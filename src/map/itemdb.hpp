@@ -4,34 +4,38 @@
 #ifndef ITEMDB_HPP
 #define ITEMDB_HPP
 
+#include <map>
+#include <vector>
+
+#include "../common/database.hpp"
 #include "../common/db.hpp"
+#include "../common/malloc.hpp"
 #include "../common/mmo.hpp" // ITEM_NAME_LENGTH
 
-///Maximum allowed Item ID (range: 1 ~ 65,534)
-#define MAX_ITEMID USHRT_MAX
+#include "script.hpp"
+#include "status.hpp"
+
+enum e_ammo_type : uint8;
+
 ///Use apple for unknown items.
-#define UNKNOWN_ITEM_ID 512
+const t_itemid UNKNOWN_ITEM_ID = 512;
 /// The maximum number of item delays
 #define MAX_ITEMDELAYS	10
 ///Designed for search functions, species max number of matches to display.
 #define MAX_SEARCH	5
-///Maximum amount of items a combo may require
-#define MAX_ITEMS_PER_COMBO 6
-
-#define MAX_ITEMGROUP_RANDGROUP 4	///Max group for random item (increase this when needed). TODO: Remove this limit and use dynamic size if needed
 
 #define MAX_ROULETTE_LEVEL 7 /** client-defined value **/
 #define MAX_ROULETTE_COLUMNS 9 /** client-defined value **/
 
-#define CARD0_FORGE 0x00FF
-#define CARD0_CREATE 0x00FE
-#define CARD0_PET 0x0100
+const t_itemid CARD0_FORGE = 0x00FF;
+const t_itemid CARD0_CREATE = 0x00FE;
+const t_itemid CARD0_PET = 0x0100;
 
 ///Marks if the card0 given is "special" (non-item id used to mark pets/created items. [Skotlex]
 #define itemdb_isspecial(i) (i == CARD0_FORGE || i == CARD0_CREATE || i == CARD0_PET)
 
 ///Enum of item id (for hardcoded purpose)
-enum item_itemid
+enum item_itemid : t_itemid
 {
 	ITEMID_DUMMY						= 499,
 	ITEMID_RED_POTION					= 501,
@@ -79,7 +83,9 @@ enum item_itemid
 	ITEMID_ANGRA_MANYU					= 1599,
 	ITEMID_PAINT_BRUSH					= 6122,
 	ITEMID_MAGIC_GEAR_FUEL				= 6146,
+	ITEMID_NEW_INSURANCE				= 6413,
 	ITEMID_STRANGE_EMBRYO				= 6415,
+	ITEMID_BLACKSMITH_BLESSING			= 6635,
 	ITEMID_STONE						= 7049,
 	ITEMID_FIRE_BOTTLE					= 7135,
 	ITEMID_ACID_BOTTLE					= 7136,
@@ -89,6 +95,7 @@ enum item_itemid
 	ITEMID_FRAGMENT_OF_CRYSTAL			= 7321,
 	ITEMID_SKULL_						= 7420,
 	ITEMID_TRAP_ALLOY					= 7940,
+	ITEMID_COOKIE_BAT					= 11605,
 	ITEMID_MERCENARY_RED_POTION			= 12184,
 	ITEMID_MERCENARY_BLUE_POTION		= 12185,
 	ITEMID_GIANT_FLY_WING				= 12212,
@@ -113,10 +120,15 @@ enum item_itemid
 	ITEMID_WOB_RACHEL					= 14584,
 	ITEMID_WOB_LOCAL					= 14585,
 	ITEMID_SIEGE_TELEPORT_SCROLL		= 14591,
+	ITEMID_INVENTORY_EX_EVT				= 25791,
+	ITEMID_INVENTORY_EX_DIS				= 25792,
+	ITEMID_INVENTORY_EX					= 25793,
+	ITEMID_WL_MB_SG						= 100065,
+	ITEMID_HOMUNCULUS_SUPPLEMENT		= 100371,
 };
 
 ///Rune Knight
-enum rune_item_list
+enum rune_item_list : t_itemid
 {
 	ITEMID_NAUTHIZ		= 12725,
 	ITEMID_RAIDO,
@@ -131,7 +143,7 @@ enum rune_item_list
 };
 
 ///Mechanic
-enum mechanic_item_list
+enum mechanic_item_list : t_itemid
 {
 	ITEMID_ACCELERATOR				= 2800,
 	ITEMID_HOVERING_BOOSTER,
@@ -154,7 +166,7 @@ enum mechanic_item_list
 };
 
 ///Genetic
-enum genetic_item_list
+enum genetic_item_list : t_itemid
 {
 	ITEMID_SEED_OF_HORNY_PLANT			= 6210,
 	ITEMID_BLOODSUCK_PLANT_SEED,
@@ -194,7 +206,7 @@ enum genetic_item_list
 };
 
 ///Guillotine Cross
-enum poison_item_list
+enum poison_item_list : t_itemid
 {
 	ITEMID_PARALYSE = 12717,
 	ITEMID_LEECHESEND,
@@ -206,36 +218,28 @@ enum poison_item_list
 	ITEMID_VENOMBLEED,
 };
 
-///Item No Use List
-enum item_nouse_list
-{
-	NOUSE_SITTING = 0x01,
-};
-
 ///Item job
-enum e_item_job
+enum e_item_job : uint16
 {
+	ITEMJ_NONE        = 0x00,
 	ITEMJ_NORMAL      = 0x01,
 	ITEMJ_UPPER       = 0x02,
 	ITEMJ_BABY        = 0x04,
 	ITEMJ_THIRD       = 0x08,
-	ITEMJ_THIRD_TRANS = 0x10,
+	ITEMJ_THIRD_UPPER = 0x10,
 	ITEMJ_THIRD_BABY  = 0x20,
-};
+	ITEMJ_FOURTH      = 0x40,
+	ITEMJ_MAX         = 0xFF,
 
-enum e_item_ammo
-{
-	AMMO_ARROW = 1,
-	AMMO_THROWABLE_DAGGER,
-	AMMO_BULLET,
-	AMMO_SHELL,
-	AMMO_GRENADE,
-	AMMO_SHURIKEN,
-	AMMO_KUNAI,
-	AMMO_CANNONBALL,
-	AMMO_THROWABLE_ITEM, ///Sling items
+	ITEMJ_ALL_UPPER = ITEMJ_UPPER | ITEMJ_THIRD_UPPER | ITEMJ_FOURTH,
+	ITEMJ_ALL_BABY = ITEMJ_BABY | ITEMJ_THIRD_BABY,
+	ITEMJ_ALL_THIRD = ITEMJ_THIRD | ITEMJ_THIRD_UPPER | ITEMJ_THIRD_BABY,
 
-	MAX_AMMO_TYPE,
+#ifdef RENEWAL
+	ITEMJ_ALL = ITEMJ_NORMAL | ITEMJ_UPPER | ITEMJ_BABY | ITEMJ_THIRD | ITEMJ_THIRD_UPPER | ITEMJ_THIRD_BABY | ITEMJ_FOURTH,
+#else
+	ITEMJ_ALL = ITEMJ_NORMAL | ITEMJ_UPPER | ITEMJ_BABY,
+#endif
 };
 
 #define AMMO_TYPE_ALL ((1<<MAX_AMMO_TYPE)-1)
@@ -733,6 +737,10 @@ enum e_random_item_group {
 	IG_PRIZEOFHERO,
 	IG_PRIVATE_AIRSHIP,
 	IG_TOKEN_OF_SIEGFRIED,
+	IG_ENCHANT_STONE_BOX,
+	IG_ENCHANT_STONE_BOX2,
+	IG_ENCHANT_STONE_BOX3,
+	IG_ENCHANT_STONE_BOX4,
 	IG_ENCHANT_STONE_BOX5,
 	IG_ENCHANT_STONE_BOX6,
 	IG_ENCHANT_STONE_BOX7,
@@ -744,6 +752,20 @@ enum e_random_item_group {
 	IG_ENCHANT_STONE_BOX13,
 	IG_ENCHANT_STONE_BOX14,
 	IG_ENCHANT_STONE_BOX15,
+	IG_ENCHANT_STONE_BOX16,
+	IG_ENCHANT_STONE_BOX17,
+	IG_ENCHANT_STONE_BOX18,
+	IG_ENCHANT_STONE_BOX19,
+	IG_ENCHANT_STONE_BOX20,
+	IG_ENCHANT_STONE_BOX21,
+	IG_XMAS_PACKAGE_14,
+	IG_EASTER_EGG,
+	IG_PITAPAT_BOX,
+	IG_HAPPY_BOX_J,
+	IG_CLASS_SHADOW_CUBE,
+	IG_SEALED_SCROLL,
+
+	IG_MAX,
 };
 
 /// Enum for bound/sell restricted selling
@@ -755,49 +777,115 @@ enum e_itemshop_restrictions {
 	ISR_BOUND_GUILDLEADER_ONLY = 0x8,
 };
 
-///Item combo struct
-struct item_combo
-{
-	struct script_code *script;
-	unsigned short *nameid;/* nameid array */
-	unsigned char count;
-	unsigned short id;/* id of this combo */
-	bool isRef;/* whether this struct is a reference or the master */
+/// Enum for item drop effects
+enum e_item_drop_effect : uint16 {
+	DROPEFFECT_NONE = 0,
+	DROPEFFECT_CLIENT,
+#if PACKETVER < 20200304
+	DROPEFFECT_WHITE_PILLAR,
+#endif
+	DROPEFFECT_BLUE_PILLAR,
+	DROPEFFECT_YELLOW_PILLAR,
+	DROPEFFECT_PURPLE_PILLAR,
+#if PACKETVER < 20200304
+	DROPEFFECT_ORANGE_PILLAR,
+#else
+	DROPEFFECT_GREEN_PILLAR,
+#endif
+#if PACKETVER >= 20200304
+	DROPEFFECT_RED_PILLAR,
+#endif
+	DROPEFFECT_MAX,
+#if PACKETVER >= 20200304
+	// White was removed in 2020-03-04
+	DROPEFFECT_WHITE_PILLAR,
+	// Orange was replaced by green in 2020-03-04
+	DROPEFFECT_ORANGE_PILLAR,
+#else
+	// Not supported before 2020-03-04
+	DROPEFFECT_GREEN_PILLAR,
+	DROPEFFECT_RED_PILLAR,
+#endif
 };
 
+/// Enum for items with delayed consumption
+enum e_delay_consume : uint8 {
+	DELAYCONSUME_NONE = 0x0,
+	DELAYCONSUME_TEMP = 0x1, // Items that are not consumed immediately upon double-click
+	DELAYCONSUME_NOCONSUME = 0x2, // Items that are not removed upon double-click
+};
+
+/// Item combo struct
+struct s_item_combo {
+	std::vector<t_itemid> nameid;
+	script_code *script;
+	uint16 id;
+
+	~s_item_combo() {
+		if (this->script) {
+			script_free_code(this->script);
+			this->script = nullptr;
+		}
+
+		this->nameid.clear();
+	}
+};
+
+class ComboDatabase : public TypesafeYamlDatabase<uint16, s_item_combo> {
+private:
+	uint16 combo_num;
+	uint16 find_combo_id( const std::vector<t_itemid>& items );
+
+public:
+	ComboDatabase() : TypesafeYamlDatabase("COMBO_DB", 1) {
+
+	}
+
+	void clear() override{
+		TypesafeYamlDatabase::clear();
+		this->combo_num = 0;
+	}
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node& node) override;
+	void loadingFinished() override;
+};
+
+extern ComboDatabase itemdb_combo;
 
 /// Struct of item group entry
 struct s_item_group_entry
 {
-	unsigned short nameid, /// Item ID
-		duration, /// Duration if item as rental item (in minutes)
+	t_itemid nameid; /// Item ID
+	uint16 rate;
+	uint16 duration, /// Duration if item as rental item (in minutes)
 		amount; /// Amount of item will be obtained
 	bool isAnnounced, /// Broadcast if player get this item
 		GUID, /// Gives Unique ID for items in each box opened
+		isStacked, /// Whether stackable items are given stacked
 		isNamed; /// Named the item (if possible)
-	char bound; /// Makes the item as bound item (according to bound type)
+	uint8 bound; /// Makes the item as bound item (according to bound type)
 };
 
 /// Struct of random group
 struct s_item_group_random
 {
-	struct s_item_group_entry *data; /// Random group entry
-	unsigned short data_qty; /// Number of item in random group
+	uint32 total_rate;
+	std::unordered_map<t_itemid, std::shared_ptr<s_item_group_entry>> data; /// item ID, s_item_group_entry
+
+	std::shared_ptr<s_item_group_entry> get_random_itemsubgroup();
 };
 
 /// Struct of item group that will be used for db
 struct s_item_group_db
 {
-	unsigned short id, /// Item Group ID
-		must_qty; /// Number of must item at this group
-	struct s_item_group_entry *must; /// Must item entry
-	struct s_item_group_random random[MAX_ITEMGROUP_RANDGROUP]; //! TODO: Move this fixed array to dynamic size if needed.
+	uint16 id; /// Item Group ID
+	std::unordered_map<uint16, std::shared_ptr<s_item_group_random>> random;	/// group ID, s_item_group_random
 };
 
 /// Struct of Roulette db
 struct s_roulette_db {
-	unsigned short *nameid[MAX_ROULETTE_LEVEL], /// Item ID
-		           *qty[MAX_ROULETTE_LEVEL]; /// Amount of Item ID
+	t_itemid *nameid[MAX_ROULETTE_LEVEL]; /// Item ID
+	unsigned short *qty[MAX_ROULETTE_LEVEL]; /// Amount of Item ID
 	int *flag[MAX_ROULETTE_LEVEL]; /// Whether the item is for loss or win
 	int items[MAX_ROULETTE_LEVEL]; /// Number of items in the list for each
 };
@@ -806,35 +894,35 @@ extern struct s_roulette_db rd;
 ///Main item data struct
 struct item_data
 {
-	unsigned short nameid;
-	char name[ITEM_NAME_LENGTH],jname[ITEM_NAME_LENGTH];
+	t_itemid nameid;
+	std::string name, ename;
 
-	//Do not add stuff between value_buy and view_id (see how getiteminfo works)
-	int value_buy;
-	int value_sell;
-	int type;
+	uint32 value_buy;
+	uint32 value_sell;
+	item_types type;
+	uint8 subtype;
 	int maxchance; //For logs, for external game info, for scripts: Max drop chance of this item (e.g. 0.01% , etc.. if it = 0, then monsters don't drop it, -1 denotes items sold in shops only) [Lupus]
-	int sex;
-	int equip;
-	int weight;
-	int atk;
-	int def;
-	int range;
-	int slot;
-	int look;
-	int elv;
-	int wlv;
-	int view_id;
-	int elvmax; ///< Maximum level for this item
+	uint8 sex;
+	uint32 equip;
+	uint32 weight;
+	uint32 atk;
+	uint32 def;
+	uint16 range;
+	uint16 slots;
+	uint32 look;
+	uint16 elv;
+	uint16 weapon_level;
+	uint16 armor_level;
+	t_itemid view_id;
+	uint16 elvmax; ///< Maximum level for this item
 #ifdef RENEWAL
-	int matk;
+	uint32 matk;
 #endif
 
-	int delay;
 //Lupus: I rearranged order of these fields due to compatibility with ITEMINFO script command
 //		some script commands should be revised as well...
 	uint64 class_base[3];	//Specifies if the base can wear this item (split in 3 indexes per type: 1-1, 2-1, 2-2)
-	unsigned class_upper : 6; //Specifies if the class-type can equip it (0x01: normal, 0x02: trans, 0x04: baby, 0x08:third, 0x10:trans-third, 0x20-third-baby)
+	uint16 class_upper; //Specifies if the class-type can equip it (See e_item_job)
 	struct {
 		int chance;
 		int id;
@@ -846,33 +934,52 @@ struct item_data
 		unsigned available : 1;
 		uint32 no_equip;
 		unsigned no_refine : 1;	// [celest]
-		unsigned delay_consume : 2;	// 1 - Signifies items that are not consumed immediately upon double-click; 2 - Signifies items that are not removed on consumption [Skotlex]
-		unsigned trade_restriction : 9;	//Item restrictions mask [Skotlex]
+		unsigned delay_consume;	// [Skotlex]
+		struct {
+			bool drop, trade, trade_partner, sell, cart, storage, guild_storage, mail, auction;
+		} trade_restriction;	//Item restrictions mask [Skotlex]
 		unsigned autoequip: 1;
-		unsigned buyingstore : 1;
-		unsigned dead_branch : 1; // As dead branch item. Logged at `branchlog` table and cannot be used at 'nobranch' mapflag [Cydh]
-		unsigned group : 1; // As item group container [Cydh]
+		bool buyingstore;
+		bool dead_branch; // As dead branch item. Logged at `branchlog` table and cannot be used at 'nobranch' mapflag [Cydh]
+		bool group; // As item group container [Cydh]
 		unsigned guid : 1; // This item always be attached with GUID and make it as bound item! [Cydh]
-		unsigned broadcast : 1; ///< Will be broadcasted if someone obtain the item [Cydh]
+		bool broadcast; ///< Will be broadcasted if someone obtain the item [Cydh]
 		bool bindOnEquip; ///< Set item as bound when equipped
-		uint8 dropEffect; ///< Drop Effect Mode
+		e_item_drop_effect dropEffect; ///< Drop Effect Mode
 	} flag;
 	struct {// item stacking limitation
-		unsigned short amount;
-		unsigned int inventory:1;
-		unsigned int cart:1;
-		unsigned int storage:1;
-		unsigned int guildstorage:1;
+		uint16 amount;
+		bool inventory, cart, storage, guild_storage;
 	} stack;
-	struct {// used by item_nouse.txt
-		unsigned int flag;
-		unsigned short override;
+	struct {
+		uint16 override;
+		bool sitting;
 	} item_usage;
 	short gm_lv_trade_override;	//GM-level to override trade_restriction
-	/* bugreport:309 */
-	struct item_combo **combos;
-	unsigned char combos_count;
-	short delay_sc; ///< Use delay group if any instead using player's item_delay data [Cydh]
+	std::vector<std::shared_ptr<s_item_combo>> combos;
+	struct {
+		uint32 duration;
+		sc_type sc; ///< Use delay group if any instead using player's item_delay data [Cydh]
+	} delay;
+
+	~item_data() {
+		if (this->script){
+			script_free_code(this->script);
+			this->script = nullptr;
+		}
+
+		if (this->equip_script){
+			script_free_code(this->equip_script);
+			this->equip_script = nullptr;
+		}
+
+		if (this->unequip_script){
+			script_free_code(this->unequip_script);
+			this->unequip_script = nullptr;
+		}
+
+		this->combos.clear();
+	}
 
 	bool isStackable();
 	int inventorySlotNeeded(int quantity);
@@ -881,36 +988,123 @@ struct item_data
 // Struct for item random option [Secret]
 struct s_random_opt_data
 {
-	unsigned short id;
-	struct script_code *script;
-};
+	uint16 id;
+	std::string name;
+	script_code *script;
 
-/// Enum for Random Option Groups
-enum Random_Option_Group {
-	RDMOPTG_None = 0,
-	RDMOPTG_Crimson_Weapon,
+	~s_random_opt_data() {
+		if (script)
+			script_free_code(script);
+	}
 };
 
 /// Struct for random option group entry
 struct s_random_opt_group_entry {
-	struct s_item_randomoption option[MAX_ITEM_RDM_OPT];
+	uint16 id;
+	int16 min_value, max_value;
+	int8 param;
+	uint16 chance;
 };
 
 /// Struct for Random Option Group
 struct s_random_opt_group {
-	uint8 id;
-	struct s_random_opt_group_entry *entries;
-	uint16 total;
+	uint16 id;
+	std::string name;
+	std::map<uint16, std::vector<std::shared_ptr<s_random_opt_group_entry>>> slots;
+	uint16 max_random;
+	std::vector<std::shared_ptr<s_random_opt_group_entry>> random_options;
 };
 
-struct item_data* itemdb_searchname(const char *name);
-struct item_data* itemdb_search_aegisname( const char *str );
+class RandomOptionDatabase : public TypesafeYamlDatabase<uint16, s_random_opt_data> {
+public:
+	RandomOptionDatabase() : TypesafeYamlDatabase("RANDOM_OPTION_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node &node) override;
+	void loadingFinished() override;
+
+	// Additional
+	bool option_exists(std::string name);
+	bool option_get_id(std::string name, uint16 &id);
+};
+
+extern RandomOptionDatabase random_option_db;
+
+class RandomOptionGroupDatabase : public TypesafeYamlDatabase<uint16, s_random_opt_group> {
+public:
+	RandomOptionGroupDatabase() : TypesafeYamlDatabase("RANDOM_OPTION_GROUP", 1) {
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node &node) override;
+
+	// Additional
+	bool add_option(const YAML::Node &node, std::shared_ptr<s_random_opt_group_entry> &entry);
+	bool option_exists(std::string name);
+	bool option_get_id(std::string name, uint16 &id);
+};
+
+extern RandomOptionGroupDatabase random_option_group;
+
+class ItemDatabase : public TypesafeCachedYamlDatabase<t_itemid, item_data> {
+private:
+	std::unordered_map<std::string, std::shared_ptr<item_data>> nameToItemDataMap;
+	std::unordered_map<std::string, std::shared_ptr<item_data>> aegisNameToItemDataMap;
+
+	e_sex defaultGender( const YAML::Node &node, std::shared_ptr<item_data> id );
+
+public:
+	ItemDatabase() : TypesafeCachedYamlDatabase("ITEM_DB", 2, 1) {
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node& node) override;
+	void loadingFinished() override;
+	void clear() override{
+		TypesafeCachedYamlDatabase::clear();
+
+		this->nameToItemDataMap.clear();
+		this->aegisNameToItemDataMap.clear();
+	}
+
+	// Additional
+	std::shared_ptr<item_data> searchname( const char* name );
+	std::shared_ptr<item_data> search_aegisname( const char *name );
+};
+
+extern ItemDatabase item_db;
+
+class ItemGroupDatabase : public TypesafeCachedYamlDatabase<uint16, s_item_group_db> {
+public:
+	ItemGroupDatabase() : TypesafeCachedYamlDatabase("ITEM_GROUP_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node& node) override;
+	void loadingFinished() override;
+
+	// Additional
+	bool item_exists(uint16 group_id, t_itemid nameid);
+	int16 item_exists_pc(map_session_data *sd, uint16 group_id);
+	t_itemid get_random_item_id(uint16 group_id, uint8 sub_group);
+	std::shared_ptr<s_item_group_entry> get_random_entry(uint16 group_id, uint8 sub_group);
+	uint8 pc_get_itemgroup(uint16 group_id, bool identify, map_session_data *sd);
+};
+
+extern ItemGroupDatabase itemdb_group;
+
 int itemdb_searchname_array(struct item_data** data, int size, const char *str);
-struct item_data* itemdb_search(unsigned short nameid);
-struct item_data* itemdb_exists(unsigned short nameid);
-#define itemdb_name(n) itemdb_search(n)->name
-#define itemdb_jname(n) itemdb_search(n)->jname
+struct item_data* itemdb_search(t_itemid nameid);
+struct item_data* itemdb_exists(t_itemid nameid);
+#define itemdb_name(n) itemdb_search(n)->name.c_str()
+#define itemdb_ename(n) itemdb_search(n)->ename.c_str()
 #define itemdb_type(n) itemdb_search(n)->type
+#define itemdb_subtype(n) itemdb_search(n)->subtype
 #define itemdb_atk(n) itemdb_search(n)->atk
 #define itemdb_def(n) itemdb_search(n)->def
 #define itemdb_look(n) itemdb_search(n)->look
@@ -918,19 +1112,16 @@ struct item_data* itemdb_exists(unsigned short nameid);
 #define itemdb_equip(n) itemdb_search(n)->equip
 #define itemdb_usescript(n) itemdb_search(n)->script
 #define itemdb_equipscript(n) itemdb_search(n)->script
-#define itemdb_wlv(n) itemdb_search(n)->wlv
+#define itemdb_wlv(n) itemdb_search(n)->weapon_level
 #define itemdb_range(n) itemdb_search(n)->range
-#define itemdb_slot(n) itemdb_search(n)->slot
+#define itemdb_slots(n) itemdb_search(n)->slots
 #define itemdb_available(n) (itemdb_search(n)->flag.available)
 #define itemdb_traderight(n) (itemdb_search(n)->flag.trade_restriction)
 #define itemdb_viewid(n) (itemdb_search(n)->view_id)
 #define itemdb_autoequip(n) (itemdb_search(n)->flag.autoequip)
 #define itemdb_dropeffect(n) (itemdb_search(n)->flag.dropEffect)
 const char* itemdb_typename(enum item_types type);
-const char *itemdb_typename_ammo (enum e_item_ammo ammo);
-
-struct s_item_group_entry *itemdb_get_randgroupitem(uint16 group_id, uint8 sub_group);
-unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group);
+const char *itemdb_typename_ammo (e_ammo_type ammo);
 
 #define itemdb_value_buy(n) itemdb_search(n)->value_buy
 #define itemdb_value_sell(n) itemdb_search(n)->value_sell
@@ -959,22 +1150,12 @@ bool itemdb_ishatched_egg(struct item* item);
 
 bool itemdb_isequip2(struct item_data *id);
 #define itemdb_isequip(nameid) itemdb_isequip2(itemdb_search(nameid))
-char itemdb_isidentified(unsigned short nameid);
+char itemdb_isidentified(t_itemid nameid);
 bool itemdb_isstackable2(struct item_data *id);
 #define itemdb_isstackable(nameid) itemdb_isstackable2(itemdb_search(nameid))
 bool itemdb_isNoEquip(struct item_data *id, uint16 m);
 
-struct item_combo *itemdb_combo_exists(unsigned short combo_id);
-
-struct s_item_group_db *itemdb_group_exists(unsigned short group_id);
-bool itemdb_group_item_exists(unsigned short group_id, unsigned short nameid);
-int16 itemdb_group_item_exists_pc(struct map_session_data *sd, unsigned short group_id);
-char itemdb_pc_get_itemgroup(uint16 group_id, bool identify, struct map_session_data *sd);
-
 bool itemdb_parse_roulette_db(void);
-
-struct s_random_opt_data *itemdb_randomopt_exists(short id);
-struct s_random_opt_group *itemdb_randomopt_group_exists(int id);
 
 void itemdb_reload(void);
 

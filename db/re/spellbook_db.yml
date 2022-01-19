@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2019 rAthena Development Team
+#   Copyright(C) 2021 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -32,54 +32,33 @@ Header:
   Version: 1
 
 Body:
-  - Skill: MG_COLDBOLT
-    Book: Magic_Book_CB
-    PreservePoints: 7
-  - Skill: MG_FIREBOLT
-    Book: Magic_Book_FB
-    PreservePoints: 7
-  - Skill: MG_LIGHTNINGBOLT
-    Book: Magic_Book_LB
-    PreservePoints: 7
-  - Skill: MG_THUNDERSTORM
-    Book: Magic_Book_TS
-    PreservePoints: 9
   - Skill: WZ_METEOR
-    Book: Magic_Book_MS
+    Book: WL_MB_MS
     PreservePoints: 10
-  - Skill: WZ_JUPITEL
-    Book: Magic_Book_JT
-    PreservePoints: 9
   - Skill: WZ_VERMILION
-    Book: Magic_Book_LOV
+    Book: WL_MB_LOV
     PreservePoints: 10
-  - Skill: WZ_WATERBALL
-    Book: Magic_Book_WB
-    PreservePoints: 9
   - Skill: WZ_STORMGUST
-    Book: Magic_Book_SG
+    Book: WL_MB_SG
     PreservePoints: 10
-  - Skill: WZ_EARTHSPIKE
-    Book: Magic_Book_ES
-    PreservePoints: 8
-  - Skill: WZ_HEAVENDRIVE
-    Book: Magic_Book_HD
-    PreservePoints: 9
+  - Skill: WL_JACKFROST
+    Book: WL_MB_JF
+    PreservePoints: 10
   - Skill: WL_DRAINLIFE
-    Book: Magic_Book_DL
+    Book: WL_MB_DL
     PreservePoints: 8
   - Skill: WL_CRIMSONROCK
-    Book: Magic_Book_CR
+    Book: WL_MB_CR
     PreservePoints: 12
   - Skill: WL_COMET
-    Book: Magic_Book_CM
+    Book: WL_MB_CM
     PreservePoints: 22
   - Skill: WL_CHAINLIGHTNING
-    Book: Magic_Book_CL
+    Book: WL_MB_CL
     PreservePoints: 12
   - Skill: WL_EARTHSTRAIN
-    Book: Magic_Book_ES_
+    Book: WL_MB_ES
     PreservePoints: 12
   - Skill: WL_TETRAVORTEX
-    Book: Magic_Book_TV
+    Book: WL_MB_TV
     PreservePoints: 22

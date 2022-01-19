@@ -22,16 +22,16 @@
 
 struct s_pet_evo_data {
 	uint16 target_mob_id;
-	std::unordered_map<uint16, uint32> requirements;
+	std::unordered_map<t_itemid, uint16> requirements;
 };
 
 /// Pet DB
 struct s_pet_db {
 	uint16 class_; ///< Monster ID
-	uint16 itemID; ///< Lure ID
-	uint16 EggID; ///< Egg ID
-	uint16 AcceID; ///< Accessory ID
-	uint16 FoodID; ///< Food ID
+	t_itemid itemID; ///< Lure ID
+	t_itemid EggID; ///< Egg ID
+	t_itemid AcceID; ///< Accessory ID
+	t_itemid FoodID; ///< Food ID
 	uint16 fullness; ///< Amount of hunger decresed each hungry_delay interval
 	uint32 hungry_delay; ///< Hunger value decrease each x seconds
 	int32 hunger_increase; ///< Hunger increased every time the pet is fed.
@@ -135,8 +135,10 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const YAML::Node& node );
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode( const YAML::Node& node ) override;
+
+	// Additional
 	bool reload();
 };
 
@@ -148,7 +150,7 @@ struct pet_data {
 	struct view_data vd;
 	struct s_pet pet;
 	struct status_data status;
-	struct mob_db *db;
+	std::shared_ptr<s_mob_db> db;
 	int pet_hungry_timer;
 	int target_id;
 	struct {
@@ -184,7 +186,7 @@ struct pet_data {
 	}
 };
 
-bool pet_create_egg(struct map_session_data *sd, unsigned short item_id);
+bool pet_create_egg(struct map_session_data *sd, t_itemid item_id);
 int pet_hungry_val(struct pet_data *pd);
 void pet_set_intimate(struct pet_data *pd, int value);
 int pet_target_check(struct pet_data *pd,struct block_list *bl,int type);

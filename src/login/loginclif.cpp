@@ -130,7 +130,7 @@ static void logclif_auth_ok(struct login_session_data* sd) {
 	WFIFOW(fd,44) = 0; // unknown
 	WFIFOB(fd,46) = sex_str2num(sd->sex);
 #if PACKETVER >= 20170315
-	memset(WFIFOP(fd,47),0,17); // Unknown
+	safestrncpy( WFIFOCP( fd, 47 ), sd->web_auth_token, WEB_AUTH_TOKEN_LENGTH ); // web authentication token
 #endif
 	for( i = 0, n = 0; i < ARRAYLENGTH(ch_server); ++i ) {
 		if( !session_isValid(ch_server[i].fd) )

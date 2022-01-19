@@ -51,7 +51,7 @@ enum e_buyingstore_failure
 
 
 static unsigned int buyingstore_nextid = 0;
-static const unsigned short buyingstore_blankslots[MAX_SLOTS] = { 0 };  // used when checking whether or not an item's card slots are blank
+static const t_itemid buyingstore_blankslots[MAX_SLOTS] = { 0 };  // used when checking whether or not an item's card slots are blank
 
 
 /// Returns unique buying store id
@@ -198,7 +198,7 @@ int8 buyingstore_create( struct map_session_data* sd, int zenylimit, unsigned ch
 
 			// duplicate
 			if( listidx != i ){
-				ShowWarning( "buyingstore_create: Found duplicate item on buying list (nameid=%hu, amount=%hu, account_id=%d, char_id=%d).\n", item->itemId, item->amount, sd->status.account_id, sd->status.char_id );
+				ShowWarning( "buyingstore_create: Found duplicate item on buying list (nameid=%u, amount=%hu, account_id=%d, char_id=%d).\n", item->itemId, item->amount, sd->status.account_id, sd->status.char_id );
 				break;
 			}
 		}
@@ -241,7 +241,7 @@ int8 buyingstore_create( struct map_session_data* sd, int zenylimit, unsigned ch
 	StringBuf_Init(&buf);
 	StringBuf_Printf(&buf, "INSERT INTO `%s`(`buyingstore_id`,`index`,`item_id`,`amount`,`price`) VALUES", buyingstore_items_table);
 	for (i = 0; i < sd->buyingstore.slots; i++){
-		StringBuf_Printf(&buf, "(%d,%d,%hu,%d,%d)", sd->buyer_id, i, sd->buyingstore.items[i].nameid, sd->buyingstore.items[i].amount, sd->buyingstore.items[i].price);
+		StringBuf_Printf(&buf, "(%d,%d,%u,%d,%d)", sd->buyer_id, i, sd->buyingstore.items[i].nameid, sd->buyingstore.items[i].amount, sd->buyingstore.items[i].price);
 		if (i < sd->buyingstore.slots-1)
 			StringBuf_AppendStr(&buf, ",");
 	}
@@ -377,7 +377,7 @@ void buyingstore_trade( struct map_session_data* sd, uint32 account_id, unsigned
 		for( int k = 0; k < i; k++ ){
 			// duplicate
 			if( itemlist[k].index == item->index && k != i ){
-				ShowWarning( "buyingstore_trade: Found duplicate item on selling list (prevnameid=%hu, prevamount=%hu, nameid=%hu, amount=%hu, account_id=%d, char_id=%d).\n", itemlist[k].itemId, itemlist[k].amount, item->itemId, item->amount, sd->status.account_id, sd->status.char_id );
+				ShowWarning( "buyingstore_trade: Found duplicate item on selling list (prevnameid=%u, prevamount=%hu, nameid=%u, amount=%hu, account_id=%d, char_id=%d).\n", itemlist[k].itemId, itemlist[k].amount, item->itemId, item->amount, sd->status.account_id, sd->status.char_id );
 				clif_buyingstore_trade_failed_seller( sd, BUYINGSTORE_TRADE_SELLER_FAILED, item->itemId );
 				return;
 			}
@@ -509,7 +509,7 @@ void buyingstore_trade( struct map_session_data* sd, uint32 account_id, unsigned
 
 
 /// Checks if an item is being bought in given player's buying store.
-bool buyingstore_search(struct map_session_data* sd, unsigned short nameid)
+bool buyingstore_search(struct map_session_data* sd, t_itemid nameid)
 {
 	unsigned int i;
 
@@ -568,10 +568,26 @@ bool buyingstore_searchall(struct map_session_data* sd, const struct s_search_st
 			;
 		}
 
-		if( !searchstore_result(s->search_sd, sd->buyer_id, sd->status.account_id, sd->message, it->nameid, it->amount, it->price, buyingstore_blankslots, 0) )
-		{// result set full
+		// Check if the result set is full
+		if( s->search_sd->searchstore.items.size() >= (unsigned int)battle_config.searchstore_maxresults ){
 			return false;
 		}
+
+		std::shared_ptr<s_search_store_info_item> ssitem = std::make_shared<s_search_store_info_item>();
+
+		ssitem->store_id = sd->buyer_id;
+		ssitem->account_id = sd->status.account_id;
+		safestrncpy( ssitem->store_name, sd->message, sizeof( ssitem->store_name ) );
+		ssitem->nameid = it->nameid;
+		ssitem->amount = it->amount;
+		ssitem->price = it->price;
+		for( int j = 0; j < MAX_SLOTS; j++ ){
+			ssitem->card[j] = 0;
+		}
+		ssitem->refine = 0;
+		ssitem->enchantgrade = 0;
+
+		s->search_sd->searchstore.items.push_back( ssitem );
 	}
 
 	return true;
@@ -671,7 +687,7 @@ void do_init_buyingstore_autotrade( void ) {
 				Sql_GetData(mmysql_handle, 0, &data, NULL); at->id = atoi(data);
 				Sql_GetData(mmysql_handle, 1, &data, NULL); at->account_id = atoi(data);
 				Sql_GetData(mmysql_handle, 2, &data, NULL); at->char_id = atoi(data);
-				Sql_GetData(mmysql_handle, 3, &data, NULL); at->sex = (data[0] == 'F') ? 0 : 1;
+				Sql_GetData(mmysql_handle, 3, &data, NULL); at->sex = (data[0] == 'F') ? SEX_FEMALE : SEX_MALE;
 				Sql_GetData(mmysql_handle, 4, &data, &len); safestrncpy(at->title, data, zmin(len + 1, MESSAGE_SIZE));
 				Sql_GetData(mmysql_handle, 5, &data, NULL); at->limit = atoi(data);
 				Sql_GetData(mmysql_handle, 6, &data, NULL); at->dir = atoi(data);
@@ -729,7 +745,7 @@ void do_init_buyingstore_autotrade( void ) {
 				while (SQL_SUCCESS == Sql_NextRow(mmysql_handle) && j < at->count) {
 					char *data;
 					CREATE(at->entries[j], struct s_autotrade_entry, 1);
-					Sql_GetData(mmysql_handle, 0, &data, NULL); at->entries[j]->item_id = atoi(data);
+					Sql_GetData(mmysql_handle, 0, &data, NULL); at->entries[j]->item_id = strtoul(data, nullptr, 10);
 					Sql_GetData(mmysql_handle, 1, &data, NULL); at->entries[j]->amount = atoi(data);
 					Sql_GetData(mmysql_handle, 2, &data, NULL); at->entries[j]->price = atoi(data);
 					j++;

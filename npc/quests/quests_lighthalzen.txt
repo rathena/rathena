@@ -10441,7 +10441,7 @@ lhz_in01,174,258,3	script	Young Man#reken	4_M_LGTGUARD,{
 		next;
 		set lhz_rekenber,22;
 		getexp (checkre(3))?55000:550000,0;
-		completequest 12014;
+		completequest 12013;
 		cutin "lhz_kaz01",2;
 		mes "[Kazien]";
 		mes "Look, I can't have";
@@ -11462,7 +11462,7 @@ airplane_01,96,48,3	script	Man#Lyozien	4_M_LGTMAN,{
 		mes "know, embarassing orders...";
 		next;
 		set lhz_rekenber,11;
-		changequest 12013,12014;
+		// changequest 12013,12014;
 		cutin "lhz_ryo01",2;
 		mes "[Lyozien]";
 		mes "No? Eh, just meet up with";
@@ -11598,7 +11598,7 @@ OnStop:
 		mes "Shouldn't you be";
 		mes "taking a break? Besides,";
 		mes "Lyozien is still waiting for";
-		mes "you the Airship, isn't he?";
+		mes "you on the Airship, isn't he?";
 		close;
 	}
 	else if(lhz_rekenber == 20)
@@ -11762,7 +11762,7 @@ OnStop:
 	close;
 }
 
-airplane_01,1,1,1	script	#bully1	HIDDEN_NPC,{
+-	script	#bully1	HIDDEN_NPC,{
 
 OnInit:
 	disablenpc "#bully1";
@@ -11805,7 +11805,7 @@ OnTimer120000:
 	end;
 }
 
-airplane_01,2,2,1	script	#bully2	HIDDEN_NPC,{
+-	script	#bully2	HIDDEN_NPC,{
 
 OnInit:
 	disablenpc "#bully2";

@@ -5,6 +5,7 @@
 #define GUILD_HPP
 
 #include "../common/cbasetypes.hpp"
+#include "../common/database.hpp"
 #include "../common/mmo.hpp"
 
 #include "map.hpp" // NAME_LENGTH
@@ -23,7 +24,7 @@ struct guardian_data {
 	int emblem_id;
 	int guardup_lv; //Level of GD_GUARDUP skill.
 	char guild_name[NAME_LENGTH];
-	struct guild_castle* castle;
+	std::shared_ptr<guild_castle> castle;
 };
 
 uint16 guild_skill_get_max(uint16 id);
@@ -36,16 +37,12 @@ bool guild_isallied(int guild_id, int guild_id2); //Checks alliance based on gui
 void do_init_guild(void);
 struct guild *guild_search(int guild_id);
 struct guild *guild_searchname(char *str);
-struct guild_castle *guild_castle_search(int gcid);
-
-struct guild_castle* guild_mapname2gc(const char* mapname);
-struct guild_castle* guild_mapindex2gc(short mapindex);
 
 struct map_session_data *guild_getavailablesd(struct guild *g);
 int guild_getindex(struct guild *g,uint32 account_id,uint32 char_id);
 int guild_getposition(struct map_session_data *sd);
-unsigned int guild_payexp(struct map_session_data *sd,unsigned int exp);
-int guild_getexp(struct map_session_data *sd,int exp); // [Celest]
+t_exp guild_payexp(struct map_session_data *sd,t_exp exp);
+t_exp guild_getexp(struct map_session_data *sd,t_exp exp); // [Celest]
 
 int guild_create(struct map_session_data *sd, const char *name);
 int guild_created(uint32 account_id,int guild_id);
@@ -82,6 +79,7 @@ int guild_position_changed(int guild_id,int idx,struct guild_position *p);
 int guild_change_notice(struct map_session_data *sd,int guild_id,const char *mes1,const char *mes2);
 int guild_notice_changed(int guild_id,const char *mes1,const char *mes2);
 int guild_change_emblem(struct map_session_data *sd,int len,const char *data);
+int guild_change_emblem_version(map_session_data* sd, int version);
 int guild_emblem_changed(int len,int guild_id,int emblem_id,const char *data);
 int guild_send_message(struct map_session_data *sd,const char *mes,int len);
 int guild_recv_message(int guild_id,uint32 account_id,const char *mes,int len);
@@ -117,5 +115,21 @@ void guild_retrieveitembound(uint32 char_id,uint32 account_id,int guild_id);
 #endif
 
 void do_final_guild(void);
+
+class CastleDatabase : public TypesafeYamlDatabase <int32, guild_castle> {
+public:
+	CastleDatabase() : TypesafeYamlDatabase("CASTLE_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node &node) override;
+
+	// Additional
+	std::shared_ptr<guild_castle> mapname2gc(const char* mapname);
+	std::shared_ptr<guild_castle> mapindex2gc(int16 mapindex);
+};
+
+extern CastleDatabase castle_db;
 
 #endif /* GUILD_HPP */

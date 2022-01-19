@@ -1625,7 +1625,7 @@ void socket_init(void)
 
 bool session_isValid(int fd)
 {
-	return ( fd > 0 && fd < MAXCONN && session[fd] != NULL );
+	return ( fd > 0 && fd < MAXCONN && session[fd] != nullptr );
 }
 
 bool session_isActive(int fd)
@@ -1733,7 +1733,7 @@ void send_shortlist_do_sends()
 
 			// If the session still exists, is not eof and has things left to
 			// be sent from it we'll re-add it to the shortlist.
-			if( session[fd] && !session[fd]->flag.eof && session[fd]->wdata_size )
+			if( session_isActive(fd) && session[fd]->wdata_size )
 				send_shortlist_add_fd(fd);
 		}
 	}

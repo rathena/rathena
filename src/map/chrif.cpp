@@ -114,6 +114,7 @@ static uint16 char_port = 6121;
 static char userid[NAME_LENGTH], passwd[NAME_LENGTH];
 static int chrif_state = 0;
 int other_mapserver_count=0; //Holds count of how many other map servers are online (apart of this instance) [Skotlex]
+char charserver_name[NAME_LENGTH];
 
 //Interval at which map server updates online listing. [Valaris]
 #define CHECK_INTERVAL 3600000
@@ -276,7 +277,7 @@ void chrif_setport(uint16 port) {
 
 // says whether the char-server is connected or not
 int chrif_isconnected(void) {
-	return (char_fd > 0 && session[char_fd] != NULL && chrif_state == 2);
+	return (session_isValid(char_fd) && chrif_state == 2);
 }
 
 /**
@@ -608,14 +609,19 @@ int chrif_sendmapack(int fd) {
 		exit(EXIT_FAILURE);
 	}
 
-	// Server name
-	memcpy(wisp_server_name, RFIFOP(fd,5), NAME_LENGTH);
-	ShowStatus("Map-server connected to char-server '" CL_WHITE "%s" CL_RESET "'.\n", wisp_server_name);
+	// Whisper name
+	safestrncpy( wisp_server_name, RFIFOCP( fd, offs ), NAME_LENGTH );
 
 	// Default map
-	memcpy(map_default.mapname, RFIFOP(fd, (offs+=NAME_LENGTH)), MAP_NAME_LENGTH);
+	safestrncpy( map_default.mapname, RFIFOCP( fd, ( offs += NAME_LENGTH ) ), MAP_NAME_LENGTH );
 	map_default.x = RFIFOW(fd, (offs+=MAP_NAME_LENGTH));
 	map_default.y = RFIFOW(fd, (offs+=2));
+
+	// Server name
+	safestrncpy( charserver_name, RFIFOCP( fd, ( offs += 2 ) ), NAME_LENGTH );
+
+	ShowStatus( "Map-server connected to char-server '" CL_WHITE "%s" CL_RESET "' (whispername: %s).\n", charserver_name, wisp_server_name );
+
 	if (battle_config.etc_log)
 		ShowInfo("Received default map from char-server '" CL_WHITE "%s %d,%d" CL_RESET "'.\n", map_default.mapname, map_default.x, map_default.y);
 
@@ -994,34 +1000,45 @@ int chrif_changedsex(int fd) {
 			return 0; //Do nothing? Likely safe.
 		sd->status.sex = !sd->status.sex;
 
-		// reset skill of some job
-		if ((sd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER) {
-			int i;
-			// remove specifical skills of Bard classes
-			for(i = BA_MUSICALLESSON; i <= BA_APPLEIDUN; i++) {
-				uint16 sk_idx = skill_get_index(i);
-				if (sd->status.skill[sk_idx].id > 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PERMANENT) {
-					sd->status.skill_point += sd->status.skill[sk_idx].lv;
-					sd->status.skill[sk_idx].id = 0;
-					sd->status.skill[sk_idx].lv = 0;
+		// Reset skills of gender split jobs.
+		if ((sd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER || (sd->class_&MAPID_UPPERMASK) == MAPID_KAGEROUOBORO) {
+			const static struct {
+				e_skill start;
+				e_skill end;
+			} ranges[] = {
+				// Bard class exclusive skills
+				{ BA_MUSICALLESSON, BA_APPLEIDUN },
+				// Dancer class exclusive skills
+				{ DC_DANCINGLESSON, DC_SERVICEFORYOU },
+				// Minstrel class exclusive skills
+				{ MI_RUSH_WINDMILL, MI_HARMONIZE },
+				// Wanderer class exclusive skills
+				{ WA_SWING_DANCE, WA_MOONLIT_SERENADE },
+				// Kagerou class exclusive skills
+				{ KG_KAGEHUMI, KG_KAGEMUSYA },
+				// Oboro class exclusive skills
+				{ OB_ZANGETSU, OB_AKAITSUKI },
+			};
+
+			for( const auto& range : ranges ){
+				for( uint16 skill_id = range.start; skill_id <= range.end; skill_id++ ){
+					uint16 sk_idx = skill_get_index( skill_id );
+
+					if( sd->status.skill[sk_idx].id > 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PERMANENT ){
+						sd->status.skill_point += sd->status.skill[sk_idx].lv;
+						sd->status.skill[sk_idx].id = 0;
+						sd->status.skill[sk_idx].lv = 0;
+					}
 				}
 			}
-			// remove specifical skills of Dancer classes
-			for(i = DC_DANCINGLESSON; i <= DC_SERVICEFORYOU; i++) {
-				uint16 sk_idx = skill_get_index(i);
-				if (sd->status.skill[sk_idx].id > 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PERMANENT) {
-					sd->status.skill_point += sd->status.skill[sk_idx].lv;
-					sd->status.skill[sk_idx].id = 0;
-					sd->status.skill[sk_idx].lv = 0;
-				}
-			}
+
 			clif_updatestatus(sd, SP_SKILLPOINT);
-			// change job if necessary
-			if (sd->status.sex) //Changed from Dancer
+			// Change to other gender version of the job if needed.
+			if (sd->status.sex)// Changed from female version of job.
 				sd->status.class_ -= 1;
-			else	//Changed from Bard
+			else// Changed from male version of job.
 				sd->status.class_ += 1;
-			//sd->class_ needs not be updated as both Dancer/Bard are the same.
+			//sd->class_ Does not need to be updated as both versions of the job are the same.
 		}
 		// save character
 		sd->login_id1++; // change identify, because if player come back in char within the 5 seconds, he can change its characters
@@ -1364,8 +1381,10 @@ int chrif_skillcooldown_save(struct map_session_data *sd) {
 		if (!sd->scd[i])
 			continue;
 
+#ifndef RENEWAL
 		if (!battle_config.guild_skill_relog_delay && (sd->scd[i]->skill_id >= GD_BATTLEORDER && sd->scd[i]->skill_id <= GD_EMERGENCYCALL))
 			continue;
+#endif
 
 		timer = get_timer(sd->scd[i]->timer);
 		if (timer == NULL || timer->func != skill_blockpc_end || DIFF_TICK(timer->tick, tick) < 0)

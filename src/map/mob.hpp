@@ -15,6 +15,12 @@
 
 struct guardian_data;
 
+//This is the distance at which @autoloot works,
+//if the item drops farther from the player than this,
+//it will not be autolooted. [Skotlex]
+//Note: The range is unlimited unless this define is set.
+//#define AUTOLOOT_DISTANCE AREA_SIZE
+
 //The number of drops all mobs have and the max drop-slot that the steal skill will attempt to steal from.
 #define MAX_MOB_DROP 10
 #define MAX_MVP_DROP 3
@@ -22,9 +28,6 @@ struct guardian_data;
 #define MAX_MVP_DROP_ADD 2
 #define MAX_MOB_DROP_TOTAL (MAX_MOB_DROP+MAX_MOB_DROP_ADD)
 #define MAX_MVP_DROP_TOTAL (MAX_MVP_DROP+MAX_MVP_DROP_ADD)
-#define MAX_STEAL_DROP 7
-
-#define MAX_RACE2_MOBS 100
 
 //Min time between AI executions
 const t_tick MIN_MOBTHINKTIME = 100;
@@ -70,6 +73,15 @@ enum MOBID {
 	MOBID_S_HORNET			= 2158,
 	MOBID_S_GIANT_HORNET,
 	MOBID_S_LUCIOLA_VESPA,
+	MOBID_GUILD_SKILL_FLAG	= 20269,
+	MOBID_ABR_BATTLE_WARIOR = 20834,
+	MOBID_ABR_DUAL_CANNON,
+	MOBID_ABR_MOTHER_NET,
+	MOBID_ABR_INFINITY,
+	MOBID_BIONIC_WOODENWARRIOR = 20848,
+	MOBID_BIONIC_WOODEN_FAIRY,
+	MOBID_BIONIC_CREEPER,
+	MOBID_BIONIC_HELLTREE,
 };
 
 ///Mob skill states.
@@ -94,7 +106,7 @@ enum MobDamageLogFlag
 	MDLF_SELF
 };
 
-enum size {
+enum e_size : uint8 {
 	SZ_SMALL = 0,
 	SZ_MEDIUM,
 	SZ_BIG,
@@ -104,12 +116,13 @@ enum size {
 
 /// Random Monster Groups
 enum e_random_monster : uint16 {
-	MOBG_Branch_Of_Dead_Tree = 0,
-	MOBG_Poring_Box,
-	MOBG_Bloody_Dead_Branch,
-	MOBG_Red_Pouch_Of_Surprise,
-	MOBG_ClassChange,
-	MOBG_Taekwon_Mission,
+	MOBG_BRANCH_OF_DEAD_TREE = 0,
+	MOBG_PORING_BOX,
+	MOBG_BLOODY_DEAD_BRANCH,
+	MOBG_RED_POUCH_OF_SURPRISE,
+	MOBG_CLASSCHANGE,
+	MOBG_TAEKWON_MISSION,
+	MOBG_MAX,
 };
 
 /// Random Monster Group Flags
@@ -117,13 +130,62 @@ enum e_random_monster_flags {
 	RMF_NONE			= 0x00, ///< Apply no flags
 	RMF_DB_RATE			= 0x01, ///< Apply the summon success chance found in the list (otherwise get any monster from the db)
 	RMF_CHECK_MOB_LV	= 0x02, ///< Apply a monster level check
-	RMF_MOB_NOT_BOSS	= 0x04, ///< Selected monster should not be a Boss type (except those from MOBG_Bloody_Dead_Branch)
+	RMF_MOB_NOT_BOSS	= 0x04, ///< Selected monster should not be a Boss type (except those from MOBG_BLOODY_DEAD_BRANCH)
 	RMF_MOB_NOT_SPAWN	= 0x08, ///< Selected monster must have normal spawn
 	RMF_MOB_NOT_PLANT	= 0x10, ///< Selected monster should not be a Plant type
 	RMF_ALL				= 0xFF, ///< Apply all flags
 };
 
-struct mob_skill {
+enum e_mob_bosstype : uint8{
+	BOSSTYPE_NONE,
+	BOSSTYPE_MINIBOSS,
+	BOSSTYPE_MVP
+};
+
+/// Monster Aegis AI types
+enum e_aegis_monstertype : uint16 {
+	MONSTER_TYPE_01 = 0x81,
+	MONSTER_TYPE_02 = 0x83,
+	MONSTER_TYPE_03 = 0x1089,
+	MONSTER_TYPE_04 = 0x3885,
+	MONSTER_TYPE_05 = 0x2085,
+	MONSTER_TYPE_06 = 0,
+	MONSTER_TYPE_07 = 0x108B,
+	MONSTER_TYPE_08 = 0x7085,
+	MONSTER_TYPE_09 = 0x3095,
+	MONSTER_TYPE_10 = 0x84,
+	MONSTER_TYPE_11 = 0x84,
+	MONSTER_TYPE_12 = 0x2085,
+	MONSTER_TYPE_13 = 0x308D,
+	//MONSTER_TYPE_14
+	//MONSTER_TYPE_15
+	//MONSTER_TYPE_16
+	MONSTER_TYPE_17 = 0x91,
+	//MONSTER_TYPE_18
+	MONSTER_TYPE_19 = 0x3095,
+	MONSTER_TYPE_20 = 0x3295,
+	MONSTER_TYPE_21 = 0x3695,
+	//MONSTER_TYPE_22
+	//MONSTER_TYPE_23
+	MONSTER_TYPE_24 = 0xA1,
+	MONSTER_TYPE_25 = 0x1,
+	MONSTER_TYPE_26 = 0xB695,
+	MONSTER_TYPE_27 = 0x8084,
+};
+
+/// Aegis monster class types
+enum e_aegis_monsterclass : int8 {
+	CLASS_NONE = -1,
+	CLASS_NORMAL = 0,
+	CLASS_BOSS,
+	CLASS_GUARDIAN,
+	CLASS_BATTLEFIELD = 4,
+	CLASS_EVENT,
+	CLASS_ALL,
+	CLASS_MAX,
+};
+
+struct s_mob_skill {
 	enum MobSkillState state;
 	uint16 skill_id,skill_lv;
 	short permillage;
@@ -136,10 +198,36 @@ struct mob_skill {
 	unsigned short msg_id;
 };
 
-struct mob_chat {
-	unsigned short msg_id;
-	unsigned long color;
-	char msg[CHAT_SIZE_MAX];
+struct s_mob_chat {
+	uint16 msg_id;
+	uint32 color;
+	std::string msg;
+};
+
+class MobChatDatabase : public TypesafeYamlDatabase<uint16, s_mob_chat> {
+public:
+	MobChatDatabase() : TypesafeYamlDatabase("MOB_CHAT_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node &node) override;
+};
+
+struct s_mob_item_drop_ratio {
+	t_itemid nameid;
+	uint16 drop_ratio;
+	std::vector<uint16> mob_ids;
+};
+
+class MobItemRatioDatabase : public TypesafeYamlDatabase<t_itemid, s_mob_item_drop_ratio> {
+public:
+	MobItemRatioDatabase() : TypesafeYamlDatabase("MOB_ITEM_RATIO_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node &node) override;
 };
 
 struct spawn_info {
@@ -155,26 +243,46 @@ struct s_mob_lootitem {
 
 /// Struct for monster's drop item
 struct s_mob_drop {
-	unsigned short nameid;
-	int p;
-	uint8 randomopt_group;
-	unsigned steal_protected : 1;
+	t_itemid nameid;
+	uint32 rate;
+	uint16 randomopt_group;
+	bool steal_protected;
 };
 
-struct mob_db {
-	char sprite[NAME_LENGTH],name[NAME_LENGTH],jname[NAME_LENGTH];
-	unsigned int base_exp,job_exp;
-	unsigned int mexp;
-	short range2,range3;
-	enum e_race2 race2;	// celest
-	unsigned short lv;
-	struct s_mob_drop dropitem[MAX_MOB_DROP_TOTAL], mvpitem[MAX_MVP_DROP_TOTAL];
-	struct status_data status;
-	struct view_data vd;
-	unsigned int option;
-	int maxskill;
-	struct mob_skill skill[MAX_MOBSKILL];
+struct s_mob_db {
+	uint32 id;
+	std::string sprite, name, jname;
+	t_exp base_exp;
+	t_exp job_exp;
+	t_exp mexp;
+	uint16 range2, range3;
+	std::vector<e_race2> race2;	// celest
+	uint16 lv;
+	s_mob_drop dropitem[MAX_MOB_DROP_TOTAL], mvpitem[MAX_MVP_DROP_TOTAL];
+	status_data status;
+	view_data vd;
+	uint32 option;
+	std::vector<std::shared_ptr<s_mob_skill>> skill;
+	uint16 damagetaken;
+
+	e_mob_bosstype get_bosstype();
 };
+
+class MobDatabase : public TypesafeCachedYamlDatabase <uint32, s_mob_db> {
+private:
+	bool parseDropNode(std::string nodeName, YAML::Node node, uint8 max, s_mob_drop *drops);
+
+public:
+	MobDatabase() : TypesafeCachedYamlDatabase("MOB_DB", 3, 1) {
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node &node) override;
+	void loadingFinished() override;
+};
+
+extern MobDatabase mob_db;
 
 struct mob_data {
 	struct block_list bl;
@@ -183,7 +291,7 @@ struct mob_data {
 	bool vd_changed;
 	struct status_data status, *base_status; //Second one is in case of leveling up mobs, or tiny/large mobs.
 	struct status_change sc;
-	struct mob_db *db;	//For quick data access (saves doing mob_db(md->mob_id) all the time) [Skotlex]
+	std::shared_ptr<s_mob_db> db;	//For quick data access (saves doing mob_db(md->mob_id) all the time) [Skotlex]
 	char name[NAME_LENGTH];
 	struct s_specialState {
 		unsigned int size : 2; //Small/Big monsters.
@@ -233,6 +341,7 @@ struct mob_data {
 	int8 skill_idx; // Index of last used skill from db->skill[]
 	t_tick skilldelay[MAX_MOBSKILL];
 	char npc_event[EVENT_NAME_LENGTH];
+	char idle_event[EVENT_NAME_LENGTH];
 	/**
 	 * Did this monster summon something?
 	 * Used to flag summon deletions, saves a worth amount of memory
@@ -242,6 +351,8 @@ struct mob_data {
 	 * MvP Tombstone NPC ID
 	 **/
 	int tomb_nid;
+
+	e_mob_bosstype get_bosstype();
 };
 
 class MobAvailDatabase : public YamlDatabase {
@@ -250,9 +361,30 @@ public:
 
 	}
 
-	void clear() { };
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
+	void clear() override{ };
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node& node) override;
+};
+
+struct s_randomsummon_entry {
+	uint16 mob_id;
+	uint32 rate;
+};
+
+struct s_randomsummon_group {
+	uint16 random_id;
+	uint16 default_mob_id;
+	std::unordered_map<uint16, std::shared_ptr<s_randomsummon_entry>> list;
+};
+
+class MobSummonDatabase : public TypesafeYamlDatabase<uint16, s_randomsummon_group> {
+public:
+	MobSummonDatabase() : TypesafeYamlDatabase("MOB_SUMMONABLE_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node &node) override;
 };
 
 enum e_mob_skill_target {
@@ -311,9 +443,8 @@ struct item_drop_list {
 	struct item_drop* item;            // linked list of drops
 };
 
-struct mob_db *mob_db(int mob_id);
 uint16 mobdb_searchname(const char * const str);
-struct mob_db* mobdb_search_aegisname( const char* str );
+std::shared_ptr<s_mob_db> mobdb_search_aegisname( const char* str );
 int mobdb_searchname_array(const char *str, uint16 * out, int size);
 int mobdb_checkid(const int id);
 struct view_data* mob_get_viewdata(int mob_id);
@@ -365,6 +496,7 @@ int mob_class_change(struct mob_data *md,int mob_id);
 int mob_warpslave(struct block_list *bl, int range);
 int mob_linksearch(struct block_list *bl,va_list ap);
 
+bool mob_chat_display_message (mob_data &md, uint16 msg_id);
 int mobskill_use(struct mob_data *md,t_tick tick,int event);
 int mobskill_event(struct mob_data *md,struct block_list *src,t_tick tick, int flag);
 int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id);
@@ -381,6 +513,8 @@ void mob_reload(void);
 void mob_add_spawn(uint16 mob_id, const struct spawn_info& new_spawn);
 const std::vector<spawn_info> mob_get_spawns(uint16 mob_id);
 bool mob_has_spawn(uint16 mob_id);
+
+int mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int base_rate, int drop_modifier);
 
 // MvP Tomb System
 int mvptomb_setdelayspawn(struct npc_data *nd);

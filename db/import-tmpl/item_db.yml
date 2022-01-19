@@ -1,0 +1,546 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Item Database
+###########################################################################
+#
+# Item Settings
+#
+###########################################################################
+# - Id                      Item ID.
+#   AegisName               Server name to reference the item in scripts and lookups, should use no spaces.
+#   Name                    Name in English for displaying as output.
+#   Type                    Item type. (Default: Etc)
+#   SubType                 Weapon, Ammo or Card type. (Default: 0)
+#   Buy                     Buying price. When not specified, becomes double the sell price. (Default: 0)
+#   Sell                    Selling price. When not specified, becomes half the buy price. (Default: 0)
+#   Weight                  Item weight. Each 10 is 1 weight. (Default: 0)
+#   Attack                  Weapon's attack. (Default: 0)
+#   MagicAttack             Weapon's magic attack. (Default: 0)
+#   Defense                 Armor's defense. (Default: 0)
+#   Range                   Weapon's attack range. (Default: 0)
+#   Slots                   Available slots in item. (Default: 0)
+#   Jobs                    Jobs that can equip the item. (Map default is 'All: true')
+#   Classes                 Upper class types that can equip the item. (Map default is 'All: true')
+#   Gender                  Gender that can equip the item. (Default: Both)
+#   Locations               Equipment's placement. (Default: None)
+#   WeaponLevel             Weapon level. (Default: 1 for Weapons)
+#   ArmorLevel              Armor level. (Default: 1 for Armors)
+#   EquipLevelMin           Minimum required level to equip. (Default: 0)
+#   EquipLevelMax           Maximum level that can equip. (Default: 0)
+#   Refineable              If the item can be refined. (Default: false)
+#   View                    View sprite of an item. (Default: 0)
+#   AliasName               Another item's AegisName that will be sent to the client instead of this item's AegisName. (Default: null)
+#   Flags:                  Item flags. (Default: null)
+#     BuyingStore           If the item is available for Buyingstores. (Default: false)
+#     DeadBranch            If the item is a Dead Branch. (Default: false)
+#     Container             If the item is part of a container. (Default: false)
+#     UniqueId              If the item is a unique stack. (Default: false)
+#     BindOnEquip           If the item is bound to the character upon equipping. (Default: false)
+#     DropAnnounce          If the item has a special announcement to self on drop. (Default: false)
+#     NoConsume             If the item is consumed on use. (Default: false)
+#     DropEffect            If the item has a special effect on the ground when dropped by a monster. (Default: None)
+#   Delay:                  Item use delay. (Default: null)
+#     Duration              Duration of delay in seconds.
+#     Status                Status Change used to track delay. (Default: None)
+#   Stack:                  Item stack amount. (Default: null)
+#     Amount                Maximum amount that can be stacked.
+#     Inventory             If the stack is applied to player's inventory. (Default: true)
+#     Cart                  If the stack is applied to the player's cart. (Default: false)
+#     Storage               If the stack is applied to the player's storage. (Default: false)
+#     GuildStorage          If the stack is applied to the player's guild storage. (Default: false)
+#   NoUse:                  Conditions when the item is unusable. (Default: null)
+#     Override              Group level to override these conditions.
+#     Sitting               If the item can not be used while sitting. (Default: false)
+#   Trade:                  Trade restrictions. (Default: null)
+#     Override              Group level to override these conditions.
+#     NoDrop                If the item can not be dropped. (Default: false)
+#     NoTrade               If the item can not be traded. (Default: false)
+#     TradePartner          If the item can not be traded to the player's partner. (Default: false)
+#     NoSell                If the item can not be sold. (Default: false)
+#     NoCart                If the item can not be put in a cart. (Default: false)
+#     NoStorage             If the item can not be put in a storage. (Default: false)
+#     NoGuildStorage        If the item can not be put in a guild storage. (Default: false)
+#     NoMail                If the item can not be put in a mail. (Default: false)
+#     NoAuction             If the item can not be put in an auction. (Default: false)
+#   Script                  Script to execute when the item is used/equipped. (Default: null)
+#   EquipScript             Script to execute when the item is equipped. (Default: null)
+#   UnEquipScript           Script to execute when the item is unequipped or when a rental item expires. (Default: null)
+###########################################################################
+
+Header:
+  Type: ITEM_DB
+  Version: 2
+
+#Body:
+# THQ Quest Items
+#=============================================================
+#  - Id: 1998
+#    AegisName: Jeramiah's_Jur
+#    Name: Jeramiah's Jur
+#    Type: Etc
+#    Sell: 10
+#    Weight: 10
+#    AliasName: Jur
+#  - Id: 1999
+#    AegisName: Zed's_Staff
+#    Name: Zed's Staff
+#    Type: Etc
+#    Sell: 10
+#    Weight: 10
+#    AliasName: Staff_Of_Soul
+#  - Id: 7950
+#    AegisName: THG_Membership
+#    Name: THG Membership
+#    Type: Etc
+#    Sell: 10
+#    Weight: 10
+#    AliasName: Foolishness_Of_Blind
+#  - Id: 7951
+#    AegisName: Gold_Tulip
+#    Name: Token Bag
+#    Type: Etc
+#    Sell: 10
+#    Weight: 10
+#    AliasName: Leather_Bag_Of_Infinity
+
+# Official Event Items that had their Effects removed after the event was completed
+#=============================================================
+#  - Id: 585
+#    AegisName: Wurst
+#    Name: Brusti
+#    Type: Delayconsume
+#    Buy: 2
+#    Weight: 40
+#    Script: |
+#      itemheal rand(15,20),0; itemskill "PR_MAGNIFICAT",3;
+#  - Id: 679
+#    AegisName: Gold_Pill
+#    Name: Pilule
+#    Type: Healing
+#    Buy: 5000
+#    Weight: 300
+#    Script: |
+#      percentheal 50,50;
+#  - Id: 2681
+#    AegisName: Republic_Ring
+#    Name: Republic Anniversary Ring
+#    Type: Armor
+#    Buy: 20
+#    Weight: 100
+#    Locations:
+#      Right_Accessory: true
+#      Left_Accessory: true
+#    Script: |
+#      bonus bAllStats,3;
+#  - Id: 5134
+#    AegisName: Pumpkin_Hat
+#    Name: Pumpkin-Head
+#    Type: Armor
+#    Buy: 20
+#    Weight: 200
+#    Defense: 2
+#    Locations:
+#      Head_Top: true
+#    Refineable: true
+#    View: 206
+#    Script: |
+#      bonus2 bSubRace,RC_Demon,5;
+#  - Id: 5136
+#    AegisName: Santa's_Hat_
+#    Name: Louise's Santa Hat
+#    Type: Armor
+#    Buy: 20
+#    Weight: 100
+#    Defense: 3
+#    Locations:
+#      Head_Top: true
+#    Refineable: true
+#    View: 20
+#    Script: |
+#      bonus bMdef,1; bonus bLuk,1; bonus3 bAutoSpellWhenHit,"AL_HEAL",3,50; bonus3 bAutoSpellWhenHit,"AL_BLESSING",10,50;
+#  - Id: 5145
+#    AegisName: Carnival_Joker_Jester
+#    Name: Carnival Jester
+#    Type: Armor
+#    Buy: 10
+#    Weight: 100
+#    Locations:
+#      Head_Top: true
+#    Refineable: true
+#    View: 89
+#    Script: |
+#      bonus bAllStats,3;
+#  - Id: 5147
+#    AegisName: Baseball_Cap
+#    Name: Baseball Cap
+#    Type: Armor
+#    Weight: 200
+#    Defense: 3
+#    Locations:
+#      Head_Top: true
+#    Refineable: true
+#    View: 216
+#    Script: |
+#      bonus2 bExpAddRace,RC_Boss,50; bonus2 bExpAddRace,RC_NonBoss,50;
+#  - Id: 5201
+#    AegisName: Party_Hat_B
+#    Name: 2nd Anniversary Party Hat
+#    Type: Armor
+#    Buy: 20
+#    Weight: 300
+#    Defense: 3
+#    Locations:
+#      Head_Top: true
+#    Refineable: true
+#    View: 144
+#    Script: |
+#      bonus bAllStats,3;
+#  - Id: 5202
+#    AegisName: Pumpkin_Hat_
+#    Name: Pumpkin Hat
+#    Type: Armor
+#    Buy: 20
+#    Weight: 200
+#    Defense: 2
+#    Locations:
+#      Head_Top: true
+#    Refineable: true
+#    View: 206
+#    Script: |
+#      bonus bAllStats,2; bonus2 bSubRace,RC_Demon,5; bonus3 bAddMonsterDropItem,529,RC_DemiHuman,1500;
+#  - Id: 5204
+#    AegisName: Event_Pierrot_Nose
+#    Name: Rudolf's Red Nose
+#    Type: Armor
+#    Buy: 20
+#    Weight: 100
+#    Locations:
+#      Head_Low: true
+#    View: 49
+#    Script: |
+#      bonus2 bResEff,Eff_Blind,3000; bonus2 bAddMonsterDropItem,12130,30;
+#  - Id: 5264
+#    AegisName: Aussie_Flag_Hat
+#    Name: Australian Flag Hat
+#    Type: Armor
+#    Buy: 20
+#    Weight: 500
+#    Defense: 4
+#    Locations:
+#      Head_Top: true
+#    Refineable: true
+#    View: 304
+#    Script: |
+#      bonus bAllStats,2;
+#  - Id: 5356
+#    AegisName: Pumpkin_Hat_H
+#    Name: Pumpkin Hat
+#    Type: Armor
+#    Buy: 20
+#    Weight: 200
+#    Defense: 2
+#    Locations:
+#      Head_Top: true
+#    Refineable: true
+#    View: 206
+#    Script: |
+#      bonus bAllStats,2; bonus2 bSubRace,RC_Demon,5; bonus2 bMagicAddRace,RC_Demon,5;
+#  - Id: 5384
+#    AegisName: Santa_Hat_1
+#    Name: Twin Pompom By JB
+#    Type: Armor
+#    Buy: 20
+#    Weight: 200
+#    Defense: 2
+#    Slots: 1
+#    Locations:
+#      Head_Top: true
+#    EquipLevelMin: 20
+#    Refineable: true
+#    View: 390
+#    Script: |
+#      bonus bLuk,3; bonus2 bResEff,Eff_Curse,2000; bonus bVariableCastrate,-2; bonus bAspdRate,4; bonus2 bAddMonsterDropItem,539,100; bonus2 bAddMonsterDropItem,529,200; bonus2 bAddMonsterDropItem,530,200; autobonus "{ bonus bCritical,10; }",10,5000;
+#  - Id: 5811
+#    AegisName: Santa_Beard
+#    Name: Santa Beard
+#    Type: Armor
+#    Buy: 20
+#    Weight: 100
+#    Defense: 5
+#    Locations:
+#      Head_Low: true
+#    View: 25
+#    Script: |
+#      bonus2 bSubRace,RC_Brute,5; bonus2 bSubRace,RC_Player_Doram,5;
+#  - Id: 11702
+#    AegisName: Moon_Cookie
+#    Name: Moon Cookie
+#    Type: Delayconsume
+#    Weight: 10
+#    Script: |
+#      sc_end SC_POISON; sc_end SC_SILENCE; sc_end SC_BLIND; sc_end SC_CONFUSION; sc_end SC_CURSE; sc_end SC_HALLUCINATION; itemskill "AL_BLESSING",7;
+#  - Id: 12131
+#    AegisName: Lucky_Potion
+#    Name: Lucky Potion
+#    Type: Healing
+#    Buy: 2
+#    Weight: 100
+#    Script: |
+#      sc_start SC_LUKFOOD,180000,15;
+#  - Id: 12143
+#    AegisName: Red_Can
+#    Name: Red Can
+#    Type: Usable
+#    Buy: 50000
+#    Weight: 300
+#    Script: |
+#      percentheal 25,25;
+
+# Event effect: Summon monster? Probably Rice_Cake. x_x
+#=============================================================
+#  - Id: 12199
+#    AegisName: Rice_Scroll
+#    Name: Rice Scroll
+#    Type: Usable
+#  - Id: 12200
+#    AegisName: Event_Cake
+#    Name: Event Cake
+#    Type: Usable
+#    Buy: 20
+#    Weight: 50
+#    Script: |
+#      itemskill "PR_MAGNIFICAT",3;
+#  - Id: 12238
+#    AegisName: New_Year_Rice_Cake_1
+#    Name: New Year Rice Cake
+#    Type: Healing
+#    Buy: 20
+#    Weight: 100
+#    Script: |
+#      percentheal 20,15; sc_start SC_STRFOOD,1200000,3; sc_start SC_INTFOOD,1200000,3; sc_start SC_LUKFOOD,1200000,3; sc_start SC_SPEEDUP1,5000,0;
+#  - Id: 12239
+#    AegisName: New_Year_Rice_Cake_2
+#    Name: New Year Rice Cake
+#    Type: Healing
+#    Buy: 20
+#    Weight: 100
+#    Script: |
+#      percentheal 20,15; sc_start SC_DEXFOOD,1200000,3; sc_start SC_AGIFOOD,1200000,3; sc_start SC_VITFOOD,1200000,3; sc_start SC_SPEEDUP1,5000,0;
+
+# iRO St. Patrick's Day Event 2008
+#=============================================================
+#  - Id: 7915
+#    AegisName: Copper_Coin_
+#    Name: Bronze Coin
+#    Type: Etc
+#    Weight: 10
+#    AliasName: Copper_Coin
+#  - Id: 7916
+#    AegisName: Silver_Coin_
+#    Name: Silver Coin
+#    Type: Etc
+#    Weight: 10
+#    AliasName: Silver_Coin
+#  - Id: 12715
+#    AegisName: Black_Treasure_Box
+#    Name: Black Treasure Chest
+#    Type: Usable
+#    Weight: 200
+#    AliasName: Treasure_Box_
+#    Script: |
+#      callfunc "F_08stpattyseventbox";
+
+# iRO Valentine's Day Event 2009
+#=============================================================
+#  - Id: 5817
+#    AegisName: Valentine_Pledge
+#    Name: Valentine's Emblem
+#    Type: Armor
+#    Buy: 10
+#    Defense: 3
+#    Locations:
+#      Right_Accessory: true
+#      Left_Accessory: true
+#    Script: |
+#      bonus bAtkRate,3; bonus bMatkRate,3; bonus bAllStats,2; bonus bFlee,10; bonus bAspd,1; bonus bMdef,3; bonus2 bSkillAtk,"AL_HEAL",10; bonus2 bSkillHeal,"AL_HEAL",10; bonus2 bSkillHeal,"AM_POTIONPITCHER",10; bonus2 bAddItemGroupHealRate,IG_Potion,10;
+#  - Id: 7946
+#    AegisName: Gold_Ring_Of_Valentine
+#    Name: Gold Ring Of Valentine
+#    Type: Etc
+#    Buy: 10
+#  - Id: 7947
+#    AegisName: Silver_Ring_Of_Valentine
+#    Name: Silver Ring Of Valentine
+#    Type: Etc
+#    Buy: 10
+#  - Id: 7948
+#    AegisName: Box
+#    Name: Box
+#    Type: Etc
+#    Buy: 10
+#    Weight: 10
+#  - Id: 12742
+#    AegisName: Valentine_Gift_Box_M
+#    Name: Valentine Gift Box
+#    Type: Usable
+#    Buy: 10
+#    Script: |
+#      getitem 7946,1;
+#  - Id: 12743
+#    AegisName: Valentine_Gift_Box_F
+#    Name: Valentine Gift Box
+#    Type: Usable
+#    Buy: 10
+#    Script: |
+#      getitem 7947,1;
+#  - Id: 12744
+#    AegisName: Chocolate_Box
+#    Name: Chocolate Box
+#    Type: Usable
+#    Buy: 10
+#    Script: |
+#      getitem 558,1;
+#  - Id: 14466
+#    AegisName: Valentine's_Emblem_Box
+#    Name: Valentine's Emblem Box
+#    Type: Usable
+#    Buy: 10
+#    Script: |
+#      getitem 5817,1;
+
+# iRO Halloween Event 2009
+#=============================================================
+#  - Id: 5668
+#    AegisName: Weird_Pumpkin_Hat
+#    Name: Weird Pumpkin Hat
+#    Type: Armor
+#    Buy: 20
+#    Defense: 5
+#    Locations:
+#      Head_Top: true
+#    Refineable: true
+#    View: 206
+#    Script: |
+#      bonus bMdef,5; bonus2 bAddMonsterDropItem,12192,2500;
+#  - Id: 6298
+#    AegisName: Pumpkin_Head_Crushed
+#    Name: Crushed Pumpkin
+#    Type: Etc
+#  - Id: 6299
+#    AegisName: Worn_Cloth_Piece
+#    Name: Worn Fabric
+#    Type: Etc
+
+# Old Tuxedo and Wedding Dress, will display the outfit when worn.
+#==================================================================
+#  - Id: 2338
+#    AegisName: Wedding_Dress
+#    Name: Wedding Dress
+#    Type: Armor
+#    Buy: 43000
+#    Weight: 500
+#    Jobs:
+#      All: true
+#      Novice: false
+#    Gender: Female
+#    Locations:
+#      Armor: true
+#    Refineable: true
+#    EquipScript: |
+#      sc_start SC_WEDDING,INFINITE_TICK,0;
+#    UnEquipScript: |
+#      sc_end SC_WEDDING;
+#  - Id: 7170
+#    AegisName: Tuxedo
+#    Name: Tuxedo
+#    Type: Armor
+#    Buy: 43000
+#    Weight: 10
+#    Jobs:
+#      All: true
+#      Novice: false
+#    Gender: Male
+#    Locations:
+#      Armor: true
+#    ArmorLevel: 1
+#    Refineable: true
+#    EquipScript: |
+#      sc_start SC_WEDDING,INFINITE_TICK,0;
+#    UnEquipScript: |
+#      sc_end SC_WEDDING;
+
+# Non-kRO Eden Group Mark effect
+#=============================================================
+#  - Id: 22508
+#    AegisName: Para_Team_Mark_
+#    Name: Eden Group Mark
+#    Type: Delayconsume
+#    Script: |
+#      unitskilluseid getcharid(3),"AL_TELEPORT",3;
+
+# Gender restrictions that were removed on official servers
+#=============================================================
+#  - Id: 2206
+#    Gender: Female
+#  - Id: 2208
+#    Gender: Female
+#  - Id: 2209
+#    Gender: Female
+#  - Id: 2234
+#    Gender: Female
+#  - Id: 2235
+#    Gender: Male
+#  - Id: 2407
+#    Gender: Female
+#  - Id: 2415
+#    Gender: Female
+#  - Id: 2494
+#    Gender: Female
+#  - Id: 5143
+#    Gender: Male
+#  - Id: 5164
+#    Gender: Female
+#  - Id: 5165
+#    Gender: Male
+#  - Id: 5191
+#    Gender: Female
+#  - Id: 5192
+#    Gender: Female
+#  - Id: 5193
+#    Gender: Female
+#  - Id: 5194
+#    Gender: Female
+#  - Id: 5195
+#    Gender: Female
+#  - Id: 5196
+#    Gender: Female
+#  - Id: 5197
+#    Gender: Female
+#  - Id: 5221
+#    Gender: Female
+#  - Id: 5354
+#    Gender: Male
+#  - Id: 5355
+#    Gender: Female
+#  - Id: 5400
+#    Gender: Female
+#  - Id: 5681
+#    Gender: Female
+#  - Id: 5735
+#    Gender: Female
