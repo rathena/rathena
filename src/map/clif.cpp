@@ -22750,11 +22750,17 @@ void clif_barter_open( struct map_session_data& sd, struct npc_data& nd ){
 		item->location = pc_equippoint_sub( &sd, id );
 #endif
 
-		std::shared_ptr<s_npc_barter_requirement> requirement = itemPair.second->requirements.at( 0 );
+		// Use a loop if someone did not start with index 0
+		for( const auto& requirementPair : itemPair.second->requirements ){
+			std::shared_ptr<s_npc_barter_requirement> requirement = requirementPair.second;
 
-		item->currencyNameid = client_nameid( requirement->nameid );
-		item->currencyAmount = requirement->amount;
-		
+			item->currencyNameid = client_nameid( requirement->nameid );
+			item->currencyAmount = requirement->amount;
+
+			// It is a normal barter, cancel after first entry
+			break;
+		}
+
 		p->packetLength += (int16)( sizeof( *item ) );
 		count++;
 	}
