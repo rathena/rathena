@@ -1133,7 +1133,7 @@ bool instance_addusers(int instance_id)
 {
 	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
 
-	if(!idata || idata->state != INSTANCE_BUSY || !idata->idle_limit)
+	if(!idata || idata->state != INSTANCE_BUSY || idata->idle_limit == 0)
 		return false;
 
 	// Stop the idle timer if we had one
