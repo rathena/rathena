@@ -681,7 +681,7 @@ int instance_addmap(int instance_id) {
 		idata->idle_timer = add_timer(gettick() + db->timeout * 1000, instance_delete_timer, instance_id, 0);
 	}
 
-	if (db->limit) {
+	if (db->limit > 0) {
 		//This will allow the instance to get a time in 'instance_startkeeptimer'
 		idata->keep_limit = 1;
 	}
