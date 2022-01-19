@@ -358,7 +358,7 @@ static TIMER_FUNC(instance_subscription_timer){
 bool instance_startkeeptimer(std::shared_ptr<s_instance_data> idata, int instance_id)
 {
 	// No timer
-	if (!idata || idata->keep_timer != INVALID_TIMER || !idata->keep_limit)
+	if (!idata || idata->keep_timer != INVALID_TIMER || idata->keep_limit == 0)
 		return false;
 
 	std::shared_ptr<s_instance_db> db = instance_db.find(idata->id);
