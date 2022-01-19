@@ -45521,7 +45521,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* TODO */
+      getgroupitem(IG_Squad_Prize1);
+      getgroupitem(IG_Squad_Prize2);
   - Id: 22568
     AegisName: Nyd_Summon_Scroll
     Name: Nidhoggur Summon Scroll
