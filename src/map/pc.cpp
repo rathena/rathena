@@ -12613,6 +12613,10 @@ uint16 pc_level_penalty_mod( struct map_session_data* sd, e_penalty_type type, s
 		return 100;
 	}
 
+	if (map_getmapflag(sd->bl.m, MF_NOLEVELDIFFPENALTY)) {
+		return 100;
+	}
+
 	int monster_level;
 
 	if( md != nullptr ){
