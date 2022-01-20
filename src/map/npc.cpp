@@ -125,7 +125,7 @@ const std::string StylistDatabase::getDefaultLocation(){
 	return std::string(db_path) + "/stylist.yml";
 }
 
-bool StylistDatabase::parseCostNode( std::shared_ptr<s_stylist_entry> entry, bool doram, const YAML::Node& node ){
+bool StylistDatabase::parseCostNode( std::shared_ptr<s_stylist_entry> entry, bool doram, const ryml::NodeRef node ){
 	std::shared_ptr<s_stylist_costs> costs = doram ? entry->doram : entry->human;
 	bool costs_exists = costs != nullptr;
 
@@ -205,7 +205,7 @@ bool StylistDatabase::parseCostNode( std::shared_ptr<s_stylist_entry> entry, boo
 	return true;
 }
 
-uint64 StylistDatabase::parseBodyNode( const YAML::Node &node ){
+uint64 StylistDatabase::parseBodyNode( const ryml::NodeRef node ){
 	if( !this->nodesExist( node, { "Look", "Options" } ) ){
 		return 0;
 	}
@@ -246,7 +246,7 @@ uint64 StylistDatabase::parseBodyNode( const YAML::Node &node ){
 		list->look = (uint16)constant;
 	}
 
-	for( const YAML::Node& optionNode : node["Options"] ){
+	for( const ryml::NodeRef optionNode : node["Options"] ){
 		int16 index;
 
 		if( !this->asInt16( optionNode, "Index", index ) ){

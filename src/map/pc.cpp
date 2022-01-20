@@ -12698,7 +12698,7 @@ const std::string SkillTreeDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 SkillTreeDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 SkillTreeDatabase::parseBodyNode(const ryml::NodeRef node) {
 	std::string job_name;
 
 	if (!this->asString(node, "Job", job_name))
@@ -12720,14 +12720,15 @@ uint64 SkillTreeDatabase::parseBodyNode(const YAML::Node &node) {
 		tree = std::make_shared<s_skill_tree>();
 
 	if (this->nodeExists(node, "Inherit")) {
-		const YAML::Node &InheritNode = node["Inherit"];
+		const ryml::NodeRef InheritNode = node["Inherit"];
 
 		for (const auto &Inheritit : InheritNode) {
-			std::string inheritname = Inheritit.first.as<std::string>();
+			std::string inheritname;
+			c4::from_chars(Inheritit.key(), &inheritname);
 			std::string inheritname_constant = "JOB_" + inheritname;
 
 			if (!script_get_constant(inheritname_constant.c_str(), &constant) || !pcdb_checkid(constant)) {
-				this->invalidWarning(InheritNode[inheritname], "Invalid job %s.\n", inheritname.c_str());
+				this->invalidWarning(InheritNode[Inheritit.key()], "Invalid job %s.\n", inheritname.c_str());
 				return 0;
 			}
 
@@ -13041,12 +13042,14 @@ const std::string JobDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 JobDatabase::parseBodyNode(const ryml::NodeRef node) {
 	if (this->nodeExists(node, "Jobs")) {
-		const YAML::Node &jobsNode = node["Jobs"];
+		const ryml::NodeRef jobsNode = node["Jobs"];
 
 		for (const auto &jobit : jobsNode) {
-			std::string job_name = jobit.first.as<std::string>(), job_name_constant = "JOB_" + job_name;
+			std::string job_name;
+			c4::from_chars(jobit.key(), &job_name);
+			std::string job_name_constant = "JOB_" + job_name;
 			int64 job_id;
 
 			if (!script_get_constant(job_name_constant.c_str(), &job_id)) {
@@ -13122,7 +13125,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (this->nodeExists(node, "BaseASPD")) {
-				const YAML::Node &aspdNode = node["BaseASPD"];
+				const ryml::NodeRef aspdNode = node["BaseASPD"];
 				uint8 max = MAX_WEAPON_TYPE;
 
 #ifdef RENEWAL // Renewal adds an extra column for shields
@@ -13135,7 +13138,9 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 				}
 
 				for (const auto &aspdit : aspdNode) {
-					std::string weapon = aspdit.first.as<std::string>(), weapon_constant = "W_" + weapon;
+					std::string weapon;
+					c4::from_chars(aspdit.key(), &weapon);
+					std::string weapon_constant = "W_" + weapon;
 					int64 constant;
 
 					if (!script_get_constant(weapon_constant.c_str(), &constant)) {
@@ -13158,10 +13163,12 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (this->nodeExists(node, "MaxStats")) {
-				const YAML::Node &statNode = node["MaxStats"];
+				const ryml::NodeRef statNode = node["MaxStats"];
 
 				for (const auto &statit : statNode) {
-					std::string stat = statit.first.as<std::string>(), stat_constant = "PARAM_" + stat;
+					std::string stat;
+					c4::from_chars(statit.key(), &stat);
+					std::string stat_constant = "PARAM_" + stat;
 					int64 constant;
 
 					if (!script_get_constant(stat_constant.c_str(), &constant)) {
@@ -13201,7 +13208,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (this->nodeExists(node, "BaseExp")) {
-				for (const YAML::Node &bexpNode : node["BaseExp"]) {
+				for (const ryml::NodeRef bexpNode : node["BaseExp"]) {
 					uint16 level;
 
 					if (!this->asUInt16(bexpNode, "Level", level))
@@ -13244,7 +13251,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (this->nodeExists(node, "JobExp")) {
-				for (const YAML::Node &jexpNode : node["JobExp"]) {
+				for (const ryml::NodeRef jexpNode : node["JobExp"]) {
 					uint16 level;
 
 					if (!this->asUInt16(jexpNode, "Level", level))
@@ -13270,9 +13277,9 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (this->nodeExists(node, "BonusStats")) {
-				const YAML::Node &bonusNode = node["BonusStats"];
+				const ryml::NodeRef bonusNode = node["BonusStats"];
 
-				for (const YAML::Node &levelNode : bonusNode) {
+				for (const ryml::NodeRef levelNode : bonusNode) {
 					uint16 level;
 
 					if (!this->asUInt16(levelNode, "Level", level))
@@ -13298,7 +13305,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 
 #ifdef HP_SP_TABLES
 			if (this->nodeExists(node, "BaseHp")) {
-				for (const YAML::Node &bhpNode : node["BaseHp"]) {
+				for (const ryml::NodeRef bhpNode : node["BaseHp"]) {
 					uint16 level;
 
 					if (!this->asUInt16(bhpNode, "Level", level))
@@ -13324,7 +13331,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (this->nodeExists(node, "BaseSp")) {
-				for (const YAML::Node &bspNode : node["BaseSp"]) {
+				for (const ryml::NodeRef bspNode : node["BaseSp"]) {
 					uint16 level;
 
 					if (!this->asUInt16(bspNode, "Level", level))
@@ -13350,7 +13357,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (this->nodeExists(node, "BaseAp")) {
-				for (const YAML::Node &bapNode : node["BaseAp"]) {
+				for (const ryml::NodeRef bapNode : node["BaseAp"]) {
 					uint16 level;
 
 					if (!this->asUInt16(bapNode, "Level", level))

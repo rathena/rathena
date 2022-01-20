@@ -72,7 +72,7 @@ struct s_stylist_list{
 
 class StylistDatabase : public TypesafeYamlDatabase<uint32, s_stylist_list>{
 private:
-	bool parseCostNode( std::shared_ptr<s_stylist_entry> entry, bool doram, const YAML::Node& node );
+	bool parseCostNode( std::shared_ptr<s_stylist_entry> entry, bool doram, const ryml::NodeRef node );
 
 public:
 	StylistDatabase() : TypesafeYamlDatabase( "STYLIST_DB", 1 ){
@@ -80,7 +80,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode( const YAML::Node& node ) override;
+	uint64 parseBodyNode( const ryml::NodeRef node ) override;
 };
 
 extern StylistDatabase stylist_db;

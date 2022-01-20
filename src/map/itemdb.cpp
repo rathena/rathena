@@ -1923,14 +1923,14 @@ uint16 ComboDatabase::find_combo_id( const std::vector<t_itemid>& items ){
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 ComboDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 ComboDatabase::parseBodyNode(const ryml::NodeRef node) {
 	std::vector<std::vector<t_itemid>> items_list;
 
 	if( !this->nodesExist( node, { "Combos" } ) ){
 		return 0;
 	}
 
-	const YAML::Node &combosNode = node["Combos"];
+	const ryml::NodeRef combosNode = node["Combos"];
 
 	for (const auto &comboit : combosNode) {
 		static const std::string nodeName = "Combo";
@@ -1939,9 +1939,9 @@ uint64 ComboDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 		}
 
-		const YAML::Node &comboNode = comboit[nodeName];
+		const ryml::NodeRef comboNode = comboit[comboit.key()];
 
-		if (!comboNode.IsSequence()) {
+		if (!comboNode.is_seq()) {
 			this->invalidWarning(comboNode, "%s should be a sequence.\n", nodeName.c_str());
 			return 0;
 		}
@@ -1949,7 +1949,8 @@ uint64 ComboDatabase::parseBodyNode(const YAML::Node &node) {
 		std::vector<t_itemid> items = {};
 
 		for (const auto &it : comboNode) {
-			std::string item_name = it.as<std::string>();
+			std::string item_name;
+			c4::from_chars(it.key(), &item_name);
 
 			std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
 
@@ -2028,7 +2029,7 @@ uint64 ComboDatabase::parseBodyNode(const YAML::Node &node) {
 				script_free_code(combo->script);
 				combo->script = nullptr;
 			}
-			combo->script = parse_script(script.c_str(), this->getCurrentFile().c_str(), node["Script"].Mark().line + 1, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
+			combo->script = parse_script(script.c_str(), this->getCurrentFile().c_str(), /*node["Script"].Mark().line +*/ 1, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
 		} else {
 			if (!exists) {
 				combo->script = nullptr;
