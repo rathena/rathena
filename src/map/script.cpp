@@ -25703,9 +25703,7 @@ BUILDIN_FUNC(itemlink)
 #endif
 
 	std::string itemlstr = createItemLink(item);
-	char* str = (char*)aMalloc((itemlstr.size() + 1) * sizeof(char));
-	safestrncpy(str, itemlstr.c_str(), itemlstr.size() + 1);
-	script_pushstr(st, str);
+	script_pushstrcopy(st, itemlstr.c_str());
 	return SCRIPT_CMD_SUCCESS;
 }
 
