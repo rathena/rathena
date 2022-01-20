@@ -22115,45 +22115,36 @@ void clif_refineui_info( struct map_session_data* sd, uint16 index ){
 		return;
 	}
 
-	std::shared_ptr<s_refine_level_info> info = refine_db.findLevelInfo( *id, *item );
-
-	// No refine possible
-	if( info == nullptr ){
-		return;
-	}
-
-	// No possibilities were found
-	if( info->costs.empty() ){
-		return;
-	}
-
-	uint16 length = (uint16)( sizeof( struct PACKET_ZC_REFINE_ADD_ITEM ) + REFINE_COST_MAX * sizeof( struct PACKET_ZC_REFINE_ADD_ITEM_SUB ) );
-
-	// Preallocate the size
-	WFIFOHEAD( fd, length );
-
-	struct PACKET_ZC_REFINE_ADD_ITEM* p = (struct PACKET_ZC_REFINE_ADD_ITEM*)WFIFOP( fd, 0 );
+	struct PACKET_ZC_REFINE_ADD_ITEM* p = (struct PACKET_ZC_REFINE_ADD_ITEM*)packet_buffer;
 
 	p->packetType = HEADER_ZC_REFINE_ADD_ITEM;
+	p->packtLength = sizeof( struct PACKET_ZC_REFINE_ADD_ITEM );
 	p->itemIndex = client_index( index );
-	p->blacksmithBlessing = (uint8)info->blessing_amount;
 
-	uint16 count = 0;
+	std::shared_ptr<s_refine_level_info> info = refine_db.findLevelInfo( *id, *item );
 
-	for( uint16 i = REFINE_COST_NORMAL; i < REFINE_COST_MAX; i++ ){
-		std::shared_ptr<s_refine_cost> cost = util::umap_find( info->costs, i );
+	// No possibilities were found
+	if( info == nullptr ){
+		p->blacksmithBlessing = 0;
+	}else{
+		p->blacksmithBlessing = (uint8)info->blessing_amount;
 
-		if( cost != nullptr ){
-			p->req[count].itemId = client_nameid( cost->nameid );
-			p->req[count].chance = (uint8)( cost->chance / 100 );
-			p->req[count].zeny = cost->zeny;
-			count++;
+		uint16 count = 0;
+
+		for( uint16 i = REFINE_COST_NORMAL; i < REFINE_COST_MAX; i++ ){
+			std::shared_ptr<s_refine_cost> cost = util::umap_find( info->costs, i );
+
+			if( cost != nullptr ){
+				p->req[count].itemId = client_nameid( cost->nameid );
+				p->req[count].chance = (uint8)( cost->chance / 100 );
+				p->req[count].zeny = cost->zeny;
+				p->packtLength += sizeof( struct PACKET_ZC_REFINE_ADD_ITEM_SUB );
+				count++;
+			}
 		}
 	}
 
-	p->packtLength = (uint16)( sizeof( struct PACKET_ZC_REFINE_ADD_ITEM ) + count * sizeof( struct PACKET_ZC_REFINE_ADD_ITEM_SUB ) );
-
-	WFIFOSET( fd, p->packtLength );
+	clif_send( p, p->packtLength, &sd->bl, SELF );
 #endif
 }
 
