@@ -29,9 +29,10 @@
 #    Direction          Direction the NPC is looking. (Default: North)
 #    Sprite             Sprite name of the NPC. (Default: FakeNpc)
 #    Items:             List of sold items.
-#      - Index          Index of the item inside the shop.
+#      - Index          Index of the item inside the shop. (0-...)
+#                       Maximum index depends on client.
 #        Item           Aegis name of the item.
-#        Stock          Amount of item in stock. (Default: unlimited)
+#        Stock          Amount of item in stock. 0 means unlimited. (Default: 0)
 #        Zeny           Cost of them item in Zeny. (Default: 0)
 #        RequiredItems: List of required items (Optional)
 #          - Index      Index of the required item. (0-4)
