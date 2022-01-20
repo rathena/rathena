@@ -22849,7 +22849,7 @@ void clif_parse_barter_buy( int fd, struct map_session_data* sd ){
 			}
 		}
 
-		s_barter_purchase purchase;
+		s_barter_purchase purchase = {};
 
 		purchase.item = item;
 		purchase.amount = p->list[i].amount;
@@ -23009,7 +23009,7 @@ void clif_parse_barter_extended_buy( int fd, struct map_session_data* sd ){
 			}
 		}
 
-		s_barter_purchase purchase;
+		s_barter_purchase purchase = {};
 
 		purchase.item = item;
 		purchase.amount = p->list[i].amount;

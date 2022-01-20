@@ -22,22 +22,22 @@
 # Barter Settings
 #
 ###########################################################################
-#  - Name               NPC name
-#    Map                Map name (Default: not on a map)
-#    X                  Map x coordinate (Default: hidden)
-#    Y                  Map y coordinate (Default: hidden)
-#    Direction          Direction the NPC is looking (Default: North)
-#    Sprite             Sprite name of the NPC (Default: hidden)
-#    Items:             List of sold items
-#      - Index          Index of the item inside the shop
-#        Item           AEGIS name of the sold item
-#        Stock          Amount of item in stock (Default: unlimited)
-#        Zeny           Cost of them item in Zeny (Default: 0)
-#        RequiredItems: List of required items (Default: none)
-#          - Index      Index of the required item (0-4)
-#            Item       AEGIS name of required item
-#            Amount     Amount of required item (Default: 1)
-#            Refine     Refine level of required item (Default: 0)
+#  - Name               NPC name.
+#    Map                Map name. (Default: not on a map)
+#    X                  Map x coordinate. (Default: 0)
+#    Y                  Map y coordinate. (Default: 0)
+#    Direction          Direction the NPC is looking. (Default: North)
+#    Sprite             Sprite name of the NPC. (Default: FakeNpc)
+#    Items:             List of sold items.
+#      - Index          Index of the item inside the shop.
+#        Item           Aegis name of the item.
+#        Stock          Amount of item in stock. (Default: unlimited)
+#        Zeny           Cost of them item in Zeny. (Default: 0)
+#        RequiredItems: List of required items (Optional)
+#          - Index      Index of the required item. (0-4)
+#            Item       Aegis name of required item.
+#            Amount     Amount of required item. (Default: 1)
+#            Refine     Refine level of required item. (Default: 0)
 ###########################################################################
 
 Header:

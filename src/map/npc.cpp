@@ -449,7 +449,7 @@ uint64 BarterDatabase::parseBodyNode( const YAML::Node& node ){
 		}
 
 		if( mapdata == nullptr ){
-			this->invalidWarning( node["X"], "barter_parseBodyNode: Barter is not on a map. Ignoring X coordinate...\n" );
+			this->invalidWarning( node["X"], "barter_parseBodyNode: Barter NPC is not on a map. Ignoring X coordinate...\n" );
 			x = 0;
 		}else if( x >= mapdata->xs ){
 			this->invalidWarning( node["X"], "barter_parseBodyNode: X coordinate %hu is out of bound %hu...\n", x, mapdata->xs );
@@ -471,7 +471,7 @@ uint64 BarterDatabase::parseBodyNode( const YAML::Node& node ){
 		}
 
 		if( mapdata == nullptr ){
-			this->invalidWarning( node["Y"], "barter_parseBodyNode: Barter is not on a map. Ignoring Y coordinate...\n" );
+			this->invalidWarning( node["Y"], "barter_parseBodyNode: Barter NPC is not on a map. Ignoring Y coordinate...\n" );
 			y = 0;
 		}else if( y >= mapdata->ys ){
 			this->invalidWarning( node["Y"], "barter_parseBodyNode: Y coordinate %hu is out of bound %hu...\n", y, mapdata->ys );
@@ -495,13 +495,13 @@ uint64 BarterDatabase::parseBodyNode( const YAML::Node& node ){
 		int64 constant;
 
 		if( !script_get_constant( ( "DIR_" + direction_name ).c_str(), &constant ) ){
-			this->invalidWarning( node["Direction"], "barter_parseBodyNode: Invalid direction %s, skipping.\n", direction_name.c_str() );
+			this->invalidWarning( node["Direction"], "barter_parseBodyNode: Unknown direction %s, skipping.\n", direction_name.c_str() );
 			return 0;
 		}
 
 		if( constant < DIR_NORTH || constant >= DIR_MAX ){
-			this->invalidWarning( node["Direction"], "barter_parseBodyNode: Invalid direction %s, skipping.\n", direction_name.c_str() );
-			return 0;
+			this->invalidWarning( node["Direction"], "barter_parseBodyNode: Invalid direction %s, defaulting to North.\n", direction_name.c_str() );
+			constant = DIR_NORTH;
 		}
 
 		barter->dir = (uint8)constant;
@@ -521,7 +521,7 @@ uint64 BarterDatabase::parseBodyNode( const YAML::Node& node ){
 		int64 constant;
 
 		if( !script_get_constant( sprite_name.c_str(), &constant ) ){
-			this->invalidWarning( node["Sprite"], "barter_parseBodyNode: Invalid sprite name %s, skipping.\n", sprite_name.c_str());
+			this->invalidWarning( node["Sprite"], "barter_parseBodyNode: Unknown sprite name %s, skipping.\n", sprite_name.c_str());
 			return 0;
 		}
 
@@ -598,8 +598,8 @@ uint64 BarterDatabase::parseBodyNode( const YAML::Node& node ){
 				}
 
 				if( zeny > MAX_ZENY ){
-					this->invalidWarning( itemNode["Zeny"], "barter_parseBodyNode: Zeny price %u is above MAX_ZENY(%u).\n", zeny, MAX_ZENY );
-					return 0;
+					this->invalidWarning( itemNode["Zeny"], "barter_parseBodyNode: Zeny price %u is above MAX_ZENY (%u), capping...\n", zeny, MAX_ZENY );
+					zeny = MAX_ZENY;
 				}
 
 				item->price = zeny;
@@ -618,7 +618,7 @@ uint64 BarterDatabase::parseBodyNode( const YAML::Node& node ){
 					}
 
 					if( requirement_index >= MAX_BARTER_REQUIREMENTS ){
-						this->invalidWarning( requiredItemNode["Index"], "barter_parseBodyNode: Index %hu is too high. Only up to %d requirements are supported.\n", requirement_index, MAX_BARTER_REQUIREMENTS );
+						this->invalidWarning( requiredItemNode["Index"], "barter_parseBodyNode: Index %hu is out of bounds. Barters support up to %d requirements.\n", requirement_index, MAX_BARTER_REQUIREMENTS );
 						return 0;
 					}
 
@@ -659,7 +659,7 @@ uint64 BarterDatabase::parseBodyNode( const YAML::Node& node ){
 						}
 
 						if( amount > MAX_AMOUNT ){
-							this->invalidWarning( requiredItemNode["Amount"], "barter_parseBodyNode: Amount %hu is too high, defaulting to %hu...\n", amount, MAX_AMOUNT );
+							this->invalidWarning( requiredItemNode["Amount"], "barter_parseBodyNode: Amount %hu is too high, capping to %hu...\n", amount, MAX_AMOUNT );
 							amount = MAX_AMOUNT;
 						}
 
@@ -685,8 +685,8 @@ uint64 BarterDatabase::parseBodyNode( const YAML::Node& node ){
 						}
 
 						if( refine > MAX_REFINE ){
-							this->invalidWarning( requiredItemNode["Amount"], "barter_parseBodyNode: Refine %hd is too high.\n", refine );
-							return 0;
+							this->invalidWarning( requiredItemNode["Amount"], "barter_parseBodyNode: Refine %hd is too high, capping to %d.\n", refine, MAX_REFINE );
+							refine = MAX_REFINE;
 						}
 
 						requirement->refine = (int8)refine;
@@ -772,7 +772,7 @@ void BarterDatabase::loadingFinished(){
 
 #if !( PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106 || PACKETVER_ZERO_NUM >= 20191127 )
 		if( nd->u.barter.extended ){
-			ShowError( "Barter %s uses extended mechanics, but this is not supported by your packet version.\n", nd->name );
+			ShowError( "Barter %s uses extended mechanics but this is not supported by the current packet version.\n", nd->name );
 			continue;
 		}
 #endif
