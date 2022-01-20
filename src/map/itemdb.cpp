@@ -3065,17 +3065,17 @@ std::string createItemLink( struct item& item ){
 
 	std::string itemstr = start_tag;
 
-	itemstr += rathena::util::string_left_pad(base62_encode(id->equip), '0', 5);
+	itemstr += util::string_left_pad(base62_encode(id->equip), '0', 5);
 	itemstr += itemdb_isequip2(id) ? "1" : "0";
 	itemstr += base62_encode(item.nameid);
 	if (item.refine > 0) {
-		itemstr += "%" + rathena::util::string_left_pad(base62_encode(item.refine), '0', 2);
+		itemstr += "%" + util::string_left_pad(base62_encode(item.refine), '0', 2);
 	}
 	if (itemdb_isequip2(id)) {
-		itemstr += "&" + rathena::util::string_left_pad(base62_encode(id->look), '0', 2);
+		itemstr += "&" + util::string_left_pad(base62_encode(id->look), '0', 2);
 	}
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-	itemstr += "'" + rathena::util::string_left_pad(base62_encode(item.enchantgrade), '0', 2);
+	itemstr += "'" + util::string_left_pad(base62_encode(item.enchantgrade), '0', 2);
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
@@ -3091,7 +3091,7 @@ std::string createItemLink( struct item& item ){
 #endif
 
 	for (uint8 i = 0; i < MAX_SLOTS; ++i) {
-		itemstr += card_sep + rathena::util::string_left_pad(base62_encode(item.card[i]), '0', 2);
+		itemstr += card_sep + util::string_left_pad(base62_encode(item.card[i]), '0', 2);
 	}
 
 #if PACKETVER >= 20150225
@@ -3100,11 +3100,11 @@ std::string createItemLink( struct item& item ){
 			break; // ignore options including ones beyond this one since the client won't even display them
 		}
 		// Option ID
-		itemstr += optid_sep + rathena::util::string_left_pad(base62_encode(item.option[i].id), '0', 2);
+		itemstr += optid_sep + util::string_left_pad(base62_encode(item.option[i].id), '0', 2);
 		// Param
-		itemstr += optpar_sep + rathena::util::string_left_pad(base62_encode(item.option[i].param), '0', 2);
+		itemstr += optpar_sep + util::string_left_pad(base62_encode(item.option[i].param), '0', 2);
 		// Value
-		itemstr += optval_sep + rathena::util::string_left_pad(base62_encode(item.option[i].value), '0', 2);
+		itemstr += optval_sep + util::string_left_pad(base62_encode(item.option[i].value), '0', 2);
 	}
 #endif
 
