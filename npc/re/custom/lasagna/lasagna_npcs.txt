@@ -9,6 +9,7 @@
 //-- Some questinfo condition may be inaccurate.
 //===== Changelogs: ==========================================
 //= 1.0 First version. [Capuche]
+//= 1.1 Moving Hair Designer to Merchants. [JohnnyPlayy]
 //============================================================
 
 lasa_fild01,47,297,0	script	#doint_evt01	HIDDEN_WARP_NPC,1,1,{
@@ -1765,116 +1766,6 @@ lasagna,217,192,5	script	Kittie#do_hint01	4_CAT_SAILOR1,{
 	mes "^4d4dffPrepare an item and/or skill that you often use for faster use.";
 	cutin "",255;
 	close;
-}
-
-lasagna,134,113,3	script	Hair Designer#dr	4_DR_F_02,{
-	mes "[Lonza]";
-	mes "If you're one of the trendsetting Dorams, watch what Lonza can do with her great scissors!";
-	next;
-	if (Class != Job_Summoner) {
-		mes "[Lonza]";
-		mes "Oh? I'm sorry, but my great scissors are not for anyone who demands it.";
-		mes "They're allowed only for the Doram.";
-		close;
-	}
-	switch( select( "Change hairstyle.", "Dye hair.", "Cancel" ) ) {
-	case 1:
-		mes "[Lonza]";
-		mes "I've lined up the attractive hairstyles that never go out of style. Will you take a look?";
-		next;
-		.@gender$ = Sex ? "m" : "f";
-		while( true ) {
-			.@i++;
-			.@i = .@i > 6 ? 1 : .@i;
-			cutin "hair_dr_" + .@gender$ + "_0" + .@i + ".bmp",4;
-			mes "[Lonza]";
-			mes "This is the " + callfunc("F_GetNumSuffix",.@i) + " hairdo. How do you like it?";
-			next;
-			switch( select( "Browse other styles.", "I'll take this.", "End of dialogue." ) ) {
-			case 1:
-				continue;
-			case 2:
-				mes "[Lonza]";
-				mes "So you picked the " + callfunc("F_GetNumSuffix",.@i) + " hairstyle. I like your choice.";
-				next;
-				mes "[Lonza]";
-				mes "But you need some preparations before you change your hairdo.";
-				next;
-				mes "[Lonza]";
-				mes "3 Counteragent,";
-				mes "3 Mixture,";
-				mes "100 Braided Hair,";
-				mes "100 Short Braids,";
-				mes "100 Long Hair,";
-				mes "100 Golden Hair,";
-				mes "100 Glossy Hair,";
-				next;
-				mes "[Lonza]";
-				mes "and 99,800 Zeny!";
-				next;
-				if (select( "It's all here.", "I'll get them all." ) == 2) {
-					mes "[Lonza]";
-					mes "Good! Keep it up! Run!";
-					close;
-				}
-				if (countitem(973) < 3 || countitem(974) < 3 || countitem(901) < 100 || countitem(1094) < 100 || countitem(1020) < 100 || countitem(1060) < 100 || countitem(7152) < 100 || Zeny < 99800) {
-					mes "[Lonza]";
-					mes "I can help you only when you bring me the materials. Will you check on your belongings again?";
-					close;
-				}
-				Zeny = Zeny - 99800;
-				delitem 973,3;// Counteragent
-				delitem 974,3;// Mixture
-				delitem 901,100;// Daenggie
-				delitem 1094,100;// Short Daenggie
-				delitem 1020,100;// Black Hair
-				delitem 1060,100;// Golden Hair
-				delitem 7152,100;// Glossy Hair
-				setlook LOOK_HAIR, .@i;
-				mes "~Snip, snip, snip~";
-				mes "~Snip, snip, snip~";
-				mes "~Snip, snip, snip~";
-				mes "~Whirring~";
-				next;
-				mes "[Lonza]";
-				mes "Wow! Amazing! Perfect! Now, go ahead and show off your lovely look to others! Come on!";
-				close;
-			case 3:
-				mes "[Lonza]";
-				mes "Goodbye then. Don't make me and my great scissors wait too long for you to return.";
-				close;
-			}
-		}
-	case 2:
-		mes "[Lonza]";
-		mes "Trendsetters know the right color for their hair, too!";
-		next;
-		mes "[Lonza]";
-		mes "Bring me the dye to have your hair dyed and 1,000 Zeny and I'll dye your hair so beautifully that even fashion stars would go home crying.";
-		next;
-		mes "^FF0000[!!Caution!!]^000000";
-		mes "^FF0000The Dorams inherently have the shortest hair. Even if you proceed with the dialogue, therefore, nothing will happen.^000000";
-		next;
-		setarray .@dye_id[0],976,981,980,979;
-		.@s = select( "Yellow", "Purple", "Orange", "Green" ) - 1;
-		if (countitem(.@dye_id[.@s]) < 1) {
-			mes "[Lonza]";
-			mes "How can I dye your hair without the dye?";
-			close;
-		}
-		delitem .@dye_id[.@s],1;
-		Zeny = Zeny - 1000;
-		// nothing happen
-		mes "[Lonza]";
-		mes "It'll be done in a jiff!";
-		mes "What a lovely color! Why don't you show it off to your friends?";
-		close;
-	case 3:
-		mes "[Lonza]";
-		mes "It feels as if you want someone to take care of your whole day. don't you have one of those days?";
-		mes "Come looking for Lonza anytime you want to be freshened up for a cooler look!";
-		close;
-	}
 }
 
 lasagna,260,134,3	script	Rasmus#dorcon01	4_CAT_SAILOR3,{
