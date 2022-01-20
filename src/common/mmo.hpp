@@ -40,7 +40,27 @@
 #endif
 
 #define MAX_MAP_PER_SERVER 1500 /// Maximum amount of maps available on a server
-#define MAX_INVENTORY 100 ///Maximum items in player inventory
+
+#ifndef INVENTORY_BASE_SIZE
+	#define INVENTORY_BASE_SIZE 100 // Amount of inventory slots each player has
+#endif
+
+#ifndef INVENTORY_EXPANSION_SIZE
+	#if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
+		#define INVENTORY_EXPANSION_SIZE 100 // Amount of additional inventory slots a player can have
+	#else
+		#define INVENTORY_EXPANSION_SIZE 0
+	#endif
+#endif
+
+#ifndef MAX_INVENTORY
+	#define MAX_INVENTORY ( INVENTORY_BASE_SIZE + INVENTORY_EXPANSION_SIZE ) // Maximum items in player inventory (in total)
+#else
+	#if MAX_INVENTORY < ( INVENTORY_BASE_SIZE + INVENTORY_EXPANSION_SIZE )
+		#error Your custom MAX_INVENTORY define is too low
+	#endif
+#endif
+
 /** Max number of characters per account. Note that changing this setting alone is not enough if the client is not hexed to support more characters as well.
 * Max value tested was 265 */
 #ifndef MAX_CHARS
@@ -63,7 +83,7 @@ typedef uint32 t_itemid;
 #define MAX_BANK_ZENY SINT32_MAX ///Max zeny in Bank
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
-#define MAX_SKILL 1450 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
+#define MAX_SKILL 1454 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
 #define DEFAULT_WALK_SPEED 150 ///Default walk speed
 #define MIN_WALK_SPEED 20 ///Min walk speed
 #define MAX_WALK_SPEED 1000 ///Max walk speed
@@ -573,6 +593,7 @@ struct mmo_charstatus {
 	unsigned char hotkey_rowshift;
 	unsigned char hotkey_rowshift2;
 	unsigned long title_id;
+	uint16 inventory_slots;
 };
 
 typedef enum mail_status {

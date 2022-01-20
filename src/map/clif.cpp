@@ -2771,7 +2771,7 @@ void clif_additem( struct map_session_data *sd, int n, int amount, unsigned char
 		return;
 	}
 
-	struct packet_additem p;
+	struct PACKET_ZC_ITEM_PICKUP_ACK p;
 
 	if( fail ){
 		p = {};
@@ -2808,7 +2808,7 @@ void clif_additem( struct map_session_data *sd, int n, int amount, unsigned char
 #endif
 	}
 
-	p.PacketType = additemType;
+	p.PacketType = HEADER_ZC_ITEM_PICKUP_ACK;
 	p.Index = client_index( n );
 	p.count = amount;
 	p.result = fail;
@@ -4690,7 +4690,7 @@ void clif_tradeadditem( struct map_session_data* sd, struct map_session_data* ts
 		clif_add_random_options( p.option_data, &sd->inventory.u.items_inventory[index] );
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 		p.location = pc_equippoint_sub( sd, sd->inventory_data[index] );
-		p.viewSprite = sd->inventory_data[index]->look;
+		p.look = sd->inventory_data[index]->look;
 		p.enchantgrade = sd->inventory.u.items_inventory[index].enchantgrade;
 #endif
 #endif
@@ -4698,7 +4698,7 @@ void clif_tradeadditem( struct map_session_data* sd, struct map_session_data* ts
 		p = {};
 	}
 
-	p.packetType = tradeaddType;
+	p.packetType = HEADER_ZC_ADD_EXCHANGE_ITEM;
 	p.amount = amount;
 
 	clif_send( &p, sizeof( p ), &tsd->bl, SELF );
@@ -4822,7 +4822,7 @@ void clif_storageitemadded( struct map_session_data* sd, struct item* i, int ind
 
 	struct PACKET_ZC_ADD_ITEM_TO_STORE p;
 
-	p.packetType = storageaddType; // Storage item added
+	p.packetType = HEADER_ZC_ADD_ITEM_TO_STORE; // Storage item added
 	p.index = client_storage_index( index ); // index
 	p.amount = amount; // amount
 	p.itemId = client_nameid( i->nameid ); // id
@@ -7133,7 +7133,7 @@ void clif_item_repair_list( struct map_session_data *sd,struct map_session_data 
 		return;
 	}
 
-	int len = MAX_INVENTORY * sizeof( struct PACKET_ZC_REPAIRITEMLIST_sub ) + sizeof( struct PACKET_ZC_REPAIRITEMLIST );
+	int len = MAX_INVENTORY * sizeof( struct REPAIRITEM_INFO ) + sizeof( struct PACKET_ZC_REPAIRITEMLIST );
 
 	// Preallocate the maximum size
 	WFIFOHEAD( fd, len );
@@ -7153,10 +7153,10 @@ void clif_item_repair_list( struct map_session_data *sd,struct map_session_data 
 	}
 
 	if( c > 0 ){
-		p->packetType = 0x1fc;
+		p->packetType = HEADER_ZC_REPAIRITEMLIST;
 
 		// Recalculate real length
-		len = c * sizeof( struct PACKET_ZC_REPAIRITEMLIST_sub ) + sizeof( struct PACKET_ZC_REPAIRITEMLIST );
+		len = c * sizeof( struct REPAIRITEM_INFO ) + sizeof( struct PACKET_ZC_REPAIRITEMLIST );
 		p->packetLength = len;
 
 		WFIFOSET( fd, len );
@@ -7293,7 +7293,7 @@ void clif_cart_additem( struct map_session_data *sd, int n, int amount ){
 
 	struct PACKET_ZC_ADD_ITEM_TO_CART p;
 
-	p.packetType = cartaddType;
+	p.packetType = HEADER_ZC_ADD_ITEM_TO_CART;
 	p.index = client_index( n );
 	p.amount = amount;
 	p.itemId = client_nameid( sd->cart.u.items_cart[n].nameid );
@@ -10400,7 +10400,7 @@ void clif_viewequip_ack( struct map_session_data* sd, struct map_session_data* t
 	nullpo_retv( sd );
 	nullpo_retv( tsd );
 
-	struct packet_viewequip_ack packet;
+	struct PACKET_ZC_EQUIPWIN_MICROSCOPE* p = (struct PACKET_ZC_EQUIPWIN_MICROSCOPE*)packet_buffer;
 	int equip = 0;
 
 	for( int i = 0; i < EQI_MAX; i++ ){
@@ -10419,31 +10419,31 @@ void clif_viewequip_ack( struct map_session_data* sd, struct map_session_data* t
 				continue;
 			}
 
-			clif_item_equip( client_index( k ), &packet.list[equip++], &tsd->inventory.u.items_inventory[k], tsd->inventory_data[k], pc_equippoint( tsd, k ) );
+			clif_item_equip( client_index( k ), &p->list[equip++], &tsd->inventory.u.items_inventory[k], tsd->inventory_data[k], pc_equippoint( tsd, k ) );
 		}
 	}
 
-	packet.PacketType = viewequipackType;
-	packet.PacketLength = ( sizeof( packet ) - sizeof( packet.list ) ) + ( sizeof( struct EQUIPITEM_INFO ) * equip );
+	p->PacketType = HEADER_ZC_EQUIPWIN_MICROSCOPE;
+	p->PacketLength = sizeof( *p ) + sizeof( struct EQUIPITEM_INFO ) * equip;
 
-	safestrncpy( packet.characterName, tsd->status.name, NAME_LENGTH );
+	safestrncpy( p->characterName, tsd->status.name, NAME_LENGTH );
 
-	packet.job = tsd->status.class_;
-	packet.head = tsd->vd.hair_style;
-	packet.accessory = tsd->vd.head_bottom;
-	packet.accessory2 = tsd->vd.head_mid;
-	packet.accessory3 = tsd->vd.head_top;
+	p->job = tsd->status.class_;
+	p->head = tsd->vd.hair_style;
+	p->accessory = tsd->vd.head_bottom;
+	p->accessory2 = tsd->vd.head_mid;
+	p->accessory3 = tsd->vd.head_top;
 #if PACKETVER >= 20110111
-	packet.robe = tsd->vd.robe;
+	p->robe = tsd->vd.robe;
 #endif
-	packet.headpalette = tsd->vd.hair_color;
-	packet.bodypalette = tsd->vd.cloth_color;
+	p->headpalette = tsd->vd.hair_color;
+	p->bodypalette = tsd->vd.cloth_color;
 #if PACKETVER_MAIN_NUM >= 20180801 || PACKETVER_RE_NUM >= 20180801 || PACKETVER_ZERO_NUM >= 20180808
-	packet.body2 = tsd->vd.body_style;
+	p->body2 = tsd->vd.body_style;
 #endif
-	packet.sex = tsd->vd.sex;
+	p->sex = tsd->vd.sex;
 
-	clif_send( &packet, packet.PacketLength, &sd->bl, SELF );
+	clif_send( p, p->PacketLength, &sd->bl, SELF );
 }
 
 
@@ -13223,7 +13223,12 @@ void clif_parse_Cooking(int fd,struct map_session_data *sd) {
 /// 01fd <index> W (CZ_REQ_ITEMREPAIR)
 /// 01fd <index>.W <name id>.W <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W ???
 void clif_parse_RepairItem( int fd, struct map_session_data *sd ){
-	const struct PACKET_CZ_REQ_ITEMREPAIR *p = (struct PACKET_CZ_REQ_ITEMREPAIR *)RFIFOP( fd, 0 );
+// Hercules has wrong date -> use correct one here
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	const struct PACKET_CZ_REQ_ITEMREPAIR2 *p = (struct PACKET_CZ_REQ_ITEMREPAIR2 *)RFIFOP( fd, 0 );
+#else
+	const struct PACKET_CZ_REQ_ITEMREPAIR1 *p = (struct PACKET_CZ_REQ_ITEMREPAIR1 *)RFIFOP( fd, 0 );
+#endif
 
 	if (sd->menuskill_id != BS_REPAIRWEAPON)
 		return;
@@ -13233,7 +13238,7 @@ void clif_parse_RepairItem( int fd, struct map_session_data *sd ){
 		clif_menuskill_clear(sd);
 		return;
 	}
-	skill_repairweapon( sd, p->index );
+	skill_repairweapon( sd, p->item.index );
 	clif_menuskill_clear(sd);
 }
 
@@ -15716,7 +15721,7 @@ void clif_Mail_setattachment( struct map_session_data* sd, int index, int amount
 	WFIFOB(fd,4) = flag;
 	WFIFOSET(fd,packet_len(0x255));
 #else
-	struct PACKET_ZC_ADD_ITEM_TO_MAIL p;
+	struct PACKET_ZC_ACK_ADD_ITEM_RODEX p;
 
 	if( flag ){
 		memset( &p, 0, sizeof( p ) );
@@ -15748,7 +15753,7 @@ void clif_Mail_setattachment( struct map_session_data* sd, int index, int amount
 #endif
 	}
 
-	p.PacketType = rodexadditem;
+	p.PacketType = HEADER_ZC_ACK_ADD_ITEM_RODEX;
 	p.result = flag;
 
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
@@ -16220,29 +16225,24 @@ void clif_Mail_read( struct map_session_data *sd, int mail_id ){
 #else
 		msg_len += 1; // Zero Termination
 
-		int length = sizeof( struct PACKET_ZC_READ_MAIL ) + MAIL_BODY_LENGTH + sizeof( struct mail_item ) * MAIL_MAX_ITEM;
-		WFIFOHEAD( fd, length );
-		struct PACKET_ZC_READ_MAIL *p = (struct PACKET_ZC_READ_MAIL *)WFIFOP( fd, 0 );
+		struct PACKET_ZC_ACK_READ_RODEX *p = (struct PACKET_ZC_ACK_READ_RODEX *)packet_buffer;
 
-		p->PacketType = rodexread;
-		p->PacketLength = length;
+		p->PacketType = HEADER_ZC_ACK_READ_RODEX;
+		p->PacketLength = sizeof( struct PACKET_ZC_ACK_READ_RODEX );
 		p->opentype = msg->type;
 		p->MailID = msg->id;
 		p->TextcontentsLength = msg_len;
 		p->zeny = msg->zeny;
 
-		int offset = sizeof( struct PACKET_ZC_READ_MAIL );
+		safestrncpy( WBUFCP( p, p->PacketLength ), msg->body, msg_len );
+		p->PacketLength += p->TextcontentsLength;
 
-		safestrncpy( WFIFOCP( fd, offset ), msg->body, msg_len );
-
-		offset += msg_len;
-
-		int count = 0;
+		p->ItemCnt = 0;
 		for( int j = 0; j < MAIL_MAX_ITEM; j++ ){
 			item = &msg->item[j];
 
 			if( item->nameid > 0 && item->amount > 0 && ( data = itemdb_exists( item->nameid ) ) != NULL ){
-				struct mail_item* mailitem = (struct mail_item *)WFIFOP( fd, offset );
+				struct PACKET_ZC_ACK_READ_RODEX_SUB* mailitem = (struct PACKET_ZC_ACK_READ_RODEX_SUB*)WBUFP( p, p->PacketLength );
 
 				mailitem->ITID = client_nameid( item->nameid );
 				mailitem->count = item->amount;
@@ -16254,20 +16254,17 @@ void clif_Mail_read( struct map_session_data *sd, int mail_id ){
 				mailitem->viewSprite = data->look;
 				mailitem->bindOnEquip = item->bound ? 2 : data->flag.bindOnEquip ? 1 : 0;
 				clif_addcards( &mailitem->slot, item );
-				clif_add_random_options( mailitem->optionData, item );
+				clif_add_random_options( mailitem->option_data, item );
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 				mailitem->enchantgrade = item->enchantgrade;
 #endif
 
-				offset += sizeof( struct mail_item );
-				count++;
+				p->PacketLength += sizeof( *mailitem );
+				p->ItemCnt++;
 			}
 		}
 
-		p->ItemCnt = count;
-		p->PacketLength = sizeof( struct PACKET_ZC_READ_MAIL ) + p->TextcontentsLength + sizeof( struct mail_item ) * p->ItemCnt;
-
-		WFIFOSET( fd, p->PacketLength );
+		clif_send( p, p->PacketLength, &sd->bl, SELF );
 #endif
 
 		if (msg->status == MAIL_UNREAD) {
@@ -16346,7 +16343,7 @@ void clif_parse_Mail_cancelwrite( int fd, struct map_session_data *sd ){
 void clif_Mail_Receiver_Ack( struct map_session_data* sd, uint32 char_id, short class_, uint32 level, const char* name ){
 	PACKET_ZC_CHECKNAME p = { 0 };
 
-	p.PacketType = rodexcheckplayer;
+	p.PacketType = HEADER_ZC_CHECKNAME;
 	p.CharId = char_id;
 	p.Class = class_;
 	p.BaseLevel = level;
@@ -22111,45 +22108,36 @@ void clif_refineui_info( struct map_session_data* sd, uint16 index ){
 		return;
 	}
 
-	std::shared_ptr<s_refine_level_info> info = refine_db.findLevelInfo( *id, *item );
-
-	// No refine possible
-	if( info == nullptr ){
-		return;
-	}
-
-	// No possibilities were found
-	if( info->costs.empty() ){
-		return;
-	}
-
-	uint16 length = (uint16)( sizeof( struct PACKET_ZC_REFINE_ADD_ITEM ) + REFINE_COST_MAX * sizeof( struct PACKET_ZC_REFINE_ADD_ITEM_SUB ) );
-
-	// Preallocate the size
-	WFIFOHEAD( fd, length );
-
-	struct PACKET_ZC_REFINE_ADD_ITEM* p = (struct PACKET_ZC_REFINE_ADD_ITEM*)WFIFOP( fd, 0 );
+	struct PACKET_ZC_REFINE_ADD_ITEM* p = (struct PACKET_ZC_REFINE_ADD_ITEM*)packet_buffer;
 
 	p->packetType = HEADER_ZC_REFINE_ADD_ITEM;
+	p->packtLength = sizeof( struct PACKET_ZC_REFINE_ADD_ITEM );
 	p->itemIndex = client_index( index );
-	p->blacksmithBlessing = (uint8)info->blessing_amount;
 
-	uint16 count = 0;
+	std::shared_ptr<s_refine_level_info> info = refine_db.findLevelInfo( *id, *item );
 
-	for( uint16 i = REFINE_COST_NORMAL; i < REFINE_COST_MAX; i++ ){
-		std::shared_ptr<s_refine_cost> cost = util::umap_find( info->costs, i );
+	// No possibilities were found
+	if( info == nullptr ){
+		p->blacksmithBlessing = 0;
+	}else{
+		p->blacksmithBlessing = (uint8)info->blessing_amount;
 
-		if( cost != nullptr ){
-			p->req[count].itemId = client_nameid( cost->nameid );
-			p->req[count].chance = (uint8)( cost->chance / 100 );
-			p->req[count].zeny = cost->zeny;
-			count++;
+		uint16 count = 0;
+
+		for( uint16 i = REFINE_COST_NORMAL; i < REFINE_COST_MAX; i++ ){
+			std::shared_ptr<s_refine_cost> cost = util::umap_find( info->costs, i );
+
+			if( cost != nullptr ){
+				p->req[count].itemId = client_nameid( cost->nameid );
+				p->req[count].chance = (uint8)( cost->chance / 100 );
+				p->req[count].zeny = cost->zeny;
+				p->packtLength += sizeof( struct PACKET_ZC_REFINE_ADD_ITEM_SUB );
+				count++;
+			}
 		}
 	}
 
-	p->packtLength = (uint16)( sizeof( struct PACKET_ZC_REFINE_ADD_ITEM ) + count * sizeof( struct PACKET_ZC_REFINE_ADD_ITEM_SUB ) );
-
-	WFIFOSET( fd, p->packtLength );
+	clif_send( p, p->packtLength, &sd->bl, SELF );
 #endif
 }
 
@@ -22527,6 +22515,185 @@ void clif_parse_stylist_buy( int fd, struct map_session_data* sd ){
 void clif_parse_stylist_close( int fd, struct map_session_data* sd ){
 #if PACKETVER >= 20151104
 	sd->state.stylist_open = false;
+#endif
+}
+
+void clif_inventory_expansion_info( struct map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
+	nullpo_retv( sd );
+
+	struct PACKET_ZC_INVENTORY_EXPANSION_INFO p = {};
+
+	p.packetType = HEADER_ZC_INVENTORY_EXPANSION_INFO;
+	p.expansionSize = sd->status.inventory_slots - INVENTORY_BASE_SIZE;
+
+	clif_send( &p, sizeof( p ), &sd->bl, SELF );
+#endif
+}
+
+enum class e_inventory_expansion_response : uint8{
+	ASK_CONFIRMATION = 0,
+	FAILED,
+	BUSY,
+	MISSING_ITEM,
+	MAXIMUM_REACHED
+};
+
+void clif_inventory_expansion_response( struct map_session_data* sd, e_inventory_expansion_response response ){
+#if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
+	nullpo_retv( sd );
+
+	struct PACKET_ZC_ACK_INVENTORY_EXPAND p = {};
+
+	p.packetType = HEADER_ZC_ACK_INVENTORY_EXPAND;
+	p.result = (uint8)response;
+	p.itemId = sd->state.inventory_expansion_confirmation;
+
+	clif_send( &p, sizeof( p ), &sd->bl, SELF );
+#endif
+}
+
+void clif_parse_inventory_expansion_request( int fd, struct map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
+	// Check if player is dead or busy with other stuff
+	if( pc_isdead( sd ) || pc_cant_act( sd ) ){
+		clif_inventory_expansion_response( sd, e_inventory_expansion_response::BUSY );
+		return;
+	}
+
+	// Check if the player already reached the maximum
+	if( sd->status.inventory_slots >= MAX_INVENTORY ){
+		clif_inventory_expansion_response( sd, e_inventory_expansion_response::MAXIMUM_REACHED );
+		return;
+	}
+
+	static std::map<t_itemid, uint16> items = {
+		// The order of entries in this list defines which will be used first
+		// This order and the usable items are hardcoded into the client
+		// The number of increased slots is "hardcoded" in the message of the client and cannot be sent per item
+		{ ITEMID_INVENTORY_EX_EVT, 10 },
+		{ ITEMID_INVENTORY_EX_DIS, 10 },
+		{ ITEMID_INVENTORY_EX, 10 },
+	};
+
+	int16 index = -1;
+	bool found_over_limit = false;
+
+	for( const auto& entry : items ){
+		// Check if the player has the required item
+		index = pc_search_inventory( sd, entry.first );
+
+		// Found an item
+		if( index >= 0 ){
+			// Check if the player would exceed the maximum
+			if( sd->status.inventory_slots + entry.second > MAX_INVENTORY ){
+				found_over_limit = true;
+			}else{
+				found_over_limit = false;
+				sd->state.inventory_expansion_confirmation = entry.first;
+				sd->state.inventory_expansion_amount = entry.second;
+				break;
+			}
+		}
+	}
+
+	// Check if an item was found
+	if( sd->state.inventory_expansion_confirmation == 0 ){
+		clif_inventory_expansion_response( sd, e_inventory_expansion_response::MISSING_ITEM );
+		return;
+	}
+
+	// Check if an item would have been found, but the player would exceed the maximum
+	if( found_over_limit ){
+		clif_inventory_expansion_response( sd, e_inventory_expansion_response::MAXIMUM_REACHED );
+		return;
+	}
+
+	// The player met all requirements => ask him for confirmation
+	clif_inventory_expansion_response( sd, e_inventory_expansion_response::ASK_CONFIRMATION );
+#endif
+}
+
+enum class e_inventory_expansion_result : uint8{
+	SUCCESS = 0,
+	FAILED,
+	BUSY,
+	MISSING_ITEM,
+	MAXIMUM_REACHED
+};
+
+void clif_inventory_expansion_result( struct map_session_data* sd, e_inventory_expansion_result result ){
+#if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
+	nullpo_retv( sd );
+
+	struct PACKET_ZC_ACK_INVENTORY_EXPAND_RESULT p = {};
+
+	p.packetType = HEADER_ZC_ACK_INVENTORY_EXPAND_RESULT;
+	p.result = (uint8)result;
+
+	clif_send( &p, sizeof( p ), &sd->bl, SELF );
+
+	// Reset the state tracking
+	sd->state.inventory_expansion_confirmation = 0;
+	sd->state.inventory_expansion_amount = 0;
+#endif
+}
+
+void clif_parse_inventory_expansion_confirm( int fd, struct map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
+	if( sd->state.inventory_expansion_confirmation == 0 ){
+		return;
+	}
+
+	// Check if player is dead
+	if( pc_isdead( sd ) ){
+		clif_inventory_expansion_result( sd, e_inventory_expansion_result::BUSY );
+		return;
+	}
+
+	// Check if the player already reached the maximum
+	if( sd->status.inventory_slots >= MAX_INVENTORY ){
+		clif_inventory_expansion_result( sd, e_inventory_expansion_result::MAXIMUM_REACHED );
+		return;
+	}
+
+	// Check if the player has the required item
+	int index = pc_search_inventory( sd, sd->state.inventory_expansion_confirmation );
+
+	// The player did not have the item anymore
+	if( index < 0 ){
+		clif_inventory_expansion_result( sd, e_inventory_expansion_result::MISSING_ITEM );
+		return;
+	}
+
+	// Check if the player would exceed the maximum
+	if( sd->status.inventory_slots + sd->state.inventory_expansion_amount > MAX_INVENTORY ){
+		clif_inventory_expansion_result( sd, e_inventory_expansion_result::MAXIMUM_REACHED );
+		return;
+	}
+
+	// Delete the required item
+	if( pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_OTHER ) ){
+		clif_inventory_expansion_result( sd, e_inventory_expansion_result::FAILED );
+		return;
+	}
+
+	// Increase the slots
+	sd->status.inventory_slots += sd->state.inventory_expansion_amount;
+
+	// Save player data (slots) and inventory data (removed item)
+	chrif_save( sd, CSAVE_NORMAL | CSAVE_INVENTORY );
+
+	// Inform the player of success
+	clif_inventory_expansion_result( sd, e_inventory_expansion_result::SUCCESS );
+	clif_inventory_expansion_info( sd );
+#endif
+}
+
+void clif_parse_inventory_expansion_reject( int fd, struct map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
+	sd->state.inventory_expansion_confirmation = 0;
+	sd->state.inventory_expansion_amount = 0;
 #endif
 }
 

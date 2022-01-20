@@ -946,6 +946,7 @@
 	export_constant2("Eff_Fear",SC_FEAR);
 	export_constant2("Eff_Burning",SC_BURNING);
 	export_constant2("Eff_Crystalize",SC_CRYSTALIZE);
+	export_constant2("Eff_Freezing",SC_FREEZING);
 
 	export_constant2("SC_ALL",SC_NONE);
 
@@ -5509,6 +5510,8 @@
 	export_constant(IG_HAPPY_BOX_J);
 	export_constant(IG_CLASS_SHADOW_CUBE);
 	export_constant(IG_SEALED_SCROLL);
+	export_constant(IG_SQUAD_PRIZE1);
+	export_constant(IG_SQUAD_PRIZE2);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
