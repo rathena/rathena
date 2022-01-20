@@ -45510,6 +45510,18 @@ Body:
     Type: Usable
     Script: |
       /* TODO */
+  - Id: 22566
+    AegisName: Frost_Crystal
+    Name: Last Year's Frost
+    Type: Usable
+    Buy: 20
+    Trade:
+      Override: 100
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+    Script: |
+      sc_start SC_CHILL,10000,0;
   - Id: 22567
     AegisName: Squad_Prize
     Name: Expedition Award Box
