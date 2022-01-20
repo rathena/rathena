@@ -25678,9 +25678,8 @@ BUILDIN_FUNC( openstylist ){
 }
 
 /**
-* Generate <ITEML> string for client
-* itemlink(<item_id>{,<refine>,<card0>,<card1>,<card2>,<card3>,<enchantgrade>});
-* itemlink2(<item_id>,<refine>,<card0>,<card1>,<card2>,<card3>,<enchantgrade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>);
+* Generate item link string for client
+* itemlink(<item_id>,<refine>,<card0>,<card1>,<card2>,<card3>,<enchantgrade>{,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>});
 * @author [Cydh]
 **/
 BUILDIN_FUNC(itemlink)
@@ -25696,9 +25695,8 @@ BUILDIN_FUNC(itemlink)
 	FETCH(8, item.enchantgrade);
 
 #if PACKETVER >= 20150225
-	char* command = (char*)script_getfuncname(st);
-	if (command[strlen(command) - 1] == '2') { // only run when called via itemlink2
-		script_getitem_randomoption(st, nullptr, &item, command, 9);
+	if ( script_hasdata(st,9) && script_getitem_randomoption(st, nullptr, &item, "itemlink", 9) == SCRIPT_CMD_FAILURE ) {
+		return SCRIPT_CMD_FAILURE;
 	}
 #endif
 
@@ -26413,8 +26411,7 @@ struct script_function buildin_func[] = {
 
 	BUILDIN_DEF(setinstancevar,"rvi"),
 	BUILDIN_DEF(openstylist, "?"),
-	BUILDIN_DEF(itemlink, "i??????"),
-	BUILDIN_DEF2(itemlink, "itemlink2", "iiiiiiirrr"),
+	BUILDIN_DEF(itemlink, "i?????????"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
