@@ -281,6 +281,13 @@ namespace rathena {
 		* @return A copy of original string with padding added
 		*/
 		std::string string_left_pad(const std::string& original, char padding, int num);
+
+		/**
+		* Encode base10 number to base62. Originally by lututui
+		* @param val: Base10 Number
+		* @return Base62 string
+		**/
+		std::string base62_encode( uint32 val );
 	}
 }
 

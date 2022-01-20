@@ -2973,67 +2973,8 @@ void itemdb_reload(void) {
 	mapit_free(iter);
 }
 
-constexpr char base62_dictionary[] = {
-	'0', '1', '2', '3', '4', '5', '6', '7',
-	'8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
-	'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
-	'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
-	'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D',
-	'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
-	'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
-	'U', 'V', 'W', 'X', 'Y', 'Z'
-};
-
-const std::unordered_map<char, int> base62_map = {
-	{ '0' ,  0 },{ '1' ,  1 },{ '2' ,  2 },{ '3' ,  3 },{ '4' ,  4 },{ '5' ,  5 },{ '6' ,  6 },{ '7' ,  7 },
-	{ '8' ,  8 },{ '9' ,  9 },{ 'a' , 10 },{ 'b' , 11 },{ 'c' , 12 },{ 'd' , 13 },{ 'e' , 14 },{ 'f' , 15 },
-	{ 'g' , 16 },{ 'h' , 17 },{ 'i' , 18 },{ 'j' , 19 },{ 'k' , 20 },{ 'l' , 21 },{ 'm' , 22 },{ 'n' , 23 },
-	{ 'o' , 24 },{ 'p' , 25 },{ 'q' , 26 },{ 'r' , 27 },{ 's' , 28 },{ 't' , 29 },{ 'u' , 30 },{ 'v' , 31 },
-	{ 'w' , 32 },{ 'x' , 33 },{ 'y' , 34 },{ 'z' , 35 },{ 'A' , 36 },{ 'B' , 37 },{ 'C' , 38 },{ 'D' , 39 },
-	{ 'E' , 40 },{ 'F' , 41 },{ 'G' , 42 },{ 'H' , 43 },{ 'I' , 44 },{ 'J' , 45 },{ 'K' , 46 },{ 'L' , 47 },
-	{ 'M' , 48 },{ 'N' , 49 },{ 'O' , 50 },{ 'P' , 51 },{ 'Q' , 52 },{ 'R' , 53 },{ 'S' , 54 },{ 'T' , 55 },
-	{ 'U' , 56 },{ 'V' , 57 },{ 'W' , 58 },{ 'X' , 59 },{ 'Y' , 60 },{ 'Z' , 61 },
-};
-
 /**
-* Encode base10 number to base62. Originally by lututui
-* @param val: Base10 Number
-* @return Base62 string
-**/
-std::string base62_encode(unsigned int val)
-{
-	if (!val) {
-		return "0";
-	}
-	std::string result = "";
-	while (val != 0) {
-		result = base62_dictionary[(val % 62)] + result;
-		val /= 62;
-	}
-	return result;
-}
-
-/**
-* Decode base62 string to base10. Originally by lututui
-* @param str: Base62 String
-* @return Base10 number
-**/
-unsigned int base62_decode(const std::string& str)
-{
-	unsigned int base10 = 0;
-	try {
-		for (auto it = str.rbegin(); it != str.rend(); ++it) {
-			base10 += base62_map.at(*it) * pow(62, it - str.rbegin());
-		}
-	}
-	catch (const std::out_of_range&) {
-		base10 = 0;
-	}
-	return base10;
-}
-
-/**
-* Generate <ITEML> string
+* Generates an item link string
 * @param data: Item info
 * @return <ITEML> string for the item
 * @author [Cydh]
@@ -3065,17 +3006,17 @@ std::string createItemLink( struct item& item ){
 
 	std::string itemstr = start_tag;
 
-	itemstr += util::string_left_pad(base62_encode(id->equip), '0', 5);
+	itemstr += util::string_left_pad(util::base62_encode(id->equip), '0', 5);
 	itemstr += itemdb_isequip2(id) ? "1" : "0";
-	itemstr += base62_encode(item.nameid);
+	itemstr += util::base62_encode(item.nameid);
 	if (item.refine > 0) {
-		itemstr += "%" + util::string_left_pad(base62_encode(item.refine), '0', 2);
+		itemstr += "%" + util::string_left_pad(util::base62_encode(item.refine), '0', 2);
 	}
 	if (itemdb_isequip2(id)) {
-		itemstr += "&" + util::string_left_pad(base62_encode(id->look), '0', 2);
+		itemstr += "&" + util::string_left_pad(util::base62_encode(id->look), '0', 2);
 	}
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-	itemstr += "'" + util::string_left_pad(base62_encode(item.enchantgrade), '0', 2);
+	itemstr += "'" + util::string_left_pad(util::base62_encode(item.enchantgrade), '0', 2);
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
@@ -3086,12 +3027,12 @@ std::string createItemLink( struct item& item ){
 #else
 	const std::string card_sep = "(";
 	const std::string optid_sep = "*";
-	csont std::string optpar_sep = "+";
+	const std::string optpar_sep = "+";
 	const std::string optval_sep = ",";
 #endif
 
 	for (uint8 i = 0; i < MAX_SLOTS; ++i) {
-		itemstr += card_sep + util::string_left_pad(base62_encode(item.card[i]), '0', 2);
+		itemstr += card_sep + util::string_left_pad(util::base62_encode(item.card[i]), '0', 2);
 	}
 
 #if PACKETVER >= 20150225
@@ -3100,11 +3041,11 @@ std::string createItemLink( struct item& item ){
 			break; // ignore options including ones beyond this one since the client won't even display them
 		}
 		// Option ID
-		itemstr += optid_sep + util::string_left_pad(base62_encode(item.option[i].id), '0', 2);
+		itemstr += optid_sep + util::string_left_pad(util::base62_encode(item.option[i].id), '0', 2);
 		// Param
-		itemstr += optpar_sep + util::string_left_pad(base62_encode(item.option[i].param), '0', 2);
+		itemstr += optpar_sep + util::string_left_pad(util::base62_encode(item.option[i].param), '0', 2);
 		// Value
-		itemstr += optval_sep + util::string_left_pad(base62_encode(item.option[i].value), '0', 2);
+		itemstr += optval_sep + util::string_left_pad(util::base62_encode(item.option[i].value), '0', 2);
 	}
 #endif
 
