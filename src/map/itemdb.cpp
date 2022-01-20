@@ -3038,22 +3038,21 @@ unsigned int base62_decode(const std::string& str)
 * @return <ITEML> string for the item
 * @author [Cydh]
 **/
-std::string createItemLink(struct s_item_link *data)
-{
-	struct item_data *id = itemdb_exists(data->item.nameid);
+std::string createItemLink( struct item& item ){
+	struct item_data *id = itemdb_exists(item.nameid);
 	std::string itemstr = "<ITEML>";
 	std::string locval = (id && itemdb_isequip2(id)) ? base62_encode(id->equip) : "";
 	itemstr += rathena::util::string_left_pad(locval, '0', 5);
 	itemstr += (id && itemdb_isequip2(id)) ? "1" : "0";
-	itemstr += base62_encode(data->item.nameid);
-	if (data->item.refine > 0) {
-		itemstr += "%" + rathena::util::string_left_pad(base62_encode(data->item.refine), '0', 2);
+	itemstr += base62_encode(item.nameid);
+	if (item.refine > 0) {
+		itemstr += "%" + rathena::util::string_left_pad(base62_encode(item.refine), '0', 2);
 	}
 	if (id && itemdb_isequip2(id)) {
 		itemstr += "&" + rathena::util::string_left_pad(base62_encode(id->look), '0', 2);
 	}
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-	itemstr += "'" + rathena::util::string_left_pad(base62_encode(data->item.enchantgrade), '0', 2);
+	itemstr += "'" + rathena::util::string_left_pad(base62_encode(item.enchantgrade), '0', 2);
 #endif
 
 #if PACKETVER < 20200101
@@ -3069,24 +3068,21 @@ std::string createItemLink(struct s_item_link *data)
 	std::string optval_sep = "-";
 #endif
 
-	if (data->flag.cards) {
-		for (uint8 i = 0; i < MAX_SLOTS; ++i) {
-			itemstr += card_sep + rathena::util::string_left_pad(base62_encode(data->item.card[i]), '0', 2);
-		}
+	for (uint8 i = 0; i < MAX_SLOTS; ++i) {
+		itemstr += card_sep + rathena::util::string_left_pad(base62_encode(item.card[i]), '0', 2);
 	}
+
 #if PACKETVER >= 20150225
-	if (data->flag.options) {
-		for (uint8 i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
-			if (data->item.option[i].id == 0) {
-				break; // ignore options including ones beyond this one since the client won't even display them
-			}
-			// Option ID
-			itemstr += optid_sep + rathena::util::string_left_pad(base62_encode(data->item.option[i].id), '0', 2);
-			// Param
-			itemstr += optpar_sep + rathena::util::string_left_pad(base62_encode(data->item.option[i].param), '0', 2);
-			// Value
-			itemstr += optval_sep + rathena::util::string_left_pad(base62_encode(data->item.option[i].value), '0', 2);
+	for (uint8 i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
+		if (item.option[i].id == 0) {
+			break; // ignore options including ones beyond this one since the client won't even display them
 		}
+		// Option ID
+		itemstr += optid_sep + rathena::util::string_left_pad(base62_encode(item.option[i].id), '0', 2);
+		// Param
+		itemstr += optpar_sep + rathena::util::string_left_pad(base62_encode(item.option[i].param), '0', 2);
+		// Value
+		itemstr += optval_sep + rathena::util::string_left_pad(base62_encode(item.option[i].value), '0', 2);
 	}
 #endif
 

@@ -25685,31 +25685,24 @@ BUILDIN_FUNC( openstylist ){
 **/
 BUILDIN_FUNC(itemlink)
 {
-	s_item_link itemldata = {};
-	itemldata.item.nameid = script_getnum(st, 2);
+	struct item item = {};
+	item.nameid = script_getnum(st, 2);
 
-	FETCH(3, itemldata.item.refine);
-	FETCH(4, itemldata.item.card[0]);
-	FETCH(5, itemldata.item.card[1]);
-	FETCH(6, itemldata.item.card[2]);
-	FETCH(7, itemldata.item.card[3]);
-	FETCH(8, itemldata.item.enchantgrade);
-
-	if (itemldata.item.card[0] || itemldata.item.card[1] || itemldata.item.card[2] || itemldata.item.card[3])
-		itemldata.flag.cards = 1;
+	FETCH(3, item.refine);
+	FETCH(4, item.card[0]);
+	FETCH(5, item.card[1]);
+	FETCH(6, item.card[2]);
+	FETCH(7, item.card[3]);
+	FETCH(8, item.enchantgrade);
 
 #if PACKETVER >= 20150225
 	char* command = (char*)script_getfuncname(st);
 	if (command[strlen(command) - 1] == '2') { // only run when called via itemlink2
-		script_getitem_randomoption(st, nullptr, &itemldata.item, command, 9);
-		for (uint8 i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
-			if (itemldata.item.option[i].id)
-				itemldata.flag.options = 1;
-		}
+		script_getitem_randomoption(st, nullptr, &item, command, 9);
 	}
 #endif
 
-	std::string itemlstr = createItemLink(&itemldata);
+	std::string itemlstr = createItemLink(item);
 	char* str = (char*)aMalloc((itemlstr.size() + 1) * sizeof(char));
 	safestrncpy(str, itemlstr.c_str(), itemlstr.size() + 1);
 	script_pushstr(st, str);
