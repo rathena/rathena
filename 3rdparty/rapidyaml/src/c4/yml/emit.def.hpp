@@ -4,7 +4,6 @@
 #ifndef _C4_YML_EMIT_HPP_
 #include "./emit.hpp"
 #endif
-#include "./detail/parser_dbg.hpp"
 
 namespace c4 {
 namespace yml {
@@ -38,26 +37,33 @@ void Emitter<Writer>::_do_visit(Tree const& t, size_t id, size_t ilevel, size_t 
 
     if(t.is_doc(id))
     {
-        this->Writer::_do_write("---");
-        if(t.has_val(id))
+        if(!t.is_root(id))
         {
-            RYML_ASSERT(!t.has_key(id));
-            this->Writer::_do_write(' ');
-            _writev(t, id, ilevel);
+            RYML_ASSERT(t.is_stream(t.parent(id)));
+            this->Writer::_do_write("---");
         }
-        else
+        if(!t.has_val(id))
         {
             if(t.has_val_tag(id))
             {
-                this->Writer::_do_write(' ');
-                this->Writer::_do_write(t.val_tag(id));
+                if(!t.is_root(id))
+                    this->Writer::_do_write(' ');
+                _write_tag(t.val_tag(id));
             }
             if(t.has_val_anchor(id))
             {
-                this->Writer::_do_write(' ');
+                if(!t.is_root(id))
+                    this->Writer::_do_write(' ');
                 this->Writer::_do_write('&');
                 this->Writer::_do_write(t.val_anchor(id));
             }
+        }
+        else
+        {
+            RYML_ASSERT(!t.has_key(id));
+            if(!t.is_root(id))
+                this->Writer::_do_write(' ');
+            _writev(t, id, ilevel);
         }
         this->Writer::_do_write('\n');
     }
@@ -71,33 +77,12 @@ void Emitter<Writer>::_do_visit(Tree const& t, size_t id, size_t ilevel, size_t 
         this->Writer::_do_write('\n');
         return;
     }
-    else if(t.has_key(id) && t.is_val_ref(id))
-    {
-        RYML_ASSERT(t.has_parent(id));
-        this->Writer::_do_write(ind);
-        _writek(t, id, ilevel);
-        this->Writer::_do_write(": ");
-        this->Writer::_do_write('*');
-        this->Writer::_do_write(t.val_ref(id));
-        this->Writer::_do_write('\n');
-        return;
-    }
     else if(t.is_val(id))
     {
-        RYML_ASSERT(t.has_parent(id));
+        RYML_ASSERT(t.has_parent(id) || t.is_doc(id));
         this->Writer::_do_write(ind);
         this->Writer::_do_write("- ");
         _writev(t, id, ilevel);
-        this->Writer::_do_write('\n');
-        return;
-    }
-    else if(t.is_val_ref(id))
-    {
-        RYML_ASSERT(t.has_parent(id));
-        this->Writer::_do_write(ind);
-        this->Writer::_do_write("- ");
-        this->Writer::_do_write('*');
-        this->Writer::_do_write(t.val_ref(id));
         this->Writer::_do_write('\n');
         return;
     }
@@ -124,15 +109,17 @@ void Emitter<Writer>::_do_visit(Tree const& t, size_t id, size_t ilevel, size_t 
 
         if(t.has_val_tag(id))
         {
-            if(spc) this->Writer::_do_write(' ');
-            this->Writer::_do_write(t.val_tag(id));
+            if(spc)
+                this->Writer::_do_write(' ');
+            _write_tag(t.val_tag(id));
             spc = true;
             nl = true;
         }
 
         if(t.has_val_anchor(id))
         {
-            if(spc) this->Writer::_do_write(' ');
+            if(spc)
+                this->Writer::_do_write(' ');
             this->Writer::_do_write('&');
             this->Writer::_do_write(t.val_anchor(id));
             spc = true;
@@ -249,7 +236,7 @@ void Emitter<Writer>::_write(NodeScalar const& sc, NodeType flags, size_t ilevel
 {
     if( ! sc.tag.empty())
     {
-        this->Writer::_do_write(sc.tag);
+        _write_tag(sc.tag);
         this->Writer::_do_write(' ');
     }
     if(flags.has_anchor())
@@ -260,9 +247,15 @@ void Emitter<Writer>::_write(NodeScalar const& sc, NodeType flags, size_t ilevel
         this->Writer::_do_write(sc.anchor);
         this->Writer::_do_write(' ');
     }
+    else if(flags.is_ref())
+    {
+        if(sc.anchor != "<<")
+            this->Writer::_do_write('*');
+        this->Writer::_do_write(sc.anchor);
+        return;
+    }
 
-    const bool has_newlines = sc.scalar.first_of('\n') != npos;
-    if(!has_newlines || (sc.scalar.triml(" \t") != sc.scalar))
+    if(sc.scalar.begins_with_any(" \t") || (sc.scalar.first_of('\n') == npos))
     {
         _write_scalar(sc.scalar, flags.is_quoted());
     }
@@ -286,18 +279,16 @@ void Emitter<Writer>::_write_json(NodeScalar const& sc, NodeType flags)
 }
 
 template<class Writer>
-void Emitter<Writer>::_write_scalar_block(csubstr s, size_t ilevel, bool as_key)
+void Emitter<Writer>::_write_scalar_block(csubstr s, size_t ilevel, bool explicit_key)
 {
     #define _rymlindent_nextline() for(size_t lv = 0; lv < ilevel+1; ++lv) { this->Writer::_do_write("  "); }
-    if(as_key)
+    if(explicit_key)
     {
         this->Writer::_do_write("? ");
     }
     RYML_ASSERT(s.find("\r") == csubstr::npos);
-    csubstr trimmed = s.trimr(" \t\n");
-    RYML_ASSERT(trimmed.len <= s.len);
+    csubstr trimmed = s.trimr('\n');
     size_t numnewlines_at_end = s.len - trimmed.len;
-    _c4dbgpf("numnl=%zu s=[%zu]'%.*s' trimmed=[%zu]'%.*s'", numnewlines_at_end, s.len, _c4prsp(s), trimmed.len, _c4prsp(trimmed));
     if(numnewlines_at_end == 0)
     {
         this->Writer::_do_write("|-\n");
@@ -309,35 +300,39 @@ void Emitter<Writer>::_write_scalar_block(csubstr s, size_t ilevel, bool as_key)
     else if(numnewlines_at_end > 1)
     {
         this->Writer::_do_write("|+\n");
-        if(!as_key)
+    }
+    if(trimmed.len)
+    {
+        size_t pos = 0; // tracks the last character that was already written
+        for(size_t i = 0; i < trimmed.len; ++i)
         {
-            RYML_ASSERT(s.back() == '\n');
-            s = s.offs(0, 1); // do not write the last newline
+            if(trimmed[i] != '\n')
+                continue;
+            // write everything up to this point
+            csubstr since_pos = trimmed.range(pos, i+1); // include the newline
+            pos = i+1; // because of the newline
+            _rymlindent_nextline()
+            this->Writer::_do_write(since_pos);
+        }
+        if(pos < trimmed.len)
+        {
+            _rymlindent_nextline()
+            this->Writer::_do_write(trimmed.sub(pos));
+        }
+        if(numnewlines_at_end)
+        {
+            this->Writer::_do_write('\n');
+            --numnewlines_at_end;
         }
     }
-    _rymlindent_nextline()
-    size_t pos = 0; // tracks the last character that was already written
-    for(size_t i = 0; i < s.len; ++i)
+    for(size_t i = 0; i < numnewlines_at_end; ++i)
     {
-        if(s[i] != '\n') continue;
-        // write everything up to this point
-        csubstr sub = s.range(pos, i+1); // include the newline
-        pos = i+1; // because of the newline
-        this->Writer::_do_write(sub);
-        if(i+1 != s.len)
-        {
-            _rymlindent_nextline();
-        }
+        _rymlindent_nextline()
+        if(i+1 < numnewlines_at_end || explicit_key)
+            this->Writer::_do_write('\n');
     }
-    if(pos < s.len)
-    {
-        csubstr sub = s.sub(pos);
-        this->Writer::_do_write(sub);
-    }
-    if(as_key && numnewlines_at_end == 0)
-    {
+    if(explicit_key && !numnewlines_at_end)
         this->Writer::_do_write('\n');
-    }
     #undef _rymlindent_nextline
 }
 
@@ -347,34 +342,37 @@ void Emitter<Writer>::_write_scalar(csubstr s, bool was_quoted)
     // this block of code needed to be moved to before the needs_quotes
     // assignment to workaround a g++ optimizer bug where (s.str != nullptr)
     // was evaluated as true even if s.str was actually a nullptr (!!!)
-    if(s.len == 0)
+    if(s.len == size_t(0))
     {
-        if(s.str != nullptr)
-        {
-            this->Writer::_do_write("''");
-        }
-        else
-        {
-            this->Writer::_do_write('~');
-        }
+        this->Writer::_do_write('~');
         return;
     }
 
     const bool needs_quotes = (
         was_quoted
         ||
-        ((!s.is_number()) // is not a number
-        &&
         (
-            (s != s.trim(" \t\n\r")) // has leading or trailing whitespace
-            ||
-            s.first_of("#:-?,\n{}[]'\"") != npos // has special chars
-            ||
-            (was_quoted && s[0] == '*')  // starts with * but is not a reference (empty string checked above)
+            ( ! s.is_number())
+            &&
+            (
+                // has leading whitespace
+                s.begins_with(" \n\r\t")
+                ||
+                // looks like reference or anchor
+                s.begins_with_any("*&")
+                ||
+                s.begins_with("<<")
+                ||
+                // has trailing whitespace
+                s.ends_with(" \n\r\t")
+                ||
+                // has special chars
+                (s.first_of("#:-?,\n{}[]'\"") != npos)
             )
-        ));
+        )
+    );
 
-    if(!needs_quotes)
+    if( ! needs_quotes)
     {
         this->Writer::_do_write(s);
     }
@@ -426,11 +424,8 @@ void Emitter<Writer>::_write_scalar_json(csubstr s, bool as_key, bool was_quoted
         this->Writer::_do_write(s);
         this->Writer::_do_write('"');
     }
-    else if(!as_key && s.is_number()) // json only allows strings as keys
-    {
-        this->Writer::_do_write(s);
-    }
-    else if(!as_key && (s == "true" || s == "null" || s == "false"))
+    // json only allows strings as keys
+    else if(!as_key && (s.is_number() || s == "true" || s == "null" || s == "false"))
     {
         this->Writer::_do_write(s);
     }

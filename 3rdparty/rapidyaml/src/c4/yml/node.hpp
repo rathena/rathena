@@ -32,7 +32,14 @@ C4_ALWAYS_INLINE Key<fmt::const_base64_wrapper> key(fmt::const_base64_wrapper w)
 C4_ALWAYS_INLINE Key<fmt::base64_wrapper> key(fmt::base64_wrapper w) { return {w}; }
 
 template<class T> void write(NodeRef *n, T const& v);
-template<class T> bool read(NodeRef const& n, T *v);
+
+template<class T>
+typename std::enable_if< ! std::is_floating_point<T>::value, bool>::type
+read(NodeRef const& n, T *v);
+
+template<class T>
+typename std::enable_if<   std::is_floating_point<T>::value, bool>::type
+read(NodeRef const& n, T *v);
 
 
 //-----------------------------------------------------------------------------
@@ -44,6 +51,9 @@ template<class T> bool read(NodeRef const& n, T *v);
 class RYML_EXPORT NodeRef
 {
 private:
+
+    // require valid: a helper macro, undefined at the end
+    #define _C4RV() RYML_ASSERT(valid() && !is_seed())
 
     Tree *C4_RESTRICT m_tree;
     size_t m_id;
@@ -62,6 +72,9 @@ private:
 
 public:
 
+    /** @name node construction */
+    /** @{ */
+
     NodeRef() : m_tree(nullptr), m_id(NONE), m_seed() { _clear_seed(); }
     NodeRef(Tree &t) : m_tree(&t), m_id(t .root_id()), m_seed() { _clear_seed(); }
     NodeRef(Tree *t) : m_tree(t ), m_id(t->root_id()), m_seed() { _clear_seed(); }
@@ -76,6 +89,8 @@ public:
     NodeRef& operator= (NodeRef const&) = default;
     NodeRef& operator= (NodeRef     &&) = default;
 
+    /** @} */
+
 public:
 
     inline Tree      * tree()       { return m_tree; }
@@ -85,8 +100,6 @@ public:
 
     inline NodeData      * get()       { return m_tree->get(m_id); }
     inline NodeData const* get() const { return m_tree->get(m_id); }
-
-#define _C4RV() RYML_ASSERT(valid() && !is_seed()) // save some typing (and some reading too!)
 
     inline bool operator== (NodeRef const& that) const { _C4RV(); RYML_ASSERT(that.valid() && !that.is_seed()); RYML_ASSERT(that.m_tree == m_tree); return m_id == that.m_id; }
     inline bool operator!= (NodeRef const& that) const { return ! this->operator==(that); }
@@ -108,55 +121,79 @@ public:
 
 public:
 
+    /** @name node property getters */
+    /** @{ */
+
     inline NodeType_e   type() const { _C4RV(); return m_tree->type(m_id); }
     inline const char*  type_str() const { _C4RV(); RYML_ASSERT(valid() && ! is_seed()); return m_tree->type_str(m_id); }
 
-    inline csubstr    const& key    () const { _C4RV(); return m_tree->key(m_id); }
-    inline csubstr    const& key_tag() const { _C4RV(); return m_tree->key_tag(m_id); }
-    inline csubstr    const& key_ref() const { _C4RV(); return m_tree->key_ref(m_id); }
-    inline NodeScalar const& keysc  () const { _C4RV(); return m_tree->keysc(m_id); }
+    inline csubstr    key()        const { _C4RV(); return m_tree->key(m_id); }
+    inline csubstr    key_tag()    const { _C4RV(); return m_tree->key_tag(m_id); }
+    inline csubstr    key_ref()    const { _C4RV(); return m_tree->key_ref(m_id); }
+    inline csubstr    key_anchor() const { _C4RV(); return m_tree->key_anchor(m_id); }
+    inline NodeScalar keysc()      const { _C4RV(); return m_tree->keysc(m_id); }
 
-    inline csubstr    const& val    () const { _C4RV(); return m_tree->val(m_id); }
-    inline csubstr    const& val_tag() const { _C4RV(); return m_tree->val_tag(m_id); }
-    inline csubstr    const& val_ref() const { _C4RV(); return m_tree->val_ref(m_id); }
-    inline NodeScalar const& valsc  () const { _C4RV(); return m_tree->valsc(m_id); }
+    inline csubstr    val()        const { _C4RV(); return m_tree->val(m_id); }
+    inline csubstr    val_tag()    const { _C4RV(); return m_tree->val_tag(m_id); }
+    inline csubstr    val_ref()    const { _C4RV(); return m_tree->val_ref(m_id); }
+    inline csubstr    val_anchor() const { _C4RV(); return m_tree->val_anchor(m_id); }
+    inline NodeScalar valsc()      const { _C4RV(); return m_tree->valsc(m_id); }
 
-    inline csubstr const& key_anchor() const { _C4RV(); return m_tree->key_anchor(m_id); }
-    inline csubstr const& val_anchor() const { _C4RV(); return m_tree->val_anchor(m_id); }
+    /** decode the base64-encoded key deserialize and assign the
+     * decoded blob to the given buffer/
+     * @return the size of base64-decoded blob */
+    size_t deserialize_key(fmt::base64_wrapper v) const;
+    /** decode the base64-encoded key deserialize and assign the
+     * decoded blob to the given buffer/
+     * @return the size of base64-decoded blob */
+    size_t deserialize_val(fmt::base64_wrapper v) const;
+
+    /** @} */
 
 public:
 
-    // node predicates
+    /** @name node property predicates */
+    /** @{ */
 
-    inline bool is_root()        const { _C4RV(); return m_tree->is_root(m_id); }
-    inline bool is_stream()      const { _C4RV(); return m_tree->is_stream(m_id); }
-    inline bool is_doc()         const { _C4RV(); return m_tree->is_doc(m_id); }
-    inline bool is_container()   const { _C4RV(); return m_tree->is_container(m_id); }
-    inline bool is_map()         const { _C4RV(); return m_tree->is_map(m_id); }
-    inline bool is_seq()         const { _C4RV(); return m_tree->is_seq(m_id); }
-    inline bool has_val()        const { _C4RV(); return m_tree->has_val(m_id); }
-    inline bool has_key()        const { _C4RV(); return m_tree->has_key(m_id); }
-    inline bool is_val()         const { _C4RV(); return m_tree->is_val(m_id); }
-    inline bool is_keyval()      const { _C4RV(); return m_tree->is_keyval(m_id); }
-    inline bool has_key_tag()    const { _C4RV(); return m_tree->has_key_tag(m_id); }
-    inline bool has_val_tag()    const { _C4RV(); return m_tree->has_val_tag(m_id); }
-    inline bool is_key_ref()     const { _C4RV(); return m_tree->is_key_ref(m_id); }
-    inline bool is_val_ref()     const { _C4RV(); return m_tree->is_val_ref(m_id); }
-    inline bool is_ref()         const { _C4RV(); return m_tree->is_ref(m_id); }
-    inline bool is_anchor()      const { _C4RV(); return m_tree->is_anchor(m_id); }
-    inline bool has_key_anchor() const { _C4RV(); return m_tree->has_key_anchor(m_id); }
-    inline bool has_val_anchor() const { _C4RV(); return m_tree->has_val_anchor(m_id); }
+    C4_ALWAYS_INLINE bool is_stream()        const { _C4RV(); return m_tree->is_stream(m_id); }
+    C4_ALWAYS_INLINE bool is_doc()           const { _C4RV(); return m_tree->is_doc(m_id); }
+    C4_ALWAYS_INLINE bool is_container()     const { _C4RV(); return m_tree->is_container(m_id); }
+    C4_ALWAYS_INLINE bool is_map()           const { _C4RV(); return m_tree->is_map(m_id); }
+    C4_ALWAYS_INLINE bool is_seq()           const { _C4RV(); return m_tree->is_seq(m_id); }
+    C4_ALWAYS_INLINE bool has_val()          const { _C4RV(); return m_tree->has_val(m_id); }
+    C4_ALWAYS_INLINE bool has_key()          const { _C4RV(); return m_tree->has_key(m_id); }
+    C4_ALWAYS_INLINE bool is_val()           const { _C4RV(); return m_tree->is_val(m_id); }
+    C4_ALWAYS_INLINE bool is_keyval()        const { _C4RV(); return m_tree->is_keyval(m_id); }
+    C4_ALWAYS_INLINE bool has_key_tag()      const { _C4RV(); return m_tree->has_key_tag(m_id); }
+    C4_ALWAYS_INLINE bool has_val_tag()      const { _C4RV(); return m_tree->has_val_tag(m_id); }
+    C4_ALWAYS_INLINE bool has_key_anchor()   const { _C4RV(); return m_tree->has_key_anchor(m_id); }
+    C4_ALWAYS_INLINE bool is_key_anchor()    const { _C4RV(); return m_tree->is_key_anchor(m_id); }
+    C4_ALWAYS_INLINE bool has_val_anchor()   const { _C4RV(); return m_tree->has_val_anchor(m_id); }
+    C4_ALWAYS_INLINE bool is_val_anchor()    const { _C4RV(); return m_tree->is_val_anchor(m_id); }
+    C4_ALWAYS_INLINE bool has_anchor()       const { _C4RV(); return m_tree->has_anchor(m_id); }
+    C4_ALWAYS_INLINE bool is_anchor()        const { _C4RV(); return m_tree->is_anchor(m_id); }
+    C4_ALWAYS_INLINE bool is_key_ref()       const { _C4RV(); return m_tree->is_key_ref(m_id); }
+    C4_ALWAYS_INLINE bool is_val_ref()       const { _C4RV(); return m_tree->is_val_ref(m_id); }
+    C4_ALWAYS_INLINE bool is_ref()           const { _C4RV(); return m_tree->is_ref(m_id); }
+    C4_ALWAYS_INLINE bool is_anchor_or_ref() const { _C4RV(); return m_tree->is_anchor_or_ref(m_id); }
+    C4_ALWAYS_INLINE bool is_key_quoted()    const { _C4RV(); return m_tree->is_key_quoted(m_id); }
+    C4_ALWAYS_INLINE bool is_val_quoted()    const { _C4RV(); return m_tree->is_val_quoted(m_id); }
+    C4_ALWAYS_INLINE bool is_quoted()        const { _C4RV(); return m_tree->is_quoted(m_id); }
 
-    inline bool parent_is_seq() const { _C4RV(); return m_tree->parent_is_seq(m_id); }
-    inline bool parent_is_map() const { _C4RV(); return m_tree->parent_is_map(m_id); }
+    C4_ALWAYS_INLINE bool parent_is_seq()    const { _C4RV(); return m_tree->parent_is_seq(m_id); }
+    C4_ALWAYS_INLINE bool parent_is_map()    const { _C4RV(); return m_tree->parent_is_map(m_id); }
 
     /** true when name and value are empty, and has no children */
-    inline bool empty() const { _C4RV(); return m_tree->empty(m_id); }
+    C4_ALWAYS_INLINE bool empty() const { _C4RV(); return m_tree->empty(m_id); }
+
+    /** @} */
 
 public:
 
-    // hierarchy predicates
+    /** @name hierarchy predicates */
+    /** @{ */
 
+    inline bool is_root()    const { _C4RV(); return m_tree->is_root(m_id); }
     inline bool has_parent() const { _C4RV(); return m_tree->has_parent(m_id); }
 
     inline bool has_child(NodeRef const& ch) const { _C4RV(); return m_tree->has_child(m_id, ch.m_id); }
@@ -170,9 +207,12 @@ public:
     /** does not count with this */
     inline bool has_other_siblings() const { _C4RV(); return m_tree->has_other_siblings(m_id); }
 
+    /** @} */
+
 public:
 
-    // hierarchy getters
+    /** @name hierarchy getters */
+    /** @{ */
 
     NodeRef       parent()       { _C4RV(); return {m_tree, m_tree->parent(m_id)}; }
     NodeRef const parent() const { _C4RV(); return {m_tree, m_tree->parent(m_id)}; }
@@ -208,64 +248,43 @@ public:
     NodeRef       find_sibling(csubstr name)       { _C4RV(); return {m_tree, m_tree->find_sibling(m_id, name)}; }
     NodeRef const find_sibling(csubstr name) const { _C4RV(); return {m_tree, m_tree->find_sibling(m_id, name)}; }
 
+    NodeRef       doc(size_t num)       { _C4RV(); return {m_tree, m_tree->doc(num)}; }
+    NodeRef const doc(size_t num) const { _C4RV(); return {m_tree, m_tree->doc(num)}; }
+
+    /** @} */
+
 public:
 
-    inline void set_type(NodeType t)
-    {
-        _C4RV();
-        m_tree->_set_flags(m_id, t);
-    }
+    /** @name node modifiers */
+    /** @{ */
 
-    inline void set_key(csubstr const& key)
-    {
-        _C4RV();
-        m_tree->_set_key(m_id, key);
-    }
-
-    inline void set_val(csubstr const& val)
-    {
-        _C4RV();
-        m_tree->_set_val(m_id, val);
-    }
+    void change_type(NodeType t) { _C4RV(); m_tree->change_type(m_id, t); }
+    void set_type(NodeType t) { _C4RV(); m_tree->_set_flags(m_id, t); }
+    void set_key(csubstr key) { _C4RV(); m_tree->_set_key(m_id, key); }
+    void set_val(csubstr val) { _C4RV(); m_tree->_set_val(m_id, val); }
+    void set_key_tag(csubstr key_tag) { _C4RV(); m_tree->set_key_tag(m_id, key_tag); }
+    void set_val_tag(csubstr val_tag) { _C4RV(); m_tree->set_val_tag(m_id, val_tag); }
+    void set_key_anchor(csubstr key_anchor) { _C4RV(); m_tree->set_key_anchor(m_id, key_anchor); }
+    void set_val_anchor(csubstr val_anchor) { _C4RV(); m_tree->set_val_anchor(m_id, val_anchor); }
+    void set_key_ref(csubstr key_ref) { _C4RV(); m_tree->set_key_ref(m_id, key_ref); }
+    void set_val_ref(csubstr val_ref) { _C4RV(); m_tree->set_val_ref(m_id, val_ref); }
 
     template<class T>
-    inline size_t set_key_serialized(T const& k)
+    size_t set_key_serialized(T const& C4_RESTRICT k)
     {
         _C4RV();
         csubstr s = m_tree->to_arena(k);
         m_tree->_set_key(m_id, s);
         return s.len;
     }
-
     template<class T>
-    inline size_t set_val_serialized(T const& v)
+    size_t set_val_serialized(T const& C4_RESTRICT v)
     {
         _C4RV();
         csubstr s = m_tree->to_arena(v);
         m_tree->_set_val(m_id, s);
         return s.len;
     }
-
-    inline void set_key_tag(csubstr const& key_tag)
-    {
-        _C4RV();
-        m_tree->set_key_tag(m_id, key_tag);
-    }
-
-    inline void set_val_tag(csubstr const& val_tag) const
-    {
-        _C4RV();
-        m_tree->set_val_tag(m_id, val_tag);
-    }
-
-    template<class T>
-    inline csubstr to_arena(T const& s) const
-    {
-        _C4RV();
-        return m_tree->to_arena(s);
-    }
-
-public:
 
     /** encode a blob as base64, then assign the result to the node's key
      * @return the size of base64-encoded blob */
@@ -274,24 +293,62 @@ public:
      * @return the size of base64-encoded blob */
     size_t set_val_serialized(fmt::const_base64_wrapper w);
 
-    /** decode the base64-encoded key deserialize and assign the
-     * decoded blob to the given buffer/
-     * @return the size of base64-decoded blob */
-    size_t deserialize_key(fmt::base64_wrapper v) const;
-    /** decode the base64-encoded key deserialize and assign the
-     * decoded blob to the given buffer/
-     * @return the size of base64-decoded blob */
-    size_t deserialize_val(fmt::base64_wrapper v) const;
+public:
+
+    inline void clear()
+    {
+        if(is_seed())
+            return;
+        m_tree->remove_children(m_id);
+        m_tree->_clear(m_id);
+    }
+
+    inline void clear_key()
+    {
+        if(is_seed())
+            return;
+        m_tree->_clear_key(m_id);
+    }
+
+    inline void clear_val()
+    {
+        if(is_seed())
+            return;
+        m_tree->_clear_val(m_id);
+    }
+
+    inline void clear_children()
+    {
+        if(is_seed())
+            return;
+        m_tree->remove_children(m_id);
+    }
+
+    /** @} */
 
 public:
 
+    /** hierarchy getters */
+    /** @{ */
+
     /** O(num_children) */
-    NodeRef operator[] (csubstr const& k)
+    NodeRef operator[] (csubstr k)
     {
         RYML_ASSERT( ! is_seed());
         RYML_ASSERT(valid());
         size_t ch = m_tree->find_child(m_id, k);
         NodeRef r = ch != NONE ? NodeRef(m_tree, ch) : NodeRef(m_tree, m_id, k);
+        return r;
+    }
+
+    /** O(num_children) */
+    NodeRef const operator[] (csubstr k) const
+    {
+        RYML_ASSERT( ! is_seed());
+        RYML_ASSERT(valid());
+        size_t ch = m_tree->find_child(m_id, k);
+        RYML_ASSERT(ch != NONE);
+        NodeRef const r(m_tree, ch);
         return r;
     }
 
@@ -302,19 +359,6 @@ public:
         RYML_ASSERT(valid());
         size_t ch = m_tree->child(m_id, pos);
         NodeRef r = ch != NONE ? NodeRef(m_tree, ch) : NodeRef(m_tree, m_id, pos);
-        return r;
-    }
-
-public:
-
-    /** O(num_children) */
-    NodeRef const operator[] (csubstr const& k) const
-    {
-        RYML_ASSERT( ! is_seed());
-        RYML_ASSERT(valid());
-        size_t ch = m_tree->find_child(m_id, k);
-        RYML_ASSERT(ch != NONE);
-        NodeRef const r(m_tree, ch);
         return r;
     }
 
@@ -329,34 +373,14 @@ public:
         return r;
     }
 
-public:
-
-    inline void clear()
-    {
-        if(is_seed()) return;
-        m_tree->remove_children(m_id);
-        m_tree->_clear(m_id);
-    }
-
-    inline void clear_key()
-    {
-        if(is_seed()) return;
-        m_tree->_clear_key(m_id);
-    }
-
-    inline void clear_val()
-    {
-        if(is_seed()) return;
-        m_tree->_clear_val(m_id);
-    }
-
-    inline void clear_children()
-    {
-        if(is_seed()) return;
-        m_tree->remove_children(m_id);
-    }
+    /** @} */
 
 public:
+
+    /** node modification */
+    /** @{ */
+
+    void create() { _apply_seed(); }
 
     inline void operator= (NodeType_e t)
     {
@@ -382,7 +406,7 @@ public:
         _apply(v);
     }
 
-    inline void operator= (csubstr const& v)
+    inline void operator= (csubstr v)
     {
         _apply_seed();
         _apply(v);
@@ -397,21 +421,31 @@ public:
         _apply(sv);
     }
 
+    /** @} */
+
 public:
 
-    /** serialize a variable, then assign the result to the node's key */
-    inline NodeRef& operator<< (csubstr const& s)
+    /** serialize a variable to the arena */
+    template<class T>
+    inline csubstr to_arena(T const& C4_RESTRICT s) const
+    {
+        _C4RV();
+        return m_tree->to_arena(s);
+    }
+
+    /** serialize a variable, then assign the result to the node's val */
+    inline NodeRef& operator<< (csubstr s)
     {
         // this overload is needed to prevent ambiguity (there's also
         // operator<< for writing a substr to a stream)
         _apply_seed();
         write(this, s);
-        RYML_ASSERT(get()->val() == s);
+        RYML_ASSERT(val() == s);
         return *this;
     }
 
     template<class T>
-    inline NodeRef& operator<< (T const& v)
+    inline NodeRef& operator<< (T const& C4_RESTRICT v)
     {
         _apply_seed();
         write(this, v);
@@ -435,7 +469,7 @@ public:
 
     /** serialize a variable, then assign the result to the node's key */
     template<class T>
-    inline NodeRef& operator<< (Key<const T> const& v)
+    inline NodeRef& operator<< (Key<const T> const& C4_RESTRICT v)
     {
         _apply_seed();
         set_key_serialized(v.k);
@@ -444,7 +478,7 @@ public:
 
     /** serialize a variable, then assign the result to the node's key */
     template<class T>
-    inline NodeRef& operator<< (Key<T> const& v)
+    inline NodeRef& operator<< (Key<T> const& C4_RESTRICT v)
     {
         _apply_seed();
         set_key_serialized(v.k);
@@ -491,7 +525,7 @@ public:
 public:
 
     template<class T>
-    void get_if(csubstr const& name, T *var) const
+    void get_if(csubstr name, T *var) const
     {
         auto ch = find_child(name);
         if(ch.valid())
@@ -501,7 +535,7 @@ public:
     }
 
     template<class T>
-    void get_if(csubstr const& name, T *var, T const& fallback) const
+    void get_if(csubstr name, T *var, T fallback) const
     {
         auto ch = find_child(name);
         if(ch.valid())
@@ -539,7 +573,7 @@ private:
         }
     }
 
-    inline void _apply(csubstr const& v)
+    inline void _apply(csubstr v)
     {
         m_tree->_set_val(m_id, v);
     }
@@ -839,9 +873,17 @@ inline void write(NodeRef *n, T const& v)
 }
 
 template<class T>
-inline bool read(NodeRef const& n, T *v)
+typename std::enable_if< ! std::is_floating_point<T>::value, bool>::type
+inline read(NodeRef const& n, T *v)
 {
     return from_chars(n.val(), v);
+}
+
+template<class T>
+typename std::enable_if< std::is_floating_point<T>::value, bool>::type
+inline read(NodeRef const& n, T *v)
+{
+    return from_chars_float(n.val(), v);
 }
 
 

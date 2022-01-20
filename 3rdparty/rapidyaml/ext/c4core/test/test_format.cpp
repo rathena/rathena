@@ -1,6 +1,8 @@
-#include "c4/std/std.hpp"
+#ifndef C4CORE_SINGLE_HEADER
 #include "c4/substr.hpp"
+#include "c4/std/std.hpp"
 #include "c4/format.hpp"
+#endif
 
 #include <c4/test.hpp>
 #include "c4/libtest/supprwarn_push.hpp"

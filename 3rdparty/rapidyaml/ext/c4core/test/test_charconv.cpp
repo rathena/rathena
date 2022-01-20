@@ -1,6 +1,8 @@
+#ifndef C4CORE_SINGLE_HEADER
 #include "c4/std/std.hpp"
 #include "c4/charconv.hpp"
 #include "c4/format.hpp"
+#endif
 
 #include "c4/libtest/supprwarn_push.hpp"
 
@@ -813,26 +815,28 @@ void test_false_parse(Function fn, csubstr numstr)
 
 TEST_CASE_TEMPLATE("atoi.false_parse", T, int8_t, int16_t, int32_t, int64_t, int, long, intptr_t)
 {
-    Fi(int8_t, "");
-    Fi(int8_t, "...");
-    Fi(int8_t, "-");
-    Fi(int8_t, "2345kjhiuy3245");
-    Fi(int8_t, "02345kjhiuy3245");
-    Fi(int8_t, "0x");
-    Fi(int8_t, "0x12ggg");
-    Fi(int8_t, "0X");
-    Fi(int8_t, "0X12GGG");
-    Fi(int8_t, "0o");
-    Fi(int8_t, "0o12888");
-    Fi(int8_t, "0O");
-    Fi(int8_t, "0O12888");
-    Fi(int8_t, "0b");
-    Fi(int8_t, "0b12121");
-    Fi(int8_t, "0B");
-    Fi(int8_t, "0B12121");
-    Fi(int8_t, "----");
-    Fi(int8_t, "===");
-    Fi(int8_t, "???");
+    Fi(T, "");
+    Fi(T, "...");
+    Fi(T, "-");
+    Fi(T, "2345kjhiuy3245");
+    Fi(T, "02345kjhiuy3245");
+    Fi(T, "0x");
+    Fi(T, "0x12ggg");
+    Fi(T, "0X");
+    Fi(T, "0X12GGG");
+    Fi(T, "0o");
+    Fi(T, "0o12888");
+    Fi(T, "0O");
+    Fi(T, "0O12888");
+    Fi(T, "0b");
+    Fi(T, "0b12121");
+    Fi(T, "0B");
+    Fi(T, "0B12121");
+    Fi(T, "----");
+    Fi(T, "===");
+    Fi(T, "???");
+    Fi(T, "infinity");
+    Fi(T, "somevalue");
 
     int dec = -1;
     CHECK(!atoi("-", &dec));
@@ -847,26 +851,28 @@ TEST_CASE_TEMPLATE("atoi.false_parse", T, int8_t, int16_t, int32_t, int64_t, int
 
 TEST_CASE_TEMPLATE("atou.false_parse", T, uint8_t, uint16_t, uint32_t, uint64_t, unsigned int, unsigned long, uintptr_t)
 {
-    Fu(uint8_t, "");
-    Fu(uint8_t, "...");
-    Fu(uint8_t, "-");
-    Fu(uint8_t, "2345kjhiuy3245");
-    Fu(uint8_t, "02345kjhiuy3245");
-    Fu(uint8_t, "0x");
-    Fu(uint8_t, "0x12ggg");
-    Fu(uint8_t, "0X");
-    Fu(uint8_t, "0X12GGG");
-    Fu(uint8_t, "0o");
-    Fu(uint8_t, "0o12888");
-    Fu(uint8_t, "0O");
-    Fu(uint8_t, "0O12888");
-    Fu(uint8_t, "0b");
-    Fu(uint8_t, "0b12121");
-    Fu(uint8_t, "0B");
-    Fu(uint8_t, "0B12121");
-    Fu(uint8_t, "----");
-    Fu(uint8_t, "===");
-    Fu(uint8_t, "???");
+    Fu(T, "");
+    Fu(T, "...");
+    Fu(T, "-");
+    Fu(T, "2345kjhiuy3245");
+    Fu(T, "02345kjhiuy3245");
+    Fu(T, "0x");
+    Fu(T, "0x12ggg");
+    Fu(T, "0X");
+    Fu(T, "0X12GGG");
+    Fu(T, "0o");
+    Fu(T, "0o12888");
+    Fu(T, "0O");
+    Fu(T, "0O12888");
+    Fu(T, "0b");
+    Fu(T, "0b12121");
+    Fu(T, "0B");
+    Fu(T, "0B12121");
+    Fu(T, "----");
+    Fu(T, "===");
+    Fu(T, "???");
+    Fu(T, "infinity");
+    Fu(T, "somevalue");
 }
 
 
@@ -1160,7 +1166,7 @@ void test_rtoa(substr buf, Real f, rtoa_fn_t<Real> rtoa_fn, int precision, const
     size_t ret;
 
     INFO("num=" << f << " precision=" << precision
-         << "'  hexa='" << hexa << "'  hexa_alternative='" << hexa_alternative << "'");
+         << "  hexa='" << hexa << "'  hexa_alternative='" << hexa_alternative << "'");
 
     memset(buf.str, 0, buf.len);
     ret = rtoa_fn(buf, f, precision, FTOA_SCIENT);
@@ -1184,7 +1190,7 @@ void test_rtoa(substr buf, Real f, rtoa_fn_t<Real> rtoa_fn, int precision, const
     std::string report;
     from_chars(buf.left_of(ret), &report);
     bool ok = buf.left_of(ret) == to_csubstr(hexa) || buf.left_of(ret) == to_csubstr(hexa_alternative);
-    CHECK_MESSAGE(ok, "ret='" << report);
+    CHECK_MESSAGE(ok, "ret='" << report << "'");
 }
 
 
@@ -1193,6 +1199,18 @@ TEST_CASE("ftoa.basic")
     char bufc[128];
     substr buf(bufc);
     C4_ASSERT(buf.len == sizeof(bufc)-1);
+
+    // earlier versions of emscripten's sprintf() do not respect some
+    // precision values when printing in hexadecimal format.
+    //
+    // @see https://github.com/biojppm/c4core/pull/52
+    #if defined(__EMSCRIPTEN__) && __EMSCRIPTEN_major__ < 3
+    #define _c4emscripten_alt(alt) , alt
+    #define _c4emscripten_alt2(alt1, alt2) , alt2
+    #else
+    #define _c4emscripten_alt(alt)
+    #define _c4emscripten_alt2(alt1, alt2) , alt1
+    #endif
 
     float f = 1.1234123f;
     double d = 1.1234123;
@@ -1203,11 +1221,11 @@ TEST_CASE("ftoa.basic")
     test_rtoa(buf, f, &ftoa, 1, /*scient*/"1.1e+00", /*flt*/"1.1", /*flex*/"1.1", /*hexa*/"0x1.2p+0");
     test_rtoa(buf, d, &dtoa, 1, /*scient*/"1.1e+00", /*flt*/"1.1", /*flex*/"1.1", /*hexa*/"0x1.2p+0");
 
-    test_rtoa(buf, f, &ftoa, 2, /*scient*/"1.12e+00", /*flt*/"1.12", /*flex*/"1.12", /*hexa*/"0x1.20p+0");
-    test_rtoa(buf, d, &dtoa, 2, /*scient*/"1.12e+00", /*flt*/"1.12", /*flex*/"1.12", /*hexa*/"0x1.20p+0");
+    test_rtoa(buf, f, &ftoa, 2, /*scient*/"1.12e+00", /*flt*/"1.12", /*flex*/"1.12", /*hexa*/"0x1.20p+0" _c4emscripten_alt("0x1.1f8p+0"));
+    test_rtoa(buf, d, &dtoa, 2, /*scient*/"1.12e+00", /*flt*/"1.12", /*flex*/"1.12", /*hexa*/"0x1.20p+0" _c4emscripten_alt("0x1.1f8p+0"));
 
-    test_rtoa(buf, f, &ftoa, 3, /*scient*/"1.123e+00", /*flt*/"1.123", /*flex*/"1.123", /*hexa*/"0x1.1f9p+0");
-    test_rtoa(buf, d, &dtoa, 3, /*scient*/"1.123e+00", /*flt*/"1.123", /*flex*/"1.123", /*hexa*/"0x1.1f9p+0");
+    test_rtoa(buf, f, &ftoa, 3, /*scient*/"1.123e+00", /*flt*/"1.123", /*flex*/"1.123", /*hexa*/"0x1.1f9p+0" _c4emscripten_alt("0x1.1f98p+0"));
+    test_rtoa(buf, d, &dtoa, 3, /*scient*/"1.123e+00", /*flt*/"1.123", /*flex*/"1.123", /*hexa*/"0x1.1f9p+0" _c4emscripten_alt("0x1.1f98p+0"));
 
     test_rtoa(buf, f, &ftoa, 4, /*scient*/"1.1234e+00", /*flt*/"1.1234", /*flex*/"1.1234", /*hexa*/"0x1.1f98p+0");
     test_rtoa(buf, d, &dtoa, 4, /*scient*/"1.1234e+00", /*flt*/"1.1234", /*flex*/"1.1234", /*hexa*/"0x1.1f98p+0");
@@ -1224,8 +1242,8 @@ TEST_CASE("ftoa.basic")
     test_rtoa(buf, f, &ftoa, 2, /*scient*/"1.01e+00", /*flt*/"1.01", /*flex*/"1.01", /*hexa*/"0x1.03p+0");
     test_rtoa(buf, d, &dtoa, 2, /*scient*/"1.01e+00", /*flt*/"1.01", /*flex*/"1.01", /*hexa*/"0x1.03p+0");
 
-    test_rtoa(buf, f, &ftoa, 3, /*scient*/"1.012e+00", /*flt*/"1.012", /*flex*/"1.012", /*hexa*/"0x1.033p+0", /*hexa*/"0x1.032p+0");
-    test_rtoa(buf, d, &dtoa, 3, /*scient*/"1.012e+00", /*flt*/"1.012", /*flex*/"1.012", /*hexa*/"0x1.033p+0", /*hexa*/"0x1.032p+0");
+    test_rtoa(buf, f, &ftoa, 3, /*scient*/"1.012e+00", /*flt*/"1.012", /*flex*/"1.012", /*hexa*/"0x1.033p+0" _c4emscripten_alt2("0x1.032p+0", "0x1.0328p+0"));
+    test_rtoa(buf, d, &dtoa, 3, /*scient*/"1.012e+00", /*flt*/"1.012", /*flex*/"1.012", /*hexa*/"0x1.033p+0" _c4emscripten_alt2("0x1.032p+0", "0x1.0328p+0"));
 
     test_rtoa(buf, f, &ftoa, 4, /*scient*/"1.0123e+00", /*flt*/"1.0123", /*flex*/"1.0123", /*hexa*/"0x1.0329p+0");
     test_rtoa(buf, d, &dtoa, 4, /*scient*/"1.0123e+00", /*flt*/"1.0123", /*flex*/"1.0123", /*hexa*/"0x1.0329p+0");
@@ -1256,6 +1274,36 @@ TEST_CASE_TEMPLATE("atof.basic", T, float, double)
     t_(s.first(3), 123);
     t_(s.first(2), 12);
     t_(s.first(1), 1);
+
+    T pinf = std::numeric_limits<T>::infinity();
+    T ninf = -std::numeric_limits<T>::infinity();
+    T nan = std::numeric_limits<T>::quiet_NaN();
+    T rval = {};
+    CHECK(atox("infinity", &rval));
+    CHECK_EQ(memcmp(&rval, &pinf, sizeof(T)), 0);
+    CHECK(atox("-infinity", &rval));
+    CHECK_EQ(memcmp(&rval, &ninf, sizeof(T)), 0);
+    CHECK(atox("inf", &rval));
+    CHECK_EQ(memcmp(&rval, &pinf, sizeof(T)), 0);
+    CHECK(atox("-inf", &rval));
+    CHECK_EQ(memcmp(&rval, &ninf, sizeof(T)), 0);
+    CHECK(atox("nan", &rval));
+    CHECK_EQ(memcmp(&rval, &nan, sizeof(T)), 0);
+}
+
+TEST_CASE_TEMPLATE("atof.fail_parse", T, float, double)
+{
+    auto t_ = [](csubstr str){
+        INFO("str=" << str);
+        T rval;
+        CHECK_EQ(atox(str, &rval), false);
+    };
+    t_(".inf");
+    t_("-.inf");
+    t_(".nan");
+    t_("-.nan");
+    t_("not a float!");
+    //t_("123.45not a float!");
 }
 
 

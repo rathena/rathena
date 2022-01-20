@@ -57,12 +57,12 @@ void* arealloc(void* ptr, size_t oldsz, size_t newsz, size_t alignment);
 /** Function pointer type for aligned allocation
  * @see set_aalloc()
  * @ingroup raw_memory_alloc */
-using aalloc_pfn   = void* (*)(size_t size, size_t alignment);
+using aalloc_pfn = void* (*)(size_t size, size_t alignment);
 
 /** Function pointer type for aligned deallocation
  * @see set_afree()
  * @ingroup raw_memory_alloc */
-using afree_pfn    = void  (*)(void *ptr);
+using afree_pfn = void  (*)(void *ptr);
 
 /** Function pointer type for aligned reallocation
  * @see set_arealloc()
@@ -76,13 +76,13 @@ using arealloc_pfn = void* (*)(void *ptr, size_t oldsz, size_t newsz, size_t ali
  * @see aalloc()
  * @see get_aalloc()
  * @ingroup raw_memory_alloc */
-void set_aalloc  (aalloc_pfn   fn);
+void set_aalloc(aalloc_pfn fn);
 
 /** Set the global aligned deallocation function.
  * @see afree()
  * @see get_afree()
  * @ingroup raw_memory_alloc */
-void set_afree   (afree_pfn    fn);
+void set_afree(afree_pfn fn);
 
 /** Set the global aligned reallocation function.
  * @see arealloc()
@@ -94,12 +94,12 @@ void set_arealloc(arealloc_pfn fn);
 /** Get the global aligned reallocation function.
  * @see arealloc()
  * @ingroup raw_memory_alloc */
-aalloc_pfn   get_aalloc();
+aalloc_pfn get_aalloc();
 
 /** Get the global aligned deallocation function.
  * @see afree()
  * @ingroup raw_memory_alloc */
-afree_pfn     get_afree();
+afree_pfn get_afree();
 
 /** Get the global aligned reallocation function.
  * @see arealloc()
@@ -133,7 +133,7 @@ struct MemoryResource
         return mem;
     }
 
-    void deallocate(void* ptr, size_t sz, size_t alignment = alignof(max_align_t))
+    void deallocate(void* ptr, size_t sz, size_t alignment=alignof(max_align_t))
     {
         this->do_deallocate(ptr, sz, alignment);
     }

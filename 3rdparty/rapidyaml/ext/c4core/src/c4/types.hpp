@@ -5,7 +5,7 @@
 #include <stddef.h>
 #include <type_traits>
 
-#if __cplusplus > 201103L
+#if __cplusplus >= 201103L
 #include <utility>  // for integer_sequence and friends
 #endif
 

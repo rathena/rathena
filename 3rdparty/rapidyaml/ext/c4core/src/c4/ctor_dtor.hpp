@@ -1,5 +1,5 @@
-#ifndef _C4_CTOR_DTOR_H_
-#define _C4_CTOR_DTOR_H_
+#ifndef _C4_CTOR_DTOR_HPP_
+#define _C4_CTOR_DTOR_HPP_
 
 #include "c4/preprocessor.hpp"
 #include "c4/language.hpp"
@@ -459,4 +459,4 @@ destroy_room(U *dst, U const* src, I n, I room, I pos)
 
 #undef _C4REQUIRE
 
-#endif /* _C4_CTOR_DTOR_H_ */
+#endif /* _C4_CTOR_DTOR_HPP_ */

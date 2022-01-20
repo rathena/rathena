@@ -1,4 +1,7 @@
+#ifndef C4CORE_SINGLE_HEADER
 #include "c4/error.hpp"
+#endif
+
 #include "c4/test.hpp"
 #include <string>
 #include <stdexcept>

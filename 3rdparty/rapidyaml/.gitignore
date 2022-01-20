@@ -12,6 +12,10 @@ __pycache__/
 .gdbinit
 setup.gdb
 
+# valgrind files
+callgrind*
+vgcore*
+
 # Visual Studio files
 .vs/
 .vscode/
@@ -33,5 +37,14 @@ compile_commands.json
 # test files
 /Testing/
 
+# python packaging
+.eggs/
+dist/
+rapidyaml.egg-info/
+
 # continuous integration files
 .ci/.vagrant
+
+# amalgamation files
+src/c4/c4core_all.hpp
+src_singleheader/

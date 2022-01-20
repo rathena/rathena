@@ -66,7 +66,7 @@ substr preprocess_into_container(csubstr input, CharContainer *out)
  *
  * @return the number of characters required for output
  */
-size_t preprocess_json(csubstr json, substr buf);
+RYML_EXPORT size_t preprocess_json(csubstr json, substr buf);
 
 /** Write into an existing container. It is resized to contained the output.
  * @return a substr of the container
@@ -115,7 +115,7 @@ CharContainer preprocess_json(csubstr json)
  *
  * @return the number of characters required for output
  */
-size_t preprocess_rxmap(csubstr rxmap, substr buf);
+RYML_EXPORT size_t preprocess_rxmap(csubstr rxmap, substr buf);
 
 
 /** Write into an existing container. It is resized to contained the output.

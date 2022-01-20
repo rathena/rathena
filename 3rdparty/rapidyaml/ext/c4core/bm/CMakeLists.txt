@@ -7,7 +7,8 @@ c4_setup_benchmarking()
 c4_require_subproject(fp
   REMOTE
     GIT_REPOSITORY https://github.com/jk-jeon/fp
-    GIT_TAG master)
+    GIT_TAG master
+  EXCLUDE_FROM_ALL)
 
 # ryu requires too much code; use an include for clarity
 include(./ryu.cmake)

@@ -1,10 +1,14 @@
 #include "c4/test.hpp"
+#ifndef C4CORE_SINGLE_HEADER
 #include "c4/std/string.hpp"
 #include "c4/std/vector.hpp"
 #include "c4/format.hpp"
 #include "c4/base64.hpp"
+#endif
 
 #include "c4/libtest/supprwarn_push.hpp"
+
+#include <cstring>
 
 C4_SUPPRESS_WARNING_MSVC_WITH_PUSH(4310)  // cast truncates constant value
 
@@ -18,7 +22,21 @@ TEST_CASE("base64.infrastructure")
     detail::base64_test_tables();
     #endif
 }
+// Since some the macros in c4/cpu.cpp cannot identify endanness at compile
+// time, we use a simple runtime endianness-detection routine.
+bool is_little_endian()
+{
+    unsigned long const v = 1UL;
+    unsigned char b[sizeof(v)];
+    std::memcpy(&b[0], &v, sizeof(v));
+    return !!b[0];
+}
 } // namespace detail
+
+csubstr native(csubstr little_endian, csubstr big_endian)
+{
+    return detail::is_little_endian() ? little_endian : big_endian;
+}
 
 
 //-----------------------------------------------------------------------------
@@ -151,18 +169,18 @@ TEST_CASE_TEMPLATE("base64.8bit", T, int8_t, uint8_t)
 TEST_CASE_TEMPLATE("base64.16bit", T, int16_t, uint16_t)
 {
     base64_test_pair<T> pairs[] = {
-        {   0, csubstr("AAA=")},
-        {   1, csubstr("AQA=")},
-        {   2, csubstr("AgA=")},
-        {   3, csubstr("AwA=")},
-        {   4, csubstr("BAA=")},
-        {   5, csubstr("BQA=")},
-        {   6, csubstr("BgA=")},
-        {   7, csubstr("BwA=")},
-        {   8, csubstr("CAA=")},
-        {   9, csubstr("CQA=")},
-        {  10, csubstr("CgA=")},
-        {1234, csubstr("0gQ=")},
+        {   0, native("AAA=", "AAA=")},
+        {   1, native("AQA=", "AAE=")},
+        {   2, native("AgA=", "AAI=")},
+        {   3, native("AwA=", "AAM=")},
+        {   4, native("BAA=", "AAQ=")},
+        {   5, native("BQA=", "AAU=")},
+        {   6, native("BgA=", "AAY=")},
+        {   7, native("BwA=", "AAc=")},
+        {   8, native("CAA=", "AAg=")},
+        {   9, native("CQA=", "AAk=")},
+        {  10, native("CgA=", "AAo=")},
+        {1234, native("0gQ=", "BNI=")},
     };
     for(auto p : pairs)
     {
@@ -174,18 +192,18 @@ TEST_CASE_TEMPLATE("base64.16bit", T, int16_t, uint16_t)
 TEST_CASE_TEMPLATE("base64.32bit", T, int32_t, uint32_t)
 {
     base64_test_pair<T> pairs[] = {
-        {   0, csubstr("AAAAAA==")},
-        {   1, csubstr("AQAAAA==")},
-        {   2, csubstr("AgAAAA==")},
-        {   3, csubstr("AwAAAA==")},
-        {   4, csubstr("BAAAAA==")},
-        {   5, csubstr("BQAAAA==")},
-        {   6, csubstr("BgAAAA==")},
-        {   7, csubstr("BwAAAA==")},
-        {   8, csubstr("CAAAAA==")},
-        {   9, csubstr("CQAAAA==")},
-        {  10, csubstr("CgAAAA==")},
-        {1234, csubstr("0gQAAA==")},
+        {   0, native("AAAAAA==", "AAAAAA==")},
+        {   1, native("AQAAAA==", "AAAAAQ==")},
+        {   2, native("AgAAAA==", "AAAAAg==")},
+        {   3, native("AwAAAA==", "AAAAAw==")},
+        {   4, native("BAAAAA==", "AAAABA==")},
+        {   5, native("BQAAAA==", "AAAABQ==")},
+        {   6, native("BgAAAA==", "AAAABg==")},
+        {   7, native("BwAAAA==", "AAAABw==")},
+        {   8, native("CAAAAA==", "AAAACA==")},
+        {   9, native("CQAAAA==", "AAAACQ==")},
+        {  10, native("CgAAAA==", "AAAACg==")},
+        {1234, native("0gQAAA==", "AAAE0g==")},
     };
     for(auto p : pairs)
     {
@@ -197,19 +215,19 @@ TEST_CASE_TEMPLATE("base64.32bit", T, int32_t, uint32_t)
 TEST_CASE_TEMPLATE("base64.64bit", T, int64_t, uint64_t)
 {
     base64_test_pair<T> pairs[] = {
-        {   0, csubstr("AAAAAAAAAAA=")},
-        {   1, csubstr("AQAAAAAAAAA=")},
-        {   2, csubstr("AgAAAAAAAAA=")},
-        {   3, csubstr("AwAAAAAAAAA=")},
-        {   4, csubstr("BAAAAAAAAAA=")},
-        {   5, csubstr("BQAAAAAAAAA=")},
-        {   6, csubstr("BgAAAAAAAAA=")},
-        {   7, csubstr("BwAAAAAAAAA=")},
-        {   8, csubstr("CAAAAAAAAAA=")},
-        {   9, csubstr("CQAAAAAAAAA=")},
-        {  10, csubstr("CgAAAAAAAAA=")},
-        {1234, csubstr("0gQAAAAAAAA=")},
-        {0xdeadbeef, csubstr("776t3gAAAAA=")},
+        {   0, native("AAAAAAAAAAA=", "AAAAAAAAAAA=")},
+        {   1, native("AQAAAAAAAAA=", "AAAAAAAAAAE=")},
+        {   2, native("AgAAAAAAAAA=", "AAAAAAAAAAI=")},
+        {   3, native("AwAAAAAAAAA=", "AAAAAAAAAAM=")},
+        {   4, native("BAAAAAAAAAA=", "AAAAAAAAAAQ=")},
+        {   5, native("BQAAAAAAAAA=", "AAAAAAAAAAU=")},
+        {   6, native("BgAAAAAAAAA=", "AAAAAAAAAAY=")},
+        {   7, native("BwAAAAAAAAA=", "AAAAAAAAAAc=")},
+        {   8, native("CAAAAAAAAAA=", "AAAAAAAAAAg=")},
+        {   9, native("CQAAAAAAAAA=", "AAAAAAAAAAk=")},
+        {  10, native("CgAAAAAAAAA=", "AAAAAAAAAAo=")},
+        {1234, native("0gQAAAAAAAA=", "AAAAAAAABNI=")},
+	{0xdeadbeef, native("776t3gAAAAA=", "AAAAAN6tvu8=")},
     };
     for(auto p : pairs)
     {
@@ -220,24 +238,24 @@ TEST_CASE_TEMPLATE("base64.64bit", T, int64_t, uint64_t)
 
 TEST_CASE("base64.high_bits_u32")
 {
-    test_base64_roundtrip(UINT32_C(0xdeadbeef), "776t3g==");
-    test_base64_roundtrip(UINT32_MAX, "/////w==");
+    test_base64_roundtrip(UINT32_C(0xdeadbeef), native("776t3g==", "3q2+7w=="));
+    test_base64_roundtrip(UINT32_MAX, native("/////w==", "/////w=="));
 }
 
 TEST_CASE("base64.high_bits_i32")
 {
-    test_base64_roundtrip(INT32_C(0x7fffffff), "////fw==");
-    test_base64_roundtrip(INT32_MAX, "////fw==");
+    test_base64_roundtrip(INT32_C(0x7fffffff), native("////fw==", "f////w=="));
+    test_base64_roundtrip(INT32_MAX, native("////fw==", "f////w=="));
 }
 
 TEST_CASE("base64.high_bits_u64")
 {
-    test_base64_roundtrip(UINT64_MAX, "//////////8=");
+    test_base64_roundtrip(UINT64_MAX, native("//////////8=", "//////////8="));
 }
 
 TEST_CASE("base64.high_bits_i64")
 {
-    test_base64_roundtrip(INT64_MAX, "/////////38=");
+    test_base64_roundtrip(INT64_MAX, native("/////////38=", "f/////////8="));
 }
 
 } // namespace c4

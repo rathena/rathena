@@ -30,40 +30,46 @@ public:
     T *       m_stack;
     size_t    m_size;
     size_t    m_capacity;
-    Allocator m_alloc;
+    Callbacks m_callbacks;
 
 public:
 
     constexpr static bool is_contiguous() { return true; }
 
-    stack() : m_buf(), m_stack(m_buf), m_size(0), m_capacity(N), m_alloc() {}
-    stack(Allocator const& c) : m_buf(), m_stack(m_buf), m_size(0), m_capacity(N), m_alloc(c)
-    {
-    }
+    stack(Callbacks const& cb)
+        : m_buf()
+        , m_stack(m_buf)
+        , m_size(0)
+        , m_capacity(N)
+        , m_callbacks(cb) {}
+    stack() : stack(get_callbacks()) {}
     ~stack()
     {
         _free();
     }
 
-    stack(stack const& that) : stack()
+    stack(stack const& that) noexcept : stack(that.m_callbacks)
     {
         resize(that.m_size);
         _cp(&that);
     }
-    stack& operator= (stack const& that)
+
+    stack(stack &&that) noexcept : stack(that.m_callbacks)
     {
+        _mv(&that);
+    }
+
+    stack& operator= (stack const& that) noexcept
+    {
+        _cb(that.m_callbacks);
         resize(that.m_size);
         _cp(&that);
         return *this;
     }
 
-    stack(stack &&that)
+    stack& operator= (stack &&that) noexcept
     {
-        _mv(&that);
-    }
-    stack& operator= (stack &&that)
-    {
-        _free();
+        _cb(that.m_callbacks);
         _mv(&that);
         return *this;
     }
@@ -105,39 +111,20 @@ public:
         return m_stack[m_size];
     }
 
-    #if defined(_MSC_VER)
-    #   pragma warning(push)
-    #   pragma warning(disable: 4296/*expression is always 'boolean_value'*/)
-    #elif defined(__clang__)
-    #   pragma clang diagnostic push
-    #   pragma clang diagnostic ignored "-Wtype-limits"
-    #elif defined(__GNUC__)
-    #   pragma GCC diagnostic push
-    #   pragma GCC diagnostic ignored "-Wtype-limits"
-    #endif
-
     C4_ALWAYS_INLINE T const& C4_RESTRICT top() const { RYML_ASSERT(m_size > 0); return m_stack[m_size - 1]; }
     C4_ALWAYS_INLINE T      & C4_RESTRICT top()       { RYML_ASSERT(m_size > 0); return m_stack[m_size - 1]; }
 
     C4_ALWAYS_INLINE T const& C4_RESTRICT bottom() const { RYML_ASSERT(m_size > 0); return m_stack[0]; }
     C4_ALWAYS_INLINE T      & C4_RESTRICT bottom()       { RYML_ASSERT(m_size > 0); return m_stack[0]; }
 
-    C4_ALWAYS_INLINE T const& C4_RESTRICT top(size_t i) const { RYML_ASSERT(i >= 0 && i < m_size); return m_stack[m_size - 1 - i]; }
-    C4_ALWAYS_INLINE T      & C4_RESTRICT top(size_t i)       { RYML_ASSERT(i >= 0 && i < m_size); return m_stack[m_size - 1 - i]; }
+    C4_ALWAYS_INLINE T const& C4_RESTRICT top(size_t i) const { RYML_ASSERT(i < m_size); return m_stack[m_size - 1 - i]; }
+    C4_ALWAYS_INLINE T      & C4_RESTRICT top(size_t i)       { RYML_ASSERT(i < m_size); return m_stack[m_size - 1 - i]; }
 
-    C4_ALWAYS_INLINE T const& C4_RESTRICT bottom(size_t i) const { RYML_ASSERT(i >= 0 && i < m_size); return m_stack[i]; }
-    C4_ALWAYS_INLINE T      & C4_RESTRICT bottom(size_t i)       { RYML_ASSERT(i >= 0 && i < m_size); return m_stack[i]; }
+    C4_ALWAYS_INLINE T const& C4_RESTRICT bottom(size_t i) const { RYML_ASSERT(i < m_size); return m_stack[i]; }
+    C4_ALWAYS_INLINE T      & C4_RESTRICT bottom(size_t i)       { RYML_ASSERT(i < m_size); return m_stack[i]; }
 
-    C4_ALWAYS_INLINE T const& C4_RESTRICT operator[](size_t i) const { RYML_ASSERT(i >= 0 && i < m_size); return m_stack[i]; }
-    C4_ALWAYS_INLINE T      & C4_RESTRICT operator[](size_t i)       { RYML_ASSERT(i >= 0 && i < m_size); return m_stack[i]; }
-
-    #if defined(_MSC_VER)
-    #   pragma warning(pop)
-    #elif defined(__clang__)
-    #   pragma clang diagnostic pop
-    #elif defined(__GNUC__)
-    #   pragma GCC diagnostic pop
-    #endif
+    C4_ALWAYS_INLINE T const& C4_RESTRICT operator[](size_t i) const { RYML_ASSERT(i < m_size); return m_stack[i]; }
+    C4_ALWAYS_INLINE T      & C4_RESTRICT operator[](size_t i)       { RYML_ASSERT(i < m_size); return m_stack[i]; }
 
 public:
 
@@ -154,6 +141,7 @@ public:
     void _free();
     void _cp(stack const* C4_RESTRICT that);
     void _mv(stack * that);
+    void _cb(Callbacks const& cb);
 };
 
 
@@ -164,18 +152,19 @@ public:
 template<class T, size_t N>
 void stack<T, N>::reserve(size_t sz)
 {
-    if(sz <= m_size) return;
+    if(sz <= m_size)
+        return;
     if(sz <= N)
     {
         m_stack = m_buf;
         m_capacity = N;
         return;
     }
-    T *buf = (T*) m_alloc.allocate(sz * sizeof(T), m_stack);
+    T *buf = (T*) m_callbacks.m_allocate(sz * sizeof(T), m_stack, m_callbacks.m_user_data);
     memcpy(buf, m_stack, m_size * sizeof(T));
     if(m_stack != m_buf)
     {
-        m_alloc.free(m_stack, m_capacity * sizeof(T));
+        m_callbacks.m_free(m_stack, m_capacity * sizeof(T), m_callbacks.m_user_data);
     }
     m_stack = buf;
     m_capacity = sz;
@@ -190,8 +179,10 @@ void stack<T, N>::_free()
     RYML_ASSERT(m_stack != nullptr); // this structure cannot be memset() to zero
     if(m_stack != m_buf)
     {
-        m_alloc.free(m_stack, m_capacity * sizeof(T));
+        m_callbacks.m_free(m_stack, m_capacity * sizeof(T), m_callbacks.m_user_data);
         m_stack = m_buf;
+        m_size = N;
+        m_capacity = N;
     }
     else
     {
@@ -207,9 +198,7 @@ void stack<T, N>::_cp(stack const* C4_RESTRICT that)
 {
     if(that->m_stack != that->m_buf)
     {
-        RYML_ASSERT(m_stack != m_buf);
         RYML_ASSERT(that->m_capacity > N);
-        RYML_ASSERT(that->m_size > N);
         RYML_ASSERT(that->m_size <= that->m_capacity);
     }
     else
@@ -219,8 +208,8 @@ void stack<T, N>::_cp(stack const* C4_RESTRICT that)
     }
     memcpy(m_stack, that->m_stack, that->m_size * sizeof(T));
     m_size = that->m_size;
-    m_capacity = that->m_size;
-    m_alloc = that->m_alloc;
+    m_capacity = that->m_size < N ? N : that->m_size;
+    m_callbacks = that->m_callbacks;
 }
 
 
@@ -232,7 +221,6 @@ void stack<T, N>::_mv(stack * that)
     if(that->m_stack != that->m_buf)
     {
         RYML_ASSERT(that->m_capacity > N);
-        RYML_ASSERT(that->m_size > N);
         RYML_ASSERT(that->m_size <= that->m_capacity);
         m_stack = that->m_stack;
     }
@@ -244,13 +232,26 @@ void stack<T, N>::_mv(stack * that)
         m_stack = m_buf;
     }
     m_size = that->m_size;
-    m_capacity = that->m_size;
-    m_alloc = that->m_alloc;
+    m_capacity = that->m_capacity;
+    m_callbacks = that->m_callbacks;
     // make sure no deallocation happens on destruction
     RYML_ASSERT(that->m_stack != m_buf);
     that->m_stack = that->m_buf;
     that->m_capacity = N;
     that->m_size = 0;
+}
+
+
+//-----------------------------------------------------------------------------
+
+template<class T, size_t N>
+void stack<T, N>::_cb(Callbacks const& cb)
+{
+    if(cb != m_callbacks)
+    {
+        _free();
+        m_callbacks = cb;
+    }
 }
 
 } // namespace detail

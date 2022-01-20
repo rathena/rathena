@@ -1,16 +1,5 @@
 c4_setup_testing(DOCTEST)
 
-# doctest does not deal well with template operator<< for substr
-# see https://github.com/onqtam/doctest/pull/431
-target_compile_definitions(c4core PUBLIC -DC4_SUBSTR_NO_OSTREAM_LSHIFT)
-if(C4CORE_SANITIZE)
-    foreach(s asan tsan msan ubsan)
-        if(TARGET c4core-${s})
-            target_compile_definitions(c4core-${s} PUBLIC -DC4_SUBSTR_NO_OSTREAM_LSHIFT)
-        endif()
-    endforeach()
-endif()
-
 c4_add_library(c4core-_libtest LIBRARY_TYPE STATIC
     SOURCES
         c4/test.hpp
@@ -21,9 +10,16 @@ c4_add_library(c4core-_libtest LIBRARY_TYPE STATIC
         c4/libtest/supprwarn_push.hpp
         c4/libtest/supprwarn_pop.hpp
     LIBS c4core doctest
+    DEFS
+        # doctest does not deal well with template operator<< for substr
+        # see https://github.com/onqtam/doctest/pull/431
+        -DC4_SUBSTR_NO_OSTREAM_LSHIFT
     INC_DIRS ${CMAKE_CURRENT_LIST_DIR}
     FOLDER test
     )
+if(C4CORE_DEFINED_FROM_SINGLEHEADER)
+    target_compile_definitions(c4core-_libtest PUBLIC -DC4CORE_SINGLE_HEADER)
+endif()
 
 function(c4core_test name)
     c4_add_executable(c4core-test-${name}
@@ -55,14 +51,3 @@ c4core_test(format           test_format.cpp)
 c4core_test(base64           test_base64.cpp)
 c4core_test(std_string       test_std_string.cpp)
 c4core_test(std_vector       test_std_vector.cpp)
-
-
-c4_add_install_include_test(c4core "c4core::")
-c4_add_install_link_test(c4core "c4core::" "
-#include <c4/substr.hpp>
-int main()
-{
-    c4::csubstr s = \"12345\";
-    return s.len != decltype(s.len)(5);
-}
-")

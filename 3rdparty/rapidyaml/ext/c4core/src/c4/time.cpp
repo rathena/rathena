@@ -2,7 +2,7 @@
 
 #if defined(C4_WIN)
 #   include "c4/windows.hpp"
-#elif defined(C4_POSIX)
+#elif defined(C4_LINUX)
 #   include <time.h>
 #else
 #   include <chrono>
@@ -35,7 +35,7 @@ time_type currtime()
     QueryPerformanceCounter(&ts);
     time_type usecs = time_type(ts.QuadPart) * ifreq;
     return usecs;
-#elif defined(C4_POSIX)
+#elif defined(C4_LINUX)
     struct timespec ts;
     clock_gettime(CLOCK_MONOTONIC_RAW, &ts);
     time_type usecs = time_type(1.e6) * time_type(ts.tv_sec)

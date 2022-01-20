@@ -2,7 +2,7 @@
 # github_url = "https://github.com/<user or organization>/<project>/"
 
 [version]
-current = "0.1.1"
+current = "0.1.8"
 
 # Example of a semver regexp.
 # Make sure this matches current_version before
@@ -25,6 +25,13 @@ tag_template = "v{new_version}"
 # tbump.toml location.
 [[file]]
 src = "CMakeLists.txt"
+search = "c4_project\\(VERSION {current_version}"
+[[file]]
+src = "test/test_install/CMakeLists.txt"
+search = "c4_project\\(VERSION {current_version}"
+[[file]]
+src = "test/test_singleheader/CMakeLists.txt"
+search = "c4_project\\(VERSION {current_version}"
 
 # You can specify a list of commands to
 # run after the files have been patched

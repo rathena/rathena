@@ -1,4 +1,7 @@
+#ifndef C4CORE_SINGLE_HEADER
 #include "c4/error.hpp"
+#endif
+
 #include "c4/test.hpp"
 #include "c4/libtest/supprwarn_push.hpp"
 
@@ -325,10 +328,11 @@ C4_ALWAYS_INLINE void new_handle_warning(locref loc, const char (&msg)[N])
 
 } // namespace c4
 
-
+#ifndef C4CORE_SINGLE_HEADER
 #include <c4/substr.hpp>
-
 #include <c4/charconv.hpp>
+#endif
+
 namespace c4 {
 
 void fputi(int val, FILE *f)
@@ -442,8 +446,10 @@ TEST_CASE("warning.exception")
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 
+#ifndef C4CORE_SINGLE_HEADER
 #include <c4/substr.hpp>
 #include <c4/charconv.hpp>
+#endif
 
 namespace c4 {
 

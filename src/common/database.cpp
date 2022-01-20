@@ -106,7 +106,7 @@ bool YamlDatabase::load(const std::string& path) {
 	rewind(f);
 	fread(buf, sizeof(char), size, f);
 	fclose(f);
-	tree = ryml::parse(c4::to_substr(buf));
+	tree = ryml::parse_in_place(c4::to_substr(buf));
 
 	// Required here already for header error reporting
 	this->currentFile = path;

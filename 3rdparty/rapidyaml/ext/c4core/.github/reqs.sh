@@ -47,6 +47,14 @@ function c4_install_test_requirements_windows()
         choco install swig
         which swig
     fi
+    # ensure chocolatey does not override cmake's cpack
+    which cpack
+    choco_cpack="/c/ProgramData/Chocolatey/bin/cpack.exe"
+    if [ -f $choco_cpack ] ; then
+        newname=$(echo $choco_cpack | sed 's:cpack:choco-cpack:')
+        mv -vf $choco_cpack $newname
+    fi
+    which cpack
 }
 
 function c4_install_test_requirements_macos()
@@ -97,6 +105,7 @@ function c4_gather_test_requirements_ubuntu()
     _add_apt libc6:i386
     _add_apt libc6-dev:i386
     _add_apt libc6-dbg:i386
+    _c4_addlibcxx
 
     _c4_gather_compilers "$CXX_"
 
@@ -140,9 +149,6 @@ function c4_install_test_requirements_ubuntu_impl()
     wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | sudo apt-key add -
     sudo -E apt-add-repository --yes 'deb https://apt.kitware.com/ubuntu/ bionic main'
     sudo -E add-apt-repository --yes ppa:ubuntu-toolchain-r/test
-    # this is going to be deprecated:
-    # https://askubuntu.com/questions/1243252/how-to-install-arm-none-eabi-gdb-on-ubuntu-20-04-lts-focal-fossa
-    sudo -E add-apt-repository --yes ppa:team-gcc-arm-embedded/ppa
 
     if [ "$APT_PKG" != "" ] ; then
         #sudo -E apt-get clean
@@ -160,6 +166,10 @@ function c4_install_test_requirements_ubuntu_impl()
 
 function _c4_add_arm_compilers()
 {
+    # this is going to be deprecated:
+    # https://askubuntu.com/questions/1243252/how-to-install-arm-none-eabi-gdb-on-ubuntu-20-04-lts-focal-fossa
+    sudo -E add-apt-repository --yes ppa:team-gcc-arm-embedded/ppa
+
     _add_apt gcc-arm-embedded
     _add_apt g++-arm-linux-gnueabihf
     _add_apt g++-multilib-arm-linux-gnueabihf
@@ -212,6 +222,14 @@ function _c4_gather_compilers()
 function _c4_addgcc()
 {
     gccversion=$1
+    case $gccversion in
+        5 )
+            _add_apt gcc-5 "deb http://dk.archive.ubuntu.com/ubuntu/ xenial main"
+            _add_apt gcc-5 "deb http://dk.archive.ubuntu.com/ubuntu/ xenial universe"
+            ;;
+        *)
+            ;;
+    esac
     _add_apt g++-$gccversion
     _add_apt g++-$gccversion-multilib
     _add_apt libstdc++-$gccversion-dev
@@ -237,6 +255,17 @@ function _c4_addclang()
     esac
     _add_apt g++-multilib  # this is required for 32 bit https://askubuntu.com/questions/1057341/unable-to-find-stl-headers-in-ubuntu-18-04
     _add_apt clang-tidy-$clversion
+}
+
+# add libc++
+function _c4_addlibcxx()
+{
+    _add_apt libc++1
+    _add_apt libc++abi-dev
+    _add_apt libc++-dev
+    _add_apt libc++1:i386
+    _add_apt libc++abi-dev:i386
+    _add_apt libc++-dev:i386
 }
 
 

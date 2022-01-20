@@ -1,9 +1,10 @@
 #ifndef _C4_WINDOWS_HPP_
 #define _C4_WINDOWS_HPP_
 
-#ifdef C4_WIN
+#if defined(_WIN64) || defined(_WIN32)
 #include "c4/windows_push.hpp"
-#include <Windows.h>
+#include <windows.h>
+#include "c4/windows_pop.hpp"
 #endif
 
 #endif /* _C4_WINDOWS_HPP_ */

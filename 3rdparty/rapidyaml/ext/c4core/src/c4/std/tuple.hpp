@@ -3,7 +3,10 @@
 
 /** @file tuple.hpp */
 
+#ifndef C4CORE_SINGLE_HEADER
 #include "c4/format.hpp"
+#endif
+
 #include <tuple>
 
 /** this is a work in progress */

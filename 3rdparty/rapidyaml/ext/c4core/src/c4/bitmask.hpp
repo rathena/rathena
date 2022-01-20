@@ -88,10 +88,11 @@ bm2stream(Stream &s, Enum value, EnumOffsetType offst=EOFFS_PFX)
 
 // some utility macros, undefed below
 
+/// @cond dev
 
-/** Execute @p code if the @p num of characters is available in the str
+/* Execute `code` if the `num` of characters is available in the str
  * buffer. This macro simplifies the code for bm2str().
- * @todo improve this by writing from the end and moving only once. */
+ * @todo improve performance by writing from the end and moving only once. */
 #define _c4prependchars(code, num)                                      \
     if(str && (pos + num <= sz))                                        \
     {                                                                   \
@@ -100,18 +101,28 @@ bm2stream(Stream &s, Enum value, EnumOffsetType offst=EOFFS_PFX)
         /* now write in the beginning of the string */                  \
         code;                                                           \
     }                                                                   \
-    else if(str && sz) { C4_ERROR("cannot write to string pos=%d num=%d sz=%d", (int)pos, (int)num, (int)sz); } \
+    else if(str && sz)                                                  \
+    {                                                                   \
+        C4_ERROR("cannot write to string pos=%d num=%d sz=%d",          \
+                 (int)pos, (int)num, (int)sz);                          \
+    }                                                                   \
     pos += num
 
-/** Execute @p code if the @p num of characters is available in the str
+/* Execute `code` if the `num` of characters is available in the str
  * buffer. This macro simplifies the code for bm2str(). */
 #define _c4appendchars(code, num)                                       \
     if(str && (pos + num <= sz))                                        \
     {                                                                   \
         code;                                                           \
     }                                                                   \
-    else if(str && sz) { C4_ERROR("cannot write to string pos=%d num=%d sz=%d", (int)pos, (int)num, (int)sz); } \
+    else if(str && sz)                                                  \
+    {                                                                   \
+        C4_ERROR("cannot write to string pos=%d num=%d sz=%d",          \
+                 (int)pos, (int)num, (int)sz);                          \
+    }                                                                   \
     pos += num
+
+/// @endcond
 
 
 /** convert a bitmask to string.
@@ -131,13 +142,13 @@ size_t bm2str
 
     auto syms = esyms<Enum>();
     size_t pos = 0;
-    typename EnumSymbols<Enum>::Sym const* zero = nullptr;
+    typename EnumSymbols<Enum>::Sym const* C4_RESTRICT zero = nullptr;
 
     // do reverse iteration to give preference to composite enum symbols,
     // which are likely to appear later in the enum sequence
     for(size_t i = syms.size()-1; i != size_t(-1); --i)
     {
-        auto const p = syms[i];
+        auto const &C4_RESTRICT p = syms[i]; // do not copy, we are assigning to `zero`
         I b = static_cast<I>(p.value);
         if(b == 0)
         {

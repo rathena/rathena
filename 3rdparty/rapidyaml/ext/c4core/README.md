@@ -23,6 +23,19 @@ I've been using these utilities in this or similar forms for some years now,
 and I've found them incredibly useful in my projects. I'm packing these as a
 separate library, as all of my projects use it.
 
+c4core is [extensively unit-tested in Linux, Windows and
+MacOS](https://github.com/biojppm/c4core/actions). The tests cover
+x64, x86, arm, wasm (emscripten), aarch64, ppc64le and s390x
+architectures, and include analysing c4core with:
+  * valgrind
+  * clang-tidy
+  * clang sanitizers:
+    * memory
+    * address
+    * undefined behavior
+    * thread
+  * [LGTM.com](https://lgtm.com/projects/g/biojppm/c4core)
+
 
 ## Obtaining c4core
 

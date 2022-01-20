@@ -1,4 +1,7 @@
+#ifndef C4CORE_SINGLE_HEADER
 #include "c4/allocator.hpp"
+#endif
+
 #include "c4/test.hpp"
 #include "c4/libtest/supprwarn_push.hpp"
 

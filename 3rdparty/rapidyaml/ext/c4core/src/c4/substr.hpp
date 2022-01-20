@@ -257,8 +257,8 @@ public:
 
     C4_ALWAYS_INLINE int compare(ro_substr const that) const { return this->compare(that.str, that.len); }
 
-    C4_ALWAYS_INLINE bool operator== (std::nullptr_t) const { return str == nullptr; }
-    C4_ALWAYS_INLINE bool operator!= (std::nullptr_t) const { return str != nullptr; }
+    C4_ALWAYS_INLINE bool operator== (std::nullptr_t) const { return str == nullptr || len == 0; }
+    C4_ALWAYS_INLINE bool operator!= (std::nullptr_t) const { return str != nullptr || len == 0; }
 
     C4_ALWAYS_INLINE bool operator== (C const c) const { return this->compare(c) == 0; }
     C4_ALWAYS_INLINE bool operator!= (C const c) const { return this->compare(c) != 0; }
@@ -307,17 +307,8 @@ public:
     /** true if there is overlap of at least one element between that and *this */
     inline bool overlaps(ro_substr const that) const
     {
-        CC * b =      begin(), * e =      end(),
-           *tb = that.begin(), *te = that.end();
-        return (
-                (tb <= b && te >  b)
-                ||
-                (tb <  e && te >= e)
-                ||
-                (tb >= b && te <= e)
-               )
-               &&
-               (b != nullptr && tb != nullptr);
+        // thanks @timwynants
+        return (that.end() > begin() && that.begin() < end());
     }
 
 public:
@@ -329,8 +320,7 @@ public:
         return basic_substring(str + first, len - first);
     }
 
-    /** return [first,first+num[. If num==npos, return first
-     * if*/
+    /** return [first,first+num[. If num==npos, return [first,len[ */
     basic_substring sub(size_t first, size_t num) const
     {
         C4_ASSERT(first >= 0 && first <= len);
@@ -340,7 +330,7 @@ public:
         return basic_substring(str + first, rnum);
     }
 
-    /** return [first,last[ */
+    /** return [first,last[. If last==npos, return [first,len[ */
     basic_substring range(size_t first, size_t last=npos) const
     {
         C4_ASSERT(first >= 0 && first <= len);
@@ -360,9 +350,7 @@ public:
     basic_substring last(size_t num) const
     {
         if(num == npos)
-        {
             return *this;
-        }
         return sub(len - num);
     }
 
@@ -381,9 +369,7 @@ public:
     basic_substring left_of(size_t pos, bool include_pos=false) const
     {
         if(pos == npos)
-        {
             return *this;
-        }
         return first(pos + include_pos);
     }
 
@@ -391,38 +377,28 @@ public:
     basic_substring right_of(size_t pos, bool include_pos=false) const
     {
         if(pos == npos)
-        {
             return sub(len, 0);
-        }
-        if( ! include_pos)
-        {
-            ++pos;
-        }
-        return sub(pos);
+        return sub(pos + !include_pos);
     }
 
 public:
 
     /** given @p subs a substring of the current string, get the
-     * portion of the current string to the left of it*/
+     * portion of the current string to the left of it */
     basic_substring left_of(ro_substr const subs) const
     {
-        C4_ASSERT(this->is_super(subs) || subs.empty());
+        C4_ASSERT(is_super(subs) || subs.empty());
         auto ssb = subs.begin();
         auto b = begin();
         auto e = end();
         if(ssb >= b && ssb <= e)
-        {
             return sub(0, static_cast<size_t>(ssb - b));
-        }
         else
-        {
             return sub(0, 0);
-        }
     }
 
     /** given @p subs a substring of the current string, get the
-     * portion of the current string to the right of it*/
+     * portion of the current string to the right of it */
     basic_substring right_of(ro_substr const subs) const
     {
         C4_ASSERT(is_super(subs) || subs.empty());
@@ -430,13 +406,9 @@ public:
         auto b = begin();
         auto e = end();
         if(sse >= b && sse <= e)
-        {
             return sub(static_cast<size_t>(sse - b), static_cast<size_t>(e - sse));
-        }
         else
-        {
             return sub(0, 0);
-        }
     }
 
     /** @} */
@@ -449,21 +421,23 @@ public:
     /** trim left */
     basic_substring triml(const C c) const
     {
-        //return right_of(first_not_of(c), /*include_pos*/true);
-        return triml({&c, 1});
+        if( ! empty())
+        {
+            size_t pos = first_not_of(c);
+            if(pos != npos)
+                return sub(pos);
+        }
+        return sub(0, 0);
     }
     /** trim left ANY of the characters.
      * @see stripl() to remove a pattern from the left */
     basic_substring triml(ro_substr chars) const
     {
-        //return right_of(first_not_of(chars), /*include_pos*/true);
         if( ! empty())
         {
-            size_t pos = first_not_of(chars, 0);
+            size_t pos = first_not_of(chars);
             if(pos != npos)
-            {
                 return sub(pos);
-            }
         }
         return sub(0, 0);
     }
@@ -471,21 +445,23 @@ public:
     /** trim the character c from the right */
     basic_substring trimr(const C c) const
     {
-        //return left_of(last_not_of(c), /*include_pos*/true);
-        return trimr({&c, 1});
+        if( ! empty())
+        {
+            size_t pos = last_not_of(c, npos);
+            if(pos != npos)
+                return sub(0, pos+1);
+        }
+        return sub(0, 0);
     }
     /** trim right ANY of the characters
      * @see stripr() to remove a pattern from the right  */
     basic_substring trimr(ro_substr chars) const
     {
-        //return left_of(last_not_of(chars), /*include_pos*/true);
         if( ! empty())
         {
             size_t pos = last_not_of(chars, npos);
             if(pos != npos)
-            {
                 return sub(0, pos+1);
-            }
         }
         return sub(0, 0);
     }
@@ -506,7 +482,8 @@ public:
      * @see triml() to remove characters*/
     basic_substring stripl(ro_substr pattern) const
     {
-        if( ! begins_with(pattern)) return *this;
+        if( ! begins_with(pattern))
+            return *this;
         return sub(pattern.len < len ? pattern.len : len);
     }
 
@@ -514,7 +491,8 @@ public:
      * @see trimr() to remove characters*/
     basic_substring stripr(ro_substr pattern) const
     {
-        if( ! ends_with(pattern)) return *this;
+        if( ! ends_with(pattern))
+            return *this;
         return left_of(len - (pattern.len < len ? pattern.len : len));
     }
 
@@ -769,7 +747,8 @@ public:
         C4_ASSERT(start == npos || (start >= 0 && start <= len));
         for(size_t i = start; i < len; ++i)
         {
-            if(str[i] == c) return i;
+            if(str[i] == c)
+                return i;
         }
         return npos;
     }
@@ -778,10 +757,12 @@ public:
     size_t last_of(const C c, size_t start=npos) const
     {
         C4_ASSERT(start == npos || (start >= 0 && start <= len));
-        if(start == npos) start = len;
+        if(start == npos)
+            start = len;
         for(size_t i = start-1; i != size_t(-1); --i)
         {
-            if(str[i] == c) return i;
+            if(str[i] == c)
+                return i;
         }
         return npos;
     }
@@ -794,7 +775,8 @@ public:
         {
             for(size_t j = 0; j < chars.len; ++j)
             {
-                if(str[i] == chars[j]) return i;
+                if(str[i] == chars[j])
+                    return i;
             }
         }
         return npos;
@@ -804,12 +786,14 @@ public:
     size_t last_of(ro_substr chars, size_t start=npos) const
     {
         C4_ASSERT(start == npos || (start >= 0 && start <= len));
-        if(start == npos) start = len;
+        if(start == npos)
+            start = len;
         for(size_t i = start-1; i != size_t(-1); --i)
         {
             for(size_t j = 0; j < chars.len; ++j)
             {
-                if(str[i] == chars[j]) return i;
+                if(str[i] == chars[j])
+                    return i;
             }
         }
         return npos;
@@ -822,7 +806,8 @@ public:
         C4_ASSERT((start >= 0 && start <= len) || (start == len && len == 0));
         for(size_t i = start; i < len; ++i)
         {
-            if(str[i] != c) return i;
+            if(str[i] != c)
+                return i;
         }
         return npos;
     }
@@ -830,10 +815,12 @@ public:
     size_t last_not_of(const C c, size_t start=npos) const
     {
         C4_ASSERT(start == npos || (start >= 0 && start <= len));
-        if(start == npos) start = len;
+        if(start == npos)
+            start = len;
         for(size_t i = start-1; i != size_t(-1); --i)
         {
-            if(str[i] != c) return i;
+            if(str[i] != c)
+                return i;
         }
         return npos;
     }
@@ -863,8 +850,9 @@ public:
     size_t last_not_of(ro_substr chars, size_t start=npos) const
     {
         C4_ASSERT(start == npos || (start >= 0 && start <= len));
-        if(start == npos) start = len;
-        for(size_t i = len-1; i != size_t(-1); --i)
+        if(start == npos)
+            start = len;
+        for(size_t i = start-1; i != size_t(-1); --i)
         {
             bool gotit = true;
             for(size_t j = 0; j < chars.len; ++j)
@@ -896,9 +884,11 @@ public:
     basic_substring pair_range(CC open, CC close) const
     {
         size_t b = find(open);
-        if(b == npos) return basic_substring();
+        if(b == npos)
+            return basic_substring();
         size_t e = find(close, b+1);
-        if(e == npos) return basic_substring();
+        if(e == npos)
+            return basic_substring();
         basic_substring ret = range(b, e+1);
         C4_ASSERT(ret.sub(1).find(open) == npos);
         return ret;
@@ -970,32 +960,63 @@ public:
     /** @name Number-matching query methods */
     /** @{ */
 
-    /** @return true if the substring contents are a floating-point or integer number */
+    /** @return true if the substring contents are a floating-point or integer number.
+     * @note any leading or trailing whitespace will return false. */
     bool is_number() const
     {
-        if(empty() || (first_non_empty_span().empty())) return false;
-        if(first_real_span() == *this) return true;
-        if(first_int_span() == *this) return true;
-        if(first_uint_span() == *this) return true;
+        if(empty() || (first_non_empty_span().empty()))
+            return false;
+        if(first_uint_span() == *this)
+            return true;
+        if(first_int_span() == *this)
+            return true;
+        if(first_real_span() == *this)
+            return true;
         return false;
     }
 
-    /** @return true if the substring contents are an integer number */
+    /** @return true if the substring contents are a real number.
+     * @note any leading or trailing whitespace will return false. */
+    bool is_real() const
+    {
+        if(empty() || (first_non_empty_span().empty()))
+            return false;
+        if(first_real_span() == *this)
+            return true;
+        return false;
+    }
+
+    /** @return true if the substring contents are an integer number.
+     * @note any leading or trailing whitespace will return false. */
     bool is_integer() const
     {
-        if(empty() || (first_non_empty_span().empty())) return false;
-        if(first_int_span() == *this) return true;
-        if(first_uint_span() == *this) return true;
+        if(empty() || (first_non_empty_span().empty()))
+            return false;
+        if(first_uint_span() == *this)
+            return true;
+        if(first_int_span() == *this)
+            return true;
         return false;
     }
 
+    /** @return true if the substring contents are an unsigned integer number.
+     * @note any leading or trailing whitespace will return false. */
+    bool is_unsigned_integer() const
+    {
+        if(empty() || (first_non_empty_span().empty()))
+            return false;
+        if(first_uint_span() == *this)
+            return true;
+        return false;
+    }
 
     /** get the first span consisting exclusively of non-empty characters */
     basic_substring first_non_empty_span() const
     {
         constexpr const ro_substr empty_chars(" \n\r\t");
         size_t pos = first_not_of(empty_chars);
-        if(pos == npos) return first(0);
+        if(pos == npos)
+            return first(0);
         auto ret = sub(pos);
         pos = ret.first_of(empty_chars);
         return ret.first(pos);
@@ -1005,8 +1026,10 @@ public:
     basic_substring first_uint_span() const
     {
         basic_substring ne = first_non_empty_span();
-        if(ne.empty()) return ne;
-        if(ne.str[0] == '-') return first(0);
+        if(ne.empty())
+            return ne;
+        if(ne.str[0] == '-')
+            return first(0);
         size_t skip_start = (ne.str[0] == '+') ? 1 : 0;
         return ne._first_integral_span(skip_start);
     }
@@ -1015,7 +1038,8 @@ public:
     basic_substring first_int_span() const
     {
         basic_substring ne = first_non_empty_span();
-        if(ne.empty()) return ne;
+        if(ne.empty())
+            return ne;
         size_t skip_start = (ne.str[0] == '+' || ne.str[0] == '-') ? 1 : 0;
         return ne._first_integral_span(skip_start);
     }
@@ -1030,51 +1054,47 @@ public:
         if(first_of_any("0x", "0X")) // hexadecimal
         {
             skip_start += 2;
-            if(len == skip_start) return first(0);
+            if(len == skip_start)
+                return first(0);
             for(size_t i = skip_start; i < len; ++i)
             {
                 if( ! _is_hex_char(str[i]))
-                {
                     return _is_delim_char(str[i]) ? first(i) : first(0);
-                }
             }
         }
         else if(first_of_any("0o", "0O")) // octal
         {
             skip_start += 2;
-            if(len == skip_start) return first(0);
+            if(len == skip_start)
+                return first(0);
             for(size_t i = skip_start; i < len; ++i)
             {
                 char c = str[i];
                 if(c < '0' || c > '7')
-                {
                     return _is_delim_char(str[i]) ? first(i) : first(0);
-                }
             }
         }
         else if(first_of_any("0b", "0B")) // binary
         {
             skip_start += 2;
-            if(len == skip_start) return first(0);
+            if(len == skip_start)
+                return first(0);
             for(size_t i = skip_start; i < len; ++i)
             {
                 char c = str[i];
                 if(c != '0' && c != '1')
-                {
                     return _is_delim_char(c) ? first(i) : first(0);
-                }
             }
         }
         else // otherwise, decimal
         {
-            if(len == skip_start) return first(0);
+            if(len == skip_start)
+                return first(0);
             for(size_t i = skip_start; i < len; ++i)
             {
                 char c = str[i];
                 if(c < '0' || c > '9')
-                {
                     return _is_delim_char(c) ? first(i) : first(0);
-                }
             }
         }
         return *this;
@@ -1084,12 +1104,14 @@ public:
     basic_substring first_real_span() const
     {
         basic_substring ne = first_non_empty_span();
-        if(ne.empty()) return ne;
+        if(ne.empty())
+            return ne;
         size_t skip_start = (ne.str[0] == '+' || ne.str[0] == '-') ? 1 : 0;
         if(ne.first_of_any("0x", "0X")) // hexadecimal
         {
             skip_start += 2;
-            if(ne.len == skip_start) return ne.first(0);
+            if(ne.len == skip_start)
+                return ne.first(0);
             for(size_t i = skip_start; i < ne.len; ++i)
             {
                 char c = ne.str[i];
@@ -1110,7 +1132,8 @@ public:
         else if(ne.first_of_any("0b", "0B")) // binary
         {
             skip_start += 2;
-            if(ne.len == skip_start) return ne.first(0);
+            if(ne.len == skip_start)
+                return ne.first(0);
             for(size_t i = skip_start; i < ne.len; ++i)
             {
                 char c = ne.str[i];
@@ -1120,9 +1143,24 @@ public:
                 }
             }
         }
+        else if(ne.first_of_any("0o", "0O")) // octal
+        {
+            skip_start += 2;
+            if(ne.len == skip_start)
+                return ne.first(0);
+            for(size_t i = skip_start; i < ne.len; ++i)
+            {
+                char c = ne.str[i];
+                if((c < '0' || c > '7') && c != '.')
+                {
+                    return _is_delim_char(c) ? ne.first(i) : ne.first(0);
+                }
+            }
+        }
         else // assume decimal
         {
-            if(ne.len == skip_start) return ne.first(0);
+            if(ne.len == skip_start)
+                return ne.first(0);
             for(size_t i = skip_start; i < ne.len; ++i)
             {
                 char c = ne.str[i];
@@ -1136,7 +1174,33 @@ public:
                             continue;
                         }
                     }
-                    return _is_delim_char(c) ? ne.first(i) : ne.first(0);
+                    else if(i == skip_start)
+                    {
+                        if(c == 'i')
+                        {
+                            if(ne.len >= skip_start + 8 && ne.sub(skip_start, 8) == "infinity")
+                                return _is_delim_char(ne.str[skip_start + 8]) ? ne.first(skip_start + 8) : ne.first(0);
+                            else if(ne.len >= skip_start + 3 && ne.sub(skip_start, 3) == "inf")
+                                return _is_delim_char(ne.str[skip_start + 3]) ? ne.first(skip_start + 3) : ne.first(0);
+                            else
+                                return ne.first(0);
+                        }
+                        else if(c == 'n')
+                        {
+                            if(ne.len >= skip_start + 3 && ne.sub(skip_start, 3) == "nan")
+                                return _is_delim_char(ne.str[skip_start + 3]) ? ne.first(skip_start + 3) : ne.first(0);
+                            else
+                                return ne.first(0);
+                        }
+                        else
+                        {
+                            return ne.first(0);
+                        }
+                    }
+                    else
+                    {
+                        return _is_delim_char(c) ? ne.first(i) : ne.first(0);
+                    }
                 }
             }
         }
@@ -1155,6 +1219,12 @@ public:
     static constexpr C4_ALWAYS_INLINE bool _is_hex_char(char c) noexcept
     {
         return (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F');
+    }
+
+    /** true if the character is in [0-9a-fA-F] */
+    static constexpr C4_ALWAYS_INLINE bool _is_oct_char(char c) noexcept
+    {
+        return (c >= '0' && c <= '7');
     }
 
     /** @} */
@@ -1236,8 +1306,10 @@ private:
             bool operator== (split_iterator_impl const& that) const
             {
                 C4_XASSERT((m_sep == that.m_sep) && "cannot compare split iterators with different separators");
-                if(m_str.size() != that.m_str.size()) return false;
-                if(m_str.data() != that.m_str.data()) return false;
+                if(m_str.size() != that.m_str.size())
+                    return false;
+                if(m_str.data() != that.m_str.data())
+                    return false;
                 return m_pos == that.m_pos;
             }
         };
@@ -1268,7 +1340,7 @@ public:
 
     using split_proxy = split_proxy_impl;
 
-    /** a view into the splits iterate throught splits with a view:*/
+    /** a view into the splits */
     split_proxy split(C sep, size_t start_pos=0) const
     {
         C4_XASSERT((start_pos >= 0 && start_pos < len) || empty());

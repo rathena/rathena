@@ -63,8 +63,14 @@ struct fail_type__ {};
 #else
 #   ifdef __clang__
 #       pragma clang diagnostic push
-#       if (__clang_major__ >= 10)
-#           pragma clang diagnostic ignored "-Wgnu-inline-cpp-without-extern" // debugbreak/debugbreak.h:50:16: error: 'gnu_inline' attribute without 'extern' in C++ treated as externally available, this changed in Clang 10 [-Werror,-Wgnu-inline-cpp-without-extern]
+#       if !defined(__APPLE_CC__)
+#           if __clang_major__ >= 10
+#               pragma clang diagnostic ignored "-Wgnu-inline-cpp-without-extern" // debugbreak/debugbreak.h:50:16: error: 'gnu_inline' attribute without 'extern' in C++ treated as externally available, this changed in Clang 10 [-Werror,-Wgnu-inline-cpp-without-extern]
+#           endif
+#       else
+#           if __clang_major__ >= 13
+#               pragma clang diagnostic ignored "-Wgnu-inline-cpp-without-extern" // debugbreak/debugbreak.h:50:16: error: 'gnu_inline' attribute without 'extern' in C++ treated as externally available, this changed in Clang 10 [-Werror,-Wgnu-inline-cpp-without-extern]
+#           endif
 #       endif
 #   elif defined(__GNUC__)
 #   endif
@@ -77,7 +83,7 @@ struct fail_type__ {};
 #endif
 
 namespace c4 {
-bool is_debugger_attached();
+C4CORE_EXPORT bool is_debugger_attached();
 } // namespace c4
 
 
@@ -123,13 +129,13 @@ typedef enum : uint32_t {
     ON_ERROR_DEFAULTS = ON_ERROR_DEBUGBREAK|ON_ERROR_LOG|ON_ERROR_CALLBACK|ON_ERROR_ABORT
 } ErrorFlags_e;
 using error_flags = uint32_t;
-void set_error_flags(error_flags f);
-error_flags get_error_flags();
+C4CORE_EXPORT void set_error_flags(error_flags f);
+C4CORE_EXPORT error_flags get_error_flags();
 
 
 using error_callback_type = void (*)(const char* msg, size_t msg_size);
-void set_error_callback(error_callback_type cb);
-error_callback_type get_error_callback();
+C4CORE_EXPORT void set_error_callback(error_callback_type cb);
+C4CORE_EXPORT error_callback_type get_error_callback();
 
 
 //-----------------------------------------------------------------------------
@@ -171,8 +177,8 @@ struct ScopedErrorSettings
 /** source location */
 struct srcloc;
 
-void handle_error(srcloc s, const char *fmt, ...);
-void handle_warning(srcloc s, const char *fmt, ...);
+C4CORE_EXPORT void handle_error(srcloc s, const char *fmt, ...);
+C4CORE_EXPORT void handle_warning(srcloc s, const char *fmt, ...);
 
 
 #   define C4_ERROR(msg, ...)                               \

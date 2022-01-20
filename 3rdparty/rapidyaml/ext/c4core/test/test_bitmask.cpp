@@ -1,8 +1,10 @@
 #include <vector>
 #include <sstream>
 
+#ifndef C4CORE_SINGLE_HEADER
 #include <c4/bitmask.hpp>
 #include <c4/std/vector.hpp>
+#endif
 
 #include <c4/test.hpp>
 

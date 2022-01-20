@@ -1,4 +1,6 @@
+#ifndef C4CORE_SINGLE_HEADER
 #include "c4/config.hpp"
+#endif
 #include <string>
 
 #include "c4/libtest/supprwarn_push.hpp"

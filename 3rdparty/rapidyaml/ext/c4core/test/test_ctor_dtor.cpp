@@ -1,4 +1,6 @@
+#ifndef C4CORE_SINGLE_HEADER
 #include "c4/ctor_dtor.hpp"
+#endif
 
 #include "c4/libtest/supprwarn_push.hpp"
 

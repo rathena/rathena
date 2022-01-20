@@ -23,8 +23,8 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-
-#pragma once
+#ifndef _C4_EXT_SG14_INPLACE_FUNCTION_H_
+#define _C4_EXT_SG14_INPLACE_FUNCTION_H_
 
 #include <type_traits>
 #include <utility>
@@ -41,7 +41,7 @@ template<size_t Cap>
 union aligned_storage_helper {
     struct double1 { double a; };
     struct double4 { double a[4]; };
-    template<class T> using maybe = std::conditional_t<(Cap >= sizeof(T)), T, char>;
+    template<class T> using maybe = typename std::conditional<(Cap >= sizeof(T)), T, char>::type;
     char real_data[Cap];
     maybe<int> a;
     maybe<long> b;
@@ -55,14 +55,10 @@ union aligned_storage_helper {
 
 template<size_t Cap, size_t Align = std::alignment_of<aligned_storage_helper<Cap>>::value>
 struct aligned_storage {
-    using type = std::aligned_storage_t<Cap, Align>;
+    using type = typename std::aligned_storage<Cap, Align>::type;
 };
-
-template<size_t Cap, size_t Align = std::alignment_of<aligned_storage_helper<Cap>>::value>
-using aligned_storage_t = typename aligned_storage<Cap, Align>::type;
 #else
 using std::aligned_storage;
-using std::aligned_storage_t;
 #endif
 
 template<typename T> struct wrapper
@@ -122,12 +118,6 @@ template<typename R, typename... Args> struct vtable
     ~vtable() = default;
 };
 
-template<typename R, typename... Args>
-#if __cplusplus >= 201703L
-inline constexpr
-#endif
-vtable<R, Args...> empty_vtable{};
-
 template<size_t DstCap, size_t DstAlign, size_t SrcCap, size_t SrcAlign>
 struct is_valid_inplace_dst : std::true_type
 {
@@ -145,7 +135,7 @@ struct is_valid_inplace_dst : std::true_type
 template<
     typename Signature,
     size_t Capacity = inplace_function_detail::InplaceFunctionDefaultCapacity,
-    size_t Alignment = std::alignment_of<inplace_function_detail::aligned_storage_t<Capacity>>::value
+    size_t Alignment = std::alignment_of<typename inplace_function_detail::aligned_storage<Capacity>::type>::value
 >
 class inplace_function; // unspecified
 
@@ -157,27 +147,28 @@ template<
 >
 class inplace_function<R(Args...), Capacity, Alignment>
 {
+    static const constexpr inplace_function_detail::vtable<R, Args...> empty_vtable{};
 public:
     using capacity = std::integral_constant<size_t, Capacity>;
     using alignment = std::integral_constant<size_t, Alignment>;
 
-    using storage_t = inplace_function_detail::aligned_storage_t<Capacity, Alignment>;
+    using storage_t = typename inplace_function_detail::aligned_storage<Capacity, Alignment>::type;
     using vtable_t = inplace_function_detail::vtable<R, Args...>;
     using vtable_ptr_t = const vtable_t*;
 
     template <typename, size_t, size_t>	friend class inplace_function;
 
     inplace_function() noexcept :
-        vtable_ptr_{std::addressof(inplace_function_detail::empty_vtable<R, Args...>)}
+        vtable_ptr_{std::addressof(empty_vtable)}
     {}
 
     template<
         typename T,
-        typename C = std::decay_t<T>,
-        typename = std::enable_if_t<
+        typename C = typename std::decay<T>::type,
+        typename = typename std::enable_if<
             !(std::is_same<C, inplace_function>::value
             || std::is_convertible<C, inplace_function>::value)
-        >
+        >::type
     >
     inplace_function(T&& closure)
     {
@@ -205,7 +196,7 @@ public:
     }
 
     inplace_function(std::nullptr_t) noexcept :
-        vtable_ptr_{std::addressof(inplace_function_detail::empty_vtable<R, Args...>)}
+        vtable_ptr_{std::addressof(empty_vtable)}
     {}
 
     inplace_function(const inplace_function& other) :
@@ -229,7 +220,7 @@ public:
     inplace_function& operator= (std::nullptr_t) noexcept
     {
         vtable_ptr_->destructor_ptr(std::addressof(storage_));
-        vtable_ptr_ = std::addressof(inplace_function_detail::empty_vtable<R, Args...>);
+        vtable_ptr_ = std::addressof(empty_vtable);
         return *this;
     }
 
@@ -288,7 +279,7 @@ public:
 
     explicit constexpr operator bool() const noexcept
     {
-        return vtable_ptr_ != std::addressof(inplace_function_detail::empty_vtable<R, Args...>);
+        return vtable_ptr_ != std::addressof(empty_vtable);
     }
 
     template<size_t Cap, size_t Align>
@@ -352,3 +343,5 @@ private:
 };
 
 } // namespace stdext
+
+#endif /* _C4_EXT_SG14_INPLACE_FUNCTION_H_ */

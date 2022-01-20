@@ -6,9 +6,6 @@
 #include <c4/yml/export.hpp>
 
 
-#define RYML_INLINE inline
-
-
 #ifndef RYML_USE_ASSERT
 #   define RYML_USE_ASSERT C4_USE_ASSERT
 #endif
@@ -43,6 +40,17 @@
     } while(0)
 
 
+#if C4_CPP >= 14
+#   define RYML_DEPRECATED(msg) [[deprecated(msg)]]
+#else
+#   if defined(_MSC_VER)
+#       define RYML_DEPRECATED(msg) __declspec(deprecated)
+#   else // defined(__GNUC__) || defined(__clang__)
+#       define RYML_DEPRECATED(msg) __attribute__((deprecated))
+#   endif
+#endif
+
+
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -65,11 +73,11 @@ enum : size_t {
 //! holds a position into a source buffer
 struct RYML_EXPORT LineCol
 {
-    //!< number of bytes from the beginning of the source buffer
+    //! number of bytes from the beginning of the source buffer
     size_t offset;
-    //!< line
+    //! line
     size_t line;
-    //!< column
+    //! column
     size_t col;
 
     LineCol() : offset(), line(), col() {}
@@ -102,6 +110,10 @@ struct RYML_EXPORT Location : public LineCol
  * interrupt execution, either by raising an exception or calling
  * std::abort(). */
 using pfn_error = void (*)(const char* msg, size_t msg_len, Location location, void *user_data);
+/** the type of the function used to allocate memory */
+using pfn_allocate = void* (*)(size_t len, void* hint, void *user_data);
+/** the type of the function used to free memory */
+using pfn_free = void (*)(void* mem, size_t size, void *user_data);
 
 /** trigger an error: call the current error callback. */
 RYML_EXPORT void error(const char *msg, size_t msg_len, Location loc);
@@ -125,11 +137,6 @@ inline void error(const char (&msg)[N])
 
 //-----------------------------------------------------------------------------
 
-/** the type of the function used to allocate memory */
-using pfn_allocate = void* (*)(size_t len, void* hint, void *user_data);
-/** the type of the function used to free memory */
-using pfn_free = void (*)(void* mem, size_t size, void *user_data);
-
 /// a c-style callbacks class
 struct RYML_EXPORT Callbacks
 {
@@ -141,43 +148,14 @@ struct RYML_EXPORT Callbacks
     Callbacks();
     Callbacks(void *user_data, pfn_allocate alloc, pfn_free free, pfn_error error_);
 
-    inline void* allocate(size_t len, void* hint) const
+    bool operator!= (Callbacks const& that) const { return !operator==(that); }
+    bool operator== (Callbacks const& that) const
     {
-        void* mem = m_allocate(len, hint, m_user_data);
-        if(mem == nullptr)
-        {
-            this->error("out of memory", {});
-        }
-        return mem;
+        return (m_user_data == that.m_user_data &&
+                m_allocate == that.m_allocate &&
+                m_free == that.m_free &&
+                m_error == that.m_error);
     }
-
-    inline void free(void *mem, size_t len) const
-    {
-        m_free(mem, len, m_user_data);
-    }
-
-    void error(const char *msg, size_t msg_len, Location loc) const
-    {
-        m_error(msg, msg_len, loc, m_user_data);
-    }
-
-    void error(const char *msg, size_t msg_len) const
-    {
-        m_error(msg, msg_len, {}, m_user_data);
-    }
-
-    template<size_t N>
-    inline void error(const char (&msg)[N], Location loc) const
-    {
-        error(msg, N-1, loc);
-    }
-
-    template<size_t N>
-    inline void error(const char (&msg)[N]) const
-    {
-        error(msg, N-1, {});
-    }
-
 };
 
 /// get the global callbacks
@@ -187,74 +165,37 @@ RYML_EXPORT void set_callbacks(Callbacks const& c);
 /// set the global callbacks to their defaults
 RYML_EXPORT void reset_callbacks();
 
-
-//-----------------------------------------------------------------------------
-
-class RYML_EXPORT MemoryResource
-{
-public:
-
-    virtual ~MemoryResource() = default;
-
-    virtual void * allocate(size_t num_bytes, void *hint) = 0;
-    virtual void   free(void *mem, size_t num_bytes) = 0;
-};
-
-/** set the global memory resource */
-RYML_EXPORT void set_memory_resource(MemoryResource *r);
-/** get the global memory resource */
-RYML_EXPORT MemoryResource *get_memory_resource();
-
-
-//-----------------------------------------------------------------------------
-
-/** a memory resource adapter to the c-style allocator */
-class RYML_EXPORT MemoryResourceCallbacks : public MemoryResource
-{
-public:
-
-    Callbacks m_callbacks;
-
-    MemoryResourceCallbacks() : m_callbacks(get_callbacks()) {}
-    MemoryResourceCallbacks(Callbacks const& c) : m_callbacks(c) {}
-
-    void* allocate(size_t len, void* hint) override final
-    {
-        return m_callbacks.allocate(len, hint);
-    }
-
-    void free(void *mem, size_t len) override final
-    {
-        return m_callbacks.free(mem, len);
-    }
-};
-
-
-//-----------------------------------------------------------------------------
-
-/** an allocator is a lightweight non-owning handle to a memory resource */
-struct RYML_EXPORT Allocator
-{
-    MemoryResource *r;
-
-    Allocator() : r(get_memory_resource()) {}
-    Allocator(MemoryResource *m) : r(m) {}
-
-    inline void *allocate(size_t num_bytes, void *hint)
-    {
-        void *mem = r->allocate(num_bytes, hint);
-        if(mem == nullptr)
-            error("out of memory");
-        return mem;
-    }
-
-    inline void free(void *mem, size_t num_bytes)
-    {
-        RYML_ASSERT(r != nullptr);
-        r->free(mem, num_bytes);
-    }
-};
-
+/// @cond dev
+#define _RYML_CB_ERR(cb, msg_literal)                                   \
+do                                                                      \
+{                                                                       \
+    const char msg[] = msg_literal;                                     \
+    C4_DEBUG_BREAK();                                                   \
+    (cb).m_error(msg, sizeof(msg), c4::yml::Location(__FILE__, 0, __LINE__, 0), (cb).m_user_data); \
+} while(0)
+#define _RYML_CB_CHECK(cb, cond)                                        \
+    do                                                                  \
+    {                                                                   \
+        if(!(cond))                                                     \
+        {                                                               \
+            const char msg[] = "check failed: " #cond;                  \
+            C4_DEBUG_BREAK();                                           \
+            (cb).m_error(msg, sizeof(msg), c4::yml::Location(__FILE__, 0, __LINE__, 0), (cb).m_user_data); \
+        }                                                               \
+    } while(0)
+#ifdef RYML_USE_ASSERT
+#define _RYML_CB_ASSERT(cb, cond) _RYML_CB_CHECK((cb), (cond))
+#else
+#define _RYML_CB_ASSERT(cb, cond) do {} while(0)
+#endif
+#define _RYML_CB_ALLOC_HINT(cb, T, num, hint) (T*) (cb).m_allocate((num) * sizeof(T), (hint), (cb).m_user_data)
+#define _RYML_CB_ALLOC(cb, T, num) _RYML_CB_ALLOC_HINT((cb), (T), (num), nullptr)
+#define _RYML_CB_FREE(cb, buf, T, num)                              \
+    do {                                                            \
+        (cb).m_free((buf), (num) * sizeof(T), (cb).m_user_data);    \
+        (buf) = nullptr;                                            \
+    } while(0)
+/// @endcond
 
 } // namespace yml
 } // namespace c4

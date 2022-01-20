@@ -1,6 +1,8 @@
-#include "c4/test.hpp"
+#ifndef C4CORE_SINGLE_HEADER
 #include "c4/blob.hpp"
+#endif
 
+#include "c4/test.hpp"
 
 #ifdef __clang__
 #   pragma clang diagnostic push

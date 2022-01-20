@@ -56,7 +56,7 @@ C4_CONSTEXPR14 cspan<char> type_name()
     // _c4t __cdecl _c4tn() [T = int]
     enum : size_t { tstart = 26, tend = 1};
 
-#   elif defined(C4_MSVC_2015) || defined(C4_MSVC_2017) || defined(C4_MSVC_2019)
+#   elif defined(C4_MSVC_2015) || defined(C4_MSVC_2017) || defined(C4_MSVC_2019) || defined(C4_MSVC_2022)
     // Note: subtract 7 at the end because the function terminates with ">(void)" in VS2015+
     cspan<char>::size_type tstart = 26, tend = 7;
 

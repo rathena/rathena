@@ -344,10 +344,10 @@ inline raw_wrapper raw(T & C4_RESTRICT data, size_t alignment=alignof(T))
 
 
 /** write a variable in raw binary format, using memcpy */
-size_t to_chars(substr buf, fmt::const_raw_wrapper r);
+C4CORE_EXPORT size_t to_chars(substr buf, fmt::const_raw_wrapper r);
 
 /** read a variable in raw binary format, using memcpy */
-bool from_chars(csubstr buf, fmt::raw_wrapper *r);
+C4CORE_EXPORT bool from_chars(csubstr buf, fmt::raw_wrapper *r);
 /** read a variable in raw binary format, using memcpy */
 inline bool from_chars(csubstr buf, fmt::raw_wrapper r)
 {

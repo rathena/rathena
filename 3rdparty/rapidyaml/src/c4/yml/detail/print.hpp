@@ -107,12 +107,14 @@ inline void print_node(NodeRef const& p, int level=0)
 
 inline size_t print_tree(Tree const& p, size_t node=NONE)
 {
-    if(node == NONE)
-    {
-        node = p.root_id();
-    }
     printf("--------------------------------------\n");
-    size_t ret = print_node(p, node, 0, 0, true);
+    size_t ret = 0;
+    if(!p.empty())
+    {
+        if(node == NONE)
+            node = p.root_id();
+        ret = print_node(p, node, 0, 0, true);
+    }
     printf("#nodes=%zd vs #printed=%zd\n", p.size(), ret);
     printf("--------------------------------------\n");
     return ret;

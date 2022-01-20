@@ -1,13 +1,17 @@
 #include <ryml.hpp>
 #include <ryml_std.hpp>
 #include <c4/fs/fs.hpp>
-#include "../test/libyaml.hpp"
+#include "c4/yml/parse.hpp"
+
+#include <libfyaml.h>
 
 #include <vector>
 #include <iostream>
 
+#include "./libyaml.hpp"
 #include <benchmark/benchmark.h>
 
+// warning suppressions for thirdparty code
 #if defined(_MSC_VER)
 #   pragma warning(push)
 #   pragma warning(disable : 4100) // sajson.h(1313,41): warning C4100: 'input_document_size_in_bytes': unreferenced formal parameter
@@ -74,6 +78,7 @@ namespace bm = benchmark;
 #   pragma GCC diagnostic ignored "-Wunused-variable"
 #   pragma GCC diagnostic ignored "-Wsign-conversion"
 #endif
+
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -147,6 +152,34 @@ struct BmCase
             memcpy(in_place.data(), src.data(), src.size());
         }
     }
+
+    void report(bm::State &st) const
+    {
+        // number of times the source was parsed
+        st.SetItemsProcessed(st.iterations());
+        // number of bytes parsed in the source
+        st.SetBytesProcessed(st.iterations() * src.size());
+    }
+
+    bool skip_libyaml_if_needed(bm::State &st) const
+    {
+        if(filename.basename() == "trusty.yml")
+        {
+            st.SkipWithError("trusty.yml has anchors/references, which do not parse successfully in our parser wrapper for libyaml");
+            return true;
+        }
+        return false;
+    }
+
+    bool skip_libfyaml_if_needed(bm::State &st) const
+    {
+        if(filename.basename() == "typeIDs.yaml")
+        {
+            st.SkipWithError("libfyaml fails to parse this file");
+            return true;
+        }
+        return false;
+    }
 };
 
 
@@ -178,7 +211,8 @@ int main(int argc, char** argv)
 #define ONLY_FOR_JSON \
     if(!s_bm_case->is_json) { st.SkipWithError("not a json file"); return; }
 
-void rapidjson_ro(bm::State& st)
+
+void bm_rapidjson_arena(bm::State& st)
 {
     const char *src = s_bm_case->src.data();
     for(auto _ : st)
@@ -187,10 +221,10 @@ void rapidjson_ro(bm::State& st)
         rapidjson::Document doc;
         doc.Parse(src);
     }
-    st.SetBytesProcessed(st.iterations() * s_bm_case->src.size());
+    s_bm_case->report(st);
 }
 
-void rapidjson_rw(bm::State& st)
+void bm_rapidjson_inplace(bm::State& st)
 {
     char *src = s_bm_case->in_place.data();
     for(auto _ : st)
@@ -200,10 +234,10 @@ void rapidjson_rw(bm::State& st)
         rapidjson::Document doc;
         doc.ParseInsitu(src);
     }
-    st.SetBytesProcessed(st.iterations() * s_bm_case->src.size());
+    s_bm_case->report(st);
 }
 
-void sajson_ro(bm::State& st)
+void bm_sajson_arena(bm::State& st)
 {
     sajson::string src = {s_bm_case->src.data(), s_bm_case->src.size()};
     for(auto _ : st)
@@ -211,10 +245,10 @@ void sajson_ro(bm::State& st)
         ONLY_FOR_JSON;
         sajson::document document = sajson::parse(sajson::dynamic_allocation(), src);
     }
-    st.SetBytesProcessed(st.iterations() * s_bm_case->src.size());
+    s_bm_case->report(st);
 }
 
-void sajson_rw(bm::State& st)
+void bm_sajson_inplace(bm::State& st)
 {
     sajson::mutable_string_view src = {s_bm_case->in_place.size(), s_bm_case->in_place.data()};
     for(auto _ : st)
@@ -223,10 +257,10 @@ void sajson_rw(bm::State& st)
         s_bm_case->prepare(st, kResetInPlace);
         sajson::document document = sajson::parse(sajson::dynamic_allocation(), src);
     }
-    st.SetBytesProcessed(st.iterations() * s_bm_case->src.size());
+    s_bm_case->report(st);
 }
 
-void jsoncpp_ro(bm::State& st)
+void bm_jsoncpp_arena(bm::State& st)
 {
     const char *b = &s_bm_case->src.front(), *e = &s_bm_case->src.back();
     for(auto _ : st)
@@ -236,10 +270,10 @@ void jsoncpp_ro(bm::State& st)
         Json::Reader reader;
         reader.parse(b, e, root);
     }
-    st.SetBytesProcessed(st.iterations() * s_bm_case->src.size());
+    s_bm_case->report(st);
 }
 
-void nlohmann_json_ro(bm::State& st)
+void bm_nlohmann_arena(bm::State& st)
 {
     const char* src = s_bm_case->src.data();
     for(auto _ : st)
@@ -247,21 +281,23 @@ void nlohmann_json_ro(bm::State& st)
         ONLY_FOR_JSON;
         auto root = nlohmann::json::parse(src);
     }
-    st.SetBytesProcessed(st.iterations() * s_bm_case->src.size());
+    s_bm_case->report(st);
 }
 
-void yamlcpp_ro(bm::State& st)
+void bm_yamlcpp_arena(bm::State& st)
 {
     const char* src = s_bm_case->src.data();
     for(auto _ : st)
     {
         YAML::Node node = YAML::Load(src);
     }
-    st.SetBytesProcessed(st.iterations() * s_bm_case->src.size());
+    s_bm_case->report(st);
 }
 
-void libyaml_ro(bm::State& st)
+void bm_libyaml_arena(bm::State& st)
 {
+    if(s_bm_case->skip_libyaml_if_needed(st))
+        return;
     c4::csubstr src = c4::to_csubstr(s_bm_case->src.data());
     for(auto _ : st)
     {
@@ -269,11 +305,13 @@ void libyaml_ro(bm::State& st)
         c4::yml::Tree t;
         p.parse(&t, src);
     }
-    st.SetBytesProcessed(st.iterations() * s_bm_case->src.size());
+    s_bm_case->report(st);
 }
 
-void libyaml_ro_reuse(bm::State& st)
+void bm_libyaml_arena_reuse(bm::State& st)
 {
+    if(s_bm_case->skip_libyaml_if_needed(st))
+        return;
     c4::csubstr src = c4::to_csubstr(s_bm_case->src.data());
     for(auto _ : st)
     {
@@ -281,77 +319,79 @@ void libyaml_ro_reuse(bm::State& st)
         s_bm_case->prepare(st, kClearTree|kClearTreeArena);
         libyaml_parser.parse(&s_bm_case->libyaml_tree, src);
     }
-    st.SetBytesProcessed(st.iterations() * s_bm_case->src.size());
+    s_bm_case->report(st);
 }
 
-void ryml_ro(bm::State& st)
+void bm_libfyaml_arena(bm::State& st)
 {
-    size_t sz = 0;
+    if(s_bm_case->skip_libfyaml_if_needed(st))
+        return;
+    c4::csubstr src = c4::to_csubstr(s_bm_case->src.data());
+    for(auto _ : st)
+    {
+        struct fy_document *fyd = fy_document_build_from_string(nullptr, src.str, src.len);
+        fy_document_destroy(fyd);
+    }
+    s_bm_case->report(st);
+}
+
+void bm_ryml_arena(bm::State& st)
+{
     c4::csubstr src = c4::to_csubstr(s_bm_case->src);
     for(auto _ : st)
     {
-        ryml::Tree tree = ryml::parse(s_bm_case->filename, src);
-        sz = tree.size();
+        ryml::Tree tree = ryml::parse_in_arena(s_bm_case->filename, src);
     }
-    st.SetItemsProcessed(st.iterations() * sz);
-    st.SetBytesProcessed(st.iterations() * s_bm_case->src.size());
+    s_bm_case->report(st);
 }
 
-void ryml_rw(bm::State& st)
+void bm_ryml_inplace(bm::State& st)
 {
-    size_t sz = 0;
     c4::substr src = c4::to_substr(s_bm_case->in_place);
     for(auto _ : st)
     {
         s_bm_case->prepare(st, kResetInPlace);
-        ryml::Tree tree = ryml::parse(s_bm_case->filename, src);
-        sz = tree.size();
+        ryml::Tree tree = ryml::parse_in_place(s_bm_case->filename, src);
     }
-    st.SetItemsProcessed(st.iterations() * sz);
-    st.SetBytesProcessed(st.iterations() * s_bm_case->src.size());
+    s_bm_case->report(st);
 }
 
-void ryml_ro_reuse(bm::State& st)
+void bm_ryml_arena_reuse(bm::State& st)
 {
-    size_t sz = 0;
     c4::csubstr src = c4::to_csubstr(s_bm_case->src);
     for(auto _ : st)
     {
         s_bm_case->prepare(st, kClearTree|kClearTreeArena);
-        s_bm_case->ryml_parser.parse(s_bm_case->filename, src, &s_bm_case->ryml_tree);
-        sz = s_bm_case->ryml_tree.size();
+        s_bm_case->ryml_parser.parse_in_arena(s_bm_case->filename, src, &s_bm_case->ryml_tree);
     }
-    st.SetItemsProcessed(st.iterations() * sz);
-    st.SetBytesProcessed(st.iterations() * s_bm_case->src.size());
+    s_bm_case->report(st);
 }
 
-void ryml_rw_reuse(bm::State& st)
+void bm_ryml_inplace_reuse(bm::State& st)
 {
-    size_t sz = 0;
     c4::substr src = c4::to_substr(s_bm_case->in_place);
     for(auto _ : st)
     {
         s_bm_case->prepare(st, kResetInPlace|kClearTree|kClearTreeArena);
-        s_bm_case->ryml_parser.parse(s_bm_case->filename, src, &s_bm_case->ryml_tree);
-        sz = s_bm_case->ryml_tree.size();
+        s_bm_case->ryml_parser.parse_in_place(s_bm_case->filename, src, &s_bm_case->ryml_tree);
     }
-    st.SetItemsProcessed(st.iterations() * sz);
-    st.SetBytesProcessed(st.iterations() * s_bm_case->src.size());
+    s_bm_case->report(st);
 }
 
-BENCHMARK(rapidjson_ro);
-BENCHMARK(rapidjson_rw);
-BENCHMARK(sajson_rw);
-BENCHMARK(sajson_ro);
-BENCHMARK(jsoncpp_ro);
-BENCHMARK(nlohmann_json_ro);
-BENCHMARK(yamlcpp_ro);
-BENCHMARK(libyaml_ro);
-BENCHMARK(libyaml_ro_reuse);
-BENCHMARK(ryml_ro);
-BENCHMARK(ryml_rw);
-BENCHMARK(ryml_ro_reuse);
-BENCHMARK(ryml_rw_reuse);
+BENCHMARK(bm_ryml_arena);
+BENCHMARK(bm_ryml_inplace);
+BENCHMARK(bm_ryml_arena_reuse);
+BENCHMARK(bm_ryml_inplace_reuse);
+BENCHMARK(bm_libyaml_arena);
+BENCHMARK(bm_libyaml_arena_reuse);
+BENCHMARK(bm_yamlcpp_arena);
+BENCHMARK(bm_libfyaml_arena);
+BENCHMARK(bm_rapidjson_arena);
+BENCHMARK(bm_rapidjson_inplace);
+BENCHMARK(bm_sajson_arena);
+BENCHMARK(bm_sajson_inplace);
+BENCHMARK(bm_jsoncpp_arena);
+BENCHMARK(bm_nlohmann_arena);
 
 #if defined(_MSC_VER)
 #   pragma warning(pop)

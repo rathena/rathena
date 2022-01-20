@@ -34,6 +34,8 @@ function c4_show_info()
     echo "BM=$BM"
     echo "STD=$STD"
     echo "ARM=$ARM"
+    echo "LIBCXX=$LIBCXX"
+    echo "VERBOSE_MAKEFILES=$VERBOSE_MAKEFILES"
     which cmake
     cmake --version
     case "$CXX_" in
@@ -102,12 +104,15 @@ function c4_build_target()  # runs in parallel
     if _c4skipbitlink "$1" ; then return 0 ; fi
     id=$1
     target=$2
+    if [ ! -z "$target" ] ; then
+        target="--target $target"
+    fi
     build_dir=`pwd`/build/$id
     export CTEST_OUTPUT_ON_FAILURE=1
     # watchout: the `--parallel` flag to `cmake --build` is broken:
     # https://discourse.cmake.org/t/parallel-does-not-really-enable-parallel-compiles-with-msbuild/964/10
     # https://gitlab.kitware.com/cmake/cmake/-/issues/20564
-    cmake --build $build_dir --config $BT --target $target -- $(_c4_generator_build_flags) $(_c4_parallel_build_flags)
+    cmake --build $build_dir --config $BT $target -- $(_c4_generator_build_flags) $(_c4_parallel_build_flags)
 }
 
 function c4_run_target()  # does not run in parallel
@@ -191,6 +196,9 @@ function c4_cfg_test()
         _addcmkflags -DC4_CXX_STANDARD=$STD
         _addprojflags CXX_STANDARD=$STD
     fi
+    if [ "$LIBCXX" != "" ] ; then
+        _addprojflags USE_LIBCXX=$LIBCXX
+    fi
     #
     if [ "$DEV" != "OFF" ] ; then
         _addprojflags DEV=ON
@@ -227,6 +235,9 @@ function c4_cfg_test()
         # export COVERALLS_REPO_TOKEN=.......
         _addprojflags COVERAGE_CODECOV=ON COVERAGE_CODECOV_SILENT=ON
         _addprojflags COVERAGE_COVERALLS=ON COVERAGE_COVERALLS_SILENT=ON
+    fi
+    if [ ! -z "$VERBOSE_MAKEFILES" ] ; then
+        _addcmkflags -DCMAKE_VERBOSE_MAKEFILES=$VERBOSE_MAKEFILES
     fi
     _addcmkflags -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
     if [ ! -z "$CMAKE_FLAGS" ] ; then
@@ -286,6 +297,10 @@ function c4_cfg_test()
                   -DCMAKE_C_COMPILER=$CC_ -DCMAKE_CXX_COMPILER=$CXX_ \
                   -DCMAKE_C_FLAGS="-std=c99 -m$bits" -DCMAKE_CXX_FLAGS="-m$bits"
             cmake --build $build_dir --target help | sed 1d | sort
+            ;;
+        em++)
+            emcmake cmake -S $PROJ_DIR -B $build_dir -DCMAKE_INSTALL_PREFIX="$install_dir" \
+                  -DCMAKE_BUILD_TYPE=$BT $CMFLAGS -DCMAKE_CXX_FLAGS="-s DISABLE_EXCEPTION_CATCHING=0"
             ;;
         *)
             echo "unknown compiler"
@@ -356,7 +371,7 @@ function _c4_parallel_build_flags()
                 echo "-IDEBuildOperationMaxNumberOfConcurrentCompileTasks=$NUM_JOBS_BUILD"
             fi
             ;;
-        *g++*|*gcc*|*clang*)
+        *g++*|*gcc*|*clang*|em++)
             if [ -z "$NUM_JOBS_BUILD" ] ; then
                 echo "-j $(nproc)"
             else
@@ -383,7 +398,7 @@ function _c4_generator_build_flags()
             # https://stackoverflow.com/questions/51153525/xcode-10-unable-to-attach-db-error
             echo "-UseModernBuildSystem=NO"
             ;;
-        *g++*|*gcc*|*clang*)
+        *g++*|*gcc*|*clang*|em++)
             ;;
         "") # allow empty compiler
             ;;

@@ -26,27 +26,108 @@
 # for more details or look at qttypes.py, stdtypes.py, boosttypes.py
 # for more complex examples.
 
+# to try parsing:
+# env PYTHONPATH=/usr/share/qtcreator/debugger/ python src/ryml-gdbtypes.py
+
 
 import dumper
 #from dumper import Dumper, Value, Children, SubItem
 #from dumper import SubItem, Children
 from dumper import *
 
+import sys
+import os
 
-# adapted from dumper.py::Dumper::putCharArrayValue()
+
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
+# QtCreator makes it really hard to figure out problems in this code.
+# So here are some debugging utilities.
+
+
+# FIXME. this decorator is not working; find out why.
+def dbglog(func):
+    """a decorator that logs entry and exit of functions"""
+    if not _DBG:
+        return func
+    def func_wrapper(*args, **kwargs):
+        _dbg_enter(func.__name__)
+        ret = func(*args, **kwargs)
+        _dbg_exit(func.__name__)
+        return ret
+    return func_wrapper
+
+
+_DBG = False
+_dbg_log = None
+_dbg_stack = 0
+def _dbg(*args, **kwargs):
+    global _dbg_log, _dbg_stack
+    if not _DBG:
+        return
+    if _dbg_log is None:
+        filename = os.path.join(os.path.dirname(__file__), "dbg.txt")
+        _dbg_log = open(filename, "w")
+    kwargs['file'] = _dbg_log
+    kwargs['flush'] = True
+    print("  " * _dbg_stack, *args, **kwargs)
+
+
+def _dbg_enter(name):
+    global _dbg_stack
+    _dbg(name, "- enter")
+    _dbg_stack += 1
+
+
+def _dbg_exit(name):
+    global _dbg_stack
+    _dbg_stack -= 1
+    _dbg(name, "- exit!")
+
+
+
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
+
+NPOS = 18446744073709551615
+MAX_SUBSTR_LEN_DISPLAY = 80
+MAX_SUBSTR_LEN_EXPAND = 1000
+
+
 def get_str_value(d, value, limit=0):
+    # adapted from dumper.py::Dumper::putCharArrayValue()
     m_str = value["str"].pointer()
     m_len = value["len"].integer()
+    if m_len == NPOS:
+        _dbg("getstr... 1", m_len)
+        m_str = "!!!!!<npos>!!!!!"
+        m_len = len(m_str)
+        return m_str, m_len
     if limit == 0:
         limit = d.displayStringLimit
     elided, shown = d.computeLimit(m_len, limit)
     mem = bytes(d.readRawMemory(m_str, shown))
-    return mem.decode('utf8'), m_len
+    mem = mem.decode('utf8')
+    return mem, m_len
 
 
 def __display_csubstr(d, value, limit=0):
     m_str, m_len = get_str_value(d, value)
-    d.putValue(f'\'{m_str}\'  [len={m_len}]')
+    safe_len = min(m_len, MAX_SUBSTR_LEN_DISPLAY)
+    disp = m_str[0:safe_len]
+    # ensure the string escapes characters like \n\r\t etc
+    disp = disp.encode('unicode_escape').decode('utf8')
+    # WATCHOUT. quotes in the string will make qtcreator hang!!!
+    disp = disp.replace('"', '\\"')
+    disp = disp.replace('\'', '\\')
+    if m_len <= MAX_SUBSTR_LEN_DISPLAY:
+        d.putValue(f"[{m_len}] '{disp}'")
+    else:
+        d.putValue(f"[{m_len}] '{disp}'...")
     return m_str, m_len
 
 
@@ -55,9 +136,10 @@ def qdump__c4__csubstr(d, value):
     d.putExpandable()
     if d.isExpanded():
         with Children(d):
-            ct = d.createType('char')
-            for i in range(m_len):
-                d.putSubItem(m_len, d.createValue(value["str"].pointer() + i, ct))
+            safe_len = min(m_len, MAX_SUBSTR_LEN_EXPAND)
+            for i in range(safe_len):
+                ct = d.createType('char')
+                d.putSubItem(safe_len, d.createValue(value["str"].pointer() + i, ct))
             d.putSubItem("len", value["len"])
             d.putPtrItem("str", value["str"].pointer())
 
@@ -90,8 +172,6 @@ def qdump__c4__yml__NodeScalar(d, value):
                 d.putSubItem("[tag]", value["tag"])
             if alen > 0:
                 d.putSubItem("[anchor or ref]", value["anchor"])
-def qdump__ryml__NodeScalar(d, value):
-    return qdump__c4__yml__NodeScalar(d, value)
 
 
 def _format_enum_value(int_value, enum_map):
@@ -169,17 +249,14 @@ def _node_type_has_any(node_type_value, type_name):
 def qdump__c4__yml__NodeType_e(d, value):
     v = _format_bitmask_value(value.integer(), node_types)
     d.putValue(v)
-def qdump__ryml__NodeType_e(d, value):
-    return qdump__c4__yml__NodeType_e(d, value)
 
 
 def qdump__c4__yml__NodeType(d, value):
     qdump__c4__yml__NodeType_e(d, value["type"])
-def qdump__ryml__NodeType(d, value):
-    return qdump__c4__yml__NodeType(d, value)
 
 
 def qdump__c4__yml__NodeData(d, value):
+    d.putValue("wtf")
     ty = _format_bitmask_value(value.integer(), node_types)
     t = value["m_type"]["type"].integer()
     k = value["m_key"]["scalar"]
@@ -202,23 +279,31 @@ def qdump__c4__yml__NodeData(d, value):
             if _node_type_has_any(t, "KEY"):
                 d.putSubItem("m_key", value["m_key"])
             if _node_type_has_any(t, "KEYREF"):
-                with SubItem(d, "m_key is ref!"):
+                with SubItem(d, "m_key.ref"):
                     s_, _ = get_str_value(d, value["m_key"]["anchor"])
                     d.putValue(f"'{s_}'")
             if _node_type_has_any(t, "KEYANCH"):
-                with SubItem(d, "m_key is anchor!"):
+                with SubItem(d, "m_key.anchor"):
                     s_, _ = get_str_value(d, value["m_key"]["anchor"])
+                    d.putValue(f"'{s_}'")
+            if _node_type_has_any(t, "KEYTAG"):
+                with SubItem(d, "m_key.tag"):
+                    s_, _ = get_str_value(d, value["m_key"]["tag"])
                     d.putValue(f"'{s_}'")
             # val
             if _node_type_has_any(t, "VAL"):
                 d.putSubItem("m_val", value["m_val"])
             if _node_type_has_any(t, "VALREF"):
-                with SubItem(d, "m_val is ref!"):
+                with SubItem(d, "m_val.ref"):
                     s_, _ = get_str_value(d, value["m_val"]["anchor"])
                     d.putValue(f"'{s_}'")
             if _node_type_has_any(t, "VALANCH"):
-                with SubItem(d, "m_val is anchor!"):
+                with SubItem(d, "m_val.anchor"):
                     s_, _ = get_str_value(d, value["m_val"]["anchor"])
+                    d.putValue(f"'{s_}'")
+            if _node_type_has_any(t, "VALTAG"):
+                with SubItem(d, "m_val.tag"):
+                    s_, _ = get_str_value(d, value["m_val"]["tag"])
                     d.putValue(f"'{s_}'")
             # hierarchy
             _dump_node_index(d, "m_parent", value)
@@ -226,18 +311,15 @@ def qdump__c4__yml__NodeData(d, value):
             _dump_node_index(d, "m_last_child", value)
             _dump_node_index(d, "m_next_sibling", value)
             _dump_node_index(d, "m_prev_sibling", value)
-def qdump__ryml__NodeData(d, value):
-    return qdump__c4__yml__NodeData(d, value)
 
 
 def _dump_node_index(d, name, value):
-    if int(value[name].integer()) == 18446744073709551615:
+    if int(value[name].integer()) == NPOS:
         pass
         #with SubItem(d, name):
         #    d.putValue("-")
     else:
         d.putSubItem(name, value[name])
-
 
 
 # c4::yml::Tree
@@ -258,8 +340,6 @@ def qdump__c4__yml__Tree(d, value):
             d.putIntItem("m_free_head", value["m_free_head"])
             d.putIntItem("m_free_tail", value["m_free_tail"])
             d.putSubItem("m_arena", value["m_arena"])
-def qdump__ryml__Tree(d, value):
-    return qdump__c4__yml__Tree(d, value)
 
 
 def qdump__c4__yml__detail__stack(d, value):
@@ -279,8 +359,6 @@ def qdump__c4__yml__detail__stack(d, value):
             d.putIntItem("[is large]", value["m_buf"].address() == value["m_stack"].pointer())
             d.putPtrItem("m_stack", value["m_stack"].pointer())
             d.putPtrItem("m_buf", value["m_buf"].address())
-def qdump__ryml__detail__stack(d, value):
-    return qdump__c4__yml__detail__stack(d, value)
 
 
 def qdump__c4__yml__detail__ReferenceResolver__refdata(d, value):
@@ -296,5 +374,3 @@ def qdump__c4__yml__detail__ReferenceResolver__refdata(d, value):
             _dump_node_index(d, "target", value)
             _dump_node_index(d, "parent_ref", value)
             _dump_node_index(d, "parent_ref_sibling", value)
-def qdump__ryml__detail__ReferenceResolver__refdata(d, value):
-    return qdump__c4__yml__detail__ReferenceResolver__refdata(d, value)

@@ -115,18 +115,18 @@ public:
     }
     C4_ALWAYS_INLINE SpanImpl range(I first) const C4_NOEXCEPT_X ///< goes up until the end of the span
     {
-        C4_XASSERT(((first >= 0) && (first < _c4csz)));
+        C4_XASSERT(((first >= 0) && (first <= _c4csz)));
         return _c4cthis->_select(_c4cptr + first, _c4csz - first);
     }
 
     C4_ALWAYS_INLINE SpanImpl first(I num) const C4_NOEXCEPT_X ///< get the first num elements, starting at 0
     {
-        C4_XASSERT((num >= 0) && (num < _c4csz));
+        C4_XASSERT((num >= 0) && (num <= _c4csz));
         return _c4cthis->_select(_c4cptr, num);
     }
     C4_ALWAYS_INLINE SpanImpl last(I num) const C4_NOEXCEPT_X ///< get the last num elements, starting at size()-num
     {
-        C4_XASSERT((num >= 0) && (num < _c4csz));
+        C4_XASSERT((num >= 0) && (num <= _c4csz));
         return _c4cthis->_select(_c4cptr + _c4csz - num, num);
     }
 
@@ -312,8 +312,8 @@ public:
     C4_ALWAYS_INLINE C4_CONSTEXPR14        span(T *p, I sz) noexcept : m_ptr{p}, m_size{sz} {}
     C4_ALWAYS_INLINE C4_CONSTEXPR14 void   assign(T *p, I sz) noexcept { m_ptr = p; m_size = sz; }
 
-    C4_ALWAYS_INLINE C4_CONSTEXPR14      span  (c4::aggregate_t, std::initializer_list<T> il) noexcept : m_ptr{il.begin()}, m_size{il.size()} {}
-    C4_ALWAYS_INLINE C4_CONSTEXPR14 void assign(c4::aggregate_t, std::initializer_list<T> il) noexcept { m_ptr = il.begin(); m_size = il.size(); }
+    C4_ALWAYS_INLINE C4_CONSTEXPR14      span  (c4::aggregate_t, std::initializer_list<T> il) noexcept : m_ptr{&*il.begin()}, m_size{il.size()} {}
+    C4_ALWAYS_INLINE C4_CONSTEXPR14 void assign(c4::aggregate_t, std::initializer_list<T> il) noexcept { m_ptr = &*il.begin(); m_size = il.size(); }
 
     /** @} */
 

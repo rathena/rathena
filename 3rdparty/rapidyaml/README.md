@@ -1,49 +1,61 @@
 # Rapid YAML
 [![MIT Licensed](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/biojppm/rapidyaml/blob/master/LICENSE.txt)
 [![release](https://img.shields.io/github/v/release/biojppm/rapidyaml?color=g&include_prereleases&label=release%20&sort=semver)](https://github.com/biojppm/rapidyaml/releases)
+[![PyPI](https://img.shields.io/pypi/v/rapidyaml?color=g)](https://pypi.org/project/rapidyaml/)
 [![Docs](https://img.shields.io/badge/docs-docsforge-blue)](https://rapidyaml.docsforge.com/)
 [![Gitter](https://badges.gitter.im/rapidyaml/community.svg)](https://gitter.im/rapidyaml/community)
 
-[![ci](https://github.com/biojppm/rapidyaml/workflows/ci/badge.svg?branch=master)](https://github.com/biojppm/rapidyaml/actions=workflow%3Aci)
+[![test](https://github.com/biojppm/rapidyaml/workflows/test/badge.svg?branch=master)](https://github.com/biojppm/rapidyaml/actions)
 [![Coveralls](https://coveralls.io/repos/github/biojppm/rapidyaml/badge.svg?branch=master)](https://coveralls.io/github/biojppm/rapidyaml)
 [![Codecov](https://codecov.io/gh/biojppm/rapidyaml/branch/master/graph/badge.svg?branch=master)](https://codecov.io/gh/biojppm/rapidyaml)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/biojppm/rapidyaml.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/biojppm/rapidyaml/alerts/)
 [![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/biojppm/rapidyaml.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/biojppm/rapidyaml/context:cpp)
 
 
-Or ryml, for short. ryml is a library to parse and emit YAML, and do it fast.
+Or ryml, for short. ryml is a C++ library to parse and emit YAML, and
+do it fast. (If you are looking to use your programs with a YAML tree
+as a configuration tree with override facilities, there is
+[c4conf](https://github.com/biojppm/c4conf), a sister project which
+uses ryml).
 
-ryml parses both read-only and in-situ source buffers; the resulting data
-nodes hold only views to sub-ranges of the source buffer. No string copies or
-duplications are done, and no virtual functions are used. The data tree is a
-flat index-based structure stored in a single array. Serialization happens
-only at your direct request, after parsing / before emitting. Internally the
-data tree representation has no knowledge of types (but of course, every node
-can have a YAML type tag). It is easy and fast to read, write and iterate
-through the data tree.
+ryml parses both read-only and in-situ source buffers; the resulting
+data nodes hold only views to sub-ranges of the source buffer. No
+string copies or duplications are done, and no virtual functions are
+used. The data tree is a flat index-based structure stored in a single
+array. Serialization happens only at your direct request, after
+parsing / before emitting. Internally, the data tree representation
+stores only strings and has no knowledge of types, but of course,
+every node can have a YAML type tag. ryml makes it easy and fast to
+read and modify the data tree.
 
-ryml can use custom global and per-tree memory allocators, and is
-exception-agnostic. Errors are reported via a custom error handler callback.
-A default error handler implementation using `std::abort()` is provided, but
-you can opt out, or provide your exception-throwing callback.
+ryml is available as a single header file, or it can be used as a
+simple library with cmake -- both separately (ie
+build->install->`find_package()`) or together with your project (ie with
+`add_subdirectory()`). (See below for examples).
 
-ryml has respect for your compilation times and therefore it is NOT
-header-only. It uses standard cmake build files, so it is easy to compile and
-install.
+ryml can use custom global and per-tree memory allocators and error
+handler callbacks, and is exception-agnostic. ryml provides a default
+implementation for the allocator (using `std::malloc()`) and error
+handlers (using using `std::abort()` is provided, but you can opt out
+and provide your own memory allocation and eg, exception-throwing
+callbacks.
 
-ryml has no dependencies, not even on the STL (although it does use the
-libc). It provides optional headers that let you serialize/deserialize
-STL strings and containers (or show you how to do it).
+ryml does not depend on the STL, ie, it does not use any std container
+as part of its data structures), but it can serialize and deserialize
+these containers into the data tree, with the use of optional
+headers. ryml ships with [c4core](https://github.com/biojppm/c4core) a
+small C++ utilities multiplatform library.
 
-ryml is written in C++11, and is known to compile with:
+ryml is written in C++11, and compiles cleanly with:
 * Visual Studio 2015 and later
 * clang++ 3.9 and later
 * g++ 5 and later
+* Intel Compiler
 
 ryml is [extensively unit-tested in Linux, Windows and
-MacOS](https://github.com/biojppm/rapidyaml/actions). The
-tests run in the standard x64, x86 and arm architectures,
-and include analysing ryml with:
+MacOS](https://github.com/biojppm/rapidyaml/actions). The tests cover
+x64, x86, arm, wasm (emscripten), aarch64, ppc64le and s390x
+architectures, and include analysing ryml with:
   * valgrind
   * clang-tidy
   * clang sanitizers:
@@ -53,36 +65,36 @@ and include analysing ryml with:
     * thread
   * [LGTM.com](https://lgtm.com/projects/g/biojppm/rapidyaml)
 
-ryml is also partially available in Python, with more languages to follow (see
+ryml is [available in Python](https://pypi.org/project/rapidyaml/),
+and can very easily be compiled to JavaScript through emscripten (see
 below).
 
-See also [the changelog](./changelog) and [the roadmap](./ROADMAP.md).
+See also [the changelog](https://github.com/biojppm/rapidyaml/changelog)
+and [the roadmap](https://github.com/biojppm/rapidyaml/ROADMAP.md).
 
-Note that ryml uses submodules. Take care to use the `--recursive` flag
-when cloning the repo, to ensure ryml's submodules are checked out as well:
-```bash
-git clone --recursive https://github.com/biojppm/rapidyaml
-```
-If you omit `--recursive`, after cloning you
-will have to do `git submodule init` and `git submodule update` 
-to ensure ryml's submodules are checked out.
+<!-- endpythonreadme -->
+
 
 ------
 
 ## Table of contents
-
 * [Is it rapid?](#is-it-rapid)
-   * [Comparison with yaml-cpp](#comparison-with-yaml-cpp)
-   * [Performance reading JSON](#performance-reading-json)
-   * [Performance emitting](#performance-emitting)
+  * [Comparison with yaml-cpp](#comparison-with-yaml-cpp)
+  * [Performance reading JSON](#performance-reading-json)
+  * [Performance emitting](#performance-emitting)
 * [Quick start](#quick-start)
 * [Using ryml in your project](#using-ryml-in-your-project)
-   * [Usage samples](#usage-samples)
-   * [cmake build settings for ryml](#cmake-build-settings-for-ryml)
+  * [Package managers](#package-managers)
+  * [Single header file](#single-header-file)
+  * [As a library](#as-a-library)
+  * [Quickstart samples](#quickstart-samples)
+  * [CMake build settings for ryml](#cmake-build-settings-for-ryml)
+     * [Forcing ryml to use a different c4core version](#forcing-ryml-to-use-a-different-c4core-version)
 * [Other languages](#other-languages)
-   * [Python](#python)
+  * [JavaScript](#javascript)
+  * [Python](#python)
 * [YAML standard conformance](#yaml-standard-conformance)
-   * [Test suite status](#test-suite-status)
+  * [Test suite status](#test-suite-status)
 * [Known limitations](#known-limitations)
 * [Alternative libraries](#alternative-libraries)
 * [License](#license)
@@ -214,15 +226,19 @@ eg the [`add_subdirectory()` sample](samples/add_subdirectory/).
 ```c++
 // Parse YAML code in place, potentially mutating the buffer.
 // It is also possible to:
-//   - parse a read-only buffer
+//   - parse a read-only buffer using parse_in_arena()
 //   - reuse an existing tree (advised)
 //   - reuse an existing parser (advised)
 char yml_buf[] = "{foo: 1, bar: [2, 3], john: doe}";
-ryml::Tree tree = ryml::parse(ryml::substr(yml_buf));
+ryml::Tree tree = ryml::parse_in_place(ryml::substr(yml_buf));
 
 // Note: it will always be significantly faster to use mutable
-// buffers and reuse tree+parser; in the quickstart sample you
-// will find examples for this.
+// buffers and reuse tree+parser.
+//
+// Below you will find samples that show how to achieve reuse; but
+// please note that for brevity and clarity, many of the examples
+// here are parsing immutable buffers, and not reusing tree or
+// parser.
 
 
 //------------------------------------------------------------------
@@ -310,14 +326,13 @@ CHECK(root["john"].id() == root[2].id());
 // root level to fill an `std::map<csubstr,size_t>` mapping key names to node
 // indices; with a node index, a lookup (via `Tree::get()`) is O(1), so this way
 // you can get O(log n) lookup from a key.
-// 
+//
 // As for `NodeRef`, the difference from `NodeRef::operator[]`
 // to `Tree::operator[]` is that the latter refers to the root node, whereas
 // the former can be invoked on any node. But the lookup process is the same for
 // both and their algorithmic complexity is the same: they are both linear in
 // the number of direct children; but depending on the data, that number may
 // be very different from one to another.
-
 
 //------------------------------------------------------------------
 // Hierarchy:
@@ -422,7 +437,7 @@ CHECK(root["john"].val() == "ron");
 // WATCHOUT: do not assign from temporary objects:
 // {
 //     std::string crash("will dangle");
-//     root["john"] == ryml::to_csubstr(crash);
+//     root["john"] = ryml::to_csubstr(crash);
 // }
 // CHECK(root["john"] == "dangling"); // CRASH! the string was deallocated
 
@@ -442,7 +457,7 @@ CHECK(tree.arena() == "says who2030deere"); // the result of serializations to t
 // using operator<< instead of operator=, the crash above is avoided:
 {
     std::string ok("in_scope");
-    // root["john"] == ryml::to_csubstr(ok); // don't, will dangle
+    // root["john"] = ryml::to_csubstr(ok); // don't, will dangle
     root["john"] << ryml::to_csubstr(ok); // OK, copy to the tree's arena
 }
 CHECK(root["john"] == "in_scope"); // OK!
@@ -533,10 +548,10 @@ ryml::csubstr buf_result = ryml::emit(tree, buf);
 // now check
 ryml::csubstr expected_result = R"(foo: says who
 bar:
-  - 20
-  - 30
-  - oh so nice
-  - oh so nice (serialized)
+- 20
+- 30
+- oh so nice
+- oh so nice (serialized)
 john: in_scope
 newkeyval: shiny and new
 newkeyval (serialized): shiny and new (serialized)
@@ -550,7 +565,38 @@ CHECK(buf_result == expected_result);
 CHECK(str_result == expected_result);
 CHECK(stream_result == expected_result);
 // There are many possibilities to emit to buffer;
-// please look at the quickstart sample functions below.
+// please look at the emit sample functions below.
+
+//------------------------------------------------------------------
+// Dealing with UTF8
+ryml::Tree langs = ryml::parse_in_arena(R"(
+en: Planet (Gas)
+fr: Planète (Gazeuse)
+ru: Планета (Газ)
+ja: 惑星（ガス）
+zh: 行星（气体）
+# this is the smiley character, twice: ☺ ☺
+no_decoding: \u263A \xE2\x98\xBA
+)");
+// in-place UTF8 just works:
+CHECK(langs["en"].val() == "Planet (Gas)");
+CHECK(langs["fr"].val() == "Planète (Gazeuse)");
+CHECK(langs["ru"].val() == "Планета (Газ)");
+CHECK(langs["ja"].val() == "惑星（ガス）");
+CHECK(langs["zh"].val() == "行星（气体）");
+// but note encoded characters are not decoded while parsing:
+CHECK(langs["no_decoding"].val() == "\\u263A \\xE2\\x98\\xBA");
+CHECK(langs["no_decoding"].val() != "☺ ☺"); // how the string would look like if decoded
+
+//------------------------------------------------------------------
+// Getting the location of nodes in the source:
+ryml::Parser parser;
+ryml::Tree tree2 = parser.parse_in_arena("expected.yml", expected_result);
+ryml::Location loc = parser.location(tree2["bar"][1]);
+CHECK(parser.location_contents(loc).begins_with("30"));
+CHECK(loc.line == 3u);
+CHECK(loc.col == 4u);
+// For further details in location tracking, refer to the sample function.
 ```
 
 The [quickstart.cpp sample](./samples/quickstart.cpp) (from which the
@@ -561,8 +607,9 @@ There you can find the following subjects being addressed:
 
 ```c++
 sample_substr();               ///< about ryml's string views (from c4core)
-sample_parse_read_only();      ///< parse a read-only YAML source buffer
-sample_parse_in_situ();        ///< parse an immutable YAML source buffer
+sample_parse_file();           ///< ready-to-go example of parsing a file from disk
+sample_parse_in_place();       ///< parse a mutable YAML source buffer
+sample_parse_in_arena();       ///< parse a read-only YAML source buffer
 sample_parse_reuse_tree();     ///< parse into an existing tree, maybe into a node
 sample_parse_reuse_parser();   ///< reuse an existing parser
 sample_parse_reuse_tree_and_parser(); ///< how to reuse existing trees and parsers
@@ -586,6 +633,7 @@ sample_docs();                 ///< deal with YAML docs
 sample_error_handler();        ///< set a custom error handler
 sample_global_allocator();     ///< set a global allocator for ryml
 sample_per_tree_allocator();   ///< set per-tree allocators
+sample_location_tracking();    ///< track node locations in the parsed source tree
 ```
 
 
@@ -593,10 +641,7 @@ sample_per_tree_allocator();   ///< set per-tree allocators
 
 ## Using ryml in your project
 
-As with any other library, you have the option to integrate ryml into
-your project's build setup, thereby building ryml together with your
-project, or -- prior to configuring your project -- you can have ryml
-installed either manually or through package managers.
+### Package managers
 
 If you opt for package managers, here's where ryml is available so far (thanks to all the contributors!):
   * [vcpkg](https://vcpkg.io/en/packages.html): `vcpkg install ryml`
@@ -605,19 +650,83 @@ If you opt for package managers, here's where ryml is available so far (thanks t
     * [python-rapidyaml-git (AUR)](https://aur.archlinux.org/packages/python-rapidyaml-git/)
   * [PyPI](https://pypi.org/project/rapidyaml/)
 
-Although package managers are very useful for quickly getting up to speed,
-the advised way is still to bring ryml as a submodule of your project,
-building both together. This makes it easy to track any upstream changes in ryml.
-Also, ryml is fairly small, and is quick to build,
-so there's not much of a cost for building it with your project.
+Although package managers are very useful for quickly getting up to
+speed, the advised way is still to bring ryml as a submodule of your
+project, building both together. This makes it easy to track any
+upstream changes in ryml. Also, ryml is small and quick to build, so
+there's not much of a cost for building it with your project.
+
+### Single header file
+ryml is provided chiefly as a cmake library project, but it can also
+be used as a single header file, and there is a [tool to
+amalgamate](./tools/amalgamate.py) the code into a single header
+file. The amalgamated header file is provided with each release, but
+you can also generate a customized file suiting your particular needs
+(or commit):
+
+```console
+[user@host rapidyaml]$ python tools/amalgamate.py -h
+usage: amalgamate.py [-h] [--c4core | --no-c4core] [--fastfloat | --no-fastfloat] [--stl | --no-stl] [output]
+
+positional arguments:
+  output          output file. defaults to stdout
+
+optional arguments:
+  -h, --help      show this help message and exit
+  --c4core        amalgamate c4core together with ryml. this is the default.
+  --no-c4core     amalgamate c4core together with ryml. the default is --c4core.
+  --fastfloat     enable fastfloat library. this is the default.
+  --no-fastfloat  enable fastfloat library. the default is --fastfloat.
+  --stl           enable stl interop. this is the default.
+  --no-stl        enable stl interop. the default is --stl.
+```
+
+The amalgamated header file contains all the function declarations and
+definitions. To use it in the project, `#include` the header at will
+in any header or source file in the project, but in one source file,
+and only in that one source file, `#define` the macro
+`RYML_SINGLE_HDR_DEFINE_NOW` **before including the header**. This
+will enable the function definitions. For example:
+```c++
+// foo.h
+#include <ryml_all.hpp>
+
+// foo.cpp
+// ensure that foo.h is not included before this define!
+#define RYML_SINGLE_HDR_DEFINE_NOW
+#include <ryml_all.hpp>
+```
+
+If you wish to package the single header into a shared library, then
+you will need to define the preprocessor symbol `RYML_SHARED` during
+compilation.
+
+
+### As a library
+The single header file is a good approach to quickly try the library,
+but if you wish to make good use of CMake and its tooling ecosystem,
+(and get better compile times), then ryml has you covered.
+
+As with any other cmake library, you have the option to integrate ryml into
+your project's build setup, thereby building ryml together with your
+project, or -- prior to configuring your project -- you can have ryml
+installed either manually or through package managers.
 
 Currently [cmake](https://cmake.org/) is required to build ryml; we
 recommend a recent cmake version, at least 3.13.
 
+Note that ryml uses submodules. Take care to use the `--recursive` flag
+when cloning the repo, to ensure ryml's submodules are checked out as well:
+```bash
+git clone --recursive https://github.com/biojppm/rapidyaml
+```
+If you omit `--recursive`, after cloning you
+will have to do `git submodule init` and `git submodule update` 
+to ensure ryml's submodules are checked out.
 
-### Usage samples
+### Quickstart samples
 
-These samples show how to build an application using ryml. All the
+These samples show different ways of getting ryml into your application. All the
 samples use [the same quickstart executable
 source](./samples/quickstart.cpp), but are built in different ways,
 showing several alternatives to integrate ryml into your project. We
@@ -633,11 +742,13 @@ more about each sample:
 
 | Sample name        | ryml is part of build?   | cmake file   | commands     |
 |:-------------------|--------------------------|:-------------|:-------------|
+| [`singleheader`](./samples/singleheader) | **yes**<br>ryml brought as a single header file,<br>not as a library | [`CMakeLists.txt`](./samples/singleheader/CMakeLists.txt) | [`run.sh`](./samples/singleheader/run.sh) |
+| [`singleheaderlib`](./samples/singleheaderlib) | **yes**<br>ryml brought as a library<br>but from the single header file | [`CMakeLists.txt`](./samples/singleheaderlib/CMakeLists.txt) | [`run_shared.sh` (shared library)](./samples/singleheaderlib/run_shared.sh)<br> [`run_static.sh` (static library)](./samples/singleheaderlib/run_static.sh) |
 | [`add_subdirectory`](./samples/add_subdirectory) | **yes**                      | [`CMakeLists.txt`](./samples/add_subdirectory/CMakeLists.txt) | [`run.sh`](./samples/add_subdirectory/run.sh) |
 | [`fetch_content`](./samples/fetch_content)      | **yes**                      | [`CMakeLists.txt`](./samples/fetch_content/CMakeLists.txt) | [`run.sh`](./samples/fetch_content/run.sh) |
 | [`find_package`](./samples/find_package)        | **no**<br>needs prior install or package  | [`CMakeLists.txt`](./samples/find_package/CMakeLists.txt) | [`run.sh`](./samples/find_package/run.sh) |
 
-### cmake build settings for ryml
+### CMake build settings for ryml
 The following cmake variables can be used to control the build behavior of
 ryml:
 
@@ -649,7 +760,7 @@ ryml:
     incorporated into ryml as if it is the same library. Defaults to `ON`.
 
 If you're developing ryml or just debugging problems with ryml itself, the
-following variables can be helpful:
+following cmake variables can be helpful:
   * `RYML_DEV=ON/OFF`: a bool variable which enables development targets such as
     unit tests, benchmarks, etc. Defaults to `OFF`.
   * `RYML_DBG=ON/OFF`: a bool variable which enables verbose prints from
@@ -662,7 +773,7 @@ ryml is strongly coupled to c4core, and this is reinforced by the fact
 that c4core is a submodule of the current repo. However, it is still
 possible to use a c4core version different from the one in the repo
 (of course, only if there are no incompatibilities between the
-versions). You can find out how to achieve this by looking at the [`custom_c4core` sample](samples/custom_c4core).
+versions). You can find out how to achieve this by looking at the [`custom_c4core` sample](./samples/custom_c4core/CMakeLists.txt).
 
 
 ------
@@ -670,11 +781,16 @@ versions). You can find out how to achieve this by looking at the [`custom_c4cor
 ## Other languages
 
 One of the aims of ryml is to provide an efficient YAML API for other
-languages. There's already a cursory implementation for Python (using
-only the low-level API). After ironing out the general approach, other
-languages are likely to follow: probably (in order) JavaScript, C#,
-Java, Ruby, PHP, Octave and R (all of this is possible because we're
-using [SWIG](http://www.swig.org/), which makes it easy to do so).
+languages. JavaScript is fully available, and there is already a
+cursory implementation for Python using only the low-level API. After
+ironing out the general approach, other languages are likely to
+follow (all of this is possible because we're using
+[SWIG](http://www.swig.org/), which makes it easy to do so).
+
+### JavaScript
+
+A JavaScript+WebAssembly port is available, compiled through [emscripten](https://emscripten.org/).
+
 
 ### Python
 
@@ -736,7 +852,7 @@ check(tree) # OK
 # also works, but requires bytearrays or
 # objects offering writeable memory
 mutable = bytearray(src)
-tree = ryml.parse_in_situ(mutable)
+tree = ryml.parse_in_place(mutable)
 check(tree) # OK
 ```
 
@@ -768,136 +884,114 @@ the source buffer.)
 
 ## YAML standard conformance
 
-ryml is under active development, but is close to feature complete. The
-following YAML core features are well covered in the unit tests:
-* mappings
-* sequences
-* complex keys
-* literal blocks
-* quoted scalars
-* tags
-* anchors and references
-* UTF8 is expected to mostly work
-  
-Of course, there are many dark corners in YAML, and there certainly can
-appear cases which ryml fails to parse. Your [bug reports or pull
-requests](https://github.com/biojppm/rapidyaml/issues) are very welcome.
+ryml is close to feature complete. Most of the YAML features are
+well covered in the unit tests, and expected to work, unless in the exceptions
+noted in the following sections.
+
+Of course, there are many dark corners in YAML, and there certainly
+can appear cases which ryml fails to parse. Your [bug reports or pull
+requests](https://github.com/biojppm/rapidyaml/issues) are very
+welcome.
 
 See also [the roadmap](./ROADMAP.md) for a list of future work.
 
 
 ### Test suite status
 
-Integration of the >300 cases in the [YAML test
-suite](https://github.com/yaml/yaml-test-suite) is ongoing work. Each of
-these tests have several subparts:
- * in-yaml: mildly, plainly or extremely difficult-to-parse yaml
- * in-json: equivalent json (where possible/meaningful)
- * out-yaml: equivalent standard yaml
- * events: equivalent libyaml events allowing to establish correctness of
-   the parsed results
+ryml is tested in the CI with the [YAML test
+suite](https://github.com/yaml/yaml-test-suite). This is a reference
+set of cases covering the full YAML spec. Each of
+these cases have several subparts:
+ * `in-yaml`: mildly, plainly or extremely difficult-to-parse YAML
+ * `in-json`: equivalent JSON (where possible/meaningful)
+ * `out-yaml`: equivalent standard YAML
+ * `emit-yaml`: equivalent standard YAML
+ * `events`: reference results (ie, expected tree)
 
-When testing, ryml tries to parse each of the 3 yaml/json parts. If the
-parsing suceeds, then the ryml test will emit the parsed tree, then parse the
-emitted result and verify that emission is idempotent, ie that the emitted
-result is the same as its input without any loss of information. To ensure
-correctness, this happens over four levels of parse/emission pairs, resulting
-in ~200 checks per test case.
+When testing, ryml parses each of the 4 yaml/json parts, then emit the
+parsed tree, then parse the emitted result and verify that emission is
+idempotent, ie that the emitted result is the same as its input
+without any loss of information. To ensure consistency, this happens
+over four levels of parse/emission pairs. And to ensure correctness,
+the parsed result is compared against the `events` spec, which
+constitute the reference. This is then combined with several
+variations: unix vs windows line endings, emitting to string, file or
+streams, which results in ~250 tests per case part. With 3 parts per
+case and ~300 cases, this makes over 200'000 individual tests.
 
-Please note that in [their own words](http://matrix.yaml.io/), the tests from
-the YAML test suite *contain a lot of edge cases that don't play such an
-important role in real world examples*. Despite the extreme focus of the test
-suite, as of May 2020, ryml only fails to parse ~30 out of the ~1000=~3x300
-cases from the test suite. Out of all other cases, all the ~200 checks per
-case are 100% successful for consistency over parse/emit pairs --- but please
-note that the events part is not yet read in and used to check for
-correctness, and therefore that **even though ryml may suceed in parsing,
-there still exists a minority of cases which may not be correct**. Currently,
-I would estimate this fraction at somewhere around 5%. These are the suite
-cases where ryml fails to parse any of its subparts:
-[EXG3](https://github.com/yaml/yaml-test-suite/tree/master/test/EXG3.tml),
-[M7A3](https://github.com/yaml/yaml-test-suite/tree/master/test/M7A3.tml),
-[735Y](https://github.com/yaml/yaml-test-suite/tree/master/test/735Y.tml),
-[82AN](https://github.com/yaml/yaml-test-suite/tree/master/test/82AN.tml),
-[9YRD](https://github.com/yaml/yaml-test-suite/tree/master/test/9YRD.tml),
-[EX5H](https://github.com/yaml/yaml-test-suite/tree/master/test/EX5H.tml),
-[HS5T](https://github.com/yaml/yaml-test-suite/tree/master/test/HS5T.tml),
-[7T8X](https://github.com/yaml/yaml-test-suite/tree/master/test/7T8X.tml),
-[RZP5](https://github.com/yaml/yaml-test-suite/tree/master/test/RZP5.tml),
-[FH7J](https://github.com/yaml/yaml-test-suite/tree/master/test/FH7J.tml),
-[PW8X](https://github.com/yaml/yaml-test-suite/tree/master/test/PW8X.tml),
-[CN3R](https://github.com/yaml/yaml-test-suite/tree/master/test/CN3R.tml),
-[6BCT](https://github.com/yaml/yaml-test-suite/tree/master/test/6BCT.tml),
-[G5U8](https://github.com/yaml/yaml-test-suite/tree/master/test/G5U8.tml),
-[K858](https://github.com/yaml/yaml-test-suite/tree/master/test/K858.tml),
-[NAT4](https://github.com/yaml/yaml-test-suite/tree/master/test/NAT4.tml),
-[9MMW](https://github.com/yaml/yaml-test-suite/tree/master/test/9MMW.tml),
-[DC7X](https://github.com/yaml/yaml-test-suite/tree/master/test/DC7X.tml),
-[L94M](https://github.com/yaml/yaml-test-suite/tree/master/test/L94M.tml),
+Also, note that in [their own words](http://matrix.yaml.io/), the
+tests from the YAML test suite *contain a lot of edge cases that don't
+play such an important role in real world examples*. And yet, despite
+the extreme focus of the test suite, currently ryml only fails to
+parse 15 out of ~900-1200 subparts from the test suite, and when
+compared against the reference results from `events` part, only 30
+subparts fail. These are the current issues:
+  * explicit keys (starting with `?`)
+    * problem parsing when the scalar is missing after `? `
+    * not supported in flow style
+  * several expected parse errors do not materialize
 
-Except for the known limitations listed next, all other suite cases are
-expected to work.
+Refer to the [list of known
+failures](test/test_suite/test_suite_parts.cpp) for the current
+status, as this is subject to ongoing work.
 
 
 --------- 
 
 ## Known limitations
 
-ryml makes no effort to follow the standard in the following situations:
+ryml deliberatly makes no effort to follow the standard in the following situations:
 
 * `%YAML` directives have no effect and are ignored.
 * `%TAG` directives have no effect and are ignored. All schemas are assumed
   to be the default YAML 2002 schema.
-* container elements are not accepted as mapping keys. keys must be
-  simple strings and cannot themselves be mappings or sequences. But mapping
-  values can be any of the above. [YAML test
-  suite](https://github.com/yaml/yaml-test-suite) cases:
-  [4FJ6](https://github.com/yaml/yaml-test-suite/tree/master/test/4FJ6.tml),
-  [6BFJ](https://github.com/yaml/yaml-test-suite/tree/master/test/6BFJ.tml),
-  [6PBE](https://github.com/yaml/yaml-test-suite/tree/master/test/6PBE.tml),
-  [6PBE](https://github.com/yaml/yaml-test-suite/tree/master/test/6PBE.tml),
-  [KK5P](https://github.com/yaml/yaml-test-suite/tree/master/test/KK5P.tml),
-  [KZN9](https://github.com/yaml/yaml-test-suite/tree/master/test/KZN9.tml),
-  [LX3P](https://github.com/yaml/yaml-test-suite/tree/master/test/LX3P.tml),
-  [M5DY](https://github.com/yaml/yaml-test-suite/tree/master/test/M5DY.tml),
-  [Q9WF](https://github.com/yaml/yaml-test-suite/tree/master/test/Q9WF.tml),
-  [SBG9](https://github.com/yaml/yaml-test-suite/tree/master/test/SBG9.tml),
-  [X38W](https://github.com/yaml/yaml-test-suite/tree/master/test/X38W.tml),
-  [XW4D](https://github.com/yaml/yaml-test-suite/tree/master/test/XW4D.tml).
+* Tags are parsed as-is; tag lookup is not supported. YAML test suite cases:
+  [5TYM](https://github.com/yaml/yaml-test-suite/tree/main/src/5TYM.yaml),
+  [6CK3](https://github.com/yaml/yaml-test-suite/tree/main/src/6CK3.yaml),
+  [6WLZ](https://github.com/yaml/yaml-test-suite/tree/main/src/6WLZ.yaml),
+  [9WXW](https://github.com/yaml/yaml-test-suite/tree/main/src/9WXW.yaml),
+  [C4HZ](https://github.com/yaml/yaml-test-suite/tree/main/src/C4HZ.yaml),
+  [CC74](https://github.com/yaml/yaml-test-suite/tree/main/src/CC74.yaml),
+  [P76L](https://github.com/yaml/yaml-test-suite/tree/main/src/P76L.yaml),
+  [QLJ7](https://github.com/yaml/yaml-test-suite/tree/main/src/QLJ7.yaml),
+  [U3C3](https://github.com/yaml/yaml-test-suite/tree/main/src/U3C3.yaml),
+  [Z9M4](https://github.com/yaml/yaml-test-suite/tree/main/src/Z9M4.yaml).
+* Anchor names must not end with a terminating colon. YAML test suite cases:
+  [2SXE](https://github.com/yaml/yaml-test-suite/tree/main/src/2SXE.yaml),
+  [W5VH](https://github.com/yaml/yaml-test-suite/tree/main/src/W5VH.yaml).
+* Tabs after `:` or `-` are not supported. YAML test suite cases:
+  [6BCT](https://github.com/yaml/yaml-test-suite/tree/main/src/6BCT.yaml),
+  [J3BT](https://github.com/yaml/yaml-test-suite/tree/main/src/J3BT.yaml).
+* Containers are not accepted as mapping keys: keys must be
+  scalar strings. YAML test suite cases:
+  [4FJ6](https://github.com/yaml/yaml-test-suite/tree/main/src/4FJ6.yaml),
+  [6BFJ](https://github.com/yaml/yaml-test-suite/tree/main/src/6BFJ.yaml),
+  [6PBE](https://github.com/yaml/yaml-test-suite/tree/main/src/6PBE.yaml),
+  [KK5P](https://github.com/yaml/yaml-test-suite/tree/main/src/KK5P.yaml),
+  [KZN9](https://github.com/yaml/yaml-test-suite/tree/main/src/KZN9.yaml),
+  [LX3P](https://github.com/yaml/yaml-test-suite/tree/main/src/LX3P.yaml),
+  [M5DY](https://github.com/yaml/yaml-test-suite/tree/main/src/M5DY.yaml),
+  [Q9WF](https://github.com/yaml/yaml-test-suite/tree/main/src/Q9WF.yaml),
+  [SBG9](https://github.com/yaml/yaml-test-suite/tree/main/src/SBG9.yaml),
+  [V9D5](https://github.com/yaml/yaml-test-suite/tree/main/src/V9D5.yaml),
+  [X38W](https://github.com/yaml/yaml-test-suite/tree/main/src/X38W.yaml),
+  [XW4D](https://github.com/yaml/yaml-test-suite/tree/main/src/XW4D.yaml).
 
 
 ------
 
 ## Alternative libraries
 
-Why this library? Because none of the existing libraries was quite what I
-wanted. There are two C/C++ libraries that I know of:
+Why this library? Because none of the existing libraries was quite
+what I wanted. When I started this project in 2018, I was aware of these two
+alternative C/C++ libraries:
 
-* [libyaml](https://github.com/yaml/libyaml)
-* [yaml-cpp](https://github.com/jbeder/yaml-cpp)
+  * [libyaml](https://github.com/yaml/libyaml). This is a bare C library. It does not create a representation of the data tree, so it don't see it as practical. My initial idea was to wrap parsing and emitting around libyaml's convenient event handling, but to my surprise I found out it makes heavy use of allocations and string duplications when parsing. I briefly pondered on sending PRs to reduce these allocation needs, but not having a permanent tree to store the parsed data was too much of a downside.
+  * [yaml-cpp](https://github.com/jbeder/yaml-cpp). This library may be full of functionality, but is heavy on the use of node-pointer-based structures like `std::map`, allocations, string copies, polymorphism and slow C++ stream serializations. This is generally a sure way of making your code slower, and strong evidence of this can be seen in the benchmark results above.
 
-The standard [libyaml](https://github.com/yaml/libyaml) is a bare C
-library. It does not create a representation of the data tree, so it can't
-qualify as practical. My initial idea was to wrap parsing and emitting around
-libyaml, but to my surprise I found out it makes heavy use of allocations and
-string duplications when parsing. I briefly pondered on sending PRs to reduce
-these allocation needs, but not having a permanent tree to store the parsed
-data was too much of a downside.
+Recently [libfyaml](https://github.com/pantoniou/libfyaml) appeared. This is a newer C library, fully conformant to the YAML standard, which does offer the tree as a data structure. As a downside, it still generally parses slower than ryml by a factor somewhere between 2x and 3x, and in some cases even higher than 100x.
 
-[yaml-cpp](https://github.com/jbeder/yaml-cpp) is full of functionality, but
-is heavy on the use of node-pointer-based structures like `std::map`,
-allocations, string copies and slow C++ stream serializations. This is
-generally a sure way of making your code slower, and strong evidence of this
-can be seen in the benchmark results above.
-
-When performance and low latency are important, using contiguous structures
-for better cache behavior and to prevent the library from trampling over the
-client's caches, parsing in place and using non-owning strings is of central
-importance. Hence this Rapid YAML library which, with minimal compromise,
-bridges the gap from efficiency to usability. This library takes inspiration
-from [RapidJSON](https://github.com/Tencent/rapidjson)
-and [RapidXML](http://rapidxml.sourceforge.net/).
-
+When performance and low latency are important, using contiguous structures for better cache behavior and to prevent the library from trampling caches, parsing in place and using non-owning strings is of central importance. Hence this Rapid YAML library which, with minimal compromise, bridges the gap from efficiency to usability. This library takes inspiration from [RapidJSON](https://github.com/Tencent/rapidjson) and [RapidXML](http://rapidxml.sourceforge.net/).
 
 ------
 ## License

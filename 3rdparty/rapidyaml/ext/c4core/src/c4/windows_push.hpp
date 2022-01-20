@@ -8,6 +8,9 @@
  *
  * @see https://aras-p.info/blog/2018/01/12/Minimizing-windows.h/ */
 
+
+#if defined(_WIN64) || defined(_WIN32)
+
 #if defined(_M_AMD64)
 #   ifndef _AMD64_
 #       define _c4_AMD64_
@@ -93,5 +96,7 @@
  *  NODEFERWINDOWPOS  - DeferWindowPos routines
  *  NOMCX             - Modem Configuration Extensions
  */
+
+#endif /* defined(_WIN64) || defined(_WIN32) */
 
 #endif /* _C4_WINDOWS_PUSH_HPP_ */

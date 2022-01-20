@@ -80,23 +80,31 @@ private:
     void _write_scalar_json(csubstr s, bool as_key, bool was_quoted);
     void _write_scalar_block(csubstr s, size_t level, bool as_key);
 
+    void _write_tag(csubstr tag)
+    {
+        if(!tag.begins_with('!'))
+            this->Writer::_do_write('!');
+        this->Writer::_do_write(tag);
+    }
+
     void _indent(size_t ilevel)
     {
         this->Writer::_do_write(indent_to(ilevel));
     }
 
     enum {
-        _keysc =  (KEY|KEYREF|KEYANCH|KEYQUO)  | ~(VAL|VALREF|VALANCH|VALQUO),
-        _valsc = ~(KEY|KEYREF|KEYANCH|KEYQUO)  |  (VAL|VALREF|VALANCH|VALQUO),
+        _keysc =  (KEY|KEYREF|KEYANCH|KEYQUO) | ~(VAL|VALREF|VALANCH|VALQUO),
+        _valsc = ~(KEY|KEYREF|KEYANCH|KEYQUO) |  (VAL|VALREF|VALANCH|VALQUO),
         _keysc_json =  (KEY)  | ~(VAL),
         _valsc_json = ~(KEY)  |  (VAL),
     };
 
-    C4_ALWAYS_INLINE void _writek(Tree const& t, size_t id, size_t level) { _write(t.keysc(id), t._p(id)->m_type.type & ~(VAL|VALREF|VALANCH|VALQUO), level); }
-    C4_ALWAYS_INLINE void _writev(Tree const& t, size_t id, size_t level) { _write(t.valsc(id), t._p(id)->m_type.type & ~(KEY|KEYREF|KEYANCH|KEYQUO), level); }
+    C4_ALWAYS_INLINE void _writek(Tree const& t, size_t id, size_t level) { _write(t.keysc(id), t._p(id)->m_type.type & ~_valsc, level); }
+    C4_ALWAYS_INLINE void _writev(Tree const& t, size_t id, size_t level) { _write(t.valsc(id), t._p(id)->m_type.type & ~_keysc, level); }
 
     C4_ALWAYS_INLINE void _writek_json(Tree const& t, size_t id) { _write_json(t.keysc(id), t._p(id)->m_type.type & ~(VAL)); }
     C4_ALWAYS_INLINE void _writev_json(Tree const& t, size_t id) { _write_json(t.valsc(id), t._p(id)->m_type.type & ~(KEY)); }
+
 };
 
 
@@ -360,6 +368,6 @@ CharOwningContainer emitrs_json(NodeRef const& n)
 } // namespace yml
 } // namespace c4
 
-#include "./emit.def.hpp"
+#include "c4/yml/emit.def.hpp"
 
 #endif /* _C4_YML_EMIT_HPP_ */

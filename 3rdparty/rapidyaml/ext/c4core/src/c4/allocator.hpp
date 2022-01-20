@@ -5,6 +5,7 @@
 #include "c4/ctor_dtor.hpp"
 
 #include <memory> // std::allocator_traits
+#include <type_traits>
 
 /** @file allocator.hpp Contains classes to make typeful allocations (note
  * that memory resources are typeless) */
@@ -69,90 +70,95 @@ public:
 //-----------------------------------------------------------------------------
 
 namespace detail {
-template< class MemRes >
+template<class MemRes>
 struct _AllocatorUtil;
+
+template<class T, class ...Args>
+struct has_no_alloc
+    : public std::integral_constant<bool,
+                                    !(std::uses_allocator<T, MemoryResource*>::value)
+                                    && std::is_constructible<T, Args...>::value> {};
+
+// std::uses_allocator_v<U, MemoryResource> && std::is_constructible<U, std::allocator_arg_t, MemoryResource*, Args...>
+// ie can construct(std::allocator_arg_t, MemoryResource*, Args...)
+template<class T, class ...Args>
+struct has_alloc_arg
+    : public std::integral_constant<bool,
+                                    std::uses_allocator<T, MemoryResource*>::value
+                                    && std::is_constructible<T, std::allocator_arg_t, MemoryResource*, Args...>::value> {};
+// std::uses_allocator<U> && std::is_constructible<U, Args..., MemoryResource*>
+// ie, can construct(Args..., MemoryResource*)
+template<class T, class ...Args>
+struct has_alloc
+    : public std::integral_constant<bool,
+                                    std::uses_allocator<T, MemoryResource*>::value
+                                    && std::is_constructible<T, Args..., MemoryResource*>::value> {};
+
 } // namespace detail
 
 
-template< class MemRes >
+template<class MemRes>
 struct detail::_AllocatorUtil : public MemRes
 {
-// utility macros, undefined at the end of the class
-/** SFINAE: enable the function with a void return type when a condition is verified */
-#define _c4_void_if(cond) C4_ALWAYS_INLINE typename std::enable_if< cond, void >::type
-/** @see http://en.cppreference.com/w/cpp/memory/uses_allocator */
-#define _c4_uses_allocator(U) std::uses_allocator< U, MemoryResource* >::value
-/** @see http://en.cppreference.com/w/cpp/types/is_constructible */
-#define _c4_is_constructible(...) std::is_constructible< __VA_ARGS__ >::value
-
-public:
-
     using MemRes::MemRes;
-
-public:
 
     /** for construct:
      * @see http://en.cppreference.com/w/cpp/experimental/polymorphic_allocator/construct */
 
     // 1. types with no allocators
-    template< class U, class... Args >
-    _c4_void_if( ! _c4_uses_allocator(U) && _c4_is_constructible(U, Args...) )
-    construct(U* ptr, Args&&... args)
+    template <class U, class... Args>
+    C4_ALWAYS_INLINE typename std::enable_if<detail::has_no_alloc<U, Args...>::value, void>::type
+    construct(U *ptr, Args &&...args)
     {
-        c4::construct(ptr, std::forward< Args >(args)...);
+        c4::construct(ptr, std::forward<Args>(args)...);
     }
-    template< class U, class I, class... Args >
-    _c4_void_if( ! _c4_uses_allocator(U) && _c4_is_constructible(U, Args...) )
+    template<class U, class I, class... Args>
+    C4_ALWAYS_INLINE typename std::enable_if<detail::has_no_alloc<U, Args...>::value, void>::type
     construct_n(U* ptr, I n, Args&&... args)
     {
-        c4::construct_n(ptr, n, std::forward< Args >(args)...);
+        c4::construct_n(ptr, n, std::forward<Args>(args)...);
     }
 
     // 2. types using allocators (ie, containers)
 
     // 2.1. can construct(std::allocator_arg_t, MemoryResource*, Args...)
-    template< class U, class... Args >
-    _c4_void_if(_c4_uses_allocator(U) && _c4_is_constructible(U, std::allocator_arg_t, MemoryResource*, Args...))
+    template<class U, class... Args>
+    C4_ALWAYS_INLINE typename std::enable_if<detail::has_alloc_arg<U, Args...>::value, void>::type
     construct(U* ptr, Args&&... args)
     {
-        c4::construct(ptr, std::allocator_arg, this->resource(), std::forward< Args >(args)...);
+        c4::construct(ptr, std::allocator_arg, this->resource(), std::forward<Args>(args)...);
     }
-    template< class U, class I, class... Args >
-    _c4_void_if(_c4_uses_allocator(U) && _c4_is_constructible(U, std::allocator_arg_t, MemoryResource*, Args...))
+    template<class U, class I, class... Args>
+    C4_ALWAYS_INLINE typename std::enable_if<detail::has_alloc_arg<U, Args...>::value, void>::type
     construct_n(U* ptr, I n, Args&&... args)
     {
-        c4::construct_n(ptr, n, std::allocator_arg, this->resource(), std::forward< Args >(args)...);
+        c4::construct_n(ptr, n, std::allocator_arg, this->resource(), std::forward<Args>(args)...);
     }
 
     // 2.2. can construct(Args..., MemoryResource*)
-    template< class U, class... Args >
-    _c4_void_if(_c4_uses_allocator(U) && _c4_is_constructible(U, Args..., MemoryResource*))
+    template<class U, class... Args>
+    C4_ALWAYS_INLINE typename std::enable_if<detail::has_alloc<U, Args...>::value, void>::type
     construct(U* ptr, Args&&... args)
     {
-        c4::construct(ptr, std::forward< Args >(args)..., this->resource());
+        c4::construct(ptr, std::forward<Args>(args)..., this->resource());
     }
-    template< class U, class I, class... Args >
-    _c4_void_if(_c4_uses_allocator(U) && _c4_is_constructible(U, Args..., MemoryResource*))
+    template<class U, class I, class... Args>
+    C4_ALWAYS_INLINE typename std::enable_if<detail::has_alloc<U, Args...>::value, void>::type
     construct_n(U* ptr, I n, Args&&... args)
     {
-        c4::construct_n(ptr, n, std::forward< Args >(args)..., this->resource());
+        c4::construct_n(ptr, n, std::forward<Args>(args)..., this->resource());
     }
 
-    template< class U >
+    template<class U>
     static C4_ALWAYS_INLINE void destroy(U* ptr)
     {
         c4::destroy(ptr);
     }
-    template< class U, class I >
+    template<class U, class I>
     static C4_ALWAYS_INLINE void destroy_n(U* ptr, I n)
     {
         c4::destroy_n(ptr, n);
     }
-
-#undef _c4_void_if
-#undef _c4_is_constructible
-#undef _c4_uses_allocator
-
 };
 
 
@@ -164,12 +170,12 @@ public:
  * @param T
  * @param MemResProvider
  * @ingroup allocators */
-template< class T, class MemResProvider=MemResGlobal >
-class Allocator : public detail::_AllocatorUtil< MemResProvider >
+template<class T, class MemResProvider=MemResGlobal>
+class Allocator : public detail::_AllocatorUtil<MemResProvider>
 {
 public:
 
-    using impl_type = detail::_AllocatorUtil< MemResProvider >;
+    using impl_type = detail::_AllocatorUtil<MemResProvider>;
 
     using value_type = T;
     using pointer = T*;
@@ -182,12 +188,12 @@ public:
 
 public:
 
-    template< class U, class MRProv >
+    template<class U, class MRProv>
     bool operator== (Allocator<U, MRProv> const& that) const
     {
         return this->resource() == that.resource();
     }
-    template< class U, class MRProv >
+    template<class U, class MRProv>
     bool operator!= (Allocator<U, MRProv> const& that) const
     {
         return this->resource() != that.resource();
@@ -195,13 +201,13 @@ public:
 
 public:
 
-    template< class U, class MRProv > friend class Allocator;
-    template< class U >
+    template<class U, class MRProv> friend class Allocator;
+    template<class U>
     struct rebind
     {
-        using other = Allocator< U, MemResProvider >;
+        using other = Allocator<U, MemResProvider>;
     };
-    template< class U >
+    template<class U>
     typename rebind<U>::other rebound()
     {
         return typename rebind<U>::other(*this);
@@ -212,7 +218,7 @@ public:
     using impl_type::impl_type;
     Allocator() : impl_type() {} // VS demands this
 
-    template< class U > Allocator(Allocator<U, MemResProvider> const& that) : impl_type(that.resource()) {}
+    template<class U> Allocator(Allocator<U, MemResProvider> const& that) : impl_type(that.resource()) {}
 
     Allocator(Allocator const&) = default;
     Allocator(Allocator     &&) = default;
@@ -229,14 +235,14 @@ public:
         C4_ASSERT(this->resource() != nullptr);
         C4_ASSERT(alignment >= alignof(T));
         void* vmem = this->resource()->allocate(detail::size_for<T>(num_objs), alignment);
-        T* mem = static_cast< T* >(vmem);
+        T* mem = static_cast<T*>(vmem);
         return mem;
     }
 
     void deallocate(T * ptr, size_t num_objs, size_t alignment=alignof(T))
     {
         C4_ASSERT(this->resource() != nullptr);
-        C4_ASSERT(alignment >= alignof(T));
+        C4_ASSERT(alignment>= alignof(T));
         this->resource()->deallocate(ptr, detail::size_for<T>(num_objs), alignment);
     }
 
@@ -245,7 +251,7 @@ public:
         C4_ASSERT(this->resource() != nullptr);
         C4_ASSERT(alignment >= alignof(T));
         void* vmem = this->resource()->reallocate(ptr, detail::size_for<T>(oldnum), detail::size_for<T>(newnum), alignment);
-        T* mem = static_cast< T* >(vmem);
+        T* mem = static_cast<T*>(vmem);
         return mem;
     }
 
@@ -256,12 +262,12 @@ public:
 //-----------------------------------------------------------------------------
 
 /** @ingroup allocators */
-template< class T, size_t N=16, size_t Alignment=alignof(T), class MemResProvider=MemResGlobal >
-class SmallAllocator : public detail::_AllocatorUtil< MemResProvider >
+template<class T, size_t N=16, size_t Alignment=alignof(T), class MemResProvider=MemResGlobal>
+class SmallAllocator : public detail::_AllocatorUtil<MemResProvider>
 {
     static_assert(Alignment >= alignof(T), "invalid alignment");
 
-    using impl_type = detail::_AllocatorUtil< MemResProvider >;
+    using impl_type = detail::_AllocatorUtil<MemResProvider>;
 
     alignas(Alignment) char m_arr[N * sizeof(T)];
     size_t m_num{0};
@@ -277,12 +283,12 @@ public:
     using difference_type = std::ptrdiff_t;
     using propagate_on_container_move_assigment = std::true_type;
 
-    template< class U >
+    template<class U>
     bool operator== (SmallAllocator<U,N,Alignment,MemResProvider> const&) const
     {
         return false;
     }
-    template< class U >
+    template<class U>
     bool operator!= (SmallAllocator<U,N,Alignment,MemResProvider> const&) const
     {
         return true;
@@ -290,13 +296,13 @@ public:
 
 public:
 
-    template< class U, size_t, size_t, class > friend class SmallAllocator;
-    template< class U >
+    template<class U, size_t, size_t, class> friend class SmallAllocator;
+    template<class U>
     struct rebind
     {
-        using other = SmallAllocator< U, N, alignof(U), MemResProvider >;
+        using other = SmallAllocator<U, N, alignof(U), MemResProvider>;
     };
-    template< class U >
+    template<class U>
     typename rebind<U>::other rebound()
     {
         return typename rebind<U>::other(*this);
@@ -307,7 +313,7 @@ public:
     using impl_type::impl_type;
     SmallAllocator() : impl_type() {} // VS demands this
 
-    template< class U, size_t N2, size_t A2, class MP2 >
+    template<class U, size_t N2, size_t A2, class MP2>
     SmallAllocator(SmallAllocator<U,N2,A2,MP2> const& that) : impl_type(that.resource())
     {
         C4_ASSERT(that.m_num == 0);
@@ -337,7 +343,7 @@ public:
             vmem = this->resource()->allocate(num_objs * sizeof(T), alignment);
         }
         m_num += num_objs;
-        T *mem = static_cast< T* >(vmem);
+        T *mem = static_cast<T*>(vmem);
         return mem;
     }
 
@@ -372,7 +378,7 @@ public:
             return m_arr;
         }
         void* vmem = this->resource()->reallocate(ptr, oldnum * sizeof(T), newnum * sizeof(T), alignment);
-        T* mem = static_cast< T* >(vmem);
+        T* mem = static_cast<T*>(vmem);
         return mem;
     }
 
@@ -384,15 +390,15 @@ public:
 
 /** An allocator making use of the global memory resource.
  * @ingroup allocators */
-template< class T > using allocator = Allocator< T, MemResGlobal >;
+template<class T> using allocator = Allocator<T, MemResGlobal>;
 /** An allocator with a per-instance memory resource
  * @ingroup allocators */
-template< class T > using allocator_mr = Allocator< T, MemRes >;
+template<class T> using allocator_mr = Allocator<T, MemRes>;
 
 /** @ingroup allocators */
-template< class T, size_t N=16, size_t Alignment=alignof(T) > using small_allocator = SmallAllocator< T, N, Alignment, MemResGlobal >;
+template<class T, size_t N=16, size_t Alignment=alignof(T)> using small_allocator = SmallAllocator<T, N, Alignment, MemResGlobal>;
 /** @ingroup allocators */
-template< class T, size_t N=16, size_t Alignment=alignof(T) > using small_allocator_mr = SmallAllocator< T, N, Alignment, MemRes >;
+template<class T, size_t N=16, size_t Alignment=alignof(T)> using small_allocator_mr = SmallAllocator<T, N, Alignment, MemRes>;
 
 } // namespace c4
 

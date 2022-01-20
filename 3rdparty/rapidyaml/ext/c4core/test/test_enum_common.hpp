@@ -1,7 +1,9 @@
 #ifndef _C4_ENUM_COMMON_HPP_
 #define _C4_ENUM_COMMON_HPP_
 
+#ifndef C4CORE_SINGLE_HEADER
 #include <c4/enum.hpp>
+#endif
 
 typedef enum {
     FOO = 0,

@@ -52,11 +52,11 @@ private:
     uint64_t m_seed;
 };
 
-bool operator==(splitmix const &lhs, splitmix const &rhs)
+inline bool operator==(splitmix const &lhs, splitmix const &rhs)
 {
     return lhs.m_seed == rhs.m_seed;
 }
-bool operator!=(splitmix const &lhs, splitmix const &rhs)
+inline bool operator!=(splitmix const &lhs, splitmix const &rhs)
 {
     return lhs.m_seed != rhs.m_seed;
 }
@@ -105,11 +105,11 @@ private:
     uint64_t m_seed;
 };
 
-bool operator==(xorshift const &lhs, xorshift const &rhs)
+inline bool operator==(xorshift const &lhs, xorshift const &rhs)
 {
     return lhs.m_seed == rhs.m_seed;
 }
-bool operator!=(xorshift const &lhs, xorshift const &rhs)
+inline bool operator!=(xorshift const &lhs, xorshift const &rhs)
 {
     return lhs.m_seed != rhs.m_seed;
 }
@@ -170,12 +170,12 @@ private:
     uint64_t m_inc;
 };
 
-bool operator==(pcg const &lhs, pcg const &rhs)
+inline bool operator==(pcg const &lhs, pcg const &rhs)
 {
     return lhs.m_state == rhs.m_state
         && lhs.m_inc == rhs.m_inc;
 }
-bool operator!=(pcg const &lhs, pcg const &rhs)
+inline bool operator!=(pcg const &lhs, pcg const &rhs)
 {
     return lhs.m_state != rhs.m_state
         || lhs.m_inc != rhs.m_inc;

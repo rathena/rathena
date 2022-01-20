@@ -115,7 +115,7 @@
 #    define C4_CONSTEXPR11
 #    define C4_CONSTEXPR14
 //#    define C4_NOEXCEPT
-#  elif __cplusplus < 201402
+#  elif __cplusplus == 201103
 #    define C4_CONSTEXPR11 constexpr
 #    define C4_CONSTEXPR14
 //#    define C4_NOEXCEPT noexcept
@@ -139,6 +139,14 @@
 //#    define C4_NOEXCEPT noexcept
 #  endif
 #endif  // _MSC_VER
+
+
+#if C4_CPP < 17
+#define C4_IF_CONSTEXPR
+#else
+#define C4_IF_CONSTEXPR constexpr
+#endif
+
 
 //------------------------------------------------------------
 

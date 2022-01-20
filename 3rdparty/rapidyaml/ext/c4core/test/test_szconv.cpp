@@ -1,4 +1,6 @@
+#ifndef C4CORE_SINGLE_HEADER
 #include "c4/szconv.hpp"
+#endif
 
 #include "c4/libtest/supprwarn_push.hpp"
 #include "c4/test.hpp"

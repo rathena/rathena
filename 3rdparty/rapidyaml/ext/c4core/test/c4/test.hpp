@@ -1,10 +1,14 @@
 #ifndef _C4_TEST_HPP_
 #define _C4_TEST_HPP_
 
+#ifdef C4CORE_SINGLE_HEADER
+#include "c4/c4core_all.hpp"
+#else
 #include "c4/config.hpp"
 #include "c4/memory_resource.hpp"
 #include "c4/allocator.hpp"
 #include "c4/substr.hpp"
+#endif
 #include <cstdio>
 #include <iostream>
 

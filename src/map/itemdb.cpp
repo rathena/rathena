@@ -2177,7 +2177,7 @@ static void itemdb_roulette_free(void) {
  */
 static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 	ryml::Tree tree;
-	ryml::NodeRef rootNode = tree.rootref();;
+	ryml::NodeRef rootNode = tree.rootref();
 	rootNode |= ryml::MAP;
 	int32 index = -1;
 

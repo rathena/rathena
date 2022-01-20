@@ -2,23 +2,22 @@
 #define _C4_YML_TREE_HPP_
 
 
+#include "c4/error.hpp"
 #include "c4/types.hpp"
 #ifndef _C4_YML_COMMON_HPP_
 #include "c4/yml/common.hpp"
 #endif
 
 #include <c4/charconv.hpp>
+#include <cmath>
+#include <limits>
 
-#if defined(_MSC_VER)
-#   pragma warning(push)
-#   pragma warning(disable: 4251/*needs to have dll-interface to be used by clients of struct*/)
-#   pragma warning(disable: 4296/*expression is always 'boolean_value'*/)
-#elif defined(__clang__)
-#   pragma clang diagnostic push
-#elif defined(__GNUC__)
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wtype-limits"
-#endif
+
+C4_SUPPRESS_WARNING_MSVC_PUSH
+C4_SUPPRESS_WARNING_MSVC(4251) // needs to have dll-interface to be used by clients of struct
+C4_SUPPRESS_WARNING_MSVC(4296) // expression is always 'boolean_value'
+C4_SUPPRESS_WARNING_GCC_CLANG_PUSH
+C4_SUPPRESS_WARNING_GCC("-Wtype-limits")
 
 
 namespace c4 {
@@ -36,6 +35,55 @@ using tag_bits = uint16_t;
 
 /** the integral type necessary to cover all the bits marking node types */
 using type_bits = uint64_t;
+
+
+/** encode a floating point value to a string. */
+template<class T>
+size_t to_chars_float(substr buf, T val)
+{
+    C4_SUPPRESS_WARNING_GCC_CLANG_WITH_PUSH("-Wfloat-equal");
+    static_assert(std::is_floating_point<T>::value, "must be floating point");
+    if(C4_UNLIKELY(std::isnan(val)))
+        return to_chars(buf, csubstr(".nan"));
+    else if(C4_UNLIKELY(val == std::numeric_limits<T>::infinity()))
+        return to_chars(buf, csubstr(".inf"));
+    else if(C4_UNLIKELY(val == -std::numeric_limits<T>::infinity()))
+        return to_chars(buf, csubstr("-.inf"));
+    return to_chars(buf, val);
+    C4_SUPPRESS_WARNING_GCC_CLANG_POP
+}
+
+
+/** decode a floating point from string. Accepts special values: .nan,
+ * .inf, -.inf */
+template<class T>
+bool from_chars_float(csubstr buf, T *C4_RESTRICT val)
+{
+    static_assert(std::is_floating_point<T>::value, "must be floating point");
+    if(C4_LIKELY(from_chars(buf, val)))
+    {
+        return true;
+    }
+    else if(C4_UNLIKELY(buf == ".nan" || buf == ".NaN" || buf == ".NAN"))
+    {
+        *val = std::numeric_limits<T>::quiet_NaN();
+        return true;
+    }
+    else if(C4_UNLIKELY(buf == ".inf" || buf == ".Inf" || buf == ".INF"))
+    {
+        *val = std::numeric_limits<T>::infinity();
+        return true;
+    }
+    else if(C4_UNLIKELY(buf == "-.inf" || buf == "-.Inf" || buf == "-.INF"))
+    {
+        *val = -std::numeric_limits<T>::infinity();
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
 
 
 //-----------------------------------------------------------------------------
@@ -66,6 +114,8 @@ typedef enum : uint8_t {
 
 
 YamlTag_e to_tag(csubstr tag);
+csubstr from_tag(YamlTag_e tag);
+csubstr normalize_tag(csubstr tag);
 
 
 
@@ -104,53 +154,7 @@ typedef enum : type_bits {
     DOCMAP  = DOC|MAP,
     DOCSEQ  = DOC|SEQ,
     DOCVAL  = DOC|VAL,
-
-#ifdef C4_WORK_IN_PROGRESS_
-    // https://yaml.org/type/
-    _NUM_TAG_TYPES = 15,
-    _KTAG_SHIFT = type_bits(12),
-    _VTAG_SHIFT = type_bits(_KTAG_SHIFT + _NUM_TAG_TYPES),
-    _TAG_END_SHIFT = type_bits(_VTAG_SHIFT + _NUM_TAG_TYPES + 1), // the first non-tagtype bit after 
-    _KVTAG_MASK = (~(c4bit(_KTAG_SHIFT)-1))/*zeros to the left of tagtype bits */
-                  & (c4bit(_TAG_END_SHIFT)-1)/*ones until the end of tagtype bits*/,
-    // key: collection types
-    KTAG_MAP    = c4bit( 0+_KTAG_SHIFT), /**< !!map   Unordered set of key: value pairs without duplicates. @see https://yaml.org/type/map.html */
-    KTAG_OMAP   = c4bit( 1+_KTAG_SHIFT), /**< !!omap  Ordered sequence of key: value pairs without duplicates. @see https://yaml.org/type/omap.html */
-    KTAG_PAIRS  = c4bit( 2+_KTAG_SHIFT), /**< !!pairs Ordered sequence of key: value pairs allowing duplicates. @see https://yaml.org/type/pairs.html */
-    KTAG_SET    = c4bit( 3+_KTAG_SHIFT), /**< !!set   Unordered set of non-equal values. @see https://yaml.org/type/set.html */
-    KTAG_SEQ    = c4bit( 4+_KTAG_SHIFT), /**< !!set   Sequence of arbitrary values. @see https://yaml.org/type/seq.html */
-    // key: scalar types
-    KTAG_BINARY = c4bit( 5+_KTAG_SHIFT), /**< !!binary A sequence of zero or more octets (8 bit values). @see https://yaml.org/type/binary.html */
-    KTAG_BOOL   = c4bit( 6+_KTAG_SHIFT), /**< !!bool   Mathematical Booleans. @see https://yaml.org/type/bool.html */
-    KTAG_FLOAT  = c4bit( 7+_KTAG_SHIFT), /**< !!float  Floating-point approximation to real numbers. https://yaml.org/type/float.html */
-    KTAG_INT    = c4bit( 8+_KTAG_SHIFT), /**< !!float  Mathematical integers. https://yaml.org/type/int.html */
-    KTAG_MERGE  = c4bit( 9+_KTAG_SHIFT), /**< !!merge  Specify one or more mapping to be merged with the current one. https://yaml.org/type/merge.html */
-    KTAG_NULL   = c4bit(10+_KTAG_SHIFT), /**< !!null   Devoid of value. https://yaml.org/type/null.html */
-    KTAG_STR    = c4bit(11+_KTAG_SHIFT), /**< !!str    A sequence of zero or more Unicode characters. https://yaml.org/type/str.html */
-    KTAG_TIME   = c4bit(12+_KTAG_SHIFT), /**< !!timestamp A point in time https://yaml.org/type/timestamp.html */
-    KTAG_VALUE  = c4bit(13+_KTAG_SHIFT), /**< !!value  Specify the default value of a mapping https://yaml.org/type/value.html */
-    KTAG_YAML   = c4bit(14+_KTAG_SHIFT), /**< !!yaml   Specify the default value of a mapping https://yaml.org/type/yaml.html */
-    // key: collection types
-    VTAG_MAP    = c4bit( 0+_VTAG_SHIFT), /**< !!map   Unordered set of key: value pairs without duplicates. @see https://yaml.org/type/map.html */
-    VTAG_OMAP   = c4bit( 1+_VTAG_SHIFT), /**< !!omap  Ordered sequence of key: value pairs without duplicates. @see https://yaml.org/type/omap.html */
-    VTAG_PAIRS  = c4bit( 2+_VTAG_SHIFT), /**< !!pairs Ordered sequence of key: value pairs allowing duplicates. @see https://yaml.org/type/pairs.html */
-    VTAG_SET    = c4bit( 3+_VTAG_SHIFT), /**< !!set   Unordered set of non-equal values. @see https://yaml.org/type/set.html */
-    VTAG_SEQ    = c4bit( 4+_VTAG_SHIFT), /**< !!set   Sequence of arbitrary values. @see https://yaml.org/type/seq.html */
-    // key: scalar types
-    VTAG_BINARY = c4bit( 5+_VTAG_SHIFT), /**< !!binary A sequence of zero or more octets (8 bit values). @see https://yaml.org/type/binary.html */
-    VTAG_BOOL   = c4bit( 6+_VTAG_SHIFT), /**< !!bool   Mathematical Booleans. @see https://yaml.org/type/bool.html */
-    VTAG_FLOAT  = c4bit( 7+_VTAG_SHIFT), /**< !!float  Floating-point approximation to real numbers. https://yaml.org/type/float.html */
-    VTAG_INT    = c4bit( 8+_VTAG_SHIFT), /**< !!float  Mathematical integers. https://yaml.org/type/int.html */
-    VTAG_MERGE  = c4bit( 9+_VTAG_SHIFT), /**< !!merge  Specify one or more mapping to be merged with the current one. https://yaml.org/type/merge.html */
-    VTAG_NULL   = c4bit(10+_VTAG_SHIFT), /**< !!null   Devoid of value. https://yaml.org/type/null.html */
-    VTAG_STR    = c4bit(11+_VTAG_SHIFT), /**< !!str    A sequence of zero or more Unicode characters. https://yaml.org/type/str.html */
-    VTAG_TIME   = c4bit(12+_VTAG_SHIFT), /**< !!timestamp A point in time https://yaml.org/type/timestamp.html */
-    VTAG_VALUE  = c4bit(13+_VTAG_SHIFT), /**< !!value  Specify the default value of a mapping https://yaml.org/type/value.html */
-    VTAG_YAML   = c4bit(14+_VTAG_SHIFT), /**< !!yaml   Specify the default value of a mapping https://yaml.org/type/yaml.html */
-#endif // C4_WORK_IN_PROGRESS_
-
-#undef c4bit
-
+    #undef c4bit
 } NodeType_e;
 
 
@@ -202,25 +206,25 @@ public:
 
     bool is_stream() const { return ((type & STREAM) == STREAM) != 0; }
     bool is_doc() const { return (type & DOC) != 0; }
-    bool is_container() const { return (type & (MAP|SEQ|STREAM|DOC)) != 0; }
+    bool is_container() const { return (type & (MAP|SEQ|STREAM)) != 0; }
     bool is_map() const { return (type & MAP) != 0; }
     bool is_seq() const { return (type & SEQ) != 0; }
     bool has_val() const { return (type & VAL) != 0; }
     bool has_key() const { return (type & KEY) != 0; }
-    bool has_keyval() const { return (type & KEY) != 0 && (type & VAL) != 0; }
-    bool is_val() const { return (type & KEYVAL) == VAL; }
+    bool is_val() const { return (type & (KEYVAL)) == VAL; }
     bool is_keyval() const { return (type & KEYVAL) == KEYVAL; }
     bool has_key_tag() const { return (type & (KEY|KEYTAG)) == (KEY|KEYTAG); }
     bool has_val_tag() const { return ((type & (VALTAG)) && (type & (VAL|MAP|SEQ))); }
-    bool has_key_anchor() const { return (type & KEYANCH) != 0; }
-    bool has_val_anchor() const { return (type & VALANCH) != 0; }
+    bool has_key_anchor() const { return (type & (KEY|KEYANCH)) == (KEY|KEYANCH); }
+    bool is_key_anchor() const { return (type & (KEY|KEYANCH)) == (KEY|KEYANCH); }
+    bool has_val_anchor() const { return (type & VALANCH) != 0 && (type & (VAL|SEQ|MAP)) != 0; }
+    bool is_val_anchor() const { return (type & VALANCH) != 0 && (type & (VAL|SEQ|MAP)) != 0; }
     bool has_anchor() const { return (type & (KEYANCH|VALANCH)) != 0; }
+    bool is_anchor() const { return (type & (KEYANCH|VALANCH)) != 0; }
     bool is_key_ref() const { return (type & KEYREF) != 0; }
     bool is_val_ref() const { return (type & VALREF) != 0; }
     bool is_ref() const { return (type & (KEYREF|VALREF)) != 0; }
-    bool is_key_anchor() const { return (type & KEYANCH) != 0; }
-    bool is_val_anchor() const { return (type & KEYANCH) != 0; }
-    bool is_anchor() const { return (type & (KEYANCH|VALANCH)) != 0; }
+    bool is_anchor_or_ref() const { return (type & (KEYANCH|VALANCH|KEYREF|VALREF)) != 0; }
     bool is_key_quoted() const { return (type & (KEY|KEYQUO)) == (KEY|KEYQUO); }
     bool is_val_quoted() const { return (type & (VAL|VALQUO)) == (VAL|VALQUO); }
     bool is_quoted() const { return (type & (KEY|KEYQUO)) == (KEY|KEYQUO) || (type & (VAL|VALQUO)) == (VAL|VALQUO); }
@@ -274,6 +278,13 @@ public:
 
     void clear() noexcept { tag.clear(); scalar.clear(); anchor.clear(); }
 
+    void set_ref_maybe_replacing_scalar(csubstr ref, bool has_scalar) noexcept
+    {
+        csubstr trimmed = ref.begins_with('*') ? ref.sub(1) : ref;
+        anchor = trimmed;
+        if((!has_scalar) || !scalar.ends_with(trimmed))
+            scalar = ref;
+    }
 };
 C4_MUST_BE_TRIVIAL_COPY(NodeScalar);
 
@@ -317,10 +328,14 @@ public:
     void _add_flags(type_bits more_flags=0)
     {
         type = (type|more_flags);
-        if( ! key.tag.empty()) type = (type|KEYTAG);
-        if( ! val.tag.empty()) type = (type|VALTAG);
-        if( ! key.anchor.empty()) type = (type|KEYANCH);
-        if( ! val.anchor.empty()) type = (type|VALANCH);
+        if( ! key.tag.empty())
+            type = (type|KEYTAG);
+        if( ! val.tag.empty())
+            type = (type|VALTAG);
+        if( ! key.anchor.empty())
+            type = (type|KEYANCH);
+        if( ! val.anchor.empty())
+            type = (type|VALANCH);
     }
 
     bool _check() const
@@ -345,7 +360,6 @@ public:
 /** contains the data for each YAML node. */
 struct NodeData
 {
-
     NodeType   m_type;
 
     NodeScalar m_key;
@@ -356,59 +370,6 @@ struct NodeData
     size_t     m_last_child;
     size_t     m_next_sibling;
     size_t     m_prev_sibling;
-
-public:
-
-    NodeType_e type() const { return (NodeType_e)(m_type & _TYMASK); }
-    const char* type_str() const { return type_str(m_type); }
-    RYML_EXPORT static const char* type_str(NodeType_e ty);
-
-    csubstr const& key() const { RYML_ASSERT(has_key()); return m_key.scalar; }
-    csubstr const& key_tag() const { RYML_ASSERT(has_key_tag()); return m_key.tag; }
-    csubstr const& key_anchor() const { return m_key.anchor; }
-    NodeScalar const& keysc() const { RYML_ASSERT(has_key()); return m_key; }
-
-    csubstr const& val() const { RYML_ASSERT(has_val()); return m_val.scalar; }
-    csubstr const& val_tag() const { RYML_ASSERT(has_val_tag()); return m_val.tag; }
-    csubstr const& val_anchor() const { RYML_ASSERT(has_val_tag()); return m_val.anchor; }
-    NodeScalar const& valsc() const { RYML_ASSERT(has_val()); return m_val; }
-
-public:
-
-#if defined(__clang__)
-#   pragma clang diagnostic push
-#   pragma clang diagnostic ignored "-Wnull-dereference"
-#elif defined(__GNUC__)
-#   pragma GCC diagnostic push
-#   if __GNUC__ >= 6
-#       pragma GCC diagnostic ignored "-Wnull-dereference"
-#   endif
-#endif
-
-    bool   is_root() const { return m_parent == NONE; }
-
-    bool   is_stream() const { return m_type.is_stream(); }
-    bool   is_doc() const { return m_type.is_doc(); }
-    bool   is_container() const { return m_type.is_container(); }
-    bool   is_map() const { return m_type.is_map(); }
-    bool   is_seq() const { return m_type.is_seq(); }
-    bool   has_val() const { return m_type.has_val(); }
-    bool   has_key() const { return m_type.has_key(); }
-    bool   is_val() const { return m_type.is_val(); }
-    bool   is_keyval() const { return m_type.is_keyval(); }
-    bool   has_key_tag() const { return m_type.has_key_tag(); }
-    bool   has_val_tag() const { return m_type.has_val_tag(); }
-    bool   has_key_anchor() const { return ! m_type.has_key_anchor(); }
-    bool   has_val_anchor() const { return ! m_type.has_val_anchor(); }
-    bool   is_key_ref() const { return m_type.is_key_ref(); }
-    bool   is_val_ref() const { return m_type.is_val_ref(); }
-
-#if defined(__clang__)
-#   pragma clang diagnostic pop
-#elif defined(__GNUC__)
-#   pragma GCC diagnostic pop
-#endif
-
 };
 C4_MUST_BE_TRIVIAL_COPY(NodeData);
 
@@ -417,16 +378,17 @@ C4_MUST_BE_TRIVIAL_COPY(NodeData);
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 
-class Tree
+class RYML_EXPORT Tree
 {
 public:
 
     /** @name construction and assignment */
     /** @{ */
 
-    Tree(Allocator const& cb);
-    Tree() : Tree(Allocator()) {}
-    Tree(size_t node_capacity, size_t arena_capacity=0, Allocator const& cb={});
+    Tree() : Tree(get_callbacks()) {}
+    Tree(Callbacks const& cb);
+    Tree(size_t node_capacity, size_t arena_capacity=0) : Tree(node_capacity, arena_capacity, get_callbacks()) {}
+    Tree(size_t node_capacity, size_t arena_capacity, Callbacks const& cb);
 
     ~Tree();
 
@@ -461,7 +423,8 @@ public:
     inline size_t arena_capacity() const { return m_arena.len; }
     inline size_t arena_slack() const { RYML_ASSERT(m_arena.len >= m_arena_pos); return m_arena.len - m_arena_pos; }
 
-    Allocator const& allocator() const { return m_alloc; }
+    Callbacks const& callbacks() const { return m_callbacks; }
+    void callbacks(Callbacks const& cb) { m_callbacks = cb; }
 
     /** @} */
 
@@ -505,17 +468,22 @@ public:
         return m_buf + i;
     }
 
-    // An if-less form of get() that demands a valid node index.
-    // This function is implementation only; use at your own risk.
+    //! An if-less form of get() that demands a valid node index.
+    //! This function is implementation only; use at your own risk.
     inline NodeData       * _p(size_t i)       { RYML_ASSERT(i != NONE && i >= 0 && i < m_cap); return m_buf + i; }
-    // An if-less form of get() that demands a valid node index.
-    // This function is implementation only; use at your own risk.
+    //! An if-less form of get() that demands a valid node index.
+    //! This function is implementation only; use at your own risk.
     inline NodeData const * _p(size_t i) const { RYML_ASSERT(i != NONE && i >= 0 && i < m_cap); return m_buf + i; }
 
     //! Get the id of the root node
     size_t root_id()       { if(m_cap == 0) { reserve(16); } RYML_ASSERT(m_cap > 0 && m_size > 0); return 0; }
     //! Get the id of the root node
     size_t root_id() const {                                 RYML_ASSERT(m_cap > 0 && m_size > 0); return 0; }
+
+    //! Get a NodeRef of a node by id
+    NodeRef       ref(size_t id);
+    //! Get a NodeRef of a node by id
+    NodeRef const ref(size_t id) const;
 
     //! Get the root as a NodeRef
     NodeRef       rootref();
@@ -535,6 +503,13 @@ public:
     //! find a root child by index: return the root node's @p i-th child as a NodeRef
     //! @note @i is NOT the node id, but the child's position
     NodeRef const operator[] (size_t i) const;
+
+    //! get the i-th document of the stream
+    //! @note @i is NOT the node id, but the doc position within the stream
+    NodeRef       docref(size_t i);
+    //! get the i-th document of the stream
+    //! @note @i is NOT the node id, but the doc position within the stream
+    NodeRef const docref(size_t i) const;
 
     /** @} */
 
@@ -562,35 +537,38 @@ public:
 
 public:
 
-    /** @name node predicates */
+    /** @name node type predicates */
     /** @{ */
 
-    bool is_root(size_t node) const { RYML_ASSERT(_p(node)->m_parent != NONE || node == 0); return _p(node)->m_parent == NONE; }
-    bool is_stream(size_t node) const { return (_p(node)->m_type & STREAM) == STREAM; }
-    bool is_doc(size_t node) const { return (_p(node)->m_type & DOC) != 0; }
-    bool is_container(size_t node) const { return (_p(node)->m_type & (MAP|SEQ|STREAM|DOC)) != 0; }
-    bool is_map(size_t node) const { return (_p(node)->m_type & MAP) != 0; }
-    bool is_seq(size_t node) const { return (_p(node)->m_type & SEQ) != 0; }
-    bool has_val(size_t node) const { return (_p(node)->m_type & VAL) != 0; }
-    bool has_key(size_t node) const { return (_p(node)->m_type & KEY) != 0; }
-    bool is_val(size_t node) const { return (_p(node)->m_type & KEYVAL) == VAL; }
-    bool is_keyval(size_t node) const { return (_p(node)->m_type & KEYVAL) == KEYVAL; }
-    bool has_key_tag(size_t node) const { return (_p(node)->m_type & (KEY|KEYTAG)) == (KEY|KEYTAG); }
-    bool has_val_tag(size_t node) const { return ((_p(node)->m_type & (VALTAG)) && (_p(node)->m_type & (VAL|MAP|SEQ))); }
-    bool has_key_anchor(size_t node) const { return (_p(node)->m_type & KEYANCH) != 0; }
-    bool has_val_anchor(size_t node) const { return (_p(node)->m_type & VALANCH) != 0; }
-    bool is_key_ref(size_t node) const { return (_p(node)->m_type & KEYREF) != 0; }
-    bool is_val_ref(size_t node) const { return (_p(node)->m_type & VALREF) != 0; }
-    bool is_ref(size_t node) const { return (_p(node)->m_type & (KEYREF|VALREF)) != 0; }
-    bool is_anchor(size_t node) const { return (_p(node)->m_type & (KEYANCH|VALANCH)) != 0; }
-    bool is_anchor_or_ref(size_t node) const { return (_p(node)->m_type & (KEYANCH|VALANCH|KEYREF|VALREF)) != 0; }
-    bool is_key_quoted(size_t node) const { return (_p(node)->m_type & (KEYQUO)) != 0; }
-    bool is_val_quoted(size_t node) const { return (_p(node)->m_type & (VALQUO)) != 0; }
+    C4_ALWAYS_INLINE bool is_stream(size_t node) const { return _p(node)->m_type.is_stream(); }
+    C4_ALWAYS_INLINE bool is_doc(size_t node) const { return _p(node)->m_type.is_doc(); }
+    C4_ALWAYS_INLINE bool is_container(size_t node) const { return _p(node)->m_type.is_container(); }
+    C4_ALWAYS_INLINE bool is_map(size_t node) const { return _p(node)->m_type.is_map(); }
+    C4_ALWAYS_INLINE bool is_seq(size_t node) const { return _p(node)->m_type.is_seq(); }
+    C4_ALWAYS_INLINE bool has_key(size_t node) const { return _p(node)->m_type.has_key(); }
+    C4_ALWAYS_INLINE bool has_val(size_t node) const { return _p(node)->m_type.has_val(); }
+    C4_ALWAYS_INLINE bool is_val(size_t node) const { return _p(node)->m_type.is_val(); }
+    C4_ALWAYS_INLINE bool is_keyval(size_t node) const { return _p(node)->m_type.is_keyval(); }
+    C4_ALWAYS_INLINE bool has_key_tag(size_t node) const { return _p(node)->m_type.has_key_tag(); }
+    C4_ALWAYS_INLINE bool has_val_tag(size_t node) const { return _p(node)->m_type.has_val_tag(); }
+    C4_ALWAYS_INLINE bool has_key_anchor(size_t node) const { return _p(node)->m_type.has_key_anchor(); }
+    C4_ALWAYS_INLINE bool is_key_anchor(size_t node) const { return _p(node)->m_type.is_key_anchor(); }
+    C4_ALWAYS_INLINE bool has_val_anchor(size_t node) const { return _p(node)->m_type.has_val_anchor(); }
+    C4_ALWAYS_INLINE bool is_val_anchor(size_t node) const { return _p(node)->m_type.is_val_anchor(); }
+    C4_ALWAYS_INLINE bool has_anchor(size_t node) const { return _p(node)->m_type.has_anchor(); }
+    C4_ALWAYS_INLINE bool is_anchor(size_t node) const { return _p(node)->m_type.is_anchor(); }
+    C4_ALWAYS_INLINE bool is_key_ref(size_t node) const { return _p(node)->m_type.is_key_ref(); }
+    C4_ALWAYS_INLINE bool is_val_ref(size_t node) const { return _p(node)->m_type.is_val_ref(); }
+    C4_ALWAYS_INLINE bool is_ref(size_t node) const { return _p(node)->m_type.is_ref(); }
+    C4_ALWAYS_INLINE bool is_anchor_or_ref(size_t node) const { return _p(node)->m_type.is_anchor_or_ref(); }
+    C4_ALWAYS_INLINE bool is_key_quoted(size_t node) const { return _p(node)->m_type.is_key_quoted(); }
+    C4_ALWAYS_INLINE bool is_val_quoted(size_t node) const { return _p(node)->m_type.is_val_quoted(); }
+    C4_ALWAYS_INLINE bool is_quoted(size_t node) const { return _p(node)->m_type.is_quoted(); }
 
-    bool parent_is_seq(size_t node) const { RYML_ASSERT(has_parent(node)); return is_seq(_p(node)->m_parent); }
-    bool parent_is_map(size_t node) const { RYML_ASSERT(has_parent(node)); return is_map(_p(node)->m_parent); }
+    C4_ALWAYS_INLINE bool parent_is_seq(size_t node) const { RYML_ASSERT(has_parent(node)); return is_seq(_p(node)->m_parent); }
+    C4_ALWAYS_INLINE bool parent_is_map(size_t node) const { RYML_ASSERT(has_parent(node)); return is_map(_p(node)->m_parent); }
 
-    /** true when name and value are empty, and has no children */
+    /** true when key and val are empty, and has no children */
     bool empty(size_t node) const { return ! has_children(node) && _p(node)->m_key.empty() && (( ! (_p(node)->m_type & VAL)) || _p(node)->m_val.empty()); }
     /** true when the node has an anchor named a */
     bool has_anchor(size_t node, csubstr a) const { return _p(node)->m_key.anchor == a || _p(node)->m_val.anchor == a; }
@@ -601,6 +579,8 @@ public:
 
     /** @name hierarchy predicates */
     /** @{ */
+
+    bool is_root(size_t node) const { RYML_ASSERT(_p(node)->m_parent != NONE || node == 0); return _p(node)->m_parent == NONE; }
 
     bool has_parent(size_t node) const { return _p(node)->m_parent != NONE; }
 
@@ -646,6 +626,8 @@ public:
     size_t sibling(size_t node, size_t pos) const { return child(_p(node)->m_parent, pos); }
     size_t find_sibling(size_t node, csubstr const& key) const { return find_child(_p(node)->m_parent, key); }
 
+    size_t doc(size_t i) const { size_t rid = root_id(); RYML_ASSERT(is_stream(rid)); return child(rid, i); } //!< gets the @p i document node index. requires that the root node is a stream.
+
     /** @} */
 
 public:
@@ -653,10 +635,10 @@ public:
     /** @name node modifiers */
     /** @{ */
 
-    void to_keyval(size_t node, csubstr const& key, csubstr const& val, type_bits more_flags=0);
-    void to_map(size_t node, csubstr const& key, type_bits more_flags=0);
-    void to_seq(size_t node, csubstr const& key, type_bits more_flags=0);
-    void to_val(size_t node, csubstr const& val, type_bits more_flags=0);
+    void to_keyval(size_t node, csubstr key, csubstr val, type_bits more_flags=0);
+    void to_map(size_t node, csubstr key, type_bits more_flags=0);
+    void to_seq(size_t node, csubstr key, type_bits more_flags=0);
+    void to_val(size_t node, csubstr val, type_bits more_flags=0);
     void to_map(size_t node, type_bits more_flags=0);
     void to_seq(size_t node, type_bits more_flags=0);
     void to_doc(size_t node, type_bits more_flags=0);
@@ -668,10 +650,10 @@ public:
     void set_key_tag(size_t node, csubstr tag) { RYML_ASSERT(has_key(node)); _p(node)->m_key.tag = tag; _add_flags(node, KEYTAG); }
     void set_val_tag(size_t node, csubstr tag) { RYML_ASSERT(has_val(node) || is_container(node)); _p(node)->m_val.tag = tag; _add_flags(node, VALTAG); }
 
-    void set_key_anchor(size_t node, csubstr anchor) { RYML_ASSERT( ! is_key_ref(node)); _p(node)->m_key.anchor = anchor; _add_flags(node, KEYANCH); }
-    void set_val_anchor(size_t node, csubstr anchor) { RYML_ASSERT( ! is_val_ref(node)); _p(node)->m_val.anchor = anchor; _add_flags(node, VALANCH); }
-    void set_key_ref   (size_t node, csubstr ref   ) { RYML_ASSERT( ! has_key_anchor(node)); _p(node)->m_key.anchor = ref; _add_flags(node, KEYREF); }
-    void set_val_ref   (size_t node, csubstr ref   ) { RYML_ASSERT( ! has_val_anchor(node)); _p(node)->m_val.anchor = ref; _add_flags(node, VALREF); }
+    void set_key_anchor(size_t node, csubstr anchor) { RYML_ASSERT( ! is_key_ref(node)); _p(node)->m_key.anchor = anchor.triml('&'); _add_flags(node, KEYANCH); }
+    void set_val_anchor(size_t node, csubstr anchor) { RYML_ASSERT( ! is_val_ref(node)); _p(node)->m_val.anchor = anchor.triml('&'); _add_flags(node, VALANCH); }
+    void set_key_ref   (size_t node, csubstr ref   ) { RYML_ASSERT( ! has_key_anchor(node)); NodeData* C4_RESTRICT n = _p(node); n->m_key.set_ref_maybe_replacing_scalar(ref, n->m_type.has_key()); _add_flags(node, KEY|KEYREF); }
+    void set_val_ref   (size_t node, csubstr ref   ) { RYML_ASSERT( ! has_val_anchor(node)); NodeData* C4_RESTRICT n = _p(node); n->m_val.set_ref_maybe_replacing_scalar(ref, n->m_type.has_val()); _add_flags(node, VAL|VALREF); }
 
     void rem_key_anchor(size_t node) { _p(node)->m_key.anchor.clear(); _rem_flags(node, KEYANCH); }
     void rem_val_anchor(size_t node) { _p(node)->m_val.anchor.clear(); _rem_flags(node, VALANCH); }
@@ -761,27 +743,30 @@ public:
 
 public:
 
-    //! remove an entire branch at once: ie remove the children and the node itself
+    /** remove an entire branch at once: ie remove the children and the node itself */
     inline void remove(size_t node)
     {
         remove_children(node);
         _release(node);
     }
 
-    //! remove all the node's children, but keep the node itself
-    void remove_children(size_t node)
+    /** remove all the node's children, but keep the node itself */
+    void remove_children(size_t node);
+
+    /** change the @p type of the node to one of MAP, SEQ or VAL.  @p
+     * type must have one and only one of MAP,SEQ,VAL; @p type may
+     * possibly have KEY, but if it does, then the @p node must also
+     * have KEY. Changing to the same type is a no-op. Otherwise,
+     * changing to a different type will initialize the node with an
+     * empty value of the desired type: changing to VAL will
+     * initialize with a null scalar (~), changing to MAP will
+     * initialize with an empty map ({}), and changing to SEQ will
+     * initialize with an empty seq ([]). */
+    bool change_type(size_t node, NodeType type);
+
+    bool change_type(size_t node, type_bits type)
     {
-        RYML_ASSERT(get(node) != nullptr);
-        size_t ich = get(node)->m_first_child;
-        while(ich != NONE)
-        {
-            remove_children(ich);
-            RYML_ASSERT(get(ich) != nullptr);
-            size_t next = get(ich)->m_next_sibling;
-            _release(ich);
-            if(ich == get(node)->m_last_child) break;
-            ich = next;
-        }
+        return change_type(node, (NodeType)type);
     }
 
     #if defined(__clang__)
@@ -801,6 +786,29 @@ public:
     /** change the node's parent and position to a different tree
      * @return the index of the new node in the destination tree */
     size_t move(Tree * src, size_t node, size_t new_parent, size_t after);
+
+    /** ensure the first node is a stream. Eg, change this tree
+     *
+     *  DOCMAP
+     *    MAP
+     *      KEYVAL
+     *      KEYVAL
+     *    SEQ
+     *      VAL
+     *
+     * to
+     *
+     *  STREAM
+     *    DOCMAP
+     *      MAP
+     *        KEYVAL
+     *        KEYVAL
+     *      SEQ
+     *        VAL
+     *
+     * If the root is already a stream, this is a no-op.
+     */
+    void set_root_as_stream();
 
 public:
 
@@ -855,13 +863,14 @@ public:
         return m_arena.is_super(s);
     }
 
-    /** serialize the given variable to the tree's arena, growing it as
-     * needed to accomodate the serialization to fit.
+    /** serialize the given non-floating-point variable to the tree's arena, growing it as
+     * needed to accomodate the serialization.
      * @note Growing the arena may cause relocation of the entire
      * existing arena, and thus change the contents of individual nodes.
      * @see alloc_arena() */
     template<class T>
-    csubstr to_arena(T const& a)
+    typename std::enable_if<!std::is_floating_point<T>::value, csubstr>::type
+    to_arena(T const& C4_RESTRICT a)
     {
         substr rem(m_arena.sub(m_arena_pos));
         size_t num = to_chars(rem, a);
@@ -869,6 +878,27 @@ public:
         {
             rem = _grow_arena(num);
             num = to_chars(rem, a);
+            RYML_ASSERT(num <= rem.len);
+        }
+        rem = _request_span(num);
+        return rem;
+    }
+
+    /** serialize the given floating-point variable to the tree's arena, growing it as
+     * needed to accomodate the serialization.
+     * @note Growing the arena may cause relocation of the entire
+     * existing arena, and thus change the contents of individual nodes.
+     * @see alloc_arena() */
+    template<class T>
+    typename std::enable_if<std::is_floating_point<T>::value, csubstr>::type
+    to_arena(T const& C4_RESTRICT a)
+    {
+        substr rem(m_arena.sub(m_arena_pos));
+        size_t num = to_chars_float(rem, a);
+        if(num > rem.len)
+        {
+            rem = _grow_arena(num);
+            num = to_chars_float(rem, a);
             RYML_ASSERT(num <= rem.len);
         }
         rem = _request_span(num);
@@ -903,9 +933,7 @@ public:
     substr alloc_arena(size_t sz)
     {
         if(sz >= arena_slack())
-        {
             _grow_arena(sz - arena_slack());
-        }
         substr s = _request_span(sz);
         return s;
     }
@@ -918,13 +946,13 @@ public:
         if(arena_cap > m_arena.len)
         {
             substr buf;
-            buf.str = (char*) m_alloc.allocate(arena_cap, m_arena.str);
+            buf.str = (char*) m_callbacks.m_allocate(arena_cap, m_arena.str, m_callbacks.m_user_data);
             buf.len = arena_cap;
             if(m_arena.str)
             {
                 RYML_ASSERT(m_arena.len >= 0);
                 _relocate(buf); // does a memcpy and changes nodes using the arena
-                m_alloc.free(m_arena.str, m_arena.len);
+                m_callbacks.m_free(m_arena.str, m_arena.len, m_callbacks.m_user_data);
             }
             m_arena = buf;
         }
@@ -1038,9 +1066,9 @@ private:
 public:
 
     #if ! RYML_USE_ASSERT
-    #define _check_next_flags(node, f)
+    C4_ALWAYS_INLINE void _check_next_flags(size_t, type_bits) {}
     #else
-    inline void _check_next_flags(size_t node, type_bits f)
+    void _check_next_flags(size_t node, type_bits f)
     {
         auto n = _p(node);
         type_bits o = n->m_type; // old
@@ -1065,9 +1093,8 @@ public:
             auto pid = parent(node); C4_UNUSED(pid);
             RYML_ASSERT(is_map(pid));
         }
-        if(f & VAL)
+        if((f & VAL) && !is_root(node))
         {
-            RYML_ASSERT(!is_root(node));
             auto pid = parent(node); C4_UNUSED(pid);
             RYML_ASSERT(is_map(pid) || is_seq(pid));
         }
@@ -1083,7 +1110,7 @@ public:
     inline void _rem_flags(size_t node, NodeType_e f) { NodeData *d = _p(node); type_bits fb = d->m_type & ~f; _check_next_flags(node, fb); d->m_type = (NodeType_e) fb; }
     inline void _rem_flags(size_t node, type_bits  f) { NodeData *d = _p(node);            f = d->m_type & ~f; _check_next_flags(node,  f); d->m_type = f; }
 
-    void _set_key(size_t node, csubstr const& key, type_bits more_flags=0)
+    void _set_key(size_t node, csubstr key, type_bits more_flags=0)
     {
         _p(node)->m_key.scalar = key;
         _add_flags(node, KEY|more_flags);
@@ -1094,10 +1121,10 @@ public:
         _add_flags(node, KEY|more_flags);
     }
 
-    void _set_val(size_t node, csubstr const& val, type_bits more_flags=0)
+    void _set_val(size_t node, csubstr val, type_bits more_flags=0)
     {
         RYML_ASSERT(num_children(node) == 0);
-        RYML_ASSERT( ! is_container(node));
+        RYML_ASSERT(!is_seq(node) && !is_map(node));
         _p(node)->m_val.scalar = val;
         _add_flags(node, VAL|more_flags);
     }
@@ -1136,7 +1163,7 @@ public:
             {
                 if((in == first_child(ip)) && (in == last_child(ip)))
                 {
-                    if( ! n->m_key.empty() || n->has_key())
+                    if( ! n->m_key.empty() || has_key(in))
                     {
                         _add_flags(ip, MAP);
                     }
@@ -1155,7 +1182,8 @@ public:
         for(size_t i = first_child(node); i != NONE; i = next_sibling(i))
         {
             NodeData *C4_RESTRICT ch = _p(i);
-            if(ch->m_type.is_keyval()) continue;
+            if(ch->m_type.is_keyval())
+                continue;
             ch->m_type.add(KEY);
             ch->m_key = ch->m_val;
         }
@@ -1261,20 +1289,16 @@ public:
     substr m_arena;
     size_t m_arena_pos;
 
-    Allocator m_alloc;
+    Callbacks m_callbacks;
 
 };
 
 } // namespace yml
 } // namespace c4
 
-#if defined(_MSC_VER)
-#   pragma warning(pop)
-#elif defined(__clang__)
-#   pragma clang diagnostic pop
-#elif defined(__GNUC__)
-#   pragma GCC diagnostic pop
-#endif
+
+C4_SUPPRESS_WARNING_MSVC_POP
+C4_SUPPRESS_WARNING_GCC_CLANG_POP
 
 
 #endif /* _C4_YML_TREE_HPP_ */

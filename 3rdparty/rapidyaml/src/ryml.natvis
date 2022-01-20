@@ -49,17 +49,17 @@ See also:
   </Type>
 
   <Type Name="c4::yml::NodeData">
-    <DisplayString Condition="(m_type.type &amp; c4::yml::STREAM) == c4::yml::STREAM">[STREAM]</DisplayString>
-    <DisplayString Condition="(m_type.type &amp; c4::yml::KEYSEQ) == c4::yml::KEYSEQ">[KEYSEQ] {m_key.scalar.str,[m_key.scalar.len]}</DisplayString>
-    <DisplayString Condition="(m_type.type &amp; c4::yml::KEYMAP) == c4::yml::KEYMAP">[KEYMAP] {m_key.scalar.str,[m_key.scalar.len]}</DisplayString>
-    <DisplayString Condition="(m_type.type &amp; c4::yml::KEYVAL) == c4::yml::KEYVAL">[KEYVAL] {m_key.scalar.str,[m_key.scalar.len]}: {m_val.scalar.str,[m_val.scalar.len]}</DisplayString>
-    <DisplayString Condition="(m_type.type &amp; c4::yml::DOCSEQ) == c4::yml::DOCSEQ">[DOCSEQ]</DisplayString>
-    <DisplayString Condition="(m_type.type &amp; c4::yml::DOCMAP) == c4::yml::DOCMAP">[DOCMAP]</DisplayString>
-    <DisplayString Condition="(m_type.type &amp; c4::yml::DOC   ) == c4::yml::DOC"   >[DOC]</DisplayString>
-    <DisplayString Condition="(m_type.type &amp; c4::yml::SEQ   ) == c4::yml::SEQ"   >[SEQ]</DisplayString>
-    <DisplayString Condition="(m_type.type &amp; c4::yml::MAP   ) == c4::yml::MAP"   >[MAP]</DisplayString>
+    <DisplayString Condition="((m_type.type &amp; c4::yml::KEY  ) == c4::yml::KEY) &amp;&amp; ((m_type.type &amp; c4::yml::VAL) == c4::yml::VAL)">[KEYVAL] {m_key.scalar.str,[m_key.scalar.len]}: {m_val.scalar.str,[m_val.scalar.len]}</DisplayString>
+    <DisplayString Condition="((m_type.type &amp; c4::yml::KEY  ) == c4::yml::KEY) &amp;&amp; ((m_type.type &amp; c4::yml::SEQ) == c4::yml::SEQ)">[KEYSEQ] {m_key.scalar.str,[m_key.scalar.len]}</DisplayString>
+    <DisplayString Condition="((m_type.type &amp; c4::yml::KEY  ) == c4::yml::KEY) &amp;&amp; ((m_type.type &amp; c4::yml::MAP) == c4::yml::MAP)">[KEYMAP] {m_key.scalar.str,[m_key.scalar.len]}</DisplayString>
+    <DisplayString Condition="((m_type.type &amp; c4::yml::DOC  ) == c4::yml::DOC) &amp;&amp; ((m_type.type &amp; c4::yml::SEQ) == c4::yml::SEQ)">[DOCSEQ]</DisplayString>
+    <DisplayString Condition="((m_type.type &amp; c4::yml::DOC  ) == c4::yml::DOC) &amp;&amp; ((m_type.type &amp; c4::yml::MAP) == c4::yml::MAP)">[DOCMAP]</DisplayString>
     <DisplayString Condition="(m_type.type &amp; c4::yml::VAL   ) == c4::yml::VAL"   >[VAL] {m_val.scalar.str,[m_val.scalar.len]}</DisplayString>
     <DisplayString Condition="(m_type.type &amp; c4::yml::KEY   ) == c4::yml::KEY"   >[KEY] {m_key.scalar.str,[m_key.scalar.len]}</DisplayString>
+    <DisplayString Condition="(m_type.type &amp; c4::yml::SEQ   ) == c4::yml::SEQ"   >[SEQ]</DisplayString>
+    <DisplayString Condition="(m_type.type &amp; c4::yml::MAP   ) == c4::yml::MAP"   >[MAP]</DisplayString>
+    <DisplayString Condition="(m_type.type &amp; c4::yml::DOC   ) == c4::yml::DOC"   >[DOC]</DisplayString>
+    <DisplayString Condition="(m_type.type &amp; c4::yml::STREAM) == c4::yml::STREAM">[STREAM]</DisplayString>
     <DisplayString Condition="(m_type.type &amp; c4::yml::NOTYPE) == c4::yml::NOTYPE">[NOTYPE]</DisplayString>
     <Expand>
       <Item Name="type">m_type</Item>

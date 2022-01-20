@@ -6,6 +6,7 @@
 .clangd/
 .cache/
 .cquery_cached_index/
+__pycache__/
 
 # Visual Studio files
 .vs/
@@ -27,5 +28,7 @@ compile_commands.json
 /Testing/
 
 # continuous integration files
+.github/vagrant/*.log
 .github/vagrant/.vagrant
 .github/vagrant/macos/.vagrant
+src_singleheader/

@@ -23,7 +23,10 @@
 #   else
 #       error "Unknown Apple platform"
 #   endif
-#elif defined(__unix) || defined(__linux)
+#elif defined(__linux)
+#   define C4_UNIX
+#   define C4_LINUX
+#elif defined(__unix)
 #   define C4_UNIX
 #elif defined(__arm__) || defined(__aarch64__)
 #   define C4_ARM

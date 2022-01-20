@@ -16,13 +16,16 @@
 #   include <sys/stat.h>
 #   include <cstring>
 #   include <fcntl.h>
-#   include <unistd.h>
 #elif defined(C4_MACOS) || defined(C4_IOS)
 #   include <assert.h>
 #   include <stdbool.h>
 #   include <sys/types.h>
-#   include <unistd.h>
 #   include <sys/sysctl.h>
+#endif
+// the amalgamation tool is dumb and was omitting this include under MACOS.
+// So do it only once:
+#if defined(C4_UNIX) || defined(C4_LINUX) || defined(C4_MACOS) || defined(C4_IOS)
+#   include <unistd.h>
 #endif
 
 #if defined(C4_EXCEPTIONS_ENABLED) && defined(C4_ERROR_THROWS_EXCEPTION)

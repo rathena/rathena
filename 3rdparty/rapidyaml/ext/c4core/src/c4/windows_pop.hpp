@@ -1,5 +1,7 @@
-#ifdef _C4_WINDOWS_PUSH_HPP_
-#undef _C4_WINDOWS_PUSH_HPP_
+#ifndef _C4_WINDOWS_POP_HPP_
+#define _C4_WINDOWS_POP_HPP_
+
+#if defined(_WIN64) || defined(_WIN32)
 
 #ifdef _c4_AMD64_
 #    undef _c4_AMD64_
@@ -34,4 +36,6 @@
 #    undef WIN32_LEAN_AND_MEAN
 #endif
 
-#endif /* _C4_WINDOWS_PUSH_HPP_ */
+#endif /* defined(_WIN64) || defined(_WIN32) */
+
+#endif /* _C4_WINDOWS_POP_HPP_ */

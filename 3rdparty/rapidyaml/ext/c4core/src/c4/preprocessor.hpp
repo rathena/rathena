@@ -53,7 +53,6 @@
  *
 Example:
 @code{.cpp}
-#include <cstddef>
 struct Example {
     int a;
     int b;

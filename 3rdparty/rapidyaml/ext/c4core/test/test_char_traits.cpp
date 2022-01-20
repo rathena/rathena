@@ -1,4 +1,6 @@
+#ifndef C4CORE_SINGLE_HEADER
 #include "c4/char_traits.hpp"
+#endif
 
 #include "c4/test.hpp"
 
