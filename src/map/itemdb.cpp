@@ -3039,33 +3039,55 @@ unsigned int base62_decode(const std::string& str)
 * @author [Cydh]
 **/
 std::string createItemLink( struct item& item ){
-	struct item_data *id = itemdb_exists(item.nameid);
-	std::string itemstr = "<ITEML>";
-	std::string locval = (id && itemdb_isequip2(id)) ? base62_encode(id->equip) : "";
-	itemstr += rathena::util::string_left_pad(locval, '0', 5);
-	itemstr += (id && itemdb_isequip2(id)) ? "1" : "0";
+	std::shared_ptr<item_data> data = item_db.find( item.nameid );
+
+	if( data == nullptr ){
+		ShowError( "Tried to create itemlink for unknown item %u.\n", item.nameid );
+		return "Unknown item";
+	}
+
+	struct item_data* id = data.get();
+
+// All these dates are unconfirmed
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	const std::string start_tag = "<ITEML>";
+	const std::string closing_tag = "</ITEML>";
+#elif PACKETVER >= 20151104
+	const std::string start_tag = "<ITEM>";
+	const std::string closing_tag = "</ITEM>";
+#elif PACKETVER >= 20100000
+	const std::string start_tag = "<ITEMLINK>";
+	const std::string closing_tag = "</ITEMLINK>";
+#else
+	// Did not exist before that
+	return id->ename;
+#endif
+
+	std::string itemstr = start_tag;
+
+	itemstr += rathena::util::string_left_pad(base62_encode(id->equip), '0', 5);
+	itemstr += itemdb_isequip2(id) ? "1" : "0";
 	itemstr += base62_encode(item.nameid);
 	if (item.refine > 0) {
 		itemstr += "%" + rathena::util::string_left_pad(base62_encode(item.refine), '0', 2);
 	}
-	if (id && itemdb_isequip2(id)) {
+	if (itemdb_isequip2(id)) {
 		itemstr += "&" + rathena::util::string_left_pad(base62_encode(id->look), '0', 2);
 	}
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 	itemstr += "'" + rathena::util::string_left_pad(base62_encode(item.enchantgrade), '0', 2);
 #endif
 
-#if PACKETVER < 20200101
-	std::string card_sep = "(";
-	std::string optid_sep = "*";
-	std::string optpar_sep = "+";
-	std::string optval_sep = ",";
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	const std::string card_sep = ")";
+	const std::string optid_sep = "+";
+	const std::string optpar_sep = ",";
+	const std::string optval_sep = "-";
 #else
-	// I don't know since when the client change the separators
-	std::string card_sep = ")";
-	std::string optid_sep = "+";
-	std::string optpar_sep = ",";
-	std::string optval_sep = "-";
+	const std::string card_sep = "(";
+	const std::string optid_sep = "*";
+	csont std::string optpar_sep = "+";
+	const std::string optval_sep = ",";
 #endif
 
 	for (uint8 i = 0; i < MAX_SLOTS; ++i) {
@@ -3086,7 +3108,7 @@ std::string createItemLink( struct item& item ){
 	}
 #endif
 
-	itemstr += "</ITEML>";
+	itemstr += closing_tag;
 	return itemstr;
 }
 
