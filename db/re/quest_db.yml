@@ -7999,6 +7999,8 @@ Body:
   - Id: 12354
     Title: Reject further requests
     TimeLimit: 4h
+  - Id: 12364
+    Title: Fallen Paros Lighthouse
   - Id: 12365
     Title: Gloomy Spirit of the Underground
     TimeLimit: +3h
