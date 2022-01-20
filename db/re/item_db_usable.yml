@@ -45514,7 +45514,7 @@ Body:
     AegisName: Frost_Crystal
     Name: Last Year's Frost
     Type: Usable
-    Buy: 20
+    Buy: 10
     Trade:
       Override: 100
       NoCart: true
@@ -45526,7 +45526,7 @@ Body:
     AegisName: Squad_Prize
     Name: Expedition Award Box
     Type: Usable
-    Buy: 20
+    Buy: 5000
     Weight: 100
     Trade:
       Override: 100
