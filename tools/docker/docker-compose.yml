@@ -14,10 +14,15 @@ services:
             MYSQL_DATABASE: ragnarok
             MYSQL_USER: ragnarok
             MYSQL_PASSWORD: ragnarok
+        healthcheck:
+            test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u", "ragnarok", "-p", "ragnarok"]
+            timeout: 3s
+            retries: 5
 
     builder:
         image: "rathena:local"
-        container_name: "builder"
+        container_name: "rathena-builder"
+        command: "/rathena/tools/docker/builder.sh"
         volumes:
             - "../..:/rathena" # mount git repo directory inside container
             - "./asset/inter_conf.txt:/rathena/conf/import/inter_conf.txt" # load db connection
@@ -29,11 +34,13 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
+        environment:
+            BUILDER_CONFIGURE: "--enable-packetver=20200401"
     
     login:
         image: "rathena:local"
         container_name: "rathena-login"
-        command: "-c /rathena/login-server"
+        command: "/rathena/login-server"
         ports:
             - "6900:6900" # login server
         volumes:
@@ -48,12 +55,13 @@ services:
             context: .
             dockerfile: Dockerfile
         depends_on:
-            - db
+            db:
+                condition: service_healthy
 
     char:
         image: "rathena:local"
         container_name: "rathena-char"
-        command: "-c /rathena/char-server"
+        command: "/rathena/char-server"
         ports:
             - "6121:6121" # char server
         volumes:
@@ -73,7 +81,7 @@ services:
     map:
         image: "rathena:local"
         container_name: "rathena-map"
-        command: "-c /rathena/map-server"
+        command: "/rathena/map-server"
         ports:
             - "5121:5121" # map server
         volumes:
