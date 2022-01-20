@@ -67,7 +67,7 @@ har_in01,17,74,7	script	Contraband Processor#pa	4_DR_SOLDIER,{
 	.@refine = getequiprefinerycnt(.@part);
 	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 	copyarray .@tmp_card[0], .@card[0], 4;
-	if ((.@card[1] && callfunc("F_IsCharm",.@card[1]) == false) || (.@card[2] && callfunc("F_IsCharm",.@card[2]) == false) || (.@card[3] && callfunc("F_IsCharm",.@card[3]) == false)) {// armor enchant system custom check
+	if ((.@card[1] && getiteminfo(.@card[1], ITEMINFO_SUBTYPE) == CARD_NORMAL) || (.@card[2] && getiteminfo(.@card[2], ITEMINFO_SUBTYPE) == CARD_NORMAL) || (.@card[3] && getiteminfo(.@card[3], ITEMINFO_SUBTYPE) == CARD_NORMAL)) {// armor enchant system custom check
 		mes "[Contraband Processor]";
 		mes "Something wrong happened.";
 		close;

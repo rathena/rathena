@@ -49,6 +49,9 @@
 #   Knockback:                Amount of tiles the skill knockbacks. (Default: 0)
 #     - Level                 Skill level.
 #       Amount                Knockback count at specific skill level.
+#   GiveAp:                   Gives AP on successful skill cast. (Default: 0)
+#     - Level                 Skill level.
+#       Amount                AP gained at specific skill level.
 #   CopyFlags:                Determines if the skill is copyable. (Optional)
 #     Skill:                  Type of skill that can copy.
 #     RemoveRequirement:      Remove a requirement type. (Optional)
@@ -87,12 +90,18 @@
 #     SpCost:                 SP required to cast. (Default: 0)
 #       - Level               Skill level.
 #         Amount              SP required at specific skill level.
+#     ApCost:                 AP required to cast. (Default: 0)
+#       - Level               Skill level.
+#         Amount              AP required at specific skill level.
 #     HpRateCost:             HP rate required to cast. If positive, uses current HP, else uses Max HP. (Default: 0)
 #       - Level               Skill level.
 #         Amount              HP rate required at specific skill level.
 #     SpRateCost:             SP rate required to cast. If positive, uses current SP, else uses Max SP. (Default: 0)
 #       - Level               Skill level.
 #         Amount              SP rate required at specific skill level.
+#     ApRateCost:             AP rate required to cast. If positive, uses current AP, else uses Max AP. (Default: 0)
+#       - Level               Skill level.
+#         Amount              AP rate required at specific skill level.
 #     MaxHpTrigger:           Maximum amount of HP to cast the skill. (Default: 0)
 #       - Level               Skill level.
 #         Amount              Maximum HP trigger required at specific skill level.
@@ -130,7 +139,7 @@
 
 Header:
   Type: SKILL_DB
-  Version: 2
+  Version: 3
 
 Body:
   - Id: 1
@@ -16297,12 +16306,28 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+  - Id: 707
+    Name: NPC_MILLENNIUMSHIELD
+    Description: Millenium Shield 2
+    MaxLevel: 1
   - Id: 708
     Name: NPC_COMET
     Description: Comet 2
     MaxLevel: 1
     Flags:
       ShowScale: true
+  - Id: 712
+    Name: NPC_PULSESTRIKE2
+    Description: Pulse Strike 2
+    MaxLevel: 1
+  - Id: 713
+    Name: NPC_DANCINGBLADE
+    Description: Dancing Blade
+    MaxLevel: 1
+  - Id: 714
+    Name: NPC_DANCINGBLADE_ATK
+    Description: Dancing Blade Attack
+    MaxLevel: 1
   - Id: 716
     Name: NPC_MAXPAIN
     Description: Max Pain
@@ -16336,6 +16361,22 @@ Body:
     MaxLevel: 1
     Flags:
       ShowScale: true
+  - Id: 721
+    Name: NPC_WIDEWEB
+    Description: Wide Web
+    MaxLevel: 1
+  - Id: 722
+    Name: NPC_WIDESUCK
+    Description: Wide Suck
+    MaxLevel: 1
+  - Id: 723
+    Name: NPC_STORMGUST2
+    Description: Storm Gust 2
+    MaxLevel: 1
+  - Id: 724
+    Name: NPC_FIRESTORM
+    Description: Fire Storm
+    MaxLevel: 3
   - Id: 725
     Name: NPC_REVERBERATION
     Description: Reverberation 2
@@ -16394,6 +16435,46 @@ Body:
   - Id: 728
     Name: NPC_ARROWSTORM
     Description: NPC Arrow Storm
+    MaxLevel: 1
+  - Id: 729
+    Name: NPC_CHEAL
+    Description: NPC Coluceo Heal
+    MaxLevel: 1
+  - Id: 730
+    Name: NPC_SR_CURSEDCIRCLE
+    Description: Cursed Circle
+    MaxLevel: 1
+  - Id: 731
+    Name: NPC_DRAGONBREATH
+    Description: NPC Dragon Breath
+    MaxLevel: 1
+  - Id: 732
+    Name: NPC_FATALMENACE
+    Description: Fatal Menace
+    MaxLevel: 1
+  - Id: 733
+    Name: NPC_MAGMA_ERUPTION
+    Description: NPC Magma Eruption
+    MaxLevel: 1
+  - Id: 734
+    Name: NPC_MAGMA_ERUPTION_DOTDAMAGE
+    Description: NPC Magma Eruption Dot Damage
+    MaxLevel: 1
+  - Id: 735
+    Name: NPC_MANDRAGORA
+    Description: NPC Howling of Mandragora
+    MaxLevel: 1
+  - Id: 736
+    Name: NPC_PSYCHIC_WAVE
+    Description: Psychic Wave
+    MaxLevel: 1
+  - Id: 737
+    Name: NPC_RAYOFGENESIS
+    Description: NPC Ray of Genesis
+    MaxLevel: 1
+  - Id: 738
+    Name: NPC_VENOMIMPRESS
+    Description: NPC Venom Impress
     MaxLevel: 1
   - Id: 739
     Name: NPC_CLOUD_KILL

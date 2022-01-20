@@ -401,7 +401,7 @@ void storage_storageaddfromcart(struct map_session_data *sd, struct s_storage *s
 		return;
 	}
 
-	result = storage_canAddItem(stor, index, sd->cart.u.items_inventory, amount, MAX_CART);
+	result = storage_canAddItem(stor, index, sd->cart.u.items_cart, amount, MAX_CART);
 	if (result == STORAGE_ADD_INVALID)
 		return;
 	else if (result == STORAGE_ADD_OK) {

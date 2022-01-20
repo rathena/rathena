@@ -72,8 +72,8 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const ryml::NodeRef node );
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode( const ryml::NodeRef node ) override;
 };
 
 const std::string GuildSkillTreeDatabase::getDefaultLocation(){

@@ -74,6 +74,14 @@ enum MOBID {
 	MOBID_S_GIANT_HORNET,
 	MOBID_S_LUCIOLA_VESPA,
 	MOBID_GUILD_SKILL_FLAG	= 20269,
+	MOBID_ABR_BATTLE_WARIOR = 20834,
+	MOBID_ABR_DUAL_CANNON,
+	MOBID_ABR_MOTHER_NET,
+	MOBID_ABR_INFINITY,
+	MOBID_BIONIC_WOODENWARRIOR = 20848,
+	MOBID_BIONIC_WOODEN_FAIRY,
+	MOBID_BIONIC_CREEPER,
+	MOBID_BIONIC_HELLTREE,
 };
 
 ///Mob skill states.
@@ -202,8 +210,8 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const ryml::NodeRef node);
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef node) override;
 };
 
 struct s_mob_item_drop_ratio {
@@ -218,8 +226,8 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const ryml::NodeRef node);
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef node) override;
 };
 
 struct spawn_info {
@@ -265,13 +273,13 @@ private:
 	bool parseDropNode(std::string nodeName, ryml::NodeRef node, uint8 max, s_mob_drop *drops);
 
 public:
-	MobDatabase() : TypesafeCachedYamlDatabase("MOB_DB", 2, 1) {
+	MobDatabase() : TypesafeCachedYamlDatabase("MOB_DB", 3, 1) {
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const ryml::NodeRef node);
-	void loadingFinished();
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef node) override;
+	void loadingFinished() override;
 };
 
 extern MobDatabase mob_db;
@@ -333,6 +341,7 @@ struct mob_data {
 	int8 skill_idx; // Index of last used skill from db->skill[]
 	t_tick skilldelay[MAX_MOBSKILL];
 	char npc_event[EVENT_NAME_LENGTH];
+	char idle_event[EVENT_NAME_LENGTH];
 	/**
 	 * Did this monster summon something?
 	 * Used to flag summon deletions, saves a worth amount of memory
@@ -352,9 +361,9 @@ public:
 
 	}
 
-	void clear() { };
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const ryml::NodeRef node);
+	void clear() override{ };
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef node) override;
 };
 
 struct s_randomsummon_entry {
@@ -374,8 +383,8 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const ryml::NodeRef node);
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef node) override;
 };
 
 enum e_mob_skill_target {
@@ -487,6 +496,7 @@ int mob_class_change(struct mob_data *md,int mob_id);
 int mob_warpslave(struct block_list *bl, int range);
 int mob_linksearch(struct block_list *bl,va_list ap);
 
+bool mob_chat_display_message (mob_data &md, uint16 msg_id);
 int mobskill_use(struct mob_data *md,t_tick tick,int event);
 int mobskill_event(struct mob_data *md,struct block_list *src,t_tick tick, int flag);
 int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id);

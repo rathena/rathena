@@ -5700,6 +5700,15 @@ BUILDIN_FUNC(areapercentheal)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+enum e_warpparty_target{
+	WARPPARTY_RANDOM = 0,
+	WARPPARTY_SAVEPOINTALL,
+	WARPPARTY_SAVEPOINT,
+	WARPPARTY_LEADER,
+	WARPPARTY_RANDOMALL,
+	WARPPARTY_RANDOMALLAREA
+};
+
 /*==========================================
  * Warpparty - [Fredzilla] [Paradox924X]
  * Syntax: warpparty "to_mapname",x,y,Party_ID,{<"from_mapname">,<range x>,<range y>};
@@ -5710,7 +5719,7 @@ BUILDIN_FUNC(warpparty)
 	TBL_PC *sd = NULL;
 	TBL_PC *pl_sd;
 	struct party_data* p;
-	int type, mapindex = 0, m = -1, i, rx = 0, ry = 0;
+	int mapindex = 0, m = -1, i, rx = 0, ry = 0;
 
 	const char* str = script_getstr(st,2);
 	int x = script_getnum(st,3);
@@ -5728,15 +5737,21 @@ BUILDIN_FUNC(warpparty)
 	if(!p)
 		return SCRIPT_CMD_SUCCESS;
 
-	type = ( strcmp(str,"Random")==0 ) ? 0
-	     : ( strcmp(str,"SavePointAll")==0 ) ? 1
-		 : ( strcmp(str,"SavePoint")==0 ) ? 2
-		 : ( strcmp(str,"Leader")==0 ) ? 3
-		 : 4;
+	enum e_warpparty_target type = ( strcmp(str,"Random")==0 ) ? WARPPARTY_RANDOM
+	     : ( strcmp(str,"SavePointAll")==0 ) ? WARPPARTY_SAVEPOINTALL
+		 : ( strcmp(str,"SavePoint")==0 ) ? WARPPARTY_SAVEPOINT
+		 : ( strcmp(str,"Leader")==0 ) ? WARPPARTY_LEADER
+		 : ( strcmp(str,"RandomAll")==0 ) ? WARPPARTY_RANDOMALL
+		 : WARPPARTY_RANDOMALLAREA;
 
 	switch (type)
 	{
-		case 3:
+		case WARPPARTY_SAVEPOINT:
+			//"SavePoint" uses save point of the currently attached player
+			if ( !script_rid2sd(sd) )
+				return SCRIPT_CMD_FAILURE;
+			break;
+		case WARPPARTY_LEADER:
 			for(i = 0; i < MAX_PARTY && !p->party.member[i].leader; i++);
 			if (i == MAX_PARTY || !p->data[i].sd) //Leader not found / not online
 				return SCRIPT_CMD_FAILURE;
@@ -5746,17 +5761,35 @@ BUILDIN_FUNC(warpparty)
 			x = pl_sd->bl.x;
 			y = pl_sd->bl.y;
 			break;
-		case 4:
+		case WARPPARTY_RANDOMALL: {
+			if ( !script_rid2sd(sd) )
+				return SCRIPT_CMD_FAILURE;
+
+			mapindex = sd->mapindex;
+			m = map_mapindex2mapid(mapindex);
+
+			struct map_data *mapdata = map_getmapdata(m);
+
+			if ( mapdata == nullptr || mapdata->flag[MF_NOWARP] || mapdata->flag[MF_NOTELEPORT] )
+				return SCRIPT_CMD_FAILURE;
+
+			i = 0;
+			do {
+				x = rnd()%(mapdata->xs - 2) + 1;
+				y = rnd()%(mapdata->ys - 2) + 1;
+			} while ((map_getcell(m,x,y,CELL_CHKNOPASS) || (!battle_config.teleport_on_portal && npc_check_areanpc(1,m,x,y,1))) && (i++) < 1000);
+
+			if (i >= 1000) {
+				ShowError("buildin_warpparty: moving player '%s' to \"%s\",%d,%d failed.\n", sd->status.name, str, x, y);
+				return SCRIPT_CMD_FAILURE;
+			}
+			} break;
+		case WARPPARTY_RANDOMALLAREA:
 			mapindex = mapindex_name2id(str);
 			if (!mapindex) {// Invalid map
 				return SCRIPT_CMD_FAILURE;
 			}
 			m = map_mapindex2mapid(mapindex);
-			break;
-		case 2:
-			//"SavePoint" uses save point of the currently attached player
-			if ( !script_rid2sd(sd) )
-				return SCRIPT_CMD_SUCCESS;
 			break;
 	}
 
@@ -5765,44 +5798,70 @@ BUILDIN_FUNC(warpparty)
 		if( !(pl_sd = p->data[i].sd) || pl_sd->status.party_id != p_id )
 			continue;
 
-		if( str2 && strcmp(str2, map_getmapdata(pl_sd->bl.m)->name) != 0 )
+		map_data* mapdata = map_getmapdata(pl_sd->bl.m);
+
+		if( str2 && strcmp(str2, mapdata->name) != 0 )
 			continue;
 
 		if( pc_isdead(pl_sd) )
 			continue;
 
+		e_setpos ret = SETPOS_OK;
+
 		switch( type )
 		{
-		case 0: // Random
-			if(!map_getmapflag(pl_sd->bl.m, MF_NOWARP))
-				pc_randomwarp(pl_sd,CLR_TELEPORT);
+		case WARPPARTY_RANDOM:
+			if (!mapdata->flag[MF_NOWARP])
+				ret = (e_setpos)pc_randomwarp(pl_sd,CLR_TELEPORT);
 		break;
-		case 1: // SavePointAll
-			if(!map_getmapflag(pl_sd->bl.m, MF_NORETURN))
-				pc_setpos(pl_sd,pl_sd->status.save_point.map,pl_sd->status.save_point.x,pl_sd->status.save_point.y,CLR_TELEPORT);
+		case WARPPARTY_SAVEPOINTALL:
+			if (!mapdata->flag[MF_NORETURN])
+				ret = pc_setpos(pl_sd,pl_sd->status.save_point.map,pl_sd->status.save_point.x,pl_sd->status.save_point.y,CLR_TELEPORT);
 		break;
-		case 2: // SavePoint
-			if(!map_getmapflag(pl_sd->bl.m, MF_NORETURN))
-				pc_setpos(pl_sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
+		case WARPPARTY_SAVEPOINT:
+			if (!mapdata->flag[MF_NORETURN])
+				ret = pc_setpos(pl_sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 		break;
-		case 3: // Leader
+		case WARPPARTY_LEADER:
 			if (p->party.member[i].leader)
 				continue;
-		case 4: // m,x,y
-			if (rx || ry) {
-				int x1 = x + rx, y1 = y + ry,
-					x0 = x - rx, y0 = y - ry;
-				uint8 attempts = 10;
-
-				do {
-					x = x0 + rnd()%(x1 - x0 + 1);
-					y = y0 + rnd()%(y1 - y0 + 1);
-				} while ((--attempts) > 0 && !map_getcell(m, x, y, CELL_CHKPASS));
+			// Fall through
+		case WARPPARTY_RANDOMALL:
+			if (pl_sd == sd) {
+				ret = pc_setpos(pl_sd, mapindex, x, y, CLR_TELEPORT);
+				break;
 			}
+			// Fall through
+		case WARPPARTY_RANDOMALLAREA:
+			if(!mapdata->flag[MF_NORETURN] && !mapdata->flag[MF_NOWARP] && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pl_sd->group_level)){
+				if (rx || ry) {
+					int x1 = x + rx, y1 = y + ry,
+						x0 = x - rx, y0 = y - ry,
+						nx, ny;
+					uint8 attempts = 10;
 
-			if(!map_getmapflag(pl_sd->bl.m, MF_NORETURN) && !map_getmapflag(pl_sd->bl.m, MF_NOWARP) && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pl_sd->group_level))
-				pc_setpos(pl_sd,mapindex,x,y,CLR_TELEPORT);
+					do {
+						nx = x0 + rnd()%(x1 - x0 + 1);
+						ny = y0 + rnd()%(y1 - y0 + 1);
+					} while ((--attempts) > 0 && !map_getcell(m, nx, ny, CELL_CHKPASS));
+
+					if (attempts != 0) { //Keep the original coordinates if fails to find a valid cell within the range
+						x = nx;
+						y = ny;
+					}
+				}
+
+				ret = pc_setpos(pl_sd, mapindex, x, y, CLR_TELEPORT);
+			}
 		break;
+		}
+
+		if( ret != SETPOS_OK ) {
+			ShowError("buildin_warpparty: moving player '%s' to \"%s\",%d,%d failed.\n", pl_sd->status.name, str, x, y);
+			if ( ( type == WARPPARTY_RANDOMALL || type == WARPPARTY_RANDOMALLAREA ) && (rx || ry) )
+				continue;
+			else
+				return SCRIPT_CMD_FAILURE;
 		}
 	}
 
@@ -5894,6 +5953,20 @@ BUILDIN_FUNC(heal)
 	hp=script_getnum(st,2);
 	sp=script_getnum(st,3);
 	status_heal(&sd->bl, hp, sp, 1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*==========================================
+ * Force Heal a player (ap)
+ *------------------------------------------*/
+BUILDIN_FUNC(healap)
+{
+	map_session_data* sd;
+
+	if (!script_charid2sd(3, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	status_heal(&sd->bl, 0, 0, script_getnum(st, 2), 1);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -9583,6 +9656,50 @@ BUILDIN_FUNC(statusup2)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+* traitstatusup <stat>{,<char_id>};
+**/
+BUILDIN_FUNC(traitstatusup)
+{
+	struct map_session_data *sd;
+
+	if (!script_charid2sd(3, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	int type = script_getnum( st, 2 );
+
+	if( type < SP_POW || type > SP_CRT ){
+		ShowError( "buildin_traitstatusup: Unknown trait type %d\n", type );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	pc_traitstatusup( sd, type, 1 );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+* traitstatusup2 <stat>,<amount>{,<char_id>};
+**/
+BUILDIN_FUNC(traitstatusup2)
+{
+	struct map_session_data *sd;
+
+	if (!script_charid2sd(4, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	int type = script_getnum( st, 2 );
+
+	if( type < SP_POW || type > SP_CRT ){
+		ShowError( "buildin_traitstatusup2: Unknown trait type %d\n", type );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	pc_traitstatusup2( sd, type, script_getnum( st, 3 ) );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /// See 'doc/item_bonus.txt'
 ///
 /// bonus <bonus type>,<val1>;
@@ -10768,6 +10885,8 @@ BUILDIN_FUNC(getmobdrops)
 
 		mapreg_setreg(reference_uid(add_str("$@MobDrop_item"), j), mob->dropitem[i].nameid);
 		mapreg_setreg(reference_uid(add_str("$@MobDrop_rate"), j), mob->dropitem[i].rate);
+		mapreg_setreg(reference_uid(add_str("$@MobDrop_nosteal"), j), mob->dropitem[i].steal_protected);
+		mapreg_setreg(reference_uid(add_str("$@MobDrop_randomopt"), j), mob->dropitem[i].randomopt_group);
 
 		j++;
 	}
@@ -11950,11 +12069,16 @@ BUILDIN_FUNC(sc_end_class)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	for (int i = 0; i < MAX_SKILL_TREE && (skill_id = skill_tree[pc_class2idx(class_)][i].skill_id) > 0; i++) {
-		enum sc_type sc = status_skill2sc(skill_id);
+	std::shared_ptr<s_skill_tree> tree = skill_tree_db.find(class_);
 
-		if (sc > SC_COMMON_MAX && sd->sc.data[sc])
-			status_change_end(&sd->bl, sc, INVALID_TIMER);
+	if( tree != nullptr ){
+		for (const auto &it : tree->skills) {
+			skill_id = it.first;
+			enum sc_type sc = status_skill2sc(skill_id);
+
+			if (sc > SC_COMMON_MAX && sd->sc.data[sc])
+				status_change_end(&sd->bl, sc, INVALID_TIMER);
+		}
 	}
 
 	return SCRIPT_CMD_SUCCESS;
@@ -14159,6 +14283,7 @@ BUILDIN_FUNC(getiteminfo)
 		}
 		case ITEMINFO_ID: script_pushint(st, i_data->nameid); break;
 		case ITEMINFO_AEGISNAME: script_pushstrcopy(st, i_data->name.c_str()); break;
+		case ITEMINFO_SUBTYPE: script_pushint(st, i_data->subtype); break;
 		default:
 			script_pushint(st, -1);
 			break;
@@ -14245,6 +14370,7 @@ BUILDIN_FUNC(setiteminfo)
 #endif
 			break;
 		}
+		case ITEMINFO_SUBTYPE: i_data->subtype = static_cast<uint8>(value); break;
 		default:
 			script_pushint(st, -1);
 			break;
@@ -14968,6 +15094,65 @@ BUILDIN_FUNC(specialeffect2)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(removespecialeffect)
+{
+	const char* command = script_getfuncname(st);
+
+#if PACKETVER < 20181002
+	ShowError("buildin_%s: This command is not supported for PACKETVER older than 2018-10-02.\n", command);
+
+	return SCRIPT_CMD_FAILURE;
+#endif
+
+	int effect = script_getnum(st, 2);
+
+	if (effect <= EF_NONE || effect >= EF_MAX) {
+		ShowError("buildin_%s: unsupported effect id %d.\n", command, effect);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	send_target e_target = script_hasdata(st, 3) ? static_cast<send_target>(script_getnum(st, 3)) : AREA;
+
+	struct block_list *bl_src;
+	struct block_list *bl_target;
+	struct map_session_data *sd;
+
+	if( strcmp(command, "removespecialeffect") == 0 ) {
+		if (!script_hasdata(st, 4)) {
+			bl_src = map_id2bl(st->oid);
+
+			if (bl_src == nullptr) {
+				ShowError("buildin_%s: npc not attached.\n", command);
+				return SCRIPT_CMD_FAILURE;
+			}
+		}
+		else {
+			struct npc_data *nd = npc_name2id(script_getstr(st, 4));
+			if (nd == nullptr) {
+				ShowError("buildin_%s: unknown npc %s.\n", command, script_getstr(st, 4));
+				return SCRIPT_CMD_FAILURE;
+			}
+			bl_src = &nd->bl;
+		}
+
+		if (e_target != SELF)
+			bl_target = bl_src;
+		else {
+			if (!script_rid2sd(sd))
+				return SCRIPT_CMD_FAILURE;
+			bl_target = &sd->bl;
+		}
+	}else{
+		if (!script_nick2sd(4, sd))
+			return SCRIPT_CMD_FAILURE;
+
+		bl_src = bl_target = &sd->bl;
+	}
+
+	clif_specialeffect_remove(bl_src, effect, e_target, bl_target);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /**
  * nude({<char_id>});
  * @author [Valaris]
@@ -15302,7 +15487,7 @@ BUILDIN_FUNC(getmercinfo)
 {
 	int type;
 	struct map_session_data* sd;
-	struct mercenary_data* md;
+	s_mercenary_data* md;
 
 	if( !script_charid2sd(3,sd) ){
 		script_pushnil(st);
@@ -15324,7 +15509,7 @@ BUILDIN_FUNC(getmercinfo)
 	{
 		case 0: script_pushint(st,md->mercenary.mercenary_id); break;
 		case 1: script_pushint(st,md->mercenary.class_); break;
-		case 2: script_pushstrcopy(st,md->db->name); break;
+		case 2: script_pushstrcopy(st,md->db->name.c_str()); break;
 		case 3: script_pushint(st,mercenary_get_faith(md)); break;
 		case 4: script_pushint(st,mercenary_get_calls(md)); break;
 		case 5: script_pushint(st,md->mercenary.kill_count); break;
@@ -17605,54 +17790,93 @@ BUILDIN_FUNC(setitemscript)
  * Add or Update a mob drop temporarily [Akinari]
  * Original Idea By: [Lupus]
  *
- * addmonsterdrop <mob_id or name>,<item_id>,<rate>;
+ * addmonsterdrop <mob_id or name>,<item_id>,<rate>,{<steal protected>,{<random option group id>}};
  *
  * If given an item the mob already drops, the rate
- * is updated to the new rate.  Rate cannot exceed 10000
- * Returns 1 if succeeded (added/updated a mob drop)
+ * is updated to the new rate. Rate range is 1-10000.
+ * Returns true if succeeded (added/updated a mob drop) false otherwise.
  *-------------------------------------------------------*/
 BUILDIN_FUNC(addmonsterdrop)
 {
 	std::shared_ptr<s_mob_db> mob;
-	int rate;
 
-	if(script_isstring(st, 2))
-		mob = mob_db.find(mobdb_searchname(script_getstr(st,2)));
+	if (script_isstring(st, 2))
+		mob = mob_db.find(mobdb_searchname(script_getstr(st, 2)));
 	else
-		mob = mob_db.find(script_getnum(st,2));
+		mob = mob_db.find(script_getnum(st, 2));
 
-	t_itemid item_id=script_getnum(st,3);
-	rate=script_getnum(st,4);
-
-	if(!itemdb_exists(item_id)){
-		ShowError("addmonsterdrop: Nonexistant item %u requested.\n", item_id );
+	if (mob == nullptr) {
+		if (script_isstring(st, 2))
+			ShowError("addmonsterdrop: bad mob name given %s\n", script_getstr(st, 2));
+		else
+			ShowError("addmonsterdrop: bad mob id given %d\n", script_getnum(st, 2));
+		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if(mob) { //We got a valid monster, check for available drop slot
-		unsigned char i, c = 0;
-		for(i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
-			if(mob->dropitem[i].nameid) {
-				if(mob->dropitem[i].nameid == item_id) { //If it equals item_id we update that drop
-					c = i;
-					break;
-				}
-				continue;
-			}
-			if(!c) //Accept first available slot only
+	t_itemid item_id = script_getnum(st, 3);
+	item_data *itm = itemdb_exists(item_id);
+
+	if (itm == nullptr) {
+		ShowError("addmonsterdrop: Nonexistant item %u requested.\n", item_id);
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int rate = script_getnum(st, 4);
+
+	if (rate < 1 || rate > 10000) {
+		ShowError("addmonsterdrop: Invalid rate %d (min 1, max 10000).\n", rate);
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	uint16 c = 0;
+
+	for (uint16 i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
+		if (mob->dropitem[i].nameid > 0) {
+			if (mob->dropitem[i].nameid == item_id) { // If it equals item_id we update that drop
 				c = i;
+				break;
+			}
+			continue;
 		}
-		if(c) { //Fill in the slot with the item and rate
-			mob->dropitem[c].nameid = item_id;
-			mob->dropitem[c].rate = (rate > 10000)?10000:rate;
-			mob_reload_itemmob_data(); // Reload the mob search data stored in the item_data
-			script_pushint(st,1);
-		} else //No place to put the new drop
-			script_pushint(st,0);
-	} else {
-		ShowWarning("addmonsterdrop: bad mob id given %d\n",script_getnum(st,2));
-		return SCRIPT_CMD_FAILURE;
+		if (c == 0) // Accept first available slot only
+			c = i;
 	}
+	if (c == 0) { // No place to put the new drop
+		script_pushint(st, false);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	int steal_protected = 0;
+	int group = 0;
+
+	if (script_hasdata(st,5))
+		steal_protected = script_getnum(st, 5);
+	if (script_hasdata(st,6)) {
+		group = script_getnum(st, 6);
+
+		if (!random_option_group.exists(group)) {
+			ShowError("buildin_addmonsterdrop: Unknown random option group %d.\n", group);
+			script_pushint(st, false);
+			return SCRIPT_CMD_FAILURE;
+		}
+		if (itm->type != IT_WEAPON && itm->type != IT_ARMOR && itm->type != IT_SHADOWGEAR) {
+			ShowError("buildin_addmonsterdrop: Random option group can't be used with this type of item (item Id: %d).\n", item_id);
+			script_pushint(st, false);
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+
+	// Fill in the slot with the item and rate
+	mob->dropitem[c].nameid = item_id;
+	mob->dropitem[c].rate = rate;
+	mob->dropitem[c].steal_protected = steal_protected > 0;
+	mob->dropitem[c].randomopt_group = group;
+	mob_reload_itemmob_data(); // Reload the mob search data stored in the item_data
+
+	script_pushint(st, true);
 	return SCRIPT_CMD_SUCCESS;
 
 }
@@ -17676,7 +17900,7 @@ BUILDIN_FUNC(delmonsterdrop)
 
 	t_itemid item_id=script_getnum(st,3);
 
-	if(!itemdb_exists(item_id)){
+	if(!item_db.exists(item_id)){
 		ShowError("delmonsterdrop: Nonexistant item %u requested.\n", item_id );
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -17687,6 +17911,8 @@ BUILDIN_FUNC(delmonsterdrop)
 			if(mob->dropitem[i].nameid == item_id) {
 				mob->dropitem[i].nameid = 0;
 				mob->dropitem[i].rate = 0;
+				mob->dropitem[i].steal_protected = false;
+				mob->dropitem[i].randomopt_group = 0;
 				mob_reload_itemmob_data(); // Reload the mob search data stored in the item_data
 				script_pushint(st,1);
 				return SCRIPT_CMD_SUCCESS;
@@ -17733,6 +17959,8 @@ BUILDIN_FUNC(getmonsterinfo)
 		case MOB_ATK2:		script_pushint(st,mob->status.rhw.atk2); break;
 		case MOB_DEF:		script_pushint(st,mob->status.def); break;
 		case MOB_MDEF:		script_pushint(st,mob->status.mdef); break;
+		case MOB_RES:		script_pushint(st, mob->status.res); break;
+		case MOB_MRES:		script_pushint(st, mob->status.mres); break;
 		case MOB_STR:		script_pushint(st,mob->status.str); break;
 		case MOB_AGI:		script_pushint(st,mob->status.agi); break;
 		case MOB_VIT:		script_pushint(st,mob->status.vit); break;
@@ -17893,7 +18121,7 @@ BUILDIN_FUNC(rid2name)
 			case BL_NPC: script_pushstrcopy(st,((TBL_NPC*)bl)->exname); break;
 			case BL_PET: script_pushstrcopy(st,((TBL_PET*)bl)->pet.name); break;
 			case BL_HOM: script_pushstrcopy(st,((TBL_HOM*)bl)->homunculus.name); break;
-			case BL_MER: script_pushstrcopy(st,((TBL_MER*)bl)->db->name); break;
+			case BL_MER: script_pushstrcopy(st,((TBL_MER*)bl)->db->name.c_str()); break;
 			default:
 				ShowError("buildin_rid2name: BL type unknown.\n");
 				script_pushconststr(st,"");
@@ -18157,6 +18385,9 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UMOB_ROBE, md->vd->robe);
 			getunitdata_sub(UMOB_BODY2, md->vd->body_style);
 			getunitdata_sub(UMOB_GROUP_ID, md->ud.group_id);
+			getunitdata_sub(UMOB_IGNORE_CELL_STACK_LIMIT, md->ud.state.ignore_cell_stack_limit);
+			getunitdata_sub(UMOB_RES, md->status.res);
+			getunitdata_sub(UMOB_MRES, md->status.mres);
 			break;
 
 		case BL_HOM:
@@ -18561,6 +18792,9 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_ROBE: clif_changelook(bl, LOOK_ROBE, (unsigned short)value); break;
 			case UMOB_BODY2: clif_changelook(bl, LOOK_BODY2, (unsigned short)value); break;
 			case UMOB_GROUP_ID: md->ud.group_id = value; unit_refresh(bl); break;
+			case UMOB_IGNORE_CELL_STACK_LIMIT: md->ud.state.ignore_cell_stack_limit = value > 0; break;
+			case UMOB_RES: md->base_status->res = (short)value; calc_status = true; break;
+			case UMOB_MRES: md->base_status->mres = (short)value; calc_status = true; break;
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_MOB.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -18804,7 +19038,7 @@ BUILDIN_FUNC(setunitdata)
 					ShowWarning("buildin_setunitdata: Error in finding target for BL_ELEM!\n");
 					return SCRIPT_CMD_FAILURE;
 				}
-				elemental_change_mode(ed, static_cast<e_mode>(EL_MODE_AGGRESSIVE));
+				elemental_change_mode(ed, EL_MODE_AGGRESSIVE);
 				unit_attack(&ed->bl, target->id, 1);
 				break;
 			}
@@ -19284,8 +19518,8 @@ BUILDIN_FUNC(unitemote)
 
 /// Makes the unit cast the skill on the target or self if no target is specified.
 ///
-/// unitskilluseid <unit_id>,<skill_id>,<skill_lv>{,<target_id>,<casttime>};
-/// unitskilluseid <unit_id>,"<skill name>",<skill_lv>{,<target_id>,<casttime>};
+/// unitskilluseid <unit_id>,<skill_id>,<skill_lv>{,<target_id>,<casttime>,<cancel>,<Line_ID>};
+/// unitskilluseid <unit_id>,"<skill name>",<skill_lv>{,<target_id>,<casttime>,<cancel>,<Line_ID>};
 BUILDIN_FUNC(unitskilluseid)
 {
 	int unit_id, target_id, casttime;
@@ -19311,15 +19545,26 @@ BUILDIN_FUNC(unitskilluseid)
 	skill_lv = script_getnum(st,4);
 	target_id = ( script_hasdata(st,5) ? script_getnum(st,5) : unit_id );
 	casttime = ( script_hasdata(st,6) ? script_getnum(st,6) : 0 );
-	
+	bool cancel = ( script_hasdata(st,7) ? script_getnum(st,7) > 0 : skill_get_castcancel(skill_id) );
+	int msg_id = (script_hasdata(st, 8) ? script_getnum(st, 8) : 0);
+
 	if(script_rid2bl(2,bl)){
+		if (msg_id > 0) {
+			if (bl->type != BL_MOB) {
+				ShowError("buildin_unitskilluseid: Msg can only be used for monster.\n");
+				return SCRIPT_CMD_FAILURE;
+			}
+			TBL_MOB* md = map_id2md(bl->id);
+			if (md)
+				mob_chat_display_message(*md, static_cast<uint16>(msg_id));
+		}
 		if (bl->type == BL_NPC) {
 			if (!((TBL_NPC*)bl)->status.hp)
 				status_calc_npc(((TBL_NPC*)bl), SCO_FIRST);
 			else
 				status_calc_npc(((TBL_NPC*)bl), SCO_NONE);
 		}
-		unit_skilluse_id2(bl, target_id, skill_id, skill_lv, (casttime * 1000) + skill_castfix(bl, skill_id, skill_lv), skill_get_castcancel(skill_id));
+		unit_skilluse_id2(bl, target_id, skill_id, skill_lv, (casttime * 1000) + skill_castfix(bl, skill_id, skill_lv), cancel);
 	}
 
 	return SCRIPT_CMD_SUCCESS;
@@ -19327,8 +19572,8 @@ BUILDIN_FUNC(unitskilluseid)
 
 /// Makes the unit cast the skill on the target position.
 ///
-/// unitskillusepos <unit_id>,<skill_id>,<skill_lv>,<target_x>,<target_y>{,<casttime>};
-/// unitskillusepos <unit_id>,"<skill name>",<skill_lv>,<target_x>,<target_y>{,<casttime>};
+/// unitskillusepos <unit_id>,<skill_id>,<skill_lv>,<target_x>,<target_y>{,<casttime>,<cancel>,<Line_ID>};
+/// unitskillusepos <unit_id>,"<skill name>",<skill_lv>,<target_x>,<target_y>{,<casttime>,<cancel>,<Line_ID>};
 BUILDIN_FUNC(unitskillusepos)
 {
 	int skill_x, skill_y, casttime;
@@ -19354,15 +19599,26 @@ BUILDIN_FUNC(unitskillusepos)
 	skill_x  = script_getnum(st,5);
 	skill_y  = script_getnum(st,6);
 	casttime = ( script_hasdata(st,7) ? script_getnum(st,7) : 0 );
+	bool cancel = ( script_hasdata(st,8) ? script_getnum(st,8) > 0 : skill_get_castcancel(skill_id) );
+	int msg_id = (script_hasdata(st, 9) ? script_getnum(st, 9) : 0);
 
 	if(script_rid2bl(2,bl)){
+		if (msg_id > 0) {
+			if (bl->type != BL_MOB) {
+				ShowError("buildin_unitskilluseid: Msg can only be used for monster.\n");
+				return SCRIPT_CMD_FAILURE;
+			}
+			TBL_MOB* md = map_id2md(bl->id);
+			if (md)
+				mob_chat_display_message(*md, static_cast<uint16>(msg_id));
+		}
 		if (bl->type == BL_NPC) {
 			if (!((TBL_NPC*)bl)->status.hp)
 				status_calc_npc(((TBL_NPC*)bl), SCO_FIRST);
 			else
 				status_calc_npc(((TBL_NPC*)bl), SCO_NONE);
 		}
-		unit_skilluse_pos2(bl, skill_x, skill_y, skill_id, skill_lv, (casttime * 1000) + skill_castfix(bl, skill_id, skill_lv), skill_get_castcancel(skill_id));
+		unit_skilluse_pos2(bl, skill_x, skill_y, skill_id, skill_lv, (casttime * 1000) + skill_castfix(bl, skill_id, skill_lv), cancel);
 	}
 
 	return SCRIPT_CMD_SUCCESS;
@@ -19751,11 +20007,37 @@ BUILDIN_FUNC(mercenary_create)
 
 	class_ = script_getnum(st,2);
 
-	if( !mercenary_db(class_) )
+	if( !mercenary_db.exists(class_) )
 		return SCRIPT_CMD_SUCCESS;
 
 	contract_time = script_getnum(st,3);
 	mercenary_create(sd, class_, contract_time);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(mercenary_delete)
+{
+	struct map_session_data *sd;
+	int type = 0;
+
+	if( !script_charid2sd(2, sd) )
+		return SCRIPT_CMD_FAILURE;
+
+	if( sd->md == nullptr ) {
+		ShowWarning("buildin_mercenary_delete: Tried to delete a non existant mercenary from player '%s' (AID: %u, CID: %u)\n", sd->status.name, sd->status.account_id, sd->status.char_id);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( script_hasdata(st, 3) ) {
+		type = script_getnum(st, 3);
+		if( type < 0 || type > 3 ) {
+			ShowWarning("buildin_mercenary_delete: invalid type value of %d.\n", type);
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+	
+	mercenary_delete(sd->md, type);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -23704,6 +23986,28 @@ BUILDIN_FUNC(needed_status_point) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/// Returns the number of trait stat points needed to change the specified trait stat by val.
+/// If val is negative, returns the number of trait stat points that would be needed to
+/// raise the specified trait stat from (current value - val) to current value.
+/// *needed_trait_point(<type>,<val>{,<char id>});
+BUILDIN_FUNC(needed_trait_point) {
+	struct map_session_data *sd;
+
+	if (!script_charid2sd(4, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	int type = script_getnum( st, 2 );
+
+	if( type < SP_POW || type > SP_CRT ){
+		ShowError( "buildin_needed_trait_point: Unknown trait type %d\n", type );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint( st, pc_need_trait_point( sd, type, script_getnum( st, 3 ) ) );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /**
  * jobcanentermap("<mapname>"{,<JobID>});
  * Check if (player with) JobID can enter the map.
@@ -25089,13 +25393,13 @@ BUILDIN_FUNC(achievement_condition){
 /// Returns a reference to a variable of the specific instance ID.
 /// Returns 0 if an error occurs.
 ///
-/// getvariableofinstance(<variable>, <instance ID>) -> <reference>
-BUILDIN_FUNC(getvariableofinstance)
+/// getinstancevar(<variable>, <instance ID>) -> <reference>
+BUILDIN_FUNC(getinstancevar)
 {
 	struct script_data* data = script_getdata(st, 2);
 
 	if (!data_isreference(data)) {
-		ShowError("buildin_getvariableofinstance: %s is not a variable.\n", script_getstr(st, 2));
+		ShowError("buildin_getinstancevar: %s is not a variable.\n", script_getstr(st, 2));
 		script_reportdata(data);
 		script_pushnil(st);
 		st->state = END;
@@ -25105,7 +25409,7 @@ BUILDIN_FUNC(getvariableofinstance)
 	const char* name = reference_getname(data);
 
 	if (*name != '\'') {
-		ShowError("buildin_getvariableofinstance: Invalid scope. %s is not an instance variable.\n", name);
+		ShowError("buildin_getinstancevar: Invalid scope. %s is not an instance variable.\n", name);
 		script_reportdata(data);
 		script_pushnil(st);
 		st->state = END;
@@ -25115,7 +25419,7 @@ BUILDIN_FUNC(getvariableofinstance)
 	int instance_id = script_getnum(st, 3);
 
 	if (instance_id <= 0) {
-		ShowError("buildin_getvariableofinstance: Invalid instance ID %d.\n", instance_id);
+		ShowError("buildin_getinstancevar: Invalid instance ID %d.\n", instance_id);
 		script_pushnil(st);
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
@@ -25124,7 +25428,7 @@ BUILDIN_FUNC(getvariableofinstance)
 	std::shared_ptr<s_instance_data> im = util::umap_find(instances, instance_id);
 
 	if (im->state != INSTANCE_BUSY) {
-		ShowError("buildin_getvariableofinstance: Unknown instance ID %d.\n", instance_id);
+		ShowError("buildin_getinstancevar: Unknown instance ID %d.\n", instance_id);
 		script_pushnil(st);
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
@@ -25134,6 +25438,62 @@ BUILDIN_FUNC(getvariableofinstance)
 		im->regs.vars = i64db_alloc(DB_OPT_RELEASE_DATA);
 
 	push_val2(st->stack, C_NAME, reference_getuid(data), &im->regs);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/// Sets the value of an instance variable.
+///
+/// setinstancevar(<variable>,<value>,<instance ID>)
+BUILDIN_FUNC(setinstancevar)
+{
+	const char *command = script_getfuncname(st);
+	struct script_data* data = script_getdata(st, 2);
+
+	if (!data_isreference(data)) {
+		ShowError("buildin_%s: %s is not a variable.\n", command, script_getstr(st, 2));
+		script_reportdata(data);
+		script_pushnil(st);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	const char* name = reference_getname(data);
+
+	if (*name != '\'') {
+		ShowError("buildin_%s: Invalid scope. %s is not an instance variable.\n", command, name);
+		script_reportdata(data);
+		script_pushnil(st);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int instance_id = script_getnum(st, 4);
+
+	if (instance_id <= 0) {
+		ShowError("buildin_%s: Invalid instance ID %d.\n", command, instance_id);
+		script_pushnil(st);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	std::shared_ptr<s_instance_data> im = util::umap_find(instances, instance_id);
+
+	if (im->state != INSTANCE_BUSY) {
+		ShowError("buildin_%s: Unknown instance ID %d.\n", command, instance_id);
+		script_pushnil(st);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushcopy(st, 2);
+
+	struct map_session_data* sd = nullptr;
+
+	if( is_string_variable(name) )
+		set_reg_str( st, sd, reference_getuid(data), name, script_getstr( st, 3 ), &im->regs );
+	else
+		set_reg_num( st, sd, reference_getuid(data), name, script_getnum64( st, 3 ), &im->regs );
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -25243,17 +25603,78 @@ BUILDIN_FUNC(refineui){
 BUILDIN_FUNC(getenchantgrade){
 	struct map_session_data *sd;
 
-	if( !script_rid2sd( sd ) ){
+	if (!script_charid2sd(3, sd)) {
+		script_pushint(st,-1);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if( current_equip_item_index == -1 ){
+	int index, position;
+
+	if (script_hasdata(st, 2))
+		position = script_getnum(st, 2);
+	else
+		position = EQI_COMPOUND_ON;
+
+	if (position == EQI_COMPOUND_ON)
+		index = current_equip_item_index;
+	else if (equip_index_check(position))
+		index = pc_checkequip(sd, equip_bitmask[position]);
+	else {
+		ShowError( "buildin_getenchantgrade: Unknown equip index '%d'\n", position );
+		script_pushint(st,-1);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	script_pushint( st, sd->inventory.u.items_inventory[current_equip_item_index].enchantgrade );
+	if (index < 0 || index >= MAX_INVENTORY || sd->inventory.u.items_inventory[index].nameid == 0)
+		script_pushint(st, -1);
+	else
+		script_pushint(st, sd->inventory.u.items_inventory[index].enchantgrade);
 
 	return SCRIPT_CMD_SUCCESS;
+}
+
+/*==========================================
+ * mob_setidleevent( <monster game ID>, "<event label>" )
+ *------------------------------------------*/
+BUILDIN_FUNC(mob_setidleevent){
+	struct block_list* bl;
+
+	if( !script_rid2bl( 2, bl ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( bl->type != BL_MOB ){
+		ShowError( "buildin_mob_setidleevent: the target GID was not a monster.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	struct mob_data* md = (struct mob_data*)bl;
+	if (md == nullptr)
+		return SCRIPT_CMD_FAILURE;
+
+	const char* idle_event = script_getstr( st, 3 );
+
+	check_event( st, idle_event );
+	safestrncpy( md->idle_event, idle_event, EVENT_NAME_LENGTH );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC( openstylist ){
+#if PACKETVER >= 20151104
+	struct map_session_data* sd;
+
+	if( !script_charid2sd( 2, sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_ui_open( sd, OUT_UI_STYLIST, 0 );
+
+	return SCRIPT_CMD_SUCCESS;
+#else
+	ShowError( "buildin_openstylist: This command requires packet version 2015-11-04 or newer.\n" );
+	return SCRIPT_CMD_FAILURE;
+#endif
 }
 
 #include "../custom/script.inc"
@@ -25364,6 +25785,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(cutin,"si"),
 	BUILDIN_DEF(viewpoint,"iiiii?"),
 	BUILDIN_DEF(heal,"ii?"),
+	BUILDIN_DEF(healap,"i?"),
 	BUILDIN_DEF(itemheal,"ii?"),
 	BUILDIN_DEF(percentheal,"ii?"),
 	BUILDIN_DEF(rand,"i?"),
@@ -25405,6 +25827,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(downrefitem,"i??"),
 	BUILDIN_DEF(statusup,"i?"),
 	BUILDIN_DEF(statusup2,"ii?"),
+	BUILDIN_DEF(traitstatusup,"i?"),
+	BUILDIN_DEF(traitstatusup2,"ii?"),
 	BUILDIN_DEF(bonus,"i?"),
 	BUILDIN_DEF2(bonus,"bonus2","ivi"),
 	BUILDIN_DEF2(bonus,"bonus3","ivii"),
@@ -25575,6 +25999,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(npcskilleffect,"viii"), // npc skill effect [Valaris]
 	BUILDIN_DEF(specialeffect,"i??"), // npc skill effect [Valaris]
 	BUILDIN_DEF(specialeffect2,"i??"), // skill effect on players[Valaris]
+	BUILDIN_DEF(removespecialeffect,"i??"),
+	BUILDIN_DEF2(removespecialeffect,"removespecialeffect2","i??"),
 	BUILDIN_DEF(nude,"?"), // nude command [Valaris]
 	BUILDIN_DEF(mapwarp,"ssii??"),		// Added by RoVeRT
 	BUILDIN_DEF(atcommand,"s"), // [MouseJstr]
@@ -25672,7 +26098,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(disguise,"i?"), //disguise player. Lupus
 	BUILDIN_DEF(undisguise,"?"), //undisguise player. Lupus
 	BUILDIN_DEF(getmonsterinfo,"ii"), //Lupus
-	BUILDIN_DEF(addmonsterdrop,"vii"), //Akinari [Lupus]
+	BUILDIN_DEF(addmonsterdrop,"vii??"), //Akinari [Lupus]
 	BUILDIN_DEF(delmonsterdrop,"vi"), //Akinari [Lupus]
 	BUILDIN_DEF(axtoi,"s"),
 	BUILDIN_DEF(query_sql,"s*"),
@@ -25709,8 +26135,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(unitstopwalk,"i?"),
 	BUILDIN_DEF(unittalk,"is?"),
 	BUILDIN_DEF_DEPRECATED(unitemote,"ii","20170811"),
-	BUILDIN_DEF(unitskilluseid,"ivi??"), // originally by Qamera [Celest]
-	BUILDIN_DEF(unitskillusepos,"iviii?"), // [Celest]
+	BUILDIN_DEF(unitskilluseid,"ivi????"), // originally by Qamera [Celest]
+	BUILDIN_DEF(unitskillusepos,"iviii???"), // [Celest]
 // <--- [zBuffer] List of unit control commands
 	BUILDIN_DEF(sleep,"i"),
 	BUILDIN_DEF(sleep2,"i"),
@@ -25739,6 +26165,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(checkwall,"s"),
 	BUILDIN_DEF(searchitem,"rs"),
 	BUILDIN_DEF(mercenary_create,"ii"),
+	BUILDIN_DEF(mercenary_delete,"??"),
 	BUILDIN_DEF(mercenary_heal,"ii"),
 	BUILDIN_DEF(mercenary_sc_start,"iii"),
 	BUILDIN_DEF(mercenary_get_calls,"i"),
@@ -25884,6 +26311,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getequiprandomoption, "iii?"),
 	BUILDIN_DEF(setrandomoption,"iiiii?"),
 	BUILDIN_DEF(needed_status_point,"ii?"),
+	BUILDIN_DEF(needed_trait_point, "ii?"),
 	BUILDIN_DEF(jobcanentermap,"s?"),
 	BUILDIN_DEF(openstorage2,"ii?"),
 	BUILDIN_DEF(unloadnpc, "s"),
@@ -25940,7 +26368,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(camerainfo,"iii?"),
 
 	BUILDIN_DEF(achievement_condition,"i"),
-	BUILDIN_DEF(getvariableofinstance,"ri"),
+	BUILDIN_DEF(getinstancevar,"ri"),
+	BUILDIN_DEF2_DEPRECATED(getinstancevar, "getvariableofinstance","ri", "2021-12-13"),
 	BUILDIN_DEF(convertpcinfo,"vi"),
 	BUILDIN_DEF(isnpccloaked, "??"),
 
@@ -25948,8 +26377,12 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(rentalcountitem, "rentalcountitem2", "viiiiiii?"),
 	BUILDIN_DEF2(rentalcountitem, "rentalcountitem3", "viiiiiiirrr?"),
 
-	BUILDIN_DEF(getenchantgrade, ""),
+	BUILDIN_DEF(getenchantgrade, "??"),
 
+	BUILDIN_DEF(mob_setidleevent, "is"),
+
+	BUILDIN_DEF(setinstancevar,"rvi"),
+	BUILDIN_DEF(openstylist, "?"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

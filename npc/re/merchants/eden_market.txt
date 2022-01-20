@@ -511,7 +511,7 @@ paramk,74,15,0	script	Leria#coin	4_M_BIBI,{
 			mes "[Leria]";
 			mes "I may not have any stock left since I sell only a handful of items.";
 			close2;
-			callshop "para_coin10",1;
+			callshop "para_coin10";
 			end;
 		}
 		mes "[Leria]";
@@ -542,7 +542,7 @@ paramk,71,15,3	script	Heimhunter#hei	4_GEFFEN_11,{
 			mes "It might have been bought by someone else already.";
 			mes "Please understand.";
 			close2;
-			callshop "para_hei10",1;
+			callshop "para_hei10";
 			end;
 		}
 		mes "[Heimhunter]";
@@ -569,7 +569,7 @@ paramk,68,15,0	script	Zephet#key	4_M_HUMERCHANT,{
 			mes "Even though I scavenge for them all week, there's not a lot available.";
 			mes "They may be sold out already.";
 			close2;
-			callshop "para_key10",1;
+			callshop "para_key10";
 			end;
 		}
 		mes "[Zephet]";
@@ -609,7 +609,7 @@ paramk,65,30,3	script	Miffy#wp01	4_F_LGTGIRL,{
 			mes "That means the weapon has already been sold.";
 			mes "The spoils go toward people with quick reflexes.";
 			close2;
-			callshop "para_wp00",1;
+			callshop "para_wp00";
 			end;
 		}
 		mes "[Miffy]";
@@ -707,7 +707,7 @@ paramk,90,31,3	script	Minho Doh#cst01	4W_M_01,{
 			mes "Here is our special collection!";
 			mes "If all the chests are empty, that means you are too late!";
 			close2;
-			callshop "para_arm10",1;
+			callshop "para_arm10";
 			end;
 		}
 		mes "[Minho Doh]";
@@ -784,7 +784,7 @@ paramk,100,30,3	script	Head Pharmacist#ptn01	4_F_SCIENCE,{
 			mes "If there's nothing, it means that we are sold out.";
 			mes "We do not brew potions in large batches. Please understand.";
 			close2;
-			callshop "para_ptn00",1;
+			callshop "para_ptn00";
 			end;
 		}
 		mes "[Head Pharmacist]";
@@ -857,7 +857,7 @@ paramk,106,27,3	script	Brewer Wyn#ptn03	4_M_ALCHE_A,{
 			mes "Aaa... The stench of herbs";
 			mes "Feel like throwing up... Aaa..";
 			close2;
-			callshop "para_ptn10",1;
+			callshop "para_ptn10";
 			end;
 		}
 		mes "[Wyn]";
@@ -900,7 +900,7 @@ paramk,114,30,3	script	Lucky Day Napeed#itm01	4_F_03,{
 			mes "The popular choices are, 'Box of accessories', 'Gift-wrapped Mask', 'Worn Album', 'Presents to take to your Hometown'...";
 			mes "If you do not see anything, it means we are sold out. Come back on next weekend~";
 			close2;
-			callshop "para_itm00",1;
+			callshop "para_itm00";
 			end;
 		}
 		mes "[Napeed]";
@@ -929,7 +929,7 @@ paramk,118,31,3	script	Manager Parayo#itm02	4_F_KHELLISIA,{
 			mes "We try to be stocked up in order to serve as many customers as possible";
 			mes "But sometimes we are sold out, unfortunately.";
 			close2;
-			callshop "para_itm10",1;
+			callshop "para_itm10";
 			end;
 		case 2:
 			mes "[Parayo]";
@@ -1015,7 +1015,7 @@ paramk,129,33,3	script	Blackphone#seed02	4_M_MERCAT2,{
 			mes "Meow~ Here are Doram cans and bottles, yggdrasil, and thorn berries.";
 			mes "Meow~ If you see nothing, that means we are sold out. Come back tomorrow.";
 			close2;
-			callshop "para_seed10",1;
+			callshop "para_seed10";
 			end;
 		}
 		mes "[Blackphone]";
@@ -1313,7 +1313,7 @@ paramk,65,86,3	script	Cocktail Master#mora01	4_M_RAFLE_VI,{
 			mes "[Cocktail Master]";
 			mes "If there is nothing, that means we are sold out. Come back tomorrow.";
 			close2;
-			callshop "para_mora10",1;
+			callshop "para_mora10";
 			end;
 		}
 		mes "[Cocktail Master]";
@@ -1342,7 +1342,7 @@ paramk,49,103,3	script	Hans #ref01	1_M_SIGNMCNT,{
 			mes "We are sold out, if there is nothing here.";
 			mes "We mine iron, steel, coal, and iron ores every day, so come back tomorrow.";
 			close2;
-			callshop "para_ref10",1;
+			callshop "para_ref10";
 			end;
 		}
 		mes "[Hans]";
@@ -1370,7 +1370,7 @@ paramk,53,104,3	script	Dus the Smith#ref02	2_M_OLDBLSMITH,{
 			mes "Not sure if we have any left.";
 			mes "Please buy if we do.";
 			close2;
-			callshop "para_ref20",1;
+			callshop "para_ref20";
 			end;
 		}
 		mes "[Dus the Smith]";
@@ -1421,13 +1421,13 @@ paramk,69,102,3	script	Aurora#jew01	4_F_02,{
 			mes "If you don't see anything, that means everything is sold out!";
 			mes "Thank you for visiting~!";
 			close2;
-			callshop "para_jew10",1;
+			callshop "para_jew10";
 			end;
 		case 2:
 			mes "[Aurora]";
 			mes "We will buy at a reasonable price.";
 			close2;
-			callshop "para_jew10",2;
+			callshop "para_fod01",2;
 			end;
 		case 3:
 			mes "[Aurora]";
@@ -1479,7 +1479,7 @@ paramk,75,102,3	script	Dye the Alchemist#alc01	4_M_ALCHE_C,{
 			mes "If not, everything is sold out!";
 			mes "They may be a bit expensive, but easy consumption... well, you know what I am talking about. Yeah?";
 			close2;
-			callshop "para_alc10",1;
+			callshop "para_alc10";
 			end;
 		}
 		mes "[Dye the Alchemist]";
@@ -1513,14 +1513,14 @@ paramk,80,104,3	script	Earl the Alchemist#alc02	4_TOWER_16,{
 			mes "[Earl the Alchemist]";
 			mes "If you don't see anything, that means everything is sold out.";
 			close2;
-			callshop "para_alc20",1;
+			callshop "para_alc20";
 			end;
 		case 2:
 			mes "[Earl the Alchemist]";
 			mes "Stardust, and Star Crumb here.";
 			mes "Not sure if we have any left.";
 			close2;
-			callshop "para_alc30",1;
+			callshop "para_alc30";
 			end;
 		case 3:
 			mes "[Earl the Alchemist]";
@@ -1563,7 +1563,7 @@ paramk,87,101,3	script	Manbok#fod01	1_M_03,{
 			mes "Well,^4d4dffif you see nothing, that means everything is sold out^000000.";
 			mes "Peruse at your pleasure.";
 			close2;
-			callshop "para_fod10",1;
+			callshop "para_fod10";
 			end;
 		case 2:
 			mes "[Manbok]";
@@ -1626,7 +1626,7 @@ paramk,95,102,3	script	Madoha#mag01	4_M_SAGE_A,{
 			mes "Blue, red, yellow gems. Magic scrolls like Meteor Storm, Stormgust, Lord of Vermillion...";
 			mes "^4d4dffIf there is nothing, it means everything is sold out^000000, please be aware.";
 			close2;
-			callshop "para_mag10",1;
+			callshop "para_mag10";
 			end;
 		}
 		mes "[Madoha]";
@@ -1647,7 +1647,7 @@ paramk,95,102,3	script	Madoha#mag01	4_M_SAGE_A,{
 			mes "We try to be stocked up as much as possible but we may have run out.";
 			mes "If you see nothing, that means everything is sold out.";
 			close2;
-			callshop "para_mag11",1;
+			callshop "para_mag11";
 			end;
 		}
 		mes "[Madoha]";
@@ -1670,7 +1670,7 @@ paramk,100,102,3	script	Magiha#mag02	4_M_SAGE_C,{
 			mes "We brew and sell four types of resistance potions that ward against water, wind, earth, or fire.";
 			mes "If you see nothing, that means all the potions are sold out.";
 			close2;
-			callshop "para_mag20",1;
+			callshop "para_mag20";
 			end;
 		}
 		mes "[Magiha]";
@@ -1714,7 +1714,7 @@ paramk,116,100,3	script	Hwaran#plt01	4_F_RUSGREEN,{
 		mes "Please shower them with affection, though they are poisonous plants.";
 		mes "I selected these babies from the farm myself. Very potent when made into meds.";
 		close2;
-		callshop "para_plt01",1;
+		callshop "para_plt01";
 		end;
 	}
 	mes "[Hwaran]";
