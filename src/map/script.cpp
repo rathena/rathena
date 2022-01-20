@@ -25685,9 +25685,7 @@ BUILDIN_FUNC( openstylist ){
 **/
 BUILDIN_FUNC(itemlink)
 {
-	struct s_item_link itemldata;
-
-	memset(&itemldata, 0, sizeof(s_item_link));
+	s_item_link itemldata = {};
 	itemldata.item.nameid = script_getnum(st, 2);
 
 	FETCH(3, itemldata.item.refine);
@@ -25703,7 +25701,7 @@ BUILDIN_FUNC(itemlink)
 #if PACKETVER >= 20150225
 	char* command = (char*)script_getfuncname(st);
 	if (command[strlen(command) - 1] == '2') { // only run when called via itemlink2
-		script_getitem_randomoption(st, NULL, &itemldata.item, command, 9);
+		script_getitem_randomoption(st, nullptr, &itemldata.item, command, 9);
 		for (uint8 i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
 			if (itemldata.item.option[i].id)
 				itemldata.flag.options = 1;

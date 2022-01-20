@@ -2997,7 +2997,7 @@ const std::unordered_map<char, int> base62_map = {
 
 /**
 * Encode base10 number to base62. Originally by lututui
-* @param val Base10 Number
+* @param val: Base10 Number
 * @return Base62 string
 **/
 std::string base62_encode(unsigned int val)
@@ -3015,7 +3015,7 @@ std::string base62_encode(unsigned int val)
 
 /**
 * Decode base62 string to base10. Originally by lututui
-* @param str Base62 String
+* @param str: Base62 String
 * @return Base10 number
 **/
 unsigned int base62_decode(const std::string& str)
@@ -3034,7 +3034,7 @@ unsigned int base62_decode(const std::string& str)
 
 /**
 * Generate <ITEML> string
-* @param data Item info
+* @param data: Item info
 * @return <ITEML> string for the item
 * @author [Cydh]
 **/
