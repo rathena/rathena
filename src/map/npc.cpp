@@ -121,6 +121,10 @@ struct script_event_s{
 // Holds pointers to the commonly executed scripts for speedup. [Skotlex]
 std::map<enum npce_event, std::vector<struct script_event_s>> script_event;
 
+// Static functions
+static struct npc_data* npc_create_npc( int16 m, int16 x, int16 y );
+static void npc_parsename( struct npc_data* nd, const char* name, const char* start, const char* buffer, const char* filepath );
+
 const std::string StylistDatabase::getDefaultLocation(){
 	return std::string(db_path) + "/stylist.yml";
 }
@@ -385,6 +389,451 @@ uint64 StylistDatabase::parseBodyNode( const YAML::Node &node ){
 }
 
 StylistDatabase stylist_db;
+
+const std::string BarterDatabase::getDefaultLocation(){
+	return "npc/barters.yml";
+}
+
+uint64 BarterDatabase::parseBodyNode( const YAML::Node& node ){
+	std::string npcname;
+
+	if( !this->asString( node, "Name", npcname ) ){
+		return 0;
+	}
+
+	std::shared_ptr<s_npc_barter> barter = this->find( npcname );
+	bool exists = barter != nullptr;
+
+	if( !exists ){
+		barter = std::make_shared<s_npc_barter>();
+		barter->name = npcname;
+	}
+
+	if( this->nodeExists( node, "Map" ) ){
+		std::string map;
+
+		if( !this->asString( node, "Map", map ) ){
+			return 0;
+		}
+
+		uint16 index = mapindex_name2idx( map.c_str(), nullptr );
+
+		if( index == 0 ){
+			this->invalidWarning( node["Map"], "barter_parseBodyNode: Unknown mapname %s, skipping.\n", map.c_str());
+			return 0;
+		}
+
+		barter->m = map_mapindex2mapid( index );
+
+		// Skip silently if the map is not on this map-server
+		if( barter->m < 0 ){
+			return 1;
+		}
+	}else{
+		if( !exists ){
+			barter->m = -1;
+		}
+	}
+
+	struct map_data* mapdata = nullptr;
+
+	if( barter->m >= 0 ){
+		mapdata = map_getmapdata( barter->m );
+	}
+
+	if( this->nodeExists( node, "X" ) ){
+		uint16 x;
+
+		if( !this->asUInt16( node, "X", x ) ){
+			return 0;
+		}
+
+		if( mapdata == nullptr ){
+			this->invalidWarning( node["X"], "barter_parseBodyNode: Barter NPC is not on a map. Ignoring X coordinate...\n" );
+			x = 0;
+		}else if( x >= mapdata->xs ){
+			this->invalidWarning( node["X"], "barter_parseBodyNode: X coordinate %hu is out of bound %hu...\n", x, mapdata->xs );
+			return 0;
+		}
+
+		barter->x = x;
+	}else{
+		if( !exists ){
+			barter->x = 0;
+		}
+	}
+
+	if( this->nodeExists( node, "Y" ) ){
+		uint16 y;
+
+		if( !this->asUInt16( node, "Y", y ) ){
+			return 0;
+		}
+
+		if( mapdata == nullptr ){
+			this->invalidWarning( node["Y"], "barter_parseBodyNode: Barter NPC is not on a map. Ignoring Y coordinate...\n" );
+			y = 0;
+		}else if( y >= mapdata->ys ){
+			this->invalidWarning( node["Y"], "barter_parseBodyNode: Y coordinate %hu is out of bound %hu...\n", y, mapdata->ys );
+			return 0;
+		}
+
+		barter->y = y;
+	}else{
+		if( !exists ){
+			barter->y = 0;
+		}
+	}
+
+	if( this->nodeExists( node, "Direction" ) ){
+		std::string direction_name;
+
+		if( !this->asString( node, "Direction", direction_name ) ){
+			return 0;
+		}
+
+		int64 constant;
+
+		if( !script_get_constant( ( "DIR_" + direction_name ).c_str(), &constant ) ){
+			this->invalidWarning( node["Direction"], "barter_parseBodyNode: Unknown direction %s, skipping.\n", direction_name.c_str() );
+			return 0;
+		}
+
+		if( constant < DIR_NORTH || constant >= DIR_MAX ){
+			this->invalidWarning( node["Direction"], "barter_parseBodyNode: Invalid direction %s, defaulting to North.\n", direction_name.c_str() );
+			constant = DIR_NORTH;
+		}
+
+		barter->dir = (uint8)constant;
+	}else{
+		if( !exists ){
+			barter->dir = (uint8)DIR_NORTH;
+		}
+	}
+
+	if( this->nodeExists( node, "Sprite" ) ){
+		std::string sprite_name;
+
+		if( !this->asString( node, "Sprite", sprite_name ) ){
+			return 0;
+		}
+
+		int64 constant;
+
+		if( !script_get_constant( sprite_name.c_str(), &constant ) ){
+			this->invalidWarning( node["Sprite"], "barter_parseBodyNode: Unknown sprite name %s, skipping.\n", sprite_name.c_str());
+			return 0;
+		}
+
+		if( constant != JT_FAKENPC && !npcdb_checkid( constant ) ){
+			this->invalidWarning( node["Sprite"], "barter_parseBodyNode: Invalid sprite name %s, skipping.\n", sprite_name.c_str());
+			return 0;
+		}
+
+		barter->sprite = (int16)constant;
+	}else{
+		if( !exists ){
+			barter->sprite = JT_FAKENPC;
+		}
+	}
+
+	if( this->nodeExists( node, "Items" ) ){
+		for( const YAML::Node& itemNode : node["Items"] ){
+			uint16 index;
+
+			if( !this->asUInt16( itemNode, "Index", index ) ){
+				return 0;
+			}
+
+			std::shared_ptr<s_npc_barter_item> item = util::map_find( barter->items, index );
+			bool item_exists = item != nullptr;
+
+			if( !item_exists ){
+				if( !this->nodesExist( itemNode, { "Item" } ) ){
+					return 0;
+				}
+
+				item = std::make_shared<s_npc_barter_item>();
+				item->index = index;
+			}
+
+			if( this->nodeExists( itemNode, "Item" ) ){
+				std::string aegis_name;
+
+				if( !this->asString( itemNode, "Item", aegis_name ) ){
+					return 0;
+				}
+
+				std::shared_ptr<item_data> id = item_db.search_aegisname( aegis_name.c_str() );
+
+				if( id == nullptr ){
+					this->invalidWarning( itemNode["Item"], "barter_parseBodyNode: Unknown item %s.\n", aegis_name.c_str() );
+					return 0;
+				}
+
+				item->nameid = id->nameid;
+			}
+
+			if( this->nodeExists( itemNode, "Stock" ) ){
+				uint32 stock;
+
+				if( !this->asUInt32( itemNode, "Stock", stock ) ){
+					return 0;
+				}
+
+				item->stock = stock;
+				item->stockLimited = ( stock > 0 );
+			}else{
+				if( !item_exists ){
+					item->stock = 0;
+					item->stockLimited = false;
+				}
+			}
+
+			if( this->nodeExists( itemNode, "Zeny" ) ){
+				uint32 zeny;
+
+				if( !this->asUInt32( itemNode, "Zeny", zeny ) ){
+					return 0;
+				}
+
+				if( zeny > MAX_ZENY ){
+					this->invalidWarning( itemNode["Zeny"], "barter_parseBodyNode: Zeny price %u is above MAX_ZENY (%u), capping...\n", zeny, MAX_ZENY );
+					zeny = MAX_ZENY;
+				}
+
+				item->price = zeny;
+			}else{
+				if( !item_exists ){
+					item->price = 0;
+				}
+			}
+
+			if( this->nodeExists( itemNode, "RequiredItems" ) ){
+				for( const YAML::Node& requiredItemNode : itemNode["RequiredItems"] ){
+					uint16 requirement_index;
+
+					if( !this->asUInt16( requiredItemNode, "Index", requirement_index ) ){
+						return 0;
+					}
+
+					if( requirement_index >= MAX_BARTER_REQUIREMENTS ){
+						this->invalidWarning( requiredItemNode["Index"], "barter_parseBodyNode: Index %hu is out of bounds. Barters support up to %d requirements.\n", requirement_index, MAX_BARTER_REQUIREMENTS );
+						return 0;
+					}
+
+					std::shared_ptr<s_npc_barter_requirement> requirement = util::map_find( item->requirements, requirement_index );
+					bool requirement_exists = requirement != nullptr;
+
+					if( !requirement_exists ){
+						if( !this->nodesExist( requiredItemNode, { "Item" } ) ){
+							return 0;
+						}
+
+						requirement = std::make_shared<s_npc_barter_requirement>();
+						requirement->index = requirement_index;
+					}
+
+					if( this->nodeExists( requiredItemNode, "Item" ) ){
+						std::string aegis_name;
+
+						if( !this->asString( requiredItemNode, "Item", aegis_name ) ){
+							return 0;
+						}
+
+						std::shared_ptr<item_data> data = item_db.search_aegisname( aegis_name.c_str() );
+
+						if( data == nullptr ){
+							this->invalidWarning( requiredItemNode["Item"], "barter_parseBodyNode: Unknown required item %s.\n", aegis_name.c_str() );
+							return 0;
+						}
+
+						requirement->nameid = data->nameid;
+					}
+
+					if( this->nodeExists( requiredItemNode, "Amount" ) ){
+						uint16 amount;
+
+						if( !this->asUInt16( requiredItemNode, "Amount", amount ) ){
+							return 0;
+						}
+
+						if( amount > MAX_AMOUNT ){
+							this->invalidWarning( requiredItemNode["Amount"], "barter_parseBodyNode: Amount %hu is too high, capping to %hu...\n", amount, MAX_AMOUNT );
+							amount = MAX_AMOUNT;
+						}
+
+						requirement->amount = amount;
+					}else{
+						if( !requirement_exists ){
+							requirement->amount = 1;
+						}
+					}
+
+					if( this->nodeExists( requiredItemNode, "Refine" ) ){
+						std::shared_ptr<item_data> data = item_db.find( requirement->nameid );
+
+						if( data->flag.no_refine ){
+							this->invalidWarning( requiredItemNode["Refine"], "barter_parseBodyNode: Item %s is not refineable.\n", data->name.c_str() );
+							return 0;
+						}
+
+						int16 refine;
+
+						if( !this->asInt16( requiredItemNode, "Refine", refine ) ){
+							return 0;
+						}
+
+						if( refine > MAX_REFINE ){
+							this->invalidWarning( requiredItemNode["Amount"], "barter_parseBodyNode: Refine %hd is too high, capping to %d.\n", refine, MAX_REFINE );
+							refine = MAX_REFINE;
+						}
+
+						requirement->refine = (int8)refine;
+					}else{
+						if( !requirement_exists ){
+							requirement->refine = -1;
+						}
+					}
+
+					if( !requirement_exists ){
+						item->requirements[requirement->index] = requirement;
+					}
+				}
+			}
+
+			if( !item_exists ){
+				barter->items[index] = item;
+			}
+		}
+	}
+
+	if( !exists ){
+		this->put( npcname, barter );
+	}
+
+	return 1;
+}
+
+void BarterDatabase::loadingFinished(){
+	for( const auto& pair : *this ){
+#if !( PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114 )
+		ShowError( "Barter system is not supported by your packet version.\n" );
+		return;
+#endif
+
+		std::shared_ptr<s_npc_barter> barter = pair.second;
+
+		struct npc_data* nd = npc_create_npc( barter->m, barter->x, barter->y );
+
+		npc_parsename( nd, barter->name.c_str(), nullptr, nullptr, __FILE__ ":" QUOTE(__LINE__) );
+
+		nd->class_ = barter->sprite;
+		nd->speed = 200;
+
+		nd->bl.type = BL_NPC;
+		nd->subtype = NPCTYPE_BARTER;
+
+		nd->u.barter.extended = false;
+
+		// Check if it has to use the extended barter feature or not
+		for( const auto& itemPair : barter->items ){
+			// Normal barter cannot have zeny requirements
+			if( itemPair.second->price > 0 ){
+				nd->u.barter.extended = true;
+				break;
+			}
+
+			// Normal barter needs to have exchange items defined
+			if( itemPair.second->requirements.empty() ){
+				nd->u.barter.extended = true;
+				break;
+			}
+
+			// Normal barter can only exchange 1:1
+			if( itemPair.second->requirements.size() > 1 ){
+				nd->u.barter.extended = true;
+				break;
+			}
+
+			// Normal barter cannot handle refine
+			for( const auto& requirement : itemPair.second->requirements ){
+				if( requirement.second->refine >= 0 ){
+					nd->u.barter.extended = true;
+					break;
+				}
+			}
+
+			// Check if a refine requirement has been set in the loop above
+			if( nd->u.barter.extended ){
+				break;
+			}
+		}
+
+#if !( PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106 || PACKETVER_ZERO_NUM >= 20191127 )
+		if( nd->u.barter.extended ){
+			ShowError( "Barter %s uses extended mechanics but this is not supported by the current packet version.\n", nd->name );
+			continue;
+		}
+#endif
+
+		if( nd->bl.m >= 0 ){
+			map_addnpc( nd->bl.m, nd );
+			npc_setcells( nd );
+			// Couldn't add on map
+			if( map_addblock( &nd->bl ) ){
+				continue;
+			}
+			
+			status_change_init( &nd->bl );
+			unit_dataset( &nd->bl );
+			nd->ud.dir = barter->dir;
+
+			if( nd->class_ != JT_FAKENPC ){
+				status_set_viewdata( &nd->bl, nd->class_ );
+
+				if( map_getmapdata( nd->bl.m )->users ){
+					clif_spawn( &nd->bl );
+				}
+			}
+		}else{
+			map_addiddb( &nd->bl );
+		}
+
+		strdb_put( npcname_db, nd->exname, nd );
+
+		for( const auto& itemPair : barter->items ){
+			if( itemPair.second->stockLimited ){
+				if( Sql_Query( mmysql_handle, "SELECT `amount` FROM `%s` WHERE `name` = '%s' AND `index` = '%hu'", barter_table, barter->name.c_str(), itemPair.first ) != SQL_SUCCESS ){
+					Sql_ShowDebug( mmysql_handle );
+					continue;
+				}
+
+				// Previous amount found
+				if( SQL_SUCCESS == Sql_NextRow( mmysql_handle ) ){
+					char* data;
+
+					Sql_GetData( mmysql_handle, 0, &data, nullptr );
+
+					itemPair.second->stock = strtoul( data, nullptr, 10 );
+				}
+
+				Sql_FreeResult( mmysql_handle );
+
+				// Save or refresh the amount
+				if( Sql_Query( mmysql_handle, "REPLACE INTO `%s` (`name`,`index`,`amount`) VALUES ( '%s', '%hu', '%hu' )", barter_table, barter->name.c_str(), itemPair.first, itemPair.second->stock ) != SQL_SUCCESS ){
+					Sql_ShowDebug( mmysql_handle );
+				}
+			}else{
+				if( Sql_Query( mmysql_handle, "DELETE FROM `%s` WHERE `name` = '%s' AND `index` = '%hu'", barter_table, barter->name.c_str(), itemPair.first ) != SQL_SUCCESS ){
+					Sql_ShowDebug( mmysql_handle );
+				}
+			}
+		}
+	}
+}
+
+BarterDatabase barter_db;
 
 /**
  * Returns the viewdata for normal NPC classes.
@@ -1735,6 +2184,14 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd)
 		case NPCTYPE_TOMB:
 			run_tomb(sd,nd);
 			break;
+		case NPCTYPE_BARTER:
+			sd->npc_shopid = nd->bl.id;
+			if( nd->u.barter.extended ){
+				clif_barter_extended_open( *sd, *nd );
+			}else{
+				clif_barter_open( *sd, *nd );
+			}
+			break;
 	}
 
 	return 0;
@@ -2232,23 +2689,23 @@ static int npc_buylist_sub(struct map_session_data* sd, uint16 n, struct s_npc_b
  * @param item_list: List of items
  * @return result code for clif_parse_NpcBuyListSend/clif_npc_market_purchase_ack
  */
-uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *item_list) {
+e_purchase_result npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *item_list) {
 	struct npc_data* nd;
 	struct npc_item_list *shop = NULL;
 	double z;
 	int i,j,k,w,skill,new_;
 	uint8 market_index[MAX_INVENTORY];
 
-	nullpo_retr(3, sd);
-	nullpo_retr(3, item_list);
+	nullpo_retr(e_purchase_result::PURCHASE_FAIL_COUNT, sd);
+	nullpo_retr(e_purchase_result::PURCHASE_FAIL_COUNT, item_list);
 
 	nd = npc_checknear(sd,map_id2bl(sd->npc_shopid));
 	if( nd == NULL )
-		return 3;
+		return e_purchase_result::PURCHASE_FAIL_COUNT;
 	if( nd->subtype != NPCTYPE_SHOP && nd->subtype != NPCTYPE_MARKETSHOP )
-		return 3;
+		return e_purchase_result::PURCHASE_FAIL_COUNT;
 	if (!item_list || !n)
-		return 3;
+		return e_purchase_result::PURCHASE_FAIL_COUNT;
 
 	z = 0;
 	w = 0;
@@ -2271,12 +2728,12 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 		);
 
 		if( j == nd->u.shop.count )
-			return 3; // no such item in shop
+			return e_purchase_result::PURCHASE_FAIL_COUNT; // no such item in shop
 
 #if PACKETVER >= 20131223
 		if (nd->subtype == NPCTYPE_MARKETSHOP) {
 			if (item_list[i].qty > shop[j].qty)
-				return 3;
+				return e_purchase_result::PURCHASE_FAIL_COUNT;
 			market_index[i] = j;
 		}
 #endif
@@ -2287,7 +2744,7 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 		id = itemdb_exists(nameid);
 
 		if( !id )
-			return 3; // item no longer in itemdb
+			return e_purchase_result::PURCHASE_FAIL_COUNT; // item no longer in itemdb
 
 		if( !itemdb_isstackable2(id) && amount > 1 ) { //Exploit? You can't buy more than 1 of equipment types o.O
 			ShowWarning("Player %s (%d:%d) sent a hexed packet trying to buy %d of nonstackable item %u!\n",
@@ -2308,7 +2765,7 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 				break;
 
 			case CHKADDITEM_OVERAMOUNT:
-				return 2;
+				return e_purchase_result::PURCHASE_FAIL_WEIGHT;
 		}
 
 		if (npc_shop_discount(nd))
@@ -2318,16 +2775,18 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 		w += itemdb_weight(nameid) * amount;
 	}
 
-	if (nd->master_nd) //Script-based shops.
-		return npc_buylist_sub(sd,n,item_list,nd->master_nd);
+	if (nd->master_nd){ //Script-based shops.
+		npc_buylist_sub(sd,n,item_list,nd->master_nd);
+		return e_purchase_result::PURCHASE_SUCCEED;
+	}
 
 	if (z > (double)sd->status.zeny)
-		return 1;	// Not enough Zeny
+		return e_purchase_result::PURCHASE_FAIL_MONEY;	// Not enough Zeny
 
 	if( w + sd->weight > sd->max_weight )
-		return 2;	// Too heavy
+		return e_purchase_result::PURCHASE_FAIL_WEIGHT;	// Too heavy
 	if( pc_inventoryblank(sd) < new_ )
-		return 3;	// Not enough space to store items
+		return e_purchase_result::PURCHASE_FAIL_COUNT;	// Not enough space to store items
 
 	pc_payzeny(sd, (int)z, LOG_TYPE_NPC, NULL);
 
@@ -2339,7 +2798,7 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 		if (nd->subtype == NPCTYPE_MARKETSHOP) {
 			j = market_index[i];
 			if (amount > shop[j].qty)
-				return 1;
+				return e_purchase_result::PURCHASE_FAIL_MONEY;
 			shop[j].qty -= amount;
 			npc_market_tosql(nd->exname, &shop[j]);
 		}
@@ -2378,7 +2837,7 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 		}
 	}
 
-	return 0;
+	return e_purchase_result::PURCHASE_SUCCEED;
 }
 
 /// npc_selllist for script-controlled shops
@@ -2572,6 +3031,268 @@ uint8 npc_selllist(struct map_session_data* sd, int n, unsigned short *item_list
 
 	return 0;
 }
+
+e_purchase_result npc_barter_purchase( struct map_session_data& sd, std::shared_ptr<s_npc_barter> barter, std::vector<s_barter_purchase>& purchases ){
+	uint64 requiredZeny = 0;
+	uint32 requiredWeight = 0;
+	uint32 reducedWeight = 0;
+	uint16 requiredSlots = 0;
+	uint32 requiredItems[MAX_INVENTORY] = { 0 };
+
+	for( s_barter_purchase& purchase : purchases ){
+		purchase.data = itemdb_exists( purchase.item->nameid );
+
+		if( purchase.data == nullptr ){
+			return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
+		}
+
+		uint32 amount = purchase.amount;
+
+		if( purchase.item->stockLimited && purchase.item->stock < amount ){
+			return e_purchase_result::PURCHASE_FAIL_STOCK_EMPTY;
+		}
+
+		char result = pc_checkadditem( &sd, purchase.item->nameid, amount );
+
+		if( result == CHKADDITEM_OVERAMOUNT ){
+			return e_purchase_result::PURCHASE_FAIL_COUNT;
+		}else if( result == CHKADDITEM_NEW ){
+			requiredSlots += purchase.data->inventorySlotNeeded( amount );
+		}
+
+		requiredZeny += ( purchase.item->price * amount );
+		requiredWeight += ( purchase.data->weight * amount );
+
+		for( const auto& requirementPair : purchase.item->requirements ){
+			std::shared_ptr<s_npc_barter_requirement> requirement = requirementPair.second;
+
+			item_data* id = itemdb_exists( requirement->nameid );
+
+			if( id == nullptr ){
+				return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
+			}
+
+			if( itemdb_isstackable2( id ) ){
+				int j;
+
+				for( j = 0; j < MAX_INVENTORY; j++ ){
+					if( sd.inventory.u.items_inventory[j].nameid == requirement->nameid ){
+						// Equipped items are not taken into account
+						if( sd.inventory.u.items_inventory[j].equip != 0 ){
+							continue;
+						}
+
+						// Items in equip switch are not taken into account
+						if( sd.inventory.u.items_inventory[j].equipSwitch != 0 ){
+							continue;
+						}
+
+						// Server is configured to hide favorite items on selling
+						if( battle_config.hide_fav_sell && sd.inventory.u.items_inventory[j].favorite ){
+							continue;
+						}
+
+						// Actually stackable items should never be refinable, but who knows...
+						if( requirement->refine >= 0 && sd.inventory.u.items_inventory[j].refine != requirement->refine ){
+							// Refine does not match, continue with next item
+							continue;
+						}
+
+						// Found a match, accumulate required amount
+						requiredItems[j] += requirement->amount * amount;
+
+						// Check if there are still enough items available
+						if( requiredItems[j] > sd.inventory.u.items_inventory[j].amount ){
+							return e_purchase_result::PURCHASE_FAIL_GOODS;
+						}
+
+						// Cancel the loop
+						break;
+					}
+				}
+
+				// Required item not found
+				if( j == MAX_INVENTORY ){
+					return e_purchase_result::PURCHASE_FAIL_GOODS;
+				}
+			}else{
+				for( int i = 0; i < requirement->amount; i++ ){
+					int j;
+
+					for( j = 0; j < MAX_INVENTORY; j++ ){
+						if( sd.inventory.u.items_inventory[j].nameid == requirement->nameid ){
+							// Equipped items are not taken into account
+							if( sd.inventory.u.items_inventory[j].equip != 0 ){
+								continue;
+							}
+
+							// Items in equip switch are not taken into account
+							if( sd.inventory.u.items_inventory[j].equipSwitch != 0 ){
+								continue;
+							}
+
+							// Server is configured to hide favorite items on selling
+							if( battle_config.hide_fav_sell && sd.inventory.u.items_inventory[j].favorite ){
+								continue;
+							}
+
+							// If necessary, check if the refine rate matches
+							if( requirement->refine >= 0 && sd.inventory.u.items_inventory[j].refine != requirement->refine ){
+								// Refine does not match, continue with next item
+								continue;
+							}
+
+							// Found a match, since it is not stackable, check if it was already taken
+							if( requiredItems[j] > 0 ){
+								// Item was already taken, try to find another match
+								continue;
+							}
+
+							// Mark it as taken
+							requiredItems[j] = 1;
+
+							// Cancel the loop
+							break;
+						}
+					}
+
+					// Required item not found
+					if( j == MAX_INVENTORY ){
+						// Maybe the refine level did not match
+						if( requirement->refine >= 0 ){
+							int refine;
+
+							// Try to find a higher refine level, going from the next lowest to the highest possible
+							for( refine = requirement->refine + 1; refine <= MAX_REFINE; refine++ ){
+								for( j = 0; j < MAX_INVENTORY; j++ ){
+									if( sd.inventory.u.items_inventory[j].nameid == requirement->nameid ){
+										// Equipped items are not taken into account
+										if( sd.inventory.u.items_inventory[j].equip != 0 ){
+											continue;
+										}
+
+										// Items in equip switch are not taken into account
+										if(	sd.inventory.u.items_inventory[j].equipSwitch != 0 ){
+											continue;
+										}
+
+										// Server is configured to hide favorite items on selling
+										if( battle_config.hide_fav_sell && sd.inventory.u.items_inventory[j].favorite ){
+											continue;
+										}
+
+										// If necessary, check if the refine rate matches
+										if( requirement->refine >= 0 && sd.inventory.u.items_inventory[j].refine != refine ){
+											// Refine does not match, continue with next item
+											continue;
+										}
+
+										// Found a match, since it is not stackable, check if it was already taken
+										if( requiredItems[j] > 0 ){
+											// Item was already taken, try to find another match
+											continue;
+										}
+
+										// Mark it as taken
+										requiredItems[j] = 1;
+
+										// Cancel the loop
+										break;
+									}
+								}
+
+								// If a match was found, make sure to cancel the loop
+								if( j < MAX_INVENTORY ){
+									// Cancel the loop
+									break;
+								}
+							}
+
+							// No matching entry found
+							if( refine > MAX_REFINE ){
+								return e_purchase_result::PURCHASE_FAIL_GOODS;
+							}
+						}else{
+							return e_purchase_result::PURCHASE_FAIL_GOODS;
+						}
+					}
+				}
+			}
+
+			reducedWeight += ( purchase.amount * requirement->amount * id->weight );
+		}
+	}
+
+	// Check if there is enough Zeny
+	if( sd.status.zeny < requiredZeny ){
+		return e_purchase_result::PURCHASE_FAIL_MONEY;
+	}
+
+	// Check if there is enough Weight Limit
+	if( ( sd.weight + requiredWeight - reducedWeight ) > sd.max_weight ){
+		return e_purchase_result::PURCHASE_FAIL_WEIGHT;
+	}
+
+	if( pc_inventoryblank( &sd ) < requiredSlots ){
+		return e_purchase_result::PURCHASE_FAIL_COUNT;
+	}
+
+	for( int i = 0; i < MAX_INVENTORY; i++ ){
+		if( requiredItems[i] > 0 ){
+			if( pc_delitem( &sd, i, requiredItems[i], 0, 0, LOG_TYPE_BARTER ) != 0 ){
+				return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
+			}
+		}
+	}
+
+	if( pc_payzeny( &sd, (int)requiredZeny, LOG_TYPE_BARTER, nullptr ) != 0 ){
+		return e_purchase_result::PURCHASE_FAIL_MONEY;
+	}
+
+	for( s_barter_purchase& purchase : purchases ){
+		if( purchase.item->stockLimited ){
+			purchase.item->stock -= purchase.amount;
+
+			if( Sql_Query( mmysql_handle, "REPLACE INTO `%s` (`name`,`index`,`amount`) VALUES ( '%s', '%hu', '%hu' )", barter_table, barter->name.c_str(), purchase.item->index, purchase.item->stock ) != SQL_SUCCESS ){
+				Sql_ShowDebug( mmysql_handle );
+				return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
+			}
+		}
+
+		if( itemdb_isstackable2( purchase.data ) ){
+			struct item it = {};
+
+			it.nameid = purchase.item->nameid;
+			it.identify = true;
+
+			if( pc_additem( &sd, &it, purchase.amount, LOG_TYPE_BARTER ) != ADDITEM_SUCCESS ){
+				return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
+			}
+		}else{
+			if( purchase.data->type == IT_PETEGG ){
+				for( int i = 0; i < purchase.amount; i++ ){
+					if( !pet_create_egg( &sd, purchase.item->nameid ) ){
+						return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
+					}
+				}
+			}else{
+				for( int i = 0; i < purchase.amount; i++ ){
+					struct item it = {};
+
+					it.nameid = purchase.item->nameid;
+					it.identify = true;
+
+					if( pc_additem( &sd, &it, 1, LOG_TYPE_BARTER ) != ADDITEM_SUCCESS ){
+						return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
+					}
+				}
+			}
+		}
+	}
+
+	return e_purchase_result::PURCHASE_SUCCEED;
+}
+
 
 //Atempt to remove an npc from a map
 //This doesn't remove it from map_db
@@ -5051,6 +5772,7 @@ int npc_reload(void) {
 		npc_id - npc_new_min, npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
 
 	stylist_db.reload();
+	barter_db.reload();
 
 	//Re-read the NPC Script Events cache.
 	npc_read_event_script();
@@ -5119,6 +5841,7 @@ void do_final_npc(void) {
 	NPCMarketDB->destroy(NPCMarketDB, npc_market_free);
 #endif
 	stylist_db.clear();
+	barter_db.clear();
 	ers_destroy(timer_event_ers);
 	ers_destroy(npc_sc_display_ers);
 	npc_clearsrcfile();
@@ -5205,6 +5928,7 @@ void do_init_npc(void){
 		npc_id - START_NPC_NUM, npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
 
 	stylist_db.load();
+	barter_db.load();
 
 	// set up the events cache
 	npc_read_event_script();
