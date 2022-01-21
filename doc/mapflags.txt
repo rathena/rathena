@@ -435,8 +435,14 @@ Ignores config value of 'monster_hp_bars_info'.
 
 ---------------------------------------
 
-*noleveldiffpenalty
+*norenewaldroppenalty
 
-Disable renewal experience and drop rate penalty on a map.
+Disable renewal drop rate penalty due to level difference on a map.
+
+---------------------------------------
+
+*norenewalexppenalty
+
+Disable renewal experience penalty due to level difference on a map.
 
 ---------------------------------------
