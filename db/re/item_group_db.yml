@@ -17189,6 +17189,66 @@ Body:
             Rate: 1
           - Item: Lush_Rose
             Rate: 1
+  - Group: SQUAD_PRIZE1
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Force3
+            Rate: 83
+          - Item: Intellect3
+            Rate: 83
+          - Item: Swiftness3
+            Rate: 83
+          - Item: Tough3
+            Rate: 83
+          - Item: Artful3
+            Rate: 83
+          - Item: Fortune3
+            Rate: 83
+          - Item: Force2
+            Rate: 416
+          - Item: Intellect2
+            Rate: 416
+          - Item: Swiftness2
+            Rate: 416
+          - Item: Tough2
+            Rate: 416
+          - Item: Artful2
+            Rate: 416
+          - Item: Fortune2
+            Rate: 416
+          - Item: Force1
+            Rate: 1167
+          - Item: Intellect1
+            Rate: 1167
+          - Item: Swiftness1
+            Rate: 1167
+          - Item: Tough1
+            Rate: 1167
+          - Item: Artful1
+            Rate: 1167
+          - Item: Fortune1
+            Rate: 1167
+  - Group: SQUAD_PRIZE2
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Treasure_Box
+            Rate: 1
+          - Item: Frost_Crystal
+            Rate: 4
+          - Item: Yggdrasilberry
+            Rate: 10
+            Amount: 3
+          - Item: Seed_Of_Yggdrasil
+            Rate: 10
+            Amount: 5
+          - Item: White_Slim_Potion
+            Rate: 35
+            Amount: 10
+          - Item: Blue_Potion
+            Rate: 40
+            Amount: 10
   - Group: SGRADE_POCKET
     SubGroups:
       - SubGroup: 0

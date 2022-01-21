@@ -20,6 +20,8 @@
 //Raised to 105 since Expanded Super Baby needs it.
 #define MAX_SKILL_TREE 105
 #define MAX_PC_SKILL_REQUIRE 5 /// Max skill tree requirement
+///Maximum amount of items a combo may require
+#define MAX_ITEMS_PER_COMBO 6
 
 struct s_skill_tree_entry_csv {
 	std::string skill_name;
@@ -508,5 +510,6 @@ static bool mercenary_read_skilldb(char* str[], int columns, int current);
 static bool mercenary_readdb(char* str[], int columns, int current);
 static bool pc_readdb_skilltree(char* str[], int columns, int current);
 static bool pc_readdb_skilltree_yaml(void);
+static bool itemdb_read_combos(const char* file);
 
 #endif /* CSV2YAML_HPP */
