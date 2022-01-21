@@ -2407,6 +2407,11 @@
 	parseable_packet( HEADER_CZ_INVENTORY_EXPAND_REJECTED, sizeof( struct PACKET_CZ_INVENTORY_EXPAND_REJECTED ), clif_parse_inventory_expansion_reject, 0 );
 #endif
 
+#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+	parseable_packet( HEADER_CZ_NPC_BARTER_PURCHASE, -1, clif_parse_barter_buy, 0 );
+	parseable_packet( HEADER_CZ_NPC_BARTER_CLOSE, sizeof( struct PACKET_CZ_NPC_BARTER_CLOSE ), clif_parse_barter_close, 0 );
+#endif
+
 #if PACKETVER_MAIN_NUM >= 20190227 || PACKETVER_RE_NUM >= 20190220 || PACKETVER_ZERO_NUM >= 20190220
 	parseable_packet( 0x0B1C, sizeof( struct PACKET_CZ_PING ), clif_parse_dull, 0 );
 #endif
@@ -2427,6 +2432,11 @@
 
 #if PACKETVER >= 20190724
 	parseable_packet( 0x0b4c, 2, clif_parse_dull, 0 );
+#endif
+
+#if PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106 || PACKETVER_ZERO_NUM >= 20191127
+	parseable_packet( HEADER_CZ_NPC_EXPANDED_BARTER_PURCHASE, -1, clif_parse_barter_extended_buy, 0 );
+	parseable_packet( HEADER_CZ_NPC_EXPANDED_BARTER_CLOSE, sizeof( struct PACKET_CZ_NPC_EXPANDED_BARTER_CLOSE ), clif_parse_barter_extended_close, 0 );
 #endif
 
 #if PACKETVER >= 20191224

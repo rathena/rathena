@@ -34359,16 +34359,6 @@ Body:
     Name: Stops Buff Reset
     Type: Etc
     Buy: 10
-  - Id: 22566
-    AegisName: Frost_Crystal
-    Name: Last Year's Frost
-    Type: Etc
-    Buy: 20
-    Trade:
-      Override: 100
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
   - Id: 22589
     AegisName: Savage_Ora
     Name: Savage Ora Ora
