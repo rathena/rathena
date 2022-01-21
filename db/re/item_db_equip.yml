@@ -145400,6 +145400,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bUnbreakableShoes;
       bonus bMdef,10;
       bonus bMaxHPrate,3;
       bonus bMaxSPrate,3;
@@ -145437,6 +145438,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bUnbreakableShoes;
       bonus bMdef,10;
       bonus bMaxHPrate,3;
       bonus bMaxSPrate,3;
@@ -145782,6 +145784,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bUnbreakableShoes;
       bonus2 bMagicAddClass,Class_Boss,15;
       bonus bMatk,5*.@r;
       bonus bVariableCastrate,-2*.@r;
@@ -145876,6 +145879,7 @@ Body:
     Script: |
       .@r = getrefine();
       .@val = getskilllv("GN_CARTBOOST");
+      bonus bUnbreakableShoes;
       bonus bMdef,10;
       bonus bMaxHPrate,3;
       bonus bMaxSPrate,3;
@@ -146331,6 +146335,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bUnbreakableShoes;
       bonus bMdef,15;
       bonus2 bAddRace,RC_All,10;
       bonus2 bSubClass,Class_Normal,5;

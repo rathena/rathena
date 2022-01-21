@@ -23608,91 +23608,91 @@ Body:
       bonus bMatkRate,10;
   - Combos:
       - Combo:
-          - RingOfThought_TW
-          - B_Seyren_Card
+          - RingOfThought_TW     # 32245
+          - B_Seyren_Card     # 4357
     Script: |
       bonus bCritical,15;
       bonus2 bAddSize,Size_All,6;
   - Combos:
       - Combo:
-          - RingOfThought_TW
-          - B_Eremes_Card
+          - RingOfThought_TW     # 32245
+          - B_Eremes_Card     # 4359
     Script: |
       bonus bFlee,20;
       skill "TF_HIDING",1;
       bonus2 bSkillUseSP,"TF_HIDING",-250;
   - Combos:
       - Combo:
-          - RingOfThought_TW
-          - B_Harword_Card
+          - RingOfThought_TW     # 32245
+          - B_Harword_Card     # 4361
     Script: |
       bonus bAspd,2;
       bonus3 bAutoSpell,"RG_STRIPHELM",3,60;
   - Combos:
       - Combo:
-          - RingOfThought_TW
-          - B_Magaleta_Card
+          - RingOfThought_TW     # 32245
+          - B_Magaleta_Card     # 4363
     Script: |
       bonus bDef,20;
       bonus2 bSubEle,Ele_All,6;
   - Combos:
       - Combo:
-          - RingOfThought_TW
-          - B_Katrinn_Card
+          - RingOfThought_TW     # 32245
+          - B_Katrinn_Card     # 4365
     Script: |
       bonus bMdef,20;
       bonus2 bMagicAtkEle,Ele_All,6;
   - Combos:
       - Combo:
-          - RingOfThought_TW
-          - B_Shecil_Card
+          - RingOfThought_TW     # 32245
+          - B_Shecil_Card     # 4367
     Script: |
       bonus bHit,20;
       bonus bSPDrainValue,1;
   - Combos:
       - Combo:
-          - Tatenasi_Armor_
-          - Cornutus_Card
+          - Tatenasi_Armor_     # 15137
+          - Cornutus_Card     # 4061
     Script: |
       bonus bVit,15;
   - Combos:
       - Combo:
-          - Tatenasi_Armor_
-          - Rsx_0806_Card
+          - Tatenasi_Armor_     # 15137
+          - Rsx_0806_Card     # 4342
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
       bonus bVit,5*.@r;
       bonus bMaxHPrate,5*.@r;
   - Combos:
       - Combo:
-          - Tatenasi_Helmet
-          - Tatenasi_Armor_
+          - Tatenasi_Helmet     # 18884
+          - Tatenasi_Armor_     # 15137
     Script: |
       bonus bDef,15*(getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_HEAD_TOP));
   - Combos:
       - Combo:
-          - Tatenasi_Armor_TW
-          - Cornutus_Card
+          - Tatenasi_Armor_TW     # 15215
+          - Cornutus_Card     # 4061
     Script: |
       bonus bVit,15;
   - Combos:
       - Combo:
-          - Tatenasi_Armor_TW
-          - Rsx_0806_Card
+          - Tatenasi_Armor_TW     # 15215
+          - Rsx_0806_Card     # 4342
     Script: |
       .@r = min(10,getequiprefinerycnt(EQI_ARMOR));
       bonus bVit,5*.@r;
       bonus bMaxHPrate,5*.@r;
   - Combos:
       - Combo:
-          - Tatenasi_Armor_TW
-          - Tatenasi_Helmet_TW
+          - Tatenasi_Armor_TW     # 15215
+          - Tatenasi_Helmet_TW     # 19298
     Script: |
       bonus bDef,15*(min(10,getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_HEAD_TOP)));
   - Combos:
       - Combo:
-          - Tatenasi_Armor
-          - Waste_Stove_Card
+          - Tatenasi_Armor     # 15136
+          - Waste_Stove_Card     # 4332
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
       if (.@r==5)
@@ -23709,18 +23709,18 @@ Body:
          bonus bDefEle,Ele_Holy;
   - Combos:
       - Combo:
-          - Yellow_Scarf
-          - YDragon_SkyWing
+          - Yellow_Scarf     # 5917
+          - YDragon_SkyWing     # 19104
     Script: |
       if (BaseClass == Job_Archer)
          bonus bLongAtkDef,-10;
   - Combos:
       - Combo:
-          - Yellow_Scarf
-          - Yellow_Bandana
+          - Yellow_Scarf     # 5917
+          - Yellow_Bandana     # 5277
       - Combo:
-          - Yellow_Scarf
-          - Yellow_Ribbon
+          - Yellow_Scarf     # 5917
+          - Yellow_Ribbon     # 5278
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       if (.@r>=5)
@@ -23729,8 +23729,8 @@ Body:
          bonus bLongAtkDef,4;
   - Combos:
       - Combo:
-          - Space_shoes_JP
-          - Dark_Lord_Card
+          - Space_shoes_JP     # 22203
+          - Dark_Lord_Card     # 4168
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
       skill "SA_VOLCANO",5;
@@ -23740,8 +23740,8 @@ Body:
         autobonus2 "{ bonus2 bMagicAtkEle,Ele_Fire,5*.@r; }",30,15000,BF_WEAPON;
   - Combos:
       - Combo:
-          - Space_shoes_JP
-          - Sealed_D_Lord_Card
+          - Space_shoes_JP     # 22203
+          - Sealed_D_Lord_Card     # 4488
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
       skill "SA_VOLCANO",1;
@@ -23751,8 +23751,8 @@ Body:
         autobonus2 "{ bonus2 bMagicAtkEle,Ele_Fire,2*.@r; }",30,15000,BF_WEAPON;
   - Combos:
       - Combo:
-          - Space_shoes_JP_
-          - Dark_Lord_Card
+          - Space_shoes_JP_     # 22245
+          - Dark_Lord_Card     # 4168
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
       skill "WZ_METEOR",10;
@@ -23763,8 +23763,8 @@ Body:
          autobonus2 "{ bonus2 bMagicAtkEle,Ele_Fire,3*.@r; bonus2 bMagicAtkEle,Ele_Dark,3*.@r; bonus2 bMagicAtkEle,Ele_Neutral,3*.@r; }",30,15000,BF_WEAPON;
   - Combos:
       - Combo:
-          - Space_shoes_JP_
-          - Sealed_D_Lord_Card
+          - Space_shoes_JP_     # 22245
+          - Sealed_D_Lord_Card     # 4488
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
       skill "SA_VOLCANO",1;
@@ -23775,15 +23775,15 @@ Body:
          autobonus2 "{ bonus2 bMagicAtkEle,Ele_Fire,5*.@r; }",30,15000,BF_WEAPON;
   - Combos:
       - Combo:
-          - Space_shoes_JP_
-          - Runaway_Magic
+          - Space_shoes_JP_     # 22245
+          - Runaway_Magic     # 4876
     Script: |
       bonus bDelayrate,-70;
       bonus bSPDrainValue,5;
   - Combos:
       - Combo:
-          - Triad_God_Mail_J_
-          - Ktullanux_Card
+          - Triad_God_Mail_J_     # 15421
+          - Ktullanux_Card     # 4419
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
       bonus2 bResEff,Eff_Freeze,10000;
@@ -23792,8 +23792,8 @@ Body:
       bonus2 bAddEle,Ele_Fire,5*.@r;
   - Combos:
       - Combo:
-          - Triad_God_Mail_J_
-          - Sealed_Ktullanux_Card
+          - Triad_God_Mail_J_     # 15421
+          - Sealed_Ktullanux_Card     # 4481
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
       bonus2 bResEff,Eff_Freeze,10000;
@@ -23802,8 +23802,8 @@ Body:
       bonus2 bAddEle,Ele_Fire,3*.@r;
   - Combos:
       - Combo:
-          - Triad_God_Mail_J__
-          - Ktullanux_Card
+          - Triad_God_Mail_J__     # 450158
+          - Ktullanux_Card     # 4419
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
       bonus2 bResEff,Eff_Freeze,10000;
@@ -23812,8 +23812,8 @@ Body:
       bonus2 bAddEle,Ele_Fire,8*.@r;
   - Combos:
       - Combo:
-          - Triad_God_Mail_J__
-          - Sealed_Ktullanux_Card
+          - Triad_God_Mail_J__     # 450158
+          - Sealed_Ktullanux_Card     # 4481
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
       bonus2 bResEff,Eff_Freeze,10000;
@@ -23822,42 +23822,42 @@ Body:
       bonus2 bAddEle,Ele_Fire,5*.@r;
   - Combos:
       - Combo:
-          - aegis_450163
-          - Grave_Amon_Ra_Card
+          - aegis_450163     # 450163
+          - Grave_Amon_Ra_Card     # 4652
     Script: |
       bonus2 bMagicAtkEle,Ele_Holy,15;
       bonus2 bResEff,Eff_Freeze,10000;
       skill "AB_JUDEX",3;
   - Combos:
       - Combo:
-          - aegis_450163
-          - aegis_300348
+          - aegis_450163     # 450163
+          - aegis_300348     # 300348
     Script: |
       bonus2 bMagicAtkEle,Ele_Holy,5;
       bonus2 bResEff,Eff_Freeze,10000;
       skill "AB_JUDEX",1;
   - Combos:
       - Combo:
-          - aegis_450181
-          - Grave_Amon_Ra_Card
+          - aegis_450181     # 450181
+          - Grave_Amon_Ra_Card     # 4652
     Script: |
       .@r = min(10,getequiprefinerycnt(EQI_ARMOR));
       bonus2 bMagicAtkEle,Ele_Holy,50;
       bonus2 bResEff,Eff_Freeze,10000;
-      skill "AB_JUDEX",.@r,1;
+      skill "AB_JUDEX",.@r;
   - Combos:
       - Combo:
-          - aegis_450181
-          - aegis_300348
+          - aegis_450181     # 450181
+          - aegis_300348     # 300348
     Script: |
       .@r = min(10,getequiprefinerycnt(EQI_ARMOR));
       bonus2 bMagicAtkEle,Ele_Holy,15;
       bonus2 bResEff,Eff_Freeze,10000;
-      skill "AB_JUDEX",.@r,1;
+      skill "AB_JUDEX",.@r;
   - Combos:
       - Combo:
-          - Awakening_Nergal_Shoes
-          - Moonlight_Flower_Card
+          - Awakening_Nergal_Shoes     # 470047
+          - Moonlight_Flower_Card     # 4131
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
       skill "AL_HEAL",10;
@@ -23870,8 +23870,8 @@ Body:
       }
   - Combos:
       - Combo:
-          - Awakening_Nergal_Shoes
-          - Sealed_M_Flower_Card_J
+          - Awakening_Nergal_Shoes     # 470047
+          - Sealed_M_Flower_Card_J     # 300139
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
       skill "AL_HEAL",10;
@@ -23884,8 +23884,8 @@ Body:
       }
   - Combos:
       - Combo:
-          - Nergal_Shoes
-          - Moonlight_Flower_Card
+          - Nergal_Shoes     # 22132
+          - Moonlight_Flower_Card     # 4131
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
       skill "AL_HEAL",10;
@@ -23898,8 +23898,8 @@ Body:
       }
   - Combos:
       - Combo:
-          - Nergal_Shoes
-          - Sealed_M_Flower_Card_J
+          - Nergal_Shoes     # 22132
+          - Sealed_M_Flower_Card_J     # 300139
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
       skill "AL_HEAL",10;
@@ -23912,35 +23912,35 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_32295
-          - Strong_Blow1
+          - aegis_32295     # 32295
+          - Strong_Blow1     # 29366
       - Combo:
-          - aegis_32295
-          - Strong_Blow2
+          - aegis_32295     # 32295
+          - Strong_Blow2     # 29367
       - Combo:
-          - aegis_32295
-          - Strong_Blow3
+          - aegis_32295     # 32295
+          - Strong_Blow3     # 29368
       - Combo:
-          - aegis_32295
-          - Strong_Blow4
+          - aegis_32295     # 32295
+          - Strong_Blow4     # 29369
       - Combo:
-          - aegis_32295
-          - Strong_Blow5
+          - aegis_32295     # 32295
+          - Strong_Blow5     # 29370
       - Combo:
-          - aegis_32296
-          - Strong_Blow1
+          - aegis_32296     # 32296
+          - Strong_Blow1     # 29366
       - Combo:
-          - aegis_32296
-          - Strong_Blow2
+          - aegis_32296     # 32296
+          - Strong_Blow2     # 29367
       - Combo:
-          - aegis_32296
-          - Strong_Blow3
+          - aegis_32296     # 32296
+          - Strong_Blow3     # 29368
       - Combo:
-          - aegis_32296
-          - Strong_Blow4
+          - aegis_32296     # 32296
+          - Strong_Blow4     # 29369
       - Combo:
-          - aegis_32296
-          - Strong_Blow5
+          - aegis_32296     # 32296
+          - Strong_Blow5     # 29370
     Script: |
       if (BaseClass == Job_Novice || BaseClass == Job_Swordman || BaseClass == Job_Archer || BaseClass == Job_Acolyte || BaseClass == Job_Archer || BaseClass == Job_Merchant || BaseClass == Job_Taekwon || BaseClass == Job_Gunslinger || BaseClass == Job_Summoner) {
          bonus2 bAddRace,RC_All,10;
@@ -23948,8 +23948,8 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_480161
-          - Old_Camo_RabbitHood
+          - aegis_480161     # 480161
+          - Old_Camo_RabbitHood     # 18984
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
       bonus bLongAtkRate,2*(.@r/2);
@@ -23958,8 +23958,8 @@ Body:
          bonus2 bSkillCooldown,"RA_ARROWSTORM",-500;
   - Combos:
       - Combo:
-          - aegis_480161
-          - Old_Shadow_Handicraft
+          - aegis_480161     # 480161
+          - Old_Shadow_Handicraft     # 18975
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
       bonus bDelayrate,-1*(.@r/2);
@@ -23968,8 +23968,8 @@ Body:
          bonus2 bSkillCooldown,"SC_FEINTBOMB",-1800;
   - Combos:
       - Combo:
-          - aegis_480161
-          - Old_Midas_Whisper
+          - aegis_480161     # 480161
+          - Old_Midas_Whisper     # 18977
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
       bonus bLongAtkRate,2*(.@r/2);
@@ -23978,8 +23978,8 @@ Body:
          bonus2 bAddSize,Size_All,5;
   - Combos:
       - Combo:
-          - aegis_480161
-          - Old_Protect_Of_Crown
+          - aegis_480161     # 480161
+          - Old_Protect_Of_Crown     # 18983
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
       bonus bLongAtkRate,2*(.@r/2);
@@ -23988,8 +23988,8 @@ Body:
          bonus2 bAddSize,Size_All,5;
   - Combos:
       - Combo:
-          - aegis_480161
-          - Old_Driver_Band_Y
+          - aegis_480161     # 480161
+          - Old_Driver_Band_Y     # 18974
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
       bonus2 bSkillAtk,"NC_PILEBUNKER",15*(.@r/2);
@@ -23998,11 +23998,11 @@ Body:
          bonus2 bSkillCooldown,"NC_SELFDESTRUCTION",-30000;
   - Combos:
       - Combo:
-          - aegis_480166
-          - Old_Minstrel_Song_Hat
+          - aegis_480166     # 480166
+          - Old_Minstrel_Song_Hat     # 18976
       - Combo:
-          - aegis_480166
-          - Old_Dying_Swan
+          - aegis_480166     # 480166
+          - Old_Dying_Swan     # 18981
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
       bonus2 bSkillAtk,"WM_METALICSOUND",15*(.@r/2);
@@ -24010,26 +24010,26 @@ Body:
          bonus2 bSkillCooldown,"WM_METALICSOUND",-1000;
   - Combos:
       - Combo:
-          - aegis_480166
-          - Old_Wind_Whisper
+          - aegis_480166     # 480166
+          - Old_Wind_Whisper     # 18980
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
-      bonus2 bMagicAddSize,Size_All,1*(.@r/2);
+      bonus2 bMagicAddSize,Size_All,(.@r/2);
       if (.@r>=12)
          bonus2 bSkillCooldown,"SO_VARETYR_SPEAR",-1000;
   - Combos:
       - Combo:
-          - aegis_480166
-          - Old_Magic_Stone_Hat
+          - aegis_480166     # 480166
+          - Old_Magic_Stone_Hat     # 18978
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
-      bonus2 bMagicAddSize,Size_All,1*(.@r/2);
+      bonus2 bMagicAddSize,Size_All,(.@r/2);
       if (.@r>=12)
          bonus2 bMagicAddClass,Class_Boss,15;
   - Combos:
       - Combo:
-          - aegis_480166
-          - Old_Mitra
+          - aegis_480166     # 480166
+          - Old_Mitra     # 18972
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
       bonus bLongAtkDef,2*(.@r/2);
