@@ -70285,3 +70285,1862 @@ Body:
           - Index: 7
             Item: C_AB_Hair_BL
             Rate: 100
+  - Group: ALCHEMIST_BOX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Fire_Bottle
+            Rate: 1
+            Amount: 50
+          - Item: Acid_Bottle
+            Rate: 1
+            Amount: 50
+          - Item: MenEater_Plant_Bottle
+            Rate: 1
+            Amount: 50
+          - Item: Coating_Bottle
+            Rate: 1
+            Amount: 50
+          - Item: Mini_Bottle
+            Rate: 1
+            Amount: 50
+  - Group: BOARDING_HALTER_BOX7
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Boarding_Halter
+            Duration: 10080
+            UniqueId: true
+  - Group: COSTAMA_EGG22
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: C_Rabbit_Earplug
+            Rate: 10
+          - Item: C_Rabbit_Magic_Hat
+            Rate: 10
+          - Item: C_Rabbit_Ear_Knit_Hat
+            Rate: 10
+          - Item: C_Love_Rabbit_Hood
+            Rate: 10
+          - Item: C_Rabbit_Ear_Hat
+            Rate: 10
+          - Item: C_Pretty_Rabbit_Hood
+            Rate: 10
+          - Item: C_Camouflage_RabbitHood
+            Rate: 10
+          - Item: C_Snow_Rabbit_Knit_Hat
+            Rate: 10
+  - Group: WING_OF_BAALZEBUB_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Wing_Of_Baalzebub
+            Duration: 43200
+            UniqueId: true
+  - Group: POROROCA_SHOES_BUNDLE_A
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Pororoca_Shoes
+          - Item: La'cryma_Stick
+  - Group: LIAN_BUNDLE_B
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Lian_Shoes
+          - Item: Lian_Robe
+          - Item: Lian_Shield
+  - Group: SPRINT_BUNDLE_A
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Sprint_Glove
+          - Item: Sprint_Mail
+          - Item: Sprint_Shoes
+          - Item: Sprint_Ring
+  - Group: ETRAN_BUNDLE_A
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Etran_Shirt
+          - Item: G_Strings_
+  - Group: ROSE_BUNDLE_A
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Rose_Of_Eden
+          - Item: Angelic_Ring
+  - Group: ORLEANS_BUNDLE_A
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Orleans_Necklace
+          - Item: Orleans_Gown
+  - Group: BLACK_SHIBA_BUNDLE_A
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Black_Shiba_Inu_Hat
+          - Item: Fidelity_Necklace
+  - Group: VALKYRIE_BUNDLE_A
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Valkyrja's_Shield
+          - Item: Long_Horn
+  - Group: KARDUI_BUNDLE_A
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Kardui_Robe
+          - Item: Rafini_Staff
+  - Group: CLOSEDMIND_BOX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Hurt_Mind
+            Rate: 1
+          - Item: KindHeart
+            Rate: 1
+          - Item: Old_Card_Album
+            Rate: 500
+          - Item: Magic_Card_Album
+            Rate: 80
+          - Item: Hot_Tee
+            Rate: 1500
+            Amount: 5
+          - Item: Bloody_Dead_Branch
+            Rate: 100
+          - Item: Old_Violet_Box
+            Rate: 808
+            Amount: 3
+          - Item: Manacles
+            Rate: 100
+            Amount: 10
+          - Item: Bloody_Page
+            Rate: 110
+            Amount: 10
+          - Item: Sweet_Canape
+            Rate: 1800
+            Amount: 5
+          - Item: Bloody_Coin
+            Rate: 1200
+            Amount: 5
+          - Item: Gold
+            Rate: 1400
+            Amount: 2
+          - Item: Violet_Jewel
+            Rate: 1200
+            Amount: 10
+          - Item: Crystal_Jewel__
+            Rate: 1200
+            Amount: 10
+  - Group: COOKIE_BAG_B
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Lucky_Cookie
+            Rate: 1042
+          - Item: Lucky_Candy_Cane
+            Rate: 1042
+          - Item: Rice_Ball
+            Rate: 1042
+          - Item: Candy_Striper
+            Rate: 1042
+          - Item: Lucky_Candy
+            Rate: 1042
+          - Item: Candy
+            Rate: 1042
+          - Item: Piece_Of_Cake
+            Rate: 1042
+          - Item: Well_Baked_Cookie
+            Rate: 1042
+          - Item: Chocolate_Drink
+            Rate: 208
+          - Item: White_Chocolate
+            Rate: 208
+          - Item: HandMade_Chocolate
+            Rate: 208
+          - Item: Chocolate
+            Rate: 208
+          - Item: Sesame_Pastry
+            Rate: 208
+          - Item: Honey_Pastry
+            Rate: 208
+          - Item: Rainbow_Cake
+            Rate: 208
+      - SubGroup: 2
+        List:
+          - Item: Lucky_Cookie
+            Rate: 1042
+          - Item: Lucky_Candy_Cane
+            Rate: 1042
+          - Item: Rice_Ball
+            Rate: 1042
+          - Item: Candy_Striper
+            Rate: 1042
+          - Item: Lucky_Candy
+            Rate: 1042
+          - Item: Candy
+            Rate: 1042
+          - Item: Piece_Of_Cake
+            Rate: 1042
+          - Item: Well_Baked_Cookie
+            Rate: 1042
+          - Item: Chocolate_Drink
+            Rate: 208
+          - Item: White_Chocolate
+            Rate: 208
+          - Item: HandMade_Chocolate
+            Rate: 208
+          - Item: Chocolate
+            Rate: 208
+          - Item: Sesame_Pastry
+            Rate: 208
+          - Item: Honey_Pastry
+            Rate: 208
+          - Item: Rainbow_Cake
+            Rate: 208
+      - SubGroup: 3
+        List:
+          - Item: Lucky_Cookie
+            Rate: 1042
+          - Item: Lucky_Candy_Cane
+            Rate: 1042
+          - Item: Rice_Ball
+            Rate: 1042
+          - Item: Candy_Striper
+            Rate: 1042
+          - Item: Lucky_Candy
+            Rate: 1042
+          - Item: Candy
+            Rate: 1042
+          - Item: Piece_Of_Cake
+            Rate: 1042
+          - Item: Well_Baked_Cookie
+            Rate: 1042
+          - Item: Chocolate_Drink
+            Rate: 208
+          - Item: White_Chocolate
+            Rate: 208
+          - Item: HandMade_Chocolate
+            Rate: 208
+          - Item: Chocolate
+            Rate: 208
+          - Item: Sesame_Pastry
+            Rate: 208
+          - Item: Honey_Pastry
+            Rate: 208
+          - Item: Rainbow_Cake
+            Rate: 208
+      - SubGroup: 4
+        List:
+          - Item: Lucky_Cookie
+            Rate: 1042
+          - Item: Lucky_Candy_Cane
+            Rate: 1042
+          - Item: Rice_Ball
+            Rate: 1042
+          - Item: Candy_Striper
+            Rate: 1042
+          - Item: Lucky_Candy
+            Rate: 1042
+          - Item: Candy
+            Rate: 1042
+          - Item: Piece_Of_Cake
+            Rate: 1042
+          - Item: Well_Baked_Cookie
+            Rate: 1042
+          - Item: Chocolate_Drink
+            Rate: 208
+          - Item: White_Chocolate
+            Rate: 208
+          - Item: HandMade_Chocolate
+            Rate: 208
+          - Item: Chocolate
+            Rate: 208
+          - Item: Sesame_Pastry
+            Rate: 208
+          - Item: Honey_Pastry
+            Rate: 208
+          - Item: Rainbow_Cake
+            Rate: 208
+      - SubGroup: 5
+        List:
+          - Item: Lucky_Cookie
+            Rate: 1042
+          - Item: Lucky_Candy_Cane
+            Rate: 1042
+          - Item: Rice_Ball
+            Rate: 1042
+          - Item: Candy_Striper
+            Rate: 1042
+          - Item: Lucky_Candy
+            Rate: 1042
+          - Item: Candy
+            Rate: 1042
+          - Item: Piece_Of_Cake
+            Rate: 1042
+          - Item: Well_Baked_Cookie
+            Rate: 1042
+          - Item: Chocolate_Drink
+            Rate: 208
+          - Item: White_Chocolate
+            Rate: 208
+          - Item: HandMade_Chocolate
+            Rate: 208
+          - Item: Chocolate
+            Rate: 208
+          - Item: Sesame_Pastry
+            Rate: 208
+          - Item: Honey_Pastry
+            Rate: 208
+          - Item: Rainbow_Cake
+            Rate: 208
+  - Group: SHADOW_BOX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_Physical_Weapon
+            Rate: 75
+          - Item: S_Physical_Earring
+            Rate: 100
+          - Item: S_Physical_Pendant
+            Rate: 100
+          - Item: S_Magical_Weapon
+            Rate: 75
+          - Item: S_Magical_Earring
+            Rate: 100
+          - Item: S_Magical_Pendant
+            Rate: 100
+          - Item: S_Breezy_Armor
+            Rate: 150
+          - Item: S_Champion_Shoes
+            Rate: 150
+          - Item: S_Athena_Shield
+            Rate: 150
+  - Group: POWER_BOX1
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Battle_Manual_X3
+            Rate: 1
+          - Item: Bloody_Dead_Branch
+            Rate: 1
+          - Item: HE_Bubble_Gum
+            Rate: 1
+            Amount: 2
+      - SubGroup: 2
+        List:
+          - Item: Battle_Manual_X3
+            Rate: 30
+          - Item: Bloody_Dead_Branch
+            Rate: 31
+            Amount: 2
+          - Item: HE_Bubble_Gum
+            Rate: 32
+            Amount: 3
+          - Item: Lucky_Egg_C10
+            Rate: 33
+          - Item: Bow_Mercenary_Scroll10
+            Rate: 34
+            Amount: 10
+          - Item: Bravery_Bag
+            Rate: 10
+            UniqueId: true
+          - Item: Sunglasses_
+            Rate: 5
+            UniqueId: true
+  - Group: MAIL_BREAKER_BOX1
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Marvelous_Medal
+            Rate: 15
+            Amount: 1000
+          - Item: Event_Pierrot_Nose
+            Rate: 4
+          - Item: Archangel_Wing
+            Rate: 4
+          - Item: Magic_Card_Album
+            Rate: 2
+            UniqueId: true
+          - Item: Fallen_Angel_Wing
+            Rate: 4
+          - Item: Food_Box_Lv1
+            Rate: 22
+          - Item: SpearMercenary_Scroll10
+            Rate: 23
+            Amount: 10
+          - Item: SwordMercenary_Scroll10
+            Rate: 24
+            Amount: 10
+          - Item: Bow_Mercenary_Scroll10
+            Rate: 25
+            Amount: 10
+          - Item: Santa_Hat_2
+            Rate: 5
+  - Group: HARDBACK_BOX1
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Lucky_Egg_C10
+          - Item: Silvervine
+            Amount: 2
+      - SubGroup: 1
+        List:
+          - Item: Blue_Arara_Hat
+            Rate: 10
+          - Item: Bloody_Dead_Branch
+            Rate: 15
+            Amount: 2
+          - Item: Deviruchi_Set_Box
+            Rate: 3
+          - Item: Slot_Coupon
+            Rate: 13
+          - Item: Battle_Manual_X3
+            Rate: 15
+            Amount: 2
+          - Item: Archangel_Wing
+            Rate: 3
+          - Item: Marvelous_Medal
+            Rate: 15
+            Amount: 250
+  - Group: SWORD_BREAKER_BOX1
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Deviruchi_Set_Box
+            UniqueId: true
+          - Item: Bow_Of_Rudra_Box1
+  - Group: BLOODY_ROAR_BOX1
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Bloody_Dead_Branch
+      - SubGroup: 2
+        List:
+          - Item: F_Repair_Scroll_Box
+            Rate: 10
+          - Item: Battle_Manual_X3
+            Rate: 10
+          - Item: Fallen_Leaves_
+            Rate: 6
+            UniqueId: true
+          - Item: Magic_Power_Scroll
+            Rate: 17
+            Amount: 15
+          - Item: Knife_Goblin_Ring
+            Rate: 17
+            Amount: 4
+  - Group: BLOODY_IRON_BALL_BOX1
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: C_Corsair
+          - Item: Battle_Manual_X3
+            Amount: 2
+          - Item: Bubble_Gum
+            Amount: 2
+          - Item: Kafra_Card
+            Amount: 2
+          - Item: Insurance
+            Amount: 2
+          - Item: Token_Of_Siegfried
+            Amount: 2
+          - Item: Abrasive
+            Amount: 10
+  - Group: SIEGE_SUPPLY_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Exchange_Coupon
+      - SubGroup: 1
+        List:
+          - Item: Exchange_Coupon
+            Rate: 25
+            Amount: 4
+  - Group: PC_BANG_COIN_BOX1
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Santa_Hat_2
+  - Group: ACIDBOMB_BOX50
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Fire_Bottle
+            Amount: 50
+          - Item: Acid_Bottle
+            Amount: 50
+  - Group: PC_BANG_COIN_BOX2
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Battle_Manual_X3
+      - SubGroup: 2
+        List:
+          - Item: Battle_Manual_X3
+            Rate: 150
+          - Item: Kuloren
+            Rate: 120
+            Amount: 3
+          - Item: Job_Manual50
+            Rate: 100
+            Amount: 2
+          - Item: BF_Badge1
+            Rate: 100
+            Amount: 50
+          - Item: Helm_Of_Abyss
+            Rate: 75
+            UniqueId: true
+  - Group: PC_BANG_COIN_BOX3
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Shiny_Coin
+            Duration: 60
+  - Group: PC_BANG_COIN_BOX4
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Pty_Assumptio_Scroll
+            Amount: 16
+          - Item: Pty_Inc_Agi_Scroll
+            Amount: 10
+          - Item: Pty_Blessing_Scroll
+            Amount: 10
+  - Group: FOOD_BOX_LV1
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Savage_BBQ
+            Amount: 5
+          - Item: Wug_Blood_Cocktail
+            Amount: 5
+          - Item: Minor_Brisket
+            Amount: 5
+          - Item: Siroma_Icetea
+            Amount: 5
+          - Item: Drocera_Herb_Stew
+            Amount: 5
+          - Item: Petti_Tail_Noodle
+            Amount: 5
+  - Group: FOOD_BOX_LV2
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Str_Dish02_
+            UniqueId: true
+          - Item: Int_Dish02_
+            UniqueId: true
+          - Item: Vit_Dish02_
+            UniqueId: true
+          - Item: Agi_Dish02_
+            UniqueId: true
+          - Item: Dex_Dish02_
+            UniqueId: true
+          - Item: Luk_Dish02_
+            UniqueId: true
+  - Group: FOOD_BOX_LV3
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Str_Dish03_
+            UniqueId: true
+          - Item: Int_Dish03_
+            UniqueId: true
+          - Item: Vit_Dish03_
+            UniqueId: true
+          - Item: Agi_Dish03_
+            UniqueId: true
+          - Item: Dex_Dish03_
+            UniqueId: true
+          - Item: Luk_Dish03_
+            UniqueId: true
+  - Group: TRIAL_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: F_Battle_Manual
+            Amount: 2
+          - Item: F_Blessing_10_Scroll
+            Amount: 15
+          - Item: F_Inc_Agi_10_Scroll
+            Amount: 15
+          - Item: E_WOB_Rune
+            Amount: 5
+  - Group: REPAIR_SCROLL_BOX10
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Repair_Scroll_
+            Amount: 10
+            UniqueId: true
+          - Item: Iron_Ore
+            Amount: 10
+            UniqueId: true
+          - Item: Iron
+            Amount: 10
+            UniqueId: true
+          - Item: Oridecon_Stone
+            Amount: 10
+            UniqueId: true
+          - Item: Steel
+            Amount: 10
+            UniqueId: true
+  - Group: HOCKEY_MASK_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Hockey_Mask
+            Duration: 10080
+            UniqueId: true
+  - Group: OBSERVER_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Observer
+            Duration: 10080
+            UniqueId: true
+  - Group: CLOCK_TOWER_CARD_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Alarm_Card
+            UniqueId: true
+          - Item: Clock_Card
+            UniqueId: true
+          - Item: Punk_Card
+            UniqueId: true
+          - Item: C_Tower_Manager_Card
+            UniqueId: true
+  - Group: GEFFENIA_CARD_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Incubus_Card
+            UniqueId: true
+          - Item: Succubus_Card
+            UniqueId: true
+  - Group: OWL_CARD_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Owl_Baron_Card
+            UniqueId: true
+          - Item: Owl_Duke_Card
+            UniqueId: true
+  - Group: GHOST_CARD_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Lude_Card
+            UniqueId: true
+          - Item: Quve_Card
+            UniqueId: true
+  - Group: NIGHTMARE_CARD_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Nightmare_Card
+            UniqueId: true
+          - Item: Nightmare_Terror_Card
+            UniqueId: true
+  - Group: STARTER_PACK
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Silver_Bullion
+            Amount: 2
+            UniqueId: true
+          - Item: Novice_Potion
+            Amount: 300
+            UniqueId: true
+          - Item: White_Potion
+            Amount: 20
+            UniqueId: true
+          - Item: Blue_Potion
+            Amount: 20
+            UniqueId: true
+          - Item: Warp_Free_Ticket
+            Amount: 30
+            UniqueId: true
+          - Item: Shoes
+            UniqueId: true
+          - Item: Mottled_Egg_Shell
+            UniqueId: true
+          - Item: Muffler
+            UniqueId: true
+          - Item: Mantle
+            UniqueId: true
+          - Item: Old_Card_Album
+            UniqueId: true
+          - Item: Old_Blue_Box
+            UniqueId: true
+          - Item: Old_Violet_Box
+            UniqueId: true
+          - Item: Leaf_Of_Yggdrasil
+            Amount: 5
+            UniqueId: true
+          - Item: Branch_Of_Dead_Tree
+            Amount: 5
+            UniqueId: true
+  - Group: LOVE_ANGEL_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Love_Angel
+            Duration: 10080
+            UniqueId: true
+  - Group: SQUIRREL_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Squirrel
+            Duration: 10080
+            UniqueId: true
+  - Group: GOGO_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Gogo
+            Duration: 10080
+            UniqueId: true
+  - Group: CRUSADER_CARD_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Archdam_Card
+            UniqueId: true
+          - Item: Permeter_Card
+            UniqueId: true
+          - Item: Freezer_Card
+            UniqueId: true
+          - Item: Heater_Card
+            UniqueId: true
+  - Group: ALCHEMIST_CARD_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Zipper_Bear_Card
+            UniqueId: true
+          - Item: Baby_Leopard_Card
+            UniqueId: true
+          - Item: Mole_Card
+            UniqueId: true
+          - Item: Raggler_Card
+            UniqueId: true
+          - Item: Muka_Card
+            UniqueId: true
+  - Group: ROGUE_CARD_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Stainer_Card
+            UniqueId: true
+          - Item: Wander_Man_Card
+            UniqueId: true
+          - Item: Wild_Rose_Card
+            UniqueId: true
+          - Item: Shinobi_Card
+            UniqueId: true
+          - Item: Whikebain_Card
+            UniqueId: true
+  - Group: BARD_DANCER_CARD_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Cruiser_Card
+            UniqueId: true
+          - Item: Anolian_Card
+            UniqueId: true
+          - Item: Dragon_Tail_Card
+            UniqueId: true
+          - Item: Ferus__Card
+            UniqueId: true
+          - Item: Alligator_Card
+            UniqueId: true
+  - Group: SAGE_CARD_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Novus__Card
+            UniqueId: true
+          - Item: Wicked_Nymph_Card
+            UniqueId: true
+          - Item: Harpy_Card
+            UniqueId: true
+          - Item: Miyabi_Ningyo_Card
+            UniqueId: true
+          - Item: Blood_Butterfly_Card
+            UniqueId: true
+  - Group: MONK_CARD_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Fur_Seal_Card
+            UniqueId: true
+          - Item: Waste_Stove_Card
+            UniqueId: true
+          - Item: Rideword_Card
+            UniqueId: true
+          - Item: Cookie_Card
+            UniqueId: true
+  - Group: LOVE_ANGEL_BOX_1M
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Love_Angel
+            Duration: 43200
+            UniqueId: true
+  - Group: SQUIRREL_BOX_1M
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Squirrel
+            Duration: 43200
+            UniqueId: true
+  - Group: GOGO_BOX_1M
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Gogo
+            Duration: 43200
+            UniqueId: true
+  - Group: WASTELAND_OUTLAW_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Wasteland_Outlaw_C
+            Duration: 10080
+            UniqueId: true
+  - Group: LEVER_ACTION_RIFLE_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Lever_Action_Rifle_C
+            Duration: 10080
+            UniqueId: true
+  - Group: SPIRITUAL_TUNIC_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Spritual_Tunic
+            Duration: 10080
+            UniqueId: true
+  - Group: RECUPERATIVE_ARMOR_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Recuperative_Armor
+            Duration: 10080
+            UniqueId: true
+  - Group: SHELTER_RESISTANCE_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Shelter_Resistance
+            Duration: 10080
+            UniqueId: true
+  - Group: SYLPHID_MANTEAU_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Sylphid_Manteau
+            Duration: 10080
+            UniqueId: true
+  - Group: REFRESH_SHOES_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Refresh_Shoes
+            Duration: 10080
+            UniqueId: true
+  - Group: TOAST_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Toast_C
+            Duration: 10080
+            UniqueId: true
+  - Group: BUBBLEGUM_LOWER_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Bubblegum_Lower
+            Duration: 1440
+            UniqueId: true
+  - Group: LUCKY_CLIP_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Lucky_Clip
+            Duration: 1440
+            UniqueId: true
+  - Group: TW_SCROLL01
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: RWC_2012_Set_Box
+            UniqueId: true
+          - Item: RWC_Scroll_2012
+            UniqueId: true
+      - SubGroup: 1
+        List:
+          - Item: Fish_Head_Hat
+            Rate: 1
+            UniqueId: true
+          - Item: Magestic_Goat_
+            Rate: 1
+            UniqueId: true
+          - Item: Sharp_Gear_
+            Rate: 1
+            UniqueId: true
+          - Item: Neuralizer
+            Rate: 17
+            UniqueId: true
+          - Item: Convex_Mirror
+            Rate: 80
+            UniqueId: true
+          - Item: Blessing_10_Scroll_Box
+            Rate: 100
+            UniqueId: true
+          - Item: Inc_Agi_10_Scroll_Box
+            Rate: 100
+            UniqueId: true
+          - Item: Vigorgra_Package6
+            Rate: 70
+            UniqueId: true
+          - Item: Mojji
+            Rate: 150
+            Amount: 20
+            UniqueId: true
+          - Item: Guyak_Candy
+            Rate: 150
+            Amount: 20
+            UniqueId: true
+          - Item: Guyak_Pudding
+            Rate: 150
+            Amount: 15
+            UniqueId: true
+          - Item: Insurance
+            Rate: 60
+            Amount: 10
+            UniqueId: true
+          - Item: Token_Of_Siegfried
+            Rate: 60
+            Amount: 10
+            UniqueId: true
+          - Item: Battle_Manual
+            Rate: 60
+            Amount: 10
+            UniqueId: true
+  - Group: PICTURE_DIARY_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Picture_Diary
+            Duration: 10080
+            UniqueId: true
+  - Group: MINI_HEART_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Mini_Heart
+            Duration: 10080
+            UniqueId: true
+  - Group: NEWCOMER_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Newcomer
+            Duration: 10080
+            UniqueId: true
+  - Group: KID_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Kid
+            Duration: 10080
+            UniqueId: true
+  - Group: MAGIC_CASTLE_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Magic_Castle
+            Duration: 10080
+            UniqueId: true
+  - Group: BULGING_HEAD_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Bulging_Head
+            Duration: 10080
+            UniqueId: true
+  - Group: PICTURE_DIARY_BOX_1M
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Picture_Diary
+            Duration: 43200
+            UniqueId: true
+  - Group: MINI_HEART_BOX_1M
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Mini_Heart
+            Duration: 43200
+            UniqueId: true
+  - Group: NEWCOMER_BOX_1M
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Newcomer
+            Duration: 43200
+            UniqueId: true
+  - Group: KID_BOX_1M
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Kid
+            Duration: 43200
+            UniqueId: true
+  - Group: MAGIC_CASTLE_BOX_1M
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Magic_Castle
+            Duration: 43200
+            UniqueId: true
+  - Group: BULGING_HEAD_BOX_1M
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Bulging_Head
+            Duration: 43200
+            UniqueId: true
+  - Group: F_LOVE_ANGEL_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Love_Angel
+            Duration: 10080
+            UniqueId: true
+  - Group: F_SQUIRREL_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Squirrel
+            Duration: 10080
+            UniqueId: true
+  - Group: F_GOGO_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Gogo
+            Duration: 10080
+            UniqueId: true
+  - Group: F_LOVE_ANGEL_BOX_1M
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Love_Angel
+            Duration: 43200
+            UniqueId: true
+  - Group: F_SQUIRREL_BOX_1M
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Squirrel
+            Duration: 43200
+            UniqueId: true
+  - Group: F_GOGO_BOX_1M
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Gogo
+            Duration: 43200
+            UniqueId: true
+  - Group: F_WASTELAND_OUTLAW_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Wasteland_Outlaw_C
+            Duration: 10080
+            UniqueId: true
+  - Group: F_ALL_IN_ONE_RING_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: All_In_One_Ring
+            Duration: 10080
+            UniqueId: true
+  - Group: F_SPRITUAL_TUNIC_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Spritual_Tunic
+            Duration: 10080
+            UniqueId: true
+  - Group: F_RECUPERATIVE_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Recuperative_Armor
+            Duration: 10080
+            UniqueId: true
+  - Group: F_SHELTER_RESIST_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Shelter_Resistance
+            Duration: 10080
+            UniqueId: true
+  - Group: F_SYLPHID_MANTEAU_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Sylphid_Manteau
+            Duration: 10080
+            UniqueId: true
+  - Group: F_TOAST_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Toast_C
+            Duration: 10080
+            UniqueId: true
+  - Group: F_REPAIR_SCROLL_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Guarantee_Armor_6Up
+          - Item: Guarantee_Armor_7Up
+          - Item: Guarantee_Weapon_7Up
+  - Group: F_REPAIR_SCROLL_BOX10
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Repair_Scroll_
+            Amount: 10
+            UniqueId: true
+          - Item: Iron_Ore
+            Amount: 10
+            UniqueId: true
+          - Item: Iron
+            Amount: 10
+            UniqueId: true
+          - Item: Oridecon_Stone
+            Amount: 10
+            UniqueId: true
+          - Item: Steel
+            Amount: 10
+            UniqueId: true
+  - Group: F_HOCKEY_MASK_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Hockey_Mask
+            Duration: 10080
+            UniqueId: true
+  - Group: F_OBSERVER_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Observer
+            Duration: 10080
+            UniqueId: true
+  - Group: F_NAGAN_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Nagan_C
+            Duration: 10080
+            UniqueId: true
+  - Group: F_SKEWER_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Skewer_C
+            Duration: 10080
+            UniqueId: true
+  - Group: F_SURVIVAL_ROD_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Survival_Rod_C
+            Duration: 10080
+            UniqueId: true
+  - Group: F_QUADRILLE_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Quadrille_C
+            Duration: 10080
+            UniqueId: true
+  - Group: F_GREAT_AXE_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Great_Axe_C
+            Duration: 10080
+            UniqueId: true
+  - Group: F_BLOODY_ROAR_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Bloody_Roar_C
+            Duration: 10080
+            UniqueId: true
+  - Group: F_HARDBACK_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Hardback_C
+            Duration: 10080
+            UniqueId: true
+  - Group: F_FIRE_BRAND_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Fire_Brand_C
+            Duration: 10080
+            UniqueId: true
+  - Group: F_IMMATERIAL_SWORD_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Immaterial_Sword_C
+            Duration: 10080
+            UniqueId: true
+  - Group: F_UNHOLY_TOUCH_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Unholy_Touch_C
+            Duration: 10080
+            UniqueId: true
+  - Group: F_CLACK_OF_SERVIVAL_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Cloak_Of_Survival_C
+            Duration: 20160
+            UniqueId: true
+  - Group: F_MASQUERADE_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Masquerade_C
+            Duration: 20160
+            UniqueId: true
+  - Group: F_ORC_HERO_HELM_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Orc_Hero_Helm_C
+            Duration: 20160
+            UniqueId: true
+  - Group: F_EAR_OF_DEVIL_WING_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Ear_Of_Devil's_Wing
+            Duration: 20160
+            UniqueId: true
+  - Group: F_DARK_BLINDFOLD_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Dark_Blindfold_C
+            Duration: 20160
+            UniqueId: true
+  - Group: F_K_DROOPING_KITTY_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: kRO_Drooping_Kitty_C
+            Duration: 20160
+            UniqueId: true
+  - Group: F_CORSAIR_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Corsair_C
+            Duration: 20160
+            UniqueId: true
+  - Group: F_BLOODY_IRON_BALL_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Bloody_Iron_Ball_C
+            Duration: 10080
+            UniqueId: true
+  - Group: F_SPIRITUAL_RING_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Spiritual_Ring_C
+            Duration: 10080
+            UniqueId: true
+  - Group: F_INFILTRATOR_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Infiltrator_C
+            Duration: 10080
+            UniqueId: true
+  - Group: F_MURAMASA_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Muramasa_C
+            Duration: 10080
+            UniqueId: true
+  - Group: F_EXCALIBUR_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Excalibur_C
+            Duration: 10080
+            UniqueId: true
+  - Group: F_COMBAT_KNIFE_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Combat_Knife_C
+            Duration: 20160
+            UniqueId: true
+  - Group: F_COUNTER_DAGGER_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Counter_Dagger_C
+            Duration: 20160
+            UniqueId: true
+  - Group: F_KAISER_KNUCKLE_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Kaiser_Knuckle_C
+            Duration: 10080
+            UniqueId: true
+  - Group: F_MIGHTY_STAFF_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Mighty_Staff_C
+            Duration: 10080
+            UniqueId: true
+  - Group: F_RIGHT_EPSILON_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Right_Epsilon_C
+            Duration: 20160
+            UniqueId: true
+  - Group: F_BALISTAR_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Balistar_C
+            Duration: 10080
+            UniqueId: true
+  - Group: F_DIARY_OF_GREAT_SAGE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Diary_Of_Great_Sage_C
+            Duration: 20160
+            UniqueId: true
+  - Group: F_ASURA_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Asura_C
+            Duration: 20160
+            UniqueId: true
+  - Group: F_APPLE_OF_ARCHER_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Apple_Of_Archer_C
+            Duration: 20160
+            UniqueId: true
+  - Group: F_BUNNY_BAND_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Bunny_Band_C
+            Duration: 20160
+            UniqueId: true
+  - Group: F_SAHKKAT_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Sahkkat_C
+            Duration: 20160
+            UniqueId: true
+  - Group: F_LORD_CIRCLET_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Lord_Circlet_C
+            Duration: 20160
+            UniqueId: true
+  - Group: F_ELVEN_EARS_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Elven_Ears_C
+            Duration: 20160
+            UniqueId: true
+  - Group: F_STEEL_FLOWER_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Steel_Flower_C
+            Duration: 20160
+            UniqueId: true
+  - Group: F_CRITICAL_RING_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Critical_Ring_C
+            Duration: 20160
+            UniqueId: true
+  - Group: F_EARRING_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Earring_C
+            Duration: 20160
+            UniqueId: true
+  - Group: F_RING_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Ring_C
+            Duration: 20160
+            UniqueId: true
+  - Group: F_NECKLACE_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Necklace_C
+            Duration: 20160
+            UniqueId: true
+  - Group: F_GLOVE_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Glove_C
+            Duration: 20160
+            UniqueId: true
+  - Group: F_BROOCH_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Brooch_C
+            Duration: 20160
+            UniqueId: true
+  - Group: F_ROSARY_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Rosary_C
+            Duration: 20160
+            UniqueId: true
+  - Group: F_SAFETY_RING_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Safety_Ring_C
+            Duration: 20160
+            UniqueId: true
+  - Group: F_VESPER_CORE_BOX01
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Vesper_Core01_C
+            Duration: 10080
+            UniqueId: true
+  - Group: F_VESPER_CORE_BOX02
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Vesper_Core02_C
+            Duration: 10080
+            UniqueId: true
+  - Group: F_VESPER_CORE_BOX03
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Vesper_Core03_C
+            Duration: 10080
+            UniqueId: true
+  - Group: F_VESPER_CORE_BOX04
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Vesper_Core04_C
+            Duration: 10080
+            UniqueId: true
+  - Group: F_VIGORGRA_PACKAGE1
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Fidelity_Necklace
+            Rate: 166
+            UniqueId: true
+          - Item: Black_Shiba_Inu_Hat
+            Rate: 166
+            UniqueId: true
+          - Item: Sinsuncho_Hat
+            Rate: 166
+            UniqueId: true
+          - Item: Drosera_Hairpin
+            Rate: 166
+            UniqueId: true
+          - Item: Butterfly_Wing_Ear_J
+            Rate: 166
+            UniqueId: true
+          - Item: Anemos_Mask
+            Rate: 166
+            UniqueId: true
+  - Group: F_VIGORGRA_PACKAGE2
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Fidelity_Necklace
+            Rate: 166
+            UniqueId: true
+          - Item: Black_Shiba_Inu_Hat
+            Rate: 166
+            UniqueId: true
+          - Item: Sinsuncho_Hat
+            Rate: 166
+            UniqueId: true
+          - Item: Drosera_Hairpin
+            Rate: 166
+            UniqueId: true
+          - Item: Butterfly_Wing_Ear_J
+            Rate: 166
+            UniqueId: true
+          - Item: Anemos_Mask
+            Rate: 166
+            UniqueId: true
+  - Group: F_VIGORGRA_PACKAGE5
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Battle_Manual
+            Amount: 2
+            UniqueId: true
+          - Item: Str_Dish10_
+            Amount: 2
+            UniqueId: true
+          - Item: Int_Dish10_
+            Amount: 2
+            UniqueId: true
+          - Item: Inc_Agi_10_Scroll
+            Amount: 15
+            UniqueId: true
+          - Item: Blessing_10_Scroll
+            Amount: 15
+            UniqueId: true
+          - Item: Kafra_Card
+            UniqueId: true
+          - Item: Token_Of_Siegfried
+            UniqueId: true
+  - Group: F_VIGORGRA_PACKAGE6
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Battle_Manual
+            Amount: 2
+            UniqueId: true
+          - Item: Str_Dish10_
+            Amount: 2
+            UniqueId: true
+          - Item: Agi_Dish10_
+            Amount: 2
+            UniqueId: true
+          - Item: Adrenaline_Scroll
+            Amount: 24
+            UniqueId: true
+          - Item: Aspersio_5_Scroll
+            Amount: 20
+            UniqueId: true
+          - Item: Holy_Water
+            Amount: 20
+            UniqueId: true
+          - Item: Kafra_Card
+            UniqueId: true
+          - Item: Token_Of_Siegfried
+            UniqueId: true
+  - Group: F_VIGORGRA_PACKAGE7
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Battle_Manual
+            Amount: 4
+            UniqueId: true
+          - Item: Str_Dish10_
+            Amount: 4
+            UniqueId: true
+          - Item: Agi_Dish10_
+            Amount: 4
+            UniqueId: true
+          - Item: Inc_Agi_10_Scroll
+            Amount: 30
+            UniqueId: true
+          - Item: Blessing_10_Scroll
+            Amount: 30
+            UniqueId: true
+          - Item: Kafra_Card
+            Amount: 2
+            UniqueId: true
+          - Item: Token_Of_Siegfried
+            Amount: 2
+            UniqueId: true
+  - Group: F_VIGORGRA_PACKAGE8
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Battle_Manual
+            Amount: 4
+            UniqueId: true
+          - Item: Str_Dish10_
+            Amount: 4
+            UniqueId: true
+          - Item: Vit_Dish10_
+            Amount: 4
+            UniqueId: true
+          - Item: Inc_Agi_10_Scroll
+            Amount: 30
+            UniqueId: true
+          - Item: Blessing_10_Scroll
+            Amount: 30
+            UniqueId: true
+          - Item: Kafra_Card
+            Amount: 2
+            UniqueId: true
+          - Item: Token_Of_Siegfried
+            Amount: 2
+            UniqueId: true
+  - Group: F_VIGORGRA_PACKAGE9
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Red_Envelope
+            Amount: 20
+            UniqueId: true
+          - Item: Novice_Potion
+            Amount: 200
+            UniqueId: true
+          - Item: Battle_Manual
+            UniqueId: true
+          - Item: WOB_Rune
+            Amount: 3
+            UniqueId: true
+  - Group: F_VIGORGRA_PACKAGE10
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Str_Dish10_
+            Amount: 5
+            UniqueId: true
+          - Item: Dex_Dish10_
+            Amount: 5
+            UniqueId: true
+          - Item: Int_Dish10_
+            Amount: 5
+            UniqueId: true
+          - Item: Mega_Resist_Potion
+            Amount: 10
+            UniqueId: true
+          - Item: B_Def_Potion
+            Amount: 10
+            UniqueId: true
+          - Item: B_Mdef_Potion
+            Amount: 10
+            UniqueId: true
+          - Item: Siege_White_Potion
+            Amount: 50
+            UniqueId: true
+          - Item: Siege_Blue_Potion
+            Amount: 25
+            UniqueId: true
+          - Item: Speed_Up_Potion
+            Amount: 20
+            UniqueId: true
+          - Item: WOB_Rachel
+            Amount: 5
+            UniqueId: true
+          - Item: WOB_Schwaltz
+            Amount: 5
+            UniqueId: true
+          - Item: WOB_Rune
+            Amount: 5
+            UniqueId: true
+          - Item: Siege_Teleport_Scroll
+            Amount: 20
+            UniqueId: true
+  - Group: F_VIGORGRA_PACKAGE11
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Assumptio_5_Scroll
+            Amount: 20
+            UniqueId: true
+          - Item: B_Def_Potion
+            Amount: 15
+            UniqueId: true
+          - Item: B_Mdef_Potion
+            Amount: 15
+            UniqueId: true
+          - Item: Med_Life_Potion
+            Amount: 6
+            UniqueId: true
+          - Item: Token_Of_Siegfried
+            Amount: 10
+            UniqueId: true
+          - Item: Insurance
+            Amount: 3
+            UniqueId: true
+          - Item: Regeneration_Potion
+            Amount: 5
+            UniqueId: true
+          - Item: Mega_Resist_Potion
+            Amount: 4
+            UniqueId: true
+          - Item: Siege_White_Potion
+            Amount: 50
+            UniqueId: true
+          - Item: Siege_Blue_Potion
+            Amount: 25
+            UniqueId: true
+  - Group: F_VIGORGRA_PACKAGE12
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Battle_Manual
+            Amount: 10
+            UniqueId: true
+          - Item: Bubble_Gum
+            Amount: 10
+            UniqueId: true
+          - Item: Inc_Agi_10_Scroll
+            Amount: 20
+            UniqueId: true
+          - Item: Blessing_10_Scroll
+            Amount: 20
+            UniqueId: true
+          - Item: Token_Of_Siegfried
+            Amount: 10
+            UniqueId: true
+          - Item: Insurance
+            Amount: 10
+            UniqueId: true
+          - Item: Kafra_Card
+            Amount: 5
+            UniqueId: true
+          - Item: Greed_Scroll
+            Amount: 20
+            UniqueId: true
+          - Item: Dun_Tele_Scroll1
+            Amount: 10
+            UniqueId: true
+          - Item: WOB_Local
+            Amount: 5
+            UniqueId: true
+          - Item: WOB_Rachel
+            Amount: 5
+            UniqueId: true
+          - Item: WOB_Schwaltz
+            Amount: 5
+            UniqueId: true
+          - Item: WOB_Rune
+            Amount: 5
+            UniqueId: true
+          - Item: Small_Life_Potion
+            Amount: 12
+            UniqueId: true
+  - Group: F_ASPERSIO_5_SCROLL_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: F_Aspersio_5_Scroll
+            Amount: 20
+            UniqueId: true
+  - Group: F_ASPERSIO_5_BOX30
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Holy_Water
+            Amount: 30
+            UniqueId: true
+          - Item: Aspersio_5_Scroll
+            Amount: 30
+            UniqueId: true
+  - Group: F_ASPERSIO_5_BOX50
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Holy_Water
+            Amount: 50
+            UniqueId: true
+          - Item: Aspersio_5_Scroll
+            Amount: 50
+            UniqueId: true
+  - Group: HEALING_STAFF_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Healing_Staff_C
+            Duration: 10080
+            UniqueId: true
+  - Group: PRAXINUS_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Praxinus_C
+            Duration: 10080
+            UniqueId: true
+  - Group: THOUGHTFUL_HAT_BOX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Guildsman_Recruiter
+            Rate: 166
+            UniqueId: true
+          - Item: Party_Recruiter_Hat
+            Rate: 166
+            UniqueId: true
+          - Item: Bf_Recruiter_Hat
+            Rate: 166
+            UniqueId: true
+          - Item: Friend_Recruiter_Hat
+            Rate: 166
+            UniqueId: true
+          - Item: Gf_Recruiter_Hat
+            Rate: 166
+            UniqueId: true
+          - Item: Notice_Board
+            Rate: 166
+            UniqueId: true
+  - Group: DUN_VOUCHER_BOX1
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Dun_Voucher
+            Duration: 60
+  - Group: DUN_VOUCHER_BOX2
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Dun_Voucher
+            Duration: 180
