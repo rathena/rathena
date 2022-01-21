@@ -186,6 +186,27 @@ enum e_bossmap_info {
 	BOSS_INFO_DEAD,
 };
 
+enum class e_purchase_result : uint8{
+	PURCHASE_SUCCEED = 0x0,
+	PURCHASE_FAIL_MONEY,
+	PURCHASE_FAIL_WEIGHT,
+	PURCHASE_FAIL_COUNT,
+	PURCHASE_FAIL_STOCK,
+	PURCHASE_FAIL_ITEM_EXCHANGING,
+	PURCHASE_FAIL_INVALID_MCSTORE,
+	PURCHASE_FAIL_OPEN_MCSTORE_ITEMLIST,
+	PURCHASE_FAIL_GIVE_MONEY,
+	PURCHASE_FAIL_EACHITEM_COUNT,
+	// Unknown names
+	PURCHASE_FAIL_RODEX,
+	PURCHASE_FAIL_EXCHANGE_FAILED,
+	PURCHASE_FAIL_EXCHANGE_DONE,
+	PURCHASE_FAIL_STOCK_EMPTY,
+	PURCHASE_FAIL_GOODS,
+	// End unknown names
+	PURCHASE_FAIL_ADD = 0xff,
+};
+
 #define packet_len(cmd) packet_db[cmd].len
 extern struct s_packet_db packet_db[MAX_PACKET_DB+1];
 extern int packet_db_ack[MAX_ACK_FUNC + 1];
@@ -1160,5 +1181,9 @@ void clif_pet_evolution_result( struct map_session_data* sd, e_pet_evolution_res
 void clif_parse_skill_toid( struct map_session_data* sd, uint16 skill_id, uint16 skill_lv, int target_id );
 
 void clif_inventory_expansion_info( struct map_session_data* sd );
+
+// Barter System
+void clif_barter_open( struct map_session_data& sd, struct npc_data& nd );
+void clif_barter_extended_open( struct map_session_data& sd, struct npc_data& nd );
 
 #endif /* CLIF_HPP */

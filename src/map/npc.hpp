@@ -4,8 +4,13 @@
 #ifndef NPC_HPP
 #define NPC_HPP
 
+#include <map>
+#include <vector>
+
+#include "../common/database.hpp"
 #include "../common/timer.hpp"
 
+#include "clif.hpp" //
 #include "map.hpp" // struct block_list
 #include "status.hpp" // struct status_change
 #include "unit.hpp" // struct unit_data
@@ -85,6 +90,51 @@ public:
 
 extern StylistDatabase stylist_db;
 
+struct s_npc_barter_requirement{
+	uint16 index;
+	t_itemid nameid;
+	uint16 amount;
+	int8 refine;
+};
+
+struct s_npc_barter_item{
+	uint16 index;
+	t_itemid nameid;
+	bool stockLimited;
+	uint32 stock;
+	uint32 price;
+	std::map<uint16, std::shared_ptr<s_npc_barter_requirement>> requirements;
+};
+
+struct s_npc_barter{
+	std::string name;
+	int16 m;
+	uint16 x;
+	uint16 y;
+	uint8 dir;
+	int16 sprite;
+	std::map<uint16, std::shared_ptr<s_npc_barter_item>> items;
+};
+
+class BarterDatabase : public TypesafeYamlDatabase<std::string, s_npc_barter>{
+public:
+	BarterDatabase() : TypesafeYamlDatabase( "BARTER_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode( const YAML::Node& node );
+	void loadingFinished();
+};
+
+extern BarterDatabase barter_db;
+
+struct s_barter_purchase{
+	std::shared_ptr<s_npc_barter_item> item;
+	uint32 amount;
+	item_data* data;
+};
+
 struct s_questinfo {
 	e_questinfo_types icon;
 	e_questinfo_markcolor color;
@@ -153,6 +203,9 @@ struct npc_data {
 			char killer_name[NAME_LENGTH];
 			int spawn_timer;
 		} tomb;
+		struct {
+			bool extended;
+		} barter;
 	} u;
 
 	struct sc_display_entry **sc_display;
@@ -1414,9 +1467,10 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd);
 bool npc_scriptcont(struct map_session_data* sd, int id, bool closing);
 struct npc_data* npc_checknear(struct map_session_data* sd, struct block_list* bl);
 int npc_buysellsel(struct map_session_data* sd, int id, int type);
-uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *item_list);
+e_purchase_result npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *item_list);
 static int npc_buylist_sub(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *item_list, struct npc_data* nd);
 uint8 npc_selllist(struct map_session_data* sd, int n, unsigned short *item_list);
+e_purchase_result npc_barter_purchase( struct map_session_data& sd, std::shared_ptr<s_npc_barter> barter, std::vector<s_barter_purchase>& purchases );
 void npc_parse_mob2(struct spawn_data* mob);
 struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short from_y, short xs, short ys, unsigned short to_mapindex, short to_x, short to_y);
 int npc_globalmessage(const char* name,const char* mes);

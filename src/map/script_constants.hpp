@@ -531,6 +531,8 @@
 	export_constant(MF_SKILL_DURATION);
 	export_constant(MF_NOCASHSHOP);
 	export_constant(MF_NORODEX);
+	export_constant(MF_NORENEWALDROPPENALTY);
+	export_constant(MF_NORENEWALEXPPENALTY);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
