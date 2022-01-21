@@ -15334,6 +15334,7 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
+    View: 1
     Script: |
       bonus bAllStats,50;
       bonus bMdef,99;

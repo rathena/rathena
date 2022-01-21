@@ -63,6 +63,7 @@ Sql* mmysql_handle;
 Sql* qsmysql_handle; /// For query_sql
 
 int db_use_sqldbs = 0;
+char barter_table[32] = "barter";
 char buyingstores_table[32] = "buyingstores";
 char buyingstore_items_table[32] = "buyingstore_items";
 char item_cash_table[32] = "item_cash_db";
@@ -4186,7 +4187,9 @@ int inter_config_read(const char *cfgName)
 		}
 #undef RENEWALPREFIX
 
-		if( strcmpi( w1, "buyingstore_db" ) == 0 )
+		if( strcmpi( w1, "barter_table" ) == 0 )
+			safestrncpy( barter_table, w2, sizeof(barter_table) );
+		else if( strcmpi( w1, "buyingstore_db" ) == 0 )
 			safestrncpy( buyingstores_table, w2, sizeof(buyingstores_table) );
 		else if( strcmpi( w1, "buyingstore_items_table" ) == 0 )
 			safestrncpy( buyingstore_items_table, w2, sizeof(buyingstore_items_table) );

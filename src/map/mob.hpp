@@ -210,8 +210,8 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node &node);
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node &node) override;
 };
 
 struct s_mob_item_drop_ratio {
@@ -226,8 +226,8 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node &node);
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node &node) override;
 };
 
 struct spawn_info {
@@ -277,9 +277,9 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node &node);
-	void loadingFinished();
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node &node) override;
+	void loadingFinished() override;
 };
 
 extern MobDatabase mob_db;
@@ -361,9 +361,9 @@ public:
 
 	}
 
-	void clear() { };
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
+	void clear() override{ };
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node& node) override;
 };
 
 struct s_randomsummon_entry {
@@ -383,8 +383,8 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node &node);
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node &node) override;
 };
 
 enum e_mob_skill_target {

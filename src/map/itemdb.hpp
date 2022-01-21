@@ -23,8 +23,6 @@ const t_itemid UNKNOWN_ITEM_ID = 512;
 #define MAX_ITEMDELAYS	10
 ///Designed for search functions, species max number of matches to display.
 #define MAX_SEARCH	5
-///Maximum amount of items a combo may require
-#define MAX_ITEMS_PER_COMBO 6
 
 #define MAX_ROULETTE_LEVEL 7 /** client-defined value **/
 #define MAX_ROULETTE_COLUMNS 9 /** client-defined value **/
@@ -122,6 +120,9 @@ enum item_itemid : t_itemid
 	ITEMID_WOB_RACHEL					= 14584,
 	ITEMID_WOB_LOCAL					= 14585,
 	ITEMID_SIEGE_TELEPORT_SCROLL		= 14591,
+	ITEMID_INVENTORY_EX_EVT				= 25791,
+	ITEMID_INVENTORY_EX_DIS				= 25792,
+	ITEMID_INVENTORY_EX					= 25793,
 	ITEMID_WL_MB_SG						= 100065,
 	ITEMID_HOMUNCULUS_SUPPLEMENT		= 100371,
 };
@@ -763,8 +764,10 @@ enum e_random_item_group {
 	IG_HAPPY_BOX_J,
 	IG_CLASS_SHADOW_CUBE,
 	IG_SEALED_SCROLL,
-	IG_ODIN_RELIC,
-	
+	IG_SQUAD_PRIZE1,
+	IG_SQUAD_PRIZE2,
+  IG_ODIN_RELIC,
+  
 	IG_MAX,
 };
 
@@ -819,7 +822,7 @@ enum e_delay_consume : uint8 {
 struct s_item_combo {
 	std::vector<t_itemid> nameid;
 	script_code *script;
-	uint32 id;
+	uint16 id;
 
 	~s_item_combo() {
 		if (this->script) {
@@ -830,6 +833,27 @@ struct s_item_combo {
 		this->nameid.clear();
 	}
 };
+
+class ComboDatabase : public TypesafeYamlDatabase<uint16, s_item_combo> {
+private:
+	uint16 combo_num;
+	uint16 find_combo_id( const std::vector<t_itemid>& items );
+
+public:
+	ComboDatabase() : TypesafeYamlDatabase("COMBO_DB", 1) {
+
+	}
+
+	void clear() override{
+		TypesafeYamlDatabase::clear();
+		this->combo_num = 0;
+	}
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node& node) override;
+	void loadingFinished() override;
+};
+
+extern ComboDatabase itemdb_combo;
 
 /// Struct of item group entry
 struct s_item_group_entry
@@ -1000,9 +1024,9 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node &node);
-	void loadingFinished();
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node &node) override;
+	void loadingFinished() override;
 
 	// Additional
 	bool option_exists(std::string name);
@@ -1017,8 +1041,8 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node &node);
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node &node) override;
 
 	// Additional
 	bool add_option(const YAML::Node &node, std::shared_ptr<s_random_opt_group_entry> &entry);
@@ -1040,9 +1064,9 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
-	void loadingFinished();
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node& node) override;
+	void loadingFinished() override;
 	void clear() override{
 		TypesafeCachedYamlDatabase::clear();
 
@@ -1063,9 +1087,9 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
-	void loadingFinished();
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node& node) override;
+	void loadingFinished() override;
 
 	// Additional
 	bool item_exists(uint16 group_id, t_itemid nameid);
@@ -1133,8 +1157,6 @@ char itemdb_isidentified(t_itemid nameid);
 bool itemdb_isstackable2(struct item_data *id);
 #define itemdb_isstackable(nameid) itemdb_isstackable2(itemdb_search(nameid))
 bool itemdb_isNoEquip(struct item_data *id, uint16 m);
-
-s_item_combo *itemdb_combo_exists(uint32 combo_id);
 
 bool itemdb_parse_roulette_db(void);
 

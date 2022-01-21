@@ -382,8 +382,13 @@ struct map_session_data {
 		bool mail_writing; // Whether the player is currently writing a mail in RODEX or not
 		bool cashshop_open;
 		bool sale_open;
+		bool stylist_open;
+		bool barter_open;
+		bool barter_extended_open;
 		unsigned int block_action : 10;
 		bool refineui_open;
+		t_itemid inventory_expansion_confirmation;
+		uint16 inventory_expansion_amount;
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -984,9 +989,9 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
-	void loadingFinished();
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node& node) override;
+	void loadingFinished() override;
 };
 
 struct s_job_info {
@@ -1009,11 +1014,11 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node &node);
-	void loadingFinished();
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node &node) override;
+	void loadingFinished() override;
 
-	// Extras
+	// Additional
 	uint32 get_maxBaseLv(uint16 job_id);
 	uint32 get_maxJobLv(uint16 job_id);
 	t_exp get_baseExp(uint16 job_id, uint32 level);
@@ -1049,9 +1054,16 @@ extern JobDatabase job_db;
 #define pc_isidle_hom(sd)     ( (sd)->hd && ( (sd)->chatID || (sd)->state.vending || (sd)->state.buyingstore || DIFF_TICK(last_tick, (sd)->idletime_hom) >= battle_config.hom_idle_no_share ) )
 #define pc_isidle_mer(sd)     ( (sd)->md && ( (sd)->chatID || (sd)->state.vending || (sd)->state.buyingstore || DIFF_TICK(last_tick, (sd)->idletime_mer) >= battle_config.mer_idle_no_share ) )
 #define pc_istrading(sd)      ( (sd)->npc_id || (sd)->state.vending || (sd)->state.buyingstore || (sd)->state.trading )
+static bool pc_cant_act2( struct map_session_data* sd ){
+	return sd->state.vending || sd->state.buyingstore || (sd->sc.opt1 && sd->sc.opt1 != OPT1_BURNING)
+		|| sd->state.trading || sd->state.storage_flag || sd->state.prevend || sd->state.refineui_open
+		|| sd->state.stylist_open || sd->state.inventory_expansion_confirmation || sd->npc_shopid
+		|| sd->state.barter_open || sd->state.barter_extended_open;
+}
 // equals pc_cant_act2 and additionally checks for chat rooms and npcs
-#define pc_cant_act(sd)       ( (sd)->npc_id || (sd)->chatID || pc_cant_act2( (sd) ) )
-#define pc_cant_act2(sd)      ( (sd)->state.vending || (sd)->state.buyingstore || ((sd)->sc.opt1 && (sd)->sc.opt1 != OPT1_BURNING) || (sd)->state.trading || (sd)->state.storage_flag || (sd)->state.prevend || (sd)->state.refineui_open )
+static bool pc_cant_act( struct map_session_data* sd ){
+	return sd->npc_id || sd->chatID || pc_cant_act2( sd );
+}
 
 #define pc_setdir(sd,b,h)     ( (sd)->ud.dir = (b) ,(sd)->head_dir = (h) )
 #define pc_setchatid(sd,n)    ( (sd)->chatID = n )
@@ -1174,8 +1186,8 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node &node);
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node &node) override;
 };
 
 extern AttendanceDatabase attendance_db;
@@ -1192,10 +1204,11 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
-	void loadingFinished();
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node& node) override;
+	void loadingFinished() override;
 
+	// Additional
 	uint32 pc_gets_status_point(uint16 level);
 	uint32 get_table_point(uint16 level);
 	uint32 pc_gets_trait_point(uint16 level);
@@ -1468,9 +1481,9 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
-	void loadingFinished();
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node& node) override;
+	void loadingFinished() override;
 
 	// Additional
 	std::shared_ptr<s_skill_tree_entry> get_skill_data(int class_, uint16 skill_id);
