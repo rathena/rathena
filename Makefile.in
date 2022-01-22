@@ -54,6 +54,7 @@ libconfig:
 
 tools:
 	@$(MAKE) -C src/tool
+	@$(MAKE) -C src/map tools
 
 yaml-cpp:
 	@$(MAKE) -C 3rdparty/yaml-cpp

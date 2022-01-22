@@ -16,6 +16,7 @@ YAML_CPP_INCLUDE = -I../../3rdparty/yaml-cpp/include
 MAP_OBJ = $(shell ls *.cpp | sed -e "s/\.cpp/\.o/g")
 #MAP_OBJ += $(shell ls *.c | sed -e "s/\.c/\.o/g")
 MAP_DIR_OBJ = $(MAP_OBJ:%=obj/%)
+MAP_GEN_DIR_OBJ = $(MAP_OBJ:%=obj-gen/%)
 MAP_H = $(shell ls ../map/*.hpp) \
 	$(shell ls ../config/*.hpp) 
 
@@ -34,6 +35,9 @@ else
 	PCRE_CFLAGS=
 endif
 
+TOOLS_DEPENDS=map-server-generator
+TOOLS_FLAGS="-DGENERATE_NAVI"
+
 @SET_MAKE@
 
 #####################################################################
@@ -42,6 +46,8 @@ endif
 all: $(ALL_DEPENDS)
 
 server: $(SERVER_DEPENDS)
+
+tools: $(TOOLS_DEPENDS)
 
 clean:
 	@echo "	CLEAN	map"
@@ -66,11 +72,19 @@ obj:
 	@echo "	MKDIR	obj"
 	@-mkdir obj
 
+obj-gen:
+	@echo "	MDIR	obj-gen"
+
 # executables
 
-map-server: obj $(MAP_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(YAML_CPP_AR)
+map-server: obj-gen $(MAP_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(YAML_CPP_AR)
 	@echo "	LD	@OMAP@@EXEEXT@"
 	@@CXX@ @LDFLAGS@ -o ../../@OMAP@@EXEEXT@ $(MAP_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(YAML_CPP_AR) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
+
+
+map-server-generator: gen-obj $(MAP_GEN_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(YAML_CPP_AR)
+	@echo "	LD	map-server-generator@EXEEXT@"
+	@@CXX@ @LDFLAGS@ -o ../../@OMAP@@EXEEXT@ $(MAP_GEN_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(YAML_CPP_AR) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
 
 
 # map object files
@@ -80,6 +94,14 @@ obj/npc.o: npc.cpp $(MAP_H) $(COMMON_H) $(LIBCONFIG_H) $(YAML_CPP_H)
 	@@CXX@ @CXXFLAG_CLEARS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(YAML_CPP_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 	
 obj/%.o: %.cpp $(MAP_H) $(COMMON_H) $(LIBCONFIG_H) $(YAML_CPP_H)
+	@echo "	CXX	$<"
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(YAML_CPP_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+
+obj-gen/npc.o: npc.cpp $(MAP_H) $(COMMON_H) $(LIBCONFIG_H) $(YAML_CPP_H)
+	@echo "	CXX	$< (custom rule)"
+	@@CXX@ @CXXFLAG_CLEARS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(YAML_CPP_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	
+obj-gen/%.o: %.cpp $(MAP_H) $(COMMON_H) $(LIBCONFIG_H) $(YAML_CPP_H)
 	@echo "	CXX	$<"
 	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(YAML_CPP_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 

@@ -68,9 +68,6 @@
 /// Comment to disable warnings for deprecated script constants
 #define SCRIPT_CONSTANT_DEPRECATION
 
-// Uncomment to have the map server generate the client's navigation files
-//#define GENERATE_NAVI
-
 // Uncomment to enable deprecated support for Windows XP and lower
 // Note:
 // Windows XP still has 32bit ticks. This means you need to restart your operating system before time
