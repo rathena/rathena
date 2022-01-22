@@ -179,7 +179,7 @@ Body:
   - Name: Box_Exchange_Gunslinger
     Items:
       - Index: 0
-        Item: Bullet_Case 
+        Item: Bullet_Case
         RequiredItems:
           - Index: 0
             Item: Bullet
