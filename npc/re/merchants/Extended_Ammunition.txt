@@ -4,11 +4,11 @@
 //= 1.0 First Version. [JohnnyPlayy]
 //===== Description: ========================================= 
 // When support for infinite stock was added.
-// Change shop to marketshop.
+// Change Marketshop to Shop.
 // Texts from this script were translated according to KRO
 //============================================================
 
-//= NPCs that become useless when activating the batashop!
+//= NPCs that become useless when activating the Barter Shop!
 //============================================================
 -	script	Barter_Init	HIDDEN_NPC,{
 	end;
