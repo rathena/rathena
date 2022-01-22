@@ -694,6 +694,7 @@ struct Battle_Config
 	int pet_legacy_formula;
 	int pet_distance_check;
 	int pet_hide_check;
+	int feature_barter;
 
 	// 4th Jobs Stuff
 	int trait_points_job_change;

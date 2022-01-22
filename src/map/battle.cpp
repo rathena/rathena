@@ -10063,6 +10063,7 @@ static const struct _battle_data {
 	{ "pet_legacy_formula",                 &battle_config.pet_legacy_formula,              0,      0,      1,              },
 	{ "pet_distance_check",                 &battle_config.pet_distance_check,              5,      0,      50,             },
 	{ "pet_hide_check",                     &battle_config.pet_hide_check,                  1,      0,      1,              },
+	{ "feature.barter",						&battle_config.feature_barter,					1,      0,      1,				},
 
 	// 4th Job Stuff
 	{ "use_traitpoint_table",               &battle_config.use_traitpoint_table,            1,      0,      1,              },
@@ -10257,6 +10258,13 @@ void battle_adjust_conf()
 	if( battle_config.feature_privateairship ){
 		ShowWarning("conf/battle/feature.conf private airship system is enabled but it requires PACKETVER 2018-03-21 or newer, disabling...\n");
 		battle_config.feature_privateairship = 0;
+	}
+#endif
+
+#if PACKETVER < 20180704
+	if (battle_config.feature_barter) {
+		ShowWarning("conf/battle/feature.conf barter shop is enabled but it requires PACKETVER 2018-07-04 or newer, disabling...\n");
+		battle_config.feature_barter = 0;
 	}
 #endif
 
