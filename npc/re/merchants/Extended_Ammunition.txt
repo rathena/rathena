@@ -10,7 +10,7 @@
 
 //= NPCs that become useless when activating the batashop!
 //============================================================
--	script	Bater_Init	HIDDEN_NPC,{
+-	script	Barter_Init	HIDDEN_NPC,{
 	end;
 	
 OnInit:
