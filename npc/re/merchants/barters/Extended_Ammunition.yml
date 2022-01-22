@@ -210,7 +210,6 @@ Body:
             Amount: 500
       - Index: 5
         Item: Bullet_Case_Poison
-        Stock: 5
         RequiredItems:
           - Index: 0
             Item: Poison_Bullet
