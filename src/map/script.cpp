@@ -25701,7 +25701,6 @@ BUILDIN_FUNC(mob_setidleevent){
 	return SCRIPT_CMD_SUCCESS;
 }
 
-<<<<<<< HEAD
 BUILDIN_FUNC( openstylist ){
 #if PACKETVER >= 20151104
 	struct map_session_data* sd;
@@ -25717,7 +25716,8 @@ BUILDIN_FUNC( openstylist ){
 	ShowError( "buildin_openstylist: This command requires packet version 2015-11-04 or newer.\n" );
 	return SCRIPT_CMD_FAILURE;
 #endif
-=======
+}
+
 BUILDIN_FUNC(navihide) {
 #ifdef GENERATE_NAVI
 	TBL_NPC *nd;
@@ -25733,7 +25733,6 @@ BUILDIN_FUNC(navihide) {
 	}
 #endif
 return SCRIPT_CMD_SUCCESS;
->>>>>>> 2cdd0d722... Add ability to hide an npc
 }
 
 #include "../custom/script.inc"

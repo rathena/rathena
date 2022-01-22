@@ -74,17 +74,18 @@ obj:
 
 obj-gen:
 	@echo "	MDIR	obj-gen"
+	@-mkdir obj-gen
 
 # executables
 
-map-server: obj-gen $(MAP_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(YAML_CPP_AR)
+map-server: obj $(MAP_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(YAML_CPP_AR)
 	@echo "	LD	@OMAP@@EXEEXT@"
 	@@CXX@ @LDFLAGS@ -o ../../@OMAP@@EXEEXT@ $(MAP_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(YAML_CPP_AR) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
 
 
-map-server-generator: gen-obj $(MAP_GEN_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(YAML_CPP_AR)
+map-server-generator: obj-gen $(MAP_GEN_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(YAML_CPP_AR)
 	@echo "	LD	map-server-generator@EXEEXT@"
-	@@CXX@ @LDFLAGS@ -o ../../@OMAP@@EXEEXT@ $(MAP_GEN_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(YAML_CPP_AR) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
+	@@CXX@ @LDFLAGS@ -o ../../map-server-generator@EXEEXT@ $(MAP_GEN_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(YAML_CPP_AR) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
 
 
 # map object files
@@ -99,11 +100,11 @@ obj/%.o: %.cpp $(MAP_H) $(COMMON_H) $(LIBCONFIG_H) $(YAML_CPP_H)
 
 obj-gen/npc.o: npc.cpp $(MAP_H) $(COMMON_H) $(LIBCONFIG_H) $(YAML_CPP_H)
 	@echo "	CXX	$< (custom rule)"
-	@@CXX@ @CXXFLAG_CLEARS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(YAML_CPP_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@@CXX@ @CXXFLAG_CLEARS@ $(TOOLS_FLAGS) $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(YAML_CPP_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 	
 obj-gen/%.o: %.cpp $(MAP_H) $(COMMON_H) $(LIBCONFIG_H) $(YAML_CPP_H)
 	@echo "	CXX	$<"
-	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(YAML_CPP_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@@CXX@ @CXXFLAGS@ $(TOOLS_FLAGS) $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(YAML_CPP_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing object files
 $(COMMON_AR):
