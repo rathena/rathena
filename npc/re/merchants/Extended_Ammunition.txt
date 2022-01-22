@@ -3,6 +3,8 @@
 //===== Changelogs: ==========================================
 //= 1.0 First Version. [JohnnyPlayy]
 //===== Description: ========================================= 
+// When support for infinite stock was added.
+// Change shop to marketshop.
 // Texts from this script were translated according to KRO
 //============================================================
 
@@ -16,11 +18,11 @@
 	switch ( select( "Buy Arrows", "Quiver Exchange", "Sell Items", "Cancel" )) {
 	case 1:
 		close2;
-		callshop "Arrow_Archer";
+		callshop "Arrow_Archer", 1;
 		end;
 	case 2:
 		close2;
-		callshop "Quiver_Archer";
+		callshop "Quiver_Archer", 1;
 		end;
 	case 3:
 		close2;
@@ -50,19 +52,19 @@ OnInit:
 		mes "[Ammunition Merchant]";
 		mes "I will start preparing the armaments.";
 		close2;
-		callshop "Weapons_Gunslinger";
+		callshop "Weapons_Gunslinger", 1;
 		end;
 	case 2:
 		mes "[Ammunition Merchant]";
 		mes "I will start preparing the ammunition.";
 		close2;
-		callshop "Ammunition_Gunslinger";
+		callshop "Ammunition_Gunslinger", 1;
 		end;
 	case 3:
 		mes "[Ammunition Merchant]";
 		mes "I will start preparing ammunition cartridges!";
 		close2;
-		callshop "Box_Exchange_Gunslinger";
+		callshop "Box_Exchange_Gunslinger", 1;
 		end;
 	case 4:
 		mes "[Ammunition Merchant]";
@@ -91,11 +93,11 @@ OnInit:
 	switch ( select( "Buy Ninjutsu Tool", "Parchment Exchange", "Sell Items", "Cancel" )) {
 	case 1:
 		close2;
-		callshop "Weapons_Ninja";
+		callshop "Weapons_Ninja", 1;
 		end;
 	case 2:
 		close2;	
-		callshop "Box_Exchange_Ninja";
+		callshop "Box_Exchange_Ninja", 1;
 		end;
 	case 3:
 		close2;	
@@ -124,13 +126,13 @@ OnInit:
 		mes "[Mado Gear Merchant]";
 		mes "I will start preparing the Madogear pieces.";
 		close2;
-		callshop "Weapons_Mechanic";
+		callshop "Weapons_Mechanic", 1;
 		end;
 	case 2:
 		mes "[Mado Gear Merchant]";
 		mes "I will start preparing the consumables used by Madogear.";
 		close2;
-		callshop "Ammunition_Mechanic";
+		callshop "Ammunition_Mechanic", 1;
 		end;
 	case 3:
 		mes "[Mado Gear Merchant]";
@@ -167,13 +169,13 @@ OnInit:
 		mes "[Talisman Merchant]";
 		mes "You'll like it.";
 		close2;
-		callshop "Talisman_Merchant";
+		callshop "Talisman_Merchant", 1;
 		end;
 	case 2:
 		mes "[Talisman Merchant]";
 		mes "We also exchange for bundles.";
 		close2;
-		callshop "Talisman_Bundle";
+		callshop "Talisman_Bundle", 1;
 		end;
 	case 3:
 		mes "[Talisman Merchant]";
@@ -191,21 +193,21 @@ OnInit:
 //============================================================
 
 //= Archer
--	marketshop	Arrow_Archer	HIDDEN_NPC,1750:-1:1,1770:-1:1,1751:-1:1,1752:-1:1,1754:-1:1,1755:-1:1,1756:-1:1,1757:-1:1,1762:-1:1,1065:-1:1,7940:-1:1
+-	shop	Arrow_Archer	HIDDEN_NPC,1750:-1:1,1770:-1:1,1751:-1:1,1752:-1:1,1754:-1:1,1755:-1:1,1756:-1:1,1757:-1:1,1762:-1:1,1065:-1:1,7940:-1:1
 
 //= Gunslinger
--	marketshop	Weapons_Gunslinger	HIDDEN_NPC,13120:-1:1,13122:-1:1,13189:-1:1,13195:-1:1,13192:-1:1,13193:-1:1,13194:-1:1,13197:-1:1,13198:-1:1,28200:-1:1,28201:-1:1
--	marketshop	Ammunition_Gunslinger	HIDDEN_NPC,13200:-1:1,13221:-1:1,13228:-1:1,13229:-1:1,13230:-1:1,13231:-1:1,13232:-1:1,13222:-1:1,13215:-1:1,13216:-1:1,13217:-1:1,13218:-1:1,13219:-1:1,13220:-1:1,7663:-1:1,7665:-1:1,7664:-1:1,25187:-1:1
+-	shop	Weapons_Gunslinger	HIDDEN_NPC,13120:-1:1,13122:-1:1,13189:-1:1,13195:-1:1,13192:-1:1,13193:-1:1,13194:-1:1,13197:-1:1,13198:-1:1,28200:-1:1,28201:-1:1
+-	shop	Ammunition_Gunslinger	HIDDEN_NPC,13200:-1:1,13221:-1:1,13228:-1:1,13229:-1:1,13230:-1:1,13231:-1:1,13232:-1:1,13222:-1:1,13215:-1:1,13216:-1:1,13217:-1:1,13218:-1:1,13219:-1:1,13220:-1:1,7663:-1:1,7665:-1:1,7664:-1:1,25187:-1:1
 
 //= Ninja
--	marketshop	Weapons_Ninja	HIDDEN_NPC,13258:-1:1,13257:-1:1,13255:-1:1,13256:-1:1,13259:-1:1,13294:-1:1,6512:-1:1,6513:-1:1,6514:-1:1,13250:-1:1,13251:-1:1,13252:-1:1,13253:-1:1,13254:-1:1,7521:-1:1,7522:-1:1,7523:-1:1,7524:-1:1
+-	shop	Weapons_Ninja	HIDDEN_NPC,13258:-1:1,13257:-1:1,13255:-1:1,13256:-1:1,13259:-1:1,13294:-1:1,6512:-1:1,6513:-1:1,6514:-1:1,13250:-1:1,13251:-1:1,13252:-1:1,13253:-1:1,13254:-1:1,7521:-1:1,7522:-1:1,7523:-1:1,7524:-1:1
 
 //= Merchant
--	marketshop	Weapons_Mechanic	HIDDEN_NPC,2139:-1:1,2800:-1:1,2801:-1:1,2802:-1:1,2803:-1:1,2805:-1:1,2806:-1:1,6186:-1:1,2808:-1:1,2807:-1:1
--	marketshop	Ammunition_Mechanic	HIDDEN_NPC,18000:-1:1,18003:-1:1,18001:-1:1,18002:-1:1,18004:-1:1,6145:-1:1,6146:-1:1,12394:-1:1,12393:-1:1,12392:-1:1,6147:-1:1,2804:-1:1,2809:-1:1,2810:-1:1
+-	shop	Weapons_Mechanic	HIDDEN_NPC,2139:-1:1,2800:-1:1,2801:-1:1,2802:-1:1,2803:-1:1,2805:-1:1,2806:-1:1,6186:-1:1,2808:-1:1,2807:-1:1
+-	shop	Ammunition_Mechanic	HIDDEN_NPC,18000:-1:1,18003:-1:1,18001:-1:1,18002:-1:1,18004:-1:1,6145:-1:1,6146:-1:1,12394:-1:1,12393:-1:1,12392:-1:1,6147:-1:1,2804:-1:1,2809:-1:1,2810:-1:1
 
 //= Talisman
--	marketshop	Talisman_Merchant	HIDDEN_NPC,1000563:30:1,101117:15000:1
+-	shop	Talisman_Merchant	HIDDEN_NPC,1000563:30:1,101117:15000:1
 
 //= Sale Shop
 -	shop	Selling_Items	HIDDEN_NPC,512:-1
