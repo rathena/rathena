@@ -92931,6 +92931,72 @@ Body:
 #    AegisName: SEASON_MOB_105
 #  - Id: 21508
 #    AegisName: SEASON_MOB_106
+#  - Id: 21513
+#    AegisName: EP19_NPC_IWIN
+#  - Id: 21514
+#    AegisName: EP19_NPC_IWIN_SN
+#  - Id: 21515
+#    AegisName: EP19_NPC_IWIN_SY
+#  - Id: 21516
+#    AegisName: EP19_NPC_IWIN_SB
+#  - Id: 21517
+#    AegisName: EP19_NPC_IWIN_SG
+#  - Id: 21518
+#    AegisName: EP19_NPC_IWIN_SR
+#  - Id: 21519
+#    AegisName: EP19_NPC_LEHAR
+#  - Id: 21520
+#    AegisName: EP19_LIMACINA
+#  - Id: 21521
+#    AegisName: EP19_UNFROST_FLOWER
+#  - Id: 21522
+#    AegisName: EP19_CALMARING
+#  - Id: 21523
+#    AegisName: EP19_ICE_STRAW
+#  - Id: 21524
+#    AegisName: EP19_SHINING_SEAWEED
+#  - Id: 21525
+#    AegisName: EP19_ICE_GANGU
+#  - Id: 21526
+#    AegisName: EP19_RGAN_A
+#  - Id: 21527
+#    AegisName: EP19_RGAN_B
+#  - Id: 21528
+#    AegisName: EP19_RGAN_C
+#  - Id: 21529
+#    AegisName: EP19_RGAN_D
+#  - Id: 21530
+#    AegisName: EP19_RGAN_E
+#  - Id: 21531
+#    AegisName: EP19_MD_AQUILA
+#  - Id: 21532
+#    AegisName: EP19_MD_JUNCEA
+#  - Id: 21533
+#    AegisName: EP19_MD_JUNCEA_S
+#  - Id: 21534
+#    AegisName: EP19_MD_RGAN_E
+#  - Id: 21535
+#    AegisName: EP19_MD_RGAN_D
+#  - Id: 21536
+#    AegisName: EP19_MD_HEARTHUNTER_AT
+#  - Id: 21537
+#    AegisName: EP19_LIMACINA_BOSS
+#  - Id: 21538
+#    AegisName: EP19_WASTED_RGAN_A
+#  - Id: 21539
+#    AegisName: EP19_WASTED_RGAN_C
+#  - Id: 21540
+#    AegisName: EP19_CAVE_CALMARING
+#  - Id: 21541
+#    AegisName: EP19_CAVE_FLOWER
+#  - Id: 21542
+#    AegisName: EP19_HALLUCIGENIA
+#  - Id: 21543
+#    AegisName: EP19_HALLUCIGENIA_BABY
+#  - Id: 21544
+#    AegisName: EP19_ONE_EYE_DOLLOCARIS
+#  - Id: 21545
+#    AegisName: EP19_DOLLOCARIS
 #  - Id: 21546
 #    AegisName: MD_COMMON
 #  - Id: 21547
@@ -93003,6 +93069,34 @@ Body:
 #    AegisName: G_BIJOU
 #  - Id: 21587
 #    AegisName: NPC_EDDGA
+#  - Id: 21588
+#    AegisName: EP19_MD_AQUILA_B
+#  - Id: 21589
+#    AegisName: G_EP19_LIMACINA
+#  - Id: 21590
+#    AegisName: EP19_MD_RGAN_ES
+#  - Id: 21591
+#    AegisName: E_CRYSTAL_C
+#  - Id: 21592
+#    AegisName: E_CRYSTAL_B
+#  - Id: 21593
+#    AegisName: E_CRYSTAL_A
+#  - Id: 21594
+#    AegisName: E_CRYSTAL_S
+#  - Id: 21595
+#    AegisName: E_CRYSTAL_SS
+#  - Id: 21596
+#    AegisName: TIGER_MAFIA
+#  - Id: 21597
+#    AegisName: RED_RAIN
+#  - Id: 21598
+#    AegisName: CHEWY_TTEOK
+#  - Id: 21599
+#    AegisName: EP19_HEARTHUNTER_AT
+#  - Id: 21600
+#    AegisName: EP19_RE_RGAN_E
+#  - Id: 21601
+#    AegisName: EP19_ET_RGAN_D
 #  - Id: 22328
 #    AegisName: DESERT_WOLF_RAC
 #  - Id: 22329
