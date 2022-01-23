@@ -529,22 +529,23 @@ S10: Go("turbo_room",99,114);
 OnNaviGenerate:
 	naviregisterwarp("Warper > Prontera", "prontera", 155, 183);
 	naviregisterwarp("Warper > Alberta", "alberta", 28, 234);
-	naviregisterwarp("Warper > Aldebaran", "aldebaran", 140, 131);
+	naviregisterwarp("Warper > Al De Baran", "aldebaran", 140, 131);
 	naviregisterwarp("Warper > Amatsu", "amatsu", 198, 84);
-	naviregisterwarp("Warper > Ayothoya", "ayothaya", 208, 166);
+	naviregisterwarp("Warper > Ayothaya", "ayothaya", 208, 166);
 	naviregisterwarp("Warper > Einbech", "einbech",63,35);
 	naviregisterwarp("Warper > Einbroch", "einbroch",64,200);
 	naviregisterwarp("Warper > Geffen", "geffen",119,59);
-	naviregisterwarp("Warper > Gonryun", "gonryun",160,120);
 	naviregisterwarp("Warper > Hugel", "hugel",96,145);
 	naviregisterwarp("Warper > Izlude", "izlude",128,(checkre(3)?146:114));
 	naviregisterwarp("Warper > Jawaii", "jawaii",251,132);
+	naviregisterwarp("Warper > Juno", "yuno",157,51);
+	naviregisterwarp("Warper > Kunlun", "gonryun",160,120);
 	naviregisterwarp("Warper > Lighthalzen", "lighthalzen",158,92);
-	naviregisterwarp("Warper > Louyang", "louyang",217,100);
+	naviregisterwarp("Warper > Luoyang", "louyang",217,100);
 	naviregisterwarp("Warper > Lutie", "xmas",147,134);
 	naviregisterwarp("Warper > Manuk", "manuk",282,138);
 	naviregisterwarp("Warper > Midgarts Expedition Camp", "mid_camp",210,288);
-	naviregisterwarp("Warper > Morroc", "morocc",156,93);
+	naviregisterwarp("Warper > Morocc", "morocc",156,93);
 	naviregisterwarp("Warper > Moscovia", "moscovia",223,184);
 	naviregisterwarp("Warper > Nameless Island", "nameless_n",256,215);
 	naviregisterwarp("Warper > Niflheim", "niflheim",202,174);
@@ -554,7 +555,6 @@ OnNaviGenerate:
 	naviregisterwarp("Warper > Thor Camp", "thor_camp",246,68);
 	naviregisterwarp("Warper > Umbala", "umbala",97,153);
 	naviregisterwarp("Warper > Veins", "veins",216,123);
-	naviregisterwarp("Warper > Yuno", "yuno",157,51);
 
 	if (checkre(0)) {
 		naviregisterwarp("Warper > Brasilis", "brasilis", 196, 217);
@@ -569,17 +569,59 @@ OnNaviGenerate:
 
 	// fields
 	naviregisterwarp("Warper > Amatsu Field", "ama_fild01", 190, 197);
-	naviregisterwarp("Warper > Ayothoya Field", "ayo_fild01", 173, 134);
-
-	if (checkre(0)) {
-		naviregisterwarp("Warper > Bifrost Field", "bif_fild02", 193, 220);
+	naviregisterwarp("Warper > Ayothaya Field", "ayo_fild01", 173, 134);
+	if (!.OnlyFirstFld) {
+		naviregisterwarp("Warper > Ayothaya Field", "ayo_fild02", 212, 150);
 	}
 
-	if (!.OnlyFirstFld) {
-		naviregisterwarp("Warper > Ayothoya Field", "ayo_fild02", 212, 150);
-		
-		if (checkre(0)) {
+	if (checkre(0)) {
+		naviregisterwarp("Warper > Bifrost Field", "bif_fild01", 193, 220);
+		if (!.OnlyFirstFld) {
 			naviregisterwarp("Warper > Bifrost Field", "bif_fild02", 220, 187);
+		}
+		naviregisterwarp("Warper > Brasilis Field", "bra_fild01", 74, 32);
+	}
+
+	naviregisterwarp("Warper > Comodo Field", "cmd_fild01", 180, 178);
+	if (!.OnlyFirstFld) {
+		naviregisterwarp("Warper > Comodo Field", "cmd_fild02", 231, 160);
+		naviregisterwarp("Warper > Comodo Field", "cmd_fild03", 191, 172);
+		naviregisterwarp("Warper > Comodo Field", "cmd_fild04", 228, 194);
+		if (!checkre(0)) {
+			naviregisterwarp("Warper > Comodo Field", "cmd_fild05", 224, 203);
+		}
+		naviregisterwarp("Warper > Comodo Field", "cmd_fild06", 190, 223);
+		naviregisterwarp("Warper > Comodo Field", "cmd_fild07", 234, 177);
+		naviregisterwarp("Warper > Comodo Field", "cmd_fild08", 194, 175);
+		naviregisterwarp("Warper > Comodo Field", "cmd_fild09", 172, 172);
+	}
+
+	if (checkre(0)) {
+		naviregisterwarp("Warper > Dewata Field", "dew_fild01", 371, 212);
+		naviregisterwarp("Warper > Eclage Field", "ecl_fild01", 97, 314);
+	}
+
+	naviregisterwarp("Warper > Einbroch Field", "ein_fild01", 142, 225);
+	if (!.OnlyFirstFld) {
+		if (!checkre(0)) {
+			naviregisterwarp("Warper > Einbroch Field", "ein_fild02", 182, 141);
+		}
+		naviregisterwarp("Warper > Einbroch Field", "ein_fild03", 187, 228);
+		naviregisterwarp("Warper > Einbroch Field", "ein_fild04", 185, 173);
+		naviregisterwarp("Warper > Einbroch Field", "ein_fild05", 216, 173);
+		naviregisterwarp("Warper > Einbroch Field", "ein_fild06", 195, 148);
+		naviregisterwarp("Warper > Einbroch Field", "ein_fild07", 272, 220);
+		naviregisterwarp("Warper > Einbroch Field", "ein_fild08", 173, 214);
+		naviregisterwarp("Warper > Einbroch Field", "ein_fild09", 207, 174);
+		if (!checkre(0)) {
+			naviregisterwarp("Warper > Einbroch Field", "ein_fild10", 196, 200);
+		}
+	}
+
+	if (checkre(0)) {
+		naviregisterwarp("Warper > El Dicastes Field", "dic_fild01", 143, 132);
+		if (!.OnlyFirstFld) {
+			naviregisterwarp("Warper > El Dicastes Field", "dic_fild02", 143, 217);
 		}
 	}
 
