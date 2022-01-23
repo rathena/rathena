@@ -9370,9 +9370,6 @@ Body:
       bonus bAllStats,12;
   - Combos:
       - Combo:
-          - Abyss_Staff
-          - Heavenly_Order
-      - Combo:
           - Variant_Axe
           - Heavenly_Order
       - Combo:
@@ -9514,13 +9511,6 @@ Body:
       bonus2 bSubRace,RC_Player_Human,3;
       bonus2 bAddEle,Ele_All,15;
       bonus2 bMagicAddEle,Ele_All,15;
-  - Combos:
-      - Combo:
-          - Abyss_Staff
-          - Labyrinth_Doppelganger_Card
-    Script: |
-      bonus2 bAddClass,Class_All,10;
-      bonus bAspdRate,10;
   - Combos:
       - Combo:
           - Sol_Manteau
@@ -19958,9 +19948,6 @@ Body:
       - Combo:
           - L_60Lv_Aring
           - L_60Lv_Gloves
-      - Combo:
-          - L_60Lv_Aring
-          - L_60Lv_Gloves
     Script: |
       bonus bFixedCast,-200;
       bonus bAspdRate,10;
@@ -19978,9 +19965,6 @@ Body:
       - Combo:
           - L_60Lv_Mring
           - L_60Lv_Necklace
-      - Combo:
-          - L_60Lv_Mring
-          - L_60Lv_Necklace
     Script: |
       bonus bFixedCast,-200;
       bonus bVariableCastrate,-10;
@@ -19990,42 +19974,6 @@ Body:
             bonus2 bMagicAtkEle,Ele_All,5;
             if (BaseLevel >= 120) {
                bonus2 bMagicAddEle,Ele_All,5;
-            }
-         }
-      }
-  - Combos:
-      - Combo:
-          - 1Para_Acc_L_A
-          - 1Para_Acc_R_A
-    Script: |
-      bonus bFixedCast,-200;
-      if (BaseLevel >= 105) {
-         bonus2 bAddClass,Class_All,1;
-         bonus bAspdRate,2;
-         if (BaseLevel >= 110) {
-            bonus2 bAddClass,Class_All,1;
-            bonus bAspdRate,3;
-            if (BaseLevel >= 120) {
-               bonus2 bAddClass,Class_All,1;
-               bonus bAspdRate,5;
-            }
-         }
-      }
-  - Combos:
-      - Combo:
-          - 1Para_Acc_L_B
-          - 1Para_Acc_R_B
-    Script: |
-      bonus bFixedCast,-200;
-      if (BaseLevel >= 105) {
-         bonus bMatkRate,1;
-         bonus bVariableCastrate,-2;
-         if (BaseLevel >= 110) {
-            bonus bMatkRate,1;
-            bonus bVariableCastrate,-3;
-            if (BaseLevel >= 120) {
-               bonus bMatkRate,1;
-               bonus bVariableCastrate,-5;
             }
          }
       }
