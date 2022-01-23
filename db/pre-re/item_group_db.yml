@@ -2206,26 +2206,6 @@ Body:
             Rate: 1
           - Item: Huuma_Calm_Mind
             Rate: 1
-  - Group: BOMB
-    SubGroups:
-      - SubGroup: 1
-        List:
-          - Item: Apple_Bomb
-            Rate: 1
-          - Item: Coconut_Bomb
-            Rate: 1
-          - Item: Melon_Bomb
-            Rate: 1
-          - Item: Pineapple_Bomb
-            Rate: 1
-          - Item: Banana_Bomb
-            Rate: 1
-          - Item: Black_Lump
-            Rate: 1
-          - Item: Black_Hard_Lump
-            Rate: 1
-          - Item: Very_Hard_Lump
-            Rate: 1
   - Group: BOX
     SubGroups:
       - SubGroup: 1
@@ -3116,18 +3096,6 @@ Body:
             Rate: 5
           - Item: Horn_Of_Succubus
             Rate: 2
-  - Group: ELEMENT
-    SubGroups:
-      - SubGroup: 1
-        List:
-          - Item: Scarlet_Pts
-            Rate: 1
-          - Item: Indigo_Pts
-            Rate: 1
-          - Item: Yellow_Wish_Pts
-            Rate: 1
-          - Item: Lime_Green_Pts
-            Rate: 1
   - Group: FINDINGORE
     SubGroups:
       - SubGroup: 1
@@ -5421,56 +5389,6 @@ Body:
           - Item: Flaming_Ice
             Rate: 1
           - Item: Tantanmen
-            Rate: 1
-  - Group: THROWABLE
-    SubGroups:
-      - SubGroup: 1
-        List:
-          - Item: Mysterious_Powder
-            Rate: 1
-          - Item: Boost500_To_Throw
-            Rate: 1
-          - Item: Full_SwingK_To_Throw
-            Rate: 1
-          - Item: Mana_Plus_To_Throw
-            Rate: 1
-          - Item: Cure_Free_To_Throw
-            Rate: 1
-          - Item: Stamina_Up_M_To_Throw
-            Rate: 1
-          - Item: Digestive_F_To_Throw
-            Rate: 1
-          - Item: HP_Inc_PotS_To_Throw
-            Rate: 1
-          - Item: HP_Inc_PotM_To_Throw
-            Rate: 1
-          - Item: HP_Inc_PotL_To_Throw
-            Rate: 1
-          - Item: SP_Inc_PotS_To_Throw
-            Rate: 1
-          - Item: SP_Inc_PotM_To_Throw
-            Rate: 1
-          - Item: SP_Inc_PotL_To_Throw
-            Rate: 1
-          - Item: En_White_PotZ_To_Throw
-            Rate: 1
-          - Item: Vitata500_To_Throw
-            Rate: 1
-          - Item: En_Cel_Juice_To_Throw
-            Rate: 1
-          - Item: Savage_BBQ_To_Throw
-            Rate: 1
-          - Item: Wug_Cocktail_To_Throw
-            Rate: 1
-          - Item: M_Brisket_To_Throw
-            Rate: 1
-          - Item: Siroma_Icetea_To_Throw
-            Rate: 1
-          - Item: Drocera_Stew_To_Throw
-            Rate: 1
-          - Item: Petti_Noodle_To_Throw
-            Rate: 1
-          - Item: Black_Thing_To_Throw
             Rate: 1
   - Group: TOKEN_OF_SIEGFRIED
     SubGroups:
