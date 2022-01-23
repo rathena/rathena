@@ -1592,7 +1592,7 @@ void initChangeTables(void)
 	set_sc(          NW_INTENSIVE_AIM       , SC_INTENSIVE_AIM           , EFST_INTENSIVE_AIM           , SCB_BATK |SCB_HIT|SCB_CRI);
 	set_sc(          NW_GRENADE_FRAGMENT    , SC_GRENADE_FRAGMENT        , EFST_GRENADE_FRAGMENT_1      , SCB_ATK_ELE);
 	set_sc(          NW_HIDDEN_CARD         , SC_HIDDEN_CARD             , EFST_HIDDEN_CARD             , SCB_PATK);
-	set_sc(          NW_AUTO_FIRING_LAUNCHER, SC_AUTO_FIRING_LAUNCHER    , EFST_AUTO_FIRING_LAUNCHER    , SCB_NONE);
+	set_sc(          NW_AUTO_FIRING_LAUNCHER, SC_AUTO_FIRING_LAUNCHER    , EFST_AUTO_FIRING_LAUNCHEREFST, SCB_NONE);
 #endif
 
 	/* Storing the target job rather than simply SC_SPIRIT simplifies code later on */

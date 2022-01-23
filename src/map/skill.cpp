@@ -14376,23 +14376,23 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1,
 			skill_castend_damage_id);
 		break;
-	case NW_GRENADES_DROPPING:
-		int area = skill_get_splash(skill_id, skill_lv);
-		short tmpx = 0, tmpy = 0;
-		tmpx = x - area + rnd() % (area * 2 + 1);
-		tmpy = y - area + rnd() % (area * 2 + 1);
-		skill_unitsetting(src, skill_id, skill_lv, tmpx, tmpy, flag);
-		for (i = 1; i <= (skill_get_time(skill_id, skill_lv) / skill_get_unit_interval(skill_id)); i++) {
-			skill_addtimerskill(src, tick + i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
-		}
-		break;
-	case NW_MISSION_BOMBARD:
-		int area = skill_get_splash(skill_id, skill_lv);
-		skill_unitsetting(src, skill_id, skill_lv, x, y, flag);
-		for (i = 1; i <= (skill_get_time(skill_id, skill_lv) / skill_get_unit_interval(skill_id)); i++) {
-			skill_addtimerskill(src, tick + i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
-		}
-		break;
+	case NW_GRENADES_DROPPING: {
+			int area = skill_get_splash(skill_id, skill_lv);
+			short tmpx = 0, tmpy = 0;
+			tmpx = x - area + rnd() % (area * 2 + 1);
+			tmpy = y - area + rnd() % (area * 2 + 1);
+			skill_unitsetting(src, skill_id, skill_lv, tmpx, tmpy, flag);
+			for (i = 1; i <= (skill_get_time(skill_id, skill_lv) / skill_get_unit_interval(skill_id)); i++) {
+				skill_addtimerskill(src, tick + i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
+			}
+		} break;
+	case NW_MISSION_BOMBARD: {
+			int area = skill_get_splash(skill_id, skill_lv);
+			skill_unitsetting(src, skill_id, skill_lv, x, y, flag);
+			for (i = 1; i <= (skill_get_time(skill_id, skill_lv) / skill_get_unit_interval(skill_id)); i++) {
+				skill_addtimerskill(src, tick + i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
+			}
+		} break;
 		
 	default:
 		ShowWarning("skill_castend_pos2: Unknown skill used:%d\n",skill_id);
