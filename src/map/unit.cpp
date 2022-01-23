@@ -1485,6 +1485,7 @@ int unit_can_move(struct block_list *bl) {
 				(sc->data[SC_DANCING]->val1&0xFFFF) == CG_MOONLIT ||
 				(sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE
 				) )
+			|| sc->data[SC_INTENSIVE_AIM]
 			)
 			return 0;
 
@@ -3103,6 +3104,8 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		status_change_end(bl, SC_NEWMOON, INVALID_TIMER);
 		status_change_end(bl, SC_CURSEDCIRCLE_ATKER, INVALID_TIMER); // callme before warp
 		status_change_end(bl, SC_SUHIDE, INVALID_TIMER);
+		status_change_end(bl, SC_INTENSIVE_AIM, INVALID_TIMER);
+		status_change_end(bl, SC_INTENSIVE_AIM_COUNT, INVALID_TIMER);
 	}
 
 	switch( bl->type ) {

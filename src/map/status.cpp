@@ -1587,6 +1587,12 @@ void initChangeTables(void)
 	set_sc(          EM_EL_STRONG_PROTECTION, SC_STRONG_PROTECTION_OPTION, EFST_STRONG_PROTECTION_OPTION, SCB_ALL );
 	set_sc(          EM_EL_DEEP_POISONING   , SC_DEEP_POISONING_OPTION   , EFST_DEEP_POISONING_OPTION   , SCB_NONE );
 	set_sc(          EM_EL_POISON_SHIELD    , SC_POISON_SHIELD_OPTION    , EFST_POISON_SHIELD_OPTION    , SCB_ALL );
+
+	// Night Watch
+	set_sc(          NW_INTENSIVE_AIM       , SC_INTENSIVE_AIM           , EFST_INTENSIVE_AIM           , SCB_BATK |SCB_HIT|SCB_CRI);
+	set_sc(          NW_GRENADE_FRAGMENT    , SC_GRENADE_FRAGMENT        , EFST_GRENADE_FRAGMENT_1      , SCB_ATK_ELE);
+	set_sc(          NW_HIDDEN_CARD         , SC_HIDDEN_CARD             , EFST_HIDDEN_CARD             , SCB_PATK);
+	set_sc(          NW_AUTO_FIRING_LAUNCHER, SC_AUTO_FIRING_LAUNCHER    , EFST_AUTO_FIRING_LAUNCHER    , SCB_NONE);
 #endif
 
 	/* Storing the target job rather than simply SC_SPIRIT simplifies code later on */
@@ -2123,6 +2129,9 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_CHARGINGPIERCE_COUNT] |= SCB_NONE;
 	StatusChangeFlagTable[SC_SHADOW_SCAR] |= SCB_NONE;
 	StatusChangeFlagTable[SC_BO_HELL_DUSTY] |= SCB_NONE;
+	
+	// 4th Extended Jobs
+	StatusIconChangeTable[SC_INTENSIVE_AIM_COUNT] = EFST_INTENSIVE_AIM_COUNT;
 
 #ifdef RENEWAL
 	// renewal EDP increases your weapon atk
@@ -2250,6 +2259,9 @@ void initChangeTables(void)
 	StatusDisplayType[SC_SECOND_JUDGE] = BL_PC;
 	StatusDisplayType[SC_THIRD_EXOR_FLAME] = BL_PC;
 	StatusDisplayType[SC_ABYSS_SLAYER] = BL_PC;
+	
+	// 4th Extended Jobs
+	StatusDisplayType[SC_INTENSIVE_AIM] = BL_PC;
 
 	/* StatusChangeState (SCS_) NOMOVE */
 	StatusChangeStateTable[SC_ANKLE]				|= SCS_NOMOVE;
@@ -5483,10 +5495,17 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		base_status->patk += skill * 3;
 		base_status->smatk += skill * 3;
 	}
+	if ((skill = pc_checkskill(sd, NW_P_F_I)) > 0 && (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE)) {
+		base_status->patk += skill + 2;
+	}
 
 // ----- PHYSICAL RESISTANCE CALCULATION -----
 	if ((skill = pc_checkskill_imperial_guard(sd, 1)) > 0)// IG_SHIELD_MASTERY
 		base_status->res += skill * 3;
+
+// ----- CONCENTRATION CALCULATION -----
+	if ((skill = pc_checkskill(sd, NW_GRENADE_MASTERY)) > 0)
+		base_status->con += skill;
 
 // ----- EQUIPMENT-DEF CALCULATION -----
 
@@ -7954,6 +7973,8 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 #endif
 	if (sc->data[SC_SUNSTANCE])
 		batk += batk * sc->data[SC_SUNSTANCE]->val2 / 100;
+	if (sc->data[SC_INTENSIVE_AIM])
+		batk += 150;
 
 	return (unsigned short)cap_value(batk,0,USHRT_MAX);
 }
@@ -8254,6 +8275,8 @@ static signed short status_calc_critical(struct block_list *bl, struct status_ch
 		critical += sc->data[SC_MTF_HITFLEE]->val1;
 	if (sc->data[SC_PACKING_ENVELOPE9])
 		critical += sc->data[SC_PACKING_ENVELOPE9]->val1 * 10;
+	if (sc->data[SC_INTENSIVE_AIM])
+		critical += 300;
 
 	return (short)cap_value(critical,10,SHRT_MAX);
 }
@@ -8326,6 +8349,8 @@ static signed short status_calc_hit(struct block_list *bl, struct status_change 
 		hit += sc->data[SC_PACKING_ENVELOPE10]->val1;
 	if (sc->data[SC_ABYSS_SLAYER])
 		hit += sc->data[SC_ABYSS_SLAYER]->val3;
+	if (sc->data[SC_INTENSIVE_AIM])
+		hit += 250;
 
 	return (short)cap_value(hit,1,SHRT_MAX);
 }
@@ -9332,7 +9357,9 @@ static signed short status_calc_patk(struct block_list *bl, struct status_change
 		patk += sc->data[SC_ABYSS_SLAYER]->val2;
 	if (sc->data[SC_PRON_MARCH])
 		patk += sc->data[SC_PRON_MARCH]->val2;
-
+	if (sc->data[SC_HIDDEN_CARD])
+		patk += sc->data[SC_HIDDEN_CARD]->val1*3;
+	
 	return (short)cap_value(patk, 0, SHRT_MAX);
 }
 
@@ -11862,6 +11889,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_FLASHKICK:
 			case SC_SOULUNITY:
 			case SC_SERVANT_SIGN:
+			case SC_GRENADE_FRAGMENT:
 				break;
 			case SC_GOSPEL:
 				 // Must not override a casting gospel char.
@@ -14039,6 +14067,20 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_DEEP_POISONING_OPTION:
 			val3 = ELE_POISON;
 			break;
+		case SC_GRENADE_FRAGMENT:
+			skill_enchant_elemental_end(bl, type);
+			switch (val1) {
+			case 1: val2 = ELE_WATER; break;
+			case 2: val2 = ELE_WIND; break;
+			case 3: val2 = ELE_EARTH; break;
+			case 4: val2 = ELE_FIRE; break;
+			case 5: val2 = ELE_DARK; break;
+			case 6: val2 = ELE_HOLY; break;
+			}
+			break;
+		case SC_INTENSIVE_AIM:
+			tick = 500;
+			break;
 
 		default:
 			if( calc_flag == SCB_NONE && StatusSkillChangeTable[type] == -1 && StatusIconChangeTable[type] == EFST_BLANK ) {
@@ -14136,6 +14178,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_CHARGINGPIERCE_COUNT:
 		case SC_CLIMAX:
 		case SC_E_SLASH_COUNT:
+		case SC_INTENSIVE_AIM_COUNT:
 			val_flag |= 1;
 			break;
 		// Start |1|2 val_flag setting
@@ -14509,7 +14552,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		if (status_icon == EFST_WEAPONPROPERTY)
 			status_icon = EFST_ATTACK_PROPERTY_NOTHING + val1; // Assign status icon for older clients
 #endif
-
+		switch (type) {
+			case SC_GRENADE_FRAGMENT:
+				status_icon = status_icon - 1 + val1;
+				break;
+		}
 		clif_status_change(bl, status_icon, 1, tick, (val_flag & 1) ? val1 : 1, (val_flag & 2) ? val2 : 0, (val_flag & 4) ? val3 : 0);
 	}
 
@@ -15718,7 +15765,11 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	if (status_icon == EFST_WEAPONPROPERTY)
 		status_icon = EFST_ATTACK_PROPERTY_NOTHING + sce->val1; // Assign status icon for older clients
 #endif
-
+	switch (type) {
+		case SC_GRENADE_FRAGMENT:
+			status_icon = status_icon - 1 + sce->val1;
+			break;
+	}
 	clif_status_change(bl,status_icon,0,0,0,0,0);
 
 	if( opt_flag&OCF_NON_PLAYER ) // bugreport:681
@@ -16792,6 +16843,15 @@ TIMER_FUNC(status_change_timer){
 			dounlock = true;
 		}
 		break;
+	case SC_INTENSIVE_AIM:
+		if (!sc || !sc->data[SC_INTENSIVE_AIM_COUNT])
+			sce->val4 = 0;
+		if (sce->val4 < 10) {
+			sce->val4++;
+			sc_start(bl, bl, SC_INTENSIVE_AIM_COUNT, 100, sce->val4, INFINITE_TICK);
+		}
+		sc_timer_next(500 + tick);
+		return 0;
 	}
 
 	// If status has an interval and there is at least 100ms remaining time, wait for next interval

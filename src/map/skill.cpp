@@ -54,6 +54,8 @@ using namespace rathena;
 static struct eri *skill_timer_ers = NULL; //For handling skill_timerskills [Skotlex]
 static DBMap* bowling_db = NULL; // int mob_id -> struct mob_data*
 
+bool damage_flag = false; //Night Watch Skill
+
 DBMap* skillunit_db = NULL; // int id -> struct skill_unit*
 
 /**
@@ -63,6 +65,9 @@ DBMap* skillusave_db = NULL; // char_id -> struct skill_usave
 struct skill_usave {
 	uint16 skill_id, skill_lv;
 };
+
+#define MAX_FIREINTHEHOLE_ID 100
+int fireinthehole_id[MAX_FIREINTHEHOLE_ID];
 
 struct s_skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
 static unsigned short skill_produce_count;
@@ -4105,6 +4110,21 @@ int skill_area_sub(struct block_list *bl, va_list ap)
 		if (flag&(SD_SPLASH|SD_PREAMBLE))
 			skill_area_temp[2]++;
 
+		if (skill_id == NW_HASTY_FIRE_IN_THE_HOLE)
+		{
+			int i;
+			for (i = 0; i < MAX_FIREINTHEHOLE_ID; i++)
+			{
+				if (fireinthehole_id[i] == bl->id)
+					return 0;
+				if (fireinthehole_id[i] == 0)
+				{
+					fireinthehole_id[i] = bl->id;
+					break;
+				}
+			}
+		}
+		
 		return func(src,bl,skill_id,skill_lv,tick,flag);
 	}
 	return 0;
@@ -4675,6 +4695,31 @@ static TIMER_FUNC(skill_timerskill){
 				case NPC_MAGMA_ERUPTION:
 				case NC_MAGMA_ERUPTION:
 					skill_unitsetting(src,skl->skill_id,skl->skill_lv,skl->x,skl->y,0);
+					break;
+				case NW_HASTY_FIRE_IN_THE_HOLE:
+					skill_castend_pos2(src, skl->x, skl->y, skl->skill_id, skl->skill_lv, tick, skl->flag);
+					break;
+				case NW_GRENADES_DROPPING: 
+					{
+						int area = skill_get_splash(skl->skill_id, skl->skill_lv);
+						short tmpx = 0, tmpy = 0;
+	
+						tmpx = skl->x - area + rnd() % (area * 2 + 1);
+						tmpy = skl->y - area + rnd() % (area * 2 + 1);
+						skill_unitsetting(src, skl->skill_id, skl->skill_lv, tmpx, tmpy, skl->flag);
+					}
+					break;
+				case NW_MISSION_BOMBARD: 
+					{
+						int area = skill_get_unit_range(skl->skill_id, skl->skill_lv);
+						int range = skill_get_splash(skl->skill_id, skl->skill_lv);
+						short tmpx = 0, tmpy = 0;
+	
+						tmpx = skl->x - area + rnd() % (area * 2 + 1);
+						tmpy = skl->y - area + rnd() % (area * 2 + 1);
+						map_foreachinarea(skill_area_sub, src->m, tmpx - range, tmpy - range, tmpx + range, tmpy + range, BL_CHAR,
+							src, skl->skill_id, skl->skill_lv, tick, skl->flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
+					}
 					break;
 			}
 		}
@@ -5552,6 +5597,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case EM_EL_STORM_WIND:
 	case EM_EL_AVALANCHE:
 	case EM_EL_DEADLY_POISON:
+	case NW_MISSION_BOMBARD:
 		if( flag&1 ) {//Recursive invocation
 			int sflag = skill_area_temp[0] & 0xFFF;
 			int heal = 0;
@@ -5743,6 +5789,30 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(DK_HACKANDSLASHER_ATK, skill_lv), BL_CHAR|BL_SKILL, src, DK_HACKANDSLASHER_ATK, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 		}
+		break;
+	case NW_THE_VIGILANTE_AT_NIGHT:
+		if (flag & 1) {
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+		}
+		break;
+	case NW_SPIRAL_SHOOTING:
+		if (flag & 1) {
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+		} else {
+			int splash = skill_get_splash(skill_id, skill_lv);
+
+			if (sd && sd->weapontype1 == W_GRENADE)
+				splash += 2;
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+			map_foreachinrange(skill_area_sub, bl, splash, BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
+		}
+		break;
+	case NW_HASTY_FIRE_IN_THE_HOLE:
+	case NW_WILD_FIRE:
+	case NW_MAGAZINE_FOR_ONE:
+	case NW_ONLY_ONE_BULLET:
+	case NW_BASIC_GRENADE:
+		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
 
 	//Place units around target
@@ -12642,6 +12712,41 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 
+	case NW_THE_VIGILANTE_AT_NIGHT:
+		i = skill_get_splash(skill_id, skill_lv);
+		skill_area_temp[0] = 0;
+		skill_area_temp[1] = bl->id;
+		skill_area_temp[2] = 0;
+
+		if (sd && sd->weapontype1 == W_GATLING) {
+			i += 3;
+			clif_skill_nodamage(src, bl, NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING, skill_lv, 1);
+		} else
+			clif_skill_nodamage(src, bl, NW_THE_VIGILANTE_AT_NIGHT_GUN_SHOTGUN, skill_lv, 1);
+		map_foreachinrange(skill_area_sub, bl, i, BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
+		break;
+
+	case NW_INTENSIVE_AIM:
+		if (tsc && tsc->data[type])
+			status_change_end(bl, type, INVALID_TIMER);
+		else
+			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
+		break;
+
+	case NW_HIDDEN_CARD:
+	case NW_AUTO_FIRING_LAUNCHER:
+		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
+		break;
+
+	case NW_GRENADE_FRAGMENT:
+		status_change_end(src, type, INVALID_TIMER);
+		if (skill_lv < 7)
+			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
+		break;
+
 	default:
 		ShowWarning("skill_castend_nodamage_id: Unknown skill used:%d\n",skill_id);
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
@@ -13360,6 +13465,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		case LG_EARTHDRIVE:
 		case SC_ESCAPE:
 		case SU_CN_METEOR:
+		case NW_GRENADES_DROPPING:
 			break; //Effect is displayed on respective switch case.
 		default:
 			if(skill_get_inf(skill_id)&INF_SELF_SKILL)
@@ -14237,6 +14343,57 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		}
 		break;
 
+	case NW_WILD_FIRE:
+		i = skill_get_splash(skill_id, skill_lv);
+		if (sd && sd->status.weapon == W_GRENADE)
+			i += 2;
+		map_foreachinallarea(skill_area_sub,
+			src->m, x - i, y - i, x + i, y + i, BL_CHAR,
+			src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1,
+			skill_castend_damage_id);
+		break;
+	case NW_HASTY_FIRE_IN_THE_HOLE:
+		i = skill_get_splash(skill_id, skill_lv);
+		if (!flag)
+			memset(fireinthehole_id, 0, sizeof(fireinthehole_id));
+		if (flag & 1)
+			i++;
+		if (flag & 2)
+			i++;
+		map_foreachinallarea(skill_area_sub,
+			src->m, x - i, y - i, x + i, y + i, BL_CHAR,
+			src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1,
+			skill_castend_damage_id);
+		if (!(flag & 1)) {
+			skill_addtimerskill(src, tick + 300, 0, x, y, skill_id, skill_lv, 0, flag | 1);
+			skill_addtimerskill(src, tick + 600, 0, x, y, skill_id, skill_lv, 0, flag | 3);
+		}
+		break;
+	case NW_BASIC_GRENADE:
+		i = skill_get_splash(skill_id, skill_lv);
+		map_foreachinallarea(skill_area_sub,
+			src->m, x - i, y - i, x + i, y + i, BL_CHAR,
+			src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1,
+			skill_castend_damage_id);
+		break;
+	case NW_GRENADES_DROPPING:
+		int area = skill_get_splash(skill_id, skill_lv);
+		short tmpx = 0, tmpy = 0;
+		tmpx = x - area + rnd() % (area * 2 + 1);
+		tmpy = y - area + rnd() % (area * 2 + 1);
+		skill_unitsetting(src, skill_id, skill_lv, tmpx, tmpy, flag);
+		for (i = 1; i <= (skill_get_time(skill_id, skill_lv) / skill_get_unit_interval(skill_id)); i++) {
+			skill_addtimerskill(src, tick + i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
+		}
+		break;
+	case NW_MISSION_BOMBARD:
+		int area = skill_get_splash(skill_id, skill_lv);
+		skill_unitsetting(src, skill_id, skill_lv, x, y, flag);
+		for (i = 1; i <= (skill_get_time(skill_id, skill_lv) / skill_get_unit_interval(skill_id)); i++) {
+			skill_addtimerskill(src, tick + i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
+		}
+		break;
+		
 	default:
 		ShowWarning("skill_castend_pos2: Unknown skill used:%d\n",skill_id);
 		return 1;
@@ -14893,6 +15050,9 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 	case WH_SWIFTTRAP:
 	case WH_FLAMETRAP:
 		limit += 3000 * (sd ? pc_checkskill(sd, WH_ADVANCED_TRAP) : 5);
+		break;
+	case NW_GRENADES_DROPPING:
+		limit = skill_get_time2(skill_id,skill_lv);
 		break;
 	}
 
@@ -16188,6 +16348,16 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 
 		case UNT_ASTRAL_STRIKE:
 			skill_attack(skill_get_type(AG_ASTRAL_STRIKE_ATK), ss, &unit->bl, bl, AG_ASTRAL_STRIKE_ATK, sg->skill_lv, tick, 0);
+			break;
+
+		case UNT_GRENADES_DROPPING:
+			skill_attack(skill_get_type(sg->skill_id), ss, &unit->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
+			break;
+
+		case UNT_MISSION_BOMBARD:
+			damage_flag = true;
+			skill_attack(skill_get_type(sg->skill_id), ss, &unit->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
+			damage_flag = false;
 			break;
 
 		case UNT_ABYSS_SQUARE: {
@@ -18345,6 +18515,8 @@ struct s_skill_condition skill_get_requirement(struct map_session_data* sd, uint
 	req.mhp = skill->require.mhp[skill_lv-1];
 	req.weapon = skill->require.weapon;
 	req.ammo_qty = skill->require.ammo_qty[skill_lv-1];
+	if (skill_id == NW_MAGAZINE_FOR_ONE && sd->weapontype1 == W_GATLING)
+		req.ammo_qty += 36;
 	if (req.ammo_qty)
 		req.ammo = skill->require.ammo;
 
