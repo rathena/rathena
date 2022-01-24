@@ -617,8 +617,8 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 	}
 	
 	if (tsc->data[SC_HEAVEN_AND_EARTH]){
-			damage += (damage * tsc->data[SC_HEAVEN_AND_EARTH]->val2)/100;
-		}
+		damage += (damage * tsc->data[SC_HEAVEN_AND_EARTH]->val2)/100;
+	}
 
 	if (battle_config.attr_recover == 0 && ratio < 0)
 		ratio = 0;
@@ -6756,16 +6756,18 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				s_ele = sd->bonus.arrow_ele;
 			break;
 		case SOA_TALISMAN_OF_FOUR_BEARING_GOD:
-			if (sc && sc->data[SC_T_FIRST_GOD])
-				ad.div_ = 2;
-			if (sc && sc->data[SC_T_SECOND_GOD])
-				ad.div_ = 3;
-			if (sc && sc->data[SC_T_THIRD_GOD])
-				ad.div_ = 4;
-			if (sc && sc->data[SC_T_FOURTH_GOD])
-				ad.div_ = 5;
-			if (sc && sc->data[SC_T_FIVETH_GOD])
-				ad.div_ = 7;
+			if (sc){ 
+				if (sc->data[SC_T_FIRST_GOD])
+					ad.div_ = 2;
+				if (sc->data[SC_T_SECOND_GOD])
+					ad.div_ = 3;
+				if (sc->data[SC_T_THIRD_GOD])
+					ad.div_ = 4;
+				if (sc->data[SC_T_FOURTH_GOD])
+					ad.div_ = 5;
+				if (sc->data[SC_T_FIFTH_GOD])
+					ad.div_ = 7;
+			}
 			break;
 	}
 
@@ -7580,37 +7582,37 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case SOA_EXORCISM_OF_MALICIOUS_SOUL:
-						if (tsc && tsc->data[SC_SOULCURSE])					
-							skillratio += 250 * skill_lv + 5 * sstatus->spl + 2 * pc_checkskill(sd, SOA_TALISMAN_MASTERY) + 400 * sd->soulball;
-						else
-							skillratio += 150 * skill_lv + 5 * sstatus->spl + 2 * pc_checkskill(sd, SOA_TALISMAN_MASTERY) + 300 * sd->soulball;
+						skillratio += 150 * skill_lv + 5 * sstatus->spl + 2 * pc_checkskill(sd, SOA_TALISMAN_MASTERY) + 300 * sd->soulball;
+
+						if (tsc && tsc->data[SC_SOULCURSE])
+							skillratio += 100 * skill_lv + 100 * sd->soulball;
 						RE_LVL_DMOD(100);
 						if (sc && sc->data[SC_TOTEM_OF_TUTELARY])
 							skillratio *= 2;
 						break;
 					case SOA_TALISMAN_OF_BLUE_DRAGON:
-						if (sc && sc->data[SC_T_FIVETH_GOD])
+						if (sc && sc->data[SC_T_FIFTH_GOD])
 							skillratio += (1350 * skill_lv + 5 * sstatus->spl) + (15 * pc_checkskill(sd, SOA_TALISMAN_MASTERY));
 						else
 							skillratio += (900 * skill_lv + 5 * sstatus->spl) + (15 * pc_checkskill(sd, SOA_TALISMAN_MASTERY));
 						RE_LVL_DMOD(100);
 						break;
 					case SOA_TALISMAN_OF_WHITE_TIGER:
-						if (sc && sc->data[SC_T_FIVETH_GOD])
+						if (sc && sc->data[SC_T_FIFTH_GOD])
 							skillratio += (1000 * skill_lv + 5 * sstatus->spl) + (15 * pc_checkskill(sd, SOA_TALISMAN_MASTERY));
 						else
 							skillratio += (700 * skill_lv + 5 * sstatus->spl) + (15 * pc_checkskill(sd, SOA_TALISMAN_MASTERY));
 						RE_LVL_DMOD(100);
 						break;
 					case SOA_TALISMAN_OF_RED_PHOENIX:
-						if (sc && sc->data[SC_T_FIVETH_GOD])
+						if (sc && sc->data[SC_T_FIFTH_GOD])
 							skillratio += (2000 + 900 * skill_lv + 5 * sstatus->spl) + (15 * pc_checkskill(sd, SOA_TALISMAN_MASTERY));
 						else
 							skillratio += (1500 + 600 * skill_lv + 5 * sstatus->spl) + (15 * pc_checkskill(sd, SOA_TALISMAN_MASTERY));
 						RE_LVL_DMOD(100);
 						break;
 					case SOA_TALISMAN_OF_BLACK_TORTOISE:
-						if (sc && sc->data[SC_T_FIVETH_GOD])
+						if (sc && sc->data[SC_T_FIFTH_GOD])
 							skillratio += (2000 + 1350 * skill_lv + 5 * sstatus->spl) + (15 * pc_checkskill(sd, SOA_TALISMAN_MASTERY));
 						else
 							skillratio += (2000 + 900 * skill_lv + 5 * sstatus->spl) + (15 * pc_checkskill(sd, SOA_TALISMAN_MASTERY));

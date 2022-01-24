@@ -1598,7 +1598,7 @@ void initChangeTables(void)
 	set_sc(          SOA_TALISMAN_OF_WHITE_TIGER   , SC_T_SECOND_GOD,                  EFST_T_SECOND_GOD                 , SCB_NONE );
 	set_sc(          SOA_TALISMAN_OF_RED_PHOENIX   , SC_T_THIRD_GOD,                   EFST_T_THIRD_GOD                  , SCB_NONE );
 	set_sc(          SOA_TALISMAN_OF_BLACK_TORTOISE, SC_T_FOURTH_GOD,                  EFST_T_FOURTH_GOD                 , SCB_NONE );
-	set_sc( SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS, SC_T_FIVETH_GOD,                  EFST_T_FIVETH_GOD                 , SCB_SMATK );
+	set_sc( SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS, SC_T_FIFTH_GOD,                  EFST_T_FIVETH_GOD                 , SCB_SMATK );
 	set_sc(          SOA_SOUL_OF_HEAVEN_AND_EARTH  , SC_HEAVEN_AND_EARTH,              EFST_HEAVEN_AND_EARTH             , SCB_ALL );
 	
 #endif
@@ -5255,8 +5255,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		base_status->int_ += skill;
 	if (pc_checkskill(sd, SU_POWEROFLAND) > 0)
 		base_status->int_ += 20;
-	if((skill=pc_checkskill(sd,SOA_SOUL_MASTERY))>0)
-		base_status->spl += skill;
+	base_status->spl += pc_checkskill(sd,SOA_SOUL_MASTERY);
 
 	// Bonuses from cards and equipment as well as base stat, remember to avoid overflows.
 	i = base_status->str + sd->status.str + sd->indexed_bonus.param_bonus[0] + sd->indexed_bonus.param_equip[0];
@@ -5504,9 +5503,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		base_status->patk += skill * 3;
 		base_status->smatk += skill * 3;
 	}
-	if ((skill = pc_checkskill(sd, SOA_TALISMAN_MASTERY)) > 0){
-		base_status->smatk += skill;
-	}	
+	base_status->smatk += pc_checkskill(sd, SOA_TALISMAN_MASTERY);
 
 // ----- PHYSICAL RESISTANCE CALCULATION -----
 	if ((skill = pc_checkskill_imperial_guard(sd, 1)) > 0)// IG_SHIELD_MASTERY
@@ -5916,19 +5913,14 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			sd->indexed_bonus.subele[ELE_HOLY] -= 30;
 		}
 		if( sc->data[SC_TALISMAN_OF_FIVE_ELEMENTS] ) {
-			i = sc->data[SC_TALISMAN_OF_FIVE_ELEMENTS]->val2;
-			sd->indexed_bonus.magic_atk_ele[ELE_FIRE] += i;
-			sd->indexed_bonus.magic_atk_ele[ELE_WATER] += i;
-			sd->indexed_bonus.magic_atk_ele[ELE_WIND] += i;
-			sd->indexed_bonus.magic_atk_ele[ELE_EARTH] += i;
-			sd->right_weapon.addele[ELE_FIRE] += i;
-			sd->left_weapon.addele[ELE_FIRE] += i;
-			sd->right_weapon.addele[ELE_WATER] += i;
-			sd->left_weapon.addele[ELE_WATER] += i;
-			sd->right_weapon.addele[ELE_WIND] += i;
-			sd->left_weapon.addele[ELE_WIND] += i;
-			sd->right_weapon.addele[ELE_EARTH] += i;
-			sd->left_weapon.addele[ELE_EARTH] += i;
+			const std::vector<e_element> elements = { ELE_FIRE, ELE_WATER, ELE_WIND, ELE_EARTH };
+			int bonus = sc->data[SC_TALISMAN_OF_FIVE_ELEMENTS]->val2;
+			
+			for( e_element element : elements ){
+				sd->indexed_bonus.magic_atk_ele += bonus;
+				sd->right_weapon.addele[ELE_FIRE] += bonus;
+				sd->left_weapon.addele[ELE_FIRE] += bonus;
+			}
 		}
 		if( sc->data[SC_HEAVEN_AND_EARTH] ) {
 			i = sc->data[SC_HEAVEN_AND_EARTH]->val2;
@@ -9378,7 +9370,7 @@ static signed short status_calc_patk(struct block_list *bl, struct status_change
 	if (sc->data[SC_PRON_MARCH])
 		patk += sc->data[SC_PRON_MARCH]->val2;
 	if (sc->data[SC_TALISMAN_OF_WARRIOR])
-		patk += sc->data[SC_TALISMAN_OF_WARRIOR]->val1*2;
+		patk += sc->data[SC_TALISMAN_OF_WARRIOR]->val2;
 
 	return (short)cap_value(patk, 0, SHRT_MAX);
 }
@@ -9404,9 +9396,9 @@ static signed short status_calc_smatk(struct block_list *bl, struct status_chang
 	if (sc->data[SC_SPELL_ENCHANTING])
 		smatk += sc->data[SC_SPELL_ENCHANTING]->val2;
 	if (sc->data[SC_TALISMAN_OF_MAGICIAN])
-		smatk += sc->data[SC_TALISMAN_OF_MAGICIAN]->val1*2;
-	if (sc->data[SC_T_FIVETH_GOD])
-		smatk += sc->data[SC_T_FIVETH_GOD]->val1*5;
+		smatk += sc->data[SC_TALISMAN_OF_MAGICIAN]->val2;
+	if (sc->data[SC_T_FIFTH_GOD])
+		smatk += sc->data[SC_T_FIFTH_GOD]->val2;
 
 	return (short)cap_value(smatk, 0, SHRT_MAX);
 }
@@ -11781,12 +11773,12 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC_T_SECOND_GOD:
 	case SC_T_THIRD_GOD:
 	case SC_T_FOURTH_GOD:
-	case SC_T_FIVETH_GOD:
+	case SC_T_FIFTH_GOD:
 		status_change_end(bl,SC_T_FIRST_GOD,INVALID_TIMER);
 		status_change_end(bl,SC_T_SECOND_GOD,INVALID_TIMER);
 		status_change_end(bl,SC_T_THIRD_GOD,INVALID_TIMER);
 		status_change_end(bl,SC_T_FOURTH_GOD,INVALID_TIMER);
-		status_change_end(bl,SC_T_FIVETH_GOD,INVALID_TIMER);
+		status_change_end(bl,SC_T_FIFTH_GOD,INVALID_TIMER);
 		break;
 	case SC_FIGHTINGSPIRIT:
 	case SC_OVERED_BOOST:
@@ -14104,7 +14096,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_TALISMAN_OF_PROTECTION:
 			val2 = 2 * val1;
 			val4 = tick / 3000;
-			tick_time = 3000;
+			tick_time = status_get_sc_interval(type);
+			break;
+		case SC_TALISMAN_OF_WARRIOR:
+		case SC_TALISMAN_OF_MAGICIAN:
+			val2 = 2 * val1;
+			break;
+		case SC_T_FIFTH_GOD:
+			val2 = 5 * val1;
 			break;
 		case SC_TALISMAN_OF_FIVE_ELEMENTS:
 			val2 = 4 * val1;
