@@ -82,7 +82,7 @@ OnInit:
 	end;
 	
 OnInit:
-    setunitdata getnpcid(0),UNPC_GROUP_ID,7;	
+	setunitdata getnpcid(0),UNPC_GROUP_ID,7;
 	end;
 }
 
@@ -126,7 +126,7 @@ OnInit:
 	end;
 	
 OnInit:
-    setunitdata getnpcid(0),UNPC_GROUP_ID,13;	
+	setunitdata getnpcid(0),UNPC_GROUP_ID,13;
 	end;
 }
 
@@ -155,7 +155,7 @@ OnInit:
 	end;
 	
 OnInit:
-    setunitdata getnpcid(0),UNPC_GROUP_ID,14;
+	setunitdata getnpcid(0),UNPC_GROUP_ID,14;
 	end;
 }
 
@@ -200,7 +200,7 @@ OnInit:
 	end;
 	
 OnInit:
-    setunitdata getnpcid(0),UNPC_GROUP_ID,11;
+	setunitdata getnpcid(0),UNPC_GROUP_ID,11;
 	end;
 }
 
@@ -231,7 +231,7 @@ OnInit:
 	end;
 	
 OnInit:
-    setunitdata getnpcid(0),UNPC_GROUP_ID,12;
+	setunitdata getnpcid(0),UNPC_GROUP_ID,12;
 	end;
 }
 
