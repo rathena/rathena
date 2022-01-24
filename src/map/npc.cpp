@@ -717,10 +717,12 @@ uint64 BarterDatabase::parseBodyNode( const YAML::Node& node ){
 
 void BarterDatabase::loadingFinished(){
 	for( const auto& pair : *this ){
-#if !( PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114 )
-		ShowError( "Barter system is not supported by your packet version.\n" );
-		return;
+		if( !battle_config.feature_barter && !battle_config.feature_barter_extended ){
+#ifndef BUILDBOT
+			ShowError( "Barter system is not enabled.\n" );
 #endif
+			return;
+		}
 
 		std::shared_ptr<s_npc_barter> barter = pair.second;
 
@@ -770,12 +772,12 @@ void BarterDatabase::loadingFinished(){
 			}
 		}
 
-#if !( PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106 || PACKETVER_ZERO_NUM >= 20191127 )
-		if( nd->u.barter.extended ){
-			ShowError( "Barter %s uses extended mechanics but this is not supported by the current packet version.\n", nd->name );
+		if( nd->u.barter.extended && !battle_config.feature_barter_extended ){
+#ifndef BUILDBOT
+			ShowError( "Barter %s uses extended mechanics but this is not enabled.\n", nd->name );
+#endif
 			continue;
 		}
-#endif
 
 		if( nd->bl.m >= 0 ){
 			map_addnpc( nd->bl.m, nd );
