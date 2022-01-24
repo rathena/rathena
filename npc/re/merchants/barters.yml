@@ -44,3 +44,7 @@
 Header:
   Type: BARTER_DB
   Version: 1
+
+Footer:
+  Imports:
+  - Path: npc/re/merchants/barters/Extended_Ammunition.yml
