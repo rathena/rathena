@@ -1,11 +1,11 @@
 //===== rAthena Script ======================================= 
 //= Extension of Ammunition Sales
-//===== Changelogs: ==========================================
-//= 1.0 First Version. [JohnnyPlayy]
 //===== Description: ========================================= 
 // When support for infinite stock was added.
 // Change marketshop to shop.
 // Texts from this script were translated according to KRO
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [JohnnyPlayy]
 //============================================================
 
 //= NPCs that become useless when activating the bartershop!
