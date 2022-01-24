@@ -8908,6 +8908,34 @@
 	export_constant(ITEMINFO_ARMORLEVEL);
 	export_constant(ITEMINFO_SUBTYPE);
 
+	/* e_setitemdata script command */
+	export_constant(SID_ID);
+	export_constant(SID_IDENTIFY);
+	export_constant(SID_REFINE);
+	export_constant(SID_ATTRIBUTE);
+	export_constant(SID_CARD1);
+	export_constant(SID_CARD2);
+	export_constant(SID_CARD3);
+	export_constant(SID_CARD4);
+	export_constant(SID_EXPIRE);
+	export_constant(SID_BOUND);
+	export_constant(SID_GRADE);
+	export_constant(SID_OPTIONID1);
+	export_constant(SID_OPTIONID2);
+	export_constant(SID_OPTIONID3);
+	export_constant(SID_OPTIONID4);
+	export_constant(SID_OPTIONID5);
+	export_constant(SID_OPTIONVALUE1);
+	export_constant(SID_OPTIONVALUE2);
+	export_constant(SID_OPTIONVALUE3);
+	export_constant(SID_OPTIONVALUE4);
+	export_constant(SID_OPTIONVALUE5);
+	export_constant(SID_OPTIONPARAM1);
+	export_constant(SID_OPTIONPARAM2);
+	export_constant(SID_OPTIONPARAM3);
+	export_constant(SID_OPTIONPARAM4);
+	export_constant(SID_OPTIONPARAM5);
+
 	/* refine types */
 	export_constant(REFINE_TYPE_ARMOR);
 	export_constant(REFINE_TYPE_WEAPON);

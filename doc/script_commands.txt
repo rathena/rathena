@@ -2704,6 +2704,14 @@ See 'getequipid' for a full list of valid equipment slots.
 
 ---------------------------------------
 
+*getequipidx(<equipment slot>{,<char_id>})
+
+This function returns the inventory index of the item equipped in the equipment slot
+specified on the invoking character. If nothing is equipped there, it returns -1.
+See 'getequipid' for a full list of valid equipment slots.
+
+---------------------------------------
+
 *getequipname(<equipment slot>{,<char_id>})
 
 Returns the jname of the item equipped in the specified equipment slot on the
@@ -5158,7 +5166,7 @@ This command will remove an item at the given inventory index.
 
 If <amount> is not specified, this will remove all of the items at the specified index.
 
-The only way to get the inventory index is by using 'getinventorylist()'. After deleting
+One way to get the inventory index is by using 'getinventorylist()'. After deleting
 an item at the given index, that index can remain empty until the player relogs, requiring
 'getinventorylist()' to be called again. If an item is deleted with an invalid index, the
 script will terminate with an error.
@@ -5618,6 +5626,13 @@ Examples:
 
 ---------------------------------------
 
+*equipidx <index>;
+
+This command equips an equipment from the given inventory index on the attached character.
+Return true on success, false otherwise.
+
+---------------------------------------
+
 *buyingstore <slots>;
 
 Invokes buying store preparation window like the skill 'Open Buying Store',
@@ -5655,6 +5670,61 @@ Example:
 These commands toggle the ability to use atcommand while interacting with an NPC.
 
 The default setting, 'atcommand_disable_npc', is defined in 'conf/battle/gm.conf'.
+
+---------------------------------------
+
+*getitemdata(<inventory index>,<arrayname>);
+*setitemdata(<inventory index>{,<parameter>,<new value>,...});
+
+This is used to get and set special data related to the item from the given inventory index.
+With getitemdata, the array given will be filled with the current data.
+The item must be equipable (weapon, armor or shadow armor type) for setunitdata and
+the indexes in the array would be used to set that data on the item.
+Equipped item will be automatically unequipped.
+
+Valid parameter (indexes) are:
+	SID_ID					- item ID (aegis item name accepted)
+	SID_IDENTIFY			- if the item is identified (1) or not (0)
+	SID_REFINE				- refine count
+	SID_ATTRIBUTE			- if the item is broken (1) or not (0)
+	SID_CARD1				- card slot 1
+	SID_CARD2				- card slot 2
+	SID_CARD3				- card slot 3
+	SID_CARD4				- card slot 4
+	SID_EXPIRE				- expire time (Unix time stamp). 0 means never expires.
+	SID_BOUND				- bound type of the items (see BOUND_* constants)
+	SID_GRADE				- enchantgrade of the items
+	SID_OPTIONID1			- random option ID 1
+	SID_OPTIONID2			- random option ID 2
+	SID_OPTIONID3			- random option ID 3
+	SID_OPTIONID4			- random option ID 4
+	SID_OPTIONID5			- random option ID 5
+	SID_OPTIONVALUE1		- random option value 1
+	SID_OPTIONVALUE2		- random option value 2
+	SID_OPTIONVALUE3		- random option value 3
+	SID_OPTIONVALUE4		- random option value 4
+	SID_OPTIONVALUE5		- random option value 5
+	SID_OPTIONPARAM1		- random option param 1
+	SID_OPTIONPARAM2		- random option param 2
+	SID_OPTIONPARAM3		- random option param 3
+	SID_OPTIONPARAM4		- random option param 4
+	SID_OPTIONPARAM5		- random option param 5
+
+Example 1:
+	// Get the inventory index of the item equipped in right hand.
+	.@index = getequipidx( EQI_HAND_R );
+
+	// Save the characteristics of the item in '.@data' array.
+	getitemdata( .@index, .@data );
+	end;
+
+Example 2:
+	// Get the inventory index of the item equipped in right hand.
+	.@index = getequipidx( EQI_HAND_R );
+
+	// Update the parameter(s) of the item.
+	setitemdata( .@index, SID_REFINE, 5, SID_GRADE, 3 );
+	end;
 
 ---------------------------------------
 //

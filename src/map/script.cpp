@@ -7637,6 +7637,8 @@ BUILDIN_FUNC(getitem)
 		get_count = amount;
 	}
 
+	int j = 0;
+
 	for (i = 0; i < amount; i += get_count)
 	{
 		// if not pet egg
@@ -7647,7 +7649,12 @@ BUILDIN_FUNC(getitem)
 				clif_additem(sd, 0, 0, flag);
 				if( pc_candrop(sd,&it) )
 					map_addflooritem(&it,get_count,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+				setd_sub_num( st, nullptr, ".@getitem_list", j, -1, nullptr );
 			}
+			else {
+				setd_sub_num( st, nullptr, ".@getitem_list", j, sd->last_addeditem_index, nullptr );
+			}
+			j++;
 		}
 	}
 	return SCRIPT_CMD_SUCCESS;
@@ -9165,6 +9172,42 @@ BUILDIN_FUNC(getequipid)
 
 	if (i >= 0 && i < MAX_INVENTORY && sd->inventory_data[i])
 		script_pushint(st, sd->inventory_data[i]->nameid);
+	else
+		script_pushint(st, -1);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * getequipidx({<equipment slot>,<char_id>})
+ **/
+BUILDIN_FUNC(getequipidx) {
+	struct map_session_data* sd;
+
+	if (!script_charid2sd(3, sd)) {
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int i, num;
+
+	if (script_hasdata(st, 2))
+		num = script_getnum(st, 2);
+	else
+		num = EQI_COMPOUND_ON;
+
+	if (num == EQI_COMPOUND_ON)
+		i = current_equip_item_index;
+	else if (equip_index_check(num)) // get inventory position of item
+		i = pc_checkequip(sd, equip_bitmask[num]);
+	else {
+		ShowError( "buildin_getequipidx: Unknown equip position '%d'\n", num );
+		script_pushint(st,-1);
+		return SCRIPT_CMD_FAILURE;
+	}
+	
+	if (i >= 0 && i < MAX_INVENTORY && sd->inventory_data[i])
+		script_pushint(st, i);
 	else
 		script_pushint(st, -1);
 
@@ -26833,6 +26876,287 @@ BUILDIN_FUNC(isdead) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(getitemdata)
+{
+	struct map_session_data* sd;
+
+	if (!script_rid2sd(sd))
+		return SCRIPT_CMD_FAILURE;
+
+	int idx = script_getnum(st, 2);
+	if (idx < 0 || idx >= MAX_INVENTORY) {
+		ShowError("buildin_getitemdata: Index %d is out of the range 0-%d.\n", idx, MAX_INVENTORY - 1);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (sd->inventory_data[idx] == nullptr) {
+		ShowError("buildin_getitemdata: No item found on index %d of player %s (AID: %u, CID: %u).\n", idx, sd->status.name, sd->status.account_id, sd->status.char_id);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	struct script_data *data = script_getdata(st, 3);
+	char* name = reference_getname(data);
+
+#define getitemdata_sub(idx__,var__) setd_sub_num(st,sd,name,(idx__),(var__),data->ref)
+
+	struct item *item_tmp = &sd->inventory.u.items_inventory[idx];
+	uint8 i;
+
+	getitemdata_sub( SID_ID, item_tmp->nameid );
+	getitemdata_sub( SID_IDENTIFY, item_tmp->identify );
+	getitemdata_sub( SID_REFINE, item_tmp->refine );
+	getitemdata_sub( SID_ATTRIBUTE, item_tmp->attribute );
+	for (i = 0; i < MAX_SLOTS; i++)
+		getitemdata_sub( SID_CARD1 + i, item_tmp->card[i] );
+	getitemdata_sub( SID_EXPIRE, item_tmp->expire_time );
+	getitemdata_sub( SID_BOUND, item_tmp->bound );
+	getitemdata_sub( SID_GRADE, item_tmp->enchantgrade );
+	for (i = 0; i < MAX_ITEM_RDM_OPT; i++) {
+		getitemdata_sub( SID_OPTIONID1 + i, item_tmp->option[i].id );
+		getitemdata_sub( SID_OPTIONVALUE1 + i, item_tmp->option[i].value );
+		getitemdata_sub( SID_OPTIONPARAM1 + i, item_tmp->option[i].param );
+	}
+
+#undef getitemdata_sub
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(setitemdata)
+{
+	map_session_data* sd;
+
+	if (!script_rid2sd(sd))
+		return SCRIPT_CMD_FAILURE;
+
+	int last = script_lastdata(st);
+	if (last < 3 || (last % 2)) {
+		ShowWarning("buildin_setitemdata: Invalid number of argument.\n");
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int idx = script_getnum(st, 2);
+	if (idx < 0 || idx >= MAX_INVENTORY) {
+		ShowError("buildin_setitemdata: Index %d is out of the range 0-%d.\n", idx, MAX_INVENTORY - 1);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (sd->inventory_data[idx] == nullptr) {
+		ShowError("buildin_setitemdata: No item found on index %d of player %s (AID: %u, CID: %u).\n", idx, sd->status.name, sd->status.account_id, sd->status.char_id);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+	if (!itemdb_isequip2(sd->inventory_data[idx]) || sd->inventory_data[idx]->type == IT_AMMO) {
+		ShowError("buildin_setitemdata: Invalid type for item %u. The item must be equippable.\n", sd->inventory_data[idx]->nameid);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	struct item item_tmp = {};
+	memcpy(&item_tmp, &sd->inventory.u.items_inventory[idx], sizeof(struct item));
+
+	for (int i = 3; i <= last; i += 2) {
+		int j = i + 1;
+		int type = script_getnum(st, i);
+
+		switch( type ) {
+		case SID_ID: {
+			std::shared_ptr<item_data> id;
+
+			if (script_isstring(st, j))
+				id = item_db.searchname( script_getstr(st, j) );
+			else
+				id = item_db.find( script_getnum(st, j) );
+
+			if (id == nullptr) {
+				ShowError("buildin_setitemdata: SID_ID: Nonexistant item '%s'.\n", script_getstr(st, j));
+				st->state = END;
+				return SCRIPT_CMD_FAILURE;
+			}
+			if (!itemdb_isequip2( id.get() ) || id->type == IT_AMMO) {
+				ShowError("buildin_setitemdata: SID_ID: Invalid type for item '%s'. The item must be equippable.\n", script_getstr(st, j));
+				st->state = END;
+				return SCRIPT_CMD_FAILURE;
+			}
+			item_tmp.nameid = id->nameid;
+
+			sd->inventory_data[idx] = itemdb_search(id->nameid);
+			break;
+		}
+		case SID_IDENTIFY:
+			item_tmp.identify = script_getnum(st, j) > 0;
+			break;
+		case SID_REFINE: {
+			int refine = script_getnum(st, j);
+			if (refine < 0 || refine > MAX_REFINE) {
+				ShowError("buildin_setitemdata: SID_REFINE: Refine %d is out of the range 0-%d.\n", refine, MAX_REFINE);
+				st->state = END;
+				return SCRIPT_CMD_FAILURE;
+			}
+			item_tmp.refine = refine;
+			break;
+		}
+		case SID_ATTRIBUTE:
+			item_tmp.attribute = script_getnum(st, j) > 0;
+			break;
+		case SID_CARD1:
+		case SID_CARD2:
+		case SID_CARD3:
+		case SID_CARD4: {
+			int index = type - SID_CARD1;
+
+			t_itemid card;
+
+			if (script_isstring(st, j)) {
+				std::shared_ptr<item_data> id = item_db.searchname( script_getstr(st, j) );
+
+				if (id == nullptr) {
+					ShowError("buildin_setitemdata: SID_CARD%d: Nonexistant item '%s'.\n", index + 1, script_getstr(st, j));
+					st->state = END;
+					return SCRIPT_CMD_FAILURE;
+				}
+				card = id->nameid;
+			}
+			else {
+				t_itemid card = script_getnum(st, j);
+
+				if (card != 0 && !item_db.exists(card) && ((index == 0 && !itemdb_isspecial(card)) || (index > 0 && !itemdb_isspecial(itm->card[0])))) {
+					ShowError("buildin_setitemdata: SID_CARD%d: Nonexistant item '%u'.\n", index + 1, card);
+					st->state = END;
+					return SCRIPT_CMD_FAILURE;
+				}
+			}
+			item_tmp.card[index] = card;
+			break;
+		}
+		case SID_EXPIRE: {
+			int t = script_getnum(st, j);
+			if (t < 0) {
+				ShowError("buildin_setitemdata: SID_EXPIRE: Invalid expire time %d. The time can't be below 0.\n", t);
+				st->state = END;
+				return SCRIPT_CMD_FAILURE;
+			}
+			if (t == 0)	// remove the timer
+				item_tmp.expire_time = 0;
+			else
+				item_tmp.expire_time = (unsigned int)(time(NULL) + script_getnum(st, j));
+			break;
+		}
+		case SID_BOUND: {
+			int bound = script_getnum(st, j);
+			if (bound < BOUND_NONE || bound >= BOUND_MAX) {
+				ShowError("buildin_setitemdata: SID_BOUND: %d is not a correct bound type.\n", bound);
+				st->state = END;
+				return SCRIPT_CMD_FAILURE;
+			}
+			item_tmp.bound = bound;
+			break;
+		}
+		case SID_GRADE: {
+			int grade = script_getnum(st, j);
+			if (grade < 0 || grade > MAX_ENCHANTGRADE) {
+				ShowError("buildin_setitemdata: SID_GRADE: Grade %d is out of the range 0-%d.\n", grade, MAX_ENCHANTGRADE);
+				st->state = END;
+				return SCRIPT_CMD_FAILURE;
+			}
+			item_tmp.enchantgrade = grade;
+			break;
+		}
+		case SID_OPTIONID1:
+		case SID_OPTIONID2:
+		case SID_OPTIONID3:
+		case SID_OPTIONID4:
+		case SID_OPTIONID5: {
+			int index = type - SID_OPTIONID1;
+
+			t_itemid id = script_getnum(st, j);
+
+			if (id > 0 && !random_option_db.exists(id)) {
+				ShowError("buildin_setitemdata: SID_OPTIONID: Random option ID %d does not exists.\n", id);
+				st->state = END;
+				return SCRIPT_CMD_FAILURE;
+			}
+			item_tmp.option[index].id = script_getnum(st, j);
+			break;
+		}
+		case SID_OPTIONVALUE1:
+		case SID_OPTIONVALUE2:
+		case SID_OPTIONVALUE3:
+		case SID_OPTIONVALUE4:
+		case SID_OPTIONVALUE5: {
+			int index = type - SID_OPTIONVALUE1;
+
+			item_tmp.option[index].value = script_getnum(st, j);
+			break;
+		}
+		case SID_OPTIONPARAM1:
+		case SID_OPTIONPARAM2:
+		case SID_OPTIONPARAM3:
+		case SID_OPTIONPARAM4:
+		case SID_OPTIONPARAM5: {
+			int index = type - SID_OPTIONPARAM1;
+
+			item_tmp.option[index].param = script_getnum(st, j);
+			break;
+		}
+		default:
+			ShowError("buildin_setitemdata: Invalid parameter %d.\n", script_getnum(st, i));
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+
+	memcpy(&sd->inventory.u.items_inventory[idx], &item_tmp, sizeof(struct item));
+
+	if (itm->equipSwitch > 0)
+		pc_equipswitch_remove(sd, idx);
+	if (itm->equip > 0)
+		pc_unequipitem(sd, idx, 3);
+
+	clif_delitem(sd, idx, 1, 3);
+	clif_additem(sd, idx, 1, 0);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * equipidx <index>;
+ **/
+BUILDIN_FUNC(equipidx) {
+	map_session_data* sd;
+
+	if (!script_rid2sd(sd)) {
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int idx = script_getnum(st, 2);
+	if (idx < 0 || idx >= MAX_INVENTORY) {
+		ShowWarning("buildin_equipidx: Index %d is out of the range 0-%d.\n", idx, MAX_INVENTORY - 1);
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (sd->inventory_data[idx] == nullptr) {
+		ShowWarning("buildin_equipidx: No item found on index %d of player %s (AID: %u, CID: %u).\n", idx, sd->status.name, sd->status.account_id, sd->status.char_id);
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+	if (!itemdb_isequip2(sd->inventory_data[idx])) {
+		ShowError("buildin_equipidx: Invalid type for item %u. The item must be equippable.\n", sd->inventory_data[idx]->nameid);
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, pc_equipitem(sd, idx, sd->inventory_data[idx]->equip));
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -26968,6 +27292,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(strcharinfo,"i?"),
 	BUILDIN_DEF(strnpcinfo,"i"),
 	BUILDIN_DEF(getequipid,"??"),
+	BUILDIN_DEF(getequipidx,"??"),
 	BUILDIN_DEF(getequipuniqueid,"i?"),
 	BUILDIN_DEF(getequipname,"i?"),
 	BUILDIN_DEF(getbrokenid,"i?"), // [Valaris]
@@ -27585,6 +27910,10 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getfame, "?"),
 	BUILDIN_DEF(getfamerank, "?"),
 	BUILDIN_DEF(isdead, "?"),
+
+	BUILDIN_DEF(getitemdata, "ir"),
+	BUILDIN_DEF(setitemdata, "i*"),
+	BUILDIN_DEF(equipidx, "i"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
