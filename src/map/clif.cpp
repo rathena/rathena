@@ -2283,6 +2283,11 @@ void clif_npc_market_open(struct map_session_data *sd, struct npc_data *nd) {
 			continue;
 		}
 
+		// Out of stock
+		if( item->qty == 0 ){
+			continue;
+		}
+
 		p->list[count].nameid = client_nameid( item->nameid );
 		p->list[count].type = itemtype( item->nameid );
 		p->list[count].price = item->value;
@@ -2312,20 +2317,18 @@ void clif_parse_NPCMarketClosed(int fd, struct map_session_data *sd) {
 
 /// Purchase item from Market shop.
 /// 0x9d7 <packet len>.W <count>.B { <name id>.W <qty>.W <price>.L }* (ZC_NPC_MARKET_PURCHASE_RESULT)
-void clif_npc_market_purchase_ack(struct map_session_data *sd, e_purchase_result res, uint8 n, struct s_npc_buy_list *list) {
+void clif_npc_market_purchase_ack( struct map_session_data *sd, e_purchase_result res, std::vector<s_npc_buy_list>& list ){
 #if PACKETVER >= 20131223
 	nullpo_retv( sd );
-	nullpo_retv( list );
 
 	struct npc_data *nd = map_id2nd( sd->npc_shopid );
 
 	nullpo_retv( nd );
 
-	int fd = sd->fd;
+	struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT *p = (struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT *)packet_buffer;
 
-	WFIFOHEAD( fd, sizeof( struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT ) + n *  sizeof( struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT_sub ) );
-	struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT *p = (struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT *)WFIFOP( fd, 0 );
 	p->PacketType = HEADER_ZC_NPC_MARKET_PURCHASE_RESULT;
+	p->PacketLength = sizeof( struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT );
 
 #if PACKETVER_MAIN_NUM >= 20190807 || PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190814
 	p->result = ( res == e_purchase_result::PURCHASE_SUCCEED ? 0 : -1 );
@@ -2333,10 +2336,8 @@ void clif_npc_market_purchase_ack(struct map_session_data *sd, e_purchase_result
 	p->result = ( res == e_purchase_result::PURCHASE_SUCCEED ? 1 : 0 );
 #endif
 
-	int count = 0;
-
 	if( p->result ){
-		for( int i = 0, j; i < n; i++ ){
+		for( int i = 0, j, count = 0; i < list.size(); i++ ){
 			ARR_FIND( 0, nd->u.shop.count, j, list[i].nameid == nd->u.shop.shop_item[j].nameid );
 
 			// Not found
@@ -2347,12 +2348,12 @@ void clif_npc_market_purchase_ack(struct map_session_data *sd, e_purchase_result
 			p->list[count].ITID = client_nameid( list[i].nameid );
 			p->list[count].qty = list[i].qty;
 			p->list[count].price = nd->u.shop.shop_item[j].value;
+			p->PacketLength += sizeof( struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT_sub );
 			count++;
 		}
 	}
 
-	p->PacketLength = sizeof( struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT ) + count *  sizeof( struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT_sub );
-	WFIFOSET( fd, p->PacketLength );
+	clif_send( p, p->PacketLength, &sd->bl, SELF );
 #endif
 }
 
@@ -2371,20 +2372,21 @@ void clif_parse_NPCMarketPurchase(int fd, struct map_session_data *sd) {
 
 	int count = ( p->PacketLength - sizeof( struct packet_npc_market_purchase ) ) / sizeof( struct packet_npc_market_purchase_sub );
 
-	struct s_npc_buy_list *list;
+	std::vector<s_npc_buy_list> items;
 
-	CREATE( list, struct s_npc_buy_list, count );
+	items.reserve( count );
 
-	// Sadly order is reverse
 	for( int i = 0; i < count; i++ ){
-		list[i].nameid = p->list[i].ITID;
-		list[i].qty = p->list[i].qty;
+		s_npc_buy_list item = {};
+
+		item.nameid = p->list[i].ITID;
+		item.qty = p->list[i].qty;
+
+		items.push_back( item );
 	}
 
-	e_purchase_result res = npc_buylist( sd, count, list );
-	clif_npc_market_purchase_ack( sd, res, count, list );
-
-	aFree( list );
+	e_purchase_result res = npc_buylist( sd, items );
+	clif_npc_market_purchase_ack( sd, res, items );
 #endif
 }
 
@@ -12319,8 +12321,22 @@ void clif_parse_NpcBuyListSend( int fd, struct map_session_data* sd ){
 
 	if( sd->state.trading || !sd->npc_shopid )
 		result = e_purchase_result::PURCHASE_FAIL_MONEY;
-	else
-		result = npc_buylist( sd, n, (struct s_npc_buy_list*)p->items );
+	else{
+		std::vector<s_npc_buy_list> items;
+
+		items.reserve( n );
+
+		for( uint16 i = 0; i < n; i++ ){
+			s_npc_buy_list item = {};
+
+			item.nameid = p->items[i].itemId;
+			item.qty = p->items[i].amount;
+
+			items.push_back( item );
+		}
+
+		result = npc_buylist( sd, items );
+	}
 
 	sd->npc_shopid = 0; //Clear shop data.
 	clif_npc_buy_result(sd, result);
@@ -17321,7 +17337,20 @@ void clif_parse_npccashshop_buy( int fd, struct map_session_data *sd ){
 		return;
 	}
 
-	clif_cashshop_ack( sd, npc_cashshop_buylist( sd, p->kafraPoints, p->count, p->items ) );
+	std::vector<s_npc_buy_list> item_list = {};
+
+	item_list.reserve( p->count );
+
+	for( int i = 0; i < p->count; i++ ){
+		s_npc_buy_list item = {};
+
+		item.nameid = p->items[i].itemId;
+		item.qty = p->items[i].amount;
+
+		item_list.push_back( item );
+	}
+
+	clif_cashshop_ack( sd, npc_cashshop_buylist( sd, p->kafraPoints, item_list ) );
 #endif
 }
 

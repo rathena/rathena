@@ -291,7 +291,7 @@ these floating NPC objects are for. More on that below.
 -%TAB%pointshop%TAB%<NPC Name>%TAB%<sprite id>,<costvariable>{:<discount>},<itemid>:<price>{,<itemid>:<price>...}
 <map name>,<x>,<y>,<facing>%TAB%pointshop%TAB%<NPC Name>%TAB%<sprite id>,<costvariable>{:<discount>},<itemid>:<price>{,<itemid>:<price>...}
 
-<map name>,<x>,<y>,<facing>%TAB%marketshop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>:<quantity>{,<itemid>:<price>:<quantity>...}
+<map name>,<x>,<y>,<facing>%TAB%marketshop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>:<stock>{,<itemid>:<price>:<stock>...}
 
 Note: Additionally barter shops can be defined in npc/barters.yml
 
@@ -319,6 +319,9 @@ item or special points from a variable. 'pointshop' only supports permanent char
 temporary character variables, permanent local account variables or permanent global account
 variables. These variables must be of integer type, not string. 'discount' flag is an
 optional value which makes the price at that shop become affected by discount skill.
+
+"marketshop" can have limited quantity of an item in stock.
+If you want to have unlimited stock in a marketshop please use -1 as stock.
 
 ** Define an warp/shop/cashshop/itemshop/pointshop/NPC duplicate.
 
@@ -7254,6 +7257,7 @@ A full example of a dynamic shop can be found in doc/sample/npc_dynamic_shop.txt
 ---------------------------------------
 
 *npcshopitem "<name>",<item id>,<price>{,<item id>,<price>{,<item id>,<price>{,...}}};
+*npcshopitem "<name>",<item id>,<price>,<stock>{,<item id>,<price>,<stock>{,<item id>,<price>,<stock>{,...}}};
 
 This command lets you override the contents of an existing NPC shop or cashshop. The
 current sell list will be wiped, and only the items specified with the price
@@ -7263,12 +7267,13 @@ The function returns 1 if shop was updated successfully, or 0 if not found.
 
 NOTES:
  - That you cannot use -1 to specify default selling price!
- - If attached shop type is market shop, need an extra param after price, it's <qty>
-   and make sure don't add duplication item!
+ - If attached shop type is market shop, need an extra param after price, it's <stock>
+   and make sure don't add duplication item! For unlimited stock use -1.
 
 ---------------------------------------
 
 *npcshopadditem "<name>",<item id>,<price>{,<item id>,<price>{,<item id>,<price>{,...}}};
+*npcshopadditem "<name>",<item id>,<price>,<stock>{,<item id>,<price>,<stock>{,<item id>,<price>,<stock>{,...}}};
 
 This command will add more items at the end of the selling list for the
 specified NPC shop or cashshop. If you specify an item already for sell, that item will
@@ -7278,8 +7283,8 @@ The function returns 1 if shop was updated successfully, or 0 if not found.
 
 NOTES:
  - That you cannot use -1 to specify default selling price!
- - If attached shop type is market shop, need an extra param after price, it's <qty>
-   and make sure don't add duplication item!
+ - If attached shop type is market shop, need an extra param after price, it's <stock>
+   and make sure don't add duplication item! For unlimited stock use -1.
 
 ---------------------------------------
 
@@ -7319,7 +7324,7 @@ NOTES:
 
 Update an entry from shop. If price is 0 means don't change the price, maybe used for
 marketshop to update the stock quantity. Except marketshop type, 'stock' value means
-nothing.
+nothing. For unlimited stock use -1.
 
 ---------------------------------------
 
