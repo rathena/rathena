@@ -617,8 +617,8 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 	}
 	
 	if (tsc->data[SC_HEAVEN_AND_EARTH]){
-			damage += (damage * tsc->data[SC_HEAVEN_AND_EARTH]->val2)/100;
-		}
+		damage += (damage * tsc->data[SC_HEAVEN_AND_EARTH]->val2)/100;
+	}
 
 	if (battle_config.attr_recover == 0 && ratio < 0)
 		ratio = 0;
@@ -7580,10 +7580,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case SOA_EXORCISM_OF_MALICIOUS_SOUL:
-						if (tsc && tsc->data[SC_SOULCURSE])					
-							skillratio += 250 * skill_lv + 5 * sstatus->spl + 2 * pc_checkskill(sd, SOA_TALISMAN_MASTERY) + 400 * sd->soulball;
-						else
-							skillratio += 150 * skill_lv + 5 * sstatus->spl + 2 * pc_checkskill(sd, SOA_TALISMAN_MASTERY) + 300 * sd->soulball;
+						skillratio += 150 * skill_lv + 5 * sstatus->spl + 2 * pc_checkskill(sd, SOA_TALISMAN_MASTERY) + 300 * sd->soulball;
+
+						if (tsc && tsc->data[SC_SOULCURSE])
+							skillratio += 100 * skill_lv + 100 * sd->soulball;
 						RE_LVL_DMOD(100);
 						if (sc && sc->data[SC_TOTEM_OF_TUTELARY])
 							skillratio *= 2;

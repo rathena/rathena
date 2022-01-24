@@ -5255,8 +5255,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		base_status->int_ += skill;
 	if (pc_checkskill(sd, SU_POWEROFLAND) > 0)
 		base_status->int_ += 20;
-	if((skill=pc_checkskill(sd,SOA_SOUL_MASTERY))>0)
-		base_status->spl += skill;
+	base_status->spl += pc_checkskill(sd,SOA_SOUL_MASTERY);
 
 	// Bonuses from cards and equipment as well as base stat, remember to avoid overflows.
 	i = base_status->str + sd->status.str + sd->indexed_bonus.param_bonus[0] + sd->indexed_bonus.param_equip[0];
@@ -5504,9 +5503,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		base_status->patk += skill * 3;
 		base_status->smatk += skill * 3;
 	}
-	if ((skill = pc_checkskill(sd, SOA_TALISMAN_MASTERY)) > 0){
-		base_status->smatk += skill;
-	}	
+	base_status->smatk += pc_checkskill(sd, SOA_TALISMAN_MASTERY);
 
 // ----- PHYSICAL RESISTANCE CALCULATION -----
 	if ((skill = pc_checkskill_imperial_guard(sd, 1)) > 0)// IG_SHIELD_MASTERY
@@ -5916,19 +5913,14 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			sd->indexed_bonus.subele[ELE_HOLY] -= 30;
 		}
 		if( sc->data[SC_TALISMAN_OF_FIVE_ELEMENTS] ) {
-			i = sc->data[SC_TALISMAN_OF_FIVE_ELEMENTS]->val2;
-			sd->indexed_bonus.magic_atk_ele[ELE_FIRE] += i;
-			sd->indexed_bonus.magic_atk_ele[ELE_WATER] += i;
-			sd->indexed_bonus.magic_atk_ele[ELE_WIND] += i;
-			sd->indexed_bonus.magic_atk_ele[ELE_EARTH] += i;
-			sd->right_weapon.addele[ELE_FIRE] += i;
-			sd->left_weapon.addele[ELE_FIRE] += i;
-			sd->right_weapon.addele[ELE_WATER] += i;
-			sd->left_weapon.addele[ELE_WATER] += i;
-			sd->right_weapon.addele[ELE_WIND] += i;
-			sd->left_weapon.addele[ELE_WIND] += i;
-			sd->right_weapon.addele[ELE_EARTH] += i;
-			sd->left_weapon.addele[ELE_EARTH] += i;
+			const std::vector<e_element> elements = { ELE_FIRE, ELE_WATER, ELE_WIND, ELE_EARTH };
+			int bonus = sc->data[SC_TALISMAN_OF_FIVE_ELEMENTS]->val2;
+			
+			for( e_element element : elements ){
+				sd->indexed_bonus.magic_atk_ele += bonus;
+				sd->right_weapon.addele[ELE_FIRE] += bonus;
+				sd->left_weapon.addele[ELE_FIRE] += bonus;
+			}
 		}
 		if( sc->data[SC_HEAVEN_AND_EARTH] ) {
 			i = sc->data[SC_HEAVEN_AND_EARTH]->val2;
