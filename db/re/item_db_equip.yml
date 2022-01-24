@@ -127114,6 +127114,51 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 698
+  - Id: 31108
+    AegisName: C_Free_Hug_BR
+    Name: Costume Free Hug    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1542
+  - Id: 31109
+    AegisName: C_Guildsman_Recruit_BR
+    Name: Costume Guildsman Recruit    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1543
+  - Id: 31110
+    AegisName: C_Party_Seeker_BR
+    Name: Costume Party Seeker    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1544
+  - Id: 31111
+    AegisName: C_Party_Mem_Recruit_BR
+    Name: Costume Party Mem Recruit    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1545
+  - Id: 31112
+    AegisName: C_Begging_Board_BR
+    Name: Costume Begging Board    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1546
   - Id: 31113
     AegisName: C_Doctor_Headband
     Name: Costume Doctor headband
@@ -127132,6 +127177,24 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 80
+  - Id: 31115
+    AegisName: C_Truemoney_TH
+    Name: Costume Inw True
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1547
+  - Id: 31116
+    AegisName: C_Truemoney_TH7
+    Name: Costume Inw True 7 Days
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1547
   - Id: 31117
     AegisName: C_Hoplite_Helmet
     Name: Costume Hoplite Helmet
@@ -127497,6 +127560,24 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 14
+  - Id: 31155
+    AegisName: C_Spinning_Eyes
+    Name: Costume Spinning Eyes
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 27
+  - Id: 31156
+    AegisName: C_Fruit_Shell
+    Name: Costume Nut Shell
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 122
   - Id: 31157
     AegisName: C_Spirit_Chain
     Name: Costume Soul Ring
@@ -127514,6 +127595,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1486
+  - Id: 31159
+    AegisName: C_Jormungandr_Hat
+    Name: Costume Jormungandr Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1149
   - Id: 31160
     AegisName: C_RuneHelm
     Name: Costume Rune Helm
@@ -128399,6 +128489,24 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 530
+  - Id: 31257
+    AegisName: C_Clay_Poring_Jar
+    Name: Costume Poring Jars Of Clay
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1634
+  - Id: 31258
+    AegisName: C_White_Clay_Filler
+    Name: Costume Glowing White Blush
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1632
   - Id: 31259
     AegisName: C_Bubble_A_Angel_H
     Name: Costume Bubbly Arc Angeling Hairband
@@ -128714,6 +128822,14 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 930
+  - Id: 31292
+    AegisName: C_Invisible_Mask_TW
+    Name: Costume Invisible Mask    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
   - Id: 31293
     AegisName: C_Kings_Crown_Purple
     Name: C Crown of Ancient King Purple
@@ -128822,6 +128938,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1051
+  - Id: 31305
+    AegisName: C_TW_1th_Balloon
+    Name: Costume 1th Balloon    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1666
   - Id: 31306
     AegisName: C_Toucan_Hat
     Name: C Toucan Hat
@@ -129007,6 +129132,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 484
+  - Id: 31324
+    AegisName: C_DJ_Kitty
+    Name: Costume Kitty DJ
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1672
   - Id: 31325
     AegisName: C_Queen_Scarabas_Helmet
     Name: C Queen Scarabas Helmet
@@ -129084,6 +129218,332 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1676
+  - Id: 31333
+    AegisName: C_Straight_Pony_WH_V
+    Name: Costume Straight Pony White    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1395
+  - Id: 31334
+    AegisName: C_Straight_Pony_BU_V
+    Name: Costume Straight Pony Blue    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1394
+  - Id: 31335
+    AegisName: C_Straight_Pony_OM_V
+    Name: Costume Straight Pony Brown    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1393
+  - Id: 31336
+    AegisName: C_Straight_Pony_RD_V
+    Name: Costume Straight Pony Red    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1392
+  - Id: 31337
+    AegisName: C_Straight_Pony_PP_V
+    Name: Costume Straight Pony Purple    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1391
+  - Id: 31338
+    AegisName: C_Straight_Pony_GN_V
+    Name: Costume Straight Pony Green    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1390
+  - Id: 31339
+    AegisName: C_Straight_Pony_YL_V
+    Name: Costume Straight Pony Yellow    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1389
+  - Id: 31340
+    AegisName: C_Straight_Pony_BL_V
+    Name: Costume Straight Pony Black    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1371
+  - Id: 31341
+    AegisName: C_Low_Pony_BU_V
+    Name: Costume Low Pony Blue    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1613
+  - Id: 31342
+    AegisName: C_Low_Pony_RD_V
+    Name: Costume Low Pony Red    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1614
+  - Id: 31343
+    AegisName: C_Low_Pony_YL_V
+    Name: Costume Low Pony Yellow    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1615
+  - Id: 31344
+    AegisName: C_Low_Pony_GN_V
+    Name: Costume Low Pony Green    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1616
+  - Id: 31345
+    AegisName: C_Low_Pony_BL_V
+    Name: Costume Low Pony Black    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1617
+  - Id: 31346
+    AegisName: C_Low_Pony_WH_V
+    Name: Costume Low Pony White    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1618
+  - Id: 31347
+    AegisName: C_Low_Pony_OM_V
+    Name: Costume Low Pony Brown    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1619
+  - Id: 31348
+    AegisName: C_Low_Pony_PP_V
+    Name: Costume Low Pony Purple    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1620
+  - Id: 31349
+    AegisName: C_Roll_Twin_BU_V
+    Name: Costume Roll Twin Blue    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1511
+  - Id: 31350
+    AegisName: C_Roll_Twin_RD_V
+    Name: Costume Roll Twin Red    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1512
+  - Id: 31351
+    AegisName: C_Roll_Twin_YL_V
+    Name: Costume Roll Twin Yellow    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1513
+  - Id: 31352
+    AegisName: C_Roll_Twin_GN_V
+    Name: Costume Roll Twin Green    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1514
+  - Id: 31353
+    AegisName: C_Roll_Twin_BL_V
+    Name: Costume Roll Twin Black    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1515
+  - Id: 31354
+    AegisName: C_Roll_Twin_WH_V
+    Name: Costume Roll Twin White    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1516
+  - Id: 31355
+    AegisName: C_Roll_Twin_OM_V
+    Name: Costume Roll Twin Brown    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1517
+  - Id: 31356
+    AegisName: C_Roll_Twin_PP_V
+    Name: Costume Roll Twin Purple    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1518
+  - Id: 31357
+    AegisName: Oliver_Wolf_Hood_CN
+    Name: Costume Oliver Wolf Hood    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 849
+  - Id: 31358
+    AegisName: C_Hahoe_Mask_CN
+    Name: Costume Hahoe Mask    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Locations:
+      Costume_Head_Mid: true
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 230
+  - Id: 31359
+    AegisName: C_Assassin_Mask_CN
+    Name: Costume Assassin Mask    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 180
+  - Id: 31360
+    AegisName: C_Centimental_Flower_CN
+    Name: Costume Centimental Flower    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 56
+  - Id: 31361
+    AegisName: C_Blush_CN
+    Name: Costume Blush    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 125
+  - Id: 31362
+    AegisName: C_Magestic_Goat_CN
+    Name: Costume Magestic Goat    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 41
+  - Id: 31363
+    AegisName: C_Frog_Cap_CN
+    Name: Costume Frog Cap    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 448
+  - Id: 31364
+    AegisName: C_Deviruchi_Cap_CN
+    Name: Costume Deviruchi Cap    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 123
+  - Id: 31365
+    AegisName: C_Boys_Cap_CN
+    Name: Costume Boys Cap    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 102
+  - Id: 31366
+    AegisName: C_Valkyrie_Helm_CN
+    Name: Costume Valkyrie Helm    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 225
+  - Id: 31367
+    AegisName: C_Wish_Tree_Hat
+    Name: Costume Wish Tree Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1270
   - Id: 31368
     AegisName: C_Harvest_Festa_Hat
     Name: C Thanksgiving Memorial Hat
@@ -129111,6 +129571,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1603
+  - Id: 31371
+    AegisName: C_Sorin_Doll_Hat
+    Name: Costume Drooping Sorin Doll Hat
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 356
   - Id: 31372
     AegisName: C_Binit_Doll_Hat
     Name: "Costume: Binit Doll"
@@ -129558,15 +130027,87 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 961
+  - Id: 31421
+    AegisName: C_Pink_Angeling_Bubble
+    Name: Costume Pink Angeling Bubble    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 975
+  - Id: 31422
+    AegisName: C_Angeling_Bubble
+    Name: Costume Angeling Bubble    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 976
+  - Id: 31423
+    AegisName: C_Bear_Balloon
+    Name: Costume Bear Balloon    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1038
+  - Id: 31424
+    AegisName: C_LoveLove_Balloon
+    Name: Costume Love Love Balloon    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1039
+  - Id: 31425
+    AegisName: C_Long_Octopus_Balloon
+    Name: Costume Long Octopus Balloon    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1040
+  - Id: 31426
+    AegisName: C_Male_Poring_Balloon
+    Name: Costume Male Poring Balloon    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1159
+  - Id: 31427
+    AegisName: C_Fmale_Poring_Balloon
+    Name: Costume Fmale Poring Balloon    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1161
   - Id: 31428
     AegisName: C_Panda_Balloon
     Name: Costume Panda Balloon
     Type: Armor
     Locations:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1115
+  - Id: 31429
+    AegisName: C_Blue_Poring_Bubble
+    Name: Costume Blue Poring Bubble    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 958
   - Id: 31430
     AegisName: C_Seppl_Hat_TW
     Name: "Costume: Seppl Hat"
@@ -129702,6 +130243,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 139
+  - Id: 31445
+    AegisName: Feather_Fedora_TW
+    Name: Costume Feather Fedora
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1710
   - Id: 31446
     AegisName: C_Toy_Syringe
     Name: C Toy Syringe
@@ -129811,6 +130361,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1016
+  - Id: 31458
+    AegisName: C_1Grade_Balloon_TW
+    Name: Costume Grade Balloon    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1426
   - Id: 31459
     AegisName: C_Sweet_Bonbon
     Name: Costume Sweets Bonbon
@@ -129837,6 +130396,15 @@ Body:
     Locations:
       Costume_Head_Mid: true
     ArmorLevel: 1
+  - Id: 31462
+    AegisName: C_Female_Poring_Earmuff
+    Name: Costume Cute Poring Earmuffs
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1162
   - Id: 31463
     AegisName: C_Flying_Drone
     Name: C Flying Drone
@@ -130549,7 +131117,7 @@ Body:
     EquipLevelMin: 1
     View: 850
   - Id: 31542
-    AegisName: C_Clay_Poring_Jar
+    AegisName: C_Clay_Poring_Jar_Jp
     Name: C Clay Poring Jar
     Type: Armor
     Locations:
