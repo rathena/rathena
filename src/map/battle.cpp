@@ -6759,13 +6759,13 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			if (sc){ 
 				if (sc->data[SC_T_FIRST_GOD])
 					ad.div_ = 2;
-				if (sc->data[SC_T_SECOND_GOD])
+				else if (sc->data[SC_T_SECOND_GOD])
 					ad.div_ = 3;
-				if (sc->data[SC_T_THIRD_GOD])
+				else if (sc->data[SC_T_THIRD_GOD])
 					ad.div_ = 4;
-				if (sc->data[SC_T_FOURTH_GOD])
+				else if (sc->data[SC_T_FOURTH_GOD])
 					ad.div_ = 5;
-				if (sc->data[SC_T_FIFTH_GOD])
+				else if (sc->data[SC_T_FIFTH_GOD])
 					ad.div_ = 7;
 			}
 			break;
