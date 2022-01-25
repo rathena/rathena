@@ -8285,8 +8285,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		
 	case SOA_SOUL_GATHERING:
 		if(sd) {
-			int limit = 5;
-			limit += pc_checkskill(sd, SP_SOULENERGY) * 3;
+			int limit = 5 + pc_checkskill(sd, SP_SOULENERGY) * 3;
+
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 			for (i = 0; i < limit; i++)
 				pc_addsoulball(sd,limit);
