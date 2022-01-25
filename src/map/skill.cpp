@@ -16308,10 +16308,10 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 					if( tsc && tsc->data[SC_HEAVEN_AND_EARTH] ){
 						ap = 3 * tsc->data[SC_HEAVEN_AND_EARTH]->val1;
 					}
-						clif_skill_nodamage(&unit->bl, bl, AL_HEAL, hp, 1);
-						clif_skill_nodamage(&unit->bl, bl, MG_SRECOVERY, sp, 1);
+					clif_skill_nodamage(&unit->bl, bl, AL_HEAL, hp, 1);
+					clif_skill_nodamage(&unit->bl, bl, MG_SRECOVERY, sp, 1);
 					
-						status_heal(bl, hp, sp, ap, 0);
+					status_heal(bl, hp, sp, ap, 0);
 				}
 				sc_start(ss, bl, SC_TOTEM_OF_TUTELARY, 100, sg->skill_lv, sg->interval + 100);
 			} 
