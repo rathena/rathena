@@ -12015,6 +12015,7 @@
 3254,T_W_O@NPC_WIDESOULDRAIN,attack,680,10,10000,0,60000,no,self,always,0,,,,,,,
 3254,T_W_O@NPC_CRITICALWOUND,attack,673,5,1500,500,45000,no,target,always,,,,,,,,
 
+// Episode 15.2 - Infinite Space
 3384,MIN_PORING@NPC_EMOTION,loot,197,1,2000,0,5000,yes,self,always,0,2,,,,,,
 3386,MIN_FABRE@NPC_GROUNDATTACK,attack,185,1,2000,0,5000,yes,target,always,0,,,,,,,
 3387,MIN_PICKY@NPC_EMOTION,walk,197,1,2000,0,5000,yes,self,always,0,2,,,,,,
@@ -12380,6 +12381,12 @@
 3490,IMMORTAL_CO_CMDER@NPC_SELFDESTRUCTION,attack,173,1,1000,1000,0,no,self,myhpltmaxrate,5,,,,,,0,
 3490,IMMORTAL_CO_CMDER@SA_DISPELL,chase,289,5,1000,0,10000,yes,target,always,0,,,,,,,
 3490,IMMORTAL_CO_CMDER@SA_DISPELL,attack,289,5,1000,0,10000,yes,target,always,0,,,,,,,
+
+// Episode 16.1 - Infinite Space Update
+3494,Shining Poring@NPC_RUN,attack,354,1,10000,0,0,yes,self,myhpltmaxrate,99,,,,,,29,
+3494,Shining Poring@NPC_RUN,chase,354,1,10000,0,0,yes,self,myhpltmaxrate,99,,,,,,29,
+3494,Shining Poring@MG_SAFETYWALL,attack,12,1,1000,1000,10000,no,self,always,0,,,,,,18,
+3494,Shining Poring@AL_INCAGI,chase,29,1,500,700,60000,no,self,always,,,,,,,6,
 
 3505,DR_BIG_EGGRING@NPC_SUMMONSLAVE,attack,196,4,10000,2000,10000,no,self,slavele,3,3508,,,,,,
 3505,DR_BIG_EGGRING@NPC_SUMMONSLAVE,idle,196,4,10000,2000,10000,no,self,slavele,3,3508,,,,,,
