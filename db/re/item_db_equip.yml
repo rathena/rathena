@@ -90491,6 +90491,25 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 169
+  - Id: 19900
+    AegisName: Special_Eyepatch
+    Name: Cool Pirate Eyepatch
+    Type: Armor
+    Weight: 100
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 1094
+    Script: |
+      bonus2 bAddMonsterDropItem,22660,50;
+  - Id: 19901
+    AegisName: C_Viking_Helm
+    Name: Costume Viking Helm    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 86
   - Id: 19902
     AegisName: C_Cigar
     Name: Costume Cigarette
@@ -90510,6 +90529,62 @@ Body:
     View: 717
     Script: |
       bonus bVariableCastrate,-10;
+  - Id: 19904
+    AegisName: C_Skull_Cap
+    Name: Costume Skull cap
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 713
+  - Id: 19905
+    AegisName: C_Secret_Society_Hood
+    Name: Costume Secret Bandana
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+      Costume_Head_Mid: true
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    Refineable: true
+    View: 806
+  - Id: 19906
+    AegisName: C_24_Bolt
+    Name: Costume 24 Bolt
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    Refineable: true
+    View: 696
+  - Id: 19907
+    AegisName: C_Fancy_Phantom_Mask
+    Name: Costume Beautiful Phantom Mask
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    Refineable: true
+    View: 710
+  - Id: 19908
+    AegisName: C_Joker_Jester_
+    Name: Costume National flag hat
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    Refineable: true
+    View: 219
+  - Id: 19909
+    AegisName: C_White_Deviruchi_Cap
+    Name: Costume White Baby demom hat
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    Refineable: true
+    View: 272
   - Id: 19910
     AegisName: C_Halloween_Hat
     Name: Costume Halloween Hat
@@ -90556,6 +90631,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1101
+  - Id: 19915
+    AegisName: C_Little_Devil_S_Horn
+    Name: Costume Little Devil's Horn
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1103
   - Id: 19916
     AegisName: C_Black_Cat_Hat
     Name: Costume Black Cat Hat
@@ -90613,6 +90697,16 @@ Body:
     View: 458
     Script: |
       bonus bFlee,20;
+  - Id: 19921
+    AegisName: C_Drooping_Wild_Rose
+    Name: Costume Drooping Wild Rose    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 541
   - Id: 19922
     AegisName: C_Noah_Hat
     Name: Costume Noah's Hat
@@ -90624,6 +90718,25 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 636
+  - Id: 19923
+    AegisName: C_Dark_Age
+    Name: Costume Dark Age
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 766
+  - Id: 19924
+    AegisName: C_Odin_Mask
+    Name: Costume Odin Mask
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 480
   - Id: 19925
     AegisName: C_One_Eyed_Glasses
     Name: Costume Monocle
@@ -90633,6 +90746,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 807
+  - Id: 19926
+    AegisName: C_Ribbon_Black
+    Name: Costume Ribbon Black
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 242
   - Id: 19927
     AegisName: C_Gray_Drooping_Kitty
     Name: Costume Drooping Gray Kitty
@@ -90688,6 +90810,15 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 157
+  - Id: 19933
+    AegisName: C_711_Headphone
+    Name: Costume 711 Headphone    # !todo check english name
+    Type: Armor
+    Buy: 10
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1131
   - Id: 19934
     AegisName: C_10Gallon_Hat_Of_Flame
     Name: Costume Alive Ten Gallon Hat Of Flame
@@ -90748,6 +90879,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 71
+  - Id: 19940
+    AegisName: C_Event_Pierrot_Nose
+    Name: Costume Event Pierrot Nose    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 49
   - Id: 19941
     AegisName: C_Ear_Mufs
     Name: Costume Ear Muffs
@@ -90757,6 +90897,70 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 70
+  - Id: 19942
+    AegisName: C_Orchid_Hairband
+    Name: Costume Orchid Hairband    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 376
+  - Id: 19943
+    AegisName: C_Hat_Of_Judge
+    Name: Costume Hat Of Judge    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 377
+  - Id: 19944
+    AegisName: C_RTC_Third_Best
+    Name: Costume RTC Third Best    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 579
+  - Id: 19945
+    AegisName: C_RTC_Third
+    Name: Costume RTC Third    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 685
+  - Id: 19946
+    AegisName: C_Rocket_Helm_RWC
+    Name: Costume Rocket Helm    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 769
+  - Id: 19947
+    AegisName: C_Rainbow_Scarf
+    Name: Costume Rainbow Scarf    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 460
+  - Id: 19948
+    AegisName: C_Globe_Hat
+    Name: Costume Globe Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1135
   - Id: 19949
     AegisName: C_RWC2013_Japan_Hat
     Name: Costume RWC2013 Japan Hat
@@ -90766,6 +90970,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1136
+  - Id: 19950
+    AegisName: C_RWC_Champ_Crown
+    Name: Costume RWC Champ Crown    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 914
   - Id: 19951
     AegisName: C_Solo_Play_Box2
     Name: Costume Cardboard Box
@@ -90996,6 +91209,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1142
+  - Id: 19975
+    AegisName: C_Boss_Beret
+    Name: Costume Boss Beret    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1134
   - Id: 19976
     AegisName: C_Cat_Santa_Hat
     Name: Cat Santa Hat
@@ -91049,6 +91271,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1148
+  - Id: 19981
+    AegisName: C_Santa_Beard
+    Name: Costume Santa Beard    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 25
   - Id: 19982
     AegisName: C_Santa's_Hat
     Name: Costume Santa Hat
@@ -91157,6 +91388,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 885
+  - Id: 19993
+    AegisName: C_Onigiri_In_Mouth
+    Name: Costume Onigiri In Mouth    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 774
   - Id: 19994
     AegisName: C_saLUsalo_Hat
     Name: Costume saLUsalo Hat
@@ -91166,6 +91406,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1171
+  - Id: 19995
+    AegisName: Flower_Blossom
+    Name: Costume Flower Blossom
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1176
   - Id: 19996
     AegisName: Horse_King
     Name: Horse King

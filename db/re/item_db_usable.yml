@@ -46011,6 +46011,15 @@ Body:
     Weight: 100
     Script: |
       bonus_script "{ bonus bAspdRate,5; bonus bUseSPrate,-2; }",180;
+  - Id: 22660
+    AegisName: Sealed_Letter
+    Name: Sealed Envelope
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      /* TODO */
   - Id: 22669
     AegisName: HALLOWEEN_G_BOX
     Name: Halloween Box
