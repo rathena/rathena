@@ -1,0 +1,1163 @@
+//===== rAthena Script ===========================================|
+//= Infinite Room                                                =|
+//===== By: ======================================================|
+//= crazyarashi                                                  =|
+//===== Current Version: =========================================|
+//= 1.0 Initial Version                                          =|
+//================================================================|
+
+cmd_fild07,57,275,5	script	Relic Appraiser#inf_merchant	1_F_02,{
+	if(!checkweight(1201,1) || (MaxWeight - Weight) < 1000){
+		mes "You can't proceed with the conversation because you have a large quantity of items.";
+		mes "Please organize your items and try again.";
+		close;
+	}
+	.@stone_id = 6905;
+	mes "[ Relic Appraiser ]";
+	mes "Choose the type of equipment that you want to purchase. You can purchase as many as you want, as long as you have " + getitemname(.@stone_id) + ".";
+	next;
+	switch(select("Cancel:Weapons:Armors")){
+		case 1:
+			mes "[ Relic Appraiser ]";
+			mes "Please come back whenever you want~";
+			end;
+			
+		case 2:
+			setarray .@equip_id,1994,1938,13323,13126,28703,2024,16038,21014,28105,18128;
+			.@price = 50;
+			break;
+			
+		case 3:
+			setarray .@equip_id,15141,22075,20779,19033;
+			.@price = 50;
+			break;
+			
+	}
+	.@menu$ = "Cancel:";
+	for(.@i = 0; .@i < getarraysize(.@equip_id); .@i++)
+		.@menu$ += getitemname(.@equip_id[.@i]) + ":";
+	.@s = select(.@menu$) - 1;
+	switch(.@s){
+		case 0:
+			mes "[ Relic Appraiser ]";
+			mes "Please come back whenever you want~";
+			end;
+			
+		default:
+			.@s--;
+			mes "[ Relic Appraiser ]";
+			mes "You need ^0000FF" + .@price + "^000000 " + getitemname(.@stone_id) + " to purchase the " + getitemname(.@equip_id[.@s]) + "~";
+			next;
+			if(select("Cancel:Purchase") == 1){
+				mes "[ Relic Appraiser ]";
+				mes "Please come back whenever you want~";
+				end;
+			}
+			if(countitem(.@stone_id) < .@price){
+				mes "[ Relic Appraiser ]";
+				mes "You don't have enough " + getitemname(.@stone_id) + " to purchase this item.";
+				end;
+			}
+			mes "[ Relic Appraiser ]";
+			mes "Thank you for your trust. Please come back again next time.";
+			delitem .@stone_id,.@price;
+			getitem .@equip_id[.@s],1;
+			end;
+	}
+}
+
+cmd_fild07,60,275,3	script	Relic Enchancer#inf_enchant	4_F_JOB_BLACKSMITH,{
+	if(!checkweight(1201,1) || (MaxWeight - Weight) < 1000){
+		mes "You can't proceed with the conversation because you have a large quantity of items.";
+		mes "Please organize your items and try again.";
+		close;
+	}
+	disable_items;
+	.@stone_id = 6905;
+	function enchant;
+	function reset;
+	function equip_check;
+	mes "[ Relic Enchancer ]";
+	mes "If you're looking to strengthen the equipment that you've obtained in the Infinite Space, you have come to the right place.";
+	mes "Do you have any " + getitemname(.@stone_id) + "?";
+	next;
+	switch(select("How do I enchant my equipment?:Enchant equipment.:Initialize equipment's enchant.")){
+		case 1:
+			mes "[ Relic Enchancer ]";
+			mes "You'll be able to obtain " + getitemname(.@stone_id) + ", if you explore the space under the Paros Lighthouse.";
+			next;
+			mes "[ Relic Enchancer ]";
+			mes "For that material, I can reinforce the equipment that you got from the Infinite Space.";
+			next;
+			mes "[ Relic Enchancer ]";
+			mes "I can only enchant the 3rd and the 4th slot.";
+			next;
+			mes "[ Relic Enchancer ]";
+			mes "There is no chance of the equipment being destroyed during the enchanting process, but there's a high probability that it will be destroyed when initializing the enchants.";
+			next;
+			mes "[ Relic Enchancer ]";
+			mes "Then come visit me when you want to enchant the equipment.";
+			break;
+			
+		case 2: enchant();
+		case 3: reset();
+	}
+	end;
+	
+function	equip_check	{
+	setarray .@equip_id,1994,1938,13323,13126,28703,2024,16038,21014,28105,18128,15141,22075,20779,19033;
+	if(!getarg(0)){
+		mes "[ Relic Enchancer ]";
+		mes "Did you take off your equipment?";
+		end;
+	}
+	if(inarray(.@equip_id,getarg(0)) == -1){
+		mes "[ Relic Enchancer ]";
+		mes "This equipment is not suitable for enchancement. Don't forget that only the infinite equipment series can be enchanted.";
+		end;
+	}
+	return;
+}
+	
+function	enchant	{
+	.@stone_id = 6905;
+	.@fee = 20;
+	mes "[ Relic Enchancer ]";
+	mes "Please select the equipment that you want to enchant.";
+	next;
+	switch(select("Cancel:Weapon:Armor:Shoes:Garment:Helm")){
+		case 1:
+			mes "[ Relic Enchancer ]";
+			mes "Then come visit me when you want to enchant the equipment.";
+			end;
+			
+		case 2:
+			.@part = EQI_HAND_R;
+			break;
+			
+		case 3:
+			.@part = EQI_ARMOR;
+			break;
+			
+		case 4:
+			.@part = EQI_SHOES;
+			break;			
+
+		case 5:
+			.@part = EQI_GARMENT;
+			break;	
+
+		case 6:
+			.@part = EQI_HEAD_TOP;
+			break;				
+	}
+	.@equip_id = getequipid(.@part);
+	.@refine = getequiprefinerycnt(.@part);
+	equip_check(.@equip_id);
+	for(.@i = 0; .@i < 4; .@i++){
+		.@card[.@i] = getequipcardid(.@part,.@i);
+		.@check[.@i] = getequipcardid(.@part,.@i);
+	}
+	if(.@card[2] > 0){
+		mes "[ Relic Enchancer ]";
+		mes "I can only enchant up to the third slot. Your equipment can't be further enchanted.";
+		end;
+	}
+	switch(.@part){
+		case EQI_HAND_R:
+			setarray .@enchant$,
+			"4700,4701:4710,4711:4720,4721",
+			"4811,4810,4809,4808,4820,4821,4822,4823:4815,4814,4813,4812,4826,4827,4828,4829:4832,4833,4834,4835,4836,4837,4838,4839";
+			break;
+		
+		case EQI_ARMOR:
+		case EQI_SHOES:
+			setarray .@enchant$,
+			"4700,4701,4702,4703:4710,4711,4712,4713:4720,4721,4722,4723",
+			"4795,4796,4797:4870,4871,4800:4870,4871,4800";
+			break;
+			
+		case EQI_GARMENT:
+		case EQI_HEAD_TOP:
+			setarray .@enchant$,
+			"4700,4701,4702,4703:4710,4711,4712,4713:4720,4721,4722,4723",
+			"4861,4862,4867,4868,4900:4861,4862,4867,4868,4900:4861,4862,4867,4868,4900";
+			break;
+	}
+	.@slot = (.@card[3] > 0 ? 2 : 3);
+	.@index = (.@slot == 3 ? 0 : 1);
+	mes "[ Relic Enchancer ]";
+	mes "You can choose 3 types of enchant, and the enchant fee is " + .@fee + " " + getitemname(.@stone_id) + ".";
+	mes "I'll make sure it gets enchanted without a problem.";
+	next;
+	.@type = select("Quit:Physical:Magical:Range") - 2;
+	mes "[ Relic Enchancer ]";
+	if(.@slot == 3)
+		mes "Okay, let's begin the first enchantment.";
+	else
+		mes "Okay, let's proceed with the second enchantment.";
+	next;
+	if(select("I'll return later.:Please proceed.") == 1){
+		mes "[ Relic Enchancer ]";
+		mes "If you change your mind, just return to me.";
+		end;
+	}
+	if(countitem(.@stone_id) < .@fee){
+		mes "[ Relic Enchancer ]";
+		mes "Hm. By the way, I don't think you were listening, you don't have enough " + getitemname(.@stone_id) + ".";
+		end;
+	}
+	explode(.@T$,.@enchant$[.@index],":");
+	explode(.@TT$,.@T$[.@type],",");
+	.@enchant = atoi(.@TT$[rand(getarraysize(.@TT$))]);
+	.@card[.@slot] = .@enchant;
+	delitem .@stone_id,.@fee;
+	if(callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipRefineHack", .@part, .@refine) || callfunc("F_IsEquipCardHack", .@part, .@check[0], .@check[1], .@check[2], .@check[3]))
+		end;
+	delequip .@part;
+	getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
+	specialeffect2 EF_REPAIRWEAPON;
+	mes "[ Relic Enchancer ]";
+	mes "Hm. It was well done. Check your equipment at once.";
+	end;
+}
+
+function	reset	{
+	.@stone_id = 6905;
+	.@fee = 30;
+	.@break_chance = 30;
+	mes "[ Relic Enchancer ]";
+	mes "Please select the equipment that you want to enchant.";
+	next;
+	switch(select("Cancel:Weapon:Armor:Shoes:Garment:Helm")){
+		case 1:
+			mes "[ Relic Enchancer ]";
+			mes "Then come visit me when you want to enchant the equipment.";
+			end;
+			
+		case 2:
+			.@part = EQI_HAND_R;
+			break;
+			
+		case 3:
+			.@part = EQI_ARMOR;
+			break;
+			
+		case 4:
+			.@part = EQI_SHOES;
+			break;			
+
+		case 5:
+			.@part = EQI_GARMENT;
+			break;	
+
+		case 6:
+			.@part = EQI_HEAD_TOP;
+			break;				
+	}
+	.@equip_id = getequipid(.@part);
+	.@refine = getequiprefinerycnt(.@part);
+	equip_check(.@equip_id);
+	for(.@i = 0; .@i < 4; .@i++){
+		.@card[.@i] = getequipcardid(.@part,.@i);
+		.@check[.@i] = .@card[.@i];
+	}
+	if(.@card[3] == 0){
+		mes "[ Relic Enchancer ]";
+		mes "Your equipment doesn't have any enchant on it.";
+		end;
+	}
+	mes "[ Relic Enchancer ]";
+	mes "There is a chance that your infinite space equipment will be destroyed on the initializion process. Are you still willing to proceed?";
+	next;
+	if(select("Quit:Proceed") == 1){
+		mes "[ Relic Enchancer ]";
+		mes "If you change your mind, just return to me.";
+		end;	
+	}
+	if(countitem(.@stone_id) < .@fee){
+		mes "[ Relic Enchancer ]";
+		mes "Hm. By the way, I don't think you were listening, you don't have enough " + getitemname(.@stone_id) + ".";
+		end;
+	}
+	delitem .@stone_id,.@fee;
+	if(callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipRefineHack", .@part, .@refine) || callfunc("F_IsEquipCardHack", .@part, .@check[0], .@check[1], .@check[2], .@check[3]))
+		end;
+	delequip .@part;
+	if(rand(1,100) > .@chance){
+		getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],0,0;
+		specialeffect2 EF_REPAIRWEAPON;
+		mes "[ Relic Enchancer ]";
+		mes "Hm. It was well done. Check your equipment at once.";
+	} else {
+		specialeffect2 EF_REFINEFAIL;
+		mes "[ Relic Enchancer ]";
+		mes "Well, I did warn you. You aren't lucky, eh?";
+	}
+	end;
+}
+
+}
+
+-	shop	inf_ration	-1,512:-1,513:-1,515:-1,516:-1
+
+cmd_fild07,63,268,1	script	Emergency Ration Merchant#inf_0	4_M_BIBI,{
+	mes "[ Emergency Ration Merchant ]";
+	mes "I have a lot of stuffs over here, well, not for free of course.";
+	close2;
+	callshop "inf_ration",1;
+	end;
+}
+
+cmd_fild07,43,275,7	script	Spectator#inf_0	4_M_01,{
+	mes "[ Spectator ]";
+	mes "If you were ever told to not come, wouldn't it be human nature that you'll want it more? But, it doesn't like there's anything in there to see. There's no monsters...";
+	end;	
+}
+
+cmd_fild07,45,273,7	script	A Hunter#inf_0	4_F_JOB_HUNTER,{
+	mes "[ Hunter ]";
+	mes "No, I'm just passing by and people are gathering...";
+	mes "Oh, I'm just got curious and passed by to see why people are gathering...";
+	end;
+}
+
+
+cmd_fild07,47,274,0	script	Traveler#inf_0	4_F_07,{
+	mes "[ Traveler ]";
+	mes "Rumors around here in the lighthouse that there are a parade of monsters in there. I want to go in there atleast once...";
+	end;
+}
+
+cmd_fild07,50,271,0	script	Adventurer#inf_0	4_M_03,{
+	mes "[ Adventurer ]";
+	mes "Do you think there will be treasures in there? It does smell like it.";
+	end;
+}
+
+cmd_fild07,58,278,3	script	Reckless Explorer#infinite_space	4_F_GON,{
+	instance_warning();
+	next;
+	if(BaseLevel < 100){
+		mes "[ Reckless Explorer ]";
+		mes "Will you come back to me after getting a little bit stronger? How about getting to level 100 first?";
+		end;
+	}
+	if(isbegin_quest(12364) != 2){
+		mes "[ Reckless Explorer ]";
+		mes "Ah, no, I didn't meant to go inside. I didn't meant to violate any laws.";
+		next;
+		select("What are you talking about?");
+		mes "[ Reckless Explorer ]";
+		mes "Ha?";
+		next;
+		mes "[ Reckless Explorer ]";
+		mes "Hmm, are you one of the Royal Palace's suppression squad?";
+		next;
+		select("I'm an ordinary adventurer.");
+		mes "[ Reckless Explorer ]";
+		mes "Phew~ That's a relief.";
+		mes "I've never soon you before, so I thought you are one of the suppression squad of the palace.";
+		next;
+		if(select("What if I am one of the suppression squad?:What's the matter?") == 1){
+			mes "[ Reckless Explorer ]";
+			mes "I'm just an ordinary woman who's out for a walk. And this is the end of my walk, and I'm going to...";
+			end;
+		}
+		mes "[ Reckless Explorer ]";
+		mes "Have you heard about the Paros Lighthouse collapse?";
+		next;
+		mes "[ Reckless Explorer ]";
+		mes "^777700(She moved close to me)^000000";
+		mes "The Paros Lighthouse here collapsed for some unknown reason some time ago, and there's a lot of stuff underneath it.";
+		next;
+		mes "[ Reckless Explorer ]";
+		mes "Some of the restoration workers and guards that were sent by the palace are currently missing. Rumors has it that monsters are crawling down there.";
+		next;
+		mes "[ Reckless Explorer ]";
+		mes "Because it looks endless, the people here became afraid of this place and started calling it Infinite Space.";
+		next;
+		mes "[ Reckless Explorer ]";
+		mes "I know some people who sneaked in and made a fortune. That's why I'm going to give it a try, are you interested?";
+		next;
+		if(select("I'm not interested.:Yes.") == 1){
+			mes "[ Reckless Explorer ]";
+			mes "That's unfortunate. Come back whenever you change your mind. I'll welcome you anytime.";
+			end;
+		}
+		mes "[ Reckless Explorer ]";
+		mes "All right, Just one thing, I'm inexperienced and a novice adventurer. So I'll help you explore down there by guiding you from somewhere safe.";
+		next;
+		mes "[ Reckless Explorer ]";
+		mes "I'm an adventure tour, and you can explore it yourself. Aren't we compatible with each other? Then, let's get started when you're ready.";
+		setquest 12364;
+		completequest 12364;
+	} else {
+		mes "[ Reckless Explorer ]";
+		mes "Are you going in there again this time?";
+		switch(checkquest(12365,PLAYTIME)){
+			case -1:
+				break;
+				
+			case 0:
+			case 1:
+				next;
+				mes "[ Reckless Explorer ]";
+				mes "Oh, your whole body is shouting that it's tired. You can't go down there like this.";
+				end;
+			
+			case 2:
+				erasequest 12365;
+				break;
+		}
+	}
+	next;
+	.@md_name$ = "Infinite Room";
+	.@party_id = getcharid(1);
+	if(!.@party_id){
+		mes "[ Reckless Explorer ]";
+		mes "It's impossible alone. Would you like to organize a party at least one person or join another party and come back?";
+		end;
+	}
+	if(select("Prepare to enter Infinite Room:Cancel") == 2)
+		end;
+	mes "[ Reckless Explorer ]";
+	mes "Once the passage opens, take a breath for a while and talk to me again.";
+	if(instance_create(.@md_name$) == -3)
+		dispbottom "The reservation of the instance '" + .@md_name$ + "' has failed due to an active instance.";
+	end;
+}
+
+cmd_fild07,54,280,5	script	Temporary Entrance#infinite_space	PORTAL,{
+	switch(checkquest(12365,PLAYTIME)){
+		case -1:
+			break;
+			
+		case 0:
+		case 1:
+			mes "The passage is not yet activated.";
+			end;
+		
+		case 2:
+			erasequest 12365;
+			break;
+	}
+	.@party_id = getcharid(1);
+	.@party_name = getpartyname(.@party_id);
+	.@md_name$ = "Infinite Room";
+	switch(instance_enter(.@md_name$)){
+		case IE_OK:
+			setquest 12365;
+			mapannounce "cmd_fild07", strcharinfo(0) + " of the party, "+ .@party_name$ +", is entering the " + .@md_name$ + ".", bc_map, "0x00FF99";
+			end;
+			
+		default:
+			mes "The passage is not yet activated.";
+			end;
+	}
+}
+
+1@infi,1,1,0	script	#inf_space_control	HIDDEN_WARP_NPC,{
+	end;
+	
+OnInstanceInit:
+	set_instance_var("map$",instance_mapname("1@infi"));
+	set_instance_var("amount",1);
+	set_instance_var("hp",1);
+	set_instance_var("stats",1);
+	set_instance_var("boss_hp",1);
+	
+	instance_enable("#inf_space_mobs",true);
+	instance_enable("#inf_explorer_0",true);
+	instance_enable("#inf_explorer_1",true);
+	instance_enable("#inf_explorer_2",false);
+	instance_hide("#inf_explorer_1",true);
+	
+	for(.@i = 1; .@i < 50; .@i++)
+		instance_enable("#inf_warp_" + .@i,false);
+		
+	for(.@i = 10; .@i < 51; .@i += 10)
+		instance_enable("#inf_treasure_" + .@i,false);
+		
+	setarray .@xy[1],
+	//1~10
+	27,18,33,25,
+	29,47,36,57,
+	24,81,34,91,
+	25,112,35,123,
+	16,152,45,164,
+	24,228,34,239,
+	26,261,35,271,
+	25,291,36,302,
+	24,324,35,335,
+	23,375,23,375,
+	//11~20
+	108,15,118,29,
+	108,49,118,58,
+	107,80,118,91,
+	108,111,116,121,
+	99,152,123,163,
+	106,229,116,236,
+	106,259,117,271,
+	109,295,118,303,
+	107,324,118,335,
+	114,364,114,364,
+	//21~30
+	192,15,204,25,
+	192,47,202,56,
+	193,80,204,91,
+	192,111,204,122,
+	191,152,212,162,
+	188,219,200,231,
+	190,251,199,263,
+	188,283,199,295,
+	188,315,199,327,
+	202,385,202,385,
+	//31~40
+	274,16,285,22,
+	274,49,283,58,
+	274,80,285,91,
+	276,112,286,123,
+	268,153,294,164,
+	274,220,286,231,
+	276,252,285,263,
+	274,283,286,294,
+	275,316,286,323,
+	269,376,269,376,
+	//40~50
+	356,20,364,27,
+	357,48,367,58,
+	357,79,368,91,
+	356,112,368,123,
+	349,152,374,164,
+	362,221,371,230,
+	360,251,372,263,
+	361,283,372,295,
+	360,315,372,325,
+	354,376,354,376;
+	for(.@i = 1; .@i < getarraysize(.@xy); .@i += 4){
+		.@f++;
+		set_instance_var("xy_" + .@f + "$",.@xy[.@i] + "," + .@xy[.@i+1] + "," + .@xy[.@i+2] + "," + .@xy[.@i+3]);
+	}
+end;
+}
+
+1@infi,1,1,0	script	#inf_space_mobs	HIDDEN_WARP_NPC,{
+	end;
+	
+OnSummonPoring:
+	.@floor = get_instance_var("floor");
+	.@map$ = get_instance_var("map$");
+	.@event2$ = instance_npcname(strnpcinfo(0)) + "::OnPoringKill";
+	explode(.@xy$,get_instance_var("xy_" + .@floor + "$"),",");
+	areamonster .@map$,atoi(.@xy$[0]),atoi(.@xy$[1]),atoi(.@xy$[2]),atoi(.@xy$[3]),"--ja--",3494,1,.@event2$;
+end;
+	
+OnSummon:
+	.@floor = get_instance_var("floor");
+	if(!.@floor){
+		set_instance_var("floor",1);
+		.@floor = get_instance_var("floor");
+	}
+	.@mode = get_instance_var("mode");
+	.@map$ = get_instance_var("map$");
+	.@m = get_instance_var("amount");
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill";
+	.@event2$ = instance_npcname(strnpcinfo(0)) + "::OnPoringKill";
+	.@poring_chance = 30;
+	switch(.@floor){
+		case 1:
+			setarray .@mob,3384,3385,3386;
+			setarray .@amount,6,5,3;
+			break;
+			
+		case 2:
+			setarray .@mob,3384,3386,3387;
+			setarray .@amount,6,3,2;
+			break;
+			
+		case 3:
+			setarray .@mob,3385,3386,3387;
+			setarray .@amount,5,3,4;
+			break;	
+			
+		case 4:
+			setarray .@mob,3386,3387,3388;
+			setarray .@amount,3,5,3;
+			break;	
+			
+		case 5:
+			setarray .@mob,3386,3387,3388,3389,3390,3391;
+			setarray .@amount,5,3,5,2,2,1;
+			break;
+			
+		case 6:
+			setarray .@mob,3387,3388,3389;
+			setarray .@amount,9,4,2;
+			break;
+			
+		case 7:
+			setarray .@mob,3388,3389,3390;
+			setarray .@amount,8,7,2;
+			break;
+			
+		case 8:
+			setarray .@mob,3389,3390,3391;
+			setarray .@amount,6,3,3;
+			break;
+			
+		case 9:
+			setarray .@mob,3390,3391,3392;
+			setarray .@amount,7,4,6;
+			break;
+			
+		case 10:
+			setarray .@mob,3426;
+			setarray .@amount,1;
+			break;
+			
+		case 11:
+			setarray .@mob,3391,3392,3393;
+			setarray .@amount,5,5,4;
+			break;
+			
+		case 12:
+			setarray .@mob,3392,3393,3394;
+			setarray .@amount,9,5,1;
+			break;
+			
+		case 13:
+			setarray .@mob,3393,3394,3395;
+			setarray .@amount,8,3,5;
+			break;
+			
+		case 14:
+			setarray .@mob,3394,3395,3396;
+			setarray .@amount,9,6,5;
+			break;
+		
+		case 15:
+			setarray .@mob,3393,3394,3395,3396,3397,3398,3399;
+			setarray .@amount,4,4,7,5,3,4,3;
+			break;
+	
+		case 16:
+			setarray .@mob,3395,3396,3397;
+			setarray .@amount,6,4,5;
+			break;
+	
+		case 17:
+			setarray .@mob,3396,3397,3398;
+			setarray .@amount,7,4,4;
+			break;
+		
+		case 18:
+			setarray .@mob,3397,3398,3399;
+			setarray .@amount,7,6,4;
+			break;
+		
+		case 19:
+			setarray .@mob,3398,3399,3400;
+			setarray .@amount,9,4,3;
+			break;
+	
+		case 20:
+			setarray .@mob,3427;
+			setarray .@amount,1;
+			break;
+	
+		case 21:
+			setarray .@mob,3399,3400,3401;
+			setarray .@amount,7,5,3;
+			break;
+			
+		case 22:
+			setarray .@mob,3400,3401,3402;
+			setarray .@amount,8,6,2;
+			break;
+
+		case 23:
+			setarray .@mob,3401,3402,3403;
+			setarray .@amount,8,7,5;
+			break;
+
+		case 24:
+			setarray .@mob,3402,3403,3404;
+			setarray .@amount,8,6,5;
+			break;
+
+		case 25:
+			setarray .@mob,3402,3403,3404,3405,3406,3407,3408;
+			setarray .@amount,3,4,5,4,3,3,2;
+			break;
+
+		case 26:
+			setarray .@mob,3403,3404,3405;
+			setarray .@amount,7,6,5;
+			break;
+
+		case 27:
+			setarray .@mob,3404,3405,3406;
+			setarray .@amount,6,5,5;
+			break;
+
+		case 28:
+			setarray .@mob,3405,3406,3407;
+			setarray .@amount,9,5,4;
+			break;
+
+		case 29:
+			setarray .@mob,3406,3407,3408;
+			setarray .@amount,7,5,2;
+			break;
+
+		case 30:
+			setarray .@mob,3428;
+			setarray .@amount,1;
+			break;
+
+		case 31:
+			setarray .@mob,3407,3408,3409;
+			setarray .@amount,8,4,4;
+			break;
+			
+		case 32:
+			setarray .@mob,3408,3409,3410;
+			setarray .@amount,5,4,5;
+			break;	
+			
+		case 33:
+			setarray .@mob,3409,3410,3411;
+			setarray .@amount,6,5,3;
+			break;	
+			
+		case 34:
+			setarray .@mob,3410,3411,3412;
+			setarray .@amount,7,3,2;
+			break;	
+			
+		case 35:
+			setarray .@mob,3409,3410,3411,3412,3413,3414;
+			setarray .@amount,6,6,4,5,3,4;
+			break;	
+			
+		case 36:
+			setarray .@mob,3411,3412,3413;
+			setarray .@amount,8,3,3;
+			break;
+			
+		case 37:
+			setarray .@mob,3412,3413,3414;
+			setarray .@amount,6,5,6;
+			break;	
+			
+		case 38:
+			setarray .@mob,3413,3414,3415;
+			setarray .@amount,6,4,2;
+			break;	
+			
+		case 39:
+			setarray .@mob,3414,3415,3416;
+			setarray .@amount,6,6,4;
+			break;	
+			
+		case 40:
+			setarray .@mob,3429;
+			setarray .@amount,1;
+			break;
+
+		case 41:
+			setarray .@mob,3415,3416,3417;
+			setarray .@amount,7,4,3;
+			break;	
+
+		case 42:
+			setarray .@mob,3416,3417,3418;
+			setarray .@amount,8,3,5;
+			break;	
+
+		case 43:
+			setarray .@mob,3417,3418,3419;
+			setarray .@amount,5,4,2;
+			break;	
+
+		case 44:
+			setarray .@mob,3418,3419,3420;
+			setarray .@amount,5,7,2;
+			break;	
+
+		case 45:
+			setarray .@mob,3414,3415,3416,3417,3418,3419,3420;
+			setarray .@amount,4,5,4,3,6,5,4;
+			break;	
+
+		case 46:
+			setarray .@mob,3412,3419;
+			setarray .@amount,2,7;
+			break;	
+
+		case 47:
+			setarray .@mob,3413,3419,3420;
+			setarray .@amount,4,7,6;
+			break;	
+
+		case 48:
+			setarray .@mob,3414,3419,3420;
+			setarray .@amount,3,6,6;
+			break;	
+
+		case 49:
+			setarray .@mob,3415,3419,3420;
+			setarray .@amount,4,5,9;
+			break;	
+
+		case 50:
+			setarray .@mob,3430;
+			setarray .@amount,1;
+			break;				
+	}
+	
+	if((.@floor % 10) == 0){
+		.@hp = get_instance_var("boss_hp");
+		.@m = 1;
+	}
+	
+	if(rand(1,100) <= .@poring_chance)
+		instance_event(strnpcinfo(0),"OnSummonPoring",false);
+		
+	explode(.@xy$,get_instance_var("xy_" + .@floor + "$"),",");
+	for(.@i = 0; .@i < getarraysize(.@mob); .@i++){
+		areamonster .@map$,atoi(.@xy$[0]),atoi(.@xy$[1]),atoi(.@xy$[2]),atoi(.@xy$[3]),"--ja--",.@mob[.@i],.@amount[.@i]*.@m,.@event$;
+		if((.@floor % 10) == 0){
+			set_instance_var("boss_id",$@mobid[0]);
+			instance_event(strnpcinfo(0),"OnUnitSpawn",false);
+		}
+	}
+	if(.@floor > 0 && .@floor % 10 > 0 && .@mode == 2){
+		if(rand(1,100) <= 10){
+			.@lboss_id = get_instance_var("last_boss");
+			.@boss_id = rand(3421,3425);
+			while(.@lboss_id == .@boss_id)
+				.@boss_id = rand(3421,3425);
+			set_instance_var("last_boss",.@boss_id);
+			areamonster .@map$,atoi(.@xy$[0]),atoi(.@xy$[1]),atoi(.@xy$[2]),atoi(.@xy$[3]),"--ja--",.@boss_id,1,.@event$;
+		}
+	}
+end;
+
+OnUnitSpawn:
+	.@map$ = get_instance_var("map$");
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnUnitKill";
+	.@mode = get_instance_var("mode");
+	
+	setarray .@mob_id,3426,3427,3428,3429,3430;
+	setarray .@spawn,3436,3437,3438,3439,3440;
+	setarray .@amount,5,7,7,6,6;
+	
+	setarray .@unit_id,3431,3432,3433,3434,3435,3436,3437,3438,3439,3440;
+	setarray .@unit_amount,3,3,4,4,5,5,4,4,5,5;
+	getunitdata get_instance_var("boss_id"),.@data;	
+	.@index = inarray(.@mob_id,.@data[UMOB_CLASS]);
+	.@x = .@data[UMOB_X];
+	.@y = .@data[UMOB_Y];
+	areamonster .@map$,.@x,.@y,.@x,.@y,"--ja--",.@spawn[.@index],.@amount[.@index],.@event$;
+	if(.@mode == 2){
+		sleep 10000;
+		mapannounce .@map$,"The boss monster is trying to summon its allies.",0xFFFF00;
+		while(.@index < getarraysize(.@unit_id)){
+			if(unitexists(get_instance_var("boss_id"))){
+				getunitdata get_instance_var("boss_id"),.@data;
+				.@x = .@data[UMOB_X];
+				.@y = .@data[UMOB_Y];
+				areamonster .@map$,.@x - 3,.@y - 3,.@x + 3,.@y + 3,"--ja--",.@unit_id[.@index],.@unit_amount[.@index],.@event$;
+				.@index++;
+			} else 
+				break;
+			sleep 5000;
+		}
+	}
+OnUnitKill:
+end;
+
+OnMobKill:
+	.@poring_chance = 10;
+	.@map$ = get_instance_var("map$");
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill";
+	.@event2$ = instance_npcname(strnpcinfo(0)) + "::OnPoringKill";
+	.@floor = get_instance_var("floor");
+	if(!mobcount(.@map$,.@event$)){
+		if(rand(1,100) <= .@poring_chance)
+			instance_event(strnpcinfo(0),"OnSummonPoring",false);
+		sleep 5000;
+		killmonster .@map$,.@event2$;
+		if((.@floor%10) == 0)
+			instance_enable("#inf_treasure_" + .@floor,true);
+		if(.@floor == 50){
+			mapannounce .@map$,"Reckless Explorer : It seems there are no other way from here. It's dangerous, so you'd better return outside.",0xFFFF00;
+			instance_enable("#inf_explorer_2",true);
+		}
+		if(.@floor < 50){
+			if((.@floor%10) == 0)
+				mapannounce .@map$,"Reckless Explorer : This area is already clear. Use the passage and move to the next section.",0xFFFF00;
+			else
+				mapannounce .@map$,"Reckless Explorer : This area is already clear. Go through the passage to proceed to the next area.",0xFFFF00;
+			instance_enable("#inf_warp_" + .@floor,true);
+			set_instance_var("floor",.@floor + 1);
+			instance_event(strnpcinfo(0),"OnSummon",false);
+		}
+	}
+OnPoringKill:
+end;
+}
+
+1@infi,42,8,1	script	#inf_explorer_0	4_F_GON,{
+	.@mode = get_instance_var("mode");
+	if(is_party_leader() && !.@mode){
+		mes "[ Reckless Explorer ]";
+		mes "I have went in and out of this place many times and figured out a way to provoke the monsters in here. You can get more rewards if you're going to deal with more monsters.";
+		next;
+		mes "[ Reckless Explorer ]";
+		mes "What do you think? Would you like to try something challenging?";
+		next;
+		if(select("I want to proceed normally:I want to proceed with something difficult") == 1)
+			set_instance_var("mode",1);
+		else {
+			set_instance_var("mode",2);
+			set_instance_var("amount",2);
+			set_instance_var("hp",2);
+			set_instance_var("stats",2);
+			set_instance_var("boss_hp",5);
+		}
+		mes "[ Reckless Explorer ]";
+		mes "All right. Let's going going.";
+		close2;
+		instance_enable(strnpcinfo(0),false);
+		instance_hide("#inf_explorer_1",false);
+		npctalk "Reckless Explorer : Woah~ It's very neat for a sunken place, don't you think?",instance_npcname("#inf_explorer_1");
+		sleep 3000;
+		npctalk "Reckless Explorer : I believe this place used to be an ancient ruin. I can't believe how organize this place is...",instance_npcname("#inf_explorer_1");
+		sleep 3000;
+		npctalk "Reckless Explorer : Oh, did you hear something?",instance_npcname("#inf_explorer_1");
+		instance_event("#inf_space_mobs","OnSummon",false);
+		sleep 3000;
+		npctalk "Reckless Explorer : Oh, that's the monsters that's roaming around here.",instance_npcname("#inf_explorer_1");
+		sleep 3000;
+		npctalk "Reckless Explorer : It looks like it's not different from the one outside, but I can feel a strong energy within them.",instance_npcname("#inf_explorer_1");
+		sleep 3000;
+		npctalk "Reckless Explorer : Hm~ It looks dangerous, so I'll go back up. I'll go you directions from there where it's safe.",instance_npcname("#inf_explorer_1");
+		instance_hide("#inf_explorer_1",true);
+		instance_enable("#inf_explorer_1",false);
+	}
+	end;
+}
+
+1@infi,42,8,1	duplicate(dummynpc2)	#inf_explorer_1	4_F_GON
+
+1@infi,366,392,4	script	#inf_explorer_2	4_F_GON,{
+	mes "[ Reckless Explorer ]";
+	mes "I'll keep a separate record of this expedition. If you're lucky enough, you'll get credit for the expedition, and properly rewarded.";
+	next;
+	mes "[ Reckless Explorer ]";
+	mes "Then, shall we get out of here?";
+	close2;
+	warp "cmd_fild07",53,270;
+	end;
+}
+
+1@infi,30,369,3	script	#inf_treasure_10	4_TREASURE_BOX,{
+	if(is_party_leader()){
+		specialeffect EF_COIN;
+		sleep 1000;
+		.@mode = get_instance_var("mode");
+		if(.@mode == 1)
+			.@amount = rand(6,10);
+		else
+			.@amount = rand(12,20);
+		for(.@i = 0; .@i < .@amount; .@i++){
+			getmapxy(.@map$,.@x,.@y,BL_NPC);
+			switch(rand(1,4)){
+				case 1:
+					.@x += rand(1,4);
+					.@y += rand(1,4);
+					break;
+					
+				case 2:
+					.@x -= rand(1,4);
+					.@y += rand(1,4);
+					break;	
+	
+				case 3:
+					.@x += rand(1,4);
+					.@y -= rand(1,4);
+					break;
+	
+				case 4:
+					.@x -= rand(1,4);
+					.@y -= rand(1,4);
+					break;					
+			}
+			if(.@amount >= 1)
+				makeitem 6905,1,.@map$,.@x,.@y;
+			.@amount -= 1;
+		}
+		if(.@mode == 2){
+			setarray .@equip_id,1994,1938,13323,13126,28703,2024,16038,21014,28105,18128;
+			for(.@i = 0; .@i < getarraysize(.@equip_id); .@i++){
+				if(rand(1,100) <= 5){
+					getmapxy(.@map$,.@x,.@y,BL_NPC);
+					switch(rand(1,4)){
+						case 1:
+							.@x += rand(1,4);
+							.@y += rand(1,4);
+							break;
+							
+						case 2:
+							.@x -= rand(1,4);
+							.@y += rand(1,4);
+							break;	
+			
+						case 3:
+							.@x += rand(1,4);
+							.@y -= rand(1,4);
+							break;
+			
+						case 4:
+							.@x -= rand(1,4);
+							.@y -= rand(1,4);
+							break;					
+					}
+					makeitem2 .@equip_id[.@i],1,.@map$,.@x,.@y,0,0,0,0,0,0,0;
+				}
+			}
+		}
+		instance_hide(strnpcinfo(0),true);
+		instance_enable(strnpcinfo(0),false);
+	}
+	end;
+}
+
+1@infi,112,369,3	duplicate(#inf_treasure_10)	#inf_treasure_20	4_TREASURE_BOX
+1@infi,194,380,3	duplicate(#inf_treasure_10)	#inf_treasure_30	4_TREASURE_BOX
+1@infi,280,380,3	duplicate(#inf_treasure_10)	#inf_treasure_40	4_TREASURE_BOX
+1@infi,366,380,3	duplicate(#inf_treasure_10)	#inf_treasure_50	4_TREASURE_BOX
+
+1@infi,30,31,0	script	#inf_warp_1	WARPNPC,2,2,{
+	end;
+	
+OnTouch:
+	.@id = atoi(replacestr(strnpcinfo(2),"inf_warp_",""));
+	.@map$ = get_instance_var("map$");
+	switch(.@id){
+		case 1: .@x = 30; .@y = 41; break;
+		case 2: .@x = 30; .@y = 73; break;
+		case 3: .@x = 30; .@y = 105; break;
+		case 4: .@x = 30; .@y = 137; break;
+		case 5: .@x = 30; .@y = 220; break;
+		case 6: .@x = 30; .@y = 253; break;
+		case 7: .@x = 30; .@y = 285; break;
+		case 8: .@x = 30; .@y = 318; break;
+		case 9: .@x = 30; .@y = 349; break;
+		case 10: .@x = 112; .@y = 10; break;
+		case 11: .@x = 112; .@y = 41; break;
+		case 12: .@x = 112; .@y = 73; break;
+		case 13: .@x = 112; .@y = 105; break;
+		case 14: .@x = 112; .@y = 137; break;
+		case 15: .@x = 112; .@y = 220; break;
+		case 16: .@x = 112; .@y = 253; break;
+		case 17: .@x = 112; .@y = 285; break;
+		case 18: .@x = 112; .@y = 317; break;
+		case 19: .@x = 112; .@y = 349; break;
+		case 20: .@x = 198; .@y = 10; break;
+		case 21: .@x = 198; .@y = 41; break;
+		case 22: .@x = 198; .@y = 73; break;
+		case 23: .@x = 198; .@y = 105; break;
+		case 24: .@x = 198; .@y = 137; break;
+		case 25: .@x = 198; .@y = 220; break;
+		case 26: .@x = 198; .@y = 245; break;
+		case 27: .@x = 198; .@y = 277; break;
+		case 28: .@x = 198; .@y = 309; break;
+		case 29: .@x = 198; .@y = 341; break;
+		case 30: .@x = 280; .@y = 10; break;
+		case 31: .@x = 280; .@y = 41; break;
+		case 32: .@x = 280; .@y = 73; break;
+		case 33: .@x = 280; .@y = 105; break;
+		case 34: .@x = 280; .@y = 137; break;
+		case 35: .@x = 280; .@y = 220; break;
+		case 36: .@x = 280; .@y = 245; break;
+		case 37: .@x = 280; .@y = 277; break;
+		case 38: .@x = 280; .@y = 309; break;
+		case 39: .@x = 280; .@y = 341; break;
+		case 40: .@x = 362; .@y = 10; break;
+		case 41: .@x = 362; .@y = 41; break;
+		case 42: .@x = 362; .@y = 73; break;
+		case 43: .@x = 362; .@y = 105; break;
+		case 44: .@x = 362; .@y = 137; break;
+		case 45: .@x = 362; .@y = 220; break;
+		case 46: .@x = 362; .@y = 245; break;
+		case 47: .@x = 362; .@y = 277; break;
+		case 48: .@x = 362; .@y = 309; break;
+		case 49: .@x = 362; .@y = 341; break;
+		default: end;
+	}
+	warp .@map$,.@x,.@y;
+end;
+}
+
+1@infi,30,63,0	duplicate(#inf_warp_1)	#inf_warp_2	WARPNPC,2,2
+1@infi,30,95,0	duplicate(#inf_warp_1)	#inf_warp_3	WARPNPC,2,2
+1@infi,30,127,0	duplicate(#inf_warp_1)	#inf_warp_4	WARPNPC,2,2
+1@infi,30,168,0	duplicate(#inf_warp_1)	#inf_warp_5	WARPNPC,2,2
+1@infi,30,243,0	duplicate(#inf_warp_1)	#inf_warp_6	WARPNPC,2,2
+1@infi,30,275,0	duplicate(#inf_warp_1)	#inf_warp_7	WARPNPC,2,2
+1@infi,30,307,0	duplicate(#inf_warp_1)	#inf_warp_8	WARPNPC,2,2
+1@infi,30,339,0	duplicate(#inf_warp_1)	#inf_warp_9	WARPNPC,2,2
+1@infi,30,380,0	duplicate(#inf_warp_1)	#inf_warp_10	WARPNPC,2,2
+1@infi,112,31,0	duplicate(#inf_warp_1)	#inf_warp_11	WARPNPC,2,2
+1@infi,112,63,0	duplicate(#inf_warp_1)	#inf_warp_12	WARPNPC,2,2
+1@infi,112,95,0	duplicate(#inf_warp_1)	#inf_warp_13	WARPNPC,2,2
+1@infi,112,127,0	duplicate(#inf_warp_1)	#inf_warp_14	WARPNPC,2,2
+1@infi,112,168,0	duplicate(#inf_warp_1)	#inf_warp_15	WARPNPC,2,2
+1@infi,112,243,0	duplicate(#inf_warp_1)	#inf_warp_16	WARPNPC,2,2
+1@infi,112,275,0	duplicate(#inf_warp_1)	#inf_warp_17	WARPNPC,2,2
+1@infi,112,307,0	duplicate(#inf_warp_1)	#inf_warp_18	WARPNPC,2,2
+1@infi,112,339,0	duplicate(#inf_warp_1)	#inf_warp_19	WARPNPC,2,2
+1@infi,112,380,0	duplicate(#inf_warp_1)	#inf_warp_20	WARPNPC,2,2
+1@infi,198,31,0	duplicate(#inf_warp_1)	#inf_warp_21	WARPNPC,2,2
+1@infi,198,63,0	duplicate(#inf_warp_1)	#inf_warp_22	WARPNPC,2,2
+1@infi,198,95,0	duplicate(#inf_warp_1)	#inf_warp_23	WARPNPC,2,2
+1@infi,198,127,0	duplicate(#inf_warp_1)	#inf_warp_24	WARPNPC,2,2
+1@infi,198,168,0	duplicate(#inf_warp_1)	#inf_warp_25	WARPNPC,2,2
+1@infi,194,235,0	duplicate(#inf_warp_1)	#inf_warp_26	WARPNPC,2,2
+1@infi,194,267,0	duplicate(#inf_warp_1)	#inf_warp_27	WARPNPC,2,2
+1@infi,194,299,0	duplicate(#inf_warp_1)	#inf_warp_28	WARPNPC,2,2
+1@infi,194,331,0	duplicate(#inf_warp_1)	#inf_warp_29	WARPNPC,2,2
+1@infi,194,392,0	duplicate(#inf_warp_1)	#inf_warp_30	WARPNPC,2,2
+1@infi,280,31,0	duplicate(#inf_warp_1)	#inf_warp_31	WARPNPC,2,2
+1@infi,280,63,0	duplicate(#inf_warp_1)	#inf_warp_32	WARPNPC,2,2
+1@infi,280,95,0	duplicate(#inf_warp_1)	#inf_warp_33	WARPNPC,2,2
+1@infi,280,127,0	duplicate(#inf_warp_1)	#inf_warp_34	WARPNPC,2,2
+1@infi,280,168,0	duplicate(#inf_warp_1)	#inf_warp_35	WARPNPC,2,2
+1@infi,280,235,0	duplicate(#inf_warp_1)	#inf_warp_36	WARPNPC,2,2
+1@infi,280,267,0	duplicate(#inf_warp_1)	#inf_warp_37	WARPNPC,2,2	
+1@infi,280,299,0	duplicate(#inf_warp_1)	#inf_warp_38	WARPNPC,2,2
+1@infi,280,331,0	duplicate(#inf_warp_1)	#inf_warp_39	WARPNPC,2,2
+1@infi,280,392,0	duplicate(#inf_warp_1)	#inf_warp_40	WARPNPC,2,2
+1@infi,362,31,0	duplicate(#inf_warp_1)	#inf_warp_41	WARPNPC,2,2
+1@infi,362,63,0	duplicate(#inf_warp_1)	#inf_warp_42	WARPNPC,2,2
+1@infi,362,95,0	duplicate(#inf_warp_1)	#inf_warp_43	WARPNPC,2,2
+1@infi,362,127,0	duplicate(#inf_warp_1)	#inf_warp_44	WARPNPC,2,2
+1@infi,362,168,0	duplicate(#inf_warp_1)	#inf_warp_45	WARPNPC,2,2
+1@infi,366,235,0	duplicate(#inf_warp_1)	#inf_warp_46	WARPNPC,2,2
+1@infi,366,267,0	duplicate(#inf_warp_1)	#inf_warp_47	WARPNPC,2,2
+1@infi,366,299,0	duplicate(#inf_warp_1)	#inf_warp_48	WARPNPC,2,2
+1@infi,366,331,0	duplicate(#inf_warp_1)	#inf_warp_49	WARPNPC,2,2
+
+1@infi	mapflag	nowarp
+1@infi	mapflag	nomemo
+1@infi	mapflag	noteleport
+1@infi	mapflag	monster_noteleport
+1@infi	mapflag	nosave
+1@infi	mapflag	nobranch
+1@infi	mapflag	nowarpto
+1@infi	mapflag	noicewall
+1@infi	mapflag	restricted	9
