@@ -1179,6 +1179,7 @@ enum sc_type : int16 {
 	SC_T_FOURTH_GOD,
 	SC_T_FIFTH_GOD,
 	SC_HEAVEN_AND_EARTH,
+	SC_TOTEM_OF_TUTELARY,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled

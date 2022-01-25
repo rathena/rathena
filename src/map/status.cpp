@@ -5917,9 +5917,9 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			int bonus = sc->data[SC_TALISMAN_OF_FIVE_ELEMENTS]->val2;
 			
 			for( e_element element : elements ){
-				sd->indexed_bonus.magic_atk_ele += bonus;
-				sd->right_weapon.addele[ELE_FIRE] += bonus;
-				sd->left_weapon.addele[ELE_FIRE] += bonus;
+				sd->indexed_bonus.magic_atk_ele[0] += bonus;
+				sd->right_weapon.addele[0] += bonus;
+				sd->left_weapon.addele[0] += bonus;
 			}
 		}
 		if( sc->data[SC_HEAVEN_AND_EARTH] ) {

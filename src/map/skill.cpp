@@ -16299,21 +16299,18 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 			++sg->val1;
 			if( bl->type == BL_PC ) {
 				if (sg->val1 % 3 == 0) {
-					int64 hp, sp, ap;
+					int hp, sp, ap;
 
 					hp = 1000 + 500 * sg->skill_lv + 5 * tstatus->crt + 7 * status_get_lv(bl) + 50 * pc_checkskill(tsd, SOA_TALISMAN_MASTERY);
 					sp = 50 + 50 * sg->skill_lv + 5 * tstatus->crt + 7 * status_get_lv(bl) + 5 * pc_checkskill(tsd, SOA_TALISMAN_MASTERY);
 					ap = 0;
 					
-					if (tstatus->hp < tstatus->max_hp)
-						clif_skill_nodamage(&unit->bl, bl, AL_HEAL, hp, 1);
-					if (tstatus->sp < tstatus->max_sp)
-						clif_skill_nodamage(&unit->bl, bl, MG_SRECOVERY, sp, 1);
-					if( tsc && tsc->data[SC_HEAVEN_AND_EARTH] && tstatus->max_ap != 0 ){
+					if( tsc && tsc->data[SC_HEAVEN_AND_EARTH] ){
 						ap = 3 * tsc->data[SC_HEAVEN_AND_EARTH]->val1;
-						if (tstatus->ap < tstatus->max_ap)
-						clif_skill_nodamage(&unit->bl, bl, EM_INCREASING_ACTIVITY, ap, 1);
 					}
+						clif_skill_nodamage(&unit->bl, bl, AL_HEAL, hp, 1);
+						clif_skill_nodamage(&unit->bl, bl, MG_SRECOVERY, sp, 1);
+					
 						status_heal(bl, hp, sp, ap, 0);
 				}
 				sc_start(ss, bl, SC_TOTEM_OF_TUTELARY, 100, sg->skill_lv, sg->interval + 100);
