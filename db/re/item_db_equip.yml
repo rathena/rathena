@@ -6070,6 +6070,7 @@ Body:
       Swordman: true
     Classes:
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -19038,6 +19039,7 @@ Body:
       BardDancer: true
     Classes:
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -20974,6 +20976,7 @@ Body:
       Wizard: true
     Classes:
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -72831,6 +72834,7 @@ Body:
       Rogue: true
     Classes:
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -118194,6 +118198,7 @@ Body:
       BardDancer: true
     Classes:
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -119457,6 +119462,7 @@ Body:
       Knight: false
     Classes:
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -123981,6 +123987,7 @@ Body:
       StarGladiator: true
     Classes:
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -134895,6 +134902,7 @@ Body:
       Knight: true
     Classes:
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -139614,7 +139622,7 @@ Body:
     Type: Armor
     View: 1552
     Locations:
-      Head_Top: true
+      Head_Mid: true
     ArmorLevel: 1
     Script: |
       bonus bMatk,20;
@@ -139626,7 +139634,7 @@ Body:
     View: 1552
     Slots: 1
     Locations:
-      Head_Top: true
+      Head_Mid: true
     ArmorLevel: 1
     Script: |
       bonus bMatk,10;
