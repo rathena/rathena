@@ -23983,3 +23983,70 @@ Body:
       bonus bLongAtkDef,2*(.@r/2);
       if (.@r>=12)
          bonus2 bSubRace,RC_All,15;
+  - Combos:
+      - Combo:
+          - Thanos_Helm2_LT     # 400142
+          - Thanos_Sword_AD     # 500024
+    Script: |
+      bonus2 bAddSize,Size_All,15;
+      bonus2 bSkillAtk,"GN_CARTCANNON",12*(getequiprefinerycnt(EQI_HAND_R)/2);
+  - Combos:
+      - Combo:
+          - Thanos_Helm2_LT     # 400142
+          - Thanos_Violin_AD     # 570016
+      - Combo:
+          - Thanos_Helm2_LT     # 400142
+          - Thanos_Whip_AD     # 580016
+    Script: |
+      bonus bLongAtkRate,15;
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",12*(getequiprefinerycnt(EQI_HAND_R)/2);
+  - Combos:
+      - Combo:
+          - Thanos_Helm2_LT     # 400142
+          - Thanos_Bow_AD     # 700029
+    Script: |
+      bonus2 bAddRace,RC_All,15;
+      bonus2 bSkillAtk,"SN_SHARPSHOOTING",12*(getequiprefinerycnt(EQI_HAND_R)/2);
+  - Combos:
+      - Combo:
+          - Thanos_Helm3_LT     # 400145
+          - Thanos_Dagger_AD     # 510030
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,15;
+      bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",12*(getequiprefinerycnt(EQI_HAND_R)/2);
+  - Combos:
+      - Combo:
+          - Thanos_Helm3_LT     # 400145
+          - Thanos_Staff_AD     # 550023
+    Script: |
+      bonus2 bMagicAddRace,RC_All,15;
+      bonus2 bSkillAtk,"SO_VARETYR_SPEAR",12*(getequiprefinerycnt(EQI_HAND_R)/2);
+  - Combos:
+      - Combo:
+          - Thanos_Helm3_LT     # 400145
+          - Thanos_Rod_AD     # 640017
+    Script: |
+      bonus2 bMagicAddSize,Size_All,15;
+      bonus2 bSkillAtk,"WL_CRIMSONROCK",12*(getequiprefinerycnt(EQI_HAND_R)/2);
+  - Combos:
+      - Combo:
+          - Thanos_Helm4_LT     # 400151
+          - Thanos_Knuckle_AD     # 560017
+    Script: |
+      bonus bMaxHPrate,15;
+      bonus2 bSkillAtk,"SR_TIGERCANNON",12*(getequiprefinerycnt(EQI_HAND_R)/2);
+  - Combos:
+      - Combo:
+          - Thanos_Helm4_LT     # 400151
+          - Thanos_Hammer_AD     # 590020
+    Script: |
+      bonus2 bAddSize,Size_All,15;
+      bonus2 bMagicAddSize,Size_All,15;
+      bonus2 bSkillAtk,"AB_DUPLELIGHT",12*(getequiprefinerycnt(EQI_HAND_R)/2);
+  - Combos:
+      - Combo:
+          - Thanos_Helm4_LT     # 400151
+          - Thanos_Katar_AD     # 610019
+    Script: |
+      bonus bDelayrate,-15;
+      bonus2 bSkillAtk,"GC_ROLLINGCUTTER",12*(getequiprefinerycnt(EQI_HAND_R)/2);
