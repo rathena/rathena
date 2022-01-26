@@ -6,6 +6,7 @@
 //===== Changelogs: ==========================================
 //= 1.0 Initial release [crazyarashi]
 //= 1.1 Removed unecessary use of functions [Everade]
+//= 1.2 Added warp scroll merchant [Everade]
 //============================================================
 
 // Food Merchant
@@ -19,7 +20,38 @@ cmd_fild07,63,268,1	script	Emergency Food Merchant#pa0829_01	4_M_BIBI,{
 	end;
 }
 
-// Gear Shop
+// Warp Scroll Seller
+cmd_fild07,375,167,1	script	Ruins Black Trader#pa0829_01	4_F_JOB_HUNTER,{
+	mes "[Ruins Black Trader]";
+	mes "Hey, isn't it hard to walk in and out of here every time? For just ^0000ff20,000^000000 Zeny, you can have a scroll that will take you directly to the entrance of the ruins, what do you think?";
+Purchase:
+	next;
+	switch( select( "Give me one", "I don't think so" )) {
+		case 1:
+			if (!checkweight(22980,1) || (MaxWeight - Weight) < 1000) {
+				mes "You can't proceed with the conversation because you have a large quantity of items.";
+				mes "Please organize your items and try again.";
+				close;
+			}
+			else if (Zeny < 20000) {
+				mes "[Ruins Black Trader]";
+				mes "You don't seem to have any more money. A scroll costs 20,000 Zenny.";
+				close;
+			}
+			Zeny -= 20000;
+			getitem 22980,1;
+			mes "[Ruins Black Trader]";
+			mes "It was a good deal. Need more?";
+			goto Purchase;
+		case 2:
+			mes "[Ruins Black Trader]";
+			mes "Come back anytime";
+			break;
+	}
+	end;
+}
+
+// Equipment Shop
 cmd_fild07,57,275,5	script	Artifact Appraiser#pa0829_01	1_F_02,{
 	if (!checkweight(1201,1) || (MaxWeight - Weight) < 1000) {
 		mes "You can't proceed with the conversation because you have a large quantity of items.";

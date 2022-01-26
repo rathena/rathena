@@ -47703,6 +47703,13 @@ Body:
     Script: |
       sc_start SC_EXPBOOST,1800000,50;
       sc_start SC_ITEMBOOST,1800000,100;
+  - Id: 22980
+    AegisName: InfinityD_ReturnScroll
+    Name: Return of Infinite Dungeon
+    Type: Usable
+    Weight: 10
+    Script: |
+      warp "cmd_fild07",83,270;
   - Id: 22984
     AegisName: Dr_Life_Potion_01
     Name: Kahluna Milk
