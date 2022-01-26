@@ -35,7 +35,7 @@ Purchase:
 			}
 			else if (Zeny < 20000) {
 				mes "[Ruins Black Trader]";
-				mes "You don't seem to have any more money. A scroll costs 20,000 Zenny.";
+				mes "You don't seem to have any more money. A scroll costs 20,000 Zeny.";
 				close;
 			}
 			Zeny -= 20000;
