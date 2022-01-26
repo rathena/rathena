@@ -51624,6 +51624,81 @@ Body:
       Container: true
     Script: |
       getitem callfunc("F_Rand",24157,24163,24164,24156,24160,24159,24165,24161,24162,24158),1;
+  - Id: 100900
+    AegisName: Teleport_Ep19_01
+    Name: Ice Castle Transport Wing
+    Type: Usable
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      warp "icas_in",175,63;
+  - Id: 100901
+    AegisName: Teleport_Ep18_01
+    Name: Gray Wolf Village Transport Wing
+    Type: Usable
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      warp "wolfvill",164,141;
+  - Id: 100902
+    AegisName: Teleport_Ep17_02
+    Name: Barmund Mansion Transport Wing
+    Type: Usable
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      warp "ba_in",87,389;
+  - Id: 100903
+    AegisName: Teleport_Ep17_01
+    Name: Border Area Cor Transport Wing
+    Type: Usable
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      warp "sp_cor",152,158;
+  - Id: 100904
+    AegisName: Teleport_Ep16_01
+    Name: Military Base Transport Wing
+    Type: Usable
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      warp "rebel_in",100,40;
   - Id: 100908
     AegisName: aegis_100908
     Name: Magic Piercing Shadow Box
@@ -51640,6 +51715,256 @@ Body:
     Weight: 10
     Script: |
       percentheal 30,30;
+  - Id: 101162
+    AegisName: Ep19_Rgan_Scroll
+    Name: Transformation Scroll (Rgan)
+    Type: Usable
+    Buy: 20
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      transform 21530,1200000; /* Confirm time */
+      bonus_script " bonus2 bAddItemHealRate,1100006,100; ",120,1,1;
+  - Id: 101183
+    AegisName: Ice_F_Stone_Box
+    Name: Ice Magic Stone Box
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* Missing description */
+  - Id: 101184
+    AegisName: Ice_F_Stone_Box2
+    Name: Ice Magic Stone Box 2
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* Missing description */
+  - Id: 101185
+    AegisName: Snow_F_Enchant
+    Name: Snowflower Armor Enchant (Armor)
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* Missing description */
+  - Id: 101186
+    AegisName: Glacier_W_Enchant
+    Name: Glacier Weapon Enchantment
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* Missing description */
+  - Id: 101187
+    AegisName: Snow_F_Refine
+    Name: Snowflower Armor 9 Refine Cube
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* upgradeui 101187; */
+  - Id: 101188
+    AegisName: Glacier_W_Refine
+    Name: Glacier Weapon 9 Refine Cube
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* upgradeui 101188; */
+  - Id: 101217
+    AegisName: Snow_F_Enchant2
+    Name: Snowflower Armor Enchant (Garment)
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* Missing description */
+  - Id: 101218
+    AegisName: Snow_F_Enchant3
+    Name: Snowflower Armor Enchant (Shoes)
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* Missing description */
+  - Id: 101219
+    AegisName: Snow_F_Enchant4
+    Name: Snowflower Armor Enchant (Accessory A)
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* Missing description */
+  - Id: 101220
+    AegisName: Snow_F_Enchant5
+    Name: Snowflower Armor Enchant (Accessory B)
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* Missing description */
+  - Id: 101271
+    AegisName: aegis_101271
+    Name: Costume Enchant Stone Box 26
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_Enchant_Stone_Box26);
+  - Id: 101276
+    AegisName: New_Year_Rice_Soup
+    Name: New Year Rice Soup
+    Type: Usable
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      percentheal 30,30;
+  - Id: 200185
+    AegisName: LI_Nyangvine_Box1_26
+    Name: (Limited) Actinidia Cat Fruit Box I (Stone Box 26)
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_LI_Nyangvine_Box1_26);
+  - Id: 200186
+    AegisName: LI_Nyangvine_Box2_26
+    Name: (Limited) Actinidia Cat Fruit Box II (Stone Box 26)
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_LI_Nyangvine_Box2_26);
+  - Id: 200187
+    AegisName: LI_Nyangvine_Box3_26
+    Name: (Limited) Actinidia Cat Fruit Box III (Stone Box 26)
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_LI_Nyangvine_Box3_26);
   - Id: 1100003
     AegisName: Concentrated_R_P
     Name: Concentrated Red Potion
@@ -51667,3 +51992,12 @@ Body:
     EquipLevelMin: 180
     Script: |
       itemheal rand(2730,2750),0;
+  - Id: 1100006
+    AegisName: aegis_1100006
+    Name: Dried Ice Gangu
+    Type: Healing
+    Buy: 10
+    Weight: 5
+    EquipLevelMin: 200
+    Script: |
+      itemheal 1925,0;

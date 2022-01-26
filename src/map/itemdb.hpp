@@ -764,6 +764,10 @@ enum e_random_item_group {
 	IG_HAPPY_BOX_J,
 	IG_CLASS_SHADOW_CUBE,
 	IG_SEALED_SCROLL,
+	IG_LI_Nyangvine_Box1_26,
+	IG_LI_Nyangvine_Box2_26,
+	IG_LI_Nyangvine_Box3_26,
+	IG_Enchant_Stone_Box26,
 
 	IG_MAX,
 };

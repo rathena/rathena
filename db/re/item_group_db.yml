@@ -23759,4 +23759,162 @@ Body:
             Rate: 1250
           - Item: C_Wing_Of_Fly_1Day_Box
             Rate: 1250
+  - Group: LI_Nyangvine_Box1_26
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Actinidia_Cat_Fruit
+            Amount: 100
+          - Item: aegis_101271
+            Amount: 2
+          - Item: Comp_Bubble_Gum
+            Amount: 3
+  - Group: LI_Nyangvine_Box2_26
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Actinidia_Cat_Fruit
+            Amount: 200
+          - Item: aegis_101271
+            Amount: 2
+          - Item: Battle_Manual100
+            Amount: 2
+  - Group: LI_Nyangvine_Box3_26
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Actinidia_Cat_Fruit
+            Amount: 400
+          - Item: aegis_101271
+            Amount: 2
+          - Item: Comp_Bubble_Gum
+            Amount: 5
+          - Item: Battle_Manual100
+            Amount: 5
+  - Group: Enchant_Stone_Box26
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: aegis_1000855
+            Rate: 1
+          - Item: aegis_1000856
+            Rate: 1
+          - Item: Critical_Stone_Robe
+            Rate: 2
+          - Item: CastingStone_Robe
+            Rate: 2
+          - Item: SPdrainStone_Robe_D
+            Rate: 4
+          - Item: SPdrainStone_Top
+            Rate: 8
+          - Item: CastStone_Robe
+            Rate: 8
+          - Item: ASPDStone_Top
+            Rate: 16
+          - Item: ASPDStone_Robe_D
+            Rate: 8
+          - Item: HPdrainStone_Robe_D
+            Rate: 8
+          - Item: ElectricEffect_Middle
+            Rate: 16
+          - Item: ArchbishopStone_Robe
+            Rate: 8
+          - Item: ArchbishopStone_II_Garment
+            Rate: 8
+          - Item: RangerStone_Robe
+            Rate: 8
+          - Item: RangerStone_II_Garment
+            Rate: 8
+          - Item: ShadowchaserStone_Robe
+            Rate: 8
+          - Item: ShadowchaserStone_Robe2
+            Rate: 8
+          - Item: aegis_1000857
+            Rate: 8
+          - Item: aegis_1000858
+            Rate: 8
+          - Item: aegis_1000859
+            Rate: 8
+          - Item: aegis_1000860
+            Rate: 8
+          - Item: aegis_1000861
+            Rate: 8
+          - Item: aegis_1000862
+            Rate: 8
+          - Item: aegis_1000863
+            Rate: 8
+          - Item: aegis_1000864
+            Rate: 8
+          - Item: aegis_1000865
+            Rate: 8
+#         - Item: aegis_100465  # 3rd/Expanded Stone (Garment) Box
+#           Rate: 16
+#         - Item: aegis_100495  # 3rd/Expanded Stone II (Garment) Box
+#           Rate: 16
+          - Item: ReloadStone_Top
+            Rate: 24
+          - Item: ReloadStone_Middle
+            Rate: 24
+          - Item: ReloadStone_Bottom
+            Rate: 24
+          - Item: HighpriestStone_Top
+            Rate: 15
+          - Item: HighpriestStone_Middle
+            Rate: 15
+          - Item: HighpriestStone_Bottom
+            Rate: 15
+          - Item: HighpriestStone_II_Top
+            Rate: 15
+          - Item: HighpriestStone_II_Middle
+            Rate: 15
+          - Item: HighpriestStone_II_Bottom
+            Rate: 15
+          - Item: RangerStone_Top
+            Rate: 15
+          - Item: RangerStone_Middle
+            Rate: 15
+          - Item: RangerStone_Bottom
+            Rate: 15
+          - Item: RangerStone_II_Top
+            Rate: 15
+          - Item: RangerStone_II_Middle
+            Rate: 15
+          - Item: RangerStone_II_Bottom
+            Rate: 15
+          - Item: ShadowchaserStone_Top
+            Rate: 15
+          - Item: ShadowchaseStone_Middle
+            Rate: 15
+          - Item: ShadowchaseStone_Bottom
+            Rate: 15
+          - Item: ShadowchasStone_Bottom2
+            Rate: 15
+          - Item: ShadowchasStone_Middle2
+            Rate: 15
+          - Item: ShadowchaserStone_Top2
+            Rate: 15
+#         - Item: aegis_100496  # Rebirth/Expanded Stone (Top) Box
+#           Rate: 36
+#         - Item: aegis_100497  # Rebirth/Expanded Stone II (Top) Box
+#           Rate: 36
+#         - Item: aegis_100498  # Rebirth/Expanded Stone (Middle) Box
+#           Rate: 36
+#         - Item: aegis_100499  # Rebirth/Expanded Stone II (Middle) Box
+#           Rate: 36
+#         - Item: aegis_100500  # Rebirth/Expanded Stone (Bottom) Box
+#           Rate: 36
+#         - Item: aegis_100501  # Rebirth/Expanded Stone II (Bottom) Box
+#           Rate: 36
+          - Item: CastingStone_Top
+            Rate: 36
+          - Item: CastingStone_Middle
+            Rate: 36
+          - Item: CastingStone_Bottom
+            Rate: 36
+          - Item: Critical_Stone
+            Rate: 36
+          - Item: Critical_Stone_Top
+            Rate: 36
+          - Item: Critical_Stone_Bottom
+            Rate: 36
 

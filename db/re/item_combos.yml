@@ -23606,3 +23606,232 @@ Body:
       bonus bSmatk,2;
       bonus2 bAddClass,Class_All,10;
       bonus bMatkRate,10;
+  - Combos:
+     - Combo:
+          - aegis_300361  # 300361 Ice Straw Card
+          - aegis_300359  # 300359 Ice Gangu Card
+    Script: |
+      bonus bMatkRate,10;
+  - Combos:
+     - Combo:
+          - aegis_300362  # 300362 Unfrost Flower Card
+          - aegis_300360  # 300360 Shining Seaweed Card
+    Script: |
+      bonus2 bAddClass,Class_All,10;
+  - Combos:
+     - Combo:
+          - aegis_300367  # 300367 Lesser Rgan Card
+          - aegis_300365  # 300365 Primal Rgan Card
+    Script: |
+        bonus bVariableCastrate,-8;
+  - Combos:
+     - Combo:
+          - aegis_300368  # 300368 Intermediate Rgan Card
+          - aegis_300366  # 300366 Minor Rgan Card
+    Script: |
+        bonus bCritAtkRate,10;
+  - Combos:
+     - Combo:
+          - aegis_300372  # 300372 Cave Flower Card
+          - aegis_300369  # 300369 Wasted Primal Card
+    Script: |
+        bonus2 bSubEle,Ele_Neutral,5;
+  - Combos:
+     - Combo:
+          - aegis_300374  # 300374 Hallucigenia Card
+          - aegis_300373  # 300373 Hallucigenia Baby Card
+    Script: |
+      bonus2 bSubDefEle,Ele_Earth,9;
+      bonus2 bMagicSubDefEle,Ele_Earth,9;
+      bonus2 bSubRace,RC_Insect,9;
+      bonus2 bWeaponSubSize,Size_Small,9;
+      bonus2 bMagicSubSize,Size_Small,9;
+  - Combos:
+     - Combo:
+          - aegis_300381  # 300381 Hearthunter AT Card
+          - aegis_300363  # 300363 Limacina Card
+    Script: |
+      bonus2 bAddClass,Class_All,10;
+  - Combos:
+     - Combo:
+          - Snowflower_Armor  # 450206
+          - Snowflower_Manteau  # 480159
+    Script: |
+      bonus bBaseAtk,50;
+  - Combos:
+     - Combo:
+          - Snowflower_Armor  # 450206
+          - Snowflower_Muffler  # 480160
+    Script: |
+      bonus bDelayrate,10;
+  - Combos:
+     - Combo:
+          - Snowflower_Robe  # 450207
+          - Snowflower_Manteau  # 480159
+    Script: |
+        bonus bAspdRate,10;
+  - Combos:
+     - Combo:
+          - Snowflower_Robe  # 450207
+          - Snowflower_Muffler  # 480160
+    Script: |
+      bonus bMatk,50;
+  - Combos:
+     - Combo:
+          - Snowflower_Boots  # 470115
+          - Snowflower_Armor  # 450206
+    Script: |
+      bonus2 bAddClass,Class_All,7;
+  - Combos:
+     - Combo:
+          - Snowflower_Boots  # 470115
+          - Snowflower_Robe  # 450207
+    Script: |
+      bonus bAspdRate,7;
+  - Combos:
+     - Combo:
+          - Snowflower_Shoes  # 470116
+          - Snowflower_Armor  # 450206
+    Script: |
+      bonus bVariableCastrate,-7;
+  - Combos:
+     - Combo:
+          - Snowflower_Shoes  # 470116
+          - Snowflower_Robe  # 450207
+    Script: |
+      bonus bMatkRate,7;
+  - Combos:
+     - Combo:
+          - Snowflower_Manteau  # 480159
+          - Snowflower_Boots  # 470115
+    Script: |
+      bonus bCritAtkRate,15;
+  - Combos:
+     - Combo:
+          - Snowflower_Manteau  # 480159
+          - Snowflower_Shoes  # 470116
+    Script: |
+      bonus bVariableCastrate,-15;
+  - Combos:
+     - Combo:
+          - Snowflower_Muffler  # 480160
+          - Snowflower_Boots  # 470115
+    Script: |
+     bonus bLongAtkRate,7;
+  - Combos:
+     - Combo:
+          - Snowflower_Muffler  # 480160
+          - Snowflower_Shoes  # 470116
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,15;
+  - Combos:
+     - Combo:
+          - aegis_311356  # 311356 Archbishop Stone (Top)
+          - ArchbishopStone_Robe_ # 29516
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,15;
+  - Combos:
+     - Combo:
+          - aegis_311356  # 311356 Archbishop Stone (Top)
+          - Archbishop_Robe2  # 310011
+    Script: |
+      bonus2 bMagicAddSize,Size_All,15;
+  - Combos:
+     - Combo:
+          - aegis_311357  # 311357 Archbishop Stone (Middle)
+          - ArchbishopStone_Robe_ # 29516
+    Script: |
+      bonus2 bSkillAtk,"AB_ADORAMUS",15;
+  - Combos:
+     - Combo:
+          - aegis_311357  # 311357 Archbishop Stone (Middle)
+          - Archbishop_Robe2  # 310011
+    Script: |
+      bonus2 bSkillAtk,"AB_JUDEX",15;
+  - Combos:
+     - Combo:
+          - aegis_311358  # 311358 Archbishop Stone (Bottom)
+          - ArchbishopStone_Robe_ # 29516
+    Script: |
+      bonus2 bMagicAddRace,RC_All,15;
+      bonus2 bMagicAddRace,RC_Brute,-15;
+      bonus2 bMagicAddRace,RC_Player_Doram,-15;
+  - Combos:
+     - Combo:
+          - aegis_311358  # 311358 Archbishop Stone (Bottom)
+          - Archbishop_Robe2  # 310011
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,15;
+  - Combos:
+     - Combo:
+          - aegis_311359  # 311359 Ranger Stone (Top)
+          - RangerStone_Robe_ # 29431
+    Script: |
+      bonus2 bSkillCooldown,"RA_UNLIMIT",-45000;
+  - Combos:
+     - Combo:
+          - aegis_311359  # 311359 Ranger Stone (Top)
+          - Ranger_Robe2  # 310003
+    Script: |
+      bonus2 bSkillAtk,"SN_SHARPSHOOTING",15;
+  - Combos:
+     - Combo:
+          - aegis_311360  # 311360 Ranger Stone (Middle)
+          - RangerStone_Robe_ # 29431
+    Script: |
+      bonus2 bSkillAtk,"RA_ARROWSTORM",15;
+  - Combos:
+     - Combo:
+          - aegis_311360  # 311360 Ranger Stone (Middle)
+          - Ranger_Robe2  # 310003
+    Script: |
+      bonus2 bSkillAtk,"RA_AIMEDBOLT",15;
+  - Combos:
+     - Combo:
+          - aegis_311361  # 311361 Ranger Stone (Bottom)
+          - RangerStone_Robe_ # 29431
+    Script: |
+      bonus2 bSPDrainRate,20,1;
+  - Combos:
+     - Combo:
+          - aegis_311361  # 311361 Ranger Stone (Bottom)
+          - Ranger_Robe2  # 310003
+    Script: |
+      bonus2 bAddSize,Size_All,15;
+
+  - Combos:
+     - Combo:
+          - aegis_311362  # 311362 Shadow Chaser Stone (Top)
+          - ShadowchaserStone_Robe_ # 29480
+    Script: |
+      bonus2 bSkillAtk,"SC_FEINTBOMB",15;
+  - Combos:
+     - Combo:
+          - aegis_311362  # 311362 Shadow Chaser Stone (Top)
+          - ShadowchaserStone_Robe2_  # 29618
+    Script: |
+      bonus2 bSPDrainRate,10,1;
+  - Combos:
+     - Combo:
+          - aegis_311363  # 311363 Shadow Chaser Stone (Middle)
+          - ShadowchaserStone_Robe_ # 29480
+    Script: |
+      bonus2 bSkillAtk,"SC_TRIANGLESHOT",15;
+  - Combos:
+     - Combo:
+          - aegis_311363  # 311363 Shadow Chaser Stone (Middle)
+          - ShadowchaserStone_Robe2_  # 29618
+    Script: |
+      bonus2 bSkillAtk,"SC_FATALMENACE",15;
+  - Combos:
+     - Combo:
+          - aegis_311364  # 311364 Shadow Chaser Stone (Bottom)
+          - ShadowchaserStone_Robe_ # 29480
+    Script: |
+      bonus2 bAddEle,Ele_All,15;
+  - Combos:
+     - Combo:
+          - aegis_311364  # 311364 Shadow Chaser Stone (Bottom)
+          - ShadowchaserStone_Robe2_  # 29618
+    Script: |
+      bonus2 bAddSize,Size_All,15;

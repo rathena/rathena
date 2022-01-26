@@ -90203,6 +90203,15 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 501
+  - Id: 19867
+    AegisName: C_Pink_Pajamas_Hat
+    Name: Costume Pink Pajama Hat
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 502
   - Id: 19871
     AegisName: C_Music_Decoration
     Name: Costume Decoration of Music
@@ -139463,6 +139472,42 @@ Body:
       bonus2 bMagicAddRace,RC_Player_Human,10;
       bonus2 bMagicAddRace,RC_Player_Doram,10;
       bonus bMatkRate,3;
+  - Id: 436006
+    AegisName: C_Ep19_Rgan
+    Name: Costume Rgan Disguise Tool    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2144
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 436007
+    AegisName: C_Ep19_Iwin
+    Name: Costume Iwin Cold Protection Helmet    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2143
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 436008
     AegisName: aegis_436008
     Name: Costume Congratulation    # !todo check english name
@@ -144391,6 +144436,48 @@ Body:
             }
          }
       }
+  - Id: 450206
+    AegisName: Snowflower_Armor
+    Name: Snowflower Armor
+    Type: Armor
+    Weight: 800
+    Defense: 150
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 2
+    EquipLevelMin: 210
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,130+15*(.@r/2);
+      if (.@r>=7) {
+        bonus bAspdRate,15;
+        if (.@r>=9) {
+          bonus bPAtk,2;
+        }
+      }
+  - Id: 450207
+    AegisName: Snowflower_Robe
+    Name: Snowflower Robe
+    Type: Armor
+    Weight: 800
+    Defense: 150
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 2
+    EquipLevelMin: 210
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,130+15+(.@r/2);
+      if (.@r>=7) {
+        bonus bVariableCastrate,-15;
+        if (.@r>=9) {
+          bonus bSMatk,2;
+        }
+      }
   - Id: 460005
     AegisName: MD_Geffen_Shield
     Name: Magic Absorber
@@ -145702,6 +145789,51 @@ Body:
                }
             }
          }
+      }
+  - Id: 470115
+    AegisName: Snowflower_Boots
+    Name: Snowflower Boots
+    Type: Armor
+    Weight: 500
+    Defense: 70
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 2
+    EquipLevelMin: 210
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,8;
+      bonus bMaxSPrate,4+1*(.@r/2);
+      if (.@r>=7) {
+        bonus bShortAtkRate,7;
+        bonus bLongAtkRate,7;
+        if (.@r>=9) {
+          bonus bPAtk,2;
+        }
+      }
+  - Id: 470116
+    AegisName: Snowflower_Shoes
+    Name: Snowflower Shoes
+    Type: Armor
+    Weight: 500
+    Defense: 70
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 2
+    EquipLevelMin: 210
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,6;
+      bonus bMaxSPrate,6+1*(.@r/2);
+      if (.@r>=7) {
+        bonus2 bMagicAtkEle,Ele_All,7;
+        if (.@r=>9) {
+          bonus bSMatk,2;
+        }
       }
   - Id: 480000
     AegisName: Attacker_Booster_Manteau_
@@ -147073,6 +147205,50 @@ Body:
                }
             }
          }
+      }
+  - Id: 480159
+    AegisName: Snowflower_Manteau
+    Name: Snowflower Manteau
+    Type: Armor
+    Weight: 900
+    Defense: 70
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 2
+    EquipLevelMin: 210
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHP,2500+200*(.@r/2);
+      bonus bMaxSP,500+50*(.@r/2);
+      if (.@r>=7) {
+        bonus bAspdRate,7;
+        if (.@r>=9) {
+          bonus bPow,3;
+        }
+      }
+  - Id: 480160
+    AegisName: Snowflower_Muffler
+    Name: Snowflower Muffler
+    Type: Armor
+    Weight: 900
+    Defense: 70
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 2
+    EquipLevelMin: 210
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHP,2000+150*(.@r/2);
+      bonus bMaxSP,1000+100*(.@r/2);
+      if (.@r>=7) {
+        bonus bVariableCastrate,-7;
+        if (.@r>=9) {
+          bonus bSpl,3;
+        }
       }
   - Id: 490004
     AegisName: Attacker_Booster_Ring
@@ -149021,6 +149197,58 @@ Body:
       bonus bMatkRate,10;
       bonus2 bAddClass,Class_All,10;
       bonus bVariableCastrate,-10;
+  - Id: 490176
+    AegisName: Snowflower_Pendant
+    Name: Snowflower Pendant
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 210
+    Script: |
+      bonus2 bAddClass,Class_All,7;
+      bonus bMaxHPrate,7;
+  - Id: 490177
+    AegisName: Snowflower_Ring
+    Name: Snowflower Ring
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Left_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 210
+    Script: |
+      bonus2 bAddClass,Class_All,7;
+      bonus bMaxSPrate,7;
+  - Id: 490178
+    AegisName: Snowflower_Necklace
+    Name: Snowflower Necklace
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 210
+    Script: |
+      bonus bMatkRate,7;
+      bonus bMaxHPrate,7;
+  - Id: 490179
+    AegisName: Snowflower_Earring
+    Name: Snowflower Earring
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Left_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 210
+    Script: |
+      bonus bMatkRate,7;
+      bonus bMaxSPrate,7;
   - Id: 490180
     AegisName: aegis_490180
     Name: Mark of a Hero (Meister)    # !todo check english name
@@ -150503,6 +150731,22 @@ Body:
             }
          }
       }
+  - Id: 500050
+    AegisName: Glacier_B_Sword
+    Name: Glacier Basic Sword
+    Type: Weapon
+    SubType: 1hSword
+    Weight: 1400
+    Attack: 220
+    MagicAttack: 210
+    Range: 1
+    Jobs:
+      Novice: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
   - Id: 510001
     AegisName: Boost_Dagger
     Name: Booster Dagger
@@ -151817,6 +152061,41 @@ Body:
             }
          }
       }
+  - Id: 510061
+    AegisName: Glacier_R_Knife
+    Name: Glacier Rogue Knife
+    Type: Weapon
+    SubType: Dagger
+    Weight: 1400
+    Attack: 210
+    MagicAttack: 210
+    Range: 1
+    Jobs:
+      Rogue: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
+  - Id: 510062
+    AegisName: Glacier_B_Knife
+    Name: Glacier Basic Knife
+    Type: Weapon
+    SubType: Dagger
+    Weight: 1200
+    Attack: 210
+    MagicAttack: 210
+    Range: 1
+    Jobs:
+      Novice: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
   - Id: 520000
     AegisName: Boost_Axe
     Name: Booster Axe
@@ -152073,6 +152352,29 @@ Body:
             }
          }
       }
+  - Id: 520017
+    AegisName: Glacier_Axe
+    Name: Glacier Axe
+    Type: Weapon
+    SubType: 1hAxe
+    Weight: 5000
+    Attack: 240
+    MagicAttack: 210
+    Range: 1
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Swordman: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
   - Id: 530000
     AegisName: Boost_Spear
     Name: Booster Spear
@@ -152626,6 +152928,24 @@ Body:
             }
          }
       }
+  - Id: 530025
+    AegisName: Glacier_Spear
+    Name: Glacier Spear
+    Type: Weapon
+    SubType: 1hSpear
+    Weight: 2100
+    Attack: 220
+    MagicAttack: 210
+    Range: 3
+    Jobs:
+      Crusader: true
+      Knight: true
+      Swordman: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
   - Id: 540000
     AegisName: Boost_Spellbook
     Name: Booster Spellbook
@@ -154106,6 +154426,26 @@ Body:
       }
       bonus bBaseAtk,15*(.@r/2);
       bonus bShortAtkRate,4*(.@r/3);
+  - Id: 540049
+    AegisName: Glacier_Book
+    Name: Glacier Book
+    Type: Weapon
+    SubType: Book
+    Weight: 1200
+    Attack: 210
+    MagicAttack: 210
+    Range: 1
+    Jobs:
+      Priest: true
+      Sage: true
+      StarGladiator: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
   - Id: 550001
     AegisName: Boost_Rod
     Name: Booster Rod
@@ -156464,6 +156804,49 @@ Body:
       }
       bonus bMatk,15*(.@r/2);
       bonus2 bMagicAtkEle,Ele_All,3*(.@r/3);
+  - Id: 550069
+    AegisName: Glacier_Wand
+    Name: Glacier Wand
+    Type: Weapon
+    SubType: Staff
+    Weight: 1300
+    Attack: 150
+    MagicAttack: 230
+    Range: 1
+    Jobs:
+      Acolyte: true
+      Mage: true
+      Monk: true
+      Novice: true
+      Priest: true
+      Sage: true
+      SoulLinker: true
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
+  - Id: 550070
+    AegisName: Glacier_Foxtail
+    Name: Glacier Foxtail Staff
+    Type: Weapon
+    SubType: Staff
+    Weight: 2000
+    Attack: 400
+    MagicAttack: 400
+    Range: 1
+    Jobs:
+      Summoner: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
   - Id: 560000
     AegisName: Boost_Knuckles
     Name: Booster Knuckles
@@ -157334,6 +157717,25 @@ Body:
             }
          }
       }
+  - Id: 560032
+    AegisName: Glacier_Knuckle
+    Name: Glacier Knuckle
+    Type: Weapon
+    SubType: Knuckle
+    Weight: 1500
+    Attack: 240
+    MagicAttack: 220
+    Range: 1
+    Jobs:
+      Monk: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
   - Id: 570000
     AegisName: Boost_Guitar
     Name: Booster Guitar
@@ -158111,6 +158513,26 @@ Body:
             }
          }
       }
+  - Id: 570029
+    AegisName: Glacier_Violin
+    Name: Glacier Violin
+    Type: Weapon
+    SubType: Musical
+    Weight: 1500
+    Attack: 210
+    MagicAttack: 210
+    Range: 1
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
   - Id: 580000
     AegisName: Boost_Whip
     Name: Booster Whip
@@ -158888,6 +159310,26 @@ Body:
             }
          }
       }
+  - Id: 580030
+    AegisName: Glacier_Whip
+    Name: Glacier Whip
+    Type: Weapon
+    SubType: Whip
+    Weight: 1500
+    Attack: 210
+    MagicAttack: 210
+    Range: 2
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
   - Id: 590000
     AegisName: Boost_Mace
     Name: Booster Mace
@@ -159912,6 +160354,53 @@ Body:
             }
          }
       }
+  - Id: 590038
+    AegisName: Glacier_Mace
+    Name: Glacier Mace
+    Type: Weapon
+    SubType: Mace
+    Weight: 1800
+    Attack: 210
+    MagicAttack: 210
+    Range: 1
+    Jobs:
+      Acolyte: true
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Monk: true
+      Priest: true
+      Swordman: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
+  - Id: 590039
+    AegisName: Glacier_M_Mace
+    Name: Glacier Mechanic Mace
+    Type: Weapon
+    SubType: Mace
+    Weight: 4000
+    Attack: 400
+    MagicAttack: 160
+    Range: 1
+    Jobs:
+      Blacksmith: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
   - Id: 600000
     AegisName: IDTest_bothhand
     Name: IDTest bothhand
@@ -160534,6 +161023,22 @@ Body:
       bonus bMaxSPrate,5*(.@r/2);
       bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",7*(.@r/3);
       bonus2 bSkillAtk,"RK_DRAGONBREATH",7*(.@r/3);
+  - Id: 600027
+    AegisName: Glacier_T_Sword
+    Name: Glacier Two-Handed Sword
+    Type: Weapon
+    SubType: 2hSword
+    Weight: 4000
+    Attack: 300
+    MagicAttack: 270
+    Range: 1
+    Jobs:
+      Knight: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
   - Id: 610000
     AegisName: Boost_Katar
     Name: Booster Katar
@@ -161387,6 +161892,25 @@ Body:
             }
          }
       }
+  - Id: 610037
+    AegisName: Glacier_Katar
+    Name: Glacier Katar
+    Type: Weapon
+    SubType: Katar
+    Weight: 1200
+    Attack: 240
+    MagicAttack: 220
+    Range: 1
+    Jobs:
+      Assassin: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
   - Id: 620003
     AegisName: PT_B_Axe
     Name: Power Swing Booster Axe
@@ -161779,6 +162303,27 @@ Body:
             }
          }
       }
+  - Id: 620017
+    AegisName: Glacier_T_Axe
+    Name: Glacier Two-Handed Axe
+    Type: Weapon
+    SubType: 2hAxe
+    Weight: 7000
+    Attack: 350
+    MagicAttack: 180
+    Range: 1
+    Jobs:
+      Blacksmith: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
   - Id: 630003
     AegisName: Ep172_Bh_Spear
     Name: Luxuria Pierce
@@ -162136,6 +162681,22 @@ Body:
             }
          }
       }
+  - Id: 630018
+    AegisName: Glacier_Lance
+    Name: Glacier Lance
+    Type: Weapon
+    SubType: 2hSpear
+    Weight: 4500
+    Attack: 300
+    MagicAttack: 270
+    Range: 3
+    Jobs:
+      Knight: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
   - Id: 640000
     AegisName: Boost_Staff
     Name: Booster Staff
@@ -163109,6 +163670,30 @@ Body:
             }
          }
       }
+  - Id: 640033
+    AegisName: Glacier_Staff
+    Name: Glacier Staff
+    Type: Weapon
+    SubType: 2hStaff
+    Weight: 2400
+    Attack: 150
+    MagicAttack: 290
+    Range: 1
+    Jobs:
+      Acolyte: true
+      Mage: true
+      Monk: true
+      Priest: true
+      Sage: true
+      SoulLinker: true
+      Wizard: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
   - Id: 650003
     AegisName: Ep172_Bh_Huuma
     Name: Wrath Wheel
@@ -163702,6 +164287,25 @@ Body:
       }
       bonus bBaseAtk,15*(.@r/2);
       bonus bLongAtkRate,4*(.@r/3);
+  - Id: 650025
+    AegisName: Glacier_Humma
+    Name: Glacier Huuma
+    Type: Weapon
+    SubType: Huuma
+    Weight: 3000
+    Attack: 400
+    MagicAttack: 370
+    Range: 1
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
+    Script: |
+      bonus bUnbreakableWeapon;
   - Id: 700000
     AegisName: IDTest_bow
     Name: IDTest bow
@@ -165137,6 +165741,25 @@ Body:
             }
          }
       }
+  - Id: 700052
+    AegisName: Glacier_Bow
+    Name: Glacier Bow
+    Type: Weapon
+    SubType: Bow
+    Weight: 1500
+    Attack: 240
+    MagicAttack: 220
+    Range: 5
+    Jobs:
+      Archer: true
+      BardDancer: true
+      Hunter: true
+      Rogue: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
   - Id: 800000
     AegisName: IDTest_gun
     Name: IDTest gun
@@ -165569,6 +166192,22 @@ Body:
       }
       bonus bBaseAtk,15*(.@r/2);
       bonus bLongAtkRate,4*(.@r/3);
+  - Id: 800014
+    AegisName: Glacier_Revolver
+    Name: Glacier Revolver
+    Type: Weapon
+    SubType: Revolver
+    Weight: 2200
+    Attack: 230
+    MagicAttack: 230
+    Range: 7
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
   - Id: 810000
     AegisName: Ep172_1h_Rifle
     Name: Lust Pointer
@@ -165904,6 +166543,22 @@ Body:
       bonus bMatk,15*(.@r/2);
       bonus2 bSkillAtk,"MG_SOULSTRIKE",20*(.@r/3);
       bonus2 bSkillAtk,"HW_NAPALMVULCAN",20*(.@r/3);
+  - Id: 810010
+    AegisName: Glacier_Rifle
+    Name: Glacier Rifle
+    Type: Weapon
+    SubType: Rifle
+    Weight: 2600
+    Attack: 280
+    MagicAttack: 230
+    Range: 9
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
   - Id: 820000
     AegisName: Ep172_1h_Shotgun
     Name: Lust Shatter
@@ -166161,6 +166816,22 @@ Body:
       }
       bonus bBaseAtk,15*(.@r/2);
       bonus bLongAtkRate,4*(.@r/3);
+  - Id: 810010
+    AegisName: Glacier_Rifle
+    Name: Glacier Rifle
+    Type: Weapon
+    SubType: Rifle
+    Weight: 2600
+    Attack: 280
+    MagicAttack: 230
+    Range: 9
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
   - Id: 830000
     AegisName: Boost_Gatling
     Name: Booster Gatling
@@ -166569,6 +167240,22 @@ Body:
       }
       bonus bBaseAtk,15*(.@r/2);
       bonus bLongAtkRate,4*(.@r/3);
+  - Id: 830013
+    AegisName: Glacier_Gatling
+    Name: Glacier Gatling
+    Type: Weapon
+    SubType: Gatling
+    Weight: 3500
+    Attack: 350
+    MagicAttack: 200
+    Range: 9
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
   - Id: 840000
     AegisName: Ep172_1h_Grenade
     Name: Lust Boom
@@ -166869,3 +167556,19 @@ Body:
       }
       bonus bBaseAtk,15*(.@r/2);
       bonus bLongAtkRate,4*(.@r/3);
+  - Id: 840009
+    AegisName: Glacier_Launcher
+    Name: Glacier Launcher
+    Type: Weapon
+    SubType: Grenade
+    Weight: 3000
+    Attack: 300
+    MagicAttack: 200
+    Range: 9
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
