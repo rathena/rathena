@@ -1104,7 +1104,7 @@ paramk,69,102,3	script	Aurora#jew01	4_F_02,{
 	}
 }
 
-// Geren [????]
+// Geren [제레니아]
 paramk,59,100,3	script	Geren#pmrf01	1_M_SIGNMCNT,{
 	mes "[Geren]";
 	mes "If you are a guest interested in smelting, take a look at the items I brought.";
@@ -1130,7 +1130,7 @@ paramk,59,100,3	script	Geren#pmrf01	1_M_SIGNMCNT,{
 	}
 }
 
-// Seth Miners Union [???? ??]
+// Seth Miners Union [광부연합 세스]
 paramk,57,103,3	script	Seth Miners Union#pmc03	1_F_01,{
 	mes "[Seth]";
 	mes "I exchange Widium, Purdium, Odium, Lindium, and Radium.";
@@ -1377,7 +1377,7 @@ OnInit:
 	setarray .valute[1],6304,6080,6081,6380;
 }
 
-// Milky [??]
+// Milky [밀크]
 paramk,59,18,7	script	Milky#pmef01	4_DR_KID_01,{
 	mes "[Milky]";
 	mes "Adventurer, adventurer!";
