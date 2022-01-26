@@ -51910,7 +51910,8 @@ Body:
       percentheal 30,30;
   - Id: 200185
     AegisName: LI_Nyangvine_Box1_26
-    Name: (Limited) Actinidia Cat Fruit Box I (Stone Box 26)
+#   Name: (Limited) Actinidia Cat Fruit Box I (Stone Box 26)
+    Name: (Limited) Actinidia Cat Fruit Box I
     Type: Usable
     Weight: 10
     Flags:
@@ -51929,7 +51930,8 @@ Body:
       getgroupitem(IG_LI_Nyangvine_Box1_26);
   - Id: 200186
     AegisName: LI_Nyangvine_Box2_26
-    Name: (Limited) Actinidia Cat Fruit Box II (Stone Box 26)
+#   Name: (Limited) Actinidia Cat Fruit Box II (Stone Box 26)
+    Name: (Limited) Actinidia Cat Fruit Box II
     Type: Usable
     Weight: 10
     Flags:
@@ -51948,7 +51950,8 @@ Body:
       getgroupitem(IG_LI_Nyangvine_Box2_26);
   - Id: 200187
     AegisName: LI_Nyangvine_Box3_26
-    Name: (Limited) Actinidia Cat Fruit Box III (Stone Box 26)
+#   Name: (Limited) Actinidia Cat Fruit Box III (Stone Box 26)
+    Name: (Limited) Actinidia Cat Fruit Box III
     Type: Usable
     Weight: 10
     Flags:

@@ -5506,6 +5506,10 @@
 	export_constant(IG_HAPPY_BOX_J);
 	export_constant(IG_CLASS_SHADOW_CUBE);
 	export_constant(IG_SEALED_SCROLL);
+	export_constant(IG_LI_Nyangvine_Box1_26);
+	export_constant(IG_LI_Nyangvine_Box2_26);
+	export_constant(IG_LI_Nyangvine_Box3_26);
+	export_constant(IG_Enchant_Stone_Box26);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

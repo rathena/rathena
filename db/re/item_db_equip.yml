@@ -145831,7 +145831,7 @@ Body:
       bonus bMaxSPrate,6+1*(.@r/2);
       if (.@r>=7) {
         bonus2 bMagicAtkEle,Ele_All,7;
-        if (.@r=>9) {
+        if (.@r>=9) {
           bonus bSMatk,2;
         }
       }

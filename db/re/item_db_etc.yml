@@ -56524,7 +56524,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bFixedCast,-1000;
+      bonus bFixedCast,-1000;
   - Id: 311118
     AegisName: Ice_F_Orb_M_F
     Name: Ice Magic Orb (Magical Force)
@@ -56544,7 +56544,7 @@ Body:
       }
   - Id: 311119
     AegisName: Ice_F_Orb_P_F
-  Name: Ice Magic Orb (Physical Force)
+    Name: Ice Magic Orb (Physical Force)
     Type: Card
     SubType: Enchant
     Script: |
@@ -57074,13 +57074,13 @@ Body:
       bonus bLongAtkRate,5;
       if (.@r>=7) {
         bonus2 bSkillAtk,"SC_TRIANGLESHOT",15;
-        bonus bLongAtkRate,10
+        bonus bLongAtkRate,10;
         if (.@r>=9) {
           bonus2 bSkillAtk,"SC_TRIANGLESHOT",15;
-          bonus bLongAtkRate,10
+          bonus bLongAtkRate,10;
           if (.@r>=11) {
             bonus2 bSkillAtk,"SC_TRIANGLESHOT",15;
-            bonus bLongAtkRate,15
+            bonus bLongAtkRate,15;
             bonus2 bSkillAtk,"ABC_FRENZY_SHOT",15;
           }
         }
@@ -60076,7 +60076,7 @@ Body:
     SubType: Enchant
     Script: |
       bonus bCritical,10;
-      bonus bCritAtkRate,10
+      bonus bCritAtkRate,10;
   - Id: 311355
     AegisName: aegis_311355
     Name: Concentration Stone (Dual)
@@ -60104,7 +60104,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bFixedCast,-100*getskilllv("AB_EXPIATIO");3
+      bonus bFixedCast,-100*getskilllv("AB_EXPIATIO");
   - Id: 311359
     AegisName: aegis_311359
     Name: Ranger Stone (Top)
