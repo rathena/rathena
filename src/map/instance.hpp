@@ -100,7 +100,7 @@ struct s_instance_db {
 
 class InstanceDatabase : public TypesafeYamlDatabase<int32, s_instance_db> {
 public:
-	InstanceDatabase() : TypesafeYamlDatabase("INSTANCE_DB", 2) {
+	InstanceDatabase() : TypesafeYamlDatabase("INSTANCE_DB", 2, 1) {
 
 	}
 
