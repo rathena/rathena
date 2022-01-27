@@ -21593,8 +21593,6 @@ BUILDIN_FUNC(instance_list)
 			return SCRIPT_CMD_FAILURE;
 		}
 	}
-	else
-		return_all = true;
 
 	int j = 0;
 	for (int i = instance_start; i < map_num; i++) {
