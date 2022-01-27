@@ -45510,18 +45510,31 @@ Body:
     Type: Usable
     Script: |
       /* TODO */
+  - Id: 22566
+    AegisName: Frost_Crystal
+    Name: Last Year's Frost
+    Type: Usable
+    Buy: 10
+    Trade:
+      Override: 100
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+    Script: |
+      sc_start SC_CHILL,10000,0;
   - Id: 22567
     AegisName: Squad_Prize
     Name: Expedition Award Box
     Type: Usable
-    Buy: 20
+    Buy: 5000
     Weight: 100
     Trade:
       Override: 100
       NoMail: true
       NoAuction: true
     Script: |
-      /* TODO */
+      getgroupitem(IG_Squad_Prize1);
+      getgroupitem(IG_Squad_Prize2);
   - Id: 22568
     AegisName: Nyd_Summon_Scroll
     Name: Nidhoggur Summon Scroll
@@ -48930,6 +48943,15 @@ Body:
     Weight: 10
     Script: |
       /*upgradeui 23720;*/
+  - Id: 23766
+    AegisName: Overwhelm_Armor_Box
+    Name: Temporal Armor Box
+    Type: Usable
+    Weight: 2000
+    Flags:
+      Container: true
+    Script: |
+      getitem callfunc("F_Rand",15278,15279,15346,15347,15353,15354),1;
   - Id: 23770
     AegisName: Enchant_Stone_Box16
     Name: Costume Enchant Stone Box 16
