@@ -10284,6 +10284,8 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			else if ((skill->inf == INF_ATTACK_SKILL || skill->inf == INF_GROUND_SKILL || skill->inf == INF_SUPPORT_SKILL) || // Target skills should get blocked even when cast on self
 					(skill->inf == INF_SELF_SKILL && src != bl)) // Self skills should get blocked on all targets except self
 				return 0;
+
+		}
 	}
 
 	rate = cap_value(rate, 0, 10000);
