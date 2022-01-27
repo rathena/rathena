@@ -47980,7 +47980,7 @@ Body:
     Name: Ice Gangu Card
     Type: Card
     Weight: 10
-    Location:
+    Locations:
       Head_Top: true
     Flags:
       BuyingStore: true
@@ -48002,7 +48002,7 @@ Body:
     Name: Shining Seaweed Card
     Type: Card
     Weight: 10
-    Location:
+    Locations:
       Head_Top: true
     Flags:
       BuyingStore: true
@@ -48024,7 +48024,7 @@ Body:
     Name: Ice Straw Card
     Type: Card
     Weight: 10
-    Location:
+    Locations:
       Armor: true
     Flags:
       BuyingStore: true
@@ -48038,7 +48038,7 @@ Body:
     Name: Unfrost Flower Card
     Type: Card
     Weight: 10
-    Location:
+    Locations:
       Armor: true
     Flags:
       BuyingStore: true
@@ -48053,7 +48053,7 @@ Body:
     Name: Limacina Card
     Type: Card
     Weight: 10
-    Location:
+    Locations:
       Head_Top: true
     Flags:
       BuyingStore: true
@@ -48075,7 +48075,7 @@ Body:
     Name: Calmaring Card
     Type: Card
     Weight: 10
-    Location:
+    Locations:
       Left_Accessory: true
     Flags:
       BuyingStore: true
@@ -48088,7 +48088,7 @@ Body:
     Name: Primal Rgan Card
     Type: Card
     Weight: 10
-    Location:
+    Locations:
       Right_Accessory: true
     Flags:
       BuyingStore: true
@@ -48100,7 +48100,7 @@ Body:
     Name: Minor Rgan Card
     Type: Card
     Weight: 10
-    Location:
+    Locations:
       Right_Accessory: true
     Flags:
       BuyingStore: true
@@ -48113,7 +48113,7 @@ Body:
     Name: Lesser Rgan Card
     Type: Card
     Weight: 10
-    Location:
+    Locations:
       Left_Accessory: true
     Flags:
       BuyingStore: true
@@ -48125,7 +48125,7 @@ Body:
     Name: Intermediate Rgan Card
     Type: Card
     Weight: 10
-    Location:
+    Locations:
       Left_Accessory: true
     Flags:
       BuyingStore: true
@@ -48138,7 +48138,7 @@ Body:
     Name: Wasted Primal Rgan Card
     Type: Card
     Weight: 10
-    Location:
+    Locations:
       Left_Accessory: true
     Flags:
       BuyingStore: true
@@ -48151,7 +48151,7 @@ Body:
     Name: Wasted Intermediate Rgan Card
     Type: Card
     Weight: 10
-    Location:
+    Locations:
       Left_Accessory: true
     Flags:
       BuyingStore: true
@@ -48164,7 +48164,7 @@ Body:
     Name: Cave Calmaring Card
     Type: Card
     Weight: 10
-    Location:
+    Locations:
       Left_Accessory: true
     Flags:
       BuyingStore: true
@@ -48177,7 +48177,7 @@ Body:
     Name: Cave Flower Card
     Type: Card
     Weight: 10
-    Location:
+    Locations:
       Garment: true
     Flags:
       BuyingStore: true
@@ -48190,7 +48190,7 @@ Body:
     Name: Hallucigenia Baby Card
     Type: Card
     Weight: 10
-    Location:
+    Locations:
       Left_Hand: true
     Flags:
       BuyingStore: true
@@ -48208,7 +48208,7 @@ Body:
     Name: Hallucigenia Card
     Type: Card
     Weight: 10
-    Location:
+    Locations:
       Shoes: true
     Flags:
       BuyingStore: true
@@ -48223,7 +48223,7 @@ Body:
     Name: One-Eye Dollocaris Card
     Type: Card
     Weight: 10
-    Location:
+    Locations:
       Garment: true
     Flags:
       BuyingStore: true
@@ -48244,7 +48244,7 @@ Body:
     Name: Two-Eye Dollocaris Card
     Type: Card
     Weight: 10
-    Location:
+    Locations:
       Armor: true
     Flags:
       BuyingStore: true
@@ -48271,7 +48271,7 @@ Body:
     Name: Ultra Limacina Card
     Type: Card
     Weight: 10
-    Location:
+    Locations:
       Head_Top: true
     Flags:
       BuyingStore: true
@@ -48290,7 +48290,7 @@ Body:
     Name: Simulation Juncea Card
     Type: Card
     Weight: 10
-    Location:
+    Locations:
       Head_Top: true
     Flags:
       BuyingStore: true
@@ -48304,7 +48304,7 @@ Body:
     Name: Modified Advanced Rgan Card
     Type: Card
     Weight: 10
-    Location:
+    Locations:
       Left_Hand: true
     Flags:
       BuyingStore: true
@@ -48325,7 +48325,7 @@ Body:
     Name: Entangled Intermediate Rgan Card
     Type: Card
     Weight: 10
-    Location:
+    Locations:
       Shoes: true
     Flags:
       BuyingStore: true
@@ -48348,7 +48348,7 @@ Body:
     Name: Hearthunter AT Card
     Type: Card
     Weight: 10
-    Location:
+    Locations:
       Armor: true
     Flags:
       BuyingStore: true
@@ -48362,7 +48362,7 @@ Body:
     Name: Aquila Card
     Type: Card
     Weight: 10
-    Location:
+    Locations:
       Garment: true
     Flags:
       BuyingStore: true
