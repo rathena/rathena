@@ -21585,8 +21585,7 @@ BUILDIN_FUNC(instance_list)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	e_instance_mode mode;
-	bool return_all = false;
+	e_instance_mode mode = IM_MAX;
 	if (script_hasdata(st, 3)) {
 		mode = static_cast<e_instance_mode>(script_getnum(st, 3));
 		if (mode < IM_NONE || mode >= IM_MAX) {
