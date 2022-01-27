@@ -45,6 +45,9 @@ Header:
   Type: BARTER_DB
   Version: 1
 
+Footer:
+  Imports:
+  - Path: npc/re/merchants/barters/eden_market.yml
 Body:
 ###########################################################################
 # Paramarket
