@@ -147937,6 +147937,36 @@ Body:
       if (.@r>=9) {
          bonus bDelayrate,-10;
       }
+  - Id: 480011
+    AegisName: Skin_Of_AzidaHaka
+    Name: Skin of Azi Dahaka
+    Type: Armor
+    Weight: 600
+    Defense: 15
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      .@a = (readparam(bVit)+readparam(bLuk))/20;
+      bonus bMdef,10;
+      bonus bVit,5;
+      bonus bLuk,5;
+      bonus2 bSubRace,RC_Brute,5;
+      bonus2 bSubRace,RC_Player_Doram,5;
+      bonus2 bSubRace,RC_Plant,5;
+      bonus2 bSubClass,Class_Boss,5;
+      if (.@r>=7)
+         bonus2 bResEff,Eff_Silence,5000;
+      if (.@r>=8) {
+         bonus bAspdRate,2*.@a;
+         bonus bVariableCastrate,-2*.@a;
+      }
+      if (.@r>=9)
+         bonus2 bResEff,Eff_Silence,5000;
   - Id: 480012
     AegisName: Noblesse_Attack_Manteau
     Name: Noblesse Attack Manteau
@@ -148990,6 +149020,43 @@ Body:
     Locations:
       Costume_Garment: true
     ArmorLevel: 1
+  - Id: 480134
+    AegisName: aegis_480134
+    Name: Avareco
+    Type: Armor
+    Weight: 100
+    Defense: 12
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,5;
+      bonus2 bSubRace,RC_Player_Human,5;
+      bonus2 bSubRace,RC_Player_Doram,5;
+      bonus2 bSkillAtk,"GC_COUNTERSLASH",getskilllv("GC_CROSSIMPACT")*6;
+      bonus2 bSkillAtk,"GC_CROSSIMPACT",getskilllv("GC_CROSSIMPACT")*30;
+      if (getskilllv("GC_CROSSIMPACT") == 5) {
+         bonus2 bSkillCooldown,"GC_DARKILLUSION",-4000;
+         bonus2 bSkillCooldown,"GC_HALLUCINATIONWALK",-20000;
+      }
+      if (getskilllv("GC_HALLUCINATIONWALK") == 5) {
+         bonus2 bSubEle,Ele_Water,100;
+         bonus2 bSubEle,Ele_Holy,30;
+      }
+      if (.@r>=7) {
+         bonus bMaxHPrate,5;
+         bonus2 bAddSize,Size_All,10;
+         bonus bSPGainValue,10;
+      }
+      if (.@r>=9) {
+         bonus bMaxHPrate,10;
+         bonus2 bAddSize,Size_All,10;
+         bonus bSPGainValue,10;
+      }
   - Id: 480136
     AegisName: aegis_480136
     Name: Magic Swordsman Thanatos's Sword
@@ -150434,6 +150501,36 @@ Body:
          bonus2 bSkillUseSP,"SP_CURSEEXPLOSION",25;
          bonus2 bSkillCooldown,"SP_CURSEEXPLOSION",-500;
       }
+  - Id: 490104
+    AegisName: Ring_Of_Phoenix
+    Name: Ring of Phoenix
+    Type: Armor
+    Weight: 400
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bVit,7;
+      bonus2 bAddSize,Size_All,10;
+      bonus2 bSkillAtk,"LG_OVERBRAND",BaseLevel/3;
+      bonus2 bSkillAtk,"PA_SHIELDCHAIN",BaseLevel;
+      if (getskilllv("LG_INSPIRATION") == 5)
+         bonus bVariableCastrate,-30;
+      if (getskilllv("LG_KINGS_GRACE") == 5) {
+         bonus bMaxHPrate,15;
+         bonus bMaxSPrate,15;
+         bonus2 bSubRace,RC_Player_Human,3;
+         bonus2 bSubRace,RC_Player_Doram,3;
+      }
+      if (getskilllv("LG_FORCEOFVANGUARD") == 5) {
+         bonus bAspdRate,10;
+         bonus bHPGainValue,100;
+         bonus bSPGainValue,10;
+      }
+      if (getskilllv("LG_MOONSLASHER") == 5)
+         bonus2 bAddClass,Class_Boss,15;
   - Id: 490106
     AegisName: Gray_W_Pendant
     Name: Gray Wolf Pendant
@@ -150910,6 +151007,19 @@ Body:
     Script: |
       bonus bVariableCastrate,-7;
       bonus bHplus,2;
+  - Id: 490139
+    AegisName: aegis_490139
+    Name: Awakening Abyss King's Ring
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 130
+    Script: |
+      bonus bMaxHP,BaseLevel*50;
+      bonus bMaxSP,BaseLevel*5;
   - Id: 490141
     AegisName: aegis_490141
     Name: Metal Pick

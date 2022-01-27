@@ -39303,6 +39303,37 @@ Body:
       bonus2 bAddEle,Ele_Earth,40;
       bonus2 bAddRace,RC_Brute,40;
       bonus2 bAddRace,RC_Insect,40;
+  - Id: 27127
+    AegisName: AncientKing_Groza_Card
+    Name: Old King Groza Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bMaxSPrate,-50;
+      bonus2 bAddRace,RC_All,10;
+      bonus2 bAddRace,RC_DemiHuman,50;
+      bonus2 bAddRace,RC_Dragon,50;
+  - Id: 27128
+    AegisName: Abyss_AncientKing_Card
+    Name: Abyssal Old King Groza Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bBaseAtk,100+(10*getrefine());
+      bonus2 bResEff,Eff_Freeze,10000;
+      bonus2 bResEff,Eff_Freeze,10000;
   - Id: 27147
     AegisName: Human_Kimera_Card
     Name: Humanoid Chimera Card
@@ -44832,6 +44863,88 @@ Body:
       bonus bCritAtkRate,9*(.@r/2);
       bonus bCritical,3*(.@r/2);
       bonus2 bAddClass,Class_All,3*(.@r/5);
+  - Id: 31000
+    AegisName: Rudo_Card_J
+    Name: Rudo Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      autobonus2 "{ bonus bAgi,44; }",50,3000,0,"{ sc_start SC_SPEEDUP1,3000,50; }";
+  - Id: 31001
+    AegisName: Lora_Card_J
+    Name: Lola Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_MACE) {
+         .@r = getrefine();
+         bonus bHit,-10-.@r;
+         bonus bCritical,10+.@r;
+         bonus bCritAtkRate,10+.@r;
+      }
+  - Id: 31002
+    AegisName: Elvira_Card_J
+    Name: Elvira Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",25;
+      bonus2 bVariableCastrate,"MG_LIGHTNINGBOLT",-25;
+  - Id: 31003
+    AegisName: Gioia_Card_J
+    Name: Merciless Gioia Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Wind,100;
+      bonus2 bSubEle,Ele_Wind,50;
+      bonus2 bResEff,Eff_Fear,10000;
+  - Id: 31004
+    AegisName: Soheon_Card_J
+    Name: Soheon Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bMatk,30;
+  - Id: 31005
+    AegisName: Daehyon_Card_J
+    Name: General Daehyon Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bBaseAtk,100;
+      bonus bMatk,100;
   - Id: 31006
     AegisName: LoVA_Hades_Card
     Name: LoVA Hades Card
@@ -50077,6 +50190,13 @@ Body:
     Script: |
       bonus2 bSkillAtk,"BA_MUSICALSTRIKE",15;
       bonus2 bSkillAtk,"DC_THROWARROW",15;
+  - Id: 310321
+    AegisName: aegis_310321
+    Name: Abyssal King
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAllStats,10;
   - Id: 310325
     AegisName: aegis_310325
     Name: Range Stone (Top)

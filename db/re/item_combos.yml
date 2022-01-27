@@ -24140,3 +24140,138 @@ Body:
     Script: |
       bonus bFlee,100;
       bonus bNoSizeFix;
+  - Combos:
+      - Combo:
+          - Ring_Of_Phoenix     # 490104
+          - Imperial_Glove     # 28551
+          - Imperial_Feather     # 18823
+          - Bear's_Power     # 4875
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader)
+         bonus2 bSkillCooldown,"LG_OVERBRAND",2000;
+  - Combos:
+      - Combo:
+          - Ring_Of_Phoenix     # 490104
+          - Bear's_Power     # 4875
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader) {
+         bonus2 bSkillUseSP,"LG_OVERBRAND",15;
+         bonus2 bSkillCooldown,"LG_OVERBRAND",-2000;
+      }
+  - Combos:
+      - Combo:
+          - AncientKing_Groza_Card     # 27127
+          - aegis_310321     # 310321
+    Script: |
+      bonus2 bAddRace,RC_Player_Human,50;
+      bonus2 bAddRace,RC_Player_Doram,50;
+  - Combos:
+      - Combo:
+          - AncientKing_Groza_Card     # 27127
+          - aegis_490139     # 490139
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      bonus bStr,10*.@r;
+      bonus bVit,3*.@r;
+  - Combos:
+      - Combo:
+          - AncientKing_Groza_Card     # 27127
+          - Hawkeye     # 4879
+    Script: |
+      bonus bMaxSPrate,50;
+      bonus2 bAddRace,RC_All,-10;
+      bonus2 bAddRace,RC_DemiHuman,-50;
+      bonus2 bAddRace,RC_Dragon,-50;
+  - Combos:
+      - Combo:
+          - AncientKing_Groza_Card     # 27127
+          - Hawkeye     # 4879
+          - aegis_310321     # 310321
+    Script: |
+      bonus2 bAddRace,RC_Player_Human,-50;
+      bonus2 bAddRace,RC_Player_Doram,-50;
+  - Combos:
+      - Combo:
+          - AncientKing_Groza_Card     # 27127
+          - Hawkeye     # 4879
+          - aegis_490139     # 490139
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      bonus bStr,-10*.@r;
+      bonus bVit,-3*.@r;
+  - Combos:
+      - Combo:
+          - Abyss_AncientKing_Card     # 27128
+          - aegis_310321     # 310321
+    Script: |
+      skill "GC_CLOAKINGEXCEED",3;
+  - Combos:
+      - Combo:
+          - Abyss_AncientKing_Card     # 27128
+          - aegis_490139     # 490139
+    Script: |
+      bonus bBaseAtk,BaseLevel;
+      bonus2 bHPDrainRate,100,2;
+      /*Unknow Rate*/
+  - Combos:
+      - Combo:
+          - Pyuriel_Card     # 4578
+          - aegis_310321     # 310321
+    Script: |
+      bonus2 bAddRace,RC_All,20;
+      skill "GC_DARKCROW",3;
+  - Combos:
+      - Combo:
+          - Kades_Card     # 4580
+          - aegis_310321     # 310321
+    Script: |
+      bonus2 bSubEle,Ele_Earth,50;
+      bonus2 bSubEle,Ele_Fire,50;
+      bonus2 bSubEle,Ele_Water,50;
+      bonus2 bSubEle,Ele_Wind,50;
+      bonus2 bSubEle,Ele_Dark,50;
+      bonus2 bSubEle,Ele_Undead,50;
+  - Combos:
+      - Combo:
+          - Rudo_Card_J     # 31000
+          - aegis_310321     # 310321
+    Script: |
+      bonus bAspdRate,10;
+  - Combos:
+      - Combo:
+          - Lora_Card_J     # 31001
+          - aegis_310321     # 310321
+    Script: |
+      bonus2 bAddClass,Class_Boss,25;
+      bonus bCritAtkRate,25;
+  - Combos:
+      - Combo:
+          - Elvira_Card_J     # 31002
+          - aegis_310321     # 310321
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Earth,10;
+      bonus2 bMagicAtkEle,Ele_Fire,10;
+      bonus2 bMagicAtkEle,Ele_Water,10;
+      bonus2 bMagicAtkEle,Ele_Wind,10;
+  - Combos:
+      - Combo:
+          - Gioia_Card_J     # 31003
+          - aegis_310321     # 310321
+    Script: |
+      bonus2 bSubEle,Ele_Wind,50;
+      bonus3 bAddEff,Eff_Fear,1000,ATF_MAGIC;
+      /*Unknow Rate*/
+  - Combos:
+      - Combo:
+          - Soheon_Card_J     # 31004
+          - aegis_310321     # 310321
+    Script: |
+      bonus bMatk,100;
+      bonus bHealPower,20;
+  - Combos:
+      - Combo:
+          - Daehyon_Card_J     # 31005
+          - aegis_310321     # 310321
+    Script: |
+      bonus bBaseAtk,BaseLevel*2;
+      bonus bMatk,BaseLevel*2;
