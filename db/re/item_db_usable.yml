@@ -51223,6 +51223,15 @@ Body:
     Buy: 10
     Script: |
       callfunc "F_CashReduceTraitStat",bCrt,-1,100457;
+  - Id: 100465
+    AegisName: aegis_100465
+    Name: 3rd/Expanded Stone (Garment) Box
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_THIRD_JOB_STONE_GARMENT_BOX);
   - Id: 100466
     AegisName: Egir_Power_Box
     Name: Aegir's Power Box
@@ -51294,6 +51303,69 @@ Body:
     Weight: 10
     Script: |
       /* upgradeui 100486; */
+  - Id: 100495
+    AegisName: aegis_100495
+    Name: 3rd/Expanded Stone II (Garment) Box
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_THIRD_JOB_STONE_GARMENT_BOX2);
+  - Id: 100496
+    AegisName: aegis_100496
+    Name: Rebirth/Expanded Stone (Top) Box
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_THIRD_JOB_STONE_TOP_BOX);
+  - Id: 100497
+    AegisName: aegis_100497
+    Name: Rebirth/Expanded Stone II (Top) Box
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_THIRD_JOB_STONE_TOP_BOX2);
+  - Id: 100498
+    AegisName: aegis_100498
+    Name: Rebirth/Expanded Stone (Middle) Box
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_THIRD_JOB_STONE_MIDDLE_BOX);
+  - Id: 100499
+    AegisName: aegis_100499
+    Name: Rebirth/Expanded Stone II (Middle) Box
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_THIRD_JOB_STONE_MIDDLE_BOX2);
+  - Id: 100500
+    AegisName: aegis_100500
+    Name: Rebirth/Expanded Stone (Bottom) Box
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_THIRD_JOB_STONE_BOTTOM_BOX);
+  - Id: 100501
+    AegisName: aegis_100501
+    Name: Rebirth/Expanded Stone II (Bottom) Box
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_THIRD_JOB_STONE_BOTTOM_BOX2);
   - Id: 100502
     AegisName: Enchant_Stone_Box22
     Name: Costume Enchant Stone Box 22

@@ -5510,6 +5510,14 @@
 	export_constant(IG_LI_Nyangvine_Box2_26);
 	export_constant(IG_LI_Nyangvine_Box3_26);
 	export_constant(IG_Enchant_Stone_Box26);
+	export_constant(IG_THIRD_JOB_STONE_GARMENT_BOX);
+	export_constant(IG_THIRD_JOB_STONE_GARMENT_BOX2);
+	export_constant(IG_THIRD_JOB_STONE_TOP_BOX);
+	export_constant(IG_THIRD_JOB_STONE_TOP_BOX2);
+	export_constant(IG_THIRD_JOB_STONE_MIDDLE_BOX);
+	export_constant(IG_THIRD_JOB_STONE_MIDDLE_BOX2);
+	export_constant(IG_THIRD_JOB_STONE_BOTTOM_BOX);
+	export_constant(IG_THIRD_JOB_STONE_BOTTOM_BOX2);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

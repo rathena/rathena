@@ -23847,10 +23847,10 @@ Body:
             Rate: 8
           - Item: aegis_1000865
             Rate: 8
-#         - Item: aegis_100465  # 3rd/Expanded Stone (Garment) Box
-#           Rate: 16
-#         - Item: aegis_100495  # 3rd/Expanded Stone II (Garment) Box
-#           Rate: 16
+          - Item: aegis_100465
+            Rate: 16
+          - Item: aegis_100495
+            Rate: 16
           - Item: ReloadStone_Top
             Rate: 24
           - Item: ReloadStone_Middle
@@ -23893,18 +23893,18 @@ Body:
             Rate: 15
           - Item: ShadowchaserStone_Top2
             Rate: 15
-#         - Item: aegis_100496  # Rebirth/Expanded Stone (Top) Box
-#           Rate: 36
-#         - Item: aegis_100497  # Rebirth/Expanded Stone II (Top) Box
-#           Rate: 36
-#         - Item: aegis_100498  # Rebirth/Expanded Stone (Middle) Box
-#           Rate: 36
-#         - Item: aegis_100499  # Rebirth/Expanded Stone II (Middle) Box
-#           Rate: 36
-#         - Item: aegis_100500  # Rebirth/Expanded Stone (Bottom) Box
-#           Rate: 36
-#         - Item: aegis_100501  # Rebirth/Expanded Stone II (Bottom) Box
-#           Rate: 36
+          - Item: aegis_100496
+            Rate: 36
+          - Item: aegis_100497
+            Rate: 36
+          - Item: aegis_100498
+            Rate: 36
+          - Item: aegis_100499
+            Rate: 36
+          - Item: aegis_100500
+            Rate: 36
+          - Item: aegis_100501
+            Rate: 36
           - Item: CastingStone_Top
             Rate: 36
           - Item: CastingStone_Middle
@@ -23917,4 +23917,269 @@ Body:
             Rate: 36
           - Item: Critical_Stone_Bottom
             Rate: 36
-
+  - Group: THIRD_JOB_STONE_GARMENT_BOX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: ArchbishopStone_Robe
+            Rate: 1
+          - Item: RoyalguardStone_Robe
+            Rate: 1
+          - Item: GuillcrossStone_Robe
+            Rate: 1
+          - Item: ShadowchaserStone_Robe
+            Rate: 1
+          - Item: MechanicStone_Robe
+            Rate: 1
+          - Item: WanderMinstrelStone_Robe
+            Rate: 1
+          - Item: RuneknightStone_Robe
+            Rate: 1
+          - Item: GeneticStone_Robe
+            Rate: 1
+          - Item: WarlockStone_Robe
+            Rate: 1
+          - Item: SuraStone_Robe
+            Rate: 1
+          - Item: RangerStone_Robe
+            Rate: 1
+          - Item: SorcererStone_Robe
+            Rate: 1
+          - Item: KagerouStone_Robe
+            Rate: 1
+          - Item: OboroStone_Robe
+            Rate: 1
+          - Item: GunslingerStone_Robe
+            Rate: 1
+          - Item: DoramStone_Robe
+            Rate: 1
+  - Group: THIRD_JOB_STONE_GARMENT_BOX2
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: SuraStone_Robe2
+            Rate: 1
+          - Item: SorcererStone_Robe2
+            Rate: 1
+          - Item: ShadowchaserStone_Robe2
+            Rate: 1
+          - Item: RuneknightStone_Robe2
+            Rate: 1
+          - Item: GeneticStone_Robe2
+            Rate: 1
+          - Item: WanderMinsStone_Robe2
+            Rate: 1
+          - Item: WarlockStone_Robe2
+            Rate: 1
+          - Item: RoyalGuardStone_Robe2
+            Rate: 1
+          - Item: GuillotineCrossStone_Robe2
+            Rate: 1
+          - Item: RangerStone_II_Garment
+            Rate: 1
+          - Item: MechanicStone_II_Garment
+            Rate: 1
+          - Item: ArchbishopStone_II_Garment
+            Rate: 1
+          - Item: SoulReaperStone_Robe
+            Rate: 1
+          - Item: StarEmperorStone_Garment
+            Rate: 1
+  - Group: THIRD_JOB_STONE_TOP_BOX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: HighpriestStone_Top
+            Rate: 1
+          - Item: PaladinStone_Top
+            Rate: 1
+          - Item: AssacrossStone_Top
+            Rate: 1
+          - Item: ShadowchaserStone_Top
+            Rate: 1
+          - Item: MechanicStone_Top
+            Rate: 1
+          - Item: WanderMinstrelStone_Top
+            Rate: 1
+          - Item: RuneknightStone_Top
+            Rate: 1
+          - Item: GeneticStone_Top
+            Rate: 1
+          - Item: WarlockStone_Top
+            Rate: 1
+          - Item: SuraStone_Top
+            Rate: 1
+          - Item: RangerStone_Top
+            Rate: 1
+          - Item: SorcererStone_Top
+            Rate: 1
+          - Item: NinjaStone_Top
+            Rate: 1
+          - Item: GunslingerStone_Top
+            Rate: 1
+          - Item: DoramStone_Top
+            Rate: 1
+  - Group: THIRD_JOB_STONE_TOP_BOX2
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: SuraStone_Top2
+            Rate: 1
+          - Item: SorcererStone_Top2
+            Rate: 1
+          - Item: ShadowchaserStone_Top2
+            Rate: 1
+          - Item: RuneknightStone_Top2
+            Rate: 1
+          - Item: GeneticStone_Top2
+            Rate: 1
+          - Item: WanderMinsStone_Top2
+            Rate: 1
+          - Item: WarlockStone_Top2
+            Rate: 1
+          - Item: RoyalGuardStone_Top2
+            Rate: 1
+          - Item: GuillotineCrossStone_Top2
+            Rate: 1
+          - Item: RangerStone_II_Top
+            Rate: 1
+          - Item: MechanicStone_II_Top
+            Rate: 1
+          - Item: HighpriestStone_II_Top
+            Rate: 1
+          - Item: SoulLinkerStone_Top
+            Rate: 1
+          - Item: StarGladiatorStone_Top
+            Rate: 1
+  - Group: THIRD_JOB_STONE_MIDDLE_BOX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: HighpriestStone_Middle
+            Rate: 1
+          - Item: PaladinStone_Middle
+            Rate: 1
+          - Item: AssacrossStone_Middle
+            Rate: 1
+          - Item: ShadowchaseStone_Middle
+            Rate: 1
+          - Item: MechanicStone_Middle
+            Rate: 1
+          - Item: WanderMinstrelStone_Middle
+            Rate: 1
+          - Item: RuneknightStone_Middle
+            Rate: 1
+          - Item: GeneticStone_Middle
+            Rate: 1
+          - Item: WarlockStone_Middle
+            Rate: 1
+          - Item: SuraStone_Middle
+            Rate: 1
+          - Item: RangerStone_Middle
+            Rate: 1
+          - Item: SorcererStone_Middle
+            Rate: 1
+          - Item: NinjaStone_Middle
+            Rate: 1
+          - Item: GunslingerStone_Middle
+            Rate: 1
+          - Item: DoramStone_Middle
+            Rate: 1
+  - Group: THIRD_JOB_STONE_MIDDLE_BOX2
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: SuraStone_Middle2
+            Rate: 1
+          - Item: SorcererStone_Middle2
+            Rate: 1
+          - Item: ShadowchasStone_Middle2
+            Rate: 1
+          - Item: RuneknightStone_Middle2
+            Rate: 1
+          - Item: GeneticStone_Middle2
+            Rate: 1
+          - Item: WanderMinsStone_Middle2
+            Rate: 1
+          - Item: WarlockStone_Middle2
+            Rate: 1
+          - Item: RoyalGuardStone_Middle2
+            Rate: 1
+          - Item: GuillotineCrossStone_Middle2
+            Rate: 1
+          - Item: RangerStone_II_Middle
+            Rate: 1
+          - Item: MechanicStone_II_Middle
+            Rate: 1
+          - Item: HighpriestStone_II_Middle
+            Rate: 1
+          - Item: SoulLinkerStone_Middle
+            Rate: 1
+          - Item: StarGladiatorStone_Middle
+            Rate: 1
+  - Group: THIRD_JOB_STONE_BOTTOM_BOX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: HighpriestStone_Bottom
+            Rate: 1
+          - Item: PaladinStone_Bottom
+            Rate: 1
+          - Item: AssacrossStone_Bottom
+            Rate: 1
+          - Item: ShadowchaseStone_Bottom
+            Rate: 1
+          - Item: MechanicStone_Bottom
+            Rate: 1
+          - Item: WanderMinstrelStone_Bottom
+            Rate: 1
+          - Item: RuneknightStone_Bottom
+            Rate: 1
+          - Item: GeneticStone_Bottom
+            Rate: 1
+          - Item: WarlockStone_Bottom
+            Rate: 1
+          - Item: SuraStone_Bottom
+            Rate: 1
+          - Item: RangerStone_Bottom
+            Rate: 1
+          - Item: SorcererStone_Bottom
+            Rate: 1
+          - Item: NinjaStone_Bottom
+            Rate: 1
+          - Item: GunslingerStone_Bottom
+            Rate: 1
+          - Item: DoramStone_Bottom
+            Rate: 1
+  - Group: THIRD_JOB_STONE_BOTTOM_BOX2
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: SuraStone_Bottom2
+            Rate: 1
+          - Item: SorcererStone_Bottom2
+            Rate: 1
+          - Item: ShadowchasStone_Bottom2
+            Rate: 1
+          - Item: RuneknightStone_Bottom2
+            Rate: 1
+          - Item: GeneticStone_Bottom2
+            Rate: 1
+          - Item: WanderMinsStone_Bottom2
+            Rate: 1
+          - Item: WarlockStone_Bottom2
+            Rate: 1
+          - Item: RoyalGuardStone_Bottom2
+            Rate: 1
+          - Item: GuillotineCrossStone_Bottom2
+            Rate: 1
+          - Item: RangerStone_II_Bottom
+            Rate: 1
+          - Item: MechanicStone_II_Bottom
+            Rate: 1
+          - Item: HighpriestStone_II_Bottom
+            Rate: 1
+          - Item: SoulLinkerStone_Bottom
+            Rate: 1
+          - Item: StarGladiatorStone_Bottom
+            Rate: 1
