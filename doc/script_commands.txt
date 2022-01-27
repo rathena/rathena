@@ -9475,16 +9475,17 @@ Examples:
 
 ---------------------------------------
 
-*instance_list(<instance mode>,<"map name">);
+*instance_list(<"map name">{,<instance mode>});
 
 Set '.@instance_list' as an array for the instances ids with the map name and the mode passed.
 Return '.@instance_list' array size.
 
 instance mode IM_NONE, IM_CHAR, IM_PARTY, IM_GUILD, IM_CLAN
+if the instance mode is not provided By default it will return all the instances ids for that map
 
 Examples:
 	// this example assums that you already have punch of prontera instances.
-	.@size = instance_list(IM_NONE, "prontera");
+	.@size = instance_list("prontera");
 	for ( .@i = 0; .@i < .@size; ++.@i )
 		mes instance_mapname("prontera", .@instance_list[.@i]);
 	//the output would be a list of all prontera copies that are active in the server.

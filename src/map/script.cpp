@@ -21573,35 +21573,36 @@ BUILDIN_FUNC(instance_live_info)
 	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
+ * instance_list(<"map name">{,<instance mode>});
  * set '.@instance_list' to a list of the live instance ids for the map with the mode.
  * return the array size of '.@instance_list'
- * .@size = instance_list(IM_NONE, "prontera");
  *------------------------------------------*/
 BUILDIN_FUNC(instance_list)
 {
-	if (!instance_start) {
-		script_pushint(st, 0);
-		return SCRIPT_CMD_SUCCESS;
-	}
-
-	e_instance_mode mode = static_cast<e_instance_mode>(script_getnum(st, 2));
-	if (mode < IM_NONE || mode >= IM_MAX) {
-		ShowError("buildin_instance_list: Unknown instance mode %d for '%s'\n", mode, script_getstr(st, 2));
-		return SCRIPT_CMD_FAILURE;
-	}
-
 	int src_id = 0;
-	if (!(src_id = map_mapname2mapid(script_getstr(st, 3)))) {
-		ShowError("buildin_instance_list: map '%s' doesn't exist\n", script_getstr(st, 3));
+	if (!(src_id = map_mapname2mapid(script_getstr(st, 2)))) {
+		ShowError("buildin_instance_list: map '%s' doesn't exist\n", script_getstr(st, 2));
 		return SCRIPT_CMD_FAILURE;
 	}
+
+	e_instance_mode mode;
+	bool return_all = false;
+	if (script_hasdata(st, 3)) {
+		mode = static_cast<e_instance_mode>(script_getnum(st, 3));
+		if (mode < IM_NONE || mode >= IM_MAX) {
+			ShowError("buildin_instance_list: Unknown instance mode %d for '%s'\n", mode, script_getstr(st, 3));
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+	else
+		return_all = true;
 
 	int j = 0;
 	for (int i = instance_start; i < map_num; i++) {
 		struct map_data* mapdata = &map[i];
 		if (mapdata->instance_src_map == src_id) {
 			std::shared_ptr<s_instance_data> idata = util::umap_find(instances, mapdata->instance_id);
-			if (idata && idata->mode == mode) {
+			if (idata && (return_all || idata->mode == mode)) {
 				setd_sub_num(st, NULL, ".@instance_list", j, mapdata->instance_id, NULL);
 				j++;
 			}
@@ -26257,7 +26258,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_check_clan,"i???"),
 	BUILDIN_DEF(instance_info,"si?"),
 	BUILDIN_DEF(instance_live_info,"i?"),
-	BUILDIN_DEF(instance_list, "is"),
+	BUILDIN_DEF(instance_list, "s?"),
 	/**
 	 * 3rd-related
 	 **/
