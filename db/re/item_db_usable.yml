@@ -1685,7 +1685,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      guildgetexp rand(50000,100000);
+      guildgetexp rand(500000,1000000);
   - Id: 659
     AegisName: Heart_Of_Her
     Name: Her Heart

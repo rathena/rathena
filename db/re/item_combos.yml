@@ -24050,3 +24050,93 @@ Body:
     Script: |
       bonus bDelayrate,-15;
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",12*(getequiprefinerycnt(EQI_HAND_R)/2);
+  - Combos:
+      - Combo:
+          - Disillusion_P_Shoes     # 470058
+          - Staff_Of_Miracle_J     # 2061
+      - Combo:
+          - Disillusion_P_Shoes_     # 470059
+          - Staff_Of_Miracle_J     # 2061
+    Script: |
+      bonus2 bSkillAtk,"MG_SOULSTRIKE",BaseLevel*4;
+      bonus2 bSkillAtk,"WL_SOULEXPANSION",BaseLevel;
+  - Combos:
+      - Combo:
+          - Disillusion_P_Shoes     # 470058
+          - Gravitation_Staff_J     # 2062
+      - Combo:
+          - Disillusion_P_Shoes_     # 470059
+          - Gravitation_Staff_J     # 2062
+    Script: |
+      bonus2 bSkillAtk,"HW_GRAVITATION",BaseLevel*4;
+      bonus2 bSkillAtk,"WL_COMET",BaseLevel;
+  - Combos:
+      - Combo:
+          - Disillusion_P_Shoes     # 470058
+          - Psychic_Spear_Rod_J     # 26169
+      - Combo:
+          - Disillusion_P_Shoes_     # 470059
+          - Psychic_Spear_Rod_J     # 26169
+    Script: |
+      bonus2 bSkillAtk,"SO_CLOUD_KILL",BaseLevel*2;
+      bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",BaseLevel*2;
+  - Combos:
+      - Combo:
+          - Disillusion_P_Shoes     # 470058
+          - Runaway_Magic     # 4876
+      - Combo:
+          - Disillusion_P_Shoes_     # 470059
+          - Runaway_Magic     # 4876
+    Script: |
+      bonus bInt,40;
+      bonus bMaxSPrate,40;
+  - Combos:
+      - Combo:
+          - aegis_470082     # 470082
+          - Reaper_Cross_J     # 28048
+      - Combo:
+          - aegis_470083     # 470083
+          - Reaper_Cross_J     # 28048
+    Script: |
+      bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",BaseLevel;
+      bonus2 bSkillAtk,"GC_ROLLINGCUTTER",(BaseLevel/3)*10;
+  - Combos:
+      - Combo:
+          - aegis_470082     # 470082
+          - Agudo_Filo_J     # 28049
+      - Combo:
+          - aegis_470083     # 470083
+          - Agudo_Filo_J     #28049
+    Script: |
+      bonus2 bSkillAtk,"AS_GRIMTOOTH",BaseLevel*20;
+      bonus2 bSkillAtk,"AS_SONICBLOW",BaseLevel*2;
+  - Combos:
+      - Combo:
+          - aegis_470082     # 470082
+          - Judgement_Slasher_J     # 28777
+      - Combo:
+          - aegis_470083     # 470083
+          - Judgement_Slasher_J     # 28777
+    Script: |
+      bonus2 bSkillAtk,"ASC_METEORASSAULT",BaseLevel*6;
+      bonus2 bSkillAtk,"GC_CROSSIMPACT",BaseLevel/3;
+  - Combos:
+      - Combo:
+          - aegis_470082     # 470082
+          - Repent_Slasher_J     # 28778
+      - Combo:
+          - aegis_470083     # 470083
+          - Repent_Slasher_J     # 28778
+    Script: |
+      bonus2 bSkillAtk,"TF_POISON",BaseLevel*12;
+      bonus2 bSkillAtk,"ASC_BREAKER",BaseLevel;
+  - Combos:
+      - Combo:
+          - aegis_470082     # 470082
+          - Bear's_Power     # 4875
+      - Combo:
+          - aegis_470083     # 470083
+          - Bear's_Power     # 4875
+    Script: |
+      bonus bFlee,100;
+      bonus bNoSizeFix;
