@@ -15,7 +15,7 @@ cmd_fild07,58,278,3	script	Reckless Explorer#pa0829_01	4_F_GON,{
 	if (BaseLevel < 100) {
 		mes "[ Reckless Explorer ]";
 		mes "Will you come back to me after getting a little bit stronger? How about getting to level 100 first?";
-		end;
+		close;
 	}
 	if (isbegin_quest(12364) != 2) {
 		mes "[ Reckless Explorer ]";
@@ -36,7 +36,7 @@ cmd_fild07,58,278,3	script	Reckless Explorer#pa0829_01	4_F_GON,{
 		if (select("What if I am one of the suppression squad?:What's the matter?") == 1) {
 			mes "[ Reckless Explorer ]";
 			mes "I'm just an ordinary woman who's out for a walk. And this is the end of my walk, and I'm going to...";
-			end;
+			close;
 		}
 		mes "[ Reckless Explorer ]";
 		mes "Have you heard about the Paros Lighthouse collapse?";
@@ -57,7 +57,7 @@ cmd_fild07,58,278,3	script	Reckless Explorer#pa0829_01	4_F_GON,{
 		if (select("I'm not interested.:Yes.") == 1) {
 			mes "[ Reckless Explorer ]";
 			mes "That's unfortunate. Come back whenever you change your mind. I'll welcome you anytime.";
-			end;
+			close;
 		}
 		mes "[ Reckless Explorer ]";
 		mes "All right, Just one thing, I'm inexperienced and a novice adventurer. So I'll help you explore down there by guiding you from somewhere safe.";
@@ -78,7 +78,7 @@ cmd_fild07,58,278,3	script	Reckless Explorer#pa0829_01	4_F_GON,{
 				next;
 				mes "[ Reckless Explorer ]";
 				mes "Oh, your whole body is shouting that it's tired. You can't go down there like this.";
-				end;
+				close;
 
 			case 2:
 				erasequest 12365;
@@ -91,15 +91,15 @@ cmd_fild07,58,278,3	script	Reckless Explorer#pa0829_01	4_F_GON,{
 	if (!.@party_id) {
 		mes "[ Reckless Explorer ]";
 		mes "It's impossible alone. Would you like to organize a party at least one person or join another party and come back?";
-		end;
+		close;
 	}
 	if (select("Prepare to enter Infinite Space:Cancel") == 2)
-		end;
+		close;
 	mes "[ Reckless Explorer ]";
 	mes "Once the passage opens, take a breath for a while and talk to me again.";
 	if (instance_create(.@md_name$) == -3)
 		dispbottom "The reservation of the instance '" + .@md_name$ + "' has failed due to an active instance.";
-	end;
+	close;
 }
 
 cmd_fild07,54,280,5	script	Temporary Entrance#pa0829_01	PORTAL,{
@@ -110,7 +110,7 @@ cmd_fild07,54,280,5	script	Temporary Entrance#pa0829_01	PORTAL,{
 		case 0:
 		case 1:
 			mes "The passage is not yet activated.";
-			end;
+			close;
 
 		case 2:
 			erasequest 12365;
@@ -127,7 +127,7 @@ cmd_fild07,54,280,5	script	Temporary Entrance#pa0829_01	PORTAL,{
 
 		default:
 			mes "The passage is not yet activated.";
-			end;
+			close;
 	}
 }
 

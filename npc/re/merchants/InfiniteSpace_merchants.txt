@@ -46,9 +46,8 @@ Purchase:
 		case 2:
 			mes "[Ruins Black Trader]";
 			mes "Come back anytime";
-			break;
+			close;
 	}
-	end;
 }
 
 // Equipment Shop
@@ -66,7 +65,7 @@ cmd_fild07,57,275,5	script	Artifact Appraiser#pa0829_01	1_F_02,{
 		case 1:
 			mes "[ Artifact Appraiser ]";
 			mes "Please come back whenever you want~";
-			end;
+			close;
 
 		case 2:
 			setarray .@equip_id,1994,1938,13323,13126,28703,2024,16038,21014,28105,18128;
@@ -86,7 +85,7 @@ cmd_fild07,57,275,5	script	Artifact Appraiser#pa0829_01	1_F_02,{
 		case 0:
 			mes "[ Artifact Appraiser ]";
 			mes "Please come back whenever you want~";
-			end;
+			close;
 
 		default:
 			.@s--;
@@ -96,18 +95,18 @@ cmd_fild07,57,275,5	script	Artifact Appraiser#pa0829_01	1_F_02,{
 			if (select("Cancel:Purchase") == 1) {
 				mes "[ Artifact Appraiser ]";
 				mes "Please come back whenever you want~";
-				end;
+				close;
 			}
 			if (countitem(.@stone_id) < .@price) {
 				mes "[ Artifact Appraiser ]";
 				mes "You don't have enough " + getitemname(.@stone_id) + " to purchase this item.";
-				end;
+				close;
 			}
 			mes "[ Artifact Appraiser ]";
 			mes "Thank you for your trust. Please come back again next time.";
 			delitem .@stone_id,.@price;
 			getitem .@equip_id[.@s],1;
-			end;
+			close;
 	}
 }
 
@@ -153,7 +152,7 @@ cmd_fild07,60,275,3	script	Artifact Enhancer#pa0829_01	4_F_JOB_BLACKSMITH,{
 				case 1:
 					mes "[ Artifact Enhancer ]";
 					mes "Then come visit me when you want to enchant the equipment.";
-					end;
+					close;
 
 				case 2:
 					.@part = EQI_HAND_R;
@@ -185,7 +184,7 @@ cmd_fild07,60,275,3	script	Artifact Enhancer#pa0829_01	4_F_JOB_BLACKSMITH,{
 			if (.@card[2] > 0) {
 				mes "[ Artifact Enhancer ]";
 				mes "I can only enchant up to the third slot. Your equipment can't be further enchanted.";
-				end;
+				close;
 			}
 			switch (.@part) {
 				case EQI_HAND_R:
@@ -224,12 +223,12 @@ cmd_fild07,60,275,3	script	Artifact Enhancer#pa0829_01	4_F_JOB_BLACKSMITH,{
 			if (select("I'll return later.:Please proceed.") == 1) {
 				mes "[ Artifact Enhancer ]";
 				mes "If you change your mind, just return to me.";
-				end;
+				close;
 			}
 			if (countitem(.@stone_id) < .@fee) {
 				mes "[ Artifact Enhancer ]";
 				mes "Hm. By the way, I don't think you were listening, you don't have enough " + getitemname(.@stone_id) + ".";
-				end;
+				close;
 			}
 			explode(.@T$,.@enchant$[.@index],":");
 			explode(.@TT$,.@T$[.@type],",");
@@ -237,7 +236,7 @@ cmd_fild07,60,275,3	script	Artifact Enhancer#pa0829_01	4_F_JOB_BLACKSMITH,{
 			.@card[.@slot] = .@enchant;
 			delitem .@stone_id,.@fee;
 			if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipRefineHack", .@part, .@refine) || callfunc("F_IsEquipCardHack", .@part, .@check[0], .@check[1], .@check[2], .@check[3]))
-				end;
+				close;
 			delequip .@part;
 			getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
 			specialeffect2 EF_REPAIRWEAPON;
@@ -256,7 +255,7 @@ cmd_fild07,60,275,3	script	Artifact Enhancer#pa0829_01	4_F_JOB_BLACKSMITH,{
 				case 1:
 					mes "[ Artifact Enhancer ]";
 					mes "Then come visit me when you want to enchant the equipment.";
-					end;
+					close;
 
 				case 2:
 					.@part = EQI_HAND_R;
@@ -288,7 +287,7 @@ cmd_fild07,60,275,3	script	Artifact Enhancer#pa0829_01	4_F_JOB_BLACKSMITH,{
 			if (.@card[3] == 0) {
 				mes "[ Artifact Enhancer ]";
 				mes "Your equipment doesn't have any enchant on it.";
-				end;
+				close;
 			}
 			mes "[ Artifact Enhancer ]";
 			mes "There is a chance that your infinite space equipment will be destroyed on the initializion process. Are you still willing to proceed?";
@@ -296,16 +295,16 @@ cmd_fild07,60,275,3	script	Artifact Enhancer#pa0829_01	4_F_JOB_BLACKSMITH,{
 			if (select("Quit:Proceed") == 1) {
 				mes "[ Artifact Enhancer ]";
 				mes "If you change your mind, just return to me.";
-				end;
+				close;
 			}
 			if (countitem(.@stone_id) < .@fee) {
 				mes "[ Artifact Enhancer ]";
 				mes "Hm. By the way, I don't think you were listening, you don't have enough " + getitemname(.@stone_id) + ".";
-				end;
+				close;
 			}
 			delitem .@stone_id,.@fee;
 			if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipRefineHack", .@part, .@refine) || callfunc("F_IsEquipCardHack", .@part, .@check[0], .@check[1], .@check[2], .@check[3]))
-				end;
+				close;
 			delequip .@part;
 			if (rand(1,100) > .@chance) {
 				getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],0,0;
@@ -319,19 +318,19 @@ cmd_fild07,60,275,3	script	Artifact Enhancer#pa0829_01	4_F_JOB_BLACKSMITH,{
 			}
 			break;
 	}
-	end;
+	close;
 
 	function	equip_check	{
 		setarray .@equip_id,1994,1938,13323,13126,28703,2024,16038,21014,28105,18128,15141,22075,20779,19033;
 		if (!getarg(0)) {
 			mes "[ Artifact Enhancer ]";
 			mes "Did you take off your equipment?";
-			end;
+			close;
 		}
 		if (inarray(.@equip_id,getarg(0)) == -1) {
 			mes "[ Artifact Enhancer ]";
 			mes "This equipment is not suitable for enchanting. Don't forget that only the infinite equipment series can be enchanted.";
-			end;
+			close;
 		}
 		return;
 	}
