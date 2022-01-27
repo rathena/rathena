@@ -21579,8 +21579,8 @@ BUILDIN_FUNC(instance_live_info)
  *------------------------------------------*/
 BUILDIN_FUNC(instance_list)
 {
-	int src_id = 0;
-	if (!(src_id = map_mapname2mapid(script_getstr(st, 2)))) {
+	int src_id = map_mapname2mapid(script_getstr(st, 2));
+	if (src_id == 0) {
 		ShowError("buildin_instance_list: map '%s' doesn't exist\n", script_getstr(st, 2));
 		return SCRIPT_CMD_FAILURE;
 	}
