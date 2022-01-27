@@ -7,6 +7,7 @@
 //= 1.0 Initial release [crazyarashi]
 //= 1.1 Updated to match official mechanics [Everade]
 //= 1.2 Moved merchants to individual files [Everade]
+//= 1.3 Cleanup and sanity checks [Everade]
 //============================================================
 
 cmd_fild07,58,278,3	script	Reckless Explorer#pa0829_01	4_F_GON,{
@@ -135,7 +136,8 @@ cmd_fild07,54,280,5	script	Temporary Entrance#pa0829_01	PORTAL,{
 	end;
 
 OnInstanceInit:
-	setd("'map$",instance_mapname("1@infi"));
+	'map$ = instance_mapname("1@infi");
+	'floor = 1;
 
 	enablenpc instance_npcname("#inf_space_mobs");
 	enablenpc instance_npcname("#w0_0");
@@ -220,34 +222,23 @@ end;
 	end;
 
 OnSummonPoring:
-	.@map$ = getd("'map$");
 	.@event2$ = instance_npcname(strnpcinfo(0)) + "::OnPoringKill";
-	if (!mobcount(.@map$,.@event2$)) {
-		.@floor = getd("'floor");
-		explode(.@xy$,getd("'xy_" + .@floor + "$"),",");
-		areamonster .@map$,atoi(.@xy$[0]),atoi(.@xy$[1]),atoi(.@xy$[2]),atoi(.@xy$[3]),"--ja--",3494,1,.@event2$;
+	if (!mobcount('map$,.@event2$)) {
+		explode(.@xy$,getd("'xy_" + 'floor + "$"),",");
+		areamonster 'map$,atoi(.@xy$[0]),atoi(.@xy$[1]),atoi(.@xy$[2]),atoi(.@xy$[3]),"--ja--",3494,1,.@event2$;
 		initnpctimer;
 	}
 	end;
 
 OnTimer20000:
-	.@map$ = getd("'map$");
 	.@event2$ = instance_npcname(strnpcinfo(0)) + "::OnPoringKill";
-	killmonster .@map$,.@event2$;
+	killmonster 'map$,.@event2$;
 	stopnpctimer;
 	end;
 
 OnSummon:
-	.@floor = getd("'floor");
-	if (!.@floor) {
-		setd("'floor",1);
-		.@floor = getd("'floor");
-	}
-	.@mode = getd("'mode");
-	.@map$ = getd("'map$");
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill";
-	.@poring_chance = getd("'poring_chance");
-	switch (.@floor) {
+	switch ('floor) {
 		case 1:
 			setarray .@mob,3384,3385,3386;
 			setarray .@amount,6,5,3;
@@ -499,33 +490,30 @@ OnSummon:
 			break;
 	}
 
-	if (rand(1,100) <= .@poring_chance)
+	if (rand(1,100) <= 'poring_chance)
 		donpcevent instance_npcname(strnpcinfo(0)) + "::OnSummonPoring";
 
-	explode(.@xy$,getd("'xy_" + .@floor + "$"),",");
+	explode(.@xy$,getd("'xy_" + 'floor + "$"),",");
 	for (.@i = 0; .@i < getarraysize(.@mob); .@i++) {
-		areamonster .@map$,atoi(.@xy$[0]),atoi(.@xy$[1]),atoi(.@xy$[2]),atoi(.@xy$[3]),"--ja--",.@mob[.@i],.@amount[.@i],.@event$;
-		if ((.@floor % 10) == 0) {
-			setd("'boss_id",$@mobid[0]);
+		areamonster 'map$,atoi(.@xy$[0]),atoi(.@xy$[1]),atoi(.@xy$[2]),atoi(.@xy$[3]),"--ja--",.@mob[.@i],.@amount[.@i],.@event$;
+		if (('floor % 10) == 0) {
+			'boss_id = $@mobid[0];
 			donpcevent instance_npcname(strnpcinfo(0)) + "::OnUnitSpawn";
 		}
 	}
-	if (.@floor > 0 && .@floor % 10 > 0 && .@mode == 2) {
+	if ('floor > 0 && 'floor % 10 > 0 && 'mode == 2) {
 		if (rand(1,100) <= 10) {
-			.@lboss_id = getd("'last_boss");
 			.@boss_id = rand(3421,3425);
-			while (.@lboss_id == .@boss_id)
+			while ('last_boss == .@boss_id)
 				.@boss_id = rand(3421,3425);
-			setd("'last_boss",.@boss_id);
-			areamonster .@map$,atoi(.@xy$[0]),atoi(.@xy$[1]),atoi(.@xy$[2]),atoi(.@xy$[3]),"--ja--",.@boss_id,1,.@event$;
+			'last_boss = .@boss_id;
+			areamonster 'map$,atoi(.@xy$[0]),atoi(.@xy$[1]),atoi(.@xy$[2]),atoi(.@xy$[3]),"--ja--",.@boss_id,1,.@event$;
 		}
 	}
 	end;
 
 OnUnitSpawn:
-	.@map$ = getd("'map$");
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnUnitKill";
-	.@mode = getd("'mode");
 
 	setarray .@mob_id,3426,3427,3428,3429,3430;
 	setarray .@spawn,3436,3437,3438,3439,3440;
@@ -533,20 +521,20 @@ OnUnitSpawn:
 
 	setarray .@unit_id,3431,3432,3433,3434,3435,3436,3437,3438,3439,3440;
 	setarray .@unit_amount,3,3,4,4,5,5,4,4,5,5;
-	getunitdata getd("'boss_id"),.@data;
+	getunitdata 'boss_id,.@data;
 	.@index = inarray(.@mob_id,.@data[UMOB_CLASS]);
 	.@x = .@data[UMOB_X];
 	.@y = .@data[UMOB_Y];
-	areamonster .@map$,.@x,.@y,.@x,.@y,"--ja--",.@spawn[.@index],.@amount[.@index],.@event$;
-	if (.@mode == 2) {
+	areamonster 'map$,.@x,.@y,.@x,.@y,"--ja--",.@spawn[.@index],.@amount[.@index],.@event$;
+	if ('mode == 2) {
 		sleep 10000;
 		while (.@index < getarraysize(.@unit_id)) {
-			if (unitexists(getd("'boss_id"))) {
-				mapannounce .@map$,"The boss monster is trying to summon its allies.",0xFFFF00;
-				getunitdata getd("'boss_id"),.@data;
+			if (unitexists('boss_id)) {
+				mapannounce 'map$,"The boss monster is trying to summon its allies.",0xFFFF00;
+				getunitdata 'boss_id,.@data;
 				.@x = .@data[UMOB_X];
 				.@y = .@data[UMOB_Y];
-				areamonster .@map$,.@x - 3,.@y - 3,.@x + 3,.@y + 3,"--ja--",.@unit_id[.@index],.@unit_amount[.@index],.@event$;
+				areamonster 'map$,.@x - 3,.@y - 3,.@x + 3,.@y + 3,"--ja--",.@unit_id[.@index],.@unit_amount[.@index],.@event$;
 				.@index++;
 			} else 
 				break;
@@ -557,30 +545,27 @@ OnUnitKill:
 	end;
 
 OnMobKill:
-	.@poring_chance = getd("'poring_chance");
-	.@map$ = getd("'map$");
-	.@floor = getd("'floor");
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill";
-	if (rand(1,100) <= .@poring_chance)
+	if (rand(1,100) <= 'poring_chance)
 		donpcevent instance_npcname(strnpcinfo(0)) + "::OnSummonPoring";
-	if (!mobcount(.@map$,.@event$)) {
+	if (!mobcount('map$,.@event$)) {
 		sleep 5000;
 		// Boss Stage, spawn Treasure Chest
-		if ((.@floor%10) == 0)
-			enablenpc instance_npcname("#w" + .@floor + "_t");
+		if (('floor%10) == 0)
+			enablenpc instance_npcname("#w" + 'floor + "_t");
 
-		if (.@floor == 50) {
-			mapannounce .@map$,"Reckless Explorer : It seems there are no other way from here. It's dangerous, so you'd better return outside.",0xFFFF00;
+		if ('floor == 50) {
+			mapannounce 'map$,"Reckless Explorer : It seems there are no other way from here. It's dangerous, so you'd better return outside.",0xFFFF00;
 			enablenpc instance_npcname("#w50_ppl");
 		}
-		if (.@floor < 50) {
-			if ((.@floor%10) == 0)
-				mapannounce .@map$,"Reckless Explorer : This area is safe. Use the passage to go to the next area.",0xFFFF00;
+		if ('floor < 50) {
+			if (('floor%10) == 0)
+				mapannounce 'map$,"Reckless Explorer : This area is safe. Use the passage to go to the next area.",0xFFFF00;
 			else
-				mapannounce .@map$,"Reckless Explorer : This area is safe. Go through the passage to the next area.",0xFFFF00;
+				mapannounce 'map$,"Reckless Explorer : This area is safe. Go through the passage to the next area.",0xFFFF00;
 			// Enable warp portal to next floor
-			enablenpc instance_npcname("#w" + .@floor);
-			setd("'floor",.@floor + 1);
+			enablenpc instance_npcname("#w" + 'floor);
+			'floor += 1;
 		}
 	}
 OnPoringKill:
@@ -588,8 +573,7 @@ OnPoringKill:
 }
 
 1@infi,42,8,1	script	#w0_0	4_F_GON,{
-	.@mode = getd("'mode");
-	if (is_party_leader() && !.@mode) {
+	if (is_party_leader() && !'mode && 'sanity < 1) {
 		mes "[ Reckless Explorer ]";
 		mes "I have went in and out of this place many times and figured out a way to provoke the monsters in here. You can get more rewards if you're going to deal with heated ones.";
 		next;
@@ -597,15 +581,16 @@ OnPoringKill:
 		mes "What do you think? Would you like to try something challenging?";
 		next;
 		if (select("I want to proceed normally:I want to proceed with something difficult") == 1) {
-			setd("'mode",1);
-			setd("'poring_chance",1);
+			'mode = 1;
+			'poring_chance = 1;
 		} else {
-			setd("'mode",2);
-			setd("'poring_chance",2);
+			'mode = 2;
+			'poring_chance = 2;
 		}
 		mes "[ Reckless Explorer ]";
 		mes "Good. Shall we go now?";
 		close2;
+		'sanity = 1;
 		disablenpc instance_npcname(strnpcinfo(0));
 		hideoffnpc instance_npcname("#w0");
 		npctalk "Reckless Explorer : Woah~ It's very neat for a sunken place, don't you think?",instance_npcname("#w0");
@@ -645,8 +630,7 @@ OnPoringKill:
 		specialeffect EF_COIN;
 		disablenpc instance_npcname(strnpcinfo(0));
 		sleep 1000;
-		.@mode = getd("'mode");
-		if (.@mode == 1)
+		if ('mode == 1)
 			.@amount = rand(3,10);	// Min/Max found in replays
 		else
 			.@amount = rand(6,22);	// Min/Max found in replays
@@ -675,7 +659,7 @@ OnPoringKill:
 			}
 			makeitem 6905,1,.@map$,.@x + .@xs,.@y + .@ys;
         }
-		if (.@mode == 2) {
+		if ('mode == 2) {
 			setarray .@equip_id,1994,1938,13323,13126,28703,2024,16038,21014,28105,18128;
 			getmapxy(.@map$,.@x,.@y,BL_NPC);
 			for (.@i = 0; .@i < getarraysize(.@equip_id); .@i++) {
@@ -724,7 +708,6 @@ OnPoringKill:
 
 OnTouch:
 	.@id = atoi(replacestr(strnpcinfo(2),"w",""));
-	.@map$ = getd("'map$");
 	switch (.@id) {
 		case 1: .@x = 30; .@y = 41; break;
 		case 2: .@x = 30; .@y = 73; break;
@@ -777,10 +760,13 @@ OnTouch:
 		case 49: .@x = 362; .@y = 341; break;
 		default: end;
 	}
-	warp .@map$,.@x,.@y;
+	warp 'map$,.@x,.@y;
 	if (is_party_leader())
 		sleep 100;
-		donpcevent instance_npcname("#inf_space_mobs") + "::OnSummon";
+		if ('sanity < 'floor ) {
+			donpcevent instance_npcname("#inf_space_mobs") + "::OnSummon";
+			'sanity += 1;
+		}
 end;
 }
 
