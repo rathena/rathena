@@ -137531,7 +137531,7 @@ Body:
          bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",70;
       }
   - Id: 400178
-    AegisName: aegis_400178
+    AegisName: Viva_Adul_Hat_WL1
     Name: Helm of Faith (Warlock)
     Type: Armor
     Weight: 100
@@ -137572,7 +137572,7 @@ Body:
       bonus2 bSkillAtk,"WL_SOULEXPANSION",15*(.@r/3);
       bonus2 bMagicAtkEle,Ele_Ghost,7*(.@r/4);
   - Id: 400179
-    AegisName: aegis_400179
+    AegisName: Viva_Adul_Hat_WL2
     Name: Helm of Faith II (Warlock)
     Type: Armor
     Weight: 100
@@ -137614,7 +137614,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Neutral,7*(.@r/4);
       bonus2 bMagicAtkEle,Ele_Dark,7*(.@r/4);
   - Id: 400180
-    AegisName: aegis_400180
+    AegisName: Viva_Adul_Hat_SR1
     Name: Helm of Faith (Sura)
     Type: Armor
     Weight: 100
@@ -137655,7 +137655,7 @@ Body:
       bonus2 bSkillAtk,"SR_TIGERCANNON",15*(.@r/3);
       bonus bShortAtkRate,7*(.@r/4);
   - Id: 400181
-    AegisName: aegis_400181
+    AegisName: Viva_Adul_Hat_SR2
     Name: Helm of Faith II (Sura)
     Type: Armor
     Weight: 100
@@ -137704,7 +137704,7 @@ Body:
     ArmorLevel: 1
     View: 2179
   - Id: 400189
-    AegisName: aegis_400189
+    AegisName: Viva_Adul_Hat_AB1
     Name: Helm of Faith (Archbishop)
     Type: Armor
     Weight: 100
@@ -137746,7 +137746,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Neutral,7*(.@r/4);
       bonus2 bMagicAtkEle,Ele_Holy,7*(.@r/4);
   - Id: 400190
-    AegisName: aegis_400190
+    AegisName: Viva_Adul_Hat_AB2
     Name: Helm of Faith II (Archbishop)
     Type: Armor
     Weight: 100
@@ -137788,7 +137788,7 @@ Body:
       bonus bLongAtkRate,7*(.@r/4);
       bonus bShortAtkRate,7*(.@r/4);
   - Id: 400191
-    AegisName: aegis_400191
+    AegisName: Viva_Adul_Hat_SC1
     Name: Helm of Faith (Shadow Chaser)
     Type: Armor
     Weight: 100
@@ -137829,7 +137829,7 @@ Body:
       bonus2 bSkillAtk,"SC_FATALMENACE",15*(.@r/3);
       bonus bShortAtkRate,7*(.@r/4);
   - Id: 400192
-    AegisName: aegis_400192
+    AegisName: Viva_Adul_Hat_SC2
     Name: Helm of Faith II (Shadow Chaser)
     Type: Armor
     Weight: 100
@@ -137870,7 +137870,7 @@ Body:
       bonus2 bSkillAtk,"SC_TRIANGLESHOT",15*(.@r/3);
       bonus bLongAtkRate,7*(.@r/4);
   - Id: 400198
-    AegisName: aegis_400198
+    AegisName: Viva_Adul_Hat_RA1
     Name: Helm of Faith (Ranger)
     Type: Armor
     Weight: 100
@@ -137911,7 +137911,7 @@ Body:
       bonus2 bSkillAtk,"RA_ARROWSTORM",15*(.@r/3);
       bonus bLongAtkRate,7*(.@r/4);
   - Id: 400199
-    AegisName: aegis_400199
+    AegisName: Viva_Adul_Hat_RA2
     Name: Helm of Faith II (Ranger)
     Type: Armor
     Weight: 100
@@ -137952,7 +137952,7 @@ Body:
       bonus2 bSkillAtk,"RA_AIMEDBOLT",15*(.@r/3);
       bonus bLongAtkRate,7*(.@r/4);
   - Id: 400200
-    AegisName: aegis_400200
+    AegisName: Viva_Adul_Hat_LG1
     Name: Helm of Faith (Royal Guard)
     Type: Armor
     Weight: 100
@@ -137994,7 +137994,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Neutral,7*(.@r/4);
       bonus2 bMagicAtkEle,Ele_Holy,7*(.@r/4);
   - Id: 400201
-    AegisName: aegis_400201
+    AegisName: Viva_Adul_Hat_LG2
     Name: Helm of Faith II (Royal Guard)
     Type: Armor
     Weight: 100
@@ -138035,7 +138035,7 @@ Body:
       bonus2 bSkillAtk,"LG_OVERBRAND",15*(.@r/3);
       bonus bShortAtkRate,7*(.@r/4);
   - Id: 400216
-    AegisName: aegis_400216
+    AegisName: Viva_Adul_Hat_GC1
     Name: Helm of Faith (Guillotine Cross)
     Type: Armor
     Weight: 100
@@ -138076,7 +138076,7 @@ Body:
       bonus2 bSkillAtk,"GC_COUNTERSLASH",15*(.@r/3);
       bonus bShortAtkRate,7*(.@r/4);
   - Id: 400217
-    AegisName: aegis_400217
+    AegisName: Viva_Adul_Hat_GC2
     Name: Helm of Faith II (Guillotine Cross)
     Type: Armor
     Weight: 100
@@ -138117,7 +138117,7 @@ Body:
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15*(.@r/3);
       bonus bShortAtkRate,7*(.@r/4);
   - Id: 400218
-    AegisName: aegis_400218
+    AegisName: Viva_Adul_Hat_SO1
     Name: Helm of Faith (Sorcerer)
     Type: Armor
     Weight: 100
@@ -138159,7 +138159,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Poison,7*(.@r/4);
       bonus2 bMagicAtkEle,Ele_Fire,7*(.@r/4);
   - Id: 400219
-    AegisName: aegis_400219
+    AegisName: Viva_Adul_Hat_SO2
     Name: Helm of Faith II (Sorcerer)
     Type: Armor
     Weight: 100

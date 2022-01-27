@@ -21392,7 +21392,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_400178
+          - Viva_Adul_Hat_WL1
           - Adulter_F_Rod
     Script: |
       bonus2 bMagicAtkEle,Ele_Ghost,10;
@@ -21400,7 +21400,7 @@ Body:
       bonus2 bSkillAtk,"WL_SOULEXPANSION",5*(.@r_weapon/3);
   - Combos:
       - Combo:
-          - aegis_400178
+          - Viva_Adul_Hat_WL1
           - Vivatus_F_Rod
     Script: |
       bonus2 bMagicAtkEle,Ele_Ghost,10;
@@ -21412,7 +21412,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_400179
+          - Viva_Adul_Hat_WL2
           - Adulter_F_T_Staff
     Script: |
       bonus2 bMagicAtkEle,Ele_Neutral,10;
@@ -21421,7 +21421,7 @@ Body:
       bonus2 bSkillAtk,"WL_COMET",5*(.@r_weapon/3);
   - Combos:
       - Combo:
-          - aegis_400179
+          - Viva_Adul_Hat_WL2
           - Vivatus_F_T_Staff
     Script: |
       bonus2 bMagicAtkEle,Ele_Neutral,10;
@@ -21434,7 +21434,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_400180
+          - Viva_Adul_Hat_SR1
           - Adulter_F_Knuckle
     Script: |
       bonus bShortAtkRate,10;
@@ -21442,7 +21442,7 @@ Body:
       bonus2 bSkillAtk,"SR_TIGERCANNON",5*(.@r_weapon/3);
   - Combos:
       - Combo:
-          - aegis_400180
+          - Viva_Adul_Hat_SR1
           - Vivatus_F_Knuckle
     Script: |
       bonus bShortAtkRate,10;
@@ -21454,7 +21454,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_400181
+          - Viva_Adul_Hat_SR2
           - Adulter_F_Claw
     Script: |
       bonus bLongAtkRate,10;
@@ -21462,7 +21462,7 @@ Body:
       bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",5*(.@r_weapon/3);
   - Combos:
       - Combo:
-          - aegis_400181
+          - Viva_Adul_Hat_SR2
           - Vivatus_F_Claw
     Script: |
       bonus bLongAtkRate,10;
@@ -21474,7 +21474,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_400189
+          - Viva_Adul_Hat_AB1
           - Adulter_F_Wand
     Script: |
       bonus2 bMagicAtkEle,Ele_Neutral,10;
@@ -21483,7 +21483,7 @@ Body:
       bonus2 bSkillAtk,"AB_ADORAMUS",5*(.@r_weapon/3);
   - Combos:
       - Combo:
-          - aegis_400189
+          - Viva_Adul_Hat_AB1
           - Vivatus_F_Wand
     Script: |
       bonus2 bMagicAtkEle,Ele_Neutral,10;
@@ -21496,7 +21496,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_400190
+          - Viva_Adul_Hat_AB2
           - Adulter_F_Bible
     Script: |
       bonus bShortAtkRate,10;
@@ -21504,7 +21504,7 @@ Body:
       bonus2 bSkillAtk,"AB_DUPLELIGHT",5*(.@r_weapon/3);
   - Combos:
       - Combo:
-          - aegis_400190
+          - Viva_Adul_Hat_AB2
           - Vivatus_F_Bible
     Script: |
       bonus bShortAtkRate,10;
@@ -21516,7 +21516,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_400191
+          - Viva_Adul_Hat_SC1
           - Adulter_F_Dagger
     Script: |
       bonus bShortAtkRate,10;
@@ -21524,7 +21524,7 @@ Body:
       bonus2 bSkillAtk,"SC_FATALMENACE",5*(.@r_weapon/3);
   - Combos:
       - Combo:
-          - aegis_400191
+          - Viva_Adul_Hat_SC1
           - Vivatus_F_Dagger
     Script: |
       bonus bShortAtkRate,10;
@@ -21536,7 +21536,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_400192
+          - Viva_Adul_Hat_SC2
           - Adulter_F_C_Bow
     Script: |
       bonus bLongAtkRate,10;
@@ -21544,7 +21544,7 @@ Body:
       bonus2 bSkillAtk,"SC_TRIANGLESHOT",5*(.@r_weapon/3);
   - Combos:
       - Combo:
-          - aegis_400192
+          - Viva_Adul_Hat_SC2
           - Vivatus_F_C_Bow
     Script: |
       bonus bLongAtkRate,10;
@@ -21556,7 +21556,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_400198
+          - Viva_Adul_Hat_RA1
           - Adulter_F_Ballista
     Script: |
       bonus bLongAtkRate,10;
@@ -21564,7 +21564,7 @@ Body:
       bonus2 bSkillAtk,"RA_ARROWSTORM",5*(.@r_weapon/3);
   - Combos:
       - Combo:
-          - aegis_400198
+          - Viva_Adul_Hat_RA1
           - Vivatus_F_Ballista
     Script: |
       bonus bLongAtkRate,10;
@@ -21576,7 +21576,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_400199
+          - Viva_Adul_Hat_RA2
           - Adulter_F_A_Bow
     Script: |
       bonus bLongAtkRate,10;
@@ -21584,7 +21584,7 @@ Body:
       bonus2 bSkillAtk,"RA_AIMEDBOLT",5*(.@r_weapon/3);
   - Combos:
       - Combo:
-          - aegis_400199
+          - Viva_Adul_Hat_RA2
           - Vivatus_F_A_Bow
     Script: |
       bonus bLongAtkRate,10;
@@ -21596,7 +21596,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_400200
+          - Viva_Adul_Hat_LG1
           - Adulter_F_G_Sword
     Script: |
       bonus2 bMagicAtkEle,Ele_Neutral,10;
@@ -21605,7 +21605,7 @@ Body:
       bonus2 bSkillAtk,"LG_RAYOFGENESIS",5*(.@r_weapon/3);
   - Combos:
       - Combo:
-          - aegis_400200
+          - Viva_Adul_Hat_LG1
           - Vivatus_F_G_Sword
     Script: |
       bonus2 bMagicAtkEle,Ele_Neutral,10;
@@ -21618,7 +21618,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_400201
+          - Viva_Adul_Hat_LG2
           - Adulter_F_G_Spear
     Script: |
       bonus bShortAtkRate,10;
@@ -21626,7 +21626,7 @@ Body:
       bonus2 bSkillAtk,"LG_OVERBRAND",5*(.@r_weapon/3);
   - Combos:
       - Combo:
-          - aegis_400201
+          - Viva_Adul_Hat_LG2
           - Vivatus_F_G_Spear
     Script: |
       bonus bShortAtkRate,10;
@@ -21638,7 +21638,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_400216
+          - Viva_Adul_Hat_GC1
           - Adulter_F_Katar
     Script: |
       bonus bShortAtkRate,10;
@@ -21646,7 +21646,7 @@ Body:
       bonus2 bSkillAtk,"GC_COUNTERSLASH",5*(.@r_weapon/3);
   - Combos:
       - Combo:
-          - aegis_400216
+          - Viva_Adul_Hat_GC1
           - Vivatus_F_Katar
     Script: |
       bonus bShortAtkRate,10;
@@ -21658,7 +21658,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_400217
+          - Viva_Adul_Hat_GC2
           - Adulter_F_Cakram
     Script: |
       bonus bShortAtkRate,10;
@@ -21666,7 +21666,7 @@ Body:
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",5*(.@r_weapon/3);
   - Combos:
       - Combo:
-          - aegis_400217
+          - Viva_Adul_Hat_GC2
           - Vivatus_F_Cakram
     Script: |
       bonus bShortAtkRate,10;
@@ -21678,7 +21678,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_400218
+          - Viva_Adul_Hat_SO1
           - Adulter_F_P_Book
     Script: |
       bonus2 bMagicAtkEle,Ele_Poison,10;
@@ -21686,7 +21686,7 @@ Body:
       bonus2 bSkillAtk,"SO_POISON_BUSTER",5*(.@r_weapon/3);
   - Combos:
       - Combo:
-          - aegis_400218
+          - Viva_Adul_Hat_SO1
           - Vivatus_F_P_Book
     Script: |
       bonus2 bMagicAtkEle,Ele_Poison,10;
@@ -21701,7 +21701,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_400219
+          - Viva_Adul_Hat_SO2
           - Adulter_F_M_Book
     Script: |
       bonus2 bMagicAtkEle,Ele_Neutral,10;
@@ -21709,7 +21709,7 @@ Body:
       bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",5*(.@r_weapon/3);
   - Combos:
       - Combo:
-          - aegis_400219
+          - Viva_Adul_Hat_SO2
           - Vivatus_F_M_Book
     Script: |
       bonus2 bMagicAtkEle,Ele_Earth,10;
