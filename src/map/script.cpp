@@ -17511,7 +17511,7 @@ BUILDIN_FUNC(callshop)
 	if (script_hasdata(st,3))
 		flag = script_getnum(st,3);
 	nd = npc_name2id(shopname);
-	if( !nd || nd->bl.type != BL_NPC || (nd->subtype != NPCTYPE_SHOP && nd->subtype != NPCTYPE_CASHSHOP && nd->subtype != NPCTYPE_ITEMSHOP && nd->subtype != NPCTYPE_POINTSHOP && nd->subtype != NPCTYPE_MARKETSHOP) ) {
+	if( !nd || nd->bl.type != BL_NPC || (nd->subtype != NPCTYPE_SHOP && nd->subtype != NPCTYPE_CASHSHOP && nd->subtype != NPCTYPE_ITEMSHOP && nd->subtype != NPCTYPE_POINTSHOP && nd->subtype != NPCTYPE_MARKETSHOP && nd->subtype != NPCTYPE_BARTER) ) {
 		ShowError("buildin_callshop: Shop [%s] not found (or NPC is not shop type)\n", shopname);
 		script_pushint(st,0);
 		return SCRIPT_CMD_FAILURE;
@@ -17547,7 +17547,16 @@ BUILDIN_FUNC(callshop)
 		return SCRIPT_CMD_SUCCESS;
 	}
 #endif
-	else
+	else if( nd->subtype == NPCTYPE_BARTER ){
+		// flag the user as using a valid script call for opening the shop (for floating NPCs)
+		sd->state.callshop = 1;
+
+		if( nd->u.barter.extended ){
+			clif_barter_extended_open( *sd, *nd );
+		}else{
+			clif_barter_open( *sd, *nd );
+		}
+	}else
 		clif_cashshop_show(sd, nd);
 
 	sd->npc_shopid = nd->bl.id;

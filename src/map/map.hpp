@@ -295,6 +295,7 @@ enum npc_subtype : uint8{
 	NPCTYPE_POINTSHOP, /// Pointshop
 	NPCTYPE_TOMB, /// Monster tomb
 	NPCTYPE_MARKETSHOP, /// Marketshop
+	NPCTYPE_BARTER, /// Barter
 };
 
 enum e_race : int8{
@@ -644,6 +645,8 @@ enum e_mapflag : int16 {
 	MF_SKILL_DURATION,
 	MF_NOCASHSHOP,
 	MF_NORODEX,
+	MF_NORENEWALEXPPENALTY,
+	MF_NORENEWALDROPPENALTY,
 	MF_MAX
 };
 
@@ -1220,6 +1223,7 @@ extern Sql* mmysql_handle;
 extern Sql* qsmysql_handle;
 extern Sql* logmysql_handle;
 
+extern char barter_table[32];
 extern char buyingstores_table[32];
 extern char buyingstore_items_table[32];
 extern char item_table[32];

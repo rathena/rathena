@@ -48943,6 +48943,15 @@ Body:
     Weight: 10
     Script: |
       /*upgradeui 23720;*/
+  - Id: 23766
+    AegisName: Overwhelm_Armor_Box
+    Name: Temporal Armor Box
+    Type: Usable
+    Weight: 2000
+    Flags:
+      Container: true
+    Script: |
+      getitem callfunc("F_Rand",15278,15279,15346,15347,15353,15354),1;
   - Id: 23770
     AegisName: Enchant_Stone_Box16
     Name: Costume Enchant Stone Box 16
