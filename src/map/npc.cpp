@@ -3981,7 +3981,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	nd->u.shop.count = 0;
 	while ( p ) {
 		t_itemid nameid2;
-		int16 qty = -1;
+		int32 qty = -1;
 		int value;
 		struct item_data* id;
 		bool skip = false;
@@ -3991,7 +3991,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		switch(type) {
 			case NPCTYPE_MARKETSHOP:
 #if PACKETVER >= 20131223
-				if (sscanf(p, ",%u:%11d:%6hd", &nameid2, &value, &qty) != 3) {
+				if (sscanf(p, ",%u:%11d:%11d", &nameid2, &value, &qty) != 3) {
 					ShowError("npc_parse_shop: (MARKETSHOP) Invalid item definition in file '%s', line '%d'. Ignoring the rest of the line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer, start - buffer), w1, w2, w3, w4);
 					skip = true;
 				}
