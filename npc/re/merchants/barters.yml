@@ -47,4 +47,4 @@ Header:
 
 Footer:
   Imports:
-  - Path: npc/re/merchants/eden_market.yml
+  - Path: npc/re/merchants/barters/eden_market.yml
