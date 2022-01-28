@@ -279,6 +279,12 @@ Body:
           - Index: 0
             Item: Shooting_Mine
             Amount: 500
+      - Index: 17
+        Item: Nw_Grenade_Box
+        RequiredItems:
+          - Index: 0
+            Item: Nw_Grenade
+            Amount: 500
 
 ###########################################################################
 ##= Ninja Tool Merchant
@@ -286,88 +292,142 @@ Body:
   - Name: Box_Exchange_Ninja
     Items:
       - Index: 0
+        Item: Kunai_Scroll
+        RequiredItems:
+          - Index: 0
+            Item: Kunai
+            Amount: 500
+      - Index: 1
+        Item: Kunai_Scroll_Nothing
+        RequiredItems:
+          - Index: 0
+            Item: Kunai_Of_Nothing
+            Amount: 500
+      - Index: 2
+        Item: Kunai_Scroll_Shadow
+        RequiredItems:
+          - Index: 0
+            Item: Kunai_Of_Shadow
+            Amount: 500
+      - Index: 3
+        Item: Kunai_Scroll_Hamaya
+        RequiredItems:
+          - Index: 0
+            Item: Kunai_Of_Hamaya
+            Amount: 500
+      - Index: 4
         Item: Kunai_Scroll_Of_Flame
         RequiredItems:
           - Index: 0
             Item: Kunai_Of_Fierce_Flame
             Amount: 500
-      - Index: 1
+      - Index: 5
         Item: Kunai_Scroll_Of_Wind
         RequiredItems:
           - Index: 0
             Item: Kunai_Of_Furious_Wind
             Amount: 500
-      - Index: 2
+      - Index: 6
         Item: Kunai_Scroll_Of_Icicle
         RequiredItems:
           - Index: 0
             Item: Kunai_Of_Icicle
             Amount: 500
-      - Index: 3
+      - Index: 7
         Item: Kunai_Scroll_Of_Soil
         RequiredItems:
           - Index: 0
             Item: Kunai_Of_Black_Soil
             Amount: 500
-      - Index: 4
+      - Index: 8
         Item: Kunai_Scroll_Of_Poison
         RequiredItems:
           - Index: 0
             Item: Kunai_Of_Deadly_Poison
             Amount: 500
-      - Index: 5
+      - Index: 9
         Item: Kunai_Scroll_Explosive
         RequiredItems:
           - Index: 0
             Item: Explosive_Kunai
             Amount: 500
-      - Index: 6
+      - Index: 10
         Item: Charm_Fire_Bundle
         RequiredItems:
           - Index: 0
             Item: Charm_Fire
             Amount: 500
-      - Index: 7
+      - Index: 11
         Item: Charm_Ice_Bundle
         RequiredItems:
           - Index: 0
             Item: Charm_Ice
             Amount: 500
-      - Index: 8
+      - Index: 12
         Item: Charm_Wind_Bundle
         RequiredItems:
           - Index: 0
             Item: Charm_Wind
             Amount: 500
-      - Index: 9
+      - Index: 13
         Item: Charm_Earth_Bundle
         RequiredItems:
           - Index: 0
             Item: Charm_Earth
             Amount: 500
-      - Index: 10
+      - Index: 14
         Item: Flame_Stone_Bundle
         RequiredItems:
           - Index: 0
             Item: Flame_Stone
             Amount: 500
-      - Index: 11
+      - Index: 15
         Item: Ice_Stone_Bundle
         RequiredItems:
           - Index: 0
             Item: Ice_Stone
             Amount: 500
-      - Index: 12
+      - Index: 16
         Item: Wind_Stone_Bundle
         RequiredItems:
           - Index: 0
             Item: Wind_Stone
             Amount: 500
-      - Index: 13
+      - Index: 17
         Item: Shadow_Orb_Bundle
         RequiredItems:
           - Index: 0
             Item: Shadow_Orb
+            Amount: 500
+      - Index: 18
+        Item: Shadow_Orb_Bundle
+        RequiredItems:
+          - Index: 0
+            Item: Shadow_Orb
+            Amount: 500
+      - Index: 19
+        Item: SS_Charm_Box
+        RequiredItems:
+          - Index: 0
+            Item: SS_Charm_F
+            Amount: 500
+      - Index: 20
+        Item: SS_Charm_W_Box
+        RequiredItems:
+          - Index: 0
+            Item: SS_Charm_W
+            Amount: 500
+      - Index: 21
+        Item: SS_Charm_G_Box
+        RequiredItems:
+          - Index: 0
+            Item: SS_Charm_G
+            Amount: 500
+      - Index: 22
+        Item: SS_Charm_L_Box
+        RequiredItems:
+          - Index: 0
+            Item: SS_Charm_L
             Amount: 500
 
 ###########################################################################
@@ -411,31 +471,61 @@ Body:
           - Index: 0
             Item: Liquid_Condensed_Bullet
             Amount: 500
+      - Index: 5
+        Item: Cannon_Box_Ice
+        RequiredItems:
+          - Index: 0
+            Item: Ice_Cannon_Ball
+            Amount: 500
       - Index: 6
+        Item: Cannon_Box_Lightning
+        RequiredItems:
+          - Index: 0
+            Item: Lightning_Cannon_Ball
+            Amount: 500
+      - Index: 7
+        Item: Cannon_Box_Stone
+        RequiredItems:
+          - Index: 0
+            Item: Stone_Cannon_Ball
+            Amount: 500
+      - Index: 8
+        Item: Cannon_Box_Flare
+        RequiredItems:
+          - Index: 0
+            Item: Flare_Cannon_Ball
+            Amount: 500
+      - Index: 9
+        Item: Cannon_Box_Poisoning
+        RequiredItems:
+          - Index: 0
+            Item: Poisoning_Cannon_Ball
+            Amount: 500
+      - Index: 10
         Item: Vulcan_Bullet_Magazine
         RequiredItems:
           - Index: 0
             Item: Vulcan_Bullet
             Amount: 500
-      - Index: 7
+      - Index: 11
         Item: Magic_Gear_Fuel_Box
         RequiredItems:
           - Index: 0
             Item: Magic_Gear_Fuel
             Amount: 500
-      - Index: 8
+      - Index: 12
         Item: RepairA_Box
         RequiredItems:
           - Index: 0
             Item: RepairA
             Amount: 500
-      - Index: 9
+      - Index: 13
         Item: RepairB_Box
         RequiredItems:
           - Index: 0
             Item: RepairB
             Amount: 500
-      - Index: 10
+      - Index: 14
         Item: RepairC_Box
         RequiredItems:
           - Index: 0
