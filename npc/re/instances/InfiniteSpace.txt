@@ -138,6 +138,7 @@ cmd_fild07,54,280,5	script	Temporary Entrance#pa0829_01	PORTAL,{
 OnInstanceInit:
 	'map$ = instance_mapname("1@infi");
 	'floor = 1;
+	'sanity = 0;
 
 	enablenpc instance_npcname("#inf_space_mobs");
 	enablenpc instance_npcname("#w0_0");
