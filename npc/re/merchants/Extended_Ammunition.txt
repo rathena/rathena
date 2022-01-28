@@ -1,9 +1,7 @@
 //===== rAthena Script ======================================= 
 //= Extension of Ammunition Sales
 //===== Description: ========================================= 
-// When support for infinite stock was added.
-// Change the Store to Marketshop.
-// Texts from this script were translated according to KRO
+// The information in this script was taken from kro
 //===== Changelogs: ==========================================
 //= 1.0 First Version. [JohnnyPlayy]
 //============================================================
