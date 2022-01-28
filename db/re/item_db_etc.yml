@@ -39333,7 +39333,7 @@ Body:
     Script: |
       bonus bBaseAtk,100+(10*getrefine());
       bonus2 bResEff,Eff_Freeze,10000;
-      bonus2 bResEff,Eff_Freeze,10000;
+      bonus2 bResEff,Eff_Stone,10000;
   - Id: 27147
     AegisName: Human_Kimera_Card
     Name: Humanoid Chimera Card
