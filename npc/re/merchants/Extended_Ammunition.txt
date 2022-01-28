@@ -39,9 +39,6 @@ OnInit:
 		//= Arrow Quiver Event
 		unloadnpc "Inventor Jaax";
 		
-		//= Ammunition and Weapons Sellers
-		unloadnpc "Trading Merchant#iz";
-		
 		//= Ammunition Dealer
 		unloadnpc "Magazine Dealer Kenny#iz";
 		unloadnpc "Magazine Dealer Kenny#al";
@@ -51,6 +48,10 @@ OnInit:
 		
 		//= Unsold items
 		npcshopdelitem "Trading Merchant#alb",13200,13221,13222;
+		npcshopdelitem "Trading Merchant#iz",13200,13221,13222;
+		
+		//= NPC Moved Place
+		movenpc "Trading Merchant#iz", 72,110,3;
 		
 	} else {
 	
