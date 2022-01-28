@@ -471,61 +471,61 @@ Body:
           - Index: 0
             Item: Liquid_Condensed_Bullet
             Amount: 500
-      - Index: 5
+      - Index: 6
         Item: Cannon_Box_Ice
         RequiredItems:
           - Index: 0
             Item: Ice_Cannon_Ball
             Amount: 500
-      - Index: 6
+      - Index: 7
         Item: Cannon_Box_Lightning
         RequiredItems:
           - Index: 0
             Item: Lightning_Cannon_Ball
             Amount: 500
-      - Index: 7
+      - Index: 8
         Item: Cannon_Box_Stone
         RequiredItems:
           - Index: 0
             Item: Stone_Cannon_Ball
             Amount: 500
-      - Index: 8
+      - Index: 9
         Item: Cannon_Box_Flare
         RequiredItems:
           - Index: 0
             Item: Flare_Cannon_Ball
             Amount: 500
-      - Index: 9
+      - Index: 10
         Item: Cannon_Box_Poisoning
         RequiredItems:
           - Index: 0
             Item: Poisoning_Cannon_Ball
             Amount: 500
-      - Index: 10
+      - Index: 11
         Item: Vulcan_Bullet_Magazine
         RequiredItems:
           - Index: 0
             Item: Vulcan_Bullet
             Amount: 500
-      - Index: 11
+      - Index: 12
         Item: Magic_Gear_Fuel_Box
         RequiredItems:
           - Index: 0
             Item: Magic_Gear_Fuel
             Amount: 500
-      - Index: 12
+      - Index: 13
         Item: RepairA_Box
         RequiredItems:
           - Index: 0
             Item: RepairA
             Amount: 500
-      - Index: 13
+      - Index: 14
         Item: RepairB_Box
         RequiredItems:
           - Index: 0
             Item: RepairB
             Amount: 500
-      - Index: 14
+      - Index: 15
         Item: RepairC_Box
         RequiredItems:
           - Index: 0
