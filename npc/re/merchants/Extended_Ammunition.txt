@@ -49,6 +49,12 @@ OnInit:
 		//= Unsold items
 		npcshopdelitem "Trading Merchant#alb",13200,13221,13222;
 		npcshopdelitem "Trading Merchant#iz",13200,13221,13222;
+		npcshopdelitem "Weapon Dealer#gef2",1750,1751;
+		npcshopdelitem "Weapon Dealer#iz",1750,1751;
+		npcshopdelitem "Weapon Dealer#yuno",1750,1751;
+		npcshopdelitem "Weapon Dealer#moc1",1750,1751;
+		npcshopdelitem "Weapon Dealer#pay",1750,1751;
+		npcshopdelitem "prt_in,172,130,0",1750,1751;
 		
 		//= NPC Moved Place
 		movenpc "Trading Merchant#iz", 72,110,3;
