@@ -54,7 +54,7 @@ OnInit:
 		npcshopdelitem "Weapon Dealer#yuno",1750,1751;
 		npcshopdelitem "Weapon Dealer#moc1",1750,1751;
 		npcshopdelitem "Weapon Dealer#pay",1750,1751;
-		npcshopdelitem "prt_in,172,130,0",1750,1751;
+		npcshopdelitem "Weapon Dealer#prt",1750,1751;
 		
 		//= NPC Moved Place
 		movenpc "Trading Merchant#iz", 72,110,3;
