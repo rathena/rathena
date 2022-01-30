@@ -574,14 +574,14 @@ OnPoringKill:
 }
 
 1@infi,42,8,1	script	#w0_0	4_F_GON,{
-	if (is_party_leader() && !'mode && 'sanity < 1) {
+	if (is_party_leader() && !'mode && 'sanity == 0) {
 		mes "[ Reckless Explorer ]";
 		mes "I have went in and out of this place many times and figured out a way to provoke the monsters in here. You can get more rewards if you're going to deal with heated ones.";
 		next;
 		mes "[ Reckless Explorer ]";
 		mes "What do you think? Would you like to try something challenging?";
 		next;
-		if (select("I want to proceed normally:I want to proceed with something difficult") == 1) {
+		if (select("I want to proceed normally:I want to proceed with something difficult") == 1 && 'sanity == 0) {
 			'mode = 1;
 			'poring_chance = 1;
 		} else {
@@ -591,22 +591,24 @@ OnPoringKill:
 		mes "[ Reckless Explorer ]";
 		mes "Good. Shall we go now?";
 		close2;
-		'sanity = 1;
-		disablenpc instance_npcname(strnpcinfo(0));
-		hideoffnpc instance_npcname("#w0");
-		npctalk "Reckless Explorer : Woah~ It's very neat for a sunken place, don't you think?",instance_npcname("#w0");
-		sleep 3000;
-		npctalk "Reckless Explorer : I would believe it to be an ancient site, not a lighthouse. It's so well organized...",instance_npcname("#w0");
-		sleep 3000;
-		npctalk "Reckless Explorer : Oh, did you hear something?",instance_npcname("#w0");
-		donpcevent instance_npcname("#inf_space_mobs") + "::OnSummon";
-		sleep 3000;
-		npctalk "Reckless Explorer : Oh, that must be the monsters haunting this place.",instance_npcname("#w0");
-		sleep 3000;
-		npctalk "Reckless Explorer : They look no different from the ones we saw outside, but I can feel a very strong energy.",instance_npcname("#w0");
-		sleep 3000;
-		npctalk "Reckless Explorer : Hm~ It looks dangerous, so I'll go back up. I'll give you directions from above.",instance_npcname("#w0");
-		disablenpc instance_npcname("#w0");
+		if ('sanity == 0) {
+			'sanity = 1;
+			disablenpc instance_npcname(strnpcinfo(0));
+			hideoffnpc instance_npcname("#w0");
+			npctalk "Reckless Explorer : Woah~ It's very neat for a sunken place, don't you think?",instance_npcname("#w0");
+			sleep 3000;
+			npctalk "Reckless Explorer : I would believe it to be an ancient site, not a lighthouse. It's so well organized...",instance_npcname("#w0");
+			sleep 3000;
+			npctalk "Reckless Explorer : Oh, did you hear something?",instance_npcname("#w0");
+			donpcevent instance_npcname("#inf_space_mobs") + "::OnSummon";
+			sleep 3000;
+			npctalk "Reckless Explorer : Oh, that must be the monsters haunting this place.",instance_npcname("#w0");
+			sleep 3000;
+			npctalk "Reckless Explorer : They look no different from the ones we saw outside, but I can feel a very strong energy.",instance_npcname("#w0");
+			sleep 3000;
+			npctalk "Reckless Explorer : Hm~ It looks dangerous, so I'll go back up. I'll give you directions from above.",instance_npcname("#w0");
+			disablenpc instance_npcname("#w0");
+		}
 	}
 	end;
 }
