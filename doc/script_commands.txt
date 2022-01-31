@@ -9484,7 +9484,7 @@ Instance mode options: IM_NONE, IM_CHAR, IM_PARTY, IM_GUILD, or IM_CLAN
 If the instance mode is not provided then it will return all the instance IDs for that map.
 
 Examples:
-	// this example assums that you already have punch of prontera instances.
+	// This example assumes that there are several instances on the map of Prontera.
 	.@size = instance_list("prontera");
 	for ( .@i = 0; .@i < .@size; ++.@i )
 		mes instance_mapname("prontera", .@instance_list[.@i]);
