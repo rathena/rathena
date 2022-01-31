@@ -8007,7 +8007,6 @@ Body:
       BlEffect: true
       DisplayPc: true
       RemoveOnDamaged: true
-      RemoveOnDamaged: true
 
   - Status: Handicapstate_Swooning
     States:
@@ -8016,7 +8015,6 @@ Body:
       NoConsumeItem: true
     Flags:
       DisplayPc: true
-      RemoveOnDamaged: true
       RemoveOnDamaged: true
 
   - Status: Handicapstate_Lightningstrike
@@ -8032,7 +8030,6 @@ Body:
       BlEffect: true
       DisplayPc: true
       RemoveOnDamaged: true
-      RemoveOnDamaged: true
 
   - Status: Handicapstate_Crystallization
     Icon: Handicapstate_Crystallization
@@ -8047,7 +8044,6 @@ Body:
     Flags:
       BlEffect: true
       DisplayPc: true
-      RemoveOnDamaged: true
       RemoveOnDamaged: true
 
   - Status: Handicapstate_Conflagration
