@@ -1782,7 +1782,6 @@ Body:
       Flee2: true
     Flags:
       NoRemoveOnDead: true
-      NoDispell: true
       NoClearance: true
 
   - Status: Assncros
@@ -1794,7 +1793,6 @@ Body:
       NoRemoveOnDead: true
       FailedMado: true
       NoClearance: true
-      NoDispell: true
     Fail:
       Quagmire: true
 
@@ -1804,7 +1802,6 @@ Body:
     Flags:
       NoRemoveOnDead: true
       NoClearance: true
-      NoDispell: true
 
   - Status: Appleidun
     Icon: Appleidun
@@ -1814,7 +1811,6 @@ Body:
     Flags:
       NoRemoveOnDead: true
       NoClearance: true
-      NoDispell: true
 
   - Status: Modechange
     DurationLookup: NPC_EMOTION
@@ -1829,7 +1825,6 @@ Body:
     Flags:
       NoRemoveOnDead: true
       NoClearance: true
-      NoDispell: true
 
   - Status: Dontforgetme
     Icon: Dontforgetme
@@ -1840,7 +1835,6 @@ Body:
     Flags:
       NoRemoveOnDead: true
       NoClearance: true
-      NoDispell: true
     Fail:
       Speedup1: true
     End:
@@ -1861,7 +1855,6 @@ Body:
     Flags:
       NoRemoveOnDead: true
       NoClearance: true
-      NoDispell: true
 
   - Status: Service4u
     Icon: Serviceforyou
@@ -1871,7 +1864,6 @@ Body:
     Flags:
       NoRemoveOnDead: true
       NoClearance: true
-      NoDispell: true
 
   - Status: Stop
     Icon: Stop

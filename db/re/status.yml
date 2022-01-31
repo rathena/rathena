@@ -1830,7 +1830,6 @@ Body:
       Flee2: true
     Flags:
       NoRemoveOnDead: true
-      NoDispell: true
       NoClearance: true
     End:
       Whistle: true
@@ -1847,7 +1846,6 @@ Body:
       NoRemoveOnDead: true
       FailedMado: true
       NoClearance: true
-      NoDispell: true
     Fail:
       Quagmire: true
     End:
@@ -1862,7 +1860,6 @@ Body:
     Flags:
       NoRemoveOnDead: true
       NoClearance: true
-      NoDispell: true
     End:
       Whistle: true
       Assncros: true
@@ -1877,7 +1874,6 @@ Body:
     Flags:
       NoRemoveOnDead: true
       NoClearance: true
-      NoDispell: true
     End:
       Whistle: true
       Assncros: true
@@ -1897,7 +1893,6 @@ Body:
     Flags:
       NoRemoveOnDead: true
       NoClearance: true
-      NoDispell: true
     End:
       Dontforgetme: true
       Humming: true
@@ -1913,7 +1908,6 @@ Body:
     Flags:
       NoRemoveOnDead: true
       NoClearance: true
-      NoDispell: true
     Fail:
       Speedup1: true
     End:
@@ -1938,7 +1932,6 @@ Body:
     Flags:
       NoRemoveOnDead: true
       NoClearance: true
-      NoDispell: true
     End:
       Dontforgetme: true
       Humming: true
@@ -1953,7 +1946,6 @@ Body:
     Flags:
       NoRemoveOnDead: true
       NoClearance: true
-      NoDispell: true
     End:
       Dontforgetme: true
       Humming: true
@@ -7851,7 +7843,6 @@ Body:
     Flags:
       NoRemoveOnDead: true
       NoBanishingBuster: true
-      NoDispell: true
       NoDispell: true
       NoClearance: true
 
