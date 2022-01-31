@@ -145124,7 +145124,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bMatk,130+15+(.@r/2);
+      bonus bMatk,130+15*(.@r/2);
       if (.@r>=7) {
         bonus bVariableCastrate,-15;
         if (.@r>=9) {
@@ -161925,7 +161925,7 @@ Body:
     Jobs:
       Knight: true
     Locations:
-      Right_Hand: true
+      Both_Hand: true
     WeaponLevel: 5
     EquipLevelMin: 210
     Refineable: true
@@ -163208,7 +163208,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
+      Both_Hand: true
     WeaponLevel: 5
     EquipLevelMin: 210
     Refineable: true
@@ -167708,14 +167708,14 @@ Body:
       }
       bonus bBaseAtk,15*(.@r/2);
       bonus bLongAtkRate,4*(.@r/3);
-  - Id: 810010
-    AegisName: Glacier_Rifle
-    Name: Glacier Rifle
+  - Id: 820008
+    AegisName: Glacier_Shotgun
+    Name: Glacier Shotgun
     Type: Weapon
-    SubType: Rifle
+    SubType: Shotgun
     Weight: 2600
-    Attack: 280
-    MagicAttack: 230
+    Attack: 300
+    MagicAttack: 200
     Range: 9
     Jobs:
       Rebellion: true
@@ -167724,6 +167724,8 @@ Body:
     WeaponLevel: 5
     EquipLevelMin: 210
     Refineable: true
+    Script: |
+      bonus bSplashRange,1;
   - Id: 830000
     AegisName: Boost_Gatling
     Name: Booster Gatling

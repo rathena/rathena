@@ -47981,6 +47981,8 @@ Body:
     Type: Card
     Weight: 10
     Locations:
+      Head_Low: true
+      Head_Mid: true
       Head_Top: true
     Flags:
       BuyingStore: true
@@ -48003,12 +48005,14 @@ Body:
     Type: Card
     Weight: 10
     Locations:
+      Head_Low: true
+      Head_Mid: true
       Head_Top: true
     Flags:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bAtk,10;
+      bonus bBaseAtk,10;
       bonus bPAtk,1;
       bonus bShortAtkRate,3;
       bonus bUseSPrate,7;
@@ -48059,7 +48063,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bAtk,10;
+      bonus bBaseAtk,10;
       bonus bPAtk,1;
       bonus bLongAtkRate,3;
       bonus bUseSPrate,7;
@@ -48094,7 +48098,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bShortAtkRate,7;
+      bonus bShortAtkRate,8;
   - Id: 300366
     AegisName: aegis_300366
     Name: Minor Rgan Card
@@ -48119,7 +48123,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bShortAtkRate,7;
+      bonus bShortAtkRate,8;
   - Id: 300368
     AegisName: aegis_300368
     Name: Intermediate Rgan Card
@@ -48272,6 +48276,8 @@ Body:
     Type: Card
     Weight: 10
     Locations:
+      Head_Low: true
+      Head_Mid: true
       Head_Top: true
     Flags:
       BuyingStore: true
@@ -48280,8 +48286,8 @@ Body:
       bonus2 bAddClass,Class_All,5;
       bonus bMatkRate,5;
       .@r = getrefine();
-      bonus bPAtk,2*.@r;
-      bonus bSMatk,2*.@r;
+      bonus bPAtk,2*(.@r/3);
+      bonus bSMatk,2*(.@r/3);
       if (.@r >= 11) {
         bonus bFixedCast,-500;
       }
@@ -48291,7 +48297,7 @@ Body:
     Type: Card
     Weight: 10
     Locations:
-      Head_Top: true
+      Armor: true
     Flags:
       BuyingStore: true
       DropEffect: CLIENT
@@ -53351,7 +53357,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bHPDrainRate,40,2;
+      bonus2 bHPDrainRate,20,4;
   - Id: 310644
     AegisName: Wolf_Orb_Soul
     Name: Wolf Orb (Drain Soul)
@@ -56259,7 +56265,7 @@ Body:
     SubType: Enchant
     Script: |
       bonus2 bAddClass,Class_All,6;
-      bonus bAtk,100;
+      bonus bBaseAtk,100;
       .@r = getrefine();
       if (.@r >= 7) {
         bonus bLongAtkRate,5;
@@ -56277,7 +56283,7 @@ Body:
     SubType: Enchant
     Script: |
       bonus2 bAddClass,Class_All,6;
-      bonus bAtk,100;
+      bonus bBaseAtk,100;
       .@r = getrefine();
       if (.@r >= 7) {
         bonus bShortAtkRate,5;
@@ -56712,14 +56718,14 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bHPDrainRate,40,2;
+      bonus2 bHPDrainRate,20,4;
   - Id: 311134
     AegisName: Ice_F_Orb_Soul
     Name: Ice Magic Orb (Drain Soul)
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSPDrainRate,30,1;
+      bonus2 bSPDrainRate,10,3;
   - Id: 311135
     AegisName: Ice_F_Orb_M_Heal
     Name: Ice Magic Orb (Magic Healing)
@@ -56733,7 +56739,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      autobonus "{ bonus2 bSPRegenRate,100,0; }",2,19000,BF_MAGIC;
+      autobonus "{ bonus2 bSPRegenRate,100,500; }",20,19000,BF_MAGIC;
   - Id: 311137
     AegisName: Ice_F_Orb_A_Force
     Name: Ice Magic Orb (All Force)
@@ -57479,11 +57485,11 @@ Body:
       bonus2 bSkillAtk,"WM_METALICSOUND",15;
       bonus2 bSkillAtk,"WM_REVERBERATION",15;
       if (.@r>=7) {
-        bonus2 bSkillAtk,"WM_METALICSOUND",15;
-        bonus2 bSkillAtk,"WM_REVERBERATION",15;
+        bonus2 bSkillAtk,"WM_METALICSOUND",10;
+        bonus2 bSkillAtk,"WM_REVERBERATION",10;
         if (.@r>=9) {
-          bonus2 bSkillAtk,"WM_METALICSOUND",15;
-          bonus2 bSkillAtk,"WM_REVERBERATION",15;
+          bonus2 bSkillAtk,"WM_METALICSOUND",10;
+          bonus2 bSkillAtk,"WM_REVERBERATION",10;
           if (.@r>=11) {
             bonus2 bSkillAtk,"WM_METALICSOUND",15;
             bonus2 bSkillAtk,"WM_REVERBERATION",15;
@@ -58136,7 +58142,7 @@ Body:
       if (.@r>=9) {
         bonus2 bSkillAtk,"NC_ARMSCANNON",20;
         if (.@r>=11) {
-          bonus2 bSkillAtk,"NC_ARMSCANNON",20;
+          bonus2 bSkillAtk,"NC_ARMSCANNON",10;
           bonus bNoMadoFuel;
         }
       }
@@ -58397,7 +58403,7 @@ Body:
       .@r = getrefine();
       bonus2 bSkillAtk,"WL_SOULEXPANSION",20+10*(.@r/3);
       if (.@r>=9) {
-        bonus2 bSkillCooldown,"WL_SOULEXPANSION",-30000;
+        bonus2 bSkillCooldown,"WL_TELEKINESIS_INTENSE",-30000;
         if (.@r>=11) {
           bonus2 bSkillAtk,"WL_SOULEXPANSION",20;
         }
@@ -59925,7 +59931,7 @@ Body:
       bonus bLongAtkRate,5*(.@r/3);
       bonus bShortAtkRate,5*(.@r/3);
       if (.@r>=9) {
-        bonus2 bAddClass,Class_All,25;
+        bonus2 bAddClass,Class_All,10;
         if (.@r>=11 ) {
           bonus bPAtk,5;
           .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
