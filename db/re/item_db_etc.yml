@@ -63184,57 +63184,57 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 1000855
-    AegisName: aegis_1000855
+    AegisName: CriticalStone_Robe_D
     Name: Critical Stone (Dual)
     Type: Etc
     Weight: 100
   - Id: 1000856
-    AegisName: aegis_1000856
+    AegisName: ConStone_Robe_D
     Name: Concentration Stone (Dual)
     Type: Etc
     Weight: 100
   - Id: 1000857
-    AegisName: aegis_1000857
+    AegisName: ArchbishopStone_Top3
     Name: Archbishop Stone (Top)
     Type: Etc
     Weight: 100
   - Id: 1000858
-    AegisName: aegis_1000858
+    AegisName: ArchbishopStone_Middle3
     Name: Archbishop Stone (Middle)
     Type: Etc
     Weight: 100
   - Id: 1000859
-    AegisName: aegis_1000859
+    AegisName: ArchbishopStone_Bottom3
     Name: Archbishop Stone (Bottom)
     Type: Etc
     Weight: 100
   - Id: 1000860
-    AegisName: aegis_1000860
+    AegisName: RangerStone_Top3
     Name: Ranger Stone (Top)
     Type: Etc
     Weight: 100
   - Id: 1000861
-    AegisName: aegis_1000861
+    AegisName: RangerStone_Middle3
     Name: Ranger Stone (Middle)
     Type: Etc
     Weight: 100
   - Id: 1000862
-    AegisName: aegis_1000862
+    AegisName: RangerStone_Bottom3
     Name: Ranger Stone (Bottom)
     Type: Etc
     Weight: 100
   - Id: 1000863
-    AegisName: aegis_1000863
+    AegisName: ShadowchasStone_Top3
     Name: Shadow Chaser Stone (Top)
     Type: Etc
     Weight: 100
   - Id: 1000864
-    AegisName: aegis_1000864
+    AegisName: ShadowchasStone_Middle3
     Name: Shadow Chaser Stone (Middle)
     Type: Etc
     Weight: 100
   - Id: 1000865
-    AegisName: aegis_1000865
+    AegisName: ShadowchasStone_Bottom3
     Name: Shadow Chaser Stone (Bottom)
     Type: Etc
     Weight: 100
