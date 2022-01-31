@@ -3221,10 +3221,8 @@ Body:
       NoBanishingBuster: true
 
   - Status: Stormblast
-    Icon: Reuse_Stormblast
     DurationLookup: RK_VITALITYACTIVATION
     Flags:
-      NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
       NoRemoveOnDead: true
