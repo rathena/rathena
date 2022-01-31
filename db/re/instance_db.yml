@@ -24,10 +24,10 @@
 ###########################################################################
 # - Id                Instance ID.
 #   Name              Instance Name.
-#   TimeLimit         Total lifetime of instance in seconds, if it's '0' the time limit would be infinite. (Default: 3600)
-#   IdleTimeOut       Time before an idle instance is destroyed in seconds, if it's '0' the idle timer would be infinite. (Default: 300)
-#   NoNpc             Prevent coping NPCs from the source map. (Default: false)
-#   NoMapFlag         Prevent coping Mapflags from the source map. (Default: false)
+#   TimeLimit         Total lifetime of instance in seconds. Use 0 to define infinite time. (Default: 3600)
+#   IdleTimeOut       Time before an idle instance is destroyed in seconds. Use 0 to define infinite idle time. (Default: 300)
+#   NoNpc             Prevent copying NPCs from the source map. (Default: false)
+#   NoMapFlag         Prevent copying Mapflags from the source map. (Default: false)
 #   Destroyable       Toggles the ability to destroy the instance using instance 'Destroy' button. (Default: true)
 #                     Note: the button is displayed based on parties. For any mode, it requires the party leader to be the instance owner to destroy it.
 #   Enter:            Instance entrance coordinates.
