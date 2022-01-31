@@ -24018,11 +24018,11 @@ Body:
           - aegis_300374  # 300374 Hallucigenia Card
           - aegis_300373  # 300373 Hallucigenia Baby Card
     Script: |
-      bonus2 bSubDefEle,Ele_Earth,9;
-      bonus2 bMagicSubDefEle,Ele_Earth,9;
-      bonus2 bSubRace,RC_Insect,9;
-      bonus2 bWeaponSubSize,Size_Small,9;
-      bonus2 bMagicSubSize,Size_Small,9;
+      bonus2 bMagicAddEle,Ele_Earth,9;
+      bonus2 bAddEle,Ele_Earth,9;
+      bonus2 bAddRace,RC_Insect,9;
+      bonus2 bAddSize,Size_Small,9;
+      bonus2 bMagicAddSize,Size_Small,9;
   - Combos:
      - Combo:
           - aegis_300381  # 300381 Hearthunter AT Card
@@ -24040,7 +24040,7 @@ Body:
           - Snowflower_Armor  # 450206
           - Snowflower_Muffler  # 480160
     Script: |
-      bonus bDelayrate,10;
+      bonus bDelayrate,-10;
   - Combos:
      - Combo:
           - Snowflower_Robe  # 450207
