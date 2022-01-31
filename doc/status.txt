@@ -49,7 +49,7 @@ States: Specified states given when the SC is active.
 	NoAttackCond       - Condition check for SCS_NOATTACK.
 	NoWarp             - Cannot warp.
 	NoWarpCond         - Condition check for SCS_NOWARP.
-	NoDeathPenalty     - Player doesn't lose experience on death.
+	NoDeathPenalty     - Cannot lose experience on death.
 	NoDeathPenaltyCond - Condition check for SCS_NODEATHPENALTY.
 
 States that have a suffix of "Cond" means the State has hard coded conditions in status.cpp::status_calc_state

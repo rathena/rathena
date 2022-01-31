@@ -5359,14 +5359,6 @@ Body:
       Mdef: true
       Def: true
 
-  - Status: Raid
-    Icon: Raid
-    DurationLookup: RG_RAID
-    Flags:
-      NoDispell: true
-      NoBanishingBuster: true
-      NoClearance: true
-
   - Status: Fire_Insignia
     Icon: Fire_Insignia
     DurationLookup: SO_FIRE_INSIGNIA
@@ -7139,10 +7131,6 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
 
-  - Status: Adaptation
-    Icon: Adaptation
-    DurationLookup: BD_ADAPTATION
-
   - Status: Basilica_Cell
     States:
       NoCast: true
@@ -7453,10 +7441,6 @@ Body:
   - Status: Add_Matk_Damage
     Icon: Add_Matk_Damage
 
-  - Status: Helpangel
-    Icon: Helpangel
-    DurationLookup: NV_HELPANGEL
-
   - Status: Soundofdestruction
     Icon: Sound_Of_Destruction
     DurationLookup: WM_SOUND_OF_DESTRUCTION
@@ -7524,18 +7508,6 @@ Body:
   - Status: Ep16_2_Buff_Ac
     Icon: Ep16_2_Buff_Ac
     Flags:
-      NoBanishingBuster: true
-      NoDispell: true
-      NoClearance: true
-      NoClearbuff: true
-
-  - Status: Emergency_Move
-    Icon: Inc_Agi
-#    DurationLookup: GD_EMERGENCY_MOVE
-    CalcFlags:
-      Speed: true
-    Flags:
-      NoSave: true
       NoBanishingBuster: true
       NoDispell: true
       NoClearance: true

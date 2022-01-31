@@ -1193,8 +1193,6 @@ Body:
       All: true
     States:
       NoAttack: true
-      Nomove: true
-      Nomovecond: true
     Flags:
       NoSave: true
       NoClearance: true
@@ -1600,20 +1598,6 @@ Body:
       NoSave: true
       NoClearance: true
 
-  - Status: Gravitation
-#    Icon: Gravitation
-#    DurationLookup: HW_GRAVITATION
-#    States:
-#      NoMove: true
-#      NoMoveCond: true
-#      NoConsumeItem: true
-#      NoConsumeItemCond: true
-#    CalcFlags:
-#      Aspd: true
-#    Flags:
-#      NoSave: true
-#      NoClearance: true
-
   - Status: Maxoverthrust
     Icon: Overthrustmax
     DurationLookup: WS_OVERTHRUSTMAX
@@ -1624,12 +1608,6 @@ Body:
       NoSave: true
     End:
       Overthrust: true
-
-  - Status: Longing
-    Icon: Ensemblefatigue
-    DurationLookup: CG_SPECIALSINGER
-    States:
-      NoMove: true
 
   - Status: Hermode
     Icon: Hermode
@@ -3456,7 +3434,6 @@ Body:
   - Status: Freeze_Sp
     Icon: Freeze_Sp
     Flags:
-      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -4643,7 +4620,6 @@ Body:
     Icon: Blood_Sucker
     DurationLookup: GN_BLOOD_SUCKER
     Flags:
-      BlEffect: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -7822,7 +7798,6 @@ Body:
     Icon: Homun_Time
     Flags:
       DisplayPc: true
-      BlEffect: true
       NoRemoveOnDead: true
       NoBanishingBuster: true
       NoDispell: true
@@ -7847,7 +7822,6 @@ Body:
       Speed: true
     Flags:
       DisplayPc: true
-      BlEffect: true
       NoRemoveOnDead: true
       NoBanishingBuster: true
       NoDispell: true
@@ -7976,7 +7950,6 @@ Body:
   - Status: Soulattack
     Icon: Soulattack
     Flags:
-      BlEffect: true
       DisplayPc: true
       NoRemoveOnDead: true
       NoClearbuff: true
@@ -8189,6 +8162,7 @@ Body:
     CalcFlags:
       All: true
     Flags:
+      BlEffect: true
       DisplayPc: true
       SendVal1: true
 
@@ -8249,6 +8223,7 @@ Body:
     CalcFlags:
       Crate: true
     Flags:
+      BlEffect: true
       DisplayPc: true
 
   - Status: Competentia
@@ -8409,6 +8384,7 @@ Body:
     Icon: Spear_Scar
     DurationLookup: IG_GRAND_JUDGEMENT
     Flags:
+      BlEffect: true
       DisplayPc: true
 
   - Status: Shield_Power
@@ -8445,6 +8421,7 @@ Body:
     Icon: Elemental_Veil
     DurationLookup: EM_ELEMENTAL_VEIL
     Flags:
+      BlEffect: true
       DisplayPc: true
 
   - Status: Mystic_Symphony
