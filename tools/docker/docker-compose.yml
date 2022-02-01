@@ -55,7 +55,7 @@ services:
     char:
         image: "rathena:local"
         container_name: "rathena-char"
-        command: "/rathena/char-server"
+        command: sh -c "/bin/wait-for db:3306 -- /rathena/char-server"
         ports:
             - "6121:6121" # char server
         volumes:
@@ -71,11 +71,10 @@ services:
             dockerfile: Dockerfile
         depends_on:
             - login
-
     map:
         image: "rathena:local"
         container_name: "rathena-map"
-        command: "/rathena/map-server"
+        command: sh -c "/bin/wait-for db:3306 -- /rathena/map-server"
         ports:
             - "5121:5121" # map server
         volumes:
