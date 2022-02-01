@@ -3678,7 +3678,7 @@ int npc_parseview(const char* w4, const char* start, const char* buffer, const c
 		if(!script_get_constant(viewid, &val_tmp)) {
 			std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(viewid);
 			if (mob != nullptr)
-				val = static_cast<int>(mob->vd.class_);
+				val = static_cast<int>(mob->id);
 			else {
 				ShowWarning("npc_parseview: Invalid NPC constant '%s' specified in file '%s', line'%d'. Defaulting to INVISIBLE. \n", viewid, filepath, strline(buffer,start-buffer));
 				val = JT_INVISIBLE;
