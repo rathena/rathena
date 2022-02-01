@@ -34208,6 +34208,8 @@ Body:
     MaxLevel: 5
     Type: Magic
     TargetType: Attack
+    Flags:
+      IgnoreGtb: true
     Range: 9
     Hit: Single
     HitCount: 1
