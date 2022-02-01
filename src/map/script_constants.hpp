@@ -5512,10 +5512,10 @@
 	export_constant(IG_SEALED_SCROLL);
 	export_constant(IG_SQUAD_PRIZE1);
 	export_constant(IG_SQUAD_PRIZE2);
-	export_constant(IG_LI_Nyangvine_Box1_26);
-	export_constant(IG_LI_Nyangvine_Box2_26);
-	export_constant(IG_LI_Nyangvine_Box3_26);
-	export_constant(IG_Enchant_Stone_Box26);
+	export_constant(IG_LI_NYANGVINE_BOX1_26);
+	export_constant(IG_LI_NYANGVINE_BOX2_26);
+	export_constant(IG_LI_NYANGVINE_BOX3_26);
+	export_constant(IG_ENCHANT_STONE_BOX26);
 	export_constant(IG_THIRD_JOB_STONE_GARMENT_BOX);
 	export_constant(IG_THIRD_JOB_STONE_GARMENT_BOX2);
 	export_constant(IG_THIRD_JOB_STONE_TOP_BOX);
