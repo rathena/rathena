@@ -3639,11 +3639,7 @@ struct script_state* script_alloc_state(struct script_code* rootscript, int pos,
 	st->rid = rid;
 	st->oid = oid;
 	st->sleep.timer = INVALID_TIMER;
-#ifdef RENEWAL
-	st->npc_item_flag = ((battle_config.item_enabled_npc & 2) != 0);
-#else
-	st->npc_item_flag = ((battle_config.item_enabled_npc & 1) != 0);
-#endif
+	st->npc_item_flag = battle_config.item_enabled_npc;
 	
 	if( st->script->instances != USHRT_MAX )
 		st->script->instances++;
