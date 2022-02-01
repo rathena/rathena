@@ -580,6 +580,7 @@ Body:
     Flags:
       StopWalking: true
       StopAttacking: true
+      StopCasting: true
       RemoveOnDamaged: true
       NoSave: true
       NoClearance: true
@@ -3337,6 +3338,7 @@ Body:
       SetStand: true
       StopWalking: true
       StopAttacking: true
+      StopCasting: true
       OverlapFail: true
     End:
       Burning: true
@@ -4049,7 +4051,10 @@ Body:
       RemoveOnRefresh: true
       RemoveOnLuxAnima: true
       BossResist: true
+      StopAttacking: true
       StopWalking: true
+      StopCasting: true
+      SetStand: true
       Debuff: true
       OverlapFail: true
     Fail:
@@ -4083,6 +4088,7 @@ Body:
     Flags:
       BossResist: true
       StopWalking: true
+      StopAttacking: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -4241,6 +4247,7 @@ Body:
       BossResist: true
       StopWalking: true
       StopAttacking: true
+      StopCasting: true
       SetStand: true
       RemoveOnDamaged: true
       NoSave: true
@@ -5037,6 +5044,7 @@ Body:
       MobLoseTarget: true
       NoClearbuff: true
       StopWalking: true
+      StopAttacking: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -6000,6 +6008,8 @@ Body:
       Nomove: true
     Flags:
       StopAttacking: true
+      StopWalking: true
+      StopCasting: true
     Fail:
       Devotion: true
       Whiteimprison: true
@@ -7521,6 +7531,10 @@ Body:
     States:
       NoMove: true
       NoCast: true
+    Flags:
+      StopCasting: true
+      StopAttacking: true
+      StopWalking: true
 
   - Status: Soulcollect
     Icon: Soulcollect

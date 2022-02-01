@@ -569,6 +569,7 @@ Body:
     Flags:
       StopWalking: true
       StopAttacking: true
+      StopCasting: true
       RemoveOnDamaged: true
       NoSave: true
       NoClearance: true
@@ -7282,6 +7283,10 @@ Body:
     States:
       NoMove: true
       NoCast: true
+    Flags:
+      StopCasting: true
+      StopAttacking: true
+      StopWalking: true
 
   - Status: Soulcollect
     Icon: Soulcollect
