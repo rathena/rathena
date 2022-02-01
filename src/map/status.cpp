@@ -9703,6 +9703,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					return 0; // BREAK_NECK cannot be stacked with new breaks until the status is over.
 				val2 |= sce->val2; // Stackable ailments
 			default:
+				if (scdb->flag[SCF_OVERLAPIGNORELEVEL])
+					break;
 				if(sce->val1 > val1)
 					return 1; // Return true to not mess up skill animations. [Skotlex]
 		}

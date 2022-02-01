@@ -650,6 +650,7 @@ Body:
       Aspd: true
     Flags:
       NoClearance: true
+      OverlapIgnoreLevel: true
 
   - Status: Aspdpotion1
     Icon: Atthaste_Potion2
@@ -657,11 +658,14 @@ Body:
       Aspd: true
     Flags:
       NoClearance: true
+      OverlapIgnoreLevel: true
 
   - Status: Aspdpotion2
     Icon: Atthaste_Potion3
     CalcFlags:
       Aspd: true
+    Flags:
+      OverlapIgnoreLevel: true
 
   - Status: Aspdpotion3
     Icon: Atthaste_Infinity
@@ -669,6 +673,7 @@ Body:
       Aspd: true
     Flags:
       NoClearance: true
+      OverlapIgnoreLevel: true
 
   - Status: Speedup0
     Icon: Movhaste_Horse
@@ -696,6 +701,7 @@ Body:
     Flags:
       NoRemoveOnDead: true
       NoClearance: true
+      OverlapIgnoreLevel: true
 
   - Status: Matkpotion
     Icon: Plusmagicpower
@@ -704,6 +710,7 @@ Body:
     Flags:
       NoRemoveOnDead: true
       NoClearance: true
+      OverlapIgnoreLevel: true
 
   - Status: Wedding
     States:
@@ -979,6 +986,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      OverlapIgnoreLevel: true
 
   - Status: Bladestop_Wait
     DurationLookup: MO_BLADESTOP
@@ -1076,6 +1084,7 @@ Body:
       All: true
     Flags:
       NoDispell: true
+      OverlapIgnoreLevel: true
 
   - Status: Nochat
     States:
@@ -1410,6 +1419,7 @@ Body:
     Flags:
       NoSave: true
       RemoveOnChangeMap: true
+      OverlapIgnoreLevel: true
 
   - Status: Sacrifice
     DurationLookup: PA_SACRIFICE
@@ -1687,6 +1697,7 @@ Body:
       NoClearance: true
       RemoveOnChangeMap: true
       RequireWeapon: true
+      OverlapIgnoreLevel: true
 
   - Status: Elementalchange
     Icon: Armor_Property
@@ -2620,6 +2631,7 @@ Body:
       Atk_Ele: true
     Flags:
       SendVal1: true
+      OverlapIgnoreLevel: true
 
   - Status: Magicalattack
     DurationLookup: NPC_MAGICALATTACK
@@ -2767,6 +2779,8 @@ Body:
   - Status: Armor_Resist
     CalcFlags:
       All: true
+    Flags:
+      OverlapIgnoreLevel: true
 
   - Status: Spcost_Rate
     Icon: Atker_Blood
@@ -5642,6 +5656,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       SendVal1: true
+      OverlapIgnoreLevel: true
 
   - Status: Spellbook1
     Icon: Spellbook1
@@ -6549,6 +6564,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      OverlapIgnoreLevel: true
 
   - Status: Reuse_Limit_A
     Icon: Reuse_Limit_A
@@ -7100,6 +7116,7 @@ Body:
       All: true
     Flags:
       NoDispell: true
+      OverlapIgnoreLevel: true
 
   - Status: Armor_Element_Fire
     Icon: Resist_Property_Fire
@@ -7107,6 +7124,7 @@ Body:
       All: true
     Flags:
       NoDispell: true
+      OverlapIgnoreLevel: true
 
   - Status: Armor_Element_Wind
     Icon: Resist_Property_Wind
@@ -7114,6 +7132,7 @@ Body:
       All: true
     Flags:
       NoDispell: true
+      OverlapIgnoreLevel: true
 
   - Status: Dailysendmailcnt
     Icon: Dailysendmailcnt
@@ -7311,6 +7330,7 @@ Body:
       NoRemoveOnDead: true
       NoBanishingBuster: true
       NoDispell: true
+      OverlapIgnoreLevel: true
 
   - Status: Lhz_Dun_N2
     Icon: Lhz_Dun_N2
@@ -7320,6 +7340,7 @@ Body:
       NoRemoveOnDead: true
       NoBanishingBuster: true
       NoDispell: true
+      OverlapIgnoreLevel: true
 
   - Status: Lhz_Dun_N3
     Icon: Lhz_Dun_N3
@@ -7329,6 +7350,7 @@ Body:
       NoRemoveOnDead: true
       NoBanishingBuster: true
       NoDispell: true
+      OverlapIgnoreLevel: true
 
   - Status: Lhz_Dun_N4
     Icon: Lhz_Dun_N4
@@ -7338,6 +7360,7 @@ Body:
       NoRemoveOnDead: true
       NoBanishingBuster: true
       NoDispell: true
+      OverlapIgnoreLevel: true
 
   - Status: Ancilla
     Icon: Ancilla
@@ -7463,7 +7486,7 @@ Body:
       NoBanishingBuster: true
       NoDispell: true
       NoClearance: true
-      OverlapFail: true
+      OverlapIgnoreLevel: true
 
   - Status: Newmoon
     Icon: Newmoon
@@ -7552,7 +7575,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
+      OverlapIgnoreLevel: true
 
   - Status: Soulshadow
     Icon: Soulshadow
@@ -8107,7 +8130,7 @@ Body:
     Flags:
       BlEffect: true
       DisplayPc: true
-      OverlapFail: true
+      OverlapIgnoreLevel: true
       RemoveOnChangeMap: true
       NoBanishingBuster: true
       NoDispell: true
