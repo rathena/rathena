@@ -23855,9 +23855,9 @@ Body:
     SubGroups:
       - SubGroup: 1
         List:
-          - Item: aegis_1000855
+          - Item: CriticalStone_Robe_D
             Rate: 1
-          - Item: aegis_1000856
+          - Item: ConStone_Robe_D
             Rate: 1
           - Item: Critical_Stone_Robe
             Rate: 2
@@ -23889,23 +23889,23 @@ Body:
             Rate: 8
           - Item: ShadowchaserStone_Robe2
             Rate: 8
-          - Item: aegis_1000857
+          - Item: ArchbishopStone_Top3
             Rate: 8
-          - Item: aegis_1000858
+          - Item: ArchbishopStone_Middle3
             Rate: 8
-          - Item: aegis_1000859
+          - Item: ArchbishopStone_Bottom3
             Rate: 8
-          - Item: aegis_1000860
+          - Item: RangerStone_Top3
             Rate: 8
-          - Item: aegis_1000861
+          - Item: RangerStone_Middle3
             Rate: 8
-          - Item: aegis_1000862
+          - Item: RangerStone_Bottom3
             Rate: 8
-          - Item: aegis_1000863
+          - Item: ShadowchasStone_Top3
             Rate: 8
-          - Item: aegis_1000864
+          - Item: ShadowchasStone_Middle3
             Rate: 8
-          - Item: aegis_1000865
+          - Item: ShadowchasStone_Bottom3
             Rate: 8
           - Item: aegis_100465
             Rate: 16
