@@ -2947,7 +2947,8 @@ static bool itemdb_read_db(const char* file) {
 		if (it_nouse != item_nouse.end()) {
 			body << YAML::Key << "NoUse";
 			body << YAML::BeginMap;
-			body << YAML::Key << "Override" << YAML::Value << it_nouse->second.override;
+            if (it_nouse->second.override != 100)
+				body << YAML::Key << "Override" << YAML::Value << it_nouse->second.override;
 			body << YAML::Key << "Sitting" << YAML::Value << "true";
 			body << YAML::EndMap;
 		}
@@ -2957,7 +2958,8 @@ static bool itemdb_read_db(const char* file) {
 		if (it_trade != item_trade.end()) {
 			body << YAML::Key << "Trade";
 			body << YAML::BeginMap;
-			body << YAML::Key << "Override" << YAML::Value << it_trade->second.override;
+            if (it_trade->second.override != 100)
+				body << YAML::Key << "Override" << YAML::Value << it_trade->second.override;
 			if (it_trade->second.drop)
 				body << YAML::Key << "NoDrop" << YAML::Value << it_trade->second.drop;
 			if (it_trade->second.trade)
