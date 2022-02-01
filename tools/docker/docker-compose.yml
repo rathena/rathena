@@ -14,10 +14,6 @@ services:
             MYSQL_DATABASE: ragnarok
             MYSQL_USER: ragnarok
             MYSQL_PASSWORD: ragnarok
-        healthcheck:
-            test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u", "ragnarok", "-p", "ragnarok"]
-            timeout: 3s
-            retries: 5
 
     builder:
         image: "rathena:local"
@@ -40,7 +36,7 @@ services:
     login:
         image: "rathena:local"
         container_name: "rathena-login"
-        command: "/rathena/login-server"
+        command: sh -c "/bin/wait-for db:3306 -- /rathena/login-server"
         ports:
             - "6900:6900" # login server
         volumes:
@@ -55,9 +51,7 @@ services:
             context: .
             dockerfile: Dockerfile
         depends_on:
-            db:
-                condition: service_healthy
-
+            - db
     char:
         image: "rathena:local"
         container_name: "rathena-char"
