@@ -321,7 +321,7 @@ variables. These variables must be of integer type, not string. 'discount' flag 
 optional value which makes the price at that shop become affected by discount skill.
 
 "marketshop" can have limited quantity of an item in stock.
-If you want to have unlimited stock in a marketshop please use -1 as stock.
+Use -1 in the stock field to have unlimited stock in a marketshop.
 
 ** Define an warp/shop/cashshop/itemshop/pointshop/NPC duplicate.
 
@@ -7267,8 +7267,7 @@ The function returns 1 if shop was updated successfully, or 0 if not found.
 
 NOTES:
  - That you cannot use -1 to specify default selling price!
- - If attached shop type is market shop, need an extra param after price, it's <stock>
-   and make sure don't add duplication item! For unlimited stock use -1.
+ - If the attached shop type is a market shop, notice that there is an extra parameter after price, <stock>. Make sure to not add duplicate items! For unlimited stock use -1.
 
 ---------------------------------------
 
@@ -7322,9 +7321,9 @@ NOTES:
 
 *npcshopupdate "<name>",<item_id>,<price>{,<stock>}
 
-Update an entry from shop. If price is 0 means don't change the price, maybe used for
-marketshop to update the stock quantity. Except marketshop type, 'stock' value means
-nothing. For unlimited stock use -1.
+Update an entry from a shop. If the price is 0 it won't be changed. May also be used for
+marketshop to update the stock quantity. For unlimited stock, use -1.
+For other shop types, the stock value has no effect.
 
 ---------------------------------------
 

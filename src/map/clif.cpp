@@ -12322,7 +12322,7 @@ void clif_parse_NpcBuyListSend( int fd, struct map_session_data* sd ){
 	if( sd->state.trading || !sd->npc_shopid )
 		result = e_purchase_result::PURCHASE_FAIL_MONEY;
 	else{
-		std::vector<s_npc_buy_list> items;
+		std::vector<s_npc_buy_list> items = {};
 
 		items.reserve( n );
 
