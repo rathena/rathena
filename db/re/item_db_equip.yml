@@ -90591,7 +90591,6 @@ Body:
       Costume_Head_Mid: true
       Costume_Head_Low: true
     ArmorLevel: 1
-    Refineable: true
     View: 806
   - Id: 19906
     AegisName: C_24_Bolt
@@ -90600,7 +90599,6 @@ Body:
     Locations:
       Costume_Head_Top: true
     ArmorLevel: 1
-    Refineable: true
     View: 696
   - Id: 19907
     AegisName: C_Fancy_Phantom_Mask
@@ -90609,7 +90607,6 @@ Body:
     Locations:
       Costume_Head_Top: true
     ArmorLevel: 1
-    Refineable: true
     View: 710
   - Id: 19908
     AegisName: C_Joker_Jester_
@@ -90618,7 +90615,6 @@ Body:
     Locations:
       Costume_Head_Top: true
     ArmorLevel: 1
-    Refineable: true
     View: 219
   - Id: 19909
     AegisName: C_White_Deviruchi_Cap
@@ -90627,7 +90623,6 @@ Body:
     Locations:
       Costume_Head_Top: true
     ArmorLevel: 1
-    Refineable: true
     View: 272
   - Id: 19910
     AegisName: C_Halloween_Hat
@@ -90636,7 +90631,6 @@ Body:
     Locations:
       Costume_Head_Top: true
     ArmorLevel: 1
-    Refineable: true
     View: 1098
   - Id: 19911
     AegisName: C_Triangular_Roof_Hat
@@ -90663,7 +90657,6 @@ Body:
     Locations:
       Costume_Head_Top: true
     ArmorLevel: 1
-    Refineable: true
     View: 76
   - Id: 19914
     AegisName: Felock_Cap
@@ -150093,26 +150086,32 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 100
     Script: |
+      .@equip_count = 0;
+      if(getequipid(EQI_ACC_L) == 490068)
+         .@equip_count++;
+      if(getequipid(EQI_ACC_R) == 490068)
+         .@equip_count++;
       .@a = readparam(bAgi);
       .@d = readparam(bDex);
       if (getequipid(EQI_ACC_L) == 490068) {
-         bonus2 bAddRace,RC_All,(.@a/10);
+         bonus2 bAddRace,RC_All,(.@a / 10) / .@equip_count;
          if (.@a>=125) {
-            bonus bSpeedAddRate,25;
-            bonus bDelayrate,-25;
+            bonus bSpeedAddRate,25 / .@equip_count;
+            bonus bDelayrate,-25 / .@equip_count;
          }
       }
       if (getequipid(EQI_ACC_R) == 490068) {
-         bonus bLongAtkRate,(.@d/10);
-         bonus2 bResEff,Eff_Stun,3*(.@d/10);
+         bonus bLongAtkRate,(.@d / 10) / .@equip_count;
+         bonus2 bResEff,Eff_Stun,(3*(.@d/10))  / .@equip_count;
          if (.@d>=125) {
-            bonus bFixedCastrate,-70;
-            bonus2 bSubEle,Ele_Earth,5;
-            bonus2 bSubEle,Ele_Water,5;
-            bonus2 bSubEle,Ele_Wind,5;
-            bonus2 bSubEle,Ele_Fire,5;
+            bonus bFixedCastrate,-70 / .@equip_count;
+            bonus2 bSubEle,Ele_Earth,5 / .@equip_count;
+            bonus2 bSubEle,Ele_Water,5 / .@equip_count;
+            bonus2 bSubEle,Ele_Wind,5 / .@equip_count;
+            bonus2 bSubEle,Ele_Fire,5 / .@equip_count;
          }
       }
+      /*TODO: Please convert to getequipidx when available*/ 
   - Id: 490069
     AegisName: Morrigane's_Belt_IL
     Name: Illusion Morrigane's Belt
