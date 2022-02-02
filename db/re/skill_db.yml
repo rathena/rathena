@@ -16747,7 +16747,6 @@ Body:
       Interval: 1000
       Target: Enemy
       Flag:
-        NoOverlap: true
         PathCheck: true
   - Id: 709
     Name: NPC_ICEMINE
@@ -19145,7 +19144,6 @@ Body:
       Interval: 1000
       Target: Enemy
       Flag:
-        NoOverlap: true
         PathCheck: true
   - Id: 2214
     Name: WL_CHAINLIGHTNING
@@ -26792,7 +26790,6 @@ Body:
       Interval: 1000
       Target: Enemy
       Flag:
-        NoOverlap: true
         PathCheck: true
   - Id: 2448
     Name: SO_POISON_BUSTER
@@ -34211,6 +34208,8 @@ Body:
     MaxLevel: 5
     Type: Magic
     TargetType: Attack
+    Flags:
+      IgnoreGtb: true
     Range: 9
     Hit: Single
     HitCount: 1
