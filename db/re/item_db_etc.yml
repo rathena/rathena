@@ -23061,7 +23061,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoMail: true
       NoAuction: true
   - Id: 6906
