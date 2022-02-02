@@ -23054,12 +23054,15 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6905
-    AegisName: Broken_Magic_Stone
+    AegisName: Shattered_Rune
     Name: Broken Magic Stone
     Type: Etc
-    Buy: 10
+    Buy: 2
     Flags:
       BuyingStore: true
+    Trade:
+      NoMail: true
+      NoAuction: true
   - Id: 6906
     AegisName: Limited_High_Density_Kalunium
     Name: (Limited)High Density Kalunium
