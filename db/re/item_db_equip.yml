@@ -138815,7 +138815,6 @@ Body:
     ArmorLevel: 1
     View: 2144
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -138833,7 +138832,6 @@ Body:
     ArmorLevel: 1
     View: 2143
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true

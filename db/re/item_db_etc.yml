@@ -35842,7 +35842,6 @@ Body:
     Name: Tightly Sealed Letter
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -35856,7 +35855,6 @@ Body:
     Name: Tightly Sealed Letter
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -35870,7 +35868,6 @@ Body:
     Name: Dragon Beard Noodles
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35883,7 +35880,6 @@ Body:
     Name: Fire-Breathe Dumpling
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35896,7 +35892,6 @@ Body:
     Name: Dragon Head Cookie
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35909,7 +35904,6 @@ Body:
     Name: Dragon Mustache Candy
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -61437,7 +61431,6 @@ Body:
     Name: Juncea Test Tube
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -61450,7 +61443,6 @@ Body:
     Name: Red Liquid Test Tube
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -61463,7 +61455,6 @@ Body:
     Name: Greater Rgan Eggshell
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -61476,7 +61467,6 @@ Body:
     Name: Guardian Invitation
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -61720,7 +61710,6 @@ Body:
     Name: Rgan Magic Core
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -61733,7 +61722,6 @@ Body:
     Name: Purified Magic Core
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -61751,7 +61739,6 @@ Body:
     Name: Frozen Meat
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -62240,7 +62227,6 @@ Body:
     Name: High-sensitivity Feeler
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -62253,7 +62239,6 @@ Body:
     Name: Ledger
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -62266,7 +62251,6 @@ Body:
     Name: Ice Cookie
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true

@@ -49600,7 +49600,6 @@ Body:
     Name: Ice Castle Transport Wing
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -49615,7 +49614,6 @@ Body:
     Name: Gray Wolf Village Transport Wing
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -49630,7 +49628,6 @@ Body:
     Name: Barmund Mansion Transport Wing
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -49645,7 +49642,6 @@ Body:
     Name: Border Area Cor Transport Wing
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -49660,7 +49656,6 @@ Body:
     Name: Military Base Transport Wing
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -49692,7 +49687,6 @@ Body:
     Type: Usable
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -49707,7 +49701,6 @@ Body:
     AegisName: Ice_F_Stone_Box
     Name: Ice Magic Stone Box
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -49722,7 +49715,6 @@ Body:
     AegisName: Ice_F_Stone_Box2
     Name: Ice Magic Stone Box 2
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -49737,7 +49729,6 @@ Body:
     AegisName: Snow_F_Enchant
     Name: Snowflower Armor Enchant (Armor)
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -49752,7 +49743,6 @@ Body:
     AegisName: Glacier_W_Enchant
     Name: Glacier Weapon Enchantment
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -49770,7 +49760,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -49786,7 +49775,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -49799,7 +49787,6 @@ Body:
     AegisName: Snow_F_Enchant2
     Name: Snowflower Armor Enchant (Garment)
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -49814,7 +49801,6 @@ Body:
     AegisName: Snow_F_Enchant3
     Name: Snowflower Armor Enchant (Shoes)
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -49829,7 +49815,6 @@ Body:
     AegisName: Snow_F_Enchant4
     Name: Snowflower Armor Enchant (Accessory A)
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -49844,7 +49829,6 @@ Body:
     AegisName: Snow_F_Enchant5
     Name: Snowflower Armor Enchant (Accessory B)
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -49869,7 +49853,6 @@ Body:
     Name: New Year Rice Soup
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -49888,7 +49871,6 @@ Body:
     Flags:
       Container: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -49908,7 +49890,6 @@ Body:
     Flags:
       Container: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -49928,7 +49909,6 @@ Body:
     Flags:
       Container: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
