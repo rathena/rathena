@@ -10278,7 +10278,13 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 	if (status_isimmune(bl)) {
 		std::shared_ptr<s_skill_db> skill = skill_db.find(battle_getcurrentskill(src));
 
-		if (skill != nullptr && skill->nameid != AG_DEADLY_PROJECTION && skill->skill_type == BF_MAGIC)
+		if (skill == nullptr) // Check for ground-type skills using the status when a player moves through units
+			skill = skill_db.find(status_sc2skill(type));
+
+		if (skill != nullptr && skill->skill_type == BF_MAGIC && // Basic magic skill
+			!skill->inf2[INF2_IGNOREGTB] && // Specific skill to bypass
+			((skill->inf == INF_ATTACK_SKILL || skill->inf == INF_GROUND_SKILL || skill->inf == INF_SUPPORT_SKILL) || // Target skills should get blocked even when cast on self
+			 (skill->inf == INF_SELF_SKILL && src != bl))) // Self skills should get blocked on all targets except self
 			return 0;
 	}
 

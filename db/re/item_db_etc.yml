@@ -54,7 +54,7 @@
 #     BindOnEquip           If the item is bound to the character upon equipping. (Default: false)
 #     DropAnnounce          If the item has a special announcement to self on drop. (Default: false)
 #     NoConsume             If the item is consumed on use. (Default: false)
-#     DropEffect            If the item has a special effect when on the ground. (Default: None)
+#     DropEffect            If the item has a special effect on the ground when dropped by a monster. (Default: None)
 #   Delay:                  Item use delay. (Default: null)
 #     Duration              Duration of delay in seconds.
 #     Status                Status Change used to track delay. (Default: None)
@@ -65,10 +65,10 @@
 #     Storage               If the stack is applied to the player's storage. (Default: false)
 #     GuildStorage          If the stack is applied to the player's guild storage. (Default: false)
 #   NoUse:                  Conditions when the item is unusable. (Default: null)
-#     Override              Group level to override these conditions.
+#     Override              Group level to override these conditions. (Default: 100)
 #     Sitting               If the item can not be used while sitting. (Default: false)
 #   Trade:                  Trade restrictions. (Default: null)
-#     Override              Group level to override these conditions.
+#     Override              Group level to override these conditions. (Default: 100)
 #     NoDrop                If the item can not be dropped. (Default: false)
 #     NoTrade               If the item can not be traded. (Default: false)
 #     TradePartner          If the item can not be traded to the player's partner. (Default: false)
@@ -471,7 +471,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoDrop: true
   - Id: 745
     AegisName: Wedding_Bouquet
@@ -482,7 +481,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoDrop: true
   - Id: 746
     AegisName: Glass_Bead
@@ -577,7 +575,6 @@ Body:
     Name: A bundle of shiny hair.
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -15433,7 +15430,6 @@ Body:
     Name: Ashes of Darkness
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15475,7 +15471,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -15488,7 +15483,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -15502,7 +15496,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -15522,7 +15515,6 @@ Body:
     Name: Big Fan Of Magic
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -15616,14 +15608,12 @@ Body:
     Buy: 6000000
     Weight: 10
     Trade:
-      Override: 100
       NoSell: true
   - Id: 6025
     AegisName: Towel_Of_Memory
     Name: Towel of Memory
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15638,14 +15628,12 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
   - Id: 6027
     AegisName: Crystal_Of_Feardoom
     Name: Crystal Of Feardom
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15659,7 +15647,6 @@ Body:
     Name: Sealed Scroll
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15673,7 +15660,6 @@ Body:
     Name: Morocc Tracing Log
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15713,7 +15699,6 @@ Body:
     Name: Weird Part
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15727,7 +15712,6 @@ Body:
     Name: Decaying Stem
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15742,7 +15726,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -15755,7 +15738,6 @@ Body:
     Name: Messy File
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15770,7 +15752,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -15784,7 +15765,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -15797,7 +15777,6 @@ Body:
     Name: Part of a Report
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -15817,7 +15796,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -15831,7 +15809,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -15845,7 +15822,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -15858,7 +15834,6 @@ Body:
     Name: Supply Box
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -15872,7 +15847,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -15886,7 +15860,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -15900,7 +15873,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15914,7 +15886,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -15928,7 +15899,6 @@ Body:
     Type: Etc
     Buy: 1
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15980,7 +15950,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -16048,7 +16017,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16062,7 +16030,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16076,7 +16043,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16095,7 +16061,6 @@ Body:
     Name: Bazett's Order
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -16114,7 +16079,6 @@ Body:
     Name: Portable Toolbox
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16128,7 +16092,6 @@ Body:
     Name: Rough Mineral
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16142,7 +16105,6 @@ Body:
     Name: Stone Fragment
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16156,7 +16118,6 @@ Body:
     Name: Flower Of Alfheim
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16170,7 +16131,6 @@ Body:
     Name: Manuk Coin
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -16182,7 +16142,6 @@ Body:
     Name: Splendide Coin
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -16194,7 +16153,6 @@ Body:
     Name: Spirit Of Alfheim
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16213,7 +16171,6 @@ Body:
     Name: Bradium Fragments
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16227,7 +16184,6 @@ Body:
     Name: Shaggy Muffler
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16294,7 +16250,6 @@ Body:
     Name: Draco's Egg
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -16361,7 +16316,6 @@ Body:
     Name: Attendance Card
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -16374,7 +16328,6 @@ Body:
     Name: Report On Splendide
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16388,7 +16341,6 @@ Body:
     Name: Report On Manuk
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16498,7 +16450,6 @@ Body:
     Name: Succubus Pet Exchange Coupon
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16512,7 +16463,6 @@ Body:
     Name: Imp Pet Exchange Coupon
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16526,7 +16476,6 @@ Body:
     Name: Chung E Exchange Coupon
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16553,7 +16502,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16568,7 +16516,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16591,7 +16538,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16606,7 +16552,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16621,7 +16566,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16635,7 +16579,6 @@ Body:
     Name: Purification Stone
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16656,7 +16599,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16670,7 +16612,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16685,7 +16626,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16699,7 +16639,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16714,7 +16653,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16729,7 +16667,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16744,7 +16681,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16759,7 +16695,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16773,7 +16708,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16788,7 +16722,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16803,7 +16736,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16818,7 +16750,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16833,7 +16764,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16848,7 +16778,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16862,7 +16791,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16907,7 +16835,6 @@ Body:
     Name: Eternity Of Chocolate
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -16920,7 +16847,6 @@ Body:
     Name: Simple Chocolate
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -16933,7 +16859,6 @@ Body:
     Name: Key of The Mansion
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16947,7 +16872,6 @@ Body:
     Name: Giant Bradium Fragment
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -16960,7 +16884,6 @@ Body:
     Name: Glittering Crystal
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -16973,7 +16896,6 @@ Body:
     Name: Special Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16988,7 +16910,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -17006,7 +16927,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -17019,7 +16939,6 @@ Body:
     Name: Poring Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17032,7 +16951,6 @@ Body:
     Name: Drops Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17045,7 +16963,6 @@ Body:
     Name: Poporing Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17058,7 +16975,6 @@ Body:
     Name: Lunatic Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17071,7 +16987,6 @@ Body:
     Name: Picky Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17084,7 +16999,6 @@ Body:
     Name: Peco Peco Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17097,7 +17011,6 @@ Body:
     Name: Savage Babe Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17110,7 +17023,6 @@ Body:
     Name: Spore Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17123,7 +17035,6 @@ Body:
     Name: Poison Spore Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17136,7 +17047,6 @@ Body:
     Name: Chonchon Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17149,7 +17059,6 @@ Body:
     Name: Steel Chonchon Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17162,7 +17071,6 @@ Body:
     Name: Sky Petite Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17175,7 +17083,6 @@ Body:
     Name: Deviruchi Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17188,7 +17095,6 @@ Body:
     Name: Isis Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17201,7 +17107,6 @@ Body:
     Name: Smokie Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17214,7 +17119,6 @@ Body:
     Name: Dokebi Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17227,7 +17131,6 @@ Body:
     Name: Baby Desert Wolf Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17240,7 +17143,6 @@ Body:
     Name: Yoyo Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17253,7 +17155,6 @@ Body:
     Name: Sohee Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17266,7 +17167,6 @@ Body:
     Name: Rocker Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17279,7 +17179,6 @@ Body:
     Name: Hunter Fly Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17292,7 +17191,6 @@ Body:
     Name: Orc Warrior Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17305,7 +17203,6 @@ Body:
     Name: Bapho Jr. Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17318,7 +17215,6 @@ Body:
     Name: Munak Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17331,7 +17227,6 @@ Body:
     Name: Bongun Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17344,7 +17239,6 @@ Body:
     Name: Christmas Goblin Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17357,7 +17251,6 @@ Body:
     Name: Rice Cake Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17370,7 +17263,6 @@ Body:
     Name: Zherlthsh Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17383,7 +17275,6 @@ Body:
     Name: Alice Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17518,7 +17409,6 @@ Body:
     Name: I Love You
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -17531,7 +17421,6 @@ Body:
     Name: Thank You
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -17544,7 +17433,6 @@ Body:
     Name: I Respect You
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -17625,7 +17513,6 @@ Body:
     Name: Delivery Daishin Box
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17639,7 +17526,6 @@ Body:
     Name: Eden Group Mark
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17684,7 +17570,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17698,7 +17583,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17711,7 +17595,6 @@ Body:
     Name: +9 Weapon Refine Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17724,7 +17607,6 @@ Body:
     Name: +8 Weapon Refine Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17737,7 +17619,6 @@ Body:
     Name: +7 Weapon Refine Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17750,7 +17631,6 @@ Body:
     Name: +6 Weapon Refine Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17763,7 +17643,6 @@ Body:
     Name: +9 Armor Refine Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17776,7 +17655,6 @@ Body:
     Name: +8 Armor Refine Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17789,7 +17667,6 @@ Body:
     Name: +7 Armor Refine Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17802,7 +17679,6 @@ Body:
     Name: +6 Armor Refine Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17815,7 +17691,6 @@ Body:
     Name: Blue Card 7
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -17828,7 +17703,6 @@ Body:
     Name: Guarana Fruit
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17842,7 +17716,6 @@ Body:
     Name: +11 Weapon Refine Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17855,7 +17728,6 @@ Body:
     Name: +11 Armor Refine Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17870,7 +17742,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17885,7 +17756,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17900,7 +17770,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
   - Id: 6243
@@ -18088,7 +17957,6 @@ Body:
     Name: Key Of Deception
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18102,7 +17970,6 @@ Body:
     Name: Key Of Illusion
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18116,7 +17983,6 @@ Body:
     Name: Key Of Gaiety
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18130,7 +17996,6 @@ Body:
     Name: A Master's Blush
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18144,7 +18009,6 @@ Body:
     Name: A Picture Of Minstrel Song
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -18157,7 +18021,6 @@ Body:
     Name: Receipt
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -18170,7 +18033,6 @@ Body:
     Name: Experiment Seed
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18184,7 +18046,6 @@ Body:
     Name: Seed For Experiment
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18198,7 +18059,6 @@ Body:
     Name: A Piece Of Cloth Of A Saint
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18212,7 +18072,6 @@ Body:
     Name: Shield Of King
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18226,7 +18085,6 @@ Body:
     Name: Clear Reagent
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18240,7 +18098,6 @@ Body:
     Name: Red Reagent
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18254,7 +18111,6 @@ Body:
     Name: Black Reagent
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18377,7 +18233,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -18399,7 +18254,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -18413,7 +18267,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -18447,7 +18300,6 @@ Body:
     Name: Proof Of Sapha's Honor
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18460,7 +18312,6 @@ Body:
     Name: Frozen Piece Of Skin
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18474,7 +18325,6 @@ Body:
     Name: Hard Bloodstain
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18488,7 +18338,6 @@ Body:
     Name: Cursed Magical Stone
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18502,7 +18351,6 @@ Body:
     Name: Unidentified Relic
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18553,7 +18401,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18582,7 +18429,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18645,7 +18491,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18742,7 +18587,6 @@ Body:
     Name: Love Lump
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -18760,7 +18604,6 @@ Body:
     Type: Etc
     Buy: 4020
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -18774,7 +18617,6 @@ Body:
     Type: Etc
     Buy: 4020
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -18788,7 +18630,6 @@ Body:
     Type: Etc
     Buy: 4020
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -18802,7 +18643,6 @@ Body:
     Type: Etc
     Buy: 4020
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -18816,7 +18656,6 @@ Body:
     Type: Etc
     Buy: 4020
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -18830,7 +18669,6 @@ Body:
     Type: Etc
     Buy: 4020
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -18844,7 +18682,6 @@ Body:
     Type: Etc
     Buy: 4020
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -18858,7 +18695,6 @@ Body:
     Type: Etc
     Buy: 4020
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -18872,7 +18708,6 @@ Body:
     Type: Etc
     Buy: 4020
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -18886,7 +18721,6 @@ Body:
     Type: Etc
     Buy: 4020
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -18901,7 +18735,6 @@ Body:
     Buy: 4020
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -18914,7 +18747,6 @@ Body:
     Name: Free Cash Coupon
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18928,7 +18760,6 @@ Body:
     Name: Guidebook Exchange
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19028,7 +18859,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -19040,7 +18870,6 @@ Body:
     Name: Winning Mark
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -19060,7 +18889,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -19090,7 +18918,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -19103,7 +18930,6 @@ Body:
     Name: Lope's Ring
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19117,7 +18943,6 @@ Body:
     Name: Research Tool Bag
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19132,7 +18957,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -19146,7 +18970,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -19160,7 +18983,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -19174,7 +18996,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -19188,7 +19009,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -19203,7 +19023,6 @@ Body:
     Buy: 20
     Weight: 2000
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -19218,7 +19037,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -19256,7 +19074,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19269,7 +19086,6 @@ Body:
     Name: PR Team Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19283,7 +19099,6 @@ Body:
     Name: Develop Team Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19297,7 +19112,6 @@ Body:
     Name: Marketing Team Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19311,7 +19125,6 @@ Body:
     Name: Operating Team Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19326,7 +19139,6 @@ Body:
     Type: Etc
     Weight: 500
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19341,7 +19153,6 @@ Body:
     Type: Etc
     Weight: 50
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -19409,7 +19220,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -19422,7 +19232,6 @@ Body:
     Name: Special Medal
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19438,7 +19247,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19457,7 +19265,6 @@ Body:
     Name: Strange Embryo
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19471,7 +19278,6 @@ Body:
     Name: Pet Exchange
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -19485,7 +19291,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19531,7 +19336,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -19545,7 +19349,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -19560,7 +19363,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -19573,7 +19375,6 @@ Body:
     Name: Bad Canned Food Sack
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19587,7 +19388,6 @@ Body:
     Name: Adventure Card A
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19601,7 +19401,6 @@ Body:
     Name: Adventure Card B
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19615,7 +19414,6 @@ Body:
     Name: Picture Fragment
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -19629,7 +19427,6 @@ Body:
     Type: Etc
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -19643,7 +19440,6 @@ Body:
     Type: Etc
     Weight: 3000
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -19657,7 +19453,6 @@ Body:
     Type: Etc
     Weight: 300
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -19671,7 +19466,6 @@ Body:
     Type: Etc
     Weight: 1000
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -19685,7 +19479,6 @@ Body:
     Type: Etc
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -19699,7 +19492,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19728,7 +19520,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19742,7 +19533,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19755,7 +19545,6 @@ Body:
     Name: Octopus Hunting Skewer
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19770,7 +19559,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19785,7 +19573,6 @@ Body:
     Buy: 2
     Weight: 1000
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19803,7 +19590,6 @@ Body:
     Name: Green Paper
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19817,7 +19603,6 @@ Body:
     Name: Red Paper
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19831,7 +19616,6 @@ Body:
     Name: White Paper
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19845,7 +19629,6 @@ Body:
     Name: Casual Diary
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19859,7 +19642,6 @@ Body:
     Name: Honest Diary
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19874,7 +19656,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -19887,7 +19668,6 @@ Body:
     Name: Etoile Ring
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19918,7 +19698,6 @@ Body:
     Name: +5 Weapon Refine Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19931,7 +19710,6 @@ Body:
     Name: +5 Armor Refine Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19964,7 +19742,6 @@ Body:
     Name: Hate Crate
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -19978,7 +19755,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20064,7 +19840,6 @@ Body:
     Name: Poring Coin
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20091,7 +19866,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20120,7 +19894,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20133,7 +19906,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20208,7 +19980,6 @@ Body:
     Name: Sharpened Bamboo
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20221,7 +19992,6 @@ Body:
     Name: Salt Bag
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20234,7 +20004,6 @@ Body:
     Name: The Cross
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20247,7 +20016,6 @@ Body:
     Name: Spiritual Protection
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20259,7 +20027,6 @@ Body:
     Name: Cast-Iron Caldron
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20272,7 +20039,6 @@ Body:
     Name: Purified Spirit Bone
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20285,7 +20051,6 @@ Body:
     Name: Offering Bouquet
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20298,7 +20063,6 @@ Body:
     Name: Evil Spirit Bone
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20399,7 +20163,6 @@ Body:
     Name: Collected Sample
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20411,7 +20174,6 @@ Body:
     Name: Lost Belongings
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20513,7 +20275,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20536,7 +20297,6 @@ Body:
     Name: Old Left Lapine
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20549,7 +20309,6 @@ Body:
     Name: Golden Leaf
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20562,7 +20321,6 @@ Body:
     Name: Avant Research Data
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20577,7 +20335,6 @@ Body:
     Buy: 20
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20589,7 +20346,6 @@ Body:
     Name: Lv110 Achieved Coin
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20602,7 +20358,6 @@ Body:
     Name: Lv120 Achieved Coin
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20615,7 +20370,6 @@ Body:
     Name: Firm Hair
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20628,7 +20382,6 @@ Body:
     Name: Younger Bro Letter
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20641,7 +20394,6 @@ Body:
     Name: Stained Research Book
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20654,7 +20406,6 @@ Body:
     Name: Piece Of Lapine Wing
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20667,7 +20418,6 @@ Body:
     Name: Courtesy Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20690,7 +20440,6 @@ Body:
     Name: Mail Package
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20704,7 +20453,6 @@ Body:
     Name: Leaf Made Wood
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20718,7 +20466,6 @@ Body:
     Name: Seed Box
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20732,7 +20479,6 @@ Body:
     Name: Birthday Candle
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20747,7 +20493,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20800,7 +20545,6 @@ Body:
     Name: Tiny Mouse Tail
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20814,7 +20558,6 @@ Body:
     Name: Weeds
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20839,7 +20582,6 @@ Body:
     Name: Cacao99 Recipe
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20852,7 +20594,6 @@ Body:
     Name: Choco Drink Recipe
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -20875,7 +20616,6 @@ Body:
     Name: +12 Weapon Certificate
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20888,7 +20628,6 @@ Body:
     Name: +12 Armor Certificate
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20908,7 +20647,6 @@ Body:
     Name: Cryptura Hair Coupon
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21106,7 +20844,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21121,7 +20858,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoDrop: true
   - Id: 6636
     AegisName: STRStone_Top
@@ -21228,7 +20964,6 @@ Body:
     Name: Needle And Thread
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21241,7 +20976,6 @@ Body:
     Name: Firm Pumpkin
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21254,7 +20988,6 @@ Body:
     Name: Goast Free Charm
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21267,7 +21000,6 @@ Body:
     Name: Memory Of Jack
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21285,7 +21017,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
   - Id: 6669
     AegisName: Jade_Leaf
@@ -21300,7 +21031,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21315,7 +21045,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21328,7 +21057,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21343,7 +21071,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21358,7 +21085,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21372,7 +21098,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21394,7 +21119,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21407,7 +21131,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21422,7 +21145,6 @@ Body:
     Buy: 10
     Weight: 2000
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21438,7 +21160,6 @@ Body:
     Buy: 10
     Weight: 2000
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21454,7 +21175,6 @@ Body:
     Buy: 10
     Weight: 2000
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21469,7 +21189,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21482,7 +21201,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21549,7 +21267,6 @@ Body:
     Buy: 10
     Weight: 1000
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21565,7 +21282,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21581,7 +21297,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21597,7 +21312,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21613,7 +21327,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21629,7 +21342,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21645,7 +21357,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21661,7 +21372,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21677,7 +21387,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21697,7 +21406,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21711,7 +21419,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21725,7 +21432,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21742,7 +21448,6 @@ Body:
     Name: Heart of Soul
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21756,7 +21461,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21770,7 +21474,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21807,7 +21510,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21821,7 +21523,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21835,7 +21536,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21850,7 +21550,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21865,7 +21564,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21880,7 +21578,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21899,7 +21596,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21976,7 +21672,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -21990,7 +21685,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22004,7 +21698,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22019,7 +21712,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22053,7 +21745,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22066,7 +21757,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22079,7 +21769,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22100,7 +21789,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22115,7 +21803,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22149,7 +21836,6 @@ Body:
     Name: Tickets Ice Kingdom
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22162,7 +21848,6 @@ Body:
     Name: Summer Festival Coins
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22175,7 +21860,6 @@ Body:
     Name: Shaved Ice For Red Beans
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22188,7 +21872,6 @@ Body:
     Name: Sweet Bread
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22305,7 +21988,6 @@ Body:
     Name: Squid Skewer
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22319,7 +22001,6 @@ Body:
     Name: Source Of Fantasy
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22333,7 +22014,6 @@ Body:
     Name: Squid Barbecue
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22347,7 +22027,6 @@ Body:
     Name: Long Firewood
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22361,7 +22040,6 @@ Body:
     Name: Rose Knife
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22375,7 +22053,6 @@ Body:
     Name: Customized Plates
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22443,7 +22120,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
   - Id: 6814
     AegisName: Swordman_Soul
@@ -22452,7 +22128,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22467,7 +22142,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22482,7 +22156,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22497,7 +22170,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22512,7 +22184,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22527,7 +22198,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22541,7 +22211,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22554,7 +22223,6 @@ Body:
     Name: Single Union Badge
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22568,7 +22236,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22584,7 +22251,6 @@ Body:
     Buy: 10
     Weight: 10000
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22599,7 +22265,6 @@ Body:
     Buy: 10
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22613,7 +22278,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22642,7 +22306,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22668,7 +22331,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22682,7 +22344,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22696,7 +22357,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22710,7 +22370,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22723,7 +22382,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22736,7 +22394,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22749,7 +22406,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22763,7 +22419,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22777,7 +22432,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22791,7 +22445,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22806,7 +22459,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22820,7 +22472,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22834,7 +22485,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22848,7 +22498,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22862,7 +22511,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22876,7 +22524,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22890,7 +22537,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22904,7 +22550,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22918,7 +22563,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22932,7 +22576,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22946,7 +22589,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22960,7 +22602,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22974,7 +22615,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -22988,7 +22628,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23002,7 +22641,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23016,7 +22654,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23030,7 +22667,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23044,7 +22680,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -23058,7 +22693,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -23071,7 +22705,6 @@ Body:
     Name: Piece Of Soul Rabbit
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23084,7 +22717,6 @@ Body:
     Name: Large Insect Barrel
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23097,7 +22729,6 @@ Body:
     Name: Medium Insect Barrel
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23110,7 +22741,6 @@ Body:
     Name: Dust
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23124,7 +22754,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -23138,7 +22767,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -23152,7 +22780,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -23166,7 +22793,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -23180,7 +22806,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -23194,7 +22819,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -23208,7 +22832,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -23222,7 +22845,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -23236,7 +22858,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -23250,7 +22871,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -23264,7 +22884,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -23278,7 +22897,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -23298,7 +22916,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -23313,7 +22930,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -23327,7 +22943,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23341,7 +22956,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23432,7 +23046,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23458,7 +23071,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -23472,7 +23084,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23494,7 +23105,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -23509,7 +23119,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -23524,7 +23133,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -23538,7 +23146,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23552,7 +23159,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -23567,7 +23173,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23581,7 +23186,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23595,7 +23199,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23609,7 +23212,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23623,7 +23225,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23638,7 +23239,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23668,7 +23268,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23690,7 +23289,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23704,7 +23302,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23718,7 +23315,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23732,7 +23328,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23746,7 +23341,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23760,7 +23354,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23774,7 +23367,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23788,7 +23380,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23802,7 +23393,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23817,7 +23407,6 @@ Body:
     Buy: 10
     Weight: 1000
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23831,7 +23420,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23955,7 +23543,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -23971,7 +23558,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23985,7 +23571,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -23999,7 +23584,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -24013,7 +23597,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -24032,7 +23615,6 @@ Body:
     Type: Etc
     Buy: 0
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -24047,7 +23629,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -24197,7 +23778,6 @@ Body:
     Name: +10 Weapon Certificate
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -24210,7 +23790,6 @@ Body:
     Name: +10 Armor Certificate
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -24223,7 +23802,6 @@ Body:
     Name: Warm Stone
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -24236,7 +23814,6 @@ Body:
     Name: Rabbit Doll
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -24249,7 +23826,6 @@ Body:
     Name: Old Arrow
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -24466,7 +24042,6 @@ Body:
     Buy: 30000
     Weight: 50
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -24708,7 +24283,6 @@ Body:
     Type: Etc
     Buy: 1
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -24722,7 +24296,6 @@ Body:
     Type: Etc
     Buy: 1
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -24736,7 +24309,6 @@ Body:
     Type: Etc
     Buy: 1
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -25365,7 +24937,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoDrop: true
   - Id: 7141
     AegisName: Yggdrasilberry_Dew
@@ -25600,7 +25171,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoDrop: true
   - Id: 7171
     AegisName: Leopard_Skin
@@ -25647,7 +25217,6 @@ Body:
     Name: Crumb of Sobbing Starlight
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -25661,7 +25230,6 @@ Body:
     Name: Sobbing Starlight
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -25817,7 +25385,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -26326,7 +25893,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -26340,7 +25906,6 @@ Body:
     Name: Doodled Message
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -26541,7 +26106,6 @@ Body:
     Name: Witch's Spell Scroll
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -26555,7 +26119,6 @@ Body:
     Name: Symbol of the Nine Realms
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -26569,7 +26132,6 @@ Body:
     Name: Piece of Spirit
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -26583,7 +26145,6 @@ Body:
     Name: Spiritual Whispers
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -26597,7 +26158,6 @@ Body:
     Name: Witch's Tonic
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -26611,7 +26171,6 @@ Body:
     Name: Crow Wing
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -26650,7 +26209,6 @@ Body:
     Type: Etc
     Buy: 2
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -26788,7 +26346,6 @@ Body:
     Name: Complete Tablet
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -26802,7 +26359,6 @@ Body:
     Name: Prontera Tablet
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -26816,7 +26372,6 @@ Body:
     Name: Payon Tablet
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -26830,7 +26385,6 @@ Body:
     Name: Morocc Tablet
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -26844,7 +26398,6 @@ Body:
     Name: Geffen Tablet
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -26866,7 +26419,6 @@ Body:
     Name: Commemorative Travel Card
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -26889,7 +26441,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -26904,7 +26455,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -26919,7 +26469,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -26934,7 +26483,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -26957,7 +26505,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -26986,7 +26533,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -27007,7 +26553,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -27126,7 +26671,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -27391,7 +26935,6 @@ Body:
     Name: Letter of Recommendation
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -27404,7 +26947,6 @@ Body:
     Name: Written Request(A)
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -27417,7 +26959,6 @@ Body:
     Name: Written Request(B)
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -27438,7 +26979,6 @@ Body:
     Name: Skull
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -27451,7 +26991,6 @@ Body:
     Name: Red Key
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -27464,7 +27003,6 @@ Body:
     Name: Yellow Key
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -27477,7 +27015,6 @@ Body:
     Name: Blue Key
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -27490,7 +27027,6 @@ Body:
     Name: Green Key
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -27503,7 +27039,6 @@ Body:
     Name: Black Key
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -27516,7 +27051,6 @@ Body:
     Name: Red Charm Stone
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -27529,7 +27063,6 @@ Body:
     Name: Yellow Charm Stone
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -27542,7 +27075,6 @@ Body:
     Name: Blue Charm Stone
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -27555,7 +27087,6 @@ Body:
     Name: Green Charm Stone
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -27568,7 +27099,6 @@ Body:
     Name: Black Charm Stone
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -27581,7 +27111,6 @@ Body:
     Name: Pile of Books
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -27594,7 +27123,6 @@ Body:
     Name: Leather Pouch
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -27974,7 +27502,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -27989,7 +27516,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28004,7 +27530,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28018,7 +27543,6 @@ Body:
     Name: Culinary Wine
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28032,7 +27556,6 @@ Body:
     Name: Delivery Package
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28046,7 +27569,6 @@ Body:
     Name: Cottage Key
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28060,7 +27582,6 @@ Body:
     Name: Letter to Elly
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28074,7 +27595,6 @@ Body:
     Name: Steel Box
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28088,7 +27608,6 @@ Body:
     Name: Yellow Keycard
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28102,7 +27621,6 @@ Body:
     Name: Golden Key
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28116,7 +27634,6 @@ Body:
     Name: Luxurious Button
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28130,7 +27647,6 @@ Body:
     Name: Blue Keycard
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28144,7 +27660,6 @@ Body:
     Name: Red Keycard
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28158,7 +27673,6 @@ Body:
     Name: Metal Fragment
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28172,7 +27686,6 @@ Body:
     Name: Rosimier Mansion Keys
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28186,7 +27699,6 @@ Body:
     Name: Family Portrait
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28200,7 +27712,6 @@ Body:
     Name: Woman's Portrait
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28214,7 +27725,6 @@ Body:
     Name: K.H's Letter
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28228,7 +27738,6 @@ Body:
     Name: James's Note
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28242,7 +27751,6 @@ Body:
     Name: Man's Portrait
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28256,7 +27764,6 @@ Body:
     Name: Power Device
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28270,7 +27777,6 @@ Body:
     Name: Toy Key
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28284,7 +27790,6 @@ Body:
     Name: Black Keycard
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -28305,7 +27810,6 @@ Body:
     Name: Allysia's Ring
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28319,7 +27823,6 @@ Body:
     Name: Luxurious Keycard
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28365,7 +27868,6 @@ Body:
     Type: Etc
     Buy: 2
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -28379,7 +27881,6 @@ Body:
     Type: Etc
     Buy: 2
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -28392,7 +27893,6 @@ Body:
     Name: Green Keycard
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -28412,7 +27912,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -28479,7 +27978,6 @@ Body:
     Type: Etc
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28501,7 +27999,6 @@ Body:
     Name: Travel Brochure [Amatsu]
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28515,7 +28012,6 @@ Body:
     Name: Travel Brochure [Kunlun]
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28529,7 +28025,6 @@ Body:
     Name: Travel Brochure [Luoyang]
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28543,7 +28038,6 @@ Body:
     Name: Travel Brochure [Ayothaya]
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28557,7 +28051,6 @@ Body:
     Name: Amatsu Completed Photo Album
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28571,7 +28064,6 @@ Body:
     Name: Kunlun Completed Photo Album
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28585,7 +28077,6 @@ Body:
     Name: Luoyang Completed Photo Album
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28599,7 +28090,6 @@ Body:
     Name: Ayothaya Completed Photo Album
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28613,7 +28103,6 @@ Body:
     Name: Sand for Work
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -28626,7 +28115,6 @@ Body:
     Name: Poring Coin
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -28676,7 +28164,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -28691,7 +28178,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -28706,7 +28192,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -28721,7 +28206,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -28736,7 +28220,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -28751,7 +28234,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -28764,7 +28246,6 @@ Body:
     Name: Lotus Flower
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -28777,7 +28258,6 @@ Body:
     Name: Striped Candle
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -28790,7 +28270,6 @@ Body:
     Name: Green Incense
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -28803,7 +28282,6 @@ Body:
     Name: Longing Heart
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28816,7 +28294,6 @@ Body:
     Name: Invitation Letter
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28829,7 +28306,6 @@ Body:
     Name: Invitation Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28842,7 +28318,6 @@ Body:
     Name: Key to the Secret Garden
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28923,7 +28398,6 @@ Body:
     Name: Wind Hammer
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28945,7 +28419,6 @@ Body:
     Name: Ashy Necklace
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28958,7 +28431,6 @@ Body:
     Name: Sparkling Necklace
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28978,7 +28450,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -28993,7 +28464,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -29009,7 +28479,6 @@ Body:
     Buy: 20
     Weight: 50
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -29030,7 +28499,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -29045,7 +28513,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -29072,7 +28539,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -29087,7 +28553,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -29102,7 +28567,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -29117,7 +28581,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -29132,7 +28595,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -29147,7 +28609,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -29240,7 +28701,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -29309,7 +28769,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -29342,7 +28801,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -29357,7 +28815,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -29372,7 +28829,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -29387,7 +28843,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -29401,7 +28856,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -29415,7 +28869,6 @@ Body:
     Type: Etc
     Buy: 2
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -29435,7 +28888,6 @@ Body:
     Name: Registration Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -29467,7 +28919,6 @@ Body:
     Name: Clean Beach Brush
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -29480,7 +28931,6 @@ Body:
     Name: Trash Debris
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -29538,7 +28988,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -29693,7 +29142,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -29708,7 +29156,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -29734,7 +29181,6 @@ Body:
     Type: Etc
     Buy: 2
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -29749,7 +29195,6 @@ Body:
     Type: Etc
     Buy: 2
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -29813,7 +29258,6 @@ Body:
     Name: Handmade Chocolate Recipe
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -29826,7 +29270,6 @@ Body:
     Name: Chocolate Strawberry Recipe
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -29839,7 +29282,6 @@ Body:
     Name: Chocolate Tart Recipe
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -29864,7 +29306,6 @@ Body:
     Buy: 100
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -29883,7 +29324,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -29898,7 +29338,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -29913,7 +29352,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -29928,7 +29366,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -29943,7 +29380,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -29957,7 +29393,6 @@ Body:
     Name: HP Doctor Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -29970,7 +29405,6 @@ Body:
     Name: SP Doctor Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -29985,7 +29419,6 @@ Body:
     Buy: 20
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -29999,7 +29432,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoSell: true
   - Id: 7731
     AegisName: Mission_Certificate2
@@ -30007,7 +29439,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoSell: true
   - Id: 7732
     AegisName: Mission_Certificate3
@@ -30015,7 +29446,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoSell: true
   - Id: 7733
     AegisName: Mission_Certificate4
@@ -30023,7 +29453,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoSell: true
   - Id: 7734
     AegisName: Mission_Certificate5
@@ -30031,7 +29460,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoSell: true
   - Id: 7735
     AegisName: Mission_Certificate6
@@ -30039,7 +29467,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoSell: true
   - Id: 7736
     AegisName: Mission_Certificate7
@@ -30047,7 +29474,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoSell: true
   - Id: 7737
     AegisName: Mission_Certificate8
@@ -30055,7 +29481,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoSell: true
   - Id: 7738
     AegisName: Mission_Certificate9
@@ -30063,7 +29488,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoSell: true
   - Id: 7739
     AegisName: Mission_Certificate10
@@ -30071,7 +29495,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoSell: true
   - Id: 7740
     AegisName: Mission_Certificate11
@@ -30079,7 +29502,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoSell: true
   - Id: 7741
     AegisName: Mission_Certificate12
@@ -30087,7 +29509,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoSell: true
   - Id: 7742
     AegisName: Kaong
@@ -30181,7 +29602,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30214,7 +29634,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30252,7 +29671,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30268,7 +29686,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30284,7 +29701,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30300,7 +29716,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30315,7 +29730,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30353,7 +29767,6 @@ Body:
     Name: Wat Badge
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -30372,7 +29785,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30386,7 +29798,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30410,7 +29821,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30424,7 +29834,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30457,7 +29866,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30471,7 +29879,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30485,7 +29892,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30499,7 +29905,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30513,7 +29918,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30527,7 +29931,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30541,7 +29944,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30555,7 +29957,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30573,7 +29974,6 @@ Body:
     Name: Golden Apple
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30586,7 +29986,6 @@ Body:
     Name: The Crow of Destiny
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30629,7 +30028,6 @@ Body:
     Name: Golden Charm Apple
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30642,7 +30040,6 @@ Body:
     Name: Girl's Letter
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -30655,7 +30052,6 @@ Body:
     Name: Signature Notebook
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -30669,7 +30065,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30682,7 +30077,6 @@ Body:
     Name: Octopig's Leg
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -30770,7 +30164,6 @@ Body:
     Name: Piece of Morocc Skin
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30786,7 +30179,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30801,7 +30193,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30816,7 +30207,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30839,7 +30229,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -30852,7 +30241,6 @@ Body:
     Name: Continental Guard Paper
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -30865,7 +30253,6 @@ Body:
     Name: Mineral Evals
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -30878,7 +30265,6 @@ Body:
     Name: Bravery Badge
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -30891,7 +30277,6 @@ Body:
     Name: Valor Badge
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -30976,7 +30361,6 @@ Body:
     Name: Crystal Key
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -30989,7 +30373,6 @@ Body:
     Name: Valkyrie's Gift
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -31003,7 +30386,6 @@ Body:
     Name: Stained Piece Of Paper
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -31016,7 +30398,6 @@ Body:
     Name: Torn Piece Of Paper
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -31029,7 +30410,6 @@ Body:
     Name: Old Piece Of Paper
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -31042,7 +30422,6 @@ Body:
     Name: Burnt Pieces Of Paper
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -31157,7 +30536,6 @@ Body:
     Buy: 20
     Weight: 200
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -31176,7 +30554,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -31190,7 +30567,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -31252,7 +30628,6 @@ Body:
     Type: Etc
     Buy: 300000
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -31265,7 +30640,6 @@ Body:
     Type: Etc
     Weight: 50
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -31279,7 +30653,6 @@ Body:
     Type: Etc
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -31293,7 +30666,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -31307,7 +30679,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -31321,7 +30692,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -31335,7 +30705,6 @@ Body:
     Type: Etc
     Weight: 50
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -31348,7 +30717,6 @@ Body:
     Name: Sharp Branch
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -31361,7 +30729,6 @@ Body:
     Name: Wooden Flute
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -31374,7 +30741,6 @@ Body:
     Name: Jade Plate
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -31387,7 +30753,6 @@ Body:
     Name: Sacred Arrow
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -31444,7 +30809,6 @@ Body:
     Name: Rama5 Book
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -31457,7 +30821,6 @@ Body:
     Name: Loykrathong Book
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -31470,7 +30833,6 @@ Body:
     Name: Constitution Book
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -31483,7 +30845,6 @@ Body:
     Name: VV Strong Balmung
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -31496,7 +30857,6 @@ Body:
     Name: Dagger Of Psychic
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -31509,7 +30869,6 @@ Body:
     Name: Jonathan Family Ring
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -31523,7 +30882,6 @@ Body:
     Name: Jillberriel Family Ring
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -31537,7 +30895,6 @@ Body:
     Name: Jessur Family Ring
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -31551,7 +30908,6 @@ Body:
     Name: Jenoss Family Ring
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -31565,7 +30921,6 @@ Body:
     Name: Piano Key
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -31585,7 +30940,6 @@ Body:
     Name: Poppy Wreath
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -31601,7 +30955,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -31620,7 +30973,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -31634,7 +30986,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -31652,7 +31003,6 @@ Body:
     Name: Portable Snowman Machine
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -31666,7 +31016,6 @@ Body:
     Name: Battle Test Certificate
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -31681,7 +31030,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -31705,7 +31053,6 @@ Body:
     Name: Magic Potion
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -31727,7 +31074,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -31741,7 +31087,6 @@ Body:
     Name: He's Arsenal
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -31767,7 +31112,6 @@ Body:
     Name: Krathong
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -31806,7 +31150,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -31822,7 +31165,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -31837,7 +31179,6 @@ Body:
     Type: Etc
     Weight: 1000
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -31951,7 +31292,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -31981,7 +31321,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -31995,7 +31334,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -32009,7 +31347,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -32022,7 +31359,6 @@ Body:
     Name: Gift Of Lomi Ross
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -32036,7 +31372,6 @@ Body:
     Name: Gift Of Juliet
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -32052,7 +31387,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -32085,21 +31419,18 @@ Body:
     Name: Ancient Gold Coin
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
   - Id: 7960
     AegisName: Ancient_Silver_Coin
     Name: Ancient Silver Coin
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
   - Id: 7961
     AegisName: Weapon_Exchange
     Name: Weapon Exchange
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -32113,7 +31444,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -32127,7 +31457,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -32141,7 +31470,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -32155,7 +31483,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -32169,7 +31496,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -32183,7 +31509,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -32197,7 +31522,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -32211,7 +31535,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -32476,7 +31799,6 @@ Body:
     Name: Varmunt's Note
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -32489,7 +31811,6 @@ Body:
     Name: Expedition Report
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -32502,7 +31823,6 @@ Body:
     Name: Expedition Report Vol1
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -32515,7 +31835,6 @@ Body:
     Name: Expedition Report Vol2
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -32528,7 +31847,6 @@ Body:
     Name: Expedition Report Vol3
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -32541,7 +31859,6 @@ Body:
     Name: Expedition Report Vol4
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -32830,7 +32147,6 @@ Body:
     Buy: 10
     Weight: 30
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -32845,7 +32161,6 @@ Body:
     Buy: 10
     Weight: 40
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -32860,7 +32175,6 @@ Body:
     Buy: 10
     Weight: 30
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -33000,7 +32314,6 @@ Body:
       Ammo: true
     EquipLevelMin: 50
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -34037,7 +33350,6 @@ Body:
       Ammo: true
     EquipLevelMin: 50
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -34063,7 +33375,6 @@ Body:
       Ammo: true
     EquipLevelMin: 1
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -34089,7 +33400,6 @@ Body:
       Ammo: true
     EquipLevelMin: 1
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -34126,7 +33436,6 @@ Body:
     Locations:
       Ammo: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34145,7 +33454,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -34162,7 +33470,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -34369,7 +33676,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34383,7 +33689,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34397,7 +33702,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34417,7 +33721,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34431,7 +33734,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34445,7 +33747,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34459,7 +33760,6 @@ Body:
     Type: Etc
     Buy: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34474,7 +33774,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -34500,7 +33799,6 @@ Body:
     Flags:
       DropEffect: CLIENT
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34605,7 +33903,6 @@ Body:
     Name: Broken Trap
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34618,7 +33915,6 @@ Body:
     Name: Capture Trap
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34638,7 +33934,6 @@ Body:
     Name: Piece of Mysterious Egg
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -34651,7 +33946,6 @@ Body:
     Name: Thorny Vine Flute
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34669,7 +33963,6 @@ Body:
     Name: Luxurious Cloth
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34682,7 +33975,6 @@ Body:
     Name: Boarding Pass
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34695,7 +33987,6 @@ Body:
     Name: Kahlunac
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34708,7 +33999,6 @@ Body:
     Name: Hearty Lunchbox
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34721,7 +34011,6 @@ Body:
     Name: Basilac Clam
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34735,7 +34024,6 @@ Body:
     Type: Etc
     Buy: 1
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34838,7 +34126,6 @@ Body:
     Name: Old Papyrus
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34851,7 +34138,6 @@ Body:
     Name: Old Coin
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34864,7 +34150,6 @@ Body:
     Name: Admiral's Sword
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34877,7 +34162,6 @@ Body:
     Name: Coursera
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34890,7 +34174,6 @@ Body:
     Name: Knight Supply
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34903,7 +34186,6 @@ Body:
     Name: Ha Soju
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34916,7 +34198,6 @@ Body:
     Name: Last Breath
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34929,7 +34210,6 @@ Body:
     Name: Fox Bead
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34942,7 +34222,6 @@ Body:
     Name: Silky Hair of Rabbit
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34955,7 +34234,6 @@ Body:
     Name: Captured Rabbit
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34968,7 +34246,6 @@ Body:
     Name: Rabbit's Hair
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34981,7 +34258,6 @@ Body:
     Name: Ribbon for Gift wrapping
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -34994,7 +34270,6 @@ Body:
     Name: Old Doll
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35007,7 +34282,6 @@ Body:
     Name: Fragment of Dreams
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35019,7 +34293,6 @@ Body:
     Name: Ornament Wings Gift
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35032,182 +34305,156 @@ Body:
     Name: Realm Map
     Type: Etc
     Trade:
-      Override: 100
       NoCart: true
   - Id: 25099
     AegisName: Jobmap_su
     Name: Realm Map
     Type: Etc
     Trade:
-      Override: 100
       NoCart: true
   - Id: 25100
     AegisName: Jobmap_sword
     Name: Realm Map
     Type: Etc
     Trade:
-      Override: 100
       NoCart: true
   - Id: 25101
     AegisName: Jobmap_magic
     Name: Realm Map
     Type: Etc
     Trade:
-      Override: 100
       NoCart: true
   - Id: 25102
     AegisName: Jobmap_Merch
     Name: Realm Map
     Type: Etc
     Trade:
-      Override: 100
       NoCart: true
   - Id: 25103
     AegisName: Jobmap_acol
     Name: Realm Map
     Type: Etc
     Trade:
-      Override: 100
       NoCart: true
   - Id: 25104
     AegisName: Jobmap_thief
     Name: Realm Map
     Type: Etc
     Trade:
-      Override: 100
       NoCart: true
   - Id: 25105
     AegisName: Jobmap_archer
     Name: Realm Map
     Type: Etc
     Trade:
-      Override: 100
       NoCart: true
   - Id: 25106
     AegisName: Jobmap_taekwon
     Name: Realm Map
     Type: Etc
     Trade:
-      Override: 100
       NoCart: true
   - Id: 25107
     AegisName: Jobmap_rune
     Name: Realm Map
     Type: Etc
     Trade:
-      Override: 100
       NoCart: true
   - Id: 25108
     AegisName: Jobmap_royal
     Name: Realm Map
     Type: Etc
     Trade:
-      Override: 100
       NoCart: true
   - Id: 25109
     AegisName: Jobmap_war
     Name: Realm Map
     Type: Etc
     Trade:
-      Override: 100
       NoCart: true
   - Id: 25110
     AegisName: Jobmap_socer
     Name: Realm Map
     Type: Etc
     Trade:
-      Override: 100
       NoCart: true
   - Id: 25111
     AegisName: Jobmap_mecha
     Name: Realm Map
     Type: Etc
     Trade:
-      Override: 100
       NoCart: true
   - Id: 25112
     AegisName: Jobmap_gene
     Name: Realm Map
     Type: Etc
     Trade:
-      Override: 100
       NoCart: true
   - Id: 25113
     AegisName: Jobmap_bishop
     Name: Realm Map
     Type: Etc
     Trade:
-      Override: 100
       NoCart: true
   - Id: 25114
     AegisName: Jobmap_sura
     Name: Realm Map
     Type: Etc
     Trade:
-      Override: 100
       NoCart: true
   - Id: 25115
     AegisName: Jobmap_cross
     Name: Realm Map
     Type: Etc
     Trade:
-      Override: 100
       NoCart: true
   - Id: 25116
     AegisName: Jobmap_chaser
     Name: Realm Map
     Type: Etc
     Trade:
-      Override: 100
       NoCart: true
   - Id: 25117
     AegisName: Jobmap_ranger
     Name: Realm Map
     Type: Etc
     Trade:
-      Override: 100
       NoCart: true
   - Id: 25118
     AegisName: Jobmap_mins
     Name: Realm Map
     Type: Etc
     Trade:
-      Override: 100
       NoCart: true
   - Id: 25119
     AegisName: Jobmap_wander
     Name: Realm Map
     Type: Etc
     Trade:
-      Override: 100
       NoCart: true
   - Id: 25120
     AegisName: Jobmap_ninja
     Name: Realm Map
     Type: Etc
     Trade:
-      Override: 100
       NoCart: true
   - Id: 25121
     AegisName: Jobmap_gun
     Name: Realm Map
     Type: Etc
     Trade:
-      Override: 100
       NoCart: true
   - Id: 25122
     AegisName: Jobmap_super2
     Name: Realm Map
     Type: Etc
     Trade:
-      Override: 100
       NoCart: true
   - Id: 25123
     AegisName: Jobmap_karma2
     Name: Realm Map
     Type: Etc
     Trade:
-      Override: 100
       NoCart: true
   - Id: 25127
     AegisName: Silent_Energy_Particle
@@ -35234,7 +34481,6 @@ Body:
     Name: Pumpkin Deco
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35247,7 +34493,6 @@ Body:
     Name: Dried White Stem
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35305,7 +34550,6 @@ Body:
     Name: Gift Stuffed Doll
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35318,7 +34562,6 @@ Body:
     Name: Bridge Postured Doll
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35331,7 +34574,6 @@ Body:
     Name: Burnt Spector Doll
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35344,7 +34586,6 @@ Body:
     Name: Cold Blooded Queen Doll
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35357,7 +34598,6 @@ Body:
     Name: Well Eatenl Rabbit Doll
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35370,7 +34610,6 @@ Body:
     Name: Cute Starved Demon Doll
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35383,7 +34622,6 @@ Body:
     Name: Doll With Warm Scarf
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35396,7 +34634,6 @@ Body:
     Name: Hugging Alice Pilow
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35409,7 +34646,6 @@ Body:
     Name: Rachel's Revolver
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35422,7 +34658,6 @@ Body:
     Name: Cherished Bouquet
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35435,7 +34670,6 @@ Body:
     Name: Broken Gun Wreck
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35453,7 +34687,6 @@ Body:
     Name: Schwarz's Honor Token
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35486,7 +34719,6 @@ Body:
     Name: Borrowed Book
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35499,7 +34731,6 @@ Body:
     Name: Delicious Handmade Cookie
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35512,7 +34743,6 @@ Body:
     Name: Crispy Anchovy
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35525,7 +34755,6 @@ Body:
     Name: Arms Shop Ad
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35538,7 +34767,6 @@ Body:
     Name: Fresh Tea Leaves
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35551,7 +34779,6 @@ Body:
     Name: High Class Tea
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35564,7 +34791,6 @@ Body:
     Name: Very Shining Ring
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35577,7 +34803,6 @@ Body:
     Name: Old Letter
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35590,7 +34815,6 @@ Body:
     Name: Sticky Mucus
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35657,7 +34881,6 @@ Body:
     Name: Blessing Star
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35670,7 +34893,6 @@ Body:
     Name: Old Rings
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35683,7 +34905,6 @@ Body:
     Name: Wood Rosary
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35696,7 +34917,6 @@ Body:
     Name: Assassin's Mark Dagger
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35709,7 +34929,6 @@ Body:
     Name: Decorated Archer's Thimble
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35722,7 +34941,6 @@ Body:
     Name: Portable Sewingbox
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35735,7 +34953,6 @@ Body:
     Name: Locket Pendant
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35754,7 +34971,6 @@ Body:
     Name: Girl's Handkerchief
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35767,7 +34983,6 @@ Body:
     Name: Fluffy Cloud
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35780,7 +34995,6 @@ Body:
     Name: Miracle Claw
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35829,7 +35043,6 @@ Body:
     Name: Tree Branch
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35842,7 +35055,6 @@ Body:
     Name: Window Paper
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35855,7 +35067,6 @@ Body:
     Name: Moonlight Kite String
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35868,7 +35079,6 @@ Body:
     Name: MoonScent Tree Branch
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35881,7 +35091,6 @@ Body:
     Name: Moon Patterned Window Paper
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35894,7 +35103,6 @@ Body:
     Name: Eden Group Coin
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35960,7 +35168,6 @@ Body:
     Name: Crafted Stone
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -35972,7 +35179,6 @@ Body:
     Name: New Normal Lubricant
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -35985,7 +35191,6 @@ Body:
     Name: New Advanced Lubricant
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -36003,7 +35208,6 @@ Body:
     Name: Small pile of bones
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36016,7 +35220,6 @@ Body:
     Name: Juice Mix Package
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36028,7 +35231,6 @@ Body:
     Name: Purple Ore
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36040,7 +35242,6 @@ Body:
     Name: Purple Ore Crate
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36052,7 +35253,6 @@ Body:
     Name: Buffalo Bandit Mane
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36072,7 +35272,6 @@ Body:
     Name: Sprig of Holly
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36084,7 +35283,6 @@ Body:
     Name: A box containing sugar
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -36098,7 +35296,6 @@ Body:
     Name: Firewood
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36139,7 +35336,6 @@ Body:
     Name: Fragment of Purple Ore
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36187,7 +35383,6 @@ Body:
     Name: Sticky Blood
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36200,7 +35395,6 @@ Body:
     Name: Mushroom Sap
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36213,7 +35407,6 @@ Body:
     Name: Wavy Mane
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36245,7 +35438,6 @@ Body:
     Name: Racing Audit Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36321,7 +35513,6 @@ Body:
     Name: Mystical Feather
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36338,7 +35529,6 @@ Body:
     Name: Product Chocolate
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -36360,7 +35550,6 @@ Body:
     Name: Happy Three Leaf Clover
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36373,7 +35562,6 @@ Body:
     Name: Something Fatal
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36436,7 +35624,6 @@ Body:
     Name: Late Lang Monster Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36450,7 +35637,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36464,7 +35650,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -36499,7 +35684,6 @@ Body:
     Name: Shell Fragment
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36512,7 +35696,6 @@ Body:
     Name: Old Metal Pieces
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36531,7 +35714,6 @@ Body:
     Name: Ice Box
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36564,7 +35746,6 @@ Body:
     Name: Flat and Round Stones
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36578,7 +35759,6 @@ Body:
     Type: Etc
     Weight: 200
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36592,7 +35772,6 @@ Body:
     Type: Etc
     Weight: 200
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36606,7 +35785,6 @@ Body:
     Type: Etc
     Weight: 200
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36619,7 +35797,6 @@ Body:
     Name: Elongated noodles
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36632,7 +35809,6 @@ Body:
     Name: Noodle Festival Coin
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36645,7 +35821,6 @@ Body:
     Name: Promotional fan
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36671,7 +35846,6 @@ Body:
     Name: Captured Savage
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36684,7 +35858,6 @@ Body:
     Name: High-quality branches
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36697,7 +35870,6 @@ Body:
     Name: Ticket to anywhere
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36710,7 +35882,6 @@ Body:
     Name: Tasty Corn
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36723,7 +35894,6 @@ Body:
     Name: Fruit lunch box
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -36737,7 +35907,6 @@ Body:
     Name: Small Ember
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -36751,7 +35920,6 @@ Body:
     Name: Black Fur
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36764,7 +35932,6 @@ Body:
     Name: Memories of Gyoll
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36849,7 +36016,6 @@ Body:
     Name: Pumpkin Decoration
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36862,7 +36028,6 @@ Body:
     Name: Dry White Stem
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36875,7 +36040,6 @@ Body:
     Name: Magical Snow Flower
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36888,7 +36052,6 @@ Body:
     Name: Warm Cotton
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36901,7 +36064,6 @@ Body:
     Name: Beginner's Equipment Exchange Voucher
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -36914,7 +36076,6 @@ Body:
     Name: Beginner's Safe to 7 Weapon Certificate
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -37000,7 +36161,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -37013,7 +36173,6 @@ Body:
     Name: Dogly Bottle
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -37108,7 +36267,6 @@ Body:
     Name: Phantom's Seal
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -37147,7 +36305,6 @@ Body:
     Name: Solid chocolate
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -37160,7 +36317,6 @@ Body:
     Name: Almond
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -37294,7 +36450,6 @@ Body:
     Name: Signed Book
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -37312,7 +36467,6 @@ Body:
     Name: Stamped Notebook
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -37325,7 +36479,6 @@ Body:
     Name: Though Noodles
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -37338,7 +36491,6 @@ Body:
     Name: Noodle Sap
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -37352,7 +36504,6 @@ Body:
     Type: Etc
     Weight: 200
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -37365,7 +36516,6 @@ Body:
     Name: Ribbon Noodles
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -37378,7 +36528,6 @@ Body:
     Name: Dien's Precious Envelope
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -37391,7 +36540,6 @@ Body:
     Name: Identification Bracelet
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -37924,7 +37072,6 @@ Body:
     Name: Episode Quest Clear Coupon
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -37937,7 +37084,6 @@ Body:
     Name: Sealed Weapon Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -37950,7 +37096,6 @@ Body:
     Name: Ancient Hero's Seal-Year
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -38162,7 +37307,6 @@ Body:
     Name: "[Event] Inventory Expansion Voucher"
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -38175,7 +37319,6 @@ Body:
     Name: "[Limited] Inventory Expansion Voucher"
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -38188,7 +37331,6 @@ Body:
     Name: Inventory Expansion Coupon
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -38312,7 +37454,6 @@ Body:
     Name: Metal Weapon Exchange Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -38325,7 +37466,6 @@ Body:
     Name: January Costume Exchange Coupon
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -38338,7 +37478,6 @@ Body:
     Name: Smooth Noodles
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -38535,7 +37674,6 @@ Body:
     Name: Searud's Fishing Rod
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -55642,7 +54780,6 @@ Body:
     Name: 1st Job Change Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -55655,7 +54792,6 @@ Body:
     Name: 2nd Job Change Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -55668,7 +54804,6 @@ Body:
     Name: Transcendence Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -55681,7 +54816,6 @@ Body:
     Name: Top Job Tickets
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -55694,7 +54828,6 @@ Body:
     Name: Boosting Weapon Voucher
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -55707,7 +54840,6 @@ Body:
     Name: Booster Armor Voucher
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -55720,7 +54852,6 @@ Body:
     Name: Parfait for Children
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -55794,7 +54925,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -55808,7 +54938,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -55822,7 +54951,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -55836,7 +54964,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -55850,7 +54977,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -55864,7 +54990,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -55878,7 +55003,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -55892,7 +55016,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -55906,7 +55029,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -55921,7 +55043,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -55936,7 +55057,6 @@ Body:
     Type: Etc
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -55956,7 +55076,6 @@ Body:
     Name: Magical Soapstone
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -56524,7 +55643,6 @@ Body:
     Name: Core of a Broken Doll
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -56542,7 +55660,6 @@ Body:
     Name: Parts of Broken Automatic Doll
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -56555,7 +55672,6 @@ Body:
     Name: Communication Chip of Automatic Doll
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -56590,7 +55706,6 @@ Body:
     Name: Booster Weapon Voucher
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -56603,7 +55718,6 @@ Body:
     Name: Booster Coin
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -56671,7 +55785,6 @@ Body:
     Name: Gas Mask
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -56683,7 +55796,6 @@ Body:
     Name: Sealing Box
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -56695,7 +55807,6 @@ Body:
     Name: Mandragora Incubator
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -56707,7 +55818,6 @@ Body:
     Name: Piece of Impression
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -56720,7 +55830,6 @@ Body:
     Name: Piece of Inspiration
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -56733,7 +55842,6 @@ Body:
     Name: "[Kachua] Mileage Coupon"
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -56788,7 +55896,6 @@ Body:
     Name: Episode 16 Clear Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -56801,7 +55908,6 @@ Body:
     Name: (Event) Episode 16 Clear Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -56815,7 +55921,6 @@ Body:
     Name: Episode 17 Clear Ticket
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -56931,7 +56036,6 @@ Body:
     Type: Etc
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -56957,7 +56061,6 @@ Body:
     Name: Kafra Coin
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -57081,7 +56184,6 @@ Body:
     Name: Ymir Ore
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -57094,7 +56196,6 @@ Body:
     Name: Geffen Arena Championship
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -57107,7 +56208,6 @@ Body:
     Name: Minneas
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -57229,7 +56329,6 @@ Body:
     Name: Very Unusual Crystal
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -57242,7 +56341,6 @@ Body:
     Name: Half Flower
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -57255,7 +56353,6 @@ Body:
     Name: Recording Note
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -57268,7 +56365,6 @@ Body:
     Name: Document Files
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -57281,7 +56377,6 @@ Body:
     Name: Water Filter
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -57294,7 +56389,6 @@ Body:
     Name: Purified Water
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -57307,7 +56401,6 @@ Body:
     Name: Trapped Bird
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -57320,7 +56413,6 @@ Body:
     Name: Trapped Lizard
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -57333,7 +56425,6 @@ Body:
     Name: Trapped Pear
     Type: Etc
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
