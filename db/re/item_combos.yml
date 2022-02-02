@@ -275,16 +275,16 @@ Body:
       /* Confirm: Success rate */
   - Combos:
       - Combo:
-          - Rift_Ancient_Armor
-          - Rift_Ancient_Decoration
+          - Armor_Of_Goddess
+          - Accessories_Of_Goddess
     Script: |
       bonus bMaxSP,100;
       bonus bNoCastCancel;
   - Combos:
       - Combo:
-          - Rift_Ancient_Armor
-          - Rift_Manteau
-          - Rift_Shoes
+          - Armor_Of_Goddess
+          - ManteauOfCracks
+          - Shoes_Of_Cracks
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_SHOES);
       bonus bMaxHP,1000;

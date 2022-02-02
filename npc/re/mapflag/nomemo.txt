@@ -168,6 +168,9 @@ un_myst	mapflag	nomemo
 lhz_dun_n	mapflag	nomemo
 lhz_d_n2	mapflag	nomemo
 
+// Infinite Space
+1@infi	mapflag	nomemo
+
 // WOE:TE Maps ===================
 te_prtcas01	mapflag	nomemo
 te_prtcas02	mapflag	nomemo
