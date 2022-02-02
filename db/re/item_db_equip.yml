@@ -18671,7 +18671,7 @@ Body:
       bonus bDex,8;
       bonus bVit,8;
   - Id: 1938
-    AegisName: Infinity_Violin
+    AegisName: Viollin_Of_Infinite
     Name: Infinity Violin
     Type: Weapon
     SubType: Musical
@@ -19876,11 +19876,11 @@ Body:
       bonus bDex,8;
       bonus bVit,8;
   - Id: 1994
-    AegisName: Infinity_Whip
+    AegisName: Whip_Of_Infinite
     Name: Infinity Whip
     Type: Weapon
     SubType: Whip
-    Buy: 10
+    Buy: 20
     Weight: 500
     Attack: 150
     Range: 2
@@ -20664,11 +20664,11 @@ Body:
     UnEquipScript: |
       heal -1000,0;
   - Id: 2024
-    AegisName: Infinity_Two-handed_Stick
-    Name: Infinity Two-handed Stick
+    AegisName: D_Staff_Of_Infinite
+    Name: Infinity Two-Handed Staff
     Type: Weapon
     SubType: 2hStaff
-    Buy: 10
+    Buy: 20
     Weight: 500
     Attack: 30
     MagicAttack: 170
@@ -59203,11 +59203,11 @@ Body:
          bonus bBaseAtk,3*(min(BaseLevel,120)/10);
       }
   - Id: 13126
-    AegisName: Infinity_Pistol
+    AegisName: Gun_Of_Infinite
     Name: Infinity Pistol
     Type: Weapon
     SubType: Revolver
-    Buy: 10
+    Buy: 20
     Weight: 500
     Attack: 175
     Range: 7
@@ -61159,10 +61159,11 @@ Body:
       if (BaseLevel >= 20 && BaseLevel <= 120)
          bonus bBaseAtk,3*.@r/10;
   - Id: 13323
-    AegisName: Infinity_Shuriken
+    AegisName: Huuma_Of_Infinite
     Name: Infinity Shuriken
     Type: Weapon
     SubType: Huuma
+    Buy: 20
     Weight: 500
     Attack: 150
     MagicAttack: 40
@@ -66602,10 +66603,10 @@ Body:
       bonus bMdef,5+.@r;
       bonus2 bSubRace,RC_Formless,5+.@r;
   - Id: 15141
-    AegisName: Rift_Ancient_Armor
+    AegisName: Armor_Of_Goddess
     Name: Rift Ancient Armor
     Type: Armor
-    Buy: 10
+    Buy: 20
     Weight: 500
     Defense: 30
     Slots: 1
@@ -70019,11 +70020,11 @@ Body:
       bonus bVit,8;
       bonus bInt,8;
   - Id: 16038
-    AegisName: Infinity_Mace
+    AegisName: Mace_Of_Infinite
     Name: Infinity Mace
     Type: Weapon
     SubType: Mace
-    Buy: 10
+    Buy: 20
     Weight: 500
     Attack: 155
     Range: 1
@@ -71606,7 +71607,7 @@ Body:
       bonus bAgi,8;
       bonus bDex,8;
   - Id: 18128
-    AegisName: Infinity_Bow
+    AegisName: Bow_Of_Infinite
     Name: Infinity Bow
     Type: Weapon
     SubType: Bow
@@ -80537,8 +80538,8 @@ Body:
       bonus2 bAddRace,RC_Angel,5;
       bonus2 bSubRace,RC_Angel,5;
   - Id: 19033
-    AegisName: Rift_Ancient_Decoration
-    Name: Rift Ancient Decoration
+    AegisName: Accessories_Of_Goddess
+    Name: Ancient Rift Ornament
     Type: Armor
     Buy: 20
     Weight: 200
@@ -96498,7 +96499,7 @@ Body:
          bonus bSPGainValue,20;
       }
   - Id: 20779
-    AegisName: Rift_Manteau
+    AegisName: ManteauOfCracks
     Name: Rift Manteau
     Type: Armor
     Buy: 20
@@ -99540,7 +99541,7 @@ Body:
       bonus2 bSkillUseSP,"KN_AUTOCOUNTER",2;
       bonus2 bSkillUseSP,"LK_PARRYING",25;
   - Id: 21014
-    AegisName: Infinity_Two-Handed_Sword
+    AegisName: D_Sword_Of_Infinite
     Name: Infinity Two-Handed Sword
     Type: Weapon
     SubType: 2hSword
@@ -101447,7 +101448,7 @@ Body:
       if (.@r > 9)
          bonus bSpeedRate,25;
   - Id: 22075
-    AegisName: Rift_Shoes
+    AegisName: Shoes_Of_Cracks
     Name: Rift Shoes
     Type: Armor
     Buy: 20
@@ -118073,11 +118074,11 @@ Body:
       bonus bStr,8;
       bonus bVit,8;
   - Id: 28105
-    AegisName: Infinity_Axe
+    AegisName: Axe_Of_Infinite
     Name: Infinity Axe
     Type: Weapon
     SubType: 2hAxe
-    Buy: 10
+    Buy: 20
     Weight: 500
     Attack: 265
     Range: 1
@@ -123305,11 +123306,11 @@ Body:
     EquipLevelMin: 120
     Refineable: true
   - Id: 28703
-    AegisName: Infinity_Dagger
+    AegisName: Dagger_Of_Infinite
     Name: Infinity Dagger
     Type: Weapon
     SubType: Dagger
-    Buy: 10
+    Buy: 20
     Weight: 500
     Attack: 125
     MagicAttack: 100
