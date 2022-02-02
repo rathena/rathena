@@ -24212,3 +24212,295 @@ Body:
           - ShadowchaserStone_Robe2_  # 29618
     Script: |
       bonus2 bAddSize,Size_All,15;
+  - Combos:
+      - Combo:
+          - Thanos_Helm2_LT     # 400142
+          - Thanos_Sword_AD     # 500024
+    Script: |
+      bonus2 bAddSize,Size_All,15;
+      bonus2 bSkillAtk,"GN_CARTCANNON",12*(getequiprefinerycnt(EQI_HAND_R)/2);
+  - Combos:
+      - Combo:
+          - Thanos_Helm2_LT     # 400142
+          - Thanos_Violin_AD     # 570016
+      - Combo:
+          - Thanos_Helm2_LT     # 400142
+          - Thanos_Whip_AD     # 580016
+    Script: |
+      bonus bLongAtkRate,15;
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",12*(getequiprefinerycnt(EQI_HAND_R)/2);
+  - Combos:
+      - Combo:
+          - Thanos_Helm2_LT     # 400142
+          - Thanos_Bow_AD     # 700029
+    Script: |
+      bonus2 bAddRace,RC_All,15;
+      bonus2 bSkillAtk,"SN_SHARPSHOOTING",12*(getequiprefinerycnt(EQI_HAND_R)/2);
+  - Combos:
+      - Combo:
+          - Thanos_Helm3_LT     # 400145
+          - Thanos_Dagger_AD     # 510030
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,15;
+      bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",12*(getequiprefinerycnt(EQI_HAND_R)/2);
+  - Combos:
+      - Combo:
+          - Thanos_Helm3_LT     # 400145
+          - Thanos_Staff_AD     # 550023
+    Script: |
+      bonus2 bMagicAddRace,RC_All,15;
+      bonus2 bSkillAtk,"SO_VARETYR_SPEAR",12*(getequiprefinerycnt(EQI_HAND_R)/2);
+  - Combos:
+      - Combo:
+          - Thanos_Helm3_LT     # 400145
+          - Thanos_Rod_AD     # 640017
+    Script: |
+      bonus2 bMagicAddSize,Size_All,15;
+      bonus2 bSkillAtk,"WL_CRIMSONROCK",12*(getequiprefinerycnt(EQI_HAND_R)/2);
+  - Combos:
+      - Combo:
+          - Thanos_Helm4_LT     # 400151
+          - Thanos_Knuckle_AD     # 560017
+    Script: |
+      bonus bMaxHPrate,15;
+      bonus2 bSkillAtk,"SR_TIGERCANNON",12*(getequiprefinerycnt(EQI_HAND_R)/2);
+  - Combos:
+      - Combo:
+          - Thanos_Helm4_LT     # 400151
+          - Thanos_Hammer_AD     # 590020
+    Script: |
+      bonus2 bAddSize,Size_All,15;
+      bonus2 bMagicAddSize,Size_All,15;
+      bonus2 bSkillAtk,"AB_DUPLELIGHT",12*(getequiprefinerycnt(EQI_HAND_R)/2);
+  - Combos:
+      - Combo:
+          - Thanos_Helm4_LT     # 400151
+          - Thanos_Katar_AD     # 610019
+    Script: |
+      bonus bDelayrate,-15;
+      bonus2 bSkillAtk,"GC_ROLLINGCUTTER",12*(getequiprefinerycnt(EQI_HAND_R)/2);
+  - Combos:
+      - Combo:
+          - Disillusion_P_Shoes     # 470058
+          - Staff_Of_Miracle_J     # 2061
+      - Combo:
+          - Disillusion_P_Shoes_     # 470059
+          - Staff_Of_Miracle_J     # 2061
+    Script: |
+      bonus2 bSkillAtk,"MG_SOULSTRIKE",BaseLevel*4;
+      bonus2 bSkillAtk,"WL_SOULEXPANSION",BaseLevel;
+  - Combos:
+      - Combo:
+          - Disillusion_P_Shoes     # 470058
+          - Gravitation_Staff_J     # 2062
+      - Combo:
+          - Disillusion_P_Shoes_     # 470059
+          - Gravitation_Staff_J     # 2062
+    Script: |
+      bonus2 bSkillAtk,"HW_GRAVITATION",BaseLevel*4;
+      bonus2 bSkillAtk,"WL_COMET",BaseLevel;
+  - Combos:
+      - Combo:
+          - Disillusion_P_Shoes     # 470058
+          - Psychic_Spear_Rod_J     # 26169
+      - Combo:
+          - Disillusion_P_Shoes_     # 470059
+          - Psychic_Spear_Rod_J     # 26169
+    Script: |
+      bonus2 bSkillAtk,"SO_CLOUD_KILL",BaseLevel*2;
+      bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",BaseLevel*2;
+  - Combos:
+      - Combo:
+          - Disillusion_P_Shoes     # 470058
+          - Runaway_Magic     # 4876
+      - Combo:
+          - Disillusion_P_Shoes_     # 470059
+          - Runaway_Magic     # 4876
+    Script: |
+      bonus bInt,40;
+      bonus bMaxSPrate,40;
+  - Combos:
+      - Combo:
+          - aegis_470082     # 470082
+          - Reaper_Cross_J     # 28048
+      - Combo:
+          - aegis_470083     # 470083
+          - Reaper_Cross_J     # 28048
+    Script: |
+      bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",BaseLevel;
+      bonus2 bSkillAtk,"GC_ROLLINGCUTTER",(BaseLevel/3)*10;
+  - Combos:
+      - Combo:
+          - aegis_470082     # 470082
+          - Agudo_Filo_J     # 28049
+      - Combo:
+          - aegis_470083     # 470083
+          - Agudo_Filo_J     #28049
+    Script: |
+      bonus2 bSkillAtk,"AS_GRIMTOOTH",BaseLevel*20;
+      bonus2 bSkillAtk,"AS_SONICBLOW",BaseLevel*2;
+  - Combos:
+      - Combo:
+          - aegis_470082     # 470082
+          - Judgement_Slasher_J     # 28777
+      - Combo:
+          - aegis_470083     # 470083
+          - Judgement_Slasher_J     # 28777
+    Script: |
+      bonus2 bSkillAtk,"ASC_METEORASSAULT",BaseLevel*6;
+      bonus2 bSkillAtk,"GC_CROSSIMPACT",BaseLevel/3;
+  - Combos:
+      - Combo:
+          - aegis_470082     # 470082
+          - Repent_Slasher_J     # 28778
+      - Combo:
+          - aegis_470083     # 470083
+          - Repent_Slasher_J     # 28778
+    Script: |
+      bonus2 bSkillAtk,"TF_POISON",BaseLevel*12;
+      bonus2 bSkillAtk,"ASC_BREAKER",BaseLevel;
+  - Combos:
+      - Combo:
+          - aegis_470082     # 470082
+          - Bear's_Power     # 4875
+      - Combo:
+          - aegis_470083     # 470083
+          - Bear's_Power     # 4875
+    Script: |
+      bonus bFlee,100;
+      bonus bNoSizeFix;
+  - Combos:
+      - Combo:
+          - Ring_Of_Phoenix     # 490104
+          - Imperial_Glove     # 28551
+          - Imperial_Feather     # 18823
+          - Bear's_Power     # 4875
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader)
+         bonus2 bSkillCooldown,"LG_OVERBRAND",2000;
+  - Combos:
+      - Combo:
+          - Ring_Of_Phoenix     # 490104
+          - Bear's_Power     # 4875
+    Script: |
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader) {
+         bonus2 bSkillUseSP,"LG_OVERBRAND",15;
+         bonus2 bSkillCooldown,"LG_OVERBRAND",-2000;
+      }
+  - Combos:
+      - Combo:
+          - AncientKing_Groza_Card     # 27127
+          - aegis_310321     # 310321
+    Script: |
+      bonus2 bAddRace,RC_Player_Human,50;
+      bonus2 bAddRace,RC_Player_Doram,50;
+  - Combos:
+      - Combo:
+          - AncientKing_Groza_Card     # 27127
+          - aegis_490139     # 490139
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      bonus bStr,10*.@r;
+      bonus bVit,3*.@r;
+  - Combos:
+      - Combo:
+          - AncientKing_Groza_Card     # 27127
+          - Hawkeye     # 4879
+    Script: |
+      bonus bMaxSPrate,50;
+      bonus2 bAddRace,RC_All,-10;
+      bonus2 bAddRace,RC_DemiHuman,-50;
+      bonus2 bAddRace,RC_Dragon,-50;
+  - Combos:
+      - Combo:
+          - AncientKing_Groza_Card     # 27127
+          - Hawkeye     # 4879
+          - aegis_310321     # 310321
+    Script: |
+      bonus2 bAddRace,RC_Player_Human,-50;
+      bonus2 bAddRace,RC_Player_Doram,-50;
+  - Combos:
+      - Combo:
+          - AncientKing_Groza_Card     # 27127
+          - Hawkeye     # 4879
+          - aegis_490139     # 490139
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      bonus bStr,-10*.@r;
+      bonus bVit,-3*.@r;
+  - Combos:
+      - Combo:
+          - Abyss_AncientKing_Card     # 27128
+          - aegis_310321     # 310321
+    Script: |
+      skill "GC_CLOAKINGEXCEED",3;
+  - Combos:
+      - Combo:
+          - Abyss_AncientKing_Card     # 27128
+          - aegis_490139     # 490139
+    Script: |
+      bonus bBaseAtk,BaseLevel;
+      bonus2 bHPDrainRate,100,2;
+      /*Unknow Rate*/
+  - Combos:
+      - Combo:
+          - Pyuriel_Card     # 4578
+          - aegis_310321     # 310321
+    Script: |
+      bonus2 bAddRace,RC_All,20;
+      skill "GC_DARKCROW",3;
+  - Combos:
+      - Combo:
+          - Kades_Card     # 4580
+          - aegis_310321     # 310321
+    Script: |
+      bonus2 bSubEle,Ele_Earth,50;
+      bonus2 bSubEle,Ele_Fire,50;
+      bonus2 bSubEle,Ele_Water,50;
+      bonus2 bSubEle,Ele_Wind,50;
+      bonus2 bSubEle,Ele_Dark,50;
+      bonus2 bSubEle,Ele_Undead,50;
+  - Combos:
+      - Combo:
+          - Rudo_Card_J     # 31000
+          - aegis_310321     # 310321
+    Script: |
+      bonus bAspdRate,10;
+  - Combos:
+      - Combo:
+          - Lora_Card_J     # 31001
+          - aegis_310321     # 310321
+    Script: |
+      bonus2 bAddClass,Class_Boss,25;
+      bonus bCritAtkRate,25;
+  - Combos:
+      - Combo:
+          - Elvira_Card_J     # 31002
+          - aegis_310321     # 310321
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Earth,10;
+      bonus2 bMagicAtkEle,Ele_Fire,10;
+      bonus2 bMagicAtkEle,Ele_Water,10;
+      bonus2 bMagicAtkEle,Ele_Wind,10;
+  - Combos:
+      - Combo:
+          - Gioia_Card_J     # 31003
+          - aegis_310321     # 310321
+    Script: |
+      bonus2 bSubEle,Ele_Wind,50;
+      bonus3 bAddEff,Eff_Fear,1000,ATF_MAGIC;
+      /*Unknow Rate*/
+  - Combos:
+      - Combo:
+          - Soheon_Card_J     # 31004
+          - aegis_310321     # 310321
+    Script: |
+      bonus bMatk,100;
+      bonus bHealPower,20;
+  - Combos:
+      - Combo:
+          - Daehyon_Card_J     # 31005
+          - aegis_310321     # 310321
+    Script: |
+      bonus bBaseAtk,BaseLevel*2;
+      bonus bMatk,BaseLevel*2;

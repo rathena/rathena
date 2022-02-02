@@ -5135,7 +5135,7 @@ Body:
       bonus4 bSetMDefRace,RC_Player_Human,10000,5000,1;
       bonus4 bSetDefRace,RC_Player_Doram,10000,5000,1;
       bonus4 bSetMDefRace,RC_Player_Doram,10000,5000,1;
-      bonus bAspdRate,4+getrefine();
+      bonus bAspdRate,getrefine();
   - Id: 1294
     AegisName: Velum_Scare
     Name: Vellum Scale
@@ -6039,6 +6039,7 @@ Body:
       Swordman: true
     Classes:
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -18897,6 +18898,7 @@ Body:
       BardDancer: true
     Classes:
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -20816,6 +20818,7 @@ Body:
       Wizard: true
     Classes:
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -21370,6 +21373,50 @@ Body:
          bonus2 bMagicAddRace,RC_Undead,20;
          bonus2 bMagicAddRace,RC_Angel,20;
       }
+  - Id: 2061
+    AegisName: Staff_Of_Miracle_J
+    Name: Staff of Miracle
+    Type: Weapon
+    SubType: 2hStaff
+    Weight: 2400
+    Attack: 120
+    MagicAttack: 270
+    Range: 1
+    Slots: 1
+    Jobs:
+      Wizard: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"MG_SOULSTRIKE",30;
+  - Id: 2062
+    AegisName: Gravitation_Staff_J
+    Name: Gravitation Staff
+    Type: Weapon
+    SubType: 2hStaff
+    Weight: 2400
+    Attack: 120
+    MagicAttack: 270
+    Range: 1
+    Slots: 1
+    Jobs:
+      Wizard: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"HW_GRAVITATION",30;
   - Id: 2101
     AegisName: Guard
     Name: Guard
@@ -72061,6 +72108,7 @@ Body:
       Rogue: true
     Classes:
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -89556,6 +89604,25 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 169
+  - Id: 19900
+    AegisName: Special_Eyepatch
+    Name: Cool Pirate Eyepatch
+    Type: Armor
+    Weight: 100
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 1094
+    Script: |
+      bonus2 bAddMonsterDropItem,22660,50;
+  - Id: 19901
+    AegisName: C_Viking_Helm
+    Name: Costume Viking Helm    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 86
   - Id: 19902
     AegisName: C_Cigar
     Name: Costume Cigarette
@@ -89575,6 +89642,57 @@ Body:
     View: 717
     Script: |
       bonus bVariableCastrate,-10;
+  - Id: 19904
+    AegisName: C_Skull_Cap
+    Name: Costume Skull cap
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 713
+  - Id: 19905
+    AegisName: C_Secret_Society_Hood
+    Name: Costume Secret Bandana
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+      Costume_Head_Mid: true
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 806
+  - Id: 19906
+    AegisName: C_24_Bolt
+    Name: Costume 24 Bolt
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 696
+  - Id: 19907
+    AegisName: C_Fancy_Phantom_Mask
+    Name: Costume Beautiful Phantom Mask
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 710
+  - Id: 19908
+    AegisName: C_Joker_Jester_
+    Name: Costume National flag hat
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 219
+  - Id: 19909
+    AegisName: C_White_Deviruchi_Cap
+    Name: Costume White Baby demom hat
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 272
   - Id: 19910
     AegisName: C_Halloween_Hat
     Name: Costume Halloween Hat
@@ -89582,7 +89700,6 @@ Body:
     Locations:
       Costume_Head_Top: true
     ArmorLevel: 1
-    Refineable: true
     View: 1098
   - Id: 19911
     AegisName: C_Triangular_Roof_Hat
@@ -89609,7 +89726,6 @@ Body:
     Locations:
       Costume_Head_Top: true
     ArmorLevel: 1
-    Refineable: true
     View: 76
   - Id: 19914
     AegisName: Felock_Cap
@@ -89621,6 +89737,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1101
+  - Id: 19915
+    AegisName: C_Little_Devil_S_Horn
+    Name: Costume Little Devil's Horn
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1103
   - Id: 19916
     AegisName: C_Black_Cat_Hat
     Name: Costume Black Cat Hat
@@ -89678,6 +89803,16 @@ Body:
     View: 458
     Script: |
       bonus bFlee,20;
+  - Id: 19921
+    AegisName: C_Drooping_Wild_Rose
+    Name: Costume Drooping Wild Rose    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 541
   - Id: 19922
     AegisName: C_Noah_Hat
     Name: Costume Noah's Hat
@@ -89689,6 +89824,25 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 636
+  - Id: 19923
+    AegisName: C_Dark_Age
+    Name: Costume Dark Age
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 766
+  - Id: 19924
+    AegisName: C_Odin_Mask
+    Name: Costume Odin Mask
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 480
   - Id: 19925
     AegisName: C_One_Eyed_Glasses
     Name: Costume Monocle
@@ -89698,6 +89852,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 807
+  - Id: 19926
+    AegisName: C_Ribbon_Black
+    Name: Costume Ribbon Black
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 242
   - Id: 19927
     AegisName: C_Gray_Drooping_Kitty
     Name: Costume Drooping Gray Kitty
@@ -89753,6 +89916,15 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 157
+  - Id: 19933
+    AegisName: C_711_Headphone
+    Name: Costume 711 Headphone    # !todo check english name
+    Type: Armor
+    Buy: 10
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1131
   - Id: 19934
     AegisName: C_10Gallon_Hat_Of_Flame
     Name: Costume Alive Ten Gallon Hat Of Flame
@@ -89812,6 +89984,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 71
+  - Id: 19940
+    AegisName: C_Event_Pierrot_Nose
+    Name: Costume Event Pierrot Nose    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 49
   - Id: 19941
     AegisName: C_Ear_Mufs
     Name: Costume Ear Muffs
@@ -89821,6 +90002,70 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 70
+  - Id: 19942
+    AegisName: C_Orchid_Hairband
+    Name: Costume Orchid Hairband    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 376
+  - Id: 19943
+    AegisName: C_Hat_Of_Judge
+    Name: Costume Hat Of Judge    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 377
+  - Id: 19944
+    AegisName: C_RTC_Third_Best
+    Name: Costume RTC Third Best    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 579
+  - Id: 19945
+    AegisName: C_RTC_Third
+    Name: Costume RTC Third    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 685
+  - Id: 19946
+    AegisName: C_Rocket_Helm_RWC
+    Name: Costume Rocket Helm    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 769
+  - Id: 19947
+    AegisName: C_Rainbow_Scarf
+    Name: Costume Rainbow Scarf    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 460
+  - Id: 19948
+    AegisName: C_Globe_Hat
+    Name: Costume Globe Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1135
   - Id: 19949
     AegisName: C_RWC2013_Japan_Hat
     Name: Costume RWC2013 Japan Hat
@@ -89830,6 +90075,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1136
+  - Id: 19950
+    AegisName: C_RWC_Champ_Crown
+    Name: Costume RWC Champ Crown    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 914
   - Id: 19951
     AegisName: C_Solo_Play_Box2
     Name: Costume Cardboard Box
@@ -90060,6 +90314,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1142
+  - Id: 19975
+    AegisName: C_Boss_Beret
+    Name: Costume Boss Beret    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1134
   - Id: 19976
     AegisName: C_Cat_Santa_Hat
     Name: Cat Santa Hat
@@ -90113,6 +90376,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1148
+  - Id: 19981
+    AegisName: C_Santa_Beard
+    Name: Costume Santa Beard    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 25
   - Id: 19982
     AegisName: C_Santa's_Hat
     Name: Costume Santa Hat
@@ -90221,6 +90493,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 885
+  - Id: 19993
+    AegisName: C_Onigiri_In_Mouth
+    Name: Costume Onigiri In Mouth    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 774
   - Id: 19994
     AegisName: C_saLUsalo_Hat
     Name: Costume saLUsalo Hat
@@ -90230,6 +90511,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1171
+  - Id: 19995
+    AegisName: Flower_Blossom
+    Name: Costume Flower Blossom
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1176
   - Id: 19996
     AegisName: Horse_King
     Name: Horse King
@@ -116984,6 +117274,28 @@ Body:
          bonus2 bMagicAddRace,RC_Undead,20;
          bonus2 bMagicAddRace,RC_Angel,20;
       }
+  - Id: 26169
+    AegisName: Psychic_Spear_Rod_J
+    Name: Psychic Spear Rod
+    Type: Weapon
+    SubType: Staff
+    Weight: 300
+    Attack: 60
+    MagicAttack: 180
+    Range: 1
+    Slots: 1
+    Jobs:
+      Sage: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",30;
   - Id: 26172
     AegisName: R_Foxtail_rod
     Name: Royal Foxtail
@@ -117111,6 +117423,7 @@ Body:
       BardDancer: true
     Classes:
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -117942,6 +118255,50 @@ Body:
          bonus2 bAddRace,RC_Undead,20;
          bonus2 bAddRace,RC_Angel,20;
       }
+  - Id: 28048
+    AegisName: Reaper_Cross_J
+    Name: Ripper Cross
+    Type: Weapon
+    SubType: Katar
+    Weight: 2800
+    Attack: 150
+    MagicAttack: 250
+    Range: 1
+    Slots: 1
+    Jobs:
+      Assassin: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",30;
+  - Id: 28049
+    AegisName: Agudo_Filo_J
+    Name: Agate Filo
+    Type: Weapon
+    SubType: Katar
+    Weight: 2800
+    Attack: 150
+    MagicAttack: 250
+    Range: 1
+    Slots: 1
+    Jobs:
+      Assassin: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"AS_SONICBLOW",30;
   - Id: 28100
     AegisName: Thanos_Axe
     Name: Thanos Axe
@@ -118365,6 +118722,7 @@ Body:
       Knight: false
     Classes:
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -122817,6 +123175,7 @@ Body:
       StarGladiator: true
     Classes:
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -124426,6 +124785,50 @@ Body:
          bonus2 bMagicAddRace,RC_Undead,20;
          bonus2 bMagicAddRace,RC_Angel,20;
       }
+  - Id: 28777
+    AegisName: Judgement_Slasher_J
+    Name: Judgement Slasher
+    Type: Weapon
+    SubType: Dagger
+    Weight: 600
+    Attack: 120
+    MagicAttack: 120
+    Range: 1
+    Slots: 1
+    Jobs:
+      Assassin: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"ASC_METEORASSAULT",30;
+  - Id: 28778
+    AegisName: Repent_Slasher_J
+    Name: Repent Slasher
+    Type: Weapon
+    SubType: Dagger
+    Weight: 600
+    Attack: 120
+    MagicAttack: 120
+    Range: 1
+    Slots: 1
+    Jobs:
+      Assassin: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"ASC_BREAKER",30;
   - Id: 28900
     AegisName: ShieldOfGuardsman
     Name: Guardsmen's Shield
@@ -125938,6 +126341,51 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 698
+  - Id: 31108
+    AegisName: C_Free_Hug_BR
+    Name: Costume Free Hug    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1542
+  - Id: 31109
+    AegisName: C_Guildsman_Recruit_BR
+    Name: Costume Guildsman Recruit    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1543
+  - Id: 31110
+    AegisName: C_Party_Seeker_BR
+    Name: Costume Party Seeker    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1544
+  - Id: 31111
+    AegisName: C_Party_Mem_Recruit_BR
+    Name: Costume Party Mem Recruit    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1545
+  - Id: 31112
+    AegisName: C_Begging_Board_BR
+    Name: Costume Begging Board    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1546
   - Id: 31113
     AegisName: C_Doctor_Headband
     Name: Costume Doctor headband
@@ -125956,6 +126404,24 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 80
+  - Id: 31115
+    AegisName: C_Truemoney_TH
+    Name: Costume Inw True
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1547
+  - Id: 31116
+    AegisName: C_Truemoney_TH7
+    Name: Costume Inw True 7 Days
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1547
   - Id: 31117
     AegisName: C_Hoplite_Helmet
     Name: Costume Hoplite Helmet
@@ -126319,6 +126785,24 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 14
+  - Id: 31155
+    AegisName: C_Spinning_Eyes
+    Name: Costume Spinning Eyes
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 27
+  - Id: 31156
+    AegisName: C_Fruit_Shell
+    Name: Costume Nut Shell
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 122
   - Id: 31157
     AegisName: C_Spirit_Chain
     Name: Costume Soul Ring
@@ -126336,6 +126820,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1486
+  - Id: 31159
+    AegisName: C_Jormungandr_Hat
+    Name: Costume Jormungandr Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1149
   - Id: 31160
     AegisName: C_RuneHelm
     Name: Costume Rune Helm
@@ -127221,6 +127714,24 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 530
+  - Id: 31257
+    AegisName: C_Clay_Poring_Jar
+    Name: Costume Poring Jars Of Clay
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1634
+  - Id: 31258
+    AegisName: C_White_Clay_Filler
+    Name: Costume Glowing White Blush
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1632
   - Id: 31259
     AegisName: C_Bubble_A_Angel_H
     Name: Costume Bubbly Arc Angeling Hairband
@@ -127534,6 +128045,14 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 930
+  - Id: 31292
+    AegisName: C_Invisible_Mask_TW
+    Name: Costume Invisible Mask    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
   - Id: 31293
     AegisName: C_Kings_Crown_Purple
     Name: C Crown of Ancient King Purple
@@ -127642,6 +128161,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1051
+  - Id: 31305
+    AegisName: C_TW_1th_Balloon
+    Name: Costume 1th Balloon    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1666
   - Id: 31306
     AegisName: C_Toucan_Hat
     Name: C Toucan Hat
@@ -127825,6 +128353,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 484
+  - Id: 31324
+    AegisName: C_DJ_Kitty
+    Name: Costume Kitty DJ
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1672
   - Id: 31325
     AegisName: C_Queen_Scarabas_Helmet
     Name: C Queen Scarabas Helmet
@@ -127902,6 +128439,332 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1676
+  - Id: 31333
+    AegisName: C_Straight_Pony_WH_V
+    Name: Costume Straight Pony White    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1395
+  - Id: 31334
+    AegisName: C_Straight_Pony_BU_V
+    Name: Costume Straight Pony Blue    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1394
+  - Id: 31335
+    AegisName: C_Straight_Pony_OM_V
+    Name: Costume Straight Pony Brown    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1393
+  - Id: 31336
+    AegisName: C_Straight_Pony_RD_V
+    Name: Costume Straight Pony Red    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1392
+  - Id: 31337
+    AegisName: C_Straight_Pony_PP_V
+    Name: Costume Straight Pony Purple    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1391
+  - Id: 31338
+    AegisName: C_Straight_Pony_GN_V
+    Name: Costume Straight Pony Green    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1390
+  - Id: 31339
+    AegisName: C_Straight_Pony_YL_V
+    Name: Costume Straight Pony Yellow    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1389
+  - Id: 31340
+    AegisName: C_Straight_Pony_BL_V
+    Name: Costume Straight Pony Black    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1371
+  - Id: 31341
+    AegisName: C_Low_Pony_BU_V
+    Name: Costume Low Pony Blue    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1613
+  - Id: 31342
+    AegisName: C_Low_Pony_RD_V
+    Name: Costume Low Pony Red    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1614
+  - Id: 31343
+    AegisName: C_Low_Pony_YL_V
+    Name: Costume Low Pony Yellow    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1615
+  - Id: 31344
+    AegisName: C_Low_Pony_GN_V
+    Name: Costume Low Pony Green    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1616
+  - Id: 31345
+    AegisName: C_Low_Pony_BL_V
+    Name: Costume Low Pony Black    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1617
+  - Id: 31346
+    AegisName: C_Low_Pony_WH_V
+    Name: Costume Low Pony White    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1618
+  - Id: 31347
+    AegisName: C_Low_Pony_OM_V
+    Name: Costume Low Pony Brown    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1619
+  - Id: 31348
+    AegisName: C_Low_Pony_PP_V
+    Name: Costume Low Pony Purple    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1620
+  - Id: 31349
+    AegisName: C_Roll_Twin_BU_V
+    Name: Costume Roll Twin Blue    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1511
+  - Id: 31350
+    AegisName: C_Roll_Twin_RD_V
+    Name: Costume Roll Twin Red    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1512
+  - Id: 31351
+    AegisName: C_Roll_Twin_YL_V
+    Name: Costume Roll Twin Yellow    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1513
+  - Id: 31352
+    AegisName: C_Roll_Twin_GN_V
+    Name: Costume Roll Twin Green    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1514
+  - Id: 31353
+    AegisName: C_Roll_Twin_BL_V
+    Name: Costume Roll Twin Black    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1515
+  - Id: 31354
+    AegisName: C_Roll_Twin_WH_V
+    Name: Costume Roll Twin White    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1516
+  - Id: 31355
+    AegisName: C_Roll_Twin_OM_V
+    Name: Costume Roll Twin Brown    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1517
+  - Id: 31356
+    AegisName: C_Roll_Twin_PP_V
+    Name: Costume Roll Twin Purple    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1518
+  - Id: 31357
+    AegisName: Oliver_Wolf_Hood_CN
+    Name: Costume Oliver Wolf Hood    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 849
+  - Id: 31358
+    AegisName: C_Hahoe_Mask_CN
+    Name: Costume Hahoe Mask    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Locations:
+      Costume_Head_Mid: true
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 230
+  - Id: 31359
+    AegisName: C_Assassin_Mask_CN
+    Name: Costume Assassin Mask    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 180
+  - Id: 31360
+    AegisName: C_Centimental_Flower_CN
+    Name: Costume Centimental Flower    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 56
+  - Id: 31361
+    AegisName: C_Blush_CN
+    Name: Costume Blush    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 125
+  - Id: 31362
+    AegisName: C_Magestic_Goat_CN
+    Name: Costume Magestic Goat    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 41
+  - Id: 31363
+    AegisName: C_Frog_Cap_CN
+    Name: Costume Frog Cap    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 448
+  - Id: 31364
+    AegisName: C_Deviruchi_Cap_CN
+    Name: Costume Deviruchi Cap    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 123
+  - Id: 31365
+    AegisName: C_Boys_Cap_CN
+    Name: Costume Boys Cap    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 102
+  - Id: 31366
+    AegisName: C_Valkyrie_Helm_CN
+    Name: Costume Valkyrie Helm    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 225
+  - Id: 31367
+    AegisName: C_Wish_Tree_Hat
+    Name: Costume Wish Tree Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1270
   - Id: 31368
     AegisName: C_Harvest_Festa_Hat
     Name: C Thanksgiving Memorial Hat
@@ -127929,6 +128792,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1603
+  - Id: 31371
+    AegisName: C_Sorin_Doll_Hat
+    Name: Costume Drooping Sorin Doll Hat
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 356
   - Id: 31372
     AegisName: C_Binit_Doll_Hat
     Name: "Costume: Binit Doll"
@@ -128376,15 +129248,87 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 961
+  - Id: 31421
+    AegisName: C_Pink_Angeling_Bubble
+    Name: Costume Pink Angeling Bubble    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 975
+  - Id: 31422
+    AegisName: C_Angeling_Bubble
+    Name: Costume Angeling Bubble    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 976
+  - Id: 31423
+    AegisName: C_Bear_Balloon
+    Name: Costume Bear Balloon    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1038
+  - Id: 31424
+    AegisName: C_LoveLove_Balloon
+    Name: Costume Love Love Balloon    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1039
+  - Id: 31425
+    AegisName: C_Long_Octopus_Balloon
+    Name: Costume Long Octopus Balloon    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1040
+  - Id: 31426
+    AegisName: C_Male_Poring_Balloon
+    Name: Costume Male Poring Balloon    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1159
+  - Id: 31427
+    AegisName: C_Fmale_Poring_Balloon
+    Name: Costume Fmale Poring Balloon    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1161
   - Id: 31428
     AegisName: C_Panda_Balloon
     Name: Costume Panda Balloon
     Type: Armor
     Locations:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1115
+  - Id: 31429
+    AegisName: C_Blue_Poring_Bubble
+    Name: Costume Blue Poring Bubble    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 958
   - Id: 31430
     AegisName: C_Seppl_Hat_TW
     Name: "Costume: Seppl Hat"
@@ -128520,6 +129464,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 139
+  - Id: 31445
+    AegisName: Feather_Fedora_TW
+    Name: Costume Feather Fedora
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1710
   - Id: 31446
     AegisName: C_Toy_Syringe
     Name: C Toy Syringe
@@ -128629,6 +129582,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1016
+  - Id: 31458
+    AegisName: C_1Grade_Balloon_TW
+    Name: Costume Grade Balloon    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1426
   - Id: 31459
     AegisName: C_Sweet_Bonbon
     Name: Costume Sweets Bonbon
@@ -128655,6 +129617,15 @@ Body:
     Locations:
       Costume_Head_Mid: true
     ArmorLevel: 1
+  - Id: 31462
+    AegisName: C_Female_Poring_Earmuff
+    Name: Costume Cute Poring Earmuffs
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1162
   - Id: 31463
     AegisName: C_Flying_Drone
     Name: C Flying Drone
@@ -129366,7 +130337,7 @@ Body:
     EquipLevelMin: 1
     View: 850
   - Id: 31542
-    AegisName: C_Clay_Poring_Jar
+    AegisName: C_Clay_Poring_Jar_Jp
     Name: C Clay Poring Jar
     Type: Armor
     Locations:
@@ -133142,6 +134113,7 @@ Body:
       Knight: true
     Classes:
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -137848,7 +138820,7 @@ Body:
     Type: Armor
     View: 1552
     Locations:
-      Head_Top: true
+      Head_Mid: true
     ArmorLevel: 1
     Script: |
       bonus bMatk,20;
@@ -137860,7 +138832,7 @@ Body:
     View: 1552
     Slots: 1
     Locations:
-      Head_Top: true
+      Head_Mid: true
     ArmorLevel: 1
     Script: |
       bonus bMatk,10;
@@ -138176,6 +139148,49 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 2151
+  - Id: 410096
+    AegisName: aegis_410096
+    Name: Cinnabar Ribbon
+    Type: Armor
+    View: 2152
+    Weight: 100
+    Defense: 2
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus2 bMagicAddSize,Size_All,10;
+      bonus2 bSubRace,RC_DemiHuman,5;
+      bonus2 bResEff,Eff_Confusion,10000;
+      if (getskilllv("SP_SWHOO") == 10) {
+         bonus2 bFixedCastrate,"SP_SPA",-100;
+         bonus2 bFixedCastrate,"SP_SWHOO",-100;
+      }
+      if (getskilllv("SP_SOULUNITY") == 7)
+         bonus bAspd,2;
+  - Id: 410097
+    AegisName: aegis_410097
+    Name: Cinnabar Ribbon
+    Type: Armor
+    View: 2152
+    Weight: 100
+    Defense: 2
+    Slots: 1
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus2 bMagicAddSize,Size_All,10;
+      bonus2 bSubRace,RC_DemiHuman,5;
+      bonus2 bResEff,Eff_Confusion,10000;
+      if (getskilllv("SP_SWHOO") == 10) {
+         bonus2 bFixedCastrate,"SP_SPA",-100;
+         bonus2 bFixedCastrate,"SP_SWHOO",-100;
+      }
+      if (getskilllv("SP_SOULUNITY") == 7)
+         bonus bAspd,2;
   - Id: 410099
     AegisName: C_Avenger
     Name: Costume Avengers    # !todo check english name
@@ -143312,6 +144327,36 @@ Body:
             }
          }
       }
+  - Id: 450180
+    AegisName: aegis_450180
+    Name: Pushy Frogy Kappa
+    Type: Armor
+    Weight: 100
+    Defense: 120
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,10;
+      bonus bMaxHPrate,10;
+      bonus2 bMagicAddRace,RC_All,getskilllv("SU_NYANGGRASS")*8;
+      bonus2 bSkillAtk,"SU_CN_METEOR",getskilllv("SU_MEOWMEOW")*10;
+      if (getskilllv("SU_SPIRITOFLAND") == 1)
+         skill "WZ_QUAGMIRE",5;
+      if (getskilllv("SU_CHATTERING") == 5)
+         bonus bAspdRate,10;
+      if (.@r>=5) {
+         bonus bDef,150;
+         bonus bMdef,15;
+      }
+      if (.@r>=7) {
+         bonus bDef,150;
+         bonus bMdef,15;
+      }
   - Id: 450181
     AegisName: aegis_450181
     Name: Awakened White Lily Robe
@@ -144599,6 +145644,124 @@ Body:
       if (.@r>=7) {
          bonus2 bMagicAtkEle,Ele_All,5;
       }
+  - Id: 470056
+    AegisName: Chaser_Shoes
+    Name: Pursuiter Shoes
+    Type: Armor
+    Weight: 400
+    Defense: 12
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      .@val = (getskilllv("SC_ESCAPE")+getskilllv("SC_FATALMENACE")+getskilllv("SC_FEINTBOMB"));
+      bonus bMdef,10;
+      bonus bMaxHPrate,3;
+      bonus bMaxSPrate,3;
+      bonus bFlee,.@val*4;
+      skill "AL_TELEPORT",1;
+      bonus2 bSkillUseSP,"SC_FATALMENACE",18;
+      bonus2 bIgnoreDefRaceRate,RC_All,20*getskilllv("SC_ESCAPE");
+      bonus2 bSkillAtk,"SC_FATALMENACE",getskilllv("GN_TRAINING_SWORD");
+      bonus2 bAddRace,RC_All,2*getskilllv("SC_FATALMENACE");
+      if (getskilllv("SC_FEINTBOMB") == 10) {
+        bonus bNoSizeFix;
+      }
+      if (.@r>=5) {
+         bonus bAspdRate,5;
+         bonus bMaxHPrate,7;
+         bonus bMaxSPrate,7;
+      }
+      if (.@r>=7) {
+         bonus bAspdRate,5;
+         bonus bMaxHPrate,10;
+         bonus bMaxSPrate,10;
+      }
+  - Id: 470057
+    AegisName: Chaser_Shoes_
+    Name: Pursuiter Shoes
+    Type: Armor
+    Weight: 400
+    Defense: 12
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      .@val = (getskilllv("SC_ESCAPE")+getskilllv("SC_FATALMENACE")+getskilllv("SC_FEINTBOMB"));
+      bonus bMdef,10;
+      bonus bMaxHPrate,3;
+      bonus bMaxSPrate,3;
+      bonus bFlee,.@val*4;
+      skill "AL_TELEPORT",1;
+      bonus2 bSkillUseSP,"SC_FATALMENACE",18;
+      bonus2 bIgnoreDefRaceRate,RC_All,20*getskilllv("SC_ESCAPE");
+      bonus2 bSkillAtk,"SC_FATALMENACE",getskilllv("GN_TRAINING_SWORD");
+      bonus2 bAddRace,RC_All,2*getskilllv("SC_FATALMENACE");
+      if (getskilllv("SC_FEINTBOMB") == 10) {
+        bonus bNoSizeFix;
+      }
+      if (.@r>=5) {
+         bonus bAspdRate,5;
+         bonus bMaxHPrate,7;
+         bonus bMaxSPrate,7;
+      }
+      if (.@r>=7) {
+         bonus bAspdRate,5;
+         bonus bMaxHPrate,10;
+         bonus bMaxSPrate,10;
+      }
+  - Id: 470058
+    AegisName: Disillusion_P_Shoes
+    Name: Mindform Shoes of Disillusion
+    Type: Armor
+    Weight: 200
+    Defense: 12
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      if (.@r>=7) {
+         bonus bMaxHPrate,10;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+      if (.@r>=9) {
+         bonus bMaxHPrate,10;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+  - Id: 470059
+    AegisName: Disillusion_P_Shoes_
+    Name: Mindform Shoes of Disillusion
+    Type: Armor
+    Weight: 200
+    Defense: 12
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      if (.@r>=7) {
+         bonus bMaxHPrate,10;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
+      if (.@r>=9) {
+         bonus bMaxHPrate,10;
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      }
   - Id: 470061
     AegisName: Cylinder_Boots_
     Name: Cylinder Boots
@@ -144930,6 +146093,126 @@ Body:
                bonus2 bAddClass,Class_All,7;
             }
          }
+      }
+  - Id: 470082
+    AegisName: aegis_470082
+    Name: Mindform Shoes of Regeneration
+    Type: Armor
+    Weight: 200
+    Defense: 12
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus bMaxHPrate,20;
+      bonus bMaxSPrate,20;
+      bonus2 bVariableCastrate,"ASC_METEORASSAULT",-100;
+      if (.@r>=7) {
+         bonus bAspdRate,10;
+         bonus bDelayrate,-15;
+      }
+      if (.@r>=9) {
+         bonus bAspdRate,10;
+         bonus bDelayrate,-15;
+      }
+  - Id: 470083
+    AegisName: aegis_470083
+    Name: Mindform Shoes of Regeneration
+    Type: Armor
+    Weight: 200
+    Defense: 12
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus bMaxHPrate,20;
+      bonus bMaxSPrate,20;
+      bonus2 bVariableCastrate,"ASC_METEORASSAULT",-100;
+      if (.@r>=7) {
+         bonus bAspdRate,10;
+         bonus bDelayrate,-15;
+      }
+      if (.@r>=9) {
+         bonus bAspdRate,10;
+         bonus bDelayrate,-15;
+      }
+  - Id: 470084
+    AegisName: Rune_Greave_JP
+    Name: Rune Greaves
+    Type: Armor
+    Weight: 400
+    Defense: 12
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus bMaxHPrate,3;
+      bonus bMaxSPrate,3;
+      bonus bSpeedAddRate,25;
+      bonus bAllStats,3*(getskilllv("RK_DRAGONBREATH")+getskilllv("RK_DRAGONBREATH_WATER")/2);
+      bonus2 bSkillAtk,"RK_HUNDREDSPEAR",getskilllv("RK_DRAGONHOWLING")*40;
+      bonus2 bSkillAtk,"LK_SPIRALPIERCE",getskilllv("RK_DRAGONHOWLING")*40;
+      if (getskilllv("RK_DRAGONTRAINING") == 5)
+         bonus2 bSkillCooldown,"RK_HUNDREDSPEAR",-1000;
+      if (getskilllv("RK_PHANTOMTHRUST") == 5)
+         bonus bFixedCastrate,-50;
+      if (.@r>=5) {
+         bonus bMaxHPrate,7;
+         bonus bMaxSPrate,7;
+         bonus bDelayrate,-10;
+      }
+      if (.@r>=7) {
+         bonus bMaxHPrate,10;
+         bonus bMaxSPrate,10;
+         bonus bDelayrate,-10;
+      }
+  - Id: 470085
+    AegisName: aegis_470085
+    Name: Rune Greaves
+    Type: Armor
+    Weight: 400
+    Defense: 12
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus bMaxHPrate,3;
+      bonus bMaxSPrate,3;
+      bonus bSpeedAddRate,25;
+      bonus bAllStats,3*(getskilllv("RK_DRAGONBREATH")+getskilllv("RK_DRAGONBREATH_WATER")/2);
+      bonus2 bSkillAtk,"RK_HUNDREDSPEAR",getskilllv("RK_DRAGONHOWLING")*40;
+      bonus2 bSkillAtk,"LK_SPIRALPIERCE",getskilllv("RK_DRAGONHOWLING")*40;
+      if (getskilllv("RK_DRAGONTRAINING") == 5)
+         bonus2 bSkillCooldown,"RK_HUNDREDSPEAR",-1000;
+      if (getskilllv("RK_PHANTOMTHRUST") == 5)
+         bonus bFixedCastrate,-50;
+      if (.@r>=5) {
+         bonus bMaxHPrate,7;
+         bonus bMaxSPrate,7;
+         bonus bDelayrate,-10;
+      }
+      if (.@r>=7) {
+         bonus bMaxHPrate,10;
+         bonus bMaxSPrate,10;
+         bonus bDelayrate,-10;
       }
   - Id: 470087
     AegisName: Gray_W_Boots
@@ -145419,6 +146702,36 @@ Body:
       if (.@r>=9) {
          bonus bDelayrate,-10;
       }
+  - Id: 480011
+    AegisName: Skin_Of_AzidaHaka
+    Name: Skin of Azi Dahaka
+    Type: Armor
+    Weight: 600
+    Defense: 15
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      .@a = (readparam(bVit)+readparam(bLuk))/20;
+      bonus bMdef,10;
+      bonus bVit,5;
+      bonus bLuk,5;
+      bonus2 bSubRace,RC_Brute,5;
+      bonus2 bSubRace,RC_Player_Doram,5;
+      bonus2 bSubRace,RC_Plant,5;
+      bonus2 bSubClass,Class_Boss,5;
+      if (.@r>=7)
+         bonus2 bResEff,Eff_Silence,5000;
+      if (.@r>=8) {
+         bonus bAspdRate,2*.@a;
+         bonus bVariableCastrate,-2*.@a;
+      }
+      if (.@r>=9)
+         bonus2 bResEff,Eff_Silence,5000;
   - Id: 480012
     AegisName: Noblesse_Attack_Manteau
     Name: Noblesse Attack Manteau
@@ -145978,6 +147291,47 @@ Body:
       if (getrefine()>=9) {
          bonus bVariableCastrate,-10;
       }
+  - Id: 480084
+    AegisName: Fafnir_Manteau
+    Name: Fafnir Breath
+    Type: Armor
+    Weight: 100
+    Defense: 12
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAspdRate,3;
+      bonus2 bSubEle,Ele_Fire,10;
+      bonus2 bSubEle,Ele_Water,10;
+      bonus2 bSubRace,RC_Player_Human,5;
+      bonus2 bSubRace,RC_Player_Doram,5;
+      bonus2 bSkillAtk,"RK_DRAGONBREATH",getskilllv("RK_DRAGONHOWLING")*20;
+      bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",getskilllv("RK_DRAGONHOWLING")*20;
+      if (getskilllv("RK_DRAGONTRAINING") == 5) {
+         bonus bMaxHPrate,20;
+         bonus bMaxSPrate,20;
+      }
+      if (getskilllv("RK_DRAGONBREATH_WATER") == 10)
+         skill "SA_DELUGE",5;
+      if (getskilllv("RK_DRAGONBREATH") == 10)
+         skill "SA_VOLCANO",5;
+      if (.@r>=7) {
+         bonus bAspdRate,5;
+         bonus bLongAtkRate,10;
+         bonus2 bSubEle,Ele_Fire,20;
+         bonus2 bSubEle,Ele_Water,20;
+      }
+      if (.@r>=9) {
+         bonus bAspdRate,7;
+         bonus bLongAtkRate,10;
+         bonus2 bSubEle,Ele_Fire,20;
+         bonus2 bSubEle,Ele_Water,20;
+      }
   - Id: 480086
     AegisName: C_CAPOO_Bag_TW
     Name: Costume CAPOO Bag    # !todo check english name
@@ -146419,6 +147773,43 @@ Body:
     Locations:
       Costume_Garment: true
     ArmorLevel: 1
+  - Id: 480134
+    AegisName: aegis_480134
+    Name: Avareco
+    Type: Armor
+    Weight: 100
+    Defense: 12
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,5;
+      bonus2 bSubRace,RC_Player_Human,5;
+      bonus2 bSubRace,RC_Player_Doram,5;
+      bonus2 bSkillAtk,"GC_COUNTERSLASH",getskilllv("GC_CROSSIMPACT")*6;
+      bonus2 bSkillAtk,"GC_CROSSIMPACT",getskilllv("GC_CROSSIMPACT")*30;
+      if (getskilllv("GC_CROSSIMPACT") == 5) {
+         bonus2 bSkillCooldown,"GC_DARKILLUSION",-4000;
+         bonus2 bSkillCooldown,"GC_HALLUCINATIONWALK",-20000;
+      }
+      if (getskilllv("GC_HALLUCINATIONWALK") == 5) {
+         bonus2 bSubEle,Ele_Water,100;
+         bonus2 bSubEle,Ele_Holy,30;
+      }
+      if (.@r>=7) {
+         bonus bMaxHPrate,5;
+         bonus2 bAddSize,Size_All,10;
+         bonus bSPGainValue,10;
+      }
+      if (.@r>=9) {
+         bonus bMaxHPrate,10;
+         bonus2 bAddSize,Size_All,10;
+         bonus bSPGainValue,10;
+      }
   - Id: 480136
     AegisName: aegis_480136
     Name: Magic Swordsman Thanatos's Sword
@@ -147477,6 +148868,44 @@ Body:
     Script: |
       bonus bVariableCastrate,-7;
       bonus2 bAddClass,Class_All,10;
+  - Id: 490068
+    AegisName: RingofVenus
+    Name: Ring of Venus
+    Type: Armor
+    Weight: 500
+    Defense: 2
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      .@equip_count = 0;
+      if(getequipid(EQI_ACC_L) == 490068)
+         .@equip_count++;
+      if(getequipid(EQI_ACC_R) == 490068)
+         .@equip_count++;
+      .@a = readparam(bAgi);
+      .@d = readparam(bDex);
+      if (getequipid(EQI_ACC_L) == 490068) {
+         bonus2 bAddRace,RC_All,(.@a / 10) / .@equip_count;
+         if (.@a>=125) {
+            bonus bSpeedAddRate,25 / .@equip_count;
+            bonus bDelayrate,-25 / .@equip_count;
+         }
+      }
+      if (getequipid(EQI_ACC_R) == 490068) {
+         bonus bLongAtkRate,(.@d / 10) / .@equip_count;
+         bonus2 bResEff,Eff_Stun,(3*(.@d/10))  / .@equip_count;
+         if (.@d>=125) {
+            bonus bFixedCastrate,-70 / .@equip_count;
+            bonus2 bSubEle,Ele_Earth,5 / .@equip_count;
+            bonus2 bSubEle,Ele_Water,5 / .@equip_count;
+            bonus2 bSubEle,Ele_Wind,5 / .@equip_count;
+            bonus2 bSubEle,Ele_Fire,5 / .@equip_count;
+         }
+      }
+      /*TODO: Please convert to getequipidx when available*/ 
   - Id: 490069
     AegisName: Morrigane's_Belt_IL
     Name: Illusion Morrigane's Belt
@@ -147860,6 +149289,36 @@ Body:
          bonus2 bSkillUseSP,"SP_CURSEEXPLOSION",25;
          bonus2 bSkillCooldown,"SP_CURSEEXPLOSION",-500;
       }
+  - Id: 490104
+    AegisName: Ring_Of_Phoenix
+    Name: Ring of Phoenix
+    Type: Armor
+    Weight: 400
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bVit,7;
+      bonus2 bAddSize,Size_All,10;
+      bonus2 bSkillAtk,"LG_OVERBRAND",BaseLevel/3;
+      bonus2 bSkillAtk,"PA_SHIELDCHAIN",BaseLevel;
+      if (getskilllv("LG_INSPIRATION") == 5)
+         bonus bVariableCastrate,-30;
+      if (getskilllv("LG_KINGS_GRACE") == 5) {
+         bonus bMaxHPrate,15;
+         bonus bMaxSPrate,15;
+         bonus2 bSubRace,RC_Player_Human,3;
+         bonus2 bSubRace,RC_Player_Doram,3;
+      }
+      if (getskilllv("LG_FORCEOFVANGUARD") == 5) {
+         bonus bAspdRate,10;
+         bonus bHPGainValue,100;
+         bonus bSPGainValue,10;
+      }
+      if (getskilllv("LG_MOONSLASHER") == 5)
+         bonus2 bAddClass,Class_Boss,15;
   - Id: 490106
     AegisName: Gray_W_Pendant
     Name: Gray Wolf Pendant
@@ -148322,6 +149781,19 @@ Body:
     Script: |
       bonus bVariableCastrate,-7;
       bonus bHplus,2;
+  - Id: 490139
+    AegisName: aegis_490139
+    Name: Awakening Abyss King's Ring
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 130
+    Script: |
+      bonus bMaxHP,BaseLevel*50;
+      bonus bMaxSP,BaseLevel*5;
   - Id: 490141
     AegisName: aegis_490141
     Name: Metal Pick
