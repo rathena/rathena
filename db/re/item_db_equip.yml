@@ -142800,6 +142800,28 @@ Body:
       Armor: true
     ArmorLevel: 1
     Refineable: true
+  - Id: 450158
+    AegisName: Triad_God_Mail_J__
+    Name: Awakening Triad God Mail
+    Type: Armor
+    Weight: 900
+    Defense: 90
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus bMaxHPrate,15;
+      bonus bMaxSPrate,15;
+      bonus bAspdRate,10;
+      if (.@r>=7)
+         bonus2 bAddSize,Size_All,20;
+      if (.@r>=9)
+         bonus2 bAddSize,Size_All,20;
   - Id: 450163
     AegisName: aegis_450163
     Name: White Lily Robe
@@ -142842,28 +142864,6 @@ Body:
          bonus bMaxHPrate,5;
          bonus bMaxSPrate,2;
       }
-  - Id: 450158
-    AegisName: Triad_God_Mail_J__
-    Name: Awakening Triad God Mail
-    Type: Armor
-    Weight: 900
-    Defense: 90
-    Slots: 1
-    Locations:
-      Armor: true
-    ArmorLevel: 1
-    EquipLevelMin: 99
-    Refineable: true
-    Script: |
-      .@r = getrefine();
-      bonus bMdef,10;
-      bonus bMaxHPrate,15;
-      bonus bMaxSPrate,15;
-      bonus bAspdRate,10;
-      if (.@r>=7)
-         bonus2 bAddSize,Size_All,20;
-      if (.@r>=9)
-         bonus2 bAddSize,Size_All,20;
   - Id: 450165
     AegisName: aegis_450165
     Name: Striking Armour
@@ -146763,7 +146763,7 @@ Body:
       bonus bUnbreakableGarment;
       bonus bMatk,20;
       bonus2 bMagicAtkEle,Ele_All,2*(.@r/3);
-      if (.@r>=9) 
+      if (.@r>=9)
          bonus bMatkRate,7;
   - Id: 490004
     AegisName: Attacker_Booster_Ring
