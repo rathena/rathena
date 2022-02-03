@@ -31,7 +31,7 @@ services:
             context: .
             dockerfile: Dockerfile
         environment:
-            BUILDER_CONFIGURE: "--enable-packetver=20200401"
+            BUILDER_CONFIGURE: "--enable-packetver=20211103"
     
     login:
         image: "rathena:local"
