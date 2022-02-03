@@ -4,4 +4,4 @@
 // you can add more than one subnet (max 16)
 // check is if((net-submask & char_ip ) == (net-submask & servip)) => ok
 
-subnet: 0.0.0.0:127.0.0.1:127.0.0.1
+subnet: 255.0.0.0:127.0.0.1:127.0.0.1

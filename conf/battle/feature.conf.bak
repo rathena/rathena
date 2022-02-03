@@ -17,7 +17,7 @@ feature.search_stores: on
 
 // Atcommand suggestions (Note 1)
 // If one type incomplete atcommand, it will suggest the complete ones.
-feature.atcommand_suggestions: on
+feature.atcommand_suggestions: off
 
 // Auction (Note 1)
 // Feature became unstable on clients 2012 onwards (exact date not known),
@@ -27,7 +27,7 @@ feature.auction: off
 
 // Warp suggestions (Note 1)
 // Show suggestions when attempting to @warp to a non-existent map?
-feature.warp_suggestions: on
+feature.warp_suggestions: off
 
 // Banking (Note 1)
 // Requires: 2013-07-24aRagexe or later
@@ -35,7 +35,7 @@ feature.banking: on
 
 // Autotrade persistency (Note 1)
 // Should vendors that used @autotrade be restored after a restart?
-feature.autotrade: off
+feature.autotrade: on
 
 // In which direction should respawned autotraders look?
 // Possible values are from 0-7
@@ -65,11 +65,11 @@ feature.bgqueue: on
 
 // Roulette (Note 1)
 // Requires: 2014-10-22bRagexe or later
-feature.roulette: off
+feature.roulette: on
 
 // Achievement (Note 1)
 // Requires: 2015-05-13aRagexe or later
-feature.achievement: off
+feature.achievement: on
 
 // Refine UI (Note 1)
 // Requires: 2016-10-12aRagexeRE or later

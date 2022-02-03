@@ -84,69 +84,219 @@ groups: (
 	id: 0 /* group 0 is the default group for every new account */
 	name: "Player"
 	level: 0
-	inherit: ()
+	inherit: ( /*empty list*/ )
 	commands: {
-		warp: true
-		who: true
-		whogm: true
-		go: true
-		party: true
-		guild: true
-		time: true
-		refresh: true
-		pettalk: true
-		autoloot: true
-		alootid: true
-		autoloottype: true
-		mobinfo: true
-		iteminfo: true
-		whodrops: true
-		whereis: true
-		changegm: true
-		changeleader: true
-		commands: true
-		noask: true
-		request: true
-		hominfo: true
-		homstats: true
-		charcommands: true
-		packetfilter: true
-		viewfilter: true
-		glvl: true
+		changedress: true
+		resurrect: true
 	}
 	permissions: {
+		/* without this basic permissions regular players could not 
+		trade or party */
 		can_trade: true
 		can_party: true
 		attendance: true
+	}
+},
+{
+	id: 1
+	name: "Super Player"
+	inherit: ( "Player" ) /* can do everything Players can and more */
+	level: 0
+	commands: {
+		/* informational commands */
+		commands: true
+		charcommands: true
+		help: true
+		rates: true
+		uptime: true
+		showdelay: true
+		exp: true
+		mobinfo: true
+		iteminfo: true
+		whodrops: true
+		time: true
+		jailtime: true
+		hominfo: true
+		homstats: true
+		showexp: true
+		showzeny: true
+		whereis: true
+		/* feature commands */
+		refresh: true
+		noask: true
+		noks: true
+		autoloot: true
+		alootid: true
+		autoloottype: true
+		autotrade: true
+		request: true
+		go: true
+		breakguild: true
+		channel: true
+		langtype: true
+	}
+	permissions: {
+		attendance: false
+	}
+},
+{
+	id: 2
+	name: "Support"
+	inherit: ( "Super Player" )
+	level: 1
+	commands: {
+		version: true
+		where: true
+		jumpto: true
+		who: true
+		who2: true
+		who3: true
+		whomap: true
+		whomap2: true
+		whomap3: true
+		users: true
+		broadcast: true
+		localbroadcast: true
+	}
+	log_commands: true
+	permissions: {
+		receive_requests: true
 		view_equipment: true
+	}
+},
+{
+	id: 3
+	name: "Script Manager"
+	inherit: ( "Support" )
+	level: 1
+	commands: {
+		tonpc: true
+		hidenpc: true
+		shownpc: true
+		loadnpc: true
+		unloadnpc: true
+		npcmove: true
+		addwarp: true
+	}
+	log_commands: true
+	permissions: {
+		any_warp: true
+	}
+},
+{
+	id: 4
+	name: "Event Manager"
+	inherit: ( "Support" )
+	level: 1
+	commands: {
+		monster: true
+		monstersmall: true
+		monsterbig: true
+		killmonster2: true
+		cleanarea: true
+		cleanmap: true
+		item: [true, true]
+		zeny: [true, true]
+		disguise: [true, true]
+		undisguise: [true, true]
+		size: [true, true]
+		raise: true
+		raisemap: true
+		day: true
+		night: true
+		skillon: true
+		skilloff: true
+		pvpon: true
+		pvpoff: true
+		gvgon: true
+		gvgoff: true
+		allowks: true
+		me: true
+		marry: true
+		divorce: true
+		refreshall: true
+	}
+	log_commands: true
+	permissions: {
+		can_trade: false
+		any_warp: true
+	}
+},
+{
+	id: 5
+	name: "VIP"
+	inherit: ( "Player" ) /* can do everything Players can */
+	level: 0
+	commands: {
+		rates: true
+		who: true
+	}
+	permissions: {
+		/* no permissions by default */
+	}
+},
+{
+	id: 10
+	name: "Law Enforcement"
+	inherit: ( "Support" )
+	level: 2
+	commands: {
+		hide: true
+		follow: true
+		kick: true
+		disguise: true
+		fakename: true
+		option: true
+		speed: true
+		warp: true
+		kill: true
+		recall: true
+		ban: true
+		block: true
+		jail: true
+		jailfor: true
+		mute: true
+		storagelist: true
+		cartlist: true
+		itemlist: true
+		stats: true
+	}
+	log_commands: true
+	permissions: {
+		join_chat: true
+		kick_chat: true
+		hide_session: true
+		who_display_aid: true
+		hack_info: true
+		any_warp: true
+		view_hpmeter: true
 	}
 },
 {
 	id: 99
 	name: "Admin"
 	level: 99
-	inherit: ()
+	inherit: ( "Support", "Law Enforcement" )
 	commands: {
+		/* not necessary due to all_commands: true */
 	}
 	log_commands: true
 	permissions: {
 		can_trade: true
-		can_party: true	
-		attendance: true
-		all_equipment: true
-		skill_unconditional: true
-		join_chat: true
-		kick_chat: true
-		view_hpmeter: true
-		view_equipment: true
-		hack_info: true
+		can_party: true
+		command_enable: true
+		all_skill: false
+		all_equipment: false
+		skill_unconditional: false
+		use_check: true
+		use_changemaptype: true
 		all_commands: true
-		who_display_aid: true
-		any_warp: true
-		receive_requests: true
-		show_bossmobs: true
 		channel_admin: true
+		can_trade_bounded: true
+		item_unconditional: false
+		bypass_stat_onclone: true
 		bypass_max_stat: true
+		/* all_permission: true */
 	}
 }
 )

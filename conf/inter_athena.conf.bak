@@ -32,7 +32,7 @@ start_status_points: 48
 login_server_ip: 127.0.0.1
 login_server_port: 3306
 login_server_id: ragnarok
-login_server_pw: 10@(EPTITIAISKSmcn
+login_server_pw: ragnarok
 login_server_db: ragnarok
 login_codepage:
 login_case_sensitive: no
@@ -40,7 +40,7 @@ login_case_sensitive: no
 ipban_db_ip: 127.0.0.1
 ipban_db_port: 3306
 ipban_db_id: ragnarok
-ipban_db_pw:  10@(EPTITIAISKSmcn
+ipban_db_pw: ragnarok
 ipban_db_db: ragnarok
 ipban_codepage:
 
@@ -48,28 +48,28 @@ ipban_codepage:
 char_server_ip: 127.0.0.1
 char_server_port: 3306
 char_server_id: ragnarok
-char_server_pw:  10@(EPTITIAISKSmcn
+char_server_pw: ragnarok
 char_server_db: ragnarok
 
 // MySQL Map Server
 map_server_ip: 127.0.0.1
 map_server_port: 3306
 map_server_id: ragnarok
-map_server_pw:  10@(EPTITIAISKSmcn
+map_server_pw: ragnarok
 map_server_db: ragnarok
 
 // MySQL Web Server
 web_server_ip: 127.0.0.1
 web_server_port: 3306
 web_server_id: ragnarok
-web_server_pw: 10@(EPTITIAISKSmcn
+web_server_pw: ragnarok
 web_server_db: ragnarok
 
 // MySQL Log Database
 log_db_ip: 127.0.0.1
 log_db_port: 3306
 log_db_id: ragnarok
-log_db_pw:  10@(EPTITIAISKSmcn
+log_db_pw: ragnarok
 log_db_db: ragnarok
 log_codepage:
 log_login_db: loginlog

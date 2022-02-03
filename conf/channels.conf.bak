@@ -62,6 +62,31 @@ channel_config: {
 		/// All values above are default settings
 	},							 // Use comma if followed by other channel
 	 **/
+	{
+		name: "#global"
+		alias: "[Global]"
+		color: "White"
+		type: "CHAN_TYPE_PUBLIC"
+		delay: 1000
+		autojoin: false
+		leave: false
+	},
+	{
+		name: "#support"
+		alias: "[Support]"
+		color: "Blue"
+		type: "CHAN_TYPE_PUBLIC"
+		delay: 1000
+		autojoin: false
+	},
+	{
+		name: "#trade"
+		alias: "[Trade]"
+		color: "LightGreen"
+		type: "CHAN_TYPE_PUBLIC"
+		delay: 1000
+		autojoin: false
+	}
 	)
 
 	/**
