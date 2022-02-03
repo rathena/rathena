@@ -755,11 +755,12 @@ void pc_delabyssball( struct map_session_data& sd, int count ){
 * Increases a player's fame points and displays a notice to him
 * @param sd Player
 * @param count Fame point
+* @return true: on success, false: on error
 */
-void pc_addfame(struct map_session_data *sd,int count)
+bool pc_addfame(struct map_session_data *sd,int count)
 {
 	enum e_rank ranktype;
-	nullpo_retv(sd);
+	nullpo_retr(false, sd);
 	sd->status.fame += count;
 	if(sd->status.fame > MAX_FAME)
 		sd->status.fame = MAX_FAME;
@@ -770,11 +771,12 @@ void pc_addfame(struct map_session_data *sd,int count)
 		case MAPID_TAEKWON:		ranktype = RANK_TAEKWON; break;
 		default:
 			ShowWarning( "pc_addfame: Trying to add fame to class '%s'(%d).\n", job_name(sd->status.class_), sd->status.class_ );
-			return;
+			return false;
 	}
 
 	clif_update_rankingpoint(sd,ranktype,count);
 	chrif_updatefamelist(sd);
+	return true;
 }
 
 /**

@@ -10675,6 +10675,33 @@ ACMD_FUNC( stylist ){
 #endif
 }
 
+/**
+ * Add fame point into a player
+ * Usage: @addfame <fame point>
+ */
+ACMD_FUNC(addfame)
+{
+	nullpo_retr(-1, sd);
+
+	int famepoint = 0;
+
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+
+	if (!message || !*message || sscanf(message, "%11d", &famepoint) < 1 || famepoint == 0) {
+		sprintf(atcmd_output, msg_txt(sd, 1516), command); // Usage: %s Usage: %s <fame point>
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+
+	if (!pc_addfame(sd, famepoint)) {
+		sprintf(atcmd_output, msg_txt(sd, 1517), job_name(sd->status.class_)); // Trying to add fame to class '%s'
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+
+	return 0;
+}
+
 #include "../custom/atcommand.inc"
 
 /**
@@ -10996,6 +11023,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF2("checkquest", quest),
 		ACMD_DEF(refineui),
 		ACMD_DEFR(stylist, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
+		ACMD_DEF(addfame),
 	};
 	AtCommandInfo* atcommand;
 	int i;
