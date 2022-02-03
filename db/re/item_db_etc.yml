@@ -23610,7 +23610,7 @@ Body:
     Buy: 10
   - Id: 6959
     AegisName: Costume_Ticket
-    Name: Costume Change Ticket 
+    Name: Costume Change Ticket
     Type: Etc
     Buy: 0
     Trade:
@@ -52643,6 +52643,13 @@ Body:
       bonus2 bMagicAtkEle,Ele_All,7;
       bonus bLongAtkRate,7;
       bonus bShortAtkRate,7;
+  - Id: 310654
+    AegisName: aegis_310654
+    Name: ASPD+1(Dual)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAspd,1;
   - Id: 310655
     AegisName: aegis_310655
     Name: The Creation
@@ -52651,13 +52658,6 @@ Body:
     Script: |
       bonus2 bAddSize,Size_All,15;
       bonus2 bMagicAddSize,Size_All,15;
-  - Id: 310654
-    AegisName: aegis_310654
-    Name: ASPD+1(Dual)
-    Type: Card
-    SubType: Enchant
-    Script: |
-      bonus bAspd,1;
   - Id: 310658
     AegisName: aegis_310658
     Name: Minor Casting Reduction(Dual)
@@ -62310,7 +62310,7 @@ Body:
     Name: Cacalapy
     Weight: 10
   - Id: 1000826
-    AegisName: EP19_Prickle_Shell	
+    AegisName: EP19_Prickle_Shell
     Name: Prickly Shell
     Weight: 10
   - Id: 1000827
