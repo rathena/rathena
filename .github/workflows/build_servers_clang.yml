@@ -1,0 +1,49 @@
+name: Build servers with Clang
+# build_servers_clang.yml
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    paths:
+      # Always trigger all Github Actions if an action or something CI related was changed
+      - '.github/workflows/**'
+      - 'tools/ci/**'
+      # This workflow should run when a file in a source directory has been modified.
+      - 'src/**'
+      - '3rdparty/**'
+
+jobs:
+  build:
+    # Github Actions checks for '[ci skip]', '[skip ci]', '[no ci]', '[skip actions]', or '[actions skip]' but not a hyphenated version.
+    # It's a catch-all incase a Pull Request has been opened and someone is on auto-pilot.
+    if: "!contains(github.event.head_commit.message, 'ci-skip')"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+          # The ubuntu-latest label currently points to ubuntu-18.04.
+          # Available: ubuntu-20.04, ubuntu-18.04
+          os: [ubuntu-18.04]
+          # Version list can be found on https://github.com/marketplace/actions/install-clang
+          clang: ['3.9', '4.0', '5.0', '6.0', '7', '8', '9', '10', '11'] #, '12', '13']
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Clang
+        uses: egor-tensin/setup-clang@v1
+        with:
+          version: ${{ matrix.clang }}
+          platform: x64
+
+      - name: Command - configure
+        env:
+            CONFIGURE_FLAGS: 'CC=clang-${{ matrix.clang }} CXX=clang++-${{ matrix.clang }} --enable-buildbot=yes'
+        run: ./configure $CONFIGURE_FLAGS
+
+      - name: Command - make clean
+        run: make clean
+
+      - name: Command - make all
+        run: make all

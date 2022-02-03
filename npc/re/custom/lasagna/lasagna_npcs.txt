@@ -9,6 +9,7 @@
 //-- Some questinfo condition may be inaccurate.
 //===== Changelogs: ==========================================
 //= 1.0 First version. [Capuche]
+//= 1.1 Moving Hair Designer to Merchants. [JohnnyPlayy]
 //============================================================
 
 lasa_fild01,47,297,0	script	#doint_evt01	HIDDEN_WARP_NPC,1,1,{
@@ -1767,116 +1768,6 @@ lasagna,217,192,5	script	Kittie#do_hint01	4_CAT_SAILOR1,{
 	close;
 }
 
-lasagna,134,113,3	script	Hair Designer#dr	4_DR_F_02,{
-	mes "[Lonza]";
-	mes "If you're one of the trendsetting Dorams, watch what Lonza can do with her great scissors!";
-	next;
-	if (Class != Job_Summoner) {
-		mes "[Lonza]";
-		mes "Oh? I'm sorry, but my great scissors are not for anyone who demands it.";
-		mes "They're allowed only for the Doram.";
-		close;
-	}
-	switch( select( "Change hairstyle.", "Dye hair.", "Cancel" ) ) {
-	case 1:
-		mes "[Lonza]";
-		mes "I've lined up the attractive hairstyles that never go out of style. Will you take a look?";
-		next;
-		.@gender$ = Sex ? "m" : "f";
-		while( true ) {
-			.@i++;
-			.@i = .@i > 6 ? 1 : .@i;
-			cutin "hair_dr_" + .@gender$ + "_0" + .@i + ".bmp",4;
-			mes "[Lonza]";
-			mes "This is the " + callfunc("F_GetNumSuffix",.@i) + " hairdo. How do you like it?";
-			next;
-			switch( select( "Browse other styles.", "I'll take this.", "End of dialogue." ) ) {
-			case 1:
-				continue;
-			case 2:
-				mes "[Lonza]";
-				mes "So you picked the " + callfunc("F_GetNumSuffix",.@i) + " hairstyle. I like your choice.";
-				next;
-				mes "[Lonza]";
-				mes "But you need some preparations before you change your hairdo.";
-				next;
-				mes "[Lonza]";
-				mes "3 Counteragent,";
-				mes "3 Mixture,";
-				mes "100 Braided Hair,";
-				mes "100 Short Braids,";
-				mes "100 Long Hair,";
-				mes "100 Golden Hair,";
-				mes "100 Glossy Hair,";
-				next;
-				mes "[Lonza]";
-				mes "and 99,800 Zeny!";
-				next;
-				if (select( "It's all here.", "I'll get them all." ) == 2) {
-					mes "[Lonza]";
-					mes "Good! Keep it up! Run!";
-					close;
-				}
-				if (countitem(973) < 3 || countitem(974) < 3 || countitem(901) < 100 || countitem(1094) < 100 || countitem(1020) < 100 || countitem(1060) < 100 || countitem(7152) < 100 || Zeny < 99800) {
-					mes "[Lonza]";
-					mes "I can help you only when you bring me the materials. Will you check on your belongings again?";
-					close;
-				}
-				Zeny = Zeny - 99800;
-				delitem 973,3;// Counteragent
-				delitem 974,3;// Mixture
-				delitem 901,100;// Daenggie
-				delitem 1094,100;// Short Daenggie
-				delitem 1020,100;// Black Hair
-				delitem 1060,100;// Golden Hair
-				delitem 7152,100;// Glossy Hair
-				setlook LOOK_HAIR, .@i;
-				mes "~Snip, snip, snip~";
-				mes "~Snip, snip, snip~";
-				mes "~Snip, snip, snip~";
-				mes "~Whirring~";
-				next;
-				mes "[Lonza]";
-				mes "Wow! Amazing! Perfect! Now, go ahead and show off your lovely look to others! Come on!";
-				close;
-			case 3:
-				mes "[Lonza]";
-				mes "Goodbye then. Don't make me and my great scissors wait too long for you to return.";
-				close;
-			}
-		}
-	case 2:
-		mes "[Lonza]";
-		mes "Trendsetters know the right color for their hair, too!";
-		next;
-		mes "[Lonza]";
-		mes "Bring me the dye to have your hair dyed and 1,000 Zeny and I'll dye your hair so beautifully that even fashion stars would go home crying.";
-		next;
-		mes "^FF0000[!!Caution!!]^000000";
-		mes "^FF0000The Dorams inherently have the shortest hair. Even if you proceed with the dialogue, therefore, nothing will happen.^000000";
-		next;
-		setarray .@dye_id[0],976,981,980,979;
-		.@s = select( "Yellow", "Purple", "Orange", "Green" ) - 1;
-		if (countitem(.@dye_id[.@s]) < 1) {
-			mes "[Lonza]";
-			mes "How can I dye your hair without the dye?";
-			close;
-		}
-		delitem .@dye_id[.@s],1;
-		Zeny = Zeny - 1000;
-		// nothing happen
-		mes "[Lonza]";
-		mes "It'll be done in a jiff!";
-		mes "What a lovely color! Why don't you show it off to your friends?";
-		close;
-	case 3:
-		mes "[Lonza]";
-		mes "It feels as if you want someone to take care of your whole day. don't you have one of those days?";
-		mes "Come looking for Lonza anytime you want to be freshened up for a cooler look!";
-		close;
-	}
-}
-
 lasagna,260,134,3	script	Rasmus#dorcon01	4_CAT_SAILOR3,{
 	npctalk "Red yarn will take you to the place you want to go, and the yellow road will take you home. don't forget. If you get lost, follow the red yarn.", "", bc_self;
 	end;
@@ -2463,44 +2354,53 @@ lasagna,140,245,3	script	The sensitive-minded ela	4_CAT_SAILOR3,{
 	mes "Yota often makes quality amulets, but he still needs more polishing.";
 	mes "If he pays attention to details, his amulets will be even greater. But he just doesn't care.";
 	next;
-	.@s = (select( "Polish the Horse Mackerel Amulet.", "Polish the Leaf Amulet.", "Polish the Rabbit Amulet." ) - 1) * 4;
-
-	setarray .@item_data[0],
-		28413, 30,	// Basic Saurel Charm [1]
-		28414, 90,	// Fair Saurel Charm [1]
-		28416, 30,	// Basic Leaf Charm [1]
-		28417, 90,	// Fair Leaf Charm [1]
-		28419, 30,	// Basic Bunny Charm [1]
-		28420, 90;	// Fair Bunny Charm [1]
-
-	if ((countitem(.@item_data[.@s]) - isequippedcnt(.@item_data[.@s]))  > 0)
-		.@index = .@s;
-	else if ((countitem(.@item_data[.@s+2]) - isequippedcnt(.@item_data[.@s+2])) > 0)
-		.@index = .@s + 2;
-	else {
+	.@s = select( "Polish the Horse Mackerel Amulet.", "Polish the Leaf Amulet.", "Polish the Rabbit Amulet." ) - 1;
+	setarray .@ids[0], 28413,28416,28419;
+	.@start_ID = .@ids[.@s];
+	if ((countitem(.@start_ID) - isequippedcnt(.@start_ID))  > 0) {	// basic amulet to upgrade
+		.@your_charm_ID = .@start_ID;
+		.@next_charm_ID = .@start_ID + 1;
+		.@needCoin = 30;
+	}
+	else if ((countitem(.@start_ID+1) - isequippedcnt(.@start_ID+1))  > 0) {	// intermediate
+		.@your_charm_ID = .@start_ID + 1;
+		.@next_charm_ID = .@start_ID + 2;
+		.@needCoin = 90;
+	}
+	else if ((countitem(.@start_ID+2) - isequippedcnt(.@start_ID+2))  > 0) {	// player have some "perfect" amulet in inventory
+		mes "[Goma Chara]";
+		mes "This amulet is already perfect!";
+		close;
+	}
+	if (.@your_charm_ID < 1) {
 		mes "[Goma Chara]";
 		mes "Show me your amulet, will you? I can't seem to find it in your inventory.";
 		close;
 	}
 	mes "[Goma Chara]";
-	mes "Let me. Hmm... " + getitemname(.@item_data[.@index]) + ", it is.";
+	mes "Let me. Hmm... " + getitemname(.@your_charm_ID) + ", it is.";
 	mes "...I knew this was going to happen again. Worse, this one must require a lot more time to polish!";
 	next;
 	mes "[Goma Chara]";
-	mes "Hey, if you give me " + .@item_data[.@index+1] + "<ITEM>Doram Token<INFO>25142</INFO></ITEM>, I'll fix this for you.";
-	mes "<ITEM>This should produce the <INFO>" + (.@item_data[.@index]+1) + "</INFO></ITEM> function, I guess. How do you like it?";
+	mes "Hey, if you give me " + .@needCoin + "<ITEM>Doram Token<INFO>25142</INFO></ITEM>, I'll fix this for you.";
+	mes "<ITEM>This should produce the <INFO>" + .@next_charm_ID + "</INFO></ITEM> function, I guess. How do you like it?";
 	next;
 	if (select( "Upgrade", "Cancel" ) == 2) {
 		mes "[Goma Chara]";
 		mes "As you please.";
 		close;
 	}
+	if (countitem(25142) < .@needCoin) {
+		mes "[Goma Chara]";
+		mes "Insufficient materials, can not be repaired free.";
+		close;
+	}
 	mes "[Goma Chara]";
 	mes "The inside of this amulet seems pretty tough.";
 	mes "But my dexterity is tougher. Tada! Put my brother's amulet to good use.";
-	delitem 25142, .@item_data[.@index+1];// Doram token
-	delitem .@item_data[.@index],1;
-	getitem (.@item_data[.@index] + 1),1;
+	delitem 25142, .@needCoin;// Doram token
+	delitem .@your_charm_ID,1;
+	getitem .@next_charm_ID,1;
 	close;
 }
 
@@ -3311,7 +3211,7 @@ lasagna,222,187,3	script	Chef#dorcon	4_CAT_CHEF,{
 				if (isbegin_quest(14592) > 0)
 					erasequest 14592;
 				for ( .@i = 0; .@i < .@j; .@i++ )
-					erasequest .@quest_left[.@j];
+					erasequest .@quest_left[.@i];
 				close;
 			}
 		}

@@ -30,7 +30,6 @@ struct homun_skill_tree_entry hskill_tree[MAX_HOMUNCULUS_CLASS][MAX_HOM_SKILL_TR
 
 static TIMER_FUNC(hom_hungry);
 static uint16 homunculus_count;
-static t_exp hexptbl[MAX_LEVEL];
 
 //For holding the view data of npc classes. [Skotlex]
 static struct view_data hom_viewdb[MAX_HOMUNCULUS_CLASS];
@@ -50,6 +49,65 @@ static struct s_homun_intimacy_grade intimacy_grades[] = {
 	{ /*"Cordial",          */ 75100 },
 	{ /*"Loyal",            */ 91100 },
 };
+
+const std::string HomExpDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/exp_homun.yml";
+}
+
+uint64 HomExpDatabase::parseBodyNode(const YAML::Node &node) {
+	if (!this->nodesExist(node, { "Level", "Exp" })) {
+		return 0;
+	}
+
+	uint16 level;
+
+	if (!this->asUInt16(node, "Level", level))
+		return 0;
+
+	uint64 exp;
+
+	if (!this->asUInt64(node, "Exp", exp))
+		return 0;
+
+	if (level == 0) {
+		this->invalidWarning(node["Level"], "The minimum level is 1.\n");
+		return 0;
+	}
+	if (level >= MAX_LEVEL) {
+		this->invalidWarning(node["Level"], "Homunculus level %d exceeds maximum level %d, skipping.\n", level, MAX_LEVEL);
+		return 0;
+	}
+
+	std::shared_ptr<s_homun_exp_db> homun_exp = this->find(level);
+	bool exists = homun_exp != nullptr;
+
+	if (!exists) {
+		homun_exp = std::make_shared<s_homun_exp_db>();
+		homun_exp->level = level;
+	}
+
+	homun_exp->exp = static_cast<t_exp>(exp);
+
+	if (!exists)
+		this->put(level, homun_exp);
+
+	return 1;
+}
+
+HomExpDatabase homun_exp_db;
+
+/**
+ * Returns the experience required to level up according to the table.
+ * @param level: Homunculus level
+ * @return Experience
+ */
+t_exp HomExpDatabase::get_nextexp(uint16 level) {
+	auto next_exp = this->find(level);
+	if (next_exp)
+		return next_exp->exp;
+	else
+		return 0;
+}
 
 /**
 * Check if the skill is a valid homunculus skill based skill range or availablity in skill db
@@ -210,6 +268,11 @@ int hom_dead(struct homun_data *hd)
 		return 3;
 
 	clif_emotion(&sd->bl, ET_CRY);
+
+#ifdef RENEWAL
+	status_change_end(&sd->bl, status_skill2sc(AM_CALLHOMUN), INVALID_TIMER);
+#endif
+
 	//Remove from map (if it has no intimacy, it is auto-removed from memory)
 	return 3;
 }
@@ -245,6 +308,11 @@ int hom_vaporize(struct map_session_data *sd, int flag)
 	}
 	clif_hominfo(sd, sd->hd, 0);
 	hom_save(hd);
+
+#ifdef RENEWAL
+	status_change_end(&sd->bl, status_skill2sc(AM_CALLHOMUN), INVALID_TIMER);
+#endif
+
 	return unit_remove_map(&hd->bl, CLR_OUTSIGHT);
 }
 
@@ -483,7 +551,7 @@ int hom_levelup(struct homun_data *hd)
 		hom->skillpts++ ;	//1 skillpoint each 3 base level
 
 	hom->exp -= hd->exp_next ;
-	hd->exp_next = hexptbl[hom->level - 1] ;
+	hd->exp_next = homun_exp_db.get_nextexp(hom->level);
 
 	if (!max) {
 		max  = &hd->homunculusDB->gmax;
@@ -715,7 +783,7 @@ void hom_gainexp(struct homun_data *hd,t_exp exp)
 }
 
 /**
-* Increase homunculu sintimacy
+* Increase homunculus intimacy
 * @param hd
 * @param value Added intimacy
 * @return New intimacy value
@@ -734,7 +802,7 @@ int hom_increase_intimacy(struct homun_data * hd, unsigned int value)
 }
 
 /**
-* Decrease homunculu sintimacy
+* Decrease homunculus intimacy
 * @param hd
 * @param value Reduced intimacy
 * @return New intimacy value
@@ -1032,7 +1100,7 @@ void hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 	hd->master = sd;
 	hd->homunculusDB = &homunculus_db[i];
 	memcpy(&hd->homunculus, hom, sizeof(struct s_homunculus));
-	hd->exp_next = hexptbl[hd->homunculus.level - 1];
+	hd->exp_next = homun_exp_db.get_nextexp(hd->homunculus.level);
 
 	status_set_viewdata(&hd->bl, hd->homunculus.class_);
 	status_change_init(&hd->bl);
@@ -1113,6 +1181,11 @@ bool hom_call(struct map_session_data *sd)
 	} else
 		//Warp him to master.
 		unit_warp(&hd->bl,sd->bl.m, sd->bl.x, sd->bl.y,CLR_OUTSIGHT);
+
+#ifdef RENEWAL
+	sc_start(&sd->bl, &sd->bl, status_skill2sc(AM_CALLHOMUN), 100, 1, skill_get_time(AM_CALLHOMUN, 1));
+#endif
+
 	return true;
 }
 
@@ -1168,6 +1241,11 @@ int hom_recv_data(uint32 account_id, struct s_homunculus *sh, int flag)
 		clif_homskillinfoblock(sd);
 		hom_init_timers(hd);
 	}
+
+#ifdef RENEWAL
+	sc_start(&sd->bl, &sd->bl, status_skill2sc(AM_CALLHOMUN), 100, 1, skill_get_time(AM_CALLHOMUN, 1));
+#endif
+
 	return 1;
 }
 
@@ -1252,6 +1330,11 @@ int hom_ressurect(struct map_session_data* sd, unsigned char per, short x, short
 			return 0;
 		clif_spawn(&hd->bl);
 	}
+
+#ifdef RENEWAL
+	sc_start(&sd->bl, &sd->bl, status_skill2sc(AM_CALLHOMUN), 100, 1, skill_get_time(AM_CALLHOMUN, 1));
+#endif
+
 	return status_revive(&hd->bl, per, 0);
 }
 
@@ -1298,7 +1381,7 @@ void hom_reset_stats(struct homun_data *hd)
 	hom->dex = base->dex *10;
 	hom->luk = base->luk *10;
 	hom->exp = 0;
-	hd->exp_next = hexptbl[0];
+	hd->exp_next = homun_exp_db.get_nextexp(hom->level);
 	memset(&hd->homunculus.hskill, 0, sizeof hd->homunculus.hskill);
 	hd->homunculus.skillpts = 0;
 }
@@ -1588,52 +1671,9 @@ static void read_homunculus_skilldb(void) {
 	}
 }
 
-/**
-* Read homunculus exp db
-*/
-void read_homunculus_expdb(void)
-{
-	int i;
-	const char *filename[]={
-		DBPATH"exp_homun.txt",
-		DBIMPORT"/exp_homun.txt"
-	};
-
-	memset(hexptbl,0,sizeof(hexptbl));
-	for (i = 0; i < ARRAYLENGTH(filename); i++) {
-		FILE *fp;
-		char path[1024];
-		char line[1024];
-		int j=0;
-		
-		sprintf(path, "%s/%s", db_path, filename[i]);
-		fp = fopen(path,"r");
-		if (fp == NULL) {
-			if (i != 0)
-				continue;
-			ShowError("read_homunculus_expdb: Can't read %s\n",line);
-			return;
-		}
-		while (fgets(line, sizeof(line), fp) && j < MAX_LEVEL) {
-			if (line[0] == '/' && line[1] == '/')
-				continue;
-
-			hexptbl[j] = strtoull(line, NULL, 10);
-			if (!hexptbl[j++])
-				break;
-		}
-		if (hexptbl[MAX_LEVEL - 1]) { // Last permitted level have to be 0!
-			ShowWarning("read_homunculus_expdb: Reached max level in %s [%d]. Remaining lines were not read.\n ",path,MAX_LEVEL);
-			hexptbl[MAX_LEVEL - 1] = 0;
-		}
-		fclose(fp);
-		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' levels in '" CL_WHITE "%s" CL_RESET "'.\n", j, path);
-	}
-}
-
 void hom_reload(void){
 	read_homunculusdb();
-	read_homunculus_expdb();
+	homun_exp_db.reload();
 }
 
 void hom_reload_skill(void){
@@ -1644,7 +1684,7 @@ void do_init_homunculus(void){
 	int class_;
 
 	read_homunculusdb();
-	read_homunculus_expdb();
+	homun_exp_db.load();
 	read_homunculus_skilldb();
 
 	// Add homunc timer function to timer func list [Toms]

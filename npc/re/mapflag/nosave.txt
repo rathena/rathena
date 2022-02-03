@@ -138,6 +138,9 @@ que_avan01	mapflag	nosave	SavePoint
 un_myst	mapflag	nosave	SavePoint
 1@mcd	mapflag	nosave	SavePoint
 
+// Infinite Space
+1@infi	mapflag	nosave
+
 // Ep 16
 que_swat	mapflag	nosave	SavePoint
 1@mir	mapflag	nosave	SavePoint

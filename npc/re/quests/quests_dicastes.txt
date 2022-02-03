@@ -6660,7 +6660,7 @@ mid_campin,165,127,5	script	Hibba Agip#ep133_is07	459,{
 	mes "I should go now.";
 	close2;
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;	
 }
 

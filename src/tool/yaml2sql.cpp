@@ -38,6 +38,7 @@
 #include "../map/channel.hpp"
 #include "../map/chat.hpp"
 #include "../map/date.hpp"
+#include "../map/elemental.hpp"
 #include "../map/instance.hpp"
 #include "../map/mercenary.hpp"
 #include "../map/mob.hpp"
@@ -139,9 +140,11 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 		const std::string to = "sql-files/" + to_table + ".sql";
 
 		if( fileExists( from ) ){
+#ifndef CONVERT_ALL
 			if( !askConfirmation( "Found the file \"%s\", which can be converted to sql.\nDo you want to convert it now? (Y/N)\n", from.c_str() ) ){
 				continue;
 			}
+#endif
 
 			inNode.reset();
 
@@ -156,11 +159,13 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 			if (!inNode["Body"].IsDefined())
 				continue;
 
+#ifndef CONVERT_ALL
 			if (fileExists(to)) {
 				if (!askConfirmation("The file \"%s\" already exists.\nDo you want to replace it? (Y/N)\n", to.c_str())) {
 					continue;
 				}
 			}
+#endif
 
 			out.open(to);
 
@@ -516,6 +521,8 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 				value.append(",");
 				column.append("`class_third_baby`,");
 			}
+			if (appendEntry(classes["Fourth"], value))
+				column.append("`class_fourth`,");
 #endif
 		}
 
@@ -584,7 +591,7 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 			if (appendEntry(locations["Costume_Head_Low"], value))
 				column.append("`location_costume_head_Low`,");
 			if (appendEntry(locations["Costume_Garment"], value))
-				column.append("`location_costume_Garment`,");
+				column.append("`location_costume_garment`,");
 			if (appendEntry(locations["Ammo"], value))
 				column.append("`location_ammo`,");
 			if (appendEntry(locations["Shadow_Armor"], value))
@@ -603,6 +610,8 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 
 		if (appendEntry(input["WeaponLevel"], value))
 			column.append("`weapon_level`,");
+		if (appendEntry(input["ArmorLevel"], value))
+			column.append("`armor_level`,");
 		if (appendEntry(input["EquipLevelMin"], value))
 			column.append("`equip_level_min`,");
 		if (appendEntry(input["EquipLevelMax"], value))
@@ -747,6 +756,12 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 			column.append("`defense`,");
 		if (appendEntry(input["MagicDefense"], value))
 			column.append("`magic_defense`,");
+#ifdef RENEWAL
+		if (appendEntry(input["Resistance"], value))
+			column.append("`resistance`,");
+		if (appendEntry(input["MagicResistance"], value))
+			column.append("`magic_resistance`,");
+#endif
 		if (appendEntry(input["Str"], value))
 			column.append("`str`,");
 		if (appendEntry(input["Agi"], value))
@@ -797,6 +812,8 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 			column.append("`attack_motion`,");
 		if (appendEntry(input["DamageMotion"], value))
 			column.append("`damage_motion`,");
+		if (appendEntry(input["DamageTaken"], value))
+			column.append("`damage_taken`,");
 		if (appendEntry(input["Ai"], value, true))
 			column.append("`ai`,");
 		if (appendEntry(input["Class"], value, true))

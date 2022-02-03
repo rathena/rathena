@@ -4,6 +4,7 @@
 #ifndef SCRIPT_HPP
 #define SCRIPT_HPP
 
+#include "../common/database.hpp"
 #include "../common/cbasetypes.hpp"
 #include "../common/db.hpp"
 #include "../common/mmo.hpp"
@@ -355,6 +356,8 @@ enum monsterinfo_types {
 	MOB_ATK2,
 	MOB_DEF,
 	MOB_MDEF,
+	MOB_RES,
+	MOB_MRES,
 	MOB_STR,
 	MOB_AGI,
 	MOB_VIT,
@@ -479,6 +482,9 @@ enum unitdata_mobtypes {
 	UMOB_ROBE,
 	UMOB_BODY2,
 	UMOB_GROUP_ID,
+	UMOB_IGNORE_CELL_STACK_LIMIT,
+	UMOB_RES,
+	UMOB_MRES,
 };
 
 enum unitdata_homuntypes {
@@ -1992,6 +1998,22 @@ enum e_hat_effects : int16{
 	HAT_EF_99LV_SOUL_R_GRAY,
 	HAT_EF_160LV_SOUL_R_GRAY,
 	HAT_EF_GEARWHEEL,
+	HAT_EF_GIFT_OF_SNOW,
+	HAT_EF_SNOW_POWDER,
+	HAT_EF_FALLING_SNOW,
+	HAT_EF_C_PHIGASIA_SCARF_EXE,
+	HAT_EF_C_KYEL_HYRE_ULTI_TW,
+	HAT_EF_C_MASTER,
+	HAT_EF_C_TIME_ACCESSORY,
+	HAT_EF_C_HELM_OF_RA,
+	HAT_EF_C_2021RTC_HEADSET_TW,
+	HAT_EF_C_MOONSTAR_ACCESSORY,
+	HAT_EF_BLACK_THUNDER,
+	HAT_EF_BLACK_THUNDER_DARK,
+	HAT_EF_C_RELEASED_GROUND,
+	HAT_EF_C_SAMBA_CARNIVAL,
+	HAT_EF_POISON_MASTER,
+	HAT_EF_C_SWIRLING_FLAME,
 	HAT_EF_MAX
 };
 
@@ -2017,6 +2039,42 @@ enum e_pcblock_action_flag : uint16 {
 	PCBLOCK_NPC      = 0x18D,
 	PCBLOCK_EMOTION  = 0x200,
 	PCBLOCK_ALL      = 0x3FF,
+};
+
+/* getiteminfo/setiteminfo script commands */
+enum e_iteminfo : uint8 {
+	ITEMINFO_BUY = 0,
+	ITEMINFO_SELL,
+	ITEMINFO_TYPE,
+	ITEMINFO_MAXCHANCE,
+	ITEMINFO_GENDER,
+	ITEMINFO_LOCATIONS,
+	ITEMINFO_WEIGHT,
+	ITEMINFO_ATTACK,
+	ITEMINFO_DEFENSE,
+	ITEMINFO_RANGE,
+	ITEMINFO_SLOT,
+	ITEMINFO_VIEW,
+	ITEMINFO_EQUIPLEVELMIN,
+	ITEMINFO_WEAPONLEVEL,
+	ITEMINFO_ALIASNAME,
+	ITEMINFO_EQUIPLEVELMAX,
+	ITEMINFO_MAGICATTACK,
+	ITEMINFO_ID,
+	ITEMINFO_AEGISNAME,	// 18
+	ITEMINFO_ARMORLEVEL,
+	ITEMINFO_SUBTYPE,
+};
+
+class ConstantDatabase : public YamlDatabase {
+public:
+	ConstantDatabase() : YamlDatabase("CONSTANT_DB", 1) {
+
+	}
+
+	void clear() override{ }
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node& node) override;
 };
 
 /**

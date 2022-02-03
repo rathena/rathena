@@ -5,8 +5,8 @@
 DROP TABLE IF EXISTS `mob_db2`;
 CREATE TABLE `mob_db2` (
   `id` int(11) unsigned NOT NULL,
-  `name_aegis` varchar(24) NOT NULL,
-  `name_english` text NOT NULL,
+  `name_aegis` varchar(24) DEFAULT NULL,
+  `name_english` text DEFAULT NULL,
   `name_japanese` text DEFAULT NULL,
   `level` smallint(6) unsigned DEFAULT NULL,
   `hp` int(11) unsigned DEFAULT NULL,
@@ -62,6 +62,7 @@ CREATE TABLE `mob_db2` (
   `attack_delay` smallint(6) unsigned DEFAULT NULL,
   `attack_motion` smallint(6) unsigned DEFAULT NULL,
   `damage_motion` smallint(6) unsigned DEFAULT NULL,
+  `damage_taken` smallint(6) unsigned DEFAULT NULL,
   `ai` varchar(2) DEFAULT NULL,
   `class` varchar(50) DEFAULT NULL,
   `mode_canmove` tinyint(1) unsigned DEFAULT NULL,
