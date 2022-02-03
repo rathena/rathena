@@ -1093,6 +1093,7 @@ alberta_in,23,104,4	script	Grandpa Turtle#tur	120,{
 		mes "Well, then...";
 		mes "Good luck~";
 		set TURTLE,1;
+		setquest 11029;
 		close;
 	case 3:
 		mes "[Grandpa Turtle]";
@@ -1183,7 +1184,9 @@ alberta_in,23,104,4	script	Grandpa Turtle#tur	120,{
 			mes "[Gotanblue]";
 			mes "Heh heh...";
 			mes "I'm sure he can tell give you details that even I wouldn't be able to provide...";
-			close;
+			close2;
+			// erasequest 11029;
+			end;
 		case 2:
 			mes "[Gotanblue]";
 			mes "After my story of Turtle Island, you're still not afraid of going? I'm impressed! Alright then...";
@@ -1200,7 +1203,9 @@ alberta_in,23,104,4	script	Grandpa Turtle#tur	120,{
 					mes "^3355FF*Choo Choo*^000000";
 					set Zeny, Zeny-10000;
 					warp "tur_dun01",157,39;
-					close;
+					close2;
+					// erasequest 11029;
+					end;
 				}
 				mes "[Gotanblue]";
 				mes "Hmmm...";
@@ -1433,6 +1438,7 @@ alberta,246,117,4	script	Voyage log#tur	111,{
 				next;
 				mes "^3355FFIn the Voyage log is a thin key marked with a skull. You've taken this Skull key, as it may be of some use later.^000000";
 				set TURTLE,2;
+				changequest 11029,11030;
 				close;
 			case 2:
 				mes "^3355FFYou notice a page with a stamp shaped like a bird's foot. The black ink smells sort of like fruit.^000000";
@@ -1483,6 +1489,7 @@ alberta,246,117,4	script	Voyage log#tur	111,{
 				mes "^3355FFYou've gained^000000";
 				mes "^3355FFthe Roots key.^000000";
 				set TURTLE,3;
+				changequest 11029,11031;
 				close;
 			case 3:
 				mes "^3355FFThese pages of this log are soiled with mud, and some of them are missing.^000000";
@@ -1517,6 +1524,7 @@ alberta,246,117,4	script	Voyage log#tur	111,{
 				mes "^3355FFYou've gained ^000000";
 				mes "^3355FFthe Security key^000000";
 				set TURTLE,4;
+				changequest 11029,11032;
 				close;
 			}
 		}
@@ -1541,6 +1549,7 @@ tur_dun01,160,81,4	script	Skull Stone#tur	111,{
 		next;
 		set MISC_QUEST,MISC_QUEST | 65536;
 		set TURTLE,0;
+		completequest 11030;
 		switch(rand(1,3)) {
 		case 1:
 			getitem 532,5; //Banana_Juice
@@ -1613,6 +1622,7 @@ tur_dun02,132,251,4	script	Turtle Tree Roots#tur	111,{
 		mes "^3355FFInside the pile of turtle^000000";
 		mes "^3355FFcrystals, a scroll is hidden.^000000";
 		set TURTLE,7;
+		changequest 11031,11033;
 		mes "^3355FFYou've gained a^000000";
 		mes "^3355FFTurtle Crystal key.^000000";
 		close;
@@ -1668,6 +1678,7 @@ tur_dun02,46,125,4	script	A pile of turtle crystal	111,{
 		mes "^3355FFAt the edge of the crystal^000000";
 		mes "^3355FFplate, is a long key.^000000";
 		set TURTLE,8;
+		changequest 11033,11034;
 		mes "^3355FFYou've gained the^000000";
 		mes "^3355FFTurtle Pillar key.^000000";
 		close;
@@ -1716,6 +1727,7 @@ tur_dun02,49,158,4	script	Turtle Pillar#tur	111,{
 		mes "^3355FFunder the pillar...^000000";
 		set MISC_QUEST,MISC_QUEST | 65536;
 		set TURTLE,0;
+		completequest 11034;
 		switch(rand(1,10)) {
 		case 1:
 			getitem 702,1; //Animal_Blood
@@ -1809,6 +1821,7 @@ tur_dun01,203,155,4	script	Turtle stone#tur	111,{
 		mes "rests a brilliant red bead.^000000";
 		next;
 		set TURTLE,10;
+		changequest 11032,11035;
 		mes "^3355FFYou set the red bead to the";
 		mes "Security key, fitting it";
 		mes "within one of three tiny holes.^000000";
@@ -1856,6 +1869,7 @@ tur_dun02,75,249,4	script	Turtle stone#tur2	111,{
 		mes "rests a brilliant yellow bead.";
 		next;
 		set TURTLE,11;
+		changequest 11035,11036;
 		mes "^3355FFYou set the yellow bead";
 		mes "into the Security key, fitting it";
 		mes "within one of three tiny holes.^000000";
@@ -1903,6 +1917,7 @@ tur_dun03,118,233,4	script	Turtle Stone#tur3	111,{
 		mes "rests a brilliant blue bead.^000000";
 		next;
 		set TURTLE,12;
+		changequest 11036,11037;
 		mes "^3355FFYou set the blue bead to the";
 		mes "into the Security Key, fitting it";
 		mes "within one of three tiny holes.^000000";
@@ -1943,6 +1958,7 @@ tur_dun04,113,178,4	script	Turtle Statue#tur	111,{
 		next;
 		set MISC_QUEST,MISC_QUEST | 65536;
 		set TURTLE,0;
+		completequest 11037;
 		if (rand(1,20) == 7) {
 			switch(rand(1,4)) {
 			case 1:

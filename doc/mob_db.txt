@@ -68,6 +68,14 @@ MagicDefense: Magic defense of the monster, reduce magical skill.
 
 ---------------------------------------
 
+Resistance: Physical resistance of the monster, reduce melee and ranged physical attack/skill.
+
+---------------------------------------
+
+MagicResistance: Magic resistance of the monster, reduce magical skill.
+
+---------------------------------------
+
 Str: Strength of the monster. Affects ATK.
 
 ---------------------------------------

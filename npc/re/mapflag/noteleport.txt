@@ -156,6 +156,10 @@ verus04	mapflag	monster_noteleport
 lhz_dun_n	mapflag	noteleport
 lhz_d_n2	mapflag	noteleport
 
+// Infinite Space
+1@infi	mapflag	noteleport
+1@infi	mapflag	monster_noteleport
+
 // WOE:TE Maps ===================
 te_prtcas01	mapflag	noteleport
 te_prtcas02	mapflag	noteleport

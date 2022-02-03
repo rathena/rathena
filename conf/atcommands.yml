@@ -283,12 +283,19 @@ Body:
       4064 Mechanic         4065 Guillotine Cross  4073 Royal Guard    4074 Sorcerer
       4075 Minstrel            4076 Wanderer              4077 Sura                  4078 Genetic
       4079 Shadow Chaser
+      ----- 4th Class -----
+      4252 Dragon Knight    4253 Meister                    4254 Shadow Cross     4255 Arch Mage
+      4256 Cardinal               4257 Windhawk              4258 Imperial Guard     4259 Biolo
+      4260 Abyss Chaser     4261 Elemental Master 4262 Inquisitor               4263 Troubadour
+      4264 Trouvere
       ----- Expanded Class -----
            23 Super Novice      24 Gunslinger              25 Ninja                 4045 Super Baby
       4046 Taekwon           4047 Star Gladiator     4049 Soul Linker            4050 Gangsi
       4051 Death Knight    4052 Dark Collector    4190 Ex. Super Novice  4191 Ex. Super Baby
       4211 Kagerou            4212 Oboro             4215 Rebellion        4218 Summoner
       4239 Star Emperor   4240 Soul Reaper
+      4302 Sky Emperor    4303 Soul Ascetic         4304 Shinkiro                 4305 Shiranui
+      4306 Night Watch     4307 Hyper Novice        4308 Spirit Handler
       ----- Baby Novice And Baby 1st Class -----
       4023 Baby Novice      4024 Baby Swordman    4025 Baby Magician   4026 Baby Archer
       4027 Baby Acolyte      4028 Baby Merchant       4029 Baby Thief
@@ -328,6 +335,10 @@ Body:
     Help: |
       Params: [<HP> <SP>]
       Heals the desired amount of HP and SP. No value specified will do a full heal.
+  - Command: healap
+    Help: |
+      Params: [<AP>]
+      Heals the desired amount of AP. No value specified will do a full AP heal.
   - Command: dye
     Aliases:
       - ccolor
@@ -473,6 +484,9 @@ Body:
   - Command: stpoint
     Help: |
       Params: <number of points> - Gives you the desired number of stat points.
+  - Command: trpoint
+    Help: |
+      Params: <number of points> - Gives you the desired number of trait stat points.
   - Command: skpoint
     Help: |
       Params: <number of points> - Gives you the desired number of skill points.
@@ -509,6 +523,30 @@ Body:
     Help: |
       Params: <amount>
       Raises LUK by given amount.
+  - Command: pow
+    Help: |
+      Params: <amount>
+      Raises POW by given amount.
+  - Command: sta
+    Help: |
+      Params: <amount>
+      Raises STA by given amount.
+  - Command: wis
+    Help: |
+      Params: <amount>
+      Raises WIS by given amount.
+  - Command: spl
+    Help: |
+      Params: <amount>
+      Raises SPL by given amount.
+  - Command: con
+    Help: |
+      Params: <amount>
+      Raises CON by given amount.
+  - Command: crt
+    Help: |
+      Params: <amount>
+      Raises CRT by given amount.
   - Command: allstats
     Aliases:
       - allstat
@@ -517,6 +555,14 @@ Body:
     Help: |
       Params: <value>
       Adds value in all stats (maximum if no value).
+  - Command: alltraits
+    Aliases:
+      - alltrait
+      - traitall
+      - traitsall
+    Help: |
+      Params: <value>
+      Adds value in all traits (maximum if no value).
   - Command: addwarp
     Help: |
       Params: <map name> <x coord> <y coord> <NPC name>

@@ -14,7 +14,8 @@ This list contains all available constants referenced in the 'bonus' commands.
 
 * Status effect (eff)
 	Eff_Bleeding, Eff_Blind, Eff_Burning, Eff_Confusion, Eff_Crystalize, Eff_Curse, Eff_DPoison,
-	Eff_Fear, Eff_Freeze, Eff_Poison, Eff_Silence, Eff_Sleep, Eff_Stone, Eff_Stun
+	Eff_Fear, Eff_Freeze, Eff_Poison, Eff_Silence, Eff_Sleep, Eff_Stone, Eff_Stun, Eff_Freezing,
+	Eff_Heat
 
 * Element (e)
 	Ele_Dark, Ele_Earth, Ele_Fire, Ele_Ghost, Ele_Holy, Ele_Neutral, Ele_Poison,
@@ -66,9 +67,9 @@ This list contains all available constants referenced in the 'bonus' commands.
 
 * Other values:
 	Skill (sk): see 'db/(pre-)re/skill_db.yml' (NOTE: Both skill IDs and names, in quotes, are supported.)
-	Monster id (mid): see 'db/(pre-)re/mob_db.txt'
+	Monster id (mid): see 'db/(pre-)re/mob_db.yml'
 	Item id (iid): see 'db/item_db.yml'
-	Item group (ig): see 'db/(pre-)re/item_group_db.txt' and the constants in 'db/const.txt', prefixed with IG_*
+	Item group (ig): see 'db/(pre-)re/item_group_db.yml' and the constants in 'src/map/script_constants.hpp', prefixed with IG_*
 	Weapon type (w): see 'doc/item_db.txt' -> SubType
 
 
@@ -98,12 +99,24 @@ bonus bAllStats,n; 			STR + n, AGI + n, VIT + n, INT + n, DEX + n, LUK + n
 bonus bAgiVit,n;   			AGI + n, VIT + n
 bonus bAgiDexStr,n;			STR + n, AGI + n, DEX + n
 
-HP/SP
+Trait Stats
+-----------
+bonus bPow,n;      			POW + n
+bonus bSta,n;      			STA + n
+bonus bWis,n;      			WIS + n
+bonus bSpl,n;      			SPL + n
+bonus bCon,n;      			CON + n
+bonus bCrt,n;      			CRT + n
+bonus bAllTraitStats,n; 		POW + n, STA + n, WIS + n, SPL + n, CON + n, CRT + n
+
+HP/SP/AP
 -----
 bonus bMaxHP,n;    			MaxHP + n
 bonus bMaxHPrate,n;			MaxHP + n% 
 bonus bMaxSP,n;    			MaxSP + n
 bonus bMaxSPrate,n;			MaxSP + n%
+bonus bMaxAP,n;    			MaxAP + n
+bonus bMaxAPrate,n;			MaxAP + n%
 
 Atk/Def
 -------
@@ -144,6 +157,18 @@ bonus bAspd,n;        			Attack speed + n
 bonus bAspdRate,n;    			Attack speed + n%
 bonus bAtkRange,n;    			Attack range + n
 bonus bAddMaxWeight,n;			MaxWeight + n (in units of 0.1)
+bonus bPAtk,n;         			PAtk + n
+bonus bPAtkRate,n;     			PAtk + n%
+bonus bSMatk,n;         		SMatk + n
+bonus bSMatkRate,n;     		SMatk + n%
+bonus bRes,n;         			Res + n
+bonus bResRate,n;     			Res + n%
+bonus bMRes,n;         			MRes + n
+bonus bMResRate,n;     			MRes + n%
+bonus bHPlus,n;         		HPlus + n
+bonus bHPlusRate,n;     		HPlus + n%
+bonus bCRate,n;         		CRate + n
+bonus bCRateRate,n;     		CRate + n%
 
 =======================
 | 2. Extended Bonuses |
@@ -187,13 +212,16 @@ bonus bNoMiscDamage,n;  		Adds n% reduction to received misc damage
 
 Healing
 -------
-bonus bHealPower,n;      			Increases heal amount of all heal skills by n%
-bonus bHealPower2,n;     			Increases heal amount if you are healed by any skills by n%
-bonus2 bSkillHeal,sk,n;  			Increases heal amount of skill sk by n%
-bonus2 bSkillHeal2,sk,n; 			Increases heal amount if you are healed by skill sk by n%
-bonus bAddItemHealRate,n;			Increases HP recovered by n% for healing items
-bonus2 bAddItemHealRate,iid,n;		Increases HP recovered by n% for item iid
-bonus2 bAddItemGroupHealRate,ig,n;	Increases HP recovered by n% for items of item group ig
+bonus bHealPower,n;						Increases heal amount of all heal skills by n%
+bonus bHealPower2,n;					Increases heal amount if you are healed by any skills by n%
+bonus2 bSkillHeal,sk,n;					Increases heal amount of skill sk by n%
+bonus2 bSkillHeal2,sk,n;				Increases heal amount if you are healed by skill sk by n%
+bonus bAddItemHealRate,n;				Increases HP recovered by n% for healing items
+bonus2 bAddItemHealRate,iid,n;			Increases HP recovered by n% for item iid
+bonus2 bAddItemGroupHealRate,ig,n;		Increases HP recovered by n% for items of item group ig
+bonus bAddItemSPHealRate,n;				Increases SP recovered by n% for healing items
+bonus2 bAddItemSPHealRate,iid,n;		Increases SP recovered by n% for item iid
+bonus2 bAddItemGroupSPHealRate,ig,n;	Increases SP recovered by n% for items of item group ig
 
 Cast time/delay
 ---------------
@@ -243,7 +271,8 @@ bonus2 bSubClass,c,x;     		+x% damage reduction against class c
 bonus2 bAddSize,s,x;      		+x% physical damage against size s
 bonus2 bMagicAddSize,s,x; 		+x% magical damage against size s
 bonus2 bSubSize,s,x;      		+x% damage reduction against size s
-bonus2 bMagicSubSize,s,x;      	+x% magic damage reduction against size s
+bonus2 bWeaponSubSize,s,x;		+x% physical damage reduction against size s
+bonus2 bMagicSubSize,s,x;		+x% magic damage reduction against size s
 bonus bNoSizeFix;       		Ignores the size modifier when calculating damage
 
 bonus2 bAddDamageClass,mid,x;     	+x% physical damage against monster mid

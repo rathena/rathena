@@ -1214,7 +1214,7 @@ OnInit:
 rockrdg1,160,306,3	script	Johnny James#revt04	10213,{
 	end;
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 rockrdg1,168,306,3	duplicate(Johnny James#revt04)	Albert Ford#revt08	10214
@@ -2117,7 +2117,7 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	10214,{
 	}
 	end;
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -3700,12 +3700,12 @@ harboro2,52,261,3	script	Red Pipe#1	4_ENERGY_RED,{
 		completequest .@quest_id;
 		if (isbegin_quest(12405) == 2 && isbegin_quest(12406) == 2 && isbegin_quest(12407) == 2 && isbegin_quest(12408) == 2)
 			setquest 12409;// Pipes Maintained
-		disablenpc strnpcinfo(0);
+		disablenpc();
 		initnpctimer;
 	}
 	end;
 OnTimer30000:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	stopnpctimer;
 	end;
 }

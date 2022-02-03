@@ -186,6 +186,27 @@ enum e_bossmap_info {
 	BOSS_INFO_DEAD,
 };
 
+enum class e_purchase_result : uint8{
+	PURCHASE_SUCCEED = 0x0,
+	PURCHASE_FAIL_MONEY,
+	PURCHASE_FAIL_WEIGHT,
+	PURCHASE_FAIL_COUNT,
+	PURCHASE_FAIL_STOCK,
+	PURCHASE_FAIL_ITEM_EXCHANGING,
+	PURCHASE_FAIL_INVALID_MCSTORE,
+	PURCHASE_FAIL_OPEN_MCSTORE_ITEMLIST,
+	PURCHASE_FAIL_GIVE_MONEY,
+	PURCHASE_FAIL_EACHITEM_COUNT,
+	// Unknown names
+	PURCHASE_FAIL_RODEX,
+	PURCHASE_FAIL_EXCHANGE_FAILED,
+	PURCHASE_FAIL_EXCHANGE_DONE,
+	PURCHASE_FAIL_STOCK_EMPTY,
+	PURCHASE_FAIL_GOODS,
+	// End unknown names
+	PURCHASE_FAIL_ADD = 0xff,
+};
+
 #define packet_len(cmd) packet_db[cmd].len
 extern struct s_packet_db packet_db[MAX_PACKET_DB+1];
 extern int packet_db_ack[MAX_ACK_FUNC + 1];
@@ -478,7 +499,8 @@ enum useskill_fail_cause : uint8_t
 	USESKILL_FAIL_THERE_ARE_NPC_AROUND = 83,
 	USESKILL_FAIL_NEED_MORE_BULLET = 84,
 	USESKILL_FAIL_COINS = 85,
-
+	// 86-99 unknown
+	USESKILL_FAIL_AP_INSUFFICIENT = 100,
 	USESKILL_FAIL_MAX
 };
 
@@ -719,10 +741,14 @@ void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, 
 void clif_skill_delunit(struct skill_unit *unit);
 void clif_skillunit_update(struct block_list* bl);
 
+void clif_skill_unit_test(struct block_list *bl, short x, short y, int unit_id, short range, short skill_lv);
+
 void clif_autospell(struct map_session_data *sd,uint16 skill_lv);
 void clif_devotion(struct block_list *src, struct map_session_data *tsd);
 void clif_spiritball( struct block_list *bl, struct block_list* target = nullptr, enum send_target send_target = AREA );
 void clif_soulball( struct map_session_data *sd, struct block_list* target = nullptr, enum send_target send_target = AREA );
+void clif_servantball( struct map_session_data& sd, struct block_list* target = nullptr, enum send_target send_target = AREA );
+void clif_abyssball( struct map_session_data& sd, struct block_list* target = nullptr, enum send_target send_target = AREA );
 void clif_combo_delay(struct block_list *bl,t_tick wait);
 void clif_bladestop(struct block_list *src, int dst_id, int active);
 void clif_changemapcell(int fd, int16 m, int x, int y, int type, enum send_target target);
@@ -876,6 +902,7 @@ void clif_send_petdata(struct map_session_data* sd, struct pet_data* pd, int typ
 #define clif_pet_performance(pd, param) clif_send_petdata(NULL, pd, 4, param)
 void clif_pet_emotion(struct pet_data *pd,int param);
 void clif_pet_food(struct map_session_data *sd,int foodid,int fail);
+void clif_pet_autofeed_status(struct map_session_data* sd, bool force);
 
 //friends list
 int clif_friendslist_toggle_sub(struct map_session_data *sd,va_list ap);
@@ -885,6 +912,7 @@ void clif_friendslist_reqack(struct map_session_data *sd, struct map_session_dat
 void clif_weather(int16 m); // [Valaris]
 void clif_specialeffect(struct block_list* bl, int type, enum send_target target); // special effects [Valaris]
 void clif_specialeffect_single(struct block_list* bl, int type, int fd);
+void clif_specialeffect_remove(struct block_list* bl_src, int effect, enum send_target e_target, struct block_list* bl_target);
 void clif_messagecolor_target(struct block_list *bl, unsigned long color, const char *msg, bool rgb2bgr, enum send_target type, struct map_session_data *sd);
 #define clif_messagecolor(bl, color, msg, rgb2bgr, type) clif_messagecolor_target(bl, color, msg, rgb2bgr, type, NULL) // Mob/Npc color talk [SnakeDrak]
 void clif_specialeffect_value(struct block_list* bl, int effect_id, int num, send_target target);
@@ -1128,6 +1156,7 @@ enum in_ui_type : int8 {
 };
 
 enum out_ui_type : int8 {
+	OUT_UI_STYLIST = 1,
 	OUT_UI_ATTENDANCE = 7
 };
 
@@ -1150,5 +1179,11 @@ void clif_equipswitch_reply( struct map_session_data* sd, bool failed );
 void clif_pet_evolution_result( struct map_session_data* sd, e_pet_evolution_result result );
 
 void clif_parse_skill_toid( struct map_session_data* sd, uint16 skill_id, uint16 skill_lv, int target_id );
+
+void clif_inventory_expansion_info( struct map_session_data* sd );
+
+// Barter System
+void clif_barter_open( struct map_session_data& sd, struct npc_data& nd );
+void clif_barter_extended_open( struct map_session_data& sd, struct npc_data& nd );
 
 #endif /* CLIF_HPP */
