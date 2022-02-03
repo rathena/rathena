@@ -2738,6 +2738,15 @@ static bool itemdb_read_db(const char* file) {
 			}
 
 			body << YAML::Key << "SubType" << YAML::Value << name2Upper(constant + 5);
+		}else if( type == IT_CARD && subtype ){
+			constant = constant_lookup( subtype, "CARD_" );
+
+			if( constant == nullptr ){
+				ShowError( "itemdb_read_db: Unknown card type %d for item %u, skipping.\n", subtype, nameid );
+				continue;
+			}
+
+			body << YAML::Key << "SubType" << YAML::Value << name2Upper(constant + 5);
 		}
 
 		if (atoi(str[4]) > 0)
