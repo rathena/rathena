@@ -10688,7 +10688,7 @@ ACMD_FUNC(addfame)
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!message || !*message || sscanf(message, "%11d", &famepoint) < 1 || famepoint == 0) {
-		sprintf(atcmd_output, msg_txt(sd, 1516), command); // Usage: %s Usage: %s <fame point>
+		sprintf(atcmd_output, msg_txt(sd, 1516), command); // Usage: %s <fame points>.
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
 	}
