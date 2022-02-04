@@ -49878,6 +49878,19 @@ Body:
       NoAuction: true
     Script: |
       percentheal 30,30;
+  - Id: 101279
+    AegisName: 2022_LunarNewYears_box
+    Name: New Year Gift Box
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
   - Id: 101306
     AegisName: Poenitentia_Hammer
     Name: Poenitentia Refining Hammer

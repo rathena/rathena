@@ -138785,6 +138785,31 @@ Body:
             }
          }
       }
+  - Id: 400256
+    AegisName: 2022_LunarNewYears_band
+    Name: Costume New Year Headband
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2179
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+  - Id: 400257
+    AegisName: aegis_400257
+    Name: Choco Banana Bonnet
+    Type: Armor
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    View: 2087
   - Id: 410005
     AegisName: C_Magic_Heir_TW
     Name: Costume Magic Heir
