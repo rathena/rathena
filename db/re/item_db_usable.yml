@@ -49962,7 +49962,7 @@ Body:
   - Id: 101314
     AegisName: aegis_101314
     Name: Helm of Faith Box
-    Type: Etc
+    Type: Usable
     Weight: 10
     Flags:
       BuyingStore: true
