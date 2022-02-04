@@ -10685,7 +10685,7 @@ ACMD_FUNC(addfame)
 
 	int famepoint = 0;
 
-	atcmd_output = {};
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!message || !*message || sscanf(message, "%11d", &famepoint) < 1 || famepoint == 0) {
 		sprintf(atcmd_output, msg_txt(sd, 1516), command); // Usage: %s <fame points>.
@@ -10698,6 +10698,9 @@ ACMD_FUNC(addfame)
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
 	}
+
+	sprintf(atcmd_output, msg_txt(sd, 1518), famepoint, sd->status.name); // %d points were added to '%s'.
+	clif_displaymessage(fd, atcmd_output);
 
 	return 0;
 }
