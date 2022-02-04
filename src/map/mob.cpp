@@ -1157,7 +1157,7 @@ int mob_spawn (struct mob_data *md)
 	if (battle_config.mob_walk_onspawn)
 		md->next_walktime = tick+rnd()%1000+MIN_RANDOMWALKTIME;
 	else
-		md->next_walktime = 0;
+		md->next_walktime = -1;
 	md->last_linktime = tick;
 	md->dmgtick = tick - 5000;
 	md->last_pcneartime = 0;
