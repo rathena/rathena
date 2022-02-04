@@ -47695,6 +47695,20 @@ Body:
       NoConsume: true
     Script: |
       itemskill "WL_READING_SB_READING",10;
+  - Id: 100081
+    AegisName: Kr_B_Special01
+    Name: "[Not for Sale] Advanced Combat Manual"
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      sc_start SC_EXPBOOST,3600000,200;
   - Id: 100083
     AegisName: BackSignon_Box_TW
     Name: Korean Style Apple Hair Box (Middle)
