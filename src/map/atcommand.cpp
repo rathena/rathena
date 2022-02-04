@@ -10694,7 +10694,7 @@ ACMD_FUNC(addfame)
 	}
 
 	if (!pc_addfame(sd, famepoint)) {
-		sprintf(atcmd_output, msg_txt(sd, 1517), job_name(sd->status.class_)); // Trying to add fame to class '%s'
+		sprintf(atcmd_output, msg_txt(sd, 1517), job_name(sd->status.class_)); // Cannot add fame to class '%s'.
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
 	}
