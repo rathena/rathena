@@ -56072,7 +56072,7 @@ Body:
       }
   - Id: 311141
     AegisName: Ice_F_Orb_Skill_4
-    Name: Ice Magic Orb (Brand Drive)
+    Name: Ice Magic Orb (Brand Lit)
     Type: Card
     SubType: Enchant
     Script: |
@@ -56445,7 +56445,7 @@ Body:
       }
   - Id: 311158
     AegisName: Ice_F_Orb_Skill_21
-    Name: Ice Magic Orb (Soul Comet)
+    Name: Ice Magic Orb (Comet Expansion)
     Type: Card
     SubType: Enchant
     Script: |
@@ -58080,7 +58080,7 @@ Body:
       }
   - Id: 311253
     AegisName: Glacier_F_Orb_62
-    Name: Glacier Magic Orb (Shatter Storm)
+    Name: Glacier Magic Orb (Storm Buster)
     Type: Card
     SubType: Enchant
     Script: |
@@ -59050,7 +59050,7 @@ Body:
       }
   - Id: 311331
     AegisName: Glacier_F_Orb_139
-    Name: Glacier Magic Orb (Air Claw)
+    Name: Glacier Magic Orb (Chul Ho Sonic Claw)
     Type: Card
     SubType: Enchant
     Script: |
@@ -59460,6 +59460,163 @@ Body:
     Script: |
       bonus bLongAtkRate,1*getskilllv("SC_REPRODUCE");
       bonus bShortAtkRate,1*getskilllv("SC_REPRODUCE");
+  - Id: 311367
+    AegisName: Gray_Melee1
+    Name: Earth Magic (Warrior) Lv. 1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade(EQI_HEAD_TOP);
+      if (.@g >= 1) {
+        bonus bPow,1;
+        if (.@g >= 2) {
+          bonus bPAtk,1;
+        }
+      }
+  - Id: 311368
+    AegisName: Gray_Melee2
+    Name: Earth Magic (Warrior) Lv. 2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade(EQI_HEAD_TOP);
+      if (.@g >= 1) {
+        bonus bPow,2;
+        if (.@g >= 2) {
+          bonus bPAtk,2;
+        }
+      }
+  - Id: 311369
+    AegisName: Gray_Melee3
+    Name: Earth Magic (Warrior) Lv. 3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade(EQI_HEAD_TOP);
+      if (.@g >= 1) {
+        bonus bPow,3;
+        if (.@g >= 2) {
+          bonus bPAtk,3;
+        }
+      }
+  - Id: 311370
+    AegisName: Gray_Range1
+    Name: Earth Magic (Sniper) Lv. 1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade(EQI_HEAD_TOP);
+      if (.@g >= 1) {
+        bonus bCon,1;
+        if (.@g >= 2) {
+          bonus bPAtk,1;
+        }
+      }
+  - Id: 311371
+    AegisName: Gray_Range2
+    Name: Earth Magic (Sniper) Lv. 2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade(EQI_HEAD_TOP);
+      if (.@g >= 1) {
+        bonus bCon,2;
+        if (.@g >= 2) {
+          bonus bPAtk,2;
+        }
+      }
+  - Id: 311372
+    AegisName: Gray_Range3
+    Name: Earth Magic (Sniper) Lv. 3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade(EQI_HEAD_TOP);
+      if (.@g >= 1) {
+        bonus bCon,3;
+        if (.@g >= 2) {
+          bonus bPAtk,3;
+        }
+      }
+  - Id: 311373
+    AegisName: Gray_Magic1
+    Name: Earth Magic (Magical) Lv. 1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade(EQI_HEAD_TOP);
+      if (.@g >= 1) {
+        bonus bSpl,1;
+        if (.@g >= 2) {
+          bonus bSMatk,1;
+        }
+      }
+  - Id: 311374
+    AegisName: Gray_Magic2
+    Name: Earth Magic (Magical) Lv. 2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade(EQI_HEAD_TOP);
+      if (.@g >= 1) {
+        bonus bSpl,2;
+        if (.@g >= 2) {
+          bonus bSMatk,2;
+        }
+      }
+  - Id: 311375
+    AegisName: Gray_Magic3
+    Name: Earth Magic (Magical) Lv. 3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade(EQI_HEAD_TOP);
+      if (.@g >= 1) {
+        bonus bSpl,3;
+        if (.@g >= 2) {
+          bonus bSMatk,3;
+        }
+      }
+  - Id: 311376
+    AegisName: Gray_Fight1
+    Name: Earth Magic (Combat) Lv. 1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade(EQI_HEAD_TOP);
+      if (.@g >= 1) {
+        bonus bSta,1;
+        if (.@g >= 2) {
+          bonus bPAtk,1;
+        }
+      }
+  - Id: 311377
+    AegisName: Gray_Fight2
+    Name: Earth Magic (Combat) Lv. 2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade(EQI_HEAD_TOP);
+      if (.@g >= 1) {
+        bonus bSta,2;
+        if (.@g >= 2) {
+          bonus bPAtk,2;
+        }
+      }
+  - Id: 311378
+    AegisName: Gray_Fight3
+    Name: Earth Magic (Combat) Lv. 3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade(EQI_HEAD_TOP);
+      if (.@g >= 1) {
+        bonus bSta,3;
+        if (.@g >= 2) {
+          bonus bPAtk,3;
+        }
+      }
+
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -62381,6 +62538,12 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1000854
+    AegisName: aegis_1000854
+    Name: Shadow Redemption Ticket
+    Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000855
     AegisName: CriticalStone_Robe_D
     Name: Critical Stone (Dual)
@@ -62434,6 +62597,17 @@ Body:
   - Id: 1000865
     AegisName: ShadowchasStone_Bottom3
     Name: Shadow Chaser Stone (Bottom)
+    Type: Etc
+    Weight: 100
+  - Id: 1000874
+    AegisName: Enchant_Ticket
+    Name: Enchant Ticket
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1000882
+    AegisName: aegis_1000882
+    Name: Electric Effect (Bottom)
     Type: Etc
     Weight: 100
   - Id: 1220001

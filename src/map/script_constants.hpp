@@ -5525,6 +5525,7 @@
 	export_constant(IG_THIRD_JOB_STONE_MIDDLE_BOX2);
 	export_constant(IG_THIRD_JOB_STONE_BOTTOM_BOX);
 	export_constant(IG_THIRD_JOB_STONE_BOTTOM_BOX2);
+	export_constant(IG_HELM_OF_FAITH_BOX);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

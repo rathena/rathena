@@ -49878,6 +49878,70 @@ Body:
       NoAuction: true
     Script: |
       percentheal 30,30;
+  - Id: 101306
+    AegisName: Poenitentia_Hammer
+    Name: Poenitentia Refining Hammer
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* reformui 101306; */
+  - Id: 101307
+    AegisName: Barmund_Hammer
+    Name: Barmund Refining Hammer
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* reformui 101307; */
+  - Id: 101308
+    AegisName: True_GemShadow_Up
+    Name: True Gemstone Shadow Spellbook
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* synthesisui 101308; */
+  - Id: 101309
+    AegisName: EXPShadow_Up
+    Name: Experience Shadow Spellbook
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* synthesisui 101309; */
+  - Id: 101310
+    AegisName: MagicalShadow_Up
+    Name: Clever Shadow Spellbook
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* synthesisui 101310; */
+  - Id: 101311
+    AegisName: InfinityShadow_Up
+    Name: Infinity Shadow Spellbook
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* synthesisui 101311; */
+  - Id: 101314
+    AegisName: aegis_101314
+    Name: Helm of Faith Box
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      Container: true
+    Script: |
+      getgroupitem(IG_HELM_OF_FAITH_BOX);
   - Id: 200185
     AegisName: LI_Nyangvine_Box1_26
 #   Name: (Limited) Actinidia Cat Fruit Box I (Stone Box 26)
