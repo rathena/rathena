@@ -10676,8 +10676,8 @@ ACMD_FUNC( stylist ){
 }
 
 /**
- * Add fame point into a player
- * Usage: @addfame <fame point>
+ * Add fame point(s) to a player
+ * Usage: @addfame <amount>
  */
 ACMD_FUNC(addfame)
 {
