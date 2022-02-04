@@ -522,6 +522,7 @@ struct Battle_Config
 	int max_third_trans_parameter;
 	int max_extended_parameter;
 	int max_summoner_parameter;
+	int max_fourth_parameter;
 	int max_third_aspd;
 	int max_summoner_aspd;
 	int vcast_stat_scale;
@@ -689,6 +690,25 @@ struct Battle_Config
 	int feature_refineui;
 	int rndopt_drop_pillar;
 	int display_tax_info;
+	int pet_legacy_formula;
+	int pet_distance_check;
+	int pet_hide_check;
+
+	// 4th Jobs Stuff
+	int trait_points_job_change;
+	int use_traitpoint_table;
+	int max_trait_parameter;
+	int max_res_mres_reduction;
+	int max_ap;
+	int ap_rate;
+	int restart_ap_rate;
+	int loose_ap_on_death;
+	int loose_ap_on_map;
+	int keep_ap_on_logout;
+	int attack_machine_level_difference;
+
+	int feature_barter;
+	int feature_barter_extended;
 
 #include "../custom/battle_config_struct.inc"
 };

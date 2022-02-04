@@ -322,6 +322,45 @@ const char* job_name(int class_) {
 		case JOB_BABY_STAR_EMPEROR2:
 			return msg_txt(120);
 
+		case JOB_DRAGON_KNIGHT:
+		case JOB_MEISTER:
+		case JOB_SHADOW_CROSS:
+		case JOB_ARCH_MAGE:
+		case JOB_CARDINAL:
+		case JOB_WINDHAWK:
+		case JOB_IMPERIAL_GUARD:
+		case JOB_BIOLO:
+		case JOB_ABYSS_CHASER:
+		case JOB_ELEMENTAL_MASTER:
+		case JOB_INQUISITOR:
+		case JOB_TROUBADOUR:
+		case JOB_TROUVERE:
+			return msg_txt( 122 - JOB_DRAGON_KNIGHT + class_ );
+
+		case JOB_WINDHAWK2:
+			return msg_txt( 127 );
+
+		case JOB_MEISTER2:
+			return msg_txt( 123 );
+
+		case JOB_DRAGON_KNIGHT2:
+			return msg_txt( 122 );
+
+		case JOB_IMPERIAL_GUARD2:
+			return msg_txt( 128 );
+
+		case JOB_SKY_EMPEROR:
+		case JOB_SOUL_ASCETIC:
+		case JOB_SHINKIRO:
+		case JOB_SHIRANUI:
+		case JOB_NIGHT_WATCH:
+		case JOB_HYPER_NOVICE:
+		case JOB_SPIRIT_HANDLER:
+			return msg_txt( 135 - JOB_SKY_EMPEROR + class_ );
+
+		case JOB_SKY_EMPEROR2:
+			return msg_txt( 135 );
+
 		default:
 			return msg_txt(199);
 	}

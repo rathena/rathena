@@ -318,11 +318,6 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 		const YAML::Node &drops = node["Drops"];
 
 		for (const YAML::Node &dropNode : drops) {
-			if (quest->objectives.size() >= MAX_QUEST_OBJECTIVES) {
-				this->invalidWarning(dropNode, "Drops list exceeds the maximum of %d, skipping.\n", MAX_QUEST_OBJECTIVES);
-				return 0;
-			}
-
 			uint32 mob_id = 0; // Can be 0 which means all monsters
 
 			if (this->nodeExists(dropNode, "Mob")) {
@@ -731,6 +726,12 @@ void quest_update_objective(struct map_session_data *sd, struct mob_data* md)
 					objective_check++;
 				if (qi->objectives[j]->mapid < 0 || (qi->objectives[j]->mapid == sd->bl.m && md->spawn != nullptr))
 					objective_check++;
+				else if (qi->objectives[j]->mapid >= 0) {
+					struct map_data *mapdata = map_getmapdata(sd->bl.m);
+
+					if (mapdata->instance_id && mapdata->instance_src_map == qi->objectives[j]->mapid)
+						objective_check++;
+				}
 			}
 
 			if (objective_check == 6 && sd->quest_log[i].count[j] < qi->objectives[j]->count)  {

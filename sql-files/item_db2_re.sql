@@ -53,6 +53,7 @@ CREATE TABLE `item_db2_re` (
   `class_third` tinyint(1) unsigned DEFAULT NULL,
   `class_third_upper` tinyint(1) unsigned DEFAULT NULL,
   `class_third_baby` tinyint(1) unsigned DEFAULT NULL,
+  `class_fourth` tinyint(1) unsigned DEFAULT NULL,
   `gender` varchar(10) DEFAULT NULL,
   `location_head_top` tinyint(1) unsigned DEFAULT NULL,
   `location_head_mid` tinyint(1) unsigned DEFAULT NULL,
@@ -175,8 +176,8 @@ REPLACE INTO `item_db2_re` (`id`,`name_aegis`,`name_english`,`type`) VALUES (629
 
 # Old Tuxedo and Wedding Dress, will display the outfit when worn.
 #=============================================================
-REPLACE INTO `item_db2_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`job_all`,`job_novice`,`location_armor`,`refineable`,`equip_script`,`unequip_script`) VALUES (2338,'Wedding_Dress','Wedding Dress','Armor',43000,500,true,false,true,true,'sc_start SC_WEDDING,INFINITE_TICK,0;','sc_end SC_WEDDING;');
-REPLACE INTO `item_db2_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`job_all`,`job_novice`,`gender`,`location_armor`,`refineable`,`equip_script`,`unequip_script`) VALUES (7170,'Tuxedo','Tuxedo','Armor',43000,10,true,false,'Male',true,true,'sc_start SC_WEDDING,INFINITE_TICK,0;','sc_end SC_WEDDING;');
+REPLACE INTO `item_db2_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`job_all`,`job_novice`,`gender`,`location_armor`,`refineable`,`equip_script`,`unequip_script`) VALUES (2338,'Wedding_Dress','Wedding Dress','Armor',43000,500,true,false,'Female',true,true,'sc_start SC_WEDDING,INFINITE_TICK,0;','sc_end SC_WEDDING;');
+REPLACE INTO `item_db2_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`job_all`,`job_novice`,`gender`,`location_armor`,`armor_level`,`refineable`,`equip_script`,`unequip_script`) VALUES (7170,'Tuxedo','Tuxedo','Armor',43000,10,true,false,'Male',true,1,true,'sc_start SC_WEDDING,INFINITE_TICK,0;','sc_end SC_WEDDING;');
 
 # Non-kRO Eden Group Mark effect
 #=============================================================

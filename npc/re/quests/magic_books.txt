@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Masao, Muad_Dib (translation)
 //===== Current Version: ===================================== 
-//= 1.1a
+//= 1.3
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //= 1.1b Fixed the rand part in "Mysterious Documents" to match
 //=	 Aegis & fixed a bracket issue. [Capuche]
 //= 1.2 Updates Magic Books gained from Lea. [Aleos]
+//= 1.3 Fixes checkquest calls. [Everade]
 //============================================================ 
 
 // Main Quest :: war_book
@@ -567,11 +568,11 @@ dic_in01,25,190,0	script	Mysterious Documents	CLEAR_NPC,{
 		mes "When you approach the documents, an Evil Giant that looks like the archive manager tries to call Guard Galton. You should get out of here quickly.";
 		close;
 	}
-	if (checkquest(12165,"PLAYTIME") == 1) {
+	if (checkquest(12165,PLAYTIME) == 1) {
 		mes "The documents are making you feel nauseous. You should come back later after your stomach settles.";
 		close;
 	}
-	if (checkquest(12165,"PLAYTIME") == 2) {
+	if (checkquest(12165,PLAYTIME) == 2) {
 		mes "You don't feel as nauseous anymore. It should be safe to proceed now.";
 		erasequest 12165;
 		close;

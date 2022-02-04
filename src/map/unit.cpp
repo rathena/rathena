@@ -65,8 +65,8 @@ struct unit_data* unit_bl2ud(struct block_list *bl)
 	case BL_PET: return &((struct pet_data*)bl)->ud;
 	case BL_NPC: return &((struct npc_data*)bl)->ud;
 	case BL_HOM: return &((struct homun_data*)bl)->ud;
-	case BL_MER: return &((struct mercenary_data*)bl)->ud;
-	case BL_ELEM: return &((struct elemental_data*)bl)->ud;
+	case BL_MER: return &((s_mercenary_data*)bl)->ud;
+	case BL_ELEM: return &((s_elemental_data*)bl)->ud;
 	default : return NULL;
 	}
 }
@@ -139,8 +139,14 @@ int unit_walktoxy_sub(struct block_list *bl)
 		i = status_get_speed(bl)*MOVE_DIAGONAL_COST/MOVE_COST;
 	else
 		i = status_get_speed(bl);
-	if( i > 0)
+	if( i > 0 ){
+		if( ud->walktimer != INVALID_TIMER ){
+			delete_timer( ud->walktimer, unit_walktoxy_timer );
+			ud->walktimer = INVALID_TIMER;
+		}
 		ud->walktimer = add_timer(gettick()+i,unit_walktoxy_timer,bl->id,i);
+	}
+
 	return 1;
 }
 
@@ -388,13 +394,12 @@ static TIMER_FUNC(unit_walktoxy_timer)
 	if(ud->walkpath.path_pos>=ud->walkpath.path_len)
 		return 0;
 
-	if(ud->walkpath.path[ud->walkpath.path_pos]>=DIR_MAX)
-		return 1;
-
-	int x = bl->x;
-	int y = bl->y;
-
 	enum directions dir = ud->walkpath.path[ud->walkpath.path_pos];
+
+	if( dir <= DIR_CENTER || dir >= DIR_MAX ){
+		return 0;
+	}
+
 	ud->dir = dir;
 
 	int dx = dirx[dir];
@@ -419,6 +424,9 @@ static TIMER_FUNC(unit_walktoxy_timer)
 			break;
 		case BL_NPC: nd = BL_CAST(BL_NPC, bl); break;
 	}
+
+	int x = bl->x;
+	int y = bl->y;
 
 	//Monsters will walk into an icewall from the west and south if they already started walking
 	if(map_getcell(bl->m,x+dx,y+dy,CELL_CHKNOPASS) 
@@ -628,7 +636,9 @@ static TIMER_FUNC(unit_walktoxy_timer)
 		ud->to_x = bl->x;
 		ud->to_y = bl->y;
 
-		if(battle_config.official_cell_stack_limit > 0
+		if (bl->type != BL_NPC	// walking npc ignores cell stack limit
+			&& !ud->state.ignore_cell_stack_limit
+			&& battle_config.official_cell_stack_limit > 0
 			&& map_count_oncell(bl->m, x, y, BL_CHAR|BL_NPC, 1) > battle_config.official_cell_stack_limit) {
 			//Walked on occupied cell, call unit_walktoxy again
 			if(ud->steptimer != INVALID_TIMER) {
@@ -1805,6 +1815,34 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 					}
 				}
 				break;
+			case DK_SERVANT_W_SIGN: {
+					uint8 i = 0, count = min(skill_lv, MAX_SERVANT_SIGN);
+
+					ARR_FIND( 0, count, i, sd->servant_sign[i] == target_id );
+
+					// Already targetted
+					if( i < count ){
+						break;
+					}
+
+					ARR_FIND( 0, count, i, sd->servant_sign[i] == 0 );
+
+					// No free slots
+					if( i == count ){
+						clif_skill_fail( sd, skill_id, USESKILL_FAIL_LEVEL, 0 );
+						return 0;
+					}
+				}
+				break;
+			case TR_RETROSPECTION:
+				// Prevent using the song skill if you no longer have the skill in your tree.
+				if (!sd->skill_id_song || pc_checkskill(sd, sd->skill_id_song) <= 0) {
+					clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+					return 0;
+				}
+
+				sd->skill_id_old = skill_id;
+				break;
 		}
 
 		if (!skill_check_condition_castbegin(sd, skill_id, skill_lv))
@@ -1925,6 +1963,16 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 			if (sc && sc->data[SC_WUGDASH])
 				casttime = -1;
 			break;
+		case DK_SERVANT_W_PHANTOM: { // Stops servants from being consumed on unmarked targets.
+				status_change *tsc = status_get_sc(target);
+
+				// Only allow to attack if the enemy has a sign mark given by the caster.
+				if( tsc == nullptr || tsc->data[SC_SERVANT_SIGN] == nullptr || tsc->data[SC_SERVANT_SIGN]->val1 != src->id ){
+					clif_skill_fail(sd, skill_id, USESKILL_FAIL, 0);
+					return 0;
+				}
+			}
+			break;
 		case EL_WIND_SLASH:
 		case EL_HURRICANE:
 		case EL_TYPOON_MIS:
@@ -2013,12 +2061,12 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 
 	if( sc ) {
 		// These 3 status do not stack, so it's efficient to use if-else
- 		if( sc->data[SC_CLOAKING] && !(sc->data[SC_CLOAKING]->val4&4) && skill_id != AS_CLOAKING ) {
+ 		if( sc->data[SC_CLOAKING] && !(sc->data[SC_CLOAKING]->val4&4) && skill_id != AS_CLOAKING && skill_id != SHC_SHADOW_STAB) {
 			status_change_end(src, SC_CLOAKING, INVALID_TIMER);
 
 			if (!src->prev)
 				return 0; // Warped away!
-		} else if( sc->data[SC_CLOAKINGEXCEED] && !(sc->data[SC_CLOAKINGEXCEED]->val4&4) && skill_id != GC_CLOAKINGEXCEED ) {
+		} else if( sc->data[SC_CLOAKINGEXCEED] && !(sc->data[SC_CLOAKINGEXCEED]->val4&4) && skill_id != GC_CLOAKINGEXCEED && skill_id != SHC_SHADOW_STAB) {
 			status_change_end(src,SC_CLOAKINGEXCEED, INVALID_TIMER);
 
 			if (!src->prev)
@@ -3031,6 +3079,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		status_change_end(bl, SC_TINDER_BREAKER, INVALID_TIMER);
 		status_change_end(bl, SC_TINDER_BREAKER2, INVALID_TIMER);
 		status_change_end(bl, SC_FLASHKICK, INVALID_TIMER);
+		status_change_end(bl, SC_SERVANT_SIGN, INVALID_TIMER);
 		status_change_end(bl, SC_HIDING, INVALID_TIMER);
 		// Ensure the bl is a PC; if so, we'll handle the removal of cloaking and cloaking exceed later
 		if ( bl->type != BL_PC ) {
@@ -3206,7 +3255,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			break;
 		}
 		case BL_MER: {
-			struct mercenary_data *md = (struct mercenary_data *)bl;
+			s_mercenary_data *md = (s_mercenary_data *)bl;
 
 			ud->canact_tick = ud->canmove_tick;
 
@@ -3221,7 +3270,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			break;
 		}
 		case BL_ELEM: {
-			struct elemental_data *ed = (struct elemental_data *)bl;
+			s_elemental_data *ed = (s_elemental_data *)bl;
 
 			ud->canact_tick = ud->canmove_tick;
 
@@ -3547,7 +3596,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			break;
 		}
 		case BL_MER: {
-			struct mercenary_data *md = (TBL_MER*)bl;
+			s_mercenary_data *md = (TBL_MER*)bl;
 			struct map_session_data *sd = md->master;
 
 			if( mercenary_get_lifetime(md) > 0 )
@@ -3570,7 +3619,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			break;
 		}
 		case BL_ELEM: {
-			struct elemental_data *ed = (TBL_ELEM*)bl;
+			s_elemental_data *ed = (TBL_ELEM*)bl;
 			struct map_session_data *sd = ed->master;
 
 			if( elemental_get_lifetime(ed) > 0 )

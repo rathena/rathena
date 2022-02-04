@@ -458,7 +458,7 @@ struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 	md->mob_id = data->id;
 	md->state.boss = data->state.boss;
 	md->db = mob_db.find(md->mob_id);
-	if (data->level > 0 && data->level <= MAX_LEVEL)
+	if (data->level > 0)
 		md->level = data->level;
 	memcpy(md->name, data->name, NAME_LENGTH);
 	if (data->state.ai)
@@ -1194,7 +1194,7 @@ int mob_spawn (struct mob_data *md)
 /*==========================================
  * Determines if the mob can change target. [Skotlex]
  *------------------------------------------*/
-static int mob_can_changetarget(struct mob_data* md, struct block_list* target, enum e_mode mode)
+static int mob_can_changetarget(struct mob_data* md, struct block_list* target, int mode)
 {
 	// Special feature that makes monsters always attack the person that provoked them
 	if(battle_config.mob_ai&0x800 && md->state.provoke_flag)
@@ -1437,7 +1437,7 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,t_tick tick)
 		// Distance with between slave and master is measured.
 		md->master_dist = distance_bl(&md->bl, bl);
 
-		if (battle_config.slave_stick_with_master) {
+		if (battle_config.slave_stick_with_master || md->special_state.ai == AI_ABR || md->special_state.ai == AI_BIONIC) {
 			// Since the master was in near immediately before, teleport is carried out and it pursues.
 			if (bl->m != md->bl.m || (old_dist < 10 && md->master_dist > 18) || md->master_dist > MAX_MINCHASE) {
 				md->master_dist = 0;
@@ -1516,6 +1516,10 @@ int mob_unlocktarget(struct mob_data *md, t_tick tick)
 		//Because it is not unset when the mob finishes walking.
 		md->state.skillstate = MSS_IDLE;
 	case MSS_IDLE:
+		if( md->ud.walktimer == INVALID_TIMER && md->idle_event[0] && npc_event_do_id( md->idle_event, md->bl.id ) > 0 ){
+			md->idle_event[0] = 0;
+			break;
+		}
 		// Idle skill.
 		if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL) && mobskill_use(md, tick, -1))
 			break;
@@ -1543,7 +1547,8 @@ int mob_unlocktarget(struct mob_data *md, t_tick tick)
 		md->ud.target_to = 0;
 		unit_set_target(&md->ud, 0);
 	}
-	if (battle_config.official_cell_stack_limit > 0
+	
+	if (!md->ud.state.ignore_cell_stack_limit && battle_config.official_cell_stack_limit > 0
 		&& (md->min_chase == md->db->range3 || battle_config.mob_ai & 0x8)
 		&& map_count_oncell(md->bl.m, md->bl.x, md->bl.y, BL_CHAR | BL_NPC, 1) > battle_config.official_cell_stack_limit) {
 		unit_walktoxy(&md->bl, md->bl.x, md->bl.y, 8);
@@ -1678,7 +1683,7 @@ int mob_warpchase(struct mob_data *md, struct block_list *target)
 static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 {
 	struct block_list *tbl = nullptr, *abl = nullptr;
-	enum e_mode mode;
+	int mode;
 	int view_range, can_move;
 
 	if(md->bl.prev == nullptr || md->status.hp == 0)
@@ -2045,6 +2050,15 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 		return 0;
 	}
 
+	if (md->ud.walktimer == INVALID_TIMER) {
+		// Because it is not unset when the mob finishes walking.
+		md->state.skillstate = MSS_IDLE;
+		if (md->idle_event[0] && npc_event_do_id( md->idle_event, md->bl.id ) > 0) {
+			md->idle_event[0] = 0;
+			return 0;
+		}
+	}
+
 	if( DIFF_TICK(md->next_walktime,tick) < 0 && status_has_mode(&md->status,MD_CANMOVE) && unit_can_move(&md->bl) )
 	{
 		// Move probability for mobs away from players
@@ -2056,9 +2070,6 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 	}
 	else if( md->ud.walktimer == INVALID_TIMER )
 	{
-		//Because it is not unset when the mob finishes walking.
-		md->state.skillstate = MSS_IDLE;
-
 		// Probability for mobs far from players from doing their IDLE skill.
 		// In Aegis, this is 100% for mobs that have been activated by players and none otherwise.
 		if( mob_is_spotted(md) &&
@@ -2340,7 +2351,7 @@ void mob_log_damage(struct mob_data *md, struct block_list *src, int damage)
 		}
 		case BL_MER:
 		{
-			struct mercenary_data *mer = (TBL_MER*)src;
+			s_mercenary_data *mer = (TBL_MER*)src;
 			if( mer->master )
 				char_id = mer->master->status.char_id;
 			if( damage )
@@ -2379,7 +2390,7 @@ void mob_log_damage(struct mob_data *md, struct block_list *src, int damage)
 		}
 		case BL_ELEM:
 		{
-			struct elemental_data *ele = (TBL_ELEM*)src;
+			s_elemental_data *ele = (TBL_ELEM*)src;
 			if( ele->master )
 				char_id = ele->master->status.char_id;
 			if( damage )
@@ -3045,7 +3056,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		//Emperium destroyed by script. Discard mvp character. [Skotlex]
 		mvp_sd = NULL;
 
-	rebirth =  ( md->sc.data[SC_KAIZEL] || (md->sc.data[SC_REBIRTH] && !md->state.rebirth) );
+	rebirth =  ( md->sc.data[SC_KAIZEL] || md->sc.data[SC_ULTIMATE_S] || (md->sc.data[SC_REBIRTH] && !md->state.rebirth) );
 	if( !rebirth ) { // Only trigger event on final kill
 		if( src ) {
 			switch( src->type ) { //allowed type
@@ -3657,6 +3668,24 @@ struct mob_data *mob_getfriendstatus(struct mob_data *md,int cond1,int cond2)
 	return fr;
 }
 
+// Display message from mob_chat_db.yml
+bool mob_chat_display_message(mob_data &md, uint16 msg_id) {
+	std::shared_ptr<s_mob_chat> mc = mob_chat_db.find(msg_id);
+
+	if (mc != nullptr) {
+		std::string name = md.name, output;
+		std::size_t unique = name.find("#");
+
+		if (unique != std::string::npos)
+			name = name.substr(0, unique); // discard extra name identifier if present [Daegaladh]
+		output = name + " : " + mc->msg;
+
+		clif_messagecolor(&md.bl, mc->color, output.c_str(), true, AREA_CHAT_WOC);
+		return true;
+	}
+	return false;
+}
+
 /*==========================================
  * Skill use judging
  *------------------------------------------*/
@@ -3856,18 +3885,7 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event)
 		}
 		//Skill used. Post-setups...
 		if ( ms[i]->msg_id ){ //Display color message [SnakeDrak]
-			std::shared_ptr<s_mob_chat> mc = mob_chat_db.find(ms[i]->msg_id);
-
-			if (mc) {
-				std::string name = md->name, output;
-				std::size_t unique = name.find("#");
-
-				if (unique != std::string::npos)
-					name = name.substr(0, unique); // discard extra name identifier if present [Daegaladh]
-				output = name + " : " + mc->msg;
-
-				clif_messagecolor(&md->bl, mc->color, output.c_str(), true, AREA_CHAT_WOC);
-			}
+			mob_chat_display_message(*md, ms[i]->msg_id);
 		}
 		if(!(battle_config.mob_ai&0x200)) { //pass on delay to same skill.
 			for (j = 0; j < ms.size(); j++)
@@ -3948,7 +3966,7 @@ static bool mob_clone_disabled_skills(uint16 skill_id) {
 int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, const char *event, int master_id, enum e_mode mode, int flag, unsigned int duration)
 {
 	int mob_id;
-	int i,j,inf, fd;
+	int inf, fd;
 	struct mob_data *md;
 	struct status_data *status;
 
@@ -3997,122 +4015,132 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 	sd->fd = 0;
 
 	//Go Backwards to give better priority to advanced skills.
-	for (i=0,j = MAX_SKILL_TREE-1;j>=0 && i< MAX_MOBSKILL ;j--) {
-		uint16 skill_id = skill_tree[pc_class2idx(sd->status.class_)][j].skill_id;
-		uint16 sk_idx = 0;
+	std::shared_ptr<s_skill_tree> tree = skill_tree_db.find(sd->status.class_);
 
-		if (!skill_id || !(sk_idx = skill_get_index(skill_id)) || sd->status.skill[sk_idx].lv < 1 ||
-			skill_get_inf2_(skill_id, { INF2_ISWEDDING, INF2_ISGUILD }) ||
-			mob_clone_disabled_skills(skill_id)
-		)
-			continue;
-		//Normal aggressive mob, disable skills that cannot help them fight
-		//against players (those with flags UF_NOMOB and UF_NOPC are specific
-		//to always aid players!) [Skotlex]
-		if (!(flag&1) &&
-			skill_get_unit_id(skill_id) &&
-			skill_get_unit_flag_(skill_id, { UF_NOMOB, UF_NOPC }))
-			continue;
-		/**
-		 * The clone should be able to cast the skill (e.g. have the required weapon) bugreport:5299)
-		 **/
-		if( !skill_check_condition_castbegin(sd,skill_id,sd->status.skill[sk_idx].lv) )
-			continue;
+	if( tree != nullptr && !tree->skills.empty() ){
+		std::vector<uint16> skill_list;
 
-		std::shared_ptr<s_mob_skill> ms = std::make_shared<s_mob_skill>();
+		for (const auto &it : tree->skills)
+			skill_list.push_back(it.first);
+		std::sort(skill_list.rbegin(), skill_list.rend());
 
-		ms->skill_id = skill_id;
-		ms->skill_lv = sd->status.skill[sk_idx].lv;
-		ms->state = MSS_ANY;
-		ms->permillage = 500*battle_config.mob_skill_rate/100; //Default chance of all skills: 5%
-		ms->emotion = -1;
-		ms->cancel = 0;
-		ms->casttime = skill_castfix(&sd->bl,skill_id, ms->skill_lv);
-		ms->delay = 5000+skill_delayfix(&sd->bl,skill_id, ms->skill_lv);
-		ms->msg_id = 0;
+		for (const auto &it : skill_list) {
+			if (db->skill.size() >= MAX_MOBSKILL)
+				break;
+			uint16 skill_id = it;
+			uint16 sk_idx = 0;
 
-		inf = skill_get_inf(skill_id);
-		if (inf&INF_ATTACK_SKILL) {
-			ms->target = MST_TARGET;
-			ms->cond1 = MSC_ALWAYS;
-			if (skill_get_range(skill_id, ms->skill_lv)  > 3)
-				ms->state = MSS_ANYTARGET;
-			else
-				ms->state = MSS_BERSERK;
-		} else if(inf&INF_GROUND_SKILL) {
-			if (skill_get_inf2(skill_id, INF2_ISTRAP)) { //Traps!
-				ms->state = MSS_IDLE;
-				ms->target = MST_AROUND2;
-				ms->delay = 60000;
-			} else if (skill_get_unit_target(skill_id) == BCT_ENEMY) { //Target Enemy
-				ms->state = MSS_ANYTARGET;
+			if (!skill_id || !(sk_idx = skill_get_index(skill_id)) || sd->status.skill[sk_idx].lv < 1 ||
+				skill_get_inf2_(skill_id, { INF2_ISWEDDING, INF2_ISGUILD }) ||
+				mob_clone_disabled_skills(skill_id)
+			)
+				continue;
+			//Normal aggressive mob, disable skills that cannot help them fight
+			//against players (those with flags UF_NOMOB and UF_NOPC are specific
+			//to always aid players!) [Skotlex]
+			if (!(flag&1) &&
+				skill_get_unit_id(skill_id) &&
+				skill_get_unit_flag_(skill_id, { UF_NOMOB, UF_NOPC }))
+				continue;
+			/**
+			 * The clone should be able to cast the skill (e.g. have the required weapon) bugreport:5299)
+			 **/
+			if( !skill_check_condition_castbegin(sd,skill_id,sd->status.skill[sk_idx].lv) )
+				continue;
+
+			std::shared_ptr<s_mob_skill> ms = std::make_shared<s_mob_skill>();
+
+			ms->skill_id = skill_id;
+			ms->skill_lv = sd->status.skill[sk_idx].lv;
+			ms->state = MSS_ANY;
+			ms->permillage = 500*battle_config.mob_skill_rate/100; //Default chance of all skills: 5%
+			ms->emotion = -1;
+			ms->cancel = 0;
+			ms->casttime = skill_castfix(&sd->bl,skill_id, ms->skill_lv);
+			ms->delay = 5000+skill_delayfix(&sd->bl,skill_id, ms->skill_lv);
+			ms->msg_id = 0;
+
+			inf = skill_get_inf(skill_id);
+			if (inf&INF_ATTACK_SKILL) {
 				ms->target = MST_TARGET;
 				ms->cond1 = MSC_ALWAYS;
-			} else { //Target allies
-				ms->target = MST_FRIEND;
-				ms->cond1 = MSC_FRIENDHPLTMAXRATE;
-				ms->cond2 = 95;
-			}
-		} else if (inf&INF_SELF_SKILL) {
-			if (skill_get_inf2(skill_id, INF2_NOTARGETSELF)) { //auto-select target skill.
-				ms->target = MST_TARGET;
-				ms->cond1 = MSC_ALWAYS;
-				if (skill_get_range(skill_id, ms->skill_lv)  > 3) {
+				if (skill_get_range(skill_id, ms->skill_lv)  > 3)
 					ms->state = MSS_ANYTARGET;
-				} else {
+				else
 					ms->state = MSS_BERSERK;
-				}
-			} else { //Self skill
-				ms->target = MST_SELF;
-				ms->cond1 = MSC_MYHPLTMAXRATE;
-				ms->cond2 = 90;
-				ms->permillage = 2000;
-				//Delay: Remove the stock 5 secs and add half of the support time.
-				ms->delay += -5000 +(skill_get_time(skill_id, ms->skill_lv) + skill_get_time2(skill_id, ms->skill_lv))/2;
-				if (ms->delay < 5000)
-					ms->delay = 5000; //With a minimum of 5 secs.
-			}
-		} else if (inf&INF_SUPPORT_SKILL) {
-			ms->target = MST_FRIEND;
-			ms->cond1 = MSC_FRIENDHPLTMAXRATE;
-			ms->cond2 = 90;
-			if (skill_id == AL_HEAL)
-				ms->permillage = 5000; //Higher skill rate usage for heal.
-			else if (skill_id == ALL_RESURRECTION)
-				ms->cond2 = 1;
-			//Delay: Remove the stock 5 secs and add half of the support time.
-			ms->delay += -5000 +(skill_get_time(skill_id, ms->skill_lv) + skill_get_time2(skill_id, ms->skill_lv))/2;
-			if (ms->delay < 2000)
-				ms->delay = 2000; //With a minimum of 2 secs.
-
-			if (i+1 < MAX_MOBSKILL) { //duplicate this so it also triggers on self.
-				ms->target = MST_SELF;
-				ms->cond1 = MSC_MYHPLTMAXRATE;
-				db->skill.insert(db->skill.begin() + i, ms);
-				++i;
-			}
-		} else {
-			switch (skill_id) { //Certain Special skills that are passive, and thus, never triggered.
-				case MO_TRIPLEATTACK:
-				case TF_DOUBLE:
-				case GS_CHAINACTION:
-					ms->state = MSS_BERSERK;
+			} else if(inf&INF_GROUND_SKILL) {
+				if (skill_get_inf2(skill_id, INF2_ISTRAP)) { //Traps!
+					ms->state = MSS_IDLE;
+					ms->target = MST_AROUND2;
+					ms->delay = 60000;
+				} else if (skill_get_unit_target(skill_id) == BCT_ENEMY) { //Target Enemy
+					ms->state = MSS_ANYTARGET;
 					ms->target = MST_TARGET;
 					ms->cond1 = MSC_ALWAYS;
-					ms->permillage = skill_id==MO_TRIPLEATTACK?(3000-ms->skill_lv*100):(ms->skill_lv*500);
-					ms->delay -= 5000; //Remove the added delay as these could trigger on "all hits".
-					break;
-				default: //Untreated Skill
-					continue;
-			}
-		}
-		if (battle_config.mob_skill_rate!= 100)
-			ms->permillage = ms->permillage*battle_config.mob_skill_rate/100;
-		if (battle_config.mob_skill_delay != 100)
-			ms->delay = ms->delay*battle_config.mob_skill_delay/100;
+				} else { //Target allies
+					ms->target = MST_FRIEND;
+					ms->cond1 = MSC_FRIENDHPLTMAXRATE;
+					ms->cond2 = 95;
+				}
+			} else if (inf&INF_SELF_SKILL) {
+				if (skill_get_inf2(skill_id, INF2_NOTARGETSELF)) { //auto-select target skill.
+					ms->target = MST_TARGET;
+					ms->cond1 = MSC_ALWAYS;
+					if (skill_get_range(skill_id, ms->skill_lv)  > 3) {
+						ms->state = MSS_ANYTARGET;
+					} else {
+						ms->state = MSS_BERSERK;
+					}
+				} else { //Self skill
+					ms->target = MST_SELF;
+					ms->cond1 = MSC_MYHPLTMAXRATE;
+					ms->cond2 = 90;
+					ms->permillage = 2000;
+					//Delay: Remove the stock 5 secs and add half of the support time.
+					ms->delay += -5000 +(skill_get_time(skill_id, ms->skill_lv) + skill_get_time2(skill_id, ms->skill_lv))/2;
+					if (ms->delay < 5000)
+						ms->delay = 5000; //With a minimum of 5 secs.
+				}
+			} else if (inf&INF_SUPPORT_SKILL) {
+				ms->target = MST_FRIEND;
+				ms->cond1 = MSC_FRIENDHPLTMAXRATE;
+				ms->cond2 = 90;
+				if (skill_id == AL_HEAL)
+					ms->permillage = 5000; //Higher skill rate usage for heal.
+				else if (skill_id == ALL_RESURRECTION)
+					ms->cond2 = 1;
+				//Delay: Remove the stock 5 secs and add half of the support time.
+				ms->delay += -5000 +(skill_get_time(skill_id, ms->skill_lv) + skill_get_time2(skill_id, ms->skill_lv))/2;
+				if (ms->delay < 2000)
+					ms->delay = 2000; //With a minimum of 2 secs.
 
-		db->skill.push_back(ms);
-		++i;
+				if (db->skill.size() < MAX_MOBSKILL) { //duplicate this so it also triggers on self.
+					ms->target = MST_SELF;
+					ms->cond1 = MSC_MYHPLTMAXRATE;
+					db->skill.push_back(ms);
+				}
+			} else {
+				switch (skill_id) { //Certain Special skills that are passive, and thus, never triggered.
+					case MO_TRIPLEATTACK:
+					case TF_DOUBLE:
+					case GS_CHAINACTION:
+						ms->state = MSS_BERSERK;
+						ms->target = MST_TARGET;
+						ms->cond1 = MSC_ALWAYS;
+						ms->permillage = skill_id==MO_TRIPLEATTACK?(3000-ms->skill_lv*100):(ms->skill_lv*500);
+						ms->delay -= 5000; //Remove the added delay as these could trigger on "all hits".
+						break;
+					default: //Untreated Skill
+						continue;
+				}
+			}
+			if (battle_config.mob_skill_rate!= 100)
+				ms->permillage = ms->permillage*battle_config.mob_skill_rate/100;
+			if (battle_config.mob_skill_delay != 100)
+				ms->delay = ms->delay*battle_config.mob_skill_delay/100;
+
+			db->skill.push_back(ms);
+		}
 	}
 
 	/**
@@ -4304,7 +4332,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "AegisName", name))
 			return 0;
 
-		if (name.length() > NAME_LENGTH) {
+		if (name.size() > NAME_LENGTH) {
 			this->invalidWarning(node["AegisName"], "AegisName \"%s\" exceeds maximum of %d characters, capping...\n", name.c_str(), NAME_LENGTH - 1);
 		}
 
@@ -4318,7 +4346,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Name", name))
 			return 0;
 
-		if (name.length() > NAME_LENGTH) {
+		if (name.size() > NAME_LENGTH) {
 			this->invalidWarning(node["Name"], "Name \"%s\" exceeds maximum of %d characters, capping...\n", name.c_str(), NAME_LENGTH - 1);
 		}
 
@@ -4332,7 +4360,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "JapaneseName", name))
 			return 0;
 
-		if (name.length() > NAME_LENGTH) {
+		if (name.size() > NAME_LENGTH) {
 			this->invalidWarning(node["JapaneseName"], "JapaneseName \"%s\" exceeds maximum of %d characters, capping...\n", name.c_str(), NAME_LENGTH - 1);
 		}
 
@@ -4446,7 +4474,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 			mob->status.rhw.atk2 = 0;
 #endif
 	}
-	
+
 	if (this->nodeExists(node, "Defense")) {
 		uint16 def;
 
@@ -4463,7 +4491,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!exists)
 			mob->status.def = 0;
 	}
-	
+
 	if (this->nodeExists(node, "MagicDefense")) {
 		uint16 def;
 
@@ -4480,7 +4508,33 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!exists)
 			mob->status.mdef = 0;
 	}
-	
+
+	if (this->nodeExists(node, "Resistance")) {
+		uint16 res;
+
+		if (!this->asUInt16(node, "Resistance", res))
+			return 0;
+
+		mob->status.res = res;
+	}
+	else {
+		if (!exists)
+			mob->status.res = 0;
+	}
+
+	if (this->nodeExists(node, "MagicResistance")) {
+		uint16 mres;
+
+		if (!this->asUInt16(node, "MagicResistance", mres))
+			return 0;
+
+		mob->status.mres = mres;
+	}
+	else {
+		if (!exists)
+			mob->status.mres = 0;
+	}
+
 	if (this->nodeExists(node, "Str")) {
 		uint16 stat;
 
@@ -4552,7 +4606,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!exists)
 			mob->status.luk = 1;
 	}
-	
+
 	if (this->nodeExists(node, "AttackRange")) {
 		uint16 range;
 
@@ -4599,12 +4653,12 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		int64 constant;
 
 		if (!script_get_constant(size_constant.c_str(), &constant)) {
-			this->invalidWarning(node["Size"], "Unknown monster size %s, defaulting to Size_Small.\n", size.c_str());
+			this->invalidWarning(node["Size"], "Unknown monster size %s, defaulting to Small.\n", size.c_str());
 			constant = SZ_SMALL;
 		}
 
 		if (constant < SZ_SMALL || constant > SZ_BIG) {
-			this->invalidWarning(node["Size"], "Invalid monster size %s, defaulting to Size_Small.\n", size.c_str());
+			this->invalidWarning(node["Size"], "Invalid monster size %s, defaulting to Small.\n", size.c_str());
 			constant = SZ_SMALL;
 		}
 
@@ -4624,12 +4678,12 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		int64 constant;
 
 		if (!script_get_constant(race_constant.c_str(), &constant)) {
-			this->invalidWarning(node["Race"], "Unknown monster race %s, defaulting to RC_FORMLESS.\n", race.c_str());
+			this->invalidWarning(node["Race"], "Unknown monster race %s, defaulting to Formless.\n", race.c_str());
 			constant = RC_FORMLESS;
 		}
 
 		if (!CHK_RACE(constant)) {
-			this->invalidWarning(node["Race"], "Invalid monster race %s, defaulting to RC_FORMLESS.\n", race.c_str());
+			this->invalidWarning(node["Race"], "Invalid monster race %s, defaulting to Formless.\n", race.c_str());
 			constant = RC_FORMLESS;
 		}
 
@@ -4678,12 +4732,12 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		int64 constant;
 
 		if (!script_get_constant(ele_constant.c_str(), &constant)) {
-			this->invalidWarning(node["Element"], "Unknown monster element %s, defaulting to ELE_NEUTRAL.\n", ele.c_str());
+			this->invalidWarning(node["Element"], "Unknown monster element %s, defaulting to Neutral.\n", ele.c_str());
 			constant = ELE_NEUTRAL;
 		}
 
 		if (!CHK_ELEMENT(constant)) {
-			this->invalidWarning(node["Element"], "Invalid monster element %s, defaulting to ELE_NEUTRAL.\n", ele.c_str());
+			this->invalidWarning(node["Element"], "Invalid monster element %s, defaulting to Neutral.\n", ele.c_str());
 			constant = ELE_NEUTRAL;
 		}
 
@@ -4788,12 +4842,12 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		int64 constant;
 
 		if (!script_get_constant(ai_constant.c_str(), &constant)) {
-			this->invalidWarning(node["Ai"], "Unknown monster AI %s, defaulting to MONSTER_TYPE_06.\n", ai.c_str());
+			this->invalidWarning(node["Ai"], "Unknown monster AI %s, defaulting to 06.\n", ai.c_str());
 			constant = MONSTER_TYPE_06;
 		}
 
 		if (constant < MD_NONE || constant > MD_MASK) {
-			this->invalidWarning(node["Ai"], "Invalid monster AI %s, defaulting to MONSTER_TYPE_06.\n", ai.c_str());
+			this->invalidWarning(node["Ai"], "Invalid monster AI %s, defaulting to 06.\n", ai.c_str());
 			constant = MONSTER_TYPE_06;
 		}
 
@@ -4813,12 +4867,12 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		int64 constant;
 
 		if (!script_get_constant(class_constant.c_str(), &constant)) {
-			this->invalidWarning(node["Class"], "Unknown monster class %s, defaulting to CLASS_NORMAL.\n", class_.c_str());
+			this->invalidWarning(node["Class"], "Unknown monster class %s, defaulting to Normal.\n", class_.c_str());
 			constant = CLASS_NORMAL;
 		}
 
 		if (constant < CLASS_NORMAL || constant > CLASS_EVENT) {
-			this->invalidWarning(node["Class"], "Invalid monster class %s, defaulting to CLASS_NORMAL.\n", class_.c_str());
+			this->invalidWarning(node["Class"], "Invalid monster class %s, defaulting to Normal.\n", class_.c_str());
 			constant = CLASS_NORMAL;
 		}
 
@@ -4893,10 +4947,10 @@ void MobDatabase::loadingFinished() {
 		}
 
 		if (battle_config.view_range_rate != 100)
-			mob->range2 = cap_value(mob->range2, 1, mob->range2 * battle_config.view_range_rate / 100);
+			mob->range2 = max(1, mob->range2 * battle_config.view_range_rate / 100);
 
 		if (battle_config.chase_range_rate != 100)
-			mob->range3 = cap_value(mob->range3, mob->range2, mob->range3 * battle_config.chase_range_rate / 100);
+			mob->range3 = max(mob->range2, mob->range3 * battle_config.chase_range_rate / 100);
 
 		// Tests showed that chase range is effectively 2 cells larger than expected [Playtester]
 		mob->range3 += 2;
@@ -5112,6 +5166,13 @@ static bool mob_read_sqldb_sub(std::vector<std::string> str) {
 			node["Drops"][i] = drops;
 	}
 
+#ifdef RENEWAL
+	if (!str[++index].empty())
+		node["Resistance"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["MagicResistance"] = std::stoi(str[index]);
+#endif
+
 	return mob_db.parseBodyNode(node) > 0;
 }
 
@@ -5133,6 +5194,9 @@ static int mob_read_sqldb(void)
 			"`mode_canmove`,`mode_looter`,`mode_aggressive`,`mode_assist`,`mode_castsensoridle`,`mode_norandomwalk`,`mode_nocast`,`mode_canattack`,`mode_castsensorchase`,`mode_changechase`,`mode_angry`,`mode_changetargetmelee`,`mode_changetargetchase`,`mode_targetweak`,`mode_randomtarget`,`mode_ignoremelee`,`mode_ignoremagic`,`mode_ignoreranged`,`mode_mvp`,`mode_ignoremisc`,`mode_knockbackimmune`,`mode_teleportblock`,`mode_fixeditemdrop`,`mode_detector`,`mode_statusimmune`,`mode_skillimmune`,"
 			"`mvpdrop1_item`,`mvpdrop1_rate`,`mvpdrop1_option`,`mvpdrop1_index`,`mvpdrop2_item`,`mvpdrop2_rate`,`mvpdrop2_option`,`mvpdrop2_index`,`mvpdrop3_item`,`mvpdrop3_rate`,`mvpdrop3_option`,`mvpdrop3_index`,"
 			"`drop1_item`,`drop1_rate`,`drop1_nosteal`,`drop1_option`,`drop1_index`,`drop2_item`,`drop2_rate`,`drop2_nosteal`,`drop2_option`,`drop2_index`,`drop3_item`,`drop3_rate`,`drop3_nosteal`,`drop3_option`,`drop3_index`,`drop4_item`,`drop4_rate`,`drop4_nosteal`,`drop4_option`,`drop4_index`,`drop5_item`,`drop5_rate`,`drop5_nosteal`,`drop5_option`,`drop5_index`,`drop6_item`,`drop6_rate`,`drop6_nosteal`,`drop6_option`,`drop6_index`,`drop7_item`,`drop7_rate`,`drop7_nosteal`,`drop7_option`,`drop7_index`,`drop8_item`,`drop8_rate`,`drop8_nosteal`,`drop8_option`,`drop8_index`,`drop9_item`,`drop9_rate`,`drop9_nosteal`,`drop9_option`,`drop9_index`,`drop10_item`,`drop10_rate`,`drop10_nosteal`,`drop10_option`,`drop10_index`"
+#ifdef RENEWAL
+			",`resistance`,`magic_resistance`"
+#endif
 			" FROM `%s`", mob_db_name[fi]) ) {
 			Sql_ShowDebug(mmysql_handle);
 			continue;

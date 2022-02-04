@@ -3457,7 +3457,7 @@ if test "${enable_lto+set}" = set; then :
         esac
 
 else
-  enable_lto="yes"
+  enable_lto="no"
 
 fi
 
