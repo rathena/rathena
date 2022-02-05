@@ -10179,11 +10179,9 @@ BUILDIN_FUNC(petautobonus3) {
 BUILDIN_FUNC(skill_plagiarism)
 {
 	TBL_PC *sd;
-	uint16 skill_id = script_getnum(st, 2);
-	uint16 skill_lv = script_getnum(st, 3);
 
 	if (script_rid2sd(sd))
-		script_pushint(st, pc_skill_plagiarism(sd, skill_id, skill_lv));
+		script_pushint(st, pc_skill_plagiarism(sd, script_getnum(st, 2), script_getnum(st, 3)));
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -10191,10 +10189,9 @@ BUILDIN_FUNC(skill_plagiarism)
 BUILDIN_FUNC(skill_plagiarism_reset)
 {
 	TBL_PC *sd;
-	uint8 type = script_getnum(st, 2);
 
 	if (!script_rid2sd(sd))
-		script_pushint(st, pc_skill_plagiarism_reset(sd, type));
+		script_pushint(st, pc_skill_plagiarism_reset(sd, script_getnum(st, 2)));
 
 	return SCRIPT_CMD_SUCCESS;
 }
