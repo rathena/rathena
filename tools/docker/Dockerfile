@@ -25,7 +25,7 @@ RUN make clean server
 FROM alpine:3.11 as base-runtime
 WORKDIR /rathena
 RUN apk add --no-cache libgcc libstdc++ gcompat mariadb-connector-c
-CMD ["./athena-start watch"]
+CMD ["./athena-start", "watch"]
 
 FROM base-runtime as runtime
 COPY --from=builder /rathena /rathena
