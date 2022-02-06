@@ -23062,8 +23062,9 @@ void clif_summon_init(struct mob_data* md) {
 #endif
 }
 
-void clif_summon_hp_bar(struct mob_data* md, struct map_session_data* sd) {
+void clif_summon_hp_bar(struct mob_data* md) {
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	struct map_session_data *sd = map_id2sd(md->master_id);
 	nullpo_retv(sd);
 
 	struct PACKET_ZC_SUMMON_HP_UPDATE p;

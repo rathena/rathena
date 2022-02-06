@@ -2475,8 +2475,7 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 		int i;
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 		if (md->special_state.ai == AI_ABR || md->special_state.ai == AI_BIONIC) {
-			struct map_session_data *sd = map_charid2sd(md->master_id);
-			clif_summon_hp_bar(md, sd);
+			clif_summon_hp_bar(md);
 		}
 #endif
 		for(i = 0; i < DAMAGELOG_SIZE; i++){ // must show hp bar to all char who already hit the mob.
@@ -3404,8 +3403,7 @@ void mob_heal(struct mob_data *md,unsigned int heal)
 		int i;
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 		if (md->special_state.ai == AI_ABR || md->special_state.ai == AI_BIONIC) {
-			struct map_session_data *sd = map_charid2sd(md->master_id);
-			clif_summon_hp_bar(md, sd);
+			clif_summon_hp_bar(md);
 		}
 #endif
 		for(i = 0; i < DAMAGELOG_SIZE; i++)// must show hp bar to all char who already hit the mob.
