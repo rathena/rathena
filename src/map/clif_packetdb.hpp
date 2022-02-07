@@ -2292,6 +2292,11 @@
 	packet(0x0A7D,-1);
 #endif
 
+#if PACKETVER_MAIN_NUM >= 20160601 || PACKETVER_RE_NUM >= 20160525 || defined(PACKETVER_ZERO)
+	parseable_packet( HEADER_CZ_LAPINEDDUKDDAK_CLOSE, sizeof( struct PACKET_CZ_LAPINEDDUKDDAK_CLOSE ), clif_parse_laphine_synthesis_close, 0 );
+	parseable_packet( HEADER_CZ_LAPINEDDUKDDAK_ACK, -1, clif_parse_laphine_synthesis, 0 );
+#endif
+
 // 2016-06-22aRagexeRE
 #if PACKETVER >= 20160622
 	packet(0x0A84,94);
@@ -2342,6 +2347,11 @@
 	packet(0x0A98,10);
 	parseable_packet(0x0A99,4,clif_parse_equipswitch_remove,2,4);
 	parseable_packet(0x0ACE,4,clif_parse_equipswitch_request_single,0);
+#endif
+
+#if PACKETVER_MAIN_NUM >= 20170726 || PACKETVER_RE_NUM >= 20170621 || defined(PACKETVER_ZERO)
+	parseable_packet( HEADER_CZ_LAPINEUPGRADE_CLOSE, sizeof( struct PACKET_CZ_LAPINEUPGRADE_CLOSE ), clif_parse_laphine_upgrade_close, 0 );
+	parseable_packet( HEADER_CZ_LAPINEUPGRADE_MAKE_ITEM, sizeof( struct PACKET_CZ_LAPINEUPGRADE_MAKE_ITEM ), clif_parse_laphine_upgrade, 0 );
 #endif
 
 // 2017-08-30bRagexeRE

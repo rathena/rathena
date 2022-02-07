@@ -427,14 +427,14 @@ int do_init( int argc, char** argv ){
 	}
 
 	item_group_txt_data(path_db_mode, path_db);
-	if (!process("ITEM_GROUP_DB", 1, { path_db_mode }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
+	if (!process("ITEM_GROUP_DB", 2, { path_db_mode }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return itemdb_read_group_yaml();
 	})) {
 		return 0;
 	}
 
 	item_group_txt_data(path_db_import, path_db_import);
-	if (!process("ITEM_GROUP_DB", 1, { path_db_import }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
+	if (!process("ITEM_GROUP_DB", 2, { path_db_import }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return itemdb_read_group_yaml();
 	})) {
 		return 0;
