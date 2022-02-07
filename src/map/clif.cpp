@@ -16363,6 +16363,7 @@ void clif_parse_Mail_cancelwrite( int fd, struct map_session_data *sd ){
 /// 0a14 <char id>.L <class>.W <base level>.W (ZC_CHECK_RECEIVE_CHARACTER_NAME)
 /// 0a51 <char id>.L <class>.W <base level>.W <name>.24B (ZC_CHECK_RECEIVE_CHARACTER_NAME2)
 void clif_Mail_Receiver_Ack( struct map_session_data* sd, uint32 char_id, short class_, uint32 level, const char* name ){
+#if PACKETVER >= 20141119
 	PACKET_ZC_CHECKNAME p = { 0 };
 
 	p.PacketType = HEADER_ZC_CHECKNAME;
@@ -16373,6 +16374,7 @@ void clif_Mail_Receiver_Ack( struct map_session_data* sd, uint32 char_id, short 
 	strncpy(p.Name, name, NAME_LENGTH);
 #endif
 	clif_send(&p, sizeof(p), &sd->bl, SELF);
+#endif
 }
 
 /// Request information about the recipient
