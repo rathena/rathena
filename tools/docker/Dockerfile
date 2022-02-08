@@ -2,6 +2,7 @@ ARG ENABLE_PRERE="no"
 ARG ENABLE_VIP="no"
 ARG ENABLE_BUILDBOT="yes"
 ARG ENABLE_LTO="yes"
+ARG PACKETVER="20211103"
 
 FROM alpine:3.11 as base-builder
 WORKDIR /rathena
@@ -18,7 +19,7 @@ ARG ENABLE_VIP
 ARG ENABLE_BUILDBOT
 ARG ENABLE_LTO
 COPY . .
-RUN ./configure --enable-prere=${ENABLE_PRERE} --enable-vip=${ENABLE_VIP} --enable-buildbot=${ENABLE_BUILDBOT} --enable-lto=${ENABLE_LTO}
+RUN ./configure --enable-prere=${ENABLE_PRERE} --enable-vip=${ENABLE_VIP} --enable-buildbot=${ENABLE_BUILDBOT} --enable-lto=${ENABLE_LTO} --enable-packetver=${PACKETVER}
 RUN make clean server
 
 FROM alpine:3.11 as base-runtime
