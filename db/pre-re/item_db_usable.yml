@@ -65,10 +65,10 @@
 #     Storage               If the stack is applied to the player's storage. (Default: false)
 #     GuildStorage          If the stack is applied to the player's guild storage. (Default: false)
 #   NoUse:                  Conditions when the item is unusable. (Default: null)
-#     Override              Group level to override these conditions.
+#     Override              Group level to override these conditions. (Default: 100)
 #     Sitting               If the item can not be used while sitting. (Default: false)
 #   Trade:                  Trade restrictions. (Default: null)
-#     Override              Group level to override these conditions.
+#     Override              Group level to override these conditions. (Default: 100)
 #     NoDrop                If the item can not be dropped. (Default: false)
 #     NoTrade               If the item can not be traded. (Default: false)
 #     TradePartner          If the item can not be traded to the player's partner. (Default: false)
@@ -1091,7 +1091,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       itemskill "SM_SELFPROVOKE",1;
@@ -1229,7 +1228,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1002;
@@ -1242,7 +1240,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1113;
@@ -1255,7 +1252,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1031;
@@ -1268,7 +1264,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1063;
@@ -1281,7 +1276,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1049;
@@ -1294,7 +1288,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1011;
@@ -1307,7 +1300,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1042;
@@ -1320,7 +1312,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1035;
@@ -1333,7 +1324,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1167;
@@ -1346,7 +1336,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1107;
@@ -1359,7 +1348,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1052;
@@ -1372,7 +1360,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1014;
@@ -1385,7 +1372,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1077;
@@ -1398,7 +1384,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1019;
@@ -1411,7 +1396,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1056;
@@ -1424,7 +1408,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1057;
@@ -1437,7 +1420,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1023;
@@ -1450,7 +1432,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1026;
@@ -1463,7 +1444,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1110;
@@ -1476,7 +1456,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1170;
@@ -1489,7 +1468,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1029;
@@ -1502,7 +1480,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1155;
@@ -1515,7 +1492,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1109;
@@ -1528,7 +1504,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1101;
@@ -1641,7 +1616,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1188;
@@ -1654,7 +1628,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1200;
@@ -1667,7 +1640,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1275;
@@ -1844,7 +1816,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       itemskill "WZ_EARTHSPIKE",3;
@@ -1857,7 +1828,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       itemskill "WZ_EARTHSPIKE",5;
@@ -1870,7 +1840,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       itemskill "MG_COLDBOLT",3;
@@ -1883,7 +1852,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       itemskill "MG_COLDBOLT",5;
@@ -1896,7 +1864,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       itemskill "MG_FIREBOLT",3;
@@ -1909,7 +1876,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       itemskill "MG_FIREBOLT",5;
@@ -1922,7 +1888,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       itemskill "MG_LIGHTNINGBOLT",3;
@@ -1935,7 +1900,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       itemskill "MG_LIGHTNINGBOLT",5;
@@ -1948,7 +1912,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       itemskill "MG_SOULSTRIKE",3;
@@ -1961,7 +1924,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       itemskill "MG_SOULSTRIKE",5;
@@ -1974,7 +1936,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       itemskill "MG_FIREBALL",1;
@@ -1987,7 +1948,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       itemskill "MG_FIREBALL",5;
@@ -2000,7 +1960,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       itemskill "MG_FIREWALL",1;
@@ -2013,7 +1972,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       itemskill "MG_FIREWALL",5;
@@ -2026,7 +1984,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       itemskill "MG_FROSTDIVER",1;
@@ -2035,7 +1992,6 @@ Body:
     Name: Clothing Dye Coupon
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -2049,7 +2005,6 @@ Body:
     Name: Clothing Dye Coupon II
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -2088,7 +2043,6 @@ Body:
     Type: Healing
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -2104,7 +2058,6 @@ Body:
     Type: Healing
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -2120,7 +2073,6 @@ Body:
     Type: Healing
     Weight: 30
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -2203,7 +2155,6 @@ Body:
     Type: Healing
     Weight: 50
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -2396,7 +2347,6 @@ Body:
     Type: Healing
     Weight: 300
     NoUse:
-      Override: 100
       Sitting: true
   - Id: 11703
     AegisName: Mysterious_Blood
@@ -2486,7 +2436,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       itemskill "MG_FROSTDIVER",5;
@@ -2499,7 +2448,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       itemskill "AL_HEAL",3;
@@ -2512,7 +2460,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       itemskill "AL_HEAL",5;
@@ -2755,7 +2702,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       percentheal 9,0;
@@ -2769,7 +2715,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       sc_start SC_SPEEDUP0,20000,25;
@@ -2782,7 +2727,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       itemskill "AC_CONCENTRATION",1;
@@ -2795,7 +2739,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       sc_start SC_ATKPOTION,60000,20;
@@ -2808,7 +2751,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       sc_start SC_MATKPOTION,60000,20;
@@ -2821,7 +2763,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       itemskill "ITEM_ENCHANTARMS",2;
@@ -2834,7 +2775,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       sc_start SC_Intravision,30000,0;
@@ -2847,7 +2787,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       percentheal 0,9;
@@ -3955,7 +3894,6 @@ Body:
     Type: Usable
     Weight: 100
     Trade:
-      Override: 100
       NoTrade: true
       NoSell: true
       NoCart: true
@@ -4063,7 +4001,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4080,7 +4017,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4097,7 +4033,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4114,7 +4049,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4131,7 +4065,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4148,7 +4081,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4165,7 +4097,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4182,7 +4113,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4199,7 +4129,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4216,7 +4145,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4233,7 +4161,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4250,7 +4177,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4267,7 +4193,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4284,7 +4209,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4301,7 +4225,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4318,7 +4241,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4335,7 +4257,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4352,7 +4273,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4369,7 +4289,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4386,7 +4305,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4403,7 +4321,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4420,7 +4337,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4437,7 +4353,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4454,7 +4369,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4471,7 +4385,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4488,7 +4401,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4505,7 +4417,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4522,7 +4433,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4539,7 +4449,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4556,7 +4465,6 @@ Body:
     Buy: 2
     Weight: 100
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -4718,7 +4626,6 @@ Body:
     Name: Scroll of Magic
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -4748,7 +4655,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -4766,7 +4672,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -4784,7 +4689,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -4802,7 +4706,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -4820,7 +4723,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -4838,7 +4740,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -4859,7 +4760,6 @@ Body:
       Duration: 60000
       Status: Reuse_Limit_C
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -4876,7 +4776,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -4896,7 +4795,6 @@ Body:
       Duration: 60000
       Status: Reuse_Limit_D
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -4913,7 +4811,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -4930,7 +4827,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -4946,7 +4842,6 @@ Body:
     Type: Delayconsume
     Buy: 2
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -4963,7 +4858,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -4980,10 +4874,8 @@ Body:
     Buy: 2
     Weight: 10
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -5001,10 +4893,8 @@ Body:
     Buy: 2
     Weight: 10
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -5025,10 +4915,8 @@ Body:
     Buy: 2
     Weight: 10
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -5049,10 +4937,8 @@ Body:
     Buy: 2
     Weight: 10
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -5070,10 +4956,8 @@ Body:
     Buy: 2
     Weight: 10
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -5091,10 +4975,8 @@ Body:
     Buy: 2
     Weight: 10
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -5115,7 +4997,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -5133,7 +5014,6 @@ Body:
     Buy: 20
     Weight: 50
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1245;
@@ -5250,7 +5130,6 @@ Body:
     Buy: 20
     Weight: 100
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       percentheal 0,5;
@@ -5263,7 +5142,6 @@ Body:
     Buy: 20
     Weight: 100
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       percentheal 5,0;
@@ -5274,7 +5152,6 @@ Body:
     Type: Usable
     Weight: 100
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       percentheal 0,5;
@@ -5460,7 +5337,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -5477,7 +5353,6 @@ Body:
     Name: Miracle Tonic
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -5502,7 +5377,6 @@ Body:
     Name: Leap of Fantasy
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -5519,7 +5393,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -5537,7 +5410,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -5554,7 +5426,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -5571,7 +5442,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -5588,7 +5458,6 @@ Body:
     Buy: 2
     Weight: 70
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -5606,7 +5475,6 @@ Body:
     Buy: 2
     Weight: 70
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -5624,7 +5492,6 @@ Body:
     Buy: 2
     Weight: 70
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -5643,7 +5510,6 @@ Body:
     Buy: 2
     Weight: 70
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -5660,7 +5526,6 @@ Body:
     Buy: 2
     Weight: 70
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -5677,7 +5542,6 @@ Body:
     Buy: 2
     Weight: 70
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -5694,7 +5558,6 @@ Body:
     Buy: 2
     Weight: 70
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -5711,7 +5574,6 @@ Body:
     Buy: 2
     Weight: 70
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -5727,7 +5589,6 @@ Body:
     Type: Healing
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -5745,7 +5606,6 @@ Body:
     Type: Healing
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -5764,7 +5624,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -5777,7 +5636,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -5790,7 +5648,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -5876,7 +5733,6 @@ Body:
     Name: Love Angel Magic Powder
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -5894,7 +5750,6 @@ Body:
     Name: Squirrel Magic Powder
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -5912,7 +5767,6 @@ Body:
     Name: Gogo Magic Powder
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -5934,7 +5788,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       percentheal 5,0;
@@ -5949,7 +5802,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       percentheal 5,0;
@@ -5981,7 +5833,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -5998,7 +5849,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -6015,7 +5865,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -6032,7 +5881,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -6049,7 +5897,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -6066,7 +5913,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -6083,7 +5929,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -6099,7 +5944,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -6115,7 +5959,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -6131,7 +5974,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -6144,7 +5986,6 @@ Body:
     Name: Diary Magic Powder
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -6162,7 +6003,6 @@ Body:
     Name: Mini Heart Magic Powder
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -6180,7 +6020,6 @@ Body:
     Name: Freshman Magic Powder
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -6198,7 +6037,6 @@ Body:
     Name: Kid Magic Powder
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -6216,7 +6054,6 @@ Body:
     Name: Magic Magic Powder
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -6234,7 +6071,6 @@ Body:
     Name: JJangu Magic Powder
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -6253,10 +6089,8 @@ Body:
     Type: Usable
     Weight: 50
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -6271,10 +6105,8 @@ Body:
     Type: Delayconsume
     Weight: 100
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -6294,10 +6126,8 @@ Body:
     Name: Guardian Angel
     Type: Usable
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -6367,10 +6197,8 @@ Body:
     Name: Novice Fly Wing
     Type: Delayconsume
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -6386,10 +6214,8 @@ Body:
     Name: Novice Butterfly Wing
     Type: Delayconsume
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -6405,10 +6231,8 @@ Body:
     Name: Novice Magnifier
     Type: Delayconsume
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -6463,7 +6287,6 @@ Body:
     Type: Healing
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -6480,7 +6303,6 @@ Body:
     Type: Healing
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -6500,7 +6322,6 @@ Body:
       Amount: 3
       Inventory: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -6569,10 +6390,8 @@ Body:
     Type: Usable
     Weight: 10
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -6600,7 +6419,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -6619,7 +6437,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -6638,7 +6455,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -6657,7 +6473,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -6675,7 +6490,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -6692,7 +6506,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       itemskill "ALL_REVERSEORCISH",1;
@@ -6704,7 +6517,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -6723,7 +6535,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -6743,10 +6554,8 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -6765,7 +6574,6 @@ Body:
     Flags:
       BuyingStore: true
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -6843,7 +6651,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1513;
@@ -6856,7 +6663,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1586;
@@ -6869,7 +6675,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1505;
@@ -6878,10 +6683,8 @@ Body:
     Name: Delicious Shaved Ice
     Type: Usable
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -6901,7 +6704,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1401;
@@ -6910,10 +6712,8 @@ Body:
     Name: Fit Pipe
     Type: Usable
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -6933,7 +6733,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1299;
@@ -6946,7 +6745,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1416;
@@ -6959,7 +6757,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1404;
@@ -6972,7 +6769,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1504;
@@ -6985,7 +6781,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1148;
@@ -6998,7 +6793,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1495;
@@ -7007,10 +6801,8 @@ Body:
     Name: Girl's Naivety
     Type: Usable
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -7030,7 +6822,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1040;
@@ -7043,7 +6834,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1379;
@@ -7056,7 +6846,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1370;
@@ -7069,7 +6858,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       pet 1837;
@@ -7079,7 +6867,6 @@ Body:
     Type: Usable
     Weight: 80
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -7097,7 +6884,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       percentheal 3,0;
@@ -7111,7 +6897,6 @@ Body:
     Flags:
       BuyingStore: true
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       percentheal 0,3;
@@ -7176,7 +6961,6 @@ Body:
     Type: Delayconsume
     Weight: 50
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -7192,7 +6976,6 @@ Body:
     Type: Delayconsume
     Weight: 50
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -7208,7 +6991,6 @@ Body:
     Type: Delayconsume
     Weight: 50
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -7224,7 +7006,6 @@ Body:
     Type: Delayconsume
     Weight: 50
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -7240,10 +7021,8 @@ Body:
     Type: Delayconsume
     Weight: 10
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -7260,10 +7039,8 @@ Body:
     Type: Delayconsume
     Weight: 10
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -7280,10 +7057,8 @@ Body:
     Type: Delayconsume
     Weight: 10
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -7300,7 +7075,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -7373,10 +7147,8 @@ Body:
     Buy: 20
     Weight: 10
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -7399,10 +7171,8 @@ Body:
     Buy: 20
     Weight: 10
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -7425,7 +7195,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -7459,7 +7228,6 @@ Body:
     Name: 29Fruit
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -7482,7 +7250,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -7497,7 +7264,6 @@ Body:
     Buy: 20
     Weight: 50
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -7516,7 +7282,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -7566,7 +7331,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -7592,7 +7356,6 @@ Body:
     Type: Usable
     Weight: 10
     NoUse:
-      Override: 100
       Sitting: true
   - Id: 12416
     AegisName: Lucky_Egg_C3
@@ -8034,10 +7797,8 @@ Body:
     Buy: 20
     Weight: 10
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -8051,10 +7812,8 @@ Body:
     Buy: 20
     Weight: 10
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -8084,7 +7843,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -8103,7 +7861,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -8117,7 +7874,6 @@ Body:
     Name: Caracas Ring Box
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -8132,7 +7888,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -8146,7 +7901,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -8160,7 +7914,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -8174,7 +7927,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -8188,7 +7940,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -8202,7 +7953,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -8216,7 +7966,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -8230,7 +7979,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -8269,7 +8017,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -8283,7 +8030,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -8497,7 +8243,6 @@ Body:
     Name: White Slim Potion Box
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -8510,7 +8255,6 @@ Body:
     Name: Mastela Fruit Box
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -8523,7 +8267,6 @@ Body:
     Name: White Potion Box
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -8536,7 +8279,6 @@ Body:
     Name: Royal Jelly Box2
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -8549,7 +8291,6 @@ Body:
     Name: Blue Herb Box2
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -8562,7 +8303,6 @@ Body:
     Name: Yggdrasil Seed Box
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -8575,7 +8315,6 @@ Body:
     Name: Iggdrasilberry Box
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -8618,7 +8357,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -8633,7 +8371,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -8648,7 +8385,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -8663,7 +8399,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -8707,7 +8442,6 @@ Body:
     Name: White Slim Pot Box2
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -8720,7 +8454,6 @@ Body:
     Name: Poison Bottle Box2
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -8958,7 +8691,6 @@ Body:
     Weight: 10
     EquipLevelMin: 85
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -8975,7 +8707,6 @@ Body:
     Weight: 100
     EquipLevelMin: 90
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -8991,7 +8722,6 @@ Body:
     Type: Delayconsume
     Weight: 100
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       itemskill "PR_GLORIA",5;
@@ -9001,7 +8731,6 @@ Body:
     Type: Delayconsume
     Weight: 100
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       itemskill "PR_MAGNIFICAT",1;
@@ -9011,7 +8740,6 @@ Body:
     Type: Delayconsume
     Weight: 100
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       itemskill "PR_IMPOSITIO",3;
@@ -9060,7 +8788,6 @@ Body:
     Flags:
       Container: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -9074,7 +8801,6 @@ Body:
     Name: Black Treasure Box
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -9180,10 +8906,8 @@ Body:
       Amount: 60
       Inventory: true
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -9206,10 +8930,8 @@ Body:
       Amount: 60
       Inventory: true
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -9232,10 +8954,8 @@ Body:
       Amount: 60
       Inventory: true
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -9258,10 +8978,8 @@ Body:
       Amount: 60
       Inventory: true
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -9281,10 +8999,8 @@ Body:
     Classes:
       Third: true
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -9307,10 +9023,8 @@ Body:
       Amount: 60
       Inventory: true
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -9330,10 +9044,8 @@ Body:
     Classes:
       Third: true
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -9353,10 +9065,8 @@ Body:
     Classes:
       Third: true
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -9379,10 +9089,8 @@ Body:
       Amount: 60
       Inventory: true
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -9476,7 +9184,6 @@ Body:
     Type: Usable
     Buy: 1
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -9486,7 +9193,6 @@ Body:
     Type: Usable
     Buy: 1
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -9509,7 +9215,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -9525,7 +9230,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -9581,7 +9285,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -9596,7 +9299,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -9614,7 +9316,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -9676,7 +9377,6 @@ Body:
     Name: Reward Job BM25
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -9690,7 +9390,6 @@ Body:
     Name: Passion FB Hat Box
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -9702,7 +9401,6 @@ Body:
     Name: Cool FB Hat Box
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -9714,7 +9412,6 @@ Body:
     Name: Victory FB Hat Box
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -9726,7 +9423,6 @@ Body:
     Name: Glory FB Hat Box
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -9738,7 +9434,6 @@ Body:
     Name: Passion Hat Box2
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -9750,7 +9445,6 @@ Body:
     Name: Cool Hat Box2
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -9762,7 +9456,6 @@ Body:
     Name: Victory Hat Box2
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -9798,7 +9491,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -9813,7 +9505,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -9828,7 +9519,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -9843,7 +9533,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -9858,7 +9547,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -9873,7 +9561,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -9888,7 +9575,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -9903,7 +9589,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -9918,7 +9603,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -9933,7 +9617,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -9948,7 +9631,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -9963,7 +9645,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -9978,7 +9659,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -9993,7 +9673,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -10008,7 +9687,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -10023,7 +9701,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -10038,7 +9715,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -10053,7 +9729,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -10068,7 +9743,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -10083,7 +9757,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -10098,7 +9771,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -10113,7 +9785,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -10128,7 +9799,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -10143,7 +9813,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -10158,7 +9827,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -10173,7 +9841,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -10188,7 +9855,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -10211,7 +9877,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -10228,7 +9893,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -10243,7 +9907,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -10258,7 +9921,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -10273,7 +9935,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -10288,7 +9949,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -10303,7 +9963,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -10318,7 +9977,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10334,7 +9992,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10350,7 +10007,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10366,7 +10022,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10382,7 +10037,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10398,7 +10052,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10414,7 +10067,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10430,7 +10082,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10446,7 +10097,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10462,7 +10112,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10478,7 +10127,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10494,7 +10142,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10510,7 +10157,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10526,7 +10172,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10542,7 +10187,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10558,7 +10202,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10574,7 +10217,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10590,7 +10232,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10606,7 +10247,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10622,7 +10262,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10638,7 +10277,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10654,7 +10292,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10670,7 +10307,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10686,7 +10322,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10702,7 +10337,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10718,7 +10352,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10734,7 +10367,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10750,7 +10382,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10766,7 +10397,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10782,7 +10412,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoCart: true
@@ -10951,7 +10580,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -10966,7 +10594,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -10981,7 +10608,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -10996,7 +10622,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -11011,7 +10636,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -11026,7 +10650,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -11040,7 +10663,6 @@ Body:
     Type: Delayconsume
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -11054,7 +10676,6 @@ Body:
     Type: Delayconsume
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -11068,7 +10689,6 @@ Body:
     Type: Delayconsume
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -11082,7 +10702,6 @@ Body:
     Type: Delayconsume
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -11096,7 +10715,6 @@ Body:
     Type: Delayconsume
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -11110,7 +10728,6 @@ Body:
     Type: Delayconsume
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -11363,7 +10980,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -11548,7 +11164,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -11605,7 +11220,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -12732,7 +12346,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -12749,7 +12362,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -12800,7 +12412,6 @@ Body:
     Type: Cash
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -12858,7 +12469,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -12869,7 +12479,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -12880,7 +12489,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -12891,7 +12499,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -12914,7 +12521,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -12927,7 +12533,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -12940,7 +12545,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -12953,7 +12557,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -12966,7 +12569,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -12979,7 +12581,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -12992,7 +12593,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13005,7 +12605,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13018,7 +12617,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13031,7 +12629,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13044,7 +12641,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13057,7 +12653,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13178,7 +12773,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13191,7 +12785,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13204,7 +12797,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13217,7 +12809,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13230,7 +12821,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13243,7 +12833,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13256,7 +12845,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13269,7 +12857,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13282,7 +12869,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13295,7 +12881,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13308,7 +12893,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13321,7 +12905,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13334,7 +12917,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13347,7 +12929,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13360,7 +12941,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13373,7 +12953,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13386,7 +12965,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13399,7 +12977,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13412,7 +12989,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13425,7 +13001,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13494,7 +13069,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -13917,7 +13491,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13930,7 +13503,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13943,7 +13515,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13956,7 +13527,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13969,7 +13539,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13982,7 +13551,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -13995,7 +13563,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -14008,7 +13575,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -14021,7 +13587,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -14034,7 +13599,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -14323,7 +13887,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -14340,7 +13903,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoCart: true
@@ -14375,7 +13937,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14396,7 +13957,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14413,7 +13973,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14430,7 +13989,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14447,7 +14005,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14464,7 +14021,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14481,7 +14037,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14503,7 +14058,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14524,7 +14078,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14545,7 +14098,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14566,7 +14118,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14587,7 +14138,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14608,7 +14158,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14628,7 +14177,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14646,7 +14194,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14664,7 +14211,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14682,7 +14228,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14700,7 +14245,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14717,7 +14261,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14734,7 +14277,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14751,7 +14293,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14768,7 +14309,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14785,7 +14325,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14802,7 +14341,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14819,7 +14357,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14836,7 +14373,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14853,7 +14389,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14870,7 +14405,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14887,7 +14421,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14904,7 +14437,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14920,7 +14452,6 @@ Body:
     Type: Cash
     Buy: 20
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -14950,7 +14481,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -14963,7 +14493,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -14976,7 +14505,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -14989,7 +14517,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -15002,7 +14529,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -15015,7 +14541,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -15028,7 +14553,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15045,7 +14569,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15062,7 +14585,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15079,7 +14601,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15098,7 +14619,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15119,7 +14639,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15138,7 +14657,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15157,7 +14675,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15177,7 +14694,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15196,7 +14712,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15211,7 +14726,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -15224,7 +14738,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -15237,7 +14750,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -15250,7 +14762,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15267,7 +14778,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15284,7 +14794,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15301,7 +14810,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15321,7 +14829,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15342,7 +14849,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15363,7 +14869,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15384,7 +14889,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15405,7 +14909,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15425,7 +14928,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15442,7 +14944,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15459,7 +14960,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15476,7 +14976,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15493,7 +14992,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15510,7 +15008,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15527,7 +15024,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15544,7 +15040,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15561,7 +15056,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15576,7 +15070,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15593,7 +15086,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15610,7 +15102,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15627,7 +15118,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15652,7 +15142,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15676,7 +15165,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15700,7 +15188,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15724,7 +15211,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15748,7 +15234,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15772,7 +15257,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15789,7 +15273,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15806,7 +15289,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15823,7 +15305,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15840,7 +15321,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15857,7 +15337,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15874,7 +15353,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15891,7 +15369,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15908,7 +15385,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15925,7 +15401,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15942,7 +15417,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15959,7 +15433,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15976,7 +15449,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -15993,7 +15465,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16010,7 +15481,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16027,7 +15497,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16044,7 +15513,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16061,7 +15529,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16078,7 +15545,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16095,7 +15561,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16112,7 +15577,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16129,7 +15593,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16144,7 +15607,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16161,7 +15623,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16178,7 +15639,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16195,7 +15655,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16212,7 +15671,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16229,7 +15687,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16246,7 +15703,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16263,7 +15719,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16280,7 +15735,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16297,7 +15751,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16314,7 +15767,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16331,7 +15783,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16348,7 +15799,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16365,7 +15815,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16382,7 +15831,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16400,7 +15848,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16417,7 +15864,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16434,7 +15880,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16451,7 +15896,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16468,7 +15912,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16485,7 +15928,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16502,7 +15944,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16519,7 +15960,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16536,7 +15976,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16553,7 +15992,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16570,7 +16008,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16587,7 +16024,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16605,7 +16041,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16623,7 +16058,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16641,7 +16075,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16658,7 +16091,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16675,7 +16107,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16692,7 +16123,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16709,7 +16139,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16726,7 +16155,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16743,7 +16171,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16760,7 +16187,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16777,7 +16203,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16794,7 +16219,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16811,7 +16235,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16828,7 +16251,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16845,7 +16267,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16862,7 +16283,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16879,7 +16299,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16896,7 +16315,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16913,7 +16331,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16930,7 +16347,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16947,7 +16363,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16964,7 +16379,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16981,7 +16395,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -16998,7 +16411,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17015,7 +16427,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17032,7 +16443,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17049,7 +16459,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17066,7 +16475,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17083,7 +16491,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17100,7 +16507,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17117,7 +16523,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17134,7 +16539,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17151,7 +16555,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17168,7 +16571,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17185,7 +16587,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17206,7 +16607,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17227,7 +16627,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17244,7 +16643,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17261,7 +16659,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17278,7 +16675,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17295,7 +16691,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17312,7 +16707,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17329,7 +16723,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17346,7 +16739,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17363,7 +16755,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17380,7 +16771,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17397,7 +16787,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17414,7 +16803,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17431,7 +16819,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17448,7 +16835,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17465,7 +16851,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17482,7 +16867,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17499,7 +16883,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17516,7 +16899,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17533,7 +16915,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17550,7 +16931,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17567,7 +16947,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17584,7 +16963,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17601,7 +16979,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17618,7 +16995,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17635,7 +17011,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17652,7 +17027,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17669,7 +17043,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17686,7 +17059,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17703,7 +17075,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17720,7 +17091,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17737,7 +17107,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17754,7 +17123,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17771,7 +17139,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17788,7 +17155,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17805,7 +17171,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17822,7 +17187,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17839,7 +17203,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17856,7 +17219,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17873,7 +17235,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17890,7 +17251,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17907,7 +17267,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17924,7 +17283,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17941,7 +17299,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17958,7 +17315,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17975,7 +17331,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -17992,7 +17347,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18009,7 +17363,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18026,7 +17379,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18043,7 +17395,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18060,7 +17411,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18077,7 +17427,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18094,7 +17443,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18111,7 +17459,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18128,7 +17475,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18145,7 +17491,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18162,7 +17507,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18179,7 +17523,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18196,7 +17539,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18213,7 +17555,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18230,7 +17571,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18247,7 +17587,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18264,7 +17603,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18281,7 +17619,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18298,7 +17635,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18315,7 +17651,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18332,7 +17667,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18349,7 +17683,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18366,7 +17699,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18383,7 +17715,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18400,7 +17731,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18417,7 +17747,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18434,7 +17763,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18451,7 +17779,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18468,7 +17795,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18485,7 +17811,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18502,7 +17827,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18519,7 +17843,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18536,7 +17859,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18553,7 +17875,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18570,7 +17891,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18587,7 +17907,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18604,7 +17923,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18621,7 +17939,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18638,7 +17955,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18655,7 +17971,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18672,7 +17987,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18689,7 +18003,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18706,7 +18019,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18723,7 +18035,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18740,7 +18051,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18757,7 +18067,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18774,7 +18083,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18791,7 +18099,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18808,7 +18115,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18825,7 +18131,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18842,7 +18147,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18859,7 +18163,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18876,7 +18179,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18893,7 +18195,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18910,7 +18211,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18927,7 +18227,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18944,7 +18243,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18961,7 +18259,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -18978,7 +18275,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19001,7 +18297,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19024,7 +18319,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19047,7 +18341,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19070,7 +18363,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19093,7 +18385,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19116,7 +18407,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19139,7 +18429,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19162,7 +18451,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19185,7 +18473,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19208,7 +18495,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19231,7 +18517,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19254,7 +18539,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19271,7 +18555,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19288,7 +18571,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19305,7 +18587,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19322,7 +18603,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19339,7 +18619,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19356,7 +18635,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19373,7 +18651,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19390,7 +18667,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19407,7 +18683,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19424,7 +18699,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19441,7 +18715,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19458,7 +18731,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19475,7 +18747,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19492,7 +18763,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19509,7 +18779,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19527,7 +18796,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19544,7 +18812,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19561,7 +18828,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19578,7 +18844,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19595,7 +18860,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19612,7 +18876,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19629,7 +18892,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19646,7 +18908,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19663,7 +18924,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19680,7 +18940,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19697,7 +18956,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19714,7 +18972,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19731,7 +18988,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19748,7 +19004,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19765,7 +19020,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19782,7 +19036,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19799,7 +19052,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19816,7 +19068,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19833,7 +19084,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19850,7 +19100,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19867,7 +19116,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19884,7 +19132,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19901,7 +19148,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19918,7 +19164,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19935,7 +19180,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19952,7 +19196,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19969,7 +19212,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -19986,7 +19228,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20004,7 +19245,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20022,7 +19262,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20039,7 +19278,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20056,7 +19294,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20073,7 +19310,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20090,7 +19326,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20107,7 +19342,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20124,7 +19358,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20141,7 +19374,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20158,7 +19390,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20175,7 +19406,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20192,7 +19422,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20209,7 +19438,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20226,7 +19454,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20243,7 +19470,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20260,7 +19486,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20277,7 +19502,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20294,7 +19518,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20311,7 +19534,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20328,7 +19550,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20345,7 +19566,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20362,7 +19582,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20379,7 +19598,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20396,7 +19614,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20413,7 +19630,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20430,7 +19646,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20447,7 +19662,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20464,7 +19678,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -20497,7 +19710,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -20566,7 +19778,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -20579,7 +19790,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -20592,7 +19802,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -20605,7 +19814,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -20618,7 +19826,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -20631,7 +19838,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -20644,7 +19850,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -20657,7 +19862,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -20670,7 +19874,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -20683,7 +19886,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -20696,7 +19898,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -20709,7 +19910,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -20722,7 +19922,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -20735,7 +19934,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -20748,7 +19946,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -20761,7 +19958,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -20774,7 +19970,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -20787,7 +19982,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -20800,7 +19994,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -20813,7 +20006,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -21000,7 +20192,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21017,7 +20208,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21048,7 +20238,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -21059,7 +20248,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -21070,7 +20258,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -21083,7 +20270,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -21096,7 +20282,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -21108,7 +20293,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21124,7 +20308,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21141,7 +20324,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -21152,7 +20334,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -21165,7 +20346,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21182,7 +20362,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21199,7 +20378,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -21212,7 +20390,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -21225,7 +20402,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -21238,7 +20414,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -21251,7 +20426,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -21264,7 +20438,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -21275,7 +20448,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -21290,7 +20462,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21307,7 +20478,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -21322,7 +20492,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -21337,7 +20506,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -21350,7 +20518,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -21361,7 +20528,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -21376,7 +20542,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -21391,7 +20556,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -21406,7 +20570,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -21421,7 +20584,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21438,7 +20600,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21455,7 +20616,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21470,7 +20630,6 @@ Body:
     Name: Valentine's Emblem Box
     Type: Usable
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21486,7 +20645,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -21506,7 +20664,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -21642,10 +20799,8 @@ Body:
     Type: Usable
     Weight: 10
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21696,7 +20851,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21717,7 +20871,6 @@ Body:
     Type: Delayconsume
     Weight: 10
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       itemskill "BS_GREED",1;
@@ -21742,7 +20895,6 @@ Body:
     Buy: 2
     Weight: 10
     NoUse:
-      Override: 100
       Sitting: true
     Script: |
       sc_start SC_EXPBOOST,1800000,25;
@@ -21753,7 +20905,6 @@ Body:
     Buy: 2
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21769,7 +20920,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21786,7 +20936,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21803,7 +20952,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21820,7 +20968,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21840,7 +20987,6 @@ Body:
       Duration: 300000
       Status: Reuse_Limit_A
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21857,7 +21003,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21874,7 +21019,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21891,7 +21035,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21908,7 +21051,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21925,7 +21067,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -21942,7 +21083,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22158,7 +21298,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22174,7 +21313,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22190,7 +21328,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22206,7 +21343,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22222,7 +21358,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22238,7 +21373,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22346,7 +21480,6 @@ Body:
       Duration: 180000
       Status: Reuse_Limit_B
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -22356,10 +21489,8 @@ Body:
     Type: Delayconsume
     Weight: 10
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22376,7 +21507,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22390,7 +21520,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22404,7 +21533,6 @@ Body:
     Buy: 10
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22417,10 +21545,8 @@ Body:
     Type: Usable
     Weight: 10
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22436,10 +21562,8 @@ Body:
     Type: Usable
     Weight: 10
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22455,10 +21579,8 @@ Body:
     Type: Delayconsume
     Weight: 10
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22474,10 +21596,8 @@ Body:
     Type: Delayconsume
     Weight: 10
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22513,7 +21633,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22529,7 +21648,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22545,10 +21663,8 @@ Body:
     Type: Usable
     Weight: 10
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22562,7 +21678,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -22572,7 +21687,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -22587,7 +21701,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22603,7 +21716,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22619,7 +21731,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22635,7 +21746,6 @@ Body:
     Type: Usable
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22651,10 +21761,8 @@ Body:
     Type: Usable
     Weight: 10
     NoUse:
-      Override: 100
       Sitting: true
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22677,7 +21785,6 @@ Body:
     Buy: 20000
     Weight: 1200
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -22698,7 +21805,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22715,7 +21821,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -22730,7 +21835,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22747,7 +21851,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22764,7 +21867,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -22775,7 +21877,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -22790,7 +21891,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -22805,7 +21905,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -22820,7 +21919,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -22835,7 +21933,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoTrade: true
       NoSell: true
@@ -22850,7 +21947,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -22861,7 +21957,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -22876,7 +21971,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -22891,7 +21985,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -22906,7 +21999,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -22921,7 +22013,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true
@@ -22934,7 +22025,6 @@ Body:
     Buy: 20
     Weight: 10
     Trade:
-      Override: 100
       NoDrop: true
       NoSell: true
       NoGuildStorage: true

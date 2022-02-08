@@ -151,6 +151,9 @@ un_myst	mapflag	nobranch
 lhz_dun_n	mapflag	nobranch
 lhz_d_n2	mapflag	nobranch
 
+// Infinite Space
+1@infi	mapflag	nobranch
+
 // WOE:TE Maps ===================
 te_alde_gld	mapflag	nobranch
 te_prt_gld	mapflag	nobranch

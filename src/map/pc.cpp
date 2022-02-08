@@ -13161,6 +13161,16 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 
 					job->aspd_base[static_cast<int16>(constant)] = aspd;
 				}
+			} else {
+				if (!exists) {
+					uint8 max = MAX_WEAPON_TYPE;
+
+#ifdef RENEWAL // Renewal adds an extra column for shields
+					max += 1;
+#endif
+					job->aspd_base.resize(max);
+					std::fill(job->aspd_base.begin(), job->aspd_base.end(), 2000);
+				}
 			}
 
 			if (this->nodeExists(node, "MaxStats")) {

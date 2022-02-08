@@ -35,6 +35,9 @@ job_gun	mapflag	nowarp
 lhz_dun_n	mapflag	nowarp
 lhz_d_n2	mapflag	nowarp
 
+// Infinite Space
+1@infi	mapflag	nowarp
+
 // Ep 16
 que_swat	mapflag	nowarp
 

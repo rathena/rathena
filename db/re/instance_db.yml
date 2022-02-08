@@ -301,3 +301,10 @@ Body:
       Map: 1@slw
       X: 187
       Y: 24
+  - Id: 38
+    Name: Infinite Space
+    TimeLimit: 3600
+    Enter:
+      Map: 1@infi
+      X: 30
+      Y: 10

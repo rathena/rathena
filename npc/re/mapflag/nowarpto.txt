@@ -103,6 +103,9 @@ un_bk_q	mapflag	nowarpto
 un_myst	mapflag	nowarpto
 1@mcd	mapflag	nowarpto
 
+// Infinite Space
+1@infi	mapflag	nowarpto
+
 // WOE:TE Maps ===================
 te_prtcas01	mapflag	nowarpto
 te_prtcas02	mapflag	nowarpto
