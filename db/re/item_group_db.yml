@@ -15719,7 +15719,7 @@ Body:
         List:
           - Item: Actinidia_Cat_Fruit
             Rate: 1
-          - Item: World_Moving_Rights
+          - Item: World_Tour_Ticket
             Rate: 1
   - Group: PRIZEOFHERO
     SubGroups:
@@ -24332,5 +24332,5 @@ Body:
             Amount: 10
           - Item: E_Baldrs_Blessing
             Amount: 10
-          - Item: World_Moving_Rights
+          - Item: World_Tour_Ticket
             Amount: 30

@@ -36240,18 +36240,10 @@ Body:
       NoGuildStorage: true
       NoAuction: true
   - Id: 25464
-    AegisName: World_Moving_Rights
-    Name: World Moving Rights
+    AegisName: World_Tour_Ticket
+    Name: World Tour Ticket
     Type: Etc
     Buy: 20
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
   - Id: 25479
     AegisName: Dogly_Bottle
     Name: Dogly Bottle
