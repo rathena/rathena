@@ -46449,9 +46449,6 @@ Body:
     DamageMotion: 384
     Ai: 20
     Class: Boss
-    Modes:
-      IgnoreMelee: true
-      IgnoreRanged: true
     Drops:
       - Item: Mistic_Frozen
         Rate: 6
