@@ -1010,6 +1010,10 @@ Body:
   - Command: reloadnpcfile
     Aliases:
       - reloadnpc
+  - Command: addfame
+    Aliases:
+      - famepoint
+      - famepoints
 
 Footer:
   Imports:
