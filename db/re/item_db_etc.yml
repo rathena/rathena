@@ -62539,7 +62539,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 1000854
-    AegisName: aegis_1000854
+    AegisName: Shadow_Exchange_Ticket
     Name: Shadow Redemption Ticket
     Type: Etc
     Flags:
