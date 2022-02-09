@@ -46748,6 +46748,56 @@ Body:
     Weight: 10
     Script: |
       /*upgradeui 23547;*/
+  - Id: 23604
+    AegisName: Main_Dish_C
+    Name: High-end Dish
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      bonus_script "{ bonus bAllStats,10; bonus bBaseAtk,30; bonus bMatk,30; }",1800;
+  - Id: 23605
+    AegisName: Challenge_Drink
+    Name: Challenge Drink
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      bonus_script "{ bonus bBaseAtk,30; bonus bMatk,30; bonus bMatkRate,1; bonus bHit,30; bonus bFlee,30; bonus bAspd,1; bonus bUseSPrate,-5; bonus bFixedCastrate,-30; }",1800,1,1;
+  - Id: 23606
+    AegisName: Power_Drink
+    Name: Power Drink
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* Confirm probability */
+      bonus_script "{ bonus bMaxHP,-10; bonus bMaxSP,-10; bonus bBaseAtk,30; bonus bMatk,30; bonus bVariableCastrate,-5; bonus3 bAutoSpell,\"AC_CONCENTRATION\",max(getskilllv(\"AC_CONCENTRATION\"),3),10; }",300;
+  - Id: 23611
+    AegisName: Mimir_Spring_W
+    Name: Mimir's Fountain
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      sc_start SC_INCREASE_MAXSP,1800000,10;
+      sc_start SC_SPCOST_RATE,1800000,10;
+  - Id: 23612
+    AegisName: Baldrs_Blessing
+    Name: Baldur's Blessing
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      sc_start SC_FLEEFOOD,300000,30;
+      sc_start SC_HITFOOD,300000,30;
+      sc_start SC_ATKPOTION,300000,20;
+      sc_start SC_MATKPOTION,300000,20;
   - Id: 23629
     AegisName: Enchant_Stone_Box14
     Name: Costume Enchant Stone Box 14
@@ -46865,6 +46915,76 @@ Body:
     Weight: 10
     Script: |
       /*upgradeui 23720;*/
+  - Id: 23725
+    AegisName: E_Main_Dish_C
+    Name: "[Event] High-end Dish"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      bonus_script "{ bonus bAllStats,10; bonus bBaseAtk,30; bonus bMatk,30; }",1800;
+  - Id: 23726
+    AegisName: E_Challenge_Drink
+    Name: "[Event] Challenge Drink"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      bonus_script "{ bonus bBaseAtk,30; bonus bMatk,30; bonus bMatkRate,1; bonus bHit,30; bonus bFlee,30; bonus bAspd,1; bonus bUseSPrate,-5; bonus bFixedCastrate,-30; }",1800,1,1;
+  - Id: 23728
+    AegisName: E_Power_Drink
+    Name: "[Event] Power Drink"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      /* Confirm probability */
+      bonus_script "{ bonus bMaxHP,-10; bonus bMaxSP,-10; bonus bBaseAtk,30; bonus bMatk,30; bonus bVariableCastrate,-5; bonus3 bAutoSpell,\"AC_CONCENTRATION\",max(getskilllv(\"AC_CONCENTRATION\"),3),10; }",300;
+  - Id: 23732
+    AegisName: E_Mimir_Spring_W
+    Name: "[Event] Mimir's Fountain"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      sc_start SC_INCREASE_MAXSP,1800000,10;
+      sc_start SC_SPCOST_RATE,1800000,10;
+  - Id: 23733
+    AegisName: E_Baldrs_Blessing
+    Name: "[Event] Baldur's Blessing"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      sc_start SC_FLEEFOOD,300000,30;
+      sc_start SC_HITFOOD,300000,30;
+      sc_start SC_ATKPOTION,300000,20;
+      sc_start SC_MATKPOTION,300000,20;
   - Id: 23766
     AegisName: Overwhelm_Armor_Box
     Name: Temporal Armor Box
@@ -49905,6 +50025,8 @@ Body:
       NoCart: true
       NoGuildStorage: true
       NoAuction: true
+    Script: |
+      getgroupitem(IG_2022_LUNARNEWYEARS_BOX);
   - Id: 101306
     AegisName: Poenitentia_Hammer
     Name: Poenitentia Refining Hammer

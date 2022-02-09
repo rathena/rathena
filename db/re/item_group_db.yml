@@ -24315,3 +24315,22 @@ Body:
             Rate: 1
           - Item: Viva_Adul_Hat_SU2
             Rate: 1
+  - Group: 2022_LUNARNEWYEARS_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: 2022_LunarNewYears_band
+          - Item: Special_Tool_Box_Coupon
+            Amount: 3
+          - Item: E_Main_Dish_C
+            Amount: 10
+          - Item: E_Mimir_Spring_W
+            Amount: 10
+          - Item: E_Challenge_Drink
+            Amount: 10
+          - Item: E_Power_Drink
+            Amount: 10
+          - Item: E_Baldrs_Blessing
+            Amount: 10
+          - Item: World_Moving_Rights
+            Amount: 30

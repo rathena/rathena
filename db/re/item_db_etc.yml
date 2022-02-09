@@ -36228,6 +36228,17 @@ Body:
     Type: Etc
     Buy: 20
     Weight: 100
+  - Id: 25461
+    AegisName: Special_Tool_Box_Coupon
+    Name: "[Event] Special Toolbox Coupon"
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
   - Id: 25464
     AegisName: World_Moving_Rights
     Name: World Moving Rights
