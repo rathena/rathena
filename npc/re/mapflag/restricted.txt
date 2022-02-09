@@ -69,6 +69,9 @@
 lhz_dun_n	mapflag	restricted	6
 lhz_d_n2	mapflag	restricted	6
 
+// Infinite Space
+1@infi	mapflag	restricted	6
+
 // Ep 16
 1@mir	mapflag	restricted	6
 2@mir	mapflag	restricted	6

@@ -20,6 +20,7 @@
 //Raised to 105 since Expanded Super Baby needs it.
 #define MAX_SKILL_TREE 105
 #define MAX_PC_SKILL_REQUIRE 5 /// Max skill tree requirement
+#define MAX_ITEMS_PER_COMBO 6 /// Max amount of items a combo may require
 #define MAX_SKILL_CHANGEMATERIAL_DB 75
 #define MAX_SKILL_CHANGEMATERIAL_SET 3
 #define MAX_SKILL_PRODUCE_DB	300 /// Max Produce DB
@@ -532,5 +533,6 @@ static bool mercenary_read_skilldb(char* str[], int columns, int current);
 static bool mercenary_readdb(char* str[], int columns, int current);
 static bool pc_readdb_skilltree(char* str[], int columns, int current);
 static bool pc_readdb_skilltree_yaml(void);
+static bool itemdb_read_combos(const char* file);
 
 #endif /* CSV2YAML_HPP */

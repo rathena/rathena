@@ -942,6 +942,9 @@ bool pc_can_sell_item(struct map_session_data *sd, struct item *item, enum npc_s
 	if (sd == NULL || item == NULL)
 		return false;
 
+	if (!pc_can_give_items(sd))
+		return false;
+
 	if (item->equip > 0 || item->amount < 0)
 		return false;
 
@@ -1631,7 +1634,7 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 
 	//Set the map-server used job id. [Skotlex]
 	uint64 class_ = pc_jobid2mapid(sd->status.class_);
-	if (class_ == -1) { //Invalid class?
+	if (class_ == -1 || !job_db.exists(sd->status.class_)) { //Invalid class?
 		ShowError("pc_authok: Invalid class %d for player %s (%d:%d). Class was changed to novice.\n", sd->status.class_, sd->status.name, sd->status.account_id, sd->status.char_id);
 		sd->status.class_ = JOB_NOVICE;
 		sd->class_ = MAPID_NOVICE;
@@ -1756,6 +1759,7 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 		}
 	}
 
+	clif_inventory_expansion_info( sd );
 	clif_authok(sd);
 
 	//Prevent S. Novices from getting the no-death bonus just yet. [Skotlex]
@@ -5088,6 +5092,10 @@ char pc_checkadditem(struct map_session_data *sd, t_itemid nameid, int amount)
 		if(sd->inventory.u.items_inventory[i].nameid == nameid){
 			if( amount > MAX_AMOUNT - sd->inventory.u.items_inventory[i].amount || ( data->stack.inventory && amount > data->stack.amount - sd->inventory.u.items_inventory[i].amount ) )
 				return CHKADDITEM_OVERAMOUNT;
+			// If the item is in the inventory already, but the player is not allowed to use that many slots anymore
+			if( i >= sd->status.inventory_slots ){
+				return CHKADDITEM_OVERAMOUNT;
+			}
 			return CHKADDITEM_EXIST;
 		}
 	}
@@ -5103,11 +5111,12 @@ char pc_checkadditem(struct map_session_data *sd, t_itemid nameid, int amount)
  *------------------------------------------*/
 uint8 pc_inventoryblank(struct map_session_data *sd)
 {
-	uint8 i, b;
+	uint16 i;
+	uint8 b;
 
 	nullpo_ret(sd);
 
-	for(i = 0, b = 0; i < MAX_INVENTORY; i++){
+	for(i = 0, b = 0; i < sd->status.inventory_slots; i++){
 		if(sd->inventory.u.items_inventory[i].nameid == 0)
 			b++;
 	}
@@ -5345,8 +5354,6 @@ enum e_additem_result pc_additem(struct map_session_data *sd,struct item *item,i
 	if(sd->weight + w > sd->max_weight)
 		return ADDITEM_OVERWEIGHT;
 
-	i = MAX_INVENTORY;
-
 	if (id->flag.guid && !item->unique_id)
 		item->unique_id = pc_generate_unique_id(sd);
 
@@ -5360,17 +5367,26 @@ enum e_additem_result pc_additem(struct map_session_data *sd,struct item *item,i
 				memcmp(&sd->inventory.u.items_inventory[i].card, &item->card, sizeof(item->card)) == 0 ) {
 				if( amount > MAX_AMOUNT - sd->inventory.u.items_inventory[i].amount || ( id->stack.inventory && amount > id->stack.amount - sd->inventory.u.items_inventory[i].amount ) )
 					return ADDITEM_OVERAMOUNT;
+				// If the item is in the inventory already, but the player is not allowed to use that many slots anymore
+				if( i >= sd->status.inventory_slots ){
+					return ADDITEM_OVERAMOUNT;
+				}
 				sd->inventory.u.items_inventory[i].amount += amount;
 				clif_additem(sd,i,amount,0);
 				break;
 			}
 		}
-	}
+	}else{
+		i = MAX_INVENTORY;
+ 	}
 
 	if (i >= MAX_INVENTORY) {
 		i = pc_search_inventory(sd,0);
 		if( i < 0 )
 			return ADDITEM_OVERITEM;
+		if( i >= sd->status.inventory_slots ){
+			return ADDITEM_OVERITEM;
+		}
 
 		memcpy(&sd->inventory.u.items_inventory[i], item, sizeof(sd->inventory.u.items_inventory[0]));
 		// clear equip and favorite fields first, just in case
@@ -6579,7 +6595,16 @@ uint8 pc_checkskill(struct map_session_data *sd, uint16 skill_id)
 	uint16 idx = 0;
 	if (sd == NULL)
 		return 0;
+
+#ifdef RENEWAL
 	if ((idx = skill_get_index(skill_id)) == 0) {
+#else
+	if( ( idx = skill_db.get_index( skill_id, skill_id >= RK_ENCHANTBLADE, __FUNCTION__, __FILE__, __LINE__ ) ) == 0 ){
+		if( skill_id >= RK_ENCHANTBLADE ){
+			// Silently fail for now -> future update planned
+			return 0;
+		}
+#endif
 		ShowError("pc_checkskill: Invalid skill id %d (char_id=%d).\n", skill_id, sd->status.char_id);
 		return 0;
 	}
@@ -9842,8 +9867,6 @@ bool pc_setparam(struct map_session_data *sd,int64 type,int64 val_tmp)
 		pc_setglobalreg(sd, add_str(PCDIECOUNTER_VAR), sd->die_counter);
 		return true;
 	case SP_COOKMASTERY:
-		if (val < 0)
-			return false;
 		if (sd->cook_mastery == val)
 			return true;
 		val = cap_value(val, 0, 1999);
@@ -10077,6 +10100,11 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 
 	if ((unsigned short)b_class == sd->class_)
 		return false; //Nothing to change.
+
+	// If the job does not exist in the job db, dont allow changing to it
+	if( !job_db.exists( job ) ){
+		return false;
+	}
 
 	// changing from 1st to 2nd job
 	if ((b_class&JOBL_2) && !(sd->class_&JOBL_2) && (sd->class_&MAPID_UPPERMASK) != MAPID_SUPER_NOVICE) {
@@ -12583,6 +12611,10 @@ uint16 pc_level_penalty_mod( struct map_session_data* sd, e_penalty_type type, s
 		return 100;
 	}
 
+	if ((type == PENALTY_DROP && map_getmapflag(sd->bl.m, MF_NORENEWALDROPPENALTY)) || (type == PENALTY_EXP && map_getmapflag(sd->bl.m, MF_NORENEWALEXPPENALTY))) {
+		return 100;
+	}
+
 	int monster_level;
 
 	if( md != nullptr ){
@@ -13126,6 +13158,16 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 						return 0;
 
 					job->aspd_base[static_cast<int16>(constant)] = aspd;
+				}
+			} else {
+				if (!exists) {
+					uint8 max = MAX_WEAPON_TYPE;
+
+#ifdef RENEWAL // Renewal adds an extra column for shields
+					max += 1;
+#endif
+					job->aspd_base.resize(max);
+					std::fill(job->aspd_base.begin(), job->aspd_base.end(), 2000);
 				}
 			}
 
