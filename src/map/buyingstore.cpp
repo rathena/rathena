@@ -337,21 +337,18 @@ static unsigned short buyinstore_tax_intotal(struct map_session_data* sd, const 
 		return 0;
 
 	for (i = 0; i < count; i++) {
-		unsigned short nameid, amount, listidx;
-		int index;
+		const struct PACKET_CZ_REQ_TRADE_BUYING_STORE_sub* item = &itemlist[i];
 
-		index = RBUFW(itemlist, i * 6 + 0) - 2;
-		nameid = RBUFW(itemlist, i * 6 + 2);
-		amount = RBUFW(itemlist, i * 6 + 4);
-
-		if (amount <= 0)
+		if (item->amount <= 0)
 			continue;
 
-		ARR_FIND(0, sd->buyingstore.slots, listidx, sd->buyingstore.items[listidx].nameid == nameid);
+		int listidx;
+
+		ARR_FIND(0, sd->buyingstore.slots, listidx, sd->buyingstore.items[listidx].nameid == item->itemId);
 		if (listidx == sd->buyingstore.slots || sd->buyingstore.items[listidx].amount == 0)
 			continue;
 
-		total += ((double)sd->buyingstore.items[listidx].price * amount);
+		total += ((double)sd->buyingstore.items[listidx].price * item->amount);
 	}
 
 	return tax->taxPercentage(tax->total, total);

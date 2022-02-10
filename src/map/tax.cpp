@@ -65,12 +65,12 @@ uint64 TaxDatabase::parseBodyNode(const YAML::Node &node) {
 			s_tax_entry entry = {};
 
 			if (!this->asUInt64(taxNode, "MinimalValue", entry.minimal)) {
-				this->invalidWarning(taxNode["MinimalValue"], "Invalid value, defaulting to 0.");
+				this->invalidWarning(taxNode["MinimalValue"], "Invalid value, defaulting to 0.\n");
 				entry.minimal = 0;
 			}
 
 			if (!this->asUInt16(taxNode, "Tax", entry.tax)) {
-				this->invalidWarning(taxNode["Tax"], "Invalid value, defaulting to 0.");
+				this->invalidWarning(taxNode["Tax"], "Invalid value, defaulting to 0.\n");
 				entry.tax = 0;
 			}
 
@@ -91,12 +91,12 @@ uint64 TaxDatabase::parseBodyNode(const YAML::Node &node) {
 			s_tax_entry entry = { 0 };
 
 			if (!this->asUInt64(taxNode, "MinimalValue", entry.minimal)) {
-				this->invalidWarning(taxNode["MinimalValue"], "Invalid value, defaulting to 0.");
+				this->invalidWarning(taxNode["MinimalValue"], "Invalid value, defaulting to 0.\n");
 				entry.minimal = 0;
 			}
 
 			if (!this->asUInt16(taxNode, "Tax", entry.tax)) {
-				this->invalidWarning(taxNode["Tax"], "Invalid value, defaulting to 0.");
+				this->invalidWarning(taxNode["Tax"], "Invalid value, defaulting to 0.\n");
 				entry.tax = 0;
 			}
 
