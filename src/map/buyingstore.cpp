@@ -330,13 +330,12 @@ void buyingstore_open(struct map_session_data* sd, uint32 account_id)
 static unsigned short buyinstore_tax_intotal(struct map_session_data* sd, const struct PACKET_CZ_REQ_TRADE_BUYING_STORE_sub* itemlist, int count) {
 	std::shared_ptr<s_tax> tax = tax_db.find(TAX_BUYING);
 
-	double total = 0;
-	int i;
-
 	if (tax == nullptr || tax->total.empty())
 		return 0;
 
-	for (i = 0; i < count; i++) {
+	double total = 0;
+
+	for (int i = 0; i < count; i++) {
 		const struct PACKET_CZ_REQ_TRADE_BUYING_STORE_sub* item = &itemlist[i];
 
 		if (item->amount <= 0)
