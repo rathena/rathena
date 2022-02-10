@@ -19908,8 +19908,8 @@ void clif_parse_ranklist(int fd,struct map_session_data *sd) {
 /// 021c <points>.L <total points>.L (ZC_ALCHEMIST_POINT)
 /// 0224 <points>.L <total points>.L (ZC_TAEKWON_POINT)
 /// 097e <RankingType>.W <point>.L <TotalPoint>.L (ZC_UPDATE_RANKING_POINT)
-void clif_update_rankingpoint(struct map_session_data *sd, int rankingtype, int point) {
-	int fd=sd->fd;
+void clif_update_rankingpoint(map_session_data &sd, int rankingtype, int point) {
+	int fd = sd.fd;
 #if PACKETVER < 20130710
 	short cmd;
 	switch(rankingtype){
@@ -19924,14 +19924,14 @@ void clif_update_rankingpoint(struct map_session_data *sd, int rankingtype, int 
 	WFIFOHEAD(fd,packet_len(cmd));
 	WFIFOW(fd,0) = cmd;
 	WFIFOL(fd,2) = point;
-	WFIFOL(fd,6) = sd->status.fame;
+	WFIFOL(fd,6) = sd.status.fame;
 	WFIFOSET(fd, packet_len(cmd));
 #else
 	WFIFOHEAD(fd,packet_len(0x97e));
 	WFIFOW(fd,0) = 0x97e;
 	WFIFOW(fd,2) = rankingtype;
 	WFIFOL(fd,4) = point;
-	WFIFOL(fd,8) = sd->status.fame;
+	WFIFOL(fd,8) = sd.status.fame;
 	WFIFOSET(fd,packet_len(0x97e));
 #endif
 }

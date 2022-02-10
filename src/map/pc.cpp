@@ -757,25 +757,25 @@ void pc_delabyssball( struct map_session_data& sd, int count ){
 * @param count Fame point
 * @return true: on success, false: on error
 */
-bool pc_addfame(struct map_session_data *sd,int count)
+bool pc_addfame(map_session_data &sd, int count)
 {
 	enum e_rank ranktype;
-	nullpo_retr(false, sd);
-	sd->status.fame += count;
-	if(sd->status.fame > MAX_FAME)
-		sd->status.fame = MAX_FAME;
 
-	switch(sd->class_&MAPID_UPPERMASK){
+	sd.status.fame += count;
+	if (sd.status.fame > MAX_FAME)
+		sd.status.fame = MAX_FAME;
+
+	switch(sd.class_&MAPID_UPPERMASK){
 		case MAPID_BLACKSMITH:	ranktype = RANK_BLACKSMITH; break;
 		case MAPID_ALCHEMIST:	ranktype = RANK_ALCHEMIST; break;
 		case MAPID_TAEKWON:		ranktype = RANK_TAEKWON; break;
 		default:
-			ShowWarning( "pc_addfame: Trying to add fame to class '%s'(%d).\n", job_name(sd->status.class_), sd->status.class_ );
+			ShowWarning( "pc_addfame: Trying to add fame to class '%s'(%d).\n", job_name(sd.status.class_), sd.status.class_ );
 			return false;
 	}
 
-	clif_update_rankingpoint(sd,ranktype,count);
-	chrif_updatefamelist(sd);
+	clif_update_rankingpoint(sd, ranktype, count);
+	chrif_updatefamelist(sd, ranktype);
 	return true;
 }
 
