@@ -1085,7 +1085,7 @@ void map_clearflooritem(struct block_list* bl);
 int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect = false);
 
 // instances
-int map_addinstancemap(int src_m, int instance_id);
+int map_addinstancemap(int src_m, int instance_id, bool no_mapflag);
 int map_delinstancemap(int m);
 void map_data_copyall(void);
 void map_data_copy(struct map_data *dst_map, struct map_data *src_map);
