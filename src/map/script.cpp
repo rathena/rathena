@@ -21589,6 +21589,42 @@ BUILDIN_FUNC(instance_live_info)
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
+/*==========================================
+ * instance_list(<"map name">{,<instance mode>});
+ * set '.@instance_list' to a list of the live instance ids for the map with the mode.
+ * return the array size of '.@instance_list'
+ *------------------------------------------*/
+BUILDIN_FUNC(instance_list)
+{
+	int src_id = map_mapname2mapid(script_getstr(st, 2));
+	if (src_id == 0) {
+		ShowError("buildin_instance_list: map '%s' doesn't exist\n", script_getstr(st, 2));
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	e_instance_mode mode = IM_MAX;
+	if (script_hasdata(st, 3)) {
+		mode = static_cast<e_instance_mode>(script_getnum(st, 3));
+		if (mode < IM_NONE || mode >= IM_MAX) {
+			ShowError("buildin_instance_list: Unknown instance mode %d for '%s'\n", mode, script_getstr(st, 3));
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+
+	int j = 0;
+	for (int i = instance_start; i < map_num; i++) {
+		struct map_data* mapdata = &map[i];
+		if (mapdata->instance_src_map == src_id) {
+			std::shared_ptr<s_instance_data> idata = util::umap_find(instances, mapdata->instance_id);
+			if (idata && (mode == IM_MAX || idata->mode == mode)) {
+				setd_sub_num(st, nullptr, ".@instance_list", j, mapdata->instance_id, nullptr);
+				j++;
+			}
+		}
+	}
+	script_pushint(st, j);
+	return SCRIPT_CMD_SUCCESS;
+}
 
 /*==========================================
  * Custom Fonts
@@ -26242,6 +26278,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_check_clan,"i???"),
 	BUILDIN_DEF(instance_info,"si?"),
 	BUILDIN_DEF(instance_live_info,"i?"),
+	BUILDIN_DEF(instance_list, "s?"),
 	/**
 	 * 3rd-related
 	 **/
