@@ -40446,6 +40446,29 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bDelayrate,-4;
+  - Id: 27345
+    AegisName: Dragon_Zilant_Card
+    Name: Ancient Dragon Zilant Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bMaxHPrate,50;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_knight) {
+         if (getequipid(EQI_ACC_L) == 27345) {
+            bonus2 bSkillAtk,"RK_DRAGONBREATH",50;
+            bonus4 bAddEff,Eff_Heat,1000,ATF_WEAPON|ATF_MAGIC,3000;
+         }
+         if (getequipid(EQI_ACC_R) == 27345) {
+            bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",50;
+            autobonus2 "{ sc_start SC_CHILL; bonus2 bResEff,Eff_Heat,10000; }",100,3000,BF_WEAPON|BF_MAGIC;
+         }
+      }
+      /*Unknow Rate*/
   - Id: 27346
     AegisName: Rigid_Muspellskoll_Card
     Name: Rigid Muspellskoll Card
@@ -41898,6 +41921,13 @@ Body:
     Script: |
       bonus bLongAtkRate,10;
       bonus bCritical,10;
+  - Id: 29140
+    AegisName: Orcish_Hero_Of_Anger
+    Name: Anger of the Brave
+    Type: Card
+    SubType: Enchant
+    Script: |
+      autobonus "{ bonus3 bAutoSpell,\"NPC_EARTHQUAKE\",3,1000; }",5,5000,BF_NORMAL,"{ active_transform 1850,5000; }";
   - Id: 29142
     AegisName: Electric_Effect
     Name: Electric Effect
