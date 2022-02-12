@@ -31196,6 +31196,17 @@ Body:
     EquipLevelMin: 20
     Script: |
       bonus bAgi,2;
+  - Id: 2606
+    AegisName: Whike_Black_Tail_L
+    Name: Rental Whike Black Tail    # !todo check english name
+    Type: Armor
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      bonus bCritical,7;
+      bonus bAspdRate,3;
   - Id: 2607
     AegisName: Clip
     Name: Clip
