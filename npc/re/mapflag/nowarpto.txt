@@ -197,3 +197,111 @@ com_d02_i	mapflag	nowarpto
 // Star Emperor Job Change
 star_frst	mapflag	nowarpto
 star_in	mapflag	nowarpto
+
+// ep17.1
+1@cor	mapflag	nowarpto
+1@os_a	mapflag	nowarpto
+1@os_b	mapflag	nowarpto
+1@rgsr	mapflag	nowarpto
+mag_dun03	mapflag	nowarpto
+pub_cat	mapflag	nowarpto
+rgsr_in	mapflag	nowarpto
+
+// ep17.2
+1@bamn	mapflag	nowarpto
+1@bamq	mapflag	nowarpto
+1@ghg	mapflag	nowarpto
+1@herbs	mapflag	nowarpto
+1@lost	mapflag	nowarpto
+ba_in01	mapflag	nowarpto
+1@odin	mapflag	nowarpto
+
+// Illusion of Labyrinth
+prt_mz03_i	mapflag	nowarpto
+
+// Illusion of Underwater
+iz_d04_i	mapflag	nowarpto
+iz_d05_i	mapflag	nowarpto
+
+// 4th jobs change
+1@4win	mapflag	nowarpto
+1@4mag	mapflag	nowarpto
+1@4mst	mapflag	nowarpto
+1@4sac	mapflag	nowarpto
+1@4tro	mapflag	nowarpto
+1@4inq	mapflag	nowarpto
+1@4cdn	mapflag	nowarpto
+1@4igd	mapflag	nowarpto
+1@4drk	mapflag	nowarpto
+job4_bio	mapflag	nowarpto
+job4_mag	mapflag	nowarpto
+job4_tro	mapflag	nowarpto
+
+// Gefen Night Arena
+1@ge_sn	mapflag	nowarpto
+
+// Traces of heroes
+1@mjo1	mapflag	nowarpto
+1@mjo2	mapflag	nowarpto
+1@spa2	mapflag	nowarpto
+
+// Instance Thanatos Tower
+1@thts	mapflag	nowarpto
+2@thts	mapflag	nowarpto
+3@thts	mapflag	nowarpto
+4@thts	mapflag	nowarpto
+5@thts	mapflag	nowarpto
+6@thts	mapflag	nowarpto
+7@thts	mapflag	nowarpto
+8@thts	mapflag	nowarpto
+
+// Glastheim Challenge Mode
+1@gl_he	mapflag	nowarpto
+1@gl_he2	mapflag	nowarpto
+
+// EDDA
+1@gl_prq	mapflag	nowarpto
+1@gol1	mapflag	nowarpto
+1@gol2	mapflag	nowarpto
+
+// 2018 Halloween
+1@halo	mapflag	nowarpto
+
+// Constellation Tower
+1@ch_t	mapflag	nowarpto
+2@ch_t	mapflag	nowarpto
+3@ch_t	mapflag	nowarpto
+
+// Level 200 Expansion
+ein_dun03	mapflag	nowarpto
+
+// Grade Enhancer
+grademk	mapflag	nowarpto
+
+// Level 250 Expansion
+nif_dun01	mapflag	nowarpto
+nif_dun02	mapflag	nowarpto
+
+// // Monster Invasion event
+e_hugel	mapflag	nowarpto
+
+// Training Ground outside Prontera
+tra_fild	mapflag	nowarpto
+
+// Episode 18: Direction of Prayer
+1@adv	mapflag	nowarpto
+1@advs	mapflag	nowarpto
+1@nyr	mapflag	nowarpto
+1@oz	mapflag	nowarpto
+1@tcamp	mapflag	nowarpto
+2@nyr	mapflag	nowarpto
+oz_dun01	mapflag	nowarpto
+oz_dun02	mapflag	nowarpto
+que_thr	mapflag	nowarpto
+wolfvill	mapflag	nowarpto
+
+// Sunken tower
+1@ch_u	mapflag	nowarpto
+
+// Illusion of Twins
+ant_d02_i	mapflag	nowarpto

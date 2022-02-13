@@ -25,3 +25,4 @@ izlude_d	mapflag	reset
 malangdo	mapflag	reset
 malaya	mapflag	reset
 mora	mapflag	reset
+wolfvill	mapflag	reset
