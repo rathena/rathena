@@ -505,6 +505,7 @@ int mob_count_sub(struct block_list *bl, va_list ap);
 
 int mob_is_clone(int mob_id);
 
+const char* get_mob_names_type();
 int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, const char *event, int master_id, enum e_mode mode, int flag, unsigned int duration);
 int mob_clone_delete(struct mob_data *md);
 

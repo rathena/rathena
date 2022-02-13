@@ -9837,6 +9837,7 @@ static const struct _battle_data {
 	{ "sg_angel_skill_ratio",               &battle_config.sg_angel_skill_ratio,            10,     0,      10000,          },
 	{ "autospell_stacking",                 &battle_config.autospell_stacking,              0,      0,      1,              },
 	{ "override_mob_names",                 &battle_config.override_mob_names,              0,      0,      2,              },
+	{ "mob_names_type",                     &battle_config.mob_names_type,                  0,      0,      1,              },
 	{ "min_chat_delay",                     &battle_config.min_chat_delay,                  0,      0,      INT_MAX,        },
 	{ "friend_auto_add",                    &battle_config.friend_auto_add,                 1,      0,      1,              },
 	{ "hom_rename",                         &battle_config.hom_rename,                      0,      0,      1,              },

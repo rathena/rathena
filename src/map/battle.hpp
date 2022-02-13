@@ -471,6 +471,7 @@ struct Battle_Config
 	int sg_miracle_skill_duration;
 	int autospell_stacking; //Enables autospell cards to stack. [Skotlex]
 	int override_mob_names; //Enables overriding spawn mob names with the mob_db names. [Skotlex]
+	int mob_names_type;
 	int min_chat_delay; //Minimum time between client messages. [Skotlex]
 	int friend_auto_add; //When accepting friends, both get friended. [Skotlex]
 	int hvan_explosion_intimate;	// fix [albator]

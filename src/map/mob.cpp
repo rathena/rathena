@@ -3958,6 +3958,13 @@ static bool mob_clone_disabled_skills(uint16 skill_id) {
 	return false;
 }
 
+const char* get_mob_names_type() {
+	if (battle_config.mob_names_type == 0)
+		return "--en--";
+	else
+		return "--ja--";
+}
+
 //Flag values:
 //&1: Set special ai (fight mobs, not players)
 //If mode is not passed, a default aggressive mode is used.
@@ -4149,7 +4156,7 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 	sd->fd = fd;
 
 	//Finally, spawn it.
-	md = mob_once_spawn_sub(&sd->bl, m, x, y, "--en--", mob_id, event, SZ_SMALL, AI_NONE);
+	md = mob_once_spawn_sub(&sd->bl, m, x, y, get_mob_names_type(), mob_id, event, SZ_SMALL, AI_NONE);
 	if (!md) return 0; //Failed?
 
 	md->special_state.clone = 1;

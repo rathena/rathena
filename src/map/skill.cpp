@@ -7328,7 +7328,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case SA_SUMMONMONSTER:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-		if (sd) mob_once_spawn(sd, src->m, src->x, src->y,"--ja--", -1, 1, "", SZ_SMALL, AI_NONE);
+		if (sd) {
+			mob_once_spawn(sd, src->m, src->x, src->y, get_mob_names_type(), -1, 1, "", SZ_SMALL, AI_NONE);
+		}
 		break;
 	case SA_LEVELUP:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
@@ -12605,7 +12607,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 
-			mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, "--ja--", abrs[3 - (MT_SUMMON_ABR_INFINITY - skill_id)], "", SZ_SMALL, AI_ABR);
+			mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, get_mob_names_type(), abrs[3 - (MT_SUMMON_ABR_INFINITY - skill_id)], "", SZ_SMALL, AI_ABR);
 
 			if (md) {
 				md->master_id = src->id;
@@ -12628,7 +12630,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 
-			mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, "--ja--", bionics[4 - (BO_HELLTREE - skill_id)], "", SZ_SMALL, AI_BIONIC);
+			mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, get_mob_names_type(), bionics[4 - (BO_HELLTREE - skill_id)], "", SZ_SMALL, AI_BIONIC);
 
 			if (md) {
 				md->master_id = src->id;
@@ -13829,7 +13831,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 						mob_id = MOBID_SHINING_PLANT;
 				}
 
-				md = mob_once_spawn_sub(src, src->m, x, y, "--ja--", mob_id, "", SZ_SMALL, AI_NONE);
+				md = mob_once_spawn_sub(src, src->m, x, y, get_mob_names_type(), mob_id, "", SZ_SMALL, AI_NONE);
 				if (!md)
 					break;
 				if ((t = skill_get_time(skill_id, skill_lv)) > 0)
