@@ -107,3 +107,4 @@ ecl_in04	mapflag	pvp	off
 ecl_hub01	mapflag	pvp	off
 que_avan01	mapflag	pvp	off
 dali	mapflag	pvp	off
+wolfvill	mapflag	pvp	off
