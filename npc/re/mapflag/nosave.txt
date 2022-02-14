@@ -175,3 +175,74 @@ rockmi2	mapflag	nosave	SavePoint
 
 // Soul Reaper Job Change
 1@soul	mapflag	nosave	SavePoint
+
+// ep17.1
+1@cor	mapflag	nosave	SavePoint
+1@os_a	mapflag	nosave	SavePoint
+1@os_b	mapflag	nosave	SavePoint
+1@rgsr	mapflag	nosave	SavePoint
+
+// ep17.2
+1@bamn	mapflag	nosave	SavePoint
+1@bamq	mapflag	nosave	SavePoint
+1@ghg	mapflag	nosave	SavePoint
+1@herbs	mapflag	nosave	SavePoint
+1@lost	mapflag	nosave	SavePoint
+1@odin	mapflag	nosave	SavePoint
+
+// 4th jobs change
+1@4win	mapflag	nosave	SavePoint
+1@4mag	mapflag	nosave	SavePoint
+1@4mst	mapflag	nosave	SavePoint
+1@4sac	mapflag	nosave	SavePoint
+1@4tro	mapflag	nosave	SavePoint
+1@4inq	mapflag	nosave	SavePoint
+1@4cdn	mapflag	nosave	SavePoint
+1@4igd	mapflag	nosave	SavePoint
+1@4drk	mapflag	nosave	SavePoint
+
+// Gefen Night Arena
+1@ge_sn	mapflag	nosave	SavePoint
+
+// Traces of heroes
+1@mjo1	mapflag	nosave	SavePoint
+1@mjo2	mapflag	nosave	SavePoint
+1@spa2	mapflag	nosave	SavePoint
+
+// Instance Thanatos Tower
+1@thts	mapflag	nosave	SavePoint
+2@thts	mapflag	nosave	SavePoint
+3@thts	mapflag	nosave	SavePoint
+4@thts	mapflag	nosave	SavePoint
+5@thts	mapflag	nosave	SavePoint
+6@thts	mapflag	nosave	SavePoint
+7@thts	mapflag	nosave	SavePoint
+8@thts	mapflag	nosave	SavePoint
+
+// Glastheim Challenge Mode
+1@gl_he	mapflag	nosave	SavePoint
+1@gl_he2	mapflag	nosave	SavePoint
+
+// EDDA
+1@gl_prq	mapflag	nosave	SavePoint
+1@gol1	mapflag	nosave	SavePoint
+1@gol2	mapflag	nosave	SavePoint
+
+// 2018 Halloween
+1@halo	mapflag	nosave	SavePoint
+
+// Constellation Tower
+1@ch_t	mapflag	nosave	SavePoint
+2@ch_t	mapflag	nosave	SavePoint
+3@ch_t	mapflag	nosave	SavePoint
+
+// Episode 18: Direction of Prayer
+1@adv	mapflag	nosave	SavePoint
+1@advs	mapflag	nosave	SavePoint
+1@nyr	mapflag	nosave	SavePoint
+1@oz	mapflag	nosave	SavePoint
+1@tcamp	mapflag	nosave	SavePoint
+2@nyr	mapflag	nosave	SavePoint
+
+// Sunken tower
+1@ch_u	mapflag	nosave	SavePoint

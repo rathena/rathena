@@ -268,3 +268,111 @@ com_d02_i	mapflag	nomemo
 // Star Emperor Job Change
 star_frst	mapflag	nomemo
 star_in	mapflag	nomemo
+
+// ep17.1
+1@cor	mapflag	nomemo
+1@os_a	mapflag	nomemo
+1@os_b	mapflag	nomemo
+1@rgsr	mapflag	nomemo
+mag_dun03	mapflag	nomemo
+pub_cat	mapflag	nomemo
+rgsr_in	mapflag	nomemo
+
+// ep17.2
+1@bamn	mapflag	nomemo
+1@bamq	mapflag	nomemo
+1@ghg	mapflag	nomemo
+1@herbs	mapflag	nomemo
+1@lost	mapflag	nomemo
+ba_in01	mapflag	nomemo
+1@odin	mapflag	nomemo
+
+// Illusion of Labyrinth
+prt_mz03_i	mapflag	nomemo
+
+// Illusion of Underwater
+iz_d04_i	mapflag	nomemo
+iz_d05_i	mapflag	nomemo
+
+// 4th jobs change
+1@4win	mapflag	nomemo
+1@4mag	mapflag	nomemo
+1@4mst	mapflag	nomemo
+1@4sac	mapflag	nomemo
+1@4tro	mapflag	nomemo
+1@4inq	mapflag	nomemo
+1@4cdn	mapflag	nomemo
+1@4igd	mapflag	nomemo
+1@4drk	mapflag	nomemo
+job4_bio	mapflag	nomemo
+job4_mag	mapflag	nomemo
+job4_tro	mapflag	nomemo
+
+// Gefen Night Arena
+1@ge_sn	mapflag	nomemo
+
+// Traces of heroes
+1@mjo1	mapflag	nomemo
+1@mjo2	mapflag	nomemo
+1@spa2	mapflag	nomemo
+
+// Instance Thanatos Tower
+1@thts	mapflag	nomemo
+2@thts	mapflag	nomemo
+3@thts	mapflag	nomemo
+4@thts	mapflag	nomemo
+5@thts	mapflag	nomemo
+6@thts	mapflag	nomemo
+7@thts	mapflag	nomemo
+8@thts	mapflag	nomemo
+
+// Glastheim Challenge Mode
+1@gl_he	mapflag	nomemo
+1@gl_he2	mapflag	nomemo
+
+// EDDA
+1@gl_prq	mapflag	nomemo
+1@gol1	mapflag	nomemo
+1@gol2	mapflag	nomemo
+
+// 2018 Halloween
+1@halo	mapflag	nomemo
+
+// Constellation Tower
+1@ch_t	mapflag	nomemo
+2@ch_t	mapflag	nomemo
+3@ch_t	mapflag	nomemo
+
+// Level 200 Expansion
+ein_dun03	mapflag	nomemo
+
+// Grade Enhancer
+grademk	mapflag	nomemo
+
+// Level 250 Expansion
+nif_dun01	mapflag	nomemo
+nif_dun02	mapflag	nomemo
+
+// // Monster Invasion event
+e_hugel	mapflag	nomemo
+
+// Training Ground outside Prontera
+tra_fild	mapflag	nomemo
+
+// Episode 18: Direction of Prayer
+1@adv	mapflag	nomemo
+1@advs	mapflag	nomemo
+1@nyr	mapflag	nomemo
+1@oz	mapflag	nomemo
+1@tcamp	mapflag	nomemo
+2@nyr	mapflag	nomemo
+oz_dun01	mapflag	nomemo
+oz_dun02	mapflag	nomemo
+que_thr	mapflag	nomemo
+wolfvill	mapflag	nomemo
+
+// Sunken tower
+1@ch_u	mapflag	nomemo
+
+// Illusion of Twins
+ant_d02_i	mapflag	nomemo

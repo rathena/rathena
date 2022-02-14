@@ -103,6 +103,77 @@ lhz_d_n2	mapflag	restricted	6
 // Soul Reaper Job Change
 1@soul	mapflag	restricted	6
 
+// ep17.1
+1@cor	mapflag	restricted	6
+1@os_a	mapflag	restricted	6
+1@os_b	mapflag	restricted	6
+1@rgsr	mapflag	restricted	6
+
+// ep17.2
+1@bamn	mapflag	restricted	6
+1@bamq	mapflag	restricted	6
+1@ghg	mapflag	restricted	6
+1@herbs	mapflag	restricted	6
+1@lost	mapflag	restricted	6
+1@odin	mapflag	restricted	6
+
+// 4th jobs change
+1@4win	mapflag	restricted	6
+1@4mag	mapflag	restricted	6
+1@4mst	mapflag	restricted	6
+1@4sac	mapflag	restricted	6
+1@4tro	mapflag	restricted	6
+1@4inq	mapflag	restricted	6
+1@4cdn	mapflag	restricted	6
+1@4igd	mapflag	restricted	6
+1@4drk	mapflag	restricted	6
+
+// Gefen Night Arena
+1@ge_sn	mapflag	restricted	6
+
+// Traces of heroes
+1@mjo1	mapflag	restricted	6
+1@mjo2	mapflag	restricted	6
+1@spa2	mapflag	restricted	6
+
+// Instance Thanatos Tower
+1@thts	mapflag	restricted	6
+2@thts	mapflag	restricted	6
+3@thts	mapflag	restricted	6
+4@thts	mapflag	restricted	6
+5@thts	mapflag	restricted	6
+6@thts	mapflag	restricted	6
+7@thts	mapflag	restricted	6
+8@thts	mapflag	restricted	6
+
+// Glastheim Challenge Mode
+1@gl_he	mapflag	restricted	6
+1@gl_he2	mapflag	restricted	6
+
+// EDDA
+1@gl_prq	mapflag	restricted	6
+1@gol1	mapflag	restricted	6
+1@gol2	mapflag	restricted	6
+
+// 2018 Halloween
+1@halo	mapflag	restricted	6
+
+// Constellation Tower
+1@ch_t	mapflag	restricted	6
+2@ch_t	mapflag	restricted	6
+3@ch_t	mapflag	restricted	6
+
+// Episode 18: Direction of Prayer
+1@adv	mapflag	restricted	6
+1@advs	mapflag	restricted	6
+1@nyr	mapflag	restricted	6
+1@oz	mapflag	restricted	6
+1@tcamp	mapflag	restricted	6
+2@nyr	mapflag	restricted	6
+
+// Sunken tower
+1@ch_u	mapflag	restricted	6
+
 // Towns =========================
 brasilis	mapflag	restricted	7
 dewata	mapflag	restricted	7
@@ -116,6 +187,7 @@ malangdo	mapflag	restricted	7
 malaya	mapflag	restricted	7
 mora	mapflag	restricted	7
 lasagna	mapflag	restricted	7
+wolfvill	mapflag	restricted	7
 
 // Restricted maps for WOE:TE Items ==
 teg_dun01	mapflag	restricted	8
