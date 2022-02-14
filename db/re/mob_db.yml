@@ -31928,7 +31928,7 @@ Body:
         Rate: 5
       - Item: Ulfhedinn
         Rate: 3
-      - Item: 23258
+      - Item: Foul_Rotten_Meat
         Rate: 5
       - Item: Galion_Card
         Rate: 1
@@ -40426,7 +40426,7 @@ Body:
         Rate: 15
       - Item: Elder_Branch
         Rate: 500
-      - Item: 23257
+      - Item: Dew_Of_Old_Tree
         Rate: 10
       - Item: Ancient_Tree_Card
         Rate: 1
