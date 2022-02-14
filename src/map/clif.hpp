@@ -552,6 +552,7 @@ enum clif_messages : uint16_t {
 
 	// Unofficial names
 	C_ITEM_EQUIP_SWITCH = 0xbc7, 
+	C_ITEM_NOEQUIP = 0x174,	/// <"You can't put this item on."
 };
 
 enum e_personalinfo : uint8_t {
