@@ -50108,9 +50108,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 1000274,10;
-      getitem 100081,3;
-      getitem 25464,20;
+      getgroupitem(IG_2020_REWARD_BOX);
   - Id: 200185
     AegisName: LI_Nyangvine_Box1_26
 #   Name: (Limited) Actinidia Cat Fruit Box I (Stone Box 26)

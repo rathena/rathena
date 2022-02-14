@@ -24334,3 +24334,13 @@ Body:
             Amount: 10
           - Item: World_Tour_Ticket
             Amount: 30
+  - Group: 2020_REWARD_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Cachua_Coupon
+            Amount: 10
+          - Item: Kr_B_Special01
+            Amount: 3
+          - Item: World_Tour_Ticket
+            Amount: 20
