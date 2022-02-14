@@ -122654,16 +122654,22 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 130
     Script: |
+      .@equip_count = 0;
+      if(getequipid(EQI_ACC_L) == 28552)
+         .@equip_count++;
+      if(getequipid(EQI_ACC_R) == 28552)
+         .@equip_count++;
       if (getequipid(EQI_ACC_L) == 28552) {
-         bonus bMaxHPrate,15;
-         bonus bVariableCastrate,-15;
-         bonus2 bSkillCooldown,"RK_DRAGONBREATH",-500;
+         bonus bMaxHPrate,15 / .@equip_count;
+         bonus bVariableCastrate,-15 / .@equip_count;
+         bonus2 bSkillCooldown,"RK_DRAGONBREATH",-500 / .@equip_count;
       }
       if (getequipid(EQI_ACC_R) == 28552) {
-         bonus bMaxSPrate,15;
-         bonus bDelayrate,-15;
-         bonus2 bSkillCooldown,"RK_DRAGONBREATH_WATER",-500;
+         bonus bMaxSPrate,15 / .@equip_count;
+         bonus bDelayrate,-15 / .@equip_count;
+         bonus2 bSkillCooldown,"RK_DRAGONBREATH_WATER",-500 / .@equip_count;
       }
+      /*TODO: Please convert to getequipidx when available*/ 
   - Id: 28560
     AegisName: YinYang_Talisman
     Name: Yin Yang Talisman
@@ -135272,25 +135278,31 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 100
     Script: |
+      .@equip_count = 0;
+      if(getequipid(EQI_ACC_L) == 32258)
+         .@equip_count++;
+      if(getequipid(EQI_ACC_R) == 32258)
+         .@equip_count++;
       skill "AL_BLESSING",5;
       if (getequipid(EQI_ACC_R) == 32258) {
-         bonus bBaseAtk,15*(readparam(bLuk)/10);
-         bonus bMatk,15*(readparam(bLuk)/10);
+         bonus bBaseAtk,(15*(readparam(bLuk)/10)) / .@equip_count;
+         bonus bMatk,(15*(readparam(bLuk)/10)) / .@equip_count;
          if (readparam(bLuk) >= 125) {
-            bonus2 bAddClass,Class_Boss,15;
-            bonus2 bMagicAddClass,Class_Boss,15;
+            bonus2 bAddClass,Class_Boss,15 / .@equip_count;
+            bonus2 bMagicAddClass,Class_Boss,15 / .@equip_count;
          }
       }
       if (getequipid(EQI_ACC_L) == 32258) {
-         bonus bMaxHPRate,2*(readparam(bVit)/10);
-         bonus bMaxSPRate,2*(readparam(bVit)/10);
+         bonus bMaxHPRate,(2*(readparam(bVit)/10)) / .@equip_count;
+         bonus bMaxSPRate,(2*(readparam(bVit)/10)) / .@equip_count;
          if (readparam(bVit) >= 125) {
-            bonus bDef,300;
-            bonus bMdef,50;
-            bonus2 bSubRace,RC_Player_Human,3;
-            bonus2 bSubRace,RC_Player_Doram,3;
+            bonus bDef,300 / .@equip_count;
+            bonus bMdef,50 / .@equip_count;
+            bonus2 bSubRace,RC_Player_Human,3 / .@equip_count;
+            bonus2 bSubRace,RC_Player_Doram,3 / .@equip_count;
          }
       }
+      /*TODO: Please convert to getequipidx when available*/ 
   - Id: 32262
     AegisName: Ball_Of_RasenHuuma
     Name: Rasen Fuma's Orb
