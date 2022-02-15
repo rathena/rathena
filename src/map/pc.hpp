@@ -1516,7 +1516,7 @@ void pc_delservantball( struct map_session_data& sd, int count = 1 );
 void pc_addabyssball( struct map_session_data& sd, int count = 1 );
 void pc_delabyssball( struct map_session_data& sd, int count = 1 );
 
-void pc_addfame(struct map_session_data *sd,int count);
+bool pc_addfame(map_session_data &sd, int count);
 unsigned char pc_famerank(uint32 char_id, int job);
 bool pc_set_hate_mob(struct map_session_data *sd, int pos, struct block_list *bl);
 
