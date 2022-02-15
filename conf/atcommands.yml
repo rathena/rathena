@@ -1010,6 +1010,12 @@ Body:
   - Command: reloadnpcfile
     Aliases:
       - reloadnpc
+  - Command: adopt
+    Help: |
+      Adopt a character.
+  - Command: unadopt
+    Help: |
+      Disown a character. Independence flag will make the baby a normal class.
 
 Footer:
   Imports:

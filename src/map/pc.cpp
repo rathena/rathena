@@ -1317,7 +1317,7 @@ bool pc_isequipped(struct map_session_data *sd, t_itemid nameid)
  *         ADOPT_LEVEL_70 - Parents need to be level 70+ (client message)
  *         ADOPT_MARRIED - Cannot adopt a married person (client message)
  */
-enum adopt_responses pc_try_adopt(struct map_session_data *p1_sd, struct map_session_data *p2_sd, struct map_session_data *b_sd)
+e_adopt_responses pc_try_adopt(struct map_session_data *p1_sd, struct map_session_data *p2_sd, struct map_session_data *b_sd)
 {
 	if( !p1_sd || !p2_sd || !b_sd )
 		return ADOPT_CHARACTER_NOT_FOUND;
@@ -1358,7 +1358,11 @@ enum adopt_responses pc_try_adopt(struct map_session_data *p1_sd, struct map_ses
 		return ADOPT_MARRIED;
 	}
 
-	if( !( ( b_sd->status.class_ >= JOB_NOVICE && b_sd->status.class_ <= JOB_THIEF ) || b_sd->status.class_ == JOB_SUPER_NOVICE || b_sd->status.class_ == JOB_SUPER_NOVICE_E ) )
+#ifdef RENEWAL
+	if (b_sd->status.base_level < 51)
+#else
+	if (!((b_sd->status.class_ >= JOB_NOVICE && b_sd->status.class_ <= JOB_THIEF) || b_sd->status.class_ == JOB_SUPER_NOVICE || b_sd->status.class_ == JOB_SUPER_NOVICE_E))
+#endif
 		return ADOPT_NOT_NOVICE;
 
 	return ADOPT_ALLOWED;
@@ -1414,6 +1418,78 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 	}
 
 	return false; // Job Change Fail
+}
+
+/**
+ * Check unadoption rules and remove adoption
+ * @param p1_sd: Player 1
+ * @param p2_sd: Player 2
+ * @param b_sd: Player that will be unadopted
+ * @param independent_baby: If the baby becomes a normal class
+ * @return see pc.hpp::e_unadopt_responses
+ */
+e_unadopt_responses pc_unadopt(struct map_session_data *p1_sd, struct map_session_data *p2_sd, struct map_session_data *b_sd, bool independent_baby) {
+	if (!p1_sd || !p2_sd || !b_sd)
+		return UNADOPT_CHARACTER_NOT_FOUND;
+
+	if (!b_sd->status.father || !b_sd->status.mother)
+		return UNADOPT_NOT_ADOPTED;
+
+	if (p1_sd->status.child != b_sd->status.char_id && p2_sd->status.child != b_sd->status.char_id)
+		return UNADOPT_NOT_CHILD;
+
+	// Baby is separated from parents by independence option (Becomes a normal class)
+	if (independent_baby) {
+		int32 job = pc_mapid2jobid(b_sd->class_ | ~JOBL_BABY, b_sd->status.sex);
+
+		if (job == -1 || !pc_jobchange(b_sd, job, 0))
+			return UNADOPT_CHARACTER_NOT_FOUND;
+	}
+
+	// Remove Baby/Parent status
+	p1_sd->status.child = 0;
+	p2_sd->status.child = 0;
+	b_sd->status.father = 0;
+	b_sd->status.mother = 0;
+
+	uint16 sk_idx;
+
+	// Remove Baby Skills
+	if ((sk_idx = skill_get_index(WE_BABY)) > 0 && pc_checkskill(b_sd, WE_BABY) > 0) {
+		b_sd->status.skill[sk_idx].lv = 0;
+		b_sd->status.skill[sk_idx].flag = SKILL_FLAG_TEMPORARY;
+		clif_deleteskill(b_sd, WE_BABY);
+	}
+	if ((sk_idx = skill_get_index(WE_CALLPARENT)) > 0 && pc_checkskill(b_sd, WE_CALLPARENT) > 0) {
+		b_sd->status.skill[sk_idx].lv = 0;
+		b_sd->status.skill[sk_idx].flag = SKILL_FLAG_TEMPORARY;
+		clif_deleteskill(b_sd, WE_CALLPARENT);
+	}
+	if ((sk_idx = skill_get_index(WE_CHEERUP)) > 0 && pc_checkskill(b_sd, WE_CHEERUP) > 0) {
+		b_sd->status.skill[sk_idx].lv = 0;
+		b_sd->status.skill[sk_idx].flag = SKILL_FLAG_TEMPORARY;
+		clif_deleteskill(b_sd, WE_CHEERUP);
+	}
+
+	// Remove Parents Skills
+	if ((sk_idx = skill_get_index(WE_CALLBABY)) > 0) {
+		if (pc_checkskill(p1_sd, WE_CALLBABY) > 0) {
+			p1_sd->status.skill[sk_idx].lv = 0;
+			p1_sd->status.skill[sk_idx].flag = SKILL_FLAG_TEMPORARY;
+			clif_deleteskill(b_sd, WE_CALLBABY);
+		}
+		if (pc_checkskill(p2_sd, WE_CALLBABY) > 0) {
+			p1_sd->status.skill[sk_idx].lv = 0;
+			p1_sd->status.skill[sk_idx].flag = SKILL_FLAG_TEMPORARY;
+			clif_deleteskill(b_sd, WE_CALLBABY);
+		}
+	}
+
+	chrif_save(p1_sd, CSAVE_NORMAL);
+	chrif_save(p2_sd, CSAVE_NORMAL);
+	chrif_save(b_sd, CSAVE_NORMAL);
+
+	return UNADOPT_ALLOWED;
 }
 
 static bool pc_job_can_use_item( struct map_session_data* sd, struct item_data* item ){

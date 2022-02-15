@@ -949,16 +949,23 @@ enum idletime_option {
 	IDLE_NPC_PROGRESS  = 0x4000,
 };
 
-enum adopt_responses {
-	ADOPT_ALLOWED = 0,
-	ADOPT_ALREADY_ADOPTED,
-	ADOPT_MARRIED_AND_PARTY,
-	ADOPT_EQUIP_RINGS,
-	ADOPT_NOT_NOVICE,
-	ADOPT_CHARACTER_NOT_FOUND,
-	ADOPT_MORE_CHILDREN,
-	ADOPT_LEVEL_70,
-	ADOPT_MARRIED,
+enum e_adopt_responses : uint8 {
+	ADOPT_ALLOWED = 0, ///< Baby can be adopted
+	ADOPT_ALREADY_ADOPTED, ///< Player is already adopted
+	ADOPT_MARRIED_AND_PARTY, ///< Parents need to be married and in a party
+	ADOPT_EQUIP_RINGS, ///< Parents need their wedding rings equipped
+	ADOPT_NOT_NOVICE, ///< Baby is not a Novice
+	ADOPT_CHARACTER_NOT_FOUND, ///< Baby or Parent not found
+	ADOPT_MORE_CHILDREN, ///< Cannot adopt more than 1 baby (client message)
+	ADOPT_LEVEL_70, ///< Parents need to be level 70 or higher (client message)
+	ADOPT_MARRIED, ///< Parents need to be married (client message)
+};
+
+enum e_unadopt_responses : uint8 {
+	UNADOPT_ALLOWED = 0, ///< Baby can be unadopted
+	UNADOPT_CHARACTER_NOT_FOUND, ///< Baby or Parent not found
+	UNADOPT_NOT_ADOPTED, ///< Baby is not adopted
+	UNADOPT_NOT_CHILD, ///< Neither parent is the father/mother
 };
 
 enum item_check {
@@ -1312,8 +1319,9 @@ bool pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem);
 bool pc_dropitem(struct map_session_data *sd,int n,int amount);
 
 bool pc_isequipped(struct map_session_data *sd, t_itemid nameid);
-enum adopt_responses pc_try_adopt(struct map_session_data *p1_sd, struct map_session_data *p2_sd, struct map_session_data *b_sd);
+e_adopt_responses pc_try_adopt(struct map_session_data *p1_sd, struct map_session_data *p2_sd, struct map_session_data *b_sd);
 bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd, struct map_session_data *b_sd);
+e_unadopt_responses pc_unadopt(struct map_session_data *p1_sd, struct map_session_data *p2_sd, struct map_session_data *b_sd, bool independent_baby);
 
 void pc_updateweightstatus(struct map_session_data *sd);
 

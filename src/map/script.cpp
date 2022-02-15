@@ -23639,13 +23639,12 @@ BUILDIN_FUNC(navigateto){
 BUILDIN_FUNC(adopt)
 {
 	TBL_PC *sd, *b_sd;
-	enum adopt_responses response;
 
 	if (script_isstring(st, 2)) {
 		const char *name = script_getstr(st, 2);
 
 		sd = map_nick2sd(name,false);
-		if (sd == NULL) {
+		if (sd == nullptr) {
 			ShowError("buildin_adopt: Non-existant parent character %s requested.\n", name);
 			return SCRIPT_CMD_FAILURE;
 		}
@@ -23653,7 +23652,7 @@ BUILDIN_FUNC(adopt)
 		uint32 char_id = script_getnum(st, 2);
 
 		sd = map_charid2sd(char_id);
-		if (sd == NULL) {
+		if (sd == nullptr) {
 			ShowError("buildin_adopt: Non-existant parent character %d requested.\n", char_id);
 			return SCRIPT_CMD_FAILURE;
 		}
@@ -23663,7 +23662,7 @@ BUILDIN_FUNC(adopt)
 		const char *name = script_getstr(st, 3);
 
 		b_sd = map_nick2sd(name,false);
-		if (b_sd == NULL) {
+		if (b_sd == nullptr) {
 			ShowError("buildin_adopt: Non-existant baby character %s requested.\n", name);
 			return SCRIPT_CMD_FAILURE;
 		}
@@ -23671,13 +23670,13 @@ BUILDIN_FUNC(adopt)
 		uint32 char_id = script_getnum(st, 3);
 
 		b_sd = map_charid2sd(char_id);
-		if (b_sd == NULL) {
+		if (b_sd == nullptr) {
 			ShowError("buildin_adopt: Non-existant baby character %d requested.\n", char_id);
 			return SCRIPT_CMD_FAILURE;
 		}
 	}
 
-	response = pc_try_adopt(sd, map_charid2sd(sd->status.partner_id), b_sd);
+	e_adopt_responses response = pc_try_adopt(sd, map_charid2sd(sd->status.partner_id), b_sd);
 
 	if (response == ADOPT_ALLOWED) {
 		TBL_PC *p_sd = map_charid2sd(sd->status.partner_id);
@@ -23690,6 +23689,64 @@ BUILDIN_FUNC(adopt)
 
 	script_pushint(st, response);
 	return SCRIPT_CMD_FAILURE;
+}
+
+/**
+ * unadopt("<parent_name>","<baby_name>"{,<independent_baby>});
+ * unadopt(<parent_id>,<baby_id>{,<independent_baby>});
+ */
+BUILDIN_FUNC(unadopt)
+{
+	TBL_PC *sd, *b_sd;
+
+	if (script_isstring(st, 2)) {
+		const char *name = script_getstr(st, 2);
+
+		sd = map_nick2sd(name,false);
+		if (sd == nullptr) {
+			ShowError("buildin_unadopt: Non-existant parent character %s requested.\n", name);
+			return SCRIPT_CMD_FAILURE;
+		}
+	} else {
+		uint32 char_id = script_getnum(st, 2);
+
+		sd = map_charid2sd(char_id);
+		if (sd == nullptr) {
+			ShowError("buildin_unadopt: Non-existant parent character %d requested.\n", char_id);
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+
+	if (script_isstring(st, 3)) {
+		const char *name = script_getstr(st, 3);
+
+		b_sd = map_nick2sd(name,false);
+		if (b_sd == nullptr) {
+			ShowError("buildin_unadopt: Non-existant baby character %s requested.\n", name);
+			return SCRIPT_CMD_FAILURE;
+		}
+	} else {
+		uint32 char_id = script_getnum(st, 3);
+
+		b_sd = map_charid2sd(char_id);
+		if (b_sd == nullptr) {
+			ShowError("buildin_unadopt: Non-existant baby character %d requested.\n", char_id);
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+
+	bool independent_baby = false;
+
+	if (script_hasdata(st, 4))
+		independent_baby = script_getnum(st, 4) != 0;
+
+	e_unadopt_responses response = pc_unadopt(sd, map_charid2sd(sd->status.partner_id), b_sd, independent_baby);
+
+	script_pushint(st, response);
+	if (response == UNADOPT_ALLOWED)
+		return SCRIPT_CMD_SUCCESS;
+	else
+		return SCRIPT_CMD_FAILURE;
 }
 
 /**
@@ -26364,6 +26421,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(navigateto,"s???????"),
 	BUILDIN_DEF(getguildalliance,"ii"),
 	BUILDIN_DEF(adopt,"vv"),
+	BUILDIN_DEF(unadopt, "vv?"),
 	BUILDIN_DEF(getexp2,"ii?"),
 	BUILDIN_DEF(recalculatestat,""),
 	BUILDIN_DEF(hateffect,"ii"),

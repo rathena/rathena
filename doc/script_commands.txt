@@ -6346,11 +6346,29 @@ Return values:
  ADOPT_ALREADY_ADOPTED - Character is already adopted.
  ADOPT_MARRIED_AND_PARTY - Parents need to be married and in a party with the baby.
  ADOPT_EQUIP_RINGS - Parents need wedding rings equipped.
- ADOPT_NOT_NOVICE - Baby is not a Novice.
+ ADOPT_NOT_NOVICE - Baby is not a Novice. In RENEWAL this has been changed to any class less that is base level 50 or lower.
  ADOPT_CHARACTER_NOT_FOUND - A parent or Baby was not found.
  ADOPT_MORE_CHILDREN - You cannot adopt more than 1 child. (client message)
  ADOPT_LEVEL_70 - Parents need to be at least level 70 in order to adopt someone. (client message)
  ADOPT_MARRIED - You cannot adopt a married person. (client message)
+
+---------------------------------------
+
+*unadopt("<parent_name>","<baby_name>"{,<independent_baby>});
+*unadopt(<parent_id>,<baby_id>{,<independent_baby>});
+
+This function will remove an adoption to the specified baby character. The parent
+value can be either parent. Both parents and the baby need to be online in order
+for adoption removal to work.
+
+The <independent_baby> option allows the baby to be converted to a normal class. This option
+is false by default.
+
+Return values:
+ UNADOPT_ALLOWED - Baby is no longer adopted.
+ UNADOPT_CHARACTER_NOT_FOUND - A parent or Baby was not found.
+ UNADOPT_NOT_ADOPTED - The Baby is not adopted.
+ UNADOPT_NOT_CHILD - A Parent is not the father or mother of the Baby.
 
 ---------------------------------------
 //

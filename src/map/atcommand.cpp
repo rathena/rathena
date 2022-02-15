@@ -10490,7 +10490,6 @@ ACMD_FUNC(clonestat) {
 ACMD_FUNC(adopt)
 {
 	TBL_PC *b_sd;
-	enum adopt_responses response;
 
 	nullpo_retr(-1, sd);
 
@@ -10503,12 +10502,12 @@ ACMD_FUNC(adopt)
 		return -1;
 	}
 
-	if ((b_sd = map_nick2sd(atcmd_player_name,false)) == NULL) {
+	if ((b_sd = map_nick2sd(atcmd_player_name,false)) == nullptr) {
 		clif_displaymessage(fd, msg_txt(sd, 3)); // Character not found.
 		return -1;
 	}
 
-	response = pc_try_adopt(sd, map_charid2sd(sd->status.partner_id), b_sd);
+	e_adopt_responses response = pc_try_adopt(sd, map_charid2sd(sd->status.partner_id), b_sd);
 
 	if (response == ADOPT_ALLOWED) {
 		TBL_PC *p_sd = map_charid2sd(sd->status.partner_id);
@@ -10518,8 +10517,54 @@ ACMD_FUNC(adopt)
 		return 0;
 	}
 
-	if (response < ADOPT_MORE_CHILDREN) // No displaymessage for client-type responses
+	if (response < ADOPT_MORE_CHILDREN) { // No displaymessage for client-type responses
+#ifdef RENEWAL
+		if (response == ADOPT_NOT_NOVICE)
+			clif_displaymessage(fd, msg_txt(sd, 1513));
+		else
+#endif
 		clif_displaymessage(fd, msg_txt(sd, 744 + response - 1));
+	}
+	return -1;
+}
+
+/**
+ * Remove an adopted character.
+ * Usage: @unadopt <char name> <independent_baby>
+ */
+ACMD_FUNC(unadopt)
+{
+	TBL_PC *b_sd;
+
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	uint8 independent_baby = 0;
+
+	if (!message || !*message || sscanf(message, "%23s %1hhu", atcmd_player_name, &independent_baby) < 1) {
+		sprintf(atcmd_output, msg_txt(sd, 1520), command); // Usage: <char name> <independent_baby>
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+
+	if ((b_sd = map_nick2sd(atcmd_player_name,false)) == nullptr) {
+		clif_displaymessage(fd, msg_txt(sd, 3)); // Character not found.
+		return -1;
+	}
+
+	e_unadopt_responses response = pc_unadopt(sd, map_charid2sd(sd->status.partner_id), b_sd, independent_baby != 0);
+
+	if (response == UNADOPT_ALLOWED) {
+		clif_displaymessage(fd, msg_txt(sd, 1517)); // Baby has been disowned.
+		return 0;
+	}
+
+	if (response == UNADOPT_CHARACTER_NOT_FOUND)
+		clif_displaymessage(fd, msg_txt(sd, 748)); // A Parent or Baby was not found.
+	else
+		clif_displaymessage(fd, msg_txt(sd, 1518 + response - 1));
 	return -1;
 }
 
@@ -10984,6 +11029,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(clonestat),
 		ACMD_DEF(bodystyle),
 		ACMD_DEF(adopt),
+		ACMD_DEF2("unadopt", adopt),
 		ACMD_DEF(agitstart3),
 		ACMD_DEF(agitend3),
 		ACMD_DEFR(limitedsale, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
