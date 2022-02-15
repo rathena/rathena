@@ -12322,9 +12322,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			heal = 0;
 		else if (status_get_hp(bl) != status_get_max_hp(bl))
 			heal = ((2 * skill_lv - 1) * 10) * status_get_max_hp(bl) / 100;
-		status_heal(bl, heal, 0, 1|2|4);
-
 		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+		status_heal(bl, heal, 0, 1|2|4);
 	}
 		break;
 
