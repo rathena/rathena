@@ -26,6 +26,14 @@ enum e_elemental_skillmode : uint8 {
 	EL_SKILLMODE_AGGRESSIVE = 0x4,
 };
 
+#if __cplusplus < 201402L
+namespace std {
+	template <> struct hash<e_elemental_skillmode> {
+		size_t operator() (const e_elemental_skillmode& t) const { return size_t(t); }
+	};
+}
+#endif
+
 ///Enum of Elemental ID
 enum elemental_elementalid  : uint16 {
 	// Sorcerer's Elementals
