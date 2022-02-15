@@ -85118,7 +85118,7 @@ Body:
     Drops:
       - Item: Big_Sis'_Ribbon
         Rate: 25
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: Bluish_Green_Jewel
         Rate: 500
@@ -85179,7 +85179,7 @@ Body:
         Rate: 500
       - Item: Light_Granule
         Rate: 250
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: Min_Vagabond_Wolf_Card
         Rate: 1
@@ -85223,7 +85223,7 @@ Body:
         Rate: 4000
       - Item: Azure_Jewel
         Rate: 500
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: Angel's_Arrival
         Rate: 500
@@ -85270,7 +85270,7 @@ Body:
     Drops:
       - Item: Fillet
         Rate: 100
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: White_Jewel
         Rate: 600
@@ -85322,7 +85322,7 @@ Body:
         Rate: 2668
       - Item: Slender_Snake
         Rate: 1250
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: War_Axe
         Rate: 1
@@ -85381,7 +85381,7 @@ Body:
         Rate: 75
       - Item: Smoking_Pipe
         Rate: 125
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: Katar_Of_Raging_Blaze
         Rate: 250
@@ -85444,7 +85444,7 @@ Body:
         Rate: 100
       - Item: Jamadhar_
         Rate: 300
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: Spinx_Helm
         Rate: 75
@@ -85501,7 +85501,7 @@ Body:
         Rate: 250
       - Item: Sucsamad
         Rate: 75
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: Mr_Scream
         Rate: 150
@@ -85566,7 +85566,7 @@ Body:
         Rate: 125
       - Item: Orcish_Sword
         Rate: 500
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: Giant_Axe
         Rate: 50
@@ -85617,7 +85617,7 @@ Body:
     Drops:
       - Item: Gemstone
         Rate: 2425
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: Golden_Jewel
         Rate: 500
@@ -87269,21 +87269,21 @@ Body:
       IgnoreRanged: true
       KnockBackImmune: true
     Drops:
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 3000
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 3000
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 3000
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 3000
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 3000
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 3000
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 3000
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 3000
         StealProtected: true
   - Id: 3495
