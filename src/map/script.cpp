@@ -25736,6 +25736,20 @@ BUILDIN_FUNC( openstylist ){
 #endif
 }
 
+BUILDIN_FUNC(getitempos) {
+	TBL_PC *sd;
+	if (script_rid2sd(sd)){
+		if( current_equip_item_index == -1 ){
+			script_pushint(st, 0);
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		script_pushint(st, sd->inventory.u.items_inventory[current_equip_item_index].equip);
+	}else
+		script_pushint(st,0);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -26443,6 +26457,8 @@ struct script_function buildin_func[] = {
 
 	BUILDIN_DEF(setinstancevar,"rvi"),
 	BUILDIN_DEF(openstylist, "?"),
+
+	BUILDIN_DEF(getitempos,""),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
