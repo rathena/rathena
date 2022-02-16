@@ -4,7 +4,8 @@
 #ifndef STRLIB_HPP
 #define STRLIB_HPP
 
-#include <stdarg.h>
+#include <cstdarg>
+#include <string>
 
 #include "cbasetypes.hpp"
 #include "malloc.hpp"
@@ -138,6 +139,8 @@ const char* skip_escaped_c(const char* p);
 /// Returns 'true' if it was able to process the specified file, or 'false' if it could not be read.
 bool sv_readdb(const char* directory, const char* filename, char delim, int mincols, int maxcols, int maxrows, bool (*parseproc)(char* fields[], int columns, int current), bool silent);
 
+std::string strformat(const char* fmt, ...);
+std::string strformatv(const char* fmt, va_list args);
 
 /// StringBuf - dynamic string
 struct StringBuf

@@ -1060,6 +1060,22 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 	return true;
 }
 
+std::string strformat(const char* fmt, ...)
+{
+	va_list args;
+	va_start(args, fmt);
+	strformatv(fmt, args);
+	va_end(args);
+}
+
+std::string strformatv(const char* fmt, va_list args)
+{
+	size_t n = std::vsnprintf(nullptr, 0, fmt, args);
+	std::string s(n + 1, '\0');
+	std::vsnprintf(&s[0], s.size(), fmt, args);
+	s.resize(n);
+	return s;
+}
 
 /////////////////////////////////////////////////////////////////////
 // StringBuf - dynamic string
