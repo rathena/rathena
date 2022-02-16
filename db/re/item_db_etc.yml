@@ -47484,7 +47484,7 @@ Body:
       bonus2 bSubEle,Ele_Neutral,20;
       .@r = getrefine();
       .@rate = ((getrefine() < 12) ? 25 : -25);
-      if (getiteminfo(getequipid(EQI_COMPOUND_ON), ITEMINFO_ARMORLEVEL) == 2) {
+      if (getequiparmorlv() == 2) {
         .@rate += 8;
       }
       bonus2 bMagicSubDefEle,Ele_Dark,.@rate;
@@ -47515,7 +47515,7 @@ Body:
         bonus2 bAddClass,Class_All,10;
         bonus bMatkRate,10;
       }
-      if (getiteminfo(getequipid(EQI_COMPOUND_ON), ITEMINFO_ARMORLEVEL) == 2) {
+      if (getequiparmorlv() == 2) {
         bonus bRes,50;
       }
   - Id: 300377
@@ -47570,7 +47570,7 @@ Body:
       .@rate = (getrefine() < 12) ? -25 : 25;
       bonus2 bSubSize,Size_All,.@rate;
       bonus2 bMagicSubSize,Size_All,.@rate;
-      if (getiteminfo(getequipid(EQI_COMPOUND_ON), ITEMINFO_ARMORLEVEL) == 2) {
+      if (getequiparmorlv() == 2) {
         bonus bRes,50;
         bonus bMRes,50;
       }
@@ -47594,7 +47594,7 @@ Body:
         bonus bCritical,15;
         bonus bCritAtkRate,10;
       }
-      if (getiteminfo(getequipid(EQI_COMPOUND_ON), ITEMINFO_ARMORLEVEL) == 2) {
+      if (getequiparmorlv() == 2) {
         bonus bCRate,5;
       }
   - Id: 300381

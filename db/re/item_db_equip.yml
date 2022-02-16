@@ -55421,6 +55421,11 @@ Body:
     Name: Child Admin Alpha Egg
     Type: Petegg
     Buy: 20
+  - Id: 9128
+    AegisName: Dark_Priest_Egg
+    Name: Dark Priest Egg
+    Type: Petegg
+    Buy: 20
   - Id: 10001
     AegisName: Skull_Helm
     Name: Skull Helm
@@ -151683,6 +151688,27 @@ Body:
             }
          }
       }
+  - Id: 500049
+    AegisName: Glacier_Sword
+    Name: Glacier Sword
+    Type: Weapon
+    SubType: 1hSword
+    Weight: 1600
+    Attack: 220
+    MagicAttack: 210
+    Range: 1
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Swordman: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
   - Id: 500050
     AegisName: Glacier_B_Sword
     Name: Glacier Basic Sword

@@ -8575,6 +8575,7 @@
 	export_constant(ITEMINFO_MAGICATTACK);
 	export_constant(ITEMINFO_ID);
 	export_constant(ITEMINFO_AEGISNAME);
+	export_constant(ITEMINFO_ARMORLEVEL);
 	export_constant(ITEMINFO_SUBTYPE);
 
 	/* refine types */

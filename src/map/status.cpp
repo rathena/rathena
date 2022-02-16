@@ -6213,8 +6213,6 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 			val += 3 + 3 * skill;
 
 		if (sc && sc->count) {
-			if (sc->data[SC_SHRIMPBLESSING])
-				val *= 150 / 100;
 			if (sc->data[SC_ANCILLA])
 				val += sc->data[SC_ANCILLA]->val2 / 100;
 			if (sc->data[SC_INCREASE_MAXSP])
@@ -6398,6 +6396,8 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 		regen->rate.hp *= 2;
 		regen->rate.sp *= 2;
 	}
+	if (sc->data[SC_SHRIMPBLESSING])
+		regen->rate.sp += 50;
 #ifdef RENEWAL
 	if (sc->data[SC_NIBELUNGEN]) {
 		if (sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_HPREGEN)

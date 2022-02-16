@@ -2705,7 +2705,7 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 /*==========================================
  * Add an instance map
  *------------------------------------------*/
-int map_addinstancemap(int src_m, int instance_id)
+int map_addinstancemap(int src_m, int instance_id, bool no_mapflag)
 {
 	if(src_m < 0)
 		return -1;
@@ -2771,7 +2771,8 @@ int map_addinstancemap(int src_m, int instance_id)
 	dst_map->channel = nullptr;
 	dst_map->mob_delete_timer = INVALID_TIMER;
 
-	map_data_copy(dst_map, src_map);
+	if(!no_mapflag)
+		map_data_copy(dst_map, src_map);
 
 	ShowInfo("[Instance] Created map '%s' (%d) from '%s' (%d).\n", dst_map->name, dst_map->m, name, src_map->m);
 
@@ -3707,7 +3708,8 @@ void map_data_copyall (void) {
 		return;
 	for (int i = instance_start; i < map_num; i++) {
 		struct map_data *mapdata = &map[i];
-		if (!mapdata || mapdata->name[0] == '\0' || !mapdata->instance_src_map)
+		std::shared_ptr<s_instance_data> idata = util::umap_find(instances, mapdata->instance_id);
+		if (!mapdata || mapdata->name[0] == '\0' || !mapdata->instance_src_map || (idata && idata->nomapflag))
 			continue;
 		map_data_copy(mapdata, &map[mapdata->instance_src_map]);
 	}

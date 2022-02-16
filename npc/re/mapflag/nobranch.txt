@@ -222,3 +222,81 @@ lasa_dun_q	mapflag	nobranch
 
 // Soul Reaper Job Change
 1@soul	mapflag	nobranch
+
+// ep17.1
+1@cor	mapflag	nobranch
+1@os_a	mapflag	nobranch
+1@os_b	mapflag	nobranch
+1@rgsr	mapflag	nobranch
+pub_cat	mapflag	nobranch
+rgsr_in	mapflag	nobranch
+
+// ep17.2
+1@bamn	mapflag	nobranch
+1@bamq	mapflag	nobranch
+1@ghg	mapflag	nobranch
+1@herbs	mapflag	nobranch
+1@lost	mapflag	nobranch
+ba_in01	mapflag	nobranch
+1@odin	mapflag	nobranch
+
+// 4th jobs change
+1@4win	mapflag	nobranch
+1@4mag	mapflag	nobranch
+1@4mst	mapflag	nobranch
+1@4sac	mapflag	nobranch
+1@4tro	mapflag	nobranch
+1@4inq	mapflag	nobranch
+1@4cdn	mapflag	nobranch
+1@4igd	mapflag	nobranch
+1@4drk	mapflag	nobranch
+job4_bio	mapflag	nobranch
+job4_mag	mapflag	nobranch
+job4_tro	mapflag	nobranch
+
+// Gefen Night Arena
+1@ge_sn	mapflag	nobranch
+
+// Traces of heroes
+1@mjo1	mapflag	nobranch
+1@mjo2	mapflag	nobranch
+1@spa2	mapflag	nobranch
+
+// Instance Thanatos Tower
+1@thts	mapflag	nobranch
+2@thts	mapflag	nobranch
+3@thts	mapflag	nobranch
+4@thts	mapflag	nobranch
+5@thts	mapflag	nobranch
+6@thts	mapflag	nobranch
+7@thts	mapflag	nobranch
+8@thts	mapflag	nobranch
+
+// Glastheim Challenge Mode
+1@gl_he	mapflag	nobranch
+1@gl_he2	mapflag	nobranch
+
+// EDDA
+1@gl_prq	mapflag	nobranch
+1@gol1	mapflag	nobranch
+1@gol2	mapflag	nobranch
+
+// 2018 Halloween
+1@halo	mapflag	nobranch
+
+// Constellation Tower
+1@ch_t	mapflag	nobranch
+2@ch_t	mapflag	nobranch
+3@ch_t	mapflag	nobranch
+
+// Episode 18: Direction of Prayer
+1@adv	mapflag	nobranch
+1@advs	mapflag	nobranch
+1@nyr	mapflag	nobranch
+1@oz	mapflag	nobranch
+1@tcamp	mapflag	nobranch
+2@nyr	mapflag	nobranch
+que_thr	mapflag	nobranch
+
+// Sunken tower
+1@ch_u	mapflag	nobranch
