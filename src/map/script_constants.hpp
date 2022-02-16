@@ -533,6 +533,7 @@
 	export_constant(MF_NORODEX);
 	export_constant(MF_NORENEWALDROPPENALTY);
 	export_constant(MF_NORENEWALEXPPENALTY);
+	export_constant(MF_NOPETCAPTURE);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
