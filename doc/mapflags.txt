@@ -273,9 +273,9 @@ Disable renewal experience penalty due to level difference on a map.
 
 ---------------------------------------
 
-*nocapture
+*nopetcapture
 
-Disable pet captures on a map.
+Disable the ability to capture pets on a map.
 
 ---------------------------------------
 

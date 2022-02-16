@@ -5841,7 +5841,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 		return 0;/* regardless, effect is not run */
 	}
 
-	if (pet_db_search(id->nameid, PET_CATCH) != nullptr && map_getmapflag(sd->bl.m, MF_NOCAPTURE)) {
+	if (pet_db_search(id->nameid, PET_CATCH) != nullptr && map_getmapflag(sd->bl.m, MF_NOPETCAPTURE)) {
 		clif_displaymessage(sd->fd, msg_txt(sd, 669)); // You can't catch any pet on this map.
 		return 0;
 	}
