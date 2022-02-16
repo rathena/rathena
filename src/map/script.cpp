@@ -25737,16 +25737,21 @@ BUILDIN_FUNC( openstylist ){
 }
 
 BUILDIN_FUNC(getitempos) {
-	TBL_PC *sd;
-	if (script_rid2sd(sd)){
-		if( current_equip_item_index == -1 ){
-			script_pushint(st, 0);
-			return SCRIPT_CMD_FAILURE;
-		}
+	struct map_session_data* sd;
 
-		script_pushint(st, sd->inventory.u.items_inventory[current_equip_item_index].equip);
-	}else
-		script_pushint(st,0);
+	if ( !script_rid2sd(sd) ){
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( current_equip_item_index == -1 ){
+		ShowError( "buildin_getitempos: Invalid usage detected. This command should only be used inside item scripts.\n" );
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, sd->inventory.u.items_inventory[current_equip_item_index].equip);
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
