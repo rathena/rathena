@@ -139776,6 +139776,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 2206
+  - Id: 420108
+    AegisName: C_Chocolate_Bomb
+    Name: Costume Chocolate Bomb
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1110
   - Id: 420113
     AegisName: C_WL_Hair_BL
     Name: Costume Side Roll Pony (Black)
@@ -147758,12 +147767,13 @@ Body:
     ArmorLevel: 1
     View: 107
   - Id: 480111
-    AegisName: aegis_480111
-    Name: Costume Flower Wing    # !todo check english name
+    AegisName: C_Flower_Wing
+    Name: Costume Flower Wing
     Type: Armor
     Locations:
       Costume_Garment: true
     ArmorLevel: 1
+    EquipLevelMin: 1
     View: 106
   - Id: 480114
     AegisName: aegis_480114
@@ -148260,6 +148270,15 @@ Body:
             }
          }
       }
+  - Id: 480158
+    AegisName: C_Lunatic_Bag
+    Name: Costume Lunatic Bag
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 123
   - Id: 480159
     AegisName: Snowflower_Manteau
     Name: Snowflower Manteau
