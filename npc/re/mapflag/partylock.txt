@@ -113,3 +113,74 @@
 
 // Soul Reaper Job Change
 1@soul	mapflag	partylock
+
+// ep17.1
+1@cor	mapflag	partylock
+1@os_a	mapflag	partylock
+1@os_b	mapflag	partylock
+1@rgsr	mapflag	partylock
+
+// ep17.2
+1@bamn	mapflag	partylock
+1@bamq	mapflag	partylock
+1@ghg	mapflag	partylock
+1@herbs	mapflag	partylock
+1@lost	mapflag	partylock
+1@odin	mapflag	partylock
+
+// 4th jobs change
+1@4win	mapflag	partylock
+1@4mag	mapflag	partylock
+1@4mst	mapflag	partylock
+1@4sac	mapflag	partylock
+1@4tro	mapflag	partylock
+1@4inq	mapflag	partylock
+1@4cdn	mapflag	partylock
+1@4igd	mapflag	partylock
+1@4drk	mapflag	partylock
+
+// Gefen Night Arena
+1@ge_sn	mapflag	partylock
+
+// Traces of heroes
+1@mjo1	mapflag	partylock
+1@mjo2	mapflag	partylock
+1@spa2	mapflag	partylock
+
+// Instance Thanatos Tower
+1@thts	mapflag	partylock
+2@thts	mapflag	partylock
+3@thts	mapflag	partylock
+4@thts	mapflag	partylock
+5@thts	mapflag	partylock
+6@thts	mapflag	partylock
+7@thts	mapflag	partylock
+8@thts	mapflag	partylock
+
+// Glastheim Challenge Mode
+1@gl_he	mapflag	partylock
+1@gl_he2	mapflag	partylock
+
+// EDDA
+1@gl_prq	mapflag	partylock
+1@gol1	mapflag	partylock
+1@gol2	mapflag	partylock
+
+// 2018 Halloween
+1@halo	mapflag	partylock
+
+// Constellation Tower
+1@ch_t	mapflag	partylock
+2@ch_t	mapflag	partylock
+3@ch_t	mapflag	partylock
+
+// Episode 18: Direction of Prayer
+1@adv	mapflag	partylock
+1@advs	mapflag	partylock
+1@nyr	mapflag	partylock
+1@oz	mapflag	partylock
+1@tcamp	mapflag	partylock
+2@nyr	mapflag	partylock
+
+// Sunken tower
+1@ch_u	mapflag	partylock

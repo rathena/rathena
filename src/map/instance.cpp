@@ -112,6 +112,32 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 			instance->timeout = 300;
 	}
 
+	if (this->nodeExists(node, "NoNpc")) {
+		bool nonpc;
+
+		if (!this->asBool(node, "NoNpc", nonpc))
+			return 0;
+
+		instance->nonpc = nonpc;
+	}
+	else {
+		if (!exists)
+			instance->nonpc = false;
+	}
+
+	if (this->nodeExists(node, "NoMapFlag")) {
+		bool nomapflag;
+
+		if (!this->asBool(node, "NoMapFlag", nomapflag))
+			return 0;
+
+		instance->nomapflag = nomapflag;
+	}
+	else {
+		if (!exists)
+			instance->nomapflag = false;
+	}
+
 	if (this->nodeExists(node, "Destroyable")) {
 		bool destroy;
 
@@ -332,7 +358,7 @@ static TIMER_FUNC(instance_subscription_timer){
 bool instance_startkeeptimer(std::shared_ptr<s_instance_data> idata, int instance_id)
 {
 	// No timer
-	if (!idata || idata->keep_timer != INVALID_TIMER)
+	if (!idata || idata->keep_timer != INVALID_TIMER || idata->keep_limit == 0)
 		return false;
 
 	std::shared_ptr<s_instance_db> db = instance_db.find(idata->id);
@@ -430,7 +456,6 @@ bool instance_stopidletimer(std::shared_ptr<s_instance_data> idata, int instance
 		return false;
 
 	// Delete the timer - Party has returned or instance is destroyed
-	idata->idle_limit = 0;
 	delete_timer(idata->idle_timer, instance_delete_timer);
 	idata->idle_timer = INVALID_TIMER;
 
@@ -439,19 +464,19 @@ bool instance_stopidletimer(std::shared_ptr<s_instance_data> idata, int instance
 			break;
 		case IM_CHAR:
 			if (map_charid2sd(idata->owner_id)) // Notify the player
-				clif_instance_changestatus(instance_id, IN_NOTIFY, idata->idle_limit);
+				clif_instance_changestatus(instance_id, IN_NOTIFY, 0);
 			break;
 		case IM_PARTY:
 			if (party_search(idata->owner_id)) // Notify the party
-				clif_instance_changestatus(instance_id, IN_NOTIFY, idata->idle_limit);
+				clif_instance_changestatus(instance_id, IN_NOTIFY, 0);
 			break;
 		case IM_GUILD:
 			if (guild_search(idata->owner_id)) // Notify the guild
-				clif_instance_changestatus(instance_id, IN_NOTIFY, idata->idle_limit);
+				clif_instance_changestatus(instance_id, IN_NOTIFY, 0);
 			break;
 		case IM_CLAN:
 			if (clan_search(idata->owner_id)) // Notify the clan
-				clif_instance_changestatus(instance_id, IN_NOTIFY, idata->idle_limit);
+				clif_instance_changestatus(instance_id, IN_NOTIFY, 0);
 			break;
 		default:
 			return false;
@@ -651,13 +676,22 @@ int instance_addmap(int instance_id) {
 
 	// Set to busy, update timers
 	idata->state = INSTANCE_BUSY;
-	idata->idle_limit = static_cast<unsigned int>(time(nullptr)) + db->timeout;
-	idata->idle_timer = add_timer(gettick() + db->timeout * 1000, instance_delete_timer, instance_id, 0);
+	if (db->timeout > 0) {
+		idata->idle_limit = static_cast<unsigned int>(time(nullptr)) + db->timeout;
+		idata->idle_timer = add_timer(gettick() + db->timeout * 1000, instance_delete_timer, instance_id, 0);
+	}
+
+	if (db->limit > 0) {
+		//This will allow the instance to get a time in 'instance_startkeeptimer'
+		idata->keep_limit = 1;
+	}
+	idata->nomapflag = db->nomapflag;
+	idata->nonpc = db->nonpc;
 
 	int16 m;
 
 	// Add initial map
-	if ((m = map_addinstancemap(db->enter.map, instance_id)) < 0) {
+	if ((m = map_addinstancemap(db->enter.map, instance_id, db->nomapflag)) < 0) {
 		ShowError("instance_addmap: Failed to create initial map for instance '%s' (%d).\n", db->name.c_str(), instance_id);
 		return 0;
 	}
@@ -670,7 +704,7 @@ int instance_addmap(int instance_id) {
 
 	// Add extra maps (if any)
 	for (const auto &it : db->maplist) {
-		if ((m = map_addinstancemap(it, instance_id)) < 0) { // An error occured adding a map
+		if ((m = map_addinstancemap(it, instance_id, db->nomapflag)) < 0) { // An error occured adding a map
 			ShowError("instance_addmap: No maps added to instance '%s' (%d).\n", db->name.c_str(), instance_id);
 			return 0;
 		} else {
@@ -681,7 +715,8 @@ int instance_addmap(int instance_id) {
 	}
 
 	// Create NPCs on all maps
-	instance_addnpc(idata);
+	if(!db->nonpc)
+		instance_addnpc(idata);
 
 	switch(idata->mode) {
 		case IM_NONE:
@@ -1098,7 +1133,7 @@ bool instance_addusers(int instance_id)
 {
 	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
 
-	if(!idata || idata->state != INSTANCE_BUSY)
+	if(!idata || idata->state != INSTANCE_BUSY || idata->idle_limit == 0)
 		return false;
 
 	// Stop the idle timer if we had one
@@ -1119,7 +1154,7 @@ bool instance_delusers(int instance_id)
 {
 	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
 
-	if(!idata || idata->state != INSTANCE_BUSY)
+	if(!idata || idata->state != INSTANCE_BUSY || idata->idle_limit == 0)
 		return false;
 
 	int users = 0;
@@ -1148,12 +1183,13 @@ void do_reload_instance(void)
 			continue;
 		else {
 			// First we load the NPCs again
-			instance_addnpc(idata);
+			if(!idata->nonpc)
+				instance_addnpc(idata);
 
 			// Create new keep timer
 			std::shared_ptr<s_instance_db> db = instance_db.find(idata->id);
 
-			if (db)
+			if (db && db->limit > 0)
 				idata->keep_limit = static_cast<unsigned int>(time(nullptr)) + db->limit;
 		}
 	}

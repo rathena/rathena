@@ -295,6 +295,7 @@ enum npc_subtype : uint8{
 	NPCTYPE_POINTSHOP, /// Pointshop
 	NPCTYPE_TOMB, /// Monster tomb
 	NPCTYPE_MARKETSHOP, /// Marketshop
+	NPCTYPE_BARTER, /// Barter
 };
 
 enum e_race : int8{
@@ -644,6 +645,8 @@ enum e_mapflag : int16 {
 	MF_SKILL_DURATION,
 	MF_NOCASHSHOP,
 	MF_NORODEX,
+	MF_NORENEWALEXPPENALTY,
+	MF_NORENEWALDROPPENALTY,
 	MF_MAX
 };
 
@@ -1082,7 +1085,7 @@ void map_clearflooritem(struct block_list* bl);
 int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect = false);
 
 // instances
-int map_addinstancemap(int src_m, int instance_id);
+int map_addinstancemap(int src_m, int instance_id, bool no_mapflag);
 int map_delinstancemap(int m);
 void map_data_copyall(void);
 void map_data_copy(struct map_data *dst_map, struct map_data *src_map);
@@ -1220,6 +1223,7 @@ extern Sql* mmysql_handle;
 extern Sql* qsmysql_handle;
 extern Sql* logmysql_handle;
 
+extern char barter_table[32];
 extern char buyingstores_table[32];
 extern char buyingstore_items_table[32];
 extern char item_table[32];

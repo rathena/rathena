@@ -101,9 +101,11 @@ public:
 
 	}
 
-	void clear();
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const YAML::Node& node );
+	void clear() override;
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode( const YAML::Node& node ) override;
+
+	// Additional
 	const char* checkAlias( const char* alias );
 };
 
@@ -10673,6 +10675,36 @@ ACMD_FUNC( stylist ){
 #endif
 }
 
+/**
+ * Add fame point(s) to a player
+ * Usage: @addfame <amount>
+ */
+ACMD_FUNC(addfame)
+{
+	nullpo_retr(-1, sd);
+
+	int famepoint = 0;
+
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+
+	if (!message || !*message || sscanf(message, "%11d", &famepoint) < 1 || famepoint == 0) {
+		sprintf(atcmd_output, msg_txt(sd, 1516), command); // Usage: %s <fame points>.
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+
+	if (!pc_addfame(*sd, famepoint)) {
+		sprintf(atcmd_output, msg_txt(sd, 1517), job_name(sd->status.class_)); // Cannot add fame to class '%s'.
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+
+	sprintf(atcmd_output, msg_txt(sd, 1518), famepoint, sd->status.name); // %d points were added to '%s'.
+	clif_displaymessage(fd, atcmd_output);
+
+	return 0;
+}
+
 #include "../custom/atcommand.inc"
 
 /**
@@ -10994,6 +11026,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF2("checkquest", quest),
 		ACMD_DEF(refineui),
 		ACMD_DEFR(stylist, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
+		ACMD_DEF(addfame),
 	};
 	AtCommandInfo* atcommand;
 	int i;

@@ -755,26 +755,28 @@ void pc_delabyssball( struct map_session_data& sd, int count ){
 * Increases a player's fame points and displays a notice to him
 * @param sd Player
 * @param count Fame point
+* @return true: on success, false: on error
 */
-void pc_addfame(struct map_session_data *sd,int count)
+bool pc_addfame(map_session_data &sd, int count)
 {
 	enum e_rank ranktype;
-	nullpo_retv(sd);
-	sd->status.fame += count;
-	if(sd->status.fame > MAX_FAME)
-		sd->status.fame = MAX_FAME;
 
-	switch(sd->class_&MAPID_UPPERMASK){
+	sd.status.fame += count;
+	if (sd.status.fame > MAX_FAME)
+		sd.status.fame = MAX_FAME;
+
+	switch(sd.class_&MAPID_UPPERMASK){
 		case MAPID_BLACKSMITH:	ranktype = RANK_BLACKSMITH; break;
 		case MAPID_ALCHEMIST:	ranktype = RANK_ALCHEMIST; break;
 		case MAPID_TAEKWON:		ranktype = RANK_TAEKWON; break;
 		default:
-			ShowWarning( "pc_addfame: Trying to add fame to class '%s'(%d).\n", job_name(sd->status.class_), sd->status.class_ );
-			return;
+			ShowWarning( "pc_addfame: Trying to add fame to class '%s'(%d).\n", job_name(sd.status.class_), sd.status.class_ );
+			return false;
 	}
 
-	clif_update_rankingpoint(sd,ranktype,count);
-	chrif_updatefamelist(sd);
+	clif_update_rankingpoint(sd, ranktype, count);
+	chrif_updatefamelist(sd, ranktype);
+	return true;
 }
 
 /**
@@ -9867,8 +9869,6 @@ bool pc_setparam(struct map_session_data *sd,int64 type,int64 val_tmp)
 		pc_setglobalreg(sd, add_str(PCDIECOUNTER_VAR), sd->die_counter);
 		return true;
 	case SP_COOKMASTERY:
-		if (val < 0)
-			return false;
 		if (sd->cook_mastery == val)
 			return true;
 		val = cap_value(val, 0, 1999);
@@ -12613,6 +12613,10 @@ uint16 pc_level_penalty_mod( struct map_session_data* sd, e_penalty_type type, s
 		return 100;
 	}
 
+	if ((type == PENALTY_DROP && map_getmapflag(sd->bl.m, MF_NORENEWALDROPPENALTY)) || (type == PENALTY_EXP && map_getmapflag(sd->bl.m, MF_NORENEWALEXPPENALTY))) {
+		return 100;
+	}
+
 	int monster_level;
 
 	if( md != nullptr ){
@@ -13156,6 +13160,16 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 						return 0;
 
 					job->aspd_base[static_cast<int16>(constant)] = aspd;
+				}
+			} else {
+				if (!exists) {
+					uint8 max = MAX_WEAPON_TYPE;
+
+#ifdef RENEWAL // Renewal adds an extra column for shields
+					max += 1;
+#endif
+					job->aspd_base.resize(max);
+					std::fill(job->aspd_base.begin(), job->aspd_base.end(), 2000);
 				}
 			}
 
