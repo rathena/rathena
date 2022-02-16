@@ -46804,6 +46804,8 @@ Body:
     Name: Grey Abrasive (physical)
     Type: Delayconsume
     Weight: 50
+    Flags:
+      BuyingStore: true
     Script: |
       /*upgradeui 23676;*/
   - Id: 23677
@@ -46811,6 +46813,8 @@ Body:
     Name: Grey Abrasive (magical)
     Type: Delayconsume
     Weight: 50
+    Flags:
+      BuyingStore: true
     Script: |
       /*upgradeui 23677;*/
   - Id: 23678
@@ -46818,6 +46822,8 @@ Body:
     Name: Grey Abrasive (distance)
     Type: Delayconsume
     Weight: 50
+    Flags:
+      BuyingStore: true
     Script: |
       /*upgradeui 23678;*/
   - Id: 23679
@@ -50085,6 +50091,57 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_LI_Nyangvine_Box3_26);
+  - Id: 200191
+    AegisName: CostumeMilePack_26_1
+#   Name: Actinidia Costume Mileage Package I (Stone Box 26)
+    Name: Actinidia Costume Mileage Package I
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_COSTUME_MILE_PACK_26_1);
+  - Id: 200193
+    AegisName: CostumeMilePack_26_2
+#   Name: Actinidia Costume Mileage Package II (Stone Box 26)
+    Name: Actinidia Costume Mileage Package II
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_COSTUME_MILE_PACK_26_2);
+  - Id: 200194
+    AegisName: CostumeMilePack_26_3
+#   Name: Actinidia Costume Mileage Package III (Stone Box 26)
+    Name: Actinidia Costume Mileage Package III
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_COSTUME_MILE_PACK_26_3);
   - Id: 1100003
     AegisName: Concentrated_R_P
     Name: Concentrated Red Potion

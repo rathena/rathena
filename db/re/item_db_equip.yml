@@ -137805,6 +137805,15 @@ Body:
       bonus bBaseAtk,10*(.@r/2);
       bonus2 bSkillAtk,"LG_OVERBRAND",15*(.@r/3);
       bonus bShortAtkRate,7*(.@r/4);
+  - Id: 400204
+    AegisName: C_Cat_Ear_Red_Hat_TW
+    Name: Costume Cat Ear Red Witch Hat
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2153
   - Id: 400216
     AegisName: Viva_Adul_Hat_GC1
     Name: Helm of Faith (Guillotine Cross)
@@ -137972,6 +137981,15 @@ Body:
       bonus2 bMagicAtkEle,Ele_Earth,7*(.@r/4);
       bonus2 bMagicAtkEle,Ele_Neutral,7*(.@r/4);
       bonus2 bMagicAtkEle,Ele_Wind,7*(.@r/4);
+  - Id: 400225
+    AegisName: C_Fluffy_Rabbit_Cape
+    Name: Costume Fluffy Rabbit Cape
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2205
   - Id: 400226
     AegisName: Viva_Adul_Hat_RK1
     Name: Helm of Face (Rune Knight)    # !todo check english name
@@ -139213,6 +139231,24 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 2171
+  - Id: 410131
+    AegisName: C_Tiger_WH
+    Name: Costume Tiger (White)
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2244
+  - Id: 410132
+    AegisName: C_Tiger_BL
+    Name: Costume Tiger (Black)
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2245
   - Id: 420003
     AegisName: CD_In_MouthK
     Name: CD in Mouth
@@ -139731,6 +139767,159 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
     View: 2050
+  - Id: 420104
+    AegisName: C_SR_Hair_SV
+    Name: Costume Wild Long Hair
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2206
+  - Id: 420113
+    AegisName: C_WL_Hair_BL
+    Name: Costume Side Roll Pony (Black)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2228
+  - Id: 420114
+    AegisName: C_WL_Hair_GN
+    Name: Costume Side Roll Pony (Green)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2229
+  - Id: 420115
+    AegisName: C_WL_Hair_OM
+    Name: Costume Side Roll Pony (Brown)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2230
+  - Id: 420116
+    AegisName: C_WL_Hair_PK
+    Name: Costume Side Roll Pony (Pink)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2231
+  - Id: 420117
+    AegisName: C_WL_Hair_PP
+    Name: Costume Side Roll Pony (Purple)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2232
+  - Id: 420118
+    AegisName: C_WL_Hair_RD
+    Name: Costume Side Roll Pony (Red)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2233
+  - Id: 420119
+    AegisName: C_WL_Hair_WH
+    Name: Costume Side Roll Pony (White)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2234
+  - Id: 420120
+    AegisName: C_WL_Hair_YL
+    Name: Costume Side Roll Pony (Yellow)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2235
+  - Id: 420121
+    AegisName: C_SR_Hair_BL
+    Name: Costume Wild Long Hair (Black)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2236
+  - Id: 420122
+    AegisName: C_SR_Hair_GN
+    Name: Costume Wild Long Hair (Green)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2237
+  - Id: 420123
+    AegisName: C_SR_Hair_OM
+    Name: Costume Wild Long Hair (Brown)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2238
+  - Id: 420124
+    AegisName: C_SR_Hair_PK
+    Name: Costume Wild Long Hair (Pink)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2239
+  - Id: 420125
+    AegisName: C_SR_Hair_PP
+    Name: Costume Wild Long Hair (Purple)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2240
+  - Id: 420126
+    AegisName: C_SR_Hair_RD
+    Name: Costume Wild Long Hair (Red)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2241
+  - Id: 420127
+    AegisName: C_SR_Hair_WH
+    Name: Costume Wild Long Hair (White)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2242
+  - Id: 420128
+    AegisName: C_SR_Hair_YL
+    Name: Costume Wild Long Hair (Yellow)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2243
   - Id: 436000
     AegisName: aegis_436000
     Name: Thanatos's Maeror Mask

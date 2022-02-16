@@ -778,6 +778,9 @@ enum e_random_item_group {
 	IG_THIRD_JOB_STONE_MIDDLE_BOX2,
 	IG_THIRD_JOB_STONE_BOTTOM_BOX,
 	IG_THIRD_JOB_STONE_BOTTOM_BOX2,
+	IG_Costume_Mile_Pack_26_1,
+	IG_Costume_Mile_Pack_26_2,
+	IG_Costume_Mile_Pack_26_3,
 
 	IG_MAX,
 };
