@@ -24704,3 +24704,10 @@ Body:
       bonus bInt,5;
       bonus bMaxHP,700;
       bonus bAspdRate,5;
+  - Combos:
+      - Combo:
+          - Royal_Guardian_Ring     # 28483
+          - Lich_Lord_Card     # 27025
+    Script: |
+      bonus2 bAddClass,Class_All,5;
+      bonus bMatkRate,5;

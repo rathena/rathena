@@ -122654,22 +122654,17 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 130
     Script: |
-      .@equip_count = 0;
-      if(getequipid(EQI_ACC_L) == 28552)
-         .@equip_count++;
-      if(getequipid(EQI_ACC_R) == 28552)
-         .@equip_count++;
-      if (getequipid(EQI_ACC_L) == 28552) {
-         bonus bMaxHPrate,15 / .@equip_count;
-         bonus bVariableCastrate,-15 / .@equip_count;
-         bonus2 bSkillCooldown,"RK_DRAGONBREATH",-500 / .@equip_count;
+      .@p = getitempos();
+      if (.@p == EQP_ACC_L) {
+         bonus bMaxHPrate,15;
+         bonus bVariableCastrate,-15;
+         bonus2 bSkillCooldown,"RK_DRAGONBREATH",-500;
       }
-      if (getequipid(EQI_ACC_R) == 28552) {
-         bonus bMaxSPrate,15 / .@equip_count;
-         bonus bDelayrate,-15 / .@equip_count;
-         bonus2 bSkillCooldown,"RK_DRAGONBREATH_WATER",-500 / .@equip_count;
+      if (.@p == EQP_ACC_R) {
+         bonus bMaxSPrate,15;
+         bonus bDelayrate,-15;
+         bonus2 bSkillCooldown,"RK_DRAGONBREATH_WATER",-500;
       }
-      /*TODO: Please convert to getequipidx when available*/ 
   - Id: 28560
     AegisName: YinYang_Talisman
     Name: Yin Yang Talisman
@@ -135278,31 +135273,26 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 100
     Script: |
-      .@equip_count = 0;
-      if(getequipid(EQI_ACC_L) == 32258)
-         .@equip_count++;
-      if(getequipid(EQI_ACC_R) == 32258)
-         .@equip_count++;
+      .@p = getitempos();
       skill "AL_BLESSING",5;
-      if (getequipid(EQI_ACC_R) == 32258) {
-         bonus bBaseAtk,(15*(readparam(bLuk)/10)) / .@equip_count;
-         bonus bMatk,(15*(readparam(bLuk)/10)) / .@equip_count;
+      if (.@p == EQP_ACC_R) {
+         bonus bBaseAtk,15*(readparam(bLuk)/10);
+         bonus bMatk,15*(readparam(bLuk)/10);
          if (readparam(bLuk) >= 125) {
-            bonus2 bAddClass,Class_Boss,15 / .@equip_count;
-            bonus2 bMagicAddClass,Class_Boss,15 / .@equip_count;
+            bonus2 bAddClass,Class_Boss,15;
+            bonus2 bMagicAddClass,Class_Boss,15;
          }
       }
-      if (getequipid(EQI_ACC_L) == 32258) {
-         bonus bMaxHPRate,(2*(readparam(bVit)/10)) / .@equip_count;
-         bonus bMaxSPRate,(2*(readparam(bVit)/10)) / .@equip_count;
+      if (.@p == EQP_ACC_L) {
+         bonus bMaxHPRate,2*(readparam(bVit)/10);
+         bonus bMaxSPRate,2*(readparam(bVit)/10);
          if (readparam(bVit) >= 125) {
-            bonus bDef,300 / .@equip_count;
-            bonus bMdef,50 / .@equip_count;
-            bonus2 bSubRace,RC_Player_Human,3 / .@equip_count;
-            bonus2 bSubRace,RC_Player_Doram,3 / .@equip_count;
+            bonus bDef,300;
+            bonus bMdef,50;
+            bonus2 bSubRace,RC_Player_Human,3;
+            bonus2 bSubRace,RC_Player_Doram,3;
          }
       }
-      /*TODO: Please convert to getequipidx when available*/ 
   - Id: 32262
     AegisName: Ball_Of_RasenHuuma
     Name: Rasen Fuma's Orb
@@ -149225,32 +149215,27 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 100
     Script: |
-      .@equip_count = 0;
-      if(getequipid(EQI_ACC_L) == 490068)
-         .@equip_count++;
-      if(getequipid(EQI_ACC_R) == 490068)
-         .@equip_count++;
+      .@p = getitempos();
       .@a = readparam(bAgi);
       .@d = readparam(bDex);
-      if (getequipid(EQI_ACC_L) == 490068) {
-         bonus2 bAddRace,RC_All,(.@a / 10) / .@equip_count;
+      if (.@p == EQP_ACC_L) {
+         bonus2 bAddRace,RC_All,.@a / 10;
          if (.@a>=125) {
-            bonus bSpeedAddRate,25 / .@equip_count;
-            bonus bDelayrate,-25 / .@equip_count;
+            bonus bSpeedAddRate,25;
+            bonus bDelayrate,-25;
          }
       }
-      if (getequipid(EQI_ACC_R) == 490068) {
-         bonus bLongAtkRate,(.@d / 10) / .@equip_count;
-         bonus2 bResEff,Eff_Stun,(3*(.@d/10))  / .@equip_count;
+      if (.@p == EQP_ACC_R) {
+         bonus bLongAtkRate,.@d / 10;
+         bonus2 bResEff,Eff_Stun,3*(.@d/10);
          if (.@d>=125) {
-            bonus bFixedCastrate,-70 / .@equip_count;
-            bonus2 bSubEle,Ele_Earth,5 / .@equip_count;
-            bonus2 bSubEle,Ele_Water,5 / .@equip_count;
-            bonus2 bSubEle,Ele_Wind,5 / .@equip_count;
-            bonus2 bSubEle,Ele_Fire,5 / .@equip_count;
+            bonus bFixedCastrate,-70;
+            bonus2 bSubEle,Ele_Earth,5;
+            bonus2 bSubEle,Ele_Water,5;
+            bonus2 bSubEle,Ele_Wind,5;
+            bonus2 bSubEle,Ele_Fire,5;
          }
       }
-      /*TODO: Please convert to getequipidx when available*/ 
   - Id: 490069
     AegisName: Morrigane's_Belt_IL
     Name: Illusion Morrigane's Belt

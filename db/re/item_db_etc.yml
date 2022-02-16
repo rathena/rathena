@@ -37921,10 +37921,6 @@ Body:
       bonus bDef,30;
       bonus bMdef,10;
       bonus2 bAddEff,Eff_Silence,900;
-      if (getequipid() == 28483) {
-         bonus2 bAddClass,Class_All,5;
-         bonus bMatkRate,5;
-      }
       /* TODO: Confirm Mob ID to transform */
       autobonus "{ bonus bIgnoreDefClass,Class_All; bonus bIgnoreMdefRace,RC_All; }",20,7000,BF_WEAPON|BF_MAGIC,"{ active_transform 1875,7000; }";
   - Id: 27026
@@ -40457,13 +40453,14 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
+      .@p = getitempos();
       bonus bMaxHPrate,50;
       if (eaclass()&EAJL_THIRD && BaseJob == Job_knight) {
-         if (getequipid(EQI_ACC_L) == 27345) {
+         if (.@p == EQP_ACC_L) {
             bonus2 bSkillAtk,"RK_DRAGONBREATH",50;
             bonus4 bAddEff,Eff_Heat,1000,ATF_WEAPON|ATF_MAGIC,3000;
          }
-         if (getequipid(EQI_ACC_R) == 27345) {
+         if (.@p == EQP_ACC_R) {
             bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",50;
             autobonus2 "{ sc_start SC_CHILL; bonus2 bResEff,Eff_Heat,10000; }",100,3000,BF_WEAPON|BF_MAGIC;
          }
