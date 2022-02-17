@@ -2474,7 +2474,7 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 	if (battle_config.monster_hp_bars_info && !map_getmapflag(md->bl.m, MF_HIDEMOBHPBAR)) {
 		int i;
 		if (md->special_state.ai == AI_ABR || md->special_state.ai == AI_BIONIC) {
-			clif_summon_hp_bar(md);
+			clif_summon_hp_bar(*md);
 		}
 		for(i = 0; i < DAMAGELOG_SIZE; i++){ // must show hp bar to all char who already hit the mob.
 			struct map_session_data *sd = map_charid2sd(md->dmglog[i].id);
@@ -3400,7 +3400,7 @@ void mob_heal(struct mob_data *md,unsigned int heal)
 	if (battle_config.monster_hp_bars_info && !map_getmapflag(md->bl.m, MF_HIDEMOBHPBAR)) {
 		int i;
 		if (md->special_state.ai == AI_ABR || md->special_state.ai == AI_BIONIC) {
-			clif_summon_hp_bar(md);
+			clif_summon_hp_bar(*md);
 		}
 		for(i = 0; i < DAMAGELOG_SIZE; i++)// must show hp bar to all char who already hit the mob.
 			if( md->dmglog[i].id ) {

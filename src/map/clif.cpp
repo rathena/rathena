@@ -1715,7 +1715,7 @@ int clif_spawn( struct block_list *bl, bool walking ){
 			else if(md->special_state.size==SZ_MEDIUM)
 				clif_specialeffect(&md->bl,EF_BABYBODY2,AREA);
 			if ( md->special_state.ai == AI_ABR || md->special_state.ai == AI_BIONIC )
-				clif_summon_init(md);
+				clif_summon_init(*md);
 		}
 		break;
 	case BL_NPC:
@@ -23047,34 +23047,35 @@ void clif_parse_barter_extended_buy( int fd, struct map_session_data* sd ){
 #endif
 }
 
-void clif_summon_init(struct mob_data* md) {
+void clif_summon_init(struct mob_data& md) {
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-	struct block_list* master_bl = battle_get_master(&md->bl);
+	nullpo_retv(md);
+	struct block_list* master_bl = battle_get_master(&md.bl);
 	nullpo_retv(master_bl);
 
 	struct PACKET_ZC_SUMMON_HP_INIT p;
 
 	p.PacketType = HEADER_ZC_SUMMON_HP_INIT;
-	p.summonAID = md->bl.id;
-	p.CurrentHP = md->status.hp;
-	p.MaxHP = md->status.max_hp;
+	p.summonAID = md.bl.id;
+	p.CurrentHP = md.status.hp;
+	p.MaxHP = md.status.max_hp;
 
 	clif_send( &p, sizeof( p ), master_bl, SELF );
 #endif
 }
 
-void clif_summon_hp_bar(struct mob_data* md) {
+void clif_summon_hp_bar(struct mob_data& md) {
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 	nullpo_retv(md);
-	struct map_session_data *sd = map_id2sd(md->master_id);
+	struct map_session_data *sd = map_id2sd(md.master_id);
 	nullpo_retv(sd);
 
 	struct PACKET_ZC_SUMMON_HP_UPDATE p;
 
 	p.PacketType = HEADER_ZC_SUMMON_HP_UPDATE;
-	p.summonAID = md->bl.id;
+	p.summonAID = md.bl.id;
 	p.VarId = SP_HP; // HP parameter
-	p.Value = md->status.hp;
+	p.Value = md.status.hp;
 
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
 #endif
