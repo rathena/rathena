@@ -5525,9 +5525,9 @@
 	export_constant(IG_THIRD_JOB_STONE_MIDDLE_BOX2);
 	export_constant(IG_THIRD_JOB_STONE_BOTTOM_BOX);
 	export_constant(IG_THIRD_JOB_STONE_BOTTOM_BOX2);
-	export_constant(IG_Costume_Mile_Pack_26_1);
-	export_constant(IG_Costume_Mile_Pack_26_2);
-	export_constant(IG_Costume_Mile_Pack_26_3);
+	export_constant(IG_COSTUME_MILE_PACK_26_1);
+	export_constant(IG_COSTUME_MILE_PACK_26_2);
+	export_constant(IG_COSTUME_MILE_PACK_26_3);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
