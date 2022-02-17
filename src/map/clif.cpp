@@ -23049,7 +23049,6 @@ void clif_parse_barter_extended_buy( int fd, struct map_session_data* sd ){
 
 void clif_summon_init(struct mob_data& md) {
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-	nullpo_retv(md);
 	struct block_list* master_bl = battle_get_master(&md.bl);
 	nullpo_retv(master_bl);
 
@@ -23066,7 +23065,6 @@ void clif_summon_init(struct mob_data& md) {
 
 void clif_summon_hp_bar(struct mob_data& md) {
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-	nullpo_retv(md);
 	struct map_session_data *sd = map_id2sd(md.master_id);
 	nullpo_retv(sd);
 
