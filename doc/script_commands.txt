@@ -3136,6 +3136,15 @@ EQI_COMPOUND_ON      - Item slot that calls this script (In context of item scri
 For a list of others equipment slots see 'getequipid'.
 
 ---------------------------------------
+
+*getitempos()
+
+This function will return the equip position of the equipment from which the
+function is called. (see EQP_* constants)
+
+This function is intended for use in item scripts.
+
+---------------------------------------
 //
 2,1.- End of item-related commands.
 //
