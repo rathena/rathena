@@ -25736,6 +25736,25 @@ BUILDIN_FUNC( openstylist ){
 #endif
 }
 
+BUILDIN_FUNC(getitempos) {
+	struct map_session_data* sd;
+
+	if ( !script_rid2sd(sd) ){
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( current_equip_item_index == -1 ){
+		ShowError( "buildin_getitempos: Invalid usage detected. This command should only be used inside item scripts.\n" );
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, sd->inventory.u.items_inventory[current_equip_item_index].equip);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 BUILDIN_FUNC( laphine_synthesis ){
 	struct map_session_data* sd;
 
@@ -26511,6 +26530,8 @@ struct script_function buildin_func[] = {
 
 	BUILDIN_DEF(setinstancevar,"rvi"),
 	BUILDIN_DEF(openstylist, "?"),
+
+	BUILDIN_DEF(getitempos,""),
 	BUILDIN_DEF(laphine_synthesis, "?"),
 	BUILDIN_DEF(laphine_upgrade, "?"),
 #include "../custom/script_def.inc"
