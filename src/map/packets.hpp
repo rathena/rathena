@@ -239,7 +239,6 @@ struct PACKET_ZC_SUMMON_HP_INIT {
 	uint32 MaxHP;
 } __attribute__((packed));
 
-
 struct PACKET_ZC_SUMMON_HP_UPDATE {
 	int16 PacketType;
 	uint32 summonAID;
