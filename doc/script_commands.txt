@@ -6277,14 +6277,14 @@ it just removes non-permanent script.
 
 ---------------------------------------
 
-*skill_plagiarism <skill_id>,<level>;
+*plagiarizeskill <skill_id>,<level>;
 
 Enable the player to plagiarize specific skills that are copyable.
 Return 1 on success, 0 otherwise.
 
 ---------------------------------------
 
-*skill_plagiarism_reset <flag>;
+*plagiarizeskillreset <flag>;
 
 Remove a plagiarized skill from the player.
 Return 1 on success, 0 otherwise.
