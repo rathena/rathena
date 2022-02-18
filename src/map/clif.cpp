@@ -23397,10 +23397,10 @@ void clif_parse_laphine_upgrade( int fd, struct map_session_data* sd ){
 	}else if( upgrade->resultRefineMaximum > 0 ){
 		// If a minimum is specified it can also downgrade
 		if( upgrade->resultRefineMinimum ){
-			item->refine = rnd_value( upgrade->resultRefineMinimum, upgrade->resultRefine );
+			item->refine = rnd_value( upgrade->resultRefineMinimum, upgrade->resultRefineMaximum );
 		}else{
 			// Otherwise it can only be upgraded until the maximum, but not downgraded
-			item->refine = rnd_value( item->refine, upgrade->resultRefine );
+			item->refine = rnd_value( item->refine, upgrade->resultRefineMaximum );
 		}
 	}else if( upgrade->minimumRefine > 0 ){
 		// No maximum has been specified, so it can be anything between minimum and MAX_REFINE
