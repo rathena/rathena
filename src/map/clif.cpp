@@ -1714,6 +1714,8 @@ int clif_spawn( struct block_list *bl, bool walking ){
 				clif_specialeffect(&md->bl,EF_GIANTBODY2,AREA);
 			else if(md->special_state.size==SZ_MEDIUM)
 				clif_specialeffect(&md->bl,EF_BABYBODY2,AREA);
+			if ( md->special_state.ai == AI_ABR || md->special_state.ai == AI_BIONIC )
+				clif_summon_init(*md);
 		}
 		break;
 	case BL_NPC:
@@ -12147,6 +12149,7 @@ void clif_parse_EquipItem(int fd,struct map_session_data *sd)
 		return; //Out of bounds check.
 
 	if(sd->npc_id && !sd->npc_item_flag) {
+		clif_msg_color( sd, C_ITEM_NOEQUIP, color_table[COLOR_RED] );
 		return;
 	} else if (sd->state.storage_flag || sd->sc.opt1)
 		; //You can equip/unequip stuff while storage is open/under status changes
@@ -12201,6 +12204,7 @@ void clif_parse_UnequipItem(int fd,struct map_session_data *sd)
 	}
 
 	if (sd->npc_id && !sd->npc_item_flag) {
+		clif_msg_color( sd, C_ITEM_NOEQUIP, color_table[COLOR_RED] );
 		return;
 	} else if (sd->state.storage_flag || sd->sc.opt1)
 		; //You can equip/unequip stuff while storage is open/under status changes
@@ -16363,6 +16367,7 @@ void clif_parse_Mail_cancelwrite( int fd, struct map_session_data *sd ){
 /// 0a14 <char id>.L <class>.W <base level>.W (ZC_CHECK_RECEIVE_CHARACTER_NAME)
 /// 0a51 <char id>.L <class>.W <base level>.W <name>.24B (ZC_CHECK_RECEIVE_CHARACTER_NAME2)
 void clif_Mail_Receiver_Ack( struct map_session_data* sd, uint32 char_id, short class_, uint32 level, const char* name ){
+#if PACKETVER >= 20141119
 	PACKET_ZC_CHECKNAME p = { 0 };
 
 	p.PacketType = HEADER_ZC_CHECKNAME;
@@ -16373,6 +16378,7 @@ void clif_Mail_Receiver_Ack( struct map_session_data* sd, uint32 char_id, short 
 	strncpy(p.Name, name, NAME_LENGTH);
 #endif
 	clif_send(&p, sizeof(p), &sd->bl, SELF);
+#endif
 }
 
 /// Request information about the recipient
@@ -19937,8 +19943,8 @@ void clif_parse_ranklist(int fd,struct map_session_data *sd) {
 /// 021c <points>.L <total points>.L (ZC_ALCHEMIST_POINT)
 /// 0224 <points>.L <total points>.L (ZC_TAEKWON_POINT)
 /// 097e <RankingType>.W <point>.L <TotalPoint>.L (ZC_UPDATE_RANKING_POINT)
-void clif_update_rankingpoint(struct map_session_data *sd, int rankingtype, int point) {
-	int fd=sd->fd;
+void clif_update_rankingpoint(map_session_data &sd, int rankingtype, int point) {
+	int fd = sd.fd;
 #if PACKETVER < 20130710
 	short cmd;
 	switch(rankingtype){
@@ -19953,14 +19959,14 @@ void clif_update_rankingpoint(struct map_session_data *sd, int rankingtype, int 
 	WFIFOHEAD(fd,packet_len(cmd));
 	WFIFOW(fd,0) = cmd;
 	WFIFOL(fd,2) = point;
-	WFIFOL(fd,6) = sd->status.fame;
+	WFIFOL(fd,6) = sd.status.fame;
 	WFIFOSET(fd, packet_len(cmd));
 #else
 	WFIFOHEAD(fd,packet_len(0x97e));
 	WFIFOW(fd,0) = 0x97e;
 	WFIFOW(fd,2) = rankingtype;
 	WFIFOL(fd,4) = point;
-	WFIFOL(fd,8) = sd->status.fame;
+	WFIFOL(fd,8) = sd.status.fame;
 	WFIFOSET(fd,packet_len(0x97e));
 #endif
 }
@@ -23038,6 +23044,44 @@ void clif_parse_barter_extended_buy( int fd, struct map_session_data* sd ){
 	}
 
 	clif_npc_buy_result( sd, npc_barter_purchase( *sd, barter, purchases )  );
+#endif
+}
+
+void clif_summon_init(struct mob_data& md) {
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	struct block_list* master_bl = battle_get_master(&md.bl);
+
+	if( master_bl == nullptr ){
+		return;
+	}
+
+	struct PACKET_ZC_SUMMON_HP_INIT p = {};
+
+	p.PacketType = HEADER_ZC_SUMMON_HP_INIT;
+	p.summonAID = md.bl.id;
+	p.CurrentHP = md.status.hp;
+	p.MaxHP = md.status.max_hp;
+
+	clif_send( &p, sizeof( p ), master_bl, SELF );
+#endif
+}
+
+void clif_summon_hp_bar(struct mob_data& md) {
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	struct block_list* master_bl = battle_get_master(&md.bl);
+
+	if( master_bl == nullptr ){
+		return;
+	}
+
+	struct PACKET_ZC_SUMMON_HP_UPDATE p = {};
+
+	p.PacketType = HEADER_ZC_SUMMON_HP_UPDATE;
+	p.summonAID = md.bl.id;
+	p.VarId = SP_HP; // HP parameter
+	p.Value = md.status.hp;
+
+	clif_send( &p, sizeof( p ), master_bl, SELF );
 #endif
 }
 

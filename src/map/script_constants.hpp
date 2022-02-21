@@ -533,6 +533,7 @@
 	export_constant(MF_NORODEX);
 	export_constant(MF_NORENEWALDROPPENALTY);
 	export_constant(MF_NORENEWALEXPPENALTY);
+	export_constant(MF_NOPETCAPTURE);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
@@ -8575,6 +8576,7 @@
 	export_constant(ITEMINFO_MAGICATTACK);
 	export_constant(ITEMINFO_ID);
 	export_constant(ITEMINFO_AEGISNAME);
+	export_constant(ITEMINFO_ARMORLEVEL);
 	export_constant(ITEMINFO_SUBTYPE);
 
 	/* refine types */

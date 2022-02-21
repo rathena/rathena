@@ -552,6 +552,7 @@ enum clif_messages : uint16_t {
 
 	// Unofficial names
 	C_ITEM_EQUIP_SWITCH = 0xbc7, 
+	C_ITEM_NOEQUIP = 0x174,	/// <"You can't put this item on."
 };
 
 enum e_personalinfo : uint8_t {
@@ -1127,7 +1128,7 @@ void clif_channel_msg(struct Channel *channel, const char *msg, unsigned long co
 #define clif_menuskill_clear(sd) (sd)->menuskill_id = (sd)->menuskill_val = (sd)->menuskill_val2 = 0;
 
 void clif_ranklist(struct map_session_data *sd, int16 rankingType);
-void clif_update_rankingpoint(struct map_session_data *sd, int rankingtype, int point);
+void clif_update_rankingpoint(map_session_data &sd, int rankingtype, int point);
 
 void clif_crimson_marker(struct map_session_data *sd, struct block_list *bl, bool remove);
 
@@ -1185,5 +1186,8 @@ void clif_inventory_expansion_info( struct map_session_data* sd );
 // Barter System
 void clif_barter_open( struct map_session_data& sd, struct npc_data& nd );
 void clif_barter_extended_open( struct map_session_data& sd, struct npc_data& nd );
+
+void clif_summon_init(struct mob_data& md);
+void clif_summon_hp_bar(struct mob_data& md);
 
 #endif /* CLIF_HPP */

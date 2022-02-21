@@ -9290,6 +9290,67 @@ Body:
       - Level: 175
         Hp: 23220
       # Levels 176-200 are unknown
+      # -----------------------------------------------------------------
+      # Provided by SSboyz
+      # data source: https://landgris.github.io/ROCalculator/
+      #
+      # Levels 176-200 HP Data Begin
+      # -----------------------------------------------------------------
+      - Level: 176
+        Hp: 23565
+      - Level: 177
+        Hp: 23910
+      - Level: 178
+        Hp: 24255
+      - Level: 178
+        Hp: 24600
+      - Level: 179
+        Hp: 24945
+      - Level: 180
+        Hp: 25305
+      - Level: 181
+        Hp: 25665
+      - Level: 182
+        Hp: 26025
+      - Level: 183
+        Hp: 26385
+      - Level: 184
+        Hp: 26745
+      - Level: 185
+        Hp: 27105
+      - Level: 186
+        Hp: 27480
+      - Level: 187
+        Hp: 27855
+      - Level: 188
+        Hp: 28230
+      - Level: 189
+        Hp: 28605
+      - Level: 190
+        Hp: 28980
+      - Level: 191
+        Hp: 29370
+      - Level: 192
+        Hp: 29760
+      - Level: 193
+        Hp: 30150
+      - Level: 194
+        Hp: 30540
+      - Level: 195
+        Hp: 30930
+      - Level: 196
+        Hp: 31335
+      - Level: 197
+        Hp: 31740
+      - Level: 198
+        Hp: 32145
+      - Level: 199
+        Hp: 32550
+      - Level: 200
+        Hp: 32955
+      # -----------------------------------------------------------------
+      # Levels 176-200 HP Data End
+      # -----------------------------------------------------------------
   - Jobs:
       Novice: true
       Super_Novice: true
@@ -18295,6 +18356,65 @@ Body:
       - Level: 175
         Sp: 1074
       # Levels 176-200 are unknown
+      # -----------------------------------------------------------------
+      # Provided by SSboyz
+      # data source: https://landgris.github.io/ROCalculator/
+      #
+      # Levels 176-200 SP Data Begin
+      # -----------------------------------------------------------------
+      - Level: 176
+        Sp: 1082
+      - Level: 177
+        Sp: 1090
+      - Level: 178
+        Sp: 1098
+      - Level: 179
+        Sp: 1106
+      - Level: 180
+        Sp: 1114
+      - Level: 181
+        Sp: 1122
+      - Level: 182
+        Sp: 1130
+      - Level: 183
+        Sp: 1138
+      - Level: 184
+        Sp: 1146
+      - Level: 185
+        Sp: 1154
+      - Level: 186
+        Sp: 1162
+      - Level: 187
+        Sp: 1170
+      - Level: 188
+        Sp: 1178
+      - Level: 189
+        Sp: 1186
+      - Level: 190
+        Sp: 1194
+      - Level: 191
+        Sp: 1202
+      - Level: 192
+        Sp: 1210
+      - Level: 193
+        Sp: 1218
+      - Level: 194
+        Sp: 1226
+      - Level: 195
+        Sp: 1234
+      - Level: 196
+        Sp: 1242
+      - Level: 197
+        Sp: 1250
+      - Level: 198
+        Sp: 1258
+      - Level: 199
+        Sp: 1266
+      - Level: 200
+        Sp: 1274
+      # -----------------------------------------------------------------
+      # Levels 176-200 SP Data End
+      # -----------------------------------------------------------------
   - Jobs:
       Star_Emperor: true
       Baby_Star_Emperor: true
@@ -18456,6 +18576,65 @@ Body:
       - Level: 175
         Hp: 17486
       # Levels 176-200 are unknown
+      # -----------------------------------------------------------------
+      # Provided by SSboyz
+      # data source: https://landgris.github.io/ROCalculator/
+      #
+      # Levels 176-200 HP Data Begin
+      # -----------------------------------------------------------------
+      - Level: 176
+        Hp: 17708
+      - Level: 177
+        Hp: 17932
+      - Level: 178
+        Hp: 18158
+      - Level: 179
+        Hp: 18386
+      - Level: 180
+        Hp: 18616
+      - Level: 181
+        Hp: 18848
+      - Level: 182
+        Hp: 19082
+      - Level: 183
+        Hp: 19318
+      - Level: 184
+        Hp: 19556
+      - Level: 185
+        Hp: 19796
+      - Level: 186
+        Hp: 20038
+      - Level: 187
+        Hp: 20282
+      - Level: 188
+        Hp: 20528
+      - Level: 189
+        Hp: 20776
+      - Level: 190
+        Hp: 21026
+      - Level: 191
+        Hp: 21278
+      - Level: 192
+        Hp: 21532
+      - Level: 193
+        Hp: 21788
+      - Level: 194
+        Hp: 22046
+      - Level: 195
+        Hp: 22306
+      - Level: 196
+        Hp: 22568
+      - Level: 197
+        Hp: 22832
+      - Level: 198
+        Hp: 23098
+      - Level: 199
+        Hp: 23366
+      - Level: 200
+        Hp: 23636
+      # -----------------------------------------------------------------
+      # Levels 176-200 HP Data End
+      # -----------------------------------------------------------------
   - Jobs:
       Soul_Reaper: true
       Baby_Soul_Reaper: true
@@ -18615,6 +18794,65 @@ Body:
       - Level: 175
         Hp: 11635
       # Levels 176-200 are unknown
+      # -----------------------------------------------------------------
+      # Provided by SSboyz
+      # data source: https://landgris.github.io/ROCalculator/
+      #
+      # Levels 176-200 HP Data Begin
+      # -----------------------------------------------------------------
+      - Level: 176
+        Hp: 11810
+      - Level: 177
+        Hp: 11985
+      - Level: 178
+        Hp: 12160
+      - Level: 179
+        Hp: 12335
+      - Level: 180
+        Hp: 12510
+      - Level: 181
+        Hp: 12685
+      - Level: 182
+        Hp: 12860
+      - Level: 183
+        Hp: 13035
+      - Level: 184
+        Hp: 13210
+      - Level: 185
+        Hp: 13385
+      - Level: 186
+        Hp: 13560
+      - Level: 187
+        Hp: 13735
+      - Level: 188
+        Hp: 13910
+      - Level: 189
+        Hp: 14085
+      - Level: 190
+        Hp: 14260
+      - Level: 191
+        Hp: 14435
+      - Level: 192
+        Hp: 14610
+      - Level: 193
+        Hp: 14785
+      - Level: 194
+        Hp: 14960
+      - Level: 195
+        Hp: 15135
+      - Level: 196
+        Hp: 15310
+      - Level: 197
+        Hp: 15485
+      - Level: 198
+        Hp: 15660
+      - Level: 199
+        Hp: 15835
+      - Level: 200
+        Hp: 16010
+      # -----------------------------------------------------------------
+      # Levels 176-200 HP Data End
+      # -----------------------------------------------------------------
   - Jobs:
       Star_Emperor: true
       Baby_Star_Emperor: true
@@ -18776,6 +19014,65 @@ Body:
       - Level: 175
         Sp: 1220
       # Levels 176-200 are unknown
+      # -----------------------------------------------------------------
+      # Provided by SSboyz
+      # data source: https://landgris.github.io/ROCalculator/
+      #
+      # Levels 176-200 SP Data Begin
+      # -----------------------------------------------------------------
+      - Level: 176
+        Sp: 1228
+      - Level: 177
+        Sp: 1236
+      - Level: 178
+        Sp: 1244
+      - Level: 179
+        Sp: 1252
+      - Level: 180
+        Sp: 1260
+      - Level: 181
+        Sp: 1268
+      - Level: 182
+        Sp: 1276
+      - Level: 183
+        Sp: 1284
+      - Level: 184
+        Sp: 1292
+      - Level: 185
+        Sp: 1300
+      - Level: 186
+        Sp: 1308
+      - Level: 187
+        Sp: 1316
+      - Level: 188
+        Sp: 1324
+      - Level: 189
+        Sp: 1332
+      - Level: 190
+        Sp: 1340
+      - Level: 191
+        Sp: 1348
+      - Level: 192
+        Sp: 1356
+      - Level: 193
+        Sp: 1364
+      - Level: 194
+        Sp: 1372
+      - Level: 195
+        Sp: 1380
+      - Level: 196
+        Sp: 1388
+      - Level: 197
+        Sp: 1396
+      - Level: 198
+        Sp: 1404
+      - Level: 199
+        Sp: 1412
+      - Level: 200
+        Sp: 1420
+      # -----------------------------------------------------------------
+      # Levels 176-200 SP Data End
+      # -----------------------------------------------------------------
   - Jobs:
       Soul_Reaper: true
       Baby_Soul_Reaper: true
@@ -18935,6 +19232,65 @@ Body:
       - Level: 175
         Sp: 1615
       # Levels 176-200 are unknown
+      # -----------------------------------------------------------------
+      # Provided by SSboyz
+      # data source: https://landgris.github.io/ROCalculator/
+      #
+      # Levels 176-200 SP Data Begin
+      # -----------------------------------------------------------------
+      - Level: 176
+        Sp: 1627
+      - Level: 177
+        Sp: 1639
+      - Level: 178
+        Sp: 1651
+      - Level: 179
+        Sp: 1663
+      - Level: 180
+        Sp: 1675
+      - Level: 181
+        Sp: 1687
+      - Level: 182
+        Sp: 1699
+      - Level: 183
+        Sp: 1711
+      - Level: 184
+        Sp: 1723
+      - Level: 185
+        Sp: 1735
+      - Level: 186
+        Sp: 1747
+      - Level: 187
+        Sp: 1759
+      - Level: 188
+        Sp: 1771
+      - Level: 189
+        Sp: 1783
+      - Level: 190
+        Sp: 1795
+      - Level: 191
+        Sp: 1807
+      - Level: 192
+        Sp: 1819
+      - Level: 193
+        Sp: 1831
+      - Level: 194
+        Sp: 1843
+      - Level: 195
+        Sp: 1855
+      - Level: 196
+        Sp: 1867
+      - Level: 197
+        Sp: 1879
+      - Level: 198
+        Sp: 1891
+      - Level: 199
+        Sp: 1903
+      - Level: 200
+        Sp: 1915
+      # -----------------------------------------------------------------
+      # Levels 176-200 SP Data End
+      # -----------------------------------------------------------------
   - Jobs:
       Dragon_Knight: true
       Dragon_Knight2: true

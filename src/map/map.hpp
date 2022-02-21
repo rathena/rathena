@@ -647,6 +647,7 @@ enum e_mapflag : int16 {
 	MF_NORODEX,
 	MF_NORENEWALEXPPENALTY,
 	MF_NORENEWALDROPPENALTY,
+	MF_NOPETCAPTURE,
 	MF_MAX
 };
 
@@ -783,7 +784,7 @@ struct map_data {
 	int users_pvp;
 	int iwall_num; // Total of invisible walls in this map
 
-	std::unordered_map<int16, int> flag;
+	std::vector<int> flag;
 	struct point save;
 	std::vector<s_drop_list> drop_list;
 	uint32 zone; // zone number (for item/skill restrictions)
@@ -1085,7 +1086,7 @@ void map_clearflooritem(struct block_list* bl);
 int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect = false);
 
 // instances
-int map_addinstancemap(int src_m, int instance_id);
+int map_addinstancemap(int src_m, int instance_id, bool no_mapflag);
 int map_delinstancemap(int m);
 void map_data_copyall(void);
 void map_data_copy(struct map_data *dst_map, struct map_data *src_map);
