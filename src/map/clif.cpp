@@ -23273,6 +23273,9 @@ static void clif_item_preview( struct map_session_data *sd, int16 index ){
 	p.isDamaged = item->attribute != 0;
 #endif
 	p.refiningLevel = item->refine;
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200723
+	p.enchantgrade = item->enchantgrade;
+#endif
 	clif_addcards( &p.slot, item );
 	clif_add_random_options( p.option_data, item );
 
