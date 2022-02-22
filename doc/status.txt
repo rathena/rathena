@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20200412
+//= 20220222
 //===== Description: =========================================
 //= Explanation of the status.yml file and structure.
 //============================================================
@@ -264,10 +264,6 @@ End: List of status that will end if the status activates.
 ---------------------------------------
 
 EndReturn: If the status has any 'End' and succeeds to end other status in the list, it won't give its effect.
-
----------------------------------------
-
-Script: Running limited-usage-script for a status. By using this script please DO NOT use nested script such as autobonus, bonus_script, or sc_start.
 
 ---------------------------------------
 
