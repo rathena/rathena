@@ -2872,15 +2872,8 @@ struct s_status_change_db {
 	std::vector<sc_type> end;	///< List of SC that will be ended when this SC is activated
 	std::vector<sc_type> fail;	///< List of SC that causing this SC cannot be activated
 	bool end_return;			///< After SC ends the SC from end list, it does nothing
-	script_code *script;		///< Executes this script when SC starts
 	t_tick min_duration;		///< Minimum duration effect (after all status reduction)
 	uint16 min_rate;			///< Minimum rate to be applied (after all status reduction)
-
-	~s_status_change_db()
-	{
-		if (script)
-			script_free_code(script);
-	}
 };
 
 class StatusDatabase : public TypesafeCachedYamlDatabase<uint16, s_status_change_db> {
@@ -2903,7 +2896,6 @@ public:
 	std::bitset<SCF_MAX> getFlag(sc_type type);
 	t_tick getMinDuration(sc_type type);
 	uint16 getMinRate(sc_type type);
-	script_code *getScript(sc_type type);
 	bool getEndReturn(sc_type type);
 	std::vector<sc_type> getEnd(sc_type type);
 	std::vector<sc_type> getFail(sc_type type);

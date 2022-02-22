@@ -663,17 +663,6 @@ uint16 StatusDatabase::getMinRate(sc_type type) {
 }
 
 /**
- * Get SC's attached script
- * @param type: SC type
- * @return script code
- **/
-script_code *StatusDatabase::getScript(sc_type type) {
-	std::shared_ptr<s_status_change_db> status = status_db.find(type);
-
-	return status ? status->script : nullptr;
-}
-
-/**
  * Will the SC stop its init after ends other SC in end_list?
  * @param sc: SC type
  * @return True: Stop, False: Continue
@@ -3598,19 +3587,6 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	}
 
 	pc_bonus_script(sd);
-
-	if (sd->sc.count) { // Script bonus from SC [Cydh]
-		for (const auto &it : status_db) {
-			sc_type type = static_cast<sc_type>(it.first);
-			script_code *script;
-
-			if (!sc->data[type] || !(script = status_db.getScript(type)))
-				continue;
-			run_script(script, 0, sd->bl.id, 0);
-			if (!calculating)
-				return 1;
-		}
-	}
 
 	if( sd->pd ) { // Pet Bonus
 		struct pet_data *pd = sd->pd;
@@ -14979,26 +14955,6 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 	} else {
 		if (!exists)
 			status->end_return = false;
-	}
-
-	if (this->nodeExists(node, "Script")) {
-		std::string script_str;
-
-		if (!this->asString(node, "Script", script_str))
-			return 0;
-
-		script_code *script = parse_script(script_str.c_str(), this->getCurrentFile().c_str(), 0, 0);
-
-		if (script == nullptr) {
-			this->invalidWarning(node["Script"], "Unable to parse Script string, skipping.\n");
-			return 0;
-		}
-
-		status->script = script;
-		status->calc_flag |= SCB_BASE; // Ask to recalculate
-	} else {
-		if (!exists)
-			status->script = nullptr;
 	}
 
 	if (!exists) {
