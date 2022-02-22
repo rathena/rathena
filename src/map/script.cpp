@@ -25758,7 +25758,7 @@ BUILDIN_FUNC(getitempos) {
 BUILDIN_FUNC( laphine_synthesis ){
 	struct map_session_data* sd;
 
-	if( !script_charid2sd( 2, sd ) ){
+	if( !script_rid2sd( sd ) ){
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -25792,7 +25792,7 @@ BUILDIN_FUNC( laphine_synthesis ){
 BUILDIN_FUNC( laphine_upgrade ){
 	struct map_session_data* sd;
 
-	if( !script_charid2sd( 2, sd ) ){
+	if( !script_rid2sd( sd ) ){
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -26532,8 +26532,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(openstylist, "?"),
 
 	BUILDIN_DEF(getitempos,""),
-	BUILDIN_DEF(laphine_synthesis, "?"),
-	BUILDIN_DEF(laphine_upgrade, "?"),
+	BUILDIN_DEF(laphine_synthesis, ""),
+	BUILDIN_DEF(laphine_upgrade, ""),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
