@@ -2172,14 +2172,14 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* upgradeui 9514; */
+      laphine_upgrade();
   - Id: 9523
     AegisName: Metal_Smelting_Ticket
     Name: Metal Refining Ticket
     Type: Delayconsume
     Weight: 1
     Script: |
-      /*upgradeui 9523;*/
+      laphine_upgrade();
   - Id: 9529
     AegisName: Ein_Ddbox2
     Name: Magical Modification Permit
@@ -2194,21 +2194,21 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* upgradeui 9529; */
+      laphine_upgrade();
   - Id: 9550
     AegisName: Gemstone_Of_Time
     Name: Gemstone of Time
     Type: Delayconsume
     Weight: 1
     Script: |
-      /*upgradeui 9550;*/
+      laphine_upgrade();
   - Id: 9551
     AegisName: Time_Unseal_Key
     Name: Time Unseal Key
     Type: Delayconsume
     Weight: 1
     Script: |
-      /*upgradeui 9551;*/
+      laphine_upgrade();
   - Id: 9553
     AegisName: C_CatPaw_7Day_Box_
     Name: Infinite Cat Hand Ticket 7 Days Box
@@ -2222,7 +2222,7 @@ Body:
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 9785; */
+      laphine_upgrade();
   - Id: 9894
     AegisName: aegis_9894
     Name: "[Scroll] Adrenaline Lv.5 Scroll"
@@ -2304,21 +2304,21 @@ Body:
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 9933; */
+      laphine_upgrade();
   - Id: 9934
     AegisName: True_Hunting_Opt_A
     Name: Trois Hunting Physical Craft Kit
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 9934; */
+      laphine_upgrade();
   - Id: 9935
     AegisName: True_Hunting_Opt_B
     Name: Trois Hunting Magical Craft Kit
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 9935; */
+      laphine_upgrade();
   - Id: 11500
     AegisName: Light_Yellow_Pot
     Name: Light Yellow Potion
@@ -43126,7 +43126,7 @@ Body:
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 22529;*/
+      laphine_synthesis();
   - Id: 22530
     AegisName: Christmas_Box
     Name: Christmas Box
@@ -45975,7 +45975,7 @@ Body:
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*upgradeui 23100;*/
+      laphine_synthesis();
   - Id: 23115
     AegisName: Class_Shadow_Cube
     Name: Class Shadow Cube
@@ -46031,28 +46031,28 @@ Body:
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23151;*/
+      laphine_synthesis();
   - Id: 23152
     AegisName: Collectibles_Box
     Name: Collectibles SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23152;*/
+      laphine_synthesis();
   - Id: 23153
     AegisName: Pet_Egg_Box
     Name: Pet Egg SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23153;*/
+      laphine_synthesis();
   - Id: 23154
     AegisName: Costume_Exchange_Box
     Name: Costume Exchange SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23154;*/
+      laphine_synthesis();
   - Id: 23168
     AegisName: Mini_Fan_Box
     Name: Mini Fan Box
@@ -46078,7 +46078,7 @@ Body:
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23170;*/
+      laphine_synthesis();
   - Id: 23174
     AegisName: Enchant_Stone_Box11
     Name: Costume Enchant Stone Box 11
@@ -46094,7 +46094,7 @@ Body:
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*upgradeui 23175;*/
+      laphine_synthesis();
   - Id: 23177
     AegisName: Kafra_Card_
     Name: Kafra Card
@@ -46263,77 +46263,77 @@ Body:
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*upgradeui 23229;*/
+      laphine_synthesis();
   - Id: 23236
     AegisName: Class_Shadow_Box_Weapon
     Name: Class Shadow Box (Weapon)
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23236;*/
+      laphine_synthesis();
   - Id: 23237
     AegisName: Class_Shadow_Box_Armor
     Name: Class Shadow Box (Armor)
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23237;*/
+      laphine_synthesis();
   - Id: 23238
     AegisName: Class_Shadow_Box_Shoes
     Name: Class Shadow Box (Shoes)
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23238;*/
+      laphine_synthesis();
   - Id: 23239
     AegisName: Class_Shadow_Box_Shield
     Name: Class Shadow Box (Shield)
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23239;*/
+      laphine_synthesis();
   - Id: 23240
     AegisName: Class_Shadow_Box_Pendant
     Name: Class Shadow Box (Pendant)
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23240;*/
+      laphine_synthesis();
   - Id: 23241
     AegisName: Class_Shadow_Box_Earring
     Name: Class Shadow Box (Earring)
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23241;*/
+      laphine_synthesis();
   - Id: 23247
     AegisName: StatusShadow_Mix
     Name: StatusShadow Mix
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23247;*/
+      laphine_synthesis();
   - Id: 23248
     AegisName: GemstoneShadow_Mix
     Name: GemstoneShadow Mix
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23248;*/
+      laphine_synthesis();
   - Id: 23249
     AegisName: BearersShadow_Mix
     Name: BearerShadow Mix
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23249;*/
+      laphine_synthesis();
   - Id: 23250
     AegisName: ComposeShadow_Mix
     Name: ComposerShadow Mix
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23250;*/
+      laphine_synthesis();
   - Id: 23251
     AegisName: Rose_Bundle_A
     Name: Rose Bundle A
@@ -46507,7 +46507,7 @@ Body:
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23281;*/
+      laphine_synthesis();
   - Id: 23285
     AegisName: Candy_Box_Melee
     Name: Candy Bag Backpack (Physical)
@@ -46552,21 +46552,21 @@ Body:
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*upgradeui 23289;*/
+      laphine_synthesis();
   - Id: 23290
     AegisName: Candy_Pouch_Blessing_Scroll_Range
     Name: Candy Pouch Blessing Scroll(Ranged)
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*upgradeui 23290;*/
+      laphine_synthesis();
   - Id: 23291
     AegisName: Candy_Pouch_Blessing_Scroll_Magic
     Name: Candy Pouch Blessing Scroll(Magic)
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*upgradeui 23291;*/
+      laphine_synthesis();
   - Id: 23294
     AegisName: Pororoca_Shoes_Bundle_A
     Name: Pororoca Shoes Bundle A
@@ -46634,21 +46634,21 @@ Body:
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*upgradeui 23308;*/
+      laphine_synthesis();
   - Id: 23311
     AegisName: Magic_Cat_hand_Scroll
     Name: Magic Cat Hand Scroll
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*upgradeui 23311;*/
+      laphine_synthesis();
   - Id: 23324
     AegisName: StabilityShadow_Mix
     Name: StabilityShadow Mix
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23324;*/
+      laphine_synthesis();
   - Id: 23340
     AegisName: Comp_Megaphone
     Name: "[Sale] Megaphone"
@@ -46685,14 +46685,14 @@ Body:
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*upgradeui 23436;*/
+      laphine_upgrade();
   - Id: 23474
     AegisName: InfinityShadow_Mix
     Name: InfinityShadow Mix
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23474;*/
+      laphine_synthesis();
   - Id: 23475
     AegisName: Infinity_Drink
     Name: Infinity Drink
@@ -46733,21 +46733,21 @@ Body:
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23545;*/
+      laphine_synthesis();
   - Id: 23546
     AegisName: Cursed_Blood
     Name: Cursed Blood
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*upgradeui 23546;*/
+      laphine_upgrade();
   - Id: 23547
     AegisName: Gold_Statue
     Name: Gold Statue
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*upgradeui 23547;*/
+      laphine_upgrade();
   - Id: 23629
     AegisName: Enchant_Stone_Box14
     Name: Costume Enchant Stone Box 14
@@ -46763,70 +46763,70 @@ Body:
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23665;*/
+      laphine_synthesis();
   - Id: 23666
     AegisName: ImmunedAthena_Mix
     Name: ImmunedAthena Mix
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23666;*/
+      laphine_synthesis();
   - Id: 23667
     AegisName: HardChamption_Mix
     Name: HardChampion Mix
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23667;*/
+      laphine_synthesis();
   - Id: 23668
     AegisName: KingbirdAncient_Mix
     Name: KingbirdAncient Mix
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23668;*/
+      laphine_synthesis();
   - Id: 23669
     AegisName: CriticalHit_Mix
     Name: CriticalHit Mix
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23669;*/
+      laphine_synthesis();
   - Id: 23675
     AegisName: Geffen_Magic_Scroll
     Name: Geffen Magic Armor Order Form
     Type: Delayconsume
     Weight: 100
     Script: |
-      /*upgradeui 23675;*/
+      laphine_upgrade();
   - Id: 23676
     AegisName: Gray_Charcoal_Melee
     Name: Grey Abrasive (physical)
     Type: Delayconsume
     Weight: 50
     Script: |
-      /*upgradeui 23676;*/
+      laphine_upgrade();
   - Id: 23677
     AegisName: Gray_Charcoal_Magic
     Name: Grey Abrasive (magical)
     Type: Delayconsume
     Weight: 50
     Script: |
-      /*upgradeui 23677;*/
+      laphine_upgrade();
   - Id: 23678
     AegisName: Gray_Charcoal_Range
     Name: Grey Abrasive (distance)
     Type: Delayconsume
     Weight: 50
     Script: |
-      /*upgradeui 23678;*/
+      laphine_upgrade();
   - Id: 23679
     AegisName: Geffen_Magic_Scroll2
     Name: Geffen Magic Accessory Order Form
     Type: Delayconsume
     Weight: 100
     Script: |
-      /*upgradeui 23679;*/
+      laphine_upgrade();
   - Id: 23682
     AegisName: Enchant_Stone_Box15
     Name: Costume Enchant Stone Box 15
@@ -46842,14 +46842,14 @@ Body:
     Type: Delayconsume
     Weight: 50
     Script: |
-      /*upgradeui 23706;*/
+      laphine_upgrade();
   - Id: 23707
     AegisName: Charleston_Parts_R
     Name: Charleston Upgrade Parts (Ranged)
     Type: Delayconsume
     Weight: 50
     Script: |
-      /*upgradeui 23707;*/
+      laphine_upgrade();
   - Id: 23711
     AegisName: Booby_Trap_Box
     Name: Trap Box
@@ -46864,7 +46864,7 @@ Body:
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*upgradeui 23720;*/
+      laphine_upgrade();
   - Id: 23766
     AegisName: Overwhelm_Armor_Box
     Name: Temporal Armor Box
@@ -46889,581 +46889,581 @@ Body:
     Type: Delayconsume
     Weight: 50
     Script: |
-      /*upgradeui 23776;*/
+      laphine_upgrade();
   - Id: 23777
     AegisName: EP17_1_SPC06
     Name: Advanced Weapon Modifier (Physical)
     Type: Delayconsume
     Weight: 50
     Script: |
-      /*upgradeui 23777;*/
+      laphine_upgrade();
   - Id: 23778
     AegisName: EP17_1_SPC07
     Name: Super Weapon Modifier (Physical)
     Type: Delayconsume
     Weight: 50
     Script: |
-      /*upgradeui 23778;*/
+      laphine_upgrade();
   - Id: 23779
     AegisName: EP17_1_SPC08
     Name: Weapon Modifier (Magic)
     Type: Delayconsume
     Weight: 50
     Script: |
-      /*upgradeui 23779;*/
+      laphine_upgrade();
   - Id: 23780
     AegisName: EP17_1_SPC09
     Name: Advanced Weapon Modifier (Magic)
     Type: Delayconsume
     Weight: 50
     Script: |
-      /*upgradeui 23780;*/
+      laphine_upgrade();
   - Id: 23781
     AegisName: EP17_1_SPC10
     Name: Super Weapon Modifier (Magic)
     Type: Delayconsume
     Weight: 50
     Script: |
-      /*upgradeui 23781;*/
+      laphine_upgrade();
   - Id: 23815
     AegisName: Magma_Essence
     Name: Lava Essence
     Type: Delayconsume
     Weight: 50
     Script: |
-      /*upgradeui 23815;*/
+      laphine_upgrade();
   - Id: 23818
     AegisName: Bs_Item_M_S_2
     Name: Giant Orc Helm Combination SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23818;*/
+      laphine_synthesis();
   - Id: 23819
     AegisName: Bs_Item_M_S_8
     Name: Crimson Rose SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23819;*/
+      laphine_synthesis();
   - Id: 23820
     AegisName: Bs_Item_M_S_10
     Name: Grand Peco Hairband SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23820;*/
+      laphine_synthesis();
   - Id: 23821
     AegisName: Bs_Item_M_S_11
     Name: Moonflower Hair Hat SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23821;*/
+      laphine_synthesis();
   - Id: 23822
     AegisName: Bs_Item_M_S_34
     Name: Wings of 8 Purgatories SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23822;*/
+      laphine_synthesis();
   - Id: 23823
     AegisName: Bs_Item_M_S_41
     Name: Tare Neko Cru SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23823;*/
+      laphine_synthesis();
   - Id: 23824
     AegisName: Bs_Item_M_S_42
     Name: Glory Soccer Ball Hat SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23824;*/
+      laphine_synthesis();
   - Id: 23825
     AegisName: Bs_Item_M_S_43
     Name: Wicket marching Hat SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23825;*/
+      laphine_synthesis();
   - Id: 23826
     AegisName: Bs_Item_M_S_44
     Name: Wandering Wolf Hat SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23826;*/
+      laphine_synthesis();
   - Id: 23827
     AegisName: Bs_Sha_M_S_1
     Name: Status Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23827;*/
+      laphine_synthesis();
   - Id: 23828
     AegisName: Bs_Sha_M_S_17
     Name: Elegant Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23828;*/
+      laphine_synthesis();
   - Id: 23829
     AegisName: Bs_Sha_M_S_18
     Name: Tension Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23829;*/
+      laphine_synthesis();
   - Id: 23830
     AegisName: Bs_Sha_M_S_19
     Name: Restore Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23830;*/
+      laphine_synthesis();
   - Id: 23831
     AegisName: Bs_Sha_M_S_20
     Name: Healing Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23831;*/
+      laphine_synthesis();
   - Id: 23832
     AegisName: Bs_Item_M_S_4
     Name: Amistr Cap SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23832;*/
+      laphine_synthesis();
   - Id: 23833
     AegisName: Bs_Item_M_S_6
     Name: Tiger King Doll Hat SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23833;*/
+      laphine_synthesis();
   - Id: 23834
     AegisName: Bs_Item_M_S_7
     Name: Bacsojin Doll SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23834;*/
+      laphine_synthesis();
   - Id: 23835
     AegisName: Bs_Item_M_S_12
     Name: Candy Pouch Bag SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23835;*/
+      laphine_synthesis();
   - Id: 23836
     AegisName: Bs_Item_M_S_13
     Name: Gold Fish Head Hat SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23836;*/
+      laphine_synthesis();
   - Id: 23837
     AegisName: Bs_Item_M_S_15
     Name: Survival SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23837;*/
+      laphine_synthesis();
   - Id: 23838
     AegisName: Bs_Item_M_S_28
     Name: Toy Sringe SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23838;*/
+      laphine_synthesis();
   - Id: 23839
     AegisName: Bs_Item_M_S_29
     Name: Indigor Rear Ribbon SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23839;*/
+      laphine_synthesis();
   - Id: 23840
     AegisName: Bs_Item_M_S_31
     Name: Magical Booster SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23840;*/
+      laphine_synthesis();
   - Id: 23841
     AegisName: Bs_Item_M_S_32
     Name: Rosario's Necklace SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23841;*/
+      laphine_synthesis();
   - Id: 23842
     AegisName: Bs_Item_M_S_33
     Name: Spirit Crown SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23842;*/
+      laphine_synthesis();
   - Id: 23843
     AegisName: Bs_Item_M_S_36
     Name: Guard's Cap SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23843;*/
+      laphine_synthesis();
   - Id: 23844
     AegisName: Bs_Item_M_S_37
     Name: Bandit's Hood SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23844;*/
+      laphine_synthesis();
   - Id: 23845
     AegisName: Bs_Item_M_S_38
     Name: Angel's Blessing SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23845;*/
+      laphine_synthesis();
   - Id: 23846
     AegisName: Bs_Item_M_S_39
     Name: Rabbit Magic Hat SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23846;*/
+      laphine_synthesis();
   - Id: 23847
     AegisName: Bs_Item_M_S_40
     Name: Anubis Helm SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23847;*/
+      laphine_synthesis();
   - Id: 23848
     AegisName: Bs_Item_M_S_45
     Name: Imp Hat SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23848;*/
+      laphine_synthesis();
   - Id: 23849
     AegisName: Bs_Item_M_S_46
     Name: Red Marching Hat SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23849;*/
+      laphine_synthesis();
   - Id: 23850
     AegisName: Bs_Item_M_S_47
     Name: Ifrit Mask SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23850;*/
+      laphine_synthesis();
   - Id: 23851
     AegisName: Bs_Item_M_S_48
     Name: Incarnation Of Morocc Doll SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23851;*/
+      laphine_synthesis();
   - Id: 23852
     AegisName: Bs_Item_M_S_49
     Name: Samambaia SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23852;*/
+      laphine_synthesis();
   - Id: 23853
     AegisName: Bs_Item_M_S_50
     Name: Chick Hat SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23853;*/
+      laphine_synthesis();
   - Id: 23854
     AegisName: Bs_Sha_M_S_2
     Name: Class Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23854;*/
+      laphine_synthesis();
   - Id: 23855
     AegisName: Bs_Sha_M_S_5
     Name: Spell Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23855;*/
+      laphine_synthesis();
   - Id: 23856
     AegisName: Bs_Sha_M_S_6
     Name: Size Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23856;*/
+      laphine_synthesis();
   - Id: 23857
     AegisName: Bs_Sha_M_S_7
     Name: Race Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23857;*/
+      laphine_synthesis();
   - Id: 23858
     AegisName: Bs_Sha_M_S_8
     Name: Stability Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23858;*/
+      laphine_synthesis();
   - Id: 23859
     AegisName: Bs_Sha_M_S_13
     Name: Special Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23859;*/
+      laphine_synthesis();
   - Id: 23860
     AegisName: Bs_Sha_M_S_15
     Name: Physical Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23860;*/
+      laphine_synthesis();
   - Id: 23861
     AegisName: Bs_Sha_M_S_16
     Name: Magical Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23861;*/
+      laphine_synthesis();
   - Id: 23862
     AegisName: Bs_Sha_M_S_23
     Name: EXP Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23862;*/
+      laphine_synthesis();
   - Id: 23863
     AegisName: Bs_Item_M_S_5
     Name: Mad Bunny SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23863;*/
+      laphine_synthesis();
   - Id: 23864
     AegisName: Bs_Item_M_S_9
     Name: Archangel's Wings SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23864;*/
+      laphine_synthesis();
   - Id: 23865
     AegisName: Bs_Item_M_S_14
     Name: Smokie's Transformation Leaf SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23865;*/
+      laphine_synthesis();
   - Id: 23866
     AegisName: Bs_Item_M_S_16
     Name: Ifrit's Ear SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23866;*/
+      laphine_synthesis();
   - Id: 23867
     AegisName: Bs_Item_M_S_17
     Name: Heartwing Band SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23867;*/
+      laphine_synthesis();
   - Id: 23868
     AegisName: Bs_Item_M_S_19
     Name: Sigrun's Wings SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23868;*/
+      laphine_synthesis();
   - Id: 23869
     AegisName: Bs_Item_M_S_27
     Name: Cat Headdress SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23869;*/
+      laphine_synthesis();
   - Id: 23870
     AegisName: Bs_Item_M_S_35
     Name: Noble Mask SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23870;*/
+      laphine_synthesis();
   - Id: 23871
     AegisName: Bs_Sha_M_S_9
     Name: Gemstone Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23871;*/
+      laphine_synthesis();
   - Id: 23872
     AegisName: Bs_Sha_M_S_10
     Name: Bearers Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23872;*/
+      laphine_synthesis();
   - Id: 23873
     AegisName: Bs_Sha_M_S_11
     Name: Hasty Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23873;*/
+      laphine_synthesis();
   - Id: 23874
     AegisName: Bs_Sha_M_S_21
     Name: Critical Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23874;*/
+      laphine_synthesis();
   - Id: 23875
     AegisName: Bs_Sha_M_S_22
     Name: Mortal Blow Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23875;*/
+      laphine_synthesis();
   - Id: 23876
     AegisName: Bs_Item_M_S_1
     Name: Fallen Angel Wings SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23876;*/
+      laphine_synthesis();
   - Id: 23877
     AegisName: Bs_Item_M_S_3
     Name: Adventurer's Backpack SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23877;*/
+      laphine_synthesis();
   - Id: 23879
     AegisName: Bs_Item_M_S_18
     Name: Spell Circuit SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23879;*/
+      laphine_synthesis();
   - Id: 23880
     AegisName: Bs_Item_M_S_20
     Name: New Wave Sunglasses SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23880;*/
+      laphine_synthesis();
   - Id: 23881
     AegisName: Bs_Item_M_S_21
     Name: Giant Snake Breath SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23881;*/
+      laphine_synthesis();
   - Id: 23882
     AegisName: Bs_Item_M_S_22
     Name: Judge Hat SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23882;*/
+      laphine_synthesis();
   - Id: 23883
     AegisName: Bs_Item_M_S_23
     Name: Dog Officer SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23883;*/
+      laphine_synthesis();
   - Id: 23884
     AegisName: Bs_Item_M_S_24
     Name: Fancy Feather Hat SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23884;*/
+      laphine_synthesis();
   - Id: 23885
     AegisName: Bs_Item_M_S_25
     Name: Amistr Beret SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23885;*/
+      laphine_synthesis();
   - Id: 23886
     AegisName: Bs_Item_M_S_26
     Name: General Helm SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23886;*/
+      laphine_synthesis();
   - Id: 23887
     AegisName: Bs_Item_M_S_30
     Name: Cursed Knight's Shield SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23887;*/
+      laphine_synthesis();
   - Id: 23888
     AegisName: Bs_Sha_M_S_3
     Name: Penetration Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23888;*/
+      laphine_synthesis();
   - Id: 23889
     AegisName: Bs_Sha_M_S_4
     Name: Tempest Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23889;*/
+      laphine_synthesis();
   - Id: 23890
     AegisName: Bs_Sha_M_S_12
     Name: Blitz Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23890;*/
+      laphine_synthesis();
   - Id: 23891
     AegisName: Bs_Sha_M_S_14
     Name: Reload Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23891;*/
+      laphine_synthesis();
   - Id: 23892
     AegisName: Bs_Sha_M_S_24
     Name: Force and Spirit Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23892;*/
+      laphine_synthesis();
   - Id: 23893
     AegisName: Bs_Sha_M_S_25
     Name: Infinity Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23893;*/
+      laphine_synthesis();
   - Id: 23894
     AegisName: Bs_Item_M_S_51
     Name: Wickebine's Black Cat's Ear SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23894;*/
+      laphine_synthesis();
   - Id: 23899
     AegisName: Comp_Almighty
     Name: "[Not For Sale] Almighty"
@@ -47486,7 +47486,7 @@ Body:
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*upgradeui 23926;*/
+      laphine_upgrade();
   - Id: 23952
     AegisName: Sillit_Pong_Box
     Name: Sillit Pong Box
@@ -47502,54 +47502,54 @@ Body:
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 23967;*/
+      laphine_synthesis();
   - Id: 23981
     AegisName: Abyss_Ddbox
     Name: Turbulence Dragon's Power
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 23981; */
+      laphine_upgrade();
   - Id: 100000
     AegisName: IDTest_Special
     Name: IDTest Special
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 100000;*/
+      laphine_synthesis();
   - Id: 100003
     AegisName: ILL_Piece_A
     Name: Red Phantom Resonance Stone
     Type: Delayconsume
     Script: |
-      /*upgradeui 100003;*/
+      laphine_upgrade();
   - Id: 100004
     AegisName: ILL_Piece_B
     Name: Azure Mirage Resonance Stone
     Type: Delayconsume
     Script: |
-      /*upgradeui 100004;*/
+      laphine_upgrade();
   - Id: 100009
     AegisName: Joy_Of_Victory
     Name: Victorious Happiness
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100009; */
+      laphine_upgrade();
   - Id: 100010
     AegisName: PerfectSize_Mix
     Name: Perfect Size Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 100010;*/
+      laphine_synthesis();
   - Id: 100011
     AegisName: MagicPiercing_Mix
     Name: Magic Piercing Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 100011;*/
+      laphine_synthesis();
   - Id: 100019
     AegisName: Enchant_Stone_Box18
     Name: Costume Enchant Stone Box 18
@@ -47565,26 +47565,26 @@ Body:
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*upgradeui 100023;*/
+      laphine_upgrade();
   - Id: 100025
     AegisName: Ancient_Hero_Wisdom
     Name: Ancient Hero Wisdom
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*upgradeui 100025;*/
+      laphine_upgrade();
   - Id: 100043
     AegisName: Boost_Up_1
     Name: Booster Armor UpgradeBox
     Type: Delayconsume
     Script: |
-      /*upgradeui 100043;*/
+      laphine_upgrade();
   - Id: 100044
     AegisName: Boost_Up_2
     Name: Booster Weapon UpgradeBox
     Type: Delayconsume
     Script: |
-      /*upgradeui 100044;*/
+      laphine_upgrade();
   - Id: 100052
     AegisName: Enchant_Stone_Box19
     Name: Costume Enchant Stone Box 19
@@ -47600,21 +47600,21 @@ Body:
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 100053;*/
+      laphine_synthesis();
   - Id: 100058
     AegisName: Hasty_Mix
     Name: Hasty Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 100058;*/
+      laphine_synthesis();
   - Id: 100060
     AegisName: EnchantStone_Recipe_4m
     Name: 4m Enchant Stone Recipe SynthesisBox
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 100060;*/
+      laphine_synthesis();
   - Id: 100065
     AegisName: WL_MB_SG
     Name: Spell Book (Storm Gust)
@@ -47868,7 +47868,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* upgradeui 100125; */
+      laphine_upgrade();
   - Id: 100128
     AegisName: Noblesses_Refine_Ticket
     Name: Noblesses Refine Ticket
@@ -47884,7 +47884,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*upgradeui 100128;*/
+      laphine_upgrade();
   - Id: 100129
     AegisName: Imperial_Refine_Ticket
     Name: Imperial Refine Ticket
@@ -47900,7 +47900,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*upgradeui 100129;*/
+      laphine_upgrade();
   - Id: 100130
     AegisName: Grace_Refine_Ticket
     Name: Grace Refine Ticket
@@ -47916,7 +47916,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*upgradeui 100130;*/
+      laphine_upgrade();
   - Id: 100131
     AegisName: Imperial_P_Mo_Garment
     Name: Imperial Physical Modification Permit (Garment)
@@ -47932,7 +47932,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*upgradeui 100131;*/
+      laphine_upgrade();
   - Id: 100132
     AegisName: Imperial_M_Mo_Garment
     Name: Imperial Magical Modification Permit (Garment)
@@ -47948,7 +47948,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*upgradeui 100132;*/
+      laphine_upgrade();
   - Id: 100133
     AegisName: Grace_P_Mo_Garment
     Name: Grace Physical Modification Permit (Garment)
@@ -47964,7 +47964,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*upgradeui 100133;*/
+      laphine_upgrade();
   - Id: 100134
     AegisName: Grace_M_Mo_Garment
     Name: Grace Magical Modification Permit (Garment)
@@ -47980,7 +47980,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*upgradeui 100134;*/
+      laphine_upgrade();
   - Id: 100135
     AegisName: Imperial_P_Mo_Armor
     Name: Imperial Physical Modification Permit (Armor)
@@ -47996,7 +47996,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*upgradeui 100135;*/
+      laphine_upgrade();
   - Id: 100136
     AegisName: Imperial_M_Mo_Armor
     Name: Imperial Magical Modification Permit (Armor)
@@ -48012,7 +48012,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*upgradeui 100136;*/
+      laphine_upgrade();
   - Id: 100137
     AegisName: Grace_P_Mo_Armor
     Name: Grace Physical Modification Permit (Armor)
@@ -48028,7 +48028,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*upgradeui 100137;*/
+      laphine_upgrade();
   - Id: 100138
     AegisName: Grace_M_Mo_Armor
     Name: Grace Magical Modification Permit (Armor)
@@ -48044,7 +48044,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*upgradeui 100138;*/
+      laphine_upgrade();
   - Id: 100142
     AegisName: Abyss_Ddbox2
     Name: Stable Dragon's Power
@@ -48059,21 +48059,21 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* upgradeui 100142; */
+      laphine_upgrade();
   - Id: 100144
     AegisName: Abyss_Ddbox3
     Name: Burning Dragon's Power
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100144; */
+      laphine_upgrade();
   - Id: 100145
     AegisName: Abyss_Ddbox4
     Name: Hot Dragon's Power
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100145; */
+      laphine_upgrade();
   - Id: 100151
     AegisName: Skill_Sha_M_S_Weapon
     Name: Skill Shadow Weapon Combination Scroll
@@ -48082,43 +48082,43 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* synthesisui 100151; */
+      laphine_synthesis();
   - Id: 100164
     AegisName: Auto_Imp_Melee_1
     Name: Normal Automatic Improvement Device (Physical)
     Type: DelayConsume
     Script: |
-      /* upgradeui 100164; */
+      laphine_upgrade();
   - Id: 100165
     AegisName: Auto_Imp_Melee_2
     Name: Advanced Automatic Improvement Device (Physical)
     Type: DelayConsume
     Script: |
-      /* upgradeui 100165; */
+      laphine_upgrade();
   - Id: 100166
     AegisName: Auto_Imp_Melee_3
     Name: Premium Automatic Improvement Device (Physical)
     Type: DelayConsume
     Script: |
-      /* upgradeui 100166; */
+      laphine_upgrade();
   - Id: 100167
     AegisName: Auto_Imp_Magic_1
     Name: Normal Automatic Improvement Device (Magical)
     Type: DelayConsume
     Script: |
-      /* upgradeui 100167; */
+      laphine_upgrade();
   - Id: 100168
     AegisName: Auto_Imp_Magic_2
     Name: Advanced Automatic Improvement Device (Magical)
     Type: DelayConsume
     Script: |
-      /* upgradeui 100168; */
+      laphine_upgrade();
   - Id: 100169
     AegisName: Auto_Imp_Magic_3
     Name: Premium Automatic Improvement Device (Magical)
     Type: DelayConsume
     Script: |
-      /* upgradeui 100169; */
+      laphine_upgrade();
   - Id: 100171
     AegisName: Cannon_Ball_Box
     Name: Cannon Ball Box
@@ -48320,7 +48320,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* upgradeui 100205; */
+      laphine_upgrade();
   - Id: 100206
     AegisName: Class_Sha_R_M_Magic
     Name: Class Shadow Spellbook (Magic)
@@ -48329,7 +48329,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* upgradeui 100206; */
+      laphine_upgrade();
   - Id: 100207
     AegisName: Skill_Sha_R_M_Melee
     Name: Skill Shadow Spellbook (Melee)
@@ -48338,7 +48338,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* upgradeui 100207; */
+      laphine_upgrade();
   - Id: 100208
     AegisName: Skill_Sha_R_M_Magic
     Name: Skill Shadow Spellbook (Magic)
@@ -48347,42 +48347,42 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* upgradeui 100208; */
+      laphine_upgrade();
   - Id: 100209
     AegisName: Skill_Sha_M_S_Shield
     Name: Skill Shadow Shield Recipe
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100209; */
+      laphine_synthesis();
   - Id: 100210
     AegisName: Skill_Sha_M_S_Pendant
     Name: Skill Shadow Pendant Recipe
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100210; */
+      laphine_synthesis();
   - Id: 100211
     AegisName: Skill_Sha_M_S_Earing
     Name: Skill Shadow Earring Recipe
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100211; */
+      laphine_synthesis();
   - Id: 100212
     AegisName: Skill_Sha_M_S_Shoes
     Name: Skill Shadow Shoes Recipe
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100212; */
+      laphine_synthesis();
   - Id: 100213
     AegisName: Skill_Sha_M_S_Armor
     Name: Skill Shadow Armor Recipe
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100213; */
+      laphine_synthesis();
   - Id: 100231
     AegisName: Ref_T_Potion
     Name: Golden X
@@ -48420,7 +48420,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* upgradeui 100251; */
+      laphine_upgrade();
   - Id: 100252
     AegisName: Auto_Enhance_Cube
     Name: Automatic Reinforcement Cube
@@ -48434,7 +48434,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* upgradeui 100252; */
+      laphine_upgrade();
   - Id: 100268
     AegisName: Temporal_Refine_Cube
     Name: Temporal Equipment 11 Refine Cube
@@ -48443,7 +48443,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* upgradeui 100268; */
+      laphine_upgrade();
   - Id: 100269
     AegisName: Geffen_Refine_Cube
     Name: Geffen Magic Tournament 12 Refine Cube
@@ -48452,7 +48452,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* upgradeui 100269; */
+      laphine_upgrade();
   - Id: 100270
     AegisName: Old_Refine_Cube
     Name: Fallen Warrior's Headgear 12 Refine Cube
@@ -48461,7 +48461,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* upgradeui 100270; */
+      laphine_upgrade();
   - Id: 100271
     AegisName: Refine_Hero_Weapon
     Name: Ancient Hero Weapon 9 Refine Permission
@@ -48470,49 +48470,49 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* upgradeui 100271; */
+      laphine_upgrade();
   - Id: 100272
     AegisName: Refine_Hero_Boots
     Name: Ancient Hero Boots 9 Refine Permission
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100272; */
+      laphine_upgrade();
   - Id: 100273
     AegisName: Remodel_Hero_Boots
     Name: Ancient Hero Boots Modification Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100273; */
+      laphine_synthesis();
   - Id: 100274
     AegisName: Oriental_Sword_Cube
     Name: Oriental Sword Modification Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100274; */
+      laphine_synthesis();
   - Id: 100275
     AegisName: Dragonic_Slayer_Cube
     Name: Dragonic Slayer Modification Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100275; */
+      laphine_synthesis();
   - Id: 100276
     AegisName: Shiver_Katar_K_Cube
     Name: Shiver Katar Modification Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100276; */
+      laphine_synthesis();
   - Id: 100277
     AegisName: Blade_Katar_Cube
     Name: Blade Katar Modification Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100277; */
+      laphine_synthesis();
   - Id: 100314
     AegisName: Enchant_Stone_Box21
     Name: Costume Enchant Stone Box 21
@@ -48530,7 +48530,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* upgradeui 100321; */
+      laphine_upgrade();
   - Id: 100322
     AegisName: Racecap_Refine_Cube
     Name: Racing Cap +11 Refinement Cube
@@ -48539,42 +48539,42 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* upgradeui 100322; */
+      laphine_upgrade();
   - Id: 100327
     AegisName: Sword_Of_Bluefire_Cube
     Name: Red Lotus Sword Remodeling Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100327; */
+      laphine_synthesis();
   - Id: 100328
     AegisName: Slate_Sword_Cube
     Name: Slate Sword Remodeling Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100328; */
+      laphine_synthesis();
   - Id: 100329
     AegisName: Narcis_Bow_Cube
     Name: Narcissus Bow Remodeling Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100329; */
+      laphine_synthesis();
   - Id: 100330
     AegisName: Trumpet_Shell_K_Cube
     Name: Trumpet Shell Remodeling Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100330; */
+      laphine_synthesis();
   - Id: 100331
     AegisName: Barb_Wire_K_Cube
     Name: Barbed Wire Whip Remodeling Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100331; */
+      laphine_synthesis();
   - Id: 100338
     AegisName: Booster_W_Up_1
     Name: Booster Weapon Phase 1 Upgrade Package
@@ -48588,7 +48588,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* upgradeui 100338; */
+      laphine_upgrade();
   - Id: 100339
     AegisName: Booster_W_Up_2
     Name: Booster Weapon Phase 2 Upgrade Package
@@ -48602,7 +48602,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* upgradeui 100339; */
+      laphine_upgrade();
   - Id: 100340
     AegisName: Booster_W_Up_3
     Name: Booster Weapon Upgrade Package
@@ -48617,7 +48617,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* upgradeui 100340; */
+      laphine_upgrade();
   - Id: 100341
     AegisName: E_ILL_Up
     Name: Illusion (Bound) Upgrade Package
@@ -48632,7 +48632,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* upgradeui 100341; */
+      laphine_upgrade();
   - Id: 100354
     AegisName: Auto_Armor_Refine_Cube
     Name: Automatic Armor +11 Refinement Cube
@@ -48641,7 +48641,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* upgradeui 100354; */
+      laphine_upgrade();
   - Id: 100355
     AegisName: Bio_Weapon_Refine_Cube
     Name: Bio Lab Weapon +11 Refinement Cube
@@ -48650,35 +48650,35 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* upgradeui 100355; */
+      laphine_upgrade();
   - Id: 100360
     AegisName: Avenger_Cube
     Name: Avenger Remodeling Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100360; */
+      laphine_synthesis();
   - Id: 100361
     AegisName: Meteor_Striker_Cube
     Name: Meteor Striker Remodeling Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100361; */
+      laphine_synthesis();
   - Id: 100362
     AegisName: Magic_Sword_Cube
     Name: Mado Sword Remodeling Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100362; */
+      laphine_synthesis();
   - Id: 100363
     AegisName: Fatalist_Cube
     Name: Fatalist Remodeling Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100363; */
+      laphine_synthesis();
   - Id: 100365
     AegisName: MD_Geffen_Rarmor
     Name: MD Geffen Refine Armor
@@ -48693,7 +48693,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* upgradeui 100365; */
+      laphine_upgrade();
   - Id: 100366
     AegisName: MD_Geffen_Rhood
     Name: MD Geffen Refine Hood
@@ -48708,7 +48708,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* upgradeui 100366; */
+      laphine_upgrade();
   - Id: 100367
     AegisName: MD_Geffen_Racc
     Name: MD Geffen Refine Accessory
@@ -48723,7 +48723,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* upgradeui 100367; */
+      laphine_upgrade();
   - Id: 100368
     AegisName: MD_Geffen_Rsheild
     Name: MD Geffen Refine Shield
@@ -48738,7 +48738,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* upgradeui 100368; */
+      laphine_upgrade();
   - Id: 100371
     AegisName: aegis_100371
     Name: Homunculus Nutritional Supplement
@@ -48752,217 +48752,217 @@ Body:
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100376; */
+      laphine_synthesis();
   - Id: 100377
     AegisName: Scalet_Dragon_L_Cube
     Name: Scarlet Dragon Leather Bow Remodeling Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100377; */
+      laphine_synthesis();
   - Id: 100378
     AegisName: Shadow_Staff_K_Cube
     Name: Shadow Staff Remodeling Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100378; */
+      laphine_synthesis();
   - Id: 100379
     AegisName: Freezing_Rod_Cube
     Name: Chilling Cane Remodeling Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100379; */
+      laphine_synthesis();
   - Id: 100381
     AegisName: 3Lv_9Refine_Weapon_7Gu
     Name: +9 Lv3 Weapon Refine Permission Exchange Hammer
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100381; */
+      laphine_synthesis();
   - Id: 100382
     AegisName: 3Lv_10Refine_Weapon_8Gu
     Name: +10 Lv3 Weapon Refine Permission Exchange Hammer
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100382; */
+      laphine_synthesis();
   - Id: 100383
     AegisName: 3Lv_11Refine_Weapon_9Gu
     Name: +11 Lv3 Weapon Refine Permission Exchange Hammer
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100383; */
+      laphine_synthesis();
   - Id: 100384
     AegisName: 3Lv_12Refine_Weapon_10G
     Name: +12 Lv3 Weapon Refine Permission Exchange Hammer
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100384; */
+      laphine_synthesis();
   - Id: 100385
     AegisName: 4Lv_9Refine_Weapon_8Gu
     Name: +9 Lv4 Weapon Refine Permission Exchange Hammer
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100385; */
+      laphine_synthesis();
   - Id: 100386
     AegisName: 4Lv_10Refine_Weapon_9Gu
     Name: +10 Lv4 Weapon Refine Permission Exchange Hammer
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100386; */
+      laphine_synthesis();
   - Id: 100387
     AegisName: 4Lv_11Refine_Weapon_10G
     Name: +11 Lv4 Weapon Refine Permission Exchange Hammer
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100387; */
+      laphine_synthesis();
   - Id: 100388
     AegisName: Iron_Nail_K_Cube
     Name: Iron Nail Remodeling Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100388; */
+      laphine_synthesis();
   - Id: 100390
     AegisName: Ray_Knuckle_Cube
     Name: Ray Knuckle Remodeling Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100390; */
+      laphine_synthesis();
   - Id: 100391
     AegisName: Moonlight_Box_IL
     Name: Moonlight Refine Box
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100391; */
+      laphine_upgrade();
   - Id: 100392
     AegisName: S_Moonlight_Box_IL
     Name: Special Moonlight Refine Box
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100392; */
+      laphine_upgrade();
   - Id: 100393
     AegisName: Undine_Spear_K_Cube
     Name: Aquatic Spear Remodeling Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100393; */
+      laphine_synthesis();
   - Id: 100394
     AegisName: Light_Blade_Cube
     Name: Light Blade Remodeling Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100394; */
+      laphine_synthesis();
   - Id: 100395
     AegisName: Iron_Staff_Cube
     Name: Iron Staff Remodeling Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100395; */
+      laphine_synthesis();
   - Id: 100396
     AegisName: Blue_Crystal_Staff_Cube
     Name: Blue Crystal Staff Remodeling Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100396; */
+      laphine_synthesis();
   - Id: 100397
     AegisName: Demon_Hunt_Bible_Cube
     Name: Exorcist's Bible Remodeling Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100397; */
+      laphine_synthesis();
   - Id: 100398
     AegisName: Saint_Hall_Cube
     Name: Saint Scepter Remodeling Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100398; */
+      laphine_synthesis();
   - Id: 100399
     AegisName: MeawFoxtail_Cube
     Name: Meowmeow Foxtail Remodeling Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100399; */
+      laphine_synthesis();
   - Id: 100400
     AegisName: Fog_Dew_Sword_Cube
     Name: Kiri no Tsuyu Remodeling Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100400; */
+      laphine_synthesis();
   - Id: 100401
     AegisName: Humma_Clear_Cube
     Name: Clarity Huuma Shuriken Remodeling Cube
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100401; */
+      laphine_synthesis();
   - Id: 100402
     AegisName: Thousand_Sun_Cube
     Name: Thousand Sun Modification Cube
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 100402;*/
+      laphine_synthesis();
   - Id: 100403
     AegisName: Spirit_Pendulum_Cube
     Name: Spirit Pendulum Modification Cube
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 100403;*/
+      laphine_synthesis();
   - Id: 100404
     AegisName: Crimson_Rose_Cube
     Name: Crimson Rose Modification Cube
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 100404;*/
+      laphine_synthesis();
   - Id: 100405
     AegisName: Master_Soul_Rifle_Cube
     Name: Master Soul Rifle Modification Cube
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 100405;*/
+      laphine_synthesis();
   - Id: 100406
     AegisName: Golden_Lord_Launcher_Cube
     Name: Golden Lord Launcher Modification Cube
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 100406;*/
+      laphine_synthesis();
   - Id: 100407
     AegisName: The_Black_Cube
     Name: The Black Modification Cube
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 100407;*/
+      laphine_synthesis();
   - Id: 100408
     AegisName: Demon_Slayer_Shot_Cube
     Name: Demon Slayer Shot Modification Cube
     Type: Delayconsume
     Weight: 10
     Script: |
-      /*synthesisui 100408;*/
+      laphine_synthesis();
   - Id: 100158
     AegisName: Mado_Box02
     Name: Mado Strengthening Suit
@@ -48986,112 +48986,112 @@ Body:
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100412; */
+      laphine_upgrade();
   - Id: 100413
     AegisName: Great_Hero_Wisdom
     Name: Great Hero's Wisdom
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100413; */
+      laphine_upgrade();
   - Id: 100414
     AegisName: Vampire_Box_IL
     Name: Vampire Refine Box
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100414; */
+      laphine_upgrade();
   - Id: 100415
     AegisName: S_Vampire_Box_IL
     Name: Special Vampire Refine Box
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100415; */
+      laphine_upgrade();
   - Id: 100416
     AegisName: S_Frozen_Box_IL
     Name: Special Frozen Refine Box
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100416; */
+      laphine_upgrade();
   - Id: 100417
     AegisName: Turtle_Is_Box_IL
     Name: Turtle Island Refine Box
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100417; */
+      laphine_upgrade();
   - Id: 100418
     AegisName: S_Turtle_Is_Box_IL
     Name: Special Turtle Island Refine Box
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100418; */
+      laphine_upgrade();
   - Id: 100419
     AegisName: Teddy_Bear_Box_IL
     Name: Teddy Bear Refine Box
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100419; */
+      laphine_upgrade();
   - Id: 100420
     AegisName: S_Teddy_Bear_Box_IL
     Name: Special Teddy Bear Refine Box
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100420; */
+      laphine_upgrade();
   - Id: 100421
     AegisName: Luanda_Box_IL
     Name: Luanda Refine Box
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100421; */
+      laphine_upgrade();
   - Id: 100422
     AegisName: S_Luanda_Box_IL
     Name: Special Luanda Refine Box
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100422; */
+      laphine_upgrade();
   - Id: 100423
     AegisName: Labyrinth_Box_IL
     Name: Labyrinth Refine Box
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100423; */
+      laphine_upgrade();
   - Id: 100424
     AegisName: S_Labyrinth_Box_IL
     Name: Special Labyrinth Refine Box
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100424; */
+      laphine_upgrade();
   - Id: 100425
     AegisName: Underwater_Box_IL
     Name: Underwater Refine Box
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100425; */
+      laphine_upgrade();
   - Id: 100426
     AegisName: S_Underwater_Box_IL
     Name: Special Underwater Refine Box
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100426; */
+      laphine_upgrade();
   - Id: 100433
     AegisName: EnchantStone_Recipe_3m
     Name: March Costume Enchant Stone Thump Box
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100433; */
+      laphine_synthesis();
   - Id: 100436
     AegisName: Circlet_Refine_Cube
     Name: Temporal Circlet +11 Refine Cube
@@ -49100,7 +49100,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* upgradeui 100436; */
+      laphine_upgrade();
   - Id: 100452
     AegisName: Minus_POW
     Name: POW Reduction Potion
@@ -49158,21 +49158,21 @@ Body:
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100466; */
+      laphine_upgrade();
   - Id: 100467
     AegisName: Egir_Magic_Box
     Name: Aegir's Magical Power Box
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100467; */
+      laphine_upgrade();
   - Id: 100468
     AegisName: Egirnion_Box
     Name: Aegirnian Box
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100468; */
+      laphine_synthesis();
   - Id: 100476
     AegisName: MD_Airboat_Random
     Name: Ymir Beads
@@ -49186,42 +49186,42 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* upgradeui 100476; */
+      laphine_upgrade();
   - Id: 100479
     AegisName: Sakray_Fury
     Name: Sakrai's Wraith
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100479; */
+      laphine_upgrade();
   - Id: 100480
     AegisName: Sakray_Fury2
     Name: Condensed Sakrai's Wrath
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100480; */
+      laphine_upgrade();
   - Id: 100481
     AegisName: Overclocker
     Name: Battle Processor Accelerator
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100481; */
+      laphine_upgrade();
   - Id: 100485
     AegisName: Sakray_Regret
     Name: Sakrai's Regret
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100485; */
+      laphine_upgrade();
   - Id: 100486
     AegisName: Sakray_Regret2
     Name: Condensed Sakrai's Regret
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100486; */
+      laphine_upgrade();
   - Id: 100495
     AegisName: aegis_100495
     Name: 3rd/Expanded Stone II (Garment) Box
@@ -49366,21 +49366,21 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* synthesisui 100572; */
+      laphine_synthesis();
   - Id: 100579
     AegisName: PendantStoneForWork
     Name: Pendant Gemstone of Force
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* synthesisui 100579; */
+      laphine_synthesis();
   - Id: 100580
     AegisName: Dark_Stone
     Name: Dark Stone
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100580; */
+      laphine_upgrade();
   - Id: 100596
     AegisName: FullTempShadow_Mix
     Name: Full Tempest Shadow Thump Box
@@ -49389,7 +49389,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* synthesisui 100596; */
+      laphine_synthesis();
   - Id: 100600
     AegisName: Shadow_Mix_Recipe2
     Name: New Shadow Thump Box
@@ -49398,7 +49398,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* synthesisui 100600; */
+      laphine_synthesis();
   - Id: 100601
     AegisName: Illusion_Module_Mix
     Name: Illusion Module Thump Box
@@ -49407,7 +49407,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* synthesisui 100601; */
+      laphine_synthesis();
   - Id: 100602
     AegisName: Automatic_Module_Mix
     Name: Automatic Module Thump Box
@@ -49416,7 +49416,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* synthesisui 100602; */
+      laphine_synthesis();
   - Id: 100620
     AegisName: True_GemShadow_Mix
     Name: True Gemstone Shadow Thump Box
@@ -49425,7 +49425,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* synthesisui 100620; */
+      laphine_synthesis();
   - Id: 100621
     AegisName: Mammoth_Mix
     Name: Maximum Mammonth Shadow Thump Box
@@ -49434,7 +49434,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* synthesisui 100621; */
+      laphine_synthesis();
   - Id: 100623
     AegisName: Shadow_Mix_Recipe_TH
     Name: Lapine Box (Shadow)
@@ -49443,7 +49443,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* synthesisui 100623; */
+      /* laphine_synthesis(); */
   - Id: 100626
     AegisName: GrayWolf_7_Ticket
     Name: Gray Wolf +7 Refinement Box
@@ -49457,7 +49457,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* upgradeui 100626; */
+      laphine_upgrade();
   - Id: 100627
     AegisName: GrayWolf_9_Ticket
     Name: Gray Wolf +9 Refinement Box
@@ -49471,7 +49471,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* upgradeui 100627; */
+      laphine_upgrade();
   - Id: 100650
     AegisName: Pontifex_Courage
     Name: Pontifex Courage
@@ -49481,7 +49481,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* upgradeui 100650; */
+      laphine_upgrade();
   - Id: 100651
     AegisName: Pontifex_Wisdom
     Name: Pontifex Wisdom
@@ -49491,7 +49491,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* upgradeui 100651; */
+      laphine_upgrade();
   - Id: 100652
     AegisName: Pontifex_Tenacity
     Name: Pontifex Tenacity
@@ -49501,7 +49501,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* upgradeui 100652; */
+      laphine_upgrade();
   - Id: 100653
     AegisName: Pontifex_Belief
     Name: Pontifex Belief
@@ -49511,7 +49511,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* upgradeui 100653; */
+      laphine_upgrade();
   - Id: 100661
     AegisName: EXPShadow_Mix
     Name: Experience Shadow Thump Box
@@ -49520,7 +49520,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* synthesisui 100661; */
+      laphine_synthesis();
   - Id: 100684
     AegisName: Bio_Helm_Refine_Cube
     Name: Biological Lab Helmet +11 Refinement Cube
@@ -49529,7 +49529,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* upgradeui 100684; */
+      laphine_upgrade();
   - Id: 100691
     AegisName: AbsorbShadow_Mix
     Name: Absolve Shadow Thump Box
@@ -49538,28 +49538,28 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* synthesisui 100691; */
+      laphine_synthesis();
   - Id: 100699
     AegisName: Twins_Box_IL
     Name: Twins Refinement Box
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100699; */
+      laphine_upgrade();
   - Id: 100700
     AegisName: S_Twins_Box_IL
     Name: Special Twins Refinement Box
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100700; */
+      laphine_upgrade();
   - Id: 100710
     AegisName: EXP_Overclocker
     Name: EXP Overclocker
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100710; */
+      laphine_upgrade();
   - Id: 100722
     AegisName: Booster_RandomOpt_P
     Name: Booster Modification Stone(Physical)
@@ -49573,7 +49573,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* upgradeui 100722; */
+      laphine_upgrade();
   - Id: 100723
     AegisName: Booster_RandomOpt_M
     Name: Booster Modification Stone(Magical)
@@ -49587,21 +49587,21 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* upgradeui 100723; */
+      laphine_upgrade();
   - Id: 100744
     AegisName: Costama_Egg69
     Name: Hero's Weapon Modifier(Physical)
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100744; */
+      laphine_upgrade();
   - Id: 100745
     AegisName: Hero_LT_Refine_Magic
     Name: Hero's Weapon Modifier(Magical)
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* upgradeui 100745; */
+      laphine_upgrade();
   - Id: 100783
     AegisName: MajorAutoSpell_Mix
     Name: Auto Spell Shadow Pick-Up Box    # !todo check english name
@@ -49610,14 +49610,14 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* synthesisui 100783; */
+      laphine_synthesis();
   - Id: 100823
     AegisName: Lens_Craft_Stone
     Name: Lens Craft Stone    # !todo check english name
     Type: Delayconsume
     Weight: 10
     Script: |
-      /* upgradeui 100823; */
+      laphine_upgrade();
   - Id: 100880
     AegisName: aegis_100880
     Name: Piercing Shadow Box
@@ -49635,7 +49635,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* synthesisui 100887; */
+     laphine_synthesis();
   - Id: 100888
     AegisName: PhysicalShadow_Mix
     Name: Durable Shadow Pick-Up Box
@@ -49644,7 +49644,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* synthesisui 100888; */
+      laphine_synthesis();
   - Id: 100900
     AegisName: Teleport_Ep19_01
     Name: Ice Castle Transport Wing
@@ -49732,7 +49732,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* synthesisui 101075; */
+      laphine_synthesis();
   - Id: 101126
     AegisName: aegis_101126
     Name: "[Scroll] Halloween Candy"
@@ -49764,7 +49764,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* upgradeui 101177; */
+      laphine_upgrade();
   - Id: 101178
     AegisName: Reload_Shadow_Up
     Name: Reload Shadow Grimoire    # !todo check english name
@@ -49773,7 +49773,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* upgradeui 101178; */
+      laphine_upgrade();
   - Id: 101179
     AegisName: SpellCaster_Shadow_Up
     Name: Spellcaster Shadow Grimoire    # !todo check english name
@@ -49782,7 +49782,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* upgradeui 101179; */
+      laphine_upgrade();
   - Id: 101180
     AegisName: Ex_Status_Shadow_Up
     Name: Trait Status Shadow Grimoire    # !todo check english name
@@ -49791,7 +49791,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* upgradeui 101180; */
+      laphine_upgrade();
   - Id: 101181
     AegisName: ReloadShadow_Mix
     Name: Reload Shadow Pick-Up Box    # !todo check english name
@@ -49800,7 +49800,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* synthesisui 101181; */
+      laphine_synthesis();
   - Id: 101182
     AegisName: SpellCasterShadow_Mix
     Name: Spell Caster Shadow Pick-Up Box    # !todo check english name
@@ -49809,7 +49809,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* synthesisui 101182; */
+      laphine_synthesis();
   - Id: 101183
     AegisName: Ice_F_Stone_Box
     Name: Ice Magic Stone Box
@@ -49838,7 +49838,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* synthesisui 101184; */
+      laphine_synthesis();
   - Id: 101185
     AegisName: Snow_F_Enchant
     Name: Snowflower Armor Enchant (Armor)
@@ -49880,7 +49880,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* upgradeui 101187; */
+      laphine_upgrade();
   - Id: 101188
     AegisName: Glacier_W_Refine
     Name: Glacier Weapon 9 Refine Cube    # !todo check english name
@@ -49894,7 +49894,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* upgradeui 101188; */
+      laphine_upgrade();
   - Id: 101217
     AegisName: Snow_F_Enchant2
     Name: Snowflower Armor Enchant (Garment)
@@ -49959,7 +49959,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* synthesisui 101257; */
+      laphine_synthesis();
   - Id: 101258
     AegisName: M_BlitzShadow_Mix
     Name: Mega Blitz Shadow Pick-Up Box    # !todo check english name
@@ -49968,7 +49968,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* synthesisui 101258; */
+      laphine_synthesis();
   - Id: 101260
     AegisName: R_Bearers_Shadow_Up
     Name: Road Bearers Shadow Grimoire    # !todo check english name
@@ -49977,7 +49977,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* upgradeui 101260; */
+      laphine_upgrade();
   - Id: 101261
     AegisName: M_Blitz_Shadow_Up
     Name: Mega Blitz Shadow Grimoire    # !todo check english name
@@ -49986,7 +49986,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* upgradeui 101261; */
+      laphine_upgrade();
   - Id: 101262
     AegisName: Absorb_Shadow_Up
     Name: Absorb Shadow Grimoire    # !todo check english name
@@ -49995,7 +49995,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* upgradeui 101262; */
+      laphine_upgrade();
   - Id: 101264
     AegisName: Mammoth_Shadow_Up
     Name: Max Mammoth Shadow Grimoire    # !todo check english name
@@ -50004,7 +50004,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* upgradeui 101264; */
+      laphine_upgrade();
   - Id: 101271
     AegisName: aegis_101271
     Name: Costume Enchant Stone Box 26

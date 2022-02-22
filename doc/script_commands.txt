@@ -2896,22 +2896,6 @@ is invalid or if there is no item in the equipment slot.
 
 ---------------------------------------
 
-*refineui({<char id>})
-
-Opens the refine UI for the attached player or the given character id.
-
-This feature requires 2016-10-12aRagexeRE or newer.
-
----------------------------------------
-
-*openstylist({<char id>})
-
-Opens the stylist UI for the attached player or the given character id.
-
-This feature requires packet version 2015-11-04 or newer.
-
----------------------------------------
-
 *getareadropitem("<map name>",<x1>,<y1>,<x2>,<y2>,<item>)
 
 This function will count all the items with the specified ID number lying on the
@@ -8078,6 +8062,42 @@ The values given will be divided by 100 and transmitted as floating-point number
 	latitude	The angle of the camera.
 				Default: -50000 (-50.0)
 				Maximum: -75000 (-75.0)
+
+---------------------------------------
+
+*refineui({<char id>})
+
+Opens the refine UI for the attached player or the given character id.
+
+This feature requires 2016-10-12aRagexeRE or newer.
+
+---------------------------------------
+
+*openstylist({<char id>})
+
+Opens the stylist UI for the attached player or the given character id.
+
+This feature requires packet version 2015-11-04 or newer.
+
+---------------------------------------
+
+*laphine_synthesis()
+
+Opens the laphine synthesis UI for the attached player.
+
+This feature requires packet version 2016-06-01 or newer.
+
+This function is intended for use in item scripts.
+
+---------------------------------------
+
+*laphine_upgrade()
+
+Opens the laphine upgrade UI for the attached player.
+
+This feature requires packet version 2017-07-26 or newer.
+
+This function is intended for use in item scripts.
 
 ---------------------------------------
 \\
