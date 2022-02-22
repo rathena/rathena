@@ -23113,7 +23113,7 @@ enum e_laphine_synthesis_result : int16{
 };
 
 void clif_laphine_synthesis_result( struct map_session_data* sd, enum e_laphine_synthesis_result result ){
-#if PACKETVER_MAIN_NUM >= 20170726 || PACKETVER_RE_NUM >= 20170621 || defined(PACKETVER_ZERO)
+#if PACKETVER_MAIN_NUM >= 20160601 || PACKETVER_RE_NUM >= 20160525 || defined(PACKETVER_ZERO)
 	nullpo_retv( sd );
 
 	struct PACKET_ZC_LAPINEDDUKDDAK_RESULT p = {};
@@ -23126,7 +23126,7 @@ void clif_laphine_synthesis_result( struct map_session_data* sd, enum e_laphine_
 }
 
 void clif_parse_laphine_synthesis( int fd, struct map_session_data* sd ){
-#if PACKETVER_MAIN_NUM >= 20170726 || PACKETVER_RE_NUM >= 20170621 || defined(PACKETVER_ZERO)
+#if PACKETVER_MAIN_NUM >= 20160601 || PACKETVER_RE_NUM >= 20160525 || defined(PACKETVER_ZERO)
 	if( sd->state.laphine_synthesis == 0 ){
 		return;
 	}
