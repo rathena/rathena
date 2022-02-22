@@ -23,13 +23,13 @@
 #
 ###########################################################################
 # - Item                       Item that triggers Laphine Synthesis.
-#   RewardGroup                Item Group that will given out as a reward.
-#   RequiredRequirementsCount  How many requirements have to be fulfilled? (Default: 1)
+#   RewardGroup                Item Group that will be given out as a reward.
+#   RequiredRequirementsCount  Amount of requirements that have to be fulfilled. (Default: 1)
 #   MinimumRefine              Minimum refine level of the required items. (Default: 0)
 #   MaximumRefine              Maximum refine level of the required items. (Default: MAX_REFINE)
-#   Requirements:              List of possible item(s) as requirements
+#   Requirements:              List of possible requirement items.
 #     - Item                   Item name of the required item
-#       Amount                 How many of the specific item are required? (Default: 1)
+#       Amount                 Amount of specific required item. (Default: 1)
 ###########################################################################
 
 Header:

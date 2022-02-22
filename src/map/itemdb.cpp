@@ -1310,7 +1310,7 @@ uint64 LaphineSynthesisDatabase::parseBodyNode( const YAML::Node& node ){
 		}
 
 		if( !itemdb_group.exists( (uint16)constant ) ){
-			this->invalidWarning( node["RewardGroup"], "laphine_synthesis_parseBodyNode: Unknown reward group id \"%" PRId64 "\".\n", constant );
+			this->invalidWarning( node["RewardGroup"], "laphine_synthesis_parseBodyNode: Unknown reward group ID \"%" PRId64 "\".\n", constant );
 			return 0;
 		}
 
@@ -1366,7 +1366,7 @@ uint64 LaphineSynthesisDatabase::parseBodyNode( const YAML::Node& node ){
 				}
 
 				if( amount > MAX_AMOUNT ){
-					this->invalidWarning( requirementNode["Amount"], "laphine_synthesis_parseBodyNode: amount %hu is too high, capping to MAX_AMOUNT...\n", amount );
+					this->invalidWarning( requirementNode["Amount"], "laphine_synthesis_parseBodyNode: Amount %hu is too high, capping to MAX_AMOUNT...\n", amount );
 					amount = MAX_AMOUNT;
 				}
 
@@ -1391,7 +1391,7 @@ uint64 LaphineSynthesisDatabase::parseBodyNode( const YAML::Node& node ){
 		}
 
 		if( refine > MAX_REFINE ){
-			this->invalidWarning( node["MinimumRefine"], "laphine_synthesis_parseBodyNode: minimum refine %hu is too high, capping to MAX_REFINE...\n", refine );
+			this->invalidWarning( node["MinimumRefine"], "laphine_synthesis_parseBodyNode: Minimum refine %hu is too high, capping to MAX_REFINE...\n", refine );
 			refine = MAX_REFINE;
 		}
 
@@ -1410,7 +1410,7 @@ uint64 LaphineSynthesisDatabase::parseBodyNode( const YAML::Node& node ){
 		}
 
 		if( refine > MAX_REFINE ){
-			this->invalidWarning( node["MaximumRefine"], "laphine_synthesis_parseBodyNode: maximum refine %hu is too high, capping to MAX_REFINE...\n", refine );
+			this->invalidWarning( node["MaximumRefine"], "laphine_synthesis_parseBodyNode: Maximum refine %hu is too high, capping to MAX_REFINE...\n", refine );
 			refine = MAX_REFINE;
 		}
 
@@ -1516,7 +1516,7 @@ uint64 LaphineUpgradeDatabase::parseBodyNode( const YAML::Node& node ){
 		}
 
 		if( refine > MAX_REFINE ){
-			this->invalidWarning( node["MinimumRefine"], "laphine_upgrade_parseBodyNode: minimum refine %hu is too high, capping to MAX_REFINE...\n", refine );
+			this->invalidWarning( node["MinimumRefine"], "laphine_upgrade_parseBodyNode: Minimum refine %hu is too high, capping to MAX_REFINE...\n", refine );
 			refine = MAX_REFINE;
 		}
 
@@ -1535,7 +1535,7 @@ uint64 LaphineUpgradeDatabase::parseBodyNode( const YAML::Node& node ){
 		}
 
 		if( refine > MAX_REFINE ){
-			this->invalidWarning( node["MaximumRefine"], "laphine_upgrade_parseBodyNode: maximum refine %hu is too high, capping to MAX_REFINE...\n", refine );
+			this->invalidWarning( node["MaximumRefine"], "laphine_upgrade_parseBodyNode: Maximum refine %hu is too high, capping to MAX_REFINE...\n", refine );
 			refine = MAX_REFINE;
 		}
 
@@ -1554,7 +1554,7 @@ uint64 LaphineUpgradeDatabase::parseBodyNode( const YAML::Node& node ){
 		}
 
 		if( amount > MAX_ITEM_RDM_OPT ){
-			this->invalidWarning( node["RequiredRandomOptions"], "laphine_upgrade_parseBodyNode: required random option amount %hu is too high, capping to MAX_ITEM_RDM_OPT...\n", amount );
+			this->invalidWarning( node["RequiredRandomOptions"], "laphine_upgrade_parseBodyNode: Required random option amount %hu is too high, capping to MAX_ITEM_RDM_OPT...\n", amount );
 			amount = MAX_ITEM_RDM_OPT;
 		}
 
@@ -1587,7 +1587,7 @@ uint64 LaphineUpgradeDatabase::parseBodyNode( const YAML::Node& node ){
 		}
 
 		if( refine > MAX_REFINE ){
-			this->invalidWarning( node["ResultRefine"], "laphine_upgrade_parseBodyNode: result refine %hu is too high, capping to MAX_REFINE...\n", refine );
+			this->invalidWarning( node["ResultRefine"], "laphine_upgrade_parseBodyNode: Result refine %hu is too high, capping to MAX_REFINE...\n", refine );
 			refine = MAX_REFINE;
 		}
 
@@ -1606,7 +1606,7 @@ uint64 LaphineUpgradeDatabase::parseBodyNode( const YAML::Node& node ){
 		}
 
 		if( refine > MAX_REFINE ){
-			this->invalidWarning( node["ResultRefineMinimum"], "laphine_upgrade_parseBodyNode: result refine minimum %hu is too high, capping to MAX_REFINE...\n", refine );
+			this->invalidWarning( node["ResultRefineMinimum"], "laphine_upgrade_parseBodyNode: Result refine minimum %hu is too high, capping to MAX_REFINE...\n", refine );
 			refine = MAX_REFINE;
 		}
 
@@ -1625,7 +1625,7 @@ uint64 LaphineUpgradeDatabase::parseBodyNode( const YAML::Node& node ){
 		}
 
 		if( refine > MAX_REFINE ){
-			this->invalidWarning( node["ResultRefineMaximum"], "laphine_upgrade_parseBodyNode: result refine maximum %hu is too high, capping to MAX_REFINE...\n", refine );
+			this->invalidWarning( node["ResultRefineMaximum"], "laphine_upgrade_parseBodyNode: Result refine maximum %hu is too high, capping to MAX_REFINE...\n", refine );
 			refine = MAX_REFINE;
 		}
 
