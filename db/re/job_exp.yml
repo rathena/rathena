@@ -134,9 +134,6 @@ Body:
       Star_Gladiator: true
       Star_Gladiator2: true
       Soul_Linker: true
-      Gangsi: true
-      Death_Knight: true
-      Dark_Collector: true
       Baby_Ninja: true
       Baby_Taekwon: true
       Baby_Star_Gladiator: true
@@ -577,8 +574,6 @@ Body:
       Baby_Kagerou: true
       Baby_Oboro: true
       Baby_Rebellion: true
-      Star_Emperor: true
-      Soul_Reaper: true
       Baby_Star_Emperor: true
       Baby_Soul_Reaper: true
       Star_Emperor2: true
@@ -1883,7 +1878,6 @@ Body:
       Baby_Merchant: true
       Baby_Thief: true
       Taekwon: true
-      Gangsi: true
       Baby_Taekwon: true
     MaxJobLevel: 50
     JobExp:
@@ -2019,8 +2013,6 @@ Body:
       Baby_Dancer: true
       Baby_Crusader2: true
       Soul_Linker: true
-      Death_Knight: true
-      Dark_Collector: true
       Baby_Soul_Linker: true
     MaxJobLevel: 50
     JobExp:
