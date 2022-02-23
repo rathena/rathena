@@ -8767,7 +8767,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 		std::shared_ptr<s_skill_db> skill = skill_db.find(battle_getcurrentskill(src));
 
 		if (skill == nullptr) // Check for ground-type skills using the status when a player moves through units
-			skill = skill_db.find(status_sc2skill(type));
+			skill = skill_db.find(status_db.getSkill(type));
 
 		if (skill != nullptr && skill->skill_type == BF_MAGIC && // Basic magic skill
 			!skill->inf2[INF2_IGNOREGTB] && // Specific skill to bypass
