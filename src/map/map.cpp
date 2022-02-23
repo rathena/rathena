@@ -63,6 +63,7 @@ Sql* mmysql_handle;
 Sql* qsmysql_handle; /// For query_sql
 
 int db_use_sqldbs = 0;
+char barter_table[32] = "barter";
 char buyingstores_table[32] = "buyingstores";
 char buyingstore_items_table[32] = "buyingstore_items";
 char item_cash_table[32] = "item_cash_db";
@@ -2646,7 +2647,7 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 /*==========================================
  * Add an instance map
  *------------------------------------------*/
-int map_addinstancemap(int src_m, int instance_id)
+int map_addinstancemap(int src_m, int instance_id, bool no_mapflag)
 {
 	if(src_m < 0)
 		return -1;
@@ -2712,7 +2713,8 @@ int map_addinstancemap(int src_m, int instance_id)
 	dst_map->channel = nullptr;
 	dst_map->mob_delete_timer = INVALID_TIMER;
 
-	map_data_copy(dst_map, src_map);
+	if(!no_mapflag)
+		map_data_copy(dst_map, src_map);
 
 	ShowInfo("[Instance] Created map '%s' (%d) from '%s' (%d).\n", dst_map->name, dst_map->m, name, src_map->m);
 
@@ -3595,7 +3597,7 @@ void map_flags_init(void){
 		union u_mapflag_args args = {};
 
 		mapdata->flag.clear();
-		mapdata->flag.reserve(MF_MAX); // Reserve the bucket size
+		mapdata->flag.resize(MF_MAX, 0); // Resize and define default values
 		mapdata->drop_list.clear();
 		args.flag_val = 100;
 
@@ -3632,7 +3634,7 @@ void map_data_copy(struct map_data *dst_map, struct map_data *src_map) {
 	memcpy(&dst_map->save, &src_map->save, sizeof(struct point));
 	memcpy(&dst_map->damage_adjust, &src_map->damage_adjust, sizeof(struct s_skill_damage));
 
-	dst_map->flag.insert(src_map->flag.begin(), src_map->flag.end());
+	dst_map->flag = src_map->flag;
 	dst_map->skill_damage.insert(src_map->skill_damage.begin(), src_map->skill_damage.end());
 	dst_map->skill_duration.insert(src_map->skill_duration.begin(), src_map->skill_duration.end());
 
@@ -3648,7 +3650,8 @@ void map_data_copyall (void) {
 		return;
 	for (int i = instance_start; i < map_num; i++) {
 		struct map_data *mapdata = &map[i];
-		if (!mapdata || mapdata->name[0] == '\0' || !mapdata->instance_src_map)
+		std::shared_ptr<s_instance_data> idata = util::umap_find(instances, mapdata->instance_id);
+		if (!mapdata || mapdata->name[0] == '\0' || !mapdata->instance_src_map || (idata && idata->nomapflag))
 			continue;
 		map_data_copy(mapdata, &map[mapdata->instance_src_map]);
 	}
@@ -4128,7 +4131,9 @@ int inter_config_read(const char *cfgName)
 		}
 #undef RENEWALPREFIX
 
-		if( strcmpi( w1, "buyingstore_db" ) == 0 )
+		if( strcmpi( w1, "barter_table" ) == 0 )
+			safestrncpy( barter_table, w2, sizeof(barter_table) );
+		else if( strcmpi( w1, "buyingstore_db" ) == 0 )
 			safestrncpy( buyingstores_table, w2, sizeof(buyingstores_table) );
 		else if( strcmpi( w1, "buyingstore_items_table" ) == 0 )
 			safestrncpy( buyingstore_items_table, w2, sizeof(buyingstore_items_table) );
@@ -4518,11 +4523,11 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
 		case MF_RESTRICTED:
 			return mapdata->zone;
 		case MF_NOLOOT:
-			return util::umap_get(mapdata->flag, static_cast<int16>(MF_NOMOBLOOT), 0) && util::umap_get(mapdata->flag, static_cast<int16>(MF_NOMVPLOOT), 0);
+			return mapdata->flag[MF_NOMOBLOOT] && mapdata->flag[MF_NOMVPLOOT];
 		case MF_NOPENALTY:
-			return util::umap_get(mapdata->flag, static_cast<int16>(MF_NOEXPPENALTY), 0) && util::umap_get(mapdata->flag, static_cast<int16>(MF_NOZENYPENALTY), 0);
+			return mapdata->flag[MF_NOEXPPENALTY] && mapdata->flag[MF_NOZENYPENALTY];
 		case MF_NOEXP:
-			return util::umap_get(mapdata->flag, static_cast<int16>(MF_NOBASEEXP), 0) && util::umap_get(mapdata->flag, static_cast<int16>(MF_NOJOBEXP), 0);
+			return mapdata->flag[MF_NOBASEEXP] && mapdata->flag[MF_NOJOBEXP];
 		case MF_SKILL_DAMAGE:
 			nullpo_retr(-1, args);
 
@@ -4535,10 +4540,10 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
 				case SKILLDMG_CASTER:
 					return mapdata->damage_adjust.caster;
 				default:
-					return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
+					return mapdata->flag[mapflag];
 			}
 		default:
-			return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
+			return mapdata->flag[mapflag];
 	}
 }
 

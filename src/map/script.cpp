@@ -9457,13 +9457,13 @@ BUILDIN_FUNC(successrefitem) {
 		{ // Fame point system [DracoRPG]
 			switch( sd->inventory_data[i]->weapon_level ){
 				case 1:
-					pc_addfame(sd, battle_config.fame_refine_lv1); // Success to refine to +10 a lv1 weapon you forged = +1 fame point
+					pc_addfame(*sd, battle_config.fame_refine_lv1); // Success to refine to +10 a lv1 weapon you forged = +1 fame point
 					break;
 				case 2:
-					pc_addfame(sd, battle_config.fame_refine_lv2); // Success to refine to +10 a lv2 weapon you forged = +25 fame point
+					pc_addfame(*sd, battle_config.fame_refine_lv2); // Success to refine to +10 a lv2 weapon you forged = +25 fame point
 					break;
 				case 3:
-					pc_addfame(sd, battle_config.fame_refine_lv3); // Success to refine to +10 a lv3 weapon you forged = +1000 fame point
+					pc_addfame(*sd, battle_config.fame_refine_lv3); // Success to refine to +10 a lv3 weapon you forged = +1000 fame point
 					break;
 			 }
 		}
@@ -17471,7 +17471,7 @@ BUILDIN_FUNC(callshop)
 	if (script_hasdata(st,3))
 		flag = script_getnum(st,3);
 	nd = npc_name2id(shopname);
-	if( !nd || nd->bl.type != BL_NPC || (nd->subtype != NPCTYPE_SHOP && nd->subtype != NPCTYPE_CASHSHOP && nd->subtype != NPCTYPE_ITEMSHOP && nd->subtype != NPCTYPE_POINTSHOP && nd->subtype != NPCTYPE_MARKETSHOP) ) {
+	if( !nd || nd->bl.type != BL_NPC || (nd->subtype != NPCTYPE_SHOP && nd->subtype != NPCTYPE_CASHSHOP && nd->subtype != NPCTYPE_ITEMSHOP && nd->subtype != NPCTYPE_POINTSHOP && nd->subtype != NPCTYPE_MARKETSHOP && nd->subtype != NPCTYPE_BARTER) ) {
 		ShowError("buildin_callshop: Shop [%s] not found (or NPC is not shop type)\n", shopname);
 		script_pushint(st,0);
 		return SCRIPT_CMD_FAILURE;
@@ -17507,7 +17507,16 @@ BUILDIN_FUNC(callshop)
 		return SCRIPT_CMD_SUCCESS;
 	}
 #endif
-	else
+	else if( nd->subtype == NPCTYPE_BARTER ){
+		// flag the user as using a valid script call for opening the shop (for floating NPCs)
+		sd->state.callshop = 1;
+
+		if( nd->u.barter.extended ){
+			clif_barter_extended_open( *sd, *nd );
+		}else{
+			clif_barter_open( *sd, *nd );
+		}
+	}else
 		clif_cashshop_show(sd, nd);
 
 	sd->npc_shopid = nd->bl.id;
@@ -17604,9 +17613,17 @@ BUILDIN_FUNC(npcshopadditem)
 				nd->u.shop.count++;
 			}
 
+			int32 stock = script_getnum( st, i + 2 );
+
+			if( stock < -1 ){
+				ShowError( "builtin_npcshopadditem: Invalid stock amount in marketshop '%s'.\n", nd->exname );
+				script_pushint( st, 0 );
+				return SCRIPT_CMD_FAILURE;
+			}
+
 			nd->u.shop.shop_item[j].nameid = nameid;
 			nd->u.shop.shop_item[j].value = script_getnum(st,i+1);
-			nd->u.shop.shop_item[j].qty = script_getnum(st,i+2);
+			nd->u.shop.shop_item[j].qty = stock;
 
 			npc_market_tosql(nd->exname, &nd->u.shop.shop_item[j]);
 		}
@@ -21532,6 +21549,42 @@ BUILDIN_FUNC(instance_live_info)
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
+/*==========================================
+ * instance_list(<"map name">{,<instance mode>});
+ * set '.@instance_list' to a list of the live instance ids for the map with the mode.
+ * return the array size of '.@instance_list'
+ *------------------------------------------*/
+BUILDIN_FUNC(instance_list)
+{
+	int src_id = map_mapname2mapid(script_getstr(st, 2));
+	if (src_id == 0) {
+		ShowError("buildin_instance_list: map '%s' doesn't exist\n", script_getstr(st, 2));
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	e_instance_mode mode = IM_MAX;
+	if (script_hasdata(st, 3)) {
+		mode = static_cast<e_instance_mode>(script_getnum(st, 3));
+		if (mode < IM_NONE || mode >= IM_MAX) {
+			ShowError("buildin_instance_list: Unknown instance mode %d for '%s'\n", mode, script_getstr(st, 3));
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+
+	int j = 0;
+	for (int i = instance_start; i < map_num; i++) {
+		struct map_data* mapdata = &map[i];
+		if (mapdata->instance_src_map == src_id) {
+			std::shared_ptr<s_instance_data> idata = util::umap_find(instances, mapdata->instance_id);
+			if (idata && (mode == IM_MAX || idata->mode == mode)) {
+				setd_sub_num(st, nullptr, ".@instance_list", j, mapdata->instance_id, nullptr);
+				j++;
+			}
+		}
+	}
+	script_pushint(st, j);
+	return SCRIPT_CMD_SUCCESS;
+}
 
 /*==========================================
  * Custom Fonts
@@ -23250,7 +23303,13 @@ BUILDIN_FUNC(npcshopupdate) {
 	t_itemid nameid = script_getnum(st, 3);
 	int price = script_getnum(st, 4);
 #if PACKETVER >= 20131223
-	uint16 stock = script_hasdata(st,5) ? script_getnum(st,5) : 0;
+	int32 stock = script_hasdata(st,5) ? script_getnum(st,5) : -1;
+
+	if( stock < -1 ){
+		ShowError( "buildin_npcshopupdate: Invalid stock amount in marketshop '%s'.\n", nd->exname );
+		script_pushint( st, 0 );
+		return SCRIPT_CMD_FAILURE;
+	}
 #endif
 	int i;
 
@@ -25637,6 +25696,93 @@ BUILDIN_FUNC( openstylist ){
 #endif
 }
 
+BUILDIN_FUNC(getitempos) {
+	struct map_session_data* sd;
+
+	if ( !script_rid2sd(sd) ){
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( current_equip_item_index == -1 ){
+		ShowError( "buildin_getitempos: Invalid usage detected. This command should only be used inside item scripts.\n" );
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, sd->inventory.u.items_inventory[current_equip_item_index].equip);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC( laphine_synthesis ){
+	struct map_session_data* sd;
+
+	if( !script_rid2sd( sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( sd->itemid == 0 ){
+		ShowError( "buildin_laphine_synthesis: Called outside of an item script without item id.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( sd->inventory_data[sd->itemindex]->flag.delay_consume == 0 ){
+		ShowError( "buildin_laphine_synthesis: Called from item %u, which is not a consumed delayed.\n", sd->itemid );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( sd->state.laphine_synthesis != 0 ){
+		ShowError( "buildin_laphine_synthesis: Laphine Synthesis window was already open. Player %s (AID: %u, CID: %u) with item id %u.\n", sd->status.name, sd->status.account_id, sd->status.char_id, sd->itemid );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	std::shared_ptr<s_laphine_synthesis> synthesis = laphine_synthesis_db.find( sd->itemid );
+
+	if( synthesis == nullptr ){
+		ShowError( "buildin_laphine_synthesis: %u is not a valid Laphine Synthesis item.\n", sd->itemid );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_laphine_synthesis_open( sd, synthesis );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC( laphine_upgrade ){
+	struct map_session_data* sd;
+
+	if( !script_rid2sd( sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( sd->itemid == 0 ){
+		ShowError( "buildin_laphine_upgrade: Called outside of an item script without item id.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( sd->inventory_data[sd->itemindex]->flag.delay_consume == 0 ){
+		ShowError( "buildin_laphine_upgrade: Called from item %u, which is not a consumed delayed.\n", sd->itemid );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( sd->state.laphine_upgrade != 0 ){
+		ShowError( "buildin_laphine_upgrade: Laphine Upgrade window was already open. Player %s (AID: %u, CID: %u) with item id %u.\n", sd->status.name, sd->status.account_id, sd->status.char_id, sd->itemid );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	std::shared_ptr<s_laphine_upgrade> upgrade = laphine_upgrade_db.find( sd->itemid );
+
+	if( upgrade == nullptr ){
+		ShowError( "buildin_laphine_upgrade: %u is not a valid Laphine Upgrade item.\n", sd->itemid );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_laphine_upgrade_open( sd, upgrade );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -26179,6 +26325,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_check_clan,"i???"),
 	BUILDIN_DEF(instance_info,"si?"),
 	BUILDIN_DEF(instance_live_info,"i?"),
+	BUILDIN_DEF(instance_list, "s?"),
 	/**
 	 * 3rd-related
 	 **/
@@ -26343,6 +26490,10 @@ struct script_function buildin_func[] = {
 
 	BUILDIN_DEF(setinstancevar,"rvi"),
 	BUILDIN_DEF(openstylist, "?"),
+
+	BUILDIN_DEF(getitempos,""),
+	BUILDIN_DEF(laphine_synthesis, ""),
+	BUILDIN_DEF(laphine_upgrade, ""),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

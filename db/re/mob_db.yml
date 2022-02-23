@@ -46449,9 +46449,6 @@ Body:
     DamageMotion: 384
     Ai: 20
     Class: Boss
-    Modes:
-      IgnoreMelee: true
-      IgnoreRanged: true
     Drops:
       - Item: Mistic_Frozen
         Rate: 6
@@ -84798,7 +84795,7 @@ Body:
     Drops:
       - Item: Big_Sis'_Ribbon
         Rate: 25
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: Bluish_Green_Jewel
         Rate: 500
@@ -84858,7 +84855,7 @@ Body:
         Rate: 500
       - Item: Light_Granule
         Rate: 250
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: Min_Vagabond_Wolf_Card
         Rate: 1
@@ -84902,7 +84899,7 @@ Body:
         Rate: 4000
       - Item: Azure_Jewel
         Rate: 500
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: Angel's_Arrival
         Rate: 500
@@ -84948,7 +84945,7 @@ Body:
     Drops:
       - Item: Fillet
         Rate: 100
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: White_Jewel
         Rate: 600
@@ -84999,7 +84996,7 @@ Body:
         Rate: 2668
       - Item: Slender_Snake
         Rate: 1250
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: War_Axe
         Rate: 1
@@ -85058,7 +85055,7 @@ Body:
         Rate: 75
       - Item: Smoking_Pipe
         Rate: 125
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: Katar_Of_Raging_Blaze
         Rate: 250
@@ -85121,7 +85118,7 @@ Body:
         Rate: 100
       - Item: Jamadhar_
         Rate: 300
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: Spinx_Helm
         Rate: 75
@@ -85178,7 +85175,7 @@ Body:
         Rate: 250
       - Item: Sucsamad
         Rate: 75
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: Mr_Scream
         Rate: 150
@@ -85243,7 +85240,7 @@ Body:
         Rate: 125
       - Item: Orcish_Sword
         Rate: 500
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: Giant_Axe
         Rate: 50
@@ -85294,7 +85291,7 @@ Body:
     Drops:
       - Item: Gemstone
         Rate: 2425
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: Golden_Jewel
         Rate: 500
@@ -85335,6 +85332,9 @@ Body:
     AttackMotion: 816
     DamageMotion: 288
     Ai: 02
+    Modes:
+      Detector: true
+      Aggressive: true
   - Id: 3432
     AegisName: MIN_G_WOLF
     Name: Wolf 
@@ -85362,6 +85362,9 @@ Body:
     AttackMotion: 504
     DamageMotion: 432
     Ai: 02
+    Modes:
+      Detector: true
+      Aggressive: true
   - Id: 3433
     AegisName: MIN_G_ROCKER
     Name: Rocker
@@ -85389,6 +85392,9 @@ Body:
     AttackMotion: 864
     DamageMotion: 540
     Ai: 02
+    Modes:
+      Detector: true
+      Aggressive: true
   - Id: 3434
     AegisName: MIN_G_LUNATIC
     Name: Lunatic
@@ -85414,6 +85420,9 @@ Body:
     AttackMotion: 456
     DamageMotion: 336
     Ai: 02
+    Modes:
+      Detector: true
+      Aggressive: true
   - Id: 3435
     AegisName: MIN_G_GARGOYLE
     Name: Gargoyle
@@ -85441,6 +85450,9 @@ Body:
     AttackMotion: 720
     DamageMotion: 384
     Ai: 05
+    Modes:
+      Detector: true
+      Aggressive: true
   - Id: 3436
     AegisName: MIN_G_BIGFOOT
     Name: Bigfoot
@@ -85466,6 +85478,9 @@ Body:
     AttackMotion: 192
     DamageMotion: 192
     Ai: 17
+    Modes:
+      Detector: true
+      Aggressive: true
   - Id: 3437
     AegisName: MIN_G_ANCIENT_MUMMY
     Name: Ancient Mummy
@@ -85493,6 +85508,9 @@ Body:
     AttackMotion: 120
     DamageMotion: 384
     Ai: 21
+    Modes:
+      Detector: true
+      Aggressive: true
   - Id: 3438
     AegisName: MIN_G_SAND_MAN
     Name: Sandman
@@ -85520,6 +85538,9 @@ Body:
     AttackMotion: 720
     DamageMotion: 288
     Ai: 04
+    Modes:
+      Detector: true
+      Aggressive: true
   - Id: 3439
     AegisName: MIN_G_HIGH_ORC
     Name: High Orc
@@ -85547,6 +85568,9 @@ Body:
     AttackMotion: 500
     DamageMotion: 1000
     Ai: 04
+    Modes:
+      Detector: true
+      Aggressive: true
   - Id: 3440
     AegisName: MIN_G_MEGALITH
     Name: Megalith
@@ -85574,6 +85598,9 @@ Body:
     AttackMotion: 1332
     DamageMotion: 672
     Ai: 21
+    Modes:
+      Detector: true
+      Aggressive: true
 #  - Id: 3441
 #    AegisName: B_DRACULA
   - Id: 3442
@@ -86881,8 +86908,55 @@ Body:
 #    AegisName: E_WILD_MOBSTER
 #  - Id: 3493
 #    AegisName: SYS_MSG_J
-#  - Id: 3494
-#    AegisName: IFN_POIRING
+  - Id: 3494
+    AegisName: IFN_POIRING
+    Name: Shining Poring
+    Level: 100
+    Hp: 15
+    Attack: 100
+    Attack2: 100
+    Str: 10
+    Agi: 10
+    Vit: 10
+    Int: 10
+    Luk: 10
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 100
+    AttackDelay: 0
+    AttackMotion: 0
+    DamageMotion: 0
+    Ai: 01
+    Class: Guardian
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
+    Drops:
+      - Item: Shattered_Rune
+        Rate: 3000
+      - Item: Shattered_Rune
+        Rate: 3000
+      - Item: Shattered_Rune
+        Rate: 3000
+      - Item: Shattered_Rune
+        Rate: 3000
+      - Item: Shattered_Rune
+        Rate: 3000
+      - Item: Shattered_Rune
+        Rate: 3000
+      - Item: Shattered_Rune
+        Rate: 3000
+      - Item: Shattered_Rune
+        Rate: 3000
+        StealProtected: true
   - Id: 3495
     AegisName: DR_EGGRING
     Name: Eggring
@@ -92931,6 +93005,72 @@ Body:
 #    AegisName: SEASON_MOB_105
 #  - Id: 21508
 #    AegisName: SEASON_MOB_106
+#  - Id: 21513
+#    AegisName: EP19_NPC_IWIN
+#  - Id: 21514
+#    AegisName: EP19_NPC_IWIN_SN
+#  - Id: 21515
+#    AegisName: EP19_NPC_IWIN_SY
+#  - Id: 21516
+#    AegisName: EP19_NPC_IWIN_SB
+#  - Id: 21517
+#    AegisName: EP19_NPC_IWIN_SG
+#  - Id: 21518
+#    AegisName: EP19_NPC_IWIN_SR
+#  - Id: 21519
+#    AegisName: EP19_NPC_LEHAR
+#  - Id: 21520
+#    AegisName: EP19_LIMACINA
+#  - Id: 21521
+#    AegisName: EP19_UNFROST_FLOWER
+#  - Id: 21522
+#    AegisName: EP19_CALMARING
+#  - Id: 21523
+#    AegisName: EP19_ICE_STRAW
+#  - Id: 21524
+#    AegisName: EP19_SHINING_SEAWEED
+#  - Id: 21525
+#    AegisName: EP19_ICE_GANGU
+#  - Id: 21526
+#    AegisName: EP19_RGAN_A
+#  - Id: 21527
+#    AegisName: EP19_RGAN_B
+#  - Id: 21528
+#    AegisName: EP19_RGAN_C
+#  - Id: 21529
+#    AegisName: EP19_RGAN_D
+#  - Id: 21530
+#    AegisName: EP19_RGAN_E
+#  - Id: 21531
+#    AegisName: EP19_MD_AQUILA
+#  - Id: 21532
+#    AegisName: EP19_MD_JUNCEA
+#  - Id: 21533
+#    AegisName: EP19_MD_JUNCEA_S
+#  - Id: 21534
+#    AegisName: EP19_MD_RGAN_E
+#  - Id: 21535
+#    AegisName: EP19_MD_RGAN_D
+#  - Id: 21536
+#    AegisName: EP19_MD_HEARTHUNTER_AT
+#  - Id: 21537
+#    AegisName: EP19_LIMACINA_BOSS
+#  - Id: 21538
+#    AegisName: EP19_WASTED_RGAN_A
+#  - Id: 21539
+#    AegisName: EP19_WASTED_RGAN_C
+#  - Id: 21540
+#    AegisName: EP19_CAVE_CALMARING
+#  - Id: 21541
+#    AegisName: EP19_CAVE_FLOWER
+#  - Id: 21542
+#    AegisName: EP19_HALLUCIGENIA
+#  - Id: 21543
+#    AegisName: EP19_HALLUCIGENIA_BABY
+#  - Id: 21544
+#    AegisName: EP19_ONE_EYE_DOLLOCARIS
+#  - Id: 21545
+#    AegisName: EP19_DOLLOCARIS
 #  - Id: 21546
 #    AegisName: MD_COMMON
 #  - Id: 21547
@@ -93003,6 +93143,34 @@ Body:
 #    AegisName: G_BIJOU
 #  - Id: 21587
 #    AegisName: NPC_EDDGA
+#  - Id: 21588
+#    AegisName: EP19_MD_AQUILA_B
+#  - Id: 21589
+#    AegisName: G_EP19_LIMACINA
+#  - Id: 21590
+#    AegisName: EP19_MD_RGAN_ES
+#  - Id: 21591
+#    AegisName: E_CRYSTAL_C
+#  - Id: 21592
+#    AegisName: E_CRYSTAL_B
+#  - Id: 21593
+#    AegisName: E_CRYSTAL_A
+#  - Id: 21594
+#    AegisName: E_CRYSTAL_S
+#  - Id: 21595
+#    AegisName: E_CRYSTAL_SS
+#  - Id: 21596
+#    AegisName: TIGER_MAFIA
+#  - Id: 21597
+#    AegisName: RED_RAIN
+#  - Id: 21598
+#    AegisName: CHEWY_TTEOK
+#  - Id: 21599
+#    AegisName: EP19_HEARTHUNTER_AT
+#  - Id: 21600
+#    AegisName: EP19_RE_RGAN_E
+#  - Id: 21601
+#    AegisName: EP19_ET_RGAN_D
 #  - Id: 22328
 #    AegisName: DESERT_WOLF_RAC
 #  - Id: 22329

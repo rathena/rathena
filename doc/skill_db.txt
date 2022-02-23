@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20200324
+//= 20220126
 //===== Description: =========================================
 //= Explanation of the skill_db.yml file and structure.
 //============================================================
@@ -102,6 +102,7 @@ IgnoreWugBite				- Ignore RA_WUGBITE.
 IgnoreAutoGuard				- Not blocked by SC_AUTOGUARD (When TargetType is Weapon only).
 IgnoreCicada				- Not blocked by SC_UTSUSEMI or SC_BUNSINJYUTSU (When TargetType is Weapon only).
 ShowScale					- Shows AoE area while casting
+IgnoreGtb					- Not blocked by Golden Thief Bug card.
 
 ---------------------------------------
 

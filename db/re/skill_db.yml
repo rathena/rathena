@@ -115,7 +115,7 @@
 #         Amount              Ammo amount required at specific skill level.
 #     State                   Special state required to cast. (Default: None)
 #     Status:                 Status change required to cast. (Default: nullptr)
-#     SphereCost:             Spirit sphere required to cast. (Default: 0)
+#     SpiritSphereCost:       Spirit sphere required to cast. (Default: 0)
 #       - Level               Skill level.
 #         Amount              Spirit sphere required at specific skill level.
 #     ItemCost:               Item required to cast. (Default: 0)
@@ -17014,7 +17014,6 @@ Body:
       Interval: 1000
       Target: Enemy
       Flag:
-        NoOverlap: true
         PathCheck: true
     Status: Burning
   - Id: 709
@@ -19456,7 +19455,6 @@ Body:
       Interval: 1000
       Target: Enemy
       Flag:
-        NoOverlap: true
         PathCheck: true
     Status: Burning
   - Id: 2214
@@ -27195,7 +27193,6 @@ Body:
       Interval: 1000
       Target: Enemy
       Flag:
-        NoOverlap: true
         PathCheck: true
     Status: Crystalize
   - Id: 2448
@@ -34713,6 +34710,8 @@ Body:
     MaxLevel: 5
     Type: Magic
     TargetType: Attack
+    Flags:
+      IgnoreGtb: true
     Range: 9
     Hit: Single
     HitCount: 1

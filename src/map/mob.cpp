@@ -2102,17 +2102,6 @@ static TIMER_FUNC(mob_ai_hard){
 }
 
 /**
- * Assign random option values to an item
- * @param item_option: Random option on the item
- * @param option: Options to assign
- */
-void mob_setitem_option(s_item_randomoption &item_option, const std::shared_ptr<s_random_opt_group_entry> &option) {
-	item_option.id = option->id;
-	item_option.value = rnd_value(option->min_value, option->max_value);
-	item_option.param = option->param;
-}
-
-/**
  * Set random option for item when dropped from monster
  * @param item: Item data
  * @param mobdrop: Drop data
@@ -2125,40 +2114,7 @@ void mob_setdropitem_option(item *item, s_mob_drop *mobdrop) {
 	std::shared_ptr<s_random_opt_group> group = random_option_group.find(mobdrop->randomopt_group);
 
 	if (group != nullptr) {
-		// Apply Must options
-		for (size_t i = 0; i < group->slots.size(); i++) {
-			// Try to apply an entry
-			for (size_t j = 0, max = group->slots[static_cast<uint16>(i)].size() * 3; j < max; j++) {
-				std::shared_ptr<s_random_opt_group_entry> option = util::vector_random(group->slots[static_cast<uint16>(i)]);
-
-				if (rnd() % 10000 < option->chance) {
-					mob_setitem_option(item->option[i], option);
-					break;
-				}
-			}
-
-			// If no entry was applied, assign one
-			if (item->option[i].id == 0) {
-				std::shared_ptr<s_random_opt_group_entry> option = util::vector_random(group->slots[static_cast<uint16>(i)]);
-
-				// Apply an entry without checking the chance
-				mob_setitem_option(item->option[i], option);
-			}
-		}
-
-		// Apply Random options (if available)
-		if (group->max_random > 0) {
-			for (size_t i = 0; i < min(group->max_random, MAX_ITEM_RDM_OPT); i++) {
-				// If item already has an option in this slot, skip it
-				if (item->option[i].id > 0)
-					continue;
-
-				std::shared_ptr<s_random_opt_group_entry> option = util::vector_random(group->random_options);
-
-				if (rnd() % 10000 < option->chance)
-					mob_setitem_option(item->option[i], option);
-			}
-		}
+		group->apply( *item );
 	}
 }
 
@@ -2472,6 +2428,9 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 #if PACKETVER >= 20120404
 	if (battle_config.monster_hp_bars_info && !map_getmapflag(md->bl.m, MF_HIDEMOBHPBAR)) {
 		int i;
+		if (md->special_state.ai == AI_ABR || md->special_state.ai == AI_BIONIC) {
+			clif_summon_hp_bar(*md);
+		}
 		for(i = 0; i < DAMAGELOG_SIZE; i++){ // must show hp bar to all char who already hit the mob.
 			struct map_session_data *sd = map_charid2sd(md->dmglog[i].id);
 			if( sd && check_distance_bl(&md->bl, &sd->bl, AREA_SIZE) ) // check if in range
@@ -3077,7 +3036,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			{ //TK_MISSION [Skotlex]
 				if (++(sd->mission_count) >= 100 && (temp = mob_get_random_id(MOBG_BRANCH_OF_DEAD_TREE, static_cast<e_random_monster_flags>(RMF_CHECK_MOB_LV|RMF_MOB_NOT_BOSS|RMF_MOB_NOT_SPAWN), sd->status.base_level)))
 				{
-					pc_addfame(sd, battle_config.fame_taekwon_mission);
+					pc_addfame(*sd, battle_config.fame_taekwon_mission);
 					sd->mission_mobid = temp;
 					pc_setglobalreg(sd, add_str(TKMISSIONID_VAR), temp);
 					sd->mission_count = 0;
@@ -3395,6 +3354,9 @@ void mob_heal(struct mob_data *md,unsigned int heal)
 #if PACKETVER >= 20120404
 	if (battle_config.monster_hp_bars_info && !map_getmapflag(md->bl.m, MF_HIDEMOBHPBAR)) {
 		int i;
+		if (md->special_state.ai == AI_ABR || md->special_state.ai == AI_BIONIC) {
+			clif_summon_hp_bar(*md);
+		}
 		for(i = 0; i < DAMAGELOG_SIZE; i++)// must show hp bar to all char who already hit the mob.
 			if( md->dmglog[i].id ) {
 				struct map_session_data *sd = map_charid2sd(md->dmglog[i].id);

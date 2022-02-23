@@ -675,7 +675,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 	s_defele = (tsd) ? (enum e_element)status_get_element(src) : ELE_NONE;
 
 //Official servers apply the cardfix value on a base of 1000 and round down the reduction/increase
-#define APPLY_CARDFIX(damage, fix) { (damage) = (damage) - (int64)(((damage) * (1000 - (fix))) / 1000); }
+#define APPLY_CARDFIX(damage, fix) { (damage) = (damage) - (int64)(((damage) * (1000 - max(0, fix))) / 1000); }
 
 	switch( attack_type ) {
 		case BF_MAGIC:
@@ -7177,14 +7177,14 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case NPC_ELECTRICWALK:
 						skillratio += -100 + 100 * skill_lv;
 						break;
-					case SO_EARTHGRAVE: // !TODO: Confirm formula
-						skillratio += -100 + sstatus->int_ / 6 * skill_lv + ((sd) ? pc_checkskill(sd, SA_SEISMICWEAPON) * 200 : 0);
+					case SO_EARTHGRAVE:
+						skillratio += -100 + 2 * sstatus->int_ + 300 * pc_checkskill(sd, SA_SEISMICWEAPON) + sstatus->int_ * skill_lv;
 						RE_LVL_DMOD(100);
 						if( sc && sc->data[SC_CURSED_SOIL_OPTION] )
 							skillratio += (sd ? sd->status.job_level * 5 : 0);
 						break;
-					case SO_DIAMONDDUST: // !TODO: Confirm formula
-						skillratio += -100 + 200 * ((sd) ? pc_checkskill(sd, SA_FROSTWEAPON) : 0) + sstatus->int_ / 6 * skill_lv;
+					case SO_DIAMONDDUST:
+						skillratio += -100 + 2 * sstatus->int_ + 300 * pc_checkskill(sd, SA_FROSTWEAPON) + sstatus->int_ * skill_lv;
 						RE_LVL_DMOD(100);
 						if( sc && sc->data[SC_COOLER_OPTION] )
 							skillratio += (sd ? sd->status.job_level * 5 : 0);
@@ -7224,8 +7224,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case NPC_CLOUD_KILL:
 						skillratio += -100 + 50 * skill_lv;
 						break;
-					case SO_VARETYR_SPEAR: //MATK [{( Endow Tornado skill level x 50 ) + ( Caster INT x Varetyr Spear Skill level )} x Caster Base Level / 100 ] %
-						skillratio += -100 + sstatus->int_ / 6 * skill_lv + ((sd) ? pc_checkskill(sd, SA_LIGHTNINGLOADER) * 50 : 0); // !TODO: Confirm new formula
+					case SO_VARETYR_SPEAR:
+						skillratio += -100 + (2 * sstatus->int_ + 150 * (pc_checkskill(sd, SO_STRIKING) + pc_checkskill(sd, SA_LIGHTNINGLOADER)) + sstatus->int_ * skill_lv / 2) / 3;
 						RE_LVL_DMOD(100);
 						if (sc && sc->data[SC_BLAST_OPTION])
 							skillratio += (sd ? sd->status.job_level * 5 : 0);
@@ -9908,7 +9908,11 @@ static const struct _battle_data {
 	{ "allow_consume_restricted_item",      &battle_config.allow_consume_restricted_item,   1,      0,      1,              },
 	{ "allow_equip_restricted_item",        &battle_config.allow_equip_restricted_item,     1,      0,      1,              },
 	{ "max_walk_path",                      &battle_config.max_walk_path,                   17,     1,      MAX_WALKPATH,   },
+#ifdef RENEWAL
+	{ "item_enabled_npc",                   &battle_config.item_enabled_npc,                0,      0,      1,              },
+#else
 	{ "item_enabled_npc",                   &battle_config.item_enabled_npc,                1,      0,      1,              },
+#endif
 	{ "item_flooritem_check",               &battle_config.item_onfloor,                    1,      0,      1,              },
 	{ "bowling_bash_area",                  &battle_config.bowling_bash_area,               0,      0,      20,             },
 	{ "drop_rateincrease",                  &battle_config.drop_rateincrease,               0,      0,      1,              },
@@ -10075,6 +10079,9 @@ static const struct _battle_data {
 	{ "loose_ap_on_map",                    &battle_config.loose_ap_on_map,                 1,      0,      1,              },
 	{ "keep_ap_on_logout",                  &battle_config.keep_ap_on_logout,               1,      0,      1,              },
 	{ "attack_machine_level_difference",    &battle_config.attack_machine_level_difference, 15,     0,      INT_MAX,        },
+
+	{ "feature.barter",                     &battle_config.feature_barter,                  1,      0,      1,              },
+	{ "feature.barter_extended",            &battle_config.feature_barter_extended,         1,      0,      1,              },
 
 #include "../custom/battle_config_init.inc"
 };
@@ -10256,6 +10263,20 @@ void battle_adjust_conf()
 	if( battle_config.feature_privateairship ){
 		ShowWarning("conf/battle/feature.conf private airship system is enabled but it requires PACKETVER 2018-03-21 or newer, disabling...\n");
 		battle_config.feature_privateairship = 0;
+	}
+#endif
+
+#if !( PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114 )
+	if( battle_config.feature_barter ){
+		ShowWarning("conf/battle/feature.conf barter shop system is enabled but it requires PACKETVER 2018-07-04 or newer, disabling...\n");
+		battle_config.feature_barter = 0;
+	}
+#endif
+
+#if !( PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106 || PACKETVER_ZERO_NUM >= 20191127 )
+	if( battle_config.feature_barter_extended ){
+		ShowWarning("conf/battle/feature.conf extended barter shop system is enabled but it requires PACKETVER 2019-11-06 or newer, disabling...\n");
+		battle_config.feature_barter_extended = 0;
 	}
 #endif
 

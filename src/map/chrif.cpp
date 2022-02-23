@@ -1222,24 +1222,14 @@ int chrif_disconnectplayer(int fd) {
 /*==========================================
  * Request/Receive top 10 Fame character list
  *------------------------------------------*/
-int chrif_updatefamelist(struct map_session_data* sd) {
-	char type;
-
+int chrif_updatefamelist(map_session_data &sd, e_rank ranktype) {
 	chrif_check(-1);
-
-	switch(sd->class_ & MAPID_UPPERMASK) {
-		case MAPID_BLACKSMITH: type = RANK_BLACKSMITH; break;
-		case MAPID_ALCHEMIST:  type = RANK_ALCHEMIST; break;
-		case MAPID_TAEKWON:    type = RANK_TAEKWON; break;
-		default:
-			return 0;
-	}
 
 	WFIFOHEAD(char_fd, 11);
 	WFIFOW(char_fd,0) = 0x2b10;
-	WFIFOL(char_fd,2) = sd->status.char_id;
-	WFIFOL(char_fd,6) = sd->status.fame;
-	WFIFOB(char_fd,10) = type;
+	WFIFOL(char_fd,2) = sd.status.char_id;
+	WFIFOL(char_fd,6) = sd.status.fame;
+	WFIFOB(char_fd,10) = ranktype;
 	WFIFOSET(char_fd,11);
 
 	return 0;

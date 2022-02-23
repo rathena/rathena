@@ -707,6 +707,9 @@ struct Battle_Config
 	int keep_ap_on_logout;
 	int attack_machine_level_difference;
 
+	int feature_barter;
+	int feature_barter_extended;
+
 #include "../custom/battle_config_struct.inc"
 };
 
