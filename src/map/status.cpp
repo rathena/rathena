@@ -14622,10 +14622,9 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Icon", icon_name))
 			return 0;
 
-		std::string icon_name_constant = "EFST_" + icon_name;
 		int64 constant;
 
-		if (!script_get_constant(icon_name_constant.c_str(), &constant)) {
+		if (!script_get_constant(icon_name.c_str(), &constant)) {
 			this->invalidWarning(node["Icon"], "Icon %s is invalid, defaulting to EFST_BLANK.\n", icon_name.c_str());
 			constant = EFST_BLANK;
 		}

@@ -23,7 +23,7 @@
 #
 ###########################################################################
 # - Status                    Status change name.
-#   Icon                      Status change icon. (Default: Blank)
+#   Icon                      Status change icon. (Default: EFST_BLANK)
 #   DurationLookup            Default status change duration. (Default: 0)
 #   States                    Status change state to determine player states. (Default: None)
 #   CalcFlags                 Status change calculation to indicate which stat is adjusted. (Default: None)
