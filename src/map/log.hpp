@@ -52,6 +52,7 @@ enum e_log_pick_type : uint32
 	LOG_TYPE_QUEST            = 0x0400000,
 	LOG_TYPE_PRIVATE_AIRSHIP  = 0x0800000,
 	LOG_TYPE_BARTER           = 0x1000000,
+	LOG_TYPE_LAPHINE          = 0x2000000,
 	// combinations
 	LOG_TYPE_LOOT             = LOG_TYPE_PICKDROP_MONSTER|LOG_TYPE_CONSUME,
 	// all

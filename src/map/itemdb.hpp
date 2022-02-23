@@ -778,6 +778,118 @@ enum e_random_item_group {
 	IG_THIRD_JOB_STONE_MIDDLE_BOX2,
 	IG_THIRD_JOB_STONE_BOTTOM_BOX,
 	IG_THIRD_JOB_STONE_BOTTOM_BOX2,
+	IG_SHADOW_EXCHANGE_BOX,
+	IG_DROOPING_GUNSLINGER_SCROLL,
+	IG_ENCHANTSTONE_RECIPE,
+	IG_PET_EGG_BOX,
+	IG_COSTUME_EXCHANGE_BOX,
+	IG_FAN_MODIFICATION_KIT,
+	IG_UNIFORM_REPAIR_KIT,
+	IG_SCROLL_OF_FALLEN_ANGEL_WINGS,
+	IG_CLASS_SHADOW_BOX_WEAPON,
+	IG_CLASS_SHADOW_BOX_ARMOR,
+	IG_CLASS_SHADOW_BOX_SHOES,
+	IG_CLASS_SHADOW_BOX_SHIELD,
+	IG_CLASS_SHADOW_BOX_PENDANT,
+	IG_CLASS_SHADOW_BOX_EARRING,
+	IG_STATUSSHADOW_MIX,
+	IG_GEMSTONESHADOW_MIX,
+	IG_BEARERSSHADOW_MIX,
+	IG_COMPOSESHADOW_MIX,
+	IG_RACESHADOW_MIX,
+	IG_CANDY_POUCH_BLESSING_SCROLL_MELEE,
+	IG_CANDY_POUCH_BLESSING_SCROLL_RANGE,
+	IG_CANDY_POUCH_BLESSING_SCROLL_MAGIC,
+	IG_MAGICAL_BOOSTER_AMPLIFIER,
+	IG_MAGIC_CAT_HAND_SCROLL,
+	IG_INFINITYSHADOW_MIX,
+	IG_SILVER_STATUE,
+	IG_PHYSICALMAGICAL_MIX,
+	IG_IMMUNEDATHENA_MIX,
+	IG_HARDCHAMPTION_MIX,
+	IG_KINGBIRDANCIENT_MIX,
+	IG_CRITICALHIT_MIX,
+	IG_BS_ITEM_M_S_2,
+	IG_BS_ITEM_M_S_8,
+	IG_BS_ITEM_M_S_10,
+	IG_BS_ITEM_M_S_11,
+	IG_BS_ITEM_M_S_34,
+	IG_BS_ITEM_M_S_41,
+	IG_BS_ITEM_M_S_42,
+	IG_BS_ITEM_M_S_43,
+	IG_BS_ITEM_M_S_44,
+	IG_BS_SHA_M_S_1,
+	IG_BS_SHA_M_S_17,
+	IG_BS_SHA_M_S_18,
+	IG_BS_SHA_M_S_19,
+	IG_BS_SHA_M_S_20,
+	IG_BS_ITEM_M_S_4,
+	IG_BS_ITEM_M_S_6,
+	IG_BS_ITEM_M_S_7,
+	IG_BS_ITEM_M_S_12,
+	IG_BS_ITEM_M_S_13,
+	IG_BS_ITEM_M_S_15,
+	IG_BS_ITEM_M_S_28,
+	IG_BS_ITEM_M_S_29,
+	IG_BS_ITEM_M_S_31,
+	IG_BS_ITEM_M_S_32,
+	IG_BS_ITEM_M_S_33,
+	IG_BS_ITEM_M_S_36,
+	IG_BS_ITEM_M_S_37,
+	IG_BS_ITEM_M_S_38,
+	IG_BS_ITEM_M_S_39,
+	IG_BS_ITEM_M_S_40,
+	IG_BS_ITEM_M_S_45,
+	IG_BS_ITEM_M_S_46,
+	IG_BS_ITEM_M_S_47,
+	IG_BS_ITEM_M_S_48,
+	IG_BS_ITEM_M_S_49,
+	IG_BS_ITEM_M_S_50,
+	IG_BS_SHA_M_S_5,
+	IG_BS_SHA_M_S_6,
+	IG_BS_SHA_M_S_7,
+	IG_BS_SHA_M_S_8,
+	IG_BS_SHA_M_S_13,
+	IG_BS_SHA_M_S_15,
+	IG_BS_SHA_M_S_16,
+	IG_BS_SHA_M_S_23,
+	IG_BS_ITEM_M_S_5,
+	IG_BS_ITEM_M_S_9,
+	IG_BS_ITEM_M_S_14,
+	IG_BS_ITEM_M_S_16,
+	IG_BS_ITEM_M_S_17,
+	IG_BS_ITEM_M_S_19,
+	IG_BS_ITEM_M_S_27,
+	IG_BS_ITEM_M_S_35,
+	IG_BS_SHA_M_S_9,
+	IG_BS_SHA_M_S_10,
+	IG_BS_SHA_M_S_11,
+	IG_BS_SHA_M_S_21,
+	IG_BS_ITEM_M_S_1,
+	IG_BS_ITEM_M_S_3,
+	IG_BS_ITEM_M_S_18,
+	IG_BS_ITEM_M_S_20,
+	IG_BS_ITEM_M_S_21,
+	IG_BS_ITEM_M_S_22,
+	IG_BS_ITEM_M_S_23,
+	IG_BS_ITEM_M_S_24,
+	IG_BS_ITEM_M_S_25,
+	IG_BS_ITEM_M_S_26,
+	IG_BS_ITEM_M_S_30,
+	IG_BS_SHA_M_S_3,
+	IG_BS_SHA_M_S_4,
+	IG_BS_SHA_M_S_12,
+	IG_BS_SHA_M_S_14,
+	IG_BS_SHA_M_S_24,
+	IG_BS_SHA_M_S_25,
+	IG_BS_ITEM_M_S_51,
+	IG_ENCHANTSTONE_RECIPE_9M,
+	IG_IDTEST_SPECIAL,
+	IG_PERFECTSIZE_MIX,
+	IG_MAGICPIERCING_MIX,
+	IG_PIERCING_MIX,
+	IG_HASTY_MIX,
+	IG_ENCHANTSTONE_RECIPE_4M,
 
 	IG_MAX,
 };
@@ -866,6 +978,73 @@ public:
 
 extern ComboDatabase itemdb_combo;
 
+// Struct for item random option [Secret]
+struct s_random_opt_data
+{
+	uint16 id;
+	std::string name;
+	script_code *script;
+
+	~s_random_opt_data() {
+		if (script)
+			script_free_code(script);
+	}
+};
+
+/// Struct for random option group entry
+struct s_random_opt_group_entry {
+	uint16 id;
+	int16 min_value, max_value;
+	int8 param;
+	uint16 chance;
+};
+
+/// Struct for Random Option Group
+struct s_random_opt_group {
+	uint16 id;
+	std::string name;
+	std::map<uint16, std::vector<std::shared_ptr<s_random_opt_group_entry>>> slots;
+	uint16 max_random;
+	std::vector<std::shared_ptr<s_random_opt_group_entry>> random_options;
+
+public:
+	void apply( struct item& item );
+};
+
+class RandomOptionDatabase : public TypesafeYamlDatabase<uint16, s_random_opt_data> {
+public:
+	RandomOptionDatabase() : TypesafeYamlDatabase("RANDOM_OPTION_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node &node) override;
+	void loadingFinished() override;
+
+	// Additional
+	bool option_exists(std::string name);
+	bool option_get_id(std::string name, uint16 &id);
+};
+
+extern RandomOptionDatabase random_option_db;
+
+class RandomOptionGroupDatabase : public TypesafeYamlDatabase<uint16, s_random_opt_group> {
+public:
+	RandomOptionGroupDatabase() : TypesafeYamlDatabase("RANDOM_OPTION_GROUP", 1) {
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node &node) override;
+
+	// Additional
+	bool add_option(const YAML::Node &node, std::shared_ptr<s_random_opt_group_entry> &entry);
+	bool option_exists(std::string name);
+	bool option_get_id(std::string name, uint16 &id);
+};
+
+extern RandomOptionGroupDatabase random_option_group;
+
 /// Struct of item group entry
 struct s_item_group_entry
 {
@@ -878,6 +1057,9 @@ struct s_item_group_entry
 		isStacked, /// Whether stackable items are given stacked
 		isNamed; /// Named the item (if possible)
 	uint8 bound; /// Makes the item as bound item (according to bound type)
+	std::shared_ptr<s_random_opt_group> randomOptionGroup;
+	uint16 refineMinimum;
+	uint16 refineMaximum;
 };
 
 /// Struct of random group
@@ -999,70 +1181,6 @@ struct item_data
 	int inventorySlotNeeded(int quantity);
 };
 
-// Struct for item random option [Secret]
-struct s_random_opt_data
-{
-	uint16 id;
-	std::string name;
-	script_code *script;
-
-	~s_random_opt_data() {
-		if (script)
-			script_free_code(script);
-	}
-};
-
-/// Struct for random option group entry
-struct s_random_opt_group_entry {
-	uint16 id;
-	int16 min_value, max_value;
-	int8 param;
-	uint16 chance;
-};
-
-/// Struct for Random Option Group
-struct s_random_opt_group {
-	uint16 id;
-	std::string name;
-	std::map<uint16, std::vector<std::shared_ptr<s_random_opt_group_entry>>> slots;
-	uint16 max_random;
-	std::vector<std::shared_ptr<s_random_opt_group_entry>> random_options;
-};
-
-class RandomOptionDatabase : public TypesafeYamlDatabase<uint16, s_random_opt_data> {
-public:
-	RandomOptionDatabase() : TypesafeYamlDatabase("RANDOM_OPTION_DB", 1) {
-
-	}
-
-	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node &node) override;
-	void loadingFinished() override;
-
-	// Additional
-	bool option_exists(std::string name);
-	bool option_get_id(std::string name, uint16 &id);
-};
-
-extern RandomOptionDatabase random_option_db;
-
-class RandomOptionGroupDatabase : public TypesafeYamlDatabase<uint16, s_random_opt_group> {
-public:
-	RandomOptionGroupDatabase() : TypesafeYamlDatabase("RANDOM_OPTION_GROUP", 1) {
-
-	}
-
-	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node &node) override;
-
-	// Additional
-	bool add_option(const YAML::Node &node, std::shared_ptr<s_random_opt_group_entry> &entry);
-	bool option_exists(std::string name);
-	bool option_get_id(std::string name, uint16 &id);
-};
-
-extern RandomOptionGroupDatabase random_option_group;
-
 class ItemDatabase : public TypesafeCachedYamlDatabase<t_itemid, item_data> {
 private:
 	std::unordered_map<std::string, std::shared_ptr<item_data>> nameToItemDataMap;
@@ -1094,7 +1212,7 @@ extern ItemDatabase item_db;
 
 class ItemGroupDatabase : public TypesafeCachedYamlDatabase<uint16, s_item_group_db> {
 public:
-	ItemGroupDatabase() : TypesafeCachedYamlDatabase("ITEM_GROUP_DB", 1) {
+	ItemGroupDatabase() : TypesafeCachedYamlDatabase("ITEM_GROUP_DB", 2, 1) {
 
 	}
 
@@ -1111,6 +1229,57 @@ public:
 };
 
 extern ItemGroupDatabase itemdb_group;
+
+struct s_laphine_synthesis_requirement{
+	t_itemid item_id;
+	uint16 amount;
+};
+
+struct s_laphine_synthesis{
+	t_itemid item_id;
+	uint16 minimumRefine;
+	uint16 maximumRefine;
+	uint16 requiredRequirements;
+	std::unordered_map<t_itemid, std::shared_ptr<s_laphine_synthesis_requirement>> requirements;
+	uint16 rewardGroupId;
+};
+
+class LaphineSynthesisDatabase : public TypesafeYamlDatabase<t_itemid, s_laphine_synthesis>{
+public:
+	LaphineSynthesisDatabase() : TypesafeYamlDatabase( "LAPHINE_SYNTHESIS_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode( const YAML::Node& node );
+};
+
+extern LaphineSynthesisDatabase laphine_synthesis_db;
+
+struct s_laphine_upgrade{
+	t_itemid item_id;
+	std::vector<t_itemid> target_item_ids;
+	uint16 minimumRefine;
+	uint16 maximumRefine;
+	uint16 requiredRandomOptions;
+	bool cardsAllowed;
+	std::shared_ptr<s_random_opt_group> randomOptionGroup;
+	uint16 resultRefine;
+	uint16 resultRefineMinimum;
+	uint16 resultRefineMaximum;
+};
+
+class LaphineUpgradeDatabase : public TypesafeYamlDatabase<t_itemid, s_laphine_upgrade>{
+public:
+	LaphineUpgradeDatabase() : TypesafeYamlDatabase( "LAPHINE_UPGRADE_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode( const YAML::Node& node );
+};
+
+extern LaphineUpgradeDatabase laphine_upgrade_db;
 
 int itemdb_searchname_array(struct item_data** data, int size, const char *str);
 struct item_data* itemdb_search(t_itemid nameid);
