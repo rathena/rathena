@@ -14,7 +14,7 @@
 //= 1.0 First Version, entirely custom. [Masao]
 //= 1.1 Cleaning. [Euphy]
 //= 1.2 Replaced with official script. [Euphy]
-//= 1.3 Added Job Class Biolo. [Mazvi]
+//= 1.3 Fixed Job Class for after Genetic. [Mazvi & Lemongrass]
 //============================================================ 
 
 // Main NPCs :: Homun_S
