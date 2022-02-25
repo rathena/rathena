@@ -14606,12 +14606,12 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 	int64 constant;
 
 	if (!script_get_constant(status_constant.c_str(), &constant)) {
-		this->invalidWarning(node["Status"], "Invalid Status %s, skipping.\n", status_name.c_str());
+		this->invalidWarning(node["Status"], "Invalid Status %s.\n", status_name.c_str());
 		return 0;
 	}
 
 	if (!CHK_SC(constant)) {
-		this->invalidWarning(node["Status"], "Status %s is out of bounds, skipping.\n", status_name.c_str());
+		this->invalidWarning(node["Status"], "Status %s is out of bounds.\n", status_name.c_str());
 		return 0;
 	}
 
@@ -14673,13 +14673,13 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 			int64 constant;
 
 			if (!script_get_constant(state_constant.c_str(), &constant)) {
-				this->invalidWarning(stateNode, "State %s is invalid, skipping.\n", state.c_str());
+				this->invalidWarning(stateNode, "State %s is invalid.\n", state.c_str());
 				return 0;
 			}
 
 			if (constant < SCS_NONE || constant >= SCS_MAX) {
-				this->invalidWarning(stateNode, "State %s is out of bounds, skipping.\n", state.c_str());
-				continue;
+				this->invalidWarning(stateNode, "State %s is out of bounds.\n", state.c_str());
+				return 0;
 			}
 
 			bool active;
@@ -14705,13 +14705,13 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 			int64 constant;
 
 			if (!script_get_constant(flag_constant.c_str(), &constant)) {
-				this->invalidWarning(flagNode, "CalcFlag %s is invalid, skipping.\n", flag.c_str());
+				this->invalidWarning(flagNode, "CalcFlag %s is invalid.\n", flag.c_str());
 				return 0;
 			}
 
 			if (constant < SCB_NONE || constant >= SCB_MAX) {
-				this->invalidWarning(flagNode, "CalcFlag %s is out of bounds, skipping.\n", flag.c_str());
-				continue;
+				this->invalidWarning(flagNode, "CalcFlag %s is out of bounds.\n", flag.c_str());
+				return 0;
 			}
 
 			bool active;
@@ -14739,8 +14739,13 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 		int64 constant;
 
 		if (!script_get_constant(opt_constant.c_str(), &constant)) {
-			this->invalidWarning(node["Opt1"], "Opt1 %s is invalid, defaulting to OPT1_NONE.\n", opt.c_str());
-			constant = OPT1_NONE;
+			this->invalidWarning(node["Opt1"], "Opt1 %s is invalid.\n", opt.c_str());
+			return 0;
+		}
+
+		if (constant < OPT1_NONE || constant >= OPT1_MAX) {
+			this->invalidWarning(node["Opt1"], "Opt2 %s is out of bounds.\n", opt.c_str());
+			return 0;
 		}
 
 		status->opt1 = static_cast<e_sc_opt1>(constant);
@@ -14757,13 +14762,13 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 			int64 constant;
 
 			if (!script_get_constant(opt_constant.c_str(), &constant)) {
-				this->invalidWarning(optNode, "Opt2 %s is invalid, skipping.\n", opt.c_str());
+				this->invalidWarning(optNode, "Opt2 %s is invalid.\n", opt.c_str());
 				return 0;
 			}
 
 			if (constant < OPT2_NONE || constant >= OPT2_MAX) {
-				this->invalidWarning(optNode, "Opt2 %s is out of bounds, skipping.\n", opt.c_str());
-				continue;
+				this->invalidWarning(optNode, "Opt2 %s is out of bounds.\n", opt.c_str());
+				return 0;
 			}
 
 			bool active;
@@ -14789,13 +14794,13 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 			int64 constant;
 
 			if (!script_get_constant(opt_constant.c_str(), &constant)) {
-				this->invalidWarning(optNode, "Opt3 %s is invalid, skipping.\n", opt.c_str());
+				this->invalidWarning(optNode, "Opt3 %s is invalid.\n", opt.c_str());
 				return 0;
 			}
 
 			if (constant < OPT3_NORMAL || constant >= OPT3_MAX) {
-				this->invalidWarning(optNode, "Opt3 %s is out of bounds, skipping.\n", opt.c_str());
-				continue;
+				this->invalidWarning(optNode, "Opt3 %s is out of bounds.\n", opt.c_str());
+				return 0;
 			}
 
 			bool active;
@@ -14821,13 +14826,13 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 			int64 constant;
 
 			if (!script_get_constant(option_constant.c_str(), &constant)) {
-				this->invalidWarning(optionNode, "Option %s is invalid, skipping.\n", option.c_str());
+				this->invalidWarning(optionNode, "Option %s is invalid.\n", option.c_str());
 				return 0;
 			}
 
 			if (constant < OPTION_NOTHING || constant >= OPTION_MAX) {
-				this->invalidWarning(optionNode, "Option %s is out of bounds, skipping.\n", option.c_str());
-				continue;
+				this->invalidWarning(optionNode, "Option %s is out of bounds.\n", option.c_str());
+				return 0;
 			}
 
 			bool active;
@@ -14853,13 +14858,13 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 			int64 constant;
 
 			if (!script_get_constant(flag_constant.c_str(), &constant)) {
-				this->invalidWarning(flagNode, "Flag %s is invalid, skipping.\n", flag.c_str());
+				this->invalidWarning(flagNode, "Flag %s is invalid.\n", flag.c_str());
 				return 0;
 			}
 
 			if (constant < SCF_NONE || constant >= SCF_MAX) {
-				this->invalidWarning(flagNode, "Flag %s is out of bounds, skipping.\n", flag.c_str());
-				continue;
+				this->invalidWarning(flagNode, "Flag %s is out of bounds.\n", flag.c_str());
+				return 0;
 			}
 
 			bool active;
@@ -14906,13 +14911,13 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 			int64 constant;
 
 			if (!script_get_constant(fail_constant.c_str(), &constant)) {
-				this->invalidWarning(failNode, "Fail status %s is invalid, skipping.\n", fail.c_str());
+				this->invalidWarning(failNode, "Fail status %s is invalid.\n", fail.c_str());
 				return 0;
 			}
 
 			if (!CHK_SC(constant)) {
-				this->invalidWarning(failNode, "Fail status %s is out of bounds, skipping.\n", fail.c_str());
-				continue;
+				this->invalidWarning(failNode, "Fail status %s is out of bounds.\n", fail.c_str());
+				return 0;
 			}
 
 			bool active;
@@ -14935,13 +14940,13 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 			int64 constant;
 
 			if (!script_get_constant(end_constant.c_str(), &constant)) {
-				this->invalidWarning(endNode, "End status %s is invalid, skipping.\n", end.c_str());
+				this->invalidWarning(endNode, "End status %s is invalid.\n", end.c_str());
 				return 0;
 			}
 
 			if (!CHK_SC(constant)) {
-				this->invalidWarning(endNode, "End status %s is out of bounds, skipping.\n", end.c_str());
-				continue;
+				this->invalidWarning(endNode, "End status %s is out of bounds.\n", end.c_str());
+				return 0;
 			}
 
 			bool active;
