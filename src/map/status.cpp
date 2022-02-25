@@ -14875,7 +14875,7 @@ void StatusDatabase::loadingFinished(){
 		const auto& status = entry.second;
 
 		if( status->icon == EFST_BLANK ){
-			StatusRelevantBLTypes[status->icon] = BL_NUL;
+			continue;
 		}else if( status->flag[SCF_BLEFFECT] ){
 			StatusRelevantBLTypes[status->icon] |= BL_SCEFFECT;
 		}else{
