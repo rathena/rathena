@@ -5697,7 +5697,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 		case ITEMID_M_BERSERK_POTION:
 			if( sd->md == NULL || sd->md->db == NULL )
 				return false;
-			if( sd->md->sc.data[SC_BERSERK] )
+			if( sd->md->sc.cant.consume )
 				return false;
 			if( nameid == ITEMID_M_AWAKENING_POTION && sd->md->db->lv < 40 )
 				return false;
@@ -5738,24 +5738,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 	if (!pc_job_can_use_item(sd,item))
 		return false;
 	
-	if (sd->sc.count && (
-		sd->sc.data[SC_BERSERK] || sd->sc.data[SC_SATURDAYNIGHTFEVER] ||
-		(sd->sc.data[SC_GRAVITATION] && sd->sc.data[SC_GRAVITATION]->val3 == BCT_SELF) ||
-		sd->sc.data[SC_TRICKDEAD] ||
-		sd->sc.data[SC_HIDING] ||
-		sd->sc.data[SC__SHADOWFORM] ||
-		sd->sc.data[SC__INVISIBILITY] ||
-		sd->sc.data[SC__MANHOLE] ||
-		sd->sc.data[SC_DEEPSLEEP] ||
-		sd->sc.data[SC_CRYSTALIZE] ||
-		sd->sc.data[SC_KAGEHUMI] ||
-		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOITEM) ||
-		sd->sc.data[SC_KINGS_GRACE] ||
-		sd->sc.data[SC_SUHIDE] ||
-		sd->sc.data[SC_HANDICAPSTATE_FROSTBITE] ||
-		sd->sc.data[SC_HANDICAPSTATE_SWOONING] ||
-		sd->sc.data[SC_HANDICAPSTATE_LIGHTNINGSTRIKE] ||
-		sd->sc.data[SC_HANDICAPSTATE_CRYSTALLIZATION]))
+	if (sd->sc.cant.consume)
 		return false;
 	
 	if (!pc_isItemClass(sd,item))

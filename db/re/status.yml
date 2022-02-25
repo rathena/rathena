@@ -1100,6 +1100,8 @@ Body:
       NoDropItemCond: true
       NoChat: true
       NoChatCond: true
+      NoConsumeItem: true
+      NoConsumeItemCond: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
@@ -4063,6 +4065,7 @@ Body:
       NoMoveCond: true
       NoCast: true
       NoCastCond: true
+      NoConsumeItem: true
       NoAttack: true
     Flags:
       BlEffect: true
@@ -4256,6 +4259,7 @@ Body:
     States:
       NoCast: true
       NoChat: true
+      NoConsumeItem: true
       NoMove: true
       NoAttack: true
     Opt1: Sleep
@@ -6026,6 +6030,7 @@ Body:
       NoCast: true
       NoAttack: true
       Nomove: true
+      NoConsumeItem: true
     Flags:
       StopAttacking: true
       StopWalking: true
