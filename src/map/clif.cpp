@@ -6452,6 +6452,12 @@ void clif_status_change(struct block_list *bl, int type, int flag, t_tick tick, 
 	if (type == EFST_ILLUSION && !battle_config.display_hallucination) // Disable Hallucination.
 		return;
 
+#if PACKETVER_MAIN_NUM < 20191120 || PACKETVER_RE_NUM < 20191106
+	// Older clients display normal riding icon.
+	if (type == EFST_MADOGEAR)
+		type = EFST_RIDING;
+#endif
+
 	nullpo_retv(bl);
 
 	sd = BL_CAST(BL_PC, bl);
