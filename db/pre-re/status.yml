@@ -5529,6 +5529,7 @@ Body:
     DurationLookup: KO_KYOUGAKU
     States:
       NoMove: true
+      NoEquipItem: true
       NoUnEquipItem: true
     CalcFlags:
       Str: true

@@ -5747,6 +5747,7 @@ Body:
     DurationLookup: KO_KYOUGAKU
     States:
       NoMove: true
+      NoEquipItem: true
       NoUnEquipItem: true
     CalcFlags:
       Str: true
@@ -5923,8 +5924,6 @@ Body:
   - Status: Pyroclastic
     Icon: EFST_PYROCLASTIC
     DurationLookup: MH_PYROCLASTIC
-    States:
-      NoEquipItem: true
     CalcFlags:
       Batk: true
       Watk: true
