@@ -29,7 +29,7 @@
 #   CalcFlags:                Status change calculation to indicate which stat is adjusted. (Default: None)
 #   Opt1                      Special effect when a status change is active. Non-stackable. (Default: None)
 #   Opt2:                     Special options/client effects when a status change is active. (Default: None)
-#   Opt3                      Special options/client effects when a status change is active. (Default: Normal)
+#   Opt3:                     Special options/client effects when a status change is active. (Default: Normal)
 #   Options:                  Special options/client effects when a status change is active. (Default: Nothing)
 #   Flags:                    Special flags which trigger during certain events.  (Default: None)
 #   MinRate                   Minimum rate after status change reduction (10000 = 100%). (Default: 0)
