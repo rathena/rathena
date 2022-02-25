@@ -14710,10 +14710,8 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (constant < SCB_NONE || constant >= SCB_MAX) {
-				if (constant != SCB_ALL) {
-					this->invalidWarning(flagNode, "CalcFlag %s is out of bounds, skipping.\n", flag.c_str());
-					continue;
-				}
+				this->invalidWarning(flagNode, "CalcFlag %s is out of bounds, skipping.\n", flag.c_str());
+				continue;
 			}
 
 			bool active;

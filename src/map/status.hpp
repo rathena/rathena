@@ -2742,12 +2742,11 @@ enum e_scb_flag : uint64 {
 	// Extra Flags
 	// These are flags not sent through battle/all flags. Always keep these last.
 	SCB_DYE		= 0x080000000000, // force cloth-dye change to 0 to avoid client crashes.
-	SCB_MAX,
 
 	// Special flags for updating all stat/sub-stat stuff on request.
 	SCB_BATTLE	= 0x07FFFFFFFFFE, // All except BASE and extra flags.
 	SCB_ALL		= 0x07FFFFFFFFFF, // All except extra flags.
-
+	SCB_MAX		= 0x0FFFFFFFFFFF,
 };
 
 enum e_status_calc_opt {
