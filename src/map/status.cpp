@@ -1099,7 +1099,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 			status_revive(target, sc->data[SC_KAIZEL]->val2, 0);
 		status_change_clear(target,0);
 		clif_skill_nodamage(target,target,ALL_RESURRECTION,1,1);
-		sc_start(src,target,skill_get_sc(PR_KYRIE),100,10,time);
+		sc_start(src,target,SC_KYRIE,100,10,time);
 
 		if( target->type == BL_MOB )
 			((TBL_MOB*)target)->state.rebirth = 1;
@@ -13713,7 +13713,7 @@ TIMER_FUNC(status_change_timer){
 			if (unit_bl2ud(bl)->walktimer == INVALID_TIMER) {
 				uint16 x = sce->val3 >> 16, y = sce->val3 & 0xFFFF;
 
-				if (distance_xy(x, y, bl->x, bl->y) <= skill_get_unit_range(skill_get_sc(type), sce->val1) && unit_movepos(bl, x, y, 0, false)) {
+				if (distance_xy(x, y, bl->x, bl->y) <= skill_get_unit_range(SO_VACUUM_EXTREME, sce->val1) && unit_movepos(bl, x, y, 0, false)) {
 					clif_slide(bl, x, y);
 					clif_fixpos(bl);
 				}
