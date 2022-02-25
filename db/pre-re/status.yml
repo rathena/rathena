@@ -339,6 +339,13 @@ Body:
     DurationLookup: AS_ENCHANTPOISON
     CalcFlags:
       Atk_Ele: true
+    Fail:
+      Fireweapon: true
+      Waterweapon: true
+      Windweapon: true
+      Earthweapon: true
+      Shadowweapon: true
+      Ghostweapon: true
 
   - Status: Poisonreact
     Icon: EFST_POISONREACT
