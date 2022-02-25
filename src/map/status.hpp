@@ -2884,18 +2884,8 @@ public:
 
 	// Extras
 	efst_type getIcon(sc_type type);
-	uint32 getState(sc_type type);
 	uint64 getCalcFlag(sc_type type);
-	uint16 getOpt1(sc_type type);
-	uint16 getOpt2(sc_type type);
-	uint32 getOpt3(sc_type type);
-	uint32 getOption(sc_type type);
-	std::bitset<SCF_MAX> getFlag(sc_type type);
-	t_tick getMinDuration(sc_type type);
-	uint16 getMinRate(sc_type type);
-	bool getEndReturn(sc_type type);
 	std::vector<sc_type> getEnd(sc_type type);
-	std::vector<sc_type> getFail(sc_type type);
 	uint16 getSkill(sc_type type);
 	bool hasSCF(status_change *sc, e_status_change_flag flag);
 	void removeByStatusFlag(block_list *bl, std::vector<e_status_change_flag> flag);

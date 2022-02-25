@@ -564,17 +564,6 @@ efst_type StatusDatabase::getIcon(sc_type type) {
 }
 
 /**
- * Get state flags of SC (SCS value)
- * @param type: SC type
- * @return state: State value
- **/
-uint32 StatusDatabase::getState(sc_type type) {
-	std::shared_ptr<s_status_change_db> status = status_db.find(type);
-
-	return status ? status->state : SCS_NONE;
-}
-
-/**
  * Get flag of SC (SCB value) for status_calc_ flag
  * @param type: SC type
  * @return cal_flag: Calc value 
@@ -586,94 +575,6 @@ uint64 StatusDatabase::getCalcFlag(sc_type type) {
 }
 
 /**
- * Get Opt1 of SC
- * @param type: SC type
- * @return opt1: OPT1 value
- **/
-uint16 StatusDatabase::getOpt1(sc_type type) {
-	std::shared_ptr<s_status_change_db> status = status_db.find(type);
-
-	return status ? status->opt1 : OPT1_NONE;
-}
-
-/**
- * Get Opt2 of SC
- * @param type: SC type
- * @return opt2: OPT2 value
- **/
-uint16 StatusDatabase::getOpt2(sc_type type) {
-	std::shared_ptr<s_status_change_db> status = status_db.find(type);
-
-	return status ? status->opt2 : OPT2_NONE;
-}
-
-/**
- * Get Opt3 of SC
- * @param type: SC type
- * @return opt3: OPT3 value
- **/
-uint32 StatusDatabase::getOpt3(sc_type type) {
-	std::shared_ptr<s_status_change_db> status = status_db.find(type);
-
-	return status ? status->opt3 : OPT3_NORMAL;
-}
-
-/**
- * Get Option look of SC
- * @param type: SC type
- * @return look: OPTION_ value
- **/
-uint32 StatusDatabase::getOption(sc_type type) {
-	std::shared_ptr<s_status_change_db> status = status_db.find(type);
-
-	return status ? status->look : OPTION_NOTHING;
-}
-
-/**
- * Get SC's option flags (SCF value)
- * @param type: SC type
- * @return flags: Option flags for SC
- **/
-std::bitset<SCF_MAX> StatusDatabase::getFlag(sc_type type) {
-	std::shared_ptr<s_status_change_db> status = status_db.find(type);
-
-	return status ? status->flag : SCF_NONE;
-}
-
-/**
- * Get SC's minimum duration after sc_def calculation
- * @param type: SC type
- * @return minimum duration in ms
- **/
-t_tick StatusDatabase::getMinDuration(sc_type type) {
-	std::shared_ptr<s_status_change_db> status = status_db.find(type);
-
-	return status ? status->min_duration : 1;
-}
-
-/**
- * Get SC's minimum rate after sc_def calculation
- * @param type: SC type
- * @return minimum rate 0 ~ 10000
- **/
-uint16 StatusDatabase::getMinRate(sc_type type) {
-	std::shared_ptr<s_status_change_db> status = status_db.find(type);
-
-	return status ? status->min_rate : 0;
-}
-
-/**
- * Will the SC stop its init after ends other SC in end_list?
- * @param sc: SC type
- * @return True: Stop, False: Continue
- **/
-bool StatusDatabase::getEndReturn(sc_type type) {
-	std::shared_ptr<s_status_change_db> status = status_db.find(type);
-
-	return status ? status->end_return : false;
-}
-
-/**
  * Get SC's END list
  * @param sc: SC type
  * @return End list
@@ -682,17 +583,6 @@ std::vector<sc_type> StatusDatabase::getEnd(sc_type type) {
 	std::shared_ptr<s_status_change_db> status = status_db.find(type);
 
 	return status ? status->end : std::vector<sc_type> {};
-}
-
-/**
- * Get SC's FAIL list
- * @param sc: SC type
- * @return Fail list
- **/
-std::vector<sc_type> StatusDatabase::getFail(sc_type type) {
-	std::shared_ptr<s_status_change_db> status = status_db.find(type);
-
-	return status ? status->fail : std::vector<sc_type> {};
 }
 
 /**
