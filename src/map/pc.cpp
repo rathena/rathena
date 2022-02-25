@@ -11608,13 +11608,8 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 		return false; //Nothing to unequip
 	}
 	// status change that makes player cannot unequip equipment
-	if (!(flag&2) && sd->sc.count &&
-		(sd->sc.data[SC_BERSERK] ||
-		sd->sc.data[SC_SATURDAYNIGHTFEVER] ||
-		sd->sc.data[SC__BLOODYLUST] ||
-		sd->sc.data[SC_KYOUGAKU] ||
-		(sd->sc.data[SC_PYROCLASTIC] &&
-		sd->inventory_data[n]->type == IT_WEAPON)))	// can't switch weapon
+	if (!(flag&2) && sd->sc.count &&( sd->sc.cant.unequip ||
+		(sd->sc.data[SC_PYROCLASTIC] &&	sd->inventory_data[n]->type == IT_WEAPON)))	// can't switch weapon
 	{
 		clif_unequipitemack(sd,n,0,0);
 		return false;
