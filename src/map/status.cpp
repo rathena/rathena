@@ -14865,13 +14865,23 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 
 	if (!exists) {
 		this->put(status_id, status);
-
-		StatusRelevantBLTypes[status->icon] = BL_PC;
-		if (status->flag[SCF_BLEFFECT] && status->icon != EFST_BLANK)
-			StatusRelevantBLTypes[status->icon] |= BL_SCEFFECT;
 	}
 
 	return 1;
+}
+
+void StatusDatabase::loadingFinished(){
+	for( const auto& entry : *this ){
+		const auto& status = entry.second;
+
+		if( status->icon == EFST_BLANK ){
+			StatusRelevantBLTypes[status->icon] = BL_NUL;
+		}else if( status->flag[SCF_BLEFFECT] ){
+			StatusRelevantBLTypes[status->icon] |= BL_SCEFFECT;
+		}else{
+			StatusRelevantBLTypes[status->icon] = BL_PC;
+		}
+	}
 }
 
 StatusDatabase status_db;
@@ -14941,7 +14951,6 @@ void status_readdb( bool reload ){
  */
 void do_init_status(void) {
 	memset(SCDisabled, 0, sizeof(SCDisabled));
-	memset(StatusRelevantBLTypes, 0, sizeof(StatusRelevantBLTypes));
 
 	add_timer_func_list(status_change_timer,"status_change_timer");
 	add_timer_func_list(status_natural_heal_timer,"status_natural_heal_timer");
