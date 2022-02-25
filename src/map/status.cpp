@@ -4964,6 +4964,14 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, enum e_
 				 (sc->data[SC_NOCHAT] && sc->data[SC_NOCHAT]->val1&MANNER_NOITEM) )
 				sc->cant.consume = start;
 		}
+
+		// Can't lose exp
+		if (flag & SCS_NODEATHPENALTY) {
+			if (!(flag & SCS_NODEATHPENALTYCOND))
+				sc->cant.deathpenalty = start;
+			/*else if (sc->data[])
+				sc->cant.deathpenalty = start;*/
+		}
 	}
 
 	return;
