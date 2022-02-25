@@ -2535,6 +2535,8 @@ Body:
       NoRemoveOnDead: true
 
   - Status: Jailed
+    States:
+      NoWarp: true
     Flags:
       NoRemoveOnDead: true
       NoClearbuff: true
