@@ -2896,22 +2896,6 @@ is invalid or if there is no item in the equipment slot.
 
 ---------------------------------------
 
-*refineui({<char id>})
-
-Opens the refine UI for the attached player or the given character id.
-
-This feature requires 2016-10-12aRagexeRE or newer.
-
----------------------------------------
-
-*openstylist({<char id>})
-
-Opens the stylist UI for the attached player or the given character id.
-
-This feature requires packet version 2015-11-04 or newer.
-
----------------------------------------
-
 *getareadropitem("<map name>",<x1>,<y1>,<x2>,<y2>,<item>)
 
 This function will count all the items with the specified ID number lying on the
@@ -3134,6 +3118,15 @@ Valid equipment slots are:
 EQI_COMPOUND_ON      - Item slot that calls this script (In context of item script) (default)
 
 For a list of others equipment slots see 'getequipid'.
+
+---------------------------------------
+
+*getitempos()
+
+This function will return the equip position of the equipment from which the
+function is called. (see EQP_* constants)
+
+This function is intended for use in item scripts.
 
 ---------------------------------------
 //
@@ -8071,6 +8064,42 @@ The values given will be divided by 100 and transmitted as floating-point number
 				Maximum: -75000 (-75.0)
 
 ---------------------------------------
+
+*refineui({<char id>})
+
+Opens the refine UI for the attached player or the given character id.
+
+This feature requires 2016-10-12aRagexeRE or newer.
+
+---------------------------------------
+
+*openstylist({<char id>})
+
+Opens the stylist UI for the attached player or the given character id.
+
+This feature requires packet version 2015-11-04 or newer.
+
+---------------------------------------
+
+*laphine_synthesis()
+
+Opens the laphine synthesis UI for the attached player.
+
+This feature requires packet version 2016-06-01 or newer.
+
+This function is intended for use in item scripts.
+
+---------------------------------------
+
+*laphine_upgrade()
+
+Opens the laphine upgrade UI for the attached player.
+
+This feature requires packet version 2017-07-26 or newer.
+
+This function is intended for use in item scripts.
+
+---------------------------------------
 \\
 6,1.- Unit-related commands
 \\
@@ -9478,6 +9507,23 @@ Examples:
 
 	// Return the guild owner ID of the given instance ID.
 	.@owner = instance_live_info(ILI_OWNER, instance_id(IM_GUILD));
+
+---------------------------------------
+
+*instance_list(<"map name">{,<instance mode>});
+
+Creates the array '.@instance_list' with possible instance IDs for the given <map name> and optional <mode>.
+Return '.@instance_list' array size.
+
+Instance mode options: IM_NONE, IM_CHAR, IM_PARTY, IM_GUILD, or IM_CLAN
+If the instance mode is not provided then it will return all the instance IDs for that map.
+
+Examples:
+	// This example assumes that there are several instances on the map of Prontera.
+	.@size = instance_list("prontera");
+	for ( .@i = 0; .@i < .@size; ++.@i )
+		mes instance_mapname("prontera", .@instance_list[.@i]);
+	//the output would be a list of all prontera copies that are active in the server.
 
 ---------------------------------------
 

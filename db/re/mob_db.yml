@@ -3187,6 +3187,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Plant
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 1000
@@ -31938,6 +31940,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Formless
+    RaceGroups:
+      Malangdo: true
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 300
@@ -46109,6 +46113,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 1
     WalkSpeed: 300
@@ -46156,6 +46162,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 300
@@ -46203,6 +46211,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 1
     WalkSpeed: 200
@@ -46248,6 +46258,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 1
     WalkSpeed: 200
@@ -46297,6 +46309,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 200
@@ -46347,6 +46361,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Insect
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 1
     WalkSpeed: 150
@@ -46394,6 +46410,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 3
     WalkSpeed: 150
@@ -46441,6 +46459,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 200
@@ -46449,9 +46469,6 @@ Body:
     DamageMotion: 384
     Ai: 20
     Class: Boss
-    Modes:
-      IgnoreMelee: true
-      IgnoreRanged: true
     Drops:
       - Item: Mistic_Frozen
         Rate: 6
@@ -46491,6 +46508,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 150
@@ -46538,6 +46557,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 190
@@ -46587,6 +46608,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 3
     WalkSpeed: 200
@@ -46634,6 +46657,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 165
@@ -46731,6 +46756,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 165
@@ -46780,6 +46807,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 165
@@ -46828,6 +46857,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 165
@@ -46877,6 +46908,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 165
@@ -46951,6 +46984,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 300
@@ -46990,6 +47025,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 300
@@ -47030,6 +47067,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 300

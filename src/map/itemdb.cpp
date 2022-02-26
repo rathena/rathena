@@ -1259,6 +1259,392 @@ int16 ItemGroupDatabase::item_exists_pc(map_session_data *sd, uint16 group_id)
 	return -1;
 }
 
+const std::string LaphineSynthesisDatabase::getDefaultLocation(){
+	return std::string( db_path ) + "/laphine_synthesis.yml";
+}
+
+uint64 LaphineSynthesisDatabase::parseBodyNode( const YAML::Node& node ){
+	t_itemid item_id;
+
+	{
+		std::string name;
+
+		if( !this->asString( node, "Item", name ) ){
+			return 0;
+		}
+
+		std::shared_ptr<item_data> id = item_db.search_aegisname( name.c_str() );
+
+		if( id == nullptr ){
+			this->invalidWarning( node["Item"], "Unknown item \"%s\".\n", name.c_str() );
+			return 0;
+		}
+
+		item_id = id->nameid;
+	}
+
+	std::shared_ptr<s_laphine_synthesis> entry = this->find( item_id );
+	bool exists = entry != nullptr;
+
+	if( !exists ){
+		if( !this->nodesExist( node, { "RewardGroup", "Requirements" } ) ){
+			return 0;
+		}
+
+		entry = std::make_shared<s_laphine_synthesis>();
+		entry->item_id = item_id;
+	}
+
+	if( this->nodeExists( node, "RewardGroup" ) ){
+		std::string name;
+
+		if( !this->asString( node, "RewardGroup", name ) ){
+			return 0;
+		}
+
+		int64 constant;
+
+		if( !script_get_constant( ( "IG_" + name ).c_str(), &constant ) ){
+			this->invalidWarning( node["RewardGroup"], "Unknown reward group \"%s\".\n", name.c_str() );
+			return 0;
+		}
+
+		if( !itemdb_group.exists( (uint16)constant ) ){
+			this->invalidWarning( node["RewardGroup"], "Unknown reward group ID \"%" PRId64 "\".\n", constant );
+			return 0;
+		}
+
+		entry->rewardGroupId = (uint16)constant;
+	}else{
+		if( !exists ){
+			entry->rewardGroupId = 0;
+		}
+	}
+
+	if( this->nodeExists( node, "RequiredRequirementsCount" ) ){
+		uint16 amount;
+
+		if( !this->asUInt16( node, "RequiredRequirementsCount", amount ) ){
+			return 0;
+		}
+
+		entry->requiredRequirements = amount;
+	}else{
+		if( !exists ){
+			entry->requiredRequirements = 1;
+		}
+	}
+
+	if( this->nodeExists( node, "Requirements" ) ){
+		for( const YAML::Node& requirementNode : node["Requirements"] ){
+			std::string name;
+
+			if( !this->asString( requirementNode, "Item", name ) ){
+				return 0;
+			}
+
+			std::shared_ptr<item_data> id = item_db.search_aegisname( name.c_str() );
+
+			if( id == nullptr ){
+				this->invalidWarning( requirementNode["Item"], "Unknown item \"%s\".\n", name.c_str() );
+				return 0;
+			}
+
+			std::shared_ptr<s_laphine_synthesis_requirement> requirement = util::umap_find( entry->requirements, id->nameid );
+			bool requirement_exists = requirement != nullptr;
+
+			if( !requirement_exists ){
+				requirement = std::make_shared<s_laphine_synthesis_requirement>();
+				requirement->item_id = id->nameid;
+			}
+
+			if( this->nodeExists( requirementNode, "Amount" ) ){
+				uint16 amount;
+
+				if( !this->asUInt16( requirementNode, "Amount", amount ) ){
+					return 0;
+				}
+
+				if( amount > MAX_AMOUNT ){
+					this->invalidWarning( requirementNode["Amount"], "Amount %hu is too high, capping to MAX_AMOUNT...\n", amount );
+					amount = MAX_AMOUNT;
+				}
+
+				requirement->amount = amount;
+			}else{
+				if( !requirement_exists ){
+					requirement->amount = 1;
+				}
+			}
+
+			if( !requirement_exists ){
+				entry->requirements[id->nameid] = requirement;
+			}
+		}
+	}
+
+	if( this->nodeExists( node, "MinimumRefine" ) ){
+		uint16 refine;
+
+		if( !this->asUInt16( node, "MinimumRefine", refine ) ){
+			return 0;
+		}
+
+		if( refine > MAX_REFINE ){
+			this->invalidWarning( node["MinimumRefine"], "Minimum refine %hu is too high, capping to MAX_REFINE...\n", refine );
+			refine = MAX_REFINE;
+		}
+
+		entry->minimumRefine = refine;
+	}else{
+		if( !exists ){
+			entry->minimumRefine = 0;
+		}
+	}
+
+	if( this->nodeExists( node, "MaximumRefine" ) ){
+		uint16 refine;
+
+		if( !this->asUInt16( node, "MaximumRefine", refine ) ){
+			return 0;
+		}
+
+		if( refine > MAX_REFINE ){
+			this->invalidWarning( node["MaximumRefine"], "Maximum refine %hu is too high, capping to MAX_REFINE...\n", refine );
+			refine = MAX_REFINE;
+		}
+
+		entry->maximumRefine = refine;
+	}else{
+		if( !exists ){
+			entry->maximumRefine = MAX_REFINE;
+		}
+	}
+
+	if( !exists ){
+		this->put( entry->item_id, entry );
+	}
+
+	return 1;
+}
+
+LaphineSynthesisDatabase laphine_synthesis_db;
+
+const std::string LaphineUpgradeDatabase::getDefaultLocation(){
+	return std::string( db_path ) + "/laphine_upgrade.yml";
+}
+
+uint64 LaphineUpgradeDatabase::parseBodyNode( const YAML::Node& node ){
+	t_itemid item_id;
+
+	{
+		std::string name;
+
+		if( !this->asString( node, "Item", name ) ){
+			return 0;
+		}
+
+		std::shared_ptr<item_data> id = item_db.search_aegisname( name.c_str() );
+
+		if( id == nullptr ){
+			this->invalidWarning( node["Item"], "Unknown item \"%s\".\n", name.c_str() );
+			return 0;
+		}
+
+		item_id = id->nameid;
+	}
+
+	std::shared_ptr<s_laphine_upgrade> entry = this->find( item_id );
+	bool exists = entry != nullptr;
+
+	if( !exists ){
+		if( !this->nodesExist( node, { "TargetItems" } ) ){
+			return 0;
+		}
+
+		entry = std::make_shared<s_laphine_upgrade>();
+		entry->item_id = item_id;
+	}
+
+	if( this->nodeExists( node, "RandomOptionGroup" ) ){
+		std::string name;
+
+		if( !this->asString( node, "RandomOptionGroup", name ) ){
+			return 0;
+		}
+
+		uint16 id;
+
+		if( !random_option_group.option_get_id( name, id ) ){
+			this->invalidWarning( node["RandomOptionGroup"], "Unknown random option group \"%s\".\n", name.c_str() );
+			return 0;
+		}
+
+		entry->randomOptionGroup = random_option_group.find( id );
+	}else{
+		if( !exists ){
+			entry->randomOptionGroup = nullptr;
+		}
+	}
+
+	if( this->nodeExists( node, "TargetItems" ) ){
+		for( const YAML::Node& targetNode : node["TargetItems"] ){
+			std::string name;
+
+			if( !this->asString( targetNode, "Item", name ) ){
+				return 0;
+			}
+
+			std::shared_ptr<item_data> id = item_db.search_aegisname( name.c_str() );
+
+			if( id == nullptr ){
+				this->invalidWarning( targetNode["Item"], "Unknown item \"%s\".\n", name.c_str() );
+				return 0;
+			}
+
+			if( !util::vector_exists( entry->target_item_ids, id->nameid ) ){
+				entry->target_item_ids.push_back( id->nameid );
+			}
+		}
+	}
+
+	if( this->nodeExists( node, "MinimumRefine" ) ){
+		uint16 refine;
+
+		if( !this->asUInt16( node, "MinimumRefine", refine ) ){
+			return 0;
+		}
+
+		if( refine > MAX_REFINE ){
+			this->invalidWarning( node["MinimumRefine"], "Minimum refine %hu is too high, capping to MAX_REFINE...\n", refine );
+			refine = MAX_REFINE;
+		}
+
+		entry->minimumRefine = refine;
+	}else{
+		if( !exists ){
+			entry->minimumRefine = 0;
+		}
+	}
+
+	if( this->nodeExists( node, "MaximumRefine" ) ){
+		uint16 refine;
+
+		if( !this->asUInt16( node, "MaximumRefine", refine ) ){
+			return 0;
+		}
+
+		if( refine > MAX_REFINE ){
+			this->invalidWarning( node["MaximumRefine"], "Maximum refine %hu is too high, capping to MAX_REFINE...\n", refine );
+			refine = MAX_REFINE;
+		}
+
+		entry->maximumRefine = refine;
+	}else{
+		if( !exists ){
+			entry->maximumRefine = MAX_REFINE;
+		}
+	}
+
+	if( this->nodeExists( node, "RequiredRandomOptions" ) ){
+		uint16 amount;
+
+		if( !this->asUInt16( node, "RequiredRandomOptions", amount ) ){
+			return 0;
+		}
+
+		if( amount > MAX_ITEM_RDM_OPT ){
+			this->invalidWarning( node["RequiredRandomOptions"], "Required random option amount %hu is too high, capping to MAX_ITEM_RDM_OPT...\n", amount );
+			amount = MAX_ITEM_RDM_OPT;
+		}
+
+		entry->requiredRandomOptions = amount;
+	}else{
+		if( !exists ){
+			entry->requiredRandomOptions = 0;
+		}
+	}
+
+	if( this->nodeExists( node, "CardsAllowed" ) ){
+		bool allowed;
+
+		if( !this->asBool( node, "CardsAllowed", allowed ) ){
+			return 0;
+		}
+
+		entry->cardsAllowed = true;
+	}else{
+		if( !exists ){
+			entry->cardsAllowed = false;
+		}
+	}
+
+	if( this->nodeExists( node, "ResultRefine" ) ){
+		uint16 refine;
+
+		if( !this->asUInt16( node, "ResultRefine", refine ) ){
+			return 0;
+		}
+
+		if( refine > MAX_REFINE ){
+			this->invalidWarning( node["ResultRefine"], "Result refine %hu is too high, capping to MAX_REFINE...\n", refine );
+			refine = MAX_REFINE;
+		}
+
+		entry->resultRefine = refine;
+	}else{
+		if( !exists ){
+			entry->resultRefine = 0;
+		}
+	}
+
+	if( this->nodeExists( node, "ResultRefineMinimum" ) ){
+		uint16 refine;
+
+		if( !this->asUInt16( node, "ResultRefineMinimum", refine ) ){
+			return 0;
+		}
+
+		if( refine > MAX_REFINE ){
+			this->invalidWarning( node["ResultRefineMinimum"], "Result refine minimum %hu is too high, capping to MAX_REFINE...\n", refine );
+			refine = MAX_REFINE;
+		}
+
+		entry->resultRefineMinimum = refine;
+	}else{
+		if( !exists ){
+			entry->resultRefineMinimum = 0;
+		}
+	}
+
+	if( this->nodeExists( node, "ResultRefineMaximum" ) ){
+		uint16 refine;
+
+		if( !this->asUInt16( node, "ResultRefineMaximum", refine ) ){
+			return 0;
+		}
+
+		if( refine > MAX_REFINE ){
+			this->invalidWarning( node["ResultRefineMaximum"], "Result refine maximum %hu is too high, capping to MAX_REFINE...\n", refine );
+			refine = MAX_REFINE;
+		}
+
+		entry->resultRefineMaximum = refine;
+	}else{
+		if( !exists ){
+			entry->resultRefineMaximum = 0;
+		}
+	}
+
+	if( !exists ){
+		this->put( entry->item_id, entry );
+	}
+
+	return 1;
+}
+
+LaphineUpgradeDatabase laphine_upgrade_db;
+
 /*==========================================
  * Return item data from item name. (lookup)
  * @param str Item Name
@@ -1392,6 +1778,25 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 	for (uint16 i = 0; i < data->amount; i += get_amt) {
 		char flag = 0;
 		tmp.unique_id = data->GUID ? pc_generate_unique_id(sd) : 0; // Generate GUID
+
+		if( itemdb_isequip( data->nameid ) ){
+			if( data->refineMinimum > 0 && data->refineMaximum > 0 ){
+				tmp.refine = rnd_value( data->refineMinimum, data->refineMaximum );
+			}else if( data->refineMinimum > 0 ){
+				tmp.refine = rnd_value( data->refineMinimum, MAX_REFINE );
+			}else if( data->refineMaximum > 0 ){
+				tmp.refine = rnd_value( 1, data->refineMaximum );
+			}else{
+				tmp.refine = 0;
+			}
+
+			if( data->randomOptionGroup != nullptr ){
+				memset( tmp.option, 0, sizeof( tmp.option ) );
+
+				data->randomOptionGroup->apply( tmp );
+			}
+		}
+
 		if ((flag = pc_additem(sd, &tmp, get_amt, LOG_TYPE_SCRIPT))) {
 			clif_additem(sd, 0, 0, flag);
 			if (pc_candrop(sd, &tmp))
@@ -1876,6 +2281,65 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 				} else {
 					if (!entry_exists)
 						entry->bound = BOUND_NONE;
+				}
+
+				if( this->nodeExists( listit, "RandomOptionGroup" ) ){
+					std::string name;
+
+					if( !this->asString( listit, "RandomOptionGroup", name ) ){
+						return 0;
+					}
+
+					uint16 id;
+
+					if( !random_option_group.option_get_id( name, id ) ){
+						this->invalidWarning( listit["RandomOptionGroup"], "Unknown random option group \"%s\".\n", name.c_str() );
+						return 0;
+					}
+
+					entry->randomOptionGroup = random_option_group.find( id );
+				}else{
+					if( !entry_exists ){
+						entry->randomOptionGroup = nullptr;
+					}
+				}
+
+				if( this->nodeExists( listit, "RefineMinimum" ) ){
+					uint16 refine;
+
+					if( !this->asUInt16( listit, "RefineMinimum", refine ) ){
+						return 0;
+					}
+
+					if( refine > MAX_REFINE ){
+						this->invalidWarning( listit["RefineMinimum"], "Minimum refine % hu is too high, capping to MAX_REFINE...\n", refine );
+						refine = MAX_REFINE;
+					}
+
+					entry->refineMinimum = refine;
+				}else{
+					if( !exists ){
+						entry->refineMinimum = 0;
+					}
+				}
+
+				if( this->nodeExists( listit, "RefineMaximum" ) ){
+					uint16 refine;
+
+					if( !this->asUInt16( listit, "RefineMaximum", refine ) ){
+						return 0;
+					}
+
+					if( refine > MAX_REFINE ){
+						this->invalidWarning( listit["RefineMaximum"], "Maximum refine %hu is too high, capping to MAX_REFINE...\n", refine );
+						refine = MAX_REFINE;
+					}
+
+					entry->refineMaximum = refine;
+				}else{
+					if( !exists ){
+						entry->refineMaximum = 0;
+					}
 				}
 			}
 		}
@@ -2734,6 +3198,51 @@ bool RandomOptionGroupDatabase::add_option(const YAML::Node &node, std::shared_p
 	return true;
 }
 
+void s_random_opt_group::apply( struct item& item ){
+	auto apply_sub = []( s_item_randomoption& item_option, const std::shared_ptr<s_random_opt_group_entry>& option ){
+		item_option.id = option->id;
+		item_option.value = rnd_value( option->min_value, option->max_value );
+		item_option.param = option->param;
+	};
+
+	// Apply Must options
+	for( size_t i = 0; i < this->slots.size(); i++ ){
+		// Try to apply an entry
+		for( size_t j = 0, max = this->slots[static_cast<uint16>(i)].size() * 3; j < max; j++ ){
+			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->slots[static_cast<uint16>(i)] );
+
+			if( rnd() % 10000 < option->chance ){
+				apply_sub( item.option[i], option );
+				break;
+			}
+		}
+
+		// If no entry was applied, assign one
+		if( item.option[i].id == 0 ){
+			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->slots[static_cast<uint16>(i)] );
+
+			// Apply an entry without checking the chance
+			apply_sub( item.option[i], option );
+		}
+	}
+
+	// Apply Random options (if available)
+	if( this->max_random > 0 ){
+		for( size_t i = 0; i < min( this->max_random, MAX_ITEM_RDM_OPT ); i++ ){
+			// If item already has an option in this slot, skip it
+			if( item.option[i].id > 0 ){
+				continue;
+			}
+
+			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->random_options );
+
+			if( rnd() % 10000 < option->chance ){
+				apply_sub( item.option[i], option );
+			}
+		}
+	}
+}
+
 /**
  * Reads and parses an entry from the item_randomopt_group.
  * @param node: YAML node containing the entry.
@@ -2906,10 +3415,15 @@ static void itemdb_read(void) {
 		aFree(dbsubpath2);
 	}
 
-	itemdb_group.load();
-	itemdb_combo.load();
 	random_option_db.load();
 	random_option_group.load();
+	itemdb_group.load();
+	itemdb_combo.load();
+	laphine_synthesis_db.load();
+	laphine_upgrade_db.load();
+
+	if (battle_config.feature_roulette)
+		itemdb_parse_roulette_db();
 }
 
 /*==========================================
@@ -2941,20 +3455,11 @@ void itemdb_reload(void) {
 	struct s_mapiterator* iter;
 	struct map_session_data* sd;
 
-	item_db.clear();
-	itemdb_combo.clear();
-	itemdb_group.clear();
-	random_option_db.clear();
-	random_option_group.clear();
-	if (battle_config.feature_roulette)
-		itemdb_roulette_free();
+	do_final_itemdb();
 
 	// read new data
 	itemdb_read();
 	cashshop_reloaddb();
-
-	if (battle_config.feature_roulette)
-		itemdb_parse_roulette_db();
 
 	mob_reload_itemmob_data();
 
@@ -2980,6 +3485,8 @@ void do_final_itemdb(void) {
 	itemdb_group.clear();
 	random_option_db.clear();
 	random_option_group.clear();
+	laphine_synthesis_db.clear();
+	laphine_upgrade_db.clear();
 	if (battle_config.feature_roulette)
 		itemdb_roulette_free();
 }
@@ -2989,7 +3496,4 @@ void do_final_itemdb(void) {
 */
 void do_init_itemdb(void) {
 	itemdb_read();
-
-	if (battle_config.feature_roulette)
-		itemdb_parse_roulette_db();
 }

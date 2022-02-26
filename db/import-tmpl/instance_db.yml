@@ -24,8 +24,10 @@
 ###########################################################################
 # - Id                Instance ID.
 #   Name              Instance Name.
-#   TimeLimit         Total lifetime of instance in seconds. (Default: 3600)
-#   IdleTimeOut       Time before an idle instance is destroyed in seconds. (Default: 300)
+#   TimeLimit         Total lifetime of instance in seconds. Use 0 to define infinite time. (Default: 3600)
+#   IdleTimeOut       Time before an idle instance is destroyed in seconds. Use 0 to define infinite idle time. (Default: 300)
+#   NoNpc             Prevent copying NPCs from the source map. (Default: false)
+#   NoMapFlag         Prevent copying Mapflags from the source map. (Default: false)
 #   Destroyable       Toggles the ability to destroy the instance using instance 'Destroy' button. (Default: true)
 #                     Note: the button is displayed based on parties. For any mode, it requires the party leader to be the instance owner to destroy it.
 #   Enter:            Instance entrance coordinates.
@@ -37,4 +39,4 @@
 
 Header:
   Type: INSTANCE_DB
-  Version: 1
+  Version: 2
