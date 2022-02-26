@@ -286,24 +286,6 @@ int elemental_data_received(s_elemental *ele, bool flag) {
 	return 1;
 }
 
-int elemental_clean_single_effect(s_elemental_data *ed, uint16 skill_id) {
-	nullpo_ret(ed);
-
-	sc_type type = skill_get_sc(skill_id);
-
-	if (type == SC_NONE)
-		return 1;
-
-	std::shared_ptr<s_status_change_db> status = status_db.find(type);
-
-	if (status && status->flag[SCF_REMOVEELEMENTALOPTION]) {
-		status_change_end(battle_get_master(&ed->bl), type, INVALID_TIMER); // Master
-		status_change_end(&ed->bl, type, INVALID_TIMER); // Elemental Spirit
-	}
-
-	return 1;
-}
-
 int elemental_clean_effect(s_elemental_data *ed) {
 	nullpo_ret(ed);
 

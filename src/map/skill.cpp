@@ -6580,7 +6580,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			clif_skill_nodamage(src,battle_get_master(src),skill_id,skill_lv,1);
 			clif_skill_damage(src, src, tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SINGLE);
 			if( (tsc_ele && tsc_ele->data[type2]) || (tsc && tsc->data[type]) ) {
-				elemental_clean_single_effect(ele, skill_id);
+				status_change_end(battle_get_master(src),type,INVALID_TIMER);
+				status_change_end(src,type2,INVALID_TIMER);
 			}
 			if( rnd()%100 < 50 )
 				skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
@@ -11694,7 +11695,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				struct status_change *sc = status_get_sc(&ele->bl);
 
 				if( (sc && sc->data[type2]) || (tsc && tsc->data[type]) ) {
-					elemental_clean_single_effect(ele, skill_id);
+					status_change_end(src,type,INVALID_TIMER);
+					status_change_end(bl,type2,INVALID_TIMER);
 				} else {
 					clif_skill_nodamage(src,src,skill_id,skill_lv,1);
 					if (!(skill_id >= EM_EL_FLAMETECHNIC && skill_id <= EM_EL_DEADLY_POISON))
@@ -11722,7 +11724,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 				clif_skill_nodamage(src,src,skill_id,skill_lv,1);
 				if( (sc && sc->data[type2]) || (tsc && tsc->data[type]) ) {
-					elemental_clean_single_effect(ele, skill_id);
+					status_change_end(bl,type,INVALID_TIMER);
+					status_change_end(src,type2,INVALID_TIMER);
 				} else {
 					// This not heals at the end.
 					clif_skill_damage(src, src, tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SINGLE);
