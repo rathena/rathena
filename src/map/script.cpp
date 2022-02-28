@@ -11944,9 +11944,11 @@ BUILDIN_FUNC(sc_start)
 	else
 		bl = map_id2bl(st->rid);
 
-	if(tick == 0 && val1 > 0 && type > SC_NONE && type < SC_MAX)
+	uint16 skill_id;
+
+	if(tick == 0 && val1 > 0 && type > SC_NONE && type < SC_MAX && (skill_id = status_db.getSkill(type)) > 0)
 	{// When there isn't a duration specified, try to get it from the skill_db
-		tick = skill_get_time(status_db.getSkill(type), val1);
+		tick = skill_get_time(skill_id, val1);
 	}
 
 	if(potion_flag == 1 && potion_target) { //skill.cpp set the flags before running the script, this is a potion-pitched effect.
@@ -12039,7 +12041,7 @@ BUILDIN_FUNC(sc_end_class)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	status_db.changeSkillTree(sd);
+	status_db.changeSkillTree(sd, class_);
 
 	return SCRIPT_CMD_SUCCESS;
 }

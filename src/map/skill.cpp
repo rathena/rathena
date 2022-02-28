@@ -9201,7 +9201,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 							continue;
 						break;
 				}
-				if(i == SC_BERSERK) tsc->data[status]->val2=0; //Mark a dispelled berserk to avoid setting hp to 100 by setting hp penalty to 0.
+				if (i == SC_BERSERK || i == SC_SATURDAYNIGHTFEVER)
+					tsc->data[status]->val2 = 0; //Mark a dispelled berserk to avoid setting hp to 100 by setting hp penalty to 0.
 				status_change_end(bl, status, INVALID_TIMER);
 			}
 			break;
@@ -10684,12 +10685,19 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					continue;
 
 				switch (status) {
+					case SC_WHISTLE:		case SC_ASSNCROS:		case SC_POEMBRAGI:
+					case SC_APPLEIDUN:		case SC_HUMMING:		case SC_DONTFORGETME:
+					case SC_FORTUNE:		case SC_SERVICE4U:
+						if (!battle_config.dispel_song || tsc->data[status]->val4 == 0)
+							continue; //If in song area don't end it, even if config enabled
+						break;
 					case SC_ASSUMPTIO:
 						if (bl->type == BL_MOB)
 							continue;
 						break;
 				}
-				if(i == SC_BERSERK) tsc->data[status]->val2=0; //Mark a dispelled berserk to avoid setting hp to 100 by setting hp penalty to 0.
+				if (i == SC_BERSERK || i == SC_SATURDAYNIGHTFEVER)
+					tsc->data[status]->val2 = 0; //Mark a dispelled berserk to avoid setting hp to 100 by setting hp penalty to 0.
 				status_change_end(bl,status,INVALID_TIMER);
 			}
 			break;
@@ -24011,7 +24019,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 		// Storing the target job rather than simply SC_SPIRIT simplifies code later on
 		if (status.rfind("EAJ_", 0) == 0) {
 			if (!script_get_constant(status.c_str(), &constant)) {
-				this->invalidWarning(node["Status"], "EAJ %s is invalid.\n", status.c_str());
+				this->invalidWarning(node["Status"], "EAJ %s for SC_SPIRIT is invalid.\n", status.c_str());
 				return 0;
 			}
 		} else {

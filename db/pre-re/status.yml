@@ -246,6 +246,7 @@ Body:
     Flags:
       BossResist: true
       Debuff: true
+      NoSaveInfinite: true
   - Status: Endure
     Icon: EFST_ENDURE
     DurationLookup: SM_ENDURE

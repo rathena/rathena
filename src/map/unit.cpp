@@ -2398,7 +2398,6 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 {
 	struct block_list *target;
 	struct unit_data  *ud;
-	struct status_change *sc = NULL;
 	int range;
 
 	nullpo_ret(ud = unit_bl2ud(src));
@@ -2416,8 +2415,7 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 		return 0;
 	}
 
-	sc = status_get_sc(src);
-	if( (sc && sc->cant.attack) || !unit_can_attack(src, target_id) ) {
+	if( !unit_can_attack(src, target_id) ) {
 		unit_stop_attack(src);
 		return 0;
 	}
@@ -2666,7 +2664,6 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 	struct status_data *sstatus;
 	struct map_session_data *sd = NULL;
 	struct mob_data *md = NULL;
-	struct status_change *sc;
 	int range;
 
 	if( (ud = unit_bl2ud(src)) == NULL )
@@ -2692,10 +2689,6 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 #endif
 	   || !unit_can_attack(src, target->id) )
 		return 0; // Can't attack under these conditions
-
-	sc = status_get_sc(src);
-	if (sc && sc->cant.attack)
-		return 0;
 
 	if( src->m != target->m ) {
 		if( src->type == BL_MOB && mob_warpchase((TBL_MOB*)src, target) )
@@ -2864,7 +2857,7 @@ bool unit_can_attack(struct block_list *bl, int target_id) {
 	if (!(sc = status_get_sc(bl)))
 		return true;
 
-	if (sc->data[SC__MANHOLE] || (sc->data[SC_VOICEOFSIREN] && sc->data[SC_VOICEOFSIREN]->val2 == target_id))
+	if (sc->cant.attack || sc->data[SC__MANHOLE] || (sc->data[SC_VOICEOFSIREN] && sc->data[SC_VOICEOFSIREN]->val2 == target_id))
 		return false;
 
 	return true;
@@ -3071,7 +3064,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		}
 		if (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)
 			status_change_end(bl, SC_GOSPEL, INVALID_TIMER);
-		if (sc->data[SC_PROVOKE] && sc->data[SC_PROVOKE]->timer == INVALID_TIMER)
+		if (sc->data[SC_PROVOKE] && sc->data[SC_PROVOKE]->val4 == 1)
 			status_change_end(bl, SC_PROVOKE, INVALID_TIMER); //End infinite provoke to prevent exploit
 	}
 

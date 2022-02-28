@@ -1054,6 +1054,7 @@
 	export_constant(SC_ARMOR_ELEMENT_WATER);
 	export_constant(SC_NOCHAT);
 	export_constant(SC_PROTECTEXP);
+	export_deprecated_constant3("SC_BABY", SC_PROTECTEXP, "SC_PROTECTEXP");
 	export_constant(SC_AURABLADE);
 	export_constant(SC_PARRYING);
 	export_constant(SC_CONCENTRATION);

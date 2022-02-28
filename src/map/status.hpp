@@ -2749,7 +2749,7 @@ enum e_scb_flag : uint64 {
 	SCB_MAX		= 0x0FFFFFFFFFFF,
 };
 
-enum e_status_calc_opt {
+enum e_status_calc_opt : uint8 {
 	SCO_NONE  = 0x0,
 	SCO_FIRST = 0x1, ///< Trigger the calculations that should take place only onspawn/once, process base status initialization code
 	SCO_FORCE = 0x2, ///< Only relevant to BL_PC types, ensures call bypasses the queue caused by delayed damage
@@ -2883,6 +2883,9 @@ public:
 	uint64 parseBodyNode(const YAML::Node &node) override;
 	void loadingFinished() override;
 
+	// Determine who will receive a clif_status_change packet for effects that require one to display correctly
+	uint16 StatusRelevantBLTypes[EFST_MAX];
+
 	// Extras
 	efst_type getIcon(sc_type type);
 	uint64 getCalcFlag(sc_type type);
@@ -2890,7 +2893,8 @@ public:
 	uint16 getSkill(sc_type type);
 	bool hasSCF(status_change *sc, e_status_change_flag flag);
 	void removeByStatusFlag(block_list *bl, std::vector<e_status_change_flag> flag);
-	void changeSkillTree(map_session_data *sd);
+	void changeSkillTree(map_session_data *sd, int32 class_ = 0);
+	bool validateStatus(sc_type type);
 };
 
 extern StatusDatabase status_db;
@@ -3038,17 +3042,17 @@ struct status_change {
 	unsigned char count;
 	//! TODO: See if it is possible to implement the following SC's without requiring extra parameters while the SC is inactive.
 	struct {
-		bool move;
-		bool pickup;
-		bool drop;
-		bool cast;
-		bool chat;
-		bool equip;
-		bool unequip;
-		bool consume;
-		bool attack;
-		bool warp;
-		bool deathpenalty;
+		uint8 move;
+		uint8 pickup;
+		uint8 drop;
+		uint8 cast;
+		uint8 chat;
+		uint8 equip;
+		uint8 unequip;
+		uint8 consume;
+		uint8 attack;
+		uint8 warp;
+		uint8 deathpenalty;
 	} cant;/* status change state flags */
 	//int sg_id; //ID of the previous Storm gust that hit you
 	short comet_x, comet_y; // Point where src casted Comet - required to calculate damage from this point
@@ -3210,7 +3214,7 @@ int status_change_clear(struct block_list* bl, int type);
 void status_change_clear_buffs(struct block_list* bl, uint8 type);
 void status_change_clear_onChangeMap(struct block_list *bl, struct status_change *sc);
 
-#define status_calc_bl(bl, flag) status_calc_bl_(bl, (enum e_scb_flag)(flag), SCO_NONE)
+#define status_calc_bl(bl, flag) status_calc_bl_(bl, flag, SCO_NONE)
 #define status_calc_mob(md, opt) status_calc_bl_(&(md)->bl, SCB_ALL, opt)
 #define status_calc_pet(pd, opt) status_calc_bl_(&(pd)->bl, SCB_ALL, opt)
 #define status_calc_pc(sd, opt) status_calc_bl_(&(sd)->bl, SCB_ALL, opt)
@@ -3221,19 +3225,19 @@ void status_change_clear_onChangeMap(struct block_list *bl, struct status_change
 
 bool status_calc_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag);
 bool status_calc_cart_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag);
-void status_calc_bl_(struct block_list *bl, enum e_scb_flag flag, enum e_status_calc_opt opt);
-int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt);
-void status_calc_pet_(struct pet_data* pd, enum e_status_calc_opt opt);
-int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt);
-int status_calc_homunculus_(struct homun_data *hd, enum e_status_calc_opt opt);
-int status_calc_mercenary_(s_mercenary_data *md, e_status_calc_opt opt);
-int status_calc_elemental_(s_elemental_data *ed, e_status_calc_opt opt);
-int status_calc_npc_(struct npc_data *nd, enum e_status_calc_opt opt);
+void status_calc_bl_(struct block_list *bl, uint64 flag, uint8 opt);
+int status_calc_mob_(struct mob_data* md, uint8 opt);
+void status_calc_pet_(struct pet_data* pd, uint8 opt);
+int status_calc_pc_(struct map_session_data* sd, uint8 opt);
+int status_calc_homunculus_(struct homun_data *hd, uint8 opt);
+int status_calc_mercenary_(s_mercenary_data *md, uint8 opt);
+int status_calc_elemental_(s_elemental_data *ed, uint8 opt);
+int status_calc_npc_(struct npc_data *nd, uint8 opt);
 
 void status_calc_misc(struct block_list *bl, struct status_data *status, int level);
 void status_calc_regen(struct block_list *bl, struct status_data *status, struct regen_data *regen);
 void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, struct status_change *sc);
-void status_calc_state(struct block_list *bl, struct status_change *sc, enum e_scs_flag flag, bool start);
+void status_calc_state(struct block_list *bl, struct status_change *sc, uint32 flag, bool start);
 
 void status_calc_slave_mode(struct mob_data *md, struct mob_data *mmd);
 
