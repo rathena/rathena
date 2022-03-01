@@ -4635,6 +4635,7 @@ Body:
     Icon: EFST_MANHOLE
     DurationLookup: SC_MANHOLE
     States:
+      NoAttack: true
       NoMove: true
       NoCast: true
       NoConsumeItem: true
@@ -5502,7 +5503,7 @@ Body:
     States:
       NoCast: true
       NoAttack: true
-      Nomove: true
+      NoMove: true
       NoConsumeItem: true
     Flags:
       StopAttacking: true

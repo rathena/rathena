@@ -2857,7 +2857,7 @@ bool unit_can_attack(struct block_list *bl, int target_id) {
 	if (!(sc = status_get_sc(bl)))
 		return true;
 
-	if (sc->cant.attack || sc->data[SC__MANHOLE] || (sc->data[SC_VOICEOFSIREN] && sc->data[SC_VOICEOFSIREN]->val2 == target_id))
+	if (sc->cant.attack || (sc->data[SC_VOICEOFSIREN] && sc->data[SC_VOICEOFSIREN]->val2 == target_id))
 		return false;
 
 	return true;
