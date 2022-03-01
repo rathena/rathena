@@ -11914,7 +11914,7 @@ Body:
           Amount: 160
         - Level: 5
           Amount: 60
-    Status: EAJ_Alchemist
+    Status: Spirit
   - Id: 446
     Name: AM_BERSERKPITCHER
     Description: Aid Berserk Potion
@@ -11976,7 +11976,7 @@ Body:
           Amount: 160
         - Level: 5
           Amount: 60
-    Status: EAJ_Monk
+    Status: Spirit
   - Id: 448
     Name: SL_STAR
     Description: Spirit of the Star Gladiator
@@ -12016,7 +12016,7 @@ Body:
           Amount: 160
         - Level: 5
           Amount: 60
-    Status: EAJ_Star_Gladiator
+    Status: Spirit
   - Id: 449
     Name: SL_SAGE
     Description: Spirit of the Sage
@@ -12056,7 +12056,7 @@ Body:
           Amount: 160
         - Level: 5
           Amount: 60
-    Status: EAJ_Sage
+    Status: Spirit
   - Id: 450
     Name: SL_CRUSADER
     Description: Spirit of the Crusader
@@ -12096,7 +12096,7 @@ Body:
           Amount: 160
         - Level: 5
           Amount: 60
-    Status: EAJ_Crusader
+    Status: Spirit
   - Id: 451
     Name: SL_SUPERNOVICE
     Description: Spirit of the Supernovice
@@ -12136,7 +12136,7 @@ Body:
           Amount: 160
         - Level: 5
           Amount: 60
-    Status: EAJ_Super_Novice
+    Status: Spirit
   - Id: 452
     Name: SL_KNIGHT
     Description: Spirit of the Knight
@@ -12176,7 +12176,7 @@ Body:
           Amount: 160
         - Level: 5
           Amount: 60
-    Status: EAJ_Knight
+    Status: Spirit
   - Id: 453
     Name: SL_WIZARD
     Description: Spirit of the Wizard
@@ -12216,7 +12216,7 @@ Body:
           Amount: 160
         - Level: 5
           Amount: 60
-    Status: EAJ_Wizard
+    Status: Spirit
   - Id: 454
     Name: SL_PRIEST
     Description: Spirit of the Priest
@@ -12256,7 +12256,7 @@ Body:
           Amount: 160
         - Level: 5
           Amount: 60
-    Status: EAJ_Priest
+    Status: Spirit
   - Id: 455
     Name: SL_BARDDANCER
     Description: Spirit of the Artist
@@ -12296,7 +12296,7 @@ Body:
           Amount: 160
         - Level: 5
           Amount: 60
-    Status: EAJ_BardDancer
+    Status: Spirit
   - Id: 456
     Name: SL_ROGUE
     Description: Spirit of the Rogue
@@ -12336,7 +12336,7 @@ Body:
           Amount: 160
         - Level: 5
           Amount: 60
-    Status: EAJ_Rogue
+    Status: Spirit
   - Id: 457
     Name: SL_ASSASIN
     Description: Spirit of the Assasin
@@ -12376,7 +12376,7 @@ Body:
           Amount: 160
         - Level: 5
           Amount: 60
-    Status: EAJ_Assassin
+    Status: Spirit
   - Id: 458
     Name: SL_BLACKSMITH
     Description: Spirit of the Blacksmith
@@ -12416,7 +12416,7 @@ Body:
           Amount: 160
         - Level: 5
           Amount: 60
-    Status: EAJ_Blacksmith
+    Status: Spirit
   - Id: 459
     Name: BS_ADRENALINE2
     Description: Advanced Adrenaline Rush
@@ -12492,7 +12492,7 @@ Body:
           Amount: 160
         - Level: 5
           Amount: 60
-    Status: EAJ_Hunter
+    Status: Spirit
   - Id: 461
     Name: SL_SOULLINKER
     Description: Spirit of the Soul Linker
@@ -12532,7 +12532,7 @@ Body:
           Amount: 160
         - Level: 5
           Amount: 60
-    Status: EAJ_Soul_Linker
+    Status: Spirit
   - Id: 462
     Name: SL_KAIZEL
     Description: Kaizel

@@ -24013,27 +24013,17 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Status", status))
 			return 0;
 
+		std::string status_constant = "SC_" + status;
 		int64 constant;
 
-		// Special check for Soul Linker Spirit skills
-		// Storing the target job rather than simply SC_SPIRIT simplifies code later on
-		if (status.rfind("EAJ_", 0) == 0) {
-			if (!script_get_constant(status.c_str(), &constant)) {
-				this->invalidWarning(node["Status"], "EAJ %s for SC_SPIRIT is invalid.\n", status.c_str());
-				return 0;
-			}
-		} else {
-			std::string status_constant = "SC_" + status;
+		if (!script_get_constant(status_constant.c_str(), &constant)) {
+			this->invalidWarning(node["Status"], "Status %s is invalid.\n", status.c_str());
+			return 0;
+		}
 
-			if (!script_get_constant(status_constant.c_str(), &constant)) {
-				this->invalidWarning(node["Status"], "Status %s is invalid.\n", status.c_str());
-				return 0;
-			}
-
-			if (constant < SC_NONE || constant > SC_MAX) {
-				this->invalidWarning(node["Status"], "Status %s is unknown. Defaulting to SC_NONE.\n", status.c_str());
-				constant = SC_NONE;
-			}
+		if (constant < SC_NONE || constant >= SC_MAX) {
+			this->invalidWarning(node["Status"], "Status %s is unknown. Defaulting to SC_NONE.\n", status.c_str());
+			constant = SC_NONE;
 		}
 
 		skill->sc = static_cast<sc_type>(constant);
