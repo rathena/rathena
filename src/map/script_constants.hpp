@@ -8800,6 +8800,8 @@
 	export_constant(SCS_NOWARPCOND);
 	export_constant(SCS_NODEATHPENALTY);
 	export_constant(SCS_NODEATHPENALTYCOND);
+	export_constant(SCS_NOINTERACT);
+	export_constant(SCS_NOINTERACTCOND);
 
 	/* body states */
 	export_constant(OPT1_STONE);
