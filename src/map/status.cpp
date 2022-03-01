@@ -4745,7 +4745,7 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
  * @param flag: Which state to apply to bl
  * @param start: (1) start state, (0) remove state
  */
-void status_calc_state( struct block_list *bl, struct status_change *sc, uint32 flag, bool start )
+void status_calc_state( struct block_list *bl, struct status_change *sc, std::bitset<SCS_MAX> flag, bool start )
 {
 
 	/// No sc at all, we can zero without any extra weight over our conciousness
@@ -4755,8 +4755,8 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, uint32 
 	}
 
 	// Can't move
-	if( flag&SCS_NOMOVE ) {
-		if( !(flag&SCS_NOMOVECOND) )
+	if( flag[SCS_NOMOVE] ) {
+		if( !flag[SCS_NOMOVECOND] )
 			sc->cant.move += (start ? 1 : ((sc->cant.move) ? -1 : 0));
 		else if(
 				     (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)	// cannot move while gospel is in effect
@@ -4783,32 +4783,32 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, uint32 
 	}
 
 	// Can't use skills
-	if( flag&SCS_NOCAST ) {
-		if( !(flag&SCS_NOCASTCOND) )
+	if( flag[SCS_NOCAST] ) {
+		if( !flag[SCS_NOCASTCOND] )
 			sc->cant.cast += (start ? 1 : ((sc->cant.cast) ? -1 : 0));
 		else if (sc->data[SC_OBLIVIONCURSE] && sc->data[SC_OBLIVIONCURSE]->val3 == 1)
 			sc->cant.cast += (start ? 1 : ((sc->cant.cast) ? -1 : 0));
 	}
 
 	// Can't chat
-	if( flag&SCS_NOCHAT ) {
-		if( !(flag&SCS_NOCHATCOND) )
+	if( flag[SCS_NOCHAT] ) {
+		if( !flag[SCS_NOCHATCOND] )
 			sc->cant.chat += (start ? 1 : ((sc->cant.chat) ? -1 : 0));
 		else if(sc->data[SC_NOCHAT] && sc->data[SC_NOCHAT]->val1&MANNER_NOCHAT)
 			sc->cant.chat += (start ? 1 : ((sc->cant.chat) ? -1 : 0));
 	}
 
 	// Can't attack
-	if( flag&SCS_NOATTACK ) {
-		if( !(flag&SCS_NOATTACKCOND) )
+	if( flag[SCS_NOATTACK] ) {
+		if( !flag[SCS_NOATTACKCOND] )
 			sc->cant.attack += (start ? 1 : ((sc->cant.attack) ? -1 : 0));
 		/*else if( )
 			sc->cant.attack += ( start ? 1 : ((sc->cant.attack)? -1:0) );*/
 	}
 
 	// Can't warp
-	if (flag & SCS_NOWARP) {
-		if (!(flag & SCS_NOWARPCOND))
+	if (flag[SCS_NOWARP]) {
+		if (!flag[SCS_NOWARPCOND])
 			sc->cant.warp += (start ? 1 : ((sc->cant.warp) ? -1 : 0));
 		/*else if (sc->data[])
 			sc->cant.warp += ( start ? 1 : ((sc->cant.warp)? -1:0) );*/
@@ -4817,40 +4817,40 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, uint32 
 	// Player-only states
 	if( bl->type == BL_PC ) {
 		// Can't pick-up items
-		if( flag&SCS_NOPICKITEM ) {
-			if( !(flag&SCS_NOPICKITEMCOND) )
+		if( flag[SCS_NOPICKITEM] ) {
+			if( !flag[SCS_NOPICKITEMCOND] )
 				sc->cant.pickup += (start ? 1 : ((sc->cant.pickup) ? -1 : 0));
 			else if( (sc->data[SC_NOCHAT] && sc->data[SC_NOCHAT]->val1&MANNER_NOITEM) )
 				sc->cant.pickup += (start ? 1 : ((sc->cant.pickup) ? -1 : 0));
 		}
 
 		// Can't drop items
-		if( flag&SCS_NODROPITEM ) {
-			if( !(flag&SCS_NODROPITEMCOND) )
+		if( flag[SCS_NODROPITEM] ) {
+			if( !flag[SCS_NODROPITEMCOND] )
 				sc->cant.drop += (start ? 1 : ((sc->cant.drop) ? -1 : 0));
 			else if( (sc->data[SC_NOCHAT] && sc->data[SC_NOCHAT]->val1&MANNER_NOITEM) )
 				sc->cant.drop += (start ? 1 : ((sc->cant.drop) ? -1 : 0));
 		}
 
 		// Can't equip item
-		if( flag&SCS_NOEQUIPITEM ) {
-			if( !(flag&SCS_NOEQUIPITEMCOND) )
+		if( flag[SCS_NOEQUIPITEM] ) {
+			if( !flag[SCS_NOEQUIPITEMCOND] )
 				sc->cant.equip += (start ? 1 : ((sc->cant.equip) ? -1 : 0));
 			/*else if(  )
 				sc->cant.equip += ( start ? 1 : ((sc->cant.equip)? -1:0) );*/
 		}
 
 		// Can't unequip item
-		if( flag&SCS_NOUNEQUIPITEM) {
-			if( !(flag&SCS_NOUNEQUIPITEMCOND) )
+		if( flag[SCS_NOUNEQUIPITEM]) {
+			if( !flag[SCS_NOUNEQUIPITEMCOND] )
 				sc->cant.unequip += (start ? 1 : ((sc->cant.unequip) ? -1 : 0));
 			/*else if(  )
 				sc->cant.unequip += ( start ? 1 : ((sc->cant.unequip)? -1:0) );*/
 		}
 
 		// Can't consume item
-		if( flag&SCS_NOCONSUMEITEM) {
-			if( !(flag&SCS_NOCONSUMEITEMCOND) )
+		if( flag[SCS_NOCONSUMEITEM]) {
+			if( !flag[SCS_NOCONSUMEITEMCOND] )
 				sc->cant.consume += (start ? 1 : ((sc->cant.consume) ? -1 : 0));
 			else if( (sc->data[SC_GRAVITATION] && sc->data[SC_GRAVITATION]->val3 == BCT_SELF) ||
 				 (sc->data[SC_NOCHAT] && sc->data[SC_NOCHAT]->val1&MANNER_NOITEM) )
@@ -4858,11 +4858,19 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, uint32 
 		}
 
 		// Can't lose exp
-		if (flag & SCS_NODEATHPENALTY) {
-			if (!(flag & SCS_NODEATHPENALTYCOND))
+		if (flag[SCS_NODEATHPENALTY]) {
+			if (!flag[SCS_NODEATHPENALTYCOND])
 				sc->cant.deathpenalty += (start ? 1 : ((sc->cant.deathpenalty) ? -1 : 0));
 			/*else if (sc->data[])
 				sc->cant.deathpenalty += ( start ? 1 : ((sc->cant.deathpenalty)? -1:0) );*/
+		}
+
+		// Can't sit/stand/attack/talk to NPC
+		if (flag[SCS_NOINTERACT]) {
+			if (!flag[SCS_NOINTERACTCOND])
+				sc->cant.interact += (start ? 1 : ((sc->cant.interact) ? -1 : 0));
+			/*else if (sc->data[])
+				sc->cant.interact += ( start ? 1 : ((sc->cant.interact)? -1:0) );*/
 		}
 	}
 
@@ -11973,8 +11981,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	// Non-zero
 	// Calc state for SC_STONE when OPT1_STONE in the timer
-	if (sc_isnew && scdb->state && type != SC_STONE)
-		status_calc_state(bl, sc, static_cast<e_scs_flag>(scdb->state), true);
+	if (sc_isnew && scdb->state.any() && type != SC_STONE)
+		status_calc_state(bl, sc, scdb->state, true);
 
 	if (sd && sd->pd)
 		pet_sc_check(sd, type); // Skotlex: Pet Status Effect Healing
@@ -12233,7 +12241,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 
 	(sc->count)--;
 
-	if (scdb->state)
+	if (scdb->state.any())
 		status_calc_state(bl,sc,scdb->state,false);
 
 	sc->data[type] = NULL;
@@ -14580,9 +14588,9 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			if (active)
-				status->state |= static_cast<e_scs_flag>(constant);
+				status->state.set(static_cast<e_scs_flag>(constant));
 			else
-				status->state &= ~static_cast<e_scs_flag>(constant);
+				status->state.reset(static_cast<e_scs_flag>(constant));
 		}
 	} else {
 		if (!exists)

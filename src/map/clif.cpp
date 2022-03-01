@@ -11731,14 +11731,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 	}
 
 	// Statuses that don't let the player sit / attack / talk with NPCs(targeted)
-	// (not all are included in pc_can_attack)
-	if (sd->sc.count &&
-		(sd->sc.data[SC_TRICKDEAD] ||
-		(sd->sc.data[SC_AUTOCOUNTER] && action_type != 0x07) ||
-		 sd->sc.data[SC_BLADESTOP] ||
-		 sd->sc.data[SC__MANHOLE] ||
-		 sd->sc.data[SC_SUHIDE] ||
-		 sd->sc.data[SC_GRAVITYCONTROL]))
+	if (sd->sc.cant.interact || (sd->sc.count > 0 && sd->sc.data[SC_AUTOCOUNTER] && action_type != 0x07))
 		return;
 
 	if(action_type != 0x00 && action_type != 0x07)

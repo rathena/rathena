@@ -544,6 +544,7 @@ Body:
       NoPickItem: true
       NoConsumeItem: true
       NoAttack: true
+      NoInteract: true
     CalcFlags:
       Regen: true
     Flags:
@@ -924,6 +925,7 @@ Body:
       NoPickItem: true
       NoDropItem: true
       NoAttack: true
+      NoInteract: true
     Opt3:
       BladeStop: true
     Flags:
@@ -4639,6 +4641,7 @@ Body:
       NoMove: true
       NoCast: true
       NoConsumeItem: true
+      NoInteract: true
     Flags:
       BlEffect: true
       DisplayPc: true
@@ -6165,6 +6168,7 @@ Body:
       NoMove: true
       NoPickItem: true
       NoConsumeItem: true
+      NoInteract: true
     Flags:
       StopAttacking: true
       RemoveOnDamaged: true
@@ -6878,6 +6882,7 @@ Body:
     States:
       NoMove: true
       NoCast: true
+      NoInteract: true
     Flags:
       StopCasting: true
       StopAttacking: true

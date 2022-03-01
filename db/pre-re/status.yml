@@ -533,6 +533,7 @@ Body:
       NoPickItem: true
       NoConsumeItem: true
       NoAttack: true
+      NoInteract: true
     CalcFlags:
       Regen: true
     Flags:
@@ -911,6 +912,7 @@ Body:
       NoPickItem: true
       NoDropItem: true
       NoAttack: true
+      NoInteract: true
     Opt3:
       BladeStop: true
     Flags:

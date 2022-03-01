@@ -2663,30 +2663,32 @@ enum manner_flags
 };
 
 /// Status Change State Flags
-enum e_scs_flag : uint32 {
-	SCS_NONE				= 0x0,
-	SCS_NOMOVECOND			= 0x000001, ///< cond flag for SCS_NOMOVE
-	SCS_NOMOVE				= 0x000002, ///< unit unable to move
-	SCS_NOPICKITEMCOND		= 0x000004, ///< cond flag for SCS_NOPICKITEM
-	SCS_NOPICKITEM			= 0x000008, ///< player unable to pick up items
-	SCS_NODROPITEMCOND		= 0x000010, ///< cond flag for SCS_NODROPITEM
-	SCS_NODROPITEM			= 0x000020, ///< player unable to drop items
-	SCS_NOCASTCOND			= 0x000040, ///< cond flag for SCS_NOCAST
-	SCS_NOCAST				= 0x000080, ///< unit unable to cast skills
-	SCS_NOCHAT				= 0x000100, ///< unit can't talk
-	SCS_NOCHATCOND			= 0x000200, ///< cond flag for SCS_NOCHAT
-	SCS_NOEQUIPITEM			= 0x000400, ///< player can't puts on equip
-	SCS_NOEQUIPITEMCOND		= 0x000800, ///< cond flag for SCS_NOEQUIPITEM
-	SCS_NOUNEQUIPITEM		= 0x001000, ///< player can't puts off equip
-	SCS_NOUNEQUIPITEMCOND	= 0x002000, ///< cond flag for SCS_NOUNEQUIPITEM
-	SCS_NOCONSUMEITEM		= 0x004000, ///< player can't consumes equip
-	SCS_NOCONSUMEITEMCOND	= 0x008000, ///< cond flag for SCS_NOCONSUMEITEM
-	SCS_NOATTACK			= 0x010000, ///< unit can't attack
-	SCS_NOATTACKCOND		= 0x020000, ///< cond flag for SCS_NOATTACK
-	SCS_NOWARP				= 0x040000, ///< unit can't warp
-	SCS_NOWARPCOND			= 0x080000, ///< cond flag for SCS_NOWARP
-	SCS_NODEATHPENALTY		= 0x100000, ///< player doesn't experience EXP loss
-	SCS_NODEATHPENALTYCOND	= 0x200000, ///< cond flag for SCS_NODEATHPENALTYCOND
+enum e_scs_flag : uint8 {
+	SCS_NONE = 0,
+	SCS_NOMOVECOND, ///< cond flag for SCS_NOMOVE
+	SCS_NOMOVE, ///< unit unable to move
+	SCS_NOPICKITEMCOND, ///< cond flag for SCS_NOPICKITEM
+	SCS_NOPICKITEM, ///< player unable to pick up items
+	SCS_NODROPITEMCOND, ///< cond flag for SCS_NODROPITEM
+	SCS_NODROPITEM, ///< player unable to drop items
+	SCS_NOCASTCOND, ///< cond flag for SCS_NOCAST
+	SCS_NOCAST, ///< unit unable to cast skills
+	SCS_NOCHAT, ///< unit can't talk
+	SCS_NOCHATCOND, ///< cond flag for SCS_NOCHAT
+	SCS_NOEQUIPITEM, ///< player can't puts on equip
+	SCS_NOEQUIPITEMCOND, ///< cond flag for SCS_NOEQUIPITEM
+	SCS_NOUNEQUIPITEM, ///< player can't puts off equip
+	SCS_NOUNEQUIPITEMCOND, ///< cond flag for SCS_NOUNEQUIPITEM
+	SCS_NOCONSUMEITEM, ///< player can't consumes equip
+	SCS_NOCONSUMEITEMCOND, ///< cond flag for SCS_NOCONSUMEITEM
+	SCS_NOATTACK, ///< unit can't attack
+	SCS_NOATTACKCOND, ///< cond flag for SCS_NOATTACK
+	SCS_NOWARP, ///< unit can't warp
+	SCS_NOWARPCOND, ///< cond flag for SCS_NOWARP
+	SCS_NODEATHPENALTY, ///< player doesn't experience EXP loss
+	SCS_NODEATHPENALTYCOND, ///< cond flag for SCS_NODEATHPENALTYCOND
+	SCS_NOINTERACT, ///< player can't sit/stand/attack/talk to NPC
+	SCS_NOINTERACTCOND, ///< cond flag for SCS_NOINTERACT
 	SCS_MAX
 };
 
@@ -2857,7 +2859,7 @@ enum e_status_change_flag : uint16 {
 struct s_status_change_db {
 	sc_type type;				///< SC_
 	efst_type icon;				///< EFST_
-	uint32 state;				///< SCS_
+	std::bitset<SCS_MAX> state;	///< SCS_
 	uint64 calc_flag;			///< SCB_ flags
 	uint16 opt1;				///< OPT1_
 	uint16 opt2;				///< OPT2_
@@ -3053,6 +3055,7 @@ struct status_change {
 		uint8 attack;
 		uint8 warp;
 		uint8 deathpenalty;
+		uint8 interact;
 	} cant;/* status change state flags */
 	//int sg_id; //ID of the previous Storm gust that hit you
 	short comet_x, comet_y; // Point where src casted Comet - required to calculate damage from this point
@@ -3237,7 +3240,7 @@ int status_calc_npc_(struct npc_data *nd, uint8 opt);
 void status_calc_misc(struct block_list *bl, struct status_data *status, int level);
 void status_calc_regen(struct block_list *bl, struct status_data *status, struct regen_data *regen);
 void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, struct status_change *sc);
-void status_calc_state(struct block_list *bl, struct status_change *sc, uint32 flag, bool start);
+void status_calc_state(struct block_list *bl, struct status_change *sc, std::bitset<SCS_MAX> flag, bool start);
 
 void status_calc_slave_mode(struct mob_data *md, struct mob_data *mmd);
 
