@@ -1,18 +1,14 @@
 //===== rAthena Script =======================================
 //= Mapflag: Ignore guilds.
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Current Version: =====================================
-//= 1.1
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: ========================================= 
 //= Ignores guild alliances on GvG-enabled maps.
 //===== Additional Comments: ================================= 
 //= 1.0 Initial script.
 //============================================================
 
-// PvP Arenas =================
+//============================================================
+// PvP Arenas
+//============================================================
 pvp_y_1-1	mapflag	pvp_noguild
 pvp_y_1-2	mapflag	pvp_noguild
 pvp_y_1-3	mapflag	pvp_noguild
