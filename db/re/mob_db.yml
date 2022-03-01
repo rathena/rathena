@@ -89182,8 +89182,8 @@ Body:
     Ai: 19
     Class: Boss
     Modes:
-      IgnoreKnockback: true
       Mvp: true
+      KnockBackImmune: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5000
