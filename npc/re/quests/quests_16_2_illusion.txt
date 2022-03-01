@@ -30,7 +30,7 @@ payon,164,229,5	script	Elder Sanyul#illusion_moonlight	1_F_ORIENT_04,{
 		mes "Let's wait for ^0000FFMuyeon^000000 now.";
 		mes "Her safety is more important than anything else.";
 		next;
-		if (select("Excuse me."))
+		select("Excuse me.");
 		mes "[ Sanyul ]";
 		mes "Hm? You're an adventurer.";
 		mes "Did you happen to hear our conversation?";
@@ -52,7 +52,7 @@ payon,164,229,5	script	Elder Sanyul#illusion_moonlight	1_F_ORIENT_04,{
 		mes "And this time, she's completely lost her mind and entered the cave.";
 		mes "That's why we're worried about her.";
 		next;
-		if (select("Is it about Muyeon?"))
+		select("Is it about Muyeon?");
 		npctalk "Maybe we should send someone else.","Elder Jagyeom#illusion_moonlight",bc_self;
 		mes "[ Sanyul ]";
 		mes "Yes. She's the Soul Linker who performs the ritual regularly.";
@@ -77,8 +77,8 @@ payon,164,229,5	script	Elder Sanyul#illusion_moonlight	1_F_ORIENT_04,{
 		next;
 		mes "[ Jagyeom ]";
 		mes "Talk to the scholar, maybe he could give you an information on the situation.";
-		setquest 7776;
 		illusion_moonlight = 1;
+		setquest 7776;
 		end;
 	}
 	if (illusion_moonlight == 1) {
@@ -155,7 +155,8 @@ pay_arche,48,137,4	script	Young Scholar#ill_moon_arch	4_F_03,{
 		mes "I'm waiting for her right now.","She ran into the cave, as if she was possessed by something.";
 		next;
 		mes "[ Young Scholar ]";
-		mes "Junghee? I mean, a soldier followed her in, but neither of them came out yet.","I was debating if I should go after them.";
+		mes "Junghee? I mean, a soldier followed her in, but neither of them came out yet.";
+		mes "I was debating if I should go after them.";
 		next;
 		mes "[ Young Scholar ]";
 		mes "I hope nothing bad happens to those two.";
@@ -197,7 +198,7 @@ pay_arche,48,137,4	script	Young Scholar#ill_moon_arch	4_F_03,{
 		mes "Muyeon must have gone to the ^0000CDDetached Payon Palace.^000000","I'm going there do you want to come with me?";
 		next;
 		illusion_moonlight = 2;
-		completequest 7776;
+		erasequest 7776;
 		setquest 7777;
         if (select("Go with him.:Go separately.") == 2) {
 			mes "[ Young Scholar ]";
@@ -247,8 +248,8 @@ OnInit:
 	end;
 }
 
-pay_arche,44,133,7	duplicate(ill_cloak_npc)	Payon Soldier#ill_moon_arch	4_M_PAY_SOLDIER
-pay_arche,46,135,5	duplicate(ill_cloak_npc)	Muyeon#ill_moon_arch	4_F_TAEKWON
+pay_arche,44,133,7	duplicate(dummy_cloaked_npc)	Payon Soldier#ill_moon_arch	4_M_PAY_SOLDIER
+pay_arche,46,135,5	duplicate(dummy_cloaked_npc)	Muyeon#ill_moon_arch	4_F_TAEKWON
 
 payon_in03,33,95,3	script	Muyeon#ill_moon_pin	4_F_TAEKWON,{
 	if (checkweight(25271,1) == 0 || (MaxWeight - Weight) < 1000) {
@@ -522,34 +523,31 @@ OnInit:
 }
 
 payon_in03,30,96,5	script	Jagyeom#ill_moon_pin	4_M_HUOLDARMY,{
-	if (illusion_moonlight < 2) {
-		mes "[ Jagyeom ]";
-		mes "Please observe proper manners inside the palace.";
-		close;
-	}
 	if (illusion_moonlight == 2) {
 		npctalk "Muyeon... If you can't do it, no one else can!","",bc_self;
 		end;
 	}
-	if (illusion_moonlight < 5) {
+	if (illusion_moonlight == 3 || illusion_moonlight == 4) {
 		npctalk "Let's listen for now.","",bc_self;
 		end;
 	}
-	if (illusion_moonlight == 5) {
+	if (illusion_moonlight == 5 || illusion_moonlight == 8) {
 		mes "[ Jagyeom ]";
-		mes "We should grasp the situation first.","It'll be great if you can help us, Adventurer.";
+		mes "We should grasp the situation first.";
+		mes "It'll be great if you can help us, Adventurer.";
 		close;
 	}
-	if (illusion_moonlight < 10) {
+	if (illusion_moonlight == 9) {
 		mes "[ Jagyeom ]";
-		mes "Please observe proper manners inside the palace.";
+		mes "The Moonlight Flower are recreating the past in their nightmares.";
+		mes "In a way, they're also victims.";
+		next;
+		mes "[ Jagyeom ]";
+		mes "I'll make sure no villagers gets close to the collapsed walls of reality and dreams.";
 		close;
 	}
 	mes "[ Jagyeom ]";
-	mes "The Moonlight Flower are recreating the past in their nightmares.","In a way, they're also victims.";
-	next;
-	mes "[ Jagyeom ]";
-	mes "I'll make sure no villagers gets close to the collapsed walls of reality and dreams.";
+	mes "Please observe proper manners inside the palace.";
 	close;
 }
 
@@ -583,10 +581,10 @@ payon_in03,33,93,1	script	Young Scholar#ill_moon_pin	4_F_03,{
 	close;
 }
 
-payon_in03,30,96,5	duplicate(ill_cloak_npc)	Nine Tail Spirit#ill_moon_0	1180
-payon_in03,35,96,3	duplicate(ill_cloak_npc)	Nine Tail Spirit#ill_moon_1	1180
-payon_in03,30,93,7	duplicate(ill_cloak_npc)	Nine Tail Spirit#ill_moon_2	1180
-payon_in03,35,93,1	duplicate(ill_cloak_npc)	Nine Tail Spirit#ill_moon_3	1180
+payon_in03,30,96,5	duplicate(dummy_cloaked_npc)	Nine Tail Spirit#ill_moon_0	NINE_TAIL
+payon_in03,35,96,3	duplicate(dummy_cloaked_npc)	Nine Tail Spirit#ill_moon_1	NINE_TAIL
+payon_in03,30,93,7	duplicate(dummy_cloaked_npc)	Nine Tail Spirit#ill_moon_2	NINE_TAIL
+payon_in03,35,93,1	duplicate(dummy_cloaked_npc)	Nine Tail Spirit#ill_moon_3	NINE_TAIL
 
 pay_dun03,140,46,0	script	Shimmering Portal#ill_moon_in	4_ENERGY_BLUE,{
 	if (illusion_moonlight < 5) {
@@ -615,6 +613,7 @@ pay_dun03,140,46,0	script	Shimmering Portal#ill_moon_in	4_ENERGY_BLUE,{
 		completequest 7780;
 		setquest 7781;
 		close2;
+		setpcblock PCBLOCK_NPC, true;
 		specialeffect EF_SPINMOVE,AREA,"Young Scholar#ill_moon_pdun";
 		specialeffect EF_DQ9_CHARGE,AREA,"Young Scholar#ill_moon_pdun";
 		sleep2 350;
@@ -628,6 +627,7 @@ pay_dun03,140,46,0	script	Shimmering Portal#ill_moon_in	4_ENERGY_BLUE,{
 		specialeffect EF_SPINMOVE,AREA,"Junghee#ill_moon_pdun";
 		specialeffect EF_DQ9_CHARGE,AREA,"Junghee#ill_moon_pdun";
 		sleep2 350;
+		setpcblock PCBLOCK_NPC, false;
 		cloakonnpc "Junghee#ill_moon_pdun",getcharid(0);
 		end;
 	}
@@ -645,8 +645,8 @@ OnInit:
 	end;
 }
 
-pay_dun03,143,45,4	duplicate(ill_cloak_npc)	Junghee#ill_moon_pdun	4_M_PAY_SOLDIER
-pay_dun03,138,43,7	duplicate(ill_cloak_npc)	Young Scholar#ill_moon_pdun	4_F_03
+pay_dun03,143,45,4	duplicate(dummy_cloaked_npc)	Junghee#ill_moon_pdun	4_M_PAY_SOLDIER
+pay_dun03,138,43,7	duplicate(dummy_cloaked_npc)	Young Scholar#ill_moon_pdun	4_F_03
 
 pay_d03_i,140,46,0	script	Shimmering Portal#ill_moon_out	4_ENERGY_BLUE,{
 	mes "I can go back to the ruined village.","What should I do?";
@@ -817,7 +817,6 @@ pay_d03_i,152,45,4	script	Soldier Junghee#ill_moon_ind	4_M_PAY_SOLDIER,{
 		erasequest 7784;
 		setquest 7785;
 		getitem 25271,1;
-		questinfo_refresh();
 		end;
 	}
 	if (checkquest(7786,HUNTING)  == 2) {
@@ -829,7 +828,6 @@ pay_d03_i,152,45,4	script	Soldier Junghee#ill_moon_ind	4_M_PAY_SOLDIER,{
 		erasequest 7786;
 		setquest 7787;
 		getitem 25271,1;
-		questinfo_refresh();
 		end;
 	}
 	mes "[ Junghee ]";
@@ -948,7 +946,7 @@ pay_d03_i,43,150,5	script	Villager#ill_moon_0	1_F_ORIENT_01,{
 	mes "The light... The magic... Please stop that magic...";
 	close2;
 	initnpctimer;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	specialeffect EF_QUAKEBODY2;
 	npctalk "Ah... Ah... Aaahhh...";
 	areamonster "pay_d03_i",42,149,44,151,"Resentful Sohee",3762,3;
@@ -956,7 +954,7 @@ pay_d03_i,43,150,5	script	Villager#ill_moon_0	1_F_ORIENT_01,{
 
 OnTimer60000:
 	stopnpctimer;
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 }
 
@@ -967,13 +965,13 @@ OnTouch:
 	specialeffect EF_QUAKEBODY2;
 	npctalk "Ahhh... Ahhhhh!!";
 	initnpctimer;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	areamonster "pay_d03_i",81,236,83,238,"Resentful Sohee",3762,3;
 	end;
 
 OnTimer60000:
 	stopnpctimer;
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 }
 
@@ -986,12 +984,12 @@ OnTouch:
 	sleep2 2000;
 	npctalk "Stop it... It's coming, agh!!";
 	areamonster "pay_d03_i",252,204,255,208,"Resentful Munak",3760,3;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 
 OnTimer60000:
 	stopnpctimer;
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 }
 
@@ -1005,14 +1003,14 @@ pay_d03_i,81,136,3	script	Villager#ill_moon_3	1_M_ORIENT01,{
 	mes "Ah... The fox lady...";
 	close2;
 	initnpctimer;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	npctalk "H-help!! I don't want to die!";
 	areamonster "pay_d03_i",79,136,81,138,"Resentful Bongun",3761,3;
 	end;
 
 OnTimer60000:
 	stopnpctimer;
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 }
 
@@ -1027,13 +1025,13 @@ pay_d03_i,160,260,3	script	Villager#ill_moon_4	1_M_ORIENT01,{
 	mes "What have we done to you?";
 	close2;
 	initnpctimer;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	npctalk "Arrgghh-!";
 	areamonster "pay_d03_i",158,258,162,262,"Resentful Bongun",3761,3;
 	end;
 
 OnTimer60000:
 	stopnpctimer;
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 }
