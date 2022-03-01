@@ -4,6 +4,7 @@
 //= Illusion of Moonlight monster spawn script.
 //===== Additional Comments: =================================
 //= 1.0 Initial Release [crazyarashi]
+//= 1.1 Added missing boss kill label [Everade]
 //============================================================
 
 pay_d03_i	monster	Blue Plant	1079,1
@@ -40,7 +41,7 @@ OnKill:
 OnBossSpawn:
 	.mvp_spawn = 0;
 	.kill_count = 0;
-	monster "pay_d03_i",0,0,"Angry Moonlight Flower",3758,1;
+	monster "pay_d03_i",0,0,"Angry Moonlight Flower",3758,1,"illusion_mob#moonlight::OnBossKill";
 	mapannounce "pay_d03_i", "Angry Moonlight Flower: Who dares bully us again? They're in a lot of trouble!", bc_map, "0x70dbdb";
 	end;
 

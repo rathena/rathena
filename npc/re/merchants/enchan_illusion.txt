@@ -5,6 +5,7 @@
 //= Illusion related merchants and enchanter
 //===== Changelogs: ==========================================
 //= 1.0 Initial release [crazyarashi]
+//= 1.1 Cleanup and improvements [Everade]
 //============================================================
 
 //============================================================
@@ -17,10 +18,12 @@ pay_d03_i,160,45,4	script	Gemcutter#ill_moon_merchant	4_TOWER_17,{
 	switch (select("What are you doing here?:Upgrade Weapon.:Upgrade Armor.")) {
 		case 1:
 			mes "[ Gemcutter ]";
-			mes "I came to the ruined village,","looking for some materials. Touched some strange light, and now I'm here.";
+			mes "I came to the ruined village,";
+			mes "looking for some materials. Touched some strange light, and now I'm here.";
 			next;
 			mes "[ Gemcutter ]";
-			mes "I've decided to stick around for a little while. Figured I'd be safe so long as I stay close to this soldier.","I have a proposition for you. I want some materials that can only be found in this place.";
+			mes "I've decided to stick around for a little while. Figured I'd be safe so long as I stay close to this soldier.";
+			mes "I have a proposition for you. I want some materials that can only be found in this place.";
 			next;
 			mes "[ Gemcutter ]";
 			mes "Get them for me, and I'll improve your equipment in exchange. Just so you know, I can only improve certain types.";
@@ -44,21 +47,25 @@ pay_d03_i,160,45,4	script	Gemcutter#ill_moon_merchant	4_TOWER_17,{
 			}
 			next;
 			mes "[ Gemcutter ]";
-			mes "Make sure ^0000FFyour equipment is refined to at least +7^000000 before bringing it to me.","That's the minimum requirement for my upgrade service to have any visible effects on your equipment.";
+			mes "Make sure ^0000FFyour equipment is refined to at least +7^000000 before bringing it to me.";
+			mes "That's the minimum requirement for my upgrade service to have any visible effects on your equipment.";
 			next;
 			mes "[ Gemcutter ]";
-			mes "Make sure you're ^0000FFequipped with the item that you want to improve.^000000","Otherwise, I can't evaluate its condition.";
+			mes "Make sure you're ^0000FFequipped with the item that you want to improve.^000000";
+			mes "Otherwise, I can't evaluate its condition.";
 			next;
 			mes "[ Gemcutter ]";
-			mes "As you may have guessed, your equipment will transform into something new after this.","In other words, ^0000FFIt'll lose its current refining levels, cards and enchantments.^000000";
+			mes "As you may have guessed, your equipment will transform into something new after this.";
+			mes "In other words, ^0000FFIt'll lose its current refining levels, cards and enchantments.^000000";
 			next;
 			mes "[ Gemcutter ]";
-			mes "And I need ^0000FFIllusion Stones and some other materials^000000 to upgrade your equipment.","Pick an item you want and I'll tell you what I need.";
+			mes "And I need ^0000FFIllusion Stones and some other materials^000000 to upgrade your equipment.";
+			mes "Pick an item you want and I'll tell you what I need.";
 			next;
 			for (.@i = 0; .@i < getarraysize(.weapons$); .@i++) {
 				explode(.@T$,.weapons$[.@i],"|");
 				.@item_id = atoi(.@T$[0]);
-				.@menu$ += getitemname(.@item_id) +":";
+				.@menu$ += replacestr(getitemname(.@item_id),":","") +":";
 			}
 			.@s = select(.@menu$) - 1;
 			explode(.@T$,.weapons$[.@s],"|");
@@ -116,21 +123,25 @@ pay_d03_i,160,45,4	script	Gemcutter#ill_moon_merchant	4_TOWER_17,{
 			}
 			next;
 			mes "[ Gemcutter ]";
-			mes "Make sure ^0000FFyour equipment is refined to at least +7^000000 before bringing it to me.","That's the minimum requirement for my upgrade service to have any visible effects on your equipment.";
+			mes "Make sure ^0000FFyour equipment is refined to at least +7^000000 before bringing it to me.";
+			mes "That's the minimum requirement for my upgrade service to have any visible effects on your equipment.";
 			next;
 			mes "[ Gemcutter ]";
-			mes "Make sure you're ^0000FFequipped with the item that you want to improve.^000000","Otherwise, I can't evaluate its condition.";
+			mes "Make sure you're ^0000FFequipped with the item that you want to improve.^000000";
+			mes "Otherwise, I can't evaluate its condition.";
 			next;
 			mes "[ Gemcutter ]";
-			mes "As you may have guessed, your equipment will transform into something new after this.","In other words, ^0000FFIt'll lose its current refining levels, cards and enchantments.^000000";
+			mes "As you may have guessed, your equipment will transform into something new after this.";
+			mes "In other words, ^0000FFIt'll lose its current refining levels, cards and enchantments.^000000";
 			next;
 			mes "[ Gemcutter ]";
-			mes "And I need ^0000FFIllusion Stones and some other materials^000000 to upgrade your equipment.","Pick an item you want and I'll tell you what I need.";
+			mes "And I need ^0000FFIllusion Stones and some other materials^000000 to upgrade your equipment.";
+			mes "Pick an item you want and I'll tell you what I need.";
 			next;
 			for (.@i = 0; .@i < getarraysize(.armors$); .@i++) {
 				explode(.@T$,.armors$[.@i],"|");
 				.@item_id = atoi(.@T$[0]);
-				.@menu$ += getitemname(.@item_id) +":";
+				.@menu$ += replacestr(getitemname(.@item_id),":","") +":";
 			}
 			.@s = select(.@menu$) - 1;
 			explode(.@T$,.armors$[.@s],"|");
