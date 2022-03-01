@@ -9192,8 +9192,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	// Check for immunities / sc fails
 	switch (type) {
 		case SC_VACUUM_EXTREME:
-			if (sc && (sc->data[SC_HALLUCINATIONWALK] || sc->data[SC_NPC_HALLUCINATIONWALK] || sc->data[SC_HOVERING] || sc->data[SC_VACUUM_EXTREME] ||
-					   (sc->data[SC_VACUUM_EXTREME_POSTDELAY] && sc->data[SC_VACUUM_EXTREME_POSTDELAY]->val2 == val2))) // Ignore post delay from other vacuum (this will make stack effect enabled)
+			if (sc && sc->data[SC_VACUUM_EXTREME_POSTDELAY] && sc->data[SC_VACUUM_EXTREME_POSTDELAY]->val2 == val2) // Ignore post delay from other vacuum (this will make stack effect enabled)
 				return 0;
 			break;
 		case SC_STONE:

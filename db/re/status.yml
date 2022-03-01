@@ -3765,6 +3765,7 @@ Body:
       Hallucinationwalk: true
       Hovering: true
       Npc_HallucinationWalk: true
+      Vacuum_Extreme: true
     States:
       Nomove: true
   - Status: Propertywalk
