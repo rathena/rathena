@@ -983,7 +983,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 				sc_type type = static_cast<sc_type>(it.first);
 
 				if (it.second->flag[SCF_REMOVEONDAMAGED]) {
-					if (type != SC_STONE)
+					if (type != SC_STONE || (sc->data[SC_STONE] && sc->opt1 == OPT1_STONE))
 						status_change_end(target, type, INVALID_TIMER);
 				}
 			}
