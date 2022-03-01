@@ -14,7 +14,7 @@ pay_d03_i,160,45,4	script	Gemcutter#ill_moon_merchant	4_TOWER_17,{
 	mes "[ Gemcutter ]";
 	mes "Do you have business with me?";
 	next;
-	switch(select("What are you doing here?:Upgrade Weapon.:Upgrade Armor.")){
+	switch (select("What are you doing here?:Upgrade Weapon.:Upgrade Armor.")) {
 		case 1:
 			mes "[ Gemcutter ]";
 			mes "I came to the ruined village,","looking for some materials. Touched some strange light, and now I'm here.";
@@ -31,13 +31,13 @@ pay_d03_i,160,45,4	script	Gemcutter#ill_moon_merchant	4_TOWER_17,{
 
 		case 2:
 			disable_items;
-			if(checkweight(25271,1) == 0 || (MaxWeight - Weight) < 1000){
+			if (checkweight(25271,1) == 0 || (MaxWeight - Weight) < 1000) {
 				mes "- You're carrying too many items to proceed. -";
 				close;
 			}
 			mes "[ Gemcutter ]";
 			mes "The following is the list of equipment I can handle.";
-			for(.@i = 0; .@i < getarraysize(.weapons$); .@i++){
+			for (.@i = 0; .@i < getarraysize(.weapons$); .@i++) {
 				explode(.@T$,.weapons$[.@i],"|");
 				.@item_id = atoi(.@T$[0]);
 				mes "<ITEM>"+getitemname(.@item_id)+"<INFO>"+.@item_id+"</INFO></ITEM>";
@@ -55,7 +55,7 @@ pay_d03_i,160,45,4	script	Gemcutter#ill_moon_merchant	4_TOWER_17,{
 			mes "[ Gemcutter ]";
 			mes "And I need ^0000FFIllusion Stones and some other materials^000000 to upgrade your equipment.","Pick an item you want and I'll tell you what I need.";
 			next;
-			for(.@i = 0; .@i < getarraysize(.weapons$); .@i++){
+			for (.@i = 0; .@i < getarraysize(.weapons$); .@i++) {
 				explode(.@T$,.weapons$[.@i],"|");
 				.@item_id = atoi(.@T$[0]);
 				.@menu$ += getitemname(.@item_id) +":";
@@ -66,7 +66,7 @@ pay_d03_i,160,45,4	script	Gemcutter#ill_moon_merchant	4_TOWER_17,{
 			mes "[ Gemcutter ]";
 			mes "For that equipment, I need the following materials.";
 			mes "^0000FF+7 " + getitemname(atoi(.@T$[1])) + "^000000";
-			for(.@i = 0; .@i < getarraysize(.@TT$); .@i++){
+			for (.@i = 0; .@i < getarraysize(.@TT$); .@i++) {
 				explode(.@data$,.@TT$[.@i],":");
 				.@item_id[.@i] = atoi(.@data$[0]);
 				.@amount[.@i] = atoi(.@data$[1]);
@@ -74,21 +74,21 @@ pay_d03_i,160,45,4	script	Gemcutter#ill_moon_merchant	4_TOWER_17,{
 			}
 			mes "Do you want to continue?";
 			next;
-			if(select("Continue.:I'll bring those materials") == 2){
+			if (select("Continue.:I'll bring those materials") == 2) {
 				mes "[ Gemcutter ]";
 				mes "Comeback when you're ready.";
 				close;
 			}
-			if(getequipid(EQI_HAND_R) != atoi(.@T$[1])){
+			if (getequipid(EQI_HAND_R) != atoi(.@T$[1])) {
 				mes "[ Gemcutter ]";
 				mes "You must equip the " + getitemname(atoi(.@T$[1])) + " before proceeding.";
 				close;
 			}
-			for(.@i = 0; .@i < getarraysize(.@item_id); .@i++){
-				if(countitem(.@item_id[.@i]) < .@amount[.@i])
+			for (.@i = 0; .@i < getarraysize(.@item_id); .@i++) {
+				if (countitem(.@item_id[.@i]) < .@amount[.@i])
 					.@miss++;
 			}
-			if(getequiprefinerycnt(EQI_HAND_R) < 7 || .@miss > 0){
+			if (getequiprefinerycnt(EQI_HAND_R) < 7 || .@miss > 0) {
 				mes "[ Gemcutter ]";
 				mes "You don't have all the materials";
 				end;
@@ -96,20 +96,20 @@ pay_d03_i,160,45,4	script	Gemcutter#ill_moon_merchant	4_TOWER_17,{
 			mes "[Illusion Researcher]";
 			mes "I upgraded your item... This was a good research for me.";
 			delequip(EQI_HAND_R);
-			for(.@i = 0; .@i < getarraysize(.@item_id); .@i++)
+			for (.@i = 0; .@i < getarraysize(.@item_id); .@i++)
 				delitem .@item_id[.@i],.@amount[.@i];
-			getitem atoi(.@T$[0]),1;			
+			getitem atoi(.@T$[0]),1;
 			break;
 
 		case 3:
 			disable_items;
-			if(checkweight(25271,1) == 0 || (MaxWeight - Weight) < 1000){
+			if (checkweight(25271,1) == 0 || (MaxWeight - Weight) < 1000) {
 				mes "- You're carrying too many items to proceed. -";
 				close;
 			}
 			mes "[ Gemcutter ]";
 			mes "The following is the list of equipment I can handle.";
-			for(.@i = 0; .@i < getarraysize(.armors$); .@i++){
+			for (.@i = 0; .@i < getarraysize(.armors$); .@i++) {
 				explode(.@T$,.armors$[.@i],"|");
 				.@item_id = atoi(.@T$[0]);
 				mes "<ITEM>"+getitemname(.@item_id)+"<INFO>"+.@item_id+"</INFO></ITEM>";
@@ -127,7 +127,7 @@ pay_d03_i,160,45,4	script	Gemcutter#ill_moon_merchant	4_TOWER_17,{
 			mes "[ Gemcutter ]";
 			mes "And I need ^0000FFIllusion Stones and some other materials^000000 to upgrade your equipment.","Pick an item you want and I'll tell you what I need.";
 			next;
-			for(.@i = 0; .@i < getarraysize(.armors$); .@i++){
+			for (.@i = 0; .@i < getarraysize(.armors$); .@i++) {
 				explode(.@T$,.armors$[.@i],"|");
 				.@item_id = atoi(.@T$[0]);
 				.@menu$ += getitemname(.@item_id) +":";
@@ -139,7 +139,7 @@ pay_d03_i,160,45,4	script	Gemcutter#ill_moon_merchant	4_TOWER_17,{
 			mes "[ Gemcutter ]";
 			mes "For that equipment, I need the following materials.";
 			mes "^0000FF+7 " + getitemname(atoi(.@T$[1])) + "^000000";
-			for(.@i = 0; .@i < getarraysize(.@TT$); .@i++){
+			for (.@i = 0; .@i < getarraysize(.@TT$); .@i++) {
 				explode(.@data$,.@TT$[.@i],":");
 				.@item_id[.@i] = atoi(.@data$[0]);
 				.@amount[.@i] = atoi(.@data$[1]);
@@ -147,21 +147,21 @@ pay_d03_i,160,45,4	script	Gemcutter#ill_moon_merchant	4_TOWER_17,{
 			}
 			mes "Do you want to continue?";
 			next;
-			if(select("Continue.:I'll bring those materials") == 2){
+			if (select("Continue.:I'll bring those materials") == 2) {
 				mes "[ Gemcutter ]";
 				mes "Comeback when you're ready.";
 				close;
 			}
-			if(getequipid(.@slot) != atoi(.@T$[1])){
+			if (getequipid(.@slot) != atoi(.@T$[1])) {
 				mes "[ Gemcutter ]";
 				mes "You must equip the " + getitemname(atoi(.@T$[1])) + " before proceeding.";
 				close;
 			}
-			for(.@i = 0; .@i < getarraysize(.@item_id); .@i++){
-				if(countitem(.@item_id[.@i]) < .@amount[.@i])
+			for (.@i = 0; .@i < getarraysize(.@item_id); .@i++) {
+				if (countitem(.@item_id[.@i]) < .@amount[.@i])
 					.@miss += 1;
 			}
-			if(getequiprefinerycnt(.@slot) < 7 || .@miss > 0){
+			if (getequiprefinerycnt(.@slot) < 7 || .@miss > 0) {
 				mes "[ Gemcutter ]";
 				mes "You don't have all the materials";
 				end;
@@ -169,10 +169,10 @@ pay_d03_i,160,45,4	script	Gemcutter#ill_moon_merchant	4_TOWER_17,{
 			mes "[ Gemcutter ]";
 			mes "I upgraded your item... This was a good research for me.";
 			delequip(.@slot);
-			for(.@i = 0; .@i < getarraysize(.@item_id); .@i++)
+			for (.@i = 0; .@i < getarraysize(.@item_id); .@i++)
 				delitem .@item_id[.@i],.@amount[.@i];
-			getitem atoi(.@T$[0]),1;			
-			break;			
+			getitem atoi(.@T$[0]),1;
+			break;
 	}
 	next;
 	mes "[ Gemcutter ]";
