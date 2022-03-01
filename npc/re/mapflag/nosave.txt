@@ -118,13 +118,13 @@ que_avan01	mapflag	nosave	SavePoint
 
 //============================================================
 // Glastheim Memorial Dungeon
-//=============================================================
+//============================================================
 1@gl_k	mapflag	nosave	SavePoint
 2@gl_k	mapflag	nosave	SavePoint
 
 //============================================================
 // Wave Mode Memorial Dungeon
-//=============================================================
+//============================================================
 1@def01	mapflag	nosave	SavePoint
 1@def02	mapflag	nosave	SavePoint
 1@def03	mapflag	nosave	SavePoint
