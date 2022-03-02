@@ -238,7 +238,7 @@ pay_arche,48,137,4	script	Young Scholar#ill_moon_arch	4_F_03,{
 	}
 	mes "[ Young Scholar ]";
 	mes "Let's go investigate the ruined village!";
-		mes "Would you like to come with me?";
+	mes "Would you like to come with me?";
 	next;
 	if (select("Go with him.:Go separately.") == 2) {
 		mes "[ Young Scholar ]";
