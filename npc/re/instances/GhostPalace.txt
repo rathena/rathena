@@ -11,16 +11,16 @@
 dali02,43,129,5	script	Unpleasant Royal Guard#	4_M_SAKRAYROYAL,{
 	if (BaseLevel < 120) {
 		mes "[Unpleasant Royal Guard]";
-		mes "จริงๆแล้วข้าก็อยากจะให้ท่านช่วยนะ แต่ดูๆแล้วท่านคง    ไม่มีความสามารถพอที่จะช่วยอะไรข้าได้หรอก ~!";
+		mes "Although I need help with a task, you are not strong enough to assist me, noob~!";
 		next;
 		mes "[Unpleasant Royal Guard]";
-		mes "ค่อยกลับมาอีกครั้ง เมื่อท่านฝึกฝนจนเลเวลถึง 120 แล้วกัน!";
+		mes "Come back later when you have done some training and are at least level 120!";
 		close;
 	}
 	.@party_id = getcharid(1);
 	if (is_party_leader() == false || .@party_id < 1) {
 		mes "[Unpleasant Royal Guard]";
-		mes "ข้าจะเปิดเส้นทางลับให้แก่ หัวหน้าปาร์ตี้เท่านั้น ท่านจงนำหัวหน้าปาร์ตี้มาพบข้า";
+		mes "I can only open the secret passage for party leaders. Please have your party leader talk to me.";
 		close;
 	}
 	switch( checkquest(1261,PLAYTIME) ) {
@@ -29,57 +29,57 @@ dali02,43,129,5	script	Unpleasant Royal Guard#	4_M_SAKRAYROYAL,{
 	case 0:
 	case 1:
 		mes "[Unpleasant Royal Guard]";
-		mes "ท่านได้พบกับองค์หญิงมั้ย? เธอปลอดภัยดีรึเปล่า?";
+		mes "Have you found the princess yet?! Is she safe?";
 		close;
 	case 2:
 		mes "[Unpleasant Royal Guard]";
-		mes "มอนสเตอร์ที่อยู่รอบๆเส้นทางหลับหายไปหมดแล้ว เป็นโอกาสดีของเราแล้ว ที่จะเข้าไปช่วยองค์หญิง!";
+		mes "The monsters around the secret passage have disappeared. Now is our chance to save the princess!";
 		erasequest 1261;// Cursed Swordman
 		close;
 	}
 	mes "[Unpleasant Royal Guard]";
-	mes "ข้าต้องการความช่วยเหลือ ได้โปรดเถอะท่าน";
+	mes "I need help, even from the likes of you.";
 	next;
 	mes "[Unpleasant Royal Guard]";
-	mes "ในระหว่างการต่อสู้เพื่อปกป้องปราสาท จู่ๆองค์หญิงก็ได้หายตัวไป";
+	mes "In the middle of battle the princess disappeared while I was guarding the palace.";
 	next;
 	mes "[Unpleasant Royal Guard]";
-	mes "หากท่านต้องการจะช่วย จงรีบมุ่งไปข้างหน้า เดี๋ยวข้าจะรีบตามไป เราจะต้องช่วยองค์หญิงให้ได้";
+	mes "You run ahead and I will catch up. We must save her.";
 	next;
-	if (select( "ได้! ข้าจะช่วยเจ้า", "เวลานี้น่าจะยังไม่ค่อยดีนะ" ) == 2) {
+	if (select( "I will help.", "This is not a good time." ) == 2) {
 		mes "[Unpleasant Royal Guard]";
-		mes "ถึงแม้ว่าอัศวิน Royal Guard ทุกคนจะต้องต่อสู้ และอาจจะถูกมอนสเตอร์สังหาร";
+		mes "Even now all the royal guards are fighting and dying from the monsters.";
 		next;
 		mes "[Unpleasant Royal Guard]";
-		mes "แต่ยังไงเราก็ต้องสู้ ไม่สนหรอกว่า ความกลัวจะคืบคลานเข้ามาในหัวใจ พวกเราจะช่วยองค์หญิงให้ได้!";
+		mes "We must, no matter how much fear grips our hearts, save the princess!";
 		close;
 	}
 	instance_create("Ghost Palace");
 	mes "[Unpleasant Royal Guard]";
-	mes "ขอบคุณท่านมาก";
-	mes "ข้าจะเปิดเส้นทางลับเพื่อเข้าสู่ ^0000ffGhost Palace^000000.";
-	mes "เตรียมตัวให้พร้อม!";
+	mes "Thank you..";
+	mes "I will open the secret passage to the ^0000ffGhost Palace^000000.";
+	mes "Please be ready!";
 	close;
 }
 
 dali02,40,134,5	script	Interdimensional Device#dk	PORTAL,{
 	if (BaseLevel < 120) {
 		mes "[Unpleasant Royal Guard]";
-		mes "จริงๆแล้วข้าก็อยากจะให้ท่านช่วยนะ แต่ดูๆแล้วท่านคงไม่มีความสามารถพอที่จะช่วยอะไรข้าได้หรอก ~!";
+		mes "Althought I need help with a task, you are not strong enough to assist me, noob~!";
 		next;
 		mes "[Unpleasant Royal Guard]";
-		mes "ค่อยกลับมาอีกครั้ง เมื่อท่านฝึกฝนจนเลเวลถึง 120 แล้วกัน!";
+		mes "Come back later when you have done some training and are at least level 120!";
 		close;
 	}
 	mes "[Unpleasant Royal Guard]";
-	mes "ข้าเห็นเส้นทางลับที่จะเข้าสู่พระราชวังแล้ว พวกท่านพร้อมที่จะช่วยองค์หญิงแล้วหรือยัง?!";
+	mes "I can see the secret passage into the palace. Are you ready to save the princess?!";
 	next;
-	if (select( "เข้าไป", "รอก่อน" ) == 2) {
+	if (select( "Enter", "Stop" ) == 2) {
 		mes "[Unpleasant Royal Guard]";
-		mes "ถึงแม้ว่าอัศวิน Royal Guard ทุกคนจะต้องต่อสู้ และอาจจะถูกมอนสเตอร์สังหาร";
+		mes "Even now all the royal guards are fighting and dying from the monsters.";
 		next;
 		mes "[Unpleasant Royal Guard]";
-		mes "แต่ยังไงเราก็ต้องสู้ ไม่สนหรอกว่า ความกลัวจะคืบคลานเข้ามาในหัวใจ พวกเราจะช่วยองค์หญิงให้ได้!";
+		mes "We must, no matter how much fear grips our hearts, save the princess!";
 		close;
 	}
 	switch( checkquest(1261,PLAYTIME) ) {
@@ -88,36 +88,36 @@ dali02,40,134,5	script	Interdimensional Device#dk	PORTAL,{
 	case 0:
 	case 1:
 		mes "[Unpleasant Royal Guard]";
-		mes "ขณะนี้มอนสเตอร์ที่เข้าโจมตีพระราชวัง ออกมาเดินเพ่นพ่านรอบๆทางลับจำนวนมาก เราคงจะต้องรอก่อน ไม่งั้นถ้าพวกมันเจอเราเข้า  ... พวกเราแย่แน่ๆ";
+		mes "The monsters that attacked the palace are wandering around the secret entrance. It would be very bad if they spotted us... Please wait.";
 		next;
-		mes "เมื่อถึงเวลาอันสมควร ที่จะเข้าสู่ประตูลับ";
-		mes "เมื่อนั้นพวกเราค่อยมาลองหาทางเข้ากันใหม่";
+		mes "When the time limit for the entrance is up";
+		mes "let's try to re-enter.";
 		close;
 	case 2:
-		mes "^0000ffขณะนี้การนับถอยหลังเพื่อเข้าสู่ Ghost Palace ได้เสร็จสิ้น กรุณาสนทนากับ Unpleasent Royal Guard อีกครั้งเพื่อเริ่มเควส ..^000000";
+		mes "^0000ffThe time limit for entering to the Curse of the Swordsman is finished. Please try to talk to the Unpleasent Royal Guard again..^000000";
 		erasequest 1261;// Cursed Swordman
 		close;
 	}
 	.@party_id = getcharid(1);
 	if (is_party_leader() == false || .@party_id < 1) {
 		mes "[Unpleasant Royal Guard]";
-		mes "ข้าจะเปิดเส้นทางลับให้แก่ หัวหน้าปาร์ตี้เท่านั้น ท่านจงนำหัวหน้าปาร์ตี้มาพบข้า";
+		mes "I can only open the secret passage for party leaders. Please have your party leader talk to me.";
 		close;
 	}
 
 	.@md_name$ = "Ghost Palace";
 	switch( instance_enter(.@md_name$) ) {
 	case IE_OTHER:
-		mes "เกิดข้อผิดพลาดให้การเข้าสู่ Instance";
+		mes "An unknown error occurred.";
 		close;
 	case IE_NOINSTANCE:
-		mes "^ff0000คุณเห็นหลุมดำภายในอุปกรณ์เคลื่อนย้ายนี้ อย่างไรก็ตามหากต้องการที่จะเข้าไป ท่านจะต้องสนทนากับ Unpleasent Royal Guard เสียก่อน.^000000";
+		mes "^ff0000Inside the devices you see a dark hole. If you wish to enter you must to talk to the Unpleasent Royal Guard first.^000000";
 		close;
 	case IE_NOMEMBER:
-		mes "สำหรับสมาชิกปาร์ตี้ที่ลงทะเบียนเท่านั้น จึงจะเข้าสู่ " + .@md_name$ + " instance ได้";
+		mes "Only registered members can enter the " + .@md_name$ + " instance.";
 		close;
 	case IE_OK:
-		mapannounce "dali", "" + strcharinfo(0) + " of the party, " + getpartyname(.@party_id) + ", กำลังเข้าสู่ Ghost Palace.", bc_map, 0x00ff99;
+		mapannounce "dali", "" + strcharinfo(0) + " of the party, " + getpartyname(.@party_id) + ", is entering the Ghost Palace.", bc_map, 0x00ff99;
 		// warp "1@spa",42,196;
 		setquest 1261;// Cursed Swordman
 		end;
@@ -127,24 +127,24 @@ dali02,40,134,5	script	Interdimensional Device#dk	PORTAL,{
 // 1st floor
 1@spa,41,204,5	script	King#dk	4_M_RUSKING,{
 	mes "[King]";
-	mes "ข้าเชื่อในความซื่อสัตย์ของเจ้าที่มีให้แก่ราชวงศ์ของเรา ดังนั้นข้าขอแต่งตั้งเจ้าเป็นนองครักษ์คอยปกป้องเจ้าหญิง Tiara อยู่ที่นี่";
-	npctalk "King: ข้าเชื่อในความซื่อสัตย์ของเจ้าที่มีให้แก่ราชวงศ์ของเรา ดังนั้นข้าขอแต่งตั้งเจ้าเป็นนองครักษ์คอยปกป้องเจ้าหญิง Tiara อยู่ที่นี่";
+	mes "You are hereby appointed as the personal guard to Princess Tiara. I trust your loyalty above all else.";
+	npctalk "King: You are hereby appointed as the personal guard to Princess Tiara. I trust your loyalty above all else.";
 	next;
 	mes "[Lurid Royal Guard]";
-	mes "กระหม่อมสาบานว่าจะปกป้ององค์หญิงไว้ด้วยชีวิต";
-	npctalk "Lurid Royal Guard: กระหม่อมสาบานว่าจะปกป้ององค์หญิงไว้ด้วยชีวิต", instance_npcname("Lurid Royal Guard#dk");
+	mes "I will protect the princess with my life.";
+	npctalk "Lurid Royal Guard: I will protect the princess with my life.", instance_npcname("Lurid Royal Guard#dk");
 	next;
 	mes "[King]";
-	mes "งานแต่งงานของเจ้าหญิงได้กำหนดการณ์แน่นอนแล้ว ตอนนี้เจ้าชายก็อยู่ที่นี่แล้วเพื่อรอพบเหน้าจ้าหญิง";
-	npctalk "King: งานแต่งงานของเจ้าหญิงได้กำหนดการณ์แน่นอนแล้ว ตอนนี้เจ้าชายก็อยู่ที่นี่แล้วเพื่อรอพบเหน้าจ้าหญิง";
+	mes "The marriage arrangements are going as planned. The prince is here to meet with the princess.";
+	npctalk "King: The marriage arrangements are going as planned. The prince is here to meet with the princess.";
 	next;
 	mes "[Lurid Royal Guard]";
-	mes "...ขอรับ ฝ่าบาท";
-	npctalk "Lurid Royal Guard: ...ขอรับ ฝ่าบาท", instance_npcname("Lurid Royal Guard#dk");
+	mes "...Yes, Your Majesty.";
+	npctalk "Lurid Royal Guard: ...Yes, Your Majesty.", instance_npcname("Lurid Royal Guard#dk");
 	next;
 	mes "[King]";
-	mes "โอ้พระเจ้า มีมอนสเตอร์บุกเข้ามาในพระราชวัง ทหาร! กำจัดพวกมันให้หมด!";
-	npctalk "โอ้พระเจ้า มีมอนสเตอร์บุกเข้ามาในพระราชวัง ทหาร! กำจัดพวกมันให้หมด!";
+	mes "My gods, there are monsters in the castle! Get rid of them now!";
+	npctalk "King: My gods, there are monsters in the castle! Get rid of them now!";
 	close2;
 	donpcevent instance_npcname("#gp_control_1") + "::OnStart";
 	end;
@@ -252,7 +252,7 @@ OnSpawn2:
 	end;
 OnMyMobDead3:
 	if (mobcount('map_spa$, instance_npcname("#gp_control_1") + "::OnMyMobDead3") < 1) {
-		mapannounce 'map_spa$, "ประตูสู่ชั้นสองภายใน Ghost Palace ได้ถูกเปิดออก", bc_map,0xFFFF00;
+		mapannounce 'map_spa$, "The passage on the 2nd floor in the palace of ghost is open .", bc_map,0xFFFF00;
 		enablenpc instance_npcname("The second floor of Palace");
 		enablenpc instance_npcname("Lurid Royal Guard#dk1");
 		enablenpc instance_npcname("Princess Tiara#dk");
@@ -265,41 +265,41 @@ OnMyMobDead3:
 	.@tiara$ = instance_npcname("Princess Tiara#dk");
 	cutin "npc-tiara.bmp",3;
 	mes "[Lurid Royal Guard]";
-	mes "ฝ่าบาท.. องค์ราชาได้เชิญเจ้าชายที่จะมาเป็นคู่หมั้นของท่านจากประเทศเพื่อนบ้านมาแล้วนะขอรับ เอ่อ.. ท่านพร้อมที่จะพบเขารึยังขอรับ?";
-	npctalk "Lurid Royal Guard: ฝ่าบาท.. องค์ราชาได้เชิญเจ้าชาย ที่จะมาเป็นคู่หมั้นของท่านจากประเทศเพื่อนบ้านมาแล้วนะขอรับ เอ่อ.. ท่านพร้อมที่จะพบเขารึยังครับ?";
+	mes "Your Highness, the King has invited a prince from a neighboring country to be your betrothed. Be ready to meet him...";
+	npctalk "Lurid Royal Guard: Your Highness, the King has invited a prince from a neighboring country to be your betrothed. Be ready to meet him...";
 	next;
 	mes "[Princess Tiara]";
-	mes "ถ้าสมมุติ...สมมุติการแต่งงานถูกจัดขึ้นแล้ว ชั้นควรจะทำยังไงดี?";
-	npctalk "Princess Tiara: ถ้าสมมุติ...สมมุติการแต่งงานถูกจัดขึ้นแล้ว ชั้นควรจะทำยังไงดี?", .@tiara$;
+	mes "If...If a marriage is arranged what should I do?";
+	npctalk "Princess Tiara: If...If a marriage is arranged what should I do?", .@tiara$;
 	next;
 	mes "[Lurid Royal Guard]";
-	mes "สิ่งเดียวที่กระหม่อมทำได้ ก็มีเพียงปกป้องท่านจากอันตรายแหละขอรับ";
-	npctalk "Lurid Royal Guard: สิ่งเดียวที่กระหม่อมทำได้ ก็มีเพียงปกป้องท่านจากอันตรายแหละขอรับ";
+	mes "The only thing I can do is protect you from physical harm.";
+	npctalk "Lurid Royal Guard: The only thing I can do is protect you from physical harm.";
 	next;
 	mes "[Princess Tiara]";
-	mes "งั้น ฉันควรทำยังไงดี?";
-	npctalk "Princess Tiara: งั้น ฉันควรทำยังไงดี?", .@tiara$;
+	mes "Then, what can I do?";
+	npctalk "Princess Tiara: Then, what can I do?", .@tiara$;
 	next;
 	mes "[Lurid Royal Guard]";
-	mes "ท่านอาจจะต้องตัดสินใจด้วยตัวเอง นะขอรับ...";
-	npctalk "Lurid Royal Guard: ท่านอาจจะต้องตัดสินใจด้วยตัวเอง นะขอรับ...";
+	mes "You must decide that for yourself Your Highness...";
+	npctalk "Lurid Royal Guard: You must decide that for yourself Your Highness...";
 	next;
 	mes "[Princess Tiara]";
-	mes "มันคงง่ายสำหรับนายสินะ หากฉันต้องแต่งงานแล้วถูกส่งไปประเทศอื่นเนี่ย?";
-	npctalk "Princess Tiara: ันคงง่ายสำหรับนายสินะ หากฉันต้องแต่งงานแล้วถูกส่งไปประเทศอื่นเนี่ย?", .@tiara$;
+	mes "Would it be easier for you if I were married and sent off to another country?";
+	npctalk "Princess Tiara: Would it be easier for you if I were married and sent off to another country?", .@tiara$;
 	next;
 	mes "[Lurid Royal Guard]";
-	mes "องค์หญิง..ยังไงกระหม่อมก็อยู่เคียงข้างองค์หญิง และปกป้องท่านตลอดไปนะขอรับ";
-	npctalk "Lurid Royal Guard: องค์หญิง..ยังไงกระหม่อมก็อยู่เคียงข้างองค์หญิง และปกป้องท่านตลอดไปนะขอรับ";
+	mes "I will always stand by you and protect you forever.";
+	npctalk "Lurid Royal Guard: I will always stand by you and protect you forever.";
 	cutin "npc-tiara.bmp",255;
 	next;
 	mes "[Princess Tiara]";
-	mes "มีมอนสเตอร์เข้ามาในปราสาทได้ยังไง! ช่วยฉันด้วย!";
-	npctalk "Princess Tiara: มีมอนสเตอร์เข้ามาในปราสาทได้ยังไง! ช่วยฉันด้วย", .@tiara$;
+	mes "Monsters have gotten inside the castle? Please, protect me!";
+	npctalk "Princess Tiara: Monsters have gotten inside the castle? Please, protect me!", .@tiara$;
 	next;
 	mes "[Lurid Royal Guard]";
-	mes "อยู่หลังกระหม่อมไว้องค์หญิง ข้าจะจัดการพวกมันเอง!";
-	npctalk "Lurid Royal Guard: อยู่หลังกระหม่อมไว้องค์หญิง ข้าจะจัดการพวกมันเอง!";
+	mes "Stay behind me. Let's go!";
+	npctalk "Lurid Royal Guard: Stay behind me. Let's go!";
 	close2;
 	donpcevent instance_npcname("#gp_control_2") + "::OnStart";
 	end;
@@ -349,7 +349,7 @@ OnMyMobDead2:
 	end;
 OnMyMobDead3:
 	if (mobcount('map_spa$, instance_npcname("#gp_control_2") + "::OnMyMobDead3") < 1) {
-		mapannounce 'map_spa$, "ประตูสู่ชั้นสามภายใน Ghost Palace ได้ถูกเปิดออก", bc_map,0xFFFF00;
+		mapannounce 'map_spa$, "The passage on the 3rd floor of the palace is open.", bc_map,0xFFFF00;
 		enablenpc instance_npcname("3rd floor in the palace");
 		enablenpc instance_npcname("King#dk1");
 		enablenpc instance_npcname("Lurid Royal Guard#dk2");
@@ -365,20 +365,20 @@ OnMyMobDead3:
 // 3rd floor
 1@spa,32,54,1	script	King#dk1	4_M_RUSKING,{
 	mes "[King]";
-	mes "ฝีมือเจ้าสินะ ที่พาพวกมอนสเตอร์เข้ามาบุกที่นี่ เจ้าคงอยากจะกำจัดข้า และพาตัวองค์หญิงไปเป็นของเจ้าเองสินะ?";
-	npctalk "King: ฝีมือเจ้าสินะ ที่พาพวกมอนสเตอร์เข้ามาบุกที่นี่ เจ้าคงอยากจะกำจัดข้า และพาตัวองค์หญิงไปเป็นของเจ้าเองสินะ?";
+	mes "It was you who brought the monsters here! You want to get rid of me and have the princess for yourself?";
+	npctalk "King: It was you who brought the monsters here! You want to get rid of me and have the princess for yourself?";
 	next;
 	mes "[Lurid Royal Guard]";
-	mes "มันเป็นกับดักท่านฝ่าบาท! ท่านต้องเชื่อใจกระหม่อม!";
-	npctalk "Lurid Royal Guard: มันเป็นกับดักท่านฝ่าบาท! ท่านต้องเชื่อใจกระหม่อม!", instance_npcname("Lurid Royal Guard#dk2");
+	mes "It is a trap Your Majesty! You must trust me!";
+	npctalk "Lurid Royal Guard: It is a trap Your Majesty! You must trust me!", instance_npcname("Lurid Royal Guard#dk2");
 	next;
 	mes "[King]";
-	mes "หุบปาก! เจ้าบังอาจหักหลังข้า! ..เสียแรงที่ข้าเชื่อและไว้ใจเจ้า... เจ้าจะต้องชดใช้กับสิ่งที่เจ้าได้ทำลงไป";
-	npctalk "King: หุบปาก! เจ้าบังอาจหักหลังข้า! ..เสียแรงที่ข้าเชื่อและไว้ใจเจ้า... เจ้าจะต้องชดใช้กับสิ่งที่เจ้าได้ทำลงไป";
+	mes "Shut up! You've betrayed me! I trusted you... you must pay for your disgrace.";
+	npctalk "King: Shut up! You've betrayed me! I trusted you... you must pay for your disgrace.";
 	next;
 	mes "[King]";
-	mes "เจ้าจะต้องทรมาณไปตลอดชีวิตที่เหลืออยู่";
-	npctalk "King: เจ้าจะต้องทรมาณไปตลอดชีวิตที่เหลืออยู่";
+	mes "You will suffer for the rest of your life.";
+	npctalk "King: You will suffer for the rest of your life.";
 	close2;
 	disablenpc instance_npcname("3rd floor in the palace");
 	disablenpc instance_npcname("King#dk1");
@@ -399,28 +399,28 @@ OnStart:
 	initnpctimer;
 	end;
 OnTimer5000:
-	npctalk "เสียงลึกลับ: โอ้ นี่หรืออัศวินผู้ซื่อสัตย์... เจ้าติดกับดักเสียแล้ว";
+	npctalk "Ominous Voice: Oh, faithful royal guard, you are trapped.";
 	end;
 OnTimer8000:
-	npctalk "เสียงลึกลับ: การกบฏครั้งนี้ องค์หญิงของเจ้าคงไม่ปลอดภัยเป็นแน่...";
+	npctalk "Ominous Voice: The conspiracy in the palace has your princess in grave danger...";
 	end;
 OnTimer12000:
-	npctalk "Lurid Royal Guard: แกเป็นใคร! โผล่ออกมาสิ!", instance_npcname("Lurid Royal Guard#dk3");
+	npctalk "Lurid Royal Guard: Who are you? Show yourself!", instance_npcname("Lurid Royal Guard#dk3");
 	end;
 OnTimer15000:
-	npctalk "เสียงลึกลับ: อ้าา,, ได้ยินเสียงของข้าด้วยหรือ?";
+	npctalk "Ominous Voice: Ah... so you do you hear me?";
 	end;
 OnTimer20000:
 	npctalk "Lurid Royal Guard: ...?", instance_npcname("Lurid Royal Guard#dk3");
 	end;
 OnTimer23000:
-	npctalk "เสียงลึกลับ: ข้าสามารถมอบพลังอันไร้ขีดจำกัดแก่เจ้าได้นะ ถ้าเจ้ายอมทำข้อตกลงกับข้า เจ้าอยากได้มันมั้ยล่ะ?";
+	npctalk "Ominous Voice: I can give you unlimited power. If you make a pact with me.";
 	end;
 OnTimer28000:
-	npctalk "Lurid Royal Guard: ข้า..เอ่อ..ข้า...", instance_npcname("Lurid Royal Guard#dk3");
+	npctalk "Lurid Royal Guard: I..I...", instance_npcname("Lurid Royal Guard#dk3");
 	end;
 OnTimer33000:
-	npctalk "ดาบเวทมนตร์ Tartanos: ฮึๆๆ... ยังไงดีล่ะ พ่ออัศวิน?";
+	npctalk "Magic Sword Tartanos: Kukuku... What do you want boy?";
 	end;
 OnTimer34000:
 	stopnpctimer;
@@ -469,7 +469,7 @@ OnMyMobDead2:
 	}
 	end;
 OnAnnounce:
-	mapannounce 'map_spa$, "ประตูสู่ชั้นสี่ภายใน Ghost Palace ได้ถูกเปิดออก", bc_map,0xFFFF00;
+	mapannounce 'map_spa$, "The passage on the 4th floor of the palace is open.", bc_map,0xFFFF00;
 	enablenpc instance_npcname("4th floor in the palace");
 	deltimer instance_npcname("#gp_control_3") + "::OnSpawn2";	// stop double spawn if timer is running
 	addtimer 2000, instance_npcname("#gp_control_3") + "::OnSpawn2";
@@ -591,25 +591,25 @@ OnMyMobDead2:
 1@spa,199,214,1	script	Lurid Royal Guard#dk4	4_M_SAKRAYROYAL,{
 	.@prince$ = instance_npcname("Visiting Prince#dk");
 	mes "[Lurid Royal Guard]";
-	mes "องค์หญิง Tiara อยู่ที่ไหน!";
-	npctalk "Lurid Royal Guard: องค์หญิง Tiara อยู่ที่ไหน!";
+	mes "Where is Princess Tiara?";
+	npctalk "Lurid Royal Guard: Where is Princess Tiara?";
 	next;
 	mes "[Visiting Prince]";
-	mes "แกมาช้าเกินไปนะ... แต่ก็ต้องขอบใจแกเหมือนกัน ที่เอาสิ่งที่ข้าต้องการมาด้วย ฮ่าๆๆ!";
-	npctalk "Visiting Prince: แกมาช้าเกินไปนะ... แต่ก็ต้องขอบใจแกเหมือนกัน ที่เอาสิ่งที่ข้าต้องการมาด้วย ฮ่าๆๆ!", .@prince$;
+	mes "You are too late... but you brought what I was looking for. Thanks for your help.";
+	npctalk "Visiting Prince: You are too late... but you brought what I was looking for. Thanks for your help.", .@prince$;
 	next;
 	mes "[Visiting Prince]";
-	mes "ดาบเวทมนตร์ Tartanos! เจ้าพร้อมที่จะอยู่กับเจ้านายใหม่รึยัง?";
-	npctalk "Visiting Prince: ดาบเวทมนตร์ Tartanos! เจ้าพร้อมที่จะอยู่กับเจ้านายใหม่รึยัง?", .@prince$;
+	mes "Cursed Magic Sword Tartanos! Are you ready to have a new master?";
+	npctalk "Visiting Prince: Cursed Magic Sword Tartanos! Are you ready to have a new master?", .@prince$;
 	next;
 	cutin "tartanos.bmp",3;
-	mes "[ดาบเวทมนตร์ Tartanos]";
-	mes "แก... กล้า... ดี,,, ยัง,,, ไง!";
-	npctalk "ดาบเวทมนตร์ Tartanos: แก... กล้า... ดี,,, ยัง,,, ไง!", instance_npcname("Magic Sword Tartanos#dk2");
+	mes "[Magic Sword Tartanos]";
+	mes "How dare you!";
+	npctalk "Magic Sword Tartanos: How dare you!", instance_npcname("Magic Sword Tartanos#dk2");
 	next;
 	mes "[Visiting Prince]";
-	mes "เฮื่ออ อั่ก อ้าาาก !!!";
-	npctalk "Visiting Prince: เฮื่ออ อั่ก อ้าาาก!!!", .@prince$;
+	mes "aah, aah !!!";
+	npctalk "Visiting Prince: Aah, aah!!!", .@prince$;
 	donpcevent instance_npcname("#gp_control_5") + "::OnStart";
 	close2;
 	cutin "",255;
@@ -647,7 +647,7 @@ OnStart:
 OnMyMobDead:
 	if (mobcount('map_spa$, instance_npcname("#gp_control_5") + "::OnMyMobDead") < 1) {
 		deltimer instance_npcname("#gp_control_4") + "::OnSpawn1";	// stop double spawn if timer is running
-		mapannounce 'map_spa$, "ประตูสู่ชั้นห้าภายใน Ghost Palace ได้ถูกเปิดออก", bc_map,0xFFFF00;
+		mapannounce 'map_spa$, "The passage on the 5th floor of the palace is open.", bc_map,0xFFFF00;
 		disablenpc instance_npcname("4th floor in the palace");
 		enablenpc instance_npcname("5th floor of Palace");
 		enablenpc instance_npcname("Princess Tiara#dk1");
@@ -664,34 +664,34 @@ OnMyMobDead:
 1@spa,216,43,3	script	Princess Tiara#dk1	4_F_MAYSEL,{
 	.@guard$ = instance_npcname("Lurid Royal Guard#dk5");
 	mes "[Princess Tiara]";
-	mes "นายย..รักษาสัญญาที่ให้ไว้กับชั้น";
-	npctalk "Princess Tiara: นายย..รักษาสัญญาที่ให้ไว้กับชั้น";
+	mes "You kept your promise.";
+	npctalk "Princess Tiara: You kept your promise.";
 	next;
 	mes "[Lurid Royal Guard]";
-	mes "องค์หญิงงง!";
-	npctalk "Lurid Royal Guard: องค์หญิงงง!", .@guard$;
+	mes "princess!";
+	npctalk "Lurid Royal Guard: Princess!", .@guard$;
 	next;
 	cutin "npc-tiara.bmp",3;
 	mes "[Princess Tiara]";
-	mes "ขอบคุณนะ... ตอนนี้ มันคงถึงเวลาที่ฉันจะได้พักผ่อนอยู่เคียงข้างนาย ...";
-	npctalk "Princess Tiara: ขอบคุณนะ... ตอนนี้ มันคงถึงเวลาที่ฉันจะได้พักผ่อนอยู่เคียงข้างนาย ...";
+	mes "Thank you... now I can rest beside you...";
+	npctalk "Princess Tiara: Thank you... now I can rest beside you...";
 	next;
 	mes "[Lurid Royal Guard]";
-	mes "ไม่นะองค์หญิง..ไม่..ม่ายยยย!!!!!";
-	npctalk "Lurid Royal Guard: ไม่นะองค์หญิง..ไม่..ม่ายยยย!!!!!", .@guard$;
+	mes "No..No!!!!!";
+	npctalk "Lurid Royal Guard: No..No!!!!!", .@guard$;
 	next;
-	mes "[เสียงกระซิบจาก เจ้าหญิง Tiara]";
-	mes "ฉันจะอยู่กับเธอตลอดไปในภพนี้.... อยู่ตลอด.. ไป";
-	npctalk "Princess Tiara: ฉันจะอยู่กับเธอตลอดไปในภพนี้.... อยู่ตลอด.. ไป";
+	mes "[The voice of Princess Tiara]";
+	mes "I want to be with you forever in peace...forever...";
+	npctalk "Princess Tiara: I want to be with you forever in peace...forever...";
 	next;
 	cutin "b-tiara.BMP",3;
 	mes "[Lurid Royal Guard]";
-	mes "ไม่นะ,,,,อ้าาาา, อ๊าา อ้ากกกก!!!!~!";
-	npctalk "Lurid Royal Guard: ไม่นะ,,,,อ้าาาา, อ๊าา อ้ากกกก!!!!~!", .@guard$;
+	mes "no.....Ahh ahh ahh!!!!~!";
+	npctalk "Lurid Royal Guard: no.....Ahh ahh ahh!!!!~!", .@guard$;
 	next;
-	mes "[เสียงกระซิบจาก เจ้าหญิง Tiara]";
-	mes "ฉัน,,รัก,,เธอ..";
-	npctalk "Princess Tiara: ฉัน,,รัก,,เธอ..";
+	mes "[The voice of Princess Tiara]";
+	mes "I love you...";
+	npctalk "Princess Tiara: I love you...";
 	cutin "",255;
 	close2;
 	donpcevent instance_npcname("#gp_control_6") + "::OnStart";
@@ -716,26 +716,26 @@ OnStart:
 	sleep 2000;
 	.@label$ = instance_npcname("#gp_control_6") + "::OnMyMobDead1";
 	monster 'map_spa$,217,52, "Forgotten Name" ,2957,1, .@label$;	// FORGOTTEN_NAME
-	unittalk $@mobid[0], "ตื่นสิ! มองที่พวกข้า... พวกข้ากลายเป็นปศาจไปแล้ว?";
+	unittalk $@mobid[0], "Wake up! look at us... We are monsters?";
 	monster 'map_spa$,190,21, "Tarnished Oath" ,2954,1, .@label$;	// COLORLESS_VOW
-	unittalk $@mobid[0], "Sakray ฆ่าพระราชา และมันจะฆ่าพวกเราด้วย!";
+	unittalk $@mobid[0], "Sakray killed the King and tried to kill us!";
 	monster 'map_spa$,198,49, "Tarnished Oath" ,2954,1, .@label$;	// COLORLESS_VOW
-	unittalk $@mobid[0], "อะไรกันนี่.. ??";
+	unittalk $@mobid[0], "What is this..??";
 	monster 'map_spa$,212,28, "Fatal Days" ,2958,1, .@label$;		// FATAL_DAYS
-	unittalk $@mobid[0], "ซาคราย เจ้าฆ่าองค์หญิง!";
+	unittalk $@mobid[0], "Sakray killed a princess!";
 	end;
 OnMyMobDead1:
 	if (mobcount('map_spa$, instance_npcname("#gp_control_6") + "::OnMyMobDead1") < 1) {
 		sleep 2000;
 		.@label$ = instance_npcname("#gp_control_6") + "::OnMyMobDead2";
 		monster 'map_spa$,217,43, "Forgotten Name" ,2957,1, .@label$;	// FORGOTTEN_NAME
-		unittalk $@mobid[0], "ตื่นสิ! มองที่พวกข้า... พวกข้ากลายเป็นปศาจไปแล้ว?";
+		unittalk $@mobid[0], "Wake up! look at us... We are monsters?";
 		monster 'map_spa$,193,24, "Forgotten Name" ,2957,1, .@label$;	// FORGOTTEN_NAME
-		unittalk $@mobid[0], "Sakray..?? ทำไมกัน....Sakray!";
+		unittalk $@mobid[0], "Sakray..?? why.....Sakray!";
 		monster 'map_spa$,216,59, "Tarnished Oath" ,2954,1, .@label$;	// COLORLESS_VOW
-		unittalk $@mobid[0], "Sakray ฆ่าพระราชา และมันจะฆ่าพวกเราด้วย!";
+		unittalk $@mobid[0], "Sakray killed the King and tried to kill us!";
 		monster 'map_spa$,197,57, "Fatal Days" ,2958,1, .@label$;		// FATAL_DAYS
-		unittalk $@mobid[0], "ซาคราย เจ้าฆ่าองค์หญิง!";
+		unittalk $@mobid[0], "Sakray killed a princess!";
 	}
 	end;
 OnMyMobDead2:
@@ -743,20 +743,20 @@ OnMyMobDead2:
 		sleep 2000;
 		.@label$ = instance_npcname("#gp_control_6") + "::OnMyMobDead3";
 		monster 'map_spa$,193,39, "Forgotten Name" ,2957,1, .@label$;	// FORGOTTEN_NAME
-		unittalk $@mobid[0], "ตื่นสิ! มองที่พวกข้า... พวกข้ากลายเป็นปศาจไปแล้ว?";
+		unittalk $@mobid[0], "Wake up! look at us... We are monsters?";
 		monster 'map_spa$,212,34, "Forgotten Name" ,2957,1, .@label$;	// FORGOTTEN_NAME
-		unittalk $@mobid[0], "Sakray..?? ทำไมกัน....Sakray!";
+		unittalk $@mobid[0], "Sakray..?? why.....Sakray!";
 		monster 'map_spa$,201,64, "Tarnished Oath" ,2954,1, .@label$;	// COLORLESS_VOW
-		unittalk $@mobid[0], "Sakray ฆ่าพระราชา และมันจะฆ่าพวกเราด้วย!";
+		unittalk $@mobid[0], "Sakray killed the King and tried to kill us!";
 		monster 'map_spa$,175,44, "Fatal Days" ,2958,1, .@label$;		// FATAL_DAYS
-		unittalk $@mobid[0], "ซาคราย เจ้าฆ่าองค์หญิง!";
+		unittalk $@mobid[0], "Sakray killed a princess!";
 	}
 	end;
 OnMyMobDead3:
 	if (mobcount('map_spa$, instance_npcname("#gp_control_6") + "::OnMyMobDead3") < 1) {
 		sleep 2000;
 		monster 'map_spa$,200,45, "Torturous Redeemer" ,2961,1, instance_npcname("#gp_control_6") + "::OnMyMobDead4";	// E_TORTUROUS_REDEEMER
-		unittalk $@mobid[0], "ดาบเวทมนตร์ Tartanos! ในเมื่อแกไม่ยอมรับข้าเป็นเจ้านาย ข้าจะทำลายเจ้าซะ . . อ้าาก มันเป็นแบบนี้ไปได้ยังไงกันเนี่ย?";
+		unittalk $@mobid[0], "Magic Sword Tartanos! I will destroy you if I can't have you... Oh no! How could this be?";
 		sleep 5000;
 		killmonster 'map_spa$, instance_npcname("#gp_control_6") + "::OnMyMobDead4";
 		enablenpc instance_npcname("Sakray#dk");
@@ -770,66 +770,66 @@ OnMyMobDead4:
 
 1@spa,196,44,5	script	Sakray#dk	4_M_SAKRAY,{
 	mes "[Lurid Royal Guard]";
-	mes "สมใจแกรึยังละ.. ? ดาบเวทมนตร์ Tartanos?";
-	npctalk "Lurid Royal Guard: สมใจแกรึยังละ.. ? ดาบเวทมนตร์ Tartanos?";
+	mes "Are you satisfied..? Magic Sword Tartanos?";
+	npctalk "Lurid Royal Guard: Are you satisfied..? Magic Sword Tartanos?";
 	next;
 	mes "[Magic Sword Tartanos]";
-	mes "ข้าต้องการเลือด...Sakray สังเวยเลือดให้แก่ข้าา!";
-	npctalk "ดาบเวทมนตร์ Tartanos: ข้าต้องการเลือด...Sakray สังเวยเลือดให้แก่ข้าา!", instance_npcname("Magic Sword Tartanos#dk3");
+	mes "I need more blood..Sakray, offer me his blood.";
+	npctalk "Magic Sword Tartanos: I need more blood..Sakray, offer me his blood.", instance_npcname("Magic Sword Tartanos#dk3");
 	next;
 	mes "[Sakray]";
-	mes "พลังนี้มันเยี่ยมไปเลยใช่มั้ย ท่านว่าไงล่ะ?";
-	npctalk "Sakray: พลังนี้มันเยี่ยมไปเลยใช่มั้ย ท่านว่าไงล่ะ?";
+	mes "Okay, that is good. A traveller. Did you see?";
+	npctalk "Sakray: Okay, that is good. A traveller. Did you see?";
 	next;
 	mes "[" + strcharinfo(0) + "]";
-	mes "Sakray.. เจ้าต้องการอะไร? ความเห็นใจงั้นเหรอ เป็นกับดักอะไรอีกล่ะ";
-	unittalk getcharid(3), "" + strcharinfo(0) + " : Sakray.. นายต้องการอะไร? ความเห็นใจงั้นเหรอ เป็นกับดักอะไรอีกล่ะ";
+	mes "Sakray, what do you want? Sympathy? Or is it a trap?";
+	unittalk getcharid(3), "" + strcharinfo(0) + " : Sakray, what do you want? Sympathy? Or is it a trap?";
 	next;
 	mes "[Sakray]";
-	mes "ป่าวเลย ... ข้าไม่ได้ต้องการที่จะรับพลังนี้ เพื่อมาจัดการกับมือสมัครเล่นอย่างท่าน";
-	npctalk "Sakray: ป่าวเลย ... ข้าไม่ได้ต้องการที่จะรับพลังนี้ เพื่อมาจัดการกับมือสมัครเล่นอย่างท่าน";
+	mes "No... I do not need to make any effort to catch a novice.";
+	npctalk "Sakray: No... I do not need to make any effort to catch a novice.";
 	next;
 	mes "[" + strcharinfo(0) + "]";
-	mes "ถ้างั้น... ทำไมล่ะ?";
-	unittalk getcharid(3), "" + strcharinfo(0) + " : ถ้างั้น... ทำไมล่ะ?";
+	mes "If so... then why...?";
+	unittalk getcharid(3), "" + strcharinfo(0) + " : If so... then why...?";
 	next;
 	cutin "cry-b.bmp",2;
 	mes "[Sakray]";
-	mes "ข้าแค่ต้องการกำจัดเศษเสี้ยวของความเป็นมนุษย์ออกไปจากตัวข้า ผ่านตัวเจ้า";
-	npctalk "Sakray: ข้าแค่ต้องการกำจัดเศษเสี้ยวของความเป็นมนุษย์ออกไปจากตัวข้า ผ่านตัวเจ้า";
+	mes "I wanted to get rid of a piece of humanity inside of me through you.";
+	npctalk "Sakray: I wanted to get rid of a piece of humanity inside of me through you.";
 	next;
 	mes "[Sakray]";
-	mes "ผลลัพธ์ที่ได้ มันช่างน่าพอใจ";
-	npctalk "Sakray: ผลลัพธ์ที่ได้ มันช่างน่าพอใจ";
+	mes "I am quite satisfied with the result.";
+	npctalk "Sakray: I am quite satisfied with the result.";
 	next;
-	mes "[ดาบเวทมนตร์ Tartanos]";
-	mes "Sakray รีบสังเวยเลือดให้แก่ข้า เดี๋ยวนี้!";
-	npctalk "ดาบเวทมนตร์ Tartanos: Sakray รีบสังเวยเลือดให้แก่ข้า เดี๋ยวนี้!", instance_npcname("Magic Sword Tartanos#dk3");
-	next;
-	mes "[Sakray]";
-	mes "ถ้าท่านเป็นข้า ท่านจะทำยังไงดีล่ะ?";
-	npctalk "Sakray: ถ้าท่านเป็นข้า ท่านจะทำยังไงดีล่ะ?";
+	mes "[Magic Sword Tartanos]";
+	mes "Sakray, offer the blood to me now!";
+	npctalk "Magic Sword Tartanos: Sakray, offer the blood to me now!", instance_npcname("Magic Sword Tartanos#dk3");
 	next;
 	mes "[Sakray]";
-	mes "ท่านจะสามารถปลดปล่อย ตัวเองจากคำสาปร้ายนี้ได้หรือเปล่าล่ะ?";
-	npctalk "Sakray: ท่านจะสามารถปลดปล่อย ตัวเองจากคำสาปร้ายนี้ได้หรือเปล่าล่ะ";
+	mes "If you were me, what would you do?";
+	npctalk "Sakray: If you were me, what would you do?";
+	next;
+	mes "[Sakray]";
+	mes "Can you set yourself free from this curse?";
+	npctalk "Sakray: Can you set yourself free from this curse?";
 	next;
 	mes "[" + strcharinfo(0) + "]";
 	mes "...";
 	unittalk getcharid(3), "" + strcharinfo(0) + " : ...";
 	next;
 	mes "[Sakray]";
-	mes "ฮึ ฮึ... ข้าจะคอยเฝ้ามองท่าน จนถึงวันนึง ที่ท่านมีความสามารถมากกว่านี้";
-	npctalk "Sakray: ฮึ ฮึ... ข้าจะคอยเฝ้ามองท่าน จนถึงวันนึง ที่ท่านมีความสามารถมากกว่านี้";
+	mes "Heh heh... I will keep watching you until the day comes when you are old enough.";
+	npctalk "Sakray: Heh heh... I will keep watching you until the day comes when you are old enough.";
 	next;
 	mes "[Sakray]";
-	mes "เมื่อนั้นล่ะ ข้าจะคอยตามล่าท่าน เพื่อสังเวยให้แก่ Tartanos";
-	npctalk "Sakray: เมื่อนั้นล่ะ ข้าจะคอยตามล่าท่าน เพื่อสังเวยให้แก่ Tartanos";
+	mes "I am willing to hunt you later for Tartanos.";
+	npctalk "Sakray: I am willing to hunt you later for Tartanos.";
 	cutin "",255;
 	next;
 	mes "[Sakray]";
-	mes "ลาก่อน ..";
-	npctalk "Sakray: ลาก่อน ..";
+	mes "Farewell then.";
+	npctalk "Sakray: Farewell then.";
 	close2;
 	donpcevent instance_npcname("#tb") + "::OnStart";
 	end;
@@ -846,28 +846,28 @@ OnStart:
 	initnpctimer;
 	end;
 OnTimer3000:
-	npctalk "เสียงกระซิบจาก Princess Tiara : มีอะไรให้ชั้นช่วยมั้ย?";
+	npctalk "Voice of Princess Tiara : What can I do for you?";
 	end;
 OnTimer8000:
-	npctalk "เสียงกระซิบจาก Sakray : ไม่เป็นไรขอรับ กระหม่อมจะอยู่เคียงข้างองค์หญิงตลอดไป", instance_npcname("#sv");
+	npctalk "Voice of Sakray : I will always stand by you. Please rest beside me.", instance_npcname("#sv");
 	end;
 OnTimer13000:
-	npctalk "ดาบเวทมนตร์ Tartanos: Sakray เจ้าอย่าลืมข้อตกลงระหว่างเจ้ากับข้าละ", instance_npcname("#tv");
+	npctalk "Magic Sword Tartanos: Sakray, do not forget the covenant of blood between us.", instance_npcname("#tv");
 	end;
 OnTimer17000:
-	npctalk "ดาบเวทมนตร์ Tartanos: วิญญาณของเจ้าเป็นของข้า จนกว่าแกจะสังเวยเลือดให้แก่ข้าจนพอใจ...", instance_npcname("#tv");
+	npctalk "Magic Sword Tartanos: Your soul is mine until you find the blood that satisfies me...", instance_npcname("#tv");
 	end;
 OnTimer22000:
-	npctalk "เสียงกระซิบจาก Sakray : พักผ่อนเถอะองค์หญิง ภายใต้เงาเดียวกันกับกระหม่อม", instance_npcname("#sv");
+	npctalk "Voice of Sakray : Rest in the shadow with me.", instance_npcname("#sv");
 	end;
 OnTimer25000:
-	npctalk "เสียงกระซิบจาก Sakray : ในความมืด ตลอดกาล...", instance_npcname("#sv");
+	npctalk "Voice of Sakray : In the dark forever...", instance_npcname("#sv");
 	end;
 OnTimer28500:
 	disablenpc instance_npcname("#tb");
 	disablenpc instance_npcname("#sv");
 	disablenpc instance_npcname("#tv");
-	mapannounce 'map_spa$, "ถึงเวลาออกจาก Ghost Palace.", bc_map,0xFFFF00;
+	mapannounce 'map_spa$, "It is time to leave the Ghost Palace.", bc_map,0xFFFF00;
 	enablenpc instance_npcname("Way out of Palace");
 	enablenpc instance_npcname("King#dk11");
 	end;
@@ -880,30 +880,31 @@ OnTimer28500:
 1@spa,204,29,1	script	King#dk11	4_M_RUSKING,{
 	disable_items;
 	mes "[King]";
-	mes "ว่าไง เจ้ายังมีชีวิตรอดอยูสินะ?";
-	mes "ข้าไม่คิดมาก่อนเลย ว่าจะเจอผู้รอดชีวิตเหมือนกัน";
+	mes "Hey there, are you alive?";
+	mes "I did not expect to meet someone who is still alive.";
+	next;
+	.@item_name_req$ = getitemname(6672);// Shard_of_Gray
+	mes "[King]";
+	mes "Do you possibly have the ^006400" + .@item_name_req$ + "^000000?";
+	mes "Can you give it to me?";
+	mes "The memories of the faithful royal guard";
+	mes "and the memories of everyone he loved";
+	mes "are contained inside of these shards.";
 	next;
 	mes "[King]";
-	mes "เจ้าพอจะมี ^006400Gray Shard^000000 อยู่บ้างไหมล่ะ?";
-	mes "ส่งให้ข้าหน่อยได้มั้ย?";
-	mes "ความทรงจำของอัศวินผู้ภักดี";
-	mes "และความทรงจำทุกอย่างเกี่ยวกับคนที่เขารัก";
-	mes "ถูกบรรจุไว้หมดแล้วในวัตถุนี้";
+	mes "Will you give the ^006400" + .@item_name_req$ + "^000000 to me?";
+	mes "The guilt is eating my soul.";
+	mes "My soul is trapped inside the Ghost Palace.";
 	next;
 	mes "[King]";
-	mes "ขอ ^006400Gray Shard^000000 ให้ข้าได้ไหม?";
-	mes "บาปเหล่านี้มันกัดกินจิตวิญญาณของข้า";
-	mes "และวิญญาณของข้าจะถูกกักขังไว้ใน Ghost Palace ตลอดไป";
+	mes "I am collecting Sakray's abandoned memories from these shards.";
 	next;
 	mes "[King]";
-	mes "ข้ากำลังรวบรวม ความทรงจำที่กระจัดกระจายของ Sakray เข้าด้วยกัน";
+	mes "If you give any ^006400" + .@item_name_req$ + "^000000s to me, I can make equipment for you.";
 	next;
 	mes "[King]";
-	mes "หากท่านมอบ ^006400Gray Shard^000000s ให้แก่ข้า ข้าสามารถสร้างอุปกรณ์บางอย่างให้แก่ท่านได้";
-	next;
-	mes "[King]";
-	mes "อัศวินต้องสาป...";
-	mes "ได้โปรดช่วยเก็บรักษาเศษเสี้ยววิญญาณของ Sakray ด้วย";
+	mes "The cursed knight...";
+	mes "Please help me save the soul of Sakray.";
 	next;
 	setarray .@item_name$[0],
 		"Thanos Sword", "Thanos Broadsword", "Thanos Spear", "Thanos Two-Handed Spear", "Thanos Staff",
@@ -920,47 +921,47 @@ OnTimer28500:
 		.@s = select(.@menu$) - 1;
 		if (.@s == 20) {
 			mes "[King]";
-			mes "ข้าเชื้อว่าวันนึง";
-			mes "Sakray จะต้องหลุดพ้นจากคำสาปนี้ได้อย่างแน่นอน";
-			mes "ข้าเชื่อว่าอย่างนั้น..";
-			mes "^006400Gray Shard^000000s เป็นทางเดียว";
-			mes "ที่จะช่วยเขาได้....";
+			mes "Someday, Sakray will";
+			mes "get out of this curse for sure.";
+			mes "I believe";
+			mes "^006400" + .@item_name_req$ + "^000000s are the only method";
+			mes "to save him....";
 			close;
 		}
 		.@cost = ( .@s > 13 ? 100 : 200 );
 		mes "[King]";
-		mes "เพื่อสร้าง ^FF0000" + .@item_name$[.@s] + "^000000";
-		mes "ข้าต้องการ " + .@cost + " ^006400Gray Shard^000000.";
+		mes "To make a ^FF0000" + .@item_name$[.@s] + "^000000";
+		mes "I need " + .@cost + " ^006400" + .@item_name_req$ + "^000000.";
 		next;
-		if (select( "ยกเลิก", "มอบ " + .@cost + " Gray Shard." + "ให้" ) == 1) {
+		if (select( "Cancel", "Hand over " + .@cost + " " + .@item_name_req$ + "." ) == 1) {
 			mes "[King]";
-			mes "ข้าเชื้อว่าวันนึง";
-			mes "Sakray จะต้องหลุดพ้นจากคำสาปนี้ได้อย่างแน่นอน";
+			mes "Someday, Sakray will";
+			mes "get out of this curse for sure.";
 			next;
 			continue;
 		}
 		if (countitem(6672) < .@cost) {
 			mes "[King]";
-			mes "ดูเหมือนท่านจะมี ^006400Gray Shard^000000 ไม่เพียงพอ";
-			mes "เพื่อสร้าง ^FF0000" + .@item_name$[.@s] + "^000000.";
-			mes "ข้าต้องการ " + .@cost + " ^006400Gray Shard^000000.";
+			mes "You do not have enough ^006400" + .@item_name_req$ + "^000000";
+			mes "to make a ^FF0000" + .@item_name$[.@s] + "^000000.";
+			mes "I need " + .@cost + " ^006400" + .@item_name_req$ + "^000000.";
 			next;
 			continue;
 		}
 		mes "[King]";
-		mes "ข้าจะมอบ ^FF0000" + .@item_name$[.@s] + "^000000 ให้แก่ท่าน";
-		mes "โดยแลกกับ " + .@cost + " ^006400Gray Shard^000000.";
+		mes "I will make a ^FF0000" + .@item_name$[.@s] + "^000000";
+		mes "with " + .@cost + " ^006400" + .@item_name_req$ + "^000000.";
 		next;
-		mes "คุณสังเกตเห็นแสงสว่าง ที่ก่อตัวบนมือของพระราชา และดูเหมือนมันจะเริ่มก่อตัวเห็นเป็นรูปเป็นร่าง";
-		next;
-		mes "[King]";
-		mes "เอาล่ะ เสร็จแล้ว";
-		mes "รับสิ่งนี้ไป ^FF0000" + .@item_name$[.@s] + "^000000";
-		mes "เพื่อจัดการกับ Sakray และ Tartanos";
+		mes "You see a light through the folded hands of the king and it gradually takes on a shape.";
 		next;
 		mes "[King]";
-		mes "พลัง.. ย่อมแลกมาด้วยการเสียสละ";
-		mes "จงระมัดระวังด้วย...";
+		mes "All right, it is done.";
+		mes "Take this ^FF0000" + .@item_name$[.@s] + "^000000";
+		mes "to confront Sakray and Tartanos.";
+		next;
+		mes "[King]";
+		mes "The power requires a sacrifice.";
+		mes "Please be careful...";
 		delitem 6672,.@cost;// Gray Shard
 		getitem .@items_list[.@s],1;
 		close;
@@ -970,9 +971,9 @@ OnTimer28500:
 1@spa,210,28,0	script	Way out of Palace	WARPNPC,2,2,{
 	end;
 OnTouch_:
-	mes "ถึงเวลาที่จะต้องออกจาก Ghost Palace.";
-	mes "ทุกอย่างในนี้จบแล้ว";
-	mes "และจะเลือนหายไป..";
+	mes "It is time to leave the Ghost Palace.";
+	mes "Everything is now complete";
+	mes "and will vanish..";
 	close2;
 	if (isbegin_quest(1263) == 2)
 		getitem 6672,1;// Gray Shard
