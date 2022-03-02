@@ -4865,7 +4865,7 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, std::bi
 				sc->cant.deathpenalty += ( start ? 1 : ((sc->cant.deathpenalty)? -1:0) );*/
 		}
 
-		// Can't sit/stand/attack/talk to NPC
+		// Can't sit/stand/talk to NPC
 		if (flag[SCS_NOINTERACT]) {
 			if (!flag[SCS_NOINTERACTCOND])
 				sc->cant.interact += (start ? 1 : ((sc->cant.interact) ? -1 : 0));

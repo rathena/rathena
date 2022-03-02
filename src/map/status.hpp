@@ -2687,7 +2687,7 @@ enum e_scs_flag : uint8 {
 	SCS_NOWARPCOND, ///< cond flag for SCS_NOWARP
 	SCS_NODEATHPENALTY, ///< player doesn't experience EXP loss
 	SCS_NODEATHPENALTYCOND, ///< cond flag for SCS_NODEATHPENALTYCOND
-	SCS_NOINTERACT, ///< player can't sit/stand/attack/talk to NPC
+	SCS_NOINTERACT, ///< player can't sit/stand/talk to NPC
 	SCS_NOINTERACTCOND, ///< cond flag for SCS_NOINTERACT
 	SCS_MAX
 };

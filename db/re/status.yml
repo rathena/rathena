@@ -860,8 +860,10 @@ Body:
     Icon: EFST_AUTOCOUNTER
     DurationLookup: KN_AUTOCOUNTER
     States:
+      NoAttack: true
       NoMove: true
       NoDropItem: true
+      NoInteract: true
   - Status: Sight
     DurationLookup: MG_SIGHT
     Options:

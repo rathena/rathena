@@ -51,7 +51,7 @@ States: Specified states given when the SC is active.
 	NoWarpCond         - Condition check for SCS_NOWARP.
 	NoDeathPenalty     - Cannot lose experience on death.
 	NoDeathPenaltyCond - Condition check for SCS_NODEATHPENALTY.
-	NoInteract         - Cannot interact with client (sit/stand, talk with NPC, attack).
+	NoInteract         - Cannot interact with client (sit/stand or talk with NPC).
 	NoInteractCond     - Condition check for SCS_NOINTERACT.
 
 States that have a suffix of "Cond" means the State has hard coded conditions in status.cpp::status_calc_state

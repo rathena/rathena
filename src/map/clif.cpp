@@ -11730,12 +11730,12 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 		return;
 	}
 
-	// Statuses that don't let the player sit / attack / talk with NPCs(targeted)
-	if (sd->sc.cant.interact || (sd->sc.count > 0 && sd->sc.data[SC_AUTOCOUNTER] && action_type != 0x07))
-		return;
-
-	if(action_type != 0x00 && action_type != 0x07)
+	// Statuses that don't let the player sit / stand / talk with NPCs (targeted)
+	if (action_type != 0x00 && action_type != 0x07) {
+		if (sd->sc.cant.interact)
+			return;
 		pc_stop_walking(sd, 1);
+	}
 	pc_stop_attack(sd);
 
 	if(target_id<0 && -target_id == sd->bl.id) // for disguises [Valaris]
@@ -11746,7 +11746,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 	case 0x00: // once attack
 	case 0x07: // continuous attack
 
-		if( pc_cant_act(sd) || sd->sc.cant.attack )
+		if( pc_cant_act(sd) )
 			return;
 
 		if (!battle_config.sdelay_attack_enable && pc_checkskill(sd, SA_FREECAST) <= 0) {
