@@ -1,8 +1,8 @@
 //===== rAthena Script =======================================
-//= Illusion Enchants
+//= Episode 16.2 - Illusion Enchants
 //===== Description: =========================================
 //= [Walkthrough Conversion]
-//= Illusion related merchants and enchanter
+//= Illusion series related merchants and enchanters
 //===== Changelogs: ==========================================
 //= 1.0 Initial release [crazyarashi]
 //= 1.1 Cleanup and improvements [Everade]
