@@ -368,7 +368,7 @@ payon_in03,33,95,3	script	Muyeon#ill_moon_pin	4_F_TAEKWON,{
 		illusion_moonlight = 4;
 		completequest 7778;
 		setquest 7779;
-		end;
+		close;
 	}
 	if (illusion_moonlight == 4) {
 		mes "[ Muyeon ]";
@@ -524,7 +524,7 @@ payon_in03,33,95,3	script	Muyeon#ill_moon_pin	4_F_TAEKWON,{
 		completequest 7788;
 		getitem 25271,5;
 		getexp 500000,500000;
-		end;
+		close;
 	}
 	mes "[ Muyeon ]";
 	mes "Good luck investigating the phenomenon with Chunghae!";
@@ -893,102 +893,96 @@ pay_d03_i,152,45,4	script	Soldier Junghee#ill_moon_ind	4_M_PAY_SOLDIER,{
 	mes "There's another portal that looks just like the one we came through.";
 	mes "I touched it, and it sent me back to the original ruined village.";
 	next;
-	if (select("About the angry Nine Tails.:About the angry Soldiers.") == 1) {
-			switch (checkquest(7785,PLAYTIME)) {
-				case -1:
-					break;
-				case 0:
-				case 1:
-					mes "[ Junghee ]";
-					mes "Chunghae said we're inside a Moonlight Flower's nightmare.";
-					mes "They may not be real, but if they pose any threat to the living, then they must be taken care of.";
-					next;
-					mes "[ Junghee ]";
-					mes "And that has nothing to do with the symphathy I feel for them.";
-					mes "Now if you'll excuse me, Chunghae and I'll go investigate other places.";
-					close;
-				case 2:
-					erasequest 7785;
-					mes "Did you get some rest?";
-					mes "Everything's just the same as when you left it, but I want to clear this place,";
-					next;
-					break;
+	switch( select( "About the angry Nine Tails.", "About the angry Soldiers." ) ) {
+	case 1:
+		switch( checkquest(7785,PLAYTIME) ) {
+		case -1:
+			if (checkquest(7784,HUNTING) == -1) {
+				mes "[ Junghee ]";
+				mes "Chunghae is having a problem investigating this place because of the angry foxes.";
+				mes "I'll appreciate if you can take care of them.";
+				break;
 			}
-			switch (checkquest(7784,HUNTING)) {
-				case -1:
-					mes "[ Junghee ]";
-					mes "Chunghae is having a problem investigating this place because of the angry foxes.";
-					mes "I'll appreciate if you can take care of them.";
-					next;
-					if (select("Accept:Decline") == 2) {
-						mes "[ Junghee ]";
-						mes "Then Chunghae won't be able to fully investigate this place.";
-						close;
-					}
-					mes "[ Junghee ]";
-					mes "Thank you.";
-					mes "I understand why those ^0000FFfoxes are angry^000000, but this has to be done.";
-					setquest 7784;
-					close;
-
-				case 0:
-				case 1:
-					mes "[ Junghee ]";
-					mes "Please hunt the ^0000FFAngry Nine Tails^000000 around this place.";
-					mes "That'll ensure Chunghae's safety during his investigation.";
-					close;
+			mes "[ Junghee ]";
+			mes "Please hunt the ^0000FFAngry Nine Tails^000000 around this place.";
+			mes "That'll ensure Chunghae's safety during his investigation.";
+			close;
+		case 0:
+		case 1:
+			mes "[ Junghee ]";
+			mes "Chunghae said we're inside a Moonlight Flower's nightmare.";
+			mes "They may not be real, but if they pose any threat to the living, then they must be taken care of.";
+			next;
+			mes "[ Junghee ]";
+			mes "And that has nothing to do with the symphathy I feel for them.";
+			mes "Now if you'll excuse me, Chunghae and I'll go investigate other places.";
+			close;
+		case 2:
+			erasequest 7785;
+			mes "[ Junghee ]";
+			mes "Did you get some rest?";
+			mes "Everything's just the same as when you left it, but I want to clear this place,";
+			mes "so Chunghae can investigate it.";
+			mes "Could you hunt some ^4d4dffAngry Nine Tails^000000?";
+			break;
+		}
+		next;
+		if (select( "Accept.", "Decline." ) == 2) {
+			mes "[ Junghee ]";
+			mes "Then Chunghae won't be able to fully investigate this place.";
+			close;
+		}
+		mes "[ Junghee ]";
+		mes "Thank you.";
+		mes "I understand why those ^0000FFfoxes are angry^000000, but this has to be done.";
+		setquest 7784;
+		close;
+	case 2:
+		switch( checkquest(7787,PLAYTIME) ) {
+		case -1:
+			if (checkquest(7786,HUNTING) == -1) {
+				mes "[ Junghee ]";
+				mes "These soldiers tried to protect their villagers until the last moment,";
+				mes "and got buried with them. No wonder they're so angry.";
+				break;
 			}
-	} else {
-			switch (checkquest(7787,PLAYTIME)) {
-				case -1:
-					break;
-				case 0:
-				case 1:
-					mes "[ Junghee ]";
-					mes "If we're really inside Moonlight Flower's nightmare, like Chunghae thinks,";
-					mes "then the angry soldier over there must have been the guard of this village.";
-					next;
-					mes "[ Junghee ]";
-					mes "It doesn't matter if this is real or not. Watching my ancestors suffer is difficult.";
-					mes "I may end up wasting our time, but I want to try to help them rest.";
-					close;
-				case 2:
-					erasequest 7787;
-					mes "[ Junghee ]";
-					mes "What can we do to get rid of these nightmares?";
-					mes "I told you it's difficult for me to look at those soldiers without feeling pain.";
-					next;
-					break;
-			}
-			switch (checkquest(7786,HUNTING)) {
-				case -1:
-					mes "[ Junghee ]";
-					mes "These soldiers tried to protect their villagers until the last moment,";
-					mes "and got buried with them. No wonder they're so angry.";
-					next;
-					mes "[ Junghee ]";
-					mes "Would you be so kind as to put them to rest for me?";
-					next;
-					if (select("Accept.:Decline.") == 2) {
-						mes "[ Junghee ]";
-						mes "I really don't want to deal with them myself,";
-						mes "but I guess I'll have to.";
-						close;
-					}
-					mes "[ Junghee ]";
-					mes "Thank you.";
-					mes "I'll leave the ^0000FFAngry Soldiers^000000 to you.";
-					mes "Please send them to heaven.";
-					setquest 7786;
-					close;
-
-				case 0:
-				case 1:
-					mes "[ Junghee ]";
-					mes "Please take care of the ^0000FFAngry Soldiers^000000 in this place.";
-					mes "I mean... send them to Heaven.";
-					close;
-			}
+			mes "[ Junghee ]";
+			mes "Please take care of the ^0000FFAngry Soldiers^000000 in this place.";
+			mes "I mean... send them to Heaven.";
+			close;
+		case 0:
+		case 1:
+			mes "[ Junghee ]";
+			mes "If we're really inside Moonlight Flower's nightmare, like Chunghae thinks,";
+			mes "then the angry soldier over there must have been the guard of this village.";
+			next;
+			mes "[ Junghee ]";
+			mes "It doesn't matter if this is real or not. Watching my ancestors suffer is difficult.";
+			mes "I may end up wasting our time, but I want to try to help them rest.";
+			close;
+		case 2:
+			erasequest 7787;
+			mes "[ Junghee ]";
+			mes "What can we do to get rid of these nightmares?";
+			mes "I told you it's difficult for me to look at those soldiers without feeling pain.";
+			break;
+		}
+		next;
+		mes "[ Junghee ]";
+		mes "Would you be so kind as to put them to rest for me?";
+		next;
+		if (select( "Accept.", "Decline." ) == 2) {
+			mes "[ Junghee ]";
+			mes "I really don't want to deal with them myself,";
+			mes "but I guess I'll have to.";
+			close;
+		}
+		mes "[ Junghee ]";
+		mes "Thank you.";
+		mes "I'll leave the ^0000FFAngry Soldiers^000000 to you.";
+		mes "Please send them to heaven.";
+		setquest 7786;
+		close;
 	}
 	end;
 
@@ -1030,7 +1024,7 @@ OnTimer60000:
 	end;
 }
 
-pay_d03_i,82,237,3	script	Villager#ill_moon_1	1_F_ORIENT_01,6,6,{
+pay_d03_i,82,237,3	script	Villager#ilp17	1_F_ORIENT_01,5,5,{
 	end;
 
 OnTouch:
@@ -1047,7 +1041,7 @@ OnTimer60000:
 	end;
 }
 
-pay_d03_i,254,206,3	script	Villager#ill_moon_2	4_F_01,6,6,{
+pay_d03_i,254,206,3	script	Villager#ilp18	4_F_01,5,5,{
 	end;
 
 OnTouch:
