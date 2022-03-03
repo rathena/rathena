@@ -65,7 +65,7 @@ prt_cas_q,21,39,3	script	Nihil M. Heine#171_prtq	4_EP16_NIHIL,{
 	end;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -101,7 +101,7 @@ einbech,219,80,3	script	Rebellion Crew#171_einb	4_M_REBELLION2,{
 	close;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"terra_gloria_main == 26 && isbegin_quest(7850) == 0");
 	end;
 }
@@ -438,7 +438,7 @@ einbroch,41,204,7	script	Kaya Toss#171_einbr	4_EP17_KAYA,{
 	close3;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -449,7 +449,7 @@ einbroch,39,205,7	script	As#171_einbr	4_EP17_AS,{
 	close3;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -596,7 +596,7 @@ ein_fild01,95,146,5	script	Kaya Toss#171_einf	4_EP17_KAYA,{
 	close3;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17013) == 1");
 	end;
 }
@@ -609,7 +609,7 @@ ein_fild01,94,145,5	script	As#171_einf	4_EP17_AS,{
 	close3;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -621,7 +621,7 @@ ein_fild01,97,144,1	script	Lazy#171_einf	4_M_LAZY,{
 	close3;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -875,7 +875,7 @@ lighthalzen,58,268,3	script	As#171_light	4_EP17_AS,{
 	close3;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -3055,7 +3055,7 @@ pub_cat,160,102,5	script	Philofontes#171_cat2	4_M_PHILOFONTES,{
 
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(7860) == 1");
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -3155,7 +3155,7 @@ pub_cat,163,102,3	script	Middle-Aged Man#171_cat	4_EP17_KAYA,{
 
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(7860) == 2 && isbegin_quest(7861) == 0");
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -3167,7 +3167,7 @@ pub_cat,165,103,3	script	Rekenber Senior Guard#171_cat	4_EP17_AS,{
 	close3;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -3179,7 +3179,7 @@ pub_cat,166,100,3	script	Commander Est#171_cat	4_F_ESTLOVELOY,{
 	close3;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -3408,7 +3408,7 @@ pub_cat,106,69,7	script	Lazy#171_cat	4_M_LAZY,{
 	end;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(7864) == 1");
 	end;
 }
@@ -3727,7 +3727,7 @@ pub_cat,105,58,3	script	Lazy#171_cat2	4_M_LAZY,{
 	end;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17000) == 1");
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17002) == 1");
 	end;
@@ -3894,7 +3894,7 @@ pub_cat,109,71,3	script	Kaya Toss#171_cat	4_EP17_KAYA,{
 	close3;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17001) == 1");
 	end;
 }
@@ -5022,7 +5022,7 @@ sp_cor,165,79,1	script	Kaya#171_rvs_1	4_EP17_KAYA,{
 	end;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17015) == 1");
 	end;
 }
@@ -5303,7 +5303,7 @@ sp_cor,166,81,7	script	Tess#171_rvs_1	4_M_PHILOFONTES,{
 	end;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17016) == 1");
 	end;
 }
@@ -5344,7 +5344,7 @@ sp_cor,164,77,1	script	As#171_rvs_1	4_EP17_AS,{
 	close3;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -5357,7 +5357,7 @@ sp_cor,162,73,7	script	Denny#171_rvs_1	4_M_REBELLION3,{
 	close;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -5370,7 +5370,7 @@ sp_cor,165,74,1	script	Magenta#171_rvs_1	4_M_GUNSLINGER2,{
 	close;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -5383,7 +5383,7 @@ sp_cor,163,62,3	script	Tommy#171_rvs_1	4_M_GUNSLINGER2,{
 	close;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -5393,7 +5393,7 @@ sp_cor,168,75,7	script	Gonie#171_rvs_1	4_M_GONY,{
 	close;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -5403,7 +5403,7 @@ sp_cor,161,80,5	script	Worker#171_rvs_1	4_M_03,{
 	close;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -5413,7 +5413,7 @@ sp_cor,167,85,5	script	Worker#171_rvs_2	4_M_LGTPOOR,{
 	close;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -5432,7 +5432,7 @@ sp_cor,164,82,5	script	Worker#171_rvs_4	4_M_DSTMAN,{
 	close;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -5442,7 +5442,7 @@ sp_cor,172,80,1	script	Worker#171_rvs_5	4_M_CHNCOOK,{
 	close;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -5775,7 +5775,7 @@ sp_cor,125,140,5	script	Kaya Toss#171_cor2	4_EP17_KAYA,{
 	end;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -6178,7 +6178,7 @@ sp_cor,110,130,3	script	Elena Bolkova#171_cor	4_F_ELENA,{
 
 OnInit:
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(16352) == 1";
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -6628,7 +6628,7 @@ sp_cor,135,216,5	script	Rookie#171_cor_1	4_M_ROOKIE,{
 
 OnInit:
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(16359) == 1";
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -6639,7 +6639,7 @@ sp_cor,141,215,3	script	Elena Bolkova#171_cor_1	4_F_ELENA,{
 	close3;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -6651,7 +6651,7 @@ sp_cor,138,219,3	script	Tess#171_cor_1	4_M_PHILOFONTES,{
 	close3;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -6662,7 +6662,7 @@ sp_cor,141,211,1	script	Lazy#171_cor_1	4_M_LAZY,{
 	close3;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -6677,7 +6677,7 @@ sp_cor,140,213,3	script	Elyumina#171_cor_1	4_EP17_ELYUMINA,{
 	close3;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -7347,7 +7347,7 @@ sp_rudus,15,280,5	script	Discarded Person#171_rudus	4_F_MUT1,{
 
 OnInit:
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17025) == 1";
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -7487,7 +7487,7 @@ sp_cor,163,56,4	script	Est#171_ocp	4_F_ESTLOVELOY,{
 	end;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -7554,7 +7554,7 @@ sp_cor,160,55,5	script	Operation Officer#171_ocp	4_M_ILYA,{
 	close;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -8189,7 +8189,7 @@ pub_cat,102,62,5	script	Kaya#171_cat2	4_EP17_KAYA,{
 	close3;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -8202,7 +8202,7 @@ pub_cat,112,72,3	script	As#171_cat	4_EP17_AS,{
 	close3;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -8213,7 +8213,7 @@ pub_cat,104,63,3	script	As#171_cat2	4_EP17_AS,{
 	close3;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
