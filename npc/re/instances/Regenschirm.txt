@@ -5,55 +5,56 @@
 //= Episode 17.1 - Regenschirm
 //===== Changelogs: ==========================================
 //= 1.0 Initial release [crazyarashi]
+//= 1.1 Optimizations and cleanup [Everade]
 //============================================================
 
 1@rgsr,1,1,0	script	#171_rgsr_control	HIDDEN_WARP_NPC,{
 	end;
-	
+
 OnInstanceInit:
-	set_instance_var("map$",instance_mapname("1@rgsr"));
-	instance_enable("Researcher#rgsr_ev_0",false);
-	instance_enable("Access Controller#rgsr",false);
-	instance_enable("#rgsr_touch_mob_0",false);
-	instance_enable("#rgsr_touch_mob_1",false);
-	instance_enable("#rgsr_warp_0",false);
-	instance_enable("Erst#rgsr",false);
-	instance_enable("Rebellion Crew#rgsr_dum01",false);
-	instance_enable("Ashley#rgsr3",false);
-	instance_enable("Gonie#rgsr",false);
-	instance_enable("Erst#rgsr2",false);
-	instance_enable("Central Room#rgsr",false);
-	instance_enable("Restrained Specimen#rgsr",false);
-	instance_enable("Control Device#rgsr0",false);
-	instance_enable("Control Device#rgsr1",false);
-	instance_enable("Control Device#rgsr2",false);
-	instance_enable("Control Device#rgsr3",false);
-	instance_enable("Ashley#rgsr4",false);
-end;
+	'map$ = instance_mapname("1@rgsr");
+	disablenpc instance_npcname("Researcher#rgsr_ev_0");
+	disablenpc instance_npcname("Access Controller#rgsr");
+	disablenpc instance_npcname("#rgsr_touch_mob_0");
+	disablenpc instance_npcname("#rgsr_touch_mob_1");
+	disablenpc instance_npcname("#rgsr_warp_0");
+	disablenpc instance_npcname("Erst#rgsr");
+	disablenpc instance_npcname("Rebellion Crew#rgsr_dum01");
+	disablenpc instance_npcname("Ashley#rgsr3");
+	disablenpc instance_npcname("Gonie#rgsr");
+	disablenpc instance_npcname("Erst#rgsr2");
+	disablenpc instance_npcname("Central Room#rgsr");
+	disablenpc instance_npcname("Restrained Specimen#rgsr");
+	disablenpc instance_npcname("Control Device#rgsr0");
+	disablenpc instance_npcname("Control Device#rgsr1");
+	disablenpc instance_npcname("Control Device#rgsr2");
+	disablenpc instance_npcname("Control Device#rgsr3");
+	disablenpc instance_npcname("Ashley#rgsr4");
+	end;
 
 OnEvent01:
-	instance_enable("#rgsr_touch_mob_0",true);
-	instance_enable("#rgsr_touch_mob_1",true);
-	instance_event("#rgsr_mob_1","OnSummon",false);
-end;
+	enablenpc instance_npcname("#rgsr_touch_mob_0");
+	enablenpc instance_npcname("#rgsr_touch_mob_1");
+	donpcevent instance_npcname("#rgsr_mob_1") + "::OnSummon";
+	end;
 
 OnEvent02:
-	instance_enable("#rgsr_warp_0",true);
-	instance_event("#rgsr_mob_2","OnSummon",false);
-end;
+	enablenpc instance_npcname("#rgsr_warp_0");
+	donpcevent instance_npcname("#rgsr_mob_2") + "::OnSummon";
+	end;
 
 OnEvent03:
-	instance_enable("Restrained Specimen#rgsr",true);
-	instance_enable("Control Device#rgsr0",true);
-	instance_enable("Control Device#rgsr1",true);
-	instance_enable("Control Device#rgsr2",true);
-	instance_enable("Control Device#rgsr3",true);
-end;
+	enablenpc instance_npcname("Restrained Specimen#rgsr");
+	enablenpc instance_npcname("Control Device#rgsr0");
+	enablenpc instance_npcname("Control Device#rgsr1");
+	enablenpc instance_npcname("Control Device#rgsr2");
+	enablenpc instance_npcname("Control Device#rgsr3");
+	end;
 
 OnEvent04:
-	set_instance_var("rgsr",14);
-	instance_event("#rgsr_boss","OnSummon",false);
-end;
+	'rgsr = 14;
+	donpcevent instance_npcname("#rgsr_boss") + "::OnSummon";
+	end;
 }
 
 1@rgsr,123,42,5	script	Oscar#rgsr	4_M_LGTGUARD,{
@@ -64,7 +65,6 @@ end;
 }
 
 1@rgsr,131,58,3	script	Ashley#rgsr	4_EP17_AS,{
-	.@map$ = get_instance_var("map$");
 	cutin "ep171_as02",1;
 	mes "[ Ashley ]";
 	mes "The door is normally locked with the security system, so I have to stay there and work with the controller.";
@@ -90,19 +90,18 @@ end;
 	mes "Please consider their safety first.";
 	mes "Now go ahead.";
 	close2;
-	if(!get_instance_var("rgsr")){
-		set_instance_var("rgsr",1);
-		instance_event("#171_rgsr_control","OnEvent01",false);
+	if (!'rgsr) {
+		'rgsr = 1;
+		donpcevent instance_npcname("#171_rgsr_control") + "::OnEvent01";
 	}
-	warp .@map$,127,67;
+	warp 'map$,127,67;
 	end;
 }
 
 1@rgsr,60,138,0	script	Access Controller#rgsr	4_ENERGY_WHITE,{
-	.@var = get_instance_var("rgsr");
-	instance_enable("Researcher#rgsr_ev_0",true);
-	if(.@var == 2){
-		set_instance_var("rgsr",3);
+	enablenpc instance_npcname("Researcher#rgsr_ev_0");
+	if ('rgsr == 2) {
+		'rgsr = 3;
 		npctalk "Communication Requested.";
 		sleep2 2750;
 		npctalk "Analysing Signal.";
@@ -123,24 +122,22 @@ end;
 		sleep2 2750;
 		npctalk "Voice Transmission Ended.";
 		sleep2 2750;
-		instance_hide(strnpcinfo(0),true);
-		instance_enable(strnpcinfo(0),true);
+		hideonnpc();
+		enablenpc();
 		npctalk "Researcher : Do you mind If I open the door?",instance_npcname("Researcher#rgsr_ev_0");
-		set_instance_var("rgsr",4);
+		'rgsr = 4;
 	}
 	end;
 }
 
 1@rgsr,59,132,7	script	Researcher#rgsr_ev_0	4_M_NFMAN,{
-	.@var = get_instance_var("rgsr");
-	.@var2 = get_instance_var("activate");
-	if(.@var == 4 && .@var2 == 0){
-		set_instance_var("activate",1);
+	if ('rgsr == 4 && 'activate == 0) {
+		'activate = 1;
 		mes "[ Researcher ]";
 		mes "The biometric scan is still operational, I'll be staying here to keep the door open.";
 		mes "If you're in a hurry, please go...";
 		dispbottom "Control : Identity confirmed.";
-		instance_event("#171_rgsr_control","OnEvent02",false);
+		donpcevent instance_npcname("#171_rgsr_control") + "::OnEvent02";
 		close2;
 		sleep2 800;
 		npctalk "Researcher : ...huh... what the hell is this...";
@@ -149,8 +146,7 @@ end;
 }
 
 1@rgsr,36,211,3	script	Erst#rgsr	4_F_ESTLOVELOY,{
-	.@var = get_instance_var("rgsr");
-	if(.@var < 7){
+	if ('rgsr < 7) {
 		cutin "ep162_est03",2;
 		mes "[ Erst ]";
 		mes "Are you the one who removed the poison gas outside?";
@@ -185,28 +181,27 @@ end;
 		next;
 		mes "[ Erst ]";
 		mes "You have to open the entrance of the private labs.";
-		if(.@var == 4)
-			set_instance_var("rgsr",5);
+		if ('rgsr == 4)
+			'rgsr = 5;
 		close3;
 	}
 	cutin "ep162_est02",2;
 	mes "[ Erst ]";
 	mes "Huh. We'll focus on rescuing the hostages first.";
-	mes "Look for the Security Guard's room that Ashley talked about.";		
-	close3;	
+	mes "Look for the Security Guard's room that Ashley talked about.";
+	close3;
 }
 
 1@rgsr,26,219,0	script	Access Controller#rgsr2	4_ENERGY_WHITE,{
-	.@var = get_instance_var("rgsr");
-	if(.@var < 5){
+	if ('rgsr < 5) {
 		mes "Code is inactive.";
 		mes "The communication has been terminated.";
 		close;
 	}
-	if(.@var == 5){
+	if ('rgsr == 5) {
 		mes "Voice Transmission Connected.";
 		close2;
-		set_instance_var("rgsr",6);
+		'rgsr = 6;
 		npctalk "Waiting for communication response...";
 		sleep2 2750;
 		npctalk "Ashley : Commander Erst? We closed the hall lock, but what is the problem?";
@@ -222,10 +217,10 @@ end;
 		npctalk "Ashley : The priority should be to secure the laboratories and then the Guard Room.... *click*";
 		sleep2 2000;
 		npctalk "Erst : Eh, what was that?",instance_npcname("Erst#rgsr");
-		set_instance_var("rgsr",7);
+		'rgsr = 7;
 		end;
 	}
-	if(.@var < 7)
+	if ('rgsr < 7)
 		end;
 	else {
 		mes "Code is inactive.";
@@ -235,13 +230,12 @@ end;
 }
 
 1@rgsr,235,44,5	script	Ashley#rgsr2	4_EP17_AS,{
-	.@var = get_instance_var("rgsr");
-	if(.@var == 7){
-		for(.@i = 0; .@i < 3; .@i++){
-			if(!get_instance_var("rescued[" + .@i + "]"))
+	if ('rgsr == 7) {
+		for (.@i = 0; .@i < 3; .@i++) {
+			if (!getd("'rescued[" + .@i + "]"))
 				.@miss++;
 		}
-		if(.@miss){
+		if (.@miss) {
 			cutin "ep171_as02",2;
 			mes "[ Ashley ]";
 			mes "Hey, Did you check all the labs yet?";
@@ -277,9 +271,9 @@ end;
 		mes "Meet me over there.";
 		close2;
 		cutin "",255;
-		instance_enable("Central Room#rgsr",true);
-		set_instance_var("rgsr",8);
-		instance_enable("#rgsr_mob_2",false);
+		enablenpc instance_npcname("Central Room#rgsr");
+		'rgsr = 8;
+		disablenpc instance_npcname("#rgsr_mob_2");
 		end;
 	}
 	cutin "ep171_as02",1;
@@ -290,8 +284,7 @@ end;
 }
 
 1@rgsr,235,143,5	script	Detained Researcher#rgsr_q01	4_F_SCIENCE,{
-	.@var = get_instance_var("rescued[0]");
-	if(!.@var){
+	if (!'rescued[0]) {
 		mes "[ Researcher ]";
 		mes "My... my search... materials...";
 		mes "They took it all!";
@@ -309,17 +302,15 @@ end;
 		mes "[ Researcher ]";
 		mes "Oh, you're there to protect me?";
 		mes "I'll go with you, thank you!";
-		set_instance_var("rescued[0]",1);
+		'rescued[0] = 1;
 		close2;
-		instance_hide(strnpcinfo(0),true);
-		instance_enable(strnpcinfo(0),false);
+		disablenpc();
 	}
 	end;
 }
 
 1@rgsr,237,108,3	script	Detained Researcher#rgsr_q02	4_LGTSCIENCE,{
-	.@var = get_instance_var("rescued[1]");
-	if(!.@var){
+	if (!'rescued[1]) {
 		mes "[ Researcher ]";
 		mes "I thought they kicked out all the crazy guy...";
 		mes "I hit the back of my head like this.";
@@ -341,18 +332,16 @@ end;
 		cutin "ep162_est01",2;
 		mes "[ Erst ]";
 		mes "I'll take this guy out of here and you look at the other rooms.";
-		set_instance_var("rescued[1]",1);
+		'rescued[1] = 1;
 		close2;
 		cutin "",255;
-		instance_hide(strnpcinfo(0),true);
-		instance_enable(strnpcinfo(0),false);
+		disablenpc();
 	}
 	end;
 }
 
 1@rgsr,237,71,3	script	Detained Researcher#rgsr_q03	4_F_FRUIT,{
-	.@var = get_instance_var("rescued[2]");
-	if(!.@var){
+	if (!'rescued[2]) {
 		mes "[ Researcher ]";
 		mes "Please help me!";
 		mes "I worked a lot and I'm not getting paid!";
@@ -380,8 +369,8 @@ end;
 		mes "Oh you already know.";
 		mes "Okay. I'll be quiet now and wait.";
 		mes "Your uniform is really cool though.";
-		set_instance_var("rescued[2]",1);
-		end;
+		'rescued[2] = 1;
+		close;
 	}
 	mes "[ Researcher ]";
 	mes "I know. I know.";
@@ -394,7 +383,7 @@ end;
 }
 
 1@rgsr,241,51,0	script	Scattered Documents#rgsr	4_ENERGY_BLUE,{
-	if(isbegin_quest(7863) == 0){
+	if (isbegin_quest(7863) == 0) {
 		mes "This is the list of the Enterprise security teams.";
 		mes "Some have circles around them... others are crossed out.";
 		next;
@@ -423,32 +412,29 @@ end;
 
 OnInstanceInit:
 	questinfo(QTYPE_CLICKME,QMARK_YELLOW,"isbegin_quest(7863) == 0");
-end;
+	end;
 }
 
 1@rgsr,125,157,0	script	Central Room#rgsr	4_ENERGY_BLUE,{
-	.@var = get_instance_var("rgsr");
-	if(.@var == 8){
-		set_instance_var("rgsr",9);
-		instance_enable("Ashley#rgsr3",true);
-		instance_enable("Gonie#rgsr",true);
-		instance_enable("Erst#rgsr2",true);
+	if ('rgsr == 8) {
+		'rgsr = 9;
+		enablenpc instance_npcname("Ashley#rgsr3");
+		enablenpc instance_npcname("Gonie#rgsr");
+		enablenpc instance_npcname("Erst#rgsr2");
 		npctalk "Am I late?",instance_npcname("Ashley#rgsr3");
 		sleep2 1800;
 		npctalk "No you arrived just in time.",instance_npcname("Erst#rgsr2");
 		end;
 	}
 	mes "The device does not work.";
-	end;	
+	close;
 }
 
 1@rgsr,128,157,3	script	Ashley#rgsr3	4_EP17_AS,{
-	.@var = get_instance_var("rgsr");
-	.@map$ = get_instance_var("map$");
-	if(.@var > 13)
+	if ('rgsr > 13)
 		end;
-	if(.@var == 9){
-		set_instance_var("rgsr",10);
+	if ('rgsr == 9) {
+		'rgsr = 10;
 		.@ashley$ = instance_npcname("Ashley#rgsr3");
 		.@gonie$ = instance_npcname("Gonie#rgsr");
 		.@erst$ = instance_npcname("Erst#rgsr2");
@@ -468,17 +454,17 @@ end;
 		sleep2 3000;
 		npctalk "Gonie : *Nods*",.@gonie$;
 		sleep2 3000;
-		instance_disable("Gonie#rgsr");
-		instance_disable("Erst#rgsr2");
+		disablenpc instance_npcname("Gonie#rgsr");
+		disablenpc instance_npcname("Erst#rgsr2");
 		npctalk "Ashley : So adventurer, let's check out the Central Room.",.@ashley$;
-		set_instance_var("rgsr",11);
-		end;		
+		'rgsr = 11;
+		end;
 	}
 	cutin "ep171_as02",1;
 	mes "[ Ashley ]";
 	mes "That's the Central Room right ahead.";
 	next;
-	if(select("Enter.:Wait.") == 2){
+	if (select("Enter.:Wait.") == 2) {
 		mes "[ Ashley ]";
 		mes "Please speak to me when you're ready.";
 		mes "I don't know why, but it's tightly closed;. It takes some time to maintain access.";
@@ -490,13 +476,13 @@ end;
 	}
 	mes "[ Ashley ]";
 	mes "First I'll need to disable the auto-locking mechanism, and then I'll follow right away.";
-	if(.@var == 11){
-		set_instance_var("rgsr",12);
-		instance_event("#171_rgsr_control","OnEvent03",false);
+	if ('rgsr == 11) {
+		'rgsr = 12;
+		donpcevent instance_npcname("#171_rgsr_control") + "::OnEvent03";
 	}
 	close2;
 	cutin "",255;
-	warp .@map$,126,164;
+	warp 'map$,126,164;
 	end;
 }
 
@@ -516,46 +502,41 @@ end;
 }
 
 1@rgsr,125,188,3	script	Restrained Specimen#rgsr	20353,2,3,{
-	.@var = get_instance_var("rgsr");
-	.@map$ = get_instance_var("map$");
-	if(.@var == 12){
+	if ('rgsr == 12) {
 		specialeffect EF_RED_HIT;
 		specialeffect EF_BEGINSPELL3;
 		npctalk "Do... do not... come close to me...!! Huh, my head... it hurts...";
-		mapannounce .@map$,"Do... do not... come close to me...!! Huh, my head... it hurts...",bc_map,0x00FF00;
-		set_instance_var("rgsr",13);
+		mapannounce 'map$,"Do... do not... come close to me...!! Huh, my head... it hurts...",bc_map,0x00FF00;
+		'rgsr = 13;
 	}
 	end;
-	
+
 OnFail:
-	.@map$ = get_instance_var("map$");
 	specialeffect EF_FREEZE;
 	npctalk "Awesome-!! That's it... What did you do!!";
-	mapannounce .@map$,"Awesome-!! That's it... What did you do!!",bc_map,0x00FF00;
-end;
+	mapannounce 'map$,"Awesome-!! That's it... What did you do!!",bc_map,0x00FF00;
+	end;
 }
 
 1@rgsr,144,180,0	script	Control Device#rgsr0	4_ENERGY_BLUE,{
-	.@var = get_instance_var("rgsr");
-	.@map$ = get_instance_var("map$");
-	if(.@var < 13){
+	if ('rgsr < 13) {
 		mes "This device has an unknown purpose.";
 		mes "There are four buttons in the room.";
 		close;
 	}
 	.@index = atoi(replacestr(strnpcinfo(2),"rgsr",""));
-	if(.@index > 0){
-		if(!get_instance_var("rsgr_c["+(.@index - 1)+"]")){
+	if (.@index > 0) {
+		if (!getd("'rsgr_c["+(.@index - 1)+"]")) {
 			mes "This device has an unknown purpose.";
 			mes "There are four buttons in the room.";
 			next;
 			select("Press the button.");
-			instance_event("Restrained Specimen#rgsr","OnFail",false);
-			end;
+			donpcevent instance_npcname("Restrained Specimen#rgsr") + "::OnFail";
+			close;
 		}
 	}
-	if(!get_instance_var("rsgr_c["+.@index+"]")){
-		switch(.@index){
+	if (!getd("'rsgr_c["+.@index+"]")) {
+		switch (.@index) {
 			case 0: .@answer = 2; .@string$ = "three phases"; break;
 			case 1: .@answer = 1; .@string$ = "two phases"; break;
 			case 2: .@answer = 4; .@string$ = "one phase"; break;
@@ -565,30 +546,29 @@ end;
 		mes "There are four buttons in the room.";
 		next;
 		.@s = select("Red Button.:Blue Button.:White Button.:Yellow Button.");
-		if(.@s != .@answer)
-			instance_event("Restrained Specimen#rgsr","OnFail",false);
+		if (.@s != .@answer)
+			donpcevent instance_npcname("Restrained Specimen#rgsr") + "::OnFail";
 		else {
 			specialeffect EF_BEGINSPELL3,AREA,instance_npcname("Restrained Specimen#rgsr");
-			if(.@index < 3){
-				mapannounce .@map$,"Gravity control adjustment... completed... There are " + .@string$ +" remaining.",bc_map,0x0D98BA;
-				set_instance_var("rsgr_c["+.@index+"]",1);
+			if (.@index < 3) {
+				mapannounce 'map$,"Gravity control adjustment... completed... There are " + .@string$ +" remaining.",bc_map,0x0D98BA;
+				setd("'rsgr_c["+.@index+"]",1);
 			} else {
-				set_instance_var("rsgr_c["+.@index+"]",1);
-				mapannounce .@map$,"Gravity control adjustment... completed... Restraints have been disengaged.",bc_map,0x0D98BA;
+				setd("'rsgr_c["+.@index+"]",1);
+				mapannounce 'map$,"Gravity control adjustment... completed... Restraints have been disengaged.",bc_map,0x0D98BA;
 				sleep2 2500;
-				instance_event("#171_rgsr_control","OnEvent04",false);
+				donpcevent instance_npcname("#171_rgsr_control") + "::OnEvent04";
 			}
 		}
-		end;
+		close;
 	}
 	mes "This device has already been activated.";
-	close;		
+	close;
 }
 
 1@rgsr,108,168,0	duplicate(Control Device#rgsr0)	Control Device#rgsr1	4_ENERGY_RED
 1@rgsr,114,191,0	duplicate(Control Device#rgsr0)	Control Device#rgsr2	4_ENERGY_WHITE
 1@rgsr,143,168,0	duplicate(Control Device#rgsr0)	Control Device#rgsr3	4_ENERGY_YELLOW
-
 
 1@rgsr,127,164,3	script	Ashley#rgsr4	4_EP17_AS,{
 	cutin "ep171_as01",2;
@@ -601,7 +581,7 @@ end;
 	mes "I'll... I'll go to my office and join you.";
 	next;
 	.@s = select("Move to Einbroch.:Move to Lighthalzen.:Stay for a while.");
-	if(.@s == 3){
+	if (.@s == 3) {
 		cutin "ep171_as02",2;
 		mes "[ Ashley ]";
 		mes "Do you have anything else to investigate?";
@@ -613,18 +593,16 @@ end;
 	mes "Please head there and meet us in the headquarters.";
 	completequest 7862;
 	close2;
-	if(.@s == 1)
+	if (.@s == 1)
 		warp "einbroch",301,324;
 	else
 		warp "lighthalzen",54,272;
 	end;
 }
 
-
 //= Monster
 1@rgsr,1,1,0	script	#rgsr_mob_1	HIDDEN_WARP_NPC,{
 OnSummon:
-	.@map$ = get_instance_var("map$");
 	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill";
 	setarray .@xy,
 	153,80,155,81,154,82, //= Bottom Right
@@ -638,93 +616,87 @@ OnSummon:
 	93,66,93,67,94,68, //= Bottom Door
 	58,65,56,57,44,59,31,53,15,55, //= Bottom Room
 	59,94,48,98,53,103,36,110,33,126,46,132,55,131; //= Upper Room
-	for(.@i = 0; .@i < getarraysize(.@xy); .@i += 2)
-		monster .@map$,.@xy[.@i],.@xy[.@i+1],"Special Guard",3627,1,.@event$;
-end;
+	for (.@i = 0; .@i < getarraysize(.@xy); .@i += 2)
+		monster 'map$,.@xy[.@i],.@xy[.@i+1],"Special Guard",3627,1,.@event$;
+	end;
 
 OnMobKill:
-	.@map$ = get_instance_var("map$");
 	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill";
-	if(!mobcount(.@map$,.@event$)){
-		set_instance_var("rgsr",2);
-		instance_enable(strnpcinfo(0),false);
-		instance_enable("Access Controller#rgsr",true);
+	if (!mobcount('map$,.@event$)) {
+		'rgsr = 2;
+		disablenpc();
+		enablenpc instance_npcname("Access Controller#rgsr");
 	}
-end;
+	end;
 }
 
 1@rgsr,1,1,0	script	#rgsr_mob_2	HIDDEN_WARP_NPC,{
 OnSummon:
-	.@map$ = get_instance_var("map$");
 	setarray .@xy,102,137,104,136,104,135,126,139,138,137,139,134,137,133,151,135,150,136,151,137,85,151,82,215,84,216,84,218,107,216;
 	setarray .@left_xy,85,170,54,186,55,183,58,181,59,186,62,183,62,216,59,214,56,217,54,214,52,217;
 	setarray .@right_xy,167,136,167,135,168,135,208,138,208,134,203,138,200,134,187,123,188,
 	123,187,122,186,108,188,107,186,105,196,106,203,109,205,105,208,109,187,92,186,90,188,91,
 	187,69,187,67,188,67,201,74,202,77,207,76,211,74,187,48,188,45,186,46,197,45,202,45,208,42,211,42;
 	setarray .@top_xy,169,217,169,214,172,217,172,214,176,217,176,214,180,217,180,214,184,217,184,214,167,204,168,203,168,203,167,176,167,176,166,175;
-	for(.@i = 0; .@i < getarraysize(.@xy); .@i += 2)
-		monster .@map$,.@xy[.@i],.@xy[.@i+1],"Special Guard",3627,1;
-	for(.@i = 0; .@i < getarraysize(.@left_xy); .@i += 2)
-		monster .@map$,.@left_xy[.@i],.@left_xy[.@i+1],"Poisonous Gas",20352,1,instance_npcname(strnpcinfo(0))+"::OnLeftKill";
-	for(.@i = 0; .@i < getarraysize(.@right_xy); .@i += 2)
-		monster .@map$,.@right_xy[.@i],.@right_xy[.@i+1],"Poisonous Gas",20352,1,instance_npcname(strnpcinfo(0))+"::OnRightKill";
-	for(.@i = 0; .@i < getarraysize(.@top_xy); .@i += 2)
-		monster .@map$,.@top_xy[.@i],.@top_xy[.@i+1],"Poisonous Gas",20352,1,instance_npcname(strnpcinfo(0))+"::OnTopKill";
+	for (.@i = 0; .@i < getarraysize(.@xy); .@i += 2)
+		monster 'map$,.@xy[.@i],.@xy[.@i+1],"Special Guard",3627,1;
+	for (.@i = 0; .@i < getarraysize(.@left_xy); .@i += 2)
+		monster 'map$,.@left_xy[.@i],.@left_xy[.@i+1],"Poisonous Gas",20352,1,instance_npcname(strnpcinfo(0))+"::OnLeftKill";
+	for (.@i = 0; .@i < getarraysize(.@right_xy); .@i += 2)
+		monster 'map$,.@right_xy[.@i],.@right_xy[.@i+1],"Poisonous Gas",20352,1,instance_npcname(strnpcinfo(0))+"::OnRightKill";
+	for (.@i = 0; .@i < getarraysize(.@top_xy); .@i += 2)
+		monster 'map$,.@top_xy[.@i],.@top_xy[.@i+1],"Poisonous Gas",20352,1,instance_npcname(strnpcinfo(0))+"::OnTopKill";
 	end;
-	
+
 OnLeftKill:
-	.@map$ = get_instance_var("map$");
 	.@event$ = instance_npcname(strnpcinfo(0))+"::OnLeftKill";
-	if(!mobcount(.@map$,.@event$)){
-		mapannounce .@map$,"Erst : Who is it? Are you Ashley? Are you the adventurer?",bc_map,0x0D98BA;
-		instance_enable("Erst#rgsr",true);
-		instance_enable("Rebellion Crew#rgsr_dum01",true);
+	if (!mobcount('map$,.@event$)) {
+		mapannounce 'map$,"Erst : Who is it? Are you Ashley? Are you the adventurer?",bc_map,0x0D98BA;
+		enablenpc instance_npcname("Erst#rgsr");
+		enablenpc instance_npcname("Rebellion Crew#rgsr_dum01");
 	}
-end;
+	end;
 
 OnRightKill:
 OnTopKill:
-end;
+	end;
 }
 
 1@rgsr,1,1,0	script	#rgsr_boss	HIDDEN_WARP_NPC,{
 OnSummon:
-	.@map$ = get_instance_var("map$");
-	mapannounce .@map$,"Ahahaha.. ahahaha... I'll kill you all!!!!",bc_map,0x00FF00;
+	mapannounce 'map$,"Ahahaha.. ahahaha... I'll kill you all!!!!",bc_map,0x00FF00;
 	sleep 2000;
-	mapannounce .@map$,"Ashley : What is going on? *click* The lock is...!!",bc_map;
+	mapannounce 'map$,"Ashley : What is going on? *click* The lock is...!!",bc_map;
 	sleep 2000;
-	mapannounce .@map$,"I'm not a defect! I'm not a monster!",bc_map,0x00FF00;
+	mapannounce 'map$,"I'm not a defect! I'm not a monster!",bc_map,0x00FF00;
 	specialeffect EF_LORD,AREA,instance_npcname("Restrained Specimen#rgsr");
-	instance_hide("Restrained Specimen#rgsr",true);
-	instance_enable("Restrained Specimen#rgsr",false);
-	monster .@map$,125,188,"Failed Specimen",20353,1,instance_npcname(strnpcinfo(0))+"::OnBossKill";
+	hideonnpc instance_npcname("Restrained Specimen#rgsr");
+	disablenpc instance_npcname("Restrained Specimen#rgsr");
+	monster 'map$,125,188,"Failed Specimen",20353,1,instance_npcname(strnpcinfo(0))+"::OnBossKill";
 	end;
-	
-OnBossKill:
-	instance_hide("Ashley#rgsr3",true);
-	instance_enable("Ashley#rgsr3",false);	
-	instance_enable("Ashley#rgsr4",true);
-	instance_enable(strnpcinfo(0),false);
-end;
-}
 
+OnBossKill:
+	hideonnpc instance_npcname("Ashley#rgsr3");
+	disablenpc instance_npcname("Ashley#rgsr3");
+	enablenpc instance_npcname("Ashley#rgsr4");
+	disablenpc();
+	end;
+}
 
 1@rgsr,94,68,5	script	#rgsr_touch_mob_0	3622,4,6,{
 	end;
-	
+
 OnTouch:
-	instance_hide(strnpcinfo(0),true);
-	instance_enable(strnpcinfo(0),false);
+	hideonnpc();
+	disablenpc();
 	.@v = atoi(replacestr(strnpcinfo(2),"rgsr_touch_mob_",""));
-	if(!.@v)
+	if (!.@v)
 		setarray .@xy,98,66,94,68,95,70,92,68;
 	else
 		setarray .@xy,91,91,91,93,95,93,94,97,97,92;
-	.@map$ = get_instance_var("map$");
-	for(.@i = 0; .@i < getarraysize(.@xy); .@i += 2)
-		monster .@map$,.@xy[.@i],.@xy[.@i+1],"Special Guard",3622,1;	
-end;
+	for (.@i = 0; .@i < getarraysize(.@xy); .@i += 2)
+		monster 'map$,.@xy[.@i],.@xy[.@i+1],"Special Guard",3622,1;
+	end;
 }
 
 1@rgsr,95,93,5	duplicate(#rgsr_touch_mob_0)	#rgsr_touch_mob_1	3622,4,6
@@ -732,30 +704,28 @@ end;
 //= Warp/Other
 1@rgsr,59,136,0	script	#rgsr_warp_0	WARPNPC,1,2,{
 	end;
-	
+
 OnTouch:
-	.@map$ = get_instance_var("map$");
-	warp .@map$,66,136;
-end;
+	warp 'map$,66,136;
+	end;
 }
 
 1@rgsr,51,184,0	script	#rgsr_warp_1	WARPNPC,1,2,{
 	end;
-	
+
 OnTouch:
 	.@event$ = instance_npcname("#rgsr_mob_2")+"::OnLeftKill";
-	.@map$ = get_instance_var("map$");
-	if(mobcount(.@map$,.@event$)){
+	if (mobcount('map$,.@event$)) {
 		dispbottom "Voice Behind Door : Who's outside? exterminate that strange poison gas!!";
 		end;
 	}
-	switch(atoi(replacestr(strnpcinfo(2),"rgsr_warp_",""))){
-		case 1: warp .@map$,46,184; break;
-		case 2:	warp .@map$,46,216; break;
-		case 3: warp .@map$,54,184; break;
-		case 4: warp .@map$,54,216; break;
+	switch (atoi(replacestr(strnpcinfo(2),"rgsr_warp_",""))) {
+		case 1: warp 'map$,46,184; break;
+		case 2:	warp 'map$,46,216; break;
+		case 3: warp 'map$,54,184; break;
+		case 4: warp 'map$,54,216; break;
 	}
-end;
+	end;
 }
 
 1@rgsr,51,216,0	duplicate(#rgsr_warp_1)	#rgsr_warp_2	WARPNPC,1,2
@@ -764,38 +734,36 @@ end;
 
 1@rgsr,186,216,0	script	#rgsr_warp_5	WARPNPC,1,2,{
 	.@event$ = instance_npcname("#rgsr_mob_2")+"::OnTopKill";
-	.@map$ = get_instance_var("map$");
-	if(mobcount(.@map$,.@event$)){
+	if (mobcount('map$,.@event$)) {
 		mes "An unknown entity has been detected. Access Denied.";
-		end;
+		close;
 	}
-	switch(atoi(replacestr(strnpcinfo(2),"rgsr_warp_",""))){
-		case 5: warp .@map$,191,216; break;
-		case 6: warp .@map$,183,216; break;
+	switch (atoi(replacestr(strnpcinfo(2),"rgsr_warp_",""))) {
+		case 5: warp 'map$,191,216; break;
+		case 6: warp 'map$,183,216; break;
 	}
-end;
+	end;
 }
 
 1@rgsr,188,216,0	duplicate(#rgsr_warp_5)	#rgsr_warp_6	WARPNPC,1,2
 
 1@rgsr,214,136,0	script	#rgsr_warp_7	WARPNPC,1,2,{
 	.@event$ = instance_npcname("#rgsr_mob_2")+"::OnRightKill";
-	.@map$ = get_instance_var("map$");
-	if(mobcount(.@map$,.@event$) > 0 || get_instance_var("rgsr") < 7){
+	if (mobcount('map$,.@event$) > 0 || 'rgsr < 7) {
 		mes "An unknown entity has been detected. Access Denied.";
-		end;
+		close;
 	}
-	switch(atoi(replacestr(strnpcinfo(2),"rgsr_warp_",""))){
-		case 7: warp .@map$,219,136; break;
-		case 8: warp .@map$,211,136; break;
-		case 9: warp .@map$,219,108; break;
-		case 10: warp .@map$,211,108; break;
-		case 11: warp .@map$,219,76; break;
-		case 12: warp .@map$,211,76; break;
-		case 13: warp .@map$,219,44; break;
-		case 14:  warp .@map$,211,44; break;
+	switch (atoi(replacestr(strnpcinfo(2),"rgsr_warp_",""))) {
+		case 7: warp 'map$,219,136; break;
+		case 8: warp 'map$,211,136; break;
+		case 9: warp 'map$,219,108; break;
+		case 10: warp 'map$,211,108; break;
+		case 11: warp 'map$,219,76; break;
+		case 12: warp 'map$,211,76; break;
+		case 13: warp 'map$,219,44; break;
+		case 14:  warp 'map$,211,44; break;
 	}
-end;
+	end;
 }
 
 1@rgsr,216,136,0	duplicate(#rgsr_warp_7)	#rgsr_warp_8	WARPNPC,1,2
@@ -861,7 +829,6 @@ end;
 	close;
 }
 
-
 1@rgsr,33,185,3	script	Rebellion Crew#rgsr_dum02	4_M_REBELLION2,{
 	mes "[ Rebellion Crew ]";
 	mes "The remaining researchers are gathered here for their security.";
@@ -893,7 +860,7 @@ end;
 	mes "It seems to have been about attempting to create a device using the refraction of light.";
 	close;
 }
-	
+
 1@rgsr,226,226,0	script	Research Report#rgsr_03	4_ENERGY_BLUE,{
 	mes "Lloyds's enchantment and processing data.";
 	mes "Only the title was left, all the text was removed.";

@@ -5,19 +5,20 @@
 //--- NPC quests for Episode 17.1
 //===== Changelogs: ==========================================
 //= 1.0 Initial release [crazyarashi]
+//= 1.1 Optimizations and cleanup [Everade]
 //============================================================
 
 prt_cas_q,29,28,0	script	#EP_171_START	HIDDEN_WARP_NPC,2,2,{
 	end;
-	
+
 OnTouch:
-	if(terra_gloria_main == 25)
-		cloaknpc("Nihil M. Heine#171_prtq",false,getcharid(0));
-end;
+	if (terra_gloria_main == 25)
+		cloakoffnpc "Nihil M. Heine#171_prtq",getcharid(0);
+	end;
 }
 
 prt_cas_q,21,39,3	script	Nihil M. Heine#171_prtq	4_EP16_NIHIL,{
-	if(terra_gloria_main == 25){
+	if (terra_gloria_main == 25) {
 		cutin "ep16_nihi_miseria_heine02",2;
 		mes "[ Nihil ]";
 		mes "I came here because I wanted to express my gratitude.";
@@ -59,27 +60,27 @@ prt_cas_q,21,39,3	script	Nihil M. Heine#171_prtq	4_EP16_NIHIL,{
 		terra_gloria_main = 26;
 		close2;
 		cutin "",255;
-		cloaknpc(strnpcinfo(0),true,getcharid(0));
+		cloakonnpc strnpcinfo(0),getcharid(0);
 	}
 	end;
-	
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 //= Einbech
 einbech,215,79,0	script	#171_EINB_EV	HIDDEN_WARP_NPC,3,3,{
 	end;
-	
+
 OnTouch:
-	if(terra_gloria_main == 26 && isbegin_quest(7850) == 0)
-		cloaknpc("Rebellion Crew#171_einb",false,getcharid(0));
-end;
+	if (terra_gloria_main == 26 && isbegin_quest(7850) == 0)
+		cloakoffnpc "Rebellion Crew#171_einb",getcharid(0);
+	end;
 }
 
 einbech,219,80,3	script	Rebellion Crew#171_einb	4_M_REBELLION2,{
-	if(terra_gloria_main == 26 && isbegin_quest(7850) == 0){
+	if (terra_gloria_main == 26 && isbegin_quest(7850) == 0) {
 		mes "[ Rebellion Crew ]";
 		mes "Hold on!";
 		mes "We have recently expanded the field of operations.";
@@ -92,21 +93,21 @@ einbech,219,80,3	script	Rebellion Crew#171_einb	4_M_REBELLION2,{
 		mes "[ Rebellion Crew ]";
 		mes "I've delivered the information!";
 		setquest 7850;
-		end;
+		close;
 	}
 	mes "[ Rebellion Crew ]";
 	mes "It's a small bar next to the train station of Einbroch.";
 	mes "<NAVI>[Cat on Bullet]<INFO>einbroch,302,329,0,101,0</INFO></NAVI>. Don't you think it's a cute name for a pub?";
 	close;
-	
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
+	cloakonnpc strnpcinfo(0);
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"terra_gloria_main == 26 && isbegin_quest(7850) == 0");
-end;	
+	end;
 }
 
 rebel_in,68,41,4	script	Rebellion Crew#171_rebelin		CLEAR_NPC,{
-	if(isbegin_quest(11601) == 1){
+	if (isbegin_quest(11601) == 1) {
 		mes "[ Rebellion Crew ]";
 		mes "Oh! Welcome back!";
 		mes "How are you doing lately?";
@@ -122,57 +123,57 @@ rebel_in,68,41,4	script	Rebellion Crew#171_rebelin		CLEAR_NPC,{
 		mes "Dien is having a cup of tea on the second floor, in her room.";
 		completequest 11601;
 		setquest 11602;
-		end;
+		close;
 	}
-	if(isbegin_quest(11602) == 1){
+	if (isbegin_quest(11602) == 1) {
 		mes "[ Rebellion Crew ]";
 		mes "Dien is having a cup of tea on the second floor, in her room.";
-		end;
+		close;
 	}
 	mes "[ Rebellion Crew ]";
 	mes "What? I'm busy right now!";
-	end;
-	
+	close;
+
 OnInit:
 	setunitdata getnpcid(0),UNPC_CLASS,JOB_REBELLION;
 	setunitdata getnpcid(0),UNPC_SEX,SEX_FEMALE;
 	setunitdata getnpcid(0),UNPC_HAIRSTYLE,17;
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(11601) == 1");
-end;
+	end;
 }
 
 rebel_in,161,91,0	script	Ornament Box#171_rebelin	HIDDEN_NPC,{
-	if(isbegin_quest(11602) == 1){
+	if (isbegin_quest(11602) == 1) {
 		mes "- It contains an envelope. -";
 		next;
-		switch(select("Take a look.:Just take it.:Leave it.")){
+		switch (select("Take a look.:Just take it.:Leave it.")) {
 			case 1:
 				cutin "ep171_trio_memory",1;
 				mes "- It's an old picture with people you've met before. -";
 				close3;
-				
+
 			case 2:
 				mes "- I took the picture with me, let's give it back to Dien. -";
 				completequest 11602;
 				setquest 11603;
 				getitem 25665,1;
-				end;
-			
+				close;
+
 			case 3:
 				mes "- Carefully closed the box again. -";
-				end;
+				close;
 		}
 	}
-	if(isbegin_quest(11603) == 1){
+	if (isbegin_quest(11603) == 1) {
 		mes "- I took the picture with me, let's give it back to Dien. -";
-		end;
+		close;
 	}
 	mes "- It's locked. -";
-	end;
-	
+	close;
+
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(11602) == 1");
-end;
+	end;
 }
 
 //= Einbroch
@@ -180,24 +181,24 @@ einbroch,51,197,0	script	#171_EINBR_EV	HIDDEN_WARP_NPC,5,5,{
 	end;
 
 OnTouch:
-	if(isbegin_quest(17003) == 1){
-		cloaknpc("Kaya Toss#171_einbr",false,getcharid(0));
-		cloaknpc("As#171_einbr",false,getcharid(0));
+	if (isbegin_quest(17003) == 1) {
+		cloakoffnpc "Kaya Toss#171_einbr",getcharid(0);
+		cloakoffnpc "As#171_einbr",getcharid(0);
 	}
-end;
+	end;
 }
 
 einbroch,42,208,3	script	Lazy#171_einbr	4_M_LAZY,{
-	if(isbegin_quest(7850) == 0){
+	if (isbegin_quest(7850) == 0) {
 		cutin "16lei_03",2;
 		mes "[ Lazy ]";
 		mes "Hourray, finally some air, huh.";
 		mes "Let's go to Yuno. Huh?";
 		close3;
 	}
-	if(isbegin_quest(17003) == 1){
-		cloaknpc("Kaya Toss#171_einbr",false,getcharid(0));
-		cloaknpc("As#171_einbr",false,getcharid(0));
+	if (isbegin_quest(17003) == 1) {
+		cloakoffnpc "Kaya Toss#171_einbr",getcharid(0);
+		cloakoffnpc "As#171_einbr",getcharid(0);
 		cutin "16lei_01",2;
 		mes "[ Lazy ]";
 		mes "Here, come. Here it is, Come over here.";
@@ -411,7 +412,7 @@ einbroch,42,208,3	script	Lazy#171_einbr	4_M_LAZY,{
 		warp "lighthalzen",246,76;
 		end;
 	}
-	if(isbegin_quest(17004) == 1){
+	if (isbegin_quest(17004) == 1) {
 		cutin "16lei_01",2;
 		mes "[ Lazy ]";
 		mes "Now, let's all go to <NAVI>[Lighthalzen]<INFO>lighthalzen,259,215,0,101,0</INFO></NAVI>.";
@@ -424,10 +425,10 @@ einbroch,42,208,3	script	Lazy#171_einbr	4_M_LAZY,{
 	mes "[ Lazy ]";
 	mes "Aren't you supposed to be working right now?";
 	close3;
-	
+
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17003) == 1");
-end;
+	end;
 }
 
 einbroch,41,204,7	script	Kaya Toss#171_einbr	4_EP17_KAYA,{
@@ -435,10 +436,10 @@ einbroch,41,204,7	script	Kaya Toss#171_einbr	4_EP17_KAYA,{
 	mes "[ Kaya ]";
 	mes "Shouldn't we listen to what Daisy have to say?";
 	close3;
-	
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 einbroch,39,205,7	script	As#171_einbr	4_EP17_AS,{
@@ -446,27 +447,27 @@ einbroch,39,205,7	script	As#171_einbr	4_EP17_AS,{
 	mes "[ As ]";
 	mes "Do you know where Daisy is trying to bring us? Can we trust you?";
 	close3;
-	
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 //= Einbroch Field
 ein_fild01,91,133,0	script	#171_EV_EINF01	HIDDEN_WARP_NPC,5,5,{
 	end;
-	
+
 OnTouch:
-	if(isbegin_quest(17013) == 1)
-		cloaknpc("Kaya Toss#171_einf",false,getcharid(0));
-end;
+	if (isbegin_quest(17013) == 1)
+		cloakoffnpc "Kaya Toss#171_einf",getcharid(0);
+	end;
 }
 
 ein_fild01,103,137,0	duplicate(#171_EV_EINF01)	#171_EV_EINF02	HIDDEN_WARP_NPC,5,5
 ein_fild01,107,149,0	duplicate(#171_EV_EINF01)	#171_EV_EINF03	HIDDEN_WARP_NPC,5,5
 
 ein_fild01,95,146,5	script	Kaya Toss#171_einf	4_EP17_KAYA,{
-	if(isbegin_quest(17013) == 1){
+	if (isbegin_quest(17013) == 1) {
 		cutin "ep171_kaya01",0;
 		mes "[ Kaya ]";
 		mes "Here we are, Sector 01 - Section 95-146 in the Einbroch Mountains.";
@@ -488,8 +489,8 @@ ein_fild01,95,146,5	script	Kaya Toss#171_einf	4_EP17_KAYA,{
 		mes "[ "+ strcharinfo(0) + " ]";
 		mes "If you don't investigate with suspicious, you won't see any problems on the surface.";
 		next;
-		cloaknpc("As#171_einf",false,getcharid(0));
-		cloaknpc("Lazy#171_einf",false,getcharid(0));
+		cloakoffnpc "As#171_einf",getcharid(0);
+		cloakoffnpc "Lazy#171_einf",getcharid(0);
 		mes "[ As ]";
 		mes "But that's so... not trusting...";
 		npctalk "But that's so... not trusting...","As#171_einf",bc_self;
@@ -593,11 +594,11 @@ ein_fild01,95,146,5	script	Kaya Toss#171_einf	4_EP17_KAYA,{
 	mes "Did you go to <NAVI>[Cat on Bullet]<INFO>pub_cat,93,105,0,000,0</INFO></NAVI> yet?";
 	mes "Let's hurry. There's still a lot to do.";
 	close3;
-		
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
+	cloakonnpc strnpcinfo(0);
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17013) == 1");
-end;
+	end;
 }
 
 ein_fild01,94,145,5	script	As#171_einf	4_EP17_AS,{
@@ -606,10 +607,10 @@ ein_fild01,94,145,5	script	As#171_einf	4_EP17_AS,{
 	mes "Let's go back to <NAVI>[Cat on Bullet]<INFO>pub_cat,93,105,0,000,0</INFO></NAVI>.";
 	mes "I think we should hurry.";
 	close3;
-	
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 ein_fild01,97,144,1	script	Lazy#171_einf	4_M_LAZY,{
@@ -618,14 +619,14 @@ ein_fild01,97,144,1	script	Lazy#171_einf	4_M_LAZY,{
 	mes "Let's go to <NAVI>[Cat on Bullet]<INFO>pub_cat,93,105,0,000,0</INFO></NAVI>.";
 	mes "I'm already hungry.";
 	close3;
-	
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 ein_fild03,278,269,4	script	Rebellion Crew#171_einf	CLEAR_NPC,{
-	if(isbegin_quest(7865) == 1){
+	if (isbegin_quest(7865) == 1) {
 		mes "[ Rebellion Crew ]";
 		mes "Hehe?...";
 		mes "I can't believe this area is disguised as an abandoned mine.";
@@ -657,16 +658,15 @@ ein_fild03,278,269,4	script	Rebellion Crew#171_einf	CLEAR_NPC,{
 		navigateto("ein_fild03",347,219);
 		completequest 7865;
 		setquest 11596;
-		questinfo_refresh();
-		end;
+		close;
 	}
-	if(isbegin_quest(7865) == 2 && isbegin_quest(11599) == 0){
+	if (isbegin_quest(7865) == 2 && isbegin_quest(11599) == 0) {
 		mes "[ Rebellion Crew ]";
 		mes "I've never seen anyone go onside...";
 		mes "I don't really know what's going to happen, so why don't you go have a look around?";
-		close;	
+		close;
 	}
-	if(isbegin_quest(11599) == 1){
+	if (isbegin_quest(11599) == 1) {
 		mes "[ Rebellion Crew ]";
 		mes "Hmmm.";
 		mes "There are no signs of people around...";
@@ -679,38 +679,38 @@ ein_fild03,278,269,4	script	Rebellion Crew#171_einf	CLEAR_NPC,{
 		completequest 11599;
 		setquest 11600;
 		getexp 100000,100000;
-		end;
+		close;
 	}
-	if(isbegin_quest(11600) == 1){
+	if (isbegin_quest(11600) == 1) {
 		mes "[ Rebellion Crew ]";
 		mes "Are you all set?";
 		next;
 		.@md_name$ = "Sealed OS";
 		.@party_id = getcharid(1);
 		.@party_name$ = getpartyname(.@party_id);
-		switch(select("Open the gate.:Go inside.:Quit.")){
+		switch (select("Open the gate.:Go inside.:Quit.")) {
 			case 1:
-				if(!.@party_id){
+				if (!.@party_id) {
 					mes "[ Rebellion Crew ]";
 					mes "It's dangerous to go alone.";
 					mes "Wouldn't it be nice to go in with a ^FF0000party^000000?";
-					end;
+					close;
 				}
-				if(!is_party_leader()){
+				if (!is_party_leader()) {
 					mes "[ Rebellion Crew ]";
 					mes "That's weird~";
 					mes "Wait a minute.";
 					mes "Maybe the ^FF0000party leader^000000 hasn't opened the gate yet?";
-					end;
+					close;
 				}
-				if(instance_create(.@md_name$) == -3)
+				if (instance_create(.@md_name$) == -3)
 					dispbottom "The reservation of the instance '" + .@md_name$ + "' has failed due to an active instance.";
 				mes "[ Rebellion Crew ]";
 				mes "Please wait a minute.";
-				end;
-				
+				close;
+
 			case 2:
-				if(instance_enter(.@md_name$) == IE_OK)
+				if (instance_enter(.@md_name$) == IE_OK)
 					mapannounce "ein_fild03", strcharinfo(0) + " of the party, "+ .@party_name$ +", is entering the " + .@md_name$ + ".", bc_map, "0x00FF99";
 				else {
 					mes "[ Rebellion Crew ]";
@@ -719,13 +719,13 @@ ein_fild03,278,269,4	script	Rebellion Crew#171_einf	CLEAR_NPC,{
 					mes "I don't think the gate is open, right?";
 				}
 				break;
-				
+
 			case 3:
 				break;
 		}
-		end;
+		close;
 	}
-	if(isbegin_quest(11601) == 1){
+	if (isbegin_quest(11601) == 1) {
 		mes "[ Rebellion Crew ]";
 		mes "What?!";
 		mes "Have you forgotten the road to Clana Nemieri?";
@@ -733,22 +733,21 @@ ein_fild03,278,269,4	script	Rebellion Crew#171_einf	CLEAR_NPC,{
 		mes "[ Rebellion Crew ]";
 		mes "What happened to you?";
 		navigateto("rebel_in",68,41);
-		end;
+		close;
 	}
-	if(isbegin_quest(11602) == 1){
+	if (isbegin_quest(11602) == 1) {
 		mes "[ Rebellion Crew ]";
 		mes "What?!";
 		mes "Dien's room?";
 		mes "It's on the second floor of Clana Nemieri.";
-		end;
+		close;
 	}
 	mes "[ Rebellion Crew ]";
 	mes "Huh...";
 	mes "It used to be great...";
 	mes "It was great...";
-	end;
-	
-	
+	close;
+
 OnInit:
 	setunitdata getnpcid(0),UNPC_CLASS,JOB_REBELLION;
 	setunitdata getnpcid(0),UNPC_SEX,SEX_MALE;
@@ -759,38 +758,37 @@ OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(7865) == 1");
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(11599) == 1");
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(11600) == 1");
-end;
+	end;
 }
 
 ein_fild03,347,219,0	script	#171_EINF03_EV_0	HIDDEN_WARP_NPC,3,3,{
 	end;
-	
+
 OnTouch:
 	.@id = atoi(replacestr(strnpcinfo(2),"171_EINF03_EV_",""));
 	.@qid = 11596 + .@id;
-	if(isbegin_quest(.@qid) == 1){
+	if (isbegin_quest(.@qid) == 1) {
 		mes "- Nothing special here. -";
-		if(.@qid == 11598){
+		if (.@qid == 11598) {
 			mes "- Let's go back to the Rebellion. -";
 		} else {
 			mes "- Let's look somewhere else. -";
 		}
 		completequest .@qid;
 		setquest .@qid + 1;
-		questinfo_refresh();
-		switch(.@id){
+		switch (.@id) {
 			case 0: navigateto("ein_fild03",268,207); break;
 			case 1: navigateto("ein_fild03",218,266); break;
 			case 2: navigateto("ein_fild03",278,269); break;
 		}
 	}
-end;
+	end;
 
 OnInit:
 	.@id = atoi(replacestr(strnpcinfo(2),"171_EINF03_EV_",""));
 	.@qid = 11596 + .@id;
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(" + .@qid + ") == 1");
-end;
+	end;
 }
 
 ein_fild03,268,207,0	duplicate(#171_EINF03_EV_0)	#171_EINF03_EV_1	HIDDEN_WARP_NPC,3,3
@@ -798,19 +796,19 @@ ein_fild03,218,266,0	duplicate(#171_EINF03_EV_0)	#171_EINF03_EV_2	HIDDEN_WARP_NP
 
 //= Lighthalzen
 lighthalzen,56,270,3	script	Republic Guard#171_light	4_M_EIN_SOLDIER,{
-	if(isbegin_quest(7861) == 0){
+	if (isbegin_quest(7861) == 0) {
 		npctalk "It is prohibited to go further, please step back.","",bc_self;
 		end;
 	}
-	if(isbegin_quest(7861) == 1){
+	if (isbegin_quest(7861) == 1) {
 		mes "[ Republic Guard ]";
 		mes "I've been contacted by Tess.";
 		mes "Don't worry I belong to the Secret Wing.";
 		mes "As and Est went to look around this area.";
 		next;
-		cloaknpc("Commander Est#171_light",false,getcharid(0));
-		cloaknpc("As#171_light",false,getcharid(0));
-		cloaknpc("Emily#171_light",false,getcharid(0));
+		cloakoffnpc "Commander Est#171_light",getcharid(0);
+		cloakoffnpc "As#171_light",getcharid(0);
+		cloakoffnpc "Emily#171_light",getcharid(0);
 		npctalk "Est : Now we can enter.","Commander Est#171_light",bc_self;
 		mes "[ Republic Guard ]";
 		mes "Oh, there they are.";
@@ -852,21 +850,21 @@ lighthalzen,56,270,3	script	Republic Guard#171_light	4_M_EIN_SOLDIER,{
 		mes "Well then, I'll tell Oscar to open the door. We have to do this!";
 		completequest 7861;
 		setquest 7862;
-		cloaknpc("Commander Est#171_light",true,getcharid(0));
-		cloaknpc("Emily#171_light",true,getcharid(0));
-		close4;
+		cloakonnpc "Commander Est#171_light",getcharid(0);
+		cloakonnpc "Emily#171_light",getcharid(0);
+		close3;
 	}
-	if(isbegin_quest(7862) == 1){
+	if (isbegin_quest(7862) == 1) {
 		mes "[ Republic Guard ]";
 		mes "The entrance is secured by Oscar who is standing up ahead the front gate.";
 		mes "Me and the Rebellions will stay outside. As will be inside.";
 		mes "Goodluck!";
 	}
-	end;
+	close;
 
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(7861) == 1");
-end;
+	end;
 }
 
 lighthalzen,58,268,3	script	As#171_light	4_EP17_AS,{
@@ -875,21 +873,21 @@ lighthalzen,58,268,3	script	As#171_light	4_EP17_AS,{
 	mes "We have to open the main gate.";
 	mes "Let's open the door with Oscar.";
 	close3;
-	
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
-lighthalzen,54,267,5	duplicate(dummynpc)	Commander Est#171_light	4_F_ESTLOVELOY
-lighthalzen,55,265,1	duplicate(dummynpc)	Emily#171_light	4_F_ANYA
+lighthalzen,54,267,5	duplicate(dummy_cloaked_npc)	Commander Est#171_light	4_F_ESTLOVELOY
+lighthalzen,55,265,1	duplicate(dummy_cloaked_npc)	Emily#171_light	4_F_ANYA
 
 lighthalzen,55,278,3	script	Rekenber Guard Oscar#171_light	4_M_LGTGUARD,{
-	if(isbegin_quest(7862) == 0){
+	if (isbegin_quest(7862) == 0) {
 		npctalk "Rekenber Guard : This place is restricted.","",bc_self;
 		end;
 	}
-	if(isbegin_quest(7862) == 1){
+	if (isbegin_quest(7862) == 1) {
 		mes "[ Oscar ]";
 		mes "The entrance for the lab has double locks.";
 		mes "It's closed from the inside.";
@@ -903,20 +901,25 @@ lighthalzen,55,278,3	script	Rekenber Guard Oscar#171_light	4_M_LGTGUARD,{
 		.@md_name$ = "Regenschirm";
 		.@party_id = getcharid(1);
 		.@party_name$ = getpartyname(.@party_id);
-		if(!.@party_id) instance_warning(1);
-		if(select("Create '" + .@md_name$ + "'","Enter '" + .@md_name$ + "'") == 1){
-			if(!is_party_leader()){
+		if (!.@party_id) {
+			mes "^4D4DFFThis place is a memorial dungeon.";
+			mes "Please form a party and try again.^000000";
+			mes "To create a party with the following command ^4D4DFF'/organize PARTY NAME'.^000000";
+			close;
+		}
+		if (select("Create '" + .@md_name$ + "'","Enter '" + .@md_name$ + "'") == 1) {
+			if (!is_party_leader()) {
 				mes "[ Oscar ]";
 				mes "The route hasn't been secured yet. Why don't you ask your party leader to prepare the route?";
-				end;
+				close;
 			}
 			mes "[ Oscar ]";
 			mes "If you're ready, please enter.";
 			mes "The locks on the inside will be handled by As.";
-			if(instance_create(.@md_name$) == -3)
-				instance_warning(2,.@md_name$);
+			if (instance_create(.@md_name$) == -3)
+				dispbottom "The reservation of the instance '" + .@md_name$ + "' has failed due to an active instance.";
 		} else {
-			if(instance_enter(.@md_name$) == IE_OK){
+			if (instance_enter(.@md_name$) == IE_OK) {
 				mes "[ Oscar ]";
 				mes "They already secured the route.";
 				mes "Let's quietly move inside.";
@@ -928,34 +931,34 @@ lighthalzen,55,278,3	script	Rekenber Guard Oscar#171_light	4_M_LGTGUARD,{
 				mes "Let's wait a bit.";
 			}
 		}
-		end;
+		close;
 	}
-	if(isbegin_quest(7862) == 2){
+	if (isbegin_quest(7862) == 2) {
 		mes "[ Oscar ]";
 		mes "You have a message from Tess back at the Cat on Bullet.";
 		mes "Please return back soon.";
 	}
-	end;
-	
+	close;
+
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(7862) == 1");
-end;
+	end;
 }
 
 lighthalzen,259,215,3	script	Lazy#171_lhz	4_M_LAZY,{
-	if(isbegin_quest(7850) == 0){
+	if (isbegin_quest(7850) == 0) {
 		cutin "16lei_01",2;
 		mes "[ Lazy ]";
 		mes "The Rekenber roads are wide and gleaming~ everyone knows about the Schwarzald Republic~";
 		close3;
 	}
-	if(isbegin_quest(17004) == 1){
+	if (isbegin_quest(17004) == 1) {
 		cutin "16lei_01",2;
 		mes "[ Lazy ]";
 		mes "Please gather around~ Let's check the number of people! Kaya Toss! Kaya Toss?";
 		next;
-		cloaknpc("Kaya Toss#171_lhz",false,getcharid(0));
-		cloaknpc("As#171_lhz",false,getcharid(0));
+		cloakoffnpc "Kaya Toss#171_lhz",getcharid(0);
+		cloakoffnpc "As#171_lhz",getcharid(0);
 		cutin "ep171_kaya01",0;
 		mes "[ Kaya ]";
 		mes ".....";
@@ -1038,15 +1041,14 @@ lighthalzen,259,215,3	script	Lazy#171_lhz	4_M_LAZY,{
 		setquest 17005;
 		close2;
 		cutin "",255;
-		questinfo_refresh();
 		warp "lighthalzen",316,227;
-		cloaknpc("Kaya Toss#171_lhz",true,getcharid(0));
-		cloaknpc("As#171_lhz",true,getcharid(0));
-		cloaknpc("Kaya Toss#171_lhz2",false,getcharid(0));
-		cloaknpc("As#171_lhz2",false,getcharid(0));
+		cloakonnpc "Kaya Toss#171_lhz",getcharid(0);
+		cloakonnpc "As#171_lhz",getcharid(0);
+		cloakoffnpc "Kaya Toss#171_lhz2",getcharid(0);
+		cloakoffnpc "As#171_lhz2",getcharid(0);
 		end;
 	}
-	if(isbegin_quest(17005) == 1){
+	if (isbegin_quest(17005) == 1) {
 		cutin "16lei_01",2;
 		mes "[ Lazy ]";
 		mes "I've found where to go next. Let's go over to the<NAVI>[slums]<INFO>lighthalzen,336,266,0,101,0</INFO></NAVI> next.";
@@ -1057,36 +1059,35 @@ lighthalzen,259,215,3	script	Lazy#171_lhz	4_M_LAZY,{
 	mes "Let's go to the headquarters. The Rekenber roads are wide and gleaming~ everyone knows about the Schwarzald Republic~";
 	npctalk "The Rekenber roads are wide and gleaming~ everyone knows about the Schwarzald Republic~","",bc_self;
 	close3;
-			
+
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17004) == 1");
-end;
+	end;
 }
-
 
 lighthalzen,316,227,0	script	#EP171_EVT_LHZ	HIDDEN_WARP_NPC,5,5,{
 	end;
-	
+
 OnTouch:
-	if(isbegin_quest(17005) == 1){
-		cloaknpc("Kaya Toss#171_lhz2",false,getcharid(0));
-		cloaknpc("As#171_lhz2",false,getcharid(0));
+	if (isbegin_quest(17005) == 1) {
+		cloakoffnpc "Kaya Toss#171_lhz2",getcharid(0);
+		cloakoffnpc "As#171_lhz2",getcharid(0);
 	}
-end;
+	end;
 }
 
 lighthalzen,336,266,3	script	Lazy#171_lhz2	4_M_LAZY,{
-	if(isbegin_quest(17005) == 1){
-		cloaknpc("Kaya Toss#171_lhz2",false,getcharid(0));
-		cloaknpc("As#171_lhz2",false,getcharid(0));
+	if (isbegin_quest(17005) == 1) {
+		cloakoffnpc "Kaya Toss#171_lhz2",getcharid(0);
+		cloakoffnpc "As#171_lhz2",getcharid(0);
 		cutin "16lei_01",2;
 		mes "[ Lazy ]";
 		mes "This is Pat's home. This is where Pat first got into contact with Rekenber and met a staff member.";
 		sleep2 2000;
 		specialeffect EF_DA_SPACE,AREA,"Pat#171_lhz";
 		specialeffect EF_DA_SPACE,AREA,"Recruiter#171_lhz";
-		cloaknpc("Pat#171_lhz",false,getcharid(0));
-		cloaknpc("Recruiter#171_lhz",false,getcharid(0));
+		cloakoffnpc "Pat#171_lhz",getcharid(0);
+		cloakoffnpc "Recruiter#171_lhz",getcharid(0);
 		sleep2 2000;
 		npctalk "Here, the job application...","Recruiter#171_lhz",bc_self;
 		sleep2 2000;
@@ -1102,16 +1103,16 @@ lighthalzen,336,266,3	script	Lazy#171_lhz2	4_M_LAZY,{
 		sleep2 2000;
 		npctalk "Thank you so much!","Pat#171_lhz",bc_self;
 		sleep2 2000;
-		cloaknpc("Recruiter#171_lhz",true,getcharid(0));
+		cloakonnpc "Recruiter#171_lhz",getcharid(0);
 		sleep2 500;
-		cloaknpc("Pat#171_lhz",true,getcharid(0));
+		cloakonnpc "Pat#171_lhz",getcharid(0);
 		next;
 		cutin "16lei_01",2;
 		mes "[ Lazy ]";
 		mes "Heyo! There you are. Mom, Dad, how are you?";
 		next;
-		cloaknpc("Pat's Mother#171_lhz",false,getcharid(0));
-		cloaknpc("Pat's Father#171_lhz",false,getcharid(0));
+		cloakoffnpc "Pat's Mother#171_lhz",getcharid(0);
+		cloakoffnpc "Pat's Father#171_lhz",getcharid(0);
 		cutin "",255;
 		mes "[ Mother ]";
 		mes "Who...?";
@@ -1224,8 +1225,8 @@ lighthalzen,336,266,3	script	Lazy#171_lhz2	4_M_LAZY,{
 		cutin "",255;
 		mes "[ Father ]";
 		mes "Take care!";
-		cloaknpc("Pat's Mother#171_lhz",true,getcharid(0));
-		cloaknpc("Pat's Father#171_lhz",true,getcharid(0));
+		cloakonnpc "Pat's Mother#171_lhz",getcharid(0);
+		cloakonnpc "Pat's Father#171_lhz",getcharid(0);
 		sleep2 1800;
 		next;
 		cutin "16lei_02",2;
@@ -1300,11 +1301,10 @@ lighthalzen,336,266,3	script	Lazy#171_lhz2	4_M_LAZY,{
 		setquest 17006;
 		close2;
 		cutin "",255;
-		questinfo_refresh();
 		warp "lighthalzen",251,215;
 		end;
 	}
-	if(isbegin_quest(17006) == 1){
+	if (isbegin_quest(17006) == 1) {
 		cutin "16lei_01",2;
 		mes "[ Lazy ]";
 		mes "Alright! We're going to follow up with Pat, so the tour's next place will be at the <NAVI>[Headquarters]<INFO>lighthalzen,107,165,0,101,0</INFO></NAVI>.";
@@ -1317,20 +1317,20 @@ lighthalzen,336,266,3	script	Lazy#171_lhz2	4_M_LAZY,{
 	mes "[ Lazy ]";
 	mes "The Rekenber roads are wide and gleaming~ everyone knows about the Schwarzald Republic~";
 	close3;
-	
+
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17005) == 1");
-end;
+	end;
 }
 
 lighthalzen,108,163,3	script	Lazy#171_lhz3	4_M_LAZY,{
-	if(isbegin_quest(17006) == 1){
+	if (isbegin_quest(17006) == 1) {
 		cutin "16lei_01",2;
 		mes "[ Lazy ]";
 		mes "Adventurer! You're here! Who else would it be?";
 		next;
-		cloaknpc("Kaya Toss#171_lhz3",false,getcharid(0));
-		cloaknpc("As#171_lhz3",false,getcharid(0));
+		cloakoffnpc "Kaya Toss#171_lhz3",getcharid(0);
+		cloakoffnpc "As#171_lhz3",getcharid(0);
 		cutin "16lei_02",2;
 		mes "[ Lazy ]";
 		mes "You're finally here. Am I too fast for you? Or do you think perhaps it's because the VIP's shoes are not suited for long distances?";
@@ -1341,7 +1341,7 @@ lighthalzen,108,163,3	script	Lazy#171_lhz3	4_M_LAZY,{
 		mes "We're finally here at Rekenber.";
 		next;
 		specialeffect EF_DA_SPACE,AREA,"Pat#171_lhz2";
-		cloaknpc("Pat#171_lhz2",false,getcharid(0));
+		cloakoffnpc "Pat#171_lhz2",getcharid(0);
 		cutin "16lei_03",2;
 		mes "[ Lazy ]";
 		mes "When Pat stood in front of the building, he was probably relieved.";
@@ -1352,8 +1352,8 @@ lighthalzen,108,163,3	script	Lazy#171_lhz3	4_M_LAZY,{
 		mes "[ Protester ]";
 		mes "Rekenber, ^0000FFexplain!^000000";
 		next;
-		cloaknpc("Pat#171_lhz2",true,getcharid(0));
-		cloaknpc("Protester#171_lhz",false,getcharid(0));
+		cloakonnpc "Pat#171_lhz2",getcharid(0);
+		cloakoffnpc "Protester#171_lhz",getcharid(0);
 		cutin "ep171_kaya01",0;
 		mes "[ Kaya ]";
 		mes "Explanation?";
@@ -1434,7 +1434,7 @@ lighthalzen,108,163,3	script	Lazy#171_lhz3	4_M_LAZY,{
 		mes "Am I a problem to you? Do you think I'll give up easily? I will keep coming until I find Marcus!";
 		npctalk "I will remember your face!! Don't think you'll be safe forever! Be careful at night!","Protester#171_lhz",bc_self;
 		next;
-		cloaknpc("Protester#171_lhz",true,getcharid(0));
+		cloakonnpc "Protester#171_lhz",getcharid(0);
 		cutin "16lei_03",2;
 		mes "[ Lazy ]";
 		mes "She said he saw the VIP...";
@@ -1599,40 +1599,40 @@ lighthalzen,108,163,3	script	Lazy#171_lhz3	4_M_LAZY,{
 		setquest 17007;
 		close2;
 		cutin "",255;
-		cloaknpc("Kaya Toss#171_lhz3",true,getcharid(0));
-		cloaknpc("As#171_lhz3",true,getcharid(0));
+		cloakonnpc "Kaya Toss#171_lhz3",getcharid(0);
+		cloakonnpc "As#171_lhz3",getcharid(0);
 		end;
 	}
-	if(isbegin_quest(17007) == 1){
+	if (isbegin_quest(17007) == 1) {
 		cutin "16lei_01",2;
 		mes "[ Lazy ]";
 		mes "Come on, get inside the <NAVI>[Headquarters]<INFO>lhz_in01,107,137,0,101,0</INFO></NAVI>!";
 		close3;
-	}		
+	}
 	cutin "16lei_01",2;
 	mes "[ Lazy ]";
 	mes "The Rekenber roads are wide and gleaming~ everyone knows about the Schwarzald Republic~";
 	close3;
-	
+
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17006) == 1");
-end;
+	end;
 }
 
 lhz_in01,107,137,5	script	Staff#171_lhzin	4_F_01,{
-	if(isbegin_quest(17007) == 1){
+	if (isbegin_quest(17007) == 1) {
 		mes "[ Staff ]";
 		mes "Hello, how may I help you?";
 		next;
-		cloaknpc("Kaya Toss#171_lhzin",false,getcharid(0));
-		cloaknpc("As#171_lhzin",false,getcharid(0));
-		cloaknpc("Lazy#171_lhzin",false,getcharid(0));
+		cloakoffnpc "Kaya Toss#171_lhzin",getcharid(0);
+		cloakoffnpc "As#171_lhzin",getcharid(0);
+		cloakoffnpc "Lazy#171_lhzin",getcharid(0);
 		cutin "16lei_01",2;
 		mes "[ Lazy ]";
 		mes "We've finally enter the Rekenber's headquarters. I wonder if Pat was relieved when he first passed through this door. Where did he go next?";
 		sleep2 1500;
 		specialeffect EF_DA_SPACE,AREA,"Pat#171_lhzin";
-		cloaknpc("Pat#171_lhzin",false,getcharid(0));
+		cloakoffnpc "Pat#171_lhzin",getcharid(0);
 		cutin "",255;
 		sleep2 1000;
 		npctalk "I... I... I...","Pat#171_lhzin",bc_self;
@@ -1653,7 +1653,7 @@ lhz_in01,107,137,5	script	Staff#171_lhzin	4_F_01,{
 		sleep2 2000;
 		npctalk "Thank you, Thank you!","Pat#171_lhzin",bc_self;
 		sleep2 2000;
-		cloaknpc("Pat#171_lhzin",true,getcharid(0));
+		cloakonnpc "Pat#171_lhzin",getcharid(0);
 		next;
 		cutin "ep171_kaya01",0;
 		mes "[ Kaya ]";
@@ -1681,40 +1681,39 @@ lhz_in01,107,137,5	script	Staff#171_lhzin	4_F_01,{
 		setquest 17008;
 		close2;
 		cutin "",255;
-		cloaknpc("Kaya Toss#171_lhzin",true,getcharid(0));
-		cloaknpc("As#171_lhzin",true,getcharid(0));
-		cloaknpc("Lazy#171_lhzin",true,getcharid(0));
-		questinfo_refresh();
+		cloakonnpc "Kaya Toss#171_lhzin",getcharid(0);
+		cloakonnpc "As#171_lhzin",getcharid(0);
+		cloakonnpc "Lazy#171_lhzin",getcharid(0);
 		end;
 	}
-	if(isbegin_quest(17008) == 1){
+	if (isbegin_quest(17008) == 1) {
 		mes "[ Staff ]";
 		mes "I think the others went to the <NAVI>[Conference Room]<INFO>lhz_in01,162,257,0,000,0</INFO></NAVI>, where the meetings are held. Shouldn't you be going?";
-		end;
+		close;
 	}
 	mes "[ Staff ]";
 	mes "Do you need an assistance with something?";
 	close;
-	
+
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17007) == 1");
-end;
+	end;
 }
 
 lhz_in01,163,258,5	script	Staff#171_lhzin2	4_M_EINMAN,{
-	if(isbegin_quest(17008) == 1){
+	if (isbegin_quest(17008) == 1) {
 		setpcblock PCBLOCK_ALL, true;
 		specialeffect EF_DA_SPACE,AREA,"Staff#171_lhzin3";
-		cloaknpc("Staff#171_lhzin3",false,getcharid(0));
+		cloakoffnpc "Staff#171_lhzin3",getcharid(0);
 		npctalk "With this, we will have completed the pre-training for the employees.","Staff#171_lhzin3",bc_self;
 		sleep2 2000;
 		npctalk "If you're new around here, you can get directions from the person in charge of the assignemnts.","Staff#171_lhzin3",bc_self;
 		sleep2 2000;
 		npctalk "Facility maintenance department, come with me!","",bc_self;
 		sleep2 2000;
-		cloaknpc("Staff#171_lhzin3",true,getcharid(0));
+		cloakonnpc "Staff#171_lhzin3",getcharid(0);
 		specialeffect EF_DA_SPACE,AREA,"Pat#171_lhzin2";
-		cloaknpc("Pat#171_lhzin2",false,getcharid(0));
+		cloakoffnpc "Pat#171_lhzin2",getcharid(0);
 		sleep2 2000;
 		npctalk "That's me!","Pat#171_lhzin2",bc_self;
 		sleep2 2000;
@@ -1726,10 +1725,10 @@ lhz_in01,163,258,5	script	Staff#171_lhzin2	4_M_EINMAN,{
 		sleep2 2000;
 		npctalk "I like your response, we need more people like you!","",bc_self;
 		sleep2 2000;
-		cloaknpc("Pat#171_lhzin2",true,getcharid(0));
-		cloaknpc("Lazy#171_lhzin2",false,getcharid(0));
-		cloaknpc("Kaya Toss#171_lhzin2",false,getcharid(0));
-		cloaknpc("As#171_lhzin2",false,getcharid(0));
+		cloakonnpc "Pat#171_lhzin2",getcharid(0);
+		cloakoffnpc "Lazy#171_lhzin2",getcharid(0);
+		cloakoffnpc "Kaya Toss#171_lhzin2",getcharid(0);
+		cloakoffnpc "As#171_lhzin2",getcharid(0);
 		setpcblock PCBLOCK_ALL, false;
 		cutin "16lei_01",2;
 		mes "[ Lazy ]";
@@ -1860,34 +1859,34 @@ lhz_in01,163,258,5	script	Staff#171_lhzin2	4_M_EINMAN,{
 		setquest 17009;
 		close2;
 		cutin "",255;
-		cloaknpc("Lazy#171_lhzin2",true,getcharid(0));
-		cloaknpc("Kaya Toss#171_lhzin2",true,getcharid(0));
-		cloaknpc("As#171_lhzin2",true,getcharid(0));
+		cloakonnpc "Lazy#171_lhzin2",getcharid(0);
+		cloakonnpc "Kaya Toss#171_lhzin2",getcharid(0);
+		cloakonnpc "As#171_lhzin2",getcharid(0);
 		end;
 	}
-	if(isbegin_quest(17009) == 1){
+	if (isbegin_quest(17009) == 1) {
 		mes "[ Staff ]";
 		mes "They are waiting for you at the <NAVI>[laboratory]<INFO>rgsr_in,157,84,0,000,0</INFO></NAVI>, shouldn't you go aswell?";
-		end;
+		close;
 	}
 	mes "[ Staff ]";
 	mes "There doesn't seem to be any room left.";
-	end;
+	close;
 
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17008) == 1");
-end;
+	end;
 }
 
 lhz_in01,80,210,5	script	Secretary#171_lhzin	4_M_RUSMAN1,{
-	if(isbegin_quest(17011) == 1){
+	if (isbegin_quest(17011) == 1) {
 		mes "[ Secretary ]";
 		mes "Hey, where are you going!";
 		next;
 		select("Are you talking to us?");
-		cloaknpc("Lazy#171_lhzin3",false,getcharid(0));
-		cloaknpc("Kaya Toss#171_lhzin3",false,getcharid(0));
-		cloaknpc("As#171_lhzin3",false,getcharid(0));
+		cloakoffnpc "Lazy#171_lhzin3",getcharid(0);
+		cloakoffnpc "Kaya Toss#171_lhzin3",getcharid(0);
+		cloakoffnpc "As#171_lhzin3",getcharid(0);
 		cutin "16lei_01",2;
 		mes "[ Lazy ]";
 		mes "Adventurer, let's go quickly? Let's go together.";
@@ -1998,34 +1997,33 @@ lhz_in01,80,210,5	script	Secretary#171_lhzin	4_M_RUSMAN1,{
 		setquest 17012;
 		close2;
 		cutin "",255;
-		cloaknpc("Lazy#171_lhzin3",true,getcharid(0));
-		cloaknpc("Kaya Toss#171_lhzin3",true,getcharid(0));
-		cloaknpc("As#171_lhzin3",true,getcharid(0));
-		questinfo_refresh();
+		cloakonnpc "Lazy#171_lhzin3",getcharid(0);
+		cloakonnpc "Kaya Toss#171_lhzin3",getcharid(0);
+		cloakonnpc "As#171_lhzin3",getcharid(0);
 		end;
 	}
-	if(isbegin_quest(17012)){
+	if (isbegin_quest(17012)) {
 		mes "[ Gray ]";
 		mes "Go to the <NAVI>[Document Storage Room]<INFO>lhz_in01,32,264,0,000,0</INFO></NAVI>, go quickly before someone notice you.";
-		end;
+		close;
 	}
 	mes "[ Gray ]";
 	mes "Don't you have something else to do.";
-	end;
-	
+	close;
+
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17011) == 1");
-end;
+	end;
 }
 
 lhz_in01,32,264,5	script	Staff#171_lhzin4	4_M_HUMAN_02,{
-	if(isbegin_quest(17012) == 1){
+	if (isbegin_quest(17012) == 1) {
 		mes "[ Staff ]";
 		mes "Hello, this is the document storage room.";
 		next;
-		cloaknpc("Lazy#171_lhzin4",false,getcharid(0));
-		cloaknpc("Kaya Toss#171_lhzin4",false,getcharid(0));
-		cloaknpc("As#171_lhzin4",false,getcharid(0));
+		cloakoffnpc "Lazy#171_lhzin4",getcharid(0);
+		cloakoffnpc "Kaya Toss#171_lhzin4",getcharid(0);
+		cloakoffnpc "As#171_lhzin4",getcharid(0);
 		mes "[ Staff ]";
 		mes "Ah! I see. You're looking for Patrick Kaufman's transfer logs?";
 		npctalk "It feels good to smell the books here. My dream was to be a librarian. I should do that from now on.";
@@ -2211,33 +2209,33 @@ lhz_in01,32,264,5	script	Staff#171_lhzin4	4_M_HUMAN_02,{
 		mes "[ Staff ]";
 		mes "Please have a look. If you need anything, let me know!";
 		close2;
-		cloaknpc("Lazy#171_lhzin4",true,getcharid(0));
-		cloaknpc("Kaya Toss#171_lhzin4",true,getcharid(0));
-		cloaknpc("As#171_lhzin4",true,getcharid(0));
+		cloakonnpc "Lazy#171_lhzin4",getcharid(0);
+		cloakonnpc "Kaya Toss#171_lhzin4",getcharid(0);
+		cloakonnpc "As#171_lhzin4",getcharid(0);
 		end;
 	}
-	if(isbegin_quest(17013) == 1){
+	if (isbegin_quest(17013) == 1) {
 		mes "[ Staff ]";
 		mes "<NAVI>[McDonald Laboratory]<INFO>ein_fild01,95,146,0,000,0</INFO></NAVI> is located in Einbroch, at the outer zone. Please be careful, it is a dangerous area.";
-		end;
+		close;
 	}
 	mes "[ Staff ]";
 	mes "If you have a document or a book to find, please go see the staff member at the reception.";
-	end;
-	
+	close;
+
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17012) == 1");
-end;
+	end;
 }
 
 rgsr_in,161,85,3	script	Laboratory Staff#171_rgsrin	4_LGTSCIENCE,{
-	if(isbegin_quest(17009) == 1){
+	if (isbegin_quest(17009) == 1) {
 		mes "[ Staff ]";
 		mes "This place is restricted from outsiders, please leave.";
 		next;
-		cloaknpc("Lazy#171_rgsrin",false,getcharid(0));
-		cloaknpc("Kaya Toss#171_rgsrin",false,getcharid(0));
-		cloaknpc("As#171_rgsrin",false,getcharid(0));
+		cloakoffnpc "Lazy#171_rgsrin",getcharid(0);
+		cloakoffnpc "Kaya Toss#171_rgsrin",getcharid(0);
+		cloakoffnpc "As#171_rgsrin",getcharid(0);
 		cutin "16lei_01",2;
 		mes "[ Lazy ]";
 		mes "Hello. Okay, you're busy so that you don't know when someone died? So what happened? Don't you think its a big deal?";
@@ -2293,34 +2291,33 @@ rgsr_in,161,85,3	script	Laboratory Staff#171_rgsrin	4_LGTSCIENCE,{
 		setquest 17010;
 		close2;
 		cutin "",255;
-		cloaknpc("Lazy#171_rgsrin",true,getcharid(0));
-		cloaknpc("Kaya Toss#171_rgsrin",true,getcharid(0));
-		cloaknpc("As#171_rgsrin",true,getcharid(0));
-		questinfo_refresh();
+		cloakonnpc "Lazy#171_rgsrin",getcharid(0);
+		cloakonnpc "Kaya Toss#171_rgsrin",getcharid(0);
+		cloakonnpc "As#171_rgsrin",getcharid(0);
 		end;
 	}
-	if(isbegin_quest(17010) == 1){
+	if (isbegin_quest(17010) == 1) {
 		mes "[ Med ]";
 		mes "If you want more information, you should ask <NAVI>[Sammy]<INFO>rgsr_in,12,46,0,101,0</INFO></NAVI> at the entrance.";
-		end;
-	}	
+		close;
+	}
 	mes "[ Staff ]";
 	mes "This place is restricted from outsiders, please leave.";
 	close;
-	
+
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17009) == 1");
-end;
+	end;
 }
 
 rgsr_in,12,46,7	script	Staff#171_rgsrin	4_M_04,{
-	if(isbegin_quest(17010) == 1){
+	if (isbegin_quest(17010) == 1) {
 		mes "[ Staff ]";
 		mes "What are you doing here? You can't be here unless you have an apointment.";
 		next;
-		cloaknpc("Lazy#171_rgsrin2",false,getcharid(0));
-		cloaknpc("Kaya Toss#171_rgsrin2",false,getcharid(0));
-		cloaknpc("As#171_rgsrin2",false,getcharid(0));
+		cloakoffnpc "Lazy#171_rgsrin2",getcharid(0);
+		cloakoffnpc "Kaya Toss#171_rgsrin2",getcharid(0);
+		cloakoffnpc "As#171_rgsrin2",getcharid(0);
 		cutin "ep171_as01",0;
 		mes "[ As ]";
 		mes "Hey, Sammy. Could I ask you a few questions?";
@@ -2377,8 +2374,8 @@ rgsr_in,12,46,7	script	Staff#171_rgsrin	4_M_04,{
 		sleep2 1000;
 		specialeffect EF_DA_SPACE,AREA,"Pat#171_rgsrin";
 		specialeffect EF_DA_SPACE,AREA,"Laboratory Staff#171_rgsrin2";
-		cloaknpc("Pat#171_rgsrin",false,getcharid(0));
-		cloaknpc("Laboratory Staff#171_rgsrin2",false,getcharid(0));
+		cloakoffnpc "Pat#171_rgsrin",getcharid(0);
+		cloakoffnpc "Laboratory Staff#171_rgsrin2",getcharid(0);
 		sleep2 1500;
 		npctalk "You'll be joining a new laboratory next week. Don't get too lonely when you move away.","",bc_self;
 		sleep2 2000;
@@ -2388,8 +2385,8 @@ rgsr_in,12,46,7	script	Staff#171_rgsrin	4_M_04,{
 		sleep2 2000;
 		npctalk "No, my body is strong.","Pat#171_rgsrin",bc_self;
 		sleep2 2000;
-		cloaknpc("Pat#171_rgsrin",true,getcharid(0));
-		cloaknpc("Laboratory Staff#171_rgsrin2",true,getcharid(0));
+		cloakonnpc "Pat#171_rgsrin",getcharid(0);
+		cloakonnpc "Laboratory Staff#171_rgsrin2",getcharid(0);
 		next;
 		mes "[ Sammy ]";
 		mes "... and then he was sent to another laboratory.";
@@ -2495,27 +2492,27 @@ rgsr_in,12,46,7	script	Staff#171_rgsrin	4_M_04,{
 		setquest 17011;
 		close2;
 		cutin "",255;
-		cloaknpc("Lazy#171_rgsrin2",true,getcharid(0));
-		cloaknpc("Kaya Toss#171_rgsrin2",true,getcharid(0));
-		cloaknpc("As#171_rgsrin2",true,getcharid(0));
+		cloakonnpc "Lazy#171_rgsrin2",getcharid(0);
+		cloakonnpc "Kaya Toss#171_rgsrin2",getcharid(0);
+		cloakonnpc "As#171_rgsrin2",getcharid(0);
 		end;
 	}
-	if(isbegin_quest(17011) == 1){
+	if (isbegin_quest(17011) == 1) {
 		mes "[ Sammy ]";
 		mes "I didn't mean to cover up anything, it's just what I heard. Did everyone else went to the <NAVI>[Office]<INFO>lhz_in01,80,210,0,000,0</INFO></NAVI>?";
-		end;
+		close;
 	}
 	mes "[ Staff ]";
 	mes "What are you doing here? You can't be here unless you have an apointment.";
-	end;
-	
+	close;
+
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17010) == 1");
-end;
+	end;
 }
 
-lighthalzen,256,215,5	duplicate(dummynpc)	Kaya Toss#171_lhz	4_EP17_KAYA
-lighthalzen,255,216,5	duplicate(dummynpc)	As#171_lhz	4_EP17_AS
+lighthalzen,256,215,5	duplicate(dummy_cloaked_npc)	Kaya Toss#171_lhz	4_EP17_KAYA
+lighthalzen,255,216,5	duplicate(dummy_cloaked_npc)	As#171_lhz	4_EP17_AS
 
 lighthalzen,336,264,5	script	Kaya Toss#171_lhz2	4_EP17_KAYA,{
 	cutin "ep171_kaya01",2;
@@ -2532,50 +2529,48 @@ lighthalzen,335,261,1	script	As#171_lhz2	4_EP17_AS,{
 	close3;
 }
 
-lighthalzen,331,262,5	duplicate(dummynpc)	Pat#171_lhz	4_M_REPAIR
-lighthalzen,332,260,1	duplicate(dummynpc)	Recruiter#171_lhz	4_F_HUWOMAN
-lighthalzen,331,263,7	duplicate(dummynpc)	Pat's Father#171_lhz	4_M_MIDDLE1
-lighthalzen,333,264,7	duplicate(dummynpc)	Pat's Mother#171_lhz	4_F_EINWOMAN
-lighthalzen,104,163,5	duplicate(dummynpc)	Kaya Toss#171_lhz3	4_EP17_KAYA
-lighthalzen,103,165,5	duplicate(dummynpc)	As#171_lhz3	4_EP17_AS
-lighthalzen,106,162,1	duplicate(dummynpc)	Pat#171_lhz2	4_M_REPAIR
-lighthalzen,106,162,5	duplicate(dummynpc)	Protester#171_lhz	4_F_ZONDAGIRL
-lhz_in01,105,134,7	duplicate(dummynpc)	Lazy#171_lhzin	4_M_LAZY
-lhz_in01,108,135,1	duplicate(dummynpc)	Pat#171_lhzin	4_M_REPAIR
-lhz_in01,109,134,1	duplicate(dummynpc)	Kaya Toss#171_lhzin	4_EP17_KAYA
-lhz_in01,109,136,3	duplicate(dummynpc)	As#171_lhzin	4_EP17_AS
-lhz_in01,161,255,7	duplicate(dummynpc)	Lazy#171_lhzin2	4_M_LAZY
-lhz_in01,168,257,5	duplicate(dummynpc)	Staff#171_lhzin3	4_F_CHNDOCTOR
-lhz_in01,162,255,1	duplicate(dummynpc)	Pat#171_lhzin2	4_M_REPAIR
-lhz_in01,164,255,1	duplicate(dummynpc)	Kaya Toss#171_lhzin2	4_EP17_KAYA
-lhz_in01,164,256,3	duplicate(dummynpc)	As#171_lhzin2	4_EP17_AS
-lhz_in01,82,209,3	duplicate(dummynpc)	Lazy#171_lhzin3	4_M_LAZY
-lhz_in01,81,208,1	duplicate(dummynpc)	Kaya Toss#171_lhzin3	4_EP17_KAYA
-lhz_in01,82,207,1	duplicate(dummynpc)	As#171_lhzin3	4_EP17_AS
-lhz_in01,33,263,3	duplicate(dummynpc)	Lazy#171_lhzin4	4_M_LAZY
-lhz_in01,33,262,1	duplicate(dummynpc)	Kaya Toss#171_lhzin4	4_EP17_KAYA
-lhz_in01,34,262,3	duplicate(dummynpc)	As#171_lhzin4	4_EP17_AS
+lighthalzen,331,262,5	duplicate(dummy_cloaked_npc)	Pat#171_lhz	4_M_REPAIR
+lighthalzen,332,260,1	duplicate(dummy_cloaked_npc)	Recruiter#171_lhz	4_F_HUWOMAN
+lighthalzen,331,263,7	duplicate(dummy_cloaked_npc)	Pat's Father#171_lhz	4_M_MIDDLE1
+lighthalzen,333,264,7	duplicate(dummy_cloaked_npc)	Pat's Mother#171_lhz	4_F_EINWOMAN
+lighthalzen,104,163,5	duplicate(dummy_cloaked_npc)	Kaya Toss#171_lhz3	4_EP17_KAYA
+lighthalzen,103,165,5	duplicate(dummy_cloaked_npc)	As#171_lhz3	4_EP17_AS
+lighthalzen,106,162,1	duplicate(dummy_cloaked_npc)	Pat#171_lhz2	4_M_REPAIR
+lighthalzen,106,162,5	duplicate(dummy_cloaked_npc)	Protester#171_lhz	4_F_ZONDAGIRL
+lhz_in01,105,134,7	duplicate(dummy_cloaked_npc)	Lazy#171_lhzin	4_M_LAZY
+lhz_in01,108,135,1	duplicate(dummy_cloaked_npc)	Pat#171_lhzin	4_M_REPAIR
+lhz_in01,109,134,1	duplicate(dummy_cloaked_npc)	Kaya Toss#171_lhzin	4_EP17_KAYA
+lhz_in01,109,136,3	duplicate(dummy_cloaked_npc)	As#171_lhzin	4_EP17_AS
+lhz_in01,161,255,7	duplicate(dummy_cloaked_npc)	Lazy#171_lhzin2	4_M_LAZY
+lhz_in01,168,257,5	duplicate(dummy_cloaked_npc)	Staff#171_lhzin3	4_F_CHNDOCTOR
+lhz_in01,162,255,1	duplicate(dummy_cloaked_npc)	Pat#171_lhzin2	4_M_REPAIR
+lhz_in01,164,255,1	duplicate(dummy_cloaked_npc)	Kaya Toss#171_lhzin2	4_EP17_KAYA
+lhz_in01,164,256,3	duplicate(dummy_cloaked_npc)	As#171_lhzin2	4_EP17_AS
+lhz_in01,82,209,3	duplicate(dummy_cloaked_npc)	Lazy#171_lhzin3	4_M_LAZY
+lhz_in01,81,208,1	duplicate(dummy_cloaked_npc)	Kaya Toss#171_lhzin3	4_EP17_KAYA
+lhz_in01,82,207,1	duplicate(dummy_cloaked_npc)	As#171_lhzin3	4_EP17_AS
+lhz_in01,33,263,3	duplicate(dummy_cloaked_npc)	Lazy#171_lhzin4	4_M_LAZY
+lhz_in01,33,262,1	duplicate(dummy_cloaked_npc)	Kaya Toss#171_lhzin4	4_EP17_KAYA
+lhz_in01,34,262,3	duplicate(dummy_cloaked_npc)	As#171_lhzin4	4_EP17_AS
 
-rgsr_in,157,84,5	duplicate(dummynpc)	Lazy#171_rgsrin	4_M_LAZY
-rgsr_in,158,87,5	duplicate(dummynpc)	Kaya Toss#171_rgsrin	4_EP17_KAYA
-rgsr_in,157,88,5	duplicate(dummynpc)	As#171_rgsrin	4_EP17_AS
-rgsr_in,16,49,3	duplicate(dummynpc)	Lazy#171_rgsrin2	4_M_LAZY
-rgsr_in,17,48,3	duplicate(dummynpc)	Kaya Toss#171_rgsrin2	4_EP17_KAYA
-rgsr_in,18,47,3	duplicate(dummynpc)	As#171_rgsrin2	4_EP17_AS
-rgsr_in,15,46,1	duplicate(dummynpc)	Pat#171_rgsrin	4_M_REPAIR
-rgsr_in,13,49,5	duplicate(dummynpc)	Laboratory Staff#171_rgsrin2	4_M_SCIENCE
-
-
+rgsr_in,157,84,5	duplicate(dummy_cloaked_npc)	Lazy#171_rgsrin	4_M_LAZY
+rgsr_in,158,87,5	duplicate(dummy_cloaked_npc)	Kaya Toss#171_rgsrin	4_EP17_KAYA
+rgsr_in,157,88,5	duplicate(dummy_cloaked_npc)	As#171_rgsrin	4_EP17_AS
+rgsr_in,16,49,3	duplicate(dummy_cloaked_npc)	Lazy#171_rgsrin2	4_M_LAZY
+rgsr_in,17,48,3	duplicate(dummy_cloaked_npc)	Kaya Toss#171_rgsrin2	4_EP17_KAYA
+rgsr_in,18,47,3	duplicate(dummy_cloaked_npc)	As#171_rgsrin2	4_EP17_AS
+rgsr_in,15,46,1	duplicate(dummy_cloaked_npc)	Pat#171_rgsrin	4_M_REPAIR
+rgsr_in,13,49,5	duplicate(dummy_cloaked_npc)	Laboratory Staff#171_rgsrin2	4_M_SCIENCE
 
 //= PUBCAT MAP
 pub_cat,93,105,3	script	Philofontes#171_cat	4_M_PHILOFONTES,{
-	if(isbegin_quest(7850) == 0){
+	if (isbegin_quest(7850) == 0) {
 		mes "[ Tess ]";
 		mes "Who knew that there was such a place.";
 		mes "It's more amazing than you think.";
-		end;
+		close;
 	}
-	if(isbegin_quest(7850) == 1){
+	if (isbegin_quest(7850) == 1) {
 		cutin "ep16_tes01",1;
 		npctalk "That's it.","",bc_self;
 		mes "[ Tess ]";
@@ -2597,7 +2592,7 @@ pub_cat,93,105,3	script	Philofontes#171_cat	4_M_PHILOFONTES,{
 		mes "Elena Bolkova is organizing an recon team for investigating the suspected areas.";
 		mes "I think it would greatly help if you joined her team too..";
 		next;
-		cloaknpc("Elena Bolkova#171_cat",false,getcharid(0));
+		cloakoffnpc "Elena Bolkova#171_cat",getcharid(0);
 		cutin "162elena_02",2;
 		mes "[ Elena Bolkova ]";
 		mes "Hey~ Tess!";
@@ -2636,7 +2631,7 @@ pub_cat,93,105,3	script	Philofontes#171_cat	4_M_PHILOFONTES,{
 		mes "[ Elena Bolkova ]";
 		mes "Leave it to me.";
 		next;
-		cloaknpc("Elena Bolkova#171_cat",true,getcharid(0));
+		cloakonnpc "Elena Bolkova#171_cat",getcharid(0);
 		cutin "ep16_tes01",1;
 		mes "[ Tess ]";
 		mes "Why not join us and see the situation for yourself?";
@@ -2653,14 +2648,14 @@ pub_cat,93,105,3	script	Philofontes#171_cat	4_M_PHILOFONTES,{
 		mes "You should received enough information to start investigating now.";
 		close3;
 	}
-	if(isbegin_quest(7859) == 0){
+	if (isbegin_quest(7859) == 0) {
 		cutin "ep16_tes01",1;
 		mes "[ Tess ]";
 		mes "<NAVI>[Rudus]<INFO>ein_fild05,158,284,0,101,0</INFO></NAVI> is at Einbroch North-East field.";
 		mes "If you join the recon team, it will definitely help.";
 		close3;
 	}
-	if(isbegin_quest(7859) == 1){
+	if (isbegin_quest(7859) == 1) {
 		cutin "ep16_tes01",1;
 		mes "[ Tess ]";
 		mes "You went there?";
@@ -2684,21 +2679,20 @@ pub_cat,93,105,3	script	Philofontes#171_cat	4_M_PHILOFONTES,{
 		mes "It seems I've picked up bad customers, but with the adventurer's help it shouldn't be a problem.";
 		completequest 7859;
 		setquest 7860;
-		questinfo_refresh();
-		cloaknpc("Philofontes#171_cat2",false,getcharid(0));
-		cloaknpc("Middle-Aged Man#171_cat",false,getcharid(0));
-		cloaknpc("Rekenber Senior Guard#171_cat",false,getcharid(0));
-		cloaknpc("Commander Est#171_cat",false,getcharid(0));
+		cloakoffnpc "Philofontes#171_cat2",getcharid(0);
+		cloakoffnpc "Middle-Aged Man#171_cat",getcharid(0);
+		cloakoffnpc "Rekenber Senior Guard#171_cat",getcharid(0);
+		cloakoffnpc "Commander Est#171_cat",getcharid(0);
 		close3;
 	}
-	if(isbegin_quest(7860) == 1){
+	if (isbegin_quest(7860) == 1) {
 		cutin "ep16_tes01",1;
 		mes "[ Tess ]";
 		mes "It's that room over there. It's a place where only rebellions leaders can go in or out.";
 		mes "All the captains are inside.";
 		close3;
 	}
-	if(isbegin_quest(7861) == 1){
+	if (isbegin_quest(7861) == 1) {
 		cutin "ep16_tes01",1;
 		mes "[ Tess ]";
 		mes "It's the building at the top left of our Headquarters, in <NAVI>[Lighthalzen]<INFO>lighthalzen,56,270,0,101,0</INFO></NAVI>.";
@@ -2709,7 +2703,7 @@ pub_cat,93,105,3	script	Philofontes#171_cat	4_M_PHILOFONTES,{
 		mes "I hope this mission goes well.";
 		close3;
 	}
-	if(isbegin_quest(7862) == 2 && isbegin_quest(7864) == 0){
+	if (isbegin_quest(7862) == 2 && isbegin_quest(7864) == 0) {
 		cutin "ep16_tes01",2;
 		mes "[ Tess ]";
 		mes "You're back.";
@@ -2726,12 +2720,12 @@ pub_cat,93,105,3	script	Philofontes#171_cat	4_M_PHILOFONTES,{
 		setquest 7864;
 		getitem 25669,25;
 		getexp 800000,800000;
-		cloaknpc("Lazy#171_cat",false,getcharid(0));
-		cloaknpc("Kaya Toss#171_cat",false,getcharid(0));
-		cloaknpc("As#171_cat",false,getcharid(0));
-		close4;
+		cloakoffnpc "Lazy#171_cat",getcharid(0);
+		cloakoffnpc "Kaya Toss#171_cat",getcharid(0);
+		cloakoffnpc "As#171_cat",getcharid(0);
+		close3;
 	}
-	if(isbegin_quest(7863) == 1){
+	if (isbegin_quest(7863) == 1) {
 		cutin "ep16_tes01",2;
 		mes "[ Tess ]";
 		mes "Is it related to the laboratory's security.";
@@ -2748,17 +2742,17 @@ pub_cat,93,105,3	script	Philofontes#171_cat	4_M_PHILOFONTES,{
 		completequest 7863;
 		close3;
 	}
-	if(isbegin_quest(7864) == 1){
+	if (isbegin_quest(7864) == 1) {
 		cutin "ep16_tes01",2;
 		mes "[ Tess ]";
 		mes "Lazy seems to be up to something.";
 		mes "He's somewhere here in the pub, go and find him.";
-		cloaknpc("Lazy#171_cat",false,getcharid(0));
-		cloaknpc("Kaya Toss#171_cat",false,getcharid(0));
-		cloaknpc("As#171_cat",false,getcharid(0));
+		cloakoffnpc "Lazy#171_cat",getcharid(0);
+		cloakoffnpc "Kaya Toss#171_cat",getcharid(0);
+		cloakoffnpc "As#171_cat",getcharid(0);
 		close3;
 	}
-	if(isbegin_quest(17014) == 1){
+	if (isbegin_quest(17014) == 1) {
 		cutin "ep16_tes01",1;
 		mes "[ Tess ]";
 		mes "I thought you were investigating with Lazy, it looks like you didn't get great results.";
@@ -2769,7 +2763,7 @@ pub_cat,93,105,3	script	Philofontes#171_cat	4_M_PHILOFONTES,{
 		mes "[ Tess ]";
 		mes "So far, I believe it was a trick from the Enterprise, from those who sit back at the company.";
 		mes "Huh...";
-		cloaknpc("Kaya#171_cat3",false,getcharid(0));
+		cloakoffnpc "Kaya#171_cat3",getcharid(0);
 		next;
 		cutin "ep171_kaya01",2;
 		mes "[ Kaya ]";
@@ -2808,7 +2802,7 @@ pub_cat,93,105,3	script	Philofontes#171_cat	4_M_PHILOFONTES,{
 		mes "[ Kaya ]";
 		mes "Please excuse me.";
 		next;
-		cloaknpc("Kaya#171_cat3",true,getcharid(0));
+		cloakonnpc "Kaya#171_cat3",getcharid(0);
 		cutin "ep16_tes01",1;
 		mes "[ Tess ]";
 		mes "... then I'll keep you informed about the next operation.";
@@ -2832,23 +2826,23 @@ pub_cat,93,105,3	script	Philofontes#171_cat	4_M_PHILOFONTES,{
 		setquest 7865;
 		close3;
 	}
-	if(isbegin_quest(7865) == 1){
+	if (isbegin_quest(7865) == 1) {
 		mes "[ Tess ]";
 		mes "Meet with a <NAVI>[Rebellion Crew]<INFO>ein_fild03,278,269,0,101,0</INFO></NAVI> member at the North-West region of Einbroch.";
-		end;
+		close;
 	}
 	cutin "ep16_tes01",2;
 	mes "[ Tess ]";
 	mes "I'm a bit tired. There are tons of documents to analyze.";
-	close3;	
-	
+	close3;
+
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(7850) == 1");
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(7859) == 1");
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(7862) == 2 && isbegin_quest(7864) == 0");
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(7863) == 1");
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17014) == 1");
-end;
+	end;
 }
 
 lighthalzen,43,271,5	script	Rekenber Guard#171_light_1	4_M_LGTGUARD,{ end; }
@@ -2857,28 +2851,28 @@ lighthalzen,46,271,5	script	Rekenber Guard#171_light_2	4_M_LGTGUARD,{ end; }
 //= Pub Back Area
 pub_cat,150,105,0	script	#EP171_EVT_CAT00	HIDDEN_WARP_NPC,1,1,{
 	end;
-	
+
 OnTouch:
-	if(isbegin_quest(7860) == 1){
-		cloaknpc("Philofontes#171_cat2",false,getcharid(0));
-		cloaknpc("Middle-Aged Man#171_cat",false,getcharid(0));
-		cloaknpc("Rekenber Senior Guard#171_cat",false,getcharid(0));
-		cloaknpc("Commander Est#171_cat",false,getcharid(0));
+	if (isbegin_quest(7860) == 1) {
+		cloakoffnpc "Philofontes#171_cat2",getcharid(0);
+		cloakoffnpc "Middle-Aged Man#171_cat",getcharid(0);
+		cloakoffnpc "Rekenber Senior Guard#171_cat",getcharid(0);
+		cloakoffnpc "Commander Est#171_cat",getcharid(0);
 		npctalk "I will cooperate this one time only, okay?","Commander Est#171_cat",bc_self;
 		end;
 	}
-	if(isbegin_quest(7860) == 2 && isbegin_quest(7861) == 0){
-		cloaknpc("Philofontes#171_cat2",false,getcharid(0));
-		cloaknpc("Middle-Aged Man#171_cat",false,getcharid(0));
+	if (isbegin_quest(7860) == 2 && isbegin_quest(7861) == 0) {
+		cloakoffnpc "Philofontes#171_cat2",getcharid(0);
+		cloakoffnpc "Middle-Aged Man#171_cat",getcharid(0);
 		end;
 	}
-	if(isbegin_quest(7860) == 2 && isbegin_quest(7861) == 1)
-		cloaknpc("Middle-Aged Man#171_cat",false,getcharid(0));
-end;
+	if (isbegin_quest(7860) == 2 && isbegin_quest(7861) == 1)
+		cloakoffnpc "Middle-Aged Man#171_cat",getcharid(0);
+	end;
 }
 
 pub_cat,160,102,5	script	Philofontes#171_cat2	4_M_PHILOFONTES,{
-	if(isbegin_quest(7860) == 1){
+	if (isbegin_quest(7860) == 1) {
 		cutin "ep162_est01",2;
 		mes "[ Est ]";
 		mes "It's your operation. Do you have no support available?";
@@ -2942,15 +2936,15 @@ pub_cat,160,102,5	script	Philofontes#171_cat2	4_M_PHILOFONTES,{
 		mes "I'm a little too excited. I'll shut up. Tess, explain it please.";
 		next;
 		cutin "ep16_tes01",0;
-		mes "[ Tess ]";			
+		mes "[ Tess ]";
 		mes "To put it simply, our affiliated Enterprise research institute, Regenschirm, is occupied by a large group of enemies.";
 		mes "A special unit under Est's command will be dispatched for the recapture.";
 		next;
-		mes "[ Tess ]";	
+		mes "[ Tess ]";
 		mes "So that's why Est was so nervous.";
 		next;
 		select("Why aren't the Enterprise guards helping?");
-		mes "[ Tess ]";	
+		mes "[ Tess ]";
 		mes "Well you see...";
 		npctalk "That's all my fault!","Rekenber Senior Guard#171_cat",bc_self;
 		next;
@@ -3052,27 +3046,27 @@ pub_cat,160,102,5	script	Philofontes#171_cat2	4_M_PHILOFONTES,{
 		mes "It all went so fast.";
 		mes "I wish we could talk more in-depth about this operation.";
 		completequest 7860;
-		cloaknpc("Rekenber Senior Guard#171_cat",true,getcharid(0));
-		cloaknpc("Commander Est#171_cat",true,getcharid(0));
-		close4;
+		cloakonnpc "Rekenber Senior Guard#171_cat",getcharid(0);
+		cloakonnpc "Commander Est#171_cat",getcharid(0);
+		close3;
 	}
 	npctalk "I think Kaya has something else to say.","",bc_self;
 	end;
 
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(7860) == 1");
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 pub_cat,163,102,3	script	Middle-Aged Man#171_cat	4_EP17_KAYA,{
-	if(isbegin_quest(7860) == 1){
+	if (isbegin_quest(7860) == 1) {
 		cutin "ep171_kaya01",0;
 		mes "[ Middle-Aged Man ]";
 		mes "I don't think I should be starting this conversation, so why do not you speak with Tess instead?";
 		close3;
 	}
-	if(isbegin_quest(7860) == 2 && isbegin_quest(7861) == 0){
+	if (isbegin_quest(7860) == 2 && isbegin_quest(7861) == 0) {
 		cutin "ep171_kaya01",2;
 		mes "[ Kaya ]";
 		mes "Now I can formally introduce myself.";
@@ -3086,7 +3080,7 @@ pub_cat,163,102,3	script	Middle-Aged Man#171_cat	4_EP17_KAYA,{
 		mes "I've sent help requests here and there, but I haven't gotten a good replies yet.";
 		next;
 		cutin "ep16_tes01",1;
-		mes "[ Tess ]";	
+		mes "[ Tess ]";
 		mes "An unusually large number of companies have contacted the Rekenber directly for support.";
 		next;
 		mes "[ Tess ]";
@@ -3150,20 +3144,19 @@ pub_cat,163,102,3	script	Middle-Aged Man#171_cat	4_EP17_KAYA,{
 		mes "I'll see you outside.";
 		close2;
 		cutin "",255;
-		questinfo_refresh();
-		cloaknpc("Philofontes#171_cat2",true,getcharid(0));
+		cloakonnpc "Philofontes#171_cat2",getcharid(0);
 		end;
-	}		
+	}
 	cutin "ep171_kaya01",0;
 	mes "[ Kaya ]";
 	mes "I'm sorry I can't help you anymore.";
 	mes "I think it may turn into a messy fight.";
 	close3;
-	
+
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(7860) == 2 && isbegin_quest(7861) == 0");
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 pub_cat,165,103,3	script	Rekenber Senior Guard#171_cat	4_EP17_AS,{
@@ -3172,10 +3165,10 @@ pub_cat,165,103,3	script	Rekenber Senior Guard#171_cat	4_EP17_AS,{
 	mes "Oh, hello there! My name is As from the Rekenber Security.";
 	mes "I'm currently here as Kaya Toss's bodyguard";
 	close3;
-	
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 pub_cat,166,100,3	script	Commander Est#171_cat	4_F_ESTLOVELOY,{
@@ -3184,36 +3177,36 @@ pub_cat,166,100,3	script	Commander Est#171_cat	4_F_ESTLOVELOY,{
 	mes "Why should we help them?";
 	mes "Can you explain why we have to cooperate with them?";
 	close3;
-	
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 //= Pub Right Area
 pub_cat,107,65,5	script	#EP171_EVT_CAT01	HIDDEN_WARP_NPC,5,5,{
 	end;
-	
+
 OnTouch:
-	if(isbegin_quest(7864) == 1){
-		cloaknpc("Lazy#171_cat",false,getcharid(0));
-		cloaknpc("Kaya Toss#171_cat",false,getcharid(0));
-		cloaknpc("As#171_cat",false,getcharid(0));
+	if (isbegin_quest(7864) == 1) {
+		cloakoffnpc "Lazy#171_cat",getcharid(0);
+		cloakoffnpc "Kaya Toss#171_cat",getcharid(0);
+		cloakoffnpc "As#171_cat",getcharid(0);
 		end;
 	}
-	if(isbegin_quest(17003) == 0){
-		cloaknpc("Lazy#171_cat2",false,getcharid(0));
-		cloaknpc("Kaya Toss#171_cat",false,getcharid(0));
-		cloaknpc("As#171_cat",false,getcharid(0));
+	if (isbegin_quest(17003) == 0) {
+		cloakoffnpc "Lazy#171_cat2",getcharid(0);
+		cloakoffnpc "Kaya Toss#171_cat",getcharid(0);
+		cloakoffnpc "As#171_cat",getcharid(0);
 		end;
 	}
-	if(isbegin_quest(17003) == 1)
-		cloaknpc("Lazy#171_cat2",false,getcharid(0));
-end;
+	if (isbegin_quest(17003) == 1)
+		cloakoffnpc "Lazy#171_cat2",getcharid(0);
+	end;
 }
 
 pub_cat,106,69,7	script	Lazy#171_cat	4_M_LAZY,{
-	if(isbegin_quest(7864) == 1){
+	if (isbegin_quest(7864) == 1) {
 		cutin "16lei_03",0;
 		mes "[ Lazy ]";
 		mes "Look, that's all nice and good to have ^0000CDfacts^000000. But this is not even something you can use as a firepower.";
@@ -3237,7 +3230,7 @@ pub_cat,106,69,7	script	Lazy#171_cat	4_M_LAZY,{
 		mes "Oh sure, I have a lunch menu survey from the people in the neighborhood... is that what you want to use as facts?";
 		next;
 		cutin "ep171_kaya01",2;
-		mes "[ Kaya ]";		
+		mes "[ Kaya ]";
 		mes "That's not what I said at all...";
 		next;
 		cutin "16lei_02",0;
@@ -3360,7 +3353,7 @@ pub_cat,106,69,7	script	Lazy#171_cat	4_M_LAZY,{
 		mes "No that's not it. You're requesting our cooperation, and asking us to trust you completely without any real evidence. How can we believe you?";
 		next;
 		cutin "16lei_03",0;
-		mes "[ Lazy ]";			
+		mes "[ Lazy ]";
 		mes "Now, even if you actively cooperate with me, it's hard for me to like trust this arrangement.";
 		next;
 		cutin "ep171_kaya01",2;
@@ -3368,7 +3361,7 @@ pub_cat,106,69,7	script	Lazy#171_cat	4_M_LAZY,{
 		mes "You're repeating yourself now. I assure you, you can trust the documents.";
 		next;
 		cutin "16lei_02",0;
-		mes "[ Lazy ]";				
+		mes "[ Lazy ]";
 		mes "Why would I believe in you if you don't believe in me? I'm a compassionate person, patient and very humane.";
 		mes "Are your eyes so shut that you can't see what's in front of you?";
 		next;
@@ -3405,23 +3398,23 @@ pub_cat,106,69,7	script	Lazy#171_cat	4_M_LAZY,{
 		next;
 		mes "[ "+ strcharinfo(0) + " ]";
 		mes "Eh? Lazy? Where are you going!";
-		cloaknpc(strnpcinfo(0),true,getcharid(0));
+		cloakonnpc strnpcinfo(0),getcharid(0);
 		sleep2 1000;
-		cloaknpc("Lazy#171_cat2",false,getcharid(0));
+		cloakoffnpc "Lazy#171_cat2",getcharid(0);
 		completequest 7864;
 		setquest 17000;
-		close4;
+		close3;
 	}
 	end;
-	
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
+	cloakonnpc strnpcinfo(0);
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(7864) == 1");
-end;
+	end;
 }
 
 pub_cat,105,58,3	script	Lazy#171_cat2	4_M_LAZY,{
-	if(isbegin_quest(17000) == 1){
+	if (isbegin_quest(17000) == 1) {
 		cutin "16lei_03",2;
 		mes "[ Lazy ]";
 		mes "Ah, this is frustrating!";
@@ -3538,15 +3531,15 @@ pub_cat,105,58,3	script	Lazy#171_cat2	4_M_LAZY,{
 		npctalk "If you go, don't give up alright?","",bc_self;
 		completequest 17000;
 		setquest 17001;
-		close4;
+		close3;
 	}
-	if(isbegin_quest(17001) == 1){
+	if (isbegin_quest(17001) == 1) {
 		cutin "16lei_01",2;
 		mes "[ Lazy ]";
 		mes "I really like it here. Don't forget about the adventure, there's nothing to worry about.";
 		close3;
 	}
-	if(isbegin_quest(17002) == 1){
+	if (isbegin_quest(17002) == 1) {
 		cutin "16lei_01",2;
 		mes "[ Lazy ]";
 		mes "What did he say? No, right?";
@@ -3566,8 +3559,8 @@ pub_cat,105,58,3	script	Lazy#171_cat2	4_M_LAZY,{
 		mes "If you asked the enterprise to cooperate with us, but what are you going to do if they refused?";
 		npctalk "I feel better already. Amazing~","",bc_self;
 		next;
-		cloaknpc("Kaya Toss#171_cat",true,getcharid(0));
-		cloaknpc("Kaya#171_cat2",false,getcharid(0));
+		cloakonnpc "Kaya Toss#171_cat",getcharid(0);
+		cloakoffnpc "Kaya#171_cat2",getcharid(0);
 		cutin "ep171_kaya01",0;
 		mes "[ Kaya ]";
 		mes "Hmm. Excuse me.";
@@ -3577,8 +3570,8 @@ pub_cat,105,58,3	script	Lazy#171_cat2	4_M_LAZY,{
 		mes "Have you thought about it?";
 		npctalk "Have you thought about it?","",bc_self;
 		next;
-		cloaknpc("As#171_cat",true,getcharid(0));
-		cloaknpc("As#171_cat2",false,getcharid(0));
+		cloakonnpc "As#171_cat",getcharid(0);
+		cloakoffnpc "As#171_cat2",getcharid(0);
 		cutin "ep171_as02",1;
 		mes "[ As ]";
 		mes "Please think it over, Vice President!";
@@ -3724,7 +3717,7 @@ pub_cat,105,58,3	script	Lazy#171_cat2	4_M_LAZY,{
 		getexp 300000,300000;
 		close3;
 	}
-	if(isbegin_quest(17003) == 1){
+	if (isbegin_quest(17003) == 1) {
 		cutin "16lei_01",2;
 		mes "[ Lazy ]";
 		mes "What are you doing here?.";
@@ -3732,16 +3725,16 @@ pub_cat,105,58,3	script	Lazy#171_cat2	4_M_LAZY,{
 		close3;
 	}
 	end;
-	
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
+	cloakonnpc strnpcinfo(0);
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17000) == 1");
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17002) == 1");
-end;
+	end;
 }
 
 pub_cat,109,71,3	script	Kaya Toss#171_cat	4_EP17_KAYA,{
-	if(isbegin_quest(17001) == 1){
+	if (isbegin_quest(17001) == 1) {
 		mes "[ "+ strcharinfo(0) + " ]";
 		mes "Hello. I'm back is everything fine?";
 		next;
@@ -3761,8 +3754,8 @@ pub_cat,109,71,3	script	Kaya Toss#171_cat	4_EP17_KAYA,{
 		mes "[ Kaya ]";
 		mes "I have no intention of debating this further with you, so I'll talk to the person in charge.";
 		next;
-		cloaknpc("Lazy#171_cat2",true,getcharid(0));
-		cloaknpc("Lazy#171_cat",false,getcharid(0));
+		cloakonnpc "Lazy#171_cat2",getcharid(0);
+		cloakoffnpc "Lazy#171_cat",getcharid(0);
 		cutin "16lei_02",0;
 		mes "[ Lazy ]";
 		mes "Who's the responsible one?";
@@ -3796,8 +3789,8 @@ pub_cat,109,71,3	script	Kaya Toss#171_cat	4_EP17_KAYA,{
 		unittalk getcharid(3),strcharinfo(0)+ " : Just let me handle it!",bc_self;
 		next;
 		cutin "",255;
-		cloaknpc("Lazy#171_cat",true,getcharid(0));
-		cloaknpc("Lazy#171_cat2",false,getcharid(0));
+		cloakonnpc "Lazy#171_cat",getcharid(0);
+		cloakoffnpc "Lazy#171_cat2",getcharid(0);
 		mes "[ "+ strcharinfo(0) + " ]";
 		mes "As Lazy was saying... Even if you called Lazy by Shit, Lazy would still by Lazy.";
 		next;
@@ -3849,8 +3842,8 @@ pub_cat,109,71,3	script	Kaya Toss#171_cat	4_EP17_KAYA,{
 		mes "[ Kaya ]";
 		mes "That's valid argument. But do I need to go too? I would prefer talking to you.";
 		next;
-		cloaknpc("Lazy#171_cat",false,getcharid(0));
-		cloaknpc("Lazy#171_cat2",true,getcharid(0));
+		cloakoffnpc "Lazy#171_cat",getcharid(0);
+		cloakonnpc "Lazy#171_cat2",getcharid(0);
 		cutin "16lei_02",0;
 		mes "[ Lazy ]";
 		mes "Can you believe what I've investigated so far? You still can't believe my findings, because you're assuming your documents are correct.";
@@ -3868,8 +3861,8 @@ pub_cat,109,71,3	script	Kaya Toss#171_cat	4_EP17_KAYA,{
 		mes "[ Lazy ]";
 		mes "I don't have much time to wait for this sillyness.";
 		next;
-		cloaknpc("Lazy#171_cat",true,getcharid(0));
-		cloaknpc("Lazy#171_cat2",false,getcharid(0));
+		cloakonnpc "Lazy#171_cat",getcharid(0);
+		cloakoffnpc "Lazy#171_cat2",getcharid(0);
 		cutin "ep171_kaya01",2;
 		mes "[ Kaya ]";
 		mes "The results will be the same no matter how many times we check them. We have a lot of other work to do.";
@@ -3887,9 +3880,9 @@ pub_cat,109,71,3	script	Kaya Toss#171_cat	4_EP17_KAYA,{
 		mes "... Please give me a few minutes to consider my options.";
 		completequest 17001;
 		setquest 17002;
-		close4;
+		close3;
 	}
-	if(isbegin_quest(17002) == 1){
+	if (isbegin_quest(17002) == 1) {
 		cutin "ep171_kaya01",2;
 		mes "[ Kaya ]";
 		mes "Daisy's opinion is hard to accept, but the logic behind it... is correct. I think I'll give it a try.";
@@ -3899,16 +3892,16 @@ pub_cat,109,71,3	script	Kaya Toss#171_cat	4_EP17_KAYA,{
 	mes "[ Kaya ]";
 	mes "Didn't you come here to find Daisy?";
 	close3;
-	
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
+	cloakonnpc strnpcinfo(0);
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17001) == 1");
-end;
+	end;
 }
 
 //= RUDUS MAP
 sp_rudus,184,360,5	script	Elena Bolkova#171_rudus	4_F_ELENA,{
-	if(isbegin_quest(7851) == 1){
+	if (isbegin_quest(7851) == 1) {
 		cutin "162elena_01",2;
 		mes "[ Elena Bolkova ]";
 		mes "Oh, this place is so peaceful.";
@@ -3929,9 +3922,9 @@ sp_rudus,184,360,5	script	Elena Bolkova#171_rudus	4_F_ELENA,{
 		mes "You remember Lucky? I brought him along, so go ahead and ask him about the progress.";
 		completequest 7851;
 		setquest 7852;
-		close4;
+		close3;
 	}
-	if(isbegin_quest(7852) == 1){
+	if (isbegin_quest(7852) == 1) {
 		cutin "162elena_01",2;
 		mes "[ Elena Bolkova ]";
 		mes "I need to find out what's beyond the barrier.";
@@ -3939,12 +3932,12 @@ sp_rudus,184,360,5	script	Elena Bolkova#171_rudus	4_F_ELENA,{
 		mes "Of course, I like the latter.";
 		close3;
 	}
-	if(isbegin_quest(7858) == 0){
+	if (isbegin_quest(7858) == 0) {
 		npctalk "Elena : Ehehehe. Whatever in this place is, I hope it'll be a challenge.","",bc_self;
 		end;
 	}
-	if(isbegin_quest(7858) < 2){
-		if(checkquest(7858,HUNTING) != 2){
+	if (isbegin_quest(7858) < 2) {
+		if (checkquest(7858,HUNTING) != 2) {
 			cutin "162elena_01",2;
 			mes "[ Elena Bolkova ]";
 			mes "Have you investigated beyond the barrier?";
@@ -3963,9 +3956,9 @@ sp_rudus,184,360,5	script	Elena Bolkova#171_rudus	4_F_ELENA,{
 		setquest 7859;
 		getitem 25723,15;
 		getexp 800000,800000;
-		end;
+		close;
 	}
-	if(isbegin_quest(7859) == 1){
+	if (isbegin_quest(7859) == 1) {
 		cutin "162elena_01",2;
 		mes "[ Elena Bolkova ]";
 		mes "The USU will manage somehow, go ahead and report back to Tess about the situation.";
@@ -3982,15 +3975,15 @@ sp_rudus,184,360,5	script	Elena Bolkova#171_rudus	4_F_ELENA,{
 	mes "It would be great if those guys went outside the barrier.";
 	mes "I haven't trained today!";
 	close3;
-	
+
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(7851) == 1");
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"checkquest(7858,HUNTING) == 2");
-end;
+	end;
 }
 
 sp_rudus,193,284,0	script	Rookie#171_rudus	4_M_ROOKIE,{
-	if(isbegin_quest(7852) == 1){
+	if (isbegin_quest(7852) == 1) {
 		cutin "16loo_01",2;
 		mes "[ Rookie ]";
 		mes "Are you an adventurer?";
@@ -4013,9 +4006,9 @@ sp_rudus,193,284,0	script	Rookie#171_rudus	4_M_ROOKIE,{
 		next;
 		mes "[ Rookie ]";
 		mes "The abandoned mine is beyond this barrier. Be careful.";
-		close4;
+		close3;
 	}
-	if(isbegin_quest(7853) == 1 && isbegin_quest(7857) == 0){
+	if (isbegin_quest(7853) == 1 && isbegin_quest(7857) == 0) {
 		cutin "16loo_01",2;
 		mes "[ Rookie ]";
 		mes "Other rebellion members are already looking for an entry point. If you don't mind, look for them adventurer.";
@@ -4025,7 +4018,7 @@ sp_rudus,193,284,0	script	Rookie#171_rudus	4_M_ROOKIE,{
 		mes "The abandoned mine is beyond this barrier. Be careful.";
 		close3;
 	}
-	if(isbegin_quest(7857) == 1){
+	if (isbegin_quest(7857) == 1) {
 		cutin "16loo_03",2;
 		mes "[ Rookie ]";
 		mes "Hey... So you found a watchtower and Small Hole?";
@@ -4075,8 +4068,8 @@ sp_rudus,193,284,0	script	Rookie#171_rudus	4_M_ROOKIE,{
 		mes "Of course you can also use magic to get out... Ahaha.";
 		close3;
 	}
-	if(isbegin_quest(7858) < 2){
-		if(checkquest(7858,HUNTING) != 2){
+	if (isbegin_quest(7858) < 2) {
+		if (checkquest(7858,HUNTING) != 2) {
 			cutin "16loo_01",2;
 			mes "[ Rookie ]";
 			mes "Other rebellion members have already entered.";
@@ -4102,26 +4095,25 @@ sp_rudus,193,284,0	script	Rookie#171_rudus	4_M_ROOKIE,{
 	mes "[ Rookie ]";
 	mes "It's nice to suddenly have so much work to do... But I won't be able to to do everything on own...";
 	close3;
-	
+
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(7852) == 1");
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(7857) == 1");
-end;
+	end;
 }
 
 function	script	ep171_rudus_check	{
-	for(.@i = 7854; .@i < 7857; .@i++)
-		if(isbegin_quest(.@i) != 1) .@skip = true;
-	if(.@skip) return;
-	for(.@i = 7854; .@i < 7857; .@i++)
+	for (.@i = 7854; .@i < 7857; .@i++)
+		if (isbegin_quest(.@i) != 1) .@skip = true;
+	if (.@skip) return;
+	for (.@i = 7854; .@i < 7857; .@i++)
 		completequest .@i;
 	setquest 7857;
-	questinfo_refresh;
 	return;
 }
 
 sp_rudus,304,266,3	script	Rebellion Crew#171_rudus01	4_M_REBELLION3,{
-	if(isbegin_quest(7853) == 1 && isbegin_quest(7854) == 0){
+	if (isbegin_quest(7853) == 1 && isbegin_quest(7854) == 0) {
 		mes "[ Rebellion Crew ]";
 		mes "Well? Are you involved with the operation?";
 		mes "Even though I live in Einbroch,";
@@ -4151,23 +4143,23 @@ sp_rudus,304,266,3	script	Rebellion Crew#171_rudus01	4_M_REBELLION3,{
 		mes "Please tell Lucky.";
 		setquest 7854;
 		ep171_rudus_check;
-		end;
+		close;
 	}
-	if(isbegin_quest(7853) == 1){
+	if (isbegin_quest(7853) == 1) {
 		mes "[ Rebellion Crew ]";
 		mes "I have to look a bit more.";
-		end;
+		close;
 	}
 	npctalk "Uh... I'm going crazy with all these strange noises.","",bc_self;
 	end;
-	
+
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(7853) == 1 && isbegin_quest(7854) == 0");
-end;
+	end;
 }
 
 sp_rudus,122,286,3	script	Rebellion Crew#171_rudus02	4_M_REBELLION3,{
-	if(isbegin_quest(7853) == 1 && isbegin_quest(7855) == 0){
+	if (isbegin_quest(7853) == 1 && isbegin_quest(7855) == 0) {
 		mes "[ Rebellion Crew ]";
 		mes "Well? What is the adventurer doing here?";
 		mes "Are you part of the operation too?";
@@ -4187,45 +4179,45 @@ sp_rudus,122,286,3	script	Rebellion Crew#171_rudus02	4_M_REBELLION3,{
 		mes "I'm going to make sure of what I saw by going back up!";
 		setquest 7855;
 		ep171_rudus_check;
-		end;
+		close;
 	}
-	if(isbegin_quest(7853) == 1){
+	if (isbegin_quest(7853) == 1) {
 		mes "[ Rebellion Crew ]";
 		mes "I will learn everything I can about the watchtower! You can report back to Lucky!";
 		close;
 	}
 	npctalk "I'm going to have to take over this watchtower too...!","",bc_self;
 	end;
-	
+
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(7853) == 1 && isbegin_quest(7855) == 0");
-end;
+	end;
 }
 
 sp_rudus,27,300,0	script	Small Hole#171_rudus	4_ENERGY_BLUE,{
-	if(isbegin_quest(7853) == 1 && isbegin_quest(7856) == 0){
+	if (isbegin_quest(7853) == 1 && isbegin_quest(7856) == 0) {
 		mes "There is a small enough hole just barely enough for a child to go through.";
 		mes "It seems like an animal has dug this hole and made a little cave.";
 		mes "Let's have another look around.";
 		setquest 7856;
 		ep171_rudus_check;
-		end;
+		close;
 	}
-	if(isbegin_quest(7853) == 1){
+	if (isbegin_quest(7853) == 1) {
 		unittalk getcharid(3),strcharinfo(0) + " : I should go and take another look around.";
 		end;
 	}
 	unittalk getcharid(3),strcharinfo(0) + " : This hole is too small to be useful.",bc_self;
 	end;
-	
+
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(7853) == 1 && isbegin_quest(7856) == 0");
-end;
+	end;
 }
 
 //= SP OS
 sp_os,252,359,5	script	Dien#171_spos	4_F_DIENE,{
-	if(isbegin_quest(11603) == 1){
+	if (isbegin_quest(11603) == 1) {
 		cutin "ep162_dn01",2;
 		mes "[ Dien ]";
 		mes "Oh!";
@@ -4237,7 +4229,7 @@ sp_os,252,359,5	script	Dien#171_spos	4_F_DIENE,{
 		mes "[ Dien ]";
 		mes "Thank you.";
 		mes "You may think it's not worth much, but it means a lot to me...";
-		if(countitem(25665)) delitem 25665,1;
+		if (countitem(25665)) delitem 25665,1;
 		next;
 		cutin "ep162_dn01",2;
 		mes "[ Dien ]";
@@ -4267,53 +4259,53 @@ sp_os,252,359,5	script	Dien#171_spos	4_F_DIENE,{
 	}
 	mes "[ Dien ]";
 	mes "It's been a while since I have been this excited.";
-	end;
-	
+	close;
+
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(11603) == 1");
-end;
+	end;
 }
 
 sp_rudus,130,200,4	script	Morning#171_rudus	4_EP17_MORNING,{
-	if(isbegin_quest(5856) == 0){
+	if (isbegin_quest(5856) == 0) {
 		cutin "ep171_morning03",2;
 		sleep2 2000;
 		cutin "",255;
 		unittalk getcharid(3),strcharinfo(0) + " : The child is laughing with a bright smile that doesn't match this place.",bc_self;
 		end;
 	}
-	switch(checkquest(5861,PLAYTIME)){
+	switch (checkquest(5861,PLAYTIME)) {
 		case -1:
 			break;
-			
-		case 0: 
+
+		case 0:
 		case 1:
 			cutin "ep171_morning03",2;
 			unittalk getcharid(3),strcharinfo(0) + " : Morning is smiling today.",bc_self;
 			select("Chat with Morning.");
 			cutin "ep171_morning03",1;
-			switch(rand(1,5)){
+			switch (rand(1,5)) {
 				case 1:
 					unittalk getcharid(3),strcharinfo(0) + " : Morning, what do you eat for breakfast?",bc_self;
 					sleep2 2000;
 					npctalk "Morning : I think about the story you told me. I'm sorry to hear that.","",bc_self;
 					sleep2 2000;
 					break;
-					
+
 				case 2:
 					unittalk getcharid(3),strcharinfo(0) + " : Morning, have you been to other floors inside Rudus?",bc_self;
 					sleep2 2000;
 					npctalk "Morning : The adventurer said the other floors were scary. Mushroom...","",bc_self;
 					sleep2 2000;
 					break;
-					
+
 				case 3:
 					unittalk getcharid(3),strcharinfo(0) + " : Morning, why are you called morning?",bc_self;
 					sleep2 2000;
 					npctalk "Morning : Morning? It's morning here.","",bc_self;
 					sleep2 2000;
 					break;
-					
+
 				case 4:
 					unittalk getcharid(3),strcharinfo(0) + " : Morning, kurururu!",bc_self;
 					sleep2 2000;
@@ -4321,7 +4313,7 @@ sp_rudus,130,200,4	script	Morning#171_rudus	4_EP17_MORNING,{
 					emotion ET_QUESTION;
 					sleep2 2000;
 					break;
-					
+
 				case 5:
 					unittalk getcharid(3),strcharinfo(0) + " : Morning, why do you stay in Rudus?",bc_self;
 					sleep2 2000;
@@ -4333,15 +4325,15 @@ sp_rudus,130,200,4	script	Morning#171_rudus	4_EP17_MORNING,{
 			unittalk getcharid(3),strcharinfo(0) + " : It sounded like you're having a conversation with someone?",bc_self;
 			cutin "",255;
 			end;
-			
+
 		case 2:
 			erasequest 5861;
 			break;
 	}
-	for(.@i = 0; .@i < getarraysize(.quest_data$); .@i++){
+	for (.@i = 0; .@i < getarraysize(.quest_data$); .@i++) {
 		explode(.@temp$,.quest_data$[.@i],":");
-		if(checkquest(atoi(.@temp$[0])) > 0){
-			if(countitem(atoi(.@temp$[1])) < 10){
+		if (checkquest(atoi(.@temp$[0])) > 0) {
+			if (countitem(atoi(.@temp$[1])) < 10) {
 				.@UF = 1;
 				break;
 			} else {
@@ -4370,7 +4362,7 @@ sp_rudus,130,200,4	script	Morning#171_rudus	4_EP17_MORNING,{
 	cutin "ep171_morning01",2;
 	setpcblock PCBLOCK_ALL,true;
 	unittalk getcharid(3),strcharinfo(0) + " : This kid seems to be Morning.",bc_self;
-	if(select("Find a meal for Morning.:Chat with Morning.") == 2){
+	if (select("Find a meal for Morning.:Chat with Morning.") == 2) {
 		setpcblock PCBLOCK_ALL,true;
 		cutin "ep171_morning02",2;
 		unittalk getcharid(3),strcharinfo(0) + " : Does morning have a hungry appetite?",bc_self;
@@ -4380,7 +4372,7 @@ sp_rudus,130,200,4	script	Morning#171_rudus	4_EP17_MORNING,{
 		setpcblock PCBLOCK_ALL,false;
 		end;
 	}
-	if(.@UF){
+	if (.@UF) {
 		npctalk "Is the adventurer back already?","",bc_self;
 		cutin "",255;
 		setpcblock PCBLOCK_ALL,false;
@@ -4398,59 +4390,58 @@ sp_rudus,130,200,4	script	Morning#171_rudus	4_EP17_MORNING,{
 	unittalk getcharid(3),strcharinfo(0) + " : You want " + getitemname(atoi(.@temp$[1])) + "? Would 10 be enough?",bc_self;
 	emotion ET_STARE,getcharid(3);
 	sleep2 2000;
-	if(select("I'll bring it.:Something urgent happened.") == 2){
-		cutin "",255; 
+	if (select("I'll bring it.:Something urgent happened.") == 2) {
+		cutin "",255;
 		setpcblock PCBLOCK_ALL,false;
 		end;
 	}
 	cutin "ep171_morning02",2;
-	if(isbegin_quest(atoi(.@temp$[0])) > 0)
+	if (isbegin_quest(atoi(.@temp$[0])) > 0)
 		erasequest atoi(.@temp$[0]);
 	setquest atoi(.@temp$[0]);
 	npctalk "Wow~ Everyone! " + ((Sex == 1)?"Papa!":"Mama!"),"",bc_self;
 	unittalk getcharid(3),strcharinfo(0) + " : Morning, wait a little and I'll be back.",bc_self;
 	setpcblock PCBLOCK_ALL,false;
 	cutin "",255;
-	end;		
+	end;
 
 OnInit:
 	setarray .quest_data$,"5862:909:Jellopies","5863:902:Roots","5864:940:Legs","5865:705:Clovers","5866:916:Feathers","5867:1016:Tails","5868:937:Canines","5869:942:Tails","5870:913:Tooth","5871:948:Footskins";
 	questinfo(QTYPE_DAILYQUEST,QMARK_YELLOW,"isbegin_quest(5856) == 2 && checkquest(5861,PLAYTIME) == -1");
 	questinfo(QTYPE_DAILYQUEST,QMARK_YELLOW,"isbegin_quest(5856) == 2 && checkquest(5861,PLAYTIME) == 2");
-end;
+	end;
 }
 
 sp_rudus,124,195,0	script	#morning_garbage_pile	4_ENERGY_WHITE,{
-	if(isbegin_quest(5856) == 0 && isbegin_quest(7850) == 2){
+	if (isbegin_quest(5856) == 0 && isbegin_quest(7850) == 2) {
 		mes "";
 		mes "A lot of garbage is piled up around this rock. It seems to have been there for a while too. Let's dig the ground.";
 		next;
-		if(select("Dig.:Quit.") == 2) end;
+		if (select("Dig.:Quit.") == 2) close;
 		mes "";
 		mes "I searched the ground and found a note someone buried.";
 		setquest 5856;
 		completequest 5856;
-		questinfo_refresh();
-		end;
+		close;
 	}
 	mes "";
 	mes "A lot of garbage is piled up around this rock. It seems to have been there for a while too. Let's dig the ground.";
 	next;
-	if(select("Dig.:Quit.") == 2) end;
+	if (select("Dig.:Quit.") == 2) close;
 	mes "";
 	mes "Someone seems to have already dug this place.";
 	close;
-	
+
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(7850) == 2 && isbegin_quest(5856) == 0");
-end;
+	end;
 }
 
 //= Cor OS
 function	script	171_worker_talk	{
 	.@type = getarg(0);
 	.@npc$ = getarg(1);
-	switch(.@type){
+	switch (.@type) {
 		case 1: .@talk$ = "Wow! We weren't lucky this morning!"; break;
 		case 2: .@talk$ = "Who's being so loud?"; break;
 		case 3: .@talk$ = "It looks like it's these guys."; break;
@@ -4520,7 +4511,7 @@ function	script	171_worker_talk	{
 		case 67: .@talk$ = "Someone else might look better?"; break;
 		case 68: .@talk$ = "Do we look like an idiots to you? Are you planning to use us?"; break;
 		case 69: .@talk$ = "Take your time."; break;
-		case 70: .@talk$ = "Oh, look at that! Now the president is here~"; break;	
+		case 70: .@talk$ = "Oh, look at that! Now the president is here~"; break;
 		case 71: .@talk$ = "He's not the president, he's from the office of the president."; break;
 		case 72: .@talk$ = "What? Is what I'm hearing true?"; break;
 		case 73: .@talk$ = "That's right, I heard that too."; break;
@@ -4540,7 +4531,7 @@ function	script	171_worker_talk	{
 		case 87: .@talk$ = "The senior researcher is here."; break;
 		case 88: .@talk$ = "Did our researcher always had such a personality?"; break;
 		case 89: .@talk$ = "Well, I never had a word with her, did you?"; break;
-		case 90: .@talk$ = "What's the matter?"; break;	
+		case 90: .@talk$ = "What's the matter?"; break;
 		case 91: .@talk$ = "Oh!!! What is all this!"; break;
 		case 92: .@talk$ = "Please, you're not alone!"; break;
 		case 93: .@talk$ = "Aaaaah!! Researcher!! It's us! We're here too!"; break;
@@ -4550,7 +4541,7 @@ function	script	171_worker_talk	{
 		case 97: .@talk$ = "Hey!! Are you okay?!"; break;
 		case 98: .@talk$ = "What is that sound!!"; break;
 		case 99: .@talk$ = "Aaah!!"; break;
-		case 100: .@talk$ = "No! Please!!"; break;	
+		case 100: .@talk$ = "No! Please!!"; break;
 		case 101: .@talk$ = "The researcher is nuts!!!"; break;
 		case 102: .@talk$ = "Huh, we're coming too!"; break;
 		case 103: .@talk$ = "Hey, come quickly!!"; break;
@@ -4560,7 +4551,7 @@ function	script	171_worker_talk	{
 		case 107: .@talk$ = "Now!"; break;
 		case 108: .@talk$ = "Oh, did you hear that? You should fire now!"; break;
 		case 109: .@talk$ = "Are they gone?"; break;
-		case 110: .@talk$ = "Huh... uh.."; break;		
+		case 110: .@talk$ = "Huh... uh.."; break;
 		case 111: .@talk$ = "Hey, are you okay?"; break;
 		case 112: .@talk$ = "Ah... argh!! I'm... going to die!!"; break;
 		case 113: .@talk$ = "I don't think so..."; break;
@@ -4572,33 +4563,33 @@ function	script	171_worker_talk	{
 
 sp_cor,162,60,0	script	#171_EV_COR_0	HIDDEN_WARP_NPC,5,5,{
 	end;
-	
+
 OnTouch:
-	if(isbegin_quest(17015) == 1 || isbegin_quest(17016) == 1){
-		cloaknpc("Worker#171_rvs_2",false,getcharid(0));
-		cloaknpc("Worker#171_rvs_4",false,getcharid(0));
-		cloaknpc("Worker#171_rvs_5",false,getcharid(0));
-		cloaknpc("Worker#171_rvs_1",false,getcharid(0));
-		cloaknpc("Tess#171_rvs_1",false,getcharid(0));
-		cloaknpc("Kaya#171_rvs_1",false,getcharid(0));
-		cloaknpc("As#171_rvs_1",false,getcharid(0));
-		cloaknpc("Magenta#171_rvs_1",false,getcharid(0));
-		cloaknpc("Denny#171_rvs_1",false,getcharid(0));
-		cloaknpc("Tommy#171_rvs_1",false,getcharid(0));
-		cloaknpc("Gonie#171_rvs_1",false,getcharid(0));
+	if (isbegin_quest(17015) == 1 || isbegin_quest(17016) == 1) {
+		cloakoffnpc "Worker#171_rvs_2",getcharid(0);
+		cloakoffnpc "Worker#171_rvs_4",getcharid(0);
+		cloakoffnpc "Worker#171_rvs_5",getcharid(0);
+		cloakoffnpc "Worker#171_rvs_1",getcharid(0);
+		cloakoffnpc "Tess#171_rvs_1",getcharid(0);
+		cloakoffnpc "Kaya#171_rvs_1",getcharid(0);
+		cloakoffnpc "As#171_rvs_1",getcharid(0);
+		cloakoffnpc "Magenta#171_rvs_1",getcharid(0);
+		cloakoffnpc "Denny#171_rvs_1",getcharid(0);
+		cloakoffnpc "Tommy#171_rvs_1",getcharid(0);
+		cloakoffnpc "Gonie#171_rvs_1",getcharid(0);
 	}
-end;
+	end;
 }
 
 sp_cor,160,84,0	duplicate(#171_EV_COR_0)	#171_EV_COR_1	HIDDEN_WARP_NPC,5,5
 
 sp_cor,168,81,7	script	Advance Squad#171_rvs_1	4_F_REBELLION3,{
-	if(isbegin_quest(11603) != 2){
+	if (isbegin_quest(11603) != 2) {
 		mes "[ Advance Squad ]";
 		mes "It's dangerous for you to be in a place like this. Even for experienced people. Please come back next time.";
-		end;
+		close;
 	}
-	if(isbegin_quest(11603) == 2 && isbegin_quest(17015) == 0){
+	if (isbegin_quest(11603) == 2 && isbegin_quest(17015) == 0) {
 		.@old$ = "Worker#171_rvs_3";
 		.@poor$ = "Worker#171_rvs_2";
 		.@moc$ = "Worker#171_rvs_4";
@@ -4608,8 +4599,8 @@ sp_cor,168,81,7	script	Advance Squad#171_rvs_1	4_F_REBELLION3,{
 		mes "Show me the way out!";
 		171_worker_talk(1,.@old$);
 		next;
-		cloaknpc("Worker#171_rvs_2",false,getcharid(0));
-		cloaknpc("Worker#171_rvs_4",false,getcharid(0));
+		cloakoffnpc "Worker#171_rvs_2",getcharid(0);
+		cloakoffnpc "Worker#171_rvs_4",getcharid(0);
 		mes "[ Worker ]";
 		mes "So these gunmen think they can just come here and suddenly start a commotion!";
 		171_worker_talk(2,.@poor$);
@@ -4619,8 +4610,8 @@ sp_cor,168,81,7	script	Advance Squad#171_rvs_1	4_F_REBELLION3,{
 		mes "[ Advance Squad ]";
 		mes "Gentlemen, please don't do this. We didn't come here to harm you.";
 		next;
-		cloaknpc("Worker#171_rvs_5",false,getcharid(0));
-		cloaknpc("Worker#171_rvs_1",false,getcharid(0));
+		cloakoffnpc "Worker#171_rvs_5",getcharid(0);
+		cloakoffnpc "Worker#171_rvs_1",getcharid(0);
 		mes "[ Worker ]";
 		mes "Of course not. We're just getting attacked by you, rebellions.";
 		171_worker_talk(5,.@man$);
@@ -4764,13 +4755,13 @@ sp_cor,168,81,7	script	Advance Squad#171_rvs_1	4_F_REBELLION3,{
 		mes "Should we charge in?";
 		171_worker_talk(39,.@moc$);
 		next;
-		cloaknpc("Tess#171_rvs_1",false,getcharid(0));
-		cloaknpc("Kaya#171_rvs_1",false,getcharid(0));
-		cloaknpc("As#171_rvs_1",false,getcharid(0));
-		cloaknpc("Magenta#171_rvs_1",false,getcharid(0));
-		cloaknpc("Denny#171_rvs_1",false,getcharid(0));
-		cloaknpc("Tommy#171_rvs_1",false,getcharid(0));
-		cloaknpc("Gonie#171_rvs_1",false,getcharid(0));
+		cloakoffnpc "Tess#171_rvs_1",getcharid(0);
+		cloakoffnpc "Kaya#171_rvs_1",getcharid(0);
+		cloakoffnpc "As#171_rvs_1",getcharid(0);
+		cloakoffnpc "Magenta#171_rvs_1",getcharid(0);
+		cloakoffnpc "Denny#171_rvs_1",getcharid(0);
+		cloakoffnpc "Tommy#171_rvs_1",getcharid(0);
+		cloakoffnpc "Gonie#171_rvs_1",getcharid(0);
 		cutin "ep16_tes01",2;
 		mes "[ Tess ]";
 		mes "Why would you charge in without orders?";
@@ -4795,30 +4786,29 @@ sp_cor,168,81,7	script	Advance Squad#171_rvs_1	4_F_REBELLION3,{
 		mes "Who are you now?!";
 		171_worker_talk(43,.@old$);
 		setquest 17015;
-		questinfo_refresh();
-		end;
+		close;
 	}
-	if(isbegin_quest(17015) == 1){
+	if (isbegin_quest(17015) == 1) {
 		mes "[ Advance Squad ]";
 		mes "The Vice President wants to talk to them.";
-		end;
+		close;
 	}
-	if(isbegin_quest(17016) == 1){
+	if (isbegin_quest(17016) == 1) {
 		mes "[ Advance Squad ]";
 		mes "Head to the safe location, hurry!";
-		end;
+		close;
 	}
 	mes "[ Advanced Team ]";
 	mes "Adventurer, it's dangerous here. Proceed to the safe location.";
-	end;
-			
+	close;
+
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(11603) == 2 && isbegin_quest(17015) == 0");
-end;
+	end;
 }
 
 sp_cor,165,79,1	script	Kaya#171_rvs_1	4_EP17_KAYA,{
-	if(isbegin_quest(17015) == 1){
+	if (isbegin_quest(17015) == 1) {
 		.@old$ = "Worker#171_rvs_3";
 		.@poor$ = "Worker#171_rvs_2";
 		.@moc$ = "Worker#171_rvs_4";
@@ -5021,31 +5011,30 @@ sp_cor,165,79,1	script	Kaya#171_rvs_1	4_EP17_KAYA,{
 		171_worker_talk(80,.@cook$);
 		completequest 17015;
 		setquest 17016;
-		questinfo_refresh();
 		close3;
 	}
-	if(isbegin_quest(17016) == 1){
+	if (isbegin_quest(17016) == 1) {
 		cutin "ep171_kaya01",2;
 		mes "[ Kaya ]";
 		mes "No matter how much I tried to persuade them, they didn't listen. It's not easy to change someone's mind. I should discuss it with Tess.";
 		close3;
 	}
 	end;
-	
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
+	cloakonnpc strnpcinfo(0);
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17015) == 1");
-end;
+	end;
 }
 
 sp_cor,166,81,7	script	Tess#171_rvs_1	4_M_PHILOFONTES,{
-	if(isbegin_quest(17015) == 1){
+	if (isbegin_quest(17015) == 1) {
 		cutin "ep16_tes01",2;
 		mes "[ Tess ]";
 		mes "The Vice President, Kaya Toss, is going to persuade them. Let's listen to him.";
 		close3;
 	}
-	if(isbegin_quest(17016) == 1){
+	if (isbegin_quest(17016) == 1) {
 		.@old$ = "Worker#171_rvs_3";
 		.@poor$ = "Worker#171_rvs_2";
 		.@moc$ = "Worker#171_rvs_4";
@@ -5072,9 +5061,9 @@ sp_cor,166,81,7	script	Tess#171_rvs_1	4_M_PHILOFONTES,{
 		mes "That sounds like a good idea.";
 		171_worker_talk(85,.@old$);
 		next;
-		cloaknpc("Elyumina#171_rvs",false,getcharid(0));
-		cloaknpc("Fool 1#171_rvs_1",false,getcharid(0));
-		cloaknpc("Fool 2#171_rvs_2",false,getcharid(0));
+		cloakoffnpc "Elyumina#171_rvs",getcharid(0);
+		cloakoffnpc "Fool 1#171_rvs_1",getcharid(0);
+		cloakoffnpc "Fool 2#171_rvs_2",getcharid(0);
 		specialeffect EF_TELEPORTATION2,AREA,"Elyumina#171_rvs";
 		specialeffect EF_TELEPORTATION2,AREA,"Fool 1#171_rvs_1";
 		specialeffect EF_TELEPORTATION2,AREA,"Fool 2#171_rvs_2";
@@ -5131,16 +5120,16 @@ sp_cor,166,81,7	script	Tess#171_rvs_1	4_M_PHILOFONTES,{
 		specialeffect EF_DESPERADO,AREA,"Fool 2#171_rvs_2";
 		specialeffect EF_IGN_STR,AREA,"Worker#171_rvs_2";
 		specialeffect EF_MAGMA_FLOW,AREA,"Worker#171_rvs_2";
-		cloaknpc("Worker#171_rvs_2",true,getcharid(0));
-		cloaknpc("Worker#171_rvs_9",false,getcharid(0));
+		cloakonnpc "Worker#171_rvs_2",getcharid(0);
+		cloakoffnpc "Worker#171_rvs_9",getcharid(0);
 		171_worker_talk(96,.@moc$);
 		171_worker_talk(97,.@old$);
 		next;
 		specialeffect EF_DESPERADO,AREA,"Fool 1#171_rvs_1";
 		specialeffect EF_BAKU,AREA,"Worker#171_rvs_4";
 		specialeffect EF_MAGMA_FLOW,AREA,"Worker#171_rvs_4";
-		cloaknpc("Worker#171_rvs_4",true,getcharid(0));
-		cloaknpc("Worker#171_rvs_10",false,getcharid(0));
+		cloakonnpc "Worker#171_rvs_4",getcharid(0);
+		cloakoffnpc "Worker#171_rvs_10",getcharid(0);
 		cutin "",255;
 		mes "[ Worker ]";
 		mes "Why are you doing this?!!";
@@ -5154,22 +5143,22 @@ sp_cor,166,81,7	script	Tess#171_rvs_1	4_M_PHILOFONTES,{
 		mes "[ As ]";
 		mes "Move behind me! Now!";
 		171_worker_talk(101,.@old$);
-		cloaknpc("As#171_rvs_1",true,getcharid(0));
-		cloaknpc("As#171_rvs_2",false,getcharid(0));
+		cloakonnpc "As#171_rvs_1",getcharid(0);
+		cloakoffnpc "As#171_rvs_2",getcharid(0);
 		sleep2 1000;
 		171_worker_talk(102,.@man$);
 		171_worker_talk(103,.@cook$);
 		171_worker_talk(104,.@old$);
-		cloaknpc("Kaya#171_rvs_1",true,getcharid(0));
-		cloaknpc("Kaya#171_rvs_2",false,getcharid(0));
-		cloaknpc(strnpcinfo(0),true,getcharid(0));
-		cloaknpc("Tess#171_rvs_2",false,getcharid(0));
-		cloaknpc("Worker#171_rvs_3",true,getcharid(0));
-		cloaknpc("Worker#171_rvs_5",true,getcharid(0));
-		cloaknpc("Worker#171_rvs_1",true,getcharid(0));
-		cloaknpc("Worker#171_rvs_6",false,getcharid(0));
-		cloaknpc("Worker#171_rvs_7",false,getcharid(0));
-		cloaknpc("Worker#171_rvs_8",false,getcharid(0));
+		cloakonnpc "Kaya#171_rvs_1",getcharid(0);
+		cloakoffnpc "Kaya#171_rvs_2",getcharid(0);
+		cloakonnpc strnpcinfo(0),getcharid(0);
+		cloakoffnpc "Tess#171_rvs_2",getcharid(0);
+		cloakonnpc "Worker#171_rvs_3",getcharid(0);
+		cloakonnpc "Worker#171_rvs_5",getcharid(0);
+		cloakonnpc "Worker#171_rvs_1",getcharid(0);
+		cloakoffnpc "Worker#171_rvs_6",getcharid(0);
+		cloakoffnpc "Worker#171_rvs_7",getcharid(0);
+		cloakoffnpc "Worker#171_rvs_8",getcharid(0);
 		.@old$ = "Worker#171_rvs_6";
 		.@cook$ = "Worker#171_rvs_7";
 		.@man$ = "Worker#171_rvs_8";
@@ -5179,14 +5168,14 @@ sp_cor,166,81,7	script	Tess#171_rvs_1	4_M_PHILOFONTES,{
 		mes "Everyone, formation!";
 		specialeffect EF_DESPERADO,AREA,"Fool 1#171_rvs_1";
 		specialeffect EF_DESPERADO,AREA,"Fool 2#171_rvs_2";
-		cloaknpc("Denny#171_rvs_1",true,getcharid(0));
-		cloaknpc("Magenta#171_rvs_1",true,getcharid(0));
-		cloaknpc("Tommy#171_rvs_1",true,getcharid(0));
-		cloaknpc("Gonie#171_rvs_1",true,getcharid(0));
-		cloaknpc("Denny#171_rvs_2",false,getcharid(0));
-		cloaknpc("Magenta#171_rvs_2",false,getcharid(0));
-		cloaknpc("Tommy#171_rvs_2",false,getcharid(0));
-		cloaknpc("Gonie#171_rvs_2",false,getcharid(0));
+		cloakonnpc "Denny#171_rvs_1",getcharid(0);
+		cloakonnpc "Magenta#171_rvs_1",getcharid(0);
+		cloakonnpc "Tommy#171_rvs_1",getcharid(0);
+		cloakonnpc "Gonie#171_rvs_1",getcharid(0);
+		cloakoffnpc "Denny#171_rvs_2",getcharid(0);
+		cloakoffnpc "Magenta#171_rvs_2",getcharid(0);
+		cloakoffnpc "Tommy#171_rvs_2",getcharid(0);
+		cloakoffnpc "Gonie#171_rvs_2",getcharid(0);
 		next;
 		specialeffect EF_RAPIDSHOWER,AREA,"Advance Squad#171_rvs_1";
 		specialeffect EF_RAPIDSHOWER,AREA,"Tommy#171_rvs_2";
@@ -5259,9 +5248,9 @@ sp_cor,166,81,7	script	Tess#171_rvs_1	4_M_PHILOFONTES,{
 		specialeffect EF_TELEPORTATION2,AREA,"Elyumina#171_rvs";
 		specialeffect EF_TELEPORTATION2,AREA,"Fool 1#171_rvs_1";
 		specialeffect EF_TELEPORTATION2,AREA,"Fool 2#171_rvs_2";
-		cloaknpc("Elyumina#171_rvs",true,getcharid(0));
-		cloaknpc("Fool 1#171_rvs_1",true,getcharid(0));
-		cloaknpc("Fool 2#171_rvs_2",true,getcharid(0));
+		cloakonnpc "Elyumina#171_rvs",getcharid(0);
+		cloakonnpc "Fool 1#171_rvs_1",getcharid(0);
+		cloakonnpc "Fool 2#171_rvs_2",getcharid(0);
 		cutin "ep171_as02",0;
 		mes "[ As ]";
 		mes "Is everyone alright?";
@@ -5297,198 +5286,193 @@ sp_cor,166,81,7	script	Tess#171_rvs_1	4_M_PHILOFONTES,{
 		setquest 17017;
 		close2;
 		cutin "",255;
-		cloaknpc("Denny#171_rvs_2",true,getcharid(0));
-		cloaknpc("Magenta#171_rvs_2",true,getcharid(0));
-		cloaknpc("Tommy#171_rvs_2",true,getcharid(0));
-		cloaknpc("Gonie#171_rvs_2",true,getcharid(0));
-		cloaknpc("Kaya#171_rvs_2",true,getcharid(0));
-		cloaknpc("Tess#171_rvs_2",true,getcharid(0));
-		cloaknpc("As#171_rvs_2",true,getcharid(0));
-		cloaknpc("Worker#171_rvs_6",true,getcharid(0));
-		cloaknpc("Worker#171_rvs_7",true,getcharid(0));
-		cloaknpc("Worker#171_rvs_8",true,getcharid(0));
-		cloaknpc("Worker#171_rvs_10",true,getcharid(0));
-		cloaknpc("Worker#171_rvs_9",true,getcharid(0));
+		cloakonnpc "Denny#171_rvs_2",getcharid(0);
+		cloakonnpc "Magenta#171_rvs_2",getcharid(0);
+		cloakonnpc "Tommy#171_rvs_2",getcharid(0);
+		cloakonnpc "Gonie#171_rvs_2",getcharid(0);
+		cloakonnpc "Kaya#171_rvs_2",getcharid(0);
+		cloakonnpc "Tess#171_rvs_2",getcharid(0);
+		cloakonnpc "As#171_rvs_2",getcharid(0);
+		cloakonnpc "Worker#171_rvs_6",getcharid(0);
+		cloakonnpc "Worker#171_rvs_7",getcharid(0);
+		cloakonnpc "Worker#171_rvs_8",getcharid(0);
+		cloakonnpc "Worker#171_rvs_10",getcharid(0);
+		cloakonnpc "Worker#171_rvs_9",getcharid(0);
 		navigateto("sp_cor",122,141);
-		questinfo_refresh();
 	}
 	end;
-	
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
+	cloakonnpc strnpcinfo(0);
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17016) == 1");
-end;
+	end;
 }
 
 sp_cor,167,79,1	script	Advance Squad#171_rvs_2	4_F_REBELLION2,{
-	if(isbegin_quest(11603) != 2){
+	if (isbegin_quest(11603) != 2) {
 		mes "[ Advance Squad ]";
 		mes "This place is incredibly nice looking, it's hard to believe they do experiments here. Even I would want to live in a place like this.";
-		end;
+		close;
 	}
-	if(isbegin_quest(11603) == 2 && isbegin_quest(17015) == 0){
+	if (isbegin_quest(11603) == 2 && isbegin_quest(17015) == 0) {
 		mes "[ Advance Squad ]";
 		mes "The problem is. We can't use force on them. What should we do?";
-		end;
+		close;
 	}
-	if(isbegin_quest(17015) == 1){
+	if (isbegin_quest(17015) == 1) {
 		mes "[ Advance Squad ]";
 		mes "Didn't you say the Vice President of Rekenber was going to convince them? What do you want to talk to me about?";
-		end;
+		close;
 	}
-	if(isbegin_quest(17016) == 1){
+	if (isbegin_quest(17016) == 1) {
 		mes "[ Advance Squad ]";
 		mes "I don't think this is going to work. What do you think Tess will say? The fight is still going on.";
-		end;
+		close;
 	}
 	mes "[ Advance Squad ]";
 	mes "It's dangerous here. Move over to the safe area!";
-	end;
+	close;
 }
-
 
 sp_cor,164,77,1	script	As#171_rvs_1	4_EP17_AS,{
 	cutin "ep171_as01",2;
 	mes "[ As ]";
-	if(isbegin_quest(17015) == 1)
+	if (isbegin_quest(17015) == 1)
 		mes "The Vice President is going to convince them.";
 	else
 		mes "Didn't Tess tell you to take action? If you aren't prepared, you should do that now.";
 	close3;
-	
-OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
-}
 
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
+}
 
 sp_cor,162,73,7	script	Denny#171_rvs_1	4_M_REBELLION3,{
 	mes "[ Denny ]";
-	if(isbegin_quest(17015) == 1)
+	if (isbegin_quest(17015) == 1)
 		mes "I'm so curious what the inside looks like~";
 	else
 		mes "Wait, something's not right?";
-	end;
-	
+	close;
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 sp_cor,165,74,1	script	Magenta#171_rvs_1	4_M_GUNSLINGER2,{
 	mes "[ Magenta ]";
-	if(isbegin_quest(17015) == 1)
+	if (isbegin_quest(17015) == 1)
 		mes "These people aren't armed? What are they playing at?";
 	else
 		mes "I don't feel so well. We should get ready.";
-	end;
-	
-OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
-}
+	close;
 
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
+}
 
 sp_cor,163,62,3	script	Tommy#171_rvs_1	4_M_GUNSLINGER2,{
 	mes "[ Tommy ]";
-	if(isbegin_quest(17015) == 1)
+	if (isbegin_quest(17015) == 1)
 		mes "It's nice here and quiet. If only I could get a day off...";
 	else
 		mes "What is this big mansion in front of us? I've never seen anything like this before.";
 	close;
-	
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 sp_cor,168,75,7	script	Gonie#171_rvs_1	4_M_GONY,{
 	mes "[ Gonie ]";
 	mes "......";
 	close;
-	
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 sp_cor,161,80,5	script	Worker#171_rvs_1	4_M_03,{
 	mes "[ Worker ]";
 	mes "Who said it? Who's going to kick our butts?!";
-	end;
-	
-OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
-}
+	close;
 
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
+}
 
 sp_cor,167,85,5	script	Worker#171_rvs_2	4_M_LGTPOOR,{
 	mes "[ Worker ]";
 	mes "I came out to see what was that commotion, what is happening?!";
-	end;
-	
+	close;
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 sp_cor,170,84,3	script	Worker#171_rvs_3	4_M_05,{
 	mes "[ Worker ]";
-	if(isbegin_quest(11603) == 2 && isbegin_quest(17015) == 0)
+	if (isbegin_quest(11603) == 2 && isbegin_quest(17015) == 0)
 		mes "Are you seeing this? Show yourselves! Come on out!";
 	else
 		mes "I don't know why I keep standing here. If they asked something, I just decline. They're stamina monsters.";
-	end;
+	close;
 }
 
 sp_cor,164,82,5	script	Worker#171_rvs_4	4_M_DSTMAN,{
 	mes "[ Worker ]";
 	mes "Today is supposed to be day off, but what is this! Are you responsible for it commotion?";
-	end;
-	
+	close;
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 sp_cor,172,80,1	script	Worker#171_rvs_5	4_M_CHNCOOK,{
 	mes "[ Worker ]";
 	mes "I'll have a warm drink when this is over!!";
-	end;
-	
+	close;
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
-sp_cor,159,66,3	duplicate(dummynpc)	Worker#171_rvs_6	4_M_05
-sp_cor,163,73,5	duplicate(dummynpc)	Worker#171_rvs_7	4_M_CHNCOOK
-sp_cor,162,72,5	duplicate(dummynpc)	Worker#171_rvs_8	4_M_03
-sp_cor,167,85,1	duplicate(dummynpc)	Worker#171_rvs_9	4_M_DIEMAN
-sp_cor,164,82,5	duplicate(dummynpc)	Worker#171_rvs_10	4_M_DSTMANDEAD
-sp_cor,165,86,5	duplicate(dummynpc)	Elyumina#171_rvs	4_EP17_ELYUMINA
-sp_cor,163,87,5	duplicate(dummynpc)	Fool 1#171_rvs_1	3454
-sp_cor,166,88,5	duplicate(dummynpc)	Fool 2#171_rvs_2	3454
-sp_cor,159,68,7	duplicate(dummynpc)	Tess#171_rvs_2	4_M_PHILOFONTES
-sp_cor,160,70,7	duplicate(dummynpc)	Kaya#171_rvs_2	4_EP17_KAYA
-sp_cor,163,75,7	duplicate(dummynpc)	As#171_rvs_2	4_EP17_AS
-sp_cor,165,82,0	duplicate(dummynpc)	Gonie#171_rvs_2	4_M_GONY
-sp_cor,162,83,0	duplicate(dummynpc)	Denny#171_rvs_2	4_M_REBELLION3
-sp_cor,162,80,7	duplicate(dummynpc)	Magenta#171_rvs_2	4_M_GUNSLINGER2
-sp_cor,171,84,1	duplicate(dummynpc)	Tommy#171_rvs_2	4_M_GUNSLINGER2
+sp_cor,159,66,3	duplicate(dummy_cloaked_npc)	Worker#171_rvs_6	4_M_05
+sp_cor,163,73,5	duplicate(dummy_cloaked_npc)	Worker#171_rvs_7	4_M_CHNCOOK
+sp_cor,162,72,5	duplicate(dummy_cloaked_npc)	Worker#171_rvs_8	4_M_03
+sp_cor,167,85,1	duplicate(dummy_cloaked_npc)	Worker#171_rvs_9	4_M_DIEMAN
+sp_cor,164,82,5	duplicate(dummy_cloaked_npc)	Worker#171_rvs_10	4_M_DSTMANDEAD
+sp_cor,165,86,5	duplicate(dummy_cloaked_npc)	Elyumina#171_rvs	4_EP17_ELYUMINA
+sp_cor,163,87,5	duplicate(dummy_cloaked_npc)	Fool 1#171_rvs_1	3454
+sp_cor,166,88,5	duplicate(dummy_cloaked_npc)	Fool 2#171_rvs_2	3454
+sp_cor,159,68,7	duplicate(dummy_cloaked_npc)	Tess#171_rvs_2	4_M_PHILOFONTES
+sp_cor,160,70,7	duplicate(dummy_cloaked_npc)	Kaya#171_rvs_2	4_EP17_KAYA
+sp_cor,163,75,7	duplicate(dummy_cloaked_npc)	As#171_rvs_2	4_EP17_AS
+sp_cor,165,82,0	duplicate(dummy_cloaked_npc)	Gonie#171_rvs_2	4_M_GONY
+sp_cor,162,83,0	duplicate(dummy_cloaked_npc)	Denny#171_rvs_2	4_M_REBELLION3
+sp_cor,162,80,7	duplicate(dummy_cloaked_npc)	Magenta#171_rvs_2	4_M_GUNSLINGER2
+sp_cor,171,84,1	duplicate(dummy_cloaked_npc)	Tommy#171_rvs_2	4_M_GUNSLINGER2
 
 //= Cor Main Area
 sp_cor,122,141,5	script	Tess#171_cor_0	4_M_PHILOFONTES,{
-	if(isbegin_quest(17017) == 0){
+	if (isbegin_quest(17017) == 0) {
 		cutin "ep16_tes01",0;
 		mes "[ Tess ]";
 		mes "This may be hard for you, but please investigate the entrance first.";
 		close3;
 	}
-	if(isbegin_quest(17017) == 1){
-		cloaknpc("As#171_cor",true,getcharid(0));
-		cloaknpc("Kaya Toss#171_cor",true,getcharid(0));
+	if (isbegin_quest(17017) == 1) {
+		cloakonnpc "As#171_cor",getcharid(0);
+		cloakonnpc "Kaya Toss#171_cor",getcharid(0);
 		cutin "ep16_tes01",0;
 		mes "[ Tess ]";
 		mes "Is everyone alright?";
@@ -5531,8 +5515,8 @@ sp_cor,122,141,5	script	Tess#171_cor_0	4_M_PHILOFONTES,{
 		mes "[ Worker ]";
 		mes "No that's not it, I just can't believe it. Ugh, I'm so tired...";
 		next;
-		cloaknpc("As#171_cor2",false,getcharid(0));
-		cloaknpc("Kaya Toss#171_cor2",false,getcharid(0));
+		cloakoffnpc "As#171_cor2",getcharid(0);
+		cloakoffnpc "Kaya Toss#171_cor2",getcharid(0);
 		cutin "ep171_as02",0;
 		mes "[ As ]";
 		mes "Please stay here, I will check the surroundings.";
@@ -5542,8 +5526,8 @@ sp_cor,122,141,5	script	Tess#171_cor_0	4_M_PHILOFONTES,{
 		mes "[ Kaya ]";
 		mes "Take a look at the condition of the injured.";
 		npctalk "Take a at the condition of the injured.","Kaya Toss#171_cor2",bc_self;
-		cloaknpc("As#171_cor2",true,getcharid(0));
-		cloaknpc("As#171_cor",false,getcharid(0));
+		cloakonnpc "As#171_cor2",getcharid(0);
+		cloakoffnpc "As#171_cor",getcharid(0);
 		sleep2 1000;
 		next;
 		cutin "ep171_as02",0;
@@ -5617,8 +5601,8 @@ sp_cor,122,141,5	script	Tess#171_cor_0	4_M_PHILOFONTES,{
 		mes "Here, stand in line please. Make three rows. Please tell me your full name when your turn comes.";
 		npctalk "Let me go first. I feel like I'm going to die soon.","Worker#171_rvs_14",bc_self;
 		next;
-		cloaknpc("As#171_cor",true,getcharid(0));
-		cloaknpc("As#171_cor2",false,getcharid(0));
+		cloakonnpc "As#171_cor",getcharid(0);
+		cloakoffnpc "As#171_cor2",getcharid(0);
 		sleep2 1000;
 		cutin "ep171_as01",0;
 		mes "[ As ]";
@@ -5632,13 +5616,13 @@ sp_cor,122,141,5	script	Tess#171_cor_0	4_M_PHILOFONTES,{
 		mes "[ As ]";
 		mes "It's not something I can tell you here, so please come over <NAVI>[here]<INFO>sp_cor,135,147,0,101,0</INFO></NAVI>.";
 		sleep2 1000;
-		cloaknpc("As#171_cor2",true,getcharid(0));
-		cloaknpc("As#171_cor",false,getcharid(0));
+		cloakonnpc "As#171_cor2",getcharid(0);
+		cloakoffnpc "As#171_cor",getcharid(0);
 		completequest 17017;
 		setquest 17018;
-		close4;
+		close3;
 	}
-	if(isbegin_quest(17018) == 1){
+	if (isbegin_quest(17018) == 1) {
 		cutin "ep16_tes01",2;
 		mes "[ Tess ]";
 		mes "Didn't you see <NAVI>[As]<INFO>sp_cor,135,147,0,101,0</INFO></NAVI> going with the Vice President? I'm worried about the wounded people.";
@@ -5648,32 +5632,32 @@ sp_cor,122,141,5	script	Tess#171_cor_0	4_M_PHILOFONTES,{
 	mes "[ Tess ]";
 	mes "It will take some time to finish the investigation and gather all the data here.";
 	close3;
-	
+
 OnInit:
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17017) == 1";
-end;
+	end;
 }
 
 sp_cor,137,146,3	script	Kaya Toss#171_cor	4_EP17_KAYA,{
-	if(isbegin_quest(11603) != 2){
+	if (isbegin_quest(11603) != 2) {
 		cutin "ep171_kaya01",2;
 		mes "[ Kaya ]";
 		mes "This place is very dangerous. Come back when you're strong enough to protect your own body.";
 		close3;
 	}
-	if(isbegin_quest(17018) == 0){
+	if (isbegin_quest(17018) == 0) {
 		cutin "ep171_kaya01",2;
 		mes "[ Kaya ]";
 		mes "I hope we can find all the missing people here. I really do.";
 		close3;
 	}
-	if(isbegin_quest(17018) == 1){
+	if (isbegin_quest(17018) == 1) {
 		cutin "ep171_kaya01",2;
 		mes "[ Kaya ]";
 		mes "It looks like <NAVI>[As]<INFO>sp_cor,135,147,0,101,0</INFO></NAVI> is concerned about the injured. Let's go see what she wants to talk about.";
 		close3;
 	}
-	if(isbegin_quest(17020) == 0){
+	if (isbegin_quest(17020) == 0) {
 		cutin "ep171_kaya01",2;
 		mes "[ Kaya ]";
 		mes "Adventurer. Could I speak with you for a moment please?";
@@ -5699,7 +5683,7 @@ sp_cor,137,146,3	script	Kaya Toss#171_cor	4_EP17_KAYA,{
 		mes "[ Kaya ]";
 		mes "Maybe... this is the last chance we'll have to find Patrick after all.";
 		next;
-		if(select("I'll look into it.:I have something else to do right now.") == 2){
+		if (select("I'll look into it.:I have something else to do right now.") == 2) {
 			cutin "ep171_kaya01",2;
 			mes "[ Kaya ]";
 			mes "It's okay, you don't have to look right now. There are other urgent matters to take care of.";
@@ -5711,17 +5695,16 @@ sp_cor,137,146,3	script	Kaya Toss#171_cor	4_EP17_KAYA,{
 		mes "[ Kaya ]";
 		mes "Thank you. I'm sorry to have had to ask you this so suddenly.";
 		setquest 17020;
-		questinfo_refresh();
 		close3;
 	}
-	if(isbegin_quest(17032) == 0){
+	if (isbegin_quest(17032) == 0) {
 		cutin "ep171_kaya01",2;
 		mes "[ Kaya ]";
 		mes "I would like you to continue investigating Patrick Kaufman.";
 		mes "Maybe if he worked here, the others might know something about it.";
-		close3;	
+		close3;
 	}
-	if(isbegin_quest(17032) == 1){
+	if (isbegin_quest(17032) == 1) {
 		cutin "ep171_kaya01",2;
 		mes "[ Kaya ]";
 		mes "Oh, welcome back adventurer. Come. Kaufman, did you find him?";
@@ -5774,50 +5757,50 @@ sp_cor,137,146,3	script	Kaya Toss#171_cor	4_EP17_KAYA,{
 	mes "[ Kaya ]";
 	mes "I would like you to continue investigating Patrick Kaufman.";
 	mes "Maybe if he worked here, the others might know something about it.";
-	close3;	
-	
+	close3;
+
 OnInit:
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17019) > 0 && isbegin_quest(17020) == 0";
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17032) == 1";
-end;
+	end;
 }
 
 sp_cor,125,140,5	script	Kaya Toss#171_cor2	4_EP17_KAYA,{
-	if(isbegin_quest(17018) == 1){
+	if (isbegin_quest(17018) == 1) {
 		cutin "ep171_kaya01",2;
 		mes "[ Kaya ]";
 		mes "It looks like <NAVI>[As]<INFO>sp_cor,135,147,0,101,0</INFO></NAVI> is concerned about the wounded people. Let's hear what she wants to talk about.";
 		close3;
 	}
 	end;
-	
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 //= Identification Bracelet Daily
 sp_cor,135,147,3	script	As#171_cor	4_EP17_AS,{
-	if(isbegin_quest(11603) != 2){
+	if (isbegin_quest(11603) != 2) {
 		cutin "ep171_as01",0;
 		mes "[ As ]";
 		mes "We don't know when there will be an enemy attack. Come back when you can protect yourself.";
 		close3;
 	}
-	if(isbegin_quest(17018) == 0){
+	if (isbegin_quest(17018) == 0) {
 		cutin "ep171_as02",2;
 		mes "[ Ashley ]";
 		mes "I honestly had no idea this place was hidden here. How the hell did they manage to avoid the surrounding people's attention?";
 		close3;
 	}
-	if(isbegin_quest(17018) == 1){
+	if (isbegin_quest(17018) == 1) {
 		cutin "ep171_as01",0;
 		mes "[ As ]";
 		mes "This way.";
 		next;
-		cloaknpc("Kaya Toss#171_cor2",true,getcharid(0));
+		cloakonnpc "Kaya Toss#171_cor2",getcharid(0);
 		sleep2 200;
-		cloaknpc("Kaya Toss#171_cor",false,getcharid(0));
+		cloakoffnpc "Kaya Toss#171_cor",getcharid(0);
 		cutin "ep171_kaya01",2;
 		mes "[ Kaya ]";
 		mes "What's the status of the wounded people?";
@@ -5981,7 +5964,7 @@ sp_cor,135,147,3	script	As#171_cor	4_EP17_AS,{
 		mes "[ Kaya ]";
 		mes "As Lazy was saying, I think Rekenber has used these people because of their desperation.";
 		next;
-		cloaknpc("Search Team#171_cor",false,getcharid(0));
+		cloakoffnpc "Search Team#171_cor",getcharid(0);
 		cutin "",255;
 		mes "[ Search Team ]";
 		mes "We need support from the adventurer!";
@@ -6008,18 +5991,17 @@ sp_cor,135,147,3	script	As#171_cor	4_EP17_AS,{
 		getexp 300000,300000;
 		completequest 17018;
 		setquest 17019;
-		questinfo_refresh();
 		close2;
-		cloaknpc("Search Team#171_cor",true,getcharid(0));
+		cloakonnpc "Search Team#171_cor",getcharid(0);
 		end;
 	}
-	if(isbegin_quest(17032) < 2){
+	if (isbegin_quest(17032) < 2) {
 		cutin "ep171_as02",2;
 		mes "[ As ]";
 		mes "I honestly had no idea this place was hidden here. How the hell did they manage to avoid the surrounding people's attention?";
 		close3;
 	}
-	if(isbegin_quest(17033) == 0){
+	if (isbegin_quest(17033) == 0) {
 		cutin "ep171_as01",2;
 		mes "[ As ]";
 		mes "Hello. Do you need anything?";
@@ -6034,10 +6016,10 @@ sp_cor,135,147,3	script	As#171_cor	4_EP17_AS,{
 		completequest 17033;
 		close3;
 	}
-	switch(checkquest(17035,PLAYTIME)){
-		case -1: 
+	switch (checkquest(17035,PLAYTIME)) {
+		case -1:
 			break;
-			
+
 		case 0:
 		case 1:
 			cutin "ep171_as03",2;
@@ -6054,18 +6036,18 @@ sp_cor,135,147,3	script	As#171_cor	4_EP17_AS,{
 			mes "[ As ]";
 			mes "I'll see you again at dawn.";
 			close3;
-			
+
 		case 2:
 			erasequest 17035;
 			break;
 	}
-	switch(checkquest(17034,HUNTING)){
+	switch (checkquest(17034,HUNTING)) {
 		case -1:
 			cutin "ep171_as03",2;
 			mes "[ As ]";
 			mes "Hello, are you going to Rudus?";
 			next;
-			if(select("Yes. I'll be going.:I can't go today.") == 2){
+			if (select("Yes. I'll be going.:I can't go today.") == 2) {
 				cutin "ep171_as03",2;
 				mes "[ As ]";
 				mes "It's alright, you need to take breaks as well, adventurer.";
@@ -6079,7 +6061,7 @@ sp_cor,135,147,3	script	As#171_cor	4_EP17_AS,{
 			mes "Please be careful. I know you will do well.";
 			setquest 17034;
 			close3;
-			
+
 		case 1:
 			cutin "ep171_as01",2;
 			mes "[ As ]";
@@ -6088,9 +6070,9 @@ sp_cor,135,147,3	script	As#171_cor	4_EP17_AS,{
 			mes "[ As ]";
 			mes "Oh..., I thought the Vice President told you to put them to rest?";
 			close3;
-			
+
 		case 2:
-			if(countitem(25666) < 10){
+			if (countitem(25666) < 10) {
 				cutin "ep171_as01",2;
 				mes "[ As ]";
 				mes "Have you finished the work in Rudus?";
@@ -6101,7 +6083,7 @@ sp_cor,135,147,3	script	As#171_cor	4_EP17_AS,{
 			}
 			cutin "ep171_as01",2;
 			mes "[ As ]";
-			mes "Have you finished the work in Rudus?";			
+			mes "Have you finished the work in Rudus?";
 			next;
 			cutin "ep171_as02",2;
 			mes "[ As ]";
@@ -6120,7 +6102,7 @@ sp_cor,135,147,3	script	As#171_cor	4_EP17_AS,{
 			close3;
 	}
 	end;
-	
+
 OnInit:
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17018) == 1";
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"checkquest(17034,HUNTING) == 2 && countitem(25666) >= 10";
@@ -6128,13 +6110,13 @@ OnInit:
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17032) == 2 && isbegin_quest(17033) == 0";
 	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"isbegin_quest(17033) == 2 && checkquest(17035,PLAYTIME) == -1 && checkquest(17034,HUNTING) == -1";
 	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"isbegin_quest(17033) == 2 && checkquest(17035,PLAYTIME) == 2 && checkquest(17034,HUNTING) == -1";
-end;
+	end;
 }
 
 sp_cor,124,139,1	script	Lazy#171_cor	4_M_LAZY,{
-	if(isbegin_quest(17018) == 1){
+	if (isbegin_quest(17018) == 1) {
 		cutin "16lei_03",2;
-		mes "[ Lazy ]";			
+		mes "[ Lazy ]";
 		mes "The <NAVI>[guard]<INFO>sp_cor,135,147,0,101,0</INFO></NAVI> seems to have something to say to the VIP. Is it a problem with the wounded people?";
 		close3;
 	}
@@ -6158,11 +6140,11 @@ sp_cor,121,138,7	script	Gonie#171_cor	4_M_GONY,{
 	close3;
 }
 
-sp_cor,127,141,3	duplicate(dummynpc)	As#171_cor2	4_EP17_AS
-sp_cor,134,144,7	duplicate(dummynpc)	Search Team#171_cor	4_M_REBELLION
+sp_cor,127,141,3	duplicate(dummy_cloaked_npc)	As#171_cor2	4_EP17_AS
+sp_cor,134,144,7	duplicate(dummy_cloaked_npc)	Search Team#171_cor	4_M_REBELLION
 
 sp_cor,110,130,3	script	Elena Bolkova#171_cor	4_F_ELENA,{
-	if(isbegin_quest(16352) == 1){
+	if (isbegin_quest(16352) == 1) {
 		cutin "162elena_01",2;
 		mes "[ Elena Bolkova ]";
 		mes "So, adventurer. Did you hear why I was looking for you?";
@@ -6185,23 +6167,23 @@ sp_cor,110,130,3	script	Elena Bolkova#171_cor	4_F_ELENA,{
 		setquest 16353;
 		close3;
 	}
-	if(isbegin_quest(16353) == 1){
+	if (isbegin_quest(16353) == 1) {
 		cutin "162elena_01",2;
 		mes "[ Elena Bolkova ]";
 		mes "An explosion occured near a facility. It must be Elyumina.";
 		mes "I have to capture her this time, follow me over <NAVI>[there]<INFO>sp_cor,180,169,0,101,0</INFO></NAVI>!";
 		close3;
-	}	
+	}
 	end;
-	
+
 OnInit:
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(16352) == 1";
-	cloaknpc(strnpcinfo(0),true);
-end;	
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 sp_cor,180,169,3	script	Elena Bolkova#171_cor_ms	4_F_ELENA,{
-	if(isbegin_quest(16353) == 1){
+	if (isbegin_quest(16353) == 1) {
 		cutin "162elena_01",2;
 		mes "[ Elena Bolkova ]";
 		mes "You're a little late. Well, we're all late.";
@@ -6230,12 +6212,11 @@ sp_cor,180,169,3	script	Elena Bolkova#171_cor_ms	4_F_ELENA,{
 		mes "You will need to make a ^0000FFparty of 1^000000 and come back to me.";
 		completequest 16353;
 		setquest 16354;
-		questinfo_refresh();
 		close3;
 	}
-	if(isbegin_quest(16354) == 1){
-		for(.@i = 0; .@i < 6; .@i++)
-			cloaknpc("Rebellion#171_cor_ms_" + .@i,false,getcharid(0));
+	if (isbegin_quest(16354) == 1) {
+		for (.@i = 0; .@i < 6; .@i++)
+			cloakoffnpc "Rebellion#171_cor_ms_" + .@i,getcharid(0);
 		cutin "162elena_01",2;
 		mes "[ Elena Bolkova ]";
 		mes "The area blockage has ended. We are closing to the end.";
@@ -6264,18 +6245,18 @@ sp_cor,180,169,3	script	Elena Bolkova#171_cor_ms	4_F_ELENA,{
 		npctalk "Time for us to go!","Rebellion#cor_ms_4",bc_self;
 		npctalk "Why are you smiling?","Rebellion#cor_ms_5",bc_self;
 		next;
-		instance_warning(0);
+		mes "^FF0000Please note that, any abnormal monster handling inside the instance such as taming is not considered normal and may hinder the instance progress.^000000";
 		next;
 		.@party_id = getcharid(1);
 		.@party_name$ = getpartyname(.@party_id);
-		if(!.@party_id){
+		if (!.@party_id) {
 			cutin "162elena_01",2;
 			mes "[ Elena Bolkova ]";
 			mes "Didn't I say not to act alone?";
 			mes "Use the ^0000CD/organize (PARTY NAME)^000000 command to form a ^0000CDparty^000000 and come back.";
 			close3;
 		}
-		if(!is_party_leader()){
+		if (!is_party_leader()) {
 			cutin "162elena_01",2;
 			mes "[ Elena Bolkova ]";
 			mes "For now, I have selected those who can act alone, including myself.";
@@ -6283,22 +6264,22 @@ sp_cor,180,169,3	script	Elena Bolkova#171_cor_ms	4_F_ELENA,{
 			close3;
 		}
 		.@md_name$ = "Securing Elyumina";
-		switch(select("Create Operation:Begin Operation:Cancel")){
+		switch (select("Create Operation:Begin Operation:Cancel")) {
 			case 1:
-				if(instance_create(.@md_name$) == -3)
-					instance_warning(2,.@md_name$);
+				if (instance_create(.@md_name$) == -3)
+					dispbottom "The reservation of the instance '" + .@md_name$ + "' has failed due to an active instance.";
 				mes "[ Elena Bolkova ]";
 				mes "Talk to me again when you're ready. We're going to begin the operation soon.";
 				close3;
-				
+
 			case 2:
-				if(instance_enter(.@md_name$) == IE_OK){
-					if(isbegin_quest(16376) == 1){
+				if (instance_enter(.@md_name$) == IE_OK) {
+					if (isbegin_quest(16376) == 1) {
 						erasequest 16376;
 						setquest 16376;
 					}
-					if(isbegin_quest(16355)) erasequest 16355;
-					if(isbegin_quest(16356)) erasequest 16356;
+					if (isbegin_quest(16355)) erasequest 16355;
+					if (isbegin_quest(16356)) erasequest 16356;
 					mapannounce "sp_cor", strcharinfo(0) + " of the party, "+ .@party_name$ +", is entering the operation to secure Elyumina.",bc_map,"0x00FF99";
 				} else {
 					mes "[ Elena Bolkova ]";
@@ -6306,17 +6287,17 @@ sp_cor,180,169,3	script	Elena Bolkova#171_cor_ms	4_F_ELENA,{
 					close3;
 				}
 				break;
-				
+
 			case 3:
 				mes "[ Elena Bolkova ]";
 				mes "Talk to me again when you're ready. We're going to begin the operation soon.";
 				close3;
 		}
-		for(.@i = 0; .@i < 6; .@i++)
-			cloaknpc("Rebellion#171_cor_ms_" + .@i,true,getcharid(0));
+		for (.@i = 0; .@i < 6; .@i++)
+			cloakonnpc "Rebellion#171_cor_ms_" + .@i,getcharid(0);
 		end;
 	}
-	if(isbegin_quest(16357) == 1){
+	if (isbegin_quest(16357) == 1) {
 		cutin "162elena_02",2;
 		mes "[ Elena Bolkova ]";
 		mes "So much trouble! Aha, these guys are all so trustworthy.";
@@ -6341,17 +6322,16 @@ sp_cor,180,169,3	script	Elena Bolkova#171_cor_ms	4_F_ELENA,{
 		setquest 16358;
 		getitem 25668,1;
 		getitem 25723,5;
-		questinfo_refresh();
 		close3;
 	}
-	if(isbegin_quest(16358) == 1){
+	if (isbegin_quest(16358) == 1) {
 		cutin "162elena_01",2;
 		mes "[ Elena Bolkova ]";
 		mes "Join them on that <NAVI>[side]<INFO>sp_cor,136,210,0,000,0</INFO></NAVI>.";
 		mes "Lucky will be asking the questions.";
 		close3;
 	}
-	if(isbegin_quest(16360) != 2){
+	if (isbegin_quest(16360) != 2) {
 		cutin "162elena_01",2;
 		mes "[ Elena Bolkova ]";
 		mes "Hey. Are you busy?";
@@ -6379,37 +6359,37 @@ sp_cor,180,169,3	script	Elena Bolkova#171_cor_ms	4_F_ELENA,{
 	mes "Me? Why am I alone? Are you worried about me? Hahaha!";
 	emotion ET_SMILE;
 	close3;
-	
+
 OnInit:
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(16353) == 1";
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(16354) == 1";
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(16357) == 1";
-end;
+	end;
 }
 
-sp_cor,177,165,1	duplicate(dummynpc)	Rebellion#171_cor_ms_0	4_M_REBELLION3
-sp_cor,180,165,1	duplicate(dummynpc)	Rebellion#171_cor_ms_1	4_M_GONY
-sp_cor,183,165,1	duplicate(dummynpc)	Rebellion#171_cor_ms_2	4_F_REBELLION3
-sp_cor,177,163,1	duplicate(dummynpc)	Rebellion#171_cor_ms_3	4_F_ANYA
-sp_cor,180,163,1	duplicate(dummynpc)	Rebellion#171_cor_ms_4	4_M_ILYA
-sp_cor,183,163,1	duplicate(dummynpc)	Rebellion#171_cor_ms_5	4_F_REBELLION2
+sp_cor,177,165,1	duplicate(dummy_cloaked_npc)	Rebellion#171_cor_ms_0	4_M_REBELLION3
+sp_cor,180,165,1	duplicate(dummy_cloaked_npc)	Rebellion#171_cor_ms_1	4_M_GONY
+sp_cor,183,165,1	duplicate(dummy_cloaked_npc)	Rebellion#171_cor_ms_2	4_F_REBELLION3
+sp_cor,177,163,1	duplicate(dummy_cloaked_npc)	Rebellion#171_cor_ms_3	4_F_ANYA
+sp_cor,180,163,1	duplicate(dummy_cloaked_npc)	Rebellion#171_cor_ms_4	4_M_ILYA
+sp_cor,183,163,1	duplicate(dummy_cloaked_npc)	Rebellion#171_cor_ms_5	4_F_REBELLION2
 
 sp_cor,136,210,7	script	Gonie#171_cor_1	4_M_GONY,{
-	if(isbegin_quest(16358) == 1){
+	if (isbegin_quest(16358) == 1) {
 		cutin "16go_01",0;
 		mes "[ Gonie ]";
 		mes ".....";
 		next;
-		cloaknpc("Rookie#171_cor_1",false,getcharid(0));
-		cloaknpc("Elena Bolkova#171_cor_1",false,getcharid(0));
-		cloaknpc("Tess#171_cor_1",false,getcharid(0));
+		cloakoffnpc "Rookie#171_cor_1",getcharid(0);
+		cloakoffnpc "Elena Bolkova#171_cor_1",getcharid(0);
+		cloakoffnpc "Tess#171_cor_1",getcharid(0);
 		cutin "16loo_01",2;
 		mes "[ Rookie ]";
 		mes "Huh, you came here quickly, I heard you were taking a rest.";
 		mes "Lazy, please bring the captive.";
 		next;
-		cloaknpc("Lazy#171_cor_1",false,getcharid(0));
-		cloaknpc("Elyumina#171_cor_1",false,getcharid(0));
+		cloakoffnpc "Lazy#171_cor_1",getcharid(0);
+		cloakoffnpc "Elyumina#171_cor_1",getcharid(0);
 		cutin "16lei_03",2;
 		mes "[ Lazy ]";
 		mes "Here, that's the captive.";
@@ -6432,28 +6412,27 @@ sp_cor,136,210,7	script	Gonie#171_cor_1	4_M_GONY,{
 		mes "Okay, excuse me then. Lucky, I'll let you do it.";
 		completequest 16358;
 		setquest 16359;
-		questinfo_refresh();
 		close3;
 	}
-	if(isbegin_quest(16359) == 1){
-		cloaknpc("Rookie#171_cor_1",false,getcharid(0));
-		cloaknpc("Elena Bolkova#171_cor_1",false,getcharid(0));
-		cloaknpc("Tess#171_cor_1",false,getcharid(0));
-		cloaknpc("Lazy#171_cor_1",false,getcharid(0));
-		cloaknpc("Elyumina#171_cor_1",false,getcharid(0));
+	if (isbegin_quest(16359) == 1) {
+		cloakoffnpc "Rookie#171_cor_1",getcharid(0);
+		cloakoffnpc "Elena Bolkova#171_cor_1",getcharid(0);
+		cloakoffnpc "Tess#171_cor_1",getcharid(0);
+		cloakoffnpc "Lazy#171_cor_1",getcharid(0);
+		cloakoffnpc "Elyumina#171_cor_1",getcharid(0);
 	}
 	cutin "16go_01",0;
 	mes "[ Gonie ]";
 	mes ".....";
 	close3;
-		
+
 OnInit:
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(16358) == 1";
-end;
+	end;
 }
 
 sp_cor,135,216,5	script	Rookie#171_cor_1	4_M_ROOKIE,{
-	if(isbegin_quest(16359) == 1){
+	if (isbegin_quest(16359) == 1) {
 		cutin "16loo_01",2;
 		mes "[ Rookie ]";
 		mes "Well...";
@@ -6574,9 +6553,9 @@ sp_cor,135,216,5	script	Rookie#171_cor_1	4_M_ROOKIE,{
 		next;
 		cutin "16lei_03",2;
 		mes "[ Lazy ]";
-		mes ".....";		
-		cloaknpc("Elyumina#171_cor_1",true,getcharid(0));
-		cloaknpc("Elyumina#171_cor_2",false,getcharid(0));
+		mes ".....";
+		cloakonnpc "Elyumina#171_cor_1",getcharid(0);
+		cloakoffnpc "Elyumina#171_cor_2",getcharid(0);
 		npctalk "Lucky : ...so it's like that. I see...","",bc_self;
 		next;
 		mes "[ Lazy ]";
@@ -6637,21 +6616,20 @@ sp_cor,135,216,5	script	Rookie#171_cor_1	4_M_ROOKIE,{
 		mes "We better check it ourselves!";
 		completequest 16359;
 		setquest 16360;
-		questinfo_refresh();
 		close2;
 		cutin "",255;
-		cloaknpc("Rookie#171_cor_1",true,getcharid(0));
-		cloaknpc("Elena Bolkova#171_cor_1",true,getcharid(0));
-		cloaknpc("Tess#171_cor_1",true,getcharid(0));
-		cloaknpc("Lazy#171_cor_1",true,getcharid(0));
-		cloaknpc("Elyumina#171_cor_2",true,getcharid(0));
+		cloakonnpc "Rookie#171_cor_1",getcharid(0);
+		cloakonnpc "Elena Bolkova#171_cor_1",getcharid(0);
+		cloakonnpc "Tess#171_cor_1",getcharid(0);
+		cloakonnpc "Lazy#171_cor_1",getcharid(0);
+		cloakonnpc "Elyumina#171_cor_2",getcharid(0);
 	}
 	end;
 
 OnInit:
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(16359) == 1";
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 sp_cor,141,215,3	script	Elena Bolkova#171_cor_1	4_F_ELENA,{
@@ -6659,22 +6637,22 @@ sp_cor,141,215,3	script	Elena Bolkova#171_cor_1	4_F_ELENA,{
 	mes "[ Elena Bolkova ]";
 	mes "I'm busy focusing using my eyes!!";
 	close3;
-	
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
-sp_cor,138,219,3	script	Tess#171_cor_1	4_M_PHILOFONTES,{ 
+sp_cor,138,219,3	script	Tess#171_cor_1	4_M_PHILOFONTES,{
 	cutin "ep16_tes01",2;
 	mes "[ Tess ]";
 	mes "It's an important interrogation, we should let the government know as well, no? I don't know what to say later.";
 	npctalk "Lazy : You're too rigid, too scrupulous~","Lazy#171_cor_1",bc_self;
 	close3;
-	
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 sp_cor,141,211,1	script	Lazy#171_cor_1	4_M_LAZY,{
@@ -6682,10 +6660,10 @@ sp_cor,141,211,1	script	Lazy#171_cor_1	4_M_LAZY,{
 	mes "[ Lazy ]";
 	mes "It's time for Lucky to show his skills. Ya, what are you expecting?";
 	close3;
-	
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 sp_cor,140,213,3	script	Elyumina#171_cor_1	4_EP17_ELYUMINA,{
@@ -6697,14 +6675,14 @@ sp_cor,140,213,3	script	Elyumina#171_cor_1	4_EP17_ELYUMINA,{
 	mes "[ Elyumina ]";
 	mes "Don't talk to me!";
 	close3;
-	
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 sp_cor,255,285,1	script	Rookie#171_cor_2	4_M_ROOKIE,{
-	if(isbegin_quest(16360) == 0){
+	if (isbegin_quest(16360) == 0) {
 		cutin "16loo_01",2;
 		mes "[ Rookie ]";
 		mes "Oh, hey adventurer. This is still under investigation.";
@@ -6719,13 +6697,13 @@ sp_cor,255,285,1	script	Rookie#171_cor_2	4_M_ROOKIE,{
 		mes "There are so many suspicious things around... I keep reminding myself every minute that I have to look out even for things that looks normal.";
 		close3;
 	}
-	if(isbegin_quest(16360) == 1){
+	if (isbegin_quest(16360) == 1) {
 		cutin "16loo_03",2;
 		mes "[ Rookie ]";
 		mes "Ah... so it's true. Well I guess this is it... it doesn't seem to easy to get through. Why go that way?";
-		cloaknpc("Elyumina#171_cor_3",false,getcharid(0));
-		cloaknpc("Gonie#171_cor_2",false,getcharid(0));
-		cloaknpc("Elena Bolkova#171_cor_2",false,getcharid(0));
+		cloakoffnpc "Elyumina#171_cor_3",getcharid(0);
+		cloakoffnpc "Gonie#171_cor_2",getcharid(0);
+		cloakoffnpc "Elena Bolkova#171_cor_2",getcharid(0);
 		next;
 		cutin "16go_01",0;
 		mes "[ Gonie ]";
@@ -6793,19 +6771,19 @@ sp_cor,255,285,1	script	Rookie#171_cor_2	4_M_ROOKIE,{
 		completequest 16360;
 		close2;
 		cutin "",255;
-		cloaknpc("Elyumina#171_cor_3",true,getcharid(0));
-		cloaknpc("Gonie#171_cor_2",true,getcharid(0));
-		cloaknpc("Elena Bolkova#171_cor_2",true,getcharid(0));
+		cloakonnpc "Elyumina#171_cor_3",getcharid(0);
+		cloakonnpc "Gonie#171_cor_2",getcharid(0);
+		cloakonnpc "Elena Bolkova#171_cor_2",getcharid(0);
 		end;
 	}
-	if(isbegin_quest(16360) == 2 && BaseLevel < 130){
+	if (isbegin_quest(16360) == 2 && BaseLevel < 130) {
 		cutin "16loo_02",2;
 		mes "[ Lucky ]";
 		mes "If I get more information, I'll let you know. For now, please rest. Elyumina will be detained here for the time being.";
 		close3;
 	}
 	//17.2 Start
-	if(isbegin_quest(18000) == 0){
+	if (isbegin_quest(18000) == 0) {
 		cutin "16loo_01",2;
 		mes "[ Rookie ]";
 		mes "You're welcome.";
@@ -6837,14 +6815,14 @@ sp_cor,255,285,1	script	Rookie#171_cor_2	4_M_ROOKIE,{
 		mes "I'll open the door anytime you need to need, adventurer. Just let me know.";
 		close3;
 	}
-	if(isbegin_quest(18000) == 1){
+	if (isbegin_quest(18000) == 1) {
 		cutin "16loo_01",2;
 		mes "[ Rookie ]";
 		mes "Shall we go?";
 		mes "To the great mansion left by the great sages?";
 		next;
-		if(select("Let's Go!:Not now.") == 2){
-			mes "[ Rookie ]";	
+		if (select("Let's Go!:Not now.") == 2) {
+			mes "[ Rookie ]";
 			mes "Let me know whenever you are ready.";
 			close3;
 		}
@@ -6886,7 +6864,7 @@ sp_cor,255,285,1	script	Rookie#171_cor_2	4_M_ROOKIE,{
 		warp "ba_pw02",275,20;
 		end;
 	}
-	if(isbegin_quest(18001) == 1){
+	if (isbegin_quest(18001) == 1) {
 		mes "[ Rookie ]";
 		mes "Go ahead and enter the mansion through this sewer.";
 		mes "Most of the colleagues who went in first cleaned up already.";
@@ -6900,22 +6878,22 @@ sp_cor,255,285,1	script	Rookie#171_cor_2	4_M_ROOKIE,{
 	mes "The path we took with you adventurer is a fresh feeling for me.";
 	mes "I feel really alive these days.";
 	close;
-	
+
 OnInit:
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(16360) == 1";
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(16360) == 2 && isbegin_quest(18000) == 0 && BaseLevel >= 130";
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(18000) == 1";
-end;
+	end;
 }
 
-sp_cor,136,217,3	duplicate(dummynpc)	Elyumina#171_cor_2	4_EP17_ELYUMINA
-sp_cor,254,284,7	duplicate(dummynpc)	Gonie#171_cor_2	4_M_GONY
-sp_cor,259,278,1	duplicate(dummynpc)	Elyumina#171_cor_3	4_EP17_ELYUMINA
-sp_cor,260,276,3	duplicate(dummynpc)	Elena Bolkova#171_cor_2	4_F_ELENA
+sp_cor,136,217,3	duplicate(dummy_cloaked_npc)	Elyumina#171_cor_2	4_EP17_ELYUMINA
+sp_cor,254,284,7	duplicate(dummy_cloaked_npc)	Gonie#171_cor_2	4_M_GONY
+sp_cor,259,278,1	duplicate(dummy_cloaked_npc)	Elyumina#171_cor_3	4_EP17_ELYUMINA
+sp_cor,260,276,3	duplicate(dummy_cloaked_npc)	Elena Bolkova#171_cor_2	4_F_ELENA
 
 //= Finding Patrick Kaufman
 sp_cor,132,144,3	script	Worker#171_rvs_11	4_F_05,{
-	if(isbegin_quest(17020) == 1){
+	if (isbegin_quest(17020) == 1) {
 		mes "[ Worker ]";
 		mes "I'll have to split the workforce because I only have so few people remaining.";
 		npctalk "I have to split the workforce.","",bc_self;
@@ -6964,26 +6942,25 @@ sp_cor,132,144,3	script	Worker#171_rvs_11	4_F_05,{
 		mes "The <NAVI>[researcher]<INFO>sp_cor,224,77,0,101,0</INFO></NAVI> right next to the crops. Do you see her?";
 		completequest 17020;
 		setquest 17021;
-		questinfo_refresh();
-		end;
+		close;
 	}
-	if(isbegin_quest(17021) == 1){
+	if (isbegin_quest(17021) == 1) {
 		mes "[ Worker ]";
 		mes "Anyway, if you're looking for someone in particular, you should ^0000FFask the researchers.^000000 Most of them already ran away, but a few stayed behind.";
 		mes "The <NAVI>[researcher]<INFO>sp_cor,224,77,0,101,0</INFO></NAVI> right next to the crops. Do you see her?";
-		end;
+		close;
 	}
 	mes "[ Worker ]";
 	mes "Now I can't think of anything else, I'm in a bad mood. I'll get back to work soon...";
 	close;
-	
+
 OnInit:
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17020) == 1";
-end;
+	end;
 }
 
 sp_cor,224,77,3	script	Researcher#171_rvs_0	4_F_SCIENCE,{
-	if(isbegin_quest(17021) == 1){
+	if (isbegin_quest(17021) == 1) {
 		mes "[ Researcher ]";
 		mes "Anyway, what about all of these...?";
 		mes "It's too bad that they won't be used.";
@@ -7023,26 +7000,25 @@ sp_cor,224,77,3	script	Researcher#171_rvs_0	4_F_SCIENCE,{
 		completequest 17021;
 		setquest 17022;
 		getexp 300000,300000;
-		questinfo_refresh();
-		end;
+		close;
 	}
-	if(isbegin_quest(17022) == 1){
+	if (isbegin_quest(17022) == 1) {
 		mes "[ Researcher ]";
 		mes "Anyway, I'm looking for a <NAVI>[person]<INFO>sp_cor,151,180,0,101,0</INFO></NAVI> to do my laundry. It's been a while and my feet are dirty.";
-		end;
+		close;
 	}
 	mes "[ Researcher ]";
 	mes "Anyway, how about all of these...?";
 	mes "I'm afraid they will go to waste if I just leave.";
 	close;
-	
+
 OnInit:
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17021) == 1";
-end;
+	end;
 }
 
 sp_cor,151,180,5	script	Worker#171_rvs_15	4_M_RUSMAN2,{
-	if(isbegin_quest(17022) == 1){
+	if (isbegin_quest(17022) == 1) {
 		mes "[ Worker ]";
 		mes "Huh... I don't want to wash these things, uh... it seems like the inside is burnt.";
 		next;
@@ -7110,26 +7086,25 @@ sp_cor,151,180,5	script	Worker#171_rvs_15	4_M_RUSMAN2,{
 		mes "Thank you. I have written many letters during my stay, so I'll sort them out. Thank you again!";
 		completequest 17022;
 		setquest 17023;
-		questinfo_refresh();
-		end;
+		close;
 	}
-	if(isbegin_quest(17023) == 1){
+	if (isbegin_quest(17023) == 1) {
 		mes "[ Marcus ]";
 		mes "Anyway, if you want to know more, check out the <NAVI>[incinerator]<INFO>sp_cor,70,263,0,101,0</INFO></NAVI>.";
 		mes "They're working on collecting and sorting the scattered materials, so maybe they know something else about Pat.";
-		end;
+		close;
 	}
 	mes "[ Marcus ]";
 	mes "Huh... I don't want to wash these things, uh... it seems like the inside is burnt.";
 	close;
-	
+
 OnInit:
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17022) == 1";
-end;
+	end;
 }
 
 sp_cor,70,263,5	script	Worker#171_rvs_16	4_M_02,{
-	if(isbegin_quest(17023) == 1){
+	if (isbegin_quest(17023) == 1) {
 		mes "[ Worker ]";
 		mes "Don't put food waste in there. It will smell.";
 		npctalk "Be careful here.","",bc_self;
@@ -7178,33 +7153,33 @@ sp_cor,70,263,5	script	Worker#171_rvs_16	4_M_02,{
 		mes "Oh, you're going to the <NAVI>[waste area]<INFO>sp_rudus,227,351,0,101,0</INFO></NAVI>? Huh, good luck. I think you'll need it.";
 		completequest 17023;
 		setquest 17024;
-		end;
+		close;
 	}
-	if(isbegin_quest(17024) == 1){
+	if (isbegin_quest(17024) == 1) {
 		mes "[ Worker ]";
 		mes "Oh, you're going to the <NAVI>[waste area]<INFO>sp_rudus,227,351,0,101,0</INFO></NAVI>? Huh, good luck. I think you'll need it.";
-		end;
+		close;
 	}
 	mes "[ Worker ]";
 	mes "What should I do next? I guess I can't keep working here.";
 	close;
-	
+
 OnInit:
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17023) == 1";
-end;
+	end;
 }
 
 sp_rudus,15,280,5	script	#171_EV_RUDUS	HIDDEN_WARP_NPC,3,3,{
 	end;
-	
+
 OnTouch:
-	if(isbegin_quest(17025) == 1)
-		cloaknpc("Discarded Person#171_rudus",false,getcharid(0));
-end;
+	if (isbegin_quest(17025) == 1)
+		cloakoffnpc "Discarded Person#171_rudus",getcharid(0);
+	end;
 }
 
 sp_rudus,227,351,0	script	Suspicious Evidence#171_rudus	4_ENERGY_BLACK,{
-	if(isbegin_quest(17024) == 1){
+	if (isbegin_quest(17024) == 1) {
 		mes "[ " + strcharinfo(0) + " ]";
 		mes "How do you find anything in such a big place? There is no one to ask.";
 		mes "Can you really look at the traces of abandoned projects...?";
@@ -7225,27 +7200,26 @@ sp_rudus,227,351,0	script	Suspicious Evidence#171_rudus	4_ENERGY_BLACK,{
 		mes "What.... I can hear a <NAVI>[voice]<INFO>sp_rudus,15,280,0,101,0</INFO></NAVI>, where does it come from?";
 		completequest 17024;
 		setquest 17025;
-		questinfo_refresh();
-		cloaknpc("Discarded Person#171_rudus",false,getcharid(0));
-		end;
+		cloakoffnpc "Discarded Person#171_rudus",getcharid(0);
+		close;
 	}
-	if(isbegin_quest(17025) == 1){
+	if (isbegin_quest(17025) == 1) {
 		mes "[ " + strcharinfo(0) + " ]";
 		mes "What.... I can hear a <NAVI>[voice]<INFO>sp_rudus,15,280,0,101,0</INFO></NAVI>, where does it come from?";
-		cloaknpc("Discarded Person#171_rudus",false,getcharid(0));
-		end;
+		cloakoffnpc "Discarded Person#171_rudus",getcharid(0);
+		close;
 	}
 	mes "[ " + strcharinfo(0) + " ]";
 	mes "There is nothing here.";
-	end;
-	
+	close;
+
 OnInit:
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17024) == 1";
-end;	
+	end;
 }
 
 sp_rudus,15,280,5	script	Discarded Person#171_rudus	4_F_MUT1,{
-	if(isbegin_quest(17025) == 1){
+	if (isbegin_quest(17025) == 1) {
 		mes "[ Discarded Person ]";
 		mes "A 1:2 ratio might better... No it's better not to experiment. I think you're right.";
 		next;
@@ -7331,7 +7305,8 @@ sp_rudus,15,280,5	script	Discarded Person#171_rudus	4_F_MUT1,{
 		mes "Leaving this place? Don't, I'm dying. It's the gruesome truth. I know my body well. It's what I studied.";
 		next;
 		mes "[ Discarded Person ]";
-		mes "For now, my foot is like this, but the other leg will change soon.","Then both of my arms... and at the end... can you still call me humans?";
+		mes "For now, my foot is like this, but the other leg will change soon.";
+		mes "Then both of my arms... and at the end... can you still call me humans?";
 		next;
 		mes "[ Discarded Person ]";
 		mes "Even if I received treatments, there's no chance I'd survive. I know this well. Wouldn't it be best for me to have a quiet life here without anyone?";
@@ -7363,25 +7338,24 @@ sp_rudus,15,280,5	script	Discarded Person#171_rudus	4_F_MUT1,{
 		getexp 300000,300000;
 		completequest 17025;
 		setquest 17026;
-		questinfo_refresh();
-		end;
+		close;
 	}
 	mes "[ Discarded Person ]";
 	mes "You should try and look for an ^0000FFIdentification Bracelet^000000 in the pile of garbage. Do you know what it is?";
 	mes "The wrist band is a bracelet. And thats where the names of the specimens are written.";
-	end;
-					
+	close;
+
 OnInit:
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17025) == 1";
-	cloaknpc(strnpcinfo(0),true);
-end;	
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 sp_rudus,55,137,3	script	Suspicious Evidence#171_rudus_0	4_ENERGY_BLACK,{
 	.@id = atoi(replacestr(strnpcinfo(2),"171_rudus_",""));
 	.@qid = 17027 + .@id;
-	if(isbegin_quest(.@qid) == 0 && isbegin_quest(17026) == 1){
-		switch(.@id){
+	if (isbegin_quest(.@qid) == 0 && isbegin_quest(17026) == 1) {
+		switch (.@id) {
 			case 0:
 			case 1:
 				mes "[ " + strcharinfo(0) + " ]";
@@ -7390,12 +7364,12 @@ sp_rudus,55,137,3	script	Suspicious Evidence#171_rudus_0	4_ENERGY_BLACK,{
 				mes "[ " + strcharinfo(0) + " ]";
 				mes "I don't think there's anything here related to Kaufman.";
 				break;
-				
+
 			case 2:
 				mes "[ " + strcharinfo(0) + " ]";
 				mes "I looked through the pile, I found nothing but garbage.";
 				break;
-				
+
 			case 3:
 				mes "[ " + strcharinfo(0) + " ]";
 				mes "I digged a bracelet buried in a pile of garbage. This seems to be an identification bracelet from the experiments. It says... Pat... Patrick... Kauf...man.";
@@ -7406,7 +7380,7 @@ sp_rudus,55,137,3	script	Suspicious Evidence#171_rudus_0	4_ENERGY_BLACK,{
 				setquest 17032;
 				getitem 25666,1;
 				break;
-				
+
 			case 4:
 				mes "[ " + strcharinfo(0) + " ]";
 				mes "I looked through the pile, there was nothing there.";
@@ -7414,22 +7388,22 @@ sp_rudus,55,137,3	script	Suspicious Evidence#171_rudus_0	4_ENERGY_BLACK,{
 		}
 		setquest .@qid;
 		completequest .@qid;
-		end;
+		close;
 	}
-	if(isbegin_quest(.@qid) == 2 && isbegin_quest(17026) == 1){
+	if (isbegin_quest(.@qid) == 2 && isbegin_quest(17026) == 1) {
 		mes "[ "+strcharinfo(0)+" ]";
 		mes "I've already seen this place. Let's look elsewhere.";
-		end;
+		close;
 	}
 	mes "[ " + strcharinfo(0) + " ]";
 	mes "This place seems like a dead end.";
-	end;
+	close;
 
 OnInit:
 	.@id = atoi(replacestr(strnpcinfo(2),"171_rudus_",""));
 	.@qid = 17027 + .@id;
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17026) == 1 && isbegin_quest(" + .@qid + ") == 0";
-end;
+	end;
 }
 
 sp_rudus,236,46,3	duplicate(Suspicious Evidence#171_rudus_0)	Suspicious Evidence#171_rudus_1	4_ENERGY_BLACK
@@ -7440,18 +7414,18 @@ sp_rudus,221,165,3	duplicate(Suspicious Evidence#171_rudus_0)	Suspicious Evidenc
 //= Cor Daily
 sp_cor,162,56,0	script	#171_ocp_ev	HIDDEN_WARP_NPC,4,4,{
 	end;
-	
+
 OnTouch:
-	if(isbegin_quest(11603) == 2 && isbegin_quest(12452) != 2){
-		cloaknpc("Est#171_ocp",false,getcharid(0));
+	if (isbegin_quest(11603) == 2 && isbegin_quest(12452) != 2) {
+		cloakoffnpc "Est#171_ocp",getcharid(0);
 		npctalk "We have to act quickly to annihilate them. We don't have much time.","Est#171_ocp",bc_self;
-	} else if(isbegin_quest(12452) == 2)
-		cloaknpc("Operation Officer#171_ocp",false,getcharid(0));
-end;
+	} else if (isbegin_quest(12452) == 2)
+		cloakoffnpc "Operation Officer#171_ocp",getcharid(0);
+	end;
 }
 
 sp_cor,163,56,4	script	Est#171_ocp	4_F_ESTLOVELOY,{
-	if(isbegin_quest(12452) == 0){
+	if (isbegin_quest(12452) == 0) {
 		cutin "ep162_est01",2;
 		mes "[ Est ]";
 		mes "Oh you're here. I heard that the recon team has taken control over the railroad transport route.";
@@ -7472,17 +7446,17 @@ sp_cor,163,56,4	script	Est#171_ocp	4_F_ESTLOVELOY,{
 		setquest 12452;
 		close3;
 	}
-	if(isbegin_quest(12452) == 1){
-		instance_warning(0);
+	if (isbegin_quest(12452) == 1) {
+		mes "^FF0000Please note that, any abnormal monster handling inside the instance such as taming is not considered normal and may hinder the instance progress.^000000";
 		next;
-		instance_warning(3);
+		mes "^FF0000In beginners mode, the player transform into a monster. Please not that existing transformation effect will disappear after entering and proceeding.^000000";
 		next;
 		cutin "ep162_est01",2;
 		mes "[ Est ]";
 		mes "Are you ready?";
 		next;
 		.@party_id = getcharid(1);
-		if(!.@party_id){
+		if (!.@party_id) {
 			mes "[ Est ]";
 			mes "Are you alone? It's difficult if you're alone. Form a party, make a unit, and start.";
 			close3;
@@ -7490,51 +7464,52 @@ sp_cor,163,56,4	script	Est#171_ocp	4_F_ESTLOVELOY,{
 		cutin "",255;
 		.@party_name$ = getpartyname(.@party_id);
 		.@md_name$ = "OS Occupation Operation";
-		switch(select(is_party_leader() ? "Prepare for OS Occupation.":"","Enter","Quit")){
+		switch (select(is_party_leader() ? "Prepare for OS Occupation.":"","Enter","Quit")) {
 			case 1:
-				if(instance_create(.@md_name$) == -3)
-					instance_warning(2,.@md_name$);
+				if (instance_create(.@md_name$) == -3)
+					dispbottom "The reservation of the instance '" + .@md_name$ + "' has failed due to an active instance.";
 				mes "[ Est ]";
 				mes "Inspect your unit before we enter for the occupation.";
 				break;
-				
+
 			case 2:
-				if(instance_enter(.@md_name$) == IE_OK)
+				if (instance_enter(.@md_name$) == IE_OK)
 					mapannounce "sp_cor", strcharinfo(0) + " of the party, "+ .@party_name$ +", is entering the " + .@md_name$ + ".", bc_map, "0x00FF99";
 				else
 					mes "The preparation for the operation is not yet complete or your party is performing another operation.";
 				break;
-				
+
 			case 3:
 				break;
 		}
+		close;
 	}
 	end;
-	
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 sp_cor,160,55,5	script	Operation Officer#171_ocp	4_M_ILYA,{
-	instance_warning(0);
+	mes "^FF0000Please note that, any abnormal monster handling inside the instance such as taming is not considered normal and may hinder the instance progress.^000000";
 	next;
-	switch(checkquest(12455,PLAYTIME)){
-		case -1: 
+	switch (checkquest(12455,PLAYTIME)) {
+		case -1:
 			break;
-		
+
 		case 0:
 		case 1:
 			mes "[ Operation Officer ]";
 			mes "It's not time for the operation yet, just rest for now.";
-			end;
-			
+			close;
+
 		case 2:
 			erasequest 12455;
 			break;
 	}
-	if(isbegin_quest(12454) == 2) erasequest 12454;
-	if(isbegin_quest(12454) == 0){
+	if (isbegin_quest(12454) == 2) erasequest 12454;
+	if (isbegin_quest(12454) == 0) {
 		mes "[ Operation Officer ]";
 		mes "Even though we suppresed the enemy from the first annihilation operation, the mutants started crawling out again.";
 		next;
@@ -7550,41 +7525,41 @@ sp_cor,160,55,5	script	Operation Officer#171_ocp	4_M_ILYA,{
 	mes "Are you ready?";
 	next;
 	.@party_id = getcharid(1);
-	if(!.@party_id){
+	if (!.@party_id) {
 		mes "[ Operation Officer ]";
 		mes "Are you alone? It's difficult if you're alone. Form a party, make a unit, and start.";
-		end;
+		close;
 	}
 	.@party_name$ = getpartyname(.@party_id);
 	.@md_name$ = "2nd OS Search";
-	switch(select(is_party_leader() ? "Prepare 2nd OS Search.":"","Enter","Quit")){
+	switch (select(is_party_leader() ? "Prepare 2nd OS Search.":"","Enter","Quit")) {
 		case 1:
-			if(instance_create(.@md_name$) == -3)
-				instance_warning(2,.@md_name$);
+			if (instance_create(.@md_name$) == -3)
+				dispbottom "The reservation of the instance '" + .@md_name$ + "' has failed due to an active instance.";
 			mes "[ Operation Officer ]";
 			mes "Perform a last unit check before the search.";
 			break;
-			
+
 		case 2:
-			if(instance_enter(.@md_name$) == IE_OK){
+			if (instance_enter(.@md_name$) == IE_OK) {
 				setquest 12455;
 				mapannounce "sp_cor", strcharinfo(0) + " of the party, "+ .@party_name$ +", is entering the " + .@md_name$ + ".", bc_map, "0x00FF99";
 			} else
 				mes "The preparation for the operation is not yet complete or your party is performing another operation.";
 			break;
-			
+
 		case 3:
 			break;
 	}
-	end;
-	
+	close;
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 sp_cor,113,130,3	script	Rebellion#cor_02	4_M_REBELLION3,{
-	if(isbegin_quest(16360) < 2){
+	if (isbegin_quest(16360) < 2) {
 		mes "[ Rebellion ]";
 		mes "Oh, you're the adventurer? It's been a too long. Did you come to see me?";
 		next;
@@ -7598,17 +7573,17 @@ sp_cor,113,130,3	script	Rebellion#cor_02	4_M_REBELLION3,{
 		mes "I also brought the right weapons and armor for the job, I'm wearing warm clothes~!";
 		close;
 	}
-	if(isbegin_quest(16377)) erasequest 16377;
-	switch(checkquest(16362,PLAYTIME)){
-		case -1: 
+	if (isbegin_quest(16377)) erasequest 16377;
+	switch (checkquest(16362,PLAYTIME)) {
+		case -1:
 			break;
-		case 0: 
+		case 0:
 		case 1:
 			mes "[ Rebellion ]";
 			mes "Mina is feeling more relaxed.";
 			mes "Mina's lovely children are resting?";
 			next;
-			cloaknpc("Elyumina#171_merchant",false,getcharid(0));
+			cloakoffnpc "Elyumina#171_merchant",getcharid(0);
 			cutin "ep171_elyumina03",0;
 			mes "[ Elyumina ]";
 			mes "... the security devices that summon monsters are still at lower power. Don't touch them the can overheat.";
@@ -7623,17 +7598,17 @@ sp_cor,113,130,3	script	Rebellion#cor_02	4_M_REBELLION3,{
 			mes "After dawn, they will have charged up enough so that you can go back!";
 			unittalk getcharid(3),strcharinfo(0) + " : She handles this surprisingly well...",bc_self;
 			close3;
-			
+
 		case 2:
 			erasequest 16362;
 			break;
 	}
-	if(isbegin_quest(16361) == 0){
+	if (isbegin_quest(16361) == 0) {
 		mes "[ Rebellion ]";
 		mes "Oh, adventurer. It's been a while! I have a favor to ask. It's about Mina...";
 		unittalk getcharid(3),strcharinfo(0)+ " : Mina?",bc_self;
 		next;
-		cloaknpc("Elyumina#171_merchant",false,getcharid(0));
+		cloakoffnpc "Elyumina#171_merchant",getcharid(0);
 		cutin "ep171_elyumina03",0;
 		mes "[ Elyumina ]";
 		mes "Okay, I'll explain. My children who protected me when you guys chased me before...";
@@ -7645,7 +7620,7 @@ sp_cor,113,130,3	script	Rebellion#cor_02	4_M_REBELLION3,{
 		mes "Yes, we couldn't catch Mina's kids back then, right? They were sleeping and hiding.";
 		next;
 		cutin "ep171_elyumina02",0;
-		mes "[ Elyumina ]";	
+		mes "[ Elyumina ]";
 		mes "Mine! Machines and traps! In case of emergency, they enter a low-power and stealth mode. They will stay like that for a while. They will come back soon and go rampant.";
 		next;
 		cutin "",255;
@@ -7692,7 +7667,7 @@ sp_cor,113,130,3	script	Rebellion#cor_02	4_M_REBELLION3,{
 		mes "It's time for Mina's children to wake up, adventurer!";
 		mes "Will they patiently wait this time around?";
 		next;
-		cloaknpc("Elyumina#171_merchant",false,getcharid(0));	
+		cloakoffnpc "Elyumina#171_merchant",getcharid(0);
 		cutin "ep171_elyumina03",0;
 		mes "[ Elyumina ]";
 		mes "... they're no longer on low power and the security devices are operation again.";
@@ -7719,34 +7694,34 @@ sp_cor,113,130,3	script	Rebellion#cor_02	4_M_REBELLION3,{
 	next;
 	.@party_id = getcharid(1);
 	.@party_name$ = getpartyname(.@party_id);
-	if(!.@party_id){
+	if (!.@party_id) {
 		mes "[ Rebellion ]";
 		mes "Hm? Mina said it will be difficult on her own. Come back after creating a party, adventurer.";
-		end;
+		close;
 	}
-	instance_warning(0);
+	mes "^FF0000Please note that, any abnormal monster handling inside the instance such as taming is not considered normal and may hinder the instance progress.^000000";
 	next;
 	.@md_name$ = "EL1_A17T Suppresion";
-	switch(select(is_party_leader() ? "Create Operation." : "","Enter Operation.","Cancel")){
+	switch (select(is_party_leader() ? "Create Operation." : "","Enter Operation.","Cancel")) {
 		case 1:
-			if(instance_create(.@md_name$) == -3)
-				instance_warning(2,.@md_name$);
+			if (instance_create(.@md_name$) == -3)
+				dispbottom "The reservation of the instance '" + .@md_name$ + "' has failed due to an active instance.";
 			mes "[ Rebellion ]";
 			mes "Great! The MD will activate in a little while. You can send the signal by selecting the ^0000CDEnter Operation^000000.";
-			npctalk "Hehe, she's so cute.","",bc_self; 
-			end;
+			npctalk "Hehe, she's so cute.","",bc_self;
+			close;
 
 		case 2:
-			if(instance_enter(.@md_name$) == IE_OK){
-				if(isbegin_quest(16363)) erasequest 16363;
+			if (instance_enter(.@md_name$) == IE_OK) {
+				if (isbegin_quest(16363)) erasequest 16363;
 				setquest 16362;
 				mapannounce "sp_cor", strcharinfo(0) + " of the party, "+ .@party_name$ +", is entering the Operation EL1_A17T Suppresion.", bc_map, "0x00FF99";
 			} else {
 				mes "[ Rebellion ]";
 				mes "There's no dungeon yet. I'll double check.";
 			}
-			end;
-			
+			close;
+
 		case 3:
 			cutin "ep171_elyumina02",0;
 			mes "[ Elyumina ]";
@@ -7759,21 +7734,21 @@ OnInit:
 	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"isbegin_quest(16360) == 2 && isbegin_quest(16361) == 0";
 	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"isbegin_quest(16360) == 2 && isbegin_quest(16362) == 0";
 	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"isbegin_quest(16360) == 2 && isbegin_quest(16362) == 2";
-end;	
+	end;
 }
 
 sp_cor,155,94,3	script	Yuslan#171_daily_merc	4_M_GUNSLINGER3,{
-	if(isbegin_quest(11603) != 2){
+	if (isbegin_quest(11603) != 2) {
 		mes "[ Yuslan ]";
 		mes "Hm? I think we need to clean up the Heart Hunters in the area.";
 		mes "Aren't you participating in the next operation?";
 		close3;
 	}
-	switch(checkquest(7868,PLAYTIME)){
+	switch (checkquest(7868,PLAYTIME)) {
 		case -1:
 			break;
-			
-		case 0: 
+
+		case 0:
 		case 1:
 			mes "[ Yuslan ]";
 			mes "Woah, you worked hard today.";
@@ -7782,20 +7757,20 @@ sp_cor,155,94,3	script	Yuslan#171_daily_merc	4_M_GUNSLINGER3,{
 			mes "[ Yuslan ]";
 			mes "How do the Heart Hunters come back so fast?";
 			mes "I think we should fight again soon, but for now let's take a break.";
-			end;
-			
+			close;
+
 		case 2:
 			mes "[ Yuslan ]";
 			mes "Huh~ Did you rest well?";
 			mes "Let's prepare for a Heart Hunter hunt.";
 			mes "When you're ready, let's go again.";
 			erasequest 7868;
-			end;
+			close;
 	}
-	switch(checkquest(7867,HUNTING)){
+	switch (checkquest(7867,HUNTING)) {
 		case -1:
 			break;
-			
+
 		case 1:
 			mes "[ Yuslan ]";
 			mes "Please handle 15 ^0000FFHeart Hunter Bellares and  Heart Hunter Sanares.^000000";
@@ -7804,8 +7779,8 @@ sp_cor,155,94,3	script	Yuslan#171_daily_merc	4_M_GUNSLINGER3,{
 			mes "[ Yuslan ]";
 			mes "You know the location, right?";
 			mes "You can follow the track from there.";
-			end;
-			
+			close;
+
 		case 2:
 			mes "[ Yuslan ]";
 			mes "These guys were stronger than expected.";
@@ -7835,7 +7810,7 @@ sp_cor,155,94,3	script	Yuslan#171_daily_merc	4_M_GUNSLINGER3,{
 	mes "Because of that, the Est special troops are hiding in the battlefield to advance further.";
 	mes "We have to deal with those guys, sometimes it's hard.";
 	next;
-	if(select("Let's do it.:That sounds like trouble.") == 2){
+	if (select("Let's do it.:That sounds like trouble.") == 2) {
 		mes "[ Yuslan ]";
 		mes "It will  be. Huh.";
 		mes "The adventurer should take a break.";
@@ -7854,21 +7829,21 @@ sp_cor,155,94,3	script	Yuslan#171_daily_merc	4_M_GUNSLINGER3,{
 	close2;
 	npctalk "I need a break...","",bc_self;
 	end;
-	
+
 OnInit:
 	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"isbegin_quest(11603) == 2 && checkquest(7868,PLAYTIME) == -1 && checkquest(7867,HUNTING) == -1";
 	questinfo QTYPE_DAILYQUEST,QMARK_YELLOW,"isbegin_quest(11603) == 2 && checkquest(7868,PLAYTIME) == 2 && checkquest(7867,HUNTING) == -1";
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"checkquest(7867,HUNTING) == 2";
-end;
+	end;
 }
 
 sp_cor,246,97,3	script	Farm Worker#171_cor_daily	1_M_03,{
-	if(isbegin_quest(16360) == 0){
+	if (isbegin_quest(16360) == 0) {
 		mes "[ Farm Worker ]";
 		mes "I'm busy and I don't think people in the city would appreciate the smell of fertilizer. There are lot of people in the research facility, but not all are present anyway.";
 		close;
 	}
-	switch(isbegin_quest(16364)){
+	switch (isbegin_quest(16364)) {
 		case 0:
 			mes "[ Farm Worker ]";
 			mes "We were in charge of raising crops here. We are proud of our self-sufficient farms.";
@@ -7876,7 +7851,7 @@ sp_cor,246,97,3	script	Farm Worker#171_cor_daily	1_M_03,{
 			mes "[ Farm Worker ]";
 			mes "But recently, a lot of people want to transfer out, so we don't have enough manpower. Could you help us take care of the crops.";
 			next;
-			if(select("Help.:Don't help.") == 2){
+			if (select("Help.:Don't help.") == 2) {
 				mes "[ Farm Worker ]";
 				mes "Ever since our elders passed, things have been a bit chaotic...";
 				next;
@@ -7894,10 +7869,9 @@ sp_cor,246,97,3	script	Farm Worker#171_cor_daily	1_M_03,{
 			setquest .grapes[.@grapes];
 			setquest .beans[.@beans];
 			setquest .pumpkin[.@pumpkin];
-			questinfo_refresh();
-			
+
 		case 1:
-			if(isbegin_quest(16546) == 1){
+			if (isbegin_quest(16546) == 1) {
 				mes "[ Farm Worker ]";
 				mes "You did it! You seem more like a farmer then an adventurer.";
 				next;
@@ -7909,30 +7883,30 @@ sp_cor,246,97,3	script	Farm Worker#171_cor_daily	1_M_03,{
 				erasequest 16546;
 				completequest 16364;
 				setquest 16365;
-				for(.@i = 16367; .@i < 16376; .@i++)
-					if(isbegin_quest(.@i)) erasequest .@i;
+				for (.@i = 16367; .@i < 16376; .@i++)
+					if (isbegin_quest(.@i)) erasequest .@i;
 				getitem 25723,1;
 				getitem 25669,5;
-				end;
+				close;
 			}
-			for(.@i = 0; .@i < 3; .@i++){
-				if(isbegin_quest(.grapes[.@i])) .@qid[0] = .grapes[.@i];
-				if(isbegin_quest(.beans[.@i])) .@qid[1] = .beans[.@i];
-				if(isbegin_quest(.pumpkin[.@i])) .@qid[2] = .pumpkin[.@i];
+			for (.@i = 0; .@i < 3; .@i++) {
+				if (isbegin_quest(.grapes[.@i])) .@qid[0] = .grapes[.@i];
+				if (isbegin_quest(.beans[.@i])) .@qid[1] = .beans[.@i];
+				if (isbegin_quest(.pumpkin[.@i])) .@qid[2] = .pumpkin[.@i];
 			}
 			.@grapes$ = (isbegin_quest(.@qid[0]) == 1 ? "You need to " + .work$[inarray(.grapes,.@qid[0])] + " on the grapes." : "You've already taken care of the grapes.");
 			.@beans$ = (isbegin_quest(.@qid[1]) == 1 ? " Need to " + .work$[inarray(.beans,.@qid[1])] + " on the beans," : " Taken care of the beans,");
 			.@pumpkin$ = " and " + (isbegin_quest(.@qid[2]) == 1 ? .work$[inarray(.pumpkin,.@qid[2])] + " on the pumpkins." : "taken care of the pumpkins.");
 			mes "[ Farm Worker ]";
 			mes .@grapes$ + .@beans$ + .@pumpkin$;
-			end;
-			
-		case 2: break;	
+			close;
+
+		case 2: break;
 	}
-	switch(checkquest(16365,PLAYTIME)){
-		case -1: 
+	switch (checkquest(16365,PLAYTIME)) {
+		case -1:
 			break;
-		case 0: 
+		case 0:
 		case 1:
 			mes "[ Farm Worker ]";
 			mes "The crops are still fresh. It's not good to touch it too often. They are very sensitive in this state.";
@@ -7941,12 +7915,12 @@ sp_cor,246,97,3	script	Farm Worker#171_cor_daily	1_M_03,{
 			mes "[ Farm Worker ]";
 			mes "I would appreciate it if you could come back after dawn.";
 			close;
-			
+
 		case 2:
 			erasequest 16365;
 			break;
 	}
-	switch(isbegin_quest(16366)){
+	switch (isbegin_quest(16366)) {
 		case 0:
 			mes "[ Farm Worker ]";
 			mes "Time is of the essence and the crops are not looking well... Will you help me on the field again today?";
@@ -7954,7 +7928,7 @@ sp_cor,246,97,3	script	Farm Worker#171_cor_daily	1_M_03,{
 			mes "[ Farm Worker ]";
 			mes "Since you are here, I might be able to do more work and take care of everything.";
 			next;
-			if(select("Help.:Don't help.") == 2){
+			if (select("Help.:Don't help.") == 2) {
 				mes "[ Farm Worker ]";
 				mes "Ever since our elders passed, things have been a bit chaotic...";
 				next;
@@ -7972,10 +7946,9 @@ sp_cor,246,97,3	script	Farm Worker#171_cor_daily	1_M_03,{
 			setquest .grapes[.@grapes];
 			setquest .beans[.@beans];
 			setquest .pumpkin[.@pumpkin];
-			questinfo_refresh();		
-		
+
 		case 1:
-			if(isbegin_quest(16546) == 1){
+			if (isbegin_quest(16546) == 1) {
 				mes "[ Farm Worker ]";
 				mes "You did it! Thank you for helping out.";
 				next;
@@ -7984,26 +7957,26 @@ sp_cor,246,97,3	script	Farm Worker#171_cor_daily	1_M_03,{
 				erasequest 16546;
 				setquest 16365;
 				erasequest 16366;
-				for(.@i = 16367; .@i < 16376; .@i++)
-					if(isbegin_quest(.@i)) erasequest .@i;
+				for (.@i = 16367; .@i < 16376; .@i++)
+					if (isbegin_quest(.@i)) erasequest .@i;
 				getitem 25723,1;
 				getitem 25669,5;
-				end;
+				close;
 			}
-			for(.@i = 0; .@i < 3; .@i++){
-				if(isbegin_quest(.grapes[.@i])) .@qid[0] = .grapes[.@i];
-				if(isbegin_quest(.beans[.@i])) .@qid[1] = .beans[.@i];
-				if(isbegin_quest(.pumpkin[.@i])) .@qid[2] = .pumpkin[.@i];
+			for (.@i = 0; .@i < 3; .@i++) {
+				if (isbegin_quest(.grapes[.@i])) .@qid[0] = .grapes[.@i];
+				if (isbegin_quest(.beans[.@i])) .@qid[1] = .beans[.@i];
+				if (isbegin_quest(.pumpkin[.@i])) .@qid[2] = .pumpkin[.@i];
 			}
 			.@grapes$ = (isbegin_quest(.@qid[0]) == 1 ? "You need to " + .work$[inarray(.grapes,.@qid[0])] + " on the grapes." : "You've already taken care of the grapes.");
 			.@beans$ = (isbegin_quest(.@qid[1]) == 1 ? " Need to " + .work$[inarray(.beans,.@qid[1])] + " on the beans," : " Taken care of the beans,");
 			.@pumpkin$ = " and " + (isbegin_quest(.@qid[2]) == 1 ? .work$[inarray(.pumpkin,.@qid[2])] + " on the pumpkins." : "taken care of the pumpkins.");
 			mes "[ Farm Worker ]";
 			mes .@grapes$ + .@beans$ + .@pumpkin$;
-			break;
+			close;
 	}
 	end;
-		
+
 OnInit:
 	questinfo(QTYPE_DAILYQUEST,QMARK_YELLOW,"isbegin_quest(16360) == 2 && isbegin_quest(16364) == 0");
 	questinfo(QTYPE_DAILYQUEST,QMARK_YELLOW,"isbegin_quest(16360) == 2 && isbegin_quest(16364) == 2 && isbegin_quest(16366) == 0 && checkquest(16365,PLAYTIME) == -1");
@@ -8013,37 +7986,36 @@ OnInit:
 	setarray .beans,16370,16371,16372;
 	setarray .pumpkin,16373,16374,16375;
 	setarray .work$,"catch aphids","add fertilizer","remove weeds";
-end;
+	end;
 }
 
 function	script	171_farm_check	{
-	for(.@i = 16367; .@i < 16376; .@i++)
-		if(isbegin_quest(.@i) == 2) .@c++;
-	if(.@c == 3){ 
+	for (.@i = 16367; .@i < 16376; .@i++)
+		if (isbegin_quest(.@i) == 2) .@c++;
+	if (.@c == 3) {
 		next;
 		mes "[ "+strcharinfo(0)+" ]";
 		mes "I tended to the crops. Not let's go back to the farm worker.";
 		setquest 16546;
-		questinfo_refresh();
-		end;
+		close;
 	}
 	return;
 }
 
 sp_cor,160,135,0	script	Bean Plants#171_plant_daily	4_ENERGY_YELLOW,{
-	if(isbegin_quest(16364) == 0 && isbegin_quest(16366) == 0){
+	if (isbegin_quest(16364) == 0 && isbegin_quest(16366) == 0) {
 		mes "[ Beans ]";
 		mes "Small pods are opening on the bean stalks.";
 		close;
 	}
-	for(.@i = 0; .@i < getarraysize(.quest_id); .@i++){
-		if(isbegin_quest(.quest_id[.@i]) == 1){
+	for (.@i = 0; .@i < getarraysize(.quest_id); .@i++) {
+		if (isbegin_quest(.quest_id[.@i]) == 1) {
 			.@quest_id = .quest_id[.@i];
 			.@answer = .@i;
 			break;
 		}
 	}
-	if(.@quest_id == 0){
+	if (.@quest_id == 0) {
 		mes "[ Beans ]";
 		mes "Small pods are opening on the recovered bean stalks.";
 		close;
@@ -8052,56 +8024,57 @@ sp_cor,160,135,0	script	Bean Plants#171_plant_daily	4_ENERGY_YELLOW,{
 	mes "The bean pods look a little weak.";
 	next;
 	.@s = select("Catch aphids:Give fertilizer:Pull weeds.") - 1;
-	switch(.@s){
+	switch (.@s) {
 		case 0:
 			mes "[ Beans ]";
 			mes "I caught the aphids attached on the bean stalks.";
 			break;
-			
+
 		case 1:
 			mes "[ Beans ]";
 			mes "I put fertilizer on the bean plants.";
 			break;
-			
+
 		case 2:
 			mes "[ Beans ]";
 			mes "I pulled out the weeds around the bean plants.";
 			break;
 	}
 	next;
-	if(.@s == .@answer){
+	if (.@s == .@answer) {
 		mes "[ Beans ]";
 		mes "I can feel it, the beans are starting to get better!";
 		specialeffect EF_HEAL4;
 		completequest .@quest_id;
-		questinfo_refresh();
 		171_farm_check();
+		close;
 	} else {
 		mes "[ Beans ]";
 		mes "I wonder why it still looks withered...?";
+		close;
 	}
 	end;
 
 OnInit:
 	questinfo(QTYPE_DAILYQUEST,QMARK_YELLOW,"isbegin_quest(16370) == 1 || isbegin_quest(16371) == 1 || isbegin_quest(16372) == 1");
 	setarray .quest_id,16370,16371,16372;
-end;
+	end;
 }
 
 sp_cor,240,87,0	script	Pumpkin#171_plant_daily	4_ENERGY_YELLOW,{
-	if(isbegin_quest(16364) == 0 && isbegin_quest(16366) == 0){
+	if (isbegin_quest(16364) == 0 && isbegin_quest(16366) == 0) {
 		mes "[ Pumpkins ]";
 		mes "The lively pumpkin stem has fluffy palm-sized leaves.";
 		close;
 	}
-	for(.@i = 0; .@i < getarraysize(.quest_id); .@i++){
-		if(isbegin_quest(.quest_id[.@i]) == 1){
+	for (.@i = 0; .@i < getarraysize(.quest_id); .@i++) {
+		if (isbegin_quest(.quest_id[.@i]) == 1) {
 			.@quest_id = .quest_id[.@i];
 			.@answer = .@i;
 			break;
 		}
 	}
-	if(.@quest_id == 0){
+	if (.@quest_id == 0) {
 		mes "[ Pumpkins ]";
 		mes "The pumpkin stem which regained it's vitality has fluffy palm-sized leaves.";
 		close;
@@ -8110,37 +8083,37 @@ sp_cor,240,87,0	script	Pumpkin#171_plant_daily	4_ENERGY_YELLOW,{
 	mes "The Pumpkin stalks look a little weak.";
 	next;
 	.@s = select("Catch aphids:Give fertilizer:Pull weeds.") - 1;
-	switch(.@s){
+	switch (.@s) {
 		case 0:
 			mes "[ Pumpkins ]";
 			mes "I caught the aphids attached on the pumpkins stalks.";
 			break;
-			
+
 		case 1:
 			mes "[ Pumpkins ]";
 			mes "I added fertilizer on the Pumpkin's soil.";
 			break;
-			
+
 		case 2:
 			mes "[ Pumpkins ]";
 			mes "I pulled out the weeds around the pumpkin stalks.";
 			break;
 	}
 	next;
-	if(.@s == .@answer){
+	if (.@s == .@answer) {
 		mes "[ Pumpkins ]";
 		mes "I can feel it, the pumpkins are rejoicing!";
 		specialeffect EF_HEAL4;
 		completequest .@quest_id;
-		questinfo_refresh();
 		171_farm_check();
+		close;
 	} else {
 		mes "[ Pumpkins ]";
 		mes "I wonder why it still looks withered...?";
+		close;
 	}
 	end;
-	
-	
+
 OnInit:
 	questinfo(QTYPE_DAILYQUEST,QMARK_YELLOW,"isbegin_quest(16373) == 1 || isbegin_quest(16374) == 1 || isbegin_quest(16375) == 1");
 	setarray .quest_id,16373,16374,16375;
@@ -8148,19 +8121,19 @@ OnInit:
 }
 
 sp_cor,246,85,0	script	Grapes#171_plant_daily	4_ENERGY_YELLOW,{
-	if(isbegin_quest(16364) == 0 && isbegin_quest(16366) == 0){
+	if (isbegin_quest(16364) == 0 && isbegin_quest(16366) == 0) {
 		mes "[ Grapes ]";
 		mes "There are blue and small grapes on the vines.";
 		close;
 	}
-	for(.@i = 0; .@i < getarraysize(.quest_id); .@i++){
-		if(isbegin_quest(.quest_id[.@i]) == 1){
+	for (.@i = 0; .@i < getarraysize(.quest_id); .@i++) {
+		if (isbegin_quest(.quest_id[.@i]) == 1) {
 			.@quest_id = .quest_id[.@i];
 			.@answer = .@i;
 			break;
 		}
 	}
-	if(.@quest_id == 0){
+	if (.@quest_id == 0) {
 		mes "[ Grapes ]";
 		mes "Blue and small grapes are starting to open on the restored vines.";
 		close;
@@ -8169,67 +8142,68 @@ sp_cor,246,85,0	script	Grapes#171_plant_daily	4_ENERGY_YELLOW,{
 	mes "The grapevines look like they're missing something.";
 	next;
 	.@s = select("Catch aphids:Give fertilizer:Pull weeds.") - 1;
-	switch(.@s){
+	switch (.@s) {
 		case 0:
 			mes "[ Grapes ]";
 			mes "I caught the aphids attached on the vines of the grapes.";
 			break;
-			
+
 		case 1:
 			mes "[ Grapes ]";
 			mes "I put the fertilizer on the grapes.";
 			break;
-			
+
 		case 2:
 			mes "[ Grapes ]";
 			mes "I pulled out the weeds around the the grapes.";
 			break;
 	}
 	next;
-	if(.@s == .@answer){
+	if (.@s == .@answer) {
 		mes "[ Grapes ]";
 		mes "I can feel it, the grapes are happy!";
 		specialeffect EF_HEAL4;
 		completequest .@quest_id;
-		questinfo_refresh();
 		171_farm_check();
+		close;
 	} else {
 		mes "[ Grapes ]";
 		mes "I wonder why it still looks withered...?";
+		close;
 	}
 	end;
-		
+
 OnInit:
 	questinfo(QTYPE_DAILYQUEST,QMARK_YELLOW,"isbegin_quest(16367) == 1 || isbegin_quest(16368) == 1 || isbegin_quest(16369) == 1");
 	setarray .quest_id,16367,16368,16369;
-end;
+	end;
 }
 
 //= < Other NPC >
-pub_cat,95,103,3	duplicate(dummynpc)	Elena Bolkova#171_cat	4_F_ELENA
+pub_cat,95,103,3	duplicate(dummy_cloaked_npc)	Elena Bolkova#171_cat	4_F_ELENA
 
 pub_cat,102,62,5	script	Kaya#171_cat2	4_EP17_KAYA,{
 	cutin "ep171_kaya01",0;
 	mes "[ Kaya ]";
 	mes "I decided to go along with the adventurer's suggestion and conduct a new investigation. But I wonder if I made the right choice.";
 	close3;
-	
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
-pub_cat,95,103,3	duplicate(dummynpc)	Kaya#171_cat3	4_EP17_KAYA
+pub_cat,95,103,3	duplicate(dummy_cloaked_npc)	Kaya#171_cat3	4_EP17_KAYA
 
 pub_cat,112,72,3	script	As#171_cat	4_EP17_AS,{
 	cutin "ep171_as01",1;
 	mes "[ As ]";
 	mes "Daisy, I don't like his eyes and his manner of speech. Are all government people like this?";
 	close3;
-	
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 pub_cat,104,63,3	script	As#171_cat2	4_EP17_AS,{
@@ -8237,10 +8211,10 @@ pub_cat,104,63,3	script	As#171_cat2	4_EP17_AS,{
 	mes "[ As ]";
 	mes "I don't know what the Vice President is thinking... But I'm going with him, even if I don't have to.";
 	close3;
-	
+
 OnInit:
-	cloaknpc(strnpcinfo(0),true);
-end;
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 sp_cor,106,103,3	script	#171_rvs_44	8_DOPPEL,1,1,{
@@ -8248,10 +8222,10 @@ OnTouch:
 	setpcblock PCBLOCK_ALL, true;
 	npctalk "c.a....a...","",bc_self;
 	sleep2 1000;
-	cloaknpc(strnpcinfo(0),false,getcharid(0));
+	cloakoffnpc strnpcinfo(0),getcharid(0);
 	sleep2 500;
 	setpcblock PCBLOCK_ALL, false;
-end;
+	end;
 }
 
 sp_cor,218,134,3	script	Dog#171_rvs_45	4_DOG01,{
@@ -8632,7 +8606,7 @@ pub_cat,67,73,3	script	Bullet President#171_pub	4_CAT_REST,{
 }
 
 pub_cat,84,66,3	script	Wilde#171_pub	1_M_SIGNROGUE,2,2,{
-	if(isbegin_quest(7864) == 0){
+	if (isbegin_quest(7864) == 0) {
 		mes "[ Wilde ]";
 		mes "What? Is this your first time here?";
 		mes "The drinks come from over there.";
@@ -8641,7 +8615,7 @@ pub_cat,84,66,3	script	Wilde#171_pub	1_M_SIGNROGUE,2,2,{
 		mes "This place is for adults only.";
 		close;
 	}
-	if(isbegin_quest(7864) == 1){
+	if (isbegin_quest(7864) == 1) {
 	OnTalk:
 		mes "[ Wilde ]";
 		mes "Hey! What's going on here?";
@@ -8649,56 +8623,56 @@ pub_cat,84,66,3	script	Wilde#171_pub	1_M_SIGNROGUE,2,2,{
 		next;
 		mes "[ Wilde ]";
 		mes "What? Are you the guy they're waiting for? You see the room behind me? Go ahead and go in.";
-		end;
+		close;
 	}
-	if(isbegin_quest(17001) != 2){
+	if (isbegin_quest(17001) != 2) {
 	OnTalk2:
 		mes "[ Wilde ]";
 		mes "Are you going in? It's pretty loud so I'll go in later.";
-		end;
+		close;
 	}
 	mes "[ Wilde ]";
 	mes "Wait nobody is back there now, are you waiting for someone?";
 	close;
-	
+
 OnTouch:
-	if(isbegin_quest(7864) == 1)
+	if (isbegin_quest(7864) == 1)
 		goto OnTalk;
-	if(isbegin_quest(17000) == 1 || isbegin_quest(17001) == 1)
+	if (isbegin_quest(17000) == 1 || isbegin_quest(17001) == 1)
 		goto OnTalk2;
-	if(isbegin_quest(17001) == 2)
+	if (isbegin_quest(17001) == 2)
 		npctalk "Hello!","",bc_self;
-end;
-	
+	end;
+
 OnInit:
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(7864) == 1");
-end;
+	end;
 }
 
 //= < Warp NPC >
 pub_cat,104,106,3	script	Retired Rebellion#backroom_ent	4_M_SEAMAN,{
-	if(isbegin_quest(7859) < 2){
+	if (isbegin_quest(7859) < 2) {
 		npctalk "Retired Rebellion: Go to another place. This place is not for you.","",bc_self;
 		end;
 	}
 	mes "[ Retired Rebellion ]";
 	mes "Are you going to the backroom?";
 	next;
-	if(select("Yes.:Not yet.") == 2){
+	if (select("Yes.:Not yet.") == 2) {
 		mes "[ Retired Rebellion ]";
 		mes "Take your time.";
-		end;
+		close;
 	}
 	warp "pub_cat",150,105;
 	end;
 }
 
 ein_fild05,156,288,1	script	Rebellion Crew#171_rudus_ent	4_M_REBELLION2,{
-	if(isbegin_quest(7850) < 2){
+	if (isbegin_quest(7850) < 2) {
 		mes "[ Rebellion Crew ]";
 		mes "I'm sorry, but you're not allowed to go inside.";
 		mes "It's dangerous at the moment because the mine is closed.";
-		end;
+		close;
 	}
 	mes "[ Rebellion Crew ]";
 	mes "Hello adventurer!";
@@ -8709,27 +8683,27 @@ ein_fild05,156,288,1	script	Rebellion Crew#171_rudus_ent	4_M_REBELLION2,{
 }
 
 sp_rudus,197,282,0	script	Firmly Closed Gate#171_in	4_ENERGY_BLUE,{
-	if(isbegin_quest(7857) < 2){
+	if (isbegin_quest(7857) < 2) {
 		mes "[ Rookie ]";
 		mes "Aaaah... I haven't finished yet.";
 		mes "It's more secure than I thought.";
 		close;
 	}
-	if(select("Jump over the barrier.:Go back.") == 1)
+	if (select("Jump over the barrier.:Go back.") == 1)
 		warp "sp_rudus",197,267;
 	end;
 }
 
 sp_rudus,197,272,0	script	Firmly Closed Gate#171_out	4_ENERGY_BLUE,{
-	if(select("Jump the barrier.:Go back.") == 1)
+	if (select("Jump the barrier.:Go back.") == 1)
 		warp "sp_rudus",197,288;
 	end;
 }
 
 ein_fild03,288,270,0	script	ein05_to_spcor	WARPNPC,2,2,{
-	if(isbegin_quest(11602) < 2){
+	if (isbegin_quest(11602) < 2) {
 		mes "- You're not allowed to enter this area. -";
-		end;
+		close;
 	}
 	warp "sp_os",188,63;
 	end;
@@ -8739,7 +8713,7 @@ lighthalzen,53,279,0	script	lhz_to_rekenber	WARPNPC,1,1,{
 	end;
 
 OnTouch:
-	if(isbegin_quest(7862) < 2){
+	if (isbegin_quest(7862) < 2) {
 		npctalk "Rekenber Guard : This place is restricted from outsider.","Rekenber Guard Oscar#171_light",bc_self;
 		end;
 	}
@@ -8749,9 +8723,9 @@ OnTouch:
 
 sp_os,260,363,0	script	sp_os_to_sp_cor	WARPNPC,1,1,{
 	end;
-	
+
 OnTouch:
-	if(isbegin_quest(11603) < 2){
+	if (isbegin_quest(11603) < 2) {
 		mes "- You can't enter yet. -";
 		close;
 	}

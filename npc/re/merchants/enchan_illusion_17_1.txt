@@ -5,23 +5,23 @@
 //= Illusion related merchants and enchanters
 //===== Changelogs: ==========================================
 //= 1.0 Initial release [crazyarashi]
+//= 1.1 Optimizations and cleanup [Everade]
 //============================================================
 
 sp_cor,108,130,5	script	Rebellion#171_cor_merchant	4_F_REBELLION3,{
-	if(isbegin_quest(16353) == 0){
+	if (isbegin_quest(16353) == 0) {
 		mes "[ Rebellion ]";
 		mes "You've have arrived! The captains are meeting. Elena Bolkova has called for you too adventurer.";
 		mes "I was just about to get her... but she seems to have arrived.";
-		cloaknpc("Elena Bolkova#171_cor",false,getcharid(0));
+		cloakoffnpc "Elena Bolkova#171_cor",getcharid(0);
 		npctalk "Elena Bolkova : Ah, I was looking for you, adventurer.","Elena Bolkova#171_cor",bc_self;
-		if(isbegin_quest(17019) == 1)
+		if (isbegin_quest(17019) == 1)
 			completequest 17019;
-		if(isbegin_quest(16352) == 0)
+		if (isbegin_quest(16352) == 0)
 			setquest 16352;
-		questinfo_refresh();
-		end;
+		close;
 	}
-	if(isbegin_quest(16360) != 2){
+	if (isbegin_quest(16360) != 2) {
 		mes "[ Rebellion ]";
 		mes "This building is temporarily used by the Rebellion.";
 		mes "We're occupying some other buildings too.";
@@ -29,33 +29,34 @@ sp_cor,108,130,5	script	Rebellion#171_cor_merchant	4_F_REBELLION3,{
 		mes "[ Rebellion ]";
 		mes "I'm rather busy.";
 		mes "It's not like I'm pleased with the president and the Enterprise, but it's nice to feel like I'm doing something good.";
-		end;
+		close;
 	}
 	mes "[ Rebellion ]";
 	mes "Did you brought some broken weapons? Are you looking for the criminal scientist? She's inside should I call her for you?";
 	mes "Perhaps you need somethin from me? I'm exchanging weapon and armor modules.";
 	npctalk "Rebellion : Hey criminal, someone's looking for you!","",bc_self;
-	cloaknpc("Elyumina#171_merchant",false,getcharid(0));
+	cloakoffnpc "Elyumina#171_merchant",getcharid(0);
 	npctalk "Elyumina : I'm going, I'm going! You can't even produce guns here without me. You'll have to throw beanbags and fight, so you have to let me rest!","Elyumina#171_merchant",bc_self;
 	next;
-	switch(select("I have business with Elyumina.:Request a weapon module.:Request an armor module.")){
+	switch (select("I have business with Elyumina.:Request a weapon module.:Request an armor module.")) {
 		case 1:
 			mes "[ Rebellion ]";
 			mes "Yes, then go ahead and speak to her.";
 			mes "I tried to work on them, but she decided to change the weapons and armors. She's good at it. She worked all day long.";
 			npctalk "Elyumina : What, what! Why do you call people and leave them like decorations?! You barbarians!","Elyumina#171_merchant",bc_self;
-			end;
-			
+			close;
+
 		case 2:
 			mes "[ Rebellion ]";
 			mes "Do you need an armor modification module? I'll need 30 <ITEM>[Unknown Parts]<INFO>25669</INFO></ITEM> and 5 <ITEM>[Cor Cores]<INFO>25723</INFO></ITEM>.";
 			mes "The modules are given at random.";
 			next;
-			if(select("Request Armor Modification Modules.:Cancel.") == 2) end;
-			if(countitem(25669) < 30 || countitem(25723) < 5){
+			if (select("Request Armor Modification Modules.:Cancel.") == 2)
+				close;
+			if (countitem(25669) < 30 || countitem(25723) < 5) {
 				mes "[ Rebellion ]";
 				mes "You are missing parts, come back to me when you have complete parts.";
-				end;
+				close;
 			}
 			.@item_id = .modules[rand(getarraysize(.modules))];
 			mes "[ Rebellion ]";
@@ -64,35 +65,35 @@ sp_cor,108,130,5	script	Rebellion#171_cor_merchant	4_F_REBELLION3,{
 			delitem 25669,30;
 			delitem 25723,5;
 			getitem .@item_id,1;
-			break;	
-			
+			close;
+
 		case 3:
 			mes "[ Rebellion ]";
 			mes "Do you need a weapon modication module? I'll need 5 <ITEM>[Cor Cores]<INFO>25723</INFO></ITEM> or 1M Zeny.";
 			mes "If you need a weapon, Elyumina is going to make them for you. So talk to her.";
 			next;
-			if(select("Request a Weapon Modifier (Physical):Request a Weapon Modifier (Magical)") == 1)
+			if (select("Request a Weapon Modifier (Physical):Request a Weapon Modifier (Magical)") == 1)
 				setarray .@id,23776,23777,23778;
-			else 
+			else
 				setarray .@id,23779,23780,23781;
 			mes "[ Rebellion ]";
 			mes "The normal outcome is random:";
-			for(.@i = 0; .@i < getarraysize(.@id); .@i++)
+			for (.@i = 0; .@i < getarraysize(.@id); .@i++)
 				mes "<ITEM>[" + getitemname(.@id[.@i])+ "]<INFO>" + .@id[.@i] + "</INFO></ITEM>";
 			mes "You will need 5 Cor Cores or ^0000FF1,000,000^000000 Zeny, which will it be?";
 			next;
-			if(select("Use 5 Cor Cores.:Spend 1,000,000 Zeny.") == 1){
-				if(countitem(25723) < 5){
+			if (select("Use 5 Cor Cores.:Spend 1,000,000 Zeny.") == 1) {
+				if (countitem(25723) < 5) {
 					mes "[ Rebellion ]";
 					mes "You don't have enough Cor Cores";
-					end;
+					close;
 				}
 				delitem 25723,5;
 			} else {
-				if(Zeny < 1000000){
+				if (Zeny < 1000000) {
 					mes "[ Rebellion ]";
 					mes "You don't have enough zeny.";
-					end;
+					close;
 				}
 				Zeny -= 1000000;
 			}
@@ -101,26 +102,26 @@ sp_cor,108,130,5	script	Rebellion#171_cor_merchant	4_F_REBELLION3,{
 			mes "You've got the best out of this deal!";
 			mes "The machine <NAVI>[next to me]<INFO>sp_cor,106,136,0,101,0</INFO></NAVI> can work on it these scrap metals to improve your gears.";
 			getitem .@item_id,1;
-			break;
+			close;
 	}
 	end;
-	
+
 OnInit:
 	questinfo QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(17019) == 1 && isbegin_quest(16352) == 0";
-	
+
 	//= Weight
 	.@w[0] = 7; //Common
 	.@w[1] = 5; //Normal
 	.@w[2] = 3; //Rare
 	.@w[3] = 1; //Legendary
-	
+
 	setarray .@modules,
 	25670,.@w[0],25671,.@w[0],25672,.@w[0],25673,.@w[0],25674,.@w[0],25675,.@w[0],25676,.@w[0],25677,.@w[0], //Common
 	25678,.@w[1],25679,.@w[1],25680,.@w[1],25681,.@w[1],25682,.@w[1],25683,.@w[1],25684,.@w[1],25685,.@w[1],25686,.@w[1],25687,.@w[1],25688,.@w[1],25689,.@w[1],25690,.@w[1],25691,.@w[1],25692,.@w[1], //Normal
 	25693,.@w[2],25694,.@w[2],25695,.@w[2],25696,.@w[2],25697,.@w[2],25698,.@w[2],25699,.@w[2], //Rare
 	25700,.@w[3],25701,.@w[3],25702,.@w[3],25703,.@w[3],25704,.@w[3],25705,.@w[3]; //Legendary
-	for(.@i = 0; .@i < getarraysize(.@modules); .@i += 2){
-		for(.@x = 0; .@x < .@modules[.@i+1]; .@x++)
+	for (.@i = 0; .@i < getarraysize(.@modules); .@i += 2) {
+		for (.@x = 0; .@x < .@modules[.@i+1]; .@x++)
 			.modules[getarraysize(.modules)] = .@modules[.@i];
 	}
 	end;
@@ -132,25 +133,25 @@ sp_cor,111,130,3	script	Elyumina#171_merchant	4_EP17_ELYUMINA,{
 	mes "What's going on? If you call someone busy researching, then you have atleast an important business with me, right?";
 	next;
 	cutin "",255;
-	if(select("Request OS Weapons.:Request Illusion Equipments.") == 1){
+	if (select("Request OS Weapons.:Request Illusion Equipments.") == 1) {
 		cutin "ep171_elyumina04",0;
-		mes "[ Elyumina ]";	
+		mes "[ Elyumina ]";
 		mes "OS weapons? I need 1 <ITEM>[Broken Weapon]<INFO>25668</INFO></ITEM> and 50 <ITEM>[Unknown Parts]<INFO>25669</INFO></ITEM>.";
 		mes "The kind me will give you a finish product. Why do I even have to do this for you?";
 		next;
-		if(select("Get OS Weapon.:Check all weapon list.") == 2){
+		if (select("Get OS Weapon.:Check all weapon list.") == 2) {
 			cutin "ep171_elyumina03",0;
 			mes "[ Elyumina ]";
 			mes "Tsk, even if you pick everything, you can only have one in there, at random!";
 			next;
 			mes "[ Elyumina ]";
-			for(.@i = 0; .@i < getarraysize(.weapon); .@i++){
+			for (.@i = 0; .@i < getarraysize(.weapon); .@i++) {
 				.@item_name$ = getitemname(.weapon[.@i]);
 				mes "<ITEM>["+.@item_name$+"]<INFO>"+.weapon[.@i]+"</INFO></ITEM>";
 			}
 			close3;
 		} else {
-			if(countitem(25668) < 1 || countitem(25669) < 50){
+			if (countitem(25668) < 1 || countitem(25669) < 50) {
 				cutin "ep171_elyumina03",0;
 				mes "[ Elyumina ]";
 				mes "I told you I need 1 Broken Weapon and 50 Unknown Parts. Open your ears and listen.";
@@ -160,10 +161,10 @@ sp_cor,111,130,3	script	Elyumina#171_merchant	4_EP17_ELYUMINA,{
 			delitem 25669,50;
 			.@weapon = .weapon[rand(getarraysize(.weapon))];
 			cutin "ep171_elyumina04",0;
-			mes "[ Elyumina ]";	
+			mes "[ Elyumina ]";
 			mes "Now, take it. If you need anything else, come back with more broken weapons and unknown parts.";
 			getitem .@weapon,1;
-			close3;	
+			close3;
 		}
 	} else {
 		mes "[ Elyumina ]";
@@ -174,7 +175,7 @@ sp_cor,111,130,3	script	Elyumina#171_merchant	4_EP17_ELYUMINA,{
 		explode(.@T$,.armor$[.@s],",");
 		cutin "ep171_elyumina04",0;
 		mes "[ Elyumina ]";
-		for(.@i = 0; .@i < 2; .@i++){
+		for (.@i = 0; .@i < 2; .@i++) {
 			.@item_id[.@i] = atoi(.@T$[.@i]);
 			.@item_name$[.@i] = getitemname(.@item_id[.@i]);
 			.@menu$ +=  .@item_name$[.@i] + ":";
@@ -186,13 +187,13 @@ sp_cor,111,130,3	script	Elyumina#171_merchant	4_EP17_ELYUMINA,{
 		mes "[ Elyumina ]";
 		mes "Yeah, what you want is a " + .@item_name$[.@s] + ", right? I will need 50 Cor Cores.";
 		next;
-		if(select("Exchange:Do not exchange") == 2){
+		if (select("Exchange:Do not exchange") == 2) {
 			cutin "ep171_elyumina03",0;
 			mes "[ Elyumina ]";
 			mes "Are you kidding me? I've been very careful!";
 			close3;
 		}
-		if(countitem(25723) < 50){
+		if (countitem(25723) < 50) {
 			cutin "ep171_elyumina03",0;
 			mes "[ Elyumina ]";
 			mes "Are you kidding me? You don't have enough Cor Core pieces!";
@@ -205,17 +206,17 @@ sp_cor,111,130,3	script	Elyumina#171_merchant	4_EP17_ELYUMINA,{
 		close3;
 	}
 	end;
-	
+
 OnInit:
 	setarray .armor$,
 	"15376,15377",
 	"20933,20934",
 	"22196,22197",
 	"32207,32208",
-	"32209,32210";	
+	"32209,32210";
 	setarray .weapon,1862,13493,16088,16089,18178,18179,18180,21047,26151,26164,28038,28136,28253,28755,28629,32019;
-	cloaknpc(strnpcinfo(0),true);
-	end;	
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 sp_cor,106,136,3	script	RS26#illusion_enchant	4_SYS_MSG,{
@@ -224,7 +225,7 @@ sp_cor,106,136,3	script	RS26#illusion_enchant	4_SYS_MSG,{
 	mes strcharinfo(0)+".";
 	mes "Welcome, Welcome!";
 	next;
-	switch(select("Explore the devices.:Enchant Illusion Armor.:Enchant Illusion Engine Wing.:Enchant Illusion Leg.:Enchant Illusion Accessory [R]:Enchant Illusion Accessory [L]")){
+	switch (select("Explore the devices.:Enchant Illusion Armor.:Enchant Illusion Engine Wing.:Enchant Illusion Leg.:Enchant Illusion Accessory [R]:Enchant Illusion Accessory [L]")) {
 		case 1:
 			mes "^0000FF# I'm the latest hologram technology perfected to show natural responses and gestures. #^000000";
 			next;
@@ -241,7 +242,7 @@ sp_cor,106,136,3	script	RS26#illusion_enchant	4_SYS_MSG,{
 			mes "[ RS26 ]";
 			mes "Please come back if you need anything else.";
 			close;
-			
+
 		case 2: .@part = EQI_ARMOR; .@index = 0; setarray .@id,15376,15377; break;
 		case 3: .@part = EQI_GARMENT; .@index = 1; setarray .@id,20933,20934; break;
 		case 4: .@part = EQI_SHOES; .@index = 3; setarray .@id,22196,22197; break;
@@ -252,63 +253,63 @@ sp_cor,106,136,3	script	RS26#illusion_enchant	4_SYS_MSG,{
 	.@equip_id = getequipid(.@part);
 	.@equip_name$ = getequipname(.@part);
 	.@refine = getequiprefinerycnt(.@part);
-	for(.@i = 0; .@i < 4; .@i++)
+	for (.@i = 0; .@i < 4; .@i++)
 		.@card[.@i] = getequipcardid(.@part,.@i);
 	copyarray .@check[0],.@card[0],4;
-	if(.@id[0] != .@equip_id && .@id[1] != .@equip_id){
+	if (.@id[0] != .@equip_id && .@id[1] != .@equip_id) {
 		mes .@id[0] + " " + .@id[1];
 		mes "Please make sure you have equipped the item.";
 		close;
 	}
-	if(.@card[1]){
+	if (.@card[1]) {
 		mes "[ RS26 ]";
 		mes "Your equipment doesn't have any slot for any modification modules.";
-		end;
+		close;
 	}
 	.@list$ = create_menu(.@index,.@part);
-	if(.@list$ == ""){
+	if (.@list$ == "") {
 		mes "[ RS26 ]";
 		mes "You do not have any modification modules that I can use to enchant your equipment.";
-		end;
+		close;
 	}
 	mes "[ RS26 ]";
 	mes "Select the module you want to insert into your equipment.";
 	next;
 	explode(.@enchant$,.@list$,":");
-	for(.@i = 0; .@i < getarraysize(.@enchant$); .@i += 2)
+	for (.@i = 0; .@i < getarraysize(.@enchant$); .@i += 2)
 		.@menu$ += getitemname(atoi(.@enchant$[.@i])) + ":";
 	.@s = (select(.@menu$) - 1) * 2;
 	mes "[ RS26 ]";
 	mes "Are you sure you want to enchant your ^FF0000" +.@equip_name$+"^000000 with ^0000CD" + getitemname(atoi(.@enchant$[.@s])) + "^000000? This process cannot be reversed.";
 	next;
-	if(select("Wait... Don't:I'm sure. Do it.") == 1){
+	if (select("Wait... Don't:I'm sure. Do it.") == 1) {
 		mes "[ RS26 ]";
 		mes "Okay.";
-		end;
+		close;
 	}
-	if(!countitem(atoi(.@enchant$[.@s]))){
+	if (!countitem(atoi(.@enchant$[.@s]))) {
 		mes "[ RS26 ]";
 		mes "You do not have the modification modules that I can use to enchant your equipment.";
-		end;
+		close;
 	}
-	for(.@i = 3; .@i > 0; .@i--){
-		if(.@card[.@i] == 0){
+	for (.@i = 3; .@i > 0; .@i--) {
+		if (.@card[.@i] == 0) {
 			.@augment_slot = .@i;
 			break;
 		}
 	}
 	delitem atoi(.@enchant$[.@s]),1;
 	.@card[.@augment_slot] = atoi(.@enchant$[.@s+1]);
-	if(callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipRefineHack", .@part, .@refine) || callfunc("F_IsEquipCardHack", .@part, .@check[0], .@check[1], .@check[2], .@check[3]))
+	if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipRefineHack", .@part, .@refine) || callfunc("F_IsEquipCardHack", .@part, .@check[0], .@check[1], .@check[2], .@check[3]))
 		end;
 	delequip .@part;
 	getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
 	equip .@equip_id;
 	mes "[ RS26 ]";
 	mes "The process has been completed successfully.";
-	end;
-	
-OnInit:	
+	close;
+
+OnInit:
 	setarray .module$,
 	"25670:29527:3,25671:29528:3,25687:29534:2,25688:29535:2,25689:29536:2,25693:29540:1",
 	"25670:29527:3,25671:29528:3,25690:29537:2,25691:29538:2,25692:29539:2,25695:29542:1",
@@ -320,42 +321,42 @@ OnInit:
 	function	create_menu	{
 		.@index = getarg(0);
 		.@slot = getarg(1);
-		for(.@i = 0; .@i < 4; .@i++)
+		for (.@i = 0; .@i < 4; .@i++)
 			.@card[.@i] = getequipcardid(.@slot,.@i);
 		explode(.@T$,.module$[.@index],",");
-		for(.@i = 0; .@i < getarraysize(.@T$); .@i++){
+		for (.@i = 0; .@i < getarraysize(.@T$); .@i++) {
 			.@count = 0;
 			explode(.@module$,.@T$[.@i],":");
 			.@module = atoi(.@module$[0]);
 			.@enchant = atoi(.@module$[1]);
 			.@max = atoi(.@module$[2]);
-			if(!countitem(.@module))
+			if (!countitem(.@module))
 				continue;
-			for(.@j = 0; .@j < 4; .@j++){
-				if(.@card[.@j] == .@enchant)
+			for (.@j = 0; .@j < 4; .@j++) {
+				if (.@card[.@j] == .@enchant)
 					.@count++;
 			}
-			if(.@count == .@max)
+			if (.@count == .@max)
 				continue;
 			.@list$ += .@module + ":" + .@enchant + ":";
 		}
-		if(.@index == 3){
+		if (.@index == 3) {
 			explode(.@TT$,.module$[4],",");
-			for(.@i = 0; .@i < getarraysize(.@TT$); .@i++){
+			for (.@i = 0; .@i < getarraysize(.@TT$); .@i++) {
 				explode(.@module$,.@TT$[.@i],":");
 				.@module = atoi(.@module$[0]);
 				.@enchant = atoi(.@module$[1]);
-				for(.@j = 0; .@j < 4; .@j++){
-					if(.@card[.@j] == .@enchant)
+				for (.@j = 0; .@j < 4; .@j++) {
+					if (.@card[.@j] == .@enchant)
 						.@rare++;
 				}
-				if(!countitem(.@module))
+				if (!countitem(.@module))
 					continue;
 				.@legendary$ += .@module + ":" + .@enchant + ":";
-				continue;	
+				continue;
 			}
 		}
-		if(.@rare)
+		if (.@rare)
 			return .@list$;
 		else
 			return .@list$ + .@legendary$;
