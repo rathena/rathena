@@ -120,7 +120,7 @@ pay_d03_i,160,45,3	script	Gemcutter#ilp20	4_TOWER_17,3,3,{
 			19209,		// Illusion Nurse Cap
 			19210,		// Illusion Apple of Archer
 			15195,		// Illusion Puente Robe
-			208381		// Illusion Muffler [1]
+			208381,		// Illusion Muffler [1]
 			22133;		// Illusion Shoes [1]
 		.@size = getarraysize(.@reward_id);
 
