@@ -394,7 +394,7 @@ const std::string BarterDatabase::getDefaultLocation(){
 	return "npc/barters.yml";
 }
 
-uint64 BarterDatabase::parseBodyNode( const YAML::Node& node ){
+uint64 BarterDatabase::parseBodyNode( const ryml::NodeRef node ){
 	std::string npcname;
 
 	if( !this->asString( node, "Name", npcname ) ){
@@ -538,7 +538,7 @@ uint64 BarterDatabase::parseBodyNode( const YAML::Node& node ){
 	}
 
 	if( this->nodeExists( node, "Items" ) ){
-		for( const YAML::Node& itemNode : node["Items"] ){
+		for( const ryml::NodeRef itemNode : node["Items"] ){
 			uint16 index;
 
 			if( !this->asUInt16( itemNode, "Index", index ) ){
@@ -610,7 +610,7 @@ uint64 BarterDatabase::parseBodyNode( const YAML::Node& node ){
 			}
 
 			if( this->nodeExists( itemNode, "RequiredItems" ) ){
-				for( const YAML::Node& requiredItemNode : itemNode["RequiredItems"] ){
+				for( const ryml::NodeRef requiredItemNode : itemNode["RequiredItems"] ){
 					uint16 requirement_index;
 
 					if( !this->asUInt16( requiredItemNode, "Index", requirement_index ) ){
