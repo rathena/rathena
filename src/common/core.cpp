@@ -363,7 +363,6 @@ int main (int argc, char **argv)
 	display_title();
 	usercheck();
 
-	do_init_yaml_database();
 	Sql_Init();
 	db_init();
 	signals_init();

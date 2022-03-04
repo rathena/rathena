@@ -32,6 +32,8 @@ private:
 
 // These should be visible/usable by the implementation provider
 protected:
+	ryml::Parser parser;
+
 	// Helper functions
 	bool nodeExists( const ryml::NodeRef node, const std::string& name );
 	bool nodesExist( const ryml::NodeRef node, std::initializer_list<const std::string> names );
@@ -194,7 +196,5 @@ public:
 		this->cache.shrink_to_fit();
 	}
 };
-
-void do_init_yaml_database();
 
 #endif /* DATABASE_HPP */

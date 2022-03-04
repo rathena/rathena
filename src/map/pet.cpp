@@ -376,7 +376,7 @@ uint64 PetDatabase::parseBodyNode( const ryml::NodeRef node ){
 			pet->pet_bonus_script = nullptr;
 		}
 
-		pet->pet_bonus_script = parse_script( script.c_str(), this->getCurrentFile().c_str(), 1, SCRIPT_IGNORE_EXTERNAL_BRACKETS ); // TODO: Line is missing
+		pet->pet_bonus_script = parse_script( script.c_str(), this->getCurrentFile().c_str(), parser.location(node["Script"]).line, SCRIPT_IGNORE_EXTERNAL_BRACKETS );
 	}else{
 		if( !exists ){
 			pet->pet_bonus_script = nullptr;
@@ -395,7 +395,7 @@ uint64 PetDatabase::parseBodyNode( const ryml::NodeRef node ){
 			pet->pet_support_script = nullptr;
 		}
 
-		pet->pet_support_script = parse_script( script.c_str(), this->getCurrentFile().c_str(), 1, SCRIPT_IGNORE_EXTERNAL_BRACKETS ); // TODO: Line is missing
+		pet->pet_support_script = parse_script( script.c_str(), this->getCurrentFile().c_str(), parser.location(node["SupportScript"]).line, SCRIPT_IGNORE_EXTERNAL_BRACKETS );
 	}else{
 		if( !exists ){
 			pet->pet_support_script = nullptr;

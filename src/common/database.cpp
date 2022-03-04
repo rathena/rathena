@@ -91,7 +91,6 @@ bool YamlDatabase::reload(){
 }
 
 bool YamlDatabase::load(const std::string& path) {
-	ryml::Tree tree;
 	char* buf = nullptr;
 	ShowStatus("Loading '" CL_WHITE "%s" CL_RESET "'..." CL_CLL "\r", path.c_str());
 	FILE* f = fopen(path.c_str(), "r");
@@ -106,7 +105,9 @@ bool YamlDatabase::load(const std::string& path) {
 	rewind(f);
 	fread(buf, sizeof(char), size, f);
 	fclose(f);
-	tree = ryml::parse_in_place(c4::to_substr(buf));
+
+	parser = {};
+	ryml::Tree tree = parser.parse_in_arena(c4::to_csubstr(path), c4::to_csubstr(buf));
 
 	// Required here already for header error reporting
 	this->currentFile = path;
@@ -148,7 +149,7 @@ void YamlDatabase::parse( const ryml::Tree& tree ){
 		size_t childNodesProgressed = 0;
 		const char* fileName = this->currentFile.c_str();
 
-		for( ryml::NodeRef node : bodyNode.children() ){
+		for( const ryml::NodeRef &node : bodyNode.children() ){
 			count += this->parseBodyNode( node );
 
 			ShowStatus( "Loading [%" PRIdPTR "/%" PRIdPTR "] entries from '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\r", ++childNodesProgressed, childNodesCount, fileName );
@@ -164,7 +165,8 @@ void YamlDatabase::parseImports( const ryml::Tree& rootNode ){
 
 		if( this->nodeExists( footerNode, "Imports") ){
 			const ryml::NodeRef importsNode = footerNode["Imports"];
-			for( const ryml::NodeRef node : importsNode.children() ){
+
+			for( const ryml::NodeRef &node : importsNode.children() ){
 				std::string importFile;
 
 				if( !this->asString( node, "Path", importFile ) ){
@@ -315,31 +317,4 @@ void YamlDatabase::invalidWarning( const ryml::NodeRef node, const char* fmt, ..
 
 std::string YamlDatabase::getCurrentFile(){
 	return this->currentFile;
-}
-
-struct YamlErrorHandler {
-	void on_error(const char* msg, size_t len, ryml::Location loc)
-	{
-		std::stringstream ss;
-		ss << loc.name << ":" << loc.line << ":" << loc.col << " (" << loc.offset << "B): ERROR: " << c4::csubstr(msg, len);
-		throw std::runtime_error(ss.str());
-	}
-
-	ryml::Callbacks callbacks()
-	{
-		return ryml::Callbacks(this, nullptr, nullptr, (c4::yml::pfn_error) s_error);
-	}
-
-	static void s_error(const char* msg, size_t msg_len, ryml::Location location, void* this_)
-	{
-		return ((YamlErrorHandler*)this_)->on_error(msg, msg_len, location);
-	}
-
-	YamlErrorHandler() {}
-};
-
-static YamlErrorHandler handler;
-void do_init_yaml_database()
-{
-	ryml::set_callbacks(handler.callbacks());
 }
