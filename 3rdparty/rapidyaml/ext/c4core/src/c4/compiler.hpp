@@ -99,12 +99,17 @@
 #       else
 #           define C4_GCC_VERSION C4_VERSION_ENCODED(__GNUC__, __GNUC_MINOR__, 0)
 #       endif
-// we do not support GCC < 5:
+#       if __GNUC__ < 5
+#           if __GNUC__ == 4 && __GNUC_MINOR__ >= 8
+// provided by cmake sub-project
+#               include "c4/gcc-4.8.hpp"
+#           else
+// we do not support GCC < 4.8:
 //  * misses std::is_trivially_copyable
 //  * misses std::align
 //  * -Wshadow has false positives when a local function parameter has the same name as a method
-#       if __GNUC__ < 5
-#           error "GCC < 5 is not supported"
+#               error "GCC < 4.8 is not supported"
+#           endif
 #       endif
 #   endif
 #endif // defined(C4_WIN) && defined(_MSC_VER)

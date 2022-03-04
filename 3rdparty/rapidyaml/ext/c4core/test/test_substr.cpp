@@ -338,18 +338,22 @@ TEST_CASE("substr.count")
     CHECK_EQ(buf.count('0', 1), 0);
     CHECK_EQ(buf.count('0', buf.len), 0);
 
+    CHECK_EQ(buf.count("01"), 1);
+    CHECK_EQ(buf.count("01", 0), 1);
+    CHECK_EQ(buf.count("01", 1), 0);
+    CHECK_EQ(buf.count("01", buf.len), 0);
+
     CHECK_EQ(buf.count('1'), 1);
     CHECK_EQ(buf.count('1', 0), 1);
     CHECK_EQ(buf.count('1', 1), 1);
     CHECK_EQ(buf.count('1', 2), 0);
     CHECK_EQ(buf.count('1', buf.len), 0);
 
-    CHECK_EQ(buf.count('2'), 1);
-    CHECK_EQ(buf.count('2', 0), 1);
-    CHECK_EQ(buf.count('2', 1), 1);
-    CHECK_EQ(buf.count('2', 2), 1);
-    CHECK_EQ(buf.count('2', 3), 0);
-    CHECK_EQ(buf.count('2', buf.len), 0);
+    CHECK_EQ(buf.count("12"), 1);
+    CHECK_EQ(buf.count("12", 0), 1);
+    CHECK_EQ(buf.count("12", 1), 1);
+    CHECK_EQ(buf.count("12", 2), 0);
+    CHECK_EQ(buf.count("12", buf.len), 0);
 
     CHECK_EQ(buf.count('2'), 1);
     CHECK_EQ(buf.count('2', 0), 1);
@@ -357,6 +361,13 @@ TEST_CASE("substr.count")
     CHECK_EQ(buf.count('2', 2), 1);
     CHECK_EQ(buf.count('2', 3), 0);
     CHECK_EQ(buf.count('2', buf.len), 0);
+
+    CHECK_EQ(buf.count("23"), 1);
+    CHECK_EQ(buf.count("23", 0), 1);
+    CHECK_EQ(buf.count("23", 1), 1);
+    CHECK_EQ(buf.count("23", 2), 1);
+    CHECK_EQ(buf.count("23", 3), 0);
+    CHECK_EQ(buf.count("23", buf.len), 0);
 
     CHECK_EQ(buf.count('3'), 1);
     CHECK_EQ(buf.count('3', 0), 1);
@@ -366,6 +377,14 @@ TEST_CASE("substr.count")
     CHECK_EQ(buf.count('3', 4), 0);
     CHECK_EQ(buf.count('3', buf.len), 0);
 
+    CHECK_EQ(buf.count("34"), 1);
+    CHECK_EQ(buf.count("34", 0), 1);
+    CHECK_EQ(buf.count("34", 1), 1);
+    CHECK_EQ(buf.count("34", 2), 1);
+    CHECK_EQ(buf.count("34", 3), 1);
+    CHECK_EQ(buf.count("34", 4), 0);
+    CHECK_EQ(buf.count("34", buf.len), 0);
+
     CHECK_EQ(buf.count('4'), 1);
     CHECK_EQ(buf.count('4', 0), 1);
     CHECK_EQ(buf.count('4', 1), 1);
@@ -374,6 +393,15 @@ TEST_CASE("substr.count")
     CHECK_EQ(buf.count('4', 4), 1);
     CHECK_EQ(buf.count('4', 5), 0);
     CHECK_EQ(buf.count('4', buf.len), 0);
+
+    CHECK_EQ(buf.count("45"), 1);
+    CHECK_EQ(buf.count("45", 0), 1);
+    CHECK_EQ(buf.count("45", 1), 1);
+    CHECK_EQ(buf.count("45", 2), 1);
+    CHECK_EQ(buf.count("45", 3), 1);
+    CHECK_EQ(buf.count("45", 4), 1);
+    CHECK_EQ(buf.count("45", 5), 0);
+    CHECK_EQ(buf.count("45", buf.len), 0);
 
     CHECK_EQ(buf.count('5'), 1);
     CHECK_EQ(buf.count('5', 0), 1);
@@ -385,6 +413,16 @@ TEST_CASE("substr.count")
     CHECK_EQ(buf.count('5', 6), 0);
     CHECK_EQ(buf.count('5', buf.len), 0);
 
+    CHECK_EQ(buf.count("56"), 1);
+    CHECK_EQ(buf.count("56", 0), 1);
+    CHECK_EQ(buf.count("56", 1), 1);
+    CHECK_EQ(buf.count("56", 2), 1);
+    CHECK_EQ(buf.count("56", 3), 1);
+    CHECK_EQ(buf.count("56", 4), 1);
+    CHECK_EQ(buf.count("56", 5), 1);
+    CHECK_EQ(buf.count("56", 6), 0);
+    CHECK_EQ(buf.count("56", buf.len), 0);
+
     CHECK_EQ(buf.count('a'), 0);
     CHECK_EQ(buf.count('a', 0), 0);
     CHECK_EQ(buf.count('a', 1), 0);
@@ -394,6 +432,16 @@ TEST_CASE("substr.count")
     CHECK_EQ(buf.count('a', 5), 0);
     CHECK_EQ(buf.count('a', 6), 0);
     CHECK_EQ(buf.count('a', buf.len), 0);
+
+    CHECK_EQ(buf.count("ab"), 0);
+    CHECK_EQ(buf.count("ab", 0), 0);
+    CHECK_EQ(buf.count("ab", 1), 0);
+    CHECK_EQ(buf.count("ab", 2), 0);
+    CHECK_EQ(buf.count("ab", 3), 0);
+    CHECK_EQ(buf.count("ab", 4), 0);
+    CHECK_EQ(buf.count("ab", 5), 0);
+    CHECK_EQ(buf.count("ab", 6), 0);
+    CHECK_EQ(buf.count("ab", buf.len), 0);
 
     buf = "00110022003300440055";
     CHECK_EQ(buf.count('0', 0), 10);
@@ -424,6 +472,32 @@ TEST_CASE("substr.count")
     CHECK_EQ(buf.count('1', 3), 1);
     CHECK_EQ(buf.count('1', 4), 0);
     CHECK_EQ(buf.count('1', 5), 0);
+
+    CHECK_EQ(buf.count("01"    ), 1);
+    CHECK_EQ(buf.count("01",  2), 0);
+    CHECK_EQ(buf.count("10"    ), 1);
+    CHECK_EQ(buf.count("10",  4), 0);
+    CHECK_EQ(buf.count("00",  0), 5);
+    CHECK_EQ(buf.count("00",  1), 4);
+    CHECK_EQ(buf.count("00",  2), 4);
+    CHECK_EQ(buf.count("00",  3), 4);
+    CHECK_EQ(buf.count("00",  4), 4);
+    CHECK_EQ(buf.count("00",  5), 3);
+    CHECK_EQ(buf.count("00",  6), 3);
+    CHECK_EQ(buf.count("00",  7), 3);
+    CHECK_EQ(buf.count("00",  8), 3);
+    CHECK_EQ(buf.count("00",  9), 2);
+    CHECK_EQ(buf.count("00", 10), 2);
+    CHECK_EQ(buf.count("00", 11), 2);
+    CHECK_EQ(buf.count("00", 12), 2);
+    CHECK_EQ(buf.count("00", 13), 1);
+    CHECK_EQ(buf.count("00", 14), 1);
+    CHECK_EQ(buf.count("00", 15), 1);
+    CHECK_EQ(buf.count("00", 16), 1);
+    CHECK_EQ(buf.count("00", 17), 0);
+    CHECK_EQ(buf.count("00", 18), 0);
+    CHECK_EQ(buf.count("00", 19), 0);
+    CHECK_EQ(buf.count("00", 20), 0);
 }
 
 TEST_CASE("substr.select")

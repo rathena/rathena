@@ -4,6 +4,8 @@ project(c4core
     DESCRIPTION "Multiplatform low-level C++ utilities"
     HOMEPAGE_URL "https://github.com/biojppm/c4core"
     LANGUAGES CXX)
+include(./compat.cmake)
+
 c4_project(VERSION 0.1.8
     AUTHOR "Joao Paulo Magalhaes <dev@jpmag.me>")
 
@@ -25,6 +27,7 @@ set(C4CORE_SRC_FILES
     c4/config.hpp
     c4/cpu.hpp
     c4/ctor_dtor.hpp
+    c4/dump.hpp
     c4/enum.hpp
     c4/error.cpp
     c4/error.hpp
@@ -52,11 +55,11 @@ set(C4CORE_SRC_FILES
     c4/substr.hpp
     c4/substr_fwd.hpp
     c4/szconv.hpp
-    c4/time.hpp
-    c4/time.cpp
     c4/type_name.hpp
     c4/types.hpp
     c4/unrestrict.hpp
+    c4/utf.hpp
+    c4/utf.cpp
     c4/windows.hpp
     c4/windows_pop.hpp
     c4/windows_push.hpp

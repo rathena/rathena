@@ -45,53 +45,6 @@ substr preprocess_into_container(csubstr input, CharContainer *out)
 
 //-----------------------------------------------------------------------------
 
-/** @name preprocess_json
- * Convert JSON that may be not YAML to valid YAML.
- *
- * @code{.json}
- * {"a":"b"} ---> {"a": "b"}
- * @endcode
- *
- * @see https://stackoverflow.com/questions/42124227/why-does-the-yaml-spec-mandate-a-space-after-the-colon
- * @note this is recursive - conversion happens on every tree node
- * @param json A relaxed map
- * @param buf output buffer
- * @param out output container
- */
-
-//@{
-
-/** Write into a given output buffer. This function is safe to call with
- * empty or small buffers; it won't write beyond the end of the buffer.
- *
- * @return the number of characters required for output
- */
-RYML_EXPORT size_t preprocess_json(csubstr json, substr buf);
-
-/** Write into an existing container. It is resized to contained the output.
- * @return a substr of the container
- * @overload preprocess_json */
-template<class CharContainer>
-substr preprocess_json(csubstr json, CharContainer *out)
-{
-    return detail::preprocess_into_container<preprocess_json>(json, out);
-}
-
-/** Create a container with the result.
- * @overload preprocess_json */
-template<class CharContainer>
-CharContainer preprocess_json(csubstr json)
-{
-    CharContainer c;
-    preprocess_json(json, &c);
-    return c;
-}
-
-//@}
-
-
-//-----------------------------------------------------------------------------
-
 /** @name preprocess_rxmap
  * Convert flow-type relaxed maps (with implicit bools) into strict YAML
  * flow map.

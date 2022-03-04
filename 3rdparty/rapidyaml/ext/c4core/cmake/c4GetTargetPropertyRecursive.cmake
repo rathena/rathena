@@ -124,9 +124,12 @@ function(c4_get_transitive_property target prop_name out)
         endforeach()
         #c4_dbg("${target}: gathering transitive property: ${prop_name}: ${interleaved}")
         set(${out} ${interleaved} PARENT_SCOPE)
-        set_target_properties(${target} PROPERTIES
-            ${_trmark} ON
-            ${_trval} "${interleaved}")
+        get_target_property(aliased_target ${target} ALIASED_TARGET)
+        if(NOT aliased_target)
+            set_target_properties(${target} PROPERTIES
+                ${_trmark} ON
+                ${_trval} "${interleaved}")
+        endif()
     endif()
 endfunction()
 
@@ -148,7 +151,8 @@ function(c4_get_transitive_libraries target prop_name out)
         #c4_dbg("${target}: gathering transitive libraries: ${prop_name}...")
         get_target_property(target_type ${target} TYPE)
         set(interleaved)
-        if(NOT ("${target_type}" STREQUAL "INTERFACE_LIBRARY") AND "${prop_name}" STREQUAL LINK_LIBRARIES)
+        if(NOT ("${target_type}" STREQUAL "INTERFACE_LIBRARY")
+                AND ("${prop_name}" STREQUAL LINK_LIBRARIES))
             get_target_property(l ${target} ${prop_name})
             foreach(ll ${l})
                 #c4_dbg("${target}: considering ${ll}...")
@@ -170,9 +174,12 @@ function(c4_get_transitive_libraries target prop_name out)
         endif()
         #c4_dbg("${target}: gathering transitive libraries: ${prop_name}: result='${interleaved}'")
         set(${out} ${interleaved} PARENT_SCOPE)
-        set_target_properties(${target} PROPERTIES
-            ${_trmark} ON
-            ${_trval} "${interleaved}")
+        get_target_property(aliased_target ${target} ALIASED_TARGET)
+        if(NOT aliased_target)
+            set_target_properties(${target} PROPERTIES
+                ${_trmark} ON
+                ${_trval} "${interleaved}")
+        endif()
     endif()
 endfunction()
 

@@ -36,6 +36,12 @@ architectures, and include analysing c4core with:
     * thread
   * [LGTM.com](https://lgtm.com/projects/g/biojppm/c4core)
 
+c4core also works [in
+bare-metal](https://github.com/biojppm/c4core/issues/63) as well as
+[in RISC-V](https://github.com/biojppm/c4core/pull/69) but at the
+moment it's not easy to add automated tests to the CI, so for now
+these are not in the list of official architectures.
+
 
 ## Obtaining c4core
 

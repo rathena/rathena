@@ -232,6 +232,21 @@ node_types = {
     _c4bit(4,2): "DOCMAP",
     _c4bit(4,3): "DOCSEQ",
     _c4bit(4,0): "DOCVAL",
+    #
+    _c4bit(14): "STYLE_FLOW_SL",
+    _c4bit(15): "STYLE_FLOW_ML",
+    _c4bit(16): "STYLE_BLOCK",
+    #
+    _c4bit(17): "KEY_LITERAL",
+    _c4bit(18): "VAL_LITERAL",
+    _c4bit(19): "KEY_FOLDED",
+    _c4bit(20): "VAL_FOLDED",
+    _c4bit(21): "KEY_SQUO",
+    _c4bit(22): "VAL_SQUO",
+    _c4bit(23): "KEY_DQUO",
+    _c4bit(24): "VAL_DQUO",
+    _c4bit(25): "KEY_PLAIN",
+    _c4bit(26): "VAL_PLAIN",
 }
 node_types_rev = {v: k for k, v in node_types.items()}
 

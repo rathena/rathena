@@ -32,7 +32,7 @@ inline void trim(decimal &h) {
 
 inline uint32_t number_of_digits_decimal_left_shift(const decimal &h, uint32_t shift) {
   shift &= 63;
-  const static uint16_t number_of_digits_decimal_left_shift_table[65] = {
+  constexpr uint16_t number_of_digits_decimal_left_shift_table[65] = {
     0x0000, 0x0800, 0x0801, 0x0803, 0x1006, 0x1009, 0x100D, 0x1812, 0x1817,
     0x181D, 0x2024, 0x202B, 0x2033, 0x203C, 0x2846, 0x2850, 0x285B, 0x3067,
     0x3073, 0x3080, 0x388E, 0x389C, 0x38AB, 0x38BB, 0x40CC, 0x40DD, 0x40EF,
@@ -47,7 +47,7 @@ inline uint32_t number_of_digits_decimal_left_shift(const decimal &h, uint32_t s
   uint32_t num_new_digits = x_a >> 11;
   uint32_t pow5_a = 0x7FF & x_a;
   uint32_t pow5_b = 0x7FF & x_b;
-  const static uint8_t
+  constexpr uint8_t
     number_of_digits_decimal_left_shift_table_powers_of_5[0x051C] = {
         5, 2, 5, 1, 2, 5, 6, 2, 5, 3, 1, 2, 5, 1, 5, 6, 2, 5, 7, 8, 1, 2, 5, 3,
         9, 0, 6, 2, 5, 1, 9, 5, 3, 1, 2, 5, 9, 7, 6, 5, 6, 2, 5, 4, 8, 8, 2, 8,
@@ -271,9 +271,9 @@ adjusted_mantissa compute_float(decimal &d) {
     answer.mantissa = 0;
     return answer;
   }
-  static const uint32_t max_shift = 60;
-  static const uint32_t num_powers = 19;
-  static const uint8_t decimal_powers[19] = {
+  constexpr uint32_t max_shift = 60;
+  constexpr uint32_t num_powers = 19;
+  constexpr uint8_t decimal_powers[19] = {
       0,  3,  6,  9,  13, 16, 19, 23, 26, 29, //
       33, 36, 39, 43, 46, 49, 53, 56, 59,     //
   };
@@ -351,8 +351,8 @@ adjusted_mantissa compute_float(decimal &d) {
 }
 
 template <typename binary>
-adjusted_mantissa parse_long_mantissa(const char *first, const char* last) {
-    decimal d = parse_decimal(first, last);
+adjusted_mantissa parse_long_mantissa(const char *first, const char* last, parse_options options) {
+    decimal d = parse_decimal(first, last, options);
     return compute_float<binary>(d);
 }
 

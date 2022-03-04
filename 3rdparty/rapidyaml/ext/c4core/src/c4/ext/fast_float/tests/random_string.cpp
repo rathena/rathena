@@ -1,8 +1,11 @@
 #include "fast_float/fast_float.h"
 
-#include <iostream>
 #include <cstdint>
+#include <ios>
+#include <iostream>
 #include <random>
+#include <system_error>
+#include <utility>
 
 #if defined(__CYGWIN__) || defined(__MINGW32__) || defined(__MINGW64__)  || defined(sun) || defined(__sun)
 // Anything at all that is related to cygwin, msys and so forth will

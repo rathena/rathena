@@ -1,8 +1,11 @@
 #include "fast_float/fast_float.h"
 
-#include <iostream>
 #include <cassert>
 #include <cmath>
+#include <cstdio>
+#include <ios>
+#include <iostream>
+#include <system_error>
 
 template <typename T> char *to_string(T d, char *buffer) {
   auto written = std::snprintf(buffer, 128, "%.*e",

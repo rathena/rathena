@@ -230,6 +230,7 @@
     <ClInclude Include="src\ryml_std.hpp" />
     <ClInclude Include="src\c4\yml\detail\checks.hpp" />
     <ClInclude Include="src\c4\yml\detail\parser_dbg.hpp" />
+    <ClInclude Include="src\c4\yml\detail\print.hpp" />
     <ClInclude Include="src\c4\yml\detail\stack.hpp" />
     <ClInclude Include="src\c4\yml\common.hpp" />
     <ClCompile Include="src\c4\yml\common.cpp" />
@@ -266,6 +267,7 @@
     <ClInclude Include="ext\c4core\src\c4\config.hpp" />
     <ClInclude Include="ext\c4core\src\c4\cpu.hpp" />
     <ClInclude Include="ext\c4core\src\c4\ctor_dtor.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\dump.hpp" />
     <ClInclude Include="ext\c4core\src\c4\enum.hpp" />
     <ClCompile Include="ext\c4core\src\c4\error.cpp" />
     <ClInclude Include="ext\c4core\src\c4\error.hpp" />
@@ -284,9 +286,12 @@
     <ClInclude Include="ext\c4core\src\c4\restrict.hpp" />
     <ClInclude Include="ext\c4core\src\c4\span.hpp" />
     <ClInclude Include="ext\c4core\src\c4\std\std.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\std\std_fwd.hpp" />
     <ClInclude Include="ext\c4core\src\c4\std\string.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\std\string_fwd.hpp" />
     <ClInclude Include="ext\c4core\src\c4\std\tuple.hpp" />
     <ClInclude Include="ext\c4core\src\c4\std\vector.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\std\vector_fwd.hpp" />
     <ClInclude Include="ext\c4core\src\c4\substr.hpp" />
     <ClInclude Include="ext\c4core\src\c4\substr_fwd.hpp" />
     <ClInclude Include="ext\c4core\src\c4\szconv.hpp" />
@@ -295,6 +300,8 @@
     <ClInclude Include="ext\c4core\src\c4\type_name.hpp" />
     <ClInclude Include="ext\c4core\src\c4\types.hpp" />
     <ClInclude Include="ext\c4core\src\c4\unrestrict.hpp" />
+    <ClCompile Include="ext\c4core\src\c4\utf.cpp" />
+    <ClInclude Include="ext\c4core\src\c4\utf.hpp" />
     <ClInclude Include="ext\c4core\src\c4\windows.hpp" />
     <ClInclude Include="ext\c4core\src\c4\windows_pop.hpp" />
     <ClInclude Include="ext\c4core\src\c4\windows_push.hpp" />
@@ -304,7 +311,9 @@
     <ClInclude Include="ext\c4core\src\c4\ext\sg14\inplace_function.h" />
     <ClInclude Include="ext\c4core\src\c4\ext\fast_float.hpp" />
     <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\ascii_number.h" />
+    <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\bigint.h" />
     <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\decimal_to_binary.h" />
+    <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\digit_comparison.h" />
     <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\fast_float.h" />
     <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\fast_table.h" />
     <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\float_common.h" />

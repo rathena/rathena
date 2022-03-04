@@ -8,9 +8,6 @@ Thanks for your contribution!
   when calling cmake. To enable only tests, use `-DRYML_BUILD_TESTS=ON`; to
   enable only benchmarks use `-DRYML_BUILD_BENCHMARKS=ON`. All these flags
   are disabled by default.
-* Submitted pull requests should target the `dev` branch. (The `master`
-  branch is the stable branch, and merges from `dev` to `master` are done
-  only if the tests succeed.)
 * Code style for pull requests should respect the existing code style:
     ```c++
     if(foo)  // no space before parens

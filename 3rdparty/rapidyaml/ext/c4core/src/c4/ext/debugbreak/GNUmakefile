@@ -21,3 +21,8 @@ clean:
 test/%: CFLAGS +=-I.
 test/%: CXXFLAGS +=-I.
 $(PROGRAMS): debugbreak.h
+
+GDB ?= gdb
+.PHONY: gdb
+gdb:
+	$(GDB) -q -x debugbreak-gdb.py

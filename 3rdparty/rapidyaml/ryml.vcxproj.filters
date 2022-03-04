@@ -40,6 +40,9 @@
     <ClCompile Include="ext\c4core\src\c4\time.cpp">
       <Filter>c4core\c4</Filter>
     </ClCompile>
+    <ClCompile Include="ext\c4core\src\c4\utf.cpp">
+      <Filter>c4core\c4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ryml.hpp" />
@@ -48,6 +51,9 @@
       <Filter>c4\yml\detail</Filter>
     </ClInclude>
     <ClInclude Include="src\c4\yml\detail\parser_dbg.hpp">
+      <Filter>c4\yml\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="src\c4\yml\detail\print.hpp">
       <Filter>c4\yml\detail</Filter>
     </ClInclude>
     <ClInclude Include="src\c4\yml\detail\stack.hpp">
@@ -134,6 +140,9 @@
     <ClInclude Include="ext\c4core\src\c4\ctor_dtor.hpp">
       <Filter>c4core\c4</Filter>
     </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\dump.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
     <ClInclude Include="ext\c4core\src\c4\enum.hpp">
       <Filter>c4core\c4</Filter>
     </ClInclude>
@@ -173,13 +182,22 @@
     <ClInclude Include="ext\c4core\src\c4\std\std.hpp">
       <Filter>c4core\c4\std</Filter>
     </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\std\std_fwd.hpp">
+      <Filter>c4core\c4\std</Filter>
+    </ClInclude>
     <ClInclude Include="ext\c4core\src\c4\std\string.hpp">
+      <Filter>c4core\c4\std</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\std\string_fwd.hpp">
       <Filter>c4core\c4\std</Filter>
     </ClInclude>
     <ClInclude Include="ext\c4core\src\c4\std\tuple.hpp">
       <Filter>c4core\c4\std</Filter>
     </ClInclude>
     <ClInclude Include="ext\c4core\src\c4\std\vector.hpp">
+      <Filter>c4core\c4\std</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\std\vector_fwd.hpp">
       <Filter>c4core\c4\std</Filter>
     </ClInclude>
     <ClInclude Include="ext\c4core\src\c4\substr.hpp">
@@ -201,6 +219,9 @@
       <Filter>c4core\c4</Filter>
     </ClInclude>
     <ClInclude Include="ext\c4core\src\c4\unrestrict.hpp">
+      <Filter>c4core\c4</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\utf.hpp">
       <Filter>c4core\c4</Filter>
     </ClInclude>
     <ClInclude Include="ext\c4core\src\c4\windows.hpp">
@@ -227,7 +248,13 @@
     <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\ascii_number.h">
       <Filter>c4core\c4\ext\fast_float\include\fast_float</Filter>
     </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\bigint.h">
+      <Filter>c4core\c4\ext\fast_float\include\fast_float</Filter>
+    </ClInclude>
     <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\decimal_to_binary.h">
+      <Filter>c4core\c4\ext\fast_float\include\fast_float</Filter>
+    </ClInclude>
+    <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\digit_comparison.h">
       <Filter>c4core\c4\ext\fast_float\include\fast_float</Filter>
     </ClInclude>
     <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\fast_float.h">

@@ -4,6 +4,8 @@
 #include <cfloat>
 #include <cstdint>
 #include <cassert>
+#include <cstring>
+#include <type_traits>
 
 #if (defined(__x86_64) || defined(__x86_64__) || defined(_M_X64)   \
        || defined(__amd64) || defined(__aarch64__) || defined(_M_ARM64) \
@@ -39,7 +41,9 @@
 #define FASTFLOAT_VISUAL_STUDIO 1
 #endif
 
-#ifdef _WIN32
+#if defined __BYTE_ORDER__ && defined __ORDER_BIG_ENDIAN__
+#define FASTFLOAT_IS_BIG_ENDIAN (__BYTE_ORDER__ == __ORDER_BIG_ENDIAN__)
+#elif defined _WIN32
 #define FASTFLOAT_IS_BIG_ENDIAN 0
 #else
 #if defined(__APPLE__) || defined(__FreeBSD__)
@@ -73,6 +77,18 @@
 #define fastfloat_really_inline inline __attribute__((always_inline))
 #endif
 
+#ifndef FASTFLOAT_ASSERT
+#define FASTFLOAT_ASSERT(x)  { if (!(x)) abort(); }
+#endif
+
+#ifndef FASTFLOAT_DEBUG_ASSERT
+#include <cassert>
+#define FASTFLOAT_DEBUG_ASSERT(x) assert(x)
+#endif
+
+// rust style `try!()` macro, or `?` operator
+#define FASTFLOAT_TRY(x) { if (!(x)) return false; }
+
 namespace fast_float {
 
 // Compares two ASCII strings in a case insensitive manner.
@@ -89,11 +105,23 @@ inline bool fastfloat_strncasecmp(const char *input1, const char *input2,
 #error "FLT_EVAL_METHOD should be defined, please include cfloat."
 #endif
 
-namespace {
-constexpr uint32_t max_digits = 768;
-constexpr uint32_t max_digit_without_overflow = 19;
-constexpr int32_t decimal_point_range = 2047;
-} // namespace
+// a pointer and a length to a contiguous block of memory
+template <typename T>
+struct span {
+  const T* ptr;
+  size_t length;
+  span(const T* _ptr, size_t _length) : ptr(_ptr), length(_length) {}
+  span() : ptr(nullptr), length(0) {}
+
+  constexpr size_t len() const noexcept {
+    return length;
+  }
+
+  const T& operator[](size_t index) const noexcept {
+    FASTFLOAT_DEBUG_ASSERT(index < length);
+    return ptr[index];
+  }
+};
 
 struct value128 {
   uint64_t low;
@@ -172,10 +200,9 @@ fastfloat_really_inline value128 full_multiplication(uint64_t a,
   return answer;
 }
 
-
 struct adjusted_mantissa {
   uint64_t mantissa{0};
-  int power2{0}; // a negative value indicates an invalid result
+  int32_t power2{0}; // a negative value indicates an invalid result
   adjusted_mantissa() = default;
   bool operator==(const adjusted_mantissa &o) const {
     return mantissa == o.mantissa && power2 == o.power2;
@@ -185,21 +212,8 @@ struct adjusted_mantissa {
   }
 };
 
-struct decimal {
-  uint32_t num_digits{0};
-  int32_t decimal_point{0};
-  bool negative{false};
-  bool truncated{false};
-  uint8_t digits[max_digits];
-  decimal() = default;
-  // Copies are not allowed since this is a fat object.
-  decimal(const decimal &) = delete;
-  // Copies are not allowed since this is a fat object.
-  decimal &operator=(const decimal &) = delete;
-  // Moves are allowed:
-  decimal(decimal &&) = default;
-  decimal &operator=(decimal &&other) = default;
-};
+// Bias so we can get the real exponent with an invalid adjusted_mantissa.
+constexpr static int32_t invalid_am_bias = -0x8000;
 
 constexpr static double powers_of_ten_double[] = {
     1e0,  1e1,  1e2,  1e3,  1e4,  1e5,  1e6,  1e7,  1e8,  1e9,  1e10, 1e11,
@@ -208,6 +222,8 @@ constexpr static float powers_of_ten_float[] = {1e0, 1e1, 1e2, 1e3, 1e4, 1e5,
                                                 1e6, 1e7, 1e8, 1e9, 1e10};
 
 template <typename T> struct binary_format {
+  using equiv_uint = typename std::conditional<sizeof(T) == 4, uint32_t, uint64_t>::type;
+
   static inline constexpr int mantissa_explicit_bits();
   static inline constexpr int minimum_exponent();
   static inline constexpr int infinite_power();
@@ -220,6 +236,10 @@ template <typename T> struct binary_format {
   static inline constexpr int largest_power_of_ten();
   static inline constexpr int smallest_power_of_ten();
   static inline constexpr T exact_power_of_ten(int64_t power);
+  static inline constexpr size_t max_digits();
+  static inline constexpr equiv_uint exponent_mask();
+  static inline constexpr equiv_uint mantissa_mask();
+  static inline constexpr equiv_uint hidden_bit_mask();
 };
 
 template <> inline constexpr int binary_format<double>::mantissa_explicit_bits() {
@@ -320,17 +340,58 @@ inline constexpr int binary_format<float>::smallest_power_of_ten() {
   return -65;
 }
 
-} // namespace fast_float
-
-// for convenience:
-template<class OStream>
-inline OStream& operator<<(OStream &out, const fast_float::decimal &d) {
-  out << "0.";
-  for (size_t i = 0; i < d.num_digits; i++) {
-    out << int32_t(d.digits[i]);
-  }
-  out << " * 10 ** " << d.decimal_point;
-  return out;
+template <> inline constexpr size_t binary_format<double>::max_digits() {
+  return 769;
 }
+template <> inline constexpr size_t binary_format<float>::max_digits() {
+  return 114;
+}
+
+template <> inline constexpr binary_format<float>::equiv_uint
+    binary_format<float>::exponent_mask() {
+  return 0x7F800000;
+}
+template <> inline constexpr binary_format<double>::equiv_uint
+    binary_format<double>::exponent_mask() {
+  return 0x7FF0000000000000;
+}
+
+template <> inline constexpr binary_format<float>::equiv_uint
+    binary_format<float>::mantissa_mask() {
+  return 0x007FFFFF;
+}
+template <> inline constexpr binary_format<double>::equiv_uint
+    binary_format<double>::mantissa_mask() {
+  return 0x000FFFFFFFFFFFFF;
+}
+
+template <> inline constexpr binary_format<float>::equiv_uint
+    binary_format<float>::hidden_bit_mask() {
+  return 0x00800000;
+}
+template <> inline constexpr binary_format<double>::equiv_uint
+    binary_format<double>::hidden_bit_mask() {
+  return 0x0010000000000000;
+}
+
+template<typename T>
+fastfloat_really_inline void to_float(bool negative, adjusted_mantissa am, T &value) {
+  uint64_t word = am.mantissa;
+  word |= uint64_t(am.power2) << binary_format<T>::mantissa_explicit_bits();
+  word = negative
+  ? word | (uint64_t(1) << binary_format<T>::sign_index()) : word;
+#if FASTFLOAT_IS_BIG_ENDIAN == 1
+   if (std::is_same<T, float>::value) {
+     ::memcpy(&value, (char *)&word + 4, sizeof(T)); // extract value at offset 4-7 if float on big-endian
+   } else {
+     ::memcpy(&value, &word, sizeof(T));
+   }
+#else
+   // For little-endian systems:
+   ::memcpy(&value, &word, sizeof(T));
+#endif
+}
+
+} // namespace fast_float
 
 #endif

@@ -19,12 +19,19 @@ csubstr normalize_tag(csubstr tag)
     if(tag.begins_with("!<"))
         tag = tag.sub(1);
     if(tag.begins_with("<!"))
-    {
-        size_t pos = tag.find('>');
-        if(pos == csubstr::npos)
-            return tag;
-        return tag.range(1, pos);
-    }
+        return tag;
+    return tag;
+}
+
+csubstr normalize_tag_long(csubstr tag)
+{
+    YamlTag_e t = to_tag(tag);
+    if(t != TAG_NONE)
+        return from_tag_long(t);
+    if(tag.begins_with("!<"))
+        tag = tag.sub(1);
+    if(tag.begins_with("<!"))
+        return tag;
     return tag;
 }
 
@@ -80,6 +87,46 @@ YamlTag_e to_tag(csubstr tag)
         return TAG_VALUE;
 
     return TAG_NONE;
+}
+
+csubstr from_tag_long(YamlTag_e tag)
+{
+    switch(tag)
+    {
+    case TAG_MAP:
+        return {"<tag:yaml.org,2002:map>"};
+    case TAG_OMAP:
+        return {"<tag:yaml.org,2002:omap>"};
+    case TAG_PAIRS:
+        return {"<tag:yaml.org,2002:pairs>"};
+    case TAG_SET:
+        return {"<tag:yaml.org,2002:set>"};
+    case TAG_SEQ:
+        return {"<tag:yaml.org,2002:seq>"};
+    case TAG_BINARY:
+        return {"<tag:yaml.org,2002:binary>"};
+    case TAG_BOOL:
+        return {"<tag:yaml.org,2002:bool>"};
+    case TAG_FLOAT:
+        return {"<tag:yaml.org,2002:float>"};
+    case TAG_INT:
+        return {"<tag:yaml.org,2002:int>"};
+    case TAG_MERGE:
+        return {"<tag:yaml.org,2002:merge>"};
+    case TAG_NULL:
+        return {"<tag:yaml.org,2002:null>"};
+    case TAG_STR:
+        return {"<tag:yaml.org,2002:str>"};
+    case TAG_TIMESTAMP:
+        return {"<tag:yaml.org,2002:timestamp>"};
+    case TAG_VALUE:
+        return {"<tag:yaml.org,2002:value>"};
+    case TAG_YAML:
+        return {"<tag:yaml.org,2002:yaml>"};
+    case TAG_NONE:
+        return {""};
+    }
+    return {""};
 }
 
 csubstr from_tag(YamlTag_e tag)
@@ -319,6 +366,8 @@ void Tree::_clear()
     m_free_tail = 0;
     m_arena = {};
     m_arena_pos = 0;
+    for(size_t i = 0; i < RYML_MAX_TAG_DIRECTIVES; ++i)
+        m_tag_directives[i] = {};
 }
 
 void Tree::_copy(Tree const& that)
@@ -343,6 +392,8 @@ void Tree::_copy(Tree const& that)
         _relocate(arena); // does a memcpy of the arena and updates nodes using the old arena
         m_arena = arena;
     }
+    for(size_t i = 0; i < RYML_MAX_TAG_DIRECTIVES; ++i)
+        m_tag_directives[i] = that.m_tag_directives[i];
 }
 
 void Tree::_move(Tree & that)
@@ -357,6 +408,8 @@ void Tree::_move(Tree & that)
     m_free_tail = that.m_free_tail;
     m_arena = that.m_arena;
     m_arena_pos = that.m_arena_pos;
+    for(size_t i = 0; i < RYML_MAX_TAG_DIRECTIVES; ++i)
+        m_tag_directives[i] = that.m_tag_directives[i];
     that._clear();
 }
 
@@ -379,6 +432,13 @@ void Tree::_relocate(substr next_arena)
             n->m_val.tag = _relocated(n->m_val.tag, next_arena);
         if(in_arena(n->m_val.anchor))
             n->m_val.anchor = _relocated(n->m_val.anchor, next_arena);
+    }
+    for(TagDirective &C4_RESTRICT td : m_tag_directives)
+    {
+        if(in_arena(td.prefix))
+            td.prefix = _relocated(td.prefix, next_arena);
+        if(in_arena(td.handle))
+            td.handle = _relocated(td.handle, next_arena);
     }
 }
 
@@ -438,6 +498,8 @@ void Tree::clear()
         m_free_head = NONE;
         m_free_tail = NONE;
     }
+    for(size_t i = 0; i < RYML_MAX_TAG_DIRECTIVES; ++i)
+        m_tag_directives[i] = {};
 }
 
 void Tree::_claim_root()
@@ -1615,6 +1677,166 @@ void Tree::to_stream(size_t node, type_bits more_flags)
     _set_flags(node, STREAM|more_flags);
     _p(node)->m_key.clear();
     _p(node)->m_val.clear();
+}
+
+
+//-----------------------------------------------------------------------------
+size_t Tree::num_tag_directives() const
+{
+    // this assumes we have a very small number of tag directives
+    for(size_t i = 0; i < RYML_MAX_TAG_DIRECTIVES; ++i)
+        if(m_tag_directives[i].handle.empty())
+            return i;
+    return RYML_MAX_TAG_DIRECTIVES;
+}
+
+void Tree::clear_tag_directives()
+{
+    for(TagDirective &td : m_tag_directives)
+        td = {};
+}
+
+size_t Tree::add_tag_directive(TagDirective const& td)
+{
+    _RYML_CB_CHECK(m_callbacks, !td.handle.empty());
+    _RYML_CB_CHECK(m_callbacks, !td.prefix.empty());
+    _RYML_CB_ASSERT(m_callbacks, td.handle.begins_with('!'));
+    _RYML_CB_ASSERT(m_callbacks, td.handle.ends_with('!'));
+    // https://yaml.org/spec/1.2.2/#rule-ns-word-char
+    _RYML_CB_ASSERT(m_callbacks, td.handle == '!' || td.handle == "!!" || td.handle.trim('!').first_not_of("01234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-") == npos);
+    size_t pos = num_tag_directives();
+    _RYML_CB_CHECK(m_callbacks, pos < RYML_MAX_TAG_DIRECTIVES);
+    m_tag_directives[pos] = td;
+    return pos;
+}
+
+size_t Tree::resolve_tag(substr output, csubstr tag, size_t node_id) const
+{
+    // lookup from the end. We want to find the first directive that
+    // matches the tag and has a target node id leq than the given
+    // node_id.
+    for(size_t i = RYML_MAX_TAG_DIRECTIVES-1; i != (size_t)-1; --i)
+    {
+        auto const& td = m_tag_directives[i];
+        if(td.handle.empty())
+            continue;
+        if(tag.begins_with(td.handle) && td.next_node_id <= node_id)
+        {
+            _RYML_CB_ASSERT(m_callbacks, tag.len >= td.handle.len);
+            csubstr rest = tag.sub(td.handle.len);
+            size_t len = 1u + td.prefix.len + rest.len + 1u;
+            size_t numpc = rest.count('%');
+            if(numpc == 0)
+            {
+                if(len <= output.len)
+                {
+                    output.str[0] = '<';
+                    memcpy(1u + output.str, td.prefix.str, td.prefix.len);
+                    memcpy(1u + output.str + td.prefix.len, rest.str, rest.len);
+                    output.str[1u + td.prefix.len + rest.len] = '>';
+                }
+            }
+            else
+            {
+                // need to decode URI % sequences
+                size_t pos = rest.find('%');
+                _RYML_CB_ASSERT(m_callbacks, pos != npos);
+                do {
+                    size_t next = rest.first_not_of("0123456789abcdefABCDEF", pos+1);
+                    if(next == npos)
+                        next = rest.len;
+                    _RYML_CB_CHECK(m_callbacks, pos+1 < next);
+                    _RYML_CB_CHECK(m_callbacks, pos+1 + 2 <= next);
+                    size_t delta = next - (pos+1);
+                    len -= delta;
+                    pos = rest.find('%', pos+1);
+                } while(pos != npos);
+                if(len <= output.len)
+                {
+                    size_t prev = 0, wpos = 0;
+                    auto appendstr = [&](csubstr s) { memcpy(output.str + wpos, s.str, s.len); wpos += s.len; };
+                    auto appendchar = [&](char c) { output.str[wpos++] = c; };
+                    appendchar('<');
+                    appendstr(td.prefix);
+                    pos = rest.find('%');
+                    _RYML_CB_ASSERT(m_callbacks, pos != npos);
+                    do {
+                        size_t next = rest.first_not_of("0123456789abcdefABCDEF", pos+1);
+                        if(next == npos)
+                            next = rest.len;
+                        _RYML_CB_CHECK(m_callbacks, pos+1 < next);
+                        _RYML_CB_CHECK(m_callbacks, pos+1 + 2 <= next);
+                        uint8_t val;
+                        if(C4_UNLIKELY(!read_hex(rest.range(pos+1, next), &val) || val > 127))
+                            _RYML_CB_ERR(m_callbacks, "invalid URI character");
+                        appendstr(rest.range(prev, pos));
+                        appendchar((char)val);
+                        prev = next;
+                        pos = rest.find('%', pos+1);
+                    } while(pos != npos);
+                    _RYML_CB_ASSERT(m_callbacks, pos == npos);
+                    _RYML_CB_ASSERT(m_callbacks, prev > 0);
+                    _RYML_CB_ASSERT(m_callbacks, rest.len >= prev);
+                    appendstr(rest.sub(prev));
+                    appendchar('>');
+                    _RYML_CB_ASSERT(m_callbacks, wpos == len);
+                }
+            }
+            return len;
+        }
+    }
+    return 0; // return 0 to signal that the tag is local and cannot be resolved
+}
+
+namespace {
+csubstr _transform_tag(Tree *t, csubstr tag, size_t node)
+{
+    size_t required_size = t->resolve_tag(substr{}, tag, node);
+    if(!required_size)
+        return tag;
+    const char *prev_arena = t->arena().str;
+    substr buf = t->alloc_arena(required_size);
+    _RYML_CB_ASSERT(t->m_callbacks, t->arena().str == prev_arena);
+    size_t actual_size = t->resolve_tag(buf, tag, node);
+    _RYML_CB_ASSERT(t->m_callbacks, actual_size <= required_size);
+    return buf.first(actual_size);
+}
+void _resolve_tags(Tree *t, size_t node)
+{
+    for(size_t child = t->first_child(node); child != NONE; child = t->next_sibling(child))
+    {
+        if(t->has_key(child) && t->has_key_tag(child))
+            t->set_key_tag(child, _transform_tag(t, t->key_tag(child), child));
+        if(t->has_val(child) && t->has_val_tag(child))
+            t->set_val_tag(child, _transform_tag(t, t->val_tag(child), child));
+        _resolve_tags(t, child);
+    }
+}
+size_t _count_resolved_tags_size(Tree const* t, size_t node)
+{
+    size_t sz = 0;
+    for(size_t child = t->first_child(node); child != NONE; child = t->next_sibling(child))
+    {
+        if(t->has_key(child) && t->has_key_tag(child))
+            sz += t->resolve_tag(substr{}, t->key_tag(child), child);
+        if(t->has_val(child) && t->has_val_tag(child))
+            sz += t->resolve_tag(substr{}, t->val_tag(child), child);
+        sz += _count_resolved_tags_size(t, child);
+    }
+    return sz;
+}
+} // namespace
+
+void Tree::resolve_tags()
+{
+    if(empty())
+        return;
+    if(num_tag_directives() == 0)
+        return;
+    size_t needed_size = _count_resolved_tags_size(this, root_id());
+    if(needed_size)
+        reserve_arena(arena_pos() + needed_size);
+    _resolve_tags(this, root_id());
 }
 
 

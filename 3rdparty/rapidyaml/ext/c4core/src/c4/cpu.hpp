@@ -103,6 +103,16 @@
 #   define C4_WORDSIZE 8
 #   define C4_BYTE_ORDER _C4EB
 
+#elif defined(__riscv)
+   #if __riscv_xlen == 64
+       #define C4_CPU_RISCV64
+       #define C4_WORDSIZE 8
+   #else
+       #define C4_CPU_RISCV32
+       #define C4_WORDSIZE 4
+   #endif
+   #define C4_BYTE_ORDER _C4EL
+
 #elif defined(__EMSCRIPTEN__)
 #   define C4_BYTE_ORDER _C4EL
 #   define C4_WORDSIZE 4

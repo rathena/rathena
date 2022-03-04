@@ -413,9 +413,7 @@ size_t to_chars(substr buf, fmt::left_<T> const& C4_RESTRICT align)
 {
     size_t ret = to_chars(buf, align.val);
     if(ret >= buf.len || ret >= align.width)
-    {
         return ret > align.width ? ret : align.width;
-    }
     buf.first(align.width).sub(ret).fill(align.pad);
     to_chars(buf, align.val);
     return align.width;
@@ -426,9 +424,7 @@ size_t to_chars(substr buf, fmt::right_<T> const& C4_RESTRICT align)
 {
     size_t ret = to_chars(buf, align.val);
     if(ret >= buf.len || ret >= align.width)
-    {
         return ret > align.width ? ret : align.width;
-    }
     size_t rem = static_cast<size_t>(align.width - ret);
     buf.first(rem).fill(align.pad);
     to_chars(buf.sub(rem), align.val);
@@ -503,6 +499,7 @@ size_t uncat(csubstr buf, Arg & C4_RESTRICT a, Args & C4_RESTRICT ...more)
         return csubstr::npos;
     return out + num;
 }
+
 
 
 //-----------------------------------------------------------------------------
@@ -615,7 +612,7 @@ inline size_t format(substr buf, csubstr fmt)
 {
     return to_chars(buf, fmt);
 }
-// @endcond
+/// @endcond
 
 
 /** using a format string, serialize the arguments into the given
@@ -636,9 +633,9 @@ inline size_t format(substr buf, csubstr fmt)
 template<class Arg, class... Args>
 size_t format(substr buf, csubstr fmt, Arg const& C4_RESTRICT a, Args const& C4_RESTRICT ...more)
 {
-    auto pos = fmt.find("{}"); // @todo use _find_fmt()
+    size_t pos = fmt.find("{}"); // @todo use _find_fmt()
     if(C4_UNLIKELY(pos == csubstr::npos))
-        return format(buf, fmt);
+        return to_chars(buf, fmt);
     size_t num = to_chars(buf, fmt.sub(0, pos));
     size_t out = num;
     buf  = buf.len >= num ? buf.sub(num) : substr{};
@@ -670,7 +667,7 @@ inline size_t unformat(csubstr /*buf*/, csubstr fmt)
 {
     return fmt.len;
 }
-// @endcond
+/// @endcond
 
 
 /** using a format string, deserialize the arguments from the given

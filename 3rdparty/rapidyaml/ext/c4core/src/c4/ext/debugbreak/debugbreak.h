@@ -1,4 +1,4 @@
-/* Copyright (c) 2011-2015, Scott Tsai
+/* Copyright (c) 2011-2021, Scott Tsai
  * 
  * All rights reserved.
  * 
@@ -23,7 +23,6 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
 #ifndef DEBUG_BREAK_H
 #define DEBUG_BREAK_H
 
@@ -33,29 +32,24 @@
 
 #else
 
-#include <signal.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-enum {
-	/* gcc optimizers consider code after __builtin_trap() dead.
-	 * Making __builtin_trap() unsuitable for breaking into the debugger */
-	DEBUG_BREAK_PREFER_BUILTIN_TRAP_TO_SIGTRAP = 0,
-};
+#define DEBUG_BREAK_USE_TRAP_INSTRUCTION 1
+#define DEBUG_BREAK_USE_BULTIN_TRAP      2
+#define DEBUG_BREAK_USE_SIGTRAP          3
 
 #if defined(__i386__) || defined(__x86_64__)
-enum { HAVE_TRAP_INSTRUCTION = 1, };
-__attribute__((gnu_inline, always_inline))
+	#define DEBUG_BREAK_IMPL DEBUG_BREAK_USE_TRAP_INSTRUCTION
 __inline__ static void trap_instruction(void)
 {
 	__asm__ volatile("int $0x03");
 }
 #elif defined(__thumb__)
-enum { HAVE_TRAP_INSTRUCTION = 1, };
+	#define DEBUG_BREAK_IMPL DEBUG_BREAK_USE_TRAP_INSTRUCTION
 /* FIXME: handle __THUMB_INTERWORK__ */
-__attribute__((gnu_inline, always_inline))
+__attribute__((always_inline))
 __inline__ static void trap_instruction(void)
 {
 	/* See 'arm-linux-tdep.c' in GDB source.
@@ -69,66 +63,112 @@ __inline__ static void trap_instruction(void)
 #endif
 
 	/* Known problem:
-	 * After a breakpoint hit, can't stepi, step, or continue in GDB.
-	 * 'step' stuck on the same instruction.
+	 * After a breakpoint hit, can't 'stepi', 'step', or 'continue' in GDB.
+	 * 'step' would keep getting stuck on the same instruction.
 	 *
-	 * Workaround: a new GDB command,
-	 * 'debugbreak-step' is defined in debugbreak-gdb.py
-	 * that does:
+	 * Workaround: use the new GDB commands 'debugbreak-step' and
+	 * 'debugbreak-continue' that become available
+	 * after you source the script from GDB:
+	 *
+	 * $ gdb -x debugbreak-gdb.py <... USUAL ARGUMENTS ...>
+	 *
+	 * 'debugbreak-step' would jump over the breakpoint instruction with
+	 * roughly equivalent of:
 	 * (gdb) set $instruction_len = 2
 	 * (gdb) tbreak *($pc + $instruction_len)
 	 * (gdb) jump   *($pc + $instruction_len)
 	 */
 }
 #elif defined(__arm__) && !defined(__thumb__)
-enum { HAVE_TRAP_INSTRUCTION = 1, };
-__attribute__((gnu_inline, always_inline))
+	#define DEBUG_BREAK_IMPL DEBUG_BREAK_USE_TRAP_INSTRUCTION
+__attribute__((always_inline))
 __inline__ static void trap_instruction(void)
 {
 	/* See 'arm-linux-tdep.c' in GDB source,
 	 * 'eabi_linux_arm_le_breakpoint' */
 	__asm__ volatile(".inst 0xe7f001f0");
-	/* Has same known problem and workaround
-	 * as Thumb mode */
+	/* Known problem:
+	 * Same problem and workaround as Thumb mode */
 }
+#elif defined(__aarch64__) && defined(__APPLE__)
+	#define DEBUG_BREAK_IMPL DEBUG_BREAK_USE_BULTIN_DEBUGTRAP
 #elif defined(__aarch64__)
-enum { HAVE_TRAP_INSTRUCTION = 1, };
-__attribute__((gnu_inline, always_inline))
+	#define DEBUG_BREAK_IMPL DEBUG_BREAK_USE_TRAP_INSTRUCTION
+__attribute__((always_inline))
 __inline__ static void trap_instruction(void)
 {
 	/* See 'aarch64-tdep.c' in GDB source,
 	 * 'aarch64_default_breakpoint' */
 	__asm__ volatile(".inst 0xd4200000");
 }
+#elif defined(__powerpc__)
+	/* PPC 32 or 64-bit, big or little endian */
+	#define DEBUG_BREAK_IMPL DEBUG_BREAK_USE_TRAP_INSTRUCTION
+__attribute__((always_inline))
+__inline__ static void trap_instruction(void)
+{
+	/* See 'rs6000-tdep.c' in GDB source,
+	 * 'rs6000_breakpoint' */
+	__asm__ volatile(".4byte 0x7d821008");
+
+	/* Known problem:
+	 * After a breakpoint hit, can't 'stepi', 'step', or 'continue' in GDB.
+	 * 'step' stuck on the same instruction ("twge r2,r2").
+	 *
+	 * The workaround is the same as ARM Thumb mode: use debugbreak-gdb.py
+	 * or manually jump over the instruction. */
+}
+#elif defined(__riscv)
+	/* RISC-V 32 or 64-bit, whether the "C" extension
+	 * for compressed, 16-bit instructions are supported or not */
+	#define DEBUG_BREAK_IMPL DEBUG_BREAK_USE_TRAP_INSTRUCTION
+__attribute__((always_inline))
+__inline__ static void trap_instruction(void)
+{
+	/* See 'riscv-tdep.c' in GDB source,
+	 * 'riscv_sw_breakpoint_from_kind' */
+	__asm__ volatile(".4byte 0x00100073");
+}
 #else
-enum { HAVE_TRAP_INSTRUCTION = 0, };
+	#define DEBUG_BREAK_IMPL DEBUG_BREAK_USE_SIGTRAP
 #endif
 
-__attribute__((gnu_inline, always_inline))
+
+#ifndef DEBUG_BREAK_IMPL
+#error "debugbreak.h is not supported on this target"
+#elif DEBUG_BREAK_IMPL == DEBUG_BREAK_USE_TRAP_INSTRUCTION
+__attribute__((always_inline))
 __inline__ static void debug_break(void)
 {
-	if (HAVE_TRAP_INSTRUCTION) {
-		trap_instruction();
-	} else if (DEBUG_BREAK_PREFER_BUILTIN_TRAP_TO_SIGTRAP) {
-		 /* raises SIGILL on Linux x86{,-64}, to continue in gdb:
-		  * (gdb) handle SIGILL stop nopass
-		  * */
-		__builtin_trap();
-	} else {
-		#ifdef _WIN32
-		/* SIGTRAP available only on POSIX-compliant operating systems
-		 * use builtin trap instead */
-		__builtin_trap();
-		#else
-		raise(SIGTRAP);
-		#endif
-	}
+	trap_instruction();
 }
+#elif DEBUG_BREAK_IMPL == DEBUG_BREAK_USE_BULTIN_DEBUGTRAP
+__attribute__((always_inline))
+__inline__ static void debug_break(void)
+{
+	__builtin_debugtrap();
+}
+#elif DEBUG_BREAK_IMPL == DEBUG_BREAK_USE_BULTIN_TRAP
+__attribute__((always_inline))
+__inline__ static void debug_break(void)
+{
+	__builtin_trap();
+}
+#elif DEBUG_BREAK_IMPL == DEBUG_BREAK_USE_SIGTRAP
+#include <signal.h>
+__attribute__((always_inline))
+__inline__ static void debug_break(void)
+{
+	raise(SIGTRAP);
+}
+#else
+#error "invalid DEBUG_BREAK_IMPL value"
+#endif
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif
+#endif /* ifdef _MSC_VER */
 
-#endif
+#endif /* ifndef DEBUG_BREAK_H */

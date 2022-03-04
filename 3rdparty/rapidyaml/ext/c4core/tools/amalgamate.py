@@ -30,6 +30,12 @@ def amalgamate_c4core(filename: str,
 #define C4CORE_EXPORTS
 #endif
 """
+    required_gcc4_8_include = """// these includes are needed to work around conditional
+// includes in the gcc4.8 shim
+#include <cstdint>
+#include <type_traits>
+#include <cstring>
+"""
     srcblocks = [
         am.cmttext(f"""
 c4core - C++ utilities
@@ -56,6 +62,8 @@ INSTRUCTIONS:
         "src/c4/platform.hpp",
         "src/c4/cpu.hpp",
         "src/c4/compiler.hpp",
+        am.injcode(required_gcc4_8_include),
+        "cmake/compat/c4/gcc-4.8.hpp",
         "src/c4/language.hpp",
         "src/c4/types.hpp",
         "src/c4/config.hpp",
@@ -77,7 +85,9 @@ INSTRUCTIONS:
         "src/c4/std/string_fwd.hpp",
         "src/c4/std/std_fwd.hpp",
         "src/c4/charconv.hpp",
+        "src/c4/utf.hpp",
         "src/c4/format.hpp",
+        "src/c4/dump.hpp",
         "src/c4/enum.hpp",
         "src/c4/bitmask.hpp",
         "src/c4/span.hpp",
@@ -87,7 +97,6 @@ INSTRUCTIONS:
         am.onlyif(with_stl, "src/c4/std/string.hpp"),
         am.onlyif(with_stl, "src/c4/std/vector.hpp"),
         am.onlyif(with_stl, "src/c4/std/tuple.hpp"),
-        "src/c4/time.hpp",
         "src/c4/ext/rng/rng.hpp",
         "src/c4/ext/sg14/inplace_function.h",
         am.ignfile("src/c4/common.hpp"),
@@ -100,12 +109,12 @@ INSTRUCTIONS:
         "src/c4/memory_util.cpp",
         "src/c4/char_traits.cpp",
         "src/c4/memory_resource.cpp",
+        "src/c4/utf.cpp",
         "src/c4/base64.cpp",
         am.injcode("#define C4_WINDOWS_POP_HPP_"),
         "src/c4/windows_push.hpp",
         "src/c4/windows.hpp",
         "src/c4/windows_pop.hpp", # do NOT include this before windows.hpp
-        "src/c4/time.cpp",
         "src/c4/error.cpp",
     ]
     result = am.catfiles(srcblocks,

@@ -54,18 +54,20 @@ endfunction(fast_float_add_cpp_test)
 
 
 fast_float_add_cpp_test(example_test)
+fast_float_add_cpp_test(example_comma_test)
 fast_float_add_cpp_test(basictest)
+fast_float_add_cpp_test(long_test)
+fast_float_add_cpp_test(powersoffive_hardround)
+fast_float_add_cpp_test(string_test)
 
 
 
 option(FASTFLOAT_EXHAUSTIVE "Exhaustive tests" OFF)
 
 if (FASTFLOAT_EXHAUSTIVE)
-  fast_float_add_cpp_test(powersoffive_hardround)
   fast_float_add_cpp_test(short_random_string)
   fast_float_add_cpp_test(exhaustive32_midpoint)
   fast_float_add_cpp_test(random_string)
-  fast_float_add_cpp_test(string_test)
   fast_float_add_cpp_test(exhaustive32)
   fast_float_add_cpp_test(exhaustive32_64)
   fast_float_add_cpp_test(long_exhaustive32)

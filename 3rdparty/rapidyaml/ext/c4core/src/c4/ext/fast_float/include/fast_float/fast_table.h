@@ -1,5 +1,6 @@
 #ifndef FASTFLOAT_FAST_TABLE_H
 #define FASTFLOAT_FAST_TABLE_H
+
 #include <cstdint>
 
 namespace fast_float {

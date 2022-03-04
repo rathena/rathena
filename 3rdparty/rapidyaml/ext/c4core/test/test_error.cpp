@@ -97,7 +97,10 @@ struct ErrorCallbacks
     }
 };
 
-
+#if __GNUC__ >= 4 && __GNUC_MINOR__ >= 8 && __GNUC__ < 5
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
+#endif
 TEST_CASE("ErrorCallbacks.default_obj")
 {
     ErrorCallbacks cb {};
@@ -108,6 +111,9 @@ TEST_CASE("ErrorCallbacks.default_obj")
     CHECK_EQ(cb.msg_part, nullptr);
     CHECK_EQ(cb.msg_end, nullptr);
 }
+#if __GNUC__ >= 4 && __GNUC_MINOR__ >= 8 && __GNUC__ < 5
+#pragma GCC diagnostic pop
+#endif
 
 template<class ErrBhv>
 struct ErrorCallbacksBridgeFull

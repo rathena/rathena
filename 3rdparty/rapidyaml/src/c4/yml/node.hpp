@@ -124,7 +124,7 @@ public:
     /** @name node property getters */
     /** @{ */
 
-    inline NodeType_e   type() const { _C4RV(); return m_tree->type(m_id); }
+    inline NodeType     type() const { _C4RV(); return m_tree->type(m_id); }
     inline const char*  type_str() const { _C4RV(); RYML_ASSERT(valid() && ! is_seed()); return m_tree->type_str(m_id); }
 
     inline csubstr    key()        const { _C4RV(); return m_tree->key(m_id); }
@@ -138,6 +138,9 @@ public:
     inline csubstr    val_ref()    const { _C4RV(); return m_tree->val_ref(m_id); }
     inline csubstr    val_anchor() const { _C4RV(); return m_tree->val_anchor(m_id); }
     inline NodeScalar valsc()      const { _C4RV(); return m_tree->valsc(m_id); }
+
+    inline bool key_is_null() const { _C4RV(); return m_tree->key_is_null(m_id); }
+    inline bool val_is_null() const { _C4RV(); return m_tree->val_is_null(m_id); }
 
     /** decode the base64-encoded key deserialize and assign the
      * decoded blob to the given buffer/
@@ -385,7 +388,7 @@ public:
     inline void operator= (NodeType_e t)
     {
         _apply_seed();
-        m_tree->_set_flags(m_id, t);
+        m_tree->_add_flags(m_id, t);
     }
 
     inline void operator|= (NodeType_e t)

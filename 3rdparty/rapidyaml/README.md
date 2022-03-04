@@ -12,11 +12,11 @@
 [![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/biojppm/rapidyaml.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/biojppm/rapidyaml/context:cpp)
 
 
-Or ryml, for short. ryml is a C++ library to parse and emit YAML, and
-do it fast. (If you are looking to use your programs with a YAML tree
-as a configuration tree with override facilities, there is
-[c4conf](https://github.com/biojppm/c4conf), a sister project which
-uses ryml).
+Or ryml, for short. ryml is a C++ library to parse and emit YAML,
+and do it fast, on everything from x64 to bare-metal chips without
+operating system. (If you are looking to use your programs with a YAML tree
+as a configuration tree with override facilities, take a look at
+[c4conf](https://github.com/biojppm/c4conf)).
 
 ryml parses both read-only and in-situ source buffers; the resulting
 data nodes hold only views to sub-ranges of the source buffer. No
@@ -24,7 +24,7 @@ string copies or duplications are done, and no virtual functions are
 used. The data tree is a flat index-based structure stored in a single
 array. Serialization happens only at your direct request, after
 parsing / before emitting. Internally, the data tree representation
-stores only strings and has no knowledge of types, but of course,
+stores only string views and has no knowledge of types, but of course,
 every node can have a YAML type tag. ryml makes it easy and fast to
 read and modify the data tree.
 
@@ -49,12 +49,12 @@ small C++ utilities multiplatform library.
 ryml is written in C++11, and compiles cleanly with:
 * Visual Studio 2015 and later
 * clang++ 3.9 and later
-* g++ 5 and later
+* g++ 4.8 and later
 * Intel Compiler
 
 ryml is [extensively unit-tested in Linux, Windows and
 MacOS](https://github.com/biojppm/rapidyaml/actions). The tests cover
-x64, x86, arm, wasm (emscripten), aarch64, ppc64le and s390x
+x64, x86, wasm (emscripten), arm, aarch64, ppc64le and s390x
 architectures, and include analysing ryml with:
   * valgrind
   * clang-tidy
@@ -65,12 +65,19 @@ architectures, and include analysing ryml with:
     * thread
   * [LGTM.com](https://lgtm.com/projects/g/biojppm/rapidyaml)
 
+ryml also [runs in
+bare-metal](https://github.com/biojppm/rapidyaml/issues/193), and
+[RISC-V
+architectures](https://github.com/biojppm/c4core/pull/69). Both of
+these are pending implementation of CI actions for continuous
+validation, but ryml has been proven to work there.
+
 ryml is [available in Python](https://pypi.org/project/rapidyaml/),
 and can very easily be compiled to JavaScript through emscripten (see
 below).
 
-See also [the changelog](https://github.com/biojppm/rapidyaml/changelog)
-and [the roadmap](https://github.com/biojppm/rapidyaml/ROADMAP.md).
+See also [the changelog](https://github.com/biojppm/rapidyaml/tree/master/changelog)
+and [the roadmap](https://github.com/biojppm/rapidyaml/tree/master/ROADMAP.md).
 
 <!-- endpythonreadme -->
 
@@ -110,7 +117,7 @@ You bet! On a i7-6800K CPU @3.40GHz:
    try yet on Windows).
  * compared against the other existing YAML libraries for C/C++:
    * ryml is in general between 2 and 3 times faster than [libyaml](https://github.com/yaml/libyaml)
-   * ryml is in general between 20 and 70 times faster than
+   * ryml is in general between 10 and 70 times faster than
      [yaml-cpp](https://github.com/jbeder/yaml-cpp), and in some cases as
      much as 100x and [even
      200x](https://github.com/biojppm/c4core/pull/16#issuecomment-700972614) faster.
@@ -164,29 +171,29 @@ So how does ryml compare against other JSON readers? Well, it's one of the
 fastest! 
 
 The benchmark is the [same as above](./bm/parse.cpp), and it is reading
-the [compile_commands.json](./bm/cases/compile_commands.json), The `_ro`
+the [compile_commands.json](./bm/cases/compile_commands.json), The `_arena`
 suffix notes parsing a read-only buffer (so buffer copies are performed),
-while the `_rw` suffix means that the source buffer can be parsed in
-situ. The `_reuse` means the data tree and/or parser are reused on each
+while the `_inplace` suffix means that the source buffer can be parsed in
+place. The `_reuse` means the data tree and/or parser are reused on each
 benchmark repeat.
 
 Here's what we get with g++ 8.2:
 
-| Benchmark        | Release,MB/s | Debug,MB/s  |
-|:-----------------|-------------:|------------:|
-| rapidjson_ro     |       509.9  |       43.4  |
-| rapidjson_rw     |      1329.4  |       68.2  |
-| sajson_rw        |       434.2  |      176.5  |
-| sajson_ro        |       430.7  |      175.6  |
-| jsoncpp_ro       |       183.6  |    ? 187.9  |
-| nlohmann_json_ro |       115.8  |       21.5  |
-| yamlcpp_ro       |        16.6  |        1.6  |
-| libyaml_ro       |       113.9  |       35.7  |
-| libyaml_ro_reuse |       114.6  |       35.9  |
-| ryml_ro          |       388.6  |       36.9  |
-| ryml_rw          |       393.7  |       36.9  |
-| ryml_ro_reuse    |       446.2  |       74.6  |
-| ryml_rw_reuse    |       457.1  |       74.9  |
+| Benchmark             | Release,MB/s | Debug,MB/s  |
+|:----------------------|-------------:|------------:|
+| rapidjson_arena       |       509.9  |       43.4  |
+| rapidjson_inplace     |      1329.4  |       68.2  |
+| sajson_inplace        |       434.2  |      176.5  |
+| sajson_arena          |       430.7  |      175.6  |
+| jsoncpp_arena         |       183.6  |    ? 187.9  |
+| nlohmann_json_arena   |       115.8  |       21.5  |
+| yamlcpp_arena         |        16.6  |        1.6  |
+| libyaml_arena         |       113.9  |       35.7  |
+| libyaml_arena_reuse   |       114.6  |       35.9  |
+| ryml_arena            |       388.6  |       36.9  |
+| ryml_inplace          |       393.7  |       36.9  |
+| ryml_arena_reuse      |       446.2  |       74.6  |
+| ryml_inplace_reuse    |       457.1  |       74.9  |
 
 You can verify that (at least for this test) ryml beats most json
 parsers at their own game, with the only exception of
@@ -199,12 +206,25 @@ the suspicious fact that the Debug result is faster than the Release result).
 
 ### Performance emitting
 
-Emitting benchmarks were not created yet, but feedback from some users
-reports as much as 25x speedup from yaml-cpp [(eg,
-here)](https://github.com/biojppm/rapidyaml/issues/28#issue-553855608).
+[Emitting benchmarks](bm/bm_emit.cpp) also show similar speedups from
+the existing libraries, also anecdotally reported by some users [(eg,
+here's a user reporting 25x speedup from
+yaml-cpp)](https://github.com/biojppm/rapidyaml/issues/28#issue-553855608). Also, in
+some cases (eg, block folded multiline scalars), the speedup is as
+high as 200x (eg, 7.3MB/s -> 1.416MG/s).
 
-If you have data or YAML code for this, please submit a pull request, or
-just send us the files!
+
+### CI results and request for files
+
+While a more effective way of showing the benchmark results is not
+available yet, you can browse through the [runs of the benchmark
+workflow in the
+CI](https://github.com/biojppm/rapidyaml/actions/workflows/benchmarks.yml)
+to scroll through the results for yourself.
+
+Also, if you have a case where ryml behaves very nicely or not as nicely as
+claimed above, we would definitely like to see it! Please submit a pull request
+adding the file to [bm/cases](bm/cases), or just send us the files.
 
 
 ------
@@ -575,8 +595,8 @@ fr: Planète (Gazeuse)
 ru: Планета (Газ)
 ja: 惑星（ガス）
 zh: 行星（气体）
-# this is the smiley character, twice: ☺ ☺
-no_decoding: \u263A \xE2\x98\xBA
+decode this: "\u263A \xE2\x98\xBA"
+and this as well: "\u2705 \U0001D11E"
 )");
 // in-place UTF8 just works:
 CHECK(langs["en"].val() == "Planet (Gas)");
@@ -584,9 +604,10 @@ CHECK(langs["fr"].val() == "Planète (Gazeuse)");
 CHECK(langs["ru"].val() == "Планета (Газ)");
 CHECK(langs["ja"].val() == "惑星（ガス）");
 CHECK(langs["zh"].val() == "行星（气体）");
-// but note encoded characters are not decoded while parsing:
-CHECK(langs["no_decoding"].val() == "\\u263A \\xE2\\x98\\xBA");
-CHECK(langs["no_decoding"].val() != "☺ ☺"); // how the string would look like if decoded
+// and \x \u \U codepoints are decoded (but only when
+// they appear inside double-quoted strings):
+CHECK(langs["decode this"].val() == "☺ ☺");
+CHECK(langs["and this as well"].val() == "✅ 𝄞");
 
 //------------------------------------------------------------------
 // Getting the location of nodes in the source:
@@ -643,7 +664,8 @@ sample_location_tracking();    ///< track node locations in the parsed source tr
 
 ### Package managers
 
-If you opt for package managers, here's where ryml is available so far (thanks to all the contributors!):
+If you opt for package managers, here's where ryml is available so far
+(thanks to all the contributors!):
   * [vcpkg](https://vcpkg.io/en/packages.html): `vcpkg install ryml`
   * Arch Linux/Manjaro:
     * [rapidyaml-git (AUR)](https://aur.archlinux.org/packages/rapidyaml-git/)
@@ -752,6 +774,9 @@ more about each sample:
 The following cmake variables can be used to control the build behavior of
 ryml:
 
+  * `RYML_WITH_TAB_TOKENS=ON/OFF`. Enable/disable support for tabs as
+    valid container tokens after `:` and `-`. Defaults to `OFF`,
+    because this may cost up to 10% in processing time.
   * `RYML_DEFAULT_CALLBACKS=ON/OFF`. Enable/disable ryml's default
     implementation of error and allocation callbacks. Defaults to `ON`.
   * `RYML_STANDALONE=ON/OFF`. ryml uses
@@ -773,7 +798,8 @@ ryml is strongly coupled to c4core, and this is reinforced by the fact
 that c4core is a submodule of the current repo. However, it is still
 possible to use a c4core version different from the one in the repo
 (of course, only if there are no incompatibilities between the
-versions). You can find out how to achieve this by looking at the [`custom_c4core` sample](./samples/custom_c4core/CMakeLists.txt).
+versions). You can find out how to achieve this by looking at the
+[`custom_c4core` sample](./samples/custom_c4core/CMakeLists.txt).
 
 
 ------
@@ -800,8 +826,8 @@ be changed.) With that said, here's an example of the Python API:
 ```python
 import ryml
 
-# because ryml does not take ownership of the source buffer
-# ryml cannot accept strings; only bytes or bytearrays
+# ryml cannot accept strings because it does not take ownership of the
+# source buffer; only bytes or bytearrays are accepted.
 src = b"{HELLO: a, foo: b, bar: c, baz: d, seq: [0, 1, 2, 3]}"
 
 def check(tree):
@@ -884,9 +910,9 @@ the source buffer.)
 
 ## YAML standard conformance
 
-ryml is close to feature complete. Most of the YAML features are
-well covered in the unit tests, and expected to work, unless in the exceptions
-noted in the following sections.
+ryml is close to feature complete. Most of the YAML features are well
+covered in the unit tests, and expected to work, unless in the
+exceptions noted below.
 
 Of course, there are many dark corners in YAML, and there certainly
 can appear cases which ryml fails to parse. Your [bug reports or pull
@@ -896,86 +922,86 @@ welcome.
 See also [the roadmap](./ROADMAP.md) for a list of future work.
 
 
+### Known limitations
+
+ryml deliberately makes no effort to follow the standard in the following situations:
+
+* Containers are not accepted as mapping keys: keys must be scalars.
+* Tab characters after `:` and `-` are not accepted tokens, unless
+  ryml is compiled with the macro `RYML_WITH_TAB_TOKENS`. This
+  requirement exists because checking for tabs introduces branching
+  into the parser's hot code and in some cases costs as much as 10%
+  in parsing time.
+* Anchor names must not end with a terminating colon: eg `&anchor: key: val`.
+* `%YAML` directives have no effect and are ignored.
+* `%TAG` directives are limited to a default maximum of 4 instances
+  per `Tree`. To increase this maximum, define the preprocessor symbol
+  `RYML_MAX_TAG_DIRECTIVES` to a suitable value. This arbitrary limit
+  reflects the usual practice of having at most 1 or 2 tag directives;
+  also, be aware that this feature is under consideration for removal
+  in YAML 1.3.
+
+Also, ryml tends to be on the permissive side where the YAML standard
+dictates there should be an error; in many of these cases, ryml will
+tolerate the input. This may be good or bad, but in any case is being
+improved on (meaning ryml will grow progressively less tolerant of
+YAML errors in the coming releases). So we strongly suggest to stay
+away from those dark corners of YAML which are generally a source of
+problems, which is a good practice anyway.
+
+If you do run into trouble and would like to investigate conformance
+of your YAML code, beware of existing online YAML linters, many of
+which are not fully conformant; instead, try using
+[https://play.yaml.io](https://play.yaml.io), an amazing tool which
+lets you dynamically input your YAML and continuously see the results
+from all the existing parsers (kudos to @ingydotnet and the people
+from the YAML test suite). And of course, if you detect anything wrong
+with ryml, please [open an
+issue](https://github.com/biojppm/rapidyaml/issues) so that we can
+improve.
+
+
 ### Test suite status
 
-ryml is tested in the CI with the [YAML test
-suite](https://github.com/yaml/yaml-test-suite). This is a reference
-set of cases covering the full YAML spec. Each of
-these cases have several subparts:
+As part of its CI testing, ryml uses the [YAML test
+suite](https://github.com/yaml/yaml-test-suite). This is an extensive
+set of reference cases covering the full YAML spec. Each of these
+cases have several subparts:
  * `in-yaml`: mildly, plainly or extremely difficult-to-parse YAML
  * `in-json`: equivalent JSON (where possible/meaningful)
  * `out-yaml`: equivalent standard YAML
  * `emit-yaml`: equivalent standard YAML
  * `events`: reference results (ie, expected tree)
 
-When testing, ryml parses each of the 4 yaml/json parts, then emit the
-parsed tree, then parse the emitted result and verify that emission is
-idempotent, ie that the emitted result is the same as its input
-without any loss of information. To ensure consistency, this happens
-over four levels of parse/emission pairs. And to ensure correctness,
-the parsed result is compared against the `events` spec, which
-constitute the reference. This is then combined with several
-variations: unix vs windows line endings, emitting to string, file or
-streams, which results in ~250 tests per case part. With 3 parts per
-case and ~300 cases, this makes over 200'000 individual tests.
+When testing, ryml parses each of the 4 yaml/json parts, then emits
+the parsed tree, then parses the emitted result and verifies that
+emission is idempotent, ie that the emitted result is semantically the
+same as its input without any loss of information. To ensure
+consistency, this happens over four levels of parse/emission
+pairs. And to ensure correctness, each of the stages is compared
+against the `events` spec from the test, which constitutes the
+reference. The tests also check for equality between the reference
+events in the test case and the events emitted by ryml from the data
+tree parsed from the test case input. All of this is then carried out
+combining several variations: both unix `\n` vs windows `\r\n` line
+endings, emitting to string, file or streams, which results in ~250
+tests per case part. With multiple parts per case and ~400 reference
+cases in the test suite, this makes over several hundred thousand
+individual tests to which ryml is subjected, which are added to the
+unit tests in ryml, which also employ the same extensive
+combinatorial approach.
 
 Also, note that in [their own words](http://matrix.yaml.io/), the
 tests from the YAML test suite *contain a lot of edge cases that don't
 play such an important role in real world examples*. And yet, despite
-the extreme focus of the test suite, currently ryml only fails to
-parse 15 out of ~900-1200 subparts from the test suite, and when
-compared against the reference results from `events` part, only 30
-subparts fail. These are the current issues:
-  * explicit keys (starting with `?`)
-    * problem parsing when the scalar is missing after `? `
-    * not supported in flow style
-  * several expected parse errors do not materialize
-
-Refer to the [list of known
-failures](test/test_suite/test_suite_parts.cpp) for the current
-status, as this is subject to ongoing work.
-
-
---------- 
-
-## Known limitations
-
-ryml deliberatly makes no effort to follow the standard in the following situations:
-
-* `%YAML` directives have no effect and are ignored.
-* `%TAG` directives have no effect and are ignored. All schemas are assumed
-  to be the default YAML 2002 schema.
-* Tags are parsed as-is; tag lookup is not supported. YAML test suite cases:
-  [5TYM](https://github.com/yaml/yaml-test-suite/tree/main/src/5TYM.yaml),
-  [6CK3](https://github.com/yaml/yaml-test-suite/tree/main/src/6CK3.yaml),
-  [6WLZ](https://github.com/yaml/yaml-test-suite/tree/main/src/6WLZ.yaml),
-  [9WXW](https://github.com/yaml/yaml-test-suite/tree/main/src/9WXW.yaml),
-  [C4HZ](https://github.com/yaml/yaml-test-suite/tree/main/src/C4HZ.yaml),
-  [CC74](https://github.com/yaml/yaml-test-suite/tree/main/src/CC74.yaml),
-  [P76L](https://github.com/yaml/yaml-test-suite/tree/main/src/P76L.yaml),
-  [QLJ7](https://github.com/yaml/yaml-test-suite/tree/main/src/QLJ7.yaml),
-  [U3C3](https://github.com/yaml/yaml-test-suite/tree/main/src/U3C3.yaml),
-  [Z9M4](https://github.com/yaml/yaml-test-suite/tree/main/src/Z9M4.yaml).
-* Anchor names must not end with a terminating colon. YAML test suite cases:
-  [2SXE](https://github.com/yaml/yaml-test-suite/tree/main/src/2SXE.yaml),
-  [W5VH](https://github.com/yaml/yaml-test-suite/tree/main/src/W5VH.yaml).
-* Tabs after `:` or `-` are not supported. YAML test suite cases:
-  [6BCT](https://github.com/yaml/yaml-test-suite/tree/main/src/6BCT.yaml),
-  [J3BT](https://github.com/yaml/yaml-test-suite/tree/main/src/J3BT.yaml).
-* Containers are not accepted as mapping keys: keys must be
-  scalar strings. YAML test suite cases:
-  [4FJ6](https://github.com/yaml/yaml-test-suite/tree/main/src/4FJ6.yaml),
-  [6BFJ](https://github.com/yaml/yaml-test-suite/tree/main/src/6BFJ.yaml),
-  [6PBE](https://github.com/yaml/yaml-test-suite/tree/main/src/6PBE.yaml),
-  [KK5P](https://github.com/yaml/yaml-test-suite/tree/main/src/KK5P.yaml),
-  [KZN9](https://github.com/yaml/yaml-test-suite/tree/main/src/KZN9.yaml),
-  [LX3P](https://github.com/yaml/yaml-test-suite/tree/main/src/LX3P.yaml),
-  [M5DY](https://github.com/yaml/yaml-test-suite/tree/main/src/M5DY.yaml),
-  [Q9WF](https://github.com/yaml/yaml-test-suite/tree/main/src/Q9WF.yaml),
-  [SBG9](https://github.com/yaml/yaml-test-suite/tree/main/src/SBG9.yaml),
-  [V9D5](https://github.com/yaml/yaml-test-suite/tree/main/src/V9D5.yaml),
-  [X38W](https://github.com/yaml/yaml-test-suite/tree/main/src/X38W.yaml),
-  [XW4D](https://github.com/yaml/yaml-test-suite/tree/main/src/XW4D.yaml).
+the extreme focus of the test suite, currently ryml only fails a minor
+fraction of the test cases, mostly related with the deliberate
+limitations noted above. Other than those limitations, by far the main
+issue with ryml is that several standard-mandated parse errors fail to
+materialize. For the up-to-date list of ryml failures in the
+test-suite, refer to the [list of known
+exceptions](test/test_suite/test_suite_parts.cpp) from ryml's test
+suite runner, which is used as part of ryml's CI process.
 
 
 ------
@@ -986,14 +1012,38 @@ Why this library? Because none of the existing libraries was quite
 what I wanted. When I started this project in 2018, I was aware of these two
 alternative C/C++ libraries:
 
-  * [libyaml](https://github.com/yaml/libyaml). This is a bare C library. It does not create a representation of the data tree, so it don't see it as practical. My initial idea was to wrap parsing and emitting around libyaml's convenient event handling, but to my surprise I found out it makes heavy use of allocations and string duplications when parsing. I briefly pondered on sending PRs to reduce these allocation needs, but not having a permanent tree to store the parsed data was too much of a downside.
-  * [yaml-cpp](https://github.com/jbeder/yaml-cpp). This library may be full of functionality, but is heavy on the use of node-pointer-based structures like `std::map`, allocations, string copies, polymorphism and slow C++ stream serializations. This is generally a sure way of making your code slower, and strong evidence of this can be seen in the benchmark results above.
+  * [libyaml](https://github.com/yaml/libyaml). This is a bare C
+    library. It does not create a representation of the data tree, so
+    I don't see it as practical. My initial idea was to wrap parsing
+    and emitting around libyaml's convenient event handling, but to my
+    surprise I found out it makes heavy use of allocations and string
+    duplications when parsing. I briefly pondered on sending PRs to
+    reduce these allocation needs, but not having a permanent tree to
+    store the parsed data was too much of a downside.
+  * [yaml-cpp](https://github.com/jbeder/yaml-cpp). This library may
+    be full of functionality, but is heavy on the use of
+    node-pointer-based structures like `std::map`, allocations, string
+    copies, polymorphism and slow C++ stream serializations. This is
+    generally a sure way of making your code slower, and strong
+    evidence of this can be seen in the benchmark results above.
 
-Recently [libfyaml](https://github.com/pantoniou/libfyaml) appeared. This is a newer C library, fully conformant to the YAML standard, which does offer the tree as a data structure. As a downside, it still generally parses slower than ryml by a factor somewhere between 2x and 3x, and in some cases even higher than 100x.
+Recently [libfyaml](https://github.com/pantoniou/libfyaml)
+appeared. This is a newer C library, fully conformant to the YAML
+standard with an amazing 100% success in the test suite; it also offers
+the tree as a data structure. As a downside, it does not work in
+Windows, and it is also multiple times slower parsing and emitting.
 
-When performance and low latency are important, using contiguous structures for better cache behavior and to prevent the library from trampling caches, parsing in place and using non-owning strings is of central importance. Hence this Rapid YAML library which, with minimal compromise, bridges the gap from efficiency to usability. This library takes inspiration from [RapidJSON](https://github.com/Tencent/rapidjson) and [RapidXML](http://rapidxml.sourceforge.net/).
+When performance and low latency are important, using contiguous
+structures for better cache behavior and to prevent the library from
+trampling caches, parsing in place and using non-owning strings is of
+central importance. Hence this Rapid YAML library which, with minimal
+compromise, bridges the gap from efficiency to usability. This library
+takes inspiration from
+[RapidJSON](https://github.com/Tencent/rapidjson) and
+[RapidXML](http://rapidxml.sourceforge.net/).
 
 ------
 ## License
 
 ryml is permissively licensed under the [MIT license](LICENSE.txt).
+ 

@@ -49,8 +49,10 @@
 
 #ifndef C4CORE_NO_FAST_FLOAT
     C4_SUPPRESS_WARNING_GCC_WITH_PUSH("-Wsign-conversion")
-    C4_SUPPRESS_WARNING_GCC_WITH_PUSH("-Warray-bounds")
-    C4_SUPPRESS_WARNING_GCC_WITH_PUSH("-Wshift-count-overflow")
+    C4_SUPPRESS_WARNING_GCC("-Warray-bounds")
+#if __GNUC__ >= 5
+    C4_SUPPRESS_WARNING_GCC("-Wshift-count-overflow")
+#endif
 #   include "c4/ext/fast_float.hpp"
     C4_SUPPRESS_WARNING_GCC_POP
 #   define C4CORE_HAVE_FAST_FLOAT 1
@@ -218,67 +220,10 @@ struct is_fixed_length
 #define _c4append(c) { if(C4_LIKELY(pos < buf.len)) { buf.str[pos++] = static_cast<char>(c); } else { ++pos; } }
 #define _c4appendhex(i) { if(C4_LIKELY(pos < buf.len)) { buf.str[pos++] = hexchars[i]; } else { ++pos; } }
 
-
-namespace detail {
-template<class T>
-C4_NO_INLINE size_t write_dec_neg(substr buf, T v)
-{
-    C4_STATIC_ASSERT(std::is_integral<T>::value);
-    C4_STATIC_ASSERT(std::is_signed<T>::value);
-    C4_ASSERT(v < 0);
-    size_t pos = 0;
-    do {
-        _c4append('0' - v % T(10));
-        v /= T(10);
-    } while(v);
-    buf.reverse_range(0, pos <= buf.len ? pos : buf.len);
-    return pos;
 }
-template<class T>
-C4_NO_INLINE size_t write_hex_neg(substr buf, T v)
-{
-    C4_STATIC_ASSERT(std::is_integral<T>::value);
-    C4_STATIC_ASSERT(std::is_signed<T>::value);
-    C4_ASSERT(v < 0);
-    constexpr const char hexchars[] = "0123456789abcdef";
-    size_t pos = 0;
-    do {
-        _c4appendhex(-(v % T(16)));
-        v /= 16;
-    } while(v);
-    buf.reverse_range(0, pos <= buf.len ? pos : buf.len);
-    return pos;
-}
-template<class T>
-C4_NO_INLINE size_t write_oct_neg(substr buf, T v)
-{
-    C4_STATIC_ASSERT(std::is_integral<T>::value);
-    C4_STATIC_ASSERT(std::is_signed<T>::value);
-    C4_ASSERT(v < 0);
-    size_t pos = 0;
-    do {
-        _c4append('0' - (v % T(8)));
-        v /= 8;
-    } while(v);
-    buf.reverse_range(0, pos <= buf.len ? pos : buf.len);
-    return pos;
-}
-template<class T>
-C4_NO_INLINE size_t write_bin_neg(substr buf, T v)
-{
-    C4_STATIC_ASSERT(std::is_integral<T>::value);
-    C4_STATIC_ASSERT(std::is_signed<T>::value);
-    C4_ASSERT(v < 0);
-    size_t pos = 0;
-    do {
-        _c4append('0' - (v % T(2)));
-        v /= 2;
-    } while(v);
-    buf.reverse_range(0, pos <= buf.len ? pos : buf.len);
-    return pos;
-}
-} // namespace detail
-
+#include <iostream>
+namespace c4 {
+C4_INLINE_CONSTEXPR const char hexchars[] = "0123456789abcdef";
 
 /** write an integer to a string in decimal format. This is the
  * lowest level (and the fastest) function to do this task.
@@ -312,7 +257,6 @@ size_t write_hex(substr buf, T v)
 {
     C4_STATIC_ASSERT(std::is_integral<T>::value);
     C4_ASSERT(v >= 0);
-    constexpr const char hexchars[] = "0123456789abcdef";
     size_t pos = 0;
     do {
         _c4appendhex(v & T(15));
@@ -367,8 +311,9 @@ size_t write_bin(substr buf, T v)
 
 namespace detail {
 template<class U> using NumberWriter = size_t (*)(substr, U);
-template<class T>
-size_t write_num_digits(NumberWriter<T> writer, substr buf, T v, size_t num_digits)
+/** @todo pass the writer as a template parameter */
+template<class T, NumberWriter<T> writer>
+size_t write_num_digits(substr buf, T v, size_t num_digits)
 {
     C4_STATIC_ASSERT(std::is_integral<T>::value);
     size_t ret = writer(buf, v);
@@ -391,7 +336,7 @@ size_t write_num_digits(NumberWriter<T> writer, substr buf, T v, size_t num_digi
 template<class T>
 size_t write_dec(substr buf, T val, size_t num_digits)
 {
-    return detail::write_num_digits<T>(&write_dec<T>, buf, val, num_digits);
+    return detail::write_num_digits<T, &write_dec<T>>(buf, val, num_digits);
 }
 
 /** same as c4::write_hex(), but pad with zeroes on the left
@@ -400,7 +345,7 @@ size_t write_dec(substr buf, T val, size_t num_digits)
 template<class T>
 size_t write_hex(substr buf, T val, size_t num_digits)
 {
-    return detail::write_num_digits<T>(&write_hex<T>, buf, val, num_digits);
+    return detail::write_num_digits<T, &write_hex<T>>(buf, val, num_digits);
 }
 
 /** same as c4::write_bin(), but pad with zeroes on the left
@@ -409,7 +354,7 @@ size_t write_hex(substr buf, T val, size_t num_digits)
 template<class T>
 size_t write_bin(substr buf, T val, size_t num_digits)
 {
-    return detail::write_num_digits<T>(&write_bin<T>, buf, val, num_digits);
+    return detail::write_num_digits<T, &write_bin<T>>(buf, val, num_digits);
 }
 
 /** same as c4::write_oct(), but pad with zeroes on the left
@@ -418,7 +363,7 @@ size_t write_bin(substr buf, T val, size_t num_digits)
 template<class T>
 size_t write_oct(substr buf, T val, size_t num_digits)
 {
-    return detail::write_num_digits<T>(&write_oct<T>, buf, val, num_digits);
+    return detail::write_num_digits<T, &write_oct<T>>(buf, val, num_digits);
 }
 
 
@@ -520,63 +465,102 @@ C4_ALWAYS_INLINE bool read_oct(csubstr s, I *C4_RESTRICT v)
 //-----------------------------------------------------------------------------
 
 namespace detail {
-template<class T>
-C4_NO_INLINE size_t itoa_neg(substr buf, T v)
+// do not use the type as the template argument because in some
+// platforms long!=int32 and long!=int64. Just use the numbytes
+// which is more generic and spares lengthy SFINAE code.
+template<size_t numbytes> struct itoa_min;
+template<> struct itoa_min<1>
 {
-    C4_STATIC_ASSERT(std::is_signed<T>::value);
-    C4_ASSERT(v < 0);
-    if(buf.len > 0)
+    static csubstr value_dec() { return csubstr("128"); }
+    static csubstr value_hex() { return csubstr("80"); }
+    static csubstr value_oct() { return csubstr("200"); }
+    static csubstr value_bin() { return csubstr("10000000"); }
+};
+template<> struct itoa_min<2>
+{
+    static csubstr value_dec() { return csubstr("32768"); }
+    static csubstr value_hex() { return csubstr("8000"); }
+    static csubstr value_oct() { return csubstr("100000"); }
+    static csubstr value_bin() { return csubstr("1000000000000000"); }
+};
+template<> struct itoa_min<4>
+{
+    static csubstr value_dec() { return csubstr("2147483648"); }
+    static csubstr value_hex() { return csubstr("80000000"); }
+    static csubstr value_oct() { return csubstr("20000000000"); }
+    static csubstr value_bin() { return csubstr("10000000000000000000000000000000"); }
+};
+template<> struct itoa_min<8>
+{
+    static csubstr value_dec() { return csubstr("9223372036854775808"); }
+    static csubstr value_hex() { return csubstr("8000000000000000"); }
+    static csubstr value_oct() { return csubstr("1000000000000000000000"); }
+    static csubstr value_bin() { return csubstr("1000000000000000000000000000000000000000000000000000000000000000"); }
+};
+inline size_t _itoa2buf(substr buf, size_t pos, csubstr val)
+{
+    if(C4_LIKELY(pos + val.len <= buf.len))
+        memcpy(buf.str + pos, val.str, val.len);
+    return pos + val.len;
+}
+inline size_t _itoa2bufwithdigits(substr buf, size_t pos, size_t num_digits, csubstr val)
+{
+    num_digits = num_digits > val.len ? num_digits - val.len : 0;
+    for(size_t i = 0; i < num_digits; ++i)
+        _c4append('0');
+    return _itoa2buf(buf, pos, val);
+}
+template<class T>
+size_t _itoadec2buf(substr buf)
+{
+    if(C4_LIKELY(buf.len > 0))
     {
         buf.str[0] = '-';
-        return size_t(1) + detail::write_dec_neg(buf.sub(1), v);
+        return detail::_itoa2buf(buf, 1, detail::itoa_min<sizeof(T)>::value_dec());
     }
-    return size_t(1) + detail::write_dec_neg({}, v);
+    else
+    {
+        return detail::_itoa2buf({}, 1, detail::itoa_min<sizeof(T)>::value_dec());
+    }
+    C4_UNREACHABLE();
 }
-
-template<class T>
-C4_NO_INLINE size_t itoa_neg(substr buf, T v, T radix)
+template<class I>
+size_t _itoa2buf(substr buf, I radix)
 {
-    C4_STATIC_ASSERT(std::is_signed<T>::value);
-    C4_ASSERT(radix == 2 || radix == 8 || radix == 10 || radix == 16);
-    C4_ASSERT(v < 0);
     size_t pos = 0;
     _c4append('-');
     switch(radix)
     {
-    case 10:
-        /*............................*/return pos + detail::write_dec_neg(pos < buf.len ? buf.sub(pos) : substr(), v);
-    case 16:
-        _c4append('0'); _c4append('x'); return pos + detail::write_hex_neg(pos < buf.len ? buf.sub(pos) : substr(), v);
-    case 2 :
-        _c4append('0'); _c4append('b'); return pos + detail::write_bin_neg(pos < buf.len ? buf.sub(pos) : substr(), v);
-    case 8 :
-        _c4append('0'); _c4append('o'); return pos + detail::write_oct_neg(pos < buf.len ? buf.sub(pos) : substr(), v);
+    case I(10):
+        /*...........................*/ return _itoa2buf(buf, pos, itoa_min<sizeof(I)>::value_dec());
+    case I(16):
+        _c4append('0'); _c4append('x'); return _itoa2buf(buf, pos, itoa_min<sizeof(I)>::value_hex());
+    case I( 2):
+        _c4append('0'); _c4append('b'); return _itoa2buf(buf, pos, itoa_min<sizeof(I)>::value_bin());
+    case I( 8):
+        _c4append('0'); _c4append('o'); return _itoa2buf(buf, pos, itoa_min<sizeof(I)>::value_oct());
     }
-    C4_UNREACHABLE();
-    return substr::npos;
+    C4_ERROR("unknown radix");
+    return 0;
 }
-
-template<class T>
-C4_NO_INLINE size_t itoa_neg(substr buf, T v, T radix, size_t num_digits)
+template<class I>
+size_t _itoa2buf(substr buf, I radix, size_t num_digits)
 {
-    C4_STATIC_ASSERT(std::is_signed<T>::value);
-    C4_ASSERT(radix == 2 || radix == 8 || radix == 10 || radix == 16);
-    C4_ASSERT(v < 0);
     size_t pos = 0;
     _c4append('-');
     switch(radix)
     {
-    case 10:
-        /*............................*/return pos + detail::write_num_digits<T>(&detail::write_dec_neg<T>, pos < buf.len ? buf.sub(pos) : substr(), v, num_digits);
-    case 16:
-        _c4append('0'); _c4append('x'); return pos + detail::write_num_digits<T>(&detail::write_hex_neg<T>, pos < buf.len ? buf.sub(pos) : substr(), v, num_digits);
-    case 2 :
-        _c4append('0'); _c4append('b'); return pos + detail::write_num_digits<T>(&detail::write_bin_neg<T>, pos < buf.len ? buf.sub(pos) : substr(), v, num_digits);
-    case 8 :
-        _c4append('0'); _c4append('o'); return pos + detail::write_num_digits<T>(&detail::write_oct_neg<T>, pos < buf.len ? buf.sub(pos) : substr(), v, num_digits);
+    case I(10):
+        /*...........................*/ return _itoa2bufwithdigits(buf, pos, num_digits, itoa_min<sizeof(I)>::value_dec());
+    case I(16):
+        _c4append('0'); _c4append('x'); return _itoa2bufwithdigits(buf, pos, num_digits, itoa_min<sizeof(I)>::value_hex());
+    case I( 2):
+        _c4append('0'); _c4append('b'); return _itoa2bufwithdigits(buf, pos, num_digits, itoa_min<sizeof(I)>::value_bin());
+    case I( 8):
+        _c4append('0'); _c4append('o'); return _itoa2bufwithdigits(buf, pos, num_digits, itoa_min<sizeof(I)>::value_oct());
     }
-    C4_UNREACHABLE();
-    return csubstr::npos;
+    C4_ERROR("unknown radix");
+    return 0;
 }
 } // namespace detail
 
@@ -593,18 +577,30 @@ size_t itoa(substr buf, T v)
     {
         return write_dec(buf, v);
     }
-    else if(C4_LIKELY(v != std::numeric_limits<T>::min()))
+    else
     {
-        if(buf.len > 0)
+        if(C4_LIKELY(v != std::numeric_limits<T>::min()))
         {
-            buf.str[0] = '-';
-            return size_t(1) + write_dec(buf.sub(1), -v);
+            if(C4_LIKELY(buf.len > 0))
+            {
+                buf.str[0] = '-';
+                return size_t(1) + write_dec(buf.sub(1), -v);
+            }
+            else
+            {
+                return size_t(1) + write_dec({}, -v);
+            }
+            C4_UNREACHABLE();
         }
-        return size_t(1) + write_dec({}, -v);
+        else
+        {
+            // when T is the min value (eg i8: -128), negating it
+            // will overflow. so we just use the explicit value
+            return detail::_itoadec2buf<T>(buf);
+        }
+        C4_UNREACHABLE();
     }
-    // when T is the min value (eg i8: -128), negating it
-    // will overflow
-    return detail::itoa_neg(buf, v);
+    C4_UNREACHABLE();
 }
 
 /** convert an integral signed integer to a string, using a specific
@@ -642,7 +638,7 @@ size_t itoa(substr buf, T v, T radix)
     }
     // when T is the min value (eg i8: -128), negating it
     // will overflow
-    return detail::itoa_neg<T>(buf, v, radix);
+    return detail::_itoa2buf<T>(buf, radix);
 }
 
 
@@ -658,8 +654,6 @@ size_t itoa(substr buf, T v, T radix, size_t num_digits)
 {
     C4_STATIC_ASSERT(std::is_signed<T>::value);
     C4_ASSERT(radix == 2 || radix == 8 || radix == 10 || radix == 16);
-    // when T is the min value (eg i8: -128), negating it
-    // will overflow
     if(C4_LIKELY(v != std::numeric_limits<T>::min()))
     {
         size_t pos = 0;
@@ -680,7 +674,9 @@ size_t itoa(substr buf, T v, T radix, size_t num_digits)
             _c4append('0'); _c4append('o'); return pos + write_oct(pos < buf.len ? buf.sub(pos) : substr(), v, num_digits);
         }
     }
-    return detail::itoa_neg(buf, v, radix, num_digits);
+    // when T is the min value (eg i8: -128), negating it
+    // will overflow
+    return detail::_itoa2buf<T>(buf, radix, num_digits);
 }
 
 
@@ -969,6 +965,8 @@ inline size_t atou_first(csubstr str, T *v)
 
 
 //-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 
 namespace detail {
 
@@ -1024,9 +1022,7 @@ size_t print_one(substr str, const char* full_fmt, T v)
     C4_ASSERT(iret >= 0);
     size_t ret = (size_t) iret;
     if(ret >= str.len)
-    {
         ++ret; /* snprintf() reserves the last character to write \0 */
-    }
     return ret;
 #endif
 }
@@ -1083,13 +1079,9 @@ size_t rtoa(substr buf, T v, int precision=-1, RealFormat_e formatting=FTOA_FLEX
         _c4append('x');
     }
     if(precision == -1)
-    {
         result = std::to_chars(buf.str + pos, buf.str + buf.len, v, to_std_fmt(formatting));
-    }
     else
-    {
         result = std::to_chars(buf.str + pos, buf.str + buf.len, v, to_std_fmt(formatting), precision);
-    }
     if(result.ec == std::errc())
     {
         // all good, no errors.
@@ -1299,7 +1291,7 @@ C4_ALWAYS_INLINE size_t from_chars_first(csubstr buf,   double *C4_RESTRICT v) {
 // are not any of the fixed length types above
 
 #define _C4_IF_NOT_FIXED_LENGTH_I(T, ty) C4_ALWAYS_INLINE typename std::enable_if<std::  is_signed<T>::value && !is_fixed_length<T>::value_i, ty>
-#define _C4_IF_NOT_FIXED_LENGTH_U(T, ty) C4_ALWAYS_INLINE typename std::enable_if<std::is_unsigned<T>::value && !is_fixed_length<T>::value_i, ty>
+#define _C4_IF_NOT_FIXED_LENGTH_U(T, ty) C4_ALWAYS_INLINE typename std::enable_if<std::is_unsigned<T>::value && !is_fixed_length<T>::value_u, ty>
 
 template <class T> _C4_IF_NOT_FIXED_LENGTH_I(T, size_t)::type xtoa(substr buf, T v) { return itoa(buf, v); }
 template <class T> _C4_IF_NOT_FIXED_LENGTH_U(T, size_t)::type xtoa(substr buf, T v) { return utoa(buf, v); }
@@ -1404,9 +1396,7 @@ inline size_t from_chars_first(csubstr buf, bool * C4_RESTRICT v)
 {
     csubstr trimmed = buf.first_non_empty_span();
     if(trimmed.len == 0 || !from_chars(buf, v))
-    {
         return csubstr::npos;
-    }
     return trimmed.len;
 }
 
@@ -1416,7 +1406,8 @@ inline size_t from_chars_first(csubstr buf, bool * C4_RESTRICT v)
 
 inline size_t to_chars(substr buf, char v)
 {
-    if(buf.len > 0) buf[0] = v;
+    if(buf.len > 0)
+        buf[0] = v;
     return 1;
 }
 
@@ -1459,7 +1450,8 @@ inline bool from_chars(csubstr buf, csubstr *C4_RESTRICT v)
 inline size_t from_chars_first(substr buf, csubstr * C4_RESTRICT v)
 {
     csubstr trimmed = buf.first_non_empty_span();
-    if(trimmed.len == 0) return csubstr::npos;
+    if(trimmed.len == 0)
+        return csubstr::npos;
     *v = trimmed;
     return static_cast<size_t>(trimmed.end() - buf.begin());
 }
@@ -1493,10 +1485,12 @@ inline size_t from_chars_first(csubstr buf, substr * C4_RESTRICT v)
 {
     csubstr trimmed = buf.first_non_empty_span();
     C4_ASSERT(!trimmed.overlaps(*v));
-    if(C4_UNLIKELY(trimmed.len == 0)) return csubstr::npos;
+    if(C4_UNLIKELY(trimmed.len == 0))
+        return csubstr::npos;
     size_t len = trimmed.len > v->len ? v->len : trimmed.len;
     memcpy(v->str, trimmed.str, len);
-    if(C4_UNLIKELY(trimmed.len > v->len)) return csubstr::npos;
+    if(C4_UNLIKELY(trimmed.len > v->len))
+        return csubstr::npos;
     return static_cast<size_t>(trimmed.end() - buf.begin());
 }
 
@@ -1514,7 +1508,6 @@ inline size_t to_chars(substr buf, const char * C4_RESTRICT v)
 {
     return to_chars(buf, to_csubstr(v));
 }
-
 
 } // namespace c4
 

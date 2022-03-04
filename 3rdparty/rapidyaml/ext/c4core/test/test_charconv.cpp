@@ -879,6 +879,7 @@ TEST_CASE_TEMPLATE("atou.false_parse", T, uint8_t, uint16_t, uint32_t, uint64_t,
 template<class T>
 void test_itoa_range_min(T val, csubstr dec, csubstr hex, csubstr oct, csubstr bin)
 {
+    C4_STATIC_ASSERT(std::is_signed<T>::value);
     char buf_[128];
     substr buf(buf_);
     size_t ret;
@@ -891,34 +892,71 @@ void test_itoa_range_min(T val, csubstr dec, csubstr hex, csubstr oct, csubstr b
 
     {
         INFO("vanilla itoa");
+        ret = itoa(substr{}, val);
+        CHECK_EQ(ret, dec.len);
         ret = itoa(buf, val);
         CHECK_EQ(ret, dec.len);
         CHECK_EQ(buf.first(ret), dec);
     }
     {
         INFO("radix itoa, 10");
+        ret = itoa(substr{}, val, T(10));
+        CHECK_EQ(ret, dec.len);
         ret = itoa(buf, val, T(10));
         CHECK_EQ(ret, dec.len);
         CHECK_EQ(buf.first(ret), dec);
+        if(val >= 0)
+        {
+            ret = write_dec(buf, val);
+            CHECK_EQ(ret, dec.len);
+            CHECK_EQ(buf.first(ret), dec);
+        }
     }
     {
         INFO("radix itoa, 16");
+        ret = itoa({}, val, T(16));
+        CHECK_EQ(ret, hex.len);
         ret = itoa(buf, val, T(16));
         CHECK_EQ(ret, hex.len);
         CHECK_EQ(buf.first(ret), hex);
+        if(val >= 0)
+        {
+            ret = write_hex(buf, val);
+            CHECK_EQ(ret + 2, hex.len);
+            CHECK_EQ(buf.first(ret), hex.sub(2));
+        }
     }
     {
         INFO("radix itoa, 8");
+        ret = itoa({}, val, T(8));
+        CHECK_EQ(ret, oct.len);
         ret = itoa(buf, val, T(8));
         CHECK_EQ(ret, oct.len);
         CHECK_EQ(buf.first(ret), oct);
+        if(val >= 0)
+        {
+            ret = write_oct(buf, val);
+            CHECK_EQ(ret + 2, oct.len);
+            CHECK_EQ(buf.first(ret), oct.sub(2));
+        }
     }
     {
         INFO("radix itoa, 2");
+        ret = itoa({}, val, T(2));
+        CHECK_EQ(ret, bin.len);
         ret = itoa(buf, val, T(2));
         CHECK_EQ(ret, bin.len);
         CHECK_EQ(buf.first(ret), bin);
+        if(val >= 0)
+        {
+            ret = write_bin(buf, val);
+            CHECK_EQ(ret + 2, bin.len);
+            CHECK_EQ(buf.first(ret), bin.sub(2));
+        }
     }
+
+    if(val >= 0)
+        return;
 
     for(size_t num_digits = dec.len; num_digits < dec.len + 10; ++num_digits)
     {
@@ -999,8 +1037,9 @@ TEST_CASE("atoi.range_i8")
 
 TEST_CASE("itoa.range_i8")
 {
-    test_itoa_range_min(int8_t(-128), "-128", "-0x80", "-0o200", "-0b10000000");
-    test_itoa_range_min(int8_t(-127), "-127", "-0x7f", "-0o177", "-0b1111111");
+    test_itoa_range_min<int8_t>(int8_t(-128), "-128", "-0x80", "-0o200", "-0b10000000");
+    test_itoa_range_min<int8_t>(int8_t(-127), "-127", "-0x7f", "-0o177", "-0b1111111");
+    test_itoa_range_min<int8_t>(int8_t( 127),  "127",  "0x7f",  "0o177",  "0b1111111");
 }
 
 TEST_CASE("atou.range_u8")
@@ -1036,8 +1075,9 @@ TEST_CASE("atoi.range_i16")
 
 TEST_CASE("itoa.range_i16")
 {
-    test_itoa_range_min(int16_t(-32768), "-32768", "-0x8000", "-0o100000", "-0b1000000000000000");
-    test_itoa_range_min(int16_t(-32767), "-32767", "-0x7fff", "-0o77777", "-0b111111111111111");
+    test_itoa_range_min<int16_t>(INT16_C(-32767) - INT16_C(1), "-32768", "-0x8000", "-0o100000", "-0b1000000000000000");
+    test_itoa_range_min<int16_t>(INT16_C(-32767)             , "-32767", "-0x7fff", "-0o77777", "-0b111111111111111");
+    test_itoa_range_min<int16_t>(INT16_C( 32767)             ,  "32767",  "0x7fff",  "0o77777",  "0b111111111111111");
 }
 
 TEST_CASE("atou.range_u16")
@@ -1076,9 +1116,10 @@ TEST_CASE("atoi.range_i32")
 
 TEST_CASE("itoa.range_i32")
 {
-    // VS does not accept int32_t(-2147483648)!!!
-    test_itoa_range_min(int32_t(-2147483647-1), "-2147483648", "-0x80000000", "-0o20000000000", "-0b10000000000000000000000000000000");
-    test_itoa_range_min(int32_t(-2147483647  ), "-2147483647", "-0x7fffffff", "-0o17777777777", "-0b1111111111111111111111111111111");
+    // the subtraction is needed in x86, because -2147483647 is out of range
+    test_itoa_range_min<int32_t>(INT32_C(-2147483647) - INT32_C(1), "-2147483648", "-0x80000000", "-0o20000000000", "-0b10000000000000000000000000000000");
+    test_itoa_range_min<int32_t>(INT32_C(-2147483647)             , "-2147483647", "-0x7fffffff", "-0o17777777777", "-0b1111111111111111111111111111111");
+    test_itoa_range_min<int32_t>(INT32_C( 2147483647)             ,  "2147483647",  "0x7fffffff",  "0o17777777777",  "0b1111111111111111111111111111111");
 }
 
 TEST_CASE("atou.range_u32")
@@ -1124,8 +1165,10 @@ TEST_CASE("atoi.range_i64")
 
 TEST_CASE("itoa.range_i64")
 {
-    test_itoa_range_min(int64_t(-9223372036854775807LL - 1LL), "-9223372036854775808", "-0x8000000000000000", "-0o1000000000000000000000", "-0b1000000000000000000000000000000000000000000000000000000000000000");
-    test_itoa_range_min(int64_t(-9223372036854775807LL), "-9223372036854775807", "-0x7fffffffffffffff", "-0o777777777777777777777", "-0b111111111111111111111111111111111111111111111111111111111111111");
+    // the subtraction is needed in x86, because -9223372036854775808 is out of range
+    test_itoa_range_min<int64_t>(INT64_C(-9223372036854775807) - INT64_C(1), "-9223372036854775808", "-0x8000000000000000", "-0o1000000000000000000000", "-0b1000000000000000000000000000000000000000000000000000000000000000");
+    test_itoa_range_min<int64_t>(INT64_C(-9223372036854775807)             , "-9223372036854775807", "-0x7fffffffffffffff", "-0o777777777777777777777" , "-0b111111111111111111111111111111111111111111111111111111111111111");
+    test_itoa_range_min<int64_t>(INT64_C( 9223372036854775807)             ,  "9223372036854775807",  "0x7fffffffffffffff",  "0o777777777777777777777" ,  "0b111111111111111111111111111111111111111111111111111111111111111");
 }
 
 TEST_CASE("atou.range_u64")

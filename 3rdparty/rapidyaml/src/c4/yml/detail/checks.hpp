@@ -180,7 +180,7 @@ inline void check_free_list(Tree const& t)
 
 inline void check_arena(Tree const& t)
 {
-    C4_CHECK(t.m_arena.len == 0 || (t.m_arena_pos >= 0 && t.m_arena_pos < t.m_arena.len));
+    C4_CHECK(t.m_arena.len == 0 || (t.m_arena_pos >= 0 && t.m_arena_pos <= t.m_arena.len));
     C4_CHECK(t.arena_size() == t.m_arena_pos);
     C4_CHECK(t.arena_slack() + t.m_arena_pos == t.m_arena.len);
 }

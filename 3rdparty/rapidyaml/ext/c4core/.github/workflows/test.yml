@@ -239,6 +239,8 @@ jobs:
           - {std: 20, cxx: g++-10     , bt: Release, os: ubuntu-18.04, bitlinks: shared64 static32}
           - {std: 11, cxx: g++-5      , bt: Debug  , os: ubuntu-18.04, bitlinks: shared64 static32}
           - {std: 11, cxx: g++-5      , bt: Release, os: ubuntu-18.04, bitlinks: shared64 static32}
+          - {std: 11, cxx: g++-4.8    , bt: Debug,   os: ubuntu-18.04, bitlinks: shared64 static32}
+          - {std: 11, cxx: g++-4.8    , bt: Release, os: ubuntu-18.04, bitlinks: shared64 static32}
     env: {STD: "${{matrix.std}}", CXX_: "${{matrix.cxx}}", BT: "${{matrix.bt}}", BITLINKS: "${{matrix.bitlinks}}", VG: "${{matrix.vg}}", SAN: "${{matrix.san}}", LINT: "${{matrix.lint}}", OS: "${{matrix.os}}"}
     steps:
       - {name: checkout, uses: actions/checkout@v2, with: {submodules: recursive}}
@@ -380,6 +382,8 @@ jobs:
           - {std: 11, cxx: g++-6, bt: Release, os: ubuntu-18.04}
           - {std: 11, cxx: g++-5, bt: Debug  , os: ubuntu-18.04}
           - {std: 11, cxx: g++-5, bt: Release, os: ubuntu-18.04}
+          - {std: 11, cxx: g++-4.8, bt: Debug, os: ubuntu-18.04}
+          - {std: 11, cxx: g++-4.8, bt: Release, os: ubuntu-18.04}
     env: {STD: "${{matrix.std}}", CXX_: "${{matrix.cxx}}", BT: "${{matrix.bt}}", BITLINKS: "${{matrix.bitlinks}}", VG: "${{matrix.vg}}", SAN: "${{matrix.san}}", LINT: "${{matrix.lint}}", OS: "${{matrix.os}}"}
     steps:
       - {name: checkout, uses: actions/checkout@v2, with: {submodules: recursive}}

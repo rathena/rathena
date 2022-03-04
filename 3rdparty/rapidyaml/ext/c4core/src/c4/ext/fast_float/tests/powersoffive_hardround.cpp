@@ -1,8 +1,12 @@
 #include "fast_float/fast_float.h"
 
+#include <ios>
 #include <iostream>
 #include <random>
 #include <sstream>
+#include <string>
+#include <system_error>
+#include <utility>
 #include <vector>
 
 
@@ -11,7 +15,6 @@
 // always use this fallback because we cannot rely on it behaving as normal
 // gcc.
 #include <locale>
-#include <sstream>
 // workaround for CYGWIN
 double cygwin_strtod_l(const char* start, char** end) {
     double d;

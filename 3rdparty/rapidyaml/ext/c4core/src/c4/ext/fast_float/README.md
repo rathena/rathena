@@ -28,10 +28,11 @@ struct from_chars_result {
 ```
 
 It parses the character sequence [first,last) for a number. It parses floating-point numbers expecting
-a locale-independent format equivalent to what is used by `std::strtod` in the default ("C") locale. 
+a locale-independent format equivalent to the C++17 from_chars function. 
 The resulting floating-point value is the closest floating-point values (using either float or double), 
 using the "round to even" convention for values that would otherwise fall right in-between two values.
 That is, we provide exact parsing according to the IEEE standard.
+
 
 Given a successful parse, the pointer (`ptr`) in the returned value is set to point right after the
 parsed number, and the `value` referenced is set to the parsed value. In case of error, the returned
@@ -64,14 +65,49 @@ the type `fast_float::chars_format`. It is a bitset value: we check whether
 to determine whether we allow the fixed point and scientific notation respectively.
 The default is  `fast_float::chars_format::general` which allows both `fixed` and `scientific`.
 
-The library seeks to follow the C++17 (see 20.19.3.(7.1))  specification. In particular, it forbids leading spaces and the leading '+' sign.
+The library seeks to follow the C++17 (see [20.19.3](http://eel.is/c++draft/charconv.from.chars).(7.1))  specification. 
+* The `from_chars` function does not skip leading white-space characters.
+* [A leading `+` sign](https://en.cppreference.com/w/cpp/utility/from_chars) is forbidden.
+* It is generally impossible to represent a decimal value exactly as binary floating-point number (`float` and `double` types). We seek the nearest value. We round to an even mantissa when we are in-between two binary floating-point numbers. 
+
+Furthermore, we have the following restrictions:
+* We only support `float` and `double` types at this time.
+* We only support the decimal format: we do not support hexadecimal strings.
+* For values that are either very large or very small (e.g., `1e9999`), we represent it using the infinity or negative infinity value.
 
 We support Visual Studio, macOS, Linux, freeBSD. We support big and little endian. We support 32-bit and 64-bit systems.
 
+
+
+## Using commas as decimal separator
+
+
+The C++ standard stipulate that `from_chars` has to be locale-independent. In
+particular, the decimal separator has to be the period (`.`). However, 
+some users still want to use the `fast_float` library with in a locale-dependent 
+manner. Using a separate function called `from_chars_advanced`, we allow the users
+to pass a `parse_options` instance which contains a custom decimal separator (e.g., 
+the comma). You may use it as follows.
+
+```C++
+#include "fast_float/fast_float.h"
+#include <iostream>
+ 
+int main() {
+    const std::string input =  "3,1416 xyz ";
+    double result;
+    fast_float::parse_options options{fast_float::chars_format::general, ','};
+    auto answer = fast_float::from_chars_advanced(input.data(), input.data()+input.size(), result, options);
+    if((answer.ec != std::errc()) || ((result != 3.1416))) { std::cerr << "parsing failure\n"; return EXIT_FAILURE; }
+    std::cout << "parsed the number " << result << std::endl;
+    return EXIT_SUCCESS;
+}
+```
+
+
 ## Reference
 
-- Daniel Lemire, [Number Parsing at a Gigabyte per Second](https://arxiv.org/abs/2101.11408), Software: Pratice and Experience (to appear)
-
+- Daniel Lemire, [Number Parsing at a Gigabyte per Second](https://arxiv.org/abs/2101.11408), Software: Pratice and Experience 51 (8), 2021.
 
 ## Other programming languages
 
@@ -82,6 +118,8 @@ We support Visual Studio, macOS, Linux, freeBSD. We support big and little endia
 
 
 ## Relation With Other Work
+
+The fastfloat algorithm is part of the [LLVM standard libraries](https://github.com/llvm/llvm-project/commit/87c016078ad72c46505461e4ff8bfa04819fe7ba). 
 
 The fast_float library provides a performance similar to that of the [fast_double_parser](https://github.com/lemire/fast_double_parser) library but using an updated algorithm reworked from the ground up, and while offering an API more in line with the expectations of C++ programmers. The fast_double_parser library is part of the [Microsoft LightGBM machine-learning framework](https://github.com/microsoft/LightGBM).
 
@@ -133,7 +171,7 @@ Or you may want to retrieve the dependency automatically if you have a sufficien
 FetchContent_Declare(
   fast_float
   GIT_REPOSITORY https://github.com/lemire/fast_float.git
-  GIT_TAG origin/main
+  GIT_TAG tags/v1.1.2
   GIT_SHALLOW TRUE)
 
 FetchContent_MakeAvailable(fast_float)
@@ -141,6 +179,19 @@ target_link_libraries(myprogram PUBLIC fast_float)
 
 ```
 
+You should change the `GIT_TAG` line so that you recover the version you wish to use.
+
+## Using as single header
+
+The script `script/amalgamate.py` may be used to generate a single header 
+version of the library if so desired.
+Just run the script from the root directory of this repository. 
+You can customize the license type and output file if desired as described in
+the command line help.
+
+You may directly download automatically generated single-header files:
+
+https://github.com/fastfloat/fast_float/releases/download/v3.4.0/fast_float.h
 
 ## Credit
 

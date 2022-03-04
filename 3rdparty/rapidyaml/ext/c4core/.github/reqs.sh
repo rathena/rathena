@@ -189,6 +189,7 @@ function _c4_gather_compilers()
         g++-6      ) _c4_addgcc 6  ;;
         g++-5      ) _c4_addgcc 5  ;;
         #g++-4.9    ) _c4_addgcc 4.9 ;;  # https://askubuntu.com/questions/1036108/install-gcc-4-9-at-ubuntu-18-04
+        g++-4.8    ) _c4_addgcc 4.8 ;;
         clang++-12 ) _c4_addclang 12  ;;
         clang++-11 ) _c4_addclang 11  ;;
         clang++-10 ) _c4_addclang 10  ;;

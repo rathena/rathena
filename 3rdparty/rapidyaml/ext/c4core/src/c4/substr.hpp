@@ -15,7 +15,7 @@
 #   pragma clang diagnostic push
 #elif defined(__GNUC__)
 #   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wtype-limits" // disable warnings on size_t>=0, used heavily in assertions below. These are a preparation step for providing the index type as a template parameter.
+#   pragma GCC diagnostic ignored "-Wtype-limits" // disable warnings on size_t>=0, used heavily in assertions below. These assertions are a preparation step for providing the index type as a template parameter.
 #   pragma GCC diagnostic ignored "-Wuseless-cast"
 #endif
 
@@ -224,13 +224,9 @@ public:
     {
         C4_XASSERT((str != nullptr) || len == 0);
         if( ! len)
-        {
             return -1;
-        }
         if(*str == c)
-        {
             return static_cast<int>(len - 1);
-        }
         return *str - c;
     }
 
@@ -242,9 +238,7 @@ public:
         {
             int ret = strncmp(str, that, len < sz ? len : sz);
             if(ret == 0 && len != sz)
-            {
                 ret = len < sz ? -1 : 1;
-            }
             return ret;
         }
         if((!str && !that) || (len == sz))
@@ -543,6 +537,20 @@ public:
         {
             ++num;
             pos = find(c, pos + 1);
+        }
+        return num;
+    }
+
+    /** count the number of occurrences of s */
+    inline size_t count(ro_substr c, size_t pos=0) const
+    {
+        C4_ASSERT(pos >= 0 && pos <= len);
+        size_t num = 0;
+        pos = find(c, pos);
+        while(pos != npos)
+        {
+            ++num;
+            pos = find(c, pos + c.len);
         }
         return num;
     }
@@ -1743,18 +1751,6 @@ public:
 }; // template class basic_substring
 
 
-/** ConstantSUBSTRing: a non-owning read-only string view
- * @see to_substr()
- * @see to_csubstr() */
-using csubstr = C4CORE_EXPORT basic_substring<const char>;
-
-
-/** SUBSTRing: a non-owning read-write string view
- * @see to_substr()
- * @see to_csubstr() */
-using substr = C4CORE_EXPORT basic_substring<char>;
-
-
 #undef C4_REQUIRE_RW
 #undef C4_REQUIRE_RO
 #undef C4_NC2C
@@ -1832,19 +1828,19 @@ inline substr to_substr(substr s)
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 
-template<typename C, size_t N> inline bool operator== (const C (&s)[N], basic_substring<const C> const that) { return that.compare(s) == 0; }
-template<typename C, size_t N> inline bool operator!= (const C (&s)[N], basic_substring<const C> const that) { return that.compare(s) != 0; }
-template<typename C, size_t N> inline bool operator<  (const C (&s)[N], basic_substring<const C> const that) { return that.compare(s) >  0; }
-template<typename C, size_t N> inline bool operator>  (const C (&s)[N], basic_substring<const C> const that) { return that.compare(s) <  0; }
-template<typename C, size_t N> inline bool operator<= (const C (&s)[N], basic_substring<const C> const that) { return that.compare(s) >= 0; }
-template<typename C, size_t N> inline bool operator>= (const C (&s)[N], basic_substring<const C> const that) { return that.compare(s) <= 0; }
+template<typename C, size_t N> inline bool operator== (const C (&s)[N], basic_substring<C> const that) { return that.compare(s) == 0; }
+template<typename C, size_t N> inline bool operator!= (const C (&s)[N], basic_substring<C> const that) { return that.compare(s) != 0; }
+template<typename C, size_t N> inline bool operator<  (const C (&s)[N], basic_substring<C> const that) { return that.compare(s) >  0; }
+template<typename C, size_t N> inline bool operator>  (const C (&s)[N], basic_substring<C> const that) { return that.compare(s) <  0; }
+template<typename C, size_t N> inline bool operator<= (const C (&s)[N], basic_substring<C> const that) { return that.compare(s) >= 0; }
+template<typename C, size_t N> inline bool operator>= (const C (&s)[N], basic_substring<C> const that) { return that.compare(s) <= 0; }
 
-template<typename C> inline bool operator== (C const c, basic_substring<const C> const that) { return that.compare(c) == 0; }
-template<typename C> inline bool operator!= (C const c, basic_substring<const C> const that) { return that.compare(c) != 0; }
-template<typename C> inline bool operator<  (C const c, basic_substring<const C> const that) { return that.compare(c) >  0; }
-template<typename C> inline bool operator>  (C const c, basic_substring<const C> const that) { return that.compare(c) <  0; }
-template<typename C> inline bool operator<= (C const c, basic_substring<const C> const that) { return that.compare(c) >= 0; }
-template<typename C> inline bool operator>= (C const c, basic_substring<const C> const that) { return that.compare(c) <= 0; }
+template<typename C> inline bool operator== (C const c, basic_substring<C> const that) { return that.compare(c) == 0; }
+template<typename C> inline bool operator!= (C const c, basic_substring<C> const that) { return that.compare(c) != 0; }
+template<typename C> inline bool operator<  (C const c, basic_substring<C> const that) { return that.compare(c) >  0; }
+template<typename C> inline bool operator>  (C const c, basic_substring<C> const that) { return that.compare(c) <  0; }
+template<typename C> inline bool operator<= (C const c, basic_substring<C> const that) { return that.compare(c) >= 0; }
+template<typename C> inline bool operator>= (C const c, basic_substring<C> const that) { return that.compare(c) <= 0; }
 
 
 //-----------------------------------------------------------------------------

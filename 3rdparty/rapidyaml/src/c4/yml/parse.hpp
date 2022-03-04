@@ -262,6 +262,8 @@ private:
 
 private:
 
+    using flag_t = int;
+
     static size_t _estimate_capacity(csubstr src) { size_t c = _count_nlines(src); c = c >= 16 ? c : 16; return c; }
 
     void  _reset();
@@ -286,8 +288,8 @@ private:
     csubstr _scan_squot_scalar();
     csubstr _scan_dquot_scalar();
     csubstr _scan_block();
-    substr  _scan_plain_scalar_impl(csubstr currscalar, csubstr peeked_line, size_t indentation);
-    substr  _scan_plain_scalar_expl(csubstr currscalar, csubstr peeked_line);
+    substr  _scan_plain_scalar_blck(csubstr currscalar, csubstr peeked_line, size_t indentation);
+    substr  _scan_plain_scalar_flow(csubstr currscalar, csubstr peeked_line);
     substr  _scan_complex_key(csubstr currscalar, csubstr peeked_line);
     csubstr _scan_to_next_nonempty_line(size_t indentation);
     csubstr _extend_scanned_scalar(csubstr currscalar);
@@ -300,6 +302,7 @@ private:
     bool    _filter_nl(substr scalar, size_t *C4_RESTRICT pos, size_t *C4_RESTRICT filter_arena_pos, size_t indentation);
     template<bool keep_trailing_whitespace>
     void    _filter_ws(substr scalar, size_t *C4_RESTRICT pos, size_t *C4_RESTRICT filter_arena_pos);
+    bool    _apply_chomp(substr buf, size_t *C4_RESTRICT pos, BlockChomp_e chomp);
 
     void  _handle_finished_file();
     void  _handle_line();
@@ -307,10 +310,10 @@ private:
     bool  _handle_indentation();
 
     bool  _handle_unk();
-    bool  _handle_map_expl();
-    bool  _handle_map_impl();
-    bool  _handle_seq_expl();
-    bool  _handle_seq_impl();
+    bool  _handle_map_flow();
+    bool  _handle_map_blck();
+    bool  _handle_seq_flow();
+    bool  _handle_seq_blck();
     bool  _handle_top();
     bool  _handle_types();
     bool  _handle_key_anchors_and_refs();
@@ -341,11 +344,11 @@ private:
     void  _start_new_doc(csubstr rem);
     void  _end_stream();
 
-    NodeData* _append_val(csubstr val, bool quoted=false);
-    NodeData* _append_key_val(csubstr val, bool val_quoted=false);
+    NodeData* _append_val(csubstr val, flag_t quoted=false);
+    NodeData* _append_key_val(csubstr val, flag_t val_quoted=false);
     bool  _rval_dash_start_or_continue_seq();
 
-    void  _store_scalar(csubstr const& s, bool is_quoted);
+    void  _store_scalar(csubstr s, flag_t is_quoted);
     csubstr _consume_scalar();
     void  _move_scalar_from_top();
 
@@ -360,30 +363,36 @@ private:
     void  _write_key_anchor(size_t node_id);
     void  _write_val_anchor(size_t node_id);
 
+    void _handle_directive(csubstr directive);
+
+    void _skipchars(char c);
+    template<size_t N>
+    void _skipchars(const char (&chars)[N]);
+
 private:
 
     static size_t _count_nlines(csubstr src);
 
 private:
 
-    typedef enum {
+    typedef enum : flag_t {
         RTOP = 0x01 <<  0,   ///< reading at top level
         RUNK = 0x01 <<  1,   ///< reading an unknown: must determine whether scalar, map or seq
         RMAP = 0x01 <<  2,   ///< reading a map
         RSEQ = 0x01 <<  3,   ///< reading a seq
-        EXPL = 0x01 <<  4,   ///< reading is inside explicit flow chars: [] or {}
-        CPLX = 0x01 <<  5,   ///< reading a complex key
+        FLOW = 0x01 <<  4,   ///< reading is inside explicit flow chars: [] or {}
+        QMRK = 0x01 <<  5,   ///< reading an explicit key (`? key`)
         RKEY = 0x01 <<  6,   ///< reading a scalar as key
         RVAL = 0x01 <<  7,   ///< reading a scalar as val
         RNXT = 0x01 <<  8,   ///< read next val or keyval
         SSCL = 0x01 <<  9,   ///< there's a stored scalar
-        RSET = 0x01 << 10,   ///< the (implicit) map being read is a !!set. @see https://yaml.org/type/set.html
-        NDOC = 0x01 << 11,   ///< no document mode. a document has ended and another has not started yet.
+        QSCL = 0x01 << 10,   ///< stored scalar was quoted
+        RSET = 0x01 << 11,   ///< the (implicit) map being read is a !!set. @see https://yaml.org/type/set.html
+        NDOC = 0x01 << 12,   ///< no document mode. a document has ended and another has not started yet.
         //! reading an implicit map nested in an explicit seq.
         //! eg, {key: [key2: value2, key3: value3]}
         //! is parsed as {key: [{key2: value2}, {key3: value3}]}
-        RSEQIMAP = 0x01 << 12,
-        SSCL_QUO = 0x01 << 13, ///< stored scalar was quoted
+        RSEQIMAP = 0x01 << 13,
     } State_e;
 
     struct LineContents
@@ -422,7 +431,7 @@ private:
 
     struct State
     {
-        size_t       flags;
+        flag_t       flags;
         size_t       level;
         size_t       node_id; // don't hold a pointer to the node as it will be relocated during tree resizes
         csubstr      scalar;
@@ -481,27 +490,27 @@ private:
     inline NodeData * node(State const& s) const { return m_tree->get(s .node_id); }
     inline NodeData * node(size_t node_id) const { return m_tree->get(   node_id); }
 
-    inline bool has_all(size_t f) const { return (m_state->flags & f) == f; }
-    inline bool has_any(size_t f) const { return (m_state->flags & f) != 0; }
-    inline bool has_none(size_t f) const { return (m_state->flags & f) == 0; }
+    inline bool has_all(flag_t f) const { return (m_state->flags & f) == f; }
+    inline bool has_any(flag_t f) const { return (m_state->flags & f) != 0; }
+    inline bool has_none(flag_t f) const { return (m_state->flags & f) == 0; }
 
-    static inline bool has_all(size_t f, State const* s) { return (s->flags & f) == f; }
-    static inline bool has_any(size_t f, State const* s) { return (s->flags & f) != 0; }
-    static inline bool has_none(size_t f, State const* s) { return (s->flags & f) == 0; }
+    static inline bool has_all(flag_t f, State const* s) { return (s->flags & f) == f; }
+    static inline bool has_any(flag_t f, State const* s) { return (s->flags & f) != 0; }
+    static inline bool has_none(flag_t f, State const* s) { return (s->flags & f) == 0; }
 
-    inline void set_flags(size_t f) { set_flags(f, m_state); }
-    inline void add_flags(size_t on) { add_flags(on, m_state); }
-    inline void addrem_flags(size_t on, size_t off) { addrem_flags(on, off, m_state); }
-    inline void rem_flags(size_t off) { rem_flags(off, m_state); }
+    inline void set_flags(flag_t f) { set_flags(f, m_state); }
+    inline void add_flags(flag_t on) { add_flags(on, m_state); }
+    inline void addrem_flags(flag_t on, flag_t off) { addrem_flags(on, off, m_state); }
+    inline void rem_flags(flag_t off) { rem_flags(off, m_state); }
 
-    void set_flags(size_t f, State * s);
-    void add_flags(size_t on, State * s);
-    void addrem_flags(size_t on, size_t off, State * s);
-    void rem_flags(size_t off, State * s);
+    void set_flags(flag_t f, State * s);
+    void add_flags(flag_t on, State * s);
+    void addrem_flags(flag_t on, flag_t off, State * s);
+    void rem_flags(flag_t off, State * s);
 
     void _resize_filter_arena(size_t num_characters);
     void _grow_filter_arena(size_t num_characters);
-    void _finish_filter_arena(substr filtered, size_t pos);
+    substr _finish_filter_arena(substr dst, size_t pos);
 
     void _prepare_locations() const;         // only changes mutable members
     void _resize_locations(size_t sz) const; // only changes mutable members
@@ -516,11 +525,11 @@ private:
     void _mv(Parser *that);
 
 #ifdef RYML_DBG
-    void _dbg(const char *msg, ...) const;
+    template<class ...Args> void _dbg(csubstr fmt, Args const& C4_RESTRICT ...args) const;
 #endif
-    void _err(const char *msg, ...) const;
-    int  _fmt_msg(char *buf, int buflen, const char *msg, va_list args) const;
-    static int  _prfl(char *buf, int buflen, size_t v);
+    template<class ...Args> void _err(csubstr fmt, Args const& C4_RESTRICT ...args) const;
+    template<class DumpFn>  void _fmt_msg(DumpFn &&dumpfn) const;
+    static csubstr _prfl(substr buf, flag_t v);
 
 private:
 

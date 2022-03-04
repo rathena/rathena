@@ -95,12 +95,25 @@ public:
 
     void push(T const& C4_RESTRICT n)
     {
+        RYML_ASSERT((const char*)&n + sizeof(T) < (const char*)m_stack || &n > m_stack + m_capacity);
         if(m_size == m_capacity)
         {
             size_t cap = m_capacity == 0 ? N : 2 * m_capacity;
             reserve(cap);
         }
         m_stack[m_size] = n;
+        ++m_size;
+    }
+
+    void push_top()
+    {
+        RYML_ASSERT(m_size > 0);
+        if(m_size == m_capacity)
+        {
+            size_t cap = m_capacity == 0 ? N : 2 * m_capacity;
+            reserve(cap);
+        }
+        m_stack[m_size] = m_stack[m_size - 1];
         ++m_size;
     }
 

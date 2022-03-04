@@ -161,8 +161,13 @@ void do_std_containers_test(Alloc alloc)
     clear_mr(alloc);
 
     {
+#if !defined(__GNUC__) || (__GNUC__ >= 5)
+        /* constructor does not exist on gcc < 5) */
         AllocPair a = alloc;
         _map_string_int v(a);
+#else
+        _map_string_int v;
+#endif
         CHECK_EQ(v.size(), 0);
         v["foo"] = 0;
         v["bar"] = 1;

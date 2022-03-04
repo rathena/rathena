@@ -1,39 +1,43 @@
 // fast_float by Daniel Lemire
 // fast_float by João Paulo Magalhaes
-
-
+//
 // with contributions from Eugene Golushkov
 // with contributions from Maksim Kita
 // with contributions from Marcin Wojdyr
 // with contributions from Neal Richardson
 // with contributions from Tim Paine
 // with contributions from Fabio Pellacini
-
-
-// Permission is hereby granted, free of charge, to any
-// person obtaining a copy of this software and associated
-// documentation files (the "Software"), to deal in the
-// Software without restriction, including without
-// limitation the rights to use, copy, modify, merge,
-// publish, distribute, sublicense, and/or sell copies of
-// the Software, and to permit persons to whom the Software
-// is furnished to do so, subject to the following
-// conditions:
-// 
-// The above copyright notice and this permission notice
-// shall be included in all copies or substantial portions
-// of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF
-// ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
-// TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
-// PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT
-// SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-// CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
-// IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-// DEALINGS IN THE SOFTWARE.
-
+//
+// MIT License Notice
+//
+//    MIT License
+//    
+//    Copyright (c) 2021 The fast_float authors
+//    
+//    Permission is hereby granted, free of charge, to any
+//    person obtaining a copy of this software and associated
+//    documentation files (the "Software"), to deal in the
+//    Software without restriction, including without
+//    limitation the rights to use, copy, modify, merge,
+//    publish, distribute, sublicense, and/or sell copies of
+//    the Software, and to permit persons to whom the Software
+//    is furnished to do so, subject to the following
+//    conditions:
+//    
+//    The above copyright notice and this permission notice
+//    shall be included in all copies or substantial portions
+//    of the Software.
+//    
+//    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF
+//    ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+//    TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+//    PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT
+//    SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+//    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+//    OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
+//    IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+//    DEALINGS IN THE SOFTWARE.
+//
 
 #ifndef FASTFLOAT_FAST_FLOAT_H
 #define FASTFLOAT_FAST_FLOAT_H
@@ -98,7 +102,6 @@ from_chars_result from_chars_advanced(const char *first, const char *last,
 }
 #endif // FASTFLOAT_FAST_FLOAT_H
 
-
 #ifndef FASTFLOAT_FLOAT_COMMON_H
 #define FASTFLOAT_FLOAT_COMMON_H
 
@@ -106,6 +109,7 @@ from_chars_result from_chars_advanced(const char *first, const char *last,
 #include <cstdint>
 #include <cassert>
 #include <cstring>
+#include <type_traits>
 
 #if (defined(__x86_64) || defined(__x86_64__) || defined(_M_X64)   \
        || defined(__amd64) || defined(__aarch64__) || defined(_M_ARM64) \
@@ -141,7 +145,9 @@ from_chars_result from_chars_advanced(const char *first, const char *last,
 #define FASTFLOAT_VISUAL_STUDIO 1
 #endif
 
-#ifdef _WIN32
+#if defined __BYTE_ORDER__ && defined __ORDER_BIG_ENDIAN__
+#define FASTFLOAT_IS_BIG_ENDIAN (__BYTE_ORDER__ == __ORDER_BIG_ENDIAN__)
+#elif defined _WIN32
 #define FASTFLOAT_IS_BIG_ENDIAN 0
 #else
 #if defined(__APPLE__) || defined(__FreeBSD__)
@@ -320,6 +326,8 @@ constexpr static float powers_of_ten_float[] = {1e0, 1e1, 1e2, 1e3, 1e4, 1e5,
                                                 1e6, 1e7, 1e8, 1e9, 1e10};
 
 template <typename T> struct binary_format {
+  using equiv_uint = typename std::conditional<sizeof(T) == 4, uint32_t, uint64_t>::type;
+
   static inline constexpr int mantissa_explicit_bits();
   static inline constexpr int minimum_exponent();
   static inline constexpr int infinite_power();
@@ -333,6 +341,9 @@ template <typename T> struct binary_format {
   static inline constexpr int smallest_power_of_ten();
   static inline constexpr T exact_power_of_ten(int64_t power);
   static inline constexpr size_t max_digits();
+  static inline constexpr equiv_uint exponent_mask();
+  static inline constexpr equiv_uint mantissa_mask();
+  static inline constexpr equiv_uint hidden_bit_mask();
 };
 
 template <> inline constexpr int binary_format<double>::mantissa_explicit_bits() {
@@ -440,6 +451,33 @@ template <> inline constexpr size_t binary_format<float>::max_digits() {
   return 114;
 }
 
+template <> inline constexpr binary_format<float>::equiv_uint
+    binary_format<float>::exponent_mask() {
+  return 0x7F800000;
+}
+template <> inline constexpr binary_format<double>::equiv_uint
+    binary_format<double>::exponent_mask() {
+  return 0x7FF0000000000000;
+}
+
+template <> inline constexpr binary_format<float>::equiv_uint
+    binary_format<float>::mantissa_mask() {
+  return 0x007FFFFF;
+}
+template <> inline constexpr binary_format<double>::equiv_uint
+    binary_format<double>::mantissa_mask() {
+  return 0x000FFFFFFFFFFFFF;
+}
+
+template <> inline constexpr binary_format<float>::equiv_uint
+    binary_format<float>::hidden_bit_mask() {
+  return 0x00800000;
+}
+template <> inline constexpr binary_format<double>::equiv_uint
+    binary_format<double>::hidden_bit_mask() {
+  return 0x0010000000000000;
+}
+
 template<typename T>
 fastfloat_really_inline void to_float(bool negative, adjusted_mantissa am, T &value) {
   uint64_t word = am.mantissa;
@@ -461,7 +499,6 @@ fastfloat_really_inline void to_float(bool negative, adjusted_mantissa am, T &va
 } // namespace fast_float
 
 #endif
-
 
 #ifndef FASTFLOAT_ASCII_NUMBER_H
 #define FASTFLOAT_ASCII_NUMBER_H
@@ -693,7 +730,6 @@ parsed_number_string parse_number_string(const char *p, const char *pend, parse_
 } // namespace fast_float
 
 #endif
-
 
 #ifndef FASTFLOAT_FAST_TABLE_H
 #define FASTFLOAT_FAST_TABLE_H
@@ -1395,7 +1431,6 @@ using powers = powers_template<>;
 
 #endif
 
-
 #ifndef FASTFLOAT_DECIMAL_TO_BINARY_H
 #define FASTFLOAT_DECIMAL_TO_BINARY_H
 
@@ -1588,7 +1623,6 @@ adjusted_mantissa compute_float(int64_t q, uint64_t w)  noexcept  {
 } // namespace fast_float
 
 #endif
-
 
 #ifndef FASTFLOAT_BIGINT_H
 #define FASTFLOAT_BIGINT_H
@@ -2180,7 +2214,6 @@ struct bigint {
 
 #endif
 
-
 #ifndef FASTFLOAT_ASCII_NUMBER_H
 #define FASTFLOAT_ASCII_NUMBER_H
 
@@ -2412,7 +2445,6 @@ parsed_number_string parse_number_string(const char *p, const char *pend, parse_
 
 #endif
 
-
 #ifndef FASTFLOAT_DIGIT_COMPARISON_H
 #define FASTFLOAT_DIGIT_COMPARISON_H
 
@@ -2456,40 +2488,24 @@ fastfloat_really_inline int32_t scientific_exponent(parsed_number_string& num) n
 // this converts a native floating-point number to an extended-precision float.
 template <typename T>
 fastfloat_really_inline adjusted_mantissa to_extended(T value) noexcept {
+  using equiv_uint = typename binary_format<T>::equiv_uint;
+  constexpr equiv_uint exponent_mask = binary_format<T>::exponent_mask();
+  constexpr equiv_uint mantissa_mask = binary_format<T>::mantissa_mask();
+  constexpr equiv_uint hidden_bit_mask = binary_format<T>::hidden_bit_mask();
+
   adjusted_mantissa am;
   int32_t bias = binary_format<T>::mantissa_explicit_bits() - binary_format<T>::minimum_exponent();
-  if (std::is_same<T, float>::value) {
-    constexpr uint32_t exponent_mask = 0x7F800000;
-    constexpr uint32_t mantissa_mask = 0x007FFFFF;
-    constexpr uint64_t hidden_bit_mask = 0x00800000;
-    uint32_t bits;
-    ::memcpy(&bits, &value, sizeof(T));
-    if ((bits & exponent_mask) == 0) {
-      // denormal
-      am.power2 = 1 - bias;
-      am.mantissa = bits & mantissa_mask;
-    } else {
-      // normal
-      am.power2 = int32_t((bits & exponent_mask) >> binary_format<T>::mantissa_explicit_bits());
-      am.power2 -= bias;
-      am.mantissa = (bits & mantissa_mask) | hidden_bit_mask;
-    }
+  equiv_uint bits;
+  ::memcpy(&bits, &value, sizeof(T));
+  if ((bits & exponent_mask) == 0) {
+    // denormal
+    am.power2 = 1 - bias;
+    am.mantissa = bits & mantissa_mask;
   } else {
-    constexpr uint64_t exponent_mask = 0x7FF0000000000000;
-    constexpr uint64_t mantissa_mask = 0x000FFFFFFFFFFFFF;
-    constexpr uint64_t hidden_bit_mask = 0x0010000000000000;
-    uint64_t bits;
-    ::memcpy(&bits, &value, sizeof(T));
-    if ((bits & exponent_mask) == 0) {
-      // denormal
-      am.power2 = 1 - bias;
-      am.mantissa = bits & mantissa_mask;
-    } else {
-      // normal
-      am.power2 = int32_t((bits & exponent_mask) >> binary_format<T>::mantissa_explicit_bits());
-      am.power2 -= bias;
-      am.mantissa = (bits & mantissa_mask) | hidden_bit_mask;
-    }
+    // normal
+    am.power2 = int32_t((bits & exponent_mask) >> binary_format<T>::mantissa_explicit_bits());
+    am.power2 -= bias;
+    am.mantissa = (bits & mantissa_mask) | hidden_bit_mask;
   }
 
   return am;
@@ -2514,7 +2530,7 @@ fastfloat_really_inline void round(adjusted_mantissa& am, callback cb) noexcept 
   if (-am.power2 >= mantissa_shift) {
     // have a denormal float
     int32_t shift = -am.power2 + 1;
-    cb(am, std::min(shift, 64));
+    cb(am, std::min<int32_t>(shift, 64));
     // check for round-up: if rounding-nearest carried us to the hidden bit.
     am.power2 = (am.mantissa < (uint64_t(1) << binary_format<T>::mantissa_explicit_bits())) ? 0 : 1;
     return;
@@ -2833,7 +2849,6 @@ inline adjusted_mantissa digit_comp(parsed_number_string& num, adjusted_mantissa
 } // namespace fast_float
 
 #endif
-
 
 #ifndef FASTFLOAT_PARSE_NUMBER_H
 #define FASTFLOAT_PARSE_NUMBER_H

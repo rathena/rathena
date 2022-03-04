@@ -432,6 +432,7 @@ TEST_CASE("uncat.tuple")
 }
 #endif // C4_TUPLE_TO_STR
 
+
 TEST_CASE("catsep.vars")
 {
     char buf[256];
@@ -557,6 +558,11 @@ TEST_CASE("format.vars")
     CHECK_EQ(sz, 23);
     result = sp.left_of(sz);
     CHECK_EQ(result, "{} and {} and {} and {}");
+
+    sz = format(buf, "{} args only at the begin", 1);
+    CHECK_EQ(sz, csubstr("1 args only at the begin").len);
+    result = sp.left_of(sz);
+    CHECK_EQ(result, csubstr("1 args only at the begin"));
 }
 
 TEST_CASE("format.empty_buffer")

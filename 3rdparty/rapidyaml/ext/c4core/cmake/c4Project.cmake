@@ -23,6 +23,7 @@ include(c4StaticAnalysis)
 include(PrintVar)
 include(c4CatSources)
 include(c4Doxygen)
+include(PatchUtils)
 
 
 #------------------------------------------------------------------------------
@@ -385,11 +386,30 @@ function(c4_project)
     c4_setup_static_analysis(${_c4_uprefix}DEV)
     c4_setup_doxygen(${_c4_uprefix}DEV)
 
-    # these are default compilation flags
+    # option to use libc++
+    option(${_c4_uprefix}USE_LIBCXX "use libc++ instead of the default standard library" OFF)
+    if(${_c4_uprefix}USE_LIBCXX)
+        if(CMAKE_CXX_COMPILER_ID MATCHES ".*Clang")
+            c4_log("using libc++")
+            list(APPEND CMAKE_CXX_FLAGS           -stdlib=libc++)
+            list(APPEND CMAKE_EXE_LINKER_FLAGS    -lc++)
+            list(APPEND CMAKE_MODULE_LINKER_FLAGS -lc++)
+            list(APPEND CMAKE_SHARED_LINKER_FLAGS -lc++)
+            list(APPEND CMAKE_STATIC_LINKER_FLAGS -lc++)
+        else()
+            c4_err("libc++ can only be used with clang")
+        endif()
+    endif()
+
+    # default compilation flags
     set(${_c4_uprefix}CXX_FLAGS "${${_c4_uprefix}CXX_FLAGS_FWD}" CACHE STRING "compilation flags for ${_c4_prefix} targets")
+    set(${_c4_uprefix}CXX_LINKER_FLAGS "${${_c4_uprefix}CXX_LINKER_FLAGS_FWD}" CACHE STRING "linker flags for ${_c4_prefix} targets")
+    c4_dbg_var_if(${_c4_uprefix}CXX_LINKER_FLAGS_FWD)
     c4_dbg_var_if(${_c4_uprefix}CXX_FLAGS_FWD)
+    c4_dbg_var_if(${_c4_uprefix}CXX_LINKER_FLAGS)
     c4_dbg_var_if(${_c4_uprefix}CXX_FLAGS)
-    # These are dev compilation flags, appended to the project's flags. They
+
+    # Dev compilation flags, appended to the project's flags. They
     # are enabled when in dev mode, but provided as a (default-disabled)
     # option when not in dev mode
     c4_dbg_var_if(${_c4_uprefix}CXX_FLAGS_OPT_FWD)
@@ -543,6 +563,10 @@ macro(c4_optional_compile_flags_dev tag desc)
             set(flags ${_GCC_CLANG};${_CLANG})
         elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
             set(flags ${_GCC_CLANG};${_GCC})
+        elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
+            set(flags ${_ALL};${_GCC_CLANG};${_GCC})  # FIXME
+        elseif(CMAKE_CXX_COMPILER_ID STREQUAL "IntelLLVM")
+            set(flags ${_ALL};${_GCC_CLANG};${_CLANG})  # FIXME
         else()
             c4_err("unknown compiler")
         endif()
@@ -579,6 +603,10 @@ function(c4_target_compile_flags target)
         set(flags ${_ALL};${_GCC_CLANG};${_CLANG})
     elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
         set(flags ${_ALL};${_GCC_CLANG};${_GCC})
+    elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
+        set(flags ${_ALL};${_GCC_CLANG};${_GCC})  # FIXME
+    elseif(CMAKE_CXX_COMPILER_ID STREQUAL "IntelLLVM")
+        set(flags ${_ALL};${_GCC_CLANG};${_CLANG})  # FIXME
     else()
         c4_err("unknown compiler")
     endif()
@@ -791,7 +819,7 @@ endif()
 function(c4_pack_project)
     # if this is the top-level project... pack it.
     if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
-        c4_log("packing the project")
+        c4_log("packing the project: ${ARGN}")
         c4_set_default_pack_properties(${ARGN})
         include(CPack)
     endif()
@@ -851,19 +879,20 @@ function(c4_set_default_pack_properties)
     elseif(EXISTS "${pd}/LICENSE.txt")
         c4_setg(CPACK_RESOURCE_FILE_LICENSE "${pd}/LICENSE.txt")
     endif()
-    c4_setg(CPACK_PACKAGE_VERSION "${${_c4_prefix}_VERSION_FULL}")
-    c4_setg(CPACK_PACKAGE_VERSION_MAJOR "${${_c4_prefix}_VERSION_MAJOR}")
-    c4_setg(CPACK_PACKAGE_VERSION_MINOR "${${_c4_prefix}_VERSION_MINOR}")
-    c4_setg(CPACK_PACKAGE_VERSION_PATCH "${${_c4_prefix}_VERSION_PATCH}")
-    c4_setg(CPACK_PACKAGE_VERSION_TWEAK "${${_c4_prefix}_VERSION_TWEAK_FULL}")
-    c4_setg(CPACK_PACKAGE_INSTALL_DIRECTORY "ryml-${${_c4_prefix}_VERSION_FULL}")
-    c4_setg(CPACK_PACKAGE_FILE_NAME "${_c4_prefix}-${${_c4_prefix}_VERSION_FULL}-${platform_tag}${build_tag}")
+    c4_proj_get_version("${pd}" version_tag full major minor patch tweak)
+    c4_setg(CPACK_PACKAGE_VERSION "${full}")
+    c4_setg(CPACK_PACKAGE_VERSION_MAJOR "${major}")
+    c4_setg(CPACK_PACKAGE_VERSION_MINOR "${minor}")
+    c4_setg(CPACK_PACKAGE_VERSION_PATCH "${patch}")
+    c4_setg(CPACK_PACKAGE_VERSION_TWEAK "${tweak}")
+    c4_setg(CPACK_PACKAGE_INSTALL_DIRECTORY "${_c4_prefix}-${version_tag}")
+    c4_setg(CPACK_PACKAGE_FILE_NAME "${_c4_prefix}-${version_tag}-${platform_tag}${build_tag}")
     if(WIN32 AND NOT UNIX)
         # There is a bug in NSI that does not handle full UNIX paths properly.
         # Make sure there is at least one set of four backlashes.
         #c4_setg(CPACK_PACKAGE_ICON "${CMake_SOURCE_DIR}/Utilities/Release\\\\InstallIcon.bmp")
         #c4_setg(CPACK_NSIS_INSTALLED_ICON_NAME "bin\\\\MyExecutable.exe")
-        c4_setg(CPACK_NSIS_DISPLAY_NAME "ryml v${${_c4_prefix}_VERSION_FULL}")
+        c4_setg(CPACK_NSIS_DISPLAY_NAME "${_c4_prefix} ${version_tag}")
         c4_setg(CPACK_NSIS_HELP_LINK "${${_c4_prefix}_HOMEPAGE_URL}")
         c4_setg(CPACK_NSIS_URL_INFO_ABOUT "${${_c4_prefix}_HOMEPAGE_URL}")
         c4_setg(CPACK_NSIS_CONTACT "${${_c4_prefix}_AUTHOR}")
@@ -895,6 +924,12 @@ function(_c4_get_platform_tag tag_)
         c4_err("not implemented")
     endif()
     set(${tag_} ${tag} PARENT_SCOPE)
+endfunction()
+
+
+function(_c4_extract_version_tag tag_)
+    # git describe --tags  <commit-id> for unannotated tags
+    # git describe --contains <commit>
 endfunction()
 
 
@@ -998,34 +1033,166 @@ endmacro()
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 
-# WIP, under construction
-function(c4_proj_get_version dir)
-
+function(c4_proj_get_version dir tag_o full_o major_o minor_o patch_o tweak_o)
     if("${dir}" STREQUAL "")
         set(dir ${CMAKE_CURRENT_LIST_DIR})
     endif()
-
-    # http://xit0.org/2013/04/cmake-use-git-branch-and-commit-details-in-project/
-
-    # Get the current working branch
-    execute_process(COMMAND git rev-parse --abbrev-ref HEAD
-        WORKING_DIRECTORY ${dir}
-        OUTPUT_VARIABLE branch #${_c4_uprefix}GIT_BRANCH
-        OUTPUT_STRIP_TRAILING_WHITESPACE
-    )
-
-    # Get the latest abbreviated commit hash of the working branch
-    execute_process(COMMAND git log -1 --format=%h
-        WORKING_DIRECTORY ${dir}
-        OUTPUT_VARIABLE hash ${_c4_uprefix}GIT_COMMIT_HASH
-        OUTPUT_STRIP_TRAILING_WHITESPACE
-    )
-
-    # also: git diff --stat
-    # also: git diff
-    # also: git status --ignored
-
+    find_program(GIT git REQUIRED)
+    function(_c4pgv_get_cmd outputvar)
+        execute_process(COMMAND ${ARGN}
+            WORKING_DIRECTORY ${dir}
+            ERROR_VARIABLE error
+            ERROR_STRIP_TRAILING_WHITESPACE
+            OUTPUT_VARIABLE output
+            OUTPUT_STRIP_TRAILING_WHITESPACE)
+        c4_dbg("output of ${ARGN}: ${outputvar}=${output} [@${dir}]")
+        set(${outputvar} ${output} PARENT_SCOPE)
+    endfunction()
+    # do we have any tags yet?
+    _c4pgv_get_cmd(head_desc ${GIT} describe HEAD)
+    _c4pgv_get_cmd(branch ${GIT} rev-parse --abbrev-ref HEAD)
+    if(NOT head_desc)
+        c4_dbg("the repo does not have any tags yet")
+        _c4pgv_get_cmd(commit_hash ${GIT} rev-parse --short HEAD)
+        set(otag "${commit_hash}-${branch}")
+    else()
+        c4_dbg("there are tags!")
+        # is the current commit tagged?
+        _c4pgv_get_cmd(commit_hash_full ${GIT} rev-parse HEAD)
+        _c4pgv_get_cmd(commit_desc ${GIT} describe --exact-match ${commit_hash_full})
+        if(commit_desc)
+            c4_dbg("current commit is tagged")
+            # is the tag a version tag?
+            _c4_parse_version_tag(${commit_desc} is_version major minor patch tweak more)
+            if(is_version)
+                c4_dbg("current commit's tag is a version tag")
+                # is the tag the current version tag?
+                if("${is_version}" VERSION_EQUAL "${${_c4_prefix}_VERSION_FULL}")
+                    c4_dbg("this is the official version commit")
+                else()
+                    c4_dbg("this is a different version")
+                endif()
+                set(otag "${commit_desc}")
+            else()
+                c4_dbg("this is a non-version tag")
+                set(otag "${commit_desc}-${branch}")
+            endif()
+        else(commit_desc)
+            # is the latest tag in the head_desc a version tag?
+            string(REGEX REPLACE "(.*)-[0-9]+-[0-9a-f]+" "\\1" latest_tag "${head_desc}")
+            c4_dbg("current commit is NOT tagged. latest tag=${latest_tag}")
+            _c4_parse_version_tag(${latest_tag} latest_tag_is_a_version major minor patch tweak more)
+            if(latest_tag_is_a_version)
+                c4_dbg("latest tag is a version. stick to the head description")
+                set(otag "${head_desc}-${branch}")
+                set(full "${latest_tag_is_a_version}")
+            else()
+                c4_dbg("latest tag is NOT a version. Use the current project version from cmake + the output of git describe")
+                set(otag "v${full}-${head_desc}-${branch}")
+                set(full "${${_c4_prefix}_VERSION_FULL}")
+                set(major "${${_c4_prefix}_VERSION_MAJOR}")
+                set(minor "${${_c4_prefix}_VERSION_MINOR}")
+                set(patch "${${_c4_prefix}_VERSION_PATCH}")
+                set(tweak "${${_c4_prefix}_VERSION_TWEAK}")
+            endif()
+        endif(commit_desc)
+    endif(NOT head_desc)
+    c4_log("cpack tag: ${otag}")
+    set(${tag_o}   "${otag}"  PARENT_SCOPE)
+    set(${full_o}  "${full}"  PARENT_SCOPE)
+    set(${major_o} "${major}" PARENT_SCOPE)
+    set(${minor_o} "${minor}" PARENT_SCOPE)
+    set(${patch_o} "${patch}" PARENT_SCOPE)
+    set(${tweak_o} "${tweak}" PARENT_SCOPE)
+    # also: dirty index?
+    #   https://stackoverflow.com/questions/2657935/checking-for-a-dirty-index-or-untracked-files-with-git
 endfunction()
+
+
+function(_c4_parse_version_tag tag is_version major minor patch tweak more)
+    # does the tag match a four-part version?
+    string(REGEX MATCH "v?([0-9]+)([\._][0-9]+)([\._][0-9]+)([\._][0-9]+)(.*)" match "${tag}")
+    function(_triml arg out) # trim the leading [\._] from the left
+        if("${arg}" STREQUAL "")
+            set(${out} "" PARENT_SCOPE)
+        else()
+            string(REGEX REPLACE "[\._](.*)" "\\1" ret "${arg}")
+            set("${out}" "${ret}" PARENT_SCOPE)
+        endif()
+    endfunction()
+    if(match)
+        set(${is_version} ${tag} PARENT_SCOPE)
+        _triml("${CMAKE_MATCH_1}" major_v)
+        _triml("${CMAKE_MATCH_2}" minor_v)
+        _triml("${CMAKE_MATCH_3}" patch_v)
+        _triml("${CMAKE_MATCH_4}" tweak_v)
+        _triml("${CMAKE_MATCH_5}" more_v)
+    else()
+        # does the tag match a three-part version?
+        string(REGEX MATCH "v?([0-9]+)([\._][0-9]+)([\._][0-9]+)(.*)" match "${tag}")
+        if(match)
+            set(${is_version} ${tag} PARENT_SCOPE)
+            _triml("${CMAKE_MATCH_1}" major_v)
+            _triml("${CMAKE_MATCH_2}" minor_v)
+            _triml("${CMAKE_MATCH_3}" patch_v)
+            _triml("${CMAKE_MATCH_4}" more_v)
+        else()
+            # does the tag match a two-part version?
+            string(REGEX MATCH "v?([0-9]+)([\._][0-9]+)(.*)" match "${tag}")
+            if(match)
+                set(${is_version} ${tag} PARENT_SCOPE)
+                _triml("${CMAKE_MATCH_1}" major_v)
+                _triml("${CMAKE_MATCH_2}" minor_v)
+                _triml("${CMAKE_MATCH_3}" more_v)
+            else()
+                # not a version!
+                set(${is_version} FALSE PARENT_SCOPE)
+            endif()
+        endif()
+    endif()
+    set(${major} "${major_v}" PARENT_SCOPE)
+    set(${minor} "${minor_v}" PARENT_SCOPE)
+    set(${patch} "${patch_v}" PARENT_SCOPE)
+    set(${tweak} "${tweak_v}" PARENT_SCOPE)
+    set(${more} "${more_v}" PARENT_SCOPE)
+endfunction()
+
+
+#function(testvtag)
+#    set(err FALSE)
+#    function(cmp value expected)
+#        if(NOT ("${${value}}" STREQUAL "${expected}"))
+#            c4_log("${tag}: error: expected ${value}=='${expected}': '${${value}}'=='${expected}'")
+#            set(err TRUE PARENT_SCOPE)
+#        else()
+#            c4_log("${tag}: ok: expected ${value}=='${expected}': '${${value}}'=='${expected}'")
+#        endif()
+#    endfunction()
+#    function(verify tag is_version_e major_e minor_e patch_e tweak_e more_e)
+#        _c4_parse_version_tag(${tag} is_version major minor patch tweak more)
+#        cmp(is_version ${is_version_e})
+#        cmp(major "${major_e}")
+#        cmp(minor "${minor_e}")
+#        cmp(patch "${patch_e}")
+#        cmp(tweak "${tweak_e}")
+#        cmp(more "${more_e}")
+#        set(err ${err} PARENT_SCOPE)
+#    endfunction()
+#    verify(v12.34.567.89-rcfoo TRUE 12 34 567 89 -rcfoo)
+#    verify(v12_34_567_89-rcfoo TRUE 12 34 567 89 -rcfoo)
+#    verify(v12.34.567.89       TRUE 12 34 567 89 "")
+#    verify(v12_34_567_89       TRUE 12 34 567 89 "")
+#    verify(v12.34.567-rcfoo    TRUE 12 34 567 "" -rcfoo)
+#    verify(v12_34_567-rcfoo    TRUE 12 34 567 "" -rcfoo)
+#    verify(v12.34.567          TRUE 12 34 567 "" "")
+#    verify(v12_34_567          TRUE 12 34 567 "" "")
+#    verify(v12_34              TRUE 12 34 ""  "" "")
+#    verify(v12.34              TRUE 12 34 ""  "" "")
+#    if(err)
+#        c4_err("test failed")
+#    endif()
+#endfunction()
+#testvtag()
 
 
 #------------------------------------------------------------------------------
@@ -1207,22 +1374,26 @@ function(c4_require_subproject subproj)
         # TODO check version compatibility
     else() #elseif(NOT _${subproj}_available)
         c4_dbg("required subproject ${subproj} is unknown. Importing...")
+        if(_EXCLUDE_FROM_ALL)
+            set(excl EXCLUDE_FROM_ALL)
+        endif()
         # forward c4 compile flags
         string(TOUPPER ${subproj} usubproj)
         c4_setg(${usubproj}_CXX_FLAGS_FWD "${${_c4_uprefix}CXX_FLAGS}")
         c4_setg(${usubproj}_CXX_FLAGS_OPT_FWD "${${_c4_uprefix}CXX_FLAGS_OPT}")
+        c4_setg(${usubproj}_CXX_LINKER_FLAGS_FWD "${${_c4_uprefix}CXX_LINKER_FLAGS}")
         # root dir
         set(_r ${CMAKE_CURRENT_BINARY_DIR}/subprojects/${subproj})
         if(_REMOTE)
             c4_log("importing subproject ${subproj} (REMOTE)... ${_REMOTE}")
             _c4_mark_subproject_imported(${subproj} ${_r}/src ${_r}/build ${_INCORPORATE})
-            c4_import_remote_proj(${subproj} ${_r} REMOTE ${_REMOTE} OVERRIDE ${_OVERRIDE})
+            c4_import_remote_proj(${subproj} ${_r} REMOTE ${_REMOTE} OVERRIDE ${_OVERRIDE} ${excl})
             _c4_get_subproject_property(${subproj} SRC_DIR _srcdir)
             c4_dbg("finished importing subproject ${subproj} (REMOTE, SRC_DIR=${_srcdir}).")
         elseif(_SUBDIRECTORY)
             c4_log("importing subproject ${subproj} (SUBDIRECTORY)... ${_SUBDIRECTORY}")
             _c4_mark_subproject_imported(${subproj} ${_SUBDIRECTORY} ${_r}/build ${_INCORPORATE})
-            c4_add_subproj(${subproj} ${_SUBDIRECTORY} ${_r}/build OVERRIDE ${_OVERRIDE})
+            c4_add_subproj(${subproj} ${_SUBDIRECTORY} ${_r}/build OVERRIDE ${_OVERRIDE} ${excl})
             set(_srcdir ${_SUBDIRECTORY})
             c4_dbg("finished importing subproject ${subproj} (SUBDIRECTORY=${_SUBDIRECTORY}).")
         else()
@@ -1239,6 +1410,7 @@ endfunction(c4_require_subproject)
 function(c4_add_subproj proj dir bindir)
     _c4_handle_args(_ARGS ${ARGN}
         _ARGS0
+            EXCLUDE_FROM_ALL # forward to add_subdirectory()
         _ARGS1
         _ARGSN
             OVERRIDE   # a list of variable name+value pairs
@@ -1263,8 +1435,12 @@ function(c4_add_subproj proj dir bindir)
         c4_override(${varname} ${varvalue})
     endwhile()
     #
+    if(_EXCLUDE_FROM_ALL)
+        set(excl EXCLUDE_FROM_ALL)
+    endif()
+    #
     c4_dbg("adding subproj: ${prev_subproject}->${_c4_curr_subproject}. path=${_c4_curr_path}")
-    add_subdirectory(${dir} ${bindir})
+    add_subdirectory(${dir} ${bindir} ${excl})
     # pop the subproj from the current path
     set(_c4_curr_subproject ${prev_subproject})
     set(_c4_curr_path ${prev_path})
@@ -1335,6 +1511,7 @@ endfunction()
 function(c4_import_remote_proj name dir)
     _c4_handle_args(_ARGS ${ARGN}
         _ARGS0
+            EXCLUDE_FROM_ALL
         _ARGS1
         _ARGSN
             OVERRIDE   # a list of variable name+value pairs
@@ -1352,7 +1529,10 @@ function(c4_import_remote_proj name dir)
     set(srcdir_in_out "${dir}")
     c4_download_remote_proj(${name} srcdir_in_out ${_REMOTE})
     _c4_set_subproject_property(${name} SRC_DIR "${srcdir_in_out}")
-    c4_add_subproj(${name} "${srcdir_in_out}" "${dir}/build" OVERRIDE ${_OVERRIDE})
+    if(_EXCLUDE_FROM_ALL)
+        set(excl EXCLUDE_FROM_ALL)
+    endif()
+    c4_add_subproj(${name} "${srcdir_in_out}" "${dir}/build" OVERRIDE ${_OVERRIDE} ${excl})
     #
     if(_SET_FOLDER_TARGETS)
         c4_set_folder_remote_project_targets(${_SET_FOLDER_TARGETS})
@@ -1620,7 +1800,8 @@ function(c4_add_target target)
     _c4_transform_to_full_path(_INTERFACE_HEADERS allsrc)
     _c4_transform_to_full_path(  _PRIVATE_HEADERS allsrc)
     create_source_group("" "${_SOURCE_ROOT}" "${allsrc}")
-
+    # is the target name prefixed with the project prefix?
+    string(REGEX MATCH "${_c4_prefix}::.*" target_is_prefixed "${target}")
     if(NOT ${_c4_uprefix}SANITIZE_ONLY)
         if(${_EXECUTABLE})
             c4_dbg("adding executable: ${target}")
@@ -1630,6 +1811,9 @@ function(c4_add_target target)
                 endif()
             endif()
 	    add_executable(${target} ${_MORE_ARGS})
+            if(NOT target_is_prefixed)
+                add_executable(${_c4_prefix}::${target} ALIAS ${target})
+            endif()
 	    set(src_mode PRIVATE)
             set(tgt_type PUBLIC)
             set(compiled_target ON)
@@ -1677,6 +1861,9 @@ function(c4_add_target target)
                     endif()  # shared lib
                 endif() # win32
             endif() # interface or lib
+            if(NOT target_is_prefixed)
+                add_library(${_c4_prefix}::${target} ALIAS ${target})
+            endif()
             set_target_properties(${target} PROPERTIES SO_VERSION ${${_c4_prefix}_VERSION})
         endif(${_EXECUTABLE})
         set_target_properties(${target} PROPERTIES VERSION ${${_c4_prefix}_VERSION})
@@ -1737,7 +1924,9 @@ function(c4_add_target target)
             else()
                 _c4_set_target_folder(${target} "")
             endif()
+            # cxx standard
             c4_target_inherit_cxx_standard(${target})
+            # compile flags
             set(_more_flags
                 ${${_c4_uprefix}CXX_FLAGS}
                 ${${_c4_uprefix}C_FLAGS}
@@ -1750,6 +1939,17 @@ function(c4_add_target target)
                 c4_dbg("${target}: COMPILE_FLAGS=${_more_flags}")
                 target_compile_options(${target} PRIVATE "${_more_flags}")
             endif()
+            # linker flags
+            set(_link_flags ${${_c4_uprefix}CXX_LINKER_FLAGS})
+            if(_link_flags)
+                get_target_property(_flags ${target} LINK_OPTIONS)
+                if(_flags)
+                    set(_link_flags ${_flags};${_more_flags})
+                endif()
+                c4_dbg("${target}: LINKER_FLAGS=${_link_flags}")
+                target_link_options(${target} PUBLIC "${_link_flags}")
+            endif()
+            # static analysis
             if(${_c4_uprefix}LINT)
                 c4_static_analysis_target(${target} "${_FOLDER}" lint_targets)
             endif()
@@ -1779,6 +1979,13 @@ function(c4_add_target target)
         endif()
         if(_PRIVATE_CFLAGS)
             target_compile_options(${target} PRIVATE ${_PRIVATE_CFLAGS})
+        endif()
+
+        if((CMAKE_CXX_COMPILER_ID STREQUAL "GNU") AND
+          (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 4.8) AND
+          (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.0))
+            c4_dbg("${target}: adding compat include path")
+            target_include_directories(${target} PUBLIC $<BUILD_INTERFACE:${_c4_project_dir}/compat>)
         endif()
 
     endif(NOT ${_c4_uprefix}SANITIZE_ONLY)
@@ -2354,6 +2561,9 @@ include(CMakeFindDependencyMacro)
             FILE "${targets_file}"
             NAMESPACE "${_NAMESPACE}"
             DESTINATION "${cfg_dst}")
+        export(EXPORT ${_TARGET}
+            FILE "${targets_file}"
+            NAMESPACE "${_NAMESPACE}")
         #
         # Config files
         # the module below has nice docs in it; do read them
@@ -2521,8 +2731,17 @@ function(c4_setup_testing)
         _c4_set_target_folder(test-verbose "/test")
     endif()
     if(NOT TARGET test)
+        # add a test target. To prevent a warning, we need to set up a policy,
+        # and also suppress the resulting warning from suppressing the warning.
+        set(_depr_old_val ${CMAKE_WARN_DEPRECATED})
+        set(CMAKE_WARN_DEPRECATED OFF CACHE BOOL "" FORCE)  # https://stackoverflow.com/questions/67432538/cannot-set-cmake-warn-deprecated-inside-the-cmakelists-txt
+        cmake_policy(PUSH)
+        cmake_policy(SET CMP0037 OLD)  # target name "test" is reserved for CTesting
         add_custom_target(test)
         _c4_set_target_folder(test "/test")
+        cmake_policy(POP)
+        set(CMAKE_WARN_DEPRECATED OFF CACHE BOOL "${_depr_old_val}" FORCE)
+        unset(_depr_old_val)
     endif()
     function(_def_runner runner)
         set(echo "
@@ -2559,7 +2778,20 @@ ${ARGN}
                   gtest_force_shared_crt ON
                   gtest_build_samples OFF
                   gtest_build_tests OFF
-                SET_FOLDER_TARGETS ext gtest gtest_main)
+                SET_FOLDER_TARGETS ext gtest gtest_main
+                EXCLUDE_FROM_ALL
+                )
+            # old gcc-4.8 support
+            if((CMAKE_CXX_COMPILER_ID STREQUAL "GNU") AND
+              (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 4.8) AND
+              (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.0))
+                _c4_get_subproject_property(gtest SRC_DIR _gtest_patch_src_dir)
+                apply_patch("${_c4_project_dir}/compat/gtest_gcc-4.8.patch"
+                  "${_gtest_patch_src_dir}"
+                  "${_gtest_patch_src_dir}/.gtest_gcc-4.8.patch")
+                unset(_gtest_patch_src_dir)
+                target_compile_options(gtest PUBLIC -include ${_c4_project_dir}/compat/c4/gcc-4.8.hpp)
+            endif()
         endif()
     endif()
     if(_DOCTEST)
@@ -2568,11 +2800,12 @@ ${ARGN}
             c4_import_remote_proj(doctest ${CMAKE_CURRENT_BINARY_DIR}/ext/doctest
                 REMOTE
                   GIT_REPOSITORY https://github.com/onqtam/doctest.git
-                  GIT_TAG 2.4.1
+                  GIT_TAG 2.4.6
                 OVERRIDE
                   DOCTEST_WITH_TESTS OFF
                   DOCTEST_WITH_MAIN_IN_STATIC_LIB ON
                 SET_FOLDER_TARGETS ext doctest_with_main
+                EXCLUDE_FROM_ALL
                 )
         endif()
     endif()
@@ -2821,7 +3054,7 @@ endif()
             elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
                 set(arch -A Win32)
             else()
-                message(FATAL_ERROR "not implemented")
+                c4_err("not implemented")
             endif()
         endif()
     elseif(ANDROID OR IOS OR WINCE OR WINDOWS_PHONE)
@@ -2832,12 +3065,15 @@ endif()
         if(CMAKE_GENERATOR_PLATFORM OR CMAKE_VS_PLATFORM_NAME)
             set(arch "-DCMAKE_GENERATOR_PLATFORM=${CMAKE_GENERATOR_PLATFORM}" "-DCMAKE_VS_PLATFORM_NAME=${CMAKE_VS_PLATFORM_NAME}")
         else()
-            if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-                set(arch "-DCMAKE_CXX_FLAGS=-m64")
-            elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
-                set(arch "-DCMAKE_CXX_FLAGS=-m32")
+            if(CMAKE_SYSTEM_PROCESSOR STREQUAL aarch64)
             else()
-                c4_err("not implemented")
+                if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+                    set(arch "-DCMAKE_CXX_FLAGS=-m64")
+                elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
+                    set(arch "-DCMAKE_CXX_FLAGS=-m32")
+                else()
+                    c4_err("not implemented")
+                endif()
             endif()
         endif()
     endif()
@@ -3226,7 +3462,9 @@ function(c4_setup_benchmarking)
             BENCHMARK_ENABLE_TESTING OFF
             BENCHMARK_ENABLE_EXCEPTIONS OFF
             BENCHMARK_ENABLE_LTO OFF
-          SET_FOLDER_TARGETS ext benchmark benchmark_main)
+          SET_FOLDER_TARGETS ext benchmark benchmark_main
+          EXCLUDE_FROM_ALL
+          )
         #
         if((CMAKE_CXX_COMPILER_ID STREQUAL GNU) OR (CMAKE_COMPILER_IS_GNUCC))
             target_compile_options(benchmark PRIVATE -Wno-deprecated-declarations)

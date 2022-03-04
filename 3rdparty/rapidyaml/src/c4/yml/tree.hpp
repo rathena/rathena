@@ -30,13 +30,6 @@ class NodeRef;
 class Tree;
 
 
-/** the integral type necessary to cover all the bits marking node types */
-using tag_bits = uint16_t;
-
-/** the integral type necessary to cover all the bits marking node types */
-using type_bits = uint64_t;
-
-
 /** encode a floating point value to a string. */
 template<class T>
 size_t to_chars_float(substr buf, T val)
@@ -90,8 +83,11 @@ bool from_chars_float(csubstr buf, T *C4_RESTRICT val)
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 
+/** the integral type necessary to cover all the bits marking node tags */
+using tag_bits = uint16_t;
+
 /** a bit mask for marking tags for types */
-typedef enum : uint8_t {
+typedef enum : tag_bits {
     // container types
     TAG_NONE      =  0,
     TAG_MAP       =  1, /**< !!map   Unordered set of key: value pairs without duplicates. @see https://yaml.org/type/map.html */
@@ -112,10 +108,26 @@ typedef enum : uint8_t {
     TAG_YAML      = 15, /**< !!yaml   Specify the default value of a mapping https://yaml.org/type/yaml.html */
 } YamlTag_e;
 
-
 YamlTag_e to_tag(csubstr tag);
 csubstr from_tag(YamlTag_e tag);
+csubstr from_tag_long(YamlTag_e tag);
 csubstr normalize_tag(csubstr tag);
+csubstr normalize_tag_long(csubstr tag);
+
+struct TagDirective
+{
+    /** Eg `!e!` in `%TAG !e! tag:example.com,2000:app/` */
+    csubstr handle;
+    /** Eg `tag:example.com,2000:app/` in `%TAG !e! tag:example.com,2000:app/` */
+    csubstr prefix;
+    /** The next node to which this tag directive applies */
+    size_t next_node_id;
+};
+
+#ifndef RYML_MAX_TAG_DIRECTIVES
+/** the maximum number of tag directives in a Tree */
+#define RYML_MAX_TAG_DIRECTIVES 4
+#endif
 
 
 
@@ -143,9 +155,9 @@ typedef enum : type_bits {
     VALREF  = c4bit(7),     ///< a *reference: the val references an &anchor
     KEYANCH = c4bit(8),     ///< the key has an &anchor
     VALANCH = c4bit(9),     ///< the val has an &anchor
-    _TYMASK = c4bit(10)-1,
     KEYTAG  = c4bit(10),    ///< the key has an explicit tag/type
     VALTAG  = c4bit(11),    ///< the val has an explicit tag/type
+    _TYMASK = c4bit(12)-1,  // all the bits up to here
     VALQUO  = c4bit(12),    ///< the val is quoted by '', "", > or |
     KEYQUO  = c4bit(13),    ///< the key is quoted by '', "", > or |
     KEYVAL  = KEY|VAL,
@@ -154,6 +166,28 @@ typedef enum : type_bits {
     DOCMAP  = DOC|MAP,
     DOCSEQ  = DOC|SEQ,
     DOCVAL  = DOC|VAL,
+    // these flags are from a work in progress and should not be used yet
+    _WIP_STYLE_FLOW_SL = c4bit(14), ///< mark container with single-line flow format (seqs as '[val1,val2], maps as '{key: val, key2: val2}')
+    _WIP_STYLE_FLOW_ML = c4bit(15), ///< mark container with multi-line flow format (seqs as '[val1,\nval2], maps as '{key: val,\nkey2: val2}')
+    _WIP_STYLE_BLOCK   = c4bit(16), ///< mark container with block format (seqs as '- val\n', maps as 'key: val')
+    _WIP_KEY_LITERAL   = c4bit(17), ///< mark key scalar as multiline, block literal |
+    _WIP_VAL_LITERAL   = c4bit(18), ///< mark val scalar as multiline, block literal |
+    _WIP_KEY_FOLDED    = c4bit(19), ///< mark key scalar as multiline, block folded >
+    _WIP_VAL_FOLDED    = c4bit(20), ///< mark val scalar as multiline, block folded >
+    _WIP_KEY_SQUO      = c4bit(21), ///< mark key scalar as single quoted
+    _WIP_VAL_SQUO      = c4bit(22), ///< mark val scalar as single quoted
+    _WIP_KEY_DQUO      = c4bit(23), ///< mark key scalar as double quoted
+    _WIP_VAL_DQUO      = c4bit(24), ///< mark val scalar as double quoted
+    _WIP_KEY_PLAIN     = c4bit(25), ///< mark key scalar as plain scalar (unquoted, even when multiline)
+    _WIP_VAL_PLAIN     = c4bit(26), ///< mark val scalar as plain scalar (unquoted, even when multiline)
+    _WIP_KEY_STYLE     = _WIP_KEY_LITERAL|_WIP_KEY_FOLDED|_WIP_KEY_SQUO|_WIP_KEY_DQUO|_WIP_KEY_PLAIN,
+    _WIP_VAL_STYLE     = _WIP_VAL_LITERAL|_WIP_VAL_FOLDED|_WIP_VAL_SQUO|_WIP_VAL_DQUO|_WIP_VAL_PLAIN,
+    _WIP_KEY_FT_NL     = c4bit(27), ///< features: mark key scalar as having \n in its contents
+    _WIP_VAL_FT_NL     = c4bit(28), ///< features: mark val scalar as having \n in its contents
+    _WIP_KEY_FT_SQ     = c4bit(29), ///< features: mark key scalar as having single quotes in its contents
+    _WIP_VAL_FT_SQ     = c4bit(30), ///< features: mark val scalar as having single quotes in its contents
+    _WIP_KEY_FT_DQ     = c4bit(31), ///< features: mark key scalar as having double quotes in its contents
+    _WIP_VAL_FT_DQ     = c4bit(32), ///< features: mark val scalar as having double quotes in its contents
     #undef c4bit
 } NodeType_e;
 
@@ -171,26 +205,26 @@ public:
 
 public:
 
-    inline operator NodeType_e      & C4_RESTRICT ()       { return type; }
-    inline operator NodeType_e const& C4_RESTRICT () const { return type; }
+    C4_ALWAYS_INLINE operator NodeType_e      & C4_RESTRICT ()       { return type; }
+    C4_ALWAYS_INLINE operator NodeType_e const& C4_RESTRICT () const { return type; }
 
-    NodeType() : type(NOTYPE) {}
-    NodeType(NodeType_e t) : type(t) {}
-    NodeType(type_bits t) : type((NodeType_e)t) {}
+    C4_ALWAYS_INLINE NodeType() : type(NOTYPE) {}
+    C4_ALWAYS_INLINE NodeType(NodeType_e t) : type(t) {}
+    C4_ALWAYS_INLINE NodeType(type_bits t) : type((NodeType_e)t) {}
 
-    const char *type_str() const { return type_str(type); }
+    C4_ALWAYS_INLINE const char *type_str() const { return type_str(type); }
     static const char* type_str(NodeType_e t);
 
-    void set(NodeType_e t) { type = t; }
-    void set(type_bits  t) { type = (NodeType_e)t; }
+    C4_ALWAYS_INLINE void set(NodeType_e t) { type = t; }
+    C4_ALWAYS_INLINE void set(type_bits  t) { type = (NodeType_e)t; }
 
-    void add(NodeType_e t) { type = (NodeType_e)(type|t); }
-    void add(type_bits  t) { type = (NodeType_e)(type|t); }
+    C4_ALWAYS_INLINE void add(NodeType_e t) { type = (NodeType_e)(type|t); }
+    C4_ALWAYS_INLINE void add(type_bits  t) { type = (NodeType_e)(type|t); }
 
-    void rem(NodeType_e t) { type = (NodeType_e)(type & ~t); }
-    void rem(type_bits  t) { type = (NodeType_e)(type & ~t); }
+    C4_ALWAYS_INLINE void rem(NodeType_e t) { type = (NodeType_e)(type & ~t); }
+    C4_ALWAYS_INLINE void rem(type_bits  t) { type = (NodeType_e)(type & ~t); }
 
-    void clear() { type = NOTYPE; }
+    C4_ALWAYS_INLINE void clear() { type = NOTYPE; }
 
 public:
 
@@ -204,30 +238,47 @@ public:
     #   endif
     #endif
 
-    bool is_stream() const { return ((type & STREAM) == STREAM) != 0; }
-    bool is_doc() const { return (type & DOC) != 0; }
-    bool is_container() const { return (type & (MAP|SEQ|STREAM)) != 0; }
-    bool is_map() const { return (type & MAP) != 0; }
-    bool is_seq() const { return (type & SEQ) != 0; }
-    bool has_val() const { return (type & VAL) != 0; }
-    bool has_key() const { return (type & KEY) != 0; }
-    bool is_val() const { return (type & (KEYVAL)) == VAL; }
-    bool is_keyval() const { return (type & KEYVAL) == KEYVAL; }
-    bool has_key_tag() const { return (type & (KEY|KEYTAG)) == (KEY|KEYTAG); }
-    bool has_val_tag() const { return ((type & (VALTAG)) && (type & (VAL|MAP|SEQ))); }
-    bool has_key_anchor() const { return (type & (KEY|KEYANCH)) == (KEY|KEYANCH); }
-    bool is_key_anchor() const { return (type & (KEY|KEYANCH)) == (KEY|KEYANCH); }
-    bool has_val_anchor() const { return (type & VALANCH) != 0 && (type & (VAL|SEQ|MAP)) != 0; }
-    bool is_val_anchor() const { return (type & VALANCH) != 0 && (type & (VAL|SEQ|MAP)) != 0; }
-    bool has_anchor() const { return (type & (KEYANCH|VALANCH)) != 0; }
-    bool is_anchor() const { return (type & (KEYANCH|VALANCH)) != 0; }
-    bool is_key_ref() const { return (type & KEYREF) != 0; }
-    bool is_val_ref() const { return (type & VALREF) != 0; }
-    bool is_ref() const { return (type & (KEYREF|VALREF)) != 0; }
-    bool is_anchor_or_ref() const { return (type & (KEYANCH|VALANCH|KEYREF|VALREF)) != 0; }
-    bool is_key_quoted() const { return (type & (KEY|KEYQUO)) == (KEY|KEYQUO); }
-    bool is_val_quoted() const { return (type & (VAL|VALQUO)) == (VAL|VALQUO); }
-    bool is_quoted() const { return (type & (KEY|KEYQUO)) == (KEY|KEYQUO) || (type & (VAL|VALQUO)) == (VAL|VALQUO); }
+    C4_ALWAYS_INLINE bool is_stream() const { return ((type & STREAM) == STREAM) != 0; }
+    C4_ALWAYS_INLINE bool is_doc() const { return (type & DOC) != 0; }
+    C4_ALWAYS_INLINE bool is_container() const { return (type & (MAP|SEQ|STREAM)) != 0; }
+    C4_ALWAYS_INLINE bool is_map() const { return (type & MAP) != 0; }
+    C4_ALWAYS_INLINE bool is_seq() const { return (type & SEQ) != 0; }
+    C4_ALWAYS_INLINE bool has_val() const { return (type & VAL) != 0; }
+    C4_ALWAYS_INLINE bool has_key() const { return (type & KEY) != 0; }
+    C4_ALWAYS_INLINE bool is_val() const { return (type & (KEYVAL)) == VAL; }
+    C4_ALWAYS_INLINE bool is_keyval() const { return (type & KEYVAL) == KEYVAL; }
+    C4_ALWAYS_INLINE bool has_key_tag() const { return (type & (KEY|KEYTAG)) == (KEY|KEYTAG); }
+    C4_ALWAYS_INLINE bool has_val_tag() const { return ((type & (VALTAG)) && (type & (VAL|MAP|SEQ))); }
+    C4_ALWAYS_INLINE bool has_key_anchor() const { return (type & (KEY|KEYANCH)) == (KEY|KEYANCH); }
+    C4_ALWAYS_INLINE bool is_key_anchor() const { return (type & (KEY|KEYANCH)) == (KEY|KEYANCH); }
+    C4_ALWAYS_INLINE bool has_val_anchor() const { return (type & VALANCH) != 0 && (type & (VAL|SEQ|MAP)) != 0; }
+    C4_ALWAYS_INLINE bool is_val_anchor() const { return (type & VALANCH) != 0 && (type & (VAL|SEQ|MAP)) != 0; }
+    C4_ALWAYS_INLINE bool has_anchor() const { return (type & (KEYANCH|VALANCH)) != 0; }
+    C4_ALWAYS_INLINE bool is_anchor() const { return (type & (KEYANCH|VALANCH)) != 0; }
+    C4_ALWAYS_INLINE bool is_key_ref() const { return (type & KEYREF) != 0; }
+    C4_ALWAYS_INLINE bool is_val_ref() const { return (type & VALREF) != 0; }
+    C4_ALWAYS_INLINE bool is_ref() const { return (type & (KEYREF|VALREF)) != 0; }
+    C4_ALWAYS_INLINE bool is_anchor_or_ref() const { return (type & (KEYANCH|VALANCH|KEYREF|VALREF)) != 0; }
+    C4_ALWAYS_INLINE bool is_key_quoted() const { return (type & (KEY|KEYQUO)) == (KEY|KEYQUO); }
+    C4_ALWAYS_INLINE bool is_val_quoted() const { return (type & (VAL|VALQUO)) == (VAL|VALQUO); }
+    C4_ALWAYS_INLINE bool is_quoted() const { return (type & (KEY|KEYQUO)) == (KEY|KEYQUO) || (type & (VAL|VALQUO)) == (VAL|VALQUO); }
+
+    // these predicates are a work in progress and subject to change. Don't use yet.
+    C4_ALWAYS_INLINE bool default_block() const { return (type & (_WIP_STYLE_BLOCK|_WIP_STYLE_FLOW_ML|_WIP_STYLE_FLOW_SL)) == 0; }
+    C4_ALWAYS_INLINE bool marked_block() const { return (type & (_WIP_STYLE_BLOCK)) != 0; }
+    C4_ALWAYS_INLINE bool marked_flow_sl() const { return (type & (_WIP_STYLE_FLOW_SL)) != 0; }
+    C4_ALWAYS_INLINE bool marked_flow_ml() const { return (type & (_WIP_STYLE_FLOW_ML)) != 0; }
+    C4_ALWAYS_INLINE bool marked_flow() const { return (type & (_WIP_STYLE_FLOW_ML|_WIP_STYLE_FLOW_SL)) != 0; }
+    C4_ALWAYS_INLINE bool key_marked_literal() const { return (type & (_WIP_KEY_LITERAL)) != 0; }
+    C4_ALWAYS_INLINE bool val_marked_literal() const { return (type & (_WIP_VAL_LITERAL)) != 0; }
+    C4_ALWAYS_INLINE bool key_marked_folded() const { return (type & (_WIP_KEY_FOLDED)) != 0; }
+    C4_ALWAYS_INLINE bool val_marked_folded() const { return (type & (_WIP_VAL_FOLDED)) != 0; }
+    C4_ALWAYS_INLINE bool key_marked_squo() const { return (type & (_WIP_KEY_SQUO)) != 0; }
+    C4_ALWAYS_INLINE bool val_marked_squo() const { return (type & (_WIP_VAL_SQUO)) != 0; }
+    C4_ALWAYS_INLINE bool key_marked_dquo() const { return (type & (_WIP_KEY_DQUO)) != 0; }
+    C4_ALWAYS_INLINE bool val_marked_dquo() const { return (type & (_WIP_VAL_DQUO)) != 0; }
+    C4_ALWAYS_INLINE bool key_marked_plain() const { return (type & (_WIP_KEY_PLAIN)) != 0; }
+    C4_ALWAYS_INLINE bool val_marked_plain() const { return (type & (_WIP_VAL_PLAIN)) != 0; }
 
     #if defined(__clang__)
     #   pragma clang diagnostic pop
@@ -450,9 +501,7 @@ public:
     inline NodeData *get(size_t i)
     {
         if(i == NONE)
-        {
             return nullptr;
-        }
         RYML_ASSERT(i >= 0 && i < m_cap);
         return m_buf + i;
     }
@@ -461,9 +510,7 @@ public:
     inline NodeData const *get(size_t i) const
     {
         if(i == NONE)
-        {
             return nullptr;
-        }
         RYML_ASSERT(i >= 0 && i < m_cap);
         return m_buf + i;
     }
@@ -518,7 +565,7 @@ public:
     /** @name node property getters */
     /** @{ */
 
-    NodeType_e  type(size_t node) const { return (NodeType_e)(_p(node)->m_type & _TYMASK); }
+    NodeType type(size_t node) const { return _p(node)->m_type; }
     const char* type_str(size_t node) const { return NodeType::type_str(_p(node)->m_type); }
 
     csubstr    const& key       (size_t node) const { RYML_ASSERT(has_key(node)); return _p(node)->m_key.scalar; }
@@ -532,6 +579,9 @@ public:
     csubstr    const& val_ref   (size_t node) const { RYML_ASSERT(is_val_ref(node) && ! has_val_anchor(node)); return _p(node)->m_val.anchor; }
     csubstr    const& val_anchor(size_t node) const { RYML_ASSERT( ! is_val_ref(node) && has_val_anchor(node)); return _p(node)->m_val.anchor; }
     NodeScalar const& valsc     (size_t node) const { RYML_ASSERT(has_val(node)); return _p(node)->m_val; }
+
+    bool key_is_null(size_t node) const { RYML_ASSERT(has_key(node)); if(is_key_quoted(node)) return false; csubstr s = _p(node)->m_key.scalar; return s == nullptr || s == "~" || s == "null" || s == "Null" || s == "NULL"; }
+    bool val_is_null(size_t node) const { RYML_ASSERT(has_val(node)); if(is_val_quoted(node)) return false; csubstr s = _p(node)->m_val.scalar; return s == nullptr || s == "~" || s == "null" || s == "Null" || s == "NULL"; }
 
     /** @} */
 
@@ -693,6 +743,39 @@ public:
      * requiring an explicit call.
      */
     void resolve();
+
+    /** @} */
+
+public:
+
+    /** @name tag directives */
+    /** @{ */
+
+    void resolve_tags();
+
+    size_t num_tag_directives() const;
+    size_t add_tag_directive(TagDirective const& td);
+    void clear_tag_directives();
+
+    size_t resolve_tag(substr output, csubstr tag, size_t node_id) const;
+    csubstr resolve_tag_sub(substr output, csubstr tag, size_t node_id) const
+    {
+        size_t needed = resolve_tag(output, tag, node_id);
+        return needed <= output.len ? output.first(needed) : output;
+    }
+
+    using tag_directive_const_iterator = TagDirective const*;
+    tag_directive_const_iterator begin_tag_directives() const { return m_tag_directives; }
+    tag_directive_const_iterator end_tag_directives() const { return m_tag_directives + num_tag_directives(); }
+
+    struct TagDirectiveProxy
+    {
+        tag_directive_const_iterator b, e;
+        tag_directive_const_iterator begin() const { return b; }
+        tag_directive_const_iterator end() const { return e; }
+    };
+
+    TagDirectiveProxy tag_directives() const { return TagDirectiveProxy{begin_tag_directives(), end_tag_directives()}; }
 
     /** @} */
 
@@ -932,7 +1015,7 @@ public:
      * existing arena, and thus change the contents of individual nodes. */
     substr alloc_arena(size_t sz)
     {
-        if(sz >= arena_slack())
+        if(sz > arena_slack())
             _grow_arena(sz - arena_slack());
         substr s = _request_span(sz);
         return s;
@@ -1290,6 +1373,8 @@ public:
     size_t m_arena_pos;
 
     Callbacks m_callbacks;
+
+    TagDirective m_tag_directives[RYML_MAX_TAG_DIRECTIVES];
 
 };
 

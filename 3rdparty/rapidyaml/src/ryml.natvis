@@ -174,4 +174,21 @@ See also:
     </Expand>
   </Type>
 
+  <Type Name="c4::yml::detail::stack&lt;*,*&gt;">
+    <DisplayString>sz={m_size} cap={m_capacity}</DisplayString>
+    <Expand>
+      <Item Name="[size]">m_size</Item>
+      <Item Name="[capacity]">m_capacity</Item>
+      <Item Name="[is small]">m_buf == m_stack</Item>
+      <Synthetic Name="[items]">
+        <Expand>
+          <ArrayItems>
+            <Size>m_size</Size>
+            <ValuePointer>m_stack</ValuePointer>
+          </ArrayItems>
+        </Expand>
+      </Synthetic>
+    </Expand>
+  </Type>
+
 </AutoVisualizer>

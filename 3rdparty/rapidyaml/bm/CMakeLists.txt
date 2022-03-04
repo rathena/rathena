@@ -2,7 +2,7 @@ c4_setup_benchmarking()
 
 # thirdparty libs that will be compared with ryml
 
-set(_ed ${CMAKE_CURRENT_BINARY_DIR}/ext) # casual ryml extern dir (these projects are not part of ryml and are downloaded and compiled on the fly)
+set(_ed ${CMAKE_CURRENT_BINARY_DIR}/subprojects) # casual ryml extern dir (these projects are not part of ryml and are downloaded and compiled on the fly)
 
 # libyaml
 c4_require_subproject(libyaml REMOTE
@@ -11,12 +11,14 @@ c4_require_subproject(libyaml REMOTE
   OVERRIDE BUILD_TESTING OFF
   SET_FOLDER_TARGETS ext yaml)
 
-# libfyaml
-c4_require_subproject(libfyaml REMOTE
-    GIT_REPOSITORY https://github.com/pantoniou/libfyaml
-    GIT_TAG fd35c3a5fa58ff2effd8207f2185852c3a837d76 #v0.7.11
-    SET_FOLDER_TARGETS ext fyaml
-  )
+# libfyaml - not in windows
+if(NOT WIN32)
+    c4_require_subproject(libfyaml REMOTE
+        GIT_REPOSITORY https://github.com/pantoniou/libfyaml
+        GIT_TAG fd35c3a5fa58ff2effd8207f2185852c3a837d76 #v0.7.11
+        SET_FOLDER_TARGETS ext fyaml
+        )
+endif()
 
 # mini-yaml
 # too incomplete ATM
@@ -35,10 +37,14 @@ target_include_directories(miniyaml PUBLIC
 # yaml-cpp
 c4_import_remote_proj(yaml-cpp ${_ed}/yaml-cpp REMOTE
     GIT_REPOSITORY https://github.com/jbeder/yaml-cpp
-    # the master branch regularly screws up on windows builds.
+    # the master branch regularly fails on windows builds.
     # so use fixed pre-validated commit hashes
     GIT_TAG 587b24e2eedea1afa21d79419008ca5f7bda3bf4
-  OVERRIDE YAML_CPP_BUILD_TESTS OFF YAML_CPP_BUILD_TOOLS OFF YAML_CPP_BUILD_CONTRIB OFF YAML_CPP_BUILD_INSTALL OFF
+  OVERRIDE
+      YAML_CPP_BUILD_TESTS OFF
+      YAML_CPP_BUILD_TOOLS OFF
+      YAML_CPP_BUILD_CONTRIB OFF
+      YAML_CPP_BUILD_INSTALL OFF
   SET_FOLDER_TARGETS ext yaml-cpp format)
 set(ryml_yaml_cpp_inc ${_ed}/yaml-cpp/src/include)
 if(MSVC)
@@ -94,17 +100,27 @@ set(RYML_SAJSON_INC_DIR ${sajson_dir}/include)
 
 # -----------------------------------------------------------------------------
 
-c4_add_executable(ryml-bm-parse
-    SOURCES bm_parse.cpp
-    LIBS ryml yaml yaml-cpp fyaml benchmark jsoncpp_static nlohmann_json c4fs
-    INC_DIRS ${RYML_RAPIDJSON_INC_DIR} ${RYML_SAJSON_INC_DIR}
-    FOLDER bm)
-if(RYML_DBG)
-    target_compile_definitions(ryml-bm-parse PRIVATE RYML_DBG)
-endif()
+function(ryml_add_bm_exe name)
+    c4_add_executable(ryml-bm-${name}
+        SOURCES bm_common.hpp ${ARGN}
+        LIBS ryml yaml yaml-cpp benchmark jsoncpp_static nlohmann_json c4fs
+        INC_DIRS ${RYML_RAPIDJSON_INC_DIR} ${RYML_SAJSON_INC_DIR}
+        FOLDER bm)
+    if(RYML_DBG)
+        target_compile_definitions(ryml-bm-${name} PRIVATE RYML_DBG)
+    endif()
+    if(NOT WIN32)
+        target_compile_definitions(ryml-bm-${name} PRIVATE RYML_HAVE_LIBFYAML)
+        target_link_libraries(ryml-bm-${name} PRIVATE fyaml)
+    endif()
+    add_custom_target(ryml-bm-${name}-all) # for aggregating all the cases
+    _c4_set_target_folder(ryml-bm-${name}-all bm/run)
+endfunction()
 
+ryml_add_bm_exe(parse bm_parse.cpp)
+ryml_add_bm_exe(emit bm_emit.cpp)
 
-function(ryml_add_bm_case target case_file)
+function(ryml_add_bm_case target name case_file)
     c4_dbg("adding benchmark case: ${case_file}")
     get_filename_component(case "${case_file}" NAME_WE) # case identifier
     get_filename_component(ext "${case_file}" EXT) # prevent json readers from reading yml data
@@ -114,8 +130,8 @@ function(ryml_add_bm_case target case_file)
     c4_add_target_benchmark(${target} ${case}
         FILTER "${filter_json}"
         ARGS ${case_file})
+    add_dependencies(ryml-bm-${name}-all ryml-bm-${name}-${case})
 endfunction()
-
 
 set(RYML_BM_CASE_MANIFESTS "" CACHE STRING "additional benchmark case manifests")
 foreach(mnf ${RYML_BM_CASE_MANIFESTS} "${CMAKE_CURRENT_LIST_DIR}/cases/bm-cases.txt")
@@ -128,6 +144,7 @@ foreach(mnf ${RYML_BM_CASE_MANIFESTS} "${CMAKE_CURRENT_LIST_DIR}/cases/bm-cases.
         if(NOT EXISTS "${mnf_dir}/${case_file}")
             c4_err("benchmark case file not found: ${mnf_dir}/${case_file}")
         endif()
-        ryml_add_bm_case(ryml-bm-parse "${mnf_dir}/${case_file}")
+        ryml_add_bm_case(ryml-bm-parse parse "${mnf_dir}/${case_file}")
+        ryml_add_bm_case(ryml-bm-emit emit "${mnf_dir}/${case_file}")
     endforeach()
 endforeach()
