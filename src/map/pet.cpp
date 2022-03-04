@@ -1219,6 +1219,11 @@ int pet_catch_process1(struct map_session_data *sd,int target_class)
 {
 	nullpo_ret(sd);
 
+	if (map_getmapflag(sd->bl.m, MF_NOPETCAPTURE)) {
+		clif_displaymessage(sd->fd, msg_txt(sd, 669)); // You can't catch any pet on this map.
+		return 0;
+	}
+
 	sd->catch_target_class = target_class;
 	clif_catch_process(sd);
 
@@ -1245,6 +1250,15 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 		sd->catch_target_class = PET_CATCH_FAIL;
 		sd->itemid = 0;
 		sd->itemindex = -1;
+		return 1;
+	}
+
+	if (map_getmapflag(sd->bl.m, MF_NOPETCAPTURE)) {
+		clif_pet_roulette(sd, 0);
+		sd->catch_target_class = PET_CATCH_FAIL;
+		sd->itemid = 0;
+		sd->itemindex = -1;
+		clif_displaymessage(sd->fd, msg_txt(sd, 669)); // You can't catch any pet on this map.
 		return 1;
 	}
 

@@ -3187,6 +3187,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Plant
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 1000
@@ -31938,6 +31940,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Formless
+    RaceGroups:
+      Malangdo: true
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 300
@@ -46109,6 +46113,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 1
     WalkSpeed: 300
@@ -46156,6 +46162,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 300
@@ -46203,6 +46211,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 1
     WalkSpeed: 200
@@ -46248,6 +46258,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 1
     WalkSpeed: 200
@@ -46297,6 +46309,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 200
@@ -46347,6 +46361,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Insect
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 1
     WalkSpeed: 150
@@ -46394,6 +46410,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 3
     WalkSpeed: 150
@@ -46441,6 +46459,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 200
@@ -46449,9 +46469,6 @@ Body:
     DamageMotion: 384
     Ai: 20
     Class: Boss
-    Modes:
-      IgnoreMelee: true
-      IgnoreRanged: true
     Drops:
       - Item: Mistic_Frozen
         Rate: 6
@@ -46491,6 +46508,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 150
@@ -46538,6 +46557,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 190
@@ -46587,6 +46608,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 3
     WalkSpeed: 200
@@ -46634,6 +46657,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 165
@@ -46731,6 +46756,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 165
@@ -46780,6 +46807,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 165
@@ -46828,6 +46857,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 165
@@ -46877,6 +46908,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 165
@@ -46951,6 +46984,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 300
@@ -46990,6 +47025,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 300
@@ -47030,6 +47067,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 300
@@ -84798,7 +84837,7 @@ Body:
     Drops:
       - Item: Big_Sis'_Ribbon
         Rate: 25
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: Bluish_Green_Jewel
         Rate: 500
@@ -84858,7 +84897,7 @@ Body:
         Rate: 500
       - Item: Light_Granule
         Rate: 250
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: Min_Vagabond_Wolf_Card
         Rate: 1
@@ -84902,7 +84941,7 @@ Body:
         Rate: 4000
       - Item: Azure_Jewel
         Rate: 500
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: Angel's_Arrival
         Rate: 500
@@ -84948,7 +84987,7 @@ Body:
     Drops:
       - Item: Fillet
         Rate: 100
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: White_Jewel
         Rate: 600
@@ -84999,7 +85038,7 @@ Body:
         Rate: 2668
       - Item: Slender_Snake
         Rate: 1250
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: War_Axe
         Rate: 1
@@ -85058,7 +85097,7 @@ Body:
         Rate: 75
       - Item: Smoking_Pipe
         Rate: 125
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: Katar_Of_Raging_Blaze
         Rate: 250
@@ -85121,7 +85160,7 @@ Body:
         Rate: 100
       - Item: Jamadhar_
         Rate: 300
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: Spinx_Helm
         Rate: 75
@@ -85178,7 +85217,7 @@ Body:
         Rate: 250
       - Item: Sucsamad
         Rate: 75
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: Mr_Scream
         Rate: 150
@@ -85243,7 +85282,7 @@ Body:
         Rate: 125
       - Item: Orcish_Sword
         Rate: 500
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: Giant_Axe
         Rate: 50
@@ -85294,7 +85333,7 @@ Body:
     Drops:
       - Item: Gemstone
         Rate: 2425
-      - Item: Broken_Magic_Stone
+      - Item: Shattered_Rune
         Rate: 10000
       - Item: Golden_Jewel
         Rate: 500
@@ -85335,6 +85374,9 @@ Body:
     AttackMotion: 816
     DamageMotion: 288
     Ai: 02
+    Modes:
+      Detector: true
+      Aggressive: true
   - Id: 3432
     AegisName: MIN_G_WOLF
     Name: Wolf 
@@ -85362,6 +85404,9 @@ Body:
     AttackMotion: 504
     DamageMotion: 432
     Ai: 02
+    Modes:
+      Detector: true
+      Aggressive: true
   - Id: 3433
     AegisName: MIN_G_ROCKER
     Name: Rocker
@@ -85389,6 +85434,9 @@ Body:
     AttackMotion: 864
     DamageMotion: 540
     Ai: 02
+    Modes:
+      Detector: true
+      Aggressive: true
   - Id: 3434
     AegisName: MIN_G_LUNATIC
     Name: Lunatic
@@ -85414,6 +85462,9 @@ Body:
     AttackMotion: 456
     DamageMotion: 336
     Ai: 02
+    Modes:
+      Detector: true
+      Aggressive: true
   - Id: 3435
     AegisName: MIN_G_GARGOYLE
     Name: Gargoyle
@@ -85441,6 +85492,9 @@ Body:
     AttackMotion: 720
     DamageMotion: 384
     Ai: 05
+    Modes:
+      Detector: true
+      Aggressive: true
   - Id: 3436
     AegisName: MIN_G_BIGFOOT
     Name: Bigfoot
@@ -85466,6 +85520,9 @@ Body:
     AttackMotion: 192
     DamageMotion: 192
     Ai: 17
+    Modes:
+      Detector: true
+      Aggressive: true
   - Id: 3437
     AegisName: MIN_G_ANCIENT_MUMMY
     Name: Ancient Mummy
@@ -85493,6 +85550,9 @@ Body:
     AttackMotion: 120
     DamageMotion: 384
     Ai: 21
+    Modes:
+      Detector: true
+      Aggressive: true
   - Id: 3438
     AegisName: MIN_G_SAND_MAN
     Name: Sandman
@@ -85520,6 +85580,9 @@ Body:
     AttackMotion: 720
     DamageMotion: 288
     Ai: 04
+    Modes:
+      Detector: true
+      Aggressive: true
   - Id: 3439
     AegisName: MIN_G_HIGH_ORC
     Name: High Orc
@@ -85547,6 +85610,9 @@ Body:
     AttackMotion: 500
     DamageMotion: 1000
     Ai: 04
+    Modes:
+      Detector: true
+      Aggressive: true
   - Id: 3440
     AegisName: MIN_G_MEGALITH
     Name: Megalith
@@ -85574,6 +85640,9 @@ Body:
     AttackMotion: 1332
     DamageMotion: 672
     Ai: 21
+    Modes:
+      Detector: true
+      Aggressive: true
 #  - Id: 3441
 #    AegisName: B_DRACULA
   - Id: 3442
@@ -86881,8 +86950,55 @@ Body:
 #    AegisName: E_WILD_MOBSTER
 #  - Id: 3493
 #    AegisName: SYS_MSG_J
-#  - Id: 3494
-#    AegisName: IFN_POIRING
+  - Id: 3494
+    AegisName: IFN_POIRING
+    Name: Shining Poring
+    Level: 100
+    Hp: 15
+    Attack: 100
+    Attack2: 100
+    Str: 10
+    Agi: 10
+    Vit: 10
+    Int: 10
+    Luk: 10
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 100
+    AttackDelay: 0
+    AttackMotion: 0
+    DamageMotion: 0
+    Ai: 01
+    Class: Guardian
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
+    Drops:
+      - Item: Shattered_Rune
+        Rate: 3000
+      - Item: Shattered_Rune
+        Rate: 3000
+      - Item: Shattered_Rune
+        Rate: 3000
+      - Item: Shattered_Rune
+        Rate: 3000
+      - Item: Shattered_Rune
+        Rate: 3000
+      - Item: Shattered_Rune
+        Rate: 3000
+      - Item: Shattered_Rune
+        Rate: 3000
+      - Item: Shattered_Rune
+        Rate: 3000
+        StealProtected: true
   - Id: 3495
     AegisName: DR_EGGRING
     Name: Eggring
