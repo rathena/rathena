@@ -24528,6 +24528,106 @@ Body:
       bonus2 bSkillFixedCast,"MG_LIGHTNINGBOLT",10000;
   - Combos:
       - Combo:
+          - Cor_Core_Headset     # 410014
+          - Cannon_Rapier_OS     # 13493
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - Saphir_Hall_OS     # 16088
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - Ultio_Spes_OS     # 16089
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - Virtual_Bow_OS     # 18178
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - MH_P89_OS     # 18179
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - AC_B44_OS     # 18180
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - Burning_Knuckle_OS     # 1862
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - Beam_Claymore_OS     # 21047
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - Rutilus_Stick_OS     # 26151
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - ElectricFox_OS     # 26164
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - Meuchler_OS     # 28038
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - Blasti_OS     # 28136
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - HR_S55_OS     # 28253
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - Circuit_Board_OS     # 28629
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - Kuroiro_OS     # 28755
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - Boost_Lance_OS     # 32019
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - Cannon_Rapier_OS     # 13493
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - Saphir_Hall_OS     # 16088
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - Ultio_Spes_OS     # 16089
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - Virtual_Bow_OS     # 18178
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - MH_P89_OS     # 18179
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - AC_B44_OS     # 18180
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - Burning_Knuckle_OS     # 1862
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - Beam_Claymore_OS     # 21047
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - Rutilus_Stick_OS     # 26151
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - ElectricFox_OS     # 26164
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - Meuchler_OS     # 28038
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - Blasti_OS     # 28136
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - HR_S55_OS     # 28253
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - Circuit_Board_OS     # 28629
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - Kuroiro_OS     # 28755
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - Boost_Lance_OS     # 32019
+    Script: |
+      bonus bBaseAtk,200;
+      bonus bMatk,200;
+  - Combos:
+      - Combo:
           - aegis_470080     # 470080
           - Bear's_Power     # 4875
       - Combo:
