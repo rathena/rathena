@@ -10184,7 +10184,7 @@ Body:
         Count: 20
     Drops:
       - Mob: EP17_1_DOLOR1
-        Item: Identification_Bracelet
+        Item: Id_Card
         Rate: 5000
   - Id: 17035
     Title: "Waiting: Rudus"

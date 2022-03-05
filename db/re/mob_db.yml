@@ -90778,6 +90778,7 @@ Body:
     AttackDelay: 1050
     AttackMotion: 1044
     DamageMotion: 432
+    Ai: 21
     Class: Boss
     Drops:
       - Item: Tiger's_Skin
@@ -90788,14 +90789,12 @@ Body:
         Rate: 100
       - Item: EP17_1_EVT39
         Rate: 1000
-      - Item: Apple
-        Rate: 50
       - Item: Miguel_Card
         Rate: 1
         StealProtected: true
   - Id: 20347
     AegisName: MD_MIGUEL_G
-    Name: Miguel
+    Name: Miguel G.
     Level: 115
     Hp: 8600000
     Attack: 4350
@@ -90820,9 +90819,10 @@ Body:
     AttackMotion: 1044
     DamageMotion: 432
     Class: Boss
+    Ai: 21
   - Id: 20348
     AegisName: MD_A013_CAPUT
-    Name: Incomplete Caput
+    Name: A013 - Caput
     Level: 110
     Hp: 31000
     BaseExp: 520
@@ -90861,7 +90861,7 @@ Body:
         Rate: 3
   - Id: 20349
     AegisName: MD_A013_DOLOR
-    Name: Incomplete Dolor
+    Name: A013 - Dolor
     Level: 111
     Hp: 31000
     BaseExp: 5300
@@ -90900,7 +90900,7 @@ Body:
         Rate: 800
   - Id: 20350
     AegisName: MD_A013_BELLARE
-    Name: Incomplete Bellare
+    Name: A013 - Bellare
     Level: 112
     Hp: 38000
     BaseExp: 6500
@@ -90941,7 +90941,7 @@ Body:
         Rate: 7
   - Id: 20351
     AegisName: MD_MANHOLE2
-    Name: 
+    Name: Manhole   #!todo check english name
     Level: 1
     Hp: 1000
     AttackRange: 2
@@ -91247,7 +91247,7 @@ Body:
         StealProtected: true
   - Id: 20360
     AegisName: EP17_1_PLAGA2
-    Name: Plaga
+    Name: Mutant Plaga
     Level: 178
     Hp: 760548
     BaseExp: 138282
@@ -91421,7 +91421,7 @@ Body:
         StealProtected: true
   - Id: 20364
     AegisName: EP17_1_VENENUM2
-    Name: Venenum
+    Name: Mutant Venenum
     Level: 176
     Hp: 755670
     BaseExp: 137394
@@ -91509,7 +91509,7 @@ Body:
         StealProtected: true
   - Id: 20366
     AegisName: EP17_1_TWIN_CAPUT2
-    Name: Twin Caput
+    Name: Mutant Twin Caput
     Level: 175
     Hp: 750501
     BaseExp: 136454
@@ -91578,11 +91578,85 @@ Body:
 #    AegisName: ICE_GHOST_H
 #  - Id: 20380
 #    AegisName: FLAME_GHOST_H
-#  - Id: 20381
-#    AegisName: EP17_1_R4885_BESTIA
-#    DamageTaken: 10
-#  - Id: 20382
-#    AegisName: G_TWIN_CAPUT2
+  - Id: 20381
+    AegisName: EP17_1_R4885_BESTIA
+    Name: R48-85-Bestia
+    Level: 174
+    Hp: 8885000
+    BaseExp: 8003000
+    JobExp: 6009000
+    MvpExp: 4001500
+    Attack: 4520
+    Attack2: 4150
+    Defense: 855
+    MagicDefense: 124
+    Str: 220
+    Agi: 244
+    Vit: 72
+    Int: 118
+    Dex: 255
+    Luk: 95
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Brute
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 1020
+    AttackMotion: 144
+    DamageMotion: 288
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+      KnockBackImmune: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+    MvpDrops:
+      - Item: Old_Violet_Box
+        Rate: 4000
+      - Item: Seed_Of_Yggdrasil
+        Rate: 3000
+    Drops:
+      - Item: Piece_Of_Bone_Armor
+        Rate: 4000
+      - Item: EP17_1_EVT02
+        Rate: 5000
+      - Item: Zelunium
+        Rate: 5000
+      - Item: R48_85_Bestia_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20382
+    AegisName: G_TWIN_CAPUT2
+    Name: Twin Capute
+    Level: 175
+    Hp: 603341
+    Attack: 3619
+    Attack2: 1206
+    Defense: 618
+    MagicDefense: 196
+    Str: 197
+    Agi: 90
+    Vit: 139
+    Int: 35
+    Dex: 143
+    Luk: 45
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 300
+    AttackDelay: 1028
+    AttackMotion: 1020
+    DamageMotion: 420
+    Ai: 21
 #  - Id: 20383
 #    AegisName: E_WICKED_NYMPH
 #  - Id: 20384
