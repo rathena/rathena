@@ -2396,14 +2396,14 @@ uint64 ComboDatabase::parseBodyNode(const ryml::NodeRef node) {
 
 	const ryml::NodeRef combosNode = node["Combos"];
 
-	for (const auto &comboit : combosNode) {
+	for (const auto comboit : combosNode.children()) {
 		static const std::string nodeName = "Combo";
 
 		if (!this->nodesExist(comboit, { nodeName })) {
 			return 0;
 		}
 
-		const ryml::NodeRef comboNode = comboit[comboit.key()];
+		const ryml::NodeRef comboNode = comboit["Combo"];
 
 		if (!comboNode.is_seq()) {
 			this->invalidWarning(comboNode, "%s should be a sequence.\n", nodeName.c_str());
@@ -2412,9 +2412,9 @@ uint64 ComboDatabase::parseBodyNode(const ryml::NodeRef node) {
 
 		std::vector<t_itemid> items = {};
 
-		for (const auto &it : comboNode) {
+		for (const auto it : comboNode.children()) {
 			std::string item_name;
-			c4::from_chars(it.key(), &item_name);
+			c4::from_chars(it.val(), &item_name);
 
 			std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
 

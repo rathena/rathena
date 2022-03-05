@@ -303,7 +303,7 @@ uint64 AchievementDatabase::parseBodyNode(const ryml::NodeRef node){
 				achievement->rewards.script = nullptr;
 			}
 
-			achievement->rewards.script = parse_script( script.c_str(), this->getCurrentFile().c_str(), parser.location(node["Script"]).line, SCRIPT_IGNORE_EXTERNAL_BRACKETS );
+			achievement->rewards.script = parse_script( script.c_str(), this->getCurrentFile().c_str(), parser.location(rewardNode["Script"]).line, SCRIPT_IGNORE_EXTERNAL_BRACKETS );
 		}else{
 			if (!exists)
 				achievement->rewards.script = nullptr;

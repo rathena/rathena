@@ -10,7 +10,7 @@
 #include <sstream>
 
 bool YamlDatabase::nodeExists( const ryml::NodeRef node, const std::string& name ){
-	return node.has_child(c4::to_csubstr(name));
+	return (node.num_children() > 0 && node.has_child(c4::to_csubstr(name)));
 }
 
 bool YamlDatabase::nodesExist( const ryml::NodeRef node, std::initializer_list<const std::string> names ){
@@ -202,6 +202,11 @@ template <typename R> bool YamlDatabase::asType( const ryml::NodeRef node, const
 	if( this->nodeExists( node, name ) ){
 		const ryml::NodeRef dataNode = node[c4::to_csubstr(name)];
 
+		if (dataNode.val_is_null()) {
+			this->invalidWarning(node, "Node \"%s\" is missing a value.\n", name.c_str());
+			return false;
+		}
+
 		dataNode >> out;
 
 		return true;
@@ -213,6 +218,12 @@ template <typename R> bool YamlDatabase::asType( const ryml::NodeRef node, const
 
 bool YamlDatabase::asBool(const ryml::NodeRef node, const std::string &name, bool &out) {
 	const auto targetNode = node[c4::to_csubstr(name)];
+
+	if (targetNode.val_is_null()) {
+		this->invalidWarning(node, "Node \"%s\" is missing a value.\n", name.c_str());
+		return false;
+	}
+
 	if (targetNode.val() == "true") {
 		out = true;
 		return true;
@@ -308,7 +319,7 @@ void YamlDatabase::invalidWarning( const ryml::NodeRef node, const char* fmt, ..
 
 	va_end(ap);
 
-	ShowError( "Occurred in file '" CL_WHITE "%s" CL_RESET "' on line %d and column %d.\n", this->currentFile.c_str(), -1, -1 ); // TODO: Report line and col.
+	ShowError( "Occurred in file '" CL_WHITE "%s" CL_RESET "' on line %d and column %d.\n", this->currentFile.c_str(), parser.location(node).line, parser.location(node).col);
 
 #ifdef DEBUG
 	std::cout << node;
