@@ -7463,7 +7463,7 @@ sp_cor,163,56,4	script	Est#171_ocp	4_F_ESTLOVELOY,{
 		}
 		cutin "",255;
 		.@party_name$ = getpartyname(.@party_id);
-		.@md_name$ = "OS Occupation Operation";
+		.@md_name$ = "OS Occupation";
 		switch (select(is_party_leader() ? "Prepare for OS Occupation.":"","Enter","Quit")) {
 			case 1:
 				if (instance_create(.@md_name$) == -3)
@@ -7701,7 +7701,7 @@ sp_cor,113,130,3	script	Rebellion#cor_02	4_M_REBELLION3,{
 	}
 	mes "^FF0000Please note that, any abnormal monster handling inside the instance such as taming is not considered normal and may hinder the instance progress.^000000";
 	next;
-	.@md_name$ = "EL1_A17T Suppresion";
+	.@md_name$ = "Cor Memorial";
 	switch (select(is_party_leader() ? "Create Operation." : "","Enter Operation.","Cancel")) {
 		case 1:
 			if (instance_create(.@md_name$) == -3)

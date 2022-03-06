@@ -13,9 +13,7 @@
 	end;
 
 OnInstanceInit:
-	.@type$ = instance_live_info(ILI_NAME);
 	'map$ = instance_mapname("1@cor");
-
 	setcell 'map$,159,216,159,225,CELL_WALKABLE,0;
 	setcell 'map$,159,216,159,225,CELL_SHOOTABLE,0;
 	setcell 'map$,98,216,98,225,CELL_WALKABLE,0;
@@ -85,11 +83,11 @@ OnStory02:
 	disablenpc instance_npcname("Rebellion#171_box_4");
 	enablenpc instance_npcname("Elena Bolkova#171_cmd_1");
 	mapannounce 'map$,"Elena Bolkova : Awesome, she came out! I've sent the signal, come to my location!",bc_map,0xFFFF99;
-	//viewpoint2 'map$,1,172,223,5,0xFFFFFF;
-	//viewpoint2 'map$,2,140,79,1,0xFFFFFF;
-	//viewpoint2 'map$,2,160,119,2,0xFFFFFF;
-	//viewpoint2 'map$,2,220,170,3,0xFFFFFF;
-	//viewpoint2 'map$,2,222,236,4,0xFFFFFF;
+	viewpoint 1,172,223,5,0xFFFFFF;
+	viewpoint 2,140,79,1,0xFFFFFF;
+	viewpoint 2,160,119,2,0xFFFFFF;
+	viewpoint 2,220,170,3,0xFFFFFF;
+	viewpoint 2,222,236,4,0xFFFFFF;
 	end;
 
 OnStory03:
@@ -107,7 +105,7 @@ OnDaily01:
 	end;
 
 OnDaily02:
-	//viewpoint2 'map$,1,172,223,5,0xFFFFFF;
+	viewpoint 1,172,223,5,0xFFFFFF;
 	mapannounce 'map$,"Elena Bolkova : Once you've finish all of it, come to the barracks and Elyumina will guide you!",bc_map,0xFFFF99;
 	enablenpc instance_npcname("Elyumina#171_cmd_1");
 	end;
@@ -150,10 +148,10 @@ OnTouch:
 		next;
 		mes "[ Rebellion ]";
 		mes "There are 4 identified locations these explosion came from! I have ^FF0000shown them on your minimap.^000000";
-		//viewpoint2 'map$,1,140,79,1,0xFFFFFF;
-		//viewpoint2 'map$,1,160,119,2,0xFFFFFF;
-		//viewpoint2 'map$,1,220,170,3,0xFFFFFF;
-		//viewpoint2 'map$,1,222,236,4,0xFFFFFF;
+		viewpoint 1,140,79,1,0xFFFFFF;
+		viewpoint 1,160,119,2,0xFFFFFF;
+		viewpoint 1,220,170,3,0xFFFFFF;
+		viewpoint 1,222,236,4,0xFFFFFF;
 		next;
 		mes "[ Elena Bolkova ]";
 		mes "It's quite sudden but, I'm changing the operation.";
@@ -212,10 +210,10 @@ OnTouch:
 		mes "Here, take the map. The information will also be delivered to the party members as well.";
 		mes "You aren't alone right? You know my childre are powerful?";
 		npctalk "Elyumina : Here, take the map. The information will also be delivered to the party members as well.",.@elyumina$;
-		//viewpoint2 'map$,1,140,79,1,0xFFFFFF;
-		//viewpoint2 'map$,1,160,119,2,0xFFFFFF;
-		//viewpoint2 'map$,1,220,170,3,0xFFFFFF;
-		//viewpoint2 'map$,1,222,236,4,0xFFFFFF;
+		viewpoint 1,140,79,1,0xFFFFFF;
+		viewpoint 1,160,119,2,0xFFFFFF;
+		viewpoint 1,220,170,3,0xFFFFFF;
+		viewpoint 1,222,236,4,0xFFFFFF;
 		next;
 		cutin "ep171_elyumina04",0;
 		mes "[ Elyumina ]";
@@ -276,7 +274,7 @@ OnTouch:
 	npctalk "Elyumina : Hahaha! Yes. Let's work hard. Gather more battle data for me!";
 	close2;
 	cutin "",255;
-	//viewpoint2 'map$,2,172,223,5,0xFFFFFF;
+	viewpoint 2,172,223,5,0xFFFFFF;
 	donpcevent instance_npcname("#171_cor_control") + "::OnDaily03";
 	end;
 }
@@ -320,7 +318,7 @@ OnTouch:
 		completequest 16355;
 		disablenpc();
 		disablenpc instance_npcname("Box#" + strnpcinfo(2));
-		//viewpoint2 'map$,2,224,236,4,0xFFFFFF;
+		viewpoint 2,224,236,4,0xFFFFFF;
 		if (isbegin_quest(16355) == 2 && isbegin_quest(16356) == 2)
 			doevent instance_npcname("#171_cor_control") + "::OnStory02";
 	}
@@ -475,7 +473,7 @@ OnTimer17000:
 		close2;
 		disablenpc();
 		disablenpc instance_npcname("Box#" + strnpcinfo(2));
-		//viewpoint2 'map$,2,220,170,3,0xFFFFFF;
+		viewpoint 2,220,170,3,0xFFFFFF;
 		completequest 16356;
 		if (isbegin_quest(16355) == 2 && isbegin_quest(16356) == 2)
 			doevent instance_npcname("#171_cor_control") + "::OnStory02";
@@ -591,7 +589,7 @@ OnTimer10000:
 	mes "*Nods, nods*";
 	next;
 	mes "- Let's go support another team. -";
-	//viewpoint2 'map$,2,160,119,2,0xFFFFFF;
+	viewpoint 2,160,119,2,0xFFFFFF;
 	close2;
 	disablenpc();
 	disablenpc instance_npcname("Rebellion#" + strnpcinfo(2));
@@ -629,7 +627,7 @@ OnTimer10000:
 	next;
 	mes "[ Rebellion ]";
 	mes "We will now conduct our search, until the signal comes. Adventurer, be careful!";
-	//viewpoint2 'map$,2,140,79,1,0xFFFFFF;
+	viewpoint 2,140,79,1,0xFFFFFF;
 	close2;
 	disablenpc();
 	disablenpc instance_npcname("Rebellion#171_box_3");
@@ -988,10 +986,22 @@ OnMobKill:
 		} else
 			.@npc$ = "Chemical Poison#";
 		switch (.@id) {
-			case 0: //viewpoint2 'map$,2,222,236,4,0xFFFFFF; .@npc$ = "Biological Battery#"; break;
-			case 1: //viewpoint2 'map$,2,220,170,3,0xFFFFFF;	.@npc$ = "Chemical Poison#"; break;
-			case 2: //viewpoint2 'map$,2,160,119,2,0xFFFFFF; .@npc$ = "Biological Battery#"; break;
-			case 3: //viewpoint2 'map$,2,140,79,1,0xFFFFFF; .@npc$ = "Chemical Poison#"; break;
+			case 0:
+				viewpoint 2,222,236,4,0xFFFFFF;
+				.@npc$ = "Biological Battery#";
+				break;
+			case 1:
+				viewpoint 2,220,170,3,0xFFFFFF;
+				.@npc$ = "Chemical Poison#";
+				break;
+			case 2:
+				viewpoint 2,160,119,2,0xFFFFFF;
+				.@npc$ = "Biological Battery#";
+				break;
+			case 3:
+				viewpoint 2,140,79,1,0xFFFFFF;
+				.@npc$ = "Chemical Poison#";
+				break;
 		}
 		killmonster 'map$,instance_npcname(.@npc$ + "171_box_trap_" + .@id) + "::OnMobKill";
 		disablenpc instance_npcname(.@npc$ + "171_box_trap_" + .@id);
