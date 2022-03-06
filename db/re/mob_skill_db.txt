@@ -12457,7 +12457,7 @@
 3758,Angry Moonlight Flower@SA_DISPELL,chase,289,5,2000,500,5000,no,target,always,0,,,,,,6,
 3758,Angry Moonlight Flower@NPC_SUMMONSLAVE,attack,196,5,10000,700,10000,no,self,slavele,3,1471,,,,,,
 3758,Angry Moonlight Flower@NPC_SUMMONSLAVE,idle,196,5,10000,700,10000,no,self,slavele,3,1471,,,,,,
-3758,Angry Moonlight Flower@NPC_SUMMONSLAVE,idle,196,3,10000,0,0,no,self,onspawn,0,1180,,,,,,
+3758,Angry Moonlight Flower@NPC_CRITICALWOUND,attack,673,1,500,0,5000,yes,target,always,0,,,,,,,
 3758,Angry Moonlight Flower@BS_HAMMERFALL,chase,110,10,2000,0,5000,no,target,always,0,,,,,,0,
 3758,Angry Moonlight Flower@BS_HAMMERFALL,attack,110,10,2000,0,5000,no,target,always,0,,,,,,0,
 3758,Angry Moonlight Flower@NPC_TALK,idle,682,10,2500,0,30000,yes,self,always,0,,,,,,,51
