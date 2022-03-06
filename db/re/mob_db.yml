@@ -44065,7 +44065,7 @@ Body:
         StealProtected: true
   - Id: 2109
     AegisName: E_RANDGRIS
-    Name: Valkyrie Randgris1
+    Name: Valkyrie Randgris
     JapaneseName: Valkyrie Randgris
     Level: 141
     Hp: 3205000
@@ -47342,7 +47342,6 @@ Body:
     Size: Small
     Race: Formless
     Element: Neutral
-    ElementLevel: 1
     AttackDelay: 432
     AttackMotion: 792
     DamageMotion: 432
@@ -79819,7 +79818,6 @@ Body:
     AttackMotion: 1
     DamageMotion: 1
     Ai: 01
-    Ai: 25
 #  - Id: 3171
 #    AegisName: EVENT_MONEMUS01
 #  - Id: 3172
