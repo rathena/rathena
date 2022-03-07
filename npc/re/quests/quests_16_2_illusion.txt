@@ -689,6 +689,8 @@ pay_d03_i,140,46,0	script	Shimmering Portal#ill_moon_out	4_ENERGY_BLUE,{
 }
 
 pay_d03_i,149,45,4	script	Scholar Chunghae#ill_moon_ind	4_F_03,{
+	if (illusion_moonlight < 6)
+		end;
 	if (illusion_moonlight == 6) {
 		mes "[ Chunghae ]";
 		mes "Look at this place!";
@@ -850,6 +852,8 @@ OnInit:
 }
 
 pay_d03_i,152,45,4	script	Soldier Junghee#ill_moon_ind	4_M_PAY_SOLDIER,{
+	if (illusion_moonlight < 6)
+		end;
 	if (illusion_moonlight == 6) {
 		mes "[ Junghee ]";
 		mes "I knew coming in that I'd better stay close to Chunghae.";
