@@ -71,8 +71,8 @@ mora,106,117,3	script	Quiver Maker#mora	4_M_RAFLE_GR,{
 			mes "I don't sell ordinary arrows. These are artisan arrows that can only be purchased here. Would you really recognize its worth, right?";
 			close2;
 			callshop "Catch_Arrows", 1;
-			end;
 		}
+		end;
 	case 3:
 		mes "[Quiver Maker]";
 		mes "An arrow may be thin and light, but carrying hundreds and thousands of arrows is like carrying a whole log.";
