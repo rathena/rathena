@@ -37922,10 +37922,6 @@ Body:
       bonus bDef,30;
       bonus bMdef,10;
       bonus2 bAddEff,Eff_Silence,900;
-      if (getequipid() == 28483) {
-         bonus2 bAddClass,Class_All,5;
-         bonus bMatkRate,5;
-      }
       /* TODO: Confirm Mob ID to transform */
       autobonus "{ bonus bIgnoreDefClass,Class_All; bonus bIgnoreMdefRace,RC_All; }",20,7000,BF_WEAPON|BF_MAGIC,"{ active_transform 1875,7000; }";
   - Id: 27026
@@ -40447,6 +40443,30 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bDelayrate,-4;
+  - Id: 27345
+    AegisName: Dragon_Zilant_Card
+    Name: Ancient Dragon Zilant Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@p = getitempos();
+      bonus bMaxHPrate,50;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_knight) {
+         if (.@p == EQP_ACC_L) {
+            bonus2 bSkillAtk,"RK_DRAGONBREATH",50;
+            bonus4 bAddEff,Eff_Heat,1000,ATF_WEAPON|ATF_MAGIC,3000;
+         }
+         if (.@p == EQP_ACC_R) {
+            bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",50;
+            autobonus2 "{ sc_start SC_CHILL; bonus2 bResEff,Eff_Heat,10000; }",100,3000,BF_WEAPON|BF_MAGIC;
+         }
+      }
+      /*Unknow Rate*/
   - Id: 27346
     AegisName: Rigid_Muspellskoll_Card
     Name: Rigid Muspellskoll Card
@@ -41899,6 +41919,13 @@ Body:
     Script: |
       bonus bLongAtkRate,10;
       bonus bCritical,10;
+  - Id: 29140
+    AegisName: Orcish_Hero_Of_Anger
+    Name: Anger of the Brave
+    Type: Card
+    SubType: Enchant
+    Script: |
+      autobonus "{ bonus3 bAutoSpell,\"NPC_EARTHQUAKE\",3,1000; }",5,5000,BF_NORMAL,"{ active_transform 1850,5000; }";
   - Id: 29142
     AegisName: Electric_Effect
     Name: Electric Effect
@@ -59309,18 +59336,11 @@ Body:
     Script: |
       .@r = getrefine();
       bonus2 bMagicAddRace,RC_All,10;
-      bonus2 bMagicAddRace,RC_Brute,-10;
-      bonus2 bMagicAddRace,RC_Player_Doram,-10;
       if (.@r>=9) {
-        bonus2 bMagicAddRace,RC_All,10;
-        bonus2 bMagicAddRace,RC_Brute,-10;
-        bonus2 bMagicAddRace,RC_Player_Doram,-10;
-        .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
-        if (.@i == W_2HSWORD || .@i == W_2HSPEAR || .@i == W_2HSTAFF || .@i == W_2HAXE || .@i == W_KATAR || .@i == W_BOW || .@i == W_HUUMA || .@i == W_REVOLVER || .@i == W_RIFLE || .@i == W_GATLING || .@i == W_SHOTGUN || .@i == W_GRENADE) {
-          bonus2 bMagicAddRace,RC_All,15;
-          bonus2 bMagicAddRace,RC_Brute,-15;
-          bonus2 bMagicAddRace,RC_Player_Doram,-15;
-        }
+         bonus2 bMagicAddRace,RC_All,10;
+         .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
+         if (.@i == W_2HSWORD || .@i == W_2HSPEAR || .@i == W_2HSTAFF || .@i == W_2HAXE || .@i == W_KATAR || .@i == W_BOW || .@i == W_HUUMA || .@i == W_REVOLVER || .@i == W_RIFLE || .@i == W_GATLING || .@i == W_SHOTGUN || .@i == W_GRENADE)
+            bonus2 bMagicAddRace,RC_All,15;
       }
   - Id: 311350
     AegisName: Glacier_F_Orb_158
