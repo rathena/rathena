@@ -17,15 +17,15 @@
 	case 1:
 		close2;
 		callshop "Arrow_Archer", 1;
-		end;
+		break;
 	case 2:
 		close2;
 		callshop "Quiver_Archer", 1;
-		end;
+		break;
 	case 3:
 		close2;
 		callshop "Selling_Items", 2;
-		end;
+		break;
 	case 4:
 		mes "[Arrow Merchant]";
 		mes "You can take a look at other things more calmly.";
@@ -51,19 +51,19 @@ OnInit:
 		mes "I will start preparing the ammunition.";
 		close2;
 		callshop "Ammunition_Gunslinger", 1;
-		end;
+		break;
 	case 2:
 		mes "[Ammunition Merchant]";
 		mes "I will start preparing ammunition cartridges!";
 		close2;
 		callshop "Box_Exchange_Gunslinger", 1;
-		end;
+		break;
 	case 3:
 		mes "[Ammunition Merchant]";
 		mes "What would you like to sell?";
 		close2;
 		callshop "Selling_Items", 2;
-		end;
+		break;
 	case 4:
 		mes "[Ammunition Merchant]";
 		mes "You can take a look at other things more calmly.";
@@ -86,17 +86,17 @@ OnInit:
 	case 1:
 		close2;
 		callshop "Weapons_Ninja", 1;
-		end;
+		break;
 	case 2:
 		close2;	
 		callshop "Box_Exchange_Ninja", 1;
-		end;
+		break;
 	case 3:
 		close2;	
 		callshop "Selling_Items", 2;
-		end;
+		break;
 	case 4:
-		end;
+		break;
 	}
 	end;
 	
@@ -119,25 +119,25 @@ OnInit:
 		mes "I will start preparing the Madogear pieces.";
 		close2;
 		callshop "Weapons_Mechanic", 1;
-		end;
+		break;
 	case 2:
 		mes "[Mado Gear Merchant]";
 		mes "I will start preparing the consumables used by Madogear.";
 		close2;
 		callshop "Ammunition_Mechanic", 1;
-		end;
+		break;
 	case 3:
 		mes "[Mado Gear Merchant]";
 		mes "I will arrange for the consumable packs used by MadoGear to be boxed!";
 		close2;
 		callshop "Box_Exchange_Mechanic", 1;
-		end;
+		break;
 	case 4:
 		mes "[Mado Gear Merchant]";
 		mes "Do you have something to sell?";
 		close2;
 		callshop "Selling_Items", 2;
-		end;
+		break;
 	case 5:
 		mes "[Mado Gear Merchant]";
 		mes "You can take a look at other things more calmly.";
@@ -162,13 +162,13 @@ OnInit:
 		mes "You'll like it.";
 		close2;
 		callshop "Talisman_Merchant", 1;
-		end;
+		break;
 	case 2:
 		mes "[Talisman Merchant]";
 		mes "We also exchange for bundles.";
 		close2;
 		callshop "Talisman_Bundle", 1;
-		end;
+		break;
 	case 3:
 		mes "[Talisman Merchant]";
 		mes "Thank you. Come again.";
