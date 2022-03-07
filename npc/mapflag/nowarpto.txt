@@ -1,11 +1,5 @@
 //===== rAthena Script =======================================
 //= Mapflag: Disable warpto.
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Current Version: =====================================
-//= 1.5
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: ========================================= 
 //= Disables warping to a map.
 //= Atcommands @warp, @go, @load, @jump, @partyrecall,
@@ -17,7 +11,9 @@
 //= 1.5 Renewal split. [Euphy]
 //============================================================
 
-// Guild Castles ========================
+//============================================================
+// WoE:FE Castles
+//============================================================
 //alde_gld	mapflag	nowarpto
 aldeg_cas01	mapflag	nowarpto
 aldeg_cas02	mapflag	nowarpto
@@ -41,6 +37,10 @@ prtg_cas02	mapflag	nowarpto
 prtg_cas03	mapflag	nowarpto
 prtg_cas04	mapflag	nowarpto
 prtg_cas05	mapflag	nowarpto
+
+//============================================================
+// WoE:SE Castles
+//============================================================
 schg_cas01	mapflag	nowarpto
 schg_cas02	mapflag	nowarpto
 schg_cas03	mapflag	nowarpto
@@ -51,21 +51,33 @@ arug_cas02	mapflag	nowarpto
 arug_cas03	mapflag	nowarpto
 arug_cas04	mapflag	nowarpto
 arug_cas05	mapflag	nowarpto
-//Novice Guild
+
+//============================================================
+// WoE:Novice Castles
+//============================================================
 n_castle	mapflag	nowarpto
 nguild_alde	mapflag	nowarpto
 nguild_gef	mapflag	nowarpto
 nguild_pay	mapflag	nowarpto
 nguild_prt	mapflag	nowarpto
-//Lighthalzen Bio-Lab 3F
+
+//============================================================
+// Lighthalzen Bio-Lab
+//============================================================
 lhz_dun03	mapflag	nowarpto
-// Special Quests Places =======
+
+//============================================================
+// Quest Places
+//============================================================
 ama_test	mapflag	nowarpto
 gon_test	mapflag	nowarpto
 que_rachel	mapflag	nowarpto
 que_san04	mapflag	nowarpto
 cave	mapflag	nowarpto
-//Aldebaran Turbo Track ========
+
+//============================================================
+// Aldebaran Turbo Track
+//============================================================
 turbo_n_1	mapflag	nowarpto
 turbo_n_4	mapflag	nowarpto
 turbo_n_8	mapflag	nowarpto
@@ -73,7 +85,10 @@ turbo_n_16	mapflag	nowarpto
 turbo_e_4	mapflag	nowarpto
 turbo_e_8	mapflag	nowarpto
 turbo_e_16	mapflag	nowarpto
-// Izlude Battle Arena =========
+
+//============================================================
+// Izlude Battle Arena
+//============================================================
 force_1-1	mapflag	nowarpto
 force_2-1	mapflag	nowarpto
 force_3-1	mapflag	nowarpto
@@ -83,15 +98,21 @@ force_1-2	mapflag	nowarpto
 force_1-3	mapflag	nowarpto
 prt_are_in	mapflag	nowarpto
 
-//Monster Races ================
+//============================================================
+// Monster Races
+//============================================================
 p_track01	mapflag	nowarpto
 p_track02	mapflag	nowarpto
 
-// Poring War ====================
+//============================================================
+// Poring War
+//============================================================
 poring_w01	mapflag	nowarpto
 poring_w02	mapflag	nowarpto
 
-//Vision of Okolnir ============
+//============================================================
+// Vision of Okolnir
+//============================================================
 que_qsch01	mapflag	nowarpto
 que_qsch02	mapflag	nowarpto
 que_qsch03	mapflag	nowarpto
@@ -103,11 +124,15 @@ que_qaru03	mapflag	nowarpto
 que_qaru04	mapflag	nowarpto
 que_qaru05	mapflag	nowarpto
 
-//Sealed Shrine ==================
+//============================================================
+// Sealed Shrine
+//============================================================
 1@cata	mapflag	nowarpto
 2@cata	mapflag	nowarpto
 
-//Endless Tower ==================
+//============================================================
+// Endless Tower
+//============================================================
 e_tower	mapflag	nowarpto
 1@tower	mapflag	nowarpto
 2@tower	mapflag	nowarpto
@@ -116,7 +141,9 @@ e_tower	mapflag	nowarpto
 5@tower	mapflag	nowarpto
 6@tower	mapflag	nowarpto
 
-// Battle Grounds ================
+//============================================================
+// Battlegrounds
+//============================================================
 bat_c01	mapflag	nowarpto
 bat_c02	mapflag	nowarpto
 bat_c03	mapflag	nowarpto
@@ -126,7 +153,9 @@ bat_b02	mapflag	nowarpto
 bat_a01	mapflag	nowarpto
 bat_a02	mapflag	nowarpto
 
-// Episode 13 ====================
+//============================================================
+// Episode 13
+//============================================================
 mid_campin	mapflag	nowarpto
 man_fild01	mapflag	nowarpto
 man_fild03	mapflag	nowarpto
@@ -148,21 +177,29 @@ splendide	mapflag	nowarpto
 spl_fild01	mapflag	nowarpto
 spl_in01	mapflag	nowarpto
 
-//Orc's Memory ===================
+//============================================================
+// Orc's Memory
+//============================================================
 1@orcs	mapflag	nowarpto
 2@orcs	mapflag	nowarpto
 
-// Nidhoggr's Instance ===========
+//============================================================
+// Nidhoggr's Instance
+//============================================================
 1@nyd	mapflag	nowarpto
 2@nyd	mapflag	nowarpto
 
-// Bossnia (custom) ==============
+//============================================================
+// Bossnia (Custom) #!todo Verify
+//============================================================
 bossnia_01	mapflag	nowarpto
 bossnia_02	mapflag	nowarpto
 bossnia_03	mapflag	nowarpto
 bossnia_04	mapflag	nowarpto
 
-// RWC Maps ===============
+//============================================================
+// RWC
+//============================================================
 2009rwc_01	mapflag	nowarpto
 2009rwc_02	mapflag	nowarpto
 2009rwc_03	mapflag	nowarpto
