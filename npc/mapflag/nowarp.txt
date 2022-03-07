@@ -1,11 +1,5 @@
 //===== rAthena Script =======================================
 //= Mapflag: Disable warping.
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Current Version: =====================================
-//= 1.3
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: ========================================= 
 //= Disables warping from a map.
 //= Script commands 'warpparty' and 'warpguild' will not warp
@@ -17,12 +11,16 @@
 //= 1.3 Added WoE SE maps.
 //============================================================
 
-// Special Quests Places =====
+//============================================================
+// Quest Places
+//============================================================
 ama_test	mapflag	nowarp
 gon_test	mapflag	nowarp
 que_ba	mapflag	nowarp
 
-// Guild Castles =============
+//============================================================
+// WoE:FE Castles
+//============================================================
 aldeg_cas01	mapflag	nowarp
 aldeg_cas02	mapflag	nowarp
 aldeg_cas03	mapflag	nowarp
@@ -43,6 +41,10 @@ prtg_cas02	mapflag	nowarp
 prtg_cas03	mapflag	nowarp
 prtg_cas04	mapflag	nowarp
 prtg_cas05	mapflag	nowarp
+
+//============================================================
+// WoE:SE Castles
+//============================================================
 schg_cas01	mapflag	nowarp
 schg_cas02	mapflag	nowarp
 schg_cas03	mapflag	nowarp
@@ -53,12 +55,19 @@ arug_cas02	mapflag	nowarp
 arug_cas03	mapflag	nowarp
 arug_cas04	mapflag	nowarp
 arug_cas05	mapflag	nowarp
+
+//============================================================
+// WoE:Novice Castles
+//============================================================
 n_castle	mapflag	nowarp
 nguild_alde	mapflag	nowarp
 nguild_gef	mapflag	nowarp
 nguild_pay	mapflag	nowarp
 nguild_prt	mapflag	nowarp
-//Aldebaran Turbo Track ======
+
+//============================================================
+// Aldebaran Turbo Track
+//============================================================
 turbo_n_1	mapflag	nowarp
 turbo_n_4	mapflag	nowarp
 turbo_n_8	mapflag	nowarp
@@ -66,10 +75,16 @@ turbo_n_16	mapflag	nowarp
 turbo_e_4	mapflag	nowarp
 turbo_e_8	mapflag	nowarp
 turbo_e_16	mapflag	nowarp
-//Monster Races ================
+
+//============================================================
+// Monster Races
+//============================================================
 p_track01	mapflag	nowarp
 p_track02	mapflag	nowarp
-// Battle Grounds ==============
+
+//============================================================
+// Battlegrounds
+//============================================================
 bat_c01	mapflag	nowarp
 bat_c02	mapflag	nowarp
 bat_c03	mapflag	nowarp
@@ -78,11 +93,15 @@ bat_b02	mapflag	nowarp
 bat_a01	mapflag	nowarp
 bat_a02	mapflag	nowarp
 
-// Poring War ==================
+//============================================================
+// Poring War
+//============================================================
 poring_w01	mapflag	nowarp
 poring_w02	mapflag	nowarp
 
-// RWC Maps ===============
+//============================================================
+// RWC
+//============================================================
 2009rwc_01	mapflag	nowarp
 2009rwc_02	mapflag	nowarp
 2009rwc_03	mapflag	nowarp
