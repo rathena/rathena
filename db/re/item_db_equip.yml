@@ -35138,7 +35138,7 @@ Body:
     AegisName: High_Quality_Cooler
     Name: High Quality Cooler
     Type: Armor
-    Buy: 100000
+    Buy: 2000000
     Weight: 2500
     Slots: 1
     Jobs:
@@ -35156,7 +35156,7 @@ Body:
     AegisName: Special_Cooler
     Name: Special Cooler
     Type: Armor
-    Buy: 100000
+    Buy: 5000000
     Weight: 2500
     Slots: 1
     Jobs:
