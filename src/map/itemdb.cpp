@@ -24,8 +24,8 @@
 
 using namespace rathena;
 
-static std::map<uint32, std::shared_ptr<s_item_combo>> itemdb_combo; /// Item Combo DB
 
+ComboDatabase itemdb_combo;
 ItemGroupDatabase itemdb_group;
 
 struct s_roulette_db rd;
@@ -65,15 +65,35 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "AegisName", name))
 			return 0;
 
-		item_data* id = itemdb_search_aegisname(name.c_str());
+		if (name.length() > ITEM_NAME_LENGTH) {
+			this->invalidWarning(node["AegisName"], "AegisName \"%s\" exceeds maximum of %d characters, capping...\n", name.c_str(), ITEM_NAME_LENGTH - 1);
+		}
+
+		std::shared_ptr<item_data> id = item_db.search_aegisname( name.c_str() );
 
 		if (id != nullptr && id->nameid != nameid) {
 			this->invalidWarning(node["AegisName"], "Found duplicate item Aegis name for %s, skipping.\n", name.c_str());
 			return 0;
 		}
 
+		if( exists ){
+			// Create a copy
+			std::string aegisname = item->name;
+			// Convert it to lower
+			util::tolower( aegisname );
+			// Remove old AEGIS name from lookup
+			this->aegisNameToItemDataMap.erase( aegisname );
+		}
+
 		item->name.resize(ITEM_NAME_LENGTH);
 		item->name = name.c_str();
+
+		// Create a copy
+		std::string aegisname = name;
+		// Convert it to lower
+		util::tolower( aegisname );
+
+		this->aegisNameToItemDataMap[aegisname] = item;
 	}
 
 	if (this->nodeExists(node, "Name")) {
@@ -82,8 +102,28 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Name", name))
 			return 0;
 
+		if (name.length() > ITEM_NAME_LENGTH) {
+			this->invalidWarning(node["Name"], "Name \"%s\" exceeds maximum of %d characters, capping...\n", name.c_str(), ITEM_NAME_LENGTH - 1);
+		}
+
+		if( exists ){
+			// Create a copy
+			std::string ename = item->ename;
+			// Convert it to lower
+			util::tolower( ename );
+			// Remove old name from lookup
+			this->nameToItemDataMap.erase( ename );
+		}
+
 		item->ename.resize(ITEM_NAME_LENGTH);
 		item->ename = name.c_str();
+
+		// Create a copy
+		std::string ename = name;
+		// Convert it to lower
+		util::tolower( ename );
+
+		this->nameToItemDataMap[ename] = item;
 	}
 
 	if (this->nodeExists(node, "Type")) {
@@ -98,13 +138,6 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!script_get_constant(type_constant.c_str(), &constant) || constant < IT_HEALING || constant >= IT_MAX) {
 			this->invalidWarning(node["Type"], "Invalid item type %s, defaulting to IT_ETC.\n", type.c_str());
 			constant = IT_ETC;
-		}
-
-		if (constant == IT_DELAYCONSUME) { // Items that are consumed only after target confirmation
-			constant = IT_USABLE;
-			item->flag.delay_consume |= DELAYCONSUME_TEMP;
-		} else {
-			item->flag.delay_consume &= ~DELAYCONSUME_TEMP; // Remove delayed consumption flag if switching types
 		}
 
 		item->type = static_cast<item_types>(constant);
@@ -139,6 +172,16 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			item->subtype = static_cast<e_ammo_type>(constant);
+		} else if (item->type == IT_CARD) {
+			std::string type_constant = "CARD_" + type;
+			int64 constant;
+
+			if (!script_get_constant(type_constant.c_str(), &constant) || constant < CARD_NORMAL || constant >= MAX_CARD_TYPE) {
+				this->invalidWarning(node["SubType"], "Invalid card type %s, defaulting to CARD_NORMAL.\n", type.c_str());
+				item->subtype = CARD_NORMAL;
+			}
+
+			item->subtype = static_cast<e_card_type>(constant);
 		} else
 			this->invalidWarning(node["SubType"], "Item sub type is not supported for this item type.\n");
 	} else {
@@ -146,8 +189,6 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			item->subtype = 0;
 	}
 
-	// When a particular price is not given, we should base it off the other one
-	// (it is important to make a distinction between 'no price' and 0z)
 	if (this->nodeExists(node, "Buy")) {
 		uint32 buy;
 
@@ -155,17 +196,10 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		item->value_buy = buy;
+		item->value_sell = 0;
 	} else {
 		if (!exists) {
-			if (this->nodeExists(node, "Sell")) {
-				uint32 sell;
-
-				if (!this->asUInt32(node, "Sell", sell))
-					return 0;
-
-				item->value_buy = sell * 2;
-			} else
-				item->value_buy = 0;
+			item->value_buy = 0;
 		}
 	}
 
@@ -176,14 +210,11 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		item->value_sell = sell;
+		item->value_buy = 0;
 	} else {
-		if (!exists)
-			item->value_sell = item->value_buy / 2;
-	}
-
-	if (item->value_buy / 124. < item->value_sell / 75.) {
-		this->invalidWarning(node, "Buying/Selling [%d/%d] price of %s (%hu) allows Zeny making exploit through buying/selling at discounted/overcharged prices! Defaulting Sell to 1 Zeny.\n", item->value_buy, item->value_sell, item->name.c_str(), nameid);
-		item->value_sell = 1;
+		if (!exists) {
+			item->value_sell = 0;
+		}
 	}
 
 	if (this->nodeExists(node, "Weight")) {
@@ -346,7 +377,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			int64 constant;
 
 			if (!script_get_constant(className_constant.c_str(), &constant)) {
-				this->invalidWarning(classNode[className], "Invalid class upper %s, defaulting to All.\n", className.c_str());
+				this->invalidWarning(classNode[className], "Invalid class %s, defaulting to All.\n", className.c_str());
 				item->class_upper |= ITEMJ_ALL;
 				break;
 			}
@@ -435,18 +466,42 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 
 		if (lv > MAX_WEAPON_LEVEL) {
 			this->invalidWarning(node["WeaponLevel"], "Invalid weapon level %d, defaulting to 0.\n", lv);
-			lv = REFINE_TYPE_ARMOR;
+			lv = 0;
 		}
 
 		if (item->type != IT_WEAPON) {
 			this->invalidWarning(node["WeaponLevel"], "Item type is not a weapon, defaulting to 0.\n");
-			lv = REFINE_TYPE_ARMOR;
+			lv = 0;
 		}
 
-		item->wlv = lv;
+		item->weapon_level = lv;
 	} else {
 		if (!exists)
-			item->wlv = REFINE_TYPE_ARMOR;
+			item->weapon_level = 0;
+	}
+
+	if( this->nodeExists( node, "ArmorLevel" ) ){
+		uint16 level;
+
+		if( !this->asUInt16( node, "ArmorLevel", level ) ){
+			return 0;
+		}
+
+		if( level > MAX_ARMOR_LEVEL ){
+			this->invalidWarning( node["ArmorLevel"], "Invalid armor level %d, defaulting to 0.\n", level );
+			level = 0;
+		}
+
+		if( item->type != IT_ARMOR ){
+			this->invalidWarning( node["ArmorLevel"], "Item type is not an armor, defaulting to 0.\n" );
+			level = 0;
+		}
+
+		item->armor_level = level;
+	}else{
+		if( !exists ){
+			item->armor_level = 0;
+		}
 	}
 
 	if (this->nodeExists(node, "EquipLevelMin")) {
@@ -518,7 +573,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "AliasName", view))
 			return 0;
 
-		item_data *view_data = itemdb_search_aegisname(view.c_str());
+		std::shared_ptr<item_data> view_data = item_db.search_aegisname( view.c_str() );
 
 		if (view_data == nullptr) {
 			this->invalidWarning(node["AliasName"], "Unable to change the alias because %s is an unknown item.\n", view.c_str());
@@ -801,7 +856,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			item->item_usage.override = override;
 		} else {
 			if (!exists)
-				item->item_usage.override = 0;
+				item->item_usage.override = 100;
 		}
 
 		if (this->nodeExists(nouseNode, "Sitting")) {
@@ -817,7 +872,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		}
 	} else {
 		if (!exists) {
-			item->item_usage.override = 0;
+			item->item_usage.override = 100;
 			item->item_usage.sitting = false;
 		}
 	}
@@ -839,7 +894,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			item->gm_lv_trade_override = override;
 		} else {
 			if (!exists)
-				item->gm_lv_trade_override = 0;
+				item->gm_lv_trade_override = 100;
 		}
 
 		if (this->nodeExists(tradeNode, "NoDrop")) {
@@ -951,7 +1006,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		}
 	} else {
 		if (!exists) {
-			item->gm_lv_trade_override = 0;
+			item->gm_lv_trade_override = 100;
 			item->flag.trade_restriction.drop = false;
 			item->flag.trade_restriction.trade = false;
 			item->flag.trade_restriction.trade_partner = false;
@@ -1022,6 +1077,67 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 }
 
 void ItemDatabase::loadingFinished(){
+	for (auto &tmp_item : item_db) {
+		std::shared_ptr<item_data> item = tmp_item.second;
+
+		// Items that are consumed only after target confirmation
+		if (item->type == IT_DELAYCONSUME) {
+			item->type = IT_USABLE;
+			item->flag.delay_consume |= DELAYCONSUME_TEMP;
+		} else {
+			item->flag.delay_consume &= ~DELAYCONSUME_TEMP; // Remove delayed consumption flag if switching types
+		}
+
+		if( item->type == IT_WEAPON ){
+			if( item->weapon_level == 0 ){
+				ShowWarning( "Item %s is a weapon, but does not have a weapon level. Consider adding it. Defaulting to 1.\n", item->name.c_str() );
+				item->weapon_level = 1;
+			}
+
+			if( item->armor_level != 0 ){
+				ShowWarning( "Item %s is a weapon, but has an armor level. Defaulting to 0.\n", item->name.c_str() );
+				item->armor_level = 0;
+			}
+		}else if( item->type == IT_ARMOR ){
+			if( item->armor_level == 0 ){
+				ShowWarning( "Item %s is an armor, but does not have an armor level. Consider adding it. Defaulting to 1.\n", item->name.c_str() );
+				item->armor_level = 1;
+			}
+
+			if( item->weapon_level != 0 ){
+				ShowWarning( "Item %s is an armor, but has a weapon level. Defaulting to 0.\n", item->name.c_str() );
+				item->weapon_level = 0;
+			}
+		}else{
+			if( item->weapon_level != 0 ){
+				ShowWarning( "Item %s is not a weapon, but has a weapon level. Defaulting to 0.\n", item->name.c_str() );
+				item->weapon_level = 0;
+			}
+
+			if( item->armor_level != 0 ){
+				ShowWarning( "Item %s is not an armor, but has an armor level. Defaulting to 0.\n", item->name.c_str() );
+				item->armor_level = 0;
+			}
+		}
+
+		// When a particular price is not given, we should base it off the other one
+		if (item->value_buy == 0 && item->value_sell > 0)
+			item->value_buy = item->value_sell * 2;
+		else if (item->value_buy > 0 && item->value_sell == 0)
+			item->value_sell = item->value_buy / 2;
+
+		if (item->value_buy / 124. < item->value_sell / 75.) {
+			ShowWarning("Buying/Selling [%d/%d] price of %s (%u) allows Zeny making exploit through buying/selling at discounted/overcharged prices! Defaulting Sell to 1 Zeny.\n", item->value_buy, item->value_sell, item->name.c_str(), item->nameid);
+			item->value_sell = 1;
+		}
+
+		// Shields need to have a view ID to be able to be recognized by ST_SHIELD check in skill.cpp
+		if( item->type == IT_ARMOR && ( item->equip & EQP_SHIELD ) != 0 && item->look == 0 ){
+			ShowWarning( "Item %s (%u) is a shield and should have a view id. Defaulting to Guard...\n", item->name.c_str(), item->nameid );
+			item->look = 1;
+		}
+	}
+
 	if( !this->exists( ITEMID_DUMMY ) ){
 		// Create dummy item
 		std::shared_ptr<item_data> dummy_item = std::make_shared<item_data>();
@@ -1070,22 +1186,31 @@ e_sex ItemDatabase::defaultGender( const YAML::Node &node, std::shared_ptr<item_
 	return static_cast<e_sex>( id->sex );
 }
 
-ItemDatabase item_db;
+std::shared_ptr<item_data> ItemDatabase::search_aegisname( const char* name ){
+	// Create a copy
+	std::string lowername = name;
+	// Convert it to lower
+	util::tolower( lowername );
 
-/**
- * Check if combo exists
- * @param combo_id
- * @return s_item_combo or nullptr if it does not exist
- */
-s_item_combo *itemdb_combo_exists(uint32 combo_id) {
-	auto item = util::map_find(itemdb_combo, combo_id);
+	return util::umap_find( this->aegisNameToItemDataMap, lowername );
+}
 
-	if( item == nullptr ){
-		return nullptr;
+std::shared_ptr<item_data> ItemDatabase::searchname( const char *name ){
+	// Create a copy
+	std::string lowername = name;
+	// Convert it to lower
+	util::tolower( lowername );
+
+	std::shared_ptr<item_data> result = util::umap_find( this->aegisNameToItemDataMap, lowername );
+
+	if( result != nullptr ){
+		return result;
 	}
 
-	return item.get();
+	return util::umap_find( this->nameToItemDataMap, lowername );
 }
+
+ItemDatabase item_db;
 
 /**
  * Check if an item exists in a group
@@ -1134,6 +1259,392 @@ int16 ItemGroupDatabase::item_exists_pc(map_session_data *sd, uint16 group_id)
 	return -1;
 }
 
+const std::string LaphineSynthesisDatabase::getDefaultLocation(){
+	return std::string( db_path ) + "/laphine_synthesis.yml";
+}
+
+uint64 LaphineSynthesisDatabase::parseBodyNode( const YAML::Node& node ){
+	t_itemid item_id;
+
+	{
+		std::string name;
+
+		if( !this->asString( node, "Item", name ) ){
+			return 0;
+		}
+
+		std::shared_ptr<item_data> id = item_db.search_aegisname( name.c_str() );
+
+		if( id == nullptr ){
+			this->invalidWarning( node["Item"], "Unknown item \"%s\".\n", name.c_str() );
+			return 0;
+		}
+
+		item_id = id->nameid;
+	}
+
+	std::shared_ptr<s_laphine_synthesis> entry = this->find( item_id );
+	bool exists = entry != nullptr;
+
+	if( !exists ){
+		if( !this->nodesExist( node, { "RewardGroup", "Requirements" } ) ){
+			return 0;
+		}
+
+		entry = std::make_shared<s_laphine_synthesis>();
+		entry->item_id = item_id;
+	}
+
+	if( this->nodeExists( node, "RewardGroup" ) ){
+		std::string name;
+
+		if( !this->asString( node, "RewardGroup", name ) ){
+			return 0;
+		}
+
+		int64 constant;
+
+		if( !script_get_constant( ( "IG_" + name ).c_str(), &constant ) ){
+			this->invalidWarning( node["RewardGroup"], "Unknown reward group \"%s\".\n", name.c_str() );
+			return 0;
+		}
+
+		if( !itemdb_group.exists( (uint16)constant ) ){
+			this->invalidWarning( node["RewardGroup"], "Unknown reward group ID \"%" PRId64 "\".\n", constant );
+			return 0;
+		}
+
+		entry->rewardGroupId = (uint16)constant;
+	}else{
+		if( !exists ){
+			entry->rewardGroupId = 0;
+		}
+	}
+
+	if( this->nodeExists( node, "RequiredRequirementsCount" ) ){
+		uint16 amount;
+
+		if( !this->asUInt16( node, "RequiredRequirementsCount", amount ) ){
+			return 0;
+		}
+
+		entry->requiredRequirements = amount;
+	}else{
+		if( !exists ){
+			entry->requiredRequirements = 1;
+		}
+	}
+
+	if( this->nodeExists( node, "Requirements" ) ){
+		for( const YAML::Node& requirementNode : node["Requirements"] ){
+			std::string name;
+
+			if( !this->asString( requirementNode, "Item", name ) ){
+				return 0;
+			}
+
+			std::shared_ptr<item_data> id = item_db.search_aegisname( name.c_str() );
+
+			if( id == nullptr ){
+				this->invalidWarning( requirementNode["Item"], "Unknown item \"%s\".\n", name.c_str() );
+				return 0;
+			}
+
+			std::shared_ptr<s_laphine_synthesis_requirement> requirement = util::umap_find( entry->requirements, id->nameid );
+			bool requirement_exists = requirement != nullptr;
+
+			if( !requirement_exists ){
+				requirement = std::make_shared<s_laphine_synthesis_requirement>();
+				requirement->item_id = id->nameid;
+			}
+
+			if( this->nodeExists( requirementNode, "Amount" ) ){
+				uint16 amount;
+
+				if( !this->asUInt16( requirementNode, "Amount", amount ) ){
+					return 0;
+				}
+
+				if( amount > MAX_AMOUNT ){
+					this->invalidWarning( requirementNode["Amount"], "Amount %hu is too high, capping to MAX_AMOUNT...\n", amount );
+					amount = MAX_AMOUNT;
+				}
+
+				requirement->amount = amount;
+			}else{
+				if( !requirement_exists ){
+					requirement->amount = 1;
+				}
+			}
+
+			if( !requirement_exists ){
+				entry->requirements[id->nameid] = requirement;
+			}
+		}
+	}
+
+	if( this->nodeExists( node, "MinimumRefine" ) ){
+		uint16 refine;
+
+		if( !this->asUInt16( node, "MinimumRefine", refine ) ){
+			return 0;
+		}
+
+		if( refine > MAX_REFINE ){
+			this->invalidWarning( node["MinimumRefine"], "Minimum refine %hu is too high, capping to MAX_REFINE...\n", refine );
+			refine = MAX_REFINE;
+		}
+
+		entry->minimumRefine = refine;
+	}else{
+		if( !exists ){
+			entry->minimumRefine = 0;
+		}
+	}
+
+	if( this->nodeExists( node, "MaximumRefine" ) ){
+		uint16 refine;
+
+		if( !this->asUInt16( node, "MaximumRefine", refine ) ){
+			return 0;
+		}
+
+		if( refine > MAX_REFINE ){
+			this->invalidWarning( node["MaximumRefine"], "Maximum refine %hu is too high, capping to MAX_REFINE...\n", refine );
+			refine = MAX_REFINE;
+		}
+
+		entry->maximumRefine = refine;
+	}else{
+		if( !exists ){
+			entry->maximumRefine = MAX_REFINE;
+		}
+	}
+
+	if( !exists ){
+		this->put( entry->item_id, entry );
+	}
+
+	return 1;
+}
+
+LaphineSynthesisDatabase laphine_synthesis_db;
+
+const std::string LaphineUpgradeDatabase::getDefaultLocation(){
+	return std::string( db_path ) + "/laphine_upgrade.yml";
+}
+
+uint64 LaphineUpgradeDatabase::parseBodyNode( const YAML::Node& node ){
+	t_itemid item_id;
+
+	{
+		std::string name;
+
+		if( !this->asString( node, "Item", name ) ){
+			return 0;
+		}
+
+		std::shared_ptr<item_data> id = item_db.search_aegisname( name.c_str() );
+
+		if( id == nullptr ){
+			this->invalidWarning( node["Item"], "Unknown item \"%s\".\n", name.c_str() );
+			return 0;
+		}
+
+		item_id = id->nameid;
+	}
+
+	std::shared_ptr<s_laphine_upgrade> entry = this->find( item_id );
+	bool exists = entry != nullptr;
+
+	if( !exists ){
+		if( !this->nodesExist( node, { "TargetItems" } ) ){
+			return 0;
+		}
+
+		entry = std::make_shared<s_laphine_upgrade>();
+		entry->item_id = item_id;
+	}
+
+	if( this->nodeExists( node, "RandomOptionGroup" ) ){
+		std::string name;
+
+		if( !this->asString( node, "RandomOptionGroup", name ) ){
+			return 0;
+		}
+
+		uint16 id;
+
+		if( !random_option_group.option_get_id( name, id ) ){
+			this->invalidWarning( node["RandomOptionGroup"], "Unknown random option group \"%s\".\n", name.c_str() );
+			return 0;
+		}
+
+		entry->randomOptionGroup = random_option_group.find( id );
+	}else{
+		if( !exists ){
+			entry->randomOptionGroup = nullptr;
+		}
+	}
+
+	if( this->nodeExists( node, "TargetItems" ) ){
+		for( const YAML::Node& targetNode : node["TargetItems"] ){
+			std::string name;
+
+			if( !this->asString( targetNode, "Item", name ) ){
+				return 0;
+			}
+
+			std::shared_ptr<item_data> id = item_db.search_aegisname( name.c_str() );
+
+			if( id == nullptr ){
+				this->invalidWarning( targetNode["Item"], "Unknown item \"%s\".\n", name.c_str() );
+				return 0;
+			}
+
+			if( !util::vector_exists( entry->target_item_ids, id->nameid ) ){
+				entry->target_item_ids.push_back( id->nameid );
+			}
+		}
+	}
+
+	if( this->nodeExists( node, "MinimumRefine" ) ){
+		uint16 refine;
+
+		if( !this->asUInt16( node, "MinimumRefine", refine ) ){
+			return 0;
+		}
+
+		if( refine > MAX_REFINE ){
+			this->invalidWarning( node["MinimumRefine"], "Minimum refine %hu is too high, capping to MAX_REFINE...\n", refine );
+			refine = MAX_REFINE;
+		}
+
+		entry->minimumRefine = refine;
+	}else{
+		if( !exists ){
+			entry->minimumRefine = 0;
+		}
+	}
+
+	if( this->nodeExists( node, "MaximumRefine" ) ){
+		uint16 refine;
+
+		if( !this->asUInt16( node, "MaximumRefine", refine ) ){
+			return 0;
+		}
+
+		if( refine > MAX_REFINE ){
+			this->invalidWarning( node["MaximumRefine"], "Maximum refine %hu is too high, capping to MAX_REFINE...\n", refine );
+			refine = MAX_REFINE;
+		}
+
+		entry->maximumRefine = refine;
+	}else{
+		if( !exists ){
+			entry->maximumRefine = MAX_REFINE;
+		}
+	}
+
+	if( this->nodeExists( node, "RequiredRandomOptions" ) ){
+		uint16 amount;
+
+		if( !this->asUInt16( node, "RequiredRandomOptions", amount ) ){
+			return 0;
+		}
+
+		if( amount > MAX_ITEM_RDM_OPT ){
+			this->invalidWarning( node["RequiredRandomOptions"], "Required random option amount %hu is too high, capping to MAX_ITEM_RDM_OPT...\n", amount );
+			amount = MAX_ITEM_RDM_OPT;
+		}
+
+		entry->requiredRandomOptions = amount;
+	}else{
+		if( !exists ){
+			entry->requiredRandomOptions = 0;
+		}
+	}
+
+	if( this->nodeExists( node, "CardsAllowed" ) ){
+		bool allowed;
+
+		if( !this->asBool( node, "CardsAllowed", allowed ) ){
+			return 0;
+		}
+
+		entry->cardsAllowed = true;
+	}else{
+		if( !exists ){
+			entry->cardsAllowed = false;
+		}
+	}
+
+	if( this->nodeExists( node, "ResultRefine" ) ){
+		uint16 refine;
+
+		if( !this->asUInt16( node, "ResultRefine", refine ) ){
+			return 0;
+		}
+
+		if( refine > MAX_REFINE ){
+			this->invalidWarning( node["ResultRefine"], "Result refine %hu is too high, capping to MAX_REFINE...\n", refine );
+			refine = MAX_REFINE;
+		}
+
+		entry->resultRefine = refine;
+	}else{
+		if( !exists ){
+			entry->resultRefine = 0;
+		}
+	}
+
+	if( this->nodeExists( node, "ResultRefineMinimum" ) ){
+		uint16 refine;
+
+		if( !this->asUInt16( node, "ResultRefineMinimum", refine ) ){
+			return 0;
+		}
+
+		if( refine > MAX_REFINE ){
+			this->invalidWarning( node["ResultRefineMinimum"], "Result refine minimum %hu is too high, capping to MAX_REFINE...\n", refine );
+			refine = MAX_REFINE;
+		}
+
+		entry->resultRefineMinimum = refine;
+	}else{
+		if( !exists ){
+			entry->resultRefineMinimum = 0;
+		}
+	}
+
+	if( this->nodeExists( node, "ResultRefineMaximum" ) ){
+		uint16 refine;
+
+		if( !this->asUInt16( node, "ResultRefineMaximum", refine ) ){
+			return 0;
+		}
+
+		if( refine > MAX_REFINE ){
+			this->invalidWarning( node["ResultRefineMaximum"], "Result refine maximum %hu is too high, capping to MAX_REFINE...\n", refine );
+			refine = MAX_REFINE;
+		}
+
+		entry->resultRefineMaximum = refine;
+	}else{
+		if( !exists ){
+			entry->resultRefineMaximum = 0;
+		}
+	}
+
+	if( !exists ){
+		this->put( entry->item_id, entry );
+	}
+
+	return 1;
+}
+
+LaphineUpgradeDatabase laphine_upgrade_db;
+
 /*==========================================
  * Return item data from item name. (lookup)
  * @param str Item Name
@@ -1157,15 +1668,6 @@ static struct item_data* itemdb_searchname1(const char *str, bool aegis_only)
 	}
 
 	return nullptr;
-}
-
-struct item_data* itemdb_searchname(const char *str)
-{
-	return itemdb_searchname1(str, false);
-}
-
-struct item_data* itemdb_search_aegisname( const char *str ){
-	return itemdb_searchname1( str, true );
 }
 
 /*==========================================
@@ -1265,17 +1767,36 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 
 	uint16 get_amt = 0;
 
-	if (itemdb_isstackable(data->nameid) && !data->GUID)
+	if (itemdb_isstackable(data->nameid) && data->isStacked)
 		get_amt = data->amount;
 	else
 		get_amt = 1;
 
 	tmp.amount = get_amt;
 
-	// Do loop for non-stackable item / stackable item with GUID
+	// Do loop for non-stackable item
 	for (uint16 i = 0; i < data->amount; i += get_amt) {
 		char flag = 0;
 		tmp.unique_id = data->GUID ? pc_generate_unique_id(sd) : 0; // Generate GUID
+
+		if( itemdb_isequip( data->nameid ) ){
+			if( data->refineMinimum > 0 && data->refineMaximum > 0 ){
+				tmp.refine = rnd_value( data->refineMinimum, data->refineMaximum );
+			}else if( data->refineMinimum > 0 ){
+				tmp.refine = rnd_value( data->refineMinimum, MAX_REFINE );
+			}else if( data->refineMaximum > 0 ){
+				tmp.refine = rnd_value( 1, data->refineMaximum );
+			}else{
+				tmp.refine = 0;
+			}
+
+			if( data->randomOptionGroup != nullptr ){
+				memset( tmp.option, 0, sizeof( tmp.option ) );
+
+				data->randomOptionGroup->apply( tmp );
+			}
+		}
+
 		if ((flag = pc_additem(sd, &tmp, get_amt, LOG_TYPE_SCRIPT))) {
 			clif_additem(sd, 0, 0, flag);
 			if (pc_candrop(sd, &tmp))
@@ -1551,8 +2072,11 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 	std::string group_name_constant = "IG_" + group_name;
 	int64 constant;
 
-	if (!script_get_constant(group_name_constant.c_str(), &constant) || constant < IG_BLUEBOX || constant >= IG_MAX) {
-		this->invalidWarning(node["Group"], "Invalid group %s.\n", group_name.c_str());
+	if (!script_get_constant(group_name_constant.c_str(), &constant) || constant < IG_BLUEBOX) {
+		if (strncasecmp(group_name.c_str(), "IG_", 3) != 0)
+			this->invalidWarning(node["Group"], "Invalid group %s.\n", group_name.c_str());
+		else
+			this->invalidWarning(node["Group"], "Invalid group %s. Note that 'IG_' is automatically appended to the group name.\n", group_name.c_str());
 		return 0;
 	}
 
@@ -1611,7 +2135,7 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 					if (!this->asString(listit, "Clear", item_name))
 						continue;
 
-					struct item_data *item = itemdb_search_aegisname(item_name.c_str());
+					std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
 
 					if (item == nullptr) {
 						this->invalidWarning(listit["Clear"], "Unknown Item %s. Clear failed.\n", item_name.c_str());
@@ -1629,7 +2153,7 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asString(listit, "Item", item_name))
 					continue;
 
-				struct item_data *item = itemdb_search_aegisname(item_name.c_str());
+				std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
 
 				if (item == nullptr) {
 					this->invalidWarning(listit["Item"], "Unknown Item %s.\n", item_name.c_str());
@@ -1715,6 +2239,18 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 						entry->GUID = item->flag.guid;
 				}
 
+				if (this->nodeExists(listit, "Stacked")) {
+					bool isStacked;
+
+					if (!this->asBool(listit, "Stacked", isStacked))
+						continue;
+
+					entry->isStacked = isStacked;
+				} else {
+					if (!entry_exists)
+						entry->isStacked = true;
+				}
+
 				if (this->nodeExists(listit, "Named")) {
 					bool named;
 
@@ -1745,6 +2281,65 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 				} else {
 					if (!entry_exists)
 						entry->bound = BOUND_NONE;
+				}
+
+				if( this->nodeExists( listit, "RandomOptionGroup" ) ){
+					std::string name;
+
+					if( !this->asString( listit, "RandomOptionGroup", name ) ){
+						return 0;
+					}
+
+					uint16 id;
+
+					if( !random_option_group.option_get_id( name, id ) ){
+						this->invalidWarning( listit["RandomOptionGroup"], "Unknown random option group \"%s\".\n", name.c_str() );
+						return 0;
+					}
+
+					entry->randomOptionGroup = random_option_group.find( id );
+				}else{
+					if( !entry_exists ){
+						entry->randomOptionGroup = nullptr;
+					}
+				}
+
+				if( this->nodeExists( listit, "RefineMinimum" ) ){
+					uint16 refine;
+
+					if( !this->asUInt16( listit, "RefineMinimum", refine ) ){
+						return 0;
+					}
+
+					if( refine > MAX_REFINE ){
+						this->invalidWarning( listit["RefineMinimum"], "Minimum refine % hu is too high, capping to MAX_REFINE...\n", refine );
+						refine = MAX_REFINE;
+					}
+
+					entry->refineMinimum = refine;
+				}else{
+					if( !exists ){
+						entry->refineMinimum = 0;
+					}
+				}
+
+				if( this->nodeExists( listit, "RefineMaximum" ) ){
+					uint16 refine;
+
+					if( !this->asUInt16( listit, "RefineMaximum", refine ) ){
+						return 0;
+					}
+
+					if( refine > MAX_REFINE ){
+						this->invalidWarning( listit["RefineMaximum"], "Maximum refine %hu is too high, capping to MAX_REFINE...\n", refine );
+						refine = MAX_REFINE;
+					}
+
+					entry->refineMaximum = refine;
+				}else{
+					if( !exists ){
+						entry->refineMaximum = 0;
+					}
 				}
 			}
 		}
@@ -1792,142 +2387,154 @@ static bool itemdb_read_noequip(char* str[], int columns, int current) {
 	return true;
 }
 
-/**
- * @return: amount of retrieved entries.
- **/
-static int itemdb_combo_split_atoi (char *str, t_itemid *val) {
-	int i;
+const std::string ComboDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/item_combos.yml";
+}
 
-	for (i=0; i<MAX_ITEMS_PER_COMBO; i++) {
-		if (!str) break;
-
-		val[i] = strtoul(str, nullptr, 10);
-
-		str = strchr(str,':');
-
-		if (str)
-			*str++=0;
+uint16 ComboDatabase::find_combo_id( const std::vector<t_itemid>& items ){
+	for (const auto &it : *this) {
+		if (it.second->nameid == items) {
+			return it.first;
+		}
 	}
 
-	if( i == 0 ) //No data found.
-		return 0;
-
-	return i;
+	return 0;
 }
 
 /**
- * <combo{:combo{:combo:{..}}}>,<{ script }>
- **/
-static void itemdb_read_combos(const char* basedir, bool silent) {
-	uint32 lines = 0, count = 0;
-	char line[1024];
+ * Reads and parses an entry from the item_combos.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
+uint64 ComboDatabase::parseBodyNode(const YAML::Node &node) {
+	std::vector<std::vector<t_itemid>> items_list;
 
-	char path[256];
-	FILE* fp;
-
-	sprintf(path, "%s/%s", basedir, "item_combo_db.txt");
-
-	if ((fp = fopen(path, "r")) == NULL) {
-		if(silent==0) ShowError("itemdb_read_combos: File not found \"%s\".\n", path);
-		return;
+	if( !this->nodesExist( node, { "Combos" } ) ){
+		return 0;
 	}
 
-	// process rows one by one
-	while(fgets(line, sizeof(line), fp)) {
-		char *str[2], *p;
+	const YAML::Node &combosNode = node["Combos"];
 
-		lines++;
+	for (const auto &comboit : combosNode) {
+		static const std::string nodeName = "Combo";
 
-		if (line[0] == '/' && line[1] == '/')
-			continue;
-
-		memset(str, 0, sizeof(str));
-
-		p = line;
-
-		p = trim(p);
-
-		if (*p == '\0')
-			continue;// empty line
-
-		if (!strchr(p,','))
-		{
-			/* is there even a single column? */
-			ShowError("itemdb_read_combos: Insufficient columns in line %d of \"%s\", skipping.\n", lines, path);
-			continue;
+		if (!this->nodesExist(comboit, { nodeName })) {
+			return 0;
 		}
 
-		str[0] = p;
-		p = strchr(p,',');
-		*p = '\0';
-		p++;
+		const YAML::Node &comboNode = comboit[nodeName];
 
-		str[1] = p;
-		p = strchr(p,',');
-		p++;
-
-		if (str[1][0] != '{') {
-			ShowError("itemdb_read_combos(#1): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
-			continue;
+		if (!comboNode.IsSequence()) {
+			this->invalidWarning(comboNode, "%s should be a sequence.\n", nodeName.c_str());
+			return 0;
 		}
-		/* no ending key anywhere (missing \}\) */
-		if ( str[1][strlen(str[1])-1] != '}' ) {
-			ShowError("itemdb_read_combos(#2): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
-			continue;
-		} else {
-			t_itemid items[MAX_ITEMS_PER_COMBO];
-			int v = 0, retcount = 0;
 
-			if((retcount = itemdb_combo_split_atoi(str[0], items)) < 2) {
-				ShowError("itemdb_read_combos: line %d of \"%s\" doesn't have enough items to make for a combo (min:2), skipping.\n", lines, path);
-				continue;
+		std::vector<t_itemid> items = {};
+
+		for (const auto &it : comboNode) {
+			std::string item_name = it.as<std::string>();
+
+			std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
+
+			if (item == nullptr) {
+				this->invalidWarning(it, "Invalid item %s, skipping.\n", item_name.c_str());
+				return 0;
 			}
-			/* validate */
-			for(v = 0; v < retcount; v++) {
-				if( !itemdb_exists(items[v]) ) {
-					ShowError("itemdb_read_combos: line %d of \"%s\" contains unknown item ID %" PRIu32 ", skipping.\n", lines, path,items[v]);
-					break;
+
+			items.push_back(item->nameid);
+		}
+
+		if (items.empty()) {
+			this->invalidWarning(comboNode, "Empty combo, skipping.\n");
+			return 0;
+		}
+
+		if (items.size() < 2) {
+			this->invalidWarning(comboNode, "Not enough item to make a combo (need at least 2). Skipping.\n");
+			return 0;
+		}
+
+		std::sort(items.begin(), items.end());
+		items_list.push_back(items);
+	}
+
+	if (items_list.empty()) {
+		this->invalidWarning(combosNode, "No combos defined, skipping.\n");
+		return 0;
+	}
+
+	if (this->nodeExists(node, "Clear")) {
+		bool clear = false;
+
+		if (!this->asBool(node, "Clear", clear))
+			return 0;
+
+		// Remove the combo (if exists)
+		if (clear) {
+			for (const auto& itemsit : items_list) {
+				uint16 id = this->find_combo_id(itemsit);
+
+				if (id == 0) {
+					this->invalidWarning(node["Clear"], "Unable to clear the combo.\n");
+					return 0;
 				}
-			}
-			/* failed at some item */
-			if( v < retcount )
-				continue;
 
-			// Create combo data
-			auto entry = std::make_shared<s_item_combo>();
-
-			entry->nameid = {};
-			entry->script = parse_script(str[1], path, lines, 0);
-			entry->id = count;
-
-			// Store into first item
-			item_data *id = itemdb_exists(items[0]);
-
-			id->combos.push_back(entry);
-
-			size_t idx = id->combos.size() - 1;
-
-			// Populate nameid field
-			for (v = 0; v < retcount; v++)
-				id->combos[idx]->nameid.push_back(items[v]);
-
-			// Populate the children to refer to this combo
-			for (v = 1; v < retcount; v++) {
-				item_data *it = itemdb_exists(items[v]);
-
-				// Copy to other combos in list
-				it->combos.push_back(id->combos[idx]);
+				this->erase(id);
 			}
 
-			itemdb_combo.insert({ id->combos[idx]->id, id->combos[idx] });
+			return 1;
 		}
+	}
+
+	uint64 count = 0;
+
+	for (const auto &itemsit : items_list) {
+		// Find the id when the combo exists
+		uint16 id = this->find_combo_id(itemsit);
+		std::shared_ptr<s_item_combo> combo = this->find(id);
+		bool exists = combo != nullptr;
+
+		if (!exists) {
+			combo = std::make_shared<s_item_combo>();
+
+			combo->nameid.insert(combo->nameid.begin(), itemsit.begin(), itemsit.end());
+			combo->id = ++this->combo_num;
+		}
+
+		if (this->nodeExists(node, "Script")) {
+			std::string script;
+
+			if (!this->asString(node, "Script", script))
+				return 0;
+
+			if (exists) {
+				script_free_code(combo->script);
+				combo->script = nullptr;
+			}
+			combo->script = parse_script(script.c_str(), this->getCurrentFile().c_str(), node["Script"].Mark().line + 1, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
+		} else {
+			if (!exists) {
+				combo->script = nullptr;
+			}
+		}
+
+		if (!exists)
+			this->put( combo->id, combo );
+
 		count++;
 	}
-	fclose(fp);
 
-	ShowStatus("Done reading '" CL_WHITE "%u" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n",count,path);
+	return count;
+}
 
-	return;
+void ComboDatabase::loadingFinished() {
+	// Populate item_data to refer to the combo
+	for (const auto &combo : *this) {
+		for (const auto &itm : combo.second->nameid) {
+			item_data *it = itemdb_exists(itm);
+			it->combos.push_back(combo.second);
+		}
+	}
 }
 
 /**
@@ -2055,9 +2662,12 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 	int32 index = -1;
 
 	node["Id"] = std::stoul(str[++index], nullptr, 10);
-	node["AegisName"] = str[++index];
-	node["Name"] = str[++index];
-	node["Type"] = str[++index];
+	if (!str[++index].empty())
+		node["AegisName"] = str[index];
+	if (!str[++index].empty())
+		node["Name"] = str[index];
+	if (!str[++index].empty())
+		node["Type"] = str[index];
 	if (!str[++index].empty())
 		node["SubType"] = str[index];
 	if (!str[++index].empty())
@@ -2193,6 +2803,8 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 	if (!str[++index].empty())
 		node["WeaponLevel"] = std::stoi(str[index]);
 	if (!str[++index].empty())
+		node["ArmorLevel"] = std::stoi(str[index]);
+	if (!str[++index].empty())
 		node["EquipLevelMin"] = std::stoi(str[index]);
 	if (!str[++index].empty())
 		node["EquipLevelMax"] = std::stoi(str[index]);
@@ -2294,6 +2906,8 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 	if (!str[++index].empty())
 		classes["Third_Baby"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
+		classes["Fourth"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
 		jobs["KagerouOboro"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
 		jobs["Rebellion"] = std::stoi(str[index]) ? "true" : "false";
@@ -2324,12 +2938,12 @@ static int itemdb_read_sqldb(void) {
 			"`class_all`,`class_normal`,`class_upper`,`class_baby`,`gender`,"
 			"`location_head_top`,`location_head_mid`,`location_head_low`,`location_armor`,`location_right_hand`,`location_left_hand`,`location_garment`,`location_shoes`,`location_right_accessory`,`location_left_accessory`,"
 			"`location_costume_head_top`,`location_costume_head_mid`,`location_costume_head_low`,`location_costume_garment`,`location_ammo`,`location_shadow_armor`,`location_shadow_weapon`,`location_shadow_shield`,`location_shadow_shoes`,`location_shadow_right_accessory`,`location_shadow_left_accessory`,"
-			"`weapon_level`,`equip_level_min`,`equip_level_max`,`refineable`,`view`,`alias_name`,"
+			"`weapon_level`,`armor_level`,`equip_level_min`,`equip_level_max`,`refineable`,`view`,`alias_name`,"
 			"`flag_buyingstore`,`flag_deadbranch`,`flag_container`,`flag_uniqueid`,`flag_bindonequip`,`flag_dropannounce`,`flag_noconsume`,`flag_dropeffect`,"
 			"`delay_duration`,`delay_status`,`stack_amount`,`stack_inventory`,`stack_cart`,`stack_storage`,`stack_guildstorage`,`nouse_override`,`nouse_sitting`,"
 			"`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_tradepartner`,`trade_nosell`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`,`equip_script`,`unequip_script`"
 #ifdef RENEWAL
-			",`magic_attack`,`class_third`,`class_third_upper`,`class_third_baby`,`job_kagerouoboro`,`job_rebellion`,`job_summoner`"
+			",`magic_attack`,`class_third`,`class_third_upper`,`class_third_baby`,`class_fourth`,`job_kagerouoboro`,`job_rebellion`,`job_summoner`"
 #endif
 			" FROM `%s`", item_db_name[fi]) ) {
 			Sql_ShowDebug(mmysql_handle);
@@ -2584,6 +3198,51 @@ bool RandomOptionGroupDatabase::add_option(const YAML::Node &node, std::shared_p
 	return true;
 }
 
+void s_random_opt_group::apply( struct item& item ){
+	auto apply_sub = []( s_item_randomoption& item_option, const std::shared_ptr<s_random_opt_group_entry>& option ){
+		item_option.id = option->id;
+		item_option.value = rnd_value( option->min_value, option->max_value );
+		item_option.param = option->param;
+	};
+
+	// Apply Must options
+	for( size_t i = 0; i < this->slots.size(); i++ ){
+		// Try to apply an entry
+		for( size_t j = 0, max = this->slots[static_cast<uint16>(i)].size() * 3; j < max; j++ ){
+			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->slots[static_cast<uint16>(i)] );
+
+			if( rnd() % 10000 < option->chance ){
+				apply_sub( item.option[i], option );
+				break;
+			}
+		}
+
+		// If no entry was applied, assign one
+		if( item.option[i].id == 0 ){
+			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->slots[static_cast<uint16>(i)] );
+
+			// Apply an entry without checking the chance
+			apply_sub( item.option[i], option );
+		}
+	}
+
+	// Apply Random options (if available)
+	if( this->max_random > 0 ){
+		for( size_t i = 0; i < min( this->max_random, MAX_ITEM_RDM_OPT ); i++ ){
+			// If item already has an option in this slot, skip it
+			if( item.option[i].id > 0 ){
+				continue;
+			}
+
+			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->random_options );
+
+			if( rnd() % 10000 < option->chance ){
+				apply_sub( item.option[i], option );
+			}
+		}
+	}
+}
+
 /**
  * Reads and parses an entry from the item_randomopt_group.
  * @param node: YAML node containing the entry.
@@ -2751,15 +3410,20 @@ static void itemdb_read(void) {
 			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
 		}
 
-		itemdb_read_combos(dbsubpath2,i > 0); //TODO change this to sv_read ? id#script ?
 		sv_readdb(dbsubpath2, "item_noequip.txt",       ',', 2, 2, -1, &itemdb_read_noequip, i > 0);
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}
 
-	itemdb_group.load();
 	random_option_db.load();
 	random_option_group.load();
+	itemdb_group.load();
+	itemdb_combo.load();
+	laphine_synthesis_db.load();
+	laphine_upgrade_db.load();
+
+	if (battle_config.feature_roulette)
+		itemdb_parse_roulette_db();
 }
 
 /*==========================================
@@ -2791,20 +3455,11 @@ void itemdb_reload(void) {
 	struct s_mapiterator* iter;
 	struct map_session_data* sd;
 
-	item_db.clear();
-	itemdb_combo.clear();
-	itemdb_group.clear();
-	random_option_db.clear();
-	random_option_group.clear();
-	if (battle_config.feature_roulette)
-		itemdb_roulette_free();
+	do_final_itemdb();
 
 	// read new data
 	itemdb_read();
 	cashshop_reloaddb();
-
-	if (battle_config.feature_roulette)
-		itemdb_parse_roulette_db();
 
 	mob_reload_itemmob_data();
 
@@ -2830,6 +3485,8 @@ void do_final_itemdb(void) {
 	itemdb_group.clear();
 	random_option_db.clear();
 	random_option_group.clear();
+	laphine_synthesis_db.clear();
+	laphine_upgrade_db.clear();
 	if (battle_config.feature_roulette)
 		itemdb_roulette_free();
 }
@@ -2839,7 +3496,4 @@ void do_final_itemdb(void) {
 */
 void do_init_itemdb(void) {
 	itemdb_read();
-
-	if (battle_config.feature_roulette)
-		itemdb_parse_roulette_db();
 }

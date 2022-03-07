@@ -267,7 +267,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 				return 0;
 			}
 
-			struct item_data *item = itemdb_search_aegisname(item_name.c_str());
+			std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
 
 			if (item == nullptr) {
 				this->invalidWarning(rewardNode["Item"], "Reward Item %s does not exist, skipping.\n", item_name.c_str());
@@ -348,11 +348,11 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 }
 
 void AchievementDatabase::loadingFinished(){
-	for (const auto &achit : achievement_db) {
+	for (const auto &achit : *this) {
 		const std::shared_ptr<s_achievement_db> ach = achit.second;
 
 		for (auto dep = ach->dependent_ids.begin(); dep != ach->dependent_ids.end(); dep++) {
-			if (!achievement_db.exists(*dep)) {
+			if (!this->exists(*dep)) {
 				ShowWarning("achievement_read_db: An invalid Dependent ID %d was given for Achievement %d. Removing from list.\n", *dep, ach->achievement_id);
 				dep = ach->dependent_ids.erase(dep);
 

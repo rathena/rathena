@@ -36,12 +36,14 @@
 #   Attack2                 Maximum attack in pre-renewal and base magic attack in renewal. (Default: 0)
 #   Defense                 Physical defense of the monster, reduces melee and ranged physical attack/skill damage. (Default: 0)
 #   MagicDefense            Magic defense of the monster, reduces magical skill damage. (Default: 0)
+#   Resistance              Physical resistance of the monster, reduces melee and ranged physical attack/skill damage. (Default: 0)
+#   MagicResistance         Magic resistance of the monster, reduces magical skill damage. (Default: 0)
 #   Str                     Strength which affects attack. (Default: 1)
 #   Agi                     Agility which affects flee. (Default: 1)
 #   Vit                     Vitality which affects defense. (Default: 1)
 #   Int                     Intelligence which affects magic attack. (Default: 1)
 #   Dex                     Dexterity which affects hit rate. (Default: 1)
-#   Luk                     Luck which affects perfect dodge/lucky flee/lerfect flee/lucky dodge rate. (Default: 1)
+#   Luk                     Luck which affects perfect dodge/lucky flee/perfect flee/lucky dodge rate. (Default: 1)
 #   AttackRange             Attack range. (Default: 0)
 #   SkillRange              Skill cast range. (Default: 0)
 #   ChaseRange              Chase range. (Default: 0)
@@ -75,7 +77,7 @@
 
 Header:
   Type: MOB_DB
-  Version: 2
+  Version: 3
 
 Body:
   - Id: 1001
@@ -172,7 +174,7 @@ Body:
         Rate: 20
         StealProtected: true
 #  - Id: 1003
-#    AegisName: TESTEGG
+#    AegisName: THIEF_BUG_AGG
 #    Name: Test Egg
 #    Level: 2
 #    Hp: 100000
@@ -999,7 +1001,7 @@ Body:
 #        Rate: 1
 #        StealProtected: true
 #  - Id: 1022
-#    AegisName: WEREWOLF
+#    AegisName: WERE_WOLF
 #    Name: Werewolf
 #    Level: 80
 #    Hp: 28600
@@ -3185,6 +3187,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Plant
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 1000
@@ -8744,6 +8748,8 @@ Body:
       - Item: Whisper_Boss_Card
         Rate: 1
         StealProtected: true
+#  - Id: 1187
+#    AegisName: SWITCH
   - Id: 1188
     AegisName: BON_GUN
     Name: Bongun
@@ -10157,6 +10163,10 @@ Body:
       - Item: Penomena_Card
         Rate: 1
         StealProtected: true
+#  - Id: 1217
+#    AegisName: ORC_WARRIOR
+#  - Id: 1218
+#    AegisName: PECO_EGG
   - Id: 1219
     AegisName: KNIGHT_OF_ABYSS
     Name: Abysmal Knight
@@ -31930,6 +31940,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Formless
+    RaceGroups:
+      Malangdo: true
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 300
@@ -40940,32 +40952,32 @@ Body:
     Drops:
       - Item: Gold_Tulip
         Rate: 10000
-#  - Id: 2034
-#    AegisName: M_DESERT_WOLF_B
-#    Name: Baby Desert Wolf
-#    Level: 9
-#    Hp: 164
-#    Sp: 15
-#    Attack: 500
-#    Attack2: 600
-#    Agi: 9
-#    Vit: 9
-#    Int: 5
-#    Dex: 40
-#    Luk: 40
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Small
-#    Race: Brute
-#    Element: Fire
-#    ElementLevel: 1
-#    WalkSpeed: 100
-#    AttackDelay: 1600
-#    AttackMotion: 900
-#    DamageMotion: 240
-#    Modes:
-#      NoRandomWalk: true
+  - Id: 2034
+    AegisName: M_DESERT_WOLF_B
+    Name: Baby Desert Wolf
+    Level: 9
+    Hp: 164
+    Sp: 15
+    Attack: 500
+    Attack2: 600
+    Agi: 9
+    Vit: 9
+    Int: 5
+    Dex: 40
+    Luk: 40
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Fire
+    ElementLevel: 1
+    WalkSpeed: 100
+    AttackDelay: 1600
+    AttackMotion: 900
+    DamageMotion: 240
+    Modes:
+      NoRandomWalk: true
   - Id: 2035
     AegisName: NIHILITY_ZEM
     Name: Nihility Zem
@@ -41020,60 +41032,60 @@ Body:
       - Item: Broken_Horn_Pipe
         Rate: 2500
         StealProtected: true
-#  - Id: 2037
-#    AegisName: VALKYRIE_A
-#    Name: Valkyrie Randgris
-#    Level: 90
-#    Hp: 5500
-#    Sp: 15
-#    Attack: 10
-#    Attack2: 160
-#    Defense: 16
-#    MagicDefense: 20
-#    Agi: 20
-#    Vit: 40
-#    Dex: 20
-#    Luk: 20
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Angel
-#    Element: Holy
-#    ElementLevel: 3
-#    WalkSpeed: 100
-#    AttackDelay: 576
-#    AttackMotion: 576
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2038
-#    AegisName: VALKYRIE_B
-#    Name: Valkyrie Randgris
-#    Level: 90
-#    Hp: 10500
-#    Sp: 15
-#    Attack: 300
-#    Attack2: 450
-#    Defense: 16
-#    MagicDefense: 40
-#    Agi: 20
-#    Vit: 80
-#    Dex: 80
-#    Luk: 20
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Angel
-#    Element: Holy
-#    ElementLevel: 3
-#    WalkSpeed: 100
-#    AttackDelay: 576
-#    AttackMotion: 576
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
+  - Id: 2037
+    AegisName: VALKYRIE_A
+    Name: Valkyrie Randgris
+    Level: 90
+    Hp: 5500
+    Sp: 15
+    Attack: 10
+    Attack2: 160
+    Defense: 16
+    MagicDefense: 20
+    Agi: 20
+    Vit: 40
+    Dex: 20
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Holy
+    ElementLevel: 3
+    WalkSpeed: 100
+    AttackDelay: 576
+    AttackMotion: 576
+    DamageMotion: 480
+    Modes:
+      NoRandomWalk: true
+  - Id: 2038
+    AegisName: VALKYRIE_B
+    Name: Valkyrie Randgris
+    Level: 90
+    Hp: 10500
+    Sp: 15
+    Attack: 300
+    Attack2: 450
+    Defense: 16
+    MagicDefense: 40
+    Agi: 20
+    Vit: 80
+    Dex: 80
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Holy
+    ElementLevel: 3
+    WalkSpeed: 100
+    AttackDelay: 576
+    AttackMotion: 576
+    DamageMotion: 480
+    Modes:
+      NoRandomWalk: true
   - Id: 2039
     AegisName: EXECUTIONER_R
     Name: Executioner
@@ -41655,91 +41667,91 @@ Body:
     AttackMotion: 500
     DamageMotion: 1000
     Ai: 09
-#  - Id: 2058
-#    AegisName: M_MIMIC
-#    Name: Mimic
-#    Level: 51
-#    Hp: 6120
-#    Sp: 182
-#    Attack: 800
-#    Attack2: 950
-#    Defense: 10
-#    MagicDefense: 40
-#    Str: 44
-#    Agi: 121
-#    Int: 60
-#    Dex: 75
-#    Luk: 110
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Formless
-#    Element: Neutral
-#    ElementLevel: 3
-#    WalkSpeed: 100
-#    AttackDelay: 972
-#    AttackMotion: 500
-#    DamageMotion: 288
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2059
-#    AegisName: M_DISGUISE
-#    Name: Disguise
-#    Level: 55
-#    Hp: 7543
-#    Sp: 180
-#    Attack: 526
-#    Attack2: 693
-#    Defense: 18
-#    MagicDefense: 29
-#    Agi: 72
-#    Vit: 45
-#    Int: 35
-#    Dex: 48
-#    Luk: 65
-#    AttackRange: 2
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Demon
-#    Element: Earth
-#    ElementLevel: 4
-#    WalkSpeed: 147
-#    AttackDelay: 516
-#    AttackMotion: 768
-#    DamageMotion: 384
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2060
-#    AegisName: M_ALICE
-#    Name: Alice
-#    Level: 62
-#    Hp: 10000
-#    Sp: 221
-#    Attack: 700
-#    Attack2: 850
-#    Defense: 5
-#    MagicDefense: 5
-#    Str: 64
-#    Agi: 64
-#    Vit: 42
-#    Int: 85
-#    Dex: 100
-#    Luk: 130
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Demihuman
-#    Element: Neutral
-#    ElementLevel: 3
-#    WalkSpeed: 200
-#    AttackDelay: 502
-#    AttackMotion: 1999
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
+  - Id: 2058
+    AegisName: M_MIMIC
+    Name: Mimic
+    Level: 51
+    Hp: 6120
+    Sp: 182
+    Attack: 800
+    Attack2: 950
+    Defense: 10
+    MagicDefense: 40
+    Str: 44
+    Agi: 121
+    Int: 60
+    Dex: 75
+    Luk: 110
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 100
+    AttackDelay: 972
+    AttackMotion: 500
+    DamageMotion: 288
+    Modes:
+      NoRandomWalk: true
+  - Id: 2059
+    AegisName: M_DISGUISE
+    Name: Disguise
+    Level: 55
+    Hp: 7543
+    Sp: 180
+    Attack: 526
+    Attack2: 693
+    Defense: 18
+    MagicDefense: 29
+    Agi: 72
+    Vit: 45
+    Int: 35
+    Dex: 48
+    Luk: 65
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Earth
+    ElementLevel: 4
+    WalkSpeed: 147
+    AttackDelay: 516
+    AttackMotion: 768
+    DamageMotion: 384
+    Modes:
+      NoRandomWalk: true
+  - Id: 2060
+    AegisName: M_ALICE
+    Name: Alice
+    Level: 62
+    Hp: 10000
+    Sp: 221
+    Attack: 700
+    Attack2: 850
+    Defense: 5
+    MagicDefense: 5
+    Str: 64
+    Agi: 64
+    Vit: 42
+    Int: 85
+    Dex: 100
+    Luk: 130
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 502
+    AttackMotion: 1999
+    DamageMotion: 480
+    Modes:
+      NoRandomWalk: true
 #  - Id: 2061
 #    AegisName: E_STAPO
 #    Name: Stapo
@@ -45816,7 +45828,8 @@ Body:
         StealProtected: true
   - Id: 2166
     AegisName: I_HORN_SCARABA_EGG
-    Name: Gold One-Horn Scaraba Egg
+#   Name: Gold One-Horn Scaraba Egg
+    Name: Gold One-Horn Scaraba E
     Level: 125
     Hp: 126000
     BaseExp: 6000
@@ -45851,7 +45864,8 @@ Body:
         Rate: 5
   - Id: 2167
     AegisName: I_HORN_SCARABA2_EGG
-    Name: Gold Two-Horn Scaraba Egg
+#   Name: Gold Two-Horn Scaraba Egg
+    Name: Gold Two-Horn Scaraba Eg
     Level: 126
     Hp: 132000
     BaseExp: 6000
@@ -46099,6 +46113,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 1
     WalkSpeed: 300
@@ -46146,6 +46162,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 300
@@ -46193,6 +46211,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 1
     WalkSpeed: 200
@@ -46238,6 +46258,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 1
     WalkSpeed: 200
@@ -46287,6 +46309,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 200
@@ -46337,6 +46361,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Insect
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 1
     WalkSpeed: 150
@@ -46384,6 +46410,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 3
     WalkSpeed: 150
@@ -46431,6 +46459,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 200
@@ -46439,9 +46469,6 @@ Body:
     DamageMotion: 384
     Ai: 20
     Class: Boss
-    Modes:
-      IgnoreMelee: true
-      IgnoreRanged: true
     Drops:
       - Item: Mistic_Frozen
         Rate: 6
@@ -46481,6 +46508,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 150
@@ -46528,6 +46557,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 190
@@ -46577,6 +46608,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 3
     WalkSpeed: 200
@@ -46624,6 +46657,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 165
@@ -46721,6 +46756,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 165
@@ -46770,6 +46807,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 165
@@ -46818,6 +46857,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 165
@@ -46867,6 +46908,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 165
@@ -46941,6 +46984,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 300
@@ -46980,6 +47025,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 300
@@ -47020,6 +47067,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 300
@@ -52893,7 +52942,8 @@ Body:
       Detector: true
   - Id: 2360
     AegisName: N_ANCIENT_MUMMY
-    Name: Ancient Mummy (Nightmare)
+#   Name: Ancient Mummy (Nightmare)
+    Name: Ancient Mummy (Nightmare
     JapaneseName: Nightmare Ancient Mummy
     Level: 141
     Hp: 90157
@@ -52943,7 +52993,8 @@ Body:
         StealProtected: true
   - Id: 2361
     AegisName: G_N_ANCIENT_MUMMY
-    Name: Ancient Mummy (Nightmare)
+#   Name: Ancient Mummy (Nightmare)
+    Name: Ancient Mummy (Nightmare
     JapaneseName: Nightmare Ancient Mummy
     Level: 141
     Hp: 90157
@@ -54133,6 +54184,8 @@ Body:
     Modes:
       NoRandomWalk: true
       TeleportBlock: true
+#  - Id: 2414
+#    AegisName: RUNAWAY_BOOK
   - Id: 2415
     AegisName: L_SEYREN
     Name: Knight Seyren
@@ -56120,7 +56173,8 @@ Body:
         Rate: 500
   - Id: 2466
     AegisName: MG_GHOUL
-    Name: Grand Chamberlain in pain
+#   Name: Grand Chamberlain in pain
+    Name: Grand Chamberlain in pai
     Level: 132
     Hp: 208100
     BaseExp: 7111
@@ -56291,7 +56345,8 @@ Body:
   - Id: 2470
     AegisName: MG_KNIGHT_OF_ABYSS
     Name: Corrupted Abysmal Knight
-    JapaneseName: Corrupted Knight of Abyss
+#   JapaneseName: Corrupted Knight of Abyss
+    JapaneseName: Corrupted Knight of Abys
     Level: 142
     Hp: 225789
     BaseExp: 9292
@@ -56419,7 +56474,8 @@ Body:
         Rate: 100
   - Id: 2473
     AegisName: MG_M_UNDEAD_KNIGHT
-    Name: 1st Commander of Destruction
+#   Name: 1st Commander of Destruction
+    Name: 1st Commander of Destruc
     Level: 145
     Hp: 950033
     BaseExp: 80009
@@ -56465,7 +56521,8 @@ Body:
         StealProtected: true
   - Id: 2474
     AegisName: MG_F_UNDEAD_KNIGHT
-    Name: 2nd Commander of Destruction
+#   Name: 2nd Commander of Destruction
+    Name: 2nd Commander of Destruc
     Level: 145
     Hp: 848011
     BaseExp: 79836
@@ -58548,74 +58605,911 @@ Body:
     Ai: 10
     Modes:
       CanMove: true
-#  - Id: 2569
-#    AegisName: G_ANOPHELES
-#  - Id: 2570
-#    AegisName: G_BREEZE
-#  - Id: 2571
-#    AegisName: G_BUTOIJO
-#  - Id: 2572
-#    AegisName: G_CARAMEL
-#  - Id: 2573
-#    AegisName: G_CHONCHON
-#  - Id: 2574
-#    AegisName: G_CIVIL_SERVANT
-#  - Id: 2575
-#    AegisName: G_COCO
-#  - Id: 2576
-#    AegisName: G_CREAMY
-#  - Id: 2577
-#    AegisName: G_FABRE
-#  - Id: 2578
-#    AegisName: G_HORN
-#  - Id: 2579
-#    AegisName: G_HYLOZOIST
-#  - Id: 2580
-#    AegisName: G_KAHO
-#  - Id: 2581
-#    AegisName: G_LUDE
-#  - Id: 2582
-#    AegisName: G_LUNATIC
-#  - Id: 2583
-#    AegisName: G_MARTIN
-#  - Id: 2584
-#    AegisName: G_MINERAL
-#  - Id: 2585
-#    AegisName: G_MOLE
-#  - Id: 2586
-#    AegisName: G_NERAID
-#  - Id: 2587
-#    AegisName: G_OBSIDIAN
-#  - Id: 2588
-#    AegisName: G_PITMAN
-#  - Id: 2589
-#    AegisName: G_POPORING
-#  - Id: 2590
-#    AegisName: G_ROCKER
-#  - Id: 2591
-#    AegisName: G_SAVAGE
-#  - Id: 2592
-#    AegisName: G_SIORAVA
-#  - Id: 2593
-#    AegisName: G_SIROMA
-#  - Id: 2594
-#    AegisName: G_SNOWIER
-#  - Id: 2595
-#    AegisName: G_STAINER
-#  - Id: 2596
-#    AegisName: G_STAPO
-#  - Id: 2597
-#    AegisName: G_STEEL_CHONCHON
-#  - Id: 2598
-#    AegisName: G_UNGOLIANT
-#  - Id: 2599
-#    AegisName: G_WILD_RIDER
-#  - Id: 2600
-#    AegisName: G_WOLF
-#  - Id: 2601
-#    AegisName: G_YOYO
-#  - Id: 2602
-#    AegisName: G_ZIPPER_BEAR
+  - Id: 2569
+    AegisName: G_ANOPHELES
+    Name: Anopheles
+    Level: 95
+    Hp: 7238
+    Attack: 315
+    Attack2: 18
+    Defense: 7
+    MagicDefense: 10
+    Str: 64
+    Agi: 60
+    Vit: 42
+    Int: 58
+    Dex: 106
+    Luk: 42
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Wind
+    ElementLevel: 3
+    WalkSpeed: 170
+    AttackDelay: 1084
+    AttackMotion: 2304
+    DamageMotion: 576
+    Ai: 02
+  - Id: 2570
+    AegisName: G_BREEZE
+    Name: Breeze
+    Level: 92
+    Hp: 6755
+    Attack: 493
+    Attack2: 52
+    Defense: 83
+    MagicDefense: 32
+    Str: 75
+    Agi: 101
+    Vit: 46
+    Int: 35
+    Dex: 79
+    Luk: 55
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Wind
+    ElementLevel: 3
+    WalkSpeed: 100
+    AttackDelay: 140
+    AttackMotion: 384
+    DamageMotion: 504
+    Ai: 02
+  - Id: 2571
+    AegisName: G_BUTOIJO
+    Name: Butoijo
+    Level: 88
+    Hp: 7524
+    Attack: 358
+    Attack2: 102
+    Defense: 77
+    MagicDefense: 12
+    Str: 66
+    Agi: 65
+    Vit: 30
+    Int: 30
+    Dex: 106
+    Luk: 44
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 170
+    AttackDelay: 576
+    AttackMotion: 768
+    DamageMotion: 432
+    Ai: 02
+  - Id: 2572
+    AegisName: G_CARAMEL
+    Name: Caramel
+    Level: 25
+    Hp: 518
+    Attack: 67
+    Attack2: 9
+    Defense: 39
+    Str: 19
+    Agi: 10
+    Vit: 15
+    Int: 10
+    Dex: 32
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1604
+    AttackMotion: 840
+    DamageMotion: 756
+    Ai: 02
+  - Id: 2573
+    AegisName: G_CHONCHON
+    Name: Chonchon
+    Level: 5
+    Hp: 57
+    Attack: 11
+    Attack2: 3
+    Defense: 27
+    Str: 13
+    Agi: 4
+    Vit: 4
+    Dex: 8
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Wind
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1076
+    AttackMotion: 576
+    DamageMotion: 480
+    Ai: 02
+  - Id: 2574
+    AegisName: G_CIVIL_SERVANT
+    Name: Civil Servant
+    Level: 89
+    Hp: 5292
+    Attack: 304
+    Attack2: 61
+    Defense: 90
+    MagicDefense: 56
+    Str: 67
+    Agi: 76
+    Vit: 40
+    Int: 65
+    Dex: 74
+    Luk: 30
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Wind
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 1257
+    AttackMotion: 528
+    DamageMotion: 432
+    Ai: 02
+  - Id: 2575
+    AegisName: G_COCO
+    Name: Coco
+    Level: 38
+    Hp: 836
+    Attack: 71
+    Attack2: 11
+    Defense: 37
+    Str: 22
+    Agi: 13
+    Vit: 30
+    Int: 20
+    Dex: 38
+    Luk: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 1864
+    AttackMotion: 864
+    DamageMotion: 1008
+    Ai: 02
+  - Id: 2576
+    AegisName: G_CREAMY
+    Name: Creamy
+    Level: 23
+    Hp: 378
+    Attack: 61
+    Attack2: 1
+    Defense: 28
+    MagicDefense: 20
+    Str: 16
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Wind
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 1136
+    AttackMotion: 720
+    DamageMotion: 840
+    Ai: 02
+  - Id: 2577
+    AegisName: G_FABRE
+    Name: Fabre
+    Level: 6
+    Hp: 72
+    Attack: 12
+    Attack2: 3
+    Defense: 24
+    Str: 12
+    Agi: 5
+    Vit: 5
+    Int: 5
+    Dex: 12
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 02
+  - Id: 2578
+    AegisName: G_HORN
+    Name: Horn
+    Level: 32
+    Hp: 705
+    Attack: 64
+    Attack2: 11
+    Defense: 52
+    MagicDefense: 8
+    Str: 10
+    Agi: 12
+    Vit: 36
+    Int: 25
+    Dex: 21
+    Luk: 35
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Insect
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1528
+    AttackMotion: 528
+    DamageMotion: 288
+    Ai: 02
+  - Id: 2579
+    AegisName: G_HYLOZOIST
+    Name: Hylozoist
+    Level: 102
+    Hp: 12000
+    Attack: 548
+    Attack2: 81
+    Defense: 101
+    MagicDefense: 68
+    Str: 97
+    Agi: 67
+    Vit: 72
+    Int: 88
+    Dex: 83
+    Luk: 60
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 155
+    AttackDelay: 741
+    AttackMotion: 1536
+    DamageMotion: 480
+    Ai: 02
+  - Id: 2580
+    AegisName: G_KAHO
+    Name: Kaho
+    Level: 98
+    Hp: 7045
+    Attack: 655
+    Attack2: 224
+    Defense: 106
+    MagicDefense: 55
+    Str: 81
+    Agi: 61
+    Vit: 55
+    Int: 65
+    Dex: 79
+    Luk: 73
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Fire
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 1700
+    AttackMotion: 1000
+    DamageMotion: 500
+    Ai: 02
+  - Id: 2581
+    AegisName: G_LUDE
+    Name: Lude
+    Level: 101
+    Hp: 11574
+    Attack: 283
+    Attack2: 78
+    Defense: 90
+    MagicDefense: 53
+    Str: 97
+    Agi: 38
+    Vit: 55
+    Int: 82
+    Dex: 83
+    Luk: 55
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 890
+    AttackMotion: 960
+    DamageMotion: 480
+    Ai: 02
+  - Id: 2582
+    AegisName: G_LUNATIC
+    Name: Lunatic
+    Level: 3
+    Hp: 55
+    Attack: 11
+    Attack2: 1
+    Defense: 18
+    Str: 10
+    Agi: 3
+    Vit: 3
+    Dex: 8
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 1456
+    AttackMotion: 456
+    DamageMotion: 336
+    Ai: 02
+  - Id: 2583
+    AegisName: G_MARTIN
+    Name: Martin
+    Level: 39
+    Hp: 1056
+    Attack: 70
+    Attack2: 18
+    Defense: 58
+    MagicDefense: 19
+    Str: 25
+    Agi: 29
+    Vit: 28
+    Int: 15
+    Dex: 30
+    Luk: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 300
+    AttackDelay: 1480
+    AttackMotion: 480
+    DamageMotion: 480
+    Ai: 02
+  - Id: 2584
+    AegisName: G_MINERAL
+    Name: Mineral
+    Level: 96
+    Hp: 8300
+    Attack: 751
+    Attack2: 57
+    Defense: 127
+    MagicDefense: 23
+    Str: 70
+    Agi: 61
+    Vit: 40
+    Int: 50
+    Dex: 74
+    Luk: 50
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 250
+    AttackDelay: 648
+    AttackMotion: 480
+    DamageMotion: 360
+    Ai: 02
+  - Id: 2585
+    AegisName: G_MOLE
+    Name: Mole
+    Level: 85
+    Hp: 6228
+    Attack: 286
+    Attack2: 49
+    Defense: 82
+    MagicDefense: 16
+    Str: 53
+    Agi: 65
+    Vit: 31
+    Int: 30
+    Dex: 58
+    Luk: 31
+    AttackRange: 9
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 300
+    AttackDelay: 1400
+    AttackMotion: 960
+    DamageMotion: 504
+    Ai: 02
+  - Id: 2586
+    AegisName: G_NERAID
+    Name: Neraid
+    Level: 98
+    Hp: 9550
+    Attack: 255
+    Attack2: 71
+    Defense: 100
+    MagicDefense: 37
+    Str: 97
+    Agi: 45
+    Vit: 60
+    Int: 30
+    Dex: 83
+    Luk: 50
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 776
+    AttackMotion: 576
+    DamageMotion: 288
+    Ai: 02
+  - Id: 2587
+    AegisName: G_OBSIDIAN
+    Name: Obsidian
+    Level: 97
+    Hp: 10088
+    Attack: 767
+    Attack2: 80
+    Defense: 129
+    MagicDefense: 37
+    Str: 84
+    Agi: 38
+    Vit: 40
+    Int: 60
+    Dex: 64
+    Luk: 50
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 350
+    AttackDelay: 720
+    AttackMotion: 864
+    DamageMotion: 504
+    Ai: 02
+  - Id: 2588
+    AegisName: G_PITMAN
+    Name: Pitman
+    Level: 90
+    Hp: 7208
+    Attack: 200
+    Attack2: 60
+    Defense: 104
+    MagicDefense: 48
+    Str: 78
+    Agi: 56
+    Vit: 45
+    Int: 35
+    Dex: 60
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Undead
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 180
+    AttackDelay: 960
+    AttackMotion: 336
+    DamageMotion: 300
+    Ai: 02
+  - Id: 2589
+    AegisName: G_POPORING
+    Name: Poporing
+    Level: 30
+    Hp: 524
+    Attack: 74
+    Attack2: 20
+    Defense: 36
+    MagicDefense: 17
+    Str: 17
+    Agi: 26
+    Vit: 20
+    Int: 18
+    Dex: 36
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Poison
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 02
+  - Id: 2590
+    AegisName: G_ROCKER
+    Name: Rocker
+    Level: 15
+    Hp: 185
+    Attack: 19
+    Attack2: 5
+    Defense: 16
+    MagicDefense: 3
+    Str: 12
+    Agi: 18
+    Vit: 8
+    Int: 10
+    Dex: 17
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Insect
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1864
+    AttackMotion: 864
+    DamageMotion: 540
+    Ai: 02
+  - Id: 2591
+    AegisName: G_SAVAGE
+    Name: Savage
+    Level: 59
+    Hp: 2301
+    Attack: 181
+    Attack2: 23
+    Defense: 126
+    MagicDefense: 3
+    Str: 56
+    Agi: 21
+    Vit: 54
+    Int: 10
+    Dex: 52
+    Luk: 15
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Brute
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1960
+    AttackMotion: 960
+    DamageMotion: 384
+    Ai: 02
+  - Id: 2592
+    AegisName: G_SIORAVA
+    Name: Siorava
+    Level: 87
+    Hp: 6500
+    Attack: 450
+    Attack2: 210
+    Defense: 20
+    MagicDefense: 40
+    Str: 10
+    Agi: 40
+    Vit: 66
+    Int: 70
+    Dex: 67
+    Luk: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 250
+    AttackDelay: 1536
+    AttackMotion: 1296
+    DamageMotion: 576
+    Ai: 02
+  - Id: 2593
+    AegisName: G_SIROMA
+    Name: Siroma
+    Level: 98
+    Hp: 11910
+    Attack: 506
+    Attack2: 100
+    Defense: 64
+    MagicDefense: 38
+    Str: 83
+    Agi: 43
+    Vit: 50
+    Int: 70
+    Dex: 96
+    Luk: 60
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 180
+    AttackDelay: 432
+    AttackMotion: 648
+    DamageMotion: 240
+    Ai: 02
+  - Id: 2594
+    AegisName: G_SNOWIER
+    Name: Snowier
+    Level: 103
+    Hp: 13934
+    Attack: 763
+    Attack2: 82
+    Defense: 121
+    MagicDefense: 47
+    Str: 91
+    Agi: 61
+    Vit: 67
+    Int: 45
+    Dex: 83
+    Luk: 55
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 220
+    AttackDelay: 936
+    AttackMotion: 1020
+    DamageMotion: 420
+    Ai: 02
+  - Id: 2595
+    AegisName: G_STAINER
+    Name: Stainer
+    Level: 21
+    Hp: 365
+    Attack: 65
+    Attack2: 9
+    Defense: 22
+    MagicDefense: 25
+    Str: 10
+    Agi: 10
+    Vit: 24
+    Dex: 39
+    Luk: 15
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Wind
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1688
+    AttackMotion: 1188
+    DamageMotion: 612
+    Ai: 02
+  - Id: 2596
+    AegisName: G_STAPO
+    Name: Stapo
+    Level: 95
+    Hp: 8805
+    Attack: 573
+    Attack2: 51
+    Defense: 129
+    MagicDefense: 36
+    Str: 20
+    Agi: 46
+    Vit: 25
+    Int: 35
+    Dex: 64
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 300
+    AttackDelay: 936
+    AttackMotion: 792
+    DamageMotion: 432
+    Ai: 02
+  - Id: 2597
+    AegisName: G_STEEL_CHONCHON
+    Name: Steel Chonchon
+    Level: 48
+    Hp: 1199
+    Attack: 77
+    Attack2: 35
+    Defense: 57
+    MagicDefense: 20
+    Str: 30
+    Agi: 62
+    Vit: 20
+    Int: 10
+    Dex: 56
+    Luk: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Wind
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 1076
+    AttackMotion: 576
+    DamageMotion: 480
+    Ai: 02
+  - Id: 2598
+    AegisName: G_UNGOLIANT
+    Name: Ungoliant
+    Level: 94
+    Hp: 27070
+    Attack: 1296
+    Attack2: 144
+    Defense: 108
+    MagicDefense: 28
+    Str: 71
+    Agi: 70
+    Vit: 58
+    Int: 43
+    Dex: 110
+    Luk: 38
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Insect
+    Element: Poison
+    ElementLevel: 2
+    WalkSpeed: 350
+    AttackDelay: 420
+    AttackMotion: 576
+    DamageMotion: 420
+    Ai: 02
+  - Id: 2599
+    AegisName: G_WILD_RIDER
+    Name: Wild Rider
+    Level: 95
+    Hp: 33300
+    Attack: 1320
+    Attack2: 330
+    Defense: 480
+    MagicDefense: 22
+    Str: 89
+    Agi: 124
+    Vit: 89
+    Int: 56
+    Dex: 112
+    Luk: 56
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Fish
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 120
+    AttackDelay: 432
+    AttackMotion: 792
+    DamageMotion: 360
+    Ai: 02
+  - Id: 2600
+    AegisName: G_WOLF
+    Name: Wolf
+    Level: 45
+    Hp: 1219
+    Attack: 80
+    Attack2: 11
+    Defense: 55
+    MagicDefense: 3
+    Str: 27
+    Agi: 24
+    Vit: 30
+    Int: 15
+    Dex: 33
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1054
+    AttackMotion: 504
+    DamageMotion: 432
+    Ai: 02
+  - Id: 2601
+    AegisName: G_YOYO
+    Name: Yoyo
+    Level: 38
+    Hp: 898
+    Attack: 63
+    Attack2: 11
+    Defense: 40
+    Str: 20
+    Agi: 11
+    Vit: 34
+    Int: 20
+    Dex: 19
+    Luk: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1054
+    AttackMotion: 54
+    DamageMotion: 384
+    Ai: 02
+  - Id: 2602
+    AegisName: G_ZIPPER_BEAR
+    Name: Zipper Bear
+    Level: 90
+    Hp: 6620
+    Attack: 451
+    Attack2: 57
+    Defense: 130
+    MagicDefense: 40
+    Str: 68
+    Agi: 51
+    Vit: 50
+    Int: 35
+    Dex: 70
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Dark
+    ElementLevel: 1
+    WalkSpeed: 155
+    AttackDelay: 780
+    AttackMotion: 1008
+    DamageMotion: 420
+    Ai: 02
   - Id: 2603
     AegisName: C1_ZOMBIE_SLAUGHTER
     Name: Swift Zombie Slaughter
@@ -60720,7 +61614,8 @@ Body:
         StealProtected: true
   - Id: 2648
     AegisName: C3_SOLDIER_SKELETON
-    Name: Soldier Skeleton Ringleader
+#   Name: Soldier Skeleton Ringleader
+    Name: Soldier Skeleton Ringlea
     Level: 34
     Hp: 4020
     BaseExp: 1420
@@ -61197,7 +62092,8 @@ Body:
         StealProtected: true
   - Id: 2658
     AegisName: C3_SKELETON_GENERAL
-    Name: Skeleton General Ringleader
+#   Name: Skeleton General Ringleader
+    Name: Skeleton General Ringlea
     Level: 139
     Hp: 900650
     BaseExp: 53070
@@ -61526,7 +62422,8 @@ Body:
         StealProtected: true
   - Id: 2665
     AegisName: C5_SHELTER
-    Name: Elusive Mistress of Shelter
+#   Name: Elusive Mistress of Shelter
+    Name: Elusive Mistress of Shel
     Level: 125
     Hp: 135000
     BaseExp: 15715
@@ -62364,7 +63261,8 @@ Body:
         StealProtected: true
   - Id: 2683
     AegisName: C3_RICE_CAKE_BOY
-    Name: Dumpling Child Ringleader
+#   Name: Dumpling Child Ringleader
+    Name: Dumpling Child Ringleade
     Level: 60
     Hp: 10490
     BaseExp: 2605
@@ -62409,7 +63307,8 @@ Body:
         StealProtected: true
   - Id: 2684
     AegisName: C4_RETRIBUTION
-    Name: Furious Baroness of Retribution
+#   Name: Furious Baroness of Retribution
+    Name: Furious Baroness of Retr
     Level: 121
     Hp: 110760
     BaseExp: 15235
@@ -62458,7 +63357,8 @@ Body:
         StealProtected: true
   - Id: 2685
     AegisName: C5_RETRIBUTION
-    Name: Elusive Baroness of Retribution
+#   Name: Elusive Baroness of Retribution
+    Name: Elusive Baroness of Retr
     Level: 121
     Hp: 110760
     BaseExp: 15235
@@ -62507,7 +63407,8 @@ Body:
         StealProtected: true
   - Id: 2686
     AegisName: C1_RETRIBUTION
-    Name: Swift Baroness of Retribution
+#   Name: Swift Baroness of Retribution
+    Name: Swift Baroness of Retrib
     Level: 121
     Hp: 110760
     BaseExp: 15235
@@ -62791,7 +63692,8 @@ Body:
         StealProtected: true
   - Id: 2692
     AegisName: C3_RAWREL
-    Name: Laurell Weinder Ringleader
+#   Name: Laurell Weinder Ringleader
+    Name: Laurell Weinder Ringlead
     Level: 133
     Hp: 201410
     BaseExp: 14625
@@ -64367,7 +65269,8 @@ Body:
         StealProtected: true
   - Id: 2726
     AegisName: C3_OBSERVATION
-    Name: Dame of Sentinel Ringleader
+#   Name: Dame of Sentinel Ringleader
+    Name: Dame of Sentinel Ringlea
     Level: 127
     Hp: 172690
     BaseExp: 18320
@@ -64667,7 +65570,8 @@ Body:
         StealProtected: true
   - Id: 2733
     AegisName: C5_NG_WRAITH_DEAD
-    Name: Elusive Wraith Dead (Nightmare)
+#   Name: Elusive Wraith Dead (Nightmare)
+    Name: Elusive Wraith Dead (Nig
     Level: 110
     Hp: 77895
     BaseExp: 10490
@@ -64709,7 +65613,8 @@ Body:
         Rate: 50
   - Id: 2734
     AegisName: C1_NG_WANDER_MAN
-    Name: Furious Wanderer (Nightmare)
+#   Name: Furious Wanderer (Nightmare)
+    Name: Furious Wanderer (Nightm
     Level: 151
     Hp: 653410
     BaseExp: 49535
@@ -65078,7 +65983,8 @@ Body:
         StealProtected: true
   - Id: 2742
     AegisName: C4_MOROCC_1
-    Name: Furious Incarnation of Morocc
+#   Name: Furious Incarnation of Morocc
+    Name: Furious Incarnation of M
     Level: 132
     Hp: 319500
     BaseExp: 14275
@@ -65123,7 +66029,8 @@ Body:
         Rate: 50
   - Id: 2743
     AegisName: C5_MOROCC_1
-    Name: Elusive Incarnation of Morocc
+#   Name: Elusive Incarnation of Morocc
+    Name: Elusive Incarnation of M
     Level: 132
     Hp: 319500
     BaseExp: 14275
@@ -65168,7 +66075,8 @@ Body:
         Rate: 50
   - Id: 2744
     AegisName: C1_MOROCC_1
-    Name: Swift Incarnation of Morocc
+#   Name: Swift Incarnation of Morocc
+    Name: Swift Incarnation of Mor
     Level: 132
     Hp: 319500
     BaseExp: 14275
@@ -66603,7 +67511,8 @@ Body:
         StealProtected: true
   - Id: 2775
     AegisName: C2_LIVE_PEACH_TREE
-    Name: Solid Enchanted Peach Tree
+#   Name: Solid Enchanted Peach Tree
+    Name: Solid Enchanted Peach Tr
     Level: 92
     Hp: 87770
     BaseExp: 6495
@@ -68541,7 +69450,8 @@ Body:
         StealProtected: true
   - Id: 2817
     AegisName: C4_GLD_KOBOLD_2
-    Name: Furious Dark Hammer Kobold
+#   Name: Furious Dark Hammer Kobold
+    Name: Furious Dark Hammer Kobo
     Level: 142
     Hp: 906700
     BaseExp: 51800
@@ -68585,7 +69495,8 @@ Body:
         Rate: 10
   - Id: 2818
     AegisName: C5_GLD_KOBOLD_2
-    Name: Elusive Dark Hammer Kobold
+#   Name: Elusive Dark Hammer Kobold
+    Name: Elusive Dark Hammer Kobo
     Level: 142
     Hp: 906700
     BaseExp: 51800
@@ -70296,7 +71207,8 @@ Body:
         StealProtected: true
   - Id: 2855
     AegisName: C3_DESERT_WOLF_B
-    Name: Baby Desert Wolf Ringleader
+#   Name: Baby Desert Wolf Ringleader
+    Name: Baby Desert Wolf Ringlea
     Level: 14
     Hp: 700
     BaseExp: 820
@@ -73874,34 +74786,34 @@ Body:
       - Item: Halloween_Coin
         Rate: 10000
         StealProtected: true
-#  - Id: 2937
-#    AegisName: M_LOKI
-#    Name: M Loki
-#    Level: 145
-#    Hp: 1215600
-#    BaseExp: 1
-#    JobExp: 1
-#    Attack: 1835
-#    Attack2: 444
-#    Defense: 15
-#    MagicDefense: 89
-#    Str: 76
-#    Agi: 66
-#    Vit: 90
-#    Int: 55
-#    Dex: 189
-#    Luk: 22
-#    AttackRange: 2
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Demihuman
-#    Element: Neutral
-#    ElementLevel: 1
-#    WalkSpeed: 175
-#    AttackDelay: 800
-#    AttackMotion: 750
-#    DamageMotion: 300
+  - Id: 2937
+    AegisName: M_LOKI
+    Name: M Loki
+    Level: 145
+    Hp: 1215600
+    BaseExp: 1
+    JobExp: 1
+    Attack: 1835
+    Attack2: 444
+    Defense: 15
+    MagicDefense: 89
+    Str: 76
+    Agi: 66
+    Vit: 90
+    Int: 55
+    Dex: 189
+    Luk: 22
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 175
+    AttackDelay: 800
+    AttackMotion: 750
+    DamageMotion: 300
   - Id: 2938
     AegisName: MM_MAGIC_SEAL
     Name: Magic Seal
@@ -74711,7 +75623,8 @@ Body:
         StealProtected: true
   - Id: 2988
     AegisName: XM_ANTONIO
-    Name: Wicked Vice Plant Manager
+#   Name: Wicked Vice Plant Manager
+    Name: Wicked Vice Plant Manage
     Level: 149
     Hp: 44
     Attack: 66
@@ -76278,7 +77191,8 @@ Body:
       IgnoreRanged: true
   - Id: 3039
     AegisName: B_MOROCC_1
-    Name: Blazing Morocc Reincarnation
+#   Name: Blazing Morocc Reincarnation
+    Name: Blazing Morocc Reincarna
     Level: 149
     Hp: 8000000
     BaseExp: 2855
@@ -76310,7 +77224,8 @@ Body:
       CanMove: true
   - Id: 3040
     AegisName: B_MOROCC_2
-    Name: Distorted Morocc Reincarnation
+#   Name: Distorted Morocc Reincarnation
+    Name: Distorted Morocc Reincar
     Level: 149
     Hp: 6400000
     BaseExp: 3311
@@ -76342,7 +77257,8 @@ Body:
       CanMove: true
   - Id: 3041
     AegisName: B_MOROCC_4
-    Name: Freezing Morocc Reincarnation
+#   Name: Freezing Morocc Reincarnation
+    Name: Freezing Morocc Reincarn
     Level: 149
     Hp: 7700000
     BaseExp: 2995
@@ -76492,14 +77408,6 @@ Body:
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-#  - Id: 3065
-#    AegisName: E_ICE_MINE
-#  - Id: 3066
-#    AegisName: SNAKE_NEWYEAR
-#  - Id: 3067
-#    AegisName: E_ORC_WOMAN
-#  - Id: 3068
-#    AegisName: E_PYTHON_SKIN
 #  - Id: 3062
 #    AegisName: GIANT_DEVIRUCHI
 #    Name: Giant Deviruchi
@@ -76578,6 +77486,14 @@ Body:
 #    ElementLevel: 1
 #    Modes:
 #      Detector: true
+#  - Id: 3065
+#    AegisName: E_ICE_MINE
+#  - Id: 3066
+#    AegisName: SNAKE_NEWYEAR
+#  - Id: 3067
+#    AegisName: E_ORC_WOMAN
+#  - Id: 3068
+#    AegisName: E_PYTHON_SKIN
   - Id: 3069
     AegisName: PERE1
     Name: Ferre
@@ -76857,162 +77773,369 @@ Body:
       - Item: Timeholder_Card
         Rate: 1
         StealProtected: true
-#  - Id: 3075
-#    AegisName: WA_TREASURE
-#  - Id: 3076
-#    AegisName: WA_MONSTER_1
-#  - Id: 3077
-#    AegisName: WA_MONSTER_2
-#  - Id: 3078
-#    AegisName: WA_MONSTER_3
-#  - Id: 3079
-#    AegisName: WA_MONSTER_4
-#  - Id: 3080
-#    AegisName: WA_MONSTER_5
-#  - Id: 3081
-#    AegisName: WA_MONSTER_6
-#  - Id: 3082
-#    AegisName: WA_MONSTER_7
-#  - Id: 3083
-#    AegisName: WA_MONSTER_8
-#  - Id: 3084
-#    AegisName: WA_MONSTER_9
-#  - Id: 3085
-#    AegisName: WA_MONSTER_10
-#  - Id: 3086
-#    AegisName: WA_MERCENARY
-#    Name: Wa Mercenary
-#    Level: 101
-#    Hp: 20099
-#    Attack: 545
-#    Attack2: 218
-#    Defense: 66
-#    MagicDefense: 36
-#    Str: 20
-#    Agi: 46
-#    Vit: 25
-#    Int: 35
-#    Dex: 64
-#    Luk: 30
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Demihuman
-#    Element: Neutral
-#    ElementLevel: 1
-#    WalkSpeed: 230
-#    AttackDelay: 1415
-#    AttackMotion: 792
-#  - Id: 3087
-#    AegisName: M_NYDHOG
-#    Name: M Nydhog
-#    Level: 160
-#    Hp: 215000
-#    JobExp: 1
-#    Attack: 1835
-#    Attack2: 444
-#    Defense: 15
-#    MagicDefense: 89
-#    Str: 76
-#    Agi: 66
-#    Vit: 90
-#    Int: 55
-#    Dex: 189
-#    Luk: 22
-#    AttackRange: 2
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Demihuman
-#    Element: Neutral
-#    ElementLevel: 1
-#    WalkSpeed: 175
-#    AttackDelay: 800
-#    AttackMotion: 750
-#    DamageMotion: 300
-#  - Id: 3088
-#    AegisName: MM_BRINARANEA_BABY
-#    Name: Mm Brinaranea Baby
-#    Level: 155
-#    Hp: 155600
-#    JobExp: 1
-#    Attack: 1
-#    Attack2: 1
-#    Defense: 80
-#    MagicDefense: 200
-#    Str: 16
-#    Agi: 26
-#    Vit: 30
-#    Int: 115
-#    Dex: 79
-#    Luk: 5
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Large
-#    Race: Formless
-#    Element: Neutral
-#    ElementLevel: 1
-#    WalkSpeed: 300
-#    AttackDelay: 1000
-#    AttackMotion: 1000
-#    DamageMotion: 1000
-#  - Id: 3089
-#    AegisName: MM_LOCO_KASA
-#    Name: Mm Loco Kasa
-#    Level: 155
-#    Hp: 185000
-#    Attack: 3266
-#    Attack2: 666
-#    Defense: 30
-#    MagicDefense: 30
-#    Str: 88
-#    Agi: 44
-#    Vit: 88
-#    Int: 21
-#    Dex: 95
-#    Luk: 44
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Large
-#    Race: Demon
-#    Element: Dark
-#    ElementLevel: 2
-#    WalkSpeed: 200
-#    AttackDelay: 1500
-#    AttackMotion: 600
-#    DamageMotion: 500
-#    Modes:
-#      Detector: true
-#  - Id: 3090
-#    AegisName: MM_LOCO_SALAMANDER
-#    Name: Mm Loco Salamander
-#    Level: 155
-#    Hp: 217650
-#    Attack: 2678
-#    Attack2: 1257
-#    Defense: 121
-#    MagicDefense: 36
-#    Str: 60
-#    Agi: 103
-#    Vit: 45
-#    Int: 35
-#    Dex: 172
-#    Luk: 15
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Demon
-#    Element: Dark
-#    ElementLevel: 2
-#    WalkSpeed: 200
-#    AttackDelay: 1000
-#    AttackMotion: 500
-#    DamageMotion: 600
-#    Modes:
-#      Detector: true
+  - Id: 3075
+    AegisName: WA_TREASURE
+    Name: Treasure
+    Level: 1
+    Hp: 3
+    Attack: 1
+    Attack2: 1
+    Defense: 100
+    Dex: 1199
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Holy
+    ElementLevel: 1
+    Class: Battlefield
+    Modes:
+      NoRandomWalk: true
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
+    Drops:
+      - Item: Vit_Dish06
+        Rate: 3000
+      - Item: Agi_Dish06
+        Rate: 3000
+      - Item: Int_Dish06
+        Rate: 3000
+      - Item: Dex_Dish06
+        Rate: 3000
+      - Item: Yggdrasilberry
+        Rate: 1000
+  - Id: 3076
+    AegisName: WA_MONSTER_1
+    Name: Go!
+    Level: 100
+    Hp: 10000
+    Defense: 64
+    MagicDefense: 50
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Angel
+    Element: Holy
+    ElementLevel: 3
+    WalkSpeed: 300
+    AttackDelay: 1332
+    AttackMotion: 288
+    DamageMotion: 384
+    Ai: 25
+    Modes:
+      NoRandomWalk: true
+  - Id: 3077
+    AegisName: WA_MONSTER_2
+    Name: Go!
+    Level: 100
+    Hp: 10500
+    Defense: 64
+    MagicDefense: 50
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Angel
+    Element: Holy
+    ElementLevel: 3
+    WalkSpeed: 300
+    AttackDelay: 1332
+    AttackMotion: 288
+    Ai: 25
+    Modes:
+      NoRandomWalk: true
+  - Id: 3078
+    AegisName: WA_MONSTER_3
+    Name: Go!
+    Level: 105
+    Hp: 11000
+    Defense: 106
+    MagicDefense: 84
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Angel
+    Element: Holy
+    ElementLevel: 3
+    WalkSpeed: 160
+    AttackDelay: 1025
+    AttackMotion: 720
+    Ai: 25
+    Modes:
+      NoRandomWalk: true
+  - Id: 3079
+    AegisName: WA_MONSTER_4
+    Name: Go!
+    Level: 120
+    Hp: 12000
+    Defense: 66
+    MagicDefense: 95
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Angel
+    Element: Holy
+    ElementLevel: 3
+    WalkSpeed: 160
+    AttackDelay: 1025
+    AttackMotion: 720
+    Ai: 25
+    Modes:
+      NoRandomWalk: true
+  - Id: 3080
+    AegisName: WA_MONSTER_5
+    Name: Go!
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 160
+    AttackDelay: 1025
+    AttackMotion: 720
+    Ai: 25
+    Modes:
+      NoRandomWalk: true
+  - Id: 3081
+    AegisName: WA_MONSTER_6
+    Name: Go!
+    Level: 125
+    Hp: 14000
+    Defense: 80
+    MagicDefense: 89
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Angel
+    Element: Holy
+    ElementLevel: 3
+    WalkSpeed: 160
+    AttackDelay: 1025
+    AttackMotion: 720
+    Ai: 25
+    Modes:
+      NoRandomWalk: true
+  - Id: 3082
+    AegisName: WA_MONSTER_7
+    Name: Go!
+    Level: 131
+    Hp: 15000
+    Defense: 85
+    MagicDefense: 92
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Angel
+    Element: Holy
+    ElementLevel: 2
+    WalkSpeed: 160
+    AttackDelay: 1025
+    AttackMotion: 720
+    Ai: 25
+    Modes:
+      NoRandomWalk: true
+  - Id: 3083
+    AegisName: WA_MONSTER_8
+    Name: Go!
+    Level: 131
+    Hp: 18000
+    Defense: 80
+    MagicDefense: 86
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Angel
+    Element: Holy
+    ElementLevel: 2
+    WalkSpeed: 160
+    AttackDelay: 1025
+    AttackMotion: 720
+    Ai: 25
+    Modes:
+      NoRandomWalk: true
+  - Id: 3084
+    AegisName: WA_MONSTER_9
+    Name: Go!
+    Level: 135
+    Hp: 20000
+    Defense: 196
+    MagicDefense: 96
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Angel
+    Element: Holy
+    ElementLevel: 3
+    WalkSpeed: 160
+    AttackDelay: 1025
+    AttackMotion: 720
+    Ai: 25
+    Modes:
+      NoRandomWalk: true
+  - Id: 3085
+    AegisName: WA_MONSTER_10
+    Name: Go!
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 160
+    AttackDelay: 1025
+    AttackMotion: 720
+    Ai: 25
+    Modes:
+      NoRandomWalk: true
+  - Id: 3086
+    AegisName: WA_MERCENARY
+    Name: Mercenary
+    Level: 101
+    Hp: 20099
+    Attack: 557
+    Attack2: 775
+    Defense: 66
+    MagicDefense: 36
+    Str: 20
+    Agi: 46
+    Vit: 25
+    Int: 35
+    Dex: 64
+    Luk: 30
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 230
+    AttackDelay: 1415
+    AttackMotion: 792
+    Ai: 24
+    Class: Battlefield
+    Modes:
+      Aggressive: true
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+  - Id: 3087
+    AegisName: M_NYDHOG
+    Name: Guardian's Alter Ego
+    Level: 160
+    Hp: 215000
+    JobExp: 1
+    Attack: 1835
+    Attack2: 444
+    Defense: 15
+    MagicDefense: 89
+    Str: 76
+    Agi: 66
+    Vit: 90
+    Int: 55
+    Dex: 189
+    Luk: 22
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 175
+    AttackDelay: 800
+    AttackMotion: 750
+    DamageMotion: 300
+  - Id: 3088
+    AegisName: MM_BRINARANEA_BABY
+    Name: Frost Spider
+    Level: 155
+    Hp: 155600
+    JobExp: 1
+    Attack: 1
+    Attack2: 1
+    Defense: 80
+    MagicDefense: 200
+    Str: 16
+    Agi: 26
+    Vit: 30
+    Int: 115
+    Dex: 79
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1000
+    AttackMotion: 1000
+    DamageMotion: 1000
+    Ai: 04
+    Modes:
+      Detector: true
+  - Id: 3089
+    AegisName: MM_LOCO_KASA
+    Name: Frenzied Kasa
+    Level: 155
+    Hp: 185000
+    Attack: 3266
+    Attack2: 666
+    Defense: 30
+    MagicDefense: 30
+    Str: 88
+    Agi: 44
+    Vit: 88
+    Int: 21
+    Dex: 95
+    Luk: 44
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 1500
+    AttackMotion: 600
+    DamageMotion: 500
+    Ai: 21
+    Class: Boss
+  - Id: 3090
+    AegisName: MM_LOCO_SALAMANDER
+    Name: Mad Salamander
+    JapaneseName: Loco Salamander
+    Level: 155
+    Hp: 217650
+    Attack: 2678
+    Attack2: 1257
+    Defense: 121
+    MagicDefense: 36
+    Str: 60
+    Agi: 103
+    Vit: 45
+    Int: 35
+    Dex: 172
+    Luk: 15
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 500
+    DamageMotion: 600
+    Ai: 21
+    Class: Boss
   - Id: 3091
     AegisName: MM_BRINARANEA
     Name: Brinaranea
@@ -77039,6 +78162,7 @@ Body:
     AttackDelay: 1020
     AttackMotion: 500
     DamageMotion: 768
+    Ai: 10
     Class: Boss
     Drops:
       - Item: Brinaranea_Card
@@ -77070,6 +78194,7 @@ Body:
     AttackDelay: 608
     AttackMotion: 408
     DamageMotion: 336
+    Ai: 10
     Class: Boss
     Drops:
       - Item: Muspellskoll_Card
@@ -77150,42 +78275,44 @@ Body:
 #      IgnoreMisc: true
 #      IgnoreRanged: true
 #      Detector: true
-#  - Id: 3096
-#    AegisName: MM_MOROCC_KID
-#    Name: Mm Morocc Kid
-#    Level: 175
-#    Hp: 80000000
-#    Attack: 4980
-#    Attack2: 209
-#    Defense: 158
-#    MagicDefense: 134
-#    Str: 90
-#    Agi: 122
-#    Vit: 7
-#    Int: 87
-#    Dex: 287
-#    Luk: 36
-#    AttackRange: 3
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Small
-#    Race: Demon
-#    Element: Holy
-#    ElementLevel: 3
-#    WalkSpeed: 200
-#    AttackDelay: 1000
-#    AttackMotion: 460
-#    DamageMotion: 350
-#    Class: Boss
-#    Modes:
-#      Mvp: true
-#    Drops:
-#      - Item: M_Morocc_Card
-#        Rate: 1
-#        StealProtected: true
+  - Id: 3096
+    AegisName: MM_MOROCC_KID
+    Name: Demigod
+    Level: 175
+    Hp: 80000000
+    Attack: 4980
+    Attack2: 209
+    Defense: 158
+    MagicDefense: 134
+    Str: 90
+    Agi: 122
+    Vit: 7
+    Int: 87
+    Dex: 287
+    Luk: 36
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Demon
+    Element: Holy
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 460
+    DamageMotion: 350
+    Ai: 10
+    Class: Boss
+    Modes:
+      CanMove: true
+      Mvp: true
+    Drops:
+      - Item: M_Morocc_Card
+        Rate: 1
+        StealProtected: true
   - Id: 3097
     AegisName: MM_MOROCC_ADT
-    Name: Despair God Morocc
+    Name: Despair God Morroc
     Level: 175
     Hp: 120000000
     Attack: 5523
@@ -77209,69 +78336,74 @@ Body:
     AttackDelay: 750
     AttackMotion: 510
     DamageMotion: 500
+    Ai: 10
     Class: Boss
     Drops:
       - Item: M_Morocc_Card
         Rate: 1
         StealProtected: true
-#  - Id: 3098
-#    AegisName: MM_MOROCC_ORIGIN
-#    Name: Mm Morocc Origin
-#    Level: 160
-#    Hp: 3258000
-#    Attack: 6177
-#    Attack2: 40
-#    Defense: 351
-#    MagicDefense: 212
-#    Str: 195
-#    Agi: 35
-#    Vit: 5
-#    Int: 36
-#    Dex: 355
-#    Luk: 7
-#    AttackRange: 3
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Large
-#    Race: Demon
-#    Element: Dark
-#    ElementLevel: 4
-#    WalkSpeed: 350
-#    AttackDelay: 2000
-#    AttackMotion: 750
-#    DamageMotion: 750
-#    Class: Boss
-#    Modes:
-#      Mvp: true
-#  - Id: 3099
-#    AegisName: MM_MOROCC_REST
-#    Name: Mm Morocc Rest
-#    Level: 160
-#    Hp: 1450000
-#    Attack: 2963
-#    Attack2: 67
-#    Defense: 112
-#    MagicDefense: 98
-#    Str: 110
-#    Agi: 98
-#    Vit: 13
-#    Int: 48
-#    Dex: 271
-#    Luk: 9
-#    AttackRange: 3
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Large
-#    Race: Demon
-#    Element: Dark
-#    ElementLevel: 4
-#    WalkSpeed: 200
-#    AttackDelay: 500
-#    AttackMotion: 510
-#    DamageMotion: 350
-#    Class: Boss
-#    Modes:
-#      Mvp: true
+  - Id: 3098
+    AegisName: MM_MOROCC_ORIGIN
+    Name: Morroc of the Genesis
+    Level: 160
+    Hp: 3258000
+    Attack: 6177
+    Attack2: 40
+    Defense: 351
+    MagicDefense: 212
+    Str: 195
+    Agi: 35
+    Vit: 5
+    Int: 36
+    Dex: 355
+    Luk: 7
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Dark
+    ElementLevel: 4
+    WalkSpeed: 350
+    AttackDelay: 2000
+    AttackMotion: 750
+    DamageMotion: 750
+    Ai: 10
+    Class: Boss
+    Modes:
+      CanMove: true
+      Mvp: true
+  - Id: 3099
+    AegisName: MM_MOROCC_REST
+    Name: Morroc of the Sabbath
+    Level: 160
+    Hp: 1450000
+    Attack: 2963
+    Attack2: 67
+    Defense: 112
+    MagicDefense: 98
+    Str: 110
+    Agi: 98
+    Vit: 13
+    Int: 48
+    Dex: 271
+    Luk: 9
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Dark
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 500
+    AttackMotion: 510
+    DamageMotion: 350
+    Ai: 10
+    Class: Boss
+    Modes:
+      CanMove: true
+      Mvp: true
 #  - Id: 3100
 #    AegisName: MM_MANA_BLACK
 #    Name: Mm Mana Black
@@ -77298,7 +78430,7 @@ Body:
 #      IgnoreRanged: true
   - Id: 3101
     AegisName: MM_MANA_WHITE
-    Name: Mana White
+    Name: Mana of White
     Level: 1
     Hp: 30
     Attack: 1
@@ -77392,68 +78524,76 @@ Body:
 #      IgnoreMelee: true
 #      IgnoreMisc: true
 #      IgnoreRanged: true
-#  - Id: 3105
-#    AegisName: MM_GB_MOROCC_1
-#    Name: Mm Gb Morocc 1
-#    Level: 149
-#    Hp: 5000000
-#    Attack: 1901
-#    Attack2: 145
-#    Defense: 199
-#    MagicDefense: 35
-#    Str: 126
-#    Agi: 91
-#    Vit: 63
-#    Int: 61
-#    Dex: 114
-#    Luk: 37
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Large
-#    Race: Angel
-#    Element: Fire
-#    ElementLevel: 2
-#    WalkSpeed: 110
-#    AttackDelay: 576
-#    AttackMotion: 480
-#    DamageMotion: 432
-#    Class: Boss
-#    Drops:
-#      - Item: Demon_God's_Apostle_Ahat_Card
-#        Rate: 1
-#        StealProtected: true
-#  - Id: 3106
-#    AegisName: MM_GB_MOROCC_4
-#    Name: Mm Gb Morocc 4
-#    Level: 149
-#    Hp: 5000000
-#    Attack: 1235
-#    Attack2: 599
-#    Defense: 109
-#    MagicDefense: 54
-#    Str: 114
-#    Agi: 88
-#    Vit: 62
-#    Int: 97
-#    Dex: 164
-#    Luk: 43
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Demon
-#    Element: Ghost
-#    ElementLevel: 3
-#    WalkSpeed: 150
-#    AttackDelay: 1536
-#    AttackMotion: 648
-#    DamageMotion: 300
-#    Class: Boss
-#    Drops:
-#      - Item: Demon_God's_Apostle_Shnaim_Card
-#        Rate: 1
-#        StealProtected: true
+  - Id: 3105
+    AegisName: MM_GB_MOROCC_1
+    Name: Demon God's Apostle Aha
+    Level: 149
+    Hp: 5000000
+    Attack: 1901
+    Attack2: 145
+    Defense: 199
+    MagicDefense: 35
+    Str: 126
+    Agi: 91
+    Vit: 63
+    Int: 61
+    Dex: 114
+    Luk: 37
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Angel
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 110
+    AttackDelay: 576
+    AttackMotion: 480
+    DamageMotion: 432
+    Ai: 10
+    Class: Boss
+    Modes:
+      CanMove: true
+      Mvp: true
+    Drops:
+      - Item: Demon_God's_Apostle_Ahat_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3106
+    AegisName: MM_GB_MOROCC_4
+    Name: Demon God's Apostle Shn
+    Level: 149
+    Hp: 5000000
+    Attack: 1235
+    Attack2: 599
+    Defense: 109
+    MagicDefense: 54
+    Str: 114
+    Agi: 88
+    Vit: 62
+    Int: 97
+    Dex: 164
+    Luk: 43
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Ghost
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1536
+    AttackMotion: 648
+    DamageMotion: 300
+    Ai: 10
+    Class: Boss
+    Modes:
+      CanMove: true
+      Mvp: true
+    Drops:
+      - Item: Demon_God's_Apostle_Shnaim_Card
+        Rate: 1
+        StealProtected: true
 #  - Id: 3107
 #    AegisName: E_EASTER_BUNNY
 #    Name: Easter Bunny
@@ -81658,7 +82798,7 @@ Body:
 #  - Id: 3278
 #    AegisName: MH_DIMIK_4
 #  - Id: 3279
-#    AegisName: MH_DIMIK_2
+#    AegisName: MH_DIMIK_1
 #  - Id: 3280
 #    AegisName: MH_DIMIK_3
 #  - Id: 3281
@@ -81710,7 +82850,7 @@ Body:
 #  - Id: 3304
 #    AegisName: PAD_MUSPELHEIM
 #  - Id: 3305
-#    AegisName: PAD_ZAEROG
+#    AegisName: PAD_ZEROG
 #  - Id: 3306
 #    AegisName: PAD_TAMADORA
 #  - Id: 3307
@@ -81867,120 +83007,2642 @@ Body:
 #    AegisName: WANDERING_SOUL
 #  - Id: 3383
 #    AegisName: ANGRY_PENGUIN
-#  - Id: 3384
-#    AegisName: MIN_PORING
-#  - Id: 3385
-#    AegisName: MIN_LUNATIC
-#  - Id: 3386
-#    AegisName: MIN_FABRE
-#  - Id: 3387
-#    AegisName: MIN_PICKY
-#  - Id: 3388
-#    AegisName: MIN_CONDOR
-#  - Id: 3389
-#    AegisName: MIN_WILOW
-#  - Id: 3390
-#    AegisName: MIN_SPORE
-#  - Id: 3391
-#    AegisName: MIN_POPORING
-#  - Id: 3392
-#    AegisName: MIN_SMOKIE
-#  - Id: 3393
-#    AegisName: MIN_DOKEBI
-#  - Id: 3394
-#    AegisName: MIN_BIGFOOT
-#  - Id: 3395
-#    AegisName: MIN_WORM_TAIL
-#  - Id: 3396
-#    AegisName: MIN_WOLF
-#  - Id: 3397
-#    AegisName: MIN_SNAKE
-#  - Id: 3398
-#    AegisName: MIN_ANACONDAQ
-#  - Id: 3399
-#    AegisName: MIN_MARIN
-#  - Id: 3400
-#    AegisName: MIN_MUKA
-#  - Id: 3401
-#    AegisName: MIN_PECOPECO
-#  - Id: 3402
-#    AegisName: MIN_DENIRO
-#  - Id: 3403
-#    AegisName: MIN_PIERE
-#  - Id: 3404
-#    AegisName: MIN_ANDRE
-#  - Id: 3405
-#    AegisName: MIN_GOLEM
-#  - Id: 3406
-#    AegisName: MIN_SCORPION
-#  - Id: 3407
-#    AegisName: MIN_CHONCHON
-#  - Id: 3408
-#    AegisName: MIN_METALLER
-#  - Id: 3409
-#    AegisName: MIN_SAND_MAN
-#  - Id: 3410
-#    AegisName: MIN_RAGGLER
-#  - Id: 3411
-#    AegisName: MIN_DRAGON_TAIL
-#  - Id: 3412
-#    AegisName: MIN_GREEN_IGUANA
-#  - Id: 3413
-#    AegisName: MIN_SEE_OTTER
-#  - Id: 3414
-#    AegisName: MIN_GALAPAGO
-#  - Id: 3415
-#    AegisName: MIN_FUR_SEAL
-#  - Id: 3416
-#    AegisName: MIN_ALLIGATOR
-#  - Id: 3417
-#    AegisName: MIN_MEGALODON
-#  - Id: 3418
-#    AegisName: MIN_TRI_JOINT
-#  - Id: 3419
-#    AegisName: MIN_MEGALITH
-#  - Id: 3420
-#    AegisName: MIN_DRYAD
-#  - Id: 3421
-#    AegisName: MIN_TOAD
-#  - Id: 3422
-#    AegisName: MIN_VAGABOND_WOLF
-#  - Id: 3423
-#    AegisName: MIN_VOCAL
-#  - Id: 3424
-#    AegisName: MIN_ECLIPSE
-#  - Id: 3425
-#    AegisName: MIN_CHIMERA
-#  - Id: 3426
-#    AegisName: MIN_EDDGA
-#  - Id: 3427
-#    AegisName: MIN_OSIRIS
-#  - Id: 3428
-#    AegisName: MIN_PHREEONI
-#  - Id: 3429
-#    AegisName: MIN_ORK_HERO
-#  - Id: 3430
-#    AegisName: MIN_TAO_GUNKA
-#  - Id: 3431
-#    AegisName: MIN_G_RODA_FROG
-#  - Id: 3432
-#    AegisName: MIN_G_WOLF
-#  - Id: 3433
-#    AegisName: MIN_G_ROCKER
-#  - Id: 3434
-#    AegisName: MIN_G_LUNATIC
-#  - Id: 3435
-#    AegisName: MIN_G_GARGOYLE
-#  - Id: 3436
-#    AegisName: MIN_G_BIGFOOT
-#  - Id: 3437
-#    AegisName: MIN_G_ANCIENT_MUMMY
-#  - Id: 3438
-#    AegisName: MIN_G_SAND_MAN
-#  - Id: 3439
-#    AegisName: MIN_G_HIGH_ORC
-#  - Id: 3440
-#    AegisName: MIN_G_MEGALITH
+  - Id: 3384
+    AegisName: MIN_PORING
+    Name: Poring
+    Level: 100
+    Hp: 25000
+    BaseExp: 1200
+    JobExp: 1200
+    Attack: 794
+    Attack2: 67
+    Defense: 146
+    MagicDefense: 5
+    Str: 108
+    Agi: 49
+    Vit: 68
+    Int: 34
+    Dex: 119
+    Luk: 24
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 02
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 20
+        StealProtected: true
+  - Id: 3385
+    AegisName: MIN_LUNATIC
+    Name: Lunatic
+    Level: 100
+    Hp: 25000
+    BaseExp: 1200
+    JobExp: 1200
+    Attack: 600
+    Attack2: 1
+    Defense: 147
+    Str: 109
+    Agi: 50
+    Vit: 69
+    Int: 35
+    Dex: 120
+    Luk: 25
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 1456
+    AttackMotion: 456
+    DamageMotion: 336
+    Ai: 01
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Clover
+        Rate: 7000
+      - Item: Feather
+        Rate: 3000
+      - Item: Pierrot_Nose
+        Rate: 4
+      - Item: Apple
+        Rate: 1000
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Carrot
+        Rate: 3000
+      - Item: Rainbow_Carrot
+        Rate: 20
+      - Item: Lunatic_Card
+        Rate: 20
+        StealProtected: true
+  - Id: 3386
+    AegisName: MIN_FABRE
+    Name: Fabre
+    Level: 100
+    Hp: 25000
+    BaseExp: 1200
+    JobExp: 1200
+    Attack: 600
+    Attack2: 3
+    Defense: 148
+    Str: 110
+    Agi: 51
+    Vit: 70
+    Int: 36
+    Dex: 121
+    Luk: 26
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 01
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Fluff
+        Rate: 7000
+      - Item: Feather
+        Rate: 1000
+      - Item: Club_
+        Rate: 80
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Green_Herb
+        Rate: 3000
+      - Item: Clover
+        Rate: 1000
+      - Item: Club
+        Rate: 200
+      - Item: Fabre_Card
+        Rate: 20
+        StealProtected: true
+  - Id: 3387
+    AegisName: MIN_PICKY
+    Name: Picky
+    Level: 100
+    Hp: 25000
+    BaseExp: 1200
+    JobExp: 1200
+    Attack: 600
+    Attack2: 1
+    Defense: 149
+    MagicDefense: 3
+    Str: 111
+    Agi: 52
+    Vit: 71
+    Int: 37
+    Dex: 122
+    Luk: 27
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Fire
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 988
+    AttackMotion: 288
+    DamageMotion: 168
+    Ai: 01
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Feather_Of_Birds
+        Rate: 7000
+      - Item: Feather
+        Rate: 1000
+      - Item: Cotton_Shirt_
+        Rate: 200
+      - Item: Red_Herb
+        Rate: 1000
+      - Item: Milk
+        Rate: 1000
+      - Item: Yellow_Gemstone
+        Rate: 60
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Picky_Card
+        Rate: 20
+        StealProtected: true
+  - Id: 3388
+    AegisName: MIN_CONDOR
+    Name: Condor
+    Level: 101
+    Hp: 40000
+    BaseExp: 1300
+    JobExp: 1350
+    Attack: 610
+    Attack2: 6
+    Defense: 150
+    MagicDefense: 5
+    Str: 112
+    Agi: 53
+    Vit: 72
+    Int: 38
+    Dex: 123
+    Luk: 28
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Wind
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 1148
+    AttackMotion: 648
+    DamageMotion: 480
+    Ai: 03
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Talon
+        Rate: 8000
+      - Item: Bow_
+        Rate: 100
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Arrow
+        Rate: 5000
+      - Item: Meat
+        Rate: 400
+      - Item: Feather_Of_Birds
+        Rate: 3000
+      - Item: Orange
+        Rate: 600
+      - Item: Condor_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3389
+    AegisName: MIN_WILOW
+    Name: Willow
+    Level: 101
+    Hp: 40000
+    BaseExp: 1350
+    JobExp: 1300
+    Attack: 610
+    Attack2: 5
+    Defense: 151
+    MagicDefense: 2
+    Str: 113
+    Agi: 54
+    Vit: 73
+    Int: 39
+    Dex: 124
+    Luk: 29
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 432
+    Ai: 01
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Tree_Root
+        Rate: 9000
+      - Item: Wooden_Block
+        Rate: 100
+      - Item: Resin
+        Rate: 2000
+      - Item: Sweet_Potato
+        Rate: 1000
+      - Item: Tree_Of_Archer_3
+        Rate: 3000
+      - Item: Tree_Of_Archer_2
+        Rate: 2000
+      - Item: Tree_Of_Archer_1
+        Rate: 1000
+      - Item: Wilow_Card
+        Rate: 10
+        StealProtected: true
+  - Id: 3390
+    AegisName: MIN_SPORE
+    Name: Spore
+    Level: 101
+    Hp: 40000
+    BaseExp: 1300
+    JobExp: 1350
+    Attack: 610
+    Attack2: 8
+    Defense: 152
+    MagicDefense: 10
+    Str: 114
+    Agi: 55
+    Vit: 74
+    Int: 40
+    Dex: 125
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 288
+    Ai: 01
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Mushroom_Spore
+        Rate: 8000
+      - Item: Red_Herb
+        Rate: 1000
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Spore_Doll
+        Rate: 10
+      - Item: Hat
+        Rate: 30
+      - Item: Poison_Spore
+        Rate: 10
+      - Item: Strawberry
+        Rate: 600
+      - Item: Spore_Card
+        Rate: 10
+        StealProtected: true
+  - Id: 3391
+    AegisName: MIN_POPORING
+    Name: Poporing
+    Level: 101
+    Hp: 40000
+    BaseExp: 1300
+    JobExp: 1350
+    Attack: 610
+    Attack2: 20
+    Defense: 153
+    MagicDefense: 17
+    Str: 115
+    Agi: 56
+    Vit: 75
+    Int: 41
+    Dex: 126
+    Luk: 31
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Poison
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 02
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Sticky_Mucus
+        Rate: 6000
+      - Item: Garlet
+        Rate: 1000
+      - Item: Green_Herb
+        Rate: 1000
+      - Item: Grape
+        Rate: 200
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Main_Gauche
+        Rate: 20
+      - Item: Apple
+        Rate: 125
+      - Item: Poporing_Card
+        Rate: 10
+        StealProtected: true
+  - Id: 3392
+    AegisName: MIN_SMOKIE
+    Name: Smokie
+    Level: 102
+    Hp: 55000
+    BaseExp: 1400
+    JobExp: 1500
+    Attack: 620
+    Attack2: 11
+    Defense: 154
+    Str: 116
+    Agi: 57
+    Vit: 76
+    Int: 42
+    Dex: 127
+    Luk: 32
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1576
+    AttackMotion: 576
+    DamageMotion: 420
+    Ai: 17
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Raccoon_Leaf
+        Rate: 2750
+      - Item: Animal's_Skin
+        Rate: 2750
+      - Item: Sweet_Potato
+        Rate: 400
+      - Item: Cat_Hairband
+        Rate: 1
+      - Item: Raccoondog_Doll
+        Rate: 1
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Bluish_Green_Jewel
+        Rate: 1
+      - Item: Smokie_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3393
+    AegisName: MIN_DOKEBI
+    Name: Dokebi
+    Level: 102
+    Hp: 55000
+    BaseExp: 1400
+    JobExp: 1500
+    Attack: 620
+    Attack2: 30
+    Defense: 155
+    MagicDefense: 20
+    Str: 117
+    Agi: 58
+    Vit: 77
+    Int: 43
+    Dex: 128
+    Luk: 33
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Demon
+    Element: Dark
+    ElementLevel: 1
+    WalkSpeed: 250
+    AttackDelay: 1156
+    AttackMotion: 456
+    DamageMotion: 384
+    Ai: 17
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Dokkaebi_Horn
+        Rate: 4500
+      - Item: Elunium_Stone
+        Rate: 75
+      - Item: Sword_Mace_
+        Rate: 1
+      - Item: Mighty_Staff
+        Rate: 1
+      - Item: Gold
+        Rate: 1
+      - Item: Horn_Protector
+        Rate: 5
+      - Item: Hammer_Of_Blacksmith
+        Rate: 3
+      - Item: Dokebi_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3394
+    AegisName: MIN_BIGFOOT
+    Name: Bigfoot
+    Level: 102
+    Hp: 55000
+    BaseExp: 1400
+    JobExp: 1500
+    Attack: 620
+    Attack2: 12
+    Defense: 156
+    MagicDefense: 7
+    Str: 118
+    Agi: 59
+    Vit: 78
+    Int: 44
+    Dex: 129
+    Luk: 34
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Brute
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1260
+    AttackMotion: 192
+    DamageMotion: 192
+    Ai: 17
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Bear's_Foot
+        Rate: 4500
+      - Item: Poo_Poo_Hat
+        Rate: 3
+      - Item: Animal's_Skin
+        Rate: 2500
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Sweet_Potato
+        Rate: 750
+      - Item: Honey
+        Rate: 225
+      - Item: Oridecon_Stone
+        Rate: 22
+      - Item: BigFoot_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3395
+    AegisName: MIN_WORM_TAIL
+    Name: Wormtail
+    Level: 102
+    Hp: 55000
+    BaseExp: 1400
+    JobExp: 1500
+    Attack: 620
+    Attack2: 5
+    Defense: 157
+    Str: 119
+    Agi: 60
+    Vit: 79
+    Int: 45
+    Dex: 130
+    Luk: 35
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1048
+    AttackMotion: 48
+    DamageMotion: 192
+    Ai: 17
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Yellow_Live
+        Rate: 30
+      - Item: Emveretarcon
+        Rate: 13
+      - Item: Pointed_Scale
+        Rate: 2750
+      - Item: Pike_
+        Rate: 15
+      - Item: Yellow_Herb
+        Rate: 35
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Green_Lace
+        Rate: 50
+      - Item: Worm_Tail_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3396
+    AegisName: MIN_WOLF
+    Name: Wolf
+    Level: 103
+    Hp: 70000
+    BaseExp: 1500
+    JobExp: 1650
+    Attack: 630
+    Attack2: 11
+    Defense: 158
+    MagicDefense: 3
+    Str: 120
+    Agi: 61
+    Vit: 80
+    Int: 46
+    Dex: 131
+    Luk: 36
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1054
+    AttackMotion: 504
+    DamageMotion: 432
+    Ai: 03
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Emveretarcon
+        Rate: 10
+      - Item: Claw_Of_Wolves
+        Rate: 4500
+      - Item: Mantle_
+        Rate: 5
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Monster's_Feed
+        Rate: 525
+      - Item: Animal's_Skin
+        Rate: 2750
+      - Item: Strawberry
+        Rate: 300
+      - Item: Wolf_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3397
+    AegisName: MIN_SNAKE
+    Name: Boa
+    Level: 103
+    Hp: 70000
+    BaseExp: 1500
+    JobExp: 1650
+    Attack: 630
+    Attack2: 5
+    Defense: 159
+    MagicDefense: 8
+    Str: 121
+    Agi: 62
+    Vit: 81
+    Int: 47
+    Dex: 132
+    Luk: 37
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1576
+    AttackMotion: 576
+    DamageMotion: 576
+    Ai: 01
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Scale_Of_Snakes
+        Rate: 8000
+      - Item: Katana_
+        Rate: 20
+      - Item: Red_Herb
+        Rate: 800
+      - Item: Emveretarcon
+        Rate: 100
+      - Item: Posionous_Canine
+        Rate: 800
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Strawberry
+        Rate: 3000
+      - Item: Snake_Card
+        Rate: 10
+        StealProtected: true
+  - Id: 3398
+    AegisName: MIN_ANACONDAQ
+    Name: Anacondaq
+    Level: 103
+    Hp: 70000
+    BaseExp: 1500
+    JobExp: 1650
+    Attack: 630
+    Attack2: 55
+    Defense: 160
+    Str: 122
+    Agi: 63
+    Vit: 82
+    Int: 48
+    Dex: 133
+    Luk: 38
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Poison
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1576
+    AttackMotion: 576
+    DamageMotion: 576
+    Ai: 17
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: White_Powder
+        Rate: 100
+      - Item: Posionous_Canine
+        Rate: 4500
+      - Item: Glaive_
+        Rate: 5
+      - Item: Scale_Of_Snakes
+        Rate: 750
+      - Item: Scales_Shell
+        Rate: 100
+      - Item: Yellow_Herb
+        Rate: 75
+      - Item: Oridecon_Stone
+        Rate: 25
+      - Item: Anacondaq_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3399
+    AegisName: MIN_MARIN
+    Name: Marin
+    Level: 103
+    Hp: 70000
+    BaseExp: 1500
+    JobExp: 1650
+    Attack: 630
+    Attack2: 14
+    Defense: 161
+    MagicDefense: 8
+    Str: 123
+    Agi: 64
+    Vit: 83
+    Int: 49
+    Dex: 134
+    Luk: 39
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 01
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Garlet
+        Rate: 1600
+      - Item: Sticky_Mucus
+        Rate: 750
+      - Item: Cold_Scroll_2_1
+        Rate: 50
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Blue_Herb
+        Rate: 38
+      - Item: Candy
+        Rate: 175
+      - Item: Poring_Hat
+        Rate: 1
+      - Item: Marin_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3400
+    AegisName: MIN_MUKA
+    Name: Muka
+    Level: 104
+    Hp: 85000
+    BaseExp: 1600
+    JobExp: 1800
+    Attack: 640
+    Attack2: 9
+    Defense: 162
+    Str: 124
+    Agi: 65
+    Vit: 84
+    Int: 50
+    Dex: 135
+    Luk: 40
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Plant
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1960
+    AttackMotion: 960
+    DamageMotion: 384
+    Ai: 01
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Yellow_Live
+        Rate: 35
+      - Item: Cactus_Needle
+        Rate: 4500
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Green_Herb
+        Rate: 200
+      - Item: Red_Herb
+        Rate: 500
+      - Item: Guisarme
+        Rate: 25
+      - Item: Iron_Ore
+        Rate: 125
+      - Item: Muka_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3401
+    AegisName: MIN_PECOPECO
+    Name: Peco Peco
+    Level: 104
+    Hp: 85000
+    BaseExp: 1600
+    JobExp: 1800
+    Attack: 640
+    Attack2: 7
+    Defense: 163
+    Str: 125
+    Agi: 66
+    Vit: 85
+    Int: 51
+    Dex: 136
+    Luk: 41
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Brute
+    Element: Fire
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1564
+    AttackMotion: 864
+    DamageMotion: 576
+    Ai: 03
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Bill_Of_Birds
+        Rate: 4500
+      - Item: Sandals_
+        Rate: 10
+      - Item: Yellow_Herb
+        Rate: 100
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Wand
+        Rate: 50
+      - Item: Orange
+        Rate: 500
+      - Item: Pecopeco_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3402
+    AegisName: MIN_DENIRO
+    Name: Deniro
+    Level: 104
+    Hp: 85000
+    BaseExp: 1600
+    JobExp: 1800
+    Attack: 640
+    Attack2: 16
+    Defense: 164
+    MagicDefense: 16
+    Str: 126
+    Agi: 67
+    Vit: 86
+    Int: 52
+    Dex: 137
+    Luk: 42
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 1288
+    AttackMotion: 288
+    DamageMotion: 576
+    Ai: 07
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Worm_Peelings
+        Rate: 4500
+      - Item: Garlet
+        Rate: 1500
+      - Item: Sticky_Mucus
+        Rate: 600
+      - Item: Boody_Red
+        Rate: 25
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Iron_Ore
+        Rate: 225
+      - Item: Elunium_Stone
+        Rate: 17
+      - Item: Andre_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3403
+    AegisName: MIN_PIERE
+    Name: Piere
+    Level: 104
+    Hp: 85000
+    BaseExp: 1600
+    JobExp: 1800
+    Attack: 640
+    Attack2: 20
+    Defense: 165
+    MagicDefense: 16
+    Str: 127
+    Agi: 68
+    Vit: 87
+    Int: 53
+    Dex: 138
+    Luk: 43
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1288
+    AttackMotion: 288
+    DamageMotion: 576
+    Ai: 07
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Worm_Peelings
+        Rate: 4500
+      - Item: Garlet
+        Rate: 550
+      - Item: Sticky_Mucus
+        Rate: 300
+      - Item: Wind_Of_Verdure
+        Rate: 15
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Iron_Ore
+        Rate: 200
+      - Item: Elunium_Stone
+        Rate: 16
+      - Item: Andre_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3404
+    AegisName: MIN_ANDRE
+    Name: Andre
+    Level: 105
+    Hp: 100000
+    BaseExp: 3000
+    JobExp: 1950
+    Attack: 660
+    Attack2: 21
+    Defense: 166
+    MagicDefense: 16
+    Str: 128
+    Agi: 69
+    Vit: 88
+    Int: 54
+    Dex: 139
+    Luk: 44
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1288
+    AttackMotion: 288
+    DamageMotion: 384
+    Ai: 07
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Worm_Peelings
+        Rate: 4500
+      - Item: Garlet
+        Rate: 500
+      - Item: Sticky_Mucus
+        Rate: 250
+      - Item: Yellow_Live
+        Rate: 25
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Iron_Ore
+        Rate: 175
+      - Item: Elunium_Stone
+        Rate: 14
+      - Item: Andre_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3405
+    AegisName: MIN_GOLEM
+    Name: Golem
+    Level: 105
+    Hp: 100000
+    BaseExp: 3000
+    JobExp: 1950
+    Attack: 660
+    Attack2: 25
+    Defense: 167
+    MagicDefense: 12
+    Str: 129
+    Agi: 70
+    Vit: 89
+    Int: 55
+    Dex: 140
+    Luk: 45
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    RaceGroups:
+      Golem: true
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 300
+    AttackDelay: 1608
+    AttackMotion: 816
+    DamageMotion: 396
+    Ai: 17
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Steel
+        Rate: 75
+      - Item: Stone_Heart
+        Rate: 4500
+      - Item: Zargon
+        Rate: 110
+      - Item: Elunium_Stone
+        Rate: 35
+      - Item: Siver_Guard
+        Rate: 3
+      - Item: Yellow_Gemstone
+        Rate: 100
+      - Item: Iron
+        Rate: 175
+      - Item: Golem_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3406
+    AegisName: MIN_SCORPION
+    Name: Scorpion
+    Level: 105
+    Hp: 100000
+    BaseExp: 3000
+    JobExp: 1950
+    Attack: 660
+    Attack2: 7
+    Defense: 168
+    MagicDefense: 5
+    Str: 130
+    Agi: 71
+    Vit: 90
+    Int: 56
+    Dex: 141
+    Luk: 46
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Fire
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1564
+    AttackMotion: 864
+    DamageMotion: 576
+    Ai: 19
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Boody_Red
+        Rate: 35
+      - Item: Scorpion's_Tail
+        Rate: 2750
+      - Item: Elunium_Stone
+        Rate: 29
+      - Item: Solid_Shell
+        Rate: 105
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Fine_Grit
+        Rate: 500
+      - Item: Lusty_Iron
+        Rate: 10
+      - Item: Scorpion_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3407
+    AegisName: MIN_CHONCHON
+    Name: Chonchon
+    Level: 105
+    Hp: 100000
+    BaseExp: 3000
+    JobExp: 1950
+    Attack: 660
+    Attack2: 3
+    Defense: 169
+    Str: 131
+    Agi: 72
+    Vit: 91
+    Int: 57
+    Dex: 142
+    Luk: 47
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Wind
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1076
+    AttackMotion: 576
+    DamageMotion: 480
+    Ai: 01
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Iron
+        Rate: 50
+      - Item: Shell
+        Rate: 7000
+      - Item: Jellopy
+        Rate: 2000
+      - Item: Cutter_
+        Rate: 50
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Chonchon_Doll
+        Rate: 6
+      - Item: Iron_Ore
+        Rate: 200
+      - Item: Chonchon_Card
+        Rate: 20
+        StealProtected: true
+  - Id: 3408
+    AegisName: MIN_METALLER
+    Name: Metaller
+    Level: 106
+    Hp: 115000
+    BaseExp: 4000
+    JobExp: 2100
+    Attack: 680
+    Attack2: 41
+    Defense: 170
+    MagicDefense: 12
+    Str: 132
+    Agi: 73
+    Vit: 92
+    Int: 58
+    Dex: 143
+    Luk: 48
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Insect
+    Element: Fire
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1708
+    AttackMotion: 1008
+    DamageMotion: 540
+    Ai: 07
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Boody_Red
+        Rate: 30
+      - Item: Grasshopper's_Leg
+        Rate: 3250
+      - Item: Scell
+        Rate: 200
+      - Item: Elunium_Stone
+        Rate: 25
+      - Item: Singing_Plant
+        Rate: 10
+      - Item: Shell
+        Rate: 1500
+      - Item: Guitar_Of_Passion
+        Rate: 5
+      - Item: Metaller_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3409
+    AegisName: MIN_SAND_MAN
+    Name: Sandman
+    Level: 106
+    Hp: 115000
+    BaseExp: 4000
+    JobExp: 2100
+    Attack: 680
+    Attack2: 56
+    Defense: 171
+    MagicDefense: 24
+    Str: 133
+    Agi: 74
+    Vit: 93
+    Int: 59
+    Dex: 144
+    Luk: 49
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Earth
+    ElementLevel: 3
+    WalkSpeed: 250
+    AttackDelay: 1672
+    AttackMotion: 720
+    DamageMotion: 288
+    Ai: 04
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Great_Nature
+        Rate: 18
+      - Item: Grit
+        Rate: 2668
+      - Item: Elunium_Stone
+        Rate: 59
+      - Item: Fine_Sand
+        Rate: 175
+      - Item: Sparkling_Dust
+        Rate: 100
+      - Item: Katar_Of_Thornbush
+        Rate: 1
+      - Item: Hypnotist's_Staff_
+        Rate: 3
+      - Item: Sand_Man_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3410
+    AegisName: MIN_RAGGLER
+    Name: Raggler
+    Level: 106
+    Hp: 115000
+    BaseExp: 4000
+    JobExp: 2100
+    Attack: 680
+    Attack2: 39
+    Defense: 172
+    MagicDefense: 10
+    Str: 134
+    Agi: 75
+    Vit: 94
+    Int: 60
+    Dex: 145
+    Luk: 50
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Wind
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 900
+    DamageMotion: 384
+    Ai: 21
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Cyfar
+        Rate: 1500
+      - Item: Feather_Of_Birds
+        Rate: 2500
+      - Item: Center_Potion
+        Rate: 100
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Wind_Of_Verdure
+        Rate: 45
+      - Item: Goggle_
+        Rate: 4
+      - Item: Oridecon_Stone
+        Rate: 16
+      - Item: Raggler_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3411
+    AegisName: MIN_DRAGON_TAIL
+    Name: Dragon Tail
+    Level: 106
+    Hp: 115000
+    BaseExp: 4000
+    JobExp: 2100
+    Attack: 680
+    Attack2: 35
+    Defense: 173
+    MagicDefense: 25
+    Str: 135
+    Agi: 76
+    Vit: 95
+    Int: 61
+    Dex: 146
+    Luk: 51
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Insect
+    Element: Wind
+    ElementLevel: 2
+    WalkSpeed: 175
+    AttackDelay: 862
+    AttackMotion: 534
+    DamageMotion: 312
+    Ai: 21
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Dragon_Fly_Wing
+        Rate: 2207
+      - Item: Round_Shell
+        Rate: 200
+      - Item: Solid_Shell
+        Rate: 400
+      - Item: Fancy_Flower
+        Rate: 4
+      - Item: Cap
+        Rate: 1
+      - Item: Dragon_Tail_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3412
+    AegisName: MIN_GREEN_IGUANA
+    Name: Grove
+    JapaneseName: Green Iguana
+    Level: 107
+    Hp: 130000
+    BaseExp: 5000
+    JobExp: 2250
+    Attack: 700
+    Attack2: 35
+    Defense: 174
+    MagicDefense: 18
+    Str: 136
+    Agi: 77
+    Vit: 96
+    Int: 62
+    Dex: 147
+    Luk: 52
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 1152
+    AttackMotion: 1152
+    DamageMotion: 480
+    Ai: 02
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Leaflet_Of_Aloe
+        Rate: 750
+      - Item: Reptile_Tongue
+        Rate: 500
+      - Item: Leaflet_Of_Hinal
+        Rate: 500
+      - Item: Green_Herb
+        Rate: 500
+      - Item: Monster's_Feed
+        Rate: 1000
+      - Item: Aloebera
+        Rate: 5
+      - Item: Melon
+        Rate: 250
+      - Item: Green_Iguana_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3413
+    AegisName: MIN_SEE_OTTER
+    Name: Sea Otter
+    Level: 107
+    Hp: 130000
+    BaseExp: 5000
+    JobExp: 2250
+    Attack: 700
+    Attack2: 42
+    Defense: 175
+    MagicDefense: 18
+    Str: 137
+    Agi: 78
+    Vit: 97
+    Int: 63
+    Dex: 148
+    Luk: 53
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 190
+    AttackDelay: 1132
+    AttackMotion: 583
+    DamageMotion: 532
+    Ai: 19
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Scarlet_Jewel
+        Rate: 75
+      - Item: Clam_Shell
+        Rate: 2750
+      - Item: Sea_Otter_Leather
+        Rate: 2183
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Blue_Jewel
+        Rate: 25
+      - Item: Glass_Bead
+        Rate: 325
+      - Item: Cyfar
+        Rate: 600
+      - Item: See_Otter_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3414
+    AegisName: MIN_GALAPAGO
+    Name: Galapago
+    Level: 107
+    Hp: 130000
+    BaseExp: 5000
+    JobExp: 2250
+    Attack: 700
+    Attack2: 35
+    Defense: 176
+    MagicDefense: 16
+    Str: 138
+    Agi: 79
+    Vit: 98
+    Int: 64
+    Dex: 149
+    Luk: 54
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 165
+    AttackDelay: 1430
+    AttackMotion: 1080
+    DamageMotion: 1080
+    Ai: 07
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Cyfar
+        Rate: 2668
+      - Item: Coconut_Fruit
+        Rate: 150
+      - Item: Yellow_Herb
+        Rate: 1750
+      - Item: Aloebera
+        Rate: 50
+      - Item: Melon
+        Rate: 150
+      - Item: Galapago_Cap
+        Rate: 1
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Galapago_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3415
+    AegisName: MIN_FUR_SEAL
+    Name: Seal
+    JapaneseName: Fur Seal
+    Level: 107
+    Hp: 130000
+    BaseExp: 5000
+    JobExp: 2250
+    Attack: 700
+    Attack2: 40
+    Defense: 177
+    MagicDefense: 16
+    Str: 139
+    Agi: 80
+    Vit: 99
+    Int: 65
+    Dex: 150
+    Luk: 55
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1612
+    AttackMotion: 622
+    DamageMotion: 583
+    Ai: 19
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Zargon
+        Rate: 2183
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Coat_
+        Rate: 3
+      - Item: Cyfar
+        Rate: 600
+      - Item: Guisarme_
+        Rate: 1
+      - Item: Panacea
+        Rate: 100
+      - Item: Glass_Bead
+        Rate: 60
+      - Item: Fur_Seal_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3416
+    AegisName: MIN_ALLIGATOR
+    Name: Alligator
+    Level: 108
+    Hp: 145000
+    BaseExp: 6000
+    JobExp: 2400
+    Attack: 720
+    Attack2: 37
+    Defense: 178
+    MagicDefense: 30
+    Str: 140
+    Agi: 81
+    Vit: 100
+    Int: 66
+    Dex: 151
+    Luk: 56
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1100
+    AttackMotion: 900
+    DamageMotion: 480
+    Ai: 17
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Zargon
+        Rate: 500
+      - Item: Worn_Out_Prison_Uniform
+        Rate: 300
+      - Item: Anolian_Skin
+        Rate: 1000
+      - Item: Seed_Of_Yggdrasil
+        Rate: 1
+      - Item: Oridecon_Stone
+        Rate: 65
+      - Item: Alligator_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3417
+    AegisName: MIN_MEGALODON
+    Name: Megalodon
+    Level: 108
+    Hp: 145000
+    BaseExp: 6000
+    JobExp: 2400
+    Attack: 720
+    Attack2: 32
+    Defense: 179
+    MagicDefense: 28
+    Str: 141
+    Agi: 82
+    Vit: 101
+    Int: 67
+    Dex: 152
+    Luk: 57
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 2492
+    AttackMotion: 792
+    DamageMotion: 432
+    Ai: 01
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Rotten_Scale
+        Rate: 2750
+      - Item: Skel_Bone
+        Rate: 750
+      - Item: Blue_Herb
+        Rate: 40
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Violet_Jewel
+        Rate: 5
+      - Item: Old_Blue_Box
+        Rate: 1
+      - Item: Rotten_Fish
+        Rate: 10
+      - Item: Megalodon_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3418
+    AegisName: MIN_TRI_JOINT
+    Name: Tri Joint
+    Level: 108
+    Hp: 145000
+    BaseExp: 6000
+    JobExp: 2400
+    Attack: 720
+    Attack2: 28
+    Defense: 180
+    MagicDefense: 5
+    Str: 142
+    Agi: 83
+    Vit: 102
+    Int: 68
+    Dex: 153
+    Luk: 58
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    RaceGroups:
+      Rockridge: true
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 860
+    AttackMotion: 660
+    DamageMotion: 624
+    Ai: 21
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Cyfar
+        Rate: 50
+      - Item: Solid_Shell
+        Rate: 190
+      - Item: Aloebera
+        Rate: 100
+      - Item: Yellow_Live
+        Rate: 80
+      - Item: Sparkling_Dust
+        Rate: 70
+      - Item: Elunium_Stone
+        Rate: 53
+      - Item: Tri_Joint_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3419
+    AegisName: MIN_MEGALITH
+    Name: Megalith
+    Level: 109
+    Hp: 160000
+    BaseExp: 7000
+    JobExp: 2600
+    Attack: 740
+    Attack2: 30
+    Defense: 181
+    MagicDefense: 18
+    Str: 143
+    Agi: 84
+    Vit: 103
+    Int: 69
+    Dex: 154
+    Luk: 59
+    AttackRange: 9
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 1332
+    AttackMotion: 1332
+    DamageMotion: 672
+    Ai: 10
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Zargon
+        Rate: 50
+      - Item: Stone
+        Rate: 500
+      - Item: Old_Violet_Box
+        Rate: 1
+      - Item: Elunium
+        Rate: 31
+      - Item: Elunium_Stone
+        Rate: 104
+      - Item: Megalith_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3420
+    AegisName: MIN_DRYAD
+    Name: Dryad
+    Level: 109
+    Hp: 160000
+    BaseExp: 7000
+    JobExp: 2600
+    Attack: 740
+    Attack2: 35
+    Defense: 182
+    MagicDefense: 8
+    Str: 144
+    Agi: 85
+    Vit: 104
+    Int: 70
+    Dex: 155
+    Luk: 60
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Earth
+    ElementLevel: 4
+    WalkSpeed: 170
+    AttackDelay: 950
+    AttackMotion: 2520
+    DamageMotion: 576
+    Ai: 04
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Tough_Vines
+        Rate: 2668
+      - Item: Great_Leaf
+        Rate: 500
+      - Item: Browny_Root
+        Rate: 1500
+      - Item: Pineapple
+        Rate: 150
+      - Item: Chemeti
+        Rate: 1
+      - Item: Centimental_Leaf
+        Rate: 5
+      - Item: Sharp_Leaf
+        Rate: 1500
+      - Item: Dryad_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3421
+    AegisName: MIN_TOAD
+    Name: Infinite Toad
+    Level: 105
+    Hp: 900000
+    BaseExp: 12000
+    JobExp: 15000
+    Attack: 1500
+    Attack2: 19
+    Defense: 24
+    MagicDefense: 6
+    Str: 32
+    Agi: 19
+    Vit: 27
+    Int: 10
+    Dex: 24
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Fish
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1236
+    AttackMotion: 336
+    DamageMotion: 432
+    Ai: 21
+    Modes:
+      Detector: true
+      Aggressive: true
+    Drops:
+      - Item: Big_Sis'_Ribbon
+        Rate: 25
+      - Item: Shattered_Rune
+        Rate: 10000
+      - Item: Bluish_Green_Jewel
+        Rate: 500
+      - Item: Light_Granule
+        Rate: 250
+      - Item: Alchol
+        Rate: 50
+      - Item: Detrimindexta
+        Rate: 50
+      - Item: Kiss_Of_Angel
+        Rate: 500
+      - Item: Min_Toad_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3422
+    AegisName: MIN_VAGABOND_WOLF
+    Name: Infinite Vagabond Wolf
+    Level: 105
+    Hp: 900000
+    BaseExp: 12000
+    JobExp: 15000
+    Attack: 1700
+    Attack2: 46
+    Defense: 102
+    MagicDefense: 51
+    Str: 72
+    Agi: 63
+    Vit: 55
+    Int: 29
+    Dex: 108
+    Luk: 15
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 1048
+    AttackMotion: 648
+    DamageMotion: 432
+    Ai: 21
+    Modes:
+      Detector: true
+      Aggressive: true
+    Drops:
+      - Item: Western_Grace
+        Rate: 100
+      - Item: Claw_Of_Wolves
+        Rate: 4000
+      - Item: Golden_Jewel
+        Rate: 750
+      - Item: Star_Dust_Blade
+        Rate: 50
+      - Item: Angel's_Warmth
+        Rate: 500
+      - Item: Light_Granule
+        Rate: 250
+      - Item: Shattered_Rune
+        Rate: 10000
+      - Item: Min_Vagabond_Wolf_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3423
+    AegisName: MIN_VOCAL
+    Name: Infinite Vocal
+    Level: 105
+    Hp: 900000
+    BaseExp: 12000
+    JobExp: 15000
+    Attack: 1600
+    Attack2: 11
+    Defense: 77
+    MagicDefense: 26
+    Str: 77
+    Agi: 26
+    Vit: 26
+    Int: 30
+    Dex: 53
+    Luk: 40
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Insect
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1080
+    AttackMotion: 648
+    DamageMotion: 480
+    Ai: 21
+    Modes:
+      Detector: true
+      Aggressive: true
+    Drops:
+      - Item: Oldman's_Romance
+        Rate: 25
+      - Item: Grasshopper's_Leg
+        Rate: 4000
+      - Item: Azure_Jewel
+        Rate: 500
+      - Item: Shattered_Rune
+        Rate: 10000
+      - Item: Angel's_Arrival
+        Rate: 500
+      - Item: Light_Granule
+        Rate: 250
+      - Item: Guitar_Of_Gentle_Breeze
+        Rate: 5
+      - Item: Min_Vocal_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3424
+    AegisName: MIN_ECLIPSE
+    Name: Infinite Eclipse
+    Level: 105
+    Hp: 900000
+    BaseExp: 12000
+    JobExp: 15000
+    Attack: 1400
+    Attack2: 20
+    Defense: 50
+    MagicDefense: 20
+    Str: 20
+    Agi: 28
+    Vit: 35
+    Int: 17
+    Dex: 27
+    Luk: 55
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 1456
+    AttackMotion: 456
+    DamageMotion: 336
+    Ai: 21
+    Modes:
+      Detector: true
+      Aggressive: true
+    Drops:
+      - Item: Fillet
+        Rate: 100
+      - Item: Shattered_Rune
+        Rate: 10000
+      - Item: White_Jewel
+        Rate: 600
+      - Item: Light_Granule
+        Rate: 250
+      - Item: Four_Leaf_Clover
+        Rate: 1
+      - Item: Rainbow_Carrot
+        Rate: 25
+      - Item: Angel's_Protection
+        Rate: 500
+      - Item: Min_Eclipse_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3425
+    AegisName: MIN_CHIMERA
+    Name: Infinite Chimera
+    Level: 105
+    Hp: 900000
+    BaseExp: 12000
+    JobExp: 15000
+    Attack: 1800
+    Attack2: 148
+    Defense: 159
+    MagicDefense: 10
+    Agi: 38
+    Vit: 110
+    Int: 88
+    Dex: 91
+    Luk: 85
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Brute
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 772
+    AttackMotion: 672
+    DamageMotion: 360
+    Ai: 21
+    Modes:
+      Detector: true
+      Aggressive: true
+    Drops:
+      - Item: Brigan
+        Rate: 2668
+      - Item: Slender_Snake
+        Rate: 1250
+      - Item: Shattered_Rune
+        Rate: 10000
+      - Item: War_Axe
+        Rate: 1
+      - Item: Citrine
+        Rate: 750
+      - Item: Great_Axe
+        Rate: 1
+      - Item: Oridecon
+        Rate: 80
+      - Item: Min_Chimera_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3426
+    AegisName: MIN_EDDGA
+    Name: Infinite Eddga
+    Level: 101
+    Hp: 1850000
+    BaseExp: 100000
+    JobExp: 100000
+    MvpExp: 100000
+    Attack: 1800
+    Attack2: 776
+    Defense: 166
+    MagicDefense: 70
+    Str: 92
+    Agi: 80
+    Vit: 103
+    Int: 66
+    Dex: 139
+    Luk: 85
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Brute
+    Element: Fire
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 872
+    AttackMotion: 1344
+    DamageMotion: 432
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Tiger's_Skin
+        Rate: 5000
+      - Item: Tiger_Footskin
+        Rate: 1000
+      - Item: Flame_Heart
+        Rate: 3000
+    Drops:
+      - Item: Fire_Brand
+        Rate: 75
+      - Item: Smoking_Pipe
+        Rate: 125
+      - Item: Shattered_Rune
+        Rate: 10000
+      - Item: Katar_Of_Raging_Blaze
+        Rate: 250
+      - Item: Tiger_Footskin
+        Rate: 400
+      - Item: Elunium
+        Rate: 1200
+      - Item: Krieg
+        Rate: 100
+      - Item: Min_Eddga_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3427
+    AegisName: MIN_OSIRIS
+    Name: Infinite Osiris
+    Level: 103
+    Hp: 2850000
+    BaseExp: 100000
+    JobExp: 100000
+    MvpExp: 100000
+    Attack: 1900
+    Attack2: 1503
+    Defense: 172
+    MagicDefense: 164
+    Str: 97
+    Agi: 99
+    Vit: 86
+    Int: 131
+    Dex: 165
+    Luk: 67
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 1072
+    AttackMotion: 672
+    DamageMotion: 384
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Old_Blue_Box
+        Rate: 4000
+      - Item: Seed_Of_Yggdrasil
+        Rate: 3000
+      - Item: Osiris_Doll
+        Rate: 500
+    Drops:
+      - Item: Old_Violet_Box
+        Rate: 1000
+      - Item: Assasin_Dagger
+        Rate: 75
+      - Item: Crown
+        Rate: 100
+      - Item: Jamadhar_
+        Rate: 300
+      - Item: Shattered_Rune
+        Rate: 10000
+      - Item: Spinx_Helm
+        Rate: 75
+      - Item: Cakram
+        Rate: 50
+      - Item: Min_Osiris_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3428
+    AegisName: MIN_PHREEONI
+    Name: Infinite Phreeoni
+    Level: 105
+    Hp: 4750000
+    BaseExp: 100000
+    JobExp: 100000
+    MvpExp: 100000
+    Attack: 2200
+    Attack2: 967
+    Defense: 269
+    MagicDefense: 98
+    Str: 88
+    Agi: 70
+    Vit: 112
+    Int: 87
+    Dex: 122
+    Luk: 71
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Brute
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 1020
+    AttackMotion: 1020
+    DamageMotion: 288
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Frozen_Heart
+        Rate: 500
+      - Item: Crystal_Jewel
+        Rate: 1000
+      - Item: Star_Crumb
+        Rate: 4000
+    Drops:
+      - Item: Thin_N'_Long_Tongue
+        Rate: 4850
+      - Item: Forturn_Sword
+        Rate: 250
+      - Item: Sucsamad
+        Rate: 75
+      - Item: Shattered_Rune
+        Rate: 10000
+      - Item: Mr_Scream
+        Rate: 150
+      - Item: Elunium
+        Rate: 1450
+      - Item: Weihna
+        Rate: 50
+      - Item: Min_Phreeoni_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3429
+    AegisName: MIN_ORK_HERO
+    Name: Infinite Orc Hero
+    Level: 107
+    Hp: 6650000
+    BaseExp: 100000
+    JobExp: 100000
+    MvpExp: 100000
+    Attack: 3000
+    Attack2: 441
+    Defense: 197
+    MagicDefense: 70
+    Str: 97
+    Agi: 82
+    Vit: 107
+    Int: 71
+    Dex: 144
+    Luk: 43
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demihuman
+    RaceGroups:
+      Clocktower: true
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1678
+    AttackMotion: 780
+    DamageMotion: 648
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Red_Jewel
+        Rate: 2000
+      - Item: Yggdrasilberry
+        Rate: 1500
+      - Item: Steel
+        Rate: 5000
+    Drops:
+      - Item: Voucher_Of_Orcish_Hero
+        Rate: 4850
+      - Item: Monkey_Circlet
+        Rate: 250
+      - Item: Right_Epsilon
+        Rate: 75
+      - Item: Shield_
+        Rate: 125
+      - Item: Orcish_Sword
+        Rate: 500
+      - Item: Shattered_Rune
+        Rate: 10000
+      - Item: Giant_Axe
+        Rate: 50
+      - Item: Min_Orc_Hero_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3430
+    AegisName: MIN_TAO_GUNKA
+    Name: Infinite Tao Gunka
+    Level: 109
+    Hp: 8550000
+    BaseExp: 200000
+    JobExp: 200000
+    MvpExp: 100000
+    Attack: 3400
+    Attack2: 1260
+    Defense: 404
+    MagicDefense: 143
+    Str: 135
+    Agi: 175
+    Vit: 98
+    Int: 110
+    Dex: 239
+    Luk: 66
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1020
+    AttackMotion: 288
+    DamageMotion: 144
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Oridecon
+        Rate: 6000
+      - Item: Old_Violet_Box
+        Rate: 3000
+      - Item: Blue_Potion
+        Rate: 6000
+    Drops:
+      - Item: Gemstone
+        Rate: 2425
+      - Item: Shattered_Rune
+        Rate: 10000
+      - Item: Golden_Jewel
+        Rate: 500
+      - Item: Binoculars
+        Rate: 200
+      - Item: White_Potion
+        Rate: 1500
+      - Item: Runstone_Rare
+        Rate: 100
+      - Item: Gemmed_Sallet_
+        Rate: 3
+      - Item: Min_Tao_Gunka_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3431
+    AegisName: MIN_G_RODA_FROG
+    Name: Roda Frog 
+    Level: 100
+    Hp: 100000
+    Attack: 632
+    Attack2: 892
+    Defense: 12
+    MagicDefense: 5
+    Str: 12
+    Agi: 6
+    Vit: 4
+    Dex: 14
+    Luk: 9
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Fish
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 2016
+    AttackMotion: 816
+    DamageMotion: 288
+    Ai: 02
+    Modes:
+      Detector: true
+      Aggressive: true
+  - Id: 3432
+    AegisName: MIN_G_WOLF
+    Name: Wolf 
+    Level: 100
+    Hp: 100000
+    Attack: 647
+    Attack2: 907
+    Defense: 55
+    MagicDefense: 3
+    Str: 27
+    Agi: 24
+    Vit: 30
+    Int: 15
+    Dex: 33
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1054
+    AttackMotion: 504
+    DamageMotion: 432
+    Ai: 02
+    Modes:
+      Detector: true
+      Aggressive: true
+  - Id: 3433
+    AegisName: MIN_G_ROCKER
+    Name: Rocker
+    Level: 100
+    Hp: 100000
+    Attack: 632
+    Attack2: 892
+    Defense: 16
+    MagicDefense: 3
+    Str: 12
+    Agi: 18
+    Vit: 8
+    Int: 10
+    Dex: 17
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Insect
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1864
+    AttackMotion: 864
+    DamageMotion: 540
+    Ai: 02
+    Modes:
+      Detector: true
+      Aggressive: true
+  - Id: 3434
+    AegisName: MIN_G_LUNATIC
+    Name: Lunatic
+    Level: 100
+    Hp: 10000
+    Attack: 630
+    Attack2: 690
+    Defense: 18
+    Str: 10
+    Agi: 3
+    Vit: 3
+    Dex: 8
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 1456
+    AttackMotion: 456
+    DamageMotion: 336
+    Ai: 02
+    Modes:
+      Detector: true
+      Aggressive: true
+  - Id: 3435
+    AegisName: MIN_G_GARGOYLE
+    Name: Gargoyle
+    Level: 100
+    Hp: 100000
+    Attack: 498
+    Attack2: 89
+    Defense: 98
+    MagicDefense: 43
+    Str: 100
+    Agi: 61
+    Vit: 60
+    Int: 57
+    Dex: 120
+    Luk: 70
+    AttackRange: 9
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Wind
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 1020
+    AttackMotion: 720
+    DamageMotion: 384
+    Ai: 05
+    Modes:
+      Detector: true
+      Aggressive: true
+  - Id: 3436
+    AegisName: MIN_G_BIGFOOT
+    Name: Bigfoot
+    Level: 100
+    Hp: 100000
+    Attack: 50
+    Attack2: 12
+    Defense: 55
+    MagicDefense: 7
+    Str: 18
+    Agi: 4
+    Vit: 7
+    Dex: 12
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Brute
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1260
+    AttackMotion: 192
+    DamageMotion: 192
+    Ai: 17
+    Modes:
+      Detector: true
+      Aggressive: true
+  - Id: 3437
+    AegisName: MIN_G_ANCIENT_MUMMY
+    Name: Ancient Mummy
+    Level: 100
+    Hp: 100000
+    Attack: 746
+    Attack2: 1006
+    Defense: 93
+    MagicDefense: 27
+    Str: 126
+    Agi: 57
+    Vit: 55
+    Int: 69
+    Dex: 78
+    Luk: 15
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 2
+    WalkSpeed: 175
+    AttackDelay: 1772
+    AttackMotion: 120
+    DamageMotion: 384
+    Ai: 21
+    Modes:
+      Detector: true
+      Aggressive: true
+  - Id: 3438
+    AegisName: MIN_G_SAND_MAN
+    Name: Sandman
+    Level: 100
+    Hp: 100000
+    Attack: 664
+    Attack2: 924
+    Defense: 126
+    MagicDefense: 25
+    Str: 44
+    Agi: 8
+    Vit: 55
+    Int: 15
+    Dex: 34
+    Luk: 25
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Earth
+    ElementLevel: 3
+    WalkSpeed: 250
+    AttackDelay: 1672
+    AttackMotion: 720
+    DamageMotion: 288
+    Ai: 04
+    Modes:
+      Detector: true
+      Aggressive: true
+  - Id: 3439
+    AegisName: MIN_G_HIGH_ORC
+    Name: High Orc
+    Level: 100
+    Hp: 100000
+    Attack: 695
+    Attack2: 955
+    Defense: 101
+    MagicDefense: 45
+    Str: 75
+    Agi: 16
+    Vit: 40
+    Int: 31
+    Dex: 83
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demihuman
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1500
+    AttackMotion: 500
+    DamageMotion: 1000
+    Ai: 04
+    Modes:
+      Detector: true
+      Aggressive: true
+  - Id: 3440
+    AegisName: MIN_G_MEGALITH
+    Name: Megalith
+    Level: 100
+    Hp: 100000
+    Attack: 122
+    Attack2: 30
+    Defense: 66
+    MagicDefense: 18
+    Str: 57
+    Agi: 14
+    Vit: 35
+    Int: 10
+    Dex: 99
+    Luk: 3
+    AttackRange: 9
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 1332
+    AttackMotion: 1332
+    DamageMotion: 672
+    Ai: 21
+    Modes:
+      Detector: true
+      Aggressive: true
 #  - Id: 3441
 #    AegisName: B_DRACULA
   - Id: 3442
@@ -82901,7 +86563,8 @@ Body:
         RandomOptionGroup: AS_WEAPON_2
   - Id: 3481
     AegisName: AS_EVIL_SHADOW1
-    Name: Immortal Nightmare Shadow
+#   Name: Immortal Nightmare Shadow
+    Name: Immortal Nightmare Shado
     Level: 160
     Hp: 423330
     BaseExp: 14059
@@ -83287,8 +86950,55 @@ Body:
 #    AegisName: E_WILD_MOBSTER
 #  - Id: 3493
 #    AegisName: SYS_MSG_J
-#  - Id: 3494
-#    AegisName: IFN_POIRING
+  - Id: 3494
+    AegisName: IFN_POIRING
+    Name: Shining Poring
+    Level: 100
+    Hp: 15
+    Attack: 100
+    Attack2: 100
+    Str: 10
+    Agi: 10
+    Vit: 10
+    Int: 10
+    Luk: 10
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 100
+    AttackDelay: 0
+    AttackMotion: 0
+    DamageMotion: 0
+    Ai: 01
+    Class: Guardian
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
+    Drops:
+      - Item: Shattered_Rune
+        Rate: 3000
+      - Item: Shattered_Rune
+        Rate: 3000
+      - Item: Shattered_Rune
+        Rate: 3000
+      - Item: Shattered_Rune
+        Rate: 3000
+      - Item: Shattered_Rune
+        Rate: 3000
+      - Item: Shattered_Rune
+        Rate: 3000
+      - Item: Shattered_Rune
+        Rate: 3000
+      - Item: Shattered_Rune
+        Rate: 3000
+        StealProtected: true
   - Id: 3495
     AegisName: DR_EGGRING
     Name: Eggring
@@ -87664,6 +91374,30 @@ Body:
 #    AegisName: AB_MOB_206
 #  - Id: 20760
 #    AegisName: AB_MOB_207
+#  - Id: 20761
+#    AegisName: IRO_WORLD_EATER
+#  - Id: 20762
+#    AegisName: IRO_LIEF
+#  - Id: 20763
+#    AegisName: IRO_SKOLL
+#  - Id: 20764
+#    AegisName: IRO_MOON_SLAYER
+#  - Id: 20765
+#    AegisName: IRO_ATROCE
+#  - Id: 20766
+#    AegisName: IRO_ATROCE_H
+#  - Id: 20767
+#    AegisName: IRO_FROST_WOLF
+#  - Id: 20768
+#    AegisName: IRO_FROST_GIANT
+#  - Id: 20769
+#    AegisName: IRO_VALKYRIE
+#  - Id: 20770
+#    AegisName: IRO_DRAUGR
+#  - Id: 20771
+#    AegisName: IRO_FROST_WOLF2
+#  - Id: 20772
+#    AegisName: IRO_LIEF_H
 #  - Id: 20773
 #    AegisName: EMPATHIZER
 #  - Id: 20774
@@ -87786,14 +91520,106 @@ Body:
 #    AegisName: 4JOB_R_FALCON
 #  - Id: 20833
 #    AegisName: 4JOB_WORG
-#  - Id: 20834
-#    AegisName: MEISTER_ABR1
-#  - Id: 20835
-#    AegisName: MEISTER_ABR2
-#  - Id: 20836
-#    AegisName: MEISTER_ABR3
-#  - Id: 20837
-#    AegisName: MEISTER_ABR4
+  - Id: 20834
+    AegisName: ABR_BATTLE_WARIOR
+    Name: ABR Battle Warrior
+    Level: 200
+    Hp: 20000
+    Defense: 200
+    MagicDefense: 40
+    Str: 10
+    Agi: 10
+    Vit: 10
+    Int: 10
+    Dex: 10
+    Luk: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 500
+    DamageMotion: 300
+    Ai: 20
+  - Id: 20835
+    AegisName: ABR_DUAL_CANNON
+    Name: ABR Duel Cannon
+    Level: 200
+    Hp: 20000
+    Defense: 200
+    MagicDefense: 40
+    Str: 10
+    Agi: 10
+    Vit: 10
+    Int: 10
+    Dex: 10
+    Luk: 10
+    AttackRange: 6
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 500
+    DamageMotion: 300
+    Ai: 20
+  - Id: 20836
+    AegisName: ABR_MOTHER_NET
+    Name: ABR Mother Net
+    Level: 200
+    Hp: 20000
+    Defense: 200
+    MagicDefense: 40
+    Str: 10
+    Agi: 10
+    Vit: 10
+    Int: 10
+    Dex: 10
+    Luk: 10
+    AttackRange: 6
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 500
+    DamageMotion: 300
+    Ai: 20
+  - Id: 20837
+    AegisName: ABR_INFINITY
+    Name: ABR Infinity
+    Level: 200
+    Hp: 20000
+    Defense: 200
+    MagicDefense: 40
+    Str: 10
+    Agi: 10
+    Vit: 10
+    Int: 10
+    Dex: 10
+    Luk: 10
+    AttackRange: 6
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 500
+    DamageMotion: 300
+    Ai: 20
 #  - Id: 20838
 #    AegisName: ELEMETAL_MASTER_S1
 #  - Id: 20839
@@ -87814,14 +91640,106 @@ Body:
 #    AegisName: MD_HIDDEN_GROUND01
 #  - Id: 20847
 #    AegisName: MD_HIDDEN_GROUND02
-#  - Id: 20848
-#    AegisName: SUMMON_WOODENWARRIOR
-#  - Id: 20849
-#    AegisName: SUMMON_WOODEN_FAIRY
-#  - Id: 20850
-#    AegisName: SUMMON_CREEPER
-#  - Id: 20851
-#    AegisName: SUMMON_HELLTREE
+  - Id: 20848
+    AegisName: SUMMON_WOODENWARRIOR
+    Name: Wooden Warrior
+    Level: 200
+    Hp: 20000
+    Defense: 200
+    MagicDefense: 40
+    Str: 10
+    Agi: 10
+    Vit: 10
+    Int: 10
+    Dex: 10
+    Luk: 10
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 500
+    DamageMotion: 300
+    Ai: 20
+  - Id: 20849
+    AegisName: SUMMON_WOODEN_FAIRY
+    Name: Wooden Fairy
+    Level: 200
+    Hp: 20000
+    Defense: 200
+    MagicDefense: 40
+    Str: 10
+    Agi: 10
+    Vit: 10
+    Int: 10
+    Dex: 10
+    Luk: 10
+    AttackRange: 5
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 500
+    DamageMotion: 300
+    Ai: 20
+  - Id: 20850
+    AegisName: SUMMON_CREEPER
+    Name: Creeper
+    Level: 200
+    Hp: 20000
+    Defense: 200
+    MagicDefense: 40
+    Str: 10
+    Agi: 10
+    Vit: 10
+    Int: 10
+    Dex: 10
+    Luk: 10
+    AttackRange: 5
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 500
+    DamageMotion: 300
+    Ai: 20
+  - Id: 20851
+    AegisName: SUMMON_HELLTREE
+    Name: Hell Tree
+    Level: 200
+    Hp: 20000
+    Defense: 200
+    MagicDefense: 40
+    Str: 10
+    Agi: 10
+    Vit: 10
+    Int: 10
+    Dex: 10
+    Luk: 10
+    AttackRange: 5
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 500
+    DamageMotion: 300
+    Ai: 20
 #  - Id: 20856
 #    AegisName: MD_N_ARENA_1
 #  - Id: 20857
@@ -87883,17 +91801,17 @@ Body:
 #  - Id: 20885
 #    AegisName: G_ILL_PHEN
 #  - Id: 20886
-#    AegisName: MD_Airboat_Tree
+#    AegisName: MD_AIRBOAT_TREE
 #  - Id: 20887
-#    AegisName: MD_Airboat_Poring
+#    AegisName: MD_AIRBOAT_PORING
 #  - Id: 20888
-#    AegisName: MD_Airboat_Worm
+#    AegisName: MD_AIRBOAT_WORM
 #  - Id: 20889
-#    AegisName: MD_Airboat_LEECH
+#    AegisName: MD_AIRBOAT_LEECH
 #  - Id: 20890
-#    AegisName: MD_Airboat_Mos
+#    AegisName: MD_AIRBOAT_MOS
 #  - Id: 20891
-#    AegisName: MD_Airboat_Boss
+#    AegisName: MD_AIRBOAT_BOSS
 #  - Id: 20892
 #    AegisName: MD_SAKRAY
 #  - Id: 20893
@@ -88236,11 +92154,11 @@ Body:
 #  - Id: 21060
 #    AegisName: G_VENEDI
 #  - Id: 21061
-#    AegisName: MD_Airboat_Boss2
+#    AegisName: MD_AIRBOAT_BOSS2
 #  - Id: 21062
-#    AegisName: MD_Airboat_Boss3
+#    AegisName: MD_AIRBOAT_BOSS3
 #  - Id: 21063
-#    AegisName: MD_Airboat_Boss4
+#    AegisName: MD_AIRBOAT_BOSS4
 #  - Id: 21064
 #    AegisName: S_DUMMY_100_SMALL
 #  - Id: 21065
@@ -88697,6 +92615,72 @@ Body:
 #    AegisName: KIEL_D_01_2
 #  - Id: 21291
 #    AegisName: CAPOO_COLLABO_TW
+#  - Id: 21292
+#    AegisName: EP18_ARMED_VILLAGER01
+#  - Id: 21293
+#    AegisName: EP18_ARMED_VILLAGER02
+#  - Id: 21294
+#    AegisName: EP18_ARMED_VILLAGER03
+#  - Id: 21295
+#    AegisName: EP18_ASH_TOAD
+#  - Id: 21296
+#    AegisName: EP18_RAKEHAND
+#  - Id: 21297
+#    AegisName: EP18_SPARK
+#  - Id: 21298
+#    AegisName: EP18_HOT_MOLAR
+#  - Id: 21299
+#    AegisName: EP18_VOLCARING
+#  - Id: 21300
+#    AegisName: EP18_LAVA_TOAD
+#  - Id: 21301
+#    AegisName: EP18_BURNING_FANG
+#  - Id: 21302
+#    AegisName: EP18_ASHHOPPER
+#  - Id: 21303
+#    AegisName: EP18_ASHRING
+#  - Id: 21304
+#    AegisName: EP18_GREY_WOLF
+#  - Id: 21305
+#    AegisName: EP18_TUMBLE_RING
+#  - Id: 21306
+#    AegisName: EP18_FIREWIND_KITE
+#  - Id: 21307
+#    AegisName: EP18_PHANTOM_WOLF
+#  - Id: 21308
+#    AegisName: EP18_MD_HEARTHUNTER_A
+#  - Id: 21309
+#    AegisName: EP18_MD_THOR_GUARD
+#  - Id: 21310
+#    AegisName: EP18_MD_GUARD_A
+#  - Id: 21311
+#    AegisName: EP18_MD_GUARD_B
+#  - Id: 21312
+#    AegisName: EP18_MD_HEARTHUNTER_R
+#  - Id: 21313
+#    AegisName: EP18_MD_HEARTHUNTER_F
+#  - Id: 21314
+#    AegisName: EP18_MD_SCHULANG
+#  - Id: 21315
+#    AegisName: EP18_MD_DEMI_FREYJA
+#  - Id: 21316
+#    AegisName: EP18_MD_SCHULANG_R
+#  - Id: 21317
+#    AegisName: EP18_MD_DEMI_FREYJA_R
+#  - Id: 21318
+#    AegisName: EP18_MD_SANARE_R
+#  - Id: 21319
+#    AegisName: EP18_MD_HEARTHUNTER_R2
+#  - Id: 21320
+#    AegisName: EP18_NPC_MARAM
+#  - Id: 21321
+#    AegisName: EP18_NPC_MIRIAM
+#  - Id: 21322
+#    AegisName: EP18_NPC_SUAD
+#  - Id: 21323
+#    AegisName: EP18_GREY_GOAT
+#  - Id: 21324
+#    AegisName: EP18_GREY_WOLF_BABY
 #  - Id: 21325
 #    AegisName: MD_T_MASTERING
 #  - Id: 21326
@@ -88767,6 +92751,10 @@ Body:
 #    AegisName: MD_T_BEELZEBUB
 #  - Id: 21359
 #    AegisName: MD_T_BEELZEBUB_
+#  - Id: 21360
+#    AegisName: EP18_MD_SCHULANG_L
+#  - Id: 21361
+#    AegisName: EP18_MD_DEMI_FREYJA_L
 #  - Id: 21362
 #    AegisName: SEASON_MOB_001
 #  - Id: 21363
@@ -88797,9 +92785,485 @@ Body:
 #    AegisName: SEASON_MOB_014
 #  - Id: 21376
 #    AegisName: SEASON_MOB_015
+#  - Id: 21377
+#    AegisName: EP18_MD_SANARE_L
+#  - Id: 21378
+#    AegisName: EP18_MD_HEARTHUNTER_L
+#  - Id: 21379
+#    AegisName: G_EP18_LAVA_TOAD
+#  - Id: 21380
+#    AegisName: G_EP18_HOT_MOLAR
+#  - Id: 21381
+#    AegisName: G_EP18_VOLCARING
 #  - Id: 21382
 #    AegisName: E_CHEAP_RAT
-#  - Id: 21999
+#  - Id: 21383
+#    AegisName: E_MAJORUROS_TW
+#  - Id: 21384
+#    AegisName: E_SWEETS_DROPS
+#  - Id: 21385
+#    AegisName: ANDRE_LARVA
+#  - Id: 21386
+#    AegisName: ILL_ANDRE
+#  - Id: 21387
+#    AegisName: ILL_SOLDIER_ANDR
+#  - Id: 21388
+#    AegisName: ILL_ANDRE_LARVA
+#  - Id: 21389
+#    AegisName: ILL_DENIRO
+#  - Id: 21390
+#    AegisName: ILL_PIERE
+#  - Id: 21391
+#    AegisName: ILL_ANT_EGG
+#  - Id: 21392
+#    AegisName: ILL_GIEARTH
+#  - Id: 21393
+#    AegisName: ILL_FARMILIAR
+#  - Id: 21394
+#    AegisName: ILL_VITATA
+#  - Id: 21395
+#    AegisName: ILL_MAYA
+#  - Id: 21396
+#    AegisName: SEASON_MOB_016
+#  - Id: 21397
+#    AegisName: SEASON_MOB_017
+#  - Id: 21398
+#    AegisName: SEASON_MOB_018
+#  - Id: 21399
+#    AegisName: SEASON_MOB_019
+#  - Id: 21400
+#    AegisName: SEASON_MOB_020
+#  - Id: 21401
+#    AegisName: SEASON_MOB_021
+#  - Id: 21402
+#    AegisName: SEASON_MOB_022
+#  - Id: 21403
+#    AegisName: SEASON_MOB_023
+#  - Id: 21404
+#    AegisName: SEASON_MOB_024
+#  - Id: 21405
+#    AegisName: SEASON_MOB_025
+#  - Id: 21406
+#    AegisName: SEASON_MOB_026
+#  - Id: 21407
+#    AegisName: SEASON_MOB_027
+#  - Id: 21408
+#    AegisName: SEASON_MOB_028
+#  - Id: 21409
+#    AegisName: SEASON_MOB_029
+#  - Id: 21410
+#    AegisName: SEASON_MOB_030
+#  - Id: 21411
+#    AegisName: SEASON_MOB_031
+#  - Id: 21412
+#    AegisName: SEASON_MOB_032
+#  - Id: 21413
+#    AegisName: SEASON_MOB_033
+#  - Id: 21414
+#    AegisName: SEASON_MOB_034
+#  - Id: 21415
+#    AegisName: SEASON_MOB_035
+#  - Id: 21416
+#    AegisName: SEASON_MOB_036
+#  - Id: 21417
+#    AegisName: SEASON_MOB_037
+#  - Id: 21418
+#    AegisName: SEASON_MOB_038
+#  - Id: 21419
+#    AegisName: SEASON_MOB_039
+#  - Id: 21420
+#    AegisName: SEASON_MOB_040
+#  - Id: 21421
+#    AegisName: SEASON_MOB_041
+#  - Id: 21422
+#    AegisName: SEASON_MOB_042
+#  - Id: 21423
+#    AegisName: SEASON_MOB_043
+#  - Id: 21424
+#    AegisName: SEASON_MOB_044
+#  - Id: 21425
+#    AegisName: SEASON_MOB_045
+#  - Id: 21426
+#    AegisName: SEASON_MOB_046
+#  - Id: 21427
+#    AegisName: SEASON_MOB_047
+#  - Id: 21428
+#    AegisName: SEASON_MOB_048
+#  - Id: 21429
+#    AegisName: SEASON_MOB_049
+#  - Id: 21430
+#    AegisName: SEASON_MOB_050
+#  - Id: 21431
+#    AegisName: G_ILL_ANDRE
+#  - Id: 21432
+#    AegisName: G_ILL_DENIRO
+#  - Id: 21433
+#    AegisName: G_ILL_PIERE
+#  - Id: 21435
+#    AegisName: G_ILL_VITATA
+#  - Id: 21436
+#    AegisName: PURIKU_CHA_TH
+#  - Id: 21437
+#    AegisName: E_ALICE_TW
+#  - Id: 21438
+#    AegisName: E_FARMILIAR_TW
+#  - Id: 21439
+#    AegisName: MD_OTARGET
+#  - Id: 21440
+#    AegisName: MD_XTARGET
+#  - Id: 21441
+#    AegisName: MD_HLGR_HEARTHUNTER
+#  - Id: 21442
+#    AegisName: MD_HLGR_BELLARE
+#  - Id: 21443
+#    AegisName: MD_HLGR_SANARE
+#  - Id: 21444
+#    AegisName: MD_NINJA_GHOST
+#  - Id: 21445
+#    AegisName: MD_HAPPY_CLOUD
+#  - Id: 21446
+#    AegisName: MD_MR_SEO
+#  - Id: 21447
+#    AegisName: MD_SOL
+#  - Id: 21448
+#    AegisName: MD_HO
+#  - Id: 21449
+#    AegisName: MD_SANGOON
+#  - Id: 21450
+#    AegisName: SEASON_MOB_051
+#  - Id: 21451
+#    AegisName: SEASON_MOB_052
+#  - Id: 21452
+#    AegisName: SEASON_MOB_053
+#  - Id: 21453
+#    AegisName: SEASON_MOB_054
+#  - Id: 21454
+#    AegisName: SEASON_MOB_055
+#  - Id: 21455
+#    AegisName: SEASON_MOB_056
+#  - Id: 21456
+#    AegisName: SEASON_MOB_057
+#  - Id: 21457
+#    AegisName: SEASON_MOB_058
+#  - Id: 21458
+#    AegisName: SEASON_MOB_059
+#  - Id: 21459
+#    AegisName: SEASON_MOB_060
+#  - Id: 21460
+#    AegisName: SEASON_MOB_061
+#  - Id: 21461
+#    AegisName: SEASON_MOB_062
+#  - Id: 21462
+#    AegisName: SEASON_MOB_063
+#  - Id: 21463
+#    AegisName: SEASON_MOB_064
+#  - Id: 21464
+#    AegisName: SEASON_MOB_065
+#  - Id: 21465
+#    AegisName: SEASON_MOB_066
+#  - Id: 21466
+#    AegisName: SEASON_MOB_067
+#  - Id: 21467
+#    AegisName: SEASON_MOB_068
+#  - Id: 21468
+#    AegisName: SEASON_MOB_069
+#  - Id: 21469
+#    AegisName: SEASON_MOB_070
+#  - Id: 21470
+#    AegisName: SEASON_MOB_071
+#  - Id: 21471
+#    AegisName: SEASON_MOB_072
+#  - Id: 21472
+#    AegisName: SEASON_MOB_073
+#  - Id: 21473
+#    AegisName: SEASON_MOB_074
+#  - Id: 21474
+#    AegisName: SEASON_MOB_075
+#  - Id: 21475
+#    AegisName: SEASON_MOB_076
+#  - Id: 21476
+#    AegisName: SEASON_MOB_077
+#  - Id: 21477
+#    AegisName: SEASON_MOB_078
+#  - Id: 21478
+#    AegisName: SEASON_MOB_079
+#  - Id: 21479
+#    AegisName: SEASON_MOB_080
+#  - Id: 21480
+#    AegisName: SEASON_MOB_081
+#  - Id: 21481
+#    AegisName: SEASON_MOB_082
+#  - Id: 21482
+#    AegisName: SEASON_MOB_083
+#  - Id: 21483
+#    AegisName: SEASON_MOB_084
+#  - Id: 21484
+#    AegisName: SEASON_MOB_085
+#  - Id: 21485
+#    AegisName: SEASON_MOB_086
+#  - Id: 21486
+#    AegisName: SEASON_MOB_087
+#  - Id: 21487
+#    AegisName: SEASON_MOB_088
+#  - Id: 21488
+#    AegisName: SEASON_MOB_089
+#  - Id: 21489
+#    AegisName: SEASON_MOB_090
+#  - Id: 21490
+#    AegisName: SEASON_MOB_091
+#  - Id: 21491
+#    AegisName: SEASON_MOB_092
+#  - Id: 21492
+#    AegisName: SEASON_MOB_093
+#  - Id: 21493
+#    AegisName: SEASON_MOB_094
+#  - Id: 21494
+#    AegisName: SEASON_MOB_095
+#  - Id: 21495
+#    AegisName: SEASON_MOB_096
+#  - Id: 21496
+#    AegisName: SEASON_MOB_097
+#  - Id: 21497
+#    AegisName: SEASON_MOB_098
+#  - Id: 21498
+#    AegisName: SEASON_MOB_099
+#  - Id: 21499
+#    AegisName: SEASON_MOB_100
+#  - Id: 21500
+#    AegisName: EDDGA2
+#  - Id: 21501
+#    AegisName: WILD_ROSE2
+#  - Id: 21502
+#    AegisName: BAPHOMET2
+#  - Id: 21503
+#    AegisName: SEASON_MOB_101
+#  - Id: 21504
+#    AegisName: SEASON_MOB_102
+#  - Id: 21505
+#    AegisName: SEASON_MOB_103
+#  - Id: 21506
+#    AegisName: SEASON_MOB_104
+#  - Id: 21507
+#    AegisName: SEASON_MOB_105
+#  - Id: 21508
+#    AegisName: SEASON_MOB_106
+#  - Id: 21513
+#    AegisName: EP19_NPC_IWIN
+#  - Id: 21514
+#    AegisName: EP19_NPC_IWIN_SN
+#  - Id: 21515
+#    AegisName: EP19_NPC_IWIN_SY
+#  - Id: 21516
+#    AegisName: EP19_NPC_IWIN_SB
+#  - Id: 21517
+#    AegisName: EP19_NPC_IWIN_SG
+#  - Id: 21518
+#    AegisName: EP19_NPC_IWIN_SR
+#  - Id: 21519
+#    AegisName: EP19_NPC_LEHAR
+#  - Id: 21520
+#    AegisName: EP19_LIMACINA
+#  - Id: 21521
+#    AegisName: EP19_UNFROST_FLOWER
+#  - Id: 21522
+#    AegisName: EP19_CALMARING
+#  - Id: 21523
+#    AegisName: EP19_ICE_STRAW
+#  - Id: 21524
+#    AegisName: EP19_SHINING_SEAWEED
+#  - Id: 21525
+#    AegisName: EP19_ICE_GANGU
+#  - Id: 21526
+#    AegisName: EP19_RGAN_A
+#  - Id: 21527
+#    AegisName: EP19_RGAN_B
+#  - Id: 21528
+#    AegisName: EP19_RGAN_C
+#  - Id: 21529
+#    AegisName: EP19_RGAN_D
+#  - Id: 21530
+#    AegisName: EP19_RGAN_E
+#  - Id: 21531
+#    AegisName: EP19_MD_AQUILA
+#  - Id: 21532
+#    AegisName: EP19_MD_JUNCEA
+#  - Id: 21533
+#    AegisName: EP19_MD_JUNCEA_S
+#  - Id: 21534
+#    AegisName: EP19_MD_RGAN_E
+#  - Id: 21535
+#    AegisName: EP19_MD_RGAN_D
+#  - Id: 21536
+#    AegisName: EP19_MD_HEARTHUNTER_AT
+#  - Id: 21537
+#    AegisName: EP19_LIMACINA_BOSS
+#  - Id: 21538
+#    AegisName: EP19_WASTED_RGAN_A
+#  - Id: 21539
+#    AegisName: EP19_WASTED_RGAN_C
+#  - Id: 21540
+#    AegisName: EP19_CAVE_CALMARING
+#  - Id: 21541
+#    AegisName: EP19_CAVE_FLOWER
+#  - Id: 21542
+#    AegisName: EP19_HALLUCIGENIA
+#  - Id: 21543
+#    AegisName: EP19_HALLUCIGENIA_BABY
+#  - Id: 21544
+#    AegisName: EP19_ONE_EYE_DOLLOCARIS
+#  - Id: 21545
+#    AegisName: EP19_DOLLOCARIS
+#  - Id: 21546
+#    AegisName: MD_COMMON
+#  - Id: 21547
+#    AegisName: M_INCREASE_SOIL
+#  - Id: 21548
+#    AegisName: ECO_CORNUS
+#  - Id: 21549
+#    AegisName: ECO_PINGUICULA
+#  - Id: 21550
+#    AegisName: ECO_HUNTER_FLY
+#  - Id: 21551
+#    AegisName: ECO_ROCKER
+#  - Id: 21552
+#    AegisName: ECO_SAVAGE
+#  - Id: 21553
+#    AegisName: ECO_FLORA
+#  - Id: 21554
+#    AegisName: ECO_HILL_WIND
+#  - Id: 21555
+#    AegisName: ECO_MISTRESS
+#  - Id: 21556
+#    AegisName: ECO_EXPLOSION
+#  - Id: 21557
+#    AegisName: ECO_DELETER
+#  - Id: 21558
+#    AegisName: ECO_JAKK
+#  - Id: 21559
+#    AegisName: ECO_LAVA_GOLEM
+#  - Id: 21560
+#    AegisName: ECO_MAJORUROS
+#  - Id: 21561
+#    AegisName: ECO_HYDRO
+#  - Id: 21562
+#    AegisName: ECO_ACIDUS
+#  - Id: 21563
+#    AegisName: ECO_DETALE
+#  - Id: 21564
+#    AegisName: ECO_ICE_TITAN
+#  - Id: 21565
+#    AegisName: ECO_SIROMA
+#  - Id: 21566
+#    AegisName: ECO_SNOWIER
+#  - Id: 21567
+#    AegisName: ECO_CENTIPEDE
+#  - Id: 21568
+#    AegisName: ECO_AQUA_ELEMENTAL
+#  - Id: 21569
+#    AegisName: ECO_ANGELGOLT
+#  - Id: 21570
+#    AegisName: ECO_RHYNCHO
+#  - Id: 21571
+#    AegisName: ECO_KTULLANUX
+#  - Id: 21572
+#    AegisName: ECO_ANCIENT_MUMMY
+#  - Id: 21573
+#    AegisName: ECO_LUDE
+#  - Id: 21574
+#    AegisName: ECO_RAGGED_ZOMBIE
+#  - Id: 21575
+#    AegisName: ECO_WRAITH
+#  - Id: 21576
+#    AegisName: ECO_FLAME_SKULL
+#  - Id: 21577
+#    AegisName: ECO_BANSHEE
+#  - Id: 21578
+#    AegisName: ECO_KNIGHT_OF_ABYSS
+#  - Id: 21579
+#    AegisName: ECO_LORD_OF_DEATH
+#  - Id: 21580
+#    AegisName: G_BIJOU
+#  - Id: 21587
+#    AegisName: NPC_EDDGA
+#  - Id: 21588
+#    AegisName: EP19_MD_AQUILA_B
+#  - Id: 21589
+#    AegisName: G_EP19_LIMACINA
+#  - Id: 21590
+#    AegisName: EP19_MD_RGAN_ES
+#  - Id: 21591
+#    AegisName: E_CRYSTAL_C
+#  - Id: 21592
+#    AegisName: E_CRYSTAL_B
+#  - Id: 21593
+#    AegisName: E_CRYSTAL_A
+#  - Id: 21594
+#    AegisName: E_CRYSTAL_S
+#  - Id: 21595
+#    AegisName: E_CRYSTAL_SS
+#  - Id: 21596
+#    AegisName: TIGER_MAFIA
+#  - Id: 21597
+#    AegisName: RED_RAIN
+#  - Id: 21598
+#    AegisName: CHEWY_TTEOK
+#  - Id: 21599
+#    AegisName: EP19_HEARTHUNTER_AT
+#  - Id: 21600
+#    AegisName: EP19_RE_RGAN_E
+#  - Id: 21601
+#    AegisName: EP19_ET_RGAN_D
+#  - Id: 22328
+#    AegisName: DESERT_WOLF_RAC
+#  - Id: 22329
+#    AegisName: ANOPHELES_RAC_MO
+#  - Id: 22330
+#    AegisName: GREMLIN_RAC
+#  - Id: 22331
+#    AegisName: BEHOLDER_RAC
+#  - Id: 22332
+#    AegisName: MQ_KIND_OF_BEETLE
+#  - Id: 22333
+#    AegisName: MQ_FRILLDORA
+#  - Id: 22334
+#    AegisName: MQ_SAND_MAN
+#  - Id: 22335
+#    AegisName: MQ_SAKRAY
+#  - Id: 22336
+#    AegisName: MQ_CRAB
+#  - Id: 22337
+#    AegisName: MQ_SHELLFISH
+#  - Id: 22338
+#    AegisName: MQ_GALAPAGO
+#  - Id: 22339
+#    AegisName: MQ_FUR_SEAL
+#  - Id: 22340
+#    AegisName: MQ_SEE_OTTER
+#  - Id: 22341
+#    AegisName: MQ_PIERE
+#  - Id: 22342
+#    AegisName: MQ_ANDRE
+#  - Id: 22343
+#    AegisName: MQ_DENIRO
+#  - Id: 22344
+#    AegisName: MQ_GOLEM
+#  - Id: 22345
+#    AegisName: MQ_DUSTINESS
+#  - Id: 22346
+#    AegisName: MQ_MANTIS
+#  - Id: 22347
+#    AegisName: MQ_GEOGRAPHER
+#  - Id: 22348
+#    AegisName: MQ_SCORPION_KING
+#  - Id: 22349
+#    AegisName: MQ_KIND_OF_BEETLE1
+#  - Id: 22350
+#    AegisName: MQ_KIND_OF_BEETLE2
+#  - Id: 22351
+#    AegisName: MQ_KIND_OF_BEETLE3
+#  - Id: 22352
+#    AegisName: MQ_KIND_OF_BEETLE4
+#  - Id: 31999
 #    AegisName: HUNTING_GID_DEFAULT
 #  - Id: 32000
 #    AegisName: MONSTER_2ND_END

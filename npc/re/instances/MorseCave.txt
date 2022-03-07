@@ -273,7 +273,7 @@ OnTouch:
 	if (getnpctimer(0) > 0)
 		end;
 	initnpctimer;
-	//disablenpc instance_npcname( strnpcinfo(0) );
+	//disablenpc();
 	hideonnpc instance_npcname( strnpcinfo(0) );
 	specialeffect EF_ICEWALL;
 	end;
@@ -380,7 +380,7 @@ OnInstanceInit:
 1@rev,34,120,0	script	#RZ Memorial Effect 1	HIDDEN_WARP_NPC,4,4,{
 	end;
 OnInstanceInit:
-	//disablenpc instance_npcname( strnpcinfo(0) );
+	//disablenpc();
 	hideonnpc instance_npcname( strnpcinfo(0) );
 	initnpctimer;
 	end;

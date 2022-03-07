@@ -70,7 +70,6 @@
 	packet( HEADER_ZC_ITEM_ENTRY, sizeof( struct PACKET_ZC_ITEM_ENTRY ) );
 	packet(0x009e,17);
 	parseable_packet(0x009f,6,clif_parse_TakeItem,2);
-	packet( additemType, sizeof( struct packet_additem ) );
 	packet(0x00a1,6);
 	parseable_packet(0x00a2,6,clif_parse_DropItem,2,4);
 	packet( inventorylistnormalType, -1 );
@@ -143,7 +142,6 @@
 	parseable_packet(0x00e6,3,clif_parse_TradeAck,2);
 	packet(0x00e7,3);
 	parseable_packet(0x00e8,8,clif_parse_TradeAddItem,2,4);
-	packet( tradeaddType, sizeof( struct PACKET_ZC_ADD_EXCHANGE_ITEM ) );
 	packet(0x00ea,5);
 	parseable_packet(0x00eb,2,clif_parse_TradeOk,0);
 	packet(0x00ec,3);
@@ -154,7 +152,6 @@
 	packet(0x00f1,2);
 	packet(0x00f2,6);
 	parseable_packet(0x00f3,8,clif_parse_MoveToKafra,2,4);
-	packet( storageaddType, sizeof( struct PACKET_ZC_ADD_ITEM_TO_STORE ) );
 	parseable_packet(0x00f5,8,clif_parse_MoveFromKafra,2,4);
 	packet(0x00f6,8);
 	parseable_packet(0x00f7,2,clif_parse_CloseKafra,0);
@@ -202,7 +199,6 @@
 	packet(0x0121,14);
 	packet( cartlistequipType, -1 );
 	packet( cartlistnormalType, -1 );
-	packet( cartaddType, sizeof( struct PACKET_ZC_ADD_ITEM_TO_CART ) );
 	packet(0x0125,8);
 	parseable_packet(0x0126,8,clif_parse_PutItemToCart,2,4);
 	parseable_packet(0x0127,8,clif_parse_GetItemFromCart,2,4);
@@ -414,7 +410,7 @@
 	packet(0x01fa,48);
 	packet(0x01fb,56);
 	packet(0x01fc,-1);
-	parseable_packet( HEADER_CZ_REQ_ITEMREPAIR, sizeof( struct PACKET_CZ_REQ_ITEMREPAIR ), clif_parse_RepairItem, 0 );
+	parseable_packet( HEADER_CZ_REQ_ITEMREPAIR1, sizeof( struct PACKET_CZ_REQ_ITEMREPAIR1 ), clif_parse_RepairItem, 0 );
 	packet(0x01fe,5);
 	packet(0x01ff,10);
 	packet(0x0200,26);
@@ -1104,7 +1100,6 @@
 	ack_packet(ZC_NOTIFY_BIND_ON_EQUIP,0x02d3,4,2);
 	packet(0x02d5,2);
 	parseable_packet(0x02d6,6,clif_parse_ViewPlayerEquip,2);
-	packet( viewequipackType, -1 );
 	parseable_packet(0x02d8,10,clif_parse_configuration,2,6);
 	packet(0x02d9,10);
 	packet(0x02da,3);
@@ -2221,7 +2216,6 @@
 	parseable_packet(0x09E8,11,clif_parse_Mail_refreshinbox,2,3); // CZ_OPEN_MAILBOX
 	parseable_packet(0x09E9,2,clif_parse_dull,0); // CZ_CLOSE_MAILBOX
 	parseable_packet(0x09EA,11,clif_parse_Mail_read,2,3); // CZ_REQ_READ_MAIL
-	packet(rodexread,-1); // ZC_ACK_READ_MAIL
 	parseable_packet(0x09EC,-1,clif_parse_Mail_send,2,4,28,52,60,62,64); // CZ_REQ_WRITE_MAIL
 	packet(0x09ED,3); // ZC_ACK_WRITE_MAIL
 	parseable_packet(0x09EE,11,clif_parse_Mail_refreshinbox,2,3); // CZ_REQ_NEXT_MAIL_LIST
@@ -2235,7 +2229,6 @@
 	packet(0x09F6,11); // ZC_ACK_DELETE_MAIL
 	parseable_packet(0x0A03,2,clif_parse_Mail_cancelwrite,0); // CZ_REQ_CANCEL_WRITE_MAIL
 	parseable_packet(0x0A04,6,clif_parse_Mail_setattach,2,4); // CZ_REQ_ADD_ITEM_TO_MAIL
-	packet( rodexadditem, sizeof( struct PACKET_ZC_ADD_ITEM_TO_MAIL ) ); // ZC_ACK_ADD_ITEM_TO_MAIL
 	parseable_packet(0x0A06,6,clif_parse_Mail_winopen,2,4); // CZ_REQ_REMOVE_ITEM_MAIL
 	packet(0x0A07,9); // ZC_ACK_REMOVE_ITEM_MAIL
 	parseable_packet(0x0A08,26,clif_parse_Mail_beginwrite,0); // CZ_REQ_OPEN_WRITE_MAIL
@@ -2273,6 +2266,11 @@
 	parseable_packet(0x0980,7,clif_parse_SelectCart,2,6); // CZ_SELECTCART
 #endif
 
+#if PACKETVER >= 20151104
+	parseable_packet( HEADER_CZ_REQ_STYLE_CHANGE, sizeof( PACKET_CZ_REQ_STYLE_CHANGE ), clif_parse_stylist_buy, 0 );
+	parseable_packet( HEADER_CZ_REQ_STYLE_CLOSE, sizeof( PACKET_CZ_REQ_STYLE_CLOSE ), clif_parse_stylist_close, 0 );
+#endif
+
 // 2016-03-02bRagexe
 #if PACKETVER >= 20160302
 	packet(0x0A51,34);
@@ -2292,6 +2290,11 @@
 // 2016-06-01aRagexe
 #if PACKETVER >= 20160601
 	packet(0x0A7D,-1);
+#endif
+
+#if PACKETVER_MAIN_NUM >= 20160601 || PACKETVER_RE_NUM >= 20160525 || defined(PACKETVER_ZERO)
+	parseable_packet( HEADER_CZ_LAPINEDDUKDDAK_CLOSE, sizeof( struct PACKET_CZ_LAPINEDDUKDDAK_CLOSE ), clif_parse_laphine_synthesis_close, 0 );
+	parseable_packet( HEADER_CZ_LAPINEDDUKDDAK_ACK, -1, clif_parse_laphine_synthesis, 0 );
 #endif
 
 // 2016-06-22aRagexeRE
@@ -2346,6 +2349,11 @@
 	parseable_packet(0x0ACE,4,clif_parse_equipswitch_request_single,0);
 #endif
 
+#if PACKETVER_MAIN_NUM >= 20170726 || PACKETVER_RE_NUM >= 20170621 || defined(PACKETVER_ZERO)
+	parseable_packet( HEADER_CZ_LAPINEUPGRADE_CLOSE, sizeof( struct PACKET_CZ_LAPINEUPGRADE_CLOSE ), clif_parse_laphine_upgrade_close, 0 );
+	parseable_packet( HEADER_CZ_LAPINEUPGRADE_MAKE_ITEM, sizeof( struct PACKET_CZ_LAPINEUPGRADE_MAKE_ITEM ), clif_parse_laphine_upgrade, 0 );
+#endif
+
 // 2017-08-30bRagexeRE
 #if PACKETVER >= 20170830
 	packet(0x0ACB,12);
@@ -2394,15 +2402,24 @@
 	packet(0x0ADD, 22);
 #endif
 
+#if PACKETVER >= 20180516
+	parseable_packet( HEADER_CZ_REQ_STYLE_CHANGE2, sizeof( PACKET_CZ_REQ_STYLE_CHANGE2 ), clif_parse_stylist_buy, 0 );
+#endif
+
 #if PACKETVER_MAIN_NUM >= 20181002 || PACKETVER_RE_NUM >= 20181002 || PACKETVER_ZERO_NUM >= 20181010
 	parseable_packet( 0x0B10, sizeof( struct PACKET_CZ_START_USE_SKILL ), clif_parse_StartUseSkillToId, 0 );
 	parseable_packet( 0x0B11, sizeof( struct PACKET_CZ_STOP_USE_SKILL ), clif_parse_StopUseSkillToId, 0 );
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
-	parseable_packet( 0x0B14, sizeof( struct PACKET_CZ_INVENTORY_EXPAND ), clif_parse_dull, 0 );
-	parseable_packet( 0x0B16, sizeof( struct PACKET_CZ_INVENTORY_EXPAND_CONFIRMED ), clif_parse_dull, 0 );
-	parseable_packet( 0x0B19, sizeof( struct PACKET_CZ_INVENTORY_EXPAND_REJECTED ), clif_parse_dull, 0 );
+	parseable_packet( HEADER_CZ_INVENTORY_EXPAND, sizeof( struct PACKET_CZ_INVENTORY_EXPAND ), clif_parse_inventory_expansion_request, 0 );
+	parseable_packet( HEADER_CZ_INVENTORY_EXPAND_CONFIRMED, sizeof( struct PACKET_CZ_INVENTORY_EXPAND_CONFIRMED ), clif_parse_inventory_expansion_confirm, 0 );
+	parseable_packet( HEADER_CZ_INVENTORY_EXPAND_REJECTED, sizeof( struct PACKET_CZ_INVENTORY_EXPAND_REJECTED ), clif_parse_inventory_expansion_reject, 0 );
+#endif
+
+#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+	parseable_packet( HEADER_CZ_NPC_BARTER_PURCHASE, -1, clif_parse_barter_buy, 0 );
+	parseable_packet( HEADER_CZ_NPC_BARTER_CLOSE, sizeof( struct PACKET_CZ_NPC_BARTER_CLOSE ), clif_parse_barter_close, 0 );
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20190227 || PACKETVER_RE_NUM >= 20190220 || PACKETVER_ZERO_NUM >= 20190220
@@ -2427,8 +2444,25 @@
 	parseable_packet( 0x0b4c, 2, clif_parse_dull, 0 );
 #endif
 
+#if PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106 || PACKETVER_ZERO_NUM >= 20191127
+	parseable_packet( HEADER_CZ_NPC_EXPANDED_BARTER_PURCHASE, -1, clif_parse_barter_extended_buy, 0 );
+	parseable_packet( HEADER_CZ_NPC_EXPANDED_BARTER_CLOSE, sizeof( struct PACKET_CZ_NPC_EXPANDED_BARTER_CLOSE ), clif_parse_barter_extended_close, 0 );
+#endif
+
 #if PACKETVER >= 20191224
 	parseable_packet( HEADER_CZ_SE_CASHSHOP_OPEN2, sizeof( struct PACKET_CZ_SE_CASHSHOP_OPEN2 ), clif_parse_cashshop_open_request, 0 );
+	parseable_packet( HEADER_CZ_REQ_ITEMREPAIR2, sizeof( struct PACKET_CZ_REQ_ITEMREPAIR2 ), clif_parse_RepairItem, 0 );
+#endif
+
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	parseable_packet( HEADER_CZ_UNCONFIRMED_TSTATUS_UP, sizeof( PACKET_CZ_UNCONFIRMED_TSTATUS_UP ), clif_parse_traitstatus_up, 0 );
+#endif
+
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20210818
+	parseable_packet( HEADER_CZ_CHECKNAME2, sizeof( struct PACKET_CZ_CHECKNAME2 ), clif_parse_Mail_Receiver_Check, 0 );
+	parseable_packet( HEADER_CZ_UNCONFIRMED_RODEX_RETURN, sizeof( struct PACKET_CZ_UNCONFIRMED_RODEX_RETURN ), clif_parse_Mail_return, 0 );
+	parseable_packet( HEADER_CZ_REQ_TAKEOFF_EQUIP_ALL, sizeof( struct PACKET_CZ_REQ_TAKEOFF_EQUIP_ALL ), clif_parse_unequipall, 0 );
+	parseable_packet( 0xb93, 12, clif_parse_dull, 0 );
 #endif
 
 #endif /* CLIF_PACKETDB_HPP */

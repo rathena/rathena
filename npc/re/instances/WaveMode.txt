@@ -1,0 +1,808 @@
+//===== rAthena Script =======================================
+//= Wave Mode
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//= Wave Mode Forest and Sky Instances
+//- Officially monsters can use their skills
+//    (NPC_SUMMONSLAVE, at least). NPC_EMOTION and
+//    NPC_EMOTION_ON have been blocked since it disrupts the
+//    walk system of the instance on rAthena.
+//- Note: The instance is currently disabled on KRO.
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+// Simple function to move the monster when idle.
+// Move the monster to the next coordinates + end the script on successful; kill the monster + return on failure
+// callfunc( "F_mobidle", <npc name + idle label>, <size coord>, <defined x array>, <x shift>,  <defined y array>, <defined spot-spot distance array> );
+function	script	F_mobidle	{
+	sleep2 1000;	// stop if no RID
+
+	.@game_id = getattachedrid();
+	.@dist_min = 300;
+	.@size = getarg(1);
+	.@dx = getarg(3);
+	getunitdata .@game_id, .@data;
+
+	for ( .@i = 0; .@i < .@size; .@i++ ) {
+		.@dist_to_spot[.@i] = distance( .@data[UMOB_X], .@data[UMOB_Y], (getelementofarray( getarg(2),.@i ) + .@dx), getelementofarray( getarg(4),.@i ) );
+		if (.@dist_min >= .@dist_to_spot[.@i]) {
+			.@dist_min = .@dist_to_spot[.@i];
+			.@index = .@i;
+		}
+	}
+
+	if (.@dist_min <= 1) {
+		.@index++;
+		if (.@index >= .@size) {
+			unitskilluseid .@game_id,301,1,.@game_id,1,false,41;	// SA_INSTANTDEATH
+			return;
+		}
+	}
+	else if (.@index < (.@size -1)) {
+		.@total[0] = .@dist_min + getelementofarray( getarg(5), .@index );
+		.@total[1] = .@dist_to_spot[.@index + 1] + getelementofarray( getarg(5), .@index+1 );
+		if (.@total[0] > .@total[1])
+			.@index = .@index + 1;
+	}
+
+	if (.@dist_to_spot[.@index] > 14) {
+		unitkill .@game_id;
+		end;
+	}
+	if (!.@data[UMOB_TARGETID]) {
+		unitwalk .@game_id, (getelementofarray( getarg(2),.@index ) + .@dx), getelementofarray( getarg(4),.@index );
+		sleep2 50;	// for now a delay between unitwalk and mob_setidleevent is needed
+	}
+	mob_setidleevent .@game_id, getarg(0);
+	end;
+}
+
+prontera,146,75,1	script	Zonda Rep#pron	4_F_ZONDAGIRL,{
+	.@player_name$ = strcharinfo(0);
+	getmapxy .@map_name$,.@x,.@y, BL_PC;
+
+	if (is_party_leader() == true) {
+		.@party_id = getcharid(1);
+		getpartymember .@party_id, 1;
+		getpartymember .@party_id, 2;
+		for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
+			if (isloggedin($@partymemberaid[.@i], $@partymembercid[.@i]) == 1)
+				.@count_online++;
+		}
+		.@menu_entry$ = "Request entry.";
+	}
+
+	mes "[Belka]";
+	mes "Welcome to Zonda, where innovation begins. What can I do for you?";
+	next;
+	switch( select( "Why are you here?", .@menu_entry$, "Enter ^6B9900<Wave Mode - Forest>^000000.", "Enter ^6B9900<Wave Mode - Sky>^000000.", "Cancel." ) ) {
+	case 1:
+		mes "[Belka]";
+		mes "We now offer a new service. Have you heard about the dimensional rifts?";
+		next;
+		mes "[Belka]";
+		mes "In case you haven't, many organizations and scientists study the rifts formed between dimensions.";
+		next;
+		mes "[Belka]";
+		mes "One of them is my company, Zonda, and after long, painstaking research...";
+		next;
+		mes "[Belka]";
+		mes "We've developed two different dimensional rifts that we call Wave Modes - Forest and Sky!";
+		next;
+		mes "[Belka]";
+		mes "Do you have any questions about Zonda's ambitious new project, Wave Mode?";
+		while(true) {
+			next;
+			switch( select( "About ^6B9900<Wave Mode - Forest>^000000", "About ^6B9900<Wave Mode - Sky>^000000", "No." ) ) {
+			case 1:
+				mes "[Belka]";
+				mes "The ^6B9900<Wave Mode - Forest>^000000";
+				mes "Introducing the first Wave Mode service, Zonda's objective is to work with your party members to keep monster waves from reaching the other side of the bridge.";
+				next;
+				mes "[Belka]";
+				mes "Monsters will advance without fighting, but the party will fail if 20 monsters are let go..";
+				break;
+			case 2:
+				mes "[Belka]";
+				mes "The ^6B9900<Wave Mode - Sky>^000000";
+				mes "Available once a day. Like the other Wave Mode, keep the monsters away from reaching the other side of the map.";
+				next;
+				mes "[Belka]";
+				mes "Feel free to come back with your party.";
+				break;
+			case 3:
+				mes "[Belka]";
+				mes "Thank you for visiting Zonda, where innovation begins.";
+				close;
+			}
+			next;
+			mes "[Belka]";
+			mes "Any other questions?";
+		}
+	case 2:
+		mes "[Belka]";
+		mes "Which Wave Mode would you like to enter: Forest or Sky?";
+		next;
+		.@s = select( "Enter ^6B9900<Wave Mode - Forest>^000000.", "Enter ^6B9900<Wave Mode - Sky>^000000." ) - 1;
+		setarray .@instance_name$[0], "Wave Mode - Forest", "Wave Mode - Sky";
+		mes "[Belka]";
+		mes "" + .@count_online + " party " + (.@count_online == 1 ? "member" : "members") + " found " + .@player_name$ + ", right? To enter the ^6B9900<" + .@instance_name$[.@s] + ">^000000, please sign here.";
+		next;
+		select("Sign.");
+		mes "[Belka]";
+		mes "" + .@player_name$ + " has requested to enter the ^6B9900<" + .@instance_name$[.@s] + ">^000000. Please come back when it's your turn to enter.";
+		if (instance_create(.@instance_name$[.@s]) < 0) {
+			mes "Party Name: " + getpartyname( getcharid(1) );
+			mes "Party Leader: " + strcharinfo(0);
+			mes "^0000ff" + .@instance_name$[.@s] + " ^000000 - Reservation Failed.";
+			close;
+		}
+		close;
+	case 3:
+		switch( instance_enter("Wave Mode - Forest") ) {
+		case IE_OTHER:
+			mes "[Belka]";
+			mes "An unknown error has occurred.";
+			close;
+		case IE_NOINSTANCE:
+		case IE_NOMEMBER:
+			mes "[Belka]";
+			mes "Please wait for ^6B9900<Wave Mode - Forest>^000000 stabilization.";
+			close;
+		case IE_OK:
+			mapannounce .@map_name$, "" + .@player_name$ + " of the party " + getpartyname(getcharid(1)) + " is entering <Wave Mode - Forest>.", bc_map,0xFF99;
+			// warp "1@def01",50,21;
+			break;
+		}
+		break;
+	case 4:
+		switch( instance_enter("Wave Mode - Sky") ) {
+		case IE_OTHER:
+			mes "[Belka]";
+			mes "An unknown error has occurred.";
+			close;
+		case IE_NOINSTANCE:
+		case IE_NOMEMBER:
+			mes "[Belka]";
+			mes "Currently the ^6B9900<Wave Mode - Sky>^000000 is being stabilized for your convenience. Please wait.";
+			close;
+		case IE_OK:
+			mapannounce .@map_name$, "" + .@player_name$ + " of the party " + getpartyname(getcharid(1)) + " is entering <Wave Mode - Sky>.", bc_map,0xFF99;
+			// warp "1@def02",29,35;
+			break;
+		}
+		break;
+	case 5:
+		mes "[Belka]";
+		mes "Thank you for visiting Zonda, where innovation begins.";
+		close;
+	}
+	wave_mode_map$ = .@map_name$;
+	wave_mode_x = .@x;
+	wave_mode_y = .@y;
+	end;
+}
+payon,166,98,1	duplicate(Zonda Rep#pron)	Zonda Rep#pay	4_F_ZONDAGIRL
+moc_para01,45,89,3	duplicate(Zonda Rep#pron)	Zonda Rep#para	4_F_ZONDAGIRL
+morocc,168,271,4	duplicate(Zonda Rep#pron)	Zonda Rep#mor	4_F_ZONDAGIRL
+
+
+// Wave mode forest
+1@def01,50,21,0	script	#wave_mode_forest_entrance	HIDDEN_WARP_NPC,1,1,{
+	end;
+OnTouch:
+	disablenpc instance_npcname("#wave_mode_forest_entrance");
+	initnpctimer;
+	end;
+OnTimer2000:
+	mapannounce 'map_def01$, "We would like to thank all loyal customers of the Cool Event Corporation.", bc_map;
+	end;
+OnTimer7000:
+	mapannounce 'map_def01$, "<Wave mode - Forest> prevent monsters from reaching the other side of the bridge.", bc_map;
+	end;
+OnTimer12000:
+	mapannounce 'map_def01$, "If 20 monsters reach the other side, the game is over.", bc_map;
+	end;
+OnTimer17000:
+	mapannounce 'map_def01$, "Ok, here they come.", bc_map;
+	end;
+OnTimer22000:
+	stopnpctimer;
+	donpcevent instance_npcname("#wave_mode_forest_system") + "::OnStart";
+	end;
+}
+
+1@def01,1,1,0	script	#wave_mode_forest_system	-1,{
+	end;
+OnStart:
+	initnpctimer;
+	end;
+OnTimer1000:
+	mapannounce 'map_def01$, "3", bc_map;
+	end;
+OnTimer2000:
+	mapannounce 'map_def01$, "2", bc_map;
+	end;
+OnTimer3000:
+	mapannounce 'map_def01$, "1", bc_map;
+	end;
+OnTimer4000:
+	'wave++;
+	if ('wave % 5)
+		mapannounce 'map_def01$, "-- Wave " + 'wave + " --", bc_map;
+	else
+		mapannounce 'map_def01$, "!! Champions summoned !!", bc_map;
+	donpcevent 'npc_name$ + "::OnSpawn";
+	end;
+OnTimer24000:
+	mapannounce 'map_def01$, "Next monsters will come out soon. Get ready.", bc_map;
+	initnpctimer;
+	end;
+OnStop:
+	stopnpctimer;
+	end;
+}
+
+1@def01,1,1,0	script	#wave_mode_forest_spawn	-1,{
+	end;
+OnSpawn:
+	switch( 'wave % 70 ) {
+	case 1:
+		'mob_id = 2401;	// G_PORING
+		break;
+	case 2:
+		'mob_id = 2582;	// G_LUNATIC
+		break;
+	case 3:
+		'mob_id = 2573;	// G_CHONCHON
+		break;
+	case 4:
+		'mob_id = 2590;	// G_ROCKER
+		break;
+	case 5:
+		'mob_id = 2699;	// C1_PORING
+		break;
+
+	case 6:
+		'mob_id = 2577;	// G_FABRE
+		break;
+	case 7:
+		'mob_id = 1747;	// G_SNAKE
+		break;
+	case 8:
+		'mob_id = 2595;	// G_STAINER
+		break;
+	case 9:
+		'mob_id = 2576;	// G_CREAMY
+		break;
+	case 10:
+		'mob_id = 2678;	// C3_RODA_FROG
+		break;
+
+	case 11:
+		'mob_id = 2572;	// G_CARAMEL
+		break;
+	case 12:
+		'mob_id = 1603;	// G_BIGFOOT
+		break;
+	case 13:
+		'mob_id = 2589;	// G_POPORING
+		break;
+	case 14:
+		'mob_id = 2578;	// G_HORN
+		break;
+	case 15:
+		'mob_id = 2670;	// C5_SCORPION
+		break;
+
+	case 16:
+		'mob_id = 2601;	// G_YOYO
+		break;
+	case 17:
+		'mob_id = 2575;	// G_COCO
+		break;
+	case 18:
+		'mob_id = 2583;	// G_MARTIN
+		break;
+	case 19:
+		'mob_id = 2600;	// G_WOLF
+		break;
+	case 20:
+		'mob_id = 2705;	// C2_POISON_SPORE
+		break;
+
+	case 21:
+		'mob_id = 1430;	// G_ARGOS
+		break;
+	case 22:
+		'mob_id = 2597;	// G_STEEL_CHONCHON
+		break;
+	case 23:
+		'mob_id = 1431;	// G_BAPHOMET_
+		break;
+	case 24:
+		'mob_id = 2591;	// G_SAVAGE
+		break;
+	case 25:
+		'mob_id = 2857;	// C5_DENIRO
+		break;
+
+	case 26:
+		'mob_id = 1457;	// G_MANTIS
+		break;
+	case 27:
+		'mob_id = 1424;	// G_SIDE_WINDER
+		break;
+	case 28:
+		'mob_id = 1429;	// G_ARGIOPE
+		break;
+	case 29:
+		'mob_id = 1441;	// G_PENOMENA
+		break;
+	case 30:
+		'mob_id = 2648;	// C3_SOLDIER_SKELETON
+		break;
+
+	case 31:
+		'mob_id = 1422;	// G_HUNTER_FLY
+		break;
+	case 32:
+		'mob_id = 2585;	// G_MOLE
+		break;
+	case 33:
+		'mob_id = 2592;	// G_SIORAVA
+		break;
+	case 34:
+		'mob_id = 2571;	// G_BUTOIJO
+		break;
+	case 35:
+		'mob_id = 2673;	// C3_SAVAGE
+		break;
+
+	case 36:
+		'mob_id = 2574;	// G_CIVIL_SERVANT
+		break;
+	case 37:
+		'mob_id = 1459;	// G_MARIONETTE
+		break;
+	case 38:
+		'mob_id = 1565;	// G_WILD_GINSENG
+		break;
+	case 39:
+		'mob_id = 2602;	// G_ZIPPER_BEAR
+		break;
+	case 40:
+		'mob_id = 2644;	// C4_STALACTIC_GOLEM
+		break;
+
+	case 41:
+		'mob_id = 2588;	// G_PITMAN
+		break;
+	case 42:
+		'mob_id = 1624;	// G_WASTE_STOVE
+		break;
+	case 43:
+		'mob_id = 2570;	// G_BREEZE
+		break;
+	case 44:
+		'mob_id = 1573;	// G_ELDER
+		break;
+	case 45:
+		'mob_id = 2811;	// C3_GRAND_PECO
+		break;
+
+	case 46:
+		'mob_id = 2598;	// G_UNGOLIANT
+		break;
+	case 47:
+		'mob_id = 1606;	// G_GARM_BABY
+		break;
+	case 48:
+		'mob_id = 1794;	// G_ROWEEN
+		break;
+	case 49:
+		'mob_id = 2596;	// G_STAPO
+		break;
+	case 50:
+		'mob_id = 2838;	// C5_EVIL_DRUID
+		break;
+
+	case 51:
+		'mob_id = 2569;	// G_ANOPHELES
+		break;
+	case 52:
+		'mob_id = 2584;	// G_MINERAL
+		break;
+	case 53:
+		'mob_id = 2599;	// G_WILD_RIDER
+		break;
+	case 54:
+		'mob_id = 1531;	// G_EVIL_CLOUD_HERMIT
+		break;
+	case 55:
+		'mob_id = 2612;	// C5_WOOD_GOBLIN
+		break;
+
+	case 56:
+		'mob_id = 2587;	// G_OBSIDIAN
+		break;
+	case 57:
+		'mob_id = 1564;	// G_WICKED_NYMPH
+		break;
+	case 58:
+		'mob_id = 2586;	// G_NERAID
+		break;
+	case 59:
+		'mob_id = 1483;	// G_RYBIO
+		break;
+	case 60:
+		'mob_id = 2888;	// C2_BANASPATY
+		break;
+
+	case 61:
+		'mob_id = 2593;	// G_SIROMA
+		break;
+	case 62:
+		'mob_id = 2580;	// G_KAHO
+		break;
+	case 63:
+		'mob_id = 1600;	// G_HEATER
+		break;
+	case 64:
+		'mob_id = 1791;	// G_GALION
+		break;
+	case 65:
+		'mob_id = 2629;	// C3_UNGOLIANT
+		break;
+
+	case 66:
+		'mob_id = 2581;	// G_LUDE
+		break;
+	case 67:
+		'mob_id = 2579;	// G_HYLOZOIST
+		break;
+	case 68:
+		'mob_id = 1549;	// G_LAVA_GOLEM
+		break;
+	case 69:
+		'mob_id = 2594;	// G_SNOWIER
+		break;
+	default:
+		'mob_id = 2730;	// C2_NOVUS
+		break;
+	}
+	initnpctimer;
+	end;
+OnTimer1000:
+	stopnpctimer;
+	if (('wave % 5) == 0) {	// champion
+		donpcevent 'npc_name$ + "::OnSpawn0";
+		donpcevent 'npc_name$ + "::OnSpawn1";
+		donpcevent 'npc_name$ + "::OnSpawn2";
+		donpcevent 'npc_name$ + "::OnSpawn3";
+		donpcevent 'npc_name$ + "::OnSpawn4";
+		end;
+	}
+	if ('wave == 1)	// first wave at x = 51
+		.@dx = 3;
+	else
+		.@dx = 2;
+	for ( .@i = 0; .@i < 24; .@i++ ) {
+		donpcevent 'npc_name$ + "::OnSpawn" + .@dx;
+		sleep 300;
+	}
+	// total ~7 secs
+	end;
+OnSpawn0: callsub( S_Spawn, 0 );
+OnSpawn1: callsub( S_Spawn, 1 );
+OnSpawn2: callsub( S_Spawn, 2 );
+OnSpawn3: callsub( S_Spawn, 3 );
+OnSpawn4: callsub( S_Spawn, 4 );
+S_Spawn:
+	.@x = 48 + getarg(0);
+	monster 'map_def01$,.@x,74, "Invader!", 'mob_id,1;
+	.@gid = $@mobid[0];
+	setunitdata .@gid, UMOB_MODE, ( MD_CANMOVE|MD_NORANDOMWALK );
+	setunitdata .@gid, UMOB_IGNORE_CELL_STACK_LIMIT, true;
+	mob_setidleevent .@gid, 'npc_name$ + "::OnIdle" + getarg(0);
+	end;
+
+OnIdle0: callsub( S_Idle, 0 );
+OnIdle1: callsub( S_Idle, 1 );
+OnIdle2: callsub( S_Idle, 2 );
+OnIdle3: callsub( S_Idle, 3 );
+OnIdle4: callsub( S_Idle, 4 );
+S_Idle:
+	callfunc( "F_mobidle", ('npc_name$ + "::OnIdle" + getarg(0)), 'size_coord, 'x_mob, getarg(0), 'y_mob, 'dist_spot_AZ );
+	'mob_escaped++;
+	if ('mob_escaped <= 20)
+		mapannounce 'map_def01$, "" + 'mob_escaped + " " + ('mob_escaped == 1 ? "monster has" : "monsters have") + " escaped.", bc_map;
+	if ('mob_escaped == 20)
+		donpcevent instance_npcname("#wave_mode_forest_out") + "::OnFail";
+	end;
+}
+
+// 1@def01,50,23,0	script	#wave_mode_forest_warp	WARPNPC,2,2,{
+1@def01,50,30,0	script	#wave_mode_forest_warp	WARPNPC,2,2,{// official warp out
+	end;
+OnTouch:
+	if (wave_mode_map$ == "")
+		warp "prontera",0,0;
+	else {
+		warp wave_mode_map$, wave_mode_x, wave_mode_y;
+		wave_mode_map$ = "";
+		wave_mode_x = wave_mode_y = 0;
+	}
+	end;
+}
+
+1@def01,1,1,0	script	#wave_mode_forest_out	-1,{
+	end;
+OnFail:
+	donpcevent instance_npcname("#wave_mode_forest_system") + "::OnStop";
+
+	mapannounce 'map_def01$, "You have failed the <Wave mode - Forest> challenge.", bc_map;
+	enablenpc instance_npcname("#wave_mode_forest_warp");
+	initnpctimer;
+	end;
+OnTimer1000:
+	mapannounce 'map_def01$, "<Wave mode - Forest> service has closed. You will be returned to the place you entered if you use the warp at the entrance.", bc_map;
+	end;
+OnTimer30000:
+	stopnpctimer;
+	instance_destroy();
+	end;
+
+OnInstanceInit:
+	'wave = 'mob_escaped = 0;
+
+	'map_def01$ = instance_mapname("1@def01");
+	'npc_name$ = instance_npcname("#wave_mode_forest_spawn");
+
+	disablenpc instance_npcname("#wave_mode_forest_system");
+	disablenpc instance_npcname("#wave_mode_forest_warp");
+	disablenpc instance_npcname("#wave_mode_forest_out");
+
+	setarray 'x_mob[0], 48, 48, 48, 48, 48, 48, 48;
+	setarray 'y_mob[0], 74, 65, 56, 48, 40, 31, 23;
+
+	'size_coord = getarraysize('y_mob);
+	for ( .@i = 0; .@i < 'size_coord -1; .@i++ ) {
+		.@dist_mob[.@i+1] = distance( 'x_mob[.@i], 'y_mob[.@i], 'x_mob[.@i+1], 'y_mob[.@i+1] );
+		.@total_mob += .@dist_mob[.@i+1];
+	}
+	for ( .@i = 0; .@i < 'size_coord -1; .@i++ )
+		'dist_spot_AZ[.@i] = .@total_mob - .@dist_mob[.@i];
+	end;
+}
+
+
+// Wave mode sky
+1@def02,30,35,0	script	#wave_mode_sky_entrance	WARPNPC,1,1,{
+	end;
+OnTouch:
+	if ('status_instance == 1)
+		end;
+	else if ('status_instance == 0) {
+		'status_instance = 1;
+		initnpctimer;
+		disablenpc instance_npcname("#wave_mode_sky_entrance");
+	}
+	else if ('status_instance == 2) {
+		if (wave_mode_map$ == "")
+			warp "prontera",0,0;
+		else {
+			warp wave_mode_map$, wave_mode_x, wave_mode_y;
+			wave_mode_map$ = "";
+			wave_mode_x = wave_mode_y = 0;
+		}
+	}
+	end;
+OnTimer4000:
+	stopnpctimer;
+	donpcevent instance_npcname("#wave_mode_sky_system") + "::OnStart";
+	end;
+}
+
+1@def02,1,1,0	script	#wave_mode_sky_system	-1,{
+	end;
+OnStart:
+	initnpctimer;
+	mapannounce 'map_def02$, "We would like to thank all costumers who always use Zonda Agency.", bc_map;
+	end;
+OnTimer1000:
+	mapannounce 'map_def02$, "3", bc_map;
+	end;
+OnTimer2000:
+	mapannounce 'map_def02$, "2", bc_map;
+	end;
+OnTimer3000:
+	mapannounce 'map_def02$, "1", bc_map;
+	end;
+OnTimer4000:
+	'wave_num++;
+	if ('wave_num % 5) {
+		donpcevent 'npc_name_mob$ + "::OnSpawn";
+		donpcevent 'npc_name_mercenary$ + "::OnStart";
+		donpcevent 'npc_name_mercenary$ + "::OnStart";
+	}
+	else {
+		donpcevent 'npc_name_treasure$ + "::OnStart";
+	}
+	end;
+OnTimer24000:
+	mapannounce 'map_def02$, "Next monster wave will come out soon. Get ready.", bc_map;
+	initnpctimer;
+	end;
+OnStop:
+	stopnpctimer;
+	end;
+}
+
+1@def02,1,1,0	script	#wave_mode_sky_treasure	-1,{
+	end;
+OnStart:
+	if ('treasure_num < 5)
+		'treasure_num++;
+	mapannounce 'map_def02$, "!! " + 'treasure_num + " treasure box appeared !!", bc_map;
+	for ( .@i = 0; .@i < 'treasure_num; .@i++ ) {
+		monster 'map_def02$,0,0, "Treasure box",3075,1;	// WA_TREASURE
+		'treasure_gid[.@i] = $@mobid[0];
+	}
+	initnpctimer;
+	end;
+OnTimer16500: callsub( S_Dice, ET_DICE3 );
+OnTimer17500: callsub( S_Dice, ET_DICE2 );
+OnTimer18500: callsub( S_Dice, ET_DICE1 );
+OnTimer19500:
+	for ( .@i = 0; .@i < 'treasure_num; .@i++ ) {
+		if (unitexists('treasure_gid[.@i]))
+			unitskilluseid 'treasure_gid[.@i],301,1,'treasure_gid[.@i],-1;	// SA_INSTANTDEATH
+	}
+	donpcevent 'npc_name_treasure$ + "::OnStop";
+	end;
+
+S_Dice:
+	.@emotion_num = getarg(0);
+	for ( .@i = 0; .@i < 'treasure_num; .@i++ ) {
+		if (unitexists('treasure_gid[.@i]))
+			emotion .@emotion_num, 'treasure_gid[.@i];
+	}
+	end;
+
+OnStop:
+	deletearray 'treasure_gid[0], 'treasure_num;
+	stopnpctimer;
+	end;
+}
+
+1@def02,1,1,0	script	#wave_mode_sky_mercenary	-1,{
+	end;
+OnStart:
+	monster 'map_def02$,29,35, "Mercenary", 3086,1, "",0,AI_WAVEMODE;	// WA_MERCENARY
+	.@gid = $@mobid[0];
+	emotion ET_SURPRISE, .@gid;
+	setunitdata .@gid, UMOB_IGNORE_CELL_STACK_LIMIT, true;
+	mob_setidleevent .@gid, 'npc_name_mercenary$ + "::OnIdle";
+	sleep 45000;
+	if (unitexists(.@gid))
+		unitskilluseid .@gid,301,1,.@gid,1,false;	// SA_INSTANTDEATH
+	end;
+
+OnIdle:
+	callfunc( "F_mobidle", ('npc_name_mercenary$ + "::OnIdle"), 'size_coord, 'x_merc, 0, 'y_merc, 'dist_spot_ZA );
+	end;
+}
+
+1@def02,1,1,0	script	#wave_mode_sky_mob_spawn	-1,{
+	end;
+OnSpawn:
+	mapannounce 'map_def02$, "-- Wave " + 'wave_num + " --", bc_map;
+
+	.@i = ('wave_num % 10) - 1;
+	setarray .@mob_list[0],
+		3076,	// WA_MONSTER_1
+		3077,	// WA_MONSTER_2
+		3078,	// WA_MONSTER_3
+		3079,	// WA_MONSTER_4
+		3080,	// WA_MONSTER_5 (skipped)
+		3081,	// WA_MONSTER_6
+		3082,	// WA_MONSTER_7
+		3083,	// WA_MONSTER_8
+		3084,	// WA_MONSTER_9
+		3085;	// WA_MONSTER_10 (skipped)
+	'mob_id = .@mob_list[.@i];
+	initnpctimer;
+	end;
+OnTimer1000: callsub( S_Spawn, true );	// aggressive
+OnTimer1500: callsub( S_Spawn, false );	// passive
+OnTimer2000: callsub( S_Spawn, true );
+OnTimer2500: callsub( S_Spawn, false );
+OnTimer3000: callsub( S_Spawn, true );
+OnTimer3500: callsub( S_Spawn, false );
+OnTimer4000: callsub( S_Spawn, true );
+OnTimer4500: callsub( S_Spawn, false );
+OnTimer5000: callsub( S_Spawn, true );
+OnTimer5500: callsub( S_Spawn, false );
+OnTimer6000: callsub( S_Spawn, true );
+OnTimer6500: callsub( S_Spawn, false );
+OnTimer7000: callsub( S_Spawn, true );
+OnTimer7500: callsub( S_Spawn, false );
+OnTimer8000: callsub( S_Spawn, true );
+OnTimer8500:
+	stopnpctimer;
+	end;
+
+S_Spawn:
+	monster 'map_def02$,48,67, "Go!", 'mob_id,1;
+	if (getarg(0) == true)
+		setunitdata $@mobid[0], UMOB_MODE, ( MD_CANMOVE|MD_NORANDOMWALK|MD_AGGRESSIVE|MD_CANATTACK );
+	.@gid = $@mobid[0];
+	emotion ET_SURPRISE, .@gid;
+	setunitdata .@gid, UMOB_IGNORE_CELL_STACK_LIMIT, true;
+	mob_setidleevent .@gid, 'npc_name_mob$ + "::OnIdle";
+	end;
+
+OnIdle:
+	// monster are walking to the nearest next spot
+	callfunc( "F_mobidle", ('npc_name_mob$ + "::OnIdle"), 'size_coord, 'x_mob, 0, 'y_mob, 'dist_spot_AZ );
+	'mob_escaped++;
+	if ('mob_escaped <= 20)
+		mapannounce 'map_def02$, "" + 'mob_escaped + " " + ('mob_escaped == 1 ? "monster has" : "monsters have") + " escaped.", bc_map;
+	if ('mob_escaped == 20)
+		donpcevent instance_npcname("#wave_mode_sky_out") + "::OnFail";
+	end;
+}
+
+
+1@def02,1,1,0	script	#wave_mode_sky_out	-1,{
+	end;
+OnFail:
+	// monsters timers continue
+	donpcevent instance_npcname("#wave_mode_sky_system") + "::OnStop";
+
+	mapannounce 'map_def02$, "You have failed the <Wave mode - Sky> challenge.", bc_map;
+	'status_instance = 2;
+	enablenpc instance_npcname("#wave_mode_sky_entrance");
+	initnpctimer;
+	end;
+OnTimer1000:
+	mapannounce 'map_def02$, "<Wave mode - Sky> service has closed. You will be returned to the place you entered if you use the warp at the entrance.", bc_map;
+	end;
+OnTimer30000:
+	stopnpctimer;
+	instance_destroy();
+	end;
+
+OnInstanceInit:
+	deletearray 'treasure_gid[0], 'treasure_num;
+	'wave_num = 'treasure_num = 'status_instance = 'mob_escaped = 0;
+
+	'map_def02$ = instance_mapname("1@def02");
+
+	'npc_name_mob$ = instance_npcname("#wave_mode_sky_mob_spawn");
+	'npc_name_treasure$ = instance_npcname("#wave_mode_sky_treasure");
+	'npc_name_mercenary$ = instance_npcname("#wave_mode_sky_mercenary");
+
+	disablenpc instance_npcname("#wave_mode_sky_out");
+
+	setarray 'x_mob[0], 48, 38, 30, 30, 29, 38, 47, 51, 50, 42, 33, 29;
+	setarray 'y_mob[0], 67, 67, 64, 58, 52, 52, 51, 45, 36, 36, 36, 35;
+
+	setarray 'x_merc[0], 29, 33, 42, 50, 51, 47, 38, 29, 30, 30, 38, 47;
+	setarray 'y_merc[0], 35, 36, 36, 36, 45, 51, 52, 52, 58, 64, 67, 67;
+
+	'size_coord = getarraysize('x_mob);
+	for ( .@i = 0; .@i < 'size_coord -1; .@i++ ) {
+		.@dist_mob[.@i+1] = distance( 'x_mob[.@i], 'y_mob[.@i], 'x_mob[.@i+1], 'y_mob[.@i+1] );
+		.@total_mob += .@dist_mob[.@i+1];
+		.@dist_merc[.@i+1] = distance( 'x_merc[.@i], 'y_merc[.@i], 'x_merc[.@i+1], 'y_merc[.@i+1] );
+		.@total_merc += .@dist_merc[.@i+1];
+	}
+	for ( .@i = 0; .@i < 'size_coord -1; .@i++ ) {
+		'dist_spot_AZ[.@i] = .@total_mob - .@dist_mob[.@i];
+		'dist_spot_ZA[.@i] = .@total_merc - .@dist_merc[.@i];
+	}
+	end;
+}
