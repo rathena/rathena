@@ -10267,6 +10267,8 @@ Body:
   - Id: 17566
     Title: (Standby) Code name! Is it a star button?
     TimeLimit: 4h
+  - Id: 18000
+    Title: Ready to enter
   - Id: 18001
     Title: Delivery for Rooney
   - Id: 18002

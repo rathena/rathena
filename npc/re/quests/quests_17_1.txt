@@ -6274,12 +6274,13 @@ sp_cor,180,169,3	script	Elena Bolkova#171_cor_ms	4_F_ELENA,{
 
 			case 2:
 				if (instance_enter(.@md_name$) == IE_OK) {
-					if (isbegin_quest(16376) == 1) {
+					if (isbegin_quest(16376) == 1)
 						erasequest 16376;
-						setquest 16376;
-					}
-					if (isbegin_quest(16355)) erasequest 16355;
-					if (isbegin_quest(16356)) erasequest 16356;
+					setquest 16376;
+					if (isbegin_quest(16355))
+						erasequest 16355;
+					if (isbegin_quest(16356))
+						erasequest 16356;
 					mapannounce "sp_cor", strcharinfo(0) + " of the party, "+ .@party_name$ +", is entering the operation to secure Elyumina.",bc_map,"0x00FF99";
 				} else {
 					mes "[ Elena Bolkova ]";
@@ -8732,4 +8733,3 @@ OnTouch:
 	warp "sp_cor",163,60;
 	end;
 }
-
