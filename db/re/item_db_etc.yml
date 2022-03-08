@@ -1874,7 +1874,7 @@ Body:
     AegisName: Booby_Trap
     Name: Trap
     Type: Etc
-    Buy: 75
+    Buy: 50
     Weight: 2
     Flags:
       BuyingStore: true
@@ -2110,7 +2110,7 @@ Body:
     Name: Silver Arrow
     Type: Ammo
     SubType: Arrow
-    Buy: 10
+    Buy: 5
     Weight: 1
     Attack: 30
     Jobs:
@@ -2130,7 +2130,7 @@ Body:
     Name: Fire Arrow
     Type: Ammo
     SubType: Arrow
-    Buy: 8
+    Buy: 5
     Weight: 1
     Attack: 30
     Jobs:
@@ -2168,7 +2168,7 @@ Body:
     Name: Crystal Arrow
     Type: Ammo
     SubType: Arrow
-    Buy: 3
+    Buy: 5
     Weight: 1
     Attack: 30
     Jobs:
@@ -2188,7 +2188,7 @@ Body:
     Name: Arrow of Wind
     Type: Ammo
     SubType: Arrow
-    Buy: 3
+    Buy: 5
     Weight: 1
     Attack: 30
     Jobs:
@@ -2208,7 +2208,7 @@ Body:
     Name: Stone Arrow
     Type: Ammo
     SubType: Arrow
-    Buy: 3
+    Buy: 5
     Weight: 1
     Attack: 30
     Jobs:
@@ -2228,7 +2228,7 @@ Body:
     Name: Immaterial Arrow
     Type: Ammo
     SubType: Arrow
-    Buy: 3
+    Buy: 5
     Weight: 1
     Attack: 30
     Jobs:
@@ -2329,7 +2329,7 @@ Body:
     Name: Rusty Arrow
     Type: Ammo
     SubType: Arrow
-    Buy: 3
+    Buy: 5
     Weight: 1
     Attack: 30
     Jobs:
@@ -2428,7 +2428,7 @@ Body:
     Name: Arrow of Shadow
     Type: Ammo
     SubType: Arrow
-    Buy: 3
+    Buy: 5
     Weight: 1
     Attack: 30
     Jobs:
@@ -2488,7 +2488,7 @@ Body:
     Name: Iron Arrow
     Type: Ammo
     SubType: Arrow
-    Buy: 4
+    Buy: 3
     Weight: 1
     Attack: 30
     Jobs:
@@ -16810,7 +16810,7 @@ Body:
     AegisName: Vulcan_Bullet
     Name: Vulcan Bullet
     Type: Etc
-    Buy: 12
+    Buy: 10
     Weight: 1
     Flags:
       BuyingStore: true
@@ -16818,7 +16818,7 @@ Body:
     AegisName: Magic_Gear_Fuel
     Name: Magic Gear Fuel
     Type: Etc
-    Buy: 375
+    Buy: 250
     Weight: 1
     Flags:
       BuyingStore: true
@@ -16826,7 +16826,7 @@ Body:
     AegisName: Liquid_Condensed_Bullet
     Name: Liquid Condensed Bullet
     Type: Etc
-    Buy: 125
+    Buy: 100
     Weight: 1
     Flags:
       BuyingStore: true
@@ -20106,7 +20106,7 @@ Body:
     AegisName: Charm_Fire
     Name: Fire Amulet
     Type: Etc
-    Buy: 100
+    Buy: 50
     Weight: 1
     Flags:
       BuyingStore: true
@@ -20114,7 +20114,7 @@ Body:
     AegisName: Charm_Ice
     Name: Ice Amulet
     Type: Etc
-    Buy: 100
+    Buy: 50
     Weight: 1
     Flags:
       BuyingStore: true
@@ -20122,7 +20122,7 @@ Body:
     AegisName: Charm_Wind
     Name: Wind Amulet
     Type: Etc
-    Buy: 100
+    Buy: 50
     Weight: 1
     Flags:
       BuyingStore: true
@@ -27933,7 +27933,7 @@ Body:
     AegisName: Flame_Stone
     Name: Flame Stone
     Type: Etc
-    Buy: 112
+    Buy: 50
     Weight: 1
     Flags:
       BuyingStore: true
@@ -27941,7 +27941,7 @@ Body:
     AegisName: Ice_Stone
     Name: Ice Stone
     Type: Etc
-    Buy: 112
+    Buy: 50
     Weight: 1
     Flags:
       BuyingStore: true
@@ -27949,7 +27949,7 @@ Body:
     AegisName: Wind_Stone
     Name: Wind Stone
     Type: Etc
-    Buy: 112
+    Buy: 50
     Weight: 1
     Flags:
       BuyingStore: true
@@ -27957,7 +27957,7 @@ Body:
     AegisName: Shadow_Orb
     Name: Shadow Orb
     Type: Etc
-    Buy: 225
+    Buy: 200
     Weight: 1
     Flags:
       BuyingStore: true
@@ -29049,21 +29049,21 @@ Body:
     AegisName: Full_Metal_Jacket
     Name: Full Metal Jacket
     Type: Etc
-    Buy: 200
+    Buy: 5
     Weight: 1
     Attack: 10
   - Id: 7664
     AegisName: Shooting_Mine
     Name: Grenade Launcher
     Type: Etc
-    Buy: 450
+    Buy: 30
     Weight: 1
     Attack: 10
   - Id: 7665
     AegisName: Dragon_Tail_Missile
     Name: Dragon Tail Missile
     Type: Etc
-    Buy: 1500
+    Buy: 15
     Weight: 1
     Attack: 10
   - Id: 7666
@@ -31263,7 +31263,7 @@ Body:
     AegisName: Special_Alloy_Trap
     Name: Special Alloy Trap
     Type: Etc
-    Buy: 300
+    Buy: 100
     Weight: 2
     Flags:
       BuyingStore: true
@@ -32388,7 +32388,7 @@ Body:
     Name: Armor-Piercing Bullet
     Type: Ammo
     SubType: Bullet
-    Buy: 15
+    Buy: 5
     Weight: 1
     Attack: 50
     Jobs:
@@ -32404,7 +32404,7 @@ Body:
     Name: Blazing Bullet
     Type: Ammo
     SubType: Bullet
-    Buy: 10
+    Buy: 5
     Weight: 1
     Attack: 40
     Jobs:
@@ -32420,7 +32420,7 @@ Body:
     Name: Freezing Bullet
     Type: Ammo
     SubType: Bullet
-    Buy: 10
+    Buy: 5
     Weight: 1
     Attack: 40
     Jobs:
@@ -32436,7 +32436,7 @@ Body:
     Name: Lightning Bullet
     Type: Ammo
     SubType: Bullet
-    Buy: 10
+    Buy: 5
     Weight: 1
     Attack: 40
     Jobs:
@@ -32452,7 +32452,7 @@ Body:
     Name: Magic Stone Bullet
     Type: Ammo
     SubType: Bullet
-    Buy: 10
+    Buy: 5
     Weight: 1
     Attack: 40
     Jobs:
@@ -32468,7 +32468,7 @@ Body:
     Name: Purifying Bullet
     Type: Ammo
     SubType: Bullet
-    Buy: 10
+    Buy: 5
     Weight: 1
     Attack: 40
     Jobs:
@@ -32500,7 +32500,7 @@ Body:
     Name: Bloody Shell
     Type: Ammo
     SubType: Bullet
-    Buy: 10
+    Buy: 5
     Weight: 1
     Attack: 30
     Jobs:
@@ -32586,7 +32586,7 @@ Body:
     Name: Flare Bullet
     Type: Ammo
     SubType: Bullet
-    Buy: 10
+    Buy: 5
     Weight: 1
     Attack: 20
     Jobs:
@@ -32602,7 +32602,7 @@ Body:
     Name: Lightning Bullet
     Type: Ammo
     SubType: Bullet
-    Buy: 10
+    Buy: 5
     Weight: 1
     Attack: 20
     Jobs:
@@ -32618,7 +32618,7 @@ Body:
     Name: Ice Bullet
     Type: Ammo
     SubType: Bullet
-    Buy: 10
+    Buy: 5
     Weight: 1
     Attack: 20
     Jobs:
@@ -32634,7 +32634,7 @@ Body:
     Name: Poison Bullet
     Type: Ammo
     SubType: Bullet
-    Buy: 10
+    Buy: 5
     Weight: 1
     Attack: 20
     Jobs:
@@ -32651,7 +32651,7 @@ Body:
     Name: Blind Bullet
     Type: Ammo
     SubType: Bullet
-    Buy: 10
+    Buy: 5
     Weight: 1
     Attack: 20
     Jobs:
@@ -32668,7 +32668,7 @@ Body:
     Name: Shuriken
     Type: Ammo
     SubType: Shuriken
-    Buy: 4
+    Buy: 2
     Weight: 1
     Attack: 10
     Jobs:
@@ -32682,7 +32682,7 @@ Body:
     Name: Nimbus Shuriken
     Type: Ammo
     SubType: Shuriken
-    Buy: 10
+    Buy: 4
     Weight: 1
     Attack: 30
     Jobs:
@@ -32696,7 +32696,7 @@ Body:
     Name: Flash Shuriken
     Type: Ammo
     SubType: Shuriken
-    Buy: 20
+    Buy: 6
     Weight: 1
     Attack: 45
     Jobs:
@@ -32710,7 +32710,7 @@ Body:
     Name: Sharp Leaf Shuriken
     Type: Ammo
     SubType: Shuriken
-    Buy: 40
+    Buy: 12
     Weight: 1
     Attack: 70
     Jobs:
@@ -32724,7 +32724,7 @@ Body:
     Name: Thorn Needle Shuriken
     Type: Ammo
     SubType: Shuriken
-    Buy: 100
+    Buy: 20
     Weight: 1
     Attack: 100
     Jobs:
@@ -32738,7 +32738,7 @@ Body:
     Name: Icicle Kunai
     Type: Ammo
     SubType: Kunai
-    Buy: 10
+    Buy: 30
     Weight: 1
     Attack: 30
     Jobs:
@@ -32754,7 +32754,7 @@ Body:
     Name: Black Earth Kunai
     Type: Ammo
     SubType: Kunai
-    Buy: 10
+    Buy: 30
     Weight: 1
     Attack: 30
     Jobs:
@@ -32770,7 +32770,7 @@ Body:
     Name: High Wind Kunai
     Type: Ammo
     SubType: Kunai
-    Buy: 10
+    Buy: 30
     Weight: 1
     Attack: 30
     Jobs:
@@ -32786,7 +32786,7 @@ Body:
     Name: Heat Wave Kunai
     Type: Ammo
     SubType: Kunai
-    Buy: 10
+    Buy: 30
     Weight: 1
     Attack: 30
     Jobs:
@@ -32802,7 +32802,7 @@ Body:
     Name: Fell Poison Kunai
     Type: Ammo
     SubType: Kunai
-    Buy: 10
+    Buy: 30
     Weight: 1
     Attack: 30
     Jobs:
@@ -33415,7 +33415,7 @@ Body:
     Name: Explosive Kunai
     Type: Ammo
     SubType: Kunai
-    Buy: 100
+    Buy: 50
     Weight: 1
     Attack: 50
     Jobs:
@@ -33484,7 +33484,7 @@ Body:
     Name: Cannon Ball
     Type: Ammo
     SubType: Cannonball
-    Buy: 100
+    Buy: 30
     Weight: 1
     Attack: 100
     Jobs:
@@ -33501,7 +33501,7 @@ Body:
     Name: Holy Cannon Ball
     Type: Ammo
     SubType: Cannonball
-    Buy: 200
+    Buy: 50
     Weight: 1
     Attack: 120
     Jobs:
@@ -33520,7 +33520,7 @@ Body:
     Name: Dark Cannon Ball
     Type: Ammo
     SubType: Cannonball
-    Buy: 200
+    Buy: 50
     Weight: 1
     Attack: 120
     Jobs:
@@ -33539,7 +33539,7 @@ Body:
     Name: Soul Cannon Ball
     Type: Ammo
     SubType: Cannonball
-    Buy: 200
+    Buy: 50
     Weight: 1
     Attack: 120
     Jobs:
@@ -33558,7 +33558,7 @@ Body:
     Name: Iron Cannon Ball
     Type: Ammo
     SubType: Cannonball
-    Buy: 500
+    Buy: 80
     Weight: 1
     Attack: 250
     Jobs:
@@ -33575,6 +33575,7 @@ Body:
     Name: Ice Cannon Ball
     Type: Ammo
     SubType: Cannonball
+    Buy: 50
     Weight: 1
     Attack: 120
     Jobs:
@@ -33593,6 +33594,7 @@ Body:
     Name: Lightning Cannon Ball
     Type: Ammo
     SubType: Cannonball
+    Buy: 50
     Weight: 1
     Attack: 120
     Jobs:
@@ -33611,6 +33613,7 @@ Body:
     Name: Stone Cannon Ball
     Type: Ammo
     SubType: Cannonball
+    Buy: 50
     Weight: 1
     Attack: 120
     Jobs:
@@ -33629,6 +33632,7 @@ Body:
     Name: Fire Cannon Ball
     Type: Ammo
     SubType: Cannonball
+    Buy: 50
     Weight: 1
     Attack: 120
     Jobs:
@@ -34964,7 +34968,7 @@ Body:
     AegisName: Slug_Bullet
     Name: Slug Bullet
     Type: Etc
-    Buy: 1200
+    Buy: 1000
     Weight: 1200
   - Id: 25188
     AegisName: Handkerchief_of_Girl
@@ -61535,31 +61539,37 @@ Body:
   - Id: 1000564
     AegisName: Nw_Grenade
     Name: Nw Grenade
+    Buy: 30
     Type: Etc
     Weight: 1
   - Id: 1000565
     AegisName: SS_Charm
+    Buy: 30
     Name: SS Charm
     Type: Etc
     Weight: 1
   - Id: 1000566
     AegisName: SS_Charm_F
     Name: SS Charm F
+    Buy: 30
     Type: Etc
     Weight: 1
   - Id: 1000567
     AegisName: SS_Charm_W
     Name: SS Charm W
+    Buy: 30
     Type: Etc
     Weight: 1
   - Id: 1000568
     AegisName: SS_Charm_G
     Name: SS Charm G
+    Buy: 30
     Type: Etc
     Weight: 1
   - Id: 1000569
     AegisName: SS_Charm_L
     Name: SS Charm L
+    Buy: 30
     Type: Etc
     Weight: 1
   - Id: 1000570
@@ -62462,6 +62472,7 @@ Body:
     Name: Kunai
     Type: Ammo
     SubType: Kunai
+    Buy: 30
     Weight: 1
     Attack: 30
     Jobs:
@@ -62475,6 +62486,7 @@ Body:
     Name: Kunai Of Nothing
     Type: Ammo
     SubType: Kunai
+    Buy: 30
     Weight: 1
     Attack: 30
     Jobs:
@@ -62490,6 +62502,7 @@ Body:
     Name: Kunai Of Shadow
     Type: Ammo
     SubType: Kunai
+    Buy: 30
     Weight: 1
     Attack: 30
     Jobs:
@@ -62505,6 +62518,7 @@ Body:
     Name: Kunai Of Hamaya
     Type: Ammo
     SubType: Kunai
+    Buy: 30
     Weight: 1
     Attack: 30
     Jobs:
