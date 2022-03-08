@@ -6881,6 +6881,33 @@ BUILDIN_FUNC(viewpoint)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+static int buildin_viewpointmap_sub(block_list *bl, va_list ap) {
+	int oid, type, x, y, id, color;
+
+	oid = va_arg(ap, int);
+	type = va_arg(ap, int);
+	x = va_arg(ap, int);
+	y = va_arg(ap, int);
+	id = va_arg(ap, int);
+	color = va_arg(ap, int);
+
+	clif_viewpoint((map_session_data *)bl, oid, type, x, y, id, color);
+	return 0;
+}
+
+BUILDIN_FUNC(viewpointmap) {
+	std::string map = script_getstr(st, 2);
+	int16 mapid = map_mapname2mapid(map.c_str());
+
+	if (mapid < 0) {
+		ShowError("buildin_viewpointmap: Unknown map name %s.\n", map.c_str());
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	map_foreachinmap(buildin_viewpointmap_sub, mapid, BL_PC, st->oid, script_getnum(st, 3), script_getnum(st, 4), script_getnum(st, 5), script_getnum(st, 6), script_getnum(st, 7));
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /**
  * Set random options for new item
  * @param st Script state
@@ -25930,6 +25957,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(disableitemuse,"disable_items",""),
 	BUILDIN_DEF(cutin,"si"),
 	BUILDIN_DEF(viewpoint,"iiiii?"),
+	BUILDIN_DEF(viewpointmap, "siiiii"),
 	BUILDIN_DEF(heal,"ii?"),
 	BUILDIN_DEF(healap,"i?"),
 	BUILDIN_DEF(itemheal,"ii?"),
