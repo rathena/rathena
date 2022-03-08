@@ -7874,13 +7874,13 @@ to create flashing marks.
 	viewpointmap "prontera",1,30,40,1,0xFF0000;
 
 This will create three points:
-	.@map$ = prontera;
+	.@map$ = "prontera";
 	viewpointmap .@map$,1,30,40,1,0xFF0000;
 	viewpointmap .@map$,1,35,45,2,0xFF0000;
 	viewpointmap .@map$,1,40,50,3,0xFF0000;
 
 And this is how you remove them:
-	.@map$ = prontera;
+	.@map$ = "prontera";
 	viewpointmap .@map$,2,30,40,1,0xFF0000;
 	viewpointmap .@map$,2,35,45,2,0xFF0000;
 	viewpointmap .@map$,2,40,50,3,0xFF0000;
