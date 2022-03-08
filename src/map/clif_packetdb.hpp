@@ -2417,7 +2417,7 @@
 	parseable_packet( HEADER_CZ_INVENTORY_EXPAND_REJECTED, sizeof( struct PACKET_CZ_INVENTORY_EXPAND_REJECTED ), clif_parse_inventory_expansion_reject, 0 );
 #endif
 
-#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+#if PACKETVER_MAIN_NUM >= 20190116 || PACKETVER_RE_NUM >= 20190116 || PACKETVER_ZERO_NUM >= 20181226
 	parseable_packet( HEADER_CZ_NPC_BARTER_PURCHASE, -1, clif_parse_barter_buy, 0 );
 	parseable_packet( HEADER_CZ_NPC_BARTER_CLOSE, sizeof( struct PACKET_CZ_NPC_BARTER_CLOSE ), clif_parse_barter_close, 0 );
 #endif
