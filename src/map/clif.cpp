@@ -22739,7 +22739,7 @@ void clif_parse_inventory_expansion_reject( int fd, struct map_session_data* sd 
 }
 
 void clif_barter_open( struct map_session_data& sd, struct npc_data& nd ){
-#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+#if PACKETVER_MAIN_NUM >= 20190116 || PACKETVER_RE_NUM >= 20190116 || PACKETVER_ZERO_NUM >= 20181226
 	if( nd.subtype != NPCTYPE_BARTER || nd.u.barter.extended || sd.state.barter_open ){
 		return;
 	}
@@ -22796,7 +22796,7 @@ void clif_barter_open( struct map_session_data& sd, struct npc_data& nd ){
 }
 
 void clif_parse_barter_close( int fd, struct map_session_data* sd ){
-#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+#if PACKETVER_MAIN_NUM >= 20190116 || PACKETVER_RE_NUM >= 20190116 || PACKETVER_ZERO_NUM >= 20181226
 	if( sd->state.barter_open ){
 		sd->npc_shopid = 0;
 		sd->state.barter_open = false;
@@ -22805,7 +22805,7 @@ void clif_parse_barter_close( int fd, struct map_session_data* sd ){
 }
 
 void clif_parse_barter_buy( int fd, struct map_session_data* sd ){
-#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+#if PACKETVER_MAIN_NUM >= 20190116 || PACKETVER_RE_NUM >= 20190116 || PACKETVER_ZERO_NUM >= 20181226
 	// No shop open
 	if( sd->npc_shopid == 0 || !sd->state.barter_open ){
 		return;
