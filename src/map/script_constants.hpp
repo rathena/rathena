@@ -5639,6 +5639,10 @@
 	export_constant(IG_PIERCING_MIX);
 	export_constant(IG_HASTY_MIX);
 	export_constant(IG_ENCHANTSTONE_RECIPE_4M);
+	export_constant(IG_SHADOW_CUBE);
+	export_constant(IG_SHADOW_CUBE_PENDANT);
+	export_constant(IG_SHADOW_CUBE_EARING);
+	export_constant(IG_ANGELPORING_BOX);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
