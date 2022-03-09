@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= birkiczd  (1.0)
 //===== Current Version: =====================================
-//= 1.5
+//= 1.4
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -15,7 +15,6 @@
 //= 1.3 Official warps [Playtester]
 //= 1.4 Moved Sailor to Hugel quest file since he's part of
 //=     Odin's Excavation Quest. [SinSloth]
-//=	1.5 Added Odin Past warps [mundussan]
 //============================================================
 
 odin_tem01,378,182,0	warp	odin01	1,1,odin_tem02,28,180
@@ -26,33 +25,3 @@ odin_tem02,153,349,0	warp	odin05	1,1,odin_tem03,120,54
 odin_tem03,121,49,0	warp	odin06	1,1,odin_tem02,154,345
 odin_tem02,261,377,0	warp	odin07	1,1,odin_tem03,247,40
 odin_tem03,247,34,0	warp	odin08	1,1,odin_tem02,263,372
-
-
-//Odin's Past Warp.
-odin_tem03,276,236,0	script	odinpast#odin	WARPNPC,1,1,{
-    end;
-OnTouch:
-
-    if (BaseLevel < 180) {
-		message strcharinfo(0), strcharinfo(0) + " What is it? This light is...";
-		end;
-	}
-	
-	mes "It's warm light.";
-	mes "Beyond the shining light, something...";
-	mes "that I know.";
-	next;
-	switch ( select( "I'm going to the place where the light leads me.", "Avoid the place." )) {
-		case 1:
-			close2;
-			warp "odin_past",291,230;
-			end;
-			break;
-		case 2:
-			mes "You are avoiding it.";
-			close;
-			break;
-		}
-	}
-
-odin_past,291,235,0	warp	thirdfloor#odin	1,1,odin_tem03,276,232

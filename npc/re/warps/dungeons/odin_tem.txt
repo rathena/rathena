@@ -1,0 +1,33 @@
+//===== rAthena Script =======================================
+//= Odin Temple Warp Script
+//===== Description: =========================================
+//= Warp Points for Odin Temple
+//===== Additional Comments: =================================
+//= 1.0 First version. [mundussan]
+//============================================================
+
+// Ancient Odin Temple - 3F
+odin_tem03,276,236,0	script	odinpast#odin	WARPNPC,1,1,{
+	end;
+
+OnTouch:
+	if (BaseLevel < 180) {
+		message strcharinfo(0), strcharinfo(0) + " What is it? This light is...";
+		end;
+	}
+	mes "It's a warm light.";
+	mes "Beyond the shining light, there's something...";
+	mes "that I know.";
+	next;
+	switch ( select( "I'm going to the place where the light leads me.", "Avoid the place." )) {
+		case 1:
+			close2;
+			warp "odin_past",291,230;
+			end;
+		case 2:
+			mes "You are avoiding it.";
+			close;
+		}
+	}
+
+odin_past,291,235,0	warp	thirdfloor#odin	1,1,odin_tem03,276,232

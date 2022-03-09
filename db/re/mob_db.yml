@@ -90919,12 +90919,10 @@ Body:
 #  - Id: 20533
 #    AegisName: G_ILL_BAPHOMET_J
   - Id: 20534
-    AegisName: VALKYRIE
+    AegisName: G_REGINLEIF
     Name: Valkyrie
     Level: 207
     Hp: 13269890
-    BaseExp: 17795730
-    JobExp: 12457020
     Attack: 7261
     Attack2: 10661
     Defense: 506
@@ -90942,8 +90940,8 @@ Body:
     Race: Angel
     Element: Fire
     ElementLevel: 4
-    WalkSpeed: 150
-    AttackDelay: 576
+    WalkSpeed: 60
+    AttackDelay: 587
     AttackMotion: 576
     DamageMotion: 480
     Ai: 21
@@ -90951,12 +90949,10 @@ Body:
     Modes:
       NoRandomWalk: true
   - Id: 20535
-    AegisName: VALKYRIE_
+    AegisName: G_INGRID
     Name: Valkyrie
-    Level: 207
-    Hp: 13269890
-    BaseExp: 17795730
-    JobExp: 12457020
+    Level: 141
+    Hp: 1047713
     Attack: 7261
     Attack2: 10661
     Defense: 374
@@ -90974,8 +90970,8 @@ Body:
     Race: Angel
     Element: Water
     ElementLevel: 4
-    WalkSpeed: 150
-    AttackDelay: 576
+    WalkSpeed: 130
+    AttackDelay: 584
     AttackMotion: 576
     DamageMotion: 480
     Ai: 21
@@ -91119,15 +91115,15 @@ Body:
 #  - Id: 20603
 #    AegisName: ABYSSMAN
   - Id: 20604
-    AegisName: Angelgolt
+    AegisName: ANGELGOLT
     Name: Angelgolt
     Level: 196
     Hp: 2634990
-    BaseExp: 5633580
-    JobExp: 3943500
+    BaseExp: 358432
+    JobExp: 250902
     Attack: 1102
     Attack2: 1542
-    Defense: 135
+    Defense: 136
     MagicDefense: 66
     Str: 143
     Agi: 117
@@ -91143,7 +91139,7 @@ Body:
     Element: Holy
     ElementLevel: 4
     WalkSpeed: 250
-    AttackDelay: 672
+    AttackDelay: 678
     AttackMotion: 780
     DamageMotion: 480
     Ai: 21
@@ -91166,12 +91162,12 @@ Body:
         Rate: 1
         StealProtected: true
   - Id: 20605
-    AegisName: Angelgolt2
+    AegisName: ANGELGOLT2
     Name: Angelgolt
     Level: 196
     Hp: 2634476
-    BaseExp: 5610240
-    JobExp: 3927180
+    BaseExp: 358432
+    JobExp: 250902
     Attack: 1142
     Attack2: 1603
     Defense: 135
@@ -91190,7 +91186,7 @@ Body:
     Element: Holy
     ElementLevel: 4
     WalkSpeed: 250
-    AttackDelay: 672
+    AttackDelay: 781
     AttackMotion: 780
     DamageMotion: 480
     Ai: 21
@@ -91215,11 +91211,12 @@ Body:
     Name: Holy Frus
     Level: 201
     Hp: 2700802
-    Sp: 0
+    BaseExp: 367456
+    JobExp: 257220
     Attack: 1437
     Attack2: 2034
-    Defense: 135
-    MagicDefense: 78
+    Defense: 239
+    MagicDefense: 76
     Str: 176
     Agi: 148
     Vit: 69
@@ -91233,9 +91230,9 @@ Body:
     Race: Angel
     Element: Holy
     ElementLevel: 4
-    WalkSpeed: 150
-    AttackDelay: 500
-    AttackMotion: 676
+    WalkSpeed: 130
+    AttackDelay: 581
+    AttackMotion: 576
     DamageMotion: 432
     Ai: 20
     Drops:
@@ -91261,8 +91258,8 @@ Body:
     Name: Holy Skogul
     Level: 202
     Hp: 2714947
-    BaseExp: 3639
-    JobExp: 3498
+    BaseExp: 369380
+    JobExp: 258566
     Attack: 1031
     Attack2: 1434
     Defense: 137
@@ -91280,9 +91277,9 @@ Body:
     Race: Angel
     Element: Holy
     ElementLevel: 4
-    WalkSpeed: 190
-    AttackDelay: 720
-    AttackMotion: 384
+    WalkSpeed: 150
+    AttackDelay: 1256
+    AttackMotion: 1254
     DamageMotion: 480
     Ai: 20
     Drops:
@@ -91310,8 +91307,8 @@ Body:
     Name: Arch Plasma
     Level: 198
     Hp: 7588702
-    BaseExp: 18603150
-    JobExp: 13022220
+    BaseExp: 1192510
+    JobExp: 834758
     Attack: 1115
     Attack2: 1542
     Defense: 131
@@ -91329,11 +91326,11 @@ Body:
     Race: Formless
     Element: Holy
     ElementLevel: 4
-    WalkSpeed: 300
-    AttackDelay: 700
-    AttackMotion: 800
-    DamageMotion: 480
-    Ai: 21
+    WalkSpeed: 250
+    AttackDelay: 1447
+    AttackMotion: 1440
+    DamageMotion: 576
+    Ai: 04
     Drops:
       - Item: Scell
         Rate: 10000
@@ -91355,10 +91352,10 @@ Body:
   - Id: 20609
     AegisName: PLASMA_SPT
     Name: Spectral Plasma
-    Level: 198
+    Level: 197
     Hp: 7549720
-    BaseExp: 17795730
-    JobExp: 12457020
+    BaseExp: 1186384
+    JobExp: 830468
     Attack: 948
     Attack2: 1293
     Defense: 130
@@ -91377,10 +91374,10 @@ Body:
     Element: Ghost
     ElementLevel: 4
     WalkSpeed: 250
-    AttackDelay: 672
-    AttackMotion: 800
-    DamageMotion: 480
-    Ai: 21
+    AttackDelay: 1057
+    AttackMotion: 1056
+    DamageMotion: 576
+    Ai: 04
     Drops:
       - Item: Scell
         Rate: 10000
@@ -91401,12 +91398,12 @@ Body:
         StealProtected: true
   - Id: 20610
     AegisName: REGINLEIF
-    Name: Reginleif
+    Name: Valkryie Reginleif
     Level: 207
     Hp: 79249813
-    BaseExp: 17795730
-    JobExp: 12457020
-    MvpExp: 50000000
+    BaseExp: 11400806
+    JobExp: 7980564
+    MvpExp: 5700403
     Attack: 10218
     Attack2: 14233
     Defense: 506
@@ -91424,9 +91421,9 @@ Body:
     Race: Angel
     Element: Fire
     ElementLevel: 4
-    WalkSpeed: 200
-    AttackDelay: 576
-    AttackMotion: 576
+    WalkSpeed: 60
+    AttackDelay: 188
+    AttackMotion: 173
     DamageMotion: 480
     DamageTaken: 10
     Ai: 21
@@ -91441,12 +91438,12 @@ Body:
         StealProtected: true
   - Id: 20611
     AegisName: INGRID
-    Name: Ingrid
+    Name: Valkryie Ingrid
     Level: 207
     Hp: 75393148
-    BaseExp: 17795730
-    JobExp: 12457020
-    MvpExp: 50000000
+    BaseExp: 11368276
+    JobExp: 7957794
+    MvpExp: 5684138
     Attack: 9418
     Attack2: 13210
     Defense: 374
@@ -91464,7 +91461,7 @@ Body:
     Race: Angel
     Element: Water
     ElementLevel: 4
-    WalkSpeed: 150
+    WalkSpeed: 100
     AttackDelay: 576
     AttackMotion: 576
     DamageMotion: 480

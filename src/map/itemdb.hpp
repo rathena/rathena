@@ -890,7 +890,7 @@ enum e_random_item_group {
 	IG_PIERCING_MIX,
 	IG_HASTY_MIX,
 	IG_ENCHANTSTONE_RECIPE_4M,
-  IG_ODIN_RELIC,
+	IG_ODIN_RELIC,
 
 	IG_MAX,
 };
