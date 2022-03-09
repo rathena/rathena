@@ -16882,6 +16882,7 @@ Body:
     DamageFlags:
       Splash: true
       IgnoreElement: true
+      IgnoreDefense: true
       IgnoreFlee: true
       IgnoreDefCard: true
     Flags:
