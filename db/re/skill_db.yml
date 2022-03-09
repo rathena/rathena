@@ -16815,7 +16815,7 @@ Body:
     Name: NPC_MAXPAIN_ATK
     Description: Max Pain Attack
     MaxLevel: 10
-    Type: Misc
+    Type: Weapon
     TargetType: Attack
     DamageFlags:
       Splash: true
