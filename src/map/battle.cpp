@@ -8002,9 +8002,6 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		case NPC_WIDESUCK:
 			md.damage = tstatus->max_hp * 15 / 100;
 			break;
-		case NPC_WIDESUCK:
-			md.damage = tstatus->max_hp * 15 / 100;
-			break;
 		case SU_SV_ROOTTWIST_ATK:
 			md.damage = 100;
 			break;
