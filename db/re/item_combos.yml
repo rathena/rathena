@@ -3085,12 +3085,11 @@ Body:
       bonus bIntravision;
   - Combos:
       - Combo:
-          - Giant_Protection
-          - Giant_Axe
+          - Giant_Protection     # 28521
+          - Giant_Axe     # 1387
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
       bonus2 bSubRace,RC_DemiHuman,3;
-      bonus2 bSubRace,RC_Player_Human,3;
       if (.@r >= 7) {
          bonus2 bAddClass,Class_Boss,5;
          bonus2 bSkillAtk,"WS_CARTTERMINATION",5;
@@ -10331,14 +10330,13 @@ Body:
       bonus2 bSkillAtk,"WZ_WATERBALL",(30*.@c)+(20*.@r);
   - Combos:
       - Combo:
-          - Giant_Boots
-          - Giant_Axe
+          - Giant_Boots     # 22106
+          - Giant_Axe     # 1387
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
       .@b = getequiprefinerycnt(EQI_HAND_R);
       if (.@r >= 7) {
          bonus2 bSubRace,RC_DemiHuman,30;
-         bonus2 bSubRace,RC_Player_Human,30;
          if (.@b >= 7) {
             bonus2 bSkillAtk,"WS_CARTTERMINATION",8;
             bonus2 bAddClass,Class_Boss,20;
@@ -19753,77 +19751,77 @@ Body:
       bonus2 bAddEle,Ele_Water,15;
   - Combos:
       - Combo:
-          - Variant_Axe
-          - Labyrinth_Doppelganger_Card
+          - Variant_Axe     # 1331
+          - Labyrinth_Doppelganger_Card     # 27301
       - Combo:
-          - Variant_Huuma
-          - Labyrinth_Doppelganger_Card
+          - Variant_Huuma     # 13343
+          - Labyrinth_Doppelganger_Card     # 27301
       - Combo:
-          - Abyss_Blade
-          - Labyrinth_Doppelganger_Card
+          - Abyss_Blade     # 13492
+          - Labyrinth_Doppelganger_Card     # 27301
       - Combo:
-          - Variant_Mace
-          - Labyrinth_Doppelganger_Card
+          - Variant_Mace     # 16087
+          - Labyrinth_Doppelganger_Card     # 27301
       - Combo:
-          - Variant_Wing
-          - Labyrinth_Doppelganger_Card
+          - Variant_Wing     # 18177
+          - Labyrinth_Doppelganger_Card     # 27301
       - Combo:
-          - Variant_Claw
-          - Labyrinth_Doppelganger_Card
+          - Variant_Claw     # 1861
+          - Labyrinth_Doppelganger_Card     # 27301
       - Combo:
-          - Abyss_Staff
-          - Labyrinth_Doppelganger_Card
+          - Abyss_Staff     # 2053
+          - Labyrinth_Doppelganger_Card     # 27301
       - Combo:
-          - Variant_Claymore
-          - Labyrinth_Doppelganger_Card
+          - Variant_Claymore     # 21046
+          - Labyrinth_Doppelganger_Card     # 27301
       - Combo:
-          - Variant_Lance
-          - Labyrinth_Doppelganger_Card
+          - Variant_Lance     # 26021
+          - Labyrinth_Doppelganger_Card     # 27301
       - Combo:
-          - Variant_Wand
-          - Labyrinth_Doppelganger_Card
+          - Variant_Wand     # 26149
+          - Labyrinth_Doppelganger_Card     # 27301
       - Combo:
-          - Variant_Foxtail
-          - Labyrinth_Doppelganger_Card
+          - Variant_Foxtail     # 26150
+          - Labyrinth_Doppelganger_Card     # 27301
       - Combo:
-          - Variant_Katar
-          - Labyrinth_Doppelganger_Card
+          - Variant_Katar     # 28037
+          - Labyrinth_Doppelganger_Card     # 27301
       - Combo:
-          - Variant_Twohand_Axe
-          - Labyrinth_Doppelganger_Card
+          - Variant_Twohand_Axe     # 28135
+          - Labyrinth_Doppelganger_Card     # 27301
       - Combo:
-          - Variant_Rifle
-          - Labyrinth_Doppelganger_Card
+          - Variant_Rifle     # 28249
+          - Labyrinth_Doppelganger_Card     # 27301
       - Combo:
-          - Variant_Gatling_Gun
-          - Labyrinth_Doppelganger_Card
+          - Variant_Gatling_Gun     # 28250
+          - Labyrinth_Doppelganger_Card     # 27301
       - Combo:
-          - Variant_Shotgun
-          - Labyrinth_Doppelganger_Card
+          - Variant_Shotgun     # 28251
+          - Labyrinth_Doppelganger_Card     # 27301
       - Combo:
-          - Variant_Launcher
-          - Labyrinth_Doppelganger_Card
+          - Variant_Launcher     # 28252
+          - Labyrinth_Doppelganger_Card     # 27301
       - Combo:
-          - Variant_Book
-          - Labyrinth_Doppelganger_Card
+          - Variant_Book     # 28627
+          - Labyrinth_Doppelganger_Card     # 27301
       - Combo:
-          - Variant_Dagger
-          - Labyrinth_Doppelganger_Card
+          - Variant_Dagger     # 28753
+          - Labyrinth_Doppelganger_Card     # 27301
       - Combo:
-          - Variant_Spear
-          - Labyrinth_Doppelganger_Card
+          - Variant_Spear     # 32017
+          - Labyrinth_Doppelganger_Card     # 27301
       - Combo:
-          - Variant_Viollin
-          - Labyrinth_Doppelganger_Card
+          - Variant_Viollin     # 32105
+          - Labyrinth_Doppelganger_Card     # 27301
       - Combo:
-          - Variant_Blade_Whip
-          - Labyrinth_Doppelganger_Card
+          - Variant_Blade_Whip     # 32106
+          - Labyrinth_Doppelganger_Card     # 27301
       - Combo:
-          - Variant_Handgun
-          - Labyrinth_Doppelganger_Card
+          - Variant_Handgun     # 32300
+          - Labyrinth_Doppelganger_Card     # 27301
     Script: |
       bonus bAspdRate,10;
-      bonus2 bAddRace,RC_All,10;
+      bonus2 bAddClass,Class_All,10;
   - Combos:
       - Combo:
           - Angel_Egg
@@ -21314,11 +21312,11 @@ Body:
       bonus2 bSkillAtk,"GN_CARTCANNON",10*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - Thanos_Helm_2
-          - Thanos_Bow_AD
+          - Thanos_Helm_2     # 400141
+          - Thanos_Bow_AD     # 700029
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
-      bonus2 bAddRace,RC_All,10;
+      bonus2 bAddClass,Class_All,10;
       bonus2 bSkillAtk,"SN_SHARPSHOOTING",10*(.@r_weapon/2);
   - Combos:
       - Combo:
@@ -23891,7 +23889,7 @@ Body:
           - Strong_Blow5     # 29370
     Script: |
       if (BaseClass == Job_Novice || BaseClass == Job_Swordman || BaseClass == Job_Archer || BaseClass == Job_Acolyte || BaseClass == Job_Archer || BaseClass == Job_Merchant || BaseClass == Job_Taekwon || BaseClass == Job_Gunslinger || BaseClass == Job_Summoner) {
-         bonus2 bAddRace,RC_All,10;
+         bonus2 bAddClass,Class_All,10;
          bonus bPerfectHitAddRate,30;
       }
   - Combos:
@@ -24504,3 +24502,208 @@ Body:
     Script: |
       bonus bBaseAtk,BaseLevel*2;
       bonus bMatk,BaseLevel*2;
+  - Combos:
+      - Combo:
+          - Staff_Of_Puffy_jp     # 26152
+          - Siroma_Card     # 4416
+    Script: |
+      bonus2 bSkillFixedCast,"MG_COLDBOLT",10000;
+  - Combos:
+      - Combo:
+          - Staff_Of_Puffy_jp     # 26152
+          - Imp_Card     # 4433
+    Script: |
+      bonus2 bSkillFixedCast,"MG_FIREBOLT",10000;
+  - Combos:
+      - Combo:
+          - Staff_Of_Puffy_jp     # 26152
+          - Elvira_Card_J     # 31002
+    Script: |
+      bonus2 bSkillFixedCast,"MG_LIGHTNINGBOLT",10000;
+  - Combos:
+      - Combo:
+          - Elvira_Card_J     # 31002
+          - Circuit_Board_OS     # 28629
+    Script: |
+      bonus2 bSkillFixedCast,"MG_LIGHTNINGBOLT",10000;
+  - Combos:
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - Cannon_Rapier_OS     # 13493
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - Saphir_Hall_OS     # 16088
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - Ultio_Spes_OS     # 16089
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - Virtual_Bow_OS     # 18178
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - MH_P89_OS     # 18179
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - AC_B44_OS     # 18180
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - Burning_Knuckle_OS     # 1862
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - Beam_Claymore_OS     # 21047
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - Rutilus_Stick_OS     # 26151
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - ElectricFox_OS     # 26164
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - Meuchler_OS     # 28038
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - Blasti_OS     # 28136
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - HR_S55_OS     # 28253
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - Circuit_Board_OS     # 28629
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - Kuroiro_OS     # 28755
+      - Combo:
+          - Cor_Core_Headset     # 410014
+          - Boost_Lance_OS     # 32019
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - Cannon_Rapier_OS     # 13493
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - Saphir_Hall_OS     # 16088
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - Ultio_Spes_OS     # 16089
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - Virtual_Bow_OS     # 18178
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - MH_P89_OS     # 18179
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - AC_B44_OS     # 18180
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - Burning_Knuckle_OS     # 1862
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - Beam_Claymore_OS     # 21047
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - Rutilus_Stick_OS     # 26151
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - ElectricFox_OS     # 26164
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - Meuchler_OS     # 28038
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - Blasti_OS     # 28136
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - HR_S55_OS     # 28253
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - Circuit_Board_OS     # 28629
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - Kuroiro_OS     # 28755
+      - Combo:
+          - Cor_Core_Headset_     # 410015
+          - Boost_Lance_OS     # 32019
+    Script: |
+      bonus bBaseAtk,200;
+      bonus bMatk,200;
+  - Combos:
+      - Combo:
+          - aegis_470080     # 470080
+          - Bear's_Power     # 4875
+      - Combo:
+          - aegis_470081     # 470081
+          - Bear's_Power     # 4875
+    Script: |
+      bonus bStr,40;
+      bonus bMaxHPrate,40;
+  - Combos:
+      - Combo:
+          - aegis_470080     # 470080
+          - Argen_Blanco_J     # 32028
+      - Combo:
+          - aegis_470081     # 470081
+          - Argen_Blanco_J     # 32028
+    Script: |
+      bonus2 bSkillAtk,"RK_IGNITIONBREAK",BaseLevel/2;
+      bonus2 bSkillAtk,"KN_PIERCE",BaseLevel*8;
+  - Combos:
+      - Combo:
+          - aegis_470080     # 470080
+          - Harve_J     # 32029
+      - Combo:
+          - aegis_470081     # 470081
+          - Harve_J     # 32029
+    Script: |
+      bonus2 bSkillAtk,"LG_OVERBRAND",BaseLevel/2;
+      bonus2 bSkillAtk,"PA_SHIELDCHAIN",BaseLevel;
+  - Combos:
+      - Combo:
+          - aegis_470080     # 470080
+          - Fortrage_J     # 32030
+      - Combo:
+          - aegis_470081     # 470081
+          - Fortrage_J     # 32030
+    Script: |
+      bonus2 bSkillAtk,"LG_CANNONSPEAR",4*(BaseLevel/5);
+      bonus2 bSkillAtk,"LG_PINPOINTATTACK",BaseLevel*2;
+  - Combos:
+      - Combo:
+          - Orcish_Hero_Of_Anger     # 29140
+          - Orcish_Axe     # 1304
+          - Orcish_Sword     # 1124        
+      - Combo:
+          - Orcish_Hero_Of_Anger     # 29140
+          - Orcish_Axe     # 1304
+          - Orcish_Sword_     # 13437
+      - Combo:
+          - Orcish_Hero_Of_Anger     # 29140
+          - Orcish_Axe_     # 1309
+          - Orcish_Sword     # 1124
+      - Combo:
+          - Orcish_Hero_Of_Anger     # 29140
+          - Orcish_Axe_     # 1309
+          - Orcish_Sword_     # 13437
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_L);
+      .@weapon = getequiprefinerycnt(EQI_HAND_R);
+      bonus3 bAutoSpell,"ASC_BREAKER",getskilllv("ASC_BREAKER"),400;
+      bonus bBaseAtk,15*(.@r+.@weapon/2);
+      bonus bAspdRate,5*(.@r+.@weapon/2);
+      if ((.@r + .@weapon) >= 20)
+         bonus2 bResEff,Eff_Stun,10000;
+  - Combos:
+      - Combo:
+          - Principles_Of_Magic     # 1572
+          - Librarian_Glove     # 2716
+          - Pocket_Watch     # 2971
+    Script: |
+      bonus bInt,5;
+      bonus bMaxHP,700;
+      bonus bAspdRate,5;
+  - Combos:
+      - Combo:
+          - Royal_Guardian_Ring     # 28483
+          - Lich_Lord_Card     # 27025
+    Script: |
+      bonus2 bAddClass,Class_All,5;
+      bonus bMatkRate,5;

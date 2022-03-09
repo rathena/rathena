@@ -10267,9 +10267,9 @@ void battle_adjust_conf()
 	}
 #endif
 
-#if !( PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114 )
+#if !( PACKETVER_MAIN_NUM >= 20190116 || PACKETVER_RE_NUM >= 20190116 || PACKETVER_ZERO_NUM >= 20181226 )
 	if( battle_config.feature_barter ){
-		ShowWarning("conf/battle/feature.conf barter shop system is enabled but it requires PACKETVER 2018-07-04 or newer, disabling...\n");
+		ShowWarning("conf/battle/feature.conf barter shop system is enabled but it requires PACKETVER 2019-01-16 or newer, disabling...\n");
 		battle_config.feature_barter = 0;
 	}
 #endif
