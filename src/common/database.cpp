@@ -73,7 +73,8 @@ bool YamlDatabase::verifyCompatibility( const YAML::Node& rootNode ){
 			ShowError( "Database version %hu is not supported. Maximum version is: %hu\n", tmpVersion, this->version );
 			return false;
 		}else if( tmpVersion >= this->minimumVersion ){
-			ShowWarning( "Database version %hu is outdated and should be updated. Current version is: %hu\n", tmpVersion, this->minimumVersion );
+			ShowWarning( "Database version %hu is outdated and should be updated. Current version is: %hu\n", tmpVersion, this->version );
+			ShowWarning( "Reduced compatibility with %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), this->currentFile.c_str() );
 		}else{
 			ShowError( "Database version %hu is not supported anymore. Minimum version is: %hu\n", tmpVersion, this->minimumVersion );
 			return false;

@@ -135,8 +135,10 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const YAML::Node& node );
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode( const YAML::Node& node ) override;
+
+	// Additional
 	bool reload();
 };
 
@@ -148,7 +150,7 @@ struct pet_data {
 	struct view_data vd;
 	struct s_pet pet;
 	struct status_data status;
-	struct mob_db *db;
+	std::shared_ptr<s_mob_db> db;
 	int pet_hungry_timer;
 	int target_id;
 	struct {

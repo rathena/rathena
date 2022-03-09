@@ -35,6 +35,7 @@
 #include "int_mercenary.hpp"
 #include "int_party.hpp"
 #include "int_storage.hpp"
+#include "packets.hpp"
 
 //definition of exported var declared in header
 int login_fd=-1; //login file descriptor
@@ -299,7 +300,10 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 		(p->rename != cp->rename) || (p->robe != cp->robe) || (p->character_moves != cp->character_moves) ||
 		(p->unban_time != cp->unban_time) || (p->font != cp->font) || (p->uniqueitem_counter != cp->uniqueitem_counter) ||
 		(p->hotkey_rowshift != cp->hotkey_rowshift) || (p->clan_id != cp->clan_id ) || (p->title_id != cp->title_id) ||
-		(p->show_equip != cp->show_equip) || (p->hotkey_rowshift2 != cp->hotkey_rowshift2)
+		(p->show_equip != cp->show_equip) || (p->hotkey_rowshift2 != cp->hotkey_rowshift2) ||
+		(p->max_ap != cp->max_ap) || (p->ap != cp->ap) || (p->trait_point != cp->trait_point) ||
+		(p->pow != cp->pow) || (p->sta != cp->sta) || (p->wis != cp->wis) ||
+		(p->spl != cp->spl) || (p->con != cp->con) || (p->crt != cp->crt)
 	)
 	{	//Save status
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `base_level`='%d', `job_level`='%d',"
@@ -310,7 +314,9 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 			"`weapon`='%d',`shield`='%d',`head_top`='%d',`head_mid`='%d',`head_bottom`='%d',"
 			"`last_map`='%s',`last_x`='%d',`last_y`='%d',`save_map`='%s',`save_x`='%d',`save_y`='%d', `rename`='%d',"
 			"`delete_date`='%lu',`robe`='%d',`moves`='%d',`font`='%u',`uniqueitem_counter`='%u',"
-			"`hotkey_rowshift`='%d', `clan_id`='%d', `title_id`='%lu', `show_equip`='%d', `hotkey_rowshift2`='%d'"
+			"`hotkey_rowshift`='%d', `clan_id`='%d', `title_id`='%lu', `show_equip`='%d', `hotkey_rowshift2`='%d',"
+			"`max_ap`='%u',`ap`='%u',`trait_point`='%d',"
+			"`pow`='%d',`sta`='%d',`wis`='%d',`spl`='%d',`con`='%d',`crt`='%d'"
 			" WHERE `account_id`='%d' AND `char_id` = '%d'",
 			schema_config.char_db, p->base_level, p->job_level,
 			p->base_exp, p->job_exp, p->zeny,
@@ -323,6 +329,8 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 			(unsigned long)p->delete_date, // FIXME: platform-dependent size
 			p->robe, p->character_moves, p->font, p->uniqueitem_counter,
 			p->hotkey_rowshift, p->clan_id, p->title_id, p->show_equip, p->hotkey_rowshift2,
+			p->max_ap, p->ap, p->trait_point,
+			p->pow, p->sta, p->wis, p->spl, p->con, p->crt,
 			p->account_id, p->char_id) )
 		{
 			Sql_ShowDebug(sql_handle);
@@ -338,18 +346,18 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 		(p->partner_id != cp->partner_id) || (p->father != cp->father) ||
 		(p->mother != cp->mother) || (p->child != cp->child) ||
  		(p->karma != cp->karma) || (p->manner != cp->manner) ||
-		(p->fame != cp->fame)
+		(p->fame != cp->fame) || (p->inventory_slots != cp->inventory_slots)
 	)
 	{
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `class`='%d',"
 			"`hair`='%d', `hair_color`='%d', `clothes_color`='%d', `body`='%d',"
 			"`partner_id`='%u', `father`='%u', `mother`='%u', `child`='%u',"
-			"`karma`='%d',`manner`='%d', `fame`='%d'"
+			"`karma`='%d',`manner`='%d', `fame`='%d', `inventory_slots`='%hu'"
 			" WHERE  `account_id`='%d' AND `char_id` = '%d'",
 			schema_config.char_db, p->class_,
 			p->hair, p->hair_color, p->clothes_color, p->body,
 			p->partner_id, p->father, p->mother, p->child,
-			p->karma, p->manner, p->fame,
+			p->karma, p->manner, p->fame, p->inventory_slots,
 			p->account_id, p->char_id) )
 		{
 			Sql_ShowDebug(sql_handle);
@@ -924,7 +932,9 @@ int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* coun
 		"`status_point`,`skill_point`,`option`,`karma`,`manner`,`hair`,`hair_color`,"
 		"`clothes_color`,`body`,`weapon`,`shield`,`head_top`,`head_mid`,`head_bottom`,`last_map`,`rename`,`delete_date`,"
 		"`robe`,`moves`,`unban_time`,`font`,`uniqueitem_counter`,`sex`,`hotkey_rowshift`,`title_id`,`show_equip`,"
-		"`hotkey_rowshift2`"
+		"`hotkey_rowshift2`,"
+		"`max_ap`,`ap`,`trait_point`,`pow`,`sta`,`wis`,`spl`,`con`,`crt`,"
+		"`inventory_slots`"
 		" FROM `%s` WHERE `account_id`='%d' AND `char_num` < '%d'", schema_config.char_db, sd->account_id, MAX_CHARS)
 	||	SQL_ERROR == SqlStmt_Execute(stmt)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0,  SQLDT_INT,    &p.char_id, 0, NULL, NULL)
@@ -973,6 +983,16 @@ int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* coun
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 43, SQLDT_ULONG,  &p.title_id, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 44, SQLDT_UINT16, &p.show_equip, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 45, SQLDT_UCHAR,  &p.hotkey_rowshift2, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 46, SQLDT_UINT,   &p.max_ap, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 47, SQLDT_UINT,   &p.ap, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 48, SQLDT_UINT,   &p.trait_point, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 49, SQLDT_SHORT,  &p.pow, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 50, SQLDT_SHORT,  &p.sta, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 51, SQLDT_SHORT,  &p.wis, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 52, SQLDT_SHORT,  &p.spl, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 53, SQLDT_SHORT,  &p.con, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 54, SQLDT_SHORT,  &p.crt, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 55, SQLDT_UINT16, &p.inventory_slots, 0, NULL, NULL)
 	)
 	{
 		SqlStmt_ShowDebug(stmt);
@@ -1040,7 +1060,9 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 		"`status_point`,`skill_point`,`option`,`karma`,`manner`,`party_id`,`guild_id`,`pet_id`,`homun_id`,`elemental_id`,`hair`,"
 		"`hair_color`,`clothes_color`,`body`,`weapon`,`shield`,`head_top`,`head_mid`,`head_bottom`,`last_map`,`last_x`,`last_y`,"
 		"`save_map`,`save_x`,`save_y`,`partner_id`,`father`,`mother`,`child`,`fame`,`rename`,`delete_date`,`robe`, `moves`,"
-		"`unban_time`,`font`,`uniqueitem_counter`,`sex`,`hotkey_rowshift`,`clan_id`,`title_id`,`show_equip`,`hotkey_rowshift2`"
+		"`unban_time`,`font`,`uniqueitem_counter`,`sex`,`hotkey_rowshift`,`clan_id`,`title_id`,`show_equip`,`hotkey_rowshift2`,"
+		"`max_ap`,`ap`,`trait_point`,`pow`,`sta`,`wis`,`spl`,`con`,`crt`,"
+		"`inventory_slots`"
 		" FROM `%s` WHERE `char_id`=? LIMIT 1", schema_config.char_db)
 	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
 	||	SQL_ERROR == SqlStmt_Execute(stmt)
@@ -1107,6 +1129,16 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 60, SQLDT_ULONG,  &p->title_id, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 61, SQLDT_UINT16, &p->show_equip, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 62, SQLDT_UCHAR,  &p->hotkey_rowshift2, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 63, SQLDT_UINT,   &p->max_ap, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 64, SQLDT_UINT,   &p->ap, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 65, SQLDT_UINT,   &p->trait_point, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 66, SQLDT_SHORT,  &p->pow, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 67, SQLDT_SHORT,  &p->sta, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 68, SQLDT_SHORT,  &p->wis, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 69, SQLDT_SHORT,  &p->spl, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 70, SQLDT_SHORT,  &p->con, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 71, SQLDT_SHORT,  &p->crt, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 72, SQLDT_UINT16, &p->inventory_slots, 0, NULL, NULL)
 	)
 	{
 		SqlStmt_ShowDebug(stmt);
@@ -1448,7 +1480,7 @@ int char_make_new_char( struct char_session_data* sd, char* name_, int str, int 
 
 	status_points = 0;
 #else
-	status_points = 48;
+	status_points = charserv_config.start_status_points;
 #endif
 
 	// check the number of already existing chars in this account
@@ -1752,7 +1784,7 @@ int char_count_users(void)
 
 	users = 0;
 	for(i = 0; i < ARRAYLENGTH(map_server); i++) {
-		if (map_server[i].fd > 0) {
+		if (session_isValid(map_server[i].fd)) {
 			users += map_server[i].users;
 		}
 	}
@@ -1762,113 +1794,91 @@ int char_count_users(void)
 // Writes char data to the buffer in the format used by the client.
 // Used in packets 0x6b (chars info) and 0x6d (new char info)
 // Returns the size
-int char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
-{
-	unsigned short offset = 0;
-	uint8* buf;
-
+int char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p){
 	if( buffer == NULL || p == NULL )
 		return 0;
 
-	buf = WBUFP(buffer,0);
-	WBUFL(buf,0) = p->char_id;
-#if PACKETVER >= 20170830
-	WBUFQ(buf,4) = u64min(p->base_exp, MAX_EXP);
-	offset += 4;
-	buf = WBUFP(buffer, offset);
-#else
-	WBUFL(buf,4) = (int32)u64min(p->base_exp, MAX_EXP);
-#endif
-	WBUFL(buf,8) = p->zeny;
-#if PACKETVER >= 20170830
-	WBUFQ(buf,12) = u64min(p->job_exp, MAX_EXP);
-	offset += 4;
-	buf = WBUFP(buffer, offset);
-#else
-	WBUFL(buf,12) = (int32)u64min(p->job_exp, MAX_EXP);
-#endif
-	WBUFL(buf,16) = p->job_level;
-	WBUFL(buf,20) = 0; // probably opt1
-	WBUFL(buf,24) = 0; // probably opt2
-	WBUFL(buf,28) = p->option;
-	WBUFL(buf,32) = p->karma;
-	WBUFL(buf,36) = p->manner;
-	WBUFW(buf,40) = umin(p->status_point, INT16_MAX);
-	WBUFL(buf,42) = p->hp;
-	WBUFL(buf,46) = p->max_hp;
-	offset+=4;
-	buf = WBUFP(buffer,offset);
-	WBUFW(buf,46) = min(p->sp, INT16_MAX);
-	WBUFW(buf,48) = min(p->max_sp, INT16_MAX);
-	WBUFW(buf,50) = DEFAULT_WALK_SPEED; // p->speed;
-	WBUFW(buf,52) = p->class_;
-	WBUFW(buf,54) = p->hair;
+	struct CHARACTER_INFO* info = (struct CHARACTER_INFO*)buffer;
 
+	info->GID = p->char_id;
+#if PACKETVER >= 20170830
+	info->exp = u64min( p->base_exp, MAX_EXP );
+#else
+	info->exp = (int32)u64min( p->base_exp, MAX_EXP );
+#endif
+	info->money = p->zeny;
+#if PACKETVER >= 20170830
+	info->jobexp = u64min( p->job_exp, MAX_EXP );
+#else
+	info->jobexp = (int32)u64min( p->job_exp, MAX_EXP );
+#endif
+	info->joblevel = p->job_level;
+	info->bodystate = 0; // probably opt1
+	info->healthstate = 0; // probably opt2
+	info->effectstate = p->option;
+	info->virtue = p->karma;
+	info->honor = p->manner;
+	info->jobpoint = umin( p->status_point, INT16_MAX );
+	info->hp = p->hp;
+	info->maxhp = p->max_hp;
+	info->sp = min( p->sp, INT16_MAX );
+	info->maxsp = min( p->max_sp, INT16_MAX );
+	info->speed = DEFAULT_WALK_SPEED; // p->speed;
+	info->job = p->class_;
+	info->head = p->hair;
 #if PACKETVER >= 20141022
-	WBUFW(buf,56) = p->body;
-	offset+=2;
-	buf = WBUFP(buffer,offset);
+	info->body = p->body;
 #endif
-
 	//When the weapon is sent and your option is riding, the client crashes on login!?
-	WBUFW(buf,56) = p->option&(0x20|0x80000|0x100000|0x200000|0x400000|0x800000|0x1000000|0x2000000|0x4000000|0x8000000) ? 0 : p->weapon;
-
-	WBUFW(buf,58) = p->base_level;
-	WBUFW(buf,60) = umin(p->skill_point, INT16_MAX);
-	WBUFW(buf,62) = p->head_bottom;
-	WBUFW(buf,64) = p->shield;
-	WBUFW(buf,66) = p->head_top;
-	WBUFW(buf,68) = p->head_mid;
-	WBUFW(buf,70) = p->hair_color;
-	WBUFW(buf,72) = p->clothes_color;
-	memcpy(WBUFP(buf,74), p->name, NAME_LENGTH);
-	WBUFB(buf,98) = (unsigned char)u16min(p->str, UINT8_MAX);
-	WBUFB(buf,99) = (unsigned char)u16min(p->agi, UINT8_MAX);
-	WBUFB(buf,100) = (unsigned char)u16min(p->vit, UINT8_MAX);
-	WBUFB(buf,101) = (unsigned char)u16min(p->int_, UINT8_MAX);
-	WBUFB(buf,102) = (unsigned char)u16min(p->dex, UINT8_MAX);
-	WBUFB(buf,103) = (unsigned char)u16min(p->luk, UINT8_MAX);
-	WBUFW(buf,104) = p->slot;
-	WBUFW(buf,106) = ( p->rename > 0 ) ? 0 : 1;
-	offset += 2;
+	info->weapon = p->option&(0x20|0x80000|0x100000|0x200000|0x400000|0x800000|0x1000000|0x2000000|0x4000000|0x8000000) ? 0 : p->weapon;
+	info->level = p->base_level;
+	info->sppoint = umin( p->skill_point, INT16_MAX );
+	info->accessory = p->head_bottom;
+	info->shield = p->shield;
+	info->accessory2 = p->head_top;
+	info->accessory3 = p->head_mid;
+	info->headpalette = p->hair_color;
+	info->bodypalette = p->clothes_color;
+	safestrncpy( info->name, p->name, NAME_LENGTH );
+	info->Str = (uint8)u16min( p->str, UINT8_MAX );
+	info->Agi = (uint8)u16min( p->agi, UINT8_MAX );
+	info->Vit = (uint8)u16min( p->vit, UINT8_MAX );
+	info->Int = (uint8)u16min( p->int_, UINT8_MAX );
+	info->Dex = (uint8)u16min( p->dex, UINT8_MAX );
+	info->Luk = (uint8)u16min( p->luk, UINT8_MAX );
+	info->CharNum = p->slot;
+	info->hairColor = (uint8)u16min( p->hair_color, UINT8_MAX );
+	info->bIsChangedCharName = ( p->rename > 0 ) ? 0 : 1;
 #if (PACKETVER >= 20100720 && PACKETVER <= 20100727) || PACKETVER >= 20100803
-	mapindex_getmapname_ext(mapindex_id2name(p->last_point.map), WBUFCP(buf,108));
-	offset += MAP_NAME_LENGTH_EXT;
+	mapindex_getmapname_ext( mapindex_id2name( p->last_point.map ), info->mapName );
 #endif
 #if PACKETVER >= 20100803
 #if PACKETVER_CHAR_DELETEDATE
-	WBUFL(buf,124) = (p->delete_date?TOL(p->delete_date-time(NULL)):0);
+	info->DelRevDate = ( p->delete_date ? TOL( p->delete_date - time( NULL ) ) : 0 );
 #else
-	WBUFL(buf,124) = TOL(p->delete_date);
+	info->DelRevDate = TOL( p->delete_date );
 #endif
-	offset += 4;
 #endif
 #if PACKETVER >= 20110111
-	WBUFL(buf,128) = p->robe;
-	offset += 4;
+	info->robePalette = p->robe;
 #endif
-#if PACKETVER != 20111116 //2011-11-16 wants 136, ask gravity.
-	#if PACKETVER >= 20110928
-		// change slot feature (0 = disabled, otherwise enabled)
-		if( (charserv_config.charmove_config.char_move_enabled)==0 )
-			WBUFL(buf,132) = 0;
-		else if( charserv_config.charmove_config.char_moves_unlimited )
-			WBUFL(buf,132) = 1;
-		else
-			WBUFL(buf,132) = max( 0, (int)p->character_moves );
-		offset += 4;
-	#endif
-	#if PACKETVER >= 20111025
-		WBUFL(buf,136) = ( p->rename > 0 ) ? 1 : 0;  // (0 = disabled, otherwise displays "Add-Ons" sidebar)
-		offset += 4;
-	#endif
-	#if PACKETVER >= 20141016
-		WBUFB(buf,140) = p->sex;// sex - (0 = female, 1 = male, 99 = logindefined)
-		offset += 1;
-	#endif
+#if PACKETVER >= 20110928
+	// change slot feature (0 = disabled, otherwise enabled)
+	if( charserv_config.charmove_config.char_move_enabled == 0 )
+		info->chr_slot_changeCnt = 0;
+	else if( charserv_config.charmove_config.char_moves_unlimited )
+		info->chr_slot_changeCnt = 1;
+	else
+		info->chr_slot_changeCnt = max( 0, (int)p->character_moves );
+#endif
+#if PACKETVER >= 20111025
+	info->chr_name_changeCnt = ( p->rename > 0 ) ? 1 : 0; // (0 = disabled, otherwise displays "Add-Ons" sidebar)
+#endif
+#if PACKETVER >= 20141016
+	info->sex = p->sex; // sex - (0 = female, 1 = male, 99 = logindefined)
 #endif
 
-	return 106+offset;
+	return sizeof( struct CHARACTER_INFO );
 }
 
 
@@ -1987,7 +1997,7 @@ void char_auth_ok(int fd, struct char_session_data *sd) {
 			chclif_send_auth_result(fd,8);
 			return;
 		}
-		if (character->fd >= 0 && character->fd != fd)
+		if (session_isValid(character->fd) && character->fd != fd)
 		{	//There's already a connection from this account that hasn't picked a char yet.
 			chclif_send_auth_result(fd,8);
 			return;
@@ -2017,7 +2027,7 @@ void char_read_fame_list(void)
 	memset(chemist_fame_list, 0, sizeof(chemist_fame_list));
 	memset(taekwon_fame_list, 0, sizeof(taekwon_fame_list));
 	// Build Blacksmith ranking list
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`fame`,`name` FROM `%s` WHERE `fame`>0 AND (`class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d') ORDER BY `fame` DESC LIMIT 0,%d", schema_config.char_db, JOB_BLACKSMITH, JOB_WHITESMITH, JOB_BABY_BLACKSMITH, JOB_MECHANIC, JOB_MECHANIC_T, JOB_BABY_MECHANIC, fame_list_size_smith) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`fame`,`name` FROM `%s` WHERE `fame`>0 AND (`class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d') ORDER BY `fame` DESC LIMIT 0,%d", schema_config.char_db, JOB_BLACKSMITH, JOB_WHITESMITH, JOB_BABY_BLACKSMITH, JOB_MECHANIC, JOB_MECHANIC_T, JOB_BABY_MECHANIC, JOB_MEISTER, fame_list_size_smith) )
 		Sql_ShowDebug(sql_handle);
 	for( i = 0; i < fame_list_size_smith && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
 	{
@@ -2032,7 +2042,7 @@ void char_read_fame_list(void)
 		memcpy(smith_fame_list[i].name, data, zmin(len, NAME_LENGTH));
 	}
 	// Build Alchemist ranking list
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`fame`,`name` FROM `%s` WHERE `fame`>0 AND (`class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d') ORDER BY `fame` DESC LIMIT 0,%d", schema_config.char_db, JOB_ALCHEMIST, JOB_CREATOR, JOB_BABY_ALCHEMIST, JOB_GENETIC, JOB_GENETIC_T, JOB_BABY_GENETIC, fame_list_size_chemist) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`fame`,`name` FROM `%s` WHERE `fame`>0 AND (`class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d') ORDER BY `fame` DESC LIMIT 0,%d", schema_config.char_db, JOB_ALCHEMIST, JOB_CREATOR, JOB_BABY_ALCHEMIST, JOB_GENETIC, JOB_GENETIC_T, JOB_BABY_GENETIC, JOB_BIOLO, fame_list_size_chemist) )
 		Sql_ShowDebug(sql_handle);
 	for( i = 0; i < fame_list_size_chemist && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
 	{
@@ -2094,7 +2104,7 @@ int char_loadName(uint32 char_id, char* name){
 int char_search_mapserver(unsigned short map, uint32 ip, uint16 port){
 	for(int i = 0; i < ARRAYLENGTH(map_server); i++)
 	{
-		if (map_server[i].fd > 0
+		if (session_isValid(map_server[i].fd)
 		&& (ip == (uint32)-1 || map_server[i].ip == ip)
 		&& (port == (uint16)-1 || map_server[i].port == port))
 		{
@@ -2316,7 +2326,9 @@ bool char_checkdb(void){
 		"`shield`,`head_top`,`head_mid`,`head_bottom`,`robe`,`last_map`,`last_x`,`last_y`,`save_map`,"
 		"`save_x`,`save_y`,`partner_id`,`online`,`father`,`mother`,`child`,`fame`,`rename`,`delete_date`,"
 		"`moves`,`unban_time`,`font`,`sex`,`hotkey_rowshift`,`clan_id`,`last_login`,`title_id`,`show_equip`,"
-		"`hotkey_rowshift2`"
+		"`hotkey_rowshift2`,"
+		"`max_ap`,`ap`,`trait_point`,`pow`,`sta`,`wis`,`spl`,`con`,`crt`,"
+		"`inventory_slots`"
 		" FROM `%s` LIMIT 1;", schema_config.char_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -2639,6 +2651,8 @@ void char_sql_config_read(const char* cfgName) {
 			safestrncpy(schema_config.clan_alliance_table, w2, sizeof(schema_config.clan_alliance_table));
 		else if(!strcmpi(w1,"achievement_table"))
 			safestrncpy(schema_config.achievement_table, w2, sizeof(schema_config.achievement_table));
+		else if(!strcmpi(w1, "start_status_points"))
+			charserv_config.start_status_points = atoi(w2);
 		//support the import command, just like any other config
 		else if(!strcmpi(w1,"import"))
 			char_sql_config_read(w2);
@@ -2769,6 +2783,8 @@ void char_set_defaults(){
 	charserv_config.start_items_doram[1].amount = 1;
 	charserv_config.start_items_doram[1].pos = EQP_ARMOR;
 #endif
+
+	charserv_config.start_status_points = 48;
 
 	charserv_config.console = 0;
 	charserv_config.max_connect_user = -1;
@@ -3070,6 +3086,8 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.mail_return_days = atoi(w2);
 		} else if (strcmpi(w1, "mail_delete_days") == 0) {
 			charserv_config.mail_delete_days = atoi(w2);
+		} else if (strcmpi(w1, "mail_return_empty") == 0) {
+			charserv_config.mail_return_empty = config_switch(w2);
 		} else if (strcmpi(w1, "allowed_job_flag") == 0) {
 			charserv_config.allowed_job_flag = atoi(w2);
 		} else if (strcmpi(w1, "import") == 0) {
@@ -3245,11 +3263,11 @@ int do_init(int argc, char **argv)
 
 	// periodically check if mails need to be returned to their sender
 	add_timer_func_list(mail_return_timer, "mail_return_timer");
-	add_timer_interval(gettick() + 1000, mail_return_timer, 0, 0, 5 * 60 * 1000); // every 5 minutes
+	add_timer_interval(gettick() + 1000, mail_return_timer, 0, 0, 1 * 60 * 1000); // every minute
 
 	// periodically check if mails need to be deleted completely
 	add_timer_func_list(mail_delete_timer, "mail_delete_timer");
-	add_timer_interval(gettick() + 1000, mail_delete_timer, 0, 0, 5 * 60 * 1000); // every 5 minutes
+	add_timer_interval(gettick() + 1000, mail_delete_timer, 0, 0, 1 * 60 * 1000); // every minute
 
 	//check db tables
 	if(charserv_config.char_check_db && char_checkdb() == 0){

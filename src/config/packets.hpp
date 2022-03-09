@@ -13,13 +13,13 @@
 	/// Do NOT edit this line! To set your client version, please do this instead:
 	/// In Windows: Add this line in your src\custom\defines_pre.hpp file: #define PACKETVER YYYYMMDD
 	/// In Linux: The same as above or run the following command: ./configure --enable-packetver=YYYYMMDD
-	#define PACKETVER 20200401
+	#define PACKETVER 20211103
 #endif
 
 #ifndef PACKETVER_RE
 	/// From November 2015 only RagexeRE are supported.
 	/// After July 2018 only Ragexe are supported.
-	#if PACKETVER > 20151104 && PACKETVER < 20180704
+	#if ( PACKETVER > 20151104 && PACKETVER < 20180704 ) || PACKETVER >= 20200902
 		#define PACKETVER_RE
 	#endif
 #endif

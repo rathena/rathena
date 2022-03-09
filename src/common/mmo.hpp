@@ -40,7 +40,27 @@
 #endif
 
 #define MAX_MAP_PER_SERVER 1500 /// Maximum amount of maps available on a server
-#define MAX_INVENTORY 100 ///Maximum items in player inventory
+
+#ifndef INVENTORY_BASE_SIZE
+	#define INVENTORY_BASE_SIZE 100 // Amount of inventory slots each player has
+#endif
+
+#ifndef INVENTORY_EXPANSION_SIZE
+	#if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
+		#define INVENTORY_EXPANSION_SIZE 100 // Amount of additional inventory slots a player can have
+	#else
+		#define INVENTORY_EXPANSION_SIZE 0
+	#endif
+#endif
+
+#ifndef MAX_INVENTORY
+	#define MAX_INVENTORY ( INVENTORY_BASE_SIZE + INVENTORY_EXPANSION_SIZE ) // Maximum items in player inventory (in total)
+#else
+	#if MAX_INVENTORY < ( INVENTORY_BASE_SIZE + INVENTORY_EXPANSION_SIZE )
+		#error Your custom MAX_INVENTORY define is too low
+	#endif
+#endif
+
 /** Max number of characters per account. Note that changing this setting alone is not enough if the client is not hexed to support more characters as well.
 * Max value tested was 265 */
 #ifndef MAX_CHARS
@@ -63,7 +83,7 @@ typedef uint32 t_itemid;
 #define MAX_BANK_ZENY SINT32_MAX ///Max zeny in Bank
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
-#define MAX_SKILL 1250 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
+#define MAX_SKILL 1454 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
 #define DEFAULT_WALK_SPEED 150 ///Default walk speed
 #define MIN_WALK_SPEED 20 ///Min walk speed
 #define MAX_WALK_SPEED 1000 ///Max walk speed
@@ -87,6 +107,17 @@ typedef uint32 t_itemid;
 #define DB_NAME_LEN 256 //max len of dbs
 #define MAX_CLAN 500
 #define MAX_CLANALLIANCE 6
+#ifndef MAX_BARTER_REQUIREMENTS
+	#define MAX_BARTER_REQUIREMENTS 5
+#endif
+
+#ifdef RENEWAL
+	#define MAX_WEAPON_LEVEL 5
+	#define MAX_ARMOR_LEVEL 2
+#else
+	#define MAX_WEAPON_LEVEL 4
+	#define MAX_ARMOR_LEVEL 1
+#endif
 
 // for produce
 #define MIN_ATTRIBUTE 0
@@ -94,8 +125,6 @@ typedef uint32 t_itemid;
 #define ATTRIBUTE_NORMAL 0
 #define MIN_STAR 0
 #define MAX_STAR 3
-
-#define MAX_STATUS_TYPE 5
 
 const t_itemid WEDDING_RING_M = 2634;
 const t_itemid WEDDING_RING_F = 2635;
@@ -150,18 +179,21 @@ const t_itemid WEDDING_RING_F = 2635;
 #define MAIL_MAX_ITEM 5
 #define MAIL_PAGE_SIZE 7
 #endif
+#ifndef MAIL_ITERATION_SIZE
+	#define MAIL_ITERATION_SIZE 100
+#endif
 
 //Mercenary System
 #define MC_SKILLBASE 8201
 #define MAX_MERCSKILL 41
 
 //Elemental System
-#define MAX_ELEMENTALSKILL 42
+#define MAX_ELEMENTALSKILL 57
 #define EL_SKILLBASE 8401
-#define MAX_ELESKILLTREE 3
-#define MAX_ELEMENTAL_CLASS 12
-#define EL_CLASS_BASE 2114
-#define EL_CLASS_MAX (EL_CLASS_BASE+MAX_ELEMENTAL_CLASS-1)
+
+//Automated Battle Robot System
+#define ABR_SKILLBASE 8601
+#define MAX_ABRSKILL 5
 
 //Achievement System
 #define MAX_ACHIEVEMENT_OBJECTIVES 10 /// Maximum different objectives in achievement_db.yml
@@ -193,16 +225,16 @@ enum e_mode {
 	MD_LOOTER				= 0x0000002,
 	MD_AGGRESSIVE			= 0x0000004,
 	MD_ASSIST				= 0x0000008,
-	MD_CASTSENSOR_IDLE		= 0x0000010,
-	MD_NORANDOM_WALK		= 0x0000020,
-	MD_NOCAST_SKILL			= 0x0000040,
+	MD_CASTSENSORIDLE		= 0x0000010,
+	MD_NORANDOMWALK			= 0x0000020,
+	MD_NOCAST				= 0x0000040,
 	MD_CANATTACK			= 0x0000080,
 	//FREE					= 0x0000100,
-	MD_CASTSENSOR_CHASE		= 0x0000200,
+	MD_CASTSENSORCHASE		= 0x0000200,
 	MD_CHANGECHASE			= 0x0000400,
 	MD_ANGRY				= 0x0000800,
-	MD_CHANGETARGET_MELEE	= 0x0001000,
-	MD_CHANGETARGET_CHASE	= 0x0002000,
+	MD_CHANGETARGETMELEE	= 0x0001000,
+	MD_CHANGETARGETCHASE	= 0x0002000,
 	MD_TARGETWEAK			= 0x0004000,
 	MD_RANDOMTARGET			= 0x0008000,
 	MD_IGNOREMELEE			= 0x0010000,
@@ -210,13 +242,13 @@ enum e_mode {
 	MD_IGNORERANGED			= 0x0040000,
 	MD_MVP					= 0x0080000,
 	MD_IGNOREMISC			= 0x0100000,
-	MD_KNOCKBACK_IMMUNE		= 0x0200000,
-	MD_TELEPORT_BLOCK		= 0x0400000,
+	MD_KNOCKBACKIMMUNE		= 0x0200000,
+	MD_TELEPORTBLOCK		= 0x0400000,
 	//FREE					= 0x0800000,
-	MD_FIXED_ITEMDROP		= 0x1000000,
+	MD_FIXEDITEMDROP		= 0x1000000,
 	MD_DETECTOR				= 0x2000000,
-	MD_STATUS_IMMUNE		= 0x4000000,
-	MD_SKILL_IMMUNE			= 0x8000000,
+	MD_STATUSIMMUNE			= 0x4000000,
+	MD_SKILLIMMUNE			= 0x8000000,
 };
 
 #define MD_MASK 0x000FFFF
@@ -238,12 +270,6 @@ struct quest {
 	e_quest_state state;             ///< Current quest state
 };
 
-struct s_item_randomoption {
-	short id;
-	short value;
-	char param;
-};
-
 /// Achievement log entry
 struct achievement {
 	int achievement_id;                    ///< Achievement ID
@@ -252,6 +278,17 @@ struct achievement {
 	time_t rewarded;                       ///< Received reward?
 	int score;                             ///< Amount of points achievement is worth
 };
+
+// NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
+#if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
+	#pragma pack( push, 1 )
+#endif
+
+struct s_item_randomoption {
+	short id;
+	short value;
+	char param;
+} __attribute__((packed));
 
 struct item {
 	int id;
@@ -268,7 +305,12 @@ struct item {
 	uint64 unique_id;
 	unsigned int equipSwitch; // location(s) where item is equipped for equip switching (using enum equip_pos for bitmasking)
 	uint8 enchantgrade;
-};
+} __attribute__((packed));
+
+// NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
+#if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
+	#pragma pack( pop )
+#endif
 
 //Equip position constants
 enum equip_pos : uint32 {
@@ -435,7 +477,7 @@ struct s_homunculus {	//[orn]
 	struct s_skill hskill[MAX_HOMUNSKILL]; //albator
 	short skillpts;
 	short level;
-	unsigned int exp;
+	t_exp exp;
 	short rename_flag;
 	short vaporize; //albator
 	int str;
@@ -469,7 +511,7 @@ struct s_elemental {
 	int elemental_id;
 	uint32 char_id;
 	short class_;
-	enum e_mode mode;
+	int mode;
 	int hp, sp, max_hp, max_sp, matk, atk, atk2;
 	short hit, flee, amotion, def, mdef;
 	t_tick life_time;
@@ -501,8 +543,8 @@ struct mmo_charstatus {
 	int zeny;
 
 	short class_; ///< Player's JobID
-	unsigned int status_point,skill_point;
-	int hp,max_hp,sp,max_sp;
+	unsigned int status_point,skill_point,trait_point;
+	int hp,max_hp,sp,max_sp,ap,max_ap;
 	unsigned int option;
 	short manner; // Defines how many minutes a char will be muted, each negative point is equivalent to a minute.
 	unsigned char karma;
@@ -523,6 +565,7 @@ struct mmo_charstatus {
 	char name[NAME_LENGTH];
 	unsigned int base_level,job_level;
 	unsigned short str,agi,vit,int_,dex,luk;
+	unsigned short pow,sta,wis,spl,con,crt;
 	unsigned char slot,sex;
 
 	uint32 mapip;
@@ -553,6 +596,7 @@ struct mmo_charstatus {
 	unsigned char hotkey_rowshift;
 	unsigned char hotkey_rowshift2;
 	unsigned long title_id;
+	uint16 inventory_slots;
 };
 
 typedef enum mail_status {
@@ -702,7 +746,7 @@ struct guild_castle {
 	int castle_id;
 	int mapindex;
 	char castle_name[NAME_LENGTH];
-	char castle_event[EVENT_NAME_LENGTH];
+	char castle_event[NPC_NAME_LENGTH];
 	int guild_id;
 	int economy;
 	int defense;
@@ -979,6 +1023,35 @@ enum e_job {
 	JOB_STAR_EMPEROR2,
 	JOB_BABY_STAR_EMPEROR2,
 
+	JOB_DRAGON_KNIGHT = 4252,
+	JOB_MEISTER,
+	JOB_SHADOW_CROSS,
+	JOB_ARCH_MAGE,
+	JOB_CARDINAL,
+	JOB_WINDHAWK,
+	JOB_IMPERIAL_GUARD,
+	JOB_BIOLO,
+	JOB_ABYSS_CHASER,
+	JOB_ELEMENTAL_MASTER,
+	JOB_INQUISITOR,
+	JOB_TROUBADOUR,
+	JOB_TROUVERE,
+
+	JOB_WINDHAWK2 = 4278,
+	JOB_MEISTER2,
+	JOB_DRAGON_KNIGHT2,
+	JOB_IMPERIAL_GUARD2,
+
+	JOB_SKY_EMPEROR = 4302,
+	JOB_SOUL_ASCETIC,
+	JOB_SHINKIRO,
+	JOB_SHIRANUI,
+	JOB_NIGHT_WATCH,
+	JOB_HYPER_NOVICE,
+	JOB_SPIRIT_HANDLER,
+
+	JOB_SKY_EMPEROR2 = 4316,
+
 	JOB_MAX,
 };
 
@@ -1078,7 +1151,9 @@ struct clan{
 	#ifndef ENABLE_SC_SAVING
 	#warning "Cart won't be able to be saved for relog"
 	#endif
-#if PACKETVER >= 20150826
+#if PACKETVER >= 20191106
+	#define MAX_CARTS 13		// used for another new cart design
+#elif PACKETVER >= 20150826
 	#define MAX_CARTS 12		// used for 3 new cart design
 #else
 	#define MAX_CARTS 9

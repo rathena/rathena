@@ -67,6 +67,8 @@ struct s_instance_data {
 	int keep_timer; ///< Life time ID
 	unsigned int idle_limit; ///< Idle time of instance
 	int idle_timer; ///< Idle timer ID
+	bool nonpc;
+	bool nomapflag;
 	struct reg_db regs; ///< Instance variables for scripts
 	std::vector<s_instance_map> map; ///< Array of maps in instance
 
@@ -89,6 +91,8 @@ struct s_instance_db {
 	std::string name; ///< Instance name
 	uint32 limit, ///< Duration limit
 		timeout; ///< Timeout limit
+	bool nonpc;
+	bool nomapflag;
 	bool destroyable; ///< Destroyable flag
 	struct point enter; ///< Instance entry point
 	std::vector<int16> maplist; ///< Maps in instance
@@ -96,12 +100,12 @@ struct s_instance_db {
 
 class InstanceDatabase : public TypesafeYamlDatabase<int32, s_instance_db> {
 public:
-	InstanceDatabase() : TypesafeYamlDatabase("INSTANCE_DB", 1) {
+	InstanceDatabase() : TypesafeYamlDatabase("INSTANCE_DB", 2, 1) {
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node &node);
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node &node) override;
 };
 
 extern InstanceDatabase instance_db;
@@ -118,6 +122,7 @@ e_instance_enter instance_enter(struct map_session_data *sd, int instance_id, co
 bool instance_reqinfo(struct map_session_data *sd, int instance_id);
 bool instance_addusers(int instance_id);
 bool instance_delusers(int instance_id);
+void instance_generate_mapname(int map_id, int instance_id, char outname[MAP_NAME_LENGTH]);
 int16 instance_mapid(int16 m, int instance_id);
 int instance_addmap(int instance_id);
 

@@ -1,0 +1,2296 @@
+//===== rAthena Script =======================================
+//= Temple of Demon God
+//===== Description: =========================================
+//= [Official Conversion]
+//= Temple of Demon God Instance (part of episode 14.3)
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+moro_cav,41,73,4	script	Guardian Nidhogg#epeom01	4_F_NYDHOG,{
+	if (checkquest(7605,PLAYTIME) == 2)
+		erasequest 7605;
+	if (getcharid(1) < 1) {
+		mes "[Nidhogg]";
+		mes "This place is too dangerous for you to explore alone.";
+		mes "Please form a party and come with your comrades.";
+		cutin "ep14_nyd01.bmp",2;
+		close3;
+	}
+	if (is_party_leader() == false) {
+		mes "[Nidhogg]";
+		mes "Only party leaders can control access to the Temple of the Demon God.";
+		mes "It's to ensure the safety of the entire Expedition. Please let your leader talk to me instead.";
+		cutin "ep14_nyd01.bmp",2;
+		close3;
+	}
+	switch( checkquest(7593,HUNTING) ) {
+	case -1:
+		mes "[Nidhogg]";
+		mes "I'm sorry, but you can't enter this place without approval from the Commander.";
+		mes "You must be on the quest to subjugate the Demon God to enter this place.";
+		cutin "ep14_nyd01.bmp",2;
+		next;
+		mes "[Nidhogg]";
+		mes "Please go to Commander Hiva Agip and receive the Demon God Subjugation quest.";
+		close3;
+	case 0:
+	case 1:
+		mes "[Nidhogg]";
+		mes "I've been waiting for you, hero-in-waiting. ";
+		mes "Let me guide you to the depth of the temple where Morroc lies in wait.";
+		cutin "ep14_nyd03.bmp",2;
+		next;
+		mes "[Nidhogg]";
+		mes "This tree is the spitting image of Yggdrasil.";
+		mes "I just hope Morroc is not intent on what I fear most.";
+		mes "Through this tree the door is opened.";
+		next;
+		mes "[Nidhogg]";
+		mes "I can sense that";
+		mes "this tree is generating mana at certain intervals as if it's breathing.";
+		mes "I'm going to catch a moment between its breaths to open up a path for you. Are you ready?";
+		cutin "ep14_nyd04.bmp",2;
+		next;
+		if (select( "Enter now.", "Do not enter." ) == 2) {
+			mes "[Nidhogg]";
+			mes "Okay.";
+			mes "I understand if you need time.";
+			mes "Take your time. I can wait as long as you want me to.";
+			cutin "ep14_nyd04.bmp",2;
+			close3;
+		}
+		if (instance_create("Temple of the Demon God") < 1) {	// todo, custom text
+			mes "Party Name: " + getpartyname(.@party_id);
+			mes "Party Leader: " + strcharinfo(0);
+			mes "^0000ff" + .@md_name$ + " ^000000 - Reservation Failed.";
+			close;
+		}
+		if (isbegin_quest(7596) == 1)
+			erasequest 7596;
+		mes "[Nidhogg]";
+		mes "Just wait a while, and the entrance will open.";
+		mes "Enter through the tree.";
+		mes "Don't be scared, even though it's not an ordinary tree.";
+		cutin "ep14_nyd04.bmp",2;
+		close3;
+	case 2:	// todo, custom text
+		mes "[Nidhogg]";
+		mes "You have eliminated the God of Despair!?";
+		mes "I can only say that his ambition was too big...";
+		mes "Always talk about creating a new world and becoming a god...";
+		cutin "ep14_nyd03.bmp",2;
+		next;
+		mes "[Nidhogg]";
+		mes "But seriously, he didn't create anything at all!";
+		mes "Abandon the body that used to be a demon, and the appearance after rebirth is just imitating the god...";
+		next;
+		mes "[Nidhogg]";
+		mes "The result is just what a human looks like,";
+		mes "He can't escape the so-called god frame,";
+		mes "...you can only say that you are eating bad luck!";
+		cutin "ep14_nyd02.bmp",2;
+		next;
+		cutin "ep14_nyd04.bmp",2;
+		mes "[Nidhogg]";
+		mes "I will give you approval for the quest, and you can report to the commander.";
+		mes "Thank you!";
+		setquest 7597;
+		erasequest 7593;
+		for ( .@quest = 7601; .@quest < 7605; .@quest++ ) {
+			if (isbegin_quest(.@quest))
+				erasequest .@quest;
+		}
+		if (isbegin_quest(7596))
+			erasequest 7596;
+		close3;
+	}
+}
+
+moro_cav,45,75,0	script	Yggdrasil Lookalike#eom_gate	CLEAR_NPC,{
+	switch( checkquest(7593,HUNTING) ) {
+	case -1:
+		mes "[Nidhogg]";
+		mes "I'm sorry, but you can't enter this place without approval from the Commander.";
+		mes "You must be on the quest to subjugate the Demon God to enter this place.";
+		cutin "ep14_nyd01.bmp",2;
+		next;
+		mes "[Nidhogg]";
+		mes "Please go to Commander Hiva Agip and receive the 'Demon God Subjugation' quest.";
+		close3;
+	case 0:
+	case 1:
+		mes "You touched the tree and felt a strange flow of mana.";
+		mes "Perhaps the flow of mana will guide you to the depth of the temple.";
+		next;
+		if (select( "Enter.", "Quit." ) == 2) {
+			mes "[Nidhogg]";
+			mes "Okay.";
+			mes "I understand if you need time.";
+			mes "Take your time. I can wait as long as you want me to.";
+			cutin "ep14_nyd04.bmp",2;
+			close3;
+		}
+		switch( instance_enter("Temple of the Demon God") ) {
+		case IE_NOMEMBER:
+			mes "[Nidhogg]";
+			mes "This place is too dangerous for you to explore alone.";
+			mes "Please form a party and come with your comrades.";
+			cutin "ep14_nyd01.bmp",2;
+			close3;
+		case IE_NOINSTANCE:
+			mes "[Nidhogg]";
+			mes "No entry permission has been issued under the name of your party.";
+			mes "Please let your party leader submit an entry request, and I'll open the gate to the temple.";
+			cutin "ep14_nyd01.bmp",2;
+			next;
+			mes "[Nidhogg]";
+			mes "You are to comply with the rules set by the Expedition.";
+			mes "It's for everyone's safety.";
+			close3;
+		case IE_OTHER:	// todo, custom text
+			mes "[Nidhogg]";
+			mes "Um...how could this happen... the flow of magic power becomes unstable,";
+			mes "It hurts my brain, this is the gap I finally made...";
+			mes "may not be able to enter at the moment...";
+			cutin "ep14_nyd01.bmp",2;
+			close3;
+		case IE_OK:
+			mapannounce "moro_cav", "" + strcharinfo(0) + " of the party " + getpartyname( getcharid(1) ) + ", is entering Temple of the Demon God.",bc_map;
+			// warp "1@eom",101,16;
+			end;
+		}
+	case 2:	// todo, custom text
+		mes "[Nidhogg]";
+		mes "You have eliminated the God of Despair!?";
+		mes "I can only say that his ambition was too big...";
+		mes "Always talk about creating a new world and becoming a god...";
+		cutin "ep14_nyd01.bmp",2;
+		next;
+		mes "[Nidhogg]";
+		mes "But seriously, he didn't create anything at all!";
+		mes "Abandon the body that used to be a demon, and the appearance after rebirth is just imitating the god...";
+		cutin "ep14_nyd02.bmp",2;
+		next;
+		mes "[Nidhogg]";
+		mes "The result is just what a human looks like,";
+		mes "He can't escape the so-called god frame,";
+		mes "...you can only say that you are eating bad luck!";
+		cutin "ep14_nyd03.bmp",2;
+		next;
+		cutin "ep14_nyd04.bmp",2;
+		mes "[Nidhogg]";
+		mes "I will give you approval for the quest, and you can report to the commander.";
+		mes "Thank you!";
+		setquest 7597;
+		erasequest 7593;
+		for ( .@quest = 7601; .@quest < 7605; .@quest++ ) {
+			if (isbegin_quest(.@quest))
+				erasequest .@quest;
+		}
+		if (isbegin_quest(7596))
+			erasequest 7596;
+		close3;
+	}
+}
+
+1@eom,1,1,0	script	#demon_god_variables	-1,{
+	end;
+OnVariableReset:
+	'boss_id = 0;
+	'boss_hp = 0;
+	'bossx = 'bossy = 0;
+	'boss_phase = 0;
+	'icestunami = false;
+	'spawn = false;
+	'miniboss_id[0] = 'miniboss_id[1] = 0;
+	'combo_is_allowed = false;
+	'flowing_lava_deactivate[0] = 'flowing_lava_deactivate[1] = false;
+	end;
+OnMyMobDead:
+	if (!playerattached())	// shouldn't happen
+		end;
+	.@mob_id = killedrid;
+	sleep 5000;
+	monster 'map_eom$,0,0,"--ja--", .@mob_id,1, instance_npcname("#demon_god_variables") + "::OnMyMobDead";
+	end;
+OnInstanceInit:
+	donpcevent instance_npcname("#demon_god_variables") + "::OnVariableReset";
+
+	'map_eom$ = instance_mapname("1@eom");
+	'step = 0;
+	'inject_soul = 0;
+
+	// Entrance
+	disablenpc instance_npcname("#door_mobmaster");
+	disablenpc instance_npcname("Empty Soul Globe#ahat01");
+	disablenpc instance_npcname("Empty Soul Globe#shnaim01");
+	disablenpc instance_npcname("Filled Soul Globe#ahat02");
+	disablenpc instance_npcname("Filled Soul Globe#shnaim02");
+	disablenpc instance_npcname("#gate_to_center");
+
+	// Center to Ice
+	disablenpc instance_npcname("Strange Boy#mockid01");
+	disablenpc instance_npcname("#gate_to_ice");
+	disablenpc instance_npcname("Loki#eomloki01");
+	disablenpc instance_npcname("Nidhogg#eomnyd01");
+	disablenpc instance_npcname("Brinaranea#brinpc01");
+	disablenpc instance_npcname("#ice_hpcheck");
+	disablenpc instance_npcname("Nidhogg#eomnyd02");
+	disablenpc instance_npcname("#ice_to_center");
+
+	// Center to Fire
+	disablenpc instance_npcname("Morroc#mockid02");
+	disablenpc instance_npcname("#gate_to_fire");
+	disablenpc instance_npcname("#fire_event01");
+	disablenpc instance_npcname("#skollmaster");
+	disablenpc instance_npcname("#loco_call");
+	disablenpc instance_npcname("#fire_combo");
+	disablenpc instance_npcname("Flowing Lava#lavapond01");
+	disablenpc instance_npcname("Flowing Lava#lavapond02");
+	disablenpc instance_npcname("Hardened Lava#lavaseal01");
+	disablenpc instance_npcname("Hardened Lava#lavaseal02");
+	disablenpc instance_npcname("#lavazone11");
+	disablenpc instance_npcname("#lavazone12");
+	disablenpc instance_npcname("#lavazone21");
+	disablenpc instance_npcname("#lavazone22");
+	disablenpc instance_npcname("Nidhogg#eomnyd03");
+	disablenpc instance_npcname("#fire_to_center");
+
+	// Center to Last
+	disablenpc instance_npcname("#gate_to_last");
+	disablenpc instance_npcname("Strange Young Man#mocadt01");
+	disablenpc instance_npcname("#moc_master");
+	disablenpc instance_npcname("#despair_god_main");
+	disablenpc instance_npcname("#mk_hpcheck");
+	disablenpc instance_npcname("#moc_origin");
+	disablenpc instance_npcname("#morocc_god");
+	disablenpc instance_npcname("#despair_main");
+	disablenpc instance_npcname("Nidhogg#eomnyd04");
+
+	// mimic permanent spawn
+	.@event$ = instance_npcname("#demon_god_variables") + "::OnMyMobDead";
+	monster 'map_eom$,0,0,"--ja--", 3101,3, .@event$;	// MM_MANA_WHITE
+	monster 'map_eom$,0,0,"--ja--", 3102,3, .@event$;	// MM_MANA_RED
+	monster 'map_eom$,0,0,"--ja--", 3103,3, .@event$;	// MM_MANA_YELLOW
+	end;
+}
+
+1@eom,101,43,3	script	Demon God's Apostle Aha#ahat	4_HUMAN_GERUTOO,{
+	cutin "ep13_ahat_" + (Sex ? "f" : "m") + ".bmp",2;	// note: cutin f for male, m for female
+	// if (is_party_leader() == false || checkquest(7593,HUNTING) != 1 || isbegin_quest(7596) != 0) {	// quest to 'var for reload
+	if (is_party_leader() == false || checkquest(7593,HUNTING) != 1 || 'step != 0) {
+		mes "[Ahat]";
+		mes "Welcome";
+		mes "to the Temple of the Demon God.";
+		mes "It's my honor to be your host today.";
+		close3;
+	}
+	.@ahat$ = instance_npcname("Demon God's Apostle Aha#ahat");
+	mes "[Ahat]";
+	mes "So, you've come.";
+	mes "Gosh, you're so persistent.";
+	mes "Hah hah, are you surprised to see me here?";
+	npctalk "Ahat: So, you've come.", .@ahat$;
+	next;
+	mes "[Ahat]";
+	mes "Didn't you expect this at all?";
+	mes "Why don't I introduce myself officially?";
+	mes "I'm Ahat, the first servant of the Demon God.";
+	npctalk "Ahat: Why don't I introduce myself officially? I'm Ahat, the first servant of the Demon God.", .@ahat$;
+	next;
+	mes "[Ahat]";
+	mes "Well, well, maybe I forfeit my life today.";
+	mes "Don't look at me like that. Everything is as planned.";
+	npctalk "Ahat: Well, well, maybe I forfeit my life today. Don't look at me like that. Everything is as planned.", .@ahat$;
+	next;
+	mes "[Ahat]";
+	mes "My master wishes for Shnaim and I to put you to the test.";
+	mes "To see if you deserve to be our guests.";
+	npctalk "Ahat: My master wishes for Shnaim and I to put you to the test. To see if you deserve to be our guests.", .@ahat$;
+	next;
+	mes "[Ahat]";
+	mes "If you think you've come this far on your own,";
+	mes "you're mistaken.";
+	npctalk "Ahat: If you think you've come this far on your own, you're mistaken.", .@ahat$;
+	next;
+	mes "[Ahat]";
+	mes "Everything is as the Master has planned.";
+	mes "For now, let's see if you can open this door.";
+	npctalk "Ahat: Everything is as the Master has planned. For now, let's see if you can open this door.", .@ahat$;
+	if (isbegin_quest(7596) == 0)
+		setquest 7596;
+	if ('step != 0)
+		close3;
+	'step = 1;
+	close2;
+	cutin "",255;
+	setpcblock PCBLOCK_NPC, true;
+	sleep2 1000;
+	setpcblock PCBLOCK_NPC, false;
+	disablenpc .@ahat$;
+	warpparty 'map_eom$,101,16,getcharid(1),'map_eom$,2,2;
+	donpcevent instance_npcname("#door_mobmaster") + "::OnStart";
+	end;
+}
+
+1@eom,1,1,0	script	#door_mobmaster	CLEAR_NPC,{
+	end;
+OnStart:
+	'apostle = 10;
+	enablenpc instance_npcname("#door_mobmaster");
+	.@label$ = instance_npcname("#door_mobmaster") + "::OnMyMobDead";
+	monster 'map_eom$,102,30, "Demon God's Apostle Ahat",3105,1, .@label$;	// MM_GB_MOROCC_1
+	setunitdata $@mobid[0], UMOB_HP, 5000000;
+	monster 'map_eom$, 98,30, "Demon God Fragment",1918,1, .@label$;
+	monster 'map_eom$,100,30, "Demon God Fragment",1918,1, .@label$;
+	monster 'map_eom$,104,30, "Demon God Fragment",1918,1, .@label$;
+	monster 'map_eom$,106,30, "Demon God Fragment",1918,1, .@label$;
+	sleep 2000;
+	mapannounce 'map_eom$, "Eliminate the Demon God's Apostles, Ahat and Shnaim, and collect their souls.", bc_map, 0x00ff00;
+	monster 'map_eom$,102,40, "Demon God's Apostle Shnaim",3106,1, .@label$;	// MM_GB_MOROCC_4
+	setunitdata $@mobid[0], UMOB_HP, 5000000;
+	monster 'map_eom$, 98,40, "Demon God Fragment",1921,1, .@label$;
+	monster 'map_eom$,100,40, "Demon God Fragment",1921,1, .@label$;
+	monster 'map_eom$,104,40, "Demon God Fragment",1921,1, .@label$;
+	monster 'map_eom$,106,40, "Demon God Fragment",1921,1, .@label$;
+	sleep 3000;
+	mapannounce 'map_eom$, "The Apostles' souls are the key to opening the Temple of the Demon God.", bc_map, 0x00ff00;
+	end;
+OnMyMobDead:
+	'apostle -= 1;
+	if ('apostle == 0) {
+		'step = 2;
+		disablenpc instance_npcname("#door_mobmaster");
+		enablenpc instance_npcname("Empty Soul Globe#shnaim01");
+		enablenpc instance_npcname("Empty Soul Globe#ahat01");
+		mapannounce 'map_eom$, "Activated the Soul Globes used to open the Temple of the Demon God.", bc_map, 0x00ff00;
+	}
+	end;
+}
+
+1@eom,104,56,0	script	Empty Soul Globe#ahat01	CLEAR_NPC,{
+	if ('step == 2) {
+		if (strnpcinfo(2) == "ahat01")
+			callsub( S_Globe, 1, "Ahat", 6713, "ahat02" );
+		else
+			callsub( S_Globe, 2, "Shnaim", 6714, "shnaim02" );
+	}
+	end;
+S_Globe:
+	.@bit = getarg(0);
+	.@item_id = getarg(2);
+	.@visible_npc_name$ = getarg(1);
+	.@hidden_npc_name$ = getarg(3);
+
+	disable_items;
+	if (is_party_leader() == false || isbegin_quest(7596) != 1 || 'step != 2) {
+		mes "Only party leaders can perform this event.";
+		close;
+	}
+	if (countitem(.@item_id) < 1) {
+		mes "If you want to activate the soul globes, you need Shnaim's soul.";
+		close;
+	}
+	mes "Inject " + .@visible_npc_name$ + "'s soul into the empty soul globe.";
+	next;
+	specialeffect EF_SPHERE;
+	progressbar "000000",10;
+	if (!('inject_soul & .@bit) && countitem(.@item_id) > 0) {
+		'inject_soul |= .@bit;
+		delitem .@item_id,1;
+		specialeffect EF_ENTRY;
+		disablenpc instance_npcname( strnpcinfo(0) );
+		enablenpc instance_npcname("Filled Soul Globe#" + .@hidden_npc_name$);
+		specialeffect EF_ENTRY,AREA, instance_npcname("Filled Soul Globe#" + .@hidden_npc_name$);
+		specialeffect EF_LEVEL99_3,AREA, instance_npcname("Filled Soul Globe#" + .@hidden_npc_name$);
+		mes "Successfully activated " + .@visible_npc_name$ + "'s soul globe.";
+		if ('inject_soul == 3 && 'step == 2) {
+			'step = 3;
+			if (isbegin_quest(7596) == 1)
+				erasequest 7596;// Qualifications of the Guests
+			enablenpc instance_npcname("#gate_to_center");
+			enablenpc instance_npcname("Strange Boy#mockid01");
+			specialeffect EF_MAPPILLAR,AREA, instance_npcname("#gate_to_center");
+			specialeffect EF_LEVEL99_3,AREA, instance_npcname("#gate_to_center");
+		}
+	}
+	close;
+}
+1@eom,98,56,0	duplicate(Empty Soul Globe#ahat01)	Empty Soul Globe#shnaim01	CLEAR_NPC
+
+1@eom,104,56,0	duplicate(dummy_npc)	Filled Soul Globe#ahat02	CLEAR_NPC
+1@eom,98,56,0	duplicate(dummy_npc)	Filled Soul Globe#shnaim02	CLEAR_NPC
+
+1@eom,101,58,0	script	#gate_to_center	WARPNPC,1,1,{
+	end;
+OnTouch_:
+	if (isbegin_quest(7596) == 1)
+		erasequest 7596;
+	warp 'map_eom$,98,115;
+	end;
+}
+
+1@eom,100,122,3	script	Strange Boy#mockid01	4_F_MOCBOY,{
+	if ('step != 3)
+		end;
+	if (is_party_leader() == false || checkquest(7593,HUNTING) != 1) {
+		mes "[Boy]";
+		mes "You insignificant creature.";
+		mes "How dare you lay a hand on a god-in-waiting?!";
+		close;
+	}
+	cutin "morocc_kid.bmp",2;
+	mes "[Boy]";
+	mes "First, let me applaud you for coming this far.";
+	mes "You've been a good pawn.";
+	next;
+	select("What are you talking about?");
+	unittalk getcharid(3), "" + strcharinfo(0) + " : What are you talking about?";
+	mes "[Boy]";
+	mes "I've been waiting for this day.";
+	mes "To get out of that corner of the demon world and rule the entire universe.";
+	npctalk "Boy: I've been waiting for this day. To get out of that corner of the demon world and rule the entire universe.";
+	sleep2 2000;
+	next;
+	mes "[Boy]";
+	mes "To achieve that, I realized I must abandon my old body.";
+	mes "So I died--well, I let you kill me.";
+	npctalk "Boy: To achieve that, I realized I must abandon my old body. So I died--well, I let you kill me.";
+	sleep2 2000;
+	next;
+	mes "[Boy]";
+	mes "Death is an inevitable step to take before rebirth.";
+	mes "So I'm reborn--again, you brought me back.";
+	npctalk "Boy: Death is an inevitable step to take before rebirth. So I've been reborn--again, you've brought me back.";
+	sleep2 2000;
+	next;
+	mes "[Boy]";
+	mes "All this has been arranged so that I could be reborn as God.";
+	npctalk "Boy: All this has been arranged so that I could be reborn as God.";
+	sleep2 2000;
+	next;
+	mes "[Morroc]";
+	mes "That's right, you foolish humans!";
+	mes "I died once, so that I could circle around the world and embrace it in my arms.";
+	mes "I've been reborn to engulf this world.";
+	npctalk "Morocc: I died once, so that I could circle around the world and embrace it in my arms. I've been reborn to engulf this world.";
+	sleep2 2000;
+	next;
+	mes "[Morroc]";
+	mes "I'll create a new world and become its Creator.";
+	mes "Let me ask you, the first creatures that have stepped into my newborn land.";
+	npctalk "Morocc: I'll create a new world and become its Creator. Let me ask you, the first creatures that have stepped into my newborn land.";
+	sleep2 2000;
+	next;
+	mes "[Morroc]";
+	mes "How'd you like to follow me and watch the birth of a new world?";
+	npctalk "Morocc: How'd you like to follow me and watch the birth of a new world?";
+	close2;
+	setpcblock PCBLOCK_NPC, true;
+	cutin "",255;
+	sleep2 1000;
+	.@loki$ = instance_npcname("Loki#eomloki01");
+	.@nidhogg$ = instance_npcname("Nidhogg#eomnyd01");
+	enablenpc .@loki$;
+	enablenpc .@nidhogg$;
+	npctalk "Loki: Enough with your nonsense. Just say you like destroying things.", .@loki$;
+	sleep2 5000;
+	npctalk "Loki: Create a new world and become its Creator? If this is the new world you're talking about, then I'm disappointed.", .@loki$;
+	sleep2 5000;
+	npctalk "Loki: Even if you burn your body, your power is not as potent as that of Ymir of the Genesis.", .@loki$;
+	sleep2 5000;
+	npctalk "Loki: Just the fact that you had to steal Yggdrasil shows your lack of creativity.", .@loki$;
+	sleep2 5000;
+	npctalk "Loki: Take a good look at yourself. You're delusional if you think you look like a creator of any kind.", .@loki$;
+	sleep2 5000;
+	npctalk "Nidhogg: I second that. You're unnecessary to this world. You don't belong here.", .@nidhogg$;
+	sleep2 4000;
+	npctalk "Nidhogg: Even Yggdrasil denies your existence!", .@nidhogg$;
+	sleep2 4000;
+	npctalk "Nidhogg: As the Guardian of Yggdrasil, I have to remove you from this world.", .@nidhogg$;
+	sleep2 2000;
+	npctalk "Morroc: Pah!";
+	sleep2 2000;
+	npctalk "Morroc: Mortal, you must have a death wish to come at me like this.";
+	sleep2 3000;
+	npctalk "Morroc: I'll take your flesh and blood as housewarming gifts for my new world.";
+	sleep2 3000;
+	npctalk "Morroc: Have you beheld the darkness of the Genesis?";
+	sleep2 3000;
+	npctalk "Morroc: Have you beheld frost, the beginning of life?";
+	sleep2 6000;
+	npctalk "Morroc: Behold the Frost of Audhumla I brought back to life, into this world.";
+	sleep2 3000;
+	specialeffect EF_ENTRY;
+	if ('step == 3) {
+		'step = 4;
+		disablenpc instance_npcname("Strange Boy#mockid01");
+		donpcevent instance_npcname("#gate_to_ice") + "::OnEnable";
+		enablenpc instance_npcname("Nidhogg#eomnyd01");
+		enablenpc instance_npcname("Brinaranea#brinpc01");
+		npctalk "Loki: Are you running?", .@loki$;
+		sleep2 2000;
+		disablenpc .@loki$;
+	}
+	setpcblock PCBLOCK_NPC, false;
+	end;
+}
+
+1@eom,91,120,0	script	#gate_to_ice	WARPNPC,1,1,{
+	end;
+OnEnable:
+	.@gate_to_ice = instance_npcname("#gate_to_ice");
+	enablenpc instance_npcname("#gate_to_ice");
+	specialeffect EF_ICECRASH;
+	sleep 1000;
+	specialeffect EF_MAPPILLAR;
+	end;
+OnTouch_:
+	if (isbegin_quest(7601) == 0 && isbegin_quest(7602) == 0)
+		setquest 7601;
+	warp 'map_eom$,61,88;
+	end;
+}
+
+1@eom,95,122,5	script	Loki#eomloki01	4_M_ROKI2,{
+	mes "[Loki]";
+	mes "You're helpless.";
+	mes "And disgusting.";
+	close;
+}
+
+1@eom,94,120,5	script	Nidhogg#eomnyd01	4_F_NYDHOG,2,2,{
+	if ('step < 4 || is_party_leader() == false)
+		end;
+	if (getmercinfo(0) > 0) {
+		mes "[Nidhogg]";
+		mes "You're with a mercenary.";
+		mes "Could you dismiss your current mercenary and hire me instead?";
+		close;
+	}
+	switch( checkquest(7605,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Nidhogg]";
+		mes "I already assisted you once.";
+		mes "Please be careful!";
+		close;
+	case 2:
+		erasequest 7605;
+		break;
+	}
+	setnpcdisplay instance_npcname("Nidhogg#eomnyd01"), 3087;
+	mes "[Nidhogg]";
+	mes "" + strcharinfo(0) + ",";
+	mes "allow me to aid you in this battle.";
+	npctalk "Nidhogg: Allow me to aid you in this battle.";
+	specialeffect EF_SPHERE;
+	next;
+	mes "[Nidhogg]";
+	mes "My duty as the guardian isn't over yet.";
+	npctalk "Nidhogg: My duty as the guardian isn't over yet.";
+	next;
+	mercenary_create 3087,1800000;// M_NYDHOG
+	mes "^4d4dffGuardian Nidhogg has joined your party.^000000";
+	setquest 7605;// Guardian's Blessing
+	disablenpc instance_npcname("Nidhogg#eomnyd01");
+	close;
+
+OnTouch:
+	if ('step >= 4 && is_party_leader())
+		npctalk "Nidhogg: Wait!";
+	end;
+}
+
+// Center -> Ice
+1@eom,48,88,0	script	Cold Mana Crystalline#eom01	4_ENERGY_BLUE,{
+	getitem 22566,1;// Frost_Crystal
+	specialeffect EF_LEVEL99_4;
+	disablenpc instance_npcname( strnpcinfo(0) );
+	end;
+}
+1@eom,51,103,0	duplicate(Cold Mana Crystalline#eom01)	Cold Mana Crystalline#eom02	4_ENERGY_BLUE
+1@eom,24,109,0	duplicate(Cold Mana Crystalline#eom01)	Cold Mana Crystalline#eom03	4_ENERGY_BLUE
+1@eom,26,128,0	duplicate(Cold Mana Crystalline#eom01)	Cold Mana Crystalline#eom04	4_ENERGY_BLUE
+1@eom,40,140,0	duplicate(Cold Mana Crystalline#eom01)	Cold Mana Crystalline#eom05	4_ENERGY_BLUE
+1@eom,38,139,0	duplicate(Cold Mana Crystalline#eom01)	Cold Mana Crystalline#eom06	4_ENERGY_BLUE
+1@eom,51,149,0	duplicate(Cold Mana Crystalline#eom01)	Cold Mana Crystalline#eom07	4_ENERGY_BLUE
+1@eom,49,148,0	duplicate(Cold Mana Crystalline#eom01)	Cold Mana Crystalline#eom08	4_ENERGY_BLUE
+
+1@eom,61,88,0	script	#icemob01	HIDDEN_WARP_NPC,2,1,{
+	end;
+OnTouch_:
+	if ('step >= 4) {
+		disablenpc instance_npcname("#icemob01");
+		areamonster 'map_eom$,40,93,48,101, "Frost Spider",3088,4;	// MM_BRINARANEA_BABY
+	}
+	end;
+}
+
+1@eom,22,116,3	script	Frost Spider#icemob02	3088,3,3,{
+	end;
+OnTouch_:
+	if ('step >= 4) {
+		disablenpc instance_npcname("Frost Spider#icemob02");
+		monster 'map_eom$,22,116, "Frost Spider",3088,1;	// MM_BRINARANEA_BABY
+		areamonster 'map_eom$,22,113,28,119, "Frost Spider",3088,3;
+	}
+	end;
+}
+
+1@eom,53,134,3	script	Frost Spider#icemob03	3088,3,3,{
+	end;
+OnTouch_:
+	if ('step >= 4) {
+		disablenpc instance_npcname("Frost Spider#icemob03");
+		monster 'map_eom$,53,134, "Frost Spider",3088,1;	// MM_BRINARANEA_BABY
+		areamonster 'map_eom$,47,133,53,139, "Frost Spider",3088,3;
+	}
+	end;
+}
+
+1@eom,38,129,3	script	Brinaranea#brinpc01	3091,10,10,{
+	end;
+OnTouch_:
+	if ('step == 4) {
+		'step = 5;
+		npctalk "Brinaranea: Ooh, food walks into my lair.";
+		initnpctimer;
+	}
+	end;
+OnTimer3000:
+	npctalk "Brinaranea: My children will have a feast tonight. Ho ho ho!";
+	disablenpc instance_npcname("Brinaranea#brinpc01");
+	donpcevent instance_npcname("#ice_hpcheck") + "::OnSpawn";
+	end;
+OnTimer5000:
+	stopnpctimer;
+	unittalk 'boss_id, "Time to cook! *Giggle*";
+	donpcevent instance_npcname("#ice_combo") + "::OnStart";
+	donpcevent instance_npcname("#ice_hpcheck") + "::OnStart";
+	end;
+}
+
+1@eom,2,3,0	script	#ice_hpcheck	CLEAR_NPC,{
+	end;
+OnSpawn:
+	enablenpc instance_npcname("#ice_hpcheck");
+	monster 'map_eom$,38,123, "Brinaranea",3091,1, instance_npcname("#ice_hpcheck") + "::OnMyMobDead";	// MM_BRINARANEA
+	'boss_id = $@mobid[0];
+	getunitdata 'boss_id, .@data;
+	'boss_hp = .@data[UMOB_MAXHP];
+	unitskilluseid 'boss_id, "NPC_WIDEFREEZE",5;
+	end;
+OnStart:
+	initnpctimer;
+	end;
+
+OnTimer3000:
+	getunitdata 'boss_id, .@data;
+	.@hp = .@data[UMOB_HP];
+	if ('boss_hp < .@hp) {
+		'boss_hp = .@hp;
+		initnpctimer;
+		end;
+	}
+	if (('boss_hp - .@hp) > 2000000) {
+		'boss_hp = .@hp;
+		donpcevent instance_npcname("#super_heal") + "::OnStart";
+		initnpctimer;
+		end;
+	}
+	'boss_hp = .@hp;
+
+	if (.@hp > 69500000 && .@hp < 70000000) {
+		unittalk 'boss_id, "Come out, my children. An exquisite feast has delivered itself to us!";
+		donpcevent instance_npcname("#ice_hpcheck") + "::OnCallBaby";
+	}
+	else if (.@hp > 59500000 && .@hp < 60000000) {
+		unittalk 'boss_id, "Children, it's time for dinner!";
+		donpcevent instance_npcname("#ice_hpcheck") + "::OnCallBaby";
+	}
+	else if (.@hp > 49500000 && .@hp < 50000000) {
+		unittalk 'boss_id, "Have all of you fed yet? Come out now!";
+		donpcevent instance_npcname("#ice_hpcheck") + "::OnCallBaby";
+	}
+	else if (.@hp < 22200000 && 'icestunami == false)
+		donpcevent instance_npcname("#icestunami") + "::OnStart";
+	initnpctimer;
+	end;
+
+OnMyMobDead:
+	donpcevent instance_npcname("#ice_hpcheck") + "::OnEnd";
+	disablenpc instance_npcname("Brinaranea#brinpc01");
+	stopnpctimer instance_npcname("#ice_combo");
+	stopnpctimer instance_npcname("#brinaranea_event_1");
+	stopnpctimer instance_npcname("#brinaranea_event_2");
+	stopnpctimer instance_npcname("#brinaranea_event_3");
+	stopnpctimer instance_npcname("#brinaranea_event_4");
+	stopnpctimer instance_npcname("Brinaranea#brinpc01");
+	stopnpctimer instance_npcname("#super_heal");
+	// stopnpctimer instance_npcname("#icestunami");
+
+	enablenpc instance_npcname("Nidhogg#eomnyd02");
+	enablenpc instance_npcname("#ice_to_center");
+	enablenpc instance_npcname("Morroc#mockid02");
+	mapannounce 'map_eom$, "Nidhogg: Brinaranea's influence has dissipated, and a new warp gate has appeared.", bc_map, 0x00ff00;
+	'step = 6;
+
+	donpcevent instance_npcname("#demon_god_variables") + "::OnVariableReset";
+	end;
+
+OnEnd:
+	stopnpctimer;
+	disablenpc instance_npcname("#ice_hpcheck");
+	killmonster 'map_eom$, instance_npcname("#ice_hpcheck") + "::OnMyMobDead";
+	end;
+
+OnCallBaby:
+	sleep 500;
+	if ('boss_id == 0)
+		end;
+	getunitdata 'boss_id, .@data;
+	'boss_hp = .@data[UMOB_HP];
+	killmonster 'map_eom$, instance_npcname("#ice_hpcheck") + "::OnMyMobDead";
+	monster 'map_eom$,38,123, "Brinaranea",3091,1, instance_npcname("#ice_hpcheck") + "::OnMyMobDead";	// MM_BRINARANEA
+	'boss_id = $@mobid[0];
+	setunitdata 'boss_id, UMOB_HP, 'boss_hp;
+	if ('spawn == true)
+		end;
+	'spawn = true;
+	unitskilluseid 'boss_id, "NPC_WIDEFREEZE",5;
+	sleep 1000;
+	if ('boss_id == 0)
+		end;
+	getunitdata 'boss_id, .@data;
+	areamonster 'map_eom$,(.@data[UMOB_X]-5),(.@data[UMOB_Y]-5),(.@data[UMOB_X]+5),(.@data[UMOB_Y]+5), " ",3088,5;	// MM_BRINARANEA_BABY
+	sleep 15000;
+	'spawn = false;
+	end;
+
+OnTest_hp:
+	if ('boss_id && mobcount( 'map_eom$, instance_npcname("#ice_hpcheck") + "::OnMyMobDead" ) > 0)
+		setunitdata 'boss_id, UMOB_HP, 2000000;
+	end;
+}
+
+1@eom,2,6,0	script	#ice_combo	CLEAR_NPC,{
+	end;
+OnStart:
+	initnpctimer;
+	end;
+OnTimer10000:
+	donpcevent instance_npcname("#brinaranea_event_" + rand(1,4)) + "::OnStart";
+	stopnpctimer;
+	end;
+}
+
+1@eom,1,1,0	script	#brinaranea_event_1	-1,{
+	end;
+OnStart:
+	initnpctimer;
+	unittalk 'boss_id, "A show time!";
+	end;
+OnTimer1000:
+	unitskilluseid 'boss_id, "NPC_WIDEFREEZE",5;
+	end;
+OnTimer2500:
+	getunitdata 'boss_id, .@data;
+	'bossx = .@data[UMOB_X];
+	'bossy = .@data[UMOB_Y];
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx-3),('bossy+3),-50;
+	end;
+OnTimer4000:
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx+3),('bossy+3),-50;
+	end;
+OnTimer5500:
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx+3),('bossy-3),-50;
+	end;
+OnTimer7000:
+	stopnpctimer;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx-3),('bossy-3),-50;
+	donpcevent instance_npcname("#ice_combo") + "::OnStart";
+	end;
+}
+
+1@eom,1,1,0	script	#brinaranea_event_2	-1,{
+	end;
+OnStart:
+	initnpctimer;
+	unittalk 'boss_id, "Ooh, game. It looks delicious!";
+	end;
+OnTimer2000:
+	unitskilluseid 'boss_id, "NPC_WIDEFREEZE",5;
+	end;
+OnTimer4000:
+	stopnpctimer;
+	getunitdata 'boss_id, .@data;
+	if (.@data[UMOB_TARGETID] > 0)
+		if (getunittype(.@data[UMOB_TARGETID]) == BL_PC)
+			unitskilluseid 'boss_id,"WZ_JUPITEL",28, .@data[UMOB_TARGETID], -50;
+	donpcevent instance_npcname("#ice_combo") + "::OnStart";
+	end;
+}
+
+1@eom,1,1,0	script	#brinaranea_event_3	-1,{
+	end;
+OnStart:
+	initnpctimer;
+	unittalk 'boss_id, "Wanna play?";
+	end;
+OnTimer1000:
+	unitskilluseid 'boss_id, "NPC_WIDEFREEZE",5;
+	end;
+OnTimer2500:
+	getunitdata 'boss_id, .@data;
+	'bossx = .@data[UMOB_X];
+	'bossy = .@data[UMOB_Y];
+	unitskillusepos 'boss_id,"WZ_VERMILION",5,'bossx,'bossy,-50;
+	end;
+OnTimer3500:
+	callsub( S_Skill,3 );
+	end;
+OnTimer4500:
+	callsub( S_Skill,4 );
+	end;
+OnTimer5500:
+	callsub( S_Skill,5 );
+	end;
+OnTimer6500:
+	callsub( S_Skill,6 );
+	end;
+OnTimer7500:
+	callsub( S_Skill,7 );
+	stopnpctimer;
+	donpcevent instance_npcname("#ice_combo") + "::OnStart";
+	end;
+S_Skill:
+	.@d = getarg(0);
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20, ('bossx - .@d), ('bossy + .@d),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20, ('bossx + .@d), ('bossy + .@d),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20, ('bossx + .@d), ('bossy - .@d),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20, ('bossx - .@d), ('bossy - .@d),-50;
+	return;
+}
+
+1@eom,1,1,0	script	#brinaranea_event_4	-1,{
+	end;
+OnStart:
+	initnpctimer;
+	unittalk 'boss_id, "Hah hah...";
+	end;
+OnTimer1000:
+	unitskilluseid 'boss_id,"AL_HEAL",11;
+	end;
+OnTimer2000:
+	unitskilluseid 'boss_id,"AL_HEAL",11;
+	end;
+OnTimer3000:
+	stopnpctimer;
+	unitskilluseid 'boss_id,"AL_HEAL",11;
+	getunitdata 'boss_id, .@data;
+	'boss_hp = .@data[UMOB_HP];
+	donpcevent instance_npcname("#ice_combo") + "::OnStart";
+	end;
+}
+
+1@eom,1,1,0	script	#super_heal	-1,{
+	end;
+OnStart:
+	initnpctimer;
+	unittalk 'boss_id, "You're annoying! Don't mess with the Frost of Audhumla!";
+	unitskilluseid 'boss_id, "NPC_ALLHEAL",1;
+	getunitdata 'boss_id, .@data;
+	'boss_hp = .@data[UMOB_HP];
+	end;
+OnTimer2000:
+	stopnpctimer;
+	mapannounce 'map_eom$, "Nidhogg: No... She's regenerated herself perfectly.", bc_map, 0x00ff00;
+	end;
+}
+
+1@eom,2,4,0	script	#icestunami	CLEAR_NPC,{
+	end;
+OnStart:
+	'icestunami = true;
+	initnpctimer;
+	unittalk 'boss_id, "You hellhounds, can you take this too?";
+	getunitdata 'boss_id, .@data;
+	'x_icemine = .@data[UMOB_X];
+	'y_icemine = .@data[UMOB_Y];
+	callsub( S_Spawn,6 );
+OnTimer2000: callsub( S_Spawn,3 );
+OnTimer4000: callsub( S_Spawn,0 );
+OnTimer6000: callsub( S_Spawn,-3 );
+OnTimer8000: callsub( S_Spawn,-6 );
+OnTimer13000:
+	killmonster 'map_eom$, instance_npcname("#icestunami") + "::OnMobDead";
+	end;
+OnTimer23000:
+	'icestunami = false;
+	'x_icemine = 0;
+	'y_icemine = 0;
+	stopnpctimer;
+	end;
+S_Spawn:
+	.@y = 'y_icemine + getarg(0);
+	.@label$ = instance_npcname("#icestunami") + "::OnMobDead";
+	monster 'map_eom$,('x_icemine-6),.@y," ",2943,1, .@label$;// MM_ICE_MINE
+	monster 'map_eom$,('x_icemine-3),.@y," ",2943,1, .@label$;
+	monster 'map_eom$,  ('x_icemine),.@y," ",2943,1, .@label$;
+	monster 'map_eom$,('x_icemine+3),.@y," ",2943,1, .@label$;
+	monster 'map_eom$,('x_icemine+6),.@y," ",2943,1, .@label$;
+	end;
+OnMobDead:
+	end;
+}
+
+1@eom,59,147,3	script	Nidhogg#eomnyd02	4_F_NYDHOG,{
+	if ('step < 6)
+		end;
+	if (isbegin_quest(7602) == 0 && checkquest(7601,HUNTING) == 2) {
+		mes "[Nidhogg]";
+		mes "That was a tough battle.";
+		mes "This may not be good enough, but I hope it'll help your growth.";
+		next;
+		mes "^4d4dffGuardian Nidhogg has rewarded you with a large amount of EXP for defeating Brinaranea.^000000";
+		erasequest 7601;// Temple of the Demon God Phase 1
+		setquest 7602;// Temple of the Demon God Phase 1 Completed
+		getexp 1000000,500000;
+		close;
+	}
+	mes "[Nidhogg]";
+	mes "Can this dreadful place compete with the Frost of the Genesis?";
+	mes "I can't say.";
+	mes "He's created nothing on his own. How did he convince himself to think that he could be a creator?";
+	close;
+}
+
+1@eom,67,149,0	script	#ice_to_center	WARPNPC,1,1,{
+	end;
+OnTouch_:
+	if (isbegin_quest(7602) == 0 && checkquest(7601,HUNTING) == 2) {
+		mes "[Nidhogg]";
+		mes "That was a tough battle.";
+		mes "This may not be good enough, but I hope it'll help your growth.";
+		next;
+		mes "^4d4dffGuardian Nidhogg has rewarded you with a large amount of EXP for defeating Brinaranea.^000000";
+		setquest 7602;
+		erasequest 7601;
+		getexp 1000000,500000;
+		close;
+	}
+	warp 'map_eom$,98,115;
+	end;
+}
+
+// Center to Fire
+1@eom,100,122,3	script	Morroc#mockid02	4_F_MOCBOY,{
+	if ('step != 6 || is_party_leader() == false || checkquest(7593,HUNTING) != 1)
+		end;
+	cutin "morocc_kid.bmp",2;
+	mes "[Morroc]";
+	mes "You're good.";
+	mes "Can you take on the wolf that swallowed the sun?";
+	npctalk "Morroc: You're good. Can you taken on the wolf that swallowed the sun?";
+	next;
+	mes "[Morroc]";
+	mes "If you can't handle him, then you can't handle a god now, can you?";
+	npctalk "Morroc: If you can't handle him, then you can't handle a god now, can you?";
+	next;
+	mes "[Morroc]";
+	mes "I'll watch you. Mwa hah hah!";
+	npctalk "Morroc: I'll watch you. Mwa hah hah!";
+	close2;
+	cutin "",255;
+	if ('step == 6) {
+		'step = 7;
+		setpcblock PCBLOCK_NPC, true;
+		enablenpc instance_npcname("#fire_event01");
+		donpcevent instance_npcname("#gate_to_fire") + "::OnEnable";
+		sleep2 2000;
+		setpcblock PCBLOCK_NPC, false;
+		specialeffect EF_ENTRY;
+		cloakonnpc instance_npcname("Morroc#mockid02");	// cloakonnpc to properly display the previous effect
+	}
+	end;
+}
+
+1@eom,104,120,0	script	#gate_to_fire	WARPNPC,1,1,{
+	end;
+OnTouch_:
+	if (isbegin_quest(7603) == 0 && isbegin_quest(7604) == 0)
+		setquest 7603;
+	warp 'map_eom$,132,93;
+	end;
+OnEnable:
+	enablenpc instance_npcname("#gate_to_fire");
+	specialeffect EF_METEORSTORM;
+	sleep 1000;
+	specialeffect EF_MAPPILLAR;
+	end;
+}
+
+1@eom,132,93,0	script	#fire_event01	HIDDEN_WARP_NPC,1,1,{
+	end;
+OnTouch_:
+	disablenpc instance_npcname("#fire_event01");
+	sleep 1000;
+	mapannounce 'map_eom$, "Grr...", bc_map, 0xff0000;
+	sleep 3000;
+	mapannounce 'map_eom$, "I smell human... Grr...", bc_map, 0xff0000;
+	monster 'map_eom$,139,101, "Frenzied Kasa",3089,1;	// MM_LOCO_KASA
+	sleep 1000;
+	monster 'map_eom$,142, 98, "Frenzied Kasa",3089,1;
+	sleep 1000;
+	monster 'map_eom$,144, 92, "Frenzied Kasa",3089,1;
+	sleep 3000;
+	monster 'map_eom$,145,104, "Frenzied Kasa",3089,1;
+	sleep 1000;
+	monster 'map_eom$,148, 98, "Frenzied Kasa",3089,1;
+	sleep 1000;
+	monster 'map_eom$,150, 93, "Frenzied Kasa",3089,1;
+	sleep 3000;
+	monster 'map_eom$,151,106, "Frenzied Kasa",3089,1;
+	sleep 1000;
+	monster 'map_eom$,153,100, "Frenzied Kasa",3089,1;
+	sleep 1000;
+	monster 'map_eom$,156, 95, "Frenzied Kasa",3089,1;
+	mapannounce 'map_eom$, "...BURN!", bc_map, 0xff0000;
+	donpcevent instance_npcname("#skollmaster") + "::OnStart";
+	end;
+}
+
+1@eom,3,1,0	script	#skollmaster	CLEAR_NPC,{
+	end;
+OnStart:
+	enablenpc instance_npcname("#skollmaster");
+	enablenpc instance_npcname("Flowing Lava#lavapond01");
+	enablenpc instance_npcname("Flowing Lava#lavapond02");
+	enablenpc instance_npcname("#lavazone11");
+	enablenpc instance_npcname("#lavazone12");
+	enablenpc instance_npcname("#lavazone21");
+	enablenpc instance_npcname("#lavazone22");
+	'flowing_lava_deactivate[0] = 'flowing_lava_deactivate[1] = false;
+
+	monster 'map_eom$,148,98, "Muspellskoll",3092,1, instance_npcname("#skollmaster") + "::OnMobDead";	// MM_MUSPELLSKOLL
+	'boss_id = $@mobid[0];
+	getunitdata 'boss_id, .@data;
+	'boss_hp = .@data[UMOB_MAXHP];
+	sleep 1000;
+	if ('boss_id)
+		unittalk 'boss_id, "You're the ones... Grr... Good, I'll crush your bones! Grr...";
+	sleep 4000;
+	if ('boss_id)
+		donpcevent instance_npcname("#skollmaster") + "::OnLava_heal";
+	end;
+
+OnLava_heal:
+	'lava_heal = true;
+	donpcevent instance_npcname("#fire_combo") + "::OnEnd";
+	stopnpctimer instance_npcname("#fire_hpcheck");
+	callsub S_Event, 0, 156,117;
+	initnpctimer;
+	end;
+OnTimer2000:
+	callsub S_Event, 1, 180,129;
+	end;
+OnTimer4000:
+	callsub S_ReSpawn, 168,121;
+	unitskilluseid 'boss_id, "CR_REFLECTSHIELD",1;
+	unittalk 'boss_id, "Let's do this again. Come on!";
+	donpcevent instance_npcname("#loco_call") + "::OnSpawn";
+	end;
+OnTimer6000:
+	stopnpctimer;
+	'lava_heal = false;
+	donpcevent instance_npcname("#fire_hpcheck") + "::OnStart";
+	donpcevent instance_npcname("#fire_combo") + "::OnEvent";
+	end;
+S_ReSpawn:
+	getunitdata 'boss_id, .@data;
+	'boss_hp = .@data[UMOB_HP];
+	killmonster 'map_eom$, instance_npcname("#skollmaster") + "::OnMobDead";
+	monster 'map_eom$,getarg(0),getarg(1), "Muspellskoll",3092,1, instance_npcname("#skollmaster") + "::OnMobDead";	// MM_MUSPELLSKOLL
+	'boss_id = $@mobid[0];
+	setunitdata 'boss_id, UMOB_HP, 'boss_hp;
+	return;
+S_Event:
+	callsub S_ReSpawn, getarg(1),getarg(2);
+	if ('flowing_lava_deactivate[ getarg(0) ] == false) {
+		for ( .@i = 0; .@i < 8; .@i++ ) {
+			unitskilluseid 'boss_id, "AL_HEAL",11;
+			sleep 100;
+			if ('boss_id == 0)
+				end;
+		}
+		unitskilluseid 'boss_id, "AL_HEAL",11;
+	}
+	mapannounce 'map_eom$, "Nidhogg: Muspellskoll is trying to regenerate itself using the lava!", bc_map, 0x00ff00;
+	getunitdata 'boss_id, .@data;
+	'boss_hp = .@data[UMOB_HP];
+	donpcevent instance_npcname("#loco_call") + "::OnSpawn";
+	return;
+
+OnMobDead:
+	stopnpctimer instance_npcname("#fire_hpcheck");
+	stopnpctimer instance_npcname("#muspellskoll_event_1");
+	stopnpctimer instance_npcname("#muspellskoll_event_2");
+	stopnpctimer instance_npcname("#muspellskoll_event_3");
+	donpcevent instance_npcname("#fire_combo") + "::OnEnd";
+	donpcevent instance_npcname("#loco_call") + "::OnEnd";
+
+	killmonster 'map_eom$, instance_npcname("#skollmaster") + "::OnMobDead";
+	mapannounce 'map_eom$, "Nidhogg: Muspellskoll's influence has dissipated, and a new warp gate has appeared.", bc_map, 0x00ff00;
+
+	enablenpc instance_npcname("Nidhogg#eomnyd03");
+	enablenpc instance_npcname("#fire_to_center");
+	enablenpc instance_npcname("Strange Young Man#mocadt01");
+
+	'step = 8;
+	donpcevent instance_npcname("#demon_god_variables") + "::OnVariableReset";
+	end;
+
+OnTest_hp:
+	if ('boss_id && mobcount( 'map_eom$, instance_npcname("#skollmaster") + "::OnMobDead" ) > 0)
+		setunitdata 'boss_id, UMOB_HP, 2000000;
+	end;
+}
+
+1@eom,3,7,0	script	#fire_hpcheck	CLEAR_NPC,{
+	end;
+OnStart:
+	initnpctimer;
+	end;
+OnTimer3000:
+	getunitdata 'boss_id, .@data;
+	.@hp = .@data[UMOB_HP];
+	if ('boss_hp < .@hp) {
+		initnpctimer;
+		end;
+	}
+	if (('boss_hp - .@hp) > 1000000) {
+		'boss_hp = .@hp;
+		donpcevent instance_npcname("#fire_hpcheck") + "::OnHeal";	// the event can stack and the boss can stay in this state until it demise
+		initnpctimer;
+		end;
+	}
+	'boss_hp = .@hp;
+
+	if ('lava_heal == false) {
+		if (.@hp > 29500000 && .@hp < 30000000 || .@hp > 35500000 && .@hp < 36000000 || .@hp > 39500000 && .@hp < 40000000 || .@hp > 44500000 && .@hp < 45000000) {
+			unittalk 'boss_id, "I'm not going down without a fight!";
+			donpcevent instance_npcname("#skollmaster") + "::OnLava_heal";
+		}
+	}
+	initnpctimer;
+	end;
+
+OnHeal:
+	if ('fire_combo)
+		donpcevent instance_npcname("#fire_combo") + "::OnEnd";
+	unittalk 'boss_id, "Do I look easy to you? I'll burn you to ashes!";
+	sleep 2000;
+	if ('boss_id == 0)
+		end;
+	getunitdata 'boss_id, .@data;
+	unitskillusepos 'boss_id,"WZ_METEOR",11,.@data[UMOB_X],.@data[UMOB_Y],-50;
+	sleep 1000;
+	if ('boss_id == 0)
+		end;
+	for ( .@i = 0; .@i < 18; .@i++ ) {
+		unitskilluseid 'boss_id, "AL_HEAL",11;
+		sleep 200;
+		if ('boss_id == 0)
+			end;
+	}
+	getunitdata 'boss_id, .@data;
+	unitskillusepos 'boss_id,"WZ_METEOR",11,.@data[UMOB_X],.@data[UMOB_Y],-50;
+	for ( .@i = 0; .@i < 18; .@i++ ) {
+		unitskilluseid 'boss_id, "AL_HEAL",11;
+		sleep 200;
+		if ('boss_id == 0)
+			end;
+	}
+	getunitdata 'boss_id, .@data;
+	'boss_hp = .@data[UMOB_HP];
+	if (!'fire_combo)
+		donpcevent instance_npcname("#fire_combo") + "::OnEvent";
+	end;
+}
+
+1@eom,3,5,0	script	#loco_call	CLEAR_NPC,{
+	end;
+OnSpawn:
+	enablenpc instance_npcname("#loco_call");
+	initnpctimer;
+	getunitdata 'boss_id, .@data;
+	'x_loco = .@data[UMOB_X];
+	'y_loco = .@data[UMOB_Y];
+	end;
+OnTimer1000:
+	.@label$ = instance_npcname("#loco_call") + "::OnMobDead";
+	if (mobcount( 'map_eom$, .@label$ ) < 6)
+		areamonster 'map_eom$,('x_loco-5),('y_loco-5),('x_loco+5),('y_loco+5)," ",3089,3, .@label$;	// MM_LOCO_KASA
+	end;
+OnTimer16000:
+	stopnpctimer;
+	disablenpc instance_npcname("#loco_call");
+	end;
+OnMobDead:
+	end;
+OnEnd:
+	stopnpctimer;
+	disablenpc instance_npcname("#loco_call");
+	end;
+}
+
+1@eom,1,1,0	script	#muspellskoll_event_1	-1,{
+	end;
+OnEvent:
+	initnpctimer;
+	unittalk 'boss_id, "Crash and burn!";
+	end;
+OnTimer1000:
+	unitskilluseid 'boss_id, "NPC_FIRESTORM",3;
+	end;
+OnTimer3000:
+	stopnpctimer;
+	unitskilluseid 'boss_id, "WZ_SIGHTRASHER",10;
+	if ('fire_combo)
+		donpcevent instance_npcname("#fire_combo") + "::OnEvent";
+	end;
+}
+
+1@eom,1,1,0	script	#muspellskoll_event_2	-1,{
+	end;
+OnEvent:
+	initnpctimer;
+	unittalk 'boss_id, "Grr...";
+	end;
+OnTimer1000:
+	getunitdata 'boss_id, .@data;
+	'bossx = .@data[UMOB_X];
+	'bossy = .@data[UMOB_Y];
+	unitskilluseid 'boss_id, "NPC_FIRESTORM",3;
+	end;
+OnTimer3000:
+	unitskillusepos 'boss_id,"WZ_FIREPILLAR",1,('bossx-3),('bossy+3),-50;
+	end;
+OnTimer5000:
+	unitskillusepos 'boss_id,"WZ_FIREPILLAR",1,('bossx+3),('bossy+3),-50;
+	end;
+OnTimer7000:
+	unitskillusepos 'boss_id,"WZ_FIREPILLAR",1,('bossx-3),('bossy-3),-50;
+	end;
+OnTimer9000:
+	unitskillusepos 'boss_id,"WZ_FIREPILLAR",1,('bossx+3),('bossy-3),-50;
+	end;
+OnTimer19000:
+	stopnpctimer;
+	if ('fire_combo)
+		donpcevent instance_npcname("#fire_combo") + "::OnEvent";
+	end;
+}
+
+1@eom,1,1,0	script	#muspellskoll_event_3	-1,{
+	end;
+OnEvent:
+	initnpctimer;
+	unittalk 'boss_id, "My fire will swallow you whole!";
+	end;
+OnTimer1000:
+	unitskilluseid 'boss_id, "NPC_FIRESTORM",3;
+	end;
+OnTimer2000:
+	donpcevent instance_npcname("#flamecross") + "::OnStart";
+	end;
+OnTimer7000:
+	getunitdata 'boss_id, .@data;
+	'bossx = .@data[UMOB_X];
+	'bossy = .@data[UMOB_Y];
+	unitskillusepos 'boss_id,"WZ_METEOR",5,('bossx),('bossy+5),-50;
+	end;
+OnTimer9000:
+	unitskillusepos 'boss_id,"WZ_METEOR",5,('bossx),('bossy-5),-50;
+	end;
+OnTimer11000:
+	unitskillusepos 'boss_id,"WZ_METEOR",5,('bossx),('bossy+10),-50;
+	end;
+OnTimer13000:
+	stopnpctimer;
+	unitskillusepos 'boss_id,"WZ_METEOR",5,'bossx,('bossy-10),-50;
+	if ('fire_combo)
+		donpcevent instance_npcname("#fire_combo") + "::OnEvent";
+	end;
+}
+
+1@eom,3,3,0	script	#fire_combo	CLEAR_NPC,{
+	end;
+OnEvent:
+	initnpctimer;
+	'fire_combo = true;
+	end;
+OnTimer10000:
+	stopnpctimer;
+	.@r = rand(1,4);
+	if (.@r == 1)
+		donpcevent instance_npcname("#muspellskoll_event_1") + "::OnEvent";
+	else if (.@r == 2)
+		donpcevent instance_npcname("#muspellskoll_event_2") + "::OnEvent";
+	else if (.@r == 3)
+		donpcevent instance_npcname("#muspellskoll_event_3") + "::OnEvent";
+	else
+		donpcevent instance_npcname("#flamecross") + "::OnSpawn";
+	end;
+OnEnd:
+	stopnpctimer;
+	'fire_combo = false;
+	disablenpc instance_npcname("#fire_combo");
+	end;
+}
+
+1@eom,3,8,0	script	#flamecross	CLEAR_NPC,{
+	end;
+OnStart:
+	getunitdata 'boss_id, .@data;
+	.@x = .@data[UMOB_X];
+	.@y = .@data[UMOB_Y];
+	callsub( S_Spawn,.@x,.@y,3 );
+	sleep 300;
+	callsub( S_Spawn,.@x,.@y,6 );
+	sleep 300;
+	callsub( S_Spawn,.@x,.@y,9 );
+	sleep 300;
+	callsub( S_Spawn,.@x,.@y,13 );
+	sleep 5000;
+	killmonster 'map_eom$, instance_npcname("#flamecross") + "::OnMobDead";
+	end;
+
+S_Spawn:
+	if (!'boss_id) {
+		killmonster 'map_eom$, instance_npcname("#flamecross") + "::OnMobDead";
+		end;
+	}
+	.@x = getarg(0);
+	.@y = getarg(1);
+	.@dxy = getarg(2);
+	.@label$ = instance_npcname("#flamecross") + "::OnMobDead";
+	monster 'map_eom$,(.@x+.@dxy),(.@y+.@dxy)," ",2960,1, .@label$;// MM_FLAMECROSS
+	monster 'map_eom$,(.@x-.@dxy),(.@y-.@dxy)," ",2960,1, .@label$;
+	monster 'map_eom$,(.@x+.@dxy),(.@y-.@dxy)," ",2960,1, .@label$;
+	monster 'map_eom$,(.@x-.@dxy),(.@y+.@dxy)," ",2960,1, .@label$;
+	return;
+
+OnSpawn:
+	getunitdata 'boss_id, .@data;
+	.@label$ = instance_npcname("#flamecross") + "::OnMobDead";	// same OnMobDead than OnStart?
+	if (mobcount( 'map_eom$, .@label$ ) < 2)
+		areamonster 'map_eom$,(.@data[UMOB_X]-1),(.@data[UMOB_Y]-1),(.@data[UMOB_X]+1),(.@data[UMOB_Y]+1)," ",3090,2, .@label$;	// MM_LOCO_SALAMANDER
+	if ('fire_combo)
+		donpcevent instance_npcname("#fire_combo") + "::OnEvent";
+	end;
+
+OnMobDead:
+	end;
+}
+
+1@eom,154,119,0	script	Flowing Lava#lavapond01	CLEAR_NPC,{	// todo, custom text
+	if (countitem(22566) < 1)
+		end;
+	mes "It can be used to block the flow of lava using a Frost Crystal.";
+	next;
+	if (select( "Use a Frost Crystal", "Do not use a Frost Crystal" ) == 2)
+		end;
+	if ('flowing_lava_deactivate[0] == true)
+		end;
+	'flowing_lava_deactivate[0] = true;
+	delitem 22566,1;// Frost_Crystal
+	disablenpc instance_npcname("Flowing Lava#lavapond01");
+	donpcevent instance_npcname("Hardened Lava#lavaseal01") + "::OnEnable";
+	initnpctimer;
+	end;
+OnTimer300:
+	donpcevent instance_npcname("Hardened Lava#lavaseal01") + "::OnEffect";
+	end;
+OnTimer120000:
+	'flowing_lava_deactivate[0] = false;
+	donpcevent instance_npcname("Hardened Lava#lavaseal01") + "::OnDisable";
+	enablenpc instance_npcname("Flowing Lava#lavapond01");
+	mapannounce 'map_eom$, "Nidhogg: The Frost has melted. The lava is flowing again!", bc_map, 0x00ff00;
+	stopnpctimer;
+	end;
+}
+
+1@eom,182,129,0	script	Flowing Lava#lavapond02	CLEAR_NPC,{	// todo, custom text
+	if (countitem(22566) < 1)
+		end;
+	mes "It can be used to block the flow of lava using a Frost Crystal.";
+	next;
+	if (select( "Use a Frost Crystal", "Do not use a Frost Crystal" ) == 2)
+		end;
+	if ('flowing_lava_deactivate[1] == true)
+		end;
+	'flowing_lava_deactivate[1] = true;
+	delitem 22566,1;// Frost_Crystal
+	disablenpc instance_npcname("Flowing Lava#lavapond02");
+	donpcevent instance_npcname("Hardened Lava#lavaseal02") + "::OnEnable";
+	initnpctimer;
+	end;
+OnTimer300:
+	donpcevent instance_npcname("Hardened Lava#lavaseal02") + "::OnEffect";
+	end;
+OnTimer120000:
+	'flowing_lava_deactivate[1] = false;
+	donpcevent instance_npcname("Hardened Lava#lavaseal02") + "::OnDisable";
+	enablenpc instance_npcname("Flowing Lava#lavapond02");
+	mapannounce 'map_eom$, "Nidhogg: The Frost has melted. The lava is flowing again!", bc_map, 0x00ff00;
+	stopnpctimer;
+	end;
+}
+
+1@eom,154,119,0	script	Hardened Lava#lavaseal01	CLEAR_NPC,{
+	end;
+OnEnable:
+	enablenpc instance_npcname("Hardened Lava#lavaseal01");
+	disablenpc instance_npcname("#lavazone11");
+	disablenpc instance_npcname("#lavazone12");
+	end;
+OnDisable:
+	stopnpctimer;
+	disablenpc instance_npcname("Hardened Lava#lavaseal01");
+	enablenpc instance_npcname("#lavazone11");
+	enablenpc instance_npcname("#lavazone12");
+	end;
+OnEffect:
+	initnpctimer;
+	specialeffect EF_LIGHTNINGLOADER;
+	end;
+OnTimer3000:
+	initnpctimer;
+	end;
+}
+
+1@eom,182,129,0	script	Hardened Lava#lavaseal02	CLEAR_NPC,{
+	end;
+OnEnable:
+	enablenpc instance_npcname("Hardened Lava#lavaseal02");
+	disablenpc instance_npcname("#lavazone21");
+	disablenpc instance_npcname("#lavazone22");
+	end;
+OnDisable:
+	stopnpctimer;
+	disablenpc instance_npcname("Hardened Lava#lavaseal02");
+	enablenpc instance_npcname("#lavazone21");
+	enablenpc instance_npcname("#lavazone22");
+	end;
+OnEffect:
+	initnpctimer;
+	specialeffect EF_LIGHTNINGLOADER;
+	end;
+OnTimer3000:
+	initnpctimer;
+	end;
+}
+
+1@eom,161,122,0	script	#lavazone11	HIDDEN_WARP_NPC,10,10,{
+	end;
+OnTouch:
+	percentheal -3,0;
+	specialeffect2 EF_SPRINKLESAND;
+	end;
+}
+1@eom,161,102,0	duplicate(#lavazone11)	#lavazone12	HIDDEN_WARP_NPC,10,10
+1@eom,163,150,0	duplicate(#lavazone11)	#lavazone21	HIDDEN_WARP_NPC,10,10
+1@eom,163,150,0	duplicate(#lavazone11)	#lavazone22	HIDDEN_WARP_NPC,10,10
+
+1@eom,151,155,3	script	Nidhogg#eomnyd03	4_F_NYDHOG,{
+	if (checkquest(7603,HUNTING) == 2 && isbegin_quest(7604) == 0) {
+		mes "[Nidhogg]";
+		mes "Good job, again.";
+		mes "This may not be good enough, but I hope it'll help your growth.";
+		next;
+		mes "^4d4dffGuardian Nidhogg has rewarded you with a large amount of EXP for defeating Muspellskoll.^000000";
+		erasequest 7603;// Temple of the Demon God Phase 2
+		setquest 7604;// Temple of the Demon God Phase 2 Completed
+		getexp 1000000,500000;
+		close;
+	}
+	mes "[Nidhogg]";
+	mes "Skoll... Skoll and Haati...";
+	mes "Everything in here is a mere copy of that in the outside world.";
+	mes "He's not a creator.";
+	close;
+}
+
+1@eom,147,156,0	script	#fire_to_center	WARPNPC,1,1,{
+	end;
+OnTouch_:
+	if (checkquest(7603,HUNTING) == 2 && isbegin_quest(7604) == 0) {
+		mes "[Nidhogg]";
+		mes "Good job, again.";
+		mes "This may not be good enough, but I hope it'll help your growth.";
+		next;
+		mes "^4d4dffGuardian Nidhogg has rewarded you with a large amount of EXP for defeating Muspellskoll.^000000";
+		setquest 7604;
+		erasequest 7603;
+		getexp 1000000,500000;
+		close;
+	}
+	warp 'map_eom$,98,115;
+	end;
+}
+
+// Center to Last
+1@eom,98,123,5	script	Strange Young Man#mocadt01	3097,5,5,{	// MM_MOROCC_ADT
+	end;
+OnTouch_:
+	if ('step == 8 && is_party_leader()) {
+		'step = 9;
+		initnpctimer;
+	}
+	end;
+OnTimer1000:
+	npctalk "You exceed my expectations.";
+	end;
+OnTimer4000:
+	npctalk "I'll accept your challenge.";
+	end;
+OnTimer7000:
+	npctalk "I shall drench the land with your flowing blood and nourish it with your torn flesh.";
+	end;
+OnTimer8000:
+	specialeffect EF_BEGINSPELL5;
+	enablenpc instance_npcname("#gate_to_last");
+	enablenpc instance_npcname("#moc_master");
+	specialeffect EF_READYPORTAL2,AREA, instance_npcname("#gate_to_last");
+	end;
+OnTimer10000:
+	npctalk "I'll show you the true depths of despair.";
+	end;
+OnTimer12000:
+	stopnpctimer;
+	specialeffect EF_ENTRY;
+	disablenpc instance_npcname("Strange Young Man#mocadt01");
+	end;
+}
+
+1@eom,98,127,0	warp	#gate_to_last	1,1,1@eom,102,186
+
+1@eom,101,194,3	script	#moc_master	3096,10,10,{
+	end;
+OnTouch_:
+	if ('step != 9)
+		end;
+	'step = 10;
+	npctalk "Morroc: You're already here, so let's not waste our time on talking.";
+	initnpctimer;
+	end;
+OnTimer2000:
+	stopnpctimer;
+	npctalk "Morroc: Come on, mortals!";
+	disablenpc instance_npcname("#moc_master");
+	donpcevent instance_npcname("#despair_god_main") + "::OnStart";
+	end;
+}
+
+1@eom,1,1,0	script	#despair_god_main	-1,{
+	end;
+OnStart:
+	enablenpc instance_npcname("#despair_god_main");
+	'boss_phase = 1;
+
+	monster 'map_eom$,101,194, "Demigod",3096,1, instance_npcname("#despair_god_main") + "::OnMobDead";	// MM_MOROCC_KID
+	'boss_id = $@mobid[0];
+	getunitdata 'boss_id, .@data;
+	'boss_hp = .@data[UMOB_MAXHP];
+
+	unitskillusepos 'boss_id,"WZ_METEOR",11,101,194,-50;
+
+	enablenpc instance_npcname("#mk_trap");
+	donpcevent instance_npcname("#mk_hpcheck") + "::OnStart";
+	donpcevent instance_npcname("#mk_combo") + "::OnEvent";
+	end;
+
+OnPhase02:
+	if ('boss_phase != 1)
+		end;
+	'boss_phase = 2;
+	stopnpctimer instance_npcname("#demigod_event_1");
+	stopnpctimer instance_npcname("#demigod_event_2");
+	stopnpctimer instance_npcname("#demigod_event_3");
+	stopnpctimer instance_npcname("#mk_hpcheck");
+	stopnpctimer instance_npcname("#mk_combo");
+	unittalk 'boss_id, "You'll have to do better than this!";
+	sleep 2000;
+	if ('boss_id == 0)
+		end;
+	getunitdata 'boss_id, .@data;
+	'boss_hp = .@data[UMOB_HP];
+	killmonster 'map_eom$, instance_npcname("#despair_god_main") + "::OnMobDead";
+	monster 'map_eom$,101,207, "Demigod",3096,1, instance_npcname("#despair_god_main") + "::OnMobDead";	// MM_MOROCC_KID
+	'boss_id = $@mobid[0];
+	setunitdata 'boss_id, UMOB_HP, 'boss_hp;
+	setunitdata 'boss_id, UMOB_MODE, (MD_MVP|MD_STATUSIMMUNE|MD_KNOCKBACKIMMUNE|MD_MVP|MD_DETECTOR);	// todo: MD_SKILL_IMMUNE ?
+	sleep 2000;
+	if ('boss_id == 0)
+		end;
+	donpcevent instance_npcname("#moc_origin") + "::OnEnable";
+	end;
+
+OnPhase03:
+	if ('boss_phase != 2)
+		end;
+	'boss_phase = 3;
+	getunitdata 'boss_id, .@data;
+	.@hp = .@data[UMOB_HP] + ('boss_hp - .@data[UMOB_HP]) * 10;
+	'boss_hp = min(80000000,.@hp);
+	killmonster 'map_eom$, instance_npcname("#despair_god_main") + "::OnMobDead";
+	monster 'map_eom$,101,194, "Demigod",3096,1, instance_npcname("#despair_god_main") + "::OnMobDead";	// MM_MOROCC_KID
+	'boss_id = $@mobid[0];
+	setunitdata 'boss_id, UMOB_HP, 'boss_hp;
+	unittalk 'boss_id, "Stop being so persistent!";
+	sleep 2000;
+	if ('boss_id == 0)
+		end;
+	unitskilluseid 'boss_id, "NPC_WIDEWEB",1;
+	sleep 1000;
+	if ('boss_id == 0)
+		end;
+	unitskilluseid 'boss_id, "NPC_FIRESTORM",3;
+	sleep 1000;
+	if ('boss_id == 0)
+		end;
+	unitskilluseid 'boss_id, "MG_FIREBALL",1;
+	donpcevent instance_npcname("#mk_hpcheck") + "::OnStart";
+	donpcevent instance_npcname("#mk_combo") + "::OnEvent";
+	end;
+
+OnTest_hp:
+	if ('boss_id && mobcount( 'map_eom$, instance_npcname("#despair_god_main") + "::OnMobDead" ) > 0)
+		setunitdata 'boss_id, UMOB_HP, 2000000;
+	end;
+
+OnMobDead:
+	disablenpc instance_npcname("#despair_god_main");
+	killmonster 'map_eom$, instance_npcname("#despair_god_main") + "::OnMobDead";
+	stopnpctimer instance_npcname("#mk_combo");
+	stopnpctimer instance_npcname("#demigod_event_1");
+	stopnpctimer instance_npcname("#demigod_event_2");
+	stopnpctimer instance_npcname("#demigod_event_3");
+	stopnpctimer instance_npcname("#moc_meddling");
+	stopnpctimer instance_npcname("#mk_hpcheck");
+	donpcevent instance_npcname("#moc_origin") + "::OnEnd";
+
+	donpcevent instance_npcname("#demon_god_variables") + "::OnVariableReset";
+	donpcevent instance_npcname("#morocc_god") + "::OnStart";
+	end;
+}
+
+1@eom,4,2,0	script	#mk_combo	CLEAR_NPC,{
+	end;
+OnEvent:
+	initnpctimer;
+	'combo_is_allowed = true;
+	end;
+OnStart:
+	initnpctimer;
+	end;
+OnTimer10000:
+	donpcevent instance_npcname("#demigod_event_" + rand(1,3)) + "::OnEvent";
+	stopnpctimer;
+	end;
+OnEnd:
+	stopnpctimer;
+	'combo_is_allowed = false;
+	end;
+}
+
+1@eom,4,1,0	script	#mk_hpcheck	CLEAR_NPC,{
+	end;
+OnStart:
+	initnpctimer;
+	end;
+OnTimer6000:
+	getunitdata 'boss_id, .@data;
+	.@hp = .@data[UMOB_HP];
+	if ('boss_hp < .@hp) {
+		initnpctimer;
+		end;
+	}
+	.@hp_a = 'boss_hp - .@hp;
+	if (.@hp_a > 1000000) {
+		if (.@hp_a > 200000) {
+			.@hp_b = .@hp + (.@hp_a - 200000) * 3;
+			.@hp_b = min(80000000, .@hp_b);
+			setunitdata 'boss_id, UMOB_HP, .@hp_b;
+			mapannounce 'map_eom$, "Nidhogg: Wow, his regenerative power is unheard of! Don't let him regenerate again!", bc_map, 0x00ff00;
+		}
+		unitskilluseid 'boss_id, "AL_HEAL",11;
+		getunitdata 'boss_id, .@data;
+		'boss_hp = .@data[UMOB_HP];
+		initnpctimer;
+		end;
+	}
+	'boss_hp = .@hp;
+
+	switch( 'boss_phase ) {	// process by phase instead of (officially) hp, just in case
+	case 1:
+		if (.@hp < 40000000)
+			donpcevent instance_npcname("#despair_god_main") + "::OnPhase02";
+		break;
+	case 2:
+		break;
+	case 3:
+		if (.@hp > 100000 && .@hp < 30000000)
+			donpcevent instance_npcname("#mk_trap") + "::OnTrap";
+		break;
+	}
+	initnpctimer;
+	end;
+}
+
+1@eom,1,1,0	script	#demigod_event_1	-1,{
+	end;
+OnEvent:
+	initnpctimer;
+	unittalk 'boss_id, "Mwah hah, dodge this if you can!";
+	end;
+OnTimer2000:
+	unitskilluseid 'boss_id, "NPC_WIDEWEB",1;
+	end;
+OnTimer3000:
+	unitskilluseid 'boss_id, "NPC_FIRESTORM",3;
+	end;
+OnTimer5000:
+	getunitdata 'boss_id, .@data;
+	unitskillusepos 'boss_id,"WZ_VERMILION",21,.@data[UMOB_X],.@data[UMOB_Y],-50;
+	end;
+OnTimer7000:
+	stopnpctimer;
+	unitskilluseid 'boss_id, "CR_REFLECTSHIELD",1;
+	if ('combo_is_allowed)
+		donpcevent instance_npcname("#mk_combo") + "::OnEvent";
+	end;
+}
+
+1@eom,1,1,0	script	#demigod_event_2	-1,{
+	end;
+OnEvent:
+	initnpctimer;
+	unittalk 'boss_id, "A rhapsody for weak souls...";
+	end;
+OnTimer2000:
+	unitskilluseid 'boss_id, "NPC_WIDEWEB",1;
+	end;
+OnTimer3000:
+	getunitdata 'boss_id, .@data;
+	'bossx = .@data[UMOB_X];
+	'bossy = .@data[UMOB_Y];
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx-2),'bossy,-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx+2),'bossy,-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,'bossx,('bossy+2),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,'bossx,('bossy-2),-50;
+	end;
+OnTimer4000:
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx-6),'bossy,-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx+6),'bossy,-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,'bossx,('bossy+6),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,'bossx,('bossy-6),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx-4),('bossy+4),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx-4),('bossy-4),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx+4),('bossy+4),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx+4),('bossy-4),-50;
+	end;
+OnTimer5000:
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx-10),'bossy,-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx+10),'bossy,-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,'bossx,('bossy+10),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,'bossx,('bossy-10),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx-8),('bossy+8),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx-8),('bossy-8),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx+8),('bossy+8),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx+8),('bossy-8),-50;
+	end;
+OnTimer6000:
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx-16),'bossy,-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx+16),'bossy,-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,'bossx,('bossy+16),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,'bossx,('bossy-16),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx-12),('bossy+12),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx-12),('bossy-12),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx+12),('bossy+12),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx+12),('bossy-12),-50;
+	end;
+OnTimer7000:
+	stopnpctimer;
+	if ('combo_is_allowed)
+		donpcevent instance_npcname("#mk_combo") + "::OnEvent";
+	end;
+}
+
+1@eom,1,1,0	script	#demigod_event_3	-1,{
+	end;
+OnEvent:
+	initnpctimer;
+	unittalk 'boss_id, "For whom the fugue is played? For whom the requiem is played?";
+	end;
+OnTimer2000:
+	unitskilluseid 'boss_id, "NPC_WIDEWEB",1;
+	end;
+OnTimer3000:
+	unitskilluseid 'boss_id, "NPC_FIRESTORM",3;
+	end;
+OnTimer5000:
+	getunitdata 'boss_id, .@data;
+	unitskillusepos 'boss_id,"WZ_METEOR",5,(.@data[UMOB_X]-5),.@data[UMOB_Y],-50;
+	unitskillusepos 'boss_id,"WZ_METEOR",5,(.@data[UMOB_X]+5),.@data[UMOB_Y],-50;
+	unitskillusepos 'boss_id,"WZ_METEOR",5,.@data[UMOB_X],(.@data[UMOB_Y]+5),-50;
+	unitskillusepos 'boss_id,"WZ_METEOR",5,.@data[UMOB_X],(.@data[UMOB_Y]-5),-50;
+	end;
+OnTimer9000:
+	unittalk 'boss_id, "Burn to ashes!";
+	end;
+OnTimer11000:
+	getunitdata 'boss_id, .@data;
+	unitskillusepos 'boss_id,"WZ_VERMILION",21,.@data[UMOB_X],.@data[UMOB_Y],-50;	// assuming position on (0,0) is self
+	end;
+OnTimer13000:
+	stopnpctimer;
+	if ('combo_is_allowed)
+		donpcevent instance_npcname("#mk_combo") + "::OnEvent";
+	end;
+}
+
+1@eom,4,3,0	script	#moc_origin	CLEAR_NPC,{
+	end;
+OnEnable:
+	enablenpc instance_npcname("#moc_origin");
+	monster 'map_eom$,114,198, "Morroc of the Genesis", 3098,1, instance_npcname("#moc_origin") + "::OnMobDead1";	// MM_MOROCC_ORIGIN
+	'miniboss_id[0] = $@mobid[0];
+	'miniboss_id[1] = 0;
+	initnpctimer;
+	end;
+OnTimer1000:
+	donpcevent instance_npcname("#moc_origin") + "::OnOriginheal";
+	if ('miniboss_id[0] < 1)
+		end;
+	getunitdata 'miniboss_id[0], .@data;
+	if (.@data[UMOB_HP] < 2200000) {
+		if ('miniboss_id[1] == 0) {
+			monster 'map_eom$,86,199, "Morroc of the Sabbath", 3099,1, instance_npcname("#moc_origin") + "::OnMobDead2";	// MM_MOROCC_REST
+			'miniboss_id[1] = $@mobid[0];
+		}
+	}
+	end;
+OnTimer2000:
+	initnpctimer;
+	end;
+
+OnOriginheal:
+	for ( .@i = 0; .@i < 11; .@i++ ) {
+		unitskilluseid 'boss_id, "AL_HEAL",11;
+		sleep 200;
+		if ('boss_id == 0)
+			end;
+	}
+	end;
+
+OnMobDead1:
+	'miniboss_id[0] = 0;
+	callsub S_Dead;
+OnMobDead2:
+	'miniboss_id[1] = 0;
+	callsub S_Dead;
+S_Dead:
+	if ('miniboss_id[1] == 0 && 'miniboss_id[0] > 0) {	// todo, custom text
+		unittalk 'miniboss_id[0], "---!!!";
+		setunitdata 'miniboss_id[0], UMOB_HP, 3000000;
+		stopnpctimer instance_npcname("#moc_meddling");
+	}
+	else if ('miniboss_id[1] == 0 && 'miniboss_id[0] == 0) {
+		donpcevent instance_npcname("#moc_origin") + "::OnEnd";
+		stopnpctimer instance_npcname("#moc_meddling");
+		donpcevent instance_npcname("#despair_god_main") + "::OnPhase03";
+	}
+	else {
+		unittalk 'miniboss_id[1], "I'll put you to rest. It's my mercy!!!"; // todo, custom text
+		setunitdata 'miniboss_id[1], UMOB_HP, 1000000;
+		donpcevent instance_npcname("#moc_meddling") + "::OnStart";
+	}
+	end;
+
+OnEnd:
+	stopnpctimer;
+	disablenpc instance_npcname("#moc_origin");
+	killmonster 'map_eom$, instance_npcname("#moc_origin") + "::OnMobDead1";
+	killmonster 'map_eom$, instance_npcname("#moc_origin") + "::OnMobDead2";
+	end;
+}
+
+1@eom,1,1,0	script	#moc_meddling	-1,{
+	end;
+OnStart:
+	initnpctimer;
+	getunitdata 'miniboss_id[1], .@data;
+	if (.@data[UMOB_HP] > 100000)
+		unitskillusepos 'miniboss_id[1],"WZ_METEOR",9,.@data[UMOB_X],.@data[UMOB_Y],-50;
+	end;
+OnTimer5000:
+	initnpctimer;
+	end;
+}
+
+1@eom,4,6,0	script	#mk_trap	CLEAR_NPC,{
+	end;
+OnTrap:
+	.@label$ = instance_npcname("#mk_trap") + "::OnMobDead";
+	if (mobcount( 'map_eom$, .@label$ ) < 3) {
+		getunitdata 'boss_id, .@data;
+		monster 'map_eom$,.@data[UMOB_X]-4,.@data[UMOB_Y], "Frenzied Kasa", 3089,1, .@label$;	// MM_LOCO_KASA
+		monster 'map_eom$,.@data[UMOB_X],.@data[UMOB_Y]-4, "Frenzied Kasa", 3089,1, .@label$;
+		monster 'map_eom$,.@data[UMOB_X]+4,.@data[UMOB_Y], "Frenzied Kasa", 3089,1, .@label$;
+		monster 'map_eom$,.@data[UMOB_X],.@data[UMOB_Y]+4, "Frenzied Kasa", 3089,1, .@label$;
+	}
+	end;
+OnMobDead:
+	end;
+}
+
+1@eom,102,222,3	script	#morocc_god	3097,{
+	end;
+OnStart:
+	enablenpc instance_npcname("#morocc_god");
+	initnpctimer;
+	end;
+OnTimer2000:
+	mapannounce 'map_eom$, "This is getting more interesting. *Snicker*", bc_map, 0xff0000;
+	end;
+OnTimer6000:
+	mapannounce 'map_eom$, "Hey, you don't think this is over already, do you?", bc_map, 0xff0000;
+	end;
+OnTimer10000:
+	disablenpc instance_npcname("#morocc_god");
+	end;
+OnTimer12000:
+	donpcevent instance_npcname("#despair_main") + "::OnStart";
+	end;
+OnTimer13000:
+	unittalk 'boss_id, "What are you waiting for?!";
+	end;
+OnTimer14000:
+	unitskilluseid 'boss_id, "NPC_WIDEWEB",1;
+	end;
+OnTimer16000:
+	mapannounce 'map_eom$, "I'll take your blood!", bc_map, 0xff0000;
+	end;
+OnTimer17000:
+	stopnpctimer;
+	getunitdata 'boss_id, .@data;
+	unitskillusepos 'boss_id,"NPC_WIDESUCK",1,.@data[UMOB_X],.@data[UMOB_Y],-50;
+	donpcevent instance_npcname("#ma_combo") + "::OnStart";
+	end;
+}
+
+1@eom,1,1,0	script	#despair_main	-1,{
+	end;
+OnStart:
+	enablenpc instance_npcname("#despair_main");
+	monster 'map_eom$,101,194, "Despair God Morroc",3097,1, instance_npcname("#despair_main") + "::OnMobDead";	// MM_MOROCC_ADT
+	'boss_id = $@mobid[0];
+	end;
+OnMobDead:
+	disablenpc instance_npcname("#despair_main");
+	killmonster 'map_eom$, instance_npcname("#despair_main") + "::OnMobDead";
+	stopnpctimer instance_npcname("#morocc_god");
+	stopnpctimer instance_npcname("#ma_combo");
+	stopnpctimer instance_npcname("#despair_event_1");
+	stopnpctimer instance_npcname("#despair_event_2");
+	stopnpctimer instance_npcname("#despair_event_3");
+	stopnpctimer instance_npcname("#despair_event_4");
+	stopnpctimer instance_npcname("#despair_event_5");
+	mapannounce 'map_eom$, "D-don't think... th-this... is over.. You're... already... time...", bc_map, 0xff0000;
+	initnpctimer;
+
+	'step = 11;
+	donpcevent instance_npcname("#demon_god_variables") + "::OnVariableReset";
+	end;
+OnTimer2000:
+	stopnpctimer;
+	enablenpc instance_npcname("Nidhogg#eomnyd04");
+	end;
+
+OnTest_hp:
+	if ('boss_id && mobcount( 'map_eom$, instance_npcname("#despair_main") + "::OnMobDead" ) > 0)
+		setunitdata 'boss_id, UMOB_HP, 2000000;
+	end;
+}
+
+1@eom,4,8,0	script	#ma_combo	CLEAR_NPC,{
+	end;
+OnStart:
+	initnpctimer;
+	end;
+OnTimer10000:
+	donpcevent instance_npcname("#despair_event_" + rand(1,5)) + "::OnEvent";
+	stopnpctimer;
+	end;
+}
+
+1@eom,1,1,0	script	#despair_event_1	-1,{
+	end;
+OnEvent:
+	initnpctimer;
+	unittalk 'boss_id, "I'll burn you slowly and painfully.";
+	end;
+OnTimer2000:
+	unitskilluseid 'boss_id, "NPC_WIDEWEB",1;
+	end;
+OnTimer3000:
+	unitskilluseid 'boss_id, "NPC_FIRESTORM",3;
+	end;
+OnTimer5000:
+	stopnpctimer;
+	getunitdata 'boss_id, .@data;
+	unitskillusepos 'boss_id,"WZ_METEOR",11,.@data[UMOB_X],.@data[UMOB_Y],-50;
+	donpcevent instance_npcname("#ma_combo") + "::OnStart";
+	end;
+}
+
+1@eom,1,1,0	script	#despair_event_2	-1,{
+	end;
+OnEvent:
+	initnpctimer;
+	unittalk 'boss_id, "Can you hear the rhapsody? It's the sound of your soul writhing and screaming in pain!";
+	end;
+OnTimer2000:
+	unitskilluseid 'boss_id, "NPC_WIDEWEB",1;
+	end;
+OnTimer3000:
+	getunitdata 'boss_id, .@data;
+	'bossx = .@data[UMOB_X];
+	'bossy = .@data[UMOB_Y];
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx-2),'bossy,-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx+2),'bossy,-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,'bossx,('bossy+2),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,'bossx,('bossy-2),-50;
+	end;
+OnTimer4000:
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx-6),'bossy,-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx+6),'bossy,-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,'bossx,('bossy+6),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,'bossx,('bossy-6),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx-4),('bossy+4),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx-4),('bossy-4),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx+4),('bossy+4),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx+4),('bossy-4),-50;
+	end;
+OnTimer5000:
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx-10),'bossy,-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx+10),'bossy,-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,'bossx,('bossy+10),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,'bossx,('bossy-10),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx-8),('bossy+8),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx-8),('bossy-8),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx+8),('bossy+8),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx+8),('bossy-8),-50;
+	end;
+OnTimer6000:
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx-16),'bossy,-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx+16),'bossy,-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,'bossx,('bossy+16),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,'bossx,('bossy-16),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx-12),('bossy+12),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx-12),('bossy-12),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx+12),('bossy+12),-50;
+	unitskillusepos 'boss_id,"MG_THUNDERSTORM",20,('bossx+12),('bossy-12),-50;
+	end;
+OnTimer7000:
+	stopnpctimer;
+	donpcevent instance_npcname("#ma_combo") + "::OnStart";
+	end;
+}
+
+1@eom,1,1,0	script	#despair_event_3	-1,{
+	end;
+OnEvent:
+	initnpctimer;
+	unittalk 'boss_id, "This is the thunderbolt of death!";
+	end;
+OnTimer2000:
+	unitskilluseid 'boss_id, "NPC_WIDEWEB",1;
+	end;
+OnTimer4000:
+	unitskilluseid 'boss_id, "NPC_WIDEFREEZE",5;
+	end;
+OnTimer6000:
+	getunitdata 'boss_id, .@data;
+	unitskillusepos 'boss_id,"WZ_VERMILION",5,(.@data[UMOB_X]-7),.@data[UMOB_Y],-50;
+	unitskillusepos 'boss_id,"WZ_VERMILION",5,(.@data[UMOB_X]+7),.@data[UMOB_Y],-50;
+	unitskillusepos 'boss_id,"WZ_VERMILION",5,.@data[UMOB_X],(.@data[UMOB_Y]+7),-50;
+	unitskillusepos 'boss_id,"WZ_VERMILION",5,.@data[UMOB_X],(.@data[UMOB_Y]-7),-50;
+	end;
+OnTimer10000:
+	unittalk 'boss_id, "Burn and make beautiful flames!";
+	end;
+OnTimer12000:
+	getunitdata 'boss_id, .@data;
+	unitskillusepos 'boss_id,"WZ_VERMILION",21,.@data[UMOB_X],.@data[UMOB_Y],-50;
+	end;
+OnTimer14000:
+	stopnpctimer;
+	donpcevent instance_npcname("#ma_combo") + "::OnStart";
+	end;
+}
+
+1@eom,1,1,0	script	#despair_event_4	-1,{
+	end;
+OnEvent:
+	initnpctimer;
+	unittalk 'boss_id, "I'll take your life.";
+	unitskilluseid 'boss_id, "NPC_FLAMECROSS",1;
+	end;
+OnTimer1000:
+	getunitdata 'boss_id, .@data;
+	unitskillusepos 'boss_id,"NPC_WIDESUCK",1,.@data[UMOB_X],.@data[UMOB_Y],-50;
+	end;
+OnTimer5000:
+	stopnpctimer;
+	donpcevent instance_npcname("#ma_combo") + "::OnStart";
+	end;
+}
+
+1@eom,1,1,0	script	#despair_event_5	-1,{
+	end;
+OnEvent:
+	initnpctimer;
+	unittalk 'boss_id, "*Chuckle*";
+	end;
+OnTimer2000:
+	unitskilluseid 'boss_id, "NPC_FIRESTORM",3;
+	end;
+OnTimer4000:
+	getunitdata 'boss_id, .@data;
+	unitskillusepos 'boss_id,"WZ_FIREPILLAR",10,.@data[UMOB_X],.@data[UMOB_Y],-50;
+	end;
+OnTimer8000:
+	stopnpctimer;
+	donpcevent instance_npcname("#ma_combo") + "::OnStart";
+	end;
+}
+
+1@eom,103,194,3	script	Nidhogg#eomnyd04	4_F_NYDHOG,{
+	if ('step < 11)
+		end;
+	if (isbegin_quest(7597) == 0 && checkquest(7593,HUNTING) == 2) {
+		mes "[Nidhogg]";
+		mes "I don't know what to say.";
+		mes "We stopped the god-in-waiting.";
+		mes "We accomplished our goal.";
+		mes "But I'm still unnerved.";
+		cutin "ep14_nyd03.bmp",2;
+		next;
+		mes "[Nidhogg]";
+		mes "This world is created in the mind of Morroc's.";
+		mes "He'll live forever in this garden he couldn't finish.";
+		cutin "ep14_nyd02.bmp",2;
+		next;
+		mes "[Nidhogg]";
+		mes "He probably doesn't know his body is destroyed forever.";
+		mes "He was far too ambitious, even for him.";
+		mes "He wanted to create a new world and become its creator,";
+		next;
+		mes "[Nidhogg]";
+		mes "but he couldn't create anything on his own.";
+		mes "He abandoned his Demon body, just to become a mere facsimile of an existing god.";
+		cutin "ep14_nyd03.bmp",2;
+		next;
+		mes "[Nidhogg]";
+		mes "He took the shape of a man.";
+		mes "He wasn't creative enough to reinvent the concept of God.";
+		mes "He was a paradox.";
+		next;
+		mes "[Nidhogg]";
+		mes "Now we need to get out of this trap in time and end; to reality.";
+		mes "This world only exists in the Demon God's mind. The same day repeats forever.";
+		next;
+		mes "[Nidhogg]";
+		mes "Everyone who enters this world will be dragged into the same loop.";
+		mes "In that sense, he succeeded in making his own world.";
+		cutin "ep14_nyd02.bmp",2;
+		next;
+		mes "[Nidhogg]";
+		mes "Today's despair will repeat day after day.";
+		mes "Even though we know this, we'll come back to walk the same path again. I hope I'll be able to fight by you every time...";
+		cutin "ep14_nyd03.bmp",2;
+		next;
+		cutin "ep14_nyd04.bmp",2;
+		mes "[Nidhogg]";
+		mes "I've talked too much. The Commander must be waiting. Let me validate your feat, so you can report to him.";
+		mes "You did great today.";
+		if (isbegin_quest(7593) == 1) {
+			erasequest 7593;// Demon God Subjugation
+			setquest 7597;// Fall of the False God
+		}
+		if (checkquest(7601,HUNTING) == 1)
+			erasequest 7601;
+		if (isbegin_quest(7602) > 0)
+			erasequest 7602;// Temple of the Demon God Phase 1 Completed
+		if (isbegin_quest(7603) == 1)
+			erasequest 7603;
+		if (isbegin_quest(7604) > 0)
+			erasequest 7604;// Temple of the Demon God Phase 2 Completed
+		if (isbegin_quest(7596) == 1)
+			erasequest 7596;
+	}
+	else {	// todo, custom text
+		mes "[Nidhogg]";
+		mes "...It feels like things are not over yet,";
+		mes "This is very close to Morroc's spiritual world,";
+		mes "He should be here to keep thinking about the past!";
+		cutin "ep14_nyd03.bmp",2;
+	}
+	next;
+	select("Exit.");
+	mes "[Nidhogg]";
+	mes "Of course. You must be exhausted.";
+	mes "Let me send you to the other members of your Expedition, free of charge.";
+	close2;
+	warp "moro_vol",91,87;
+	end;
+}
+
+1@eom,5,1,0	script	Little Helper#eomtest	4_ENERGY_BLUE,{
+	mes "What?";
+	next;
+	if (callfunc("F_GM_NPC",1854,0) < 1) {
+		mes "Wrong.";
+		close;
+	}
+	mes "What Boss?";
+	next;
+	switch( select( "Brinaranea", "Muspellskoll", "Demigod", "Despair God" ) ) {
+	case 1:
+		mes "Brinaranea health was set to 2.000.000.";
+		donpcevent instance_npcname("Brinaranea#brinpc01") + "::OnTest_hp";
+		close;
+	case 2:
+		mes "Muspellskoll health was set to 2.000.000.";
+		donpcevent instance_npcname("#skollmaster") + "::OnTest_hp";
+		close;
+
+	case 3:
+		mes "Demigod health was set to 2.000.000.";
+		donpcevent instance_npcname("#despair_god_main") + "::OnTest_hp";
+		close;
+
+	case 4:
+		mes "Despair God health was set to 2.000.000.";
+		donpcevent instance_npcname("#despair_main") + "::OnTest_hp";
+		close;
+	}
+	end;
+}

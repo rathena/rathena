@@ -84,7 +84,7 @@ public:
 	TypesafeYamlDatabase( const std::string& type_, uint16 version_ ) : YamlDatabase( type_, version_, version_ ){
 	}
 
-	void clear(){
+	void clear() override{
 		this->data.clear();
 	}
 
@@ -128,6 +128,10 @@ public:
 		}
 
 		return rathena::util::umap_random( this->data );
+	}
+
+	void erase(keytype key) {
+		this->data.erase(key);
 	}
 };
 

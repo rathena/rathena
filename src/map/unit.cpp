@@ -65,8 +65,8 @@ struct unit_data* unit_bl2ud(struct block_list *bl)
 	case BL_PET: return &((struct pet_data*)bl)->ud;
 	case BL_NPC: return &((struct npc_data*)bl)->ud;
 	case BL_HOM: return &((struct homun_data*)bl)->ud;
-	case BL_MER: return &((struct mercenary_data*)bl)->ud;
-	case BL_ELEM: return &((struct elemental_data*)bl)->ud;
+	case BL_MER: return &((s_mercenary_data*)bl)->ud;
+	case BL_ELEM: return &((s_elemental_data*)bl)->ud;
 	default : return NULL;
 	}
 }
@@ -139,8 +139,14 @@ int unit_walktoxy_sub(struct block_list *bl)
 		i = status_get_speed(bl)*MOVE_DIAGONAL_COST/MOVE_COST;
 	else
 		i = status_get_speed(bl);
-	if( i > 0)
+	if( i > 0 ){
+		if( ud->walktimer != INVALID_TIMER ){
+			delete_timer( ud->walktimer, unit_walktoxy_timer );
+			ud->walktimer = INVALID_TIMER;
+		}
 		ud->walktimer = add_timer(gettick()+i,unit_walktoxy_timer,bl->id,i);
+	}
+
 	return 1;
 }
 
@@ -388,13 +394,12 @@ static TIMER_FUNC(unit_walktoxy_timer)
 	if(ud->walkpath.path_pos>=ud->walkpath.path_len)
 		return 0;
 
-	if(ud->walkpath.path[ud->walkpath.path_pos]>=DIR_MAX)
-		return 1;
-
-	int x = bl->x;
-	int y = bl->y;
-
 	enum directions dir = ud->walkpath.path[ud->walkpath.path_pos];
+
+	if( dir <= DIR_CENTER || dir >= DIR_MAX ){
+		return 0;
+	}
+
 	ud->dir = dir;
 
 	int dx = dirx[dir];
@@ -412,13 +417,16 @@ static TIMER_FUNC(unit_walktoxy_timer)
 		case BL_MOB:
 			md = BL_CAST(BL_MOB, bl);
 
-			if (status_has_mode(&md->status,MD_STATUS_IMMUNE))
+			if (status_has_mode(&md->status,MD_STATUSIMMUNE))
 				icewall_walk_block = battle_config.boss_icewall_walk_block;
 			else
 				icewall_walk_block = battle_config.mob_icewall_walk_block;
 			break;
 		case BL_NPC: nd = BL_CAST(BL_NPC, bl); break;
 	}
+
+	int x = bl->x;
+	int y = bl->y;
 
 	//Monsters will walk into an icewall from the west and south if they already started walking
 	if(map_getcell(bl->m,x+dx,y+dy,CELL_CHKNOPASS) 
@@ -628,7 +636,9 @@ static TIMER_FUNC(unit_walktoxy_timer)
 		ud->to_x = bl->x;
 		ud->to_y = bl->y;
 
-		if(battle_config.official_cell_stack_limit > 0
+		if (bl->type != BL_NPC	// walking npc ignores cell stack limit
+			&& !ud->state.ignore_cell_stack_limit
+			&& battle_config.official_cell_stack_limit > 0
 			&& map_count_oncell(bl->m, x, y, BL_CHAR|BL_NPC, 1) > battle_config.official_cell_stack_limit) {
 			//Walked on occupied cell, call unit_walktoxy again
 			if(ud->steptimer != INVALID_TIMER) {
@@ -1216,7 +1226,7 @@ enum e_unit_blown unit_blown_immune(struct block_list* bl, uint8 flag)
 	switch (bl->type) {
 		case BL_MOB:
 			// Immune can't be knocked back
-			if (((flag&0x1) && status_bl_has_mode(bl,MD_KNOCKBACK_IMMUNE))
+			if (((flag&0x1) && status_bl_has_mode(bl,MD_KNOCKBACKIMMUNE))
 				&& ((flag&0x2) || !(battle_config.skill_trap_type&0x2)))
 				return UB_MD_KNOCKBACK_IMMUNE;
 			break;
@@ -1488,8 +1498,8 @@ int unit_can_move(struct block_list *bl) {
 	// Icewall walk block special trapped monster mode
 	if(bl->type == BL_MOB) {
 		struct mob_data *md = BL_CAST(BL_MOB, bl);
-		if(md && ((status_has_mode(&md->status,MD_STATUS_IMMUNE) && battle_config.boss_icewall_walk_block == 1 && map_getcell(bl->m,bl->x,bl->y,CELL_CHKICEWALL))
-			|| (!status_has_mode(&md->status,MD_STATUS_IMMUNE) && battle_config.mob_icewall_walk_block == 1 && map_getcell(bl->m,bl->x,bl->y,CELL_CHKICEWALL)))) {
+		if(md && ((status_has_mode(&md->status,MD_STATUSIMMUNE) && battle_config.boss_icewall_walk_block == 1 && map_getcell(bl->m,bl->x,bl->y,CELL_CHKICEWALL))
+			|| (!status_has_mode(&md->status,MD_STATUSIMMUNE) && battle_config.mob_icewall_walk_block == 1 && map_getcell(bl->m,bl->x,bl->y,CELL_CHKICEWALL)))) {
 			md->walktoxy_fail_count = 1; //Make sure rudeattacked skills are invoked
 			return 0;
 		}
@@ -1541,7 +1551,7 @@ int unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int typ
 
 	if (type) {
 		//Bosses can ignore skill induced walkdelay (but not damage induced)
-		if(bl->type == BL_MOB && status_has_mode(status_get_status_data(bl),MD_STATUS_IMMUNE))
+		if(bl->type == BL_MOB && status_has_mode(status_get_status_data(bl),MD_STATUSIMMUNE))
 			return 0;
 		//Make sure walk delay is not decreased
 		if (DIFF_TICK(ud->canmove_tick, tick+delay) > 0)
@@ -1805,6 +1815,34 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 					}
 				}
 				break;
+			case DK_SERVANT_W_SIGN: {
+					uint8 i = 0, count = min(skill_lv, MAX_SERVANT_SIGN);
+
+					ARR_FIND( 0, count, i, sd->servant_sign[i] == target_id );
+
+					// Already targetted
+					if( i < count ){
+						break;
+					}
+
+					ARR_FIND( 0, count, i, sd->servant_sign[i] == 0 );
+
+					// No free slots
+					if( i == count ){
+						clif_skill_fail( sd, skill_id, USESKILL_FAIL_LEVEL, 0 );
+						return 0;
+					}
+				}
+				break;
+			case TR_RETROSPECTION:
+				// Prevent using the song skill if you no longer have the skill in your tree.
+				if (!sd->skill_id_song || pc_checkskill(sd, sd->skill_id_song) <= 0) {
+					clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+					return 0;
+				}
+
+				sd->skill_id_old = skill_id;
+				break;
 		}
 
 		if (!skill_check_condition_castbegin(sd, skill_id, skill_lv))
@@ -1925,6 +1963,16 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 			if (sc && sc->data[SC_WUGDASH])
 				casttime = -1;
 			break;
+		case DK_SERVANT_W_PHANTOM: { // Stops servants from being consumed on unmarked targets.
+				status_change *tsc = status_get_sc(target);
+
+				// Only allow to attack if the enemy has a sign mark given by the caster.
+				if( tsc == nullptr || tsc->data[SC_SERVANT_SIGN] == nullptr || tsc->data[SC_SERVANT_SIGN]->val1 != src->id ){
+					clif_skill_fail(sd, skill_id, USESKILL_FAIL, 0);
+					return 0;
+				}
+			}
+			break;
 		case EL_WIND_SLASH:
 		case EL_HURRICANE:
 		case EL_TYPOON_MIS:
@@ -1955,7 +2003,9 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		unit_stop_walking(src, 1); // Even though this is not how official works but this will do the trick. bugreport:6829
 
 	// SC_MAGICPOWER needs to switch states at start of cast
+#ifndef RENEWAL
 	skill_toggle_magicpower(src, skill_id);
+#endif
 
 	// In official this is triggered even if no cast time.
 	clif_skillcasting(src, src->id, target_id, 0,0, skill_id, skill_lv, skill_get_ele(skill_id, skill_lv), casttime);
@@ -1965,11 +2015,11 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 
 		mobskill_event(md, src, tick, -1); // Cast targetted skill event.
 
-		if ((status_has_mode(tstatus,MD_CASTSENSOR_IDLE) || status_has_mode(tstatus,MD_CASTSENSOR_CHASE)) && battle_check_target(target, src, BCT_ENEMY) > 0) {
+		if ((status_has_mode(tstatus,MD_CASTSENSORIDLE) || status_has_mode(tstatus,MD_CASTSENSORCHASE)) && battle_check_target(target, src, BCT_ENEMY) > 0) {
 			switch (md->state.skillstate) {
 				case MSS_RUSH:
 				case MSS_FOLLOW:
-					if (!status_has_mode(tstatus,MD_CASTSENSOR_CHASE))
+					if (!status_has_mode(tstatus,MD_CASTSENSORCHASE))
 						break;
 
 					md->target_id = src->id;
@@ -1978,7 +2028,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 					break;
 				case MSS_IDLE:
 				case MSS_WALK:
-					if (!status_has_mode(tstatus,MD_CASTSENSOR_IDLE))
+					if (!status_has_mode(tstatus,MD_CASTSENSORIDLE))
 						break;
 
 					md->target_id = src->id;
@@ -2011,12 +2061,12 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 
 	if( sc ) {
 		// These 3 status do not stack, so it's efficient to use if-else
- 		if( sc->data[SC_CLOAKING] && !(sc->data[SC_CLOAKING]->val4&4) && skill_id != AS_CLOAKING ) {
+ 		if( sc->data[SC_CLOAKING] && !(sc->data[SC_CLOAKING]->val4&4) && skill_id != AS_CLOAKING && skill_id != SHC_SHADOW_STAB) {
 			status_change_end(src, SC_CLOAKING, INVALID_TIMER);
 
 			if (!src->prev)
 				return 0; // Warped away!
-		} else if( sc->data[SC_CLOAKINGEXCEED] && !(sc->data[SC_CLOAKINGEXCEED]->val4&4) && skill_id != GC_CLOAKINGEXCEED ) {
+		} else if( sc->data[SC_CLOAKINGEXCEED] && !(sc->data[SC_CLOAKINGEXCEED]->val4&4) && skill_id != GC_CLOAKINGEXCEED && skill_id != SHC_SHADOW_STAB) {
 			status_change_end(src,SC_CLOAKINGEXCEED, INVALID_TIMER);
 
 			if (!src->prev)
@@ -2214,7 +2264,9 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	unit_stop_walking(src,1);
 
 	// SC_MAGICPOWER needs to switch states at start of cast
+#ifndef RENEWAL
 	skill_toggle_magicpower(src, skill_id);
+#endif
 
 	// In official this is triggered even if no cast time.
 	clif_skillcasting(src, src->id, 0, skill_x, skill_y, skill_id, skill_lv, skill_get_ele(skill_id, skill_lv), casttime);
@@ -2907,6 +2959,19 @@ void unit_dataset(struct block_list *bl)
 }
 
 /**
+ * Returns the remaining max amount of skill units per object for a specific skill
+ * @param ud: Unit data
+ * @param skill_id: Skill to search for
+ * @param maxcount: Maximum amount of placeable units
+ */
+void unit_skillunit_maxcount(unit_data& ud, uint16 skill_id, int& maxcount) {
+	for (const auto su : ud.skillunits) {
+		if (su->skill_id == skill_id && --maxcount == 0 )
+			break;
+	}
+}
+
+/**
  * Gets the number of units attacking another unit
  * @param bl: Object to check amount of targets
  * @return number of targets or 0
@@ -3014,6 +3079,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		status_change_end(bl, SC_TINDER_BREAKER, INVALID_TIMER);
 		status_change_end(bl, SC_TINDER_BREAKER2, INVALID_TIMER);
 		status_change_end(bl, SC_FLASHKICK, INVALID_TIMER);
+		status_change_end(bl, SC_SERVANT_SIGN, INVALID_TIMER);
 		status_change_end(bl, SC_HIDING, INVALID_TIMER);
 		// Ensure the bl is a PC; if so, we'll handle the removal of cloaking and cloaking exceed later
 		if ( bl->type != BL_PC ) {
@@ -3189,7 +3255,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			break;
 		}
 		case BL_MER: {
-			struct mercenary_data *md = (struct mercenary_data *)bl;
+			s_mercenary_data *md = (s_mercenary_data *)bl;
 
 			ud->canact_tick = ud->canmove_tick;
 
@@ -3204,7 +3270,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			break;
 		}
 		case BL_ELEM: {
-			struct elemental_data *ed = (struct elemental_data *)bl;
+			s_elemental_data *ed = (s_elemental_data *)bl;
 
 			ud->canact_tick = ud->canmove_tick;
 
@@ -3352,9 +3418,9 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 
 			pc_delinvincibletimer(sd);
 
-			pc_delautobonus(sd, sd->autobonus, false);
-			pc_delautobonus(sd, sd->autobonus2, false);
-			pc_delautobonus(sd, sd->autobonus3, false);
+			pc_delautobonus(*sd, sd->autobonus, false);
+			pc_delautobonus(*sd, sd->autobonus2, false);
+			pc_delautobonus(*sd, sd->autobonus3, false);
 
 			if( sd->followtimer != INVALID_TIMER )
 				pc_stop_following(sd);
@@ -3397,11 +3463,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				sd->num_quests = sd->avail_quests = 0;
 			}
 
-			if (sd->qi_display) {
-				aFree(sd->qi_display);
-				sd->qi_display = NULL;
-			}
-			sd->qi_count = 0;
+			sd->qi_display.clear();
 
 #if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
 			sd->hatEffects.clear();
@@ -3463,7 +3525,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			}
 
 			if( md->guardian_data ) {
-				struct guild_castle* gc = md->guardian_data->castle;
+				std::shared_ptr<guild_castle> gc = md->guardian_data->castle;
 
 				if( md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS )
 					gc->guardian[md->guardian_data->number].id = 0;
@@ -3519,6 +3581,10 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 
 				if( sd )
 					sd->status.hom_id = 0;
+
+#ifdef RENEWAL
+				status_change_end(&sd->bl, status_skill2sc(AM_CALLHOMUN), INVALID_TIMER);
+#endif
 			}
 
 			if( sd )
@@ -3530,7 +3596,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			break;
 		}
 		case BL_MER: {
-			struct mercenary_data *md = (TBL_MER*)bl;
+			s_mercenary_data *md = (TBL_MER*)bl;
 			struct map_session_data *sd = md->master;
 
 			if( mercenary_get_lifetime(md) > 0 )
@@ -3553,7 +3619,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			break;
 		}
 		case BL_ELEM: {
-			struct elemental_data *ed = (TBL_ELEM*)bl;
+			s_elemental_data *ed = (TBL_ELEM*)bl;
 			struct map_session_data *sd = ed->master;
 
 			if( elemental_get_lifetime(ed) > 0 )
