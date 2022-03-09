@@ -6248,6 +6248,14 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 			}
 		}
 
+		if (tsc->data[SC_MAXPAIN]) {
+			rdamage = wd->damage + wd->damage2;
+			tsc->data[SC_MAXPAIN]->val2 = (int)rdamage;
+			if (!tsc->data[SC_KYOMU] && !(tsc->data[SC_DARKCROW] && wd->flag&BF_SHORT)) { //SC_KYOMU invalidates reflecting ability. SC_DARKCROW also does, but only for short weapon attack.
+				skill_castend_damage_id(target, src, NPC_MAXPAIN_ATK, tsc->data[SC_MAXPAIN]->val1, tick, ((wd->flag & 1) ? wd->flag - 1 : wd->flag));
+			}
+		}
+		
 		// Calculate skill reflect damage separately
 		if ((ud && !ud->immune_attack) || !status_bl_has_mode(target, MD_SKILLIMMUNE))
 			rdamage = battle_calc_return_damage(target, src, &damage, wd->flag, skill_id,true);
@@ -6523,6 +6531,17 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			break;
 		case MH_EQC:
 			ATK_ADD(wd.damage, wd.damage2, 6000 * skill_lv + status_get_lv(src)); // !TODO: Confirm base level bonus
+			break;
+		case NPC_MAXPAIN_ATK:
+			if (sc && sc->data[SC_MAXPAIN]) {
+				if (sc->data[SC_MAXPAIN]->val2) {
+					wd.damage = sc->data[SC_MAXPAIN]->val2 * skill_lv / 10;
+				} else if (sc->data[SC_MAXPAIN]->val3) {
+					wd.damage = sc->data[SC_MAXPAIN]->val3 * skill_lv / 10;
+				}
+			} else {
+				wd.damage = 0;
+			}
 			break;
 	}
 
