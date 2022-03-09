@@ -7999,17 +7999,6 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			if (status_bl_has_mode(target, MD_STATUSIMMUNE))
 				md.damage /= 10;
 			break;
-		case NPC_MAXPAIN_ATK:
-			if (ssc && ssc->data[SC_MAXPAIN]) {
-				if (ssc->data[SC_MAXPAIN]->val2) {
-					md.damage = ssc->data[SC_MAXPAIN]->val2 * skill_lv / 10;
-				} else if (ssc->data[SC_MAXPAIN]->val3) {
-					md.damage = ssc->data[SC_MAXPAIN]->val3 * skill_lv / 10;
-				}
-			} else {
-				md.damage = 0;
-			}
-			break;
 		case NPC_WIDESUCK:
 			md.damage = tstatus->max_hp * 15 / 100;
 			break;
