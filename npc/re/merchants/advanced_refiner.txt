@@ -71,42 +71,58 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 	}
 	mes "[Holink]";
 	.@refineitemid = getequipid(.@part); // save id of the item
+	.@itemtype = getiteminfo( .@refineitemid, ITEMINFO_TYPE );
 	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
 	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 // Holink has different hardcoded prices
 //	.@price = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_ZENY_COST);
 	.@material = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_MATERIAL_ID);
 
-	switch(getequipweaponlv(.@part)) {
-	default:
-	case 0: // Armor
+	if( .@itemtype == IT_ARMOR ){
+		.@equip_lv = getequiparmorlv( .@part );
 		.@type$ = "armor";
-		.@price = 15000;
 		mes "You have chosen an armor, meow~";
-		break;
-	case 1: // Level 1 Weapon
+
+		switch(.@equip_lv) {
+			case 1:
+				.@price = 15000;
+				break;
+			default:
+				// TODO:
+				close;
+		}
+	}else if( .@itemtype == IT_WEAPON ){
+		.@equip_lv = getequipweaponlv( .@part );
 		.@type$ = "weapon";
-		.@price = 500;
-		mes "A level 1 weapon...?";
-		break;
-	case 2: // Level 2 Weapon
-		.@type$ = "weapon";
-		.@price = 2000;
-		mes "Meow, a level 2 weapon...?";
-		break;
-	case 3: // Level 3 Weapon
-		.@type$ = "weapon";
-		.@price = 20000;
-		mes "Meow Meow~~ A level 3 weapon~~";
-		break;
-	case 4: // Level 4 Weapon
-		.@type$ = "weapon";
-		.@price = 50000;
-		mes "Me-Meow!... A level 4 weapon...!";
-		mes "I've only seen it twice while";
-		mes "learning from Aragam... Me-Meow!!";
-		break;
+
+		switch( .@equip_lv ){
+			case 1: // Level 1 Weapon
+				.@price = 500;
+				mes "A level 1 weapon...?";
+				break;
+			case 2: // Level 2 Weapon
+				.@price = 2000;
+				mes "Meow, a level 2 weapon...?";
+				break;
+			case 3: // Level 3 Weapon
+				.@price = 20000;
+				mes "Meow Meow~~ A level 3 weapon~~";
+				break;
+			case 4: // Level 4 Weapon
+				.@price = 50000;
+				mes "Me-Meow!... A level 4 weapon...!";
+				mes "I've only seen it twice while";
+				mes "learning from Aragam... Me-Meow!!";
+				break;
+			default:
+				// TODO:
+				close;
+		}
+	}else{
+		// TODO:
+		close;
 	}
+
 	mes "You need ^ff9999"+getitemname(.@material)+"^000000 and ^ff9999"+.@price+"^000000 Zeny for this refine, meow~";
 	mes "Want to continue, meow?~";
 	next;

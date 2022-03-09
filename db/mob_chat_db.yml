@@ -1,0 +1,132 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Monster Chat Database
+###########################################################################
+#
+# Settings
+#
+###########################################################################
+# - Id                      Index of the message.
+#   Color                   Hexadecimal color (Default: 0xFF0000).
+#   Dialog                  Text displayed by the monster.
+###########################################################################
+
+Header:
+  Type: MOB_CHAT_DB
+  Version: 1
+
+Body:
+  - Id: 1
+    Dialog: Weakling! Challenge me if you have any courage!
+  - Id: 2
+    Dialog: Impressive! I wonder how far your recklessness will take you.
+  - Id: 3
+    Dialog: I almost pity how outmatched you are against me. Now prepare for my attack!
+  - Id: 4
+    Dialog: My loyal servants! Welcome them with a painful death!
+  - Id: 5
+    Dialog: Don't you run away!
+  - Id: 6
+    Dialog: You worthless humans. Your so-called holy powers have no effect on me!
+  - Id: 7
+    Dialog: Useless underlings!...Well, that's fine, I have more weapons to use and dispose.
+  - Id: 8
+    Dialog: Pray to your gods!
+  - Id: 9
+    Dialog: Do you still think you're a match to me?!
+  - Id: 10
+    Dialog: Vanish!
+  - Id: 11
+    Dialog: Let's see how long you can endure my power!
+  - Id: 12
+    Dialog: Is this all you've got?!
+  - Id: 13
+    Dialog: You're tickling me!
+  - Id: 14
+    Dialog: This is how you attack? Watch and learn, weaklings!
+  - Id: 15
+    Dialog: It's time to finish the game!
+  - Id: 16
+    Dialog: Oh, you're stronger than I thought!
+  - Id: 17
+    Dialog: No, this can't be happening! I'm Satan Morocc, Demon King of Destruction!
+  - Id: 18
+    Dialog: I can never die! I'll be coming back for you!
+  - Id: 19
+    Dialog: I was born to conquer this world! None shall stop me!
+  - Id: 20
+    Dialog: Your days are numbered!
+  - Id: 21
+    Dialog: Pulse Strike! My fingers tear steel!
+  - Id: 22
+    Dialog: Hahaha, tell me who I am! I'm Baphomet, the Heir of Hell!
+  - Id: 23
+    Dialog: Enjoy your time on the mortal plane while you can, your hope will soon turn into despair!
+  - Id: 24
+    Dialog: When are you going to learn your lesson? In death?
+  - Id: 25
+    Dialog: No... I can't lose! I won't beg for my life! I'm not running away! I don't accept this as defeat!
+  - Id: 26
+    Dialog: Argh... I... I'm weakening...
+  - Id: 27
+    Dialog: What do you want from me?
+  - Id: 28
+    Dialog: No! I didn't do this! He's the one who planned out all this!
+  - Id: 29
+    Dialog: I just wanted to find peace..!  That's why I have been fleeing away!
+  - Id: 30
+    Dialog: Ahhhh!!! Now, I just have to kill you all!
+  - Id: 31
+    Dialog: Annoying flies!! Get off of me!
+  - Id: 32
+    Dialog: Suffer in Hell!
+  - Id: 33
+    Dialog: Mwahahaha! Taste the anger of the earth!!!
+  - Id: 34
+    Dialog: No... I won't accept this as defeat!
+  - Id: 35
+    Dialog: Will it ease your loneliness to hit me?  Why don't you stay here with me forever, human?
+  - Id: 36
+    Dialog: You will forgot the meaning of time.  I wonder how long can you last in here...
+  - Id: 37
+    Dialog: Is there anyone waiting for you outside of here?  Throw them all away, you are mine now...
+  - Id: 38
+    Dialog: Discard your life and stay confined here. You will yearn for freedom in captivity !!
+  - Id: 39
+    Dialog: How much will the outside world change if you stay here in solitude for one thousand years?
+  - Id: 40
+    Dialog: Yes! Yearn for your freedom from this confined place, your captivity here will be permanent !!
+  - Id: 41
+    Dialog: Arrival!
+  - Id: 51
+    Dialog: I will not forgive humans!!
+  - Id: 52 # !todo Unknown dialogue
+    Dialog: I will not forgive humans!!
+  - Id: 53
+    Dialog: I will save you!
+  - Id: 54 # !todo Unknown dialogue
+    Dialog: I will save you!
+  - Id: 55
+    Dialog: This is the truth! Hahahahah!
+  - Id: 58 # !todo Unknown dialogue
+    Dialog: Attack!
+
+Footer:
+  Imports:
+  - Path: db/import/mob_chat_db.yml

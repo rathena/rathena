@@ -53,7 +53,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 		return 0;
 	}
 
-	uint16 mob_id = mob->vd.class_;
+	uint16 mob_id = mob->id;
 
 	std::shared_ptr<s_pet_db> pet = this->find( mob_id );
 	bool exists = pet != nullptr;
@@ -75,7 +75,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 			return 0;
 		}
 
-		struct item_data* item = itemdb_search_aegisname( item_name.c_str() );
+		std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
 
 		if( item == nullptr ){
 			this->invalidWarning( node["TameItem"], "Taming item %s does not exist.\n", item_name.c_str() );
@@ -96,7 +96,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 			return 0;
 		}
 
-		struct item_data* item = itemdb_search_aegisname( item_name.c_str() );
+		std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
 
 		if( item == nullptr ){
 			this->invalidWarning( node["EggItem"], "Egg item %s does not exist.\n", item_name.c_str() );
@@ -113,7 +113,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 			return 0;
 		}
 
-		struct item_data* item = itemdb_search_aegisname( item_name.c_str() );
+		std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
 
 		if( item == nullptr ){
 			this->invalidWarning( node["EquipItem"], "Equip item %s does not exist.\n", item_name.c_str() );
@@ -134,7 +134,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 			return 0;
 		}
 
-		struct item_data* item = itemdb_search_aegisname( item_name.c_str() );
+		std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
 
 		if( item == nullptr ){
 			this->invalidWarning( node["FoodItem"], "Food item %s does not exist.\n", item_name.c_str() );
@@ -419,7 +419,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 				return 0;
 			}
 
-			uint16 targetId = mob->vd.class_;
+			uint16 targetId = mob->id;
 
 			if( !this->nodeExists( evolutionNode, "ItemRequirements" ) ){
 				this->invalidWarning( evolutionNode, "Missing required node \"ItemRequirements\".\n" );
@@ -441,7 +441,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 					return 0;
 				}
 
-				struct item_data* item = itemdb_search_aegisname( item_name.c_str() );
+				std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
 
 				if( item == nullptr ){
 					this->invalidWarning( requirementNode["Item"], "Evolution requirement item %s does not exist.\n", item_name.c_str() );
@@ -1115,6 +1115,7 @@ int pet_birth_process(struct map_session_data *sd, struct s_pet *pet)
 #endif
 		clif_pet_equip_area(sd->pd);
 		clif_send_petstatus(sd);
+		clif_pet_autofeed_status(sd,true);
 	}
 
 	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->master == sd);
@@ -1218,6 +1219,11 @@ int pet_catch_process1(struct map_session_data *sd,int target_class)
 {
 	nullpo_ret(sd);
 
+	if (map_getmapflag(sd->bl.m, MF_NOPETCAPTURE)) {
+		clif_displaymessage(sd->fd, msg_txt(sd, 669)); // You can't catch any pet on this map.
+		return 0;
+	}
+
 	sd->catch_target_class = target_class;
 	clif_catch_process(sd);
 
@@ -1247,6 +1253,15 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 		return 1;
 	}
 
+	if (map_getmapflag(sd->bl.m, MF_NOPETCAPTURE)) {
+		clif_pet_roulette(sd, 0);
+		sd->catch_target_class = PET_CATCH_FAIL;
+		sd->itemid = 0;
+		sd->itemindex = -1;
+		clif_displaymessage(sd->fd, msg_txt(sd, 669)); // You can't catch any pet on this map.
+		return 1;
+	}
+
 	//FIXME: delete taming item here, if this was an item-invoked capture and the item was flagged as delay-consume [ultramage]
 
 	std::shared_ptr<s_pet_db> pet = pet_db.find(md->mob_id);
@@ -1270,7 +1285,27 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 		return 1;
 	}
 
-	pet_catch_rate = (pet->capture + (sd->status.base_level - md->level)*30 + sd->battle_status.luk*20)*(200 - get_percentage(md->status.hp, md->status.max_hp))/100;
+	if( battle_config.pet_distance_check && distance_bl( &sd->bl, &md->bl ) > battle_config.pet_distance_check ){
+		clif_pet_roulette( sd, 0 );
+		sd->catch_target_class = PET_CATCH_FAIL;
+
+		return 1;
+	}
+
+	struct status_change* tsc = status_get_sc( &md->bl );
+
+	if( battle_config.pet_hide_check && tsc && ( tsc->data[SC_HIDING] || tsc->data[SC_CLOAKING] || tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_NEWMOON] || tsc->data[SC_CLOAKINGEXCEED] ) ){
+		clif_pet_roulette( sd, 0 );
+		sd->catch_target_class = PET_CATCH_FAIL;
+
+		return 1;
+	}
+
+	if( battle_config.pet_legacy_formula ){
+		pet_catch_rate = ( pet->capture + ( sd->status.base_level - md->level ) * 30 + sd->battle_status.luk * 20 ) * ( 200 - get_percentage( md->status.hp, md->status.max_hp ) ) / 100;
+	}else{
+		pet_catch_rate = pet->capture + ( ( 100 - get_percentage( md->status.hp, md->status.max_hp ) ) * pet->capture ) / 100;
+	}
 
 	if(pet_catch_rate < 1)
 		pet_catch_rate = 1;

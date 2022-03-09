@@ -801,10 +801,10 @@ OnDisable:
 
 -	script	The chamber of magic#2	-1,{
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	monster "job3_war02",23,32,"Magic Monster",2047,1,strnpcinfo(0)+"::OnMyMobDead";
 	monster "job3_war02",23,21,"Magic Monster",2048,1,strnpcinfo(0)+"::OnMyMobDead";
 	monster "job3_war02",34,32,"Magic Monster",2049,1,strnpcinfo(0)+"::OnMyMobDead";
@@ -819,7 +819,7 @@ OnReset:
 	killmonster "job3_war02",strnpcinfo(0)+"::OnMyMobDead";
 	end;
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnMyMobDead:
 	if (mobcount("job3_war02",strnpcinfo(0)+"::OnMyMobDead") < 1) {

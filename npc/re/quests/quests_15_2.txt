@@ -2287,7 +2287,7 @@ un_bunker,382,335,3	script	Box#e152p00	4_ENERGY_BLUE,{
 			close;
 		}
 		progressbar "ffff00",3;
-		disablenpc strnpcinfo(0);
+		disablenpc();
 		initnpctimer;
 		if (.@npc_name$ == "Box") {
 			mes "Found a Memory Record in the box.";
@@ -2346,14 +2346,14 @@ un_bunker,382,335,3	script	Box#e152p00	4_ENERGY_BLUE,{
 		close;
 	}
 	progressbar "ffff00",3;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	initnpctimer;
 	mes "Found a Memory Record.";
 	getitem 6824,1;	// Lab_Memory_Record
 	close;
 
 OnTimer30000:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	stopnpctimer;
 	end;
 }
@@ -2407,7 +2407,7 @@ verus02,60,30,1	script	Strewn paper#e152a01	4_ENERGY_BLUE,{
 
 OnTimer60000:
 	stopnpctimer;
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 
 S_Type:
@@ -2424,7 +2424,7 @@ S_Type:
 		close;
 	}
 	progressbar "ffff00",3;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	initnpctimer;
 	getitem 6757,1;// Memory_Record
 
