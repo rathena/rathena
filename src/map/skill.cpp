@@ -3428,7 +3428,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 	if (tsc && tsc->data[SC_MAXPAIN]) {
 		tsc->data[SC_MAXPAIN]->val3 = (int)damage;
 		tsc->data[SC_MAXPAIN]->val2 = 0;
-		if (!tsc->data[SC_KYOMU]) {//SC_KYOMU invalidates reflecting ability
+		if (!tsc->data[SC_KYOMU] && !(tsc->data[SC_DARKCROW] && dmg.flag & BF_SHORT)) {//SC_KYOMU invalidates reflecting ability. SC_DARKCROW also does, but only for short weapon attack.
 			skill_castend_damage_id(bl, src, NPC_MAXPAIN_ATK, tsc->data[SC_MAXPAIN]->val1, tick, flag);
 		}
 	}
@@ -7060,6 +7060,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case RL_E_CHAIN:
 	case SU_FRESHSHRIMP:
 	case SU_ARCLOUSEDASH:
+	case NPC_MAXPAIN:
 	case SP_SOULREAPER:
 	case SJ_LIGHTOFMOON:
 	case SJ_LIGHTOFSTAR:
@@ -7074,7 +7075,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	//SC_DARKCROW prevents using reflecting skills
 	case CR_REFLECTSHIELD:
 	case MS_REFLECTSHIELD:
-	case NPC_MAXPAIN:
 		if (tsc && tsc->data[SC_DARKCROW]) {
 			if (sd)
 				clif_skill_fail(sd, skill_id, USESKILL_FAIL, 0);
