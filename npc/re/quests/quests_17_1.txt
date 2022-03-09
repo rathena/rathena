@@ -7677,7 +7677,6 @@ sp_cor,113,130,3	script	Rebellion#cor_02	4_M_REBELLION3,{
 		mes "[ Elyumina ]";
 		mes "Will you meet with Cor again and will you collect more data?";
 		mes "Let me know please, I want to get away from this guy.";
-		next;
 	}
 	next;
 	cutin "",255;

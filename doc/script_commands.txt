@@ -3,7 +3,7 @@
 //===== By:==================================================
 //= rAthena Dev Team
 //===== Last Updated:========================================
-//= 20201115
+//= 20220308
 //===== Description:=========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.

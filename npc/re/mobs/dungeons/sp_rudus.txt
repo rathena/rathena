@@ -2,7 +2,7 @@
 //= Rudus Dungeon Monster Spawn Script
 //===== Description: =========================================
 //= Spawns monsters inside Rudus Dungeon F1-3
-//===== Changelogs: ==========================================
+//===== Changelog: ===========================================
 //= 1.0 First version. [crazyarashi]
 //= 1.1 Some corrections [Everade]
 //============================================================

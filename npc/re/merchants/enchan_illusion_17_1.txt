@@ -235,7 +235,7 @@ sp_cor,106,136,3	script	RS26#illusion_enchant	4_SYS_MSG,{
 			mes "If you bring Illusion equipments with strengthening modules, I will improve them as you desire.";
 			next;
 			mes "[ RS26 ]";
-			mes "Since these modules work with the standard equipments, they will not destroy the items. However, the number of upgrades can vary depending of the equipment.";
+			mes "Since these modules work with the standard equipments, they will not destroy the items. However, the number of upgrades can vary depending on the equipment.";
 			next;
 			mes "[ RS26 ]";
 			mes "Please come back if you need anything else.";
@@ -274,8 +274,8 @@ sp_cor,106,136,3	script	RS26#illusion_enchant	4_SYS_MSG,{
 		.@card[.@i] = getequipcardid(.@part,.@i);
 	copyarray .@check[0],.@card[0],4;
 	if (.@id[0] != .@equip_id && .@id[1] != .@equip_id) {
-		mes getitemname(.@id[0]);
-		mes getitemname(.@id[1]);
+		mes "<ITEM>"+ getitemname(.@id[0]) +"<INFO>"+ .@id[0] +"</INFO></ITEM>";
+		mes "<ITEM>"+ getitemname(.@id[1]) +"<INFO>"+ .@id[1] +"</INFO></ITEM>";
 		mes "Please make sure you have equipped the item.";
 		close;
 	}

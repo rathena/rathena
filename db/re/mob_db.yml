@@ -89299,7 +89299,6 @@ Body:
     Class: Boss
     Modes:
       Mvp: true
-      KnockBackImmune: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5000
@@ -91038,6 +91037,7 @@ Body:
     AttackDelay: 866
     AttackMotion: 864
     DamageMotion: 360
+    Ai: 04
     Drops:
       - Item: Sticky_Mucus
         Rate: 1250
@@ -91210,6 +91210,7 @@ Body:
     AttackDelay: 1872
     AttackMotion: 360
     DamageMotion: 864
+    Ai: 04
     Drops:
       - Item: Rune_Of_Darkness
         Rate: 1250
@@ -91249,6 +91250,7 @@ Body:
     AttackDelay: 1872
     AttackMotion: 672
     DamageMotion: 480
+    Ai: 04
     Drops:
       - Item: Tough_Scalelike_Stem
         Rate: 1250
@@ -91288,6 +91290,7 @@ Body:
     AttackDelay: 385
     AttackMotion: 384
     DamageMotion: 288
+    Ai: 04
     Drops:
       - Item: Heart_Hunter_Seal
         Rate: 1250
@@ -91974,9 +91977,6 @@ Body:
     Class: Boss
     Modes:
       Mvp: true
-      KnockBackImmune: true
-      IgnoreMisc: true
-      IgnoreRanged: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 4000
