@@ -306,6 +306,7 @@ struct s_skill_db {
 	int32 abra_probability[MAX_SKILL_LEVEL];
 	s_skill_spellbook reading_spellbook;
 	uint16 improvisedsong_rate;
+	sc_type sc;									///< Default SC for skill
 };
 
 class SkillDatabase : public TypesafeCachedYamlDatabase <uint16, s_skill_db> {
@@ -2634,6 +2635,7 @@ int skill_is_combo(uint16 skill_id);
 void skill_combo_toggle_inf(struct block_list* bl, uint16 skill_id, int inf);
 void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_list *bl, uint16 skill_id, uint16 skill_lv, t_tick tick);
 
+enum sc_type skill_get_sc(int16 skill_id);
 void skill_reveal_trap_inarea(struct block_list *src, int range, int x, int y);
 int skill_get_time3(struct map_data *mapdata, uint16 skill_id, uint16 skill_lv);
 
