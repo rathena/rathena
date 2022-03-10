@@ -1,7 +1,7 @@
 
-RAPIDYAML_OBJ = $(shell find src/* -type f -name "*.cpp" | sed -e "s/\.cpp/\.o/g")
+RAPIDYAML_OBJ = $(shell find * -type f -name "*.cpp" | sed -e "s/\.cpp/\.o/g")
 RAPIDYAML_DIR_OBJ = $(RAPIDYAML_OBJ:%=obj/%)
-RAPIDYAML_H =  $(shell find src/* -type f -name "*.h*")
+RAPIDYAML_H =  $(shell find * -type f -name "*.h*")
 RAPIDYAML_AR = obj/ryml.a
 
 CXXFLAG =-std=c++11
