@@ -5,7 +5,7 @@ OMAP=@OMAP@
 ifeq ($(HAVE_MYSQL),yes)
 	ALL_DEPENDS=server tools
 	SERVER_DEPENDS=common login char map import
-	COMMON_DEPENDS=libconfig rapidyaml
+	COMMON_DEPENDS=libconfig rapidyaml yaml-cpp
 	LOGIN_DEPENDS=libconfig common
 	CHAR_DEPENDS=libconfig common rapidyaml
 	MAP_DEPENDS=libconfig common rapidyaml
@@ -58,6 +58,9 @@ tools:
 rapidyaml:
 	@$(MAKE) -C 3rdparty/rapidyaml
 
+yaml-cpp:
+	@$(MAKE) -C 3rdparty/yaml-cpp
+
 import:
 # 1) create conf/import folder
 # 2) add missing files
@@ -77,6 +80,7 @@ clean:
 	@$(MAKE) -C src/common $@
 	@$(MAKE) -C 3rdparty/libconfig $@
 	@$(MAKE) -C 3rdparty/rapidyaml $@
+	@$(MAKE) -C 3rdparty/yaml-cpp $@
 	@$(MAKE) -C src/login $@
 	@$(MAKE) -C src/char $@
 	@$(MAKE) -C src/map $@
@@ -88,6 +92,7 @@ help:
 	@echo "'common'      - builds object files used for the three servers"
 	@echo "'libconfig'   - builds object files of libconfig"
 	@echo "'rapidyaml'   - builds object files of rapidyaml"
+	@echo "'yaml-cpp'    - builds object files of yaml-cpp"
 	@echo "'login'       - builds login server"
 	@echo "'char'        - builds char server"
 	@echo "'map'         - builds map server"

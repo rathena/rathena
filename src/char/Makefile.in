@@ -16,9 +16,9 @@ CHAR_H = $(shell ls ../char/*.hpp)
 
 RAPIDYAML_OBJ = $(shell find ../../3rdparty/rapidyaml/ -type f -name "*.cpp" | sed -e "s/\.cpp/\.o/g" )
 RAPIDYAML_DIR_OBJ = $(RAPIDYAML_OBJ:%=obj/%)
-RAPIDYAML_AR = ../../3rdparty/rapidyaml/obj/rapidyaml.a
-RAPIDYAML_H = $(shell find ../../3rdparty/rapidyaml/ -type f -name "*.h")
-RAPIDYAML_INCLUDE = -I../../3rdparty/rapidyaml/src
+RAPIDYAML_AR = ../../3rdparty/rapidyaml/obj/ryml.a
+RAPIDYAML_H = $(shell find ../../3rdparty/rapidyaml/ -type f -name "*.h*")
+RAPIDYAML_INCLUDE = -I../../3rdparty/rapidyaml/src -I../../3rdparty/rapidyaml/ext/c4core/src
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)	

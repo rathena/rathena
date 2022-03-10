@@ -53,6 +53,9 @@ Thumbs.db
 # /3rdparty/rapidyaml/
 /3rdparty/rapidyaml/Makefile
 
+# /3rdparty/yaml-cpp/
+/3rdparty/yaml-cpp/Makefile
+
 # /db/
 /db/import
 
