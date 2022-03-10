@@ -291,7 +291,7 @@ struct s_bonus_script_entry {
 	StringBuf *script_buf; //Used for comparing and storing on table
 	t_tick tick;
 	uint16 flag;
-	enum efst_types icon;
+	enum efst_type icon;
 	uint8 type; //0 - Ignore; 1 - Buff; 2 - Debuff
 	int tid;
 };
@@ -1459,7 +1459,6 @@ void pc_regen (struct map_session_data *sd, t_tick diff_tick);
 
 bool pc_setstand(struct map_session_data *sd, bool force);
 bool pc_candrop(struct map_session_data *sd,struct item *item);
-bool pc_can_attack(struct map_session_data *sd, int target_id);
 
 uint64 pc_jobid2mapid(unsigned short b_class);	// Skotlex
 int pc_mapid2jobid(uint64 class_, int sex);	// Skotlex
@@ -1573,8 +1572,8 @@ void pc_show_version(struct map_session_data *sd);
 
 TIMER_FUNC(pc_bonus_script_timer);
 void pc_bonus_script(struct map_session_data *sd);
-struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, const char *script_str, t_tick dur, enum efst_types icon, uint16 flag, uint8 type);
-void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag);
+struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, const char *script_str, t_tick dur, enum efst_type icon, uint16 flag, uint8 type);
+void pc_bonus_script_clear(struct map_session_data *sd, uint32 flag);
 
 void pc_cell_basilica(struct map_session_data *sd);
 
