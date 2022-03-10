@@ -7329,7 +7329,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SA_SUMMONMONSTER:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		if (sd) {
-			mob_once_spawn(sd, src->m, src->x, src->y, get_mob_names_type(), -1, 1, "", SZ_SMALL, AI_NONE);
+			if (battle_config.mob_names_type == 0)
+				mob_once_spawn(sd, src->m, src->x, src->y,"--en--", -1, 1, "", SZ_SMALL, AI_NONE);
+			else
+				mob_once_spawn(sd, src->m, src->x, src->y,"--ja--", -1, 1, "", SZ_SMALL, AI_NONE);
 		}
 		break;
 	case SA_LEVELUP:
@@ -12602,12 +12605,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case MT_SUMMON_ABR_DUAL_CANNON:
 	case MT_SUMMON_ABR_MOTHER_NET:
 	case MT_SUMMON_ABR_INFINITY: {
-			uint32 abrs[4] = { MOBID_ABR_BATTLE_WARIOR, MOBID_ABR_DUAL_CANNON, MOBID_ABR_MOTHER_NET, MOBID_ABR_INFINITY };
+			int32 abrs[4] = { MOBID_ABR_BATTLE_WARIOR, MOBID_ABR_DUAL_CANNON, MOBID_ABR_MOTHER_NET, MOBID_ABR_INFINITY };
 
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+			int mob_id = abrs[3 - (MT_SUMMON_ABR_INFINITY - skill_id)];
 
-			mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, get_mob_names_type(), abrs[3 - (MT_SUMMON_ABR_INFINITY - skill_id)], "", SZ_SMALL, AI_ABR);
+			mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, mob_db.find(mob_id)->get_name().c_str(), mob_id, "", SZ_SMALL, AI_ABR);
 
 			if (md) {
 				md->master_id = src->id;
@@ -12625,12 +12629,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case BO_WOODEN_FAIRY:
 	case BO_CREEPER:
 	case BO_HELLTREE: { // A poring is used in the 4th slot as a dummy since the Research Report skill is in between the Creeper and Hell Tree skills.
-			uint32 bionics[5] = { MOBID_BIONIC_WOODENWARRIOR, MOBID_BIONIC_WOODEN_FAIRY, MOBID_BIONIC_CREEPER, MOBID_PORING, MOBID_BIONIC_HELLTREE };
+			int32 bionics[5] = { MOBID_BIONIC_WOODENWARRIOR, MOBID_BIONIC_WOODEN_FAIRY, MOBID_BIONIC_CREEPER, MOBID_PORING, MOBID_BIONIC_HELLTREE };
 
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+			int mob_id = bionics[4 - (BO_HELLTREE - skill_id)];
 
-			mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, get_mob_names_type(), bionics[4 - (BO_HELLTREE - skill_id)], "", SZ_SMALL, AI_BIONIC);
+			mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, mob_db.find(mob_id)->get_name().c_str(), mob_id, "", SZ_SMALL, AI_BIONIC);
 
 			if (md) {
 				md->master_id = src->id;
@@ -13831,7 +13836,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 						mob_id = MOBID_SHINING_PLANT;
 				}
 
-				md = mob_once_spawn_sub(src, src->m, x, y, get_mob_names_type(), mob_id, "", SZ_SMALL, AI_NONE);
+				md = mob_once_spawn_sub(src, src->m, x, y, mob_db.find(mob_id)->get_name().c_str(), mob_id, "", SZ_SMALL, AI_NONE);
 				if (!md)
 					break;
 				if ((t = skill_get_time(skill_id, skill_lv)) > 0)
