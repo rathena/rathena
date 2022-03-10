@@ -6170,6 +6170,7 @@ Body:
       NoMove: true
       NoPickItem: true
       NoConsumeItem: true
+      NoAttack: true
       NoInteract: true
     Flags:
       StopAttacking: true
@@ -6884,6 +6885,7 @@ Body:
     States:
       NoMove: true
       NoCast: true
+      NoAttack: true
       NoInteract: true
     Flags:
       StopCasting: true
