@@ -14498,7 +14498,7 @@ const std::string StatusDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef node) {
 	std::string status_name;
 
 	if (!this->asString(node, "Status", status_name))
@@ -14568,10 +14568,13 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "States")) {
-		const YAML::Node &stateNode = node["States"];
+		const ryml::NodeRef stateNode = node["States"];
 
-		for (const auto &it : stateNode) {
-			std::string state = it.first.as<std::string>(), state_constant = "SCS_" + state;
+		for (const auto &it : stateNode.children()) {
+			std::string state;
+			c4::from_chars(it.key(), &state);
+
+			std::string state_constant = "SCS_" + state;
 			int64 constant;
 
 			if (!script_get_constant(state_constant.c_str(), &constant)) {
@@ -14600,10 +14603,13 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "CalcFlags")) {
-		const YAML::Node &flagNode = node["CalcFlags"];
+		const ryml::NodeRef flagNode = node["CalcFlags"];
 
-		for (const auto &it : flagNode) {
-			std::string flag = it.first.as<std::string>(), flag_constant = "SCB_" + flag;
+		for (const auto &it : flagNode.children()) {
+			std::string flag;
+			c4::from_chars(it.key(), &flag);
+
+			std::string flag_constant = "SCB_" + flag;
 			int64 constant;
 
 			if (!script_get_constant(flag_constant.c_str(), &constant)) {
@@ -14657,10 +14663,13 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Opt2")) {
-		const YAML::Node &optNode = node["Opt2"];
+		const ryml::NodeRef optNode = node["Opt2"];
 
-		for (const auto &it : optNode) {
-			std::string opt = it.first.as<std::string>(), opt_constant = "OPT2_" + opt;
+		for (const auto &it : optNode.children()) {
+			std::string opt;
+			c4::from_chars(it.key(), &opt);
+
+			std::string opt_constant = "OPT2_" + opt;
 			int64 constant;
 
 			if (!script_get_constant(opt_constant.c_str(), &constant)) {
@@ -14689,10 +14698,13 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Opt3")) {
-		const YAML::Node &optNode = node["Opt3"];
+		const ryml::NodeRef optNode = node["Opt3"];
 
-		for (const auto &it : optNode) {
-			std::string opt = it.first.as<std::string>(), opt_constant = "OPT3_" + opt;
+		for (const auto &it : optNode.children()) {
+			std::string opt;
+			c4::from_chars(it.key(), &opt);
+
+			std::string opt_constant = "OPT3_" + opt;
 			int64 constant;
 
 			if (!script_get_constant(opt_constant.c_str(), &constant)) {
@@ -14721,10 +14733,13 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Options")) {
-		const YAML::Node &optionNode = node["Options"];
+		const ryml::NodeRef optionNode = node["Options"];
 
-		for (const auto &it : optionNode) {
-			std::string option = it.first.as<std::string>(), option_constant = "OPTION_" + option;
+		for (const auto &it : optionNode.children()) {
+			std::string option;
+			c4::from_chars(it.key(), &option);
+
+			std::string option_constant = "OPTION_" + option;
 			int64 constant;
 
 			if (!script_get_constant(option_constant.c_str(), &constant)) {
@@ -14753,10 +14768,13 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Flags")) {
-		const YAML::Node &flagNode = node["Flags"];
+		const ryml::NodeRef flagNode = node["Flags"];
 
-		for (const auto &it : flagNode) {
-			std::string flag = it.first.as<std::string>(), flag_constant = "SCF_" + flag;
+		for (const auto &it : flagNode.children()) {
+			std::string flag;
+			c4::from_chars(it.key(), &flag);
+
+			std::string flag_constant = "SCF_" + flag;
 			int64 constant;
 
 			if (!script_get_constant(flag_constant.c_str(), &constant)) {
@@ -14806,10 +14824,13 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Fail")) {
-		const YAML::Node &failNode = node["Fail"];
+		const ryml::NodeRef failNode = node["Fail"];
 
-		for (const auto &it : failNode) {
-			std::string fail = it.first.as<std::string>(), fail_constant = "SC_" + fail;
+		for (const auto &it : failNode.children()) {
+			std::string fail;
+			c4::from_chars(it.key(), &fail);
+
+			std::string fail_constant = "SC_" + fail;
 			int64 constant;
 
 			if (!script_get_constant(fail_constant.c_str(), &constant)) {
@@ -14835,10 +14856,13 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "End")) {
-		const YAML::Node &endNode = node["End"];
+		const ryml::NodeRef endNode = node["End"];
 
-		for (const auto &it : endNode) {
-			std::string end = it.first.as<std::string>(), end_constant = "SC_" + end;
+		for (const auto &it : endNode.children()) {
+			std::string end;
+			c4::from_chars(it.key(), &end);
+
+			std::string end_constant = "SC_" + end;
 			int64 constant;
 
 			if (!script_get_constant(end_constant.c_str(), &constant)) {

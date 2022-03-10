@@ -2882,7 +2882,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node &node) override;
+	uint64 parseBodyNode(const ryml::NodeRef node) override;
 	void loadingFinished() override;
 
 	// Determine who will receive a clif_status_change packet for effects that require one to display correctly
