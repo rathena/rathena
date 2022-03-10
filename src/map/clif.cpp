@@ -23190,6 +23190,16 @@ void clif_parse_laphine_synthesis( int fd, struct map_session_data* sd ){
 			clif_laphine_synthesis_result( sd, LAPHINE_SYNTHESIS_ITEM );
 			return;
 		}
+
+		if( item->equip != 0 ){
+			clif_laphine_synthesis_result( sd, LAPHINE_SYNTHESIS_ITEM );
+			return;
+		}
+
+		if( item->equipSwitch != 0 ){
+			clif_laphine_synthesis_result( sd, LAPHINE_SYNTHESIS_ITEM );
+			return;
+		}
 	}
 
 	int16 index = pc_search_inventory( sd, sd->state.laphine_synthesis );
@@ -23200,7 +23210,7 @@ void clif_parse_laphine_synthesis( int fd, struct map_session_data* sd ){
 	}
 
 	if( ( sd->inventory_data[index]->flag.delay_consume & DELAYCONSUME_NOCONSUME ) == 0 ){
-		if( pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_CONSUME ) != 0 ){
+		if( pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_LAPHINE ) != 0 ){
 			return;
 		}
 	}
@@ -23323,6 +23333,12 @@ void clif_parse_laphine_upgrade( int fd, struct map_session_data* sd ){
 		return;
 	}
 
+	// If target item is in equipswitch
+	if( item->equipSwitch != 0 ){
+		clif_laphine_upgrade_result( sd, true );
+		return;
+	}
+
 	// Check minimum refine requirement
 	if( item->refine < upgrade->minimumRefine ){
 		clif_laphine_upgrade_result( sd, true );
@@ -23369,7 +23385,7 @@ void clif_parse_laphine_upgrade( int fd, struct map_session_data* sd ){
 	}
 
 	if( ( sd->inventory_data[index2]->flag.delay_consume & DELAYCONSUME_NOCONSUME ) == 0 ){
-		if( pc_delitem( sd, index2, 1, 0, 0, LOG_TYPE_CONSUME ) != 0 ){
+		if( pc_delitem( sd, index2, 1, 0, 0, LOG_TYPE_LAPHINE ) != 0 ){
 			return;
 		}
 	}
