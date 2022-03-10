@@ -33,12 +33,12 @@ jobs:
       - uses: lukka/get-cmake@latest
 
       - name: Create build directory
-        run: |
-          mkdir cbuild
-          cd cbuild
+        run: mkdir cbuild
 
       - name: Create Unix Makefiles
-        run: cmake -G "Unix Makefiles" ..
+        run: |
+          cd cbuild
+          cmake -G "Unix Makefiles" ..
 
       - name: Command - make
         run: make
