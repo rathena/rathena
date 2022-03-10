@@ -1587,6 +1587,20 @@ void initChangeTables(void)
 	set_sc(          EM_EL_STRONG_PROTECTION, SC_STRONG_PROTECTION_OPTION, EFST_STRONG_PROTECTION_OPTION, SCB_ALL );
 	set_sc(          EM_EL_DEEP_POISONING   , SC_DEEP_POISONING_OPTION   , EFST_DEEP_POISONING_OPTION   , SCB_NONE );
 	set_sc(          EM_EL_POISON_SHIELD    , SC_POISON_SHIELD_OPTION    , EFST_POISON_SHIELD_OPTION    , SCB_ALL );
+	
+	// Soul Ascetic
+	set_sc_with_vfx( SOA_TALISMAN_OF_PROTECTION    , SC_TALISMAN_OF_PROTECTION,        EFST_TALISMAN_OF_PROTECTION       , SCB_NONE );
+	set_sc(          SOA_TALISMAN_OF_WARRIOR       , SC_TALISMAN_OF_WARRIOR,           EFST_TALISMAN_OF_WARRIOR          , SCB_PATK );
+	set_sc(          SOA_TALISMAN_OF_MAGICIAN      , SC_TALISMAN_OF_MAGICIAN,          EFST_TALISMAN_OF_MAGICIAN         , SCB_SMATK );
+	set_sc(          SOA_TALISMAN_OF_FIVE_ELEMENTS , SC_TALISMAN_OF_FIVE_ELEMENTS,     EFST_TALISMAN_OF_FIVE_ELEMENTS    , SCB_ALL );
+	set_sc(          SOA_TOTEM_OF_TUTELARY         , SC_TOTEM_OF_TUTELARY,             EFST_BLANK                        , SCB_REGEN );
+	set_sc_with_vfx( SOA_TALISMAN_OF_BLUE_DRAGON   , SC_T_FIRST_GOD,                   EFST_T_FIRST_GOD                  , SCB_NONE );
+	set_sc(          SOA_TALISMAN_OF_WHITE_TIGER   , SC_T_SECOND_GOD,                  EFST_T_SECOND_GOD                 , SCB_NONE );
+	set_sc(          SOA_TALISMAN_OF_RED_PHOENIX   , SC_T_THIRD_GOD,                   EFST_T_THIRD_GOD                  , SCB_NONE );
+	set_sc(          SOA_TALISMAN_OF_BLACK_TORTOISE, SC_T_FOURTH_GOD,                  EFST_T_FOURTH_GOD                 , SCB_NONE );
+	set_sc( SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS, SC_T_FIFTH_GOD,                  EFST_T_FIVETH_GOD                 , SCB_SMATK );
+	set_sc(          SOA_SOUL_OF_HEAVEN_AND_EARTH  , SC_HEAVEN_AND_EARTH,              EFST_HEAVEN_AND_EARTH             , SCB_ALL );
+	
 #endif
 
 	/* Storing the target job rather than simply SC_SPIRIT simplifies code later on */
@@ -2250,6 +2264,11 @@ void initChangeTables(void)
 	StatusDisplayType[SC_SECOND_JUDGE] = BL_PC;
 	StatusDisplayType[SC_THIRD_EXOR_FLAME] = BL_PC;
 	StatusDisplayType[SC_ABYSS_SLAYER] = BL_PC;
+	
+	StatusDisplayType[SC_TALISMAN_OF_PROTECTION] = BL_PC;
+	StatusDisplayType[SC_TALISMAN_OF_WARRIOR] = BL_PC;
+	StatusDisplayType[SC_TALISMAN_OF_FIVE_ELEMENTS] = BL_PC;
+	StatusDisplayType[SC_T_FIRST_GOD] = BL_PC;
 
 	/* StatusChangeState (SCS_) NOMOVE */
 	StatusChangeStateTable[SC_ANKLE]				|= SCS_NOMOVE;
@@ -5236,6 +5255,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		base_status->int_ += skill;
 	if (pc_checkskill(sd, SU_POWEROFLAND) > 0)
 		base_status->int_ += 20;
+	base_status->spl += pc_checkskill(sd,SOA_SOUL_MASTERY);
 
 	// Bonuses from cards and equipment as well as base stat, remember to avoid overflows.
 	i = base_status->str + sd->status.str + sd->indexed_bonus.param_bonus[0] + sd->indexed_bonus.param_equip[0];
@@ -5483,6 +5503,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		base_status->patk += skill * 3;
 		base_status->smatk += skill * 3;
 	}
+	base_status->smatk += pc_checkskill(sd, SOA_TALISMAN_MASTERY);
 
 // ----- PHYSICAL RESISTANCE CALCULATION -----
 	if ((skill = pc_checkskill_imperial_guard(sd, 1)) > 0)// IG_SHIELD_MASTERY
@@ -5890,6 +5911,22 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		if (sc->data[SC_POISON_SHIELD_OPTION]) {
 			sd->indexed_bonus.subele[ELE_POISON] += 100;
 			sd->indexed_bonus.subele[ELE_HOLY] -= 30;
+		}
+		if( sc->data[SC_TALISMAN_OF_FIVE_ELEMENTS] ) {
+			const std::vector<e_element> elements = { ELE_FIRE, ELE_WATER, ELE_WIND, ELE_EARTH };
+			int bonus = sc->data[SC_TALISMAN_OF_FIVE_ELEMENTS]->val2;
+			
+			for( e_element element : elements ){
+				sd->indexed_bonus.magic_atk_ele[0] += bonus;
+				sd->right_weapon.addele[0] += bonus;
+				sd->left_weapon.addele[0] += bonus;
+			}
+		}
+		if( sc->data[SC_HEAVEN_AND_EARTH] ) {
+			i = sc->data[SC_HEAVEN_AND_EARTH]->val2;
+			sd->right_weapon.addele[ELE_ALL] += i;
+			sd->left_weapon.addele[ELE_ALL] += i;
+			sd->indexed_bonus.magic_atk_ele[ELE_ALL] += i;
 		}
 	}
 	status_cpy(&sd->battle_status, base_status);
@@ -9332,6 +9369,8 @@ static signed short status_calc_patk(struct block_list *bl, struct status_change
 		patk += sc->data[SC_ABYSS_SLAYER]->val2;
 	if (sc->data[SC_PRON_MARCH])
 		patk += sc->data[SC_PRON_MARCH]->val2;
+	if (sc->data[SC_TALISMAN_OF_WARRIOR])
+		patk += sc->data[SC_TALISMAN_OF_WARRIOR]->val2;
 
 	return (short)cap_value(patk, 0, SHRT_MAX);
 }
@@ -9356,6 +9395,10 @@ static signed short status_calc_smatk(struct block_list *bl, struct status_chang
 		smatk += sc->data[SC_JAWAII_SERENADE]->val2;
 	if (sc->data[SC_SPELL_ENCHANTING])
 		smatk += sc->data[SC_SPELL_ENCHANTING]->val2;
+	if (sc->data[SC_TALISMAN_OF_MAGICIAN])
+		smatk += sc->data[SC_TALISMAN_OF_MAGICIAN]->val2;
+	if (sc->data[SC_T_FIFTH_GOD])
+		smatk += sc->data[SC_T_FIFTH_GOD]->val2;
 
 	return (short)cap_value(smatk, 0, SHRT_MAX);
 }
@@ -11732,6 +11775,17 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC_ATTACK_STANCE:
 		status_change_end(bl, SC_GUARD_STANCE, INVALID_TIMER);
 		break;
+	case SC_T_FIRST_GOD:
+	case SC_T_SECOND_GOD:
+	case SC_T_THIRD_GOD:
+	case SC_T_FOURTH_GOD:
+	case SC_T_FIFTH_GOD:
+		status_change_end(bl,SC_T_FIRST_GOD,INVALID_TIMER);
+		status_change_end(bl,SC_T_SECOND_GOD,INVALID_TIMER);
+		status_change_end(bl,SC_T_THIRD_GOD,INVALID_TIMER);
+		status_change_end(bl,SC_T_FOURTH_GOD,INVALID_TIMER);
+		status_change_end(bl,SC_T_FIFTH_GOD,INVALID_TIMER);
+		break;
 	case SC_FIGHTINGSPIRIT:
 	case SC_OVERED_BOOST:
 	case SC_MAGICPOWER:
@@ -14044,6 +14098,24 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_DEEP_POISONING_OPTION:
 			val3 = ELE_POISON;
+			break;
+		case SC_TALISMAN_OF_PROTECTION:
+			val2 = 2 * val1;
+			val4 = tick / 3000;
+			tick_time = status_get_sc_interval(type);
+			break;
+		case SC_TALISMAN_OF_WARRIOR:
+		case SC_TALISMAN_OF_MAGICIAN:
+			val2 = 2 * val1;
+			break;
+		case SC_T_FIFTH_GOD:
+			val2 = 5 * val1;
+			break;
+		case SC_TALISMAN_OF_FIVE_ELEMENTS:
+			val2 = 4 * val1;
+			break;
+		case SC_HEAVEN_AND_EARTH:
+			val2 = 5 + 2 * val1;
 			break;
 
 		default:
@@ -16796,6 +16868,13 @@ TIMER_FUNC(status_change_timer){
 			interval = max(500, skill_get_time2(ABC_FROM_THE_ABYSS, sce->val1));
 			map_freeblock_lock();
 			dounlock = true;
+		}
+		break;
+	case SC_TALISMAN_OF_PROTECTION:
+		if (--(sce->val4) >= 0) {
+			skill_castend_nodamage_id(bl, bl, SOA_TALISMAN_OF_PROTECTION, sce->val1, tick, 1);
+			sc_timer_next(3000 + tick);
+			return 0;
 		}
 		break;
 	}
