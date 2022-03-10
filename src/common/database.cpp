@@ -95,7 +95,7 @@ bool YamlDatabase::load(const std::string& path) {
 	ShowStatus("Loading '" CL_WHITE "%s" CL_RESET "'..." CL_CLL "\r", path.c_str());
 	FILE* f = fopen(path.c_str(), "r");
 	if (f == nullptr) {
-		ShowError("Failed to open %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type, path.c_str());
+		ShowError("Failed to open %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), path.c_str());
 		return false;
 	}
 	fseek(f, 0, SEEK_END);
