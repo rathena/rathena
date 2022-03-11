@@ -25788,6 +25788,30 @@ BUILDIN_FUNC( laphine_upgrade ){
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(randomoptgroup)
+{
+	int id = script_getnum(st,2);
+
+	auto group = random_option_group.find(id);
+
+	if (group == nullptr) {
+		ShowError("buildin_randomoptgroup: Invalid random option group id (%d)!\n", id);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	struct item item_tmp = {};
+
+	group->apply( item_tmp );
+
+	for ( int i = 0; i < MAX_ITEM_RDM_OPT; ++i ) {
+		setd_sub_num(st, nullptr, ".@opt_id", i, item_tmp.option[i].id, nullptr);
+		setd_sub_num(st, nullptr, ".@opt_value", i, item_tmp.option[i].value, nullptr);
+		setd_sub_num(st, nullptr, ".@opt_param", i, item_tmp.option[i].param, nullptr);
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -26499,6 +26523,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getitempos,""),
 	BUILDIN_DEF(laphine_synthesis, ""),
 	BUILDIN_DEF(laphine_upgrade, ""),
+	BUILDIN_DEF(randomoptgroup,"i"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
