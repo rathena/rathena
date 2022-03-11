@@ -319,7 +319,7 @@ void YamlDatabase::invalidWarning( const ryml::NodeRef node, const char* fmt, ..
 
 	va_end(ap);
 
-	ShowError( "Occurred in file '" CL_WHITE "%s" CL_RESET "' on line %d and column %d.\n", this->currentFile.c_str(), parser.location(node).line, parser.location(node).col);
+	ShowError( "Occurred in file '" CL_WHITE "%s" CL_RESET "' on line %zu and column %zu.\n", this->currentFile.c_str(), parser.location(node).line, parser.location(node).col);
 
 #ifdef DEBUG
 	std::cout << node;
