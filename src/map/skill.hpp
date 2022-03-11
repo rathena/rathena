@@ -107,6 +107,7 @@ enum e_skill_inf2 : uint8 {
 	INF2_IGNOREAUTOGUARD , // Skill is not blocked by SC_AUTOGUARD (physical-skill only)
 	INF2_IGNORECICADA, // Skill is not blocked by SC_UTSUSEMI or SC_BUNSINJYUTSU (physical-skill only)
 	INF2_SHOWSCALE, // Skill shows AoE area while casting
+	INF2_IGNOREGTB, // Skill ignores effect of GTB
 	INF2_MAX,
 };
 
@@ -305,18 +306,30 @@ struct s_skill_db {
 	int32 abra_probability[MAX_SKILL_LEVEL];
 	s_skill_spellbook reading_spellbook;
 	uint16 improvisedsong_rate;
+	sc_type sc;									///< Default SC for skill
 };
 
 class SkillDatabase : public TypesafeCachedYamlDatabase <uint16, s_skill_db> {
+private:
+	/// Skill ID to Index lookup: skill_index = skill_get_index(skill_id) - [FWI] 20160423 the whole index thing should be removed.
+	uint16 skilldb_id2idx[(UINT16_MAX + 1)];
+	/// Skill count, also as last index
+	uint16 skill_num;
+
+	template<typename T, size_t S> bool parseNode(std::string nodeName, std::string subNodeName, YAML::Node node, T(&arr)[S]);
+
 public:
 	SkillDatabase() : TypesafeCachedYamlDatabase("SKILL_DB", 3, 1) {
-
+		this->clear();
 	}
 
-	const std::string getDefaultLocation();
-	template<typename T, size_t S> bool parseNode(std::string nodeName, std::string subNodeName, YAML::Node node, T (&arr)[S]);
-	uint64 parseBodyNode(const YAML::Node &node);
-	void clear();
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node &node) override;
+	void clear() override;
+	void loadingFinished() override;
+
+	// Additional
+	uint16 get_index( uint16 skill_id, bool silent, const char* func, const char* file, int line );
 };
 
 extern SkillDatabase skill_db;
@@ -452,8 +465,8 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node& node) override;
 };
 
 extern SkillArrowDatabase skill_arrow_db;
@@ -470,8 +483,8 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node& node) override;
 };
 
 struct s_skill_improvise_db {
@@ -484,8 +497,8 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node& node) override;
 };
 
 void do_init_skill(void);
@@ -500,8 +513,7 @@ const char*	skill_get_desc( uint16 skill_id ); 	// [Skotlex]
 int skill_tree_get_max( uint16 skill_id, int b_class );	// Celest
 
 // Accessor to the skills database
-uint16 skill_get_index_(uint16 skill_id, bool silent, const char *func, const char *file, int line);
-#define skill_get_index(skill_id)  skill_get_index_((skill_id), false, __FUNCTION__, __FILE__, __LINE__) /// Get skill index from skill_id (common usage on source)
+#define skill_get_index(skill_id) skill_db.get_index((skill_id), false, __FUNCTION__, __FILE__, __LINE__) /// Get skill index from skill_id (common usage on source)
 int skill_get_type( uint16 skill_id );
 e_damage_type skill_get_hit( uint16 skill_id );
 int skill_get_inf( uint16 skill_id );
@@ -553,8 +565,6 @@ int skill_get_spiritball( uint16 skill_id, uint16 skill_lv );
 unsigned short skill_dummy2skill_id(unsigned short skill_id);
 
 uint16 skill_name2id(const char* name);
-
-uint16 SKILL_MAX_DB(void);
 
 int skill_isammotype(struct map_session_data *sd, unsigned short skill_id);
 TIMER_FUNC(skill_castend_id);
@@ -2562,8 +2572,10 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node& node) override;
+
+	// Additional
 	std::shared_ptr<s_skill_spellbook_db> findBook(t_itemid nameid);
 };
 
@@ -2583,8 +2595,8 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node &node);
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node &node) override;
 };
 
 extern MagicMushroomDatabase magic_mushroom_db;
@@ -2623,6 +2635,7 @@ int skill_is_combo(uint16 skill_id);
 void skill_combo_toggle_inf(struct block_list* bl, uint16 skill_id, int inf);
 void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_list *bl, uint16 skill_id, uint16 skill_lv, t_tick tick);
 
+enum sc_type skill_get_sc(int16 skill_id);
 void skill_reveal_trap_inarea(struct block_list *src, int range, int x, int y);
 int skill_get_time3(struct map_data *mapdata, uint16 skill_id, uint16 skill_lv);
 

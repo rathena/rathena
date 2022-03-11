@@ -1,0 +1,41 @@
+//===== rAthena Script =======================================
+//= Comodo Town
+//===== Description: =========================================
+//= NPCs in Comodo
+//===== Additional Comments: =================================
+//= 1.0 Initial release [crazyarashi]
+//= 1.1 Improved translations [Everade]
+//============================================================
+
+// Infinite Space
+//============================================================
+cmd_fild07,43,275,7	script	Spectator#pa0829_01	4_M_01,{
+	mes "[Spectator]";
+	mes "If you tell me to not go in, isn't it going to make me want to go inside even more? But it doesn't look like there's anything interesting to see.";
+	mes "I see no monsters here...";
+	close;
+}
+
+cmd_fild07,45,273,7	script	Passerby#pa0829_01	4_F_JOB_HUNTER,{
+	mes "[Passerby]";
+	mes "No... I'm just passing by. I don't want to go inside...";
+	close;
+}
+
+cmd_fild07,47,274,0	script	Traveler#pa0829_01	4_F_07,{
+	mes "[Traveler]";
+	mes "Rumors have been spreading that there are monsters living here. People claim to hear the ground rumbling because of them...";
+	next;
+	mes "[Traveler]";
+	mes "I want to go explore inside...";
+	close;
+}
+
+cmd_fild07,50,271,0	script	Adventurer#pa0829_01	4_M_03,{
+	mes "[Adventurer]";
+	mes "Do you think there's going to be treasure inside this place?";
+	next;
+	mes "[Adventurer]";
+	mes "It kind of smells like it...";
+	close;
+}
