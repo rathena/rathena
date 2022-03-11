@@ -10629,7 +10629,7 @@ Param - Parameter of random option
 
 *randomoptgroup <random option group ID>;
 
-This command fill the following arrays with the result of a random option group.
+This command fills the following arrays with the results of a random option group.
 The random option group IDs are specified in 'db/(pre-)re/item_randomopt_group.yml'.
 
 Arrays - from index 0 to MAX_ITEM_RDM_OPT-1 :
@@ -10638,7 +10638,7 @@ Arrays - from index 0 to MAX_ITEM_RDM_OPT-1 :
 .@opt_param[]             - array of param.
 
 Example:
-	// Fill the arrays using the random option group ID 5 (group used for Crimson weapon).
+	// Fill the arrays using the random option group ID 5 (group used for Crimson weapons).
 	randomoptgroup(5);
 
 	// Create a +9 Crimson Dagger [2] with the Group 5 applied

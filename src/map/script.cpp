@@ -25825,18 +25825,16 @@ BUILDIN_FUNC( laphine_upgrade ){
 
 BUILDIN_FUNC(randomoptgroup)
 {
-	const char* command = script_getfuncname(st);
 	int id = script_getnum(st,2);
 
 	auto group = random_option_group.find(id);
 
 	if (group == nullptr) {
-		ShowError("buildin_%s: Invalid random option group id (%d)!\n", command, id);
+		ShowError("buildin_randomoptgroup: Invalid random option group id (%d)!\n", id);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	struct item item_tmp;
-	memset(&item_tmp, 0, sizeof(item_tmp));
+	struct item item_tmp = {};
 
 	group->apply( item_tmp );
 
