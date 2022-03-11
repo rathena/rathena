@@ -670,7 +670,7 @@ har_in01,20,30,5	script	Wyatt Warp#har_in01	4_M_YATTWARP,{
 			mes "Shawn was right.";
 			mes "Give me the ore.";
 			mes "I'll give it to Shawn.";
-			delitem 25247, countitem(25247);// Purple Ore
+			delitem 25247, countitem(25247);// Violet_Stone
 			setquest 7809;// Collecting Ores
 			completequest 7809;// Collecting Ores
 			next;
@@ -697,7 +697,7 @@ har_in01,20,30,5	script	Wyatt Warp#har_in01	4_M_YATTWARP,{
 			mes "Shawn was right.";
 			mes "Give me the ore.";
 			mes "I'll give it to Shawn.";
-			delitem 25247, countitem(25247);// Purple Ore
+			delitem 25247, countitem(25247);// Violet_Stone
 			setquest 7809;// Collecting Ores
 			completequest 7809;// Collecting Ores
 			next;
@@ -805,7 +805,7 @@ har_in01,20,30,5	script	Wyatt Warp#har_in01	4_M_YATTWARP,{
 		mes "Be proud of yourself.";
 		mes "And this is reward money.";
 		rock_main_quest = 22;
-		delitem 25248,1;// Purple_Ore_Crate
+		delitem 25248,1;// Violet_Stone_Box
 		erasequest 7808;// Case Solved
 		setquest 9457;// Solved Anyway
 		completequest 9457;// Solved Anyway
@@ -1072,7 +1072,7 @@ har_in01,89,26,5	script	Johnny James#har_in01	4_M_JOHNNYJAMES,{
 		next;
 		unittalk getcharid(3), "" + .@player_name$ + " : Actually, you have.", bc_self;
 		mes "[" + .@player_name$ + "]";
-		mes "Alert wants us to pay him for the ores.";
+		mes "Albert wants us to pay him for the ores.";
 		mes "But we don't have to pay him if you tell us where they are.";
 		next;
 		mes "[" + .@player_name$ + "]";
@@ -1186,7 +1186,7 @@ har_in01,89,26,5	script	Johnny James#har_in01	4_M_JOHNNYJAMES,{
 		mes "Good luck.";
 		mes "And don't forget to tell the sheriff I cooperated.";
 		rock_main_quest = 15;
-		delitem 25249,1;// Buffalo_Bandit_Mane
+		delitem 25249,1;// Mane_Of_Cow
 		erasequest 7803;// Happy for Broken Trust
 		setquest 7804;// Location of the Ores
 		close;
@@ -1792,7 +1792,7 @@ rockmi2,97,120,5	script	Broken Elevator#rrevt10	4_ENERGY_WHITE,{
 	if (rock_main_quest == 18) {
 		mes "I removed the plate from the bottom of the elevator and found boxes of ores underneath it.";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Shawn said just one box.", bc_self;
-		getitem 25248,1;// Purple Ore Crate
+		getitem 25248,1;// Violet_Stone_Box
 		rock_main_quest = 19;
 		close;
 	}
@@ -2061,7 +2061,7 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	4_M_ALBERTFORD,{
 		next;
 		mes "[Albert Ford]";
 		mes "Next time we meet, we'll meet at Johnny's funeral, got it?";
-		getitem 25249,1;// Buffalo_Bandit_Mane
+		getitem 25249,1;// Mane_Of_Cow
 		erasequest 7802;// Hear Me Out 2
 		setquest 7803;// Happy for Broken Trust
 		rock_main_quest = 14;
@@ -2082,7 +2082,7 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	4_M_ALBERTFORD,{
 		next;
 		mes "[Albert Ford]";
 		mes "Here, take it.";
-		getitem 25249,1;// Buffalo_Bandit_Mane
+		getitem 25249,1;// Mane_Of_Cow
 		close2;
 		cloakonnpc strnpcinfo(0), getcharid(0);
 		end;
@@ -2383,7 +2383,7 @@ rockrdg1,341,133,3	script	Mrs. Cacturon#rrrem01	4_M_CACTUSLADY,{
 			mes "I'll appreciate if you can help me every day, starting from today.";
 			mes "I'll really appreciate if you can help for a little longer. You inspire me to try harder to make a better life for my son.";
 			emotion ET_SMILE;
-			delitem 25246,5;// Juice_Mix_Package
+			delitem 25246,5;// Juice_Package
 			completequest 16078;// Peace of the Family
 			setquest 16079;// Back for More Coyotes Tomorrow
 			getitem 25250,2;// Coin_Of_Rr
@@ -2449,7 +2449,7 @@ rockrdg1,341,133,3	script	Mrs. Cacturon#rrrem01	4_M_CACTUSLADY,{
 		mes "This is the best I can do. I hope you'll like it. I'd like to thank you for your help on behalf of my family.";
 		erasequest 16080;// Hunting Coyotes Again
 		setquest 16079;// Back for More Coyotes Tomorrow
-		getitem 25250,2;// Rock Ridge Coin
+		getitem 25250,2;// Coin_Of_Rr
 		getexp 55560,52710;
 		close;
 	}
@@ -2699,7 +2699,7 @@ rockrdg1,146,164,1	script	Wasteland Cactuten#rremef01	4_ENERGY_RED,15,15,{
 			next;
 			mes "- I've got the juice mix package. -";
 		}
-		getitem 25246,1;// Juice Mix Package
+		getitem 25246,1;// Juice_Package
 		setquest 16083;// Discovered Wasteland Cactuten
 		erasequest 16083;// Discovered Wasteland Cactuten
 		cloakonnpc "Wasteland Cactuten#rremef01", getcharid(0);
@@ -2767,7 +2767,7 @@ OnTouch:
 		mes "YIP!";
 		next;
 		mes "- Startled, the coyote scuttled backward. I moved close to check what it dropped. It's a juice mix package! -";
-		getitem 25246,1;// Juice_Mix_Package
+		getitem 25246,1;// Juice_Package
 		setquest 16085;// Discovered Coyote
 		completequest 16085;// Discovered Coyote
 		cloakonnpc "Curious Coyote#rremef03", getcharid(0);
@@ -2840,7 +2840,7 @@ rockrdg1,305,200,3	script	Cactus Girl#rremef02	4_ENERGY_RED,15,15,{
 		mes "No. Thank you for giving it to me.";
 		next;
 		mes "- I've received the juice mix package from the Cactus girl. -";
-		getitem 25246,1;// Juice_Mix_Package
+		getitem 25246,1;// Juice_Package
 		setquest 16087;// Discovered Cactus Girl
 		completequest 16087;// Discovered Cactus Girl
 		cloakonnpc "Cactus Girl#rremef02", getcharid(0);
@@ -2910,7 +2910,7 @@ OnTouch:
 		mes "YIP!";
 		next;
 		mes "- Startled, the coyote scuttled backward. I moved close to check what it dropped. It's a juice mix package! -";
-		getitem 25246,1;// Juice_Mix_Package
+		getitem 25246,1;// Juice_Package
 		setquest 16088;// Discovered Coyote
 		completequest 16088;// Discovered Coyote
 		cloakonnpc "Absorbed Coyote#rremef04", getcharid(0);
@@ -3083,7 +3083,7 @@ rockrdg1,262,90,7	script	Crouched Horse#rr	4_M_CACTUSMAN1,{
 			mes "I know you mean well,";
 			mes "but I don't need so many.";
 		}
-		delitem 25260, .@count;// Fragment_of_Purple_Ore
+		delitem 25260, .@count;// Violet_Stone_Chip
 		erasequest 9460;// Collecting Ore Fragments
 		setquest 9461;// Enough Ores
 		getexp 25000,20000;
@@ -3219,7 +3219,7 @@ harboro1,231,254,3	script	Exotic Merchant	1_M_MERCHANT,{
 		close;
 	}
 	delitem .@item_id[.@s],5;
-	getitem 25250,2;// Rock Ridge Coin
+	getitem 25250,2;// Coin_Of_Rr
 	getexp 20000,18000;
 	setquest 12411;// Come Back Tomorrow
 	mes "[Exotic Merchant]";
@@ -3405,7 +3405,7 @@ S_Food:
 		close;
 	}
 	delitem .@item_id, .@amount;
-	getitem 25250,1;// Rock Ridge Coin
+	getitem 25250,1;// Coin_Of_Rr
 	getexp 16000,12800;
 	erasequest getarg(0);
 	setquest 12382;// Distributing Food
@@ -3649,7 +3649,7 @@ harboro1,357,155,3	script	Steel Vigilante#1	4_M_MASKMAN,{
 		.@mob_id = 3788;
 		break;
 	}
-	getitem 25250,2;// Rock Ridge Coin
+	getitem 25250,2;// Coin_Of_Rr
 	erasequest .@quest_id;
 	setquest 12390;// Relieved for Now
 	mes "[Steel Vigilante]";
@@ -3785,7 +3785,7 @@ harboro1,357,152,3	script	Steel Vigilante#2	4_M_ACROSS,{
 		.@mob_id = 3740;
 		break;
 	}
-	getitem 25250,3;// Rock Ridge Coin
+	getitem 25250,3;// Coin_Of_Rr
 	erasequest .@quest_id;
 	setquest 12398;// You're Good
 	mes "[Steel Vigilante]";
@@ -4001,7 +4001,7 @@ harboro1,334,135,6	script	Desalination Facility Manager	4_M_YURI,{
 		close;
 	}
 	getexp 35000,27000;
-	getitem 25250,2;// Rock Ridge Coin
+	getitem 25250,2;// Coin_Of_Rr
 	for ( .@quest_id = 12405; .@quest_id <= 12409; .@quest_id++ )
 		erasequest .@quest_id;
 	setquest 12404;// Are You Not Tired?
@@ -4259,7 +4259,7 @@ harboro1,138,157,5	script	Donovan	4_M_EINMAN2,{
 		erasequest 9458;// Pipe Cleaning
 		setquest 9459;// Too Early for Pipe Cleaning
 		getexp 25000,20000;
-		getitem 25250,1;// Rock Ridge Coin
+		getitem 25250,1;// Coin_Of_Rr
 		close;
 	}
 }
@@ -4723,11 +4723,11 @@ harboro2,164,80,5	script	Demon#srdg01	4_M_NFMAN,{
 		next;
 		mes "[Demon]";
 		mes "Go rest today and come back tomorrow in the morning. See ya!";
-		delitem 25277, countitem(25277);// Deadly Poison Powder
-		delitem 6213, countitem(6213);// Explosive Powder
+		delitem 25277, countitem(25277);// DeadlyPoisonPowder
+		delitem 6213, countitem(6213);// Explosive_Powder
 		erasequest 14672;// Preparing for the Firework Festival
 		setquest 14673;// Time to Make Bombs
-		getitem 25250,3;// Rock Ridge Coin
+		getitem 25250,3;// Coin_Of_Rr
 		getexp 76200,70740;
 		close;
 	}
@@ -5006,7 +5006,7 @@ harboro1,347,65,3	script	Mrs. McPhy#rockdaily	1_F_MERCHANT_02,{
 		mes "That Rock Ridge Coin is yours. Thank you for helping us.";
 		erasequest 1330;// Spotty's Holes
 		completequest 1322;// Found Something
-		getitem 25250,1;// Rock Ridge Coin
+		getitem 25250,1;// Coin_Of_Rr
 		setquest 1329;// Spotty in the Dreamland
 		next;
 		mes "[Mrs. McPhy]";
@@ -5031,7 +5031,7 @@ harboro1,347,65,3	script	Mrs. McPhy#rockdaily	1_F_MERCHANT_02,{
 		mes "Here's the Rock Ridge Coin we promised. Thank you for searching the wasteland for us.";
 		erasequest 1328;// Found Missing Items
 		erasequest 1330;// Spotty's Holes
-		getitem 25250,1;// Rock Ridge Coin
+		getitem 25250,1;// Coin_Of_Rr
 		setquest 1329;// Spotty in the Dreamland
 		next;
 		mes "[Mrs. McPhy]";
@@ -5385,7 +5385,7 @@ harboro1,344,61,5	script	Mr. McPhy#rockdaily	4W_M_02,{
 		mes "[Mr. McPhy]";
 		mes "Since you brought back my wife's gold ring, I've been taking odd jobs to supplement our income. We can afford to repay you now.";
 		next;
-		if (select("Help him.", "Decline." ) == 2) {
+		if (select( "Help him.", "Decline." ) == 2) {
 			mes "[Mr. McPhy]";
 			mes "You're not afraid of the bandits, are you?";
 			mes "Okay, I understand if you can't help us.";
@@ -5432,7 +5432,7 @@ harboro1,344,61,5	script	Mr. McPhy#rockdaily	4W_M_02,{
 			mes "Oh, right?here's your payment I promised. Thank you.";
 			erasequest 1331;
 			setquest 1332;
-			getitem 25250,2;// Rock Ridge Coin
+			getitem 25250,2;// Coin_Of_Rr
 			getexp 14499,13863;
 			close;
 		}
@@ -7039,7 +7039,7 @@ harboro1,1,1,3	script	Manager#1	CLEAR_NPC,3,0,{
 	if (.@equip_id == -1)
 		end;
 
-	if (.@equip_id != getiteminfo("Amesha_Spenta", ITEMINFO_ID)) {	// wtf is that part ?
+	if (.@equip_id != getiteminfo("Amesha_Spenta", ITEMINFO_ID)) {
 		mes "^0000ff[Carrying Limit Helper]^000000";
 		mes "^0000ffDo you want to delete all the equipment this character is wearing?^000000";
 		mes "^0000ffPPL Removal version.^000000";
