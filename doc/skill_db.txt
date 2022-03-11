@@ -925,3 +925,7 @@ CrazyWeedImmune		- Immune to GN_CRAZYWEED.
 RemovedByFireRain	- Removed by RL_FIRE_RAIN.
 KnockbackGroup		- Knock back a whole skill group (by default, skill unit is knocked back by each unit).
 HiddenTrap			- Hidden trap. See battle_config::traps_setting to enable this flag.
+
+------------------
+
+Status: Status Change that is associated to the skill. The status is used in association with the status.yml database.

@@ -1367,7 +1367,7 @@ Body:
         Amount: 10
       - Item: Clean_Bone
         Amount: 10
-      - Item: Deadly_Poison_Powder
+      - Item: DeadlyPoisonPowder
         Amount: 10
       - Item: Bandits_Scarf
         Amount: 10
