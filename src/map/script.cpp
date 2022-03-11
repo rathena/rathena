@@ -12001,13 +12001,16 @@ BUILDIN_FUNC(sc_end)
 	if (type >= SC_NONE && type < SC_MAX) {
 		struct status_change *sc = status_get_sc(bl);
 
-		if (!sc)
+		if (sc == nullptr)
+			return SCRIPT_CMD_SUCCESS;
+
+		struct status_change_entry *sce = sc->data[type];
+
+		if (sce == nullptr)
 			return SCRIPT_CMD_SUCCESS;
 
 		if (status_db.hasSCF(sc, SCF_NOCLEARBUFF))
 			return SCRIPT_CMD_SUCCESS;
-
-		struct status_change_entry *sce = sc ? sc->data[type] : NULL;
 
 		//This should help status_change_end force disabling the SC in case it has no limit.
 		sce->val1 = sce->val2 = sce->val3 = sce->val4 = 0;
