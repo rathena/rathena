@@ -62467,6 +62467,18 @@ Body:
     Name: Shadow Chaser Stone (Bottom)
     Type: Etc
     Weight: 100
+  - Id: 1000891
+    AegisName: aegis_1000891
+    Name: Special Red Pill Exchange
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai
