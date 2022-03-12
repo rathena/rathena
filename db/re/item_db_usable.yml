@@ -50185,7 +50185,7 @@ Body:
     AegisName: CostumeMilePack_26_1
 #   Name: Actinidia Costume Mileage Package I (Stone Box 26)
     Name: Actinidia Costume Mileage Package I
-    Type: Usable
+    Type: Cash
     Flags:
       Container: true
     Trade:
@@ -50202,7 +50202,7 @@ Body:
     AegisName: CostumeMilePack_26_2
 #   Name: Actinidia Costume Mileage Package II (Stone Box 26)
     Name: Actinidia Costume Mileage Package II
-    Type: Usable
+    Type: Cash
     Flags:
       Container: true
     Trade:
@@ -50219,7 +50219,7 @@ Body:
     AegisName: CostumeMilePack_26_3
 #   Name: Actinidia Costume Mileage Package III (Stone Box 26)
     Name: Actinidia Costume Mileage Package III
-    Type: Usable
+    Type: Cash
     Flags:
       Container: true
     Trade:
