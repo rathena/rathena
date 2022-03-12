@@ -50269,7 +50269,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* synthesisui 101308; */
+      laphine_synthesis();
   - Id: 101309
     AegisName: EXPShadow_Up
     Name: Experience Shadow Spellbook
@@ -50278,7 +50278,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* synthesisui 101309; */
+      laphine_synthesis();
   - Id: 101310
     AegisName: MagicalShadow_Up
     Name: Clever Shadow Spellbook
@@ -50287,7 +50287,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* synthesisui 101310; */
+      laphine_synthesis();
   - Id: 101311
     AegisName: InfinityShadow_Up
     Name: Infinity Shadow Spellbook
@@ -50296,7 +50296,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* synthesisui 101311; */
+      laphine_synthesis();
   - Id: 101314
     AegisName: aegis_101314
     Name: Helm of Faith Box
