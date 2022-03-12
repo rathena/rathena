@@ -4740,15 +4740,44 @@ Body:
   - Id: 7762
     Title: Make Chimeras rest in peace (Standby)
     TimeLimit: 4h
+  - Id: 7776
+    Title: Suspicious sign
+  - Id: 7777
+    Title: What happened?
+  - Id: 7778
+    Title: What Muyeon saw
+  - Id: 7779
+    Title: Distressing ritual
+  - Id: 7780
+    Title: Nightmare in the ruined village
+  - Id: 7781
+    Title: Nightmare in the ruined village
+  - Id: 7782
+    Title: Stop the wizard!
+    Targets:
+      - Mob: ILL_HIGHWIZARD
+        Count: 1
   - Id: 7783
-    Title: Stop the Wizard! - Pending
+    Title: Stop the wizard! - Pending
     TimeLimit: 4h
+  - Id: 7784
+    Title: No mercy for illusions
+    Targets:
+      - Mob: ILL_NINE_TAIL
+        Count: 20  
   - Id: 7785
-    Title: No Mercy for Illusions - Pending
+    Title: No mercy for illusions - Pending
     TimeLimit: 4h
+  - Id: 7786
+    Title: Remembering my ancestors
+    Targets:
+      - Mob: ILL_ARCHER_SKELETON
+        Count: 20
   - Id: 7787
-    Title: Remembering my Ancestors - Pending
+    Title: Remembering my ancestors - Pending
     TimeLimit: 4h
+  - Id: 7788
+    Title: Back to Muyeon
   - Id: 7790
     Title: Rock Ridge, Land of Opportunities
   - Id: 7791
@@ -4775,7 +4804,7 @@ Body:
     Title: Shawn McCurdy's Weapon 3
     Drops:
       - Mob: PURPLESTONE
-        Item: Purple_Ore
+        Item: Violet_Stone
         Rate: 10000
   - Id: 7802
     Title: Hear Me Out 2
@@ -5866,13 +5895,13 @@ Body:
     Title: Collecting Ore Fragments
     Drops:
       - Mob: COWRAIDERS1
-        Item: Fragment_of_Purple_Ore
+        Item: Violet_Stone_Chip
         Rate: 5000
       - Mob: COWRAIDERS2
-        Item: Fragment_of_Purple_Ore
+        Item: Violet_Stone_Chip
         Rate: 5000
       - Mob: COYOTE
-        Item: Fragment_of_Purple_Ore
+        Item: Violet_Stone_Chip
         Rate: 5000
   - Id: 9461
     Title: Enough Ores

@@ -883,15 +883,16 @@ OnTimer28500:
 	mes "Hey there, are you alive?";
 	mes "I did not expect to meet someone who is still alive.";
 	next;
+	.@item_name_req$ = getitemname(6672);// Shard_of_Gray
 	mes "[King]";
-	mes "Do you possibly have the ^006400Gray Shard^000000?";
+	mes "Do you possibly have the ^006400" + .@item_name_req$ + "^000000?";
 	mes "Can you give it to me?";
 	mes "The memories of the faithful royal guard";
 	mes "and the memories of everyone he loved";
 	mes "are contained inside of these shards.";
 	next;
 	mes "[King]";
-	mes "Will you give the ^006400Gray Shard^000000 to me?";
+	mes "Will you give the ^006400" + .@item_name_req$ + "^000000 to me?";
 	mes "The guilt is eating my soul.";
 	mes "My soul is trapped inside the Ghost Palace.";
 	next;
@@ -899,7 +900,7 @@ OnTimer28500:
 	mes "I am collecting Sakray's abandoned memories from these shards.";
 	next;
 	mes "[King]";
-	mes "If you give any ^006400Gray Shard^000000s to me, I can make equipment for you.";
+	mes "If you give any ^006400" + .@item_name_req$ + "^000000s to me, I can make equipment for you.";
 	next;
 	mes "[King]";
 	mes "The cursed knight...";
@@ -923,16 +924,16 @@ OnTimer28500:
 			mes "Someday, Sakray will";
 			mes "get out of this curse for sure.";
 			mes "I believe";
-			mes "^006400Gray Shard^000000s are the only method";
+			mes "^006400" + .@item_name_req$ + "^000000s are the only method";
 			mes "to save him....";
 			close;
 		}
 		.@cost = ( .@s > 13 ? 100 : 200 );
 		mes "[King]";
 		mes "To make a ^FF0000" + .@item_name$[.@s] + "^000000";
-		mes "I need " + .@cost + " ^006400Gray Shard^000000.";
+		mes "I need " + .@cost + " ^006400" + .@item_name_req$ + "^000000.";
 		next;
-		if (select( "Cancel", "Hand over " + .@cost + " Gray Shard." ) == 1) {
+		if (select( "Cancel", "Hand over " + .@cost + " " + .@item_name_req$ + "." ) == 1) {
 			mes "[King]";
 			mes "Someday, Sakray will";
 			mes "get out of this curse for sure.";
@@ -941,15 +942,15 @@ OnTimer28500:
 		}
 		if (countitem(6672) < .@cost) {
 			mes "[King]";
-			mes "You do not have enough ^006400Gray Shard^000000";
+			mes "You do not have enough ^006400" + .@item_name_req$ + "^000000";
 			mes "to make a ^FF0000" + .@item_name$[.@s] + "^000000.";
-			mes "I need " + .@cost + " ^006400Gray Shard^000000.";
+			mes "I need " + .@cost + " ^006400" + .@item_name_req$ + "^000000.";
 			next;
 			continue;
 		}
 		mes "[King]";
 		mes "I will make a ^FF0000" + .@item_name$[.@s] + "^000000";
-		mes "with " + .@cost + " ^006400Gray Shard^000000.";
+		mes "with " + .@cost + " ^006400" + .@item_name_req$ + "^000000.";
 		next;
 		mes "You see a light through the folded hands of the king and it gradually takes on a shape.";
 		next;
