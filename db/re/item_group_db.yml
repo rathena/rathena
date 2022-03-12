@@ -24984,9 +24984,9 @@ Body:
             Rate: 73
           - Item: S_Tempest_Armor
             Rate: 73
-          - Item: S_Perfect_Size_Weapon
+          - Item: S_PerfectSize_Weapon
             Rate: 73
-          - Item: S_Perfect_Size_Armor
+          - Item: S_PerfectSize_Armor
             Rate: 73
           - Item: S_M_Exo_Co_Weapon
             Rate: 73
@@ -27442,9 +27442,9 @@ Body:
     SubGroups:
       - SubGroup: 1
         List:
-          - Item: S_Perfect_Size_Weapon
+          - Item: S_PerfectSize_Weapon
             Rate: 1
-          - Item: S_Perfect_Size_Armor
+          - Item: S_PerfectSize_Armor
             Rate: 1
   - Group: MAGICPIERCING_MIX
     SubGroups:
