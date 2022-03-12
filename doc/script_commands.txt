@@ -9714,7 +9714,7 @@ QMARK_PURPLE - Purple Marker
 
 *open_quest_ui {<quest ID>,{<char ID>}};
 
-Opens the quest UI for the attached player or the given character id.
+Opens the quest UI for the attached player or the given character ID.
 If the quest ID is not 0, the UI is opened at the given quest with the condtions that the quest must exist in quest_db.yml and in the character quest log.
 
 ---------------------------------------
