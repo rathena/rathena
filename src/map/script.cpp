@@ -25818,7 +25818,18 @@ BUILDIN_FUNC( open_quest_ui ){
 	if (!script_charid2sd(3, sd))
 		return SCRIPT_CMD_FAILURE;
 
-	int quest_id = script_hasdata(st, 2) ? script_getnum(st, 2) : 0;
+	int quest_id;
+
+	if (!script_hasdata(st, 2))
+		quest_id = 0;
+	else {
+		int i;
+		quest_id = script_getnum(st, 2);
+
+		ARR_FIND(0, sd->avail_quests, i, sd->quest_log[i].quest_id == quest_id);
+		if (i == sd->avail_quests)
+			ShowWarning("buildin_open_quest_ui: Character %d doesn't have quest %d.\n", sd->status.char_id, quest_id);
+	}
 
 	clif_ui_open( sd, OUT_UI_QUEST, quest_id );
 
