@@ -25818,14 +25818,10 @@ BUILDIN_FUNC( open_quest_ui ){
 	if (!script_charid2sd(3, sd))
 		return SCRIPT_CMD_FAILURE;
 
-	int quest_id;
+	int quest_id = script_hasdata(st, 2) ? script_getnum(st, 2) : 0;
 
-	if (!script_hasdata(st, 2))
-		quest_id = 0;
-	else {
+	if( quest_id != 0 ){
 		int i;
-		quest_id = script_getnum(st, 2);
-
 		ARR_FIND(0, sd->avail_quests, i, sd->quest_log[i].quest_id == quest_id);
 		if (i == sd->avail_quests)
 			ShowWarning("buildin_open_quest_ui: Character %d doesn't have quest %d.\n", sd->status.char_id, quest_id);
