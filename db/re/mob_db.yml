@@ -3187,6 +3187,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Plant
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 1000
@@ -31938,6 +31940,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Formless
+    RaceGroups:
+      Malangdo: true
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 300
@@ -46109,6 +46113,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 1
     WalkSpeed: 300
@@ -46156,6 +46162,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 300
@@ -46203,6 +46211,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 1
     WalkSpeed: 200
@@ -46248,6 +46258,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 1
     WalkSpeed: 200
@@ -46297,6 +46309,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 200
@@ -46347,6 +46361,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Insect
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 1
     WalkSpeed: 150
@@ -46394,6 +46410,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 3
     WalkSpeed: 150
@@ -46441,6 +46459,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 200
@@ -46449,9 +46469,6 @@ Body:
     DamageMotion: 384
     Ai: 20
     Class: Boss
-    Modes:
-      IgnoreMelee: true
-      IgnoreRanged: true
     Drops:
       - Item: Mistic_Frozen
         Rate: 6
@@ -46491,6 +46508,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 150
@@ -46538,6 +46557,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 190
@@ -46587,6 +46608,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 3
     WalkSpeed: 200
@@ -46634,6 +46657,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 165
@@ -46731,6 +46756,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 165
@@ -46780,6 +46807,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 165
@@ -46828,6 +46857,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 165
@@ -46877,6 +46908,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 165
@@ -46951,6 +46984,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 300
@@ -46990,6 +47025,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 300
@@ -47030,6 +47067,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Fish
+    RaceGroups:
+      Malangdo: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 300
@@ -88868,7 +88907,7 @@ Body:
     DamageMotion: 500
     Ai: 04
     Drops:
-      - Item: Deadly_Poison_Powder
+      - Item: DeadlyPoisonPowder
         Rate: 2500
       - Item: Mould_Powder
         Rate: 1500
@@ -89227,22 +89266,384 @@ Body:
 #    AegisName: ILL_BOMI
 #  - Id: 3757
 #    AegisName: ILL_DRACULA
-#  - Id: 3758
-#    AegisName: ILL_MOONLIGHT
-#  - Id: 3759
-#    AegisName: ILL_NINE_TAIL
-#  - Id: 3760
-#    AegisName: ILL_MUNAK
-#  - Id: 3761
-#    AegisName: ILL_BON_GUN
-#  - Id: 3762
-#    AegisName: ILL_SOHEE
-#  - Id: 3763
-#    AegisName: ILL_ARCHER_SKELETON
-#  - Id: 3764
-#    AegisName: ILL_HIGHWIZARD
-#  - Id: 3765
-#    AegisName: ILL_FURY_HERO
+  - Id: 3758
+    AegisName: ILL_MOONLIGHT
+    Name: Angry Moonlight Flower
+    Level: 118
+    Hp: 4287803
+    BaseExp: 1403238
+    JobExp: 962759
+    MvpExp: 701619
+    Attack: 4878
+    Attack2: 2797
+    Defense: 254
+    MagicDefense: 81
+    Str: 166
+    Agi: 205
+    Vit: 150
+    Int: 167
+    Dex: 290
+    Luk: 240
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1276
+    AttackMotion: 576
+    DamageMotion: 288
+    Ai: 19
+    Class: Boss
+    Modes:
+      Mvp: true
+      KnockBackImmune: true
+    MvpDrops:
+      - Item: Old_Violet_Box
+        Rate: 5000
+      - Item: Yggdrasilberry
+        Rate: 2000
+      - Item: Illusion_Stone
+        Rate: 500
+    Drops:
+      - Item: Bradium
+        Rate: 5000
+      - Item: Hazy_Dream_Fragment
+        Rate: 3000
+      - Item: Spectral_Spear
+        Rate: 500
+      - Item: Moonlight_Sword
+        Rate: 100
+      - Item: Silver_Knife_Of_Chaste
+        Rate: 600
+      - Item: Staff_Of_Bordeaux
+        Rate: 100
+      - Item: AngerMoonlight_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3759
+    AegisName: ILL_NINE_TAIL
+    Name: Angry Nine Tail
+    Level: 116
+    Hp: 21875
+    BaseExp: 2315
+    JobExp: 2169
+    Attack: 965
+    Attack2: 214
+    Defense: 95
+    MagicDefense: 40
+    Str: 121
+    Agi: 73
+    Vit: 64
+    Int: 42
+    Dex: 212
+    Luk: 100
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 840
+    AttackMotion: 540
+    DamageMotion: 480
+    Ai: 19
+    Drops:
+      - Item: Fox_Tail
+        Rate: 3000
+      - Item: Glass_Bead
+        Rate: 200
+      - Item: Branch_Of_Dead_Tree
+        Rate: 100
+      - Item: Carnium
+        Rate: 100
+      - Item: Illusion_Gemstone
+        Rate: 200
+      - Item: Hazy_Dream_Fragment
+        Rate: 500
+      - Item: AngerNineTail_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3760
+    AegisName: ILL_MUNAK
+    Name: Resentful Munak
+    Level: 110
+    Hp: 17728
+    BaseExp: 1843
+    JobExp: 1876
+    Attack: 637
+    Attack2: 105
+    Defense: 77
+    MagicDefense: 15
+    Str: 103
+    Agi: 18
+    Vit: 50
+    Int: 20
+    Dex: 66
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 2468
+    AttackMotion: 768
+    DamageMotion: 288
+    Ai: 19
+    Drops:
+      - Item: HazyMooncake
+        Rate: 1000
+      - Item: Munak_Turban
+        Rate: 10
+      - Item: Amulet
+        Rate: 20
+      - Item: HazyMooncake
+        Rate: 1000
+      - Item: Salty_Rice_Cake
+        Rate: 150
+      - Item: Poison_Herb_Seratum
+        Rate: 150
+      - Item: BitterMunak_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3761
+    AegisName: ILL_BON_GUN
+    Name: Resentful Bongun
+    Level: 112
+    Hp: 19077
+    BaseExp: 2137
+    JobExp: 1869
+    Attack: 826
+    Attack2: 215
+    Defense: 88
+    MagicDefense: 5
+    Str: 125
+    Agi: 52
+    Vit: 49
+    Int: 22
+    Dex: 78
+    Luk: 40
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 190
+    AttackDelay: 1720
+    AttackMotion: 500
+    DamageMotion: 420
+    Ai: 19
+    Drops:
+      - Item: HazyMooncake
+        Rate: 1750
+      - Item: Old_Portrait
+        Rate: 60
+      - Item: Bongun_Hat
+        Rate: 3
+      - Item: Amulet
+        Rate: 10
+      - Item: Munak_Doll
+        Rate: 20
+      - Item: Light_Granule
+        Rate: 200
+      - Item: BitterBonGun_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3762
+    AegisName: ILL_SOHEE
+    Name: Resentful Sohee
+    Level: 114
+    Hp: 22414
+    BaseExp: 2004
+    JobExp: 2373
+    Attack: 779
+    Attack2: 115
+    Defense: 83
+    MagicDefense: 84
+    Str: 122
+    Agi: 49
+    Vit: 49
+    Int: 40
+    Dex: 84
+    Luk: 56
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 250
+    AttackDelay: 912
+    AttackMotion: 2112
+    DamageMotion: 576
+    Ai: 19
+    Drops:
+      - Item: Bloody_Love_Letter
+        Rate: 2000
+      - Item: Skirt_Of_Virgin
+        Rate: 300
+      - Item: Nurse_Cap
+        Rate: 10
+      - Item: Puente_Robe
+        Rate: 10
+      - Item: Hearty_Rice_Cake
+        Rate: 200
+      - Item: Poison_Herb_Nerium
+        Rate: 200
+      - Item: Heartbroken_Tears
+        Rate: 200
+      - Item: BitterSohee_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3763
+    AegisName: ILL_ARCHER_SKELETON
+    Name: Resentful Soldier
+    Level: 115
+    Hp: 20843
+    BaseExp: 2010
+    JobExp: 2570
+    Attack: 767
+    Attack2: 516
+    Defense: 47
+    MagicDefense: 10
+    Str: 60
+    Agi: 61
+    Vit: 30
+    Int: 20
+    Dex: 101
+    Luk: 12
+    AttackRange: 9
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 2864
+    AttackMotion: 864
+    DamageMotion: 576
+    Ai: 19
+    Drops:
+      - Item: Broken_Arrow
+        Rate: 2000
+      - Item: Carnium
+        Rate: 10
+      - Item: Apple_Of_Archer
+        Rate: 6
+      - Item: Poison_Herb_Amoena
+        Rate: 200
+      - Item: Fire_Arrow
+        Rate: 3000
+      - Item: Fire_Arrow
+        Rate: 2000
+      - Item: Fire_Arrow
+        Rate: 1000
+      - Item: BitterArcherSk_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3764
+    AegisName: ILL_HIGHWIZARD
+    Name: Wizard of the Truth
+    Level: 118
+    Hp: 121847
+    BaseExp: 8599
+    JobExp: 7695
+    Attack: 1977
+    Attack2: 362
+    Defense: 20
+    MagicDefense: 90
+    Str: 101
+    Agi: 89
+    Vit: 60
+    Int: 205
+    Dex: 255
+    Luk: 124
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Dark
+    ElementLevel: 1
+    WalkSpeed: 140
+    AttackDelay: 768
+    AttackMotion: 864
+    DamageMotion: 288
+    Ai: 19
+    Drops:
+      - Item: Red_Gemstone
+        Rate: 3000
+      - Item: Yellow_Gemstone
+        Rate: 3000
+      - Item: Vermilion_10_Scroll
+        Rate: 200
+      - Item: Meteor_10_Scroll
+        Rate: 50
+      - Item: Storm_10_Scroll
+        Rate: 50
+      - Item: Fire_Scroll_3_5
+        Rate: 200
+      - Item: CandyCaneRod
+        Rate: 10
+      - Item: WizardOfVeritas_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3765
+    AegisName: ILL_FURY_HERO
+    Name: Deranged Adventurer
+    Level: 117
+    Hp: 24078
+    BaseExp: 2381
+    JobExp: 2288
+    Attack: 837
+    Attack2: 113
+    Defense: 340
+    MagicDefense: 20
+    Str: 180
+    Agi: 42
+    Vit: 126
+    Int: 66
+    Dex: 149
+    Luk: 50
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1450
+    AttackMotion: 864
+    DamageMotion: 288
+    Ai: 19
+    Drops:
+      - Item: Recruitment_Leaflet
+        Rate: 2000
+      - Item: Light_Granule
+        Rate: 200
+      - Item: Runstone_Quality
+        Rate: 1000
+      - Item: Runstone_Rare
+        Rate: 200
+      - Item: Empty_Potion
+        Rate: 500
+      - Item: Rotten_Bandage
+        Rate: 500
+      - Item: FuryHero_Card
+        Rate: 1
+        StealProtected: true
 #  - Id: 3766
 #    AegisName: JP_E_MONSTER_53
 #  - Id: 3767

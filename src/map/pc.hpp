@@ -291,7 +291,7 @@ struct s_bonus_script_entry {
 	StringBuf *script_buf; //Used for comparing and storing on table
 	t_tick tick;
 	uint16 flag;
-	enum efst_types icon;
+	enum efst_type icon;
 	uint8 type; //0 - Ignore; 1 - Buff; 2 - Debuff
 	int tid;
 };
@@ -389,6 +389,8 @@ struct map_session_data {
 		bool refineui_open;
 		t_itemid inventory_expansion_confirmation;
 		uint16 inventory_expansion_amount;
+		t_itemid laphine_synthesis;
+		t_itemid laphine_upgrade;
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -1058,7 +1060,8 @@ static bool pc_cant_act2( struct map_session_data* sd ){
 	return sd->state.vending || sd->state.buyingstore || (sd->sc.opt1 && sd->sc.opt1 != OPT1_BURNING)
 		|| sd->state.trading || sd->state.storage_flag || sd->state.prevend || sd->state.refineui_open
 		|| sd->state.stylist_open || sd->state.inventory_expansion_confirmation || sd->npc_shopid
-		|| sd->state.barter_open || sd->state.barter_extended_open;
+		|| sd->state.barter_open || sd->state.barter_extended_open
+		|| sd->state.laphine_synthesis || sd->state.laphine_upgrade;
 }
 // equals pc_cant_act2 and additionally checks for chat rooms and npcs
 static bool pc_cant_act( struct map_session_data* sd ){
@@ -1456,7 +1459,6 @@ void pc_regen (struct map_session_data *sd, t_tick diff_tick);
 
 bool pc_setstand(struct map_session_data *sd, bool force);
 bool pc_candrop(struct map_session_data *sd,struct item *item);
-bool pc_can_attack(struct map_session_data *sd, int target_id);
 
 uint64 pc_jobid2mapid(unsigned short b_class);	// Skotlex
 int pc_mapid2jobid(uint64 class_, int sex);	// Skotlex
@@ -1516,7 +1518,7 @@ void pc_delservantball( struct map_session_data& sd, int count = 1 );
 void pc_addabyssball( struct map_session_data& sd, int count = 1 );
 void pc_delabyssball( struct map_session_data& sd, int count = 1 );
 
-void pc_addfame(struct map_session_data *sd,int count);
+bool pc_addfame(map_session_data &sd, int count);
 unsigned char pc_famerank(uint32 char_id, int job);
 bool pc_set_hate_mob(struct map_session_data *sd, int pos, struct block_list *bl);
 
@@ -1570,8 +1572,8 @@ void pc_show_version(struct map_session_data *sd);
 
 TIMER_FUNC(pc_bonus_script_timer);
 void pc_bonus_script(struct map_session_data *sd);
-struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, const char *script_str, t_tick dur, enum efst_types icon, uint16 flag, uint8 type);
-void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag);
+struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, const char *script_str, t_tick dur, enum efst_type icon, uint16 flag, uint8 type);
+void pc_bonus_script_clear(struct map_session_data *sd, uint32 flag);
 
 void pc_cell_basilica(struct map_session_data *sd);
 

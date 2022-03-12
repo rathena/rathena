@@ -134,9 +134,6 @@ Body:
       Star_Gladiator: true
       Star_Gladiator2: true
       Soul_Linker: true
-      Gangsi: true
-      Death_Knight: true
-      Dark_Collector: true
     MaxBaseLevel: 99
     BaseExp:
       - Level: 1
@@ -599,7 +596,6 @@ Body:
       Baby_Merchant: true
       Baby_Thief: true
       Taekwon: true
-      Gangsi: true
     MaxJobLevel: 50
     JobExp:
       - Level: 1
@@ -734,8 +730,6 @@ Body:
       Baby_Dancer: true
       Baby_Crusader2: true
       Soul_Linker: true
-      Death_Knight: true
-      Dark_Collector: true
     MaxJobLevel: 50
     JobExp:
       - Level: 1
