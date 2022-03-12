@@ -25815,10 +25815,12 @@ BUILDIN_FUNC(randomoptgroup)
 BUILDIN_FUNC( open_quest_ui ){
 	struct map_session_data* sd;
 
-	if (!script_rid2sd(sd))
+	if (!script_charid2sd(3, sd))
 		return SCRIPT_CMD_FAILURE;
 
-	clif_ui_open( sd, OUT_UI_QUEST, script_getnum(st, 2) );
+	int quest_id = script_hasdata(st, 2) ? script_getnum(st, 2) : 0;
+
+	clif_ui_open( sd, OUT_UI_QUEST, quest_id );
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -26535,7 +26537,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(laphine_synthesis, ""),
 	BUILDIN_DEF(laphine_upgrade, ""),
 	BUILDIN_DEF(randomoptgroup,"i"),
-	BUILDIN_DEF(open_quest_ui, "?"),
+	BUILDIN_DEF(open_quest_ui, "??"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
