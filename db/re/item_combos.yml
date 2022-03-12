@@ -25067,7 +25067,7 @@ Body:
       bonus bAspdRate,15;
   - Combos:
       - Combo:
-          - Discord_Particles_Shoe     # 470030
+          - Discord_Particles_Shoes     # 470030
           - Wind_Gale_J     # 18197
       - Combo:
           - Discord_Particles_Shoe_     # 470031
@@ -25077,7 +25077,7 @@ Body:
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",BaseLevel/2;
   - Combos:
       - Combo:
-          - Discord_Particles_Shoe     # 470030
+          - Discord_Particles_Shoes     # 470030
           - Sharp_Star_Bow_J     # 18194
       - Combo:
           - Discord_Particles_Shoe_     # 470031
@@ -25087,7 +25087,7 @@ Body:
       bonus2 bSkillAtk,"AC_DOUBLE",2*BaseLevel;
   - Combos:
       - Combo:
-          - Discord_Particles_Shoe     # 470030
+          - Discord_Particles_Shoes     # 470030
           - Falken_Shooter_J     # 18196
       - Combo:
           - Discord_Particles_Shoe_     # 470031
@@ -25097,7 +25097,7 @@ Body:
       bonus2 bSkillAtk,"RA_WUGSTRIKE",BaseLevel/2;
   - Combos:
       - Combo:
-          - Discord_Particles_Shoe     # 470030
+          - Discord_Particles_Shoes     # 470030
           - Hawkeye     # 4879
       - Combo:
           - Discord_Particles_Shoe_     # 470031

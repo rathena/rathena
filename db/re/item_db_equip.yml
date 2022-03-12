@@ -146630,7 +146630,7 @@ Body:
          bonus bMaxSPrate,10;
       }
   - Id: 470030
-    AegisName: Discord_Particles_Shoe
+    AegisName: Discord_Particles_Shoes
     Name: Discordant thought body shoes    # !todo check english name
     Type: Armor
     Defense: 12
