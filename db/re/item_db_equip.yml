@@ -139880,8 +139880,8 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 436008
-    AegisName: aegis_436008
-    Name: Costume Congratulation    # !todo check english name
+    AegisName: C_HwaHoJumJung
+    Name: Costume Big Tiger Hat
     Type: Armor
     Locations:
       Costume_Head_Mid: true
@@ -139995,7 +139995,7 @@ Body:
       NoAuction: true
   - Id: 440008
     AegisName: aegis_440008
-    Name: Costume Master    # !todo check english name
+    Name: Costume Master
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -140006,7 +140006,7 @@ Body:
       hateffect HAT_EF_C_MASTER,false;
   - Id: 440009
     AegisName: C_Black_Moon_Cat_kr
-    Name: Costume beginner black moon cat    # !todo check english name
+    Name: Costume Black Moon Cat    # !todo check english name
     Type: Armor
     Locations:
       Costume_Head_Top: true
