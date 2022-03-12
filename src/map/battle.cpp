@@ -2439,6 +2439,7 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 		case MT_RUSH_QUAKE: // 9 cell cast range.
 		case ABC_UNLUCKY_RUSH: // 7 cell cast range.
 		//case ABC_DEFT_STAB: // 2 cell cast range???
+		case NPC_MAXPAIN_ATK:
 			return BF_SHORT;
 		case CD_PETITIO: { // Skill range is 2 but damage is melee with books and ranged with mace.
 			map_session_data *sd = BL_CAST(BL_PC, src);
