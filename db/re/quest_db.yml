@@ -4804,7 +4804,7 @@ Body:
     Title: Shawn McCurdy's Weapon 3
     Drops:
       - Mob: PURPLESTONE
-        Item: Purple_Ore
+        Item: Violet_Stone
         Rate: 10000
   - Id: 7802
     Title: Hear Me Out 2
@@ -5895,13 +5895,13 @@ Body:
     Title: Collecting Ore Fragments
     Drops:
       - Mob: COWRAIDERS1
-        Item: Fragment_of_Purple_Ore
+        Item: Violet_Stone_Chip
         Rate: 5000
       - Mob: COWRAIDERS2
-        Item: Fragment_of_Purple_Ore
+        Item: Violet_Stone_Chip
         Rate: 5000
       - Mob: COYOTE
-        Item: Fragment_of_Purple_Ore
+        Item: Violet_Stone_Chip
         Rate: 5000
   - Id: 9461
     Title: Enough Ores

@@ -33571,6 +33571,22 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_July_Lucky_Scroll);
+  - Id: 14840
+    AegisName: DF_Megaphone
+    Name: "[Sale] Megaphone"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      input .@megaphone$;
+      announce strcharinfo(0) + ": " + .@megaphone$,bc_all,0xFF0000;
   - Id: 14841
     AegisName: DF_Songpyun
     Name: "[Scroll] Korean Rice Cake"
@@ -33860,6 +33876,22 @@ Body:
       itemskill "AC_CONCENTRATION",max(getskilllv("AC_CONCENTRATION"),3);
       specialeffect2 EF_POTION_BERSERK;
       showscript "Oh My GOODNESS!!! I FEEL AWESOMELY STRONG!!! WOWOW";
+  - Id: 14875
+    AegisName: DF_Med_Life_Potion
+    Name: "[Scroll] Medium Life potion"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      specialeffect2 EF_HEAL3;
+      sc_start4 SC_L_LIFEPOTION,600000,-7,4,0,0;
   - Id: 14886
     AegisName: UltimateCook_S
     Name: "[Scroll] Ultimate Cook"
@@ -44939,12 +44971,11 @@ Body:
     AegisName: Shadow_Cube
     Name: Shadow Cube
     Type: Usable
-    Buy: 10
     Weight: 10
-    Classes:
-      All: false
+    Flags:
+      Container: true
     Script: |
-      /*No Info*/
+      getgroupitem(IG_SHADOW_CUBE);
   - Id: 22828
     AegisName: Sealed_Scroll
     Name: Sealed Album Scroll
@@ -45635,6 +45666,24 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box7);
+  - Id: 22977
+    AegisName: Shadow_Cube_Pendant
+    Name: Shadow Cube (Pendant)
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_SHADOW_CUBE_PENDANT);
+  - Id: 22978
+    AegisName: Shadow_Cube_Earing
+    Name: Shadow Cube (Earing)
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_SHADOW_CUBE_EARING);
   - Id: 22979
     AegisName: Comp_Battle_Bubble
     Name: "[Sale] Battle Manual and Bubble Gum"
@@ -45863,6 +45912,23 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box9);
+  - Id: 23073
+    AegisName: AngelPoring_Box
+    Name: Angel Poring Shoes Box
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_ANGELPORING_BOX);
   - Id: 23076
     AegisName: Build_Up_Potion_SS
     Name: Build Up Potion SS
@@ -50028,6 +50094,30 @@ Body:
       NoAuction: true
     Script: |
       percentheal 30,30;
+  - Id: 101322
+    AegisName: aegis_101322
+    Name: Love Confession Chocolate
+    Type: Healing
+    Script: |
+      percentheal 30,30;
+  - Id: 101336
+    AegisName: aegis_101336
+    Name: "[Scroll] DEX Biscuit Stick"
+    Type: Usable
+    Weight: 10
+    Trade:
+    Script: |
+      sc_start SC_FOOD_DEX_CASH,1800000,15;
+      sc_start SC_HITFOOD,600000,rand(11,33);
+  - Id: 101337
+    AegisName: aegis_101337
+    Name: "[Scroll] VIT Biscuit Stick"
+    Type: Usable
+    Weight: 10
+    Trade:
+    Script: |
+      sc_start SC_FOOD_VIT_CASH,1800000,15;
+      bonus_script "{ bonus bHPRecovRate,rand(11,33); }",1800,1;
   - Id: 200185
     AegisName: LI_Nyangvine_Box1_26
 #   Name: (Limited) Actinidia Cat Fruit Box I (Stone Box 26)

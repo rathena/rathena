@@ -8557,8 +8557,8 @@ Body:
       bonus2 bSubSize,Size_All,5;
   - Combos:
       - Combo:
-          - Poring_Sunglasses_
-          - Angel_Poring_Boots
+          - Poring_Sunglasses_     # 19117
+          - AngelPoring_Boots     # 22101
     Script: |
       bonus2 bDropAddRace,RC_All,5;
       bonus2 bExpAddRace,RC_All,5;
@@ -8567,8 +8567,8 @@ Body:
       }
   - Combos:
       - Combo:
-          - Poring_Sunglasses__
-          - Angel_Poring_Boots
+          - Poring_Sunglasses__     # 19118
+          - AngelPoring_Boots     # 22101
     Script: |
       bonus2 bDropAddRace,RC_All,4;
       bonus2 bExpAddRace,RC_All,4;
@@ -10216,8 +10216,8 @@ Body:
       bonus bMaxSPrate,.@r;
   - Combos:
       - Combo:
-          - Angel_Poring_Boots
-          - Leo_Stone
+          - AngelPoring_Boots     # 22101
+          - Leo_Stone     # 29148
     Script: |
       bonus bMaxHPRate,5;
       bonus bMaxSPRate,5;
@@ -10233,8 +10233,8 @@ Body:
       }
   - Combos:
       - Combo:
-          - Angel_Poring_Boots
-          - Pisces_Stone
+          - AngelPoring_Boots     # 22101
+          - Pisces_Stone     # 29149
     Script: |
       bonus bMaxHPRate,5;
       bonus bMaxSPRate,5;
@@ -10250,8 +10250,8 @@ Body:
       }
   - Combos:
       - Combo:
-          - Angel_Poring_Boots
-          - Capricorn_Stone
+          - AngelPoring_Boots     # 22101
+          - Capricorn_Stone     # 29150
     Script: |
       bonus bMaxHPRate,5;
       bonus bMaxSPRate,5;
@@ -10267,8 +10267,8 @@ Body:
       }
   - Combos:
       - Combo:
-          - Angel_Poring_Boots
-          - Aquarius_Stone
+          - AngelPoring_Boots     # 22101
+          - Aquarius_Stone     # 29151
     Script: |
       bonus bMaxHPRate,5;
       bonus bMaxSPRate,5;
@@ -10284,8 +10284,8 @@ Body:
       }
   - Combos:
       - Combo:
-          - Angel_Poring_Boots
-          - Scorpio_Stone
+          - AngelPoring_Boots     # 22101
+          - Scorpio_Stone     # 29152
     Script: |
       bonus bMaxHPRate,5;
       bonus bMaxSPRate,5;
@@ -10301,8 +10301,8 @@ Body:
       }
   - Combos:
       - Combo:
-          - Angel_Poring_Boots
-          - Taurus_Stone
+          - AngelPoring_Boots     # 22101
+          - Taurus_Stone     # 29153
     Script: |
       bonus bMaxHPRate,5;
       bonus bMaxSPRate,5;
@@ -23888,7 +23888,7 @@ Body:
           - aegis_32296     # 32296
           - Strong_Blow5     # 29370
     Script: |
-      if (BaseClass == Job_Novice || BaseClass == Job_Swordman || BaseClass == Job_Archer || BaseClass == Job_Acolyte || BaseClass == Job_Archer || BaseClass == Job_Merchant || BaseClass == Job_Taekwon || BaseClass == Job_Gunslinger || BaseClass == Job_Summoner) {
+      if (BaseClass == Job_Novice || BaseClass == Job_Swordman || BaseClass == Job_Mage || BaseClass == Job_Acolyte || BaseClass == Job_Archer || BaseClass == Job_Merchant || BaseClass == Job_Taekwon || BaseClass == Job_Gunslinger || BaseClass == Job_Summoner) {
          bonus2 bAddClass,Class_All,10;
          bonus bPerfectHitAddRate,30;
       }
@@ -24707,3 +24707,120 @@ Body:
     Script: |
       bonus2 bAddClass,Class_All,5;
       bonus bMatkRate,5;
+  - Combos:
+      - Combo:
+          - Ring_Of_Hunter     # 490096
+          - Speed_Of_Light     # 4877
+    Script: |
+      bonus bAgi,40;
+      bonus2 bAddSize,Size_All,10;
+  - Combos:
+      - Combo:
+          - aegis_490182     # 490182
+          - Katar_170     # 28010
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bAddClass,Class_All,.@r;
+      if (.@r >= 10)
+         autobonus "{ bonus bAgi,20; }",10,10000,BF_WEAPON;
+      if (.@r >= 12) {
+         bonus bDelayrate,-5;
+         bonus bLongAtkRate,8;
+      }
+  - Combos:
+      - Combo:
+          - aegis_490182     # 490182
+          - Staff_170     # 2027
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"WL_CRIMSONROCK",2*.@r;
+      if (.@r >= 10)
+         autobonus "{ bonus2 bMagicAtkEle,Ele_Fire,15; }",10,10000,BF_MAGIC,"{ specialeffect2 255; }";
+      if (.@r >= 12) {
+         bonus bMaxHPrate,5;
+         bonus bMaxSPrate,5;
+         bonus2 bMagicAddSize,Size_All,10;
+      }
+  - Combos:
+      - Combo:
+          - aegis_490182     # 490182
+          - Two_Hand_Spear_170     # 21018
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus bCritAtkRate,.@r;
+      if (.@r >= 10)
+         bonus3 bAutoSpell,"RK_IGNITIONBREAK",3,10;
+      if (.@r >= 12) {
+         bonus2 bAddClass,Class_Boss,15;
+         bonus bAspd,2;
+      }
+  - Combos:
+      - Combo:
+          - aegis_410136     # 410136
+          - aegis_480161     # 480161
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      bonus bLongAtkRate,7;
+      if (.@r >= 11)
+         bonus bDelayrate,-min(.@r,15);
+  - Combos:
+      - Combo:
+          - aegis_410136     # 410136
+          - aegis_480166     # 480166
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      bonus bMatk,50;
+      if (.@r >= 11)
+         bonus bMatk,20*min(.@r,15);
+  - Combos:
+      - Combo:
+          - aegis_410136     # 410136
+          - aegis_480172     # 480172
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      bonus bBaseAtk,50;
+      if (.@r >= 11)
+         bonus2 bAddClass,Class_All,2*min(.@r,15);
+  - Combos:
+      - Combo:
+          - aegis_480172     # 480172
+          - Old_Rune_Circlet     # 18971
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      bonus bCritAtkRate,3*(.@r/2);
+      if (.@r>=12)
+         skill "TF_DOUBLE",5;
+  - Combos:
+      - Combo:
+          - aegis_480172     # 480172
+          - Old_Circlet_Of_Bone     # 18982
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      bonus2 bSkillAtk,"GC_COUNTERSLASH",3*(.@r/2);
+      if (.@r>=12)
+         bonus2 bAddRace,RC_All,5;
+  - Combos:
+      - Combo:
+          - aegis_480172     # 480172
+          - Old_Driver_Band_R     # 18973
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      bonus2 bSkillAtk,"NC_AXETORNADO",3*(.@r/2);
+      if (.@r>=12)
+         bonus bDelayrate,-5;
+  - Combos:
+      - Combo:
+          - aegis_480172     # 480172
+          - Old_Blazing_Soul     # 18979
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      bonus2 bSkillAtk,"SR_TIGERCANNON",3*(.@r/2);
+      if (.@r>=12)
+         bonus bLongAtkDef,5;
+  - Combos:
+      - Combo:
+          - Angel_Poring_Earing     # 28592
+          - Angel_Poring_Ring     # 28593
+    Script: |
+      bonus bBaseAtk,20;
+      bonus bMatk,20;

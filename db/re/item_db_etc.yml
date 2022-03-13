@@ -35220,7 +35220,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25246
-    AegisName: Juice_Mix_Package
+    AegisName: Juice_Package
     Name: Juice Mix Package
     Type: Etc
     Trade:
@@ -35231,7 +35231,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25247
-    AegisName: Purple_Ore
+    AegisName: Violet_Stone
     Name: Purple Ore
     Type: Etc
     Trade:
@@ -35242,7 +35242,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25248
-    AegisName: Purple_Ore_Crate
+    AegisName: Violet_Stone_Box
     Name: Purple Ore Crate
     Type: Etc
     Trade:
@@ -35264,7 +35264,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25250
-    AegisName: Rock_Ridge_Coin
+    AegisName: Coin_Of_Rr
     Name: Rock Ridge Coin
     Type: Etc
   - Id: 25251
@@ -35336,7 +35336,7 @@ Body:
     Buy: 778
     Weight: 10
   - Id: 25260
-    AegisName: Fragment_of_Purple_Ore
+    AegisName: Violet_Stone_Chip
     Name: Fragment of Purple Ore
     Type: Etc
     Trade:
@@ -35455,7 +35455,7 @@ Body:
     Buy: 348
     Weight: 10
   - Id: 25277
-    AegisName: Deadly_Poison_Powder
+    AegisName: DeadlyPoisonPowder
     Name: Deadly Poison Powder
     Type: Etc
     Buy: 644
@@ -62467,6 +62467,18 @@ Body:
     Name: Shadow Chaser Stone (Bottom)
     Type: Etc
     Weight: 100
+  - Id: 1000891
+    AegisName: aegis_1000891
+    Name: Special Red Pill Exchange
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai
