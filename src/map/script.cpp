@@ -12001,13 +12001,16 @@ BUILDIN_FUNC(sc_end)
 	if (type >= SC_NONE && type < SC_MAX) {
 		struct status_change *sc = status_get_sc(bl);
 
-		if (!sc)
+		if (sc == nullptr)
+			return SCRIPT_CMD_SUCCESS;
+
+		struct status_change_entry *sce = sc->data[type];
+
+		if (sce == nullptr)
 			return SCRIPT_CMD_SUCCESS;
 
 		if (status_db.hasSCF(sc, SCF_NOCLEARBUFF))
 			return SCRIPT_CMD_SUCCESS;
-
-		struct status_change_entry *sce = sc ? sc->data[type] : NULL;
 
 		//This should help status_change_end force disabling the SC in case it has no limit.
 		sce->val1 = sce->val2 = sce->val3 = sce->val4 = 0;
@@ -25785,6 +25788,50 @@ BUILDIN_FUNC( laphine_upgrade ){
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(randomoptgroup)
+{
+	int id = script_getnum(st,2);
+
+	auto group = random_option_group.find(id);
+
+	if (group == nullptr) {
+		ShowError("buildin_randomoptgroup: Invalid random option group id (%d)!\n", id);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	struct item item_tmp = {};
+
+	group->apply( item_tmp );
+
+	for ( int i = 0; i < MAX_ITEM_RDM_OPT; ++i ) {
+		setd_sub_num(st, nullptr, ".@opt_id", i, item_tmp.option[i].id, nullptr);
+		setd_sub_num(st, nullptr, ".@opt_value", i, item_tmp.option[i].value, nullptr);
+		setd_sub_num(st, nullptr, ".@opt_param", i, item_tmp.option[i].param, nullptr);
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC( open_quest_ui ){
+	struct map_session_data* sd;
+
+	if (!script_charid2sd(3, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	int quest_id = script_hasdata(st, 2) ? script_getnum(st, 2) : 0;
+
+	if( quest_id != 0 ){
+		int i;
+		ARR_FIND(0, sd->avail_quests, i, sd->quest_log[i].quest_id == quest_id);
+		if (i == sd->avail_quests)
+			ShowWarning("buildin_open_quest_ui: Character %d doesn't have quest %d.\n", sd->status.char_id, quest_id);
+	}
+
+	clif_ui_open( sd, OUT_UI_QUEST, quest_id );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -26496,6 +26543,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getitempos,""),
 	BUILDIN_DEF(laphine_synthesis, ""),
 	BUILDIN_DEF(laphine_upgrade, ""),
+	BUILDIN_DEF(randomoptgroup,"i"),
+	BUILDIN_DEF(open_quest_ui, "??"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
