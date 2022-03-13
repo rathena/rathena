@@ -427,14 +427,14 @@ int do_init( int argc, char** argv ){
 	}
 
 	item_group_txt_data(path_db_mode, path_db);
-	if (!process("ITEM_GROUP_DB", 1, { path_db_mode }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
+	if (!process("ITEM_GROUP_DB", 2, { path_db_mode }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return itemdb_read_group_yaml();
 	})) {
 		return 0;
 	}
 
 	item_group_txt_data(path_db_import, path_db_import);
-	if (!process("ITEM_GROUP_DB", 1, { path_db_import }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
+	if (!process("ITEM_GROUP_DB", 2, { path_db_import }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return itemdb_read_group_yaml();
 	})) {
 		return 0;
@@ -2947,7 +2947,8 @@ static bool itemdb_read_db(const char* file) {
 		if (it_nouse != item_nouse.end()) {
 			body << YAML::Key << "NoUse";
 			body << YAML::BeginMap;
-			body << YAML::Key << "Override" << YAML::Value << it_nouse->second.override;
+			if (it_nouse->second.override != 100)
+				body << YAML::Key << "Override" << YAML::Value << it_nouse->second.override;
 			body << YAML::Key << "Sitting" << YAML::Value << "true";
 			body << YAML::EndMap;
 		}
@@ -2957,7 +2958,8 @@ static bool itemdb_read_db(const char* file) {
 		if (it_trade != item_trade.end()) {
 			body << YAML::Key << "Trade";
 			body << YAML::BeginMap;
-			body << YAML::Key << "Override" << YAML::Value << it_trade->second.override;
+			if (it_trade->second.override != 100)
+				body << YAML::Key << "Override" << YAML::Value << it_trade->second.override;
 			if (it_trade->second.drop)
 				body << YAML::Key << "NoDrop" << YAML::Value << it_trade->second.drop;
 			if (it_trade->second.trade)
