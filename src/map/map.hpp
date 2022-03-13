@@ -345,6 +345,7 @@ enum e_race2 : uint8{
 	RC2_WERNER_LAB,
 	RC2_TEMPLE_DEMON,
 	RC2_ILLUSION_VAMPIRE,
+	RC2_MALANGDO,
 	RC2_MAX
 };
 
@@ -647,6 +648,7 @@ enum e_mapflag : int16 {
 	MF_NORODEX,
 	MF_NORENEWALEXPPENALTY,
 	MF_NORENEWALDROPPENALTY,
+	MF_NOPETCAPTURE,
 	MF_MAX
 };
 
@@ -783,7 +785,7 @@ struct map_data {
 	int users_pvp;
 	int iwall_num; // Total of invisible walls in this map
 
-	std::unordered_map<int16, int> flag;
+	std::vector<int> flag;
 	struct point save;
 	std::vector<s_drop_list> drop_list;
 	uint32 zone; // zone number (for item/skill restrictions)

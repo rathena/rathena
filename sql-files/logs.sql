@@ -167,12 +167,13 @@ CREATE TABLE IF NOT EXISTS `npclog` (
 # (Q)uest
 # Private Airs(H)ip
 # Barter Shop (J)
+# Laphine systems (W)
 
 CREATE TABLE IF NOT EXISTS `picklog` (
   `id` int(11) NOT NULL auto_increment,
   `time` datetime NOT NULL,
   `char_id` int(11) NOT NULL default '0',
-  `type` enum('M','P','L','T','V','S','N','C','A','R','G','E','B','O','I','X','D','U','$','F','Y','Z','Q','H','J') NOT NULL default 'P',
+  `type` enum('M','P','L','T','V','S','N','C','A','R','G','E','B','O','I','X','D','U','$','F','Y','Z','Q','H','J','W') NOT NULL default 'P',
   `nameid` int(10) unsigned NOT NULL default '0',
   `amount` int(11) NOT NULL default '1',
   `refine` tinyint(3) unsigned NOT NULL default '0',
