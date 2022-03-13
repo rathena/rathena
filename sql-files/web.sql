@@ -30,9 +30,10 @@ CREATE TABLE IF NOT EXISTS `user_configs` (
 
 CREATE TABLE IF NOT EXISTS `char_configs` (
   `account_id` int(11) unsigned NOT NULL,
+  `char_id` int(11) unsigned NOT NULL,
   `world_name` varchar(32) NOT NULL,
   `data` longtext NOT NULL,
-  PRIMARY KEY (`account_id`, `world_name`)
+  PRIMARY KEY (`account_id`, `char_id`, `world_name`)
 ) ENGINE=MyISAM;
 
 --
