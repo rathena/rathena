@@ -12,28 +12,28 @@
  * I just didn't want to add one just for this functionality
  */
 bool addToJsonObject(std::string& obj, const std::string& to_append) {
-    bool need_comma = false;
-    auto last_close_brace = std::find(obj.rbegin(), obj.rend(), '}');
-    if (last_close_brace == obj.rend()) {
-        return false;
-    }
-    for (auto it = last_close_brace + 1; it != obj.rend(); ++it) {
-        std::cout << "Checking " << *it << "\n";
-        if (*it == '}' || *it == '"' || *it == ':') {
-            // there was a value, we need to add a comma
-            need_comma = true;
-            break;
-        } else if (*it == '{') {
-            // there was no previous value, don't add comma
-            need_comma = false;
-            break;
-        }
-    }
-    std::cout << "erase everything from " << *(last_close_brace.base() - 1) << "\n";
-    obj.erase(--(last_close_brace.base()));
-    if (need_comma) {
-        obj += ",";
-    }
-    obj += to_append + "}";
-    return true;
+	bool need_comma = false;
+	auto last_close_brace = std::find(obj.rbegin(), obj.rend(), '}');
+	if (last_close_brace == obj.rend()) {
+		return false;
+	}
+	for (auto it = last_close_brace + 1; it != obj.rend(); ++it) {
+		std::cout << "Checking " << *it << "\n";
+		if (*it == '}' || *it == '"' || *it == ':') {
+			// there was a value, we need to add a comma
+			need_comma = true;
+			break;
+		} else if (*it == '{') {
+			// there was no previous value, don't add comma
+			need_comma = false;
+			break;
+		}
+	}
+	std::cout << "erase everything from " << *(last_close_brace.base() - 1) << "\n";
+	obj.erase(--(last_close_brace.base()));
+	if (need_comma) {
+		obj += ",";
+	}
+	obj += to_append + "}";
+	return true;
 }
