@@ -1,7 +1,11 @@
-//===== rAthena Mapflag ======================================
+//===== rAthena Script =======================================
+//= Mapflag: Adjust Skill Duration.
+//===== Description: ========================================= 
 //= Sets skill time limit on specified map.
 //===== Structure ============================================
 //= mapname	skill_duration	skill_name,percentage
+//===== Additional Comments: ================================= 
+//= 1.0 Initial script. [Cydh]
 //============================================================
 
 //============================================================

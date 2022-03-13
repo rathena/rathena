@@ -1,5 +1,5 @@
 
-COMMON_OBJ = minicore.o malloc.o showmsg.o strlib.o utils.o des.o grfio.o
+COMMON_OBJ = minicore.o malloc.o showmsg.o strlib.o utils.o des.o grfio.o nullpo.o
 COMMON_DIR_OBJ = $(COMMON_OBJ:%=../common/obj/%)
 COMMON_H = $(shell ls ../common/*.hpp)
 COMMON_INCLUDE = -I../common/

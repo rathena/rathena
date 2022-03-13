@@ -55,12 +55,14 @@ enum e_quest_check_type : uint8 {
 
 class QuestDatabase : public TypesafeYamlDatabase<uint32, s_quest_db> {
 public:
-	QuestDatabase() : TypesafeYamlDatabase("QUEST_DB", 2) {
+	QuestDatabase() : TypesafeYamlDatabase("QUEST_DB", 2, 1) {
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node& node) override;
+
+	// Additional
 	bool reload();
 };
 

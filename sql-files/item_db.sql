@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS `item_db`;
 CREATE TABLE `item_db` (
   `id` int(10) unsigned NOT NULL DEFAULT '0',
   `name_aegis` varchar(50) NOT NULL DEFAULT '',
-  `name_english` varchar(50) NOT NULL DEFAULT '',
+  `name_english` varchar(100) NOT NULL DEFAULT '',
   `type` varchar(20) DEFAULT NULL,
   `subtype` varchar(20) DEFAULT NULL,
   `price_buy` mediumint(8) unsigned DEFAULT NULL,
@@ -69,6 +69,7 @@ CREATE TABLE `item_db` (
   `location_shadow_right_accessory` tinyint(1) unsigned DEFAULT NULL,
   `location_shadow_left_accessory` tinyint(1) unsigned DEFAULT NULL,
   `weapon_level` tinyint(1) unsigned DEFAULT NULL,
+  `armor_level` tinyint(1) unsigned DEFAULT NULL,
   `equip_level_min` tinyint(3) unsigned DEFAULT NULL,
   `equip_level_max` tinyint(3) unsigned DEFAULT NULL,
   `refineable` tinyint(1) unsigned DEFAULT NULL,

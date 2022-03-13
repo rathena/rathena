@@ -10,7 +10,7 @@
 prt_cas_q,29,28,0	script	#ep162_evt_npc_con	HIDDEN_WARP_NPC,2,2,{
 	end;
 OnTouch:
-	if (banquet_main_quest < 18)	// pre-req : access to room of consciousness (first time)
+	if (ep16_royal < 17)	// pre-req : access to room of consciousness (first time)
 		end;
 	if (terra_gloria_main == 0) {
 		cloakoffnpc "Nihil M. Heine#ep162_01", getcharid(0);
@@ -35,7 +35,7 @@ prt_cas_q,23,33,2	duplicate(dummy_cloaked_npc)	Crux#ep162_03	4_EP16_CRUX
 prt_cas_q,23,32,3	duplicate(dummy_cloaked_npc)	Kronecker G. Heine#ep162	4_EP16_GRANZ
 
 prt_cas_q,21,39,3	script	Nihil M. Heine#ep162_01	4_EP16_NIHIL,{
-	if (banquet_main_quest < 18)	// pre-req : access to room of consciousness (first time)
+	if (ep16_royal < 17)	// pre-req : access to room of consciousness (first time)
 		end;
 	if (terra_gloria_main == 0) {
 		cutin "ep16_nihi_miseria_heine02.bmp",2;
@@ -340,7 +340,7 @@ prt_cas_q,21,39,3	script	Nihil M. Heine#ep162_01	4_EP16_NIHIL,{
 }
 
 prt_cas_q,23,36,3	script	Spica Nerius#ep162_01	4_EP16_SPICA,{
-	if (banquet_main_quest < 18)
+	if (ep16_royal < 17)
 		end;
 	if (terra_gloria_main == 1) {
 		cutin "ep16_spica_nerius01.bmp",1;
@@ -566,7 +566,7 @@ prt_cas_q,18,37,5	script	Skia Nerius#ep162_01	4_EP16_SKIA,{
 		mes "[Bel]";
 		mes "Prince Grantz has arrived.";
 		next;
-		cloakoffnpc "Kronecker G. Heine#ep16", getcharid(0);
+		cloakoffnpc "Kronecker G. Heine#ep162", getcharid(0);
 		mes "[Kronecker]";
 		mes "Hmm. The esteemed daughters of the Nerius family are here too.";
 		mes "First of all, " + strcharinfo(0) + " I have come to show my gratitude to you.";
@@ -629,9 +629,9 @@ prt_cas_q,18,37,5	script	Skia Nerius#ep162_01	4_EP16_SKIA,{
 		cutin "ep16_spica_nerius01.bmp",1;
 		mes "[Spica]";
 		mes "See you later. I will contact you.";
-		npctalk "I will be waiting.", "Kronecker G. Heine#ep16", bc_self;
+		npctalk "I will be waiting.", "Kronecker G. Heine#ep162", bc_self;
 		next;
-		cloakonnpc "Kronecker G. Heine#ep16", getcharid(0);
+		cloakonnpc "Kronecker G. Heine#ep162", getcharid(0);
 		mes "[Spica]";
 		mes "Skia?";
 		mes "Why don't you have a quiet conversation with me?";
@@ -2093,7 +2093,7 @@ einbech,218,82,5	script	Gonie#16nego02	4_M_FALLENGONY,{
 	mes "......";
 	close3;
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -2187,7 +2187,7 @@ einbech,217,82,3	script	Lazy#16nego03	4_M_LAZY,{
 	}
 	end;
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -2235,7 +2235,7 @@ rebel_in,23,43,5	script	Gonie#16nego03	4_M_FALLENGONY,{
 	cloakonnpc "Gonie#16nego03", getcharid(0);
 	end;
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -2250,7 +2250,7 @@ rebel_in,23,42,3	script	Lucky#16nego01	4_M_ROOKIE,{
 	}
 	end;
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -3250,7 +3250,7 @@ ein_in01,269,285,5	script	Nihil#ep162_02	4_EP16_NIHIL,{
 		callfunc( "F_Terra_Gloria_Inn" );
 	end;
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -3276,7 +3276,7 @@ ein_in01,274,278,3	script	Lazy#ep162_01	4_M_LAZY,{
 	}
 	end;
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -3298,7 +3298,7 @@ ein_in01,272,282,3	script	Rookie#ep162_01	4_M_ROOKIE,{
 	}
 	end;
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -3316,7 +3316,7 @@ ein_in01,271,284,3	script	Skia#ep162_05	4_EP16_SKIA,{
 	}
 	end;
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -3335,7 +3335,7 @@ ein_in01,269,282,1	script	Philopontess#ep162_03	4_M_PHILOFONTES,{
 		callfunc( "F_Terra_Gloria_Inn" );
 	end;
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -5509,7 +5509,7 @@ rebel_in,119,68,7	script	Rebellion Guard leader#4	4_M_REBELLION,{
 	}
 	end;
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -5620,7 +5620,7 @@ rebel_in,121,69,8	script	Dien#162gmbs2	4_F_DIENE,{
 	}
 	end;
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -8530,7 +8530,7 @@ rebel_in,78,66,6	script	Arivero Yurhik#TFQ02	4_M_GUNSLINGER,{
 	}
 	end;
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -8604,7 +8604,7 @@ rebel_in,78,63,6	script	Rebellion leader#TFQ15	4_M_RUPERT,{
 	}
 	end;
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -8732,7 +8732,7 @@ einbech,212,212,6	script	Arivero Yurhik#TFQ04	4_M_GUNSLINGER,{
 	}
 	end;
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -8842,7 +8842,7 @@ lighthalzen,135,233,6	script	Arivero Yurhik#TFQ07	4_M_GUNSLINGER,{
 	}
 	end;
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -8923,7 +8923,7 @@ yuno,204,226,6	script	Arivero Yurhik#TFQ10	4_M_GUNSLINGER,{
 	}
 	end;
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -9028,7 +9028,7 @@ einbroch,262,42,4	script	Arivero Yurhik#TFQ13	4_M_GUNSLINGER,{
 	}
 	end;
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -10586,7 +10586,7 @@ einbech,34,209,3	script	Empty bench#16.2rm2	HIDDEN_NPC,{
 			mes "After waiting for a while, you reclaimed the Anchovy cookies.";
 			mes "Go to another bench or wait for a while.";
 			initnpctimer;
-			disablenpc strnpcinfo(0);
+			disablenpc();
 			close;
 		}
 		if (strnpcinfo(0) == "Empty bench#16.2rm2")
@@ -10613,7 +10613,7 @@ einbech,34,209,3	script	Empty bench#16.2rm2	HIDDEN_NPC,{
 
 OnTimer30000:
 	stopnpctimer;
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 }
 einbech,144,98,3	duplicate(Empty bench#16.2rm2)	Empty bench#16.2rm3	HIDDEN_NPC
@@ -11854,11 +11854,11 @@ ein_fild09,70,175,5	script	Suspicious Heap of Earth#1	4_SOIL,{
 	else if (.@r == 7) unittalk $@mobid[0], "So you are abandoning me again? Then let me kill you first!";
 	else if (.@r == 8) unittalk $@mobid[0], "It's been cold and I was lonely waiting for you... Let us die together.";
 	initnpctimer;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnTimer300000:
 	stopnpctimer;
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 }
 ein_fild09,136,157,5	duplicate(Suspicious Heap of Earth#1)	Suspicious Heap of Earth#2	4_SOIL
@@ -13384,7 +13384,7 @@ slabw01,235,137,3	script	Suspicious cabinet#hide01	4_ENERGY_WHITE,{
 	}
 	unittalk getcharid(3), "" + strcharinfo(0) + " : .. This looks suspicious!", bc_self;
 	progressbar "000000",3;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	enablenpc "Hiding researcher#" + strnpcinfo(2);
 	npctalk "Arrrgh!", "Hiding researcher#" + strnpcinfo(2);
 	cutin "16loo_02.bmp",0;
@@ -13411,7 +13411,7 @@ slabw01,235,137,3	script	Suspicious cabinet#hide01	4_ENERGY_WHITE,{
 	cutin "",255;
 	end;
 OnTimer30000:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	disablenpc "Hiding researcher#" + strnpcinfo(2);
 	stopnpctimer;
 	end;
@@ -13420,7 +13420,7 @@ OnTimer30000:
 slabw01,235,137,3	script	Hiding researcher#hide01	4_M_ALCHE_A,{
 	end;
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 }
 
@@ -13436,8 +13436,9 @@ slabw01,255,63,3	duplicate(Hiding researcher#hide01)	Hiding researcher#hide04	4_
 slabw01,179,58,3	duplicate(Suspicious cabinet#hide01)	Suspicious desk#hide05	4_ENERGY_WHITE
 slabw01,180,57,3	duplicate(Hiding researcher#hide01)	Hiding researcher#hide05	4_M_ALCHE_A
 
-slabw01,143,100,3	duplicate(Suspicious cabinet#hide01)	Suspicious test_tube#hide06	4_ENERGY_WHITE
-slabw01,143,100,3	duplicate(Hiding researcher#hide01)	Researcher inside a test#hide06	4_M_ALCHE_A
+slabw01,143,100,3	duplicate(Suspicious cabinet#hide01)	Suspicious test tube#hide06	4_ENERGY_WHITE
+slabw01,143,100,3	duplicate(Hiding researcher#hide01)	Hiding researcher#hide06	4_M_ALCHE_A
+// slabw01,143,100,3	duplicate(Hiding researcher#hide01)	Researcher inside a test#hide06	4_M_ALCHE_A
 
 slabw01,247,34,3	duplicate(Suspicious cabinet#hide01)	Suspicious bookshelf#hide07	4_ENERGY_WHITE
 slabw01,247,34,3	duplicate(Hiding researcher#hide01)	Hiding researcher#hide07	4_M_ALCHE_A

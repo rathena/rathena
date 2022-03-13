@@ -1032,7 +1032,7 @@ OnInit:
 -	script	#wander_xmas	-1,{
 	end;
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 }
 xmas,149,135,3	duplicate(#wander_xmas)	Guitar Song#xmas	479

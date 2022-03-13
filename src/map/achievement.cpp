@@ -167,7 +167,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 					return 0;
 				}
 
-				uint32 mob_id = mob->vd.class_;
+				uint32 mob_id = mob->id;
 
 				if( !this->mobexists( mob_id ) ){
 					this->achievement_mobs.push_back( mob_id );
@@ -267,7 +267,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 				return 0;
 			}
 
-			struct item_data *item = itemdb_search_aegisname(item_name.c_str());
+			std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
 
 			if (item == nullptr) {
 				this->invalidWarning(rewardNode["Item"], "Reward Item %s does not exist, skipping.\n", item_name.c_str());
@@ -348,11 +348,11 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 }
 
 void AchievementDatabase::loadingFinished(){
-	for (const auto &achit : achievement_db) {
+	for (const auto &achit : *this) {
 		const std::shared_ptr<s_achievement_db> ach = achit.second;
 
 		for (auto dep = ach->dependent_ids.begin(); dep != ach->dependent_ids.end(); dep++) {
-			if (!achievement_db.exists(*dep)) {
+			if (!this->exists(*dep)) {
 				ShowWarning("achievement_read_db: An invalid Dependent ID %d was given for Achievement %d. Removing from list.\n", *dep, ach->achievement_id);
 				dep = ach->dependent_ids.erase(dep);
 
@@ -821,7 +821,7 @@ int *achievement_level(struct map_session_data *sd, bool flag)
 	for( sd->achievement_data.level = 0; /* Break condition's inside the loop */; sd->achievement_data.level++ ){
 		std::shared_ptr<s_achievement_level> level = achievement_level_db.find( sd->achievement_data.level );
 
-		if( sd->achievement_data.total_score > level->points ){
+		if( level != nullptr && sd->achievement_data.total_score > level->points ){
 			std::shared_ptr<s_achievement_level> next_level = achievement_level_db.find( sd->achievement_data.level + 1 );
 
 			// Check if there is another level
@@ -842,7 +842,11 @@ int *achievement_level(struct map_session_data *sd, bool flag)
 
 		if( sd->achievement_data.level == 0 ){
 			left_score = sd->achievement_data.total_score;
-			right_score = level->points;
+			if( level == nullptr ){
+				right_score = 0;
+			}else{
+				right_score = level->points;
+			}
 			break;
 		}else{
 			std::shared_ptr<s_achievement_level> previous_level = achievement_level_db.find( sd->achievement_data.level - 1 );
