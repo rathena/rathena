@@ -33,6 +33,9 @@
     <ClCompile Include="web.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="merchantstore_controller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="auth.hpp">
@@ -57,6 +60,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="webcnslif.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="merchantstore_controller.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

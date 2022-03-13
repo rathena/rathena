@@ -40,6 +40,7 @@ extern char user_configs_table[32];
 extern char char_configs_table[32];
 extern char guild_db_table[32];
 extern char char_db_table[32];
+extern char merchant_configs_table[32];
 
 #define msg_config_read(cfgName) web_msg_config_read(cfgName)
 #define msg_txt(msg_number) web_msg_txt(msg_number)

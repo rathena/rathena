@@ -167,8 +167,10 @@
     <ClCompile Include="auth.cpp" />
     <ClCompile Include="charconfig_controller.cpp" />
     <ClCompile Include="emblem_controller.cpp" />
+    <ClCompile Include="merchantstore_controller.cpp" />
     <ClCompile Include="sqllock.cpp" />
     <ClCompile Include="userconfig_controller.cpp" />
+    <ClCompile Include="utils.cpp" />
     <ClCompile Include="web.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -176,8 +178,10 @@
     <ClInclude Include="charconfig_controller.hpp" />
     <ClInclude Include="emblem_controller.hpp" />
     <ClInclude Include="http.hpp" />
+    <ClInclude Include="merchantstore_controller.hpp" />
     <ClInclude Include="sqllock.hpp" />
     <ClInclude Include="userconfig_controller.hpp" />
+    <ClCompile Include="utils.hpp" />
     <ClInclude Include="web.hpp" />
     <ClInclude Include="webcnslif.hpp" />
   </ItemGroup>
