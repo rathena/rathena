@@ -11,6 +11,7 @@
 #include "auth.hpp"
 #include "http.hpp"
 #include "sqllock.hpp"
+#include "utils.hpp"
 #include "web.hpp"
 
 HANDLER_FUNC(charconfig_save) {
@@ -27,6 +28,7 @@ HANDLER_FUNC(charconfig_save) {
 
 	if (req.has_file("data")) {
 		data = req.get_file_value("data").content;
+		addToJsonObject(data, "\"Type\": 1");
 	} else {
 		data = "{\"Type\": 1}";
 	}
