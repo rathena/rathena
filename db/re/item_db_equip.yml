@@ -136394,7 +136394,7 @@ Body:
       bonus2 bSkillAtk,"NC_ARMSCANNON",30;
   - Id: 32405
     AegisName: Coolant_Injection_J
-    Name: Courland injection    # !todo check english name
+    Name: Coolant Injection    # !todo check english name
     Type: Weapon
     SubType: Mace
     Weight: 1500
@@ -136438,7 +136438,7 @@ Body:
       bonus2 bSkillAtk,"GN_CRAZYWEED",30;
   - Id: 32407
     AegisName: Lucis_Flail_J
-    Name: Lucis Frail    # !todo check english name
+    Name: Lucis Flail    # !todo check english name
     Type: Weapon
     SubType: Mace
     Weight: 1500
@@ -146631,7 +146631,7 @@ Body:
       }
   - Id: 470030
     AegisName: Discord_Particles_Shoes
-    Name: Discordant thought body shoes    # !todo check english name
+    Name: Mindform Shoes of Discord    # !todo check english name
     Type: Armor
     Defense: 12
     Weight: 200
@@ -146655,7 +146655,7 @@ Body:
       }
   - Id: 470031
     AegisName: Discord_Particles_Shoe_
-    Name: Discordant thought body shoes    # !todo check english name
+    Name: Mindform Shoes of Discord    # !todo check english name
     Type: Armor
     Defense: 12
     Weight: 200
@@ -146710,7 +146710,7 @@ Body:
       }
   - Id: 470034
     AegisName: Virtue_Particles_Shoes
-    Name: Immoral Thought Shoes    # !todo check english name
+    Name: Mindform Shoes of Immorality    # !todo check english name
     Type: Armor
     Defense: 12
     Weight: 200
@@ -146734,7 +146734,7 @@ Body:
       }
   - Id: 470035
     AegisName: Virtue_Particles_Shoes_
-    Name: Immoral Thought Shoes    # !todo check english name
+    Name: Mindform Shoes of Immorality    # !todo check english name
     Type: Armor
     Defense: 12
     Weight: 200
@@ -147077,7 +147077,7 @@ Body:
       }
   - Id: 470062
     AegisName: aegis_470062
-    Name: Lethargic thought body shoes    # !todo check english name
+    Name: Mindform Shoes of Lethargy    # !todo check english name
     Type: Armor
     Defense: 12
     Weight: 200
@@ -147104,7 +147104,7 @@ Body:
       }
   - Id: 470063
     AegisName: aegis_470063
-    Name: Lethargic thought body shoes    # !todo check english name
+    Name: Mindform Shoes of Lethargy    # !todo check english name
     Type: Armor
     Defense: 12
     Weight: 200
@@ -147449,7 +147449,7 @@ Body:
       }
   - Id: 470078
     AegisName: Indecisive_P_Shoes
-    Name: Indecisive Shoes    # !todo check english name
+    Name: Mindform Shoes of Indecisiveness    # !todo check english name
     Type: Armor
     Defense: 12
     Weight: 200
@@ -147477,7 +147477,7 @@ Body:
       }
   - Id: 470079
     AegisName: Indecisive_P_Shoes_
-    Name: Indecisive Shoes    # !todo check english name
+    Name: Mindform Shoes of Indecisiveness    # !todo check english name
     Type: Armor
     Defense: 12
     Weight: 200
@@ -147715,7 +147715,7 @@ Body:
       }
   - Id: 470089
     AegisName: aegis_470089
-    Name: Runaway Thought Shoes    # !todo check english name
+    Name: Mindform Shoes of Rampage    # !todo check english name
     Type: Armor
     Defense: 12
     Weight: 200
@@ -147739,7 +147739,7 @@ Body:
       }
   - Id: 470090
     AegisName: aegis_470090
-    Name: Runaway Thought Shoes    # !todo check english name
+    Name: Mindform Shoes of Rampage    # !todo check english name
     Type: Armor
     Defense: 12
     Weight: 200
@@ -147764,7 +147764,7 @@ Body:
       }
   - Id: 470091
     AegisName: aegis_470091
-    Name: Disappointed Thought Shoes    # !todo check english name
+    Name: Mindform Shoes of Despair    # !todo check english name
     Type: Armor
     Defense: 12
     Weight: 200
@@ -147792,7 +147792,7 @@ Body:
       }
   - Id: 470092
     AegisName: aegis_470092
-    Name: Disappointed Thought Shoes    # !todo check english name
+    Name: Mindform Shoes of Despair    # !todo check english name
     Type: Armor
     Defense: 12
     Weight: 200
@@ -148497,7 +148497,7 @@ Body:
       }
   - Id: 480023
     AegisName: Arabian_Manteau
-    Name: Arabian cloak    # !todo check english name
+    Name: Arabian Manteau    # !todo check english name
     Type: Armor
     Defense: 10
     Weight: 300
@@ -150195,7 +150195,7 @@ Body:
       bonus bHit,15;
   - Id: 490035
     AegisName: Pendant_of_Solomon
-    Name: Solomon's pendant    # !todo check english name
+    Name: Solomon's Pendant    # !todo check english name
     Type: Armor
     Weight: 500
     Locations:
@@ -150210,7 +150210,7 @@ Body:
       autobonus3 "{ bonus2 bMagicAtkEle,Ele_Fire,30; bonus2 bMagicAtkEle,Ele_Water,30; bonus2 bMagicAtkEle,Ele_Wind,30; bonus2 bMagicAtkEle,Ele_Holy,30; }",1000,10000,"HW_MAGICPOWER","{}";
   - Id: 490036
     AegisName: Pendant_of_Solomon_
-    Name: Solomon's pendant    # !todo check english name
+    Name: Solomon's Pendant    # !todo check english name
     Type: Armor
     Weight: 500
     Slots: 1

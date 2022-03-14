@@ -42989,35 +42989,35 @@ Body:
       bonus bFixedCastrate,-50;
   - Id: 29445
     AegisName: Amplification1
-    Name: Amplification Lv 1    # !todo check english name
+    Name: Amplify 1    # !todo check english name
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatkRate,getrefine();
   - Id: 29446
     AegisName: Amplification2
-    Name: Amplification Lv 2    # !todo check english name
+    Name: Amplify 2    # !todo check english name
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatkRate,2*getrefine();
   - Id: 29447
     AegisName: Amplification3
-    Name: Amplification Lv 3    # !todo check english name
+    Name: Amplify 3    # !todo check english name
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatkRate,3*getrefine();
   - Id: 29448
     AegisName: Amplification4
-    Name: Amplification Lv 4    # !todo check english name
+    Name: Amplify 4    # !todo check english name
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatkRate,4*getrefine();
   - Id: 29449
     AegisName: Amplification5
-    Name: Amplification Lv 5    # !todo check english name
+    Name: Amplify 5    # !todo check english name
     Type: Card
     SubType: Enchant
     Script: |
