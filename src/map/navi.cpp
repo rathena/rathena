@@ -3,6 +3,7 @@
 #ifdef GENERATE_NAVI
 
 #include <sys/stat.h>
+#include <algorithm>
 #include <cstring>
 #include <fstream>
 #include <iostream>
@@ -301,11 +302,39 @@ void write_footer(std::ostream &os) {
 }
 
 // 5001 = normal, 5002 = airport/airship, 5003 = indoor maps
+// 5001 = default
+// 5002 = airport/airship
+// 5003 = maps that are segmented
+// 5005 = 5003 + monsters??? i really have no clue
+//        maybe it's maps that you must leave to reach parts of it
+//        for example, ptr_fild04?
 int map_type(const struct map_data * m) {
-	if (strstr(m->name, "_in"))
-		return 5003;
+
+	bool segmented = false;
+	bool has_mob = false;
+
 	if (strstr(m->name, "air"))
 		return 5002;
+
+	// this is n^2, yikes!
+	if (std::find_if(m->navi.warps_outof.begin(), m->navi.warps_outof.end(), [&m](const navi_link* link) {
+		return std::find_if(m->navi.warps_outof.begin(), m->navi.warps_outof.end(), [&link](const navi_link* link2) {
+			// find if any two warps in a map cannot be reached
+			return !navi_path_search(nullptr, &link->pos, &link2->pos, CELL_CHKNOREACH);
+		}) != m->navi.warps_into.end();
+	}) != m->navi.warps_into.end())
+		segmented = true;
+	
+	if (m->moblist[0] != nullptr) {
+		has_mob = true;
+	}
+
+	if (segmented && has_mob) {
+		return 5005;
+	} else if (segmented) {
+		return 5003;
+	}
+
 	return 5001;
 }
 
@@ -406,7 +435,6 @@ void write_object_lists() {
 
 	for (int mapid = 0; mapid < map_num; mapid++) {
 		auto m = map_getmapdata(mapid);
-		write_map(map_file, m);
 
 		// Warps/NPCs
 		for (int npcidx = 0; npcidx < m->npc_num; npcidx++) {
@@ -462,6 +490,7 @@ void write_object_lists() {
 			write_spawn(mob_file, m, mobinfo, m->moblist[mobidx]->num, 17104 + spawn_count);
 			spawn_count++;
 		}
+		write_map(map_file, m);
 	}
 
 	ShowStatus("Generated %d maps\n", map_num);
@@ -550,14 +579,14 @@ void write_mapdist_header(std::ostream &os, const struct map_data * m) {
  */
 void write_map_distance(std::ostream &os, const struct navi_link * warp1, const struct map_data * m) {
 	os << "\t\t{ " << warp1->id << ", -- (" << " " << m->name << ", " << warp1->pos.x << ", " << warp1->pos.y << ")\n";
-	for (const auto warp2 : m->navi.warps_outof) {
-		struct navi_walkpath_data wpd = {0};
-		if (warp1 == warp2)
-			continue;
-		if (!navi_path_search(&wpd, &warp1->pos, &warp2->pos, CELL_CHKNOREACH))
-			continue;
-		os << "\t\t\t{ \"P\", " << warp2->id << ", " << std::to_string(wpd.path_len) << "}, -- ReachableFromSrc warp (" << m->name << ", " << warp2->pos.x << ", " << warp2->pos.y << ")\n";
-	}
+	// for (const auto warp2 : m->navi.warps_outof) {
+	// 	struct navi_walkpath_data wpd = {0};
+	// 	if (warp1 == warp2)
+	// 		continue;
+	// 	if (!navi_path_search(&wpd, &warp1->pos, &warp2->pos, CELL_CHKNOREACH))
+	// 		continue;
+	// 	os << "\t\t\t{ \"P\", " << warp2->id << ", " << std::to_string(wpd.path_len) << "}, -- ReachableFromSrc warp (" << m->name << ", " << warp2->pos.x << ", " << warp2->pos.y << ")\n";
+	// }
 
 	for (const auto warp3 : map_getmapdata(warp1->warp_dest.m)->navi.warps_outof) {
 		struct navi_walkpath_data wpd = {0};
