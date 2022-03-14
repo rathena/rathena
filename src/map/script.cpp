@@ -11998,7 +11998,7 @@ BUILDIN_FUNC(sc_end)
 	if (!bl)
 		return SCRIPT_CMD_SUCCESS;
 
-	if (type >= SC_NONE && type < SC_MAX) {
+	if (type > SC_NONE && type < SC_MAX) {
 		struct status_change *sc = status_get_sc(bl);
 
 		if (sc == nullptr)
