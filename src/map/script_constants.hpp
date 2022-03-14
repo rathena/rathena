@@ -5649,6 +5649,9 @@
 	export_constant(IG_SHADOW_CUBE_PENDANT);
 	export_constant(IG_SHADOW_CUBE_EARING);
 	export_constant(IG_ANGELPORING_BOX);
+	export_constant(IG_HELM_OF_FAITH_BOX);
+	export_constant(IG_2022_LUNARNEWYEARS_BOX);
+	export_constant(IG_2020_REWARD_BOX);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

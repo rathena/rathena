@@ -15722,7 +15722,7 @@ Body:
         List:
           - Item: Actinidia_Cat_Fruit
             Rate: 1
-          - Item: World_Moving_Rights
+          - Item: World_Tour_Ticket
             Rate: 1
   - Group: PRIZEOFHERO
     SubGroups:
@@ -24984,9 +24984,9 @@ Body:
             Rate: 73
           - Item: S_Tempest_Armor
             Rate: 73
-          - Item: S_Perfect_Size_Weapon
+          - Item: S_PerfectSize_Weapon
             Rate: 73
-          - Item: S_Perfect_Size_Armor
+          - Item: S_PerfectSize_Armor
             Rate: 73
           - Item: S_M_Exo_Co_Weapon
             Rate: 73
@@ -27442,9 +27442,9 @@ Body:
     SubGroups:
       - SubGroup: 1
         List:
-          - Item: S_Perfect_Size_Weapon
+          - Item: S_PerfectSize_Weapon
             Rate: 1
-          - Item: S_Perfect_Size_Armor
+          - Item: S_PerfectSize_Armor
             Rate: 1
   - Group: MAGICPIERCING_MIX
     SubGroups:
@@ -28466,3 +28466,105 @@ Body:
             Rate: 33
           - Item: S_Archer_earring
             Rate: 33
+  - Group: HELM_OF_FAITH_BOX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Viva_Adul_Hat_WL1
+            Rate: 1
+          - Item: Viva_Adul_Hat_WL2
+            Rate: 1
+          - Item: Viva_Adul_Hat_SR1
+            Rate: 1
+          - Item: Viva_Adul_Hat_SR2
+            Rate: 1
+          - Item: Viva_Adul_Hat_AB1
+            Rate: 1
+          - Item: Viva_Adul_Hat_AB2
+            Rate: 1
+          - Item: Viva_Adul_Hat_SC1
+            Rate: 1
+          - Item: Viva_Adul_Hat_SC2
+            Rate: 1
+          - Item: Viva_Adul_Hat_RA1
+            Rate: 1
+          - Item: Viva_Adul_Hat_RA2
+            Rate: 1
+          - Item: Viva_Adul_Hat_LG1
+            Rate: 1
+          - Item: Viva_Adul_Hat_LG2
+            Rate: 1
+          - Item: Viva_Adul_Hat_GC1
+            Rate: 1
+          - Item: Viva_Adul_Hat_GC2
+            Rate: 1
+          - Item: Viva_Adul_Hat_SO1
+            Rate: 1
+          - Item: Viva_Adul_Hat_SO2
+            Rate: 1
+          - Item: Viva_Adul_Hat_RK1
+            Rate: 1
+          - Item: Viva_Adul_Hat_RK2
+            Rate: 1
+          - Item: Viva_Adul_Hat_WM1
+            Rate: 1
+          - Item: Viva_Adul_Hat_WM2
+            Rate: 1
+          - Item: Viva_Adul_Hat_NC1
+            Rate: 1
+          - Item: Viva_Adul_Hat_NC2
+            Rate: 1
+          - Item: Viva_Adul_Hat_GN1
+            Rate: 1
+          - Item: Viva_Adul_Hat_GN2
+            Rate: 1
+          - Item: Viva_Adul_Hat_KO1
+            Rate: 1
+          - Item: Viva_Adul_Hat_KO2
+            Rate: 1
+          - Item: Viva_Adul_Hat_RL1
+            Rate: 1
+          - Item: Viva_Adul_Hat_RL2
+            Rate: 1
+          - Item: Viva_Adul_Hat_SP1
+            Rate: 1
+          - Item: Viva_Adul_Hat_SP2
+            Rate: 1
+          - Item: Viva_Adul_Hat_SJ1
+            Rate: 1
+          - Item: Viva_Adul_Hat_SJ2
+            Rate: 1
+          - Item: Viva_Adul_Hat_SU1
+            Rate: 1
+          - Item: Viva_Adul_Hat_SU2
+            Rate: 1
+  - Group: 2022_LUNARNEWYEARS_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: 2022_LunarNewYears_band
+          - Item: Special_Tool_Box_Coupon
+            Amount: 3
+          - Item: E_Main_Dish_C
+            Amount: 10
+          - Item: E_Mimir_Spring_W
+            Amount: 10
+          - Item: E_Challenge_Drink
+            Amount: 10
+          - Item: E_Power_Drink
+            Amount: 10
+          - Item: E_Baldrs_Blessing
+            Amount: 10
+          - Item: World_Tour_Ticket
+            Amount: 30
+  - Group: 2020_REWARD_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Cachua_Coupon
+            Amount: 10
+          - Item: Kr_B_Special01
+            Amount: 3
+          - Item: World_Tour_Ticket
+            Amount: 20
+
