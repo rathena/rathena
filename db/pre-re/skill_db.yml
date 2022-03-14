@@ -532,6 +532,7 @@ Body:
       Flag:
         NoEnemy: true
         NoReiteration: true
+    Status: Safetywall
   - Id: 13
     Name: MG_SOULSTRIKE
     Description: Soul Strike
@@ -31788,6 +31789,7 @@ Body:
       Flag:
         NoEnemy: true
         NoReiteration: true
+    Status: Safetywall
   - Id: 8034
     Name: MH_HEILIGE_STANGE
     Description: Holy Pole
