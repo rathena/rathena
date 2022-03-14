@@ -11998,7 +11998,7 @@ BUILDIN_FUNC(sc_end)
 	if (!bl)
 		return SCRIPT_CMD_SUCCESS;
 
-	if (type >= SC_NONE && type < SC_MAX) {
+	if (type > SC_NONE && type < SC_MAX) {
 		struct status_change *sc = status_get_sc(bl);
 
 		if (sc == nullptr)
@@ -12009,8 +12009,17 @@ BUILDIN_FUNC(sc_end)
 		if (sce == nullptr)
 			return SCRIPT_CMD_SUCCESS;
 
-		if (status_db.hasSCF(sc, SCF_NOCLEARBUFF))
-			return SCRIPT_CMD_SUCCESS;
+		std::shared_ptr<s_status_change_db> sc_db = status_db.find( type );
+
+		if( sc_db == nullptr ){
+			ShowError( "buildin_sc_end: Unknown status change %d.\n", type );
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		if( sc_db->flag[SCF_NOCLEARBUFF] && sc_db->flag[SCF_NOFORCEDEND] ){
+			ShowError( "buildin_sc_end: Status %d cannot be cleared.\n", type );
+			return SCRIPT_CMD_FAILURE;
+		}
 
 		//This should help status_change_end force disabling the SC in case it has no limit.
 		sce->val1 = sce->val2 = sce->val3 = sce->val4 = 0;
@@ -25812,6 +25821,26 @@ BUILDIN_FUNC(randomoptgroup)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC( open_quest_ui ){
+	struct map_session_data* sd;
+
+	if (!script_charid2sd(3, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	int quest_id = script_hasdata(st, 2) ? script_getnum(st, 2) : 0;
+
+	if( quest_id != 0 ){
+		int i;
+		ARR_FIND(0, sd->avail_quests, i, sd->quest_log[i].quest_id == quest_id);
+		if (i == sd->avail_quests)
+			ShowWarning("buildin_open_quest_ui: Character %d doesn't have quest %d.\n", sd->status.char_id, quest_id);
+	}
+
+	clif_ui_open( sd, OUT_UI_QUEST, quest_id );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -26524,6 +26553,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(laphine_synthesis, ""),
 	BUILDIN_DEF(laphine_upgrade, ""),
 	BUILDIN_DEF(randomoptgroup,"i"),
+	BUILDIN_DEF(open_quest_ui, "??"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

@@ -95903,7 +95903,6 @@ Body:
     Trade:
       NoDrop: true
       NoTrade: true
-      NoSell: true
       NoCart: true
       NoStorage: true
       NoGuildStorage: true
@@ -110265,7 +110264,7 @@ Body:
       bonus bMaxHP,.@r*10;
       bonus2 bIgnoreMdefClassRate,Class_Normal,5+(.@r/2);
   - Id: 24425
-    AegisName: S_Perfect_Size_Weapon
+    AegisName: S_PerfectSize_Weapon
     Name: Perfect Size Shadow Weapon
     Type: Shadowgear
     Locations:
@@ -110287,7 +110286,7 @@ Body:
          bonus2 bMagicAddSize,Size_All,3;
       }
   - Id: 24426
-    AegisName: S_Perfect_Size_Armor
+    AegisName: S_PerfectSize_Armor
     Name: Perfect Size Shadow Armor
     Type: Shadowgear
     Locations:
@@ -114726,7 +114725,7 @@ Body:
       bonus2 bExpAddRace,RC_All,.@val;
   - Id: 24685
     AegisName: S_Absorb_Shield
-    Name: Absolve Shadow Shield
+    Name: Absorb Shadow Shield
     Type: ShadowGear
     Locations:
       Shadow_Shield: true
@@ -114745,7 +114744,7 @@ Body:
       }
   - Id: 24686
     AegisName: S_Absorb_Weapon
-    Name: Absolve Shadow Weapon
+    Name: Absorb Shadow Weapon
     Type: ShadowGear
     Locations:
       Shadow_Weapon: true
@@ -138191,7 +138190,7 @@ Body:
     View: 2205
   - Id: 400226
     AegisName: Viva_Adul_Hat_RK1
-    Name: Helm of Face (Rune Knight)    # !todo check english name
+    Name: Helm of Faith (Rune Knight)
     Type: Armor
     Weight: 100
     Defense: 10
@@ -138233,7 +138232,7 @@ Body:
       bonus bShortAtkRate,7*(.@r/4);
   - Id: 400227
     AegisName: Viva_Adul_Hat_RK2
-    Name: Helm of Face II (Rune Knight)    # !todo check english name
+    Name: Helm of Faith II (Rune Knight)
     Type: Armor
     Weight: 100
     Defense: 10
@@ -138274,7 +138273,7 @@ Body:
       bonus bLongAtkRate,7*(.@r/4);
   - Id: 400228
     AegisName: Viva_Adul_Hat_WM1
-    Name: Helm of Face (Minstrel & Wanderer)    # !todo check english name
+    Name: Helm of Faith (Minstrel & Wanderer)
     Type: Armor
     Weight: 100
     Defense: 10
@@ -138315,7 +138314,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Neutral,7*(.@r/4);
   - Id: 400229
     AegisName: Viva_Adul_Hat_WM2
-    Name: Helm of Face II (Minstrel & Wanderer)    # !todo check english name
+    Name: Helm of Faith II (Minstrel & Wanderer)
     Type: Armor
     Weight: 100
     Defense: 10
@@ -138356,7 +138355,7 @@ Body:
       bonus bLongAtkRate,7*(.@r/4);
   - Id: 400230
     AegisName: Viva_Adul_Hat_NC1
-    Name: Helm of Face (Mechanic)    # !todo check english name
+    Name: Helm of Faith (Mechanic)
     Type: Armor
     Weight: 100
     Defense: 10
@@ -138398,7 +138397,7 @@ Body:
       bonus bShortAtkRate,7*(.@r/4);
   - Id: 400231
     AegisName: Viva_Adul_Hat_NC2
-    Name: Helm of Face II (Mechanic)    # !todo check english name
+    Name: Helm of Faith II (Mechanic)
     Type: Armor
     Weight: 100
     Defense: 10
@@ -138447,7 +138446,7 @@ Body:
     View: 2204
   - Id: 400233
     AegisName: Viva_Adul_Hat_GN1
-    Name: Helm of Face (generic)    # !todo check english name
+    Name: Helm of Faith (Genetic)
     Type: Armor
     Weight: 100
     Defense: 10
@@ -138488,7 +138487,7 @@ Body:
       bonus bLongAtkRate,7*(.@r/4);
   - Id: 400234
     AegisName: Viva_Adul_Hat_GN2
-    Name: Helm of Face II (generic)    # !todo check english name
+    Name: Helm of Faith II (Genetic)
     Type: Armor
     Weight: 100
     Defense: 10
@@ -138529,7 +138528,7 @@ Body:
       bonus bShortAtkRate,7*(.@r/4);
   - Id: 400235
     AegisName: Viva_Adul_Hat_KO1
-    Name: Helm of Face (Kagerou & Oboro)    # !todo check english name
+    Name: Helm of Faith (Kagerou & Oboro)
     Type: Armor
     Weight: 100
     Defense: 10
@@ -138567,7 +138566,7 @@ Body:
       bonus bLongAtkRate,7*(.@r/4);
   - Id: 400236
     AegisName: Viva_Adul_Hat_KO2
-    Name: Helm of Face II (Kagerou & Oboro)    # !todo check english name
+    Name: Helm of Faith II (Kagerou & Oboro)
     Type: Armor
     Weight: 100
     Defense: 10
@@ -138605,7 +138604,7 @@ Body:
       bonus bLongAtkRate,7*(.@r/4);
   - Id: 400237
     AegisName: Viva_Adul_Hat_RL1
-    Name: Helm of Face (Rebellion)    # !todo check english name
+    Name: Helm of Faith (Rebellion)
     Type: Armor
     Weight: 100
     Defense: 10
@@ -138645,7 +138644,7 @@ Body:
       bonus bLongAtkRate,7*(.@r/4);
   - Id: 400238
     AegisName: Viva_Adul_Hat_RL2
-    Name: Helm of Face II (Rebellion)    # !todo check english name
+    Name: Helm of Faith II (Rebellion)
     Type: Armor
     Weight: 100
     Defense: 10
@@ -138684,7 +138683,7 @@ Body:
       bonus bLongAtkRate,7*(.@r/4);
   - Id: 400239
     AegisName: Viva_Adul_Hat_SP1
-    Name: Helm of Face (Soul Reaper)    # !todo check english name
+    Name: Helm of Faith (Soul Reaper)
     Type: Armor
     Weight: 100
     Defense: 10
@@ -138723,7 +138722,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_All,7*(.@r/4);
   - Id: 400240
     AegisName: Viva_Adul_Hat_SP2
-    Name: Helm of Face II (Soul Reaper)    # !todo check english name
+    Name: Helm of Faith II (Soul Reaper)
     Type: Armor
     Weight: 100
     Defense: 10
@@ -138761,7 +138760,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_All,7*(.@r/4);
   - Id: 400241
     AegisName: Viva_Adul_Hat_SJ1
-    Name: Helm of Face (Holy Priest)    # !todo check english name
+    Name: Helm of Faith (Star Emperor)
     Type: Armor
     Weight: 100
     Defense: 10
@@ -138800,7 +138799,7 @@ Body:
       bonus bShortAtkRate,7*(.@r/4);
   - Id: 400242
     AegisName: Viva_Adul_Hat_SJ2
-    Name: Helm of Face II (Holy Priest)    # !todo check english name
+    Name: Helm of Faith II (Star Emperor)
     Type: Armor
     Weight: 100
     Defense: 10
@@ -138838,7 +138837,7 @@ Body:
       bonus bShortAtkRate,7*(.@r/4);
   - Id: 400243
     AegisName: Viva_Adul_Hat_SU1
-    Name: Helm of Face (Summoner)    # !todo check english name
+    Name: Helm of Faith (Summoner)
     Type: Armor
     Weight: 100
     Defense: 10
@@ -138877,7 +138876,7 @@ Body:
       bonus bLongAtkRate,7*(.@r/4);
   - Id: 400244
     AegisName: Viva_Adul_Hat_SU2
-    Name: Helm of Face II (Summoner)    # !todo check english name
+    Name: Helm of Faith II (Summoner)
     Type: Armor
     Weight: 100
     Defense: 10
@@ -139008,6 +139007,31 @@ Body:
             }
          }
       }
+  - Id: 400256
+    AegisName: 2022_LunarNewYears_band
+    Name: Costume New Year Headband
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2179
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+  - Id: 400257
+    AegisName: aegis_400257
+    Name: Choco Banana Bonnet
+    Type: Armor
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    View: 2087
   - Id: 410005
     AegisName: C_Magic_Heir_TW
     Name: Costume Magic Heir
@@ -140399,19 +140423,14 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 436008
-    AegisName: aegis_436008
-    Name: Costume Congratulation    # !todo check english name
+    AegisName: C_HwaHoJumJung
+    Name: Costume Big Tiger Hat
     Type: Armor
     Locations:
       Costume_Head_Mid: true
       Costume_Head_Low: true
     ArmorLevel: 1
     View: 2216
-    Script: |
-      bonus2 bAddClass,Class_All,1;
-      bonus bMatkRate,1;
-      bonus bPAtk,2;
-      bonus bSmatk,2;
   - Id: 440000
     AegisName: C_SharkHead
     Name: Costume Shark Hat
@@ -140519,7 +140538,7 @@ Body:
       NoAuction: true
   - Id: 440008
     AegisName: aegis_440008
-    Name: Costume Master    # !todo check english name
+    Name: Costume Master
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -140530,7 +140549,7 @@ Body:
       hateffect HAT_EF_C_MASTER,false;
   - Id: 440009
     AegisName: C_Black_Moon_Cat_kr
-    Name: Costume beginner black moon cat    # !todo check english name
+    Name: Costume Black Moon Cat    # !todo check english name
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -140541,7 +140560,6 @@ Body:
     Trade:
       NoDrop: true
       NoTrade: true
-      NoSell: true
       NoCart: true
       NoStorage: true
       NoGuildStorage: true
