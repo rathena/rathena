@@ -5652,6 +5652,9 @@
 	export_constant(IG_HELM_OF_FAITH_BOX);
 	export_constant(IG_2022_LUNARNEWYEARS_BOX);
 	export_constant(IG_2020_REWARD_BOX);
+	export_constant(IG_COSTUME_MILE_PACK_26_1);
+	export_constant(IG_COSTUME_MILE_PACK_26_2);
+	export_constant(IG_COSTUME_MILE_PACK_26_3);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

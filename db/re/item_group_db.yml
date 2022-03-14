@@ -28567,4 +28567,34 @@ Body:
             Amount: 3
           - Item: World_Tour_Ticket
             Amount: 20
+  - Group: COSTUME_MILE_PACK_26_1
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Actinidia_Cat_Fruit
+            Amount: 100
+          - Item: Evt_Cos_Coin
+            Amount: 12
+          - Item: aegis_101271
+            Amount: 3
+  - Group: COSTUME_MILE_PACK_26_2
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Actinidia_Cat_Fruit
+            Amount: 200
+          - Item: Evt_Cos_Coin
+            Amount: 25
+          - Item: aegis_101271
+            Amount: 5
+  - Group: COSTUME_MILE_PACK_26_3
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Actinidia_Cat_Fruit
+            Amount: 400
+          - Item: Evt_Cos_Coin
+            Amount: 50
+          - Item: aegis_101271
+            Amount: 10
 
