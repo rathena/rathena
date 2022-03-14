@@ -59076,7 +59076,7 @@ Body:
         CastCancel: true
         Target: TARGET
         Condition: ALWAYS
-        Ai: 04
+        # Ai: 04
         Emotion: ET_ANGER
       - Index: 23
         Name: NPC_ALLHEAL

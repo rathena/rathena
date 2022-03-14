@@ -235,8 +235,7 @@ struct s_mob_skill {
 	int casttime,delay;
 	bool cancel;
 	e_mob_skill_target target;
-	int cond1;
-	uint16 cond2, cond3;
+	short cond1, cond2, cond3;
 	int mob_mode;
 	int val[6];
 	short emotion;

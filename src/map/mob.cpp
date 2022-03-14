@@ -5873,7 +5873,7 @@ uint64 MobSkillDatabase::parseBodyNode(const YAML::Node &node) {
 					this->invalidWarning(it["Condition"], "Invalid Condition %s.\n", condition_name.c_str());
 					return 0;
 				}
-				skill->cond1 = static_cast<int>(constant);
+				skill->cond1 = static_cast<int16>(constant);
 			} else {
 				if (!skill_exists)
 					skill->cond1 = MSC_ALWAYS;
@@ -5902,7 +5902,7 @@ uint64 MobSkillDatabase::parseBodyNode(const YAML::Node &node) {
 							this->invalidWarning(it["ConditionValue1"], "Invalid aegis skill name \"%s\".\n", condition_value.c_str());
 							return 0;
 						}
-						skill->cond2 = skill_id_cond2;
+						skill->cond2 = static_cast<int16>(skill_id_cond2);
 						break;
 					}
 					case MSC_MYSTATUSON:	// SC_ status constant required
@@ -5938,13 +5938,13 @@ uint64 MobSkillDatabase::parseBodyNode(const YAML::Node &node) {
 								this->invalidWarning(it["ConditionValue1"], "Unsupported ConditionValue1 %s.\n", condition_value.c_str());
 								return 0;
 						}
-						skill->cond2 = static_cast<uint16>(constant);
+						skill->cond2 = static_cast<int16>(constant);
 						break;
 					}
 					default: {
-						uint16 cond2;
+						int16 cond2;
 
-						if (!this->asUInt16(it, "ConditionValue1", cond2))
+						if (!this->asInt16(it, "ConditionValue1", cond2))
 							return 0;
 
 						skill->cond2 = cond2;
@@ -5966,9 +5966,9 @@ uint64 MobSkillDatabase::parseBodyNode(const YAML::Node &node) {
 						return 0;
 				}
 
-				uint16 cond3;
+				int16 cond3;
 
-				if (!this->asUInt16(it, "ConditionValue2", cond3))
+				if (!this->asInt16(it, "ConditionValue2", cond3))
 					return 0;
 
 				skill->cond3 = cond3;

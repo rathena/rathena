@@ -221,21 +221,6 @@ static std::unordered_map<std::string, equip_pos> um_equipnames {
 	{ "Shadow_Left_Accessory", EQP_SHADOW_ACC_L },
 };
 
-static std::unordered_map<std::string, std::string> um_mob_skill_cond2 {
-	{	"anybad",		"SC_ANYBAD"		},
-	{	"stone",		"SC_STONE"		},
-	{	"freeze",		"SC_FREEZE"		},
-	{	"stun",			"SC_STUN"		},
-	{	"sleep",		"SC_SLEEP"		},
-	{	"poison",		"SC_POISON"		},
-	{	"curse",		"SC_CURSE"		},
-	{	"silence",		"SC_SILENCE"	},
-	{	"confusion",	"SC_CONFUSION"	},
-	{	"blind",		"SC_BLIND"		},
-	{	"hiding",		"SC_HIDING"		},
-	{	"sight",		"SC_SIGHT"		},
-};
-
 static std::unordered_map<int, std::string> um_mob_mode2ai {	// mode, AI
 	{ 0x0081, "01" },
 	{ 0x0083, "02" },
