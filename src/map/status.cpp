@@ -5457,7 +5457,7 @@ void status_calc_bl_main(struct block_list *bl, std::bitset<SCB_MAX> flag)
 	}
 #endif
 
-	if(flag[SCB_VIT|SCB_MAXHP|SCB_INT|SCB_MAXSP] && bl->type&BL_REGEN)
+	if((flag[SCB_VIT] || flag[SCB_MAXHP] || flag[SCB_INT] || flag[SCB_MAXSP]) && bl->type &BL_REGEN)
 		status_calc_regen(bl, status, status_get_regen_data(bl));
 
 	if(flag[SCB_REGEN] && bl->type&BL_REGEN)
