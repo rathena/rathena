@@ -11738,9 +11738,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 
 		default:
-			if (calc_flag == SCB_NONE && scdb->skill_id == 0 && scdb->icon == EFST_BLANK) {
+			if (calc_flag == SCB_NONE && scdb->skill_id == 0 && scdb->icon == EFST_BLANK && scdb->opt1 == OPT1_NONE && scdb->opt2 == OPT2_NONE && scdb->state.none() && scdb->flag.none() && scdb->end.empty() && scdb->fail.empty()) {
 				// Status change with no calc, no icon, and no skill associated...?
-				ShowError("status_change_start: Unknown SC %d\n", type);
+				ShowWarning("status_change_start: Status %s (%d) is bare. Add the NoWarning flag to suppress this message.\n", script_get_constant_str("SC_", type), type);
 				return 0;
 			}
 	} else // Special considerations when loading SC data.
