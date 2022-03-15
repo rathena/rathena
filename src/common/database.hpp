@@ -84,7 +84,7 @@ public:
 	TypesafeYamlDatabase( const std::string& type_, uint16 version_ ) : YamlDatabase( type_, version_, version_ ){
 	}
 
-	void clear(){
+	void clear() override{
 		this->data.clear();
 	}
 
@@ -150,12 +150,7 @@ public:
 
 	void clear() override{
 		TypesafeYamlDatabase<keytype, datatype>::clear();
-
-		// Restore size after clearing
-		size_t cap = cache.capacity();
-
 		cache.clear();
-		cache.resize(cap, nullptr);
 	}
 
 	std::shared_ptr<datatype> find( keytype key ) override{

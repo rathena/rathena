@@ -146,6 +146,14 @@ static void mercenary_skill_txt_data(const std::string& modePath, const std::str
 		sv_readdb(fixedPath.c_str(), "mercenary_skill_db.txt", ',', 3, 3, -1, mercenary_read_skilldb, false);
 }
 
+// Skill tree database data to memory
+static void skilltree_txt_data(const std::string &modePath, const std::string &fixedPath) {
+	skill_tree.clear();
+
+	if (fileExists(modePath + "/skill_tree.txt"))
+		sv_readdb(modePath.c_str(), "skill_tree.txt", ',', 3 + MAX_PC_SKILL_REQUIRE * 2, 5 + MAX_PC_SKILL_REQUIRE * 2, -1, pc_readdb_skilltree, false);
+}
+
 template<typename Func>
 bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, Func lambda, const std::string& rename = "" ){
 	for( const std::string& path : paths ){
@@ -275,14 +283,14 @@ int do_init( int argc, char** argv ){
 	}
 
 	skill_txt_data( path_db_mode, path_db );
-	if (!process("SKILL_DB", 2, { path_db_mode }, "skill_db", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("SKILL_DB", 3, { path_db_mode }, "skill_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 18, 18, -1, &skill_parse_row_skilldb, false);
 	})){
 		return 0;
 	}
 
 	skill_txt_data( path_db_import, path_db_import );
-	if (!process("SKILL_DB", 2, { path_db_import }, "skill_db", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("SKILL_DB", 3, { path_db_import }, "skill_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 18, 18, -1, &skill_parse_row_skilldb, false);
 	})){
 		return 0;
@@ -345,14 +353,14 @@ int do_init( int argc, char** argv ){
 #endif
 
 	mob_txt_data(path_db_mode, path_db);
-	if (!process("MOB_DB", 2, { path_db_mode }, "mob_db", [](const std::string &path, const std::string &name_ext) -> bool {
+	if (!process("MOB_DB", 3, { path_db_mode }, "mob_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &mob_readdb_sub, false);
 	})) {
 		return 0;
 	}
 
 	mob_txt_data(path_db_import, path_db_import);
-	if (!process("MOB_DB", 2, { path_db_import }, "mob_db", [](const std::string &path, const std::string &name_ext) -> bool {
+	if (!process("MOB_DB", 3, { path_db_import }, "mob_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &mob_readdb_sub, false);
 	})) {
 		return 0;
@@ -427,14 +435,14 @@ int do_init( int argc, char** argv ){
 	}
 
 	item_group_txt_data(path_db_mode, path_db);
-	if (!process("ITEM_GROUP_DB", 1, { path_db_mode }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
+	if (!process("ITEM_GROUP_DB", 2, { path_db_mode }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return itemdb_read_group_yaml();
 	})) {
 		return 0;
 	}
 
 	item_group_txt_data(path_db_import, path_db_import);
-	if (!process("ITEM_GROUP_DB", 1, { path_db_import }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
+	if (!process("ITEM_GROUP_DB", 2, { path_db_import }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return itemdb_read_group_yaml();
 	})) {
 		return 0;
@@ -509,6 +517,32 @@ int do_init( int argc, char** argv ){
 	if (!process("MERCENARY_DB", 1, root_paths, "mercenary_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 26, 26, -1, &mercenary_readdb, false);
 	})) {
+		return 0;
+	}
+
+	skilltree_txt_data(path_db_mode, path_db);
+	if (!process("SKILL_TREE_DB", 1, { path_db_mode }, "skill_tree", [](const std::string &path, const std::string &name_ext) -> bool {
+		return pc_readdb_skilltree_yaml();
+	})) {
+		return 0;
+	}
+
+	skilltree_txt_data(path_db_import, path_db_import);
+	if (!process("SKILL_TREE_DB", 1, { path_db_import }, "skill_tree", [](const std::string &path, const std::string &name_ext) -> bool {
+		return pc_readdb_skilltree_yaml();
+	})) {
+		return 0;
+	}
+
+	if (!process("COMBO_DB", 1, { path_db_mode }, "item_combo_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return itemdb_read_combos((path + name_ext).c_str());
+	}, "item_combos")) {
+		return 0;
+	}
+
+	if (!process("COMBO_DB", 1, { path_db_import }, "item_combo_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return itemdb_read_combos((path + name_ext).c_str());
+	}, "item_combos")) {
 		return 0;
 	}
 
@@ -2021,8 +2055,8 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 
 			for (int i = 1; i < MAX_AMMO_TYPE; i++) {
 				if (temp & 1 << i) {
-					constant = constant_lookup(i, "A_");
-					constant.erase(0, 2);
+					constant = constant_lookup(i, "AMMO_");
+					constant.erase(0, 5);
 					body << YAML::Key << name2Upper(constant) << YAML::Value << "true";
 					temp ^= 1 << i;
 				}
@@ -2935,7 +2969,8 @@ static bool itemdb_read_db(const char* file) {
 		if (it_nouse != item_nouse.end()) {
 			body << YAML::Key << "NoUse";
 			body << YAML::BeginMap;
-			body << YAML::Key << "Override" << YAML::Value << it_nouse->second.override;
+			if (it_nouse->second.override != 100)
+				body << YAML::Key << "Override" << YAML::Value << it_nouse->second.override;
 			body << YAML::Key << "Sitting" << YAML::Value << "true";
 			body << YAML::EndMap;
 		}
@@ -2945,7 +2980,8 @@ static bool itemdb_read_db(const char* file) {
 		if (it_trade != item_trade.end()) {
 			body << YAML::Key << "Trade";
 			body << YAML::BeginMap;
-			body << YAML::Key << "Override" << YAML::Value << it_trade->second.override;
+			if (it_trade->second.override != 100)
+				body << YAML::Key << "Override" << YAML::Value << it_trade->second.override;
 			if (it_trade->second.drop)
 				body << YAML::Key << "NoDrop" << YAML::Value << it_trade->second.drop;
 			if (it_trade->second.trade)
@@ -4670,6 +4706,237 @@ static bool mercenary_readdb(char* str[], int columns, int current) {
 	}
 
 	body << YAML::EndMap;
+
+	return true;
+}
+
+// Copied and adjusted from pc.cpp
+static bool pc_readdb_skilltree(char* fields[], int columns, int current) {
+	uint16 baselv, joblv, offset;
+	uint16 class_  = (uint16)atoi(fields[0]);
+	uint16 skill_id = (uint16)atoi(fields[1]);
+
+	if (columns == 5 + MAX_PC_SKILL_REQUIRE * 2) { // Base/Job level requirement extra columns
+		baselv = (uint16)atoi(fields[3]);
+		joblv = (uint16)atoi(fields[4]);
+		offset = 5;
+	}
+	else if (columns == 3 + MAX_PC_SKILL_REQUIRE * 2) {
+		baselv = joblv = 0;
+		offset = 3;
+	}
+	else {
+		ShowWarning("pc_readdb_skilltree: Invalid number of colums in skill %hu of job %d's tree.\n", skill_id, class_);
+		return false;
+	}
+
+	const char* constant = constant_lookup(class_, "JOB_");
+	if (constant == nullptr) {
+		ShowWarning("pc_readdb_skilltree: Invalid job class %d specified.\n", class_);
+		return false;
+	}
+	std::string job_name(constant);
+
+	std::string* skill_name = util::umap_find( aegis_skillnames, skill_id );
+
+	if( skill_name == nullptr ){
+		ShowWarning("pc_readdb_skilltree: Unable to load skill %hu into job %d's tree.\n", skill_id, class_);
+		return false;
+	}
+
+	uint16 skill_lv = (uint16)atoi(fields[2]);
+
+	std::vector<s_skill_tree_entry_csv> *job = util::map_find(skill_tree, class_);
+	bool exists = job != nullptr;
+
+	s_skill_tree_entry_csv entry;
+
+	entry.skill_name = *skill_name;
+	entry.skill_id = skill_id;
+	entry.skill_lv = skill_lv;
+	entry.baselv = baselv;
+	entry.joblv = joblv;
+
+	for (uint16 i = 0; i < MAX_PC_SKILL_REQUIRE; i++) {
+		uint16 req_skill_id = (uint16)atoi(fields[i * 2 + offset]);
+		skill_lv = (uint16)atoi(fields[i * 2 + offset + 1]);
+
+		if (req_skill_id == 0)
+			continue;
+
+		skill_name = util::umap_find( aegis_skillnames, req_skill_id );
+
+		if( skill_name == nullptr ){
+			ShowWarning("pc_readdb_skilltree: Unable to load requirement skill %hu into job %d's tree.", req_skill_id, class_);
+			return false;
+		}
+		entry.need.insert({ *skill_name, skill_lv });
+	}
+
+	if (exists)
+		job->push_back(entry);
+	else {
+		std::vector<s_skill_tree_entry_csv> tree;
+
+		tree.push_back(entry);
+		skill_tree.insert({ class_, tree });
+	}
+
+	return true;
+}
+
+static bool pc_readdb_skilltree_yaml(void) {
+	for (const auto &it : skill_tree) {
+		body << YAML::BeginMap;
+		std::string job = constant_lookup(it.first, "JOB_");
+		job.erase( 0, 4 );
+		body << YAML::Key << "Job" << YAML::Value << name2Upper( job );
+		body << YAML::Key << "Tree";
+		body << YAML::BeginSeq;
+		for (const auto &subit : it.second) {
+			body << YAML::BeginMap;
+			body << YAML::Key << "Name" << YAML::Value << subit.skill_name;
+			body << YAML::Key << "MaxLevel" << YAML::Value << subit.skill_lv;
+			if (!subit.need.empty()) {
+				body << YAML::Key << "Requires";
+				body << YAML::BeginSeq;
+				for (const auto &terit : subit.need) {
+					body << YAML::BeginMap;
+					body << YAML::Key << "Name" << YAML::Value << terit.first;
+					body << YAML::Key << "Level" << YAML::Value << terit.second;
+					body << YAML::EndMap;
+				}
+				body << YAML::EndSeq;
+			}
+			if (subit.baselv > 0)
+				body << YAML::Key << "BaseLevel" << YAML::Value << subit.baselv;
+			if (subit.joblv > 0)
+				body << YAML::Key << "JobLevel" << YAML::Value << subit.joblv;
+			body << YAML::EndMap;
+		}
+		body << YAML::EndSeq;
+		body << YAML::EndMap;
+	}
+	return true;
+}
+
+// Copied and adjusted from itemdb.cpp
+static int itemdb_combo_split_atoi (char *str, t_itemid *val) {
+	int i;
+
+	for (i = 0; i < MAX_ITEMS_PER_COMBO; i++) {
+		if (!str)
+			break;
+		val[i] = strtoul(str, nullptr, 10);
+		str = strchr(str,':');
+		if (str)
+			*str++=0;
+	}
+	if (i == 0) //No data found.
+		return 0;
+
+	return i;
+}
+
+// Copied and adjusted from itemdb.cpp
+static bool itemdb_read_combos(const char* file) {
+	FILE* fp = fopen( file, "r" );
+
+	if( fp == nullptr ){
+		ShowError( "Can't read %s\n", file );
+		return 0;
+	}
+
+	uint32 lines = 0, count = 0;
+	char line[1024];
+	char path[256];
+	
+	// process rows one by one
+	while (fgets(line, sizeof(line), fp)) {
+		char *str[2], *p;
+
+		lines++;
+
+		if (line[0] == '/' && line[1] == '/')
+			continue;
+
+		memset(str, 0, sizeof(str));
+
+		p = line;
+
+		p = trim(p);
+
+		if (*p == '\0')
+			continue;// empty line
+
+		if (!strchr(p,',')) {
+			ShowError("itemdb_read_combos: Insufficient columns in line %d of \"%s\", skipping.\n", lines, path);
+			continue;
+		}
+
+		str[0] = p;
+		p = strchr(p,',');
+		*p = '\0';
+		p++;
+
+		str[1] = p;
+		p = strchr(p,',');
+		p++;
+
+		if (str[1][0] != '{') {
+			ShowError("itemdb_read_combos(#1): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
+			continue;
+		}
+		if ( str[1][strlen(str[1])-1] != '}' ) {
+			ShowError("itemdb_read_combos(#2): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
+			continue;
+		}
+		t_itemid items[MAX_ITEMS_PER_COMBO];
+		int v = 0, retcount = 0;
+
+		if ((retcount = itemdb_combo_split_atoi(str[0], items)) < 2) {
+			ShowError("itemdb_read_combos: line %d of \"%s\" doesn't have enough items to make for a combo (min:2), skipping.\n", lines, path);
+			continue;
+		}
+		for (v = 0; v < retcount; v++) {
+			std::string *item_name = util::umap_find(aegis_itemnames, items[v]);
+
+			if (item_name == nullptr) {
+				ShowWarning("itemdb_read_combos: Invalid item ID %" PRIu32 ".\n", items[v]);
+				break;
+			}
+		}
+		if (v < retcount)
+			continue;
+
+		body << YAML::BeginMap;
+		body << YAML::Key << "Combos";
+		body << YAML::BeginSeq;
+
+		body << YAML::BeginMap;
+		body << YAML::Key << "Combo";
+		body << YAML::BeginSeq;
+
+		for (v = 0; v < retcount; v++) {
+			body << YAML::BeginMap;
+			std::string *item_name = util::umap_find(aegis_itemnames, items[v]);
+			body << YAML::Key << *item_name;
+			body << YAML::EndMap;
+		}
+		body << YAML::EndSeq;
+		body << YAML::EndMap;
+
+		str[1] = str[1] + 1;	//skip the first left curly
+		str[1][strlen(str[1])-1] = '\0';	//null the last right curly
+
+		body << YAML::EndSeq;
+		body << YAML::Key << "Script" << YAML::Literal << trim(str[1]);
+		body << YAML::EndMap;
+
+		count++;
+	}
+	fclose(fp);
+	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, file);
 
 	return true;
 }

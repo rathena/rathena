@@ -40,7 +40,27 @@
 #endif
 
 #define MAX_MAP_PER_SERVER 1500 /// Maximum amount of maps available on a server
-#define MAX_INVENTORY 100 ///Maximum items in player inventory
+
+#ifndef INVENTORY_BASE_SIZE
+	#define INVENTORY_BASE_SIZE 100 // Amount of inventory slots each player has
+#endif
+
+#ifndef INVENTORY_EXPANSION_SIZE
+	#if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
+		#define INVENTORY_EXPANSION_SIZE 100 // Amount of additional inventory slots a player can have
+	#else
+		#define INVENTORY_EXPANSION_SIZE 0
+	#endif
+#endif
+
+#ifndef MAX_INVENTORY
+	#define MAX_INVENTORY ( INVENTORY_BASE_SIZE + INVENTORY_EXPANSION_SIZE ) // Maximum items in player inventory (in total)
+#else
+	#if MAX_INVENTORY < ( INVENTORY_BASE_SIZE + INVENTORY_EXPANSION_SIZE )
+		#error Your custom MAX_INVENTORY define is too low
+	#endif
+#endif
+
 /** Max number of characters per account. Note that changing this setting alone is not enough if the client is not hexed to support more characters as well.
 * Max value tested was 265 */
 #ifndef MAX_CHARS
@@ -63,7 +83,7 @@ typedef uint32 t_itemid;
 #define MAX_BANK_ZENY SINT32_MAX ///Max zeny in Bank
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
-#define MAX_SKILL 1250 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
+#define MAX_SKILL 1454 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
 #define DEFAULT_WALK_SPEED 150 ///Default walk speed
 #define MIN_WALK_SPEED 20 ///Min walk speed
 #define MAX_WALK_SPEED 1000 ///Max walk speed
@@ -87,6 +107,9 @@ typedef uint32 t_itemid;
 #define DB_NAME_LEN 256 //max len of dbs
 #define MAX_CLAN 500
 #define MAX_CLANALLIANCE 6
+#ifndef MAX_BARTER_REQUIREMENTS
+	#define MAX_BARTER_REQUIREMENTS 5
+#endif
 
 #ifdef RENEWAL
 	#define MAX_WEAPON_LEVEL 5
@@ -165,8 +188,12 @@ const t_itemid WEDDING_RING_F = 2635;
 #define MAX_MERCSKILL 41
 
 //Elemental System
-#define MAX_ELEMENTALSKILL 42
+#define MAX_ELEMENTALSKILL 57
 #define EL_SKILLBASE 8401
+
+//Automated Battle Robot System
+#define ABR_SKILLBASE 8601
+#define MAX_ABRSKILL 5
 
 //Achievement System
 #define MAX_ACHIEVEMENT_OBJECTIVES 10 /// Maximum different objectives in achievement_db.yml
@@ -516,8 +543,8 @@ struct mmo_charstatus {
 	int zeny;
 
 	short class_; ///< Player's JobID
-	unsigned int status_point,skill_point;
-	int hp,max_hp,sp,max_sp;
+	unsigned int status_point,skill_point,trait_point;
+	int hp,max_hp,sp,max_sp,ap,max_ap;
 	unsigned int option;
 	short manner; // Defines how many minutes a char will be muted, each negative point is equivalent to a minute.
 	unsigned char karma;
@@ -569,6 +596,7 @@ struct mmo_charstatus {
 	unsigned char hotkey_rowshift;
 	unsigned char hotkey_rowshift2;
 	unsigned long title_id;
+	uint16 inventory_slots;
 };
 
 typedef enum mail_status {
@@ -994,6 +1022,35 @@ enum e_job {
 	JOB_BABY_SOUL_REAPER,
 	JOB_STAR_EMPEROR2,
 	JOB_BABY_STAR_EMPEROR2,
+
+	JOB_DRAGON_KNIGHT = 4252,
+	JOB_MEISTER,
+	JOB_SHADOW_CROSS,
+	JOB_ARCH_MAGE,
+	JOB_CARDINAL,
+	JOB_WINDHAWK,
+	JOB_IMPERIAL_GUARD,
+	JOB_BIOLO,
+	JOB_ABYSS_CHASER,
+	JOB_ELEMENTAL_MASTER,
+	JOB_INQUISITOR,
+	JOB_TROUBADOUR,
+	JOB_TROUVERE,
+
+	JOB_WINDHAWK2 = 4278,
+	JOB_MEISTER2,
+	JOB_DRAGON_KNIGHT2,
+	JOB_IMPERIAL_GUARD2,
+
+	JOB_SKY_EMPEROR = 4302,
+	JOB_SOUL_ASCETIC,
+	JOB_SHINKIRO,
+	JOB_SHIRANUI,
+	JOB_NIGHT_WATCH,
+	JOB_HYPER_NOVICE,
+	JOB_SPIRIT_HANDLER,
+
+	JOB_SKY_EMPEROR2 = 4316,
 
 	JOB_MAX,
 };

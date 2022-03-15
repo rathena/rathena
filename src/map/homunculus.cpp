@@ -266,7 +266,7 @@ int hom_dead(struct homun_data *hd)
 	clif_emotion(&sd->bl, ET_CRY);
 
 #ifdef RENEWAL
-	status_change_end(&sd->bl, status_skill2sc(AM_CALLHOMUN), INVALID_TIMER);
+	status_change_end(&sd->bl, SC_HOMUN_TIME, INVALID_TIMER);
 #endif
 
 	//Remove from map (if it has no intimacy, it is auto-removed from memory)
@@ -306,7 +306,7 @@ int hom_vaporize(struct map_session_data *sd, int flag)
 	hom_save(hd);
 
 #ifdef RENEWAL
-	status_change_end(&sd->bl, status_skill2sc(AM_CALLHOMUN), INVALID_TIMER);
+	status_change_end(&sd->bl, SC_HOMUN_TIME, INVALID_TIMER);
 #endif
 
 	return unit_remove_map(&hd->bl, CLR_OUTSIGHT);
@@ -1148,7 +1148,7 @@ bool hom_call(struct map_session_data *sd)
 		unit_warp(&hd->bl,sd->bl.m, sd->bl.x, sd->bl.y,CLR_OUTSIGHT);
 
 #ifdef RENEWAL
-	sc_start(&sd->bl, &sd->bl, status_skill2sc(AM_CALLHOMUN), 100, 1, skill_get_time(AM_CALLHOMUN, 1));
+	sc_start(&sd->bl, &sd->bl, SC_HOMUN_TIME, 100, 1, skill_get_time(AM_CALLHOMUN, 1));
 #endif
 
 	return true;
@@ -1208,7 +1208,7 @@ int hom_recv_data(uint32 account_id, struct s_homunculus *sh, int flag)
 	}
 
 #ifdef RENEWAL
-	sc_start(&sd->bl, &sd->bl, status_skill2sc(AM_CALLHOMUN), 100, 1, skill_get_time(AM_CALLHOMUN, 1));
+	sc_start(&sd->bl, &sd->bl, SC_HOMUN_TIME, 100, 1, skill_get_time(AM_CALLHOMUN, 1));
 #endif
 
 	return 1;
@@ -1298,7 +1298,7 @@ int hom_ressurect(struct map_session_data* sd, unsigned char per, short x, short
 	}
 
 #ifdef RENEWAL
-	sc_start(&sd->bl, &sd->bl, status_skill2sc(AM_CALLHOMUN), 100, 1, skill_get_time(AM_CALLHOMUN, 1));
+	sc_start(&sd->bl, &sd->bl, SC_HOMUN_TIME, 100, 1, skill_get_time(AM_CALLHOMUN, 1));
 #endif
 
 	return status_revive(&hd->bl, per, 0);

@@ -52,7 +52,7 @@ void map_msg_reload(void);
 #define NATURAL_HEAL_INTERVAL 500
 #define MIN_FLOORITEM 2
 #define MAX_FLOORITEM START_ACCOUNT_NUM
-#define MAX_LEVEL 200
+#define MAX_LEVEL 250
 #define MAX_DROP_PER_MAP 48
 #define MAX_IGNORE_LIST 20 	// official is 14
 #define MAX_VENDING 12
@@ -75,6 +75,7 @@ void map_msg_reload(void);
 #define MAPID_BASEMASK 0x00ff
 #define MAPID_UPPERMASK 0x0fff
 #define MAPID_THIRDMASK (JOBL_THIRD|MAPID_UPPERMASK)
+#define MAPID_FOURTHMASK (JOBL_FOURTH|MAPID_THIRDMASK|JOBL_UPPER)
 
 //First Jobs
 //Note the oddity of the novice:
@@ -222,12 +223,17 @@ enum e_mapid : uint64{
 	MAPID_BABY_SHADOW_CHASER,
 	MAPID_BABY_SOUL_REAPER,
 //4-1 Jobs
-	MAPID_DRAGON_KNIGHT = JOBL_FOURTH|JOBL_THIRD|JOBL_UPPER|MAPID_KNIGHT,
+	MAPID_HYPER_NOVICE = JOBL_FOURTH|JOBL_THIRD|JOBL_UPPER|MAPID_SUPER_NOVICE,
+	MAPID_DRAGON_KNIGHT,
 	MAPID_ARCH_MAGE,
 	MAPID_WINDHAWK,
 	MAPID_CARDINAL,
 	MAPID_MEISTER,
 	MAPID_SHADOW_CROSS,
+	MAPID_SKY_EMPEROR,
+	MAPID_NIGHT_WATCH = JOBL_FOURTH|JOBL_THIRD|JOBL_UPPER|MAPID_REBELLION,
+	MAPID_SHINKIRO_SHIRANUI,
+	MAPID_SPIRIT_HANDLER = JOBL_FOURTH|JOBL_THIRD|JOBL_UPPER|JOBL_2_1|MAPID_SUMMONER,
 //4-2 Jobs
 	MAPID_IMPERIAL_GUARD = JOBL_FOURTH|JOBL_THIRD|JOBL_UPPER|MAPID_CRUSADER,
 	MAPID_ELEMENTAL_MASTER,
@@ -235,6 +241,7 @@ enum e_mapid : uint64{
 	MAPID_INQUISITOR,
 	MAPID_BIOLO,
 	MAPID_ABYSS_CHASER,
+	MAPID_SOUL_ASCETIC,
 // Additional constants
 	MAPID_ALL = UINT64_MAX
 };
@@ -288,6 +295,7 @@ enum npc_subtype : uint8{
 	NPCTYPE_POINTSHOP, /// Pointshop
 	NPCTYPE_TOMB, /// Monster tomb
 	NPCTYPE_MARKETSHOP, /// Marketshop
+	NPCTYPE_BARTER, /// Barter
 };
 
 enum e_race : int8{
@@ -337,6 +345,7 @@ enum e_race2 : uint8{
 	RC2_WERNER_LAB,
 	RC2_TEMPLE_DEMON,
 	RC2_ILLUSION_VAMPIRE,
+	RC2_MALANGDO,
 	RC2_MAX
 };
 
@@ -397,6 +406,8 @@ enum mob_ai {
 	AI_FAW,
 	AI_GUILD,
 	AI_WAVEMODE,
+	AI_ABR,
+	AI_BIONIC,
 	AI_MAX
 };
 
@@ -511,6 +522,7 @@ enum _sp {
 	SP_DELAYRATE,SP_HP_DRAIN_VALUE_RACE, SP_SP_DRAIN_VALUE_RACE, // 1083-1085
 	SP_IGNORE_MDEF_RACE_RATE,SP_IGNORE_DEF_RACE_RATE,SP_SKILL_HEAL2,SP_ADDEFF_ONSKILL, //1086-1089
 	SP_ADD_HEAL_RATE,SP_ADD_HEAL2_RATE, SP_EQUIP_ATK, //1090-1092
+	SP_PATK_RATE,SP_SMATK_RATE,SP_RES_RATE,SP_MRES_RATE,SP_HPLUS_RATE,SP_CRATE_RATE,SP_ALL_TRAIT_STATS,SP_MAXAPRATE,// 1093-1100
 
 	SP_RESTART_FULL_RECOVER=2000,SP_NO_CASTCANCEL,SP_NO_SIZEFIX,SP_NO_MAGIC_DAMAGE,SP_NO_WEAPON_DAMAGE,SP_NO_GEMSTONE, // 2000-2005
 	SP_NO_CASTCANCEL2,SP_NO_MISC_DAMAGE,SP_UNBREAKABLE_WEAPON,SP_UNBREAKABLE_ARMOR, SP_UNBREAKABLE_HELM, // 2006-2010
@@ -538,6 +550,7 @@ enum _sp {
 	SP_IGNORE_DEF_CLASS_RATE, SP_REGEN_PERCENT_HP, SP_REGEN_PERCENT_SP, SP_SKILL_DELAY, SP_NO_WALK_DELAY, //2088-2092
 	SP_LONG_SP_GAIN_VALUE, SP_LONG_HP_GAIN_VALUE, SP_SHORT_ATK_RATE, SP_MAGIC_SUBSIZE, SP_CRIT_DEF_RATE, // 2093-2097
 	SP_MAGIC_SUBDEF_ELE, SP_REDUCE_DAMAGE_RETURN, SP_ADD_ITEM_SPHEAL_RATE, SP_ADD_ITEMGROUP_SPHEAL_RATE, // 2098-2101
+	SP_WEAPON_SUBSIZE // 2102
 };
 
 enum _look {
@@ -633,6 +646,9 @@ enum e_mapflag : int16 {
 	MF_SKILL_DURATION,
 	MF_NOCASHSHOP,
 	MF_NORODEX,
+	MF_NORENEWALEXPPENALTY,
+	MF_NORENEWALDROPPENALTY,
+	MF_NOPETCAPTURE,
 	MF_MAX
 };
 
@@ -769,7 +785,7 @@ struct map_data {
 	int users_pvp;
 	int iwall_num; // Total of invisible walls in this map
 
-	std::unordered_map<int16, int> flag;
+	std::vector<int> flag;
 	struct point save;
 	std::vector<s_drop_list> drop_list;
 	uint32 zone; // zone number (for item/skill restrictions)
@@ -1071,7 +1087,7 @@ void map_clearflooritem(struct block_list* bl);
 int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect = false);
 
 // instances
-int map_addinstancemap(int src_m, int instance_id);
+int map_addinstancemap(int src_m, int instance_id, bool no_mapflag);
 int map_delinstancemap(int m);
 void map_data_copyall(void);
 void map_data_copy(struct map_data *dst_map, struct map_data *src_map);
@@ -1209,6 +1225,7 @@ extern Sql* mmysql_handle;
 extern Sql* qsmysql_handle;
 extern Sql* logmysql_handle;
 
+extern char barter_table[32];
 extern char buyingstores_table[32];
 extern char buyingstore_items_table[32];
 extern char item_table[32];

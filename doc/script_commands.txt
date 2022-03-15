@@ -291,7 +291,9 @@ these floating NPC objects are for. More on that below.
 -%TAB%pointshop%TAB%<NPC Name>%TAB%<sprite id>,<costvariable>{:<discount>},<itemid>:<price>{,<itemid>:<price>...}
 <map name>,<x>,<y>,<facing>%TAB%pointshop%TAB%<NPC Name>%TAB%<sprite id>,<costvariable>{:<discount>},<itemid>:<price>{,<itemid>:<price>...}
 
-<map name>,<x>,<y>,<facing>%TAB%marketshop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>:<quantity>{,<itemid>:<price>:<quantity>...}
+<map name>,<x>,<y>,<facing>%TAB%marketshop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>:<stock>{,<itemid>:<price>:<stock>...}
+
+Note: Additionally barter shops can be defined in npc/barters.yml
 
 This will define a shop NPC, which, when triggered (which can only be done by
 clicking) will cause a shop window to come up. No code whatsoever runs in shop
@@ -317,6 +319,9 @@ item or special points from a variable. 'pointshop' only supports permanent char
 temporary character variables, permanent local account variables or permanent global account
 variables. These variables must be of integer type, not string. 'discount' flag is an
 optional value which makes the price at that shop become affected by discount skill.
+
+"marketshop" can have limited quantity of an item in stock.
+Use -1 in the stock field to have unlimited stock in a marketshop.
 
 ** Define an warp/shop/cashshop/itemshop/pointshop/NPC duplicate.
 
@@ -482,7 +487,7 @@ nothing  - A permanent variable attached to the character, the default variable
 "'"      - An instance variable.
            These are used with the instancing system and are unique to each
            instance type. Can be accessed from inside the instance or by calling
-           'getvariableofinstance'.
+           'getinstancevar'.
 "#"      - A permanent local account variable.
            They are stored by char-server in the `acc_reg_num` table and
            `acc_reg_str`.
@@ -561,6 +566,8 @@ Karma       - The character's karma. Karma system is not fully functional, but
 Manner      - The character's manner rating. Becomes negative if the player
               utters words forbidden through the use of 'manner.txt' client-side
               file.
+Ap          - Current amount of activity points.
+MaxAp       - Maximum amount of activity points.
 
 While these behave as variables, do not always expect to just set them - it is
 not certain whether this will work for all of them. Whenever there is a command
@@ -2429,7 +2436,7 @@ Some example parameters:
 
 StatusPoint, BaseLevel, SkillPoint, Class, Upper, Zeny, Sex, Weight, MaxWeight,
 JobLevel, BaseExp, JobExp, NextBaseExp, NextJobExp, Hp, MaxHp, Sp, MaxSp,
-BaseJob, Karma, Manner, bVit, bDex, bAgi, bStr, bInt, bLuk
+BaseJob, Karma, Manner, bVit, bDex, bAgi, bStr, bInt, bLuk, Ap, MaxAp
 
 All of these also behave as variables, but don't expect to be able to just 'set'
 them - some will not work for various internal reasons.
@@ -2889,14 +2896,6 @@ is invalid or if there is no item in the equipment slot.
 
 ---------------------------------------
 
-*refineui({<char id>})
-
-Opens the refine UI for the attached player or the given character id.
-
-This feature requires 2016-10-12aRagexeRE or newer.
-
----------------------------------------
-
 *getareadropitem("<map name>",<x1>,<y1>,<x2>,<y2>,<item>)
 
 This function will count all the items with the specified ID number lying on the
@@ -3055,6 +3054,7 @@ Valid types are:
 	ITEMINFO_ID             (17)   -  item ID
 	ITEMINFO_AEGISNAME      (18)   -  aegis item name
 	ITEMINFO_ARMORLEVEL     (19)   -  armor LV
+	ITEMINFO_SUBTYPE        (20)   -  Subtype
 
 See the sample in 'doc/sample/getiteminfo.txt'.
 
@@ -3107,10 +3107,24 @@ If <type> is false the command only returns the count of unidentified items.
 
 ---------------------------------------
 
-*getenchantgrade()
+*getenchantgrade({<equipment slot>,<char_id>})
 
 This function will return the enchantgrade of the equipment from which the
-function is called.
+function is called or the specified equipment slot. If nothing is
+equipped there, it returns -1.
+
+Valid equipment slots are:
+
+EQI_COMPOUND_ON      - Item slot that calls this script (In context of item script) (default)
+
+For a list of others equipment slots see 'getequipid'.
+
+---------------------------------------
+
+*getitempos()
+
+This function will return the equip position of the equipment from which the
+function is called. (see EQP_* constants)
 
 This function is intended for use in item scripts.
 
@@ -3580,6 +3594,8 @@ Valid types are:
 	MOB_ATK2 - monster's atk2
 	MOB_DEF - monster's def
 	MOB_MDEF - monster's mdef
+	MOB_RES - monster's res
+	MOB_MRES - monster's mres
 	MOB_STR - monster's str
 	MOB_AGI - monster's agi
 	MOB_VIT - monster's vit
@@ -4232,6 +4248,7 @@ SavePoint:    All party members are warped to the save point of the currently
               attached player (will fail if there's no player attached).
 Leader:       All party members are warped to the leader's position. The leader must
               be online and in the current map-server for this to work.
+RandomAll:    All party members are warped to the same random position in their current map
 
 If you specify a from_mapname, 'warpparty' will only affect those on that map.
 
@@ -4302,6 +4319,18 @@ This command will heal a set amount of HP and/or SP on the invoking character.
 	heal 300,300; // This will heal 300 HP and 300 SP
 
 This command just alters the hit points and spell points of the invoking
+character and produces no other output whatsoever.
+
+---------------------------------------
+
+*healap <ap>{,<char_id>};
+
+This command will heal a set amount of AP on the invoking character.
+
+	healap 10;  // This will give 10 AP
+	healap -10; // This will remove 10 AP
+
+This command just alters the activity points of the invoking
 character and produces no other output whatsoever.
 
 ---------------------------------------
@@ -6025,6 +6054,30 @@ specified amount permanently. The amount can be negative. See 'statusup'.
 
 	// This will decrease a character's Vit forever.
 	statusup2 bVit,-1;
+---------------------------------------
+
+*traitstatusup <stat>{,<char_id>};
+
+This command will change a specified trait stat of the invoking character up by one
+permanently. Trait stats are to be given as number, but you can use these constants to
+replace them:
+
+bPow -  Power
+bSta -  Stamina
+bWis -  Wisdom
+bSpl -  Spell
+bCon -  Concentration
+bCrt -  Creative
+
+---------------------------------------
+
+*traitstatusup2 <stat>,<amount>{,<char_id>};
+
+This command will change a specified trait stat of the invoking character by the
+specified amount permanently. The amount can be negative. See 'statusup'.
+
+	// This will decrease a character's Sta forever.
+	traitstatusup2 bSta,-1;
 
 ---------------------------------------
 
@@ -7140,13 +7193,13 @@ optional parameters are the same as in 'announce', but target and source flags a
 
 ---------------------------------------
 
-*callshop "<name>",<option>;
+*callshop "<name>"{,<option>};
 
 These are a series of commands used to create dynamic shops.
 The 'callshop' function calls an invisible shop (view -1) as if the player clicked on it.
 
 The options are:
-	0 = The normal window (buy, sell and cancel)
+	0 = The normal window (buy, sell and cancel) (default)
 	1 = The buy window
 	2 = The sell window
 
@@ -7197,6 +7250,7 @@ A full example of a dynamic shop can be found in doc/sample/npc_dynamic_shop.txt
 ---------------------------------------
 
 *npcshopitem "<name>",<item id>,<price>{,<item id>,<price>{,<item id>,<price>{,...}}};
+*npcshopitem "<name>",<item id>,<price>,<stock>{,<item id>,<price>,<stock>{,<item id>,<price>,<stock>{,...}}};
 
 This command lets you override the contents of an existing NPC shop or cashshop. The
 current sell list will be wiped, and only the items specified with the price
@@ -7206,12 +7260,12 @@ The function returns 1 if shop was updated successfully, or 0 if not found.
 
 NOTES:
  - That you cannot use -1 to specify default selling price!
- - If attached shop type is market shop, need an extra param after price, it's <qty>
-   and make sure don't add duplication item!
+ - If the attached shop type is a market shop, notice that there is an extra parameter after price, <stock>. Make sure to not add duplicate items! For unlimited stock use -1.
 
 ---------------------------------------
 
 *npcshopadditem "<name>",<item id>,<price>{,<item id>,<price>{,<item id>,<price>{,...}}};
+*npcshopadditem "<name>",<item id>,<price>,<stock>{,<item id>,<price>,<stock>{,<item id>,<price>,<stock>{,...}}};
 
 This command will add more items at the end of the selling list for the
 specified NPC shop or cashshop. If you specify an item already for sell, that item will
@@ -7221,8 +7275,8 @@ The function returns 1 if shop was updated successfully, or 0 if not found.
 
 NOTES:
  - That you cannot use -1 to specify default selling price!
- - If attached shop type is market shop, need an extra param after price, it's <qty>
-   and make sure don't add duplication item!
+ - If attached shop type is market shop, need an extra param after price, it's <stock>
+   and make sure don't add duplication item! For unlimited stock use -1.
 
 ---------------------------------------
 
@@ -7260,9 +7314,9 @@ NOTES:
 
 *npcshopupdate "<name>",<item_id>,<price>{,<stock>}
 
-Update an entry from shop. If price is 0 means don't change the price, maybe used for
-marketshop to update the stock quantity. Except marketshop type, 'stock' value means
-nothing.
+Update an entry from a shop. If the price is 0 it won't be changed. May also be used for
+marketshop to update the stock quantity. For unlimited stock, use -1.
+For other shop types, the stock value has no effect.
 
 ---------------------------------------
 
@@ -8010,6 +8064,42 @@ The values given will be divided by 100 and transmitted as floating-point number
 				Maximum: -75000 (-75.0)
 
 ---------------------------------------
+
+*refineui({<char id>})
+
+Opens the refine UI for the attached player or the given character id.
+
+This feature requires 2016-10-12aRagexeRE or newer.
+
+---------------------------------------
+
+*openstylist({<char id>})
+
+Opens the stylist UI for the attached player or the given character id.
+
+This feature requires packet version 2015-11-04 or newer.
+
+---------------------------------------
+
+*laphine_synthesis()
+
+Opens the laphine synthesis UI for the attached player.
+
+This feature requires packet version 2016-06-01 or newer.
+
+This function is intended for use in item scripts.
+
+---------------------------------------
+
+*laphine_upgrade()
+
+Opens the laphine upgrade UI for the attached player.
+
+This feature requires packet version 2017-07-26 or newer.
+
+This function is intended for use in item scripts.
+
+---------------------------------------
 \\
 6,1.- Unit-related commands
 \\
@@ -8263,6 +8353,8 @@ Parameters (indexes) for monsters are:
 	UMOB_BODY2
 	UMOB_GROUP_ID
 	UMOB_IGNORE_CELL_STACK_LIMIT
+	UMOB_RES
+	UMOB_MRES
 
 -----
 
@@ -9418,17 +9510,47 @@ Examples:
 
 ---------------------------------------
 
-*getvariableofinstance(<variable>,<instance id>);
+*instance_list(<"map name">{,<instance mode>});
+
+Creates the array '.@instance_list' with possible instance IDs for the given <map name> and optional <mode>.
+Return '.@instance_list' array size.
+
+Instance mode options: IM_NONE, IM_CHAR, IM_PARTY, IM_GUILD, or IM_CLAN
+If the instance mode is not provided then it will return all the instance IDs for that map.
+
+Examples:
+	// This example assumes that there are several instances on the map of Prontera.
+	.@size = instance_list("prontera");
+	for ( .@i = 0; .@i < .@size; ++.@i )
+		mes instance_mapname("prontera", .@instance_list[.@i]);
+	//the output would be a list of all prontera copies that are active in the server.
+
+---------------------------------------
+
+*getinstancevar(<variable>,<instance id>);
 
 Returns a reference to an instance variable (' prefix) of the specific instance ID.
 This can only be used to get ' variables.
 
 Examples:
 	// This will set the .@s variable to the value of 'var variable of the specific instance ID.
-	set .@s, getvariableofinstance('var, instance_id(IM_PARTY));
+	set .@s, getinstancevar('var, instance_id(IM_PARTY));
 
 	// This will set the 'var variable of the specific instance ID to 1.
-	set getvariableofinstance('var, instance_id(IM_GUILD)), 1;
+	set getinstancevar('var, instance_id(IM_GUILD)), 1;
+
+---------------------------------------
+
+*setinstancevar(<variable>,<value>,<instance id>);
+
+This command will set an instance variable to the value that the expression results in.
+See 'set' command for more information.
+
+Returns the variable reference.
+
+Examples:
+	// This will set the 'var variable of the specific instance ID to 9.
+	setinstancevar('var, 9, instance_id(IM_GUILD));
 
 ---------------------------------------
 
@@ -9587,6 +9709,13 @@ QMARK_NONE   - No Marker (default)
 QMARK_YELLOW - Yellow Marker
 QMARK_GREEN  - Green Marker
 QMARK_PURPLE - Purple Marker
+
+---------------------------------------
+
+*open_quest_ui {<quest ID>,{<char ID>}};
+
+Opens the quest UI for the attached player or the given character ID.
+Use 0 as the quest ID to open the main quest UI. If the quest ID is not 0 then the quest UI is opened to the given quest. If the quest data is not populated in the client LUB then a message will be displayed saying the quest doesn't exist.
 
 ---------------------------------------
 
@@ -10502,6 +10631,25 @@ index parameter can be 0 to MAX_ITEM_RDM_OPT-1 (default 0-4).
 ID - ID of random option. See db/item_randomopt_db.yml for constants.
 Value - Value of random option
 Param - Parameter of random option
+
+---------------------------------------
+
+*randomoptgroup <random option group ID>;
+
+This command fills the following arrays with the results of a random option group.
+The random option group IDs are specified in 'db/(pre-)re/item_randomopt_group.yml'.
+
+Arrays - from index 0 to MAX_ITEM_RDM_OPT-1 :
+.@opt_id[]                - array of random option ID.
+.@opt_value[]             - array of value.
+.@opt_param[]             - array of param.
+
+Example:
+	// Fill the arrays using the random option group ID 5 (group used for Crimson weapons).
+	randomoptgroup(5);
+
+	// Create a +9 Crimson Dagger [2] with the Group 5 applied
+	getitem3 28705,1,1,9,0,0,0,0,0,.@opt_id,.@opt_value,.@opt_param;
 
 ---------------------------------------
 
