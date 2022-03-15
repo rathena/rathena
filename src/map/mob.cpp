@@ -5736,7 +5736,7 @@ uint64 MobSkillDatabase::parseBodyNode(const YAML::Node &node) {
 					return 0;
 
 				if (mob_skill->skills.size() >= MAX_MOBSKILL) {
-					this->invalidWarning(it["Id"], "Too many skills for monster %s (max: %d).\n", mob_name.c_str(), MAX_MOBSKILL);
+					this->invalidWarning(it["Index"], "Too many skills for monster %s (max: %d).\n", mob_name.c_str(), MAX_MOBSKILL);
 					return 0;
 				}
 				skill = std::make_shared<s_mob_skill>();
@@ -6194,85 +6194,74 @@ void MobSkillDatabase::loadingFinished() {
  * @param str: Array of parsed SQL data
  * @return True on success or false otherwise
  */
-static bool mob_read_sqlskilldb_sub(std::vector<std::string> str) {
+static bool mob_read_sqlskilldb_sub(std::vector<std::string> str, uint16 skill_index) {
 	YAML::Node node;
 	int32 index = -1;
 
-	int32 mob_id = std::stoul(str[++index]);
+	if (!str[++index].empty())
+		node["Mob"] = str[index];
 
-	if (mob_id == -3)
-		node["Mob"] = "ALL";
-	else if (mob_id == -2)
-		node["Mob"] = "ALL_NORMAL";
-	else if (mob_id == -1)
-		node["Mob"] = "ALL_BOSS";
-	else {
-		std::shared_ptr<s_mob_db> mob = mob_db.find(mob_id);
+	YAML::Node skill;
 
-		if (mob == nullptr) {
-			ShowWarning("Mob %d does not exist.\n", mob_id);
-			return 0;
+	skill["Index"] = skill_index;
+
+	if (!str[++index].empty())
+		skill["Name"] = str[index];
+	if (!str[++index].empty() && std::stoi(str[index]) > 1)
+		skill["Level"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		skill["State"] = str[index];
+	if (!str[++index].empty() && std::stoul(str[index]) > 1)
+		skill["CastRate"] = std::stoul(str[index]);
+	if (!str[++index].empty() && std::stoul(str[index]) > 1)
+		skill["CastTime"] = std::stoul(str[index]);
+	if (!str[++index].empty() && std::stoul(str[index]) > 1)
+		skill["CastDelay"] = std::stoul(str[index]);
+	if (!str[++index].empty())
+		skill["CastCancel"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		skill["Target"] = str[index];
+	if (!str[++index].empty())
+		skill["Condition"] = str[index];
+	if (!str[++index].empty())
+		skill["ConditionValue1"] = str[index];
+	if (!str[++index].empty() && std::stoi(str[index]) > 1)
+		skill["ConditionValue2"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		skill["Ai"] = str[index];
+	
+	for (uint8 i = 0; i < 6; i++) {
+		YAML::Node summon;
+
+		if (!str[++index].empty()) {
+			summon["Index"] = i;
+			summon["Mob"] = str[index];
+
+			node["Summon"][i] = summon;
 		}
-
-		node["Mob"] = mob->sprite;
 	}
+	
+	if (!str[++index].empty())
+		skill["Emotion"] = str[index];
+	if (!str[++index].empty())
+		skill["Chat"] = str[index];
 
-	++index;	// skip info
-
-	YAML::Node skills;
-
-	// skills["Id"] = ;
-	skills["State"] = str[++index];
-	uint16 skill_id = static_cast<uint16>(std::stoul(str[++index]));
-
-	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
-	if (skill == nullptr) {
-		ShowWarning("Invalid skill id %hu, skipping.\n", skill_id);
-		return 0;
-	}
-
-	// skills["Name"] = skill->name;
-	// skills["Level"] = std::stoi(str[++index]);
-
-	// skills["CastRate"] = std::stoi(str[++index]);
-	// skills["CastTime"] = std::stoi(str[++index]);
-	// skills["CastDelay"] = std::stoi(str[++index]);
-	// skills["CastCancel"] = str[++index];
-
-	// skills["Target"] = str[++index];
-
-	// skills["Condition"] = str[++index];
-		// Condition["Cond2String"] = str[++index];
-	// Condition["Val0"] = str[++index];
-	// Condition["Val1"] = str[++index];
-	// Condition["Val2"] = str[++index];
-	// Condition["Val3"] = str[++index];
-	// Condition["Val4"] = str[++index];
-
-
-	// todo
-	// skills["Emotion"] = str[++index];
-	// skills["Chat"] = str[++index];
-
-	node["Skills"] = skills;
+	node["Skills"] = skill;
 
 	return mob_skill_db.parseBodyNode(node) > 0;
 }
 
 /**
- * mob_skill_db table reading [CalciumKid]
- * not overly sure if this is all correct
- * seems to work though...
+ * Read SQL mob_skill_db table
  */
 static int mob_read_sqlskilldb(void)
 {
 	const char* mob_skill_db_name[] = {
 		mob_skill_table,
 		mob_skill2_table };
-	int fi;
 
-	for( fi = 0; fi < ARRAYLENGTH(mob_skill_db_name); ++fi ) {
-		uint32 count = 0;
+	for( uint16 fi = 0; fi < ARRAYLENGTH(mob_skill_db_name); ++fi ) {
+		uint16 count = 0;
 
 		// retrieve all rows from the mob skill database
 		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", mob_skill_db_name[fi]) ) {
@@ -6296,8 +6285,8 @@ static int mob_read_sqlskilldb(void)
 					data.push_back(str);
 			}
 
-			// if (!mob_read_sqlskilldb_sub(data))
-				// continue;
+			if (!mob_read_sqlskilldb_sub(data, count))
+				continue;
 
 			count++;
 		}
@@ -6305,7 +6294,7 @@ static int mob_read_sqlskilldb(void)
 		// free the query result
 		Sql_FreeResult(mmysql_handle);
 
-		ShowStatus("Done reading '" CL_WHITE "%u" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, mob_skill_db_name[fi]);
+		ShowStatus("Done reading '" CL_WHITE "%hu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, mob_skill_db_name[fi]);
 	}
 	return 0;
 }

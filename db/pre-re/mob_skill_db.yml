@@ -39895,6 +39895,18 @@ Body:
         Condition: ALWAYS
         Emotion: ET_BEST
       - Index: 22
+        Name: PF_SPIDERWEB
+        Level: 1
+        State: ATTACK
+        CastRate: 3000
+        CastTime: 0
+        CastDelay: 10000
+        CastCancel: true
+        Target: TARGET
+        Condition: ALWAYS
+        Ai: 04
+        Emotion: ET_ANGER
+      - Index: 23
         Name: NPC_ALLHEAL
         Level: 1
         State: IDLE
@@ -46961,18 +46973,6 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-  - Mob: BOMBPORING
-    Skills:
-      - Index: 0
-        Name: NPC_SELFDESTRUCTION
-        Level: 1
-        State: ANY
-        CastRate: 10000
-        CastTime: 3000
-        CastDelay: 0
-        CastCancel: false
-        Target: SELF
-        Condition: ALWAYS
   - Mob: GEMINI
     Skills:
       - Index: 0
@@ -57198,6 +57198,18 @@ Body:
         CastDelay: 5000
         CastCancel: false
         Target: TARGET
+        Condition: ALWAYS
+  - Mob: SENTRY
+    Skills:
+      - Index: 0
+        Name: NPC_SELFDESTRUCTION
+        Level: 1
+        State: ANY
+        CastRate: 10000
+        CastTime: 3000
+        CastDelay: 0
+        CastCancel: false
+        Target: SELF
         Condition: ALWAYS
   - Mob: MOROCC_
     Skills:
