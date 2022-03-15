@@ -46814,6 +46814,56 @@ Body:
     Weight: 10
     Script: |
       laphine_upgrade();
+  - Id: 23604
+    AegisName: Main_Dish_Course
+    Name: Main Dish Course
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      bonus_script "{ bonus bAllStats,10; bonus bBaseAtk,30; bonus bMatk,30; }",1800;
+  - Id: 23605
+    AegisName: Challenge_Drink
+    Name: Challenge Drink
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      bonus_script "{ bonus bBaseAtk,30; bonus bMatk,30; bonus bMatkRate,1; bonus bHit,30; bonus bFlee,30; bonus bAspd,1; bonus bUseSPrate,-5; bonus bFixedCastrate,-30; }",1800,1,1;
+  - Id: 23606
+    AegisName: Power_Drink
+    Name: Power Drink
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* Confirm probability */
+      bonus_script "{ bonus bMaxHP,-10; bonus bMaxSP,-10; bonus bBaseAtk,30; bonus bMatk,30; bonus bVariableCastrate,-5; bonus3 bAutoSpell,\"AC_CONCENTRATION\",max(getskilllv(\"AC_CONCENTRATION\"),3),10; }",300;
+  - Id: 23611
+    AegisName: Mimir_Spring_Water
+    Name: Mimir's Spring Water
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      sc_start SC_INCREASE_MAXSP,1800000,10;
+      sc_start SC_SPCOST_RATE,1800000,10;
+  - Id: 23612
+    AegisName: Baldrs_Blessing
+    Name: Baldur's Blessing
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      sc_start SC_FLEEFOOD,300000,30;
+      sc_start SC_HITFOOD,300000,30;
+      sc_start SC_ATKPOTION,300000,20;
+      sc_start SC_MATKPOTION,300000,20;
   - Id: 23629
     AegisName: Enchant_Stone_Box14
     Name: Costume Enchant Stone Box 14
@@ -46870,6 +46920,8 @@ Body:
     Name: Grey Abrasive (physical)
     Type: Delayconsume
     Weight: 50
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_upgrade();
   - Id: 23677
@@ -46877,6 +46929,8 @@ Body:
     Name: Grey Abrasive (magical)
     Type: Delayconsume
     Weight: 50
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_upgrade();
   - Id: 23678
@@ -46884,6 +46938,8 @@ Body:
     Name: Grey Abrasive (distance)
     Type: Delayconsume
     Weight: 50
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_upgrade();
   - Id: 23679
@@ -46931,6 +46987,76 @@ Body:
     Weight: 10
     Script: |
       laphine_upgrade();
+  - Id: 23725
+    AegisName: E_Main_Dish_C
+    Name: "[Event] Main Dish Course"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      bonus_script "{ bonus bAllStats,10; bonus bBaseAtk,30; bonus bMatk,30; }",1800;
+  - Id: 23726
+    AegisName: E_Challenge_Drink
+    Name: "[Event] Challenger Drink"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      bonus_script "{ bonus bBaseAtk,30; bonus bMatk,30; bonus bMatkRate,1; bonus bHit,30; bonus bFlee,30; bonus bAspd,1; bonus bUseSPrate,-5; bonus bFixedCastrate,-30; }",1800,1,1;
+  - Id: 23728
+    AegisName: E_Power_Drink
+    Name: "[Event] Power Drink"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      /* Confirm probability */
+      bonus_script "{ bonus bMaxHP,-10; bonus bMaxSP,-10; bonus bBaseAtk,30; bonus bMatk,30; bonus bVariableCastrate,-5; bonus3 bAutoSpell,\"AC_CONCENTRATION\",max(getskilllv(\"AC_CONCENTRATION\"),3),10; }",300;
+  - Id: 23732
+    AegisName: E_Mimir_Spring_W
+    Name: "[Event] Mimir's Spring Water"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      sc_start SC_INCREASE_MAXSP,1800000,10;
+      sc_start SC_SPCOST_RATE,1800000,10;
+  - Id: 23733
+    AegisName: E_Baldrs_Blessing
+    Name: "[Event] Baldur's Blessing"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      sc_start SC_FLEEFOOD,300000,30;
+      sc_start SC_HITFOOD,300000,30;
+      sc_start SC_ATKPOTION,300000,20;
+      sc_start SC_MATKPOTION,300000,20;
   - Id: 23766
     AegisName: Overwhelm_Armor_Box
     Name: Temporal Armor Box
@@ -47761,6 +47887,20 @@ Body:
       NoConsume: true
     Script: |
       itemskill "WL_READING_SB_READING",10;
+  - Id: 100081
+    AegisName: Kr_B_Special01
+    Name: "[Not for Sale] Advanced Combat Manual"
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      sc_start SC_EXPBOOST,3600000,200;
   - Id: 100083
     AegisName: BackSignon_Box_TW
     Name: Korean Style Apple Hair Box (Middle)
@@ -50094,6 +50234,103 @@ Body:
       NoAuction: true
     Script: |
       percentheal 30,30;
+  - Id: 101279
+    AegisName: 2022_LunarNewYears_box
+    Name: New Year Gift Box
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_2022_LUNARNEWYEARS_BOX);
+  - Id: 101306
+    AegisName: Poenitentia_Hammer
+    Name: Poenitentia Refining Hammer
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* reformui 101306; */
+  - Id: 101307
+    AegisName: Barmund_Hammer
+    Name: Barmund Refining Hammer
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* reformui 101307; */
+  - Id: 101308
+    AegisName: True_GemShadow_Up
+    Name: True Gemstone Shadow Spellbook
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101309
+    AegisName: EXPShadow_Up
+    Name: Experience Shadow Spellbook
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101310
+    AegisName: MagicalShadow_Up
+    Name: Clever Shadow Spellbook
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101311
+    AegisName: InfinityShadow_Up
+    Name: Infinity Shadow Spellbook
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101314
+    AegisName: aegis_101314
+    Name: Helm of Faith Box
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      Container: true
+    Script: |
+      getgroupitem(IG_HELM_OF_FAITH_BOX);
+  - Id: 101321
+    AegisName: 2022Reward_Box
+    Name: Event Error Compensation Box
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_2020_REWARD_BOX);
   - Id: 101322
     AegisName: aegis_101322
     Name: Love Confession Chocolate
@@ -50175,6 +50412,57 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_LI_Nyangvine_Box3_26);
+  - Id: 200191
+    AegisName: CostumeMilePack_26_1
+#   Name: Actinidia Costume Mileage Package I (Stone Box 26)
+    Name: Actinidia Costume Mileage Package I
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_COSTUME_MILE_PACK_26_1);
+  - Id: 200193
+    AegisName: CostumeMilePack_26_2
+#   Name: Actinidia Costume Mileage Package II (Stone Box 26)
+    Name: Actinidia Costume Mileage Package II
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_COSTUME_MILE_PACK_26_2);
+  - Id: 200194
+    AegisName: CostumeMilePack_26_3
+#   Name: Actinidia Costume Mileage Package III (Stone Box 26)
+    Name: Actinidia Costume Mileage Package III
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_COSTUME_MILE_PACK_26_3);
   - Id: 1100003
     AegisName: Concentrated_R_P
     Name: Concentrated Red Potion

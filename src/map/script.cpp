@@ -12009,8 +12009,17 @@ BUILDIN_FUNC(sc_end)
 		if (sce == nullptr)
 			return SCRIPT_CMD_SUCCESS;
 
-		if (status_db.hasSCF(sc, SCF_NOCLEARBUFF))
-			return SCRIPT_CMD_SUCCESS;
+		std::shared_ptr<s_status_change_db> sc_db = status_db.find( type );
+
+		if( sc_db == nullptr ){
+			ShowError( "buildin_sc_end: Unknown status change %d.\n", type );
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		if( sc_db->flag[SCF_NOCLEARBUFF] && sc_db->flag[SCF_NOFORCEDEND] ){
+			ShowError( "buildin_sc_end: Status %d cannot be cleared.\n", type );
+			return SCRIPT_CMD_FAILURE;
+		}
 
 		//This should help status_change_end force disabling the SC in case it has no limit.
 		sce->val1 = sce->val2 = sce->val3 = sce->val4 = 0;

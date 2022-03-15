@@ -14881,6 +14881,8 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 }
 
 void StatusDatabase::loadingFinished(){
+	std::fill( std::begin( this->StatusRelevantBLTypes ), std::end( this->StatusRelevantBLTypes ), BL_PC );
+
 	for( auto& entry : *this ){
 		auto& status = entry.second;
 

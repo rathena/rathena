@@ -213,6 +213,7 @@ Flags: Various status flags for specific status change events.
 	SendVal3              - Notifies the client of a status change (val3).
 
 	NoClearbuff           - Cannot be removed by 'status_change_clear_buffs()', 'sc_end SC_ALL', 'status_change_clear(3)', etc.
+	NoForcedEnd           - Cannot be removed by sc_end.
 	NoRemoveOnDead        - Cannot be removed when a player dies.
 	NoDispell             - Cannot be removed by SA_DISPELL.
 	NoClearance           - Cannot be removed by AB_CLEARANCE.

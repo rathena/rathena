@@ -583,6 +583,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoForcedEnd: true
   - Status: Weight90
     Icon: EFST_WEIGHTOVER90
     Flags:
@@ -593,6 +594,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoForcedEnd: true
   - Status: Aspdpotion0
     Icon: EFST_ATTHASTE_POTION1
     CalcFlags:
@@ -1003,6 +1005,7 @@ Body:
       NoBanishingBuster: true
       OverlapFail: true
       NoClearance: true
+      NoForcedEnd: true
   - Status: Protectexp
     Icon: EFST_PROTECTEXP
     DurationLookup: WE_BABY
@@ -2815,6 +2818,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       OverlapFail: true
+      NoForcedEnd: true
   - Status: Giantgrowth
     Icon: EFST_GIANTGROWTH
     DurationLookup: RK_GIANTGROWTH
@@ -4952,6 +4956,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       OverlapIgnoreLevel: true
+      NoForcedEnd: true
   - Status: Spellbook1
     Icon: EFST_SPELLBOOK1
     Flags:
@@ -5080,6 +5085,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoForcedEnd: true
   - Status: Tinder_Breaker
     Icon: EFST_TINDER_BREAKER_POSTDELAY
     DurationLookup: MH_TINDER_BREAKER
@@ -5355,6 +5361,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoForcedEnd: true
   - Status: Angel_Protect
     Icon: EFST_ANGEL_PROTECT
     Flags:
@@ -5484,6 +5491,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoForcedEnd: true
   - Status: Mtf_Rangeatk
     Icon: EFST_MTF_RANGEATK
     CalcFlags:
@@ -5495,6 +5503,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoForcedEnd: true
   - Status: Mtf_Matk
     Icon: EFST_MTF_MATK
     CalcFlags:
@@ -5505,6 +5514,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoForcedEnd: true
   - Status: Mtf_Mleatked
     Icon: EFST_MTF_MLEATKED
     CalcFlags:
@@ -5515,6 +5525,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoForcedEnd: true
   - Status: Mtf_Cridamage
     Icon: EFST_MTF_CRIDAMAGE
     CalcFlags:
@@ -5525,6 +5536,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoForcedEnd: true
   - Status: Oktoberfest
     States:
       NoAttack: true
@@ -5605,6 +5617,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoForcedEnd: true
     End:
       All_Riding: true
     EndReturn: true
@@ -5647,6 +5660,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoForcedEnd: true
   - Status: Mtf_Rangeatk2
     Icon: EFST_MTF_RANGEATK2
     CalcFlags:
@@ -5657,6 +5671,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoForcedEnd: true
   - Status: Mtf_Matk2
     Icon: EFST_MTF_MATK2
     CalcFlags:
@@ -5667,6 +5682,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoForcedEnd: true
   - Status: 2011rwc_Scroll
     Icon: EFST_2011RWC_SCROLL
     CalcFlags:
@@ -5709,6 +5725,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoForcedEnd: true
   - Status: Mtf_Msp
     Icon: EFST_MTF_MSP
     CalcFlags:
@@ -5719,6 +5736,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoForcedEnd: true
   - Status: Mtf_Pumpkin
     Icon: EFST_MTF_PUMPKIN
     Flags:
@@ -5727,6 +5745,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoForcedEnd: true
   - Status: Mtf_Hitflee
     Icon: EFST_MTF_HITFLEE
     CalcFlags:
@@ -5739,6 +5758,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoForcedEnd: true
   - Status: Vacuum_Extreme_Postdelay
     DurationLookup: SO_VACUUM_EXTREME
     Flags:
@@ -5766,6 +5786,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       OverlapIgnoreLevel: true
+      NoForcedEnd: true
   - Status: Reuse_Limit_A
     Icon: EFST_REUSE_LIMIT_A
     Flags:
@@ -5775,6 +5796,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       OverlapFail: true
+      NoForcedEnd: true
   - Status: Reuse_Limit_B
     Icon: EFST_REUSE_LIMIT_B
     Flags:
@@ -5784,6 +5806,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       OverlapFail: true
+      NoForcedEnd: true
   - Status: Reuse_Limit_C
     Icon: EFST_REUSE_LIMIT_C
     Flags:
@@ -5793,6 +5816,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       OverlapFail: true
+      NoForcedEnd: true
   - Status: Reuse_Limit_D
     Icon: EFST_REUSE_LIMIT_D
     Flags:
@@ -5802,6 +5826,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       OverlapFail: true
+      NoForcedEnd: true
   - Status: Reuse_Limit_E
     Icon: EFST_REUSE_LIMIT_E
     Flags:
@@ -5811,6 +5836,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       OverlapFail: true
+      NoForcedEnd: true
   - Status: Reuse_Limit_F
     Icon: EFST_REUSE_LIMIT_F
     Flags:
@@ -5820,6 +5846,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       OverlapFail: true
+      NoForcedEnd: true
   - Status: Reuse_Limit_G
     Icon: EFST_REUSE_LIMIT_G
     Flags:
@@ -5829,6 +5856,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       OverlapFail: true
+      NoForcedEnd: true
   - Status: Reuse_Limit_H
     Icon: EFST_REUSE_LIMIT_H
     Flags:
@@ -5838,6 +5866,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       OverlapFail: true
+      NoForcedEnd: true
   - Status: Reuse_Limit_Mtf
     Icon: EFST_REUSE_LIMIT_MTF
     Flags:
@@ -5847,6 +5876,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       OverlapFail: true
+      NoForcedEnd: true
   - Status: Reuse_Limit_Aspd_Potion
     Icon: EFST_REUSE_LIMIT_ASPD_POTION
     Flags:
@@ -5856,6 +5886,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       OverlapFail: true
+      NoForcedEnd: true
   - Status: Reuse_Millenniumshield
     Icon: EFST_REUSE_MILLENNIUMSHIELD
     Flags:
@@ -5865,6 +5896,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       OverlapFail: true
+      NoForcedEnd: true
   - Status: Reuse_Crushstrike
     Icon: EFST_REUSE_CRUSHSTRIKE
     Flags:
@@ -5874,6 +5906,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       OverlapFail: true
+      NoForcedEnd: true
   - Status: Reuse_Stormblast
     Icon: EFST_REUSE_STORMBLAST
     Flags:
@@ -5883,6 +5916,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       OverlapFail: true
+      NoForcedEnd: true
   - Status: All_Riding_Reuse_Limit
     Icon: EFST_ALL_RIDING_REUSE_LIMIT
     Flags:
@@ -5892,6 +5926,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       OverlapFail: true
+      NoForcedEnd: true
   - Status: Reuse_Limit_Ecl
     Icon: EFST_REUSE_LIMIT_ECL
     Flags:
@@ -5901,6 +5936,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       OverlapFail: true
+      NoForcedEnd: true
   - Status: Reuse_Limit_Recall
     Icon: EFST_REUSE_LIMIT_RECALL
     Flags:
@@ -5910,6 +5946,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       OverlapFail: true
+      NoForcedEnd: true
   - Status: Promote_Health_Reserch
     Icon: EFST_PROMOTE_HEALTH_RESERCH
     CalcFlags:
@@ -6004,6 +6041,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoForcedEnd: true
   - Status: Ljosalfar
     Icon: EFST_LJOSALFAR
     Flags:
