@@ -7084,6 +7084,7 @@ Body:
       NoClearance: true
       NoClearbuff: true
   - Status: Reuse_Limit_Luxanima
+    Icon: EFST_REUSE_LIMIT_LUXANIMA
     Flags:
       NoBanishingBuster: true
       NoDispell: true
