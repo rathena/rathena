@@ -2084,85 +2084,27 @@ int map_quit(struct map_session_data *sd) {
 	//map_quit handles extra specific data which is related to quitting normally
 	//(changing map-servers invokes unit_free but bypasses map_quit)
 	if( sd->sc.count ) {
-		//Status that are not saved...
-		status_change_end(&sd->bl, SC_BOSSMAPINFO, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_AUTOTRADE, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_SPURT, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_BERSERK, INVALID_TIMER);
-		status_change_end(&sd->bl, SC__BLOODYLUST, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_TRICKDEAD, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_LEADERSHIP, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_GLORYWOUNDS, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_SOULCOLD, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_HAWKEYES, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_EMERGENCY_MOVE, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_CHASEWALK2, INVALID_TIMER);
-		if(sd->sc.data[SC_PROVOKE] && sd->sc.data[SC_PROVOKE]->timer == INVALID_TIMER)
-			status_change_end(&sd->bl, SC_PROVOKE, INVALID_TIMER); //Infinite provoke ends on logout
-		status_change_end(&sd->bl, SC_WEIGHT50, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_WEIGHT90, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_SATURDAYNIGHTFEVER, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_KYOUGAKU, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_C_MARKER, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_READYSTORM, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_READYDOWN, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_READYTURN, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_READYCOUNTER, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_DODGE, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_CBC, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_EQC, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_SPRITEMABLE, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_SV_ROOTTWIST, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_GUARD_STANCE, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_ATTACK_STANCE, INVALID_TIMER);
-		// Remove visuals effect from headgear
-		status_change_end(&sd->bl, SC_MOONSTAR, INVALID_TIMER); 
-		status_change_end(&sd->bl, SC_SUPER_STAR, INVALID_TIMER); 
-		status_change_end(&sd->bl, SC_STRANGELIGHTS, INVALID_TIMER); 
-		status_change_end(&sd->bl, SC_DECORATION_OF_MUSIC, INVALID_TIMER); 
-		if (battle_config.debuff_on_logout&1) { //Remove negative buffs
-			status_change_end(&sd->bl, SC_ORCISH, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_STRIPWEAPON, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_STRIPARMOR, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_STRIPSHIELD, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_STRIPHELM, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_EXTREMITYFIST, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_EXPLOSIONSPIRITS, INVALID_TIMER);
-			if(sd->sc.data[SC_REGENERATION] && sd->sc.data[SC_REGENERATION]->val4)
-				status_change_end(&sd->bl, SC_REGENERATION, INVALID_TIMER);
-			//TO-DO Probably there are way more NPC_type negative status that are removed
-			status_change_end(&sd->bl, SC_CHANGEUNDEAD, INVALID_TIMER);
-			// Both these statuses are removed on logout. [L0ne_W0lf]
-			status_change_end(&sd->bl, SC_SLOWCAST, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_CRITICALWOUND, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_H_MINE, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_ANTI_M_BLAST, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_B_TRAP, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_SHADOW_STRIP, INVALID_TIMER);
-		}
-		if (battle_config.debuff_on_logout&2) { //Remove positive buffs
-			status_change_end(&sd->bl, SC_MAXIMIZEPOWER, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_MAXOVERTHRUST, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_STEELBODY, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_PRESERVE, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_KAAHI, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_SPIRIT, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_HEAT_BARREL, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_P_ALTER, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_E_CHAIN, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_SIGHTBLASTER, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_BENEDICTIO, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_GLASTHEIM_ATK, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_GLASTHEIM_DEF, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_GLASTHEIM_HEAL, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_GLASTHEIM_HIDDEN, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_GLASTHEIM_STATE, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_GLASTHEIM_ITEMDEF, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_GLASTHEIM_HPSP, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_SOULGOLEM, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_SOULSHADOW, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_SOULFALCON, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_SOULFAIRY, INVALID_TIMER);
+		for (const auto &it : status_db) {
+			std::bitset<SCF_MAX> &flag = it.second->flag;
+
+			//No need to save infinite status
+			if (flag[SCF_NOSAVEINFINITE] && sd->sc.data[it.first] && sd->sc.data[it.first]->val4 > 0) {
+				status_change_end(&sd->bl, static_cast<sc_type>(it.first), INVALID_TIMER);
+				continue;
+			}
+
+			//Status that are not saved
+			if (flag[SCF_NOSAVE]) {
+				status_change_end(&sd->bl, static_cast<sc_type>(it.first), INVALID_TIMER);
+				continue;
+			}
+			//Removes status by config
+			if (battle_config.debuff_on_logout&1 && flag[SCF_DEBUFF] || //Removes debuffs
+				(battle_config.debuff_on_logout&2 && !(flag[SCF_DEBUFF]))) //Removes buffs
+			{
+				status_change_end(&sd->bl, static_cast<sc_type>(it.first), INVALID_TIMER);
+				continue;
+			}
 		}
 	}
 

@@ -434,8 +434,8 @@ Body:
       - Item: S_Soul_Reaper_Shoes
       - Item: S_Tempest_Weapon
       - Item: S_Tempest_Armor
-      - Item: S_Perfect_Size_Weapon
-      - Item: S_Perfect_Size_Armor
+      - Item: S_PerfectSize_Weapon
+      - Item: S_PerfectSize_Armor
       - Item: S_M_Exo_Co_Weapon
       - Item: S_M_Viv_Dr_Weapon
       - Item: S_M_Sci_Hu_Weapon
@@ -1367,7 +1367,7 @@ Body:
         Amount: 10
       - Item: Clean_Bone
         Amount: 10
-      - Item: Deadly_Poison_Powder
+      - Item: DeadlyPoisonPowder
         Amount: 10
       - Item: Bandits_Scarf
         Amount: 10
@@ -3766,8 +3766,8 @@ Body:
 #      - Item: S_Soul_Reaper_Shoes
 #      - Item: S_Tempest_Weapon
 #      - Item: S_Tempest_Armor
-#      - Item: S_Perfect_Size_Weapon
-#      - Item: S_Perfect_Size_Armor
+#      - Item: S_PerfectSize_Weapon
+#      - Item: S_PerfectSize_Armor
 #      - Item: S_M_Exo_Co_Weapon
 #      - Item: S_M_Viv_Dr_Weapon
 #      - Item: S_M_Sci_Hu_Weapon
