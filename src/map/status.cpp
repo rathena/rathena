@@ -9208,6 +9208,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			// Undead are immune to Freeze/Stone
 			if (undead_flag && !(flag&SCSTART_NOAVOID))
 				return 0;
+			break;
 		case SC_ALL_RIDING:
 			if( !sd || sc->option&(OPTION_RIDING|OPTION_DRAGON|OPTION_WUG|OPTION_MADOGEAR) )
 				return 0;
