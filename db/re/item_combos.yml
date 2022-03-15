@@ -12181,8 +12181,8 @@ Body:
       bonus2 bIgnoreMdefRaceRate,RC_Player_Human,-70;
   - Combos:
       - Combo:
-          - S_Perfect_Size_Weapon
-          - S_Perfect_Size_Armor
+          - S_PerfectSize_Weapon
+          - S_PerfectSize_Armor
     Script: |
       bonus bMaxHPrate,2;
       bonus bMaxSPrate,2;
@@ -24173,7 +24173,6 @@ Body:
           - Ranger_Robe2  # 310003
     Script: |
       bonus2 bAddSize,Size_All,15;
-
   - Combos:
      - Combo:
           - aegis_311362  # 311362 Shadow Chaser Stone (Top)
@@ -24824,3 +24823,349 @@ Body:
     Script: |
       bonus bBaseAtk,20;
       bonus bMatk,20;
+  - Combos:
+      - Combo:
+          - Gray_Melee1
+          - Thanos_TSword_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"RK_WINDCUTTER",15;
+      bonus2 bSkillAtk,"DK_SERVANTWEAPON",15;
+      bonus2 bSkillAtk,"DK_SERVANTWEAPON",2*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Melee1
+          - Thanos_Axe_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"NC_AXETORNADO",15;
+      bonus2 bSkillAtk,"MT_AXE_STOMP",15;
+      bonus2 bSkillAtk,"NC_AXEBOOMERANG",6*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Melee1
+          - Thanos_Spear_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"LG_HESPERUSLIT",15;
+      bonus2 bSkillAtk,"IG_OVERSLASH",15;
+      bonus2 bSkillAtk,"LG_OVERBRAND",6*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Melee2
+          - Thanos_TSword_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"RK_WINDCUTTER",20;
+      bonus2 bSkillAtk,"DK_SERVANTWEAPON",20;
+      bonus2 bSkillAtk,"DK_SERVANTWEAPON",4*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Melee2
+          - Thanos_Axe_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"NC_AXETORNADO",20;
+      bonus2 bSkillAtk,"MT_AXE_STOMP",20;
+      bonus2 bSkillAtk,"NC_AXEBOOMERANG",9*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Melee2
+          - Thanos_Spear_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"LG_HESPERUSLIT",20;
+      bonus2 bSkillAtk,"IG_OVERSLASH",20;
+      bonus2 bSkillAtk,"LG_OVERBRAND",9*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Melee3
+          - Thanos_TSword_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"RK_WINDCUTTER",25;
+      bonus2 bSkillAtk,"DK_SERVANTWEAPON",25;
+      bonus2 bSkillAtk,"DK_SERVANTWEAPON",6*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Melee3
+          - Thanos_Axe_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"NC_AXETORNADO",25;
+      bonus2 bSkillAtk,"MT_AXE_STOMP",25;
+      bonus2 bSkillAtk,"NC_AXEBOOMERANG",12*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Melee3
+          - Thanos_Spear_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"LG_HESPERUSLIT",25;
+      bonus2 bSkillAtk,"IG_OVERSLASH",25;
+      bonus2 bSkillAtk,"LG_OVERBRAND",12*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Range1
+          - Thanos_Sword_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"GN_CARTCANNON",15;
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",15;
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_GROUND",15;
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WATER",15;
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",15;
+      bonus bLongAtkRate,2*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Range1
+          - Thanos_Bow_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"SN_SHARPSHOOTING",15;
+      bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",15;
+      bonus bLongAtkRate,2*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Range1
+          - Thanos_Violin_AD
+      - Combo:
+          - Gray_Range1
+          - Thanos_Whip_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
+      bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",15;
+      bonus bLongAtkRate,2*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Range2
+          - Thanos_Sword_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"GN_CARTCANNON",20;
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",20;
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_GROUND",20;
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WATER",20;
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",20;
+      bonus bLongAtkRate,4*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Range2
+          - Thanos_Bow_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"SN_SHARPSHOOTING",20;
+      bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",20;
+      bonus bLongAtkRate,4*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Range2
+          - Thanos_Violin_AD
+      - Combo:
+          - Gray_Range2 
+          - Thanos_Whip_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",20;
+      bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",20;
+      bonus bLongAtkRate,4*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Range3
+          - Thanos_Sword_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"GN_CARTCANNON",25;
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",25;
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_GROUND",25;
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WATER",25;
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",25;
+      bonus bLongAtkRate,6*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Range3
+          - Thanos_Bow_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"SN_SHARPSHOOTING",25;
+      bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",25;
+      bonus bLongAtkRate,6*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Range3
+          - Thanos_Violin_AD
+      - Combo:
+          - Gray_Range3
+          - Thanos_Whip_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",25;
+      bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",25;
+      bonus bLongAtkRate,6*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Magic1
+          - Thanos_Rod_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"WL_CRIMSONROCK",15;
+      bonus2 bSkillAtk,"AG_FLORAL_FLARE_ROAD",15;
+      bonus2 bSkillAtk,"AG_STRANTUM_TREMOR",15;
+      bonus2 bSkillAtk,"WL_EARTHSTRAIN",6*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Magic1
+          - Thanos_Staff_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"SO_VARETYR_SPEAR",15;
+      bonus2 bSkillAtk,"EM_LIGHTNING_LAND",15;
+      bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",6*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Magic1
+          - Thanos_Dagger_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",15;
+      bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS",15;
+      bonus2 bMagicAtkEle,Ele_All,2*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Magic2
+          - Thanos_Rod_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"WL_CRIMSONROCK",20;
+      bonus2 bSkillAtk,"AG_FLORAL_FLARE_ROAD",20;
+      bonus2 bSkillAtk,"AG_STRANTUM_TREMOR",20;
+      bonus2 bSkillAtk,"WL_EARTHSTRAIN",9*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Magic2
+          - Thanos_Staff_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"SO_VARETYR_SPEAR",20;
+      bonus2 bSkillAtk,"EM_LIGHTNING_LAND",20;
+      bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",9*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Magic2
+          - Thanos_Dagger_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",20;
+      bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS",20;
+      bonus2 bMagicAtkEle,Ele_All,4*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Magic3
+          - Thanos_Rod_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"WL_CRIMSONROCK",25;
+      bonus2 bSkillAtk,"AG_FLORAL_FLARE_ROAD",25;
+      bonus2 bSkillAtk,"AG_STRANTUM_TREMOR",25;
+      bonus2 bSkillAtk,"WL_EARTHSTRAIN",12*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Magic3
+          - Thanos_Staff_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"SO_VARETYR_SPEAR",25;
+      bonus2 bSkillAtk,"EM_LIGHTNING_LAND",25;
+      bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",12*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Magic3
+          - Thanos_Dagger_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",25;
+      bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS",25;
+      bonus2 bMagicAtkEle,Ele_All,6*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Fight1
+          - Thanos_Hammer_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"AB_DUPLELIGHT",15;
+      bonus2 bSkillAtk,"CD_PETITIO",15;
+      bonus bLongAtkRate,2*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Fight1
+          - Thanos_Knuckle_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"SR_TIGERCANNON",15;
+      bonus2 bSkillAtk,"IQ_THIRD_FLAME_BOMB",15;
+      bonus bMaxHPrate,2*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Fight1
+          - Thanos_Katar_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15;
+      bonus2 bSkillAtk,"SHC_IMPACT_CRATER",15;
+      bonus2 bSkillAtk,"GC_COUNTERSLASH",6*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Fight2
+          - Thanos_Hammer_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"AB_DUPLELIGHT",20;
+      bonus2 bSkillAtk,"CD_PETITIO",20;
+      bonus bLongAtkRate,4*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Fight2
+          - Thanos_Knuckle_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"SR_TIGERCANNON",20;
+      bonus2 bSkillAtk,"IQ_THIRD_FLAME_BOMB",20;
+      bonus bMaxHPrate,3*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Fight2
+          - Thanos_Katar_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"GC_ROLLINGCUTTER",20;
+      bonus2 bSkillAtk,"SHC_IMPACT_CRATER",20;
+      bonus2 bSkillAtk,"GC_COUNTERSLASH",9*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Fight3
+          - Thanos_Hammer_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"AB_DUPLELIGHT",25;
+      bonus2 bSkillAtk,"CD_PETITIO",25;
+      bonus bLongAtkRate,6*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Fight3
+          - Thanos_Knuckle_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"SR_TIGERCANNON",25;
+      bonus2 bSkillAtk,"IQ_THIRD_FLAME_BOMB",25;
+      bonus bMaxHPrate,5*(.@r/2);
+  - Combos:
+      - Combo:
+          - Gray_Fight3
+          - Thanos_Katar_AD
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"GC_ROLLINGCUTTER",25;
+      bonus2 bSkillAtk,"SHC_IMPACT_CRATER",25;
+      bonus2 bSkillAtk,"GC_COUNTERSLASH",12*(.@r/2);
+
