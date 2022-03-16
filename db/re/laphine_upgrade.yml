@@ -862,11 +862,13 @@ Body:
       - Item: Bloody_Knight_Shield__
   - Item: Geffen_Magic_Scroll
     RandomOptionGroup: GEFFEN_MAGIC_SCROLL
+    CardsAllowed: true
     TargetItems:
       - Item: Geffen_Mage_Robe
       - Item: Anti_Magic_Suit
   - Item: Gray_Charcoal_Melee
     RandomOptionGroup: GRAY_CHARCOAL_MELEE
+    CardsAllowed: true
     TargetItems:
       - Item: Thanos_Whip
       - Item: Thanos_Sword
@@ -881,6 +883,7 @@ Body:
       - Item: Thanos_Violin
   - Item: Gray_Charcoal_Magic
     RandomOptionGroup: GRAY_CHARCOAL_MAGIC
+    CardsAllowed: true
     TargetItems:
       - Item: Thanos_Rod
       - Item: Thanos_Staff
@@ -890,6 +893,7 @@ Body:
       - Item: Thanos_Whip
   - Item: Gray_Charcoal_Range
     RandomOptionGroup: GRAY_CHARCOAL_RANGE
+    CardsAllowed: true
     TargetItems:
       - Item: Thanos_Bow
       - Item: Thanos_Violin
@@ -904,6 +908,7 @@ Body:
       - Item: Thanos_Axe
   - Item: Geffen_Magic_Scroll2
     RandomOptionGroup: GEFFEN_MAGIC_SCROLL2
+    CardsAllowed: true
     TargetItems:
       - Item: Body_Power_Up_Ring
       - Item: Ring_Of_Spell_Explosion
