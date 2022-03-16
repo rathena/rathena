@@ -9544,6 +9544,15 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				return 0;
 			}
 			break;
+		case SC_SOULGOLEM:
+		case SC_SOULSHADOW:
+		case SC_SOULFALCON:
+		case SC_SOULFAIRY:
+			if( sd == nullptr ){
+				// Status change is only applicable for players
+				return 0;
+			}
+			break;
 	}
 
 	// Before overlapping fail, one must check for status cured.
