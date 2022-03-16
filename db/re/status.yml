@@ -1862,7 +1862,7 @@ Body:
       NoClearance: true
       NoSave: true
       NoBanishingBuster: true
-    End:
+    Fail:
       Soulgolem: true
       Soulshadow: true
       Soulfalcon: true
