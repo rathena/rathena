@@ -12716,7 +12716,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			clif_status_load(bl, EFST_ACTIVE_MONSTER_TRANSFORM, 0);
 			break;
 		case SC_INTRAVISION:
-			calc_flag.set(); // Required for overlapping
+			calc_flag = status_db.getSCB_ALL(); // Required for overlapping
 			break;
 
 		case SC_SUNSTANCE:
