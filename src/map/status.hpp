@@ -2742,7 +2742,7 @@ enum e_scb_flag : uint8 {
 	SCB_CRATE,
 
 	// Extra Flags
-	SCB_DYE, // force cloth-dye change to 0 to avoid client crashes; add extra flags after SCB_DYE.
+	SCB_DYE, // force cloth-dye change to 0 to avoid client crashes.
 	SCB_MAX,
 };
 
@@ -2878,12 +2878,10 @@ public:
 		// All except BASE and extra flags.
 		SCB_BATTLE.set();
 		SCB_BATTLE.reset(SCB_BASE);
-		for (uint8 i = SCB_DYE; i < SCB_MAX; i++)
-			SCB_BATTLE.reset(i);
+		SCB_BATTLE.reset(SCB_DYE);
 		// All except extra flags.
 		SCB_ALL.set();
-		for (uint8 i = SCB_DYE; i < SCB_MAX; i++)
-			SCB_ALL.reset(i);
+		SCB_ALL.reset(SCB_DYE);
 	}
 
 	const std::string getDefaultLocation() override;
