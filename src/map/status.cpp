@@ -9475,6 +9475,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_SPIRIT:
 			if( sd ){
 				uint64 target_class = 0;
+				uint64 mask = MAPID_UPPERMASK;
 
 				switch( val2 ){
 					case SL_ALCHEMIST:
@@ -9522,12 +9523,20 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					case SL_WIZARD:
 						target_class = MAPID_WIZARD;
 						break;
+					case SL_HIGH:
+						if( sd->status.base_level < 70 ){
+							return 0;
+						}
+
+						mask |= JOBL_UPPER;
+						target_class = MAPID_NOVICE_HIGH;
+						break;
 					default:
 						ShowError( "Unknown skill id %d for SC_SPIRIT.\n", val2 );
 						return 0;
 				}
 
-				if( !( ( sd->class_ & MAPID_UPPERMASK ) == target_class ) ){
+				if( ( sd->class_ & mask ) != target_class ){
 					return 0;
 				}
 			}else{
