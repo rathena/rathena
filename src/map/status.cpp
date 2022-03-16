@@ -9457,6 +9457,69 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					status_change_end(bl, static_cast<sc_type>(i), INVALID_TIMER); // End the bonus part on the caster
 			}
 			break;
+		case SC_SPIRIT:
+			if( sd ){
+				uint64 target_class = 0;
+
+				switch( val2 ){
+					case SL_ALCHEMIST:
+						target_class = MAPID_ALCHEMIST;
+						break;
+					case SL_ASSASIN:
+						target_class = MAPID_ASSASSIN;
+						break;
+					case SL_BARDDANCER:
+						target_class = MAPID_BARDDANCER;
+						break;
+					case SL_BLACKSMITH:
+						target_class = MAPID_BLACKSMITH;
+						break;
+					case SL_CRUSADER:
+						target_class = MAPID_CRUSADER;
+						break;
+					case SL_HUNTER:
+						target_class = MAPID_HUNTER;
+						break;
+					case SL_KNIGHT:
+						target_class = MAPID_KNIGHT;
+						break;
+					case SL_MONK:
+						target_class = MAPID_MONK;
+						break;
+					case SL_PRIEST:
+						target_class = MAPID_PRIEST;
+						break;
+					case SL_ROGUE:
+						target_class = MAPID_ROGUE;
+						break;
+					case SL_SAGE:
+						target_class = MAPID_SAGE;
+						break;
+					case SL_SOULLINKER:
+						target_class = MAPID_SOUL_LINKER;
+						break;
+					case SL_STAR:
+						target_class = MAPID_STAR_GLADIATOR;
+						break;
+					case SL_SUPERNOVICE:
+						target_class = MAPID_SUPER_NOVICE;
+						break;
+					case SL_WIZARD:
+						target_class = MAPID_WIZARD;
+						break;
+					default:
+						ShowError( "Unknown skill id %d for SC_SPIRIT.\n", val2 );
+						return 0;
+				}
+
+				if( !( ( sd->class_ & MAPID_UPPERMASK ) == target_class ) ){
+					return 0;
+				}
+			}else{
+				// Status change is only applicable for players
+				return 0;
+			}
+			break;
 	}
 
 	// Before overlapping fail, one must check for status cured.
