@@ -2742,15 +2742,8 @@ enum e_scb_flag : uint8 {
 	SCB_CRATE,
 
 	// Extra Flags
-	SCB_DYE, // force cloth-dye change to 0 to avoid client crashes.
-
+	SCB_DYE, // force cloth-dye change to 0 to avoid client crashes; add extra flags after SCB_DYE.
 	SCB_MAX,
-};
-
-// Special flags for updating all stat/sub-stat stuff on request.
-enum e_scb_flag_special : uint64 {
-	SCB_BATTLE = 0x7FFFFFFFFFE, // All except BASE and extra flags.
-	SCB_ALL = 0x7FFFFFFFFFF, // All except extra flags.
 };
 
 enum e_status_calc_opt : uint8 {
@@ -2880,7 +2873,15 @@ struct s_status_change_db {
 class StatusDatabase : public TypesafeCachedYamlDatabase<uint16, s_status_change_db> {
 public:
 	StatusDatabase() : TypesafeCachedYamlDatabase("STATUS_DB", 1) {
-
+		// All except BASE and extra flags.
+		SCB_BATTLE.set();
+		SCB_BATTLE.reset(SCB_BASE);
+		for (uint8 i = SCB_DYE; i < SCB_MAX; i++)
+			SCB_BATTLE.reset(i);
+		// All except extra flags.
+		SCB_ALL.set();
+		for (uint8 i = SCB_DYE; i < SCB_MAX; i++)
+			SCB_ALL.reset(i);
 	}
 
 	const std::string getDefaultLocation() override;
@@ -2899,6 +2900,11 @@ public:
 	void removeByStatusFlag(block_list *bl, std::vector<e_status_change_flag> flag);
 	void changeSkillTree(map_session_data *sd, int32 class_ = 0);
 	bool validateStatus(sc_type type);
+	std::bitset<SCB_MAX> getSCB_BATTLE();
+	std::bitset<SCB_MAX> getSCB_ALL();
+
+private:
+	std::bitset<SCB_MAX> SCB_BATTLE, SCB_ALL;
 };
 
 extern StatusDatabase status_db;
@@ -3220,13 +3226,13 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type);
 void status_change_clear_onChangeMap(struct block_list *bl, struct status_change *sc);
 
 #define status_calc_bl(bl, flag) status_calc_bl_(bl, flag, SCO_NONE)
-#define status_calc_mob(md, opt) status_calc_bl_(&(md)->bl, SCB_ALL, opt)
-#define status_calc_pet(pd, opt) status_calc_bl_(&(pd)->bl, SCB_ALL, opt)
-#define status_calc_pc(sd, opt) status_calc_bl_(&(sd)->bl, SCB_ALL, opt)
-#define status_calc_homunculus(hd, opt) status_calc_bl_(&(hd)->bl, SCB_ALL, opt)
-#define status_calc_mercenary(md, opt) status_calc_bl_(&(md)->bl, SCB_ALL, opt)
-#define status_calc_elemental(ed, opt) status_calc_bl_(&(ed)->bl, SCB_ALL, opt)
-#define status_calc_npc(nd, opt) status_calc_bl_(&(nd)->bl, SCB_ALL, opt)
+#define status_calc_mob(md, opt) status_calc_bl_(&(md)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_pet(pd, opt) status_calc_bl_(&(pd)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_pc(sd, opt) status_calc_bl_(&(sd)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_homunculus(hd, opt) status_calc_bl_(&(hd)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_mercenary(md, opt) status_calc_bl_(&(md)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_elemental(ed, opt) status_calc_bl_(&(ed)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_npc(nd, opt) status_calc_bl_(&(nd)->bl, status_db.getSCB_ALL(), opt)
 
 bool status_calc_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag);
 bool status_calc_cart_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag);

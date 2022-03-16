@@ -561,7 +561,7 @@ efst_type StatusDatabase::getIcon(sc_type type) {
 std::bitset<SCB_MAX> StatusDatabase::getCalcFlag(sc_type type) {
 	std::shared_ptr<s_status_change_db> status = status_db.find(type);
 
-	return status ? status->calc_flag : SCB_NONE;
+	return status ? status->calc_flag : std::bitset<SCB_MAX> {};
 }
 
 /**
@@ -616,6 +616,22 @@ bool StatusDatabase::hasSCF(status_change *sc, e_status_change_flag flag) {
 	}
 
 	return false;
+}
+
+/**
+ * Returns the SCB_BATTLE constant.
+ * return SCB_BATTLE
+ */
+std::bitset<SCB_MAX> StatusDatabase::getSCB_BATTLE() {
+	return this->SCB_BATTLE;
+}
+
+/**
+ * Returns the SCB_ALL constant.
+ * @return SCB_ALL
+ */
+std::bitset<SCB_MAX> StatusDatabase::getSCB_ALL() {
+	return this->SCB_ALL;
 }
 
 /**
@@ -14593,15 +14609,31 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 		}
 	} else {
 		if (!exists)
-			status->state = SCS_NONE;
+			status->state.reset();
 	}
 
 	if (this->nodeExists(node, "CalcFlags")) {
 		const YAML::Node &flagNode = node["CalcFlags"];
 
+		if (this->nodeExists(flagNode, "All")) {
+			bool active;
+
+			if (!this->asBool(flagNode, "All", active))
+				return 0;
+
+			if (active)
+				status->calc_flag = status_db.SCB_ALL;
+			else
+				status->calc_flag.reset();
+		}
+
 		for (const auto &it : flagNode) {
 			std::string flag = it.first.as<std::string>(), flag_constant = "SCB_" + flag;
 			int64 constant;
+
+			// Skipped because processed above the loop
+			if (flag.compare("All") == 0)
+				continue;
 
 			if (!script_get_constant(flag_constant.c_str(), &constant)) {
 				this->invalidWarning(flagNode, "CalcFlag %s is invalid.\n", flag.c_str());
@@ -14619,13 +14651,13 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			if (active)
-				status->calc_flag |= static_cast<e_scb_flag>(constant);
+				status->calc_flag.set(static_cast<e_scb_flag>(constant));
 			else
-				status->calc_flag &= ~static_cast<e_scb_flag>(constant);
+				status->calc_flag.reset(static_cast<e_scb_flag>(constant));
 		}
 	} else {
 		if (!exists)
-			status->calc_flag = SCB_NONE;
+			status->calc_flag.reset();
 	}
 
 	if (this->nodeExists(node, "Opt1")) {
@@ -14776,6 +14808,9 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 			else
 				status->flag.reset(static_cast<e_status_change_flag>(constant));
 		}
+	} else {
+		if (!exists)
+			status->flag.reset();
 	}
 
 	if (this->nodeExists(node, "MinRate")) {
