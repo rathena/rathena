@@ -120,17 +120,6 @@ short hom_skill_get_index(uint16 skill_id) {
 }
 
 /**
-* Check homunculus class for array look up
-* @param class_
-* @return Class index or -1 if invalid class
-*/
-static short hom_class2index(int class_) {
-	if (homdb_checkid(class_))
-		return class_ - HM_CLASS_BASE;
-	return -1;
-}
-
-/**
 * Get homunculus view data
 * @param class_ Homunculus class
 * @return vd
