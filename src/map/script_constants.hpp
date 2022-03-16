@@ -8902,6 +8902,7 @@
 	export_constant(SCF_SENDVAL2);
 	export_constant(SCF_SENDVAL3);
 	export_constant(SCF_NOFORCEDEND);
+	export_constant(SCF_NOWARNING);
 
 	#undef export_constant
 	#undef export_constant2

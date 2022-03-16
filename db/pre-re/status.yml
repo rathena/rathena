@@ -815,6 +815,8 @@ Body:
     Flags:
       NoSave: true
   - Status: Spellbreaker
+    Flags:
+      NoWarning: true
   - Status: Autospell
     Icon: EFST_AUTOSPELL
     DurationLookup: SA_AUTOSPELL
@@ -824,6 +826,8 @@ Body:
       NoRemoveOnDead: true
       NoClearance: true
   - Status: Sighttrasher
+    Flags:
+      NoWarning: true
   - Status: Autoberserk
     Icon: EFST_AUTOBERSERK
     DurationLookup: SM_AUTOBERSERK
@@ -1074,6 +1078,8 @@ Body:
       Saturdaynightfever: true
       _Bloodylust: true
   - Status: Fury
+    Flags:
+      NoWarning: true
   - Status: Gospel
     Icon: EFST_GOSPEL
     DurationLookup: PA_GOSPEL
@@ -2209,6 +2215,8 @@ Body:
       NoSave: true
       NoClearance: true
   - Status: Kaensin
+    Flags:
+      NoWarning: true
   - Status: Suiton
     Icon: EFST_NJ_SUITON
     DurationLookup: NJ_SUITON
@@ -2444,6 +2452,8 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
   - Status: Ksprotected
+    Flags:
+      NoWarning: true
   - Status: Armor_Resist
     CalcFlags:
       All: true
@@ -3033,6 +3043,8 @@ Body:
       DisplayPc: true
       NoClearance: true
   - Status: Reading_Sb
+    Flags:
+      NoWarning: true
   - Status: Freeze_Sp
     Icon: EFST_FREEZE_SP
     Flags:
@@ -6389,6 +6401,8 @@ Body:
     CalcFlags:
       Flee2: true
   - Status: Doram_Svsp
+    Flags:
+      NoWarning: true
   - Status: Fallen_Angel
     DurationLookup: RL_FALLEN_ANGEL
   - Status: Cheerup
@@ -6499,6 +6513,8 @@ Body:
     CalcFlags:
       Regen: true
   - Status: Earthshaker
+    Flags:
+      NoWarning: true
   - Status: Weaponblock_On
     Icon: EFST_WEAPONBLOCK_ON
     Flags:
@@ -6629,7 +6645,11 @@ Body:
     Flags:
       NoClearance: true
   - Status: Dimension1
+    Flags:
+      NoWarning: true
   - Status: Dimension2
+    Flags:
+      NoWarning: true
   - Status: Creatingstar
     Icon: EFST_CREATINGSTAR
     DurationLookup: SJ_BOOKOFCREATINGSTAR
