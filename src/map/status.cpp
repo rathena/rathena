@@ -1497,7 +1497,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 			return false;
 		}
 
-		if (sc->cant.cast && skill_id != RK_REFRESH && skill_id != SU_GROOMING && skill_id != SR_GENTLETOUCH_CURE) { // Stuned/Frozen/etc
+		if (skill_id && sc->cant.cast && skill_id != RK_REFRESH && skill_id != SU_GROOMING && skill_id != SR_GENTLETOUCH_CURE) { // Stuned/Frozen/etc
 			if (flag != 1) // Can't cast, casted stuff can't damage.
 				return false;
 			if (skill_get_casttype(skill_id) == CAST_DAMAGE)
@@ -9223,6 +9223,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			// Undead are immune to Freeze/Stone
 			if (undead_flag && !(flag&SCSTART_NOAVOID))
 				return 0;
+			break;
 		case SC_ALL_RIDING:
 			if( !sd || sc->option&(OPTION_RIDING|OPTION_DRAGON|OPTION_WUG|OPTION_MADOGEAR) )
 				return 0;
@@ -9469,6 +9470,69 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					return 0;
 				else if (sc->data[i] && sc->data[i]->val3 == 0)
 					status_change_end(bl, static_cast<sc_type>(i), INVALID_TIMER); // End the bonus part on the caster
+			}
+			break;
+		case SC_SPIRIT:
+			if( sd ){
+				uint64 target_class = 0;
+
+				switch( val2 ){
+					case SL_ALCHEMIST:
+						target_class = MAPID_ALCHEMIST;
+						break;
+					case SL_ASSASIN:
+						target_class = MAPID_ASSASSIN;
+						break;
+					case SL_BARDDANCER:
+						target_class = MAPID_BARDDANCER;
+						break;
+					case SL_BLACKSMITH:
+						target_class = MAPID_BLACKSMITH;
+						break;
+					case SL_CRUSADER:
+						target_class = MAPID_CRUSADER;
+						break;
+					case SL_HUNTER:
+						target_class = MAPID_HUNTER;
+						break;
+					case SL_KNIGHT:
+						target_class = MAPID_KNIGHT;
+						break;
+					case SL_MONK:
+						target_class = MAPID_MONK;
+						break;
+					case SL_PRIEST:
+						target_class = MAPID_PRIEST;
+						break;
+					case SL_ROGUE:
+						target_class = MAPID_ROGUE;
+						break;
+					case SL_SAGE:
+						target_class = MAPID_SAGE;
+						break;
+					case SL_SOULLINKER:
+						target_class = MAPID_SOUL_LINKER;
+						break;
+					case SL_STAR:
+						target_class = MAPID_STAR_GLADIATOR;
+						break;
+					case SL_SUPERNOVICE:
+						target_class = MAPID_SUPER_NOVICE;
+						break;
+					case SL_WIZARD:
+						target_class = MAPID_WIZARD;
+						break;
+					default:
+						ShowError( "Unknown skill id %d for SC_SPIRIT.\n", val2 );
+						return 0;
+				}
+
+				if( !( ( sd->class_ & MAPID_UPPERMASK ) == target_class ) ){
+					return 0;
+				}
+			}else{
+				// Status change is only applicable for players
+				return 0;
 			}
 			break;
 	}
@@ -11754,9 +11818,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 
 		default:
-			if (calc_flag.none() && scdb->skill_id == 0 && scdb->icon == EFST_BLANK) {
+			if (calc_flag.none() && scdb->skill_id == 0 && scdb->icon == EFST_BLANK && scdb->opt1 == OPT1_NONE && scdb->opt2 == OPT2_NONE && scdb->state.none() && scdb->flag.none() && scdb->end.empty() && scdb->fail.empty()) {
 				// Status change with no calc, no icon, and no skill associated...?
-				ShowError("status_change_start: Unknown SC %d\n", type);
+				ShowWarning("status_change_start: Status %s (%d) is bare. Add the NoWarning flag to suppress this message.\n", script_get_constant_str("SC_", type), type);
 				return 0;
 			}
 	} else // Special considerations when loading SC data.
@@ -14915,6 +14979,8 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 }
 
 void StatusDatabase::loadingFinished(){
+	std::fill( std::begin( this->StatusRelevantBLTypes ), std::end( this->StatusRelevantBLTypes ), BL_PC );
+
 	for( auto& entry : *this ){
 		auto& status = entry.second;
 

@@ -301,6 +301,7 @@ Body:
     Cooldown: 2000
     Requires:
       SpCost: 30
+    Status: Watk_Element
   - Id: 8
     Name: SM_ENDURE
     Description: Endure
@@ -533,6 +534,7 @@ Body:
       Flag:
         NoEnemy: true
         NoReiteration: true
+    Status: Safetywall
   - Id: 13
     Name: MG_SOULSTRIKE
     Description: Soul Strike
@@ -7077,6 +7079,7 @@ Body:
           Amount: 1
         - Item: Seed_Of_Life
           Amount: 1
+    Status: Homun_Time
   - Id: 244
     Name: AM_REST
     Description: Vaporize
@@ -9633,6 +9636,7 @@ Body:
     Range: 9
     Hit: Single
     Duration1: 15000
+    Status: Stop
   - Id: 343
     Name: NPC_WEAPONBRAKER
     Description: Break weapon
@@ -9782,6 +9786,7 @@ Body:
     Flags:
       IsNpc: true
     Duration1: 30000
+    Status: Cloaking
   - Id: 354
     Name: NPC_RUN
     Description: Run
@@ -9794,7 +9799,6 @@ Body:
       IsNpc: true
     Range: 2
     Hit: Single
-    Status: Cloaking
   - Id: 355
     Name: LK_AURABLADE
     Description: Aura Blade
@@ -11269,6 +11273,7 @@ Body:
           Amount: 60
         - Level: 5
           Amount: 70
+    Status: Curse
   - Id: 401
     Name: CH_SOULCOLLECT
     Description: Zen
@@ -11602,6 +11607,7 @@ Body:
     HitCount: 1
     Requires:
       SpCost: 1
+    Status: ReadyStorm
   - Id: 413
     Name: TK_STORMKICK
     Description: Tornado Kick
@@ -13716,6 +13722,7 @@ Body:
     FixedCastTime: 500
     Requires:
       SpCost: 40
+    Status: TarotCard
   - Id: 490
     Name: CR_ACIDDEMONSTRATION
     Description: Acid Demonstration
@@ -14111,6 +14118,7 @@ Body:
     Requires:
       SpCost: 7
       SpiritSphereCost: 1
+    Status: MagicalBullet
   - Id: 508
     Name: GS_CRACKER
     Description: Cracker
@@ -16144,6 +16152,7 @@ Body:
     HitCount: 1
     Element: Weapon
     Duration2: 120000
+    Status: Bleeding
   - Id: 661
     Name: NPC_PULSESTRIKE
     Description: Pulse Strike
@@ -16493,6 +16502,7 @@ Body:
     HitCount: 1
     Element: Weapon
     Duration2: 30000
+    Status: CriticalWound
   - Id: 674
     Name: NPC_EXPULSION
     Description: Expulsion
@@ -16941,6 +16951,7 @@ Body:
     HitCount: 1
     CastCancel: true
     Duration1: 1200000
+    Status: Orcish
   - Id: 698
     Name: ALL_WEWISH
     Description: Christmas Carol
@@ -19456,7 +19467,7 @@ Body:
       Target: Enemy
       Flag:
         PathCheck: true
-    Status: Burning
+    Status: Magic_Poison
   - Id: 2214
     Name: WL_CHAINLIGHTNING
     Description: Chain Lightning
@@ -21645,6 +21656,7 @@ Body:
         - Level: 5
           Amount: 48
       State: Wug
+    Status: Bite
   - Id: 2245
     Name: RA_TOOTHOFWUG
     Description: Tooth of Warg
@@ -26551,6 +26563,7 @@ Body:
       ItemCost:
         - Item: Protect_Neck_Candy
           Amount: 10
+    Status: SoundOfDestruction
   - Id: 2430
     Name: WM_SATURDAY_NIGHT_FEVER
     Description: Saturday Night Fever
@@ -28905,6 +28918,7 @@ Body:
       ItemCost:
         - Item: MenEater_Plant_Bottle
           Amount: 1
+    Status: Hells_Plant
   - Id: 2491
     Name: GN_HELLS_PLANT_ATK
     Description: Hell's Plant Attack
@@ -29661,6 +29675,7 @@ Body:
       Weapon:
         Revolver: true
       SpiritSphereCost: 1
+    Status: Fallen_Angel
   - Id: 2565
     Name: RL_R_TRIP
     Description: Round Trip
@@ -32612,6 +32627,7 @@ Body:
     Duration1: 900000
     Requires:
       SpCost: 1
+    Status: LuxAnima
   - Id: 5006
     Name: NC_MAGMA_ERUPTION
     Description: Magma Eruption
@@ -32666,6 +32682,7 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+    Status: Stun
   - Id: 5007
     Name: WM_FRIGG_SONG
     Description: Frigg's Song
@@ -32820,6 +32837,7 @@ Body:
       Interval: 1000
       Flag:
         NoReiteration: true
+    Status: Ankle
   - Id: 5011
     Name: AB_OFFERTORIUM
     Description: Offertorium
@@ -32964,6 +32982,7 @@ Body:
     Hit: Single
     HitCount: 1
     Duration2: 20000
+    Status: Burning
   - Id: 5018
     Name: SU_BASIC_SKILL
     Description: New Basic Skill
@@ -34145,6 +34164,7 @@ Body:
       IgnoreDex: true
     Requires:
       SpCost: 50
+    Status: CheerUp
   - Id: 5067
     Name: ALL_EQSWITCH
     Description: Equip Switch
@@ -34227,6 +34247,7 @@ Body:
       ItemCost:
         - Item: Blue_Gemstone
           Amount: 1
+    Status: Aeterna
   - Id: 5073
     Name: AB_CONVENIO
     Description: Convenio
@@ -34263,6 +34284,7 @@ Body:
     Cooldown: 300000
     Requires:
       SpCost: 1
+    Status: HelpAngel
   - Id: 5077
     Name: NV_TRANSCENDENCE
     Description: Transcendence
@@ -34341,6 +34363,7 @@ Body:
           Amount: 60
         - Level: 5
           Amount: 70
+    Status: ServantWeapon
   - Id: 5202
     Name: DK_SERVANTWEAPON_ATK
     Description: Servant Weapon Attack
@@ -34380,6 +34403,7 @@ Body:
     Requires:
       SpCost: 15
       SpiritSphereCost: 1
+    Status: Servant_Sign
   - Id: 5204
     Name: DK_SERVANT_W_PHANTOM
     Description: Servant Weapon Phantom
@@ -34402,6 +34426,7 @@ Body:
     Requires:
       SpCost: 40
       SpiritSphereCost: 5
+    Status: HandicapState_DeepBlind
   - Id: 5205
     Name: DK_SERVANT_W_DEMOL
     Description: Servant Weapon Demolition
@@ -34492,6 +34517,7 @@ Body:
         2hSword: true
         1hSpear: true
         2hSpear: true
+    Status: ChargingPierce
   - Id: 5207
     Name: DK_TWOHANDDEF
     Description: Two Hand Def
@@ -34585,6 +34611,7 @@ Body:
     Requires:
       SpCost: 100
       ApCost: 150
+    Status: Dragonic_Aura
   - Id: 5211
     Name: DK_MADNESS_CRUSHER
     Description: Madness Crusher
@@ -34663,6 +34690,7 @@ Body:
     Requires:
       SpCost: 100
       ApCost: 150
+    Status: Vigor
   - Id: 5213
     Name: DK_STORMSLASH
     Description: Storm Slash
@@ -34743,8 +34771,8 @@ Body:
         - Level: 4
           Amount: 110
         - Level: 5
-
           Amount: 120
+    Status: Deadly_Defeasance
   - Id: 5215
     Name: AG_DESTRUCTIVE_HURRICANE
     Description: Destructive Hurricane
@@ -34785,6 +34813,7 @@ Body:
           Amount: 110
         - Level: 5
           Amount: 120
+    Status: Climax_Des_Hu
   - Id: 5216
     Name: AG_RAIN_OF_CRYSTAL
     Description: Rain Of Crystal
@@ -34944,6 +34973,7 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+    Status: Climax_Earth
   - Id: 5219
     Name: AG_VIOLENT_QUAKE_ATK
     Description: Violent Quake Attack
@@ -35128,6 +35158,7 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+    Status: Climax_Bloom
   - Id: 5223
     Name: AG_ALL_BLOOM_ATK
     Description: All Bloom Attack
@@ -35218,6 +35249,7 @@ Body:
           Amount: 110
         - Level: 5
           Amount: 120
+    Status: Climax_CryImp
   - Id: 5226
     Name: AG_CRYSTAL_IMPACT_ATK
     Description: Crystal Impact Attack
@@ -35426,6 +35458,7 @@ Body:
     Requires:
       SpCost: 60
       ApCost: 200
+    Status: Climax
   - Id: 5233
     Name: AG_ROCK_DOWN
     Description: Rock Down
@@ -35606,6 +35639,7 @@ Body:
           Amount: 66
         - Level: 5
           Amount: 70
+    Status: Powerful_Faith
   - Id: 5239
     Name: IQ_FIRM_FAITH
     Description: Firm Faith
@@ -35643,6 +35677,7 @@ Body:
           Amount: 66
         - Level: 5
           Amount: 70
+    Status: Firm_Faith
   - Id: 5240
     Name: IQ_WILL_OF_FAITH
     Description: Will Of Faith
@@ -35700,6 +35735,7 @@ Body:
       ItemCost:
         - Item: Holy_Water
           Amount: 1
+    Status: Holy_Oil
   - Id: 5242
     Name: IQ_SINCERE_FAITH
     Description: Sincere Faith
@@ -35737,6 +35773,7 @@ Body:
           Amount: 66
         - Level: 5
           Amount: 70
+    Status: Sincere_Faith
   - Id: 5243
     Name: IQ_MASSIVE_F_BLASTER
     Description: Massive Flame Blaster
@@ -35757,6 +35794,7 @@ Body:
     Requires:
       SpCost: 100
       ApCost: 150
+    Status: Massive_F_Blaster
   - Id: 5244
     Name: IQ_EXPOSION_BLASTER
     Description: Exposion Blaster
@@ -35844,6 +35882,7 @@ Body:
           Amount: 43
         - Level: 5
           Amount: 50
+    Status: First_Brand
   - Id: 5246
     Name: IQ_FIRST_FAITH_POWER
     Description: First Faith Power
@@ -35871,6 +35910,7 @@ Body:
     FixedCastTime: 1000
     Requires:
       SpCost: 60
+    Status: First_Faith_Power
   - Id: 5247
     Name: IQ_JUDGE
     Description: Judge
@@ -35901,6 +35941,7 @@ Body:
       ApCost: 100
       Status:
         First_Faith_Power: true
+    Status: Second_Judge
   - Id: 5248
     Name: IQ_SECOND_FLAME
     Description: Second Flame
@@ -35940,6 +35981,7 @@ Body:
           Amount: 64
         - Level: 5
           Amount: 70
+    Status: Second_Brand
   - Id: 5249
     Name: IQ_SECOND_FAITH
     Description: Second Faith
@@ -36162,6 +36204,7 @@ Body:
       ApCost: 150
       Status:
         Second_Judge: true
+    Status: Third_Exor_Flame
   - Id: 5255
     Name: IG_GUARD_STANCE
     Description: Guard Stance
@@ -36176,6 +36219,7 @@ Body:
     Requires:
       SpCost: 50
       State: Shield
+    Status: Guard_Stance
   - Id: 5256
     Name: IG_GUARDIAN_SHIELD
     Description: Guardian Shield
@@ -36197,6 +36241,7 @@ Body:
       SpCost: 60
       Status:
         Guard_Stance: true
+    Status: Guardian_S
   - Id: 5257
     Name: IG_REBOUND_SHIELD
     Description: Rebound Shield
@@ -36216,6 +36261,7 @@ Body:
       SpCost: 60
       Status:
         Guard_Stance: true
+    Status: Rebound_S
   - Id: 5258
     Name: IG_SHIELD_MASTERY
     Description: Shield Mastery
@@ -36237,6 +36283,7 @@ Body:
     FixedCastTime: 500
     Requires:
       SpCost: 50
+    Status: Attack_Stance
   - Id: 5261
     Name: IG_ULTIMATE_SACRIFICE
     Description: Ultimate Sacrifice
@@ -36277,6 +36324,7 @@ Body:
       SpCost: 120
       Status:
         Guard_Stance: true
+    Status: Ultimate_S
   - Id: 5262
     Name: IG_HOLY_SHIELD
     Description: Holy Shield
@@ -36295,6 +36343,7 @@ Body:
     Requires:
       SpCost: 60
       State: Shield
+    Status: Holy_S
   - Id: 5263
     Name: IG_GRAND_JUDGEMENT
     Description: Grand Judgement
@@ -36342,6 +36391,7 @@ Body:
         2hSpear: true
       Status:
         Attack_Stance: true
+    Status: Spear_Scar
   - Id: 5264
     Name: IG_JUDGEMENT_CROSS
     Description: Judgement Cross
@@ -36392,6 +36442,7 @@ Body:
       State: Shield
       Status:
         Attack_Stance: true
+    Status: Shield_Power
   - Id: 5266
     Name: IG_OVERSLASH
     Description: Overslash
@@ -36571,6 +36622,7 @@ Body:
           Amount: 60
         - Level: 5
           Amount: 70
+    Status: Mediale
   - Id: 5270
     Name: CD_MACE_BOOK_M
     Description: Mace Book Mastery
@@ -36615,6 +36667,7 @@ Body:
           Amount: 75
         - Level: 5
           Amount: 90
+    Status: A_Vita
   - Id: 5272
     Name: CD_ARGUTUS_TELUM
     Description: Argutus Telum
@@ -36655,6 +36708,7 @@ Body:
           Amount: 75
         - Level: 5
           Amount: 90
+    Status: A_Telum
   - Id: 5273
     Name: CD_ARBITRIUM
     Description: Arbitrium
@@ -36693,6 +36747,7 @@ Body:
           Amount: 130
         - Level: 10
           Amount: 140
+    Status: HandicapState_DeepSilence
   - Id: 5274
     Name: CD_ARBITRIUM_ATK
     Description: Arbitrium Attack
@@ -36768,6 +36823,7 @@ Body:
           Amount: 75
         - Level: 5
           Amount: 90
+    Status: Pre_Acies
   - Id: 5276
     Name: CD_FIDUS_ANIMUS
     Description: Fidus Animus
@@ -36822,6 +36878,7 @@ Body:
     Requires:
       SpCost: 60
       ApCost: 200
+    Status: Competentia
   - Id: 5279
     Name: CD_PNEUMATICUS_PROCELLA
     Description: Pneumaticus Procella
@@ -36948,6 +37005,7 @@ Body:
           Amount: 85
         - Level: 5
           Amount: 90
+    Status: Religio
   - Id: 5282
     Name: CD_BENEDICTUM
     Description: Benedictum
@@ -36986,6 +37044,7 @@ Body:
           Amount: 85
         - Level: 5
           Amount: 90
+    Status: Benedictum
   - Id: 5283
     Name: CD_PETITIO
     Description: Petitio
@@ -37128,6 +37187,7 @@ Body:
     Requires:
       SpCost: 100
       ApCost: 150
+    Status: Shadow_Exceed
   - Id: 5286
     Name: SHC_DANCING_KNIFE
     Description: Dancing Knife
@@ -37160,6 +37220,7 @@ Body:
           Amount: 60
       Weapon:
         Dagger: true
+    Status: Dancing_Knife
   - Id: 5287
     Name: SHC_SAVAGE_IMPACT
     Description: Savage Impact
@@ -37226,6 +37287,7 @@ Body:
       SpCost: 40
       Status:
         Weaponblock_On: true
+    Status: E_Slash_Count
   - Id: 5290
     Name: SHC_POTENT_VENOM
     Description: Potent Venom
@@ -37283,6 +37345,7 @@ Body:
           Amount: 60
       Status:
         Edp: true
+    Status: Potent_Venom
   - Id: 5291
     Name: SHC_SHADOW_STAB
     Description: Shadow Stab
@@ -37357,6 +37420,7 @@ Body:
         Katar: true
       Status:
         Rollingcutter: true
+    Status: WeaponBlock_On
   - Id: 5293
     Name: SHC_ENCHANTING_SHADOW
     Description: Enchanting Shadow
@@ -37384,6 +37448,7 @@ Body:
           Amount: 60
         - Level: 5
           Amount: 70
+    Status: Shadow_Weapon
   - Id: 5294
     Name: SHC_FATAL_SHADOW_CROW
     Description: Fatal Shadow Crow
@@ -37449,6 +37514,7 @@ Body:
       Weapon:
         1hAxe: true
         2hAxe: true
+    Status: Axe_Stomp
   - Id: 5296
     Name: MT_RUSH_QUAKE
     Description: Rush Quake
@@ -37572,6 +37638,7 @@ Body:
       ItemCost:
         - Item: Device_Capsule
           Amount: 1
+    Status: A_Machine
   - Id: 5299
     Name: MT_D_MACHINE
     Description: Defense Machine
@@ -37613,6 +37680,7 @@ Body:
       ItemCost:
         - Item: Device_Capsule
           Amount: 1
+    Status: D_Machine
   - Id: 5300
     Name: MT_TWOAXEDEF
     Description: Two Hand Axe Def
@@ -37660,6 +37728,7 @@ Body:
       ItemCost:
         - Item: Auto_Battle_Capsule
           Amount: 1
+    Status: Abr_Battle_Warior
   - Id: 5303
     Name: MT_SUMMON_ABR_DUAL_CANNON
     Description: ABR Dual Cannon
@@ -37699,6 +37768,7 @@ Body:
       ItemCost:
         - Item: Auto_Battle_Capsule
           Amount: 1
+    Status: Abr_Dual_Cannon
   - Id: 5304
     Name: MT_SUMMON_ABR_MOTHER_NET
     Description: ABR Mother Net
@@ -37738,6 +37808,7 @@ Body:
       ItemCost:
         - Item: Auto_Battle_Capsule
           Amount: 1
+    Status: Abr_Mother_Net
   - Id: 5305
     Name: MT_SUMMON_ABR_INFINITY
     Description: ABR Infinity
@@ -37777,6 +37848,7 @@ Body:
       ItemCost:
         - Item: Auto_Battle_Capsule
           Amount: 5
+    Status: Abr_Infinity
   - Id: 5306
     Name: AG_DESTRUCTIVE_HURRICANE_CLIMAX
     Description: Destructive Hurricane Climax
@@ -37884,6 +37956,7 @@ Body:
           Amount: 41
         - Level: 5
           Amount: 45
+    Status: Shadow_Strip
   - Id: 5314
     Name: ABC_ABYSS_DAGGER
     Description: Abyss Dagger
@@ -37925,6 +37998,7 @@ Body:
       Weapon:
         Dagger: true
         1hSword: true
+    Status: Abyss_Dagger
   - Id: 5315
     Name: ABC_UNLUCKY_RUSH
     Description: Unlucky Rush
@@ -37953,6 +38027,7 @@ Body:
           Amount: 45
         - Level: 5
           Amount: 50
+    Status: HandicapState_Misfortune
   - Id: 5316
     Name: ABC_CHAIN_REACTION_SHOT
     Description: Chain Reaction Shot
@@ -38043,6 +38118,7 @@ Body:
           Amount: 70
         - Level: 5
           Amount: 80
+    Status: AbyssForceWeapon
   - Id: 5318
     Name: ABC_ABYSS_SLAYER
     Description: Abyss Slayer
@@ -38061,6 +38137,7 @@ Body:
     Requires:
       SpCost: 100
       ApCost: 150
+    Status: Abyss_Slayer
   - Id: 5319
     Name: ABC_ABYSS_STRIKE
     Description: Abyss Strike
@@ -38263,6 +38340,7 @@ Body:
           Amount: 70
         - Level: 5
           Amount: 60
+    Status: WindSign
   - Id: 5325
     Name: WH_NATUREFRIENDLY
     Description: Nature Friendly
@@ -38327,6 +38405,7 @@ Body:
     Requires:
       SpCost: 300
       ApCost: 200
+    Status: CalamityGale
   - Id: 5329
     Name: WH_HAWKBOOMERANG
     Description: Hawk Boomerang
@@ -38512,6 +38591,7 @@ Body:
       ItemCost:
         - Item: Special_Alloy_Trap
           Amount: 2
+    Status: HandicapState_Crystallization
     Unit:
       Id: Solidtrap
       Range: 1
@@ -38564,6 +38644,7 @@ Body:
       ItemCost:
         - Item: Special_Alloy_Trap
           Amount: 2
+    Status: HandicapState_LightningStrike
     Unit:
       Id: Swifttrap
       Range: 1
@@ -38617,6 +38698,7 @@ Body:
       Ammo:
         Arrow: true
       AmmoAmount: 1
+    Status: CresciveBolt
   - Id: 5335
     Name: WH_FLAMETRAP
     Description: Flame Trap
@@ -38669,6 +38751,7 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+    Status: HandicapState_Conflagration
   - Id: 5336
     Name: BO_BIONIC_PHARMACY
     Description: Bionic Pharmacy
@@ -38784,6 +38867,7 @@ Body:
       ItemCost:
         - Item: High_Coating_Bottle
           Amount: 1
+    Status: ProtectShadowEquip
   - Id: 5340
     Name: BO_ACIDIFIED_ZONE_WATER
     Description: Acidified Zone Water
@@ -39073,6 +39157,7 @@ Body:
       ItemCost:
         - Item: High_Plant_Bottle
           Amount: 2
+    Status: Bionic_WoodenWarrior
   - Id: 5345
     Name: BO_WOODEN_FAIRY
     Description: Wooden Fairy
@@ -39114,6 +39199,7 @@ Body:
       ItemCost:
         - Item: High_Plant_Bottle
           Amount: 2
+    Status: Bionic_Wooden_Fairy
   - Id: 5346
     Name: BO_CREEPER
     Description: Creeper
@@ -39155,6 +39241,7 @@ Body:
       ItemCost:
         - Item: High_Plant_Bottle
           Amount: 1
+    Status: Bionic_Creeper
   - Id: 5347
     Name: BO_RESEARCHREPORT
     Description: Research Report
@@ -39173,6 +39260,7 @@ Body:
     Requires:
       SpCost: 60
       ApCost: 100
+    Status: ResearchReport
   - Id: 5348
     Name: BO_HELLTREE
     Description: Hell Tree
@@ -39204,6 +39292,7 @@ Body:
       ItemCost:
         - Item: High_Plant_Bottle
           Amount: 3
+    Status: Bionic_HellTree
   - Id: 5349
     Name: TR_STAGE_MANNER
     Description: Stage Manner
@@ -39243,6 +39332,7 @@ Body:
         Bow: true
         Musical: true
         Whip: true
+    Status: Mystic_Symphony
   - Id: 5352
     Name: TR_KVASIR_SONATA
     Description: Kvasir Sonata
@@ -39265,6 +39355,7 @@ Body:
         Bow: true
         Musical: true
         Whip: true
+    Status: Kvasir_Sonata
   - Id: 5353
     Name: TR_ROSEBLOSSOM
     Description: Rose Blossom
@@ -39301,6 +39392,7 @@ Body:
       Ammo:
         Arrow: true
       AmmoAmount: 1
+    Status: RoseBlossom
   - Id: 5354
     Name: TR_ROSEBLOSSOM_ATK
     Description: Rose Blossom Attack
@@ -39478,6 +39570,7 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+    Status: SoundBlend
   - Id: 5358
     Name: TR_GEF_NOCTURN
     Description: Geffenia Nocturn
@@ -39524,6 +39617,7 @@ Body:
       ItemCost:
         - Item: Protect_Neck_Candy
           Amount: 1
+    Status: Gef_Nocturn
   - Id: 5359
     Name: TR_ROKI_CAPRICCIO
     Description: Roki Capriccio
@@ -39617,6 +39711,7 @@ Body:
       ItemCost:
         - Item: Protect_Neck_Candy
           Amount: 1
+    Status: Ain_Rhapsody
   - Id: 5361
     Name: TR_MUSICAL_INTERLUDE
     Description: Musical Interlude
@@ -39663,6 +39758,7 @@ Body:
       ItemCost:
         - Item: Protect_Neck_Candy
           Amount: 1
+    Status: Musical_Interlude
   - Id: 5362
     Name: TR_JAWAII_SERENADE
     Description: Jawaii Serenade
@@ -39709,6 +39805,7 @@ Body:
       ItemCost:
         - Item: Protect_Neck_Candy
           Amount: 1
+    Status: Jawaii_Serenade
   - Id: 5363
     Name: TR_NIPELHEIM_REQUIEM
     Description: Nipelheim Requiem
@@ -39802,6 +39899,7 @@ Body:
       ItemCost:
         - Item: Protect_Neck_Candy
           Amount: 1
+    Status: Pron_March
   - Id: 5365
     Name: EM_MAGIC_BOOK_M
     Description: Magic Book Mastery
@@ -39843,6 +39941,7 @@ Body:
           Amount: 52
         - Level: 5
           Amount: 55
+    Status: Spell_Enchanting
   - Id: 5367
     Name: EM_ACTIVITY_BURN
     Description: Activity Burn
@@ -39938,6 +40037,7 @@ Body:
       Target: Enemy
       Flag:
         PathCheck: true
+    Status: HandicapState_FrostBite
   - Id: 5370
     Name: EM_LIGHTNING_LAND
     Description: Lightning Land
@@ -40015,6 +40115,7 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+    Status: HandicapState_DeadlyPoison
   - Id: 5372
     Name: EM_CONFLAGRATION
     Description: Conflagration
@@ -40116,6 +40217,7 @@ Body:
       ItemCost:
         - Item: Flame_Stone_4th
           Amount: 1
+    Status: Summon_Elemental_Ardor
   - Id: 5376
     Name: EM_SUMMON_ELEMENTAL_DILUVIO
     Description: Summon Elemental Diluvio
@@ -40136,6 +40238,7 @@ Body:
       ItemCost:
         - Item: Ice_Stone_4th
           Amount: 1
+    Status: Summon_Elemental_Diluvio
   - Id: 5377
     Name: EM_SUMMON_ELEMENTAL_PROCELLA
     Description: Summon Elemental Procella
@@ -40156,6 +40259,7 @@ Body:
       ItemCost:
         - Item: Wind_Stone_4th
           Amount: 1
+    Status: Summon_Elemental_Procella
   - Id: 5378
     Name: EM_SUMMON_ELEMENTAL_TERREMOTUS
     Description: Summon Elemental Terremotus
@@ -40176,6 +40280,7 @@ Body:
       ItemCost:
         - Item: Earth_Stone_4th
           Amount: 1
+    Status: Summon_Elemental_Terremotus
   - Id: 5379
     Name: EM_SUMMON_ELEMENTAL_SERPENS
     Description: Summon Elemental Serpens
@@ -40196,6 +40301,7 @@ Body:
       ItemCost:
         - Item: Poison_Stone_4th
           Amount: 1
+    Status: Summon_Elemental_Serpens
   - Id: 5380
     Name: EM_ELEMENTAL_BUSTER
     Description: Elemental Buster
@@ -40249,6 +40355,7 @@ Body:
           Amount: 85
         - Level: 5
           Amount: 90
+    Status: Elemental_Veil
   - Id: 5382
     Name: ABC_CHAIN_REACTION_SHOT_ATK
     Description: Chain Reaction Shot Attack
@@ -41691,7 +41798,7 @@ Body:
       Flag:
         NoEnemy: true
         NoReiteration: true
-    Status: SafetyWall
+    Status: Stone_Wall
   - Id: 8034
     Name: MH_HEILIGE_STANGE
     Description: Holy Pole
@@ -44189,6 +44296,7 @@ Body:
     Duration1: -1
     Requires:
       SpCost: 1
+    Status: FlameTechnic_Option
   - Id: 8444
     Name: EM_EL_FLAMEARMOR
     Description: Flame Armor
@@ -44202,6 +44310,7 @@ Body:
     Duration1: -1
     Requires:
       SpCost: 1
+    Status: FlameArmor_Option
   - Id: 8445
     Name: EM_EL_FLAMEROCK
     Description: Flame Rock
@@ -44235,6 +44344,7 @@ Body:
     Duration1: -1
     Requires:
       SpCost: 1
+    Status: Cold_Force_Option
   - Id: 8447
     Name: EM_EL_CRYSTAL_ARMOR
     Description: Crystal Armor
@@ -44248,6 +44358,7 @@ Body:
     Duration1: -1
     Requires:
       SpCost: 1
+    Status: Crystal_Armor_Option
   - Id: 8448
     Name: EM_EL_AGE_OF_ICE
     Description: Age Of Ice
@@ -44281,6 +44392,7 @@ Body:
     Duration1: -1
     Requires:
       SpCost: 1
+    Status: Grace_Breeze_Option
   - Id: 8450
     Name: EM_EL_EYES_OF_STORM
     Description: Eyes Of Storm
@@ -44294,6 +44406,7 @@ Body:
     Duration1: -1
     Requires:
       SpCost: 1
+    Status: Eyes_Of_Storm_Option
   - Id: 8451
     Name: EM_EL_STORM_WIND
     Description: Storm Wind
@@ -44327,6 +44440,7 @@ Body:
     Duration1: -1
     Requires:
       SpCost: 1
+    Status: Earth_Care_Option
   - Id: 8453
     Name: EM_EL_STRONG_PROTECTION
     Description: Strong Protection
@@ -44340,6 +44454,7 @@ Body:
     Duration1: -1
     Requires:
       SpCost: 1
+    Status: Strong_Protection_Option
   - Id: 8454
     Name: EM_EL_AVALANCHE
     Description: Avalanche
@@ -44373,6 +44488,7 @@ Body:
     Duration1: -1
     Requires:
       SpCost: 1
+    Status: Deep_Poisoning_Option
   - Id: 8456
     Name: EM_EL_POISON_SHIELD
     Description: Poison Shield
@@ -44386,6 +44502,7 @@ Body:
     Duration1: -1
     Requires:
       SpCost: 1
+    Status: Poison_Shield_Option
   - Id: 8457
     Name: EM_EL_DEADLY_POISON
     Description: Deadly Poison
@@ -44720,3 +44837,4 @@ Body:
     SplashArea: 15
     Duration1: 10000
     Cooldown: 600000
+    Status: Emergency_Move

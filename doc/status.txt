@@ -213,12 +213,14 @@ Flags: Various status flags for specific status change events.
 	SendVal3              - Notifies the client of a status change (val3).
 
 	NoClearbuff           - Cannot be removed by 'status_change_clear_buffs()', 'sc_end SC_ALL', 'status_change_clear(3)', etc.
+	NoForcedEnd           - Cannot be removed by sc_end.
 	NoRemoveOnDead        - Cannot be removed when a player dies.
 	NoDispell             - Cannot be removed by SA_DISPELL.
 	NoClearance           - Cannot be removed by AB_CLEARANCE.
 	NoBanishingBuster     - Cannot be removed by RL_BANISHING_BUSTER.
 	NoSave                - Won't be saved when player logs out.
 	NoSaveInfinite        - Infinite duration status won't be saved when player logs out.
+	NoWarning             - Ignores the status_change_start check for statuses that have no defining features associated to them in the status database.
 
 	RemoveOnDamaged       - Removed when receiving damage.
 	RemoveOnRefresh       - Removed by RK_REFRESH.
