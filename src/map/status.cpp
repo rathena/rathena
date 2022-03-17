@@ -12888,6 +12888,9 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	bool disable_opt_flag = false;
 
 	switch (type) {
+		case SC_STONE:
+			sc->opt1 = OPT1_NONE;
+			break;
 		case SC_DANCING:
 			if ((sce->val1&0xFFFF) == CG_MOONLIT)
 				sc->opt3 &= ~OPT3_MOONLIT;
