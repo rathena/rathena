@@ -1300,6 +1300,8 @@ Body:
   - Status: Spiderweb
     Icon: EFST_SPIDERWEB
     DurationLookup: PF_SPIDERWEB
+    States:
+      NoMove: true
     CalcFlags:
       Flee: true
     Flags:
