@@ -7710,15 +7710,19 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
  */
 static unsigned short status_calc_dmotion(struct block_list *bl, struct status_change *sc, int dmotion)
 {
-	if( !sc || !sc->count || map_flag_gvg2(bl->m) || map_getmapflag(bl->m, MF_BATTLEGROUND) )
-		return cap_value(dmotion,0,USHRT_MAX);
-
 	/// It has been confirmed on official servers that MvP mobs have no dmotion even without endure
 	if( bl->type == BL_MOB && status_get_class_(bl) == CLASS_BOSS )
 		return 0;
-	if (bl->type == BL_PC && ((TBL_PC *)bl)->special_state.no_walk_delay)
-		return 0;
-	if( sc->data[SC_ENDURE] || sc->data[SC_RUN] || sc->data[SC_WUGDASH] )
+
+	if (bl->type == BL_PC) {
+		if (map_flag_gvg2(bl->m) || map_getmapflag(bl->m, MF_BATTLEGROUND))
+			return (unsigned short)cap_value(dmotion, 0, USHRT_MAX);
+
+		if (((TBL_PC *)bl)->special_state.no_walk_delay)
+			return 0;
+	}
+
+	if (sc && sc->count > 0 && (sc->data[SC_ENDURE] || sc->data[SC_RUN] || sc->data[SC_WUGDASH]))
 		return 0;
 
 	return (unsigned short)cap_value(dmotion,0,USHRT_MAX);
