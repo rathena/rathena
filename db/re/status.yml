@@ -7070,7 +7070,6 @@ Body:
     DurationLookup: GN_HELLS_PLANT
     Flags:
       NoSave: true
-      RemoveOnChangeMap: true
       DisplayPc: true
       BlEffect: true
   - Status: Increase_Maxhp
