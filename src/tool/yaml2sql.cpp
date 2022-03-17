@@ -954,6 +954,8 @@ static bool mob_skill_db_yaml2sql(const std::string &file, const std::string &ta
 
 			if (appendEntry(input["Mob"], value, true))
 				column.append("`MOB_AEGIS_NAME`,");
+			if (appendEntry(skill["Index"], value))
+				column.append("`INDEX`,");
 			if (appendEntry(skill["Name"], value, true))
 				column.append("`SKILL_NAME`,");
 			if (appendEntry(skill["Level"], value))

@@ -6194,38 +6194,36 @@ void MobSkillDatabase::loadingFinished() {
  * @param str: Array of parsed SQL data
  * @return True on success or false otherwise
  */
-static bool mob_read_sqlskilldb_sub(std::vector<std::string> str, uint16 skill_index) {
+static bool mob_read_sqlskilldb_sub(std::vector<std::string> str) {
 	YAML::Node node;
 	int32 index = -1;
 
-	if (!str[++index].empty())
-		node["Mob"] = str[index];
+	node["Mob"] = str[++index];
 
 	YAML::Node skill;
 
-	skill["Index"] = skill_index;
+	skill["Index"] = std::stoi(str[++index]);
+	skill["Name"] = str[++index];
 
-	if (!str[++index].empty())
-		skill["Name"] = str[index];
-	if (!str[++index].empty() && std::stoi(str[index]) > 1)
+	if (!str[++index].empty() && std::stoi(str[index]) > 0)
 		skill["Level"] = std::stoi(str[index]);
-	if (!str[++index].empty())
+	if (!str[++index].empty() && str[index] != "MSS_BERSERK")
 		skill["State"] = str[index];
-	if (!str[++index].empty() && std::stoul(str[index]) > 1)
+	if (!str[++index].empty() && std::stoul(str[index]) != 10000)
 		skill["CastRate"] = std::stoul(str[index]);
-	if (!str[++index].empty() && std::stoul(str[index]) > 1)
+	if (!str[++index].empty() && std::stoul(str[index]) != 0)
 		skill["CastTime"] = std::stoul(str[index]);
-	if (!str[++index].empty() && std::stoul(str[index]) > 1)
+	if (!str[++index].empty() && std::stoul(str[index]) != 5000)
 		skill["CastDelay"] = std::stoul(str[index]);
 	if (!str[++index].empty())
 		skill["CastCancel"] = std::stoi(str[index]) ? "true" : "false";
-	if (!str[++index].empty())
+	if (!str[++index].empty() && str[index] != "MST_TARGET")
 		skill["Target"] = str[index];
-	if (!str[++index].empty())
+	if (!str[++index].empty() && str[index] != "MSC_ALWAYS")
 		skill["Condition"] = str[index];
 	if (!str[++index].empty())
 		skill["ConditionValue1"] = str[index];
-	if (!str[++index].empty() && std::stoi(str[index]) > 1)
+	if (!str[++index].empty() && std::stoi(str[index]) != 0)
 		skill["ConditionValue2"] = std::stoi(str[index]);
 	if (!str[++index].empty())
 		skill["Ai"] = str[index];
@@ -6241,12 +6239,12 @@ static bool mob_read_sqlskilldb_sub(std::vector<std::string> str, uint16 skill_i
 		}
 	}
 	
-	if (!str[++index].empty())
+	if (!str[++index].empty() && str[index] != "ET_NONE")
 		skill["Emotion"] = str[index];
-	if (!str[++index].empty())
-		skill["Chat"] = str[index];
+	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+		skill["Chat"] = std::stoi(str[index]);
 
-	node["Skills"] = skill;
+	node["Skills"][0] = skill;
 
 	return mob_skill_db.parseBodyNode(node) > 0;
 }
@@ -6285,7 +6283,7 @@ static int mob_read_sqlskilldb(void)
 					data.push_back(str);
 			}
 
-			if (!mob_read_sqlskilldb_sub(data, count))
+			if (!mob_read_sqlskilldb_sub(data))
 				continue;
 
 			count++;
