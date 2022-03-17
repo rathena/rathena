@@ -10258,6 +10258,9 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 		status_change_end(&sd->bl, SC_SPRITEMABLE, INVALID_TIMER);
 	if (sd->sc.data[SC_SOULATTACK] && !pc_checkskill(sd, SU_SOULATTACK))
 		status_change_end(&sd->bl, SC_SOULATTACK, INVALID_TIMER);
+	if( sd->sc.data[SC_SPIRIT] ){
+		status_change_end( &sd->bl, SC_SPIRIT, INVALID_TIMER );
+	}
 
 	if(sd->status.manner < 0)
 		clif_changestatus(sd,SP_MANNER,sd->status.manner);

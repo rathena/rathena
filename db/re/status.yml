@@ -1862,7 +1862,7 @@ Body:
       NoClearance: true
       NoSave: true
       NoBanishingBuster: true
-    End:
+    Fail:
       Soulgolem: true
       Soulshadow: true
       Soulfalcon: true
@@ -6975,7 +6975,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    Fail:
       Spirit: true
       Soulgolem: true
       Soulfalcon: true
@@ -6990,7 +6990,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    Fail:
       Spirit: true
       Soulgolem: true
       Soulshadow: true
@@ -7006,7 +7006,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    Fail:
       Spirit: true
       Soulgolem: true
       Soulshadow: true
@@ -7022,7 +7022,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-    End:
+    Fail:
       Spirit: true
       Soulshadow: true
       Soulfalcon: true
