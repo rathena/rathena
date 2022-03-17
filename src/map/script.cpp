@@ -13460,8 +13460,8 @@ BUILDIN_FUNC(getequipcardcnt)
 	}
 
 	count = 0;
-	for (j = 0; j < sd->inventory_data[i]->slots; j++)
-		if (sd->inventory.u.items_inventory[i].card[j] && itemdb_type(sd->inventory.u.items_inventory[i].card[j]) == IT_CARD)
+	for( j = 0; j < sd->inventory_data[i]->slots; j++ )
+		if( sd->inventory.u.items_inventory[i].card[j] && itemdb_type(sd->inventory.u.items_inventory[i].card[j]) == IT_CARD )
 			count++;
 
 	script_pushint(st,count);
