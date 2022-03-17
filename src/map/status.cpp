@@ -1557,7 +1557,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 			(src->type != BL_PC || ((TBL_PC*)src)->skillitem != skill_id)
 		) {	// Skills blocked through status changes...
 			if (!flag && ( // Blocked only from using the skill (stuff like autospell may still go through
-				sc->cant.cast ||
+				( sc->cant.cast && skill_id != RK_REFRESH && skill_id != SU_GROOMING && skill_id != SR_GENTLETOUCH_CURE ) ||
 #ifndef RENEWAL
 				(sc->data[SC_BASILICA] && (sc->data[SC_BASILICA]->val4 != src->id || skill_id != HP_BASILICA)) || // Only Basilica caster that can cast, and only Basilica to cancel it
 #endif
