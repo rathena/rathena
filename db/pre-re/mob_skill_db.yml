@@ -39904,7 +39904,7 @@ Body:
         CastCancel: true
         Target: TARGET
         Condition: ALWAYS
-        Ai: 04
+        # Ai: 04
         Emotion: ET_ANGER
       - Index: 23
         Name: NPC_ALLHEAL
@@ -57199,7 +57199,7 @@ Body:
         CastCancel: false
         Target: TARGET
         Condition: ALWAYS
-  - Mob: SENTRY
+  - Mob: BOMBPORING
     Skills:
       - Index: 0
         Name: NPC_SELFDESTRUCTION
