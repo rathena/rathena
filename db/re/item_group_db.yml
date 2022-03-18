@@ -15722,7 +15722,7 @@ Body:
         List:
           - Item: Actinidia_Cat_Fruit
             Rate: 1
-          - Item: World_Moving_Rights
+          - Item: World_Tour_Ticket
             Rate: 1
   - Group: PRIZEOFHERO
     SubGroups:
@@ -24984,9 +24984,9 @@ Body:
             Rate: 73
           - Item: S_Tempest_Armor
             Rate: 73
-          - Item: S_Perfect_Size_Weapon
+          - Item: S_PerfectSize_Weapon
             Rate: 73
-          - Item: S_Perfect_Size_Armor
+          - Item: S_PerfectSize_Armor
             Rate: 73
           - Item: S_M_Exo_Co_Weapon
             Rate: 73
@@ -27442,9 +27442,9 @@ Body:
     SubGroups:
       - SubGroup: 1
         List:
-          - Item: S_Perfect_Size_Weapon
+          - Item: S_PerfectSize_Weapon
             Rate: 1
-          - Item: S_Perfect_Size_Armor
+          - Item: S_PerfectSize_Armor
             Rate: 1
   - Group: MAGICPIERCING_MIX
     SubGroups:
@@ -27497,3 +27497,1104 @@ Body:
             Rate: 1
           - Item: Enchant_Stone_Box19
             Rate: 1
+  - Group: ANGELPORING_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: AngelPoring_Boots
+      - SubGroup: 1
+        List:
+          - Item: Leo_Stone
+            Rate: 1667
+          - Item: Pisces_Stone
+            Rate: 1667
+          - Item: Capricorn_Stone
+            Rate: 1667
+          - Item: Aquarius_Stone
+            Rate: 1667
+          - Item: Scorpio_Stone
+            Rate: 1667
+          - Item: Taurus_Stone
+            Rate: 1667
+  - Group: SHADOW_CUBE_PENDANT
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_Physical_Pendant
+            Rate: 278
+          - Item: S_Magical_Pendant
+            Rate: 278
+          - Item: S_Int_Pendant
+            Rate: 278
+          - Item: S_Power_Pendant
+            Rate: 278
+          - Item: S_Resist_Spell_Pendant
+            Rate: 278
+          - Item: S_Rapid_Pendant
+            Rate: 278
+          - Item: S_Caster_Pendant
+            Rate: 278
+          - Item: S_Spiritual_Pendent
+            Rate: 278
+          - Item: S_Gemstone_Pendent
+            Rate: 278
+          - Item: Unfreeze_Pendent_S
+            Rate: 278
+          - Item: Vitality_Pendant_S
+            Rate: 278
+          - Item: S_Neutral_Pendent
+            Rate: 278
+          - Item: S_Curse_Lift_Pendent
+            Rate: 278
+          - Item: S_Greed_Pendant
+            Rate: 278
+          - Item: S_Heal_Pendant
+            Rate: 278
+          - Item: S_Hiding_Pendant
+            Rate: 278
+          - Item: S_Cloaking_Pendant
+            Rate: 278
+          - Item: S_Teleport_Pendant
+            Rate: 278
+          - Item: S_Steal_Pendant
+            Rate: 278
+          - Item: S_Infinity_Pendant
+            Rate: 278
+          - Item: S_Immortal_Pendant
+            Rate: 278
+          - Item: S_Penetration_Pendent
+            Rate: 278
+          - Item: S_Tempest_Pendent
+            Rate: 278
+          - Item: S_Bearers_Pendent
+            Rate: 278
+          - Item: S_Blitz_Pendent
+            Rate: 278
+          - Item: S_Force_Pendant
+            Rate: 278
+          - Item: S_Spirit_Pendant
+            Rate: 278
+          - Item: S_Titan_Pendant
+            Rate: 278
+          - Item: S_Boned_Pendant
+            Rate: 278
+          - Item: S_Gigantic_Pendant
+            Rate: 278
+          - Item: S_Tension_Pendent
+            Rate: 278
+          - Item: S_Elegant_Pendent
+            Rate: 278
+          - Item: S_Restore_Pendant
+            Rate: 278
+          - Item: S_Mortal_Blow_Pendant
+            Rate: 278
+          - Item: Sentimental_Pendant_S
+            Rate: 278
+          - Item: Enchanting_Pendant_S
+            Rate: 278
+  - Group: SHADOW_CUBE_EARING
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_Physical_Earring
+            Rate: 270
+          - Item: S_Magical_Earring
+            Rate: 270
+          - Item: S_Power_Earring
+            Rate: 270
+          - Item: S_Int_Earring
+            Rate: 270
+          - Item: S_Hard_Earring
+            Rate: 270
+          - Item: S_Wise_Earring
+            Rate: 270
+          - Item: S_Athena_Earring
+            Rate: 270
+          - Item: S_Spiritual_Earring
+            Rate: 270
+          - Item: S_Gemstone_Earring
+            Rate: 270
+          - Item: Unfreeze_Earing_S
+            Rate: 270
+          - Item: Vitality_Earing_S
+            Rate: 270
+          - Item: S_Neutral_Earring
+            Rate: 270
+          - Item: S_Curse_Lift_Earring
+            Rate: 270
+          - Item: S_Caster_earring
+            Rate: 270
+          - Item: S_Greed_Earring
+            Rate: 270
+          - Item: S_Heal_Earring
+            Rate: 270
+          - Item: S_Hiding_Earring
+            Rate: 270
+          - Item: S_Cloaking_Earring
+            Rate: 270
+          - Item: S_Teleport_Earring
+            Rate: 270
+          - Item: S_Steal_Earring
+            Rate: 270
+          - Item: S_Infinity_Earring
+            Rate: 270
+          - Item: S_Solid_Earring
+            Rate: 270
+          - Item: S_Penetration_Earring
+            Rate: 270
+          - Item: S_Tempest_Earring
+            Rate: 270
+          - Item: S_Bearers_Earring
+            Rate: 270
+          - Item: S_Blitz_Earring
+            Rate: 270
+          - Item: S_Force_Earring
+            Rate: 270
+          - Item: S_Spirit_Earring
+            Rate: 270
+          - Item: S_Titan_Earring
+            Rate: 270
+          - Item: S_Boned_Earring
+            Rate: 270
+          - Item: S_Gigantic_Earring
+            Rate: 270
+          - Item: S_Tension_Earring
+            Rate: 270
+          - Item: S_Elegant_Earring
+            Rate: 270
+          - Item: S_Restore_Earring
+            Rate: 270
+          - Item: S_Mortal_Blow_Earring
+            Rate: 270
+          - Item: Sentimental_Earring_S
+            Rate: 270
+          - Item: Enchanting_Earring_S
+            Rate: 270
+  - Group: SHADOW_CUBE
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_Runeknight_Weapon
+            Rate: 4
+          - Item: S_Royalguard_Weapon
+            Rate: 4
+          - Item: S_Mechanic_weapon
+            Rate: 4
+          - Item: S_Genetic_Weapon
+            Rate: 4
+          - Item: S_Archbishop_Weapon
+            Rate: 4
+          - Item: S_Sura_weapon
+            Rate: 4
+          - Item: S_Guillotine_Weapon
+            Rate: 4
+          - Item: S_Shadowchaser_Weapon
+            Rate: 4
+          - Item: S_Warlock_Weapon
+            Rate: 4
+          - Item: S_Sorcerer_Weapon
+            Rate: 4
+          - Item: S_Ranger_Weapon
+            Rate: 4
+          - Item: S_Minstrel_Weapon
+            Rate: 4
+          - Item: S_Wanderer_Weapon
+            Rate: 4
+          - Item: S_Runeknight_Shield
+            Rate: 4
+          - Item: S_Royalguard_Shield
+            Rate: 4
+          - Item: S_Mechanic_Shield
+            Rate: 4
+          - Item: S_Genetic_Shield
+            Rate: 4
+          - Item: S_Archbishop_Shield
+            Rate: 4
+          - Item: S_Sura_Shield
+            Rate: 4
+          - Item: S_Guillotine_Shield
+            Rate: 4
+          - Item: S_Shadowchaser_Shield
+            Rate: 4
+          - Item: S_Warlock_Shield
+            Rate: 4
+          - Item: S_Sorcerer_Shield
+            Rate: 4
+          - Item: S_Ranger_Shield
+            Rate: 4
+          - Item: S_Minstrel_Shield
+            Rate: 4
+          - Item: S_Wanderer_Shield
+            Rate: 4
+          - Item: S_Hasty_Shoes_II
+            Rate: 4
+          - Item: S_Bearer's_Pendant_II
+            Rate: 4
+          - Item: S_Gemstone_Earring_II
+            Rate: 4
+          - Item: S_Spellflow_Shield_II
+            Rate: 4
+          - Item: S_Spiritual_Weapon_II
+            Rate: 4
+          - Item: S_Malicious_Armor_II
+            Rate: 4
+          - Item: S_Sigrun_Armor
+            Rate: 4
+          - Item: S_Sigrun_Shield
+            Rate: 4
+          - Item: S_Force_Executioner_Weapon
+            Rate: 4
+          - Item: S_Spirit_Magic_Executioner_Weapon
+            Rate: 4
+          - Item: S_Caster_Armor_II
+            Rate: 4
+          - Item: S_Reload_Armor_II
+            Rate: 4
+          - Item: S_Magic_Compose_Armor
+            Rate: 4
+          - Item: S_Gemstone_Weapon_II
+            Rate: 4
+          - Item: S_Gemstone_Shield_II
+            Rate: 4
+          - Item: S_Bearer's_Armor_II
+            Rate: 4
+          - Item: S_Bearer's_Shoes_II
+            Rate: 4
+          - Item: S_Almighty_Earring
+            Rate: 4
+          - Item: S_Almighty_Pendant
+            Rate: 4
+          - Item: S_All_Race_Shoes
+            Rate: 4
+          - Item: S_All_Race_Shield
+            Rate: 4
+          - Item: S_Tempest_Shield
+            Rate: 4
+          - Item: S_Tempest_Shoes
+            Rate: 4
+          - Item: S_Magic_Executioner_Holy_Water_Armor
+            Rate: 4
+          - Item: S_Magic_Exorcist_Corrupted_Armor
+            Rate: 4
+          - Item: S_Magic_Vibration_Dragon_Killer_Armor
+            Rate: 4
+          - Item: S_Magic_Scissor_Hunting_Armor
+            Rate: 4
+          - Item: S_Magic_Fishing_Insect_Net_Armor
+            Rate: 4
+          - Item: S_Plasterer's_Armor_II
+            Rate: 4
+          - Item: S_Insomniac_Shoes_II
+            Rate: 4
+          - Item: S_Peerless_Armor_II
+            Rate: 4
+          - Item: S_Adulate_Shoes_II
+            Rate: 4
+          - Item: S_Unfreezing_Weapon_II
+            Rate: 4
+          - Item: S_Vitality_Earring_II
+            Rate: 4
+          - Item: S_Neutral_Weapon_II
+            Rate: 4
+          - Item: S_Uncursed_Pendant_II
+            Rate: 4
+          - Item: S_Penetration_Shoes
+            Rate: 4
+          - Item: S_Penetration_Shield
+            Rate: 4
+          - Item: S_Executioner_Holy_Water_Armor
+            Rate: 4
+          - Item: S_Exorcist_Corrupted_Armor
+            Rate: 4
+          - Item: S_Vibration_Dragon_Killer_Armor
+            Rate: 4
+          - Item: S_Scissor_Hunting_Armor
+            Rate: 4
+          - Item: S_Fishing_Insect_Net_Armor
+            Rate: 4
+          - Item: S_Infinity_Weapon
+            Rate: 4
+          - Item: S_Physical_Shoes
+            Rate: 4
+          - Item: S_Physical_Shield
+            Rate: 4
+          - Item: S_Physical_Armor
+            Rate: 4
+          - Item: S_Magical_Shoes
+            Rate: 4
+          - Item: S_Magical_Shield
+            Rate: 4
+          - Item: S_Magical_Armor
+            Rate: 4
+          - Item: S_Immune_Athena_Shield
+            Rate: 4
+          - Item: S_Hard_Champion_Shoes
+            Rate: 4
+          - Item: S_Kingbird_Ancient_Armor
+            Rate: 4
+          - Item: S_Rebellion_Armor
+            Rate: 4
+          - Item: S_Kagerou_Armor
+            Rate: 4
+          - Item: S_Oboro_Armor
+            Rate: 4
+          - Item: S_Rebellion_Shoes
+            Rate: 4
+          - Item: S_Kagerou_Shoes
+            Rate: 4
+          - Item: S_Oboro_Shoes
+            Rate: 4
+          - Item: S_DoramPhysical_Armor
+            Rate: 4
+          - Item: S_DoramPhysical_Shoes
+            Rate: 4
+          - Item: S_DoramMagical_Armor
+            Rate: 4
+          - Item: S_DoramMagical_Shoes
+            Rate: 4
+          - Item: S_Knight_Shoes
+            Rate: 17
+          - Item: S_Crusader_Shoes
+            Rate: 17
+          - Item: S_Blacksmith_Shoes
+            Rate: 17
+          - Item: S_Alchemist_Shoes
+            Rate: 17
+          - Item: S_Priest_Shoes
+            Rate: 17
+          - Item: S_Monk_Shoes
+            Rate: 17
+          - Item: S_Assassin_Shoes
+            Rate: 17
+          - Item: S_Rogue_Shoes
+            Rate: 17
+          - Item: S_Wizard_Shoes
+            Rate: 17
+          - Item: S_Sage_Shoes
+            Rate: 17
+          - Item: S_Hunter_Shoes
+            Rate: 17
+          - Item: S_Bard_Shoes
+            Rate: 17
+          - Item: S_Dancer_Shoes
+            Rate: 17
+          - Item: S_Knight_Armor
+            Rate: 17
+          - Item: S_Crusader_Armor
+            Rate: 17
+          - Item: S_Blacksmith_Armor
+            Rate: 17
+          - Item: S_Alchemist_Armor
+            Rate: 17
+          - Item: S_Priest_Armor
+            Rate: 17
+          - Item: S_Monk_Armor
+            Rate: 17
+          - Item: S_Assassin_Armor
+            Rate: 17
+          - Item: S_Rogue_Armor
+            Rate: 17
+          - Item: S_Wizard_Armor
+            Rate: 17
+          - Item: S_Sage_Armor
+            Rate: 17
+          - Item: S_Hunter_Armor
+            Rate: 17
+          - Item: S_Bard_Armor
+            Rate: 17
+          - Item: S_Dancer_Armor
+            Rate: 17
+          - Item: S_SuperNovice_Weapon
+            Rate: 17
+          - Item: S_Gunslinger_Weapon
+            Rate: 17
+          - Item: S_Taekwon_Weapon
+            Rate: 17
+          - Item: S_Ninja_Weapon
+            Rate: 17
+          - Item: S_DoramMagical_Weapon
+            Rate: 17
+          - Item: S_DoramPhysical_Weapon
+            Rate: 17
+          - Item: S_Ninja_Shield
+            Rate: 17
+          - Item: S_Taekwon_Shield
+            Rate: 17
+          - Item: S_DoramPhysical_Shield
+            Rate: 17
+          - Item: S_DoramMagical_Shield
+            Rate: 17
+          - Item: S_SuperNovice_Shield
+            Rate: 17
+          - Item: S_Gunslinger_Shield
+            Rate: 17
+          - Item: S_Promotion_Weapon
+            Rate: 33
+          - Item: S_Promotion_Armor
+            Rate: 33
+          - Item: S_Promotion_Shoes
+            Rate: 33
+          - Item: S_Promotion_Shield
+            Rate: 33
+          - Item: S_Promotion_Earring
+            Rate: 33
+          - Item: S_Promotion_Pendant
+            Rate: 33
+          - Item: S_Physical_Earring
+            Rate: 33
+          - Item: S_Physical_Weapon
+            Rate: 33
+          - Item: S_Physical_Pendant
+            Rate: 33
+          - Item: S_Magical_Earring
+            Rate: 33
+          - Item: S_Magical_Weapon
+            Rate: 33
+          - Item: S_Magical_Pendant
+            Rate: 33
+          - Item: S_Breezy_Armor
+            Rate: 33
+          - Item: S_Champion_Shoes
+            Rate: 33
+          - Item: S_Athena_Shield
+            Rate: 33
+          - Item: S_Immune_Armor
+            Rate: 33
+          - Item: S_Hard_Armor
+            Rate: 33
+          - Item: S_Ancient_Armor
+            Rate: 33
+          - Item: S_Critical_Armor
+            Rate: 33
+          - Item: S_Kingbird_Weapon
+            Rate: 33
+          - Item: S_Cri_Hit_Weapon
+            Rate: 33
+          - Item: S_Healing_Weapon
+            Rate: 33
+          - Item: S_Lucky_Weapon
+            Rate: 33
+          - Item: S_Power_Earring
+            Rate: 33
+          - Item: S_Int_Pendant
+            Rate: 33
+          - Item: S_Dexterous_Armor
+            Rate: 33
+          - Item: S_Vital_Shoes
+            Rate: 33
+          - Item: S_Athletic_Shield
+            Rate: 33
+          - Item: S_Lucky_Armor
+            Rate: 33
+          - Item: S_Power_Pendant
+            Rate: 33
+          - Item: S_Int_Earring
+            Rate: 33
+          - Item: S_Dexterous_Weapon
+            Rate: 33
+          - Item: S_Vital_Shield
+            Rate: 33
+          - Item: S_Athletic_Shoes
+            Rate: 33
+          - Item: S_Resist_Spell_Pendant
+            Rate: 33
+          - Item: S_Rapid_Pendant
+            Rate: 33
+          - Item: S_Caster_Pendant
+            Rate: 33
+          - Item: S_Hard_Earring
+            Rate: 33
+          - Item: S_Wise_Earring
+            Rate: 33
+          - Item: S_Athena_Earring
+            Rate: 33
+          - Item: S_Cranial_Shield
+            Rate: 33
+          - Item: S_Safeguard_Shield
+            Rate: 33
+          - Item: S_Brutal_Shield
+            Rate: 33
+          - Item: S_Gargantua_Shield
+            Rate: 33
+          - Item: S_Homers_Shield
+            Rate: 33
+          - Item: S_Dragoon_Shield
+            Rate: 33
+          - Item: S_Satanic_Shield
+            Rate: 33
+          - Item: S_Flameguard_Shield
+            Rate: 33
+          - Item: S_Requiem_Shield
+            Rate: 33
+          - Item: S_Cadi_Shield
+            Rate: 33
+          - Item: S_Bloody_Shoes
+            Rate: 33
+          - Item: S_Liberation_Shoes
+            Rate: 33
+          - Item: S_Chemical_Shoes
+            Rate: 33
+          - Item: S_Clamorous_Shoes
+            Rate: 33
+          - Item: S_Insecticide_Shoes
+            Rate: 33
+          - Item: S_Fisher_Shoes
+            Rate: 33
+          - Item: S_Seraphim_Shoes
+            Rate: 33
+          - Item: S_Beholder_Shoes
+            Rate: 33
+          - Item: S_Divine_Shoes
+            Rate: 33
+          - Item: S_Dragoon_Shoes
+            Rate: 33
+          - Item: S_Big_Armor
+            Rate: 33
+          - Item: S_Medium_Armor
+            Rate: 33
+          - Item: S_Small_Armor
+            Rate: 33
+          - Item: S_Big_Weapon
+            Rate: 33
+          - Item: S_Medium_Weapon
+            Rate: 33
+          - Item: S_Small_Weapon
+            Rate: 33
+          - Item: S_Spiritual_Weapon
+            Rate: 33
+          - Item: S_Spiritual_Earring
+            Rate: 33
+          - Item: S_Spiritual_Pendent
+            Rate: 33
+          - Item: S_Malicious_Armor
+            Rate: 33
+          - Item: S_Malicious_Shoes
+            Rate: 33
+          - Item: S_Malicious_Shield
+            Rate: 33
+          - Item: S_Gemstone_Armor
+            Rate: 33
+          - Item: S_Gemstone_Shoes
+            Rate: 33
+          - Item: S_Gemstone_Shield
+            Rate: 33
+          - Item: S_Gemstone_Weapon
+            Rate: 33
+          - Item: S_Gemstone_Earring
+            Rate: 33
+          - Item: S_Gemstone_Pendent
+            Rate: 33
+          - Item: S_Stability_Shield
+            Rate: 33
+          - Item: S_Plasterer's_Armor
+            Rate: 33
+          - Item: S_Plasterer's_Shoes
+            Rate: 33
+          - Item: S_Insomniac_Armor
+            Rate: 33
+          - Item: S_Insomniac_Shoes
+            Rate: 33
+          - Item: S_Peerless_Armor
+            Rate: 33
+          - Item: S_Peerless_Shoes
+            Rate: 33
+          - Item: S_Adurate_Armor
+            Rate: 33
+          - Item: S_Adurate_Shoes
+            Rate: 33
+          - Item: Unfreez_Weapon_S
+            Rate: 33
+          - Item: Unfreeze_Earing_S
+            Rate: 33
+          - Item: Unfreeze_Pendent_S
+            Rate: 33
+          - Item: Vitality_Earing_S
+            Rate: 33
+          - Item: Vitality_Pendant_S
+            Rate: 33
+          - Item: S_Neutral_Weapon
+            Rate: 33
+          - Item: S_Neutral_Earring
+            Rate: 33
+          - Item: S_Neutral_Pendent
+            Rate: 33
+          - Item: S_Curse_Lift_Earring
+            Rate: 33
+          - Item: S_Curse_Lift_Pendent
+            Rate: 33
+          - Item: S_Caster_earring
+            Rate: 33
+          - Item: S_Caster_Weapon
+            Rate: 33
+          - Item: S_Spell_Flow_Shoes
+            Rate: 33
+          - Item: S_Spell_Flow_Armor
+            Rate: 33
+          - Item: S_Spell_Flow_Shield
+            Rate: 33
+          - Item: S_Greed_Armor
+            Rate: 33
+          - Item: S_Greed_Shoes
+            Rate: 33
+          - Item: S_Greed_Shield
+            Rate: 33
+          - Item: S_Greed_Weapon
+            Rate: 33
+          - Item: S_Greed_Earring
+            Rate: 33
+          - Item: S_Greed_Pendant
+            Rate: 33
+          - Item: S_Heal_Armor
+            Rate: 33
+          - Item: S_Heal_Shoes
+            Rate: 33
+          - Item: S_Heal_Shield
+            Rate: 33
+          - Item: S_Heal_Weapon
+            Rate: 33
+          - Item: S_Heal_Earring
+            Rate: 33
+          - Item: S_Heal_Pendant
+            Rate: 33
+          - Item: S_Hiding_Armor
+            Rate: 33
+          - Item: S_Hiding_Shoes
+            Rate: 33
+          - Item: S_Hiding_Shield
+            Rate: 33
+          - Item: S_Hiding_Weapon
+            Rate: 33
+          - Item: S_Hiding_Earring
+            Rate: 33
+          - Item: S_Hiding_Pendant
+            Rate: 33
+          - Item: S_Cloaking_Armor
+            Rate: 33
+          - Item: S_Cloaking_Shoes
+            Rate: 33
+          - Item: S_Cloaking_Shield
+            Rate: 33
+          - Item: S_Cloaking_Weapon
+            Rate: 33
+          - Item: S_Cloaking_Earring
+            Rate: 33
+          - Item: S_Cloaking_Pendant
+            Rate: 33
+          - Item: S_Teleport_Armor
+            Rate: 33
+          - Item: S_Teleport_Shoes
+            Rate: 33
+          - Item: S_Teleport_Shield
+            Rate: 33
+          - Item: S_Teleport_Weapon
+            Rate: 33
+          - Item: S_Teleport_Earring
+            Rate: 33
+          - Item: S_Teleport_Pendant
+            Rate: 33
+          - Item: S_Steal_Armor
+            Rate: 33
+          - Item: S_Steal_Shoes
+            Rate: 33
+          - Item: S_Steal_Shield
+            Rate: 33
+          - Item: S_Steal_Weapon
+            Rate: 33
+          - Item: S_Steal_Earring
+            Rate: 33
+          - Item: S_Steal_Pendant
+            Rate: 33
+          - Item: S_Infinity_Earring
+            Rate: 33
+          - Item: S_Infinity_Pendant
+            Rate: 33
+          - Item: S_Solid_Weapon
+            Rate: 33
+          - Item: S_Solid_Earring
+            Rate: 33
+          - Item: S_Immortal_Armor
+            Rate: 33
+          - Item: S_Immortal_Pendant
+            Rate: 33
+          - Item: S_Executioner_Weapon
+            Rate: 33
+          - Item: S_Exorcist_Weapon
+            Rate: 33
+          - Item: S_Hunting_Weapon
+            Rate: 33
+          - Item: S_Insect_Net_Weapon
+            Rate: 33
+          - Item: S_Fishing_Weapon
+            Rate: 33
+          - Item: S_Dragon_Killer_Weapon
+            Rate: 33
+          - Item: S_Corrupt_Weapon
+            Rate: 33
+          - Item: S_Vibration_Weapon
+            Rate: 33
+          - Item: S_Holy_Water_Weapon
+            Rate: 33
+          - Item: S_Scissors_Weapon
+            Rate: 33
+          - Item: S_Penetration_Earring
+            Rate: 33
+          - Item: S_Penetration_Pendent
+            Rate: 33
+          - Item: S_Tempest_Earring
+            Rate: 33
+          - Item: S_Tempest_Pendent
+            Rate: 33
+          - Item: S_M_Executioner_Weapon
+            Rate: 33
+          - Item: S_M_Exorcist_Weapon
+            Rate: 33
+          - Item: S_M_Hunting_Weapon
+            Rate: 33
+          - Item: S_M_Insect_Net_Weapon
+            Rate: 33
+          - Item: S_M_Fishing_Weapon
+            Rate: 33
+          - Item: S_M_Dragon_K_Weapon
+            Rate: 33
+          - Item: S_M_Corrupt_Weapon
+            Rate: 33
+          - Item: S_M_Vibration_Weapon
+            Rate: 33
+          - Item: S_M_Holy_Water_Weapon
+            Rate: 33
+          - Item: S_M_Scissors_Weapon
+            Rate: 33
+          - Item: S_Bearers_Armor
+            Rate: 33
+          - Item: S_Bearers_Shoes
+            Rate: 33
+          - Item: S_Bearers_Shield
+            Rate: 33
+          - Item: S_Bearers_Weapon
+            Rate: 33
+          - Item: S_Bearers_Earring
+            Rate: 33
+          - Item: S_Bearers_Pendent
+            Rate: 33
+          - Item: S_Basis_Armor
+            Rate: 33
+          - Item: S_Hallowed_Armor
+            Rate: 33
+          - Item: S_Saharic_Armor
+            Rate: 33
+          - Item: S_Underneath_Armor
+            Rate: 33
+          - Item: S_Flam_Armor
+            Rate: 33
+          - Item: S_Windy_Armor
+            Rate: 33
+          - Item: S_Envenom_Armor
+            Rate: 33
+          - Item: S_Damned_Armor
+            Rate: 33
+          - Item: S_Geist_Armor
+            Rate: 33
+          - Item: S_Divine_Armor
+            Rate: 33
+          - Item: S_Hasty_Shoes
+            Rate: 33
+          - Item: S_Hasty_Armor
+            Rate: 33
+          - Item: S_Basis_Shield
+            Rate: 33
+          - Item: S_Hallowed_Shield
+            Rate: 33
+          - Item: S_Saharic_Shield
+            Rate: 33
+          - Item: S_Underneath_Shield
+            Rate: 33
+          - Item: S_Flam_Shield
+            Rate: 33
+          - Item: S_Windy_Shield
+            Rate: 33
+          - Item: S_Envenom_Shield
+            Rate: 33
+          - Item: S_Damned_Shield
+            Rate: 33
+          - Item: S_Geist_Shield
+            Rate: 33
+          - Item: S_Divine_Shield
+            Rate: 33
+          - Item: S_Expert_Shoes
+            Rate: 33
+          - Item: S_Expert_Shield
+            Rate: 33
+          - Item: S_Beginner_Shoes
+            Rate: 33
+          - Item: S_Beginner_Shield
+            Rate: 33
+          - Item: S_Rookie_Shoes
+            Rate: 33
+          - Item: S_Rookie_Shield
+            Rate: 33
+          - Item: S_Advanced_Shoes
+            Rate: 33
+          - Item: S_Advanced_Shield
+            Rate: 33
+          - Item: S_Attack_Armor
+            Rate: 33
+          - Item: S_Blitz_Earring
+            Rate: 33
+          - Item: S_Blitz_Pendent
+            Rate: 33
+          - Item: S_ColdBolt_Armor
+            Rate: 33
+          - Item: S_FireBolt_Armor
+            Rate: 33
+          - Item: S_LightingBolt_Armor
+            Rate: 33
+          - Item: S_EarthSpike_Armor
+            Rate: 33
+          - Item: S_Enhance_Force_Weapon
+            Rate: 33
+          - Item: S_Force_Weapon
+            Rate: 33
+          - Item: S_Force_Earring
+            Rate: 33
+          - Item: S_Force_Pendant
+            Rate: 33
+          - Item: S_Enhance_Spirit_Weapon
+            Rate: 33
+          - Item: S_Spirit_Weapon
+            Rate: 33
+          - Item: S_Spirit_Earring
+            Rate: 33
+          - Item: S_Spirit_Pendant
+            Rate: 33
+          - Item: S_Blitz_Shoes
+            Rate: 33
+          - Item: S_Blitz_Shield
+            Rate: 33
+          - Item: S_Exceed_Weapon
+            Rate: 33
+          - Item: S_Titan_Earring
+            Rate: 33
+          - Item: S_Titan_Pendant
+            Rate: 33
+          - Item: S_Boned_Earring
+            Rate: 33
+          - Item: S_Boned_Pendant
+            Rate: 33
+          - Item: S_Gigantic_Earring
+            Rate: 33
+          - Item: S_Gigantic_Pendant
+            Rate: 33
+          - Item: S_Caster_Shoes
+            Rate: 33
+          - Item: S_Caster_Shield
+            Rate: 33
+          - Item: S_Caster_Armor
+            Rate: 33
+          - Item: S_Reload_Shoes
+            Rate: 33
+          - Item: S_Reload_Shield
+            Rate: 33
+          - Item: S_Reload_Armor
+            Rate: 33
+          - Item: S_Swordman_earring
+            Rate: 33
+          - Item: S_Merchant_earring
+            Rate: 33
+          - Item: S_Acolyte_earring
+            Rate: 33
+          - Item: S_Magician_earring
+            Rate: 33
+          - Item: S_Swordman_Pendant
+            Rate: 33
+          - Item: S_Merchant_Pendant
+            Rate: 33
+          - Item: S_Acolyte_Pendant
+            Rate: 33
+          - Item: S_Thief_Pendant
+            Rate: 33
+          - Item: S_Magician_Pendant
+            Rate: 33
+          - Item: S_Archer_Pendant
+            Rate: 33
+          - Item: S_Critical_Shield
+            Rate: 33
+          - Item: S_Critical_Shoes
+            Rate: 33
+          - Item: S_Blitz_Weapon
+            Rate: 33
+          - Item: S_Blitz_Armor
+            Rate: 33
+          - Item: S_Tension_Weapon
+            Rate: 33
+          - Item: S_Tension_Earring
+            Rate: 33
+          - Item: S_Tension_Pendent
+            Rate: 33
+          - Item: S_Elegant_Weapon
+            Rate: 33
+          - Item: S_Elegant_Earring
+            Rate: 33
+          - Item: S_Elegant_Pendent
+            Rate: 33
+          - Item: S_Healing_Shield
+            Rate: 33
+          - Item: S_Healing_Shoes
+            Rate: 33
+          - Item: S_Restore_Earring
+            Rate: 33
+          - Item: S_Restore_Pendant
+            Rate: 33
+          - Item: S_Mortal_Blow_Weapon
+            Rate: 33
+          - Item: S_Mortal_Blow_Earring
+            Rate: 33
+          - Item: S_Mortal_Blow_Pendant
+            Rate: 33
+          - Item: Sentimental_Weapone_S
+            Rate: 33
+          - Item: Sentimental_Earring_S
+            Rate: 33
+          - Item: Sentimental_Pendant_S
+            Rate: 33
+          - Item: Enchanting_Weapone_S
+            Rate: 33
+          - Item: Enchanting_Earring_S
+            Rate: 33
+          - Item: Enchanting_Pendant_S
+            Rate: 33
+          - Item: S_Thief_earring
+            Rate: 33
+          - Item: S_Archer_earring
+            Rate: 33
+  - Group: HELM_OF_FAITH_BOX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Viva_Adul_Hat_WL1
+            Rate: 1
+          - Item: Viva_Adul_Hat_WL2
+            Rate: 1
+          - Item: Viva_Adul_Hat_SR1
+            Rate: 1
+          - Item: Viva_Adul_Hat_SR2
+            Rate: 1
+          - Item: Viva_Adul_Hat_AB1
+            Rate: 1
+          - Item: Viva_Adul_Hat_AB2
+            Rate: 1
+          - Item: Viva_Adul_Hat_SC1
+            Rate: 1
+          - Item: Viva_Adul_Hat_SC2
+            Rate: 1
+          - Item: Viva_Adul_Hat_RA1
+            Rate: 1
+          - Item: Viva_Adul_Hat_RA2
+            Rate: 1
+          - Item: Viva_Adul_Hat_LG1
+            Rate: 1
+          - Item: Viva_Adul_Hat_LG2
+            Rate: 1
+          - Item: Viva_Adul_Hat_GC1
+            Rate: 1
+          - Item: Viva_Adul_Hat_GC2
+            Rate: 1
+          - Item: Viva_Adul_Hat_SO1
+            Rate: 1
+          - Item: Viva_Adul_Hat_SO2
+            Rate: 1
+          - Item: Viva_Adul_Hat_RK1
+            Rate: 1
+          - Item: Viva_Adul_Hat_RK2
+            Rate: 1
+          - Item: Viva_Adul_Hat_WM1
+            Rate: 1
+          - Item: Viva_Adul_Hat_WM2
+            Rate: 1
+          - Item: Viva_Adul_Hat_NC1
+            Rate: 1
+          - Item: Viva_Adul_Hat_NC2
+            Rate: 1
+          - Item: Viva_Adul_Hat_GN1
+            Rate: 1
+          - Item: Viva_Adul_Hat_GN2
+            Rate: 1
+          - Item: Viva_Adul_Hat_KO1
+            Rate: 1
+          - Item: Viva_Adul_Hat_KO2
+            Rate: 1
+          - Item: Viva_Adul_Hat_RL1
+            Rate: 1
+          - Item: Viva_Adul_Hat_RL2
+            Rate: 1
+          - Item: Viva_Adul_Hat_SP1
+            Rate: 1
+          - Item: Viva_Adul_Hat_SP2
+            Rate: 1
+          - Item: Viva_Adul_Hat_SJ1
+            Rate: 1
+          - Item: Viva_Adul_Hat_SJ2
+            Rate: 1
+          - Item: Viva_Adul_Hat_SU1
+            Rate: 1
+          - Item: Viva_Adul_Hat_SU2
+            Rate: 1
+  - Group: 2022_LUNARNEWYEARS_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: 2022_LunarNewYears_band
+          - Item: Special_Tool_Box_Coupon
+            Amount: 3
+          - Item: E_Main_Dish_C
+            Amount: 10
+          - Item: E_Mimir_Spring_W
+            Amount: 10
+          - Item: E_Challenge_Drink
+            Amount: 10
+          - Item: E_Power_Drink
+            Amount: 10
+          - Item: E_Baldrs_Blessing
+            Amount: 10
+          - Item: World_Tour_Ticket
+            Amount: 30
+  - Group: 2020_REWARD_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Cachua_Coupon
+            Amount: 10
+          - Item: Kr_B_Special01
+            Amount: 3
+          - Item: World_Tour_Ticket
+            Amount: 20
+  - Group: COSTUME_MILE_PACK_26_1
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Actinidia_Cat_Fruit
+            Amount: 100
+          - Item: Evt_Cos_Coin
+            Amount: 12
+          - Item: aegis_101271
+            Amount: 3
+  - Group: COSTUME_MILE_PACK_26_2
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Actinidia_Cat_Fruit
+            Amount: 200
+          - Item: Evt_Cos_Coin
+            Amount: 25
+          - Item: aegis_101271
+            Amount: 5
+  - Group: COSTUME_MILE_PACK_26_3
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Actinidia_Cat_Fruit
+            Amount: 400
+          - Item: Evt_Cos_Coin
+            Amount: 50
+          - Item: aegis_101271
+            Amount: 10
+

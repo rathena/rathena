@@ -33571,6 +33571,22 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_July_Lucky_Scroll);
+  - Id: 14840
+    AegisName: DF_Megaphone
+    Name: "[Sale] Megaphone"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      input .@megaphone$;
+      announce strcharinfo(0) + ": " + .@megaphone$,bc_all,0xFF0000;
   - Id: 14841
     AegisName: DF_Songpyun
     Name: "[Scroll] Korean Rice Cake"
@@ -33860,6 +33876,22 @@ Body:
       itemskill "AC_CONCENTRATION",max(getskilllv("AC_CONCENTRATION"),3);
       specialeffect2 EF_POTION_BERSERK;
       showscript "Oh My GOODNESS!!! I FEEL AWESOMELY STRONG!!! WOWOW";
+  - Id: 14875
+    AegisName: DF_Med_Life_Potion
+    Name: "[Scroll] Medium Life potion"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      specialeffect2 EF_HEAL3;
+      sc_start4 SC_L_LIFEPOTION,600000,-7,4,0,0;
   - Id: 14886
     AegisName: UltimateCook_S
     Name: "[Scroll] Ultimate Cook"
@@ -44939,12 +44971,11 @@ Body:
     AegisName: Shadow_Cube
     Name: Shadow Cube
     Type: Usable
-    Buy: 10
     Weight: 10
-    Classes:
-      All: false
+    Flags:
+      Container: true
     Script: |
-      /*No Info*/
+      getgroupitem(IG_SHADOW_CUBE);
   - Id: 22828
     AegisName: Sealed_Scroll
     Name: Sealed Album Scroll
@@ -45635,6 +45666,24 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box7);
+  - Id: 22977
+    AegisName: Shadow_Cube_Pendant
+    Name: Shadow Cube (Pendant)
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_SHADOW_CUBE_PENDANT);
+  - Id: 22978
+    AegisName: Shadow_Cube_Earing
+    Name: Shadow Cube (Earing)
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_SHADOW_CUBE_EARING);
   - Id: 22979
     AegisName: Comp_Battle_Bubble
     Name: "[Sale] Battle Manual and Bubble Gum"
@@ -45863,6 +45912,23 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box9);
+  - Id: 23073
+    AegisName: AngelPoring_Box
+    Name: Angel Poring Shoes Box
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_ANGELPORING_BOX);
   - Id: 23076
     AegisName: Build_Up_Potion_SS
     Name: Build Up Potion SS
@@ -46338,7 +46404,6 @@ Body:
     AegisName: Rose_Bundle_A
     Name: Rose Bundle A
     Type: Usable
-    Weight: 0
     Flags:
       Container: true
     Trade:
@@ -46356,7 +46421,6 @@ Body:
     AegisName: Orleans_Bundle_A
     Name: Orleans's Bundle A
     Type: Usable
-    Weight: 0
     Flags:
       Container: true
     Trade:
@@ -46374,7 +46438,6 @@ Body:
     AegisName: Black_Shiba_Bundle_A
     Name: Black Shiba Inu Bundle A
     Type: Usable
-    Weight: 0
     Flags:
       Container: true
     Trade:
@@ -46409,7 +46472,6 @@ Body:
     AegisName: Kardui_Bundle_A
     Name: Kardui Bundle A
     Type: Usable
-    Weight: 0
     Flags:
       Container: true
     Trade:
@@ -46453,7 +46515,6 @@ Body:
     AegisName: Etran_Bundle_A
     Name: Etran Bundle A
     Type: Usable
-    Weight: 0
     Flags:
       Container: true
     Trade:
@@ -46571,7 +46632,6 @@ Body:
     AegisName: Pororoca_Shoes_Bundle_A
     Name: Pororoca Shoes Bundle A
     Type: Usable
-    Weight: 0
     Flags:
       Container: true
     Trade:
@@ -46748,6 +46808,56 @@ Body:
     Weight: 10
     Script: |
       laphine_upgrade();
+  - Id: 23604
+    AegisName: Main_Dish_Course
+    Name: Main Dish Course
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      bonus_script "{ bonus bAllStats,10; bonus bBaseAtk,30; bonus bMatk,30; }",1800;
+  - Id: 23605
+    AegisName: Challenge_Drink
+    Name: Challenger Drink
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      bonus_script "{ bonus bBaseAtk,30; bonus bMatk,30; bonus bMatkRate,1; bonus bHit,30; bonus bFlee,30; bonus bAspd,1; bonus bUseSPrate,-5; bonus bFixedCastrate,-30; }",1800,1,1;
+  - Id: 23606
+    AegisName: Power_Drink
+    Name: Power Drink
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* Confirm probability */
+      bonus_script "{ bonus bMaxHP,-10; bonus bMaxSP,-10; bonus bBaseAtk,30; bonus bMatk,30; bonus bVariableCastrate,-5; bonus3 bAutoSpell,\"AC_CONCENTRATION\",max(getskilllv(\"AC_CONCENTRATION\"),3),10; }",300;
+  - Id: 23611
+    AegisName: Mimir_Spring_Water
+    Name: Mimir's Spring Water
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      sc_start SC_INCREASE_MAXSP,1800000,10;
+      sc_start SC_SPCOST_RATE,1800000,10;
+  - Id: 23612
+    AegisName: Baldrs_Blessing
+    Name: Baldur's Blessing
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      sc_start SC_FLEEFOOD,300000,30;
+      sc_start SC_HITFOOD,300000,30;
+      sc_start SC_ATKPOTION,300000,20;
+      sc_start SC_MATKPOTION,300000,20;
   - Id: 23629
     AegisName: Enchant_Stone_Box14
     Name: Costume Enchant Stone Box 14
@@ -46804,6 +46914,8 @@ Body:
     Name: Grey Abrasive (physical)
     Type: Delayconsume
     Weight: 50
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_upgrade();
   - Id: 23677
@@ -46811,6 +46923,8 @@ Body:
     Name: Grey Abrasive (magical)
     Type: Delayconsume
     Weight: 50
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_upgrade();
   - Id: 23678
@@ -46818,6 +46932,8 @@ Body:
     Name: Grey Abrasive (distance)
     Type: Delayconsume
     Weight: 50
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_upgrade();
   - Id: 23679
@@ -46865,6 +46981,76 @@ Body:
     Weight: 10
     Script: |
       laphine_upgrade();
+  - Id: 23725
+    AegisName: E_Main_Dish_C
+    Name: "[Event] Main Dish Course"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      bonus_script "{ bonus bAllStats,10; bonus bBaseAtk,30; bonus bMatk,30; }",1800;
+  - Id: 23726
+    AegisName: E_Challenge_Drink
+    Name: "[Event] Challenger Drink"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      bonus_script "{ bonus bBaseAtk,30; bonus bMatk,30; bonus bMatkRate,1; bonus bHit,30; bonus bFlee,30; bonus bAspd,1; bonus bUseSPrate,-5; bonus bFixedCastrate,-30; }",1800,1,1;
+  - Id: 23728
+    AegisName: E_Power_Drink
+    Name: "[Event] Power Drink"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      /* Confirm probability */
+      bonus_script "{ bonus bMaxHP,-10; bonus bMaxSP,-10; bonus bBaseAtk,30; bonus bMatk,30; bonus bVariableCastrate,-5; bonus3 bAutoSpell,\"AC_CONCENTRATION\",max(getskilllv(\"AC_CONCENTRATION\"),3),10; }",300;
+  - Id: 23732
+    AegisName: E_Mimir_Spring_W
+    Name: "[Event] Mimir's Spring Water"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      sc_start SC_INCREASE_MAXSP,1800000,10;
+      sc_start SC_SPCOST_RATE,1800000,10;
+  - Id: 23733
+    AegisName: E_Baldrs_Blessing
+    Name: "[Event] Baldur's Blessing"
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      sc_start SC_FLEEFOOD,300000,30;
+      sc_start SC_HITFOOD,300000,30;
+      sc_start SC_ATKPOTION,300000,20;
+      sc_start SC_MATKPOTION,300000,20;
   - Id: 23766
     AegisName: Overwhelm_Armor_Box
     Name: Temporal Armor Box
@@ -47695,6 +47881,20 @@ Body:
       NoConsume: true
     Script: |
       itemskill "WL_READING_SB_READING",10;
+  - Id: 100081
+    AegisName: Kr_B_Special01
+    Name: "[Not for Sale] Advanced Combat Manual"
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      sc_start SC_EXPBOOST,3600000,200;
   - Id: 100083
     AegisName: BackSignon_Box_TW
     Name: Korean Style Apple Hair Box (Middle)
@@ -49381,6 +49581,18 @@ Body:
     Weight: 10
     Script: |
       laphine_upgrade();
+  - Id: 100591
+    AegisName: Thanos_W_Reform_1
+    Name: Thanos Weapon Reform Cube (Lower)
+    Type: DelayConsume
+    Script: |
+      /* reform(); */
+  - Id: 100592
+    AegisName: Thanos_W_Reform_2
+    Name: Thanos Weapon Reform Cube (Middle)
+    Type: DelayConsume
+    Script: |
+      /* reform(); */
   - Id: 100596
     AegisName: FullTempShadow_Mix
     Name: Full Tempest Shadow Thump Box
@@ -49417,6 +49629,15 @@ Body:
       BuyingStore: true
     Script: |
       laphine_synthesis();
+  - Id: 100619
+    AegisName: Thanos_Refine_Hammer
+    Name: Modified Thanos Refinement Hammer
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* reform(); */
   - Id: 100620
     AegisName: True_GemShadow_Mix
     Name: True Gemstone Shadow Thump Box
@@ -49472,6 +49693,18 @@ Body:
       NoAuction: true
     Script: |
       laphine_upgrade();
+  - Id: 100648
+    AegisName: Consecrate_Weapon_1
+    Name: Purification Ritual
+    Type: DelayConsume
+    Script: |
+      /* reform(); */
+  - Id: 100649
+    AegisName: Consecrate_Weapon_2
+    Name: Advanced Purification Ritual
+    Type: DelayConsume
+    Script: |
+      /* reform(); */
   - Id: 100650
     AegisName: Pontifex_Courage
     Name: Pontifex Courage
@@ -49539,6 +49772,18 @@ Body:
       BuyingStore: true
     Script: |
       laphine_synthesis();
+  - Id: 100694
+    AegisName: C_Armor_Reform_1
+    Name: Armor Modification Box (Lower)
+    Type: DelayConsume
+    Script: |
+      /* reform(); */
+  - Id: 100695
+    AegisName: C_Armor_Reform_2
+    Name: Armor Modification Box (Middle)
+    Type: DelayConsume
+    Script: |
+      /* reform(); */
   - Id: 100699
     AegisName: Twins_Box_IL
     Name: Twins Refinement Box
@@ -49602,6 +49847,33 @@ Body:
     Weight: 10
     Script: |
       laphine_upgrade();
+  - Id: 100746
+    AegisName: C_Weapon_Reform_1
+    Name: Weapon Modification Box (Lower)
+    Type: DelayConsume
+    Script: |
+      /* reform(); */
+  - Id: 100747
+    AegisName: C_Weapon_Reform_2
+    Name: Weapon Modification Box (Middle)
+    Type: DelayConsume
+    Script: |
+      /* reform(); */
+  - Id: 100748
+    AegisName: C_Weapon_Reform_3
+    Name: Weapon Modification Box (Upper)
+    Type: DelayConsume
+    Script: |
+      /* reform(); */
+  - Id: 100753
+    AegisName: Hero_Equipment_Cube
+    Name: Ancient Hero's Release Cube
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* reform(); */
   - Id: 100783
     AegisName: MajorAutoSpell_Mix
     Name: Auto Spell Shadow Pick-Up Box    # !todo check english name
@@ -49611,6 +49883,56 @@ Body:
       BuyingStore: true
     Script: |
       laphine_synthesis();
+  - Id: 100784
+    AegisName: Shadow_Changer_W_Shi
+    Name: Shadow Changer (Weapon→Shield)
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* reform(); */
+  - Id: 100786
+    AegisName: C_Armor_Reform_3
+    Name: Armor Modification Box (Upper)
+    Type: DelayConsume
+    Script: |
+      /* reform(); */
+  - Id: 100817
+    AegisName: Thanos_Upgrade_Box
+    Name: Thanos Upgrade Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* reform(); */
+  - Id: 100819
+    AegisName: Hero_Weapon_Up_Box_1
+    Name: Hero's Weapon Modification Box I
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* reform(); */
+  - Id: 100820
+    AegisName: Hero_Weapon_Up_Box_2
+    Name: Hero's Weapon Modification Box II
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* reform(); */
+  - Id: 100821
+    AegisName: Hero_Weapon_Hammer_1
+    Name: Modified Hero's Weapon Refinement Hammer I
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* reform(); */
+  - Id: 100822
+    AegisName: Hero_Weapon_Hammer_2
+    Name: Modified Hero's Weapon Refinement Hammer II
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* reform(); */
   - Id: 100823
     AegisName: Lens_Craft_Stone
     Name: Lens Craft Stone    # !todo check english name
@@ -49618,6 +49940,20 @@ Body:
     Weight: 10
     Script: |
       laphine_upgrade();
+  - Id: 100834
+    AegisName: Hero_Weapon_Up_Box_3
+    Name: Hero's Weapon Modification Box III
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* reform(); */
+  - Id: 100835
+    AegisName: Hero_Weapon_Hammer_3
+    Name: Modified Hero's Weapon Refinement Hammer III
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* reform(); */
   - Id: 100880
     AegisName: aegis_100880
     Name: Piercing Shadow Box
@@ -49645,6 +49981,15 @@ Body:
       BuyingStore: true
     Script: |
       laphine_synthesis();
+  - Id: 100890
+    AegisName: Shadow_Changer_A_W
+    Name: Shadow Changer (Armor→Weapon)
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* reform(); */
   - Id: 100900
     AegisName: Teleport_Ep19_01
     Name: Ice Castle Transport Wing
@@ -49724,6 +50069,34 @@ Body:
       Container: true
     Script: |
       getitem callfunc("F_Rand",24177,24171,24178,24170,24174,24173,24179,24175,24176,24172),1;
+  - Id: 100917
+    AegisName: Hero_Weapon_Hammer_4
+    Name: Modified Hero's Weapon Refinement Hammer IV
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* reform(); */
+  - Id: 100918
+    AegisName: Hero_Weapon_Up_Box_4
+    Name: Hero's Weapon Modification Box IV
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* reform(); */
+  - Id: 100938
+    AegisName: Hero_Weapon_Hammer_5
+    Name: Modified Hero's Weapon Refinement Hammer V
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* reform(); */
+  - Id: 100939
+    AegisName: Hero_Weapon_Up_Box_5
+    Name: Hero's Weapon Modification Box V
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* reform(); */
   - Id: 101075
     AegisName: SLD_Card_Recipe
     Name: Sealed Boss Card Pick-Up Box    # !todo check english name
@@ -49733,6 +50106,24 @@ Body:
       BuyingStore: true
     Script: |
       laphine_synthesis();
+  - Id: 101077
+    AegisName: Vivatus_Weapon_Hammer
+    Name: Vivatus Weapon Refinement Hammer
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* reform(); */
+  - Id: 101078
+    AegisName: Adulter_Weapon_Up_Box
+    Name: Adulter Weapon Modification Box
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* reform(); */
   - Id: 101126
     AegisName: aegis_101126
     Name: "[Scroll] Halloween Candy"
@@ -49895,6 +50286,20 @@ Body:
       NoAuction: true
     Script: |
       laphine_upgrade();
+  - Id: 101189
+    AegisName: Hero_Weapon_Hammer_6
+    Name: Modified Hero's Weapon Refinement Hammer VI
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* reform(); */
+  - Id: 101190
+    AegisName: Hero_Weapon_Up_Box_6
+    Name: Hero's Weapon Modification Box VI
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* reform(); */
   - Id: 101217
     AegisName: Snow_F_Enchant2
     Name: Snowflower Armor Enchant (Garment)
@@ -49951,6 +50356,12 @@ Body:
       NoAuction: true
     Script: |
       /* Missing description */
+  - Id: 101243
+    AegisName: Shadow_Changer_NPC
+    Name: Shadow Changer
+    Type: DelayConsume
+    Script: |
+      /* reform(); */
   - Id: 101257
     AegisName: R_BearersShadow_Mix
     Name: Road Bearers Shadow Pick-Up Box    # !todo check english name
@@ -49969,6 +50380,15 @@ Body:
       BuyingStore: true
     Script: |
       laphine_synthesis();
+  - Id: 101259
+    AegisName: Special_Hat_Hammer
+    Name: Refinement Hammer for Special Hats
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* reform(); */
   - Id: 101260
     AegisName: R_Bearers_Shadow_Up
     Name: Road Bearers Shadow Grimoire    # !todo check english name
@@ -50028,6 +50448,127 @@ Body:
       NoAuction: true
     Script: |
       percentheal 30,30;
+  - Id: 101279
+    AegisName: 2022_LunarNewYears_box
+    Name: New Year Gift Box
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_2022_LUNARNEWYEARS_BOX);
+  - Id: 101306
+    AegisName: Poenitentia_Hammer
+    Name: Poenitentia Refining Hammer
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* reform(); */
+  - Id: 101307
+    AegisName: Barmund_Hammer
+    Name: Barmund Refining Hammer
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* reform(); */
+  - Id: 101308
+    AegisName: True_GemShadow_Up
+    Name: True Gemstone Shadow Spellbook
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101309
+    AegisName: EXPShadow_Up
+    Name: Experience Shadow Spellbook
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101310
+    AegisName: MagicalShadow_Up
+    Name: Clever Shadow Spellbook
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101311
+    AegisName: InfinityShadow_Up
+    Name: Infinity Shadow Spellbook
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101314
+    AegisName: aegis_101314
+    Name: Helm of Faith Box
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      Container: true
+    Script: |
+      getgroupitem(IG_HELM_OF_FAITH_BOX);
+  - Id: 101321
+    AegisName: 2022Reward_Box
+    Name: Event Error Compensation Box
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_2020_REWARD_BOX);
+  - Id: 101322
+    AegisName: aegis_101322
+    Name: Love Confession Chocolate
+    Type: Healing
+    Script: |
+      percentheal 30,30;
+  - Id: 101336
+    AegisName: aegis_101336
+    Name: "[Scroll] DEX Biscuit Stick"
+    Type: Usable
+    Weight: 10
+    Trade:
+    Script: |
+      sc_start SC_FOOD_DEX_CASH,1800000,15;
+      sc_start SC_HITFOOD,600000,rand(11,33);
+  - Id: 101337
+    AegisName: aegis_101337
+    Name: "[Scroll] VIT Biscuit Stick"
+    Type: Usable
+    Weight: 10
+    Trade:
+    Script: |
+      sc_start SC_FOOD_VIT_CASH,1800000,15;
+      bonus_script "{ bonus bHPRecovRate,rand(11,33); }",1800,1;
   - Id: 200185
     AegisName: LI_Nyangvine_Box1_26
 #   Name: (Limited) Actinidia Cat Fruit Box I (Stone Box 26)
@@ -50085,6 +50626,57 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_LI_Nyangvine_Box3_26);
+  - Id: 200191
+    AegisName: CostumeMilePack_26_1
+#   Name: Actinidia Costume Mileage Package I (Stone Box 26)
+    Name: Actinidia Costume Mileage Package I
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_COSTUME_MILE_PACK_26_1);
+  - Id: 200193
+    AegisName: CostumeMilePack_26_2
+#   Name: Actinidia Costume Mileage Package II (Stone Box 26)
+    Name: Actinidia Costume Mileage Package II
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_COSTUME_MILE_PACK_26_2);
+  - Id: 200194
+    AegisName: CostumeMilePack_26_3
+#   Name: Actinidia Costume Mileage Package III (Stone Box 26)
+    Name: Actinidia Costume Mileage Package III
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_COSTUME_MILE_PACK_26_3);
   - Id: 1100003
     AegisName: Concentrated_R_P
     Name: Concentrated Red Potion
