@@ -86,7 +86,7 @@ OnTouch:
 
 1@os_a,30,360,3	script	Est#171_ocp_0	4_F_ESTLOVELOY,{
 	cutin "ep162_est01",2;
-	mes "[ Est ]";
+	mes "[Est]";
 	mes "Focus on the briefing.";
 	close3;
 
@@ -124,33 +124,31 @@ OnEvent:
 		close;
 	}
 	switch ('ocp) {
-		case 1:
-			mes "## Enter Message Input ##";
-			next;
-			setarray .@input$,
-			"Engaging with mutants on north.","Engaging with small mutants.","Ah~! I want to go home!";
-			.@menu$ = implode(.@input$,":");
-			.@s = select(.@menu$) - 1;
-			'ocp = 2;
-			mapannounce 'map$,strcharinfo(0) + " : " + .@input$[.@s],bc_map,0xEE66EE;
-			doevent instance_npcname(strnpcinfo(0)) + "::OnEvent02";
-			close;
-
-		case 3:
-			mes "## Enter Message Input ##";
-			next;
-			setarray .@input$,
-			"Echo is fighting too. Requesting for support.","There was an engagement, but it's over.","Save me!";
-			.@menu$ = implode(.@input$,":");
-			.@s = select(.@menu$) - 1;
-			'ocp = 4;
-			mapannounce 'map$,strcharinfo(0) + " : " + .@input$[.@s],bc_map,0xEE66EE;
-			doevent instance_npcname(strnpcinfo(0)) + "::OnEvent03";
-			close;
-
-		default:
-			mes "## No Communication Status ##";
-			close;
+	case 1:
+		mes "## Enter Message Input ##";
+		next;
+		setarray .@input$,
+		"Engaging with mutants on north.","Engaging with small mutants.","Ah~! I want to go home!";
+		.@menu$ = implode(.@input$,":");
+		.@s = select(.@menu$) - 1;
+		'ocp = 2;
+		mapannounce 'map$,strcharinfo(0) + " : " + .@input$[.@s],bc_map,0xEE66EE;
+		doevent instance_npcname(strnpcinfo(0)) + "::OnEvent02";
+		close;
+	case 3:
+		mes "## Enter Message Input ##";
+		next;
+		setarray .@input$,
+		"Echo is fighting too. Requesting for support.","There was an engagement, but it's over.","Save me!";
+		.@menu$ = implode(.@input$,":");
+		.@s = select(.@menu$) - 1;
+		'ocp = 4;
+		mapannounce 'map$,strcharinfo(0) + " : " + .@input$[.@s],bc_map,0xEE66EE;
+		doevent instance_npcname(strnpcinfo(0)) + "::OnEvent03";
+		close;
+	default:
+		mes "## No Communication Status ##";
+		close;
 	}
 	end;
 
@@ -269,39 +267,36 @@ OnTouch:
 		else
 			donpcevent instance_npcname("#171_ocp_wrp_2") + "::OnBossSummon";
 		switch (.@id) {
-			case 0:
-				monster 'map$,144,275,"",2536,1,instance_npcname("#171_ocp_mob") + "::OnPoisonKill";
-				navigateto("1@os_a",163,266);
-				mapannounce 'map$,"Est : " + strcharinfo(0) + ", can you hear me?",bc_map,0x00EEEE;
-				sleep2 3000;
-				mapannounce 'map$,"Est : I transmitted the second search coordinates. Be careful not to lose your records.",bc_map,0x00EEEE;
-				sleep2 6000;
-				mapannounce 'map$,"Est : " + strcharinfo(0) + ", check if there are any traces around there.",bc_map,0x00EEEE;
-				initnpctimer instance_npcname("#171_ocp_wrp_1");
-				sleep2 3000;
-				mapannounce 'map$,strcharinfo(0) + " : I have found a troop of mutants along the route.",bc_map,0xEE66EE;
-				sleep2 3000;
-				mapannounce 'map$,"Est : If you see a mutant who can communicate, immediately capture it. Other than that... You can subdue them all.",bc_map,0x00EEEE;
-				break;
-
-			case 1:
-				navigateto("1@os_a",138,174);
-				initnpctimer instance_npcname("#171_ocp_wrp_2");
-				mapannounce 'map$,"Est : " + strcharinfo(0) + ", are you still alive?",bc_map,0x00EEEE;
-				sleep2 3000;
-				mapannounce 'map$,strcharinfo(0) + " : Team Echo is still alive. We are moving towards the southern point.",bc_map,0xEE66EE;
-				sleep2 3000;
-				mapannounce 'map$,"Est : Bravo is also moving towards there, we're skipping the eastern point.",bc_map,0x00EEEE;
-				sleep2 3000;
-				mapannounce 'map$,strcharinfo(0) + " : I hope that Bravo arrive safely.",bc_map,0xEE66EE;
-				sleep2 3000;
-				mapannounce 'map$,"Est : I wish the same for Team Echo.",bc_map,0x00EEEE;
-				break;
-
-			case 2:
-				navigateto("1@os_a",161,178);
-				mapannounce 'map$,"???? : Grrr...",bc_map,0xFF9999;
-				break;
+		case 0:
+			monster 'map$,144,275,"",2536,1,instance_npcname("#171_ocp_mob") + "::OnPoisonKill";
+			navigateto("1@os_a",163,266);
+			mapannounce 'map$,"Est : " + strcharinfo(0) + ", can you hear me?",bc_map,0x00EEEE;
+			sleep2 3000;
+			mapannounce 'map$,"Est : I transmitted the second search coordinates. Be careful not to lose your records.",bc_map,0x00EEEE;
+			sleep2 6000;
+			mapannounce 'map$,"Est : " + strcharinfo(0) + ", check if there are any traces around there.",bc_map,0x00EEEE;
+			initnpctimer instance_npcname("#171_ocp_wrp_1");
+			sleep2 3000;
+			mapannounce 'map$,strcharinfo(0) + " : I have found a troop of mutants along the route.",bc_map,0xEE66EE;
+			sleep2 3000;
+			mapannounce 'map$,"Est : If you see a mutant who can communicate, immediately capture it. Other than that... You can subdue them all.",bc_map,0x00EEEE;
+			break;
+		case 1:
+			navigateto("1@os_a",138,174);
+			initnpctimer instance_npcname("#171_ocp_wrp_2");
+			mapannounce 'map$,"Est : " + strcharinfo(0) + ", are you still alive?",bc_map,0x00EEEE;
+			sleep2 3000;
+			mapannounce 'map$,strcharinfo(0) + " : Team Echo is still alive. We are moving towards the southern point.",bc_map,0xEE66EE;
+			sleep2 3000;
+			mapannounce 'map$,"Est : Bravo is also moving towards there, we're skipping the eastern point.",bc_map,0x00EEEE;
+			sleep2 3000;
+			mapannounce 'map$,strcharinfo(0) + " : I hope that Bravo arrive safely.",bc_map,0xEE66EE;
+			sleep2 3000;
+			mapannounce 'map$,"Est : I wish the same for Team Echo.",bc_map,0x00EEEE;
+			break;
+		case 2:
+			navigateto("1@os_a",161,178);
+			mapannounce 'map$,"???? : Grrr...",bc_map,0xFF9999;
 		}
 	}
 	end;
@@ -318,7 +313,7 @@ OnSummon:
 	.@id = atoi(replacestr(strnpcinfo(2),"171_ocp_wrp_",""));
 	switch (.@id) {
 		case 1: setarray .@xy,146,266,20349,166,266,20349,170,266,20349,154,266,20349,126,266,20350,130,266,20350,134,266,20350,138,266,20350,142,266,20350,150,266,20350,158,266,20350,162,266,20350,174,266,20350; break;
-		case 2: setarray .@xy,151,243,20348,144,216,20349,141,213,20349,137,210,20349,132,207,20349,139,200,20349,146,199,20349,139,196,20349,146,216,20350,141,213,20350,135,213,20350,137,212,20350,143,203,20350,139,209,20350,134,199,20350; break;
+		case 2: setarray .@xy,151,243,20348,144,216,20349,141,213,20349,137,210,20349,132,207,20349,139,200,20349,146,199,20349,139,196,20349,146,216,20350,141,213,20350,135,213,20350,137,212,20350,143,203,20350,139,209,20350,134,199,20350;
 	}
 	for (.@i = 0; .@i < getarraysize(.@xy); .@i += 3)
 		monster 'map$,.@xy[.@i],.@xy[.@i+1],"Incomplete " + getmonsterinfo(.@xy[.@i+2],MOB_NAME),.@xy[.@i+2],1,.@event$;
@@ -360,7 +355,7 @@ OnTimer10000:
 		close;
 	}
 	cutin "ep171_miguel01",0;
-	mes "[ ??? ]";
+	mes "[???]";
 	mes "Krrr. I guess you're not someone of Regenschirm. Can you move aside, I have something to say to that person.";
 	next;
 	cutin "",255;
@@ -371,82 +366,82 @@ OnTimer10000:
 1@os_a,165,176,3	script	Est#171_ocp_1	4_F_ESTLOVELOY,{
 	if (isbegin_quest(12452) == 1) {
 		cutin "ep162_est01",2;
-		mes "[ Est ]";
+		mes "[Est]";
 		mes strcharinfo(0) + ", I didn't think I'd survive and see you again. You're pretty good.";
 		next;
 		select("Ask about the fallen mutant.");
-		mes "[ Est ]";
+		mes "[Est]";
 		mes "Well, even if you ask me... it's the first time that I'll talk to a mutant.";
 		emotion ET_SCRATCH;
 		next;
 		cutin "ep171_miguel03",0;
-		mes "[ ??? ]";
+		mes "[???]";
 		mes "... Est?";
 		next;
 		cutin "ep162_est01",2;
-		mes "[ Est ]";
+		mes "[Est]";
 		mes "How do you know my name? Who are you! I'll finish you painlessly, so be honest.";
 		emotion ET_SURPRISE;
 		next;
 		cutin "ep171_miguel03",0;
-		mes "[ ??? ]";
+		mes "[???]";
 		mes "Est... Rebellion Ghost Squad... Do you remember uncle Miguel?";
 		next;
 		cutin "ep162_est01",2;
-		mes "[ Est ]";
+		mes "[Est]";
 		mes "How do you know that name...";
 		next;
 		cutin "ep171_miguel03",0;
-		mes "[ ??? ]";
+		mes "[???]";
 		mes "Ha... haha... you still remember.";
 		next;
 		mes "^0000FFThe identification tag on the mutant's neck stands out.^000000";
 		next;
 		select("Get the identification tag and hand it to Est.");
 		cutin "ep162_est01",2;
-		mes "[ Est ]";
+		mes "[Est]";
 		mes "Mi... guel...?";
 		next;
 		cutin "ep171_miguel03",0;
-		mes "[ Miguel ]";
+		mes "[Miguel]";
 		mes "... Est, the last thing I'll see... is your face... That's a relief.";
 		next;
 		cutin "ep162_est01",2;
-		mes "[ Est ]";
+		mes "[Est]";
 		mes "Uncle Miguel!? How did this happen!";
 		next;
 		cutin "ep171_miguel03",0;
-		mes "[ Miguel ]";
+		mes "[Miguel]";
 		mes "Before I die... I always wanted to see my old colleagues... You fulfilled my wish.";
 		next;
 		cutin "ep162_est01",2;
-		mes "[ Est ]";
+		mes "[Est]";
 		mes "Uncle! What is this! What happened to you?";
 		next;
 		cutin "ep171_miguel01",0;
-		mes "[ Miguel ]";
+		mes "[Miguel]";
 		mes "Ugh... I don't have much time left... Listen carefully, Est.";
 		next;
-		mes "[ Miguel ]";
+		mes "[Miguel]";
 		mes "Somewhere in here... the mad research results of Regenschirm... can be found somewhere in here.";
 		next;
-		mes "[ Miguel ]";
+		mes "[Miguel]";
 		mes "Find everything... and you'll know what happened to me... you'll see things that can't be explained here.";
 		next;
 		cutin "ep162_est01",2;
-		mes "[ Est ]";
+		mes "[Est]";
 		mes "Uncle! Wake up!! Let's go out. If we go out, we can save you!";
 		next;
 		cutin "ep171_miguel02",0;
-		mes "[ Miguel ]";
+		mes "[Miguel]";
 		mes  "Est... you still have a big heart... that kind of feeling... on the battlefield... I taught you...";
 		next;
 		cutin "ep162_est01",2;
-		mes "[ Est ]";
+		mes "[Est]";
 		mes "Uncle! Uncle!!";
 		next;
 		cutin "",255;
-		mes "[ Miguel ]";
+		mes "[Miguel]";
 		mes "...";
 		if (isbegin_quest(12452) == 1)
 			completequest 12452;
@@ -457,17 +452,17 @@ OnTimer10000:
 	}
 	select("Ask about Miguel");
 	cutin "ep162_est01",2;
-	mes "[ Est ]";
+	mes "[Est]";
 	mes strcharinfo(0) +", I'm sorry but I don't feel like talking about him right now.";
 	next;
 	select("Ask about the records.");
-	mes "[ Est ]";
+	mes "[Est]";
 	mes "I checked the northeast section and saw a place over the railway that seemed to be a research facility.";
 	next;
-	mes "[ Est ]";
+	mes "[Est]";
 	mes "Maybe the research Miguel was talking about... is somewhere in there. I'm going to have to start another operation right away.";
 	next;
-	mes "[ Est ]";
+	mes "[Est]";
 	mes "I don't think there will be anything else to do here.";
 	next;
 	select("I want to go back.");
@@ -477,25 +472,25 @@ OnTimer10000:
 
 1@os_a,187,195,5	script	Operation Officer#171_osd	4_M_ILYA,{
 	if (isbegin_quest(12454) == 1) {
-		mes "[ Operation Officer ]";
+		mes "[Operation Officer]";
 		mes "You've dealt with a CP7 Mutant by yourself... did the battle went well?";
 		next;
-		mes "[ Operation Officer ]";
+		mes "[Operation Officer]";
 		mes "Here are the supplies and experience given to the troops that joined the operation. Take it.";
 		erasequest 12454;
 		getexp 150000,150000;
 		getitem 25669,5;
 		getitem 25723,1;
 		next;
-		mes "[ Operation Officer ]";
+		mes "[Operation Officer]";
 		mes "Even though it's a CP7 Rated, sorry I couldn't give you more experience.";
 		close;
 	}
-	mes "[ Operation Officer ]";
+	mes "[Operation Officer]";
 	mes "Let's go out now. We need to prepare for repairs quickly.";
 	next;
 	if (select("Look around more.:Go Out") == 1) {
-		mes "[ Operation Officer ]";
+		mes "[Operation Officer]";
 		mes "Is that so? Don't delay it for too long.";
 		close;
 	}
@@ -526,9 +521,7 @@ OnSummon:
 		case 4: setarray .@xy,209,118,20348,208,129,20348,214,136,20348,222,131,20348,215,134,20348,204,137,20348,205,127,20349,222,127,20349,225,136,20349,221,132,20349,206,132,20349,217,132,20349,208,135,20350,216,129,20350,210,136,20350; break;
 		case 5: setarray .@xy,257,153,20348,263,156,20348,261,158,20348,256,161,20348,252,161,20348,246,156,20349,240,156,20349,248,157,20349,256,158,20349,243,156,20350,249,156,20350,237,153,20350,252,161,20350,253,161,20350; break;
 		case 6: setarray .@xy,200,190,20348,213,189,20348,227,190,20348,206,191,20348,201,189,20348,198,183,20348,200,170,20348,197,187,20349,200,191,20349,215,190,20349,207,190,20349,209,183,20349,218,184,20349,212,184,20349,229,185,20349,219,184,20350,199,183,20350,207,184,20350,206,182,20350,226,188,20350,203,187,20350,197,183,20350; break;
-		case 7:
-			donpcevent instance_npcname(strnpcinfo(0)) + "::OnSummonBoss";
-			end;
+		case 7: donpcevent instance_npcname(strnpcinfo(0)) + "::OnSummonBoss"; end;
 	}
 	if (.@id == 1) {
 		'osd = 2;

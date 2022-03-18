@@ -18,11 +18,11 @@ OnInstanceInit:
 	disablenpc instance_npcname("#rgsr_touch_mob_0");
 	disablenpc instance_npcname("#rgsr_touch_mob_1");
 	disablenpc instance_npcname("#rgsr_warp_0");
-	disablenpc instance_npcname("Erst#rgsr");
+	disablenpc instance_npcname("Est#rgsr");
 	disablenpc instance_npcname("Rebellion Crew#rgsr_dum01");
 	disablenpc instance_npcname("Ashley#rgsr3");
-	disablenpc instance_npcname("Gonie#rgsr");
-	disablenpc instance_npcname("Erst#rgsr2");
+	disablenpc instance_npcname("Goni#rgsr");
+	disablenpc instance_npcname("Est#rgsr2");
 	disablenpc instance_npcname("Central Room#rgsr");
 	disablenpc instance_npcname("Restrained Specimen#rgsr");
 	disablenpc instance_npcname("Control Device#rgsr0");
@@ -58,7 +58,7 @@ OnEvent04:
 }
 
 1@rgsr,123,42,5	script	Oscar#rgsr	4_M_LGTGUARD,{
-	mes "[ Oscar ]";
+	mes "[Oscar]";
 	mes "The captain sneaked in the control panel room.";
 	mes "Move quietly.";
 	close;
@@ -66,27 +66,27 @@ OnEvent04:
 
 1@rgsr,131,58,3	script	Ashley#rgsr	4_EP17_AS,{
 	cutin "ep171_as02",1;
-	mes "[ Ashley ]";
+	mes "[Ashley]";
 	mes "The door is normally locked with the security system, so I have to stay there and work with the controller.";
 	mes "As you can see most of the entrances have been blocked already.";
 	mes "Hi";
 	next;
-	mes "[ Ashley ]";
+	mes "[Ashley]";
 	mes "It will take some time to go through them one by one.";
 	mes "I'll keep helping you through the intercom.";
 	next;
-	mes "[ Ashley ]";
+	mes "[Ashley]";
 	mes "You'll have to go through the restaurant to reach the hallway.";
-	mes "Erst will be performing the operation alone.";
+	mes "Est will be performing the operation alone.";
 	next;
-	mes "[ Ashley ]";
-	mes "If there's a disturbance, Erst may have caused it. So please check out with her before continuing.";
+	mes "[Ashley]";
+	mes "If there's a disturbance, Est may have caused it. So please check out with her before continuing.";
 	next;
-	mes "[ Ashley ]";
+	mes "[Ashley]";
 	mes "You should go now adventurer. I'll keep working on securing the security controller.";
 	mes "There may be researchers detained inside.";
 	next;
-	mes "[ Ashley ]";
+	mes "[Ashley]";
 	mes "Please consider their safety first.";
 	mes "Now go ahead.";
 	close2;
@@ -133,7 +133,7 @@ OnEvent04:
 1@rgsr,59,132,7	script	Researcher#rgsr_ev_0	4_M_NFMAN,{
 	if ('rgsr == 4 && 'activate == 0) {
 		'activate = 1;
-		mes "[ Researcher ]";
+		mes "[Researcher]";
 		mes "The biometric scan is still operational, I'll be staying here to keep the door open.";
 		mes "If you're in a hurry, please go...";
 		dispbottom "Control : Identity confirmed.";
@@ -145,48 +145,48 @@ OnEvent04:
 	}
 }
 
-1@rgsr,36,211,3	script	Erst#rgsr	4_F_ESTLOVELOY,{
+1@rgsr,36,211,3	script	Est#rgsr	4_F_ESTLOVELOY,{
 	if ('rgsr < 7) {
 		cutin "ep162_est03",2;
-		mes "[ Erst ]";
+		mes "[Est]";
 		mes "Are you the one who removed the poison gas outside?";
 		mes "You arrived at a good time.";
 		mes "Because of the gas, the door was forcibly locked down!";
 		next;
 		cutin "ep162_est01",2;
-		mes "[ Erst ]";
+		mes "[Est]";
 		mes "It takes time for Ashley to come hack the controller and release the gas.";
 		mes "I was going to do it myself.";
 		next;
 		cutin "ep162_est02",2;
-		mes "[ Erst ]";
+		mes "[Est]";
 		mes "The guards here were wearing the same clothes as those Heart Hunters we saw before.";
 		mes "I don't think I can save all the researchers alone.";
 		next;
-		mes "[ Erst ]";
+		mes "[Est]";
 		mes "It seems we've gathered most of them here already.";
 		mes "Let's organize our next strategy.";
 		next;
 		cutin "ep162_est01",2;
-		mes "[ Erst ]";
+		mes "[Est]";
 		mes "There are laboratories on the other side and it's likely to be a mess.";
 		mes "I wonder if there will be a big fight.";
 		next;
-		mes "[ Erst ]";
+		mes "[Est]";
 		mes "From now on the Rebellion Special Forces will prioritize on rescuing the Detained Researchers.";
 		mes "If you get it, move quickly!";
 		next;
-		mes "[ Erst ]";
+		mes "[Est]";
 		mes "Okay, adventurer, find a communication device and get in contact with Ashley.";
 		next;
-		mes "[ Erst ]";
+		mes "[Est]";
 		mes "You have to open the entrance of the private labs.";
 		if ('rgsr == 4)
 			'rgsr = 5;
 		close3;
 	}
 	cutin "ep162_est02",2;
-	mes "[ Erst ]";
+	mes "[Est]";
 	mes "Huh. We'll focus on rescuing the hostages first.";
 	mes "Look for the Security Guard's room that Ashley talked about.";
 	close3;
@@ -204,7 +204,7 @@ OnEvent04:
 		'rgsr = 6;
 		npctalk "Waiting for communication response...";
 		sleep2 2750;
-		npctalk "Ashley : Commander Erst? We closed the hall lock, but what is the problem?";
+		npctalk "Ashley : Commander Est? We closed the hall lock, but what is the problem?";
 		sleep2 2750;
 		npctalk "Ashley : Oh you're the adventurer. I will give you the report. I have not fully taken over the security controller system yet.";
 		sleep2 2750;
@@ -216,7 +216,7 @@ OnEvent04:
 		sleep2 2750;
 		npctalk "Ashley : The priority should be to secure the laboratories and then the Guard Room.... *click*";
 		sleep2 2000;
-		npctalk "Erst : Eh, what was that?",instance_npcname("Erst#rgsr");
+		npctalk "Est : Eh, what was that?",instance_npcname("Est#rgsr");
 		'rgsr = 7;
 		end;
 	}
@@ -237,36 +237,36 @@ OnEvent04:
 		}
 		if (.@miss) {
 			cutin "ep171_as02",2;
-			mes "[ Ashley ]";
+			mes "[Ashley]";
 			mes "Hey, Did you check all the labs yet?";
 			mes "Please check if there are still Detained Researchers.";
 			close3;
 		}
 		cutin "ep171_as02",1;
-		mes "[ Ashley ]";
+		mes "[Ashley]";
 		mes "The spare Master Key still remains.";
 		mes "Without it, I wouldn't have been able to control over the security systems. Are you okay?";
 		next;
-		mes "[ Ashley ]";
+		mes "[Ashley]";
 		mes "Now you only need to check the Central Room.";
 		mes "Did you say Heart Hunters?";
 		mes "The traitors from Schlein have already escaped.";
 		next;
-		mes "[ Ashley ]";
+		mes "[Ashley]";
 		mes "We've got our focus on that room.";
 		mes "That's the main idea.";
-		mes "Where is Erst?";
+		mes "Where is Est?";
 		next;
 		cutin "16go_01",0;
-		mes "[ Gonie ]";
+		mes "[Goni]";
 		mes "... ... ...";
 		next;
 		cutin "ep171_as02",1;
-		mes "[ Ashley ]";
+		mes "[Ashley]";
 		mes "You have to keep looking for all the Researchers?";
 		mes "That's necessary, I understand.";
 		next;
-		mes "[ Ashley ]";
+		mes "[Ashley]";
 		mes "Adventurer, we head to the Central Room.";
 		mes "Meet me over there.";
 		close2;
@@ -277,7 +277,7 @@ OnEvent04:
 		end;
 	}
 	cutin "ep171_as02",1;
-	mes "[ Ashley ]";
+	mes "[Ashley]";
 	mes "Adventurer, we head to the Central Room.";
 	mes "Meet me over there.";
 	close3;
@@ -285,13 +285,13 @@ OnEvent04:
 
 1@rgsr,235,143,5	script	Detained Researcher#rgsr_q01	4_F_SCIENCE,{
 	if (!'rescued[0]) {
-		mes "[ Researcher ]";
+		mes "[Researcher]";
 		mes "My... my search... materials...";
 		mes "They took it all!";
 		mes "They took everything!";
 		next;
 		cutin "16go_01",0;
-		mes "[ Gonie ]";
+		mes "[Goni]";
 		mes "... ... ...";
 		next;
 		cutin "",255;
@@ -299,7 +299,7 @@ OnEvent04:
 		mes "Oh, you're here to protect me?";
 		mes "I'll go with you, thank you!";
 		next;
-		mes "[ Researcher ]";
+		mes "[Researcher]";
 		mes "Oh, you're there to protect me?";
 		mes "I'll go with you, thank you!";
 		'rescued[0] = 1;
@@ -311,26 +311,26 @@ OnEvent04:
 
 1@rgsr,237,108,3	script	Detained Researcher#rgsr_q02	4_LGTSCIENCE,{
 	if (!'rescued[1]) {
-		mes "[ Researcher ]";
+		mes "[Researcher]";
 		mes "I thought they kicked out all the crazy guy...";
 		mes "I hit the back of my head like this.";
 		mes "Tsk.";
 		next;
-		mes "[ Researcher ]";
+		mes "[Researcher]";
 		mes "Are you here to save us?";
 		mes "Get me out of here!";
 		mes "We couldn't flee because they put poisonous gas outside the doors!";
 		next;
-		mes "[ Researcher ]";
+		mes "[Researcher]";
 		mes "Yeah, I know a little bit about the Heart Hunters, I will tell you everything!";
 		next;
 		cutin "ep162_est02",2;
-		mes "[ Erst ]";
+		mes "[Est]";
 		mes "Ah? Do you have more information to share?";
 		mes "Do you want to go outside and talk about it calmly with me?";
 		next;
 		cutin "ep162_est01",2;
-		mes "[ Erst ]";
+		mes "[Est]";
 		mes "I'll take this guy out of here and you look at the other rooms.";
 		'rescued[1] = 1;
 		close2;
@@ -342,42 +342,42 @@ OnEvent04:
 
 1@rgsr,237,71,3	script	Detained Researcher#rgsr_q03	4_F_FRUIT,{
 	if (!'rescued[2]) {
-		mes "[ Researcher ]";
+		mes "[Researcher]";
 		mes "Please help me!";
 		mes "I worked a lot and I'm not getting paid!";
 		next;
-		mes "[ Researcher ]";
+		mes "[Researcher]";
 		mes "Schlein, where is Schlein?";
 		mes "He's a traitor!";
 		mes "I've seen it with my own eyes, he just killed the guards...";
 		next;
 		select("Calm down.");
-		mes "[ Researcher ]";
+		mes "[Researcher]";
 		mes "Is it safe now?";
 		mes "I'm glad when I was hired at Rekenber, but what the hell is going with such a big company...";
 		next;
-		mes "[ Researcher ]";
+		mes "[Researcher]";
 		mes "Say what? The Rebellions are coming to save us?";
 		mes "Can't I just run away with you instead?";
 		next;
-		mes "[ Researcher ]";
+		mes "[Researcher]";
 		mes "Oh... you're part of the recon team?";
 		mes "Alright. I'll wait for the rescue team.";
 		mes "Many people escaped by breaking the windows and ran away..";
 		next;
-		mes "[ Researcher ]";
+		mes "[Researcher]";
 		mes "Oh you already know.";
 		mes "Okay. I'll be quiet now and wait.";
 		mes "Your uniform is really cool though.";
 		'rescued[2] = 1;
 		close;
 	}
-	mes "[ Researcher ]";
+	mes "[Researcher]";
 	mes "I know. I know.";
 	mes "If I wait here, will the Rebellions come and save me?";
 	mes "I'll be fine then.";
 	next;
-	mes "[ Researcher ]";
+	mes "[Researcher]";
 	mes "But again, your uniform is really cool.";
 	close;
 }
@@ -388,20 +388,20 @@ OnEvent04:
 		mes "Some have circles around them... others are crossed out.";
 		next;
 		cutin "ep171_as01",2;
-		mes "[ Ashley ]";
+		mes "[Ashley]";
 		mes "The ones circled are probably those who accepted to be recruited...";
 		mes "My team is the one with a X marked next to it.";
 		next;
-		mes "[ Ashley ]";
+		mes "[Ashley]";
 		mes "It's a mercenary contract...";
 		mes "There's a rough plan for the day of the raid.";
 		mes "I can't believe it came to this...";
 		next;
-		mes "[ Ashley ]";
+		mes "[Ashley]";
 		mes "This is meant to provoke me.";
 		mes "It won't work this time. I'll track this to the end.";
 		next;
-		mes "[ Ashley ]";
+		mes "[Ashley]";
 		mes "I'd better take it back to Tess and analyze it.";
 		setquest 7863;
 		close3;
@@ -419,11 +419,11 @@ OnInstanceInit:
 	if ('rgsr == 8) {
 		'rgsr = 9;
 		enablenpc instance_npcname("Ashley#rgsr3");
-		enablenpc instance_npcname("Gonie#rgsr");
-		enablenpc instance_npcname("Erst#rgsr2");
+		enablenpc instance_npcname("Goni#rgsr");
+		enablenpc instance_npcname("Est#rgsr2");
 		npctalk "Am I late?",instance_npcname("Ashley#rgsr3");
 		sleep2 1800;
-		npctalk "No you arrived just in time.",instance_npcname("Erst#rgsr2");
+		npctalk "No you arrived just in time.",instance_npcname("Est#rgsr2");
 		end;
 	}
 	mes "The device does not work.";
@@ -436,45 +436,45 @@ OnInstanceInit:
 	if ('rgsr == 9) {
 		'rgsr = 10;
 		.@ashley$ = instance_npcname("Ashley#rgsr3");
-		.@gonie$ = instance_npcname("Gonie#rgsr");
-		.@erst$ = instance_npcname("Erst#rgsr2");
+		.@gonie$ = instance_npcname("Goni#rgsr");
+		.@erst$ = instance_npcname("Est#rgsr2");
 		npctalk "Ashley : The Central Room seems to be empty. I'll go in and check it out.",.@ashley$;
 		sleep2 3000;
-		npctalk "Erst : I'll go ahead and take the researchers out of here. Will that be okay?",.@erst$;
+		npctalk "Est : I'll go ahead and take the researchers out of here. Will that be okay?",.@erst$;
 		sleep2 3000;
 		npctalk "Ashley : Yes. Nothing else is being detected on the system. With our progress so far, the enemies have all been restrained.",.@ashley$;
 		sleep2 3000;
-		npctalk "Erst : What are you scared of something else? I'm going back already!",.@erst$;
+		npctalk "Est : What are you scared of something else? I'm going back already!",.@erst$;
 		sleep2 3000;
-		npctalk "Gonie : ... Me too.",.@gonie$;
+		npctalk "Goni : ... Me too.",.@gonie$;
 		sleep2 3000;
-		npctalk "Erst : There were couple of researchers left in the labs, I'll go bring them along. I'll be waiting.",.@erst$;
+		npctalk "Est : There were couple of researchers left in the labs, I'll go bring them along. I'll be waiting.",.@erst$;
 		sleep2 3000;
-		npctalk "Erst : Alright, Gonie. You go to the main lobby first and secure the road. I'll take the others at the conference room.",.@erst$;
+		npctalk "Est : Alright, Goni. You go to the main lobby first and secure the road. I'll take the others at the conference room.",.@erst$;
 		sleep2 3000;
-		npctalk "Gonie : *Nods*",.@gonie$;
+		npctalk "Goni : *Nods*",.@gonie$;
 		sleep2 3000;
-		disablenpc instance_npcname("Gonie#rgsr");
-		disablenpc instance_npcname("Erst#rgsr2");
+		disablenpc instance_npcname("Goni#rgsr");
+		disablenpc instance_npcname("Est#rgsr2");
 		npctalk "Ashley : So adventurer, let's check out the Central Room.",.@ashley$;
 		'rgsr = 11;
 		end;
 	}
 	cutin "ep171_as02",1;
-	mes "[ Ashley ]";
+	mes "[Ashley]";
 	mes "That's the Central Room right ahead.";
 	next;
 	if (select("Enter.:Wait.") == 2) {
-		mes "[ Ashley ]";
+		mes "[Ashley]";
 		mes "Please speak to me when you're ready.";
 		mes "I don't know why, but it's tightly closed;. It takes some time to maintain access.";
 		next;
-		mes "[ Ashley ]";
+		mes "[Ashley]";
 		mes "As confirmed by the security system, nothing is being detected on the inside...";
 		mes "I still want to confirm inside the room regardless.";
 		close3;
 	}
-	mes "[ Ashley ]";
+	mes "[Ashley]";
 	mes "First I'll need to disable the auto-locking mechanism, and then I'll follow right away.";
 	if ('rgsr == 11) {
 		'rgsr = 12;
@@ -486,16 +486,16 @@ OnInstanceInit:
 	end;
 }
 
-1@rgsr,124,152,5	script	Gonie#rgsr	4_M_GONY,{
+1@rgsr,124,152,5	script	Goni#rgsr	4_M_GONY,{
 	cutin "16go_01",0;
-	mes "[ Gonie ]";
+	mes "[Goni]";
 	mes "... ... ...";
 	close3;
 }
 
-1@rgsr,125,154,5	script	Erst#rgsr2	4_F_ESTLOVELOY,{
+1@rgsr,125,154,5	script	Est#rgsr2	4_F_ESTLOVELOY,{
 	cutin "ep162_est01",2;
-	mes "[ Erst ]";
+	mes "[Est]";
 	mes "I don't believe there are any enemies left inside, I'm going to pull out.";
 	mes "Just check the Central Room and then get out.";
 	close3;
@@ -540,7 +540,7 @@ OnFail:
 			case 0: .@answer = 2; .@string$ = "three phases"; break;
 			case 1: .@answer = 1; .@string$ = "two phases"; break;
 			case 2: .@answer = 4; .@string$ = "one phase"; break;
-			case 3: .@answer = 3; break;
+			case 3: .@answer = 3;
 		}
 		mes "This device has an unknown purpose.";
 		mes "There are four buttons in the room.";
@@ -572,23 +572,23 @@ OnFail:
 
 1@rgsr,127,164,3	script	Ashley#rgsr4	4_EP17_AS,{
 	cutin "ep171_as01",2;
-	mes "[ Ashley ]";
-	mes "Erst has handled everything else on the inside.";
+	mes "[Ashley]";
+	mes "Est has handled everything else on the inside.";
 	mes "Sorry for not being able to help you at all.";
 	next;
-	mes "[ Ashley ]";
+	mes "[Ashley]";
 	mes "Let's go back to Einbroch.";
 	mes "I'll... I'll go to my office and join you.";
 	next;
 	.@s = select("Move to Einbroch.:Move to Lighthalzen.:Stay for a while.");
 	if (.@s == 3) {
 		cutin "ep171_as02",2;
-		mes "[ Ashley ]";
+		mes "[Ashley]";
 		mes "Do you have anything else to investigate?";
 		mes "I'll wait  here.";
 		close3;
 	}
-	mes "[ Ashley ]";
+	mes "[Ashley]";
 	mes "We're going to wait for you in the Cat on Bullet.";
 	mes "Please head there and meet us in the headquarters.";
 	completequest 7862;
@@ -651,8 +651,8 @@ OnSummon:
 OnLeftKill:
 	.@event$ = instance_npcname(strnpcinfo(0))+"::OnLeftKill";
 	if (!mobcount('map$,.@event$)) {
-		mapannounce 'map$,"Erst : Who is it? Are you Ashley? Are you the adventurer?",bc_map,0x0D98BA;
-		enablenpc instance_npcname("Erst#rgsr");
+		mapannounce 'map$,"Est : Who is it? Are you Ashley? Are you the adventurer?",bc_map,0x0D98BA;
+		enablenpc instance_npcname("Est#rgsr");
 		enablenpc instance_npcname("Rebellion Crew#rgsr_dum01");
 	}
 	end;
@@ -723,7 +723,7 @@ OnTouch:
 		case 1: warp 'map$,46,184; break;
 		case 2:	warp 'map$,46,216; break;
 		case 3: warp 'map$,54,184; break;
-		case 4: warp 'map$,54,216; break;
+		case 4: warp 'map$,54,216;
 	}
 	end;
 }
@@ -740,7 +740,7 @@ OnTouch:
 	}
 	switch (atoi(replacestr(strnpcinfo(2),"rgsr_warp_",""))) {
 		case 5: warp 'map$,191,216; break;
-		case 6: warp 'map$,183,216; break;
+		case 6: warp 'map$,183,216;
 	}
 	end;
 }
@@ -761,7 +761,7 @@ OnTouch:
 		case 11: warp 'map$,219,76; break;
 		case 12: warp 'map$,211,76; break;
 		case 13: warp 'map$,219,44; break;
-		case 14:  warp 'map$,211,44; break;
+		case 14:  warp 'map$,211,44;
 	}
 	end;
 }
@@ -775,69 +775,69 @@ OnTouch:
 1@rgsr,216,44,0	duplicate(#rgsr_warp_7)	#rgsr_warp_14	WARPNPC,1,2
 
 1@rgsr,37,126,0	script	Researcher#rgsr_dum00	4_F_SCIENCE,{
-	mes "[ Detained Researcher ]";
+	mes "[Detained Researcher]";
 	mes "Why do I have to feed this traitors?";
 	close;
 }
 
 1@rgsr,35,136,7	script	Researcher#rgsr_dum01	4_LGTSCIENCE,{
-	mes "[ Detained Researcher ]";
+	mes "[Detained Researcher]";
 	mes "I want to go home... I just want to go home...";
 	close;
 }
 
 1@rgsr,38,139,3	script	Researcher#rgsr_dum02	4_M_NFMAN,{
-	mes "[ Detained Researcher ]";
+	mes "[Detained Researcher]";
 	mes "Are you here to save us?";
 	mes "Thank you! Thank you!";
 	close;
 }
 
 1@rgsr,31,186,3	script	Researcher#rgsr_dum03	4_LGTSCIENCE,{
-	mes "[ Detained Researcher ]";
+	mes "[Detained Researcher]";
 	mes "What the hell is happening?";
 	mes "Aaaah... I just want to go home...";
 	close;
 }
 
 1@rgsr,24,186,5	script	Researcher#rgsr_dum04	4_F_SCIENCE,{
-	mes "[ Detained Researcher ]";
+	mes "[Detained Researcher]";
 	mes "Why did you come here to save me?";
 	mes "The Enterprise's guards... no wait...";
 	next;
-	mes "[ Detained Researcher ]";
+	mes "[Detained Researcher]";
 	mes "I thought that you were the one who kept us in custody...!";
 	mes "Why would they do that?";
 	close;
 }
 
 1@rgsr,25,182,7	script	Researcher#rgsr_dum05	4_M_HUMAN_01,{
-	mes "[ Detained Researcher ]";
+	mes "[Detained Researcher]";
 	mes "These scumbags took my Research Report and I escaped here.";
 	mes "It was a spray repellent to block blood-sucking insects!";
 	next;
-	mes "[ Detained Researcher ]";
+	mes "[Detained Researcher]";
 	mes "That was my private research, I don't know why they took it!";
 	mes "You can't just take away someone else's Research Report.";
 	close;
 }
 
 1@rgsr,40,186,3	script	Rebellion Crew#rgsr_dum01	4_M_ILYA,{
-	mes "[ Rebellion Crew ]";
+	mes "[Rebellion Crew]";
 	mes "I've come prepared, but this was easier than thought.";
 	mes "Now I'm stuck here. Hehehehe!";
 	close;
 }
 
 1@rgsr,33,185,3	script	Rebellion Crew#rgsr_dum02	4_M_REBELLION2,{
-	mes "[ Rebellion Crew ]";
+	mes "[Rebellion Crew]";
 	mes "The remaining researchers are gathered here for their security.";
 	mes "The Rebellions will protect them and help them escape.";
 	close;
 }
 
 1@rgsr,31,183,5	script	Rebellion Crew#rgsr_dum03	4_F_ANYA,{
-	mes "[ Rebellion Crew ]";
+	mes "[Rebellion Crew]";
 	mes "I thought they had less forces on the inside, but I didn't think they'd have installed toxic gas.";
 	mes "Most people have fled already, only the enemies are remaining.";
 	close;

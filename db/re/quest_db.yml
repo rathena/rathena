@@ -4891,7 +4891,7 @@ Body:
       - Mob: EP17_1_TWIN_CAPUT1
         Count: 10
   - Id: 7859
-    Title: Report to Tess
+    Title: Report to Tes
   - Id: 7860
     Title: Unexpected Guest
   - Id: 7861
@@ -9426,7 +9426,7 @@ Body:
     Title: Time for repair
     TimeLimit: 4h
   - Id: 14613
-    Title: Erst on second floor
+    Title: Est on second floor
   - Id: 14614
     Title: Convince the leaders
   - Id: 14615
@@ -10015,17 +10015,17 @@ Body:
     Title: Healthy Herb of June (Standby)
     TimeLimit: 4h
   - Id: 16352
-    Title: Call from Elena Bolkova
+    Title: Call from Elena Volkova
   - Id: 16353
     Title: Golden Troublemaker
   - Id: 16354
-    Title: Operation of Elyumina
+    Title: Operation of Eliumina
   - Id: 16355
     Title: Suspicious Box
   - Id: 16356
     Title: Suspicious Box
   - Id: 16357
-    Title: Elyumina Secured
+    Title: Eliumina Secured
   - Id: 16358
     Title: Pure Wicked
   - Id: 16359
