@@ -6176,7 +6176,7 @@ Body:
       }
   - Id: 1337
     AegisName: Golden_Wrench_J
-    Name: Golden wrench    # !todo check english name
+    Name: Golden Wrench    # !todo check english name
     Type: Weapon
     SubType: 1hAxe
     Weight: 1800

@@ -25173,7 +25173,7 @@ Body:
           - aegis_490193     # 490193
           - Hero     # 29509
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == JOB_MINSTREL || eaclass()&EAJL_THIRD && BaseJob == JOB_WANDERER)
+      if ((eaclass()&EAJ_THIRDMASK)==EAJ_MINSTRELWANDERER)
          bonus bNoSizeFix;
          autobonus3 "{ bonus3 bAutoSpell,\"RA_UNLIMIT\",5,1000; }",10,20000,"WM_SEVERE_RAINSTORM","{}";
   - Combos:
@@ -25610,7 +25610,7 @@ Body:
           - Pendant_of_Solomon     # 490035
           - Amplification5     # 29449
     Script: |
-      if (BaseClass == Job_Novice || BaseClass == JOB_Mage || BaseClass == Job_Acolyte) {
+      if (BaseClass == Job_Novice || BaseClass == Job_Mage || BaseClass == Job_Acolyte) {
          bonus2 bMagicAddRace,RC_All,10;
          bonus2 bIgnoreMdefRaceRate,RC_All,70;
       }
@@ -25631,7 +25631,7 @@ Body:
           - Pendant_of_Solomon_     # 490036
           - Amplification5     # 29449
     Script: |
-      if (BaseClass == Job_Novice || BaseClass == JOB_Mage || BaseClass == Job_Acolyte || BaseClass == Job_Summoner) {
+      if (BaseClass == Job_Novice || BaseClass == Job_Mage || BaseClass == Job_Acolyte || BaseClass == Job_Summoner) {
          bonus2 bMagicAddRace,RC_All,10;
          bonus2 bIgnoreMdefRaceRate,RC_All,70;
       }
