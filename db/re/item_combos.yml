@@ -25173,9 +25173,10 @@ Body:
           - aegis_490193     # 490193
           - Hero     # 29509
     Script: |
-      if ((eaclass()&EAJ_THIRDMASK)==EAJ_MINSTRELWANDERER)
+      if ((eaclass()&EAJ_THIRDMASK)==EAJ_MINSTRELWANDERER) {
          bonus bNoSizeFix;
          autobonus3 "{ bonus3 bAutoSpell,\"RA_UNLIMIT\",5,1000; }",10,20000,"WM_SEVERE_RAINSTORM","{}";
+      }
   - Combos:
       - Combo:
           - Indecisive_P_Shoes     # 470078
@@ -25185,7 +25186,7 @@ Body:
           - Hawkeye     # 4879
     Script: |
       bonus bDex,15;
-      bonus bAtkRate,25;
+      bonus2 bAddClass,Class_All,25;
   - Combos:
       - Combo:
           - Indecisive_P_Shoes     # 470078
@@ -25593,6 +25594,14 @@ Body:
           - Ifrit_Card     # 4430
     Script: |
       bonus2 bSubEle,Ele_Fire,100;
+      bonus2 bSubSkill,"NPC_CRITICALSLASH",100;
+#  - Combos:
+#      - Combo:
+#          - Arabian_Manteau     # 480023
+#          - aegis_300331     # 300331
+#    Script: |
+#      bonus2 bSubEle,Ele_Fire,30;
+#      bonus2 bSubSkill,"NPC_CRITICALSLASH",30;
   - Combos:
       - Combo:
           - Pendant_of_Solomon     # 490035
