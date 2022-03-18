@@ -152354,7 +152354,7 @@ Body:
       if (getskilllv("WM_GLOOMYDAY") >= 5)
          bonus bPerfectHitAddRate,15;
     UnEquipScript: |
-      if (eaclass()&EAJL_THIRD && BaseJob == JOB_MINSTREL || eaclass()&EAJL_THIRD && BaseJob == JOB_WANDERER)
+      if ((eaclass()&EAJ_THIRDMASK)==EAJ_MINSTRELWANDERER)
          sc_end SC_UNLIMIT;
   - Id: 500000
     AegisName: IDTest_weapon
