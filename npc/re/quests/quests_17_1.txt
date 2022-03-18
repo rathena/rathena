@@ -4374,7 +4374,7 @@ sp_rudus,130,200,4	script	Morning#171_rudus	4_EP17_MORNING,{
 		case 255:
 			setpcblock PCBLOCK_ALL,false;
 			end;
-		case 1;
+		case 1:
 			cutin "ep171_morning02",2;
 			if (isbegin_quest(atoi(.@temp$[0])) > 0)
 				erasequest atoi(.@temp$[0]);
@@ -4384,7 +4384,7 @@ sp_rudus,130,200,4	script	Morning#171_rudus	4_EP17_MORNING,{
 			setpcblock PCBLOCK_ALL,false;
 			cutin "",255;
 			end;
-		case 2;
+		case 2:
 			cutin "",255;
 			setpcblock PCBLOCK_ALL,false;
 			end;
