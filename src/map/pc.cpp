@@ -6308,10 +6308,18 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 		bg_send_dot_remove(sd);
 		if (sd->regen.state.gc)
 			sd->regen.state.gc = 0;
-		// make sure vending is allowed here
-		if (sd->state.vending && mapdata && mapdata->flag[MF_NOVENDING]) {
-			clif_displaymessage (sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
-			vending_closevending(sd);
+
+		if (mapdata) {
+			// make sure vending is allowed here
+			if (sd->state.vending && mapdata->flag[MF_NOVENDING]) {
+				clif_displaymessage(sd->fd, msg_txt(sd, 276)); // "You can't open a shop on this map"
+				vending_closevending(sd);
+			}
+			// make sure buyingstore is allowed here
+			else if (sd->state.buyingstore && mapdata->flag[MF_NOBUYINGSTORE]) {
+				clif_displaymessage(sd->fd, msg_txt(sd, 276)); // "You can't open a shop on this map"
+				buyingstore_close(sd);
+			}
 		}
 
 		channel_pcquit(sd,4); //quit map chan
@@ -6349,6 +6357,8 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 
 		if (sd->state.vending) // Stop vending
 			vending_closevending(sd);
+		if (sd->state.buyingstore) // Stop buyingstore
+			buyingstore_close(sd);
 
 		npc_script_event(sd, NPCE_LOGOUT);
 		//remove from map, THEN change x/y coordinates
@@ -6395,6 +6405,10 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 	if (sd->state.vending && map_getcell(m,x,y,CELL_CHKNOVENDING)) {
 		clif_displaymessage (sd->fd, msg_txt(sd,204)); // "You can't open a shop on this cell."
 		vending_closevending(sd);
+	}
+	if (sd->state.buyingstore && map_getcell(m, x, y, CELL_CHKNOBUYINGSTORE)) {
+		clif_displaymessage(sd->fd, msg_txt(sd, 204)); // "You can't open a shop on this cell."
+		buyingstore_close(sd);
 	}
 
 	if(sd->bl.prev != NULL){
@@ -6454,6 +6468,11 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 	}
 	else 
 		sd->count_rewarp = 0;
+
+	if (sd->state.vending)
+		vending_update_vendor_location(*sd);
+	else if (sd->state.buyingstore)
+		buyingstore_update_buyer_location(*sd);
 	
 	return SETPOS_OK;
 }

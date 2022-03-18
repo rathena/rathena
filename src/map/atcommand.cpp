@@ -4481,6 +4481,8 @@ ACMD_FUNC(mapinfo) {
 		strcat(atcmd_output, " NoTrade |");
 	if (map_getmapflag(m_id, MF_NOVENDING))
 		strcat(atcmd_output, " NoVending |");
+	if (map_getmapflag(m_id, MF_NOBUYINGSTORE))
+		strcat(atcmd_output, " NoBuyingstore |");
 	if (map_getmapflag(m_id, MF_NODROP))
 		strcat(atcmd_output, " NoDrop |");
 	if (map_getmapflag(m_id, MF_NOSKILL))

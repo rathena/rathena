@@ -145,9 +145,20 @@ Notes:
 ---------------------------------------
 
 *nochat
+
+Disables chatroom creation on a map.
+
+---------------------------------------
+
 *novending
 
-Disables chatroom and shop creation on a map.
+Disables shop creation on a map by using MC_VENDING skill.
+
+---------------------------------------
+
+*nobuyingstore
+
+Disables shop creation on a map by using ALL_BUYING_STORE skill.
 
 ---------------------------------------
 

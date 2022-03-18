@@ -78,13 +78,13 @@ int8 buyingstore_setup(struct map_session_data* sd, unsigned char slots){
 		return 2;
 	}
 
-	if( map_getmapflag(sd->bl.m, MF_NOVENDING) )
+	if( map_getmapflag(sd->bl.m, MF_NOBUYINGSTORE) )
 	{// custom: no vending maps
 		clif_displaymessage(sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
 		return 3;
 	}
 
-	if( map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOVENDING) )
+	if( map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOBUYINGSTORE) )
 	{// custom: no vending cells
 		clif_displaymessage(sd->fd, msg_txt(sd,204)); // "You can't open a shop on this cell."
 		return 4;
@@ -145,13 +145,13 @@ int8 buyingstore_create( struct map_session_data* sd, int zenylimit, unsigned ch
 		return 2;
 	}
 
-	if( map_getmapflag(sd->bl.m, MF_NOVENDING) )
+	if( map_getmapflag(sd->bl.m, MF_NOBUYINGSTORE) )
 	{// custom: no vending maps
 		clif_displaymessage(sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
 		return 3;
 	}
 
-	if( map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOVENDING) )
+	if( map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOBUYINGSTORE) )
 	{// custom: no vending cells
 		clif_displaymessage(sd->fd, msg_txt(sd,204)); // "You can't open a shop on this cell."
 		return 4;
@@ -796,6 +796,20 @@ static int buyingstore_autotrader_free(DBKey key, DBData *data, va_list ap) {
 	if (at)
 		buyingstore_autotrader_remove(at, false);
 	return 0;
+}
+
+/**
+* Update buyer location
+* @param map_session_data &sd: Player's session data
+*/
+void buyingstore_update_buyer_location(map_session_data &sd)
+{
+	if (Sql_Query(mmysql_handle, "UPDATE `%s` SET `map` = '%s', `x` = '%d', `y` = '%d', `body_direction` = '%d', `head_direction` = '%d', `sit` = '%d' WHERE `id` = '%d') ",
+		buyingstores_table, map_getmapdata(sd.bl.m)->name, sd.bl.x, sd.bl.y, sd.ud.dir, sd.head_dir, pc_issit(&sd),
+		sd.buyer_id
+	) != SQL_SUCCESS) {
+		Sql_ShowDebug(mmysql_handle);
+	}
 }
 
 /**
