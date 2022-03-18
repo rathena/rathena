@@ -2848,7 +2848,7 @@ bool unit_can_attack(struct block_list *bl, int target_id) {
 	if (bl->type == BL_PC) {
 		map_session_data *sd = ((TBL_PC *)bl);
 
-		if (sd && (sd->state.block_action & PCBLOCK_ATTACK))
+		if (sd && ((sd->state.block_action & PCBLOCK_ATTACK) || pc_isridingwug(sd)))
 			return false;
 	}
 
