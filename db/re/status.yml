@@ -1300,6 +1300,8 @@ Body:
   - Status: Spiderweb
     Icon: EFST_SPIDERWEB
     DurationLookup: PF_SPIDERWEB
+    States:
+      NoMove: true
     CalcFlags:
       Flee: true
     Flags:
@@ -7068,7 +7070,6 @@ Body:
     DurationLookup: GN_HELLS_PLANT
     Flags:
       NoSave: true
-      RemoveOnChangeMap: true
       DisplayPc: true
       BlEffect: true
   - Status: Increase_Maxhp
