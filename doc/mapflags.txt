@@ -152,13 +152,13 @@ Disables chatroom creation on a map.
 
 *novending
 
-Disables shop creation on a map by using MC_VENDING skill.
+Disables shop creation on a map from the MC_VENDING skill.
 
 ---------------------------------------
 
 *nobuyingstore
 
-Disables shop creation on a map by using ALL_BUYING_STORE skill.
+Disables shop creation on a map from the ALL_BUYING_STORE skill.
 
 ---------------------------------------
 

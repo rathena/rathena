@@ -712,7 +712,7 @@ static int vending_autotrader_free(DBKey key, DBData *data, va_list ap) {
 
 /**
 * Update vendor location
-* @param map_session_data &sd: Player's session data
+* @param sd: Player's session data
 */
 void vending_update_vendor_location(map_session_data &sd)
 {

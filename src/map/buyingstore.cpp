@@ -800,7 +800,7 @@ static int buyingstore_autotrader_free(DBKey key, DBData *data, va_list ap) {
 
 /**
 * Update buyer location
-* @param map_session_data &sd: Player's session data
+* @param sd: Player's session data
 */
 void buyingstore_update_buyer_location(map_session_data &sd)
 {
