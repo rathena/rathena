@@ -10705,6 +10705,33 @@ ACMD_FUNC(addfame)
 	return 0;
 }
 
+/**
+ * Check player's status
+ * Usage: @checkstatus <char name>
+ */
+ACMD_FUNC(checkstatus) {
+	nullpo_retr(-1, sd);
+
+	char charname[NAME_LENGTH];
+
+	if (sscanf(message, "%23[^\n]", charname) != 1) {
+		sprintf(atcmd_output, msg_txt(sd, 828), command); // Please enter a player name (usage: @%s <char name>)
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+
+	struct map_session_data* pl_sd;
+
+	if ((pl_sd = map_nick2sd(charname, false)) == NULL || pc_get_group_level(sd) < pc_get_group_level(pl_sd)) {
+		clif_displaymessage(fd, msg_txt(sd, 3)); // Character not found.
+		return -1;
+	}
+
+	clif_checkstatus_ack(*sd, *pl_sd);
+
+	return 0;
+}
+
 #include "../custom/atcommand.inc"
 
 /**
@@ -11027,6 +11054,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(refineui),
 		ACMD_DEFR(stylist, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEF(addfame),
+		ACMD_DEFR(checkstatus, ATCMD_NOCONSOLE | ATCMD_NOAUTOTRADE),
 	};
 	AtCommandInfo* atcommand;
 	int i;

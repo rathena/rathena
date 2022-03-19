@@ -5242,6 +5242,43 @@ struct PACKET_ZC_GRADE_STATUS {
 DEFINE_PACKET_HEADER(ZC_GRADE_STATUS, 0x0b5e);
 #endif
 
+struct PACKET_CZ_REQ_STATUS_GM {
+	int16 packetType;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_STATUS_GM, 0x0213);
+
+struct PACKET_ZC_ACK_STATUS_GM {
+	int16 packetType;
+	unsigned char str;
+	unsigned char standardStr;
+	unsigned char agi;
+	unsigned char standardAgi;
+	unsigned char vit;
+	unsigned char standardVit;
+	unsigned char Int;
+	unsigned char standardInt;
+	unsigned char dex;
+	unsigned char standardDex;
+	unsigned char luk;
+	unsigned char standardLuk;
+	short attPower;
+	short refiningPower;
+	short max_mattPower;
+	short min_mattPower;
+	short itemdefPower;
+	short plusdefPower;
+	short mdefPower;
+	short plusmdefPower;
+	short hitSuccessValue;
+	short avoidSuccessValue;
+	short plusAvoidSuccessValue;
+	short criticalSuccessValue;
+	short ASPD;
+	short plusASPD;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_STATUS_GM, 0x0214);
+
 #if !defined(sun) && (!defined(__NETBSD__) || __NetBSD_Version__ >= 600000000) // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #pragma pack(pop)
 #endif // not NetBSD < 6 / Solaris
