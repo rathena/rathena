@@ -804,8 +804,8 @@ static int buyingstore_autotrader_free(DBKey key, DBData *data, va_list ap) {
 */
 void buyingstore_update_buyer_location(map_session_data &sd)
 {
-	if (Sql_Query(mmysql_handle, "UPDATE `%s` SET `map` = '%s', `x` = '%d', `y` = '%d', `body_direction` = '%d', `head_direction` = '%d', `sit` = '%d' WHERE `id` = '%d') ",
-		buyingstores_table, map_getmapdata(sd.bl.m)->name, sd.bl.x, sd.bl.y, sd.ud.dir, sd.head_dir, pc_issit(&sd),
+	if (Sql_Query(mmysql_handle, "UPDATE `%s` SET `map` = '%s', `x` = '%d', `y` = '%d', `body_direction` = '%d', `head_direction` = '%d', `sit` = '%d', `autotrade` = '%d' WHERE `id` = '%d'",
+		buyingstores_table, map_getmapdata(sd.bl.m)->name, sd.bl.x, sd.bl.y, sd.ud.dir, sd.head_dir, pc_issit(&sd), sd.state.autotrade,
 		sd.buyer_id
 	) != SQL_SUCCESS) {
 		Sql_ShowDebug(mmysql_handle);
