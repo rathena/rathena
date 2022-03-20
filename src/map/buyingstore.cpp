@@ -79,13 +79,13 @@ int8 buyingstore_setup(struct map_session_data* sd, unsigned char slots){
 	}
 
 	if( map_getmapflag(sd->bl.m, MF_NOBUYINGSTORE) )
-	{// custom: no vending maps
+	{// custom: no buyingstore maps
 		clif_displaymessage(sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
 		return 3;
 	}
 
 	if( map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOBUYINGSTORE) )
-	{// custom: no vending cells
+	{// custom: no buyingstore cells
 		clif_displaymessage(sd->fd, msg_txt(sd,204)); // "You can't open a shop on this cell."
 		return 4;
 	}
@@ -146,13 +146,13 @@ int8 buyingstore_create( struct map_session_data* sd, int zenylimit, unsigned ch
 	}
 
 	if( map_getmapflag(sd->bl.m, MF_NOBUYINGSTORE) )
-	{// custom: no vending maps
+	{// custom: no buyingstore maps
 		clif_displaymessage(sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
 		return 3;
 	}
 
 	if( map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOBUYINGSTORE) )
-	{// custom: no vending cells
+	{// custom: no buyingstore cells
 		clif_displaymessage(sd->fd, msg_txt(sd,204)); // "You can't open a shop on this cell."
 		return 4;
 	}
