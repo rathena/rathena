@@ -8290,26 +8290,29 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 		}
 	}
 
+	int64 reduce = 0;
+	
 	if (rdamage > 0) {
 		map_session_data* ssd = BL_CAST(BL_PC, src);
 		if (ssd && ssd->bonus.reduce_damage_return != 0) {
-			rdamage -= rdamage * ssd->bonus.reduce_damage_return / 100;
-			rdamage = i64max(rdamage, 1);
+			reduce += (ssd->bonus.reduce_damage_return);
 		}
 	}
 
 	if (ssc) {
 		if (ssc->data[SC_REFLECTDAMAGE]) {
-			rdamage -= damage * ssc->data[SC_REFLECTDAMAGE]->val2 / 100;
+			reduce += (ssc->data[SC_REFLECTDAMAGE]->val2);
 			if (--(ssc->data[SC_REFLECTDAMAGE]->val3) < 1) // TODO: Confirm if reflect count still exists
 				status_change_end(bl, SC_REFLECTDAMAGE, INVALID_TIMER);
 		}
 		if (ssc->data[SC_VENOMBLEED] && ssc->data[SC_VENOMBLEED]->val3 == 0)
-			rdamage -= damage * ssc->data[SC_VENOMBLEED]->val2 / 100;
+			reduce += ssc->data[SC_VENOMBLEED]->val2;
 
 		if (rdamage > 0 && ssc->data[SC_REF_T_POTION])
 			return 1; // Returns 1 damage
 	}
+	rdamage -= rdamage * i64min(100, reduce)/100;
+	rdamage = i64max(rdamage, 1);
 
 	if (sc) {
 		if (sc->data[SC_MAXPAIN])
