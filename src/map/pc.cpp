@@ -1295,7 +1295,7 @@ bool pc_isequipped(struct map_session_data *sd, t_itemid nameid)
 			continue;
 		if( sd->inventory_data[index]->nameid == nameid )
 			return true;
-		for( j = 0; j < sd->inventory_data[index]->slots; j++ ){
+		for( j = 0; j < MAX_SLOTS; j++ ){
 			if( sd->inventory.u.items_inventory[index].card[j] == nameid )
 				return true;
 		}
@@ -10258,6 +10258,9 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 		status_change_end(&sd->bl, SC_SPRITEMABLE, INVALID_TIMER);
 	if (sd->sc.data[SC_SOULATTACK] && !pc_checkskill(sd, SU_SOULATTACK))
 		status_change_end(&sd->bl, SC_SOULATTACK, INVALID_TIMER);
+	if( sd->sc.data[SC_SPIRIT] ){
+		status_change_end( &sd->bl, SC_SPIRIT, INVALID_TIMER );
+	}
 
 	if(sd->status.manner < 0)
 		clif_changestatus(sd,SP_MANNER,sd->status.manner);

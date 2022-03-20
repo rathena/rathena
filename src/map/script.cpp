@@ -15516,7 +15516,7 @@ BUILDIN_FUNC(checkequipedcard)
 			if(sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory.u.items_inventory[i].amount && sd->inventory_data[i]){
 				if (itemdb_isspecial(sd->inventory.u.items_inventory[i].card[0]))
 					continue;
-				for(n=0;n<sd->inventory_data[i]->slots;n++){
+				for (n=0; n < MAX_SLOTS; n++) {
 					if(sd->inventory.u.items_inventory[i].card[n] == c) {
 						script_pushint(st,1);
 						return SCRIPT_CMD_SUCCESS;
@@ -16068,7 +16068,7 @@ BUILDIN_FUNC(isequippedcnt)
 			} else { //Count cards.
 				if (itemdb_isspecial(sd->inventory.u.items_inventory[index].card[0]))
 					continue; //No cards
-				for (short k = 0; k < sd->inventory_data[index]->slots; k++) {
+				for (short k = 0; k < MAX_SLOTS; k++) {
 					if (sd->inventory.u.items_inventory[index].card[k] == id)
 						ret++; //[Lupus]
 				}
@@ -16124,11 +16124,10 @@ BUILDIN_FUNC(isequipped)
 				break;
 			} else { //Cards
 				short k;
-				if (sd->inventory_data[index]->slots == 0 ||
-					itemdb_isspecial(sd->inventory.u.items_inventory[index].card[0]))
+				if (itemdb_isspecial(sd->inventory.u.items_inventory[index].card[0]))
 					continue;
 
-				for (k = 0; k < sd->inventory_data[index]->slots; k++)
+				for (k = 0; k < MAX_SLOTS; k++)
 				{	//New hash system which should support up to 4 slots on any equipment. [Skotlex]
 					unsigned int hash = 0;
 					if (sd->inventory.u.items_inventory[index].card[k] != id)
@@ -16198,7 +16197,7 @@ BUILDIN_FUNC(cardscnt)
 		} else {
 			if (itemdb_isspecial(sd->inventory.u.items_inventory[index].card[0]))
 				continue;
-			for(k=0; k<sd->inventory_data[index]->slots; k++) {
+			for (k=0; k < MAX_SLOTS; k++) {
 				if (sd->inventory.u.items_inventory[index].card[k] == id)
 					ret++;
 			}
@@ -18791,7 +18790,7 @@ BUILDIN_FUNC(setunitdata)
 				return SCRIPT_CMD_FAILURE;
 			}
 			if (calc_status)
-				status_calc_bl(&md->bl, SCB_BATTLE);
+				status_calc_bl(&md->bl, status_db.getSCB_BATTLE());
 		break;
 
 	case BL_HOM:
@@ -18858,7 +18857,7 @@ BUILDIN_FUNC(setunitdata)
 				return SCRIPT_CMD_FAILURE;
 			}
 			if (calc_status)
-				status_calc_bl(&hd->bl, SCB_BATTLE);
+				status_calc_bl(&hd->bl, status_db.getSCB_BATTLE());
 		break;
 
 	case BL_PET:
@@ -18972,7 +18971,7 @@ BUILDIN_FUNC(setunitdata)
 				return SCRIPT_CMD_FAILURE;
 			}
 			if (calc_status)
-				status_calc_bl(&mc->bl, SCB_BATTLE);
+				status_calc_bl(&mc->bl, status_db.getSCB_BATTLE());
 		break;
 
 	case BL_ELEM:
@@ -19039,7 +19038,7 @@ BUILDIN_FUNC(setunitdata)
 				return SCRIPT_CMD_FAILURE;
 			}
 			if (calc_status)
-				status_calc_bl(&ed->bl, SCB_BATTLE);
+				status_calc_bl(&ed->bl, status_db.getSCB_BATTLE());
 		break;
 
 	case BL_NPC:
