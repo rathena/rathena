@@ -139649,7 +139649,7 @@ Body:
     ArmorLevel: 1
     View: 2025
   - Id: 420017
-    AegisName: aegis_420017
+    AegisName: Tree_Of_Sprout_STR
     Name: Young Leaf of World Tree (Str)
     Type: Armor
     View: 848
@@ -139659,7 +139659,7 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 100
   - Id: 420018
-    AegisName: aegis_420018
+    AegisName: Tree_Of_Sprout_DEX
     Name: Young Leaf of World Tree (Dex)
     Type: Armor
     View: 848
@@ -139669,7 +139669,7 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 100
   - Id: 420019
-    AegisName: aegis_420019
+    AegisName: Tree_Of_Sprout_AGI
     Name: Young Leaf of World Tree (Agi)
     Type: Armor
     View: 848
@@ -139679,7 +139679,7 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 100
   - Id: 420020
-    AegisName: aegis_420020
+    AegisName: Tree_Of_Sprout_LUK
     Name: Young Leaf of World Tree (Luk)
     Type: Armor
     View: 848
@@ -139689,7 +139689,7 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 100
   - Id: 420021
-    AegisName: aegis_420021
+    AegisName: Tree_Of_Sprout_VIT
     Name: Young Leaf of World Tree (Vit)
     Type: Armor
     View: 848
@@ -139699,7 +139699,7 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 100
   - Id: 420022
-    AegisName: aegis_420022
+    AegisName: Tree_Of_Sprout_INT
     Name: Young Leaf of World Tree (Int)
     Type: Armor
     View: 848
