@@ -1010,6 +1010,9 @@ Body:
     Aliases:
       - famepoint
       - famepoints
+  - Command: checkstatus
+    Aliases:
+      - check
 
 Footer:
   Imports:

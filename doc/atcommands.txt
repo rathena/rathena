@@ -588,6 +588,12 @@ This user has logged 27 times, the last time were at 2012-11-24 17:29:07
 [Slot/CID: 0/150001] Test1 | High Swordsman | Level: 99/50 | Off
 [Slot/CID: 1/150002] Test2 | Rune Knight | Level: 150/50 | On
 
+---------------------------------------
+
+@checkstatus <player_name>
+
+Check character's status.
+
 ======================
 | 4. Action Commands |
 ======================

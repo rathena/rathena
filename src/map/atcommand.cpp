@@ -10722,8 +10722,12 @@ ACMD_FUNC(checkstatus) {
 
 	struct map_session_data* pl_sd;
 
-	if ((pl_sd = map_nick2sd(charname, false)) == NULL || pc_get_group_level(sd) < pc_get_group_level(pl_sd)) {
+	if ((pl_sd = map_nick2sd(charname, false)) == NULL) {
 		clif_displaymessage(fd, msg_txt(sd, 3)); // Character not found.
+		return -1;
+	}
+	if (pc_get_group_level(sd) < pc_get_group_level(pl_sd)) {
+		clif_displaymessage(fd, msg_txt(sd, 81)); // Your GM level doesn't authorize you to preform this action on the specified player.
 		return -1;
 	}
 
