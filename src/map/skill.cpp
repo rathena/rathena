@@ -3568,8 +3568,8 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 				}
 				if (sc->data[SC_REF_T_POTION])
 					reduce += 100;
-				dmg.damage -= dmg.damage * i64min(100,reduce) / 100;
 				if (dmg.damage > 0) {
+					dmg.damage -= dmg.damage * i64min(100,reduce) / 100;
 					dmg.damage = i64max(dmg.damage, dmg.div_);
 				}
 			}
