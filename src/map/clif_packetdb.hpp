@@ -498,7 +498,6 @@
 #if PACKETVER >= 20040816
 	parseable_packet(0x0212,26,clif_parse_GMRc,2);
 	parseable_packet(HEADER_CZ_REQ_STATUS_GM, sizeof(struct PACKET_CZ_REQ_STATUS_GM), clif_parse_ReqStatusGM, 0);
-	packet(HEADER_ZC_ACK_STATUS_GM, sizeof(struct PACKET_ZC_ACK_STATUS_GM));
 #endif
 
 // 2004-08-17aSakexe

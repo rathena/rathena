@@ -15700,7 +15700,7 @@ void clif_checkstatus_ack(map_session_data& sd, map_session_data& pl_sd)
 void clif_parse_ReqStatusGM(int fd, struct map_session_data *sd)
 {
 	char charname[NAME_LENGTH];
-	char command[40];
+	char command[CHAT_SIZE_MAX];
 	struct PACKET_CZ_REQ_STATUS_GM* p = (struct PACKET_CZ_REQ_STATUS_GM*)RFIFOP(fd, 0);
 
 	if (!pc_has_permission(sd, PC_PERM_USE_CHECK))
