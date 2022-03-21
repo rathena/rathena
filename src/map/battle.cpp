@@ -8250,7 +8250,6 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 	if (flag & BF_SHORT) {//Bounces back part of the damage.
 		if ( (skill_get_inf2(skill_id, INF2_ISTRAP) || !status_reflect) && sd && sd->bonus.short_weapon_damage_return ) {
 			rdamage += damage * sd->bonus.short_weapon_damage_return / 100;
-			rdamage = i64max(rdamage, 1);
 		} else if( status_reflect && sc && sc->count ) {
 			if( sc->data[SC_REFLECTSHIELD] ) {
 				struct status_change_entry *sce_d;
@@ -8271,7 +8270,6 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 					rdamage = 0;
 				else {
 					rdamage += damage * sc->data[SC_REFLECTSHIELD]->val2 / 100;
-					rdamage = i64max(rdamage, 1);
 				}
 			}
 
@@ -8290,7 +8288,6 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 	} else {
 		if (!status_reflect && sd && sd->bonus.long_weapon_damage_return) {
 			rdamage += damage * sd->bonus.long_weapon_damage_return / 100;
-			rdamage = i64max(rdamage, 1);
 		}
 	}
 
@@ -8298,7 +8295,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 	map_session_data* ssd = BL_CAST(BL_PC, src);
 	
 	if (ssd && ssd->bonus.reduce_damage_return != 0) {
-		reduce += (ssd->bonus.reduce_damage_return);
+		reduce += ssd->bonus.reduce_damage_return;
 	}
 	
 	if (ssc) {
