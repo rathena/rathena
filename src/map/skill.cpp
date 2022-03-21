@@ -3494,7 +3494,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		}
 	}
 
-	if((tsc && tsc->data[SC_MAGICMIRROR] && skill_get_type(skill_id)==BF_MAGIC) || (dmg.flag&BF_MAGIC && ( skill_id != NPC_EARTHQUAKE || (battle_config.eq_single_target_reflectable && (flag&0xFFF) == 1) )) )
+	if(((tsc && tsc->data[SC_MAGICMIRROR] && skill_get_type(skill_id)==BF_MAGIC) || dmg.flag&BF_MAGIC) && ( skill_id != NPC_EARTHQUAKE || (battle_config.eq_single_target_reflectable && (flag&0xFFF) == 1) ) )
 	{ // Earthquake on multiple targets is not counted as a target skill. [Inkfish]
 		if( (dmg.damage || dmg.damage2) && (type = skill_magic_reflect(src, bl, src==dsrc)) )
 		{	//Magic reflection, switch caster/target
@@ -3559,7 +3559,8 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 				}
 
 				int64 reduce = 0;
-				if (dmg.damage > 0 && tsd && tsd->bonus.reduce_damage_return != 0) {
+				
+				if (tsd && tsd->bonus.reduce_damage_return != 0) {
 					reduce += tsd->bonus.reduce_damage_return;
 				}
 				if (tsc && tsc->data[SC_REFLECTDAMAGE]) {
@@ -3568,7 +3569,9 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 				if (sc->data[SC_REF_T_POTION])
 					reduce += 100;
 				dmg.damage -= dmg.damage * i64min(100,reduce) / 100;
-				dmg.damage = i64max(dmg.damage, dmg.div_);
+				if (dmg.damage > 0) {
+					dmg.damage = i64max(dmg.damage, dmg.div_);
+				}
 			}
 #endif
 		}
