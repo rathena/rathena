@@ -17674,7 +17674,7 @@ Body:
       bonus5 bAutoSpell,"HW_GRAVITATION",3,100,BF_SHORT|BF_WEAPON,1;
   - Combos:
       - Combo:
-          - aegis_420017
+          - Tree_Of_Sprout_STR
           - Overwhelm_Str_Armor
           - Temporal_M_Str
     Script: |
@@ -17692,7 +17692,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_420018
+          - Tree_Of_Sprout_DEX
           - Overwhelm_Dex_Armor
           - Temporal_M_Dex
     Script: |
@@ -17710,7 +17710,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_420019
+          - Tree_Of_Sprout_AGI
           - Overwhelm_Agi_Armor
           - Temporal_M_Agi
     Script: |
@@ -17728,7 +17728,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_420020
+          - Tree_Of_Sprout_LUK
           - Overwhelm_Luk_Armor
           - Temporal_M_Luk
     Script: |
@@ -17746,7 +17746,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_420021
+          - Tree_Of_Sprout_VIT
           - Overwhelm_Vit_Armor
           - Temporal_M_Vit
     Script: |
@@ -17764,7 +17764,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_420022
+          - Tree_Of_Sprout_INT
           - Overwhelm_Int_Armor
           - Temporal_M_Int
     Script: |
