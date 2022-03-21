@@ -6316,7 +6316,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 				vending_closevending(sd);
 			}
 			// make sure buyingstore is allowed here
-			else if (sd->state.buyingstore && mapdata->flag[MF_NOBUYINGSTORE]) {
+			if (sd->state.buyingstore && mapdata->flag[MF_NOBUYINGSTORE]) {
 				clif_displaymessage(sd->fd, msg_txt(sd, 276)); // "You can't open a shop on this map"
 				buyingstore_close(sd);
 			}
@@ -6471,7 +6471,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 
 	if (sd->state.vending)
 		vending_update_vendor_location(*sd);
-	else if (sd->state.buyingstore)
+	if (sd->state.buyingstore)
 		buyingstore_update_buyer_location(*sd);
 	
 	return SETPOS_OK;

@@ -802,7 +802,7 @@ static int buyingstore_autotrader_free(DBKey key, DBData *data, va_list ap) {
 * Update buyer location
 * @param sd: Player's session data
 */
-void buyingstore_update_buyer_location(map_session_data &sd)
+void buyingstore_update(map_session_data &sd)
 {
 	if (Sql_Query(mmysql_handle, "UPDATE `%s` SET `map` = '%s', `x` = '%d', `y` = '%d', `body_direction` = '%d', `head_direction` = '%d', `sit` = '%d', `autotrade` = '%d' WHERE `id` = '%d'",
 		buyingstores_table, map_getmapdata(sd.bl.m)->name, sd.bl.x, sd.bl.y, sd.ud.dir, sd.head_dir, pc_issit(&sd), sd.state.autotrade,
