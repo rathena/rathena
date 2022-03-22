@@ -1176,7 +1176,7 @@ bool hom_call(struct map_session_data *sd)
 		clif_hominfo(sd,hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
 		clif_homskillinfoblock(sd);
 		if (battle_config.hom_setting&HOMSET_COPY_SPEED)
-			status_calc_bl_sub(&hd->bl, { SCB_SPEED });
+			status_calc_bl(&hd->bl, { SCB_SPEED });
 		hom_save(hd);
 	} else
 		//Warp him to master.

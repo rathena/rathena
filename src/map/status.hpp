@@ -3225,17 +3225,17 @@ int status_change_clear(struct block_list* bl, int type);
 void status_change_clear_buffs(struct block_list* bl, uint8 type);
 void status_change_clear_onChangeMap(struct block_list *bl, struct status_change *sc);
 
-#define status_calc_mob(md, opt) status_calc_bl(&(md)->bl, status_db.getSCB_ALL(), opt)
-#define status_calc_pet(pd, opt) status_calc_bl(&(pd)->bl, status_db.getSCB_ALL(), opt)
-#define status_calc_pc(sd, opt) status_calc_bl(&(sd)->bl, status_db.getSCB_ALL(), opt)
-#define status_calc_homunculus(hd, opt) status_calc_bl(&(hd)->bl, status_db.getSCB_ALL(), opt)
-#define status_calc_mercenary(md, opt) status_calc_bl(&(md)->bl, status_db.getSCB_ALL(), opt)
-#define status_calc_elemental(ed, opt) status_calc_bl(&(ed)->bl, status_db.getSCB_ALL(), opt)
-#define status_calc_npc(nd, opt) status_calc_bl(&(nd)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_mob(md, opt) status_calc_bl_(&(md)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_pet(pd, opt) status_calc_bl_(&(pd)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_pc(sd, opt) status_calc_bl_(&(sd)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_homunculus(hd, opt) status_calc_bl_(&(hd)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_mercenary(md, opt) status_calc_bl_(&(md)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_elemental(ed, opt) status_calc_bl_(&(ed)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_npc(nd, opt) status_calc_bl_(&(nd)->bl, status_db.getSCB_ALL(), opt)
 
 bool status_calc_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag);
 bool status_calc_cart_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag);
-void status_calc_bl(struct block_list *bl, std::bitset<SCB_MAX> flag, uint8 opt = SCO_NONE);
+void status_calc_bl_(struct block_list *bl, std::bitset<SCB_MAX> flag, uint8 opt = SCO_NONE);
 int status_calc_mob_(struct mob_data* md, uint8 opt);
 void status_calc_pet_(struct pet_data* pd, uint8 opt);
 int status_calc_pc_(struct map_session_data* sd, uint8 opt);
@@ -3244,7 +3244,7 @@ int status_calc_mercenary_(s_mercenary_data *md, uint8 opt);
 int status_calc_elemental_(s_elemental_data *ed, uint8 opt);
 int status_calc_npc_(struct npc_data *nd, uint8 opt);
 
-static void status_calc_bl_sub(block_list *bl, std::vector<e_scb_flag> flags) {
+static void status_calc_bl(block_list *bl, std::vector<e_scb_flag> flags) {
 	static std::bitset<SCB_MAX> temp;
 
 	temp.reset();
@@ -3252,7 +3252,7 @@ static void status_calc_bl_sub(block_list *bl, std::vector<e_scb_flag> flags) {
 		temp.set(scb);
 	}
 
-	status_calc_bl(bl, temp);
+	status_calc_bl_(bl, temp);
 }
 
 void status_calc_misc(struct block_list *bl, struct status_data *status, int level);
