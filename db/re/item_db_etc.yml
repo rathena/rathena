@@ -44113,6 +44113,86 @@ Body:
       bonus bCritAtkRate,9*(.@r/2);
       bonus bCritical,3*(.@r/2);
       bonus2 bAddClass,Class_All,3*(.@r/5);
+  - Id: 29706
+    AegisName: Tenacity1
+    Name: Tenacity Lv1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,4;
+      bonus bPerfectHitRate,1;
+  - Id: 29707
+    AegisName: Tenacity2
+    Name: Tenacity Lv2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,8;
+      bonus bPerfectHitRate,2;
+  - Id: 29708
+    AegisName: Tenacity3
+    Name: Tenacity Lv3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,12;
+      bonus bPerfectHitRate,3;
+  - Id: 29709
+    AegisName: Tenacity4
+    Name: Tenacity Lv4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,16;
+      bonus bPerfectHitRate,4;
+  - Id: 29710
+    AegisName: Tenacity5
+    Name: Tenacity Lv5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,20;
+      bonus bPerfectHitRate,5;
+  - Id: 29711
+    AegisName: Tenacity6
+    Name: Tenacity Lv6
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,24;
+      bonus bPerfectHitRate,6;
+  - Id: 29712
+    AegisName: Tenacity7
+    Name: Tenacity Lv7
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,28;
+      bonus bPerfectHitRate,7;
+  - Id: 29713
+    AegisName: Tenacity8
+    Name: Tenacity Lv8
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,32;
+      bonus bPerfectHitRate,10;
+  - Id: 29714
+    AegisName: Tenacity9
+    Name: Tenacity Lv9
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,36;
+      bonus bPerfectHitRate,9;
+  - Id: 29715
+    AegisName: Tenacity10
+    Name: Tenacity Lv10
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,44;
+      bonus bPerfectHitRate,10;
   - Id: 31000
     AegisName: Rudo_Card_J
     Name: Rudo Card
