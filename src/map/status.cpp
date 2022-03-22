@@ -5488,7 +5488,7 @@ void status_calc_bl_main(struct block_list *bl, std::bitset<SCB_MAX> flag)
  * @param flag: Which status has changed on bl
  * @param opt: If true, will cause status_calc_* functions to run their base status initialization code
  */
-void status_calc_bl_(struct block_list* bl, std::bitset<SCB_MAX> flag, uint8 opt)
+void status_calc_bl(struct block_list* bl, std::bitset<SCB_MAX> flag, uint8 opt)
 {
 	struct status_data b_status; // Previous battle status
 	struct status_data* status; // Pointer to current battle status
@@ -12071,14 +12071,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				case SC_BERSERK:
 				case SC_MERC_HPUP:
 				case SC_MERC_SPUP:
-					status_calc_bl_(bl, calc_flag, SCO_FORCE);
+					status_calc_bl(bl, calc_flag, SCO_FORCE);
 					break;
 				default:
-					status_calc_bl_(bl, calc_flag, SCO_NONE);
+					status_calc_bl(bl, calc_flag);
 					break;
 			}
 		} else
-			status_calc_bl_(bl, calc_flag, SCO_NONE);
+			status_calc_bl(bl, calc_flag);
 	}
 
 	// Non-zero
@@ -12959,10 +12959,10 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 #ifndef RENEWAL
 		if (type == SC_MAGICPOWER) {
 			//If Mystical Amplification ends, MATK is immediately recalculated
-			status_calc_bl_(bl, calc_flag, SCO_FORCE);
+			status_calc_bl(bl, calc_flag, SCO_FORCE);
 		} else
 #endif
-			status_calc_bl_(bl, calc_flag, SCO_NONE);
+			status_calc_bl(bl, calc_flag);
 	}
 
 	if(opt_flag[SCF_UNITMOVE]) // Out of hiding, invoke on place.
@@ -13096,7 +13096,7 @@ TIMER_FUNC(status_change_timer){
 			clif_changeoption(bl);
 			sc_timer_next(min(sce->val4, interval) + tick);
 			sce->val4 -= interval; //Remaining time
-			status_calc_bl_(bl, scdb->calc_flag, SCO_NONE);
+			status_calc_bl(bl, scdb->calc_flag);
 			return 0;
 		}
 		if (sce->val4 >= 0 && !(sce->val3) && status->hp > status->max_hp / 4) {
