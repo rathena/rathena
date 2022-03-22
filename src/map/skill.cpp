@@ -3566,7 +3566,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 				if (tsc && tsc->data[SC_REFLECTDAMAGE]) {
 					reduce += (tsc->data[SC_REFLECTDAMAGE]->val2);
 				}
-				if (sc->data[SC_REF_T_POTION])
+				if (tsc && tsc->data[SC_REF_T_POTION])
 					reduce += 100;
 				if (dmg.damage > 0) {
 					dmg.damage -= dmg.damage * i64min(100,reduce) / 100;
