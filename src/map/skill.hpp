@@ -244,11 +244,6 @@ struct s_skill_copyable { // [Cydh]
 	uint16 req_opt;
 };
 
-/// Skill Reading Spellbook structure.
-struct s_skill_spellbook {
-	uint16 nameid, point;
-};
-
 /// Database skills
 struct s_skill_db {
 	uint16 nameid;								///< Skill ID
@@ -304,7 +299,6 @@ struct s_skill_db {
 	struct s_skill_copyable copyable;
 
 	int32 abra_probability[MAX_SKILL_LEVEL];
-	s_skill_spellbook reading_spellbook;
 	uint16 improvisedsong_rate;
 	sc_type sc;									///< Default SC for skill
 };
@@ -2581,7 +2575,7 @@ public:
 
 extern ReadingSpellbookDatabase reading_spellbook_db;
 
-void skill_spellbook(struct map_session_data *sd, t_itemid nameid);
+void skill_spellbook(map_session_data &sd, t_itemid nameid);
 
 int skill_block_check(struct block_list *bl, enum sc_type type, uint16 skill_id);
 
