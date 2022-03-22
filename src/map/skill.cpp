@@ -21942,7 +21942,6 @@ int skill_magicdecoy(struct map_session_data *sd, t_itemid nameid) {
  * @param nameid: Spellbook item used
  */
 void skill_spellbook(map_session_data &sd, t_itemid nameid) {
-	nullpo_retv(&sd);
 
 	if (reading_spellbook_db.empty())
 		return;
