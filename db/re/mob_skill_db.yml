@@ -42670,6 +42670,8 @@ Body:
             Mob: V_G_GERTIE
           - Index: 4
             Mob: V_G_ALPHOCCIO
+          - Index: 5
+            Mob: V_G_TRENTINI
       - Index: 2
         Name: NPC_CALLSLAVE
         Level: 1
@@ -42758,6 +42760,8 @@ Body:
             Mob: V_G_GERTIE
           - Index: 4
             Mob: V_G_ALPHOCCIO
+          - Index: 5
+            Mob: V_G_TRENTINI
       - Index: 9
         Name: NPC_SUMMONMONSTER
         Level: 1
@@ -42780,6 +42784,8 @@ Body:
             Mob: V_G_GERTIE
           - Index: 4
             Mob: V_G_ALPHOCCIO
+          - Index: 5
+            Mob: V_G_TRENTINI
       - Index: 10
         Name: PA_PRESSURE
         Level: 5
@@ -59076,7 +59082,7 @@ Body:
         CastCancel: true
         Target: TARGET
         Condition: ALWAYS
-        # Ai: 04
+        Ai: 04
         Emotion: ET_ANGER
       - Index: 23
         Name: NPC_ALLHEAL
@@ -90815,6 +90821,8 @@ Body:
             Mob: V_G_GERTIE
           - Index: 4
             Mob: V_G_ALPHOCCIO
+          - Index: 5
+            Mob: V_G_TRENTINI
       - Index: 3
         Name: NPC_MAXPAIN
         Level: 5
@@ -90903,6 +90911,8 @@ Body:
             Mob: V_G_GERTIE
           - Index: 4
             Mob: V_G_ALPHOCCIO
+          - Index: 5
+            Mob: V_G_TRENTINI
       - Index: 10
         Name: NPC_MAXPAIN
         Level: 10
@@ -90935,6 +90945,8 @@ Body:
             Mob: V_G_GERTIE
           - Index: 4
             Mob: V_G_ALPHOCCIO
+          - Index: 5
+            Mob: V_G_TRENTINI
       - Index: 12
         Name: CR_ACIDDEMONSTRATION
         Level: 5
@@ -126156,6 +126168,8 @@ Body:
             Mob: V_G_CHEN
           - Index: 4
             Mob: V_G_GERTIE
+          - Index: 5
+            Mob: V_G_ALPHOCCIO
       - Index: 2
         Name: NPC_CALLSLAVE
         Level: 1
@@ -126244,6 +126258,8 @@ Body:
             Mob: V_G_CHEN
           - Index: 4
             Mob: V_G_GERTIE
+          - Index: 5
+            Mob: V_G_ALPHOCCIO
       - Index: 9
         Name: NPC_SUMMONMONSTER
         Level: 1
@@ -126266,6 +126282,8 @@ Body:
             Mob: V_G_CHEN
           - Index: 4
             Mob: V_G_GERTIE
+          - Index: 5
+            Mob: V_G_ALPHOCCIO
       - Index: 10
         Name: NPC_MAXPAIN
         Level: 9
@@ -130262,6 +130280,8 @@ Body:
             Mob: V_G_GERTIE
           - Index: 4
             Mob: V_G_ALPHOCCIO
+          - Index: 5
+            Mob: V_G_TRENTINI
       - Index: 3
         Name: AL_TELEPORT
         Level: 1
@@ -130375,6 +130395,8 @@ Body:
             Mob: V_G_GERTIE
           - Index: 4
             Mob: V_G_ALPHOCCIO
+          - Index: 5
+            Mob: V_G_TRENTINI
       - Index: 13
         Name: NPC_SUMMONMONSTER
         Level: 1
@@ -130397,6 +130419,8 @@ Body:
             Mob: V_G_GERTIE
           - Index: 4
             Mob: V_G_ALPHOCCIO
+          - Index: 5
+            Mob: V_G_TRENTINI
       - Index: 14
         Name: SA_LANDPROTECTOR
         Level: 5
@@ -130533,6 +130557,8 @@ Body:
             Mob: V_G_GERTIE
           - Index: 4
             Mob: V_G_ALPHOCCIO
+          - Index: 5
+            Mob: V_G_TRENTINI
       - Index: 2
         Name: NPC_MAXPAIN
         Level: 5
@@ -130601,6 +130627,8 @@ Body:
             Mob: V_G_GERTIE
           - Index: 4
             Mob: V_G_ALPHOCCIO
+          - Index: 5
+            Mob: V_G_TRENTINI
       - Index: 7
         Name: NPC_SUMMONMONSTER
         Level: 1
@@ -130623,6 +130651,8 @@ Body:
             Mob: V_G_GERTIE
           - Index: 4
             Mob: V_G_ALPHOCCIO
+          - Index: 5
+            Mob: V_G_TRENTINI
       - Index: 8
         Name: MO_EXTREMITYFIST
         Level: 5
@@ -130770,6 +130800,8 @@ Body:
             Mob: V_G_CHEN
           - Index: 4
             Mob: V_G_ALPHOCCIO
+          - Index: 5
+            Mob: V_G_TRENTINI
       - Index: 2
         Name: NPC_CALLSLAVE
         Level: 1
@@ -130858,6 +130890,8 @@ Body:
             Mob: V_G_CHEN
           - Index: 4
             Mob: V_G_ALPHOCCIO
+          - Index: 5
+            Mob: V_G_TRENTINI
       - Index: 9
         Name: NPC_SUMMONMONSTER
         Level: 1
@@ -130880,6 +130914,8 @@ Body:
             Mob: V_G_CHEN
           - Index: 4
             Mob: V_G_ALPHOCCIO
+          - Index: 5
+            Mob: V_G_TRENTINI
       - Index: 10
         Name: NPC_AGIUP
         Level: 5
@@ -131040,6 +131076,8 @@ Body:
             Mob: V_G_CHEN
           - Index: 4
             Mob: V_G_GERTIE
+          - Index: 5
+            Mob: V_G_TRENTINI
       - Index: 3
         Name: NPC_SLOWCAST
         Level: 5
@@ -131129,6 +131167,8 @@ Body:
             Mob: V_G_CHEN
           - Index: 4
             Mob: V_G_GERTIE
+          - Index: 5
+            Mob: V_G_TRENTINI
       - Index: 10
         Name: NPC_SUMMONMONSTER
         Level: 1
@@ -131151,6 +131191,8 @@ Body:
             Mob: V_G_CHEN
           - Index: 4
             Mob: V_G_GERTIE
+          - Index: 5
+            Mob: V_G_TRENTINI
       - Index: 11
         Name: NPC_POWERUP
         Level: 5

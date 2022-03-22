@@ -5978,15 +5978,6 @@ uint64 MobSkillDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (this->nodeExists(it, "Ai")) {
-				switch( skill->skill_id ) {
-					case NPC_EMOTION:
-					case NPC_EMOTION_ON:
-						break;
-					default:	// some skills have a value in the AI field on aegis data. Mistake? or the AI field should be supported for all skills ?
-						this->invalidWarning(it["Ai"], "Ai not supported for skill %s.\n", skill_name);
-						return 0;
-				}
-
 				std::string ai;
 
 				if (!this->asString(it, "Ai", ai))

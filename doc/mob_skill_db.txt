@@ -141,7 +141,8 @@ ConditionValue2: Number required for MYHPINRATE and FRIENDHPINRATE conditions.
 
 ---------------------------------------
 
-Ai: Change the monster mode using the given Aegis monster type AI. This field is currently only supported for NPC_EMOTION and NPC_EMOTION_ON skills.
+Ai: Change the monster mode using the given Aegis monster type AI.
+    Note: When used with NPC_EMOTION_ON the Ai is added to the current AI. The others skills replace the monster AI by Ai.
 
 ---------------------------------------
 

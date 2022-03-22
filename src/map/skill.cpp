@@ -9508,12 +9508,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case NPC_EMOTION_ON:
 		//NPC_EMOTION & NPC_EMOTION_ON can change a mob's mode 'permanently' [Skotlex]
+		// NPC_EMOTION_ON adds the mode to the current mode
 		if(md && md->skill_idx >= 0 && tsc)
 		{
 			int mode_passive = (md->db->skill[md->skill_idx]->mob_mode & MD_AGGRESSIVE) ? 0 : MD_AGGRESSIVE;	// Remove aggressive mode when the new mob type is passive.
 
 			if (md->db->skill[md->skill_idx]->mob_mode > -1)
-				sc_start4(src,src, type, 100, skill_lv,
+				sc_start4(src,src, SC_MODECHANGE, 100, skill_lv,
 					0,	// 'sets' the mode
 					md->db->skill[md->skill_idx]->mob_mode,	// adds to the current mode
 					mode_passive,	// removes from the current mode
@@ -9526,29 +9527,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case NPC_EMOTION:
-		//NPC_EMOTION & NPC_EMOTION_ON can change a mob's mode 'permanently' [Skotlex]
-		if(md && md->skill_idx >= 0 && tsc)
-		{
-			std::shared_ptr<s_mob_skill> skilltmp = md->db->skill[md->skill_idx];
-
-			if (skilltmp->mob_mode > -1 && skilltmp->mob_mode == md->db->status.mode && tsce)	// asks to delete the previous mode change
-				status_change_end(bl, type, INVALID_TIMER);
-
-			//If mode gets set by NPC_EMOTION then the target should be reset [Playtester]
-			if (!battle_config.npc_emotion_behavior && skilltmp->mob_mode > -1 && skilltmp->mob_mode != md->db->status.mode)
-				mob_unlocktarget(md,tick);
-
-			if (skilltmp->mob_mode > -1 && skilltmp->mob_mode != md->db->status.mode)
-				sc_start4(src,src, type, 100, skill_lv,
-					skilltmp->mob_mode,	// 'sets' the mode
-					0,	// adds to the current mode
-					0,	// removes from the current mode
-					skill_get_time(skill_id, skill_lv));
-
-			//Reset aggressive state depending on resulting mode
-			if (!battle_config.npc_emotion_behavior)
-				md->state.aggressive = status_has_mode(&md->status,MD_ANGRY)?1:0;
-		}
 		break;
 
 	case NPC_POWERUP:
@@ -12442,6 +12420,34 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 	}
 
+	// Change a mob's mode 'permanently'
+	if (md && md->skill_idx >= 0 && skill_id != NPC_EMOTION_ON) {
+		status_change *sc = status_get_sc(src);
+
+		if (sc) {
+			std::shared_ptr<s_mob_skill> skilltmp = md->db->skill[md->skill_idx];
+
+			if (skilltmp->mob_mode > -1 && sc->data[SC_MODECHANGE])	// asks to delete the previous mode change regardless of the current monster mode since we 'sets' the mode
+				status_change_end(src, SC_MODECHANGE, INVALID_TIMER);
+
+			//If mode gets set by NPC_EMOTION then the target should be reset [Playtester]
+			if (!battle_config.npc_emotion_behavior && skilltmp->mob_mode > -1 && skilltmp->mob_mode != md->db->status.mode)
+				mob_unlocktarget(md,tick);
+
+			if (skilltmp->mob_mode > -1 && skilltmp->mob_mode != md->db->status.mode) {
+				sc_start4(src,src, SC_MODECHANGE, 100, skill_lv,
+					skilltmp->mob_mode,	// 'sets' the mode
+					0,	// adds to the current mode
+					0,	// removes from the current mode
+					skill_get_time(skill_id, skill_lv));
+			}
+
+			//Reset aggressive state depending on resulting mode
+			if (!battle_config.npc_emotion_behavior)
+				md->state.aggressive = status_has_mode(&md->status,MD_ANGRY)?1:0;
+		}
+	}
+
 	if (skill_id != SR_CURSEDCIRCLE && skill_id != NPC_SR_CURSEDCIRCLE) {
 		struct status_change *sc = status_get_sc(src);
 
@@ -14032,6 +14038,32 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	default:
 		ShowWarning("skill_castend_pos2: Unknown skill used:%d\n",skill_id);
 		return 1;
+	}
+
+	mob_data *md = BL_CAST(BL_MOB, src);
+
+	// Change a mob's mode 'permanently'
+	if (md && md->skill_idx >= 0 && sc) {
+		std::shared_ptr<s_mob_skill> skilltmp = md->db->skill[md->skill_idx];
+
+		//if (skilltmp->mob_mode > -1 && skilltmp->mob_mode == md->db->status.mode)	// asks to delete the previous mode change
+		if (skilltmp->mob_mode > -1 && sc->data[SC_MODECHANGE])	// asks to delete the previous mode change regardless of the current monster mode since we 'sets' the mode
+			status_change_end(src, SC_MODECHANGE, INVALID_TIMER);
+
+		if (!battle_config.npc_emotion_behavior && skilltmp->mob_mode > -1 && skilltmp->mob_mode != md->db->status.mode)
+			mob_unlocktarget(md,tick);
+
+		if (skilltmp->mob_mode > -1 && skilltmp->mob_mode != md->db->status.mode) {
+			sc_start4(src,src, SC_MODECHANGE, 100, skill_lv,
+				skilltmp->mob_mode,	// 'sets' the mode
+				0,	// adds to the current mode
+				0,	// removes from the current mode
+				skill_get_time(skill_id, skill_lv));
+		}
+
+		//Reset aggressive state depending on resulting mode
+		if (!battle_config.npc_emotion_behavior)
+			md->state.aggressive = status_has_mode(&md->status,MD_ANGRY)?1:0;
 	}
 
 	if( sc && sc->data[SC_CURSEDCIRCLE_ATKER] ) //Should only remove after the skill has been casted.
