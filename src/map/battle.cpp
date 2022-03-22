@@ -2420,6 +2420,10 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 	if (skill_get_inf2(skill_id, INF2_ISTRAP))
 		return BF_SHORT;
 
+	struct status_change* tsc = status_get_sc(target);
+	if (tsc && tsc->data[SC_MAGICMIRROR] && skill_get_type(skill_id) == BF_MAGIC)
+		return BF_SHORT;
+
 	switch (skill_id) {
 		case AC_SHOWER:
 		case AM_DEMONSTRATION:
@@ -6668,10 +6672,11 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	sc = status_get_sc(src);
 	tsc = status_get_sc(target);
 	
-	if (tsc && tsc->data[SC_MAGICMIRROR])
-		ad.flag = BF_WEAPON|BF_SHORT|BF_SKILL|BF_NORMAL;
-	else
+	if (tsc && tsc->data[SC_MAGICMIRROR]) {
+		ad.flag = BF_WEAPON|BF_SKILL|BF_NORMAL;
+	} else {
 		ad.flag = BF_MAGIC|BF_SKILL;
+	}
 
 	//Initialize variables that will be used afterwards
 	s_ele = skill_get_ele(skill_id, skill_lv);
@@ -8297,7 +8302,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 	if (ssd && ssd->bonus.reduce_damage_return != 0) {
 		reduce += ssd->bonus.reduce_damage_return;
 	}
-	
+
 	if (ssc) {
 		if (ssc->data[SC_REFLECTDAMAGE]) {
 			reduce += (ssc->data[SC_REFLECTDAMAGE]->val2);
