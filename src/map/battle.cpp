@@ -8308,7 +8308,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 			reduce += ssc->data[SC_VENOMBLEED]->val2;
 
 		if (rdamage > 0 && ssc->data[SC_REF_T_POTION])
-			return 1; // Returns 1 damage
+			reduce += 100;
 	}
 	if (rdamage > 0) {
 		rdamage -= rdamage * i64min(100, reduce)/100;
