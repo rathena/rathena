@@ -12074,11 +12074,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					status_calc_bl_(bl, calc_flag, SCO_FORCE);
 					break;
 				default:
-					status_calc_bl(bl, calc_flag);
+					status_calc_bl_(bl, calc_flag);
 					break;
 			}
 		} else
-			status_calc_bl(bl, calc_flag);
+			status_calc_bl_(bl, calc_flag);
 	}
 
 	// Non-zero
@@ -12962,7 +12962,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			status_calc_bl_(bl, calc_flag, SCO_FORCE);
 		} else
 #endif
-			status_calc_bl(bl, calc_flag);
+			status_calc_bl_(bl, calc_flag);
 	}
 
 	if(opt_flag[SCF_UNITMOVE]) // Out of hiding, invoke on place.
@@ -13096,7 +13096,7 @@ TIMER_FUNC(status_change_timer){
 			clif_changeoption(bl);
 			sc_timer_next(min(sce->val4, interval) + tick);
 			sce->val4 -= interval; //Remaining time
-			status_calc_bl(bl, scdb->calc_flag);
+			status_calc_bl_(bl, scdb->calc_flag);
 			return 0;
 		}
 		if (sce->val4 >= 0 && !(sce->val3) && status->hp > status->max_hp / 4) {
