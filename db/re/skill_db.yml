@@ -7294,8 +7294,6 @@ Body:
     DamageFlags:
       IgnoreAtkCard: true
       IgnoreFlee: true
-    Flags:
-      TargetSelf: true
     Range: 5
     Hit: Single
     HitCount: 1
