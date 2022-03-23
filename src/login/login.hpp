@@ -112,6 +112,7 @@ struct Login_Config {
 	} vip_sys;
 #endif
 	bool use_web_auth_token;						/// Enable web authentication token system
+	int disable_webtoken_delay;						/// delay disabling web token after char logs off in milliseconds
 };
 extern struct Login_Config login_config;
 

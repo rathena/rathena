@@ -13,6 +13,8 @@
 #include "../config/core.hpp"
 
 
+#define SQL_BUFFER_SIZE 65535
+
 enum E_WEBSERVER_ST {
 	WEBSERVER_ST_RUNNING = CORE_ST_LAST,
 	WEBSERVER_ST_STARTING,
@@ -27,12 +29,16 @@ struct Web_Config {
 
 	char webconf_name[256];						/// name of main config file
 	char msgconf_name[256];							/// name of msg_conf config file
-	int emblem_transparency_limit;                  // Emblem transparency limit
 	bool allow_gifs;
 };
 
+struct Inter_Config {
+	int emblem_transparency_limit;					// Emblem transparency limit
+	bool emblem_woe_change;							// allow emblem change during woe
+};
 
 extern struct Web_Config web_config;
+extern struct Inter_Config inter_config;
 
 extern char login_table[32];
 extern char guild_emblems_table[32];

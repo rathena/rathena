@@ -934,7 +934,7 @@ TIMER_FUNC(account_disable_webtoken_timer){
 	AccountDB_SQL* db = reinterpret_cast<AccountDB_SQL*>(data);
 
 	if (p == nullptr) {
-		ShowInfo("Token for %d disabled\n", id);
+		ShowInfo("Web Auth Token for account %d was disabled\n", id);
 		if( SQL_ERROR == Sql_Query( db->accounts, "UPDATE `%s` SET `web_auth_token_enabled` = '0' WHERE `account_id` = '%u'", db->account_db, id ) ){
 			Sql_ShowDebug( db->accounts );
 			return 0;
@@ -949,7 +949,7 @@ TIMER_FUNC(account_disable_webtoken_timer){
 bool account_db_sql_disable_webtoken( AccountDB* self, const uint32 account_id ){
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
 
-	add_timer(gettick() + DISABLE_WEBTOKEN_TIMER, account_disable_webtoken_timer, account_id, reinterpret_cast<intptr_t>(db));
+	add_timer(gettick() + login_config.disable_webtoken_delay, account_disable_webtoken_timer, account_id, reinterpret_cast<intptr_t>(db));
 
 	return true;
 }

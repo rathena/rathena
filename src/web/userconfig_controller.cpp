@@ -135,7 +135,7 @@ HANDLER_FUNC(userconfig_load) {
 		return;
 	}
 
-	char databuf[10000];
+	char databuf[SQL_BUFFER_SIZE];
 
 	if (SQL_SUCCESS != SqlStmt_BindColumn(stmt, 0, SQLDT_STRING, &databuf, sizeof(databuf), NULL, NULL)
 		|| SQL_SUCCESS != SqlStmt_NextRow(stmt)

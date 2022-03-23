@@ -131,13 +131,6 @@ const t_exp MAX_LEVEL_JOB_EXP = 999999999;
 #endif
 
 /**
- * Use web service?
- **/
-#if PACKETVER > 20200300
-	#define WEB_SERVER_ENABLE
-#endif
-
-/**
  * End of File
  **/
 #endif /* CONFIG_CONST_H */

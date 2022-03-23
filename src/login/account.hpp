@@ -12,7 +12,6 @@
 #define WEB_AUTH_TOKEN_LENGTH 16+1
 #endif
 
-#define DISABLE_WEBTOKEN_TIMER 10000 // delay disabling web token after char logs off
 
 typedef struct AccountDB AccountDB;
 typedef struct AccountDBIterator AccountDBIterator;
