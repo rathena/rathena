@@ -108,6 +108,7 @@ enum e_skill_inf2 : uint8 {
 	INF2_IGNORECICADA, // Skill is not blocked by SC_UTSUSEMI or SC_BUNSINJYUTSU (physical-skill only)
 	INF2_SHOWSCALE, // Skill shows AoE area while casting
 	INF2_IGNOREGTB, // Skill ignores effect of GTB
+	INF2_ISTOGGLEABLE, // Skill can be toggled on and off (won't consume HP/SP when toggled off)
 	INF2_MAX,
 };
 
@@ -612,7 +613,7 @@ bool skill_check_condition_castend(struct map_session_data *sd, uint16 skill_id,
 int skill_check_condition_char_sub (struct block_list *bl, va_list ap);
 void skill_consume_requirement(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv, short type);
 struct s_skill_condition skill_get_requirement(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
-int skill_disable_check(struct status_change *sc, uint16 skill_id);
+bool skill_disable_check(status_change *sc, uint16 skill_id);
 bool skill_pos_maxcount_check(struct block_list *src, int16 x, int16 y, uint16 skill_id, uint16 skill_lv, enum bl_type type, bool display_failure);
 
 int skill_check_pc_partner(struct map_session_data *sd, uint16 skill_id, uint16 *skill_lv, int range, int cast_flag);
