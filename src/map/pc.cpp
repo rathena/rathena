@@ -6470,9 +6470,9 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 		sd->count_rewarp = 0;
 
 	if (sd->state.vending)
-		vending_update_vendor_location(*sd);
+		vending_update(*sd);
 	if (sd->state.buyingstore)
-		buyingstore_update_buyer_location(*sd);
+		buyingstore_update(*sd);
 	
 	return SETPOS_OK;
 }

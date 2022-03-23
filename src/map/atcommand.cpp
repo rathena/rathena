@@ -6388,9 +6388,9 @@ ACMD_FUNC(autotrade) {
 		sd->state.block_action |= PCBLOCK_IMMUNE;
 
 	if( sd->state.vending ){
-		vending_update_vendor_location(*sd);
+		vending_update(*sd);
 	}else if( sd->state.buyingstore ){
-		buyingstore_update_buyer_location(*sd);
+		buyingstore_update(*sd);
 	}
 
 	if( battle_config.at_timeout ) {
