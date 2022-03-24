@@ -4927,91 +4927,104 @@ void status_calc_bl_main(struct block_list *bl, std::bitset<SCB_MAX> flag)
 
 	if(flag[SCB_STR]) {
 		status->str = status_calc_str(bl, sc, b_status->str);
-		flag|=SCB_BATK;
+		flag.set(SCB_BATK);
 		if( bl->type&BL_HOM )
-			flag |= SCB_WATK;
+			flag.set(SCB_WATK);
 	}
 
 	if(flag[SCB_AGI]) {
 		status->agi = status_calc_agi(bl, sc, b_status->agi);
-		flag|=SCB_FLEE
+		flag.set(SCB_FLEE);
 #ifdef RENEWAL
-			|SCB_DEF2
+		flag.set(SCB_DEF2);
 #endif
-			;
-		if( bl->type&(BL_PC|BL_HOM) )
-			flag |= SCB_ASPD|SCB_DSPD;
+		if( bl->type&(BL_PC|BL_HOM) ) {
+			flag.set(SCB_ASPD);
+			flag.set(SCB_DSPD);
+		}
 	}
 
 	if(flag[SCB_VIT]) {
 		status->vit = status_calc_vit(bl, sc, b_status->vit);
-		flag|=SCB_DEF2|SCB_MDEF2;
+		flag.set(SCB_DEF2);
+		flag.set(SCB_MDEF2);
 		if( bl->type&(BL_PC|BL_HOM|BL_MER|BL_ELEM) )
-			flag |= SCB_MAXHP;
+			flag.set(SCB_MAXHP);
 		if( bl->type&BL_HOM )
-			flag |= SCB_DEF;
+			flag.set(SCB_DEF);
 	}
 
 	if(flag[SCB_INT]) {
 		status->int_ = status_calc_int(bl, sc, b_status->int_);
-		flag|=SCB_MATK|SCB_MDEF2;
+		flag.set(SCB_MATK);
+		flag.set(SCB_MDEF2);
 		if( bl->type&(BL_PC|BL_HOM|BL_MER|BL_ELEM) )
-			flag |= SCB_MAXSP;
+			flag.set(SCB_MAXSP);
 		if( bl->type&BL_HOM )
-			flag |= SCB_MDEF;
+			flag.set(SCB_MDEF);
 	}
 
 	if(flag[SCB_DEX]) {
 		status->dex = status_calc_dex(bl, sc, b_status->dex);
-		flag|=SCB_BATK|SCB_HIT
+		flag.set(SCB_BATK);
+		flag.set(SCB_HIT);
 #ifdef RENEWAL
-			|SCB_MATK|SCB_MDEF2
+		flag.set(SCB_MATK);
+		flag.set(SCB_MDEF2);
 #endif
-			;
 		if( bl->type&(BL_PC|BL_HOM) )
-			flag |= SCB_ASPD;
+			flag.set(SCB_ASPD);
 		if( bl->type&BL_HOM )
-			flag |= SCB_WATK;
+			flag.set(SCB_WATK);
 	}
 
 	if(flag[SCB_LUK]) {
 		status->luk = status_calc_luk(bl, sc, b_status->luk);
-		flag|=SCB_BATK|SCB_CRI|SCB_FLEE2
+		flag.set(SCB_BATK);
+		flag.set(SCB_CRI);
+		flag.set(SCB_FLEE2);
 #ifdef RENEWAL
-			|SCB_MATK|SCB_HIT|SCB_FLEE
+		flag.set(SCB_MATK);
+		flag.set(SCB_HIT);
+		flag.set(SCB_FLEE);
 #endif
-			;
 	}
 
 #ifdef RENEWAL
 	if (flag[SCB_POW]) {
 		status->pow = status_calc_pow(bl, sc, b_status->pow);
-		flag |= SCB_BATK|SCB_PATK;
+		flag.set(SCB_BATK);
+		flag.set(SCB_PATK);
 	}
 
 	if (flag[SCB_STA]) {
 		status->sta = status_calc_sta(bl, sc, b_status->sta);
-		flag |= SCB_RES;
+		flag.set(SCB_RES);
 	}
 
 	if (flag[SCB_WIS]) {
 		status->wis = status_calc_wis(bl, sc, b_status->wis);
-		flag |= SCB_MRES;
+		flag.set(SCB_MRES);
 	}
 
 	if (flag[SCB_SPL]) {
 		status->spl = status_calc_spl(bl, sc, b_status->spl);
-		flag |= SCB_MATK|SCB_SMATK;
+		flag.set(SCB_MATK);
+		flag.set(SCB_SMATK);
 	}
 
 	if (flag[SCB_CON]) {
 		status->con = status_calc_con(bl, sc, b_status->con);
-		flag |= SCB_HIT|SCB_FLEE|SCB_PATK|SCB_SMATK;
+		flag.set(SCB_HIT);
+		flag.set(SCB_FLEE);
+		flag.set(SCB_PATK);
+		flag.set(SCB_SMATK);
 	}
 
 	if (flag[SCB_CRT]) {
 		status->crt = status_calc_crt(bl, sc, b_status->crt);
-		flag |= SCB_HPLUS|SCB_CRATE;
+		flag.set(SCB_HPLUS);
+		flag.set(SCB_CRATE);
 	}
 #endif
 
