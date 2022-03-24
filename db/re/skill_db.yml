@@ -1980,7 +1980,7 @@ Body:
       AllowWhenHidden: true
       IgnoreKagehumi: true
       IgnoreWugBite: true
-      IsToggleable: true
+      Toggleable: true
     Range: 1
     Hit: Single
     HitCount: 1
@@ -4323,7 +4323,7 @@ Body:
       NoDamage: true
     Flags:
       AllowOnMado: true
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     Duration1:
@@ -4976,7 +4976,7 @@ Body:
     Flags:
       IgnoreKagehumi: true
       IgnoreWugBite: true
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     Duration1:
@@ -5344,7 +5344,7 @@ Body:
       NoDamage: true
     Flags:
       IsQuest: true
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     Duration1: 600000
@@ -7132,7 +7132,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Flags:
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     Duration1: 300000
@@ -7415,7 +7415,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Flags:
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     AfterCastActDelay: 800
@@ -10241,7 +10241,7 @@ Body:
       NoDamage: true
       IgnoreFlee: true
     Flags:
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     CastCancel: true
@@ -10909,7 +10909,7 @@ Body:
       NoDamage: true
     Flags:
       IgnoreKagehumi: true
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     CastTime: 500
@@ -11540,7 +11540,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Flags:
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     Knockback: 4
@@ -11615,7 +11615,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Flags:
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     Requires:
@@ -11662,7 +11662,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Flags:
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     Requires:
@@ -11707,7 +11707,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Flags:
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     Requires:
@@ -11755,7 +11755,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Flags:
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     Requires:
@@ -12197,7 +12197,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Flags:
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     Duration1: 600000
@@ -14419,7 +14419,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Flags:
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -17954,7 +17954,7 @@ Body:
       NoDamage: true
     Flags:
       IsQuest: true
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     Knockback: 2
     Duration1: 300000
@@ -20373,7 +20373,7 @@ Body:
     Flags:
       IgnoreKagehumi: true
       IgnoreWugBite: true
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     AfterCastActDelay: 2000
@@ -21589,7 +21589,7 @@ Body:
     Flags:
       AllowOnWarg: true
       IncreaseDanceWithWugDamage: true
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -21724,7 +21724,7 @@ Body:
     Flags:
       IgnoreKagehumi: true
       IgnoreWugBite: true
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     Duration1: 10000
@@ -30096,7 +30096,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Flags:
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     CastCancel: true
@@ -30175,7 +30175,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Flags:
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     CastCancel: true
@@ -30332,7 +30332,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Flags:
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     CastCancel: true
@@ -30541,7 +30541,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Flags:
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     CastCancel: true
@@ -31240,7 +31240,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Flags:
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     CastCancel: true
@@ -31328,7 +31328,7 @@ Body:
     TargetType: Self
     Flags:
       AllowWhenHidden: true
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     Duration1: 200000
@@ -36251,7 +36251,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Flags:
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     CastCancel: true
@@ -36269,7 +36269,7 @@ Body:
       NoDamage: true
       Splash: true
     Flags:
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     SplashArea: 10
@@ -43055,7 +43055,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Flags:
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     AfterCastActDelay: 800
@@ -43073,7 +43073,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Flags:
-      IsToggleable: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     Duration1: 300000
