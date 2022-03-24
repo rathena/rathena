@@ -16676,7 +16676,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 		return false;
 
 	//Checks if disabling skill - in which case no SP requirements are necessary
-	if( sc && skill_disable_check(sc,skill_id))
+	if( sc && skill_disable_check(*sc,skill_id))
 		return true;
 
 	std::bitset<INF2_MAX> inf2 = skill_db.find(skill_id)->inf2;
@@ -18015,7 +18015,7 @@ struct s_skill_condition skill_get_requirement(struct map_session_data* sd, uint
 		sc = NULL;
 
 	//Checks if disabling skill - in which case no SP requirements are necessary
-	if( sc && skill_disable_check(sc,skill_id) )
+	if( sc && skill_disable_check(*sc,skill_id) )
 		return req;
 
 	skill_lv = cap_value(skill_lv, 1, MAX_SKILL_LEVEL);
@@ -22899,19 +22899,19 @@ int skill_block_check(struct block_list *bl, sc_type type , uint16 skill_id) {
  * @param skill_id: Skill to toggle
  * @return True on success or false otherwise
  */
-bool skill_disable_check(status_change *sc, uint16 skill_id) {
+bool skill_disable_check(status_change &sc, uint16 skill_id) {
 	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 
 	if (skill->sc <= SC_NONE || skill->sc >= SC_MAX)
 		return false;
 
 	if (skill->inf2[INF2_ISTOGGLEABLE]) { // HP & SP Consumption Check
-		if (sc->data[skill->sc])
+		if (sc.data[skill->sc])
 			return true;
 		// These 2 skills contain a master and are not correctly pulled using skill_get_sc
-		if (skill->nameid == NC_NEUTRALBARRIER && sc->data[SC_NEUTRALBARRIER_MASTER])
+		if (skill->nameid == NC_NEUTRALBARRIER && sc.data[SC_NEUTRALBARRIER_MASTER])
 			return true;
-		if (skill->nameid == NC_STEALTHFIELD && sc->data[SC_STEALTHFIELD_MASTER])
+		if (skill->nameid == NC_STEALTHFIELD && sc.data[SC_STEALTHFIELD_MASTER])
 			return true;
 	}
 
