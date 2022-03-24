@@ -6794,7 +6794,7 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 	if(sc->data[SC_MOON_COMFORT]) // SG skill [Komurka]
 		flee += sc->data[SC_MOON_COMFORT]->val2;
 	if(sc->data[SC_CLOSECONFINE])
-		flee += 10;
+		flee += sc->data[SC_CLOSECONFINE]->val3;
 	if (sc->data[SC_ANGRIFFS_MODUS])
 		flee -= sc->data[SC_ANGRIFFS_MODUS]->val3;
 	if(sc->data[SC_ADJUSTMENT])
@@ -10388,9 +10388,15 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			struct status_change_entry *sce2 = sc2?sc2->data[SC_CLOSECONFINE]:NULL;
 
 			if (src2 && sc2) {
-				if (!sce2) // Start lock on caster.
-					sc_start4(src2,src2,SC_CLOSECONFINE,100,val1,1,0,0,tick+1000);
-				else { // Increase count of locked enemies and refresh time.
+				if (!sce2) { // Start lock on caster.
+#ifdef RENEWAL
+					val3 = 50; // Flee increase
+#else
+					val3 = 10; // Flee increase
+#endif
+
+					sc_start4(src2,src2,SC_CLOSECONFINE,100,val1,1,val3,0,tick+1000);
+				} else { // Increase count of locked enemies and refresh time.
 					(sce2->val2)++;
 					delete_timer(sce2->timer, status_change_timer);
 					sce2->timer = add_timer(gettick()+tick+1000, status_change_timer, src2->id, SC_CLOSECONFINE);

@@ -13812,7 +13812,7 @@ Body:
         Element: Ghost
       - Level: 10
         Element: Undead
-    Duration1: 180000
+    Duration1: 1200000
     Requires:
       SpCost: 1
     Status: EnchantArms
@@ -17911,6 +17911,7 @@ Body:
     Range: 14
     Hit: Single
     HitCount: 1
+    Knockback: 2
     Element: Weapon
     CopyFlags:
       Skill:
@@ -17930,10 +17931,10 @@ Body:
     Flags:
       IsQuest: true
     Hit: Single
-    Knockback: 2
-    Duration1: 300000
+    Duration1: 900000
+    Duration2: 5000
     Requires:
-      SpCost: 15
+      SpCost: 100
       State: Shield
     Status: Shrink
   - Id: 1003
@@ -17984,7 +17985,7 @@ Body:
       - Level: 10
         Time: 60000
     Requires:
-      SpCost: 15
+      SpCost: 35
       Ammo:
         Dagger: true
       AmmoAmount: 1
@@ -18003,7 +18004,7 @@ Body:
     HitCount: 1
     Duration1: 10000
     Requires:
-      SpCost: 25
+      SpCost: 40
     Status: CloseConfine2
   - Id: 1006
     Name: WZ_SIGHTBLASTER
@@ -18025,10 +18026,10 @@ Body:
         Reproduce: true
     CastCancel: true
     CastTime: 1280
-    Duration1: 120000
+    Duration1: 900000
     FixedCastTime: 320
     Requires:
-      SpCost: 40
+      SpCost: 80
     Status: SightBlaster
   - Id: 1007
     Name: SA_CREATECON
@@ -18077,14 +18078,14 @@ Body:
     Range: -9
     Hit: Single
     HitCount: 1
-    Element: Weapon
+    Element: Wind
     Knockback: 3
     CopyFlags:
       Skill:
         Plagiarism: true
         Reproduce: true
     Requires:
-      SpCost: 10
+      SpCost: 50
       Weapon:
         Bow: true
   - Id: 1010
@@ -18102,9 +18103,10 @@ Body:
     CastTime: 800
     AfterCastActDelay: 2000
     Duration1: 17000
+    Duration2: 120000
     FixedCastTime: 200
     Requires:
-      SpCost: 20
+      SpCost: 40
   - Id: 1011
     Name: DC_WINKCHARM
     Description: Wink of Charm
@@ -18123,7 +18125,7 @@ Body:
     Duration2: 17000
     FixedCastTime: 200
     Requires:
-      SpCost: 20
+      SpCost: 40
     Status: WinkCharm
   - Id: 1012
     Name: BS_UNFAIRLYTRICK
@@ -18169,7 +18171,7 @@ Body:
     CastTimeFlags:
       IgnoreDex: true
     Requires:
-      SpCost: 400
+      SpCost: 800
   - Id: 1015
     Name: MO_KITRANSLATION
     Description: Ki Translation
@@ -18214,8 +18216,8 @@ Body:
     AfterCastActDelay: 2000
     Duration2: 5000
     Requires:
-      HpCost: 10
-      SpCost: 20
+      HpCost: 200
+      SpCost: 40
     Status: Stun
   - Id: 1017
     Name: SA_ELEMENTGROUND
