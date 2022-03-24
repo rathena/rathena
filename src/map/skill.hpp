@@ -109,7 +109,7 @@ enum e_skill_inf2 : uint8 {
 	INF2_IGNORECICADA, // Skill is not blocked by SC_UTSUSEMI or SC_BUNSINJYUTSU (physical-skill only)
 	INF2_SHOWSCALE, // Skill shows AoE area while casting
 	INF2_IGNOREGTB, // Skill ignores effect of GTB
-	INF2_ISTOGGLEABLE, // Skill can be toggled on and off (won't consume HP/SP when toggled off)
+	INF2_TOGGLEABLE, // Skill can be toggled on and off (won't consume HP/SP when toggled off)
 	INF2_MAX,
 };
 

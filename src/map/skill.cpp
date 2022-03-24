@@ -22902,10 +22902,10 @@ int skill_block_check(struct block_list *bl, sc_type type , uint16 skill_id) {
 bool skill_disable_check(status_change &sc, uint16 skill_id) {
 	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 
-	if (skill->sc <= SC_NONE || skill->sc >= SC_MAX)
+	if (skill == nullptr || skill->sc <= SC_NONE || skill->sc >= SC_MAX)
 		return false;
 
-	if (skill->inf2[INF2_ISTOGGLEABLE]) { // HP & SP Consumption Check
+	if (skill->inf2[INF2_TOGGLEABLE]) {
 		if (sc.data[skill->sc])
 			return true;
 		// These 2 skills contain a master and are not correctly pulled using skill_get_sc
