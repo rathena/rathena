@@ -181,7 +181,7 @@
     <ClInclude Include="merchantstore_controller.hpp" />
     <ClInclude Include="sqllock.hpp" />
     <ClInclude Include="userconfig_controller.hpp" />
-    <ClCompile Include="webutils.hpp" />
+    <ClInclude Include="webutils.hpp" />
     <ClInclude Include="web.hpp" />
     <ClInclude Include="webcnslif.hpp" />
   </ItemGroup>
