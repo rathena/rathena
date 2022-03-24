@@ -1252,7 +1252,7 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 
 	do {
 		.@menu$ = "";
-		.@offset = .@i;
+		.@offset += .@i;
 
 		for ( .@i = .@offset; .@i < .@size; .@i += 2 ) {
 			.@str$ = sprintf( "%d. %s [%d] left:", (.@i/2)+1, getitemname(.@stone_id[.@i]), countitem(.@stone_id[.@i]) );
