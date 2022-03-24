@@ -10376,12 +10376,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 			if (src2 && sc2) {
 				if (!sce2) { // Start lock on caster.
-					int val3; // Flee increase
-
 #ifdef RENEWAL
-					val3 = 50;
+					val3 = 50; // Flee increase
 #else
-					val3 = 10;
+					val3 = 10; // Flee increase
 #endif
 
 					sc_start4(src2,src2,SC_CLOSECONFINE,100,val1,1,val3,0,tick+1000);
