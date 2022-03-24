@@ -9841,14 +9841,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_ENCPOISON:
 			val2= 250+50*val1; // Poisoning Chance (2.5+0.5%) in 1/10000 rate
-		case SC_ASPERSIO:
-		case SC_FIREWEAPON:
-		case SC_WATERWEAPON:
-		case SC_WINDWEAPON:
-		case SC_EARTHWEAPON:
-		case SC_SHADOWWEAPON:
-		case SC_GHOSTWEAPON:
-			skill_enchant_elemental_end(bl,type);
 			break;
 		case SC_ELEMENTALCHANGE:
 			// val1 : Element Lvl (if called by skill lvl 1, takes random value between 1 and 4)
@@ -10624,8 +10616,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val4 = BF_WEAPON|BF_MISC; // Type
 			break;
 		case SC_ENCHANTARMS:
-			// end previous enchants
-			skill_enchant_elemental_end(bl,type);
 			// Make sure the received element is valid.
 			if (val1 >= ELE_ALL)
 				val1 = val1%ELE_ALL;
