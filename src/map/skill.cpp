@@ -12648,7 +12648,7 @@ TIMER_FUNC(skill_castend_id){
 		if( sd && ud->skilltimer != INVALID_TIMER && (pc_checkskill(sd,SA_FREECAST) > 0 || ud->skill_id == LG_EXEEDBREAK) )
 		{// restore original walk speed
 			ud->skilltimer = INVALID_TIMER;
-			status_calc_bl(&sd->bl, SCB_SPEED|SCB_ASPD);
+			status_calc_bl(&sd->bl, { SCB_SPEED, SCB_ASPD });
 		} else
 			ud->skilltimer = INVALID_TIMER;
 	}
@@ -12978,7 +12978,7 @@ TIMER_FUNC(skill_castend_pos){
 	if( sd && ud->skilltimer != INVALID_TIMER && ( pc_checkskill(sd,SA_FREECAST) > 0 || ud->skill_id == LG_EXEEDBREAK ) )
 	{// restore original walk speed
 		ud->skilltimer = INVALID_TIMER;
-		status_calc_bl(&sd->bl, SCB_SPEED|SCB_ASPD);
+		status_calc_bl(&sd->bl, { SCB_SPEED, SCB_ASPD });
 	} else
 		ud->skilltimer = INVALID_TIMER;
 
@@ -19810,12 +19810,12 @@ bool skill_check_cloaking(struct block_list *bl, struct status_change_entry *sce
 				status_change_end(bl, SC_CLOAKING, INVALID_TIMER);
 			else if( sce->val4&1 ) { //Remove wall bonus
 				sce->val4&=~1;
-				status_calc_bl(bl,SCB_SPEED);
+				status_calc_bl(bl, { SCB_SPEED });
 			}
 		} else {
 			if( !(sce->val4&1) ) { //Add wall speed bonus
 				sce->val4|=1;
-				status_calc_bl(bl,SCB_SPEED);
+				status_calc_bl(bl, { SCB_SPEED });
 			}
 		}
 	}
@@ -19889,7 +19889,7 @@ bool skill_check_camouflage(struct block_list *bl, struct status_change_entry *s
 	if( sce ) {
 		if( !wall && sce->val1 < 3 ) //End camouflage.
 			status_change_end(bl, SC_CAMOUFLAGE, INVALID_TIMER);
-		status_calc_bl(bl,SCB_SPEED);
+		status_calc_bl(bl, { SCB_SPEED });
 	}
 
 	return wall;
@@ -21892,7 +21892,7 @@ void skill_toggle_magicpower(struct block_list *bl, uint16 skill_id)
 			status_change_end(bl, SC_MAGICPOWER, INVALID_TIMER);
 		} else {
 			sc->data[SC_MAGICPOWER]->val4 = 1;
-			status_calc_bl(bl, status_db.getCalcFlag(SC_MAGICPOWER));
+			status_calc_bl_(bl, status_db.getCalcFlag(SC_MAGICPOWER));
 			if(bl->type == BL_PC){// update current display.
 				clif_updatestatus(((TBL_PC *)bl),SP_MATK1);
 				clif_updatestatus(((TBL_PC *)bl),SP_MATK2);
