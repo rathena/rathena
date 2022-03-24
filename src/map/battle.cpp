@@ -1284,8 +1284,13 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 		} else {
 			clif_skill_nodamage(target, target, CR_AUTOGUARD, sce->val1, 1);
 			unit_set_walkdelay(target, gettick(), delay, 1);
+#ifdef RENEWAL
+			if (sc->data[SC_SHRINK])
+				sc_start(src, target, SC_STUN, 50, skill_lv, skill_get_time2(skill_id, skill_lv));
+#else
 			if (sc->data[SC_SHRINK] && rnd() % 100 < 5 * sce->val1)
 				skill_blown(target, src, skill_get_blewcount(CR_SHRINK, 1), -1, BLOWN_NONE);
+#endif
 			d->dmg_lv = ATK_MISS;
 			return false;
 		}
@@ -2977,7 +2982,11 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 				break;
 			case AS_SONICBLOW:
 				if(sd && pc_checkskill(sd,AS_SONICACCEL) > 0)
+#ifdef RENEWAL
+					hitrate += hitrate * 90 / 100;
+#else
 					hitrate += hitrate * 50 / 100;
+#endif
 				break;
 #ifdef RENEWAL
 			case RG_BACKSTAP:
@@ -4373,7 +4382,13 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case NJ_KUNAI:
 			skillratio += -100 + 100 * skill_lv;
 			break;
-#endif
+		case KN_CHARGEATK:
+			skillratio += 600;
+			break;
+		case AS_VENOMKNIFE:
+			skillratio += 400;
+			break;
+#else
 		case KN_CHARGEATK: { // +100% every 3 cells of distance but hard-limited to 500%
 				int k = (wd->miscflag-1)/3;
 				if (k < 0)
@@ -4383,11 +4398,20 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio += 100 * k;
 			}
 			break;
+#endif
 		case HT_PHANTASMIC:
+#ifdef RENEWAL
+			skillratio += 400;
+#else
 			skillratio += 50;
+#endif
 			break;
 		case MO_BALKYOUNG:
+#ifdef RENEWAL
+			skillratio += 700;
+#else
 			skillratio += 200;
+#endif
 			break;
 		case HFLI_MOON: //[orn]
 			skillratio += 10 + 110 * skill_lv;
@@ -5753,7 +5777,11 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
 	switch (skill_id) {
 		case AS_SONICBLOW:
 			if(sd && pc_checkskill(sd,AS_SONICACCEL)>0)
+#ifdef RENEWAL
+				ATK_ADDRATE(wd->damage, wd->damage2, 90);
+#else
 				ATK_ADDRATE(wd->damage, wd->damage2, 10);
+#endif
 			break;
 	}
 }
@@ -7055,6 +7083,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case PA_PRESSURE:
 						skillratio += -100 + 500 + 150 * skill_lv;
 						RE_LVL_DMOD(100);
+						break;
+					case WZ_SIGHTBLASTER:
+						skillratio += 500;
 						break;
 #else
 					case WZ_VERMILION:
