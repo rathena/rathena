@@ -179,6 +179,7 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 				target->element = ELE_ALL;
 				target->mapid = -1;
 				target->map_name = "";
+				target->count_slave = true;
 			}
 
 			if (!this->nodeExists(targetNode, "Mob")) {
@@ -294,6 +295,15 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 						return 0;
 
 					target->map_name = map_name;
+				}
+
+				if (this->nodeExists(targetNode, "CountSlave")) {
+					bool active;
+
+					if (!this->asBool(targetNode, "CountSlave", active))
+						return 0;
+
+					target->count_slave = active;
 				}
 
 				// if max_level is set, min_level is 1
@@ -709,32 +719,32 @@ void quest_update_objective(struct map_session_data *sd, struct mob_data* md)
 
 		// Process quest objectives
 		for (int j = 0; j < qi->objectives.size(); j++) {
-			uint8 objective_check = 0; // Must pass all 6 checks
+			if (sd->quest_log[i].count[j] < qi->objectives[j]->count)  {
+				if (qi->objectives[j]->mob_id != 0 && qi->objectives[j]->mob_id != md->mob_id)
+					continue;
+				if (qi->objectives[j]->mob_id == 0) {
+					if (qi->objectives[j]->min_level != 0 && qi->objectives[j]->min_level > md->level)
+						continue;
+					if (qi->objectives[j]->max_level != 0 && qi->objectives[j]->max_level < md->level)
+						continue;
+					if (qi->objectives[j]->race != RC_ALL && qi->objectives[j]->race != md->status.race)
+						continue;
+					if (qi->objectives[j]->size != SZ_ALL && qi->objectives[j]->size != md->status.size)
+						continue;
+					if (qi->objectives[j]->element != ELE_ALL && qi->objectives[j]->element != md->status.def_ele)
+						continue;
+					if (qi->objectives[j]->mapid >= 0) {
+						map_data *mapdata = map_getmapdata(sd->bl.m);
 
-			if (qi->objectives[j]->mob_id == md->mob_id)
-				objective_check = 6;
-			else if (qi->objectives[j]->mob_id == 0) {
-				if (qi->objectives[j]->min_level == 0 || qi->objectives[j]->min_level <= md->level)
-					objective_check++;
-				if (qi->objectives[j]->max_level == 0 || qi->objectives[j]->max_level >= md->level)
-					objective_check++;
-				if (qi->objectives[j]->race == RC_ALL || qi->objectives[j]->race == md->status.race)
-					objective_check++;
-				if (qi->objectives[j]->size == SZ_ALL || qi->objectives[j]->size == md->status.size)
-					objective_check++;
-				if (qi->objectives[j]->element == ELE_ALL || qi->objectives[j]->element == md->status.def_ele)
-					objective_check++;
-				if (qi->objectives[j]->mapid < 0 || (qi->objectives[j]->mapid == sd->bl.m && md->spawn != nullptr))
-					objective_check++;
-				else if (qi->objectives[j]->mapid >= 0) {
-					struct map_data *mapdata = map_getmapdata(sd->bl.m);
-
-					if (mapdata->instance_id && mapdata->instance_src_map == qi->objectives[j]->mapid)
-						objective_check++;
+						if (mapdata->instance_id < 1 && qi->objectives[j]->mapid != sd->bl.m)
+							continue;
+						if (mapdata->instance_id > 0 && mapdata->instance_src_map != qi->objectives[j]->mapid)
+							continue;
+					}
+					if (!qi->objectives[j]->count_slave && md->spawn == nullptr)
+						continue;
 				}
-			}
 
-			if (objective_check == 6 && sd->quest_log[i].count[j] < qi->objectives[j]->count)  {
 				sd->quest_log[i].count[j]++;
 				sd->save_quest = true;
 				clif_quest_update_objective(sd, &sd->quest_log[i]);

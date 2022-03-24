@@ -46,6 +46,7 @@
 #                   On normal maps only kills of permanently spawned monsters increase the counter.
 #                   On instance maps all monster kills increase the counter.
 #       MapName     Displayed map name in quest UI. (Default: empty string)
+#       CountSlave  (Only when the monster to kill is global) Whether the temporary monsters increase the counter. (Default: true)
 #   Drops:          Quest item drop targets. (Default: null)
 #     - Mob         Monster to kill. 0 will apply to all monsters. (Default: 0)
 #       Item        Item to drop.
@@ -55,7 +56,7 @@
 
 Header:
   Type: QUEST_DB
-  Version: 2
+  Version: 3
 
 Footer:
   Imports:
