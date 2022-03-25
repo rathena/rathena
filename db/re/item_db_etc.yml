@@ -60035,12 +60035,12 @@ Body:
     SubType: Enchant
     Script: |
       .@r = getrefine();
-      bonus bVariableCastrate,-7*(.@r/3);
+      bonus bVariableCastrate,-7;
       if (.@r>=9) {
-        bonus bVariableCastrate,8;
+        bonus bVariableCastrate,-8;
         .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
         if (.@i == W_2HSWORD || .@i == W_2HSPEAR || .@i == W_2HSTAFF || .@i == W_2HAXE || .@i == W_KATAR || .@i == W_BOW || .@i == W_HUUMA || .@i == W_REVOLVER || .@i == W_RIFLE || .@i == W_GATLING || .@i == W_SHOTGUN || .@i == W_GRENADE) {
-          bonus bVariableCastrate,5;
+          bonus bVariableCastrate,-5;
         }
       }
   - Id: 311346
@@ -60065,12 +60065,12 @@ Body:
     SubType: Enchant
     Script: |
       .@r = getrefine();
-      bonus bDelayrate,7;
+      bonus bDelayrate,-7;
       if (.@r>=9) {
-        bonus bDelayrate,8;
+        bonus bDelayrate,-8;
         .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
         if (.@i == W_2HSWORD || .@i == W_2HSPEAR || .@i == W_2HSTAFF || .@i == W_2HAXE || .@i == W_KATAR || .@i == W_BOW || .@i == W_HUUMA || .@i == W_REVOLVER || .@i == W_RIFLE || .@i == W_GATLING || .@i == W_SHOTGUN || .@i == W_GRENADE) {
-          bonus bDelayrate,5;
+          bonus bDelayrate,-5;
         }
       }
   - Id: 311348
@@ -60081,16 +60081,16 @@ Body:
     Script: |
       .@r = getrefine();
       bonus2 bAddRace,RC_All,10;
-      bonus2 bAddRace,RC_Brute,-10;
+      bonus2 bAddRace,RC_Player_Human,-10;
       bonus2 bAddRace,RC_Player_Doram,-10;
       if (.@r>=9) {
         bonus2 bAddRace,RC_All,10;
-        bonus2 bAddRace,RC_Brute,-10;
+        bonus2 bAddRace,RC_Player_Human,-10;
         bonus2 bAddRace,RC_Player_Doram,-10;
         .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
         if (.@i == W_2HSWORD || .@i == W_2HSPEAR || .@i == W_2HSTAFF || .@i == W_2HAXE || .@i == W_KATAR || .@i == W_BOW || .@i == W_HUUMA || .@i == W_REVOLVER || .@i == W_RIFLE || .@i == W_GATLING || .@i == W_SHOTGUN || .@i == W_GRENADE) {
           bonus2 bAddRace,RC_All,15;
-          bonus2 bAddRace,RC_Brute,-15;
+          bonus2 bAddRace,RC_Player_Human,-15;
           bonus2 bAddRace,RC_Player_Doram,-15;
         }
       }
