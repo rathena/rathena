@@ -25178,7 +25178,7 @@ Body:
     Script: |
       if ((eaclass()&EAJ_THIRDMASK)==EAJ_MINSTRELWANDERER) {
          bonus bNoSizeFix;
-         autobonus3 "{}",500,100,"WM_SEVERE_RAINSTORM","{ sc_start SC_UNLIMIT,20000,5; }";
+         autobonus3 "{}",10,100,"WM_SEVERE_RAINSTORM","{ sc_start SC_UNLIMIT,20000,5; }";
       }
   - Combos:
       - Combo:
