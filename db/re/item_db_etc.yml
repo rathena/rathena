@@ -42990,6 +42990,41 @@ Body:
     SubType: Enchant
     Script: |
       bonus bFixedCastrate,-50;
+  - Id: 29445
+    AegisName: Amplification1
+    Name: Amplify 1    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,getrefine();
+  - Id: 29446
+    AegisName: Amplification2
+    Name: Amplify 2    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,2*getrefine();
+  - Id: 29447
+    AegisName: Amplification3
+    Name: Amplify 3    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,3*getrefine();
+  - Id: 29448
+    AegisName: Amplification4
+    Name: Amplify 4    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,4*getrefine();
+  - Id: 29449
+    AegisName: Amplification5
+    Name: Amplify 5    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,5*getrefine();
   - Id: 29460
     AegisName: RuneknightStone_Top_
     Name: Lord Knight Stone (Top)
@@ -47324,6 +47359,14 @@ Body:
       bonus bUseSPrate,10;
       bonus bShortAtkRate,4*(.@r/3);
       bonus bLongAtkRate,4*(.@r/3);
+  - Id: 300314
+    AegisName: aegis_300314
+    Name: Remnants of reason and memory    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-10;
+      bonus bDelayrate,-10;
   - Id: 300348
     AegisName: aegis_300348
     Name: Sealed Nightmare Amon Ra Card

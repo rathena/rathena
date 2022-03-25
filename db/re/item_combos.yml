@@ -25168,4 +25168,479 @@ Body:
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",25;
       bonus2 bSkillAtk,"SHC_IMPACT_CRATER",25;
       bonus2 bSkillAtk,"GC_COUNTERSLASH",12*(.@r/2);
-
+  - Combos:
+      - Combo:
+          - aegis_490193     # 490193
+          - Hero     # 29509
+    Script: |
+      if ((eaclass()&EAJ_THIRDMASK)==EAJ_MINSTRELWANDERER) {
+         bonus bNoSizeFix;
+         autobonus3 "{ bonus3 bAutoSpell,\"RA_UNLIMIT\",5,1000; }",10,20000,"WM_SEVERE_RAINSTORM","{}";
+      }
+  - Combos:
+      - Combo:
+          - Indecisive_P_Shoes     # 470078
+          - Hawkeye     # 4879
+      - Combo:
+          - Indecisive_P_Shoes_     # 470079
+          - Hawkeye     # 4879
+    Script: |
+      bonus bDex,15;
+      bonus2 bAddClass,Class_All,25;
+  - Combos:
+      - Combo:
+          - Indecisive_P_Shoes     # 470078
+          - Runaway_Magic     # 4876
+      - Combo:
+          - Indecisive_P_Shoes_     # 470079
+          - Runaway_Magic     # 4876
+    Script: |
+      bonus bInt,15;
+      bonus2 bMagicAtkEle,Ele_Neutral,15;
+  - Combos:
+      - Combo:
+          - Indecisive_P_Shoes     # 470078
+          - Black_Circle_J     # 32112
+      - Combo:
+          - Indecisive_P_Shoes     # 470078
+          - Heart_Whip_J     # 26217
+      - Combo:
+          - Indecisive_P_Shoes_     # 470079
+          - Black_Circle_J     # 32112
+      - Combo:
+          - Indecisive_P_Shoes_     # 470079
+          - Heart_Whip_J     # 26217
+    Script: |
+      bonus3 bAutoSpell,"SO_PSYCHIC_WAVE",3,10;
+      bonus2 bSkillAtk,"WM_METALICSOUND",3*(BaseLevel/5);
+  - Combos:
+      - Combo:
+          - Indecisive_P_Shoes     # 470078
+          - Antique_Cello_J     # 32113
+      - Combo:
+          - Indecisive_P_Shoes     # 470078
+          - Scarlet_Ribbon_J     # 26218
+      - Combo:
+          - Indecisive_P_Shoes_     # 470079
+          - Antique_Cello_J     # 32113
+      - Combo:
+          - Indecisive_P_Shoes_     # 470079
+          - Scarlet_Ribbon_J     # 26218
+    Script: |
+      bonus2 bSkillAtk,"CG_ARROWVULCAN",2*BaseLevel;
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",2*(BaseLevel/3);
+  - Combos:
+      - Combo:
+          - Virtue_Particles_Shoes     # 470034
+          - Volar_J     # 21056
+      - Combo:
+          - Virtue_Particles_Shoes_     # 470035
+          - Volar_J     # 21056
+    Script: |
+      bonus2 bSkillAtk,"SM_BASH",2*BaseLevel;
+      bonus2 bSkillAtk,"KN_BOWLINGBASH",2*BaseLevel;
+  - Combos:
+      - Combo:
+          - Virtue_Particles_Shoes     # 470034
+          - Estal_J     # 32355
+      - Combo:
+          - Virtue_Particles_Shoes_     # 470035
+          - Estal_J     # 32355
+    Script: |
+      bonus2 bSkillAtk,"MC_CARTREVOLUTION",3*BaseLevel;
+      bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",BaseLevel/3;
+  - Combos:
+      - Combo:
+          - Virtue_Particles_Shoes     # 470034
+          - Farthezan_J     # 32354
+      - Combo:
+          - Virtue_Particles_Shoes_     # 470035
+          - Farthezan_J     # 32354
+    Script: |
+      bonus2 bSkillAtk,"CR_HOLYCROSS",3*BaseLevel;
+      bonus2 bSkillAtk,"CR_GRANDCROSS",2*BaseLevel;
+  - Combos:
+      - Combo:
+          - Virtue_Particles_Shoes     # 470034
+          - Vernan_J     # 21057
+      - Combo:
+          - Virtue_Particles_Shoes_     # 470035
+          - Vernan_J     # 21057
+    Script: |
+      bonus2 bSkillAtk,"RK_WINDCUTTER",2*BaseLevel;
+      bonus2 bSkillAtk,"LK_SPIRALPIERCE",2*BaseLevel;
+  - Combos:
+      - Combo:
+          - Virtue_Particles_Shoes     # 470034
+          - Bear's_Power     # 4875
+      - Combo:
+          - Virtue_Particles_Shoes_     # 470035
+          - Bear's_Power     # 4875
+    Script: |
+      bonus bStr,40;
+      bonus bMaxHPrate,40;
+  - Combos:
+      - Combo:
+          - aegis_470089     # 470089
+          - Engine_Pilebuncker_J     # 32404
+      - Combo:
+          - aegis_470090     # 470090
+          - Engine_Pilebuncker_J     # 32404
+    Script: |
+      bonus2 bSkillAtk,"NC_ARMSCANNON",BaseLevel/4;
+      bonus2 bSkillAtk,"NC_COLDSLOWER",BaseLevel;
+      bonus2 bSkillAtk,"NC_FLAMELAUNCHER",BaseLevel;
+  - Combos:
+      - Combo:
+          - aegis_470089     # 470089
+          - Golden_Wrench_J     # 1337
+      - Combo:
+          - aegis_470090     # 470090
+          - Golden_Wrench_J     # 1337
+    Script: |
+      bonus2 bSkillAtk,"MC_CARTREVOLUTION",5*BaseLevel;
+      bonus2 bSkillAtk,"MC_MAMMONITE",10*BaseLevel;
+  - Combos:
+      - Combo:
+          - aegis_470089     # 470089
+          - Maxi_Spanner_J     # 28142
+      - Combo:
+          - aegis_470090     # 470090
+          - Maxi_Spanner_J     # 28142
+    Script: |
+      bonus2 bSkillAtk,"WS_CARTTERMINATION",5*BaseLevel;
+      bonus2 bSkillAtk,"NC_MAGMA_ERUPTION",10*BaseLevel;
+  - Combos:
+      - Combo:
+          - aegis_470089     # 470089
+          - Bear's_Power     # 4875
+      - Combo:
+          - aegis_470090     # 470090
+          - Bear's_Power     # 4875
+    Script: |
+      bonus bMaxHPrate,20;
+      bonus bDelayrate,-40;
+  - Combos:
+      - Combo:
+          - aegis_470091     # 470091
+          - Crimson_Rose_Stick_J     # 26168
+      - Combo:
+          - aegis_470092     # 470092
+          - Crimson_Rose_Stick_J     # 26168
+    Script: |
+      bonus2 bSkillAtk,"WL_CRIMSONROCK",BaseLevel/5;
+      bonus2 bSkillAtk,"WL_CHAINLIGHTNING",2*(BaseLevel/5);
+  - Combos:
+      - Combo:
+          - aegis_470091     # 470091
+          - Adorare_Staff_J     # 2063
+      - Combo:
+          - aegis_470092     # 470092
+          - Adorare_Staff_J     # 2063
+    Script: |
+      bonus3 bAutoSpell,"WL_HELLINFERNO",5,10;
+      bonus2 bSkillAtk,"AB_ADORAMUS",BaseLevel/3;
+  - Combos:
+      - Combo:
+          - aegis_470091     # 470091
+          - Dust_Grave_J     # 26170
+      - Combo:
+          - aegis_470092     # 470092
+          - Dust_Grave_J     # 26170
+    Script: |
+      bonus2 bSkillAtk,"WZ_EARTHSPIKE",10*BaseLevel;
+      bonus2 bSkillAtk,"WZ_HEAVENDRIVE",5*BaseLevel;
+  - Combos:
+      - Combo:
+          - aegis_470091     # 470091
+          - Ponitendtia_J     # 26171
+      - Combo:
+          - aegis_470092     # 470092
+          - Ponitendtia_J     # 26171
+    Script: |
+      bonus2 bSkillAtk,"PR_MAGNUS",BaseLevel;
+      bonus2 bSkillAtk,"AL_HOLYLIGHT",20*BaseLevel;
+  - Combos:
+      - Combo:
+          - aegis_470091     # 470091
+          - Runaway_Magic     # 4876
+      - Combo:
+          - aegis_470092     # 470092
+          - Runaway_Magic     # 4876
+    Script: |
+      bonus bInt,40;
+      bonus bVariableCastrate,-15;
+  - Combos:
+      - Combo:
+          - aegis_470062     # 470062
+          - Bright_Mace_J     # 32408
+      - Combo:
+          - aegis_470063     # 470063
+          - Bright_Mace_J     # 32408
+    Script: |
+      bonus2 bSkillAtk,"MO_EXTREMITYFIST",BaseLevel/5;
+      bonus2 bSkillAtk,"SR_RIDEINLIGHTNING",BaseLevel/3;
+  - Combos:
+      - Combo:
+          - aegis_470062     # 470062
+          - Asura_Bandage_J     # 1869
+      - Combo:
+          - aegis_470063     # 470063
+          - Asura_Bandage_J     # 1869
+    Script: |
+      bonus2 bSkillAtk,"SR_DRAGONCOMBO",3*BaseLevel;
+      bonus2 bSkillAtk,"MO_COMBOFINISH",5*BaseLevel;
+  - Combos:
+      - Combo:
+          - aegis_470062     # 470062
+          - Combo_Fist_J     # 1868
+      - Combo:
+          - aegis_470063     # 470063
+          - Combo_Fist_J     # 1868
+    Script: |
+      bonus2 bSkillAtk,"CH_TIGERFIST",16*BaseLevel;
+      bonus2 bSkillAtk,"CH_CHAINCRUSH",8*BaseLevel;
+  - Combos:
+      - Combo:
+          - aegis_470062     # 470062
+          - Bear's_Power     # 4875
+      - Combo:
+          - aegis_470063     # 470063
+          - Bear's_Power     # 4875
+    Script: |
+      bonus bStr,40;
+      bonus bAspdRate,15;
+  - Combos:
+      - Combo:
+          - Discord_Particles_Shoes     # 470030
+          - Wind_Gale_J     # 18197
+      - Combo:
+          - Discord_Particles_Shoe_     # 470031
+          - Wind_Gale_J     # 18197
+    Script: |
+      bonus2 bSkillAtk,"AC_SHOWER",4*BaseLevel;
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",BaseLevel/2;
+  - Combos:
+      - Combo:
+          - Discord_Particles_Shoes     # 470030
+          - Sharp_Star_Bow_J     # 18194
+      - Combo:
+          - Discord_Particles_Shoe_     # 470031
+          - Sharp_Star_Bow_J     # 18194
+    Script: |
+      bonus2 bSkillAtk,"SN_SHARPSHOOTING",BaseLevel;
+      bonus2 bSkillAtk,"AC_DOUBLE",2*BaseLevel;
+  - Combos:
+      - Combo:
+          - Discord_Particles_Shoes     # 470030
+          - Falken_Shooter_J     # 18196
+      - Combo:
+          - Discord_Particles_Shoe_     # 470031
+          - Falken_Shooter_J     # 18196
+    Script: |
+      bonus2 bSkillAtk,"HT_BLITZBEAT",2*BaseLevel;
+      bonus2 bSkillAtk,"RA_WUGSTRIKE",BaseLevel/2;
+  - Combos:
+      - Combo:
+          - Discord_Particles_Shoes     # 470030
+          - Hawkeye     # 4879
+      - Combo:
+          - Discord_Particles_Shoe_     # 470031
+          - Hawkeye     # 4879
+    Script: |
+      bonus bDex,40;
+      bonus bDelayrate,-20;
+  - Combos:
+      - Combo:
+          - aegis_300314     # 300314
+          - Argen_Blanco_J     # 32028
+      - Combo:
+          - aegis_300314     # 300314
+          - Antique_Cello_J     # 32113
+      - Combo:
+          - aegis_300314     # 300314
+          - Estal_J     # 32355
+      - Combo:
+          - aegis_300314     # 300314
+          - Engine_Pilebuncker_J     # 32404
+      - Combo:
+          - aegis_300314     # 300314
+          - Coolant_Injection_J     # 32405
+      - Combo:
+          - aegis_300314     # 300314
+          - Crimson_Rose_Stick_J     # 26168
+      - Combo:
+          - aegis_300314     # 300314
+          - Bright_Mace_J     # 32408
+      - Combo:
+          - aegis_300314     # 300314
+          - Golden_Wrench_J     # 1337
+      - Combo:
+          - aegis_300314     # 300314
+          - Psychic_Spear_Rod_J     # 26169
+      - Combo:
+          - aegis_300314     # 300314
+          - Gene_Rod_J     # 32406
+      - Combo:
+          - aegis_300314     # 300314
+          - Jack_The_Knife_J     # 28779
+      - Combo:
+          - aegis_300314     # 300314
+          - Scarlet_Ribbon_J     # 26218
+      - Combo:
+          - aegis_300314     # 300314
+          - Dust_Grave_J     # 26170
+      - Combo:
+          - aegis_300314     # 300314
+          - Asura_Bandage_J     # 1869
+      - Combo:
+          - aegis_300314     # 300314
+          - Heart_Whip_J     # 26217
+      - Combo:
+          - aegis_300314     # 300314
+          - Harve_J     # 32029
+      - Combo:
+          - aegis_300314     # 300314
+          - Farthezan_J     # 32354
+      - Combo:
+          - aegis_300314     # 300314
+          - Fortrage_J     # 32030
+      - Combo:
+          - aegis_300314     # 300314
+          - Platinum_Dagger_J     # 28780
+      - Combo:
+          - aegis_300314     # 300314
+          - Black_Circle_J     # 32112
+      - Combo:
+          - aegis_300314     # 300314
+          - Ponitendtia_J     # 26171
+      - Combo:
+          - aegis_300314     # 300314
+          - Boltigin_J     # 28637
+      - Combo:
+          - aegis_300314     # 300314
+          - Combo_Fist_J     # 1868
+      - Combo:
+          - aegis_300314     # 300314
+          - Lucis_Flail_J     # 32407
+    Script: |
+      bonus bBaseAtk,100;
+      bonus bMatk,100;
+      bonus2 bSubRace,RC_Player_Human,10;
+      bonus2 bSubRace,RC_Player_Doram,10;
+      skill "LK_CONCENTRATION",5;
+  - Combos:
+      - Combo:
+          - aegis_300314     # 300314
+          - Judgement_Slasher_J     # 28777
+      - Combo:
+          - aegis_300314     # 300314
+          - Repent_Slasher_J     # 28778
+    Script: |
+      bonus bBaseAtk,200;
+      bonus bMatk,200;
+      bonus2 bSubRace,RC_Player_Human,40;
+      bonus2 bSubRace,RC_Player_Doram,40;
+      skill "LK_CONCENTRATION",5;
+  - Combos:
+      - Combo:
+          - aegis_300314     # 300314
+          - Agudo_Filo_J     # 28049
+      - Combo:
+          - aegis_300314     # 300314
+          - Wind_Gale_J     # 18197
+      - Combo:
+          - aegis_300314     # 300314
+          - Volar_J     # 21056
+      - Combo:
+          - aegis_300314     # 300314
+          - Aiming_Bow_J     # 18195
+      - Combo:
+          - aegis_300314     # 300314
+          - Gravitation_Staff_J     # 2062
+      - Combo:
+          - aegis_300314     # 300314
+          - Sharp_Star_Bow_J     # 18194
+      - Combo:
+          - aegis_300314     # 300314
+          - Adorare_Staff_J     # 2063
+      - Combo:
+          - aegis_300314     # 300314
+          - Staff_Of_Miracle_J     # 2061
+      - Combo:
+          - aegis_300314     # 300314
+          - Falken_Shooter_J     # 18196
+      - Combo:
+          - aegis_300314     # 300314
+          - Vernan_J     # 21057
+      - Combo:
+          - aegis_300314     # 300314
+          - Maxi_Spanner_J     # 28142
+      - Combo:
+          - aegis_300314     # 300314
+          - Rapid_Fire_C_Bow_J     # 18193
+      - Combo:
+          - aegis_300314     # 300314
+          - Reaper_Cross_J     # 28048
+    Script: |
+      bonus bBaseAtk,100;
+      bonus bMatk,100;
+      bonus2 bSubRace,RC_Player_Human,40;
+      bonus2 bSubRace,RC_Player_Doram,40;
+      skill "LK_CONCENTRATION",5;
+  - Combos:
+      - Combo:
+          - Arabian_Manteau     # 480023
+          - Ifrit_Card     # 4430
+    Script: |
+      bonus2 bSubEle,Ele_Fire,100;
+      bonus2 bSubSkill,"NPC_CRITICALSLASH",100;
+#  - Combos:
+#      - Combo:
+#          - Arabian_Manteau     # 480023
+#          - aegis_300331     # 300331
+#    Script: |
+#      bonus2 bSubEle,Ele_Fire,30;
+#      bonus2 bSubSkill,"NPC_CRITICALSLASH",30;
+  - Combos:
+      - Combo:
+          - Pendant_of_Solomon     # 490035
+          - Amplification1     # 29445
+      - Combo:
+          - Pendant_of_Solomon     # 490035
+          - Amplification2     # 29446
+      - Combo:
+          - Pendant_of_Solomon     # 490035
+          - Amplification3     # 29447
+      - Combo:
+          - Pendant_of_Solomon     # 490035
+          - Amplification4     # 29448
+      - Combo:
+          - Pendant_of_Solomon     # 490035
+          - Amplification5     # 29449
+    Script: |
+      if (BaseClass == Job_Novice || BaseClass == Job_Mage || BaseClass == Job_Acolyte) {
+         bonus2 bMagicAddRace,RC_All,10;
+         bonus2 bIgnoreMdefRaceRate,RC_All,70;
+      }
+  - Combos:
+      - Combo:
+          - Pendant_of_Solomon_     # 490036
+          - Amplification1     # 29445
+      - Combo:
+          - Pendant_of_Solomon_     # 490036
+          - Amplification2     # 29446
+      - Combo:
+          - Pendant_of_Solomon_     # 490036
+          - Amplification3     # 29447
+      - Combo:
+          - Pendant_of_Solomon_     # 490036
+          - Amplification4     # 29448
+      - Combo:
+          - Pendant_of_Solomon_     # 490036
+          - Amplification5     # 29449
+    Script: |
+      if (BaseClass == Job_Novice || BaseClass == Job_Mage || BaseClass == Job_Acolyte || BaseClass == Job_Summoner) {
+         bonus2 bMagicAddRace,RC_All,10;
+         bonus2 bIgnoreMdefRaceRate,RC_All,70;
+      }
