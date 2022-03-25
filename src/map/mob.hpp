@@ -47,6 +47,9 @@ const t_tick MIN_RANDOMWALKTIME = 4000;
  * Added definitions for WoE:SE objects and other [L0ne_W0lf], [aleos]
  */
 enum MOBID {
+	MOBID_ALL				= -3,
+	MOBID_NORMAL			= -2,
+	MOBID_BOSS				= -1,
 	MOBID_PORING			= 1002,
 	MOBID_RED_PLANT			= 1078,
 	MOBID_BLUE_PLANT,
@@ -186,7 +189,7 @@ enum e_aegis_monsterclass : int8 {
 };
 
 enum e_mob_skill_target {
-	MST_TARGET	=	0,
+	MST_TARGET = 0,
 	MST_RANDOM,	//Random Target!
 	MST_SELF,
 	MST_FRIEND,
@@ -203,7 +206,7 @@ enum e_mob_skill_target {
 };
 
 enum e_mob_skill_condition {
-	MSC_ALWAYS	=	0x0000,
+	MSC_ALWAYS = 0,
 	MSC_MYHPLTMAXRATE,
 	MSC_MYHPINRATE,
 	MSC_FRIENDHPLTMAXRATE,
@@ -237,14 +240,14 @@ struct s_mob_skill {
 	e_mob_skill_target target;
 	short cond1, cond2, cond3;
 	int mob_mode;
-	int val[6];
+	std::unordered_map<uint16, int> summons;	// index, mob ID
 	short emotion;
 	unsigned short msg_id;
 };
 
 /// Mob skill struct for temporary storage
 struct s_mob_skill_db {
-	int32 mob_id; ///< Monster ID. -1 boss types, -2 normal types, -3 all monsters
+	int32 mob_id; ///< Monster ID. MOBID_BOSS boss types, MOBID_NORMAL normal types, MOBID_ALL all monsters
 	uint16 index_num;	/// index for unordered_map
 	std::unordered_map<uint16, std::shared_ptr<s_mob_skill>> skills; ///< index, Skills
 };
@@ -509,7 +512,7 @@ void do_final_mob(bool is_reload);
 TIMER_FUNC(mob_timer_delete);
 int mob_deleteslave(struct mob_data *md);
 
-int mob_random_class (int *value, size_t count);
+int mob_random_class (std::unordered_map<uint16, int> summons);
 int mob_get_random_id(int type, enum e_random_monster_flags flag, int lv);
 int mob_class_change(struct mob_data *md,int mob_id);
 int mob_warpslave(struct block_list *bl, int range);
@@ -518,7 +521,7 @@ int mob_linksearch(struct block_list *bl,va_list ap);
 bool mob_chat_display_message (mob_data &md, uint16 msg_id);
 int mobskill_use(struct mob_data *md,t_tick tick,int event);
 int mobskill_event(struct mob_data *md,struct block_list *src,t_tick tick, int flag);
-int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id);
+int mob_summonslave(mob_data *md2, std::unordered_map<uint16, int> summons, int amount, uint16 skill_id);
 int mob_countslave(struct block_list *bl);
 int mob_count_sub(struct block_list *bl, va_list ap);
 

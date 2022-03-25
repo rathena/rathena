@@ -3188,23 +3188,22 @@ int mob_guardian_guildchange(struct mob_data *md)
 /*==========================================
  * Pick a random class for the mob
  *------------------------------------------*/
-int mob_random_class(int *value, size_t count)
+int mob_random_class(std::unordered_map<uint16, int> summons)
 {
-	nullpo_ret(value);
+	if (summons.empty())
+		return 0;
 
-	// no count specified, look into the array manually, but take only max 5 elements
-	if (count < 1) {
-		count = 0;
-		while(count < 5 && mobdb_checkid(value[count])) count++;
-		if(count < 1)	// nothing found
-			return 0;
-	} else {
-		// check if at least the first value is valid
-		if(mobdb_checkid(value[0]) == 0)
-			return 0;
+	std::vector<int> summons_available;
+
+	for (const auto &it : summons) {
+		if (mobdb_checkid(it.second) > 0)
+			summons_available.push_back(it.second);
 	}
-	//Pick a random value, hoping it exists. [Skotlex]
-	return mobdb_checkid(value[rnd()%count]);
+
+	if (summons_available.empty())
+		return 0;
+
+	return util::vector_random(summons_available);
 }
 
 /**
@@ -3418,14 +3417,26 @@ int mob_countslave(struct block_list *bl)
 /*==========================================
  * Summons amount slaves contained in the value[5] array using round-robin. [adapted by Skotlex]
  *------------------------------------------*/
-int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id)
+int mob_summonslave(mob_data *md2, std::unordered_map<uint16, int> summons, int amount, uint16 skill_id)
 {
-	struct mob_data *md;
-	struct spawn_data data;
-	int count = 0,k=0,hp_rate=0;
-
 	nullpo_ret(md2);
-	nullpo_ret(value);
+
+	if (summons.empty())
+		return 0;
+
+	std::vector<int> summons_available;
+
+	for (const auto &it : summons) {
+		if (mobdb_checkid(it.second) > 0)
+			summons_available.push_back(it.second);
+	}
+
+	if (summons_available.empty())
+		return 0;
+
+	int k = 0, hp_rate = 0;
+	int count = summons_available.size();
+	spawn_data data;
 
 	memset(&data, 0, sizeof(struct spawn_data));
 	data.m = md2->bl.m;
@@ -3435,29 +3446,27 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id)
 	data.state.size = md2->special_state.size;
 	data.state.ai = md2->special_state.ai;
 
-	if(mobdb_checkid(value[0]) == 0)
-		return 0;
 	/**
 	 * Flags this monster is able to summon; saves a worth amount of memory upon deletion
 	 **/
 	md2->can_summon = 1;
 
-	while(count < 5 && mobdb_checkid(value[count])) count++;
-	if(count < 1) return 0;
 	if (amount > 0 && amount < count) { //Do not start on 0, pick some random sub subset [Skotlex]
 		k = rnd()%count;
 		amount+=k; //Increase final value by same amount to preserve total number to summon.
 	}
 
-	if (!battle_config.monster_class_change_recover &&
-		(skill_id == NPC_TRANSFORMATION || skill_id == NPC_METAMORPHOSIS))
+	if (!battle_config.monster_class_change_recover && (skill_id == NPC_TRANSFORMATION || skill_id == NPC_METAMORPHOSIS))
 		hp_rate = get_percentage(md2->status.hp, md2->status.max_hp);
 
+	mob_data *md;
+
 	for(;k<amount;k++) {
-		short x,y;
-		data.id = value[k%count]; //Summon slaves in round-robin fashion. [Skotlex]
+		data.id = summons_available[k%count]; //Summon slaves in round-robin fashion. [Skotlex]
 		if (mobdb_checkid(data.id) == 0)
 			continue;
+
+		short x,y;
 
 		if (skill_id != NPC_DEATHSUMMON && map_search_freecell(&md2->bl, 0, &x, &y, MOB_SLAVEDISTANCE, MOB_SLAVEDISTANCE, 0)) {
 			data.x = x;
@@ -3583,11 +3592,10 @@ struct block_list *mob_getmasterhpltmaxrate(struct mob_data *md,int rate)
  *------------------------------------------*/
 int mob_getfriendstatus_sub(struct block_list *bl,va_list ap)
 {
-	int cond2;
-	struct mob_data **fr, *md, *mmd;
-	int flag=0;
-
 	nullpo_ret(bl);
+
+	struct mob_data *md, *mmd;
+
 	nullpo_ret(md=(struct mob_data *)bl);
 	nullpo_ret(mmd=va_arg(ap,struct mob_data *));
 
@@ -3596,9 +3604,12 @@ int mob_getfriendstatus_sub(struct block_list *bl,va_list ap)
 
 	if (battle_check_target(&mmd->bl,bl,BCT_ENEMY)>0)
 		return 0;
+
 	int cond1 = va_arg(ap, int);
-	cond2=va_arg(ap,int);
-	fr=va_arg(ap,struct mob_data **);
+	int cond2 = va_arg(ap,int);
+	struct mob_data **fr = va_arg(ap,struct mob_data **);
+	int flag = 0;
+
 	if( cond2==-1 ){
 		int j;
 		for(j=SC_COMMON_MIN;j<=SC_COMMON_MAX && !flag;j++){
@@ -3616,7 +3627,7 @@ int mob_getfriendstatus_sub(struct block_list *bl,va_list ap)
 struct mob_data *mob_getfriendstatus(struct mob_data *md,int cond1,int cond2)
 {
 	nullpo_ret(md);
-	struct mob_data* fr = NULL;
+	struct mob_data* fr = nullptr;
 
 	map_foreachinallrange(mob_getfriendstatus_sub, &md->bl, 8,BL_MOB, md,cond1,cond2,&fr);
 	return fr;
@@ -5684,11 +5695,11 @@ uint64 MobSkillDatabase::parseBodyNode(const YAML::Node &node) {
 	std::shared_ptr<s_mob_db> mob = nullptr;
 
 	if (mob_name == "ALL")	// special behaviour
-		mob_id = -3;
+		mob_id = MOBID_ALL;
 	else if (mob_name == "ALL_NORMAL")
-		mob_id = -2;
+		mob_id = MOBID_NORMAL;
 	else if (mob_name == "ALL_BOSS")
-		mob_id = -1;
+		mob_id = MOBID_BOSS;
 	else {
 		mob = mobdb_search_aegisname( mob_name.c_str() );
 
@@ -5720,7 +5731,7 @@ uint64 MobSkillDatabase::parseBodyNode(const YAML::Node &node) {
 					return 0;
 
 				if (mob_skill->skills.erase(index) == 0)
-					this->invalidWarning(it["Clear"], "Failed to remove non-existing skill Index %hu for monster %s.\n", index, mob_name.c_str());
+					this->invalidWarning(it["Clear"], "Failed to remove nonexistent skill Index %hu for monster %s.\n", index, mob_name.c_str());
 
 				continue;
 			}
@@ -5736,7 +5747,7 @@ uint64 MobSkillDatabase::parseBodyNode(const YAML::Node &node) {
 					return 0;
 
 				if (mob_skill->skills.size() >= MAX_MOBSKILL) {
-					this->invalidWarning(it["Index"], "Too many skills for monster %s (max: %d).\n", mob_name.c_str(), MAX_MOBSKILL);
+					this->invalidWarning(it["Index"], "Too many skills have been defined for monster %s (max: %d).\n", mob_name.c_str(), MAX_MOBSKILL);
 					return 0;
 				}
 				skill = std::make_shared<s_mob_skill>();
@@ -5751,7 +5762,7 @@ uint64 MobSkillDatabase::parseBodyNode(const YAML::Node &node) {
 				uint16 skill_id = skill_name2id(name.c_str());
 
 				if (skill_id == 0) {
-					this->invalidWarning(it["Name"], "Invalid aegis skill name \"%s\".\n", name.c_str());
+					this->invalidWarning(it["Name"], "Invalid Aegis skill name \"%s\".\n", name.c_str());
 					return 0;
 				}
 
@@ -5887,7 +5898,7 @@ uint64 MobSkillDatabase::parseBodyNode(const YAML::Node &node) {
 					case MSC_LONGRANGEATTACKED:
 					case MSC_CASTTARGETED:
 					case MSC_RUDEATTACKED:
-						this->invalidWarning(it["ConditionValue1"], "The Condition doesn't support a value.\n");
+						this->invalidWarning(it["ConditionValue1"], "Condition %s does not need a Condition Value.\n", script_get_constant_str("MSC_", skill->cond1));
 						return 0;
 					case MSC_SKILLUSED:	// aegis skill name required
 					case MSC_AFTERSKILL: {
@@ -5899,7 +5910,7 @@ uint64 MobSkillDatabase::parseBodyNode(const YAML::Node &node) {
 						uint16 skill_id_cond2 = skill_name2id(condition_value.c_str());
 
 						if (skill_id_cond2 == 0) {
-							this->invalidWarning(it["ConditionValue1"], "Invalid aegis skill name \"%s\".\n", condition_value.c_str());
+							this->invalidWarning(it["ConditionValue1"], "Invalid Aegis skill name \"%s\".\n", condition_value.c_str());
 							return 0;
 						}
 						skill->cond2 = static_cast<int16>(skill_id_cond2);
@@ -5962,7 +5973,7 @@ uint64 MobSkillDatabase::parseBodyNode(const YAML::Node &node) {
 					case MSC_FRIENDHPINRATE:
 						break;
 					default:	// no condition value required
-						this->invalidWarning(it["ConditionValue2"], "The Condition doesn't support a value.\n");
+						this->invalidWarning(it["ConditionValue2"], "Condition %s does not need a Condition Value.\n", script_get_constant_str("MSC_", skill->cond1));
 						return 0;
 				}
 
@@ -6030,7 +6041,10 @@ uint64 MobSkillDatabase::parseBodyNode(const YAML::Node &node) {
 						if (!this->asBool(summonit, "Clear", active))
 							return 0;
 
-						skill->val[summon_index] = 0;
+						if (active && skill->summons.erase(summon_index) == 0) {
+							this->invalidWarning(summonit["Clear"], "Failed to remove data in index %s.\n", summon_index);
+							continue;
+						}
 
 						continue;
 					}
@@ -6047,16 +6061,7 @@ uint64 MobSkillDatabase::parseBodyNode(const YAML::Node &node) {
 						return 0;
 					}
 
-					skill->val[summon_index] = mob_summon->id;
-				}
-			} else {
-				if (!skill_exists) {
-					skill->val[0] = 0;
-					skill->val[1] = 0;
-					skill->val[2] = 0;
-					skill->val[3] = 0;
-					skill->val[4] = 0;
-					skill->val[5] = 0;
+					skill->summons[summon_index] = mob_summon->id;
 				}
 			}
 
@@ -6125,16 +6130,12 @@ void MobSkillDatabase::loadingFinished() {
 
 			// Apply battle_config modifiers to rate (permillage) and delay [Skotlex]
 			if (battle_config.mob_skill_rate != 100)
-				skill->permillage = skill->permillage * battle_config.mob_skill_rate / 100;
-			if (skill->permillage > 10000)
-				skill->permillage = 10000;
+				skill->permillage = min(skill->permillage * battle_config.mob_skill_rate / 100, 10000);
 			else if (skill->permillage == 0 && battle_config.mob_skill_rate)
 				skill->permillage = 1;
 
 			if (battle_config.mob_skill_delay != 100)
-				skill->delay = skill->delay * battle_config.mob_skill_delay / 100;
-			if (skill->delay < 0 || skill->delay > MOB_MAX_DELAY) // time overflow?
-				skill->delay = MOB_MAX_DELAY;
+				skill->delay = cap_value(skill->delay * battle_config.mob_skill_delay / 100, 0, MOB_MAX_DELAY);
 
 			// Check that the target condition is right for the skill type. [Skotlex]
 			if (skill_get_casttype(skill->skill_id) == CAST_GROUND) {
@@ -6579,7 +6580,7 @@ static void mob_skill_db_set(void) {
 		}
 		// Global skill
 		else {
-			uint16 id = skill->mob_id;
+			int32 id = skill->mob_id;
 			id *= -1;
 			for( auto &pair : mob_db ){
 				if ( mob_is_clone(pair.first) ){
