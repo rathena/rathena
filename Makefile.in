@@ -4,11 +4,12 @@ HAVE_MYSQL=@HAVE_MYSQL@
 OMAP=@OMAP@
 ifeq ($(HAVE_MYSQL),yes)
 	ALL_DEPENDS=server tools
-	SERVER_DEPENDS=common login char map import
+	SERVER_DEPENDS=common login char map web import
 	COMMON_DEPENDS=libconfig yaml-cpp
 	LOGIN_DEPENDS=libconfig common
 	CHAR_DEPENDS=libconfig common yaml-cpp
 	MAP_DEPENDS=libconfig common yaml-cpp
+	WEB_DEPENDS=libconfig common yaml-cpp httplib
 else
 	ALL_DEPENDS=needs_mysql
 	SERVER_DEPENDS=needs_mysql
@@ -16,6 +17,7 @@ else
 	LOGIN_DEPENDS=needs_mysql
 	CHAR_DEPENDS=needs_mysql
 	MAP_DEPENDS=needs_mysql
+	WEB_DEPENDS=needs_mysql
 endif
 
 
@@ -25,6 +27,7 @@ endif
 	login \
 	char \
 	map \
+	web \
 	tools \
 	import \
 	clean help \
@@ -49,6 +52,9 @@ char: $(CHAR_DEPENDS)
 map: $(MAP_DEPENDS)
 	@$(MAKE) -C src/map server
 
+web: $(WEB_DEPENDS)
+	@$(MAKE) -C src/web server
+
 libconfig:
 	@$(MAKE) -C 3rdparty/libconfig
 
@@ -57,6 +63,9 @@ tools:
 
 yaml-cpp:
 	@$(MAKE) -C 3rdparty/yaml-cpp
+
+httplib:
+	@$(MAKE) -C 3rdparty/httplib
 
 import:
 # 1) create conf/import folder
@@ -77,9 +86,11 @@ clean:
 	@$(MAKE) -C src/common $@
 	@$(MAKE) -C 3rdparty/libconfig $@
 	@$(MAKE) -C 3rdparty/yaml-cpp $@
+	@$(MAKE) -C 3rdparty/httplib $@
 	@$(MAKE) -C src/login $@
 	@$(MAKE) -C src/char $@
 	@$(MAKE) -C src/map $@
+	@$(MAKE) -C src/web $@
 	@$(MAKE) -C src/tool $@
 
 help:
@@ -88,9 +99,11 @@ help:
 	@echo "'common'      - builds object files used for the three servers"
 	@echo "'libconfig'   - builds object files of libconfig"
 	@echo "'yaml-cpp'    - builds object files of yaml-cpp"
+	@echo "'httplib'     - builds object files of httplib"
 	@echo "'login'       - builds login server"
 	@echo "'char'        - builds char server"
 	@echo "'map'         - builds map server"
+	@echo "'web'         - builds web server"
 	@echo "'tools'       - builds all the tools in src/tools"
 	@echo "'import'      - builds conf/import, conf/msg_conf/import and db/import folders from their template folders (x-tmpl)"
 	@echo "'all'         - builds all the above targets"

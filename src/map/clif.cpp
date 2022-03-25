@@ -14290,7 +14290,7 @@ void clif_parse_GuildRequestEmblem(int fd,struct map_session_data *sd)
 enum e_result_validate_emblem {	// Used as Result for clif_validate_emblem
 	EMBVALIDATE_SUCCESS = 0,
 	EMBVALIDATE_ERR_RAW_FILEFORMAT,	// Invalid File Format (Error in zlib/decompression or malformed BMP header)
-	EMBVALIDATE_ERR_TRANSPARENCY	// uploaded emblem does not met the requirements of battle_config.emblem_transparency_limit
+	EMBVALIDATE_ERR_TRANSPARENCY	// uploaded emblem does not met the requirements of inter_config.emblem_transparency_limit
 };
 
 static enum e_result_validate_emblem clif_validate_emblem(const uint8* emblem, unsigned long emblem_len)
@@ -14306,7 +14306,7 @@ static enum e_result_validate_emblem clif_validate_emblem(const uint8* emblem, u
 		))
 		return EMBVALIDATE_ERR_RAW_FILEFORMAT;
 
-	if(battle_config.emblem_transparency_limit != 100) {
+	if(inter_config.emblem_transparency_limit != 100) {
 		int i, transcount = 1, tmp[3];
 		for(i = offset; i < buf_len-1; i++) {
 			int j = i%3;
@@ -14314,7 +14314,7 @@ static enum e_result_validate_emblem clif_validate_emblem(const uint8* emblem, u
 			if(j == 2 && (tmp[0] == 0xFFFF00FF) && (tmp[1] == 0xFFFF00) && (tmp[2] == 0xFF00FFFF)) //if pixel is transparent
 				transcount++;
 		}
-		if(((transcount*300)/(buf_len-offset)) > battle_config.emblem_transparency_limit) //convert in % to chk
+		if(((transcount*300)/(buf_len-offset)) > inter_config.emblem_transparency_limit) //convert in % to chk
 			return EMBVALIDATE_ERR_TRANSPARENCY;
 	}
 
@@ -14333,7 +14333,7 @@ void clif_parse_GuildChangeEmblem(int fd,struct map_session_data *sd){
 	if( !emblem_len || !sd->state.gmaster_flag )
 		return;
 
-	if(!(battle_config.emblem_woe_change) && is_agit_start() ){
+	if(!(inter_config.emblem_woe_change) && is_agit_start() ){
 		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,385),false,SELF); //"You not allowed to change emblem during woe"
 		return;
 	}
@@ -14344,7 +14344,7 @@ void clif_parse_GuildChangeEmblem(int fd,struct map_session_data *sd){
 		return;
 	} else if(emb_val == EMBVALIDATE_ERR_TRANSPARENCY){
 		char output[128];
-		safesnprintf(output,sizeof(output),msg_txt(sd,387),battle_config.emblem_transparency_limit);
+		safesnprintf(output,sizeof(output),msg_txt(sd,387),inter_config.emblem_transparency_limit);
 		clif_messagecolor(&sd->bl,color_table[COLOR_RED],output,false,SELF); //"The chosen emblem was detected invalid as it contain too much transparency (limit=%d)\n"
 		return;
 	}
@@ -14367,7 +14367,7 @@ void clif_parse_GuildChangeEmblem2(int fd, struct map_session_data* sd) {
 	if (!sd->state.gmaster_flag)
 		return;
 
-	if (!battle_config.emblem_woe_change && is_agit_start()) {
+	if (!inter_config.emblem_woe_change && is_agit_start()) {
 		clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 385), false, SELF); //"You not allowed to change emblem during woe"
 		return;
 	}
