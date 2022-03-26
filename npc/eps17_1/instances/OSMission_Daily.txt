@@ -1,0 +1,493 @@
+//===== rAthena Script =======================================
+//===== Crazyarashi Services =================================
+//= Episode 17.1 Illusion : OS Mission Daily
+sp_cor,160,55,5	script	Operation Officer#os_mission	HIDDEN_WARP_NPC,7,7,{
+	.@md_name$ = "OS Mission 2";
+	.@party_id = getcharid(1);
+	.@party_name$ = getpartyname(.@party_id);
+	if(checkquest(12454) != 1){
+		mes "[ Operation Officer ]";
+		mes "Even though the first operation was done by our squad, the mutants still continue to come out.";
+		next;
+		mes "[ Operation Officer ]";
+		mes "If the facility is destroyed at the source, it will clear them out. But it won't be approved by the upper level, so we'll have to send a second search team instead.";
+		setquest 12454;
+	} else {
+		mes "[ Operation Officer ]";
+		mes "I hope the search is done safely.";
+	}
+	next;
+	mes "[ Operation Officer ]";
+	mes "Are you prepared?";
+	next;
+	switch(checkquest(12455,PLAYTIME)){
+		case 0: case 1:
+			mes "[ Operation Officer ]";
+			mes "I don't have time yet, let's take a break.";
+			end;
+			
+		case 2:
+			erasequest 12455;
+			break;
+			
+		default:
+			break;
+	}
+	if(!.@party_id){
+		mes "[ Operation Officer ]";
+		mes "You're going alone? It may be difficult. Once you've formed a party, come and talk to me again.";
+		close;
+	}
+	.@s = select((!instance_id(IM_PARTY)?"Prepare OS Mission 2.":""),(!instance_id(IM_PARTY)?"":"Enter OS Mission 2."));
+	switch(.@s){
+		case 1:
+			switch(instance_create(.@md_name$,IM_PARTY)){
+				case -1:
+					mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed!";
+					mes "Unknown Error Has Occurred.";
+					end;
+				case -2:
+					mes "[ Operation Officer ]";
+					mes "You're going alone? It may be difficult. Once you've formed a party, come and talk to me again.";
+					close;
+				case -3:
+					mes "[ Operation Officer ]";
+					mes "You already have an instance active. Please cancel it before proceeding.";
+					close;
+					
+				case -4:
+					mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed!";
+					mes "^0000ff"+.@md_name$+" ^000000 is currently full.";
+					end;
+					
+				default:
+					mes "[ Operation Officer ]";
+					mes "Before going make sure you make a party first.";
+					end;
+			}
+
+		case 2:
+			switch(instance_enter(.@md_name$)){
+				case 3:
+					mes "An unknown error has occurred.";
+					end;
+					
+				case 2:
+				case 1:
+					mes "^ff0000Character doesn't have an instance reserved.^000000";
+					end;
+					
+				case 0:
+					mapannounce "sp_cor", strcharinfo(0) + " of the party, "+ .@party_name$ +", is entering the " + .@md_name$ + ".", bc_map, "0x00FF99";
+					setquest 12455;
+					end;
+			}	
+	}
+	end;
+	
+OnTouch:
+	if(checkquest(12452) == 2){
+		classchange 4_M_ILYA,"",bc_self;
+	}
+	end;
+}
+
+1@os_a,335,33,0	script	#os_mission_daily_start	HIDDEN_WARP_NPC,1,1,{
+	end;
+	
+OnTouch:
+	if(is_party_leader() == false)
+		end;
+		
+	F_InstanceHide(strnpcinfo(0),5);
+	F_InstanceHide("#os_mob_phase_1",4);
+	doevent instance_npcname("#os_mob_phase_1")+"::OnMobSpawn";
+	end;
+	
+OnInstanceInit:
+	'instance_id = instance_id();
+	'os_a_map$ = instance_mapname("1@os_a");
+	setcell 'os_a_map$,248,110,258,110,CELL_SHOOTABLE,0;
+	setcell 'os_a_map$,248,110,258,110,CELL_WALKABLE,0;
+	setcell 'os_a_map$,198,110,204,110,CELL_SHOOTABLE,0;
+	setcell 'os_a_map$,198,110,204,110,CELL_WALKABLE,0;
+	end;
+}
+
+1@os_a,1,1,0	script	#os_mob_phase_1	HIDDEN_WARP_NPC,{
+	end;
+	
+OnMobSpawn:
+	.@map$ = 'os_a_map$;
+	monster .@map$,300,94,"CP1 Twin Caput",20348,1,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	monster .@map$,300,94,"CP1 Dolor",20349,1,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	monster .@map$,300,94,"CP1 Bellare",20350,1,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	monster .@map$,280,96,"CP1 Twin Caput",20348,2,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	monster .@map$,270,96,"CP1 Dolor",20349,3,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	monster .@map$,260,76,"CP1 Bellare",20350,2,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	monster .@map$,260,76,"CP1 Twin Caput",20348,1,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	monster .@map$,260,76,"CP1 Dolor",20349,4,instance_npcname(strnpcinfo(0))+"::OnMobKill";	
+	sleep2 2000;
+	mapannounce .@map$,"Operation Officer : The Alpha team should be prepare to battle as soon as mutants are seen nearby.",bc_blue|bc_map;
+	sleep2 3000;
+	mapannounce .@map$,"Operation Officer : There are no civilian this area, we can safely subdue monsters.",bc_blue|bc_map;
+	sleep2 3000;
+	mapannounce .@map$,"Operation Officer : Charlie, the Delta team will fight into battle if they are engaged.",bc_blue|bc_map;
+	do {
+		sleep 20000;
+		.@mob_count = mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill");
+		if(mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill") > 0){
+			mapannounce .@map$,"Remaining Mutant Survivor - " + .@mob_count,bc_map;
+		}
+	} while(mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill") > 0);
+	end;
+	
+OnMobKill:
+	.@map$ = 'os_a_map$;
+	if(mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill") < 1){
+		F_InstanceHide(strnpcinfo(0),3);
+		mapannounce .@map$,"First base secured.",bc_map;
+		F_InstanceHide("#os_mob_phase_2",4);
+		doevent instance_npcname("#os_mob_phase_2")+"::OnMobSpawn";
+	}
+	end;
+	
+OnInstanceInit:
+	F_InstanceHide(strnpcinfo(0),3);
+	end;
+}
+
+1@os_a,1,1,0	script	#os_mob_phase_2	HIDDEN_WARP_NPC,{
+OnMobSpawn:
+	.@map$ = 'os_a_map$;
+	areamonster .@map$,198,80,214,88,"CP1 Twin Caput",20348,5,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	areamonster .@map$,198,80,214,88,"CP1 Dolor",20349,7,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	areamonster .@map$,198,80,214,88,"CP1 Bellare",20350,3,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	sleep2 2000;
+	mapannounce .@map$,"Operation Officer : We received information about this search area.",bc_blue|bc_map;
+	sleep2 3000;
+	mapannounce .@map$,"Operation Officer : A mutant marked with A013 is unique and independent of this base.",bc_blue|bc_map;
+	sleep2 3000;
+	mapannounce .@map$,"Operation Officer : Avoid combat unless you are willing to fight more than normal mutants.",bc_blue|bc_map;
+	do {
+		sleep 20000;
+		.@mob_count = mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill");
+		if(mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill") > 0){
+			mapannounce .@map$,"Remaining Mutant Survivor - " + .@mob_count,bc_map;
+		}
+	} while(mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill") > 0);
+	end;
+	
+OnMobKill:
+	.@map$ = 'os_a_map$;
+	if(mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill") < 1){
+		F_InstanceHide(strnpcinfo(0),3);
+		mapannounce .@map$,"Second base secured.",bc_map;
+		F_InstanceHide("#os_mob_phase_3",4);
+		doevent instance_npcname("#os_mob_phase_3")+"::OnMobSpawn";
+	}
+	end;
+	
+OnInstanceInit:
+	F_InstanceHide(strnpcinfo(0),3);
+	end;
+}
+
+1@os_a,1,1,0	script	#os_mob_phase_3	HIDDEN_WARP_NPC,{
+OnMobSpawn:
+	.@map$ = 'os_a_map$;
+	areamonster .@map$,207,125,222,138,"CP1 Twin Caput",20348,5,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	areamonster .@map$,207,125,222,138,"CP1 Dolor",20349,5,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	areamonster .@map$,207,125,222,138,"CP1 Bellare",20350,5,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	for(.@i = 1; .@i < 33; .@i++){
+		F_InstanceHide("#os_poison_daily_"+.@i,3);
+	}
+	setcell 'os_a_map$,248,110,258,110,CELL_SHOOTABLE,1;
+	setcell 'os_a_map$,248,110,258,110,CELL_WALKABLE,1;
+	setcell 'os_a_map$,198,110,204,110,CELL_SHOOTABLE,1;
+	setcell 'os_a_map$,198,110,204,110,CELL_WALKABLE,1;
+	sleep2 2000;
+	mapannounce .@map$,"Operation Officer : Be careful when dealing with CP4 or higher class mutants.",bc_blue|bc_map;
+	sleep2 3000;
+	mapannounce .@map$,"Operation Officer : They are the same type as CP1, but their destructive power increases with their grade. Be careful not to be surrounded.",bc_blue|bc_map;
+	do {
+		sleep 20000;
+		.@mob_count = mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill");
+		if(mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill") > 0){
+			mapannounce .@map$,"Remaining Mutant Survivor - " + .@mob_count,bc_map;
+		}
+	} while(mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill") > 0);
+	end;
+	
+OnMobKill:
+	.@map$ = 'os_a_map$;
+	if(mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill") < 1){
+		F_InstanceHide(strnpcinfo(0),3);
+		mapannounce .@map$,"Third base secured.",bc_map;
+		F_InstanceHide("#os_mob_phase_4",4);
+		doevent instance_npcname("#os_mob_phase_4")+"::OnMobSpawn";
+	}
+	end;
+	
+OnInstanceInit:
+	F_InstanceHide(strnpcinfo(0),3);
+	end;
+}
+
+1@os_a,1,1,0	script	#os_mob_phase_4	HIDDEN_WARP_NPC,{
+OnMobSpawn:
+	.@map$ = 'os_a_map$;
+	areamonster .@map$,239,152,258,161,"CP1 Twin Caput",20348,10,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	areamonster .@map$,239,152,258,161,"CP1 Bellare",20350,5,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	sleep2 2000;
+	mapannounce .@map$,"Operation Officer : The fourth area is said to be contain confidential documents from the storage room.",bc_blue|bc_map;
+	sleep2 3000;
+	mapannounce .@map$,"Operation Officer : I want you to focus on battle because the first team has already searched the place for important information.",bc_blue|bc_map;
+	do {
+		sleep 20000;
+		.@mob_count = mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill");
+		if(mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill") > 0){
+			mapannounce .@map$,"Remaining Mutant Survivor - " + .@mob_count,bc_map;
+		}
+	} while(mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill") > 0);
+	end;
+	
+OnMobKill:
+	.@map$ = 'os_a_map$;
+	if(mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill") < 1){
+		F_InstanceHide(strnpcinfo(0),3);
+		mapannounce .@map$,"Fourth base secured.",bc_map;
+		F_InstanceHide("#os_mob_phase_5",4);
+		doevent instance_npcname("#os_mob_phase_5")+"::OnMobSpawn";
+	}
+	end;
+	
+OnInstanceInit:
+	F_InstanceHide(strnpcinfo(0),3);
+	end;
+}
+
+1@os_a,1,1,0	script	#os_mob_phase_5	HIDDEN_WARP_NPC,{
+OnMobSpawn:
+	.@map$ = 'os_a_map$;
+	areamonster .@map$,211,183,228,191,"CP1 Twin Caput",20348,11,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	areamonster .@map$,211,183,228,191,"CP1 Dolor",20349,11,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	areamonster .@map$,211,183,228,191,"CP1 Bellare",20350,8,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	sleep2 2000;
+	mapannounce .@map$,"Operation Officer : Bravo Team. CP6 mutants sighted. Their attack power is very strong.",bc_blue|bc_map;
+	sleep2 3000;
+	mapannounce .@map$,"Operation Officer : Alpha, Charlie and Delta team, be very careful. Never be surrounded by CP6 grade mutants.",bc_blue|bc_map;
+	do {
+		.@map$ = 'os_a_map$;
+		sleep 20000;
+		.@mob_count = mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill");
+		if(mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill") > 0){
+			mapannounce .@map$,"Remaining Mutant Survivor - " + .@mob_count,bc_map;
+		}
+	} while(mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill") > 0);
+	end;
+	
+OnMobKill:
+	.@map$ = 'os_a_map$;
+	if(mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill") < 1){
+		F_InstanceHide(strnpcinfo(0),3);
+		mapannounce .@map$,"Fifth base secured.",bc_map;
+		F_InstanceHide("#os_mob_phase_boss",4);
+		doevent instance_npcname("#os_mob_phase_boss")+"::OnMobSpawn";
+	}
+	end;
+	
+OnInstanceInit:
+	F_InstanceHide(strnpcinfo(0),3);
+	end;
+}
+
+1@os_a,1,1,0	script	#os_mob_phase_boss	HIDDEN_WARP_NPC,{
+OnMobSpawn:
+	.@map$ = 'os_a_map$;
+	monster .@map$,194,193,"CP24 Miguel",20346,1,instance_npcname(strnpcinfo(0))+"::OnBossKill";
+	'boss_id = $@mobid[0];
+	'boss_alive = 1;
+	mapannounce .@map$,"Operation Officer : To all team. If you find an S-Class mutant, engage in the battle immediately.",bc_blue|bc_map;
+	sleep2 1500;
+	mapannounce .@map$,"????: Argh...",bc_map,0xFF0000;
+	sleep2 1500;
+	mapannounce .@map$,"Operation Officer : A mutant with a high CP is hard to deal with, so be careful!",bc_blue|bc_map;
+	freeloop(true);
+	do {
+		sleep 100;
+		if(unitexists('boss_id)){
+			getunitdata 'boss_id,.@boss_data;
+			.@HP = .@boss_data[2];
+			.@MAX_HP = .@boss_data[3];
+			.@FIRST_SUMMON = (.@MAX_HP/10)*7;
+			.@SECOND_SUMMON = (.@MAX_HP/10)*3;
+			if(.@HP < .@FIRST_SUMMON && 'first_summon < 1){
+				F_InstanceEvent(strnpcinfo(0),"OnFirstSummon");
+			}
+			if(.@HP < .@SECOND_SUMMON && 'second_summon < 1){
+				F_InstanceEvent(strnpcinfo(0),"OnSecondSummon");
+			}
+		}
+	} while('boss_alive);
+	freeloop(false);
+	end;
+	
+OnFirstSummon:
+	'first_summon = 1;
+	.@map$ = 'os_a_map$;
+	freeloop(true);
+	while('boss_alive){
+		getunitdata 'boss_id,.@xy;
+		'x = .@xy[6];
+		'y = .@xy[7];
+		'summon[0] = monster(.@map$,'x+7,'y,"",20351,1,instance_npcname(strnpcinfo(0))+"::OnEnd");
+		'summon[1] = monster(.@map$,'x-7,'y,"",20351,1,instance_npcname(strnpcinfo(0))+"::OnEnd");
+		'summon[2] = monster(.@map$,'x,'y+7,"",20351,1,instance_npcname(strnpcinfo(0))+"::OnEnd");
+		'summon[3] = monster(.@map$,'x,'y-7,"",20351,1,instance_npcname(strnpcinfo(0))+"::OnEnd");
+		setunitdata 'summon[0],UMOB_DMGIMMUNE,1;
+		setunitdata 'summon[1],UMOB_DMGIMMUNE,1;
+		setunitdata 'summon[2],UMOB_DMGIMMUNE,1;
+		setunitdata 'summon[3],UMOB_DMGIMMUNE,1;
+		sleep 150;
+		if(unitexists('summon[0]))
+			unitkill 'summon[0];
+		if(unitexists('summon[1]))
+			unitkill 'summon[1];
+		if(unitexists('summon[2]))
+			unitkill 'summon[2];
+		if(unitexists('summon[3]))
+			unitkill 'summon[3];
+	}
+	freeloop(false);
+	end;
+	
+OnSecondSummon:
+	'second_summon = 1;
+	.@map$ = 'os_a_map$;
+	freeloop(true);
+	while('boss_alive){
+		getunitdata 'boss_id,.@xy;
+		'x = .@xy[6];
+		'y = .@xy[7];
+		'summon[4] = monster(.@map$,'x+5,'y+5,"",20351,1,instance_npcname(strnpcinfo(0))+"::OnEnd");
+		'summon[5] = monster(.@map$,'x+5,'y-5,"",20351,1,instance_npcname(strnpcinfo(0))+"::OnEnd");
+		'summon[6] = monster(.@map$,'x-5,'y+5,"",20351,1,instance_npcname(strnpcinfo(0))+"::OnEnd");
+		'summon[7] = monster(.@map$,'x-5,'y-5,"",20351,1,instance_npcname(strnpcinfo(0))+"::OnEnd");
+		setunitdata 'summon[4],UMOB_DMGIMMUNE,1;
+		setunitdata 'summon[5],UMOB_DMGIMMUNE,1;
+		setunitdata 'summon[6],UMOB_DMGIMMUNE,1;
+		setunitdata 'summon[7],UMOB_DMGIMMUNE,1;
+		sleep 150;
+		if(unitexists('summon[4]))
+			unitkill 'summon[4];
+		if(unitexists('summon[5]))
+			unitkill 'summon[5];
+		if(unitexists('summon[6]))
+			unitkill 'summon[6];
+		if(unitexists('summon[7]))
+			unitkill 'summon[7];
+	}
+	freeloop(false);
+	end;
+	
+OnEnd: end;
+	
+OnBossKill:
+	.@map$ = 'os_a_map$;
+	'boss_alive = 0;
+	'os_mission_daily = 3;
+	killmonsterall 'os_a_map$;
+	F_InstanceHide("Operation Officer#os_mission_daily",4);
+	mapannounce .@map$,"Operation Officer : I think I arrived late!.",bc_blue|bc_map;
+	end;
+}
+
+1@os_a,187,195,5	script	Operation Officer#os_mission_daily	4_M_ILYA,{
+	if('os_mission_daily == 3 && checkquest(12454,HUNTING) == 2){
+		mes "[ Operation Officer ]";
+		mes "You've dealt with the CP6 Mutant all by yourself. Was it a good fight?";
+		next;
+		mes "[ Operation Officer ]";
+		mes "These are the supplies and experience given to the troops that joined the operation. There you go.";
+		erasequest 12454;
+		getexp 150000,150000;
+		getitem 25669,5;
+		getitem 25723,1;
+		next;
+		mes "[ Operation Officer ]";
+		mes "It's a CP6 rating, sorry I couldn't give you more experience.";
+		end;
+	} else if('os_mission_daily == 3 && checkquest(12454,HUNTING) == -1){
+		mes "[ Operation Officer ]";
+		mes "Let's go out now. You'll have to go back soon.";
+		next;
+		if(select("Take a closer look.:I'm going now.") == 1){
+			mes "[ Operation Officer ]";
+			mes "Hurry up. We can't stay much longer here.";
+			end;
+		}
+		@os_reward = 0;
+		warp "sp_cor",162,56;
+		end;
+	}
+	end;
+	
+OnInstanceInit:
+	F_InstanceHide(strnpcinfo(0),3);
+	end;
+}
+
+1@os_a,252,109,0	script	#os_poison_daily_1	HIDDEN_WARP_NPC,1,1,{
+	end;
+	
+OnTouch:
+	.@DAMAGE = (MaxHp/10) * 5;
+	heal -.@DAMAGE,0;
+	end;
+	
+OnDisable:
+	F_InstanceHide(strnpcinfo(0),5);
+	end;
+
+OnInstanceInit:
+	while(!'os_mission_daily){
+		sleep 1000;
+		specialeffect 1020;
+	}
+	end;
+}
+
+
+1@os_a,253,109,0	duplicate(#os_poison_daily_1)	#os_poison_daily_2	HIDDEN_WARP_NPC,1,1
+1@os_a,254,109,0	duplicate(#os_poison_daily_1)	#os_poison_daily_3	HIDDEN_WARP_NPC,1,1
+1@os_a,255,109,0	duplicate(#os_poison_daily_1)	#os_poison_daily_4	HIDDEN_WARP_NPC,1,1
+1@os_a,252,108,0	duplicate(#os_poison_daily_1)	#os_poison_daily_5	HIDDEN_WARP_NPC,1,1
+1@os_a,253,108,0	duplicate(#os_poison_daily_1)	#os_poison_daily_6	HIDDEN_WARP_NPC,1,1
+1@os_a,254,108,0	duplicate(#os_poison_daily_1)	#os_poison_daily_7	HIDDEN_WARP_NPC,1,1
+1@os_a,255,108,0	duplicate(#os_poison_daily_1)	#os_poison_daily_8	HIDDEN_WARP_NPC,1,1
+1@os_a,252,107,0	duplicate(#os_poison_daily_1)	#os_poison_daily_9	HIDDEN_WARP_NPC,1,1
+1@os_a,253,107,0	duplicate(#os_poison_daily_1)	#os_poison_daily_10	HIDDEN_WARP_NPC,1,1
+1@os_a,254,107,0	duplicate(#os_poison_daily_1)	#os_poison_daily_11	HIDDEN_WARP_NPC,1,1
+1@os_a,255,107,0	duplicate(#os_poison_daily_1)	#os_poison_daily_12	HIDDEN_WARP_NPC,1,1
+1@os_a,252,106,0	duplicate(#os_poison_daily_1)	#os_poison_daily_13	HIDDEN_WARP_NPC,1,1
+1@os_a,253,106,0	duplicate(#os_poison_daily_1)	#os_poison_daily_14	HIDDEN_WARP_NPC,1,1
+1@os_a,254,106,0	duplicate(#os_poison_daily_1)	#os_poison_daily_15	HIDDEN_WARP_NPC,1,1
+1@os_a,255,106,0	duplicate(#os_poison_daily_1)	#os_poison_daily_16	HIDDEN_WARP_NPC,1,1
+
+1@os_a,198,109,0	duplicate(#os_poison_daily_1)	#os_poison_daily_17	HIDDEN_WARP_NPC,1,1
+1@os_a,199,109,0	duplicate(#os_poison_daily_1)	#os_poison_daily_18	HIDDEN_WARP_NPC,1,1
+1@os_a,200,109,0	duplicate(#os_poison_daily_1)	#os_poison_daily_19	HIDDEN_WARP_NPC,1,1
+1@os_a,201,109,0	duplicate(#os_poison_daily_1)	#os_poison_daily_20	HIDDEN_WARP_NPC,1,1
+1@os_a,198,108,0	duplicate(#os_poison_daily_1)	#os_poison_daily_21	HIDDEN_WARP_NPC,1,1
+1@os_a,199,108,0	duplicate(#os_poison_daily_1)	#os_poison_daily_22	HIDDEN_WARP_NPC,1,1
+1@os_a,200,108,0	duplicate(#os_poison_daily_1)	#os_poison_daily_23	HIDDEN_WARP_NPC,1,1
+1@os_a,201,108,0	duplicate(#os_poison_daily_1)	#os_poison_daily_24	HIDDEN_WARP_NPC,1,1
+1@os_a,198,107,0	duplicate(#os_poison_daily_1)	#os_poison_daily_25	HIDDEN_WARP_NPC,1,1
+1@os_a,199,107,0	duplicate(#os_poison_daily_1)	#os_poison_daily_26	HIDDEN_WARP_NPC,1,1
+1@os_a,200,107,0	duplicate(#os_poison_daily_1)	#os_poison_daily_27	HIDDEN_WARP_NPC,1,1
+1@os_a,201,107,0	duplicate(#os_poison_daily_1)	#os_poison_daily_28	HIDDEN_WARP_NPC,1,1
+1@os_a,198,106,0	duplicate(#os_poison_daily_1)	#os_poison_daily_29	HIDDEN_WARP_NPC,1,1
+1@os_a,199,106,0	duplicate(#os_poison_daily_1)	#os_poison_daily_30	HIDDEN_WARP_NPC,1,1
+1@os_a,200,106,0	duplicate(#os_poison_daily_1)	#os_poison_daily_31	HIDDEN_WARP_NPC,1,1
+1@os_a,201,106,0	duplicate(#os_poison_daily_1)	#os_poison_daily_32	HIDDEN_WARP_NPC,1,1

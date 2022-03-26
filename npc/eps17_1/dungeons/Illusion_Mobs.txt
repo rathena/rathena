@@ -1,0 +1,85 @@
+//===== rAthena Script =======================================
+
+//====================ILLUSION MOONLIGHT========================\\
+
+pay_d03_i,0,0	monster	Angry Nine Tail	3759,10,3000,5000,"Angry Nine Tail#illusionmoonlight::OnKill"
+pay_d03_i,0,0	monster	Resentful Munak	3760,20,5000
+pay_d03_i,0,0	monster	Resentful Bongun	3761,20,5000
+pay_d03_i,0,0	monster	Resentful Sohee	3762,20,5000
+pay_d03_i,0,0	monster	Resentful Soldier	3763,15,3000,5000,"Unfair Soldier#illusionmoonlight::OnKill"
+pay_d03_i,0,0	monster	Wizard of Truth	3764,1,3000,5000,"Truthful Wizard#illusionmoonlight::OnKill"
+pay_d03_i,0,0	monster	Deranged Adventurer	3765,5,5000
+pay_d03_i,155,133,8,8	boss_monster	Illusion Moonlight	3758,1,7200000,600000,1
+
+//====================ILLUSION VAMPIRE========================\\
+
+gef_d01_i,0,0	monster	Illusion Drainliar	3750,37,5000
+gef_d01_i,0,0	monster	Illusion Zombie Cursed	3751,6,5000
+gef_d01_i,0,0	monster	Illusion Zombie	3752,47,5000
+gef_d01_i,0,0	monster	Illusion Ghoul	3753,30,5000
+gef_d01_i,0,0	monster	Illusion Nightmare	3754,30,5000
+gef_d01_i,0,0	monster	Illusion Black Mushroom	3755,10,5000
+gef_d01_i,0,0	monster	Bream	3756,1,3000,5000,"Bream#illusionvampire::OnKill"
+gef_d01_i,0,0	boss_monster	Illusion Dracula	3757,1,7200000,600000,1
+
+//====================ILLUSION FROZEN========================\\
+
+ice_d03_i,0,0	monster	Furious Gazeti	3792,30,3000,5000,"Furious Gazeti#IllusionFrozen::OnKill"
+ice_d03_i,0,0	monster	Furious Snowier	3793,49,3000,5000,"Furious Snowier#IllusionFrozen::OnKill"
+ice_d03_i,0,0	monster	Furious Ice Titan	3794,38,3000,5000,"Furious Ice Titan#IllusionFrozen::OnKill"
+ice_d03_i,0,0	monster	Furious Icecle	3795,50,3000,5000,"Furious Icecle#IllusionFrozen::OnKill"
+
+//====================ILLUSION ABYSS========================\\
+
+tur_d03_i,0,0	monster	Ominous Heater	3803,10,3000,5000,"Ominous Heater#abyssturtleisland::OnKill"
+tur_d03_i,0,0	monster	Ominous Solider	3802,40,3000,5000,"Ominous Solider#abyssturtleisland::OnKill"
+tur_d03_i,0,0	monster	Ominous Freezer	3801,40,3000,5000,"Ominous Freezer#abyssturtleisland::OnKill"
+tur_d03_i,0,0	monster	Ominous Permeter	3800,15,3000,5000,"Ominous Permeter#abyssturtleisland::OnKill"
+tur_d03_i,0,0	monster	Ominous Assulter	3799,35,3000,5000,"Ominous Assulter#abyssturtleisland::OnKill"
+
+tur_d04_i,0,0	monster	Ominous Heater	3803,33,3000,5000,"Ominous Heater#abyssturtleisland::OnKill"
+tur_d04_i,0,0	monster	Ominous Freezer	3801,15,3000,5000,"Ominous Freezer#abyssturtleisland::OnKill"
+tur_d04_i,0,0	monster	Ominous Permeter	3800,4,3000,5000,"Ominous Permeter#abyssturtleisland::OnKill"
+tur_d04_i,0,0	monster	Ominous Assulter	3799,42,3000,5000,"Ominous Assulter#abyssturtleisland::OnKill"
+tur_d04_i,100,88,18,18	boss_monster	Ominous Turtle General	3804,1,7200000,600000,1
+
+//====================ILLUSION TEDDYBEAR========================\\
+
+ein_d02_i,0,0	monster	Red Teddy Bear	20255,18,3000,5000,"Red Teddy Bear#IllusionTeddyBear::OnKill"
+ein_d02_i,0,0	monster	Yellow Teddy Bear	20256,18,3000,5000,"Yellow Teddy Bear#IllusionTeddyBear::OnKill"
+ein_d02_i,0,0	monster	Green Teddy Bear	20257,17,3000,5000,"Green Teddy Bear#IllusionTeddyBear::OnKill"
+ein_d02_i,0,0	monster	White Teddy Bear	20258,16,3000,5000,"White Teddy Bear#IllusionTeddyBear::OnKill"
+ein_d02_i,0,0	monster	Blue Teddy Bear	20259,14,3000,5000,"Blue Teddy Bear#IllusionTeddyBear::OnKill"
+ein_d02_i,0,0	monster	Hardworking Pitman	20261,19,5000
+ein_d02_i,0,0	monster	Vicious Soul Fragment	20262,11,5000
+ein_d02_i,0,0	monster	Haunted Obsidian	20263,20,5000
+ein_d02_i,0,0	boss_monster	Shining Teddy Bear	20260,1,7200000,600000,1
+
+//ein_d02_i,0,0	monster	Hardworking Pitman	20261,19,3000,5000,"Hardworking Pitman#IllusionTeddyBear::OnKill"
+//ein_d02_i,0,0	monster	Vicious Soul Fragment	20262,11,3000,5000,"Vicious Soul Fragment#IllusionTeddyBear::OnKill"
+//ein_d02_i,0,0	monster	Haunted Obsidian	20263,20,3000,5000,"Haunted Obsidian#IllusionTeddyBear::OnKill"
+
+//====================ILLUSION LAUNDA========================\\
+com_d02_i,0,0	monster	Ancient Tri Joint	20270,18,5000
+com_d02_i,0,0	monster	Ancient Stalactic Golem	20271,28,5000
+com_d02_i,0,0	monster	Ancient Megalith	20272,20,5000
+com_d02_i,0,0	monster	Ancient Stone Shooter	20274,38,5000
+com_d02_i,0,0	monster	Ancient Wootan Shooter	20275,22,5000
+com_d02_i,0,0	monster	Ancient Wootan Fighter	20276,32,5000
+com_d02_i,0,0	boss_monster	Ancient Wootan Defender	20277,1,7200000,600000,1
+
+//====================ILLUSION LABYRINTH========================\\
+
+prt_mz03_i,0,0,0,0	boss_monster	Chaotic Baphomet	20520,1,7200000,600000,1
+prt_mz03_i,0,0	monster	Chaotic Andrea	20521,1,5000
+prt_mz03_i,0,0	monster	Chaotic Anes	20522,1,5000
+prt_mz03_i,0,0	monster	Chaotic Silvano	20523,1,5000
+prt_mz03_i,0,0	monster	Chaotic Cecilia	20524,1,5000
+prt_mz03_i,0,0	monster	Chaotic Baphomet Jr.	20525,30,5000
+prt_mz03_i,0,0	monster	Chaotic Side Winder	20526,16,5000
+prt_mz03_i,0,0	monster	Chaotic Hunter Fly	20527,21,5000
+prt_mz03_i,0,0	monster	Chaotic Mantis	20528,20,5000
+prt_mz03_i,0,0	monster	Chaotic Ghostring	20529,2,5000
+prt_mz03_i,0,0	monster	Chaotic Killer Mantis	20530,10,5000
+prt_mz03_i,0,0	monster	Chaotic Poporing	20531,33,5000
+prt_mz03_i,0,0	monster	Chaotic Stem Worm	20532,16,5000

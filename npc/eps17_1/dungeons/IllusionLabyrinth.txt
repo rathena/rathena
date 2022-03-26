@@ -1,0 +1,902 @@
+//===== rAthena Script =======================================
+
+// warp point: prt_fild01,136,364
+
+// Signboard
+prt_fild01,139,369,5	script	Signboard#illusionlabyrinth	837,{
+	mes "This labyrinth are Baphomet and Chaotic Baphomet lairs. You can get lost easily in this labyrinth.";
+	close;
+}
+
+prt_maze01,97,26,5	script	Erene#illusionlabyrinth	10337,12,12,{
+	switch(illusionlabyrinth){
+		case 1:
+			mes "[Erene]";
+			mes "Now please hurry find ^ff0000Licheniyes^000000, she's at ^33CC33Prontera^000000 near the Chruch.";
+			mes "And by the way, my name is ^ff0000Erene^000000.";
+			close;
+		case 2:
+			mes "[Erene]";
+			mes "You bring Licheniyes here! Talk to her quickly.";
+			close;
+		case 4:
+			mes "[Erene]";
+			mes "Thank you for your help "+strcharinfo(0)+".";
+			next;
+			mes "[Erene]";
+			mes "Now my friends knows that we should never go inside the labyrinth ever again.";
+			next;
+			mes "[Erene]";
+			mes "And now, you will only need";
+			mes "10 pc of ^000000<ITEM>" +getitemname(7539)+ "<INFO>" +7539+"</INFO></ITEM> to go inside the labyrinth again.";
+			getitem 25271, 1;
+			illusionlabyrinth = 5;
+			next;
+			mes "[Erene]";
+			mes "And one more thing you should know, talk to any of my friends.";
+			mes "They will give you chalenge to hunt monster inside the labyrinth for a prize.";
+			next;
+			mes "[Erene]";
+			mes "And try to talk to our guardian, ^0000ffLicheniyes^000000 outside this labyrinth, she can craft you special equipment.";
+			close;
+		case 5:
+			mes "[Erene]";
+			mes "And now, you will only need";
+			mes "10 pc of ^000000<ITEM>" +getitemname(7539)+ "<INFO>" +7539+"</INFO></ITEM> to go inside the labyrinth again.";
+			next;
+			mes "[Erene]";
+			mes "And one more thing you should know, talk to any of my friends.";
+			mes "They will give you chalenge to hunt monster inside the labyrinth for a prize.";
+			next;
+			mes "[Erene]";
+			mes "And try to talk to our guardian, ^0000ffLicheniyes^000000 outside this labyrinth, she can craft you special equipment.";
+			close;
+		default:
+			mes "[Erene]";
+			mes "Hi there...";
+			mes "I need your immediate help.";
+			next;
+			mes "[Erene]";
+			mes "My friends are lost inside the ^33CC33Illusion Labyrinth^000000, and they badly injured.";
+			next;
+			mes "[Erene]";
+			mes "I need to stay here to guard the portal, can you help me to get ^ff0000Licheniyes^000000 to come here?";
+			next;
+			mes "[Erene]";
+			mes "We need her skill to Heal all of my friends inside.";
+			next;
+			switch(select("I'm sorry but I can't:Sure I'll help")){
+				case 1:
+					mes "[Erene]";
+					mes "Please find someone to help me.";
+					close;
+				case 2:
+					break;
+			}
+			illusionlabyrinth = 1;
+			showevent QTYPE_NONE, 0;
+			mes "[Erene]";
+			mes "Thank you. Now please hurry find ^ff0000Licheniyes^000000, she's at ^33CC33Prontera^000000 near the Chruch.";
+			mes "And by the way, my name is ^ff0000Erene^000000.";
+			close;
+	}
+	
+	OnInit:
+		end;
+		
+	OnTouch:
+		OnPCLoadMapEvent:
+			if(strcharinfo(3) == strnpcinfo(4)){
+				specialeffect 687,AREA,"Ice#illusionlabyrinth";
+				specialeffect 74,AREA,"Ice#illusionlabyrinth";
+				if(illusionlabyrinth < 2){
+					showevent 1, 1;
+				}
+				if(illusionlabyrinth == 2){
+					classchange( 4_geffen_09, "Licheniyes#illusionlabyrinth_1", bc_self );
+					showevent QTYPE_NONE, 0;
+				}
+				
+				if(illusionlabyrinth == 3){
+					classchange( HIDDEN_WARP_NPC, "Erene#illusionlabyrinth", bc_self );
+					classchange( 4_geffen_09, "Licheniyes#illusionlabyrinth_1", bc_self );
+					showevent QTYPE_NONE, 0;
+				}
+				
+				if(illusionlabyrinth >= 4){
+					showevent QTYPE_NONE, 1;
+					classchange( 10337, "Erene#illusionlabyrinth", bc_self );
+					classchange( 10310, "Andrea#illusionlabyrinth", bc_self );
+					classchange( 10316, "Cecilia#illusionlabyrinth", bc_self );
+					classchange( 10314, "Silvano#illusionlabyrinth", bc_self );
+				}
+			}
+			end;
+}
+
+prt_maze01,97,20,5	script	Andrea#illusionlabyrinth	HIDDEN_WARP_NPC,{
+mes "[ Andrea ]";
+mes "Choose which hunting quest you want to take.";
+mes "Each completed quest will be rewarded with 1 pc of ^ff0000Illusion Stone^000000.";
+next;
+switch(select("Chaotic Side Winder:Chaotic Hunter Fly:Chaotic Mantis:Chaotic Poporing:Chaotic Stem Worm")){
+	case 1:
+		if(checkquest(95034,PLAYTIME) == 0 || checkquest(95034,PLAYTIME) == 1){
+			mes "[ Andrea ]";
+			mes "You need to wait before you can take this quest.";
+			close;
+		}
+		erasequest 95034;
+		setquest 95034;
+		mes "[ Andrea ]";
+		mes "Great!";
+		mes "Now hunt 30 ^ff0000Chaotic Side Winder^000000.";
+		mes "Report to Cecilia when you done hunting.";
+		close;
+	case 2:
+		if(checkquest(95035,PLAYTIME) == 0 || checkquest(95035,PLAYTIME) == 1){
+			mes "[ Andrea ]";
+			mes "You need to wait before you can take this quest.";
+			close;
+		}
+		erasequest 95035;
+		setquest 95035;
+		mes "[ Andrea ]";
+		mes "Great!";
+		mes "Now hunt 30 ^ff0000Chaotic Hunter Fly^000000.";
+		mes "Report to Cecilia when you done hunting.";
+		close;
+	case 3:
+		if(checkquest(95036,PLAYTIME) == 0 || checkquest(95036,PLAYTIME) == 1){
+			mes "[ Andrea ]";
+			mes "You need to wait before you can take this quest.";
+			close;
+		}
+		erasequest 95036;
+		setquest 95036;
+		mes "[ Andrea ]";
+		mes "Great!";
+		mes "Now hunt 30 ^ff0000Chaotic Mantis^000000.";
+		mes "Report to Cecilia when you done hunting.";
+		close;
+	case 4:
+		if(checkquest(95037,PLAYTIME) == 0 || checkquest(95037,PLAYTIME) == 1){
+			mes "[ Andrea ]";
+			mes "You need to wait before you can take this quest.";
+			close;
+		}
+		erasequest 95037;
+		setquest 95037;
+		mes "[ Andrea ]";
+		mes "Great!";
+		mes "Now hunt 30 ^ff0000Chaotic Poporing^000000.";
+		mes "Report to Cecilia when you done hunting.";
+		close;
+	case 5:
+		if(checkquest(95038,PLAYTIME) == 0 || checkquest(95038,PLAYTIME) == 1){
+			mes "[ Andrea ]";
+			mes "You need to wait before you can take this quest.";
+			close;
+		}
+		erasequest 95038;
+		setquest 95038;
+		mes "[ Andrea ]";
+		mes "Great!";
+		mes "Now hunt 30 ^ff0000Chaotic Stem Worm^000000.";
+		mes "Report to Cecilia when you done hunting.";
+		close;
+}
+close;
+}
+
+prt_maze01,101,20,1	script	Cecilia#illusionlabyrinth	HIDDEN_WARP_NPC,{
+mes "[ Cecilia ]";
+mes "Which hunting quest did you wanna claim for?";
+next;
+switch(select("Chaotic Side Winder:Chaotic Hunter Fly:Chaotic Mantis:Chaotic Poporing:Chaotic Stem Worm")){
+	case 1:
+		if(checkquest(95034,HUNTING) < 2){
+			mes "[ Cecilia ]";
+			mes "You have not completed your hunting quest yet.";
+			close;
+		}
+		mes "[ Cecilia ]";
+		mes "Good job!";
+		mes "Please take this 1 pc of ^ff0000Illusion Stone^000000 as reward.";
+		getitem 25271, 1;
+		completequest 95034;
+		close;
+	case 2:
+		if(checkquest(95035,HUNTING) < 2){
+			mes "[ Cecilia ]";
+			mes "You have not completed your hunting quest yet.";
+			close;
+		}
+		mes "[ Cecilia ]";
+		mes "Good job!";
+		mes "Please take this 1 pc of ^ff0000Illusion Stone^000000 as reward.";
+		getitem 25271, 1;
+		completequest 95035;
+		close;
+	case 3:
+		if(checkquest(95036,HUNTING) < 2){
+			mes "[ Cecilia ]";
+			mes "You have not completed your hunting quest yet.";
+			close;
+		}
+		mes "[ Cecilia ]";
+		mes "Good job!";
+		mes "Please take this 1 pc of ^ff0000Illusion Stone^000000 as reward.";
+		getitem 25271, 1;
+		completequest 95036;
+		close;
+	case 4:
+		if(checkquest(95037,HUNTING) < 2){
+			mes "[ Cecilia ]";
+			mes "You have not completed your hunting quest yet.";
+			close;
+		}
+		mes "[ Cecilia ]";
+		mes "Good job!";
+		mes "Please take this 1 pc of ^ff0000Illusion Stone^000000 as reward.";
+		getitem 25271, 1;
+		completequest 95037;
+		close;
+	case 5:
+		if(checkquest(95038,HUNTING) < 2){
+			mes "[ Cecilia ]";
+			mes "You have not completed your hunting quest yet.";
+			close;
+		}
+		mes "[ Cecilia ]";
+		mes "Good job!";
+		mes "Please take this 1 pc of ^ff0000Illusion Stone^000000 as reward.";
+		getitem 25271, 1;
+		completequest 95038;
+		close;
+}
+close;
+}
+
+prt_maze01,101,26,3	script	Silvano#illusionlabyrinth	HIDDEN_WARP_NPC,{
+	mes "[Silvano]";
+	mes "Try talk to my friend there, he got something for you.";
+	close;
+}
+
+prt_maze01,99,23,5	script	Ice#illusionlabyrinth	111,{
+	switch(illusionlabyrinth){
+		case 3:
+			mes "This ice crystal with teleport you into Illusion Labyrinth.";
+			mes "^ff0000Every teleport you'll need";
+			mes "25 pc of ^000000<ITEM>" +getitemname(7539)+ "<INFO>" +7539+"</INFO></ITEM>";
+			next;
+			switch(select("Stay here:Go inside the labyrinth")){
+				case 1:
+					mes "You choose to stay.";
+					close;
+				case 2:
+					break;
+			}
+			if(countitem(7539) < 25){
+				mes "^ff0000You can't go inside the labyrinth, you need 25 pc of ^000000<ITEM>" +getitemname(7539)+ "<INFO>" +7539+"</INFO></ITEM>";
+				close;
+			}
+			delitem 7539, 25;
+			sleep2 500;
+			warp "prt_mz03_i",99,31;
+			close;
+		case 4:
+		case 5:
+			mes "This ice crystal with teleport you into Illusion Labyrinth.";
+			mes "^ff0000Every teleport you'll need";
+			mes "10 pc of ^000000<ITEM>" +getitemname(7539)+ "<INFO>" +7539+"</INFO></ITEM>";
+			next;
+			switch(select("Stay here:Go inside the labyrinth")){
+				case 1:
+					mes "You choose to stay.";
+					close;
+				case 2:
+					break;
+			}
+			if(countitem(7539) < 10){
+				mes "^ff0000You can't go inside the labyrinth, you need 10 pc of ^000000<ITEM>" +getitemname(7539)+ "<INFO>" +7539+"</INFO></ITEM>";
+				close;
+			}
+			delitem 7539, 10;
+			sleep2 500;
+			warp "prt_mz03_i",99,31;
+			close;
+		default:
+			mes "Ice Crystal";
+			close;
+	}
+	close;
+}
+
+//viewpoint
+prt_mz03_i,99,28,0	script	Guide#illusionlabyrinth	HIDDEN_WARP_NPC,9,9,{
+	close;
+	
+	OnInit:
+		end;
+		
+	OnTouch:
+		OnPCLoadMapEvent:
+			if(strcharinfo(3) == strnpcinfo(4)){
+				if(illusionlabyrinth_cecilia == 0){
+					viewpoint 1,182,25,1,0xFFFF00;
+				}
+				if(illusionlabyrinth_andrea == 0){
+					viewpoint 1,135,68,2,0xFFFF00;
+				}
+				if(illusionlabyrinth_anes == 0){
+					viewpoint 1,12,20,3,0xFFFF00;
+				}
+				if(illusionlabyrinth_silvano == 0){
+					viewpoint 1,106,103,4,0xFFFF00;
+				}
+			}
+			end;
+}
+
+prontera,156,191,0	script	Guide#illusionlabyrinth_1	HIDDEN_WARP_NPC,3,3,{
+		close;
+	
+	OnInit:
+		end;
+		
+	OnTouch:
+		OnPCLoadMapEvent:
+			if(strcharinfo(3) == strnpcinfo(4)){
+				if(illusionlabyrinth == 1){
+					viewpoint 1,214,323,1,0xFFFF00;
+				}
+			}
+			end;
+}
+
+prt_maze01,101,26,3	script	Licheniyes#illusionlabyrinth_1	HIDDEN_WARP_NPC,{
+	switch(illusionlabyrinth){
+		case 2:
+			mes "[Licheniyes]";
+			mes "What takes you so long? We must be hurry.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Sorry, I'll try come as fast as I can.";
+			next;
+			mes "[Licheniyes]";
+			mes "That's fine, no worriest, but we must be fast.";
+			next;
+			mes "[Licheniyes]";
+			mes "Now listen carefully!";
+			mes "I will give you a spell that allow you to heal all of Erene's friends inside the labyrinth.";
+			next;
+			mes "[Licheniyes]";
+			mes "You just need to find them one by one then talk to them, then cast the spell without any interuption.";
+			next;
+			switch(select("That's sound not that hard")){
+				case 1:
+					break;
+			}
+			mes "[Licheniyes]";
+			mes "Don't say that, you must be careful while inside the labyrinth.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "You are right.";
+			next;
+			mes "[Licheniyes]";
+			mes "Now get yourself ready, then try to touch the Ice, it will teleport you inside the Illusion Labyrinth.";
+			next;
+			illusionlabyrinth = 3;
+			mes "[Licheniyes]";
+			mes "And one more thing, you'll need";
+			mes "25pc of <ITEM>" +getitemname(7539)+ "<INFO>" +7539+"</INFO></ITEM>";
+			mes "everytime you wan't to go inside. But, after you bring back all of ^ff0000Erene^000000 friends, I can help you lowering the number. Be careful!";
+			close;
+		case 3:
+			if(illusionlabyrinth_saved > 3){
+				mes "[Licheniyes]";
+				mes "You did it! You save them all!";
+				next;
+				mes "[Licheniyes]";
+				mes "I will sent you back outside while I let Erene and friends to ptotect this ice crystal portal.";
+				next;
+				illusionlabyrinth = 4;
+				warp "prt_fild01",136,364;
+				close;
+			}
+			mes "[Licheniyes]";
+			mes "Now heal all four of ^ff0000Erene^000000 friends inside the labyrinth.";
+			mes "Please be careful. I will waiting here.";
+			close;
+		default:
+			mes "[Licheniyes]";
+			close;
+	}
+	close;
+}	
+
+// Illusion Labyrinth
+prt_mz03_i,182,25,5	script	Cecilia#illusionlabyrinth_1	10317,14,14,{
+	switch(illusionlabyrinth){
+		case 3:
+			mes "You found a body lying on the ground.";
+			next;
+			switch(select("Ignore:Ressurect")){
+				case 1:
+					mes "^0000ffYou ignoring the body.^000000";
+					close;
+				case 2:
+					break;
+			}
+			progressbar "ffff00", 5;
+			illusionlabyrinth_cecilia = 1;
+			illusionlabyrinth_saved += 1;
+			classchange( HIDDEN_WARP_NPC, "Cecilia#illusionlabyrinth_1", bc_self );
+			specialeffect 371,AREA,"Cecilia#illusionlabyrinth_1";
+			showevent QTYPE_NONE, 0;
+			mes "[Cecilia]";
+			mes "^33CC33Thank you for rescuing me.^000000";
+			close;
+		default:
+			mes "[Cecilia]";
+			close;
+	}
+	
+	OnInit:
+		end;
+		
+	OnTouch:
+		OnPCLoadMapEvent:
+			if(strcharinfo(3) == strnpcinfo(4)){
+				if(illusionlabyrinth_cecilia < 1){
+					showevent 1, 1;
+				}
+				if(illusionlabyrinth_cecilia == 1){
+					classchange( HIDDEN_WARP_NPC, "Cecilia#illusionlabyrinth_1", bc_self );
+					showevent QTYPE_NONE, 0;
+				}
+			}
+			end;
+}
+
+prt_mz03_i,106,103,5	script	Silvano#illusionlabyrinth_1	10315,14,14,{
+	switch(illusionlabyrinth){
+		case 3:
+			mes "You found a body lying on the ground.";
+			next;
+			switch(select("Ignore:Ressurect")){
+				case 1:
+					mes "^0000ffYou ignoring the body.^000000";
+					close;
+				case 2:
+					break;
+			}
+			progressbar "ffff00", 5;
+			illusionlabyrinth_silvano = 1;
+			illusionlabyrinth_saved += 1;
+			classchange( HIDDEN_WARP_NPC, "Silvano#illusionlabyrinth_1", bc_self );
+			specialeffect 371,AREA,"Silvano#illusionlabyrinth_1";
+			showevent QTYPE_NONE, 0;
+			mes "[Anes]";
+			mes "^33CC33Thank you for rescuing me.^000000";
+			close;
+		default:
+			mes "[Anes]";
+			close;
+	}
+	
+	OnInit:
+		end;
+		
+	OnTouch:
+		OnPCLoadMapEvent:
+			if(strcharinfo(3) == strnpcinfo(4)){
+				if(illusionlabyrinth_silvano < 1){
+					showevent 1, 1;
+				}
+				if(illusionlabyrinth_silvano == 1){
+					classchange( HIDDEN_WARP_NPC, "Silvano#illusionlabyrinth_1", bc_self );
+					showevent QTYPE_NONE, 0;
+				}
+			}
+			end;
+}
+
+prt_mz03_i,12,20,3	script	Anes#illusionlabyrinth	10313,14,14,{
+	switch(illusionlabyrinth){
+		case 3:
+			mes "You found a body lying on the ground.";
+			next;
+			switch(select("Ignore:Ressurect")){
+				case 1:
+					mes "^0000ffYou ignoring the body.^000000";
+					close;
+				case 2:
+					break;
+			}
+			progressbar "ffff00", 5;
+			illusionlabyrinth_anes = 1;
+			illusionlabyrinth_saved += 1;
+			classchange( HIDDEN_WARP_NPC, "Anes#illusionlabyrinth", bc_self );
+			specialeffect 371,AREA,"Anes#illusionlabyrinth";
+			showevent QTYPE_NONE, 0;
+			mes "[Anes]";
+			mes "^33CC33Thank you for rescuing me.^000000";
+			close;
+		default:
+			mes "[Anes]";
+			close;
+	}
+	
+	OnInit:
+		end;
+		
+	OnTouch:
+		OnPCLoadMapEvent:
+			if(strcharinfo(3) == strnpcinfo(4)){
+				if(illusionlabyrinth_anes < 1){
+					showevent 1, 1;
+				}
+				if(illusionlabyrinth_anes == 1){
+					classchange( HIDDEN_WARP_NPC, "Anes#illusionlabyrinth", bc_self );
+					showevent QTYPE_NONE, 0;
+				}
+			}
+			end;
+}
+
+prt_mz03_i,135,68,3	script	Andrea#illusionlabyrinth_1	10311,14,14,{
+	switch(illusionlabyrinth){
+		case 3:
+			mes "You found a body lying on the ground.";
+			next;
+			switch(select("Ignore:Ressurect")){
+				case 1:
+					mes "^0000ffYou ignoring the body.^000000";
+					close;
+				case 2:
+					break;
+			}
+			progressbar "ffff00", 5;
+			illusionlabyrinth_andrea = 1;
+			illusionlabyrinth_saved += 1;
+			classchange( HIDDEN_WARP_NPC, "Andrea#illusionlabyrinth_1", bc_self );
+			specialeffect 371,AREA,"Andrea#illusionlabyrinth_1";
+			showevent QTYPE_NONE, 0;
+			mes "[Cecilia]";
+			mes "^33CC33Thank you for rescuing me.^000000";
+			close;
+		default:
+			mes "[Cecilia]";
+			close;
+	}
+	
+	OnInit:
+		end;
+		
+	OnTouch:
+		OnPCLoadMapEvent:
+			if(strcharinfo(3) == strnpcinfo(4)){
+				if(illusionlabyrinth_andrea < 1){
+					showevent 1, 1;
+				}
+				if(illusionlabyrinth_andrea == 1){
+					classchange( HIDDEN_WARP_NPC, "Andrea#illusionlabyrinth_1", bc_self );
+					showevent QTYPE_NONE, 0;
+				}
+				end;
+			}
+			end;
+}
+
+prontera,214,323,3	script	Licheniyes#illusionlabyrinth	HIDDEN_WARP_NPC,12,12,{
+	switch(illusionlabyrinth){
+		case 1:
+			mes "["+strcharinfo(0)+"]";
+			mes "Hi Licheniyes, my name is "+strcharinfo(0)+", Erene send me here.";
+			next;
+			mes "[Licheniyes]";
+			mes "Awh, I wonder why she's not coming back since last night.";
+			next;
+			switch(select("She is in trouble and need your help")){
+				case 1:
+					break;
+			}
+			mes "[Licheniyes]";
+			mes "Oh my Lord!";
+			mes "What could possibly happen to her?";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Her friends are injured inside the ^33CC33Illusion Labyrinth^000000.";
+			next;
+			illusionlabyrinth = 2;
+			mes "[Licheniyes]";
+			mes "Dear Lord! Say no more, let's go there...";
+			showevent QTYPE_NONE, 0;
+			classchange( HIDDEN_WARP_NPC, "Licheniyes#illusionlabyrinth", bc_self );
+			close;
+		case 2:
+			mes "[Licheniyes]";
+			mes "Dear Lord! Say no more, let's go to ^ff0000Erene^000000.";
+			classchange( HIDDEN_WARP_NPC, "Licheniyes#illusionlabyrinth", bc_self );
+			close;
+		default:
+			mes "[Licheniyes]";
+			mes "Keep the good work!";
+			close;
+	}
+	
+	OnInit:
+		end;
+		
+	OnTouch:
+		OnPCLoadMapEvent:
+			if(strcharinfo(3) == strnpcinfo(4)){
+				if(illusionlabyrinth == 1){
+					showevent 1, 1;
+					classchange( 4_geffen_09, "Licheniyes#illusionlabyrinth", bc_self );
+				}
+				if(illusionlabyrinth > 1){
+					showevent QTYPE_NONE, 0;
+				}
+				end;
+			}
+	end;			
+}
+
+prt_fild01,141,367,3	script	Licheniyes#illusionlabyrinth_2	HIDDEN_WARP_NPC,14,14,{
+	switch(illusionlabyrinth){
+		case 4:
+			mes "[ Licheniyes ]";
+			mes "You should go inside.";
+			close;
+		case 5:
+			disable_items;
+			mes "[ Licheniyes ]";
+			mes "Thank you for your heroic act before.";
+			mes "I have few rare colletion that can make use even stronger.";
+			next;
+			mes "[ Licheniyes ]";
+			mes "Most item will need everything that dropped from inside the Labyrinth.";
+			next;
+			switch(select("Equipment list:Craft equipment")){
+				case 1:
+					mes "[ Licheniyes ]";
+					mes "^000000<ITEM>" +getitemname(19428)+ "<INFO>" +19428+"</INFO></ITEM>";
+					mes "^000000<ITEM>" +getitemname(20948)+ "<INFO>" +20948+"</INFO></ITEM>";
+					mes "^000000<ITEM>" +getitemname(32238)+ "<INFO>" +32238+"</INFO></ITEM>";
+					mes "^000000<ITEM>" +getitemname(32239)+ "<INFO>" +32239+"</INFO></ITEM>";
+					mes "^000000<ITEM>" +getitemname(28762)+ "<INFO>" +28762+"</INFO></ITEM>";
+					mes "^000000<ITEM>" +getitemname(21050)+ "<INFO>" +21050+"</INFO></ITEM>";
+					mes "^000000<ITEM>" +getitemname(32301)+ "<INFO>" +32301+"</INFO></ITEM>";
+					mes "^000000<ITEM>" +getitemname(28254)+ "<INFO>" +28254+"</INFO></ITEM>";
+					close;
+				case 2:
+					break;
+			}
+			next;
+			mes "[ Licheniyes ]";
+			mes "Which one you want to create?";
+			next;
+			switch(select("Illusion Morpheus's Hood[1]","Illusion Morpheus's Shawl[1]","Illusion Morpheus's Ring[1]","Illusion Morpheus's Bracelet[1]","Illusion Butcher[2]","Illusion Tae Goo Lyeon[2]","Illusion Gold Lux[2]","Illusion Bazerald[2]","Nothing")){
+				case 1:
+					set .@location, EQI_HEAD_TOP;
+					.@refine = getequiprefinerycnt(.@location);
+					.@equip_id = getequipid(.@location);
+					.@equip_id_req = 5126;
+					.@req_item_1 = 25271;
+					.@req_item_2 = 25775;
+					.@req_item_3 = 25783;
+					.@amount_req_item_1 = 100;
+					.@amount_req_item_2 = 100;
+					.@amount_req_item_3 = 100;
+					.@req_item_4 = 0;
+					.@reward = 19428;
+					goto craft;
+				case 2:
+					set .@location, EQI_GARMENT;
+					.@refine = getequiprefinerycnt(.@location);
+					.@equip_id = getequipid(.@location);
+					.@equip_id_req = 2518;
+					.@req_item_1 = 25271;
+					.@req_item_2 = 25778;
+					.@req_item_3 = 25782;
+					.@req_item_4 = 0;
+					.@amount_req_item_1 = 100;
+					.@amount_req_item_2 = 100;
+					.@amount_req_item_3 = 50;
+					.@reward = 20948;
+					goto craft;
+				case 3:
+					set .@location, EQI_ACC_R;
+					.@refine = getequiprefinerycnt(.@location);
+					.@equip_id = getequipid(.@location);
+					.@equip_id_req = 2648;
+					.@req_item_1 = 25271;
+					.@req_item_2 = 25776;
+					.@req_item_3 = 25781;
+					.@req_item_4 = 25780;
+					.@amount_req_item_1 = 100;
+					.@amount_req_item_2 = 100;
+					.@amount_req_item_3 = 50;
+					.@amount_req_item_4 = 15;
+					.@reward = 32238;
+					goto craft;
+				case 4:
+					set .@location, EQI_ACC_R;
+					.@refine = getequiprefinerycnt(.@location);
+					.@equip_id = getequipid(.@location);
+					.@equip_id_req = 2649;
+					.@req_item_1 = 25271;
+					.@req_item_2 = 25777;
+					.@req_item_3 = 25784;
+					.@req_item_4 = 25780;
+					.@amount_req_item_1 = 100;
+					.@amount_req_item_2 = 100;
+					.@amount_req_item_3 = 50;
+					.@amount_req_item_4 = 15;
+					.@reward = 32239;
+					goto craft;
+				case 5:
+					set .@location, EQI_HAND_R;
+					.@refine = getequiprefinerycnt(.@location);
+					.@equip_id = getequipid(.@location);
+					.@equip_id_req = 13159;
+					.@req_item_1 = 25271;
+					.@req_item_2 = 25772;
+					.@req_item_3 = 0;
+					.@req_item_4 = 0;
+					.@amount_req_item_1 = 120;
+					.@amount_req_item_2 = 150;
+					.@reward = 28254;
+					goto craft;
+				case 6:
+					set .@location, EQI_HAND_R;
+					.@refine = getequiprefinerycnt(.@location);
+					.@equip_id = getequipid(.@location);
+					.@equip_id_req = 1181;
+					.@req_item_1 = 25271;
+					.@req_item_2 = 25779;
+					.@req_item_3 = 0;
+					.@req_item_4 = 0;
+					.@amount_req_item_1 = 120;
+					.@amount_req_item_2 = 150;
+					.@reward = 21050;
+					goto craft;
+				case 7:
+					set .@location, EQI_HAND_R;
+					.@refine = getequiprefinerycnt(.@location);
+					.@equip_id = getequipid(.@location);
+					.@equip_id_req = 13106;
+					.@req_item_1 = 25271;
+					.@req_item_2 = 25773;
+					.@req_item_3 = 0;
+					.@req_item_4 = 0;
+					.@amount_req_item_1 = 120;
+					.@amount_req_item_2 = 150;
+					.@reward = 32301;
+					goto craft;
+				case 8:
+					set .@location, EQI_HAND_R;
+					.@refine = getequiprefinerycnt(.@location);
+					.@equip_id = getequipid(.@location);
+					.@equip_id_req = 1231;
+					.@req_item_1 = 25271;
+					.@req_item_2 = 25774;
+					.@req_item_3 = 0;
+					.@req_item_4 = 0;
+					.@amount_req_item_1 = 120;
+					.@amount_req_item_2 = 150;
+					.@reward = 28762;
+					goto craft;
+				case 9:
+					emotion ET_HUK;
+					mes "[ Licheniyes ]";
+					mes "What?";
+					mes "Nothing?";
+					mes "N-o-t-h-i-n-g-???";
+					close;
+			}
+			craft:
+				mes "[ Licheniyes ]";
+				mes "If you want <ITEM>" +getitemname(.@reward)+ "<INFO>" +.@reward+"</INFO></ITEM>";
+				mes "Then you need to bring me something in return.";
+				mes "Nothing free in this world, ahahaha.";
+				next;
+				mes "[ Licheniyes ]";
+				mes "Bring me all of this:";
+				mes " ";
+				mes "( ^009900"+.@equip_id_req+"^000000 ) ^ff0000+9^000000 "+getitemname(.@equip_id_req)+"";
+				mes "( ^009900"+.@req_item_1+"^000000 ) "+.@amount_req_item_1+" pcs of "+getitemname(.@req_item_1)+"";
+				mes "( ^009900"+.@req_item_2+"^000000 ) "+.@amount_req_item_2+" pcs of "+getitemname(.@req_item_2)+"";
+				if(.@req_item_3 > 0){
+					mes "( ^009900"+.@req_item_3+"^000000 ) "+.@amount_req_item_3+" pcs of "+getitemname(.@req_item_3)+"";
+				}
+				if(.@req_item_4 > 0){
+					mes "( ^009900"+.@req_item_4+"^000000 ) "+.@amount_req_item_4+" pcs of "+getitemname(.@req_item_4)+"";
+				}
+				next;
+				mes "[ Licheniyes ]";
+				mes "You can get some of the items from this dungeon.";
+				mes "And looks like you are already prepared.";
+				mes "Don't forget, you need to wear the equip that you want to exchange.";
+				next;
+				switch(select("Let's trade!","I'm not prepared yet.")){
+					case 1:
+						break;
+					case 2:
+						mes "[ Licheniyes ]";
+						mes "Ow... How sad.";
+						mes "Please come back when you are ready!";
+						close;
+				}
+				.@refine = getequiprefinerycnt(.@location);
+				.@equip_id = getequipid(.@location);
+				if(.@equip_id_req != .@equip_id || .@refine < 9){
+					mes "[ Licheniyes ]";
+					mes "I want ^ff0000+9^000000 "+getitemname(.@equip_id_req)+".";
+					mes "I will not accept the others.";
+					close;
+				}
+				if(.@req_item_4 == 0){
+					if(countitem(.@req_item_1) < .@amount_req_item_1 || countitem(.@req_item_2) < .@amount_req_item_2 || countitem(.@req_item_3) < .@amount_req_item_3 ){
+						mes "[ Licheniyes ]";
+						mes "Hahaha...";
+						mes "You don't bring enough items.";
+						mes "Go get me some!";
+						close;
+					}
+				}
+				if(.@req_item_3 == 0){
+					if(countitem(.@req_item_1) < .@amount_req_item_1 || countitem(.@req_item_2) < .@amount_req_item_2){
+						mes "[ Licheniyes ]";
+						mes "Hahaha...";
+						mes "You don't bring enough items.";
+						mes "Go get me some!";
+						close;
+					}
+				}
+				if(countitem(.@req_item_1) < .@amount_req_item_1 || countitem(.@req_item_2) < .@amount_req_item_2 || countitem(.@req_item_3) < .@amount_req_item_3 || countitem(.@req_item_4) < .@amount_req_item_4){
+						mes "[ Licheniyes ]";
+						mes "Hahaha...";
+						mes "You don't bring enough items.";
+						mes "Go get me some!";
+						close;
+					}
+				emotion ET_SMILE;
+				specialeffect2 EF_PHARMACY_OK;
+				delequip .@location;
+				delitem .@req_item_1, .@amount_req_item_1;
+				delitem .@req_item_2, .@amount_req_item_2;
+				if(.@req_item_3 > 0){
+					delitem .@req_item_3, .@amount_req_item_3;
+				}
+				if(.@req_item_4 > 0){
+					delitem .@req_item_4, .@amount_req_item_4;
+				}
+				getitem .@reward, 1;
+				mes "[ Licheniyes ]";
+				mes "OK, that's what you came here for!";
+				mes "Enjoy your new toy!";
+				mes "Take a good care of it.";
+				close;
+		default:
+			mes "[Licheniyes]";
+			close;
+	}
+	
+	OnInit:
+		end;
+		
+	OnTouch:
+		OnPCLoadMapEvent:
+			if(strcharinfo(3) == strnpcinfo(4)){
+				if(illusionlabyrinth >= 4){
+					showevent QTYPE_QUEST, 0;
+					classchange( 4_geffen_09, "Licheniyes#illusionlabyrinth_2", bc_self );
+				}
+			}
+			end;
+}

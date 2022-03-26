@@ -1,0 +1,117 @@
+//===== rAthena Script =======================================
+
+// 3rd Floor No.01	-------------------------------------------------------------
+prt_mz03_i,22,194,0	warp	illmazewarp5301	1,1,prt_mz03_i,175,48	/*To No.3-20*/
+prt_mz03_i,5,186,0	warp	illmazewarp5302	1,1,prt_mz03_i,151,134	/*To No.3-9*/
+//3rd Floor No.02
+prt_mz03_i,58,194,0	script	#illmazewarp5303	45,1,1,{
+	switch(rand(4)) {
+		case 0: warp "prt_mz03_i",98,151; end;	/*To No.3-8*/
+		case 1: warp "prt_mz03_i",137,128; end;	/*To No.3-9*/
+		case 2: warp "prt_mz03_i",14,71; end;	/*To No.3-16*/
+		case 3: warp "prt_mz03_i",54,8; end;	/*To No.3-22*/
+	}
+}
+// 3rd Floor No.03
+prt_mz03_i,102,165,0	warp	illmazewarp5304	1,1,prt_mz03_i,137,71	/*To No.3-19*/
+prt_mz03_i,85,174,0	warp	illmazewarp5305	1,1,prt_mz03_i,14,47	/*To No.3-16*/
+// 3rd Floor No.04
+prt_mz03_i,154,181,0	warp	illmazewarp5306	1,1,prt_mz03_i,139,48	/*To No.3-19*/
+prt_mz03_i,125,171,0	warp	illmazewarp5307	1,1,prt_mz03_i,105,111	/*To No.3-13*/
+// 3rd Floor No.05
+prt_mz03_i,175,165,0	warp	illmazewarp5308	1,1,prt_mz03_i,71,12	/*To No.3-22*/
+prt_mz03_i,194,175,0	warp	illmazewarp5309	1,1,prt_mz03_i,191,139	/*To No.3-10*/
+// 3rd Floor No.06
+prt_mz03_i,18,154,0	warp	illmazewarp5310	1,1,prt_mz03_i,48,21	/*To No.3-22*/
+prt_mz03_i,23,125,0	warp	illmazewarp5311	1,1,prt_mz03_i,177,71	/*To No.3-20*/
+prt_mz03_i,5,140,0	warp	illmazewarp5312	1,1,prt_mz03_i,111,56	/*To No.3-18*/
+// 3rd Floor No.07
+prt_mz03_i,54,154,0	warp	illmazewarp5313	1,1,prt_mz03_i,142,111	/*To No.3-14*/
+prt_mz03_i,63,125,0	warp	illmazewarp5314	1,1,prt_mz03_i,88,97	/*To No.3-13*/
+// 3rd Floor No.08
+prt_mz03_i,98,154,0	warp	illmazewarp5315	1,1,prt_mz03_i,99,31	/*To No.3-23*/
+prt_mz03_i,114,145,0	warp	illmazewarp5316	1,1,prt_mz03_i,168,22	/*To No.3-25*/
+prt_mz03_i,85,146,0	warp	illmazewarp5317	1,1,prt_mz03_i,22,88	/*To No.3-11*/
+// 3rd Floor No.09
+prt_mz03_i,137,125,0	warp	illmazewarp5318	1,1,prt_mz03_i,71,71	/*To No.3-17*/
+prt_mz03_i,154,134,0	warp	illmazewarp5319	1,1,prt_mz03_i,8,186	/*To No.3-1*/
+// 3rd Floor No.10
+prt_mz03_i,194,139,0	warp	illmazewarp5320	1,1,prt_mz03_i,191,175	/*To No.3-5*/
+prt_mz03_i,166,139,0	warp	illmazewarp5321	1,1,prt_mz03_i,63,88	/*To No.3-12*/
+// 3rd Floor No.11
+prt_mz03_i,17,114,0	warp	illmazewarp5322	1,1,prt_mz03_i,128,105	/*To No.3-14*/
+prt_mz03_i,22,85,0	warp	illmazewarp5323	1,1,prt_mz03_i,88,146	/*To No.3-8*/
+// 3rd Floor No.12
+prt_mz03_i,63,114,0	warp	illmazewarp5324	1,1,prt_mz03_i,14,71	/*To No.3-16*/
+prt_mz03_i,63,85,0	warp	illmazewarp5325	1,1,prt_mz03_i,169,139	/*To No.3-10*/
+prt_mz03_i,74,97,0	warp	illmazewarp5326	1,1,prt_mz03_i,54,8	/*To No.3-22*/
+prt_mz03_i,45,104,0	warp	illmazewarp5327	1,1,prt_mz03_i,96,48	/*To No.3-18*/
+// 3rd Floor No.13
+prt_mz03_i,105,114,0	warp	illmazewarp5328	1,1,prt_mz03_i,128,171	/*To No.3-4*/
+prt_mz03_i,114,95,0	warp	illmazewarp5329	1,1,prt_mz03_i,176,8	/*To No.3-25*/
+prt_mz03_i,85,97,0	warp	illmazewarp5330	1,1,prt_mz03_i,63,128	/*To No.3-7*/
+// 3rd Floor No.14
+prt_mz03_i,142,114,0	warp	illmazewarp5331	1,1,prt_mz03_i,54,151	/*To No.3-7*/
+prt_mz03_i,125,105,0	warp	illmazewarp5332	1,1,prt_mz03_i,58,191	/*To No.3-2*/
+// 3rd Floor No.15
+prt_mz03_i,182,85,0	warp	illmazewarp5333	1,1,prt_mz03_i,178,67
+prt_mz03_i,194,94,0	warp	illmazewarp5334	1,1,prt_mz03_i,151,22	/*To No.3-24*/
+prt_mz03_i,168,94,0	warp	illmazewarp5335	1,1,prt_mz03_i,191,54	/*To No.3-20*/
+// 3rd Floor No.16
+prt_mz03_i,14,74,0	warp	illmazewarp5336	1,1,prt_mz03_i,63,111	/*To No.3-12*/
+prt_mz03_i,14,45,0	warp	illmazewarp5337	1,1,prt_mz03_i,88,174	/*To No.3-3*/
+prt_mz03_i,5,58,0	warp	illmazewarp5338	1,1,prt_mz03_i,191,15	/*To No.3-25*/
+// 3rd Floor No.17
+prt_mz03_i,74,74,0	script	#illmazewarp5339	45,1,1,{
+	switch(rand(4)) {
+		case 0: warp "prt_mz03_i",98,151; end;	/*To No.3-8*/
+		case 1: warp "prt_mz03_i",137,128; end;	/*To No.3-9*/
+		case 2: warp "prt_mz03_i",14,71; end;	/*To No.3-16*/
+		case 3: warp "prt_mz03_i",54,8; end;	/*To No.3-22*/
+	}
+}
+prt_mz03_i,52,45,0	warp	illmazewarp5340	1,1,prt_mz03_i,16,31	/*To No.3-21*/
+// 3rd Floor No.18
+prt_mz03_i,104,74,0	warp	illmazewarp5341	1,1,prt_mz03_i,111,22	/*To No.3-23*/
+prt_mz03_i,96,45,0	warp	illmazewarp5342	1,1,prt_mz03_i,48,104	/*To No.3-12*/
+prt_mz03_i,114,56,0	warp	illmazewarp5343	1,1,prt_mz03_i,8,140	/*To No.3-6*/
+prt_mz03_i,85,56,0	warp	illmazewarp5344	1,1,prt_mz03_i,176,31	/*To No.3-25*/
+// 3rd Floor No.19
+prt_mz03_i,137,74,0	warp	illmazewarp5345	1,1,prt_mz03_i,102,168	/*To No.3-3*/
+prt_mz03_i,139,45,0	script	#illmazewarp5346	45,1,1,{
+	switch(rand(4)) {
+		case 0: warp "prt_mz03_i",98,151; end;	/*To No.3-8*/
+		case 1: warp "prt_mz03_i",137,128; end;	/*To No.3-9*/
+		case 2: warp "prt_mz03_i",14,71; end;	/*To No.3-16*/
+		case 3: warp "prt_mz03_i",54,8; end;	/*To No.3-22*/
+	}
+}
+// 3rd Floor No.20
+prt_mz03_i,177,74,0	warp	illmazewarp5347	1,1,prt_mz03_i,23,128	/*To No.3-6*/
+prt_mz03_i,175,45,0	warp	illmazewarp5348	1,1,prt_mz03_i,22,191	/*To No.3-1*/
+prt_mz03_i,194,54,0	warp	illmazewarp5349	1,1,prt_mz03_i,171,94	/*To No.3-15*/
+// 3rd Floor No.21
+prt_mz03_i,16,34,0	warp	illmazewarp5350	1,1,prt_mz03_i,52,48	/*To No.3-17*/
+prt_mz03_i,23,5,0	warp	illmazewarp5351	1,1,prt_mz03_i,88,13	/*To No.3-23*/
+// 3rd Floor No.22
+prt_mz03_i,54,5,0	warp	illmazewarp5352	1,1,prt_mz03_i,71,97	/*To No.3-12*/
+prt_mz03_i,74,12,0	warp	illmazewarp5353	1,1,prt_mz03_i,175,168	/*To No.3-5*/
+prt_mz03_i,45,21,0	warp	illmazewarp5354	1,1,prt_mz03_i,18,151	/*To No.3-6*/
+// 3rd Floor No.23
+prt_mz03_i,99,34,0	warp	illmazewarp5355	1,1,prt_mz03_i,98,151	/*To No.3-8*/
+prt_mz03_i,114,22,0	warp	illmazewarp5356	1,1,prt_mz03_i,104,71	/*To No.3-18*/
+prt_mz03_i,85,13,0	warp	illmazewarp5357	1,1,prt_mz03_i,23,8	/*To No.3-21*/
+// 3rd Floor No.24
+prt_mz03_i,154,22,0	script	#illmazewarp5358	45,1,1,{
+	switch(rand(4)) {
+		case 0: warp "prt_mz03_i",98,151; end;	/*To No.3-8*/
+		case 1: warp "prt_mz03_i",137,128; end;	/*To No.3-9*/
+		case 2: warp "prt_mz03_i",14,71; end;	/*To No.3-16*/
+		case 3: warp "prt_mz03_i",54,8; end;	/*To No.3-22*/
+	}
+}
+// 3rd Floor No.25
+prt_mz03_i,176,34,0	warp	illmazewarp5359	1,1,prt_mz03_i,88,56	/*To No.3-18*/
+prt_mz03_i,176,5,0	warp	illmazewarp5360	1,1,prt_mz03_i,111,95	/*To No.3-13*/
+prt_mz03_i,194,15,0	warp	illmazewarp5361	1,1,prt_mz03_i,8,58	/*To No.3-16*/
+prt_mz03_i,165,22,0	warp	illmazewarp5362	1,1,prt_mz03_i,111,145	/*To No.3-8*/

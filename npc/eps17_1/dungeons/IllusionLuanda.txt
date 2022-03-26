@@ -1,0 +1,640 @@
+//===== rAthena Script =======================================
+
+//Illusion of Launda
+beach_dun2,248,254,4	script	Mystical Statue#illusionofluanda	4_ENERGY_BLUE,{
+switch(illusionofluanda){
+	case 2:
+		mes "^33cc33[ Mystical Statue ]^000000";
+		mes "^00ccff----------------------------------^000000";
+		mes "Something strange about this statue.";
+		mes "What will you do?";
+		next;
+		switch(select("Touch the statue","Ignore it")) {
+			case 1:
+				if (countitem(7539) < 10){
+					mes "^33cc33[ Mystical Statue ]^000000";
+					mes "^00ccff----------------------------------^000000";
+					mes "It's like nothing happen.";
+					mes "Try bring 10 pcs Poring Coin.";
+					close;
+				}
+				mes "^33cc33[ Mystical Statue ]^000000";
+				mes "^00ccff----------------------------------^000000";
+				mes "You can feel some force pulled you in!";
+				next;
+				delitem 7539, 10;
+				warp "com_d02_i",251,244;
+				close;
+			case 2:
+				mes "^33cc33[ Mystical Statue ]^000000";
+				mes "^00ccff----------------------------------^000000";
+				mes "Nothing happen.";
+				close;
+		}
+	default:
+		mes "^33cc33[ Mystical Statue ]^000000";
+		mes "^00ccff----------------------------------^000000";
+		mes "You seems don't have strength to use this statue.";
+		mes "Try to talk to ^ff0000Luanda Guardian^000000, he is outside this dungeon.";
+		close;
+}
+
+end;
+}
+
+
+com_d02_i,263,73,4	script	Mysterious Crack#illusionofluanda	4_PURPLE_WARP,{
+if($@ancienttaogunka < 1){
+	if (countitem(7300) > 0) {
+		mes "[ Mysterious Crack ]";
+		mes "You feel the presence of magic in this area.";
+		next;
+		switch(select("Perform the ritual","Step away")){
+			case 1:
+				break;
+			case 2:
+				mes "[ Mysterious Crack ]";
+				mes "The magic presence is slowly dissapear.";
+				close;
+		}
+		specialeffect 99;
+		progressbar "ffff00", 10;
+		specialeffect 99;
+		mes "[ Mysterious Crack ]";
+		mes "^3355FFYou rub the Gemstone";
+		mes "so fast and it glowing.";
+		mes "It shine so brightly.^000000";
+		delitem 7300, 1;
+		hideonnpc "Mysterious Crack#illusionofluanda";
+		set $@ancienttaogunka,1;
+		donpcevent "AncientTaoGunkaBroadcast#illusionofluanda::OnStart";
+		close;
+	}
+	mes "[ Mysterious Crack ]";
+	mes "Once you posessed one <ITEM>" +getitemname(7300)+ "<INFO>" +7300+"</INFO></ITEM>, you can perform the ritual to summon the ^ff0000Ancient Tao Gunka^000000.";
+	close;
+}
+end;
+}
+
+//Ancient Tao Gunka
+com_d02_i,227,87,5	script	AncientTaoGunkaBroadcast#illusionofluanda	-1,{
+OnStop:
+	stopnpctimer;
+	end;
+
+OnStart:
+	initnpctimer;
+	end;
+
+OnTimer2000:
+	mapannounce "com_d02_i","Someone performing an ancient ritual...!",bc_map,0xFF6633;
+	end;
+
+OnTimer8000:
+	mapannounce "com_d02_i","Sounds of huge rumbling stone heard!",bc_map,0xFF6633;
+	end;
+
+OnTimer10000:
+	mapannounce "com_d02_i","And the sounds become louder and louder!",bc_map,0xFF6633;
+	end;
+
+OnTimer13000:
+	mapannounce "com_d02_i","The Ancient Tao Gunka appear at left side of ritual sites!",bc_map,0xFF6633;
+	end;
+
+OnTimer15000:
+	stopnpctimer;
+	donpcevent "AncientTaoGunkaSummon#illusionofluanda::OnStart";
+	end;	
+}
+
+com_d02_i,227,87,3	script	AncientTaoGunkaSummon#illusionofluanda	-1,{
+OnStart:
+	monster "com_d02_i",227,87,"Ancient Tao Gunka",20273,1,"AncientTaoGunkaSummon#illusionofluanda::OnMyMobDead";
+	end;
+
+OnStartTimer:
+	Initnpctimer;
+	end;
+
+OnStopTimer:
+	stopnpctimer;
+	end;
+
+OnMyMobDead:
+	mapannounce "com_d02_i","The Ancient Tao Gunka is defeated!",bc_map,0xFF6633;
+	mapannounce "com_d02_i","He will come back for the revenge!",bc_map,0x33FFFF;
+	donpcevent "AncientTaoGunkaSummon#illusionofluanda::OnStartTimer";
+	end;
+
+OnTimer7200000:
+	stopnpctimer;
+	set $@ancienttaogunka,0;
+	hideoffnpc "Mysterious Crack#illusionofluanda";
+	end;
+}
+
+//warp back
+com_d02_i,255,244,0	warp	luandawarp	1,1,beach_dun2,250,244
+
+// Luanda Main Quest
+comodo,171,348,5	script	Luanda Guardian#illusionofluanda	4_M_MOC_SOLDIER,9,9,{
+switch(illusionofluanda){
+	case 1:
+		if( checkquest(95003, HUNTING) < 2 || checkquest(95004, HUNTING) < 2 || checkquest(95005, HUNTING) < 2 || checkquest(95006, HUNTING) < 2 || checkquest(95007, HUNTING) < 2){
+			mes "[ Luanda Guardian ]";
+			mes "Now go inside the normal dungeon and kill 5 of each mobs you can find there, ^ff0000except^000000 Furious Stalactic Golem.";
+			next;
+			mes "[ Luanda Guardian ]";
+			mes "Report to me when you finished.";
+			close;
+		}
+		mes "[ Luanda Guardian ]";
+		mes "Now I can see your true power.";
+		mes "I think you'll be able to survive there.";
+		next;
+		mes "[ Luanda Guardian ]";
+		mes "But don't get cocky there, don't take many monster than you can chew.";
+		next;
+		mes "[ Luanda Guardian ]";
+		mes "Better be save than sorry.";
+		next;
+		completequest 95003;
+		completequest 95004;
+		completequest 95005;
+		completequest 95006;
+		completequest 95007;
+		erasequest 95003;
+		erasequest 95004;
+		erasequest 95005;
+		erasequest 95006;
+		erasequest 95007;
+		illusionofluanda = 2;
+		getitem 7539, 10;
+		mes "[ Luanda Guardian ]";
+		mes "Now take this 10 pcs of ^ff0000Poring Coin^000000, and then on the far north east of the dungeon, you'll find a large statue.";
+		next;
+		mes "[ Luanda Guardian ]";
+		mes "Throw this Poring Coin there and you'll be able to use the statue as warp machine.";
+		mes "Remember, you'll need another 10 pcs of ^ff0000Poring Coin^000000 if you want to go there again.";
+		next;
+		mes "[ Luanda Guardian ]";
+		mes "Goodluck!";
+		close;
+	case 2:
+		mes "[ Luanda Guardian ]";
+		mes "Goodluck!";
+		close;
+	default:
+		mes "[ Luanda Guardian ]";
+		mes "Hi adventurer!";
+		mes "Did you know that something magical appear on this dungeon?";
+		next;
+		emotion ET_HUK,playerattached();
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Not realy.";
+		next;
+		mes "[ Luanda Guardian ]";
+		mes "A new illusion of this dungeon are formed while that thing happened.";
+		next;
+		mes "[ Luanda Guardian ]";
+		mes "New monster that affected by that power become stronger than ever.";
+		mes "But something good is there too, you can get powerful item while you are there.";
+		next;
+		mes "[ Luanda Guardian ]";
+		mes "And if you wanna go to that illusion dungeon, I can show you the way.";
+		mes "But first, I need to give you a simple task to help me understand your power.";
+		next;
+		mes "[ Luanda Guardian ]";
+		mes "So are you up for this chalenge?";
+		next;
+		switch(select("Yes","No")){
+			case 1:
+				break;
+			case 2:
+				mes "[ Luanda Guardian ]";
+				mes "Very well.";
+				mes "I will not force anyone who doesn't want to.";
+				close;
+		}
+		mes "[ Luanda Guardian ]";
+		mes "Good, now go inside the normal dungeon and kill 5 of each mobs you can find there, ^ff0000except^000000 Furious Stalactic Golem.";
+		illusionofluanda = 1;
+		setquest 95003;
+		setquest 95004;
+		setquest 95005;
+		setquest 95006;
+		setquest 95007;
+		next;
+		mes "[ Luanda Guardian ]";
+		mes "Report to me when you finished.";
+		close;
+}
+	end;
+	
+OnTouch:
+{
+	OnPCLoadMapEvent:
+		if(strcharinfo(3) == strnpcinfo(4))
+			if(illusionofluanda > 1){
+				end;
+			}
+		//showevent 1, 1;
+		viewpoint 2,171,348,1,0xFF0000;
+		end;
+}
+}
+
+// Viewpoint at dungeon
+-	script	IllusionOfLuanda#illusionofluanda	-1,{
+	end;
+	
+OnInit:
+	end;
+	
+OnTouch:
+	{
+		OnPCLoadMapEvent:
+			if(strcharinfo(3) == strnpcinfo(4))
+			if(illusionofluanda < 1){
+				end;
+			}
+			viewpoint 1,248,253,1,0xFF0000;
+			end;
+	}
+}
+
+beach_dun2,154,25,0	duplicate(IllusionOfLuanda#illusionofluanda)	#IllusionOfLuanda_Clue1	-1,9,9
+
+// Craft NPC
+com_d02_i,242,255,4	script	Junior#illusionofluanda	4_M_THAIONGBAK,{
+	disable_items;
+	mes "[ Junior ]";
+	mes "Hi there!";
+	mes "What a beautiful day at Luanda.";
+	next;
+	mes "[ Junior ]";
+	mes "Just choose whatever you want to craft.";
+	next;
+	switch(select("Illusion Tablet[2]","Illusion Hunter Bow[2]","Illusion Goibne's Helm[1]","Illusion Goibne's Armor[1]","Illusion Goibne's Greaves[1]","Illusion Goibne's Spaulders[1]")){
+		case 1:
+			set .@location, EQI_HAND_R;
+			.@refine = getequiprefinerycnt(.@location);
+			.@equip_id = getequipid(.@location);
+			.@equip_id_req = 1552;
+			.@req_item_1 = 25271;
+			.@req_item_2 = 25642;
+			.@req_item_3 = 0;
+			.@req_item_4 = 0;
+			.@amount_req_item_1 = 50;
+			.@amount_req_item_2 = 100;
+			.@amount_req_item_3 = 0;
+			.@amount_req_item_4 = 0;
+			.@amount_req_item_5 = 0;
+			.@reward = 28626;
+			goto craft;
+		case 2:
+			set .@location, EQI_HAND_R;
+			.@refine = getequiprefinerycnt(.@location);
+			.@equip_id = getequipid(.@location);
+			.@equip_id_req = 1718;
+			.@req_item_1 = 25271;
+			.@req_item_2 = 25636;
+			.@req_item_3 = 25640;
+			.@req_item_4 = 25637;
+			.@amount_req_item_1 = 80;
+			.@amount_req_item_2 = 50;
+			.@amount_req_item_3 = 50;
+			.@amount_req_item_4 = 50;
+			.@reward = 18174;
+			goto craft;
+		case 3:
+			set .@location, EQI_HEAD_TOP;
+			.@refine = getequiprefinerycnt(.@location);
+			.@equip_id = getequipid(.@location);
+			.@equip_id_req = 5128;
+			.@req_item_1 = 25271;
+			.@req_item_2 = 25634;
+			.@req_item_3 = 25633;
+			.@req_item_4 = 0;
+			.@amount_req_item_1 = 120;
+			.@amount_req_item_2 = 30;
+			.@amount_req_item_3 = 150;
+			.@reward = 19366;
+			goto craft;
+		case 4:
+			set .@location, EQI_ARMOR;
+			.@refine = getequiprefinerycnt(.@location);
+			.@equip_id = getequipid(.@location);
+			.@equip_id_req = 2354;
+			.@req_item_1 = 25271;
+			.@req_item_2 = 25641;
+			.@req_item_3 = 25638;
+			.@req_item_4 = 0;
+			.@amount_req_item_1 = 80;
+			.@amount_req_item_2 = 100;
+			.@amount_req_item_3 = 150;
+			.@reward = 15348;
+			goto craft;
+		case 5:
+			set .@location, EQI_SHOES;
+			.@refine = getequiprefinerycnt(.@location);
+			.@equip_id = getequipid(.@location);
+			.@equip_id_req = 2419;
+			.@req_item_1 = 25271;
+			.@req_item_2 = 25639;
+			.@req_item_3 = 25633;
+			.@req_item_4 = 0;
+			.@amount_req_item_1 = 80;
+			.@amount_req_item_2 = 30;
+			.@amount_req_item_3 = 150;
+			.@reward = 22192;
+			goto craft;
+		case 6:
+			set .@location, EQI_GARMENT;
+			.@refine = getequiprefinerycnt(.@location);
+			.@equip_id = getequipid(.@location);
+			.@equip_id_req = 2520;
+			.@req_item_1 = 25271;
+			.@req_item_2 = 25635;
+			.@req_item_3 = 25638;
+			.@req_item_4 = 0;
+			.@amount_req_item_1 = 120;
+			.@amount_req_item_2 = 100;
+			.@amount_req_item_3 = 150;
+			.@reward = 20923;
+			goto craft;
+	}
+	craft:
+		mes "[ Junior ]";
+		mes "If you want <ITEM>" +getitemname(.@reward)+ "<INFO>" +.@reward+"</INFO></ITEM>";
+		mes "Please bring all this material so I can craft it for you.";
+		next;
+		mes "[ Junior ]";
+		mes "Bring me all of this:";
+		mes " ";
+		mes "( ^009900"+.@equip_id_req+"^000000 ) ^ff0000+9^000000 "+getitemname(.@equip_id_req)+"";
+		mes "( ^009900"+.@req_item_1+"^000000 ) "+.@amount_req_item_1+" pcs of "+getitemname(.@req_item_1)+"";
+		mes "( ^009900"+.@req_item_2+"^000000 ) "+.@amount_req_item_2+" pcs of "+getitemname(.@req_item_2)+"";
+		if(.@req_item_3 > 0){
+			mes "( ^009900"+.@req_item_3+"^000000 ) "+.@amount_req_item_3+" pcs of "+getitemname(.@req_item_3)+"";
+		}
+		if(.@req_item_4 > 0){
+			mes "( ^009900"+.@req_item_4+"^000000 ) "+.@amount_req_item_4+" pcs of "+getitemname(.@req_item_4)+"";
+		}
+		next;
+		mes "[ Junior ]";
+		mes "And looks like you are already prepared.";
+		mes "Don't forget, you need to wear the equip that you want to exchange.";
+		next;
+		switch(select("Let's trade!","I'm not prepared yet.")){
+			case 1:
+				break;
+			case 2:
+				mes "[ Junior ]";
+				mes "Ow... How sad.";
+				mes "Please come back when you are ready!";
+				end;
+		}
+		.@refine = getequiprefinerycnt(.@location);
+		.@equip_id = getequipid(.@location);
+		if(.@equip_id_req != .@equip_id || .@refine < 9){
+			mes "[ Junior ]";
+			mes "I want ^ff0000+9^000000 "+getitemname(.@equip_id_req)+".";
+			mes "Other items will not do.";
+			end;
+		}
+		if(.@req_item_4 > 0){
+			if(countitem(.@req_item_1) < .@amount_req_item_1 || countitem(.@req_item_2) < .@amount_req_item_2 || countitem(.@req_item_3) < .@amount_req_item_3 || countitem(.@req_item_4) < .@amount_req_item_4 ){
+				mes "[ Junior ]";
+				mes "Hahaha...";
+				mes "You don't bring enough items.";
+				mes "Go get me some!";
+				end;
+			}
+		}
+		if(.@req_item_3 > 0){
+			if(countitem(.@req_item_1) < .@amount_req_item_1 || countitem(.@req_item_2) < .@amount_req_item_2 || countitem(.@req_item_3) < .@amount_req_item_3 ){
+				mes "[ Junior ]";
+				mes "Hahaha...";
+				mes "You don't bring enough items.";
+				mes "Go get me some!";
+				end;
+			}
+		}
+		if(.@req_item_3 == 0){
+			if(countitem(.@req_item_1) < .@amount_req_item_1 || countitem(.@req_item_2) < .@amount_req_item_2){
+				mes "[ Junior ]";
+				mes "Hahaha...";
+				mes "You don't bring enough items.";
+				mes "Go get me some!";
+				end;
+			}
+		}
+		
+		emotion ET_SMILE;
+		specialeffect2 EF_PHARMACY_OK;
+		delequip .@location;
+		if(.@req_item_4 > 0){
+			delitem .@req_item_1, .@amount_req_item_1;
+			delitem .@req_item_2, .@amount_req_item_2;
+			delitem .@req_item_3, .@amount_req_item_3;
+			delitem .@req_item_4, .@amount_req_item_4;
+			getitem .@reward, 1;
+			mes "[ Junior ]";
+			mes "OK, that's what you came here for!";
+			mes "Take a good care of it.";
+			end;
+		}
+		if(.@req_item_3 > 0){
+			delitem .@req_item_1, .@amount_req_item_1;
+			delitem .@req_item_2, .@amount_req_item_2;
+			delitem .@req_item_3, .@amount_req_item_3;
+			getitem .@reward, 1;
+			mes "[ Junior ]";
+			mes "OK, that's what you came here for!";
+			mes "Take a good care of it.";
+			end;
+		}
+		if(.@req_item_3 == 0){
+			delitem .@req_item_1, .@amount_req_item_1;
+			delitem .@req_item_2, .@amount_req_item_2;
+			getitem .@reward, 1;
+			mes "[ Junior ]";
+			mes "OK, that's what you came here for!";
+			mes "Take a good care of it.";
+			end;
+		}
+		end;
+}
+
+// Daily Hunting
+com_d02_i,234,266,5	script	Adventurer#illusionofluanda	4_M_ORIENT01,{
+mes "[ Adventurer ]";
+mes "Which hunting quest did you wanna claim for?";
+next;
+switch(select("Ancient Tri Joint","Ancient Stalactic Golem","Ancient Megalith","Ancient Stone Shooter","Ancient Wootan Shooter","Ancient Wootan Fighter")){
+	case 1:
+		if(checkquest(95008,HUNTING) < 2){
+			mes "[ Adventurer ]";
+			mes "You have not completed your hunting quest yet.";
+			close;
+		}
+		mes "[ Adventurer ]";
+		mes "Good job!";
+		mes "Please take this 1 pc of ^ff0000Illusion Stone^000000 as reward.";
+		getitem 25271, 1;
+		completequest 95008;
+		close;
+	case 2:
+		if(checkquest(95009,HUNTING) < 2){
+			mes "[ Adventurer ]";
+			mes "You have not completed your hunting quest yet.";
+			close;
+		}
+		mes "[ Adventurer ]";
+		mes "Good job!";
+		mes "Please take this 1 pc of ^ff0000Illusion Stone^000000 as reward.";
+		getitem 25271, 1;
+		completequest 95009;
+		close;
+	case 3:
+		if(checkquest(95010,HUNTING) < 2){
+			mes "[ Adventurer ]";
+			mes "You have not completed your hunting quest yet.";
+			close;
+		}
+		mes "[ Adventurer ]";
+		mes "Good job!";
+		mes "Please take this 1 pc of ^ff0000Illusion Stone^000000 as reward.";
+		getitem 25271, 1;
+		completequest 95010;
+		close;
+	case 4:
+		if(checkquest(95011,HUNTING) < 2){
+			mes "[ Adventurer ]";
+			mes "You have not completed your hunting quest yet.";
+			close;
+		}
+		mes "[ Adventurer ]";
+		mes "Good job!";
+		mes "Please take this 1 pc of ^ff0000Illusion Stone^000000 as reward.";
+		getitem 25271, 1;
+		completequest 95011;
+		close;
+	case 5:
+		if(checkquest(95012,HUNTING) < 2){
+			mes "[ Adventurer ]";
+			mes "You have not completed your hunting quest yet.";
+			close;
+		}
+		mes "[ Adventurer ]";
+		mes "Good job!";
+		mes "Please take this 1 pc of ^ff0000Illusion Stone^000000 as reward.";
+		getitem 25271, 1;
+		completequest 95012;
+		close;
+	case 6:
+		if(checkquest(95013,HUNTING) < 2){
+			mes "[ Adventurer ]";
+			mes "You have not completed your hunting quest yet.";
+			close;
+		}
+		mes "[ Adventurer ]";
+		mes "Good job!";
+		mes "Please take this 1 pc of ^ff0000Illusion Stone^000000 as reward.";
+		getitem 25271, 1;
+		completequest 95013;
+		close;
+}
+end;
+}
+
+com_d02_i,238,266,3	script	Hunting Board#illusionofluanda	4_BOARD3,{
+mes "[ Hunting Board ]";
+mes "Choose which hunting quest you want to take.";
+mes "Each completed quest will be rewarded with 1 pc of ^ff0000Illusion Stone^000000.";
+next;
+switch(select("Ancient Tri Joint","Ancient Stalactic Golem","Ancient Megalith","Ancient Stone Shooter","Ancient Wootan Shooter","Ancient Wootan Fighter")){
+	case 1:
+		if(checkquest(95008,PLAYTIME) == 0 || checkquest(95008,PLAYTIME) == 1){
+			mes "[ Hunting Board ]";
+			mes "You need to wait before you can take this quest.";
+			close;
+		}
+		erasequest 95008;
+		setquest 95008;
+		mes "[ Hunting Board ]";
+		mes "Great!";
+		mes "Now hunt 30 ^ff0000Ancient Tri Joint^000000.";
+		mes "Report to Adventurer when you done hunting.";
+		close;
+	case 2:
+		if(checkquest(95009,PLAYTIME) == 0 || checkquest(95009,PLAYTIME) == 1){
+			mes "[ Hunting Board ]";
+			mes "You need to wait before you can take this quest.";
+			close;
+		}
+		erasequest 95009;
+		setquest 95009;
+		mes "[ Hunting Board ]";
+		mes "Great!";
+		mes "Now hunt 30 ^ff0000Ancient Stalactic Golem^000000.";
+		mes "Report to Adventurer when you done hunting.";
+		close;
+	case 3:
+		if(checkquest(95010,PLAYTIME) == 0 || checkquest(95010,PLAYTIME) == 1){
+			mes "[ Hunting Board ]";
+			mes "You need to wait before you can take this quest.";
+			close;
+		}
+		erasequest 95010;
+		setquest 95010;
+		mes "[ Hunting Board ]";
+		mes "Great!";
+		mes "Now hunt 30 ^ff0000Ancient Megalith^000000.";
+		mes "Report to Adventurer when you done hunting.";
+		close;
+	case 4:
+		if(checkquest(95011,PLAYTIME) == 0 || checkquest(95011,PLAYTIME) == 1){
+			mes "[ Hunting Board ]";
+			mes "You need to wait before you can take this quest.";
+			close;
+		}
+		erasequest 95011;
+		setquest 95011;
+		mes "[ Hunting Board ]";
+		mes "Great!";
+		mes "Now hunt 30 ^ff0000Ancient Stone Shooter^000000.";
+		mes "Report to Adventurer when you done hunting.";
+		close;
+	case 5:
+		if(checkquest(95012,PLAYTIME) == 0 || checkquest(95012,PLAYTIME) == 1){
+			mes "[ Hunting Board ]";
+			mes "You need to wait before you can take this quest.";
+			close;
+		}
+		erasequest 95012;
+		setquest 95012;
+		mes "[ Hunting Board ]";
+		mes "Great!";
+		mes "Now hunt 30 ^ff0000Ancient Wootan Shooter^000000.";
+		mes "Report to Adventurer when you done hunting.";
+		close;
+	case 6:
+		if(checkquest(95013,PLAYTIME) == 0 || checkquest(95013,PLAYTIME) == 1){
+			mes "[ Hunting Board ]";
+			mes "You need to wait before you can take this quest.";
+			close;
+		}
+		erasequest 95013;
+		setquest 95013;
+		mes "[ Hunting Board ]";
+		mes "Great!";
+		mes "Now hunt 30 ^ff0000Ancient Wootan Fighter^000000.";
+		mes "Report to Adventurer when you done hunting.";
+		close;
+}
+end;
+}

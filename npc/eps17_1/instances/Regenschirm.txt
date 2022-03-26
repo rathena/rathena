@@ -1,0 +1,1290 @@
+//===== rAthena Script =======================================
+//= Episode 17.1 Instance Regenschirm                            =|
+//================================================================|
+//= 51,Regenschirm,7200,300,1@rgsr,127,38 ========================|
+//================================================================|
+
+lighthalzen,55,278,3	script	Rekenber Guard Oscar#171_light	4_M_LGTGUARD,{
+	if(ep_illusion < 11){
+		npctalk "Rekenber Guard : This place is restricted.","",bc_self;
+		end;
+	}
+	switch(ep_illusion){
+		case 11:
+			mes "[ Oscar ]";
+			mes "The entrance for the lab has double locks.";
+			mes "It's closed from the inside.";
+			mes "It will be difficult to get it.";
+			next;
+			mes "[ Oscar ]";
+			mes "I'm not too sure about the locks on the inside, so I don't know yet.";
+			mes "Let's secure 'Regenschirm' and find out.";
+			mes "Are you ready?";
+			next;
+			.@md_name$ = "Regenschirm";
+			.@party_id = getcharid(1);
+			if(!.@party_id){
+				mes "[ Oscar ]";
+				mes "You'll need to create a party to enter adventurer and...";
+				mes "you can't bring anyone other than yourself, it's dangerous inside!";
+				close;
+			}
+			getpartymember .@party_id,3;
+			if($@partymembercount != 1){
+				mes "[ Oscar ]";
+				mes "You can't bring anyone other than yourself, it's dangerous inside!";
+				close;
+			}
+			.@party_name$ = getpartyname(.@party_id);
+			.@s = select((!instance_id(IM_PARTY)?"Generate 'Regenschirm'.":""),(!instance_id(IM_PARTY)?"":"Enter 'Regenschirm'."));
+			switch(.@s){
+				case 1:
+					switch(instance_create(.@md_name$)){
+						case -1:
+							mes "[ Oscar ]";
+							mes "^0000CD"+.@md_name$+" ^000000 - Reservation Failed!";
+							mes "Unknown Error Has Occurred.";
+							end;
+						case -2:
+							mes "[ Oscar ]";
+							mes "- You need a party to enter this memorial dungeon.";
+							end;
+							
+						case -3:
+							mes "[ Oscar ]";
+							mes "It seems you already have an instance. Please cancel it before proceeding.";
+							end;
+							
+						case -4:
+							mes "[ Oscar ]";
+							mes "^0000CD"+.@md_name$+" ^000000 - Reservation Failed!";
+							mes "^0000CD"+.@md_name$+" ^000000 is currently full.";
+							mes "Try to create again later.";
+							end;
+							
+						default:
+							mes "[ Oscar ]";
+							mes "If you're ready, please enter.";
+							mes "The locks on the inside will be handled by Ashley.";
+							end;
+					}
+					
+				case 2:
+					switch(instance_enter(.@md_name$)){
+						case IE_OTHER:
+							mes "An unknown error has occurred.";
+							end;
+							
+						case IE_NOINSTANCE:
+							mes "^ff0000Character doesn't have an instance reserved.^000000";
+							end;
+							
+						case IE_OK:
+							mapannounce "lighthalzen", strcharinfo(0) + " of the party, "+ .@party_name$ +", is entering the " + .@md_name$ + ".", bc_map, "0x00FF99";
+							end;
+					}	
+			}
+			end;
+			
+		case 12:
+			mes "[ Oscar ]";
+			mes "You have a message from Tess back at the Cat on Bullet.";
+			mes "He'll see you soon.";
+			close;
+	}
+	end;	
+		
+OnInit:
+	questinfo(QTYPE_QUEST,QMARK_YELLOW,"ep_illusion == 11");
+	end;
+}
+
+1@rgsr,1,1,0	script	#171_rgsr_init	HIDDEN_WARP_NPC,{
+	OnInstanceInit:
+		'rgsr$ = instance_mapname("1@rgsr");
+		F_InstanceHide("Oscar#171_rgsr",3);
+		F_InstanceHide("Ashley#171_rgsr",3);
+		F_InstanceHide("Access Controller#rgsr_kitchen",3);
+		F_InstanceHide("Researcher#rgsr_ev_1",1);
+		F_InstanceHide("Erst#rgsr_conf",3);
+		F_InstanceHide("Access Controller#rgsr_conf",3);
+		F_InstanceHide("Ashley#rgsr_lab",3);
+		F_InstanceHide("Central Room#rgsr_cen_in",3);
+		F_InstanceHide("Ashley#171_rgsr_cen_in",3);
+		
+		F_InstanceHide("Ashley#171_rgsr_cen",1);
+		F_InstanceHide("Gonie#rgsr_cen_in",1);
+		F_InstanceHide("Erst#rgsr_cen_in",1);
+		
+		F_InstanceHide("Researcher#rgsr_dum_1",3);
+		F_InstanceHide("Researcher#rgsr_dum_2",3);
+		F_InstanceHide("Researcher#rgsr_dum_3",3);
+		F_InstanceHide("Researcher#rgsr_dum_4",3);
+		F_InstanceHide("Researcher#rgsr_dum_5",3);
+		F_InstanceHide("Researcher#rgsr_dum_6",3);
+		F_InstanceHide("Detained Researcher#rgsr_res_1",3);
+		F_InstanceHide("Detained Researcher#rgsr_res_2",3);
+		F_InstanceHide("Detained Researcher#rgsr_res_3",3);
+		
+		F_InstanceHide("Rebellion Crew#rgsr_dum_1",3);
+		F_InstanceHide("Rebellion Crew#rgsr_dum_2",3);
+		F_InstanceHide("Rebellion Crew#rgsr_dum_3",3);
+		
+		F_InstanceHide("Heart Hunter#rgsr_mob_1",3);
+		F_InstanceHide("Heart Hunter#rgsr_mob_2",3);
+		F_InstanceHide("#rgsr_mob_1",3);
+		F_InstanceHide("#rgsr_mob_2",3);
+		F_InstanceHide("#rgsr_gas_left",3);
+		F_InstanceHide("#rgsr_gas_right",3);
+		F_InstanceHide("Restrained Specimen#rgsr_boss",3);
+		
+		F_InstanceHide("#rgsr_kitchen_out",3);
+		F_InstanceHide("#rgsr_conf_in_1",3);
+		F_InstanceHide("#rgsr_conf_in_2",3);
+		F_InstanceHide("#rgsr_conf_out_1",3);
+		F_InstanceHide("#rgsr_conf_out_2",3);
+		F_InstanceHide("#rgsr_lab_in_1",3);
+		F_InstanceHide("#rgsr_lab_in_2",3);
+		F_InstanceHide("#rgsr_lab_in_3",3);
+		F_InstanceHide("#rgsr_lab_in_4",3);
+		F_InstanceHide("#rgsr_lab_in_5",3);
+		F_InstanceHide("#rgsr_lab_out_1",3);
+		F_InstanceHide("#rgsr_lab_out_2",3);
+		F_InstanceHide("#rgsr_lab_out_3",3);
+		F_InstanceHide("#rgsr_lab_out_4",3);
+        F_InstanceHide("#rgsr_lab_out_5",3);
+		end;
+}
+
+1@rgsr,123,42,5	script	Oscar#171_rgsr	4_M_LGTGUARD,{
+	mes "[ Oscar ]";
+	mes "The captain sneaked in the control panel room.";
+	mes "Move quietly.";
+	close;
+	
+OnInstanceInit:
+	F_InstanceHide(strnpcinfo(0),4);
+	end;
+}
+
+1@rgsr,131,58,3	script	Ashley#171_rgsr	4_EP17_AS,{
+	switch('rgsr){
+		case 0:
+			cutin "ep171_as02",1;
+			mes "[ Ashley ]";
+			mes "The door is normally locked with the security system, so I have to stay there and work with the controller.";
+			mes "As you can see most of the entrances have been blocked already.";
+			next;
+			mes "[ Ashley ]";
+			mes "It will take some time to go through them one by one.";
+			mes "I'll keep helping you through the intercom.";
+			next;
+			mes "[ Ashley ]";
+			mes "You'll have to go through the restaurant to reach the hallway.";
+			mes "Erst will be performing the operation alone.";
+			next;
+			mes "[ Ashley ]";
+			mes "If there's a disturbance, Erst may have caused it. So please check out with her before continuing.";
+			next;
+			mes "[ Ashley ]";
+			mes "You should go now adventurer. I'll keep working on securing the security controller.";
+			mes "There may be researchers detained inside.";
+			next;
+			mes "[ Ashley ]";
+			mes "Please consider their safety first.";
+			mes "Now go ahead.";
+			'rgsr = 1;
+			close2;
+			cutin "",255;
+			F_InstanceEvent("#rgsr_mob_1","OnMobSpawn");
+			F_InstanceHide("Heart Hunter#rgsr_mob_1",4);
+			F_InstanceHide("Heart Hunter#rgsr_mob_2",4);
+			F_InstanceHide("Researcher#rgsr_dum_1",4);
+			F_InstanceHide("Researcher#rgsr_dum_2",4);
+			F_InstanceHide("Researcher#rgsr_dum_3",4);
+			F_InstanceHide("Access Controller#rgsr_kitchen",4);
+			warp 'rgsr$,127,67;
+			end;
+			
+		case 1:
+			cutin "ep171_as02",1;
+			mes "[ Ashley ]";
+			mes "You should go now adventurer. I'll keep working on securing the security controller.";
+			mes "There may be researchers detained inside.";
+			next;
+			mes "[ Ashley ]";
+			mes "Please consider their safety first.";
+			mes "Now go ahead.";
+			warp 'rgsr$,127,67;
+			close3;
+	}
+	
+OnInstanceInit:
+	F_InstanceHide(strnpcinfo(0),4);
+	end;
+}
+
+1@rgsr,60,138,0	script	Access Controller#rgsr_kitchen	4_ENERGY_WHITE,{
+	if('guard_count != 0) end;
+	F_InstanceHide("Researcher#rgsr_ev_1",2);
+	if(!'clicked){
+		'clicked = 1;
+		npctalk "Communication Requested.";
+		sleep2 3000;
+		npctalk "Analysing Signal.";
+		sleep2 3000;
+		npctalk "Activating Voice Transmission...";
+		sleep2 3000;
+		npctalk "Are you connected? It's Ashley.";
+		sleep2 3000;
+		npctalk "I have gained control over some of the security system, but I haven't gained full access yet.";
+		sleep2 3000;
+		npctalk "Unless there is a big disturbance, the alarm or security devices won't work.";
+		sleep2 3000;
+		npctalk "I think you should open this door to open the hallway.";
+		sleep2 3000;
+		npctalk "Ask a Detained Researcher to put their hand on the device.";
+		sleep2 3000;
+		npctalk "...*Zap*....";
+		sleep2 3000;
+		npctalk "Voice Transmission Ended.";
+		sleep2 3000;
+		F_InstanceHide(strnpcinfo(0),5);
+		npctalk "Researcher : Do you mind If I open the door?",instance_npcname("Researcher#rgsr_ev_1");
+		'rgsr = 2;
+	}
+	end;
+}
+
+1@rgsr,59,132,7	script	Researcher#rgsr_ev_1	4_M_NFMAN,{
+	switch('rgsr){
+		case 1: end;
+		
+		case 2:
+			mes "[ Researcher ]";
+			mes "The biometric scan is still operational, I'll be staying here to keep the door open.";
+			mes "If you're in a hurry, please go...";
+			dispbottom "Control : Identity confirmed.";
+			F_InstanceHide("#rgsr_kitchen_out",4);
+			'rgsr = 3;
+			F_InstanceEvent("#rgsr_mob_2","OnMobSpawn");
+			F_InstanceEvent("#rgsr_gas_left","OnMobSpawn");
+			F_InstanceHide("#rgsr_conf_in_1",4);
+			F_InstanceHide("#rgsr_conf_in_2",4);
+			F_InstanceHide("#rgsr_conf_out_1",4);
+			F_InstanceHide("#rgsr_conf_out_2",4);
+			F_InstanceHide("#rgsr_lab_in_1",4);
+			F_InstanceHide("#rgsr_lab_in_2",4);
+			F_InstanceHide("#rgsr_lab_in_3",4);
+			F_InstanceHide("#rgsr_lab_in_4",4);
+			F_InstanceHide("#rgsr_lab_in_5",4);
+			F_InstanceHide("#rgsr_lab_out_1",4);
+			F_InstanceHide("#rgsr_lab_out_2",4);
+			F_InstanceHide("#rgsr_lab_out_3",4);
+			F_InstanceHide("#rgsr_lab_out_4",4);
+			F_InstanceHide("#rgsr_lab_out_5",4);
+			
+			close2;
+			sleep2 1000;
+			npctalk "Researcher : ...huh... what the hell is this...";
+			end;
+			
+		default:
+			mes "[ Researcher ]";
+			mes "Some researchers ran away with the research materials.";
+			mes "The southern guards have changed as well.";
+			next;
+			mes "[ Researcher ]";
+			mes "There will be more people in this next area.";
+			mes "Please be careful!";
+			end;	
+	}
+	end;
+}
+
+1@rgsr,36,211,3	script	Erst#rgsr_conf	4_F_ESTLOVELOY,{
+	switch('rgsr){
+		case 3:
+			cutin "ep162_est03",2;
+			mes "[ Erst ]";
+			mes "Are you the one who removed the poison gas outside?";
+			mes "You arrived at a good time.";
+			mes "Because of the gas, the door was forcibly locked down!";
+			next;
+			cutin "ep162_est01",2;
+			mes "[ Erst ]";
+			mes "It takes time for Ashley to come hack the controller and release the gas.";
+			mes "I was going to do it myself.";
+			next;
+			cutin "ep162_est02",2;
+			mes "[ Erst ]";
+			mes "The guards here were wearing the same clothes as those Heart Hunters we saw before.";
+			mes "I don't think I can save all the researchers alone.";
+			next;
+			mes "[ Erst ]";
+			mes "It seems we've gathered most of them here already.";
+			mes "Let's organize our next strategy.";
+			next;
+			cutin "ep162_est01",2;
+			mes "[ Erst ]";
+			mes "There are laboratories on the other side and it's likely to be a mess.";
+			mes "I wonder if there will be a big fight.";
+			next;
+			mes "[ Erst ]";
+			mes "From now on the Rebellion Special Forces will prioritize on rescuing the Detained Researchers.";
+			mes "If you get it, move quickly!";
+			next;
+			mes "[ Erst ]";
+			mes "Okay, adventurer, find a communication device and get in contact with Ashley, using code 0315.";
+			next;
+			mes "[ Erst ]";
+			mes "You have to open the entrance of the private labs.";
+			'rgsr = 4;
+			close3;
+			
+		case 4:
+			cutin "ep162_est03",2;
+			mes "[ Erst ]";
+			mes "Are you the one who removed the poison gas outside?";
+			mes "You arrived at a good time.";
+			mes "Because of the gas, the door was forcibly locked down!";
+			next;
+			cutin "ep162_est01",2;
+			mes "[ Erst ]";
+			mes "It takes time for Ashley to come hack the controller and release the gas.";
+			mes "I was going to do it myself.";
+			next;
+			cutin "ep162_est02",2;
+			mes "[ Erst ]";
+			mes "The guards here were wearing the same clothes as those Heart Hunters we saw before.";
+			mes "I don't think I can save all the researchers alone.";
+			next;
+			mes "[ Erst ]";
+			mes "It seems we've gathered most of them here already.";
+			mes "Let's organize our next strategy.";
+			next;
+			cutin "ep162_est01",2;
+			mes "[ Erst ]";
+			mes "There are laboratories on the other side and it's likely to be a mess.";
+			mes "I wonder if there will be a big fight.";
+			next;
+			mes "[ Erst ]";
+			mes "From now on the Rebellion Special Forces will prioritize on rescuing the Detained Researchers.";
+			mes "If you get it, move quickly!";
+			next;
+			mes "[ Erst ]";
+			mes "Okay, adventurer, find a communication device and get in contact with Ashley, using code 0315.";
+			next;
+			mes "[ Erst ]";
+			mes "You have to open the entrance of the private labs.";
+			close3;
+		
+		default:
+			cutin "ep162_est02",2;
+			mes "[ Erst ]";
+			mes "Huh. We'll focus on rescuing the hostages first.";
+			mes "Look for the Security Guard's room that Ashley talked about.";
+			close3;
+			
+	}
+}
+
+1@rgsr,26,219,0	script	Access Controller#rgsr_conf	4_ENERGY_WHITE,{
+	switch('rgsr){
+		case 4:
+			mes "There is a controller with a communication function.";
+			next;
+			switch(select("1103:4885:0315:7561")){
+				case 3:
+					mes "Voice Transmission Connected.";
+					'rgsr = 5;
+					F_InstanceEvent("#rgsr_gas_right","OnMobSpawn");
+					close2;
+					npctalk "Waiting for communication response...";
+					sleep2 3000;
+					npctalk "Ashley : Commander Erst? We closed the hall lock, but what is the problem?";
+					sleep2 3000;
+					npctalk "Ashley : Oh you're the adventurer. I will give you the report. I have not fully taken over the security controller system yet.";
+					sleep2 3000;
+					npctalk "Ashley : It seems it will take some time, but I've taken control of most of the monitoring modules.";
+					sleep2 3000;
+					npctalk "Ashley : Most of the enemy troops were in the lobby and the resting area, so the lab area is less guarded.";
+					sleep2 3000;
+					npctalk "Ashley : However, in order to secure the central control room, you have to go through the Guard's Room where many test subjects were detected.";
+					sleep2 3000;
+					npctalk "Ashley : The priority should be to secure the laboratories and then the Guard Room.... *click*";
+					sleep2 2000;
+					npctalk "Erst : Eh, what was that?",instance_npcname("Erst#rgsr_conf");
+					end;
+					
+				default:
+					mes "Code is inactive.";
+					mes "The communication has been terminated.";
+					close;
+			}
+					
+		default:
+			mes "There is a controller with a communication function.";
+			close;
+	}
+}
+
+1@rgsr,235,44,5	script	Ashley#rgsr_lab	4_EP17_AS,{
+	switch('rgsr){
+		case 5:
+			explode(.@T$,'rescued$,":");
+			if(atoi(.@T$[0]) == 1 && atoi(.@T$[1]) == 1 && atoi(.@T$[2]) == 1){
+				.@unfinished = 0;
+			} else {
+				.@unfinished = 1;
+			}
+			if(.@unfinished){
+				cutin "ep171_as02",2;
+				mes "[ Ashley ]";
+				mes "Hey, Did you check all the labs yet?";
+				mes "Please check if there are still Detained Researchers.";
+				close3;
+			}
+			cutin "ep171_as02",1;
+			mes "[ Ashley ]";
+			mes "The spare Master Key still remains.";
+			mes "Without it, I wouldn't have been able to control over the security systems. Are you okay?";
+			next;
+			mes "[ Ashley ]";
+			mes "Now you only need to check the Central Room.";
+			mes "Did you say Heart Hunters?";
+			mes "The traitors from Schlein have already escaped.";
+			next;
+			mes "[ Ashley ]";
+			mes "We've got our focus on that room.";
+			mes "That's the main idea.";
+			mes "Where is Erst?";
+			next;
+			cutin "16go_01",0;
+			mes "[ Gonie ]";
+			mes "... ... ...";
+			next;
+			cutin "ep171_as02",1;
+			mes "[ Ashley ]";
+			mes "You have to keep looking for all the Researchers?";
+			mes "That's necessary, I understand.";
+			next;
+			mes "[ Ashley ]";
+			mes "Adventurer, we head to the Central Room.";
+			mes "Meet me over there.";
+			F_InstanceHide("Central Room#rgsr_cen_in",4);
+			'rgsr = 6;
+			close3;
+			
+		case 6:
+			mes "[ Ashley ]";
+			mes "Adventurer, we head to the Central Room.";
+			mes "Meet me over there.";
+			end;
+	}
+}
+
+1@rgsr,127,164,3	script	Ashley#171_rgsr_cen_in	4_EP17_AS,{
+	if('rgsr = 10){
+		cutin "ep171_as01",2;
+		mes "[ Ashley ]";
+		mes "Erst has handled everything else on the inside.";
+		mes "Sorry for not being able to help you at all.";
+		next;
+		mes "[ Ashley ]";
+		mes "Let's go back to Einbroch.";
+		mes "I'll... I'll go to my office and join you.";
+		ep_illusion = 12;
+		next;
+		switch(select("Move to Einbroch.:Move to Lighthalzen.:Do not exit.")){
+			case 1:
+				mes "[ Ashley ]";
+				mes "We're going to wait for you in the Cat on Bullet.";
+				mes "Please head there and meet us in the headquarters.";
+				warp "einbroch",301,324;
+				end;
+				
+			case 2:
+				mes "[ Ashley ]";
+				mes "We're going to wait for you in the Cat on Bullet.";
+				mes "Please head there and meet us in the headquarters.";
+				warp "lighthalzen",54,272;
+				end;
+				
+			case 3:
+				cutin "ep171_as02",2;
+				mes "[ Ashley ]";
+				mes "Do you have anything else to investigate?";
+				mes "I'll wait  here.";
+				close3;
+		}
+	}
+}
+
+1@rgsr,128,157,3	script	Ashley#171_rgsr_cen	4_EP17_AS,{
+	switch('rgsr){
+		case 7:
+			.@ashley$ = instance_npcname("Ashley#171_rgsr_cen");
+			.@gonie$ = instance_npcname("Gonie#rgsr_cen_in");
+			.@erst$ = instance_npcname("Erst#rgsr_cen_in");
+			npctalk "Ashley : The Central Room seems to be empty. I'll go in and check it out.",.@ashley$;
+			sleep2 3000;
+			npctalk "Erst : I'll go ahead and take the researchers out of here. Will that be okay?",.@erst$;
+			sleep2 3000;
+			npctalk "Ashley : Yes. Nothing else is being detected on the system. With our progres so far, the enemies have all been restrained.",.@ashley$;
+			sleep2 3000;
+			npctalk "Erst : What are you scared of something else? I'm going back already!",.@erst$;
+			sleep2 3000;
+			npctalk "Gonie : ... Me too.",.@gonie$;
+			sleep2 3000;
+			npctalk "Erst : There were couple of researchers left in the labs, I'll go bring them along. I'll be waiting.",.@erst$;
+			sleep2 3000;
+			npctalk "Erst : Alright, Gonie. You go to the main lobby first and secure the road. I'll take the others at the conference room.",.@erst$;
+			sleep2 3000;
+			npctalk "Gonie : *Nods*",.@gonie$;
+			sleep2 3000;
+			F_InstanceHide("Gonie#rgsr_cen_in",5);
+			F_InstanceHide("Erst#rgsr_cen_in",5);
+			npctalk "Ashley : So adventurer, let's check out the Central Room.",.@ashley$;
+			'rgsr = 8;
+			end;
+			
+		case 8:
+			cutin "ep171_as02",1;
+			mes "[ Ashley ]";
+			mes "That's the Central Room right ahead.";
+			next;
+			if(select("Enter.:Wait.") == 2){
+				mes "[ Ashley ]";
+				mes "Please speak to me when you're ready.";
+				mes "I don't know why, but it's tightly closed;. It takes some time to maintain access.";
+				next;
+				mes "[ Ashley ]";
+				mes "As confirmed by the security system, nothing is being detected on the inside...";
+				mes "I still want to confirm inside the room regardless.";
+				close3;
+			}
+			mes "[ Ashley ]";
+			mes "First I'll need to disable the auto-locking mechanism, and then I'll follow right away.";
+			'rgsr = 9;
+			close2;
+			cutin "",255;
+			F_InstanceHide("Restrained Specimen#rgsr_boss",4);
+			F_InstanceHide("Control Device#rgsr_blue",4);
+			F_InstanceHide("Control Device#rgsr_red",4);
+			F_InstanceHide("Control Device#rgsr_white",4);
+			F_InstanceHide("Control Device#rgsr_yellow",4);
+			warp 'rgsr$,126,164;
+			end;
+			
+		default:
+			cutin "ep171_as02",1;
+			mes "[ Ashley ]";
+			mes "That's the Central Room right ahead.";
+			next;
+			if(select("Enter.:Wait.") == 2){
+				mes "[ Ashley ]";
+				mes "Please speak to me when you're ready.";
+				mes "I don't know why, but it's tightly closed;. It takes some time to maintain access.";
+				next;
+				mes "[ Ashley ]";
+				mes "As confirmed by the security system, nothing is being detected on the inside...";
+				mes "I still want to confirm inside the room regardless.";
+				close3;
+			}
+			mes "[ Ashley ]";
+			mes "First I'll need to disable the auto-locking mechanism, and then I'll follow right away.";
+			close2;
+			cutin "",255;	
+			warp 'rgsr$,126,164;			
+			end;
+	}
+}
+
+1@rgsr,124,152,5	script	Gonie#rgsr_cen_in	4_M_GONY,{
+	cutin "16go_01",0;
+	mes "[ Gonie ]";
+	mes "... ... ...";
+	close3;
+}
+
+1@rgsr,125,154,5	script	Erst#rgsr_cen_in	4_F_ESTLOVELOY,{
+	cutin "ep162_est01",2;
+	mes "[ Erst ]";
+	mes "I don't believe there are any enemies left inside, I'm going to pull out.";
+	mes "Just check the Central Room and then get out.";
+	close3;
+}
+
+1@rgsr,125,157,0	script	Central Room#rgsr_cen_in	4_ENERGY_BLUE,{
+	switch('rgsr){
+		case 6:
+			.@ashley$ = instance_npcname("Ashley#171_rgsr_cen");
+			.@gonie$ = instance_npcname("Gonie#rgsr_cen_in");
+			.@erst$ = instance_npcname("Erst#rgsr_cen_in");
+			F_InstanceHide("Ashley#171_rgsr_cen",2);
+			F_InstanceHide("Gonie#rgsr_cen_in",2);
+			F_InstanceHide("Erst#rgsr_cen_in",2);
+			'rgsr = 7;
+			npctalk "Am I late?",.@ashley$;
+			sleep2 2000;
+			npctalk "No you arrived just in time.",.@erst$;
+			end;
+			
+		default:
+			mes "The device does not work.";
+			end;	
+	}
+	end;
+}
+
+1@rgsr,144,180,0	script	Control Device#rgsr_blue	4_ENERGY_BLUE,{
+	if(!'boss_trigger){
+		mes "This device has an unknown purpose.";
+		mes "There are four buttons in the room.";
+		close;
+	}
+	if('buttons == 0){
+		mes "This device has an unknown purpose.";
+		mes "There are four buttons in the room.";
+		next;
+		if(select("Red Button.:Blue Button.:White Button.:Yellow Button.") != 2){
+			F_InstanceEvent("Restrained Specimen#rgsr_boss","OnFail");
+		}
+		specialeffect 55,AREA,instance_npcname("Restrained Specimen#rgsr_boss");
+		mapannounce 'rgsr$,"Gravity control adjustment... completed... There are three phases remaining.",bc_map,0x0D98BA;
+		'buttons  = 1;
+		end;
+	} else if('buttons > 0){
+		mes "This device has already been activated.";
+		close;
+	}
+	mes "This device has an unknown purpose.";
+	mes "There are four buttons in the room.";
+	next;
+	select("Press the button.");
+	F_InstanceEvent("Restrained Specimen#rgsr_boss","OnFail");
+	end;
+}
+
+1@rgsr,108,168,0	script	Control Device#rgsr_red	4_ENERGY_RED,{
+	if(!'boss_trigger){
+		mes "This device has an unknown purpose.";
+		mes "There are four buttons in the room.";
+		close;
+	}
+	if('buttons == 1){
+		mes "This device has an unknown purpose.";
+		mes "There are four buttons in the room.";
+		next;
+		if(select("Red Button.:Blue Button.:White Button.:Yellow Button.") != 1){
+			F_InstanceEvent("Restrained Specimen#rgsr_boss","OnFail");
+		}
+		specialeffect 55,AREA,instance_npcname("Restrained Specimen#rgsr_boss");
+		mapannounce 'rgsr$,"Gravity control adjustment... completed... There are two phases remaining.",bc_map,0x0D98BA;
+		'buttons  = 2;
+		end;
+	} else if('buttons > 1){
+		mes "This device has already been activated.";
+		close;
+	}
+	mes "This device has an unknown purpose.";
+	mes "There are four buttons in the room.";
+	next;
+	select("Press the button.");
+	F_InstanceEvent("Restrained Specimen#rgsr_boss","OnFail");
+	end;
+}
+
+1@rgsr,143,168,0	script	Control Device#rgsr_white	4_ENERGY_YELLOW,{
+	if(!'boss_trigger){
+		mes "This device has an unknown purpose.";
+		mes "There are four buttons in the room.";
+		close;
+	}
+	if('buttons == 2){
+		mes "This device has an unknown purpose.";
+		mes "There are four buttons in the room.";
+		next;
+		if(select("Red Button.:Blue Button.:White Button.:Yellow Button.") != 4){
+			F_InstanceEvent("Restrained Specimen#rgsr_boss","OnFail");
+		}
+		specialeffect 55,AREA,instance_npcname("Restrained Specimen#rgsr_boss");
+		mapannounce 'rgsr$,"Gravity control adjustment... completed... There are one phase remaining.",bc_map,0x0D98BA;
+		
+		'buttons  = 3;
+		end;
+	} else if('buttons > 2){
+		mes "This device has already been activated.";
+		close;
+	}
+	mes "This device has an unknown purpose.";
+	mes "There are four buttons in the room.";
+	next;
+	select("Press the button.");
+	F_InstanceEvent("Restrained Specimen#rgsr_boss","OnFail");
+	end;
+}
+
+
+
+	
+1@rgsr,114,191,0	script	Control Device#rgsr_yellow	4_ENERGY_WHITE,{
+	if(!'boss_trigger){
+		mes "This device has an unknown purpose.";
+		mes "There are four buttons in the room.";
+		close;
+	}
+	if('buttons == 3){
+		mes "This device has an unknown purpose.";
+		mes "There are four buttons in the room.";
+		next;
+		if(select("Red Button.:Blue Button.:White Button.:Yellow Button.") != 3){
+			F_InstanceEvent("Restrained Specimen#rgsr_boss","OnFail");
+		}
+		specialeffect 55,AREA,instance_npcname("Restrained Specimen#rgsr_boss");
+		mapannounce 'rgsr$,"Gravity control adjustment... completed... Restraints have been disengaged.",bc_map,0x0D98BA;
+		sleep2 3000;
+		F_InstanceEvent("Restrained Specimen#rgsr_boss","OnSummonBoss");
+		'buttons  = 4;
+		end;
+	} else if('buttons > 3){
+		mes "This device has already been activated.";
+		close;
+	}
+	mes "This device has an unknown purpose.";
+	mes "There are four buttons in the room.";
+	next;
+	select("Press the button.");
+	F_InstanceEvent("Restrained Specimen#rgsr_boss","OnFail");
+	end;
+}
+
+1@rgsr,37,126,0	script	Researcher#rgsr_dum_1	4_F_SCIENCE,{
+	mes "[ Detained Researcher ]";
+	mes "Why do I have to feed this traitors?";
+	close;
+}
+
+1@rgsr,35,136,7	script	Researcher#rgsr_dum_2	4_LGTSCIENCE,{
+	mes "[ Detained Researcher ]";
+	mes "I want to go home... I just want to go home...";
+	close;
+}
+
+1@rgsr,38,139,3	script	Researcher#rgsr_dum_3	4_M_NFMAN,{
+	mes "[ Detained Researcher ]";
+	mes "Are you here to save us?";
+	mes "Thank you! Thank you!";
+	close;
+}
+
+1@rgsr,31,186,3	script	Researcher#rgsr_dum_4	4_LGTSCIENCE,{
+	mes "[ Detained Researcher ]";
+	mes "What the hell is happening?";
+	mes "Aaaah... I just want to go home...";
+	close;
+}
+
+1@rgsr,24,186,5	script	Researcher#rgsr_dum_5	4_F_SCIENCE,{
+	mes "[ Detained Researcher ]";
+	mes "Why did you come here to save me?";
+	mes "The Enterprise's guards... no wait...";
+	next;
+	mes "[ Detained Researcher ]";
+	mes "I thought that you were the one who kept us in custody...!";
+	mes "Why would they do that?";
+	close;
+}
+
+1@rgsr,25,182,7	script	Researcher#rgsr_dum_6	4_M_HUMAN_01,{
+	mes "[ Detained Researcher ]";
+	mes "These scumbags took my Research Report and I escaped here.";
+	mes "It was a spray repellent to block blood-sucking insects!";
+	next;
+	mes "[ Detained Researcher ]";
+	mes "That was my private research, I don't know why they took it!";
+	mes "You can't just take away someone else's Research Report.";
+	close;
+}
+
+1@rgsr,40,186,3	script	Rebellion Crew#rgsr_dum_1	4_M_ILYA,{
+	mes "[ Rebellion Crew ]";
+	mes "I've come prepared, but this was easier than thought.";
+	mes "Now I'm stuck here. Hehehehe!";
+	close;
+}
+
+
+1@rgsr,33,185,3	script	Rebellion Crew#rgsr_dum_2	4_M_REBELLION2,{
+	mes "[ Rebellion Crew ]";
+	mes "The remaining researchers are gathered here for their security.";
+	mes "The Rebellions will protect them and help them escape.";
+	close;
+}
+
+1@rgsr,33,185,3	script	Rebellion Crew#rgsr_dum_3	4_F_ANYA,{
+	mes "[ Rebellion Crew ]";
+	mes "I thought they had less forces on the inside, but I didn't think they'd have installed toxic gas.";
+	mes "Most people have fled already, only the enemies are remaining.";
+	close;
+}
+
+1@rgsr,235,143,5	script	Detained Researcher#rgsr_res_1	4_F_SCIENCE,{
+	explode(.@T$,'rescued$,":");
+	if(!atoi(.@t$[0])){
+		mes "[ Researcher ]";
+		mes "My... my search... materials...";
+		mes "They took it all!";
+		mes "They took everything!";
+		next;
+		cutin "16go_01",0;
+		mes "[ Gonie ]";
+		mes "... ... ...";
+		next;
+		cutin "",255;
+		npctalk "I'm going to live! Thank you!";
+		mes "Oh, you're here to protect me?";
+		mes "I'll go with you, thank you!";
+		next;
+		mes "[ Researcher ]";
+		mes "Oh, you're there to protect me?";
+		mes "I'll go with you, thank you!";
+		.@T$[0] = "1";
+		'rescued$ = implode(.@T$,":");
+		close2;
+		F_InstanceHide(strnpcinfo(0),1);
+		end;
+	}
+	end;
+}
+
+1@rgsr,237,108,3	script	Detained Researcher#rgsr_res_2	4_LGTSCIENCE,{
+	explode(.@T$,'rescued$,":");
+	if(!atoi(.@t$[1])){
+		mes "[ Researcher ]";
+		mes "I thought they kicked out all the crazy guy...";
+		mes "I hit the back of my head like this.";
+		mes "Tsk.";
+		next;
+		mes "[ Researcher ]";
+		mes "Are you here to save us?";
+		mes "Get me out of here!";
+		mes "We couldn't flee because they put poisonous gas outside the doors!";
+		next;
+		mes "[ Researcher ]";
+		mes "Yeah, I know a little bit about the Heart Hunters, I will tell you everything!";
+		next;
+		cutin "ep162_est02",2;
+		mes "[ Erst ]";
+		mes "Ah? Do you have more information to share?";
+		mes "Do you want to go outside and talk about it calmly with me?";
+		next;
+		cutin "ep162_est01",2;
+		mes "[ Erst ]";
+		mes "I'll take this guy out of here and you look at the other rooms.";
+		.@T$[1] = "1";
+		'rescued$ = implode(.@T$,":");
+		close2;
+		cutin "",255;
+		F_InstanceHide(strnpcinfo(0),1);
+		end;
+	}
+	end;
+}
+
+1@rgsr,237,71,3	script	Detained Researcher#rgsr_res_3	4_F_FRUIT,{
+	explode(.@T$,'rescued$,":");
+	if(!atoi(.@t$[2])){
+		mes "[ Researcher ]";
+		mes "Please help me!";
+		mes "I worked a lot and I'm not getting paid!";
+		next;
+		mes "[ Researcher ]";
+		mes "Schlein, where is Schlein?";
+		mes "He's a traitor!";
+		mes "I've seen it with my own eyes, he just killed the guards...";
+		next;
+		select("Calm down.");
+		mes "[ Researcher ]";
+		mes "Is it safe now?";
+		mes "I'm glad when I was hired at Rekenber, but what the hell is going with such a big company...";
+		next;
+		mes "[ Researcher ]";
+		mes "Say what? The Rebellions are coming to save us?";
+		mes "Can't I just run away with you instead?";
+		next;
+		mes "[ Researcher ]";
+		mes "Oh... you're part of the recon team?";
+		mes "Alright. I'll wait for the rescue team.";
+		mes "Many people escaped by breaking the windows and ran away..";
+		next;
+		mes "[ Researcher ]";
+		mes "Oh you already know.";
+		mes "Okay. I'll be quiet now and wait.";
+		mes "Your uniform is really cool though.";
+		.@T$[2] = "1";
+		'rescued$ = implode(.@T$,":");
+		end;
+	}
+	mes "[ Researcher ]";
+	mes "I know. I know.";
+	mes "If I wait here, will the Rebellions come and save me?";
+	mes "I'll be fine then.";
+	next;
+	mes "[ Researcher ]";
+	mes "But again, your uniform is really cool.";
+	close;
+}
+
+1@rgsr,241,51,0	script	Scattered Documents#rgsr	4_ENERGY_BLUE,{
+	if(checkquest(7863) == -1){
+		mes "This is the list of the Enterprise security teams.";
+		mes "Some have circles around them... others are crossed out.";
+		next;
+		cutin "ep171_as01",2;
+		mes "[ Ashley ]";
+		mes "The ones circled are probably those who accepted to be recruited...";
+		mes "My team is the one with a X marked next to it.";
+		next;
+		mes "[ Ashley ]";
+		mes "It's a mercenary contract...";
+		mes "There's a rough plan for the day of the raid.";
+		mes "I can't believe it came to this...";
+		next;
+		mes "[ Ashley ]";
+		mes "This is meant to provoke me.";
+		mes "It won't work this time. I'll track this to the end.";
+		next;
+		mes "[ Ashley ]";
+		mes "I'd better take it back to Tess and analyze it.";
+		setquest 7863;
+		close3;
+	}
+	mes "I've already got the data here.";
+	mes "There's nothing else to see here.";
+	close;
+
+OnInstanceInit:
+	questinfo(QTYPE_CLICKME,QMARK_YELLOW,"checkquest(7863) == -1");
+	end;
+}
+
+1@rgsr,59,136,0	script	#rgsr_kitchen_out	WARPNPC,1,2,{
+	OnTouch:
+		warp 'rgsr$,66,136;
+		end;
+}
+
+1@rgsr,51,184,0	script	#rgsr_conf_in_1	WARPNPC,1,2,{
+OnTouch:
+	if('gas_left == 0){
+		warp 'rgsr$,46,184;
+	} else {
+		dispbottom "Voice Behind Door : Who's outside? Remove that strange poison gas!!";
+	}
+	end;
+}
+
+1@rgsr,51,216,0	script	#rgsr_conf_in_2	WARPNPC,1,2,{
+OnTouch:
+	if('gas_left == 0){
+		warp 'rgsr$,46,216;
+	} else {
+		dispbottom "Voice Behind Door : Who's outside? Remove that strange poison gas!!";
+	}
+	end;
+}
+
+1@rgsr,49,184,0	script	#rgsr_conf_out_1	WARPNPC,1,2,{
+OnTouch:
+	warp 'rgsr$,54,187;
+	end;
+}
+
+1@rgsr,49,216,0	script	#rgsr_conf_out_2	WARPNPC,1,2,{
+OnTouch:
+	warp 'rgsr$,54,216;
+	end;
+}
+
+1@rgsr,186,216,0	script	#rgsr_lab_in_1	WARPNPC,1,2,{
+OnTouch:
+	if('gas_right == 0){
+		warp 'rgsr$,191,216;
+	} else {
+		mes "A foreign entity has been detected. Access Denied.";
+	}
+	end;
+}
+
+1@rgsr,188,216,0	script	#rgsr_lab_out_1	WARPNPC,1,2,{
+OnTouch:
+	warp 'rgsr$,183,216;
+	end;
+}
+
+1@rgsr,214,136,0	script	#rgsr_lab_in_2	WARPNPC,1,2,{
+OnTouch:
+	if('gas_right == 0){
+		warp 'rgsr$,219,136;
+	} else {
+		mes "A foreign entity has been detected. Access Denied.";
+	}
+	end;	
+}
+
+1@rgsr,216,136,0	script	#rgsr_lab_out_2	WARPNPC,1,2,{
+OnTouch:
+	warp 'rgsr$,211,136;
+	end;
+}
+
+1@rgsr,214,108,0	script	#rgsr_lab_in_3	WARPNPC,1,2,{
+OnTouch:
+	if('gas_right == 0){
+		warp 'rgsr$,219,108;
+	} else {
+		mes "A foreign entity has been detected. Access Denied.";
+	}
+	end;	
+}
+
+1@rgsr,216,108,0	script	#rgsr_lab_out_3	WARPNPC,1,2,{
+OnTouch:
+	warp 'rgsr$,211,108;
+	end;
+}
+
+1@rgsr,214,76,0	script	#rgsr_lab_in_4	WARPNPC,1,2,{
+OnTouch:
+	if('gas_right == 0){
+		warp 'rgsr$,219,76;
+	} else {
+		mes "A foreign entity has been detected. Access Denied.";
+	}
+	end;	
+}
+
+1@rgsr,216,76,0	script	#rgsr_lab_out_4	WARPNPC,1,2,{
+OnTouch:
+	warp 'rgsr$,211,76;
+	end;
+}
+
+1@rgsr,214,44,0	script	#rgsr_lab_in_5	WARPNPC,1,2,{
+OnTouch:
+	if('rgsr < 4){
+		npctalk "Communication Controller : Support is required for this area.",instance_npcname("Communication Controller#rgsr_lab_5");
+		sleep2 2000;
+		unittalk getcharid(3),strcharinfo(0) + " : What was that...",bc_self;
+		end;
+	}
+	if('gas_right == 0){
+		warp 'rgsr$,219,44;
+	} else {
+		mes "A foreign entity has been detected. Access Denied.";
+	}
+	end;	
+}
+
+1@rgsr,216,44,0	script	#rgsr_lab_out_5	WARPNPC,1,2,{
+OnTouch:
+	warp 'rgsr$,211,44;
+	end;
+}
+
+1@rgsr,215,48,0	script	Communication Controller#rgsr_lab_5	HIDDEN_NPC,{ end; }
+
+
+1@rgsr,1,1,0	script	#rgsr_mob_1	HIDDEN_WARP_NPC,{
+OnMobSpawn:
+	F_InstanceHide(strnpcinfo(0),4);
+	.@map$ = 'rgsr$;
+	setarray .@xy$,"135,138,86,89","114,117,86,89","114,117,103,106","135,138,103,106","154,157,75,78","154,157,92,95","149,152,112,115","100,103,112,115","99,102,92,95","74,77,66,69","76,79,93,96","51,54,96,100","30,33,112,116","49,52,130,133";
+	for(.@i = 0; .@i < getarraysize(.@xy$); .@i++){
+		explode(.@T$,.@xy$[.@i],",");
+		areamonster .@map$,atoi(.@T$[0]),atoi(.@T$[2]),atoi(.@T$[1]),atoi(.@T$[3]),"Special Guard",3622,3,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+		'guard_count += 3;
+	}
+	monster .@map$,56,67,"Special Guard",3622,1,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	monster .@map$,48,63,"Special Guard",3622,1,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	monster .@map$,42,60,"Special Guard",3622,1,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	monster .@map$,36,56,"Special Guard",3622,1,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	monster .@map$,28,52,"Special Guard",3622,1,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	monster .@map$,15,51,"Special Guard",3622,1,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	'guard_count += 6;
+	end;
+	
+OnMobKill:
+	'guard_count -= 1;
+	end;
+}
+
+1@rgsr,1,1,0	script	#rgsr_mob_2	HIDDEN_WARP_NPC,{
+OnMobSpawn:
+	F_InstanceHide(strnpcinfo(0),4);
+	.@map$ = 'rgsr$;
+	setarray .@xy$,"98,105,132,139","134,141,132,139","152,159,132,139","82,89,212,219","110,117,212,219";
+	for(.@i = 0; .@i < getarraysize(.@xy$); .@i++){
+		explode(.@T$,.@xy$[.@i],",");
+		areamonster .@map$,atoi(.@T$[0]),atoi(.@T$[2]),atoi(.@T$[1]),atoi(.@T$[3]),"Special Guard",3622,3,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	}
+	monster .@map$,117,136,"Special Guard",3622,3,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	end;
+	
+OnMobKill:
+	end;
+}
+
+1@rgsr,94,68,5	script	Heart Hunter#rgsr_mob_1	3622,3,3,{
+OnTouch:
+	F_InstanceHide(strnpcinfo(0),5);
+	.@map$ = 'rgsr$;
+	areamonster .@map$,96,68,99,71,"Special Guard",3622,4,instance_npcname("#rgsr_mob_1")+"::OnMobKill";
+	'guard_count += 4;
+	end;
+}
+
+1@rgsr,94,95,5	script	Heart Hunter#rgsr_mob_2	3622,3,3,{
+OnTouch:
+	F_InstanceHide(strnpcinfo(0),5);
+	.@map$ = 'rgsr$;
+	areamonster .@map$,96,92,99,96,"Special Guard",3622,4,instance_npcname("#rgsr_mob_1")+"::OnMobKill";
+	'guard_count += 4;
+	end;
+}
+
+1@rgsr,1,1,0	script	#rgsr_gas_left	HIDDEN_WARP_NPC,{
+OnMobSpawn:
+	F_InstanceHide(strnpcinfo(0),4);
+	.@map$ = 'rgsr$;
+	setarray .@xy$,"54,61,180,187","54,61,212,219";
+	for(.@i = 0; .@i < getarraysize(.@xy$); .@i++){
+		explode(.@T$,.@xy$[.@i],",");
+		areamonster .@map$,atoi(.@T$[0]),atoi(.@T$[2]),atoi(.@T$[1]),atoi(.@T$[3]),"Deadly Poisonous Gas",20352,5,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+		'gas_left += 5;
+	}
+	monster .@map$,86,199,"Deadly Poisonous Gas",20352,1,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	monster .@map$,86,167,"Deadly Poisonous Gas",20352,1,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	'gas_left += 2;
+	end;
+	
+OnMobKill:
+	'gas_left -= 1;
+	if('gas_left == 0){
+		mapannounce 'rgsr$,"Erst : Who is it? Are you Ashley? Are you the adventurer?",bc_map,0x0D98BA;
+		F_InstanceHide("Erst#rgsr_conf",4);
+		F_InstanceHide("Access Controller#rgsr_conf",4);
+		F_InstanceHide("Researcher#rgsr_dum_4",4);
+		F_InstanceHide("Researcher#rgsr_dum_5",4);
+		F_InstanceHide("Researcher#rgsr_dum_6",4);
+		F_InstanceHide("Rebellion Crew#rgsr_dum_1",4);
+		F_InstanceHide("Rebellion Crew#rgsr_dum_2",4);		
+		F_InstanceHide("Rebellion Crew#rgsr_dum_3",4);
+	}
+	end;
+}
+
+1@rgsr,1,1,0	script	#rgsr_gas_right	HIDDEN_WARP_NPC,{
+OnMobSpawn:
+	F_InstanceHide(strnpcinfo(0),4);
+	.@map$ = 'rgsr$;
+	setarray .@xy$,"154,161,212,219:3","175,182,212,219:5","164,171,212,219:3","164,171,196,203:3","164,171,172,179:3","164,171,132,193:3","184,191,124,131:3","200,207,132,139:5","184,191,104,111:3","200,207,104,111:5","184,191,92,99:3","200,207,72,79:5","184,191,64,71:3","184,191,40,47:3","200,207,40,47:5";
+	for(.@i = 0; .@i < getarraysize(.@xy$); .@i++){
+		explode(.@T$,.@xy$[.@i],":");
+		explode(.@TT$,.@T$[0],",");
+		.@amount = atoi(.@T$[1]);
+		areamonster .@map$,atoi(.@TT$[0]),atoi(.@TT$[2]),atoi(.@TT$[1]),atoi(.@TT$[3]),"Deadly Poisonous Gas",20352,.@amount,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+		'gas_right += .@amount;
+	}
+	end;
+	
+OnMobKill:
+	'gas_right -= 1;
+	dispbottom "Variable:"+'gas_right;
+	if('gas_right == 0){
+		F_InstanceHide("Detained Researcher#rgsr_res_1",4);
+		F_InstanceHide("Detained Researcher#rgsr_res_2",4);
+		F_InstanceHide("Detained Researcher#rgsr_res_3",4);
+		F_InstanceHide("Ashley#rgsr_lab",4);
+	}
+	end;
+}
+
+1@rgsr,125,188,3	script	Restrained Specimen#rgsr_boss	20353,2,3,{
+	end;
+	
+OnTouch:
+	if(!'boss_trigger){
+		.@map$ = 'rgsr$;
+		'boss_trigger = 1;
+		specialeffect 133;
+		npctalk "Do... do not... come close to me...!! Huh, my head... it hurts...";
+		mapannounce .@map$,"Do... do not... come close to me...!! Huh, my head... it hurts...",bc_map,0x00FF00;
+	}
+	end;
+	
+OnFail:
+	.@map$ = 'rgsr$;
+	specialeffect 133;
+	npctalk "Awesome-!! That's it... What did you do!!";
+	mapannounce .@map$,"Awesome-!! That's it... What did you do!!",bc_map,0x00FF00;
+	end;
+	
+OnSummonBoss:
+	.@map$ = 'rgsr$;
+	F_InstanceHide("Control Device#rgsr_blue",5);
+	F_InstanceHide("Control Device#rgsr_red",5);
+	F_InstanceHide("Control Device#rgsr_white",5);
+	F_InstanceHide("Control Device#rgsr_yellow",5);
+	mapannounce .@map$,"Ahahaha.. ahahaha... I'll kill you all!!!!",bc_map,0x00FF00;
+	sleep 2000;
+	mapannounce .@map$,"Ashley : What is going on? *click* The lock is...!!",bc_map;
+	sleep 2000;
+	mapannounce .@map$,"I'm not a defect! I'm not a monster!",bc_map,0x00FF00;
+	specialeffect 90;
+	monster .@map$,125,188,"Failed Specimen",20353,1,instance_npcname(strnpcinfo(0))+"::OnBossKill";
+	F_InstanceHide(strnpcinfo(0),1);
+	end;
+	
+OnBossKill:
+	'rgsr = 10;
+	F_InstanceHide("Ashley#171_rgsr_cen",5);
+	F_InstanceHide("Ashley#171_rgsr_cen_in",4);
+	end;
+}
+
+1@rgsr,195,205,0	script	Research Report#rgsr_00	4_ENERGY_BLUE,{
+	mes "It is a data on new efficiency and side effect of new potions.";
+	mes "However there is information about the core ingredients.";
+	close;
+}
+
+1@rgsr,198,199,0	script	Research Report#rgsr_01	4_ENERGY_BLUE,{
+	mes "Some of the drawing has been torned.";
+	mes "Somebody intentionally destroyed the relevants parts.";
+	close;
+}
+
+1@rgsr,207,210,0	script	Research Report#rgsr_02	4_ENERGY_BLUE,{
+	mes "Parts of the documents were severely damaged.";
+	mes "It seems to have been about attempting to create a device using the refraction of light.";
+	close;
+}
+	
+1@rgsr,226,226,0	script	Research Report#rgsr_03	4_ENERGY_BLUE,{
+	mes "Lloyds's enchantment and processing data.";
+	mes "Only the title was left, all the text was removed.";
+	close;
+}
+
+1@rgsr,231,223,0	script	Research Report#rgsr_04	4_ENERGY_BLUE,{
+	mes "The booklet is missing some pages. Someone has deliberately ommited the material.";
+	close;
+}
+
+1@rgsr,243,223,0	script	Research Report#rgsr_05	4_ENERGY_BLUE,{
+	mes "The experimental data has been removed. There are clear traces of someone destroying the information.";
+	close;
+}

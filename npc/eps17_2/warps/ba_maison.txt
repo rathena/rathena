@@ -1,0 +1,53 @@
+//===== rAthena Script =======================================
+//= Portals of Varmundt's mansion
+
+//= Mansion
+//============================================================
+ba_maison,197,279,0	warp	Mansion_Int	1,1,ba_in01,271,269
+ba_in01,271,265,0	warp	Mansion_Out	1,1,ba_maison,197,274
+
+//= Restaurant
+//============================================================
+ba_maison,140,108,0	warp	Restaurant_In_A	1,1,ba_in01,23,375
+ba_in01,23,372,0	warp	Restaurant_Out_A	1,1,ba_maison,137,108
+
+ba_maison,140,96,0	warp	Restaurant_In_B	1,1,ba_in01,80,367
+ba_in01,80,364,0	warp	Restaurant_Out_B	1,1,ba_maison,137,96
+
+ba_maison,100,65,0	warp	Restaurant_In_C	1,1,ba_in01,223,116
+ba_in01,226,116,0	warp	Restaurant_Out_C	1,1,ba_maison,103,65
+
+ba_in01,35,383,0	warp	A_to_B	1,1,ba_in01,69,381
+ba_in01,66,381,0	warp	B_to_A	1,1,ba_in01,32,383
+
+//= Laboratory
+//============================================================
+ba_maison,78,146,0	warp	Laboratory_In_A	1,1,ba_in01,15,321
+ba_in01,12,321,0	warp	Laboratory_Out_A	1,1,ba_maison,75,146
+
+//= Lobby
+//============================================================
+ba_in01,255,354,0	warp	Lobby_to_Hallway	1,1,ba_in01,307,34
+ba_in01,307,31,0	warp	Hallway_to_Lobby	1,1,ba_in01,255,351
+
+//= Library
+//============================================================
+ba_maison,197,105,0	warp	#ep173_library_in	1,1,ba_in01,211,163
+ba_in01,211,160,0	warp	#ep172_library_out	1,1,ba_maison,197,100
+ba_lib,159,4,0	warp	#ep173_lib_dun_out	1,1,ba_in01,211,180
+
+//= Rooms
+//============================================================
+ba_in01,32,144,0	warp	Room_Out	1,1,ba_in01,35,144
+
+ba_maison,33,225,0	warp	Room_In_A	1,1,ba_in01,13,255
+ba_in01,10,255,0	warp	Room_Out_A	1,1,ba_maison,33,222
+
+ba_maison,103,323,0	warp	Room_In_B	1,1,ba_in01,37,137
+ba_in01,37,134,0	warp	Room_Out_B	1,1,ba_maison,100,320
+
+ba_in01,37,210,0	warp	Room_A_to_B	1,1,ba_in01,125,207
+ba_in01,125,210,0	warp	Room_B_to_A	1,1,ba_in01,37,207
+
+ba_maison,53,131,0	warp	Camp_Room_In_A	1,1,ba_in01,234,35
+ba_in01,237,35,0	warp	Camp_Room_Out_A	1,1,ba_maison,57,131

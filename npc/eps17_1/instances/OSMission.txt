@@ -1,0 +1,806 @@
+//===== Crazyarashi Services =====================================|
+//= Episode 17.1 Illusion : OS Mission Story
+
+sp_cor,163,56,3	script	Erst#os_mission	HIDDEN_WARP_NPC,4,6,{
+	if(ep_illusion < 35){
+		cutin "ep162_est01",2;
+		mes "[ Erst ]";
+		mes "You don't have any business with me.";
+		close2;
+		cutin "",255;
+		end;
+
+	}
+	switch(checkquest(12452)){
+		case -1:
+			cutin "ep162_est01",2;
+			mes "[ Erst ]";
+			mes "Oh you're here. I heard that the recon team has taken control over the railroad.";
+			next;
+			select("Ask about the next operation.");
+			mes "[ Erst ]";
+			mes "I took control for now, but in a few hours they will be back. It would make the current operation useless.";
+			next;
+			mes "[ Erst ]";
+			mes "We are going to carry out the battle of surrounding area to prevent a subsequent counterattack.";
+			mes "Of course civilians will not be included.";
+			next;
+			select("Ask what you need to prepare.");
+			mes "[ Erst ]";
+			mes "We'll brief you after we enter the operational area. Bring only necessary items.";
+			next;
+			mes "[ Erst ]";
+			mes "We have to hurry before they take back the railroad.";
+			setquest 12452;
+			close3;
+			
+		case 1:
+			cutin "ep162_est01",2;
+			mes "[ Erst ]";
+			mes "Have you prepared all you needed?";
+			next;
+			.@md_name$ = "OS Mission";
+			.@party_id = getcharid(1);
+			if(!.@party_id){
+				mes "[ Erst ]";
+				mes "Are you alone? It's difficult if you're alone. Once you've made a party of one, talk to me again.";
+				close3;
+			}
+			getpartymember .@party_id,3;
+			if($@partymembercount != 1){
+				mes "[ Erst ]";
+				mes "Are you alone? It's difficult if you're alone. Once you've made a party of one, talk to me again.";
+				close3;
+			}
+			.@party_name$ = getpartyname(.@party_id);
+			.@s = select((!instance_id(IM_PARTY)?"Generate OS Mission.":""),(!instance_id(IM_PARTY)?"":"Enter OS Mission."));
+			switch(.@s){
+				case 1:
+					switch(instance_create(.@md_name$,IM_PARTY)){
+						case -1:
+							mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed!";
+							mes "Unknown Error Has Occurred.";
+							end;
+						case -2:
+							mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed!";
+							mes "Party Is Non-Existent.";
+							end;
+						case -3:
+							mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed!";
+							mes "Player already have instance.";
+							end;
+							
+						case -4:
+							mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed!";
+							mes "^0000ff"+.@md_name$+" ^000000 is currently full.";
+							end;
+							
+						default:
+							mes "[ Erst ]";
+							mes "The last checks are in place, let me know when you're ready to enter.";
+							close3;
+					}
+				case 2:
+					switch(instance_enter(.@md_name$)){
+						case 3:
+							mes "An unknown error has occurred.";
+							end;
+							
+						case 2:
+						case 1:
+							mes "^ff0000Character doesn't have an instance reserved.^000000";
+							end;
+							
+						case 0:
+							mapannounce "sp_cor", strcharinfo(0) + " of the party, "+ .@party_name$ +", is entering the " + .@md_name$ + ".", bc_map, "0x00FF99";
+							end;
+					}				
+			}			
+		case 2:
+			end;
+	}
+	end;
+	
+OnTouch:
+	if(checkquest(12452) != 2){
+		classchange(4_F_ESTLOVELOY,"",bc_self);
+		if(ep_illusion < 35){
+			npctalk "We don't have any business right now.","",bc_self;
+			end;
+		}
+		npctalk "We have to move quickly while we have the advantage.","",bc_self;
+	}
+	end;
+}
+
+1@os_a,30,354,0	script	#os_a_start	HIDDEN_WARP_NPC,2,2,{
+	end;
+	
+OnTouch:
+	doevent instance_npcname("Erst#osa_start")+"::OnStart";
+	end;
+	
+OnInstanceInit:
+	'instance_id = instance_id();
+	'os_a_map$ = instance_mapname("1@os_a");
+	/*
+	if(checkwall("os_pf_wall_1_" + 'instance_id) == true)
+		delwall "os_pf_wall_1_" + 'instance_id;
+	if(checkwall("os_pf_wall_2_" + 'instance_id) == true)
+		delwall "os_pf_wall_2_" + 'instance_id;
+	*/
+	setcell 'os_a_map$,48,327,48,345,CELL_WALKABLE,0;
+	setcell 'os_a_map$,48,327,48,345,CELL_SHOOTABLE,0;
+	setcell 'os_a_map$,46,356,46,363,CELL_WALKABLE,0;
+	setcell 'os_a_map$,46,356,46,363,CELL_SHOOTABLE,0;
+	end;
+}
+
+1@os_a,30,360,3	script	Erst#osa_start	4_F_ESTLOVELOY,{
+	cutin "ep162_est01",2;
+	mes "[ Erst ]";
+	mes "Focus on the briefing.";
+	close3;
+	
+OnStart:
+	.@map$ = 'os_a_map$;
+	F_InstanceHide("#os_a_start",3);
+	F_InstanceHide(strnpcinfo(0),2);
+	for(.@i = 1; .@i < 26; .@i++){
+		F_InstanceHide("#os_rebel_" + .@i,2);
+	}
+	npctalk "Erst : I have confirmed that there's toxic gas spreading at the front and it's being removed as we speak.";
+	sleep2 3000;
+	npctalk "Erst : Do not go until the clean up is finished...";
+	sleep2 3000;
+	npctalk "Erst : We need to properly establish a base here. I don't know how many experiment are lurking around.";
+	sleep2 3000;
+	npctalk "Erst : There isn't much information available, so it's our duty to figure it out. From now on, we'll split in 3 groups.";
+	sleep2 3000;
+	npctalk "Erst : The Alpha Team will begin a search around the southern channel.";
+	sleep2 3000;
+	npctalk "Erst : Bravo Team, you will come with me and we'll sweep the border to the east.";
+	sleep2 3000;
+	npctalk "Erst : The Echo team is guided by Lulune and they will be our backups. You will block the entrance and stop the experiments from coming back.";
+	sleep2 3000;
+	npctalk "Erst : We shouldn't need to ask anything from the support team, but if that happens, the Echo team will stand by.";
+	sleep2 1500;
+	mapannounce .@map$,"Chemical Processing Unit : The toxic gas facilities have been blocked successfully. The residual gas is expected to last for several more minutes.",bc_map,0xFFAE42;
+	sleep2 1500;
+	npctalk "Erst : it's time, let's move out. " + strcharinfo(0) + " team, wait here on standby, you're the support team.";
+	sleep2 1000;
+	F_InstanceHide("#os_rebel_1",5);
+	F_InstanceHide("#os_rebel_18",5);
+	F_InstanceHide("#os_rebel_19",5);
+	F_InstanceHide("#os_rebel_25",5);
+	sleep2 500;
+	F_InstanceHide("#os_rebel_13",5);
+	F_InstanceHide("#os_rebel_20",5);
+	F_InstanceHide("#os_rebel_24",5);
+	sleep2 500;
+	F_InstanceHide("#os_rebel_4",5);
+	F_InstanceHide("#os_rebel_14",5);
+	F_InstanceHide("#os_rebel_16",5);
+	F_InstanceHide("#os_rebel_23",5);		
+	sleep2 500;
+	F_InstanceHide("#os_rebel_9",5);
+	F_InstanceHide("#os_rebel_10",5);
+	F_InstanceHide("#os_rebel_21",5);
+	F_InstanceHide("#os_rebel_22",5);
+	sleep2 500;
+	F_InstanceHide("#os_rebel_7",5);
+	F_InstanceHide("#os_rebel_8",5);
+	F_InstanceHide("#os_rebel_12",5);
+	F_InstanceHide("#os_rebel_17",5);	
+	sleep2 500;
+	F_InstanceHide("#os_rebel_2",5);
+	F_InstanceHide("#os_rebel_3",5);
+	F_InstanceHide("#os_rebel_6",5);
+	F_InstanceHide("#os_rebel_15",5);
+	sleep2 500;
+	F_InstanceHide("#os_rebel_5",5);
+	F_InstanceHide("#os_rebel_11",5);
+	F_InstanceHide(strnpcinfo(0),5);
+	doevent instance_npcname("#os_com_dev_1")+"::OnStart";
+	end;
+	
+OnInstanceInit:
+	F_InstanceHide(strnpcinfo(0),1);
+	end;
+}
+
+1@os_a,29,360,3	script	#os_com_dev_1	4_SCR_AT_ROBOTS,{
+	if('os_a){
+		.@map$ = 'os_a_map$;
+		mes "## Received Message ##";
+		mes "## Team Alpha's last communication was at Car Sierra 52 177 ##";
+		navigateto(.@map$,52,177);
+		end;
+	}
+	switch('os_dev){
+		case 1:
+			doevent instance_npcname(strnpcinfo(0))+"::OnRadioFail";
+			end;
+			
+		case 2:
+			doevent instance_npcname(strnpcinfo(0))+"::OnRadioSuccess";
+			end;
+		
+		default:
+			mes "## ^FF0000No Communication Status^000000 ##";
+			close;
+	}
+	end;
+	
+	
+OnStart:
+	.@map$ = 'os_a_map$;
+	sleep2 2000;
+	F_InstanceEvent("#os_a_mob_start","OnMobSpawn");
+	mapannounce .@map$,"Alpha : The Alpha team is approaching south. We found a lot of mutants north of the Echo team.",bc_map,0xF0E68C;
+	sleep2 5000;
+	mapannounce .@map$,"Erst : The reception is good. Team Echo, prepare yourselves  and then contact us when you've taken care of the attack.",bc_blue|bc_map;
+	sleep2 5000;
+	mapannounce .@map$,"Alpha : This is Team Alpha. We're dealing with a number of mutants near the south drain. We're about to engage.",bc_map,0xF0E68C;
+	sleep2 5000;
+	mapannounce .@map$,"Erst : ---Roger.",bc_blue|bc_map;
+	sleep2 5000;
+	mapannounce .@map$,"Erst : Team Alpha, notify us when you're done with your engagement.",bc_blue|bc_map;
+	sleep2 5000;
+	mapannounce .@map$,"Alpha : We've cleared the mutants around the drain. A biological researched was confirmed. Waiting on the second wave.",bc_map,0xF0E68C;
+	sleep2 5000;
+	mapannounce .@map$,"Erst : Team Alpha, roger. Team Echo, give us a status report.",bc_blue|bc_map;
+	sleep2 5000;
+	mapannounce .@map$,"Erst : " + strcharinfo(0) + "!! What is your situation!!",bc_blue|bc_map;
+	sleep2 1500;
+	'os_dev = 1;
+	specialeffect 561;
+	end;
+	
+OnRadioFail:
+	.@map$ = 'os_a_map$;
+	mes "## Send Message Input ##";
+	next;
+	switch(select("Engaging with mutants north.:Engaging with small mutants.:No~! I want to go home!")){
+		case 1: .@word$ = "Engaging with mutants north."; break;
+		case 2: .@word$ = "Engaging with small mutants."; break;
+		case 3: .@word$ = "No~! I want to go home!"; break;
+	}
+	'os_dev = 0;
+	close2;
+	mapannounce .@map$,strcharinfo(0) + " : " + .@word$,bc_map,0x800080;
+	sleep2 5000;
+	mapannounce .@map$,"Erst : The Echo reception is not so good. Please send again.",bc_blue|bc_map;
+	sleep2 5000;
+	mapannounce .@map$,"Alpha : It's an ambush! Alpha team coordinates are OS Car Sierra 9.... *inaudible*",bc_map,0xF0E68C;
+	sleep2 5000;
+	mapannounce .@map$,"Erst : Team Alpha, resume your coordinates. Alpha!! Respond!!.",bc_blue|bc_map;
+	sleep2 5000;
+	mapannounce .@map$,"Alpha : ---- Tch -----!",bc_map,0xF0E68C;
+	sleep2 5000;
+	mapannounce .@map$,"Erst : Damn!... Team Echo, check if you can get to team Alpha's coordinates.",bc_blue|bc_map;
+	sleep2 5000;
+	mapannounce .@map$,"Erst : " + strcharinfo(0) + "! Check Alpha team's coordinates!",bc_blue|bc_map;
+	sleep2 1500;
+	'os_dev = 2;
+	specialeffect 561;
+	end;
+	
+OnRadioSuccess:
+	.@map$ = 'os_a_map$;
+	mes "## Send Message Input ##";
+	next;
+	switch(select("Team Echo is fighting. Requesting more support.:There was an engagement, but it ended.:Help me!")){
+		case 1: .@word$ = "Team Echo is fighting. Requesting more support."; break;
+		case 2: .@word$ = "There was an engagement, but it ended."; break;
+		case 3: .@word$ = "Help me!"; break;		
+	}
+	'os_dev = 0;
+	close2;
+	mapannounce .@map$,strcharinfo(0) + " : " + .@word$,bc_map,0x800080;
+	sleep2 5000;
+	mapannounce .@map$,"?????? : This is Foxtrot. Ground support bombardment is ready.",bc_map,0x00FF00;
+	sleep2 5000;
+	mapannounce .@map$,"Erst : Team Alpha is not responding." + strcharinfo(0) + ", please go back them up. The coordinates are OS Cat Sierra 32 356.",bc_blue|bc_map;
+	sleep2 5000;
+	mapannounce .@map$,"?????? : Foxtrot here, we receieved the coordinates.  Please be careful to only hit the mutants.",bc_map,0x00FF00;
+	sleep2 5000;
+	mapannounce .@map$,"?????? : A ground pulse will be sent on Echo's side in 3 seconds.",bc_map,0x00FF00;
+	sleep2 3000;
+	.@map$ = 'os_a_map$;
+	setarray .@xy$,"27,358","32,358","37,358","27,353","32,353","37,353","27,348","32,348","37,348";
+	for(.@i = 0; .@i < getarraysize(.@xy$); .@i++){
+		explode(.@T$,.@xy$[.@i],",");
+		.@x = atoi(.@T$[0]);
+		.@y = atoi(.@T$[1]);
+		npcskilleffect 83,0,.@x,.@y;
+		killmonster .@map$,instance_npcname("#os_a_mob_start")+"::OnDead";
+		sleep2 1000;
+	}
+	for(.@i = 1; .@i < 71; .@i++){
+		F_InstanceEvent("#os_poison_" + .@i),"OnDisable";
+	}
+	mapannounce .@map$,"?????? : Team Echo, the mutant disabling support is complete.",bc_map;
+	sleep2 3000;
+	mapannounce .@map$,"Erst : The engagement has ended on our end.",bc_blue|bc_map;
+	sleep2 3000;
+	mapannounce .@map$,"Erst : I will transmit Alpha team's approximate coordinates of their last contact point by radio.",bc_blue|bc_map;
+	sleep2 3000;
+	'os_a = 1;
+	//delwall "os_pf_wall_1_" + 'instance_id;
+	//delwall "os_pf_wall_2_" + 'instance_id;
+	setcell 'os_a_map$,48,327,48,345,CELL_WALKABLE,1;
+	setcell 'os_a_map$,48,327,48,345,CELL_SHOOTABLE,1;
+	setcell 'os_a_map$,46,356,46,363,CELL_WALKABLE,1;
+	setcell 'os_a_map$,46,356,46,363,CELL_SHOOTABLE,1;
+	specialeffect 561;
+	F_InstanceHide("#os_com_dev_2",4);
+	end;
+}
+
+1@os_a,52,177,3	script	#os_com_dev_2	4_SCR_AT_ROBOTS,{
+	.@map$ = 'os_a_map$;
+	'os_a = 2;
+	npctalk "Erst : Can you hear me " + strcharinfo(0) + "? Answer me if possible.";
+	sleep2 1000;
+	mes "## Send Message Input ##";
+	next;
+	select("I can't find team Alpha's traces.");
+	mapannounce .@map$,strcharinfo(0) + " : No traces of the Alpha team were found at the bottom bridge.",bc_map,0x800080;
+	sleep2 1500;
+	select("There is nothing special.");
+	mapannounce .@map$,strcharinfo(0) + " : There is nothing special.",bc_map,0x800080;
+	sleep2 1500;
+	mapannounce .@map$,"Erst : Team Bravo just completed the search on the east side.",bc_blue|bc_map;
+	F_InstanceEvent("#os_a_mob_mid","OnMobSpawn");
+	sleep2 1500;
+	mapannounce .@map$,"Erst : We'll be moving south. I'll transmit the new coordinates. Prepare yourselves for an engagement when you move out.",bc_blue|bc_map;
+	mes "## Received Coordinates ##";
+	navigateto(.@map$,84,256);
+	close2;
+	F_InstanceHide(strnpcinfo(0),5);
+	end;
+
+OnInstanceInit:
+	F_InstanceHide(strnpcinfo(0),3);
+	end;
+}
+
+1@os_a,84,256,0	script	#os_a_ev_t_1	4_ENERGY_BLUE,2,2,{
+	end;
+	
+OnTouch_:
+	.@map$ = 'os_a_map$;
+	F_InstanceHide(strnpcinfo(0),5);
+	mapannounce .@map$,"Erst : " + strcharinfo(0) + ", can you hear me?",bc_blue|bc_map;
+	F_InstanceEvent("#os_a_mob_rail","OnMobSpawn");
+	navigateto(.@map$,163,266);
+	sleep2 3000;
+	mapannounce .@map$,"Erst : I transmitted the second search coordinates. Be careful not to lose them.",bc_blue|bc_map;
+	sleep2 3000;
+	mapannounce .@map$,"Erst : " + strcharinfo(0) + ". See if you find any traces of team Alpha nearby.",bc_blue|bc_map;
+	sleep2 3000;
+	mapannounce .@map$,strcharinfo(0) + " : I've detected movements nearby, there are troops of mutants..",bc_map,0x800080;
+	sleep2 3000;
+	mapannounce .@map$,"Erst : See if you can get through. Try to ... take over all of them.",bc_blue|bc_map;
+	end;
+	
+OnInstanceInit:
+	F_InstanceHide(strnpcinfo(0),3);
+	end;
+}
+
+1@os_a,163,266,0	script	#os_a_ev_t_2	4_ENERGY_BLUE,2,2,{
+OnTouch_:
+	.@map$ = 'os_a_map$;
+	F_InstanceHide(strnpcinfo(0),5);
+	navigateto(.@map$,138,174);
+	F_InstanceEvent("#os_a_mob_end","OnMobSpawn");
+	mapannounce .@map$,"Erst : " + strcharinfo(0) + ", are you still there?",bc_blue|bc_map;
+	sleep2 3000;
+	mapannounce .@map$,strcharinfo(0) + " : Team Echo is still moving towards to the southern point.",bc_map,0x800080;
+	sleep2 3000;
+	mapannounce .@map$,"Erst : Team Bravo is also moving to the meeting point, we're skipping the eastern location.",bc_blue|bc_map;
+	end;
+	
+OnInstanceInit:
+	F_InstanceHide(strnpcinfo(0),3);
+	end;
+}
+
+1@os_a,138,174,0	script	#os_a_ev_t_3	4_ENERGY_BLUE,2,2,{
+	end;
+	
+OnTouch_:
+	.@map$ = 'os_a_map$;
+	F_InstanceHide(strnpcinfo(0),5);
+	navigateto(.@map$,161,179);
+	F_InstanceEvent("#os_a_boss","OnBossSpawn");
+	end;
+	
+OnInstanceInit:
+	F_InstanceHide(strnpcinfo(0),3);
+	end;
+}
+
+1@os_a,162,176,5	script	#miguel_os_a	4_EP17_MIGUEL_D,{
+	if('os_a == 3){
+		mes "^0000FFI think he stopped breathing.^000000";
+		close;
+	}
+	cutin "ep171_miguel01",0;
+	mes "[ ??? ]";
+	mes "You... You must have been to Regenschirm. I have something to say...";
+	next;
+	cutin "",255;
+	mes "^0000FFThe mutant seems like he want to say something.^000000";
+	close;
+	
+OnInstanceInit:
+	F_InstanceHide(strnpcinfo(0),3);
+	end;
+}
+
+1@os_a,165,176,3	script	Erst#os_a_end	4_F_ESTLOVELOY,{
+	switch('os_a){
+		case 2:
+			cutin "ep162_est01",2;
+			mes "[ Erst ]";
+			mes strcharinfo(0) + ", I didn't know if you'd make it. You're pretty good.";
+			next;
+			mes "[ Erst ]";
+			mes "Well, I think we should ask him...";
+			mes "he's the first able to speak.";
+			next;
+			cutin "ep171_miguel03",0;
+			mes "[ ??? ]";
+			mes "... Erst?";
+			next;
+			cutin "ep162_est01",2;
+			mes "[ Erst ]";
+			mes "How do you know my name? Who are you!";
+			next;
+			cutin "ep171_miguel03",0;
+			mes "[ ??? ]";
+			mes "Erst... Rebellion Ghost Squad... Do you remember uncle Miguel?";
+			next;
+			cutin "ep162_est01",2;
+			mes "[ Erst ]";
+			mes "How do you know that name, that's not possible...";
+			next;
+			cutin "ep171_miguel03",0;
+			mes "[ ??? ]";
+			mes "Ah... ahah... so you do remember.";
+			next;
+			mes "^0000FFYou notice the identification tag on the mutant's neck.^000000";
+			next;
+			select("Untie the tag and hand it over to Erst.");
+			cutin "ep162_est01",2;
+			mes "[ Erst ]";
+			mes "Mi... guel...?";
+			next;
+			cutin "ep171_miguel03",0;
+			mes "[ Miguel ]";
+			mes "... Erst, the last thing I'll see... is your face... I'm glad.";
+			next;
+			cutin "ep162_est01",2;
+			mes "[ Erst ]";			
+			mes "Uncle Miguel?! How did this happen!";
+			next;
+			cutin "ep171_miguel03",0;
+			mes "[ Miguel ]";
+			mes "Before I die... I always wanted to see my old colleagues... You made that wish happen.";
+			next;
+			cutin "ep162_est01",2;
+			mes "[ Erst ]";
+			mes "Uncle! What is this! What the hell happened to you?";
+			next;
+			cutin "ep171_miguel01",0;
+			mes "[ Miguel ]";
+			mes "Come on... I don't have much time left... Listen to me, Erst.";
+			next;
+			mes "[ Miguel ]";
+			mes "Somewhere in here... the mad research results of Regenschirm... can be found somewhere in here.";
+			next;
+			mes "[ Miguel ]";
+			mes "Find everything... and you'll know what happened to me... you'll see things that can't be explained here.";
+			next;
+			cutin "ep162_est01",2;
+			mes "[ Erst ]";
+			mes "Uncle! Stand up!! Please... let's go back home together!";
+			next;
+			cutin "ep171_miguel02",0;
+			mes "[ Miguel ]";
+			mes  "Erst... you still have a big heart... did you... learn that in... the battlefield...";
+			next;
+			cutin "ep162_est01",2;
+			mes "[ Erst ]";
+			mes "Uncle! Uncle!!";
+			next;
+			cutin "",255;
+			mes "[ Miguel ]";
+			mes "...";
+			'os_a = 3;
+			completequest 12452;
+			getitem 25668,1;
+			getitem 25723,5;
+			getexp 3000000,3000000;
+			end;
+			
+		case 3:
+			select("Ask about Miguel");
+			cutin "ep162_est01",2;
+			mes "[ Erst ]";
+			mes strcharinfo(0) +", I'm sorry but I don't feel like talking about him right now.";
+			next;
+			select("Ask about the records.");
+			mes "[ Erst ]";
+			mes "I checked the northeast section and saw a place over the railway that seemed to be a research facility.";
+			next;
+			mes "[ Erst ]";
+			mes "Maybe the research Miguel was talking about... is somewhere in there. I'm going to have to start another operation right away.";
+			next;
+			mes "[ Erst ]";
+			mes "I don't think there will be anything else to do here.";
+			next;
+			select("I want to go back.");
+			warp "sp_cor",162,56;
+			end;
+	}
+	
+OnInstanceInit:
+	F_InstanceHide(strnpcinfo(0),3);
+	end;
+}
+
+1@os_a,1,1,0	script	#os_a_boss	HIDDEN_WARP_NPC,{
+	end;
+	
+OnBossSpawn:
+	F_InstanceHide(strnpcinfo(0),4);
+	.@map$ = 'os_a_map$;
+	monster .@map$,161,178,"????",20347,1,instance_npcname(strnpcinfo(0))+"::OnBossKill";
+	'boss_id = $@mobid[0];
+	getunitdata 'boss_id,.@boss;
+	.@MAX_HP = .@boss[3];
+	.@DAMAGE = (.@MAX_HP/10) * 9;
+	.@HP = (.@MAX_HP - .@DAMAGE);
+	setunitdata 'boss_id,UMOB_HP,.@HP;
+	end;
+	
+OnBossKill:
+	F_InstanceHide("#miguel_os_a",4);
+	F_InstanceHide("Erst#os_a_end",4);
+	end;
+	
+OnInstanceInit:
+	F_InstanceHide(strnpcinfo(0),3);
+	end;
+}
+
+1@os_a,1,1,0	script	#os_a_mob_mid	HIDDEN_WARP_NPC,{
+	end;
+	
+OnMobSpawn:
+	F_InstanceHide(strnpcinfo(0),4);
+	.@map$ = 'os_a_map$;
+	areamonster .@map$,59,213,65,220,"--ja--",20350,4,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	areamonster .@map$,59,213,65,220,"--ja--",20349,1,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	areamonster .@map$,63,233,72,244,"--ja--",20350,2,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	areamonster .@map$,63,233,72,244,"--ja--",20349,1,instance_npcname(strnpcinfo(0))+"::OnMobKill";	
+	do {
+		.@mob_count = mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill");
+		mapannounce .@map$,"Remaining Mutant Survivor - " + .@mob_count,bc_map;
+		sleep 5000;
+	} while(mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill") > 0);
+	end;
+	
+OnMobKill:
+	.@map$ = 'os_a_map$;
+	if(mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill") < 1){
+		mapannounce .@map$,"Secure of the intermediate base complete.",bc_map;
+		F_InstanceHide("#os_a_ev_t_1",4);
+	}
+	end;
+	
+OnInstanceInit:
+	F_InstanceHide(strnpcinfo(0),3);
+	end; 
+}
+
+1@os_a,1,1,0	script	#os_a_mob_rail	HIDDEN_WARP_NPC,{
+	end;
+	
+OnMobSpawn:
+	F_InstanceHide(strnpcinfo(0),4);
+	.@map$ = 'os_a_map$;
+	areamonster .@map$,127,264,184,269,"--ja--",20350,6,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	areamonster .@map$,126,265,135,269,"--ja--",20349,6,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	do {
+		.@mob_count = mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill");
+		mapannounce .@map$,"Remaining Mutant Survivor - " + .@mob_count,bc_map;
+		sleep 5000;
+	} while(mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill") > 0);
+	end;
+	
+OnMobKill:
+	.@map$ = 'os_a_map$;
+	if(mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill") < 1){
+		mapannounce .@map$,"Secure of the intermediate base complete.",bc_map;
+		F_InstanceHide("#os_a_ev_t_2",4);
+	}
+	end;
+	
+OnInstanceInit:
+	F_InstanceHide(strnpcinfo(0),3);
+	end;
+}
+
+1@os_a,148,224,0	script	#os_a_mob_end	HIDDEN_WARP_NPC,{
+	end;
+	
+OnMobSpawn:
+	F_InstanceHide(strnpcinfo(0),4);
+	.@map$ = 'os_a_map$;
+	areamonster .@map$,136,196,146,204,"--ja--",20350,12,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	areamonster .@map$,136,196,146,204,"--ja--",20349,2,instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	do {
+		.@mob_count = mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill");
+		mapannounce .@map$,"Remaining Mutant Survivor - " + .@mob_count,bc_map;
+		sleep 5000;
+	} while(mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill") > 0);
+	end;
+	
+OnMobKill:
+	.@map$ = 'os_a_map$;
+	if(mobcount(.@map$,instance_npcname(strnpcinfo(0))+"::OnMobKill") < 1){
+		mapannounce .@map$,"Secure of the intermediate base complete.",bc_map;
+		F_InstanceHide("#os_a_ev_t_3",4);
+	}
+	end;
+	
+OnInstanceInit:
+	F_InstanceHide(strnpcinfo(0),3);
+	end; 
+}
+
+1@os_a,1,1,0	script	#os_a_mob_start	HIDDEN_WARP_NPC,{
+	end;
+	
+OnMobSpawn:
+	.@map$ = 'os_a_map$;
+	setarray .@mob,20348,20349,20350;
+	do {
+		.@id = .@mob[rand(getarraysize(.@mob))];
+		areamonster .@map$,26,349,37,357,"--ja--",.@id,1,instance_npcname(strnpcinfo(0))+"::OnDead";
+		sleep 8000;
+	} while('os_a < 1);
+	end;
+	
+OnDead:
+	end;
+	
+OnInstanceInit:
+	F_InstanceHide(strnpcinfo(0),3);
+	end; 
+}
+
+1@os_a,38,357,7	script	#os_rebel_1	4_F_GUNSLINGER3,{
+	end;
+}
+
+1@os_a,38,354,7	duplicate(#os_rebel_1)	#os_rebel_2	4_F_GUNSLINGER3
+1@os_a,38,351,7	duplicate(#os_rebel_1)	#os_rebel_3	4_F_GUNSLINGER3
+1@os_a,38,348,7	duplicate(#os_rebel_1)	#os_rebel_4	4_F_GUNSLINGER3
+1@os_a,38,345,7	duplicate(#os_rebel_1)	#os_rebel_5	4_F_GUNSLINGER3
+1@os_a,35,357,7	duplicate(#os_rebel_1)	#os_rebel_6	4_F_GUNSLINGER2
+1@os_a,35,354,7	duplicate(#os_rebel_1)	#os_rebel_7	4_F_GUNSLINGER2
+1@os_a,35,351,7	duplicate(#os_rebel_1)	#os_rebel_8	4_F_GUNSLINGER2
+1@os_a,35,348,7	duplicate(#os_rebel_1)	#os_rebel_9	4_F_GUNSLINGER2
+1@os_a,35,345,7	duplicate(#os_rebel_1)	#os_rebel_10	4_F_GUNSLINGER2
+1@os_a,32,357,7	duplicate(#os_rebel_1)	#os_rebel_11	4_M_REBELLION3
+1@os_a,32,354,7	duplicate(#os_rebel_1)	#os_rebel_12	4_M_REBELLION3
+1@os_a,32,351,7	duplicate(#os_rebel_1)	#os_rebel_13	4_M_REBELLION3
+1@os_a,32,348,7	duplicate(#os_rebel_1)	#os_rebel_14	4_M_REBELLION3
+1@os_a,32,345,7	duplicate(#os_rebel_1)	#os_rebel_15	4_M_REBELLION3
+1@os_a,29,357,7	duplicate(#os_rebel_1)	#os_rebel_16	4_M_REBELLION2
+1@os_a,29,354,7	duplicate(#os_rebel_1)	#os_rebel_17	4_M_REBELLION2
+1@os_a,29,351,7	duplicate(#os_rebel_1)	#os_rebel_18	4_M_REBELLION2
+1@os_a,29,348,7	duplicate(#os_rebel_1)	#os_rebel_19	4_M_REBELLION2
+1@os_a,29,345,7	duplicate(#os_rebel_1)	#os_rebel_20	4_M_REBELLION2
+1@os_a,26,357,7	duplicate(#os_rebel_1)	#os_rebel_21	4_M_REBELLION2
+1@os_a,26,354,7	duplicate(#os_rebel_1)	#os_rebel_22	4_M_REBELLION2
+1@os_a,26,351,7	duplicate(#os_rebel_1)	#os_rebel_23	4_M_REBELLION2
+1@os_a,26,348,7	duplicate(#os_rebel_1)	#os_rebel_24	4_M_REBELLION2
+1@os_a,26,345,7	duplicate(#os_rebel_1)	#os_rebel_25	4_M_REBELLION2
+
+1@os_a,41,340,0	script	#os_poison_1	HIDDEN_WARP_NPC,1,1,{
+	end;
+	
+OnTouch:
+	.@DAMAGE = (MaxHp/10) * 8;
+	heal -.@DAMAGE,0;
+	end;
+	
+OnDisable:
+	F_InstanceHide(strnpcinfo(0),5);
+	end;
+
+OnInstanceInit:
+	while('os_a < 1){
+		sleep 1000;
+		specialeffect 1020;
+	}
+	end;
+}
+
+
+1@os_a,41,341,0	duplicate(#os_poison_1)	#os_poison_2	HIDDEN_WARP_NPC,1,1
+1@os_a,41,342,0	duplicate(#os_poison_1)	#os_poison_3	HIDDEN_WARP_NPC,1,1
+1@os_a,41,343,0	duplicate(#os_poison_1)	#os_poison_4	HIDDEN_WARP_NPC,1,1
+1@os_a,41,344,0	duplicate(#os_poison_1)	#os_poison_5	HIDDEN_WARP_NPC,1,1
+1@os_a,42,340,0	duplicate(#os_poison_1)	#os_poison_6	HIDDEN_WARP_NPC,1,1
+1@os_a,42,341,0	duplicate(#os_poison_1)	#os_poison_7	HIDDEN_WARP_NPC,1,1
+1@os_a,42,342,0	duplicate(#os_poison_1)	#os_poison_8	HIDDEN_WARP_NPC,1,1
+1@os_a,42,343,0	duplicate(#os_poison_1)	#os_poison_9	HIDDEN_WARP_NPC,1,1
+1@os_a,42,344,0	duplicate(#os_poison_1)	#os_poison_10	HIDDEN_WARP_NPC,1,1
+1@os_a,43,340,0	duplicate(#os_poison_1)	#os_poison_11	HIDDEN_WARP_NPC,1,1
+1@os_a,43,341,0	duplicate(#os_poison_1)	#os_poison_12	HIDDEN_WARP_NPC,1,1	
+1@os_a,43,342,0	duplicate(#os_poison_1)	#os_poison_13	HIDDEN_WARP_NPC,1,1
+1@os_a,43,343,0	duplicate(#os_poison_1)	#os_poison_14	HIDDEN_WARP_NPC,1,1
+1@os_a,43,344,0	duplicate(#os_poison_1)	#os_poison_15	HIDDEN_WARP_NPC,1,1
+1@os_a,44,340,0	duplicate(#os_poison_1)	#os_poison_16	HIDDEN_WARP_NPC,1,1
+1@os_a,44,341,0	duplicate(#os_poison_1)	#os_poison_17	HIDDEN_WARP_NPC,1,1
+1@os_a,44,342,0	duplicate(#os_poison_1)	#os_poison_18	HIDDEN_WARP_NPC,1,1
+1@os_a,44,343,0	duplicate(#os_poison_1)	#os_poison_19	HIDDEN_WARP_NPC,1,1
+1@os_a,44,344,0	duplicate(#os_poison_1)	#os_poison_20	HIDDEN_WARP_NPC,1,1
+1@os_a,45,340,0	duplicate(#os_poison_1)	#os_poison_21	HIDDEN_WARP_NPC,1,1
+1@os_a,45,341,0	duplicate(#os_poison_1)	#os_poison_22	HIDDEN_WARP_NPC,1,1
+1@os_a,45,342,0	duplicate(#os_poison_1)	#os_poison_23	HIDDEN_WARP_NPC,1,1
+1@os_a,45,343,0	duplicate(#os_poison_1)	#os_poison_24	HIDDEN_WARP_NPC,1,1
+1@os_a,45,344,0	duplicate(#os_poison_1)	#os_poison_25	HIDDEN_WARP_NPC,1,1
+1@os_a,46,340,0	duplicate(#os_poison_1)	#os_poison_26	HIDDEN_WARP_NPC,1,1
+1@os_a,46,341,0	duplicate(#os_poison_1)	#os_poison_27	HIDDEN_WARP_NPC,1,1
+1@os_a,46,342,0	duplicate(#os_poison_1)	#os_poison_28	HIDDEN_WARP_NPC,1,1
+1@os_a,46,343,0	duplicate(#os_poison_1)	#os_poison_29	HIDDEN_WARP_NPC,1,1
+1@os_a,46,344,0	duplicate(#os_poison_1)	#os_poison_30	HIDDEN_WARP_NPC,1,1
+1@os_a,41,334,0	duplicate(#os_poison_1)	#os_poison_31	HIDDEN_WARP_NPC,1,1
+1@os_a,41,333,0	duplicate(#os_poison_1)	#os_poison_32	HIDDEN_WARP_NPC,1,1
+1@os_a,41,332,0	duplicate(#os_poison_1)	#os_poison_33	HIDDEN_WARP_NPC,1,1
+1@os_a,41,331,0	duplicate(#os_poison_1)	#os_poison_34	HIDDEN_WARP_NPC,1,1
+1@os_a,41,330,0	duplicate(#os_poison_1)	#os_poison_35	HIDDEN_WARP_NPC,1,1
+1@os_a,42,334,0	duplicate(#os_poison_1)	#os_poison_36	HIDDEN_WARP_NPC,1,1
+1@os_a,42,333,0	duplicate(#os_poison_1)	#os_poison_37	HIDDEN_WARP_NPC,1,1
+1@os_a,42,332,0	duplicate(#os_poison_1)	#os_poison_38	HIDDEN_WARP_NPC,1,1
+1@os_a,42,331,0	duplicate(#os_poison_1)	#os_poison_39	HIDDEN_WARP_NPC,1,1
+1@os_a,42,330,0	duplicate(#os_poison_1)	#os_poison_40	HIDDEN_WARP_NPC,1,1
+1@os_a,43,334,0	duplicate(#os_poison_1)	#os_poison_41	HIDDEN_WARP_NPC,1,1
+1@os_a,43,333,0	duplicate(#os_poison_1)	#os_poison_42	HIDDEN_WARP_NPC,1,1
+1@os_a,43,332,0	duplicate(#os_poison_1)	#os_poison_43	HIDDEN_WARP_NPC,1,1
+1@os_a,43,331,0	duplicate(#os_poison_1)	#os_poison_44	HIDDEN_WARP_NPC,1,1
+1@os_a,43,330,0	duplicate(#os_poison_1)	#os_poison_45	HIDDEN_WARP_NPC,1,1
+1@os_a,44,334,0	duplicate(#os_poison_1)	#os_poison_46	HIDDEN_WARP_NPC,1,1
+1@os_a,44,333,0	duplicate(#os_poison_1)	#os_poison_47	HIDDEN_WARP_NPC,1,1
+1@os_a,44,332,0	duplicate(#os_poison_1)	#os_poison_48	HIDDEN_WARP_NPC,1,1
+1@os_a,44,331,0	duplicate(#os_poison_1)	#os_poison_49	HIDDEN_WARP_NPC,1,1
+1@os_a,44,330,0	duplicate(#os_poison_1)	#os_poison_50	HIDDEN_WARP_NPC,1,1
+1@os_a,45,334,0	duplicate(#os_poison_1)	#os_poison_51	HIDDEN_WARP_NPC,1,1
+1@os_a,45,333,0	duplicate(#os_poison_1)	#os_poison_52	HIDDEN_WARP_NPC,1,1
+1@os_a,45,332,0	duplicate(#os_poison_1)	#os_poison_53	HIDDEN_WARP_NPC,1,1
+1@os_a,45,331,0	duplicate(#os_poison_1)	#os_poison_54	HIDDEN_WARP_NPC,1,1
+1@os_a,45,330,0	duplicate(#os_poison_1)	#os_poison_55	HIDDEN_WARP_NPC,1,1
+1@os_a,42,359,0	duplicate(#os_poison_1)	#os_poison_56	HIDDEN_WARP_NPC,1,1
+1@os_a,42,360,0	duplicate(#os_poison_1)	#os_poison_57	HIDDEN_WARP_NPC,1,1
+1@os_a,42,361,0	duplicate(#os_poison_1)	#os_poison_58	HIDDEN_WARP_NPC,1,1
+1@os_a,43,359,0	duplicate(#os_poison_1)	#os_poison_59	HIDDEN_WARP_NPC,1,1
+1@os_a,43,360,0	duplicate(#os_poison_1)	#os_poison_60	HIDDEN_WARP_NPC,1,1
+1@os_a,43,361,0	duplicate(#os_poison_1)	#os_poison_61	HIDDEN_WARP_NPC,1,1
+1@os_a,44,359,0	duplicate(#os_poison_1)	#os_poison_62	HIDDEN_WARP_NPC,1,1
+1@os_a,44,360,0	duplicate(#os_poison_1)	#os_poison_63	HIDDEN_WARP_NPC,1,1
+1@os_a,44,361,0	duplicate(#os_poison_1)	#os_poison_64	HIDDEN_WARP_NPC,1,1
+1@os_a,45,359,0	duplicate(#os_poison_1)	#os_poison_65	HIDDEN_WARP_NPC,1,1
+1@os_a,45,360,0	duplicate(#os_poison_1)	#os_poison_66	HIDDEN_WARP_NPC,1,1
+1@os_a,45,361,0	duplicate(#os_poison_1)	#os_poison_67	HIDDEN_WARP_NPC,1,1
+1@os_a,46,359,0	duplicate(#os_poison_1)	#os_poison_68	HIDDEN_WARP_NPC,1,1
+1@os_a,46,360,0	duplicate(#os_poison_1)	#os_poison_69	HIDDEN_WARP_NPC,1,1
+1@os_a,46,361,0	duplicate(#os_poison_1)	#os_poison_70	HIDDEN_WARP_NPC,1,1

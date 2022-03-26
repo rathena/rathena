@@ -1,0 +1,1175 @@
+//===== rAthena Script =======================================
+//= Farm of the Forgotten Time
+
+//Instance Start
+1@lost,0,0,0	script	#fft_ctrl	HIDDEN_WARP_NPC,{
+	
+OnInstanceInit:
+	'ftt_map$ = instance_mapname("1@lost");
+	'fftp = 0;
+	'fft_done = 0;
+	
+	//Hide NPC's
+	hideonnpc instance_npcname("Silk#01");
+	hideonnpc instance_npcname("Silk#02");
+	hideonnpc instance_npcname("Silk#03");
+	hideonnpc instance_npcname("Silk#04");
+	hideonnpc instance_npcname("Silk#05");
+	hideonnpc instance_npcname("Silk#06");
+	hideonnpc instance_npcname("Silk#10");
+	
+	hideonnpc instance_npcname("Wooden Box#02");
+	hideonnpc instance_npcname("Wooden Box#03");
+	hideonnpc instance_npcname("Wooden Box#04");
+	hideonnpc instance_npcname("Wooden Box#05");
+	hideonnpc instance_npcname("Wooden Box#06");
+	hideonnpc instance_npcname("Wooden Box#10");
+	hideonnpc instance_npcname("Wooden Box#10-1");
+	
+	//Spawn just to make sure
+	disablenpc instance_npcname("#r_mob_trig01");
+	disablenpc instance_npcname("#r_mob_trig02");
+	disablenpc instance_npcname("#r_mob_trig03");
+	disablenpc instance_npcname("#r_mob_trig04");
+	disablenpc instance_npcname("#r_mob_trig05");
+	disablenpc instance_npcname("#l_mob_trig01");
+	disablenpc instance_npcname("#l_mob_trig02");
+	disablenpc instance_npcname("#l_mob_trig03");
+	disablenpc instance_npcname("#l_mob_trig04");
+	disablenpc instance_npcname("#l_mob_trig05");
+	end;
+}
+
+1@lost,163,47,3	script	Wooden Box#01	4_WOODBOX,5,5,{
+	if('fftp == 1){
+		mes "[Silk]";
+		mes "Welcome to the farm!";
+		mes "I heard you from Luina!";
+		mes "I'm the one in charge of the collection!";
+		npctalk "Silk: Welcome to the farm! I heard you from Luina! I’m Silk and I am in charge of the collection.",instance_npcname("Wooden Box#01"),bc_area;
+		next;
+		mes "[Silk]";
+		mes "Help me!";
+		npctalk "Silk: Help me!",instance_npcname("Wooden Box#01"),bc_area;
+		close2;
+		'fftp = 2;
+		donpcevent instance_npcname("#fft_mob_ctrl") + "::OnSummon";
+		end;
+	}
+	close;
+	
+OnTouch:
+	if(!'fftp) {
+		npctalk "Silk: Ah!! Sir! Here!!",instance_npcname("Wooden Box#01"),bc_area; //13410
+		'fftp = 1;
+		end;
+	}
+	end;
+}
+
+1@lost,163,47,3	script	Silk#01	4_EP17_BASKET,{
+	mes "[Silk]";
+	mes "Ugh... Ugh...";
+	mes "Thanks for saving me!";
+	mes "Luina told me that the Pitayas are nice!";
+	npctalk "Silk: Thanks for saving me! Luina told me that the Pitayas are nice!",instance_npcname("Silk#01"),bc_area; // 13410
+	next;
+	mes "[Silk]";
+	mes "You saw it now! Scary!";
+	npctalk "Silk: You saw it now! Scary!",instance_npcname("Silk#01"),bc_area;  // 13410
+	next;
+	mes "[Silk]";
+	mes "I need to feed, hug, and pet it for five minutes?";
+	mes "How can I pet them when they're approaching me with their teeth grinding!";
+	npctalk "Silk: I need to feed, hug, and pet it for five minutes? How can I pet them when they're approaching me with their teeth grinding!",instance_npcname("Silk#01"),bc_area;  // 13410
+	next;
+	mes "[Silk]";
+	mes "What the hell is 5 minutes!";
+	npctalk "What the hell is 5 minutes!",instance_npcname("Silk#01"),bc_area;  // 13410
+	next;
+	mes "[Silk]";
+	mes "...";
+	npctalk "Silk: ...",instance_npcname("Silk#01"),bc_area;  // 13410
+	next;
+	mes "[Silk]";
+	mes "Sir...";
+	npctalk "Silk: Sir...",instance_npcname("Silk#01"),bc_area;  // 13410
+	next;
+	mes "[Silk]";
+	mes "I understand why Luina asked for more hands because she couldn't harvest quickly.";
+	npctalk "Silk: I understand why Luina asked for more hands because she couldn't harvest quickly.",instance_npcname("Silk#01"),bc_area;  // 13410
+	next;
+	mes "[Silk]";
+	mes "But rather than holding on somehow and stroking it for five minutes, just like just now. I think it would be faster to play with them.";
+	npctalk "Silk: But rather than holding on somehow and stroking it for five minutes, just like just now. I think it would be faster to play with them.",instance_npcname("Silk#01"),bc_area;  // 13410
+	next;
+	mes "[Silk]";
+	mes "...I can't even hold onto it.";
+	npctalk "Silk: ...I can't even hold onto it.",instance_npcname("Silk#01"),bc_area;  // 13410
+	next;
+	mes "[Silk]";
+	mes "Let's move on to their next habitat and not here.";
+	mes "Ready? Let's go!";
+	npctalk "Silk: Let's move on to their next habitat and not here. Ready? Let's go!",instance_npcname("Silk#01"),bc_area;  // 13410
+	'fftp = 3;
+	close2;
+	hideoffnpc instance_npcname("Silk#02"); //Not sure #1
+	hideonnpc instance_npcname("Silk#01"); //Not sure #1
+	warp 'ftt_map$,219,148;
+	end;
+}
+
+1@lost,214,147,3	script	Silk#02	4_EP17_BASKET,{
+	switch('fftp){
+		case 3:
+			mes "[Silk]";
+			mes "As you can see, this facility is a farm where reptile friends can live with comfort.";
+			npctalk "Silk: As you can see, this facility is a farm where reptile friends can live with comfort.",instance_npcname("Silk#02"),bc_area;  // 13411
+			next;
+			mes "[Silk]";
+			mes "Whether it's plants or animals.";
+			mes "The temperature and humidity are always constant.";
+			npctalk "Silk: Whether it's plants or animals. The temperature and humidity are always constant.",instance_npcname("Silk#02"),bc_area;  // 13411
+			next;
+			mes "[Silk]";
+			mes "I heard that it's not good to people, but how's your breathing?";
+			npctalk "Silk: I heard that it's not good to people, but how's your breathing?",instance_npcname("Silk#02"),bc_area;  // 13411
+			next;
+			mes "[Silk]";
+			mes "Let's sprinkle some food over here. Let's get this over with. Let's go.";
+			npctalk "Silk: Let's sprinkle some food over here. Let's get this over with. Let's go.",instance_npcname("Silk#02"),bc_area;  // 13411
+			next;
+			mes "[Silk]";
+			mes "Huh? Does an automatic doll feel scared, too? Wouldn't anyone who can think of the fear of extinction?";
+			next;
+			mes "[Silk]";
+			mes "Hey, guys, it-- it's time to eaaaat~";
+			npctalk "Silk: Hey, guys, it-- it's time to eaaaat~",instance_npcname("Silk#02"),bc_area;  // 13411
+			'fftp = 4;
+			close2;
+			hideonnpc instance_npcname("Silk#02");
+			hideoffnpc instance_npcname("Wooden Box#02");
+			donpcevent instance_npcname("Wooden Box#02") + "::OnCommand";
+			end;
+		case 4:
+			mes "[Silk]";
+			mes "Huhuhu... it was so scary...";
+			npctalk "Silk: Huhuhu... it was so scary...",instance_npcname("Silk#02"),bc_area;  // 13411
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Are you sure you're playing right now?";
+			showscript ""+strcharinfo(0)+" : Are you sure you're playing right now?";
+			next;
+			mes "[Silk]";
+			mes "I think it also thinks we are playing with them.";
+			mes "I told you it had to be in a good mood to hand out the tails.";
+			npctalk "Silk: I think it also thinks we are playing with them. I told you it had to be in a good mood to hand out the tails...",instance_npcname("Silk#02"),bc_area;  // 13411
+			next;
+			mes "[Silk]";
+			mes "By the way, shall we move on to the next location? The work isn't finished yet...";
+			npctalk "Silk: By the way, shall we move on to the next location? The work isn't finished yet...",instance_npcname("Silk#02"),bc_area;  // 13411
+			next;
+			mes "[Silk]";
+			mes "Next is a playground with rocks and sand. When I harvest, you'll have to shake off the sand first…";
+			npctalk "Silk: Next is a playground with rocks and sand. When I harvest, you'll have to shake off the sand first…",instance_npcname("Silk#02"),bc_area;  // 13411
+			'fftp = 5;
+			close2;
+			hideonnpc instance_npcname("Silk#02");
+			hideoffnpc instance_npcname("Silk#03");
+			warp 'ftt_map$,85,100;
+			end;
+		default:
+			end;
+	}
+}
+
+1@lost,214,147,3	script	Wooden Box#02	4_WOODBOX,{
+	end;
+	
+OnCommand:
+	sleep 500;
+	npctalk "Silk: I sprayed food, so they will show up soon!",instance_npcname("Silk#02"),bc_area;  // 13411
+	sleep 1000;
+	donpcevent instance_npcname("#fft_mob_ctrl") + "::OnSummon";
+	end;
+}
+
+1@lost,91,92,3	script	Silk#03	4_EP17_BASKET,{
+	switch('fftp){
+		case 5:
+			mes "[Silk]";
+			mes "Don't mind my position......";
+			npctalk "Silk: Don't mind my position......",instance_npcname("Silk#03"),bc_area;  // 13413
+			next;
+			mes "[Silk]";
+			mes "Even if it's right to come over to play, I don't think it's for me at least.";
+			npctalk "Silk: Even if it's right to come over to play, I don't think it's for me at least.",instance_npcname("Silk#03"),bc_area;  // 13413
+			next;
+			mes "[Silk]";
+			mes "But I feel like it is really playing with you sir! That's right!";
+			npctalk "Silk: But I feel like it is really playing with you sir! That's right!",instance_npcname("Silk#03"),bc_area;  // 13413
+			next;
+			mes "[Silk]";
+			mes "Anyway, please help me with the next harvest! Hey, guys. It's time to eaaaat~~~";
+			npctalk "Silk: Anyway, please help me with the next harvest! Hey, guys. It's time to eaaaat~~~",instance_npcname("Silk#03"),bc_area;  // 13413
+			'fftp = 6;
+			close2;
+			hideonnpc instance_npcname("Silk#03");
+			hideoffnpc instance_npcname("Wooden Box#03");
+			donpcevent instance_npcname("Wooden Box#03") + "::OnCommand";	
+			end;
+		case 6:
+			mes "[Silk]";
+			mes "Ha...";
+			npctalk "Silk: Ha...",instance_npcname("Silk#03"),bc_area;  // 13413
+			next;
+			mes "[Silk]";
+			mes "You're covered in sand… sir… and even me...";
+			npctalk "Silk: You're covered in sand… sir… and even me...",instance_npcname("Silk#03"),bc_area;  // 13413
+			next;
+			mes "[Silk]";
+			mes "Oh, my core is fine because it's waterproof as well as dustproof.";
+			npctalk "Silk: Oh, my core is fine because it's waterproof as well as dustproof.",instance_npcname("Silk#03"),bc_area;  // 13413
+			next;
+			mes "[Silk]";
+			mes "I am angry? To you? Never";
+			npctalk "Silk: I am angry? To you? Never...",instance_npcname("Silk#03"),bc_area;  // 13413
+			next;
+			mes "[Silk]";
+			mes "Can the automatic doll get angry?... Huhuhu...";
+			npctalk "Silk: Can the automatic doll get angry?... Huhuhu...",instance_npcname("Silk#03"),bc_area;  // 13413
+			next;
+			mes "[Silk]";
+			mes "...It might not be now but I can feel that it probably could... Huhuhu.";
+			npctalk "Silk: ...It might not be now but I can feel that it probably could... Huhuhu.",instance_npcname("Silk#03"),bc_area;  // 13413
+			next;
+			mes "[Silk]";
+			mes "Next is the playground with an oasis-like pool. Let's go...";
+			npctalk "Silk: Next is the playground with an oasis-like pool. Let's go...",instance_npcname("Silk#03"),bc_area;  // 13413
+			'fftp = 7;
+			close2;
+			hideonnpc instance_npcname("Silk#03");
+			hideoffnpc instance_npcname("Silk#04");
+			warp 'ftt_map$,224,258;
+			end;
+	}
+}
+
+1@lost,91,92,3	script	Wooden Box#03	4_WOODBOX,{
+	end;
+	
+OnCommand:
+	sleep 500;
+	npctalk "Silk: You've feed them, so it will appear soon!",instance_npcname("Silk#03"),bc_area;  // 13413
+	sleep 1000;
+	donpcevent instance_npcname("#fft_mob_ctrl") + "::OnSummon";
+	end;
+}
+
+1@lost,232,257,3	script	Silk#04	4_EP17_BASKET,{
+	switch('fftp){
+		case 7:
+			mes "[Silk]";
+			mes "Again, don't worry about my position...";
+			npctalk "Silk: Again, don't worry about my position...",instance_npcname("Silk#04"),bc_area;  // 13415
+			next;
+			mes "[Silk]";
+			mes "How is it? I think you're doing a lot better than the first time.";
+			npctalk "Silk: How is it? I think you're doing a lot better than the first time.",instance_npcname("Silk#04"),bc_area;  // 13415
+			next;
+			mes "[Silk]";
+			mes "As expected, you seem to be talented! Right!";
+			npctalk "Silk: As expected, you seem to be talented! Right!",instance_npcname("Silk#04"),bc_area;  // 13415
+			next;
+			mes "[Silk]";
+			mes "Do automatic dolls know how to compliment? I only told the truth.";
+			npctalk "Silk: Do automatic dolls know how to compliment? I only told the truth.",instance_npcname("Silk#04"),bc_area;  // 13415
+			next;
+			mes "[Silk]";
+			mes "Then let's spray the next food based on your talent! Guys~~ it's food~~";
+			npctalk "Silk: Then let's spray the next food based on your talent! Guys~~ it's food~~",instance_npcname("Silk#04"),bc_area;  // 13415
+			'fftp = 8;
+			close2;
+			hideonnpc instance_npcname("Silk#04");
+			hideoffnpc instance_npcname("Wooden Box#04");
+			donpcevent instance_npcname("Wooden Box#04") + "::OnCommand";	
+			end;
+		case 8:
+			mes "[Silk]";
+			mes "...";
+			npctalk "Silk: ...",instance_npcname("Silk#04"),bc_area;  // 13415
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Are you okay?";
+			showscript ""+strcharinfo(0)+" : Are you okay?";
+			next;
+			mes "[Silk]";
+			mes "I think the guest getting used to it is a little different with me getting used to it.";
+			npctalk "Silk: I think the guest getting used to it is a little different with me getting used to it.",instance_npcname("Silk#04"),bc_area;  // 13415
+			next;
+			mes "[Silk]";
+			mes "Let’s move on to the next location!";
+			npctalk "Silk: Let’s move on to the next location!"; // 13415,instance_npcname("Silk#04"),bc_area; 
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Anything else?";
+			showscript ""+strcharinfo(0)+" : Anything else?";
+			next;
+			mes "[Silk]";
+			mes "It might be a small greenhouse from the outside, but it’s an optical illusion. Look at the ceiling… it’s really high, right?";
+			npctalk "Silk: It might be a small greenhouse from the outside, but it’s an optical illusion. Look at the ceiling… it’s really high, right?",instance_npcname("Silk#04"),bc_area;  // 13415
+			next;
+			mes "[Silk]";
+			mes "There’s a reason why I have to guide our guests.";
+			npctalk "Silk: There’s a reason why I have to guide our guests.",instance_npcname("Silk#04"),bc_area; // 13415
+			next;
+			mes "[Silk]";
+			mes "The next one is close to the entrance, but according to Luina's information, it is an area with a lot of sleepers. Shall we try waking them up?";
+			npctalk "Silk: The next one is close to the entrance, but according to Luina's information, it is an area with a lot of sleepers. Shall we try waking them up?",instance_npcname("Silk#04"),bc_area;  // 13415
+			'fftp = 9;
+			close2;
+			hideonnpc instance_npcname("Silk#04");
+			hideoffnpc instance_npcname("Silk#05");
+			warp 'ftt_map$,242,117;
+			end;
+	}
+}
+
+1@lost,232,257,3	script	Wooden Box#04	4_WOODBOX,{
+	end;
+	
+OnCommand:
+	sleep 500;
+	npctalk "Silk: Gu--guys~~ not me~~",instance_npcname("Wooden Box#04"),bc_area;  // 13415
+	sleep 1000;
+	donpcevent instance_npcname("#fft_mob_ctrl") + "::OnSummon";
+	npctalk "Silk: My gosh...",instance_npcname("Wooden Box#04"),bc_area;  // 13415
+	sleep 2000;
+	npctalk "Silk: Don't come! Don't cooommmee!!!",instance_npcname("Wooden Box#04"),bc_area;  // 13415
+	sleep 2000;
+	npctalk "Silk: Don’t come this waaaayyyyyyy",instance_npcname("Wooden Box#04"),bc_area;  // 13415
+	sleep 2000;
+	end;
+}
+
+1@lost,247,119,3	script	Silk#05	4_EP17_BASKET,{
+	switch('fftp){
+		case 9:
+			mes "[Silk]";
+			mes "Deep breaths... deep breaths...";
+			npctalk "Silk: Deep breaths... deep breaths...",instance_npcname("Silk#05"),bc_area;  // 13417
+			next;
+			mes "[Silk]";
+			mes "What? Does the automatic doll breathe deeply? Wouldn't you want to catch a straw if you can't control your mind?";
+			npctalk "Silk: What? Does the automatic doll breathe deeply? Wouldn't you want to catch a straw if you can't control your mind?",instance_npcname("Silk#05"),bc_area;  // 13417
+			next;
+			mes "[Silk]";
+			mes "I don't have any lungs, but... Come to think of it, how does Pitaya make sounds?";
+			npctalk "Silk: I don't have any lungs, but... Come to think of it, how does Pitaya make sounds?",instance_npcname("Silk#05"),bc_area;  // 13417
+			next;
+			mes "[Silk]";
+			mes "...I don't wanna think of scary thoughts.";
+			npctalk "Silk: ...I don't wanna think of scary thoughts.",instance_npcname("Silk#05"),bc_area;  // 13417
+			next;
+			mes "[Silk]";
+			mes "So let's move on to the next... The Pitayas here are sleepyheads, so the reaction might be a little different. So guys... Come here...";
+			npctalk "Silk: So let's move on to the next... The Pitayas here are sleepyheads, so the reaction might be a little different. So guys... Come here...",instance_npcname("Silk#05"),bc_area;  // 13417
+			'fftp = 10;
+			close2;
+			hideonnpc instance_npcname("Silk#05");
+			hideoffnpc instance_npcname("Wooden Box#05");
+			donpcevent instance_npcname("Wooden Box#05") + "::OnCommand";	
+			end;
+		case 10:
+			mes "[Silk]";
+			mes "Phew...";
+			npctalk "Silk: Phew...",instance_npcname("Silk#05"),bc_area;  // 13417
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Are you okay?";
+			showscript ""+strcharinfo(0)+" : Are you okay?";
+			next;
+			mes "[Silk]";
+			mes "Does Meow event bite?";
+			npctalk "Silk: Does Meow event bite?",instance_npcname("Silk#05"),bc_area;  // 13417
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "I think so...";
+			showscript ""+strcharinfo(0)+" : I think so...";
+			next;
+			mes "[Silk]";
+			mes "Does being cute also means it bites well?";
+			npctalk "Silk: Does being cute also means it bites well?",instance_npcname("Silk#05"),bc_area;  // 13417
+			next;
+			mes "[Silk]";
+			mes "As expected… pleasure comes with a price.";
+			npctalk "Silk: As expected… pleasure comes with a price.",instance_npcname("Silk#05"),bc_area;  // 13417
+			next;
+			mes "[Silk]";
+			mes "I'm ready to give you arms and legs to enjoy your cuteness.";
+			npctalk "Silk: I'm ready to give you arms and legs to enjoy your cuteness.",instance_npcname("Silk#05"),bc_area;  // 13417
+			next;
+			mes "[Silk]";
+			mes "I saw the guests again, I respect them. Oh, of course, they are admirable even from the beginning.";
+			npctalk "Silk: I saw the guests again, I respect them. Oh, of course, they are admirable even from the beginning.",instance_npcname("Silk#05"),bc_area;  // 13417
+			next;
+			mes "[Silk]";
+			mes "Does an automatic doll make jokes? You're good at joking. I always mean it.";
+			npctalk "Silk: Does an automatic doll make jokes? You're good at joking. I always mean it.",instance_npcname("Silk#05"),bc_area;  // 13417
+			next;
+			mes "[Silk]";
+			mes "Do I still have something to harvest? I'm sorry about that also. Let's move to the next section.";
+			npctalk "Silk: Do I still have something to harvest? I'm sorry about that also. Let's move to the next section.",instance_npcname("Silk#05"),bc_area;  // 13417
+			'fftp = 11;
+			close2;
+			hideonnpc instance_npcname("Silk#05");
+			hideoffnpc instance_npcname("Silk#06");
+			warp 'ftt_map$,117,167;
+			end;
+	}
+}
+
+1@lost,247,119,3	script	Wooden Box#05	4_WOODBOX,{
+	end;
+	
+OnCommand:
+	sleep 500;
+	npctalk "Silk: ...",instance_npcname("Silk#05"),bc_area; // 13417
+	sleep 1000;
+	donpcevent instance_npcname("#fft_mob_ctrl") + "::OnSummon";
+	end;
+}
+
+1@lost,106,160,3	script	Silk#06	4_EP17_BASKET,{
+	switch('fftp){
+		case 11:
+			mes "[Silk]";
+			mes "I have so much worries...";
+			npctalk "Silk: I have so much worries...",instance_npcname("Silk#06"),bc_area;  // 13419
+			next;
+			mes "[Silk]";
+			mes "There's no distinction among us, but they can tell us apart?";
+			npctalk "Silk: There's no distinction among us, but they can tell us apart?",instance_npcname("Silk#06"),bc_area;  // 13419
+			next;
+			mes "[Silk]";
+			mes "Does it smells...? Sniff sniff.";
+			npctalk "Silk: Does it smells...? Sniff sniff.",instance_npcname("Silk#06"),bc_area;  // 13419
+			next;
+			mes "[Silk]";
+			mes "By the way... today's quota is finally over half.";
+			npctalk "Silk: By the way... today's quota is finally over half.",instance_npcname("Silk#06"),bc_area;  // 13419
+			next;
+			mes "[Silk]";
+			mes "This is all thanks to your help...Thank you so much.";
+			npctalk "Silk: This is all thanks to your help...Thank you so much.",instance_npcname("Silk#06"),bc_area;  // 13419
+			next;
+			mes "[Silk]";
+			mes "Then I'll call the Pitayas over here...";
+			npctalk "Silk: Then I'll call the Pitayas over here...",instance_npcname("Silk#06"),bc_area;  // 13419
+			'fftp = 12;
+			close2;
+			hideonnpc instance_npcname("Silk#06");
+			hideoffnpc instance_npcname("Wooden Box#06");
+			donpcevent instance_npcname("Wooden Box#06") + "::OnCommand";	
+			end;
+		case 12:
+			setpcblock PCBLOCK_ALL,true;
+			mes "[Silk]";
+			mes "According to Luina's instructions, all that's left is...";
+			npctalk "Silk: According to Luina's instructions, all that's left is...",instance_npcname("Silk#06"),bc_area;  // 13419
+			next;
+			mes "[Silk]";
+			mes "Boss Meow only...";
+			npctalk "Silk: Boss Meow only...",instance_npcname("Silk#06"),bc_area;  // 13419
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Boss Meow?";
+			showscript ""+strcharinfo(0)+" : Boss Meow?";
+			next;
+			mes "[Silk]";
+			mes "If being cute means to bite well, Boss Meow is more cute and bites well...";
+			npctalk "Silk: If being cute means to bite well, Boss Meow is more cute and bites well...",instance_npcname("Silk#06"),bc_area;  // 13419
+			next;
+			mes "[Silk]";
+			mes "...It bites well...?";
+			npctalk "Silk: ...It bites well...?",instance_npcname("Silk#06"),bc_area;  // 13419
+			next;
+			mes "[Silk]";
+			mes "I'm ready to give you arms and legs to enjoy their cuteness!";
+			npctalk "Silk: I'm ready to give you arms and legs to enjoy their cuteness.!",instance_npcname("Silk#06"),bc_area;  // 13419
+			next;
+			mes "[Silk]";
+			mes "Respectful… guests?";
+			npctalk "Silk: Respectful… guests?",instance_npcname("Silk#06"),bc_area;  // 13419
+			next;
+			mes "[Silk]";
+			mes "Shall we go?";
+			npctalk "Silk: Shall we go?",instance_npcname("Silk#06"),bc_area;  // 13419
+			'fftp = 13;
+			close2;
+			sleep2 1500;
+			npctalk "Silk: Boss Meow usually sleeps on the 2nd floor of the Rose Garden.",instance_npcname("Silk#06"),bc_area;  // 13419
+			sleep2 1500;
+			npctalk "Silk: Let's see, Luina's record is... I need to wake up a big meow to get there",instance_npcname("Silk#06"),bc_area;  // 13419
+			sleep2 1500;
+			npctalk "Silk: ...I mean. Two big meows... Boss Meow and big meow have a hierarchy, so they have a set location for napping at mealtime...",instance_npcname("Silk#06"),bc_area;  // 13419
+			sleep2 1500;
+			npctalk "Silk: I guess we just have to make one of them get out of the way. Well, if you pick one side, I'll go and... I'll feed...",instance_npcname("Silk#06"),bc_area;  // 13419
+			sleep2 1500;
+			npctalk "Silk: It's okay, I have good eyesight, so if you send me a signal when you arrive, I will take care of it! Now, I'll show you the coordinates on the map for those nearby...",instance_npcname("Silk#06"),bc_area;  // 13419
+			viewpoint 1,38,253,1,0xFFFF00;
+			viewpoint 1,287,253,2,0xFFFF00;
+			setpcblock PCBLOCK_ALL,false;
+			end;
+		case 13:
+			mes "[Silk]";
+			mes "You can choose one of the locations on the map and go.";
+			viewpoint 1,38,253,1,0xFFFF00;
+			viewpoint 1,287,253,2,0xFFFF00;
+			close;
+	}
+}
+
+1@lost,106,160,3	script	Wooden Box#06	4_WOODBOX,{
+	end;
+	
+OnCommand:
+	sleep 500;
+	npctalk "Silk: I a~am~~~",instance_npcname("Silk#06"),bc_area; // 13419
+	sleep 1000;
+	donpcevent instance_npcname("#fft_mob_ctrl") + "::OnSummon";
+	end;
+}
+
+//Left & Right Monsters (Parallel?)
+//Right
+1@lost,286,253,3	script	Big Meow#02	20661,2,2,{
+	mes "[Big Meow]";
+	mes "Gorreung.";
+	next;
+	mes "-- Meow is taking a nap. --";
+	close;
+
+OnTouch:
+	.@map$ = 'ftt_map$;
+	switch('fftp){
+		case 13:
+			'fftp = 14;
+			npctalk "Big Meow: Grruuuunnngggg.",instance_npcname("Big Meow#02"),bc_area;  // 13530
+			hideonnpc instance_npcname("Big Meow#02");
+			hideonnpc instance_npcname("Big Meow#01");
+			monster .@map$,286,253,"Big Meow",20661,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			end;
+		default:
+			end;
+	}
+	
+OnMobDead:
+	.@map$ = 'ftt_map$;
+	getitem callfunc("F_Rand",1000094,1000095,1000096,1000097),1;
+	enablenpc instance_npcname("#r_mob_trig01");
+	mapannounce .@map$,"Silk: Ahhhh!!! Save the automatic doll!!",bc_map,"0xFFFF33";
+	sleep 1500;
+	mapannounce .@map$,"Silk: I succeeded!!!!!!",bc_map,"0xFFFF33";
+	sleep 1500;
+	mapannounce .@map$,"Silk: I'll wait in front of Boss Meow!",bc_map,"0xFFFF33";
+	end;
+}
+
+1@lost,286,261,0	script	#r_mob_trig01	HIDDEN_WARP_NPC,2,2,{
+	end;
+	
+OnTouch:
+	.@map$ = 'ftt_map$;
+	if('fftp == 14){
+		'fftp = 15;
+		monster .@map$,283,265,"Pearl",20663,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,285,267,"Sapphire",20662,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,289,267,"Ruby",20660,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,290,265,"Diamond",20661,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,287,262,"Emerald",20664,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		end;
+	}
+	end;
+	
+OnMobDead:
+	.@label$ = instance_npcname("#r_mob_trig01") + "::OnMobDead";
+	.@count = mobcount( 'ftt_map$, .@label$ );
+	if (.@count == 0){
+		enablenpc instance_npcname("#r_mob_trig02");
+		disablenpc instance_npcname("#r_mob_trig01");
+		end;
+	}
+	end;
+}
+
+1@lost,286,298,0	script	#r_mob_trig02	HIDDEN_WARP_NPC,2,2,{
+	end;
+	
+OnTouch:
+	.@map$ = 'ftt_map$;
+	if('fftp == 15){
+		'fftp = 16;
+		monster .@map$,286,299,"Sadonyx",20660,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,289,300,"Opal",20664,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,284,296,"Topaz",20662,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,290,293,"Zircon",20661,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,289,293,"Amethyst",20663,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		end;
+	}
+	end;
+	
+OnMobDead:
+	.@label$ = instance_npcname("#r_mob_trig02") + "::OnMobDead";
+	.@count = mobcount( 'ftt_map$, .@label$ );
+	if (.@count == 0){
+		enablenpc instance_npcname("#r_mob_trig03");
+		disablenpc instance_npcname("#r_mob_trig02");
+		end;
+	}
+	end;
+}
+
+1@lost,278,317,0	script	#r_mob_trig03	HIDDEN_WARP_NPC,2,2,{
+	end;
+	
+OnTouch:
+	.@map$ = 'ftt_map$;
+	if('fftp == 16){
+		'fftp = 17;
+		monster .@map$,273,321,"Sadonyx",20662,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,272,316,"Opal",20660,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,279,318,"Topaz",20663,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,277,314,"Zircon",20661,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,276,315,"Amethyst",20664,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		end;
+	}
+	end;
+	
+OnMobDead:
+	.@label$ = instance_npcname("#r_mob_trig03") + "::OnMobDead";
+	.@count = mobcount( 'ftt_map$, .@label$ );
+	if (.@count == 0){
+		getitem callfunc("F_Rand",1000094,1000095,1000096,1000097),1;
+		enablenpc instance_npcname("#r_mob_trig04");
+		disablenpc instance_npcname("#r_mob_trig03");
+		end;
+	}
+	end;
+}
+
+1@lost,235,317,0	script	#r_mob_trig04	HIDDEN_WARP_NPC,2,2,{
+	end;
+	
+OnTouch:
+	.@map$ = 'ftt_map$;
+	if('fftp == 17){
+		'fftp = 18;
+		monster .@map$,232,318,"Rutile",20660,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,235,316,"Argonite",20662,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,241,316,"Amber",20661,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,240,314,"Blue",20662,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,238,317,"Obsidian",20662,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		end;
+	}
+	end;
+	
+OnMobDead:
+	.@label$ = instance_npcname("#r_mob_trig04") + "::OnMobDead";
+	.@count = mobcount( 'ftt_map$, .@label$ );
+	if (.@count == 0){
+		getitem callfunc("F_Rand",1000094,1000095,1000096,1000097),1;
+		enablenpc instance_npcname("#r_mob_trig05");
+		disablenpc instance_npcname("#r_mob_trig04");
+		end;
+	}
+	end;
+}
+
+1@lost,199,317,0	script	#r_mob_trig05	HIDDEN_WARP_NPC,2,2,{
+	end;
+	
+OnTouch:
+	.@map$ = 'ftt_map$;
+	if('fftp == 18){
+		'fftp = 19;
+		monster .@map$,193,318,"Onyx",20662,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,198,316,"Tanzanite",20663,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,201,315,"Jasper",20660,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,199,316,"Rhodonite",20660,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,202,318,"Zen",20663,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		end;
+	}
+	end;
+	
+OnMobDead:
+	.@label$ = instance_npcname("#r_mob_trig05") + "::OnMobDead";
+	.@count = mobcount( 'ftt_map$, .@label$ );
+	if (.@count == 0){
+		getitem callfunc("F_Rand",1000094,1000095,1000096,1000097),1;
+		hideoffnpc instance_npcname("Wooden Box#10");
+		disablenpc instance_npcname("#r_mob_trig05");
+		end;
+	}
+}
+//Left
+1@lost,38,253,3	script	Big Meow#01	20661,2,2,{
+	mes "[Big Meow]";
+	mes "Gorreung.";
+	next;
+	mes "-- Meow is taking a nap. --";
+	close;
+
+OnTouch:
+	.@map$ = 'ftt_map$;
+	switch('fftp){
+		case 13:
+			'fftp = 14;
+			npctalk "Big Meow: Grruuuunnngggg.",instance_npcname("Big Meow#01"),bc_area;  // 13530
+			hideonnpc instance_npcname("Big Meow#01");
+			hideonnpc instance_npcname("Big Meow#02");
+			monster .@map$,38,253,"Big Meow",20661,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			end;
+		default:
+			hideonnpc instance_npcname("Big Meow#01");
+			hideonnpc instance_npcname("Big Meow#02");
+			end;
+	}
+	
+OnMobDead:
+	.@map$ = 'ftt_map$;
+	getitem callfunc("F_Rand",1000094,1000095,1000096,1000097),1;
+	enablenpc instance_npcname("#l_mob_trig01");
+	mapannounce .@map$,"Silk: Ahhhh!!! Save the automatic doll!!",bc_map,"0xFFFF33";
+	sleep 1500;
+	mapannounce .@map$,"Silk: I succeeded!!!!!!",bc_map,"0xFFFF33";
+	sleep 1500;
+	mapannounce .@map$,"Silk: I'll wait in front of Boss Meow!",bc_map,"0xFFFF33";
+	end;
+}
+
+1@lost,38,261,0	script	#l_mob_trig01	HIDDEN_WARP_NPC,5,5,{
+	end;
+	
+OnTouch:
+	.@map$ = 'ftt_map$;
+	if('fftp == 14){
+		'fftp = 15;
+		monster .@map$,38,265,"Pearl",20663,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,40,267,"Sapphire",20662,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,42,267,"Ruby",20660,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,37,265,"Diamond",20661,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,40,262,"Emerald",20664,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		end;
+	}
+	end;
+	
+OnMobDead:
+	.@label$ = instance_npcname("#l_mob_trig01") + "::OnMobDead";
+	.@count = mobcount( 'ftt_map$, .@label$ );
+	if (.@count == 0){
+		enablenpc instance_npcname("#l_mob_trig02");
+		disablenpc instance_npcname("#l_mob_trig01");
+		end;
+	}
+	end;
+}
+
+1@lost,38,298,0	script	#l_mob_trig02	HIDDEN_WARP_NPC,5,5,{
+	end;
+	
+OnTouch:
+	.@map$ = 'ftt_map$;
+	if('fftp == 15){
+		'fftp = 16;
+		monster .@map$,38,299,"Sadonyx",20660,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,40,300,"Opal",20664,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,43,296,"Topaz",20662,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,37,293,"Zircon",20661,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,39,293,"Amethyst",20663,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		end;
+	}
+	end;
+	
+OnMobDead:
+	.@label$ = instance_npcname("#l_mob_trig02") + "::OnMobDead";
+	.@count = mobcount( 'ftt_map$, .@label$ );
+	if (.@count == 0){
+		enablenpc instance_npcname("#l_mob_trig03");
+		disablenpc instance_npcname("#l_mob_trig02");
+		end;
+	}
+	end;
+}
+
+1@lost,48,317,0	script	#l_mob_trig03	HIDDEN_WARP_NPC,5,5,{
+	end;
+	
+OnTouch:
+	.@map$ = 'ftt_map$;
+	if('fftp == 16){
+		'fftp = 17;
+		monster .@map$,51,321,"Sadonyx",20662,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,53,316,"Opal",20660,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,48,318,"Topaz",20663,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,49,314,"Zircon",20661,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,52,315,"Amethyst",20664,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		end;
+	}
+	end;
+	
+OnMobDead:
+	.@label$ = instance_npcname("#l_mob_trig03") + "::OnMobDead";
+	.@count = mobcount( 'ftt_map$, .@label$ );
+	if (.@count == 0){
+		getitem callfunc("F_Rand",1000094,1000095,1000096,1000097),1;
+		enablenpc instance_npcname("#l_mob_trig04");
+		disablenpc instance_npcname("#l_mob_trig03");
+		end;
+	}
+}
+
+1@lost,89,317,0	script	#l_mob_trig04	HIDDEN_WARP_NPC,5,5,{
+	end;
+	
+OnTouch:
+	.@map$ = 'ftt_map$;
+	if('fftp == 17){
+		'fftp = 18;
+		monster .@map$,89,318,"Rutile",20660,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,92,316,"Argonite",20662,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,88,316,"Amber",20661,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,93,314,"Blue",20662,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,90,317,"Obsidian",20662,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		end;
+	}
+	end;
+	
+OnMobDead:
+	.@label$ = instance_npcname("#l_mob_trig04") + "::OnMobDead";
+	.@count = mobcount( 'ftt_map$, .@label$ );
+	if (.@count == 0){
+		enablenpc instance_npcname("#l_mob_trig05");
+		disablenpc instance_npcname("#l_mob_trig04");
+		end;
+	}
+}
+
+1@lost,129,317,0	script	#l_mob_trig05	HIDDEN_WARP_NPC,5,5,{
+	end;
+	
+OnTouch:
+	.@map$ = 'ftt_map$;
+	if('fftp == 18){
+		'fftp = 19;
+		monster .@map$,130,318,"Onyx",20662,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,132,316,"Tanzanite",20663,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,129,316,"Jasper",20660,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,131,314,"Rhodonite",20660,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		monster .@map$,132,317,"Zen",20663,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		end;
+	}
+	end;
+	
+OnMobDead:
+	.@label$ = instance_npcname("#l_mob_trig05") + "::OnMobDead";
+	.@count = mobcount( 'ftt_map$, .@label$ );
+	if (.@count == 0){
+		getitem callfunc("F_Rand",1000094,1000095,1000096,1000097),1;
+		disablenpc instance_npcname("#l_mob_trig05");
+		hideoffnpc instance_npcname("Wooden Box#10");
+		end;
+	}
+}
+//End of Left & Right Monsters
+
+1@lost,161,315,3	script	Wooden Box#10	4_WOODBOX,5,5,{
+	mes "[Silk]";
+	mes "....come this way.";
+	npctalk "Silk: ....come this way.",instance_npcname("Wooden Box#10"),bc_area;  // 13429
+	next;
+	mes "[Silk]";
+	mes "It's Boss Meow...!";
+	npctalk "Silk: It's Boss Meow...!",instance_npcname("Wooden Box#10"),bc_area;  // 13429
+	'fftp = 20;
+	close2;
+	hideonnpc instance_npcname("Wooden Box#10");
+	hideoffnpc instance_npcname("Wooden Box#10-1");
+	end;
+	
+OnTouch:
+	if('fftp == 19){
+		npctalk "Silk: ...Shhhh.",instance_npcname("Wooden Box#10"),bc_area; // 13429  
+		end;
+	}
+	end;
+}
+
+1@lost,161,315,3	script	Wooden Box#10-1	4_WOODBOX,{
+	switch('fftp){
+		.@map$ = 'ftt_map$;
+		case 20:
+			'fftp = 21;
+			npctalk "Silk: Stroking the Boss Meow!",instance_npcname("Wooden Box#10-1"),bc_area;  // 13429
+			sleep 500;
+			monster .@map$,166,316,"Boss Meow",20659,1,instance_npcname(strnpcinfo(0))+"::OnBossDead";
+			monster .@map$,154,317,"Mora",20661,1;
+			monster .@map$,167,314,"Max",20664,1;
+			monster .@map$,167,318,"Cash",20664,1;
+			end;
+		case 21:
+			if(!'fft_done) end;
+			mes "[Silk]";
+			mes "Sir… huhuhu...";
+			npctalk "Sir… huhuhu...",instance_npcname("Wooden Box#10-1"),bc_area;
+			next;
+			mes "[Silk]";
+			mes "This… is not fear. This seems unfair...";
+			npctalk "This… is not fear. This seems unfair...",instance_npcname("Wooden Box#10-1"),bc_area;
+			next;
+			mes "[Silk]";
+			mes "Why even we are all the same, but Luina can do it and I can't do it...";
+			npctalk "Why even we are all the same, but Luina can do it and I can't do it...",instance_npcname("Wooden Box#10-1"),bc_area;
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Come out first..";
+			showscript ""+strcharinfo(0)+": Come out first..";
+			next;
+			mes "[Silk]";
+			mes "Ahhh!!!";
+			npctalk "Ahhhh!!!",instance_npcname("Wooden Box#10-1"),bc_area;
+			'fftp = 22;
+			close2;
+			hideonnpc instance_npcname("Wooden Box#10-1");
+			hideoffnpc instance_npcname("Silk#10");
+			end;
+		default:
+			end;
+	}
+
+OnBossDead:
+	.@map$ = 'ftt_map$;
+	getitem 1000098,1;
+	npctalk "It's doneeeee!!",instance_npcname("Wooden Box#10-1"),bc_area;  // 13429
+	'fft_done = 1;
+	sleep 2000;
+	monster .@map$,152,318,"Elizabeth",20660,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+	monster .@map$,153,314,"Toto",20661,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+	monster .@map$,166,327,"Dio",20664,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+	monster .@map$,169,318,"Argonite",20662,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+	monster .@map$,169,314,"Tanzanite",20663,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+	monster .@map$,157,327,"Rhodonite",20660,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+	end;
+	
+OnMobDead:
+	end;
+}
+
+1@lost,161,315,3	script	Silk#10	4_EP17_BASKET,{
+	switch('fftp){
+		case 22:
+			mes "[Silk]";
+			mes "The components that make up each of them are different, so we can't help it...";
+			npctalk "The components that make up each of them are different, so we can't help it...",instance_npcname("Silk#10"),bc_area;
+			next;
+			mes "[Silk]";
+			mes "So this is the only way to continue the harvest…?";
+			npctalk "So this is the only way to continue the harvest…?",instance_npcname("Silk#10"),bc_area;
+			next;
+			mes "[Silk]";
+			mes "So what if we can't do anything about it! The guests even enjoyed, right?";
+			npctalk "So what if we can't do anything about it! The guests even enjoyed, right?",instance_npcname("Silk#10"),bc_area;
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Did you enjoy?";
+			showscript ""+strcharinfo(0)+": Did you enjoy?";
+			next;
+			mes "[Silk]";
+			mes "Yes!! Because it has ended! Isn't it usually enjoyable once the work is done?";
+			npctalk "Yes!! Because it has ended! Isn't it usually enjoyable once the work is done?",instance_npcname("Silk#10"),bc_area;
+			next;
+			mes "[Silk]";
+			mes "If you give me the tail of pitaya that you have collected, today's farm experience is over! Okay I'll walk!";
+			npctalk "If you give me the tail of pitaya that you have collected, today's farm experience is over! Okay I'll walk!",instance_npcname("Silk#10"),bc_area;
+			'fftp = 23;
+			close;
+		case 23:
+			if (checkweight(1000103,4) == 0) {
+				mes "- There are many items in your possession, so you cannot proceed with the quest. -";
+				close;
+			}
+			.@y_tail = countitem(1000094);
+			.@b_tail = countitem(1000095);
+			.@g_tail = countitem(1000096);
+			.@p_tail = countitem(1000097);
+			.@boss_tail = countitem(1000098);
+			.@total_tail = .@y_tail + .@b_tail + .@g_tail + .@p_tail + .@boss_tail;
+			if(.@total_tail > 0){ //This will always be 10 though.
+				mes "[Silk]";
+				mes "Where... How many pitaya tails did you collect?";
+				next;
+				mes "[Silk]";
+				mes "It's a total of 10. Thank you for your hard work!";
+				if(.@y_tail) delitem 1000094,.@y_tail;
+				if(.@b_tail) delitem 1000095,.@b_tail;
+				if(.@g_tail) delitem 1000096,.@g_tail;
+				if(.@p_tail) delitem 1000097,.@p_tail;
+				if(.@boss_tail) delitem 1000098,.@boss_tail;
+				if(.@total_tail < 10) {
+					getitem 1000103,2;
+					erasequest 8588;
+				} else {
+					getitem 1000103,4;
+					erasequest 8588;
+				}
+				close;
+			}
+			next;
+			mes "[Silk]";
+			mes "Then.. shall we go out?";
+			next;
+			if(select("Go out:Don't go out") == 2) close;
+			mes "[Silk]";
+			mes "Even if I have finished reporting, you should say something to Luina. Thank you for your hard work. Hmm... so, see you next time!";
+			warp "ba_maison",308,202;
+			close;
+			end;
+			
+	}
+}
+
+1@lost,0,0,0	script	#fft_mob_ctrl	HIDDEN_WARP_NPC,{
+	end;
+	
+OnSummon:
+	.@map$ = 'ftt_map$;
+	switch('fftp){
+		case 2:
+			monster .@map$,156,46,"Happy",20660,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,168,48,"Cute",20660,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,157,47,"Toto",20661,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,159,50,"Lightning",20662,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,167,47,"Woody",20663,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,154,50,"Big Eyes",20664,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,168,43,"Rusk",20664,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			end;
+		case 4:
+			monster .@map$,210,146,"Lucy",20662,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,207,151,"Elizabeth",20660,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,216,149,"Dorothy",20664,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,215,151,"Clara",20661,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,213,147,"Coco",20662,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,211,144,"Cloud",20663,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,215,153,"Harmony",20660,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			end;
+		case 6:
+			monster .@map$,80,105,"Lottie",20661,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,80,101,"Sally",20660,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,82,93,"Glory",20662,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,87,108,"Connie",20664,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,92,102,"Boris",20661,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,92,101,"Rooney",20664,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,89,94,"Mikey",20663,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			end;
+		case 8:
+			monster .@map$,228,261,"Rudolf",20664,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,224,263,"Daisy",20663,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,218,259,"Adonis",20660,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,219,253,"Bingo",20662,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,221,251,"Molly",20663,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,227,248,"Sammy",20661,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,232,253,"Joy",20662,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			end;
+		case 10:
+			monster .@map$,248,113,"Dio",20664,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,246,112,"Roro",20663,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,246,120,"Jasmine",20661,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,241,124,"Melody",20660,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,247,119,"Misty",20664,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,244,115,"Sandy",20662,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,243,114,"Bonnie",20661,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			end;
+		case 12:
+			monster .@map$,108,166,"Berry",20661,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,107,169,"Lane",20660,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,111,173,"Windy",20663,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,118,171,"Poppy",20661,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,120,168,"Lala",20662,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,111,159,"Sasha",20664,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,117,161,"Emerald",20660,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			end;
+	}
+	end;
+	
+OnMobDead:
+	.@label$ = instance_npcname("#fft_mob_ctrl") + "::OnMobDead";
+	.@count = mobcount( 'ftt_map$, .@label$ );
+	if (.@count == 0){
+		switch('fftp){
+			case 2:
+				getitem callfunc("F_Rand",1000094,1000095,1000096,1000097),1;
+				hideonnpc instance_npcname("Wooden Box#01");
+				hideoffnpc instance_npcname("Silk#01");
+				end;
+			case 4:
+				getitem callfunc("F_Rand",1000094,1000095,1000096,1000097),1;
+				hideonnpc instance_npcname("Wooden Box#02");
+				hideoffnpc instance_npcname("Silk#02");
+				end;
+			case 6:
+				getitem callfunc("F_Rand",1000094,1000095,1000096,1000097),1;
+				npctalk "Silk: !!",instance_npcname("Silk#03"),bc_area; // 13413
+				hideonnpc instance_npcname("Wooden Box#03");
+				hideoffnpc instance_npcname("Silk#03");
+				sleep 1000;
+				end;
+			case 8:
+				getitem callfunc("F_Rand",1000094,1000095,1000096,1000097),1;
+				npctalk "Silk: ...Oops...",instance_npcname("Silk#04"),bc_area;  // 13415
+				hideonnpc instance_npcname("Wooden Box#04");
+				hideoffnpc instance_npcname("Silk#04");
+				sleep 1000;
+				end;
+			case 10:
+				getitem callfunc("F_Rand",1000094,1000095,1000096,1000097),1;
+				npctalk "Silk: Are you finished!?",instance_npcname("Silk#05"),bc_area;  // 13417
+				hideonnpc instance_npcname("Wooden Box#05");
+				hideoffnpc instance_npcname("Silk#05");
+				sleep 1000;
+				npctalk "Silk: ............What's the difference!",instance_npcname("Silk#05"),bc_area;  // 13417
+				end;
+			case 12:
+				getitem callfunc("F_Rand",1000094,1000095,1000096,1000097),1;
+				npctalk "Silk: ...I am okay~~~",instance_npcname("Silk#06"),bc_area;  // 13419
+				hideonnpc instance_npcname("Wooden Box#06");
+				hideoffnpc instance_npcname("Silk#06");
+				sleep 1000;
+				npctalk "Silk: Ahh, I'm really okay~~~",instance_npcname("Silk#06"),bc_area;  // 13419
+				end;
+		}
+	} else {
+		switch('fftp){
+			case 2:
+				npctalk "Silk: !!",instance_npcname("Wooden Box#01"),bc_area; // 13411
+				end;
+			case 4:
+				.@rand = rand(1,2);
+				if(.@rand == 1) npctalk "Silk: It's done~~~~" ,instance_npcname("Wooden Box#02"),bc_area; // 13411
+				if(.@rand == 2) npctalk "Silk: Sa--save me~~~",instance_npcname("Wooden Box#02"),bc_area;  // 13411
+				end;
+			case 6:
+				npctalk "Silk: There is still "+.@count+" left!",instance_npcname("Wooden Box#03"),bc_area;  // 13413
+				end;
+			case 8:
+				npctalk "Silk: There is still "+.@count+" left!",instance_npcname("Wooden Box#04"),bc_area; // 13413
+				end;
+			case 10:
+				npctalk "Silk: There is still "+.@count+" left!",instance_npcname("Wooden Box#05"),bc_area;  // 13413
+				end;
+			case 12:
+				npctalk "Silk: There is still "+.@count+" left!",instance_npcname("Wooden Box#06"),bc_area; // 13413
+				end;
+		}
+	}
+	end;
+}
