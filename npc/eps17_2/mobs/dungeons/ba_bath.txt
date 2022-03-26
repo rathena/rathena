@@ -1,0 +1,11 @@
+//===== rAthena Script =======================================
+//= Monsters from Varmundt's Mansion
+
+//= Meditation Bath
+//============================================================
+ba_bath,0,0	monster	Broken Inspector	20633,30,5000
+ba_bath,0,0	monster	Broken Inspector	20634,30,5000
+ba_bath,0,0	monster	Boiled Water Phen	20643,70,5000
+ba_bath,0,0	monster	Boiled Water Marc	20644,50,5000
+ba_bath,0,0	monster	Boiled Water Swordfish	20645,50,5000
+ba_bath,0,0	monster	Boiled Water Piranha	20646,70,5000

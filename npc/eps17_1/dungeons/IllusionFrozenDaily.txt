@@ -1,0 +1,760 @@
+//===== rAthena Script =======================================
+
+//WARPER
+ice_dun02,150,10,5	script	Purple Portal#IllusionFrozen	4_PURPLE_WARP,{
+
+mes "You touch the mysterious portal.";
+mes " ";
+mes "You can feel cold fog suddenly rolling toward you";
+next;
+switch(select("Throw 10 Poring Coin at the Portal","Leave")) {	
+	case 1:
+	goto yesTicket;
+	close;
+	 case 2:
+	goto noTicket;
+	close;
+
+noTicket:
+mes "The fog is getting colder and colder.";
+mes "You better run and hide!";
+close;
+
+yesTicket:
+if (countitem(7539) < 10){
+	mes "It's like you don't have enough Poring Coin to throw!";
+	close;
+}
+mes "The cold fog enter your body!";
+specialeffect 74;
+progressbar "ffff00", 1;
+sleep2 1000;
+delitem 7539, 10;
+warp "ice_d03_i",150,23;
+close;
+	}
+
+}
+
+
+//Blazing Fire
+ice_d03_i,126,126,3	script	Blazing Fire#IllusionFrozen1	802,{
+	mes "^3355FFThe flames in this fire";
+	mes "barrier crackle with magic";
+	mes "power. There's no way that";
+	mes "you can put this fire out";
+	mes "with conventional means.";
+	mes "Try use 25x Ice Cubix or 1x Ice Scale.^000000";
+	//if (ice_necklace_q > 4) {
+		if ($@awakenktullanux_summon < 4) {
+			if (countitem(7066) > 25) {
+				next;
+				select("Use Ice Cubic.");
+				mes "^3355FFYou sprinkle the Ice Cubic";
+				mes "Powder onto the flame. It";
+				mes "flickers before extinguising.^000000";
+				delitem 7066,25; //Ice Cubic
+				hideonnpc "Blazing Fire#IllusionFrozen1";
+				set $@awakenktullanux_summon,$@awakenktullanux_summon+1;
+				if ($@awakenktullanux_summon == 4) donpcevent "ice_boss#broadIllusionFrozen::OnStart";
+			}
+			else if (countitem(7562) > 0) {
+				next;
+				select("Use Ice Scale.");
+				mes "^3355FFYou throw the Ice Scale into";
+				mes "the flame, it crackles before";
+				mes "extinguising.^000000";
+				delitem 7562,1; //Ice Scale
+				hideonnpc "Blazing Fire#IllusionFrozen1";
+				set $@awakenktullanux_summon,$@awakenktullanux_summon+1;
+				if ($@awakenktullanux_summon == 4) donpcevent "ice_boss#broadIllusionFrozen::OnStart";
+				close;
+			}
+		}
+	//}
+	close;
+}
+
+ice_d03_i,172,126,0	script	Blazing Fire#IllusionFrozen2	802,{
+	mes "^3355FFThe flames in this fire";
+	mes "barrier crackle with magic";
+	mes "power. There's no way that";
+	mes "you can put this fire out";
+	mes "with conventional means.";
+	mes "Try use 25x Ice Cubix or 1x Ice Scale.^000000";
+	//if (ice_necklace_q > 4) {
+		if ($@awakenktullanux_summon < 4) {
+			if (countitem(7066) > 25) {
+				next;
+				select("Use Ice Cubic.");
+				mes "^3355FFYou sprinkle the Ice Cubic";
+				mes "Powder onto the flame. It";
+				mes "flickers before extinguising.^000000";
+				delitem 7066,25; //Ice Cubic
+				hideonnpc "Blazing Fire#IllusionFrozen2";
+				set $@awakenktullanux_summon,$@awakenktullanux_summon+1;
+				if ($@awakenktullanux_summon == 4) donpcevent "ice_boss#broadIllusionFrozen::OnStart";
+			}
+			else if (countitem(7562) > 0) {
+				next;
+				select("Use Ice Scale.");
+				mes "^3355FFYou throw the Ice Scale into";
+				mes "the flame, it crackles before";
+				mes "extinguising.^000000";
+				delitem 7562,1; //Ice Scale
+				hideonnpc "Blazing Fire#IllusionFrozen2";
+				set $@awakenktullanux_summon,$@awakenktullanux_summon+1;
+				if ($@awakenktullanux_summon == 4) donpcevent "ice_boss#broadIllusionFrozen::OnStart";
+				close;
+			}
+		}
+	//}
+	close;
+}
+
+ice_d03_i,172,172,0	script	Blazing Fire#IllusionFrozen3	802,{
+	mes "^3355FFThe flames in this fire";
+	mes "barrier crackle with magic";
+	mes "power. There's no way that";
+	mes "you can put this fire out";
+	mes "with conventional means.";
+	mes "Try use 25x Ice Cubix or 1x Ice Scale.^000000";
+	//if (ice_necklace_q > 4) {
+		if ($@awakenktullanux_summon < 4) {
+			if (countitem(7066) > 25) {
+				next;
+				select("Use Ice Cubic.");
+				mes "^3355FFYou sprinkle the Ice Cubic";
+				mes "Powder onto the flame. It";
+				mes "flickers before extinguising.^000000";
+				delitem 7066,25; //Ice Cubic
+				hideonnpc "Blazing Fire#IllusionFrozen3";
+				set $@awakenktullanux_summon,$@awakenktullanux_summon+1;
+				if ($@awakenktullanux_summon == 4) donpcevent "ice_boss#broadIllusionFrozen::OnStart";
+			}
+			else if (countitem(7562) > 0) {
+				next;
+				select("Use Ice Scale.");
+				mes "^3355FFYou throw the Ice Scale into";
+				mes "the flame, it crackles before";
+				mes "extinguising.^000000";
+				delitem 7562,1; //Ice Scale
+				hideonnpc "Blazing Fire#IllusionFrozen3";
+				set $@awakenktullanux_summon,$@awakenktullanux_summon+1;
+				if ($@awakenktullanux_summon == 4) donpcevent "ice_boss#broadIllusionFrozen::OnStart";
+				close;
+			}
+		}
+	//}
+	close;
+}
+
+ice_d03_i,127,172,0	script	Blazing Fire#IllusionFrozen4	802,{
+	mes "^3355FFThe flames in this fire";
+	mes "barrier crackle with magic";
+	mes "power. There's no way that";
+	mes "you can put this fire out";
+	mes "with conventional means.";
+	mes "Try use 25x Ice Cubix or 1x Ice Scale.^000000";
+	//if (ice_necklace_q > 4) {
+		if ($@awakenktullanux_summon < 4) {
+			if (countitem(7066) > 25) {
+				next;
+				select("Use Ice Cubic.");
+				mes "^3355FFYou sprinkle the Ice Cubic";
+				mes "Powder onto the flame. It";
+				mes "flickers before extinguising.^000000";
+				delitem 7066,25; //Ice Cubic
+				hideonnpc "Blazing Fire#IllusionFrozen4";
+				set $@awakenktullanux_summon,$@awakenktullanux_summon+1;
+				if ($@awakenktullanux_summon == 4) donpcevent "ice_boss#broadIllusionFrozen::OnStart";
+			}
+			else if (countitem(7562) > 0) {
+				next;
+				select("Use Ice Scale.");
+				mes "^3355FFYou throw the Ice Scale into";
+				mes "the flame, it crackles before";
+				mes "extinguising.^000000";
+				delitem 7562,1; //Ice Scale
+				hideonnpc "Blazing Fire#IllusionFrozen4";
+				set $@awakenktullanux_summon,$@awakenktullanux_summon+1;
+				if ($@awakenktullanux_summon == 4) donpcevent "ice_boss#broadIllusionFrozen::OnStart";
+				close;
+			}
+		}
+	//}
+	close;
+}
+
+ice_d03_i,1,173,5	script	ice_boss#broadIllusionFrozen	-1,{
+OnStop:
+	stopnpctimer;
+	end;
+
+OnStart:
+	initnpctimer;
+	end;
+
+OnTimer2000:
+	mapannounce "ice_d03_i","Someone has put out Thor's flames... Infidel!",bc_map,0xFF6633;
+	end;
+
+OnTimer8000:
+	mapannounce "ice_d03_i","I, Ktullanux, must protect and preserve Thor's fierce flames...",bc_map,0xFF6633;
+	end;
+
+OnTimer10000:
+	mapannounce "ice_d03_i","As the master of this cave, I vow vengeance!",bc_map,0xFF6633;
+	end;
+
+OnTimer13000:
+	mapannounce "ice_d03_i","Only a human would be so foolhardy....",bc_map,0xFF6633;
+	end;
+
+OnTimer16000:
+	mapannounce "ice_d03_i","Your curiosity will cost you, human.",bc_map,0xFF6633;
+	end;
+
+OnTimer19000:
+	mapannounce "ice_d03_i","Prepare yourself for a freezing realm of pain which you cannot possibly imagine!",bc_map,0xFF6633;
+	end;
+
+OnTimer21000:
+	stopnpctimer;
+	donpcevent "ice_boss#onIllusionFrozen::OnStart";
+	end;
+}
+
+ice_d03_i,1,174,3	script	ice_boss#onIllusionFrozen	-1,{
+OnStart:
+	monster "ice_d03_i",150,135,"Awaken Ktullanux",3796,1,"ice_boss#onIllusionFrozen::OnMyMobDead";
+	end;
+
+OnStartTimer:
+	Initnpctimer;
+	end;
+
+OnStopTimer:
+	stopnpctimer;
+	end;
+
+OnMyMobDead:
+	mapannounce "ice_d03_i","Oh, Odin! Please protect this place from Thor's fierce fire!",bc_map,0xFF6633;
+	mapannounce "ice_d03_i","Pzzzzz...Pzzzz...",bc_map,0x33FFFF;
+	donpcevent "ice_boss#onIllusionFrozen::OnStartTimer";
+	//donpcevent "#ice_secIllusionFrozen::OnStart";
+	end;
+
+OnTimer7200000:
+	stopnpctimer;
+	set $@awakenktullanux_summon,0;
+	hideoffnpc "Blazing Fire#IllusionFrozen1";
+	hideoffnpc "Blazing Fire#IllusionFrozen2";
+	hideoffnpc "Blazing Fire#IllusionFrozen3";
+	hideoffnpc "Blazing Fire#IllusionFrozen4";
+	end;
+}
+
+//Main Daily Quest
+ice_d03_i,148,41,3	script	Frozen Knight#IllusionFrozen	10035,{
+
+//OnNPCKillEvent:
+//if( test_reaper > 0 && killedrid == 3029 && strcharinfo(3) == instance_mapname("1@dth3")){
+//if( test_reaper > 0 && getmonsterinfo( killedrid, MOB_MVPEXP ) && strcharinfo(3) == instance_mapname("1@dth3")){
+//	poring_count = 1;
+//	if (poring_count == 1) {
+//		dispbottom "You already killed "+poring_count+" Porings!";
+//		getitem 50006, 10;
+//		test_reaper = 0;
+//	}
+//	end;
+//}
+	
+	mes "[^0000FFFrozen Knight^000000]";
+	mes "Hi there!";
+	mes "I need help to restore the balance of this place.";
+	next;
+	mes "[^0000FFFrozen Knight^000000]";
+	mes "This place is so huge, it will takes time if I do it alone.";
+	mes "Will you help me to hunt monster in this place?";
+	next;
+	switch(select("Hunt Furious Gazeti!","Hunt Furious Ice Titan","Hunt Furious Snowier","Hunt Furious Icecle","Cancel!")) {
+		case 1:
+			goto HuntFuriosGazeti;
+			close;
+		case 2:
+			goto HuntFuriosIceTitan;
+			close;
+		case 3:
+			goto HuntFuriosSnowier;
+			close;
+		case 4:
+			goto HuntFuriosIcecle;
+			close;
+		case 5:
+			//goto Cancel;
+			mes "[^0000FFFrozen Knight^000000]";
+			mes "Scared huh?";
+			close;
+
+	HuntFuriosGazeti:
+	if(dailyfrozen_snowier == 1 || dailyfrozen_icetitan == 1 || dailyfrozen_icecle == 1){
+		mes "[^0000FFFrozen Knight^000000]";
+		mes "You must finish your other hunt before starting a new one!";
+		close;
+	}
+	if(dailyfrozen_gazeti == 1){
+		mes "[^0000FFFrozen Knight^000000]";
+		mes "You already kill "+kill_gazeti_count+"x Furious Gazeti.";
+		mes "Kill 20x Furious Gazeti and come back to me.";
+		end;
+	}
+	if(dailyfrozen_gazeti == 3 && gettimetick(2) < delay_dailyfrozen_gazeti){
+		mes "[^0000FFFrozen Knight^000000]";
+		mes "You already finished the quest, please come back later.";
+		end;
+	}
+	if(dailyfrozen_gazeti == 2){
+		dailyfrozen_gazeti = 3;
+		delay_dailyfrozen_gazeti = gettimetick(2)+86400;
+		mes "[^0000FFFrozen Knight^000000]";
+		mes "You did it!";
+		mes "Please take this Illusion Stone.";
+		getitem 25271, 1;
+		next;
+		mes "[^0000FFFrozen Knight^000000]";
+		mes "Come back tomorrow for more quest!";
+		end;
+	}
+	dailyfrozen_gazeti = 1;
+	kill_gazeti_count = 0;
+	mes "[^0000FFFrozen Knight^000000]";
+	mes "Good!";
+	mes "Now go and kill 20x Furious Gazeti!";
+	next;
+	mes "Come back to me when you done to get your reward!";
+	close;
+
+	
+	HuntFuriosIceTitan:
+	if(dailyfrozen_gazeti == 1 || dailyfrozen_snowier == 1 || dailyfrozen_icecle == 1){
+		mes "[^0000FFFrozen Knight^000000]";
+		mes "You must finish your other hunt before starting a new one!";
+		close;
+	}
+	if(dailyfrozen_icetitan == 1){
+		mes "[^0000FFFrozen Knight^000000]";
+		mes "You already kill "+kill_icetitan_count+"x Furious Ice Titan.";
+		mes "Kill 20x Furious Ice Titan and come back to me.";
+		end;
+	}
+	if(dailyfrozen_icetitan == 3 && gettimetick(2) < delay_dailyfrozen_icetitan){
+		mes "[^0000FFFrozen Knight^000000]";
+		mes "You already finished the quest, please come back later.";
+		end;
+	}
+	if(dailyfrozen_icetitan == 2){
+		dailyfrozen_icetitan = 3;
+		delay_dailyfrozen_icetitan = gettimetick(2)+86400;
+		mes "[^0000FFFrozen Knight^000000]";
+		mes "You did it!";
+		mes "Please take this Illusion Stone.";
+		getitem 25271, 1;
+		next;
+		mes "[^0000FFFrozen Knight^000000]";
+		mes "Come back tomorrow for more quest!";
+		end;
+	}
+	dailyfrozen_icetitan = 1;
+	kill_icetitan_count = 0;
+	mes "[^0000FFFrozen Knight^000000]";
+	mes "Good!";
+	mes "Now go and kill 20x Furious Ice Titan!";
+	next;
+	mes "Come back to me when you done to get your reward!";
+	close;
+
+	
+	HuntFuriosSnowier:
+	if(dailyfrozen_gazeti == 1 || dailyfrozen_icetitan == 1 || dailyfrozen_icecle == 1){
+		mes "[^0000FFFrozen Knight^000000]";
+		mes "You must finish your other hunt before starting a new one!";
+		close;
+	}
+	if(dailyfrozen_snowier == 1){
+		mes "[^0000FFFrozen Knight^000000]";
+		mes "You already kill "+kill_snowier_count+"x Furious Snowier.";
+		mes "Kill 20x Furious Snowier and come back to me.";
+		end;
+	}
+	if(dailyfrozen_snowier == 3 && gettimetick(2) < delay_dailyfrozen_snowier){
+		mes "[^0000FFFrozen Knight^000000]";
+		mes "You already finished the quest, please come back later.";
+		end;
+	}
+	if(dailyfrozen_snowier == 2){
+		dailyfrozen_snowier = 3;
+		delay_dailyfrozen_snowier = gettimetick(2)+86400;
+		mes "[^0000FFFrozen Knight^000000]";
+		mes "You did it!";
+		mes "Please take this Illusion Stone.";
+		getitem 25271, 1;
+		next;
+		mes "[^0000FFFrozen Knight^000000]";
+		mes "Come back tomorrow for more quest!";
+		end;
+	}
+	dailyfrozen_snowier = 1;
+	kill_snowier_count = 0;
+	mes "[^0000FFFrozen Knight^000000]";
+	mes "Good!";
+	mes "Now go and kill 20x Furious Snowier!";
+	next;
+	mes "Come back to me when you done to get your reward!";
+	close;
+	
+	HuntFuriosIcecle:
+	if(dailyfrozen_gazeti == 1 || dailyfrozen_icetitan == 1 || dailyfrozen_snowier == 1){
+		mes "[^0000FFFrozen Knight^000000]";
+		mes "You must finish your other hunt before starting a new one!";
+		close;
+	}
+	if(dailyfrozen_icecle == 1){
+		mes "[^0000FFFrozen Knight^000000]";
+		mes "You already kill "+kill_icecle_count+"x Furious Icecle.";
+		mes "Kill 20x Furious Icecle and come back to me.";
+		end;
+	}
+	if(dailyfrozen_icecle == 3 && gettimetick(2) < delay_dailyfrozen_icecle){
+		mes "[^0000FFFrozen Knight^000000]";
+		mes "You already finished the quest, please come back later.";
+		end;
+	}
+	if(dailyfrozen_icecle == 2){
+		dailyfrozen_icecle = 3;
+		delay_dailyfrozen_icecle = gettimetick(2)+86400;
+		mes "[^0000FFFrozen Knight^000000]";
+		mes "You did it!";
+		mes "Please take this Illusion Stone.";
+		getitem 25271, 1;
+		next;
+		mes "[^0000FFFrozen Knight^000000]";
+		mes "Come back tomorrow for more quest!";
+		end;
+	}
+	dailyfrozen_icecle = 1;
+	kill_icecle_count = 0;
+	mes "[^0000FFFrozen Knight^000000]";
+	mes "Good!";
+	mes "Now go and kill 20x Furious Icecle!";
+	next;
+	mes "Come back to me when you done to get your reward!";
+	close;
+	}
+			
+	end;
+}
+
+//Kill Daily Quest
+-	script	Furious Gazeti#IllusionFrozen	-1,{
+    OnKill:
+		if(dailyfrozen_gazeti == 2){
+			unittalk getcharid(3),"I already kill 20x Furious Gazeti. I need to talk to Frozen Knight.",bc_self;
+		}
+		if(dailyfrozen_gazeti == 1 && kill_gazeti_count > 19){
+				unittalk getcharid(3),"I already kill 20x Furious Gazeti. I need to talk to Frozen Knight.",bc_self;
+				dailyfrozen_gazeti = 2;
+				end;
+			}
+		if(dailyfrozen_gazeti == 1){
+			kill_gazeti_count = kill_gazeti_count+1;
+			if(kill_gazeti_count > 19){
+				unittalk getcharid(3),"I already kill 20x Furious Gazeti. I need to talk to Frozen Knight.",bc_self;
+				dailyfrozen_gazeti = 2;
+				end;
+			}
+			unittalk getcharid(3),"I already kill "+kill_gazeti_count+" Furious Gazeti",bc_self;
+			end;
+		}
+	end;
+}
+
+-	script	Furious Snowier#IllusionFrozen	-1,{
+    OnKill:
+		if(dailyfrozen_snowier == 2){
+			unittalk getcharid(3),"I already kill 20x Furious Snowier. I need to talk to Frozen Knight.",bc_self;
+		}
+		if(dailyfrozen_snowier == 1 && kill_snowier_count > 19){
+				unittalk getcharid(3),"I already kill 20x Furious Snowier. I need to talk to Frozen Knight.",bc_self;
+				dailyfrozen_snowier = 2;
+				end;
+			}
+		if(dailyfrozen_snowier == 1){
+			kill_snowier_count = kill_snowier_count+1;
+			if(kill_snowier_count > 19){
+				unittalk getcharid(3),"I already kill 20x Furious Snowier. I need to talk to Frozen Knight.",bc_self;
+				dailyfrozen_snowier = 2;
+				end;
+			}
+			unittalk getcharid(3),"I already kill "+kill_snowier_count+" Furious Snowier",bc_self;
+			end;
+		}
+	end;
+}
+
+-	script	Furious Ice Titan#IllusionFrozen	-1,{
+    OnKill:
+		if(dailyfrozen_icetitan == 2){
+			unittalk getcharid(3),"I already kill 20x Furious Ice Titan. I need to talk to Frozen Knight.",bc_self;
+		}
+		if(dailyfrozen_icetitan == 1 && kill_icetitan_count > 19){
+				unittalk getcharid(3),"I already kill 20x Furious Ice Titan. I need to talk to Frozen Knight.",bc_self;
+				dailyfrozen_icetitan = 2;
+				end;
+			}
+		if(dailyfrozen_icetitan == 1){
+			kill_icetitan_count = kill_icetitan_count+1;
+			if(kill_icetitan_count > 19){
+				unittalk getcharid(3),"I already kill 20x Furious Ice Titan. I need to talk to Frozen Knight.",bc_self;
+				dailyfrozen_icetitan = 2;
+				end;
+			}
+			unittalk getcharid(3),"I already kill "+kill_icetitan_count+" Furious Ice Titan",bc_self;
+			end;
+		}
+	end;
+}
+
+-	script	Furious Icecle#IllusionFrozen	-1,{
+    OnKill:
+		if(dailyfrozen_icecle == 2){
+			unittalk getcharid(3),"I already kill 20x Furious Icecle. I need to talk to Frozen Knight.",bc_self;
+		}
+		if(dailyfrozen_icecle == 1 && kill_icecle_count > 19){
+				unittalk getcharid(3),"I already kill 20x Furious Icecle. I need to talk to Frozen Knight.",bc_self;
+				dailyfrozen_icecle = 2;
+				end;
+			}
+		if(dailyfrozen_icecle == 1){
+			kill_icecle_count = kill_icecle_count+1;
+			if(kill_icecle_count > 19){
+				unittalk getcharid(3),"I already kill 20x Furious Icecle. I need to talk to Frozen Knight.",bc_self;
+				dailyfrozen_icecle = 2;
+				end;
+			}
+			unittalk getcharid(3),"I already kill "+kill_icecle_count+" Furious Icecle",bc_self;
+			end;
+		}
+	end;
+}
+
+//Equip Craft
+ice_d03_i,158,41,3	script	Ominous Abstraction#IllusionFrozen	10036,{
+	if (checkweight(1201,1) == 0) {
+		mes "Reduce the amount of items that you have in your inventory before continuing.";
+		close;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes "You are carrying too much in your inventory.";
+		close;
+	}
+	
+	disable_items;
+	emotion ET_DELIGHT;
+	mes "[^0000FFOminous Abstraction^000000]";
+	mes "You are must be strong enough to be here";
+	mes "I can craft powerfull item for you at a cost";
+	mes "Just choose whatever item you desire for me to craft";
+	next;
+	
+	switch(select("Please explain:Illusion Combo Battle Glove:Illusion Huuma Fluttering Snow:Illusion Cap:Illusion Survivor's Manteau:Illusion Sacred Mission:Cancel")) {
+	case 1:
+		break;
+	case 2:
+		mes "[^0000FFOminous Abstraction^000000]";
+		mes "To craft Illusion Combo Battle Glove I will need this: ";
+		mes " ";
+		mes "+9 ^FF0000"+getitemname(1822)+"^000000";
+		mes "100 ^FF0000"+getitemname(25271)+"^000000";
+		mes "100 ^FF0000"+getitemname(25299)+"^000000";
+		next;
+		mes "Ok, that's it!";
+		mes "Let's craft the weapon for you";
+		mes "And don't you worry, I never fail to craft this item";
+		next;
+		set .@equip_id, getequipid(EQI_HAND_R);
+		if (countitem(25299) < 100 || countitem(25271) < 100){
+			mes "You didn't bring enough material with you";
+			mes "Please come back later with the items so I can craft the weapon for you";
+			close;
+		}
+
+		if (.@equip_id != 1822) || (getequiprefinerycnt(EQI_HAND_R) < 9){
+			mes "Don't you hear what I said before? I only accept +9 of ^FF0000"+getitemname(1822)+"^000000";
+			close;
+		}
+
+		emotion ET_SMILE;
+		specialeffect2 EF_PHARMACY_OK;
+		delequip EQI_HAND_R;
+		delitem 25299, 100;
+		delitem 25271, 100;
+		getitem 1846, 1;
+		mes "OK, that's what you came here for";
+		mes "Enjoy!";
+		close;
+
+	case 3:
+		mes "[^0000FFOminous Abstraction^000000]";
+		mes "To craft Illusion Huuma Fluttering Snow I will need this: ";
+		mes " ";
+		mes "+9 ^FF0000"+getitemname(13314)+"^000000";
+		mes "100 ^FF0000"+getitemname(25271)+"^000000";
+		mes "20 ^FF0000"+getitemname(25300)+"^000000";
+		next;
+		mes "Ok, that's it!";
+		mes "Let's craft the weapon for you";
+		mes "And don't you worry, I never fail to craft this item";
+		next;
+		set .@equip_id, getequipid(EQI_HAND_R);
+		if (countitem(25300) < 100 || countitem(25271) < 100){
+			mes "You didn't bring enough material with you";
+			mes "Please come back later with the items so I can craft the weapon for you";
+			close;
+		}
+
+		if (.@equip_id != 13314) || (getequiprefinerycnt(EQI_HAND_R) < 9){
+			mes "Don't you hear what I said before? I only accept +9 of ^FF0000"+getitemname(13314)+"^000000";
+			close;
+		}
+
+		emotion ET_SMILE;
+		specialeffect2 EF_PHARMACY_OK;
+		delequip EQI_HAND_R;
+		delitem 25271, 100;
+		delitem 25300, 20;
+		getitem 13337, 1;
+		mes "OK, that's what you came here for";
+		mes "Enjoy!";
+		close;
+
+	case 4:
+		mes "[^0000FFOminous Abstraction^000000]";
+		mes "To craft Illusion Cap I will need this: ";
+		mes " ";
+		mes "+9 ^FF0000"+getitemname(2227)+"^000000";
+		mes "50 ^FF0000"+getitemname(25271)+"^000000";
+		mes "100 ^FF0000"+getitemname(25298)+"^000000";
+		next;
+		mes "Ok, that's it!";
+		mes "Let's craft the weapon for you";
+		mes "And don't you worry, I never fail to craft this item";
+		next;
+		set .@equip_id, getequipid(HEAD_TOP);
+		if (countitem(25298) < 100 || countitem(25271) < 50){
+			mes "You didn't bring enough material with you";
+			mes "Please come back later with the items so I can craft the weapon for you";
+			close;
+		}
+
+		if (.@equip_id != 2227) || (getequiprefinerycnt(EQI_HEAD_TOP) < 9){
+			mes "Don't you hear what I said before? I only accept +9 of ^FF0000"+getitemname(2227)+"^000000";
+			close;
+		}
+
+		emotion ET_SMILE;
+		specialeffect2 EF_PHARMACY_OK;
+		delequip EQI_HEAD_TOP;
+		delitem 25271, 50;
+		delitem 25298, 100;
+		getitem 19223, 1;
+		mes "OK, that's what you came here for";
+		mes "Enjoy!";
+		close;
+
+	case 5:
+		mes "[^0000FFOminous Abstraction^000000]";
+		mes "To craft Illusion Survivor's Manteau will need this: ";
+		mes " ";
+		mes "+9 ^FF0000"+getitemname(2509)+"^000000";
+		mes "100 ^FF0000"+getitemname(25271)+"^000000";
+		mes "200 ^FF0000"+getitemname(25297)+"^000000";
+		next;
+		mes "Ok, that's it!";
+		mes "Let's craft the weapon for you";
+		mes "And don't you worry, I never fail to craft this item";
+		next;
+		set .@equip_id, getequipid(EQI_GARMENT);
+		if (countitem(25297) < 200 || countitem(25271) < 100){
+			mes "You didn't bring enough material with you";
+			mes "Please come back later with the items so I can craft the weapon for you";
+			close;
+		}
+
+		if (.@equip_id != 2509) || (getequiprefinerycnt(EQI_GARMENT) < 9){
+			mes "Don't you hear what I said before? I only accept +9 of ^FF0000"+getitemname(2509)+"^000000";
+			close;
+		}
+
+		emotion ET_SMILE;
+		specialeffect2 EF_PHARMACY_OK;
+		delequip EQI_GARMENT;
+		delitem 25271, 100;
+		delitem 25297, 200;
+		getitem 20847, 1;
+		mes "OK, that's what you came here for";
+		mes "Enjoy!";
+		close;
+
+	case 6:
+		mes "[^0000FFOminous Abstraction^000000]";
+		mes "To craft Illusion Sacred Mission I will need this: ";
+		mes " ";
+		mes "+9 ^FF0000"+getitemname(2128)+"^000000";
+		mes "100 ^FF0000"+getitemname(25271)+"^000000";
+		mes "300 ^FF0000"+getitemname(25297)+"^000000";
+		next;
+		mes "Ok, that's it!";
+		mes "Let's craft the equip for you";
+		mes "And don't you worry, I never fail to craft this item";
+		next;
+		set .@equip_id, getequipid(EQI_HAND_L);
+		if (countitem(25297) < 300 || countitem(25271) < 100){
+			mes "You didn't bring enough material with you";
+			mes "Please come back later with the items so I can craft the equip for you";
+			close;
+		}
+
+		if (.@equip_id != 2128) || (getequiprefinerycnt(EQI_HAND_L) < 9){
+			mes "Don't you hear what I said before? I only accept +9 of ^FF0000"+getitemname(2128)+"^000000";
+			close;
+		}
+
+		emotion ET_SMILE;
+		specialeffect2 EF_PHARMACY_OK;
+		delequip EQI_HAND_L;
+		delitem 25271, 100;
+		delitem 25297, 300;
+		getitem 28922, 1;
+		mes "OK, that's what you came here for";
+		mes "Enjoy!";
+		close;
+
+	case 7:
+		mes "[^0000FFOminous Abstraction^000000]";
+		mes "Bye bye";
+		close;
+			
+	}
+		mes "[^0000FFOminous Abstraction^000000]";
+		mes "I can craft many powerfull weapon, headgear, shoes, and garment for you";
+		mes "You must give me all items needed to do so";
+		mes "In case you are wondering what I can craft for you, just check this item list";
+		next;
+		mes "<ITEM>" +getitemname(1846)+ "<INFO>" +1846+"</INFO></ITEM>";
+		mes "<ITEM>" +getitemname(13337)+ "<INFO>" +13337+"</INFO></ITEM>";
+		mes "<ITEM>" +getitemname(19223)+ "<INFO>" +19223+"</INFO></ITEM>";
+		mes "<ITEM>" +getitemname(20847)+ "<INFO>" +20847+"</INFO></ITEM>";
+		mes "<ITEM>" +getitemname(28922)+ "<INFO>" +28922+"</INFO></ITEM>";
+		close;	
+}

@@ -1,0 +1,58 @@
+//===== rAthena Script =======================================
+
+//Todo I have no actual list but you can copy mapflag for instance.
+//Placeholder below for instance maps
+
+//Twilight Garden & Hey Sweety
+1@bamn	mapflag	nowarp
+1@bamn	mapflag	nomemo
+1@bamn	mapflag	noteleport
+1@bamn	mapflag	monster_noteleport
+1@bamn	mapflag	nosave
+1@bamn	mapflag	nobranch
+1@bamn	mapflag	nowarpto
+1@bamn	mapflag	noicewall
+1@bamn	mapflag	restricted	9
+
+1@bamq	mapflag	nowarp
+1@bamq	mapflag	nomemo
+1@bamq	mapflag	noteleport
+1@bamq	mapflag	monster_noteleport
+1@bamq	mapflag	nosave
+1@bamq	mapflag	nobranch
+1@bamq	mapflag	nowarpto
+1@bamq	mapflag	noicewall
+1@bamq	mapflag	restricted	9
+
+//Farm of the Forgotten Time
+1@lost	mapflag	nowarp
+1@lost	mapflag	nomemo
+1@lost	mapflag	noteleport
+1@lost	mapflag	monster_noteleport
+1@lost	mapflag	nosave
+1@lost	mapflag	nobranch
+1@lost	mapflag	nowarpto
+1@lost	mapflag	noicewall
+1@lost	mapflag	restricted	9
+
+//Water Garden
+1@ghg	mapflag	nowarp
+1@ghg	mapflag	nomemo
+1@ghg	mapflag	noteleport
+1@ghg	mapflag	monster_noteleport
+1@ghg	mapflag	nosave
+1@ghg	mapflag	nobranch
+1@ghg	mapflag	nowarpto
+1@ghg	mapflag	noicewall
+1@ghg	mapflag	restricted	9
+
+//Hidden Garden
+1@herbs	mapflag	nowarp
+1@herbs	mapflag	nomemo
+1@herbs	mapflag	noteleport
+1@herbs	mapflag	monster_noteleport
+1@herbs	mapflag	nosave
+1@herbs	mapflag	nobranch
+1@herbs	mapflag	nowarpto
+1@herbs	mapflag	noicewall
+1@herbs	mapflag	restricted	9

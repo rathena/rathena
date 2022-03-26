@@ -1,0 +1,637 @@
+//===== rAthena Script =======================================
+
+// Narin 
+tur_d03_i,139,186,3	script	Narin#abyssturtleisland	4_F_NARIN,7,3,{
+	if(daily_ominousheater == 2){
+		emotion ET_CONGRATULATION;
+		mes "[ Narin ]";
+		mes "You did an excellent job!";
+		mes "You've hunted them all!";
+		next;
+		mes "[ Narin ]";
+		mes "Now take this ^0000ffIllusion Stone^000000.";
+		hunt_abyssturtleisland_progress = 0;
+		daily_ominousheater = 0;
+		delay_daily_ominousheater = gettimetick(2)+86400;
+		adventurer_abyssturtleisland = 1;
+		getitem 25271, 1;
+		next;
+		mes "[ Narin ]";
+		mes "You can take other hunt challenges if you want, but you must wait 1 day before repeating this challenge.";
+		mes "Take care!";
+		end;
+	}
+	if(daily_ominoussolider == 2){
+		emotion ET_CONGRATULATION;
+		mes "[ Narin ]";
+		mes "You did an excellent job!";
+		mes "You've hunted them all!";
+		next;
+		mes "[ Narin ]";
+		mes "Now take this ^0000ffIllusion Stone^000000.";
+		hunt_abyssturtleisland_progress = 0;
+		daily_ominoussolider = 0;
+		delay_daily_ominoussolider = gettimetick(2)+86400;
+		adventurer_abyssturtleisland = 1;
+		getitem 25271, 1;
+		next;
+		mes "[ Narin ]";
+		mes "You can take other hunt challenges if you want, but you must wait 1 day before repeating this challenge.";
+		mes "Take care!";
+		end;
+	}
+	if(daily_ominousfreezer == 2){
+		emotion ET_CONGRATULATION;
+		mes "[ Narin ]";
+		mes "You did an excellent job!";
+		mes "You've hunted them all!";
+		next;
+		mes "[ Narin ]";
+		mes "Now take this ^0000ffIllusion Stone^000000.";
+		hunt_abyssturtleisland_progress = 0;
+		daily_ominousfreezer = 0;
+		delay_daily_ominousfreezer = gettimetick(2)+86400;
+		adventurer_abyssturtleisland = 1;
+		getitem 25271, 1;
+		next;
+		mes "[ Narin ]";
+		mes "You can take other hunt challenges if you want, but you must wait 1 day before repeating this challenge.";
+		mes "Take care!";
+		end;
+	}
+	if(daily_ominouspermeter == 2){
+		emotion ET_CONGRATULATION;
+		mes "[ Narin ]";
+		mes "You did an excellent job!";
+		mes "You've hunted them all!";
+		next;
+		mes "[ Narin ]";
+		mes "Now take this ^0000ffIllusion Stone^000000.";
+		hunt_abyssturtleisland_progress = 0;
+		daily_ominouspermeter = 0;
+		delay_daily_ominouspermeter = gettimetick(2)+86400;
+		adventurer_abyssturtleisland = 1;
+		getitem 25271, 1;
+		next;
+		mes "[ Narin ]";
+		mes "You can take other hunt challenges if you want, but you must wait 1 day before repeating this challenge.";
+		mes "Take care!";
+		end;
+	}
+	if(daily_ominousassulter == 2){
+		emotion ET_CONGRATULATION;
+		mes "[ Narin ]";
+		mes "You did an excellent job!";
+		mes "You've hunted them all!";
+		next;
+		mes "[ Narin ]";
+		mes "Now take this ^0000ffIllusion Stone^000000.";
+		hunt_abyssturtleisland_progress = 0;
+		daily_ominousassulter = 0;
+		delay_daily_ominousassulter = gettimetick(2)+86400;
+		adventurer_abyssturtleisland = 1;
+		getitem 25271, 1;
+		next;
+		mes "[ Narin ]";
+		mes "You can take other hunt challenges if you want, but you must wait 1 day before repeating this challenge.";
+		mes "Take care!";
+		end;
+	}
+	if(hunt_abyssturtleisland_progress > 0){
+		mes "[ Narin ]";
+		mes "You need to kill 30x ^009900"+.MobsName$[hunt_ID_abyssturtleisland-1]+"^000000.";
+		mes "Talk to me when you are done.";
+		end;
+	}
+	mes "[ Narin ]";
+	mes "Are you up to exploring this place?";
+	next;
+	switch(select("Yes","No")) {
+		case 1:
+			break;
+		case 2:
+		emotion ET_SURPRISE;
+			mes "[ Narin ]";
+			mes "So what are you doing here then?";
+			mes "I don't understand you people!";
+			end;
+	}
+	mes "[ Narin ]";
+	mes "Very well!";
+	mes "While you're exploring this place, help me kill monsters in this place.";
+	next;
+	mes "[ "+strcharinfo(0)+" ]";
+	mes "Sure!";
+	mes "I'm not afraid of anything!";
+	mes "I'm sure of it!";
+	next;
+	mes "[ Narin ]";
+	mes "Ahahaha...";
+	mes "OK OK, I believe you.";
+	mes "Now choose which monster will you like to hunt.";
+	next;
+	switch(select("Ominous Heater","Ominous Solider","Ominous Freezer","Ominous Permeter","Ominous Assulter","I've change my mind.")){
+		case 1:
+			if(gettimetick(2) < delay_daily_ominousheater){
+				mes "[ Narin ]";
+				mes "You need to wait until tomorrow to take this hunt challenge again.";
+				end;
+			}
+			hunt_ID_abyssturtleisland = 1;
+			goto hunt_abyssturtleisland;
+			close;
+		case 2:
+			if(gettimetick(2) < delay_daily_ominoussolider){
+				mes "[ Narin ]";
+				mes "You need to wait until tomorrow to take this hunt challenge again.";
+				end;
+			}
+			hunt_ID_abyssturtleisland = 2;
+			goto hunt_abyssturtleisland;
+			close;
+		case 3:
+			if(gettimetick(2) < delay_daily_ominousfreezer){
+				mes "[ Narin ]";
+				mes "You need to wait until tomorrow to take this hunt challenge again.";
+				end;
+			}
+			hunt_ID_abyssturtleisland = 3;
+			goto hunt_abyssturtleisland;
+			close;
+		case 4:
+			if(gettimetick(2) < delay_daily_ominouspermeter){
+				mes "[ Narin ]";
+				mes "You need to wait until tomorrow to take this hunt challenge again.";
+				end;
+			}
+			hunt_ID_abyssturtleisland = 4;
+			goto hunt_abyssturtleisland;
+			close;
+		case 5:
+			if(gettimetick(2) < delay_daily_ominousassulter){
+				mes "[ Narin ]";
+				mes "You need to wait until tomorrow to take this hunt challenge again.";
+				end;
+			}
+			hunt_ID_abyssturtleisland = 5;
+			goto hunt_abyssturtleisland;
+			close;
+		case 6:
+			emotion ET_SWEAT;
+			mes "[ Narin ]";
+			mes "You've what?";
+			next;
+			mes "Ahahaha...";
+			mes "That's fine, may be you just not what you just said before.";
+			mes "Off you go!";
+			end;
+	}
+	
+	hunt_abyssturtleisland:
+	mes "[ Narin ]";
+	mes "Great choice!";
+	mes "You choose to hunt 30x ^009900"+.MobsName$[hunt_ID_abyssturtleisland-1]+"^000000.";
+	mes "Are you sure?";
+	next;
+	switch(select("Yes","No")){
+		case 1: break;
+		case 2:
+			emotion ET_SWEAT;
+			mes "[ Narin ]";
+			mes "So what are you doing here then?";
+			mes "I don't understand you people!";
+			end;
+		}
+	if (hunt_ID_abyssturtleisland == 1){
+		daily_ominousheater = 1;
+		daily_ominoussolider = 0;
+		daily_ominousfreezer = 0;
+		daily_ominouspermeter = 0;
+		daily_ominousassulter = 0;
+		kill_ominousheater_count = 0;
+		}
+	if (hunt_ID_abyssturtleisland == 2){
+		daily_ominousheater = 0;
+		daily_ominoussolider = 1;
+		daily_ominousfreezer = 0;
+		daily_ominouspermeter = 0;
+		daily_ominousassulter = 0;
+		kill_ominoussolider_count = 0;
+		}
+	if (hunt_ID_abyssturtleisland == 3){
+		daily_ominousheater = 0;
+		daily_ominoussolider = 0;
+		daily_ominousfreezer = 1;
+		daily_ominouspermeter = 0;
+		daily_ominousassulter = 0;
+		kill_ominousfreezer_count = 0;
+		}
+	if (hunt_ID_abyssturtleisland == 4){
+		daily_ominousheater = 0;
+		daily_ominoussolider = 0;
+		daily_ominousfreezer = 0;
+		daily_ominouspermeter = 1;
+		daily_ominousassulter = 0;
+		kill_ominouspermeter_count = 0;
+		}
+	if (hunt_ID_abyssturtleisland == 5){
+		daily_ominousheater = 0;
+		daily_ominoussolider = 0;
+		daily_ominousfreezer = 0;
+		daily_ominouspermeter = 0;
+		daily_ominousassulter = 1;
+		kill_ominousassulter_count = 0;
+		}
+	hunt_abyssturtleisland_progress = 1;
+	mes "[ Narin ]";
+	mes "Nice!";
+	mes "Come back to me when you are done hunt them.";
+	mes "And I will give you this ^0000ffIllusion Stone^000000.";
+	next;
+	mes "[ Narin ]";
+	mes "Good luck!";
+	close;
+	
+OnInit:
+	setarray .mobs_hunt_abyssturtleisland[0],3799,3780,3781,3782,3783;
+	//setarray .reward_hunt_abyssturtleisland[0],25271,25271,25271,25271,25271;
+	//setarray .reward_amount_hunt_abyssturtleisland[0],1,1,1,1,1;
+	setarray .MobsName$[0],"Ominous Heater","Ominous Solider","Ominous Freezer","Ominous Permeter","Ominous Assulter";
+	end;
+	
+	OnTouch:
+	{
+		OnPCLoadMapEvent:
+			if(strcharinfo(3) == strnpcinfo(4))
+			showevent 1, 1;
+			end;
+	}
+}
+
+// Adventurer Create Equip
+tur_d03_i,125,186,5	script	Adventurer#abyssturtleisland	4_f_job_assassin,{
+	if(adventurer_abyssturtleisland < 1){
+		mes "[ Adventurer ]";
+		mes "I know why you are here.";
+		mes "But I can't offer my services before you prove yourself to me that you are strong enough to handle what I have.";
+		next;
+		mes "[ Adventurer ]";
+		mes "Talk to Narin and finish one of her challenges.";
+		mes "Only then I will give you chance to trade with some of my belongings.";
+		end;
+	}
+	if (checkweight(1201,1) == 0) {
+		mes "Reduce the amount of items that you have in your inventory before continuing.";
+		end;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes "You are carrying too much in your inventory.";
+		end;
+	}
+	disable_items;
+	mes "[ Adventurer ]";
+	mes "Hahaha... I know that you are strong enough.";
+	mes "Now you can have one of my precious collection.";
+	next;
+	mes "[ Adventurer ]";
+	mes "Which one you want the most?";
+	next;
+	switch(select("Illusion Immaterial Sword[2]","Illusion War Axe[2]","Illusion Pole Axe[2]","Illusion Wing Shuriken[2]","Illusion Iron Driver [2]","Illusion Fancy Flower [1]","Nothing")){
+		case 1:
+			set .@location, EQI_HAND_R;
+			.@refine = getequiprefinerycnt(.@location);
+			.@equip_id = getequipid(.@location);
+			.@equip_id_req = 1141;
+			.@req_item_1 = 25271;
+			.@req_item_2 = 25314;
+			.@amount_req_item_1 = 100;
+			.@amount_req_item_2 = 50;
+			.@reward = 13469;
+			goto craft;
+		case 2:
+			set .@location, EQI_HAND_R;
+			.@refine = getequiprefinerycnt(.@location);
+			.@equip_id = getequipid(.@location);
+			.@equip_id_req = 1306;
+			.@req_item_1 = 25271;
+			.@req_item_2 = 25311;
+			.@amount_req_item_1 = 100;
+			.@amount_req_item_2 = 200;
+			.@reward = 1326;
+			goto craft;
+		case 3:
+			set .@location, EQI_HAND_R;
+			.@refine = getequiprefinerycnt(.@location);
+			.@equip_id = getequipid(.@location);
+			.@equip_id_req = 1417;
+			.@req_item_1 = 25271;
+			.@req_item_2 = 25311;
+			.@amount_req_item_1 = 100;
+			.@amount_req_item_2 = 200;
+			.@reward = 32005;
+			goto craft;
+		case 4:
+			set .@location, EQI_HAND_R;
+			.@refine = getequiprefinerycnt(.@location);
+			.@equip_id = getequipid(.@location);
+			.@equip_id_req = 13300;
+			.@req_item_1 = 25271;
+			.@req_item_2 = 25313;
+			.@amount_req_item_1 = 100;
+			.@amount_req_item_2 = 200;
+			.@reward = 13338;
+			goto craft;
+		case 5:
+			set .@location, EQI_HAND_R;
+			.@refine = getequiprefinerycnt(.@location);
+			.@equip_id = getequipid(.@location);
+			.@equip_id_req = 1529;
+			.@req_item_1 = 25271;
+			.@req_item_2 = 25313;
+			.@amount_req_item_1 = 100;
+			.@amount_req_item_2 = 200;
+			.@reward = 16065;
+			goto craft;
+		case 6:
+			set .@location, EQI_HEAD_TOP;
+			.@refine = getequiprefinerycnt(.@location);
+			.@equip_id = getequipid(.@location);
+			.@equip_id_req = 2207;
+			.@req_item_1 = 25271;
+			.@req_item_2 = 25312;
+			.@amount_req_item_1 = 100;
+			.@amount_req_item_2 = 50;
+			.@reward = 19247;
+			goto craft;
+		case 7:
+			emotion ET_HUK;
+			mes "[ Adventurer ]";
+			mes "What?";
+			mes "Nothing?";
+			mes "N-o-t-h-i-n-g-???";
+			end;
+	}
+	craft:
+		mes "[ Adventurer ]";
+		mes "If you want <ITEM>" +getitemname(.@reward)+ "<INFO>" +.@reward+"</INFO></ITEM>";
+		mes "Then you need to bring me something in return.";
+		mes "Nothing free in this world, ahahaha.";
+		next;
+		mes "[ Adventurer ]";
+		mes "Bring me all of this:";
+		mes " ";
+		mes "( ^009900"+.@equip_id_req+"^000000 ) ^ff0000+9^000000 "+getitemname(.@equip_id_req)+"";
+		mes "( ^009900"+.@req_item_1+"^000000 ) "+.@amount_req_item_1+" pcs of "+getitemname(.@req_item_1)+"";
+		mes "( ^009900"+.@req_item_2+"^000000 ) "+.@amount_req_item_2+" pcs of "+getitemname(.@req_item_2)+"";
+		next;
+		mes "[ Adventurer ]";
+		mes "You can get some of the items from this dungeon.";
+		mes "And looks like you are already prepared.";
+		mes "Don't forget, you need to wear the equipment that you want to exchange.";
+		next;
+		switch(select("Let's trade!","I'm not prepared yet.")){
+			case 1:
+				break;
+			case 2:
+				mes "[ Adventurer ]";
+				mes "Ow... How sad.";
+				mes "Please come back when you are ready!";
+				end;
+		}
+		.@refine = getequiprefinerycnt(.@location);
+		.@equip_id = getequipid(.@location);
+		if(.@equip_id_req != .@equip_id || .@refine < 9){
+			mes "[ Adventurer ]";
+			mes "I want ^ff0000+9^000000 "+getitemname(.@equip_id_req)+".";
+			mes "I will not accept the others.";
+			end;
+		}
+		if(countitem(.@req_item_1) < .@amount_req_item_1 || countitem(.@req_item_2) < .@amount_req_item_2 ){
+			mes "[ Adventurer ]";
+			mes "Hahaha...";
+			mes "You haven't brought enough items.";
+			mes "Go get some more!";
+			end;
+		}
+		emotion ET_SMILE;
+		specialeffect2 EF_PHARMACY_OK;
+		delequip .@location;
+		delitem .@req_item_1, .@amount_req_item_1;
+		delitem .@req_item_2, .@amount_req_item_2;
+		getitem .@reward, 1;
+		mes "[ Adventurer ]";
+		mes "OK, that's what you came here for!";
+		mes "Enjoy your new toy!";
+		mes "Take a good care of it.";
+		end;
+}
+
+//Kill Daily Quest
+
+-	script	Ominous Heater#abyssturtleisland	-1,{
+	OnKill:
+		if(daily_ominousheater == 2){
+			unittalk getcharid(3),"I've killed 30x Ominous Heater. I need to talk to Narin.",bc_self;
+			end;
+		}
+		if(daily_ominousheater == 1){
+			kill_ominousheater_count = kill_ominousheater_count + 1;
+			if(kill_ominousheater_count > 29){
+				unittalk getcharid(3),"I've killed 30x Ominous Heater. I need to talk to Narin.",bc_self;
+				daily_ominousheater = 2;
+				end;
+			}
+			unittalk getcharid(3),"I've killed "+kill_ominousheater_count+"x Ominous Heater!",bc_self;
+			end;
+		}
+	end;
+}
+
+-	script	Ominous Solider#abyssturtleisland	-1,{
+	OnKill:
+		if(daily_ominoussolider == 2){
+			unittalk getcharid(3),"I've killed 30x Ominous Solider. I need to talk to Narin.",bc_self;
+			end;
+		}
+		if(daily_ominoussolider == 1){
+			kill_ominoussolider_count = kill_ominoussolider_count + 1;
+			if(kill_ominoussolider_count > 29){
+				unittalk getcharid(3),"I've killed 30x Ominous Solider. I need to talk to Narin.",bc_self;
+				daily_ominoussolider = 2;
+				end;
+			}
+			unittalk getcharid(3),"I've killed "+kill_ominoussolider_count+"x Ominous Solider!",bc_self;
+			end;
+		}
+	end;
+}
+
+-	script	Ominous Freezer#abyssturtleisland	-1,{
+	OnKill:
+		if(daily_ominousfreezer == 2){
+			unittalk getcharid(3),"I've killed 30x Ominous Freezer. I need to talk to Narin.",bc_self;
+			end;
+		}
+		if(daily_ominousfreezer == 1){
+			kill_ominousfreezer_count = kill_ominousfreezer_count + 1;
+			if(kill_ominousfreezer_count > 29){
+				unittalk getcharid(3),"I've killed 30x Ominous Freezer. I need to talk to Narin.",bc_self;
+				daily_ominousfreezer = 2;
+				end;
+			}
+			unittalk getcharid(3),"I've killed "+kill_ominousfreezer_count+"x Ominous Freezer!",bc_self;
+			end;
+		}
+	end;
+}
+
+-	script	Ominous Permeter#abyssturtleisland	-1,{
+	OnKill:
+		if(daily_ominouspermeter == 2){
+			unittalk getcharid(3),"I've killed 30x Ominous Permeter. I need to talk to Narin.",bc_self;
+			end;
+		}
+		if(daily_ominouspermeter == 1){
+			kill_ominouspermeter_count = kill_ominouspermeter_count + 1;
+			if(kill_ominouspermeter_count > 29){
+				unittalk getcharid(3),"I've killed 30x Ominous Permeter. I need to talk to Narin.",bc_self;
+				daily_ominouspermeter = 2;
+				end;
+			}
+			unittalk getcharid(3),"I've killed "+kill_ominouspermeter_count+"x Ominous Permeter!",bc_self;
+			end;
+		}
+	end;
+}
+
+-	script	Ominous Assulter#abyssturtleisland	-1,{
+	OnKill:
+		if(daily_ominousassulter == 2){
+			unittalk getcharid(3),"I've killed 30x Ominous Assulter. I need to talk to Narin.",bc_self;
+			end;
+		}
+		if(daily_ominousassulter == 1){
+			kill_ominousassulter_count = kill_ominousassulter_count + 1;
+			if(kill_ominousassulter_count > 29){
+				unittalk getcharid(3),"I've killed 30x Ominous Assulter. I need to talk to Narin.",bc_self;
+				daily_ominousassulter = 2;
+				end;
+			}
+			unittalk getcharid(3),"I've killed "+kill_ominousassulter_count+"x Ominous Assulter!",bc_self;
+			end;
+		}
+	end;
+}
+
+// NPC
+tur_d03_i,147,169,3	script	Suspicious Men#abyssturtleisland	4_M_URGENT_MAN,{
+	end;
+	
+	OnTalk:
+		npctalk "This place doesn't looks like how it supposed to be!";
+		sleep 2000;
+		npctalk "I'd better find the way out!";
+		sleep 2000;
+		npctalk "Run! Run! Run! Run! Run!";
+		sleep 500;
+		donpcevent "Suspicious Men#abyssturtleisland::OnHide";
+	end;
+	
+	OnHide:
+	hideonnpc "Suspicious Men#abyssturtleisland";
+	sleep 10000;
+	hideoffnpc "Suspicious Men#abyssturtleisland";
+	donpcevent "Suspicious Men#abyssturtleisland::OnTalk";
+	end;
+	
+	OnInit:
+		donpcevent strnpcinfo(3) + "::OnTalk";
+}
+
+tur_d04_i,76,35,3	script	Keen Soldier#abyssturtleisland	4_M_KEEN_SOLDIER,{
+	end;
+	
+	OnTalk:
+		npctalk "I heard that there is a giant Turtle in this place!";
+		sleep 3000;
+		npctalk "I don't know if it's true but it does sounds scary.";
+		sleep 5000;
+		npctalk "Eh~! I should back to work!";
+		sleep 3000;
+		emotion ET_SURPRISE;
+		npctalk "Don't disturb me, just mind your own business!";
+		sleep 500;
+		donpcevent "Keen Soldier#abyssturtleisland::OnHide";
+	end;
+	
+	OnHide:
+	hideonnpc "Keen Soldier#abyssturtleisland";
+	sleep 10000;
+	hideoffnpc "Keen Soldier#abyssturtleisland";
+	donpcevent "Keen Soldier#abyssturtleisland::OnTalk";
+	end;
+	
+	OnInit:
+		donpcevent strnpcinfo(3) + "::OnTalk";
+}
+
+tur_d04_i,96,111,1	script	Sloppy Woman#abyssturtleisland	4_F_SLOPPY_WOMAN,{
+	mes "[ Sloppy Woman ]";
+	mes "I don't know why I'm here.";
+	mes "Just leave me alone!";
+	end;
+}
+
+tur_dun01,157,173,4	script	Distorted Space#abyssturtleisland_1	4_ENERGY_BLUE,{
+	mes "^33cc33[ Distorted Space ]^000000";
+	mes "^00ccff----------------------------------^000000";
+	mes "Something doesn't feel right about this light.";
+	mes "What will you do?";
+	next;
+	switch(select("Step in","Step out")) {
+		case 1:
+			if (BaseLevel < 140){
+				mes "^33cc33[ Distorted Space ]^000000";
+				mes "^00ccff----------------------------------^000000";
+				mes "Nothing happened.";
+				mes "You must be ^FF0000at least Level 140 ^000000to enter the Illusion of Abyss Turtle Island.";
+				close;
+			}
+			mes "^33cc33[ Distorted Space ]^000000";
+			mes "^00ccff----------------------------------^000000";
+			mes "You feel a force pulling you in!";
+			next;
+			delitem 7539, 10;
+			warp "tur_d03_i",132,185;
+			close;
+		case 2:
+			mes "^33cc33[ Distorted Space ]^000000";
+			mes "^00ccff----------------------------------^000000";
+			mes "Nothing happens.";
+			close;
+	}
+	end;
+}
+
+tur_d03_i,132,194,4	script	Distorted Space#abyssturtleisland_2	4_ENERGY_BLUE,{
+	mes "^33cc33[ Distorted Space ]^000000";
+	mes "^00ccff----------------------------------^000000";
+	mes "You can feel something strange in this space.";
+	mes "What will you do?";
+	next;
+	switch(select("Step in","Step out")) {
+		case 1:
+			warp "tur_dun01",161,174;
+			close;
+		case 2:
+			mes "^33cc33[ Distorted Space ]^000000";
+			mes "^00ccff----------------------------------^000000";
+			mes "Nothing happens.";
+			close;
+	}
+	end;
+}
+
+// Warp
+tur_d03_i,218,70,0	warp	3_to_4#abyssturtleisland	2,2,tur_d04_i,100,190
+tur_d04_i,100,196,0	warp	4_to_3#abyssturtleisland	2,2,tur_d03_i,218,81
