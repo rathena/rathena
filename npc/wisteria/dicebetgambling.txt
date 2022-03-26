@@ -1,0 +1,255 @@
+//===== rAthena Script =======================================
+//= Dicebet Gambling
+//===== By: ==================================================
+//= Technoken
+//===== Current Version: =====================================
+//= 1.1
+//===== Features: ============================================
+//= Gamble with other players using dicebet.
+//= This idea came from GTA Samp gamble system
+//= New atcommands:
+//= 	@dicebet <opponent name> <amount to bet>
+//= 	  - sends a dicebet invitation to another player
+//= 	@acceptdb - accepts the dicebet invitation
+//= 	@declinedb - declines the dicebet invitation
+//= 	@resetdb - resets the dicebet invitation
+//===== Features: ============================================
+//
+//= THIS IS A FREE SCRIPT
+//
+//===== Change Logs: =========================================
+//= 1.0 First version.
+//= 1.1 Updated script to work on rAthena Hash ea88ea5
+//============================================================
+-	script	DicebetGambling	-1,{
+OnInit:
+	.MinBet = 1; // Minimum amount to bet
+	.MaxBet = 500000000; // Maximum amount to bet NOTE: If you increase it by 500m, make sure that max zeny allowed per char is > 1b
+	bindatcmd("dicebet","DicebetGambling::OnAtcommandDicebet",0,99);
+	bindatcmd("acceptdb","DicebetGambling::OnAtcommandAcceptDB",0,99);
+	bindatcmd("declinedb","DicebetGambling::OnAtcommandDeclineDB",0,99);
+	bindatcmd("resetdb","DicebetGambling::OnAtcommandResetDB",0,99);
+	end;
+	
+OnAtcommandDicebet:
+	if( .@atcmd_numparameters < 2 ) {
+		message strcharinfo(0),"Please enter correct parameters (usage: @dicebet <opponent name> <amount to bet>)";
+		message strcharinfo(0),"@dicebet failed.";
+		end;
+	}
+	.@tmp$ = implode(.@atcmd_parameters$," ");
+	.@eil = getstrlen(.@atcmd_parameters$[.@atcmd_numparameters-1]) + 1;
+	.@charName$ = substr(.@tmp$, 0, (getstrlen(.@tmp$) - .@eil) - 1);
+	@oppRID = getcharid(3,.@charName$);
+	@oppCID = getcharid(0,.@charName$);
+	if( !isloggedin(@oppRID,@oppCID)  ) {
+		message strcharinfo(0),"Character name is not found.";
+		message strcharinfo(0),"Might be offline or a non-existing character.";
+		message strcharinfo(0),"@dicebet failed.";
+		end;
+	}
+	if( @oppRID == getcharid(3) ) {
+		message strcharinfo(0),"You cannot offer yourself a dice bet.";
+		message strcharinfo(0),"@dicebet failed.";
+		end;
+	}
+	if( @onbet || @diceDealerCID ) { // Prevents from offering another one
+		message strcharinfo(0),"1 dice bet at a time.";
+		message strcharinfo(0),"@dicebet failed.";
+		end;
+	}
+	getmapxy(.@map$,.@x,.@y,BL_PC);
+	getmapxy(.@map1$,.@x1,.@y1,BL_PC,rid2name(@oppRID));
+	if( distance( .@x, .@y, .@x1, .@y1 ) > 3 ) { // 3 cells distance
+		message strcharinfo(0),"You must be near to your opponent.";
+		message strcharinfo(0),"@dicebet failed.";
+		end;
+	}
+	.@oppInviter = getvar(@onbet,@oppCID); //  Opponent already invite someone
+	.@oppInvited = getvar(@diceDealerCID,@oppCID); // Opponent is already invited by someone
+	if( .@oppInviter || .@oppInvited ) { // Prevents from dealing inviters and someone whos already on a bet
+		message strcharinfo(0),.@charName$+" is currenty on a dice bet.";
+		message strcharinfo(0),"@dicebet failed.";
+		end;
+	}
+	.@bet = .@atcmd_parameters$[.@atcmd_numparameters-1];
+	if( .@bet > .MaxBet || .@bet < .MinBet ) {
+		message strcharinfo(0),"Minimum Bet: "+.MinBet+"z";
+		message strcharinfo(0),"Maximum Bet: "+.MaxBet+"z";
+		message strcharinfo(0),"@dicebet failed.";
+		end;
+	}
+	// Checks if the opponent has right amount of zeny to bet
+	.@oppZeny = readparam(Zeny,@oppCID);
+	if( .@oppZeny < .@bet ) {
+		message strcharinfo(0),"Your opponent doesn't have enough zeny to bet.";
+		message strcharinfo(0),"@dicebet failed.";
+		end;
+	}
+	if( Zeny < .@bet ) {
+		message strcharinfo(0),"You don't have enough zeny to bet.";
+		message strcharinfo(0),"@dicebet failed.";
+		end;
+	}
+	set(@dicebet,.@bet,@oppCID); // Sets the bet
+	set(@diceDealerCID,getcharid(0),@oppCID); // Sets who's the dealer
+	set(@diceDealerRID,getcharid(3),@oppCID);
+	@onbet = 1; // Sets to 1 when the player already dicebet someone
+	dispbottom "You offered "+rid2name(@oppRID)+" a dice bet for "+.@bet+"z.",0x63D1F4;
+	dispbottom strcharinfo(0)+" has offered you a dice bet for "+.@bet+"z. Will you accept? (Use @acceptdb/@declinedb)",0x63D1F4,@oppCID;
+	end;
+	
+OnAtcommandAcceptDB:
+	if( @rolling ) {
+		message strcharinfo(0),"You're currently rolling the dice.";
+		message strcharinfo(0),"@acceptdb failed.";
+		end;
+	}
+	if( !@diceDealerCID ) {
+		message strcharinfo(0),"No one offered you a dice bet.";
+		message strcharinfo(0),"@acceptdb failed.";
+		end;
+	}
+	if( .@atcmd_numparameters != 0 ) {
+		message strcharinfo(0),"Please enter correct parameters (usage: @acceptdb)";
+		message strcharinfo(0),"@acceptdb failed.";
+		end;
+	}
+	if( !isloggedin(@diceDealerRID,@diceDealerCID) ) {
+		message strcharinfo(0),"Your opponent has gone offline.";
+		message strcharinfo(0),"@acceptdb failed.";
+		goto D_Reset;
+		end;
+	}
+	if( Zeny < @dicebet ) {
+		message strcharinfo(0),"You don't have enough zeny to accept the bet.";
+		message strcharinfo(0),"@acceptdb failed.";
+		end;
+	}
+	.@oppZeny = readparam(Zeny,@diceDealerCID); // Checks if the opponent still has the zeny that he bet
+	if( .@oppZeny < @dicebet ) {
+		message strcharinfo(0),"Your opponent doesn't have enough zeny to bet.";
+		message strcharinfo(0),"@dicebet failed.";
+		end;
+	}
+	getmapxy(.@map$,.@x,.@y,BL_PC);
+	getmapxy(.@map1$,.@x1,.@y1,BL_PC,rid2name(@diceDealerRID));
+	if( distance( .@x, .@y, .@x1, .@y1 ) > 3 ) {
+		message strcharinfo(0),"You must be near your opponent.";
+		message strcharinfo(0),"@acceptdb failed.";
+		end;
+	}
+	@rolling = 1;
+	dispbottom strcharinfo(0)+" accepted your dice bet offer for "+@dicebet+"z.",0x63D1F4,@diceDealerCID;
+	setarray .@dice[1],ET_DICE1,ET_DICE2,ET_DICE3,ET_DICE4,ET_DICE5,ET_DICE6;
+	.@rand = rand(1,6);
+	emotion .@dice[.@rand],strcharinfo(0);
+	.@rand1 = rand(1,6);
+	emotion .@dice[.@rand1],strcharinfo(0,@diceDealerCID);
+	sleep2 1200;
+	if( !isloggedin(@diceDealerRID) || !@diceDealerCID ) { // Checks if the inviter logged out
+		dispbottom strcharinfo(0,@diceDealerCID)+" logged out and cancels the dice bet.",0x63D1F4;
+		goto D_Reset;
+		end;
+	}
+	getmapxy(.@map$,.@x,.@y,BL_PC);
+	.@bet = @dicebet;
+	.@ownRID = getattachedrid();
+	.@diceDealerRID = @diceDealerRID;
+	while( .@i < 2 ) { // Checks Zeny again
+		if( Zeny < .@bet ) {
+			areaannounce .@map$,.@x-3,.@y-3,.@x+3,.@y+3,"Dicebet was cancelled because "+strcharinfo(0)+" current zeny has decreased!",0,0x63D1F4;
+			.@t++;
+		}
+		detachrid;
+		if( .@i == 0 ) attachrid(.@diceDealerRID);
+		else attachrid(.@ownRID);
+		.@i++;
+	}
+	if( !.@t ) {
+		areaannounce .@map$,.@x-3,.@y-3,.@x+3,.@y+3,"* * "+strcharinfo(0,@diceDealerCID)+" rolls the dice and land on "+.@rand1+" * *",0,0x63D1F4;
+		areaannounce .@map$,.@x-3,.@y-3,.@x+3,.@y+3,"* * "+strcharinfo(0)+" rolls the dice and land on "+.@rand+" * *",0,0x63D1F4;
+		if( .@rand == .@rand1 ) // Both dice lands on same number
+			areaannounce .@map$,.@x-3,.@y-3,.@x+3,.@y+3,"Nobody has won the bet of "+.@bet+"z because the dice landed on the same amount.",0,0x63D1F4;
+		else {
+			if( .@rand > .@rand1 ) { // I WON
+				Zeny += .@bet;
+				.@winner$ = strcharinfo(0);
+				detachrid; attachrid(.@diceDealerRID);
+				Zeny -= .@bet;
+			} else { // I LOSE
+				Zeny -= .@bet;
+				detachrid; attachrid(.@diceDealerRID);
+				.@winner$ = strcharinfo(0);
+				Zeny += .@bet;
+			}
+			detachrid; attachrid(.@ownRID);
+			areaannounce .@map$,.@x-3,.@y-3,.@x+3,.@y+3,.@winner$+" has won the bet of "+.@bet+"z.",0,0x63D1F4;
+		}
+	}
+	set(@onbet,0,@diceDealerCID);
+	goto D_Reset;
+	end;
+	
+OnAtcommandDeclineDB:
+	if( @rolling ) {
+		message strcharinfo(0),"You're currently rolling the dice.";
+		message strcharinfo(0),"@declinedb failed.";
+		end;
+	}
+	if( .@atcmd_numparameters != 0 ) {
+		message strcharinfo(0),"Please enter correct parameters (usage: @declinedb)";
+		message strcharinfo(0),"@declinedb failed.";
+		end;
+	}
+	if( !@diceDealerCID ) {
+		message strcharinfo(0),"No one offered you a dice bet.";
+		message strcharinfo(0),"@declinedb failed.";
+		end;
+	}
+	dispbottom "The dice bet offer has been declined.",0x63D1F4;
+	dispbottom strcharinfo(0)+" declined your dice bet offer.",0x63D1F4,@diceDealerCID;
+	set(@onbet,0,@diceDealerCID);
+	goto D_Reset;
+	end;
+
+OnAtcommandResetDB:
+	if( @oppCID )
+		.@rolling = getvar(@rolling,@oppCID);
+	else
+		.@rolling = 0;
+	if( .@rolling ) {
+		message strcharinfo(0),"Dicebet is currently rolling.";
+		message strcharinfo(0),"@resetdb failed.";
+		end;
+	}
+	if( !@onbet ) {
+		message strcharinfo(0),"You don't have a pending dicebet invitation.";
+		message strcharinfo(0),"@resetdb failed.";
+		end;
+	}
+	@onbet = 0;
+	dispbottom "Your pending dicebet invitation has been cancelled.";
+	detachrid; attachrid(@oppRID);
+	dispbottom "Pending dicebet invitation has been cancelled.";
+	goto D_Reset;
+	end;
+
+OnPCLogoutEvent:
+	if( @onbet ) {
+		detachrid; attachrid(@oppRID);
+		goto D_Reset;
+	}
+	if( @diceDealerCID ) { // When the one who use @acceptdb logged out
+		dispbottom strcharinfo(0)+" logged out and cancels the dice bet.",0x63D1F4,@diceDealerCID;
+		set(@onbet,0,@diceDealerCID);
+	}
+	end;
+
+D_Reset:
+	@dicebet = 0;
+	@diceDealerCID = 0;
+	@diceDealerRID = 0;
+	@rolling = 0;
+	end;
+}

@@ -1,0 +1,186 @@
+// https://rathena.org/board/topic/112186-faw-enchant-error-script/
+sec_in02,150,180,4	script	Dark Luhir	403,{
+	disable_items;
+	mes .@npc_name$ = "[^AA0000Valkyrie^000000]";
+	mes "I am here to enchant the",
+		"magnificent ^000099Fallen Angel Wing^000000.",
+		"Would you like to enchant yours?";
+	next;
+	.@menu$ = select("Information:Enchant Fallen Angel Wing:Reset Enchantment");
+	switch(.@menu$) {
+		default:
+		case 1:
+			break;
+		case 2:
+			callsub S_Check;
+			.@ref = getequiprefinerycnt(EQI_GARMENT);
+			.@card[0] = getequipcardid(EQI_GARMENT,0);
+			.@card[1] = getequipcardid(EQI_GARMENT,1);
+			.@card[2] = getequipcardid(EQI_GARMENT,2);
+			.@card[3] = getequipcardid(EQI_GARMENT,3);
+			
+			// Check if enchantment slot is full here, do no need to continue if full.
+			if(.@card[1] && .@card[2] && .@card[3]) {
+				mes .@npc_name$,
+				"Hmm.. it seems that all", 
+				"slots have already been enchanted.";
+				close;
+			}
+			if (.@ref >= 7) .@enc_count = 2;
+			else if (.@ref > 8) .@enc_count = 3;
+			else
+				.@enc_count = 1;
+			mes .@npc_name$;
+			mes "You have a ^000099+"+.@ref+" Fallen Angel Wing^000000.",
+				"It can have a total of "+.@enc_count+" enchantment"+(.@enc_count > 1? "s.":".")+" Please";
+			mes "select your preferred","enchantment.";
+			next;
+			.@menu$ = "";
+			for (.@i = 0; .@i < getarraysize(.enchant_type$); .@i++)
+				.@menu$ = .@menu$ + .enchant_type$[.@i]+":";
+			.@type = select(.@menu$);
+			.@enc_stat = getd(".enc"+.@type+"["+callsub(S_ChanceType, .chance_type, .@card[1], .@card[2], .@card[3])+"]");
+			if(.enchant_cost) {
+				if(Zeny < .enchant_cost) {
+					mes .@npc_name$,
+						"You don't have enough zeny.";
+					close;
+				}
+				Zeny -= .enchant_cost;
+			}
+			if ((.@card[1] && !.@card[2] && (.@ref < 7)) || (.@card[1] && .@card[2] && !.@card[3] && (.@ref < 9))) {
+				mes .@npc_name$,
+				"Sorry, but your",
+				"^000099Fallen Angel Wing^000000's",
+				"refinement level is too", 
+				"low to continue";
+				close;
+			}
+			delitem2 2589, 1, 1, .@ref, 0, .@card[0], .@card[1], .@card[2], .@card[3];
+			if(!.@card[1]) .@card[1] = .@enc_stat;
+			else if(!.@card[2] && .@ref > 6) .@card[2] = .@enc_stat;
+			else if(!.@card[3] && .@ref > 8) .@card[3] = .@enc_stat;
+			getitem2 2589, 1, 1, .@ref, 0, .@card[0], .@card[1], .@card[2], .@card[3];
+			mes .@npc_name$,
+				"Your ^000099Fallen Angel Wing^000000 has",
+				"been enchanted with ^000099"+getitemname(.@enc_stat)+"^000000.";
+			close;
+		case 3:
+			callsub S_Check;
+			mes .@npc_name$,
+				"This will cost 1x Silvervine Fruit.",
+				"Are you sure?";
+			next;
+			select("Yes");
+			mes .@npc_name$;
+			if(countitem(6417) < 1) {
+				mes "You don't bring enough silvervine Fruit.";
+				close;
+			}
+			delitem 6417,1;
+			.@ref = getequiprefinerycnt(EQI_GARMENT);
+			.@card[0] = getequipcardid(EQI_GARMENT,0);
+			.@card[1] = getequipcardid(EQI_GARMENT,1);
+			.@card[2] = getequipcardid(EQI_GARMENT,2);
+			.@card[3] = getequipcardid(EQI_GARMENT,3);
+			delitem2 2589, 1, 1, .@ref, 0, .@card[0], .@card[1], .@card[2], .@card[3];
+			getitem2 2589, 1, 1, .@ref, 0, .@card[0], 0, 0, 0;
+			mes "Your ^000099Fallen Angel Wing^000000's",
+				"enchantments have been reset.";
+			equip 2589; // didn't know it will work while npc set disable_items
+			specialeffect2 261;
+			specialeffect2 119;
+			close;
+	}
+	mes .@npc_name$,
+		"I can enchant your",
+		"^000099Fallen Angel Wing^000000 for",
+		(.enchant_cost ? callfunc("F_InsertComma",.enchant_cost)+"z":"free")+" to give it various.", 
+		"effects. In fact, I can do it",
+		"twice if its refinement level is",
+		"+7 ~ +8, and thrice if its",
+		"+9 and above.";
+	next;
+	mes .@npc_name$,
+		"The 3rd enchantment has a",
+		"chance to be more powerful",
+		"than the first two.";
+	next;
+	mes .@npc_name$,
+		"There is no chance to",
+		"fail, so enchant away",
+		"as much as you like.";
+	next;	
+	mes .@npc_name$,
+		"But if you're not happy",
+		"with the results, you can",
+		"reset the enchantments",
+		"for ^009900"+callfunc("F_InsertComma",.reset_cost)+"z^000000.";
+	next;
+	mes .@npc_name$,
+		"That's about everything.";
+	close;
+
+S_Check:
+	if (getequipid(EQI_GARMENT) != 2589) {
+		mes .@npc_name$;
+		mes "Please equip your",
+			"^000099Fallen Angel Wing^000000 if",
+			"you want to have it enchanted.";
+		close;
+	}
+	return;
+	
+S_ChanceType:
+	switch(getarg(0)) {
+		case 1:
+		//Decreasing Chance of Enchantment
+		//60% low, 30% mid, 10% high for 1st & 2nd enchant slot
+		//40% low, 30% mid, 20% high, 10% special for 3rd enchant slot
+			.@rand = rand(1,10);
+			if(getarg(2) && getarg(3)) { //For 3rd & 4th Card Slot aka 2nd & 3rd Enchant Slot
+				if (.@rand < 5 ) .@x = 0; 
+				else if (.@rand < 7) .@x = 1; 
+				else if (.@rand < 9) .@x = 2; 
+				else .@x = 3;	
+			} else {	//For 2nd Card slot aka 1st Enchant Slot
+				if (.@rand < 7) .@x=0; 
+				else if (.@rand < 10) .@x = 1; 
+				else .@x = 2; 
+			}
+			return .@x;
+		case 0:
+			if(getarg(2) && getarg(3))
+				return rand(0,3);
+			else
+				return rand(0,2);
+	}
+	
+OnInit:
+	setarray .enchant_type$, "Fighting Enchant", "Magic Enchant", "Archer Enchant", "Critical/Fatal Enchant",
+							 "Max HP Enchant", "Max SP Enchant", "ASPD Enchant", "STR Enchant","AGI Enchant",
+							 "DEX Enchant", "VIT Enchant","INT Enchant","LUK Enchant";
+	
+	setarray .enc1[0], 4809,4808,4820, 4821;	//Fighting 3~5
+	setarray .enc2[0], 4812,4826,4827, 4828;	//Magic 4~6
+	setarray .enc3[0], 4832,4833,4834, 4835;	//Expert Arc 1~3
+	setarray .enc4[0], 4863,4864,4865, 4866;	//Fatal 1~3
+	setarray .enc5[0], 4861,4862,4867, 4868;	//MHPP 1~3%
+	setarray .enc6[0], 4870,4800,4871, 4801;	//MaxSP 25,50,75
+	setarray .enc7[0], 4869,4872,4873, 4807;	//ASPD 1~3
+//	setarray .enc7[0], 4869,4872,4873, 4881;	//ASPD 1~3
+	setarray .enc8[0], 4702,4703,4704, 4853;	//STR 3~5 | Special Str
+	setarray .enc9[0], 4731,4732,4733, 4854;	//AGI 2~4
+	setarray .enc10[0], 4722,4723,4724, 4857;	//DEX 3~5
+	setarray .enc11[0], 4742,4743,4744, 4855;	//VIT 3~5
+	setarray .enc12[0], 4712,4713,4714, 4856;	//INT 3~5
+	setarray .enc13[0], 4752,4753,4754, 4858;	//LUK 3~5
+	
+	// 1 = 60% low, 30% mid, 10% high for 1st & 2nd enchant slot && 40% low, 30% mid, 20% high, 10% special for 3rd enchant slot
+	// 0 = Equal Chance
+	.chance_type = 1;
+	//Cost for Enchanting. It's free in iRO
+	.enchant_cost = 600000;
+	//Cost to reset | Costs 1Mz in iRO
+	.reset_cost = 1000000;
+}

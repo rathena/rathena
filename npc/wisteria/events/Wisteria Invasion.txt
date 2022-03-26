@@ -1,0 +1,114 @@
+quiz_02,296,263,4	script	Invasion Summoner	401,{
+
+	.mapsummon$ = "prontera";
+
+if(getgmlevel() >= 80) {
+	mes "[ Invasion Summoner ]";
+	mes "Let's get the party started?";
+	switch(select("Yes:No")) {
+	case 1:
+		close2;
+		npctalk "Invasion Summoner: Prepare for the invasion!";
+		if(mobcount( .mapsummon$, strnpcinfo(0)+"::OnPCEvent" )>0){donpcevent strnpcinfo(0)+"::OnPCEvent";end;}
+		announce "The earth is trembling...",bc_all,"0x00ffff";
+		sleep 10000;
+		announce "Someone is coming...",bc_all,"0x00ffff";
+		sleep 10000;
+		announce "This place is in danger...",bc_all,"0x00ffff";
+		sleep 10000;
+		announce "Prepare yourselves for the invasion!!!",bc_all,"0x00ffff";
+		sleep 10000;
+		soundeffectall "death.wav",0;
+		monster .mapsummon$,0,0,"Amon Ra",1511,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Assassin Cross Eremes",1647,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Atroce",1785,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Bacsojin",1630,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Baphomet",1039,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Beelzebub",1874,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Boitata",2068,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Champion Chen",2238,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Clown Alphoccio",2240,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Creator Flamel",2236,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"General Daehyun",2253,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Dark Lord",1272,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Detale",1719,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Doppelganger",1046,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Dracula",1389,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Drake",1112,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Eddga",1115,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Evil Snake Lord",1418,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Fallen Bishop",1871,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Garm",1252,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Gloom Under Night",1768,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Golden Thief Bug",1086,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Gopinich",1885,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Gypsy Trentini",2241,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"High Priest Magaleta",1649,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"High Wizard Katrinn",1651,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Ifrit",1832,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Incantation Samurai",1492,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Kiel D-01",1734,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Stormy Knight",1251,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Ktullanux",1779,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Lady Tanee",1688,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Lord Knight Seyren",1646,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Lord of Death",1373,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Maya",1147,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Mistress",1059,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Moonlight Flower",1150,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Nidhoggr's Shadow",2022,1,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Orc Hero",1087,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Orc Lord",1190,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Osiris",1038,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Paladin Randel",2235,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Pharaoh",1157,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Phreeoni",1159,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Professor Celia",2237,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"RSX-0806",1623,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Sniper Cecil",1650,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Stalker Gertie",2239,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Tao Gunka",1583,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Thanatos",1708,1,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Turtle General",1312,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Valkyrie Randgris",1751,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Vesper",1685,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Mastersmith Howard",1648,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Wounded Morroc",1917,1,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Egnigem Cenia",1658,2,strnpcinfo(0)+"::OnPCEvent",2,0;
+		monster .mapsummon$,0,0,"Naght Sieger",1956,1,strnpcinfo(0)+"::OnPCEvent",2,0;
+		sleep 10000;
+		announce "This is the Wisteria Invasion Event.",bc_all,"0xFFFF00";
+		sleep 10000;
+		announce "You have to do here is to kill all the MVP threats, here in Prontera.",bc_all,"0xFFFF00";
+		sleep 10000;
+		announce "Be safe and keep it up!",bc_all,"0xFFFF00";
+		sleep 10000;
+		end;
+	case 2:
+		if (mobcount( .mapsummon$, strnpcinfo(0)+"::OnPCEvent" )==1){
+			announce mobcount( .mapsummon$, strnpcinfo(0)+"::OnPCEvent" ) + " monster remaining in " + .mapsummon$ +".",bc_all,"0x00FF00";
+		}else{
+			announce mobcount( .mapsummon$, strnpcinfo(0)+"::OnPCEvent" ) + " monsters remaining in " + .mapsummon$ +".",bc_all,"0x00FF00";
+		}
+		end;
+	}
+} else {
+	mes "[ Invasion Summoner ]";
+	mes "Back off!";
+	close2;
+}
+end;
+OnPCEvent:
+	if(mobcount( .mapsummon$, strnpcinfo(0)+"::OnPCEvent" )==0){
+//		mapannounce .mapsummon$,"Congratulations! Prontera is saved from destruction.",bc_map,"0x00FF00";
+//		announce "Congratulations! Prontera is saved from destruction.",0,0x00ff00;
+		announce"Congratulations Wisterians! Prontera is saved from destruction.",bc_all,"0x00FF00";
+		end;
+	}
+	if (mobcount( .mapsummon$, strnpcinfo(0)+"::OnPCEvent" )==1){
+			announce mobcount( .mapsummon$, strnpcinfo(0)+"::OnPCEvent" ) + " monster remaining in " + .mapsummon$ +".",bc_all,"0x00FF00";
+		}else{
+			announce mobcount( .mapsummon$, strnpcinfo(0)+"::OnPCEvent" ) + " monsters remaining in " + .mapsummon$ +".",bc_all,"0x00FF00";
+		}
+
+}

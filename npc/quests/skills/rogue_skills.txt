@@ -19,6 +19,8 @@
 //= 1.8 Some cleaning. [Euphy]
 //============================================================
 
+
+/***
 in_rogue,359,177,0	script	#killershow01	-1,{
 OnInit:
 	disablenpc "#killershow01";
@@ -1368,3 +1370,4 @@ OnStartArena:
 //= 1.3a fixed an item ID typo, thx 2Spiritual Kid
 //= 1.3b Splitted into different files [DracoRPG]
 //============================================================
+**/

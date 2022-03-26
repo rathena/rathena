@@ -1,0 +1,330 @@
+
+//===== rAthena Script =======================================
+//= Ryoma's Rental Shop
+//===== By: ==================================================
+//= Euphy edited by Ryoma
+//===== Current Version: =====================================
+//= 1.6c
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= A dynamic Rental Shop based on Lunar's, with easier config.
+//= Includes support for multiple shops & cashpoints.
+//= Item Preview script by ToastOfDoom.
+//===== Additional Comments: =================================
+//= 1.0 Initial script.
+//= 1.2 Added category support.
+//= 1.3 More options and fixes.
+//= 1.4 Added debug settings.
+//= 1.5 Replaced categories with shop IDs.
+//= 1.6 Added support for purchasing stackables.
+//= 1.6a Added support for previewing costumes and robes.
+//= 1.6b Added 'disable_items' command.
+//= 1.6c Replaced function 'A_An' with "F_InsertArticle".
+//============================================================
+
+// Shop NPCs -- supplying no argument displays entire menu.
+//	callfunc "rentshop"{,<shop ID>{,<shop ID>{,...}}};
+//  ADD YOUR NPC HERE
+//============================================================
+prontera,192,172,3	script	Rental Shop#1	998,{ 
+
+
+	mes "[Rental Shop]";
+	mes "Hi Wisterians!";
+	mes "i need ^ff0000500^000000  Wisteria and ^ff0000500^000000  Zeny"; 
+	mes "to lend you 3 Days of my Gears!";
+	next;
+	mes "[Rental Shop]";
+	mes "it will automatically Expire within ^ff00003^000000  Days!";
+	mes "i will give you ^0000ff+7^000000 of all items";
+	next;
+	mes "[Rental Shop]";
+	mes "but you can't put cards any more in my Items!";
+	mes "Deal?";
+	next;
+
+
+
+callfunc "rentshop"; 
+}
+// prontera,165,203,6	script	Rental Shop#2	998,{ callfunc "rentshop",1,2; }	// call the shop 1 and 2 defined below
+// etc.. Add your Shop NPCs 'Rental Shop#XXX' here
+//============================================================
+//rentitem2 "<item name>",<time>, <identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>;
+
+// Script Core - DO NOT DUPLICATE THIS NPC !!!!!!!!!!!!!
+//============================================================
+
+
+
+
+
+
+-	script	donate_shop	-1,{
+
+
+
+
+function Add; function Chk; function Slot;
+OnInit:
+	freeloop(1);
+
+// -----------------------------------------------------------
+//  Basic shop settings.
+// -----------------------------------------------------------
+
+	set .Announce,0;	// Announce quest completion? (1: yes / 0: no)
+	set .ShowSlot,1;	// Show item slots? (2: all equipment / 1: if slots > 0 / 0: never)
+	set .ShowID,0;  	// Show item IDs? (1: yes / 0: no)
+	set .ShowZeny,1;	// Show Zeny cost, if any? (1: yes / 0: no)
+	set .MaxStack,1;	// Max number of quest items purchased at one time.
+
+// -----------------------------------------------------------
+//  Points variable -- optional quest requirement.
+//	setarray .Points$[0],"<variable name>","<display name>";
+// -----------------------------------------------------------
+
+	setarray .Points$[0],
+		"#CASHPOINTS", "Cash Points";
+
+
+//=====================================================================================
+// ------------------- ADD YOUR SHOPS NAME AND ITEMS SHOPS STARTING HERE --------------
+//=====================================================================================
+
+// -----------------------------------------------------------
+//  Shop IDs -- to add shops, copy dummy data at bottom of file.
+//	setarray .Shops$[1],"<Shop 1>","<Shop 2>"{,...};
+// -----------------------------------------------------------
+
+	setarray .Shops$[1],
+		"Headgears",	// Shop Named 1
+		"Weapons",		// Shop Named 2
+		"Armor",		// Shop Named 2
+		"Shields",		// Shop Named 2
+		"Garments",		// Shop Named 2
+		"Shoes",		// Shop Named 2
+		"Accessories";		// Shop Named 3
+
+// -----------------------------------------------------------
+//  Quest items -- do NOT use a reward item more than once!
+//	Add(<shop ID>,<reward ID>,<reward amount>,
+//	    <Zeny cost>,<point cost>,
+//	    <required item ID>,<required item amount>{,...});
+// -----------------------------------------------------------
+
+// Headgears
+	
+	Add(1,5374,1,500,0,30006,500); // Gigantic Majestic Goat
+	Add(1,5665,1,500,0,30006,500); // Shaman Hat
+	Add(1,5469,1,500,0,30006,500); // Musketeer Hat
+	
+
+	
+
+// Weapons
+	Add(2,18180,1,500,0,30006,500); // AC_B44_OS
+	Add(2,21047,1,500,0,30006,500); // Beam_Claymore_OS
+	Add(2,28136,1,500,0,30006,500); // Blasti_OS
+	Add(2,32019,1,500,0,30006,500); // Boost_Lance_OS
+	Add(2,1862,1,500,0,30006,500); // Burning_Knuckle_OS
+	Add(2,13493,1,500,0,30006,500); // Cannon_Rapier_OS
+	Add(2,28629,1,500,0,30006,500); // Circuit Board-OS
+	Add(2,26164,1,500,0,30006,500); // ElectricFox_OS
+	Add(2,28253,1,500,0,30006,500); // HR_S55_OS
+	Add(2,28755,1,500,0,30006,500); // Kuroiro_OS
+	Add(2,28038,1,500,0,30006,500); // Meuchler_OS
+	Add(2,18179,1,500,0,30006,500); // MH_P89_OS
+	Add(2,26151,1,500,0,30006,500); // Rutilus Stick-OS
+	Add(2,16088,1,500,0,30006,500); // Saphir_Hall_OS
+	Add(2,16089,1,500,0,30006,500); // Ultio_Spes_OS
+	Add(2,18178,1,500,0,30006,500); // Virtual_Bow_OS
+	
+
+// Armors
+	Add(3,450147,1,500,0,30006,500);
+	Add(3,450148,1,500,0,30006,500);
+
+	
+// Shields
+
+	Add(4,2137,1,500,0,30006,500); // Neo Valkyrie Shield
+	Add(4,2145,1,500,0,30006,500); // Time_Keepr_Shield
+	Add(4,2190,1,500,0,30006,500); // Ancient_Shield_Of_Aeon
+	
+
+
+
+//Garments
+	Add(5,20933,1,500,0,30006,500); //Illusion_Engine_A
+	Add(5,20934,1,500,0,30006,500); // //Illusion_Engine_B
+
+//Shoes
+	Add(6,22196,1,500,0,30006,500); //Illusion_Leg_A
+	Add(6,22197,1,500,0,30006,500); // //Illusion_Leg_B
+
+//Accessories	
+	Add(7,32207,1,500,0,30006,500); //Illusion_B_L
+	Add(7,32208,1,500,0,30006,500); // //Illusion_B_R
+	Add(7,32209,1,500,0,30006,500); //Illusion_BC_L
+	Add(7,32210,1,500,0,30006,500); // //Illusion_BC_R
+
+
+// -----------------------------------------------------------
+
+//=====================================================================================
+// ------------------- YOUR SHOPS AND ITEMS SHOPS HAVE BEEN ADDED ---------------------
+//=====================================================================================
+
+	freeloop(0);
+	set .menu$,"";
+	for(set .@i,1; .@i<=getarraysize(.Shops$); set .@i,.@i+1) {
+		set .menu$, .menu$+.Shops$[.@i]+":";
+		npcshopdelitem "rentshop"+.@i,909;
+	}
+	end;
+
+OnMenu:
+	set .@size, getarraysize(@i);
+	if (!.@size) set @shop_index, select(.menu$);
+	else if (.@size == 1) set @shop_index, @i[0];
+	else {
+		for(set .@j,0; .@j<.@size; set .@j,.@j+1)
+			set .@menu$, .@menu$+.Shops$[@i[.@j]]+":";
+		set @shop_index, @i[select(.@menu$)-1];
+	}
+	deletearray @i[0],getarraysize(@i);
+	if (.Shops$[@shop_index] == "") {
+		message strcharinfo(0),"An error has occurred.";
+		end;
+	}
+	dispbottom "Select one item at a time.";
+	callshop "rentshop"+@shop_index,1;
+	npcshopattach "rentshop"+@shop_index;
+	end;
+
+OnBuyItem:
+	// .@q[] : RewardID, BoughtAmt, RewardAmt, BaseAmt, ReqZeny, ReqPts, { ReqItem, ReqAmt, ... }
+	setarray .@q[0],@bought_nameid[0],((@bought_quantity[0] > .MaxStack)?.MaxStack:@bought_quantity[0]);
+	copyarray .@q[3],getd(".q_"+@shop_index+"_"+.@q[0]+"[0]"),getarraysize(getd(".q_"+@shop_index+"_"+.@q[0]));
+	set .@q[2],.@q[1]*.@q[3];
+	if (!.@q[2] || .@q[2] > 30000) {
+		message strcharinfo(0),"You can't purchase that many "+getitemname(.@q[0])+".";
+		end;
+	}
+	mes "[Rental Shop]";
+	mes "Reward: ^0055FF"+((.@q[2] > 1)?.@q[2]+"x ":"")+Slot(.@q[0])+"^000000";
+	mes "Requirements:";
+	disable_items;
+	if (.@q[4]) mes " > "+Chk(Zeny,.@q[4]*.@q[1])+(.@q[4]*.@q[1])+" Zeny^000000";
+	if (.@q[5]) mes " > "+Chk(getd(.Points$[0]),.@q[5]*.@q[1])+(.@q[5]*.@q[1])+" "+.Points$[1]+" ("+getd(.Points$[0])+"/"+(.@q[5]*.@q[1])+")^000000";
+	if (.@q[6]) for(set .@i,6; .@i<getarraysize(.@q); set .@i,.@i+2)
+		mes " > "+Chk(countitem(.@q[.@i]),.@q[.@i+1]*.@q[1])+((.ShowID)?"{"+.@q[.@i]+"} ":"")+Slot(.@q[.@i])+" ("+countitem(.@q[.@i])+"/"+(.@q[.@i+1]*.@q[1])+")^000000";
+	next;
+	setarray @qe[1], getiteminfo(.@q[0],5), getiteminfo(.@q[0],11);
+	if (@qe[2] > 0 && ((@qe[1] & EQP_HEAD_LOW) || (@qe[1] & EQP_HEAD_TOP) || (@qe[1] & EQP_HEAD_MID) || (@qe[1] & EQP_COSTUME_HEAD_TOP) || (@qe[1] & EQP_COSTUME_HEAD_MID) || (@qe[1] & EQP_COSTUME_HEAD_LOW) || (@qe[1] & EQP_GARMENT) || (@qe[1] & EQP_COSTUME_GARMENT)))
+		set .@preview,1;
+	addtimer 1000, strnpcinfo(0)+"::OnEnd";
+	while(1) {
+		switch(select(" ~ Purchase ^0055FF"+getitemname(.@q[0])+"^000000:"+((.@preview && !@qe[7])?" ~ Preview...":"")+": ~ ^777777Cancel^000000")) {
+		case 1:
+			if (@qe[0]) {
+				mes "[Rental Shop]";
+				mes "You're missing one or more quest requirements.";
+				close;
+			}
+			if (!checkweight(.@q[0],.@q[2])) {
+				mes "[Rental Shop]";
+				mes "^FF0000You need "+(((.@q[2]*getiteminfo(.@q[0],6))+Weight-MaxWeight)/10)+" additional weight capacity to complete this trade.^000000";
+				close;
+			}
+			if (.@q[4]) set Zeny, Zeny-(.@q[4]*.@q[1]);
+			if (.@q[5]) setd .Points$[0], getd(.Points$[0])-(.@q[5]*.@q[1]);
+			if (.@q[6]) for(set .@i,6; .@i<getarraysize(.@q); set .@i,.@i+2)
+				delitem .@q[.@i],.@q[.@i+1]*.@q[1];
+			
+			//rentitem2 "<item name>",<time>, <identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>;
+			//getitem .@q[0],.@q[2];
+			rentitem2 .@q[0],( 3 * 24 * 3600 ),1,7,0,30005,30005,30005,30005;
+			
+			
+			if (.Announce) announce strcharinfo(0)+" has created "+((.@q[2] > 1)?.@q[2]+"x "+getitemname(.@q[0]):callfunc("F_InsertArticle",getitemname(.@q[0])))+"!",0;
+			specialeffect2 EF_FLOWERLEAF;
+			close;
+		case 2:
+			setarray @qe[3], getlook(LOOK_HEAD_BOTTOM), getlook(LOOK_HEAD_TOP), getlook(LOOK_HEAD_MID), getlook(LOOK_ROBE), 1;
+			if ((@qe[1] & 1) || (@qe[1] & 4096)) changelook LOOK_HEAD_BOTTOM, @qe[2];
+			else if ((@qe[1] & 256) || (@qe[1] & 1024)) changelook LOOK_HEAD_TOP, @qe[2];
+			else if ((@qe[1] & 512) || (@qe[1] & 2048)) changelook LOOK_HEAD_MID, @qe[2];
+			else if ((@qe[1] & 4) || (@qe[1] & 8192)) changelook LOOK_ROBE, @qe[2];
+			break;
+		case 3:
+			close;
+		}
+	}
+
+OnEnd:
+	if (@qe[7]) {
+		changelook LOOK_HEAD_BOTTOM, @qe[3];
+		changelook LOOK_HEAD_TOP, @qe[4];
+		changelook LOOK_HEAD_MID, @qe[5];
+		changelook LOOK_ROBE, @qe[6];
+	}
+	deletearray @qe[0],8;
+	end;
+
+function Add {
+	if (getitemname(getarg(1)) == "null") {
+		debugmes "Quest reward #"+getarg(1)+" invalid (skipped).";
+		return;
+	}
+	setarray .@j[0],getarg(2),getarg(3),getarg(4);
+	for(set .@i,5; .@i<getargcount(); set .@i,.@i+2) {
+		if (getitemname(getarg(.@i)) == "null") {
+			debugmes "Quest requirement #"+getarg(.@i)+" invalid (skipped).";
+			return;
+		} else
+			setarray .@j[.@i-2],getarg(.@i),getarg(.@i+1);
+	}
+	copyarray getd(".q_"+getarg(0)+"_"+getarg(1)+"[0]"),.@j[0],getarraysize(.@j);
+	npcshopadditem "rentshop"+getarg(0),getarg(1),((.ShowZeny)?getarg(3):0);
+	return;
+}
+
+function Chk {
+	if (getarg(0) < getarg(1)) {
+		set @qe[0],1;
+		return "^FF0000";
+	} else
+		return "^00FF00";
+}
+
+function Slot {
+	set .@s$,getitemname(getarg(0));
+	switch(.ShowSlot) {
+		case 1: if (!getitemslots(getarg(0))) return .@s$;
+		case 2: if (getiteminfo(getarg(0),2) == 4 || getiteminfo(getarg(0),2) == 5) return .@s$+" ["+getitemslots(getarg(0))+"]";
+		default: return .@s$;
+	}
+}
+}
+
+function	script	rentshop	{
+	deletearray @i[0],getarraysize(@i);
+	for(set .@i,0; .@i<getargcount(); set .@i,.@i+1)
+		set @i[.@i],getarg(.@i);
+	doevent "donate_shop::OnMenu";
+	end;
+}
+
+
+// Dummy shop data -- copy as needed.
+//============================================================
+-	shop	rentshop1	-1,909:-1
+-	shop	rentshop2	-1,909:-1
+-	shop	rentshop3	-1,909:-1
+-	shop	rentshop4	-1,909:-1
+-	shop	rentshop5	-1,909:-1
+-	shop	rentshop6	-1,909:-1
+-	shop	rentshop7	-1,909:-1

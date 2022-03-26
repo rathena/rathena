@@ -1,0 +1,97 @@
+-	script	at_signed_item	-1,{
+	function sf {
+		function s;
+		.@a = getarg(2);
+		.@len = getarg(3);
+		return (
+			sprintf( getarg(0),
+				s(.@a, .@len, getarg(1)), s(.@a++, .@len, getarg(1)),
+				s(.@a++, .@len, getarg(1)), s(.@a++, .@len, getarg(1)),
+				s(.@a++, .@len, getarg(1)), s(.@a++, .@len, getarg(1)), 
+				s(.@a++, .@len, getarg(1)), s(.@a++, .@len, getarg(1)), 
+				s(.@a++, .@len, getarg(1)), s(.@a++, .@len, getarg(1))
+			)
+			+(( .@a+1 < .@len )?":Next":":")
+			+(( .@a-11 > 0 )?":Back":":")
+			+":Cancel"
+		);
+		function s {
+			if( getarg(0) >= getarg(1) ) return "";
+			else {
+				.@name$ = getelementofarray( getarg(2), getarg(0) );
+				return .@name$=="null"?"":"Character [^0054ff"+.@name$+"^000000]";
+			}
+		};
+	};
+	function nex { return((getarg(0)+10)<getarg(1)?getarg(0)+10:getarg(1)-(getarg(1)%10)); };
+	function bac { return((getarg(0)-10)>=0?getarg(0)-10:0); };
+	
+OnCreate:
+	//@signeditem <item_id>{ "<Signed Name>"{ <amount>{ <refine>{ <VVV Strong>{ <element>{ "Receiving Player"}}}}};
+	
+	switch( .@atcmd_numparameters ) {
+		default: dispbottom "Error: Too many parameters sent! ( @signeditem <item_id>{ <Signed Name>{ <amount>{ <refine>{ <VVV Strong>{ <element>{ Receiving Player}}}}}} ) "; end;
+		case 7: .@player = getcharid( 3, .@atcmd_parameters$[6] ); if( !.@player ) { dispbottom "Error: Player not found! ( Maybe they aren't online! )"; end; }
+		case 6: .@element = atoi( .@atcmd_parameters$[5] ); if( .@element > 4 ) { dispbottom "Error: Element not found! ( 1 - Ice, 2 - Earth, 3 - Fire, 4 - Wind )"; end; }
+		case 5:	.@strong = atoi( .@atcmd_parameters$[4] );
+		case 4: .@refine = atoi( .@atcmd_parameters$[3] );
+		case 3: .@amount = atoi( .@atcmd_parameters$[2] );
+		case 2: .@signature$ = .@atcmd_parameters$[1];
+		case 1: .@item = atoi( .@atcmd_parameters$ );
+	}
+	
+	.@len = query_sql( "SELECT `char_id`,`name` FROM `char` WHERE `name` LIKE '%"+.@signature$+"%' LIMIT 127;", .@cid, .@c_name$ );
+	
+	if( .@len > 1 ) {
+		mes "[ Signed @item ]";
+		mes "There was more than one result. Please select the correct name.";
+		.@format$ = "%s:%s:%s:%s:%s:%s:%s:%s:%s:%s";
+		next;
+		while( 1 ) {
+			select( sf( .@format$, .@c_name$, .@a, .@len ) );
+			switch( @menu ) {
+				case 11: .@a = nex( .@a, .@len ); break;
+				case 12: .@a = bac( .@a ); break;
+				case 13: end;
+				
+				default:
+					.@select = .@a+@menu-1;
+					mes "[ Signed @item ]";
+					mes "You've selected ^0000FF["+.@c_name$[.@select]+"]^000000, is this correct?";
+					next;
+					if( select("Yes:No") == 1 )
+						callsub Sub_NamedItem, .@item, .@cid[.@select], .@amount, .@refine, .@strong, .@element, .@player;
+					close;
+			}
+		}
+	} else if( .@len )
+		callsub Sub_NamedItem, .@item, .@cid, .@amount, .@refine, .@strong, .@element, .@player;
+	dispbottom "Error: Signature could not be identified! ( Maybe that player doesn't exist! )";
+	end;
+	
+Sub_NamedItem:
+	.@cid = getarg(1);
+	.@card3 = .@cid & 65535;
+	.@card4 = .@cid >> 16;
+	.@item = !getarg(0,501)?501:getarg(0);
+	.@amount = !getarg(2,1)?1:getarg(2);
+	.@refine = getarg(3,0);
+	.@equip = getiteminfo( .@item, 5 );
+	if( .@equip == 0 || .@equip == 32768 )
+		.@card1 = 254;
+	else {
+		.@sc = getarg(4,0);
+		.@ele = getarg(5,0);
+		.@card1 = 255;
+		.@card2 = .@ele+((.@sc*5)<<8);
+	}
+	if( .@player )
+		getitem2 .@item, .@amount, 1, .@refine, 0, .@card1, .@card2, .@card3, .@card4, .@player;
+	else
+		getitem2 .@item, .@amount, 1, .@refine, 0, .@card1, .@card2, .@card3, .@card4;
+	dispbottom "Item"+((.@amount>1)?"s":"")+" Created!";
+	end;
+	
+OnInit: bindatcmd "signeditem", "at_signed_item::OnCreate", 99, 99;
+	
+}

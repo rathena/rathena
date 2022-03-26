@@ -1,0 +1,1601 @@
+function	script	F_MesItemInfo	{
+	.@item = getarg(0);
+	.@itemname$ = getitemname(.@item);
+	if (.@itemname$ != "null") {
+		.@itemslot = getitemslots(.@item);
+		if (.@itemslot)
+			.@itemname$ = sprintf("%s [%d]", .@itemname$, .@itemslot);
+	}
+	else
+		.@itemname$ = "Unknown Item";
+	if (PACKETVER >= 20150729)
+		return sprintf("<ITEM>%s<INFO>%d</INFO></ITEM>", .@itemname$, .@item);
+	else if (PACKETVER >= 20130130)
+		return sprintf("<ITEMLINK>%s<INFO>%d</INFO></ITEMLINK>", .@itemname$, .@item);
+	else
+		return .@itemname$;
+}
+
+//	~~~~~ Please use this latest int__ function that support negative numbers ~~~~~
+function	script	int__	{
+	.@i = getstrlen( .@str$ = getarg(0) ) -3;
+	.@is_negative = charat( .@str$, 0 ) == "-";
+	while ( .@i > .@is_negative ) {
+		.@str$ = insertchar( .@str$, ",", .@i );
+		.@i -= 3;
+	}
+	return .@str$;
+}
+
+//===== rAthena Script ============================================
+//= Mission Board
+//===== By: =======================================================
+//= AnnieRuru
+//===== Current Version: ==========================================
+//= 2.6
+//===== Compatible With: ==========================================
+//= rathena 2019-03-25
+//===== Description: ==============================================
+//= allow admin to setup their own quests dynamically
+//===== Topic =====================================================
+//= https://rathena.org/board/topic/118598-help-mission_board-script-npc-by-annieruru-jobs-restrictions-not-work/
+//===== Additional Comments: ======================================
+//= fix job restriction ... again 4144 is right, all bitmask has to enclose in bracket
+//=================================================================
+
+-	script	mission board#127::ms_b_	-1,{
+
+	mes "["+ strnpcinfo(1) +"]";
+	if ( atoi( strnpcinfo(2) ) <= 0 || atoi( strnpcinfo(2) ) > 127 ) {
+		mes "This board is currently down";
+		mes "Please report to GM";
+		mes "Reason: Invalid NPC ID";
+		close;
+	}
+	if ( .duplicate_id ) {
+		set .@size, getarraysize(.duplicate_id);
+		for ( set .@i, 0; .@i < .@size; set .@i, .@i +1 ) {
+			if ( .duplicate_id[.@i] == atoi( strnpcinfo(2) ) ) {
+				mes "This board is currently down";
+				mes "Please report to GM";
+				mes "Reason: duplicate NPC ID#"+ strnpcinfo(2);
+				close;
+			}
+		}
+	}
+	if ( .loading == 1 ) {
+		mes "The board is currently loading mission data, please try again!";
+		close;
+	}
+	if ( @ms_b_loading == 1 ) {
+		mes "The board is currently loading player data";
+		mes "Please wait";
+		close;
+	}
+	mes "The Mission Board will instruct you to hunt certain monsters or items. Completing missions will result into rewards such as EXP and Midgard Coins";
+	next;
+	mes "["+ strnpcinfo(1) +"]";
+	mes "Every player may pick up to ^FF00004^000000 missions from the Mission Board.";
+	mes "Missions that end with '^FF0000Slayer^000000' are kill count missions and those that end with '^FF0000Collector^000000' are item gathering missions.";
+	next;
+	mes "["+ strnpcinfo(1) +"]";
+	mes "^FF0000Please remember that, when accepting a mission, you need to be within the assigned level range when you ACCEPT and SUBMIT it!^000000";
+	set @slot, 0;
+	next;
+	for ( set .@i, 1; .@i <= 4; set .@i, .@i +1 ) {
+		if ( getd("@ms_b_m_"+ .@i) ) {
+			if ( getd("$ms_b_m_"+ getd("@ms_b_m_"+ .@i +"[0]") +"$[0]") == "" ) {
+				dispbottom "Mission Board: Your Mission#"+ .@i +" has been deleted because it is no longer available.";
+				deletearray getd("@ms_b_m_"+ .@i);
+				setd "ms_b_m_"+ .@i +"$", "";
+				deltimer "ms_b_::OnQuest"+ .@i +"TimeUp";
+			}
+			else if ( getd("@ms_b_m_"+ .@i +"[1]") && getd("@ms_b_m_"+ .@i +"[1]") <= gettimetick(2) ) {
+				dispbottom "Mission #"+ .@i +": "+ getd("$ms_b_m_"+ getd("@ms_b_m_"+ .@i +"[0]") +"$[0]") +" has expired!";
+				deletearray getd("@ms_b_m_"+ .@i);
+				setd "ms_b_m_"+ .@i +"$", "";
+				deltimer "ms_b_::OnQuest"+ .@i +"TimeUp";
+			}
+		}
+	}
+	set .@size, getarraysize( getd("@ms_b_n_"+ strnpcinfo(2)) );
+	for ( set .@i, 1; .@i < .@size; set .@i, .@i +1 ) {
+		if ( getd("@ms_b_n_"+ strnpcinfo(2) +"[0]") != atoi( gettimestr("%Y%m%d", 9) ) && getd(".ms_b_m_"+ getd("@ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") +"[6]") == 1 ||
+			getd(".ms_b_m_"+ getd("@ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") +"[6]") == 0 ) {
+				deletearray getd("@ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]"), 1;
+				set .@i, .@i -1 ;
+				set .@size, .@size -1;
+		}
+	}
+	if ( getd("@ms_b_n_"+ strnpcinfo(2) +"[1]") ) {
+		setd "ms_b_n_"+ strnpcinfo(2) +"$",    gettimestr("%Y%m%d", 9);
+		set .@size, getarraysize( getd("@ms_b_n_"+ strnpcinfo(2) ) );
+		for ( set .@i, 1; .@i < .@size; set .@i, .@i +1 )
+			setd "ms_b_n_"+ strnpcinfo(2) +"$", getd("ms_b_n_"+ strnpcinfo(2) +"$") +"#"+ getd("@ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]");
+		setd "ms_b_n_"+ strnpcinfo(2) +"$", getd("ms_b_n_"+ strnpcinfo(2) +"$") +"#";
+	}
+	else {
+		setd "ms_b_n_"+ strnpcinfo(2) +"$", "";
+		deletearray getd( "@ms_b_n_"+ strnpcinfo(2) );
+	}
+
+	switch ( select ( "- Submit completed mission", "- Drop a mission", "- Accept a mission", ( getgmlevel() < 99 )?"":"^FF0000Administrator Settings^000000" ) ) {
+		case 1:
+			mes "["+ strnpcinfo(1) +"]";
+			mes "Please select the mission you wish to submit:";
+			set @slot, select(
+				"#1 "+( ( @ms_b_m_1[0] )?"^0000FF"+ getd("$ms_b_m_"+ @ms_b_m_1[0] +"$[0]"):"^FF0000Empty" )+"^000000",
+				"#2 "+( ( @ms_b_m_2[0] )?"^0000FF"+ getd("$ms_b_m_"+ @ms_b_m_2[0] +"$[0]"):"^FF0000Empty" )+"^000000",
+				"#3 "+( ( @ms_b_m_3[0] )?"^0000FF"+ getd("$ms_b_m_"+ @ms_b_m_3[0] +"$[0]"):"^FF0000Empty" )+"^000000",
+				"#4 "+( ( @ms_b_m_4[0] )?"^0000FF"+ getd("$ms_b_m_"+ @ms_b_m_4[0] +"$[0]"):"^FF0000Empty" )+"^000000");
+			if ( getd("@ms_b_m_"+ @slot +"[0]") == 0 ) {
+				mes "It appears that you have selected a empty slot!";
+				close;
+			}
+			callsub L_showprogress;
+			mes "Are you sure you want to submit the selected mission?";
+			next;
+			if ( select ( "Yes", "No" ) == 2 ) close;
+			mes "["+ strnpcinfo(1) +"]";
+			if ( getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[11]") != atoi( strnpcinfo(2) ) ) {
+				mes "Please submit this mission to:";
+				mes "^0000FF"+ .ms_b_name$[ getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[11]") ] +"^000000";
+				close;
+			}
+			set .@size, getarraysize( getd(".ms_b_t_"+ getd("@ms_b_m_"+ @slot +"[0]") ) );
+			for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 ) {
+				if ( getd("@ms_b_m_"+ @slot +"["+( .@i/2 +2 )+"]") < getd(".ms_b_t_"+ getd("@ms_b_m_"+ @slot +"[0]") +"["+ (.@i +1)+"]") ) {
+					mes "You do not meet the requirements to submit this mission. Please submit the mission once you've killed the required amount of monsters!";
+					close;
+				}
+			}
+			set .@size, getarraysize( getd(".ms_b_ir_"+ getd("@ms_b_m_"+ @slot +"[0]") ) );
+			for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 ) {
+				if ( countitem( getd(".ms_b_ir_"+ getd("@ms_b_m_"+ @slot +"[0]") +"["+ .@i +"]") )  < getd(".ms_b_ir_"+ getd("@ms_b_m_"+ @slot +"[0]") +"["+ (.@i +1)+"]") ) {
+					mes "You do not meet the requirements to submit this mission. Please submit this mission once you've gathered the required item(s)!";
+					close;
+				}
+			}
+			if ( getd(".ms_b_ia_"+ getd("@ms_b_m_"+ @slot +"[0]") ) ) {
+				getinventorylist;
+				deletearray @inventorylist_id, @inventorylist_count;
+				deletearray @inventorylist_amount, @inventorylist_count;
+				deletearray @inventorylist_equip, @inventorylist_count;
+				deletearray @inventorylist_refine, @inventorylist_count;
+				deletearray @inventorylist_identify, @inventorylist_count;
+				deletearray @inventorylist_attribute, @inventorylist_count;
+				deletearray @inventorylist_card1, @inventorylist_count;
+				deletearray @inventorylist_card2, @inventorylist_count;
+				deletearray @inventorylist_card3, @inventorylist_count;
+				deletearray @inventorylist_card4, @inventorylist_count;
+				set .@size, getarraysize( getd(".ms_b_ia_"+ getd("@ms_b_m_"+ @slot +"[0]") ) );
+				for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 ) {
+					set .@itemWeight, .@itemWeight + getiteminfo( getd(".ms_b_ia_"+ getd("@ms_b_m_"+ @slot +"[0]") +"["+ .@i +"]"), 6 ) * getd(".ms_b_ia_"+ getd("@ms_b_m_"+ @slot +"[0]") +"["+ (.@i +1) +"]");
+				}
+				if ( @inventorylist_count > 95 || Weight + .@itemWeight > MaxWeight ) {
+					mes "It appears that you are overWeight, please clean up some inventory space.";
+					set @inventorylist_count, 0;
+					close;
+				}
+				set @inventorylist_count, 0;
+			}
+			if ( getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[3]") && ( BaseLevel < getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[3]") || BaseLevel > getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[4]") ) ) {
+				mes "You're not within the level range to submit this mission!";
+				close;
+			}
+			mes "Congratulations, the mission has been completed!";
+			mes " ";
+			set .@size, getarraysize( getd(".ms_b_ir_"+ getd("@ms_b_m_"+ @slot +"[0]") ) );
+			for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+				delitem getd(".ms_b_ir_"+ getd("@ms_b_m_"+ @slot +"[0]") +"["+ .@i +"]"), getd(".ms_b_ir_"+ getd("@ms_b_m_"+ @slot +"[0]") +"["+ (.@i +1)+"]");
+			mes "[Rewards]";
+			if ( getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[7]") ) {
+				mes "Base Exp : ^0000FF"+ callfunc("int__", getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[7]") ) +"^000000";
+				dispbottom "Mission Reward - Base EXP : "+ callfunc("int__", getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[7]") );
+				set BaseExp, BaseExp + getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[7]");
+			}
+			if ( getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[8]") ) {
+				mes "Job Exp : ^0000FF"+ callfunc("int__", getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[8]") ) +"^000000";
+				dispbottom "Mission Reward - Job EXP : "+ callfunc("int__", getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[8]") );
+				set JobExp, JobExp + getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[8]");
+			}
+			if ( getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[9]") ) {
+				mes "Zeny : ^0000FF"+ callfunc("int__", getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[9]") ) +"^000000";
+				dispbottom "Mission Reward - "+ callfunc("int__", getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[9]") ) +" Zeny";
+				set Zeny, Zeny + getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[9]");
+			}
+			if ( getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[10]") ) {
+				mes "Cash Point : ^0000FF"+ callfunc("int__", getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[10]") ) +"^000000";
+				dispbottom "Mission Reward - "+ callfunc("int__", getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[10]") ) +" Cash Points";
+				set #CASHPOINTS, #CASHPOINTS + getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[10]");
+			}
+			set .@size, getarraysize( getd(".ms_b_ia_"+ getd("@ms_b_m_"+ @slot +"[0]") ) );
+			for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 ) {
+				mes "Item : ^0000FF"+ getd(".ms_b_ia_"+ getd("@ms_b_m_"+ @slot +"[0]") +"["+ (.@i +1) +"]") +" "+ F_MesItemInfo( getd(".ms_b_ia_"+ getd("@ms_b_m_"+ @slot +"[0]") +"["+ .@i +"]") ) +"^000000";
+				getitem getd(".ms_b_ia_"+ getd("@ms_b_m_"+ @slot +"[0]") +"["+ .@i +"]"), getd(".ms_b_ia_"+ getd("@ms_b_m_"+ @slot +"[0]") +"["+ (.@i +1) +"]");
+			}
+			if ( getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[6]") ) {
+				setd "@ms_b_n_"+ strnpcinfo(2) +"[0]", gettimestr("%Y%m%d", 9);
+				set .@size, getarraysize( getd("@ms_b_n_"+ strnpcinfo(2) ) );
+				setd "@ms_b_n_"+ strnpcinfo(2) +"["+ .@size +"]", getd("@ms_b_m_"+ @slot +"[0]");
+				setd "ms_b_n_"+ strnpcinfo(2) +"$", gettimestr("%Y%m%d", 9);
+				for ( set .@i, 1; .@i <= .@size; set .@i, .@i +1 )
+					setd "ms_b_n_"+ strnpcinfo(2) +"$", getd("ms_b_n_"+ strnpcinfo(2) +"$") +"#"+ getd("@ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]");
+				setd "ms_b_n_"+ strnpcinfo(2) +"$", getd("ms_b_n_"+ strnpcinfo(2) +"$") +"#";
+			}
+			deletearray getd("@ms_b_m_"+ @slot);
+			setd "ms_b_m_"+ @slot +"$", "";
+			deltimer "ms_b_::OnQuest"+ @slot +"TimeUp";
+			set @slot, 0;
+			close;
+		case 2:
+			mes "["+ strnpcinfo(1) +"]";
+			mes "Please select the slot with the mission that you wish to drop:";
+			set @slot, select(
+				"#1 "+( ( @ms_b_m_1[0] )?"^0000FF"+ getd("$ms_b_m_"+ @ms_b_m_1[0] +"$[0]"):"^FF0000Empty" )+"^000000",
+				"#2 "+( ( @ms_b_m_2[0] )?"^0000FF"+ getd("$ms_b_m_"+ @ms_b_m_2[0] +"$[0]"):"^FF0000Empty" )+"^000000",
+				"#3 "+( ( @ms_b_m_3[0] )?"^0000FF"+ getd("$ms_b_m_"+ @ms_b_m_3[0] +"$[0]"):"^FF0000Empty" )+"^000000",
+				"#4 "+( ( @ms_b_m_4[0] )?"^0000FF"+ getd("$ms_b_m_"+ @ms_b_m_4[0] +"$[0]"):"^FF0000Empty" )+"^000000");
+			if ( getd("@ms_b_m_"+ @slot +"[0]") == 0 ) {
+				mes "It appears that you have selected a empty slot!";
+				close;
+			}
+			callsub L_showprogress;
+			mes "Are you sure that you want to give up this mission?";
+			mes "^777777NOTE: Any progress you've made for this mission will be lost!^000000";
+			next;
+			if ( select ( "Yes", "No" ) == 2 ) close;
+			mes "["+ strnpcinfo(1) +"]";
+			mes "^0000FF"+ getd("$ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"$[0]") +"^000000";
+			mes " ";
+			mes "Mission has given up successfully";
+			deletearray getd("@ms_b_m_"+ @slot);
+			setd "ms_b_m_"+ @slot +"$", "";
+			deltimer "ms_b_::OnQuest"+ @slot +"TimeUp";
+			set @slot, 0;
+			close;
+		case 3:
+			mes "["+ strnpcinfo(1) +"]";
+			mes "Please select a (empty) slot:";
+			if ( getd(".ms_b_n_"+ strnpcinfo(2) ) == 0 ) {
+				mes "There is no mission available";
+				close;
+			}
+			set .@slot, select(
+				"#1 "+( ( @ms_b_m_1[0] )?"^0000FF"+ getd("$ms_b_m_"+ @ms_b_m_1[0] +"$[0]"):"^FF0000Empty" )+"^000000",
+				"#2 "+( ( @ms_b_m_2[0] )?"^0000FF"+ getd("$ms_b_m_"+ @ms_b_m_2[0] +"$[0]"):"^FF0000Empty" )+"^000000",
+				"#3 "+( ( @ms_b_m_3[0] )?"^0000FF"+ getd("$ms_b_m_"+ @ms_b_m_3[0] +"$[0]"):"^FF0000Empty" )+"^000000",
+				"#4 "+( ( @ms_b_m_4[0] )?"^0000FF"+ getd("$ms_b_m_"+ @ms_b_m_4[0] +"$[0]"):"^FF0000Empty" )+"^000000");
+			if ( getd("@ms_b_m_"+ .@slot +"[0]") ) {
+				mes "The slot that you've selected is already taken by another mission. Please select another (empty) slot!";
+				close;
+			}
+			mes "Select a mission to accept below:";
+			mes "^00CC00Green missions^000000 are within your level range and can be accepted.";
+			mes "^FF0000Red missions^000000 can not be accepted. The reason(s) can be: you're not within the level range or the daily cool-down delay hasn't passed yet.";
+			if ( basejob == Job_Novice || basejob == Job_SuperNovice ) set .@basejob, pow(2,0);
+			else if ( basejob == Job_Swordman ) set .@basejob, pow(2,1);
+			else if ( basejob == Job_Mage ) set .@basejob, pow(2,2);
+			else if ( basejob == Job_Archer ) set .@basejob, pow(2,3);
+			else if ( basejob == Job_Acolyte ) set .@basejob, pow(2,4);
+			else if ( basejob == Job_Merchant ) set .@basejob, pow(2,5);
+			else if ( basejob == Job_Thief ) set .@basejob, pow(2,6);
+			else if ( basejob == Job_Knight ) set .@basejob, pow(2,7);
+			else if ( basejob == Job_Priest ) set .@basejob, pow(2,8);
+			else if ( basejob == Job_Wizard ) set .@basejob, pow(2,9);
+			else if ( basejob == Job_Blacksmith ) set .@basejob, pow(2,10);
+			else if ( basejob == Job_Hunter ) set .@basejob, pow(2,11);
+			else if ( basejob == Job_Assassin ) set .@basejob, pow(2,12);
+			else if ( basejob == Job_Crusader ) set .@basejob, pow(2,13);
+			else if ( basejob == Job_Monk ) set .@basejob, pow(2,14);
+			else if ( basejob == Job_Sage ) set .@basejob, pow(2,15);
+			else if ( basejob == Job_Rogue ) set .@basejob, pow(2,16);
+			else if ( basejob == Job_Alchemist ) set .@basejob, pow(2,17);
+			else if ( basejob == Job_Bard || basejob == Job_Dancer ) set .@basejob, pow(2,18);
+			else if ( basejob == Job_Taekwon ) set .@basejob, pow(2,19);
+			else if ( basejob == Job_Star_Gladiator ) set .@basejob, pow(2,20);
+			else if ( basejob == Job_Soul_Linker ) set .@basejob, pow(2,21);
+			else if ( basejob == Job_Gunslinger ) set .@basejob, pow(2,22);
+			else if ( basejob == Job_Ninja ) set .@basejob, pow(2,23);
+			next;
+			while (1) {
+				set .@menu$, "";
+				set .@i, 0;
+				set .@size1, getarraysize( getd(".ms_b_n_"+ strnpcinfo(2)) );
+				set .@size2, getarraysize( getd("@ms_b_n_"+ strnpcinfo(2)) );
+				while ( .@i < .@size1 ) {
+					set .@j, 1;
+					while ( .@j < .@size2 && getd("@ms_b_n_"+ strnpcinfo(2) +"["+ .@j +"]") != getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") )
+						set .@j, .@j +1 ;
+					set .@color$, "^00AA00";
+					if ( .@j != .@size2 && .@size2 ||
+						@ms_b_m_1[0] == getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") ||
+						@ms_b_m_2[0] == getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") ||
+						@ms_b_m_3[0] == getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") ||
+						@ms_b_m_4[0] == getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") ||
+						getd(".ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") +"[3]") && ( BaseLevel < getd(".ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") +"[3]") || BaseLevel > getd(".ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") +"[4]") ) ||
+						getd(".ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") +"[2]") && ( getd(".ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") +"[2]") & .@basejob ) == 0 )
+						set .@color$, "^FF0000";
+					set .@menu$, .@menu$ + .@color$ + getd("$ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") +"$") +":";
+					set .@i, .@i +1 ;
+				}
+				set .@menu, select(.@menu$) -1;
+				set .@m_id, getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@menu +"]");
+				mes "["+ strnpcinfo(1) +"]";
+				mes "^0000FF"+ getd("$ms_b_m_"+ .@m_id +"$[0]") +"^000000";
+				mes "Description: ^0000FF"+ getd("$ms_b_m_"+ .@m_id +"$[1]") +"^000000";
+				if ( getd(".ms_b_m_"+ .@m_id +"[6]") ) {
+					for ( set .@i, 1; .@i < .@size2; set .@i, .@i +1 ) {
+						if ( getd("@ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") == .@m_id ) break;
+					}
+					mes "Status : "+( ( .@i == .@size2 || getd("@ms_b_n_"+ strnpcinfo(2)) == 0 )?"^FF0000Incomplete":"^00CC00Completed" )+"^000000";
+				}
+				mes " ";
+				set .@size, getarraysize( getd(".ms_b_t_"+ .@m_id) );
+				for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+					mes "Require Mobs : ^0000FF"+ getd(".ms_b_t_"+ .@m_id +"["+ (.@i +1) +"]") +" "+ getmonsterinfo( getd(".ms_b_t_"+ .@m_id +"["+ .@i +"]") , 0) +"^000000";
+				set .@size, getarraysize( getd(".ms_b_ir_"+ .@m_id) );
+				for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+					mes "Require Items : ^0000FF"+ getd(".ms_b_ir_"+ .@m_id +"["+ (.@i +1) +"]") +" "+ F_MesItemInfo( getd(".ms_b_ir_"+ .@m_id +"["+ .@i +"]") ) +"^000000";
+				mes " ";
+				if ( getd(".ms_b_m_"+ .@m_id +"[6]") || getd(".ms_b_m_"+ .@m_id +"[3]") || getd(".ms_b_m_"+ .@m_id +"[5]") || getd(".ms_b_m_"+ .@m_id +"[2]") ) {
+					mes "[^FF0000Limitations^000000]";
+					if ( getd(".ms_b_m_"+ .@m_id +"[6]") )
+						mes "Can do : "+( ( getd(".ms_b_m_"+ .@m_id +"[6]") == 1 )?"^00CC00Everyday":"^FF0000Only Once" )+"^000000";
+					if ( getd(".ms_b_m_"+ .@m_id +"[3]") )
+						mes "Base Level :"+( ( getd(".ms_b_m_"+ .@m_id +"[3]") )?"  ^0000FF"+ getd(".ms_b_m_"+ .@m_id +"[3]") +( ( getd(".ms_b_m_"+ .@m_id +"[3]") != getd(".ms_b_m_"+ .@m_id +"[4]") )?"~"+ getd(".ms_b_m_"+ .@m_id +"[4]"):"" )+"^000000":"" );
+					if ( getd(".ms_b_m_"+ .@m_id +"[5]") )
+						mes "Time Limit : ^FF0000"+( ( getd(".ms_b_m_"+ .@m_id +"[5]") /60 )?getd(".ms_b_m_"+ .@m_id +"[5]") /60 +" hour"+( ( getd(".ms_b_m_"+ .@m_id +"[5]") %60 )?" ":"" ):"" )+( ( getd(".ms_b_m_"+ .@m_id +"[5]") %60 )?getd(".ms_b_m_"+ .@m_id +"[5]") %60 +" min":"" )+"^000000";
+					if ( getd(".ms_b_m_"+ .@m_id +"[2]") ) {
+						deletearray .@joblimit;
+						for ( set .@i, 0; .@i < 24; set .@i, .@i +1 ) {
+							if ( getd(".ms_b_m_"+ .@m_id +"[2]") & pow( 2, .@i ) ) {
+								set .@joblimit[ getarraysize(.@joblimit) ], .@i +1;
+							}
+						}
+						set .@joblimit$, .jobname$[ .@joblimit[0] -1 ];
+						set .@size, getarraysize(.@joblimit);
+						for ( set .@i, 1; .@i < .@size; set .@i, .@i +1 )
+							set .@joblimit$, .@joblimit$ +", "+ .jobname$[ .@joblimit[.@i] -1 ];
+						mes "Job Limit : ^00CC00"+ .@joblimit$ +"^000000";
+					}
+					mes " ";
+				}
+				mes "[^009900Rewards^000000]";
+				if ( getd(".ms_b_m_"+ .@m_id +"[7]") )
+					mes "Base Exp : ^0000FF"+ callfunc("int__", getd(".ms_b_m_"+ .@m_id +"[7]") ) +"^000000";
+				if ( getd(".ms_b_m_"+ .@m_id +"[8]") )
+					mes "Job Exp : ^0000FF"+ callfunc("int__", getd(".ms_b_m_"+ .@m_id +"[8]") ) +"^000000";
+				if ( getd(".ms_b_m_"+ .@m_id +"[9]") )
+					mes "Zeny : ^0000FF"+ callfunc("int__", getd(".ms_b_m_"+ .@m_id +"[9]") ) +"^000000";
+				if ( getd(".ms_b_m_"+ .@m_id +"[10]") )
+					mes "Cash Point : ^0000FF"+ callfunc("int__", getd(".ms_b_m_"+ .@m_id +"[10]") ) +"^000000";
+				set .@size, getarraysize( getd(".ms_b_ia_"+ .@m_id ) );
+				for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+					mes "Item : ^0000FF"+ getd(".ms_b_ia_"+ .@m_id +"["+ (.@i +1) +"]") +" "+ F_MesItemInfo( getd(".ms_b_ia_"+ .@m_id +"["+ .@i +"]") ) +"^000000";
+				next;
+				if ( select ( "- Accept this mission", "- Pick another mission" ) == 1 ) {
+					for ( set .@i, 1; .@i < .@size2; set .@i, .@i +1 ) {
+						if ( getd("@ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") == .@m_id ) {
+							mes "["+ strnpcinfo(1) +"]";
+							mes "It appears that you have already completed this mission. This mission can either only be completed once, or the daily cool-down delay hasn't passed yet!";
+							set .@break, 1;
+							next;
+							break;
+						}
+					}
+					if ( .@break == 0 && ( @ms_b_m_1[0] == .@m_id || @ms_b_m_2[0] == .@m_id || @ms_b_m_3[0] == .@m_id || @ms_b_m_4[0] == .@m_id ) ) {
+						mes "["+ strnpcinfo(1) +"]";
+						mes "You already taken this mission";
+						set .@break, 1;
+						next;
+					}
+					if ( .@break == 0 && getd(".ms_b_m_"+ .@m_id +"[3]") && ( BaseLevel < getd(".ms_b_m_"+ .@m_id +"[3]") || BaseLevel > getd(".ms_b_m_"+ .@m_id +"[4]") ) ) {
+						mes "["+ strnpcinfo(1) +"]";
+						mes "You're not within the level range to accept this mission!";
+						set .@break, 1;
+						next;
+					}
+					if ( .@break == 0 && getd(".ms_b_m_"+ .@m_id +"[2]") ) {
+						if ( ( getd(".ms_b_m_"+ .@m_id +"[2]") & .@basejob ) == 0 ) {
+							mes "["+ strnpcinfo(1) +"]";
+							mes "Your current job class is not allowed to do this mission";
+							set .@break, 1;
+							next;
+						}
+					}
+					if ( .@break == 0 ) break;
+				}
+				set .@break, 0;
+			}
+			mes "["+ strnpcinfo(1) +"]";
+			mes "You have accepted the following mission:";
+			mes "^0000FF"+ getd("$ms_b_m_"+ .@m_id +"$[0]") +"^000000";
+			if ( getd(".ms_b_m_"+ .@m_id +"[5]") ) {
+				mes "Time Left : ^FF0000"+( ( getd(".ms_b_m_"+ .@m_id +"[5]") /60 )?getd(".ms_b_m_"+ .@m_id +"[5]") /60 +" hour"+( ( getd(".ms_b_m_"+ .@m_id +"[5]") %60 )?" ":"" ):"" )+( ( getd(".ms_b_m_"+ .@m_id +"[5]") %60 )?getd(".ms_b_m_"+ .@m_id +"[5]") %60 +" min":"" )+"^000000";
+				addtimer getd(".ms_b_m_"+ .@m_id +"[5]") * 60 * 1000, "ms_b_::OnQuest"+ .@slot +"TimeUp";
+				setd "@ms_b_m_"+ .@slot +"[1]", gettimetick(2) + getd(".ms_b_m_"+ .@m_id +"[5]") * 60;
+			}
+			setd "@ms_b_m_"+ .@slot +"[0]", .@m_id;
+			setd "ms_b_m_"+ .@slot +"$", getd("@ms_b_m_"+ .@slot +"[0]") +"#"+ getd("@ms_b_m_"+ .@slot +"[1]");
+			close;
+		case 4:
+			if ( getgmlevel() < 99 ) end;
+			while (1) {
+				mes "["+ strnpcinfo(1) +"]";
+				mes "Please select an option below:";
+				next;
+				switch ( select ( "Setup a mission", "Edit a mission", "Remove a mission", "Swap mission order" ) ) {
+					case 1:
+						if ( $ms_b_id >= 99999 ) {
+							mes "["+ strnpcinfo(1) +"]";
+							mes "This is the end, you can't create anymore missions";
+							close;
+						}
+						else if ( getarraysize( getd(".ms_b_n_"+ strnpcinfo(2) ) ) == 40 ) {
+							mes "["+ strnpcinfo(1) +"]";
+							mes "Each NPC are only allowed to setup 40 missions";
+							next;
+							break;
+						}
+						deletearray @tmp_ms_b_m_$;
+						deletearray @tmp_ms_b_m_;
+						deletearray @tmp_ms_b_t_;
+						deletearray @tmp_ms_b_ir_;
+						deletearray @tmp_ms_b_ia_;
+						if ( callsub( L_setupmission, 0 ) == 0 ) {
+							deletearray @tmp_ms_b_m_$;
+							deletearray @tmp_ms_b_m_;
+							deletearray @tmp_ms_b_t_;
+							deletearray @tmp_ms_b_ir_;
+							deletearray @tmp_ms_b_ia_;
+							break;
+						}
+						set $ms_b_id, $ms_b_id +1 ;
+						setd ".ms_b_n_"+ strnpcinfo(2) +"["+ getarraysize( getd(".ms_b_n_"+ strnpcinfo(2) ) ) +"]", $ms_b_id;
+						setd "$ms_b_n_"+ strnpcinfo(2) +"$", getd(".ms_b_n_"+ strnpcinfo(2) +"[0]");
+						set .@size, getarraysize( getd(".ms_b_n_"+ strnpcinfo(2) ) );
+						for ( set .@i, 1; .@i < .@size; set .@i, .@i +1 )
+							setd "$ms_b_n_"+ strnpcinfo(2) +"$", getd("$ms_b_n_"+ strnpcinfo(2) +"$") +"#"+ getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]");
+						set @tmp_ms_b_m_[11], strnpcinfo(2);
+						copyarray getd(".ms_b_m_"+ $ms_b_id +"$"), @tmp_ms_b_m_$, 128;
+						copyarray getd(".ms_b_m_"+ $ms_b_id), @tmp_ms_b_m_, 128;
+						copyarray getd(".ms_b_t_"+ $ms_b_id ), @tmp_ms_b_t_, 128;
+						copyarray getd(".ms_b_ir_"+ $ms_b_id ), @tmp_ms_b_ir_, 128;
+						copyarray getd(".ms_b_ia_"+ $ms_b_id ), @tmp_ms_b_ia_, 128;
+						setarray getd("$ms_b_m_"+ $ms_b_id +"$"),
+							@tmp_ms_b_m_$[0],
+							@tmp_ms_b_m_$[1],
+							( ( @tmp_ms_b_m_[2] )?@tmp_ms_b_m_[2]:"" )+"#"+( ( @tmp_ms_b_m_[3] )?@tmp_ms_b_m_[3]:"" )+"#"+( ( @tmp_ms_b_m_[4] )?@tmp_ms_b_m_[4]:"" )+"#"+( ( @tmp_ms_b_m_[5] )?@tmp_ms_b_m_[5]:"" )+"#"+( ( @tmp_ms_b_m_[6] )?@tmp_ms_b_m_[6]:"" )+"#"+( ( @tmp_ms_b_m_[7] )?@tmp_ms_b_m_[7]:"" )+"#"+( ( @tmp_ms_b_m_[8] )?@tmp_ms_b_m_[8]:"" )+"#"+( ( @tmp_ms_b_m_[9] )?@tmp_ms_b_m_[9]:"" )+"#"+( ( @tmp_ms_b_m_[10] )?@tmp_ms_b_m_[10]:"" )+"#"+( ( @tmp_ms_b_m_[11] )?@tmp_ms_b_m_[11]:"" )+"#"+( ( @tmp_ms_b_m_[12] )?@tmp_ms_b_m_[12]:"" )+"#"+( ( @tmp_ms_b_m_[13] )?@tmp_ms_b_m_[13]:"" ),
+							( ( @tmp_ms_b_t_[0] )?@tmp_ms_b_t_[0]:"" )+"#"+( ( @tmp_ms_b_t_[1] )?@tmp_ms_b_t_[1]:"" )+"#"+( ( @tmp_ms_b_t_[2] )?@tmp_ms_b_t_[2]:"" )+"#"+( ( @tmp_ms_b_t_[3] )?@tmp_ms_b_t_[3]:"" )+"#"+( ( @tmp_ms_b_t_[4] )?@tmp_ms_b_t_[4]:"" )+"#"+( ( @tmp_ms_b_t_[5] )?@tmp_ms_b_t_[5]:"" )+"#"+( ( @tmp_ms_b_t_[6] )?@tmp_ms_b_t_[6]:"" )+"#"+( ( @tmp_ms_b_t_[7] )?@tmp_ms_b_t_[7]:"" )+"#"+( ( @tmp_ms_b_t_[8] )?@tmp_ms_b_t_[8]:"" )+"#"+( ( @tmp_ms_b_t_[9] )?@tmp_ms_b_t_[9]:"" )+"#"+( ( @tmp_ms_b_t_[10] )?@tmp_ms_b_t_[10]:"" )+"#"+( ( @tmp_ms_b_t_[11] )?@tmp_ms_b_t_[11]:"" )+"#"+( ( @tmp_ms_b_t_[12] )?@tmp_ms_b_t_[12]:"" )+"#"+( ( @tmp_ms_b_t_[13] )?@tmp_ms_b_t_[13]:"" )+"#"+( ( @tmp_ms_b_t_[14] )?@tmp_ms_b_t_[14]:"" )+"#"+( ( @tmp_ms_b_t_[15] )?@tmp_ms_b_t_[15]:"" )+"#"+( ( @tmp_ms_b_ir_[0] )?@tmp_ms_b_ir_[0]:"" )+"#"+( ( @tmp_ms_b_ir_[1] )?@tmp_ms_b_ir_[1]:"" )+"#"+( ( @tmp_ms_b_ir_[2] )?@tmp_ms_b_ir_[2]:"" )+"#"+( ( @tmp_ms_b_ir_[3] )?@tmp_ms_b_ir_[3]:"" )+"#"+( ( @tmp_ms_b_ir_[4] )?@tmp_ms_b_ir_[4]:"" )+"#"+( ( @tmp_ms_b_ir_[5] )?@tmp_ms_b_ir_[5]:"" )+"#"+( ( @tmp_ms_b_ir_[6] )?@tmp_ms_b_ir_[6]:"" )+"#"+( ( @tmp_ms_b_ir_[7] )?@tmp_ms_b_ir_[7]:"" )+"#"+( ( @tmp_ms_b_ir_[8] )?@tmp_ms_b_ir_[8]:"" )+"#"+( ( @tmp_ms_b_ir_[9] )?@tmp_ms_b_ir_[9]:"" )+"#"+( ( @tmp_ms_b_ia_[0] )?@tmp_ms_b_ia_[0]:"" )+"#"+( ( @tmp_ms_b_ia_[1] )?@tmp_ms_b_ia_[1]:"" )+"#"+( ( @tmp_ms_b_ia_[2] )?@tmp_ms_b_ia_[2]:"" )+"#"+( ( @tmp_ms_b_ia_[3] )?@tmp_ms_b_ia_[3]:"" )+"#"+( ( @tmp_ms_b_ia_[4] )?@tmp_ms_b_ia_[4]:"" )+"#"+( ( @tmp_ms_b_ia_[5] )?@tmp_ms_b_ia_[5]:"" )+"#"+( ( @tmp_ms_b_ia_[6] )?@tmp_ms_b_ia_[6]:"" )+"#"+( ( @tmp_ms_b_ia_[7] )?@tmp_ms_b_ia_[7]:"" )+"#"+( ( @tmp_ms_b_ia_[8] )?@tmp_ms_b_ia_[8]:"" )+"#"+( ( @tmp_ms_b_ia_[9] )?@tmp_ms_b_ia_[9]:"" );
+						deletearray @tmp_ms_b_m_$;
+						deletearray @tmp_ms_b_m_;
+						deletearray @tmp_ms_b_t_;
+						deletearray @tmp_ms_b_ir_;
+						deletearray @tmp_ms_b_ia_;
+						mes " ";
+						mes "Mission has setup successfully";
+						next;
+						break;
+					case 2:
+						mes "["+ strnpcinfo(1) +"]";
+						if ( getd(".ms_b_n_"+ strnpcinfo(2) ) == 0 ) {
+							mes "There is no mission available to edit.";
+							next;
+							break;
+						}
+						mes "Select a mission below to edit:";
+						next;
+						if ( getd(".ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"[0]") +"[6]") == 0 ) set .@color$, "^0000FF";
+						else if ( getd(".ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"[0]") +"[6]") == 1 ) set .@color$, "^00CC00";
+						else if ( getd(".ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"[0]") +"[6]") == 2 ) set .@color$, "^FF0000";
+						set .@menu$, "^996600"+ getd(".ms_b_n_"+ strnpcinfo(2) +"[0]") +". "+ .@color$ + getd("$ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"[0]") +"$");
+						set .@size, getarraysize( getd(".ms_b_n_"+ strnpcinfo(2)) );
+						for ( set .@i, 1; .@i < .@size; set .@i, .@i +1 ) {
+							if ( getd(".ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") +"[6]") == 0 ) set .@color$, "^0000FF";
+							else if ( getd(".ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") +"[6]") == 1 ) set .@color$, "^00CC00";
+							else if ( getd(".ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") +"[6]") == 2 ) set .@color$, "^FF0000";
+							set .@menu$, .@menu$ +":^996600"+ getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") +". "+ .@color$ + getd("$ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") +"$");
+						}
+						set .@menu$, .@menu$ +":^000000 - back";
+						set .@menu, select(.@menu$) -1;
+						if ( .@menu == .@size ) break;
+						set @m_id, getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@menu +"]");
+						deletearray @tmp_ms_b_m_$;
+						deletearray @tmp_ms_b_m_;
+						deletearray @tmp_ms_b_t_;
+						deletearray @tmp_ms_b_ir_;
+						deletearray @tmp_ms_b_ia_;
+						copyarray @tmp_ms_b_m_$, getd("$ms_b_m_"+ @m_id +"$"), 128;
+						copyarray @tmp_ms_b_m_, getd(".ms_b_m_"+ @m_id ), 128;
+						copyarray @tmp_ms_b_t_, getd(".ms_b_t_"+ @m_id ), 128;
+						copyarray @tmp_ms_b_ir_, getd(".ms_b_ir_"+ @m_id ), 128;
+						copyarray @tmp_ms_b_ia_, getd(".ms_b_ia_"+ @m_id ), 128;
+						if ( callsub( L_setupmission, 1 ) == 0 ) {
+							deletearray @tmp_ms_b_m_$;
+							deletearray @tmp_ms_b_m_;
+							deletearray @tmp_ms_b_t_;
+							deletearray @tmp_ms_b_ir_;
+							deletearray @tmp_ms_b_ia_;
+							set @m_id, 0;
+							break;
+						}
+						copyarray getd(".ms_b_m_"+ @m_id +"$"), @tmp_ms_b_m_$, 128;
+						copyarray getd(".ms_b_m_"+ @m_id), @tmp_ms_b_m_, 128;
+						copyarray getd(".ms_b_t_"+ @m_id ), @tmp_ms_b_t_, 128;
+						copyarray getd(".ms_b_ir_"+ @m_id ), @tmp_ms_b_ir_, 128;
+						copyarray getd(".ms_b_ia_"+ @m_id ), @tmp_ms_b_ia_, 128;
+						setarray getd("$ms_b_m_"+ @m_id +"$"),
+							@tmp_ms_b_m_$[0],
+							@tmp_ms_b_m_$[1],
+							( ( @tmp_ms_b_m_[2] )?@tmp_ms_b_m_[2]:"" )+"#"+( ( @tmp_ms_b_m_[3] )?@tmp_ms_b_m_[3]:"" )+"#"+( ( @tmp_ms_b_m_[4] )?@tmp_ms_b_m_[4]:"" )+"#"+( ( @tmp_ms_b_m_[5] )?@tmp_ms_b_m_[5]:"" )+"#"+( ( @tmp_ms_b_m_[6] )?@tmp_ms_b_m_[6]:"" )+"#"+( ( @tmp_ms_b_m_[7] )?@tmp_ms_b_m_[7]:"" )+"#"+( ( @tmp_ms_b_m_[8] )?@tmp_ms_b_m_[8]:"" )+"#"+( ( @tmp_ms_b_m_[9] )?@tmp_ms_b_m_[9]:"" )+"#"+( ( @tmp_ms_b_m_[10] )?@tmp_ms_b_m_[10]:"" )+"#"+( ( @tmp_ms_b_m_[11] )?@tmp_ms_b_m_[11]:"" )+"#"+( ( @tmp_ms_b_m_[12] )?@tmp_ms_b_m_[12]:"" )+"#"+( ( @tmp_ms_b_m_[13] )?@tmp_ms_b_m_[13]:"" ),
+							( ( @tmp_ms_b_t_[0] )?@tmp_ms_b_t_[0]:"" )+"#"+( ( @tmp_ms_b_t_[1] )?@tmp_ms_b_t_[1]:"" )+"#"+( ( @tmp_ms_b_t_[2] )?@tmp_ms_b_t_[2]:"" )+"#"+( ( @tmp_ms_b_t_[3] )?@tmp_ms_b_t_[3]:"" )+"#"+( ( @tmp_ms_b_t_[4] )?@tmp_ms_b_t_[4]:"" )+"#"+( ( @tmp_ms_b_t_[5] )?@tmp_ms_b_t_[5]:"" )+"#"+( ( @tmp_ms_b_t_[6] )?@tmp_ms_b_t_[6]:"" )+"#"+( ( @tmp_ms_b_t_[7] )?@tmp_ms_b_t_[7]:"" )+"#"+( ( @tmp_ms_b_t_[8] )?@tmp_ms_b_t_[8]:"" )+"#"+( ( @tmp_ms_b_t_[9] )?@tmp_ms_b_t_[9]:"" )+"#"+( ( @tmp_ms_b_t_[10] )?@tmp_ms_b_t_[10]:"" )+"#"+( ( @tmp_ms_b_t_[11] )?@tmp_ms_b_t_[11]:"" )+"#"+( ( @tmp_ms_b_t_[12] )?@tmp_ms_b_t_[12]:"" )+"#"+( ( @tmp_ms_b_t_[13] )?@tmp_ms_b_t_[13]:"" )+"#"+( ( @tmp_ms_b_t_[14] )?@tmp_ms_b_t_[14]:"" )+"#"+( ( @tmp_ms_b_t_[15] )?@tmp_ms_b_t_[15]:"" )+"#"+( ( @tmp_ms_b_ir_[0] )?@tmp_ms_b_ir_[0]:"" )+"#"+( ( @tmp_ms_b_ir_[1] )?@tmp_ms_b_ir_[1]:"" )+"#"+( ( @tmp_ms_b_ir_[2] )?@tmp_ms_b_ir_[2]:"" )+"#"+( ( @tmp_ms_b_ir_[3] )?@tmp_ms_b_ir_[3]:"" )+"#"+( ( @tmp_ms_b_ir_[4] )?@tmp_ms_b_ir_[4]:"" )+"#"+( ( @tmp_ms_b_ir_[5] )?@tmp_ms_b_ir_[5]:"" )+"#"+( ( @tmp_ms_b_ir_[6] )?@tmp_ms_b_ir_[6]:"" )+"#"+( ( @tmp_ms_b_ir_[7] )?@tmp_ms_b_ir_[7]:"" )+"#"+( ( @tmp_ms_b_ir_[8] )?@tmp_ms_b_ir_[8]:"" )+"#"+( ( @tmp_ms_b_ir_[9] )?@tmp_ms_b_ir_[9]:"" )+"#"+( ( @tmp_ms_b_ia_[0] )?@tmp_ms_b_ia_[0]:"" )+"#"+( ( @tmp_ms_b_ia_[1] )?@tmp_ms_b_ia_[1]:"" )+"#"+( ( @tmp_ms_b_ia_[2] )?@tmp_ms_b_ia_[2]:"" )+"#"+( ( @tmp_ms_b_ia_[3] )?@tmp_ms_b_ia_[3]:"" )+"#"+( ( @tmp_ms_b_ia_[4] )?@tmp_ms_b_ia_[4]:"" )+"#"+( ( @tmp_ms_b_ia_[5] )?@tmp_ms_b_ia_[5]:"" )+"#"+( ( @tmp_ms_b_ia_[6] )?@tmp_ms_b_ia_[6]:"" )+"#"+( ( @tmp_ms_b_ia_[7] )?@tmp_ms_b_ia_[7]:"" )+"#"+( ( @tmp_ms_b_ia_[8] )?@tmp_ms_b_ia_[8]:"" )+"#"+( ( @tmp_ms_b_ia_[9] )?@tmp_ms_b_ia_[9]:"" );
+						deletearray @tmp_ms_b_m_$;
+						deletearray @tmp_ms_b_m_;
+						deletearray @tmp_ms_b_t_;
+						deletearray @tmp_ms_b_ir_;
+						deletearray @tmp_ms_b_ia_;
+						set @m_id, 0;
+						mes " ";
+						mes "Mission has edited successfully";
+						next;
+						break;
+					case 3:
+						mes "["+ strnpcinfo(1) +"]";
+						if ( getd(".ms_b_n_"+ strnpcinfo(2) ) == 0 ) {
+							mes "There is no mission available to remove.";
+							next;
+							break;
+						}
+						mes "Select a mission below to delete:";
+						next;
+						if ( getd(".ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"[0]") +"[6]") == 0 ) set .@color$, "^0000FF";
+						else if ( getd(".ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"[0]") +"[6]") == 1 ) set .@color$, "^00CC00";
+						else if ( getd(".ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"[0]") +"[6]") == 2 ) set .@color$, "^FF0000";
+						set .@menu$, "^996600"+ getd(".ms_b_n_"+ strnpcinfo(2) +"[0]") +". "+ .@color$ + getd("$ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"[0]") +"$");
+						set .@size, getarraysize( getd(".ms_b_n_"+ strnpcinfo(2)) );
+						for ( set .@i, 1; .@i < .@size; set .@i, .@i +1 ) {
+							if ( getd(".ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") +"[6]") == 0 ) set .@color$, "^0000FF";
+							else if ( getd(".ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") +"[6]") == 1 ) set .@color$, "^00CC00";
+							else if ( getd(".ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") +"[6]") == 2 ) set .@color$, "^FF0000";
+							set .@menu$, .@menu$ +":^996600"+ getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") +". "+ .@color$ + getd("$ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") +"$");
+						}
+						set .@menu$, .@menu$ +":^000000 - back";
+						set .@menu, select(.@menu$) -1;
+						if ( .@menu == .@size ) break;
+						mes "["+ strnpcinfo(1) +"]";
+						mes "Are you sure that you want to delete the selected mission?";
+						mes " ";
+						set .@m_id, getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@menu +"]");
+						if ( getd(".ms_b_m_"+ .@m_id +"[6]") == 0 ) set .@color$, "^0000FF";
+						else if ( getd(".ms_b_m_"+ .@m_id +"[6]") == 1 ) set .@color$, "^00CC00";
+						else if ( getd(".ms_b_m_"+ .@m_id +"[6]") == 2 ) set .@color$, "^FF0000";
+						mes "^996600"+ .@m_id +". "+ .@color$ + getd("$ms_b_m_"+ .@m_id +"$") +"^000000";
+						mes "Description: ^0000FF"+ getd("$ms_b_m_"+ .@m_id +"$[1]") +"^000000";
+						next;
+						if ( select ( "No", "Yes" ) == 1 ) break;
+						mes "["+ strnpcinfo(1) +"]";
+						mes "Mission has deleted successfully";
+						mes " ";
+						mes "^996600"+ .@m_id +". "+ .@color$ + getd("$ms_b_m_"+ .@m_id +"$") +"^000000";
+						deletearray getd(".ms_b_m_"+ .@m_id +"$");
+						deletearray getd(".ms_b_m_"+ .@m_id );
+						deletearray getd(".ms_b_t_"+ .@m_id );
+						deletearray getd(".ms_b_ir_"+ .@m_id );
+						deletearray getd(".ms_b_ia_"+ .@m_id );
+						deletearray getd("$ms_b_m_"+ .@m_id +"$");
+						deletearray getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@menu +"]"), 1;
+						setd "$ms_b_n_"+ strnpcinfo(2) +"$", ( ( getd(".ms_b_n_"+ strnpcinfo(2) +"[0]") )?getd(".ms_b_n_"+ strnpcinfo(2) +"[0]"):"" );
+						set .@size, getarraysize( getd(".ms_b_n_"+ strnpcinfo(2) ) );
+						for ( set .@i, 1; .@i < .@size; set .@i, .@i +1 )
+							setd "$ms_b_n_"+ strnpcinfo(2) +"$", getd("$ms_b_n_"+ strnpcinfo(2) +"$") +"#"+ getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") +"#";
+						next;
+						break;
+					case 4:
+						mes "["+ strnpcinfo(1) +"]";
+						if ( getd(".ms_b_n_"+ strnpcinfo(2) ) == 0 ) {
+							mes "There is no mission available to swap";
+							next;
+							break;
+						}
+						mes "Select a mission below to swap:";
+						next;
+						if ( getd(".ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"[0]") +"[6]") == 0 ) set .@color$, "^0000FF";
+						else if ( getd(".ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"[0]") +"[6]") == 1 ) set .@color$, "^00CC00";
+						else if ( getd(".ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"[0]") +"[6]") == 2 ) set .@color$, "^FF0000";
+						set .@menu$, "^996600"+ getd(".ms_b_n_"+ strnpcinfo(2) +"[0]") +". "+ .@color$ + getd("$ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"[0]") +"$");
+						set .@size, getarraysize( getd(".ms_b_n_"+ strnpcinfo(2)) );
+						for ( set .@i, 1; .@i < .@size; set .@i, .@i +1 ) {
+							if ( getd(".ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") +"[6]") == 0 ) set .@color$, "^0000FF";
+							else if ( getd(".ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") +"[6]") == 1 ) set .@color$, "^00CC00";
+							else if ( getd(".ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") +"[6]") == 2 ) set .@color$, "^FF0000";
+							set .@menu$, .@menu$ +":^996600"+ getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") +". "+ .@color$ + getd("$ms_b_m_"+ getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]") +"$");
+						}
+						set .@menu$, .@menu$ +":^000000 - back";
+						set .@menu, select(.@menu$) -1;
+						if ( .@menu == .@size ) break;
+						mes "["+ strnpcinfo(1) +"]";
+						mes "mission selected :";
+						set .@m_id1, getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@menu +"]");
+						if ( getd(".ms_b_m_"+ .@m_id1 +"[6]") == 0 ) set .@color1$, "^0000FF";
+						else if ( getd(".ms_b_m_"+ .@m_id1 +"[6]") == 1 ) set .@color1$, "^00CC00";
+						else if ( getd(".ms_b_m_"+ .@m_id1 +"[6]") == 2 ) set .@color1$, "^FF0000";
+						mes "^996600"+ .@m_id1 +". "+ .@color1$ + getd("$ms_b_m_"+ .@m_id1 +"$") +"^000000";
+						mes " ";
+						mes "Please select another mission to be swapped:";
+						next;
+						set .@menu2, select(.@menu$) -1;
+						if ( .@menu2 == .@size ) break;
+						mes "["+ strnpcinfo(1) +"]";
+						mes "Missions has swapped successfully";
+						set .@m_id2, getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@menu2 +"]");
+						if ( getd(".ms_b_m_"+ .@m_id2 +"[6]") == 0 ) set .@color2$, "^0000FF";
+						else if ( getd(".ms_b_m_"+ .@m_id2 +"[6]") == 1 ) set .@color2$, "^00CC00";
+						else if ( getd(".ms_b_m_"+ .@m_id2 +"[6]") == 2 ) set .@color2$, "^FF0000";
+						mes "^996600"+ .@m_id1 +". "+ .@color1$ + getd("$ms_b_m_"+ .@m_id1 +"$") +"^000000";
+						mes "^996600"+ .@m_id2 +". "+ .@color2$ + getd("$ms_b_m_"+ .@m_id2 +"$") +"^000000";
+						setd ".ms_b_n_"+ strnpcinfo(2) +"["+ .@menu +"]", .@m_id2;
+						setd ".ms_b_n_"+ strnpcinfo(2) +"["+ .@menu2 +"]", .@m_id1;
+						setd "$ms_b_n_"+ strnpcinfo(2) +"$", getd(".ms_b_n_"+ strnpcinfo(2) +"[0]");
+						set .@size, getarraysize( getd(".ms_b_n_"+ strnpcinfo(2) ) );
+						for ( set .@i, 1; .@i < .@size; set .@i, .@i +1 )
+							setd "$ms_b_n_"+ strnpcinfo(2) +"$", getd("$ms_b_n_"+ strnpcinfo(2) +"$") +"#"+ getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]");
+						next;
+						break;
+				}
+			}
+	}
+	close;
+OnQuest1TimeUp:
+	dispbottom "Mission #1: "+ getd("$ms_b_m_"+ @ms_b_m_1[0] +"$[0]") +" has Time Up";
+	deletearray @ms_b_m_1;
+	set ms_b_m_1$, "";
+	end;
+OnQuest2TimeUp:
+	dispbottom "Mission #2: "+ getd("$ms_b_m_"+ @ms_b_m_2[0] +"$[0]") +" has Time Up";
+	deletearray @ms_b_m_2;
+	set ms_b_m_2$, "";
+	end;
+OnQuest3TimeUp:
+	dispbottom "Mission #3: "+ getd("$ms_b_m_"+ @ms_b_m_3[0] +"$[0]") +" has Time Up";
+	deletearray @ms_b_m_3;
+	set ms_b_m_3$, "";
+	end;
+OnQuest4TimeUp:
+	dispbottom "Mission #4: "+ getd("$ms_b_m_"+ @ms_b_m_4[0] +"$[0]") +" has Time Up";
+	deletearray @ms_b_m_4;
+	set ms_b_m_4$, "";
+	end;
+L_showprogress:
+	mes "^0000FF"+ getd("$ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"$[0]") +"^000000";
+	mes "Description: ^0000FF"+ getd("$ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"$[1]") +"^000000";
+	mes " ";
+	mes "[^804000Mission Progress^000000]";
+	if ( getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[5]") ) {
+		set .@left, getd("@ms_b_m_"+ @slot +"[1]") - gettimetick(2);
+		set .@hour, .@left / 3600;
+		set .@min, .@left % 3600 / 60;
+		set .@sec, .@left % 60;
+		mes "Time Left:  ^FF0000"+( ( .@hour )?.@hour +" hour ":"" )+( ( .@hour || .@min )?.@min +" min ":"" )+ .@sec +" sec^000000";
+	}
+	set .@size, getarraysize( getd(".ms_b_t_"+ getd("@ms_b_m_"+ @slot +"[0]") ) );
+	for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+		mes "Mobs : ^0000FF"+ getmonsterinfo( getd(".ms_b_t_"+ getd("@ms_b_m_"+ @slot +"[0]") +"["+ .@i +"]") , 0) +"^000000 ["+( ( getd("@ms_b_m_"+ @slot +"["+( .@i/2 +2 )+"]") > getd(".ms_b_t_"+ getd("@ms_b_m_"+ @slot +"[0]") +"["+ (.@i +1) +"]") )?getd(".ms_b_t_"+ getd("@ms_b_m_"+ @slot +"[0]") +"["+ (.@i +1) +"]"):getd("@ms_b_m_"+ @slot +"["+( .@i/2 +2 )+"]") ) +"/"+ getd(".ms_b_t_"+ getd("@ms_b_m_"+ @slot +"[0]") +"["+ (.@i +1) +"]") +"]";
+	set .@size, getarraysize( getd(".ms_b_ir_"+ getd("@ms_b_m_"+ @slot +"[0]") ) );
+	for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+		mes "Items : ^0000FF"+ F_MesItemInfo( getd(".ms_b_ir_"+ getd("@ms_b_m_"+ @slot +"[0]") +"["+ .@i +"]") ) +"^000000 ["+ countitem( getd(".ms_b_ir_"+ getd("@ms_b_m_"+ @slot +"[0]") +"["+ .@i +"]") ) +"/"+ getd(".ms_b_ir_"+ getd("@ms_b_m_"+ @slot +"[0]") +"["+ (.@i +1) +"]") +"]";
+	mes " ";
+	mes "[^009900Rewards^000000]";
+	if ( getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[7]") )
+		mes "Base Exp : ^0000FF"+ callfunc("int__", getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[7]") ) +"^000000";
+	if ( getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[8]") )
+		mes "Job Exp : ^0000FF"+ callfunc("int__", getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[8]") ) +"^000000";
+	if ( getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[9]") )
+		mes "Zeny : ^0000FF"+ callfunc("int__", getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[9]") ) +"^000000";
+	if ( getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[10]") )
+		mes "Cash Point : ^0000FF"+ callfunc("int__", getd(".ms_b_m_"+ getd("@ms_b_m_"+ @slot +"[0]") +"[10]") ) +"^000000";
+	set .@size, getarraysize( getd(".ms_b_ia_"+ getd("@ms_b_m_"+ @slot +"[0]") ) );
+	for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+	mes "Item : ^0000FF"+ getd(".ms_b_ia_"+ getd("@ms_b_m_"+ @slot +"[0]") +"["+ (.@i +1) +"]") +" "+ F_MesItemInfo( getd(".ms_b_ia_"+ getd("@ms_b_m_"+ @slot +"[0]") +"["+ .@i +"]") ) +"^000000";
+	mes " ";
+	return;
+L_setupmission:
+	while (1) {
+		mes "["+ strnpcinfo(1) +"]";
+		mes "Name : "+( ( @tmp_ms_b_m_$[0] != "" )?"^0000FF"+ @tmp_ms_b_m_$[0]:"^FF0000Incomplete" )+"^000000";
+		mes "Description: "+( ( @tmp_ms_b_m_$[1] != "" )?"^0000FF"+ @tmp_ms_b_m_$[1]:"^FF0000Incomplete" )+"^000000";
+		mes " ";
+		if ( @tmp_ms_b_t_ == 0 && @tmp_ms_b_ir_ == 0 )
+			mes "Require mobs : ^FF0000Incomplete^000000";
+		set .@size, getarraysize(@tmp_ms_b_t_);
+		for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+			mes "Require mobs : ^0000FF"+ @tmp_ms_b_t_[.@i +1] +" "+ getmonsterinfo(@tmp_ms_b_t_[.@i], 0) +"^000000";
+		if ( @tmp_ms_b_t_ == 0 && @tmp_ms_b_ir_ == 0 )
+			mes "Require items : ^FF0000Incomplete^000000";
+		set .@size, getarraysize(@tmp_ms_b_ir_);
+		for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+			mes "Require items : ^0000FF"+ @tmp_ms_b_ir_[.@i +1] +" "+ F_MesItemInfo(@tmp_ms_b_ir_[.@i]) +"^000000";
+		mes " ";
+		if ( @tmp_ms_b_m_[6] || @tmp_ms_b_m_[3] || @tmp_ms_b_m_[5] || @tmp_ms_b_m_[2] ) {
+			mes "[^FF0000Limitations^000000]";
+			if ( @tmp_ms_b_m_[6] )
+				mes "Can do : "+( ( @tmp_ms_b_m_[6] == 1 )?"^00CC00Everyday":"^FF0000Only Once" )+"^000000";
+			if ( @tmp_ms_b_m_[3] )
+				mes "Base Level :"+( ( @tmp_ms_b_m_[3] )?"  ^0000FF"+ @tmp_ms_b_m_[3] +( ( @tmp_ms_b_m_[3] != @tmp_ms_b_m_[4] )?"~"+ @tmp_ms_b_m_[4]:"" )+"^000000":"" );
+			if ( @tmp_ms_b_m_[5] )
+				mes "Time Limit : ^FF0000"+( ( @tmp_ms_b_m_[5] /60 )?@tmp_ms_b_m_[5] /60 +" hour"+( ( @tmp_ms_b_m_[5] %60 )?" ":"" ):"" )+( ( @tmp_ms_b_m_[5] %60 )?@tmp_ms_b_m_[5] %60 +" min":"" )+"^000000";
+			if ( @tmp_ms_b_m_[2] ) {
+				deletearray .@joblimit;
+				for ( set .@i, 0; .@i < 24; set .@i, .@i +1 ) {
+					if ( @tmp_ms_b_m_[2] & pow( 2, .@i ) ) {
+						set .@joblimit[ getarraysize(.@joblimit) ], .@i +1;
+					}
+				}
+				set .@joblimit$, .jobname$[ .@joblimit[0] -1 ];
+				set .@size, getarraysize(.@joblimit);
+				for ( set .@i, 1; .@i < .@size; set .@i, .@i +1 )
+					set .@joblimit$, .@joblimit$ +", "+ .jobname$[ .@joblimit[.@i] -1 ];
+				mes "Job Limit : ^00CC00"+ .@joblimit$ +"^000000";
+			}
+			mes " ";
+		}
+		mes "[^009900Rewards^000000]";
+		if ( @tmp_ms_b_m_[7] || @tmp_ms_b_m_[8] || @tmp_ms_b_m_[9] || @tmp_ms_b_m_[10] || @tmp_ms_b_ia_ )
+			set .@color_reward$, "";
+		else {
+			mes "^FF0000Incomplete^000000";
+			set .@color_reward$, "  - ^FF0000Incomplete^000000";
+		}
+		if ( @tmp_ms_b_m_[7] )
+			mes "Base Exp : ^0000FF"+ callfunc("int__", @tmp_ms_b_m_[7] ) +"^000000";
+		if ( @tmp_ms_b_m_[8] )
+			mes "Job Exp : ^0000FF"+ callfunc("int__", @tmp_ms_b_m_[8] ) +"^000000";
+		if ( @tmp_ms_b_m_[9] )
+			mes "Zeny : ^0000FF"+ callfunc("int__", @tmp_ms_b_m_[9] ) +"^000000";
+		if ( @tmp_ms_b_m_[10] )
+			mes "Cash Point : ^0000FF"+ callfunc("int__", @tmp_ms_b_m_[10] ) +"^000000";
+		set .@size, getarraysize(@tmp_ms_b_ia_);
+		for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+			mes "Item : ^0000FF"+ @tmp_ms_b_ia_[.@i +1] +" "+ F_MesItemInfo(@tmp_ms_b_ia_[.@i]) +"^000000";
+		next;
+		if ( @tmp_ms_b_m_$[0] != "" && @tmp_ms_b_m_$[1] != "" && ( @tmp_ms_b_t_ || @tmp_ms_b_ir_ ) &&
+			( @tmp_ms_b_m_[7] || @tmp_ms_b_m_[8] || @tmp_ms_b_m_[9] || @tmp_ms_b_m_[10] || @tmp_ms_b_ia_ ) )
+			set .@color_all$, "^00CC00";
+		else
+			set .@color_all$, "^FF0000";
+		set .@setupmenu, select (
+			"Important Settings"+( ( @tmp_ms_b_m_$[0] != "" && @tmp_ms_b_m_$[1] != "" && ( @tmp_ms_b_t_ || @tmp_ms_b_ir_ ) )?"":"  - ^FF0000Incomplete^000000" ),
+			"Mission Limitations",
+			"Rewards"+ .@color_reward$,
+			.@color_all$ +"Complete "+( ( getarg(0) )?"Edit":"Setup" )+"^000000",
+			"- back" );
+		switch ( .@setupmenu ) {
+			case 1:
+				while (1) {
+					mes "["+ strnpcinfo(1) +"]";
+					mes "Name : "+( ( @tmp_ms_b_m_$[0] != "" )?"^0000FF"+ @tmp_ms_b_m_$[0]:"^FF0000Incomplete" )+"^000000";
+					mes "Description: "+( ( @tmp_ms_b_m_$[1] != "" )?"^0000FF"+ @tmp_ms_b_m_$[1]:"^FF0000Incomplete" )+"^000000";
+					mes " ";
+					if ( @tmp_ms_b_t_ == 0 && @tmp_ms_b_ir_ == 0 )
+						mes "Require mobs : ^FF0000Incomplete^000000";
+					set .@size, getarraysize(@tmp_ms_b_t_);
+					for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+						mes "Require mobs : ^0000FF"+ @tmp_ms_b_t_[.@i +1] +" "+ getmonsterinfo(@tmp_ms_b_t_[.@i], 0) +"^000000";
+					if ( @tmp_ms_b_t_ == 0 && @tmp_ms_b_ir_ == 0 )
+						mes "Require items : ^FF0000Incomplete^000000";
+					set .@size, getarraysize(@tmp_ms_b_ir_);
+					for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+						mes "Require items : ^0000FF"+ @tmp_ms_b_ir_[.@i +1] +" "+ F_MesItemInfo(@tmp_ms_b_ir_[.@i]) +"^000000";
+					next;
+					set .@importantmenu, select (
+						"Mission Name"+( ( @tmp_ms_b_m_$[0] != "" )?"":"  - ^FF0000Incomplete^000000" ),
+						"Description"+( ( @tmp_ms_b_m_$[1] != "" )?"":"  - ^FF0000Incomplete^000000" ),
+						"Require Mobs",
+						"Require Items",
+						"- back" );
+					switch ( .@importantmenu ) {
+						case 1:
+							mes "["+ strnpcinfo(1) +"]";
+							mes "Name : "+( ( @tmp_ms_b_m_$[0] != "" )?"^0000FF"+ @tmp_ms_b_m_$[0]:"^FF0000Incomplete" )+"^000000";
+							mes " ";
+							mes "Input the mission name";
+							next;
+							input .@tmp$;
+							mes "["+ strnpcinfo(1) +"]";
+							if ( getstrlen(.@tmp$) > 60 ) {
+								mes "Mission name must not more than 60 characters";
+								next;
+								break;
+							}
+							else if ( compare ( .@tmp$, ":" ) || compare ( .@tmp$, "^" ) ) {
+								mes "Mission name must not allow to use these symbols";
+								mes "-> : <- colon";
+								mes "-> ^ <- caret";
+								next;
+								break;
+							}
+							mes "Name : "+( ( @tmp_ms_b_m_$[0] != "" )?"^0000FF"+ @tmp_ms_b_m_$[0]:"^FF0000Incomplete" )+"^000000";
+							mes "Description: "+( ( @tmp_ms_b_m_$[1] != "" )?"^0000FF"+ @tmp_ms_b_m_$[1]:"^FF0000Incomplete" )+"^000000";
+							mes " ";
+							mes "Are you sure to change the name to";
+							mes "^0000FF"+ .@tmp$ +"^000000";
+							next;
+							if ( select ( "Yes", "No" ) == 2 ) break;
+							set @tmp_ms_b_m_$[0], .@tmp$;
+							break;
+						case 2:
+							mes "["+ strnpcinfo(1) +"]";
+							mes "Name : "+( ( @tmp_ms_b_m_$[0] != "" )?"^0000FF"+ @tmp_ms_b_m_$[0]:"^FF0000Incomplete" )+"^000000";
+							mes "Description: "+( ( @tmp_ms_b_m_$[1] != "" )?"^0000FF"+ @tmp_ms_b_m_$[1]:"^FF0000Incomplete" )+"^000000";
+							mes " ";
+							mes "Input the descriptions";
+							next;
+							set .@tmp1$, "";
+							set .@tmp2$, "";
+							set .@tmp3$, "";
+							set .@tmp, 0;
+							do {
+								set .@tmp, .@tmp +1 ;
+								input getd(".@tmp"+ .@tmp +"$");
+							} while ( getstrlen( getd(".@tmp"+ .@tmp +"$") ) > 50 && .@tmp < 3 );
+							mes "["+ strnpcinfo(1) +"]";
+							mes "Name : "+( ( @tmp_ms_b_m_$[0] != "" )?"^0000FF"+ @tmp_ms_b_m_$[0]:"^FF0000Incomplete" )+"^000000";
+							mes "Description: "+( ( @tmp_ms_b_m_$[1] != "" )?"^0000FF"+ @tmp_ms_b_m_$[1]:"^FF0000Incomplete" )+"^000000";
+							mes " ";
+							mes "Are you sure to change description to";
+							mes "^0000FF"+ .@tmp1$ + .@tmp2$ + .@tmp3$ +"^000000";
+							next;
+							if ( select ( "Yes", "No" ) == 2 ) break;
+							set @tmp_ms_b_m_$[1], .@tmp1$ + .@tmp2$ + .@tmp3$;
+							break;
+						case 3:
+							if ( getarg(0) ) {
+								mes "["+ strnpcinfo(1) +"]";
+								mes "Name : "+( ( @tmp_ms_b_m_$[0] != "" )?"^0000FF"+ @tmp_ms_b_m_$[0]:"^FF0000Incomplete" )+"^000000";
+								mes " ";
+								mes "Require Mobs are not allow to edit";
+								next;
+								break;
+							}
+							while (1) {
+								mes "["+ strnpcinfo(1) +"]";
+								mes "Name : "+( ( @tmp_ms_b_m_$[0] != "" )?"^0000FF"+ @tmp_ms_b_m_$[0]:"^FF0000Incomplete" )+"^000000";
+								mes " ";
+								if ( @tmp_ms_b_t_ == 0 )
+									mes "Require mobs :";
+								set .@size, getarraysize(@tmp_ms_b_t_);
+								for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+									mes "Require mobs : ^0000FF"+ @tmp_ms_b_t_[.@i +1] +" "+ getmonsterinfo(@tmp_ms_b_t_[.@i], 0) +"^000000";
+								next;
+								set .@mobmenu, select ( "Add a monster requirement", "Remove a monster requirement", "- back" );
+								switch ( .@mobmenu ) {
+									case 1:
+										mes "["+ strnpcinfo(1) +"]";
+										mes "Name : "+( ( @tmp_ms_b_m_$[0] != "" )?"^0000FF"+ @tmp_ms_b_m_$[0]:"^FF0000Incomplete" )+"^000000";
+										mes " ";
+										if ( @tmp_ms_b_t_ == 0 )
+											mes "Require mobs :";
+										set .@size, getarraysize(@tmp_ms_b_t_);
+										for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+											mes "Require mobs : ^0000FF"+ @tmp_ms_b_t_[.@i +1] +" "+ getmonsterinfo(@tmp_ms_b_t_[.@i], 0) +"^000000";
+										mes " ";
+										if ( .@size == 16 ) {
+											mes "Require mobs are only allow up to 8 different kinds";
+											next;
+											break;
+										}
+										mes "Input monster ID";
+										next;
+										input .@tmp, 0, 9999;
+										mes "["+ strnpcinfo(1) +"]";
+										if ( .@tmp == 0 ) {
+											mes "Invalid monster ID";
+											next;
+											break;
+										}
+										else if ( getmonsterinfo(.@tmp, 1) == -1 ) {
+											mes "Invalid monster ID";
+											next;
+											break;
+										}
+										if ( @tmp_ms_b_t_ == 0 )
+											mes "Require mobs :";
+										for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+											mes "Require mobs : ^0000FF"+ @tmp_ms_b_t_[.@i +1] +" "+ getmonsterinfo(@tmp_ms_b_t_[.@i], 0) +"^000000";
+										mes " ";
+										for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 ) {
+											if ( .@tmp == @tmp_ms_b_t_[.@i] ) break;
+										}
+										if ( .@i != .@size ) {
+											mes "Monster ^0000FF"+ getmonsterinfo(.@tmp, 0) +"^000000 is Repeated";
+											next;
+											break;
+										}
+										mes "Require mobs : ^0000FF"+ getmonsterinfo(.@tmp, 0) +"^000000";
+										mes "Input an amount need to be hunt";
+										next;
+										input .@tmp2, 0, 999;
+										if ( .@tmp2 == 0 ) {
+											mes "["+ strnpcinfo(1) +"]";
+											mes "Invalid amount";
+											next;
+										}
+										else
+											setarray @tmp_ms_b_t_[ .@size ], .@tmp, .@tmp2;
+										break;
+									case 2:
+										mes "["+ strnpcinfo(1) +"]";
+										mes "Name : "+( ( @tmp_ms_b_m_$[0] != "" )?"^0000FF"+ @tmp_ms_b_m_$[0]:"^FF0000Incomplete" )+"^000000";
+										mes " ";
+										if ( @tmp_ms_b_t_ == 0 ) {
+											mes "There are no monster to remove";
+											next;
+											break;
+										}
+										set .@size, getarraysize(@tmp_ms_b_t_);
+										for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+											mes "Require mobs : ^0000FF"+ @tmp_ms_b_t_[.@i +1] +" "+ getmonsterinfo(@tmp_ms_b_t_[.@i], 0) +"^000000";
+										mes " ";
+										mes "Select a mob to delete";
+										next;
+										set .@menu$, "^0000FF"+ @tmp_ms_b_t_[1] +" "+ getmonsterinfo(@tmp_ms_b_t_, 0);
+										for ( set .@i, 2; .@i < .@size; set .@i, .@i +2 )
+											set .@menu$, .@menu$ +":"+ @tmp_ms_b_t_[.@i +1] +" "+ getmonsterinfo(@tmp_ms_b_t_[.@i], 0);
+										set .@menu$, .@menu$ +"^000000:- back";
+										set .@menu, select(.@menu$) -1;
+										if ( .@menu == .@size /2 ) break;
+										deletearray @tmp_ms_b_t_[ .@menu *2 ], 2;
+									case 3:
+								}
+								if ( .@mobmenu == 3 ) break;
+							}
+							break;
+						case 4:
+							while (1) {
+								mes "["+ strnpcinfo(1) +"]";
+								mes "Name : "+( ( @tmp_ms_b_m_$[0] != "" )?"^0000FF"+ @tmp_ms_b_m_$[0]:"^FF0000Incomplete" )+"^000000";
+								mes " ";
+								if ( @tmp_ms_b_ir_ == 0 )
+									mes "Require items :";
+								set .@size, getarraysize(@tmp_ms_b_ir_);
+								for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+									mes "Require items : ^0000FF"+ @tmp_ms_b_ir_[.@i +1] +" "+ F_MesItemInfo(@tmp_ms_b_ir_[.@i]) +"^000000";
+								next;
+								set .@item_require_menu, select ( "add item requirement", "remove a require item", "- back" );
+								switch ( .@item_require_menu ) {
+									case 1:
+										mes "["+ strnpcinfo(1) +"]";
+										mes "Name : "+( ( @tmp_ms_b_m_$[0] != "" )?"^0000FF"+ @tmp_ms_b_m_$[0]:"^FF0000Incomplete" )+"^000000";
+										mes " ";
+										if ( @tmp_ms_b_ir_ == 0 )
+											mes "Require items : ";
+										set .@size, getarraysize(@tmp_ms_b_ir_);
+										for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+											mes "Require items : ^0000FF"+ @tmp_ms_b_ir_[.@i +1] +" "+ F_MesItemInfo(@tmp_ms_b_ir_[.@i]) +"^000000";
+										mes " ";
+										if ( .@size == 10 ) {
+											mes "Require items are only allow up to 5 different kinds";
+											next;
+											break;
+										}
+										mes "Input item ID";
+										next;
+										input .@tmp, 0, 32767;
+										mes "["+ strnpcinfo(1) +"]";
+										if ( getitemname(.@tmp) == "null" ) {
+											mes "Invalid item ID";
+											next;
+											break;
+										}
+										mes "Name : "+( ( @tmp_ms_b_m_$[0] != "" )?"^0000FF"+ @tmp_ms_b_m_$[0]:"^FF0000Incomplete" )+"^000000";
+										mes " ";
+										if ( @tmp_ms_b_ir_ == 0 )
+											mes "Require items : ";
+										for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+											mes "Require items : ^0000FF"+ @tmp_ms_b_ir_[.@i +1] +" "+ F_MesItemInfo(@tmp_ms_b_ir_[.@i]) +"^000000";
+										mes " ";
+										for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 ) {
+											if ( .@tmp == @tmp_ms_b_ir_[.@i] ) break;
+										}
+										if ( .@i != .@size ) {
+											mes "Item ^0000FF"+ F_MesItemInfo(.@tmp) +"^000000 is repeated";
+											next;
+											break;
+										}
+										mes "Require items : ^0000FF"+ F_MesItemInfo(.@tmp) +"^000000";
+										mes "input the amount required for this item";
+										next;
+										input .@tmp2, 0, 30000;
+										if ( .@tmp2 == 0 ) {
+											mes "["+ strnpcinfo(1) +"]";
+											mes "Invalid amount";
+											next;
+										}
+										else
+											setarray @tmp_ms_b_ir_[ .@size ], .@tmp, .@tmp2;
+										break;
+									case 2:
+										mes "["+ strnpcinfo(1) +"]";
+										mes "Name : "+( ( @tmp_ms_b_m_$[0] != "" )?"^0000FF"+ @tmp_ms_b_m_$[0]:"^FF0000Incomplete" )+"^000000";
+										mes " ";
+										if ( @tmp_ms_b_ir_ == 0 ) {
+											mes "There are no item to be remove";
+											next;
+											break;
+										}
+										set .@size, getarraysize(@tmp_ms_b_ir_);
+										for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+											mes "Require items : ^0000FF"+ @tmp_ms_b_ir_[.@i +1] +" "+ F_MesItemInfo(@tmp_ms_b_ir_[.@i]) +"^000000";
+										mes " ";
+										mes "Select an item to delete";
+										next;
+										set .@menu$, "^0000FF"+ @tmp_ms_b_ir_[1] +" "+ getitemname(@tmp_ms_b_ir_);
+										for ( set .@i, 2; .@i < .@size; set .@i, .@i +2 )
+											set .@menu$, .@menu$ +":"+ @tmp_ms_b_ir_[.@i +1] +" "+ getitemname(@tmp_ms_b_ir_[.@i]);
+										set .@menu$, .@menu$ +"^000000:- back";
+										set .@menu, select(.@menu$) -1;
+										if ( .@menu == .@size /2 ) break;
+										deletearray @tmp_ms_b_ir_[ .@menu *2 ], 2;
+									case 3:
+								}
+								if ( .@item_require_menu == 3 ) break;
+							}
+						case 5:
+					}
+					if ( .@importantmenu == 5 ) break;
+				}
+				break;
+			case 2:
+				while (1) {
+					mes "["+ strnpcinfo(1) +"]";
+					mes "Name : "+( ( @tmp_ms_b_m_$[0] != "" )?"^0000FF"+ @tmp_ms_b_m_$[0]:"^FF0000Incomplete" )+"^000000";
+					mes " ";
+					mes "[^FF0000Limitations^000000]";
+					mes "Can do : "+( ( @tmp_ms_b_m_[6] == 0 )?"^0000FFRepeatedly": ( @tmp_ms_b_m_[6] == 1 )?"^00CC00Everyday":"^FF0000Only Once" )+"^000000";
+					mes "Base Level :"+( ( @tmp_ms_b_m_[3] )?"  ^0000FF"+ @tmp_ms_b_m_[3] +( ( @tmp_ms_b_m_[3] != @tmp_ms_b_m_[4] )?"~"+ @tmp_ms_b_m_[4]:"" )+"^000000":"" );
+					mes "Time Limit : "+( ( @tmp_ms_b_m_[5] )?"^FF0000"+( ( @tmp_ms_b_m_[5] /60 )?@tmp_ms_b_m_[5] /60 +" hour"+( ( @tmp_ms_b_m_[5] %60 )?" ":"" ):"" )+( ( @tmp_ms_b_m_[5] %60 )?@tmp_ms_b_m_[5] %60 +" min":"" )+"^000000":"" );
+					if ( @tmp_ms_b_m_[2] == 0 )
+						mes "Job Limit : ^FF0000<none>^000000";
+					else {
+						deletearray .@joblimit;
+						for ( set .@i, 0; .@i < 24; set .@i, .@i +1 ) {
+							if ( @tmp_ms_b_m_[2] & pow( 2, .@i ) ) {
+								set .@joblimit[ getarraysize(.@joblimit) ], .@i +1;
+							}
+						}
+						set .@joblimit$, .jobname$[ .@joblimit[0] -1 ];
+						set .@size, getarraysize(.@joblimit);
+						for ( set .@i, 1; .@i < .@size; set .@i, .@i +1 )
+							set .@joblimit$, .@joblimit$ +", "+ .jobname$[ .@joblimit[.@i] -1 ];
+						mes "Job Limit : ^00CC00"+ .@joblimit$ +"^000000";
+					}
+					next;
+					set .@limitmenu, select ( "Mission Status (Can do)", "Base Level", "Time Limit", "Job limitation", "- back" );
+					switch ( .@limitmenu ) {
+						case 1:
+							mes "["+ strnpcinfo(1) +"]";
+							mes "Name : "+( ( @tmp_ms_b_m_$[0] != "" )?"^0000FF"+ @tmp_ms_b_m_$[0]:"^FF0000Incomplete" )+"^000000";
+							mes " ";
+							mes "Can do : "+( ( @tmp_ms_b_m_[6] == 0 )?"^0000FFRepeatedly": ( @tmp_ms_b_m_[6] == 1 )?"^00CC00Everyday":"^FF0000Only Once" )+"^000000";
+							mes "Please select a status";
+							next;
+							switch ( select ( "^0000FFRepeatedly^000000", "^00CC00Everyday^000000", "^FF0000Only Once^000000" ) ) {
+								case 1: set @tmp_ms_b_m_[6], 0; break;
+								case 2: set @tmp_ms_b_m_[6], 1; break;
+								case 3: set @tmp_ms_b_m_[6], 2;
+							}
+							break;
+						case 2:
+							mes "["+ strnpcinfo(1) +"]";
+							mes "Name : "+( ( @tmp_ms_b_m_$[0] != "" )?"^0000FF"+ @tmp_ms_b_m_$[0]:"^FF0000Incomplete" )+"^000000";
+							mes " ";
+							mes "Base Level :";
+							mes " ";
+							mes "Input starting range";
+							next;
+							input .@tmp, 0, 1000;
+							if ( .@tmp == 0 ) {
+								mes "["+ strnpcinfo(1) +"]";
+								mes "invalid value";
+								set @tmp_ms_b_m_[3], 0;
+								set @tmp_ms_b_m_[4], 0;
+								next;
+								break;
+							}
+							mes "["+ strnpcinfo(1) +"]";
+							mes "Name : "+( ( @tmp_ms_b_m_$[0] != "" )?"^0000FF"+ @tmp_ms_b_m_$[0]:"^FF0000Incomplete" )+"^000000";
+							mes " ";
+							mes "Base Level : ^0000FF"+ .@tmp +"~^000000";
+							mes " ";
+							mes "Input ending range";
+							next;
+							input .@tmp2, 0, 1000;
+							if ( .@tmp2 == 0 ) {
+								mes "["+ strnpcinfo(1) +"]";
+								mes "invalid value";
+								set @tmp_ms_b_m_[3], 0;
+								set @tmp_ms_b_m_[4], 0;
+								next;
+								break;
+							}
+							else if ( .@tmp > .@tmp2 ) {
+								mes "["+ strnpcinfo(1) +"]";
+								mes "Ending range cannot higher than starting range";
+								next;
+								break;
+							}
+							else
+								setarray @tmp_ms_b_m_[3], .@tmp, .@tmp2;
+							break;
+						case 3:
+							mes "["+ strnpcinfo(1) +"]";
+							mes "Name : "+( ( @tmp_ms_b_m_$[0] != "" )?"^0000FF"+ @tmp_ms_b_m_$[0]:"^FF0000Incomplete" )+"^000000";
+							mes " ";
+							mes "Time Limit : "+( ( @tmp_ms_b_m_[5] )?"^FF0000"+( ( @tmp_ms_b_m_[5] /60 )?@tmp_ms_b_m_[5] /60 +" hour"+( ( @tmp_ms_b_m_[5] %60 )?" ":"" ):"" )+( ( @tmp_ms_b_m_[5] %60 )?@tmp_ms_b_m_[5] %60 +" min":"" )+"^000000":"" );
+							mes "      1 = 1 minute";
+							mes "    60 = 1 hour";
+							mes "1440 = 1 day";
+							next;
+							input @tmp_ms_b_m_[5], 0, 1440;
+							break;
+						case 4:
+							while (1) {
+								mes "["+ strnpcinfo(1) +"]";
+								mes "Name : "+( ( @tmp_ms_b_m_$[0] != "" )?"^0000FF"+ @tmp_ms_b_m_$[0]:"^FF0000Incomplete" )+"^000000";
+								mes " ";
+								if ( @tmp_ms_b_m_[2] == 0 )
+									mes "Job Limit : ^FF0000<none>^000000";
+								else {
+									deletearray .@joblimit;
+									for ( set .@i, 0; .@i < 24; set .@i, .@i +1 ) {
+										if ( @tmp_ms_b_m_[2] & pow( 2, .@i ) ) {
+											set .@joblimit[ getarraysize(.@joblimit) ], .@i +1;
+										}
+									}
+									set .@joblimit$, .jobname$[ .@joblimit[0] -1 ];
+									set .@size, getarraysize(.@joblimit);
+									for ( set .@i, 1; .@i < .@size; set .@i, .@i +1 )
+										set .@joblimit$, .@joblimit$ +", "+ .jobname$[ .@joblimit[.@i] -1 ];
+									mes "Job Limit : ^00CC00"+ .@joblimit$ +"^000000";
+								}
+								next;
+								set .@menu$, ( ( @tmp_ms_b_m_[2] & pow( 2, 0 ) )?"^00CC00":"^FF0000" )+ .jobname$;
+								for ( set .@i, 1; .@i < 24; set .@i,.@i +1 )
+									set .@menu$, .@menu$ +":"+( ( @tmp_ms_b_m_[2] & pow( 2, .@i ) )?"^00CC00":"^FF0000" )+ .jobname$[.@i];
+								set .@menu$, .@menu$ +":^000000- back";
+								set .@menu, select(.@menu$) -1;
+								if ( .@menu == 24 ) break;
+								set @tmp_ms_b_m_[2], @tmp_ms_b_m_[2] ^ pow( 2, .@menu );
+							}
+							break;
+						case 5:
+					}
+					if ( .@limitmenu == 5 ) break;
+				}
+				break;
+			case 3:
+				while (1) {
+					mes "["+ strnpcinfo(1) +"]";
+					mes "Name : "+( ( @tmp_ms_b_m_$[0] != "" )?"^0000FF"+ @tmp_ms_b_m_$[0]:"^FF0000Incomplete" )+"^000000";
+					mes " ";
+					mes "[^009900Rewards^000000]";
+					mes "Base Exp : "+( ( @tmp_ms_b_m_[7] )?"^0000FF"+ callfunc("int__", @tmp_ms_b_m_[7] ):"^FF00000" ) +"^000000";
+					mes "Job Exp : "+( ( @tmp_ms_b_m_[8] )?"^0000FF"+ callfunc("int__", @tmp_ms_b_m_[8] ):"^FF00000" ) +"^000000";
+					mes "Zeny : "+( ( @tmp_ms_b_m_[9] )?"^0000FF"+ callfunc("int__", @tmp_ms_b_m_[9] ):"^FF00000" ) +"^000000 ";
+					mes "Cash Point : "+( ( @tmp_ms_b_m_[10] )?"^0000FF"+ callfunc("int__", @tmp_ms_b_m_[10] ):"^FF00000" ) +"^000000";
+					if ( @tmp_ms_b_ia_ == 0 )
+						mes "Item : ";
+					set .@size, getarraysize(@tmp_ms_b_ia_);
+					for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+						mes "Item : ^0000FF"+ @tmp_ms_b_ia_[.@i +1] +" "+ F_MesItemInfo(@tmp_ms_b_ia_[.@i]) +"^000000";
+					next;
+					set .@rewardmenu, select ( "Base Exp", "Job Exp", "Zeny", "Cash Points", "Item Rewards", "- back" );
+					switch ( .@rewardmenu ) {
+						case 1:
+							input @tmp_ms_b_m_[7], 0, 2000000000;
+							break;
+						case 2:
+							input @tmp_ms_b_m_[8], 0, 2000000000;
+							break;
+						case 3:
+							input @tmp_ms_b_m_[9], 0, 2000000000;
+							break;
+						case 4:
+							input @tmp_ms_b_m_[10], 0, 2000000000;
+							break;
+						case 5:
+							while (1) {
+								mes "["+ strnpcinfo(1) +"]";
+								mes "Name : "+( ( @tmp_ms_b_m_$[0] != "" )?"^0000FF"+ @tmp_ms_b_m_$[0]:"^FF0000Incomplete" )+"^000000";
+								mes " ";
+								if ( @tmp_ms_b_ia_ == 0 )
+									mes "Item :";
+								set .@size, getarraysize(@tmp_ms_b_ia_);
+								for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+									mes "Item : ^0000FF"+ @tmp_ms_b_ia_[.@i +1] +" "+ F_MesItemInfo(@tmp_ms_b_ia_[.@i]) +"^000000";
+								next;
+								set .@item_reward_menu, select ( "Add an item reward", "Remove an item reward", "- back" );
+								switch ( .@item_reward_menu ) {
+									case 1:
+										mes "["+ strnpcinfo(1) +"]";
+										mes "Name : "+( ( @tmp_ms_b_m_$[0] != "" )?"^0000FF"+ @tmp_ms_b_m_$[0]:"^FF0000Incomplete" )+"^000000";
+										mes " ";
+										if ( @tmp_ms_b_ia_ == 0 )
+											mes "Item : ";
+										set .@size, getarraysize(@tmp_ms_b_ia_);
+										for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+											mes "Item : ^0000FF"+ @tmp_ms_b_ia_[.@i +1] +" "+ F_MesItemInfo(@tmp_ms_b_ia_[.@i]) +"^000000";
+										mes " ";
+										if ( .@size == 10 ) {
+											mes "Items Rewards are only allow up to 5 different kinds";
+											next;
+											break;
+										}
+										mes "Input item id";
+										next;
+										input .@tmp, 0, 32767;
+										mes "["+ strnpcinfo(1) +"]";
+										if ( getitemname(.@tmp) == "null" ) {
+											mes "Invalid item id";
+											next;
+											break;
+										}
+										mes "Name : "+( ( @tmp_ms_b_m_$[0] != "" )?"^0000FF"+ @tmp_ms_b_m_$[0]:"^FF0000Incomplete" )+"^000000";
+										mes " ";
+										if ( @tmp_ms_b_ia_ == 0 )
+											mes "Item : ";
+										for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+											mes "Item : ^0000FF"+ @tmp_ms_b_ia_[.@i +1] +" "+ F_MesItemInfo(@tmp_ms_b_ia_[.@i]) +"^000000";
+										mes " ";
+										for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 ) {
+											if ( .@tmp == @tmp_ms_b_ia_[.@i] ) break;
+										}
+										if ( .@i != .@size ) {
+											mes "Item ^0000FF"+ F_MesItemInfo(.@tmp) +"^000000 is repeated";
+											next;
+											break;
+										}
+										mes "Item : ^0000FF"+ F_MesItemInfo(.@tmp) +"^000000";
+										mes "Input the amount rewards for this item";
+										next;
+										input .@tmp2, 0, 30000;
+										if ( .@tmp2 == 0 ) {
+											mes "["+ strnpcinfo(1) +"]";
+											mes "Invalid amount";
+											next;
+										}
+										else
+											setarray @tmp_ms_b_ia_[ .@size ], .@tmp, .@tmp2;
+										break;
+									case 2:
+										mes "["+ strnpcinfo(1) +"]";
+										mes "Name : "+( ( @tmp_ms_b_m_$[0] != "" )?"^0000FF"+ @tmp_ms_b_m_$[0]:"^FF0000Incomplete" )+"^000000";
+										mes " ";
+										if ( @tmp_ms_b_ia_ == 0 ) {
+											mes "There is no item rewards to remove";
+											next;
+											break;
+										}
+										set .@size, getarraysize(@tmp_ms_b_ia_);
+										for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+											mes "Item : ^0000FF"+ @tmp_ms_b_ia_[.@i +1] +" "+ F_MesItemInfo(@tmp_ms_b_ia_[.@i]) +"^000000";
+										mes " ";
+										mes "Select an item rewards to delete";
+										next;
+										set .@menu$, "^0000FF"+ @tmp_ms_b_ia_[1] +" "+ getitemname(@tmp_ms_b_ia_);
+										for ( set .@i, 2; .@i < .@size; set .@i, .@i +2 )
+											set .@menu$, .@menu$ +":"+ @tmp_ms_b_ia_[.@i +1] +" "+ getitemname(@tmp_ms_b_ia_[.@i]);
+										set .@menu$, .@menu$ +"^000000:- back";
+										set .@menu, select(.@menu$) -1;
+										if ( .@menu == .@size /2 ) break;
+										deletearray @tmp_ms_b_ia_[ .@menu *2 ], 2;
+									case 3:
+								}
+								if ( .@item_reward_menu == 3 ) break;
+							}
+						case 6:
+					}
+					if ( .@rewardmenu == 6 ) break;
+				}
+				break;
+			case 4:
+				mes "["+ strnpcinfo(1) +"]";
+				if ( @tmp_ms_b_m_$[0] != "" && @tmp_ms_b_m_$[1] != "" && ( @tmp_ms_b_t_ || @tmp_ms_b_ir_ ) &&
+					( @tmp_ms_b_m_[7] || @tmp_ms_b_m_[8] || @tmp_ms_b_m_[9] || @tmp_ms_b_m_[10] || @tmp_ms_b_ia_ ) ) {
+					mes "mission ID: ^996600"+( ( getarg(0) == 0 )?$ms_b_id +1:@m_id )+"^000000";
+					mes "Name : ^0000FF"+ @tmp_ms_b_m_$[0] +"^000000";
+				}
+				else {
+					mes "Name : "+( ( @tmp_ms_b_m_$[0] != "" )?"^0000FF"+ @tmp_ms_b_m_$[0]:"^FF0000Incomplete" )+"^000000";
+					mes " ";
+					mes "Some field are still Incomplete !";
+					next;
+					break;
+				}
+				mes "Description: ^0000FF"+ @tmp_ms_b_m_$[1] +"^000000";
+				mes " ";
+				set .@size, getarraysize(@tmp_ms_b_t_);
+				for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+					mes "Require mobs : ^0000FF"+ @tmp_ms_b_t_[.@i +1] +" "+ getmonsterinfo(@tmp_ms_b_t_[.@i], 0) +"^000000";
+				set .@size, getarraysize(@tmp_ms_b_ir_);
+				for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+					mes "Require items : ^0000FF"+ @tmp_ms_b_ir_[.@i +1] +" "+ F_MesItemInfo(@tmp_ms_b_ir_[.@i]) +"^000000";
+					mes " ";
+				if ( @tmp_ms_b_m_[6] || @tmp_ms_b_m_[3] || @tmp_ms_b_m_[5] || @tmp_ms_b_m_[2] ) {
+					mes "[^FF0000Limitations^000000]";
+					if ( @tmp_ms_b_m_[6] )
+						mes "Can do : "+( ( @tmp_ms_b_m_[6] == 1 )?"^00CC00Everyday":"^FF0000Only Once" )+"^000000";
+					if ( @tmp_ms_b_m_[3] )
+						mes "Base Level :"+( ( @tmp_ms_b_m_[3] )?"  ^0000FF"+ @tmp_ms_b_m_[3] +( ( @tmp_ms_b_m_[3] != @tmp_ms_b_m_[4] )?"~"+ @tmp_ms_b_m_[4]:"" )+"^000000":"" );
+					if ( @tmp_ms_b_m_[5] )
+						mes "Time Limit : ^FF0000"+( ( @tmp_ms_b_m_[5] /60 )?@tmp_ms_b_m_[5] /60 +" hour"+( ( @tmp_ms_b_m_[5] %60 )?" ":"" ):"" )+( ( @tmp_ms_b_m_[5] %60 )?@tmp_ms_b_m_[5] %60 +" min":"" )+"^000000";
+					if ( @tmp_ms_b_m_[2] ) {
+						deletearray .@joblimit;
+						for ( set .@i, 0; .@i < 24; set .@i, .@i +1 ) {
+							if ( @tmp_ms_b_m_[2] & pow( 2, .@i ) ) {
+								set .@joblimit[ getarraysize(.@joblimit) ], .@i +1;
+							}
+						}
+						set .@joblimit$, .jobname$[ .@joblimit[0] -1 ];
+						set .@size, getarraysize(.@joblimit);
+						for ( set .@i, 1; .@i < .@size; set .@i, .@i +1 )
+							set .@joblimit$, .@joblimit$ +", "+ .jobname$[ .@joblimit[.@i] -1 ];
+						mes "Job Limit : ^00CC00"+ .@joblimit$ +"^000000";
+					}
+					mes " ";
+				}
+				mes "[^009900Rewards^000000]";
+				if ( @tmp_ms_b_m_[7] )
+					mes "Base Exp : ^0000FF"+ callfunc("int__", @tmp_ms_b_m_[7] ) +"^000000";
+				if ( @tmp_ms_b_m_[8] )
+					mes "Job Exp : ^0000FF"+ callfunc("int__", @tmp_ms_b_m_[8] ) +"^000000";
+				if ( @tmp_ms_b_m_[9] )
+					mes "Zeny : ^0000FF"+ callfunc("int__", @tmp_ms_b_m_[9] ) +"^000000";
+				if ( @tmp_ms_b_m_[10] )
+					mes "Cash Point : ^0000FF"+ callfunc("int__", @tmp_ms_b_m_[10] ) +"^000000";
+				set .@size, getarraysize(@tmp_ms_b_ia_);
+				for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+					mes "Item : ^0000FF"+ @tmp_ms_b_ia_[.@i +1] +" "+ F_MesItemInfo(@tmp_ms_b_ia_[.@i]) +"^000000";
+				return 1;
+			case 5:
+				return 0;
+		}
+	}
+	end;
+OnInit:
+	bindatcmd "mission", "mission::OnWhisperGlobal";
+	set .loading, 1;
+	set .total_npc, .total_npc +1 ;
+	if ( atoi( strnpcinfo(2) ) <= 0 || atoi( strnpcinfo(2) ) > 127 ) {
+		debugmes "Mission Board: invalid npc id #"+ strnpcinfo(2);
+		goto L_load_finish;
+	}
+	else if ( .ms_b_name$[ atoi( strnpcinfo(2) ) ] != "" ) {
+		debugmes "Mission Board: duplicate npc id #"+ strnpcinfo(2);
+		set .duplicate_id[ getarraysize(.duplicate_id) ], atoi( strnpcinfo(2) );
+		goto L_load_finish;
+	}
+	set .ms_b_name$[ atoi( strnpcinfo(2) ) ], strnpcinfo(1);
+	explode .@ms_b_n_$, getd("$ms_b_n_"+ strnpcinfo(2) +"$"), "#";
+	set .@ex_size, getarraysize(.@ms_b_n_$);
+	set .@i, 0;
+	while ( .@i < .@ex_size ) {
+		setd ".ms_b_n_"+ strnpcinfo(2) +"["+ .@i +"]", atoi( .@ms_b_n_$[.@i] );
+		set .@i, .@i +1 ;
+	}
+	set .@size, getarraysize( getd(".ms_b_n_"+ strnpcinfo(2) ) );
+	while ( .@id < .@size ) {
+		set .@m_id, getd(".ms_b_n_"+ strnpcinfo(2) +"["+ .@id +"]");
+		explode .@ms_b_m_$[2], getd("$ms_b_m_"+ .@m_id +"$[2]"), "#";
+		set .@ex_size, getarraysize(.@ms_b_m_$);
+		set .@i, 0;
+		while ( .@i < .@ex_size ) {
+			setd ".ms_b_m_"+ .@m_id +"["+ .@i +"]", atoi( .@ms_b_m_$[.@i] );
+			set .@i, .@i +1 ;
+		}
+		explode .@ms_b_t_$, getd("$ms_b_m_"+ .@m_id +"$[3]"), "#";
+		set .@ex_size, getarraysize(.@ms_b_t_$);
+		set .@i, 0;
+		while ( .@i < .@ex_size ) {
+			setd ".ms_b_t_"+ .@m_id +"["+ .@i +"]", atoi( .@ms_b_t_$[.@i] );
+			set .@i, .@i +1 ;
+		}        
+		copyarray getd(".ms_b_ir_"+ .@m_id), getd(".ms_b_t_"+ .@m_id +"[16]"), 10;
+		copyarray getd(".ms_b_ia_"+ .@m_id), getd(".ms_b_t_"+ .@m_id +"[26]"), 10;
+		deletearray getd(".ms_b_t_"+ .@m_id +"[16]"), 20;
+		set .@id, .@id +1 ;
+		sleep 1;
+	}
+L_load_finish:
+	set .finish, .finish +1;
+	if ( .finish == .total_npc ) {
+		set .finish, 0;
+		set .total_npc, 0;
+		set .loading, 0;
+		setarray .jobname$,    "(Super) Novice","Swordman","Mage","Archer","Acolyte","Merchant","Thief","Knight","Priest","Wizard","Blacksmith","Hunter","Assassin","Crusader","Monk","Sage","Rogue","Alchemist","Bard/Dancer","Taekwon","Star Gladiator","Soul Linker","Gunslinger","Ninja";
+	}
+	end;
+}
+
+-	script	mission	-1,{
+OnWhisperGlobal:
+	if ( getvariableofnpc( .loading, "ms_b_") == 1 ) {
+		dispbottom "Mission Board: Loading Mission Data ......";
+		end;
+	}
+	if ( @ms_b_loading == 1 ) {
+		dispbottom "Mission Board: Loading Player Data ......";
+		end;
+	}
+	for ( set .@i, 1; .@i <= 4; set .@i, .@i +1 ) {
+		if ( getd("@ms_b_m_"+ .@i) ) {
+			if ( getd("$ms_b_m_"+ getd("@ms_b_m_"+ .@i +"[0]") +"$[0]") == "" ) {
+				dispbottom "Mission Board: Your Mission#"+ .@i +" has deleted because it is no longer available";
+				deletearray getd("@ms_b_m_"+ .@i);
+				setd "ms_b_m_"+ .@i +"$", "";
+				deltimer "ms_b_::OnQuest"+ .@i +"TimeUp";
+			}
+			else if ( getd("@ms_b_m_"+ .@i +"[1]") && getd("@ms_b_m_"+ .@i +"[1]") <= gettimetick(2) ) {
+				dispbottom "Mission #1: "+ getd("$ms_b_m_"+ getd("@ms_b_m_"+ .@i +"[0]") +"$[0]") +" has Time Up";
+				deletearray getd("@ms_b_m_"+ .@i);
+				setd "ms_b_m_"+ .@i +"$", "";
+				deltimer "ms_b_::OnQuest"+ .@i +"TimeUp";
+			}
+		}
+	}
+	dispbottom "[Mission Progress]";
+	if ( @ms_b_m_1 == 0 && @ms_b_m_2 == 0 && @ms_b_m_3 == 0 && @ms_b_m_4 == 0 ) {
+		dispbottom "You haven't accepted any mission(s) yet!";
+		end;
+	}
+	for ( set .@j, 1; .@j <= 4; set .@j, .@j +1 ) {
+		if ( getd("@ms_b_m_"+ .@j +"[0]") ) {
+			dispbottom "-----------------------";
+			dispbottom "Mission #"+ .@j +":  "+ getd("$ms_b_m_"+ getd("@ms_b_m_"+ .@j +"[0]") +"$[0]");
+			if ( getvariableofnpc( getd(".ms_b_m_"+ getd("@ms_b_m_"+ .@j +"[0]") +"[5]"), "ms_b_" ) ) {
+				set .@left, getd("@ms_b_m_"+ .@j +"[1]") - gettimetick(2);
+				set .@hour, .@left / 3600;
+				set .@min, .@left % 3600 / 60;
+				set .@sec, .@left % 60;
+				dispbottom "Time Left:  "+( ( .@hour )?.@hour +" hour ":"" )+( ( .@hour || .@min )?.@min +" min ":"" )+ .@sec +" sec";
+			}
+			if ( getvariableofnpc( getd(".ms_b_t_"+ getd("@ms_b_m_"+ .@j +"[0]") ), "ms_b_" ) ) {
+	
+				set .@size, getarraysize( getvariableofnpc( getd(".ms_b_t_"+ getd("@ms_b_m_"+ .@j +"[0]") ), "ms_b_" ) );
+				for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+					dispbottom "Monsters killed: "+ getmonsterinfo( getvariableofnpc( getd(".ms_b_t_"+ getd("@ms_b_m_"+ .@j +"[0]") +"["+ .@i +"]"), "ms_b_" ) , 0) +" ["+( ( getd("@ms_b_m_"+ .@j +"["+( .@i/2 +2 )+"]") > getvariableofnpc( getd(".ms_b_t_"+ getd("@ms_b_m_"+ .@j +"[0]") +"["+ (.@i +1) +"]"), "ms_b_" ) )?getvariableofnpc( getd(".ms_b_t_"+ getd("@ms_b_m_"+ .@j +"[0]") +"["+ (.@i +1) +"]"), "ms_b_" ):getd("@ms_b_m_"+ .@j +"["+( .@i/2 +2 )+"]") ) +"/"+ getvariableofnpc( getd(".ms_b_t_"+ getd("@ms_b_m_"+ .@j +"[0]") +"["+ (.@i +1) +"]"), "ms_b_" ) +"]";
+			}
+			if ( getvariableofnpc( getd(".ms_b_ir_"+ getd("@ms_b_m_"+ .@j +"[0]") ), "ms_b_" ) ) {
+				set .@size, getarraysize( getvariableofnpc( getd(".ms_b_ir_"+ getd("@ms_b_m_"+ .@j +"[0]") ), "ms_b_" ) );
+				for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 )
+					dispbottom "Items Collected: "+ getitemname( getvariableofnpc( getd(".ms_b_ir_"+ getd("@ms_b_m_"+ .@j +"[0]") +"["+ .@i +"]"), "ms_b_" ) ) +" ["+ countitem( getvariableofnpc( getd(".ms_b_ir_"+ getd("@ms_b_m_"+ .@j +"[0]") +"["+ .@i +"]"), "ms_b_" ) ) +"/"+ getvariableofnpc( getd(".ms_b_ir_"+ getd("@ms_b_m_"+ .@j +"[0]") +"["+ (.@i +1) +"]"), "ms_b_" ) +"]";
+			}
+		}
+	}
+	dispbottom "   -----------------------";
+	end;
+OnNPCKillEvent:
+	set .@killedrid, killedrid;
+	if ( getvariableofnpc( .loading, "ms_b_") == 1 ) end;
+	if ( getcharid(1) == 0 ) {
+		if ( @ms_b_loading == 1 ) end;
+		for ( set .@j, 1; .@j <= 4; set .@j, .@j +1 ) {
+			if ( getd("@ms_b_m_"+ .@j +"[0]") ) {
+				if ( getd("$ms_b_m_"+ getd("@ms_b_m_"+ .@j +"[0]") +"$[0]") == "" ) {
+					dispbottom "Mission Board: Your Mission#"+ .@j +" has deleted because it is no longer available";
+					deletearray getd("@ms_b_m_"+ .@j);
+					setd "ms_b_m_"+ .@j +"$", "";
+					deltimer "ms_b_::OnQuest"+ .@j +"TimeUp";
+				}
+				else {
+					set .@size, getarraysize( getvariableofnpc( getd(".ms_b_t_"+ getd("@ms_b_m_"+ .@j +"[0]") ), "ms_b_" ) );
+					for ( set .@i, 0; .@i < .@size; set .@i, .@i +2 ) {
+						if ( .@killedrid == getvariableofnpc( getd(".ms_b_t_"+ getd("@ms_b_m_"+ .@j +"[0]") +"["+ .@i +"]"), "ms_b_" ) && getd("@ms_b_m_"+ .@j +"["+( .@i/2 +2 )+"]") < getvariableofnpc( getd(".ms_b_t_"+ getd("@ms_b_m_"+ .@j +"[0]") +"["+( .@i +1 )+"]"), "ms_b_" ) ) {
+							setd "@ms_b_m_"+ .@j +"["+( .@i/2 +2 )+"]", getd("@ms_b_m_"+ .@j +"["+( .@i/2 +2 )+"]") +1;
+							dispbottom "Mission #"+ .@j +". You have killed "+ getmonsterinfo( getvariableofnpc( getd(".ms_b_t_"+ getd("@ms_b_m_"+ .@j +"[0]") +"["+ .@i +"]"), "ms_b_" ), 0 ) +" ["+ getd("@ms_b_m_"+ .@j +"["+( .@i/2 +2 )+"]") +"/"+ getvariableofnpc( getd(".ms_b_t_"+ getd("@ms_b_m_"+ .@j +"[0]") +"["+( .@i +1 )+"]"), "ms_b_" ) +"]";
+							setd "ms_b_m_"+ .@j +"$", getd("@ms_b_m_"+ .@j +"[0]") +"#"+( ( getd("@ms_b_m_"+ .@j +"[1]") )?getd("@ms_b_m_"+ .@j +"[1]"):"" )+"#"+( ( getd("@ms_b_m_"+ .@j +"[2]") )?getd("@ms_b_m_"+ .@j +"[2]"):"" )+"#"+( ( getd("@ms_b_m_"+ .@j +"[3]") )?getd("@ms_b_m_"+ .@j +"[3]"):"" )+"#"+( ( getd("@ms_b_m_"+ .@j +"[4]") )?getd("@ms_b_m_"+ .@j +"[4]"):"" )+"#"+( ( getd("@ms_b_m_"+ .@j +"[5]") )?getd("@ms_b_m_"+ .@j +"[5]"):"" )+"#"+( ( getd("@ms_b_m_"+ .@j +"[6]") )?getd("@ms_b_m_"+ .@j +"[6]"):"" )+"#"+( ( getd("@ms_b_m_"+ .@j +"[7]") )?getd("@ms_b_m_"+ .@j +"[7]"):"" )+"#"+( ( getd("@ms_b_m_"+ .@j +"[8]") )?getd("@ms_b_m_"+ .@j +"[8]"):"" )+"#"+( ( getd("@ms_b_m_"+ .@j +"[9]") )?getd("@ms_b_m_"+ .@j +"[9]"):"" );
+						}
+					}
+				}
+			}
+		}
+		end;
+	}
+	getmapxy .@map1$, .@x1, .@y1, BL_PC;
+	getpartymember getcharid(1), 1;
+	getpartymember getcharid(1), 2;
+	set .@k, 0;
+	while ( .@k < $@partymembercount ) {
+		if ( isloggedin( $@partymemberaid[.@k], $@partymembercid[.@k] ) ) {
+			attachrid $@partymemberaid[.@k];
+			getmapxy .@map2$, .@x2, .@y2, BL_PC;
+			if ( @ms_b_loading == 0 && .@map1$ == .@map2$ && distance(.@x1,.@y1,.@x2,.@y2) <= 30 && Hp ) {
+				set .@j, 1;
+				while ( .@j <= 4 ) {
+					if ( getd("@ms_b_m_"+ .@j +"[0]") ) {
+						if ( getd("$ms_b_m_"+ getd("@ms_b_m_"+ .@j +"[0]") +"$[0]") == "" ) {
+							dispbottom "Mission Board: Your Mission#"+ .@j +" has deleted because it is no longer available";
+							deletearray getd("@ms_b_m_"+ .@j);
+							setd "ms_b_m_"+ .@j +"$", "";
+							deltimer "ms_b_::OnQuest"+ .@j +"TimeUp";
+						}
+						else {
+							set .@i, 0;
+							set .@size, getarraysize( getvariableofnpc( getd(".ms_b_t_"+ getd("@ms_b_m_"+ .@j +"[0]") ), "ms_b_" ) );
+							while ( .@i < .@size ) {
+								if ( .@killedrid == getvariableofnpc( getd(".ms_b_t_"+ getd("@ms_b_m_"+ .@j +"[0]") +"["+ .@i +"]"), "ms_b_" ) && getd("@ms_b_m_"+ .@j +"["+( .@i/2 +2 )+"]") < getvariableofnpc( getd(".ms_b_t_"+ getd("@ms_b_m_"+ .@j +"[0]") +"["+( .@i +1 )+"]"), "ms_b_" ) ) {
+									setd "@ms_b_m_"+ .@j +"["+( .@i/2 +2 )+"]", getd("@ms_b_m_"+ .@j +"["+( .@i/2 +2 )+"]") +1;
+									dispbottom "Mission #"+ .@j +". You have killed "+ getmonsterinfo( getvariableofnpc( getd(".ms_b_t_"+ getd("@ms_b_m_"+ .@j +"[0]") +"["+ .@i +"]"), "ms_b_" ), 0 ) +" ["+ getd("@ms_b_m_"+ .@j +"["+( .@i/2 +2 )+"]") +"/"+ getvariableofnpc( getd(".ms_b_t_"+ getd("@ms_b_m_"+ .@j +"[0]") +"["+( .@i +1 )+"]"), "ms_b_" ) +"]";
+									setd "ms_b_m_"+ .@j +"$", getd("@ms_b_m_"+ .@j +"[0]") +"#"+( ( getd("@ms_b_m_"+ .@j +"[1]") )?getd("@ms_b_m_"+ .@j +"[1]"):"" )+"#"+( ( getd("@ms_b_m_"+ .@j +"[2]") )?getd("@ms_b_m_"+ .@j +"[2]"):"" )+"#"+( ( getd("@ms_b_m_"+ .@j +"[3]") )?getd("@ms_b_m_"+ .@j +"[3]"):"" )+"#"+( ( getd("@ms_b_m_"+ .@j +"[4]") )?getd("@ms_b_m_"+ .@j +"[4]"):"" )+"#"+( ( getd("@ms_b_m_"+ .@j +"[5]") )?getd("@ms_b_m_"+ .@j +"[5]"):"" )+"#"+( ( getd("@ms_b_m_"+ .@j +"[6]") )?getd("@ms_b_m_"+ .@j +"[6]"):"" )+"#"+( ( getd("@ms_b_m_"+ .@j +"[7]") )?getd("@ms_b_m_"+ .@j +"[7]"):"" )+"#"+( ( getd("@ms_b_m_"+ .@j +"[8]") )?getd("@ms_b_m_"+ .@j +"[8]"):"" )+"#"+( ( getd("@ms_b_m_"+ .@j +"[9]") )?getd("@ms_b_m_"+ .@j +"[9]"):"" );
+								}
+								set .@i, .@i +2 ;
+							}
+						}
+					}
+					set .@j, .@j +1 ;
+				}
+			}
+		}
+		set .@k, .@k +1 ;
+	}
+	end;
+OnPCLoginEvent:
+	set @ms_b_loading, 1;
+	set .@j, 1;
+	while ( .@j <= 4 ) {
+		if ( getd("ms_b_m_"+ .@j +"$") != "" ) {
+			explode getd(".@ms_b_m_"+ .@j +"$"), getd("ms_b_m_"+ .@j +"$"), "#";
+			set .@ex_size, getarraysize( getd(".@ms_b_m_"+ .@j +"$") );
+			set .@i, 0;
+			while ( .@i < .@ex_size ) {
+				setd "@ms_b_m_"+ .@j +"["+ .@i +"]", atoi( getd(".@ms_b_m_"+ .@j +"$["+ .@i +"]") );
+				set .@i, .@i +1 ;
+			}
+		}
+		set .@j, .@j +1 ;
+	}
+	sleep2 1;
+	set .@l, 0;
+	while ( .@npc_id < 128 ) {
+		if ( getvariableofnpc( .ms_b_name$[.@npc_id], "ms_b_" ) != "" ) {
+			explode getd(".@ms_b_n_"+ .@npc_id +"$"), getd("ms_b_n_"+ .@npc_id +"$"), "#";
+			set .@ex_size, getarraysize( getd(".@ms_b_n_"+ .@npc_id +"$") );
+			set .@i, 0;
+			while ( .@i < .@ex_size ) {
+				setd "@ms_b_n_"+ .@npc_id +"["+ .@i +"]", atoi( getd(".@ms_b_n_"+ .@npc_id +"$["+ .@i +"]") );
+				set .@i, .@i +1 ;
+			}
+			sleep2 1;
+		}
+		set .@npc_id, .@npc_id +1 ;
+	}
+	sleep2 1;
+	set @ms_b_loading, 0;
+	if ( getvariableofnpc( .loading, "ms_b_" ) == 0 ) {
+		set .@j, 1;
+		while ( .@j <= 4 ) {
+			if ( getd("@ms_b_m_"+ .@j +"[0]") ) {
+				if ( getd("$ms_b_m_"+ getd("@ms_b_m_"+ .@j +"[0]") +"$[0]") == "" ) {
+					dispbottom "Mission Board: Your Mission#"+ .@j +" has deleted because it is no longer available";
+					deletearray getd("@ms_b_m_"+ .@j);
+					setd "ms_b_m_"+ .@j +"$", "";
+				}
+				else if ( getd("@ms_b_m_"+ .@j +"[1]") ) {
+					if ( getd("@ms_b_m_"+ .@j +"[1]") > gettimetick(2) )
+						addtimer ( getd("@ms_b_m_"+ .@j +"[1]") - gettimetick(2) ) *1000, "ms_b_::OnQuest"+ .@j +"TimeUp";
+					else
+						doevent "ms_b_::OnQuest"+ .@j +"TimeUp";
+				}
+			}
+			set .@j, .@j +1 ;
+		}
+	}
+	end;
+}
+
+//    create more missions by using npc duplicates
+//    display name can be anything, but the hidden name #1 #2 #35 must be a number within 1 ~ 126
+//    Note: npc display name plus the hidden name must not more than 23 characters
+prontera,143,179,5	duplicate(ms_b_)	Mission Board#3	837
+//prontera,163,188,5	duplicate(ms_b_)	Mission Board#9	837
+//prontera,168,188,5	duplicate(ms_b_)	Mission Board#23	837

@@ -1,0 +1,436 @@
+prontera,163,153,4	script	Liza	805,{
+	mes "[Liza]";
+	mes "" + strcharinfo(0) + ",";
+	mes "Hello! Can I help you?";
+	next;
+	switch( select( "Note", "Enhanced " + getitemname(450127), "Enhanced " + getitemname(450128), "Enhanced " + getitemname(480020), "Enhanced " + getitemname(480021), "Enhanced " + getitemname(470022), "Enhanced " + getitemname(470023), "Enhanced " + getitemname(490024), "Enhanced " + getitemname(490025), "Enhanced " + getitemname(490026), "Enhanced " + getitemname(490027) ) ) {
+	case 1:
+		mes "^0000ffSoon the instructions again.^000000";
+		next;
+		mes "[Liza]";
+		mes "While waiting for the new owner, we continue to update to the latest version.";
+		next;
+		mes "[Liza]";
+		mes "If you bring Automatic equipment, I will strengthen the equipment according to the design.";
+		next;
+		mes "[Liza]";
+		mes "According to the standard design drawings of the operation, the equipment will not be damaged during the process, but the number of maximum upgrade will change depending on the type of equipement.";
+		next;
+		mes "[Liza]";
+		mes "Welcome back again~";
+		close;
+	case 2:
+		.@part = EQI_ARMOR;
+		break;
+	case 3:
+		.@part = EQI_ARMOR;
+		break;
+	case 4:
+		.@part = EQI_GARMENT;
+		break;
+	case 5:
+		.@part = EQI_GARMENT;
+		break;
+	case 6:
+		.@part = EQI_SHOES;
+		break;
+	case 7:
+		.@part = EQI_SHOES;
+		break;
+	case 8:
+		.@part = EQI_ACC_R;
+		break;
+	case 9:
+		.@part = EQI_ACC_L;
+		break;
+	case 10:
+		.@part = EQI_ACC_R;
+		break;
+	case 11:
+		.@part = EQI_ACC_L;
+		break;		
+	}
+	// <item ID required>, <item enchant ID>, <max number of this enchant on armor>, <max number of this enchant on garment>, <max number of this enchant on shoes>, <max number of this enchant on accesory R>, <max number of this enchant on accesory L>, <enchant on first slot only>
+	//Normal
+	setarray .@norm[0],
+		1000105, 310082, 3, 3, 3, 0, 0, 0,
+		1000106, 310083, 3, 3, 3, 0, 0, 0,
+		1000107, 310084, 0, 0, 0, 3, 3, 0,
+		1000108, 310085, 0, 0, 0, 3, 3, 0,
+		1000109, 310086, 0, 0, 0, 3, 0, 0,
+		1000110, 310087, 0, 0, 0, 3, 0, 0,
+		1000111, 310088, 0, 0, 0, 0, 3, 0,
+		1000112, 310089, 0, 0, 0, 0, 3, 0;
+	.@size1 = getarraysize(.@norm);
+	//Rare
+	setarray .@rare[0],
+		1000113, 310090, 0, 0, 0, 2, 0, 0,
+		1000114, 310091, 0, 0, 0, 0, 2, 0,
+		1000115, 310092, 0, 0, 0, 1, 1, 0,
+		1000116, 310093, 0, 0, 0, 1, 1, 0,
+		1000117, 310094, 0, 0, 0, 1, 1, 0,
+		1000118, 310095, 0, 0, 0, 1, 1, 0,
+		1000119, 310096, 0, 0, 2, 0, 0, 0,
+		1000120, 310097, 0, 0, 2, 0, 0, 0,
+		1000121, 310098, 0, 0, 2, 0, 0, 0,
+		1000122, 310099, 2, 0, 0, 0, 0, 0,
+		1000123, 310100, 2, 0, 0, 0, 0, 0,
+		1000124, 310101, 2, 0, 0, 0, 0, 0,
+		1000125, 310102, 0, 2, 0, 0, 0, 0,
+		1000126, 310103, 0, 2, 0, 0, 0, 0,
+		1000127, 310104, 0, 2, 0, 0, 0, 0;
+	.@size2 = getarraysize(.@rare);
+	//Unique
+	setarray .@unq[0],
+		1000128, 310105, 1, 0, 0, 0, 0, 0,
+		1000129, 310106, 1, 0, 0, 0, 0, 0,
+		1000130, 310107, 1, 0, 0, 0, 0, 0,
+		1000131, 310108, 1, 0, 0, 0, 0, 0,
+		1000132, 310109, 1, 0, 0, 0, 0, 0,
+		1000207, 310178, 1, 0, 0, 0, 0, 0,
+		1000133, 310110, 1, 0, 0, 0, 0, 0,
+		1000134, 310111, 0, 0, 1, 0, 0, 0,
+		1000135, 310112, 0, 1, 0, 0, 0, 0,
+		1000136, 310113, 0, 0, 0, 1, 0, 0,
+		1000137, 310114, 0, 0, 0, 0, 1, 0,
+		1000138, 310115, 0, 0, 0, 1, 0, 0,
+		1000139, 310116, 0, 0, 0, 0, 1, 0,
+		1000140, 310117, 1, 0, 0, 0, 0, 0,
+		1000141, 310118, 0, 0, 1, 0, 0, 0,
+		1000142, 310119, 0, 1, 0, 0, 0, 0,
+		1000143, 310120, 0, 0, 0, 1, 1, 0,
+		1000208, 310179, 0, 1, 0, 0, 0, 0;
+	.@size3 = getarraysize(.@unq);
+	//Legendary
+	setarray .@lgd[0],
+		1000144, 310121, 0, 0, 1, 0, 0, 3,
+		1000145, 310122, 0, 0, 1, 0, 0, 3,
+		1000146, 310123, 0, 0, 1, 0, 0, 3,
+		1000147, 310124, 0, 0, 1, 0, 0, 3,
+		1000148, 310125, 0, 0, 1, 0, 0, 3,
+		1000149, 310126, 0, 0, 1, 0, 0, 3;
+	.@size4 = getarraysize(.@lgd);	
+	//Epic1
+	setarray .@epc[0],
+		1000152, 310127, 2, 0, 0, 0, 0, 0,
+		1000153, 310128, 2, 0, 0, 0, 0, 0,
+		1000154, 310129, 2, 0, 0, 0, 0, 0,
+		1000155, 310130, 2, 0, 0, 0, 0, 0,
+		1000156, 310131, 2, 0, 0, 0, 0, 0,
+		1000157, 310132, 2, 0, 0, 0, 0, 0,
+		1000158, 310133, 2, 0, 0, 0, 0, 0,
+		1000159, 310134, 2, 0, 0, 0, 0, 0,
+		1000160, 310135, 2, 0, 0, 0, 0, 0,
+		1000161, 310136, 2, 0, 0, 0, 0, 0,
+		1000162, 310137, 2, 0, 0, 0, 0, 0,
+		1000163, 310138, 2, 0, 0, 0, 0, 0,
+		1000164, 310139, 2, 0, 0, 0, 0, 0,
+		1000165, 310140, 2, 0, 0, 0, 0, 0,
+		1000166, 310141, 2, 0, 0, 0, 0, 0,
+		1000167, 310142, 2, 0, 0, 0, 0, 0,
+		1000168, 310143, 2, 0, 0, 0, 0, 0,
+		1000169, 310144, 2, 0, 0, 0, 0, 0,
+		1000170, 310145, 2, 0, 0, 0, 0, 0,
+		1000171, 310146, 2, 0, 0, 0, 0, 0,
+		1000172, 310147, 2, 0, 0, 0, 0, 0,
+		1000173, 310148, 2, 0, 0, 0, 0, 0,
+		1000174, 310149, 2, 0, 0, 0, 0, 0,
+		1000175, 310150, 2, 0, 0, 0, 0, 0,
+		1000176, 310151, 2, 0, 0, 0, 0, 0,
+		1000177, 310152, 2, 0, 0, 0, 0, 0;
+	.@size5 = getarraysize(.@epc);	
+	//Epic2
+	setarray .@epc2[0],
+		1000178, 310153, 2, 0, 0, 0, 0, 0,
+		1000179, 310154, 2, 0, 0, 0, 0, 0,
+		1000180, 310155, 2, 0, 0, 0, 0, 0,
+		1000181, 310156, 2, 0, 0, 0, 0, 0,
+		1000182, 310157, 2, 0, 0, 0, 0, 0,
+		1000183, 310158, 2, 0, 0, 0, 0, 0,
+		1000184, 310159, 2, 0, 0, 0, 0, 0,
+		1000185, 310160, 2, 0, 0, 0, 0, 0,
+		1000186, 310161, 2, 0, 0, 0, 0, 0,
+		1000187, 310162, 2, 0, 0, 0, 0, 0,
+		1000188, 310163, 2, 0, 0, 0, 0, 0,
+		1000189, 310164, 2, 0, 0, 0, 0, 0,
+		1000190, 310165, 2, 0, 0, 0, 0, 0,
+		1000191, 310166, 2, 0, 0, 0, 0, 0,
+		1000192, 310167, 2, 0, 0, 0, 0, 0,
+		1000193, 310168, 2, 0, 0, 0, 0, 0,
+		1000194, 310169, 2, 0, 0, 0, 0, 0,
+		1000195, 310170, 2, 0, 0, 0, 0, 0,
+		1000196, 310171, 2, 0, 0, 0, 0, 0,
+		1000197, 310172, 2, 0, 0, 0, 0, 0,
+		1000198, 310173, 2, 0, 0, 0, 0, 0,
+		1000199, 310174, 2, 0, 0, 0, 0, 0,
+		1000200, 310175, 2, 0, 0, 0, 0, 0,
+		1000201, 310176, 2, 0, 0, 0, 0, 0,
+		1000202, 310177, 2, 0, 0, 0, 0, 0;
+	.@size6 = getarraysize(.@epc2);
+	
+	for ( .@i = 0; .@i < .@size1; .@i += 8 ) {
+		if (countitem(.@norm[.@i]) < 1)
+			.@menu$ += sprintf( "^aaaaaa%s (Missing)^000000:", getitemname(.@norm[.@i]) );
+		else
+			.@menu$ += sprintf( "%s:", getitemname(.@norm[.@i]) );
+	}
+	for ( .@i = 0; .@i < .@size2; .@i += 8 ) {
+		if (countitem(.@rare[.@i]) < 1)
+			.@menu1$ += sprintf( "^aaaaaa%s (Missing)^000000:", getitemname(.@rare[.@i]) );
+		else
+			.@menu1$ += sprintf( "%s:", getitemname(.@rare[.@i]) );
+	}
+	for ( .@i = 0; .@i < .@size3; .@i += 8 ) {
+		if (countitem(.@unq[.@i]) < 1)
+			.@menu2$ += sprintf( "^aaaaaa%s (Missing)^000000:", getitemname(.@unq[.@i]) );
+		else
+			.@menu2$ += sprintf( "%s:", getitemname(.@unq[.@i]) );
+	}
+	for ( .@i = 0; .@i < .@size4; .@i += 8 ) {
+		if (countitem(.@lgd[.@i]) < 1)
+			.@menu3$ += sprintf( "^aaaaaa%s (Missing)^000000:", getitemname(.@lgd[.@i]) );
+		else
+			.@menu3$ += sprintf( "%s:", getitemname(.@lgd[.@i]) );
+	}
+	for ( .@i = 0; .@i < .@size5; .@i += 8 ) {
+		if (countitem(.@epc[.@i]) < 1)
+			.@menu4$ += sprintf( "^aaaaaa%s (Missing)^000000:", getitemname(.@epc[.@i]) );
+		else
+			.@menu4$ += sprintf( "%s:", getitemname(.@epc[.@i]) );
+	}
+	for ( .@i = 0; .@i < .@size6; .@i += 8 ) {
+		if (countitem(.@epc2[.@i]) < 1)
+			.@menu5$ += sprintf( "^aaaaaa%s (Missing)^000000:", getitemname(.@epc2[.@i]) );
+		else
+			.@menu5$ += sprintf( "%s:", getitemname(.@epc2[.@i]) );
+	}
+	mes "[Liza]";
+	mes "" + strcharinfo(0) + ",";
+	mes "Choose the enchant you want to use!";
+	next;
+	switch(select("- Normal:- Rare:- Unique:- legendary:- Epic1:- Epic2")) {
+	case 1:
+	.@s = select("Quit.:" + .@menu$) - 2;
+	.@s *= 8;
+	.@item_req = .@norm[.@s];
+	.@item_enchant_id = .@norm[.@s+1];
+	.@first_slot_only = .@norm[.@s+7];
+	if (.@part == EQI_ARMOR)
+		.@max_num_enchant = .@norm[.@s+2];
+	else if (.@part == EQI_GARMENT)
+		.@max_num_enchant = .@norm[.@s+3];
+	else if (.@part == EQI_SHOES)
+		.@max_num_enchant = .@norm[.@s+4];
+	else if (.@part == EQI_ACC_R)
+		.@max_num_enchant = .@norm[.@s+5];
+	else if (.@part == EQI_ACC_L)
+		.@max_num_enchant = .@norm[.@s+6];
+	else {
+		mes "[Liza]";
+		mes "Please contact the administrator.";
+		close;
+	}
+	break;
+	case 2:
+	.@s = select("Quit.:" + .@menu1$) - 2;
+	.@s *= 8;
+	.@item_req = .@rare[.@s];
+	.@item_enchant_id = .@rare[.@s+1];
+	.@first_slot_only = .@rare[.@s+7];
+	if (.@part == EQI_ARMOR)
+		.@max_num_enchant = .@rare[.@s+2];
+	else if (.@part == EQI_GARMENT)
+		.@max_num_enchant = .@rare[.@s+3];
+	else if (.@part == EQI_SHOES)
+		.@max_num_enchant = .@rare[.@s+4];
+	else if (.@part == EQI_ACC_R)
+		.@max_num_enchant = .@rare[.@s+5];
+	else if (.@part == EQI_ACC_L)
+		.@max_num_enchant = .@rare[.@s+6];
+	else {
+		mes "[Liza]";
+		mes "Please contact the administrator.";
+		close;
+	}
+	break;
+	case 3:
+	.@s = select("Quit.:" + .@menu2$) - 2;
+	.@s *= 8;
+	.@item_req = .@unq[.@s];
+	.@item_enchant_id = .@unq[.@s+1];
+	.@first_slot_only = .@unq[.@s+7];
+	if (.@part == EQI_ARMOR)
+		.@max_num_enchant = .@unq[.@s+2];
+	else if (.@part == EQI_GARMENT)
+		.@max_num_enchant = .@unq[.@s+3];
+	else if (.@part == EQI_SHOES)
+		.@max_num_enchant = .@unq[.@s+4];
+	else if (.@part == EQI_ACC_R)
+		.@max_num_enchant = .@unq[.@s+5];
+	else if (.@part == EQI_ACC_L)
+		.@max_num_enchant = .@unq[.@s+6];
+	else {
+		mes "[Liza]";
+		mes "Please contact the administrator.";
+		close;
+	}
+	break;
+	case 4:
+	.@s = select("Quit.:" + .@menu3$) - 2;
+	.@s *= 8;
+	.@item_req = .@lgd[.@s];
+	.@item_enchant_id = .@lgd[.@s+1];
+	.@first_slot_only = .@lgd[.@s+7];
+	if (.@part == EQI_SHOES)
+		.@max_num_enchant = .@lgd[.@s+4];
+	else {
+		mes "[Liza]";
+		mes "Please contact the administrator.";
+		close;
+	}
+	break;
+	case 5:
+	.@s = select("Quit.:" + .@menu4$) - 2;
+	.@s *= 8;
+	.@item_req = .@epc[.@s];
+	.@item_enchant_id = .@epc[.@s+1];
+	.@first_slot_only = .@epc[.@s+7];
+	if (.@part == EQI_ARMOR)
+		.@max_num_enchant = .@epc[.@s+2];
+	else {
+		mes "[Liza]";
+		mes "Please contact the administrator.";
+		close;
+	}
+	break;
+	case 6:
+	.@s = select("Quit.:" + .@menu5$) - 2;
+	.@s *= 8;
+	.@item_req = .@epc2[.@s];
+	.@item_enchant_id = .@epc2[.@s+1];
+	.@first_slot_only = .@epc2[.@s+7];
+	if (.@part == EQI_ARMOR)
+		.@max_num_enchant = .@epc2[.@s+2];
+	else {
+		mes "[Liza]";
+		mes "Please contact the administrator.";
+		close;
+	}
+	break;
+}
+	if (.@s < 0) {
+		mes "[Liza]";
+		mes "So far.";
+		close;
+	}
+	.@equip_id = getequipid(.@part);
+	.@equip_refine = getequiprefinerycnt(.@part);
+	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
+
+	if (countitem(.@item_req) < 1) {
+		mes "[Liza]";
+		mes "So far.";
+		close;
+	}
+
+		// anti-hack
+	if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine)) {
+		mes "[Liza]";
+		mes "Did you remove your gear?";
+		close;
+	}
+
+	if (.@card[0] > 0 && .@item_enchant_id == .@card[0]) { .@slot_sum++; }
+	if (.@card[1] > 0 && .@item_enchant_id == .@card[1]) { .@slot_sum++; }
+	if (.@card[2] > 0 && .@item_enchant_id == .@card[2]) { .@slot_sum++; }
+	if (.@card[3] > 0 && .@item_enchant_id == .@card[3]) { .@slot_sum++; }
+
+	if (.@max_num_enchant < 1) {
+		mes "[Liza]";
+		mes "The design you choose is incompatible with the equipment.";
+		close;
+	}
+	if (.@first_slot_only > 0 && .@card[3] != 0) {
+		mes "[Liza]";
+		mes "This design is only for the first time to strengthen the use, but the equipment has other performance, please use other design to strengthen it!";
+		close;
+	}
+	if (.@slot_sum >= .@max_num_enchant) {
+		mes "[Liza]";
+		mes "The maximum number of enchants is " + .@max_num_enchant + ". The item has reached the upper limit.";
+		close;
+	}
+	if (.@card[1] != 0) {
+		mes "[Liza]";
+		mes "The number of equipment has reached the limit.";
+		close;
+	}
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine)) {
+		mes "[Liza]";
+		mes "Please pay special attention if the equipment will be removed.";
+		close;
+	}
+
+	switch( .@equip_id ) {
+	case 450127:	// Excelion_Wing
+	case 450128:	// Excelion_Suit
+	case 480020:	// Excelion_Wing
+	case 480021:	// Excelion_Suit
+	case 470022:	// Excelion_Wing
+	case 470023:	// Excelion_Suit
+	case 490024:	// Excelion_Wing
+	case 490025:	// Excelion_Suit
+	case 490026:	// Excelion_Wing
+	case 490027:	// Excelion_Suit
+		break;
+	default:
+		mes "[Liza]";
+		mes "The product does not have a serial number, does not meet the specifications of the product can not be strengthened.";
+		close;
+	}
+	mes "[Liza]^0000ff";
+	mes "Choose " + getequipname(.@part) + " + " + getitemname(.@item_req) + ",";
+	mes "^000000------------------";
+	mes "Your selected design can be upgraded to the equipment limit ^0000ff" + .@max_num_enchant + " the same design, ^000000so far, enhanced ^0000ff" + .@slot_sum + " times^000000, do you want to continue?";
+	next;
+	if (select( "I'll think about it...", "Go on." ) == 1) {
+		mes "[Liza]";
+		mes "Come back next time you need me~";
+		close;
+	}
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
+		close;
+
+	if (.@card[3] == 0) {
+		.@enchant_count = 1;
+		.@card[3] = .@item_enchant_id;
+	}
+	else if (.@card[2] == 0) {
+		.@enchant_count = 2;
+		.@card[2] = .@item_enchant_id;
+	}
+	else if (.@card[1] == 0) {
+		.@enchant_count = 3;
+		.@card[1] = .@item_enchant_id;
+	}
+	else {
+		mes "[Liza]";
+		mes "The equipment has reached the upper limit of strengthening Hello!";
+		close;
+	}
+	specialeffect2 EF_REPAIRWEAPON;
+	mes "[Liza]";
+	if (.@enchant_count < 5)
+		mes "The first equipment has been upgraded ^990000" + .@enchant_count + " times^000000.";
+	else
+		mes "For additional performance equipment^990000 ^000000 upgrade.";	// never displayed
+
+	delitem .@item_req, 1;
+	delequip .@part;
+	getitem2 .@equip_id,1,1,.@equip_refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
+	close;
+}

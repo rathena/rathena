@@ -1,0 +1,429 @@
+//==========================================================|
+//==========================================================|
+//	 _    _                     _     _                     |
+//	| |  | |                   | |   (_)                    |
+//	| |__| |_   _ _ __ ___  ___| |__  _ _ __ ___   __ _     |
+//	|  __  | | | | '__/ _ \/ __| '_ \| | '_ ` _ \ / _` |    |
+//	| |  | | |_| | | | (_) \__ \ | | | | | | | | | (_| |    |
+//	|_|  |_|\__, |_|  \___/|___/_| |_|_|_| |_| |_|\__,_|    |
+// 	        __/ |Scripter                                   |
+// 	       |___/										    |
+//==========================================================|
+//==========================================================|
+//==========================================================|
+/* ------------------ SCRIPT INFO -------------------------	=
+Name: Quest Point	   										=
+Ver : 1.0				 					   				=
+For : rAthena				 					   			=
+Lang: EN					   								=
+By  : Hyroshima												= 
+---------------------------------------------------------- */
+//===========================================================
+prontera,144,178,6	script	Quest Custom	4_F_VALKYRIE,{
+//===========================================================
+
+	callsub S_QCHead;
+	
+	if(getgroupid() >= $QP_Gmlvl) menu "Admin CP",QC_Admin,"Player Mode",-;
+	
+	mes "Hello ^9370DB "+strcharinfo(0)+"^000000,";
+	mes "So you came to get your favorite custom?";
+	
+MNP:	
+	next;
+	
+	callsub S_QCHead;
+	
+	mes "You have "+callfunc("QP_Main",2,getcharid(3))+" Quest Points.";
+	mes " ";
+	mes "Please feel free to choose, see the menu now!";
+	next;
+	switch(select("[*] Wings:[*] Helms:[*] Midles:[*] Others:Exit"))	//Main Menu
+	{
+		//List of Wings
+		case 1:
+				switch(select("Hat of the Sun God:Sakkat:Exit"))		//Main Menu of Wings
+				{
+					case 1: set .@itemid,5022;	//Item ID for the previous menu
+							set .@itemqtd,1;	//Item quantity.
+							set .@itemqpr,10;	//Item cost (in quest points)
+				
+							callsub S_QCHead;
+				
+							mes "What you want to know about ^D2691E"+getitemname(.@itemid)+"^000000 ?";
+							mes " ";
+							mes "^1E90FFCost: ^000000^0000FF "+.@itemqpr+" Quest Points!^000000";
+							next;
+							switch(select("Create a "+getitemname(.@itemid)+":Informations about "+getitemname(.@itemid)+":Exit"))
+							{
+								case 1:
+										query_sql "SELECT `QuestPoint` FROM `login` WHERE `account_id` = '"+getcharid(3)+"'",.@point;
+										if(.@point < .@itemqpr) callsub S_Faltaponto,.@itemid,.@point,.@itemqpr;
+										callsub S_SucessItem,.@itemid,.@itemqtd,getcharid(3),getcharid(0);
+										break;								
+								case 2:
+										mes "^D2691EInformation about "+getitemname(.@itemid)+"^000000";
+										mes "^6633CC • STR: +3 ^000000";
+										mes "^6633CC • INT: +2 ^000000";
+										mes "Class: ^6633CC Head Equipment ^000000";
+										mes "Slot Equip: ^6633CC Top / Middle ^000000";
+										mes "Weight: ^6633CC 240 ^000000";
+										mes "Required Level: ^6633CC None ^000000";
+										mes "Job:  ^6633CC 2nd Class+ ^000000";
+										mes "Slots:  ^6633CC 0 ^000000";
+										close;
+								case 3:
+										close;
+							}
+							
+					case 2: set .@itemid,2280;	//Item ID for the previous menu
+							set .@itemqtd,1;	//Item quantity.
+							set .@itemqpr,10;	//Item cost (in quest points)
+				
+							callsub S_QCHead;
+					
+							mes "What you want to know about ^D2691E"+getitemname(.@itemid)+"^000000 ?";
+							mes " ";
+							mes "^1E90FFCost: ^000000^0000FF "+.@itemqpr+" Quest Points!^000000";
+							next;
+							switch(select("Create a "+getitemname(.@itemid)+":Informations about "+getitemname(.@itemid)+":Exit"))
+							{
+								case 1:
+										query_sql "SELECT `QuestPoint` FROM `login` WHERE `account_id` = '"+getcharid(3)+"'",.@point;
+										if(.@point < .@itemqpr) callsub S_Faltaponto,.@itemid,.@point,.@itemqpr;
+										callsub S_SucessItem,.@itemid,.@itemqtd,getcharid(3),getcharid(0);
+										break;								
+								case 2:
+										mes "^D2691EInformation about "+getitemname(.@itemid)+"^000000";
+										mes "^6633CC • AGI: +1 ^000000";
+										mes "Class: ^6633CC Head Equipment ^000000";
+										mes "Slot Equip: ^6633CC Up ^000000";
+										mes "Weight: ^6633CC 30 ^000000";
+										mes "Required Level: ^6633CC None ^000000";
+										mes "Job:  ^6633CC All ^000000";
+										mes "Slots:  ^6633CC 0 ^000000";
+										close;
+								case 3:
+										close;
+							}	
+					case 3:
+							close;
+				}
+				
+		//List of Helmets		
+		case 2:
+				switch(select("Bride Mask:Mythical Lion Mask:Exit"))	// Main Menu of  Helmets
+				{
+					case 1: set .@itemid,5169;	//Item ID for the previous menu
+							set .@itemqtd,1;	//Item quantity.
+							set .@itemqpr,10;	//Item cost (in quest points)
+				
+							callsub S_QCHead;
+					
+							mes "What you want to know about ^D2691E"+getitemname(.@itemid)+"^000000 ?";
+							mes " ";
+							mes "^1E90FFCost: ^000000^0000FF "+.@itemqpr+" Quest Points!^000000";
+							next;
+							switch(select("Create a "+getitemname(.@itemid)+":Informations about "+getitemname(.@itemid)+":Exit"))
+							{
+								case 1:
+										query_sql "SELECT `QuestPoint` FROM `login` WHERE `account_id` = '"+getcharid(3)+"'",.@point;
+										if(.@point < .@itemqpr) callsub S_Faltaponto,.@itemid,.@point,.@itemqpr;
+										callsub S_SucessItem,.@itemid,.@itemqtd,getcharid(3),getcharid(0);
+										break;								
+								case 2:
+										mes "^D2691EInformation about "+getitemname(.@itemid)+"^000000";
+										mes "[ TaeKwon Class ]";
+										mes "^6633CC • LUCK: +2 ^000000";
+										mes "^6633CC • ATK CRÍTICO: +5% ^000000";
+										mes "Class: ^6633CC Head Equipment ^000000";
+										mes "Slot Equip: ^6633CC Top / Middle ^000000";
+										mes "Weight: ^6633CC 50 ^000000";
+										mes "Required Level: ^6633CC 40 ^000000";
+										mes "Job:  ^6633CC All ^000000";
+										mes "Slots:  ^6633CC 1 ^000000";
+										close;
+								case 3:
+										close;
+							}
+							
+					case 2: set .@itemid,5177;	//Item ID for the previous menu
+							set .@itemqtd,1;	//Item quantity.
+							set .@itemqpr,10;	//Item cost (in quest points)
+				
+							callsub S_QCHead;
+					
+							mes "What you want to know about ^D2691E"+getitemname(.@itemid)+"^000000 ?";
+							mes " ";
+							mes "^1E90FFCost: ^000000^0000FF "+.@itemqpr+" Quest Points!^000000";
+							next;
+							switch(select("Create a "+getitemname(.@itemid)+":Informations about "+getitemname(.@itemid)+":Exit"))
+							{
+								case 1:
+										query_sql "SELECT `QuestPoint` FROM `login` WHERE `account_id` = '"+getcharid(3)+"'",.@point;
+										if(.@point < .@itemqpr) callsub S_Faltaponto,.@itemid,.@point,.@itemqpr;
+										callsub S_SucessItem,.@itemid,.@itemqtd,getcharid(3),getcharid(0);
+										break;								
+								case 2:
+										mes "^D2691EInformation about "+getitemname(.@itemid)+"^000000";
+										mes "[ TaeKwon Class ]";
+										mes "^6633CC • DEX: +2 ^000000";
+										mes "^6633CC • Base ATK *2 por refino. ^000000";
+										mes "Class: ^6633CC Head Equipment ^000000";
+										mes "Slot Equip: ^6633CC Up/Meio ^000000";
+										mes "Weight: ^6633CC 50 ^000000";
+										mes "Required Level: ^6633CC 40 ^000000";
+										mes "Job:  ^6633CC All ^000000";
+										mes "Slots:  ^6633CC 1 ^000000";
+										close;
+								case 3:
+										close;
+							}	
+					case 3:
+							close;
+				}
+				
+		//List of Midles		
+		case 3:
+				switch(select("Pretend Murdered:Smokie Leaf:Exit"))		// Main Menu of Midles
+				{
+					case 1: set .@itemid,2293;	//Item ID for the previous menu
+							set .@itemqtd,1;	//Item quantity.
+							set .@itemqpr,10;	//Item cost (in quest points)
+				
+							callsub S_QCHead;
+					
+							mes "What you want to know about ^D2691E"+getitemname(.@itemid)+"^000000 ?";
+							mes " ";
+							mes "^1E90FFCost: ^000000^0000FF "+.@itemqpr+" Quest Points!^000000";
+							next;
+							switch(select("Create a "+getitemname(.@itemid)+":Informations about "+getitemname(.@itemid)+":Exit"))
+							{
+								case 1:
+										query_sql "SELECT `QuestPoint` FROM `login` WHERE `account_id` = '"+getcharid(3)+"'",.@point;
+										if(.@point < .@itemqpr) callsub S_Faltaponto,.@itemid,.@point,.@itemqpr;
+										callsub S_SucessItem,.@itemid,.@itemqtd,getcharid(3),getcharid(0);
+										break;								
+								case 2:
+										mes "^D2691EInformation about "+getitemname(.@itemid)+"^000000";
+										mes "[ TaeKwon Class ]";
+										mes "^6633CC • ^000000";
+										mes "Class: ^6633CC Head Equipment ^000000";
+										mes "Slot Equip: ^6633CC Up ^000000";
+										mes "Weight: ^6633CC 10 ^000000";
+										mes "Required Level: ^6633CC None ^000000";
+										mes "Job:  ^6633CC All ^000000";
+										mes "Slots:  ^6633CC 0 ^000000";
+										close;
+								case 3:
+										close;
+							}
+							
+					case 2: set .@itemid,5064;	//Item ID for the previous menu
+							set .@itemqtd,1;	//Item quantity.
+							set .@itemqpr,10;	//Item cost (in quest points)
+				
+							callsub S_QCHead;
+					
+							mes "What you want to know about ^D2691E"+getitemname(.@itemid)+"^000000 ?";
+							mes " ";
+							mes "^1E90FFCost: ^000000^0000FF "+.@itemqpr+" Quest Points!^000000";
+							next;
+							switch(select("Create a "+getitemname(.@itemid)+":Informations about "+getitemname(.@itemid)+":Exit"))
+							{
+								case 1:
+										query_sql "SELECT `QuestPoint` FROM `login` WHERE `account_id` = '"+getcharid(3)+"'",.@point;
+										if(.@point < .@itemqpr) callsub S_Faltaponto,.@itemid,.@point,.@itemqpr;
+										callsub S_SucessItem,.@itemid,.@itemqtd,getcharid(3),getcharid(0);
+										break;								
+								case 2:
+										mes "^D2691EInformation about "+getitemname(.@itemid)+"^000000";
+										mes "[ TaeKwon Class ]";
+										mes "^6633CC • ^000000";
+										mes "Class: ^6633CC Head Equipment ^000000";
+										mes "Slot Equip: ^6633CC Up ^000000";
+										mes "Weight: ^6633CC 10 ^000000";
+										mes "Required Level: ^6633CC None ^000000";
+										mes "Job:  ^6633CC All ^000000";
+										mes "Slots:  ^6633CC 0 ^000000";
+										close;
+								case 3:
+										close;
+							}	
+					case 3:
+							close;
+				}
+				
+		//List of Others
+		case 4:
+				switch(select("50x Yggdrasil Berry:20x Blessing Of Water:Poring Coin:Exit"))		// Main Menu of Others
+				{
+					case 1: set .@itemid,607;	//Item ID for the previous menu
+							set .@itemqtd,50;	//Item quantity.
+							set .@itemqpr,5;	//Item cost (in quest points)
+				
+							callsub S_QCHead;
+					
+							mes "What you want to know about ^D2691E"+getitemname(.@itemid)+"^000000 ?";
+							mes " ";
+							mes "^1E90FFCost: ^000000^0000FF "+.@itemqpr+" Quest Points!^000000";
+							next;
+							switch(select("Create a "+getitemname(.@itemid)+":Informations about "+getitemname(.@itemid)+":Exit"))
+							{
+								case 1:
+										query_sql "SELECT `QuestPoint` FROM `login` WHERE `account_id` = '"+getcharid(3)+"'",.@point;
+										if(.@point < .@itemqpr) callsub S_Faltaponto,.@itemid,.@point,.@itemqpr;
+										callsub S_SucessItem,.@itemid,.@itemqtd,getcharid(3),getcharid(0);
+										break;								
+								case 2:
+										mes "^D2691EInformation about "+getitemname(.@itemid)+"^000000";
+										mes "^6633CC • Recupera todo o HP. ^000000";
+										mes "Class: ^6633CC n/a ^000000";
+										mes "Slot Equip: ^6633CC n/a ^000000";
+										mes "Weight: ^6633CC 30 ^000000";
+										mes "Required Level: ^6633CC n/a ^000000";
+										mes "Job:  ^6633CC All ^000000";
+										mes "Slots:  ^6633CC n/a ^000000";
+										close;
+								case 3:
+										close;
+							}
+							
+					case 2: set .@itemid,12303;	//Item ID for the previous menu
+							set .@itemqtd,20;	//Item quantity.
+							set .@itemqpr,5;	//Item cost (in quest points)
+				
+							callsub S_QCHead;
+					
+							mes "What you want to know about ^D2691E"+getitemname(.@itemid)+"^000000 ?";
+							mes " ";
+							mes "^1E90FFCost: ^000000^0000FF "+.@itemqpr+" Quest Points!^000000";
+							next;
+							switch(select("Create a "+getitemname(.@itemid)+":Informations about "+getitemname(.@itemid)+":Exit"))
+							{
+								case 1:
+										query_sql "SELECT `QuestPoint` FROM `login` WHERE `account_id` = '"+getcharid(3)+"'",.@point;
+										if(.@point < .@itemqpr) callsub S_Faltaponto,.@itemid,.@point,.@itemqpr;
+										callsub S_SucessItem,.@itemid,.@itemqtd,getcharid(3),getcharid(0);
+										break;								
+								case 2:
+										mes "^D2691EInformation about "+getitemname(.@itemid)+"^000000";
+										mes "^6633CC •Luk: +5 por 1 minuto. ^000000";
+										mes "Class: ^6633CC n/a ^000000";
+										mes "Slot Equip: ^6633CC n/a ^000000";
+										mes "Weight: ^6633CC 1 ^000000";
+										mes "Required Level: ^6633CC n/a ^000000";
+										mes "Job:  ^6633CC All ^000000";
+										mes "Slots:  ^6633CC n/a ^000000";
+										close;
+								case 3:
+										close;
+							}
+							
+
+					case 3: set .@itemid,7539;	//Item ID for the previous menu
+							set .@itemqtd,200;	//Item quantity.
+							set .@itemqpr,5;	//Item cost (in quest points)
+				
+							callsub S_QCHead;
+					
+							mes "What you want to know about ^D2691E"+getitemname(.@itemid)+"^000000 ?";
+							mes " ";
+							mes "^1E90FFCost: ^000000^0000FF "+.@itemqpr+" Quest Points!^000000";
+							next;
+							switch(select("Create a "+getitemname(.@itemid)+":Informations about "+getitemname(.@itemid)+":Exit"))
+							{
+								case 1:
+										query_sql "SELECT `QuestPoint` FROM `login` WHERE `account_id` = '"+getcharid(3)+"'",.@point;
+										if(.@point < .@itemqpr) callsub S_Faltaponto,.@itemid,.@point,.@itemqpr;
+										callsub S_SucessItem,.@itemid,.@itemqtd,getcharid(3),getcharid(0);
+										break;								
+								case 2:
+										mes "^D2691EInformation about "+getitemname(.@itemid)+"^000000";
+										mes "^6633CC A small coin with a monster Poring engraved in it. ^000000";
+										close;
+								case 3:
+										close;
+							}
+
+							
+					case 4:
+							close;
+				}
+				
+		//Exit Principal
+		case 5:
+				close;
+	}
+	
+QC_Admin:
+
+	mes "What Mr. ^FF0000[ "+strcharinfo(0)+" ]^000000 want?";
+	next;
+	if(select("Logs:Exit")==2){ close; }
+	
+	query_sql "SELECT count(*) FROM `qpCustom_log`",.@rst;
+	
+	callsub S_QCHead;
+	
+	if(!.@rst){ mes "^FF0000* There are no logs!^000000"; close; }
+	
+	mes "A total of "+.@rst+" records were found, would you like to see them?";
+	if(select("Yes:No")==2){ close; }
+	
+	next;
+	
+	query_sql "SELECT `id`,`acc_id`,`char_id`,`item_id`,`item_qtd`,`log_date` FROM `qpCustom_log`",.@id,.@accid,.@charid,.@item,.@iqtd,.@log$;
+
+	for(set .@i,0; .@i< .@rst; set .@i,.@i+1)
+	{
+		query_sql "SELECT `name` FROM `char` WHERE `char_id`='"+.@charid[.@i]+"'",.@name$;
+		mes "                  ^0065DF[ "+(.@i+1)+" / "+.@rst+" ]^000000";
+		mes "-----------------------------------";
+		mes "^0000CDLogID: ^000000"+.@id[.@i];
+		mes "^0000CDAccID: ^000000"+.@accid[.@i];
+		mes "^0000CDCharID: ^000000"+.@charid[.@i];
+		mes "^0000CDName: ^000000"+.@name$;
+		mes "^0000CDItemID: ^000000"+.@item[.@i];
+		mes "^0000CDQtd: ^000000"+.@iqtd[.@i];
+		mes "^0000CDI-Name: ^000000"+getitemname(.@item[.@i]);
+		mes "^0000CDDate: ^000000"+.@log$[.@i];
+		
+		if(select("Next:Cancel")==2){ close; }
+		next;
+	}
+	
+	close;
+
+
+S_QCHead:
+	mes "            ^0065DF [ Custom Manager ]^000000";
+	mes "            ^0065DF ¯¯¯¯¯¯¯¯*¯¯¯¯¯¯¯^000000";
+return;
+
+S_Faltaponto:
+	next;
+	callsub S_QCHead;
+	mes "^FF0000What a pity you only have [ "+getarg(1)+" ] Quest Points!^000000";
+	next;
+	
+	callsub S_QCHead;
+	mes "To obtain the ^D2691E"+getitemname(getarg(0))+"^000000 will be needed [ "+getarg(2)+" ] quest points...";
+	mes "come back when you have "+getarg(2)+" quest points!";
+	close;
+
+S_SucessItem:
+	callsub S_QCHead;
+	
+	if(!checkweight(getarg(0),getarg(1))){ mes "Your inventory is heavy!"; close; }
+	
+	mes "Here's your ^FF0000"+getitemname(getarg(0))+"^000000!";
+	getitem getarg(0),getarg(1);
+	query_sql "UPDATE `login` SET `QuestPoint` = `QuestPoint`-'10' WHERE `account_id` = '"+getarg(2)+"'";
+	query_sql "UPDATE `login` SET `MaxCustom` = `MaxCustom` + '1' WHERE `account_id` = '"+getarg(2)+"'";
+	query_sql "INSERT INTO `qpCustom_log` (`acc_id`,`char_id`,`item_id`,`item_qtd`,`log_date`) VALUES ('"+getarg(2)+"','"+getarg(3)+"','"+getarg(0)+"','"+getarg(1)+"','"+gettime(5)+"/"+gettime(6)+"/"+gettime(7)+" - "+gettime(3)+":"+gettime(2)+"')";  
+	mes "Do you want to return to the main menu?";
+	menu "Yes",MNP,"No",-;
+	close;
+
+}

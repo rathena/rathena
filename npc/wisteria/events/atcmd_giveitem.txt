@@ -1,0 +1,57 @@
+// How to use?
+// @giveitem <itemid> <amount> <area|map|all>
+
+-	script	atcmd_giveitem	1_-1_0_0,{
+function F_GiveItem;
+OnInit:
+	// Ignore players who are vending?
+	.novend = true;
+	
+	// Ignore players who are in pubs/chatroom? 
+	.nopub = true;
+	
+	// Ignore idle players? if yes, set how many seconds/min/hours to be considered as idle?
+	// sec * min * hour
+	// Default : 5 mins
+	.idle_time = 60 * 5; 
+	
+	bindatcmd "giveitem",strnpcinfo(0)+"::OnGiveItem",99,99;
+	end;
+	
+OnGiveItem:
+	.@flag$ = .@atcmd_parameters$[2];
+	.@area = getbattleflag("area_size");
+	$@itemid_var = atoi( .@atcmd_parameters$[0] );
+	$@amt_var = atoi( .@atcmd_parameters$[1] );
+	if ( getitemname($@itemid_var) == "null" ) { 
+		message strcharinfo(0), "@giveitem failed";
+		dispbottom "Invalid item id.", 0xff0000;
+	}
+	getmapxy(@map$, @x, @y, BL_PC);
+	if ( .@atcmd_numparameters < 3 ) {
+		message strcharinfo(0), "@giveitem failed";
+		dispbottom "Lacking parameter. Requires 3 parameters.", 0xff0000;
+		dispbottom "@giveitem <itemid> <amount> < area | map | all>", 0xff0000;
+		end;
+	}
+	if ( .@flag$ == "area" ) {
+		addrid(4,0,@x+.@area, @y+.@area, @x-.@area, @y-.@area);
+		F_GiveItem;
+	} else if ( .@flag$ == "map" ) {
+		addrid(1);
+		F_GiveItem;
+	} else if ( .@flag$ == "all" ) {
+		addrid(0);
+		F_GiveItem;
+	} else {
+		message strcharinfo(0), "@giveitem failed";
+		dispbottom "'"+ .@flag$ +"' parameter is invalid or non-existent.", 0xff0000;
+	}
+	end;
+	
+	function	F_GiveItem	{
+		if ( checkvending() && .novend || checkchatting() && .nopub || checkidle() > .idle_time ) end;
+		getitem $@itemid_var, $@amt_var;
+		return;
+	}
+}

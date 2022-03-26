@@ -1,0 +1,122 @@
+prontera,141,181,5	script	VFP Manager	62,{
+	function getPoints;
+
+	set .@n$, 			"[VFP Manager]";
+	set .@settings, 	1;		// 0 = item, 1 = shop
+	set .@itemReward, 	501;	// if settings is set to item
+	set .@convertRate, 	2;		// 2 Vote Points for 1 Red Potion
+	set .vp, 			getPoints(getcharid(3));
+	
+	switch (.@settings) {
+		case 0:
+			mes .@n$;
+			mes "Would you like to convert your "+ .vp +" Vote Points?";
+			mes "^ff0000The current convert rate is "+ .@convertRate +" Vote Points for 1 "+ getitemname(.@itemReward) +".";
+			next;
+			menu "Yes", L_Convert, "No", -;
+			mes .@n$;
+			mes "Bye, then.";
+			break;
+		case 1:
+			mes .@n$;
+			mes "You have ^ff0000"+ .vp +"^000000 Vote Points.";
+			mes "Would you like to go shopping?";
+			next;
+			menu "Yes", -, "No", L_Goodbye;
+			mes .@n$;
+			mes "Have fun shopping!";
+			callshop "votepoints_shop",1;
+			npcshopattach "votepoints_shop";
+			end;
+	}
+	
+	L_Goodbye:
+		mes .@n$;
+		mes "Goodbye, then.";
+		close;
+	
+	L_Convert:
+		if (.vp < .@convertRate)
+			goto L_VotePointsTooLow;
+		mes .@n$;
+		mes "How much Vote Points would you like to convert?";
+		next;
+		menu "All", L_ConvertAll, "Input Amount", L_ConvertAmount;
+	
+	L_ConvertAmount:
+		input .@convert;
+		
+		if (.@convert > .vp)
+			goto L_VotePointsTooLow;
+		
+		set .vp, ((.vp - .@convert) + (.@convert % .@convertRate));
+		set .@convert, (.@convert / .@convertRate);
+		getitem .@itemReward, .@convert;
+		query_sql("UPDATE cp_createlog SET votepoints = "+ .vp +" WHERE account_id = "+ getcharid(3));
+		
+		mes .@n$;
+		mes "You have received "+ .@convert +"x "+ getitemname(.@itemReward) +".";
+		mes "Your current Vote Points is "+ .vp;
+		close;
+		
+	L_ConvertAll:
+		set .@convert, (.vp / .@convertRate);
+		set .vp, (.vp % .@convertRate);
+		getitem .@itemReward, .@convert;
+		query_sql("UPDATE cp_createlog SET votepoints = "+ .vp +" WHERE account_id = "+ getcharid(3));
+		
+		mes .@n$;
+		mes "You have received "+ .@convert +"x "+ getitemname(.@itemReward) +".";
+		mes "Your current Vote Points is "+ .vp;
+		close;
+	
+	L_VotePointsTooLow:
+		mes .@n$;
+		mes "Your Vote Points is too low. Come back when you have the minimum amount of Vote Points.";
+		close;
+	
+	function getPoints {
+		set .@account_id, getarg(0);
+		
+		set .@count, query_sql("SELECT votepoints FROM cp_createlog WHERE account_id = "+ .@account_id, .@votepoints);
+		
+		return .@count ? .@votepoints : 0;
+	}
+	
+	OnBuyItem:
+		set .@cost,0;
+		for(set .@i,0; .@i<getarraysize(@bought_nameid); set .@i,.@i+1)
+			for(set .@j,0; .@j<getarraysize(.itemShop); set .@j,.@j+2)
+				if (@bought_nameid[.@i] == .itemShop[.@j]) {
+					set .@cost, .@cost+(.itemShop[.@j+1]*@bought_quantity[.@i]);
+					break;
+				}
+		mes .@n$;
+		if (.@cost > .vp) mes "You don't have enough Vote Points.";
+		else {
+			for(set .@i,0; .@i<getarraysize(@bought_nameid); set .@i,.@i+1) {
+				getitem @bought_nameid[.@i], @bought_quantity[.@i];
+				dispbottom "Purchased "+@bought_quantity[.@i]+"x "+getitemname(@bought_nameid[.@i])+".";
+			}
+			set .vp, .vp - .@cost;
+			query_sql("UPDATE cp_createlog SET votepoints = votepoints - "+ .@cost +" WHERE account_id = "+ getcharid(3));
+			mes .@n$;
+			mes "Deal completed.";
+			mes "You now have ^ff0000"+ .vp +"^000000 Vote Points.";
+			emotion ET_MONEY;
+		}
+		set .@cost,0;
+		deletearray @bought_nameid[0], getarraysize(@bought_nameid);
+		deletearray @bought_quantity[0], getarraysize(@bought_quantity);
+		close;
+	
+	OnInit:
+		setarray .itemShop[0],	7539,1,12548,2,7776,5,12263,10,14592,20,12264,10,12412,20; // <ITEM_ID>,<PRICE>,...
+		
+		npcshopdelitem "votepoints_shop",512;
+		for(set .@i, 0; .@i < getarraysize(.itemShop); set .@i, .@i+2)
+			npcshopadditem "votepoints_shop", .itemShop[.@i], .itemShop[.@i+1];
+	end;
+}
+
+-	shop	votepoints_shop	-1,512:-1

@@ -1,0 +1,295 @@
+//
+// start npc
+//
+prontera,163,155,4	script	Automatic Equipment	806,{
+	mes "[Automatic Equipment]";
+	mes "Hi!!";
+	mes "Do you want to upgrade you illusion equipment?,";
+	mes "i need ^FF0000refined illusion equipment^000000 for armor, garment dan shoes and ^FF0000varmeal ticket.^000000";
+	next;
+	mes "[Automatic Equipment]";
+	mes "For accesories doesnt need to be refined";
+	mes "Do you want to make one?";
+	next;
+	switch(select("Create automatic equipment.","Maybe next time.")){
+	next;
+	case 1:
+		mes "[Automatic Equipment]";
+		mes "please select the equpment!";
+		switch(select("Automatic Armor Type A.","Automatic Armor Type B.","Automatic Leg Type A.","Automatic Leg Type B.","Automatic Engine Wing Type A.","Automatic Engine Wing Type B.","Automatic Booster R.","Automatic Booster L.","Automatic Battle Chip R.","Automatic Battle Chip L.")){
+		next;
+			case 1:
+				if(countitem(1000103) < 900) {
+					mes "[Automatic Equipment]";
+					mes "But it looks like you don't have enough "+getitemname(1000103)+"!";
+					close;
+				}
+				if(countitem(15376) < 1) { 
+					mes "[Automatic Equipment]";
+					mes "you don't even have "+getitemname(15376)+"!";
+					close;
+				}
+				mes "[Automatic Equipment]";
+				mes "Are you sure you wish to craft";
+				mes "^0000FFAutomatic Armor Type A.^000000";
+				mes "Required items:";
+				mes "1X +9 Illusion Armor A Type?";
+				mes "900X Varmeal Tickets.";
+				if(select("- Yes:- No") - 1) close;
+				next;
+				if(countitem(1000103) >= 900 && countitem2(15376,1,9,0,0,0,0,0) >= 1) {
+				delitem 1000103,900;
+				delitem2 15376,1,1,9,0,0,0,0,0;
+				getitem 450127,1;
+				}
+			else {
+					mes "You dont have the required item";
+					close;
+				}
+			case 2:			
+				if(countitem(1000103) < 900) {
+					mes "[Automatic Equipment]";
+					mes "But it looks like you don't have enough "+getitemname(1000103)+"!";
+					close;
+				}
+				if(countitem(15377) < 1) {
+					mes "[Automatic Equipment]";
+					mes "you don't even have "+getitemname(15377)+"!";
+					close;
+				}
+				mes "[Automatic Equipment]";
+				mes "Are you sure you wish to craft";
+				mes "^0000FFAutomatic Armor Type B?^000000";
+				mes "Required items:";
+				mes "1X +9 Illusion Armor B Type.";
+				mes "900X Varmeal Tickets.";
+				if(select("- Yes:- No") - 1) close;
+				next;
+				if(countitem(1000103) >= 900 && countitem2(15377,1,9,0,0,0,0,0) >= 1) {
+				delitem 1000103,900;
+				delitem2 15377,1,1,9,0,0,0,0,0;
+				getitem 450128,1;
+				}
+			else {
+					mes "You dont have the required item";
+					close;
+				}
+			case 3:
+				if(countitem(1000103) < 900) {
+					mes "[Automatic Equipment]";
+					mes "But it looks like you don't have enough "+getitemname(1000103)+"!";
+					close;
+				}
+				if(countitem(22196) < 1) {
+					mes "[Automatic Equipment]";
+					mes "you don't even have "+getitemname(22196)+"!";
+					close;
+				}
+				mes "[Automatic Equipment]";
+				mes "Are you sure you wish to craft";
+				mes "^0000FFAutomatic Leg Type A?^000000";
+				mes "Required items:";
+				mes "1X +9 Illusion Leg A Type?";
+				mes "900X Varmeal Tickets.";
+				if(select("- Yes:- No") - 1) close;
+				next;
+				if(countitem(1000103) >= 900 && countitem2(22196,1,9,0,0,0,0,0) >= 1) {
+				delitem 1000103,900;
+				delitem2 22196,1,1,9,0,0,0,0,0;
+				getitem 470022,1;
+				}
+			else {
+					mes "You dont have the required item";
+					close;
+				}
+			case 4:
+				if(countitem(1000103) < 900) {
+					mes "[Automatic Equipment]";
+					mes "But it looks like you don't have enough "+getitemname(1000103)+"!";
+					close;
+				}
+				if(.@refine[22197] < 1) {
+					mes "[Automatic Equipment]";
+					mes "you don't even have "+getitemname(22197)+"!";
+					close;
+				}
+				mes "[Automatic Equipment]";
+				mes "Are you sure you wish to craft";
+				mes "^0000FFAutomatic Leg Type B?^000000";
+				mes "Required items:";
+				mes "1X +9 Illusion Leg B Type?";
+				mes "900X Varmeal Tickets.";
+				if(select("- Yes:- No") - 1) close;
+				next;
+				if(countitem(1000103) >= 900 && countitem2(22197,1,9,0,0,0,0,0) >= 1) {
+				delitem 1000103,900;
+				delitem2 22197,1,1,9,0,0,0,0,0;
+				getitem 470023,1;
+				}
+			else {
+					mes "You dont have the required item";
+					close;
+				}				
+			case 5:
+				if(countitem(1000103) < 900) {
+					mes "[Automatic Equipment]";
+					mes "But it looks like you don't have enough "+getitemname(1000103)+"!";
+					close;
+				}
+				if(countitem(20933) < 1) {
+					mes "[Automatic Equipment]";
+					mes "you don't even have "+getitemname(20933)+"!";
+					close;
+				}
+				mes "[Automatic Equipment]";
+				mes "Are you sure you wish to craft";
+				mes "^0000FFAutomatic Engine Wing Type A?^000000";
+				mes "Required items:";
+				mes "1X +9 Illusion Engine Wing A Type?";
+				mes "900X Varmeal Tickets.";
+				if(select("- Yes:- No") - 1) close;
+				next;
+				if(countitem(1000103) >= 900 && countitem2(20933,1,9,0,0,0,0,0) >= 1) {
+				delitem 1000103,900;
+				delitem2 20933,1,1,9,0,0,0,0,0;
+				getitem 480020,1;
+				}
+			else {
+					mes "You dont have the required item";
+					close;
+				}			
+			case 6:
+				if(countitem(1000103) < 900) {
+					mes "[Automatic Equipment]";
+					mes "But it looks like you don't have enough "+getitemname(1000103)+"!";
+					close;
+				}
+				if(countitem(20934) < 1) {
+					mes "[Automatic Equipment]";
+					mes "you don't even have "+getitemname(20934)+"!";
+					close;
+				}
+				mes "[Automatic Equipment]";
+				mes "Are you sure you wish to craft";
+				mes "^0000FFAutomatic Engine Wing Type B?^000000";
+				mes "Required items:";
+				mes "1X +9 Illusion Engine Wing B Type?";
+				mes "900X Varmeal Tickets.";
+				if(select("- Yes:- No") - 1) close;
+				next;
+				if(countitem(1000103) >= 900 && countitem2(20934,1,9,0,0,0,0,0) >= 1) {
+				delitem 1000103,900;
+				delitem2 20934,1,1,9,0,0,0,0,0;
+				getitem 480021,1;
+				}
+			else {
+					mes "You dont have the required item";
+					close;
+				}			
+			case 7:
+				if(countitem(1000103) < 1500) {
+					mes "[Automatic Equipment]";
+					mes "But it looks like you don't have enough "+getitemname(1000103)+"!";
+					close;
+				}
+				if(countitem(32207) < 1) {
+					mes "[Automatic Equipment]";
+					mes "you don't have "+getitemname(32207)+"!";
+					close;
+				}
+				mes "[Automatic Equipment]";
+				mes "Proceed?";
+				if(select("- Yes:- No") - 1) close;
+				next;
+				if(countitem(1000103) >= 1500 && countitem(32207) >= 1) {
+				delitem 1000103,900;
+				delitem 32207,1;
+				getitem 490024,1;
+				close;
+				}
+			else {
+					mes "You dont have the required item";
+					close;
+				}				
+			case 8:
+				if(countitem(1000103) < 1500) {
+					mes "[Automatic Equipment]";
+					mes "But it looks like you don't have enough "+getitemname(1000103)+"!";
+					close;
+				}
+				if(countitem(32208) < 1) {
+					mes "[Automatic Equipment]";
+					mes "you don't have "+getitemname(32208)+"!";
+					close;
+				}
+				mes "[Automatic Equipment]";
+				mes "Proceed?";
+				if(select("- Yes:- No") - 1) close;
+				next;
+				if(countitem(1000103) >= 1500 && countitem(32208) >= 1) {
+				delitem 1000103,1500;
+				delitem 32208,1;
+				getitem 490025,1;
+				close;
+				}
+			else {
+					mes "You dont have the required item";
+					close;
+				}				
+			case 9:
+				if(countitem(1000103) < 1500) {
+					mes "[Automatic Equipment]";
+					mes "But it looks like you don't have enough "+getitemname(1000103)+"!";
+					close;
+				}
+				if(countitem(32209) < 1) {
+					mes "[Automatic Equipment]";
+					mes "you don't have "+getitemname(32209)+"!";
+					close;
+				}
+				mes "[Automatic Equipment]";
+				mes "Proceed?";
+				if(select("- Yes:- No") - 1) close;
+				next;
+				if(countitem(1000103) >= 1500 && countitem(32209) >= 1) {
+				delitem 1000103,1500;
+				delitem 32209,1;
+				getitem 490026,1;
+				close;
+				}
+			else {
+					mes "You dont have the required item";
+					close;
+				}				
+			case 10:
+				if(countitem(1000103) < 1500) {
+					mes "[Automatic Equipment]";
+					mes "But it looks like you don't have enough "+getitemname(1000103)+"!";
+					close;
+				}
+				if(countitem(32210) < 1) {
+					mes "[Automatic Equipment]";
+					mes "you don't have "+getitemname(32210)+"!";
+					close;
+				}
+				mes "[Automatic Equipment]";
+				mes "Proceed?";
+				if(select("- Yes:- No") - 1) close;
+				next;
+				if(countitem(1000103) >= 1500 && countitem(32210) >= 1) {
+				delitem 1000103,1500;
+				delitem 32210,1;
+				getitem 490027,1;
+				close;
+				}
+			else {
+					mes "You dont have the required item";
+					close;
+				}				
+			}
+	case 2: 
+		mes "okay see you around!";
+		close;
+	}
+}
+	

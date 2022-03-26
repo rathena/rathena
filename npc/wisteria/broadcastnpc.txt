@@ -1,0 +1,90 @@
+// https://rathena.org/board/topic/117251-broadcaster-npc-request/
+
+/*
+DROP TABLE IF EXISTS `e_broadcast`;
+CREATE TABLE IF NOT EXISTS `e_broadcast` (
+  `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
+  `aid` int(11) NOT NULL DEFAULT '0',
+  `cid` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(25) NOT NULL DEFAULT '',
+  `message` varchar(255) NOT NULL DEFAULT '',
+  `time` int(11) NOT NULL DEFAULT '0',
+  `status` tinyint(3) NOT NULL DEFAULT '1',
+  `repeat` tinyint(3) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
+*/
+
+prontera,155,204,4	script	Broadcaster	4264,{
+	doevent "broadcast_main::OnTalk";
+}
+
+-	script	broadcast_main	-1,{
+
+	OnInit:
+		
+		.zeny = 10000;
+		.broadcast_delay_second = 180;
+		.log_limit = 3;
+		waitingroom strnpcinfo(1), 0;
+		end;
+		
+	OnTalk:
+		.@size = query_sql("SELECT `id`,`message`,`time`,`repeat` FROM `e_broadcast` WHERE `cid` = "+getcharid(0)+" ORDER BY `id` DESC LIMIT "+.log_limit, .@id, .@message$, .@time, .@repeat);
+		mes "Would you like to broadcast a message?";
+		next;
+		switch (select(
+			"Broadcast",
+			(.@size ? "History" : ""),
+			"Cancel"
+		)) {
+			case 2:
+				for (.@i = 0; .@i < .@size; .@i++) {
+					mes (.@i + 1 )+". "+.@message$[.@i];
+					mes " ";
+					.@menu$ = .@menu$ + "Recent Broadcast # "+(.@i + 1) + ":";
+				}
+				.@i = select(.@menu$) - 1;
+				if (.@repeat[.@i]) {
+					mes "This broadcast cant be used to repeat now.";
+					close;
+				}
+				.@broadcast_message$ = .@message$[.@i];
+			case 1:
+				if (.@broadcast_message$ == "") {
+					mes "Enter your broadcast message:";
+					input .@broadcast_message$;
+				}
+				next;
+				mes "Confirm to broadcast this?";
+				mes "^777777"+.@broadcast_message$+"^000000";
+				mes " ";
+				if (.zeny) {
+					mes "Zeny: "+F_InsertComma(.zeny)+"z";
+					mes " ";
+				}
+				if (select("Confirm", "Cancel") == 1) {
+					.@gettimetick = gettimetick(2);
+					if (.zeny > 0 && Zeny <= .zeny) {
+						mes "You dont have enough zeny.";
+					}
+					else if (.broadcast_delay_second > 0 && .@gettimetick < (.@time + .broadcast_delay_second)) {
+						mes "You cant broadcast for next "+((.@time + .broadcast_delay_second) - .@gettimetick)+" second(s)";
+					}
+					else {
+						Zeny -= .zeny;
+						announce "<"+strcharinfo(0)+">: "+.@broadcast_message$, bc_all;
+						query_sql("INSERT INTO `e_broadcast` (`aid`,`cid`,`name`,`message`,`time`,`repeat`) VALUES ( "+getcharid(3)+","+getcharid(0)+",'"+escape_sql(strcharinfo(0))+"','"+escape_sql(.@broadcast_message$)+"', "+.@gettimetick+","+(.@repeat[.@i] > 0)+")");
+						if (.@id[.@i] > 0) {
+							query_sql("UPDATE `e_broadcast` SET `repeat` = 1 WHERE `id` = "+.@id[.@i]+" LIMIT ");
+						}
+						mes "done.";
+					}
+				}
+				break;
+			default:
+				break;
+		}
+		close;
+		
+}

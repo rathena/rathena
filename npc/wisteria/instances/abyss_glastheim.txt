@@ -1,0 +1,265 @@
+//===== rAthena Script =======================================
+//= Abyss Glastheim - Mage Nillem
+//===== By ===================================================
+//= llchrisll
+//===== Version ==============================================
+//= 1.0 - Initial Version
+//===== Tested With ==========================================
+//= rAthena 07/29/2019 Revision
+//= GIT Hash: 3dd388ac66580e72f56826d142ef69d2525188b7
+//===== Description ==========================================
+//= Warp into Abyss Glastheim
+//= EXP Quests - Custom Text and EXP Reward
+//===== Credits ==============================================
+//= Nova RO
+//===== Database + Lua Entries ==============================
+/*
+quest_db:
+8541,0,20367,20,20368,20,0,0,"Nothing to see"
+8542,86400,0,0,0,0,0,0,"Nothing to see - Wait"
+8544,0,20369,5,20371,5,0,0,"High Freezing Point"
+8545,86400,0,0,0,0,0,0,"High Freezing Point - Wait"
+8547,0,20379,10,20380,10,0,0,"A Mirror"
+8548,86400,0,0,0,0,0,0,"A Mirror - Wait"
+*/
+/*
+OngoingQuestInfoList_Sakray.lub or OngoingQuestInfoList (Main Server):
+	[8541] = {
+		Title = "Nothing to See",
+		IconName = "ico_dq.bmp",
+		Description = {
+			"<NAVI>[Mage Nillem]<INFO>glast_01,190,273,0,101,0</INFO></NAVI> asked you to hunt 20 Hunt Contaminated Raydrics and 20 Contaminated Raydric Archers to gather more information."
+		},
+		Summary = "Hunt 20 Contaminated Raydrics and 20 Contaminated Raydric Archers."
+	},
+	[8542] = {
+		Title = "Nothing to See - Wait",
+		IconName = "ico_dq.bmp",
+		Description = { "This is a daily quest, you can take it again tomorrow when the timer expires. Speak with <NAVI>[Mage Nillem]<INFO>glast_01,190,273,0,101,0</INFO></NAVI>." },
+		Summary = "Reset at 00:00."
+	},
+	[8544] = {
+		Title = "High Freezing Point",
+		IconName = "ico_dq.bmp",
+		Description = {
+			"<NAVI>[Mage Nillem]<INFO>glast_01,190,273,0,101,0</INFO></NAVI> asked you to hunt 5 Frozen Gargoyles and 5 Prison Breakers to gather more information."
+		},
+		Summary = "Hunt 5 Frozen Gargoyles and 5 Prison Breakers."
+	},
+	[8545] = {
+		Title = "High Freezing Point - Wait",
+		IconName = "ico_dq.bmp",
+		Description = { "This is a daily quest, you can take it again tomorrow when the timer expires. Speak with <NAVI>[Mage Nillem]<INFO>glast_01,190,273,0,101,0</INFO></NAVI>." },
+		Summary = "Reset at 00:00."
+	},
+	[8547] = {
+		Title = "A Mirror",
+		IconName = "ico_dq.bmp",
+		Description = {
+			"<NAVI>[Mage Nillem]<INFO>glast_01,190,273,0,101,0</INFO></NAVI> asked you to hunt 10 Ice Ghosts and 10 Flame Ghosts to gather more information."
+		},
+		Summary = "Hunt 10 Ice Ghosts and 10 Flame Ghosts."
+	},
+	[8548] = {
+		Title = "A Mirror - Wait",
+		IconName = "ico_dq.bmp",
+		Description = { "This is a daily quest, you can take it again tomorrow when the timer expires. Speak with <NAVI>[Mage Nillem]<INFO>glast_01,190,273,0,101,0</INFO></NAVI>." },
+		Summary = "Reset at 00:00."
+	},
+*/
+//============================================================
+glast_01,189,272,4	script	Mage Nillem#glast	4_M_JOB_WIZARD,{
+
+mes .n$;
+if(BaseLevel < 175) {
+	mes "What are you doing here?";
+	mes "I'm looking for a strong adventurer to fill my curiosity!";
+	next;
+	mes .n$;
+	mes "Come back when you're at least 175.";
+	close;
+}
+mes "I think I just did the discovery of the century! Do you want to tag along?";
+next;
+switch(select("Let's go!:I need an explanation:Share discoveries:I don't want to.")) {
+	
+	case 1:
+	mes .n$;
+	mes "That's the way to go!";
+	mes "I can't help, but fall in love with your enthusiasm.";
+	close2;
+	warp "gl_cas01_",200,26;
+	end;
+	
+	case 2:
+	mes .n$;
+	mes "There were reports of a weird magical power near Glast Heim Castle.";
+	mes "I came to investigate, and what do I discover?";
+	next;
+	mes .n$;
+	mes "A gap in the dimension!";
+	mes "This genius wizard is also great at creating dimensional gaps.";
+	next;
+	mes .n$;
+	mes "So I forcibly connected it! I went inside...";
+	mes "The flow of time had stopped...";
+	mes "Hmm. I have nothing else to say about it.";
+	next;
+	mes .n$;
+	mes "Anyway, the evil monsters trapped inside keep coming in waves!";
+	next;
+	mes .n$;
+	mes "I almost died, but I got out just in time.";
+	mes "So I'm recruiting adventurers to join me and explore it together ~ <3";
+	close;
+	
+	case 3:
+	mes .n$;
+	mes "I don't give out missions, I just want to discover new areas!";
+	mes "There's a few things I want to do with you, so let me know before we get going ~ <3";
+	next;
+	.@q = select("Nothingness.:Freezing.:Mirror-like:I'm done.") - 1;
+	mes .n$;
+	if(.@q == 3) {
+		mes "Oh, that's alright.";
+		mes "If you're tired, you should rest.";
+		mes "See you tomorrow.";
+		mes "Don't overdo it ~ <3";
+		close;
+	}
+	switch(checkquest(.abyss_delay[.@q],PLAYTIME)) {
+		case 0:
+		case 1:
+		mes "You are still exhausted from the past discoveries. Kindly rest first..";
+		close;
+	
+		case 2:
+		completequest .abyss_delay[.@q];
+		erasequest .abyss_delay[.@q];
+		mes "You are free to share you discoveries with me again ~ <3.";
+		close;
+	}
+	switch(checkquest(.abyss_quest[.@q],HUNTING)) {
+		case -1:
+		mes "Beyond the gap, there are empty-like entities.";
+		switch(.@q) {
+
+			case 0: // Quest: Nothing to see
+			mes "^0000FFContaminated Raydrics^000000 and ^0000FFContaminated Raydric Archers^000000...";
+			mes "It's about their contamination...";
+			mes "how does it affect you?";
+			next;
+			mes .n$;
+			mes "^0000FF20 Contaminated Raydrics,";
+			mes "Contaminated Raydric Archers.^000000";
+			break;
+				
+			case 1: // Quest: High Freezing Point
+			mes "^0000FFFrozen Gargyoles^000000 and ^0000FFPrison Breakers^000000...";
+			next;
+			mes .n$;
+			mes "^0000FF5 Frozen Gargyoles,";
+			mes "5 Prison Breakers.^000000";
+			break;
+					
+			case 2: // Quest: A Mirror
+			mes "^0000FFIce Ghosts^000000 and ^0000FFFlame Ghosts^000000...";
+			mes "They look totally different in this dimension.";
+			next;
+			mes .n$;
+			mes "^0000FF10 Ice Ghosts,";
+			mes "10 Flame Ghosts.^000000";
+			break;
+		}
+		mes "When you come back, this genius wizard will inspect your results.";
+		mes "How about it, darling?";
+		next;
+		if(select("That's not too difficult.:I refuse") == 2) {
+			mes .n$;
+			mes "If you are busy, it can't be helped.";
+			mes "Help us when you have time, silly ~ <3";
+			close;
+		}
+		mes .n$;
+		mes "Let's do it.";
+		mes "Beyond this point, it's hard to know the outcome.";
+		mes "If you need to escape the gap, talk to me at the entrance ~ <3";
+		setquest .abyss_quest[.@q];
+		break;
+		
+		case 0:
+		case 1:
+		switch(.@q) {
+			case 0:
+			mes "You're not finished yet on the discovery.";
+			mes "Do you thing they're influenced by";
+			mes "the emptiness?";
+			close;
+			
+			case 1:
+			mes "You're not finished yet on the discovery.";
+			mes "It's not a freezing";
+			mes "temperature, but if you're";
+			mes "freezing, come see me.";
+			close;
+			
+			case 2:
+			mes "You're not finished yet on the discovery.";
+			mes "I don't think they";
+			mes" are actually on the other side of";
+			mes "the mirror, but they are on another dimensional gap..."; 
+			close;
+		}
+		case 2:
+		switch(.@q) {
+			case 0:
+			case 1:
+			case 2:
+			mes "Oohh! Well done, that's exactly what I'm looking for.";
+			mes "Very interesting...";
+			mes "Oh yeah, here is your reward for your hard work.";
+			mes "See you again next time ~ <3";
+			getexp .abyss_bexp[.@q],.abyss_jexp[.@q];
+			completequest .abyss_quest[.@q];
+			erasequest .abyss_quest[.@q];
+			setquest .abyss_delay[.@q];
+			close;
+		}
+	}
+	close;
+	
+	case 4:
+	mes .n$;
+	mes "Oh, we're cold today, I see.";
+	mes "Nillelm is sad!";
+	break;
+}
+close;
+
+OnInit:
+.n$ = "[Nillem]";
+setarray .abyss_quest[0],8541,8544,8547;
+setarray .abyss_delay[0],8542,8545,8548;
+setarray .abyss_bexp[0],2000000,2000000,2000000;
+setarray .abyss_jexp[0],2000000,2000000,2000000;
+end;
+}
+gl_cas01_,205,36,4	script	Mage Nillem#abyss_gl	4_M_JOB_WIZARD,{
+
+mes "[Nillem]";
+mes "Haha! Everytime I come here, it's a new adventurer!";
+mes "I like it!";
+next;
+if(select("Let's get out of here!:I'll keep looking.") == 2) {
+	mes "[Nillem]";
+	mes "Sure!";
+	close;
+}
+mes "[Nillem]";
+mes "Alright!";
+mes "Let's skip this and go back outside";
+mes "~ <3";
+close2;
+warp "gl_cas01",191,270;
+end;
+}

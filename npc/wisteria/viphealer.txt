@@ -1,0 +1,110 @@
+//===== rAthena Script =======================================
+//= Healer
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Basic healer script.
+//===== Additional Comments: =================================
+//= 1.0 Initial script.
+//= 1.1 Aligned coordinates with @go.
+//============================================================
+
+-	script	VipHealer	-1,{
+
+	.@Price = 0;	// Zeny required for heal
+	.@Buffs = 1;	// Also buff players? (1: yes / 0: no)
+	.@Delay = 10;	// Heal delay, in seconds
+	
+	.@cooldown = 5; // how many seconds before the player can heal again
+
+	if ( @heal_cooldown + .@cooldown > gettimetick(2) ) {
+		dispbottom "You need wait for " + ( @heal_cooldown + .@cooldown - gettimetick(2) ) + " seconds.";
+		end;
+	}
+	
+	
+
+	//if (@HD > gettimetick(2))
+	//	end;
+	if (.@Price) {
+		message strcharinfo(0), "Healing costs " + callfunc("F_InsertComma",.@Price) + " Zeny.";
+		if (Zeny < .@Price)
+			end;
+		if (select("^0055FFHeal^000000:^777777Cancel^000000") == 2)
+			end;
+		Zeny -= .@Price;
+	}
+	specialeffect2 EF_HEAL2;
+	percentheal 100,100;
+	if (.@Buffs) {
+
+	.@time = 300000; // the buff last 5 minutes
+	specialeffect2 EF_INCAGILITY;
+	sc_start SC_INCREASEAGI, .@time, 10;
+	specialeffect2 EF_BLESSING;
+	sc_start SC_BLESSING, .@time, 10;
+	sc_start SC_ASSUMPTIO, .@time, 10;
+	sc_start SC_IMPOSITIO, .@time, 5;
+	sc_start SC_SUFFRAGIUM, .@time, 3;
+//	sc_start SC_KYRIE, .@time, 10;
+	sc_start SC_MAGNIFICAT, .@time, 5;
+	sc_start SC_GLORIA, .@time, 5;
+	sc_start SC_WINDWALK, .@time, 5;
+	sc_start SC_ANGELUS, .@time, 10;
+	emotion ET_THROB;	
+	@heal_cooldown = gettimetick(2);	
+	}
+if( getbrokenid(1) ) repairall;
+getinventorylist;
+while( .@i < @inventorylist_count ){
+	if ( !@inventorylist_identify[.@i] ){
+		delitem2 @inventorylist_id[.@i],1,0,0,0,0,0,0,0;
+		getitem @inventorylist_id[.@i],1;
+	}
+	.@i++;
+}
+
+
+	if(getgroupid() >= 5 ){
+		set(.@min, 5); // duration in minutes
+		//sc_start(SC_CP_HELM, (.@min * 1000 * 60), 1);
+		//sc_start(SC_CP_ARMOR, (.@min * 1000 * 60), 1);
+		//sc_start(SC_CP_SHIELD, (.@min * 1000 * 60), 1);
+		//sc_start(SC_CP_WEAPON, (.@min * 1000 * 60), 1);
+		switch ( basejob ) {
+			case Job_Alchemist:	set .@spirit, 445; break;
+			case Job_Monk:	 set .@spirit, 447; break;
+			case Job_Star_Gladiator:  set .@spirit, 448; break;
+			case Job_Sage:	 set .@spirit, 449; break;
+			case Job_Crusader:	set .@spirit, 450; break;
+			case Job_SuperNovice:   set .@spirit, 451; break;
+			case Job_Knight:	set .@spirit, 452; break;
+			case Job_Wizard:	set .@spirit, 453; break;
+			case Job_Priest:	set .@spirit, 454; break;
+			case Job_Bard: case Job_Dancer: set .@spirit, 455; break;
+			case Job_Rogue:	 set .@spirit, 456; break;
+			case Job_Assassin:	set .@spirit, 457; break;
+			case Job_Blacksmith:   set .@spirit, 458; break;
+			case Job_Hunter:	set .@spirit, 460; break;
+			case Job_Soul_Linker:   set .@spirit, 461; break;
+			default:
+				if ( upper == 1 && baselevel < 70 )
+					set .@spirit, 494;
+		}
+		if ( .@spirit ) {
+			sc_start4 sc_spirit, 360000, 5, .@spirit,0,0;
+			skilleffect .@spirit, 5;
+			end;
+		}
+	}
+
+	//if (.@Delay)
+		//@HD = gettimetick(2) + .@Delay;
+	//end;
+}
+
+sec_in02,137,175,6	duplicate(VipHealer)	Vip Healer#vip	909

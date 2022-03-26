@@ -1,0 +1,81 @@
+//================= Freebies NPC ================//
+// by : pajodex
+iz_int01,17,33,4	script	Freebies NPC	100,{
+
+	mes "[ ^FF0000System^000000 ]";
+	mes "Welcome ^FF0000"+strcharinfo(0)+"^000000 !";
+	next;
+	mes "[ ^FF0000System^000000 ]";
+	mes "Let me help you start your adventure!";
+	mes "i will give you starting items for 1 account only";
+	next;
+	mes "[ ^FF0000System^000000 ]";
+	mes "Checking Account!";
+	progressbar_npc "00FF00",3;
+	if(#freebies == 0) {
+	next;
+	mes "[ ^FF0000System^000000 ]";
+	mes "It seems to be your first, here!";
+	mes "~ Special Freebies from the [ ^FF0000Wisteria Team^000000 ]";
+
+		getitembound 20307, 1, Bound_Account;
+		getitembound 12672, 1, Bound_Account;
+		getitembound 12323, 20, Bound_Account;
+		getitembound 11567, 200, Bound_Account;
+		getitembound 2404, 1, Bound_Account;
+		getitembound 2506, 1, Bound_Account;
+		getitembound 2607, 1, Bound_Account;
+		getitembound 1208, 1, Bound_Account;
+		getitembound 30004, 1, Bound_Char;
+		getitembound 2106, 1, Bound_Account;
+		
+		
+	#freebies = 1;
+	}
+	next;
+	mes "[ ^FF0000System^000000 ]";
+	mes "you have claimed your freebie in this account ~";
+	mes "Goodluck! Enjoy your Adventure ~";
+	close;
+	}
+	
+// Doram NPC Freebies
+
+lasa_fild01,54,304,4	script	Freebies NPC Doram	100,{
+
+	mes "[ ^FF0000System^000000 ]";
+	mes "Welcome ^FF0000"+strcharinfo(0)+"^000000 !";
+	next;
+	mes "[ ^FF0000System^000000 ]";
+	mes "Let me help you start your adventure!";
+	mes "i will give you starting items for 1 account only";
+	next;
+	mes "[ ^FF0000System^000000 ]";
+	mes "Checking Account!";
+	progressbar_npc "00FF00",3;
+	if(#freebies == 0) {
+	next;
+	mes "[ ^FF0000System^000000 ]";
+	mes "It seems to be your first, here!";
+	mes "~ Special Freebies from the [ ^FF0000Wisteria Team^000000 ]";
+
+		getitembound 20307, 1, Bound_Account; // Costume Beginner Hat
+		getitembound 12672, 1, Bound_Account; // Start_New_Box
+		getitembound 12323, 20, Bound_Account; // Novice Fly Wing
+		getitembound 11567, 200, Bound_Account; //  Novice Potion
+		getitembound 2404, 1, Bound_Account; // Shoes
+		getitembound 2506, 1, Bound_Account; // Manteau
+		getitembound 2607, 1, Bound_Account; // Clip
+		getitembound 1681, 1, Bound_Account; // Sprout Foxtail Wand
+		getitembound 30004, 1, Bound_Char; // trial Card
+		getitembound 2106, 1, Bound_Account; // Shield
+		
+		
+	#freebies = 1;
+	}
+	next;
+	mes "[ ^FF0000System^000000 ]";
+	mes "you have claimed your freebie in this account ~";
+	mes "Goodluck! Enjoy your Adventure ~";
+	close;
+	}

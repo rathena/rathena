@@ -1,0 +1,95 @@
+prontera,163,147,4	script	Barmeal Vendor	891,{
+	.@item = 1000103;
+
+	mes "[Barmeal Vendor]";
+	mes "Good Afternon";
+	mes "Do you want to";
+	mes "buy the tickets?";
+	mes "It will cost you 1000 zeny";
+	mes "how much do you want?";
+	next;
+	input .@item;
+	if (.@item == 0) {
+		mes "[Barmeal Vendor]";
+		mes "You have cancelled the trade.";
+		mes "Have a good day.";
+		close;
+	}
+	set .@total_cost,.@item * 1000;
+		if (Zeny < .@Total_cost) {
+			mes "[Barmeal Vendor]";
+			mes "Oh, whoa~!";
+			mes "You don't have enough";
+			mes "zeny to exchange. You need to have";
+			mes "at least " + .@total_cost + " zeny.";
+			close;
+		}
+	set Zeny, Zeny-.@total_cost;
+	getitem 1000103,.@item*1; //Barmeal Ticket	
+	mes "[Barmeal Vendor]";
+	mes "Here are your tickets.";
+	mes "Have a good day.";
+	close;
+	}
+
+prontera,163,144,4	script	Magical Soapstone	890,{
+	mes "[Magical Soapstone]";
+	mes "Hey, hey...";
+	mes "If you bring me";
+	mes "1 rough oridecon, 1 rough elunium and";
+	mes "500 Zeny, I'll exchange";
+	mes "them for 1 Magical Soapstone. How";
+	mes "does that sound?";
+	next;
+	if (select("Exchange all rough stones.:Cancel") == 1) {
+		if (countitem(756) < 1) {
+			mes "[Magical Soapstone]";
+			mes "Hey...";
+			mes "You don't have";
+			mes "any rough stone.";
+			mes "I can't really give you";
+			mes "this magical stone any other";
+			mes "way, you know...";
+			close;
+		}
+		if (countitem(757) < 1) {
+			mes "[Magical Soapstone]";
+			mes "Hey...";
+			mes "You don't have";
+			mes "any rough stone.";
+			mes "I can't really give you";
+			mes "this magical stone any other";
+			mes "way, you know...";
+			close;
+		}
+		
+		set .@bottles,countitem(756);
+		set .@bottles,countitem(757);
+		set .@total_cost,.@bottles * 500;
+		if (Zeny < .@Total_cost) {
+			mes "[Magical Soapstone]";
+			mes "Oh, whoa~!";
+			mes "You don't have enough";
+			mes "zeny to exchange all";
+			mes "these rough stones for";
+			mes "magical stone. You need to have";
+			mes "at least " + .@total_cost + " zeny.";
+			close;
+		}
+		mes "[Magical Soapstone]";
+		mes "Here are your stone";
+		mes "Good Bye~";
+		if(countitem(756) > 0) {
+		set Zeny, Zeny-.@total_cost;
+		delitem 756,.@bottles; //Empty Bottles
+		delitem 757,.@bottles; //Empty Bottles
+		getitem 1000104,.@bottles; //Milk
+		} else if(countitem(757) > 0) {
+		set Zeny, Zeny-.@total_cost;
+		delitem 757,.@bottles; //Empty Bottles
+		delitem 756,.@bottles; //Empty Bottles
+		getitem 1000104,.@bottles; //Milk
+		}
+	close;
+	}
+}

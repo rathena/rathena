@@ -17,8 +17,35 @@
 //============================================================
 
 -	script	Warper	-1,{
-function Go; function Disp; function Pick; function Restrict;
+	
+callfunc "F_ClearGarbage"; //Clear outdated, unused variables
 
+
+		
+	.@PriceWarp = 1000;	// Zeny required for Warp
+
+	if (vip_status(VIP_STATUS_ACTIVE)) || (getgmlevel() > 20) {
+	message strcharinfo(0), "You are a VIP, you can use Warp Service for FREE!";
+	goto L_Warp;
+	next;
+	}
+	
+	if (.@PriceWarp) {
+		message strcharinfo(0), "Warp costs " + callfunc("F_InsertComma",.@PriceWarp) + " Zeny.";
+		mes "Warp will cost 10,000zeny";
+		mes "this will deduct automaticaly and no refund";
+		mes "would you like to proceed?";
+		next;
+		if (Zeny < .@PriceWarp)
+			end;
+		mes "i will now deduct if you choose warp";	
+		if (select("^0055FFWarp^000000:^777777Cancel^000000") == 2)
+			end;
+		Zeny -= .@PriceWarp;
+	}
+
+L_Warp:	
+function Go; function Disp; function Pick; function Restrict;
 // --------------------------------------------------
 //	Main Menu:
 // --------------------------------------------------
@@ -26,11 +53,11 @@ function Go; function Disp; function Pick; function Restrict;
 menu	"Last Warp ^777777["+lastwarp$+"]^000000",-,
     	" ~ Towns",Towns,
     	" ~ Fields",Fields,
-    	" ~ Dungeons",Dungeons,
-    	" ~ Guild Castles",Castles,
-    	" ~ Guild Dungeons",Guild_Dungeons,
-    	" ~ Instances",Instances,
-    	" ~ Special Areas",Special;
+    	" ~ Dungeons",Dungeons;
+    	//" ~ Guild Castles",Castles,
+    	//" ~ Guild Dungeons",Guild_Dungeons,
+    	//" ~ Instances",Instances,
+    	//" ~ Special Areas",Special;
 
 	if (lastwarp$ == "")
 		message strcharinfo(0),"You haven't warped anywhere yet.";
@@ -563,7 +590,7 @@ nameless_n,259,213,4	duplicate(Warper)	Warper#nam	811
 niflheim,205,179,4	duplicate(Warper)	Warper#nif	811
 pay_arche,42,134,4	duplicate(Warper)	Warper#arc	811
 payon,182,108,4	duplicate(Warper)	Warper#pay	811
-prontera,159,192,4	duplicate(Warper)	Warper#prt	811
+prontera,120,169,4	duplicate(Warper)	Warper#prt	811
 prt_fild05,279,223,6	duplicate(Warper)	Warper#cul	811
 rachel,135,116,4	duplicate(Warper)	Warper#rac	811
 splendide,205,153,4	duplicate(Warper)	Warper#spl	811
