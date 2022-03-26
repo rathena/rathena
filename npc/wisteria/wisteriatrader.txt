@@ -7,7 +7,7 @@ do{
 	callsub exchange_rate;
 	.@menu = select( "Wisteria to Zeny","Close" );
 	switch( .@menu ){
-	/*
+	
 		Case 1:
 			mes "Convert Zeny to which Wisteria ?";
 			.@coin = select( implode( .coin_name$,":" ) ) - 1;
@@ -28,7 +28,7 @@ do{
 					}
 			}
 			break;
-		*/	
+			
 		Case 1:
 			mes "Convert Wisteria to Zeny ?";
 			.@coin = select( implode( .coin_name$,":" ) ) - 1;
