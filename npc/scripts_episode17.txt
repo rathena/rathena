@@ -1,0 +1,43 @@
+// Episode 17.1
+npc: npc/eps17_1/Global_Functions.txt
+npc: npc/eps17_1/instances/CorMission.txt
+npc: npc/eps17_1/instances/OSMission.txt
+npc: npc/eps17_1/instances/OSMission_Daily.txt
+npc: npc/eps17_1/instances/Regenschirm.txt
+npc: npc/eps17_1/instances/SealedOS.txt
+npc: npc/eps17_1/mapflag/eps_17_1.txt
+npc: npc/eps17_1/merchant/illusion_enchant.txt
+npc: npc/eps17_1/mobs/mobs_spawn.txt
+npc: npc/eps17_1/quests/quests_17_1.txt
+npc: npc/eps17_1/quests/quests_17_2.txt
+npc: npc/eps17_1/dungeons/Illusion_Mobs.txt
+npc: npc/eps17_1/dungeons/IllusionAbyssTurtleIsland.txt
+npc: npc/eps17_1/dungeons/IllusionFrozenDaily.txt
+npc: npc/eps17_1/dungeons/IllusionLabyrinth.txt
+npc: npc/eps17_1/dungeons/IllusionLabyrinthWarp.txt
+npc: npc/eps17_1/dungeons/IllusionLuanda.txt
+npc: npc/eps17_1/dungeons/IllusionMoonlight.txt
+npc: npc/eps17_1/dungeons/IllusionTeddyBear.txt
+npc: npc/eps17_1/dungeons/IllusionVampire.txt
+
+
+// Episode 17.2
+npc: npc/eps17_2/custom/sage_function.txt
+npc: npc/eps17_2/warps/ba_2whs.txt
+npc: npc/eps17_2/mobs/dungeons/ba_2whs.txt
+npc: npc/eps17_2/warps/ba_bath.txt
+npc: npc/eps17_2/mobs/dungeons/ba_bath.txt
+npc: npc/eps17_2/mobs/dungeons/ba_lib.txt
+npc: npc/eps17_2/mobs/fields/ba_lost.txt
+npc: npc/eps17_2/warps/ba_lost.txt
+npc: npc/eps17_2/mobs/fields/ba_maison.txt
+npc: npc/eps17_2/warps/ba_maison.txt
+npc: npc/eps17_2/warps/ba_pw.txt
+npc: npc/eps17_2/mobs/dungeons/ba_pw.txt
+npc: npc/eps17_2/instances/FarmOfTheForgottenTime.txt
+npc: npc/eps17_2/instances/HiddenGarden.txt
+npc: npc/eps17_2/other/LapineEnchants.txt
+npc: npc/eps17_2/custom/mapflags.txt
+npc: npc/eps17_2/quests/quest_17_2.txt
+npc: npc/eps17_2/instances/TwilightGarden.txt
+npc: npc/eps17_2/instances/WaterGarden.txt

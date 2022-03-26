@@ -1,0 +1,38 @@
+//===== rAthena Script =======================================
+//= < Mapflags >
+1@rgsr	mapflag	nowarp
+1@rgsr	mapflag	nomemo
+1@rgsr	mapflag	noteleport
+1@rgsr	mapflag	monster_noteleport
+1@rgsr	mapflag	nosave
+1@rgsr	mapflag	nobranch
+1@rgsr	mapflag	nowarpto
+1@rgsr	mapflag	noicewall
+1@rgsr	mapflag	restricted	9
+1@os_a	mapflag	nowarp
+1@os_a	mapflag	nomemo
+1@os_a	mapflag	noteleport
+1@os_a	mapflag	monster_noteleport
+1@os_a	mapflag	nosave
+1@os_a	mapflag	nobranch
+1@os_a	mapflag	nowarpto
+1@os_a	mapflag	noicewall
+1@os_a	mapflag	restricted	9
+1@os_b	mapflag	nowarp
+1@os_b	mapflag	nomemo
+1@os_b	mapflag	noteleport
+1@os_b	mapflag	monster_noteleport
+1@os_b	mapflag	nosave
+1@os_b	mapflag	nobranch
+1@os_b	mapflag	nowarpto
+1@os_b	mapflag	noicewall
+1@os_b	mapflag	restricted	9
+1@cor	mapflag	nowarp
+1@cor	mapflag	nomemo
+1@cor	mapflag	noteleport
+1@cor	mapflag	monster_noteleport
+1@cor	mapflag	nosave
+1@cor	mapflag	nobranch
+1@cor	mapflag	nowarpto
+1@cor	mapflag	noicewall
+1@cor	mapflag	restricted	9

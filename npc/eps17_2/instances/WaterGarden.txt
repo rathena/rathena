@@ -1,0 +1,943 @@
+//===== rAthena Script =======================================
+//= Water Garden
+
+ba_maison,238,44,5	script	Harard#jh_ba1	4_EP17_BASIC_B,{
+	if(ep17_2_garden < 3){
+		cutin "ep172_beta", 2;
+		mes "[Harard]";
+		mes "Hello! Are you a guest?";
+		mes "This is a garden dock.";
+		next;
+		mes "[Harard]";
+		mes "There are no boats in operation now.";
+		mes "But the scenery is nice, so take a look around and enjoy!";
+		close3;
+	}
+	if(ep17_2_garden == 3){
+		cutin "ep172_beta", 2;
+		mes "[Harard]";
+		mes "Would you like to take a boat to the water garden?";
+		mes "The boat runs only once a day!";
+		next;
+		mes "[Harard]";
+		mes "^FF0000If you randomly deal with monsters such as monster taming in the dungeon, it is not considered normal progress. Please be aware of this.^000000";
+		mes " ";
+		mes "^FF0000The party leader who received the dungeon quest 'Water Garden' must enter the dungeon to proceed. If the party leader changes, the dungeon may not proceed.^000000";
+		next;
+		.@md_name$ = "Water Garden";
+		.@party_id = getcharid(1);
+		.@party_name$ = getpartyname(.@party_id);
+		if (!instance_check_party(.@party_id,1)) {
+			mes "[Harard]";
+			mes "Make or join a party with more than 1 member and try again.";
+			close;
+		}
+		if(is_party_leader() == false) {
+			mes "- This instance is part of story of the quest. -";
+			mes " ";
+			mes "- Only leader can create and enter the instance. -";
+			close;
+		}
+		.@s = select((!instance_id(IM_PARTY)?"Generate Water Garden":""),(!instance_id(IM_PARTY)?"":"^0000CDEnter Water Garden.^000000"));
+		switch(.@s){
+			case 1:
+				switch(instance_create(.@md_name$,IM_PARTY)){
+					case -1:
+						mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed!";
+						mes "Unknown Error Has Occurred.";
+						end;
+					case -2:
+						mes "[Harard]";
+						mes "Well? It will be difficult on your own. Come back with a party, adventurer.";
+						close;
+					case -3:
+						mes "[Harard]";
+						mes "You already have an instance active. Please cancel it before proceeding.";
+						close;
+					case -4:
+						mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed!";
+						mes "^0000ff"+.@md_name$+" ^000000 is currently full.";
+						end;
+					default:
+						setquest 16437;
+						end;
+				}
+			case 2:
+				switch(instance_enter(.@md_name$)){
+					case 3:
+						mes "An unknown error has occurred.";
+						end;
+					case 2:
+					case 1:
+						mes "^ff0000Character doesn't have an instance reserved.^000000";
+						end;
+					case 0:
+						end;
+				}	
+		}
+		close3;
+	}
+	if(ep17_2_garden > 3){
+		switch(checkquest(16439,PLAYTIME)){
+			case -1:
+				cutin "ep172_beta", 2;
+				mes "[Harard]";
+				mes "Would you like to take a boat to the water garden?";
+				mes "The boat runs only once a day!";
+				next;
+				mes "[Harard]";
+				mes "^FF0000If you randomly deal with monsters such as monster taming in the dungeon, it is not considered normal progress. Please be aware of this.^000000";
+				mes " ";
+				mes "^FF0000The party leader who received the dungeon quest 'Water Garden' must enter the dungeon to proceed. If the party leader changes, the dungeon may not proceed.^000000";
+				next;
+				.@party_id = getcharid(1);
+				.@party_name$ = getpartyname(.@party_id);
+				if (!instance_check_party(.@party_id,1)) {
+					mes "[Harard]";
+					mes "Make or join a party with more than 1 member and try again.";
+					close;
+				}
+				.@s = select((!instance_id(IM_PARTY)?"Generate Water Garden (Normal)":""),(!instance_id(IM_PARTY)?"Generate Water Garden (Hard)":""),(!instance_id(IM_PARTY)?"":"^0000CDEnter Water Garden.^000000"));
+				switch(.@s){
+					case 1:
+						if(is_party_leader() == false) {
+							mes "[Harard]";
+							mes "I understand that you want visit the water garden right now but I need to talk to your leader.";
+							close;
+						}
+						.@md_name$ = "Water Garden (Normal)";
+						switch(instance_create(.@md_name$,IM_PARTY)){
+							case -1:
+								mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed!";
+								mes "Unknown Error Has Occurred.";
+								close3;
+								end;
+							case -2:
+								mes "[Harard]";
+								mes "Well? It will be difficult on your own. Come back with a party, adventurer.";
+								close3;
+								end;
+							case -3:
+								mes "[Harard]";
+								mes "You already have an instance active. Please cancel it before proceeding.";
+								close3;
+								end;
+							case -4:
+								mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed!";
+								mes "^0000ff"+.@md_name$+" ^000000 is currently full.";
+								close3;
+								end;
+							default:
+								if(isbegin_quest(16438) > 0) erasequest 16438;
+								setquest 16437;
+								close3;
+								end;
+						}
+					case 2:
+						if(is_party_leader() == false) {
+							mes "[Harard]";
+							mes "I understand that you want visit the water garden right now but I need to talk to your leader.";
+							close;
+						}
+						.@md_name$ = "Water Garden (Hard)";
+						switch(instance_create(.@md_name$,IM_PARTY)){
+							case -1:
+								mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed!";
+								mes "Unknown Error Has Occurred.";
+								close3;
+								end;
+							case -2:
+								mes "[Harard]";
+								mes "Well? It will be difficult on your own. Come back with a party, adventurer.";
+								close3;
+							case -3:
+								mes "[Harard]";
+								mes "You already have an instance active. Please cancel it before proceeding.";
+								close3;
+							case -4:
+								mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed!";
+								mes "^0000ff"+.@md_name$+" ^000000 is currently full.";
+								close3;
+								end;
+							default:
+								if(isbegin_quest(16437) > 0) erasequest 16437;
+								setquest 16438;
+								close3;
+								end;
+						}
+					case 3:
+						.@md_name$ = instance_live_info(ILI_NAME, instance_id(IM_PARTY));
+						switch(instance_enter(.@md_name$)){
+							case 3:
+								mes "An unknown error has occurred.";
+								end;
+							case 2:
+							case 1:
+								mes "^ff0000Character doesn't have an instance reserved.^000000";
+								end;
+							case 0:
+								if(.@md_name$ == "Water Garden (Normal)"){
+									if(isbegin_quest(16437) == 0) setquest 16437;
+								} else {
+									if(isbegin_quest(16438) == 0) setquest 16438;
+								}
+								setquest 16439;
+								end;
+						}	
+				}
+				close3;
+			case 0:
+			case 1:
+				cutin "ep172_beta", 2;
+				mes "[Harard]";
+				mes "The boat has already left to the Floating Garden.";
+				next;
+				mes "[Harard]";
+				mes "Please come back after dawn.";
+				close3;
+			case 2:
+				cutin "ep172_beta", 2;
+				mes "[Harard]";
+				mes "The boat will be leaving soon.";
+				mes "Please get ready..";
+				erasequest 16439;
+				if(isbegin_quest(16437)) erasequest 16437;
+				if(isbegin_quest(16438)) erasequest 16438;
+				close3;
+		}
+	}
+	end;
+
+OnInit:
+	questinfo ( QTYPE_QUEST,QMARK_YELLOW," checkquest(16429,HUNTING) == 1 && ep17_2_garden == 3 ");
+	questinfo ( QTYPE_DAILYQUEST,QTYPE_QUEST, " ep17_2_garden >= 5 && ( checkquest(16433,HUNTING) == 1 || checkquest(16431,HUNTING) == 1 || isbegin_quest(16435) == 1 ) && checkquest(16439,PLAYTIME) == -1 " );
+	end;
+}
+
+1@ghg,0,0,0	script	#water_garden_ctrl	HIDDEN_WARP_NPC,{
+
+OnInstanceInit:
+	'party_id = 0;
+	'wg_mob = 0;
+	'wg_boss = 0;
+	'wg_level = 0;
+	'wg_status = 0;
+	'map$ = instance_mapname("1@ghg");
+	
+	//NPC's
+	hideoffnpc instance_npcname("Gardener#ghg_g1");
+	
+	//Warps
+	disablenpc instance_npcname("#ghg_w2");
+	disablenpc instance_npcname("#ghg_w3");
+	disablenpc instance_npcname("#ghg_w4");
+	disablenpc instance_npcname("#ghg_wb");
+	
+	end;
+}
+
+1@ghg,216,58,3	script	Gardener#ghg_g1	4_EP17_SCISSORE,{
+	if (is_party_leader() == false) end;
+	'party_id = getcharid(1);
+	.@md_name$ = instance_live_info(ILI_NAME, instance_id(IM_PARTY));
+	if(.@md_name$ == "Water Garden (Hard)") 'wg_level = 1;
+	if('wg_status){
+		npctalk "Papila's spell are activated. Be careful!",instance_npcname("Gardener#ghg_g1"),bc_area;
+		end;
+	}
+	mes "[Hetilla]";
+	mes "Welcome to the water garden.";
+	mes "Are you going to meet Papila? Papila is kind of sensitive nowadays because of the intruders.";
+	npctalk "Are you going to meet Papila? Papila is kind of sensitive nowadays because of the intruders.",instance_npcname("Gardener#ghg_g1"),bc_area;
+	next;
+	mes "[Hetilla]";
+	mes "Papila is playing around here and there.";
+	mes "It uses the hallucinogen from the wings to travel short distances or use dangerous spells!";
+	npctalk "Papila is playing around here and there. It uses the hallucinogen from the wings to travel short distances or use dangerous spells!",instance_npcname("Gardener#ghg_g1"),bc_area;
+	next;
+	mes "[Hetilla]";
+	mes "The gardeners would warn you while on broadcast but still be careful.";
+	mes "If you remove all overgrown animals and plants, the gate going to the next zone which is in your 3’oclock direction will open.";
+	npctalk "The gardeners would warn you while on broadcast but still be careful. If you remove all overgrown animals and plants, the gate going to the next zone which is in your 3’oclock direction will open.",instance_npcname("Gardener#ghg_g1"),bc_area;
+	donpcevent instance_npcname("#wg_mob_ctrl") + "::OnSummon";
+	getpartymember 'party_id,1;
+	getpartymember 'party_id,2;
+	for(.@i = 0; .@i < $@partymembercount; .@i++){
+		if(attachrid($@partymemberaid[.@i])){
+			if(strcharinfo(3) == 'map$ && isloggedin($@partymemberaid[.@i], $@partymembercid[.@i]) && HP > 0)
+				warp 'map$,240,73;
+		}
+	}
+	'wg_status = 1;
+	close;
+}
+
+1@ghg,316,69,3	script	Gardener#ghg_g2	4_EP17_SCISSORE,{
+	if (is_party_leader() == false) end;
+	if('wg_status == 2){
+		npctalk "If gardeners try to attack you guys, they are all broken gardeners, so please take them down..",instance_npcname("Gardener#ghg_g2"),bc_area;
+		end;
+	}
+	mes "[Yubiche]";
+	mes "Seems like Papila and the fallen paphila are roaming around so be careful.";
+	npctalk "Seems like Papila and the fallen paphila are roaming around so be careful.",instance_npcname("Gardener#ghg_g2"),bc_area;
+	next;
+	mes "[Yubiche]";
+	mes "The range of attacks depends on the color of the paphila.";
+	npctalk "The range of attacks depends on the color of the paphila.",instance_npcname("Gardener#ghg_g2"),bc_area;
+	next;
+	mes "[Yubiche]";
+	mes "Also, some of the gardeners who where gardening was destroyed by the intruders.";
+	npctalk "Also, some of the gardeners who where gardening was destroyed by the intruders.",instance_npcname("Gardener#ghg_g2"),bc_area;
+	next;
+	mes "[Yubiche]";
+	mes "If gardeners try to attack you guys, they are all broken gardeners, so please take them down..";
+	npctalk "If gardeners try to attack you guys, they are all broken gardeners, so please take them down..",instance_npcname("Gardener#ghg_g2"),bc_area;
+	close2;	
+	donpcevent instance_npcname("#wg_mob_ctrl") + "::OnSummon";
+	'wg_status = 2;
+	end;
+}
+
+1@ghg,341,143,3	script	Gardener#ghg_g3	4_EP17_SCISSORE,{
+	if (is_party_leader() == false) end;
+	mes "[Adithura]";
+	mes "The rose garden is a beautifully decorated place, but it's looking a mess now because many animals and plants appear in groups and destroys it.";
+	npctalk "The rose garden is a beautifully decorated place, but it's looking a mess now because many animals and plants appear in groups and destroys it.",instance_npcname("Gardener#ghg_g3"),bc_area;
+	next;
+	mes "[Adithura]";
+	mes "Please remove the plants and animals to restore the place.";
+	npctalk "Please remove the plants and animals to restore the place.",instance_npcname("Gardener#ghg_g3"),bc_area;
+	next;
+	mes "[Adithura]";
+	mes "Please talk to the manager who is waiting for you at the end of the garden to open the next zone.";
+	npctalk "Please talk to the manager who is waiting for you at the end of the garden to open the next zone.",instance_npcname("Gardener#ghg_g3"),bc_area;
+	next;
+	mes "[Adithura]";
+	mes "The manager is a little slow so you might need to wait, but surely the door will definitely open.";
+	npctalk "The manager is a little slow so you might need to wait, but surely the door will definitely open.",instance_npcname("Gardener#ghg_g3"),bc_area;
+	close;
+}
+
+1@ghg,344,173,3	script	Gardener#ghg_g4	4_EP17_SCISSORE,{
+	if (is_party_leader() == false) end;
+	if('wg_mob == 23){
+		sleep2 100;
+		setpcblock PCBLOCK_ALL,true;
+		progressbar_npc "000000",10;
+		mes "[Higel]";
+		mes "Next garden... Portal generation complete... Move to your 12’oclock direction...";
+		mes "Thank you...";
+		npctalk "Next garden... Portal generation complete... Move to your 12’oclock direction...",instance_npcname("Gardener#ghg_g4"),bc_area;
+		next;
+		mes "[Higel]";
+		mes "After going there... Papilla in the maze garden... Remove all... Please.";
+		npctalk "After going there... Papilla in the maze garden... Remove all... Please.",instance_npcname("Gardener#ghg_g4"),bc_area;
+		donpcevent instance_npcname("#ghg_eff01") + "::OnEffect";
+		enablenpc instance_npcname("#ghg_w4");	
+		donpcevent instance_npcname("#wg_mob_ctrl") + "::OnSummon";
+		setpcblock PCBLOCK_ALL,false;
+		close;
+	}
+	end;
+}
+
+1@ghg,186,287,3	script	Gardener#ghg_gb	4_EP17_SCISSORE,{
+	if(!'wg_boss){
+		mes "[Verkina]";
+		mes "If Papila appears while in the battle, move it to a pillar with the same light color.";
+		npctalk "If Papila appears while in the battle, move it to a pillar with the same light color.",instance_npcname("Gardener#ghg_gb"),bc_area;
+		next;
+		mes "[Verkina]";
+		mes "When the Papila touches a pillar, it gets damaged and dies.";
+		npctalk "When the Papila touches a pillar, it gets damaged and dies.",instance_npcname("Gardener#ghg_gb"),bc_area;
+		next;
+		mes "[Verkina]";
+		mes "We will take care of everything after you safely neutralize Silva Papila.";
+		npctalk "We will take care of everything after you safely neutralize Silva Papila.",instance_npcname("Gardener#ghg_gb"),bc_area;
+		next;
+		mes "[Verkina]";
+		mes "Then I will burn a scent that will call Silva Papila";
+		npctalk "Then I will burn a scent that will call Silva Papila",instance_npcname("Gardener#ghg_gb"),bc_area;
+		hideonnpc instance_npcname("Gardener#ghg_gb");
+		'wg_mob = 24;
+		donpcevent instance_npcname("#wg_boss") + "::OnSummon";
+		close;
+		end;
+	}
+	mes "[Verkina]";
+	mes "You didn't forget Seiyu's request right?";
+	next;
+	mes "[Verkina]";
+	mes "Don’t forget to talk to Seiyu once you go out and also don't forget your reward!";
+	next;
+	mes "[Verkina]";
+	mes "Okay, let me show you the way outside.";
+	if(ep17_2_garden == 3) ep17_2_garden = 4;
+	warp "ba_maison",233,46;
+	close;
+}
+
+1@ghg,343,184,0	script	#ghg_eff01	HIDDEN_WARP_NPC,{
+	end;
+	
+OnEffect:
+	specialeffect EF_READYPORTAL,AREA,instance_npcname("#ghg_eff01");
+	end;
+}
+
+1@ghg,288,272,3	script	Gardener#fg_quest	4_EP17_SCISSORE,{
+	switch(isbegin_quest(16435)){
+		case 0:
+			npctalk "I've been lost for some time... How beautiful this garden is...",instance_npcname("Gardener#fg_quest"),bc_area;
+			sleep2 3000;
+			end;
+		case 1:
+			if(!ep17_2_garden_daily){
+				setpcblock PCBLOCK_ALL,true;
+				ep17_2_garden_daily = 1;
+				sleep2 1000;
+				showscript ""+strcharinfo(0)+": Are you the gardener whom Seiyu is talking about?";
+				sleep2 1000;
+				npctalk "Gardener: How did you find me?",instance_npcname("Gardener#fg_quest"),bc_area;
+				sleep2 1000;
+				showscript ""+strcharinfo(0)+": Seiyu wants you to contact her. She has been looking for you.";
+				sleep2 1000;
+				npctalk "Gardener: I've been lost here for so long.. I've forgotten about my tasks..",instance_npcname("Gardener#fg_quest"),bc_area;
+				sleep2 1000;
+				setpcblock PCBLOCK_ALL,false;
+				end;
+			}
+			npctalk "Gardener: The garden looks amazing..",instance_npcname("Gardener#fg_quest"),bc_area;
+			sleep2 3000;
+			end;
+	}
+	end;
+}
+
+1@ghg,0,0,0	script	#wg_boss	HIDDEN_WARP_NPC,1,1,{
+	end;
+	
+OnSummon:
+	.@map$ = 'map$;
+	if('wg_level){
+		monster .@map$,183,287,"Gran Papila",20668,1,instance_npcname(strnpcinfo(0))+"::OnBossDead";
+	}else{
+		monster .@map$,183,287,"Silva Papila",20667,1,instance_npcname(strnpcinfo(0))+"::OnBossDead";
+	}
+	end;
+	
+OnBossDead:
+	'wg_boss = 1;
+	hideoffnpc instance_npcname("Gardener#ghg_gb");
+	end;
+}
+
+//Aura
+1@ghg,179,294,3	script	#red1ghg	4_ENERGY_RED,{ end; }
+1@ghg,174,287,3	script	#red2ghg	4_ENERGY_RED,{ end; }
+1@ghg,178,280,3	script	#red3ghg	4_ENERGY_RED,{ end; }
+1@ghg,186,294,3	script	#blue1ghg	4_ENERGY_BLUE,{ end; }
+1@ghg,190,287,3	script	#blue2ghg	4_ENERGY_BLUE,{ end; }
+1@ghg,187,280,3	script	#blue3ghg	4_ENERGY_BLUE,{ end; }
+
+1@ghg,318,150,3	script	#rg_01	HIDDEN_WARP_NPC,5,5,{
+	end;
+	
+OnTouch:
+	.@map$ = 'map$;
+	if('wg_mob == 5){
+		if('wg_level){
+			monster .@map$,315,150,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,318,147,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,318,151,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		}else{
+			monster .@map$,315,150,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,318,147,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,318,151,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		}
+		'wg_mob++;
+		end;
+	}//6
+	end;
+	
+OnMobDead:
+	.@label$ = instance_npcname("#rg_01") + "::OnMobDead";
+	.@count = mobcount( 'map$, .@label$ );
+	if (.@count == 0){
+		'wg_mob++;
+	}//7
+	end;
+}
+
+1@ghg,299,150,3	script	#rg_02	HIDDEN_WARP_NPC,5,5,{
+	end;
+	
+OnTouch:
+	.@map$ = 'map$;
+	if('wg_mob == 7){
+		if('wg_level){
+			monster .@map$,296,147,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,298,147,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,297,151,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		}else{
+			monster .@map$,296,147,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,298,147,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,297,151,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		}
+		'wg_mob++;
+		end;
+	}//8
+	end;
+	
+OnMobDead:
+	.@label$ = instance_npcname("#rg_02") + "::OnMobDead";
+	.@count = mobcount( 'map$, .@label$ );
+	if (.@count == 0){
+		'wg_mob++;
+	}//9
+	end;
+}
+
+1@ghg,276,150,3	script	#rg_03	HIDDEN_WARP_NPC,5,5,{
+	end;
+	
+OnTouch:
+	.@map$ = 'map$;
+	if('wg_mob == 9){
+		if('wg_level){
+			monster .@map$,278,149,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,275,149,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,275,149,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		}else{
+			monster .@map$,278,149,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,275,149,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,275,149,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		}
+		'wg_mob++;
+		end;
+	}//10
+	end;
+	
+OnMobDead:
+	.@label$ = instance_npcname("#rg_03") + "::OnMobDead";
+	.@count = mobcount( 'map$, .@label$ );
+	if (.@count == 0){
+		'wg_mob++;
+	}//11
+	end;
+}
+
+1@ghg,258,150,3	script	#rg_04	HIDDEN_WARP_NPC,5,5,{
+	end;
+	
+OnTouch:
+	.@map$ = 'map$;
+	if('wg_mob == 11){
+		if('wg_level){
+			monster .@map$,258,148,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,255,150,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,256,150,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		}else{
+			monster .@map$,258,148,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,255,150,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,256,150,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		}
+		'wg_mob++;
+		end;
+	}//12
+	end;
+	
+OnMobDead:
+	.@label$ = instance_npcname("#rg_04") + "::OnMobDead";
+	.@count = mobcount( 'map$, .@label$ );
+	if (.@count == 0){
+		'wg_mob++;
+	}//13
+	end;
+}
+
+1@ghg,232,162,3	script	#rg_05	HIDDEN_WARP_NPC,5,5,{
+	end;
+	
+OnTouch:
+	.@map$ = 'map$;
+	if('wg_mob == 13){
+		if('wg_level){
+			monster .@map$,233,163,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,229,162,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,232,162,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		}else{
+			monster .@map$,233,163,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,229,162,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,232,162,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		}
+		'wg_mob++;
+		end;
+	}//14
+	end;
+	
+OnMobDead:
+	.@label$ = instance_npcname("#rg_05") + "::OnMobDead";
+	.@count = mobcount( 'map$, .@label$ );
+	if (.@count == 0){
+		'wg_mob++;
+	}//15
+	end;
+}
+
+1@ghg,252,174,3	script	#rg_06	HIDDEN_WARP_NPC,5,5,{
+	end;
+	
+OnTouch:
+	.@map$ = 'map$;
+	if('wg_mob == 15){
+		if('wg_level){
+			monster .@map$,256,173,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,252,175,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,252,174,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		}else{
+			monster .@map$,256,173,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,252,175,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,252,174,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		}
+		'wg_mob++;
+		end;
+	}//16
+	end;
+	
+OnMobDead:
+	.@label$ = instance_npcname("#rg_06") + "::OnMobDead";
+	.@count = mobcount( 'map$, .@label$ );
+	if (.@count == 0){
+		'wg_mob++;
+	}//17
+	end;
+}
+
+1@ghg,275,174,3	script	#rg_07	HIDDEN_WARP_NPC,5,5,{
+	end;
+	
+OnTouch:
+	.@map$ = 'map$;
+	if('wg_mob == 17){
+		if('wg_level){
+			monster .@map$,274,173,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,274,175,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,275,174,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		}else{
+			monster .@map$,274,173,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,274,175,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,275,174,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		}
+		'wg_mob++;
+		end;
+	}//18
+	end;
+	
+OnMobDead:
+	.@label$ = instance_npcname("#rg_07") + "::OnMobDead";
+	.@count = mobcount( 'map$, .@label$ );
+	if (.@count == 0){
+		'wg_mob++;
+	}//19
+	end;
+}
+
+1@ghg,294,174,3	script	#rg_08	HIDDEN_WARP_NPC,5,5,{
+	end;
+	
+OnTouch:
+	.@map$ = 'map$;
+	if('wg_mob == 19){
+		if('wg_level){
+			monster .@map$,292,173,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,296,175,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,295,174,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		}else{
+			monster .@map$,292,173,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,296,175,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,295,174,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		}
+		'wg_mob++;
+		end;
+	}//20
+	end;
+	
+OnMobDead:
+	.@label$ = instance_npcname("#rg_08") + "::OnMobDead";
+	.@count = mobcount( 'map$, .@label$ );
+	if (.@count == 0){
+		'wg_mob++;
+	}//21
+	end;
+}
+
+1@ghg,314,173,3	script	#rg_09	HIDDEN_WARP_NPC,5,5,{
+	end;
+	
+OnTouch:
+	.@map$ = 'map$;
+	if('wg_mob == 21){
+		if('wg_level){
+			monster .@map$,316,173,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,315,175,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,313,174,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		}else{
+			monster .@map$,316,173,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,315,175,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			monster .@map$,313,174,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+		}
+		'wg_mob++;
+		end;
+	}//22
+	end;
+	
+OnMobDead:
+	.@label$ = instance_npcname("#rg_09") + "::OnMobDead";
+	.@count = mobcount( 'map$, .@label$ );
+	if (.@count == 0){
+		'wg_mob++;
+	}//23
+	end;
+}
+
+1@ghg,0,0,0	script	#wg_mob_ctrl	HIDDEN_WARP_NPC,1,1,{
+	end;
+	
+OnSummon:
+	.@map$ = 'map$;
+	if('wg_level){
+		//Chang me I'm still normal
+		switch('wg_mob){
+			case 0:
+				mapannounce .@map$,"Papila’s spell is activated. Be careful!",bc_all;
+				monster .@map$,236,74,"Aries",20678,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,230,70,"Aries",20678,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,243,78,"Papila Ruba",20672,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,244,74,"Papila Ruba",20672,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,239,74,"Papila Cae",20675,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				
+				monster .@map$,243,76,"Papila",20670,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,244,73,"Papila",20670,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				end;
+			case 1:
+				mapannounce .@map$,"Papila’s spell is activated. Be careful!",bc_all;
+				monster .@map$,236,64,"Aries",20678,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,230,60,"Aries",20678,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,243,62,"Papila Ruba",20672,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,244,64,"Papila Ruba",20672,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,240,54,"Papila Cae",20675,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				
+				monster .@map$,243,61,"Papila",20670,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,244,63,"Papila",20670,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				end;
+			case 2:
+				mapannounce .@map$,"Papila’s spell is activated. Be careful!",bc_all;
+				monster .@map$,237,58,"Aries",20678,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,240,58,"Papila Ruba",20672,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,238,52,"Aries",20678,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,239,55,"Papila Ruba",20672,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,257,76,"Papila Cae",20675,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,253,91,"Papila Cae",20675,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				
+				monster .@map$,240,56,"Papila",20670,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,238,56,"Papila",20670,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				end;
+			case 3:
+				mapannounce .@map$,"Papila’s spell is activated. Be careful!",bc_all;
+				monster .@map$,226,90,"Aries",20678,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,227,85,"Papila Ruba",20672,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,230,92,"Aries",20678,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,235,88,"Papila Ruba",20672,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,223,92,"Papila Cae",20675,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,228,79,"Papila Cae",20675,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				
+				monster .@map$,225,85,"Papila",20670,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,235,86,"Papila",20670,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				end;
+			case 4:
+				mapannounce .@map$,"A Papila appeared.",bc_all;
+				monster .@map$,327,85,"Broken Gardener",20632,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,335,86,"Broken Gardener",20632,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,327,73,"Broken Gardener",20632,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,324,80,"Aries",20678,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,330,76,"Aries",20678,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,328,80,"Aries",20678,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,327,76,"Aries",20678,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,323,81,"Aries",20678,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,322,85,"Aries",20678,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,340,86,"Papila Ruba",20672,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,320,86,"Papila Ruba",20672,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,320,71,"Papila Cae",20675,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				
+				monster .@map$,342,86,"Papila",20670,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,318,86,"Papila",20670,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				end;
+			case 23:
+				monster .@map$,318,296,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,320,299,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,322,297,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,282,282,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,276,284,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,276,280,"Verporte",20666,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,313,272,"Aries",20678,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,318,272,"Aries",20678,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,317,265,"Aries",20678,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,279,302,"Papila Cae",20675,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,279,242,"Papila Ruba",20672,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				
+				monster .@map$,276,242,"Papila",20670,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			default:
+				break;
+		}
+	}else{
+		switch('wg_mob){
+			case 0:
+				mapannounce .@map$,"Papila’s spell is activated. Be careful!",bc_all;
+				monster .@map$,236,74,"Aries",20677,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,230,70,"Aries",20677,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,243,78,"Papila Ruba",20674,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,244,74,"Papila Ruba",20674,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,239,74,"Papila Cae",20671,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				
+				monster .@map$,239,72,"Papila",20669,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				end;
+			case 1:
+				mapannounce .@map$,"Papila’s spell is activated. Be careful!",bc_all;
+				monster .@map$,236,64,"Aries",20677,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,230,60,"Aries",20677,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,243,62,"Papila Ruba",20674,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,244,64,"Papila Ruba",20674,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,240,54,"Papila Cae",20671,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				
+				monster .@map$,240,52,"Papila",20669,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				end;
+			case 2:
+				mapannounce .@map$,"Papila’s spell is activated. Be careful!",bc_all;
+				monster .@map$,237,58,"Aries",20677,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,240,58,"Papila Ruba",20674,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,238,52,"Aries",20677,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,239,55,"Papila Ruba",20674,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,257,76,"Papila Cae",20671,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,253,91,"Papila Cae",20671,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				
+				monster .@map$,257,74,"Papila",20669,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,253,93,"Papila",20669,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				end;
+			case 3:
+				mapannounce .@map$,"Papila’s spell is activated. Be careful!",bc_all;
+				monster .@map$,226,90,"Aries",20677,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,227,85,"Papila Ruba",20674,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,230,92,"Aries",20677,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,235,88,"Papila Ruba",20674,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,223,92,"Papila Cae",20671,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,228,79,"Papila Cae",20671,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				
+				monster .@map$,223,91,"Papila",20669,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,228,82,"Papila",20669,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				end;
+			case 4:
+				mapannounce .@map$,"A Papila appeared.",bc_all;
+				monster .@map$,327,85,"Broken Gardener",20632,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,335,86,"Broken Gardener",20631,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,327,73,"Broken Gardener",20632,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,324,80,"Aries",20677,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,330,76,"Aries",20677,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,328,80,"Aries",20677,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,327,76,"Aries",20677,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,323,81,"Aries",20677,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,322,85,"Aries",20677,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,340,86,"Papila Ruba",20671,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,320,86,"Papila Ruba",20671,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,320,71,"Papila Cae",20674,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				
+				monster .@map$,340,84,"Papila",20669,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,320,85,"Papila",20669,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				end;
+			case 23:
+				monster .@map$,318,296,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,320,299,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,322,297,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,282,282,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,276,284,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,276,280,"Verporta",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,313,272,"Aries",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,318,272,"Aries",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,317,265,"Aries",20665,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,279,302,"Papila Cae",20674,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				monster .@map$,279,242,"Papila Ruba",20671,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+				
+				monster .@map$,279,240,"Papila",20669,1,instance_npcname(strnpcinfo(0))+"::OnMobDead";
+			default:
+				break;
+		}
+	}
+	end;
+	
+OnMobDead:
+	.@label$ = instance_npcname("#wg_mob_ctrl") + "::OnMobDead";
+	.@count = mobcount( 'map$, .@label$ );
+	if (.@count == 0){
+		switch('wg_mob){
+			case 0:
+				'wg_mob++;
+				donpcevent instance_npcname("#wg_mob_ctrl") + "::OnSummon";
+				getpartymember 'party_id,1;
+				getpartymember 'party_id,2;
+				for(.@i = 0; .@i < $@partymembercount; .@i++){
+					if(attachrid($@partymemberaid[.@i])){
+						if(strcharinfo(3) == 'map$ && isloggedin($@partymemberaid[.@i], $@partymembercid[.@i]) && HP > 0)
+							warp 'map$,240,54;
+					}
+				}
+				end;
+			case 1:
+				'wg_mob++;
+				donpcevent instance_npcname("#wg_mob_ctrl") + "::OnSummon";
+				getpartymember 'party_id,1;
+				getpartymember 'party_id,2;
+				for(.@i = 0; .@i < $@partymembercount; .@i++){
+					if(attachrid($@partymemberaid[.@i])){
+						if(strcharinfo(3) == 'map$ && isloggedin($@partymemberaid[.@i], $@partymembercid[.@i]) && HP > 0)
+							warp 'map$,257,76;
+					}
+				}
+				end;
+			case 2:
+				'wg_mob++;
+				donpcevent instance_npcname("#wg_mob_ctrl") + "::OnSummon";	
+				getpartymember 'party_id,1;
+				getpartymember 'party_id,2;
+				for(.@i = 0; .@i < $@partymembercount; .@i++){
+					if(attachrid($@partymemberaid[.@i])){
+						if(strcharinfo(3) == 'map$ && isloggedin($@partymemberaid[.@i], $@partymembercid[.@i]) && HP > 0)
+							warp 'map$,228,92;
+					}
+				}
+				end;
+			case 3:
+				'wg_mob++;
+				sleep 2000;
+				mapannounce .@map$,"Done cleaning the place. Go to the next zone.",bc_all;
+				enablenpc instance_npcname("#ghg_w2");
+				end;
+			case 4:
+				'wg_mob++;
+				mapannounce .@map$,"All opponents are eliminated. Go to the next zone!",bc_all;
+				enablenpc instance_npcname("#ghg_w3");
+				end;
+			case 23:
+				enablenpc instance_npcname("#ghg_wb");
+				end;
+		}
+	}
+	end;
+}
+
+//Warps
+1@ghg,75,69,0	warp	#ghg_w1	2,2,1@ghg,208,57
+1@ghg,269,68,0	warp	#ghg_w2	2,2,1@ghg,311,67
+1@ghg,343,97,0	warp	#ghg_w3	2,2,1@ghg,343,139
+1@ghg,343,184,0	warp	#ghg_w4	2,2,1@ghg,306,235
+1@ghg,265,309,0	warp	#ghg_wb	2,2,1@ghg,189,287

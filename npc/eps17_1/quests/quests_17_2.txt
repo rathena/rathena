@@ -1,0 +1,192 @@
+//===== rAthena Script =======================================
+//= Episode 17.2 Varmundt's Mansion
+//= Episode 17.2 Storyline/Quest/Database/Instance
+
+sp_cor,255,285,1	script	Rookie#sp_cor_tunnel	4_M_ROOKIE,{
+	switch(ep_illusion){
+		case 46:
+			cutin "16loo_03",2;
+			mes "[ Rookie ]";
+			mes "Ah... so it's true. Well I guess this is it... it doesn't seem to easy to get through. Why go that way?";
+			classchange 4_EP17_ELYUMINA,"Elyumina#sp_cor_tunnel",bc_self;
+			classchange 4_M_GONY,"Gonie#sp_cor_tunnel",bc_self;
+			classchange 4_F_ELENA,"Elena Bolkova#sp_cor_tunnel",bc_self;
+			next;
+			cutin "16go_01",0;
+			mes "[ Gonie ]";
+			mes ".....";
+			next;
+			cutin "16loo_02",2;
+			mes "[ Rookie ]";
+			mes "Oh, you will go? Thank you, Gonie.";
+			next;
+			cutin "16go_01",0;
+			mes "[ Gonie ]";
+			mes ".....";
+			sleep2 1000;
+			mes "........";
+			sleep2 1000;
+			mes "...........";
+			next;
+			cutin "16loo_01",2;
+			mes "[ Rookie ]";
+			mes "Huh, Gonie. Is that true? Oh right, well that's funny...";
+			next;
+			cutin "ep171_elyumina03",0;
+			mes "[ Elyumina ]";
+			mes "What's that look? I told the truth!";
+			mes "There's a doorway!";
+			mes "I wouldn't lie in such a situation.";
+			mes "I'd be stupid to lie, don't you think?";
+			next;
+			cutin "16loo_01",2;
+			mes "[ Rookie ]";
+			mes "Who said anything about that? I found the entrance.";
+			mes "But it was sealed from the inside, so we can't even open it with Gonie's strength.";
+			next;
+			cutin "16loo_02",2;
+			mes "[ Rookie ]";
+			mes "I had to make sure you were telling the truth, but I guess I didn't have to.";
+			mes "You're a better person than you think. You're not a fool.";
+			npctalk "Elyumina : Why are you making fun of me! Aaah!","Elyumina#sp_cor_tunnel",bc_self;
+			next;
+			cutin "16loo_03",2;
+			mes "[ Rookie ]";
+			mes "The government and the Enterprise are cooperating now. We'll do everything we can to reclaim Varmundt's Mansion.";
+			next;
+			cutin "16loo_02",2;
+			mes "[ Rookie ]";
+			mes "As I told you, the entrance is blocked right now.";
+			mes "If I get more information, I'll let you know. For know, please rest.";
+			next;
+			cutin "162elena_01",2;
+			mes "[ Elena Bolkova ]";
+			mes "Oh, right. Elyumina will be detained here for the time being.";
+			mes "For now, she's the one who knows the most about Illusion, so I can't turn her outside.";
+			next;
+			mes "[ Elena Bolkova ]";
+			mes "We will keep monitoring the area and see if we can repair the damaged weapons.";
+			next;
+			mes "[ Elena Bolkova ]";
+			mes "If you're interested, please go see my <NAVI>[subordinates]<INFO>sp_cor,113,130,0,101,0</INFO></NAVI> in charge of it.";
+			mes "They're very smart.";
+			next;
+			cutin "16loo_02",2;
+			mes "[ Rookie ]";
+			mes "There are many things to do around here, so if you have free time, you can help out.";
+			mes "Goodluck, adventurer!! I'll contact you if I have new information.";
+			ep_illusion = 47;
+			completequest 16360;
+			navigateto("sp_cor",113,130,NAV_ALL);
+			close2;
+			cutin "",255;
+			classchange HIDDEN_WARP_NPC,"Elyumina#sp_cor_tunnel",bc_self;
+			classchange HIDDEN_WARP_NPC,"Gonie#sp_cor_tunnel",bc_self;
+			classchange HIDDEN_WARP_NPC,"Elena Bolkova#sp_cor_tunnel",bc_self;
+			end;
+		
+		case 47:
+			cutin "16loo_02",2;
+			mes "[ Lucky ]";
+			mes "If I get mroe information, I'll let you know. For now, please rest. Elyumina will be detained here for the time being.";
+			close3;
+			//break;
+			
+		default:
+			cutin "16loo_01",2;
+			mes "[ Rookie ]";
+			mes "Oh, hey adventurer. This is still under investigation.";
+			mes "Don't come too close, we don't know if it's dangerous or not yet.";
+			next;
+			cutin "16loo_02",2;
+			mes "[ Rookie ]";
+			mes "The water flowing trough this channel looks clean, but I would like to take samples and ask for analysis.";
+			next;
+			cutin "16loo_01",2;
+			mes "[ Rookie ]";
+			mes "There are so many suspicious things around... I keep reminding myself every minute that I have to look out even for things that looks normal.";
+			close3;
+	}
+	if(ep_v_mansion == 0){
+		mes "[ Rookie ]";
+		mes "Welcome back.";
+		mes "Perfect timing. Last night, I forcefully opened the entrance here. Elyumina said that somehow the device that was sealing it from the inside seems to be broken.";
+		next;
+		cutin "16loo_01",2;
+		mes "[ Rookie ]";
+		mes "I think it's a device used by the ^0000FFIllusion^000000 and ^0000FFHeart Hunters^000000 to block the entrance.";
+		mes "I'm glad that we're able to forcefully open it and get inside.";
+		next;
+		mes "[ Rookie ]";
+		mes "Some of the rebellions have already entered the mansion.";
+		mes "I'm sure there are a lot of experiments inside too. But I wouldn't know...";
+		next;
+		mes "[ Rookie ]";
+		mes "Some of the rebellions who entered would have a clue of what's inside.";
+		next;
+		mes "[ Rookie ]";
+		mes "I will stay here to keep the entrance open for the people who went in.";
+		next;
+		mes "[ Rookie ]";
+		mes "... Why do I feel like a gatekeeper?";
+		mes "Hahahaha. Maybe it's just coincidence...";
+		next;
+		mes "[ Rookie ]";
+		mes "Anyways... Just tell me if you're ready. I'll let you in anytime you want.";
+		ep_v_mansion = 1;
+		setquest 18000;
+		close3;
+	} else if(ep_v_mansion == 1){
+		cutin "16loo_01",2;
+		mes "[ Rookie ]";
+		mes "Are you ready?";
+		mes "Would you like to go in to the mansion?";
+		next;
+		if(select("Go!:Not now.") == 2)
+			end;
+		mes "[ Rookie ]";
+		mes "The first party who is monitoring the inside sometimes pops out here to eat...";
+		next;
+		mes "[ Rookie ]";
+		mes "Well... adventurer. We call this the entrance but after some investigation, we realized that it's actually the exit.";
+		mes "It's a big sewer. Along this sewer, there's a huge sewage treatment plant inside.";
+		next;
+		mes "[ Rookie ]";
+		mes "If you go past the sewage treatment plant, there is a magic power plant inside the first laboratory.";
+		mes "It seems that power plant supports the entire mansion's energy needs.";
+		next;
+		mes "[ Rookie ]";
+		mes "You can go to the mansion's garden through the powerplant.";
+		mes "The mansion's manager resides near the garden, be sure you meet with them first.";
+		next;
+		select("Manager?");
+		mes "[ Rookie ]";
+		mes "I know... If you go in... They're going to be in trouble because of the Illusions that invaded the mansion.";
+		next;
+		mes "[ Rookie ]";
+		mes "If you found an ally inside, I suggest you move together.";
+		mes "Though catching the Illusions are important, we put everyone's safety first.";
+		next;
+		mes "[ Rookie ]";
+		mes "Then this way adventurer.";
+		ep_v_mansion = 2;
+		completequest 18000;
+		setquest 18001;
+		warp "ba_pw02",275,20;
+		end;
+	}
+	cutin "16loo_01",2;
+	mes "[ Rookie ]";
+	mes "If you found an ally inside, I suggest you move together.";
+	mes "Though catching the Illusions are important, we put everyones safety first.";
+	next;
+	mes "[ Rookie ]";
+	mes "This way adventurer.";
+	mes "I will stay here to keep the entrance open.";
+	close3;
+
+OnInit:
+	questinfo QTYPE_QUEST,QMARK_YELLOW,"ep_illusion == 46";
+	//questinfo QTYPE_QUEST,QMARK_YELLOW,"ep_illusion == 47 && ep_v_mansion == 0";
+	end;
+}
