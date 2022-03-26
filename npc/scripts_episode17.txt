@@ -16,7 +16,7 @@ npc: npc/eps17_1/dungeons/IllusionFrozenDaily.txt
 npc: npc/eps17_1/dungeons/IllusionLabyrinth.txt
 npc: npc/eps17_1/dungeons/IllusionLabyrinthWarp.txt
 npc: npc/eps17_1/dungeons/IllusionLuanda.txt
-npc: npc/eps17_1/dungeons/IllusionMoonlight.txt
+//npc: npc/eps17_1/dungeons/IllusionMoonlight.txt
 npc: npc/eps17_1/dungeons/IllusionTeddyBear.txt
 npc: npc/eps17_1/dungeons/IllusionVampire.txt
 
