@@ -1,0 +1,91 @@
+// Magma Dungeon 3
+mag_dun03,0,0	monster	Rigid Blazer	20372,30,5000
+mag_dun03,0,0	monster	Rigid Nightmare Terror	20373,20,5000
+mag_dun03,0,0	monster	Rigid Sky Deleter	20374,30,5000
+mag_dun03,0,0	monster	Rigid Deleter	20375,20,5000
+mag_dun03,0,0	monster	Rigid Explosion	20376,20,5000
+mag_dun03,0,0	monster	Rigid Kaho	20377,20,5000
+mag_dun03,0,0	monster	Rigid Lava Golem	20378,10,5000
+mag_dun03,0,0,0,0	boss_monster	Rigid Muspellskoll	20419,1,7200000,600000,1
+mag_dun02,245,68,0	warp	mag02-03	1,1,mag_dun03,47,30
+
+
+//==================================================
+// gl_cas01_ - Abyss Glast Heim 
+//==================================================
+gl_cas01_,0,0	monster	Contaminated Raydric	20367,80,5000,5000,"#AbyssGlast_Drop::OnAGHMobDead"
+gl_cas01_,0,0	monster	Contaminated Raydric Archer	20368,80,5000,5000,"#AbyssGlast_Drop::OnAGHMobDead"
+gl_cas01_,0,0	monster	Frozen Gargoyle	20369,30,5000,5000,"#AbyssGlast_Drop::OnAGHMobDead"
+gl_cas01_,0,0	monster	Contaminated Sting	20370,30,5000,5000,"#AbyssGlast_Drop::OnAGHMobDead"
+gl_cas01_,0,0	monster	Prison Breaker	20371,40,5000,5000,"#AbyssGlast_Drop::OnAGHMobDead"
+gl_cas01_,0,0	monster	Ice Ghost	20379,40,5000,5000,"#AbyssGlast_Drop::OnAGHMobDead"
+gl_cas01_,0,0	monster	Flame Ghost	20380,40,5000,5000,"#AbyssGlast_Drop::OnAGHMobDead"
+gl_cas01_,0,0	monster	Contaminated Wanderer	20420,40,5000,5000,"#AbyssGlast_Drop::OnAGHMobDead"
+
+gl_cas01_,0,0	boss_monster	Contaminated Spider Queen	20421,1,3600000,600000,"#AbyssGlast_Drop::OnAGHMobDead"
+gl_cas01_,0,0	boss_monster	Contaminated Dark Lord	20422,1,3600000,600000,"#AbyssGlast_Drop::OnAGHMobDead"
+//==================================================
+// Party Drop Script
+//==================================================
+gl_cas01_,0,0,0	script	#AbyssGlast_Drop	-1,{
+
+OnAGHMobDead:
+if(getcharid(1)) {
+	if(getcharid(1)) {
+    getpartymember getcharid(1),1;
+    getpartymember getcharid(1),2;
+    
+    for ( .@p = 0; .@p < $@partymembercount; .@p++)
+        if(attachrid($@partymemberaid[.@p],$@partymembercid[.@p]) == 1) {
+            if(strcharinfo(3) != strnpcinfo(4)) continue;
+            if(rand(1,10000) >= (10000 - .chance)) 
+                getitem .drop_id[rand(getarraysize(.drop_id))],1;
+        }
+
+} else {
+	if(rand(1,10000) >= (10000 - .chance)) 
+		getitem .drop_id[rand(getarraysize(.drop_id))],1;
+}
+end;
+
+OnInit:
+setarray .drop_id[0],26138, // Hellfire Staff
+					 26139, // Icecle Staff
+					 26016, // Royal Knight's Lance
+					 21039, // Royal Knight's Broadsword
+					 28619; // Prisoner's Dairy
+// ==== Drop Settings ====
+// Multiply the Drop Chance below with the Server Drop Chance for Equipment
+// 1 = Yes
+// 0 = No
+.battleconf_drop = 0;
+// General Drop Chance
+.drop = 50; // 50 = 0.5%
+// Calculation
+.chance = .drop * ( (.battleconf_drop)?( (getbattleflag("item_rate_equip")%100 > 0)? (getbattleflag("item_rate_equip")/100):1):1);
+end;
+}
+}
+
+//===========================================================
+
+//Einbroch dungeon 3
+
+//warpnpc
+
+ein_dun02,17,250,0	warp	ein_dun03	1,1,ein_dun03,268,277
+ein_dun03,268,281,0	warp	ein_dun02	1,1,ein_dun02,22,250
+
+//mobnpc
+//==================================================
+// ein_dun03 - Mine Dungeon
+//==================================================
+ein_dun03,0,0	monster	Green Mineral	20594,30,5000
+ein_dun03,0,0	monster	Red Obsidian	20595,30,5000
+ein_dun03,0,0	monster	White Mineral	20596,30,5000
+ein_dun03,0,0	monster	Purple Mineral	20597,30,5000
+ein_dun03,0,0	monster	Jewelry Ant	20598,30,5000
+ein_dun03,0,0	monster	Jewel	20600,20,5000
+ein_dun03,0,0	monster	White Porcellio	20602,40,5000
+ein_dun03,0,0	monster	Abyssman	20603,40,5000
+ein_dun03,0,0,0,0	boss_monster	Jungoliant	20601,1,7500000,600000,0

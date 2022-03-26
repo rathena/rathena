@@ -130,8 +130,19 @@ OnAgitEnd3:
 	end;
 
 OnAgitBreak:
+	query_sql( "SELECT * FROM woe_ranking WHERE `PlayerName` = '"+strcharinfo(0)+"'", .@CharID, .@Name$, .@Kills, .@Deaths, .@EmpBreak);
+	set .WoeBreakPoints, 1;
+	set ToTalB , .@EmpBreak + .WoeBreakPoints;
+	
 	.@guild_id = getcharid(2);
 	.@map$ = strnpcinfo(4);
+
+
+	if(.@Name$ == strcharinfo(0)){
+	query_sql("UPDATE `woe_ranking` SET `EmpBreak` = '"+ToTalB+"' WHERE `PlayerName` = '"+strcharinfo(0)+"'");
+	}else{
+	query_sql("INSERT INTO `woe_ranking` (`Char_ID`,`PlayerName`,`Kills`,`Deaths`,`EmpBreak`) VALUES ('"+getcharid(0)+"', '"+strcharinfo(0)+"', '"+.@Kills+"', '"+.@Deaths+"', '"+ToTalB+"')"); 
+	}
 
 	.@economy = getcastledata(.@map$,CD_CURRENT_ECONOMY) - 5;// Adjust economy Invest Level for Castle
 	if (.@economy < 1)

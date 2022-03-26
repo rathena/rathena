@@ -1,0 +1,154 @@
+//===== rAthena Script =======================================
+//= WoE Ranking
+//===== By: ==================================================
+//= BeWan
+//https://rathena.org/board/profile/62232-bewan/
+//===== Current Version: =====================================
+//= 1.2
+//===== Description: =========================================
+//= WoE Ranking with top kills, deaths and emp breaker
+//= Guild Ranking Supported
+//============================================================
+
+/*
+DROP TABLE IF EXISTS `woe_ranking`;
+
+CREATE TABLE IF NOT EXISTS `woe_ranking` (
+`Char_ID` int(11) unsigned NOT NULL DEFAULT '0',
+`PlayerName` varchar(255) NULL DEFAULT '',
+`Kills` varchar(255) NULL DEFAULT '',
+`Deaths` varchar(255) NULL DEFAULT '',
+`EmpBreak` varchar(255) NULL DEFAULT '',
+PRIMARY KEY (`Char_ID`)
+) ENGINE=MyISAM;
+*/
+
+prontera,156,196,4	script	Ranking Manager	4262,{
+
+	set .@menu$, "Top "+.top+" Kills:Top "+.top+" Deaths:Top "+.top+" Breaker:Guild Rank:Points Shop:";
+	if (getgmlevel() == 99) { set .@menu$, .@menu$ + "Reset Data"; }
+	switch(select(.@menu$)) {
+	case 1:
+	query_sql "CREATE TABLE IF NOT EXISTS `woe_ranking` ( `Char_ID` int(11) unsigned NOT NULL DEFAULT '0', `PlayerName` varchar(255) NULL DEFAULT '', `Kills` varchar(255) NULL DEFAULT '', `Deaths` varchar(255) NULL DEFAULT '', `EmpBreak` varchar(255) NULL DEFAULT '', PRIMARY KEY (`Char_ID`) ) ENGINE=MyISAM";
+	query_sql( "DELETE FROM `woe_ranking` WHERE `PlayerName` NOT IN ( SELECT `name` FROM `char` )" ); 
+	set .@size, query_sql( "SELECT * FROM woe_ranking WHERE Kills > 0 ORDER BY Kills DESC limit "+ .top, .@CharID, .@name$, .@Kills, .@Deaths, .@EmpBreak);
+	
+	mes "[^FF0000WoE ^0000FFRank ^996600Top ^FF0000" + .top +"^000000]";
+	for (set .@c, 0; .@c < .@size; set .@c, .@c + 1)
+		mes "Top ^FF0000" +(.@c + 1) +"^000000: ^0000FF" + .@name$[.@c] +"^000000 | ^FF0000" + .@Kills[.@c] +"^000000 Kills | ^FF0000" + .@Deaths[.@c] +"^000000 Deaths | ^FF0000" + .@EmpBreak[.@c] +"^000000 Emp Break";
+	close;
+	break;
+	
+	case 2:
+	query_sql "CREATE TABLE IF NOT EXISTS `woe_ranking` ( `Char_ID` int(11) unsigned NOT NULL DEFAULT '0', `PlayerName` varchar(255) NULL DEFAULT '', `Kills` varchar(255) NULL DEFAULT '', `Deaths` varchar(255) NULL DEFAULT '', `EmpBreak` varchar(255) NULL DEFAULT '', PRIMARY KEY (`Char_ID`) ) ENGINE=MyISAM";
+	query_sql( "DELETE FROM `woe_ranking` WHERE `PlayerName` NOT IN ( SELECT `name` FROM `char` )" ); 
+	set .@size, query_sql( "SELECT * FROM woe_ranking WHERE Deaths > 0 ORDER BY Deaths DESC limit "+ .top, .@CharID, .@name$, .@Kills, .@Deaths, .@EmpBreak);
+	
+	mes "[^FF0000WoE ^0000FFRank ^996600Top ^FF0000" + .top +"^000000]";
+	for (set .@c, 0; .@c < .@size; set .@c, .@c + 1)
+		mes "Top ^FF0000" +(.@c + 1) +"^000000: ^0000FF" + .@name$[.@c] +"^000000 | ^FF0000" + .@Kills[.@c] +"^000000 Kills | ^FF0000" + .@Deaths[.@c] +"^000000 Deaths | ^FF0000" + .@EmpBreak[.@c] +"^000000 Emp Break";
+	close;
+	break;
+	
+	case 3:
+	query_sql "CREATE TABLE IF NOT EXISTS `woe_ranking` ( `Char_ID` int(11) unsigned NOT NULL DEFAULT '0', `PlayerName` varchar(255) NULL DEFAULT '', `Kills` varchar(255) NULL DEFAULT '', `Deaths` varchar(255) NULL DEFAULT '', `EmpBreak` varchar(255) NULL DEFAULT '', PRIMARY KEY (`Char_ID`) ) ENGINE=MyISAM";
+	query_sql( "DELETE FROM `woe_ranking` WHERE `PlayerName` NOT IN ( SELECT `name` FROM `char` )" ); 
+	set .@size, query_sql( "SELECT * FROM woe_ranking WHERE EmpBreak > 0 ORDER BY EmpBreak DESC limit "+ .top, .@CharID, .@name$, .@Kills, .@Deaths, .@EmpBreak);
+	
+	mes "[^FF0000WoE ^0000FFRank ^996600Top ^FF0000" + .top +"^000000]";
+	for (set .@c, 0; .@c < .@size; set .@c, .@c + 1)
+		mes "Top ^FF0000" +(.@c + 1) +"^000000: ^0000FF" + .@name$[.@c] +"^000000 | ^FF0000" + .@Kills[.@c] +"^000000 Kills | ^FF0000" + .@Deaths[.@c] +"^000000 Deaths | ^FF0000" + .@EmpBreak[.@c] +"^000000 Emp Break";
+	close;
+	break;
+	
+	case 4:
+	for (set .@x,0; .@x < .top; set .@x,.@x + 1) {
+		if (.@x) mes "- - - - - - - - - - - - - - -";
+		mes "# ^ff0000" + (.@x + 1) + "^000000: ^0000ff" + ( (.GuildName$[.@x])? .GuildName$[.@x]:"None" ) + "^000000";
+		mes " - Guild Master: ^0000ff" + ( (.GuildMaster$[.@x])? .GuildMaster$[.@x]:"None" ) + "^000000";
+		mes " - Territories: ^ff0000" + .NumCastles[.@x] + "^000000";
+		mes " - Members: ^ff0000" + .NumMembers[.@x] + "^000000";
+	}
+	end;
+	
+	case 5:
+	mes "[Master Krane]";
+	mes "Hi, "+strcharinfo(0)+"";
+	mes "Want to go shopping?";
+	next;
+	menu "GvG Shop",GvGShop,"Emp Break Shop",BreakShop,"Nope",ShopNope;
+	
+	GvGShop:
+	callshop "GvG_Points_Shop",1;
+	end;
+	
+	BreakShop:
+	callshop "EmpBreak_Points_Shop",1;
+	end;
+	
+	ShopNope:
+	mes "[Master Krane]";
+	mes "Well Okay";
+	close;
+
+	case 6:
+		mes "Good Day! Master.";
+		next;
+		menu "Are you sure?",yess,"Nope",noo;
+		yess:
+		query_sql("TRUNCATE TABLE `ragnarok`.`woe_ranking`;");
+		mes "Woe Rank Reset Success";
+		close;
+
+		noo:
+		mes "Well Okay";
+		close;
+	break;
+	}
+
+OnInit: // Script Configuration
+	set .top, 10;
+	set .WoePoints, 1;      //points to add in database/player when kill
+	set .WoeDeduct, 1;      //points to add in database
+	set .diedeductpoint, 2; //points to deduct when died
+	waitingroom "Woe Rank List",0;
+	end;
+
+OnPCKillEvent:
+	if (killerrid != getcharid(3)) {
+	if (( agitcheck() || agitcheck2() ) && compare(strcharinfo(3),"g_cas")) {
+		set points, points+.WoePoints;
+		query_sql( "SELECT * FROM woe_ranking WHERE `Char_ID` = '"+getcharid(0)+"'", .@CharID, .@Name$, .@Kills, .@Deaths, .@EmpBreak);
+		set ToTalP , .@Kills + .WoePoints;
+		
+		if(getcharid(0) == .@CharID){
+		query_sql("UPDATE `woe_ranking` SET `Kills` = '"+ToTalP+"' WHERE `Char_ID` = '"+getcharid(0)+"'");
+		}else{	
+		query_sql("INSERT INTO `woe_ranking` (`Char_ID`,`PlayerName`,`Kills`,`Deaths`,`EmpBreak`) VALUES ('"+getcharid(0)+"', '"+strcharinfo(0)+"', '"+.WoePoints+"', '"+.@Deaths+"', '"+.@EmpBreak+"')"); 
+		}
+		////////query for the deaths
+		query_sql( "SELECT `char_id`, `account_id` FROM `char` WHERE `account_id` =  '"+getcharid(3)+"' ", .@Cchar_id, .@Aid);
+		query_sql( "SELECT * FROM woe_ranking WHERE `Char_ID` = '"+.@Cchar_id+"'", .@CharID, .@Name$, .@Kills, .@Deaths, .@EmpBreak);
+		set TotalD , .@Deaths + .WoeDeduct;
+		
+		if(.@CharID != .@Cchar_id){
+		query_sql("INSERT INTO `woe_ranking` (`Char_ID`,`PlayerName`,`Kills`,`Deaths`,`EmpBreak`) VALUES ('"+.@Cchar_id+"', '"+strcharinfo(0)+"', '0', '"+TotalD+"', '"+.@EmpBreak+"')");
+		}else{
+		query_sql("UPDATE woe_ranking SET Deaths = '"+TotalD+"' WHERE `Char_ID` = '"+.@Cchar_id+"'");
+		}
+		
+		//This is the point system on the player, you can disable this anytime by adding comment " // "
+		dispbottom "You killed "+rid2name(killedrid)+" you gained "+.WoePoints+" point and You now have "+Points+" Woe Points.";
+		attachrid(killedrid);
+		set points, points-.diedeductpoint;
+		dispbottom "You are killed by "+rid2name(killerrid)+" you lost "+.diedeductpoint+" points and You now have "+Points+" Woe Points.";
+		end;
+		///////
+
+	}
+    }
+    end;
+}
+
+-	pointshop	GvG_Points_Shop	-1,points,4302:2000;
+-	pointshop	EmpBreak_Points_Shop	-1,ToTalB,13017:1000,4092:500

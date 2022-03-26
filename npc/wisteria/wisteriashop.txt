@@ -1,0 +1,32 @@
+
+prontera,167,178,4	shop	Wisteria_Shop	757,12927:10000
+
+-	script	Wisteria_Shop_main	-1,{
+	
+	OnInit:
+		.item_id = 30006;
+		.max_amount = 100000000;
+		
+		.shop_npc$ = "Wisteria_Shop";
+		
+	OnMinute00: // update every hour
+		hideonnpc .shop_npc$;
+		npcshopdelitem .shop_npc$, .item_id;
+		.@sql$ = .@sql$ + "SELECT `amount` FROM `inventory` WHERE `nameid` = "+.item_id;
+		.@sql$ = .@sql$ + " UNION ";
+		.@sql$ = .@sql$ + "SELECT `amount` FROM `cart_inventory` WHERE `nameid` = "+.item_id;
+		.@sql$ = .@sql$ + " UNION ";
+		.@sql$ = .@sql$ + "SELECT `amount` FROM `storage` WHERE `nameid` = "+.item_id;
+		.@sql$ = .@sql$ + " UNION ";
+		.@sql$ = .@sql$ + "SELECT `amount` FROM `guild_storage` WHERE `nameid` = "+.item_id;
+		.@size = query_sql(.@sql$, .@amount);
+		for (.@i = 0; .@i < .@size; .@i++)
+			.@total_amount += .@amount[.@i];
+		
+		setiteminfo .item_id, ITEMINFO_SELL, (.max_amount / .@total_amount) ;
+		//setiteminfo .item_id, ITEMINFO_BUY, (((.max_amount / .@total_amount) * 100) / rand(1, 3)) ;
+		
+		//npcshopadditem .shop_npc$, .item_id, (.max_amount / .@total_amount);
+		hideoffnpc .shop_npc$;
+		end;
+}

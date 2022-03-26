@@ -1,0 +1,24 @@
+-	script	Item_Shower	-1,{
+OnInit:
+	bindatcmd "itemrain", strnpcinfo(0) +"::OnItemShower", 60,100;
+	end;
+	
+OnItemShower:
+	.@itemid = atoi( .@atcmd_parameters$[0] );
+	.@amount = atoi( .@atcmd_parameters$[1] );
+	if ( getitemname( .@itemid ) == "null" ) {
+		message strcharinfo(0), "Invalid Item ID";
+		end;
+	}
+	if ( !.@amount || .@amount > 100 ) .@amount = 100;
+	getmapxy .@map$, .@x, .@y, BL_PC;
+	while ( .@i < .@amount ) {
+		do {
+			.@dx = rand( -14, 14 );
+			.@dy = rand( -14, 14 );
+		} while( !checkcell( .@map$,(.@x+.@dx),(.@y+.@dy),cell_chkpass ) );
+		makeitem .@itemid, 1, .@map$, .@x + .@dx, .@y + .@dy;
+		.@i++;
+	}
+	end;
+}

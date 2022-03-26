@@ -1,0 +1,38 @@
+sec_in02,165,180,3	script	Skull Collector	10032,{
+
+   set $@npcname_mpq$, "^4000C0[Skull Collector]^000000";
+   mes $@npcname_mpq$;
+   mes "Good Day!";
+   mes "Give me ^0000ff5^000000 ^00c000Skulls^000000";
+   mes "and i will trade it to ^0000ff 1 ^000000 ^ff0000Wisteria^000000.";
+   mes "";
+   mes "Deal?";
+   next;
+   menu "Yes",L_pods,"Cancel",L_Exit;
+
+
+L_pods:
+   set .@wisteriaskullid,7420;
+   mes $@npcname_mpq$;
+   mes "How many Wisteria do you want?";
+   input @skulls;
+   if(countitem(.@wisteriaskullid) < (5*@skulls)) goto LNotEnough;
+       delitem 7420,(5*@skulls);
+   mes "You really have that many Wisteria? Okay, let's trade!";
+       getitem 30006,(1*@skulls);
+   mes "Thank you sweety. come back anytime!";
+   close;
+
+
+
+LNotEnough:
+   mes "You dont have the required items...?";
+   mes "Come back when you are actually ready. Now go Kill some Weak!";
+   close;
+
+L_Exit:
+   close;
+}
+
+
+prontera,147,166,6	duplicate(Skull Collector)	Skull Collector#pront	10032

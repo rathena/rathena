@@ -1,0 +1,138 @@
+//===== Natsukashi Designs Script =======================================
+//= Treasure Chest Event
+//===== Modified By ===================================================
+//= Dev Kael
+
+quiz_02,293,263,4	script	Treasure Event	871,{
+//-	script	Treasure Event	-1,{
+
+	set .gm,80;	// GM Level
+
+OnWhisperGlobal:
+	if(getgmlevel() >= .gm) {
+	if (.mob_left) {
+	mes "^FF0000[Wisteria's Treasures CP]^000000";
+	mes "The Wisteria's Treasures Event is already in progress!";
+	mes "Would you stop it?";
+	switch(select("Yes:No")){
+case 1:
+	close2;
+	goto OnStop2;
+case 2:
+	close;
+	}
+}
+	mes "^FF0000[Wisteria's Treasures Event CP]^000000";
+	mes "This is the Control Panel for the Wisteria's Treasures.";
+	mes "How can I help you?";
+	next;
+	switch(select("Start:Stop:Cancel")){
+	
+case 1:
+	mes "^FF0000[Wisteria's Treasures Event CP]^000000";
+	mes "Please select a map.";
+	// ADD YOUR MAPS HERE
+	setarray .maplist$,
+		"RANDOM MAP","alberta","aldebaran","amatsu","ayothaya","brasilis","comodo","dewata","dicastes01",
+		"eclage","einbech","einbroch","geffen","gonryun","hugel","izlude","jawaii","lasagna","lighthalzen","louyang",
+		"malangdo","malaya","manuk","mid_camp","mora","morocc","moscovia","niflheim","payon","prontera",
+		"rachel","splendide","umbala","veins","xmas","yuno";
+	.menu_count = getarraysize(.maplist$);
+	for (.@i = 0; .@i < .menu_count; .@i++)
+		.@menu$ = .@menu$ + .maplist$[.@i] + ":";
+	.@i = select(.@menu$) - 1;
+	if( .@i == 0 )
+		set .@i,rand(1,getarraysize(.maplist$)-1);
+	set .map$,.maplist$[.@i];
+	mes " ","The chosen map is [ ^0000FF"+.map$+" ^000000]"," ","Are you sure?";
+	if(select("Yes:No")==2)end;
+	close2;
+	goto OnStart;
+	
+case 2:
+
+case 3:
+	close;
+	}
+}
+	close;
+
+OnStart:
+	donpcevent strnpcinfo(0)+"::OnKillSummon";
+	set (.mobid,1334);	//Monster ID
+	set (.mobname$,"Wisteria Treasure Chest");	//Monster Name
+	set (.moba,30);	//Monster Count
+	set .mobevent,1; //Event On/Off Indicator
+
+	//set .@rand,rand(0,getarraysize(.maplist$)-1);
+	//set .map$,.maplist$[.@rand];
+	setmapflag .map$,mf_noskill;
+	setmapflag .map$,mf_noicewall;
+	setmapflag .map$,mf_loadevent;
+	setmapflag .map$,mf_nocommand,99;
+	sleep 1000;
+//	mapannounce "cell_game","[Wisteria's Treasures Event]: "+.moba+" "+.mobname$+" spawn at "+.map$+"",0;
+	announce ("[Wisteria's Treasures Event]: "+.moba+" "+.mobname$+" spawn at "+.map$+"",bc_all);
+	monster .map$,0,0,.mobname$,.mobid,.moba,"Treasure Event::OnMyMobDead";
+	set .mob_left,.moba;
+	sleep 5000;
+//	mapannounce "cell_game","[Wisteria's Treasures Event]: Skills and Commands are currently disabled at "+.map$+".",0;
+	announce "[Wisteria's Treasures Event]: Skills and Commands are currently disabled at "+.map$+".",bc_all;
+	end;
+
+OnKillSummon:
+	killmonster .map$,strnpcinfo(0)+"::OnMyMobDead";
+	set .mob_left,0;
+	end;
+
+OnStop2:
+	killmonster .map$,strnpcinfo(0)+"::OnMyMobDead";
+//	mapannounce "cell_game","The Wisteria's Treasures Event was stopped by an Admin.",0;
+	announce "Wisteria's Treasures Event was stopped by an Admin.",bc_all;
+	set .mob_left,0;
+	removemapflag .map$,mf_noskill;
+	removemapflag .map$,mf_noicewall;
+	removemapflag .map$,mf_loadevent;
+	removemapflag .map$,mf_nocommand,99;
+	set .mobevent,0;
+	sleep 5000;
+//	mapannounce "cell_game","[Wisteria's Treasures Event]: Skills and Commands are re-enabled at "+.map$+".",0;
+	announce "[Wisteria's Treasures Event]: Skills and Commands are re-enabled at "+.map$+".",bc_all;
+	end;
+
+OnStop:
+	sleep 2000;
+//	mapannounce "cell_game","Thank you for participating in Wisteria's Treasures Event",0;
+	announce "Thank you for participating in Wisteria's Treasures Event",bc_all;
+	removemapflag .map$,mf_noskill;
+	removemapflag .map$,mf_noicewall;
+	removemapflag .map$,mf_loadevent;
+	removemapflag .map$,mf_nocommand,99;
+	set .mobevent,0;
+	sleep 5000;
+//	mapannounce "cell_game","[Wisteria's Treasures Event]: Skills and Commands are re-enabled at "+.map$+".",0;
+	announce "[Wisteria's Treasures Event]: Skills and Commands are re-enabled at "+.map$+".",bc_all;
+	end;
+
+OnMyMobDead:
+	set .mob_left,.mob_left-1;
+	if (.mob_left <= 0) {
+//              mapannounce "cell_game","[Wisteria's Treasures Event]: "+strcharinfo(0)+" has killed the last "+.mobname$+".",0;
+               announce "[Wisteria's Treasures Event]: "+strcharinfo(0)+" has killed the last "+.mobname$+".",bc_all;
+               donpcevent "Treasure Event::OnStop";	
+        } else {
+//		mapannounce "cell_game","["+.mob_left+"/"+.moba+"] "+.mobname$+" left at "+.map$+".",0;
+               announce "["+.mob_left+"/"+.moba+"] "+.mobname$+" left at "+.map$+".",bc_all;
+        }
+        end;
+
+OnPCLoadMapEvent:
+	if (.mobevent == 0) end;
+	if (strcharinfo(3) == .map$){
+		atcommand "@alootid reset";
+		atcommand "@autoloot 0";
+	}
+	end;
+}
+	
+	

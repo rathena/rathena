@@ -100,7 +100,16 @@ OnStartArena:
 
 // The Emperium has been broken.
 OnAgitBreak:
+	query_sql( "SELECT * FROM woe_ranking WHERE `PlayerName` = '"+strcharinfo(0)+"'", .@CharID, .@Name$, .@Kills, .@Deaths, .@EmpBreak);
+	set .WoeBreakPoints, 1;
+	set ToTalB , .@EmpBreak + .WoeBreakPoints;
 	set .@GID,getcharid(2);
+	
+	if(.@Name$ == strcharinfo(0)){
+	query_sql("UPDATE `woe_ranking` SET `EmpBreak` = '"+ToTalB+"' WHERE `PlayerName` = '"+strcharinfo(0)+"'");
+	}else{
+	query_sql("INSERT INTO `woe_ranking` (`Char_ID`,`PlayerName`,`Kills`,`Deaths`,`EmpBreak`) VALUES ('"+getcharid(0)+"', '"+strcharinfo(0)+"', '"+.@Kills+"', '"+.@Deaths+"', '"+ToTalB+"')"); 
+	}
 	// Show and log error if an unguilded player breaks the Emperium. (Should NEVER happen)
 	if (.@GID <= 0) {
 		set .@notice$,"Character "+strcharinfo(0)+" ("+getcharid(0)+") broke the Emperium in Castle: "+strnpcinfo(2)+" while guildless. No data will be saved and Emperium respawned.";

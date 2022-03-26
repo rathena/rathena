@@ -1,0 +1,823 @@
+//==========================================================|
+//==========================================================|
+//	 _    _                     _     _                     |
+//	| |  | |                   | |   (_)                    |
+//	| |__| |_   _ _ __ ___  ___| |__  _ _ __ ___   __ _     |
+//	|  __  | | | | '__/ _ \/ __| '_ \| | '_ ` _ \ / _` |    |
+//	| |  | | |_| | | | (_) \__ \ | | | | | | | | | (_| |    |
+//	|_|  |_|\__, |_|  \___/|___/_| |_|_|_| |_| |_|\__,_|    |
+// 	        __/ |Scripter                                   |
+// 	       |___/										    |
+//==========================================================|
+//==========================================================|
+//==========================================================|
+/* ------------------ SCRIPT INFO -------------------------	=
+Name: Quest Point	   										=
+Ver : 1.0				 					   				=
+For : rAthena				 					   			=
+Lang: EN					   								=
+By  : Hyroshima												= 
+---------------------------------------------------------- */
+//===== DESCRIPTION ===========================================
+// The system consists of 1 quest to the player, 			=
+// the player who makes it complete earn 1 Quest Point, 	=
+// and these points you can use to exchange for custom 		=
+// or something of interest to you, the quests are random,	=
+// and the Admins / GMs can add quest items in-game like	=
+// this you can edit too.									=
+//===========================================================
+prontera,141,180,6	script	Quest Point::QP	4_F_VALKYRIE,{
+//===========================================================
+
+	callsub S_QPHead;
+	
+	if(getgroupid() >= $QP_Gmlvl) menu "Admin CP",QP_Admin,"Player Mode",-;
+	
+	callfunc("QP_Main",1,getcharid(3));
+	
+	query_sql "SELECT COUNT('item_id') FROM `quest_point_db`",.@irst;
+
+	if(.@irst == 0){ mes "No quest items have been added!"; close; }
+	
+	if(#Quest_Ativa != null)
+	{
+		mes "^0065DFItem: ^000000^32CD32[ "+getitemname(#item_id)+" ]^000000";
+		mes "^0065DFAmount: ^000000^32CD32[ "+#item_value+" ]^000000";
+		mes "^0065DFItem ID: ^000000^32CD32[ "+#item_id+" ]^000000";
+		switch(#nivel)
+		{
+			case 1: mes "^0065DFDifficulty:^000000 ^32CD32[ Easy ]^000000"; break;
+			case 2: mes "^0065DFDifficulty:^000000 ^0000FF[ Medium ]^000000"; break;
+			case 3: mes "^0065DFDifficulty:^000000 ^FF0000[ Hard ]^000000"; break;
+		}
+
+		freeloop(1);
+		while(!.@mLoop)
+		{
+			set .@slt,select("Give Items:Back After:^4169E1You have "+callfunc("QP_Main",2,getcharid(3))+" ^4169E1Quest Points!^000000");	
+			
+			switch(.@slt)
+			{
+				case 1: set .@mLoop,1; break;
+				case 2: set .@mLoop,1; close;
+				case 3: break;
+			}
+		}
+		freeloop(0);
+
+		if(countitem(#item_id) < #item_value)
+		{
+			next;
+			callsub S_QPHead;
+			mes "^FF0000* Please check your items!^000000";
+			close;
+		}
+
+		delitem #item_id,#item_value;
+
+		set #Quest_Ativa,null;
+		query_sql "UPDATE `login` SET `QuestPoint` = `QuestPoint` + 1 WHERE `account_id` = '"+getcharid(3)+"'";
+		query_sql "UPDATE `login` SET `MaxQPoints` = `MaxQPoints` + 1 WHERE `account_id` = '"+getcharid(3)+"'";
+		
+		query_sql "SELECT `char_id` FROM `char` WHERE `QP_CharPref`='1' AND `account_id`='"+getcharid(3)+"'",.@qpc;
+		if(!.@qpc){ query_sql "UPDATE `char` SET `QP_CharPref`='1' WHERE `char_id`='"+getcharid(0)+"'"; }
+		
+		next;
+		
+		callsub S_QPHead;
+
+		mes "Congratulations, quest completed!";
+		mes "Until the next quest ^FF0000[ "+strcharinfo(0)+" ]^000000.";
+		close2;
+		dispbottom "You have received 1 Quest Point, Total: "+callfunc("QP_Main",2,getcharid(3))+"";
+		end;
+	}
+	
+	mes "Hello ^9370DB "+strcharinfo(0)+"^000000,";
+	mes "You have "+callfunc("QP_Main",2,getcharid(3))+" Quest Points.";
+	next;
+
+	callsub S_QPHead;
+	
+	switch($Filtro_lvl)
+	{
+		case 0: mes "Dificuldade: ^9400D3[ Random ]^000000"; break;
+		case 1: mes "Dificuldade: ^32CD32[ Easy ]^000000"; break;
+		case 2: mes "Dificuldade: ^0000FF[ Medium ]^000000"; break;
+		case 3: mes "Dificuldade: ^FF0000[ Hard ]^000000"; break;
+	}
+	
+	mes "^3CB371----------------------------------^000000";
+	mes "Are you ready to start a quest?";
+	next;
+	menu "Right now!!",-,"See Ranking",-,"Char preference",-,"No",-;
+	
+	switch(@menu)
+	{
+		case 1: break;
+		case 2:		
+				mes "    ^1E90FF[ Ranking top 10 Quest Point ]^000000";
+				mes "  ^4682B4POSITION - QUEST POINTS - NICK^000000";
+				mes " ";
+				
+				query_sql "SELECT `account_id`,`MaxQPoints` FROM `login` WHERE `MaxQPoints` > '0' ORDER BY `MaxQPoints` DESC LIMIT 10",.@acid,.@maxqp;
+				
+				if(!getarraysize(.@acid)){ mes "^FF0000*The ranking is empty!^000000"; }
+				
+				for(set .@i,0; .@i<getarraysize(.@acid); set .@i,.@i+1)
+				{
+					query_sql "SELECT `name` FROM `char` WHERE `account_id`='"+.@acid[.@i]+"' AND `QP_CharPref`='1'",.@qpname$;
+					mes " ^8B008B[ "+(.@i+1)+"º ]^000000-^0000CD[ "+.@maxqp[.@i]+" ]:^000000 "+.@qpname$+"";
+				}
+				
+				close;
+				
+		case 3:
+				callsub S_QPHead;
+				
+				mes "Would you like to make this char as the main one in the Quest Point ranking?";
+				if(select("Yes please!:No")==2){ close; }
+				
+				query_sql "UPDATE `char` SET `QP_CharPref`='0' WHERE `account_id`='"+getcharid(3)+"' AND `QP_CharPref`='1'";
+				query_sql "UPDATE `char` SET `QP_CharPref`='1' WHERE `char_id`='"+getcharid(0)+"'";
+				
+				mes "^00FF00 DONE! ^000000";
+				
+		case 4:
+				close;
+	}
+
+	callsub S_QPHead;
+	
+	mes "Ok ... let me check the mission board ...!";
+	next;
+
+	//Filtro Dificuldade
+	if($Filtro_lvl != 0)
+	{ query_sql "select item_id from quest_point_db where level='"+$Filtro_lvl+"' order by rand() limit 1",.@rst; }
+	else
+	{ query_sql "select item_id from quest_point_db order by rand() limit 1",.@rst; }
+
+	if(select("Start Quest:Cancel")==2){ close; }
+
+	query_sql "select item_id,quantity_min,quantity_max,level from quest_point_db where item_id='"+.@rst+"'",.@item_id,.@min,.@max,.@lvl; 
+
+	set #item_id,.@item_id;
+	set #item_value,rand(.@min,.@max);
+	set #nivel,.@lvl;
+	set #Quest_Ativa,1;
+	next;
+
+	callsub S_QPHead;
+
+	mes "^0065DFItem: ^000000^32CD32[ "+getitemname(#item_id)+" ]^000000";
+	mes "^0065DFAmount: ^000000^32CD32[ "+#item_value+" ]^000000";
+	mes "^0065DFItem ID: ^000000^32CD32[ "+#item_id+" ]^000000";
+	switch(#nivel)
+	{
+		case 1: mes "^0065DFDificuldade:^000000 ^32CD32[ Easy ]^000000"; break;
+		case 2: mes "^0065DFDificuldade:^000000 ^0000FF[ Medium ]^000000"; break;
+		case 3: mes "^0065DFDificuldade:^000000 ^FF0000[ Hard ]^000000"; break;
+	}
+	close;
+
+QP_Admin:
+
+	mes "What Mr. ^FF0000[ "+strcharinfo(0)+" ]^000000 want?";
+	next;
+	switch(select("^008000Add ^000000/^FF0000 Remove ^000000Quest Point:^008000Add ^000000/^0000CD Edit ^000000/^FF0000 Remove ^000000Quest Item:^8A2BE2Difficulty filter^000000 / ^7B68EEReset Quest^000000:^D2691ELogs^000000:^FF0000Exit^000000"))
+	{
+		case 1:
+			callsub S_QPHead;
+			mes "Please enter account login or player name!";
+			next;
+			input .@userid$;
+
+			query_sql "SELECT `account_id`,`userid` FROM `login` WHERE `userid`='"+.@userid$+"'",.@rst,.@usid$;
+
+			if (.@rst == 0)
+			{
+				query_sql "SELECT `account_id`,`name` FROM `char` WHERE `name`='"+.@userid$+"'",.@rst,.@name$;
+				if(.@rst == 0 && .@name$ == "")
+				{
+					callsub S_QPHead;
+					mes "^FF0000*No account or player found!^000000";
+					close;
+				}
+			}
+
+			next;
+			
+			callsub S_QPHead;
+			mes "Enter the amount of Quest Points to be added or removed!";
+			input .@Qvalor;
+
+			if(.@Qvalor == null){ mes "^FF0000*Invalid value!^000000"; close; }
+
+			next;
+			
+			callsub S_QPHead;
+			mes "Please which method you will use!";
+			if(select("^008000Add^000000:^FF0000Remove^000000")==2){ set .@mod,1; }
+			else{ set .@mod,0; }
+
+			if(.@mod == 1)
+			{
+				query_sql "SELECT `QuestPoint` FROM `login` WHERE `account_id`='"+.@rst+"'",.@rstq;
+				if(.@Qvalor > .@rstq)
+				{
+					mes "^FF0000*The player does not have enough quest points to be removed!^000000";
+					close;
+				}
+			}
+			
+			next;
+			
+			callsub S_QPHead;
+			mes "Please inform in a few words why you are "+(.@mod?"^FF0000removing^000000":"^32CD32adding^000000")+" Quest Points!";
+			input .@comment$;
+
+			next;
+
+			callsub S_QPHead;
+			mes "                ^4682B4[ INFORMATION ]^000000";
+			if(.@usid$ != "") mes "^008B8BUser ID: [ ^000000"+.@userid$+"^008B8B ]^000000";
+			if(.@name$ != "") mes "^008B8BPlayer Name: [ ^000000"+.@name$+"^008B8B ]^000000";
+			mes "^20B2AAAccount ID: [ ^000000"+.@rst+"^20B2AA ]^000000";
+			mes "^48D1CCQuest Points: [ ^000000"+(.@mod?"^FF0000-"+.@Qvalor+"^000000":"^32CD32+"+.@Qvalor+"^000000")+" ^48D1CC]^000000";
+			next;
+			
+			callsub S_QPHead;
+			mes "               ^008B8B[ Reason ]^000000";
+			mes "^2F4F4F"+.@comment$+"^000000";
+				
+			if(select(""+(.@mod?"^FF0000Remove^000000":"^32CD32Add^000000")+":Cancelar")==2){ close; }
+			
+			next;
+
+			callsub S_QPHead;
+
+			query_sql "SELECT `userid` FROM `login` WHERE `account_id`='"+getcharid(3)+"'",.@accid$;
+			query_sql "SELECT `userid` FROM `login` WHERE `account_id`='"+.@rst+"'",.@accuser$;
+
+			switch(.@mod)
+			{
+				case 0:
+					query_sql "INSERT INTO `quest_point_log` (`send_acc_id` ,`send_player_name`,`send_acc_user` ,`valor` ,`adicionar` ,`recpt_acc_id` ,`recpt_player_name` ,`recpt_acc_user` ,`log_date`,`comment`) VALUES ('"+getcharid(3)+"','"+strcharinfo(0)+"','"+.@accid$+"' ,'"+.@Qvalor+"' ,'1','"+.@rst+"','"+.@name$+"' ,'"+.@accuser$+"', '"+gettime(5)+"/"+gettime(6)+"/"+gettime(7)+" - "+gettime(3)+":"+gettime(2)+"','"+.@comment$+"')";
+					query_sql "UPDATE `login` SET `QuestPoint`=`QuestPoint`+'"+.@Qvalor+"' WHERE `account_id`='"+.@rst+"'";
+					break;
+				case 1:
+					query_sql "INSERT INTO `quest_point_log` (`send_acc_id` ,`send_player_name`,`send_acc_user` ,`valor` ,`remover` ,`recpt_acc_id` ,`recpt_player_name` ,`recpt_acc_user` ,`log_date`,`comment`) VALUES ('"+getcharid(3)+"','"+strcharinfo(0)+"','"+.@accid$+"' ,'"+.@Qvalor+"' ,'1','"+.@rst+"','"+.@name$+"' ,'"+.@accuser$+"', '"+gettime(5)+"/"+gettime(6)+"/"+gettime(7)+" - "+gettime(3)+":"+gettime(2)+"','"+.@comment$+"')";
+					query_sql "UPDATE `login` SET `QuestPoint`=`QuestPoint`-'"+.@Qvalor+"' WHERE `account_id`='"+.@rst+"'";
+					break;
+			}
+
+			mes "Pontos "+(.@mod?"removed":"inserted")+" successfully!";
+			close; 
+
+		case 2:
+		
+			callsub S_QPHead;
+			
+			mes "What would you like to do?";
+			switch(select("^008000Add Item^000000:^0000CDEdit Item^000000:^FF0000Remove Item^000000"))
+			{
+				case 1:
+						next;
+						callsub S_QPHead;
+						
+						mes "Please enter the item id!";
+						input .@item_id;
+
+						query_sql "SELECT `item_id` FROM `quest_point_db` WHERE `item_id`='"+.@item_id+"'",.@rst;
+
+						if(.@item_id == 0 || .@rst == .@item_id){ mes "^FF0000*This item has already been registered or is an invalid value!^000000"; close; }
+						
+						next;
+						callsub S_QPHead;
+
+						mes "Minimum Quantity:";
+						mes "^3CB371----------------------------------^000000";
+						mes "^00008B> For the value to be fixed, type the same value in the next window!^000000";
+						input .@quantity_min;
+
+						if(.@quantity_min == 0){ mes "^FF0000*Invalid value!^000000"; close; }
+						
+						next;
+						callsub S_QPHead;
+
+						mes "Maximum Quantity:";
+						input .@quantity_max;
+
+						if(.@quantity_max == 0){ mes "^FF0000*Invalid value!^000000"; close; }
+						if(.@quantity_max < .@quantity_min){ mes "^FF0000*The 'max' value cannot be less than the 'min'!^000000"; close; }
+						
+						next;
+						callsub S_QPHead;
+
+						mes "Difficulty level:";
+						mes "1 =^32CD32 Easy^000000";
+						mes "2 =^0000FF Medium^000000";
+						mes "3 =^FF0000 Hard^000000";
+						input .@level;
+						
+						if(.@level == 0){ mes "^FF0000*Invalid value!^000000"; close; }
+						
+						next;
+						callsub S_QPHead;
+
+						mes "Check the information in the next window so you can complete or cancel the procedure!";
+						next;
+
+						callsub S_QPHead;
+						
+						mes "^3CB371[ ID ]: ^000000"+.@item_id;
+						mes "^3CB371[ Name ]: ^000000"+getitemname(.@item_id);
+						
+						if(.@quantity_min == .@quantity_max){ mes "^3CB371[ Fixed value ]: ^000000"+.@quantity_min; } else { mes "^3CB371[ Min~Max ]: ^000000"+.@quantity_min+"~"+.@quantity_max; }
+						
+						mes "^3CB371[ Difficulty ]: ^000000"+.@level;
+										
+						if(select("Confirm:Cancel")==2){ close; }
+						
+						query_sql "INSERT INTO  `quest_point_db` (`item_id` , `quantity_min` , `quantity_max` ,`level`)VALUES ('"+.@item_id+"',  '"+.@quantity_min+"',  '"+.@quantity_max+"',  '"+.@level+"')";
+
+						// Query log add item
+						query_sql "INSERT INTO  `qpItem_log` (`acc_id`,`char_id`,`char_name`,`item_id`,`imin`,`imax`,`level`,`add`,`log_date`) VALUES ('"+getcharid(3)+"',  '"+getcharid(0)+"',  '"+strcharinfo(0)+"',  '"+.@item_id+"',  '"+.@quantity_min+"',  '"+.@quantity_max+"',  '"+.@level+"','1', '"+gettime(5)+"/"+gettime(6)+"/"+gettime(7)+" - "+gettime(3)+":"+gettime(2)+"')";
+						
+						next;
+						callsub S_QPHead;
+						
+						mes "Process concluded!";
+						close;
+			
+				case 2: 
+						next;
+						callsub S_QPHead;
+
+						mes "Please enter the item id!";
+						input .@itemid;
+						
+						query_sql "SELECT * FROM `quest_point_db` WHERE `item_id`='"+.@itemid+"'",.@item_id,.@i_min,.@i_max,.@ilvl;
+
+						if(.@item_id == 0){ mes "^FF0000*Invalid value or item not found!^000000"; close; }
+
+						next;
+							
+						callsub S_QPHead;
+
+						mes "     ^4682B4*Choose what you want to edit.^000000";
+						mes "^3CB371[ ID ]: ^000000"+.@item_id;
+						mes "^3CB371[ Name ]: ^000000"+getitemname(.@item_id);
+						mes "^3CB371[ Min ]: ^000000"+.@i_min;
+						mes "^3CB371[ Max ]: ^000000"+.@i_max;
+						mes "^3CB371[ Difficulty ]: ^000000"+.@ilvl;
+						switch(select("Min:Max:Difficulty:Cancel"))
+						{
+							case 1:
+									next;
+									callsub S_QPHead;
+									
+									mes "What is the minimum value you want to set?";
+									input .@i2_min;
+									
+									if(.@i2_min > .@i_max){ mes "^FF0000*The 'min' value cannot be greater than 'max', change the 'max' value first!^000000"; close; }
+									
+									next;
+									callsub S_QPHead;
+									
+									mes "Do you want to change the minimum "+.@i_min+" for "+.@i2_min+" ?";
+									if(select("Yes:No")==2){ close; }
+										
+									query_sql "UPDATE `quest_point_db` SET `quantity_min`='"+.@i2_min+"' WHERE `item_id`='"+.@item_id+"'";
+									
+									// Query log edite item
+									query_sql "INSERT INTO  `qpItem_log` (`acc_id`,`char_id`,`char_name`,`item_id`,`ant_imin`,`imin`,`edit`,`log_date`) VALUES ('"+getcharid(3)+"',  '"+getcharid(0)+"',  '"+strcharinfo(0)+"',  '"+.@item_id+"',  '"+.@i_min+"',  '"+.@i2_min+"', '1', '"+gettime(5)+"/"+gettime(6)+"/"+gettime(7)+" - "+gettime(3)+":"+gettime(2)+"')";
+									
+									next;
+									callsub S_QPHead;
+									
+									mes "Change made successfully!";
+									close;
+							case 2:
+									next;
+									callsub S_QPHead;
+									
+									mes "What is the maximum value you want to set?";
+									input .@i2_max;
+									
+									if(.@i2_max < .@i_min){ mes "^FF0000*The 'max' value cannot be less than 'min', change the 'min' value first!"; close; }
+									
+									next;
+									callsub S_QPHead;
+									
+									mes "Do you want to change the maximum "+.@i_max+" for "+.@i2_max+" ?";
+									if(select("Yes:No")==2){ close; }
+										
+									query_sql "UPDATE `quest_point_db` SET `quantity_max`='"+.@i2_max+"' WHERE `item_id`='"+.@item_id+"'";
+									
+									// Query log edite item
+									query_sql "INSERT INTO  `qpItem_log` (`acc_id`,`char_id`,`char_name`,`item_id`,`ant_imax`,`imax`,`edit`,`log_date`) VALUES ('"+getcharid(3)+"',  '"+getcharid(0)+"',  '"+strcharinfo(0)+"',  '"+.@item_id+"',  '"+.@i_max+"',  '"+.@i2_max+"', '1', '"+gettime(5)+"/"+gettime(6)+"/"+gettime(7)+" - "+gettime(3)+":"+gettime(2)+"')";
+									
+									next;
+									callsub S_QPHead;
+									
+									mes "Change made successfully!";
+									close;
+							case 3:
+									next;
+									callsub S_QPHead;
+									mes "      ^4682B4*Choose the difficulty.^000000";
+									mes "1 =^32CD32 Easy^000000";
+									mes "2 =^0000FF Medium^000000";
+									mes "3 =^FF0000 Hard^000000";
+									input .@i2lvl;
+									
+									next;
+									callsub S_QPHead;
+									
+									if(.@i2lvl == 0 || .@i2lvl > 3){ mes "^FF0000*Invalid value!^000000"; close; }
+									
+									mes "Do you want to change the difficulty of "+.@ilvl+" for "+.@i2lvl+" ?";
+									if(select("Yes:No")==2){ close; }
+										
+									query_sql "UPDATE `quest_point_db` SET `level`='"+.@i2lvl+"' WHERE `item_id`='"+.@item_id+"'";
+									
+									// Query log edite item
+									query_sql "INSERT INTO  `qpItem_log` (`acc_id`,`char_id`,`char_name`,`item_id`,`ant_level`,`level`,`edit`,`log_date`) VALUES ('"+getcharid(3)+"',  '"+getcharid(0)+"',  '"+strcharinfo(0)+"',  '"+.@item_id+"',  '"+.@ilvl+"',  '"+.@i2lvl+"', '1', '"+gettime(5)+"/"+gettime(6)+"/"+gettime(7)+" - "+gettime(3)+":"+gettime(2)+"')";
+									
+									next;
+									callsub S_QPHead;
+									
+									mes "Change made successfully!";
+							case 4:
+									close;
+						}
+				
+				case 3:
+						next;
+						callsub S_QPHead;
+
+						mes "Item ID:";
+						input .@item_id;
+
+						query_sql "SELECT `item_id` FROM `quest_point_db` WHERE `item_id`='"+.@item_id+"'",.@rst;
+
+						next;
+						callsub S_QPHead;
+
+						if(.@item_id == 0 || .@rst == 0){ mes "^FF0000*This item is not found or is a Invalid value!^000000"; close; }
+
+						query_sql "SELECT * FROM `quest_point_db` WHERE `item_id`='"+.@item_id+"'",.@item_id,.@i_min,.@i_max,.@ilvl;
+
+						mes "^4682B4*Remove the following information?^000000";
+						mes "-----------------------------------";
+						mes "^3CB371[ ID ]: ^000000"+.@item_id;
+						mes "^3CB371[ Name ]: ^000000"+getitemname(.@item_id);
+						mes "^3CB371[ Min ]: ^000000"+.@i_min;
+						mes "^3CB371[ Max ]: ^000000"+.@i_max;
+						mes "^3CB371[ Difficulty ]: ^000000"+.@ilvl;
+
+						if(select("Remove:Cancel")==2){ close; }
+
+						query_sql "DELETE FROM `quest_point_db` WHERE `item_id`='"+.@item_id+"'";
+
+						// Query log remove item
+						query_sql "INSERT INTO  `qpItem_log` (`acc_id`,`char_id`,`char_name`,`item_id`,`imin`,`imax`,`level`,`remov`,`log_date`) VALUES ('"+getcharid(3)+"',  '"+getcharid(0)+"',  '"+strcharinfo(0)+"',  '"+.@item_id+"',  '"+.@i_min+"',  '"+.@i_max+"',  '"+.@ilvl+"','1', '"+gettime(5)+"/"+gettime(6)+"/"+gettime(7)+" - "+gettime(3)+":"+gettime(2)+"')";
+
+						next;
+						callsub S_QPHead;
+
+						mes "Successful item removal!";
+						close;
+			}
+
+		case 3:
+				next;
+				callsub S_QPHead;
+				
+				mes "^00008B> Reset: If any player has a problem, this option will ask for a reset the next time they talk to the npc!^000000";
+				switch(select("Difficulty filter:Resete:Cancel"))
+				{
+					case 1:
+							next;
+							callsub S_QPHead;
+							mes "^00008B> Deactivating the difficulty filter, the system becomes random!";
+							set .@fStatus$,($Filtro_lvl == 1 ? "Easy":$Filtro_lvl == 2 ? "Medium":$Filtro_lvl == 3 ? "Hard":"");
+							mes "^00008B> Filter (current): "+(.@fStatus$ != "" ? .@fStatus$:"Off (random)!")+"";
+							
+							next;
+							callsub S_QPHead;
+								
+							if(select("Disable:Activate")==2)
+							{
+								mes "Níveis de dificuldade:";
+								mes "1 =^32CD32 Easy^000000";
+								mes "2 =^0000FF Medium^000000";
+								mes "3 =^FF0000 Hard^000000";
+								input .@nivel;
+								
+								if(.@nivel == 0 || .@nivel > 3){ next; callsub S_QPHead; mes "^FF0000*Invalid value!^000000"; close; }
+								
+								query_sql "SELECT COUNT(*) FROM `quest_point_db` WHERE `level`='"+.@nivel+"'",.@sqlrst;
+								
+								if(.@sqlrst == 0)
+								{
+									next;
+									callsub S_QPHead;
+									
+									mes "There are no items registered with this difficulty!";
+									close;
+								}
+								
+								next;
+								callsub S_QPHead;
+								
+								mes "There is a total of "+.@sqlrst+" items with this difficult, would you like to continue?";
+								if(select("Yes:No")==2) close;
+								
+								next;
+								callsub S_QPHead;
+								
+								set $Filtro_lvl,.@nivel;
+								
+								mes "Difficulty filter changed to "+.@nivel+"!";
+								close;
+							}
+
+							if($Filtro_lvl == 0){ mes "It is already deactivated!"; close; }
+							
+							mes "Difficulty filter disabled (default: random).";
+							set $Filtro_lvl,0;
+							close;
+						
+					case 2:
+							next;
+							callsub S_QPHead;
+							
+							mes "Please enter the login or name of the player you wish to request a reset from!";
+							input .@loginuser$;
+
+							query_sql "SELECT `account_id` FROM `login` WHERE `userid`='"+.@loginuser$+"'",.@rst;
+
+							if (.@rst == 0)
+							{
+								query_sql "SELECT `account_id`,`name` FROM `char` WHERE `name`='"+.@loginuser$+"'",.@rst,.@name$;
+								if(.@rst == 0 && .@name$ == "")
+								{ mes "^FF0000*No account or player found!^000000"; close; }
+							}
+
+							query_sql "SELECT `qp_reset` FROM `login` WHERE `account_id`='"+.@rst+"'",.@loginu;
+
+							if(.@loginu == 1){next; callsub S_QPHead; mes "I'm waiting for the player to come and talk to me!"; close; }
+							
+							next;
+							
+							callsub S_QPHead;
+							
+							mes "Please inform the reason why you are applying the reset to this (e) account / player!";
+							input .@comment2$;
+							
+							next;
+							callsub S_QPHead;
+							
+							query_sql "UPDATE `login` SET `qp_reset` = '1' WHERE `account_id`='"+.@rst+"'";
+							mes "Tell the player that you must speak to me so that I can do the reset!";
+						
+							query_sql "INSERT INTO `qpReset_log` (`acc_id`,`char_id`,`char_name`,`player_name`,`player_acc`,`log_date`,`comment`) VALUES ('"+getcharid(3)+"', '"+getcharid(0)+"', '"+strcharinfo(0)+"', '"+.@name$+"', '"+.@loginuser$+"', '"+gettime(5)+"/"+gettime(6)+"/"+gettime(7)+" - "+gettime(3)+":"+gettime(2)+"', '"+.@comment2$+"')";
+							
+							close;
+					case 3:
+							close;
+				}
+		
+		case 4:
+				callsub S_QPHead;
+				
+				mes "Please choose from the menu what you would like to see.";
+				
+				switch(select("Quest Point Manipulated:Items de Quest:Quest Reset:Exit"))
+				{
+						case 1:
+								next;
+								callsub S_QPHead;
+								
+								query_sql "SELECT count(*) FROM `quest_point_log`",.@rst;
+								
+								mes "A total of "+.@rst+" records were found, would you like to see them?";
+								if(select("Yes:No")==2){ close; }
+								next;
+								
+								query_sql "SELECT * FROM `quest_point_log`",.@id,.@accs,.@sendp$,.@accsu$,.@amount,.@add,.@rmv,.@acca,.@rcpp$,.@accau$,.@date$,.@comment$;
+								
+								for(set .@i,0; .@i< .@rst; set .@i,.@i+1)
+								{
+									mes "          ^0065DF[ Sender's Data ]^000000";
+									mes "                     ^0065DF[ "+(.@i+1)+" / "+.@rst+" ]^000000";
+									mes "                -----------------";
+									mes "^DAA520LogID: ^000000"+.@id[.@i];
+									mes "^DAA520AccID: ^000000"+.@accs[.@i];
+									mes "^DAA520Player: ^000000"+.@sendp$[.@i];
+									mes "^DAA520AccUser: ^000000"+.@accsu$[.@i];
+									mes "^DAA520Value: ^000000"+.@amount[.@i];
+									mes "^DAA520Method: ^000000"+(.@add[.@i]?"Added":"Removed");
+									mes "^DAA520Date: ^000000"+.@date$[.@i];
+									mes "            ^FF4500 [ Reason ] ^000000";
+									mes .@comment$[.@i];
+									mes "-----------------------------------";
+									mes "         ^0065DF[ Receiver Data ]^000000";
+									mes "                -----------------";
+									mes "^DAA520AccID: ^000000"+.@acca[.@i];
+									mes "^DAA520Player: ^000000"+.@rcpp$[.@i];
+									mes "^DAA520AccUser: ^000000"+.@accau$[.@i];
+									
+									if(select("Next:Cancel")==2){ close; }
+									next;
+								}
+								
+								close;
+						
+						case 2:
+								next;
+								callsub S_QPHead;
+								
+								mes "Choose by category or all in order.";
+								switch(select("^008000Added^000000:^0000CDEdited^000000:^FF0000Removeds^000000:^9400D3All^000000:Exit"))
+								{
+									case 1:
+											next;
+											query_sql "SELECT count(*) FROM `qpItem_log` WHERE `add`='1'",.@rst;
+											
+											if(!.@rst){ callsub S_QPHead; mes "^FF0000*There are no logs!^000000"; close; }
+											
+											query_sql "SELECT `id`,`acc_id`,`char_id`,`char_name`,`item_id`,`imin`,`imax`,`level`,`log_date` FROM `qpItem_log` WHERE `add`='1'",.@id,.@accid,.@charid,.@cname$,.@item,.@imin,.@imax,.@lvl,.@log$;
+								
+											for(set .@i,0; .@i< .@rst; set .@i,.@i+1)
+											{
+												mes "                  ^0065DF[ "+(.@i+1)+" / "+.@rst+" ]^000000";
+												mes "-----------------------------------";
+												mes "^008000LogID: ^000000"+.@id[.@i];
+												mes "^008000AccID: ^000000"+.@accid[.@i];
+												mes "^008000CharID: ^000000"+.@charid[.@i];
+												mes "^008000Name: ^000000"+.@cname$[.@i];
+												mes "^008000ItemID: ^000000"+.@item[.@i];
+												mes "^008000I-Name: ^000000"+getitemname(.@item[.@i]);
+												mes "^008000Min: ^000000"+.@imin[.@i];
+												mes "^008000Max: ^000000"+.@imax[.@i];
+												mes "^008000Level: ^000000"+.@lvl[.@i];
+												mes "^008000Date: ^000000"+.@log$[.@i];
+										
+												if(select("Next:Cancel")==2){ close; }
+												next;
+											}
+											
+											close;
+									case 2:
+											next;
+											query_sql "SELECT count(*) FROM `qpItem_log` WHERE `edit`='1'",.@rst;
+											
+											if(!.@rst){ callsub S_QPHead; mes "^FF0000*There are no logs!^000000"; close; }
+											
+											query_sql "SELECT `id`,`acc_id`,`char_id`,`char_name`,`item_id`,`ant_imin`,`imin`,`ant_imax`,`imax`,`ant_level`,`level`,`log_date` FROM `qpItem_log` WHERE `edit`='1'",.@id,.@accid,.@charid,.@cname$,.@item,.@aimin,.@imin,.@aimax,.@imax,.@alvl,.@lvl,.@log$;
+											
+											for(set .@i,0; .@i< .@rst; set .@i,.@i+1)
+											{
+												mes "                  ^0065DF[ "+(.@i+1)+" / "+.@rst+" ]^000000";
+												mes "-----------------------------------";
+												mes "^0000CDLogID: ^000000"+.@id[.@i];
+												mes "^0000CDAccID: ^000000"+.@accid[.@i];
+												mes "^0000CDCharID: ^000000"+.@charid[.@i];
+												mes "^0000CDName: ^000000"+.@cname$[.@i];
+												mes "^0000CDItemID: ^000000"+.@item[.@i];
+												mes "^0000CDI-Name: ^000000"+getitemname(.@item[.@i]);
+												
+												if(.@aimin[.@i] > 0){ mes "^0000CDMin: ^000000"+.@aimin[.@i]+" -> "+.@imin[.@i]; } else if(.@imin[.@i] != 0) { mes "^0000CDMin: ^000000"+.@imin[.@i]; }
+												if(.@aimax[.@i] > 0){ mes "^0000CDMax: ^000000"+.@aimax[.@i]+" -> "+.@imax[.@i]; } else if(.@imax[.@i] != 0) { mes "^0000CDMax: ^000000"+.@imax[.@i]; }
+												if(.@alvl[.@i] > 0){ mes "^0000CDLevel: ^000000"+.@alvl[.@i]+" -> "+.@lvl[.@i]; } else if(.@lvl[.@i] != 0) { mes "^0000CDLevel: ^000000"+.@lvl[.@i]; }
+																								
+												mes "^0000CDDate: ^000000"+.@log$[.@i];
+												if(select("Next:Cancel")==2){ close; }
+												next;
+											}
+											
+											close;
+											
+									case 3:
+											next;
+											query_sql "SELECT count(*) FROM `qpItem_log` WHERE `remov`='1'",.@rst;
+											
+											if(!.@rst){ callsub S_QPHead; mes "^FF0000*There are no logs!^000000"; close; }
+											
+											query_sql "SELECT `id`,`acc_id`,`char_id`,`char_name`,`item_id`,`imin`,`imax`,`level`,`log_date` FROM `qpItem_log` WHERE `remov`='1'",.@id,.@accid,.@charid,.@cname$,.@item,.@imin,.@imax,.@lvl,.@log$;
+								
+											for(set .@i,0; .@i< .@rst; set .@i,.@i+1)
+											{
+												mes "                  ^0065DF[ "+(.@i+1)+" / "+.@rst+" ]^000000";
+												mes "-----------------------------------";
+												mes "^FF0000LogID: ^000000"+.@id[.@i];
+												mes "^FF0000AccID: ^000000"+.@accid[.@i];
+												mes "^FF0000CharID: ^000000"+.@charid[.@i];
+												mes "^FF0000Name: ^000000"+.@cname$[.@i];
+												mes "^FF0000ItemID: ^000000"+.@item[.@i];
+												mes "^FF0000I-Name: ^000000"+getitemname(.@item[.@i]);
+												mes "^FF0000Min: ^000000"+.@imin[.@i];
+												mes "^FF0000Max: ^000000"+.@imax[.@i];
+												mes "^FF0000Level: ^000000"+.@lvl[.@i];
+												mes "^FF0000Date: ^000000"+.@log$[.@i];
+												
+												if(select("Next:Cancel")==2){ close; }
+												next;
+											}
+											
+											close;
+									case 4:
+											next;
+											query_sql "SELECT count(*) FROM `qpItem_log`",.@rst;
+											
+											if(!.@rst){ callsub S_QPHead; mes "^FF0000*There are no logs!^000000"; close; }
+											
+											query_sql "SELECT `id`,`acc_id`,`char_id`,`char_name`,`item_id`,`ant_imin`,`imin`,`ant_imax`,`imax`,`ant_level`,`level`,`add`,`edit`,`remov`,`log_date` FROM `qpItem_log`",.@id,.@accid,.@charid,.@cname$,.@item,.@aimin,.@imin,.@aimax,.@imax,.@alvl,.@lvl,.@iadd,.@iedit,.@iremov,.@log$;
+											
+											for(set .@i,0; .@i< .@rst; set .@i,.@i+1)
+											{
+												mes "                  ^0065DF[ "+(.@i+1)+" / "+.@rst+" ]^000000";
+												if(.@iadd[.@i] == 1) if((.@i+1) < 10){ mes "              ^0065DF[ Added ]^000000"; } else { mes "               ^0065DF[ Added ]^000000"; }
+												if(.@iedit[.@i] == 1) if((.@i+1) < 10){ mes "                 ^0065DF[ Edited ]^000000"; } else { mes "                  ^0065DF[ Edited ]^000000"; }
+												if(.@iremov[.@i] == 1) if((.@i+1) < 10){ mes "               ^0065DF[ Removed ]^000000"; } else { mes "                ^0065DF[ Removed ]^000000"; }
+												mes "-----------------------------------";
+												mes "^8B008BLogID: ^000000"+.@id[.@i];
+												mes "^8B008BAccID: ^000000"+.@accid[.@i];
+												mes "^8B008BCharID: ^000000"+.@charid[.@i];
+												mes "^8B008BName: ^000000"+.@cname$[.@i];
+												mes "^8B008BItemID: ^000000"+.@item[.@i];
+												mes "^8B008BI-Name: ^000000"+getitemname(.@item[.@i]);
+												
+												if(.@aimin[.@i] > 0){ mes "^8B008BMin: ^000000"+.@aimin[.@i]+" -> "+.@imin[.@i]; } else if(.@imin[.@i] != 0) { mes "^8B008BMin: ^000000"+.@imin[.@i]; }
+												if(.@aimax[.@i] > 0){ mes "^8B008BMax: ^000000"+.@aimax[.@i]+" -> "+.@imax[.@i]; } else if(.@imax[.@i] != 0) { mes "^8B008BMax: ^000000"+.@imax[.@i]; }
+												if(.@alvl[.@i] > 0){ mes "^8B008BLevel: ^000000"+.@alvl[.@i]+" -> "+.@lvl[.@i]; } else if(.@lvl[.@i] != 0) { mes "^8B008BLevel: ^000000"+.@lvl[.@i]; }
+												
+												mes "^8B008BDate: ^000000"+.@log$[.@i];
+												if(select("Next:Cancel")==2){ close; }
+												next;
+											}
+											
+											close;
+											
+									case 5:
+											close;
+								}
+											
+						case 3:
+								next;
+								callsub S_QPHead;
+								
+								query_sql "SELECT COUNT(*) FROM `qpReset_log`",.@rst;					
+								
+								if(!.@rst){ mes "^FF0000*There are no logs!^000000"; close; }
+								
+								mes "A total of "+.@rst+" records were found, would you like to see them?";
+								if(select("Yes:No")==2){ close; }
+								next;
+								
+								query_sql "SELECT * FROM `qpReset_log`",.@id,.@accid,.@charid,.@cname$,.@pname$,.@pacc$,.@date$,.@comment$;
+								
+								for(set .@i,0; .@i< .@rst; set .@i,.@i+1)
+								{
+									mes "          ^0065DF[ Sender's Data ]^000000";
+									mes "                    ^0065DF[ "+(.@i+1)+" / "+.@rst+" ]^000000";
+									mes "-----------------------------------";
+									mes "^00BFFFLogID: ^000000"+.@id[.@i];
+									mes "^00BFFFAccID: ^000000"+.@accid[.@i];
+									mes "^00BFFFName: ^000000"+.@cname$[.@i];
+									mes "^00BFFFDate: ^000000"+.@date$[.@i];
+									mes "       ^4169E1[ Reason ] ^000000";
+									mes .@comment$[.@i];
+									mes "-----------------------------------";
+									mes "        ^0065DF[ Receiver Data ]^000000";
+									mes "-----------------------------------";
+									mes "^00BFFFName: ^000000"+.@pname$[.@i];
+									mes "^00BFFFUserID: ^000000"+.@pacc$[.@i]+"";
+									
+									if(select("Next:Cancel")==2){ close; }
+									next;
+								}
+								
+								close;
+						case 4:
+								close;
+				}
+		
+		case 5:
+			close;
+	}
+
+S_QPHead:
+	mes "              ^0065DF [ Quest Manager ]^000000";
+	mes "              ^0065DF¯¯¯¯¯¯¯*¯¯¯¯¯¯¯^000000";
+return;
+
+OnPCLoadMapEvent:
+	showevent(QTYPE_QUEST,0);
+	end;
+}
+prontera	mapflag	loadevent

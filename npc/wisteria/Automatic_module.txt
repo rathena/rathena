@@ -1,0 +1,108 @@
+//============================================================
+//====== start npc
+//============================================================
+prontera,103,209,4	script	Yecheng	808,{
+	mes "[Yecheng]";
+	mes "Hi!!";
+	mes "I can create craft regular module for your automatic equipment.";
+	mes "I need ^FF000090 Barmeal Tickets^000000 for each modules.";
+	next;
+	mes "[Yecheng]";
+	mes "Do you want to make one?";
+	if(select("- Yes Craft the blue print:- No, I'm just passing by.") - 1) close;
+	next;
+	mes "[Yecheng]";
+	mes "please select the module!";
+	switch(select("Normal.","Rare.","Unique.","Legendary.")){
+		next;
+			case 1:
+				if(countitem(1000103) < 90) {
+					mes "[Yecheng]";
+					mes "But it looks like you don't have enough "+getitemname(1000103)+"!";
+					close;
+				}
+				mes "[Yecheng]";
+				mes "Proceed?";
+				if(select("- Yes:- No") - 1) close;
+				next;
+				if(countitem(1000103) > 89)
+				delitem 1000103,90;
+				getitem callfunc("F_Rand",1000105,1000106,1000107,1000108,1000109,1000110,1000111,1000112),1;
+				close;
+			case 2:			
+				if(countitem(1000103) < 90) {
+					mes "[Yecheng]";
+					mes "But it looks like you don't have enough "+getitemname(1000103)+"!";
+					close;
+				}
+				mes "[Yecheng]";
+				mes "Proceed?";
+				if(select("- Yes:- No") - 1) close;
+				next;
+				if(countitem(1000103) > 89)
+				delitem 1000103,90;
+				getitem callfunc("F_Rand",1000113,1000114,1000115,1000116,1000117,1000118,1000119,1000120,1000121,1000122,1000123,1000124,1000125,1000126,1000127),1;
+				close;	
+			case 3:
+				if(countitem(1000103) < 90) {
+					mes "[Yecheng]";
+					mes "But it looks like you don't have enough "+getitemname(1000103)+"!";
+					close;
+				}
+				mes "[Yecheng]";
+				mes "Proceed?";
+				if(select("- Yes:- No") - 1) close;
+				next;
+				if(countitem(1000103) > 89)
+				delitem 1000103,90;
+				getitem callfunc("F_Rand",1000128,1000129,1000130,1000131,1000132,1000133,1000134,1000135,1000136,1000137,1000138,1000139,1000140,1000141,1000142,1000143,1000207,1000208),1;
+				close;
+			case 4:
+				if(countitem(1000103) < 90) {
+					mes "[Yecheng]";
+					mes "But it looks like you don't have enough "+getitemname(1000103)+"!";
+					close;
+				}
+				mes "[Yecheng]";
+				mes "Proceed?";
+				if(select("- Yes:- No") - 1) close;
+				next;
+				if(countitem(1000103) > 89)
+				delitem 1000103,90;
+				getitem callfunc("F_Rand",1000144,1000145,1000146,1000147,1000148,1000149),1;
+				close;					
+			}
+		end;
+	}
+	
+prontera,163,150,4	script	Spiera	811,{
+//Legendary module
+setarray .@list[0],1000152,1000153,1000154,1000155,1000156,1000157,1000158,1000159,1000160,1000161,1000162,1000163,1000164,1000165,1000166,1000167,1000168,1000169,1000170,1000171,1000172,1000173,1000174,1000175,1000176,1000177,1000178,1000179,1000180,1000181,1000182,1000183,1000184,1000185,1000186,1000187,1000188,1000189,1000190,1000191,1000192,1000193,1000194,1000195,1000196,1000197,1000198,1000199,1000200,1000201,1000202;
+	mes "[Spiera]";
+	mes "Hi!!";
+	mes "I can craft ^FF0000Epic module^000000 for your automatic equipment.";
+	mes "I need ^FF0000300 Magical Soapstone^000000 for each modules.";
+	next;
+	mes "[Spiera]";
+	mes "Do you want to make one?";
+	if(select("- Yes Craft the blue print:- No, I'm just passing by.") - 1) close;
+	next;
+	mes "[Spiera]";
+	mes "You can select the module as you like!";
+	next;
+	for ( set .@e,0; .@e < getarraysize(.@list); set .@e,.@e + 1)
+		set .@e_m$,.@e_m$ + "> "+getitemname(.@list[.@e])+ ( (.@list[.@e+1] != 0)?":":"");
+	set .@rune,select(.@e_m$) - 1;
+	mes "Selected Module: "+getitemname(.@list[.@rune]);
+	if(countitem(1000104) < 300) {
+		mes "But it looks like you don't have enough "+getitemname(1000104)+"!";
+		close;
+	}
+	if(1000104 > 299)
+	delitem 1000104,300;
+	getitem .@list[.@rune],1;
+	
+	mes "Here you go! the epic module as you wish.";
+	mes "Use it wisely.";
+	close;
+}

@@ -1,0 +1,50 @@
+prontera,155,185,5	script	Card collector	1_F_MARIA,{
+	mes "["+ strnpcinfo(0) +"]";
+	if ( !.start ) {
+		mes "I'm not looking for any card right now.";
+		close;
+	}
+	mes "Hi, I'm looking for "+ getitemname(.look4card) +", do you have it ?";
+	next;
+	.@count = countitem(.look4card);
+	if ( !.@count ) {
+		mes "["+ strnpcinfo(0) +"]";
+		mes "Unfortunately you don't have the card I'm looking for";
+		close;
+	}
+	input .@give, 0, .@count;
+	mes "["+ strnpcinfo(0) +"]";
+	if ( !.@give ) {
+		mes "You are not giving me ? ... sob..";
+		close;
+	}
+	mes "Thank You !!";
+	delitem .look4card, .@give;
+	collector_points += ( 5 + .checkmvp * 5 )* .@give;
+	close;
+OnMinute00:
+	if ( gettime(3) % 1 ) end;
+OnStart:
+	.look4card = .allcardid[ rand( .allcards ) ];
+	announce "["+ strnpcinfo(0) +"] I'm looking for "+ getitemname( .look4card ) +" !!!", bc_all;
+	while ( .mvpcardid[.@i] != .look4card && .@i < .mvpcards ) .@i++;
+	.checkmvp = ( .@i < .mvpcards )? 1 : 0;
+	.start = true;
+	sleep 30000; // last 30 seconds
+	.start = false;
+	announce "["+ strnpcinfo(0) +"] Thank you everyone for the participation.", bc_all;
+	end;
+OnInit:
+	.@mobdb$ = checkre(0)? "mob_db_re" : "mob_db";
+	.@itemdb$ = checkre(0)? "item_db_re" : "item_db";
+	.allcards = query_sql("select "+ .@itemdb$ +".id from "+ .@itemdb$ +" right join "+ .@mobdb$ +" on "+ .@itemdb$ +".id = "+ .@mobdb$ +".dropcardid where class = 6 group by name_japanese", .allcardid);
+	.mvpcards = query_sql("select "+ .@itemdb$ +".id from "+ .@itemdb$ +" right join "+ .@mobdb$ +" on "+ .@itemdb$ +".id = "+ .@mobdb$ +".dropcardid where mvp_exp > 0 and type = 6 group by name_japanese;", .mvpcardid);
+	bindatcmd "card", strnpcinfo(0)+"::OnStart", 99, 100;
+//	bindatcmd "value", strnpcinfo(0)+"::OnValue", 99, 100;
+	end;
+OnValue:
+	dispbottom "Your currently collector points is "+ collector_points;
+	if ( .start )
+		dispbottom "looking for ID "+ .look4card;
+	end;
+}

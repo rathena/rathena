@@ -1,0 +1,26 @@
+-	script	Wisteria_Drop	-1,{
+OnNPCKillEvent:
+
+if ( rand( 100 ) <= 5 ) {
+
+.@item_id = F_Rand( 30006 );
+
+getitem .@item_id,1;
+}
+
+
+end;
+
+}
+
+
+/*
+-	script	Wisteria_MVP	-1,{
+
+OnNPCKillEvent:
+	if( getmonsterinfo(killedrid,22) )
+		announce "Congratulations! Player, "+ strcharinfo(0) +" has killed MVP "+ getmonsterinfo( killedrid, MOB_NAME ) +" and obtained 'Wisteria' at "+ strcharinfo(3),0,0x00FF00;
+		getitem 30006,5;
+	end;
+}
+*/

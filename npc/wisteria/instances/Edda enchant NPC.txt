@@ -1,0 +1,225 @@
+//============================================================
+//====== start npc
+//============================================================
+yuno,210,340,3	script	Edda bio enchant	105,{
+	setArray .@weapons[0],21051,21052,32023,1333,16092,28138,28765,28766,28044,28042,26158,2055,2056,26161,16095,18185,18187,18186,32350,32024,32025,32351,16093,16094,28767,28768,18184,28633,26159,26160,1865,1866,16096,18188,26212,26213,32107,32108;
+	setArray .@enchant1[0],4832,4833,4834,4808,4820,4821,4818,4817,4816,4863,4864,4865,4815,4814,4813;
+	setArray .@enchant2[0],29594,29595,29596,29598,29599,29600,29601,29602,29603,29604,29605,29606,29607;
+	
+	.@isEdda = 0;
+	
+	mes "[Edda bio enchants]";
+	.@weap = getequipid(EQI_HAND_R);
+	.@refine = getequiprefinerycnt(EQI_HAND_R);
+	.@card0 = getequipcardid(EQI_HAND_R,0);
+	.@card1 = getequipcardid(EQI_HAND_R,1);
+	.@card2 = getequipcardid(EQI_HAND_R,2);
+	.@card3 = getequipcardid(EQI_HAND_R,3);
+	
+	
+	
+	for(.@i = 0; .@i < 38; .@i++) {
+		if(.@weapons[.@i] == .@weap){
+			.@isEdda = 1;
+		} 
+	}
+	if(.@isEdda == 0) {
+		mes "Come on you need an edda weapon @.@";
+	
+		end;
+	}
+
+	if(.@card2 != 0 && .@card3 != 0){
+		mes "you want to reroll the enchantment?";
+		
+		switch(select("yes the 3rd one", "yes the 4th one", "no")){
+			case 1:
+				mes "normal mode will cost you 500 Biological Research Document and 500 Biological Experiment Fragment";
+				mes "with 5% of break your weapon!";
+				next;
+				mes "safe mode will cost you 2000 Biological Research Document and 2000 Biological Experiment Fragment";
+				mes "with no chance of break your weapon!";
+				
+				switch(select("normal", "safe")){
+					case 1:
+						if(countitem(25786) < 500 && countitem(25787) < 500) {
+							mes "You dont have the items";
+							end;
+						}
+					
+						delitem 25786,500;
+						delitem 25787,500;
+						if(rand(5) == 1){
+							delequip EQI_HAND_R;
+							mes "Too bad...";
+							end;
+						}
+						delequip EQI_HAND_R;
+						getitem2 .@weap,1,1,.@refine,0,.@card0,.@card1,.@card2,.@card3;
+						end;
+					case 2:
+						if(countitem(25786) < 2000 && countitem(25787) < 2000) {
+							mes "You dont have the items";
+							end;
+						}
+						.@card2 = .@enchant2[rand(13)];
+						delitem 25786,2000;
+						delitem 25787,2000;
+						delequip EQI_HAND_R;
+						getitem2 .@weap,1,1,.@refine,0,.@card0,.@card1,.@card2,.@card3;
+						end;
+				}
+			break;
+			case 2:
+				mes "normal mode will cost you 200 Biological Research Document and 200 Biological Experiment Fragment";
+				mes "with 5% of break your weapon!";
+				next;
+				mes "safe mode will cost you 1000 Biological Research Document and 1000 Biological Experiment Fragment";
+				mes "with no chance of break your weapon!";
+				
+				switch(select("normal", "safe")){
+					case 1:
+						delitem 25786,200;
+						delitem 25787,200;
+						if(rand(5) == 1){
+							delequip EQI_HAND_R;
+							mes "Too bad...";
+							end;
+						}
+						delequip EQI_HAND_R;
+						getitem2 .@weap,1,1,.@refine,0,.@card0,.@card1,.@card2,.@card3;
+						end;
+					case 2:
+						.@card3 = .@enchant1[rand(15)];
+						delitem 25786,1000;
+						delitem 25787,1000;
+						delequip EQI_HAND_R;
+						getitem2 .@weap,1,1,.@refine,0,.@card0,.@card1,.@card2,.@card3;
+						end;
+				}
+			break;
+			
+			case 3:end;
+		}
+		
+		end;
+	}
+	//@item 2056
+
+	switch(select("yes","no")){
+		case 1:
+			switch(select("normal mode", "safe mode", "cancel")){
+				case 1:
+					.@safe = 0;
+					break;
+				case 2:
+					.@safe = 1;
+					break;
+				case 3: end;
+			}
+		
+		
+			if(.@card3 == 0) {
+				if(.@safe == 0) mes "this will cost 50  Biological Research Document and 50  Biological Experiment Fragment";
+				else {
+					mes "this will cost 500  Biological Research Document and 500  Biological Experiment Fragment";
+					next;
+					mes "there is a low change to break your weapon, want to continue?";
+				}
+				next;
+				switch(select("yes","no")){
+					case 1:
+						// 30% of the player loses the weapon;
+						if(rand(10) <= 3 && .@safe == 0){
+							delequip EQI_HAND_R;
+							mes "Too bad...";
+							end;
+							
+						}
+						break;
+					
+					case 2: 
+						mes "Ok...";
+						end;
+				}
+				
+				if(countitem(25786) < 50 && countitem(25787) < 50){
+					mes "you dont have the enought materials";
+					end;
+				}
+				if(.@safe == 1){
+					delitem 25786,500;
+					delitem 25787,500;
+				}
+				else {
+					delitem 25786,50;
+					delitem 25787,50;
+				}
+				.@card3 = .@enchant1[rand(15)];
+				break;
+			}
+			
+			if(.@card2 == 0) {
+				if(.@safe == 0) mes "this will cost 50  Biological Research Document and 50  Biological Experiment Fragment";
+				else {
+					mes "this will cost 500  Biological Research Document and 500  Biological Experiment Fragment";
+					next;
+					mes "there is a low change to break your weapon, want to continue?";
+				}
+				next;
+				switch(select("yes","no")){
+					// 30% of the player loses the weapon;
+					case 1:
+						if(rand(10) <= 3 && .@safe == 0){
+							delequip EQI_HAND_R;
+							mes "Too bad...";
+							end;
+						}
+						break;
+					case 2: 
+						mes "Ok...";
+						end;
+				}
+				
+				if(countitem(25786) < 50 && countitem(25787) < 50){
+					mes "you dont have the enought materials";
+					end;
+				}
+				if(.@safe == 1){
+					delitem 25786,500;
+					delitem 25787,500;
+				}
+				else {
+					delitem 25786,50;
+					delitem 25787,50;
+				}
+				
+				.@card2 = .@enchant2[rand(13)];
+				break;
+			}
+			end;
+		case 2:
+			mes "ok...";
+			end;
+	}
+	delequip EQI_HAND_R;
+	getitem2 .@weap,1,1,.@refine,0,.@card0,.@card1,.@card2,.@card3;
+	end;
+	
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

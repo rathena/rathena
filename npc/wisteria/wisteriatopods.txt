@@ -1,0 +1,32 @@
+prontera,180,188,3	script	Wisteria to PODS	758,{
+
+   set $@npcname_mpq$, "^4000C0[Wisteria to PODS]^000000";
+   mes $@npcname_mpq$;
+   mes "Good Day!";
+   mes "Give me 50 Wisteria and i will trade it to 1 POD. Deal?";
+   next;
+   menu "Yes",L_pods,"Cancel",L_Exit;
+
+
+L_pods:
+   set .@wisteriaid,30006;
+   mes $@npcname_mpq$;
+   mes "How many PODS do you want?";
+   input @pods;
+   if(countitem(.@wisteriaid) < (50*@pods)) goto LNotEnough;
+       delitem 30006,(50*@pods);
+   mes "You really have that many Wisteria? Okay, let's trade!";
+       getitem 7179,(1*@pods);
+   mes "Thank you sweety. come back anytime!";
+   close;
+
+
+
+LNotEnough:
+   mes "You dont have the required items...?";
+   mes "Come back when you are actually ready. Now go Farm!";
+   close;
+
+L_Exit:
+   close;
+}

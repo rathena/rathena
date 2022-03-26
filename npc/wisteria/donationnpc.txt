@@ -1,0 +1,179 @@
+// ===== Donation Coder 1.0 ===================== //
+// ===== Credits : Jhosef and trOn ============ //
+// ===== Change Logs ========================== //
+// ============================================ //
+
+
+
+// ==== NPC Location ========================== // 
+prontera,163,193,4	script	Donation Coder	763,{
+
+// === Configuration ========================== //
+	set .gms_level, 99;
+	set .code_length,10; // Length for the Donation Code
+	set .code_length2,3; // Length for the Validation Code
+	set .donate_item, 7179; // Donation Item
+	set .@itemORcash, 1; // 0 for Item or 1 for Cash Point
+	set .@npc_name$, "Donation Coder";
+	setarray .coupon_code$[0],"A","B","C","D","E","F","G","H","I","J","K","L",
+							  "M","N","O","P","Q","R","S","T","U","V","W","X",
+							  "Y","Z","0","1","2","3","4","5","6","7","8","9";
+							  
+	setarray .validation_code$[0],"A","B","C","D","E","F","G","H","I","J","K","L",
+							  "M","N","O","P","Q","R","S","T","U","V","W","X",
+							  "Y","Z","0","1","2","3","4","5","6","7","8","9";
+
+							 
+// ==== NPC Talk ============================== //
+	if( getgmlevel() >= .gms_level) goto AdminPanel;
+	if( getgmlevel() < .gms_level) goto PlayerPanel;
+	
+// ==== Don't Edit This ======================= //
+	set .@stats$,"0";
+// ==== Admin Panel =========================== //
+	AdminPanel:
+	
+	mes .@npc_name$;
+	mes "Welcome " + strcharinfo(0) + ".";
+	next;
+	switch(select("Add Donation Code:Player View:Exit"))
+		{
+			case 1:
+				for(set @i, 0; @i < .code_length; set @i, @i+1)
+				{
+					set @random_char, rand(0,(getarraysize(.coupon_code$)-1));
+					set @new_donation$, @new_donation$ + .coupon_code$[@random_char];
+				}
+				
+				for(set @i, 0; @i< .code_length2; set @i, @i+1)
+				{
+					set @random_char, rand(0,(getarraysize(.validation_code$)-1));
+					set @new_validation$, @new_validation$ + .validation_code$[@random_char];
+				}
+				mes .@npc_name$;
+				mes "Enter Item Amount:";
+				input @donate_amount;
+				next;
+				mes .@npc_name$;
+				mes "Coupon added.";
+				
+				query_sql "INSERT INTO `donate` (`code`, `item_amount`,`validation_code`,`status`) VALUES ('"+@new_donation$+"', "+@donate_amount+", '"+@new_validation$+"' , '"+.@stats$+"')";
+				set @new_donation$, "";
+				set @new_validation$, "";
+				next;		
+				mes "This is the list of code logs";
+				query_sql "SELECT `code` , `item_amount` , `validation_code` , `status` FROM `donate` ORDER BY `code` DESC", .@codelist$, .@status$, .@validation$;
+				if(.@codelist)
+				{
+					mes .@npcname$;
+					mes "There are no entrys in the Code List.";
+					close;
+				} 
+				else 
+				{
+					next;
+					mes .@npcname$;
+					mes "The list will spawn at your main chat box.";
+					dispbottom "Codelist | Amount | Validation";
+					for(set @ei,0; @ei < getarraysize(.@codelist$); set @ei,@ei + 1) 
+					{
+						dispbottom ""+.@codelist$[@ei]+" | "+.@status$[@ei]+" | "+.@validation$[@ei]+" "; 
+					}					
+				}
+				next;
+				close;
+				
+			case 2:
+				goto PlayerPanel;
+			case 3:
+				mes .@npc_name$;
+				mes "Have a nice day.";
+				close;
+		}
+	
+
+// ==== Player Panel ========================== //
+PlayerPanel:
+
+	mes .@npc_name$;
+	mes "Welcome to the Donation System. How can I help you?";
+	next;
+	switch(Select("View My Donation Code:Enter My Donation Code:Exit"))
+	{
+		case 1:
+			mes .@npc_name$;
+			mes "Please enter your Validation Code:";
+			input @my_code$;
+			next;
+			query_sql "SELECT `validation_code` FROM `donate` WHERE `validation_code` = '"+@my_code$+"'", @available_code$;
+			next;
+			
+				if(@my_code$ == @available_code$)
+				{
+					query_sql "SELECT `code` FROM `donate` WHERE `validation_code` = '"+@my_code$+"'", @available_code2$;
+					mes .@npc_name$;
+					mes "Your Donation Code is : [^FF7700"  + @available_code2$+ "^000000].";
+					close2;
+					end;
+				}
+				else
+				{
+				mes .@npc_name$;
+				mes "Your Validation Code is Invalid.";
+				close;
+				}
+			
+		case 2:
+			mes .@npc_name$;
+			mes "Please enter your Donation Code:";
+			input @donate_code$;
+			next;
+			query_sql "SELECT `code` FROM `donate` WHERE `code` = '"+@donate_code$+"'", @donation_code$;
+			query_sql "SELECT `status` FROM `donate` WHERE `code` = '"+@donate_code$+"'", @donate_status;
+			if(strtoupper(@donate_code$)==@donation_code$ && @donate_status == 0)
+			{
+				if( .itemORcash == 0)
+				{
+					query_sql "SELECT `item_amount` FROM `donate` WHERE `code` = '"+@donate_code$+"'", @Donation_Code$;
+					mes .@npc_name$;
+					mes "You get ^0000FF" + getitemname(.donate_item) + " - " + @Donation_Code$ + " ea.^000000";
+					query_sql "UPDATE `donate` SET `status`=1 WHERE `code`='"+@donate_code$+"'";
+					close2;
+					//query_sql "DELETE FROM `donate` WHERE `code`='"+@donate_code$+"'";
+					getitem .donate_item,@Donation_Code$;
+					end;
+				}
+				else
+				{
+					query_sql "SELECT `item_amount` FROM `donate` WHERE `code` = '"+@donate_code$+"'", @Donation_Code$;
+					mes .@npc_name$;
+					mes "You get ^0000FF" + @Donation_Code$ + " Cash Point.^000000";
+					query_sql "UPDATE `donate` SET `status`=1 WHERE `code`='"+@donate_code$+"'";
+					close2;
+					//query_sql "DELETE FROM `donate` WHERE `code`='"+@donate_code$+"'";
+					set #CASHPOINTS, @Donation_Code$;
+					end;
+				
+				}
+			}
+			else
+			{
+				mes .@npc_name$;
+				mes "This Donation Code doesn't exist.";
+				close;
+			}
+			
+		case 3:
+			mes .@npc_name$;
+			mes "Have a nice day.";
+			close;
+	}
+
+// ============================================ //
+
+OnInit:
+	waitingroom strnpcinfo(1), 0;
+	query_sql "CREATE TABLE IF NOT EXISTS `donate` (`code` TINYTEXT NOT NULL, `item_amount` INT NOT NULL, `validation_code` TEXT NOT NULL, `status` TEXT NOT NULL, INDEX `code` (`code`(32)) ) ENGINE=MyISAM";
+	query_sql "CREATE TABLE IF NOT EXISTS `donation` (`name` TEXT NOT NULL, `code` TEXT NOT NULL, `item_amount` INT NOT NULL, `validation_code` TEXT NOT NULL, INDEX `code` (`code`(32)) ) ENGINE=MyISAM";
+
+}

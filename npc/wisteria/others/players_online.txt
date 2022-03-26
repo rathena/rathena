@@ -1,0 +1,16 @@
+prontera,139,179,5	script	Players Online	837,{
+
+OnTimer1000:
+delwaitingroom;
+waitingroom "Online: "+ getusers(1)+" Players",0;
+initnpctimer;
+end;
+
+    query_sql "SELECT `name` , `class` FROM `char` WHERE `online` = '1'", .@name$, .@class;
+    mes "-----------------------------------";
+    mes "Online Users: " + getusers(1);
+    mes "-----------------------------------";
+    close;
+
+
+}
