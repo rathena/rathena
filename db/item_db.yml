@@ -94,3 +94,5 @@ Footer:
   - Path: db/re/item_db.yml
     Mode: Renewal
   - Path: db/import/item_db.yml
+    Mode: Renewal
+  - Path: db/import/itemdb_ep17.yml
