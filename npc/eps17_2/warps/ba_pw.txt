@@ -1,0 +1,16 @@
+//===== rAthena Script =======================================
+//= Portals of Varmundt's mansion
+
+//= Power Plant
+//============================================================
+ba_in01,24,306,0	warp	Lab_to_Pw1	1,1,ba_pw01,91,288
+ba_pw01,91,291,0	warp	Pw1_to_Lab	1,1,ba_in01,24,310
+
+ba_pw01,10,115,0	warp	Pw1_to_Pw2	1,1,ba_pw02,10,149
+ba_pw02,7,149,0	warp	Pw2_to_Pw1	1,1,ba_pw01,13,115
+
+ba_pw02,275,15,0	warp	Pw2_to_Cor	1,1,sp_cor,258,283
+sp_cor,258,287,0	warp	Cor_to_Pw2	1,1,ba_pw02,275,20
+
+ba_maison,88,272,0	warp	Pw03_In	1,1,ba_pw03,13,115
+ba_pw03,10,115,0	warp	Pw03_Out	1,1,ba_maison,88,268

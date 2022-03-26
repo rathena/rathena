@@ -1,0 +1,13 @@
+//===== rAthena Script =======================================
+//= Portals of Varmundt's mansion
+
+
+//= Adega Tartaros
+//============================================================
+ba_maison,305,322,0	warp	2Whs01_In	1,1,ba_2whs01,156,32
+ba_2whs01,156,29,0	warp	2Whs01_Out	1,1,ba_maison,305,319
+
+ba_2whs02,337,337,0	warp	2Whs02_To_2Whs01	1,1,ba_2whs01,275,291
+
+ba_2whs02,66,300,0	warp	2Whs02_Inside_A	1,1,ba_2whs02,60,300
+ba_2whs02,63,300,0	warp	2Whs02_Inside_B	1,1,ba_2whs02,70,300

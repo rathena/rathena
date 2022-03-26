@@ -1,0 +1,1132 @@
+//===== rAthena Script =======================================
+ba_in01,51,157,3	script	Erst#ep172_bain01-00	4_F_ESTLOVELOY,{
+	switch(ep17_2_main){
+		case 29:
+			cutin "ep162_est01",2;
+			mes "[Erst]";
+			mes "Adventurer, what's that?";
+			next;
+			cutin "ep162_est02",2;
+			mes "[Erst]";
+			mes "Ho..., a tracker that tells you where the Illusion and Heart Hunters are?";
+			mes "That's a little tempting.";
+			next;
+			mes "[Erst]";
+			mes "Based on their behavior so far, they seem to be working in the dark when the sun sets.";
+			mes "Let's wait until the sun goes down and then proceed to the operation quietly.";
+			next;
+			cutin "ep162_est01",2;
+			mes "[Erst]";
+			mes "I'm going to reduce the night patrol drastically today so they can crawl out of their caves.";
+			mes "I'm going to make the exterior of the mansion look empty.";
+			next;
+			mes "[Erst]";
+			mes "I'll tell the managers about the operation.";
+			mes "Don't wander around the garden at night, it'll be dangerous.";
+			next;
+			mes "[Erst]";
+			mes "It's an obvious trap, but I don't think they'll let this opportunity pass by.";
+			next;
+			mes "[Erst]";
+			mes "If you have no objection, we'll proceed as it is.";
+			mes "You should get ready for the operation.";
+			mes "Talk to me when you're ready.";
+			ep17_2_main = 30;
+			completequest 18016;
+			setquest 18017;
+			close3;
+			
+		case 30:
+			switch(checkquest(18017,HUNTING)){
+				case 1:
+					.@md_name$ = "Twilight Garden";
+					.@party_id = getcharid(1);
+					.@party_name$ = getpartyname(.@party_id);	
+					if(!.@party_id){
+						mes "^0000CDThis is a memorial dungeon.^000000";
+						mes "Please create a party and try again.";
+						mes "^0000CDA party can be created using the /organize partyname command.^000000";
+						end;
+					}
+					cutin "ep162_est01",2;
+					mes "[Erst]";
+					mes "Shall we go?";
+					next;
+					switch(select("Create '" + .@md_name$ + "'.:Enter '" + .@md_name$ + "'.")){
+						case 1:
+							if(!is_party_leader()){
+								cutin "",255;
+								mes "^0000CDThis is a memorial dungeon.^000000";
+								mes "You must be the party leader to create a memorial dungeon.";
+								end;								
+							}
+							switch(instance_create(.@md_name$)){
+								case -1:
+									cutin "",255;
+									mes "Unknown Error Has Occurred.";
+									close3;
+									
+								case -2:
+									cutin "",255;
+									mes "^0000CDThis is a memorial dungeon.^000000";
+									mes "Please create a party and try again.";
+									mes "^0000CDA party can be created using the /organize partyname command.^000000";
+									close3;
+									
+								case -3:
+									mes "[Erst]";
+									mes "You already have an instance active. Cancel it and try again later.";
+									mes "Player already have instance.";
+									close3;;
+									
+								case -4:
+									cutin "",255;
+									mes "[Erst]";
+									mes "Reservation is currently full. Try again later.";
+									close3;
+									
+								default:
+									cutin "ep162_est01",2;
+									mes "[Erst]";
+									mes "Then, let's proceed quietly.";
+									close3;
+							}
+							
+						case 2:
+							switch(instance_enter(.@md_name$)){
+								case IE_OTHER:
+									mes "^ff0000Character doesn't have an instance reserved.^000000";
+									close3;
+									
+								case IE_NOINSTANCE:
+									mes "^ff0000Character doesn't have an instance reserved.^000000";
+									close3;
+									
+								case IE_OK:
+									mapannounce "ba_in01", strcharinfo(0) + " of the party, "+ .@party_name$ +", is entering the " + .@md_name$ + ".", bc_map, "0x00FF99";
+									close3;
+							}
+					}
+					
+				case 2:
+					cutin "ep162_est03",2;
+					mes "[Erst]";
+					mes "We handed the prisoner to Alpha.";
+					mes "By the way, I've prepared a trap to cause a commotion, and to catch the non-officer members.";
+					next;
+					cutin "ep162_est01",2;
+					mes "[Erst]";
+					mes "They're not easy to catch...";
+					mes "Alpha is going to do some more research on the airship hangar, so go check it out.";
+					next;
+					mes "[Erst]";
+					mes "Let's take a break for now.";
+					mes "Sigh... You did a great job.";
+					ep17_2_main = 31;
+					erasequest 18017;
+					setquest 18018;
+					delitem 1000092,1;
+					questinfo_refresh();
+					next;
+					mes "[Erst]";
+					mes "Oh, I'll also take the Radar.";
+					mes "It'll be helpful for looking for the rest of the members.";
+					close3;
+			}
+			
+		case 31:
+			cutin "ep162_est01",2;
+			mes "[Erst]";
+			mes "We're going to investigate the airship hangar.";
+			mes "I'm going to explain to the rest of the Rebellion first, so go ahead and take care of it.";
+			close3;
+			
+		default:
+			mes "[Erst]";
+			mes "Can you see all the wine in here?";
+			mes "There is a lot of luxurious selection of wine here. Did the sage like wine?";
+			end;
+	}
+	
+OnInit:
+	questinfo QTYPE_QUEST,QMARK_YELLOW,"ep17_2_main == 29";
+	questinfo QTYPE_QUEST,QMARK_YELLOW,"ep17_2_main == 30";
+end;
+}
+
+1@bamn,1,1,0	script	#twilight_garden_control	-1,{
+	end;
+	
+OnInstanceInit:
+	set_instance_var("map$",instance_mapname("1@bamn"));
+	instance_enable("Erst#ep172_twilight_0",false);
+	instance_enable("Erst#ep172_twilight_1",false);
+	instance_enable("Erst#ep172_twilight_3",false);
+	instance_enable("Heart Hunter#ep172_twilight_0",false);
+	for(.@i = 0; .@i < 4; .@i++)
+		instance_enable("Heart Hunter#ep172_tgdummy_0-" + .@i,false);
+	instance_enable("Erst#ep172_twilight_2",true);
+	instance_enable("Almond#twilight_garden_guide",true);
+	instance_hide("Erst#ep172_twilight_2",true);
+	instance_hide("Almond#twilight_garden_guide",true);
+	instance_enable("Erst#ep172_twilight_4",true);
+	instance_hide("Erst#ep172_twilight_4",true);
+	instance_enable("Intruder#twilight_garden_s_0",false);
+	instance_enable("Intruder#twilight_garden_s_1",false);
+	instance_enable("Intruder#twilight_garden_s_2",false);
+	for(.@i = 0; .@i < 4; .@i++)
+		instance_enable("Rebellion#ep172_tgdummy_1-" + .@i,false);
+	for(.@i = 0; .@i < 3; .@i++){
+		instance_enable("Heart Hunter#ep172_tgdummy_1-" + .@i,false);
+		instance_enable("Rebellion#ep172_tgdummy_2-" + .@i,false);
+		instance_enable("Heart Hunter#twilight_garden_trap_" + .@i,false);
+	}
+	instance_enable("Rebellion#ep172_tgdummy_3-0",false);
+	instance_enable("#bamn_to_bamnq",false);
+	instance_enable("#bamq_exit_s",false);
+	instance_enable("Almond#hey_sweetie",false);
+	instance_enable("Sweety#hey_sweetie",false);
+	instance_enable("#bamq_to_garden",false);
+	instance_enable("#garden_to_bamq",false);
+	instance_enable("#hey_sweetie_mob",false);
+	end;
+}
+
+1@bamn,100,320,0	script	#twilight_garden_story	HIDDEN_WARP_NPC,1,1,{
+	end;
+	
+OnTouch:
+	instance_hide(strnpcinfo(0),true);
+	instance_enable(strnpcinfo(0),false);
+	instance_enable("Erst#ep172_twilight_0",true);
+end;
+}
+
+1@bamn,96,318,5	script	Erst#ep172_twilight_0	4_F_ESTLOVELOY,{
+	.@var = get_instance_var("twilight_story");
+	if(.@var == 0){
+		set_instance_var("twilight_story",1);
+		npctalk "Erst : It's dark and quiet. If you want to execute the plan, now's the perfect time. Right?";
+		sleep 2500;
+		npctalk "Erst : Elena said she'd join us later, but there's a good chance she won't able to join.";
+		sleep 2500;
+		npctalk "Erst : Even so, there's no need to worry. The others are prepared and waiting for the ambush signal.";
+		sleep 2500;
+		npctalk "Erst : All we have to do is walk around like a patrol and catch them off guard.";
+		sleep 2500;
+		npctalk "Erst : Go along the road to the main building of the mansion. I'll lurk behind you.";
+		sleep 2500;
+		npctalk "Erst : Don't look around too much, and pretend you're not vigilant, got it?";
+		sleep 2500;
+		npctalk "Erst : Now, let's go.";
+		set_instance_var("twilight_story",2);
+		for(.@i = 0; .@i < 4; .@i++)
+			instance_enable("Heart Hunter#ep172_tgdummy_0-" + .@i,true);
+		instance_enable("Heart Hunter#ep172_twilight_0",true);
+		end;
+	}
+	if(.@var == 1){
+		cutin "ep162_est01",2;
+		mes "[Erst]";
+		mes "I'll move quietly to the back of the building.";
+		mes "The others are lurking around, waiting for the signal.";
+		next;
+		mes "[Erst]";
+		mes "So it'll look like you're patrolling alone. ";
+		mes "First, head to the main building of the mansion. If we can't spot anything special there, we'll head to the next area.";
+		close3;
+	}
+	if(.@var == 3){
+		cutin "ep162_est01",2;
+		mes "[Erst]";
+		mes "They must have been waiting too.";
+		mes "Let's do this more quietly.";
+		close3;
+	}
+	end;
+}
+
+1@bamn,119,299,3	script	Heart Hunter#ep172_twilight_0	20681,3,2,{
+	end;
+	
+OnTouch:
+	.@var = get_instance_var("twilight_story");
+	if(.@var == 2){
+		.@var = get_instance_var("twilight_story");
+		if(.@var == 2)
+			set_instance_var("twilight_story",3);
+		npctalk "Quietly surrender or return back to where you came from.";
+		sleep2 2500;
+		npctalk "Well, that doesn't mean we'll let you go back.";
+		sleep2 1000;
+		for(.@i = 0; .@i < 4; .@i++){
+			instance_hide("Heart Hunter#ep172_tgdummy_0-" + .@i,true);
+			instance_enable("Heart Hunter#ep172_tgdummy_0-" + .@i,false);
+		}
+		instance_hide(strnpcinfo(0),true);
+		instance_enable(strnpcinfo(0),false);
+		instance_event("#twilight_story_mob","OnSpawn00",false);
+	}
+end;
+}
+
+1@bamn,119,305,3	duplicate(instancedummynpc)	Heart Hunter#ep172_tgdummy_0-0	20681,3,2
+1@bamn,119,302,3	duplicate(instancedummynpc)	Heart Hunter#ep172_tgdummy_0-1	20681,3,2
+1@bamn,119,296,3	duplicate(instancedummynpc)	Heart Hunter#ep172_tgdummy_0-2	20681,3,2
+1@bamn,119,293,3	duplicate(instancedummynpc)	Heart Hunter#ep172_tgdummy_0-3	20681,3,2
+
+1@bamn,119,299,5	script	Erst#ep172_twilight_1	4_F_ESTLOVELOY,{
+	.@var = get_instance_var("twilight_story");
+	.@map$ = get_instance_var("map$");
+	if(.@var == 3){
+		cutin "ep162_est01",2;
+		mes "[Erst]";
+		mes "I don't know if we should set a trap, or give you a chance.";
+		mes "Activate the tracker that we got from Elyumina.";
+		next;
+		cutin "",255;
+		unittalk getcharid(3),strcharinfo(0) + " : Tracker : According to the intuition of the great Elyumina... Too Doo Too Doo Too~";
+		sleep2 2000;
+		unittalk getcharid(3),strcharinfo(0) + " : Tracker : Over there!! Beep!";
+		navigateto(.@map$,204,273);
+		sleep2 2000;
+		cutin "ep162_est01",2;
+		mes "[Erst]";
+		mes "That's a loud thing.";
+		mes "Will you move out first?";
+		mes "I have a place to go for a second.";
+		next;
+		mes "[Erst]";
+		mes "I'll join you soon.";
+		.@var = get_instance_var("twilight_story");
+		if(.@var == 3)
+			set_instance_var("twilight_story",4);
+		instance_hide(strnpcinfo(0),true);
+		instance_enable(strnpcinfo(0),false);
+		instance_event("#twilight_story_mob","OnSpawn01",false);
+		close2;
+		cutin "",255;
+	}
+	end;
+}
+
+1@bamn,202,274,5	script	Erst#ep172_twilight_2	4_F_ESTLOVELOY,{
+	.@var = get_instance_var("twilight_story");
+	if(.@var == 5){
+		cutin "ep162_est01",2;
+		mes "[Erst]";
+		mes "I thought it might be better to throw in more bait, so I went to ask for the help of the automatic dolls.";
+		mes "Also, Almond said she had to go out and check something.";
+		next;
+		cutin "ep172_beta",0;
+		mes "[Almond]";
+		mes "The repeater is dead again. That's why I have to fix it.";
+		mes "The repeater is the favorite target of the intruders, so we can't just leave it broken, right?";
+		next;
+		cutin "ep162_est01",2;
+		mes "[Erst]";
+		mes "For that reason, I'd like to ask you to escort Almon here to check the repeater.";
+		mes "I'll look around and find other routes.";
+		next;
+		cutin "ep172_beta",0;
+		mes "[Almond]";
+		mes "Let's go together whenever you're ready.";
+		close2;
+		cutin "",255;
+		.@var = get_instance_var("twilight_story");
+		if(.@var == 5)
+			set_instance_var("twilight_story",6);
+		end;
+	}
+	if(.@var == 6){
+		cutin "ep162_est01",2;
+		mes "[Erst]";
+		mes "Talk to Almond, when you're ready to move.";
+		close3;
+	}
+	end;
+}
+
+1@bamn,199,275,5	script	Almond#twilight_garden_guide	20629,{
+	.@var = get_instance_var("twilight_story");
+	if(.@var == 5){
+		cutin "ep172_beta",2;
+		mes "[Almond]";
+		mes "Everyone was supposed to be in the mansion today.";
+		mes "Something important came up. That's why I'm here with Erst.";
+		close3;
+	}
+	if(.@var == 6){
+		set_instance_var("guide",getnpcid(0));
+		.@gid = get_instance_var("guide");
+		set_instance_var("twilight_story",7);
+		npcspeed 200;
+		npctalk "Then, let us go.";
+		sleep 300;
+		unitwalk .@gid,199,248,instance_npcname(strnpcinfo(0))+"::OnEvent00";
+		end;
+	}
+	if(.@var == 8){
+		.@gid = get_instance_var("guide");
+		.@map$ = get_instance_var("map$");
+		set_instance_var("twilight_story",9);
+		unittalk getcharid(3),strcharinfo(0) + " : Tracker : Pyo-o-o-o-o! There!!";
+		setpcblock PCBLOCK_ALL,true;
+		navigateto(.@map$,242,206);
+		sleep2 2500;
+		npctalk "Ahahaha, it's noisy.";
+		sleep2 2500;
+		npctalk "I'm curious, should we go quickly?";
+		instance_enable("Intruder#twilight_garden_s_0",true);
+		instance_event("#twilight_story_mob","OnSpawn02",false);
+		setpcblock PCBLOCK_ALL,false;
+		sleep 150;
+		npcspeed 80;
+		unitwalk .@gid,245,229,instance_npcname(strnpcinfo(0))+"::OnEvent02";
+		end;
+	}
+	if(.@var == 10 || .@var == 11){
+		npctalk "Adventurer, there's an intruder!";
+		end;
+	}
+	if(.@var == 12){
+		.@gid = get_instance_var("guide");
+		set_instance_var("twilight_story",13);
+		npcspeed 200;
+		setpcblock PCBLOCK_ALL,true;
+		npctalk "Let's go check the repeater.";
+		sleep2 1000;
+		setpcblock PCBLOCK_ALL,false;
+		sleep2 1500;
+		unitwalk .@gid,244,208,instance_npcname(strnpcinfo(0))+"::OnEvent04";
+		end;
+	}
+	if(.@var == 14){
+		.@gid = get_instance_var("guide");
+		.@map$ = get_instance_var("map$");
+		setpcblock PCBLOCK_ALL,true;
+		for(.@i = 0; .@i < 4; .@i++)
+			instance_enable("Rebellion#ep172_tgdummy_1-" + .@i,true);
+		for(.@i = 0; .@i < 3; .@i++)
+			instance_enable("Heart Hunter#ep172_tgdummy_1-" + .@i,true);
+		set_instance_var("twilight_story",15);		
+		unittalk getcharid(3),strcharinfo(0) + " : Tracker : Kakakakakakakil! The culprit is around! They're on my radar! It's that way!";
+		navigateto(.@map$,332,143);
+		sleep2 1500;
+		setpcblock PCBLOCK_ALL,false;
+		sleep2 1000;
+		npcspeed 80;
+		npctalk "There's another intruder! No wonder I'm starting to get excited~!";
+		unitwalk .@gid,332,169;
+	}
+	if(.@var == 18){
+		.@gid = get_instance_var("guide");
+		npcspeed 200;
+		set_instance_var("twilight_story",19);
+		npctalk "Are you all right, adventurer? Then, we can keep going.";
+		unitwalk .@gid,332,143,instance_npcname(strnpcinfo(0))+"::OnEvent11";
+	}
+	if(.@var == 20){
+		npctalk "Shouldn't you talk to Erst? Looks like she've been waiting.";
+		end;
+	}
+	end;
+	
+OnEvent00:
+	.@gid = get_instance_var("guide");
+	npctalk "That way.";
+	sleep 1000;
+	unitwalk .@gid,225,248,instance_npcname(strnpcinfo(0))+"::OnFollow00";
+end;
+
+OnFollow00:
+	.@gid = get_instance_var("guide");
+	unitwalk .@gid,245,248,instance_npcname(strnpcinfo(0))+"::OnEvent01";
+end;
+
+OnEvent01:
+	.@gid = get_instance_var("guide");
+	npctalk "Let's go see the Repeater that is oftenly hacked.";
+	sleep 2500;
+	npctalk "Huh? What are you carrying right now? Take it out and show it to me.";
+	set_instance_var("twilight_story",8);
+end;
+
+OnEvent02:
+	.@gid = get_instance_var("guide");
+	npctalk "Adventurer, there's an intruder!";
+	unitwalk .@gid,245,215,instance_npcname(strnpcinfo(0))+"::OnEvent03";
+end;
+
+OnEvent03:
+	set_instance_var("twilight_story",10);
+end;
+
+OnEvent04:
+	.@gid = get_instance_var("guide");
+	npctalk "...checking the signal.";
+	sleep 2200;
+	npctalk "...hacking channel checked.";
+	sleep 2200;
+	npctalk "...recovering...";
+	sleep 2200;
+	npctalk "...recovering...84%";
+	sleep 2200;
+	npctalk "...recovery completed.";
+	sleep 2200;
+	npctalk "Shall we go to the repeater?";
+	sleep 2200;
+	unitwalk .@gid,245,204,instance_npcname(strnpcinfo(0))+"::OnEvent05";
+end;
+
+OnEvent05:
+	.@gid = get_instance_var("guide");
+	npctalk "Adventurer. Do you like Almonds? A customer who liked almonds named me. Does it suit me?";
+	sleep 2500;
+	unitwalk .@gid,265,204,instance_npcname(strnpcinfo(0))+"::OnEvent06";
+end;
+
+OnEvent06:
+	.@gid = get_instance_var("guide");
+	npctalk "That kid a while ago, I've seen him before.";
+	unitwalk .@gid,285,204,instance_npcname(strnpcinfo(0))+"::OnEvent07";
+end;
+
+OnEvent07:
+	.@gid = get_instance_var("guide");
+	npctalk "But he always ran so well, It's the first time I've seen him properly~";
+	unitwalk .@gid,300,204,instance_npcname(strnpcinfo(0))+"::OnEvent08";
+end;
+
+OnEvent08:
+	.@gid = get_instance_var("guide");
+	npctalk "The Pitaya's here is cute~ They say Almonds is delicious? Have you eaten almonds before?";
+	sleep 2500;
+	npctalk "This way.";
+	unitwalk .@gid,300,190,instance_npcname(strnpcinfo(0))+"::OnEvent09";	
+end;
+
+OnEvent09:
+	.@gid = get_instance_var("guide");
+	npctalk "It's been a while since I've been this comfortable~";
+	unitwalk .@gid,327,189,instance_npcname(strnpcinfo(0))+"::OnEvent10";
+end;
+
+OnEvent10:
+	.@gid = get_instance_var("guide");
+	npctalk "Adventurer. Is that noisy thing flickering again? Let us check it for a second.";
+	set_instance_var("twilight_story",14);
+end;
+
+OnEvent11:
+	.@gid = get_instance_var("guide");
+	npctalk "...checking the signal.";
+	sleep 2200;
+	npctalk "...hacking channel checked.";
+	sleep 2200;
+	npctalk "...recovering...";
+	sleep 2200;
+	npctalk "...recovering...72%";
+	sleep 2200;
+	npctalk "...recovery completed.";
+	sleep 2200;
+	npctalk "Let's go to the next repeater~";
+	sleep 2200;
+	unitwalk .@gid,320,139,instance_npcname(strnpcinfo(0))+"::OnFollow12";
+end;
+
+OnFollow12:
+	.@gid = get_instance_var("guide");
+	unitwalk .@gid,300,139,instance_npcname(strnpcinfo(0))+"::OnEvent12";
+end;
+
+OnEvent12:
+	.@gid = get_instance_var("guide");
+	npctalk "It's the kid from before, right? He's an intruder. That's weird, kind of like almonds...";
+	unitwalk .@gid,285,139,instance_npcname(strnpcinfo(0))+"::OnEvent13";
+end;
+
+OnEvent13:
+	.@gid = get_instance_var("guide");
+	npctalk "Shall we go faster? There's a sound coming from over there...";
+	unitwalk .@gid,285,118,instance_npcname(strnpcinfo(0))+"::OnEvent14";
+end;
+
+OnEvent14:
+	.@gid = get_instance_var("guide");
+	npctalk "It's more quiet than I thought. Where did the intruders go?";
+	unitwalk .@gid,285,98,instance_npcname(strnpcinfo(0))+"::OnEvent15";
+end;
+
+OnEvent15:
+	.@gid = get_instance_var("guide");
+	npctalk "This way.";
+	unitwalk .@gid,261,98,instance_npcname(strnpcinfo(0))+"::OnEvent16";
+end;
+
+OnEvent16:
+	.@gid = get_instance_var("guide");
+	npcspeed 80;
+	npctalk "It's Erst!";
+	set_instance_var("twilight_story",20);
+	unitwalk .@gid,261,87;
+end;
+}
+
+
+1@bamn,257,84,3	script	Erst#ep172_twilight_3	4_F_ESTLOVELOY,{
+	.@var = get_instance_var("twilight_story");
+	if(.@var == 20){
+		cutin "ep162_est01",2;
+		mes "[Erst]";
+		mes "I've heard the report. You found a guy who looked like the leader?";
+		mes "I think the rest of the members are somewhat good too.";
+		next;
+		mes "[Erst]";
+		mes "What happened to the repeater?";
+		next;
+		cutin "ep172_beta",2;
+		mes "[Almond]";
+		mes "Were on the way to the other one.";
+		mes "But it's quite far from here.";
+		next;
+		cutin "ep162_est01",2;
+		mes "[Erst]";
+		mes "Hmm... Shall we do this?";
+		mes "The guy you missed is a boy with purple hair, right?";
+		mes "We're going to bait him out.";
+		next;
+		mes "[Erst]";
+		mes "I'll deal with the rest who's hiding in the garden.";
+		mes "Ah. I'll also escort Almond.";
+		next;
+		mes "[Erst]";
+		mes "He probably went to the western part of the mansion, so head over there.";
+		mes "You have Elyumina's tracker, if you get near him, it will activate.";
+		instance_enable("#bamn_to_bamnq",true);
+		instance_enable("Intruder#twilight_garden_s_2",true);
+		set_instance_var("twilight_story",21);
+		close2;
+		cutin "",255;
+		end;
+	}
+	if(.@var == 21){
+		mes "[Erst]";
+		mes "He probably went to the western part of the mansion, so head over there.";
+		mes "You have Elyumina's tracker, if you get near him, it will activate.";
+		next;
+		mes "[Erst]";
+		mes "Don't worry, I'll take care of Almond from here.";
+		close3;
+	}
+	end;
+}
+
+
+1@bamn,258,80,1	script	Rebellion#ep172_tgdummy_2-0	4_M_REBELLION,{
+	npctalk "If there's an enemy causing commotion, we should attack them with more numbers.";
+	end;
+}
+
+1@bamn,254,80,7	script	Rebellion#ep172_tgdummy_2-1	4_F_REBELLION,{
+	npctalk "Hehehe... It's finally time for revenge... Hehehe...";
+	end;
+}
+
+1@bamn,250,80,7	script	Rebellion#ep172_tgdummy_2-2	4_M_REBELLION,{
+	npctalk "Leave the rest to us.";
+	end;
+}
+
+1@bamn,242,206,7	script	Intruder#twilight_garden_s_0	4_EP17_SWEETY,{
+	.@var = get_instance_var("twilight_story");
+	if(.@var < 11){
+		npctalk "You're one step behind! You bunch of idiot!";
+		end;
+	}
+	if(.@var == 11){
+		npctalk "Hah! Do you think you can catch me?";
+		sleep 2000;
+		npctalk "Go suffer!";
+		sleep 500;
+		instance_hide(strnpcinfo(0),true);
+		instance_enable(strnpcinfo(0),false);
+		instance_event("#twilight_story_mob","OnSpawn03",false);
+		end;
+	}
+	end;
+}
+
+1@bamn,331,161,3	script	Rebellion#ep172_tgdummy_1-0	4_F_REBELLION,7,5,{
+	end;
+	
+OnTouch:	
+	.@var = get_instance_var("twilight_story");
+	if(.@var == 15){
+		set_instance_var("twilight_story",16);
+		npctalk "We'll take over this place, just watch!";
+		sleep 1000;
+		specialeffect EF_DESPERADO,AREA,instance_npcname("Heart Hunter#ep172_tgdummy_1-2");
+		sleep 1000;
+		npctalk "Kakaka, Let's beat them down with a blast!",instance_npcname("Rebellion#ep172_tgdummy_1-2");
+		sleep EF_RAPIDSHOWER;
+		specialeffect EF_RAPIDSHOWER,AREA,instance_npcname("Heart Hunter#ep172_tgdummy_1-1");
+		sleep 500;
+		specialeffect EF_DESPERADO,AREA,instance_npcname("Heart Hunter#ep172_tgdummy_1-1");
+		sleep 1000;
+		npctalk "Thank you for showing yourselves! You bastards!",instance_npcname("Rebellion#ep172_tgdummy_1-1");
+		sleep 1500;
+		specialeffect EF_DESPERADO,AREA,instance_npcname("Heart Hunter#ep172_tgdummy_1-0");
+		sleep 1000;
+		npctalk "...",instance_npcname("Heart Hunter#ep172_tgdummy_1-1");
+		sleep 1500;
+		npctalk "...(Nods)",instance_npcname("Heart Hunter#ep172_tgdummy_1-2");
+		sleep 1500;
+		npctalk "...",instance_npcname("Heart Hunter#ep172_tgdummy_1-0");
+		sleep 1500;
+		npctalk "What signal are you sending to each other?";
+		sleep 1500;
+		specialeffect EF_DESPERADO,AREA,instance_npcname("Heart Hunter#ep172_tgdummy_1-1");
+		sleep 50;
+		for(.@i = 0; .@i < 4; .@i++)
+			specialeffect EF_SPREADATTACK,AREA,instance_npcname("Rebellion#ep172_tgdummy_1-" + .@i);
+		sleep 1200;
+		for(.@i = 0; .@i < 3; .@i++){
+			instance_hide("Heart Hunter#ep172_tgdummy_1-" + .@i,true);
+			instance_enable("Heart Hunter#ep172_tgdummy_1-" + .@i,false);
+		}
+		sleep 1800;
+		npctalk "What? Did they ran?! Move out!";
+		sleep 1800;
+		for(.@i = 0; .@i < 4; .@i++){
+			instance_hide("Rebellion#ep172_tgdummy_1-" + .@i,true);
+			instance_enable("Rebellion#ep172_tgdummy_1-" + .@i,false);
+		}
+		instance_enable("Intruder#twilight_garden_s_1",true);
+		npctalk "What...?",instance_npcname("Intruder#twilight_garden_s_1");
+	}
+end;
+}
+
+1@bamn,333,141,7	script	Intruder#twilight_garden_s_1	4_EP17_SWEETY,{
+	.@var = get_instance_var("twilight_story");
+	if(.@var == 16){
+		set_instance_var("twilight_story",17);
+		npctalk "What, where did the other guys go?";
+		sleep 2000;
+		npctalk "Did you do it?";
+		sleep 2000;
+		npctalk "You're pretty good, aren't you?";
+		sleep 2000;
+		npctalk "Repeater : (... .. ..)",instance_npcname("Repeater#twilight_garden_0");
+		npctalk "Oh, there's a message. Stay there for a while. Yes, Hello.";
+		sleep 2000;
+		npctalk "Repeater : (... … ... ….)",instance_npcname("Repeater#twilight_garden_0");
+		sleep 2000;
+		npctalk "Now? More time... Yes, no... Ah...";
+		sleep 2000;
+		npctalk "... ... so far... no?!... Okay...";
+		sleep 2000;
+		npctalk "You! You're the reason I don't have time right now! I'll kill you the next time we meet!";
+		sleep 1500;
+		instance_hide(strnpcinfo(0),true);
+		instance_enable(strnpcinfo(0),false);
+		instance_enable("Erst#ep172_twilight_3",true);
+		for(.@i = 0; .@i < 3; .@i++){
+			instance_enable("Rebellion#ep172_tgdummy_2-" + .@i,true);
+			instance_enable("Heart Hunter#twilight_garden_trap_" + .@i,true);
+		}
+		instance_enable("Rebellion#ep172_tgdummy_3-0",true);
+		set_instance_var("twilight_story",18);
+	}
+	end;
+}
+
+1@bamq,108,39,5	script	Erst#ep172_twilight_4	4_F_ESTLOVELOY,{
+	.@var = get_instance_var("twilight_story");
+	if(.@var == 23){
+		cutin "ep162_est01",2;
+		mes "[Erst]";
+		mes "It's a little late, but it's over.";
+		mes "So that's you. The guy who was dragging his feet in the garden.";
+		next;
+		mes "[Erst]";
+		mes "Did this guy think that controlling the automatic dolls will help him buy time?";
+		next;
+		cutin "ep162_est02",2;
+		mes "[Erst]";
+		mes "After all, they're just automatic dolls, right?";
+		mes "I had no choice but to blow the automatic dolls of the mansion...";
+		next;
+		cutin "ep162_est01",2;
+		mes "[Erst]";
+		mes "Let's get out of here.";
+		mes "I'll be waiting at the guesthouse.";
+		close3;
+	}
+}
+
+1@bamn,331,155,1	duplicate(dummynpc2)	Rebellion#ep172_tgdummy_1-1	4_M_REBELLION
+1@bamn,322,155,7	duplicate(dummynpc2)	Rebellion#ep172_tgdummy_1-2	4_F_REBELLION
+1@bamn,322,161,3	duplicate(dummynpc2)	Rebellion#ep172_tgdummy_1-3	4_M_REBELLION
+
+1@bamn,328,158,1	duplicate(dummynpc2)	Heart Hunter#ep172_tgdummy_1-0	20681
+1@bamn,326,159,3	duplicate(dummynpc2)	Heart Hunter#ep172_tgdummy_1-1	20681
+1@bamn,324,158,7	duplicate(dummynpc2)	Heart Hunter#ep172_tgdummy_1-2	20681
+
+1@bamn,202,84,3	script	Rebellion#ep172_tgdummy_3-0	4_M_REBELLION2,{
+	npctalk "You're looking for a boy with purple hair, right? He went towards the labs.";
+	end;
+}
+
+1@bamn,334,143,5	duplicate(dummynpc2)	Repeater#twilight_garden_0	2_POSTBOX
+
+1@bamn,67,173,3	script	#twi_garden_ev_navi_0	HIDDEN_WARP_NPC,5,7,{
+	end;
+	
+OnTouch:
+	.@var = get_instance_var("twilight_story");
+	if(.@var == 21){
+		.@map$ = get_instance_var("map$");
+		unittalk getcharid(3),strcharinfo(0) + " : Tracker : Pyo-o-o-o-o! That way! Pyo-pyo~!";
+		navigateto(.@map$,33,224);
+	}
+end;
+}
+
+1@bamn,33,224,0	script	#bamn_to_bamnq	WARPNPC,1,1,{
+	end;
+	
+OnTouch:
+	.@var = get_instance_var("twilight_story");
+	if(.@var == 21)
+		warp instance_mapname("1@bamq"),103,39;
+end;
+}
+
+1@bamq,101,39,0	script	#bamq_exit_s	WARPNPC,1,1,{
+	end;
+	
+OnTouch:
+	warp "ba_maison",33,220;
+end;
+}
+
+1@bamn,121,204,0	duplicate(#twi_garden_ev_navi_0)	#twi_garden_ev_navi_1	HIDDEN_WARP_NPC,5,7
+
+1@bamn,1,1,0	script	#twilight_story_mob	-1,{
+	end;
+	
+OnSpawn00:
+	.@map$ = get_instance_var("map$");
+	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill00";
+	setarray .@xy,118,293,20681,124,294,20681,121,300,20681,119,308,20681,128,308,20681;
+	for(.@i = 0; .@i < getarraysize(.@xy); .@i += 3)
+		monster .@map$,.@xy[.@i],.@xy[.@i+1],"Heart Hunter",.@xy[.@i+2],1,.@event$;
+end;
+
+OnMobKill00:
+	.@map$ = get_instance_var("map$");
+	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill00";
+	if(!mobcount(.@map$,.@event$)){
+		instance_enable("Erst#ep172_twilight_0",false);
+		instance_enable("Erst#ep172_twilight_1",true);
+	}	
+end;
+
+OnSpawn01:
+	.@map$ = get_instance_var("map$");
+	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill01";
+	setarray .@xy,210,282,20681,208,283,20681,210,285,20681,213,284,20681,213,281,20681;
+	for(.@i = 0; .@i < getarraysize(.@xy); .@i += 3)
+		monster .@map$,.@xy[.@i],.@xy[.@i+1],"Heart Hunter",.@xy[.@i+2],1,.@event$;
+end;
+
+OnMobKill01:
+	.@map$ = get_instance_var("map$");
+	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill01";
+	if(!mobcount(.@map$,.@event$)){
+		set_instance_var("twilight_story",5);
+		instance_hide("Erst#ep172_twilight_2",false);
+		instance_hide("Almond#twilight_garden_guide",false);
+	}
+end;
+
+OnSpawn02:
+	.@map$ = get_instance_var("map$");
+	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill02";
+	setarray .@xy,246,208,20681,248,208,20681,248,206,20681,246,206,20681;
+	for(.@i = 0; .@i < getarraysize(.@xy); .@i += 3)
+		monster .@map$,.@xy[.@i],.@xy[.@i+1],"Heart Hunter",.@xy[.@i+2],1,.@event$;
+end;
+
+OnMobKill02:
+	.@map$ = get_instance_var("map$");
+	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill02";
+	if(!mobcount(.@map$,.@event$))
+		set_instance_var("twilight_story",11);
+end;
+
+OnSpawn03:
+	.@map$ = get_instance_var("map$");
+	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill03";
+	setarray .@xy,248,208,20688,248,206,20688;
+	for(.@i = 0; .@i < getarraysize(.@xy); .@i += 3)
+		monster .@map$,.@xy[.@i],.@xy[.@i+1],"Heart Hunter Commander",.@xy[.@i+2],1,.@event$;
+end;
+
+OnMobKill03:
+	.@map$ = get_instance_var("map$");
+	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill03";
+	if(!mobcount(.@map$,.@event$))
+		set_instance_var("twilight_story",12);
+end;
+}
+
+1@bamn,61,214,7	script	Heart Hunter#twilight_garden_trap_0	20688,5,5,{
+	end;
+	
+OnTouch:
+	.@type = atoi(replacestr(strnpcinfo(2),"twilight_garden_trap_",""));
+	switch(.@type){
+		case 0:
+			setarray .@xy,61,214,20688,64,214,20688,58,212,20688;
+			break;
+			
+		case 1:
+			setarray .@xy,78,204,20688,83,204,20688,76,200,20688;
+			break;
+			
+		case 2:
+			setarray .@xy,67,195,20688,71,197,20688,65,199,20688;
+			break;
+	}
+	emotion ET_GO;
+	.@map$ = get_instance_var("map$");
+	for(.@i = 0; .@i < getarraysize(.@xy); .@i += 3)
+		monster .@map$,.@xy[.@i],.@xy[.@i+1],"Heart Hunter Commander",.@xy[.@i+2],1;
+end;
+}
+
+1@bamn,78,204,5	duplicate(Heart Hunter#twilight_garden_trap_0)	Heart Hunter#twilight_garden_trap_1	20688,5,5
+1@bamn,67,195,3	duplicate(Heart Hunter#twilight_garden_trap_0)	Heart Hunter#twilight_garden_trap_2	20688,5,5
+
+1@bamq,125,39,3	script	Intruder#twilight_garden_s_2	4_EP17_SWEETY,5,3,{
+	.@var = get_instance_var("twilight_story");
+	if(.@var == 23){
+		specialeffect EF_NPC_STOP;
+		npctalk "... Do ... n't ... you ... dare ...";
+		end;
+	}
+	end;
+	
+OnTouch:
+	.@var = get_instance_var("twilight_story");
+	if(.@var == 21){
+		setpcblock PCBLOCK_ALL,true;
+		set_instance_var("twilight_story",22);
+		sleep2 500;
+		npctalk "You're too late. You idiots!";
+		sleep2 2000;
+		npctalk "They already escaped using the airships!";
+		sleep2 2000;
+		npctalk "Now, I, Sweety will take care of the idiots that just came in!";
+		sleep2 2000;
+		setpcblock PCBLOCK_ALL,false;
+		instance_event(strnpcinfo(0),"OnBossSpawn",false);
+		end;
+	}
+end;
+
+OnBossSpawn:
+	instance_hide(strnpcinfo(0),true);
+	.@gid = monster(instance_mapname("1@bamq"),125,39,"Sweety",20642,1,instance_npcname(strnpcinfo(0))+"::OnBossKill");
+	setunitdata .@gid,UMOB_HP,500000;
+end;
+
+OnBossKill:
+	set_instance_var("twilight_story",23);
+	instance_hide(strnpcinfo(0),false);
+	instance_hide("Erst#ep172_twilight_4",false);
+	instance_enable("#bamq_exit_s",true);
+end;
+}
+
+1@bamn,150,47,3	script	#twilight_garden_beta-0	4_EP17_BROKENBETA,{
+	.@id = atoi(replacestr(strnpcinfo(2),"twilight_garden_beta-",""));
+	.@var = get_instance_var("broken_beta_" + .@id);
+	if(instance_live_info(ILI_NAME, instance_id(IM_PARTY)) == "Hey! Sweety"){
+		if(.@var == 0){
+			mes "The body of Manager Beta is hidden under the landscapes.";
+			next;
+			mes "I've recovered the core.";
+			mes "I'll let Alpha know later so she can retrieve the doll's body.";
+			set_instance_var("broken_beta_" + .@id,1);
+			getitem 1000226,1;
+			end;
+		}
+	}
+	mes "The core part is empty.";
+	end;
+	
+OnInstanceInit:
+	questinfo QTYPE_CLICKME,QMARK_YELLOW,"isbegin_quest(18024) == 1";
+end;
+}
+
+1@bamn,208,87,3	duplicate(#twilight_garden_beta-0)	#twilight_garden_beta-1	4_EP17_BROKENBETA
+1@bamn,221,193,3	duplicate(#twilight_garden_beta-0)	#twilight_garden_beta-2	4_EP17_BROKENBETA
+1@bamn,314,146,3	duplicate(#twilight_garden_beta-0)	#twilight_garden_beta-3	4_EP17_BROKENBETA
+1@bamn,338,267,3	duplicate(#twilight_garden_beta-0)	#twilight_garden_beta-4	4_EP17_BROKENBETA
+1@bamn,275,313,3	duplicate(#twilight_garden_beta-0)	#twilight_garden_beta-5	4_EP17_BROKENBETA
+1@bamn,207,276,3	duplicate(#twilight_garden_beta-0)	#twilight_garden_beta-6	4_EP17_BROKENBETA
+1@bamn,131,197,3	duplicate(#twilight_garden_beta-0)	#twilight_garden_beta-7	4_EP17_BROKENBETA
+1@bamn,64,187,3	duplicate(#twilight_garden_beta-0)	#twilight_garden_beta-8	4_EP17_BROKENBETA
+1@bamn,70,256,3	duplicate(#twilight_garden_beta-0)	#twilight_garden_beta-9	4_EP17_BROKENBETA
+
+1@bamq,16,39,0	script	#hey_sweetie_ev	HIDDEN_WARP_NPC,1,1,{
+	end;
+	
+OnTouch:
+	instance_hide(strnpcinfo(0),true);
+	instance_enable(strnpcinfo(0),false);
+	set_instance_var("map$",instance_mapname("1@bamq"));
+	for(.@i = 0; .@i < 5; .@i++)
+		instance_enable("Erst#ep172_twilight_" + .@i,false);
+	instance_enable("Almond#twilight_garden_guide",true);
+	instance_enable("Heart Hunter#ep172_twilight_0",false);
+	for(.@i = 0; .@i < 4; .@i++)
+		instance_enable("Heart Hunter#ep172_tgdummy_0-" + .@i,false);
+	instance_enable("Intruder#twilight_garden_s_0",false);
+	instance_enable("Intruder#twilight_garden_s_1",false);
+	instance_enable("Intruder#twilight_garden_s_2",false);
+	for(.@i = 0; .@i < 4; .@i++)
+		instance_enable("Rebellion#ep172_tgdummy_1-" + .@i,false);
+	for(.@i = 0; .@i < 3; .@i++){
+		instance_enable("Heart Hunter#ep172_tgdummy_1-" + .@i,false);
+		instance_enable("Rebellion#ep172_tgdummy_2-" + .@i,false);
+		instance_enable("Heart Hunter#twilight_garden_trap_" + .@i,false);
+	}
+	instance_enable("Rebellion#ep172_tgdummy_3-0",false);
+	instance_enable("#bamn_to_bamnq",false);
+	instance_enable("#bamq_exit_s",false);
+	instance_enable("#twilight_story_mob",false);
+	instance_enable("#twi_garden_ev_navi_0",false);
+	instance_enable("#twi_garden_ev_navi_1",false);
+	instance_enable("Almond#hey_sweetie",true);
+	instance_enable("Sweety#hey_sweetie",true);
+	instance_enable("#bamq_to_garden",true);
+	instance_enable("#garden_to_bamq",true);
+	instance_enable("#hey_sweetie_mob",true);
+	instance_event("#hey_sweetie_mob","OnSpawn",false);
+end;
+}
+
+1@bamq,37,59,3	script	Almond#hey_sweetie	20629,{
+	.@var = get_instance_var("sweety");
+	if(.@var < 2){
+		cutin "ep172_beta",2;
+		mes "[Almond]";
+		mes "I can't understand.";
+		mes "Why Sweety likes to push his body to the limit...";
+		next;
+		mes "[Almond]";
+		mes "And it's my job to fix his destroyed body.";
+		mes "Please deal with him enough to make him satisfied.";
+		close3;
+	}
+	cutin "ep172_beta",2;
+	mes "[Almond]";
+	mes "I will take care of moving Sweety.";
+	mes "Do you want to wrap up now?";
+	next;
+	if(select("Let's wrap up.:I'll explore the garden first.") == 2){
+		mes "[Almond]";
+		mes "There is still some intruders out there.";
+		mes "Are you aware of it?";
+		close3;
+	}
+	mes "[Almond]";
+	mes "Then, shall we?";
+	close2;
+	warp "ba_in01",18,255;
+	end;
+}
+
+1@bamq,32,49,3	script	Sweety#hey_sweetie	4_EP17_SWEETY,{
+	.@var = get_instance_var("sweety");
+	if(.@var == 0){
+		cutin "ep172_sweety01",2;
+		mes "[Sweety]";
+		mes "Hey, are you ready?";
+		mes "Come at me anytime.";
+		mes "I'm sure I'll feel better once I beat you.";
+		next;
+		if(select("Wait a bit.:Let's go!") == 1){
+			mes "[Sweety]";
+			mes "What, did you come here to explore the garden?";
+			mes "The heart hunter don't know what happened to me, but...";
+			next;
+			cutin "ep172_sweety02",2;
+			mes "[Sweety]";
+			mes "What, why?";
+			mes "I'm not like them at all, I'm an excellent creature!";
+			mes "So did the teachers.";
+			mes "But, those guys are nothing but failures.";
+			close3;
+			
+		}
+		cutin "",255;
+		npctalk "I won't lose to you this time!";
+		instance_event(strnpcinfo(0),"OnSummon",false);
+		set_instance_var("sweety",1);
+		end;
+	}
+	specialeffect EF_NPC_STOP;
+	mes "He is not responding to anything.";
+	mes "I think he fainted from my attack.";
+	npctalk "... ...";
+	end;
+	
+OnSummon:
+	instance_hide(strnpcinfo(0),true);
+	monster instance_mapname("1@bamq"),32,49,"Sweety",20642,1,instance_npcname(strnpcinfo(0))+"::OnBossKill";
+end;
+	
+OnBossKill:
+	instance_hide(strnpcinfo(0),false);
+	set_instance_var("sweety",2);
+end;
+}
+
+1@bamn,33,224,0	script	#bamq_to_garden	WARPNPC,1,1,{
+	end;
+	
+OnTouch:
+	warp instance_mapname("1@bamq"),13,39;
+end;
+}
+
+1@bamq,8,39,0	script	#garden_to_bamq	WARPNPC,1,1,{
+	end;
+	
+OnTouch:
+	warp instance_mapname("1@bamn"),33,220;
+end;
+}
+
+1@bamn,1,1,0	script	#hey_sweetie_mob	HIDDEN_WARP_NPC,{
+	end;
+	
+OnSpawn:
+	.@map$ = get_instance_var("map$");
+	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	setarray .@xy,74,155,20688,60,152,20688,66,160,20688,131,175,20681,136,171,20681,129,166,20681,124,252,20681,121,248,20681,120,249,20681,189,242,20688,191,252,20688,187,247,20688,121,310,20688,119,304,20688,117,298,20688,
+	119,80,20688,120,81,20688,118,84,20688,112,79,20681,125,80,20681,125,72,20681;
+	for(.@i = 0; .@i < getarraysize(.@xy); .@i += 3)
+		monster .@map$,.@xy[.@i],.@xy[.@i+1],"Heart Hunter",.@xy[.@i+2],1,.@event$;
+end;
+
+OnMobKill:
+end;
+}
