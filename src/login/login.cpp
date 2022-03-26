@@ -792,6 +792,13 @@ void do_final(void) {
 	}
 
 	login_log(0, "login server", 100, "login server shutdown");
+	
+// (^~_~^) Gepard Shield Start
+
+	login_gepard_log(0, 0, "login server", 100, "login server shutdown");
+
+// (^~_~^) Gepard Shield End
+	
 	ShowStatus("Terminating...\n");
 
 	if( login_config.log_login )
@@ -923,6 +930,13 @@ int do_init(int argc, char** argv) {
 
 	ShowStatus("The login-server is " CL_GREEN "ready" CL_RESET " (Server is listening on the port %u).\n\n", login_config.login_port);
 	login_log(0, "login server", 100, "login server started");
+
+// (^~_~^) Gepard Shield Start
+
+	login_gepard_log(0, 0, "login server", 100, "login server started");
+
+// (^~_~^) Gepard Shield End
+
 
 	return 0;
 }

@@ -44,6 +44,242 @@ typedef struct AccountDBIterator_SQL {
 	int last_account_id;
 } AccountDBIterator_SQL;
 
+// (^~_~^) Gepard Shield Start
+static AccountDB_SQL* db_sql;
+
+void account_gepard_init(AccountDB* self)
+{
+	db_sql = (AccountDB_SQL*)self;
+
+	if (SQL_SUCCESS != Sql_Query(db_sql->accounts,
+		"CREATE TABLE IF NOT EXISTS `gepard_report_log` ("
+		"`time` datetime NOT NULL,"
+		"`unique_id` int(11) unsigned NOT NULL DEFAULT '0',"
+		"`account_id` int(11) unsigned NOT NULL DEFAULT '0',"
+		"`char_id` int(11) unsigned NOT NULL DEFAULT '0',"
+		"`char_name` varchar(24) NOT NULL,"
+		"`report_str` varchar(120) NOT NULL"
+		") ENGINE=MyISAM DEFAULT CHARSET=latin1;"))
+	{
+		Sql_ShowDebug(db_sql->accounts);
+		exit(EXIT_FAILURE);
+	}
+
+	if (SQL_SUCCESS != Sql_Query(db_sql->accounts, 
+		"CREATE TABLE IF NOT EXISTS `gepard_block` ("
+		"`unique_id` int(11) unsigned NOT NULL DEFAULT '0',"
+		"`unban_time` datetime NOT NULL,"
+		"`reason` varchar(50) NOT NULL,"
+		"UNIQUE KEY `unique_id` (`unique_id`)"
+		") ENGINE=MyISAM DEFAULT CHARSET=latin1;"))
+	{
+		Sql_ShowDebug(db_sql->accounts);
+		exit(EXIT_FAILURE);
+	}
+
+	if (SQL_SUCCESS != Sql_Query(db_sql->accounts, 
+		"CREATE TABLE IF NOT EXISTS `gepard_block_log` ("
+		"`id` int(11) unsigned NOT NULL AUTO_INCREMENT,"
+		"`unique_id` int(11) unsigned NOT NULL DEFAULT '0',"
+		"`block_time` datetime NOT NULL,"
+		"`unban_time` datetime NOT NULL,"
+		"`violator_name` varchar(24) NOT NULL,"
+		"`violator_account_id` int(11) NOT NULL,"
+		"`initiator_name` varchar(24) NOT NULL,"
+		"`initiator_account_id` int(11) NOT NULL,"
+		"`reason` varchar(50) NOT NULL,"
+		"PRIMARY KEY (`id`)"
+		") ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;"))
+	{
+		Sql_ShowDebug(db_sql->accounts);
+		exit(EXIT_FAILURE);
+	}
+
+	if (SQL_SUCCESS != Sql_Query(db_sql->accounts, 
+		"CREATE TABLE IF NOT EXISTS `gepard_min_allowed_license_version` ("
+		"`version` int(11) unsigned NOT NULL DEFAULT '2018033001'"
+		") ENGINE=MyISAM DEFAULT CHARSET=latin1;"))
+	{
+		Sql_ShowDebug(db_sql->accounts);
+		exit(EXIT_FAILURE);
+	}
+
+	if (SQL_SUCCESS != Sql_Query(db_sql->accounts, "SELECT `version` FROM `gepard_min_allowed_license_version`"))
+	{
+		Sql_ShowDebug(db_sql->accounts);
+		exit(EXIT_FAILURE);
+	}
+
+	if (SQL_SUCCESS != Sql_NextRow(db_sql->accounts))
+	{
+		if (SQL_SUCCESS != Sql_Query(db_sql->accounts, "INSERT INTO `gepard_min_allowed_license_version` VALUES ('0')"))
+		{
+			Sql_ShowDebug(db_sql->accounts);
+			exit(EXIT_FAILURE);
+		}
+	}
+
+	if (SQL_SUCCESS != Sql_Query(db_sql->accounts, "SHOW COLUMNS FROM `login` LIKE 'last_unique_id'"))
+	{
+		Sql_ShowDebug(db_sql->accounts);
+		exit(EXIT_FAILURE);
+	}
+
+	if (Sql_NumRows(db_sql->accounts) == 0)
+	{
+		if (SQL_SUCCESS != Sql_Query(db_sql->accounts, "ALTER TABLE `login` ADD `last_unique_id` INT(11) UNSIGNED NOT NULL DEFAULT '0';"))
+		{
+			Sql_ShowDebug(db_sql->accounts);
+			exit(EXIT_FAILURE);
+		}
+	}
+
+	if (SQL_SUCCESS != Sql_Query(db_sql->accounts, "SHOW COLUMNS FROM `login` LIKE 'blocked_unique_id'"))
+	{
+		Sql_ShowDebug(db_sql->accounts);
+		exit(EXIT_FAILURE);
+	}
+
+	if (Sql_NumRows(db_sql->accounts) == 0)
+	{
+		if (SQL_SUCCESS != Sql_Query(db_sql->accounts, "ALTER TABLE `login` ADD `blocked_unique_id` INT(11) UNSIGNED NOT NULL DEFAULT '0';"))
+		{
+			Sql_ShowDebug(db_sql->accounts);
+			exit(EXIT_FAILURE);
+		}
+	}
+}
+
+int account_gepard_check_license_version(struct socket_data* s, int fd, int group_id)
+{
+	const char* message_info_sql_error = "Tell administrator about SQL problem.";
+
+	if (is_gepard_active == false)
+	{
+		return 0;
+	}
+
+	if (group_id == 99)
+	{
+		return 0;
+	}
+
+	if (SQL_SUCCESS != Sql_Query(db_sql->accounts, "SELECT `version` FROM `gepard_min_allowed_license_version`"))
+	{
+		Sql_ShowDebug(db_sql->accounts);
+
+		gepard_send_info(fd, GEPARD_INFO_MESSAGE, message_info_sql_error);
+	}
+	else if (SQL_SUCCESS != Sql_NextRow(db_sql->accounts))
+	{
+		if (SQL_SUCCESS != Sql_Query(db_sql->accounts, "INSERT INTO `gepard_min_allowed_license_version` VALUES ('0')"))
+		{
+			Sql_ShowDebug(db_sql->accounts);
+
+			gepard_send_info(fd, GEPARD_INFO_MESSAGE, message_info_sql_error);
+		}
+	}
+	else
+	{
+		char* data;
+		const char* message_info_outdated_license = "You are using outdated Gepard Shield.\n\nYou have to close the game and run updater.";
+
+		Sql_GetData(db_sql->accounts, 0, &data, NULL);
+
+		min_allowed_license_version = (unsigned int)strtoul(data, NULL, 10);
+
+		Sql_FreeResult(db_sql->accounts);
+
+		if (s->gepard_info.license_version >= min_allowed_license_version)
+		{
+			return 0;
+		}
+
+		gepard_send_info(fd, GEPARD_INFO_OLD_LICENSE_VERSION, message_info_outdated_license);
+	}
+
+	return 1;
+}
+
+void account_gepard_update_last_unique_id(int account_id, unsigned int unique_id)
+{
+	if (is_gepard_active == false)
+	{
+		return;
+	}
+
+	if (SQL_SUCCESS != Sql_Query(db_sql->accounts, "UPDATE `login` SET `last_unique_id`= '%u' WHERE `account_id` = '%d'", unique_id, account_id))
+	{
+		Sql_ShowDebug(db_sql->accounts);
+	}
+	else if (SQL_SUCCESS == Sql_NextRow(db_sql->accounts))
+	{
+		Sql_ShowDebug(db_sql->accounts);
+	}
+
+	Sql_FreeResult(db_sql->accounts);
+}
+
+bool account_gepard_check_unique_id(int fd, struct socket_data* s)
+{
+	unsigned int unique_id = s->gepard_info.unique_id;
+
+	if (SQL_SUCCESS != Sql_Query(db_sql->accounts, "SELECT `unban_time`, `reason` FROM `gepard_block` WHERE `unique_id` = '%u'", unique_id))
+	{
+		Sql_ShowDebug(db_sql->accounts);
+		gepard_send_info(fd, GEPARD_INFO_MESSAGE, "Tell administrator about SQL problem.");
+	}
+	else if (SQL_SUCCESS == Sql_NextRow(db_sql->accounts))
+	{
+		char* data;
+		struct tm unblock_tm;
+		time_t time_unban, time_server;
+		int year, month, day, hour, min, sec;
+		char reason_str[GEPARD_REASON_LENGTH];
+		char unban_time_str[GEPARD_TIME_STR_LENGTH];
+
+		memset((void*)&unblock_tm, 0, sizeof(unblock_tm));
+
+		Sql_GetData(db_sql->accounts,  0, &data, NULL);
+		safestrncpy(unban_time_str, data, sizeof(unban_time_str));
+
+		sscanf(unban_time_str, "%d-%d-%d %d:%d:%d", &year, &month, &day, &hour, &min, &sec);
+
+		unblock_tm.tm_year = year - 1900;
+		unblock_tm.tm_mon = month - 1;
+		unblock_tm.tm_mday = day;
+		unblock_tm.tm_hour = hour;
+		unblock_tm.tm_min = min;
+		unblock_tm.tm_sec = sec;
+
+		time_unban = mktime(&unblock_tm);
+		time(&time_server);
+
+		if (time_server <= time_unban)
+		{
+			char message_info[200];
+
+			Sql_GetData(db_sql->accounts,  1, &data, NULL);
+			safestrncpy(reason_str, data, sizeof(reason_str));
+
+			safesnprintf(message_info, sizeof(message_info), "Unique ID has been banned!\r\rDate of unban:  %s\r\rUnique id: %u\r\rReason: %s", unban_time_str, unique_id, reason_str);
+
+			s->gepard_info.is_init_ack_received = false;
+
+			gepard_send_info(fd, GEPARD_INFO_BANNED, message_info);
+		}
+		else if (SQL_ERROR == Sql_Query(db_sql->accounts, "DELETE FROM `gepard_block` WHERE `unique_id` = '%u'", unique_id))
+		{
+			Sql_ShowDebug(db_sql->accounts);
+		}
+	}
+
+	Sql_FreeResult(db_sql->accounts);
+
+	return false;
+}
+// (^~_~^) Gepard Shield End
+
 /// internal functions
 static bool account_db_sql_init(AccountDB* self);
 static void account_db_sql_destroy(AccountDB* self);
@@ -141,6 +377,15 @@ static bool account_db_sql_init(AccountDB* self) {
 
 	if( codepage[0] != '\0' && SQL_ERROR == Sql_SetEncoding(sql_handle, codepage) )
 		Sql_ShowDebug(sql_handle);
+
+// (^~_~^) Gepard Shield Start
+
+	if (is_gepard_active == true)
+	{
+		account_gepard_init(self);
+	}
+
+// (^~_~^) Gepard Shield End
 
 	self->remove_webtokens( self );
 
