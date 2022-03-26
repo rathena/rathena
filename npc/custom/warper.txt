@@ -32,7 +32,7 @@ callfunc "F_ClearGarbage"; //Clear outdated, unused variables
 	
 	if (.@PriceWarp) {
 		message strcharinfo(0), "Warp costs " + callfunc("F_InsertComma",.@PriceWarp) + " Zeny.";
-		mes "Warp will cost 10,000zeny";
+		mes "Warp will cost 1,000zeny";
 		mes "this will deduct automaticaly and no refund";
 		mes "would you like to proceed?";
 		next;
