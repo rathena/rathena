@@ -3162,6 +3162,7 @@ Body:
   - Status: Freeze_Sp
     Icon: EFST_FREEZE_SP
     Flags:
+      NoDispell: true
       NoClearance: true
   - Status: Fearbreeze
     Icon: EFST_FEARBREEZE
@@ -5208,30 +5209,37 @@ Body:
   - Status: Spellbook1
     Icon: EFST_SPELLBOOK1
     Flags:
+      NoDispell: true
       NoClearance: true
   - Status: Spellbook2
     Icon: EFST_SPELLBOOK2
     Flags:
+      NoDispell: true
       NoClearance: true
   - Status: Spellbook3
     Icon: EFST_SPELLBOOK3
     Flags:
+      NoDispell: true
       NoClearance: true
   - Status: Spellbook4
     Icon: EFST_SPELLBOOK4
     Flags:
+      NoDispell: true
       NoClearance: true
   - Status: Spellbook5
     Icon: EFST_SPELLBOOK5
     Flags:
+      NoDispell: true
       NoClearance: true
   - Status: Spellbook6
     Icon: EFST_SPELLBOOK6
     Flags:
+      NoDispell: true
       NoClearance: true
   - Status: Maxspellbook
     Icon: EFST_SPELLBOOK7
     Flags:
+      NoDispell: true
       NoClearance: true
   - Status: Incmhp
     Flags:
