@@ -20852,7 +20852,7 @@ Body:
     Script: |
       bonus bInt,40;
       bonus bIntravision;
-      if (BaseJob == Job_Warlock) {
+      if ((eaclass()&EAJ_THIRDMASK)==EAJ_WARLOCK) {
          bonus2 bSkillAtk,"WZ_SIGHTRASHER",6*BaseLevel;
          bonus4 bAutoSpellOnSkill,"WZ_SIGHTRASHER","MG_SIGHT",1,1000;
       }
