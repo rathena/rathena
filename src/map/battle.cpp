@@ -1436,7 +1436,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 	if (sc && sc->data[SC_MAXPAIN])
 		return 0;
-
 	if (sc && sc->data[SC_DAMAGE_HEAL]) {
 		int heal = (int)damage;
 		int skill_lv = sc->data[SC_DAMAGE_HEAL]->val1;
@@ -1475,6 +1474,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			damage = 0;
 		}
 	}
+
 	switch (skill_id) {
 #ifndef RENEWAL
 		case PA_PRESSURE:
