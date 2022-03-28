@@ -423,7 +423,6 @@ struct Battle_Config
 	int display_hallucination;	// [Skotlex]
 	int use_statpoint_table;	// [Skotlex]
 
-	int berserk_cancels_buffs; // [Aru]
 	int debuff_on_logout; // Removes a few "official" negative Scs on logout. [Skotlex]
 	int mob_ai; //Configures various mob_ai settings to make them smarter or dumber(official). [Skotlex]
 	int hom_setting; //Configures various homunc settings which make them behave unlike normal characters.. [Skotlex]
@@ -525,7 +524,6 @@ struct Battle_Config
 	int max_extended_parameter;
 	int max_summoner_parameter;
 	int max_fourth_parameter;
-	int max_fourth_trait;
 	int max_third_aspd;
 	int max_summoner_aspd;
 	int vcast_stat_scale;
@@ -692,6 +690,25 @@ struct Battle_Config
 	int idletime_mer_option;
 	int feature_refineui;
 	int rndopt_drop_pillar;
+	int pet_legacy_formula;
+	int pet_distance_check;
+	int pet_hide_check;
+
+	// 4th Jobs Stuff
+	int trait_points_job_change;
+	int use_traitpoint_table;
+	int max_trait_parameter;
+	int max_res_mres_reduction;
+	int max_ap;
+	int ap_rate;
+	int restart_ap_rate;
+	int loose_ap_on_death;
+	int loose_ap_on_map;
+	int keep_ap_on_logout;
+	int attack_machine_level_difference;
+
+	int feature_barter;
+	int feature_barter_extended;
 
 #include "../custom/battle_config_struct.inc"
 };

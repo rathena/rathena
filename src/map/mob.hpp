@@ -74,6 +74,14 @@ enum MOBID {
 	MOBID_S_GIANT_HORNET,
 	MOBID_S_LUCIOLA_VESPA,
 	MOBID_GUILD_SKILL_FLAG	= 20269,
+	MOBID_ABR_BATTLE_WARIOR = 20834,
+	MOBID_ABR_DUAL_CANNON,
+	MOBID_ABR_MOTHER_NET,
+	MOBID_ABR_INFINITY,
+	MOBID_BIONIC_WOODENWARRIOR = 20848,
+	MOBID_BIONIC_WOODEN_FAIRY,
+	MOBID_BIONIC_CREEPER,
+	MOBID_BIONIC_HELLTREE,
 };
 
 ///Mob skill states.
@@ -202,8 +210,8 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node &node);
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node &node) override;
 };
 
 struct s_mob_item_drop_ratio {
@@ -218,8 +226,8 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node &node);
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node &node) override;
 };
 
 struct spawn_info {
@@ -265,13 +273,13 @@ private:
 	bool parseDropNode(std::string nodeName, YAML::Node node, uint8 max, s_mob_drop *drops);
 
 public:
-	MobDatabase() : TypesafeCachedYamlDatabase("MOB_DB", 2, 1) {
+	MobDatabase() : TypesafeCachedYamlDatabase("MOB_DB", 3, 1) {
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node &node);
-	void loadingFinished();
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node &node) override;
+	void loadingFinished() override;
 };
 
 extern MobDatabase mob_db;
@@ -353,9 +361,9 @@ public:
 
 	}
 
-	void clear() { };
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
+	void clear() override{ };
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node& node) override;
 };
 
 struct s_randomsummon_entry {
@@ -375,8 +383,8 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node &node);
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node &node) override;
 };
 
 enum e_mob_skill_target {

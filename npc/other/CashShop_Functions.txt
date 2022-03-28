@@ -51,10 +51,10 @@ function	script	F_CashStore	{
 // - Summon Party members on party leader map to a 3x3 location around the leader.
 // - No arguments.
 function	script	F_CashPartyCall	{
-	itemskill "AL_TELEPORT",1;
-	sleep2 1;	// a slight delay seems necessary after itemskill
-	if (is_party_leader() == true)
-		warpparty "Leader", 0, 0, getcharid(1), strcharinfo(3), 3, 3;
+	if (is_party_leader())
+		warpparty "RandomAll", 0, 0, getcharid(1), strcharinfo(3), 3, 3;
+	else
+		itemskill "AL_TELEPORT",1;
 	return;
 }
 
@@ -326,5 +326,30 @@ function	script	F_CashReduceStat	{
 	}
 	StatusPoint += needed_status_point(.@type, .@amount);
 	statusup2 .@type,.@amount;
+	return;
+}
+
+// Trait Status reduction potion
+//============================================================
+// - Permanently reduces base trait stat <type> by <val>.
+// - Returns trait status points equals to points needed to raise
+//   that trait stat to original value.
+// - Doesn't work if base trait status <type> would become lower than 0 after reduction.
+// * callfunc("F_CashReduceTraitStat",<type>{,<val>,<itemid>});
+function	script	F_CashReduceTraitStat	{
+	.@type = getarg(0);
+	.@amount = getarg(1, -1);
+	.@itemid = getarg(2, 0);
+	
+	if((readparam(.@type) + .@amount) < 0) return;
+	
+	if(.@itemid) {
+		if(countitem(.@itemid))
+			delitem .@itemid,1;
+		else
+			return;
+	}
+	TraitPoint += needed_trait_point(.@type, .@amount);
+	traitstatusup2 .@type,.@amount;
 	return;
 }

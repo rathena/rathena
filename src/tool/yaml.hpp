@@ -628,6 +628,9 @@ void SkillDatabase::clear() {
 	TypesafeCachedYamlDatabase::clear();
 }
 
+void SkillDatabase::loadingFinished(){
+}
+
 SkillDatabase skill_db;
 
 const std::string MobDatabase::getDefaultLocation(){

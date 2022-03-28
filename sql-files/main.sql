@@ -91,6 +91,17 @@ CREATE TABLE IF NOT EXISTS `auction` (
 ) ENGINE=MyISAM;
 
 --
+-- Table `barter` for barter shop persistency
+--
+
+CREATE TABLE IF NOT EXISTS `barter` (
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `index` SMALLINT(5) UNSIGNED NOT NULL,
+  `amount` SMALLINT(5) UNSIGNED NOT NULL,
+  PRIMARY KEY  (`name`,`index`)
+) ENGINE=MyISAM;
+
+--
 -- Table structure for `db_roulette`
 --
 
@@ -212,12 +223,21 @@ CREATE TABLE IF NOT EXISTS `char` (
   `int` smallint(4) unsigned NOT NULL default '0',
   `dex` smallint(4) unsigned NOT NULL default '0',
   `luk` smallint(4) unsigned NOT NULL default '0',
+  `pow` smallint(4) unsigned NOT NULL default '0',
+  `sta` smallint(4) unsigned NOT NULL default '0',
+  `wis` smallint(4) unsigned NOT NULL default '0',
+  `spl` smallint(4) unsigned NOT NULL default '0',
+  `con` smallint(4) unsigned NOT NULL default '0',
+  `crt` smallint(4) unsigned NOT NULL default '0',
   `max_hp` int(11) unsigned NOT NULL default '0',
   `hp` int(11) unsigned NOT NULL default '0',
   `max_sp` int(11) unsigned NOT NULL default '0',
   `sp` int(11) unsigned NOT NULL default '0',
+  `max_ap` int(11) unsigned NOT NULL default '0',
+  `ap` int(11) unsigned NOT NULL default '0',
   `status_point` int(11) unsigned NOT NULL default '0',
   `skill_point` int(11) unsigned NOT NULL default '0',
+  `trait_point` int(11) unsigned NOT NULL default '0',
   `option` int(11) NOT NULL default '0',
   `karma` tinyint(3) NOT NULL default '0',
   `manner` smallint(6) NOT NULL default '0',
@@ -261,6 +281,7 @@ CREATE TABLE IF NOT EXISTS `char` (
   `last_login` datetime DEFAULT NULL,
   `title_id` INT(11) unsigned NOT NULL default '0',
   `show_equip` tinyint(3) unsigned NOT NULL default '0',
+  `inventory_slots` smallint(6) NOT NULL default '100',
   PRIMARY KEY  (`char_id`),
   UNIQUE KEY `name_key` (`name`),
   KEY `account_id` (`account_id`),
@@ -846,7 +867,7 @@ CREATE TABLE IF NOT EXISTS `market` (
   `name` varchar(50) NOT NULL DEFAULT '',
   `nameid` int(10) UNSIGNED NOT NULL,
   `price` INT(11) UNSIGNED NOT NULL,
-  `amount` SMALLINT(5) UNSIGNED NOT NULL,
+  `amount` INT(11) NOT NULL,
   `flag` TINYINT(2) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY  (`name`,`nameid`)
 ) ENGINE = MyISAM;

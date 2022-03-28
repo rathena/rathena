@@ -756,6 +756,12 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 			column.append("`defense`,");
 		if (appendEntry(input["MagicDefense"], value))
 			column.append("`magic_defense`,");
+#ifdef RENEWAL
+		if (appendEntry(input["Resistance"], value))
+			column.append("`resistance`,");
+		if (appendEntry(input["MagicResistance"], value))
+			column.append("`magic_resistance`,");
+#endif
 		if (appendEntry(input["Str"], value))
 			column.append("`str`,");
 		if (appendEntry(input["Agi"], value))

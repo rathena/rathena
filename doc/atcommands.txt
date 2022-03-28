@@ -1237,6 +1237,14 @@ Note: This command requires packet version 2016-10-12 or newer.
 
 ---------------------------------------
 
+@stylist
+
+Opens the stylist user interface.
+
+Note: This command requires packet version 2015-11-04 or newer.
+
+---------------------------------------
+
 @request <message>
 
 Sends a message to all connected GMs (via the GM whisper system).
@@ -1413,11 +1421,11 @@ Affected files:
 -- atcommand: atcommands.yml, groups.conf
 -- battleconf: battle_athena.conf, battle_conf.txt
 -- instancedb: instance_db.yml
--- itemdb: item_db.yml, item_group_db.yml, item_noequip.txt, item_combo_db.txt, item_randomopt_db.yml, item_randomopt_group.yml
--- mobdb: mob_db.yml, mob_item_ratio.yml, mob_chat_db.yml, mob_avail.yml, mob_summon.yml, pet_db.yml, homunculus_db.txt, homun_skill_tree.txt, exp_homun.yml, mercenary_db.txt, mercenary_skill_db.txt, elemental_db.txt, elemental_skill_db.txt
+-- itemdb: item_db.yml, item_group_db.yml, item_noequip.txt, item_combos.yml, item_randomopt_db.yml, item_randomopt_group.yml
+-- mobdb: mob_db.yml, mob_item_ratio.yml, mob_chat_db.yml, mob_avail.yml, mob_summon.yml, pet_db.yml, homunculus_db.txt, homun_skill_tree.txt, exp_homun.yml, mercenary_db.yml, elemental_db.yml
 -- motd: motd.txt
 -- msgconf: atcommands.yml
--- pcdb: statpoint.yml, job_exp.yml, skill_tree.txt, attr_fix.yml, job_stats.yml, job_basepoints.yml, level_penalty.yml
+-- pcdb: statpoint.yml, job_exp.yml, skill_tree.yml, attr_fix.yml, job_stats.yml, job_basepoints.yml, level_penalty.yml
 -- questdb: quest_db.yml
 -- script: /npc/*.txt, /npc/*.conf
 -- skilldb: skill_db.yml, skill_nocast_db.txt, skill_changematerial_db.txt, skill_damage_db.txt, abra_db.yml, create_arrow_db.yml, produce_db.txt, spellbook_db.yml, magicmushroom_db.yml

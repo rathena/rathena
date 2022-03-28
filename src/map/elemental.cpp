@@ -79,24 +79,33 @@ int elemental_create(map_session_data *sd, int class_, unsigned int lifetime) {
 
 	//per individual bonuses
 	switch(db->class_){
-	case ELEMENTALID_AGNI_S:	case ELEMENTALID_AGNI_M:
-	case ELEMENTALID_AGNI_L: //ATK + (Summon Agni Skill Level x 20) / HIT + (Summon Agni Skill Level x 10)
+	case ELEMENTALID_AGNI_S:
+	case ELEMENTALID_AGNI_M:
+	case ELEMENTALID_AGNI_L:
+	case ELEMENTALID_ARDOR://ATK + (Summon Agni Skill Level x 20) / HIT + (Summon Agni Skill Level x 10)
 		ele.atk += i * 20;
 		ele.atk2 += i * 20;
 		ele.hit += i * 10;
 		break;
-	case ELEMENTALID_AQUA_S:	case ELEMENTALID_AQUA_M:
-	case ELEMENTALID_AQUA_L: //MDEF + (Summon Aqua Skill Level x 10) / MATK + (Summon Aqua Skill Level x 20)
+	case ELEMENTALID_AQUA_S:
+	case ELEMENTALID_AQUA_M:
+	case ELEMENTALID_AQUA_L:
+	case ELEMENTALID_DILUVIO://MDEF + (Summon Aqua Skill Level x 10) / MATK + (Summon Aqua Skill Level x 20)
 		ele.mdef += i * 10;
 		ele.matk += i * 20;
 		break;
-	case ELEMENTALID_VENTUS_S:	case ELEMENTALID_VENTUS_M:
-	case ELEMENTALID_VENTUS_L: //FLEE + (Summon Ventus Skill Level x 20) / MATK + (Summon Ventus Skill Level x 10)
+	case ELEMENTALID_VENTUS_S:
+	case ELEMENTALID_VENTUS_M:
+	case ELEMENTALID_VENTUS_L:
+	case ELEMENTALID_PROCELLA://FLEE + (Summon Ventus Skill Level x 20) / MATK + (Summon Ventus Skill Level x 10)
 		ele.flee += i * 20;
 		ele.matk += i * 10;
 		break;
-	case ELEMENTALID_TERA_S:	case ELEMENTALID_TERA_M:
-	case ELEMENTALID_TERA_L: //DEF + (Summon Tera Skill Level x 25) / ATK + (Summon Tera Skill Level x 5)
+	case ELEMENTALID_TERA_S:
+	case ELEMENTALID_TERA_M:
+	case ELEMENTALID_TERA_L:
+	case ELEMENTALID_TERREMOTUS:
+	case ELEMENTALID_SERPENS://DEF + (Summon Tera Skill Level x 25) / ATK + (Summon Tera Skill Level x 5)
 		ele.def += i * 25;
 		ele.atk += i * 5;
 		ele.atk2 += i * 5;
@@ -109,6 +118,17 @@ int elemental_create(map_session_data *sd, int class_, unsigned int lifetime) {
 		ele.atk += 25 * i;
 		ele.atk2 += 25 * i;
 		ele.matk += 25 * i;
+	}
+
+	if ((i = pc_checkskill(sd, EM_ELEMENTAL_SPIRIT_M)) > 0 && db->class_ >= ELEMENTALID_DILUVIO && db->class_ <= ELEMENTALID_SERPENS) {
+		ele.hp = ele.max_hp += 10000 + 3000 * i;
+		ele.sp = ele.max_sp += 100 * i;
+		ele.atk += 100 + 20 * i;
+		ele.atk2 += 100 + 20 * i;
+		ele.matk += 20 * i;
+		ele.def += 20 * i;
+		ele.mdef += 4 * i;
+		ele.flee += 10 * i;
 	}
 
 	ele.life_time = lifetime;
@@ -266,107 +286,11 @@ int elemental_data_received(s_elemental *ele, bool flag) {
 	return 1;
 }
 
-int elemental_clean_single_effect(s_elemental_data *ed, uint16 skill_id) {
-	nullpo_ret(ed);
-
-	sc_type type = status_skill2sc(skill_id);
-	block_list *bl = battle_get_master(&ed->bl);
-
-	if( type ) {
-		switch( type ) {
-				// Just remove status change.
-			case SC_PYROTECHNIC_OPTION:
-			case SC_HEATER_OPTION:
-			case SC_TROPIC_OPTION:
-			case SC_FIRE_CLOAK_OPTION:
-			case SC_AQUAPLAY_OPTION:
-			case SC_WATER_SCREEN_OPTION:
-			case SC_COOLER_OPTION:
-			case SC_CHILLY_AIR_OPTION:
-			case SC_GUST_OPTION:
-			case SC_WIND_STEP_OPTION:
-			case SC_BLAST_OPTION:
-			case SC_WATER_DROP_OPTION:
-			case SC_WIND_CURTAIN_OPTION:
-			case SC_WILD_STORM_OPTION:
-			case SC_PETROLOGY_OPTION:
-			case SC_SOLID_SKIN_OPTION:
-			case SC_CURSED_SOIL_OPTION:
-			case SC_STONE_SHIELD_OPTION:
-			case SC_UPHEAVAL_OPTION:
-			case SC_CIRCLE_OF_FIRE_OPTION:
-			case SC_TIDAL_WEAPON_OPTION:
-				if( bl ) status_change_end(bl,type,INVALID_TIMER);	// Master
-				status_change_end(&ed->bl,static_cast<sc_type>(type-1),INVALID_TIMER);	// Elemental Spirit
-				break;
-			case SC_ZEPHYR:
-				if( bl ) status_change_end(bl,type,INVALID_TIMER);
-				break;
-			default:
-				ShowWarning("Invalid SC=%d in elemental_clean_single_effect\n",type);
-				break;
-		}
-	}
-
-	return 1;
-}
-
 int elemental_clean_effect(s_elemental_data *ed) {
 	nullpo_ret(ed);
 
-	map_session_data *sd;
-
-	// Elemental side
-	status_change_end(&ed->bl, SC_TROPIC, INVALID_TIMER);
-	status_change_end(&ed->bl, SC_HEATER, INVALID_TIMER);
-	status_change_end(&ed->bl, SC_AQUAPLAY, INVALID_TIMER);
-	status_change_end(&ed->bl, SC_COOLER, INVALID_TIMER);
-	status_change_end(&ed->bl, SC_CHILLY_AIR, INVALID_TIMER);
-	status_change_end(&ed->bl, SC_PYROTECHNIC, INVALID_TIMER);
-	status_change_end(&ed->bl, SC_FIRE_CLOAK, INVALID_TIMER);
-	status_change_end(&ed->bl, SC_WATER_DROP, INVALID_TIMER);
-	status_change_end(&ed->bl, SC_WATER_SCREEN, INVALID_TIMER);
-	status_change_end(&ed->bl, SC_GUST, INVALID_TIMER);
-	status_change_end(&ed->bl, SC_WIND_STEP, INVALID_TIMER);
-	status_change_end(&ed->bl, SC_BLAST, INVALID_TIMER);
-	status_change_end(&ed->bl, SC_WIND_CURTAIN, INVALID_TIMER);
-	status_change_end(&ed->bl, SC_WILD_STORM, INVALID_TIMER);
-	status_change_end(&ed->bl, SC_PETROLOGY, INVALID_TIMER);
-	status_change_end(&ed->bl, SC_SOLID_SKIN, INVALID_TIMER);
-	status_change_end(&ed->bl, SC_CURSED_SOIL, INVALID_TIMER);
-	status_change_end(&ed->bl, SC_STONE_SHIELD, INVALID_TIMER);
-	status_change_end(&ed->bl, SC_UPHEAVAL, INVALID_TIMER);
-	status_change_end(&ed->bl, SC_CIRCLE_OF_FIRE, INVALID_TIMER);
-	status_change_end(&ed->bl, SC_TIDAL_WEAPON, INVALID_TIMER);
-
-	if( (sd = ed->master) == NULL )
-		return 0;
-
-	// Master side
-	status_change_end(&sd->bl, SC_TROPIC_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_HEATER_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_AQUAPLAY_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_COOLER_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_CHILLY_AIR_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_PYROTECHNIC_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_FIRE_CLOAK_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_WATER_DROP_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_WATER_SCREEN_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_GUST_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_WIND_STEP_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_BLAST_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_WATER_DROP_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_WIND_CURTAIN_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_WILD_STORM_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_ZEPHYR, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_WIND_STEP_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_PETROLOGY_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_SOLID_SKIN_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_CURSED_SOIL_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_STONE_SHIELD_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_UPHEAVAL_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_CIRCLE_OF_FIRE_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_TIDAL_WEAPON_OPTION, INVALID_TIMER);
+	status_db.removeByStatusFlag(&ed->bl, { SCF_REMOVEELEMENTALOPTION });
+	status_db.removeByStatusFlag(battle_get_master(&ed->bl), { SCF_REMOVEELEMENTALOPTION });
 
 	return 1;
 }
@@ -745,8 +669,8 @@ uint64 ElementalDatabase::parseBodyNode(const YAML::Node &node) {
 	if (!this->asInt32(node, "Id", id))
 		return 0;
 
-	if (id < ELEMENTALID_AGNI_S || id > ELEMENTALID_TERA_L) {
-		this->invalidWarning(node["Id"], "Invalid Id %d (valid range: %d-%d).\n", id, ELEMENTALID_AGNI_S, ELEMENTALID_TERA_L);
+	if( !( ( id >= ELEMENTALID_AGNI_S && id <= ELEMENTALID_TERA_L ) || ( id >= ELEMENTALID_DILUVIO && id <= ELEMENTALID_SERPENS ) ) ) {
+		this->invalidWarning( node["Id"], "Invalid Id %d (valid ranges: %d-%d and %d-%d).\n", id, ELEMENTALID_AGNI_S, ELEMENTALID_TERA_L, ELEMENTALID_DILUVIO, ELEMENTALID_SERPENS );
 		return 0;
 	}
 

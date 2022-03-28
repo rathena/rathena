@@ -36,6 +36,8 @@
 #   Attack2                 Maximum attack in pre-renewal and base magic attack in renewal. (Default: 0)
 #   Defense                 Physical defense of the monster, reduces melee and ranged physical attack/skill damage. (Default: 0)
 #   MagicDefense            Magic defense of the monster, reduces magical skill damage. (Default: 0)
+#   Resistance              Physical resistance of the monster, reduces melee and ranged physical attack/skill damage. (Default: 0)
+#   MagicResistance         Magic resistance of the monster, reduces magical skill damage. (Default: 0)
 #   Str                     Strength which affects attack. (Default: 1)
 #   Agi                     Agility which affects flee. (Default: 1)
 #   Vit                     Vitality which affects defense. (Default: 1)
@@ -75,7 +77,7 @@
 
 Header:
   Type: MOB_DB
-  Version: 2
+  Version: 3
 
 #Body:
 # eAthena Dev Team
