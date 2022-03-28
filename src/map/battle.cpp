@@ -1443,7 +1443,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			damage = 0;
 		}
 	}
-
 	if (sc) {
 		int element = skill_get_ele(skill_id, skill_lv);
 		struct status_change *ssc = status_get_sc(src);
@@ -1472,6 +1471,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			damage = 0;
 		}
 	}
+
 	switch (skill_id) {
 #ifndef RENEWAL
 		case PA_PRESSURE:
