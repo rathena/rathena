@@ -17925,6 +17925,72 @@ Body:
         NoReiteration: true
         NoOverlap: true
     Status: PropertyWalk
+  - Id: 751
+    Name: NPC_ALL_STAT_DOWN
+    Description: Decrease All Stats
+    MaxLevel: 5
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Range: 9
+    Duration1: 10000
+    Status: ALL_STAT_DOWN
+  - Id: 752
+    Name: NPC_GRADUAL_GRAVITY
+    Description: Increased Gravity
+    MaxLevel: 3
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Range: 9
+    Duration1: 3000
+    Status: GRADUAL_GRAVITY
+  - Id: 753  
+    Name: NPC_DAMAGE_HEAL
+    Description: Damage Heal
+    MaxLevel: 3
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Duration1: 30000
+    Status: DAMAGE_HEAL
+  - Id: 754
+    Name: NPC_IMMUNE_PROPERTY
+    Description: Property Immune
+    MaxLevel: 10 #Check: Max level is 5?
+    TargetType: Self #Check: Type is Support?
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    #Range: Check: Skill has range?
+    #  - Level: 1
+    #    Size: 5
+    #  - Level: 2
+    #    Size: 10
+    #  - Level: 3
+    #    Size: 15
+    #  - Level: 4
+    #    Size: 20
+    #  - Level: 5
+    #    Size: 25
+    Duration1: 30000
+  - Id: 755
+    Name: NPC_MOVE_COORDINATE
+    Description: Change Location
+    MaxLevel: 1
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Range: 14
   - Id: 1001
     Name: KN_CHARGEATK
     Description: Charge Attack
