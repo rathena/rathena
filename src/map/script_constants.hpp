@@ -1834,6 +1834,19 @@
 	export_constant(SC_DEEP_POISONING_OPTION);
 	export_constant(SC_POISON_SHIELD);
 	export_constant(SC_POISON_SHIELD_OPTION);
+	export_constant(SC_ALL_STAT_DOWN);
+	export_constant(SC_GRADUAL_GRAVITY);
+	export_constant(SC_DAMAGE_HEAL);
+	export_constant(SC_IMMUNE_PROPERTY_NOTHING);
+	export_constant(SC_IMMUNE_PROPERTY_WATER);
+	export_constant(SC_IMMUNE_PROPERTY_GROUND);
+	export_constant(SC_IMMUNE_PROPERTY_FIRE);
+	export_constant(SC_IMMUNE_PROPERTY_WIND);
+	export_constant(SC_IMMUNE_PROPERTY_POISON);
+	export_constant(SC_IMMUNE_PROPERTY_SAINT);
+	export_constant(SC_IMMUNE_PROPERTY_DARKNESS);
+	export_constant(SC_IMMUNE_PROPERTY_TELEKINESIS);
+	export_constant(SC_IMMUNE_PROPERTY_UNDEAD);
 
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
