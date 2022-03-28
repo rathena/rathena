@@ -4508,7 +4508,7 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 	sd = BL_CAST(BL_PC,bl);
 	sc = status_get_sc(bl);
 
-	val = 1 + (status->vit/5) + (status->max_hp/200);
+	val = (status->vit/5) + max(1, status->max_hp/200);
 
 	if( sd && sd->hprecov_rate != 100 )
 		val = val*sd->hprecov_rate/100;
@@ -14340,8 +14340,10 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 
 	if (flag&(RGN_HP|RGN_SHP|RGN_SSP) && ud && ud->walktimer != INVALID_TIMER) {
 		flag &= ~(RGN_SHP|RGN_SSP);
-		if(!regen->state.walk)
+		if (!regen->state.walk) {
 			flag &= ~RGN_HP;
+			regen->tick.hp = gettick();
+		}
 	}
 
 	if (!flag)
@@ -14358,46 +14360,43 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 
 	// Natural Hp regen
 	if (flag&RGN_HP) {
-		rate = (int)(natural_heal_diff_tick * (regen->rate.hp/100. * multi));
+		// Interval to next recovery tick
+		rate = (int)(battle_config.natural_healhp_interval / (regen->rate.hp/100. * multi));
 		if (ud && ud->walktimer != INVALID_TIMER)
-			rate /= 2;
+			rate *= 2;
 		// Homun HP regen fix (they should regen as if they were sitting (twice as fast)
 		if(bl->type == BL_HOM)
-			rate *= 2;
+			rate /= 2;
 
-		regen->tick.hp += rate;
+		// Our timer system isn't 100% accurate so make sure we use the closest interval
+		rate -= NATURAL_HEAL_INTERVAL / 2;
 
-		if(regen->tick.hp >= (unsigned int)battle_config.natural_healhp_interval) {
-			int val = 0;
-			do {
-				val += regen->hp;
-				regen->tick.hp -= battle_config.natural_healhp_interval;
-			} while(regen->tick.hp >= (unsigned int)battle_config.natural_healhp_interval);
-			if (status_heal(bl, val, 0, 1) < val)
+		if(regen->tick.hp + rate <= gettick()) {
+			regen->tick.hp = gettick();
+			if (status_heal(bl, regen->hp, 0, 1) < regen->hp)
 				flag &= ~RGN_SHP; // Full.
 		}
 	}
 
 	// Natural SP regen
 	if(flag&RGN_SP) {
-		rate = (int)(natural_heal_diff_tick * (regen->rate.sp/100. * multi));
+		// Interval to next recovery tick
+		rate = (int)(battle_config.natural_healsp_interval / (regen->rate.sp/100. * multi));
 		// Homun SP regen fix (they should regen as if they were sitting (twice as fast)
 		if(bl->type==BL_HOM)
-			rate *= 2;
+			rate /= 2;
 #ifdef RENEWAL
 		if (bl->type == BL_PC && (((TBL_PC*)bl)->class_&MAPID_UPPERMASK) == MAPID_MONK &&
 			sc && sc->data[SC_EXPLOSIONSPIRITS] && (!sc->data[SC_SPIRIT] || sc->data[SC_SPIRIT]->val2 != SL_MONK))
-			rate /= 2; // Tick is doubled in Fury state
+			rate *= 2; // Tick is doubled in Fury state
 #endif
-		regen->tick.sp += rate;
 
-		if(regen->tick.sp >= (unsigned int)battle_config.natural_healsp_interval) {
-			int val = 0;
-			do {
-				val += regen->sp;
-				regen->tick.sp -= battle_config.natural_healsp_interval;
-			} while(regen->tick.sp >= (unsigned int)battle_config.natural_healsp_interval);
-			if (status_heal(bl, 0, val, 1) < val)
+		// Our timer system isn't 100% accurate so make sure we use the closest interval
+		rate -= NATURAL_HEAL_INTERVAL / 2;
+
+		if(regen->tick.sp + rate <= gettick()) {
+			regen->tick.sp = gettick();
+			if (status_heal(bl, 0, regen->sp, 1) < regen->sp)
 				flag &= ~RGN_SSP; // full.
 		}
 	}
