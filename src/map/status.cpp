@@ -14342,7 +14342,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 		flag &= ~(RGN_SHP|RGN_SSP);
 		if (!regen->state.walk) {
 			flag &= ~RGN_HP;
-			regen->tick.hp = gettick();
+			regen->tick.hp = natural_heal_prev_tick;
 		}
 	}
 
@@ -14371,8 +14371,8 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 		// Our timer system isn't 100% accurate so make sure we use the closest interval
 		rate -= NATURAL_HEAL_INTERVAL / 2;
 
-		if(regen->tick.hp + rate <= gettick()) {
-			regen->tick.hp = gettick();
+		if(regen->tick.hp + rate <= natural_heal_prev_tick) {
+			regen->tick.hp = natural_heal_prev_tick;
 			if (status_heal(bl, regen->hp, 0, 1) < regen->hp)
 				flag &= ~RGN_SHP; // Full.
 		}
@@ -14394,8 +14394,8 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 		// Our timer system isn't 100% accurate so make sure we use the closest interval
 		rate -= NATURAL_HEAL_INTERVAL / 2;
 
-		if(regen->tick.sp + rate <= gettick()) {
-			regen->tick.sp = gettick();
+		if(regen->tick.sp + rate <= natural_heal_prev_tick) {
+			regen->tick.sp = natural_heal_prev_tick;
 			if (status_heal(bl, 0, regen->sp, 1) < regen->sp)
 				flag &= ~RGN_SSP; // full.
 		}
@@ -14453,8 +14453,8 @@ static int status_natural_heal(struct block_list* bl, va_list args)
  */
 static TIMER_FUNC(status_natural_heal_timer){
 	natural_heal_diff_tick = DIFF_TICK(tick,natural_heal_prev_tick);
-	map_foreachregen(status_natural_heal);
 	natural_heal_prev_tick = tick;
+	map_foreachregen(status_natural_heal);
 	return 0;
 }
 
