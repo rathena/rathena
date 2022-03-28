@@ -7459,6 +7459,52 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 		break;
 
+	case NPC_IMMUNE_PROPERTY:
+		switch (skill_lv) {
+			case 1  : type = SC_IMMUNE_PROPERTY_NOTHING;	break;
+			case 2  : type = SC_IMMUNE_PROPERTY_WATER;		break;
+			case 3  : type = SC_IMMUNE_PROPERTY_GROUND;		break;
+			case 4  : type = SC_IMMUNE_PROPERTY_FIRE;		break;
+			case 5  : type = SC_IMMUNE_PROPERTY_WIND;		break;
+			case 6  : type = SC_IMMUNE_PROPERTY_DARKNESS;	break;
+			case 7  : type = SC_IMMUNE_PROPERTY_SAINT;		break;
+			case 8  : type = SC_IMMUNE_PROPERTY_POISON;		break;
+			case 9  : type = SC_IMMUNE_PROPERTY_TELEKINESIS;break;
+			case 10 : type = SC_IMMUNE_PROPERTY_UNDEAD;		break;
+		}
+		clif_skill_nodamage(src,bl, skill_id,skill_lv,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
+		break;
+
+	case NPC_MOVE_COORDINATE:
+		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+		if (status_get_class_(src) == CLASS_BOSS) {//if caster is a boss, the skill will pull target ahead of the boss, instead of switch coordinates with target. 
+			{
+				short x, y;
+				short dir = map_calc_dir(bl, src->x, src->y);
+
+				if (dir > 0 && dir < 4) x = 1;
+				else if (dir > 4) x = -1;
+				else x = 0;
+				if (dir > 2 && dir < 6) y = 1;
+				else if (dir == 7 || dir < 2) y = -1;
+				else y = 0;
+
+				if (skill_check_unit_movepos(1, bl, src->x, src->y, 1, 1)) {
+					skill_blown(src, bl, 1, map_calc_dir_xy(src->x + x, src->y + y, bl->x, bl->y, unit_getdir(src)), BLOWN_NONE);
+				}
+			}
+		} else {
+			int x = src->x;
+			int y = src->y;
+			if (unit_movepos(src, bl->x, bl->y, 1, 1)) {
+				clif_blown(src);
+			}
+			if (unit_movepos(bl, x, y, 1, 1)) {
+				clif_blown(bl);
+			}
+		}
+		break;
+
 	case PR_KYRIE:
 	case MER_KYRIE:
 	case SU_TUNAPARTY:
@@ -7625,6 +7671,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case TR_MYSTIC_SYMPHONY:
 	case TR_KVASIR_SONATA:
 	case EM_SPELL_ENCHANTING:
+	case NPC_ALL_STAT_DOWN:
+	case NPC_GRADUAL_GRAVITY:
+	case NPC_DAMAGE_HEAL:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
