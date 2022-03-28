@@ -1437,6 +1437,45 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	if (sc && sc->data[SC_MAXPAIN])
 		return 0;
 
+	if (sc && sc->data[SC_DAMAGE_HEAL]) {
+		int heal = (int)damage;
+		int skill_lv = sc->data[SC_DAMAGE_HEAL]->val1;
+		if (heal && ((flag & BF_WEAPON && skill_lv == 1) || (flag & BF_MAGIC && skill_lv == 2) || (flag & BF_MISC && skill_lv == 3))) {//Absorb MISC damage or WEAPON & MAGIC damage on level 3?
+			clif_skill_nodamage(NULL, bl, AL_HEAL, heal, 1);
+			status_heal(bl, heal, 0, 0);
+			damage = 0;
+		}
+	}
+
+	if (sc) {
+		int element = skill_get_ele(skill_id, skill_lv);
+		struct status_change *ssc = status_get_sc(src);
+		if (!skill_id || element == ELE_WEAPON) {
+				element = status_get_status_data(src)->rhw.ele | status_get_status_data(src)->lhw.ele;
+			if (tsd && tsd->state.arrow_atk && tsd->bonus.arrow_ele)
+				element = tsd->bonus.arrow_ele;
+			if (tsd && tsd->spiritcharm_type != CHARM_TYPE_NONE && tsd->spiritcharm >= MAX_SPIRITCHARM)
+				element = tsd->spiritcharm_type; 
+		}
+		else if (element == ELE_ENDOWED) //Use enchantment's element
+			element = status_get_attack_sc_element(src, ssc);
+		else if (element == ELE_RANDOM) //Use random element
+			element = rnd() % ELE_ALL;
+
+		if ((sc->data[SC_IMMUNE_PROPERTY_NOTHING] && element == ELE_NEUTRAL)
+		|| (sc->data[SC_IMMUNE_PROPERTY_WATER] && element == ELE_WATER)
+		|| (sc->data[SC_IMMUNE_PROPERTY_GROUND] && element == ELE_EARTH)
+		|| (sc->data[SC_IMMUNE_PROPERTY_FIRE] && element == ELE_FIRE)
+		|| (sc->data[SC_IMMUNE_PROPERTY_WIND] && element == ELE_WIND)
+		|| (sc->data[SC_IMMUNE_PROPERTY_DARKNESS] && element == ELE_DARK)
+		|| (sc->data[SC_IMMUNE_PROPERTY_SAINT] && element == ELE_HOLY)
+		|| (sc->data[SC_IMMUNE_PROPERTY_POISON] && element == ELE_POISON)
+		|| (sc->data[SC_IMMUNE_PROPERTY_TELEKINESIS] && element == ELE_GHOST)
+		|| (sc->data[SC_IMMUNE_PROPERTY_UNDEAD] && element == ELE_UNDEAD)) {
+			damage = 0;
+		}
+	}
+
 	switch (skill_id) {
 #ifndef RENEWAL
 		case PA_PRESSURE:
