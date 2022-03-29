@@ -48070,7 +48070,7 @@ Body:
     Script: |
       laphine_upgrade();
   - Id: 100128
-    AegisName: Noblesses_Refine_Ticket
+    AegisName: Noblesse_Rifine_Ticket
     Name: Noblesses Refine Ticket
     Type: Delayconsume
     Buy: 20
