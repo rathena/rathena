@@ -1995,8 +1995,10 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 		status->def2 = status->mdef2 =
 		status->cri = status->flee2 =
 		status->patk = status->smatk =
-		status->hplus = status->crate =
-		status->res = status->mres = 0;
+		status->hplus = status->crate = 0;
+		
+		if (bl->type != BL_MOB)	// BL_MOB has values set when loading mob_db
+			status->res = status->mres = 0;
 
 #ifdef RENEWAL // Renewal formulas
 	if (bl->type == BL_HOM) {
