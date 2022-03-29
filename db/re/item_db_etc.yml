@@ -11470,7 +11470,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bAbsorbDmgMaxHP,100;
+      bonus bAbsorbDmgMaxHP2,40;
   - Id: 4625
     AegisName: Timeholder_Card
     Name: Time Holder Card
