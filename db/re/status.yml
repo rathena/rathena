@@ -3162,11 +3162,7 @@ Body:
   - Status: Freeze_Sp
     Icon: EFST_FREEZE_SP
     Flags:
-      NoDispell: true
-      NoBanishingBuster: true
       NoClearance: true
-      NoSave: true
-      NoRemoveOnDead: true
   - Status: Fearbreeze
     Icon: EFST_FEARBREEZE
     DurationLookup: RA_FEARBREEZE
