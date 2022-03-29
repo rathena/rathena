@@ -13181,7 +13181,7 @@ Body:
           - GeneticStone_Robe_
           - GeneticStone_Top_
       - Combo:
-          - aegis_311009
+          - Genetic_Middle3
           - GeneticStone_Robe_
     Script: |
       bonus2 bSkillAtk,"GN_CARTCANNON",15;
@@ -13196,7 +13196,7 @@ Body:
           - WarlockStone_Robe_
           - WarlockStone_Top_
       - Combo:
-          - aegis_310885
+          - Warlock_Middle3
           - WarlockStone_Robe_
     Script: |
       bonus2 bSkillAtk,"WL_CRIMSONROCK",15;
@@ -13235,7 +13235,7 @@ Body:
           - GuillcrossStone_Robe_
           - AssacrossStone_Top_
       - Combo:
-          - aegis_311005
+          - WanderMins_Top3
           - WanderMinstrelStone_Robe_
     Script: |
       bonus2 bSPDrainRate,20,1;
@@ -13256,7 +13256,7 @@ Body:
           - WanderMinstrelStone_Robe_
           - WanderMinstrelStone_Top_
       - Combo:
-          - aegis_311007
+          - WanderMins_Bottom3
           - WanderMinstrelStone_Robe_
     Script: |
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
@@ -13307,10 +13307,10 @@ Body:
           - RoyalguardStone_Robe_
           - PaladinStone_Bottom_
       - Combo:
-          - aegis_310888
+          - Royalguard_Middle3
           - RoyalguardStone_Robe_
       - Combo:
-          - aegis_310888
+          - Royalguard_Middle3
           - RoyalGuard_Robe2
     Script: |
       bonus2 bSkillAtk,"LG_BANISHINGPOINT",15;
@@ -14979,7 +14979,7 @@ Body:
           - Warlock_Robe2
           - Warlock_Top2
       - Combo:
-          - aegis_310886
+          - Warlock_Bottom3
           - Warlock_Robe2
     Script: |
       bonus2 bSkillAtk,"WL_COMET",15;
@@ -15599,7 +15599,7 @@ Body:
           - HeroInsignia_INT
           - HeroBoots_INT
       - Combo:
-          - aegis_311006
+          - WanderMins_Middle3
           - WandMinst_Robe2
     Script: |
       bonus2 bMagicAtkEle,Ele_All,15;
@@ -20697,43 +20697,43 @@ Body:
       bonus2 bSkillAtk,"RK_IGNITIONBREAK",15;
   - Combos:
       - Combo:
-          - aegis_310884
+          - Warlock_Top3
           - WarlockStone_Robe_
     Script: |
       bonus2 bSkillAtk,"WL_SOULEXPANSION",15;
   - Combos:
       - Combo:
-          - aegis_310884
+          - Warlock_Top3
           - Warlock_Robe2
       - Combo:
-          - aegis_310885
+          - Warlock_Middle3
           - Warlock_Robe2
     Script: |
       bonus2 bSkillAtk,"WL_JACKFROST",15;
   - Combos:
       - Combo:
-          - aegis_310886
+          - Warlock_Bottom3
           - WarlockStone_Robe_
     Script: |
       bonus2 bSkillAtk,"WL_CHAINLIGHTNING",15;
   - Combos:
       - Combo:
-          - aegis_310887
+          - Royalguard_Top3
           - RoyalguardStone_Robe_
       - Combo:
-          - aegis_310889
+          - Royalguard_Bottom3
           - RoyalguardStone_Robe_
     Script: |
       bonus2 bSkillAtk,"LG_CANNONSPEAR",15;
   - Combos:
       - Combo:
-          - aegis_310887
+          - Royalguard_Top3
           - RoyalGuard_Robe2
     Script: |
       bonus2 bSkillUseSPrate,"LG_RAYOFGENESIS",15;
   - Combos:
       - Combo:
-          - aegis_310889
+          - Royalguard_Bottom3
           - RoyalGuard_Robe2
     Script: |
       bonus2 bMagicAddSize,Size_All,15;
@@ -20765,43 +20765,43 @@ Body:
       bonus2 bAddClass,Class_All,15;
   - Combos:
       - Combo:
-          - aegis_311005
+          - WanderMins_Top3
           - WandMinst_Robe2
     Script: |
       bonus2 bSkillAtk,"WM_METALICSOUND",15;
   - Combos:
       - Combo:
-          - aegis_311006
+          - WanderMins_Middle3
           - WanderMinstrelStone_Robe_
     Script: |
       bonus2 bAddSize,Size_All,15;
   - Combos:
       - Combo:
-          - aegis_311007
+          - WanderMins_Bottom3
           - WandMinst_Robe2
     Script: |
       bonus2 bSkillAtk,"WM_REVERBERATION",15;
   - Combos:
       - Combo:
-          - aegis_311008
+          - Genetic_Top3
           - GeneticStone_Robe_
       - Combo:
-          - aegis_311010
+          - Genetic_Bottom3
           - GeneticStone_Robe_
     Script: |
       bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",15;
   - Combos:
       - Combo:
-          - aegis_311008
+          - Genetic_Top3
           - Genetic_Robe2
     Script: |
       bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",15;
   - Combos:
       - Combo:
-          - aegis_311009
+          - Genetic_Middle3
           - Genetic_Robe2
       - Combo:
-          - aegis_311010
+          - Genetic_Bottom3
           - Genetic_Robe2
     Script: |
       bonus2 bSkillAtk,"GN_CART_TORNADO",15;
