@@ -14283,10 +14283,15 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 	sd = BL_CAST(BL_PC,bl);
 
 	flag = regen->flag;
-	if (flag&RGN_HP && (status->hp >= status->max_hp || regen->state.block&1))
+	if (flag&RGN_HP && (regen->state.block&1))
 		flag &= ~(RGN_HP|RGN_SHP);
-	if (flag&RGN_SP && (status->sp >= status->max_sp || regen->state.block&2))
+	if (flag&RGN_SP && (regen->state.block&2))
 		flag &= ~(RGN_SP|RGN_SSP);
+	// Only skill-based regen is disabled at max HP/SP
+	if (flag&RGN_SHP && (status->hp >= status->max_hp))
+		flag &= ~RGN_SHP;
+	if (flag&RGN_SSP && (status->sp >= status->max_sp))
+		flag &= ~RGN_SSP;
 
 	if (flag && (
 		status_isdead(bl) ||
@@ -14313,7 +14318,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 			while(sregen->tick.hp >= (unsigned int)battle_config.natural_heal_skill_interval) {
 				sregen->tick.hp -= battle_config.natural_heal_skill_interval;
 				if(status_heal(bl, sregen->hp, 0, 3) < sregen->hp) { // Full
-					flag &= ~(RGN_HP|RGN_SHP);
+					flag &= ~RGN_SHP;
 					break;
 				}
 			}
@@ -14326,7 +14331,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 			while(sregen->tick.sp >= (unsigned int)battle_config.natural_heal_skill_interval) {
 				sregen->tick.sp -= battle_config.natural_heal_skill_interval;
 				if(status_heal(bl, 0, sregen->sp, 3) < sregen->sp) { // Full
-					flag &= ~(RGN_SP|RGN_SSP);
+					flag &= ~RGN_SSP;
 					break;
 				}
 			}
@@ -14340,14 +14345,9 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 
 	if (flag&(RGN_HP|RGN_SHP|RGN_SSP) && ud && ud->walktimer != INVALID_TIMER) {
 		flag &= ~(RGN_SHP|RGN_SSP);
-		if (!regen->state.walk) {
+		if(!regen->state.walk)
 			flag &= ~RGN_HP;
-			regen->tick.hp = natural_heal_prev_tick;
-		}
 	}
-
-	if (!flag)
-		return 0;
 
 	if (flag&(RGN_HP|RGN_SP)) {
 		if(!vd)
@@ -14373,9 +14373,14 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 
 		if(regen->tick.hp + rate <= natural_heal_prev_tick) {
 			regen->tick.hp = natural_heal_prev_tick;
-			if (status_heal(bl, regen->hp, 0, 1) < regen->hp)
-				flag &= ~RGN_SHP; // Full.
+			if (status->hp >= status->max_hp)
+				flag &= ~(RGN_HP | RGN_SHP);
+			else if (status_heal(bl, regen->hp, 0, 1) < regen->hp)
+				flag &= ~RGN_SHP; // Full
 		}
+	}
+	else {
+		regen->tick.hp = natural_heal_prev_tick;
 	}
 
 	// Natural SP regen
@@ -14396,9 +14401,14 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 
 		if(regen->tick.sp + rate <= natural_heal_prev_tick) {
 			regen->tick.sp = natural_heal_prev_tick;
-			if (status_heal(bl, 0, regen->sp, 1) < regen->sp)
-				flag &= ~RGN_SSP; // full.
+			if (status->sp >= status->max_sp)
+				flag &= ~(RGN_SP | RGN_SSP);
+			else if (status_heal(bl, 0, regen->sp, 1) < regen->sp)
+				flag &= ~RGN_SSP; // Full
 		}
+	}
+	else {
+		regen->tick.sp = natural_heal_prev_tick;
 	}
 
 	if (!regen->sregen)
