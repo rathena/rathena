@@ -602,6 +602,7 @@ struct map_session_data {
 		int ematk; // matk bonus from equipment
 		int eatk; // atk bonus from equipment
 		uint8 absorb_dmg_maxhp; // [Cydh]
+		uint8 absorb_dmg_maxhp2;
 		short critical_rangeatk;
 		short weapon_atk_rate, weapon_matk_rate;
 	} bonus;

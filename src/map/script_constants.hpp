@@ -843,6 +843,7 @@
 	export_constant2("bCritDefRate",SP_CRIT_DEF_RATE);
 	export_constant2("bMagicSubDefEle", SP_MAGIC_SUBDEF_ELE);
 	export_constant2("bReduceDamageReturn",SP_REDUCE_DAMAGE_RETURN);
+	export_constant2("bAbsorbDmgMaxHP2", SP_ABSORB_DMG_MAXHP2);
 	export_constant2("bAddItemSPHealRate", SP_ADD_ITEM_SPHEAL_RATE);
 	export_constant2("bAddItemGroupSPHealRate", SP_ADD_ITEMGROUP_SPHEAL_RATE);
 	export_constant2("bWeaponSubSize", SP_WEAPON_SUBSIZE);
