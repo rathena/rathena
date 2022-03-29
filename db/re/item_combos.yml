@@ -20825,13 +20825,13 @@ Body:
       bonus2 bSkillAtk,"SO_VARETYR_SPEAR",15;
   - Combos:
       - Combo:
-          - aegis_311013
+          - Sorcerer_Bottom3
           - SorcererStone_Robe_
     Script: |
       bonus2 bSkillAtk,"SO_POISON_BUSTER",15;
   - Combos:
       - Combo:
-          - aegis_311013
+          - Sorcerer_Bottom3
           - SorcererStone_Robe2_
     Script: |
       bonus2 bSkillAtk,"SO_DIAMONDDUST",15;
