@@ -1,3 +1,20 @@
+function	script	F_MesItemInfo	{
+	.@item = getarg(0);
+	.@itemname$ = getitemname(.@item);
+	if (.@itemname$ != "null") {
+		.@itemslot = getitemslots(.@item);
+		if (.@itemslot)
+			.@itemname$ = sprintf("%s [%d]", .@itemname$, .@itemslot);
+	}
+	else
+		.@itemname$ = "Unknown Item";
+	if (PACKETVER >= 20150729)
+		return sprintf("<ITEM>%s<INFO>%d</INFO></ITEM>", .@itemname$, .@item);
+	else if (PACKETVER >= 20130130)
+		return sprintf("<ITEMLINK>%s<INFO>%d</INFO></ITEMLINK>", .@itemname$, .@item);
+	else
+		return .@itemname$;
+}
 
 //	~~~~~ Please use this latest int__ function that support negative numbers ~~~~~
 function	script	int__	{

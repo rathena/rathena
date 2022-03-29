@@ -37,3 +37,8 @@ prontera,152,193,4	script	PVP Warper::pvp	4258,{
 sec_in02,140,175,4	duplicate(pvp)	PVP Warper#vip	4258
 
 grandarena	mapflag	pvp
+grandarena	mapflag	pvp_noparty
+grandarena	mapflag	pvp_noguild
+grandarena	mapflag	nomemo
+grandarena	mapflag	nogo
+grandarena	mapflag	nowarp

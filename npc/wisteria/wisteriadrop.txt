@@ -1,7 +1,7 @@
 -	script	Wisteria_Drop	-1,{
 OnNPCKillEvent:
 
-if ( rand( 100 ) <= 5 ) {
+if ( rand( 200 ) <= 1 ) {
 
 .@item_id = F_Rand( 30006 );
 
