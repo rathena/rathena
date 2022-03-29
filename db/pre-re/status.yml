@@ -55,11 +55,13 @@ Body:
       Def_Ele: true
       Def: true
       Mdef: true
+    Opt1: Stone
     Flags:
       SendOption: true
       BossResist: true
       StopAttacking: true
       StopCasting: true
+      RemoveOnDamaged: true
     Fail:
       Refresh: true
       Inspiration: true
