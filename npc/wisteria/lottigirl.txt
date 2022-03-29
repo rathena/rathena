@@ -14,7 +14,7 @@
 //===== Additional Comments: =================================
 //= 
 //============================================================
-
+/*
 function	script	F_MesItemInfo	{
 	.@item = getarg(0);
 	.@itemname$ = getitemname(.@item);
@@ -32,7 +32,7 @@ function	script	F_MesItemInfo	{
 	else
 		return .@itemname$;
 }
-
+*/
 /*
 create table lotti_rank (
 char_id int(11),

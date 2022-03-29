@@ -51,8 +51,8 @@ setarray .PvPMap$[0], "All"; //List all pvp maps here (Index 0:"All" to enable a
 set .Top, 10; //What is the length of the list?
 set .Reset, 0; //Allow players to reset their PvP statistics? (0:Disable|1:Zeny|2:Cashpoint|3:Skull)
 set .ZenyFee, 0; //How much zeny you want to charge to reset their pvp stat?
-set .CashFee, 1000; //How much cashpoint you want to charge to reset their pvp stat?
-set .SkullFee, 1000; //How much skull you want to charge to reset their pvp stat?
+set .CashFee, 100; //How much cashpoint you want to charge to reset their pvp stat?
+set .SkullFee, 500; //How much skull you want to charge to reset their pvp stat?
 set .AnnouncerFee, 5; //How much cashpoint per announcer? (DotA announcer is set as default)
 
 //Reward Setting (Every Kill)
@@ -75,7 +75,7 @@ set .Streak, 1; //Show number of killing streak in broadcast? e.g. Ghost is Beyo
 set .Multiple, 1; //Show number of multiple kill in broadcast? e.g. Makizushi just got an Ownage(5)
 set .Nemesis, 1; //Show number of nemesis in broadcast? e.g. Epoque is owning Jguy(9)
 set .Feeder, 1; //Show number of feed in broadcast? e.g. Cookies is feeding `KeiKun(10)
-set .RandomKillWord, 1; //Randomize the kill words? e.g. Arcenciel "Kill Word" jTynne (0:Disable|Default:"pwned")
+set .RandomKillWord, 0; //Randomize the kill words? e.g. Arcenciel "Kill Word" jTynne (0:Disable|Default:"pwned")
 setarray .KillWord$[0], "pwned", "killed", "disintegrated", "neutralized"; //Enable above setting for this to work
 
 //Broadcast Color | See HexTable: http://johncfish.com/bggallery/otherchart/hextable.gif

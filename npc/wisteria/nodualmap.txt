@@ -33,7 +33,7 @@ OnInit:
 	// 1= if you have gepard 0=if you do not use gepard
 	set .Gepard,1;
 	// Maps for prevent the script from working in other scripts that have loadevent
-	setarray $MapsWorks$[0], "new_zone04";
+	setarray $MapsWorks$[0], "new_zone04","grandarena","guild_vs3","pvp_n_8-1","pvp_y_1-1"; 
 	end;
 	
 OnPCLoadMapEvent:
@@ -97,3 +97,7 @@ OnPCLoadMapEvent:
 
 //loadevents
 new_zone04	mapflag	loadevent
+grandarena	mapflag	loadevent
+guild_vs3	mapflag	loadevent
+pvp_n_8-1	mapflag	loadevent 
+pvp_y_1-1	mapflag	loadevent
