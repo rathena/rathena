@@ -3674,7 +3674,7 @@ harboro1,357,152,3	script	Steel Vigilante#2	4_M_ACROSS,{
 		mes "^0000ffYou must be Level 140 or above to receive this quest.^000000";
 		close;
 	}
-	if (isbegin_quest(12389) == 2) {
+	if (isbegin_quest(12389) != 2) {
 		mes "[Steel Vigilante]";
 		mes "Mm? You're not one of us. If you need a job, then you should look elsewhere.";
 		close;

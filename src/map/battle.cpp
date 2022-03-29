@@ -712,7 +712,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 					int ele_fix = tsd->indexed_bonus.subele[rh_ele] + tsd->indexed_bonus.subele[ELE_ALL] + tsd->indexed_bonus.subele_script[rh_ele] + tsd->indexed_bonus.subele_script[ELE_ALL];
 
 					for (const auto &it : tsd->subele2) {
-						if (it.ele != rh_ele)
+						if (it.ele != ELE_ALL && it.ele != rh_ele)
 							continue;
 						if (!(((it.flag)&flag)&BF_WEAPONMASK &&
 							((it.flag)&flag)&BF_RANGEMASK &&
@@ -734,7 +734,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 				cardfix = cardfix * (100 - race_fix) / 100;
 				race_fix = tsd->indexed_bonus.subrace[sstatus->race] + tsd->indexed_bonus.subrace[RC_ALL];
 				for (const auto &it : tsd->subrace3) {
-					if (it.race != sstatus->race)
+					if (it.race != RC_ALL && it.race != sstatus->race)
 						continue;
 					if (!(((it.flag)&flag)&BF_WEAPONMASK &&
 						((it.flag)&flag)&BF_RANGEMASK &&
@@ -779,7 +779,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 							sd->right_weapon.addele[ELE_ALL] + sd->indexed_bonus.arrow_addele[ELE_ALL];
 
 						for (const auto &it : sd->right_weapon.addele2) {
-							if (it.ele != tstatus->def_ele)
+							if (it.ele != ELE_ALL && it.ele != tstatus->def_ele)
 								continue;
 							if (!(((it.flag)&flag)&BF_WEAPONMASK &&
 								((it.flag)&flag)&BF_RANGEMASK &&
@@ -810,7 +810,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 							int ele_fix = sd->right_weapon.addele[tstatus->def_ele] + sd->right_weapon.addele[ELE_ALL];
 
 							for (const auto &it : sd->right_weapon.addele2) {
-								if (it.ele != tstatus->def_ele)
+								if (it.ele != ELE_ALL && it.ele != tstatus->def_ele)
 									continue;
 								if (!(((it.flag)&flag)&BF_WEAPONMASK &&
 									((it.flag)&flag)&BF_RANGEMASK &&
@@ -831,7 +831,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 								int ele_fix_lh = sd->left_weapon.addele[tstatus->def_ele] + sd->left_weapon.addele[ELE_ALL];
 
 								for (const auto &it : sd->left_weapon.addele2) {
-									if (it.ele != tstatus->def_ele)
+									if (it.ele != ELE_ALL && it.ele != tstatus->def_ele)
 										continue;
 									if (!(((it.flag)&flag)&BF_WEAPONMASK &&
 										((it.flag)&flag)&BF_RANGEMASK &&
@@ -855,7 +855,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 										+ sd->right_weapon.addele[ELE_ALL] + sd->left_weapon.addele[ELE_ALL];
 
 							for (const auto &it : sd->right_weapon.addele2) {
-								if (it.ele != tstatus->def_ele)
+								if (it.ele != ELE_ALL && it.ele != tstatus->def_ele)
 									continue;
 								if (!(((it.flag)&flag)&BF_WEAPONMASK &&
 									((it.flag)&flag)&BF_RANGEMASK &&
@@ -864,7 +864,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 								ele_fix += it.rate;
 							}
 							for (const auto &it : sd->left_weapon.addele2) {
-								if (it.ele != tstatus->def_ele)
+								if (it.ele != ELE_ALL && it.ele != tstatus->def_ele)
 									continue;
 								if (!(((it.flag)&flag)&BF_WEAPONMASK &&
 									((it.flag)&flag)&BF_RANGEMASK &&
@@ -920,7 +920,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 					int ele_fix = tsd->indexed_bonus.subele[rh_ele] + tsd->indexed_bonus.subele[ELE_ALL] + tsd->indexed_bonus.subele_script[rh_ele] + tsd->indexed_bonus.subele_script[ELE_ALL];
 
 					for (const auto &it : tsd->subele2) {
-						if (it.ele != rh_ele)
+						if (it.ele != ELE_ALL && it.ele != rh_ele)
 							continue;
 						if (!(((it.flag)&flag)&BF_WEAPONMASK &&
 							((it.flag)&flag)&BF_RANGEMASK &&
@@ -934,7 +934,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 						int ele_fix_lh = tsd->indexed_bonus.subele[lh_ele] + tsd->indexed_bonus.subele[ELE_ALL] + tsd->indexed_bonus.subele_script[lh_ele] + tsd->indexed_bonus.subele_script[ELE_ALL];
 
 						for (const auto &it : tsd->subele2) {
-							if (it.ele != lh_ele)
+							if (it.ele != ELE_ALL && it.ele != lh_ele)
 								continue;
 							if (!(((it.flag)&flag)&BF_WEAPONMASK &&
 								((it.flag)&flag)&BF_RANGEMASK &&
@@ -957,7 +957,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 				cardfix = cardfix * (100 - race_fix) / 100;
 				race_fix = tsd->indexed_bonus.subrace[sstatus->race] + tsd->indexed_bonus.subrace[RC_ALL];
 				for (const auto &it : tsd->subrace3) {
-					if (it.race != sstatus->race)
+					if (it.race != RC_ALL && it.race != sstatus->race)
 						continue;
 					if (!(((it.flag)&flag)&BF_WEAPONMASK &&
 						((it.flag)&flag)&BF_RANGEMASK &&
@@ -1004,7 +1004,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 				}
 				int race_fix = tsd->indexed_bonus.subrace[sstatus->race] + tsd->indexed_bonus.subrace[RC_ALL];
 				for (const auto &it : tsd->subrace3) {
-					if (it.race != sstatus->race)
+					if (it.race != RC_ALL && it.race != sstatus->race)
 						continue;
 					if (!(((it.flag)&flag)&BF_WEAPONMASK &&
 						((it.flag)&flag)&BF_RANGEMASK &&
@@ -1054,11 +1054,17 @@ static void battle_absorb_damage(struct block_list *bl, struct Damage *d) {
 				struct map_session_data *sd = BL_CAST(BL_PC, bl);
 				if (!sd)
 					return;
+				dmg_ori = dmg_new = d->damage + d->damage2;
 				if (sd->bonus.absorb_dmg_maxhp) {
 					int hp = sd->bonus.absorb_dmg_maxhp * status_get_max_hp(bl) / 100;
-					dmg_ori = dmg_new = d->damage + d->damage2;
 					if (dmg_ori > hp)
 						dmg_new = dmg_ori - hp;
+				}
+				if (sd->bonus.absorb_dmg_maxhp2) {
+					int hp = sd->bonus.absorb_dmg_maxhp2 * status_get_max_hp(bl) / 100;
+					if (dmg_ori > hp) {
+						dmg_new = hp;
+					}
 				}
 			}
 			break;
@@ -1284,8 +1290,13 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 		} else {
 			clif_skill_nodamage(target, target, CR_AUTOGUARD, sce->val1, 1);
 			unit_set_walkdelay(target, gettick(), delay, 1);
+#ifdef RENEWAL
+			if (sc->data[SC_SHRINK])
+				sc_start(src, target, SC_STUN, 50, skill_lv, skill_get_time2(skill_id, skill_lv));
+#else
 			if (sc->data[SC_SHRINK] && rnd() % 100 < 5 * sce->val1)
 				skill_blown(target, src, skill_get_blewcount(CR_SHRINK, 1), -1, BLOWN_NONE);
+#endif
 			d->dmg_lv = ATK_MISS;
 			return false;
 		}
@@ -2977,7 +2988,11 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 				break;
 			case AS_SONICBLOW:
 				if(sd && pc_checkskill(sd,AS_SONICACCEL) > 0)
+#ifdef RENEWAL
+					hitrate += hitrate * 90 / 100;
+#else
 					hitrate += hitrate * 50 / 100;
+#endif
 				break;
 #ifdef RENEWAL
 			case RG_BACKSTAP:
@@ -4373,7 +4388,13 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case NJ_KUNAI:
 			skillratio += -100 + 100 * skill_lv;
 			break;
-#endif
+		case KN_CHARGEATK:
+			skillratio += 600;
+			break;
+		case AS_VENOMKNIFE:
+			skillratio += 400;
+			break;
+#else
 		case KN_CHARGEATK: { // +100% every 3 cells of distance but hard-limited to 500%
 				int k = (wd->miscflag-1)/3;
 				if (k < 0)
@@ -4383,11 +4404,20 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio += 100 * k;
 			}
 			break;
+#endif
 		case HT_PHANTASMIC:
+#ifdef RENEWAL
+			skillratio += 400;
+#else
 			skillratio += 50;
+#endif
 			break;
 		case MO_BALKYOUNG:
+#ifdef RENEWAL
+			skillratio += 700;
+#else
 			skillratio += 200;
+#endif
 			break;
 		case HFLI_MOON: //[orn]
 			skillratio += 10 + 110 * skill_lv;
@@ -5753,7 +5783,11 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
 	switch (skill_id) {
 		case AS_SONICBLOW:
 			if(sd && pc_checkskill(sd,AS_SONICACCEL)>0)
+#ifdef RENEWAL
+				ATK_ADDRATE(wd->damage, wd->damage2, 90);
+#else
 				ATK_ADDRATE(wd->damage, wd->damage2, 10);
+#endif
 			break;
 	}
 }
@@ -7056,6 +7090,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += -100 + 500 + 150 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
+					case WZ_SIGHTBLASTER:
+						skillratio += 500;
+						break;
 #else
 					case WZ_VERMILION:
 						skillratio += 20 * skill_lv - 20;
@@ -7708,17 +7745,12 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					struct Damage wd = battle_calc_weapon_attack(src,target,skill_id,skill_lv,mflag);
 
 					ad.damage = battle_attr_fix(src, target, wd.damage + ad.damage, s_ele, tstatus->def_ele, tstatus->ele_lv) * (100 + 40 * skill_lv) / 100;
-#ifdef RENEWAL
-					if (src == target)
-						ad.damage = 0;
-#else
 					if(src == target) {
 						if(src->type == BL_PC)
 							ad.damage = ad.damage / 2;
 						else
 							ad.damage = 0;
 					}
-#endif
 				}
 				break;
 		}

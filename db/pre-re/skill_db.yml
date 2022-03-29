@@ -322,6 +322,7 @@ Body:
         - Level: 10
           Amount: 16
       SpCost: 30
+    Status: Watk_Element
   - Id: 8
     Name: SM_ENDURE
     Description: Endure
@@ -532,6 +533,7 @@ Body:
       Flag:
         NoEnemy: true
         NoReiteration: true
+    Status: Safetywall
   - Id: 13
     Name: MG_SOULSTRIKE
     Description: Soul Strike
@@ -1975,6 +1977,7 @@ Body:
       IgnoreKagehumi: true
       AllowOnMado: true
       IgnoreWugBite: true
+      Toggleable: true
     Range: 1
     Hit: Single
     HitCount: 1
@@ -2580,6 +2583,7 @@ Body:
     Duration2: 30000
     Requires:
       SpCost: 5
+    Status: Blind
   - Id: 73
     Name: PR_KYRIE
     Description: Kyrie Eleison
@@ -3941,6 +3945,7 @@ Body:
         1hAxe: true
         2hAxe: true
         Mace: true
+    Status: Stun
   - Id: 111
     Name: BS_ADRENALINE
     Description: Adrenaline Rush
@@ -4093,6 +4098,7 @@ Body:
       NoDamage: true
     Flags:
       AllowOnMado: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     Duration1:
@@ -4725,6 +4731,7 @@ Body:
     Flags:
       IgnoreKagehumi: true
       IgnoreWugBite: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     Duration1:
@@ -5074,6 +5081,7 @@ Body:
       NoDamage: true
     Flags:
       IsQuest: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     Duration1: 600000
@@ -6146,6 +6154,7 @@ Body:
       SpCost: 20
       Status:
         Hiding: true
+    Status: Stun
   - Id: 215
     Name: RG_STRIPWEAPON
     Description: Divest Weapon
@@ -6752,6 +6761,8 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
+    Flags:
+      Toggleable: true
     Hit: Single
     HitCount: 1
     Duration1: 300000
@@ -9310,6 +9321,7 @@ Body:
     Range: 9
     Hit: Single
     Duration1: 15000
+    Status: Stop
   - Id: 343
     Name: NPC_WEAPONBRAKER
     Description: Break weapon
@@ -9459,6 +9471,7 @@ Body:
     Flags:
       IsNpc: true
     Duration1: 30000
+    Status: Cloaking
   - Id: 354
     Name: NPC_RUN
     Description: Run
@@ -9482,7 +9495,6 @@ Body:
         Time: 2000
       - Level: 6
         Time: 2500
-    Status: Cloaking
   - Id: 355
     Name: LK_AURABLADE
     Description: Aura Blade
@@ -9946,6 +9958,8 @@ Body:
     DamageFlags:
       NoDamage: true
       IgnoreFlee: true
+    Flags:
+      Toggleable: true
     Hit: Single
     HitCount: 1
     CastCancel: true
@@ -10626,6 +10640,7 @@ Body:
       NoDamage: true
     Flags:
       IgnoreKagehumi: true
+      Toggleable: true
     Hit: Single
     HitCount: 1
     CastTime: 1200
@@ -10993,6 +11008,7 @@ Body:
           Amount: 55
         - Level: 5
           Amount: 70
+    Status: Curse
   - Id: 401
     Name: CH_SOULCOLLECT
     Description: Zen
@@ -11249,6 +11265,8 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
+    Flags:
+      Toggleable: true
     Hit: Single
     HitCount: 1
     Knockback: 4
@@ -11300,10 +11318,13 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
+    Flags:
+      Toggleable: true
     Hit: Single
     HitCount: 1
     Requires:
       SpCost: 1
+    Status: ReadyStorm
   - Id: 413
     Name: TK_STORMKICK
     Description: Tornado Kick
@@ -11344,6 +11365,8 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
+    Flags:
+      Toggleable: true
     Hit: Single
     HitCount: 1
     Requires:
@@ -11387,6 +11410,8 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
+    Flags:
+      Toggleable: true
     Hit: Single
     HitCount: 1
     Requires:
@@ -11433,6 +11458,8 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
+    Flags:
+      Toggleable: true
     Hit: Single
     HitCount: 1
     Requires:
@@ -11868,6 +11895,8 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
+    Flags:
+      Toggleable: true
     Hit: Single
     HitCount: 1
     AfterCastActDelay: 1000
@@ -13409,6 +13438,7 @@ Body:
     Duration2: 30000
     Requires:
       SpCost: 40
+    Status: TarotCard
   - Id: 490
     Name: CR_ACIDDEMONSTRATION
     Description: Acid Demonstration
@@ -14071,6 +14101,8 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
+    Flags:
+      Toggleable: true
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -15742,6 +15774,7 @@ Body:
     HitCount: 1
     Element: Weapon
     Duration2: 120000
+    Status: Bleeding
   - Id: 661
     Name: NPC_PULSESTRIKE
     Description: Pulse Strike
@@ -16091,6 +16124,7 @@ Body:
     HitCount: 1
     Element: Weapon
     Duration2: 30000
+    Status: CriticalWound
   - Id: 674
     Name: NPC_EXPULSION
     Description: Expulsion
@@ -16533,6 +16567,7 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
+    Status: Orcish
   - Id: 698
     Name: ALL_WEWISH
     Description: Christmas Carol
@@ -16943,6 +16978,7 @@ Body:
       NoDamage: true
     Flags:
       IsQuest: true
+      Toggleable: true
     Hit: Single
     Knockback: 2
     Duration1: 300000
@@ -31788,6 +31824,7 @@ Body:
       Flag:
         NoEnemy: true
         NoReiteration: true
+    Status: Safetywall
   - Id: 8034
     Name: MH_HEILIGE_STANGE
     Description: Holy Pole
@@ -32837,6 +32874,8 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
+    Flags:
+      Toggleable: true
     Hit: Single
     HitCount: 1
     AfterCastActDelay: 800
@@ -32852,6 +32891,8 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
+    Flags:
+      Toggleable: true
     Hit: Single
     HitCount: 1
     Duration1: 300000
