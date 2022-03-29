@@ -47368,7 +47368,7 @@ Body:
       bonus bVariableCastrate,-10;
       bonus bDelayrate,-10;
   - Id: 300348
-    AegisName: aegis_300348
+    AegisName: SLD_G_Amon_Ra_Card_J
     Name: Sealed Nightmare Amon Ra Card
     Type: Card
     Weight: 10
@@ -54217,7 +54217,7 @@ Body:
       bonus bVariableCastrate,-5;
       bonus bMatk,3;
   - Id: 310881
-    AegisName: aegis_310881
+    AegisName: Runeknight_Top3
     Name: Rune Knight Stone(Upper)
     Type: Card
     SubType: Enchant
@@ -55011,22 +55011,22 @@ Body:
     Script: |
       bonus bFixedCast,-100*getskilllv("GN_TRAINING_SWORD");
   - Id: 311011
-    AegisName: aegis_311011
-    Name: Sorcerer Stone (top)    # !todo check english name
+    AegisName: Sorcerer_Top3
+    Name: Sorcerer Stone (Upper)    # !todo check english name
     Type: Card
     SubType: Enchant
     Script: |
       bonus bFixedCast,-100*getskilllv("SO_STRIKING");
   - Id: 311012
-    AegisName: aegis_311012
-    Name: Sorcerer Stone (Discontinued)    # !todo check english name
+    AegisName: Sorcerer_Middle3
+    Name: Sorcerer Stone (Middle)    # !todo check english name
     Type: Card
     SubType: Enchant
     Script: |
       bonus bVariableCastrate,-2*getskilllv("SO_DIAMONDDUST");
   - Id: 311013
-    AegisName: aegis_311013
-    Name: Sorcerer Stone (bottom)    # !todo check english name
+    AegisName: Sorcerer_Bottom3
+    Name: Sorcerer Stone (Lower)    # !todo check english name
     Type: Card
     SubType: Enchant
     Script: |

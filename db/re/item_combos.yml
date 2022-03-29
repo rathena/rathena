@@ -1163,7 +1163,7 @@ Body:
           - Sprint_Glove_IL
           - Sprint_Mail_IL
       - Combo:
-          - aegis_310881
+          - Runeknight_Top3
           - RuneknightStone_Robe_
     Script: |
       bonus bVariableCastrate,-10;
@@ -4791,7 +4791,7 @@ Body:
           - RingOfDevil
           - Fortune3
       - Combo:
-          - aegis_410094
+          - Chain_Of_Seal_
           - Vassalage_Necklace
     Script: |
       bonus bCritAtkRate,5;
@@ -13146,7 +13146,7 @@ Body:
           - SorcererStone_Robe_
           - SorcererStone_Top_
       - Combo:
-          - aegis_311012
+          - Sorcerer_Middle3
           - SorcererStone_Robe_
     Script: |
       bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",15;
@@ -20672,7 +20672,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_All,6;
   - Combos:
       - Combo:
-          - aegis_310881
+          - Runeknight_Top3
           - Runeknight_Robe2
     Script: |
       bonus2 bSkillAtk,"RK_HUNDREDSPEAR",15;
@@ -20807,19 +20807,19 @@ Body:
       bonus2 bSkillAtk,"GN_CART_TORNADO",15;
   - Combos:
       - Combo:
-          - aegis_311011
+          - Sorcerer_Top3
           - SorcererStone_Robe_
     Script: |
       bonus2 bSkillCooldown,"SO_CLOUD_KILL",-2000;
   - Combos:
       - Combo:
-          - aegis_311011
+          - Sorcerer_Top3
           - SorcererStone_Robe2_
     Script: |
       bonus2 bSkillAtk,"SO_EARTHGRAVE",15;
   - Combos:
       - Combo:
-          - aegis_311012
+          - Sorcerer_Middle3
           - SorcererStone_Robe2_
     Script: |
       bonus2 bSkillAtk,"SO_VARETYR_SPEAR",15;
@@ -23768,7 +23768,7 @@ Body:
       bonus2 bAddEle,Ele_Fire,5*.@r;
   - Combos:
       - Combo:
-          - aegis_450163     # 450163
+          - White_Lily_Robe_     # 450163
           - Grave_Amon_Ra_Card     # 4652
     Script: |
       bonus2 bMagicAtkEle,Ele_Holy,15;
@@ -23776,15 +23776,15 @@ Body:
       skill "AB_JUDEX",3;
   - Combos:
       - Combo:
-          - aegis_450163     # 450163
-          - aegis_300348     # 300348
+          - White_Lily_Robe_     # 450163
+          - SLD_G_Amon_Ra_Card_J     # 300348
     Script: |
       bonus2 bMagicAtkEle,Ele_Holy,5;
       bonus2 bResEff,Eff_Freeze,10000;
       skill "AB_JUDEX",1;
   - Combos:
       - Combo:
-          - aegis_450181     # 450181
+          - White_Lily_Robe__     # 450181
           - Grave_Amon_Ra_Card     # 4652
     Script: |
       .@r = min(10,getequiprefinerycnt(EQI_ARMOR));
@@ -23793,8 +23793,8 @@ Body:
       skill "AB_JUDEX",.@r;
   - Combos:
       - Combo:
-          - aegis_450181     # 450181
-          - aegis_300348     # 300348
+          - White_Lily_Robe__     # 450181
+          - SLD_G_Amon_Ra_Card_J     # 300348
     Script: |
       .@r = min(10,getequiprefinerycnt(EQI_ARMOR));
       bonus2 bMagicAtkEle,Ele_Holy,15;
@@ -23858,34 +23858,34 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_32295     # 32295
+          - Crystal_Blade_Necklace     # 32295
           - Strong_Blow1     # 29366
       - Combo:
-          - aegis_32295     # 32295
+          - Crystal_Blade_Necklace     # 32295
           - Strong_Blow2     # 29367
       - Combo:
-          - aegis_32295     # 32295
+          - Crystal_Blade_Necklace     # 32295
           - Strong_Blow3     # 29368
       - Combo:
-          - aegis_32295     # 32295
+          - Crystal_Blade_Necklace     # 32295
           - Strong_Blow4     # 29369
       - Combo:
-          - aegis_32295     # 32295
+          - Crystal_Blade_Necklace     # 32295
           - Strong_Blow5     # 29370
       - Combo:
-          - aegis_32296     # 32296
+          - Crystal_Blade_Necklace_     # 32296
           - Strong_Blow1     # 29366
       - Combo:
-          - aegis_32296     # 32296
+          - Crystal_Blade_Necklace_     # 32296
           - Strong_Blow2     # 29367
       - Combo:
-          - aegis_32296     # 32296
+          - Crystal_Blade_Necklace_     # 32296
           - Strong_Blow3     # 29368
       - Combo:
-          - aegis_32296     # 32296
+          - Crystal_Blade_Necklace_     # 32296
           - Strong_Blow4     # 29369
       - Combo:
-          - aegis_32296     # 32296
+          - Crystal_Blade_Necklace_     # 32296
           - Strong_Blow5     # 29370
     Script: |
       if (BaseClass == Job_Novice || BaseClass == Job_Swordman || BaseClass == Job_Mage || BaseClass == Job_Acolyte || BaseClass == Job_Archer || BaseClass == Job_Merchant || BaseClass == Job_Taekwon || BaseClass == Job_Gunslinger || BaseClass == Job_Summoner) {
