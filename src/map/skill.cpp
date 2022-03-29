@@ -7476,7 +7476,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case NPC_MOVE_COORDINATE:
-		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 		if (status_get_class_(src) == CLASS_BOSS) {//if caster is a boss, the skill will pull target ahead of the boss, instead of switch coordinates with target. 
 			{
 				short x, y;
@@ -7503,6 +7502,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				clif_blown(bl);
 			}
 		}
+		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+		clif_specialeffect(bl, EF_MOVE_COORDINATE, AREA);
 		break;
 
 	case PR_KYRIE:
