@@ -14745,8 +14745,11 @@ uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef node) {
 				status->calc_flag.reset();
 		}
 
-		for (const auto &it : flagNode) {
-			std::string flag = it.first.as<std::string>(), flag_constant = "SCB_" + flag;
+		for (const auto &it : flagNode.children()) {
+			std::string flag;
+			c4::from_chars(it.key(), &flag);
+
+			std::string flag_constant = "SCB_" + flag;
 			int64 constant;
 
 			// Skipped because processed above the loop
