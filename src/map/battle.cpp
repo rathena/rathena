@@ -5668,13 +5668,13 @@ static void battle_calc_defense_reduction(struct Damage* wd, struct block_list *
 			def2 = 1;
 	}
 
-	//Vitality reduction from rodatazone: http://rodatazone.simgaming.net/mechanics/substats.php#def
+	//Damage reduction based on vitality
 	if (tsd) {	//Sd vit-eq
 		int skill;
 #ifndef RENEWAL
-		//[VIT*0.5] + rnd([VIT*0.3], max([VIT*0.3],[VIT^2/150]-1))
-		vit_def = def2*(def2-15)/150;
-		vit_def = def2/2 + (vit_def>0?rnd()%vit_def:0);
+		//Damage reduction: [VIT*0.3] + RND(0; [VIT^2/150] - [VIT*0.3]) + [VIT*0.5]
+		vit_def = max(1, (def2 * def2 / 150) - ((3 * def2) / 10)); //Random bonus part
+		vit_def = ((3 * def2) / 10) + (rnd() % vit_def) + (def2 / 2);
 #else
 		vit_def = def2;
 #endif
