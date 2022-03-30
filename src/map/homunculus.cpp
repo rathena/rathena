@@ -1081,6 +1081,7 @@ void hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 {
 	struct homun_data *hd;
 	int i = 0;
+	t_tick tick = gettick();
 
 	nullpo_retv(sd);
 
@@ -1114,6 +1115,10 @@ void hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 	unit_calc_pos(&hd->bl, sd->bl.x, sd->bl.y, sd->ud.dir);
 	hd->bl.x = hd->ud.to_x;
 	hd->bl.y = hd->ud.to_y;
+
+	// Ticks need to be initialized before adding bl to map_addiddb
+	hd->regen.tick.hp = tick;
+	hd->regen.tick.sp = tick;
 
 	map_addiddb(&hd->bl);
 	status_calc_homunculus(hd, SCO_FIRST);
