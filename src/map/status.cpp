@@ -4510,7 +4510,7 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 	sd = BL_CAST(BL_PC,bl);
 	sc = status_get_sc(bl);
 
-	val = 1 + (status->vit/5) + (status->max_hp/200);
+	val = (status->vit/5) + max(1, status->max_hp/200);
 
 	if( sd && sd->hprecov_rate != 100 )
 		val = val*sd->hprecov_rate/100;
@@ -9843,14 +9843,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_ENCPOISON:
 			val2= 250+50*val1; // Poisoning Chance (2.5+0.5%) in 1/10000 rate
-		case SC_ASPERSIO:
-		case SC_FIREWEAPON:
-		case SC_WATERWEAPON:
-		case SC_WINDWEAPON:
-		case SC_EARTHWEAPON:
-		case SC_SHADOWWEAPON:
-		case SC_GHOSTWEAPON:
-			skill_enchant_elemental_end(bl,type);
 			break;
 		case SC_ELEMENTALCHANGE:
 			// val1 : Element Lvl (if called by skill lvl 1, takes random value between 1 and 4)
@@ -10626,8 +10618,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val4 = BF_WEAPON|BF_MISC; // Type
 			break;
 		case SC_ENCHANTARMS:
-			// end previous enchants
-			skill_enchant_elemental_end(bl,type);
 			// Make sure the received element is valid.
 			if (val1 >= ELE_ALL)
 				val1 = val1%ELE_ALL;
@@ -14285,10 +14275,15 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 	sd = BL_CAST(BL_PC,bl);
 
 	flag = regen->flag;
-	if (flag&RGN_HP && (status->hp >= status->max_hp || regen->state.block&1))
+	if (flag&RGN_HP && (regen->state.block&1))
 		flag &= ~(RGN_HP|RGN_SHP);
-	if (flag&RGN_SP && (status->sp >= status->max_sp || regen->state.block&2))
+	if (flag&RGN_SP && (regen->state.block&2))
 		flag &= ~(RGN_SP|RGN_SSP);
+	// Only skill-based regen is disabled at max HP/SP
+	if (flag&RGN_SHP && (status->hp >= status->max_hp))
+		flag &= ~RGN_SHP;
+	if (flag&RGN_SSP && (status->sp >= status->max_sp))
+		flag &= ~RGN_SSP;
 
 	if (flag && (
 		status_isdead(bl) ||
@@ -14315,7 +14310,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 			while(sregen->tick.hp >= (unsigned int)battle_config.natural_heal_skill_interval) {
 				sregen->tick.hp -= battle_config.natural_heal_skill_interval;
 				if(status_heal(bl, sregen->hp, 0, 3) < sregen->hp) { // Full
-					flag &= ~(RGN_HP|RGN_SHP);
+					flag &= ~RGN_SHP;
 					break;
 				}
 			}
@@ -14328,7 +14323,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 			while(sregen->tick.sp >= (unsigned int)battle_config.natural_heal_skill_interval) {
 				sregen->tick.sp -= battle_config.natural_heal_skill_interval;
 				if(status_heal(bl, 0, sregen->sp, 3) < sregen->sp) { // Full
-					flag &= ~(RGN_SP|RGN_SSP);
+					flag &= ~RGN_SSP;
 					break;
 				}
 			}
@@ -14346,9 +14341,6 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 			flag &= ~RGN_HP;
 	}
 
-	if (!flag)
-		return 0;
-
 	if (flag&(RGN_HP|RGN_SP)) {
 		if(!vd)
 			vd = status_get_viewdata(bl);
@@ -14360,48 +14352,55 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 
 	// Natural Hp regen
 	if (flag&RGN_HP) {
-		rate = (int)(natural_heal_diff_tick * (regen->rate.hp/100. * multi));
+		// Interval to next recovery tick
+		rate = (int)(battle_config.natural_healhp_interval / (regen->rate.hp/100. * multi));
 		if (ud && ud->walktimer != INVALID_TIMER)
-			rate /= 2;
+			rate *= 2;
 		// Homun HP regen fix (they should regen as if they were sitting (twice as fast)
 		if(bl->type == BL_HOM)
-			rate *= 2;
+			rate /= 2;
 
-		regen->tick.hp += rate;
+		// Our timer system isn't 100% accurate so make sure we use the closest interval
+		rate -= NATURAL_HEAL_INTERVAL / 2;
 
-		if(regen->tick.hp >= (unsigned int)battle_config.natural_healhp_interval) {
-			int val = 0;
-			do {
-				val += regen->hp;
-				regen->tick.hp -= battle_config.natural_healhp_interval;
-			} while(regen->tick.hp >= (unsigned int)battle_config.natural_healhp_interval);
-			if (status_heal(bl, val, 0, 1) < val)
-				flag &= ~RGN_SHP; // Full.
+		if(regen->tick.hp + rate <= natural_heal_prev_tick) {
+			regen->tick.hp = natural_heal_prev_tick;
+			if (status->hp >= status->max_hp)
+				flag &= ~(RGN_HP | RGN_SHP);
+			else if (status_heal(bl, regen->hp, 0, 1) < regen->hp)
+				flag &= ~RGN_SHP; // Full
 		}
+	}
+	else {
+		regen->tick.hp = natural_heal_prev_tick;
 	}
 
 	// Natural SP regen
 	if(flag&RGN_SP) {
-		rate = (int)(natural_heal_diff_tick * (regen->rate.sp/100. * multi));
+		// Interval to next recovery tick
+		rate = (int)(battle_config.natural_healsp_interval / (regen->rate.sp/100. * multi));
 		// Homun SP regen fix (they should regen as if they were sitting (twice as fast)
 		if(bl->type==BL_HOM)
-			rate *= 2;
+			rate /= 2;
 #ifdef RENEWAL
-		if (bl->type == BL_PC && (((TBL_PC*)bl)->class_&MAPID_UPPERMASK) == MAPID_MONK &&
+		if (sd && (sd->class_&MAPID_UPPERMASK) == MAPID_MONK &&
 			sc && sc->data[SC_EXPLOSIONSPIRITS] && (!sc->data[SC_SPIRIT] || sc->data[SC_SPIRIT]->val2 != SL_MONK))
-			rate /= 2; // Tick is doubled in Fury state
+			rate *= 2; // Tick is doubled in Fury state
 #endif
-		regen->tick.sp += rate;
 
-		if(regen->tick.sp >= (unsigned int)battle_config.natural_healsp_interval) {
-			int val = 0;
-			do {
-				val += regen->sp;
-				regen->tick.sp -= battle_config.natural_healsp_interval;
-			} while(regen->tick.sp >= (unsigned int)battle_config.natural_healsp_interval);
-			if (status_heal(bl, 0, val, 1) < val)
-				flag &= ~RGN_SSP; // full.
+		// Our timer system isn't 100% accurate so make sure we use the closest interval
+		rate -= NATURAL_HEAL_INTERVAL / 2;
+
+		if(regen->tick.sp + rate <= natural_heal_prev_tick) {
+			regen->tick.sp = natural_heal_prev_tick;
+			if (status->sp >= status->max_sp)
+				flag &= ~(RGN_SP | RGN_SSP);
+			else if (status_heal(bl, 0, regen->sp, 1) < regen->sp)
+				flag &= ~RGN_SSP; // Full
 		}
+	}
+	else {
+		regen->tick.sp = natural_heal_prev_tick;
 	}
 
 	if (!regen->sregen)
@@ -14456,8 +14455,8 @@ static int status_natural_heal(struct block_list* bl, va_list args)
  */
 static TIMER_FUNC(status_natural_heal_timer){
 	natural_heal_diff_tick = DIFF_TICK(tick,natural_heal_prev_tick);
-	map_foreachregen(status_natural_heal);
 	natural_heal_prev_tick = tick;
+	map_foreachregen(status_natural_heal);
 	return 0;
 }
 
