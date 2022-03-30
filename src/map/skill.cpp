@@ -7672,11 +7672,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case TR_MYSTIC_SYMPHONY:
 	case TR_KVASIR_SONATA:
 	case EM_SPELL_ENCHANTING:
-	case NPC_ALL_STAT_DOWN:
 	case NPC_GRADUAL_GRAVITY:
 	case NPC_DAMAGE_HEAL:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
+		break;
+	case NPC_ALL_STAT_DOWN:
+		clif_skill_nodamage(src, bl, skill_id, skill_lv,
+			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
+		clif_specialeffect(bl, EF_ENERVATION7, AREA); //Add effect, but still need to add sound.
 		break;
 
 	case LG_SHIELDSPELL:
