@@ -1684,6 +1684,9 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->cansendmail_tick = tick;
 	sd->idletime = last_tick;
 
+	sd->regen.tick.hp = tick;
+	sd->regen.tick.sp = tick;
+
 	for(int i = 0; i < MAX_SPIRITBALL; i++)
 		sd->spirit_timer[i] = INVALID_TIMER;
 

@@ -227,6 +227,7 @@ void elemental_summon_init(s_elemental_data *ed) {
  */
 int elemental_data_received(s_elemental *ele, bool flag) {
 	map_session_data *sd;
+	t_tick tick = gettick();
 
 	if( (sd = map_charid2sd(ele->char_id)) == NULL )
 		return 0;
@@ -259,6 +260,10 @@ int elemental_data_received(s_elemental *ele, bool flag) {
 		unit_calc_pos(&ed->bl, sd->bl.x, sd->bl.y, sd->ud.dir);
 		ed->bl.x = ed->ud.to_x;
 		ed->bl.y = ed->ud.to_y;
+
+		// Ticks need to be initialized before adding bl to map_addiddb
+		ed->regen.tick.hp = tick;
+		ed->regen.tick.sp = tick;
 
 		map_addiddb(&ed->bl);
 		status_calc_elemental(ed,SCO_FIRST);

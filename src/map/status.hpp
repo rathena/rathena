@@ -3012,7 +3012,8 @@ struct regen_data {
 
 	//tick accumulation before healing.
 	struct {
-		unsigned int hp,sp,shp,ssp;
+		t_tick hp, sp; //time of last natural recovery
+		unsigned int shp,ssp;
 	} tick;
 
 	//Regen rates. n/100
