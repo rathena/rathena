@@ -8726,12 +8726,18 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 	sc = status_get_sc(bl);
 	if( sc && !sc->count )
 		sc = NULL;
+levelDiff
+#ifdef RENEWAL
+	uint16 levelDiff = max(0, status_get_lv(src) - status_get_lv(bl));
+
+	levelDiff = (levelDiff * levelDiff / 5) * 100;
+#endif
 
 	switch (type) {
 		case SC_POISON:
 		case SC_DPOISON:
-			sc_def = status->vit*100;
 #ifndef RENEWAL
+			sc_def = status->vit*100;
 			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
 			if (sd) {
 				// For players: 60000 - 450*vit - 100*luk
@@ -8742,54 +8748,73 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 				tick>>=1;
 				tick_def = (status->vit*200)/3;
 			}
+#else
+			sc_def = status->vit * 100 - levelDiff;
+			tick_def2 = -2000;
 #endif
 			break;
 		case SC_STUN:
+#ifndef RENEWAL
 			sc_def = status->vit*100;
 			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
 			tick_def2 = status->luk*10;
+#else
+			sc_def = status->vit * 100 - levelDiff;
+			tick_def2 = -500;
+#endif
 			break;
 		case SC_SILENCE:
 #ifndef RENEWAL
 			sc_def = status->vit*100;
 			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
-#else
-			sc_def = status->int_*100;
-			sc_def2 = (status->vit + status->luk) * 5 + status_get_lv(bl)*10 - status_get_lv(src)*10;
-#endif
 			tick_def2 = status->luk*10;
+#else
+			sc_def = status->int_ * 100 - levelDiff;
+			tick_def2 = -2000;
+#endif
 			break;
 		case SC_BLEEDING:
 #ifndef RENEWAL
 			sc_def = status->vit*100;
 			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
-#else
-			sc_def = status->agi*100;
-			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
-#endif
 			tick_def2 = status->luk*10;
+#else
+			sc_def = status->agi * 100 - levelDiff;
+			tick_def2 = -12000;
+#endif
 			break;
 		case SC_SLEEP:
 #ifndef RENEWAL
 			sc_def = status->int_*100;
 			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
-#else
-			sc_def = status->agi*100;
-			sc_def2 = (status->int_ + status->luk) * 5 + status_get_lv(bl)*10 - status_get_lv(src)*10;
-#endif
 			tick_def2 = status->luk*10;
+#else
+			sc_def = status->agi * 100 - levelDiff;
+			tick_def2 = -2000;
+#endif
 			break;
 		case SC_STONE:
+#ifndef RENEWAL
 			sc_def = status->mdef*100;
 			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
+#else
+			sc_def = status->mdef * 100 - levelDiff;
+			tick_def2 = -3000;
+#endif
 			tick_def = 0; // No duration reduction
 			break;
 		case SC_FREEZE:
+#ifndef RENEWAL
 			sc_def = status->mdef*100;
 			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
 			tick_def2 = status_src->luk*-10; // Caster can increase final duration with luk
+#else
+			sc_def = status->mdef * 100 - levelDiff;
+			tick_def2 = -3000;
+#endif
 			break;
 		case SC_CURSE:
+#ifndef RENEWAL
 			// Special property: immunity when luk is zero
 			if (status->luk == 0)
 				return 0;
@@ -8797,16 +8822,31 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			sc_def2 = status->luk*10 - status_get_lv(src)*10; // Curse only has a level penalty and no resistance
 			tick_def = status->vit*100;
 			tick_def2 = status->luk*10;
+#else
+			sc_def = status->luk * 100 - levelDiff;
+			tick_def2 = -2000;
+#endif
 			break;
 		case SC_BLIND:
+#ifndef RENEWAL
 			sc_def = (status->vit + status->int_)*50;
 			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
 			tick_def2 = status->luk*10;
+#else
+			sc_def = status->int_ * 100 - levelDiff;
+			tick_def2 = -2000;
+#endif
 			break;
 		case SC_CONFUSION:
+#ifndef RENEWAL
 			sc_def = (status->str + status->int_)*50;
 			sc_def2 = status_get_lv(src)*10 - status_get_lv(bl)*10 - status->luk*10; // Reversed sc_def2
 			tick_def2 = status->luk*10;
+#else
+			sc_def = status->luk * 100 - levelDiff;
+			tick_def2 = -2000;
+
+#endif
 			break;
 		case SC_DECREASEAGI:
 			if (sd)
@@ -8823,7 +8863,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			tick_def2 = (status->luk * 50 + status->agi * 200) / 2; // (50 * LUK / 100 + 20 * AGI / 100) / 2
 			break;
 		case SC_DEEPSLEEP:
-			tick_def2 = status_get_base_status(bl)->int_ * 25 + status_get_lv(bl) * 50;
+			tick_def2 = max(0, status_get_base_status(bl)->int_ * 25 + status_get_lv(bl) * 50);
 			break;
 		case SC_NETHERWORLD:
 			// Resistance: {(Target's Base Level / 50) + (Target's Job Level / 10)} seconds
@@ -8838,17 +8878,20 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			tick_def2 = (status->vit + status->dex) * 50;
 			break;
 		case SC_WHITEIMPRISON:
-			if( tick == 5000 ) // 100% on caster
+			if( src == bl ) // 100% on caster
 				break;
-			if( bl->type == BL_PC )
-				tick_def2 = status_get_lv(bl)*20 + status->vit*25 + status->agi*10;
-			else
-				tick_def2 = (status->vit + status->luk)*50;
+			sc_def = status->str * 10 + status_get_lv(bl) * 10 + status->luk * 10;
+			tick_def2 = -2000;
+			break;
+		case SC_FEAR:
+			sc_def = status->int_ * 10 + status_get_lv(bl) * 10 + status->luk * 10;
+			tick_def2 = -2000;
 			break;
 		case SC_BURNING:
-			tick_def2 = 75*status->luk + 125*status->agi;
+			sc_def = status->agi * 10 + status_get_lv(bl) * 10 + status->luk * 10;
+			tick_def2 = -2000;
 			break;
-		case SC_FREEZING:
+		case SC_FREEZING: // TODO: Confirm
 			tick_def2 = (status->vit + status->dex)*50;
 			break;
 		case SC_OBLIVIONCURSE: // 100% - (100 - 0.8 x INT)
@@ -8873,7 +8916,8 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			tick_def2 = (status->vit + status->agi) * 70;
 			break;
 		case SC_CRYSTALIZE:
-			tick_def2 = (sd ? sd->status.vit : status_get_base_status(bl)->vit) * 100;
+			tick_def = 0;
+			tick_def2 = status_get_base_status(bl)->vit * 100;
 			break;
 		case SC_VACUUM_EXTREME:
 			tick_def2 = (sd ? sd->status.str : status_get_base_status(bl)->str) * 50;
