@@ -5850,11 +5850,8 @@ BUILDIN_FUNC(warpparty)
 						y = ny;
 					}
 				}
-
-			if(!map_getmapflag(pl_sd->bl.m, MF_NORETURN) && !map_getmapflag(pl_sd->bl.m, MF_NOWARP) && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pc_get_group_level(pl_sd))) {
-				ret = pc_setpos(pl_sd, mapindex, x, y, CLR_TELEPORT);
 			}
-		break;
+			break;
 		}
 
 		if( ret != SETPOS_OK ) {
