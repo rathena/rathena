@@ -23264,7 +23264,7 @@ BUILDIN_FUNC(mergeitem2) {
 		if (!it || !it->unique_id || it->expire_time || !itemdb_isstackable(it->nameid))
 			continue;
 		if ((!nameid || (nameid == it->nameid))) {
-			uint8 k;
+			uint16 k;
 			if (!count) {
 				CREATE(items, struct item, 1);
 				memcpy(&items[count++], it, sizeof(struct item));
