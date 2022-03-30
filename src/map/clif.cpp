@@ -20855,9 +20855,9 @@ void clif_parse_merge_item_req(int fd, struct map_session_data* sd) {
 	}
 
 	for (i = 0, j = 0; i < n; i++) {
-		unsigned short idx = RFIFOW(fd, info->pos[1] + i*2) - 2;
+		uint16 idx = server_index( RFIFOW( fd, info->pos[1] + i * 2 ) );
 
-		if( idx < 0 || idx >= MAX_INVENTORY ){
+		if( idx >= MAX_INVENTORY ){
 			return;
 		}
 
