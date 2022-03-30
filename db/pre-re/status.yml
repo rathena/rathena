@@ -325,13 +325,15 @@ Body:
     DurationLookup: AS_ENCHANTPOISON
     CalcFlags:
       Atk_Ele: true
-    Fail:
+    End:
+      Aspersio: true
       Fireweapon: true
       Waterweapon: true
       Windweapon: true
       Earthweapon: true
       Shadowweapon: true
       Ghostweapon: true
+      Enchantarms: true
   - Status: Poisonreact
     Icon: EFST_POISONREACT
     DurationLookup: AS_POISONREACT
@@ -455,6 +457,16 @@ Body:
     DurationLookup: PR_ASPERSIO
     CalcFlags:
       Atk_Ele: true
+    Flags:
+      RemoveOnUnequipWeapon: true
+    End:
+      Encpoison: true
+      Fireweapon: true
+      Waterweapon: true
+      Windweapon: true
+      Earthweapon: true
+      Shadowweapon: true
+      Ghostweapon: true
   - Status: Benedictio
     Icon: EFST_BENEDICTIO
     DurationLookup: PR_BENEDICTIO
@@ -463,6 +475,7 @@ Body:
     Flags:
       NoSave: true
       NoClearance: true
+      #RemoveOnUnequipArmor: true
   - Status: Kyrie
     Icon: EFST_KYRIE
     DurationLookup: PR_KYRIE
@@ -938,6 +951,14 @@ Body:
       Atk_Ele: true
     Flags:
       NoRemoveOnDead: true
+    End:
+      Encpoison: true
+      Aspersio: true
+      Waterweapon: true
+      Windweapon: true
+      Earthweapon: true
+      Shadowweapon: true
+      Ghostweapon: true
   - Status: Waterweapon
     Icon: EFST_PROPERTYWATER
     DurationLookup: SA_FROSTWEAPON
@@ -945,6 +966,14 @@ Body:
       Atk_Ele: true
     Flags:
       NoRemoveOnDead: true
+    End:
+      Encpoison: true
+      Aspersio: true
+      Fireweapon: true
+      Windweapon: true
+      Earthweapon: true
+      Shadowweapon: true
+      Ghostweapon: true
   - Status: Windweapon
     Icon: EFST_PROPERTYWIND
     DurationLookup: SA_LIGHTNINGLOADER
@@ -952,6 +981,14 @@ Body:
       Atk_Ele: true
     Flags:
       NoRemoveOnDead: true
+    End:
+      Encpoison: true
+      Aspersio: true
+      Fireweapon: true
+      Waterweapon: true
+      Earthweapon: true
+      Shadowweapon: true
+      Ghostweapon: true
   - Status: Earthweapon
     Icon: EFST_PROPERTYGROUND
     DurationLookup: SA_SEISMICWEAPON
@@ -959,6 +996,14 @@ Body:
       Atk_Ele: true
     Flags:
       NoRemoveOnDead: true
+    End:
+      Encpoison: true
+      Aspersio: true
+      Fireweapon: true
+      Waterweapon: true
+      Windweapon: true
+      Shadowweapon: true
+      Ghostweapon: true
   - Status: Volcano
     Icon: EFST_GROUNDMAGIC
     DurationLookup: SA_VOLCANO
@@ -1393,6 +1438,14 @@ Body:
     Flags:
       NoSave: true
       NoClearance: true
+    End:
+      Encpoison: true
+      Aspersio: true
+      Fireweapon: true
+      Waterweapon: true
+      Windweapon: true
+      Earthweapon: true
+      Ghostweapon: true
   - Status: Adrenaline2
     Icon: EFST_ADRENALINE2
     DurationLookup: BS_ADRENALINE2
@@ -1413,6 +1466,14 @@ Body:
     Flags:
       NoSave: true
       NoClearance: true
+    End:
+      Encpoison: true
+      Aspersio: true
+      Fireweapon: true
+      Waterweapon: true
+      Windweapon: true
+      Earthweapon: true
+      Shadowweapon: true
   - Status: Kaizel
     Icon: EFST_KAIZEL
     DurationLookup: SL_KAIZEL
@@ -2331,6 +2392,10 @@ Body:
     Flags:
       SendVal1: true
       OverlapIgnoreLevel: true
+      RemoveOnUnequipWeapon: true
+    End:
+      Enchantarms: true
+      Aspersio: true
   - Status: Magicalattack
     DurationLookup: NPC_MAGICALATTACK
     CalcFlags:
@@ -2463,6 +2528,7 @@ Body:
       All: true
     Flags:
       OverlapIgnoreLevel: true
+      RemoveOnUnequipArmor: true
   - Status: Spcost_Rate
     Icon: EFST_ATKER_BLOOD
     CalcFlags:
