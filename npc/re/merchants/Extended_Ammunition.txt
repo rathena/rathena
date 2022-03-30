@@ -1,0 +1,445 @@
+//===== rAthena Script ======================================= 
+//= Extension of Ammunition Sales
+//===== Description: ========================================= 
+// The information in this script was taken from kro
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [JohnnyPlayy]
+//============================================================
+
+//= Arrow Merchant Shop
+//============================================================
+-	script	#over_arrow	HIDDEN_NPC,{
+	mes "[Arrow Merchant]";
+	mes "Hi!";
+	mes "Do you want to buy arrows or exchange the quiver?";
+	next;
+	switch ( select( "Buy Arrows", "Quiver Exchange", "Sell Items", "Cancel" )) {
+	case 1:
+		close2;
+		callshop "Arrow_Archer", 1;
+		break;
+	case 2:
+		close2;
+		callshop "Quiver_Archer", 1;
+		break;
+	case 3:
+		close2;
+		callshop "Selling_Items", 2;
+		break;
+	case 4:
+		mes "[Arrow Merchant]";
+		mes "You can take a look at other things more calmly.";
+		close;
+	}
+	end;
+	
+OnInit:
+	setunitdata getnpcid(0),UNPC_GROUP_ID,7;
+	end;
+}
+
+//= Ammunition Trader Shop
+//============================================================
+-	script	#over_bullet	HIDDEN_NPC,{
+	mes "[Ammunition Merchant]";
+	mes "Hi!";
+	mes "What did you come to see?";
+	next;
+	switch ( select( "Buy Ammunition", "Cartridge Exchange", "Sell Items", "Cancel" )) {
+	case 1:
+		mes "[Ammunition Merchant]";
+		mes "I will start preparing the ammunition.";
+		close2;
+		callshop "Ammunition_Gunslinger", 1;
+		break;
+	case 2:
+		mes "[Ammunition Merchant]";
+		mes "I will start preparing ammunition cartridges!";
+		close2;
+		callshop "Box_Exchange_Gunslinger", 1;
+		break;
+	case 3:
+		mes "[Ammunition Merchant]";
+		mes "What would you like to sell?";
+		close2;
+		callshop "Selling_Items", 2;
+		break;
+	case 4:
+		mes "[Ammunition Merchant]";
+		mes "You can take a look at other things more calmly.";
+		close;
+	}
+	end;
+	
+OnInit:
+	setunitdata getnpcid(0),UNPC_GROUP_ID,13;
+	end;
+}
+
+//= Ninja Tool Merchant
+//============================================================
+-	script	#over_kunai	HIDDEN_NPC,{
+	mes "[Ninja Tool Merchant]";
+	mes "Hi, what can I do to help you?";
+	next;
+	switch ( select( "Buy Ninjutsu Tool", "Parchment Exchange", "Sell Items", "Cancel" )) {
+	case 1:
+		close2;
+		callshop "Weapons_Ninja", 1;
+		break;
+	case 2:
+		close2;	
+		callshop "Box_Exchange_Ninja", 1;
+		break;
+	case 3:
+		close2;	
+		callshop "Selling_Items", 2;
+		break;
+	case 4:
+		break;
+	}
+	end;
+	
+OnInit:
+	setunitdata getnpcid(0),UNPC_GROUP_ID,14;
+	end;
+}
+
+//= Mado Gear Merchant
+//============================================================
+-	script	#over_madogear	HIDDEN_NPC,{
+	mes "[Mado Gear Merchant]";
+	mes "Hi!";
+	mes "Here you will find equipment for Madogear, except those that cannot be sold!";
+	mes "How can I help you?";
+	next;
+	switch ( select( "Buy Component", "Consumables and Cooling Device", "Box Exchange", "Sell Items", "Cancel" )) {
+	case 1:
+		mes "[Mado Gear Merchant]";
+		mes "I will start preparing the Madogear pieces.";
+		close2;
+		callshop "Weapons_Mechanic", 1;
+		break;
+	case 2:
+		mes "[Mado Gear Merchant]";
+		mes "I will start preparing the consumables used by Madogear.";
+		close2;
+		callshop "Ammunition_Mechanic", 1;
+		break;
+	case 3:
+		mes "[Mado Gear Merchant]";
+		mes "I will arrange for the consumable packs used by MadoGear to be boxed!";
+		close2;
+		callshop "Box_Exchange_Mechanic", 1;
+		break;
+	case 4:
+		mes "[Mado Gear Merchant]";
+		mes "Do you have something to sell?";
+		close2;
+		callshop "Selling_Items", 2;
+		break;
+	case 5:
+		mes "[Mado Gear Merchant]";
+		mes "You can take a look at other things more calmly.";
+		close;
+	}
+	end;
+	
+OnInit:
+	setunitdata getnpcid(0),UNPC_GROUP_ID,11;
+	end;
+}
+
+//= Talisman Merchant
+//============================================================
+-	script	#over_talisman	HIDDEN_NPC,{
+	mes "[Talisman Merchant]";
+	mes "Hello. Did you come to see the spirits?";
+	next;
+	switch ( select( "Buy Talisman", "Talisman Bundle Exchange", "Cancel" )) {
+	case 1:
+		mes "[Talisman Merchant]";
+		mes "You'll like it.";
+		close2;
+		callshop "Talisman_Merchant", 1;
+		break;
+	case 2:
+		mes "[Talisman Merchant]";
+		mes "We also exchange for bundles.";
+		close2;
+		callshop "Talisman_Bundle", 1;
+		break;
+	case 3:
+		mes "[Talisman Merchant]";
+		mes "Thank you. Come again.";
+		close;
+	}
+	end;
+	
+OnInit:
+	setunitdata getnpcid(0),UNPC_GROUP_ID,12;
+	end;
+}
+
+//= Basic Shops
+//============================================================
+
+//= Archer
+-	marketshop	Arrow_Archer	HIDDEN_NPC,1750:-1:-1,1770:3:-1,1751:5:-1,1752:5:-1,1754:5:-1,1755:5:-1,1756:5:-1,1757:5:-1,1767:5:-1,1762:5:-1,1065:50:-1,7940:100:-1
+
+//= Gunslinger
+
+-	marketshop	Ammunition_Gunslinger	HIDDEN_NPC,13200:-1:-1,13221:-1:-1,13228:-1:-1,13229:-1:-1,13230:-1:-1,13231:-1:-1,13232:-1:-1,13222:-1:-1,13215:-1:-1,13216:-1:-1,13217:-1:-1,13218:-1:-1,13219:-1:-1,13220:-1:-1,7663:-1:-1,7665:15:-1,7664:-1:-1,25187:-1:-1,1000564:-1:-1
+
+//= Ninja
+-	marketshop	Weapons_Ninja	HIDDEN_NPC,1220001:-1:-1,1220002:-1:-1,1220003:30:-1,1220004:-1:-1,13258:-1:-1,13257:-1:-1,13255:-1:-1,13256:-1:-1,13259:-1:-1,13294:-1:-1,6512:-1:-1,6513:-1:-1,6514:-1:-1,13250:-1:-1,13251:-1:-1,13252:-1:-1,13253:-1:-1,13254:-1:-1,7521:-1:-1,7522:-1:-1,7523:-1:-1,7524:-1:-1,1000565:-1:-1,1000566:-1:-1,1000567:-1:-1,1000568:-1:-1,1000569:-1:-1
+
+//= Merchant
+-	marketshop	Weapons_Mechanic	HIDDEN_NPC,2139:-1:-1,2800:-1:-1,2801:-1:-1,2802:-1:-1,2803:-1:-1,2805:-1:-1,2806:-1:-1,6186:-1:-1,2808:-1:-1,2807:-1:-1
+-	marketshop	Ammunition_Mechanic	HIDDEN_NPC,18000:-1:-1,18003:-1:-1,18001:-1:-1,18002:-1:-1,18004:-1:-1,18005:-1:-1,18006:-1:-1,18007:-1:-1,18008:-1:-1,6145:-1:-1,6146:-1:-1,12394:-1:-1,12393:-1:-1,12392:-1:-1,6147:-1:-1,23277:-1:-1,100158:-1:-1,2804:-1:-1,2809:-1:-1,2810:-1:-1
+
+//= Talisman
+-	marketshop	Talisman_Merchant	HIDDEN_NPC,1000563:30:-1,101117:15000:-1
+
+//= Sale Shop
+-	shop	Selling_Items	HIDDEN_NPC,512:-1
+
+//= Duplicate of Prontera
+//============================================================
+
+prt_in,162,135,5	duplicate(#over_arrow)	Arrow Merchant#over_arrow_0	4_M_ARCHER
+prt_in,162,137,5	duplicate(#over_bullet)	Ammunition Merchant#over_bullet_0	4_F_GUNSLINGER
+prt_in,162,139,5	duplicate(#over_kunai)	Ninja Tool Merchant#over_kunai_0	4_M_NINJA_RED
+prt_in,162,141,5	duplicate(#over_madogear)	Mado Gear Merchant#over_madogear_0	4_TOWER_17
+prt_in,162,133,4	duplicate(#over_talisman)	Talisman Merchant#over_talisman_0	4_M_POORSCHOLAR
+
+//= Duplicate of Izlude
+//============================================================
+
+izlude_in,73,103,3	duplicate(#over_arrow)	Arrow Merchant#over_arrow_1	4_M_ARCHER
+izlude_in,73,105,3	duplicate(#over_bullet)	Ammunition Merchant#over_bullet_1	4_F_GUNSLINGER
+izlude_in,73,101,3	duplicate(#over_kunai)	Ninja Tool Merchant#over_kunai_1	4_M_NINJA_RED
+izlude_in,73,99,3	duplicate(#over_madogear)	Mado Gear Merchant#over_madogear_1	4_TOWER_17
+izlude_in,72,106,3	duplicate(#over_talisman)	Talisman Merchant#over_talisman_1	4_M_POORSCHOLAR
+
+//= Duplicate of Morocc
+//============================================================
+
+morocc_in,128,66,5	duplicate(#over_arrow)	Arrow Merchant#over_arrow_2	4_M_ARCHER
+morocc_in,128,68,5	duplicate(#over_bullet)	Ammunition Merchant#over_bullet_2	4_F_GUNSLINGER
+morocc_in,128,70,5	duplicate(#over_kunai)	Ninja Tool Merchant#over_kunai_2	4_M_NINJA_RED
+morocc_in,128,72,4	duplicate(#over_madogear)	Mado Gear Merchant#over_madogear_2	4_TOWER_17
+morocc_in,128,64,4	duplicate(#over_talisman)	Talisman Merchant#over_talisman_2	4_M_POORSCHOLAR
+
+//= Duplicate of Geffen
+//============================================================
+
+geffen_in,22,167,5	duplicate(#over_arrow)	Arrow Merchant#over_arrow_3	4_M_ARCHER
+geffen_in,22,169,5	duplicate(#over_bullet)	Ammunition Merchant#over_bullet_3	4_F_GUNSLINGER
+geffen_in,22,165,5	duplicate(#over_kunai)	Ninja Tool Merchant#over_kunai_3	4_M_NINJA_RED
+geffen_in,22,163,4	duplicate(#over_madogear)	Mado Gear Merchant#over_madogear_3	4_TOWER_17
+geffen_in,22,161,6	duplicate(#over_talisman)	Talisman Merchant#over_talisman_3	4_M_POORSCHOLAR
+
+//= Duplicate of Alberta
+//============================================================
+
+alberta_in,177,23,5	duplicate(#over_arrow)	Arrow Merchant#over_arrow_4	4_M_ARCHER
+alberta_in,177,25,7	duplicate(#over_bullet)	Ammunition Merchant#over_bullet_4	4_F_GUNSLINGER
+alberta_in,177,27,5	duplicate(#over_kunai)	Ninja Tool Merchant#over_kunai_4	4_M_NINJA_RED
+alberta_in,177,29,5	duplicate(#over_madogear)	Mado Gear Merchant#over_madogear_4	4_TOWER_17
+alberta_in,177,21,5	duplicate(#over_talisman)	Talisman Merchant#over_talisman_4	4_M_POORSCHOLAR
+
+//= Duplicate of Payon
+//===========================================================
+
+payon_in01,8,132,5	duplicate(#over_arrow)	Arrow Merchant#over_arrow_5	4_M_ARCHER
+payon_in01,10,132,7	duplicate(#over_bullet)	Ammunition Merchant#over_bullet_5	4_F_GUNSLINGER
+payon_in01,12,132,6	duplicate(#over_kunai)	Ninja Tool Merchant#over_kunai_5	4_M_NINJA_RED
+payon_in01,14,132,5	duplicate(#over_madogear)	Mado Gear Merchant#over_madogear_5	4_TOWER_17
+payon_in01,6,132,6	duplicate(#over_talisman)	Talisman Merchant#over_talisman_5	4_M_POORSCHOLAR
+
+//= Duplicate of Aldebaran
+//===========================================================
+
+aldeba_in,37,47,3	duplicate(#over_arrow)	Arrow Merchant#over_arrow_6	4_M_ARCHER
+aldeba_in,37,49,3	duplicate(#over_bullet)	Ammunition Merchant#over_bullet_6	4_F_GUNSLINGER
+aldeba_in,37,45,3	duplicate(#over_kunai)	Ninja Tool Merchant#over_kunai_6	4_M_NINJA_RED
+aldeba_in,37,43,4	duplicate(#over_madogear)	Mado Gear Merchant#over_madogear_6	4_TOWER_17
+aldeba_in,35,50,2	duplicate(#over_talisman)	Talisman Merchant#over_talisman_6	4_M_POORSCHOLAR
+
+//= Duplicate of Lutie
+//===========================================================
+
+xmas_in,169,93,5	duplicate(#over_arrow)	Arrow Merchant#over_arrow_7	4_M_ARCHER
+xmas_in,171,93,5	duplicate(#over_bullet)	Ammunition Merchant#over_bullet_7	4_F_GUNSLINGER
+xmas_in,173,93,5	duplicate(#over_kunai)	Ninja Tool Merchant#over_kunai_7	4_M_NINJA_RED
+xmas_in,175,93,5	duplicate(#over_madogear)	Mado Gear Merchant#over_madogear_7	4_TOWER_17
+xmas_in,167,93,5	duplicate(#over_talisman)	Talisman Merchant#over_talisman_7	4_M_POORSCHOLAR
+
+//= Duplicate of Comodo
+//===========================================================
+
+cmd_in01,117,173,5	duplicate(#over_arrow)	Arrow Merchant#over_arrow_8	4_M_ARCHER
+cmd_in01,119,173,5	duplicate(#over_bullet)	Ammunition Merchant#over_bullet_8	4_F_GUNSLINGER
+cmd_in01,115,173,5	duplicate(#over_kunai)	Ninja Tool Merchant#over_kunai_8	4_M_NINJA_RED
+cmd_in01,113,173,4	duplicate(#over_madogear)	Mado Gear Merchant#over_madogear_8	4_TOWER_17
+cmd_in01,112,174,4	duplicate(#over_talisman)	Talisman Merchant#over_talisman_8	4_M_POORSCHOLAR
+
+//= Duplicate of Umbala
+//===========================================================
+
+um_in,158,127,5	duplicate(#over_arrow)	Arrow Merchant#over_arrow_9	4_M_ARCHER
+um_in,156,127,5	duplicate(#over_bullet)	Ammunition Merchant#over_bullet_9	4_F_GUNSLINGER
+um_in,154,127,5	duplicate(#over_kunai)	Ninja Tool Merchant#over_kunai_9	4_M_NINJA_RED
+um_in,152,127,4	duplicate(#over_madogear)	Mado Gear Merchant#over_madogear_9	4_TOWER_17
+um_in,150,127,4	duplicate(#over_talisman)	Talisman Merchant#over_talisman_9	4_M_POORSCHOLAR
+
+//= Duplicate of Yuno
+//===========================================================
+
+yuno_in01,99,26,3	duplicate(#over_arrow)	Arrow Merchant#over_arrow_10	4_M_ARCHER
+yuno_in01,99,24,3	duplicate(#over_bullet)	Ammunition Merchant#over_bullet_10	4_F_GUNSLINGER
+yuno_in01,99,22,3	duplicate(#over_kunai)	Ninja Tool Merchant#over_kunai_10	4_M_NINJA_RED
+yuno_in01,99,20,2	duplicate(#over_madogear)	Mado Gear Merchant#over_madogear_10	4_TOWER_17
+yuno_in01,99,18,2	duplicate(#over_talisman)	Talisman Merchant#over_talisman_10	4_M_POORSCHOLAR
+
+//= Duplicate of Hugel
+//===========================================================
+
+hu_in01,99,383,5	duplicate(#over_arrow)	Arrow Merchant#over_arrow_11	4_M_ARCHER
+hu_in01,95,383,5	duplicate(#over_bullet)	Ammunition Merchant#over_bullet_11	4_F_GUNSLINGER
+hu_in01,93,383,5	duplicate(#over_kunai)	Ninja Tool Merchant#over_kunai_11	4_M_NINJA_RED
+hu_in01,101,383,4	duplicate(#over_madogear)	Mado Gear Merchant#over_madogear_11	4_TOWER_17
+hu_in01,91,383,4	duplicate(#over_talisman)	Talisman Merchant#over_talisman_11	4_M_POORSCHOLAR
+
+//= Duplicate of Lighthalzen
+//===========================================================
+
+lhz_in02,268,92,5	duplicate(#over_arrow)	Arrow Merchant#over_arrow_12	4_M_ARCHER
+lhz_in02,266,92,5	duplicate(#over_bullet)	Ammunition Merchant#over_bullet_12	4_F_GUNSLINGER
+lhz_in02,264,92,5	duplicate(#over_kunai)	Ninja Tool Merchant#over_kunai_12	4_M_NINJA_RED
+lhz_in02,262,92,4	duplicate(#over_madogear)	Mado Gear Merchant#over_madogear_12	4_TOWER_17
+lhz_in02,270,92,4	duplicate(#over_talisman)	Talisman Merchant#over_talisman_12	4_M_POORSCHOLAR
+
+//= Duplicate of Einbroch
+//===========================================================
+
+ein_in01,95,22,5	duplicate(#over_arrow)	Arrow Merchant#over_arrow_13	4_M_ARCHER
+ein_in01,95,24,5	duplicate(#over_bullet)	Ammunition Merchant#over_bullet_13	4_F_GUNSLINGER
+ein_in01,95,20,5	duplicate(#over_kunai)	Ninja Tool Merchant#over_kunai_13	4_M_NINJA_RED
+ein_in01,95,18,4	duplicate(#over_madogear)	Mado Gear Merchant#over_madogear_13	4_TOWER_17
+ein_in01,95,26,4	duplicate(#over_talisman)	Talisman Merchant#over_talisman_13	4_M_POORSCHOLAR
+
+//= Duplicate of Rachel
+//===========================================================
+
+ra_in01,169,363,5	duplicate(#over_arrow)	Arrow Merchant#over_arrow_14	4_M_ARCHER
+ra_in01,169,365,5	duplicate(#over_bullet)	Ammunition Merchant#over_bullet_14	4_F_GUNSLINGER
+ra_in01,169,367,5	duplicate(#over_kunai)	Ninja Tool Merchant#over_kunai_14	4_M_NINJA_RED
+ra_in01,169,361,4	duplicate(#over_madogear)	Mado Gear Merchant#over_madogear_14	4_TOWER_17
+ra_in01,169,359,4	duplicate(#over_talisman)	Talisman Merchant#over_talisman_14	4_M_POORSCHOLAR
+
+//= Duplicate of Veins
+//===========================================================
+
+ve_in,349,243,5	duplicate(#over_arrow)	Arrow Merchant#over_arrow_15	4_M_ARCHER
+ve_in,351,243,5	duplicate(#over_bullet)	Arrow Merchant#over_bullet_15	4_F_GUNSLINGER
+ve_in,353,243,5	duplicate(#over_kunai)	Arrow Merchant#over_kunai_15	4_M_NINJA_RED
+ve_in,355,243,4	duplicate(#over_madogear)	Arrow Merchant#over_madogear_15	4_TOWER_17
+ve_in,347,243,4	duplicate(#over_talisman)	Talisman Merchant#over_talisman_15	4_M_POORSCHOLAR
+
+//= Duplicate of Amatsu
+//===========================================================
+
+ama_in01,100,17,3	duplicate(#over_arrow)	Arrow Merchant#over_arrow_16	4_M_ARCHER
+ama_in01,100,19,3	duplicate(#over_bullet)	Ammunition Merchant#over_bullet_16	4_F_GUNSLINGER
+ama_in01,100,21,3	duplicate(#over_kunai)	Ninja Tool Merchant#over_kunai_16	4_M_NINJA_RED
+ama_in01,100,23,2	duplicate(#over_madogear)	Mado Gear Merchant#over_madogear_16	4_TOWER_17
+ama_in01,100,25,2	duplicate(#over_talisman)	Talisman Merchant#over_talisman_16	4_M_POORSCHOLAR
+
+//= Duplicate of Kunlun
+//===========================================================
+
+gonryun,175,95,3	duplicate(#over_arrow)	Arrow Merchant#over_arrow_17	4_M_ARCHER
+gonryun,175,97,3	duplicate(#over_bullet)	Ammunition Merchant#over_bullet_17	4_F_GUNSLINGER
+gonryun,175,99,3	duplicate(#over_kunai)	Ninja Tool Merchant#over_kunai_17	4_M_NINJA_RED
+gonryun,175,93,3	duplicate(#over_madogear)	Mado Gear Merchant#over_madogear_17	4_TOWER_17
+gonryun,175,91,3	duplicate(#over_talisman)	Talisman Merchant#over_talisman_17	4_M_POORSCHOLAR
+
+//= Duplicate of Louyang
+//===========================================================
+
+lou_in02,134,176,3	duplicate(#over_arrow)	Arrow Merchant#over_arrow_18	4_M_ARCHER
+lou_in02,134,178,3	duplicate(#over_bullet)	Ammunition Merchant#over_bullet_18	4_F_GUNSLINGER
+lou_in02,134,180,3	duplicate(#over_kunai)	Ninja Tool Merchant#over_kunai_18	4_M_NINJA_RED
+lou_in02,134,174,2	duplicate(#over_madogear)	Mado Gear Merchant#over_madogear_18	4_TOWER_17
+lou_in02,134,172,2	duplicate(#over_talisman)	Talisman Merchant#over_talisman_18	4_M_POORSCHOLAR
+
+//= Duplicate of Ayotaya
+//===========================================================
+
+ayo_in01,77,161,5	duplicate(#over_arrow)	Arrow Merchant#over_arrow_19	4_M_ARCHER
+ayo_in01,77,163,5	duplicate(#over_bullet)	Ammunition Merchant#over_bullet_19	4_F_GUNSLINGER
+ayo_in01,77,165,5	duplicate(#over_kunai)	Ninja Tool Merchant#over_kunai_19	4_M_NINJA_RED
+ayo_in01,77,159,5	duplicate(#over_madogear)	Mado Gear Merchant#over_madogear_19	4_TOWER_17
+ayo_in01,77,157,3	duplicate(#over_talisman)	Talisman Merchant#over_talisman_19	4_M_POORSCHOLAR
+
+//= Duplicate of Brasilis
+//===========================================================
+
+brasilis,252,247,3	duplicate(#over_arrow)	Arrow Merchant#over_arrow_20	4_M_ARCHER
+brasilis,252,249,3	duplicate(#over_bullet)	Ammunition Merchant#over_bullet_20	4_F_GUNSLINGER
+brasilis,252,251,3	duplicate(#over_kunai)	Ninja Tool Merchant#over_kunai_20	4_M_NINJA_RED
+brasilis,252,253,3	duplicate(#over_madogear)	Mado Gear Merchant#over_madogear_20	4_TOWER_17
+brasilis,252,245,3	duplicate(#over_talisman)	Talisman Merchant#over_talisman_20	4_M_POORSCHOLAR
+
+//= Duplicate of Malaya
+//===========================================================
+
+ma_in01,69,21,5	duplicate(#over_arrow)	Arrow Merchant#over_arrow_21	4_M_ARCHER
+ma_in01,67,21,5	duplicate(#over_bullet)	Ammunition Merchant#over_bullet_21	4_F_GUNSLINGER
+ma_in01,65,21,5	duplicate(#over_kunai)	Ninja Tool Merchant#over_kunai_21	4_M_NINJA_RED
+ma_in01,71,21,4	duplicate(#over_madogear)	Mado Gear Merchant#over_madogear_21	4_TOWER_17
+ma_in01,63,19,4	duplicate(#over_talisman)	Talisman Merchant#over_talisman_21	4_M_POORSCHOLAR
+
+//= Duplicate of Dewata
+//===========================================================
+
+dewata,223,167,3	duplicate(#over_arrow)	Arrow Merchant#over_arrow_22	4_M_ARCHER
+dewata,223,169,3	duplicate(#over_bullet)	Ammunition Merchant#over_bullet_22	4_F_GUNSLINGER
+dewata,223,171,3	duplicate(#over_kunai)	Ninja Tool Merchant#over_kunai_22	4_M_NINJA_RED
+dewata,223,173,2	duplicate(#over_madogear)	Mado Gear Merchant#over_madogear_22	4_TOWER_17
+dewata,223,165,2	duplicate(#over_talisman)	Talisman Merchant#over_talisman_22	4_M_POORSCHOLAR
+
+//= Duplicate of Moscovia
+//===========================================================
+
+mosk_in,24,173,3	duplicate(#over_arrow)	Arrow Merchant#over_arrow_23	4_M_ARCHER
+mosk_in,26,174,3	duplicate(#over_bullet)	Ammunition Merchant#over_bullet_23	4_F_GUNSLINGER
+mosk_in,22,172,3	duplicate(#over_kunai)	Ninja Tool Merchant#over_kunai_23	4_M_NINJA_RED
+mosk_in,20,172,2	duplicate(#over_madogear)	Mado Gear Merchant#over_madogear_23	4_TOWER_17
+mosk_in,18,174,2	duplicate(#over_talisman)	Talisman Merchant#over_talisman_23	4_M_POORSCHOLAR
+
+//= Duplicate of Rock Ridge
+//===========================================================
+
+har_in01,32,81,3	duplicate(#over_arrow)	Arrow Merchant#over_arrow_24	4_M_ARCHER
+har_in01,32,77,3	duplicate(#over_bullet)	Ammunition Merchant#over_bullet_24	4_F_GUNSLINGER
+har_in01,32,79,3	duplicate(#over_kunai)	Ninja Tool Merchant#over_kunai_24	4_M_NINJA_RED
+har_in01,32,83,2	duplicate(#over_madogear)	Mado Gear Merchant#over_madogear_24	4_TOWER_17
+har_in01,30,84,2	duplicate(#over_talisman)	Talisman Merchant#over_talisman_24	4_M_POORSCHOLAR
+
+//= Duplicate of Hunter Guild
+//===========================================================
+
+in_hunter,104,108,3	duplicate(#over_arrow)	Arrow Merchant#over_arrow_25	4_M_ARCHER
+
+//= Duplicate of Unknown Place
+//===========================================================
+
+que_ng,180,79,3	duplicate(#over_bullet)	Ammunition Merchant#over_bullet_25	4_F_GUNSLINGER
+
+//= Duplicate of Liberation Shelter
+//===========================================================
+
+job_gun,220,138,5	duplicate(#over_bullet)	Ammunition Merchant#over_bullet_26	4_F_GUNSLINGER

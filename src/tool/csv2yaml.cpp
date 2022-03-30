@@ -170,30 +170,30 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 
 			ShowNotice("Conversion process has begun.\n");
 
-			std::ofstream out;
+			std::ofstream outFile;
 
 			body.~Emitter();
 			new (&body) YAML::Emitter();
-			out.open(to);
+			outFile.open(to);
 
-			if (!out.is_open()) {
+			if (!outFile.is_open()) {
 				ShowError("Can not open file \"%s\" for writing.\n", to.c_str());
 				return false;
 			}
 
-			prepareHeader(out, type, version, (rename.size() > 0 ? rename : name));
+			prepareHeader(outFile, type, version, (rename.size() > 0 ? rename : name));
 			prepareBody();
 
 			if( !lambda( path, name_ext ) ){
-				out.close();
+				outFile.close();
 				return false;
 			}
 
 			finalizeBody();
-			out << body.c_str();
+			outFile << body.c_str();
 			// Make sure there is an empty line at the end of the file for git
-			out << "\n";
-			out.close();
+			outFile << "\n";
+			outFile.close();
 			
 			// TODO: do you want to delete?
 		}
@@ -427,14 +427,14 @@ int do_init( int argc, char** argv ){
 	}
 
 	item_group_txt_data(path_db_mode, path_db);
-	if (!process("ITEM_GROUP_DB", 1, { path_db_mode }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
+	if (!process("ITEM_GROUP_DB", 2, { path_db_mode }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return itemdb_read_group_yaml();
 	})) {
 		return 0;
 	}
 
 	item_group_txt_data(path_db_import, path_db_import);
-	if (!process("ITEM_GROUP_DB", 1, { path_db_import }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
+	if (!process("ITEM_GROUP_DB", 2, { path_db_import }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return itemdb_read_group_yaml();
 	})) {
 		return 0;
@@ -523,6 +523,18 @@ int do_init( int argc, char** argv ){
 	if (!process("SKILL_TREE_DB", 1, { path_db_import }, "skill_tree", [](const std::string &path, const std::string &name_ext) -> bool {
 		return pc_readdb_skilltree_yaml();
 	})) {
+		return 0;
+	}
+
+	if (!process("COMBO_DB", 1, { path_db_mode }, "item_combo_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return itemdb_read_combos((path + name_ext).c_str());
+	}, "item_combos")) {
+		return 0;
+	}
+
+	if (!process("COMBO_DB", 1, { path_db_import }, "item_combo_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return itemdb_read_combos((path + name_ext).c_str());
+	}, "item_combos")) {
 		return 0;
 	}
 
@@ -757,7 +769,7 @@ static bool pet_read_db( const char* file ){
 	}
 
 	fclose(fp);
-	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' pets in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file );
+	ShowStatus("Done reading '" CL_WHITE "%zu" CL_RESET "' pets in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file );
 
 	return true;
 }
@@ -921,7 +933,7 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 			t_itemid *headtop_item_id = util::umap_find(aegis_itemviewid, (uint32)strtoul(str[7], nullptr, 10));
 
 			if (headtop_item_id == nullptr) {
-				ShowError("Item ID for view ID %u (head top) is not known.\n", strtoul(str[7], nullptr, 10));
+				ShowError("Item ID for view ID %lu (head top) is not known.\n", strtoul(str[7], nullptr, 10));
 				return false;
 			}
 
@@ -939,7 +951,7 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 			t_itemid *headmid_item_id = util::umap_find(aegis_itemviewid, (uint32)strtoul(str[8], nullptr, 10));
 
 			if (headmid_item_id == nullptr) {
-				ShowError("Item ID for view ID %u (head mid) is not known.\n", strtoul(str[8], nullptr, 10));
+				ShowError("Item ID for view ID %lu (head mid) is not known.\n", strtoul(str[8], nullptr, 10));
 				return false;
 			}
 
@@ -957,7 +969,7 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 			t_itemid *headlow_item_id = util::umap_find(aegis_itemviewid, (uint32)strtoul(str[9], nullptr, 10));
 
 			if (headlow_item_id == nullptr) {
-				ShowError("Item ID for view ID %u (head low) is not known.\n", strtoul(str[9], nullptr, 10));
+				ShowError("Item ID for view ID %lu (head low) is not known.\n", strtoul(str[9], nullptr, 10));
 				return false;
 			}
 
@@ -2111,7 +2123,7 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 								break; // Levels 1-5 have no cost
 						case NC_SHAPESHIFT:
 						case NC_REPAIR:
-							if (skill_id == NC_SHAPESHIFT || skill_id == NC_REPAIR && i >= 5)
+							if (skill_id == NC_SHAPESHIFT || (skill_id == NC_REPAIR && i >= 5))
 								break; // Don't add level 5 label as it exceeds the max level of these skills
 						case GN_FIRE_EXPANSION:
 						case SO_SUMMON_AGNI:
@@ -2630,19 +2642,19 @@ static bool itemdb_read_db(const char* file) {
 		}
 
 		if (p == NULL) {
-			ShowError("itemdb_read_db: Insufficient columns in line %d (item with id %u), skipping.\n", lines, strtoul(str[0], nullptr, 10));
+			ShowError("itemdb_read_db: Insufficient columns in line %d (item with id %lu), skipping.\n", lines, strtoul(str[0], nullptr, 10));
 			continue;
 		}
 
 		// Script
 		if (*p != '{') {
-			ShowError("itemdb_read_db: Invalid format (Script column) in line %d (item with id %u), skipping.\n", lines, strtoul(str[0], nullptr, 10));
+			ShowError("itemdb_read_db: Invalid format (Script column) in line %d (item with id %lu), skipping.\n", lines, strtoul(str[0], nullptr, 10));
 			continue;
 		}
 		str[19] = p + 1;
 		p = strstr(p + 1, "},");
 		if (p == NULL) {
-			ShowError("itemdb_read_db: Invalid format (Script column) in line %d (item with id %u), skipping.\n", lines, strtoul(str[0], nullptr, 10));
+			ShowError("itemdb_read_db: Invalid format (Script column) in line %d (item with id %lu), skipping.\n", lines, strtoul(str[0], nullptr, 10));
 			continue;
 		}
 		*p = '\0';
@@ -2650,13 +2662,13 @@ static bool itemdb_read_db(const char* file) {
 
 		// OnEquip_Script
 		if (*p != '{') {
-			ShowError("itemdb_read_db: Invalid format (OnEquip_Script column) in line %d (item with id %u), skipping.\n", lines, strtoul(str[0], nullptr, 10));
+			ShowError("itemdb_read_db: Invalid format (OnEquip_Script column) in line %d (item with id %lu), skipping.\n", lines, strtoul(str[0], nullptr, 10));
 			continue;
 		}
 		str[20] = p + 1;
 		p = strstr(p + 1, "},");
 		if (p == NULL) {
-			ShowError("itemdb_read_db: Invalid format (OnEquip_Script column) in line %d (item with id %u), skipping.\n", lines, strtoul(str[0], nullptr, 10));
+			ShowError("itemdb_read_db: Invalid format (OnEquip_Script column) in line %d (item with id %lu), skipping.\n", lines, strtoul(str[0], nullptr, 10));
 			continue;
 		}
 		*p = '\0';
@@ -2664,7 +2676,7 @@ static bool itemdb_read_db(const char* file) {
 
 		// OnUnequip_Script (last column)
 		if (*p != '{') {
-			ShowError("itemdb_read_db: Invalid format (OnUnequip_Script column) in line %d (item with id %u), skipping.\n", lines, strtoul(str[0], nullptr, 10));
+			ShowError("itemdb_read_db: Invalid format (OnUnequip_Script column) in line %d (item with id %lu), skipping.\n", lines, strtoul(str[0], nullptr, 10));
 			continue;
 		}
 		str[21] = p;
@@ -2684,7 +2696,7 @@ static bool itemdb_read_db(const char* file) {
 			}
 
 			if (lcurly != rcurly) {
-				ShowError("itemdb_read_db: Mismatching curly braces in line %d (item with id %u), skipping.\n", lines, strtoul(str[0], nullptr, 10));
+				ShowError("itemdb_read_db: Mismatching curly braces in line %d (item with id %lu), skipping.\n", lines, strtoul(str[0], nullptr, 10));
 				continue;
 			}
 		}
@@ -2935,7 +2947,8 @@ static bool itemdb_read_db(const char* file) {
 		if (it_nouse != item_nouse.end()) {
 			body << YAML::Key << "NoUse";
 			body << YAML::BeginMap;
-			body << YAML::Key << "Override" << YAML::Value << it_nouse->second.override;
+			if (it_nouse->second.override != 100)
+				body << YAML::Key << "Override" << YAML::Value << it_nouse->second.override;
 			body << YAML::Key << "Sitting" << YAML::Value << "true";
 			body << YAML::EndMap;
 		}
@@ -2945,7 +2958,8 @@ static bool itemdb_read_db(const char* file) {
 		if (it_trade != item_trade.end()) {
 			body << YAML::Key << "Trade";
 			body << YAML::BeginMap;
-			body << YAML::Key << "Override" << YAML::Value << it_trade->second.override;
+			if (it_trade->second.override != 100)
+				body << YAML::Key << "Override" << YAML::Value << it_trade->second.override;
 			if (it_trade->second.drop)
 				body << YAML::Key << "NoDrop" << YAML::Value << it_trade->second.drop;
 			if (it_trade->second.trade)
@@ -3245,7 +3259,7 @@ static bool mob_readdb_race2(char *fields[], int columns, int current) {
 		std::string *mob_name = util::umap_find(aegis_mobnames, static_cast<uint16>(mob_id));
 
 		if (!mob_name) {
-			ShowWarning("mob_readdb_race2: Unknown mob id %d for race2 %lld.\n", mob_id, race);
+			ShowWarning("mob_readdb_race2: Unknown mob id %u for race2 %lld.\n", mob_id, race);
 			continue;
 		}
 
@@ -3559,7 +3573,7 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 				std::string *item_name = util::umap_find(aegis_itemnames, nameid);
 
 				if (!item_name) {
-					ShowWarning("Monster \"%s\"(id: %d) is dropping an unknown item \"%u\"(MVP-Drop %d)\n", fields[1], mob_id, nameid, (i / 2) + 1);
+					ShowWarning("Monster \"%s\"(id: %u) is dropping an unknown item \"%u\"(MVP-Drop %d)\n", fields[1], mob_id, nameid, (i / 2) + 1);
 					continue;
 				}
 
@@ -3582,7 +3596,7 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 						std::string *item_name = util::umap_find(aegis_itemnames, drop.nameid);
 
 						if (!item_name) {
-							ShowWarning("Monster \"%s\"(id: %d) is dropping an unknown item \"%u\"(MVP-Drop %d)\n", fields[1], mob_id, drop.nameid, (i / 2) + 1);
+							ShowWarning("Monster \"%s\"(id: %u) is dropping an unknown item \"%u\"(MVP-Drop %d)\n", fields[1], mob_id, drop.nameid, (i / 2) + 1);
 							continue;
 						}
 
@@ -3620,7 +3634,7 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 				std::string *item_name = util::umap_find(aegis_itemnames, nameid);
 
 				if (!item_name) {
-					ShowWarning("Monster \"%s\"(id: %d) is dropping an unknown item \"%s\"\n", fields[1], mob_id, fields[k]);
+					ShowWarning("Monster \"%s\"(id: %u) is dropping an unknown item \"%s\"\n", fields[1], mob_id, fields[k]);
 					continue;
 				}
 
@@ -3645,7 +3659,7 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 						std::string *item_name = util::umap_find(aegis_itemnames, drop.nameid);
 
 						if (!item_name) {
-							ShowWarning("Monster \"%s\"(id: %d) is dropping an unknown item \"%u\"\n", fields[1], mob_id, drop.nameid);
+							ShowWarning("Monster \"%s\"(id: %u) is dropping an unknown item \"%u\"\n", fields[1], mob_id, drop.nameid);
 							continue;
 						}
 
@@ -4781,5 +4795,126 @@ static bool pc_readdb_skilltree_yaml(void) {
 		body << YAML::EndSeq;
 		body << YAML::EndMap;
 	}
+	return true;
+}
+
+// Copied and adjusted from itemdb.cpp
+static int itemdb_combo_split_atoi (char *str, t_itemid *val) {
+	int i;
+
+	for (i = 0; i < MAX_ITEMS_PER_COMBO; i++) {
+		if (!str)
+			break;
+		val[i] = strtoul(str, nullptr, 10);
+		str = strchr(str,':');
+		if (str)
+			*str++=0;
+	}
+	if (i == 0) //No data found.
+		return 0;
+
+	return i;
+}
+
+// Copied and adjusted from itemdb.cpp
+static bool itemdb_read_combos(const char* file) {
+	FILE* fp = fopen( file, "r" );
+
+	if( fp == nullptr ){
+		ShowError( "Can't read %s\n", file );
+		return 0;
+	}
+
+	uint32 lines = 0, count = 0;
+	char line[1024];
+	char path[256];
+	
+	// process rows one by one
+	while (fgets(line, sizeof(line), fp)) {
+		char *str[2], *p;
+
+		lines++;
+
+		if (line[0] == '/' && line[1] == '/')
+			continue;
+
+		memset(str, 0, sizeof(str));
+
+		p = line;
+
+		p = trim(p);
+
+		if (*p == '\0')
+			continue;// empty line
+
+		if (!strchr(p,',')) {
+			ShowError("itemdb_read_combos: Insufficient columns in line %d of \"%s\", skipping.\n", lines, path);
+			continue;
+		}
+
+		str[0] = p;
+		p = strchr(p,',');
+		*p = '\0';
+		p++;
+
+		str[1] = p;
+		p = strchr(p,',');
+		p++;
+
+		if (str[1][0] != '{') {
+			ShowError("itemdb_read_combos(#1): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
+			continue;
+		}
+		if ( str[1][strlen(str[1])-1] != '}' ) {
+			ShowError("itemdb_read_combos(#2): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
+			continue;
+		}
+		t_itemid items[MAX_ITEMS_PER_COMBO];
+		int v = 0, retcount = 0;
+
+		if ((retcount = itemdb_combo_split_atoi(str[0], items)) < 2) {
+			ShowError("itemdb_read_combos: line %d of \"%s\" doesn't have enough items to make for a combo (min:2), skipping.\n", lines, path);
+			continue;
+		}
+		for (v = 0; v < retcount; v++) {
+			std::string *item_name = util::umap_find(aegis_itemnames, items[v]);
+
+			if (item_name == nullptr) {
+				ShowWarning("itemdb_read_combos: Invalid item ID %" PRIu32 ".\n", items[v]);
+				break;
+			}
+		}
+		if (v < retcount)
+			continue;
+
+		body << YAML::BeginMap;
+		body << YAML::Key << "Combos";
+		body << YAML::BeginSeq;
+
+		body << YAML::BeginMap;
+		body << YAML::Key << "Combo";
+		body << YAML::BeginSeq;
+
+		for (v = 0; v < retcount; v++) {
+			body << YAML::BeginMap;
+			std::string *item_name = util::umap_find(aegis_itemnames, items[v]);
+			body << YAML::Key << *item_name;
+			body << YAML::EndMap;
+		}
+		body << YAML::EndSeq;
+		body << YAML::EndMap;
+
+		str[1] = str[1] + 1;	//skip the first left curly
+		str[1][strlen(str[1])-1] = '\0';	//null the last right curly
+
+		body << YAML::EndSeq;
+		body << YAML::Key << "Script" << YAML::Literal << trim(str[1]);
+		body << YAML::EndMap;
+
+		count++;
+	}
+	fclose(fp);
+	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, file);
+
 	return true;
 }

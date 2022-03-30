@@ -981,3 +981,51 @@ Body:
     Option: ADDEXPPERCENT_KILLRACE_ALL
     Script: |
       bonus2 bExpAddRace,RC_All,getrandomoptinfo(ROA_VALUE);
+  - Id: 243
+    Option: VAR_POWAMOUNT
+    Script: |
+      bonus bPow,getrandomoptinfo(ROA_VALUE);
+  - Id: 244
+    Option: VAR_SPLAMOUNT
+    Script: |
+      bonus bSpl,getrandomoptinfo(ROA_VALUE);
+  - Id: 245
+    Option: VAR_STAAMOUNT
+    Script: |
+      bonus bSta,getrandomoptinfo(ROA_VALUE);
+  - Id: 246
+    Option: VAR_WISAMOUNT
+    Script: |
+      bonus bWis,getrandomoptinfo(ROA_VALUE);
+  - Id: 247
+    Option: VAR_CONAMOUNT
+    Script: |
+      bonus bCon,getrandomoptinfo(ROA_VALUE);
+  - Id: 248
+    Option: VAR_CRTAMOUNT
+    Script: |
+      bonus bCrt,getrandomoptinfo(ROA_VALUE);
+  - Id: 249
+    Option: VAR_PATKAMOUNT
+    Script: |
+      bonus bPAtk,getrandomoptinfo(ROA_VALUE);
+  - Id: 250
+    Option: VAR_SMATKAMOUNT
+    Script: |
+      bonus bSMatk,getrandomoptinfo(ROA_VALUE);
+  - Id: 251
+    Option: VAR_RESAMOUNT
+    Script: |
+      bonus bRes,getrandomoptinfo(ROA_VALUE);
+  - Id: 252
+    Option: VAR_MRESAMOUNT
+    Script: |
+      bonus bMRes,getrandomoptinfo(ROA_VALUE);
+  - Id: 253
+    Option: VAR_HEAL_PLUS
+    Script: |
+      bonus bHPlus,getrandomoptinfo(ROA_VALUE);
+  - Id: 254
+    Option: VAR_CRITICAL_RATE
+    Script: |
+      bonus bCRate,getrandomoptinfo(ROA_VALUE);
