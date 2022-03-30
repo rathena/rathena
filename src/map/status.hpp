@@ -2849,6 +2849,9 @@ enum e_status_change_flag : uint16 {
 	SCF_SENDVAL3,
 	SCF_NOFORCEDEND,
 	SCF_NOWARNING,
+	SCF_REMOVEONUNEQUIP,
+	SCF_REMOVEONUNEQUIPWEAPON,
+	SCF_REMOVEONUNEQUIPARMOR,
 	SCF_MAX
 };
 
@@ -3012,7 +3015,8 @@ struct regen_data {
 
 	//tick accumulation before healing.
 	struct {
-		unsigned int hp,sp,shp,ssp;
+		t_tick hp, sp; //time of last natural recovery
+		unsigned int shp,ssp;
 	} tick;
 
 	//Regen rates. n/100

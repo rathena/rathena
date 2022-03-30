@@ -35099,6 +35099,8 @@ Body:
     EquipLevelMin: 99
     Script: |
       bonus bAgi,1;
+    UnEquipScript: |
+      sc_end SC_HOVERING;
   - Id: 2802
     AegisName: Suicidal_Device
     Name: Suicidal Device
@@ -134513,16 +134515,16 @@ Body:
     ArmorLevel: 1
     View: 973
   - Id: 31889
-    AegisName: aegis_31889
-    Name: Costume Gemini Crown    # !todo check english name
+    AegisName: C_Gemini_Crown
+    Name: Costume Gemini Crown
     Type: Armor
     Locations:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 551
   - Id: 31890
-    AegisName: aegis_31890
-    Name: Costume Sagittarius Diadem    # !todo check english name
+    AegisName: C_Sagittarius_Diadem
+    Name: Costume Sagittarius Diadem
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -136461,7 +136463,7 @@ Body:
          bonus2 bSkillUseSP,"LG_EARTHDRIVE",25;
       }
   - Id: 32295
-    AegisName: aegis_32295
+    AegisName: Crystal_Blade_Necklace
     Name: Crystal Blade Necklace
     Type: Armor
     Weight: 500
@@ -136477,7 +136479,7 @@ Body:
       autobonus3 "{ bonus2 bAddEle,Ele_All,15; }",10,10000,"LK_AURABLADE";
       /*Unknow Rate*/
   - Id: 32296
-    AegisName: aegis_32296
+    AegisName: Crystal_Blade_Necklace_
     Name: Crystal Blade Necklace
     Type: Armor
     Weight: 500
@@ -140630,7 +140632,7 @@ Body:
       bonus bShortAtkRate,8;
       bonus bCritical,8;
   - Id: 410094
-    AegisName: aegis_410094
+    AegisName: Chain_Of_Seal_
     Name: Sealed Chain
     Type: Armor
     Weight: 100
@@ -140700,6 +140702,9 @@ Body:
     AegisName: C_Avenger
     Name: Costume Avengers    # !todo check english name
     Type: Armor
+    Jobs:
+      All: true
+      Summoner: false
     Locations:
       Costume_Head_Mid: true
     ArmorLevel: 1
@@ -145592,7 +145597,7 @@ Body:
       if (.@r>=9)
          bonus2 bAddSize,Size_All,20;
   - Id: 450163
-    AegisName: aegis_450163
+    AegisName: White_Lily_Robe_
     Name: White Lily Robe
     Type: Armor
     Weight: 900
@@ -146113,7 +146118,7 @@ Body:
          bonus bMdef,15;
       }
   - Id: 450181
-    AegisName: aegis_450181
+    AegisName: White_Lily_Robe__
     Name: Awakened White Lily Robe
     Type: Armor
     Weight: 900
