@@ -17,7 +17,7 @@ const std::string PlayerGroupDatabase::getDefaultLocation() {
 	return std::string( conf_path ) + "/groups.yml";
 }
 
-uint64 PlayerGroupDatabase::parseBodyNode( const YAML::Node& node ){
+uint64 PlayerGroupDatabase::parseBodyNode( const ryml::NodeRef node ){
 	uint32 groupId;
 
 	if( !this->asUInt32( node, "Id", groupId ) ){
@@ -72,27 +72,41 @@ uint64 PlayerGroupDatabase::parseBodyNode( const YAML::Node& node ){
 	}
 
 	if( this->nodeExists( node, "Commands" ) ){
-		const YAML::Node& commands = node["Commands"];
+		const auto& commands = node["Commands"];
 
-		for( const auto& it : commands ){
-			std::string command = it.first.as<std::string>();
+		for( const auto& it : commands.children() ){
+			std::string command;
+
+			c4::from_chars( it.key(), &command );
+
+			bool allowed;
+
+			if( !this->asBool( commands, command, allowed ) ){
+				return 0;
+			}
 
 			if( !atcommand_exists( command.c_str() ) ){
 				this->invalidWarning( it, "Unknown atcommand: %s\n", command.c_str() );
 				return 0;
 			}
 
-			bool allowed = it.second.as<bool>();
-
 			group->commands[command] = allowed;
 		}
 	}
 
 	if( this->nodeExists( node, "CharCommands" ) ){
-		const YAML::Node& commands = node["CharCommands"];
+		const auto& commands = node["CharCommands"];
 
-		for( const auto& it : commands ){
-			std::string command = it.first.as<std::string>();
+		for( const auto& it : commands.children() ){
+			std::string command;
+
+			c4::from_chars( it.key(), &command );
+
+			bool allowed;
+
+			if( !this->asBool( commands, command, allowed ) ){
+				return 0;
+			}
 
 			util::tolower( command );
 
@@ -101,18 +115,24 @@ uint64 PlayerGroupDatabase::parseBodyNode( const YAML::Node& node ){
 				return 0;
 			}
 
-			bool allowed = it.second.as<bool>();
-
 			group->char_commands[command] = allowed;
 		}
 	}
 
 	if( this->nodeExists( node, "Permissions" ) ){
-		const YAML::Node& permissions = node["Permissions"];
+		const auto& permissions = node["Permissions"];
 
 		for( const auto& it : permissions ){
-			std::string permission = it.first.as<std::string>();
-			bool allowed = it.second.as<bool>();
+			std::string permission;
+
+			c4::from_chars( it.key(), &permission );
+
+			bool allowed;
+
+			if( !this->asBool( permissions, permission, allowed ) ){
+				return 0;
+			}
+
 			const char* str = permission.c_str();
 			bool found = false;
 
@@ -137,13 +157,20 @@ uint64 PlayerGroupDatabase::parseBodyNode( const YAML::Node& node ){
 	}
 
 	if( this->nodeExists( node, "Inherit" ) ){
-		const YAML::Node& inherits = node["Inherit"];
+		const auto& inherits = node["Inherit"];
 
 		auto& inheritanceVector = this->inheritance[groupId];
 
 		for( const auto& it : inherits ){
-			std::string inherit = it.first.as<std::string>();
-			bool enable = it.second.as<bool>();
+			std::string inherit;
+
+			c4::from_chars( it.key(), &inherit );
+
+			bool enable;
+
+			if( !this->asBool( inherits, inherit, enable ) ){
+				return 0;
+			}
 
 			util::tolower( inherit );
 
