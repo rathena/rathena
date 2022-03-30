@@ -8904,6 +8904,9 @@
 	export_constant(SCF_SENDVAL3);
 	export_constant(SCF_NOFORCEDEND);
 	export_constant(SCF_NOWARNING);
+	export_constant(SCF_REMOVEONUNEQUIP);
+	export_constant(SCF_REMOVEONUNEQUIPWEAPON);
+	export_constant(SCF_REMOVEONUNEQUIPARMOR);
 
 	#undef export_constant
 	#undef export_constant2

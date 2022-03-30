@@ -11645,7 +11645,8 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 	clif_unequipitemack(sd,n,pos,1);
 	pc_set_costume_view(sd);
 
-	status_change_end(&sd->bl,SC_HEAT_BARREL,INVALID_TIMER);
+	status_db.removeByStatusFlag(&sd->bl, { SCF_REMOVEONUNEQUIP });
+
 	// On weapon change (right and left hand)
 	if ((pos & EQP_ARMS) && sd->inventory_data[n]->type == IT_WEAPON) {
 		if (battle_config.ammo_unequip && !(flag & 4)) {
@@ -11670,20 +11671,12 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 			}
 		}
 
-		skill_enchant_elemental_end(&sd->bl, SC_NONE);
-		status_change_end(&sd->bl, SC_FEARBREEZE, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_EXEEDBREAK, INVALID_TIMER);
-#ifdef RENEWAL
-		status_change_end(&sd->bl, SC_MAXOVERTHRUST, INVALID_TIMER);
-#endif
+		status_db.removeByStatusFlag(&sd->bl, { SCF_REMOVEONUNEQUIPWEAPON });
 	}
 
 	// On armor change
 	if (pos & EQP_ARMOR) {
-		if (sd->sc.data[SC_HOVERING] && sd->inventory_data[n]->nameid == ITEMID_HOVERING_BOOSTER)
-			status_change_end(&sd->bl, SC_HOVERING, INVALID_TIMER);
-		//status_change_end(&sd->bl, SC_BENEDICTIO, INVALID_TIMER); // No longer is removed? Need confirmation
-		status_change_end(&sd->bl, SC_ARMOR_RESIST, INVALID_TIMER);
+		status_db.removeByStatusFlag(&sd->bl, { SCF_REMOVEONUNEQUIPARMOR });
 	}
 
 	// On equipment change
