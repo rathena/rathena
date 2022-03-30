@@ -20326,8 +20326,8 @@ int skill_delunitgroup_(std::shared_ptr<s_skill_unit_group> group, const char* f
 
 	// remove all unit cells
 	if(group->unit != NULL)
-		for( i = 0; i < group->unit_count; i++ )
-			skill_delunit(&group->unit[i]);
+		for( int j = 0; j < group->unit_count; j++ )
+			skill_delunit(&group->unit[j]);
 
 	// clear Talkie-box string
 	if( group->valstr != NULL ) {
