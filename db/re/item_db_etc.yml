@@ -11470,7 +11470,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bAbsorbDmgMaxHP,100;
+      bonus bAbsorbDmgMaxHP2,40;
   - Id: 4625
     AegisName: Timeholder_Card
     Name: Time Holder Card
@@ -35220,7 +35220,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25246
-    AegisName: Juice_Mix_Package
+    AegisName: Juice_Package
     Name: Juice Mix Package
     Type: Etc
     Trade:
@@ -35231,7 +35231,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25247
-    AegisName: Purple_Ore
+    AegisName: Violet_Stone
     Name: Purple Ore
     Type: Etc
     Trade:
@@ -35242,7 +35242,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25248
-    AegisName: Purple_Ore_Crate
+    AegisName: Violet_Stone_Box
     Name: Purple Ore Crate
     Type: Etc
     Trade:
@@ -35264,7 +35264,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25250
-    AegisName: Rock_Ridge_Coin
+    AegisName: Coin_Of_Rr
     Name: Rock Ridge Coin
     Type: Etc
   - Id: 25251
@@ -35336,7 +35336,7 @@ Body:
     Buy: 778
     Weight: 10
   - Id: 25260
-    AegisName: Fragment_of_Purple_Ore
+    AegisName: Violet_Stone_Chip
     Name: Fragment of Purple Ore
     Type: Etc
     Trade:
@@ -35455,7 +35455,7 @@ Body:
     Buy: 348
     Weight: 10
   - Id: 25277
-    AegisName: Deadly_Poison_Powder
+    AegisName: DeadlyPoisonPowder
     Name: Deadly Poison Powder
     Type: Etc
     Buy: 644
@@ -36233,19 +36233,22 @@ Body:
     Type: Etc
     Buy: 20
     Weight: 100
-  - Id: 25464
-    AegisName: World_Moving_Rights
-    Name: World Moving Rights
+  - Id: 25461
+    AegisName: Special_Tool_Box_Coupon
+    Name: "[Event] Special Toolbox Coupon"
     Type: Etc
-    Buy: 20
     Trade:
       NoDrop: true
       NoTrade: true
       NoSell: true
       NoCart: true
       NoGuildStorage: true
-      NoMail: true
       NoAuction: true
+  - Id: 25464
+    AegisName: World_Tour_Ticket
+    Name: World Tour Ticket
+    Type: Etc
+    Buy: 20
   - Id: 25479
     AegisName: Dogly_Bottle
     Name: Dogly Bottle
@@ -42987,6 +42990,41 @@ Body:
     SubType: Enchant
     Script: |
       bonus bFixedCastrate,-50;
+  - Id: 29445
+    AegisName: Amplification1
+    Name: Amplify 1    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,getrefine();
+  - Id: 29446
+    AegisName: Amplification2
+    Name: Amplify 2    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,2*getrefine();
+  - Id: 29447
+    AegisName: Amplification3
+    Name: Amplify 3    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,3*getrefine();
+  - Id: 29448
+    AegisName: Amplification4
+    Name: Amplify 4    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,4*getrefine();
+  - Id: 29449
+    AegisName: Amplification5
+    Name: Amplify 5    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMatkRate,5*getrefine();
   - Id: 29460
     AegisName: RuneknightStone_Top_
     Name: Lord Knight Stone (Top)
@@ -44110,6 +44148,86 @@ Body:
       bonus bCritAtkRate,9*(.@r/2);
       bonus bCritical,3*(.@r/2);
       bonus2 bAddClass,Class_All,3*(.@r/5);
+  - Id: 29706
+    AegisName: Tenacity1
+    Name: Tenacity Lv1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,4;
+      bonus bPerfectHitRate,1;
+  - Id: 29707
+    AegisName: Tenacity2
+    Name: Tenacity Lv2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,8;
+      bonus bPerfectHitRate,2;
+  - Id: 29708
+    AegisName: Tenacity3
+    Name: Tenacity Lv3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,12;
+      bonus bPerfectHitRate,3;
+  - Id: 29709
+    AegisName: Tenacity4
+    Name: Tenacity Lv4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,16;
+      bonus bPerfectHitRate,4;
+  - Id: 29710
+    AegisName: Tenacity5
+    Name: Tenacity Lv5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,20;
+      bonus bPerfectHitRate,5;
+  - Id: 29711
+    AegisName: Tenacity6
+    Name: Tenacity Lv6
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,24;
+      bonus bPerfectHitRate,6;
+  - Id: 29712
+    AegisName: Tenacity7
+    Name: Tenacity Lv7
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,28;
+      bonus bPerfectHitRate,7;
+  - Id: 29713
+    AegisName: Tenacity8
+    Name: Tenacity Lv8
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,32;
+      bonus bPerfectHitRate,10;
+  - Id: 29714
+    AegisName: Tenacity9
+    Name: Tenacity Lv9
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,36;
+      bonus bPerfectHitRate,9;
+  - Id: 29715
+    AegisName: Tenacity10
+    Name: Tenacity Lv10
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,44;
+      bonus bPerfectHitRate,10;
   - Id: 31000
     AegisName: Rudo_Card_J
     Name: Rudo Card
@@ -47241,8 +47359,16 @@ Body:
       bonus bUseSPrate,10;
       bonus bShortAtkRate,4*(.@r/3);
       bonus bLongAtkRate,4*(.@r/3);
+  - Id: 300314
+    AegisName: aegis_300314
+    Name: Remnants of reason and memory    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-10;
+      bonus bDelayrate,-10;
   - Id: 300348
-    AegisName: aegis_300348
+    AegisName: SLD_G_Amon_Ra_Card_J
     Name: Sealed Nightmare Amon Ra Card
     Type: Card
     Weight: 10
@@ -54091,7 +54217,7 @@ Body:
       bonus bVariableCastrate,-5;
       bonus bMatk,3;
   - Id: 310881
-    AegisName: aegis_310881
+    AegisName: Runeknight_Top3
     Name: Rune Knight Stone(Upper)
     Type: Card
     SubType: Enchant
@@ -54113,44 +54239,44 @@ Body:
     Script: |
       bonus2 bSkillAtk,"RK_WINDCUTTER",5*getskilllv("RK_ENCHANTBLADE");
   - Id: 310884
-    AegisName: aegis_310884
-    Name: Warlock Stone(Upper)
+    AegisName: Warlock_Top3
+    Name: Warlock Stone (Upper)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bMagicAtkEle,Ele_All,2*getskilllv("WL_SOULEXPANSION");
   - Id: 310885
-    AegisName: aegis_310885
-    Name: Warlock Stone(Mid)
+    AegisName: Warlock_Middle3
+    Name: Warlock Stone (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bFixedCast,-100*getskilllv("WL_COMET");
   - Id: 310886
-    AegisName: aegis_310886
-    Name: Warlock Stone(Lower)
+    AegisName: Warlock_Bottom3
+    Name: Warlock Stone (Lower)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDelayrate,-getskilllv("WL_CHAINLIGHTNING");
   - Id: 310887
-    AegisName: aegis_310887
-    Name: Royal Guard Stone(Upper)
+    AegisName: Royalguard_Top3
+    Name: Royal Guard Stone (Upper)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bFixedCast,-100*getskilllv("LG_INSPIRATION");
   - Id: 310888
-    AegisName: aegis_310888
-    Name: Royal Guard Stone(Mid)
+    AegisName: Royalguard_Middle3
+    Name: Royal Guard Stone (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bLongAtkRate,2*getskilllv("LG_PIETY");
       bonus2 bMagicAtkEle,Ele_All,2*getskilllv("LG_PIETY");
   - Id: 310889
-    AegisName: aegis_310889
-    Name: Royal Guard Stone(Lower)
+    AegisName: Royalguard_Bottom3
+    Name: Royal Guard Stone (Lower)
     Type: Card
     SubType: Enchant
     Script: |
@@ -54842,65 +54968,65 @@ Body:
     Script: |
       bonus2 bExpAddRace,RC_All,5;
   - Id: 311005
-    AegisName: aegis_311005
-    Name: Wondermins Stone (top)    # !todo check english name
+    AegisName: WanderMins_Top3
+    Name: Wander Mins Stone (Upper)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bVariableCastrate,-getskilllv("WM_LESSON");
   - Id: 311006
-    AegisName: aegis_311006
-    Name: Wondermin's Stone (Discontinued)    # !todo check english name
+    AegisName: WanderMins_Middle3
+    Name: Wander Mins Stone (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-(100*getskilllv("WM_SIRCLEOFNATURE"));
       bonus2 bSkillCooldown,"WM_METALICSOUND",-(100*getskilllv("WM_SIRCLEOFNATURE"));
   - Id: 311007
-    AegisName: aegis_311007
-    Name: Wondermin's Stone (bottom)    # !todo check english name
+    AegisName: WanderMins_Bottom3
+    Name: Wander Mins Stone (Lower)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bFixedCast,-100*getskilllv("WM_FRIGG_SONG");
   - Id: 311008
-    AegisName: aegis_311008
-    Name: Generic Stone (top)    # !todo check english name
+    AegisName: Genetic_Top3
+    Name: Genetic Stone (Upper)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bLongAtkRate,2*getskilllv("GN_CARTCANNON");
   - Id: 311009
-    AegisName: aegis_311009
-    Name: Generic Stone (Discontinued)    # !todo check english name
+    AegisName: Genetic_Middle3
+    Name: Generic Stone (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bVariableCastrate,-2*getskilllv("GN_REMODELING_CART");
   - Id: 311010
-    AegisName: aegis_311010
-    Name: Generic Stone (Bottom)    # !todo check english name
+    AegisName: Genetic_Bottom3
+    Name: Genetic Stone (Lower)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bFixedCast,-100*getskilllv("GN_TRAINING_SWORD");
   - Id: 311011
-    AegisName: aegis_311011
-    Name: Sorcerer Stone (top)    # !todo check english name
+    AegisName: Sorcerer_Top3
+    Name: Sorcerer Stone (Upper)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bFixedCast,-100*getskilllv("SO_STRIKING");
   - Id: 311012
-    AegisName: aegis_311012
-    Name: Sorcerer Stone (Discontinued)    # !todo check english name
+    AegisName: Sorcerer_Middle3
+    Name: Sorcerer Stone (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bVariableCastrate,-2*getskilllv("SO_DIAMONDDUST");
   - Id: 311013
-    AegisName: aegis_311013
-    Name: Sorcerer Stone (bottom)    # !todo check english name
+    AegisName: Sorcerer_Bottom3
+    Name: Sorcerer Stone (Lower)
     Type: Card
     SubType: Enchant
     Script: |
@@ -55012,277 +55138,770 @@ Body:
       bonus bSmatk,3+getenchantgrade();
   - Id: 311029
     AegisName: Gear_DN1
-    Name: Precision Tuning Device (Storm Slash)
+    Name: Storm Slash Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"DK_STORMSLASH",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"DK_STORMSLASH",5;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"DK_STORMSLASH",3;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"DK_STORMSLASH",4;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"DK_STORMSLASH",6;
+            }
+          }
+        }
+      }
   - Id: 311030
     AegisName: Gear_DN2
-    Name: Precision Tuning Device (Hack and Slasher)
+    Name: Hack and Slasher Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"DK_HACKANDSLASHER",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"DK_HACKANDSLASHER",10;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"DK_HACKANDSLASHER",7;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"DK_HACKANDSLASHER",8;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"DK_HACKANDSLASHER",10;
+            }
+          }
+        }
+      }
   - Id: 311031
     AegisName: Gear_MT1
-    Name: Precision Tuning Device (Axe Stomp)
+    Name: Axe Stomp Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"MT_AXE_STOMP",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"MT_AXE_STOMP",5;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"MT_AXE_STOMP",3;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"MT_AXE_STOMP",4;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"MT_AXE_STOMP",6;
+            }
+          }
+        }
+      }
   - Id: 311032
     AegisName: Gear_MT2
-    Name: Precision Tuning Device (Axe Tornado)
+    Name: Axe Tornado Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"NC_AXETORNADO",35+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"NC_AXETORNADO",5;
+      bonus2 bSkillCooldown,"NC_AXETORNADO",-1000;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"NC_AXETORNADO",7;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"NC_AXETORNADO",8;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"NC_AXETORNADO",10;
+            }
+          }
+        }
+      }
   - Id: 311033
     AegisName: Gear_BO1
-    Name: Precision Tuning Device (Acidified Zone)
+    Name: Acidified Zone Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",5;
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",5;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",3;
+        bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",3;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",4;
+            bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",4;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",6;
+              bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",6;
+            }
+          }
+        }
+      }
   - Id: 311034
     AegisName: Gear_BO2
-    Name: Precision Tuning Device (Cart Tornado)
+    Name: Cart Tornado Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"GN_CART_TORNADO",35+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"GN_CART_TORNADO",5;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"GN_CART_TORNADO",7;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"GN_CART_TORNADO",8;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"GN_CART_TORNADO",10;
+            }
+          }
+        }
+      }
   - Id: 311035
     AegisName: Gear_SHC1
-    Name: Precision Tuning Device (Impact Crater)
+    Name: Impact Crater Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"SHC_IMPACT_CRATER",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"SHC_IMPACT_CRATER",5;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"SHC_IMPACT_CRATER",3;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"SHC_IMPACT_CRATER",4;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"SHC_IMPACT_CRATER",6;
+            }
+          }
+        }
+      }
   - Id: 311036
     AegisName: Gear_SHC2
-    Name: Precision Tuning Device (Savage Impact)
+    Name: Savage Impact Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"SHC_SAVAGE_IMPACT",35+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"SHC_SAVAGE_IMPACT",10;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"SHC_SAVAGE_IMPACT",7;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"SHC_SAVAGE_IMPACT",8;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"SHC_SAVAGE_IMPACT",10;
+            }
+          }
+        }
+      }
   - Id: 311037
     AegisName: Gear_AG1
-    Name: Precision Tuning Device (Frozen Crimson)
+    Name: Frozen Crimson Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
       .@g = getenchantgrade();
-      bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",25+5*.@g;
-      bonus2 bSkillAtk,"AG_FROZEN_SLASH",25+5*.@g;
+      bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",5;
+      bonus2 bSkillAtk,"AG_FROZEN_SLASH",5;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",3;
+        bonus2 bSkillAtk,"AG_FROZEN_SLASH",3;
+        if (.@g >= 2) {
+          bonus2 bMagicAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",4;
+            bonus2 bSkillAtk,"AG_FROZEN_SLASH",4;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",6;
+              bonus2 bSkillAtk,"AG_FROZEN_SLASH",6;
+            }
+          }
+        }
+      }
   - Id: 311038
     AegisName: Gear_AG2
-    Name: Precision Tuning Device (Crystal Impact)
+    Name: Crystal Impact Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"AG_CRYSTAL_IMPACT_ATK",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"AG_CRYSTAL_IMPACT_ATK",10;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"AG_CRYSTAL_IMPACT_ATK",7;
+        if (.@g >= 2) {
+          bonus2 bMagicAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"AG_CRYSTAL_IMPACT_ATK",8;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"AG_CRYSTAL_IMPACT_ATK",10;
+            }
+          }
+        }
+      }
   - Id: 311039
     AegisName: Gear_ABC1
-    Name: Precision Tuning Device (Abyss Square)
+    Name: Abyss Square Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",5;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",6;
+        if (.@g >= 2) {
+          bonus2 bMagicAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",4;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",6;
+            }
+          }
+        }
+      }
   - Id: 311040
     AegisName: Gear_ABC2
-    Name: Precision Tuning Device (From the Abyss)
+    Name: From the Abyss Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS",10;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS",7;
+        if (.@g >= 2) {
+          bonus2 bMagicAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS",8;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS",10;
+            }
+          }
+        }
+      }
   - Id: 311041
     AegisName: Gear_EM1
-    Name: Precision Tuning Device (Conflagration Land)
+    Name: Conflagration Land Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
       .@g = getenchantgrade();
-      bonus2 bSkillAtk,"EM_CONFLAGRATION",25+5*.@g;
-      bonus2 bSkillAtk,"EM_LIGHTNING_LAND",25+5*.@g;
+      bonus2 bSkillAtk,"EM_CONFLAGRATION",5;
+      bonus2 bSkillAtk,"EM_LIGHTNING_LAND",5;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"EM_CONFLAGRATION",6;
+        bonus2 bSkillAtk,"EM_LIGHTNING_LAND",6;
+        if (.@g >= 2) {
+          bonus2 bMagicAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"EM_CONFLAGRATION",4;
+            bonus2 bSkillAtk,"EM_LIGHTNING_LAND",4;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"EM_CONFLAGRATION",6;
+              bonus2 bSkillAtk,"EM_LIGHTNING_LAND",6;
+            }
+          }
+        }
+      }
   - Id: 311042
     AegisName: Gear_EM2
-    Name: Precision Tuning Device (Varetyr Spear)
+    Name: Psychic Wave Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"SO_VARETYR_SPEAR",35+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",5;
+      bonus2 bSkillCooldown,"SO_PSYCHIC_WAVE",-1500;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",7;
+        if (.@g >= 2) {
+          bonus2 bMagicAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",8;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",10;
+            }
+          }
+        }
+      }
   - Id: 311043
     AegisName: Gear_WH1
-    Name: Precision Tuning Device (Gale Storm)
+    Name: Gale Storm Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"WH_GALESTORM",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"WH_GALESTORM",5;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"WH_GALESTORM",3;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"WH_GALESTORM",4;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"WH_GALESTORM",6;
+            }
+          }
+        }
+      }
   - Id: 311044
     AegisName: Gear_WH2
-    Name: Precision Tuning Device (Arrow Storm)
+    Name: Arrow Storm Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"RA_ARROWSTORM",35+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"RA_ARROWSTORM",5;
+      bonus2 bSkillCooldown,"RA_ARROWSTORM",-1200;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"RA_ARROWSTORM",7;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"RA_ARROWSTORM",8;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"RA_ARROWSTORM",10;
+            }
+          }
+        }
+      }
   - Id: 311045
     AegisName: Gear_IQ1
-    Name: Precision Tuning Device (Judge Faith)
+    Name: Second Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
       .@g = getenchantgrade();
-      bonus2 bSkillAtk,"IQ_SECOND_FAITH",25+5*.@g;
-      bonus2 bSkillAtk,"IQ_SECOND_JUDGEMENT",25+5*.@g;
+      bonus2 bSkillAtk,"IQ_SECOND_FAITH",5;
+      bonus2 bSkillAtk,"IQ_SECOND_JUDGEMENT",5;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"IQ_SECOND_FAITH",3;
+        bonus2 bSkillAtk,"IQ_SECOND_JUDGEMENT",3;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"IQ_SECOND_FAITH",4;
+            bonus2 bSkillAtk,"IQ_SECOND_JUDGEMENT",4;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"IQ_SECOND_FAITH",6;
+              bonus2 bSkillAtk,"IQ_SECOND_JUDGEMENT",6;
+            }
+          }
+        }
+      }
   - Id: 311046
     AegisName: Gear_IQ2
-    Name: Precision Tuning Device (Consecration Punish)
+    Name: Third Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"IQ_THIRD_PUNISH",35+5*getenchantgrade();
-      bonus2 bSkillAtk,"IQ_THIRD_CONSECRATION",35+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"IQ_THIRD_PUNISH",10;
+      bonus2 bSkillAtk,"IQ_THIRD_CONSECRATION",10;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"IQ_THIRD_PUNISH",7;
+        bonus2 bSkillAtk,"IQ_THIRD_CONSECRATION",7;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"IQ_THIRD_PUNISH",8;
+            bonus2 bSkillAtk,"IQ_THIRD_CONSECRATION",8;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"IQ_THIRD_PUNISH",10;
+              bonus2 bSkillAtk,"IQ_THIRD_CONSECRATION",10;
+            }
+          }
+        }
+      }
   - Id: 311047
     AegisName: Gear_IG1
-    Name: Precision Tuning Device (Shield Shooting)
+    Name: Shield Shooting Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",10;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",4;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",5;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",7;
+            }
+          }
+        }
+      }
   - Id: 311048
     AegisName: Gear_IG2
-    Name: Precision Tuning Device (Rapid Smiting)
+    Name: Shield Chain Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"PA_SHIELDCHAIN",35+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"PA_SHIELDCHAIN",10;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"PA_SHIELDCHAIN",7;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"PA_SHIELDCHAIN",8;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"PA_SHIELDCHAIN",10;
+            }
+          }
+        }
+      }
   - Id: 311049
     AegisName: Gear_CD1
-    Name: Precision Tuning Device (Flamen)
+    Name: Framen Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"CD_FRAMEN",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"CD_FRAMEN",5;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"CD_FRAMEN",3;
+        bonus bHealPower,6;
+        if (.@g >= 2) {
+          bonus2 bMagicAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"CD_FRAMEN",4;
+            bonus bHealPower,6;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"CD_FRAMEN",6;
+              bonus bHealPower,6;
+            }
+          }
+        }
+      }
   - Id: 311050
     AegisName: Gear_CD2
-    Name: Precision Tuning Device (Arbitrium)
+    Name: Arbitrium Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",10;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",7;
+        bonus bHealPower,6;
+        if (.@g >= 2) {
+          bonus2 bMagicAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",8;
+            bonus bHealPower,6;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",10;
+              bonus bHealPower,6;
+            }
+          }
+        }
+      }
   - Id: 311051
     AegisName: Gear_SKE1
-    Name: Precision Tuning Device (Noon Blast)
+    Name: Noon Blast Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"SKE_NOON_BLAST",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"SKE_NOON_BLAST",5;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"SKE_NOON_BLAST",3;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"SKE_NOON_BLAST",4;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"SKE_NOON_BLAST",6;
+            }
+          }
+        }
+      }
   - Id: 311052
     AegisName: Gear_SKE2
-    Name: Precision Tuning Device (Rising Sun)
+    Name: Rising Sun Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"SKE_RISING_SUN",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"SKE_RISING_SUN",10;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"SKE_RISING_SUN",7;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"SKE_RISING_SUN",8;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"SKE_RISING_SUN",10;
+            }
+          }
+        }
+      }
   - Id: 311053
     AegisName: Gear_SOA1
-    # Name: Precision Tuning Device (Talisman of Four Bearing God)
-    Name: Precision Tuning Device (Talisman of Four Bearing
+    Name: Talisman of Four Bearing God Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",5;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",3;
+        if (.@g >= 2) {
+          bonus2 bMagicAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",4;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",6;
+            }
+          }
+        }
+      }
   - Id: 311054
     AegisName: Gear_SOA2
-    # Name: Precision Tuning Device (Talisman of Soul Stealing)
-    Name: Precision Tuning Device (Talisman of Soul Stealin
+    Name: Talisman of Soul Stealing Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",10;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",7;
+        if (.@g >= 2) {
+          bonus2 bMagicAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",8;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",10;
+            }
+          }
+        }
+      }
   - Id: 311055
     AegisName: Gear_NW1
-    Name: Precision Tuning Device (Magazine Bullet)
+    Name: Only One Bullet Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
       .@g = getenchantgrade();
-      bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",25+5*.@g;
-      bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",25+5*.@g;
+      bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",5;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",3;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",4;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",6;
+            }
+          }
+        }
+      }
   - Id: 311056
     AegisName: Gear_NW2
-    Name: Precision Tuning Device (Vigilante Wild)
+    Name: Spiral Shooting Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"NW_WILD_FIRE",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",5;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",3;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",4;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",6;
+            }
+          }
+        }
+      }
   - Id: 311057
     AegisName: Gear_HN1
-    Name: Precision Tuning Device (Double Bowling Blow)
+    Name: Double Bowling Bash Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
       .@g = getenchantgrade();
-      bonus2 bSkillAtk,"HN_MEGA_SONIC_BLOW",25+5*.@g;
-      bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",25+5*.@g;
+      bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",5;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",3;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",4;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",6;
+            }
+          }
+        }
+      }
   - Id: 311058
     AegisName: Gear_HN2
-    Name: Precision Tuning Device (Meteor Strike)
+    Name: Meteor Storm Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
       .@g = getenchantgrade();
-      bonus2 bSkillAtk,"HN_NAPALM_VULCAN_STRIKE",25+5*.@g;
-      bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",25+5*.@g;
+      bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",5;
+      bonus2 bSkillAtk,"HN_JUPITEL_THUNDER_STORM",5;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",3;
+        bonus2 bSkillAtk,"HN_JUPITEL_THUNDER_STORM",3;
+        if (.@g >= 2) {
+          bonus2 bMagicAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",4;
+            bonus2 bSkillAtk,"HN_JUPITEL_THUNDER_STORM",4;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",6;
+              bonus2 bSkillAtk,"HN_JUPITEL_THUNDER_STORM",6;
+            }
+          }
+        }
+      }
   - Id: 311059
     AegisName: Gear_SS1
     Name: Precision Tuning Device (Shadow Dance)
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"SS_KAGENOMAI",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"SS_KAGENOMAI",5;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"SS_KAGENOMAI",3;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,6;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"SS_KAGENOMAI",4;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"SS_KAGENOMAI",5;
+            }
+          }
+        }
+      }
   - Id: 311060
     AegisName: Gear_SS2
-    Name: Precision Tuning Device (Darkening Cannon)
+    Name: Antenpou Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"SS_ANTENPOU",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"SS_ANTENPOU",5;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"SS_ANTENPOU",3;
+        if (.@g >= 2) {
+          bonus2 bMagicAddSize,Size_All,6;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"SS_ANTENPOU",4;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"SS_ANTENPOU",5;
+            }
+          }
+        }
+      }
   - Id: 311061
     AegisName: Gear_TR1
-    Name: Precision Tuning Device (Rose Rhythm)
+    Name: Rose Shooting Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
       .@g = getenchantgrade();
-      bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",25+5*.@g;
-      bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",25+5*.@g;
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",5;
+      bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",5;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",3;
+        bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",3;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",4;
+            bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",4;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",6;
+              bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",6;
+            }
+          }
+        }
+      }
   - Id: 311062
     AegisName: Gear_TR2
-    Name: Precision Tuning Device (Severe Rainstorm)
+    Name: Severe Rainstorm Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",35+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",5;
+      bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",7;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",8;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",10;
+            }
+          }
+        }
+      }
   - Id: 311063
     AegisName: Gear_SH1
-    Name: Precision Tuning Device (Chulho Strike)
+    Name: Howling Strike Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
       .@g = getenchantgrade();
-      bonus2 bSkillAtk,"SH_HOGOGONG_STRIKE",25+5*.@g;
-      bonus2 bSkillAtk,"SH_HOWLING_OF_CHUL_HO",25+5*.@g;
+      bonus2 bSkillAtk,"SH_HOWLING_OF_CHUL_HO",7;
+      bonus2 bSkillAtk,"SH_HOGOGONG_STRIKE",7;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"SH_HOWLING_OF_CHUL_HO",5;
+        bonus2 bSkillAtk,"SH_HOGOGONG_STRIKE",5;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"SH_HOWLING_OF_CHUL_HO",6;
+            bonus2 bSkillAtk,"SH_HOGOGONG_STRIKE",6;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"SH_HOWLING_OF_CHUL_HO",7;
+              bonus2 bSkillAtk,"SH_HOGOGONG_STRIKE",7;
+            }
+          }
+        }
+      }
   - Id: 311064
     AegisName: Gear_SH2
-    Name: Precision Tuning Device (Hyunrok Breeze)
+    Name: Hyun Rok Tuning Device
     Type: Card
     SubType: Enchant
     Script: |
       .@g = getenchantgrade();
-      bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",25+5*.@g;
-      bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",25+5*.@g;
+      bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",7;
+      bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",7;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",5;
+        bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",5;
+        if (.@g >= 2) {
+          bonus2 bMagicAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",6;
+            bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",6;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",7;
+              bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",7;
+            }
+          }
+        }
+      }
   - Id: 311076
     AegisName: POW_1Lv
     Name: POW Lv1
@@ -56104,7 +56723,7 @@ Body:
       }
   - Id: 311141
     AegisName: Ice_F_Orb_Skill_4
-    Name: Ice Magic Orb (Brand Drive)
+    Name: Ice Magic Orb (Brand Lit)
     Type: Card
     SubType: Enchant
     Script: |
@@ -56477,7 +57096,7 @@ Body:
       }
   - Id: 311158
     AegisName: Ice_F_Orb_Skill_21
-    Name: Ice Magic Orb (Soul Comet)
+    Name: Ice Magic Orb (Comet Expansion)
     Type: Card
     SubType: Enchant
     Script: |
@@ -58112,7 +58731,7 @@ Body:
       }
   - Id: 311253
     AegisName: Glacier_F_Orb_62
-    Name: Glacier Magic Orb (Shatter Storm)
+    Name: Glacier Magic Orb (Storm Buster)
     Type: Card
     SubType: Enchant
     Script: |
@@ -58967,7 +59586,7 @@ Body:
       }
   - Id: 311322
     AegisName: Glacier_F_Orb_130
-    Name: Glacier Magic Orb (Wild Magic Shuriken)
+    Name: Glacier Magic Orb (Huuma Shuriken)
     Type: Card
     SubType: Enchant
     Script: |
@@ -59082,7 +59701,7 @@ Body:
       }
   - Id: 311331
     AegisName: Glacier_F_Orb_139
-    Name: Glacier Magic Orb (Air Claw)
+    Name: Glacier Magic Orb (Chul Ho Sonic Claw)
     Type: Card
     SubType: Enchant
     Script: |
@@ -59485,6 +60104,243 @@ Body:
     Script: |
       bonus bLongAtkRate,1*getskilllv("SC_REPRODUCE");
       bonus bShortAtkRate,1*getskilllv("SC_REPRODUCE");
+  - Id: 311367
+    AegisName: Gray_Melee1
+    Name: Earth Magic (Warrior) Lv. 1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade(EQI_HEAD_TOP);
+      if (.@g >= 1) {
+        bonus bPow,1;
+        if (.@g >= 2) {
+          bonus bPAtk,1;
+        }
+      }
+  - Id: 311368
+    AegisName: Gray_Melee2
+    Name: Earth Magic (Warrior) Lv. 2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade(EQI_HEAD_TOP);
+      if (.@g >= 1) {
+        bonus bPow,2;
+        if (.@g >= 2) {
+          bonus bPAtk,2;
+        }
+      }
+  - Id: 311369
+    AegisName: Gray_Melee3
+    Name: Earth Magic (Warrior) Lv. 3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade(EQI_HEAD_TOP);
+      if (.@g >= 1) {
+        bonus bPow,3;
+        if (.@g >= 2) {
+          bonus bPAtk,3;
+        }
+      }
+  - Id: 311370
+    AegisName: Gray_Range1
+    Name: Earth Magic (Sniper) Lv. 1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade(EQI_HEAD_TOP);
+      if (.@g >= 1) {
+        bonus bCon,1;
+        if (.@g >= 2) {
+          bonus bPAtk,1;
+        }
+      }
+  - Id: 311371
+    AegisName: Gray_Range2
+    Name: Earth Magic (Sniper) Lv. 2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade(EQI_HEAD_TOP);
+      if (.@g >= 1) {
+        bonus bCon,2;
+        if (.@g >= 2) {
+          bonus bPAtk,2;
+        }
+      }
+  - Id: 311372
+    AegisName: Gray_Range3
+    Name: Earth Magic (Sniper) Lv. 3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade(EQI_HEAD_TOP);
+      if (.@g >= 1) {
+        bonus bCon,3;
+        if (.@g >= 2) {
+          bonus bPAtk,3;
+        }
+      }
+  - Id: 311373
+    AegisName: Gray_Magic1
+    Name: Earth Magic (Magical) Lv. 1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade(EQI_HEAD_TOP);
+      if (.@g >= 1) {
+        bonus bSpl,1;
+        if (.@g >= 2) {
+          bonus bSMatk,1;
+        }
+      }
+  - Id: 311374
+    AegisName: Gray_Magic2
+    Name: Earth Magic (Magical) Lv. 2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade(EQI_HEAD_TOP);
+      if (.@g >= 1) {
+        bonus bSpl,2;
+        if (.@g >= 2) {
+          bonus bSMatk,2;
+        }
+      }
+  - Id: 311375
+    AegisName: Gray_Magic3
+    Name: Earth Magic (Magical) Lv. 3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade(EQI_HEAD_TOP);
+      if (.@g >= 1) {
+        bonus bSpl,3;
+        if (.@g >= 2) {
+          bonus bSMatk,3;
+        }
+      }
+  - Id: 311376
+    AegisName: Gray_Fight1
+    Name: Earth Magic (Combat) Lv. 1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade(EQI_HEAD_TOP);
+      if (.@g >= 1) {
+        bonus bSta,1;
+        if (.@g >= 2) {
+          bonus bPAtk,1;
+        }
+      }
+  - Id: 311377
+    AegisName: Gray_Fight2
+    Name: Earth Magic (Combat) Lv. 2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade(EQI_HEAD_TOP);
+      if (.@g >= 1) {
+        bonus bSta,2;
+        if (.@g >= 2) {
+          bonus bPAtk,2;
+        }
+      }
+  - Id: 311378
+    AegisName: Gray_Fight3
+    Name: Earth Magic (Combat) Lv. 3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade(EQI_HEAD_TOP);
+      if (.@g >= 1) {
+        bonus bSta,3;
+        if (.@g >= 2) {
+          bonus bPAtk,3;
+        }
+      }
+
+  - Id: 311379
+    AegisName: Gear_NW3
+    Name: The Vigilant at Night Tuning Device
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",5;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",3;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",4;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT",6;
+            }
+          }
+        }
+      }
+  - Id: 311380
+    AegisName: Gear_NW4
+    Name: Magazine for One Tuning Device
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",5;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",3;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",4;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",6;
+            }
+          }
+        }
+      }
+  - Id: 311381
+    AegisName: Gear_NW5
+    Name: Wild Fire Tuning Device
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"NW_WILD_FIRE",5;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"NW_WILD_FIRE",3;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"NW_WILD_FIRE",4;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"NW_WILD_FIRE",6;
+            }
+          }
+        }
+      }
+  - Id: 311382
+    AegisName: Gear_SS3
+    Name: Huuma Shuriken Tuning Device
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"SS_FUUMASHOUAKU",5;
+      if (.@g >= 1) {
+        bonus2 bSkillAtk,"SS_FUUMASHOUAKU",3;
+        if (.@g >= 2) {
+          bonus2 bAddSize,Size_All,10;
+          if (.@g >= 3) {
+            bonus2 bSkillAtk,"SS_FUUMASHOUAKU",4;
+            if (.@g >= 4) {
+              bonus2 bSkillAtk,"SS_FUUMASHOUAKU",6;
+            }
+          }
+        }
+      }
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -62412,6 +63268,12 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1000854
+    AegisName: Shadow_Exchange_Ticket
+    Name: Shadow Redemption Ticket
+    Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 1000855
     AegisName: CriticalStone_Robe_D
     Name: Critical Stone (Dual)
@@ -62467,6 +63329,29 @@ Body:
     Name: Shadow Chaser Stone (Bottom)
     Type: Etc
     Weight: 100
+  - Id: 1000874
+    AegisName: Enchant_Ticket
+    Name: Enchant Ticket
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1000882
+    AegisName: aegis_1000882
+    Name: Electric Effect (Bottom)
+    Type: Etc
+    Weight: 100
+  - Id: 1000891
+    AegisName: aegis_1000891
+    Name: Special Red Pill Exchange
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai

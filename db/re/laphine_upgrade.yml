@@ -567,8 +567,8 @@ Body:
       - Item: S_Soul_Reaper_Shoes
       - Item: S_Tempest_Weapon
       - Item: S_Tempest_Armor
-      - Item: S_Perfect_Size_Weapon
-      - Item: S_Perfect_Size_Armor
+      - Item: S_PerfectSize_Weapon
+      - Item: S_PerfectSize_Armor
       - Item: S_M_Exo_Co_Weapon
       - Item: S_M_Viv_Dr_Weapon
       - Item: S_M_Sci_Hu_Weapon
@@ -1257,8 +1257,8 @@ Body:
       - Item: S_Cri_Hit_Armor
       - Item: S_Tempest_Weapon
       - Item: S_Tempest_Armor
-      - Item: S_Perfect_Size_Weapon
-      - Item: S_Perfect_Size_Armor
+      - Item: S_PerfectSize_Weapon
+      - Item: S_PerfectSize_Armor
       - Item: S_M_Exo_Co_Weapon
       - Item: S_M_Viv_Dr_Weapon
       - Item: S_M_Sci_Hu_Weapon
@@ -2083,8 +2083,8 @@ Body:
       - Item: S_Soul_Reaper_Shoes
       - Item: S_Tempest_Weapon
       - Item: S_Tempest_Armor
-      - Item: S_Perfect_Size_Weapon
-      - Item: S_Perfect_Size_Armor
+      - Item: S_PerfectSize_Weapon
+      - Item: S_PerfectSize_Armor
       - Item: S_M_Exo_Co_Weapon
       - Item: S_M_Viv_Dr_Weapon
       - Item: S_M_Sci_Hu_Weapon

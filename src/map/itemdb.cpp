@@ -1578,7 +1578,7 @@ uint64 LaphineUpgradeDatabase::parseBodyNode( const ryml::NodeRef node ){
 			return 0;
 		}
 
-		entry->cardsAllowed = true;
+		entry->cardsAllowed = allowed;
 	}else{
 		if( !exists ){
 			entry->cardsAllowed = false;
