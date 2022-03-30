@@ -8445,7 +8445,7 @@ Body:
           - Option: VAR_MAXSPAMOUNT
             MinValue: 50
             MaxValue: 500
-            Chance: 
+            Chance: 588
           - Option: VAR_MAXSPPERCENT
             MinValue: 1
             MaxValue: 5
