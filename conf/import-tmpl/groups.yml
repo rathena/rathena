@@ -22,18 +22,18 @@
 # Player Group Settings
 #
 ###########################################################################
-# - Id                  Group ID.
-#   Name                Group name.
-#   Level               GM Level to compare which group is ranked higher
-#   LogCommands         Whether atcommands should be logged or not (Default: false)
-#   Commands:           List of atcommands that can be used by this group (Default: none)
-#     <atcommand name>  Whether an atcommand can be used by this group or not (true/false)
-#   CharCommands:       List of charcommands that can be used by this group (Default: none)
-#     <atcommand name>  Whether an atcommand can be used by this group or not (true/false)
-#   Permissions:        List of permissions the this group has (Default: none)
-#     <permission name> Whether the group has this permission or not (true/false)
-#   Inherit:            List of groups that will be inherited (Default: none)
-#     <group name>      Whether this group will be inherited or not (true/false)
+# - Id                    Group ID.
+#   Name                  Group name.
+#   Level                 GM Level used for ranking groups. (Default: 0)
+#   LogCommands           Whether atcommands should be logged or not. (Default: false)
+#   Commands:             List of atcommands that can be used by this group. (Default: none)
+#     <atcommand name>    Whether the specified atcommand can be used by this group or not.
+#   CharCommands:         List of charcommands that can be used by this group. (Default: none)
+#     <charcommand name>  Whether the specified charcommand can be used by this group or not.
+#   Permissions:          List of permissions the group has. (Default: none)
+#     <permission name>   Whether the group has this permission or not.
+#   Inherit:              List of groups that will be inherited. (Default: none)
+#     <group name>        Whether this group will be inherited or not.
 ###########################################################################
 
 Header:
