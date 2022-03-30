@@ -8726,7 +8726,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 	sc = status_get_sc(bl);
 	if( sc && !sc->count )
 		sc = NULL;
-levelDiff
+
 #ifdef RENEWAL
 	uint16 levelDiff = max(0, status_get_lv(src) - status_get_lv(bl));
 
