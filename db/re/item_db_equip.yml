@@ -35099,6 +35099,8 @@ Body:
     EquipLevelMin: 99
     Script: |
       bonus bAgi,1;
+    UnEquipScript: |
+      sc_end SC_HOVERING;
   - Id: 2802
     AegisName: Suicidal_Device
     Name: Suicidal Device

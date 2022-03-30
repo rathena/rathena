@@ -146,7 +146,6 @@ enum rune_item_list : t_itemid
 enum mechanic_item_list : t_itemid
 {
 	ITEMID_ACCELERATOR				= 2800,
-	ITEMID_HOVERING_BOOSTER,
 	ITEMID_SUICIDAL_DEVICE,
 	ITEMID_SHAPE_SHIFTER,
 	ITEMID_COOLING_DEVICE,

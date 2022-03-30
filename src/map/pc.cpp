@@ -11670,8 +11670,6 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 
 	// On armor change
 	if (pos & EQP_ARMOR) {
-		if (sd->sc.data[SC_HOVERING] && sd->inventory_data[n]->nameid == ITEMID_HOVERING_BOOSTER)
-			status_change_end(&sd->bl, SC_HOVERING, INVALID_TIMER);
 		status_db.removeByStatusFlag(&sd->bl, { SCF_REMOVEONUNEQUIPARMOR });
 	}
 
