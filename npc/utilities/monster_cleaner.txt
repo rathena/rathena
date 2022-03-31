@@ -1,0 +1,64 @@
+-	script	MonsterCleaner	-1,{
+	end;
+	
+OnMinute30:
+	// Instance
+	killmonsterall "1@ge_st";
+	killmonsterall "1@gef";
+	killmonsterall "1@tower";
+	killmonsterall "2@tower";
+	killmonsterall "3@tower";
+	killmonsterall "4@tower";
+	killmonsterall "5@tower";
+	killmonsterall "6@tower";
+	killmonsterall "1@nyd";
+	killmonsterall "2@nyd";
+	killmonsterall "1@orcs";
+	killmonsterall "2@orcs";
+	killmonsterall "1@cata";
+	killmonsterall "2@cata";
+	killmonsterall "1@air1";
+	killmonsterall "1@air2";
+	killmonsterall "1@ma_b";
+	killmonsterall "1@ma_h";
+	killmonsterall "1@ma_c";
+	killmonsterall "1@lab";
+	killmonsterall "1@mcd";
+	killmonsterall "1@tnm1";
+	killmonsterall "1@tnm2";
+	killmonsterall "1@tnm3";
+	killmonsterall "1@ecl";
+	killmonsterall "1@face";
+	killmonsterall "1@spa";
+	killmonsterall "1@mist";
+	killmonsterall "1@swat";
+	killmonsterall "1@xm_d";
+	killmonsterall "1@dth1";
+	killmonsterall "1@dth2";
+	killmonsterall "1@dth3";
+	killmonsterall "1@uns";
+	killmonsterall "1@pump";
+	killmonsterall "2@pump";
+	killmonsterall "1@rev";
+	killmonsterall "1@jtb";
+	killmonsterall "1@cash";
+	killmonsterall "1@gl_k";
+	killmonsterall "2@gl_k";
+	killmonsterall "2@mir";
+	killmonsterall "1@mir";
+	killmonsterall "1@glast";
+	killmonsterall "1@sara";
+	killmonsterall "1@sthd";
+	killmonsterall "1@slw";
+	killmonsterall "1@lhz";
+	killmonsterall "1@eom";
+	killmonsterall "new_zone01";
+	killmonsterall "1@infi";
+	// Special Room
+	//donpcevent "Better Leveling::OnCleanUp";
+	//donpcevent "4 Keys::OnCleanUp";
+	donpcevent "Boss Equipment::OnCleanUp";
+	donpcevent "Boss Enchantment::OnCleanUp";
+	donpcevent "Boss Zeny::OnCleanUp";
+	end;
+}

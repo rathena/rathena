@@ -1,51 +1,77 @@
-//===== rAthena Script =======================================
-//= Stylist
-//===== By: ==================================================
-//= Euphy
-//===== Current Version: =====================================
-//= 1.1
-//===== Compatible With: =====================================
-//= rAthena Project
-//===== Description: =========================================
-//= Changes your hair style, hair color, and cloth color.
-//===== Additional Comments: =================================
-//= 1.0 Initial script.
-//= 1.1 Switched to 'getbattleflag', credits to Saithis. [Euphy]
-//============================================================
-
-prontera,170,180,1	script	Stylist#custom_stylist	122,{
-	setarray .@Styles[1],
-		getbattleflag("max_cloth_color"),
-		getbattleflag("max_hair_style"),
-		getbattleflag("max_hair_color");
-	setarray .@Look[1],
-		LOOK_CLOTHES_COLOR,
-		LOOK_HAIR,
-		LOOK_HAIR_COLOR;
-	set .@s, select(" ~ Cloth color: ~ Hairstyle: ~ Hair color");
-	set .@Revert, getlook(.@Look[.@s]);
-	set .@Style,1;
+prontera,142,180,7	script	แต่งตัว	894,{
+	menu "ตัดผม, ย้อมสีผม, ย้อมสีเสื้อ",-,"เปลี่ยนชุด Class 3",L_Class3Suit,"เปลี่ยน Password",L_ChangePassword;
+	//openstylist;
+	//end;
+	
+	setarray .@Styles[1],getbattleflag("max_cloth_color"),getbattleflag("max_hair_style"),getbattleflag("max_hair_color");
+	setarray .@Look[1],LOOK_CLOTHES_COLOR,LOOK_HAIR,LOOK_HAIR_COLOR;
+	.@s = select(" ~ สีเสื้อ: ~ ทรงผม: ~ สีผม");
+	.@Revert = getlook(.@Look[.@s]);
+	if(.@s==2)
+	.@Style = 1;
+	else
+	.@Style = 0;
 	while(1) {
 		setlook .@Look[.@s], .@Style;
-		message strcharinfo(0),"This is style #"+.@Style+".";
-		set .@menu$, " ~ Next (^0055FF"+((.@Style!=.@Styles[.@s])?.@Style+1:1)+"^000000): ~ Previous (^0055FF"+((.@Style!=1)?.@Style-1:.@Styles[.@s])+"^000000): ~ Jump to...: ~ Revert to original (^0055FF"+.@Revert+"^000000)";
+		message strcharinfo(0),"สไตล์ที่ #"+.@Style+"";
+		.@menu$ = " ~ ต่อไป: ~ ก่อนหน้า : ~ ข้ามไปที่...: ~ กลับสู่แบบเดิม";
 		switch(select(.@menu$)) {
 		case 1:
-			set .@Style, ((.@Style != .@Styles[.@s]) ? .@Style+1 : 1);
+			.@Style = ((.@Style != .@Styles[.@s]) ? .@Style+1 : 0);
+			if(.@s==2&&.@Style <= 0)
+			.@Style = 1;
 			break;
 		case 2:
-			set .@Style, ((.@Style != 1) ? .@Style-1 : .@Styles[.@s]);
+			.@Style = (((.@s==2&&.@Style != 1) || (.@s!=2&&.@Style != 0)) ? .@Style-1 : .@Styles[.@s]);
 			break;
 		case 3:
-			message strcharinfo(0),"Choose a style between 1 - "+.@Styles[.@s]+".";
+			message strcharinfo(0),"เลือกสไตล์ระหว่าง 0 - "+.@Styles[.@s]+"";
 			input .@Style,0,.@Styles[.@s];
 			if (!.@Style)
-				set .@Style, rand(1,.@Styles[.@s]);
+			.@Style = rand(0,.@Styles[.@s]);
 			break;
 		case 4:
-			set .@Style, .@Revert;
+			.@Style = .@Revert;
 			setlook .@Look[.@s], .@Revert;
 			break;
 		}
 	}
+	
+	L_Class3Suit:
+	if((Class == 4190)
+			|| (Class == 4191)
+			|| (Class == 4239)
+			|| (Class == 4240)
+			|| (eaclass()&EAJL_FOURTH))
+	end;
+	menu "แบบที่ 1",-,"แบบที่ 2",L_1;
+	atcommand "@bodystyle 0";
+	end;
+	
+	L_1:
+	atcommand "@bodystyle 1";
+	end;
+
+	L_ChangePassword:
+	mes "โปรดระบุ ID ที่ต้องการเปลี่ยน Password";
+	input .@id$;
+	next;
+	mes "โปรดระบุ Password ปัจจุบันของ ID\n^FF2929" + .@id$ + "^000000";
+	input .@password$;
+	next;
+	query_sql ("SELECT `account_id` FROM `login` WHERE `userid`='" + .@id$ + "' AND `user_pass`='" + .@password$ + "'",.@sum);
+	if(.@sum <= 0){
+		mes "ID หรือ Password ไม่ถูกต้อง";
+		close;
+	}
+	mes "โปรดระบุ Password ใหม่";
+	input .@new_password$;
+	next;
+	query_sql "UPDATE `login` SET `user_pass` = '" + .@new_password$ + "' WHERE `userid` = '" + .@id$ + "'";	
+	mes "เรียบร้อยแล้ว โปรดลองเข้า ID ดังกล่าวใหม่อีกที";
+	close;
+	
+OnInit:
+	waitingroom "แต่งตัว",0;
+	end;
 }

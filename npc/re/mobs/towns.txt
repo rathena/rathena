@@ -28,9 +28,109 @@ alb_ship,0,0	monster	Strange Mouse	2057,25
 //==================================================
 // Prontera, Training Dummy Area
 //==================================================
-prontera,251,77	monster	Dummy Lv50	2409,1,5000
-prontera,259,77	monster	Dummy Lv50	2409,1,5000
-prontera,251,66	monster	Dummy Lv100	2410,1,5000
-prontera,259,66	monster	Dummy Lv100	2410,1,5000
-prontera,251,55	monster	Dummy Lv150	2411,1,5000
-prontera,259,55	monster	Dummy Lv150	2411,1,5000
+prontera,251,77	monster	Boss Lv50	2409,1,5000
+prontera,258,77	monster	Boss Lv50	2409,1,5000
+prontera,259,76	monster	Boss Lv50	2409,1,5000
+prontera,259,77	monster	Boss Lv50	2409,1,5000
+prontera,259,78	monster	Boss Lv50	2409,1,5000
+prontera,260,77	monster	Boss Lv50	2409,1,5000
+prontera,251,66	monster	Boss Lv100	2410,1,5000
+prontera,258,66	monster	Boss Lv100	2410,1,5000
+prontera,259,65	monster	Boss Lv100	2410,1,5000
+prontera,259,66	monster	Boss Lv100	2410,1,5000
+prontera,259,67	monster	Boss Lv100	2410,1,5000
+prontera,260,66	monster	Boss Lv100	2410,1,5000
+prontera,251,55	monster	Boss Lv150	2411,1,5000
+prontera,258,55	monster	Boss Lv150	2411,1,5000
+prontera,259,54	monster	Boss Lv150	2411,1,5000
+prontera,259,55	monster	Boss Lv150	2411,1,5000
+prontera,259,56	monster	Boss Lv150	2411,1,5000
+prontera,260,55	monster	Boss Lv150	2411,1,5000
+
+//==================================================
+// THE BOX 2, Damage 5% Training Dummy Area
+//==================================================
+force_1-1,89,110	monster	Boss Lv50	2409,1,5000
+force_1-1,109,110	monster	Boss Lv50	2409,1,5000
+force_1-1,110,110	monster	Boss Lv50	2409,1,5000
+force_1-1,111,110	monster	Boss Lv50	2409,1,5000
+force_1-1,110,111	monster	Boss Lv50	2409,1,5000
+force_1-1,110,109	monster	Boss Lv50	2409,1,5000
+force_1-1,89,100	monster	Boss Lv100	2410,1,5000
+force_1-1,109,100	monster	Boss Lv100	2410,1,5000
+force_1-1,110,100	monster	Boss Lv100	2410,1,5000
+force_1-1,111,100	monster	Boss Lv100	2410,1,5000
+force_1-1,110,101	monster	Boss Lv100	2410,1,5000
+force_1-1,110,99	monster	Boss Lv100	2410,1,5000
+force_1-1,89,90	monster	Boss Lv150	2411,1,5000
+force_1-1,109,90	monster	Boss Lv150	2411,1,5000
+force_1-1,110,90	monster	Boss Lv150	2411,1,5000
+force_1-1,111,90	monster	Boss Lv150	2411,1,5000
+force_1-1,110,91	monster	Boss Lv150	2411,1,5000
+force_1-1,110,89	monster	Boss Lv150	2411,1,5000
+
+//==================================================
+// THE BOX 2, Damage 3% Training Dummy Area
+//==================================================
+force_1-2,166,167	monster	Boss Lv50	2409,1,5000
+force_1-2,180,167	monster	Boss Lv50	2409,1,5000
+force_1-2,181,167	monster	Boss Lv50	2409,1,5000
+force_1-2,182,167	monster	Boss Lv50	2409,1,5000
+force_1-2,181,168	monster	Boss Lv50	2409,1,5000
+force_1-2,181,166	monster	Boss Lv50	2409,1,5000
+force_1-2,166,157	monster	Boss Lv100	2410,1,5000
+force_1-2,180,157	monster	Boss Lv100	2410,1,5000
+force_1-2,181,157	monster	Boss Lv100	2410,1,5000
+force_1-2,182,157	monster	Boss Lv100	2410,1,5000
+force_1-2,181,158	monster	Boss Lv100	2410,1,5000
+force_1-2,181,156	monster	Boss Lv100	2410,1,5000
+force_1-2,166,147	monster	Boss Lv150	2411,1,5000
+force_1-2,180,147	monster	Boss Lv150	2411,1,5000
+force_1-2,181,147	monster	Boss Lv150	2411,1,5000
+force_1-2,182,147	monster	Boss Lv150	2411,1,5000
+force_1-2,181,148	monster	Boss Lv150	2411,1,5000
+force_1-2,181,146	monster	Boss Lv150	2411,1,5000
+
+//==================================================
+// THE BOX 2, Damage 1% Training Dummy Area
+//==================================================
+force_1-3,90,191	monster	Boss Lv50	2409,1,5000
+force_1-3,109,191	monster	Boss Lv50	2409,1,5000
+force_1-3,109,192	monster	Boss Lv50	2409,1,5000
+force_1-3,108,191	monster	Boss Lv50	2409,1,5000
+force_1-3,110,191	monster	Boss Lv50	2409,1,5000
+force_1-3,109,190	monster	Boss Lv50	2409,1,5000
+force_1-3,90,183	monster	Boss Lv100	2410,1,5000
+force_1-3,109,183	monster	Boss Lv100	2410,1,5000
+force_1-3,109,184	monster	Boss Lv100	2410,1,5000
+force_1-3,108,183	monster	Boss Lv100	2410,1,5000
+force_1-3,110,183	monster	Boss Lv100	2410,1,5000
+force_1-3,109,182	monster	Boss Lv100	2410,1,5000
+force_1-3,90,175	monster	Boss Lv150	2411,1,5000
+force_1-3,109,175	monster	Boss Lv150	2411,1,5000
+force_1-3,109,176	monster	Boss Lv150	2411,1,5000
+force_1-3,108,175	monster	Boss Lv150	2411,1,5000
+force_1-3,110,175	monster	Boss Lv150	2411,1,5000
+force_1-3,109,174	monster	Boss Lv150	2411,1,5000
+
+//==================================================
+// THE BOX 2, Damage 0.1% Training Dummy Area
+//==================================================
+force_2-3,90,191	monster	Boss Lv50	2409,1,5000
+force_2-3,109,191	monster	Boss Lv50	2409,1,5000
+force_2-3,109,192	monster	Boss Lv50	2409,1,5000
+force_2-3,108,191	monster	Boss Lv50	2409,1,5000
+force_2-3,110,191	monster	Boss Lv50	2409,1,5000
+force_2-3,109,190	monster	Boss Lv50	2409,1,5000
+force_2-3,90,183	monster	Boss Lv100	2410,1,5000
+force_2-3,109,183	monster	Boss Lv100	2410,1,5000
+force_2-3,109,184	monster	Boss Lv100	2410,1,5000
+force_2-3,108,183	monster	Boss Lv100	2410,1,5000
+force_2-3,110,183	monster	Boss Lv100	2410,1,5000
+force_2-3,109,182	monster	Boss Lv100	2410,1,5000
+force_2-3,90,175	monster	Boss Lv150	2411,1,5000
+force_2-3,109,175	monster	Boss Lv150	2411,1,5000
+force_2-3,109,176	monster	Boss Lv150	2411,1,5000
+force_2-3,108,175	monster	Boss Lv150	2411,1,5000
+force_2-3,110,175	monster	Boss Lv150	2411,1,5000
+force_2-3,109,174	monster	Boss Lv150	2411,1,5000

@@ -1,0 +1,214 @@
+force_2-1	mapflag	novending
+force_2-1	mapflag	nochat
+force_2-1	mapflag	monster_noteleport
+force_2-1	mapflag	noteleport
+force_2-1	mapflag	nowarp
+force_2-1	mapflag	nowarpto
+force_2-1	mapflag	nosave
+force_2-1	mapflag	nobranch
+force_2-1	mapflag	notomb
+
+prontera,170,200,8	script	Self Challenge	10007,{
+	// Clean up old instance
+	if(instance_id(IM_CHAR))
+	instance_destroy(instance_id(IM_CHAR));
+	// Information
+	mes "๐ ต้องการ ^FF2929" + F_InsertComma(.req_zeny) + "z^000000 \nและ ^FF2929" + F_InsertComma(.req_item_amount) + " " + getitemname(.req_item_id) + "^000000 ในการเข้าห้อง";
+	mes "---";
+	mes "รางวัล";
+	mes "๐ ^3629FFEXP (เพิ่ม EXP ได้ปกติ)^000000";
+	mes "๐ ^3629FFJob EXP (เพิ่ม EXP ได้ปกติ)^000000";
+	mes "๐ ^3629FF" + getitemname(.req_item_id) + "^000000";
+	mes "๐ ^3629FFZeny^000000";
+	next;
+	menu "เข้า",-;
+	// Create instance
+	self_challenge_id = instance_create(.instance_name$,IM_CHAR);
+	// Reset self challenge initialize
+	is_self_test_init = 0;
+	// Enter instance
+	instance_enter(.instance_name$,100,100,getcharid(0),self_challenge_id);
+	end;
+	
+OnInit:
+	.map_name$ = "force_2-1";
+	
+	.instance_name$ = "Self Challenge";
+	
+	.req_zeny = 30000;
+	.req_item_id = 40017;
+	.req_item_amount = 1;
+	
+	waitingroom "เก็บ Level, " + getitemname(.req_item_id) + ", Zeny",0;
+	
+	end;
+}
+
+force_2-1,99,99,8	script	Self Challenge#Controller	10007,{
+	menu "จ่ายค่าเข้า เพื่อเล่น",L_Respawn,"หยุดเล่น",-;
+	warp "prontera",156,191;
+	end;
+	
+	L_Spawn:
+	hideonnpc instance_npcname("Self Challenge#Controller",instance_id(IM_CHAR));
+	
+	// Get tier
+	if(BaseLevel >= .tier_7_lv)
+	.@tier = 7; // 150+
+	else if(BaseLevel >= .tier_6_lv)
+	.@tier = 6; // 120~149
+	else if(BaseLevel >= .tier_5_lv)
+	.@tier = 5; // 100~119
+	else if(BaseLevel >= .tier_4_lv)
+	.@tier = 4; // 80~99
+	else if(BaseLevel >= .tier_3_lv)
+	.@tier = 3; // 60~79
+	else if(BaseLevel >= .tier_2_lv)
+	.@tier = 2; // 30~59
+	else if(BaseLevel >= .tier_1_lv)
+	.@tier = 2; // 10~29
+	else
+	.@tier = 1; // 1~9
+
+	// Spawn monster
+	setinstancevar('self_test_kill_count, rand(.monster_min_amount,.monster_max_amount), instance_id(IM_CHAR));
+
+	freeloop(1);
+	
+	for(.@i = 0; .@i < getinstancevar('self_test_kill_count, instance_id(IM_CHAR)); .@i++){
+		.@monster_id = $all_mob_ids[rand(0,$all_mob_id_size - 1)];
+		.@monster_level = getmonsterinfo(.@monster_id,MOB_LV);
+		while(F_IsDummyMonster(.@monster_id)
+		|| (getmonsterinfo(.@monster_id,MOB_MVPEXP) > 0)
+		|| ((.@tier == 1) && ((.@monster_level <= 0) || (.@monster_level > .tier_1_lv)))
+		|| ((.@tier == 2) && ((.@monster_level < .tier_1_lv) || (.@monster_level > .tier_2_lv)))
+		|| ((.@tier == 3) && ((.@monster_level < .tier_2_lv) || (.@monster_level > .tier_3_lv)))
+		|| ((.@tier == 4) && ((.@monster_level < .tier_3_lv) || (.@monster_level > .tier_4_lv)))
+		|| ((.@tier == 5) && ((.@monster_level < .tier_4_lv) || (.@monster_level > .tier_5_lv)))
+		|| ((.@tier == 6) && ((.@monster_level < .tier_5_lv) || (.@monster_level > .tier_6_lv)))
+		|| ((.@tier == 7) && (.@monster_level < .tier_7_lv))){
+			.@monster_id = $all_mob_ids[rand(0,$all_mob_id_size - 1)];
+			.@monster_level = getmonsterinfo(.@monster_id,MOB_LV);
+		}
+		
+		// Spawn
+		monster instance_mapname(.map_name$,self_challenge_id),rand(88,111),rand(88,111),"--ja--",.@monster_id,1,.npc_name$ + "::OnMonsterDead";
+	}
+	
+	freeloop(0);
+	
+	end;
+	
+OnMonsterDead:
+	// Unexpected double call
+	if(getinstancevar('self_test_kill_count, instance_id(IM_CHAR)) <= 0)
+	end;
+
+	// Unexpected error
+	if(playerattached()){
+		// Get EXP and Job EXP
+		getexp callsub(L_GetExp),callsub(L_GetJobExp);
+		// Get Items
+		if(checkweight(.reward_item_id,1))
+		getitem .reward_item_id,rand(.reward_item_min_amount,.reward_item_max_amount);
+		// Get Zeny
+		.@reward_zeny = rand(.reward_zeny_min_amount,.reward_zeny_max_amount);
+		if(Zeny < .max_zeny){
+			Zeny += .@reward_zeny;
+			message strcharinfo(0),"ได้รับ " + F_InsertComma(.@reward_zeny) + "z";
+		}
+	}
+	
+	// Counting
+	setinstancevar('self_test_kill_count,(getinstancevar('self_test_kill_count, instance_id(IM_CHAR)) - 1), instance_id(IM_CHAR));
+	
+	// All monster dead
+	if(getinstancevar('self_test_kill_count, instance_id(IM_CHAR)) <= 0)
+				{
+					message strcharinfo(0),"คุณกำจัด Monster ครบแล้ว!";
+					
+					hideoffnpc instance_npcname("Self Challenge#Controller",instance_id(IM_CHAR));
+				}
+				
+				end;
+				
+				L_Respawn:
+				// Check zeny
+				if (Zeny < .req_zeny){
+		mes "Zeny ไม่เพียงพอ";
+		close2;
+		warp "prontera",156,191;
+		end;
+	}
+	// Check item
+	if (countitem(.req_item_id) < .req_item_amount){
+		mes getitemname(.req_item_id) + " ไม่เพียงพอ";
+		close2;
+		warp "prontera",156,191;
+		end;
+	}
+	// Trade
+	Zeny -= .req_zeny;
+	delitem .req_item_id,.req_item_amount;
+	
+	callsub L_Spawn;
+	
+	end;
+	
+	L_GetExp:
+	.@sum = callsub(L_CalExp);
+	if(.@sum <= 0)
+	.@sum = 1;
+	return .@sum;
+	
+	L_GetJobExp:
+	.@sum = callsub(L_CalJobExp);
+	if(.@sum <= 0)
+	.@sum = 1;
+	return .@sum;
+	
+	L_CalExp:
+	if(.reward_exp_max_divider > NextBaseExp)
+	return .reward_exp_max_divider;
+	return (NextBaseExp / rand(.reward_exp_min_divider,.reward_exp_max_divider));
+	
+	L_CalJobExp:
+	if(.reward_exp_max_divider > NextJobExp)
+	return .reward_exp_max_divider;
+	return (NextJobExp / rand(.reward_exp_min_divider,.reward_exp_max_divider));
+	
+OnInit:
+	.map_name$ = "force_2-1";
+
+	.npc_name$ = strnpcinfo(0);
+
+	// Level range
+	.tier_1_lv = 10;
+	.tier_2_lv = 40;
+	.tier_3_lv = 60;
+	.tier_4_lv = 80;
+	.tier_5_lv = 100;
+	.tier_6_lv = 120;
+	.tier_7_lv = 150;
+	
+	// Monster count
+	.monster_min_amount = 3;
+	.monster_max_amount = 7;
+	
+	// Rewards
+	.reward_item_id = 40017;
+	.reward_item_min_amount = 1;
+	.reward_item_max_amount = 2;
+	.reward_zeny_min_amount = 10000;
+	.reward_zeny_max_amount = 100000;
+	.reward_exp_min_divider = 1000;
+	.reward_exp_max_divider = 3500;
+	
+	.req_zeny = 30000;
+	.req_item_id = 40017;
+	.req_item_amount = 1;
+	
+	.max_zeny = 2000000000;
+	
+	end;
+}

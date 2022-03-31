@@ -15,7 +15,7 @@ teg_dun01,0,0	monster	Blacksmith Howard	2417,15,5000
 teg_dun01,0,0	monster	Hunter Cecil	2418,35,5000
 teg_dun01,0,0	monster	Wizard Kathryne	2419,30,5000
 teg_dun01,0,0	monster	Priest Margaretha	2420,20,5000
-teg_dun01,0,0,0,0	boss_monster	The Last One	2441,1,28800000,0,0
+teg_dun01,0,0,0,0	boss_monster	The Last One	2441,1,180000,180000
 
 // =======================
 // Kafragaten Guild Dungeon
@@ -27,4 +27,4 @@ teg_dun02,0,0	monster	Bard Kavach	2424,15,5000
 teg_dun02,0,0	monster	Dancer Josephina	2425,15,5000
 teg_dun02,0,0	monster	Sage Laurell	2426,15,5000
 teg_dun02,0,0	monster	Monk Errende	2427,15,5000
-teg_dun02,0,0,0,0	boss_monster	King of the Alley	2442,1,7200000,0,0
+teg_dun02,0,0,0,0	boss_monster	King of the Alley	2442,1,180000,180000

@@ -1,0 +1,152 @@
+8@thts	mapflag	tb4
+8@thts	mapflag	novending
+8@thts	mapflag	nochat
+8@thts	mapflag	noteleport
+8@thts	mapflag	nowarp
+8@thts	mapflag	nowarpto
+8@thts	mapflag	nosave
+8@thts	mapflag	nobranch
+8@thts	mapflag	notomb
+
+8@thts,0,0	monster	--ja--	1394,15,5000,5000
+
+prontera,155,208,8	script	Dead Pit	10007,{
+	if($dead_pit_boss_id)
+	mes "ขณะนี้ " + getmonsterinfo($dead_pit_boss_id,MOB_NAME) + " จะให้ " + getitemname($dead_pit_reward_item_id) + " (โอกาส 50%)";
+	else
+	mes "๐ ต้องการ ^FF2929" + F_InsertComma(.req_item_amount) + " " + getitemname(.req_item_id) + "^000000 ในการเรียก Boss";
+	mes "---";
+	mes "โทษภายในห้อง";
+	mes "๐ ^FF2929เป็นห้อง PvP^000000";
+	mes "๐ ^FF2929Damage จะเหลือ 0.1%^000000";
+	mes "๐ ^FF2929Flee จะเหลือ 1%^000000";
+	mes "๐ ^FF2929Perfect Dodge จะเหลือ 1%^000000";
+	mes "๐ ^FF2929Monster จะโจมตีแรงขึ้น 50 เท่า^000000";
+	mes "---";
+	mes "รางวัล";
+	mes "๐ ^3629FFItem ที่คุณต้องการ 1 ชิ้น (โอกาสได้ 50%)^000000";
+	next;
+	menu "เข้า",-;
+	// Warp now
+	if($dead_pit_reward_item_id){
+		setpcblock PCBLOCK_ALL,true;
+		setpcblock PCBLOCK_MOVE,false;
+		addtimer 2000,strnpcinfo(3) + "::OnWarp";
+		warp .map_name$,0,0;
+		end;
+	}
+	// Check Item
+	if (countitem(.req_item_id) < .req_item_amount){
+		mes getitemname(.req_item_id) + " ไม่เพียงพอ";
+		close;
+	}
+	mes "โปรดระบุ Item ID ที่ต้องการ";
+	next;
+	input .@input;
+	// Check if anyone already set
+	if($dead_pit_reward_item_id)
+	{
+		mes "Item ID ในรอบนี้ถูกระบุไปแล้ว";
+		close;
+	}
+	// Check all item id had this item id
+	freeloop(1);
+	.@is_found = 0;
+	for(.@i = 0; .@i < getarraysize($weaponIds); .@i++){
+		if($weaponIds[.@i] == .@input){
+			.@is_found = 1;
+			break;
+		}
+	}
+	if(!.@is_found){
+		for(.@i = 0; .@i < getarraysize($equipmentIds); .@i++){
+			if($equipmentIds[.@i] == .@input){
+				.@is_found = 1;
+				break;
+			}
+		}
+	}
+	if(!.@is_found){
+		for(.@i = 0; .@i < getarraysize($costumeIds); .@i++){
+			if($costumeIds[.@i] == .@input){
+				.@is_found = 1;
+				break;
+			}
+		}
+	}
+	if(!.@is_found){
+		for(.@i = 0; .@i < getarraysize($cardIds); .@i++){
+			if($cardIds[.@i] == .@input){
+				.@is_found = 1;
+				break;
+			}
+		}
+	}
+	if(!.@is_found){
+		for(.@i = 0; .@i < getarraysize($enchantIds); .@i++){
+			if($enchantIds[.@i] == .@input){
+				.@is_found = 1;
+				break;
+			}
+		}
+	}
+	freeloop(0);
+	if(!.@is_found){
+		mes "Item ID: " + .@input + " ไม่สามารถกำหนด เป็นรางวัลได้";
+		close;
+	}
+	$dead_pit_reward_item_id = .@input;
+	$dead_pit_boss_id = $all_boss_ids[rand(0,($all_boss_id_size - 1))];
+	delitem .req_item_id,.req_item_amount;
+	callsub(L_Spawn);
+	setpcblock PCBLOCK_ALL,true;
+	setpcblock PCBLOCK_MOVE,false;
+	addtimer 2000,strnpcinfo(3) + "::OnWarp";
+	warp .map_name$,0,0;
+	end;
+	return;
+	
+OnWarp:
+	setpcblock PCBLOCK_ALL,false;
+	end;
+	
+OnBossDead:
+	// Unexpected error
+	if(!playerattached())
+	end;
+
+	.@chance = rand(100);
+	dispbottom "คุณสุ่มเลขได้:" + .@chance + " (เลขที่ได้ต้องไม่เกิน 49)";
+	if(.@chance < 50){
+		announce strcharinfo(0) + " ได้รับ " + getitemname($dead_pit_reward_item_id),bc_map;
+		
+		getitem $dead_pit_reward_item_id,1;
+	}
+	else
+	announce "ไม่ได้รับ Item.. โปรดลองใหม่ในรอบหน้า..",bc_map;
+
+	$dead_pit_reward_item_id = 0;
+	$dead_pit_boss_id = 0;
+	
+	end;
+	
+	L_Spawn:
+	if($dead_pit_boss_id){
+		monster .map_name$,0,0,"--ja--",$dead_pit_boss_id,1,strnpcinfo(0) + "::OnBossDead";
+		setunitdata $@mobid[0],UMOB_SPEED,30;
+	}
+
+	return;
+	
+OnInit:
+	.map_name$ = "8@thts";
+	
+	.req_item_id = 40017;
+	.req_item_amount = 5000;
+	
+	waitingroom strnpcinfo(0),0;
+	
+	callsub L_Spawn;
+	
+	end;
+}

@@ -1,0 +1,162 @@
+prontera,125,261,3	script	Enchantment	10111,{
+	if(target_enchantment > 0){
+		mes "ตอนนี้คุณต้องการจะฝัง: " + getitemname(target_enchantment);
+		next;
+	}
+	menu "เริ่มกระบวนการฝัง Enchantment",-,"เลือก Enchantment ที่จะฝัง",L_Select;
+	if(target_enchantment <= 0){
+		mes "คุณยังไม่ได้เลือก Enchantment ที่จะฝัง";
+		close;
+	}
+	mes "^3F28FF๐ Enchant ได้เฉพาะ:^000000 อุปกรณ์สวมใส่ที่มี Slot ไม่ครบ 4 Slot";
+	next;
+	
+	setarray .@indices[1], EQI_HEAD_TOP, EQI_HEAD_MID, EQI_HEAD_LOW, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_COSTUME_HEAD_TOP, EQI_COSTUME_HEAD_MID, EQI_COSTUME_HEAD_LOW, EQI_SHADOW_ARMOR, EQI_SHADOW_WEAPON, EQI_SHADOW_SHIELD, EQI_COSTUME_GARMENT, EQI_SHADOW_SHOES, EQI_SHADOW_ACC_L, EQI_SHADOW_ACC_R;
+	
+	for(.@i = 1; .@i < getarraysize(.@indices); ++.@i){
+		if(getequipisequiped(.@indices[.@i])){
+			.@menu$ = .@menu$ + F_getpositionname(.@indices[.@i]);
+			.@equipped = 1;
+		}
+		.@menu$ = .@menu$ + ":";
+	}
+	
+	if (.@equipped == 0){
+		mes "เจ้าไม่ได้สวมใส่ อุปกรณ์สวมใส่ใด ๆ เลย";
+		close;
+	}
+	
+	.@part = .@indices[select(.@menu$)];
+
+	if(!getequipisequiped(.@part)){
+		mes "เจ้าเลือกช่องที่ ไม่ได้สวมใส่อะไรอยู่เลย";
+		close;
+	}
+	
+	.@selectedItemId = getequipid(.@part);
+
+	// Remember all value
+	.@refineCount = getequiprefinerycnt(.@part);
+	.@cardSlot1 = getequipcardid(.@part,0);
+	.@cardSlot2 = getequipcardid(.@part,1);
+	.@cardSlot3 = getequipcardid(.@part,2);
+	.@cardSlot4 = getequipcardid(.@part,3);
+	.@randomOptionId1 = getequiprandomoption(.@part,0,ROA_ID);
+	.@randomOptionId2 = getequiprandomoption(.@part,1,ROA_ID);
+	.@randomOptionId3 = getequiprandomoption(.@part,2,ROA_ID);
+	.@randomOptionId4 = getequiprandomoption(.@part,3,ROA_ID);
+	.@randomOptionId5 = getequiprandomoption(.@part,4,ROA_ID);
+	.@randomOptionValue1 = getequiprandomoption(.@part,0,ROA_VALUE);
+	.@randomOptionValue2 = getequiprandomoption(.@part,1,ROA_VALUE);
+	.@randomOptionValue3 = getequiprandomoption(.@part,2,ROA_VALUE);
+	.@randomOptionValue4 = getequiprandomoption(.@part,3,ROA_VALUE);
+	.@randomOptionValue5 = getequiprandomoption(.@part,4,ROA_VALUE);
+
+	// Slot select
+	.@itemSlotCount = getitemslots(.@selectedItemId);
+	.@sumSlotCount = 4 - .@itemSlotCount;
+	if(.@sumSlotCount <= 0){
+		mes "อุปกรณ์สวมใส่ดังกล่าว ไม่สามารถ Enchant ได้";
+		close;
+	}
+	mes "โปรดเลือก Slot ที่ต้องการ";
+	next;
+
+	.@menu$ = "";
+	
+	for(.@i = .@itemSlotCount; .@i < 4; ++.@i){
+		if(getd(".@cardSlot" + (.@i + 1)) > 0)
+		.@menu$ += "[" + (.@i + 1) + "] ^1D68FF" + getitemname(getd(".@cardSlot" + (.@i + 1))) + "^000000:";
+		else
+		.@menu$ += "[" + (.@i + 1) + "] ว่าง" + ":";
+	}
+	if(.@menu$ != "" && .@menu$ != " ")
+	.@menu$ += "^FF1D1Dทีเดียวทุกช่อง^000000";
+
+	.@slot = select(.@menu$) + .@itemSlotCount - 1;
+	
+	.@is_all_slot = (.@slot == 4);
+	
+	if(.@is_all_slot){
+		if(countitem(target_enchantment) < .@sumSlotCount){
+			mes getitemname(target_enchantment) + " ไม่เพียงพอ";
+			close;
+		}
+		delitem target_enchantment,.@sumSlotCount;
+	}
+	else{
+		if(countitem(target_enchantment) < 1){
+			mes getitemname(target_enchantment) + " ไม่เพียงพอ";
+			close;
+		}
+		delitem target_enchantment,1;
+	}
+	
+	if (callfunc("F_IsEquipIDHack",.@part,.@selectedItemId)){
+		mes "เหมือนว่าเจ้า จะสลับอุปกรณ์ ระหว่างที่ข้า กำลังดำเนินการอยู่นะ!";
+		close;
+	}
+	delequip .@part;
+	if(.@is_all_slot){
+		if((.@sumSlotCount - 4) >= 0)
+		.@cardSlot1 = target_enchantment;
+		if((.@sumSlotCount - 3) >= 0)
+		.@cardSlot2 = target_enchantment;
+		if((.@sumSlotCount - 2) >= 0)
+		.@cardSlot3 = target_enchantment;
+		if((.@sumSlotCount - 1) >= 0)
+		.@cardSlot4 = target_enchantment;
+	}
+	else{
+		if(.@slot == 0)
+		.@cardSlot1 = target_enchantment;
+		else if(.@slot == 1)
+		.@cardSlot2 = target_enchantment;
+		else if(.@slot == 2)
+		.@cardSlot3 = target_enchantment;
+		else if(.@slot == 3)
+		.@cardSlot4 = target_enchantment;
+	}
+	if(.@randomOptionId1 > 0){
+		setarray .@OptID[0],.@randomOptionId1,.@randomOptionId2,.@randomOptionId3,.@randomOptionId4,.@randomOptionId5;
+		setarray .@OptVal[0],.@randomOptionValue1,.@randomOptionValue2,.@randomOptionValue3,.@randomOptionValue4,.@randomOptionValue5;
+		setarray .@OptParam[0],0,0,0,0,0;
+		getitem3 .@selectedItemId,1,1,.@refineCount,0,.@cardSlot1,.@cardSlot2,.@cardSlot3,.@cardSlot4,.@OptID,.@OptVal,.@OptParam;
+	}
+	else
+	getitem2 .@selectedItemId,1,1,.@refineCount,0,.@cardSlot1,.@cardSlot2,.@cardSlot3,.@cardSlot4;
+	
+	mes "เรียบร้อยแล้ว!";
+	close;
+
+	L_Select:
+	mes "โปรดลาก Enchantment ที่ต้องการ";
+	close2;
+	callshop "EnchantmentSelector",2;
+	npcshopattach "EnchantmentSelector";
+	end;
+	
+OnSellItem:
+	for (.@i = 0; .@i < getarraysize(@sold_nameid); .@i++){
+		if((getiteminfo(@sold_nameid[.@i],ITEMINFO_TYPE) == 6)
+				&& ((getiteminfo(@sold_nameid[.@i],ITEMINFO_SUBTYPE) == 1) || !compare(getitemname(@sold_nameid[.@i])," Card"))){
+			mes "คุณต้องการจะฝัง: " + getitemname(@sold_nameid[.@i]);
+			target_enchantment = @sold_nameid[.@i];
+			close;
+		}
+	}
+	mes "ไม่พบ Enchantment ที่คุณต้องการฝัง";
+	close;
+
+OnInit:
+	waitingroom "เสริมแกร่งด้วย Enchantment",0;
+	end;
+}
+
+-	shop	EnchantmentSelector	-1,no,501:-1
+
+prontera,237,83,5	duplicate(Enchantment)	Enchantment#2	10111
+force_1-1,100,114,5	duplicate(Enchantment)	Enchantment#3	10111
+force_1-2,173,173,5	duplicate(Enchantment)	Enchantment#4	10111
+force_1-3,100,193,5	duplicate(Enchantment)	Enchantment#5	10111
+force_2-3,100,193,5	duplicate(Enchantment)	Enchantment#6	10111

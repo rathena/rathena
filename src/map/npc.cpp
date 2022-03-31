@@ -137,15 +137,15 @@ bool StylistDatabase::parseCostNode( std::shared_ptr<s_stylist_entry> entry, boo
 		costs = std::make_shared<s_stylist_costs>();
 	}
 
-	if( this->nodeExists( node, "Price" ) ){
+	if( this->nodeExists( node, "PriceNoUse" ) ){
 		uint32 price;
 
-		if( !this->asUInt32( node, "Price", price ) ){
+		if( !this->asUInt32( node, "PriceNoUse", price ) ){
 			return false;
 		}
 
 		if( price > MAX_ZENY ){
-			this->invalidWarning( node["Price"], "stylist_parseCostNode: Price %u is too high, capping to MAX_ZENY...\n", price );
+			this->invalidWarning( node["PriceNoUse"], "stylist_parseCostNode: Price %u is too high, capping to MAX_ZENY...\n", price );
 			price = MAX_ZENY;
 		}
 
@@ -156,17 +156,17 @@ bool StylistDatabase::parseCostNode( std::shared_ptr<s_stylist_entry> entry, boo
 		}
 	}
 
-	if( this->nodeExists( node, "RequiredItem" ) ){
+	if( this->nodeExists( node, "RequiredItemNoUse" ) ){
 		std::string item;
 
-		if( !this->asString( node, "RequiredItem", item ) ){
+		if( !this->asString( node, "RequiredItemNoUse", item ) ){
 			return false;
 		}
 
 		std::shared_ptr<item_data> id = item_db.search_aegisname( item.c_str() );
 
 		if( id == nullptr ){
-			this->invalidWarning( node["RequiredItem"], "stylist_parseCostNode: Unknown item \"%s\"...\n", item.c_str() );
+			this->invalidWarning( node["RequiredItemNoUse"], "stylist_parseCostNode: Unknown item \"%s\"...\n", item.c_str() );
 			return false;
 		}
 
@@ -177,17 +177,17 @@ bool StylistDatabase::parseCostNode( std::shared_ptr<s_stylist_entry> entry, boo
 		}
 	}
 
-	if( this->nodeExists( node, "RequiredItemBox" ) ){
+	if( this->nodeExists( node, "RequiredItemBoxNoUse" ) ){
 		std::string item;
 
-		if( !this->asString( node, "RequiredItemBox", item ) ){
+		if( !this->asString( node, "RequiredItemBoxNoUse", item ) ){
 			return false;
 		}
 
 		std::shared_ptr<item_data> id = item_db.search_aegisname( item.c_str() );
 
 		if( id == nullptr ){
-			this->invalidWarning( node["RequiredItemBox"], "stylist_parseCostNode: Unknown item \"%s\"...\n", item.c_str() );
+			this->invalidWarning( node["RequiredItemBoxNoUse"], "stylist_parseCostNode: Unknown item \"%s\"...\n", item.c_str() );
 			return false;
 		}
 
@@ -354,8 +354,8 @@ uint64 StylistDatabase::parseBodyNode( const ryml::NodeRef node ){
 			entry->value = value;
 		}
 
-		if( this->nodeExists( optionNode, "CostsHuman" ) ) {
-			if( !this->parseCostNode( entry, false, optionNode["CostsHuman"] ) ){
+		if( this->nodeExists( optionNode, "CostsHumanNoUse" ) ) {
+			if( !this->parseCostNode( entry, false, optionNode["CostsHumanNoUse"] ) ){
 				return 0;
 			}
 		}else{
@@ -364,8 +364,8 @@ uint64 StylistDatabase::parseBodyNode( const ryml::NodeRef node ){
 			}
 		}
 
-		if( this->nodeExists( optionNode, "CostsDoram" ) ) {
-			if( !this->parseCostNode( entry, true, optionNode["CostsDoram"] ) ){
+		if( this->nodeExists( optionNode, "CostsDoramNoUse" ) ) {
+			if( !this->parseCostNode( entry, true, optionNode["CostsDoramNoUse"] ) ){
 				return 0;
 			}
 		}else{

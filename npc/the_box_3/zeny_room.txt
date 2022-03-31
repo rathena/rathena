@@ -1,0 +1,110 @@
+tra_fild	mapflag	tb2
+tra_fild	mapflag	pvp
+tra_fild	mapflag	novending
+tra_fild	mapflag	nochat
+tra_fild	mapflag	noteleport
+tra_fild	mapflag	nowarp
+tra_fild	mapflag	nowarpto
+tra_fild	mapflag	nosave
+tra_fild	mapflag	nobranch
+tra_fild	mapflag	notomb
+
+prontera,134,200,1	script	Boss Zeny	10007,{
+	mes "๐ ต้องการ ^FF2929" + F_InsertComma(.req_item_amount) + " " + getitemname(.req_item_id) + "^000000 ในการเข้าห้อง";
+	mes "---";
+	mes "โทษภายในห้อง";
+	mes "๐ ^FF2929เป็นห้อง PvP^000000";
+	mes "๐ ^FF2929Damage จะเหลือ 3%^000000";
+	mes "๐ ^FF2929Flee จะเหลือ 3%^000000";
+	mes "๐ ^FF2929Perfect Dodge จะเหลือ 3%^000000";
+	mes "๐ ^FF2929Monster จะโจมตีแรงขึ้น 10 เท่า^000000";
+	mes "---";
+	mes "รางวัล";
+	mes "๐ ^3629FF" + F_InsertComma(.reward_min_zeny) + "~" + F_InsertComma(.reward_max_zeny) + "z^000000";
+	next;
+	menu "เข้า",-;
+	// Check Item
+	if (countitem(.req_item_id) < .req_item_amount){
+		mes getitemname(.req_item_id) + " ไม่เพียงพอ";
+		close;
+	}
+	zeny_room_combo = 0;
+	delitem .req_item_id,.req_item_amount;
+	setpcblock PCBLOCK_ALL,true;
+	setpcblock PCBLOCK_MOVE,false;
+	addtimer 2000,strnpcinfo(3) + "::OnWarp";
+	announce strcharinfo(0) + " เข้าห้อง Boss (Zeny)",bc_all;
+	warp .map_name$,0,0;
+	end;
+	
+OnWarp:
+	setpcblock PCBLOCK_ALL,false;
+	end;
+	
+OnCleanUp:
+	.no_respawn = 1;
+	killmonsterall .map_name$;
+	callsub L_Spawn;
+	.no_respawn = 0;
+	end;
+	
+OnBossDead:
+	if(.no_respawn)
+	end;
+
+	monster .map_name$,0,0,"--ja--",$all_boss_ids[rand(0,($all_boss_id_size - 1))],1,strnpcinfo(0) + "::OnBossDead";
+
+	// Unexpected error
+	if(!playerattached())
+	end;
+
+	// Get Zeny
+	if(zeny_room_combo){
+		.@sum_combo = zeny_room_combo;
+		if(.@sum_combo > 100)
+		.@sum_combo = 100;
+		.@combo_min_zeny = .reward_min_zeny + (.reward_combo_zeny * .@sum_combo);
+		if(.@combo_min_zeny >= .reward_max_zeny)
+		.@reward_zeny = .reward_max_zeny;
+		else
+		.@reward_zeny = rand(.@combo_min_zeny,.reward_max_zeny);
+	}
+	else
+	.@reward_zeny = rand(.reward_min_zeny,.reward_max_zeny);
+
+	if(Zeny < .max_zeny)
+	Zeny += .@reward_zeny;
+
+	zeny_room_combo++;
+	
+	if(Zeny < .max_zeny)
+	message strcharinfo(0),"ได้รับ " + F_InsertComma(.@reward_zeny) + "z (ฆ่าไปแล้ว " + F_InsertComma(zeny_room_combo) + " ตัว)";
+	else
+	message strcharinfo(0),"ฆ่าไปแล้ว " + F_InsertComma(zeny_room_combo) + " ตัว";
+	end;
+	
+	L_Spawn:
+	for(.@i = 0; .@i < .spawn_amount; .@i++)
+	monster .map_name$,0,0,"--ja--",$all_boss_ids[rand(0,($all_boss_id_size - 1))],1,strnpcinfo(0) + "::OnBossDead";
+	return;
+	
+OnInit:
+	.map_name$ = "tra_fild";
+	
+	.max_zeny = 2000000000;
+	
+	.reward_combo_zeny = 10000;
+	.reward_min_zeny = 100000;
+	.reward_max_zeny = 1000000;
+	
+	.req_item_id = 40017;
+	.req_item_amount = 99;
+	
+	.spawn_amount = 50;
+	
+	waitingroom "ห้อง Boss (Zeny)",0;
+	
+	callsub L_Spawn;
+	
+	end;
+}

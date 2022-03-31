@@ -549,7 +549,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef node) {
 			item->elvmax = MAX_LEVEL;
 	}
 
-	if (this->nodeExists(node, "Refineable")) {
+	if (this->nodeExists(node, "RefineableNoUse")) { // [Start]
 		bool refine;
 
 		if (!this->asBool(node, "Refineable", refine))
@@ -558,7 +558,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef node) {
 		item->flag.no_refine = !refine;
 	} else {
 		if (!exists)
-			item->flag.no_refine = true;
+			item->flag.no_refine = false; // [Start]
 	}
 
 	if (this->nodeExists(node, "View")) {
@@ -844,7 +844,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef node) {
 			item->stack.guild_storage = false;
 		}
 	}
-	
+
 	if (this->nodeExists(node, "NoUse")) {
 		const auto nouseNode = node["NoUse"];
 
@@ -883,8 +883,8 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef node) {
 		}
 	}
 
-	if (this->nodeExists(node, "Trade")) {
-		const auto tradeNode = node["Trade"];
+	if (this->nodeExists(node, "TradeNoUse")) { // [Start]
+		const auto tradeNode = node["TradeNoUse"];
 
 		if (this->nodeExists(tradeNode, "Override")) {
 			uint16 override;
@@ -2029,7 +2029,7 @@ char itemdb_isidentified(t_itemid nameid) {
 		case IT_ARMOR:
 		case IT_PETARMOR:
 		case IT_SHADOWGEAR:
-			return 0;
+			return 1; // [Start]
 		default:
 			return 1;
 	}

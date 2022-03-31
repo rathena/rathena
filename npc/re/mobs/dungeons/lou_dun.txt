@@ -41,4 +41,4 @@ lou_dun03,0,0	monster	Yao Jun	1512,30,5000
 lou_dun03,0,0	monster	Mao Guai	1513,18,5000
 lou_dun03,0,0	monster	Green Maiden	1631,6,5000
 lou_dun03,0,0	monster	Green Maiden	1631,5,3000000,1800000
-lou_dun03,0,0,0,0	boss_monster	White Lady	1630,1,7000000,600000,1
+lou_dun03,0,0,0,0	boss_monster	White Lady	1630,1,180000,180000

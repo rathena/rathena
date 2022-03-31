@@ -1,0 +1,57 @@
+pvp_y_1-1	mapflag	tb
+//pvp_y_1-1	mapflag	tb2
+//pvp_y_1-1	mapflag	battleground
+//pvp_y_1-1	mapflag	gvg
+//pvp_y_1-1	mapflag	pvp
+pvp_y_1-1	mapflag	pvp_noparty
+pvp_y_1-1	mapflag	pvp_noguild
+pvp_y_1-1	mapflag	novending
+pvp_y_1-1	mapflag	nochat
+pvp_y_1-1	mapflag	monster_noteleport
+pvp_y_1-1	mapflag	noteleport
+pvp_y_1-1	mapflag	nowarp
+pvp_y_1-1	mapflag	nowarpto
+pvp_y_1-1	mapflag	nosave
+pvp_y_1-1	mapflag	nobranch
+pvp_y_1-1	mapflag	notomb
+pvp_y_1-1	mapflag	nopenalty
+pvp_y_1-1	mapflag	nocommand	99
+
+pvp_y_1-4	mapflag	tb
+//pvp_y_1-4	mapflag	tb2
+//pvp_y_1-4	mapflag	battleground
+//pvp_y_1-4	mapflag	gvg
+pvp_y_1-4	mapflag	pvp
+pvp_y_1-4	mapflag	novending
+pvp_y_1-4	mapflag	nochat
+pvp_y_1-4	mapflag	monster_noteleport
+pvp_y_1-4	mapflag	noteleport
+pvp_y_1-4	mapflag	nowarp
+pvp_y_1-4	mapflag	nowarpto
+pvp_y_1-4	mapflag	nosave
+pvp_y_1-4	mapflag	nobranch
+pvp_y_1-4	mapflag	notomb
+pvp_y_1-4	mapflag	nopenalty
+pvp_y_1-4	mapflag	nocommand	99
+
+prontera,164,174,3	script	PvP	831,{
+	mes "โทษภายในห้อง";
+	mes "๐ ^FF2929เป็นห้อง PvP^000000";
+	mes "๐ ^FF2929Damage จะเหลือ 10%^000000";
+	mes "๐ ^FF2929Flee จะเหลือ 10%^000000";
+	mes "๐ ^FF2929Perfect Dodge จะเหลือ 10%^000000";
+	mes "---";
+	mes "๐ ^3629FFไม่มีโทษการตายใด ๆ ตายรัว ๆ ได้เลย^000000";
+	next;
+	menu "PvP",-,"PvP Party",L_Party;
+	warp "pvp_y_1-1",rand(145,166),rand(112,124);
+	end;
+
+	L_Party:
+	warp "pvp_y_1-4",0,0;
+	end;
+	
+OnInit:
+	waitingroom "PvP",0;
+	end;
+}

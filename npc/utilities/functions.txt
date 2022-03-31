@@ -1,0 +1,55 @@
+function	script	F_ExpMultiplier	{
+	sc_end SC_EXPBOOST;
+	sc_start SC_EXPBOOST,86400000,100 * exp_multiplier;
+	return;
+}
+
+function	script	F_DropMultiplier	{
+	sc_end SC_ITEMBOOST;
+	sc_start SC_ITEMBOOST,86400000,100 * drop_multiplier;
+	return;
+}
+
+function	script	F_THE_BOX_KEY_Quest_Add_Drop	{
+	if(key_dropper_monster_id
+			&& (the_box_key_quest_duration - gettimetick(2) > 0)){
+		bonus_script "bonus3 bAddMonsterIdDropItem,40018," + key_dropper_monster_id + "," + the_box_key_quest_drop_rate + ";",(the_box_key_quest_duration - gettimetick(2)),8,1;
+	}
+	return;
+}
+
+function	script	F_PercentBase10000	{
+	.@v = getarg(0,0);
+	if(.@v < 10)
+	return "0.0" + .@v + "%";
+	else if(.@v < 100)
+	return "0." + .@v + "%";
+	else{
+		.@percent = (.@v / 100);
+		.@decimal = (.@v % 100) / 10;
+		return .@percent + "." + .@decimal + "%";
+	}
+	
+	return;
+}
+
+function	script	F_IsDummyMonster	{
+	.@v = getarg(0,0);
+	if((.@v == 2408)									// Dummy
+			|| (.@v == 2409)							// Dummy
+			|| (.@v == 2410)							// Dummy
+			|| (.@v == 2411)							// Dummy
+			|| (.@v == 2413)							// Dummy
+			|| (.@v == 2401)							// Poring on initial land maps
+			|| (.@v == 2337)							// Hidden Mob
+			|| (.@v == 2343)							// Hidden Mob
+			|| (.@v == 2536)							// Hidden Mob
+			|| (.@v == 2537)							// Hidden Mob
+			|| (.@v == 2539)							// Hidden Mob
+			|| (.@v == 3038)							// Hidden Mob
+			|| (getmonsterinfo(.@v,MOB_MAXHP) < 60)		// HP below Poring is not allowed
+			|| !isspawn(.@v))							// It's not spawn in official servers
+	return true;
+	else
+	return false;
+}

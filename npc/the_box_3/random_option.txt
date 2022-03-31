@@ -1,0 +1,439 @@
+prontera,120,263,3	script	Random Option	10127,{
+	L_Menu:
+	if(locking_option)
+	mes "^FF2929คุณกำลังจะเสียเงินมหาศาล\nเพื่อหา Option ID: " + locking_option + "^000000";
+	else
+	mes "คุณไม่ได้กำหนด Option ID ที่ต้องการ เราจะทำการสุ่มให้เพียงรอบเดียวตามปกติ";
+	next;
+	menu "ใช้งาน NPC",-
+	,(locking_option ? "^3F28FFนำการกำหนดออก^000000" : "-"),L_RemoveLockingOption
+	,"ดูรายการ Option ID Set 1",L_DisplayOptionSet1
+	,"ดูรายการ Option ID Set 2",L_DisplayOptionSet2
+	,"ดูรายการ Option ID Set 3",L_DisplayOptionSet3
+	,"กำหนด Option ที่อยากได้ (^FF2929ใช้เงินมหาศาล^000000)",L_LockingOptionSetup
+	,"นำ Option เคลือบธาตุออกทุกอุปกรณ์ที่สวมใส่อยู่",L_ClearElementOption;
+	mes "๐ ต้องการ ^FF2929" + F_InsertComma(.price) + "z^000000 " + (locking_option ? "ต่อรอบ" : "");
+	mes "^3F28FF๐ รับ Random Option 5 แถว^000000";
+	mes "^3F28FF๐ สุ่มค่าที่ได้รับ 1~5 ต่อแถว^000000";
+	next;
+	
+	setarray .@indices[1], EQI_HEAD_TOP, EQI_HEAD_MID, EQI_HEAD_LOW, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_COSTUME_HEAD_TOP, EQI_COSTUME_HEAD_MID, EQI_COSTUME_HEAD_LOW, EQI_SHADOW_ARMOR, EQI_SHADOW_WEAPON, EQI_SHADOW_SHIELD, EQI_COSTUME_GARMENT, EQI_SHADOW_SHOES, EQI_SHADOW_ACC_L, EQI_SHADOW_ACC_R;
+	
+	for(.@i = 1; .@i<getarraysize(.@indices); ++.@i){
+		if(getequipisequiped(.@indices[.@i])){
+			.@menu$ = .@menu$ + F_getpositionname(.@indices[.@i]);
+			.@equipped = 1;
+		}
+		.@menu$ = .@menu$ + ":";
+	}
+	
+	if (.@equipped == 0){
+		mes "เจ้าไม่ได้สวมใส่ อุปกรณ์สวมใส่ใด ๆ เลย";
+		close;
+	}
+	
+	.@part = .@indices[select(.@menu$)];
+
+	if(!getequipisequiped(.@part)){
+		mes "เจ้าเลือกช่องที่ ไม่ได้สวมใส่อะไรอยู่เลย";
+		close;
+	}
+	
+	.@selectedItemId = getequipid(.@part);
+	
+	if(Zeny < .price){
+		mes "Zeny ไม่เพียงพอ";
+		close;
+	}
+	
+	if (callfunc("F_IsEquipIDHack",.@part,.@selectedItemId)){
+		mes "เหมือนว่าเจ้า จะสลับอุปกรณ์ ระหว่างที่ข้า กำลังดำเนินการอยู่นะ!";
+		close;
+	}
+	
+	Zeny -= .price;
+	
+	.@opt_id_index_0 = callfunc("GetRandomOptionId",locking_option);
+	.@opt_id_index_1 = callfunc("GetRandomOptionId",locking_option);
+	.@opt_id_index_2 = callfunc("GetRandomOptionId",locking_option);
+	.@opt_id_index_3 = callfunc("GetRandomOptionId",locking_option);
+	.@opt_id_index_4 = callfunc("GetRandomOptionId",locking_option);
+	setrandomoption(.@part,0,.@opt_id_index_0,rand(1,5),0);
+	setrandomoption(.@part,1,.@opt_id_index_1,rand(1,5),0);
+	setrandomoption(.@part,2,.@opt_id_index_2,rand(1,5),0);
+	setrandomoption(.@part,3,.@opt_id_index_3,rand(1,5),0);
+	setrandomoption(.@part,4,.@opt_id_index_4,rand(1,5),0);
+
+	if(locking_option){
+		freeloop(1);
+		
+		while(true){
+			if((.@opt_id_index_0 == locking_option)
+					|| (.@opt_id_index_1 == locking_option)
+					|| (.@opt_id_index_2 == locking_option)
+					|| (.@opt_id_index_3 == locking_option)
+					|| (.@opt_id_index_4 == locking_option)
+					|| (Zeny < .price))
+			break;
+			else{
+				Zeny -= .price;
+				
+				.@opt_id_index_0 = callfunc("GetRandomOptionId",locking_option);
+				.@opt_id_index_1 = callfunc("GetRandomOptionId",locking_option);
+				.@opt_id_index_2 = callfunc("GetRandomOptionId",locking_option);
+				.@opt_id_index_3 = callfunc("GetRandomOptionId",locking_option);
+				.@opt_id_index_4 = callfunc("GetRandomOptionId",locking_option);
+				setrandomoption(.@part,0,.@opt_id_index_0,rand(1,5),0);
+				setrandomoption(.@part,1,.@opt_id_index_1,rand(1,5),0);
+				setrandomoption(.@part,2,.@opt_id_index_2,rand(1,5),0);
+				setrandomoption(.@part,3,.@opt_id_index_3,rand(1,5),0);
+				setrandomoption(.@part,4,.@opt_id_index_4,rand(1,5),0);
+			}
+		}
+		
+		freeloop(0);
+	}
+	
+	mes "เรียบร้อยแล้ว!";
+	close;
+
+	L_RemoveLockingOption:
+	if(!locking_option)
+	goto L_Menu;
+	locking_option = 0;
+	mes "คุณนำการกำหนด Option ID ที่อยากได้ออก เรียบร้อยแล้ว";
+	end;
+
+	L_DisplayOptionSet1:
+	dispbottom "1 - Max HP";
+	dispbottom "2 - Max SP";
+	dispbottom "3 - STR";
+	dispbottom "4 - AGI";
+	dispbottom "5 - VIT";
+	dispbottom "6 - INT";
+	dispbottom "7 - DEX";
+	dispbottom "8 - LUK";
+	dispbottom "9 - Max HP %";
+	dispbottom "10 - Max SP %";
+	dispbottom "11 - การฟื้นฟู HP %";
+	dispbottom "12 - การฟื้นฟู SP %";
+	dispbottom "13 - ATK %";
+	dispbottom "14 - MATK %";
+	dispbottom "15 - ASPD";
+	dispbottom "16 - ASPD %";
+	dispbottom "17 - ATK";
+	dispbottom "18 - HIT";
+	dispbottom "19 - MATK";
+	dispbottom "20 - DEF";
+	dispbottom "21 - MDEF";
+	dispbottom "22 - FLEE";
+	dispbottom "23 - Perfect dodge";
+	dispbottom "24 - CRIT";
+	dispbottom "25 - กันธาตุ Neutral %";
+	dispbottom "26 - กันธาตุ Water %";
+	dispbottom "27 - กันธาตุ Earth %";
+	dispbottom "28 - กันธาตุ Fire %";
+	dispbottom "29 - กันธาตุ Wind %";
+	dispbottom "30 - กันธาตุ Poison %";
+	dispbottom "31 - กันธาตุ Holy %";
+	dispbottom "32 - กันธาตุ Shadow %";
+	dispbottom "33 - กันธาตุ Ghost %";
+	dispbottom "34 - กันธาตุ Undead %";
+	dispbottom "35 - กันทุกธาตุ %";
+	dispbottom "36 - กัน Monster Neutral %";
+	dispbottom "37 - ATK % กับ Monster Neutral";
+	dispbottom "38 - กัน Monster Water %";
+	dispbottom "39 - ATK % กับ Monster Water";
+	dispbottom "40 - กัน Monster Earth %";
+	dispbottom "41 - ATK % กับ Monster Earth";
+	dispbottom "42 - กัน Monster Fire %";
+	dispbottom "43 - ATK % กับ Monster Fire";
+	dispbottom "44 - กัน Monster Wind %";
+	dispbottom "45 - ATK % กับ Monster Wind";
+	dispbottom "46 - กัน Monster Poison %";
+	dispbottom "47 - ATK % กับ Monster Poison";
+	dispbottom "48 - กัน Monster Holy %";
+	dispbottom "49 - ATK % กับ Monster Holy";
+	dispbottom "50 - กัน Monster Shadow %";
+	dispbottom "51 - ATK % กับ Monster Shadow";
+	dispbottom "52 - กัน Monster Ghost %";
+	dispbottom "53 - ATK % กับ Monster Ghost";
+	dispbottom "54 - กัน Monster Undead %";
+	dispbottom "55 - ATK % กับ Monster Undead";
+	dispbottom "56 - กันเวทย์ Monster Neutral %";
+	dispbottom "57 - MATK % กับ Monster Neutral";
+	dispbottom "58 - กันเวทย์ Monster Water %";
+	dispbottom "59 - MATK % กับ Monster Water";
+	dispbottom "60 - กันเวทย์ Monster Earth %";
+	dispbottom "61 - MATK % กับ Monster Earth";
+	dispbottom "62 - กันเวทย์ Monster Fire %";
+	dispbottom "63 - MATK % กับ Monster Fire";
+	dispbottom "64 - กันเวทย์ Monster Wind %";
+	dispbottom "65 - MATK % กับ Monster Wind";
+	dispbottom "66 - กันเวทย์ Monster Poison %";
+	dispbottom "67 - MATK % กับ Monster Poison";
+	dispbottom "68 - กันเวทย์ Monster Holy %";
+	dispbottom "69 - MATK % กับ Monster Holy";
+	dispbottom "70 - กันเวทย์ Monster Shadow %";
+	dispbottom "71 - MATK % กับ Monster Shadow";
+	dispbottom "72 - กันเวทย์ Monster Ghost %";
+	dispbottom "73 - MATK % กับ Monster Ghost";
+	dispbottom "74 - กันเวทย์ Monster Undead %";
+	dispbottom "75 - MATK % กับ Monster Undead";
+	dispbottom "76 - เคลือบธาตุ Armor: Neutral";
+	dispbottom "77 - เคลือบธาตุ Armor: Water";
+	dispbottom "78 - เคลือบธาตุ Armor: Earth";
+	dispbottom "79 - เคลือบธาตุ Armor: Fire";
+	dispbottom "80 - เคลือบธาตุ Armor: Wind";
+	dispbottom "81 - เคลือบธาตุ Armor: Poison";
+	dispbottom "82 - เคลือบธาตุ Armor: Holy";
+	dispbottom "83 - เคลือบธาตุ Armor: Shadow";
+	dispbottom "84 - เคลือบธาตุ Armor: Ghost";
+	dispbottom "85 - เคลือบธาตุ Armor: Undead";
+	dispbottom "87 - กัน Monster Formless %";
+	dispbottom "88 - กัน Monster Undead %";
+	dispbottom "89 - กัน Monster Brute %";
+	dispbottom "90 - กัน Monster Plant %";
+	dispbottom "91 - กัน Monster Insect %";
+	dispbottom "92 - กัน Monster Fish %";
+	dispbottom "93 - กัน Monster Demon %";
+	dispbottom "94 - กัน Monster Demihuman %";
+	dispbottom "95 - กัน Monster Angel %";
+	dispbottom "96 - กัน Monster Dragon %";
+	dispbottom "97 - ATK % กับ Monster Formless";
+	dispbottom "98 - ATK % กับ Monster Undead";
+	dispbottom "99 - ATK % กับ Monster Brute";
+	end;
+	
+	L_DisplayOptionSet2:
+	dispbottom "100 - ATK % กับ Monster Plant";
+	dispbottom "101 - ATK % กับ Monster Insect";
+	dispbottom "102 - ATK % กับ Monster Fish";
+	dispbottom "103 - ATK % กับ Monster Demon";
+	dispbottom "104 - ATK % กับ Monster Demihuman";
+	dispbottom "105 - ATK % กับ Monster Angel";
+	dispbottom "106 - ATK % กับ Monster Dragon";
+	dispbottom "107 - MATK % กับ Monster Formless";
+	dispbottom "108 - MATK % กับ Monster Undead";
+	dispbottom "109 - MATK % กับ Monster Brute";
+	dispbottom "110 - MATK % กับ Monster Plant";
+	dispbottom "111 - MATK % กับ Monster Insect";
+	dispbottom "112 - MATK % กับ Monster Fish";
+	dispbottom "113 - MATK % กับ Monster Devil";
+	dispbottom "114 - MATK % กับ Monster Demihuman";
+	dispbottom "115 - MATK % กับ Monster Angel";
+	dispbottom "116 - MATK % กับ Monster Dragon";
+	dispbottom "117 - CRIT  กับ Monster Formless";
+	dispbottom "118 - CRIT  กับ Monster Undead";
+	dispbottom "119 - CRIT  กับ Monster Brute";
+	dispbottom "120 - CRIT  กับ Monster Plant";
+	dispbottom "121 - CRIT  กับ Monster Insect";
+	dispbottom "122 - CRIT  กับ Monster Fish";
+	dispbottom "123 - CRIT  กับ Monster Demon";
+	dispbottom "124 - CRIT  กับ Monster Demihuman";
+	dispbottom "125 - CRIT  กับ Monster Angel";
+	dispbottom "126 - CRIT  กับ Monster Dragon";
+	dispbottom "127 - เจาะ % DEF กับ Monster Formless";
+	dispbottom "128 - เจาะ % DEF กับ Monster Undead";
+	dispbottom "129 - เจาะ % DEF กับ Monster Brute";
+	dispbottom "130 - เจาะ % DEF กับ Monster Plant";
+	dispbottom "131 - เจาะ % DEF กับ Monster Insect";
+	dispbottom "132 - เจาะ % DEF กับ Monster Fish";
+	dispbottom "133 - เจาะ % DEF กับ Monster Demon";
+	dispbottom "134 - เจาะ % DEF กับ Monster Demihuman";
+	dispbottom "135 - เจาะ % DEF กับ Monster Angel";
+	dispbottom "136 - เจาะ % DEF กับ Monster Dragon";
+	dispbottom "137 - เจาะ % MDEF กับ Monster Formless";
+	dispbottom "138 - เจาะ % MDEF กับ Monster Undead";
+	dispbottom "139 - เจาะ % MDEF กับ Monster Brute";
+	dispbottom "140 - เจาะ % MDEF กับ Monster Plant";
+	dispbottom "141 - เจาะ % MDEF กับ Monster Insect";
+	dispbottom "142 - เจาะ % MDEF กับ Monster Fish";
+	dispbottom "143 - เจาะ % MDEF กับ Monster Demon";
+	dispbottom "144 - เจาะ % MDEF กับ Monster Demihuman";
+	dispbottom "145 - เจาะ % MDEF กับ Monster Angel";
+	dispbottom "146 - เจาะ % MDEF กับ Monster Dragon";
+	dispbottom "147 - ATK % กับ Monster Normal";
+	dispbottom "148 - ATK % กับ Monster Boss";
+	dispbottom "149 - กัน Monster Normal %";
+	dispbottom "150 - กัน Monster Boss %";
+	dispbottom "151 - MATK % กับ Monster Normal";
+	dispbottom "152 - MATK % กับ Monster Boss";
+	dispbottom "153 - เจาะ % DEF กับ Monster Normal";
+	dispbottom "154 - เจาะ % DEF กับ Monster Boss";
+	dispbottom "155 - เจาะ % MDEF กับ Monster Normal";
+	dispbottom "156 - เจาะ % MDEF กับ Monster Boss";
+	dispbottom "157 - ATK % กับ Monster ขนาด Small";
+	dispbottom "158 - ATK % กับ Monster ขนาด Medium";
+	dispbottom "159 - ATK % กับ Monster ขนาด Large";
+	dispbottom "160 - กัน Monster ขนาด Small %";
+	dispbottom "161 - กัน Monster ขนาด Medium %";
+	dispbottom "162 - กัน Monster ขนาด Large %";
+	dispbottom "163 - ไม่สนใจขนาดในการคำนวณ Damage";
+	dispbottom "164 - Critical แรงขึ้น %";
+	dispbottom "165 - โดน Critical เบาลง %";
+	dispbottom "166 - โจมตีกายภาพระยะไกลแรงขึ้น %";
+	dispbottom "167 - กันกายภาพระยะไกล %";
+	dispbottom "168 - Heal แรงขึ้น %";
+	dispbottom "169 - โดน Heal แรงขึ้น %";
+	dispbottom "170 - ร่าย VCAST เร็วขึ้น %";
+	dispbottom "171 - ลดอาการหน่วงหลังร่าย %";
+	dispbottom "172 - ใช้ SP น้อยลง %";
+	dispbottom "175 - เคลือบธาตุ Weapon: Neutral";
+	dispbottom "176 - เคลือบธาตุ Weapon: Water";
+	dispbottom "177 - เคลือบธาตุ Weapon: Earth";
+	dispbottom "178 - เคลือบธาตุ Weapon: Fire";
+	dispbottom "179 - เคลือบธาตุ Weapon: Wind";
+	dispbottom "180 - เคลือบธาตุ Weapon: Poison";
+	dispbottom "181 - เคลือบธาตุ Weapon: Holy";
+	dispbottom "182 - เคลือบธาตุ Weapon: Shadow";
+	dispbottom "183 - เคลือบธาตุ Weapon: Ghost";
+	dispbottom "184 - เคลือบธาตุ Weapon: Undead";
+	dispbottom "185 - Weapon จะไม่ชำรุด";
+	dispbottom "186 - Armor จะไม่ชำรุด";
+	dispbottom "187 - MATK กับ Monster ขนาด Small %";
+	dispbottom "188 - MATK กับ Monster ขนาด Medium %";
+	dispbottom "189 - MATK กับ Monster ขนาด Large %";
+	dispbottom "190 - กันเวทย์กับ Monster ขนาด Small %";
+	dispbottom "191 - กันเวทย์กับ Monster ขนาด Medium %";
+	dispbottom "192 - กันเวทย์กับ Monster ขนาด Large %";
+	dispbottom "193 - กันทุกธาตุ %";
+	dispbottom "194 - กัน Monster Formless %";
+	dispbottom "195 - กัน Monster Undead %";
+	dispbottom "196 - กัน Monster Brute %";
+	dispbottom "197 - กัน Monster Plant %";
+	dispbottom "198 - กัน Monster Insect %";
+	dispbottom "199 - กัน Monster Fish %";
+	end;
+	
+	L_DisplayOptionSet3:
+	dispbottom "200 - กัน Monster Demon %";
+	dispbottom "201 - กัน Monster Demihuman %";
+	dispbottom "202 - กัน Monster Angel %";
+	dispbottom "203 - กัน Monster Dragon %";
+	//dispbottom "204 - โจมตีกายภาพระยะไกลแรงขึ้น %";
+	//dispbottom "205 - กันกายภาพระยะไกล %";
+	dispbottom "206 - กันคน %";
+	dispbottom "207 - กัน Doram %";
+	dispbottom "208 - ตีกายภาพกับคนแรงขึ้น %";
+	dispbottom "209 - ตีกายภาพกับ Doram แรงขึ้น %";
+	dispbottom "210 - ตีเวทย์กับคนแรงขึ้น %";
+	dispbottom "211 - ตีเวทย์กับ Doram แรงขึ้น %";
+	dispbottom "212 - Critical  กับคน";
+	dispbottom "213 - Critical  กับ Doram";
+	dispbottom "214 - เจาะ % DEF กับคน";
+	dispbottom "215 - เจาะ % DEF กับ Doram";
+	dispbottom "216 - เจาะ % MDEF กับคน";
+	dispbottom "217 - เจาะ % MDEF กับ Doram";
+	dispbottom "218 - โดนสะท้อนเบาลง %";
+	dispbottom "219 - ตีกายภาพระยะใกล้แรงขึ้น %";
+	dispbottom "220 - กันกายภาพระยะใกล้ %";
+	dispbottom "221 - กันเวทย์ Skill ธาตุ Neutral %";
+	dispbottom "222 - กันเวทย์ Skill ธาตุ Water %";
+	dispbottom "223 - กันเวทย์ Skill ธาตุ Earth %";
+	dispbottom "224 - กันเวทย์ Skill ธาตุ Fire %";
+	dispbottom "225 - กันเวทย์ Skill ธาตุ Wind %";
+	dispbottom "226 - กันเวทย์ Skill ธาตุ Poison %";
+	dispbottom "227 - กันเวทย์ Skill ธาตุ Holy %";
+	dispbottom "228 - กันเวทย์ Skill ธาตุ Shadow %";
+	dispbottom "229 - กันเวทย์ Skill ธาตุ Ghost %";
+	dispbottom "230 - กันเวทย์ Skill ธาตุ Undead %";
+	dispbottom "231 - กันเวทย์ Skill ทุกธาตุ %";
+	dispbottom "232 - EXP เพิ่มขึ้นกับ Monster Formless %";
+	dispbottom "233 - EXP เพิ่มขึ้นกับ Monster Undead %";
+	dispbottom "234 - EXP เพิ่มขึ้นกับ Monster Brute %";
+	dispbottom "235 - EXP เพิ่มขึ้นกับ Monster Plant %";
+	dispbottom "236 - EXP เพิ่มขึ้นกับ Monster Insect %";
+	dispbottom "237 - EXP เพิ่มขึ้นกับ Monster Fish %";
+	dispbottom "238 - EXP เพิ่มขึ้นกับ Monster Demon %";
+	dispbottom "239 - EXP เพิ่มขึ้นกับ Monster Demi-Human %";
+	dispbottom "240 - EXP เพิ่มขึ้นกับ Monster Angel %";
+	dispbottom "241 - EXP เพิ่มขึ้นกับ Monster Dragon %";
+	dispbottom "242 - EXP เพิ่มขึ้น %";
+	dispbottom "243 - POW";
+	dispbottom "244 - SPL";
+	dispbottom "245 - STA";
+	dispbottom "246 - WIS";
+	dispbottom "247 - CON";
+	dispbottom "248 - CRT";
+	dispbottom "249 - P.ATK";
+	dispbottom "250 - S.MATK";
+	dispbottom "251 - RES";
+	dispbottom "252 - MRES";
+	dispbottom "253 - H.PLUS";
+	dispbottom "254 - C.RATE";
+	end;
+
+	L_ClearElementOption:
+	setarray .@indices[0], EQI_HEAD_TOP, EQI_HEAD_MID, EQI_HEAD_LOW, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_COSTUME_HEAD_TOP, EQI_COSTUME_HEAD_MID, EQI_COSTUME_HEAD_LOW, EQI_SHADOW_ARMOR, EQI_SHADOW_WEAPON, EQI_SHADOW_SHIELD, EQI_COSTUME_GARMENT, EQI_SHADOW_SHOES, EQI_SHADOW_ACC_L, EQI_SHADOW_ACC_R;
+	
+	freeloop(1);
+	
+	for(.@i = 0; .@i < getarraysize(.@indices); .@i++){
+		// Check is equipped
+		if(getequipisequiped(.@indices[.@i])){
+			for(.@j = 0; .@j < 5; .@j++){
+				// Get random option id
+				.@option_id = getequiprandomoption(.@indices[.@i],.@j,ROA_ID);
+				if((.@option_id >= 76 && .@option_id <= 85)
+						|| (.@option_id >= 175 && .@option_id <= 184))
+				setrandomoption(.@indices[.@i],.@j,1,1,0);
+			}
+		}
+	}
+	
+	freeloop(0);
+	
+	end;
+
+	L_LockingOptionSetup:
+	mes "โปรดระบุ ID Option ที่ต้องการ (" + .min_option_id + "~" + .max_option_id + ")";
+	//mes "สามารถเช็คได้ที่: <URL>คลิก<INFO>https://raw.githubusercontent.com/kaninhot004/rathena/the-box-3/db/re/item_randomopt_db.yml</INFO></URL>";
+	next;
+	input .@i;
+	if(.@i < .min_option_id || .@i > .max_option_id)
+	{
+		mes "ยกเลิกเรียบร้อยแล้ว";
+		close;
+	}
+	locking_option = .@i;
+	mes "คุณต้องการ Option ID: " + locking_option;
+	close;
+
+OnInit:
+	.min_option_id = 1;
+	.max_option_id = 254;
+	.price = 3000000;
+	waitingroom "เสริมแกร่งด้วย Random Option",0;
+	end;
+}
+
+function	script	GetRandomOptionId	{
+	.@optId = rand(1,254);
+	
+	freeloop(1);
+	
+	// Locking option
+	if(getarg(0,0) > 0){
+		while((.@optId == 86)
+		|| (.@optId == 173)
+		|| (.@optId == 174)
+		|| (.@optId == 204)
+		|| (.@optId == 205))
+		.@optId = rand(1,254);
+		
+		freeloop(0);
+		
+		return .@optId;
+	}
+	
+	while(((.@optId >= 76) && (.@optId <= 86))
+	|| ((.@optId >= 173) && (.@optId <= 184))
+	|| (.@optId == 204)
+	|| (.@optId == 205))
+	.@optId = rand(1,254);
+
+	freeloop(0);
+	
+	return .@optId;
+}

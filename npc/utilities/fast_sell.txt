@@ -1,0 +1,63 @@
+prontera,125,250,3	script	ขายของเร็ว	10389,{
+	mes "๐ ^FF2929จะขาย Item ทุกชิ้นในกระเป๋า^000000";
+	mes "๐ ^3629FFจะไม่ขาย Item ที่สวมใส่อยู่^000000";
+	mes "๐ ^3629FFจะไม่ขาย Item ที่ Favourite อยู่^000000";
+	mes "๐ ^3629FFจะไม่ขาย " + getitemname(.no_sell_item_id_1) + "^000000";
+	mes "๐ ^3629FFจะไม่ขาย " + getitemname(.no_sell_item_id_2) + "^000000";
+	mes "๐ ^3629FFSkill 'Overcharge' จะเพิ่มราคาขายได้ตามปกติ^000000";
+	next;
+	menu "ไม่ทำอะไร",-,"ขายของเร็ว",L_FastSell;
+	close;
+	
+	L_FastSell:
+	if(Zeny > .max_zeny){
+		mes "เงินล้น";
+		close;
+	}
+	
+	close2;
+	
+	// Check OC skill
+	if(getskilllv(38) > 0)
+	.@oc_rate = 4 + (2 * getskilllv(38));
+
+	getinventorylist;
+	
+	freeloop(1);
+	for(.@i = @inventorylist_count - 1; .@i >= 0; .@i--){
+		// Equipped or Favourite will skip
+		if(@inventorylist_equip[.@i]
+				|| @inventorylist_favorite[.@i]
+				|| @inventorylist_id[.@i] == .no_sell_item_id_1
+				|| @inventorylist_id[.@i] == .no_sell_item_id_2)
+		continue;
+		
+		// Get sell price
+		.@sell_price = getiteminfo(@inventorylist_id[.@i],ITEMINFO_SELL);
+		
+		if(.@sell_price){
+			// OC
+			if(.@oc_rate)
+			.@sell_price += (.@sell_price * .@oc_rate) / 100;
+			
+			.@sum += .@sell_price * @inventorylist_amount[.@i];
+		}
+		delitemidx @inventorylist_idx[.@i],@inventorylist_amount[.@i];
+	}
+	freeloop(0);
+	
+	message strcharinfo(0),"ได้รับ " + F_InsertComma(.@sum) + "z";
+	Zeny += .@sum;
+	
+	end;
+	
+OnInit:
+	.max_zeny = 2000000000;
+	.no_sell_item_id_1 = 40016;
+	.no_sell_item_id_2 = 40017;
+	waitingroom "ขายของเร็ว",0;
+	end;
+}
+
+prontera,138,172,5	duplicate(ขายของเร็ว)	ขายของเร็ว#1	10389
+prontera,70,67,3	duplicate(ขายของเร็ว)	ขายของเร็ว#2	10389

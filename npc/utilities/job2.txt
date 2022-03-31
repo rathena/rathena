@@ -1,0 +1,18 @@
+-	script	Job2Commands	-1,{
+OnInit:
+	bindatcmd "job2",strnpcinfo(3) + "::OnJob2",99,99;
+	end;
+	
+OnJob2:
+	.@job_id = .@atcmd_parameters$[0];
+	atcommand "@job " + .@job_id;
+	atcommand "@lvup 99999";
+	atcommand "@joblvup 99999";
+	atcommand "@statsall";
+	atcommand "@skillall";
+	atcommand "@traitall";
+	atcommand "@stpoint -99999";
+	sc_end SC_ALL;
+	callfunc("F_GetPlatinumSkills");
+	end;
+}

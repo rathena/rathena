@@ -784,7 +784,8 @@ ACMD_FUNC(who) {
 
 	iter = mapit_getallusers();
 	for (pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter))	{
-		if (!((pc_has_permission(pl_sd, PC_PERM_HIDE_SESSION) || pc_isinvisible(pl_sd)) && pc_get_group_level(pl_sd) > level)) { // you can look only lower or same level
+		//if (!((pc_has_permission(pl_sd, PC_PERM_HIDE_SESSION) || pc_isinvisible(pl_sd)) && pc_get_group_level(pl_sd) > level)) { // you can look only lower or same level
+		if (!((pc_has_permission(pl_sd, PC_PERM_HIDE_SESSION) || pc_isinvisible(pl_sd)) && pc_get_group_level(pl_sd) > level) && !pl_sd->state.autotrade) { // [Start]
 			if (stristr(pl_sd->status.name, player_name) == NULL // search with no case sensitive
 				|| (map_id >= 0 && pl_sd->bl.m != map_id))
 				continue;
@@ -4159,6 +4160,8 @@ ACMD_FUNC(reload) {
 		battle_config_read(BATTLE_CONF_FILENAME);
 
 		if( prev_config.item_rate_mvp          != battle_config.item_rate_mvp
+		||  prev_config.item_rate_mvp_refine   != battle_config.item_rate_mvp_refine
+		||  prev_config.item_rate_the_box_key  != battle_config.item_rate_the_box_key
 		||  prev_config.item_rate_common       != battle_config.item_rate_common
 		||  prev_config.item_rate_common_boss  != battle_config.item_rate_common_boss
 		||  prev_config.item_rate_common_mvp   != battle_config.item_rate_common_mvp
@@ -7739,7 +7742,8 @@ ACMD_FUNC(mobinfo)
 				if (mob->mvpitem[i].nameid == 0 || (item_data = itemdb_exists(mob->mvpitem[i].nameid)) == NULL)
 					continue;
 				//Because if there are 3 MVP drops at 50%, the first has a chance of 50%, the second 25% and the third 12.5%
-				mvppercent = (float)mob->mvpitem[i].rate * mvpremain / 10000.0f;
+				//mvppercent = (float)mob->mvpitem[i].rate * mvpremain / 10000.0f;
+				mvppercent = mob_getdroprate(&sd->bl, mob, mob->mvpitem[i].rate, drop_modifier); // [Start]
 				if(battle_config.item_drop_mvp_mode == 0) {
 					mvpremain -= mvppercent;
 				}
@@ -7747,14 +7751,18 @@ ACMD_FUNC(mobinfo)
 					j++;
 					if (j == 1) {
 						if (item_data->slots)
-							sprintf(atcmd_output2, " %s[%d]  %02.02f%%", item_data->ename.c_str(), item_data->slots, mvppercent);
+							//sprintf(atcmd_output2, " %s[%d]  %02.02f%%", item_data->ename.c_str(), item_data->slots, mvppercent);
+							sprintf(atcmd_output2, " %s[%d]  %02.02f%%", item_data->ename.c_str(), item_data->slots, mvppercent / 100); // [Start]
 						else
-							sprintf(atcmd_output2, " %s  %02.02f%%", item_data->ename.c_str(), mvppercent);
+							//sprintf(atcmd_output2, " %s  %02.02f%%", item_data->ename.c_str(), mvppercent);
+							sprintf(atcmd_output2, " %s  %02.02f%%", item_data->ename.c_str(), mvppercent / 100); // [Start]
 					} else {
 						if (item_data->slots)
-							sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_data->ename.c_str(), item_data->slots, mvppercent);
+							//sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_data->ename.c_str(), item_data->slots, mvppercent);
+							sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_data->ename.c_str(), item_data->slots, mvppercent / 100); // [Start]
 						else
-							sprintf(atcmd_output2, " - %s  %02.02f%%", item_data->ename.c_str(), mvppercent);
+							//sprintf(atcmd_output2, " - %s  %02.02f%%", item_data->ename.c_str(), mvppercent / 100);
+							sprintf(atcmd_output2, " - %s  %02.02f%%", item_data->ename.c_str(), mvppercent / 100); // [Start]
 					}
 					strcat(atcmd_output, atcmd_output2);
 				}

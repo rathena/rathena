@@ -11092,10 +11092,10 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			guild_notice = false; // Do not display it twice
 		}
 
-		if (battle_config.bg_flee_penalty != 100 || battle_config.gvg_flee_penalty != 100) {
+		if (battle_config.bg_flee_penalty != 100 || battle_config.gvg_flee_penalty != 100 || battle_config.tb_flee_penalty != 100 || battle_config.tb2_flee_penalty != 100 || battle_config.tb3_flee_penalty != 100 || battle_config.tb4_flee_penalty != 100) {
 			struct map_data *pmap = map_getmapdata(sd->state.pmap);
 
-			if ((pmap != nullptr && (mapdata_flag_gvg(pmap) || pmap->flag[MF_BATTLEGROUND])) || (mapdata != nullptr && (mapdata_flag_gvg(mapdata) || mapdata->flag[MF_BATTLEGROUND])))
+			if ((pmap != nullptr && (mapdata_flag_gvg(pmap) || pmap->flag[MF_BATTLEGROUND])) || (mapdata != nullptr && (mapdata_flag_gvg(mapdata) || mapdata->flag[MF_BATTLEGROUND] || mapdata->flag[MF_TB] || mapdata->flag[MF_TB2] || mapdata->flag[MF_TB3] || mapdata->flag[MF_TB4])))
 				status_calc_bl(&sd->bl, { SCB_FLEE }); //Refresh flee penalty
 		}
 

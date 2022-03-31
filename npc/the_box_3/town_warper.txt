@@ -1,0 +1,123 @@
+force_1-1	mapflag	monster_noteleport
+force_1-1	mapflag	noteleport
+force_1-1	mapflag	nomemo
+force_1-1	mapflag	nosave
+force_1-1	mapflag	tb
+
+force_1-2	mapflag	monster_noteleport
+force_1-2	mapflag	noteleport
+force_1-2	mapflag	nomemo
+force_1-2	mapflag	nosave
+force_1-2	mapflag	tb2
+
+force_1-3	mapflag	monster_noteleport
+force_1-3	mapflag	noteleport
+force_1-3	mapflag	nomemo
+force_1-3	mapflag	nosave
+force_1-3	mapflag	tb3
+
+force_2-3	mapflag	monster_noteleport
+force_2-3	mapflag	noteleport
+force_2-3	mapflag	nomemo
+force_2-3	mapflag	nosave
+force_2-3	mapflag	tb4
+
+-	script	backToCenter	-1,{
+	warp "prontera",156,191;
+	end;
+	
+OnInit:
+	waitingroom "กลับกลางเมือง",0;
+	end;
+}
+
+prontera,115,250,5	duplicate(backToCenter)	Warper#Upg	10081
+prontera,101,168,5	duplicate(backToCenter)	Warper#Itm	10081
+prontera,237,62,5	duplicate(backToCenter)	Warper#Tst	10081
+prontera,200,240,5	duplicate(backToCenter)	Warper#Pet	10081
+prontera,53,67,5	duplicate(backToCenter)	Warper#Box	10081
+force_1-1,100,98,5	duplicate(backToCenter)	Warper#tb1	10081
+force_1-2,173,156,5	duplicate(backToCenter)	Warper#tb2	10081
+force_1-3,100,167,5	duplicate(backToCenter)	Warper#tb3	10081
+force_2-3,100,167,5	duplicate(backToCenter)	Warper#tb4	10081
+
+prontera,145,193,5	script	Warper#1	10081,{
+	warp "prontera",115,257;
+	end;
+	
+OnInit:
+	waitingroom "Zone - พัฒนาตัวละคร",0;
+	end;
+}
+
+prontera,138,193,5	script	Warper#2	10081,{
+	warp "prontera",102,175;
+	end;
+	
+OnInit:
+	waitingroom "Zone - ของจำเป็น",0;
+	end;
+}
+
+prontera,173,193,5	script	Warper#3	10081,{
+	warp "prontera",237,66;
+	end;
+	
+OnInit:
+	waitingroom "Zone - ทดสอบ",0;
+	end;
+}
+
+prontera,234,69,5	script	Warper#4	10081,{
+	warp "force_1-1",100,100;
+	end;
+	
+OnInit:
+	waitingroom "Zone ทดสอบ Damage 5%",0;
+	end;
+}
+
+prontera,240,69,5	script	Warper#5	10081,{
+	warp "force_1-2",173,158;
+	end;
+	
+OnInit:
+	waitingroom "Zone ทดสอบ Damage 3%",0;
+	end;
+}
+
+prontera,234,75,5	script	Warper#6	10081,{
+	warp "force_1-3",100,185;
+	end;
+	
+OnInit:
+	waitingroom "Zone ทดสอบ Damage 1%",0;
+	end;
+}
+
+prontera,240,75,5	script	Warper#7	10081,{
+	warp "force_2-3",100,185;
+	end;
+	
+OnInit:
+	waitingroom "Zone ทดสอบ Damage 0.1%",0;
+	end;
+}
+
+prontera,166,193,5	script	Warper#8	10081,{
+	warp "prontera",198,246;
+	end;
+	
+OnInit:
+	waitingroom "Zone - Pet & Hom.",0;
+	end;
+}
+
+prontera,131,193,5	script	Warper#9	10081,{
+	warp "prontera",48,64;
+	end;
+	
+OnInit:
+	waitingroom "Zone - สุ่มของ",0;
+	end;
+}

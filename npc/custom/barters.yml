@@ -44,3 +44,30 @@
 Header:
   Type: BARTER_DB
   Version: 1
+
+Body:
+  - Name: ร้านค้า-ตีบวก
+    Map: prontera
+    X: 94
+    Y: 246
+    Direction: SouthEast
+    Sprite: 4_TREASURE_BOX
+    Items:
+      - Index: 0
+        Item: Phracon
+        Zeny: 200
+      - Index: 1
+        Item: Emveretarcon
+        Zeny: 1000
+      - Index: 2
+        Item: Oridecon
+        RequiredItems:
+          - Index: 0
+            Item: Oridecon_Stone
+            Amount: 5
+      - Index: 3
+        Item: Elunium
+        RequiredItems:
+          - Index: 0
+            Item: Elunium_Stone
+            Amount: 5

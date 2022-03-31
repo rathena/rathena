@@ -1,0 +1,93 @@
+prontera,95,248,5	script	ตีบวก	10366,{
+	mes "ต้องการตีบวกปกติ หรือตีบวกไวทั้งตัว?";
+	mes "---";
+	mes "การตีบวกไวทั้งตัว จะใช้ Zeny อย่างเดียว ไม่ต้องการแร่ตีบวกใด ๆ";
+	mes "ค่าตีบวกคิดตามเดิม แต่จะเพิ่มราคาตาม Level อุปกรณ์ดังนี้";
+	mes "^3629FFWeapon Level 1^000000 ราคา ^FF2929" + F_InsertComma(.price_weapon_level_1) + "z^000000";
+	mes "^3629FFWeapon Level 2^000000 ราคา ^FF2929" + F_InsertComma(.price_weapon_level_2) + "z^000000";
+	mes "^3629FFWeapon Level 3^000000 ราคา ^FF2929" + F_InsertComma(.price_weapon_level_3) + "z^000000";
+	mes "^3629FFWeapon Level 4^000000 ราคา ^FF2929" + F_InsertComma(.price_weapon_level_4) + "z^000000";
+	mes "^3629FFWeapon Level 5^000000 ราคา ^FF2929" + F_InsertComma(.price_weapon_level_5) + "z^000000";
+	mes "^3629FFArmor Level 1^000000 ราคา ^FF2929" + F_InsertComma(.price_armor_level_1) + "z^000000";
+	mes "^3629FFArmor Level 2^000000 ราคา ^FF2929" + F_InsertComma(.price_armor_level_2) + "z^000000";
+	next;
+	menu "^3629FFตีบวกปกติ^000000",-,"^FF2929ตีบวกไวทั้งตัว^000000",L_OneStopRefine;
+	refineui;
+	end;
+	
+	L_OneStopRefine:
+	setarray .@indices[0], EQI_HEAD_TOP, EQI_HEAD_MID, EQI_HEAD_LOW, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_COSTUME_HEAD_TOP, EQI_COSTUME_HEAD_MID, EQI_COSTUME_HEAD_LOW, EQI_SHADOW_ARMOR, EQI_SHADOW_WEAPON, EQI_SHADOW_SHIELD, EQI_COSTUME_GARMENT, EQI_SHADOW_SHOES, EQI_SHADOW_ACC_L, EQI_SHADOW_ACC_R;
+	
+	freeloop(1);
+	
+	for(.@i = 0; .@i < getarraysize(.@indices); .@i++){
+		// Check is equipped
+		if(getequipisequiped(.@indices[.@i])){
+			// Set material price
+			.@armor_level = getequiparmorlv(.@indices[.@i]);
+			.@weapon_level = getequipweaponlv(.@indices[.@i]);
+			if(.@armor_level == 1)
+			.@material_price = .price_armor_level_1;
+			else if(.@armor_level == 2)
+			.@material_price = .price_armor_level_2;
+			else if(.@weapon_level == 1)
+			.@material_price = .price_weapon_level_1;
+			else if(.@weapon_level == 2)
+			.@material_price = .price_weapon_level_2;
+			else if(.@weapon_level == 3)
+			.@material_price = .price_weapon_level_3;
+			else if(.@weapon_level == 4)
+			.@material_price = .price_weapon_level_4;
+			else if(.@weapon_level == 5)
+			.@material_price = .price_weapon_level_5;
+			// Check refine count
+			while(getequiprefinerycnt(.@indices[.@i]) < 20){
+				// Get refine price
+				.@refine_price = getequiprefinecost(.@indices[.@i],REFINE_COST_NORMAL,REFINE_ZENY_COST);
+				
+				// Check zeny
+				if(Zeny < (.@material_price + .@refine_price)){
+					freeloop(0);
+					
+					mes "Zeny ไม่เพียงพอ";
+					
+					close;
+				}
+				
+				Zeny -= (.@material_price + .@refine_price);
+				
+				// Is success
+				.@chance = getequippercentrefinery(.@indices[.@i]);
+				// Rate below 1%
+				if(.@chance <= 0){
+					// Will random max chance 99~100% and check it greater than or equal to 99.1%
+					.@chance = rand(10000);
+					.@chance_penalty = rand(100);
+					.@chance -= .@chance_penalty;
+					if(.@chance >= 9910)
+					successrefitem .@indices[.@i];
+				}
+				// Rate over 1%
+				else if(.@chance > rand(100))
+				successrefitem .@indices[.@i];
+			}
+		}
+	}
+	
+	freeloop(0);
+	
+	end;
+	
+OnInit:
+	.price_weapon_level_1 = 200;
+	.price_weapon_level_2 = 1000;
+	.price_weapon_level_3 = 50000;
+	.price_weapon_level_4 = 75000;
+	.price_weapon_level_5 = 100000;
+	.price_armor_level_1 = 60000;
+	.price_armor_level_2 = 120000;
+	
+	waitingroom "ตีบวก",0;
+	
+	end;
+}

@@ -49,4 +49,4 @@ jupe_core,0,0	monster	Archdam	1668,40,5000
 jupe_core,0,0	monster	Venatu	1676,25,5000
 jupe_core,0,0	monster	Venatu	1677,25,5000
 jupe_core,0,0	monster	Venatu	1678,25,5000
-jupe_core,0,0,0,0	boss_monster	Vesper	1685,1,7200000,600000,1
+jupe_core,0,0,0,0	boss_monster	Vesper	1685,1,180000,180000

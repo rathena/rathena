@@ -27,7 +27,7 @@ ve_fild01,0,0	monster	Galion	1783,60,5000
 ve_fild01,0,0	monster	Stapo	1784,34,5000
 ve_fild01,0,0	monster	Drosera	1781,34,5000
 ve_fild01,0,0	monster	Muscipular	1780,34,5000
-ve_fild01,0,0,0,0	boss_monster	Atroce	1785,1,10800000,600000,0
+ve_fild01,0,0,0,0	boss_monster	Atroce	1785,1,180000,180000
 ve_fild01,0,0	monster	Red Plant	1078,10,5000
 ve_fild01,0,0	monster	Yellow Plant	1081,10,5000
 ve_fild01,270,80,20,7	monster	Blue Plant	1079,4,840000
@@ -39,7 +39,7 @@ ve_fild01,270,80,20,7	monster	Shining Plant	1083,1,960000
 ve_fild02,0,0	monster	Drosera	1781,177,5000
 ve_fild02,0,0	monster	Muscipular	1780,27,5000
 ve_fild02,0,0	monster	Galion	1783,13,5000
-ve_fild02,120,55,50,50	boss_monster	Atroce	1785,1,21600000,600000,0
+ve_fild02,120,55,50,50	boss_monster	Atroce	1785,1,180000,180000
 ve_fild02,0,0	monster	Red Plant	1078,10,10000
 ve_fild02,0,0	monster	Yellow Plant	1081,10,10000
 

@@ -1,0 +1,91 @@
+-	script	storage	-1,{
+	if(getcharid(2) > 0)
+	menu "คลังปกติ",-
+	,"คลัง Guild",L_GuildStorage
+	,"คลังปกติ #2",L_Storage2
+	,"คลังปกติ #3",L_Storage3
+	,"คลังปกติ #4",L_Storage4
+	,"คลังปกติ #5",L_Storage5
+	,"คลังปกติ #6",L_Storage6
+	,"คลังปกติ #7",L_Storage7
+	,"คลังปกติ #8",L_Storage8
+	,"คลังปกติ #9",L_Storage9
+	,"คลังปกติ #10",L_Storage10;
+	else
+	menu "คลังปกติ",-
+	,"คลังปกติ #2",L_Storage2
+	,"คลังปกติ #3",L_Storage3
+	,"คลังปกติ #4",L_Storage4
+	,"คลังปกติ #5",L_Storage5
+	,"คลังปกติ #6",L_Storage6
+	,"คลังปกติ #7",L_Storage7
+	,"คลังปกติ #8",L_Storage8
+	,"คลังปกติ #9",L_Storage9
+	,"คลังปกติ #10",L_Storage10;
+	openstorage;
+	end;
+	
+	L_GuildStorage:
+	guildopenstorage();
+	end;
+	
+	L_Storage2:
+	callsub(L_AdditionalStorage,2);
+	end;
+	
+	L_Storage3:
+	callsub(L_AdditionalStorage,3);
+	end;
+	
+	L_Storage4:
+	callsub(L_AdditionalStorage,4);
+	end;
+	
+	L_Storage5:
+	callsub(L_AdditionalStorage,5);
+	end;
+	
+	L_Storage6:
+	callsub(L_AdditionalStorage,6);
+	end;
+	
+	L_Storage7:
+	callsub(L_AdditionalStorage,7);
+	end;
+	
+	L_Storage8:
+	callsub(L_AdditionalStorage,8);
+	end;
+	
+	L_Storage9:
+	callsub(L_AdditionalStorage,9);
+	end;
+	
+	L_Storage10:
+	callsub(L_AdditionalStorage,10);
+	end;
+	
+	L_AdditionalStorage:
+	if(getd("#storage" + getarg(0)) <= 0){
+		mes "จ่าย " + F_InsertComma(.additional_storage_price) + "z เพื่อใช้คลังปกติ #" + getarg(0) + "?";
+		next;
+		menu "จ่าย",-;
+		if(Zeny < .additional_storage_price){
+			mes "Zeny ไม่เพียงพอ";
+			close;
+		}
+		Zeny -= .additional_storage_price;
+		set getd("#storage" + getarg(0)),1;
+	}
+	openstorage2 (getarg(0) - 1),STOR_MODE_GET|STOR_MODE_PUT;
+	return;
+	
+OnInit:
+	.additional_storage_price = 1000000000;
+	waitingroom "คลังเก็บของ",0;
+	end;
+}
+
+prontera,147,174,5	duplicate(storage)	คลังเก็บของ	10005
+prontera,113,262,5	duplicate(storage)	คลังเก็บของ#2	10005
+prontera,83,67,5	duplicate(storage)	คลังเก็บของ#3	10005

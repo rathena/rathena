@@ -632,27 +632,27 @@ function	script	F_CanChangeJob	{
 //////////////////////////////////////////////////////////////////////////////////
 function	script	F_getpositionname	{
 	switch( getarg(0,999) ) {
-		case EQI_ACC_L:		return "Accessory 1";
-		case EQI_ACC_R:		return "Accessory 2";
-		case EQI_SHOES:		return "Shoes";
-		case EQI_GARMENT:	return "Robe";
-		case EQI_HEAD_LOW:	return "Head 3";
-		case EQI_HEAD_MID:	return "Head 2";
-		case EQI_HEAD_TOP:	return "Head";
-		case EQI_ARMOR:		return "Body";
-		case EQI_HAND_L:	return "Left hand";
-		case EQI_HAND_R:	return "Right hand";
-		case EQI_COSTUME_HEAD_TOP:	return "Upper Costume Headgear";
-		case EQI_COSTUME_HEAD_MID:	return "Middle Costume Headgear";
-		case EQI_COSTUME_HEAD_LOW:	return "Lower Costume Headgear";
-		case EQI_COSTUME_GARMENT:	return "Costume Garment";
-		case EQI_AMMO:			return "Arrow/Ammunition";
-		case EQI_SHADOW_ARMOR:	return "Shadow Armor";
-		case EQI_SHADOW_WEAPON:	return "Shadow Weapon";
-		case EQI_SHADOW_SHIELD:	return "Shadow Shield";
-		case EQI_SHADOW_SHOES:	return "Shadow Shoes";
-		case EQI_SHADOW_ACC_R:	return "Shadow Accessory 2";
-		case EQI_SHADOW_ACC_L:	return "Shadow Accessory 1";
+		case EQI_ACC_L:		return "ประดับข้างซ้าย";
+		case EQI_ACC_R:		return "ประดับข้างขวา";
+		case EQI_SHOES:		return "รองเท้า";
+		case EQI_GARMENT:	return "ผ้าคลุม";
+		case EQI_HEAD_LOW:	return "หมวกส่วนล่าง";
+		case EQI_HEAD_MID:	return "หมวกส่วนกลาง";
+		case EQI_HEAD_TOP:	return "หมวกส่วนบน";
+		case EQI_ARMOR:		return "ชุดเกราะ";
+		case EQI_HAND_L:	return "มือซ้าย";
+		case EQI_HAND_R:	return "มือขวา";
+		case EQI_COSTUME_HEAD_TOP:	return "Costume หมวกส่วนบน";
+		case EQI_COSTUME_HEAD_MID:	return "Costume หมวกส่วนกลาง";
+		case EQI_COSTUME_HEAD_LOW:	return "Costume หมวกส่วนล่าง";
+		case EQI_COSTUME_GARMENT:	return "Costume ผ้าคลุม";
+		case EQI_AMMO:			return "กระสุน";
+		case EQI_SHADOW_ARMOR:	return "ชุดเกราะ Shadow";
+		case EQI_SHADOW_WEAPON:	return "อาวุธ Shadow";
+		case EQI_SHADOW_SHIELD:	return "โล่ Shadow";
+		case EQI_SHADOW_SHOES:	return "รองเท้า Shadow";
+		case EQI_SHADOW_ACC_R:	return "ประดับข้างขวา Shadow";
+		case EQI_SHADOW_ACC_L:	return "ประดับข้างซ้าย Shadow";
 		default:
 			return "Unknown";
 	}

@@ -165,7 +165,7 @@ moc_fild16,0,0	monster	Frilldora	1119,10,5000
 moc_fild17,0,0	monster	Hode	1127,170,5000
 moc_fild17,0,0	monster	Sandman	1165,39,5000
 moc_fild17,0,0	monster	Frilldora	1119,13,5000
-moc_fild17,0,0,0,0	boss_monster	Phreeoni	1159,1,7200000,600000,1
+moc_fild17,0,0,0,0	boss_monster	Phreeoni	1159,1,180000,180000
 moc_fild17,40,258	monster	Yellow Plant	1081,1,180000,90000
 moc_fild17,144,151	monster	Yellow Plant	1081,1,180000,90000
 moc_fild17,243,138	monster	Yellow Plant	1081,1,180000,90000
@@ -217,4 +217,4 @@ moc_fild22,0,0	monster	Incarnation of Morocc	1918,73,30000
 moc_fild22,0,0	monster	Incarnation of Morocc	1919,73,30000
 moc_fild22,0,0	monster	Incarnation of Morocc	1920,73,30000
 moc_fild22,0,0	monster	Incarnation of Morocc	1921,50,10000
-moc_fild22,0,0,0,0	boss_monster	Wounded Morocc	1917,1,43200000,600000,0
+moc_fild22,0,0,0,0	boss_monster	Wounded Morocc	1917,1,180000,180000

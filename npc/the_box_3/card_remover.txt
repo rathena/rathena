@@ -1,0 +1,104 @@
+prontera,95,254,5	script	ถอด Card	643,{
+	mes "๐ ต้องการ ^FF2929" + F_InsertComma(.price) + "z^000000";
+	next;
+	setarray .@indices[1], EQI_HEAD_TOP, EQI_HEAD_MID, EQI_HEAD_LOW, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_COSTUME_HEAD_TOP, EQI_COSTUME_HEAD_MID, EQI_COSTUME_HEAD_LOW, EQI_SHADOW_ARMOR, EQI_SHADOW_WEAPON, EQI_SHADOW_SHIELD, EQI_COSTUME_GARMENT, EQI_SHADOW_SHOES, EQI_SHADOW_ACC_L, EQI_SHADOW_ACC_R;
+	
+	for(.@i = 1; .@i<getarraysize(.@indices); ++.@i) {
+		if(getequipisequiped(.@indices[.@i])) {
+			.@menu$ = .@menu$ + F_getpositionname(.@indices[.@i]);
+			.@equipped = 1;
+		}
+		.@menu$ = .@menu$ + ":";
+	}
+	
+	if (.@equipped == 0) {
+		mes "เจ้าไม่ได้สวมใส่ อุปกรณ์สวมใส่ใด ๆ เลย";
+		close;
+	}
+	
+	.@part = .@indices[select(.@menu$)];
+
+	if(!getequipisequiped(.@part)) {
+		mes "เจ้าเลือกช่องที่ ไม่ได้สวมใส่อะไรอยู่เลย";
+		close;
+	}
+	
+	.@selectedItemId = getequipid(.@part);
+
+	// Remember all value
+	.@refineCount = getequiprefinerycnt(.@part);
+	.@cardSlot1 = getequipcardid(.@part,0);
+	.@cardSlot2 = getequipcardid(.@part,1);
+	.@cardSlot3 = getequipcardid(.@part,2);
+	.@cardSlot4 = getequipcardid(.@part,3);
+	.@randomOptionId1 = getequiprandomoption(.@part,0,ROA_ID);
+	.@randomOptionId2 = getequiprandomoption(.@part,1,ROA_ID);
+	.@randomOptionId3 = getequiprandomoption(.@part,2,ROA_ID);
+	.@randomOptionId4 = getequiprandomoption(.@part,3,ROA_ID);
+	.@randomOptionId5 = getequiprandomoption(.@part,4,ROA_ID);
+	.@randomOptionValue1 = getequiprandomoption(.@part,0,ROA_VALUE);
+	.@randomOptionValue2 = getequiprandomoption(.@part,1,ROA_VALUE);
+	.@randomOptionValue3 = getequiprandomoption(.@part,2,ROA_VALUE);
+	.@randomOptionValue4 = getequiprandomoption(.@part,3,ROA_VALUE);
+	.@randomOptionValue5 = getequiprandomoption(.@part,4,ROA_VALUE);
+
+	// Slot check
+	.@itemSlotCount = getitemslots(.@selectedItemId);
+	if(.@itemSlotCount <= 0){
+		mes "อุปกรณ์สวมใส่ดังกล่าว ไม่สามารถถอด Card ได้";
+		close;
+	}
+
+	// Zeny check
+	if(Zeny < .price) {
+		mes "Zeny ไม่เพียงพอ";
+		close;
+	}
+	
+	if (callfunc("F_IsEquipIDHack",.@part,.@selectedItemId)){
+		mes "เหมือนว่าเจ้า จะสลับอุปกรณ์ ระหว่างที่ข้า กำลังดำเนินการอยู่นะ!";
+		close;
+	}
+	
+	Zeny -= .price;
+	
+	delequip .@part;
+
+	// Success card remove
+	if(.@itemSlotCount >= 1 && .@cardSlot1 > 0)
+	getitem .@cardSlot1,1;
+	if(.@itemSlotCount >= 2 && .@cardSlot2 > 0)
+	getitem .@cardSlot2,1;
+	if(.@itemSlotCount >= 3 && .@cardSlot3 > 0)
+	getitem .@cardSlot3,1;
+	if(.@itemSlotCount >= 4 && .@cardSlot4 > 0)
+	getitem .@cardSlot4,1;
+
+	// Clear card on equipment
+	if(.@itemSlotCount >= 1)
+	.@cardSlot1 = 0;
+	if(.@itemSlotCount >= 2)
+	.@cardSlot2 = 0;
+	if(.@itemSlotCount >= 3)
+	.@cardSlot3 = 0;
+	if(.@itemSlotCount >= 4)
+	.@cardSlot4 = 0;
+
+	// Return equipment without card
+	if(.@randomOptionId1 > 0){
+		setarray .@OptID[0],.@randomOptionId1,.@randomOptionId2,.@randomOptionId3,.@randomOptionId4,.@randomOptionId5;
+		setarray .@OptVal[0],.@randomOptionValue1,.@randomOptionValue2,.@randomOptionValue3,.@randomOptionValue4,.@randomOptionValue5;
+		setarray .@OptParam[0],0,0,0,0,0;
+		getitem3 .@selectedItemId,1,1,.@refineCount,0,.@cardSlot1,.@cardSlot2,.@cardSlot3,.@cardSlot4,.@OptID,.@OptVal,.@OptParam;
+	}
+	else
+	getitem2 .@selectedItemId,1,1,.@refineCount,0,.@cardSlot1,.@cardSlot2,.@cardSlot3,.@cardSlot4;
+	
+	mes "เรียบร้อยแล้ว!";
+	close;
+
+OnInit:
+	.price = 1000000;
+	waitingroom "ถอด Card",0;
+	end;
+}

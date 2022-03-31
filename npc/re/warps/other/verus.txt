@@ -19,11 +19,6 @@ verus03,44,17,0	warp2	fr_ver03_to_ver04_2	1,1,verus04,44,264
 verus03,52,254,0	script	verus03_to_verus01	WARPNPC,1,1,{
 	end;
 OnTouch:
-	if (ep15_2_permit < 1) {
-		mes "[Access Controller]";
-		mes "I am sorry but only permitted members can enter from this point.";
-		close;
-	}
 	warp "verus01",243,62;
 	end;
 }
@@ -31,11 +26,6 @@ OnTouch:
 verus03,169,259,0	script	verus03_to_verus02	WARPNPC,1,1,{
 	end;
 OnTouch:
-	if (ep15_2_permit < 1) {
-		mes "[Access Controller]";
-		mes "I am sorry but only permitted members can enter from this point.";
-		close;
-	}
 	warp "verus02",72,19;
 	end;
 }
@@ -127,13 +117,6 @@ un_bunker,27,52,0	warp2	Z-2#b_Z-0	1,1,un_bunker,361,163
 un_bk_q,41,275,0	script	Machine Warehouse#J-0	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
-	if (.@cooldown_status_day[0] == 0 && .@cooldown_status_day[1] == 0 && .@cooldown_status_day[2] == 0 && .@cooldown_status_day[3] == 0 && .@cooldown_status_day[4] == 0) {
-		emotion 24, getnpcid(0, "Mechanician Mugeosi#EP15.2MR");
-		mes "[Mechanician Mugeosi]";
-		mes "Ah! You're the adventurer send to deliver air cleaners. You are at the right place. Come this way.";
-		close;
-	}
 	warp "un_bk_q",21,276;
 	end;
 }
@@ -141,7 +124,6 @@ OnTouch:
 un_bk_q,24,276,0	script	J-0#Machine Warehouse	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",45,275;
 	end;
 }
@@ -149,7 +131,6 @@ OnTouch:
 un_bk_q,24,256,0	script	J-0#L-1	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",26,190;
 	end;
 }
@@ -157,7 +138,6 @@ OnTouch:
 un_bk_q,23,190,0	script	L-1#J-0	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",21,256;
 	end;
 }
@@ -165,7 +145,6 @@ OnTouch:
 un_bk_q,31,196,0	script	L-1#D-1	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",22,378;
 	end;
 }
@@ -173,7 +152,6 @@ OnTouch:
 un_bk_q,21,375,0	script	D-1#L-1	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",32,193;
 	end;
 }
@@ -181,7 +159,6 @@ OnTouch:
 un_bk_q,51,196,0	script	L-1#D-2	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",68,378;
 	end;
 }
@@ -189,7 +166,6 @@ OnTouch:
 un_bk_q,67,375,0	script	D-2#L-1	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",52,193;
 	end;
 }
@@ -197,7 +173,6 @@ OnTouch:
 un_bk_q,60,183,0	script	L-1#Control room	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",75,235;
 	end;
 }
@@ -205,7 +180,6 @@ OnTouch:
 un_bk_q,71,236,0	script	Control room#L-1	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",57,182;
 	end;
 }
@@ -213,7 +187,6 @@ OnTouch:
 un_bk_q,60,169,0	script	L-1#b_Monitoring room_	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",72,168;
 	end;
 }
@@ -221,12 +194,6 @@ OnTouch:
 un_bk_q,69,167,0	script	b_Monitoring room#L-1	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
-	if (.@cooldown_status_day[0] == 0 && .@cooldown_status_day[1] == 0 && .@cooldown_status_day[2] == 0 && .@cooldown_status_day[3] == 0 && .@cooldown_status_day[4] == 0) {
-		mes "[Bunker Sayhu]";
-		mes "Hey!! Where do you think you're going when we're trying to get a headcount? Get over here.";
-		close;
-	}
 	warp "un_bk_q",57,168;
 	end;
 }
@@ -234,7 +201,6 @@ OnTouch:
 un_bk_q,47,135,0	script	L-1#B-1	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",37,134;
 	end;
 }
@@ -242,7 +208,6 @@ OnTouch:
 un_bk_q,40,135,0	script	B-1#L-1	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",50,134;
 	end;
 }
@@ -250,7 +215,6 @@ OnTouch:
 un_bk_q,57,118,0	script	L-1#A-0	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",72,117;
 	end;
 }
@@ -258,7 +222,6 @@ OnTouch:
 un_bk_q,69,118,0	script	A-0#L-1	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",53,117;
 	end;
 }
@@ -266,7 +229,6 @@ OnTouch:
 un_bk_q,97,124,0	script	A-0#b_Monitoring room_	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",100,144;
 	end;
 }
@@ -274,12 +236,6 @@ OnTouch:
 un_bk_q,97,141,0	script	Monitoring room#A-0	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
-	if (.@cooldown_status_day[0] == 0 && .@cooldown_status_day[1] == 0 && .@cooldown_status_day[2] == 0 && .@cooldown_status_day[3] == 0 && .@cooldown_status_day[4] == 0) {
-		mes "[Bunker Sayhu]";
-		mes "Hey!! Where do you think you're going when we're trying to get a headcount? Get over here.";
-		close;
-	}
 	warp "un_bk_q",98,121;
 	end;
 }
@@ -287,7 +243,6 @@ OnTouch:
 un_bk_q,128,118,0	script	A-0#L-2	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",144,117;
 	end;
 }
@@ -295,7 +250,6 @@ OnTouch:
 un_bk_q,140,118,0	script	L-2#A-0	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",125,117;
 	end;
 }
@@ -303,7 +257,6 @@ OnTouch:
 un_bk_q,137,168,0	script	L-2#b_Monitoring room_	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",122,167;
 	end;
 }
@@ -311,13 +264,6 @@ OnTouch:
 un_bk_q,126,168,0	script	b_Monitoring room#L-2	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
-	if (.@cooldown_status_day[0] == 0 && .@cooldown_status_day[1] == 0 && .@cooldown_status_day[2] == 0 && .@cooldown_status_day[3] == 0 && .@cooldown_status_day[4] == 0) {
-		emotion 19, getnpcid(0, "Bunker Sayhu#EP15.2MR");
-		mes "[Bunker Sayhu]";
-		mes "Hey!! Where do you think you're going when we're trying to get a headcount? Get over here.";
-		close;
-	}
 	warp "un_bk_q",140,167;
 	end;
 }
@@ -325,7 +271,6 @@ OnTouch:
 un_bk_q,137,185,0	script	L-2#Control room	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",120,235;
 	end;
 }
@@ -333,7 +278,6 @@ OnTouch:
 un_bk_q,124,236,0	script	Control room#L-2	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",140,184;
 	end;
 }
@@ -341,7 +285,6 @@ OnTouch:
 un_bk_q,147,196,0	script	L-2#E-1	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",106,378;
 	end;
 }
@@ -349,7 +292,6 @@ OnTouch:
 un_bk_q,105,375,0	script	E-1#L-2	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",148,193;
 	end;
 }
@@ -357,7 +299,6 @@ OnTouch:
 un_bk_q,167,196,0	script	L-2#E-2	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",152,378;
 	end;
 }
@@ -365,7 +306,6 @@ OnTouch:
 un_bk_q,151,375,0	script	E-2#L-2	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",168,193;
 	end;
 }
@@ -373,7 +313,6 @@ OnTouch:
 un_bk_q,174,190,0	script	L-2#K-0	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",172,229;
 	end;
 }
@@ -381,7 +320,6 @@ OnTouch:
 un_bk_q,169,230,0	script	K-0#L-2	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",171,189;
 	end;
 }
@@ -389,13 +327,6 @@ OnTouch:
 un_bk_q,213,346,0	script	Farm#C-0	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
-	if (.@cooldown_status_day[0] == 0 && .@cooldown_status_day[1] == 0 && .@cooldown_status_day[2] == 0 && .@cooldown_status_day[3] == 0 && .@cooldown_status_day[4] == 0) {
-		emotion 14, getnpcid(0, "Bioengineer Ebrik#EP15.2MR");
-		mes "[Bioengineer Ebrik]";
-		mes "Are you the Adventurer here to help us with the grape harvest? Right here!!";
-		close;
-	}
 	warp "un_bk_q",213,299;
 	end;
 }
@@ -403,12 +334,6 @@ OnTouch:
 un_bk_q,216,300,0	script	C-0#Farm	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
-	if ((isbegin_quest(5359) + isbegin_quest(5360) + isbegin_quest(5361) + isbegin_quest(5362)) != 1) {
-		mes "[Bioengineer Touring]";
-		mes "Wait a minute. You cannot enter the farm right now.";
-		close;
-	}
 	warp "un_bk_q",216,345;
 	end;
 }
@@ -416,7 +341,6 @@ OnTouch:
 un_bk_q,216,280,0	script	C-0#G-1	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",220,261;
 	end;
 }
@@ -424,7 +348,6 @@ OnTouch:
 un_bk_q,217,262,0	script	G-1#C-0	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",213,279;
 	end;
 }
@@ -432,7 +355,6 @@ OnTouch:
 un_bk_q,249,268,0	script	G-1#M-0	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",390,380;
 	end;
 }
@@ -440,7 +362,6 @@ OnTouch:
 un_bk_q,389,377,0	script	M-0#G-1	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",250,265;
 	end;
 }
@@ -448,7 +369,6 @@ OnTouch:
 un_bk_q,258,262,0	script	G-1#Cafeteria	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",274,289;
 	end;
 }
@@ -456,13 +376,6 @@ OnTouch:
 un_bk_q,271,290,0	script	Cafeteria#G-1	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
-	if (.@cooldown_status_day[0] == 0 && .@cooldown_status_day[1] == 0 && .@cooldown_status_day[2] == 0 && .@cooldown_status_day[3] == 0 && .@cooldown_status_day[4] == 0) {
-		emotion 6, getnpcid(0, "Transportation Executive Ernon#EP15.2MR");
-		mes "[Transportation Executive Ernon]";
-		mes "Hey~ This is a time to borrow even the hands of small children. Stop goofing around and come here.";
-		close;
-	}
 	warp "un_bk_q",255,261;
 	end;
 }
@@ -470,19 +383,6 @@ OnTouch:
 un_bk_q,269,236,0	script	Clinic#G-1	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
-	if (.@cooldown_status_day[0] == 0 && .@cooldown_status_day[1] == 0 && .@cooldown_status_day[2] == 0 && .@cooldown_status_day[3] == 0 && .@cooldown_status_day[4] == 0) {
-		emotion 6, getnpcid(0, "Nurse Lapplad#EP15.2MR");
-		mes "[Nurse Lapplad]";
-		mes "Look here?! Where are you trying to go? We have to do some tests so don't leave and wait here!!";
-		close;
-	}
-	if ((isbegin_quest(5364) + isbegin_quest(5365)) == 1) {
-		emotion 6, getnpcid(0, "Nurse Lapplad#EP15.2MR");
-		mes "[Nurse Lapplad]";
-		mes "Hello? You have to deal with it before you can go? Where do you want to go!?";
-		close;
-	}
 	warp "un_bk_q",255,235;
 	end;
 }
@@ -490,7 +390,6 @@ OnTouch:
 un_bk_q,245,214,0	script	G-1#F-1	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",226,213;
 	end;
 }
@@ -498,7 +397,6 @@ OnTouch:
 un_bk_q,230,214,0	script	F-1#G-1	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",248,213;
 	end;
 }
@@ -506,7 +404,6 @@ OnTouch:
 un_bk_q,262,200,0	script	G-1#H-0	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",274,199;
 	end;
 }
@@ -514,7 +411,6 @@ OnTouch:
 un_bk_q,271,200,0	script	H-0#G-1	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",258,199;
 	end;
 }
@@ -522,7 +418,6 @@ OnTouch:
 un_bk_q,75,128,0	script	LeftA-0#LeftH-0	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",276,196;
 	end;
 }
@@ -530,7 +425,6 @@ OnTouch:
 un_bk_q,275,191,0	script	LeftH-0#LeftA-0	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",76,121;
 	end;
 }
@@ -538,7 +432,6 @@ OnTouch:
 un_bk_q,119,128,0	script	RightA-0#RightH-0	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",319,196;
 	end;
 }
@@ -546,7 +439,6 @@ OnTouch:
 un_bk_q,320,191,0	script	RightH-0#RightA-0	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",120,121;
 	end;
 }
@@ -554,19 +446,6 @@ OnTouch:
 un_bk_q,297,221,0	script	Clinic#H-0	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
-	if (.@cooldown_status_day[0] == 0 && .@cooldown_status_day[1] == 0 && .@cooldown_status_day[2] == 0 && .@cooldown_status_day[3] == 0 && .@cooldown_status_day[4] == 0) {
-		emotion 6, getnpcid(0, "Nurse Lapplad#EP15.2MR");
-		mes "[Nurse Lapplad]";
-		mes "Look here?! Where are you trying to go? We have to do some tests so don't leave and wait here!!";
-		close;
-	}
-	if ((isbegin_quest(5364) + isbegin_quest(5365)) == 1) {
-		emotion 6, getnpcid(0, "Nurse Lapplad#EP15.2MR");
-		mes "[Nurse Lapplad]";
-		mes "Hello? You have to deal with it before you can go? Where do you want to go!?";
-		close;
-	}
 	warp "un_bk_q",298,203;
 	end;
 }
@@ -574,7 +453,6 @@ OnTouch:
 un_bk_q,324,200,0	script	H-0#G-2	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",344,199;
 	end;
 }
@@ -582,7 +460,6 @@ OnTouch:
 un_bk_q,339,200,0	script	G-2#H-0	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",321,199;
 	end;
 }
@@ -590,7 +467,6 @@ OnTouch:
 un_bk_q,350,214,0	script	G-2#F-2	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",368,213;
 	end;
 }
@@ -598,7 +474,6 @@ OnTouch:
 un_bk_q,365,214,0	script	F-2#G-2	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",347,213;
 	end;
 }
@@ -606,19 +481,6 @@ OnTouch:
 un_bk_q,326,236,0	script	Clinic#G-2	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
-	if (.@cooldown_status_day[0] == 0 && .@cooldown_status_day[1] == 0 && .@cooldown_status_day[2] == 0 && .@cooldown_status_day[3] == 0 && .@cooldown_status_day[4] == 0) {
-		emotion 6, getnpcid(0, "Nurse Lapplad#EP15.2MR");
-		mes "[Nurse Lapplad]";
-		mes "Look here?! Where are you trying to go? We have to do some tests so don't leave and wait here!!";
-		close;
-	}
-	if ((isbegin_quest(5364) + isbegin_quest(5365)) == 1) {
-		emotion 6, getnpcid(0, "Nurse Lapplad#EP15.2MR");
-		mes "[Nurse Lapplad]";
-		mes "Hello? You have to deal with it before you can go? Where do you want to go!?";
-		close;
-	}
 	warp "un_bk_q",340,235;
 	end;
 }
@@ -626,13 +488,6 @@ OnTouch:
 un_bk_q,324,290,0	script	Cafeteria#G-2	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
-	if (.@cooldown_status_day[0] == 0 && .@cooldown_status_day[1] == 0 && .@cooldown_status_day[2] == 0 && .@cooldown_status_day[3] == 0 && .@cooldown_status_day[4] == 0) {
-		emotion 6, getnpcid(0, "Transportation Executive Ernon#EP15.2MR");
-		mes "[Transportation Executive Ernon]";
-		mes "Hey~ This is a time to borrow even the hands of small children. Stop goofing around and come here.";
-		close;
-	}
 	warp "un_bk_q",340,261;
 	end;
 }
@@ -640,7 +495,6 @@ OnTouch:
 un_bk_q,337,262,0	script	G-2#Cafeteria	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",321,289;
 	end;
 }
@@ -648,7 +502,6 @@ OnTouch:
 un_bk_q,343,270,0	script	G-2#N-0	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",382,328;
 	end;
 }
@@ -656,7 +509,6 @@ OnTouch:
 un_bk_q,381,325,0	script	N-0#G-2	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",344,267;
 	end;
 }
@@ -664,7 +516,6 @@ OnTouch:
 un_bk_q,370,264,0	script	G-2#I-0	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",388,263;
 	end;
 }
@@ -672,7 +523,6 @@ OnTouch:
 un_bk_q,385,264,0	script	I-0#G-2	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",367,263;
 	end;
 }
@@ -680,7 +530,6 @@ OnTouch:
 un_bk_q,297,192,0	script	H-0#Z-0	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",298,181;
 	end;
 }
@@ -688,7 +537,6 @@ OnTouch:
 un_bk_q,297,186,0	script	Z-0#H-0	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",298,196;
 	end;
 }
@@ -696,7 +544,6 @@ OnTouch:
 un_bk_q,229,163,0	script	Z-0#Z-1	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",159,52;
 	end;
 }
@@ -704,7 +551,6 @@ OnTouch:
 un_bk_q,164,51,0	script	Z-1#Z-0	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",233,164;
 	end;
 }
@@ -712,7 +558,6 @@ OnTouch:
 un_bk_q,366,164,0	script	Z-0#Z-2	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",31,51;
 	end;
 }
@@ -720,7 +565,6 @@ OnTouch:
 un_bk_q,27,52,0	script	Z-2#Z-0	WARPNPC,1,1,{
 	end;
 OnTouch:
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	warp "un_bk_q",361,163;
 	end;
 }

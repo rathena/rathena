@@ -531,6 +531,10 @@
 	export_constant(MF_SKILL_DURATION);
 	export_constant(MF_NOCASHSHOP);
 	export_constant(MF_NORODEX);
+	export_constant(MF_TB);
+	export_constant(MF_TB2);
+	export_constant(MF_TB3);
+	export_constant(MF_TB4);
 	export_constant(MF_NORENEWALDROPPENALTY);
 	export_constant(MF_NORENEWALEXPPENALTY);
 	export_constant(MF_NOPETCAPTURE);

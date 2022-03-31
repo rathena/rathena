@@ -95,7 +95,7 @@ mjolnir_03,91,161	monster	Green Plant	1080,1,180000,90000
 mjolnir_04,0,0	monster	Driller	1380,162,5000
 mjolnir_04,0,0	monster	Mantis	1139,43,5000
 mjolnir_04,0,0	monster	Side Winder	1037,43,5000
-mjolnir_04,0,0,0,0	boss_monster	Mistress	1059,1,7200000,600000,1
+mjolnir_04,0,0,0,0	boss_monster	Mistress	1059,1,180000,180000
 mjolnir_04,200,200,30,30	monster	Shining Plant	1083,3,1800000,900000
 mjolnir_04,177,34	monster	Green Plant	1080,1,180000,90000
 mjolnir_04,122,28	monster	Green Plant	1080,1,180000,90000

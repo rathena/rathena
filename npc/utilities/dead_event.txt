@@ -1,0 +1,49 @@
+prontera	mapflag	noexp
+prontera	mapflag	noloot
+prontera	mapflag	nopenalty
+force_1-1	mapflag	noexp
+force_1-1	mapflag	noloot
+force_1-1	mapflag	nopenalty
+force_1-2	mapflag	noexp
+force_1-2	mapflag	nopenalty
+
+-	script	DeadEvent	-1,{
+	end;
+	
+OnPCDieEvent:
+	.@dead_map_name$ = strcharinfo(3);
+	
+	if((.@dead_map_name$ == "pvp_y_1-1")
+			|| (.@dead_map_name$ == "pvp_y_1-4")
+			|| (.@dead_map_name$ == "force_1-1")
+			|| (.@dead_map_name$ == "force_1-2")
+			|| (.@dead_map_name$ == "prontera")){
+		dispbottom "คุณตายใน Map ที่ไม่มีโทษใด ๆ";
+		end;
+	}
+	else{
+		exp_multiplier = 0;
+		drop_multiplier = 0;
+		sc_end SC_EXPBOOST;
+		sc_end SC_ITEMBOOST;
+		
+		// Auto warp
+		if((.@dead_map_name$ == "bossnia_01")
+				|| (.@dead_map_name$ == "bossnia_02")
+				|| (.@dead_map_name$ == "bossnia_03")
+				|| (.@dead_map_name$ == "bossnia_04")
+				|| (.@dead_map_name$ == "tra_fild")
+				|| (.@dead_map_name$ == "lasa_sea")
+				|| (.@dead_map_name$ == "8@thts")
+				|| (.@dead_map_name$ == "1@halo"))
+		addtimer 1000,strnpcinfo(3) + "::OnWarp";
+		
+		end;
+	}
+	
+	end;
+	
+OnWarp:
+	warp "prontera",156,191;
+	end;
+}
