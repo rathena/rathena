@@ -40,3 +40,19 @@
 Header:
   Type: INSTANCE_DB
   Version: 2
+
+Body:
+  - Id: 10001
+    Name: Boss Private
+    TimeLimit: 600
+    Enter:
+      Map: new_5-3
+      X: 96
+      Y: 175
+  - Id: 10002
+    Name: Self Challenge
+    TimeLimit: 3600
+    Enter:
+      Map: force_2-1
+      X: 100
+      Y: 100
