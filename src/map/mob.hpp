@@ -258,9 +258,9 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node &node);
-	void loadingFinished();
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef node) override;
+	void loadingFinished() override;
 };
 
 struct s_mob_chat {

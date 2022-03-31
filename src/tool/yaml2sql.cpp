@@ -1001,7 +1001,7 @@ static bool mob_skill_db_yaml2sql(const std::string &file, const std::string &ta
 			column.pop_back(); // Remove last ','
 			value.pop_back(); // Remove last ','
 
-			out << "REPLACE INTO `" + table + "` (" + column + ") VALUES (" + value + ");\n";
+			outFile << "REPLACE INTO `" + table + "` (" + column + ") VALUES (" + value + ");\n";
 			entries++;
 		}
 	}

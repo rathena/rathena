@@ -5685,7 +5685,7 @@ const std::string MobSkillDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 MobSkillDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 MobSkillDatabase::parseBodyNode(const ryml::NodeRef node) {
 	std::string mob_name;
 
 	if (!this->asString( node, "Mob", mob_name ))
@@ -5723,7 +5723,9 @@ uint64 MobSkillDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Skills")) {
-		for (const YAML::Node &it : node["Skills"]) {
+		const auto SkillsNode = node["Skills"];
+
+		for (const auto it : SkillsNode.children()) {
 			uint16 index;
 
 			if (this->nodeExists(it, "Clear")) {
@@ -6024,7 +6026,9 @@ uint64 MobSkillDatabase::parseBodyNode(const YAML::Node &node) {
 						return 0;
 				}
 
-				for (const YAML::Node &summonit : it["Summon"]) {
+				const auto SummonNode = it["Summon"];
+
+				for (const auto summonit : SummonNode.children()) {
 					uint16 summon_index;
 
 					if (!this->asUInt16(summonit, "Index", summon_index))
@@ -6186,6 +6190,7 @@ void MobSkillDatabase::loadingFinished() {
  * @param str: Array of parsed SQL data
  * @return True on success or false otherwise
  */
+/*
 static bool mob_read_sqlskilldb_sub(std::vector<std::string> str) {
 	YAML::Node node;
 	int32 index = -1;
@@ -6240,6 +6245,7 @@ static bool mob_read_sqlskilldb_sub(std::vector<std::string> str) {
 
 	return mob_skill_db.parseBodyNode(node) > 0;
 }
+*/
 
 /**
  * Read SQL mob_skill_db table
@@ -6275,8 +6281,8 @@ static int mob_read_sqlskilldb(void)
 					data.push_back(str);
 			}
 
-			if (!mob_read_sqlskilldb_sub(data))
-				continue;
+			// if (!mob_read_sqlskilldb_sub(data))
+				// continue;
 
 			count++;
 		}
