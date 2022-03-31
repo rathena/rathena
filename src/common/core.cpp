@@ -6,6 +6,7 @@
 #include "../config/core.hpp"
 
 #ifndef MINICORE
+#include "database.hpp"
 #include "ers.hpp"
 #include "socket.hpp"
 #include "timer.hpp"

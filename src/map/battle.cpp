@@ -5668,13 +5668,14 @@ static void battle_calc_defense_reduction(struct Damage* wd, struct block_list *
 			def2 = 1;
 	}
 
-	//Vitality reduction from rodatazone: http://rodatazone.simgaming.net/mechanics/substats.php#def
+	//Damage reduction based on vitality
 	if (tsd) {	//Sd vit-eq
 		int skill;
 #ifndef RENEWAL
-		//[VIT*0.5] + rnd([VIT*0.3], max([VIT*0.3],[VIT^2/150]-1))
-		vit_def = def2*(def2-15)/150;
-		vit_def = def2/2 + (vit_def>0?rnd()%vit_def:0);
+		//Damage reduction: [VIT*0.3] + RND(0, [VIT^2/150] - [VIT*0.3] - 1) + [VIT*0.5]
+		vit_def = ((3 * def2) / 10);
+		vit_def += rnd_value(0, (def2 * def2) / 150 - ((3 * def2) / 10) - 1);
+		vit_def += (def2 / 2);
 #else
 		vit_def = def2;
 #endif
@@ -9836,7 +9837,7 @@ static const struct _battle_data {
 	{ "display_hallucination",              &battle_config.display_hallucination,           1,      0,      1,              },
 	{ "use_statpoint_table",                &battle_config.use_statpoint_table,             1,      0,      1,              },
 	{ "debuff_on_logout",                   &battle_config.debuff_on_logout,                0,      0,      1|2,            },
-	{ "monster_ai",                         &battle_config.mob_ai,                          0x000,  0x000,  0x77F,          },
+	{ "monster_ai",                         &battle_config.mob_ai,                          0x000,  0x000,  0xFFF,          },
 	{ "hom_setting",                        &battle_config.hom_setting,                     0xFFFF, 0x0000, 0xFFFF,         },
 	{ "dynamic_mobs",                       &battle_config.dynamic_mobs,                    1,      0,      1,              },
 	{ "mob_remove_damaged",                 &battle_config.mob_remove_damaged,              1,      0,      1,              },

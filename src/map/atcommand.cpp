@@ -103,7 +103,7 @@ public:
 
 	void clear() override;
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode( const YAML::Node& node ) override;
+	uint64 parseBodyNode( const ryml::NodeRef node ) override;
 
 	// Additional
 	const char* checkAlias( const char* alias );
@@ -118,7 +118,7 @@ const std::string AtcommandAliasDatabase::getDefaultLocation(){
 	return std::string(conf_path) + "/atcommands.yml";
 }
 
-uint64 AtcommandAliasDatabase::parseBodyNode( const YAML::Node& node ){
+uint64 AtcommandAliasDatabase::parseBodyNode( const ryml::NodeRef node ){
 	std::string command;
 
 	if( !this->asString( node, "Command", command ) ){
@@ -151,15 +151,16 @@ uint64 AtcommandAliasDatabase::parseBodyNode( const YAML::Node& node ){
 	}
 
 	if( this->nodeExists( node, "Aliases" ) ){
-		const YAML::Node& aliasesNode = node["Aliases"];
+		const auto aliasesNode = node["Aliases"];
 
-		if( !aliasesNode.IsSequence() ){
+		if( !aliasesNode.is_seq() ){
 			this->invalidWarning( aliasesNode, "Aliases should be a sequence.\n" );
 			return 0;
 		}
 
-		for( const auto& subNode : aliasesNode ){
-			std::string alias = subNode.as<std::string>();
+		for( const auto subNode : aliasesNode.children() ){
+			std::string alias;
+			subNode >> alias;
 
 			info->aliases.insert( alias );
 			this->aliases[alias] = command;
