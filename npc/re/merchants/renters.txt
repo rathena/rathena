@@ -1,18 +1,13 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Renters
-//===== By: ================================================== 
-//= rAthena Dev Team
-//===== Current Version: ===================================== 
-//= 2.2
-//===== Compatible With: ===================================== 
-//= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Renewal-specific breeder NPCs.
-//===== Additional Comments: ================================= 
+//===== Changelogs: ==========================================
 //= 2.1 Moved some renters to a separate renewal file. [Daegaladh]
 //= 2.2 Updated to match the official scripts. [Euphy]
-//============================================================ 
+//= 2.3 Added fourth class support. [Emistry]
+//============================================================
 
 // Dragon Breeder :: dragon
 //============================================================
