@@ -7,11 +7,11 @@ LIBCONFIG_H = $(shell ls ../../3rdparty/libconfig/*.h)
 LIBCONFIG_AR = ../../3rdparty/libconfig/obj/libconfig.a
 LIBCONFIG_INCLUDE = -I../../3rdparty/libconfig
 
-YAML_CPP_OBJ = $(shell find ../../3rdparty/yaml-cpp/ -type f -name "*.cpp" | sed -e "s/\.cpp/\.o/g" )
-YAML_CPP_DIR_OBJ = $(YAML_CPP_OBJ:%=obj/%)
-YAML_CPP_AR = ../../3rdparty/yaml-cpp/obj/yaml-cpp.a
-YAML_CPP_H = $(shell find ../../3rdparty/yaml-cpp/ -type f -name "*.h")
-YAML_CPP_INCLUDE = -I../../3rdparty/yaml-cpp/include
+RAPIDYAML_OBJ = $(shell find ../../3rdparty/rapidyaml/ -type f -name "*.cpp" | sed -e "s/\.cpp/\.o/g" )
+RAPIDYAML_DIR_OBJ = $(RAPIDYAML_OBJ:%=obj/%)
+RAPIDYAML_AR = ../../3rdparty/rapidyaml/obj/ryml.a
+RAPIDYAML_H = $(shell find ../../3rdparty/rapidyaml/ -type f -name "*.h*")
+RAPIDYAML_INCLUDE = -I../../3rdparty/rapidyaml/src -I../../3rdparty/rapidyaml/ext/c4core/src
 
 MAP_OBJ = $(shell ls *.cpp | sed -e "s/\.cpp/\.o/g")
 #MAP_OBJ += $(shell ls *.c | sed -e "s/\.c/\.o/g")
@@ -68,20 +68,20 @@ obj:
 
 # executables
 
-map-server: obj $(MAP_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(YAML_CPP_AR)
+map-server: obj $(MAP_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(RAPIDYAML_AR)
 	@echo "	LD	@OMAP@@EXEEXT@"
-	@@CXX@ @LDFLAGS@ -o ../../@OMAP@@EXEEXT@ $(MAP_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(YAML_CPP_AR) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
+	@@CXX@ @LDFLAGS@ -o ../../@OMAP@@EXEEXT@ $(MAP_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(RAPIDYAML_AR) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
 
 
 # map object files
 #cause this one failling otherwise
-obj/npc.o: npc.cpp $(MAP_H) $(COMMON_H) $(LIBCONFIG_H) $(YAML_CPP_H)
+obj/npc.o: npc.cpp $(MAP_H) $(COMMON_H) $(LIBCONFIG_H) $(RAPIDYAML_H)
 	@echo "	CXX	$< (custom rule)"
-	@@CXX@ @CXXFLAG_CLEARS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(YAML_CPP_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@@CXX@ @CXXFLAG_CLEARS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(RAPIDYAML_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 	
-obj/%.o: %.cpp $(MAP_H) $(COMMON_H) $(LIBCONFIG_H) $(YAML_CPP_H)
+obj/%.o: %.cpp $(MAP_H) $(COMMON_H) $(LIBCONFIG_H) $(RAPIDYAML_H)
 	@echo "	CXX	$<"
-	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(YAML_CPP_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) $(PCRE_CFLAGS) $(RAPIDYAML_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing object files
 $(COMMON_AR):
@@ -90,5 +90,5 @@ $(COMMON_AR):
 $(LIBCONFIG_AR):
 	@$(MAKE) -C ../../3rdparty/libconfig
 
-$(YAML_CPP_AR):
-	@$(MAKE) -C ../../3rdparty/yaml-cpp
+$(RAPIDYAML_AR):
+	@$(MAKE) -C ../../3rdparty/rapidyaml
