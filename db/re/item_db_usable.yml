@@ -44382,7 +44382,7 @@ Body:
     Script: |
       getgroupitem(IG_PITAPAT_BOX);
   - Id: 22721
-    AegisName: ?_Box
+    AegisName: "?_Box"
     Name: "? Box"
     Type: Cash
     Buy: 10

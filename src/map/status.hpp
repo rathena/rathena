@@ -97,7 +97,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode( const YAML::Node& node ) override;
+	uint64 parseBodyNode( const ryml::NodeRef node ) override;
 
 	// Additional
 	std::shared_ptr<s_refine_level_info> findLevelInfo( const struct item_data& data, struct item& item );
@@ -118,7 +118,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node &node) override;
+	uint64 parseBodyNode(const ryml::NodeRef node) override;
 };
 
 extern SizeFixDatabase size_fix_db;
@@ -136,7 +136,7 @@ public:
 		std::fill_n(&attr_fix_table[0][0][0], MAX_ELE_LEVEL * ELE_MAX * ELE_MAX, 100);
 	}
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node& node) override;
+	uint64 parseBodyNode(const ryml::NodeRef node) override;
 
 	// Additional
 	int16 getAttribute(uint16 level, uint16 atk_ele, uint16 def_ele);
@@ -2888,7 +2888,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node &node) override;
+	uint64 parseBodyNode(const ryml::NodeRef node) override;
 	void loadingFinished() override;
 
 	// Determine who will receive a clif_status_change packet for effects that require one to display correctly
