@@ -2889,7 +2889,7 @@ Body:
       Debuff: true
       OverlapFail: true
       SpreadEffect: true
-    MinDuration: 6000
+    MinDuration: 10000
     Fail:
       Refresh: true
       Inspiration: true

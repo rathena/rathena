@@ -2779,7 +2779,7 @@ Body:
       NoBanishingBuster: true
       Debuff: true
       OverlapFail: true
-    MinDuration: 6000
+    MinDuration: 10000
     Fail:
       Refresh: true
       Inspiration: true

@@ -8728,9 +8728,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 		sc = NULL;
 
 #ifdef RENEWAL
-	uint16 levelDiff = max(0, status_get_lv(src) - status_get_lv(bl));
-
-	levelDiff = (levelDiff * levelDiff / 5) * 100;
+	uint16 levelAdv = (pow(max(0, status_get_lv(src) - status_get_lv(bl)), 2) / 5) * 100;
 #endif
 
 	switch (type) {
@@ -8749,7 +8747,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 				tick_def = (status->vit*200)/3;
 			}
 #else
-			sc_def = status->vit * 100 - levelDiff;
+			sc_def = status->vit * 100 - levelAdv;
 			tick_def2 = -2000;
 #endif
 			break;
@@ -8759,7 +8757,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
 			tick_def2 = status->luk*10;
 #else
-			sc_def = status->vit * 100 - levelDiff;
+			sc_def = status->vit * 100 - levelAdv;
 			tick_def2 = -500;
 #endif
 			break;
@@ -8769,7 +8767,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
 			tick_def2 = status->luk*10;
 #else
-			sc_def = status->int_ * 100 - levelDiff;
+			sc_def = status->int_ * 100 - levelAdv;
 			tick_def2 = -2000;
 #endif
 			break;
@@ -8779,7 +8777,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
 			tick_def2 = status->luk*10;
 #else
-			sc_def = status->agi * 100 - levelDiff;
+			sc_def = status->agi * 100 - levelAdv;
 			tick_def2 = -12000;
 #endif
 			break;
@@ -8789,7 +8787,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
 			tick_def2 = status->luk*10;
 #else
-			sc_def = status->agi * 100 - levelDiff;
+			sc_def = status->agi * 100 - levelAdv;
 			tick_def2 = -2000;
 #endif
 			break;
@@ -8797,11 +8795,11 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 #ifndef RENEWAL
 			sc_def = status->mdef*100;
 			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
+			tick_def = 0; // No duration reduction
 #else
-			sc_def = status->mdef * 100 - levelDiff;
+			sc_def = status->mdef * 100 - levelAdv;
 			tick_def2 = -3000;
 #endif
-			tick_def = 0; // No duration reduction
 			break;
 		case SC_FREEZE:
 #ifndef RENEWAL
@@ -8809,7 +8807,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
 			tick_def2 = status_src->luk*-10; // Caster can increase final duration with luk
 #else
-			sc_def = status->mdef * 100 - levelDiff;
+			sc_def = status->mdef * 100 - levelAdv;
 			tick_def2 = -3000;
 #endif
 			break;
@@ -8823,7 +8821,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			tick_def = status->vit*100;
 			tick_def2 = status->luk*10;
 #else
-			sc_def = status->luk * 100 - levelDiff;
+			sc_def = status->luk * 100 - levelAdv;
 			tick_def2 = -2000;
 #endif
 			break;
@@ -8833,7 +8831,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
 			tick_def2 = status->luk*10;
 #else
-			sc_def = status->int_ * 100 - levelDiff;
+			sc_def = status->int_ * 100 - levelAdv;
 			tick_def2 = -2000;
 #endif
 			break;
@@ -8843,9 +8841,8 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			sc_def2 = status_get_lv(src)*10 - status_get_lv(bl)*10 - status->luk*10; // Reversed sc_def2
 			tick_def2 = status->luk*10;
 #else
-			sc_def = status->luk * 100 - levelDiff;
+			sc_def = status->luk * 100 - levelAdv;
 			tick_def2 = -2000;
-
 #endif
 			break;
 		case SC_DECREASEAGI:
@@ -8863,7 +8860,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			tick_def2 = (status->luk * 50 + status->agi * 200) / 2; // (50 * LUK / 100 + 20 * AGI / 100) / 2
 			break;
 		case SC_DEEPSLEEP:
-			tick_def2 = max(0, status_get_base_status(bl)->int_ * 25 + status_get_lv(bl) * 50);
+			tick_def2 = status_get_base_status(bl)->int_ * 25 + status_get_lv(bl) * 50;
 			break;
 		case SC_NETHERWORLD:
 			// Resistance: {(Target's Base Level / 50) + (Target's Job Level / 10)} seconds
@@ -8885,14 +8882,14 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			break;
 		case SC_FEAR:
 			sc_def = status->int_ * 10 + status_get_lv(bl) * 10 + status->luk * 10;
-			tick_def2 = -2000;
+			tick_def2 = -4000; // 2 seconds is applied twice on Aegis
 			break;
 		case SC_BURNING:
 			sc_def = status->agi * 10 + status_get_lv(bl) * 10 + status->luk * 10;
 			tick_def2 = -2000;
 			break;
-		case SC_FREEZING: // TODO: Confirm
-			tick_def2 = (status->vit + status->dex)*50;
+		case SC_FREEZING:
+			tick_def2 = (status->vit + status->dex) * 50;
 			break;
 		case SC_OBLIVIONCURSE: // 100% - (100 - 0.8 x INT)
 			sc_def = status->int_ * 80;
@@ -8916,7 +8913,6 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			tick_def2 = (status->vit + status->agi) * 70;
 			break;
 		case SC_CRYSTALIZE:
-			tick_def = 0;
 			tick_def2 = status_get_base_status(bl)->vit * 100;
 			break;
 		case SC_VACUUM_EXTREME:
@@ -8951,8 +8947,8 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			sc_def2 = sc_def2*battle_config.pc_sc_def_rate/100;
 		}
 
-		sc_def = min(sc_def, battle_config.pc_max_sc_def*100);
-		sc_def2 = min(sc_def2, battle_config.pc_max_sc_def*100);
+		sc_def = cap_value(sc_def, 0, battle_config.pc_max_sc_def*100);
+		sc_def2 = cap_value(sc_def2, 0, battle_config.pc_max_sc_def*100);
 
 		if (battle_config.pc_sc_def_rate != 100) {
 			tick_def = tick_def*battle_config.pc_sc_def_rate/100;
@@ -8964,8 +8960,8 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			sc_def2 = sc_def2*battle_config.mob_sc_def_rate/100;
 		}
 
-		sc_def = min(sc_def, battle_config.mob_max_sc_def*100);
-		sc_def2 = min(sc_def2, battle_config.mob_max_sc_def*100);
+		sc_def = cap_value(sc_def, 0, battle_config.mob_max_sc_def*100);
+		sc_def2 = cap_value(sc_def2, 0, battle_config.mob_max_sc_def*100);
 
 		if (battle_config.mob_sc_def_rate != 100) {
 			tick_def = tick_def*battle_config.mob_sc_def_rate/100;
@@ -9025,8 +9021,6 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 
 	// Cap minimum rate
 	rate = max(rate, scdb->min_rate);
-	// Cap minimum duration
-	tick = i64max(tick, scdb->min_duration);
 
 	if (rate < 10000 && (rate <= 0 || !(rnd()%10000 < rate)))
 		return 0;
@@ -9038,26 +9032,8 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 	tick -= tick*tick_def/10000;
 	tick -= tick_def2;
 
-	// Minimum durations
-	switch (type) {
-		case SC_ANKLE:
-		case SC_MARSHOFABYSS:
-			tick = i64max(tick, 5000); // Minimum duration 5s
-			break;
-		case SC_FREEZING:
-			tick = i64max(tick, 6000); // Minimum duration 6s
-			// NEED AEGIS CHECK: might need to be 10s (http://ro.gnjoy.com/news/notice/View.asp?seq=5352)
-			break;
-		case SC_BURNING:
-		case SC_STASIS:
-		case SC_VOICEOFSIREN:
-			tick = i64max(tick, 10000); // Minimum duration 10s
-			break;
-		default:
-			// Skills need to trigger even if the duration is reduced below 1ms
-			tick = i64max(tick, 1);
-			break;
-	}
+	// Cap minimum duration
+	tick = i64max(tick, scdb->min_duration);
 
 	return tick;
 }
