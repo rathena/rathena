@@ -18944,6 +18944,15 @@ static void clif_parse_ReqOpenBuyingStore( int fd, struct map_session_data* sd )
 		return;
 	}
 
+	if (map_getmapflag(sd->bl.m, MF_NOBUYINGSTORE)) {
+		clif_displaymessage(sd->fd, msg_txt(sd, 276)); // "You can't open a shop on this map"
+		return;
+	}
+	if (map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOBUYINGSTORE)) {
+		clif_displaymessage(sd->fd, msg_txt(sd, 204)); // "You can't open a shop on this cell."
+		return;
+	}
+
 	char storename[MESSAGE_SIZE];
 
 	safestrncpy( storename, p->storeName, sizeof( storename ) );
