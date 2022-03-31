@@ -493,18 +493,24 @@ set( DEVELOPMENT_DIRECTORIES
 	)
 set( RUNTIME_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/athena-start"
-	"${CMAKE_CURRENT_SOURCE_DIR}/charserv.bat"
-	"${CMAKE_CURRENT_SOURCE_DIR}/dbghelp.dll"
-	"${CMAKE_CURRENT_SOURCE_DIR}/libmysql.dll"
 	"${CMAKE_CURRENT_SOURCE_DIR}/LICENSE"
-	"${CMAKE_CURRENT_SOURCE_DIR}/logserv.bat"
-	"${CMAKE_CURRENT_SOURCE_DIR}/mapserv.bat"
-	"${CMAKE_CURRENT_SOURCE_DIR}/pcre3.dll"
-	"${CMAKE_CURRENT_SOURCE_DIR}/README.txt"
-	"${CMAKE_CURRENT_SOURCE_DIR}/runserver.bat"
-	"${CMAKE_CURRENT_SOURCE_DIR}/serv.bat"
-	"${CMAKE_CURRENT_SOURCE_DIR}/zlib1.dll"
+	"${CMAKE_CURRENT_SOURCE_DIR}/README.md"
 	)
+if (WIN32)
+	set (RUNTIME_FILES 
+		${RUNTIME_FILES}
+		"${CMAKE_CURRENT_SOURCE_DIR}/dbghelp.dll"
+		"${CMAKE_CURRENT_SOURCE_DIR}/libmysql.dll"
+		"${CMAKE_CURRENT_SOURCE_DIR}/pcre3.dll"
+		"${CMAKE_CURRENT_SOURCE_DIR}/zlib1.dll"
+		"${CMAKE_CURRENT_SOURCE_DIR}/tools/charserv.bat"
+		"${CMAKE_CURRENT_SOURCE_DIR}/tools/logserv.bat"
+		"${CMAKE_CURRENT_SOURCE_DIR}/tools/mapserv.bat"
+		"${CMAKE_CURRENT_SOURCE_DIR}/tools/runserver.bat"
+		"${CMAKE_CURRENT_SOURCE_DIR}/tools/serv.bat"
+	)
+endif(WIN32)
+
 set( RUNTIME_DIRECTORIES
 	"conf"
 	"db"
