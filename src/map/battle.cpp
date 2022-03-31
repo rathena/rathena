@@ -8306,7 +8306,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 
 			if (sc->data[SC_DEATHBOUND] && skill_id != WS_CARTTERMINATION && skill_id != GN_HELLS_PLANT_ATK && !status_bl_has_mode(src,MD_STATUSIMMUNE)) {
 				if (distance_bl(src,bl) <= 0 || !map_check_dir(map_calc_dir(bl,src->x,src->y), unit_getdir(bl))) {
-					int64 rd1 = min(damage, status_get_max_hp(bl)) * sc->data[SC_DEATHBOUND]->val2 / 100; // Amplify damage.
+					int64 rd1 = i64min(damage, status_get_max_hp(bl)) * sc->data[SC_DEATHBOUND]->val2 / 100; // Amplify damage.
 
 					*dmg = rd1 * 30 / 100; // Received damage = 30% of amplified damage.
 					clif_skill_damage(src, bl, gettick(), status_get_amotion(src), 0, -30000, 1, RK_DEATHBOUND, sc->data[SC_DEATHBOUND]->val1, DMG_SINGLE);
@@ -8349,7 +8349,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 			rdamage = damage * sc->data[SC_MAXPAIN]->val1 * 10 / 100;
 	}
 
-	return cap_value(min(rdamage,max_damage),INT_MIN,INT_MAX);
+	return cap_value(i64min(rdamage,max_damage),INT_MIN,INT_MAX);
 }
 
 /**
