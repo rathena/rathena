@@ -15659,7 +15659,8 @@ void clif_parse_AutoRevive(int fd, struct map_session_data *sd)
 ///      <criticalSuccessValue>.W <ASPD>.W <plusASPD>.W
 void clif_checkstatus_ack(map_session_data& sd, map_session_data& pl_sd)
 {
-	struct PACKET_ZC_ACK_STATUS_GM p;
+#if PACKETVER >= 20040816
+	struct PACKET_ZC_ACK_STATUS_GM p = {};
 
 	p.packetType = HEADER_ZC_ACK_STATUS_GM;
 
@@ -15691,6 +15692,7 @@ void clif_checkstatus_ack(map_session_data& sd, map_session_data& pl_sd)
 	p.plusASPD = 0;  // FIXME: What is 'plusASPD' supposed to be? Maybe adelay?
 
 	clif_send(&p, sizeof(p), &sd.bl, SELF);
+#endif
 }
 
 
@@ -15699,6 +15701,7 @@ void clif_checkstatus_ack(map_session_data& sd, map_session_data& pl_sd)
 /// 0213 <char name>.24B
 void clif_parse_ReqStatusGM(int fd, struct map_session_data *sd)
 {
+#if PACKETVER >= 20040816
 	char charname[NAME_LENGTH];
 	char command[CHAT_SIZE_MAX];
 	struct PACKET_CZ_REQ_STATUS_GM* p = (struct PACKET_CZ_REQ_STATUS_GM*)RFIFOP(fd, 0);
@@ -15710,6 +15713,7 @@ void clif_parse_ReqStatusGM(int fd, struct map_session_data *sd)
 	safesnprintf(command, sizeof(command), "%ccheckstatus %s", atcommand_symbol, charname);
 
 	is_atcommand(fd, sd, command, 1);
+#endif
 }
 
 
