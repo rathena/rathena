@@ -42,6 +42,7 @@ Header:
   Version: 2
 
 Body:
+  - Id: 35
     Name: Old Glast Heim Hard
     Enter:
       Map: 1@gl_k
