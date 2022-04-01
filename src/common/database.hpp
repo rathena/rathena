@@ -37,6 +37,8 @@ protected:
 	// Helper functions
 	bool nodeExists( const ryml::NodeRef node, const std::string& name );
 	bool nodesExist( const ryml::NodeRef node, std::initializer_list<const std::string> names );
+	int32 invalidWarningLine(const ryml::NodeRef node);
+	int32 invalidWarningCol(const ryml::NodeRef node);
 	void invalidWarning( const ryml::NodeRef node, const char* fmt, ... );
 	std::string getCurrentFile();
 
