@@ -9027,15 +9027,12 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 
 	// Duration cannot be reduced
 	if (flag&SCSTART_NOTICKDEF)
-		return i64max(tick, 1);
+		return i64max(tick, scdb->min_duration);
 
 	tick -= tick*tick_def/10000;
 	tick -= tick_def2;
 
-	// Cap minimum duration
-	tick = i64max(tick, scdb->min_duration);
-
-	return tick;
+	return i64max(tick, scdb->min_duration);
 }
 
 /**

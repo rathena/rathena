@@ -175,6 +175,7 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
+    Duration2: 4500
     Requires:
       SpCost:
         - Level: 1
@@ -5101,7 +5102,6 @@ Body:
     Type: Weapon
     Flags:
       IsQuest: true
-    Duration2: 5000
   - Id: 146
     Name: SM_AUTOBERSERK
     Description: Auto Berserk
