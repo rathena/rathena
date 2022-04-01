@@ -1054,11 +1054,17 @@ static void battle_absorb_damage(struct block_list *bl, struct Damage *d) {
 				struct map_session_data *sd = BL_CAST(BL_PC, bl);
 				if (!sd)
 					return;
+				dmg_ori = dmg_new = d->damage + d->damage2;
 				if (sd->bonus.absorb_dmg_maxhp) {
 					int hp = sd->bonus.absorb_dmg_maxhp * status_get_max_hp(bl) / 100;
-					dmg_ori = dmg_new = d->damage + d->damage2;
 					if (dmg_ori > hp)
 						dmg_new = dmg_ori - hp;
+				}
+				if (sd->bonus.absorb_dmg_maxhp2) {
+					int hp = sd->bonus.absorb_dmg_maxhp2 * status_get_max_hp(bl) / 100;
+					if (dmg_ori > hp) {
+						dmg_new = hp;
+					}
 				}
 			}
 			break;
@@ -1433,6 +1439,9 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 	if( sc && sc->data[SC_INVINCIBLE] && !sc->data[SC_INVINCIBLEOFF] )
 		return 1;
+
+	if (sc && sc->data[SC_MAXPAIN])
+		return 0;
 
 	switch (skill_id) {
 #ifndef RENEWAL
@@ -5659,13 +5668,14 @@ static void battle_calc_defense_reduction(struct Damage* wd, struct block_list *
 			def2 = 1;
 	}
 
-	//Vitality reduction from rodatazone: http://rodatazone.simgaming.net/mechanics/substats.php#def
+	//Damage reduction based on vitality
 	if (tsd) {	//Sd vit-eq
 		int skill;
 #ifndef RENEWAL
-		//[VIT*0.5] + rnd([VIT*0.3], max([VIT*0.3],[VIT^2/150]-1))
-		vit_def = def2*(def2-15)/150;
-		vit_def = def2/2 + (vit_def>0?rnd()%vit_def:0);
+		//Damage reduction: [VIT*0.3] + RND(0, [VIT^2/150] - [VIT*0.3] - 1) + [VIT*0.5]
+		vit_def = ((3 * def2) / 10);
+		vit_def += rnd_value(0, (def2 * def2) / 150 - ((3 * def2) / 10) - 1);
+		vit_def += (def2 / 2);
 #else
 		vit_def = def2;
 #endif
@@ -6267,14 +6277,6 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 
 		if (!tsc)
 			return;
-		
-		if (tsc->data[SC_MAXPAIN]) {
-			rdamage = wd->damage + wd->damage2;
-			tsc->data[SC_MAXPAIN]->val2 = (int)rdamage;
-			if(tsc && (!tsc->data[SC_KYOMU] && !(tsc->data[SC_DARKCROW] && wd->flag&BF_SHORT))) {//SC_KYOMU invalidates reflecting ability. SC_DARKCROW also does, but only for short weapon attack.
-				skill_castend_damage_id(target, src, NPC_MAXPAIN_ATK, tsc->data[SC_MAXPAIN]->val1, tick, ((wd->flag&1)?wd->flag-1:wd->flag));
-			}
-		}
 
 		// Calculate skill reflect damage separately
 		if ((ud && !ud->immune_attack) || !status_bl_has_mode(target, MD_SKILLIMMUNE))
@@ -6285,6 +6287,11 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 
 			if (sc && sc->data[SC_VITALITYACTIVATION])
 				rdamage /= 2;
+			if (tsc->data[SC_MAXPAIN]) {
+				tsc->data[SC_MAXPAIN]->val2 = (int)rdamage;
+				skill_castend_damage_id(target, src, NPC_MAXPAIN_ATK, tsc->data[SC_MAXPAIN]->val1, tick, wd->flag);
+				tsc->data[SC_MAXPAIN]->val2 = 0;
+			}
 			else if( attack_type == BF_WEAPON && tsc->data[SC_REFLECTDAMAGE] ) // Don't reflect your own damage (Grand Cross)
 				map_foreachinshootrange(battle_damage_area,target,skill_get_splash(LG_REFLECTDAMAGE,1),BL_CHAR,tick,target,wd->amotion,sstatus->dmotion,rdamage,wd->flag);
 			else if( attack_type == BF_WEAPON || attack_type == BF_MISC) {
@@ -8025,6 +8032,12 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			if (status_bl_has_mode(target, MD_STATUSIMMUNE))
 				md.damage /= 10;
 			break;
+		case NPC_MAXPAIN_ATK:
+			if (ssc && ssc->data[SC_MAXPAIN])
+				md.damage = ssc->data[SC_MAXPAIN]->val2;
+			else
+				md.damage = 0;
+			break;
 		case NPC_WIDESUCK:
 			md.damage = tstatus->max_hp * 15 / 100;
 			break;
@@ -8329,6 +8342,11 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 
 		if (rdamage > 0 && ssc->data[SC_REF_T_POTION])
 			return 1; // Returns 1 damage
+	}
+
+	if (sc) {
+		if (sc->data[SC_MAXPAIN])
+			rdamage = damage * sc->data[SC_MAXPAIN]->val1 * 10 / 100;
 	}
 
 	return cap_value(min(rdamage,max_damage),INT_MIN,INT_MAX);
@@ -9819,7 +9837,7 @@ static const struct _battle_data {
 	{ "display_hallucination",              &battle_config.display_hallucination,           1,      0,      1,              },
 	{ "use_statpoint_table",                &battle_config.use_statpoint_table,             1,      0,      1,              },
 	{ "debuff_on_logout",                   &battle_config.debuff_on_logout,                0,      0,      1|2,            },
-	{ "monster_ai",                         &battle_config.mob_ai,                          0x000,  0x000,  0x77F,          },
+	{ "monster_ai",                         &battle_config.mob_ai,                          0x000,  0x000,  0xFFF,          },
 	{ "hom_setting",                        &battle_config.hom_setting,                     0xFFFF, 0x0000, 0xFFFF,         },
 	{ "dynamic_mobs",                       &battle_config.dynamic_mobs,                    1,      0,      1,              },
 	{ "mob_remove_damaged",                 &battle_config.mob_remove_damaged,              1,      0,      1,              },
