@@ -47368,7 +47368,7 @@ Body:
       bonus bVariableCastrate,-10;
       bonus bDelayrate,-10;
   - Id: 300348
-    AegisName: aegis_300348
+    AegisName: SLD_G_Amon_Ra_Card_J
     Name: Sealed Nightmare Amon Ra Card
     Type: Card
     Weight: 10
@@ -54217,7 +54217,7 @@ Body:
       bonus bVariableCastrate,-5;
       bonus bMatk,3;
   - Id: 310881
-    AegisName: aegis_310881
+    AegisName: Runeknight_Top3
     Name: Rune Knight Stone(Upper)
     Type: Card
     SubType: Enchant
@@ -54239,44 +54239,44 @@ Body:
     Script: |
       bonus2 bSkillAtk,"RK_WINDCUTTER",5*getskilllv("RK_ENCHANTBLADE");
   - Id: 310884
-    AegisName: aegis_310884
-    Name: Warlock Stone(Upper)
+    AegisName: Warlock_Top3
+    Name: Warlock Stone (Upper)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bMagicAtkEle,Ele_All,2*getskilllv("WL_SOULEXPANSION");
   - Id: 310885
-    AegisName: aegis_310885
-    Name: Warlock Stone(Mid)
+    AegisName: Warlock_Middle3
+    Name: Warlock Stone (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bFixedCast,-100*getskilllv("WL_COMET");
   - Id: 310886
-    AegisName: aegis_310886
-    Name: Warlock Stone(Lower)
+    AegisName: Warlock_Bottom3
+    Name: Warlock Stone (Lower)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDelayrate,-getskilllv("WL_CHAINLIGHTNING");
   - Id: 310887
-    AegisName: aegis_310887
-    Name: Royal Guard Stone(Upper)
+    AegisName: Royalguard_Top3
+    Name: Royal Guard Stone (Upper)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bFixedCast,-100*getskilllv("LG_INSPIRATION");
   - Id: 310888
-    AegisName: aegis_310888
-    Name: Royal Guard Stone(Mid)
+    AegisName: Royalguard_Middle3
+    Name: Royal Guard Stone (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bLongAtkRate,2*getskilllv("LG_PIETY");
       bonus2 bMagicAtkEle,Ele_All,2*getskilllv("LG_PIETY");
   - Id: 310889
-    AegisName: aegis_310889
-    Name: Royal Guard Stone(Lower)
+    AegisName: Royalguard_Bottom3
+    Name: Royal Guard Stone (Lower)
     Type: Card
     SubType: Enchant
     Script: |
@@ -54968,65 +54968,65 @@ Body:
     Script: |
       bonus2 bExpAddRace,RC_All,5;
   - Id: 311005
-    AegisName: aegis_311005
-    Name: Wondermins Stone (top)    # !todo check english name
+    AegisName: WanderMins_Top3
+    Name: Wander Mins Stone (Upper)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bVariableCastrate,-getskilllv("WM_LESSON");
   - Id: 311006
-    AegisName: aegis_311006
-    Name: Wondermin's Stone (Discontinued)    # !todo check english name
+    AegisName: WanderMins_Middle3
+    Name: Wander Mins Stone (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-(100*getskilllv("WM_SIRCLEOFNATURE"));
       bonus2 bSkillCooldown,"WM_METALICSOUND",-(100*getskilllv("WM_SIRCLEOFNATURE"));
   - Id: 311007
-    AegisName: aegis_311007
-    Name: Wondermin's Stone (bottom)    # !todo check english name
+    AegisName: WanderMins_Bottom3
+    Name: Wander Mins Stone (Lower)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bFixedCast,-100*getskilllv("WM_FRIGG_SONG");
   - Id: 311008
-    AegisName: aegis_311008
-    Name: Generic Stone (top)    # !todo check english name
+    AegisName: Genetic_Top3
+    Name: Genetic Stone (Upper)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bLongAtkRate,2*getskilllv("GN_CARTCANNON");
   - Id: 311009
-    AegisName: aegis_311009
-    Name: Generic Stone (Discontinued)    # !todo check english name
+    AegisName: Genetic_Middle3
+    Name: Generic Stone (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bVariableCastrate,-2*getskilllv("GN_REMODELING_CART");
   - Id: 311010
-    AegisName: aegis_311010
-    Name: Generic Stone (Bottom)    # !todo check english name
+    AegisName: Genetic_Bottom3
+    Name: Genetic Stone (Lower)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bFixedCast,-100*getskilllv("GN_TRAINING_SWORD");
   - Id: 311011
-    AegisName: aegis_311011
-    Name: Sorcerer Stone (top)    # !todo check english name
+    AegisName: Sorcerer_Top3
+    Name: Sorcerer Stone (Upper)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bFixedCast,-100*getskilllv("SO_STRIKING");
   - Id: 311012
-    AegisName: aegis_311012
-    Name: Sorcerer Stone (Discontinued)    # !todo check english name
+    AegisName: Sorcerer_Middle3
+    Name: Sorcerer Stone (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bVariableCastrate,-2*getskilllv("SO_DIAMONDDUST");
   - Id: 311013
-    AegisName: aegis_311013
-    Name: Sorcerer Stone (bottom)    # !todo check english name
+    AegisName: Sorcerer_Bottom3
+    Name: Sorcerer Stone (Lower)
     Type: Card
     SubType: Enchant
     Script: |
