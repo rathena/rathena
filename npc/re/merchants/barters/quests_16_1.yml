@@ -49,167 +49,812 @@ Header:
 Body:
   - Name: shop_ext161_JOB_RUNE_KNIGHT
     Items:
-      - { Index: 0, Item: Noblesse_Attack_Ring     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 1, Item: Noblesse_Attack_Manteau  , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 2, Item: Noblesse_Attack_Boots    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 3, Item: Noblesse_Rifine_Ticket   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 4, Item: Noblesse_Rolling_Suit    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Assasin_Suit    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
+      - Index: 0
+        Item: Noblesse_Attack_Ring
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 1
+        Item: Noblesse_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 2
+        Item: Noblesse_Attack_Boots  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 3
+        Item: Noblesse_Rifine_Ticket 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 4
+        Item: Noblesse_Rolling_Suit  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 5
+        Item: Noblesse_Assasin_Suit  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
   - Name: shop_ext161_JOB_RANGER
     Items:
-      - { Index: 0, Item: Noblesse_Attack_Ring     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 1, Item: Noblesse_Attack_Manteau  , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 2, Item: Noblesse_Attack_Boots    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 3, Item: Noblesse_Rifine_Ticket   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 4, Item: Noblesse_Aim_Suit        , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Sharp_Suit      , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
+      - Index: 0
+        Item: Noblesse_Attack_Ring   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 1
+        Item: Noblesse_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 2
+        Item: Noblesse_Attack_Boots  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 3
+        Item: Noblesse_Rifine_Ticket 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 4
+        Item: Noblesse_Aim_Suit      
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 5
+        Item: Noblesse_Sharp_Suit    
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
   - Name: shop_ext161_JOB_SHADOW_CHASER
     Items:
-      - { Index: 0, Item: Noblesse_Attack_Ring     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 1, Item: Noblesse_Attack_Manteau  , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 2, Item: Noblesse_Attack_Boots    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 3, Item: Noblesse_Rifine_Ticket   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 4, Item: Noblesse_Fatal_Suit      , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Stalker_Suit    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Magic_Boots     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Magic_Manteau   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Magic_Ring      , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
+      - Index: 0
+        Item: Noblesse_Attack_Ring   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 1
+        Item: Noblesse_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 2
+        Item: Noblesse_Attack_Boots  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 3
+        Item: Noblesse_Rifine_Ticket 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 4
+        Item: Noblesse_Fatal_Suit    
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 5
+        Item: Noblesse_Stalker_Suit  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 6
+        Item: Noblesse_Magic_Boots   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 7
+        Item: Noblesse_Magic_Manteau 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 8
+        Item: Noblesse_Magic_Ring    
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
   - Name: shop_ext161_JOB_RUNE_KNIGHT
     Items:
-      - { Index: 0, Item: Noblesse_Attack_Ring     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 1, Item: Noblesse_Attack_Manteau  , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 2, Item: Noblesse_Attack_Boots    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 3, Item: Noblesse_Rifine_Ticket   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 4, Item: Noblesse_Knight_Armor    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Breath_Armor    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
+      - Index: 0
+        Item: Noblesse_Attack_Ring   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 1
+        Item: Noblesse_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 2
+        Item: Noblesse_Attack_Boots  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 3
+        Item: Noblesse_Rifine_Ticket 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 4
+        Item: Noblesse_Knight_Armor  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 5
+        Item: Noblesse_Breath_Armor  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
   - Name: shop_ext161_JOB_ARCH_BISHOP
     Items:
-      - { Index: 0, Item: Noblesse_Attack_Ring     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 1, Item: Noblesse_Attack_Manteau  , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 2, Item: Noblesse_Attack_Boots    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 3, Item: Noblesse_Rifine_Ticket   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 4, Item: Noblesse_Adora_Robe      , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Duple_Robe      , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Magic_Boots     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Magic_Manteau   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Magic_Ring      , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
+      - Index: 0
+        Item: Noblesse_Attack_Ring   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 1
+        Item: Noblesse_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 2
+        Item: Noblesse_Attack_Boots  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 3
+        Item: Noblesse_Rifine_Ticket 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 4
+        Item: Noblesse_Adora_Robe    
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 5
+        Item: Noblesse_Duple_Robe    
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 6
+        Item: Noblesse_Magic_Boots   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 7
+        Item: Noblesse_Magic_Manteau 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 8
+        Item: Noblesse_Magic_Ring    
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
   - Name: shop_ext161_JOB_GENETIC
     Items:
-      - { Index: 0, Item: Noblesse_Attack_Ring     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 1, Item: Noblesse_Attack_Manteau  , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 2, Item: Noblesse_Attack_Boots    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 3, Item: Noblesse_Rifine_Ticket   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 4, Item: Noblesse_Kart_Suit       , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Kart_Suit2      , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
+      - Index: 0
+        Item: Noblesse_Attack_Ring   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 1
+        Item: Noblesse_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 2
+        Item: Noblesse_Attack_Boots  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 3
+        Item: Noblesse_Rifine_Ticket 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 4
+        Item: Noblesse_Kart_Suit     
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 5
+        Item: Noblesse_Kart_Suit2    
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
   - Name: shop_ext161_JOB_SUMMONER
     Items:
-      - { Index: 0, Item: Noblesse_Attack_Ring     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 1, Item: Noblesse_Attack_Manteau  , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 2, Item: Noblesse_Attack_Boots    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 3, Item: Noblesse_Rifine_Ticket   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 4, Item: Noblesse_Picky_Robe      , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Carrot_Robe     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Magic_Boots     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Magic_Manteau   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Magic_Ring      , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
+      - Index: 0
+        Item: Noblesse_Attack_Ring   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 1
+        Item: Noblesse_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 2
+        Item: Noblesse_Attack_Boots  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 3
+        Item: Noblesse_Rifine_Ticket 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 4
+        Item: Noblesse_Picky_Robe    
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 5
+        Item: Noblesse_Carrot_Robe   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 6
+        Item: Noblesse_Magic_Boots   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 7
+        Item: Noblesse_Magic_Manteau 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 8
+        Item: Noblesse_Magic_Ring    
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
   - Name: shop_ext161_JOB_WARLOCK
     Items:
-      - { Index: 0, Item: Noblesse_Magic_Ring      , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 1, Item: Noblesse_Magic_Manteau   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 2, Item: Noblesse_Magic_Boots     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 3, Item: Noblesse_Rifine_Ticket   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 4, Item: Noblesse_Frost_Robe      , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Crimson_Robe    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
+      - Index: 0
+        Item: Noblesse_Magic_Ring    
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 1
+        Item: Noblesse_Magic_Manteau 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 2
+        Item: Noblesse_Magic_Boots   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 3
+        Item: Noblesse_Rifine_Ticket 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 4
+        Item: Noblesse_Frost_Robe    
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 5
+        Item: Noblesse_Crimson_Robe  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
   - Name: shop_ext161_JOB_SORCERER
     Items:
-      - { Index: 0, Item: Noblesse_Magic_Ring      , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 1, Item: Noblesse_Magic_Manteau   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 2, Item: Noblesse_Magic_Boots     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 3, Item: Noblesse_Rifine_Ticket   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 4, Item: Noblesse_Dust_Robe       , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Psychic_Robe    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
+      - Index: 0
+        Item: Noblesse_Magic_Ring    
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 1
+        Item: Noblesse_Magic_Manteau 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 2
+        Item: Noblesse_Magic_Boots   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 3
+        Item: Noblesse_Rifine_Ticket 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 4
+        Item: Noblesse_Dust_Robe     
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 5
+        Item: Noblesse_Psychic_Robe  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
   - Name: shop_ext161_JOB_SOUL_REAPER
     Items:
-      - { Index: 0, Item: Noblesse_Magic_Ring      , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 1, Item: Noblesse_Magic_Manteau   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 2, Item: Noblesse_Magic_Boots     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 3, Item: Noblesse_Rifine_Ticket   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 4, Item: Noblesse_Swhoo_Robe      , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Explosion_Robe  , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
+      - Index: 0
+        Item: Noblesse_Magic_Ring    
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 1
+        Item: Noblesse_Magic_Manteau 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 2
+        Item: Noblesse_Magic_Boots   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 3
+        Item: Noblesse_Rifine_Ticket 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 4
+        Item: Noblesse_Swhoo_Robe    
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 5
+        Item: Noblesse_Explosion_Robe
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
   - Name: shop_ext161_JOB_REBELLION
     Items:
-      - { Index: 0, Item: Noblesse_Attack_Ring     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 1, Item: Noblesse_Attack_Manteau  , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 2, Item: Noblesse_Attack_Boots    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 3, Item: Noblesse_Rifine_Ticket   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 4, Item: Noblesse_Firerain_Suit   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Trip_Suit       , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
+      - Index: 0
+        Item: Noblesse_Attack_Ring   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 1
+        Item: Noblesse_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 2
+        Item: Noblesse_Attack_Boots  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 3
+        Item: Noblesse_Rifine_Ticket 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 4
+        Item: Noblesse_Firerain_Suit 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 5
+        Item: Noblesse_Trip_Suit     
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
   - Name: shop_ext161_JOB_ROYAL_GUARD
     Items:
-      - { Index: 0, Item: Noblesse_Attack_Ring     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 1, Item: Noblesse_Attack_Manteau  , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 2, Item: Noblesse_Attack_Boots    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 3, Item: Noblesse_Rifine_Ticket   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 4, Item: Noblesse_Spear_Armor     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Genesis_Armor   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Magic_Boots     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Magic_Manteau   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Magic_Ring      , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
+      - Index: 0
+        Item: Noblesse_Attack_Ring   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 1
+        Item: Noblesse_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 2
+        Item: Noblesse_Attack_Boots  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 3
+        Item: Noblesse_Rifine_Ticket 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 4
+        Item: Noblesse_Spear_Armor   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 5
+        Item: Noblesse_Genesis_Armor 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 6
+        Item: Noblesse_Magic_Boots   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 7
+        Item: Noblesse_Magic_Manteau 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 8
+        Item: Noblesse_Magic_Ring    
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
   - Name: shop_ext161_JOB_SURA
     Items:
-      - { Index: 0, Item: Noblesse_Attack_Ring     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 1, Item: Noblesse_Attack_Manteau  , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 2, Item: Noblesse_Attack_Boots    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 3, Item: Noblesse_Rifine_Ticket   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 4, Item: Noblesse_Knuckle_Suit    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Tiger_Suit      , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
+      - Index: 0
+        Item: Noblesse_Attack_Ring   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 1
+        Item: Noblesse_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 2
+        Item: Noblesse_Attack_Boots  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 3
+        Item: Noblesse_Rifine_Ticket 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 4
+        Item: Noblesse_Knuckle_Suit  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 5
+        Item: Noblesse_Tiger_Suit    
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
   - Name: shop_ext161_JOB_KAGEROU
     Items:
-      - { Index: 0, Item: Noblesse_Attack_Ring     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 1, Item: Noblesse_Attack_Manteau  , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 2, Item: Noblesse_Attack_Boots    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 3, Item: Noblesse_Rifine_Ticket   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 4, Item: Noblesse_Kunai_Suit      , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Ninja_Suit      , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Magic_Boots     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Magic_Manteau   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Magic_Ring      , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
+      - Index: 0
+        Item: Noblesse_Attack_Ring   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 1
+        Item: Noblesse_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 2
+        Item: Noblesse_Attack_Boots  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 3
+        Item: Noblesse_Rifine_Ticket 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 4
+        Item: Noblesse_Kunai_Suit    
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 5
+        Item: Noblesse_Ninja_Suit    
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 6
+        Item: Noblesse_Magic_Boots   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 7
+        Item: Noblesse_Magic_Manteau 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 8
+        Item: Noblesse_Magic_Ring    
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
   - Name: shop_ext161_JOB_STAR_EMPEROR
     Items:
-      - { Index: 0, Item: Noblesse_Attack_Ring     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 1, Item: Noblesse_Attack_Manteau  , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 2, Item: Noblesse_Attack_Boots    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 3, Item: Noblesse_Rifine_Ticket   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 4, Item: Noblesse_Sun_Suit        , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Moon_Suit       , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
+      - Index: 0
+        Item: Noblesse_Attack_Ring   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 1
+        Item: Noblesse_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 2
+        Item: Noblesse_Attack_Boots  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 3
+        Item: Noblesse_Rifine_Ticket 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 4
+        Item: Noblesse_Sun_Suit      
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 5
+        Item: Noblesse_Moon_Suit     
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
   - Name: shop_ext161_JOB_MINSTREL
     Items:
-      - { Index: 0, Item: Noblesse_Attack_Ring     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 1, Item: Noblesse_Attack_Manteau  , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 2, Item: Noblesse_Attack_Boots    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 3, Item: Noblesse_Rifine_Ticket   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 4, Item: Noblesse_Severe_Suit     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Reverb_Suit     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Magic_Boots     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Magic_Manteau   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Magic_Ring      , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
+      - Index: 0
+        Item: Noblesse_Attack_Ring   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 1
+        Item: Noblesse_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 2
+        Item: Noblesse_Attack_Boots  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 3
+        Item: Noblesse_Rifine_Ticket 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 4
+        Item: Noblesse_Severe_Suit   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 5
+        Item: Noblesse_Reverb_Suit   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 6
+        Item: Noblesse_Magic_Boots   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 7
+        Item: Noblesse_Magic_Manteau 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 8
+        Item: Noblesse_Magic_Ring    
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
   - Name: shop_ext161_JOB_SUPER_NOVICE_E
     Items:
-      - { Index: 0, Item: Noblesse_Attack_Ring     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 1, Item: Noblesse_Attack_Manteau  , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 2, Item: Noblesse_Attack_Boots    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 3, Item: Noblesse_Rifine_Ticket   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 4, Item: Noblesse_Snovice_Suit    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Snovice_Robe    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Magic_Boots     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Magic_Manteau   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Magic_Ring      , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
+      - Index: 0
+        Item: Noblesse_Attack_Ring   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 1
+        Item: Noblesse_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 2
+        Item: Noblesse_Attack_Boots  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 3
+        Item: Noblesse_Rifine_Ticket 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 4
+        Item: Noblesse_Snovice_Suit  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 5
+        Item: Noblesse_Snovice_Robe  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 6
+        Item: Noblesse_Magic_Boots   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 7
+        Item: Noblesse_Magic_Manteau 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 8
+        Item: Noblesse_Magic_Ring    
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
   - Name: shop_ext161_JOB_STAR_EMPEROR
     Items:
-      - { Index: 0, Item: Noblesse_Attack_Ring     , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 1, Item: Noblesse_Attack_Manteau  , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 2, Item: Noblesse_Attack_Boots    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 3, Item: Noblesse_Rifine_Ticket   , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 4, Item: Noblesse_Tonado_Armor    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
-      - { Index: 5, Item: Noblesse_Vulcan_Armor    , RequiredItems: [ { Index: 0, Item: TokenOfHonor, Amount: 10 } ] }
+      - Index: 0
+        Item: Noblesse_Attack_Ring   
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 1
+        Item: Noblesse_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 2
+        Item: Noblesse_Attack_Boots  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 3
+        Item: Noblesse_Rifine_Ticket 
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 4
+        Item: Noblesse_Tonado_Armor  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
+      - Index: 5
+        Item: Noblesse_Vulcan_Armor  
+        RequiredItems:
+          - Index: 0
+            Item: TokenOfHonor
+            Amount: 10
 

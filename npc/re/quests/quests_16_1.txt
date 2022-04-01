@@ -14261,99 +14261,45 @@ prt_cas,165,260,6	script	Noblesse Operator#ext161	4_F_CRU,{
 	mes "We have ^4d4dffNoblesse^000000 equipment that can be exchanged for <ITEM>[Honor Token]<INFO>6919</INFO></ITEM>.";
 	mes "I will guide you to exchange items according to your job.";
 	close2;
-	switch( Class ) {
-		case JOB_RUNE_KNIGHT:
-		case JOB_RUNE_KNIGHT_T:
-		case JOB_RUNE_KNIGHT2:
-		case JOB_RUNE_KNIGHT_T2:
-		case JOB_BABY_RUNE_KNIGHT:
-		case JOB_BABY_RUNE_KNIGHT2:
-		case JOB_DRAGON_KNIGHT:
-		case JOB_DRAGON_KNIGHT2:
-			.@str$ = "JOB_RUNE_KNIGHT";
-			break;
-		case JOB_WARLOCK:
-		case JOB_WARLOCK_T:
-		case JOB_BABY_WARLOCK:
-		case JOB_ARCH_MAGE:
-			.@str$ = "JOB_WARLOCK";
-			break;
-		case JOB_RANGER:
-		case JOB_RANGER_T:
-		case JOB_RANGER2:
-		case JOB_RANGER_T2:
-		case JOB_BABY_RANGER:
-		case JOB_BABY_RANGER2:
-		case JOB_WINDHAWK:
-		case JOB_WINDHAWK2:
-			.@str$ = "JOB_RANGER";
-			break;
-		case JOB_ARCH_BISHOP:
-		case JOB_ARCH_BISHOP_T:
-		case JOB_BABY_ARCH_BISHOP:
-		case JOB_CARDINAL:
-			.@str$ = "JOB_ARCH_BISHOP";
-			break;
-		case JOB_MECHANIC:
-		case JOB_MECHANIC_T:
-		case JOB_MECHANIC2:
-		case JOB_MECHANIC_T2:
-		case JOB_BABY_MECHANIC:
-		case JOB_BABY_MECHANIC2:
-		case JOB_MEISTER:
-		case JOB_MEISTER2:
-			.@str$ = "JOB_MECHANIC";
-			break;
-		case JOB_GUILLOTINE_CROSS:
-		case JOB_GUILLOTINE_CROSS_T:
-		case JOB_BABY_GUILLOTINE_CROSS:
-		case JOB_SHADOW_CROSS:
-			.@str$ = "JOB_GUILLOTINE_CROSS";
-			break;
-		case JOB_ROYAL_GUARD:
-		case JOB_ROYAL_GUARD_T:
-		case JOB_ROYAL_GUARD2:
-		case JOB_ROYAL_GUARD_T2:
-		case JOB_BABY_ROYAL_GUARD:
-		case JOB_BABY_ROYAL_GUARD2:
-		case JOB_IMPERIAL_GUARD:
-		case JOB_IMPERIAL_GUARD2:
-			.@str$ = "JOB_ROYAL_GUARD";
-			break;
-		case JOB_SORCERER:
-		case JOB_SORCERER_T:
-		case JOB_BABY_SORCERER:
-		case JOB_ELEMENTAL_MASTER:
-			.@str$ = "JOB_SORCERER";
-			break;
-		case JOB_MINSTREL:
-		case JOB_MINSTREL_T:
-		case JOB_BABY_MINSTREL:
-		case JOB_WANDERER:
-		case JOB_WANDERER_T:
-		case JOB_BABY_WANDERER:
-		case JOB_TROUBADOUR:
-		case JOB_TROUVERE:
-			.@str$ = "JOB_MINSTREL";
-			break;
-		case JOB_SURA:
-		case JOB_SURA_T:
-		case JOB_BABY_SURA:
-		case JOB_INQUISITOR:
-			.@str$ = "JOB_SURA";
-			break;
-		case JOB_GENETIC:
-		case JOB_GENETIC_T:
-		case JOB_BABY_GENETIC:
-		case JOB_BIOLO:
-			.@str$ = "JOB_GENETIC";
-			break;
-		case JOB_SHADOW_CHASER:
-		case JOB_SHADOW_CHASER_T:
-		case JOB_BABY_SHADOW_CHASER:
-		case JOB_ABYSS_CHASER:
-			.@str$ = "JOB_SHADOW_CHASER";
-			break;
+	switch( eaclass() & EAJ_THIRDMASK ) {
+	case EAJ_RUNE_KNIGHT:
+		.@str$ = "JOB_RUNE_KNIGHT";
+		break;
+	case EAJ_WARLOCK:
+		.@str$ = "JOB_WARLOCK";
+		break;
+	case EAJ_RANGER:
+		.@str$ = "JOB_RANGER";
+		break;
+	case EAJ_ARCH_BISHOP:
+		.@str$ = "JOB_ARCH_BISHOP";
+		break;
+	case EAJ_MECHANIC:
+		.@str$ = "JOB_MECHANIC";
+		break;
+	case EAJ_GUILLOTINE_CROSS:
+		.@str$ = "JOB_GUILLOTINE_CROSS";
+		break;
+	case EAJ_ROYAL_GUARD:
+		.@str$ = "JOB_ROYAL_GUARD";
+		break;
+	case EAJ_SORCERER:
+		.@str$ = "JOB_SORCERER";
+		break;
+	case EAJ_MINSTRELWANDERER:
+		.@str$ = "JOB_MINSTREL";
+		break;
+	case EAJ_SURA:
+		.@str$ = "JOB_SURA";
+		break;
+	case EAJ_GENETIC:
+		.@str$ = "JOB_GENETIC";
+		break;
+	case EAJ_SHADOW_CHASER:
+		.@str$ = "JOB_SHADOW_CHASER";
+		break;
+	default:
+		switch( Class ) {
 		case JOB_SUPER_NOVICE_E:
 		case JOB_SUPER_BABY_E:
 		case JOB_HYPER_NOVICE:
@@ -14392,6 +14338,8 @@ prt_cas,165,260,6	script	Noblesse Operator#ext161	4_F_CRU,{
 			break;
 		default:
 			end;
+		}
+		break;
 	}
 	callshop "shop_ext161_" + .@str$;
 	end;
