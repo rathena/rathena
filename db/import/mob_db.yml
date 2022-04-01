@@ -1,0 +1,950 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Monster Database
+###########################################################################
+#
+# Monster Settings
+#
+###########################################################################
+# - Id                      Monster ID.
+#   AegisName               Server name to reference the monster in scripts and lookups, should use no spaces.
+#   Name                    Name in English.
+#   JapaneseName            Name in Japanese. (Default: 'Name' value)
+#   Level                   Level. (Default: 1)
+#   Hp                      Total HP. (Default: 1)
+#   Sp                      Total SP. (Default: 1)
+#   BaseExp                 Base experience gained. (Default: 0)
+#   JobExp                  Job experience gained. (Default: 0)
+#   MvpExp                  MVP experience gained. (Default: 0)
+#   Attack                  Minimum attack in pre-renewal and base attack in renewal. (Default: 0)
+#   Attack2                 Maximum attack in pre-renewal and base magic attack in renewal. (Default: 0)
+#   Defense                 Physical defense of the monster, reduces melee and ranged physical attack/skill damage. (Default: 0)
+#   MagicDefense            Magic defense of the monster, reduces magical skill damage. (Default: 0)
+#   Resistance              Physical resistance of the monster, reduces melee and ranged physical attack/skill damage. (Default: 0)
+#   MagicResistance         Magic resistance of the monster, reduces magical skill damage. (Default: 0)
+#   Str                     Strength which affects attack. (Default: 1)
+#   Agi                     Agility which affects flee. (Default: 1)
+#   Vit                     Vitality which affects defense. (Default: 1)
+#   Int                     Intelligence which affects magic attack. (Default: 1)
+#   Dex                     Dexterity which affects hit rate. (Default: 1)
+#   Luk                     Luck which affects perfect dodge/lucky flee/perfect flee/lucky dodge rate. (Default: 1)
+#   AttackRange             Attack range. (Default: 0)
+#   SkillRange              Skill cast range. (Default: 0)
+#   ChaseRange              Chase range. (Default: 0)
+#   Size                    Size. (Default: Small)
+#   Race                    Race. (Default: Formless)
+#   RaceGroups:             List of secondary groups the monster may be part of. (Optional)
+#     <group>: <value>      Group to toggle.
+#   Element                 Element. (Default: Neutral)
+#   ElementLevel            Level of element. (Default: 1)
+#   WalkSpeed               Walk speed. (Default: DEFAULT_WALK_SPEED)
+#   AttackDelay             Attack speed. (Default: 0)
+#   AttackMotion            Attack animation speed. (Default: 0)
+#   DamageMotion            Damage animation speed. (Default: 0)
+#   DamageTaken             Rate at which the monster will receive incoming damage. (Default: 100)
+#   Ai                      Aegis monster type AI behavior. (Default: 06)
+#   Class                   Aegis monster class. (Default: Normal)
+#   Modes:                  List of unique behavior not defined by AI, Class, or Attribute. (Optional)
+#     <mode>: <value>       Mode to toggle.
+#   MvpDrops:               List of possible MVP prize items. Max of MAX_MVP_DROP. (Optional)
+#     - Item                Item name.
+#       Rate                Drop rate of item. (Default: 1)
+#       RandomOptionGroup   Random Option Group applied to item on drop. (Default: None)
+#       Index               Index used for overwriting item. (Optional)
+#   Drops:                  List of possible normal item drops. Max of MAX_MOB_DROP. (Optional)
+#     - Item                Item name.
+#       Rate                Drop rate of item. (Default: 1)
+#       StealProtected      If the item is shielded from TF_STEAL. (Default: false)
+#       RandomOptionGroup   Random Option Group applied to item on drop. (Default: None)
+#       Index               Index used for overwriting item. (Optional)
+###########################################################################
+
+Header:
+  Type: MOB_DB
+  Version: 3
+
+Body:
+#Einbroch Dungeon 3
+  - Id: 20592
+    AegisName: POISONOUS
+    Name: Poisonous
+    Level: 188
+    Hp: 2407086
+    BaseExp: 171935
+    JobExp: 120534
+    Attack: 3160
+    Attack2: 5240
+    Defense: 132
+    MagicDefense: 63
+    Str: 145
+    Agi: 141
+    Vit: 77
+    Int: 67
+    Dex: 175
+    Luk: 11
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Ghost
+    ElementLevel: 4
+    WalkSpeed: 350
+    AttackDelay: 768
+    AttackMotion: 1440
+    DamageMotion: 672
+    Ai: 04
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Air_Pollutant
+        Rate: 5000
+      - Item: Spawns
+        Rate: 3000
+      - Item: Old_Blue_Box
+        Rate: 1
+      - Item: Poisonous_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20593
+    AegisName: TOXIOUS
+    Name: Toxious
+    Level: 188
+    Hp: 2407556
+    BaseExp: 171968
+    JobExp: 120378
+    Attack: 3060
+    Attack2: 5120
+    Defense: 134
+    MagicDefense: 63
+    Str: 144
+    Agi: 143
+    Vit: 80
+    Int: 65
+    Dex: 168
+    Luk: 47
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Poison
+    ElementLevel: 4
+    WalkSpeed: 350
+    AttackDelay: 768
+    AttackMotion: 1440
+    DamageMotion: 672
+    Ai: 04
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Jubilee
+        Rate: 5000
+      - Item: Single_Cell
+        Rate: 3000
+      - Item: Old_Blue_Box
+        Rate: 1
+      - Item: Toxious_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20594
+    AegisName: MINERAL_G
+    Name: Green Mineral
+    Level: 190
+    Hp: 2435702
+    BaseExp: 173979
+    JobExp: 121785
+    Attack: 4901
+    Attack2: 5957
+    Defense: 143
+    MagicDefense: 61
+    Str: 153
+    Agi: 141
+    Vit: 96
+    Int: 54
+    Dex: 143
+    Luk: 68
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 250
+    AttackDelay: 648
+    AttackMotion: 480
+    DamageMotion: 360
+    Ai: 17
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Fragment_Of_Crystal
+        Rate: 3000
+      - Item: Golden_Jewel
+        Rate: 500
+      - Item: Ein_RINDIUM
+        Rate: 200
+      - Item: Oridecon
+        Rate: 80
+      - Item: Emveretarcon
+        Rate: 800
+      - Item: Gold
+        Rate: 2
+      - Item: Neo_Mineral_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20595
+    AegisName: MINERAL_R
+    Name: Red Mineral
+    Level: 190
+    Hp: 2435702
+    BaseExp: 173979
+    JobExp: 121785
+    Attack: 4901
+    Attack2: 6057
+    Defense: 143
+    MagicDefense: 60
+    Str: 157
+    Agi: 134
+    Vit: 96
+    Int: 53
+    Dex: 138
+    Luk: 75
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 250
+    AttackDelay: 648
+    AttackMotion: 480
+    DamageMotion: 360
+    Ai: 17
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Fragment_Of_Crystal
+        Rate: 3000
+      - Item: Siege_Supply_Box
+        Rate: 10
+      - Item: Ein_EYEROCK
+        Rate: 200
+      - Item: Oridecon
+        Rate: 80
+      - Item: Emveretarcon
+        Rate: 800
+      - Item: Ein_REDIUM
+        Rate: 200
+      - Item: Neo_Mineral_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20596
+    AegisName: MINERAL_W
+    Name: White Mineral
+    Level: 190
+    Hp: 2436177
+    BaseExp: 174013
+    JobExp: 121809
+    Attack: 4501
+    Attack2: 5357
+    Defense: 144
+    MagicDefense: 61
+    Str: 156
+    Agi: 138
+    Vit: 99
+    Int: 57
+    Dex: 139
+    Luk: 77
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 250
+    AttackDelay: 648
+    AttackMotion: 480
+    DamageMotion: 360
+    Ai: 17
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Fragment_Of_Crystal
+        Rate: 3000
+      - Item: Ein_EYEROCK
+        Rate: 200
+      - Item: Oridecon
+        Rate: 80
+      - Item: Emveretarcon
+        Rate: 800
+      - Item: Ein_WHIDIUM
+        Rate: 200
+      - Item: Neo_Mineral_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20597
+    AegisName: MINERAL_P
+    Name: Purple Mineral
+    Level: 190
+    Hp: 2435543
+    BaseExp: 173967
+    JobExp: 121777
+    Attack: 4201
+    Attack2: 5157
+    Defense: 142
+    MagicDefense: 61
+    Str: 155
+    Agi: 122
+    Vit: 95
+    Int: 55
+    Dex: 141
+    Luk: 71
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 250
+    AttackDelay: 648
+    AttackMotion: 480
+    DamageMotion: 360
+    Ai: 17
+    Modes:
+      Aggressive: true
+    Drops:
+      - Item: Fragment_Of_Crystal
+        Rate: 3000
+      - Item: Ein_EYEROCK
+        Rate: 200
+      - Item: Oridecon
+        Rate: 80
+      - Item: Emveretarcon
+        Rate: 800
+      - Item: Ein_PURDIUM
+        Rate: 200
+      - Item: Neo_Mineral_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20598
+    AegisName: JEWELIANT
+    Name: Jewelry Ant
+    Level: 191
+    Hp: 2445656
+    BaseExp: 174690
+    JobExp: 122283
+    Attack: 5019
+    Attack2: 6886
+    Defense: 484
+    MagicDefense: 69
+    Str: 157
+    Agi: 144
+    Vit: 78
+    Int: 87
+    Dex: 166
+    Luk: 79
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Insect
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 250
+    AttackDelay: 360
+    AttackMotion: 360
+    DamageMotion: 600
+    Ai: 04
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Jaws_Of_Ant
+        Rate: 3000
+      - Item: Insect_Feeler
+        Rate: 5000
+      - Item: Long_Limb
+        Rate: 5000
+      - Item: Fluorescent_Liquid
+        Rate: 500
+      - Item: Olivine
+        Rate: 100
+      - Item: Ein_UNDIUM
+        Rate: 500
+      - Item: Colorful_Shell
+        Rate: 1
+      - Item: Jeweliant_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20600
+    AegisName: JEWEL
+    Name: Jewel
+    Level: 192
+    Hp: 100
+    BaseExp: 0
+    JobExp: 0
+    Attack: 65
+    Attack2: 0
+    Defense: 504
+    MagicDefense: 71
+    Str: 1
+    Agi: 1
+    Vit: 1
+    Int: 1
+    Dex: 1
+    Luk: 1
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 425
+    AttackDelay: 603
+    AttackMotion: 864
+    DamageMotion: 504
+    Ai: 04
+  - Id: 20601
+    AegisName: JUNGOLIANT
+    Name: Jewel Ungoliant
+    Level: 197
+    Hp: 37847096
+    BaseExp: 3703364
+    JobExp: 1892355
+    MvpExp: 9600000
+    Attack: 9850
+    Attack2: 10950
+    Defense: 345
+    MagicDefense: 90
+    Str: 295
+    Agi: 165
+    Vit: 123
+    Int: 288
+    Dex: 190
+    Luk: 64
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Insect
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 350
+    AttackDelay: 420
+    AttackMotion: 576
+    DamageMotion: 420
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Modes:
+      CanMove: true
+      Assist: true
+      CastSensorIdle: true
+      Angry: true
+      ChangeChase: true
+      ChangeTargetMelee: true
+      ChangeTargetChase: true
+      Detector: true
+      Mvp: true
+    MvpDrops:
+      - Item: Old_Violet_Box
+        Rate: 5500
+      - Item: Old_Blue_Box
+        Rate: 5000
+      - Item: Old_Card_Album
+        Rate: 2000
+    Drops:
+      - Item: Jaws_Of_Ant
+        Rate: 3000
+      - Item: Colorful_Shell
+        Rate: 5000
+      - Item: Long_Limb
+        Rate: 5000
+      - Item: Fluorescent_Liquid
+        Rate: 500
+      - Item: Olivine
+        Rate: 1000
+      - Item: Dark_Red_Jewel
+        Rate: 500
+      - Item: Boots_
+        Rate: 1000
+      - Item: Jungoliant_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20602
+    AegisName: PORCELLIO_W
+    Name: White Porcellio
+    Level: 188
+    Hp: 2403326
+    BaseExp: 171666
+    JobExp: 120166
+    Attack: 4495
+    Attack2: 5889
+    Defense: 120
+    MagicDefense: 65
+    Str: 141
+    Agi: 158
+    Vit: 53
+    Int: 75
+    Dex: 186
+    Luk: 75
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Earth
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 720
+    AttackMotion: 360
+    DamageMotion: 360
+    Ai: 02
+    Modes:
+      Aggressive: true
+      Detector: true
+    Drops:
+      - Item: Solid_Shell
+        Rate: 5500
+      - Item: Insect_Feeler
+        Rate: 5000
+      - Item: Lantern
+        Rate: 2000
+      - Item: Single_Cell
+        Rate: 5500
+      - Item: Jubilee
+        Rate: 5000
+      - Item: Fragment_Of_Crystal
+        Rate: 2000
+      - Item: Ein_ODIUM
+        Rate: 2000
+      - Item: Porcellio_W_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20603
+    AegisName: ABYSSMAN
+    Name: Abyssman
+    Level: 190
+    Hp: 2428577
+    BaseExp: 173470
+    JobExp: 121429
+    Attack: 4602
+    Attack2: 6351
+    Defense: 120
+    MagicDefense: 58
+    Str: 161
+    Agi: 129
+    Vit: 51
+    Int: 45
+    Dex: 177
+    Luk: 53
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Brute
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 180
+    AttackDelay: 960
+    AttackMotion: 336
+    DamageMotion: 300
+    Ai: 17
+    Modes:
+      CanMove: true
+      Aggressive: true
+    Drops:
+      - Item: Old_Pick
+        Rate: 3000
+      - Item: Ein_RUSTHELM
+        Rate: 500
+      - Item: Lantern
+        Rate: 1000
+      - Item: Headlamp
+        Rate: 80
+      - Item: Abyss_Man_Card
+        Rate: 1
+        StealProtected: true
+#Odin's Past Mobs
+  - Id: 20604
+    AegisName: Angelgolt
+    Name: Angelgolt
+    Level: 196
+    Hp: 2634990
+    BaseExp: 5633580
+    JobExp: 3943500
+    Attack: 1102
+    Attack2: 1542
+    Defense: 135
+    MagicDefense: 66
+    Str: 143
+    Agi: 117
+    Vit: 102
+    Int: 186
+    Dex: 231
+    Luk: 106
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Angel
+    Element: Holy
+    ElementLevel: 4
+    WalkSpeed: 250
+    AttackDelay: 672
+    AttackMotion: 780
+    DamageMotion: 480
+    Ai: 21
+    Drops:
+      - Item: Angel_Dream
+        Rate: 500
+      - Item: Cassock_Boots
+        Rate: 100
+      - Item: Cassock_Manteau
+        Rate: 100   
+      - Item: Rune_Of_Darkness
+        Rate: 300
+      - Item: Odin_itembox
+        Rate: 100
+      - Item: Stone_Of_Intelligence_
+        Rate: 100
+      - Item: Soft_Feather
+        Rate: 2000
+      - Item: Angelgolt_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20605
+    AegisName: Angelgolt2
+    Name: Angelgolt
+    Level: 196
+    Hp: 2634476
+    BaseExp: 5610240
+    JobExp: 3927180
+    Attack: 1142
+    Attack2: 1603
+    Defense: 135
+    MagicDefense: 64
+    Str: 155
+    Agi: 158
+    Vit: 74
+    Int: 63
+    Dex: 166
+    Luk: 41
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Angel
+    Element: Holy
+    ElementLevel: 4
+    WalkSpeed: 250
+    AttackDelay: 672
+    AttackMotion: 780
+    DamageMotion: 480
+    Ai: 21
+    Drops:
+      - Item: Angel_Dream
+        Rate: 150
+      - Item: Cassock_Boots
+        Rate: 100
+      - Item: Cassock_Manteau
+        Rate: 100        
+      - Item: Odin_itembox
+        Rate: 100
+      - Item: Rune_Of_Darkness
+        Rate: 300
+      - Item: Soft_Feather
+        Rate: 2000
+      - Item: Angelgolt_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20606
+    AegisName: HOLY_FRUS
+    Name: Holy Frus
+    Level: 201
+    Hp: 2700802
+    Sp: 0
+    Attack: 1437
+    Attack2: 2034
+    Defense: 135
+    MagicDefense: 78
+    Str: 176
+    Agi: 148
+    Vit: 69
+    Int: 111
+    Dex: 144
+    Luk: 87
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Holy
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 500
+    AttackMotion: 676
+    DamageMotion: 432
+    Ai: 20
+    Drops:
+      - Item: Angel_Dream
+        Rate: 350
+      - Item: Cassock_Boots
+        Rate: 100
+      - Item: Cassock_Manteau
+        Rate: 100         
+      - Item: Rune_Of_Darkness
+        Rate: 500
+      - Item: Odin_itembox
+        Rate: 100
+      - Item: Soft_Feather
+        Rate: 700
+      - Item: Brigan
+        Rate: 1000
+      - Item: Holy_Frus_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20607
+    AegisName: HOLY_SKOGUL
+    Name: Holy Skogul
+    Level: 202
+    Hp: 2714947
+    BaseExp: 3639
+    JobExp: 3498
+    Attack: 1031
+    Attack2: 1434
+    Defense: 137
+    MagicDefense: 79
+    Str: 179
+    Agi: 149
+    Vit: 73
+    Int: 114
+    Dex: 146
+    Luk: 88
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Holy
+    ElementLevel: 4
+    WalkSpeed: 190
+    AttackDelay: 720
+    AttackMotion: 384
+    DamageMotion: 480
+    Ai: 20
+    Drops:
+      - Item: Rune_Of_Darkness
+        Rate: 500
+      - Item: Brigan
+        Rate: 1000
+      - Item: Angel_Dream
+        Rate: 150
+      - Item: Cassock_Boots
+        Rate: 100
+      - Item: Cassock_Manteau
+        Rate: 100
+      - Item: Odin_itembox
+        Rate: 100                 
+      - Item: Soft_Feather
+        Rate: 200
+      - Item: Shard_Blue
+        Rate: 100
+      - Item: Holy_Skogul_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20608
+    AegisName: PLASMA_ARCH
+    Name: Arch Plasma
+    Level: 198
+    Hp: 7588702
+    BaseExp: 18603150
+    JobExp: 13022220
+    Attack: 1115
+    Attack2: 1542
+    Defense: 131
+    MagicDefense: 76
+    Str: 145
+    Agi: 133
+    Vit: 65
+    Int: 108
+    Dex: 151
+    Luk: 79
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Holy
+    ElementLevel: 4
+    WalkSpeed: 300
+    AttackDelay: 700
+    AttackMotion: 800
+    DamageMotion: 480
+    Ai: 21
+    Drops:
+      - Item: Scell
+        Rate: 1000
+      - Item: Soft_Feather
+        Rate: 1000
+      - Item: Light_Granule
+        Rate: 1000
+      - Item: Cassock_Boots
+        Rate: 150
+      - Item: Cassock_Manteau
+        Rate: 150       
+      - Item: Old_Violet_Box
+        Rate: 250
+      - Item: Crystal_Jewel_
+        Rate: 1000
+      - Item: Plasma_Arch_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20609
+    AegisName: PLASMA_SPT
+    Name: Spectral Plasma
+    Level: 198
+    Hp: 7549720
+    BaseExp: 17795730
+    JobExp: 12457020
+    Attack: 948
+    Attack2: 1293
+    Defense: 130
+    MagicDefense: 74
+    Str: 149
+    Agi: 133
+    Vit: 63
+    Int: 99
+    Dex: 148
+    Luk: 78
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Ghost
+    ElementLevel: 4
+    WalkSpeed: 250
+    AttackDelay: 672
+    AttackMotion: 800
+    DamageMotion: 480
+    Ai: 21
+    Drops:
+      - Item: Scell
+        Rate: 1000
+      - Item: Soft_Feather
+        Rate: 1000
+      - Item: Light_Granule
+        Rate: 1000
+      - Item: Cassock_Boots
+        Rate: 150
+      - Item: Cassock_Manteau
+        Rate: 150         
+      - Item: Old_Violet_Box
+        Rate: 250
+      - Item: Crystal_Jewel_
+        Rate: 100
+      - Item: Plasma_Spt_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20610
+    AegisName: REGINLEIF
+    Name: Reginleif
+    Level: 207
+    Hp: 79249813
+    BaseExp: 17795730
+    JobExp: 12457020
+    MvpExp: 50000000
+    Attack: 10218
+    Attack2: 14233
+    Defense: 506
+    MagicDefense: 94
+    Str: 281
+    Agi: 183
+    Vit: 147
+    Int: 298
+    Dex: 201
+    Luk: 101
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Fire
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 576
+    AttackMotion: 576
+    DamageMotion: 480
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Modes:
+      NoRandomWalk: true
+      Detector: true
+      Mvp: true
+    Drops:
+      - Item: Reginleif_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20611
+    AegisName: INGRID
+    Name: Ingrid
+    Level: 207
+    Hp: 75393148
+    BaseExp: 17795730
+    JobExp: 12457020
+    MvpExp: 50000000
+    Attack: 9418
+    Attack2: 13210
+    Defense: 374
+    MagicDefense: 92
+    Str: 297
+    Agi: 185
+    Vit: 135
+    Int: 273
+    Dex: 205
+    Luk: 99
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Water
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 576
+    AttackMotion: 576
+    DamageMotion: 480
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Modes:
+      NoRandomWalk: true
+      Detector: true
+      Mvp: true
+    Drops:
+      - Item: Ingrid_Card
+        Rate: 1
+        StealProtected: true
