@@ -653,6 +653,7 @@ enum e_mapflag : int16 {
 	MF_NORENEWALEXPPENALTY,
 	MF_NORENEWALDROPPENALTY,
 	MF_NOPETCAPTURE,
+	MF_NOBUYINGSTORE,
 	MF_MAX
 };
 
@@ -715,7 +716,7 @@ enum cell_t{
 	CELL_NOCHAT,
 	CELL_MAELSTROM,
 	CELL_ICEWALL,
-
+	CELL_NOBUYINGSTORE,
 };
 
 // used by map_getcell()
@@ -739,6 +740,7 @@ enum cell_chk : uint8 {
 	CELL_CHKNOCHAT,			// Whether the cell denies Player Chat Window
 	CELL_CHKMAELSTROM,		// Whether the cell has Maelstrom
 	CELL_CHKICEWALL,		// Whether the cell has Ice Wall
+	CELL_CHKNOBUYINGSTORE,	// Whether the cell denies ALL_BUYING_STORE skill
 
 };
 
@@ -758,7 +760,8 @@ struct mapcell
 		novending : 1,
 		nochat : 1,
 		maelstrom : 1,
-		icewall : 1;
+		icewall : 1,
+		nobuyingstore : 1;
 
 #ifdef CELL_NOSTACK
 	unsigned char cell_bl; //Holds amount of bls in this cell.
