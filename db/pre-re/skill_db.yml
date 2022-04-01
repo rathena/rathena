@@ -175,7 +175,7 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    Duration2: 4500
+    Duration2: 5000
     Requires:
       SpCost:
         - Level: 1
