@@ -5679,9 +5679,9 @@ static void battle_calc_defense_reduction(struct Damage* wd, struct block_list *
 #else
 		vit_def = def2;
 #endif
-		if( src->type == BL_MOB && (battle_check_undead(sstatus->race,sstatus->def_ele) || sstatus->race==RC_DEMON) && //This bonus already doesn't work vs players
-			(skill=pc_checkskill(tsd,AL_DP)) > 0 )
-			vit_def += skill*(int)(3 +(tsd->status.base_level+1)*0.04);   // submitted by orn
+		if (src->type == BL_MOB && (battle_check_undead(sstatus->race, sstatus->def_ele) || sstatus->race == RC_DEMON) && //This bonus already doesn't work vs players
+			(skill = pc_checkskill(tsd, AL_DP)) > 0)
+			vit_def += (int)(((float)tsd->status.base_level / 25.0 + 3.0) * skill + 0.5);
 		if( src->type == BL_MOB && (skill=pc_checkskill(tsd,RA_RANGERMAIN))>0 &&
 			(sstatus->race == RC_BRUTE || sstatus->race == RC_PLAYER_DORAM || sstatus->race == RC_FISH || sstatus->race == RC_PLANT) )
 			vit_def += skill*5;
