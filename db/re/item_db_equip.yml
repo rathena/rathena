@@ -80016,7 +80016,7 @@ Body:
       bonus bUnbreakableHelm;
       bonus2 bSubEle,Ele_Wind,5;
       bonus2 bSubEle,Ele_Earth,-5;
-      bonus2 bAddEffWhenHit,Eff_Fear,1000;
+      bonus3 bAddEffWhenHit,Eff_Fear,1,ATF_WEAPON|ATF_MAGIC;
       autobonus2 "{}",50,100,BF_WEAPON|BF_MAGIC,"{ heal 0,-30; }";
   - Id: 18942
     AegisName: Knit_Cap_Of_Water
