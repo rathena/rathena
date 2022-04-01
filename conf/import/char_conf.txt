@@ -1,0 +1,18 @@
+//Ryoma
+
+userid: MzM
+passwd: MzMxOW
+char_ip: 134.209.109.74
+server_name: WisteriaRO
+start_zeny: 15000
+char_name_letters: abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890
+char_del_option: 1
+char_del_delay: 360
+
+// Type of server.
+// No functional side effects at the moment.
+// Displayed next to the server name in the client.
+// 0=normal, 1=maintenance, 2=over 18, 3=paying, 4=P2P
+char_maintenance: 0
+
+start_point: iz_int01,18,26
