@@ -199,7 +199,7 @@ uint64 AchievementDatabase::parseBodyNode(const ryml::NodeRef node){
 			achievement->condition = nullptr;
 		}
 
-		achievement->condition = parse_script( condition.c_str(), this->getCurrentFile().c_str(), this->invalidWarningLine(node["Condition"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS );
+		achievement->condition = parse_script( condition.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["Condition"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS );
 	}else{
 		if (!exists)
 			achievement->condition = nullptr;
@@ -303,7 +303,7 @@ uint64 AchievementDatabase::parseBodyNode(const ryml::NodeRef node){
 				achievement->rewards.script = nullptr;
 			}
 
-			achievement->rewards.script = parse_script( script.c_str(), this->getCurrentFile().c_str(), this->invalidWarningLine(rewardNode["Script"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS );
+			achievement->rewards.script = parse_script( script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(rewardNode["Script"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS );
 		}else{
 			if (!exists)
 				achievement->rewards.script = nullptr;

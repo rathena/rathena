@@ -307,11 +307,11 @@ bool YamlDatabase::asUInt32Rate( const ryml::NodeRef node, const std::string& na
 	}
 }
 
-int32 YamlDatabase::invalidWarningLine(const ryml::NodeRef node) {
+int32 YamlDatabase::getLineNumber(const ryml::NodeRef node) {
 	return parser.source().has_str() ? (int32)parser.location(node).line : 0;
 }
 
-int32 YamlDatabase::invalidWarningCol(const ryml::NodeRef node) {
+int32 YamlDatabase::getColumnNumber(const ryml::NodeRef node) {
 	return parser.source().has_str() ? (int32)parser.location(node).col : 0;
 }
 
@@ -327,7 +327,7 @@ void YamlDatabase::invalidWarning( const ryml::NodeRef node, const char* fmt, ..
 
 	va_end(ap);
 
-	ShowError( "Occurred in file '" CL_WHITE "%s" CL_RESET "' on line %d and column %d.\n", this->currentFile.c_str(), this->invalidWarningLine(node), this->invalidWarningCol(node));
+	ShowError( "Occurred in file '" CL_WHITE "%s" CL_RESET "' on line %d and column %d.\n", this->currentFile.c_str(), this->getLineNumber(node), this->getColumnNumber(node));
 
 #ifdef DEBUG
 	std::cout << node;
