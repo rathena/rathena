@@ -1,0 +1,40 @@
+max_hair_style: 42
+max_hair_color: 33
+max_cloth_color: 34
+base_exp_rate: 10000
+job_exp_rate: 10000
+multi_level_up: yes
+mvp_exp_rate: 10000
+quest_exp_rate: 10000
+zeny_penalty: 1
+bone_drop: 1
+
+item_rate_common: 1000
+item_rate_common_boss: 1000
+item_rate_common_mvp: 1000
+// The rate at which equipment is dropped.
+item_rate_equip: 1000
+item_rate_equip_boss: 1000
+item_rate_equip_mvp: 1000
+item_drop_equip_min: 1
+item_drop_equip_max: 10000
+
+item_rate_card: 9000
+item_rate_card_boss: 9000
+item_rate_card_mvp: 2000
+
+display_version: no
+homunculus_friendly_rate: 1000
+homunculus_exp_gain: 50
+//VIP Settings
+vip_storage_increase: 300
+vip_base_exp_increase: 0
+vip_job_exp_increase: 0
+vip_exp_penalty_base: 0
+vip_exp_penalty_job: 0
+vip_zeny_penalty: 0
+vip_bm_increase: 0
+vip_drop_increase: 0
+vip_gemstone: 2
+vip_disp_rate: no
+

@@ -1,0 +1,235 @@
+// Cash Shop Database
+// Contains the items sold in the ingame cash shop.
+//
+// Structure of Database:
+// Type,ItemID,Price
+//
+// Type:
+//    0: Headgears
+//    1: Weapons
+//    2: Shields/Armors
+//    3: Shoes
+//    4: Accessories
+//    5: Costumes
+//    6: Consumables
+//    7: Others
+//    8: Sale
+//
+// Price:
+//    Item cost, in cash points (#CASHPOINTS).
+
+// Headgears
+0,5171,200 // Valkyrie Helm
+0,5826,500 // Valkyrie Helm Gods
+0,5389,500 // Angel Spirit
+0,5401,500 // Black Frame Glasses
+0,410013,500 // EXP Advisor
+0,5592,600 // Sigrun's Wings
+0,410080,600 // Deep Blue Sunglasses
+0,410017,600 // Battle Processor
+0,410018,600 // Booster Mask A-type
+0,410019,600 // Booster Mask B-type
+0,410020,600 // Booster Mask C-type
+0,400002,700 // Victory Wing Ears
+
+
+
+
+
+// Weapons
+1,500018,350 //Relapse Sword
+1,510026,350 //Relapse Dagger
+1,530009,350 //Fortify Spear
+1,540013,350 //Fortify Book
+1,560011,350 //Scrap Knuckle
+1,570012,350 //Scrap Lute
+1,580012,350 //Scrap Whip
+1,590015,350 //Relapse Mace
+1,600013,350 //Fortify Sword
+1,610015,350 //Relapse Katar
+1,620005,350 //Relapse Axe
+1,640013,350 //Fortify Staff
+1,700021,350 //Scrap Bow
+//Vellum Weapons
+1,1293,1000 //Jamadhar
+1,1294,1000 //Scale
+1,1395,1000 //Buster
+1,1396,1000 //Guillotine
+1,1436,1000 //Spear
+1,1492,1000 //Glaive
+1,1586,1000 //Bible
+1,1587,1000 //Great Encyclopedia
+1,1832,1000 //Claw
+1,2016,1000 //Arc wand
+1,13072,1000 //Damascus
+1,16020,1000 //Stunner
+1,18113,1000 //Vellum Arbalest
+1,18114,1000 //Vellum CrossBow
+1,21001,1000 //Velum_Claymore
+1,21002,1000 //Vellum Katzbalger
+
+
+
+
+
+// Shields/Armors
+
+2,2357,500 // Valkyrian Armor
+2,2115,350 // Valkyrja's Shield
+2,2524,350 // Valkyrian Manteau
+2,2589,400 // Fallen Angel Wing
+
+// Shoes
+3,2421,250 // Valkyrian Shoes
+
+// Accessories
+
+//Costumes
+5,19459,100 // C_Luna_On_Shoulder
+5,420025,100 // C_OneEyedJack
+5,19618,200 // C_Mask_Of_Fox
+5,31918,200 // C_Party_Recruiter_Hat
+5,31919,200 // C_Friend_Recruiter_Hat
+5,19605,200 // C_Gang_Scarf
+5,19660,200 // C_Coppola
+5,19158,200 // C_Gemini_Eyes
+5,19609,200 // C_Red_Glasses
+5,19464,300 // C_Melon_Cap
+5,19642,300 // C_Moonlight_Flower_Hat
+5,19466,300 // C_Small_ocean
+5,19544,300 // C_Tare_Neko_Cru
+5,19472,300 // C_S_Circlet_Of_Time
+5,31884,300 // C_Magic_Helm
+5,31827,300 // Costume_Durumagi
+5,19539,500 // C_Reginleif_Hairband
+5,19540,500 // C_Rabbit_Earplug
+5,400074,500 // C_Disapear_Time_TW
+5,31883,500 // C_Nine_Tail_Fox_Hair_J
+5,31906,500 // C_PGstone_Knit_Hat_PK
+5,19934,500 // Costume Alive Ten Gallon Hat Of Flame
+5,19935,500 // Costume Hunting Cap Of Gust
+5,31028,500 // Costume Black Cat Hood
+5,31166,500 // Costume Teddy Bear Hood
+5,410054,500 // C_Long_Ribbon
+5,19291,500 // C_Shiba_Inu
+5,15858,500 // C_Choco_Banana
+5,18740,500 // RMSC2012 Special Costume
+5,19294,500 // C_CatEars_Cyber_HeadP_R
+5,19292,500 // C_Wildcat_Knit_Cap
+5,480093,500 // C_Scepter
+5,480071,500 // Calabash
+5,440003,500 // C_Pretty_Rabbit_Hood_E
+5,440006,500 // C_Black_Cat_Hood_kr
+5,420071,500 // C_Feather_Stola
+5,420050,500 // C_Hair_Bun_Wave
+5,420029,500 // C_Imperial_Glory
+5,31853,500 // C_ZombieMask
+5,31841,500 // Costume_BJ_Headset_B
+5,31849,500 // C_Runaway_Accelerator
+5,31852,500 // C_WitchManteau
+5,31974,500 // C_Melon_Headphone
+5,31937,500 // C_Unicorn_Ornament
+5,31930,500 // C_Mike_Stand
+5,31850,500 // C_Gift_of_Panagia
+5,31732,500 // Costume_Bear_Balloon
+5,31729,500 // Costume_Miracle_Plant
+5,31815,500 // Costume_Angola_Intention
+5,31763,500 // Costume_Fortier_Mask
+5,31800,500 // Costume_BR_Twin_Ribbon
+5,31735,500 // Costume_Yawata_Seal
+5,31719,1000 // Costume_Master_Of_Flames
+5,31733,1000 // Costume_Phantom_Masquerade
+5,31814,1000 // Costume_Lunatic_Family_Balloon
+5,31803,1000 // Costume_Master_Of_Wind
+5,31816,1000 // Costume_Moon_Messenger_Robe
+5,31851,1000 // C_Phalanx
+5,31854,1000 // C_SnackParty_J
+5,400020,1000 // C_BeachBall
+5,440002,1000 // C_Happy_Cat_TW
+5,410048,1000 // C_Tiger
+5,410029,1000 // C_Wonder_Egg_Basket
+5,410005,1000 // C_Magic_Heir_TW
+5,420016,1000 // C_Katashiro_Flying
+5,420072,1000 // C_L_Knitting_Low_Twin_W
+5,18742,1000 // C_MoonStar_Accessory
+5,480095,1000 // C_Giant_White_Rabbit
+5,18741,1000 // Costume Will O Wisp
+5,18744,1000 // C_World_Star
+5,480107,1000 // Costume Kings Twin Sword
+5,480110,1000 // Costume Adventure Bag
+5,480056,1000 // Costume Heavenly Fallen Angel Wings
+5,480058,1000 // Costume Wavy Golden Angel Wings
+5,480069,1000 // Costume Heavenly Angel Wings
+5,20571,1000 // Costume Valkyrie Wings
+5,19433,1000 // C_Resonate_Taego
+5,480122,1500 // C_Samba_Carnival
+5,420010,1500 // C_Cons_Of_Darkness
+5,410055,1500 // C_Floating_Parasol
+5,400076,1500 // C_20th_Anniversary
+5,31885,1500 // Cons_Of_Earth
+
+
+// Consumables
+6,610,1 // YGG leaf 1
+6,607,1 //Ygg Berry 1
+6,13810,1 // Blue_Potion_Box
+6,12550,1 // Poison_Bottle_Box2
+6,12534,5 //YGG Seed Boz 30
+6,14232,10 //YGG Box 10
+6,13607,20 // Bubble_Gum_Box5
+6,13990,20 // Job_Manual50_Box
+6,13696,30 // Battle_Manual100_Box
+
+
+
+
+// Other
+7,30001,800 // Gold Credit
+7,30002,500 // Silver Credit Card
+7,30003,300 // Violet Credit Card
+7,30004,100 // Trial Card
+7,6909,10 // Silvervine Cat Fruit
+7,6417,2 // Silvervine Fruit
+7,984,2 // Oridecon
+7,985,2 // Elunium
+7,7132,3 // Coating_Create_Book
+7,7128,3 // FireBottle_Create_Book
+7,7129,3 // Acid_Create_Book
+7,7127,3 // Alcol_Create_Book
+7,7130,3 // Plant_Create_Book
+7,7620,10 // Enriched Oridecon
+7,7619,10 //Enriched Elunium
+7,6240,15 //HD Oridecon
+7,6241,15 //HD Elunium
+7,1000331,15 // Ethernium
+7,1000332,15 // Etherdeocon
+7,714,20 // Emperium
+7,1000334,20 // Enriched_Etherdeocon
+7,1000333,20 // Enriched_Ethernium
+7,1000335,30 // HD_Ethernium
+7,1000336,30 // HD_Etherdeocon
+7,6230,750 // +7 Weapon Refine Ticket
+7,6234,750 // +7 Armor Refine Ticket
+7,6228,950 // +9 Weapon Refine Ticket
+7,6232,950 // +9 Armor Refine Ticket
+
+
+
+// Sale
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

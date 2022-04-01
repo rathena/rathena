@@ -1,0 +1,1144 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Quest Database
+###########################################################################
+#
+# Quest Settings
+#
+###########################################################################
+# - Id              Quest ID.
+#   Title           Quest title.
+#   TimeLimit       Amount of time before the quest expires. (Default: 0)
+#                   Use a number following by "d" for day(s), "h" for hour(s), "mn" for minute(s), and "s" for second(s).
+#                   Specify with "+" for how long until the quest expires.
+#                   Specify without "+" for the exact time the quest expires using "d" (optional), [0-23]"h" (required), [0-59]"mn" (optional), [0-59]"s" (optional) format.
+#                   Please note the number before "d" only shift the exact timer to the given day(s).
+#   Targets:        Quest objective target. (Default: null)
+#                   The target can be a couple of node Mob/Count or of Id/Race/Size/Element/MinLevel/MaxLevel.
+#                   If Mob is supplied, Count is required and the other fields are ignored.
+#                   If Id is supplied, at least one other field of Race/Size/Element/MinLevel/MaxLevel is required.
+#                   If Id is supplied, Count is required for each new entry.
+#     - Mob         Monster to kill (aegis monster name).
+#       Count       Amount of monsters to kill. Set to 0 to skip the target on import.
+#       Id          Unique target index for the quest Id. Requires a positive number.
+#       Race        Monster race target (default All). Valid races are Angel, Brute, DemiHuman, Demon, Dragon, Fish, Formless, Insect, Plant, Undead, All.
+#       Size        Monster size target (default All). Valid sizes are Small, Medium, Large, All.
+#       Element     Monster element target (default All). Valid elements are Dark, Earth, Fire, Ghost, Holy, Neutral, Poison, Undead, Water, Wind, All.
+#       MinLevel    Minimum monster level target. If not supplied but MaxLevel defined, MinLevel is 1. Set to 0 to ignore MinLevel on import. (Default: 0)
+#       MaxLevel    Maximum monster level target. Set to 0 to ignore MaxLevel on import. (Default: 0)
+#       Location    Map name where kills are counted. (Default any location)
+#                   On normal maps only kills of permanently spawned monsters increase the counter.
+#                   On instance maps all monster kills increase the counter.
+#       MapName     Displayed map name in quest UI. (Default: empty string)
+#   Drops:          Quest item drop targets. (Default: null)
+#     - Mob         Monster to kill. 0 will apply to all monsters. (Default: 0)
+#       Item        Item to drop.
+#       Count       Amount of items that will drop. Non-stackable items default to 1. (Default: 1)
+#       Rate        Item drop rate. (10000 = 100%)
+###########################################################################
+
+Header:
+  Type: QUEST_DB
+  Version: 2
+
+# 17.1, 17.2 episodes
+Body:
+  - Id: 16400
+    Title: Road of Battle
+    TimeLimit: +23h
+#------------------------------------------------
+# Episode 17.1 - Illusion
+#------------------------------------------------    
+  - Id: 5856
+    Title: My Name is Morning
+  - Id: 5857
+    Title: Friends of Morning
+  - Id: 5858
+    Title: Friends of Morning
+  - Id: 5859
+    Title: Friends of Morning
+  - Id: 5860
+    Title: Friends of Morning
+  - Id: 5861
+    Title: Morning Dailies - Standby
+    TimeLimit: 4h
+  - Id: 5862
+    Title: Morning's Menu Selection
+  - Id: 5863
+    Title: Morning's Menu Selection
+  - Id: 5864
+    Title: Morning's Menu Selection
+  - Id: 5865
+    Title: Morning's Menu Selection
+  - Id: 5866
+    Title: Morning's Menu Selection
+  - Id: 5867
+    Title: Morning's Menu Selection
+  - Id: 5868
+    Title: Morning's Menu Selection
+  - Id: 5869
+    Title: Morning's Menu Selection
+  - Id: 5870
+    Title: Morning's Menu Selection
+  - Id: 5871
+    Title: Morning's Menu Selection
+  - Id: 7850
+    Title: Cat on Bullet
+  - Id: 7851
+    Title: New Operation
+  - Id: 7852
+    Title: Beyond the Barrier
+  - Id: 7853
+    Title: Barrier Investigation
+  - Id: 7854
+    Title: Wall on Barrier
+  - Id: 7855
+    Title: Watchtower
+  - Id: 7856
+    Title: Small Hole
+  - Id: 7857
+    Title: Report to Lucky
+  - Id: 7858
+    Title: Investigate the Strange Sounds
+    Targets:
+      - Mob: EP17_1_DOLOR1
+        Count: 10
+      - Mob: EP17_1_VENENUM1
+        Count: 10
+      - Mob: EP17_1_TWIN_CAPUT1
+        Count: 10
+  - Id: 7859
+    Title: Report to Tess
+  - Id: 7860
+    Title: Unexpected Guest
+  - Id: 7861
+    Title: Enterprise Crisis
+  - Id: 7862
+    Title: Reclaim Regenschirm
+  - Id: 7863
+    Title: Laboratory Data
+  - Id: 7864
+    Title: Ventilation
+  - Id: 7865
+    Title: Second Operation
+  - Id: 7866
+    Title: Along with Cat on Bullet
+  - Id: 7867
+    Title: Mercenary vs Mercenary
+    Targets:
+      - Mob: EP17_1_BELLARE1
+        Count: 15
+      - Mob: EP17_1_SANARE1
+        Count: 15
+  - Id: 7868
+    Title: Mercenary vs Mercenary - Standby
+    TimeLimit: 4h
+# Episode 17.1 Old Memories
+#------------------------------------------------  
+  - Id: 11596
+    Title: Old Memories
+  - Id: 11597
+    Title: Old Memories
+  - Id: 11598
+    Title: Old Memories
+  - Id: 11599
+    Title: Old Memories
+  - Id: 11600
+    Title: Old Memories
+  - Id: 11601
+    Title: Old Memories
+  - Id: 11602
+    Title: Old Memories
+  - Id: 11603
+    Title: Old Memories
+  - Id: 12452
+    Title: OS Mission
+  - Id: 12453
+    Title: Operation Standby
+    TimeLimit: 4h
+  - Id: 12454
+    Title: More Search Operations
+    Targets:
+      - Mob: MD_MIGUEL
+        Count: 1
+  - Id: 12455
+    Title: Operation Standby
+    TimeLimit: 4h
+  - Id: 16352
+    Title: Call from Elena Bolkova
+  - Id: 16353
+    Title: Golden Troublemaker
+  - Id: 16354
+    Title: Operation of Elyumina
+  - Id: 16355
+    Title: Suspicious Box
+  - Id: 16356
+    Title: Suspicious Box
+  - Id: 16357
+    Title: Elyumina Secured
+  - Id: 16358
+    Title: Pure Wicked
+  - Id: 16359
+    Title: Pure Violence
+  - Id: 16360
+    Title: Pure Facts
+  - Id: 16361
+    Title: Pure Backward
+  - Id: 16362
+    Title: Pure Backward - Standby
+    TimeLimit: 4h
+  - Id: 16363
+    Title: Process EL1_A17T
+    Targets:
+      - Mob: MD_E_EA1L
+        Count: 1
+  - Id: 16364
+    Title: Helping Farm Worker
+  - Id: 16365
+    Title: Helping Farm Worker - Standby
+    TimeLimit: 4h
+  - Id: 16366
+    Title: Helping Farm Worker
+  - Id: 16367
+    Title: Growing Grapes
+  - Id: 16368
+    Title: Growing Grapes
+  - Id: 16369
+    Title: Growing Grapes
+  - Id: 16370
+    Title: Growing Bean Plants
+  - Id: 16371
+    Title: Growing Bean Plants
+  - Id: 16372
+    Title: Growing Bean Plants
+  - Id: 16373
+    Title: Growing Pumpkins
+  - Id: 16374
+    Title: Growing Pumpkins
+  - Id: 16375
+    Title: Growing Pumpkins
+  - Id: 16376
+    Title: Overpower EL1_A17T
+  - Id: 16377
+    Title: Overpower EL1_A17T - Standby
+    TimeLimit: 4h
+  - Id: 17000
+    Title: Refuse to Talk
+  - Id: 17001
+    Title: Companion Proposal
+  - Id: 17002
+    Title: Troubled Times
+  - Id: 17003
+    Title: Companionship
+  - Id: 17004
+    Title: Start of the Road, the Journey Begins
+  - Id: 17005
+    Title: The Slums of Lighthalzen
+  - Id: 17006
+    Title: Full Investigation
+  - Id: 17007
+    Title: Investigating Rekenber
+  - Id: 17008
+    Title: Investigating Rekenber
+  - Id: 17009
+    Title: Investigating Rekenber
+  - Id: 17010
+    Title: Investigating Rekenber
+  - Id: 17011
+    Title: Investigating Rekenber
+  - Id: 17012
+    Title: Investigating Rekenber
+  - Id: 17013
+    Title: Location of the new Laboratory
+  - Id: 17014
+    Title: No Laboratory
+  - Id: 17015
+    Title: Vice President's Speech
+  - Id: 17016
+    Title: Not Convincing
+  - Id: 17017
+    Title: Prepare for the Attack
+  - Id: 17018
+    Title: The Condition of the Patients
+  - Id: 17019
+    Title: Urgent Situation
+  - Id: 17020
+    Title: Resume the Investigation
+  - Id: 17021
+    Title: Finding Patrick
+  - Id: 17022
+    Title: Finding Patrick
+  - Id: 17023
+    Title: Finding Patrick
+  - Id: 17024
+    Title: Finding Patrick
+  - Id: 17025
+    Title: Finding Patrick
+  - Id: 17026
+    Title: Finding Patrick
+  - Id: 17027
+    Title: Finding Patrick
+  - Id: 17028
+    Title: Finding Patrick
+  - Id: 17029
+    Title: Finding Patrick
+  - Id: 17030
+    Title: Finding Patrick
+  - Id: 17031
+    Title: Finding Patrick
+  - Id: 17032
+    Title: Finding Patrick
+  - Id: 17033
+    Title: Worker Treatments
+  - Id: 17034
+    Title: Rudus
+    Targets:
+      - Mob: EP17_1_DOLOR1
+        Count: 20
+    Drops:
+      - Mob: EP17_1_DOLOR1
+        Item: Id_Card
+        Rate: 5000
+  - Id: 17035
+    Title: Rudus - Standby
+    TimeLimit: 4h
+    
+    
+# Episode 17.2 Sage's Legacy
+#-------------------------------------------------    
+  - Id: 3389
+    Title: Removing Biomagnetic Jamming Chips
+  - Id: 3390
+    Title: Eorpa, The Manager of the Second Power Plant
+  - Id: 3391
+    Title: Plated Chip Spread by Illusion - Waiting
+    TimeLimit: 4h
+  - Id: 3392
+    Title: Plated Chip Spread by Illusion
+  - Id: 5892
+    Title: Cleaning Robot Omega
+  - Id: 5893
+    Title: Cleaning the Sewage Treatment Plant I
+    Targets:
+      - Mob: EP17_2_VENENUM3
+        Count: 44
+  - Id: 5894
+    Title: Cleaning the Sewage Treatment Plant II
+    Targets:
+      - Mob: EP17_2_CRAMP
+        Count: 44
+  - Id: 5895
+    Title: Cleaning the Sewage Treatment Plant III
+    Targets:
+      - Mob: EP17_2_WATERFALL
+        Count: 44
+  - Id: 5896
+    Title: Cleaning the Sewage Treatment Plant - Waiting
+    TimeLimit: 4h
+  - Id: 5897
+    Title: Cleaning the First Power Plant I
+    Targets:
+      - Mob: EP17_2_BELLARE3
+        Count: 44
+  - Id: 5898
+    Title: Cleaning the First Power Plant II
+    Targets:
+      - Mob: EP17_2_DOLOR3
+        Count: 44
+  - Id: 5899
+    Title: Cleaning the First Power Plant III
+    Targets:
+      - Mob: EP17_2_PLASMA_Y
+        Count: 44
+  - Id: 5900
+    Title: Cleaning the First Power Plant - Waiting
+    TimeLimit: 4h
+  - Id: 8586
+    Title: Keeping Breeding Ground
+  - Id: 8587
+    Title: Daily Farm Experience - Waiting
+    TimeLimit: 4h
+  - Id: 8588
+    Title: Tail Collection
+  - Id: 8589
+    Title: It's Boss Meow!
+  - Id: 8590
+    Title: Play with the Red Pitaya
+    Targets:
+      - Mob: EP17_2_PITAYA_R
+        Count: 20
+  - Id: 8591
+    Title: Play with the Yellow Pitaya
+    Targets:
+      - Mob: EP17_2_PITAYA_Y
+        Count: 20
+  - Id: 8592
+    Title: Play with the Blue Pitaya
+    Targets:
+      - Mob: EP17_2_PITAYA_B
+        Count: 20
+  - Id: 8593
+    Title: Play with the Purple Pitaya
+    Targets:
+      - Mob: EP17_2_PITAYA_V
+        Count: 20
+  - Id: 8594
+    Title: Play with the Green Pitaya
+    Targets:
+      - Mob: EP17_2_PITAYA_G
+        Count: 20
+  - Id: 8595
+    Title: Play with Pitaya - Waiting
+    TimeLimit: 4h
+  - Id: 11615
+    Title: Sewer Pipe Straggler
+  - Id: 11616
+    Title: Sewer Pipe Straggler
+  - Id: 11617
+    Title: Sewer Pipe Straggler
+  - Id: 11618
+    Title: Sewer Pipe Straggler
+  - Id: 11620
+    Title: Sewer Pipe Straggler
+  - Id: 11621
+    Title: Be quiet in the Library!
+  - Id: 11622
+    Title: Be quiet in the Library!
+  - Id: 11623
+    Title: Be quiet in the Library!
+  - Id: 11624
+    Title: Be quiet in the Library!
+  - Id: 11625
+    Title: Be quiet in the Library!
+  - Id: 11626
+    Title: Be quiet in the Library!
+  - Id: 11627
+    Title: Be quiet in the Library!
+  - Id: 11628
+    Title: Be quiet in the Library!
+  - Id: 11629
+    Title: Be quiet in the Library!
+  - Id: 11630
+    Title: Be quiet in the Library!
+  - Id: 11631
+    Title: Be quiet in the Library!
+  - Id: 11632
+    Title: Be quiet in the Library!
+  - Id: 11633
+    Title: Be quiet in the Library!
+  - Id: 11634
+    Title: Hunting Bookworm
+    Targets:
+      - Mob: EP17_2_BOOKWORM
+        Count: 20
+  - Id: 11635
+    Title: Hunting Bookworm - Waiting
+    TimeLimit: 4h
+  - Id: 11636
+    Title: Hunting Roaming Spellbook
+    Targets:
+      - Mob: EP17_2_ROAMING_SPLBOOK
+        Count: 20
+  - Id: 11637
+    Title: Hunting Roaming Spellbook - Waiting
+    TimeLimit: 4h
+  - Id: 11638
+    Title: Ultimate Scrap Metal Collection
+    Targets:
+      - Mob: EP17_2_GUARDIAN_PARTS
+        Count: 20
+  - Id: 12496
+    Title: Permission to Enter the Garden - Waiting
+  - Id: 12497
+    Title: Security Clearance
+  - Id: 12498
+    Title: Security Clearance - Waiting
+    TimeLimit: 4h
+  - Id: 12499
+    Title: Red Pepper - Kappa Suppression
+    Targets:
+      - Mob: MD_REDPEPPER
+        Count: 1
+  - Id: 12500
+    Title: Red Pepper - Lambda Suppression
+    Targets:
+      - Mob: MD_REDPEPPER_H
+        Count: 1        
+    
+#-------------------------------------------------
+# Illusion Moonlight
+#-------------------------------------------------    
+  - Id: 7776
+    Title: Suspicious Sign
+  - Id: 7777
+    Title: What Happened?
+  - Id: 7778
+    Title: What Muyeon Saw
+  - Id: 7779
+    Title: Distressing Ritual
+  - Id: 7780
+    Title: Nightmare in the Ruined Village
+  - Id: 7781
+    Title: Nightmare in the Ruined Village
+  - Id: 7782
+    Title: Stop the Wizard!
+    Targets:
+      - Mob: ILL_HIGHWIZARD
+        Count: 1
+  - Id: 7783
+    Title: Stop the Wizard!
+    TimeLimit: 4h
+  - Id: 7784
+    Title: No Mercy for Illusions
+    Targets:
+      - Mob: ILL_NINE_TAIL
+        Count: 20
+  - Id: 7785
+    Title: No Mercy for Illusions - Cooldown
+    TimeLimit: 4h
+  - Id: 7786
+    Title: Remembering my ancestors
+    Targets:
+      - Mob: ILL_ARCHER_SKELETON
+        Count: 20
+  - Id: 7787
+    Title: No Mercy for Illusions - Cooldown
+    TimeLimit: 4h
+  - Id: 7788
+    Title: Back to Muyeon
+    
+#-------------------------------------------------
+# Illusion Vampires
+#-------------------------------------------------    
+
+  - Id: 14652
+    Title: Detailed Account 01
+  - Id: 14653
+    Title: Detailed Account 02
+  - Id: 14654
+    Title: Detailed Account 03
+  - Id: 14655
+    Title: I'm Ready
+  - Id: 14656
+    Title: Finding Father Grimm's Colleagues
+  - Id: 14657
+    Title: Jojo Is the Mage's Name
+  - Id: 14658
+    Title: Jubilee Is the Priest's Name
+  - Id: 14659
+    Title: Lost in Thought
+  - Id: 14660
+    Title: Ingredients for Fake Blood
+    Targets:
+      - Mob: ILL_DRAINLIAR
+        Count: 5
+      - Mob: ILL_BLACK_MUSHROOM
+        Count: 5
+  - Id: 14661
+    Title: Jojo Is the Mage's Name 02
+  - Id: 14662
+    Title: You're Scaring Me
+  - Id: 14663
+    Title: Bloody Fight
+  - Id: 14664
+    Title: Deep Misunderstanding
+  - Id: 14665
+    Title: Is the Fight Over?
+  - Id: 14666
+    Title: Warden's Role
+  - Id: 14667
+    Title: Send the Dead Back to Earth
+    Targets:
+      - Mob: ILL_GHOUL
+        Count: 10
+      - Mob: ILL_ZOMBIE
+        Count: 10
+      - Mob: ILL_ZOMBIE_C
+        Count: 10
+  - Id: 14668
+    Title: Get Some Rest
+  - Id: 14669
+    Title: Sweet Dreams
+    Targets:
+      - Mob: ILL_NIGHTMARE
+        Count: 10
+  - Id: 14670
+    Title: Time for Dreaming
+  - Id: 14671
+    Title: Unreliable Fake Blood
+    Targets:
+      - Mob: ILL_DRAINLIAR
+        Count: 5
+      - Mob: ILL_BLACK_MUSHROOM
+        Count: 5
+  - Id: 14674
+    Title: Time to Digest
+  - Id: 14675
+    Title: Noisy Neighbors
+    Targets:
+      - Mob: ILL_DRAINLIAR
+        Count: 10
+  - Id: 14676
+    Title: Break Time
+  - Id: 14677
+    Title: Studying in Dim Light
+    Targets:
+      - Mob: ILL_BLACK_MUSHROOM
+        Count: 5
+      - Mob: ILL_NIGHTMARE
+        Count: 5
+  - Id: 14678
+    Title: Time to Study
+  - Id: 14679
+    Title: Curious by Nature
+    Targets:
+      - Mob: ILL_ZOMBIE_C
+        Count: 5
+      - Mob: ILL_ZOMBIE
+        Count: 5
+      - Mob: ILL_GHOUL
+        Count: 5
+  - Id: 14680
+    Title: Time to Research
+    TimeLimit: 4h
+
+        
+  - Id: 12337
+    Title: Amdarais Soul Hunt
+    Targets:
+      - Mob: MG_AMDARAIS_H
+        Count: 1
+  - Id: 12336
+    Title: Corrupted Soul Hunt
+    Targets:
+      - Mob: MG_CORRUPTION_ROOT_H
+        Count: 1
+#-------------------------------------------------
+# Illusion Luanda UnOfficial
+#-------------------------------------------------        
+        
+  - Id: 95003
+    Title: Luanda Hunting Staltic Golem
+    TimeLimit: +23h
+    Targets:
+      - Mob: STALACTIC_GOLEM
+        Count: 5
+        Location: beach_dun2
+  - Id: 95004
+    Title: Luanda Hunting Tri Joint
+    TimeLimit: +23h
+    Targets:
+      - Mob: TRI_JOINT
+        Count: 5
+        Location: beach_dun2
+  - Id: 95005
+    Title: Luanda Hunting Megalith
+    TimeLimit: +23h
+    Targets:
+      - Mob: MEGALITH
+        Count: 5
+        Location: beach_dun2
+  - Id: 95006
+    Title: Luanda Hunting Hydra
+    TimeLimit: +23h
+    Targets:
+      - Mob: HYDRA
+        Count: 5
+        Location: beach_dun2
+  - Id: 95007
+    Title: Luanda Hunting Nereid
+    TimeLimit: +23h
+    Targets:
+      - Mob: NERAID
+        Count: 5
+        Location: beach_dun2		
+  - Id: 95008
+    Title: Luanda Hunting Ancient Tri Joint
+    TimeLimit: +23h
+    Targets:
+      - Mob: ILL_TRI_JOINT
+        Count: 30
+        Location: com_d02_i
+  - Id: 95009
+    Title: Luanda Hunting Ancient Stalactic Golem
+    TimeLimit: +23h
+    Targets:
+      - Mob: ILL_STALACTIC_GOLEM
+        Count: 30
+        Location: com_d02_i
+  - Id: 95010
+    Title: Luanda Hunting Ancient Megalith
+    TimeLimit: +23h
+    Targets:
+      - Mob: ILL_MEGALITH
+        Count: 30
+        Location: com_d02_i
+  - Id: 95011
+    Title: Luanda Hunting Ancient Stone Shooter
+    TimeLimit: +23h
+    Targets:
+      - Mob: ILL_STONE_SHOOTER
+        Count: 30
+        Location: com_d02_i
+  - Id: 95012
+    Title: Luanda Hunting Ancient Wootan Shooter
+    TimeLimit: +23h
+    Targets:
+      - Mob: ILL_WOOTAN_SHOOTER
+        Count: 30
+        Location: com_d02_i
+  - Id: 95013
+    Title: Luanda Hunting Ancient Wootan Fighter
+    TimeLimit: +23h
+    Targets:
+      - Mob: ILL_WOOTAN_FIGHTER
+        Count: 30
+        Location: com_d02_i
+        
+       
+  - Id: 8548
+    Title: A Mirror - Wait
+  - Id: 8541
+    Title: Nothing to see
+    Targets:
+      - Mob: RAYDRIC_H
+        Count: 20
+      - Mob: RAYDRIC_ARCHER_H
+        Count: 20
+  - Id: 8542
+    Title: Nothing to see - Wait
+  - Id: 8544
+    Title: High Freezing Point
+    Targets:
+      - Mob: GARGOYLE_H
+        Count: 5
+      - Mob: RAGGED_ZOMBIE_H
+        Count: 5
+  - Id: 8545
+    Title: High Freezing Point - Wait
+  - Id: 8547
+    Title: A Mirror
+    Targets:
+      - Mob: ICE_GHOST_H
+        Count: 10
+      - Mob: FLAME_GHOST_H
+        Count: 10
+
+#--------------------------------------------------------------
+# Illusion Of Labyrinth Quest UnOfficial
+#--------------------------------------------------------------
+  - Id: 95034
+    Title: Andrea of Labyrinth Chaotic Side Winder
+    TimeLimit: +23h
+    Targets:
+      - Mob: ILL_SIDE_WINDER
+        Count: 30
+  - Id: 95035
+    Title: Andrea of Labyrinth Chaotic Hunter Fly
+    TimeLimit: +23h
+    Targets:
+      - Mob: ILL_HUNTER_FLY
+        Count: 30
+  - Id: 95036
+    Title: Andrea of Labyrinth Chaotic Mantis
+    TimeLimit: +23h
+    Targets:
+      - Mob: ILL_MANTIS
+        Count: 30
+  - Id: 95037
+    Title: Andrea of Labyrinth Chaotic Poporing
+    TimeLimit: +23h
+    Targets:
+      - Mob: ILL_POPORING
+        Count: 30
+  - Id: 95038
+    Title: Andrea of Labyrinth Chaotic Stem Worm
+    TimeLimit: +23h
+    Targets:
+      - Mob: ILL_STEM_WORM
+        Count: 30
+# Underwater
+#-------------------------------------------------
+  - Id: 3407
+    Title: The Fishing Rod of the Missing Person
+  - Id: 3408
+    Title: Gather Extra Water Supply
+  - Id: 3409
+    Title: Wind to Deep Sea 
+  - Id: 3410
+    Title: Sirud to the Surface   
+  - Id: 132000
+    Title: Deep Sea Sropho Hunting
+    Targets:
+      - Mob: ILL_SROPHO
+        Count: 20
+  - Id: 132001
+    Title: Deep Sea Obeaune Hunting
+    Targets:
+      - Mob: ILL_OBEAUNE
+        Count: 20
+  - Id: 132002
+    Title: Deep Sea Marse Hunting
+    Targets:
+      - Mob: ILL_MARSE
+        Count: 20
+  - Id: 132003
+    Title: Deep Sea Merman Hunting
+    Targets:
+      - Mob: ILL_MERMAN
+        Count: 20
+  - Id: 132004
+    Title: Deep Sea Sedora Hunting
+    Targets:
+      - Mob: ILL_SEDORA
+        Count: 20
+  - Id: 132005
+    Title: Deep Sea Strouf Hunting
+    Targets:
+      - Mob: ILL_STROUF
+        Count: 20
+  - Id: 132006
+    Title: Deep Sea Phen Hunting
+    Targets:
+      - Mob: ILL_PHEN
+        Count: 20
+  - Id: 132007
+    Title: Deep Sea King Dramoh Hunting
+    Targets:
+      - Mob: ILL_KING_DRAMOH
+        Count: 20
+  - Id: 132031
+    Title: Deep Sea Sropho Timer
+    TimeLimit: 4h
+  - Id: 132032
+    Title: Deep Sea Obeaune Timer
+    TimeLimit: 4h
+  - Id: 132033
+    Title: Deep Sea Marse Timer
+    TimeLimit: 4h
+  - Id: 132034
+    Title: Deep Sea Merman Timer
+    TimeLimit: 4h
+  - Id: 132035
+    Title: Deep Sea Sedora Timer
+    TimeLimit: 4h
+  - Id: 132036
+    Title: Deep Sea Strouf Timer
+    TimeLimit: 4h
+  - Id: 132037
+    Title: Deep Sea Phen Timer
+    TimeLimit: 4h
+  - Id: 132038
+    Title: Deep Sea King Dramoh Timer
+    TimeLimit: 4h
+# Illusion Of Frozen QuestDB
+#-------------------------------------------------
+  - Id: 15110
+    Title: Ice is Fire!  
+    TimeLimit: 4h
+  - Id: 15111
+    Title: Catch an angry ice titan
+    Targets:
+      - Mob: ILL_ICE_TITAN
+        Count: 10
+  - Id: 15112
+    Title: Dance and Dance!
+  - Id: 15113
+    Title: Dance and Dance!
+  - Id: 15114
+    Title: Catch a strange lizard
+  - Id: 15115
+    Title: Brides and Jays
+    TimeLimit: 4h
+  - Id: 15116
+    Title: Clear Illusion of Frozen
+  - Id: 15117
+    Title: Catch an angry Gazeti
+    Targets:
+      - Mob: ILL_GAZETI
+        Count: 10
+  - Id: 15118
+    Title: Catch an angry snoir
+    Targets:
+      - Mob: ILL_SNOWIER
+        Count: 10
+  - Id: 15119
+    Title: Catch hard icicles
+    Targets:
+      - Mob: ILL_SNOWIER
+        Count: 10
+  - Id: 16360
+    Title: pure facts
+  - Id: 16427
+    Title: Poisoning
+  - Id: 16428
+    Title: Made antidote
+  - Id: 16429
+    Title: Silva Papila
+    Targets:
+      - Mob: MD_SILVA_PAPILIA
+        Count: 1
+  - Id: 16430
+    Title: Complete antidote
+  - Id: 16431
+    Title: Hunting Silva Papilia
+    Targets:
+      - Mob: MD_SILVA_PAPILIA
+        Count: 1
+  - Id: 16432
+    Title: Silva Papilia Hunt-Standby
+    TimeLimit: 4h
+  - Id: 16433
+    Title: Grand Papilla Hunt
+    Targets:
+      - Mob: MD_GRAN_PAPILIA
+        Count: 1
+  - Id: 16434
+    Title: Grand Papelia Hunting-Standby
+    TimeLimit: 4h
+  - Id: 16435
+    Title: Search for gardeners
+  - Id: 16436
+    Title: Search-wait for gardeners
+    TimeLimit: 4h
+  - Id: 16437
+    Title: Award Garden
+  - Id: 16438
+    Title: Difficulty in Award Garden
+  - Id: 16439
+    Title: Award Garden-Waiting
+    TimeLimit: 4h
+  - Id: 16440
+    Title: I want to know that
+  - Id: 16441
+    Title: I want to know that
+  - Id: 16442
+    Title: The manager's story
+  - Id: 16443
+    Title: The manager's story
+  - Id: 16444
+    Title: The manager's story
+  - Id: 16445
+    Title: The manager's story
+  - Id: 16446
+    Title: I want to know that
+  - Id: 16447
+    Title: I want to know that
+  - Id: 16448
+    Title: I want to know that
+  - Id: 16449
+    Title: I want to know that
+  - Id: 16450
+    Title: I want to know that
+  - Id: 16451
+    Title: I want to know that
+  - Id: 16452
+    Title: I want to know that
+  - Id: 16453
+    Title: I want to know that
+  - Id: 17333
+    Title: "Guest of the Mansion"
+  - Id: 17334
+    Title: "Check the Repeater: Restaurant"
+  - Id: 17335
+    Title: Repeater Parts
+    Drops:
+      - Mob: EP17_2_BETA_BASIC_NG
+        Item: Com_chip_Auto_Doll
+        Rate: 1000
+  - Id: 17336
+    Title: "Check the Repeater: Summerhouse"
+  - Id: 17337
+    Title: "Check the repeater: Central Garden"
+  - Id: 17338
+    Title: Repeater Confirmation Complete
+  - Id: 17339
+    Title: Supply and Demand for Reserve Parts
+  - Id: 17340
+    Title: Supply and Demand for Reserve Parts
+    Drops:
+      - Mob: EP17_2_BETA_BASIC_NG
+        Item: Com_chip_Auto_Doll
+        Rate: 1000
+  - Id: 17341
+    Title: Standby No Signal
+    TimeLimit: 4h
+  - Id: 17342
+    Title: "I Don't Like it"
+    Targets:
+      - Mob: EP17_2_OMEGA_CLEANER_NG
+        Count: 5
+  - Id: 17343
+    Title: Scary...
+  - Id: 17344
+    Title: No Key
+  - Id: 17345
+    Title: Stairway Key 1
+  - Id: 17346
+    Title: Stairway Key 2
+  - Id: 17347
+    Title: Stairway Key 3
+  - Id: 17348
+    Title: Passing the Key
+  - Id: 17349
+    Title: The Door is Open
+  - Id: 17350
+    Title: Head, Body, Arms and Legs
+  - Id: 17351
+    Title: Head, Body, Arms and Legs
+  - Id: 17352
+    Title: Head, Body, Arms and Legs
+  - Id: 17353
+    Title: Head, Body, Arms and Legs
+  - Id: 17354
+    Title: Head, Body, Arms and Legs
+  - Id: 17355
+    Title: Head, Body, Arms and Legs
+  - Id: 17356
+    Title: Head, Body, Arms and Legs
+  - Id: 17357
+    Title: Head, Body, Arms and Legs
+  - Id: 17358
+    Title: Done Checking the Underground Condition
+  - Id: 17359
+    Title: First Warehouse Floor Cleanup
+    Targets:
+      - Mob: EP17_2_HEART_HUNTER_H
+        Count: 20
+  - Id: 17360
+    Title: Standby First Warehouse Floor Cleanup
+    TimeLimit: 4h
+  - Id: 17361
+    Title: Underground Warehouse Cleanup
+    Targets:
+      - Mob: EP17_2_BETA_ITEMKEEPER
+        Count: 20
+  - Id: 17362
+    Title: Standby Underground Warehouse Cleanup
+    TimeLimit: 4h
+  - Id: 17363
+    Title: Visiting the Bathroom
+  - Id: 17364
+    Title: Request Boiler Shutdown
+  - Id: 17365
+    Title: "It's Already Stopped?"
+  - Id: 17366
+    Title: "Suddenly Just Like This?"
+  - Id: 17367
+    Title: Planning Countermeasures
+  - Id: 17368
+    Title: Install Trap 1
+  - Id: 17369
+    Title: Install Trap 2
+  - Id: 17370
+    Title: Install Trap 3
+  - Id: 17371
+    Title: Install Trap 4
+  - Id: 17372
+    Title: Install Trap Complete
+  - Id: 17373
+    Title: "Anyway, Let's Talk"
+  - Id: 17374
+    Title: "Why did you do that?"
+  - Id: 17375
+    Title: "Boiler's Request"
+  - Id: 17376
+    Title: Boiler's Request
+    Targets:
+      - Mob: EP17_2_BETA_CLEANER_A
+        Count: 10
+      - Mob: EP17_2_BETA_CLEANER_B
+        Count: 10
+  - Id: 17377
+    Title: Standby Between Hot and Cold Baths
+    TimeLimit: 4h
+  - Id: 17378
+    Title: "Sweep's Request"
+  - Id: 17379
+    Title: "Bathhouse Cleaning"
+    Targets:
+      - Mob: EP17_2_MARC
+        Count: 15
+      - Mob: EP17_2_PIRANHA
+        Count: 15
+  - Id: 17380
+    Title: Standby Bathhouse Cleaning
+    TimeLimit: 4h
+  - Id: 17381
+    Title: Joining the Party
+  - Id: 18000
+    Title: Ready to Enter
+  - Id: 18001
+    Title: The Mansion's Opening
+  - Id: 18002
+    Title: Broken core recovery
+  - Id: 18003
+    Title: Core 01
+  - Id: 18004
+    Title: Core 02
+  - Id: 18005
+    Title: Core 03
+  - Id: 18006
+    Title: Core 04
+  - Id: 18007
+    Title: Core 05
+  - Id: 18008
+    Title: Core 06
+  - Id: 18009
+    Title: Core 07
+  - Id: 18010
+    Title: Core 08
+  - Id: 18011
+    Title: Core 09
+  - Id: 18012
+    Title: Core 10
+  - Id: 18013
+    Title: To the Designated Location
+  - Id: 18014
+    Title: Unexpected Guest
+  - Id: 18015
+    Title: Illusion Tracker
+  - Id: 18016
+    Title: Operation Conference
+  - Id: 18017
+    Title: Pesticide Extermination Operation
+    Targets:
+      - Mob: MD_SWEETY
+        Count: 1
+  - Id: 18018
+    Title: Unprocessed Placement
+  - Id: 18019
+    Title: Talk to Sweetie
+  - Id: 18020
+    Title: Hello
+  - Id: 18021
+    Title: Visiting Guest
+  - Id: 18022
+    Title: Hey! Sweetie!
+    Targets:
+      - Mob: MD_SWEETY
+        Count: 1
+  - Id: 18023
+    Title: Hey! Waiting for Sweetie
+    TimeLimit: 4h
+  - Id: 18024
+    Title: Core collection
+  - Id: 18025
+    Title: Core collection - Standby
+    TimeLimit: 4h
