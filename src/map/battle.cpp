@@ -8317,7 +8317,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 			return 1; // Returns 1 damage
 	}
 
-	return cap_value(min(rdamage,max_damage),INT_MIN,INT_MAX);
+	return cap_value(i64min(rdamage,max_damage),INT_MIN,INT_MAX);
 }
 
 /**
