@@ -8445,7 +8445,7 @@ Body:
           - Option: VAR_MAXSPAMOUNT
             MinValue: 50
             MaxValue: 500
-            Chance: 
+            Chance: 588
           - Option: VAR_MAXSPPERCENT
             MinValue: 1
             MaxValue: 5
@@ -11832,7 +11832,7 @@ Body:
             MaxValue: 10
             Chance: 714
   - Id: 137
-    Group: IMPERIAL_P_MO_GARMENT
+    Group: IMPERIAL_CONVERT1
     Slots:
       - Slot: 1
         Options:
@@ -11877,7 +11877,7 @@ Body:
             MaxValue: 5
             Chance: 1000
   - Id: 138
-    Group: IMPERIAL_M_MO_GARMENT
+    Group: IMPERIAL_CONVERT2
     Slots:
       - Slot: 1
         Options:
@@ -11922,7 +11922,7 @@ Body:
             MaxValue: 5
             Chance: 1000
   - Id: 139
-    Group: IMPERIAL_P_MO_ARMOR
+    Group: IMPERIAL_CONVERT3
     Slots:
       - Slot: 1
         Options:
@@ -11959,7 +11959,7 @@ Body:
             MaxValue: 5
             Chance: 1250
   - Id: 140
-    Group: IMPERIAL_M_MO_ARMOR
+    Group: IMPERIAL_CONVERT4
     Slots:
       - Slot: 1
         Options:

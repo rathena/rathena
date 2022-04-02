@@ -68,5 +68,6 @@ void do_init_buyingstore(void);
 
 void do_init_buyingstore_autotrade( void );
 void buyingstore_reopen( struct map_session_data* sd );
+void buyingstore_update(map_session_data &sd);
 
 #endif /* BUYINGSTORE_HPP */

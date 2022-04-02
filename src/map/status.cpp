@@ -7,7 +7,6 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string>
-#include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/ers.hpp"
@@ -118,7 +117,7 @@ const std::string RefineDatabase::getDefaultLocation(){
 	return std::string( db_path ) + "/refine.yml";
 }
 
-uint64 RefineDatabase::parseBodyNode( const YAML::Node& node ){
+uint64 RefineDatabase::parseBodyNode( const ryml::NodeRef node ){
 	std::string group_name;
 
 	if( !this->asString( node, "Group", group_name ) ){
@@ -143,7 +142,8 @@ uint64 RefineDatabase::parseBodyNode( const YAML::Node& node ){
 	}
 
 	if( this->nodeExists( node, "Levels" ) ){
-		for( const YAML::Node& levelNode : node["Levels"] ){
+		const auto levelsNode = node["Levels"];
+		for( const auto levelNode : levelsNode.children() ){
 			uint16 level;
 
 			if( !this->asUInt16( levelNode, "Level", level ) ){
@@ -159,7 +159,8 @@ uint64 RefineDatabase::parseBodyNode( const YAML::Node& node ){
 			}
 
 			if( this->nodeExists( levelNode, "RefineLevels" ) ){
-				for( const YAML::Node& refineLevelNode : levelNode["RefineLevels"] ){
+				const auto refineLevelsNode = levelNode["RefineLevels"];
+				for( const auto refineLevelNode : refineLevelsNode.children() ){
 					uint16 refine_level;
 
 					if( !this->asUInt16( refineLevelNode, "Level", refine_level ) ){
@@ -230,7 +231,8 @@ uint64 RefineDatabase::parseBodyNode( const YAML::Node& node ){
 					}
 
 					if( this->nodeExists( refineLevelNode, "Chances" ) ){
-						for( const YAML::Node& chanceNode : refineLevelNode["Chances"] ){
+						const auto chancesNode = refineLevelNode["Chances"];
+						for( const auto chanceNode : chancesNode ){
 							std::string cost_name;
 
 							if( !this->asString( chanceNode, "Type", cost_name ) ){
@@ -457,7 +459,7 @@ const std::string SizeFixDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 SizeFixDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 SizeFixDatabase::parseBodyNode(const ryml::NodeRef node) {
 	std::string weapon_name;
 
 	if (!this->asString(node, "Weapon", weapon_name))
@@ -1995,8 +1997,10 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 		status->def2 = status->mdef2 =
 		status->cri = status->flee2 =
 		status->patk = status->smatk =
-		status->hplus = status->crate =
-		status->res = status->mres = 0;
+		status->hplus = status->crate = 0;
+		
+		if (bl->type != BL_MOB)	// BL_MOB has values set when loading mob_db
+			status->res = status->mres = 0;
 
 #ifdef RENEWAL // Renewal formulas
 	if (bl->type == BL_HOM) {
@@ -4508,7 +4512,7 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 	sd = BL_CAST(BL_PC,bl);
 	sc = status_get_sc(bl);
 
-	val = 1 + (status->vit/5) + (status->max_hp/200);
+	val = (status->vit/5) + max(1, status->max_hp/200);
 
 	if( sd && sd->hprecov_rate != 100 )
 		val = val*sd->hprecov_rate/100;
@@ -4927,91 +4931,104 @@ void status_calc_bl_main(struct block_list *bl, std::bitset<SCB_MAX> flag)
 
 	if(flag[SCB_STR]) {
 		status->str = status_calc_str(bl, sc, b_status->str);
-		flag|=SCB_BATK;
+		flag.set(SCB_BATK);
 		if( bl->type&BL_HOM )
-			flag |= SCB_WATK;
+			flag.set(SCB_WATK);
 	}
 
 	if(flag[SCB_AGI]) {
 		status->agi = status_calc_agi(bl, sc, b_status->agi);
-		flag|=SCB_FLEE
+		flag.set(SCB_FLEE);
 #ifdef RENEWAL
-			|SCB_DEF2
+		flag.set(SCB_DEF2);
 #endif
-			;
-		if( bl->type&(BL_PC|BL_HOM) )
-			flag |= SCB_ASPD|SCB_DSPD;
+		if( bl->type&(BL_PC|BL_HOM) ) {
+			flag.set(SCB_ASPD);
+			flag.set(SCB_DSPD);
+		}
 	}
 
 	if(flag[SCB_VIT]) {
 		status->vit = status_calc_vit(bl, sc, b_status->vit);
-		flag|=SCB_DEF2|SCB_MDEF2;
+		flag.set(SCB_DEF2);
+		flag.set(SCB_MDEF2);
 		if( bl->type&(BL_PC|BL_HOM|BL_MER|BL_ELEM) )
-			flag |= SCB_MAXHP;
+			flag.set(SCB_MAXHP);
 		if( bl->type&BL_HOM )
-			flag |= SCB_DEF;
+			flag.set(SCB_DEF);
 	}
 
 	if(flag[SCB_INT]) {
 		status->int_ = status_calc_int(bl, sc, b_status->int_);
-		flag|=SCB_MATK|SCB_MDEF2;
+		flag.set(SCB_MATK);
+		flag.set(SCB_MDEF2);
 		if( bl->type&(BL_PC|BL_HOM|BL_MER|BL_ELEM) )
-			flag |= SCB_MAXSP;
+			flag.set(SCB_MAXSP);
 		if( bl->type&BL_HOM )
-			flag |= SCB_MDEF;
+			flag.set(SCB_MDEF);
 	}
 
 	if(flag[SCB_DEX]) {
 		status->dex = status_calc_dex(bl, sc, b_status->dex);
-		flag|=SCB_BATK|SCB_HIT
+		flag.set(SCB_BATK);
+		flag.set(SCB_HIT);
 #ifdef RENEWAL
-			|SCB_MATK|SCB_MDEF2
+		flag.set(SCB_MATK);
+		flag.set(SCB_MDEF2);
 #endif
-			;
 		if( bl->type&(BL_PC|BL_HOM) )
-			flag |= SCB_ASPD;
+			flag.set(SCB_ASPD);
 		if( bl->type&BL_HOM )
-			flag |= SCB_WATK;
+			flag.set(SCB_WATK);
 	}
 
 	if(flag[SCB_LUK]) {
 		status->luk = status_calc_luk(bl, sc, b_status->luk);
-		flag|=SCB_BATK|SCB_CRI|SCB_FLEE2
+		flag.set(SCB_BATK);
+		flag.set(SCB_CRI);
+		flag.set(SCB_FLEE2);
 #ifdef RENEWAL
-			|SCB_MATK|SCB_HIT|SCB_FLEE
+		flag.set(SCB_MATK);
+		flag.set(SCB_HIT);
+		flag.set(SCB_FLEE);
 #endif
-			;
 	}
 
 #ifdef RENEWAL
 	if (flag[SCB_POW]) {
 		status->pow = status_calc_pow(bl, sc, b_status->pow);
-		flag |= SCB_BATK|SCB_PATK;
+		flag.set(SCB_BATK);
+		flag.set(SCB_PATK);
 	}
 
 	if (flag[SCB_STA]) {
 		status->sta = status_calc_sta(bl, sc, b_status->sta);
-		flag |= SCB_RES;
+		flag.set(SCB_RES);
 	}
 
 	if (flag[SCB_WIS]) {
 		status->wis = status_calc_wis(bl, sc, b_status->wis);
-		flag |= SCB_MRES;
+		flag.set(SCB_MRES);
 	}
 
 	if (flag[SCB_SPL]) {
 		status->spl = status_calc_spl(bl, sc, b_status->spl);
-		flag |= SCB_MATK|SCB_SMATK;
+		flag.set(SCB_MATK);
+		flag.set(SCB_SMATK);
 	}
 
 	if (flag[SCB_CON]) {
 		status->con = status_calc_con(bl, sc, b_status->con);
-		flag |= SCB_HIT|SCB_FLEE|SCB_PATK|SCB_SMATK;
+		flag.set(SCB_HIT);
+		flag.set(SCB_FLEE);
+		flag.set(SCB_PATK);
+		flag.set(SCB_SMATK);
 	}
 
 	if (flag[SCB_CRT]) {
 		status->crt = status_calc_crt(bl, sc, b_status->crt);
-		flag |= SCB_HPLUS|SCB_CRATE;
+		flag.set(SCB_HPLUS);
+		flag.set(SCB_CRATE);
 	}
 #endif
 
@@ -6781,7 +6798,7 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 	if(sc->data[SC_MOON_COMFORT]) // SG skill [Komurka]
 		flee += sc->data[SC_MOON_COMFORT]->val2;
 	if(sc->data[SC_CLOSECONFINE])
-		flee += 10;
+		flee += sc->data[SC_CLOSECONFINE]->val3;
 	if (sc->data[SC_ANGRIFFS_MODUS])
 		flee -= sc->data[SC_ANGRIFFS_MODUS]->val3;
 	if(sc->data[SC_ADJUSTMENT])
@@ -9828,14 +9845,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_ENCPOISON:
 			val2= 250+50*val1; // Poisoning Chance (2.5+0.5%) in 1/10000 rate
-		case SC_ASPERSIO:
-		case SC_FIREWEAPON:
-		case SC_WATERWEAPON:
-		case SC_WINDWEAPON:
-		case SC_EARTHWEAPON:
-		case SC_SHADOWWEAPON:
-		case SC_GHOSTWEAPON:
-			skill_enchant_elemental_end(bl,type);
 			break;
 		case SC_ELEMENTALCHANGE:
 			// val1 : Element Lvl (if called by skill lvl 1, takes random value between 1 and 4)
@@ -10375,9 +10384,15 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			struct status_change_entry *sce2 = sc2?sc2->data[SC_CLOSECONFINE]:NULL;
 
 			if (src2 && sc2) {
-				if (!sce2) // Start lock on caster.
-					sc_start4(src2,src2,SC_CLOSECONFINE,100,val1,1,0,0,tick+1000);
-				else { // Increase count of locked enemies and refresh time.
+				if (!sce2) { // Start lock on caster.
+#ifdef RENEWAL
+					val3 = 50; // Flee increase
+#else
+					val3 = 10; // Flee increase
+#endif
+
+					sc_start4(src2,src2,SC_CLOSECONFINE,100,val1,1,val3,0,tick+1000);
+				} else { // Increase count of locked enemies and refresh time.
 					(sce2->val2)++;
 					delete_timer(sce2->timer, status_change_timer);
 					sce2->timer = add_timer(gettick()+tick+1000, status_change_timer, src2->id, SC_CLOSECONFINE);
@@ -10605,8 +10620,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val4 = BF_WEAPON|BF_MISC; // Type
 			break;
 		case SC_ENCHANTARMS:
-			// end previous enchants
-			skill_enchant_elemental_end(bl,type);
 			// Make sure the received element is valid.
 			if (val1 >= ELE_ALL)
 				val1 = val1%ELE_ALL;
@@ -12074,11 +12087,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					status_calc_bl_(bl, calc_flag, SCO_FORCE);
 					break;
 				default:
-					status_calc_bl(bl, calc_flag);
+					status_calc_bl_(bl, calc_flag);
 					break;
 			}
 		} else
-			status_calc_bl(bl, calc_flag);
+			status_calc_bl_(bl, calc_flag);
 	}
 
 	// Non-zero
@@ -12962,7 +12975,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			status_calc_bl_(bl, calc_flag, SCO_FORCE);
 		} else
 #endif
-			status_calc_bl(bl, calc_flag);
+			status_calc_bl_(bl, calc_flag);
 	}
 
 	if(opt_flag[SCF_UNITMOVE]) // Out of hiding, invoke on place.
@@ -13096,7 +13109,7 @@ TIMER_FUNC(status_change_timer){
 			clif_changeoption(bl);
 			sc_timer_next(min(sce->val4, interval) + tick);
 			sce->val4 -= interval; //Remaining time
-			status_calc_bl(bl, scdb->calc_flag);
+			status_calc_bl_(bl, scdb->calc_flag);
 			return 0;
 		}
 		if (sce->val4 >= 0 && !(sce->val3) && status->hp > status->max_hp / 4) {
@@ -14264,10 +14277,15 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 	sd = BL_CAST(BL_PC,bl);
 
 	flag = regen->flag;
-	if (flag&RGN_HP && (status->hp >= status->max_hp || regen->state.block&1))
+	if (flag&RGN_HP && (regen->state.block&1))
 		flag &= ~(RGN_HP|RGN_SHP);
-	if (flag&RGN_SP && (status->sp >= status->max_sp || regen->state.block&2))
+	if (flag&RGN_SP && (regen->state.block&2))
 		flag &= ~(RGN_SP|RGN_SSP);
+	// Only skill-based regen is disabled at max HP/SP
+	if (flag&RGN_SHP && (status->hp >= status->max_hp))
+		flag &= ~RGN_SHP;
+	if (flag&RGN_SSP && (status->sp >= status->max_sp))
+		flag &= ~RGN_SSP;
 
 	if (flag && (
 		status_isdead(bl) ||
@@ -14294,7 +14312,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 			while(sregen->tick.hp >= (unsigned int)battle_config.natural_heal_skill_interval) {
 				sregen->tick.hp -= battle_config.natural_heal_skill_interval;
 				if(status_heal(bl, sregen->hp, 0, 3) < sregen->hp) { // Full
-					flag &= ~(RGN_HP|RGN_SHP);
+					flag &= ~RGN_SHP;
 					break;
 				}
 			}
@@ -14307,7 +14325,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 			while(sregen->tick.sp >= (unsigned int)battle_config.natural_heal_skill_interval) {
 				sregen->tick.sp -= battle_config.natural_heal_skill_interval;
 				if(status_heal(bl, 0, sregen->sp, 3) < sregen->sp) { // Full
-					flag &= ~(RGN_SP|RGN_SSP);
+					flag &= ~RGN_SSP;
 					break;
 				}
 			}
@@ -14325,9 +14343,6 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 			flag &= ~RGN_HP;
 	}
 
-	if (!flag)
-		return 0;
-
 	if (flag&(RGN_HP|RGN_SP)) {
 		if(!vd)
 			vd = status_get_viewdata(bl);
@@ -14339,48 +14354,55 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 
 	// Natural Hp regen
 	if (flag&RGN_HP) {
-		rate = (int)(natural_heal_diff_tick * (regen->rate.hp/100. * multi));
+		// Interval to next recovery tick
+		rate = (int)(battle_config.natural_healhp_interval / (regen->rate.hp/100. * multi));
 		if (ud && ud->walktimer != INVALID_TIMER)
-			rate /= 2;
+			rate *= 2;
 		// Homun HP regen fix (they should regen as if they were sitting (twice as fast)
 		if(bl->type == BL_HOM)
-			rate *= 2;
+			rate /= 2;
 
-		regen->tick.hp += rate;
+		// Our timer system isn't 100% accurate so make sure we use the closest interval
+		rate -= NATURAL_HEAL_INTERVAL / 2;
 
-		if(regen->tick.hp >= (unsigned int)battle_config.natural_healhp_interval) {
-			int val = 0;
-			do {
-				val += regen->hp;
-				regen->tick.hp -= battle_config.natural_healhp_interval;
-			} while(regen->tick.hp >= (unsigned int)battle_config.natural_healhp_interval);
-			if (status_heal(bl, val, 0, 1) < val)
-				flag &= ~RGN_SHP; // Full.
+		if(regen->tick.hp + rate <= natural_heal_prev_tick) {
+			regen->tick.hp = natural_heal_prev_tick;
+			if (status->hp >= status->max_hp)
+				flag &= ~(RGN_HP | RGN_SHP);
+			else if (status_heal(bl, regen->hp, 0, 1) < regen->hp)
+				flag &= ~RGN_SHP; // Full
 		}
+	}
+	else {
+		regen->tick.hp = natural_heal_prev_tick;
 	}
 
 	// Natural SP regen
 	if(flag&RGN_SP) {
-		rate = (int)(natural_heal_diff_tick * (regen->rate.sp/100. * multi));
+		// Interval to next recovery tick
+		rate = (int)(battle_config.natural_healsp_interval / (regen->rate.sp/100. * multi));
 		// Homun SP regen fix (they should regen as if they were sitting (twice as fast)
 		if(bl->type==BL_HOM)
-			rate *= 2;
+			rate /= 2;
 #ifdef RENEWAL
-		if (bl->type == BL_PC && (((TBL_PC*)bl)->class_&MAPID_UPPERMASK) == MAPID_MONK &&
+		if (sd && (sd->class_&MAPID_UPPERMASK) == MAPID_MONK &&
 			sc && sc->data[SC_EXPLOSIONSPIRITS] && (!sc->data[SC_SPIRIT] || sc->data[SC_SPIRIT]->val2 != SL_MONK))
-			rate /= 2; // Tick is doubled in Fury state
+			rate *= 2; // Tick is doubled in Fury state
 #endif
-		regen->tick.sp += rate;
 
-		if(regen->tick.sp >= (unsigned int)battle_config.natural_healsp_interval) {
-			int val = 0;
-			do {
-				val += regen->sp;
-				regen->tick.sp -= battle_config.natural_healsp_interval;
-			} while(regen->tick.sp >= (unsigned int)battle_config.natural_healsp_interval);
-			if (status_heal(bl, 0, val, 1) < val)
-				flag &= ~RGN_SSP; // full.
+		// Our timer system isn't 100% accurate so make sure we use the closest interval
+		rate -= NATURAL_HEAL_INTERVAL / 2;
+
+		if(regen->tick.sp + rate <= natural_heal_prev_tick) {
+			regen->tick.sp = natural_heal_prev_tick;
+			if (status->sp >= status->max_sp)
+				flag &= ~(RGN_SP | RGN_SSP);
+			else if (status_heal(bl, 0, regen->sp, 1) < regen->sp)
+				flag &= ~RGN_SSP; // Full
 		}
+	}
+	else {
+		regen->tick.sp = natural_heal_prev_tick;
 	}
 
 	if (!regen->sregen)
@@ -14435,8 +14457,8 @@ static int status_natural_heal(struct block_list* bl, va_list args)
  */
 static TIMER_FUNC(status_natural_heal_timer){
 	natural_heal_diff_tick = DIFF_TICK(tick,natural_heal_prev_tick);
-	map_foreachregen(status_natural_heal);
 	natural_heal_prev_tick = tick;
+	map_foreachregen(status_natural_heal);
 	return 0;
 }
 
@@ -14534,7 +14556,7 @@ const std::string AttributeDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 AttributeDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 AttributeDatabase::parseBodyNode(const ryml::NodeRef node) {
 	uint16 level;
 
 	if (!this->asUInt16(node, "Level", level))
@@ -14549,7 +14571,7 @@ uint64 AttributeDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->nodeExists(node, itatk.first))
 			continue;
 
-		const YAML::Node &eleNode = node[itatk.first];
+		const auto eleNode = node[c4::to_csubstr(itatk.first)];
 
 		for (const auto &itdef : um_eleid2elename) {
 			if (!this->nodeExists(eleNode, itdef.first))
@@ -14561,11 +14583,11 @@ uint64 AttributeDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			if (val < -100) {
-				this->invalidWarning(eleNode[itdef.first], "%s %h is out of range %d~%d. Setting to -100.\n", itdef.first.c_str(), val, -100, 200);
+				this->invalidWarning(eleNode[c4::to_csubstr(itdef.first)], "%s %h is out of range %d~%d. Setting to -100.\n", itdef.first.c_str(), val, -100, 200);
 				val = -100;
 			}
 			else if (val > 200) {
-				this->invalidWarning(eleNode[itdef.first], "%s %h is out of range %d~%d. Setting to 200.\n", itdef.first.c_str(), val, -100, 200);
+				this->invalidWarning(eleNode[c4::to_csubstr(itdef.first)], "%s %h is out of range %d~%d. Setting to 200.\n", itdef.first.c_str(), val, -100, 200);
 				val = 200;
 			}
 
@@ -14600,7 +14622,7 @@ const std::string StatusDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef node) {
 	std::string status_name;
 
 	if (!this->asString(node, "Status", status_name))
@@ -14670,10 +14692,13 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "States")) {
-		const YAML::Node &stateNode = node["States"];
+		const ryml::NodeRef stateNode = node["States"];
 
-		for (const auto &it : stateNode) {
-			std::string state = it.first.as<std::string>(), state_constant = "SCS_" + state;
+		for (const auto &it : stateNode.children()) {
+			std::string state;
+			c4::from_chars(it.key(), &state);
+
+			std::string state_constant = "SCS_" + state;
 			int64 constant;
 
 			if (!script_get_constant(state_constant.c_str(), &constant)) {
@@ -14702,22 +14727,27 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "CalcFlags")) {
-		const YAML::Node &flagNode = node["CalcFlags"];
+		const ryml::NodeRef flagNode = node["CalcFlags"];
 
-		if (this->nodeExists(flagNode, "All")) {
-			bool active;
+		for (const auto &it : flagNode.children()) {
+			if (this->nodeExists(it, "All")) {
+				bool active;
 
-			if (!this->asBool(flagNode, "All", active))
-				return 0;
+				if (!this->asBool(it, "All", active))
+					return 0;
 
-			if (active)
-				status->calc_flag = status_db.SCB_ALL;
-			else
-				status->calc_flag.reset();
+				if (active)
+					status->calc_flag = status_db.SCB_ALL;
+				else
+					status->calc_flag.reset();
+			}
 		}
 
-		for (const auto &it : flagNode) {
-			std::string flag = it.first.as<std::string>(), flag_constant = "SCB_" + flag;
+		for (const auto &it : flagNode.children()) {
+			std::string flag;
+			c4::from_chars(it.key(), &flag);
+
+			std::string flag_constant = "SCB_" + flag;
 			int64 constant;
 
 			// Skipped because processed above the loop
@@ -14775,10 +14805,13 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Opt2")) {
-		const YAML::Node &optNode = node["Opt2"];
+		const ryml::NodeRef optNode = node["Opt2"];
 
-		for (const auto &it : optNode) {
-			std::string opt = it.first.as<std::string>(), opt_constant = "OPT2_" + opt;
+		for (const auto &it : optNode.children()) {
+			std::string opt;
+			c4::from_chars(it.key(), &opt);
+
+			std::string opt_constant = "OPT2_" + opt;
 			int64 constant;
 
 			if (!script_get_constant(opt_constant.c_str(), &constant)) {
@@ -14807,10 +14840,13 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Opt3")) {
-		const YAML::Node &optNode = node["Opt3"];
+		const ryml::NodeRef optNode = node["Opt3"];
 
-		for (const auto &it : optNode) {
-			std::string opt = it.first.as<std::string>(), opt_constant = "OPT3_" + opt;
+		for (const auto &it : optNode.children()) {
+			std::string opt;
+			c4::from_chars(it.key(), &opt);
+
+			std::string opt_constant = "OPT3_" + opt;
 			int64 constant;
 
 			if (!script_get_constant(opt_constant.c_str(), &constant)) {
@@ -14839,10 +14875,13 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Options")) {
-		const YAML::Node &optionNode = node["Options"];
+		const ryml::NodeRef optionNode = node["Options"];
 
-		for (const auto &it : optionNode) {
-			std::string option = it.first.as<std::string>(), option_constant = "OPTION_" + option;
+		for (const auto &it : optionNode.children()) {
+			std::string option;
+			c4::from_chars(it.key(), &option);
+
+			std::string option_constant = "OPTION_" + option;
 			int64 constant;
 
 			if (!script_get_constant(option_constant.c_str(), &constant)) {
@@ -14871,10 +14910,13 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Flags")) {
-		const YAML::Node &flagNode = node["Flags"];
+		const ryml::NodeRef flagNode = node["Flags"];
 
-		for (const auto &it : flagNode) {
-			std::string flag = it.first.as<std::string>(), flag_constant = "SCF_" + flag;
+		for (const auto &it : flagNode.children()) {
+			std::string flag;
+			c4::from_chars(it.key(), &flag);
+
+			std::string flag_constant = "SCF_" + flag;
 			int64 constant;
 
 			if (!script_get_constant(flag_constant.c_str(), &constant)) {
@@ -14927,10 +14969,13 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Fail")) {
-		const YAML::Node &failNode = node["Fail"];
+		const ryml::NodeRef failNode = node["Fail"];
 
-		for (const auto &it : failNode) {
-			std::string fail = it.first.as<std::string>(), fail_constant = "SC_" + fail;
+		for (const auto &it : failNode.children()) {
+			std::string fail;
+			c4::from_chars(it.key(), &fail);
+
+			std::string fail_constant = "SC_" + fail;
 			int64 constant;
 
 			if (!script_get_constant(fail_constant.c_str(), &constant)) {
@@ -14956,10 +15001,13 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "End")) {
-		const YAML::Node &endNode = node["End"];
+		const ryml::NodeRef endNode = node["End"];
 
-		for (const auto &it : endNode) {
-			std::string end = it.first.as<std::string>(), end_constant = "SC_" + end;
+		for (const auto &it : endNode.children()) {
+			std::string end;
+			c4::from_chars(it.key(), &end);
+
+			std::string end_constant = "SC_" + end;
 			int64 constant;
 
 			if (!script_get_constant(end_constant.c_str(), &constant)) {

@@ -35,33 +35,33 @@ bool process(const std::string &type, uint32 version, const std::vector<std::str
 
 			ShowNotice("Upgrade process has begun.\n");
 
-			std::ofstream out;
+			std::ofstream outFile;
 
 			body.~Emitter();
 			new (&body) YAML::Emitter();
-			out.open(to);
+			outFile.open(to);
 
-			if (!out.is_open()) {
+			if (!outFile.is_open()) {
 				ShowError("Can not open file \"%s\" for writing.\n", to.c_str());
 				return false;
 			}
 
-			prepareHeader(out, type, version, name);
+			prepareHeader(outFile, type, version, name);
 			if (inNode["Body"].IsDefined()) {
 				prepareBody();
 
 				if (!lambda(path, name_ext, source_version)) {
-					out.close();
+					outFile.close();
 					return false;
 				}
 
 				finalizeBody();
-				out << body.c_str();
+				outFile << body.c_str();
 			}
-			prepareFooter(out);
+			prepareFooter(outFile);
 			// Make sure there is an empty line at the end of the file for git
-			out << "\n";
-			out.close();
+			outFile << "\n";
+			outFile.close();
 		}
 	}
 
@@ -222,7 +222,7 @@ static bool upgrade_achievement_db(std::string file, const uint32 source_version
 		entries++;
 	}
 
-	ShowStatus("Done converting/upgrading '" CL_WHITE "%d" CL_RESET "' achievements in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+	ShowStatus("Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' achievements in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
 	return true;
 }
@@ -244,7 +244,7 @@ static bool upgrade_item_db(std::string file, const uint32 source_version) {
 		entries++;
 	}
 
-	ShowStatus("Done converting/upgrading '" CL_WHITE "%d" CL_RESET "' items in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+	ShowStatus("Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' items in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
 	return true;
 }
