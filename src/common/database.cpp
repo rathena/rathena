@@ -42,14 +42,11 @@ bool YamlDatabase::verifyCompatibility( const ryml::Tree& tree ){
 
 	const ryml::NodeRef& headerNode = tree["Header"];
 
-	if( !this->nodeExists( headerNode, "Type" ) ){
-		ShowError( "No database \"Type\" was found.\n" );
+	std::string tmpType;
+
+	if( !this->asString( headerNode, "Type", tmpType ) ){
 		return false;
 	}
-
-	const ryml::NodeRef& typeNode = headerNode["Type"];
-	std::string tmpType;
-	typeNode >> tmpType;
 
 	if( this->type != tmpType ){
 		ShowError( "Database type mismatch: %s != %s.\n", this->type.c_str(), tmpType.c_str() );
@@ -59,7 +56,6 @@ bool YamlDatabase::verifyCompatibility( const ryml::Tree& tree ){
 	uint16 tmpVersion;
 
 	if( !this->asUInt16( headerNode, "Version", tmpVersion ) ){
-		ShowError("Invalid header \"Version\" type for %s database.\n", this->type.c_str());
 		return false;
 	}
 
@@ -210,7 +206,12 @@ template <typename R> bool YamlDatabase::asType( const ryml::NodeRef& node, cons
 			return false;
 		}
 
-		dataNode >> out;
+		try{
+			dataNode >> out;
+		}catch( std::runtime_error const& ){
+			this->invalidWarning( node, "Node \"%s\" cannot be parsed as %s.\n", name.c_str(), typeid( R ).name() );
+			return false;
+		}
 
 		return true;
 	}else{
@@ -346,4 +347,12 @@ void YamlDatabase::invalidWarning( const ryml::NodeRef& node, const char* fmt, .
 
 std::string YamlDatabase::getCurrentFile(){
 	return this->currentFile;
+}
+
+void on_yaml_error( const char* msg, size_t len, ryml::Location loc, void *user_data ){
+	throw std::runtime_error( msg );
+}
+
+void do_init_database(){
+	ryml::set_callbacks( ryml::Callbacks( nullptr, nullptr, nullptr, on_yaml_error ) );
 }

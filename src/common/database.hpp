@@ -194,4 +194,6 @@ public:
 	}
 };
 
+void do_init_database();
+
 #endif /* DATABASE_HPP */
