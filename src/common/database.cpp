@@ -232,7 +232,6 @@ bool YamlDatabase::asBool(const ryml::NodeRef node, const std::string &name, boo
 		out = false;
 		return true;
 	}
-	this->invalidWarning(node, "Invalid value for Node \"%s\".\n", name.c_str());
 	return false;
 }
 
