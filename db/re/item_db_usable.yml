@@ -44373,7 +44373,7 @@ Body:
     Script: |
       getgroupitem(IG_PITAPAT_BOX);
   - Id: 22721
-    AegisName: ?_Box
+    AegisName: "?_Box"
     Name: "? Box"
     Type: Cash
     Buy: 10
@@ -48070,7 +48070,7 @@ Body:
     Script: |
       laphine_upgrade();
   - Id: 100128
-    AegisName: Noblesses_Refine_Ticket
+    AegisName: Noblesse_Rifine_Ticket
     Name: Noblesses Refine Ticket
     Type: Delayconsume
     Buy: 20

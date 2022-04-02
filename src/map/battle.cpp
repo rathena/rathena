@@ -5679,9 +5679,9 @@ static void battle_calc_defense_reduction(struct Damage* wd, struct block_list *
 #else
 		vit_def = def2;
 #endif
-		if( src->type == BL_MOB && (battle_check_undead(sstatus->race,sstatus->def_ele) || sstatus->race==RC_DEMON) && //This bonus already doesn't work vs players
-			(skill=pc_checkskill(tsd,AL_DP)) > 0 )
-			vit_def += skill*(int)(3 +(tsd->status.base_level+1)*0.04);   // submitted by orn
+		if (src->type == BL_MOB && (battle_check_undead(sstatus->race, sstatus->def_ele) || sstatus->race == RC_DEMON) && //This bonus already doesn't work vs players
+			(skill = pc_checkskill(tsd, AL_DP)) > 0)
+			vit_def += (int)(((float)tsd->status.base_level / 25.0 + 3.0) * skill + 0.5);
 		if( src->type == BL_MOB && (skill=pc_checkskill(tsd,RA_RANGERMAIN))>0 &&
 			(sstatus->race == RC_BRUTE || sstatus->race == RC_PLAYER_DORAM || sstatus->race == RC_FISH || sstatus->race == RC_PLANT) )
 			vit_def += skill*5;
@@ -8306,7 +8306,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 
 			if (sc->data[SC_DEATHBOUND] && skill_id != WS_CARTTERMINATION && skill_id != GN_HELLS_PLANT_ATK && !status_bl_has_mode(src,MD_STATUSIMMUNE)) {
 				if (distance_bl(src,bl) <= 0 || !map_check_dir(map_calc_dir(bl,src->x,src->y), unit_getdir(bl))) {
-					int64 rd1 = min(damage, status_get_max_hp(bl)) * sc->data[SC_DEATHBOUND]->val2 / 100; // Amplify damage.
+					int64 rd1 = i64min(damage, status_get_max_hp(bl)) * sc->data[SC_DEATHBOUND]->val2 / 100; // Amplify damage.
 
 					*dmg = rd1 * 30 / 100; // Received damage = 30% of amplified damage.
 					clif_skill_damage(src, bl, gettick(), status_get_amotion(src), 0, -30000, 1, RK_DEATHBOUND, sc->data[SC_DEATHBOUND]->val1, DMG_SINGLE);
@@ -8349,7 +8349,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 			rdamage = damage * sc->data[SC_MAXPAIN]->val1 * 10 / 100;
 	}
 
-	return cap_value(min(rdamage,max_damage),INT_MIN,INT_MAX);
+	return cap_value(i64min(rdamage,max_damage),INT_MIN,INT_MAX);
 }
 
 /**

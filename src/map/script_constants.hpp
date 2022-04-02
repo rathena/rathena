@@ -534,6 +534,7 @@
 	export_constant(MF_NORENEWALDROPPENALTY);
 	export_constant(MF_NORENEWALEXPPENALTY);
 	export_constant(MF_NOPETCAPTURE);
+	export_constant(MF_NOBUYINGSTORE);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
@@ -546,6 +547,7 @@
 	export_constant(CELL_NOCHAT);
 	export_constant(CELL_MAELSTROM);
 	export_constant(CELL_ICEWALL);
+	export_constant(CELL_NOBUYINGSTORE);
 
 	/* getcell types */
 	export_constant(CELL_CHKWALL);
@@ -564,6 +566,7 @@
 	export_constant(CELL_CHKNOCHAT);
 	export_constant(CELL_CHKMAELSTROM);
 	export_constant(CELL_CHKICEWALL);
+	export_constant(CELL_CHKNOBUYINGSTORE);
 
 	/* parameters */
 	export_parameter("StatusPoint",SP_STATUSPOINT);
@@ -843,6 +846,7 @@
 	export_constant2("bCritDefRate",SP_CRIT_DEF_RATE);
 	export_constant2("bMagicSubDefEle", SP_MAGIC_SUBDEF_ELE);
 	export_constant2("bReduceDamageReturn",SP_REDUCE_DAMAGE_RETURN);
+	export_constant2("bAbsorbDmgMaxHP2", SP_ABSORB_DMG_MAXHP2);
 	export_constant2("bAddItemSPHealRate", SP_ADD_ITEM_SPHEAL_RATE);
 	export_constant2("bAddItemGroupSPHealRate", SP_ADD_ITEMGROUP_SPHEAL_RATE);
 	export_constant2("bWeaponSubSize", SP_WEAPON_SUBSIZE);
@@ -8903,6 +8907,9 @@
 	export_constant(SCF_SENDVAL3);
 	export_constant(SCF_NOFORCEDEND);
 	export_constant(SCF_NOWARNING);
+	export_constant(SCF_REMOVEONUNEQUIP);
+	export_constant(SCF_REMOVEONUNEQUIPWEAPON);
+	export_constant(SCF_REMOVEONUNEQUIPARMOR);
 
 	#undef export_constant
 	#undef export_constant2

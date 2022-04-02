@@ -1163,7 +1163,7 @@ Body:
           - Sprint_Glove_IL
           - Sprint_Mail_IL
       - Combo:
-          - aegis_310881
+          - Runeknight_Top3
           - RuneknightStone_Robe_
     Script: |
       bonus bVariableCastrate,-10;
@@ -4791,7 +4791,7 @@ Body:
           - RingOfDevil
           - Fortune3
       - Combo:
-          - aegis_410094
+          - Chain_Of_Seal_
           - Vassalage_Necklace
     Script: |
       bonus bCritAtkRate,5;
@@ -5167,7 +5167,7 @@ Body:
           - Noblesse_Attack_Boots
           - Noblesse_Attack_Manteau
           - Noblesse_Attack_Ring
-          - Noblesse_Aimed_suit
+          - Noblesse_Aim_Suit
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
@@ -5215,7 +5215,7 @@ Body:
           - Noblesse_Attack_Boots
           - Noblesse_Attack_Manteau
           - Noblesse_Attack_Ring
-          - Noblesse_Tornado_Armor
+          - Noblesse_Tonado_Armor
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
@@ -5247,7 +5247,7 @@ Body:
           - Noblesse_Attack_Boots
           - Noblesse_Attack_Manteau
           - Noblesse_Attack_Ring
-          - Noblesse_Cart_Cannon_Suit
+          - Noblesse_Kart_Suit
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bVariableCastRate,-5;
@@ -5263,7 +5263,7 @@ Body:
           - Noblesse_Attack_Boots
           - Noblesse_Attack_Manteau
           - Noblesse_Attack_Ring
-          - Noblesse_Cart_Tornado_Suit
+          - Noblesse_Kart_Suit2
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
@@ -5295,7 +5295,7 @@ Body:
           - Noblesse_Attack_Boots
           - Noblesse_Attack_Manteau
           - Noblesse_Attack_Ring
-          - Noblesse_Assassin_Suit
+          - Noblesse_Assasin_Suit
       - Combo:
           - Imperial_Attack_Boots
           - Imperial_Attack_Manteau
@@ -5369,7 +5369,7 @@ Body:
           - Noblesse_Attack_Boots
           - Noblesse_Attack_Manteau
           - Noblesse_Attack_Ring
-          - Noblesse_Fire_Rain_Suit
+          - Noblesse_Firerain_Suit
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
@@ -5465,7 +5465,7 @@ Body:
           - Noblesse_Attack_Boots
           - Noblesse_Attack_Manteau
           - Noblesse_Attack_Ring
-          - Noblesse_Super_Novice_Suit
+          - Noblesse_Snovice_Suit
       - Combo:
           - Imperial_Attack_Boots
           - Imperial_Attack_Manteau
@@ -5555,7 +5555,7 @@ Body:
           - Noblesse_Magic_Boots
           - Noblesse_Magic_Manteau
           - Noblesse_Magic_Ring
-          - Noblesse_Catnip_Robe
+          - Noblesse_Carrot_Robe
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bVariableCastrate,-5;
@@ -5655,7 +5655,7 @@ Body:
           - Noblesse_Magic_Boots
           - Noblesse_Magic_Manteau
           - Noblesse_Magic_Ring
-          - Noblesse_Eswhoo_Robe
+          - Noblesse_Swhoo_Robe
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bVariableCastrate,-5;
@@ -5687,7 +5687,7 @@ Body:
           - Noblesse_Magic_Boots
           - Noblesse_Magic_Manteau
           - Noblesse_Magic_Ring
-          - Noblesse_Super_Novice_Robe
+          - Noblesse_Snovice_Robe
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bMaxHPrate,5;
@@ -13146,7 +13146,7 @@ Body:
           - SorcererStone_Robe_
           - SorcererStone_Top_
       - Combo:
-          - aegis_311012
+          - Sorcerer_Middle3
           - SorcererStone_Robe_
     Script: |
       bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",15;
@@ -13181,7 +13181,7 @@ Body:
           - GeneticStone_Robe_
           - GeneticStone_Top_
       - Combo:
-          - aegis_311009
+          - Genetic_Middle3
           - GeneticStone_Robe_
     Script: |
       bonus2 bSkillAtk,"GN_CARTCANNON",15;
@@ -13196,7 +13196,7 @@ Body:
           - WarlockStone_Robe_
           - WarlockStone_Top_
       - Combo:
-          - aegis_310885
+          - Warlock_Middle3
           - WarlockStone_Robe_
     Script: |
       bonus2 bSkillAtk,"WL_CRIMSONROCK",15;
@@ -13235,7 +13235,7 @@ Body:
           - GuillcrossStone_Robe_
           - AssacrossStone_Top_
       - Combo:
-          - aegis_311005
+          - WanderMins_Top3
           - WanderMinstrelStone_Robe_
     Script: |
       bonus2 bSPDrainRate,20,1;
@@ -13256,7 +13256,7 @@ Body:
           - WanderMinstrelStone_Robe_
           - WanderMinstrelStone_Top_
       - Combo:
-          - aegis_311007
+          - WanderMins_Bottom3
           - WanderMinstrelStone_Robe_
     Script: |
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
@@ -13307,10 +13307,10 @@ Body:
           - RoyalguardStone_Robe_
           - PaladinStone_Bottom_
       - Combo:
-          - aegis_310888
+          - Royalguard_Middle3
           - RoyalguardStone_Robe_
       - Combo:
-          - aegis_310888
+          - Royalguard_Middle3
           - RoyalGuard_Robe2
     Script: |
       bonus2 bSkillAtk,"LG_BANISHINGPOINT",15;
@@ -14979,7 +14979,7 @@ Body:
           - Warlock_Robe2
           - Warlock_Top2
       - Combo:
-          - aegis_310886
+          - Warlock_Bottom3
           - Warlock_Robe2
     Script: |
       bonus2 bSkillAtk,"WL_COMET",15;
@@ -15599,7 +15599,7 @@ Body:
           - HeroInsignia_INT
           - HeroBoots_INT
       - Combo:
-          - aegis_311006
+          - WanderMins_Middle3
           - WandMinst_Robe2
     Script: |
       bonus2 bMagicAtkEle,Ele_All,15;
@@ -20672,7 +20672,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_All,6;
   - Combos:
       - Combo:
-          - aegis_310881
+          - Runeknight_Top3
           - Runeknight_Robe2
     Script: |
       bonus2 bSkillAtk,"RK_HUNDREDSPEAR",15;
@@ -20697,43 +20697,43 @@ Body:
       bonus2 bSkillAtk,"RK_IGNITIONBREAK",15;
   - Combos:
       - Combo:
-          - aegis_310884
+          - Warlock_Top3
           - WarlockStone_Robe_
     Script: |
       bonus2 bSkillAtk,"WL_SOULEXPANSION",15;
   - Combos:
       - Combo:
-          - aegis_310884
+          - Warlock_Top3
           - Warlock_Robe2
       - Combo:
-          - aegis_310885
+          - Warlock_Middle3
           - Warlock_Robe2
     Script: |
       bonus2 bSkillAtk,"WL_JACKFROST",15;
   - Combos:
       - Combo:
-          - aegis_310886
+          - Warlock_Bottom3
           - WarlockStone_Robe_
     Script: |
       bonus2 bSkillAtk,"WL_CHAINLIGHTNING",15;
   - Combos:
       - Combo:
-          - aegis_310887
+          - Royalguard_Top3
           - RoyalguardStone_Robe_
       - Combo:
-          - aegis_310889
+          - Royalguard_Bottom3
           - RoyalguardStone_Robe_
     Script: |
       bonus2 bSkillAtk,"LG_CANNONSPEAR",15;
   - Combos:
       - Combo:
-          - aegis_310887
+          - Royalguard_Top3
           - RoyalGuard_Robe2
     Script: |
       bonus2 bSkillUseSPrate,"LG_RAYOFGENESIS",15;
   - Combos:
       - Combo:
-          - aegis_310889
+          - Royalguard_Bottom3
           - RoyalGuard_Robe2
     Script: |
       bonus2 bMagicAddSize,Size_All,15;
@@ -20765,73 +20765,73 @@ Body:
       bonus2 bAddClass,Class_All,15;
   - Combos:
       - Combo:
-          - aegis_311005
+          - WanderMins_Top3
           - WandMinst_Robe2
     Script: |
       bonus2 bSkillAtk,"WM_METALICSOUND",15;
   - Combos:
       - Combo:
-          - aegis_311006
+          - WanderMins_Middle3
           - WanderMinstrelStone_Robe_
     Script: |
       bonus2 bAddSize,Size_All,15;
   - Combos:
       - Combo:
-          - aegis_311007
+          - WanderMins_Bottom3
           - WandMinst_Robe2
     Script: |
       bonus2 bSkillAtk,"WM_REVERBERATION",15;
   - Combos:
       - Combo:
-          - aegis_311008
+          - Genetic_Top3
           - GeneticStone_Robe_
       - Combo:
-          - aegis_311010
+          - Genetic_Bottom3
           - GeneticStone_Robe_
     Script: |
       bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",15;
   - Combos:
       - Combo:
-          - aegis_311008
+          - Genetic_Top3
           - Genetic_Robe2
     Script: |
       bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",15;
   - Combos:
       - Combo:
-          - aegis_311009
+          - Genetic_Middle3
           - Genetic_Robe2
       - Combo:
-          - aegis_311010
+          - Genetic_Bottom3
           - Genetic_Robe2
     Script: |
       bonus2 bSkillAtk,"GN_CART_TORNADO",15;
   - Combos:
       - Combo:
-          - aegis_311011
+          - Sorcerer_Top3
           - SorcererStone_Robe_
     Script: |
       bonus2 bSkillCooldown,"SO_CLOUD_KILL",-2000;
   - Combos:
       - Combo:
-          - aegis_311011
+          - Sorcerer_Top3
           - SorcererStone_Robe2_
     Script: |
       bonus2 bSkillAtk,"SO_EARTHGRAVE",15;
   - Combos:
       - Combo:
-          - aegis_311012
+          - Sorcerer_Middle3
           - SorcererStone_Robe2_
     Script: |
       bonus2 bSkillAtk,"SO_VARETYR_SPEAR",15;
   - Combos:
       - Combo:
-          - aegis_311013
+          - Sorcerer_Bottom3
           - SorcererStone_Robe_
     Script: |
       bonus2 bSkillAtk,"SO_POISON_BUSTER",15;
   - Combos:
       - Combo:
-          - aegis_311013
+          - Sorcerer_Bottom3
           - SorcererStone_Robe2_
     Script: |
       bonus2 bSkillAtk,"SO_DIAMONDDUST",15;
@@ -23768,7 +23768,7 @@ Body:
       bonus2 bAddEle,Ele_Fire,5*.@r;
   - Combos:
       - Combo:
-          - aegis_450163     # 450163
+          - White_Lily_Robe_     # 450163
           - Grave_Amon_Ra_Card     # 4652
     Script: |
       bonus2 bMagicAtkEle,Ele_Holy,15;
@@ -23776,15 +23776,15 @@ Body:
       skill "AB_JUDEX",3;
   - Combos:
       - Combo:
-          - aegis_450163     # 450163
-          - aegis_300348     # 300348
+          - White_Lily_Robe_     # 450163
+          - SLD_G_Amon_Ra_Card_J     # 300348
     Script: |
       bonus2 bMagicAtkEle,Ele_Holy,5;
       bonus2 bResEff,Eff_Freeze,10000;
       skill "AB_JUDEX",1;
   - Combos:
       - Combo:
-          - aegis_450181     # 450181
+          - White_Lily_Robe__     # 450181
           - Grave_Amon_Ra_Card     # 4652
     Script: |
       .@r = min(10,getequiprefinerycnt(EQI_ARMOR));
@@ -23793,8 +23793,8 @@ Body:
       skill "AB_JUDEX",.@r;
   - Combos:
       - Combo:
-          - aegis_450181     # 450181
-          - aegis_300348     # 300348
+          - White_Lily_Robe__     # 450181
+          - SLD_G_Amon_Ra_Card_J     # 300348
     Script: |
       .@r = min(10,getequiprefinerycnt(EQI_ARMOR));
       bonus2 bMagicAtkEle,Ele_Holy,15;
@@ -23858,34 +23858,34 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_32295     # 32295
+          - Crystal_Blade_Necklace     # 32295
           - Strong_Blow1     # 29366
       - Combo:
-          - aegis_32295     # 32295
+          - Crystal_Blade_Necklace     # 32295
           - Strong_Blow2     # 29367
       - Combo:
-          - aegis_32295     # 32295
+          - Crystal_Blade_Necklace     # 32295
           - Strong_Blow3     # 29368
       - Combo:
-          - aegis_32295     # 32295
+          - Crystal_Blade_Necklace     # 32295
           - Strong_Blow4     # 29369
       - Combo:
-          - aegis_32295     # 32295
+          - Crystal_Blade_Necklace     # 32295
           - Strong_Blow5     # 29370
       - Combo:
-          - aegis_32296     # 32296
+          - Crystal_Blade_Necklace_     # 32296
           - Strong_Blow1     # 29366
       - Combo:
-          - aegis_32296     # 32296
+          - Crystal_Blade_Necklace_     # 32296
           - Strong_Blow2     # 29367
       - Combo:
-          - aegis_32296     # 32296
+          - Crystal_Blade_Necklace_     # 32296
           - Strong_Blow3     # 29368
       - Combo:
-          - aegis_32296     # 32296
+          - Crystal_Blade_Necklace_     # 32296
           - Strong_Blow4     # 29369
       - Combo:
-          - aegis_32296     # 32296
+          - Crystal_Blade_Necklace_     # 32296
           - Strong_Blow5     # 29370
     Script: |
       if (BaseClass == Job_Novice || BaseClass == Job_Swordman || BaseClass == Job_Mage || BaseClass == Job_Acolyte || BaseClass == Job_Archer || BaseClass == Job_Merchant || BaseClass == Job_Taekwon || BaseClass == Job_Gunslinger || BaseClass == Job_Summoner) {
