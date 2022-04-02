@@ -183,8 +183,10 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef node) {
 			}
 
 			item->subtype = static_cast<e_card_type>(constant);
-		} else
+		} else {
 			this->invalidWarning(node["SubType"], "Item sub type is not supported for this item type.\n");
+			return 0;
+		}
 	} else {
 		if (!exists)
 			item->subtype = 0;
@@ -196,8 +198,12 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef node) {
 		if (!this->asUInt32(node, "Buy", buy))
 			return 0;
 
+		if( buy > MAX_ZENY ){
+			this->invalidWarning( node["Buy"], "Buying price exceeds MAX_ZENY. Capping...\n" );
+			buy = MAX_ZENY;
+		}
+
 		item->value_buy = buy;
-		item->value_sell = 0;
 	} else {
 		if (!exists) {
 			item->value_buy = 0;
@@ -210,8 +216,12 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef node) {
 		if (!this->asUInt32(node, "Sell", sell))
 			return 0;
 
+		if( sell > MAX_ZENY ){
+			this->invalidWarning( node["Sell"], "Sell price exceeds MAX_ZENY. Capping...\n" );
+			sell = MAX_ZENY;
+		}
+
 		item->value_sell = sell;
-		item->value_buy = 0;
 	} else {
 		if (!exists) {
 			item->value_sell = 0;
