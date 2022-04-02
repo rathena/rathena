@@ -141509,7 +141509,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,5;
   - Id: 450023
-    AegisName: Noblesse_Aimed_suit
+    AegisName: Noblesse_Aim_Suit
     Name: Noblesse Aimed suit
     Type: Armor
     Buy: 20
@@ -141669,7 +141669,7 @@ Body:
       if (.@r>=9)
          bonus bCritAtkRate,5;
   - Id: 450028
-    AegisName: Noblesse_Tornado_Armor
+    AegisName: Noblesse_Tonado_Armor
     Name: Noblesse Tornado Armor
     Type: Armor
     Buy: 20
@@ -141733,7 +141733,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,5;
   - Id: 450030
-    AegisName: Noblesse_Cart_Cannon_Suit
+    AegisName: Noblesse_Kart_Suit
     Name: Noblesse Cart Cannon Suit
     Type: Armor
     Buy: 20
@@ -141765,7 +141765,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,5;
   - Id: 450031
-    AegisName: Noblesse_Cart_Tornado_Suit
+    AegisName: Noblesse_Kart_Suit2
     Name: Noblesse Cart Tornado Suit
     Type: Armor
     Buy: 20
@@ -141829,7 +141829,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,5;
   - Id: 450033
-    AegisName: Noblesse_Assassin_Suit
+    AegisName: Noblesse_Assasin_Suit
     Name: Noblesse Assassin Suit
     Type: Armor
     Buy: 20
@@ -141954,7 +141954,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,5;
   - Id: 450037
-    AegisName: Noblesse_Catnip_Robe
+    AegisName: Noblesse_Carrot_Robe
     Name: Noblesse Catnip Robe
     Type: Armor
     Buy: 20
@@ -142012,7 +142012,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,5;
   - Id: 450039
-    AegisName: Noblesse_Fire_Rain_Suit
+    AegisName: Noblesse_Firerain_Suit
     Name: Noblesse Fire Rain Suit
     Type: Armor
     Buy: 20
@@ -142291,7 +142291,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,5;
   - Id: 450048
-    AegisName: Noblesse_Eswhoo_Robe
+    AegisName: Noblesse_Swhoo_Robe
     Name: Noblesse Eswhoo Robe
     Type: Armor
     Buy: 20
@@ -144559,7 +144559,7 @@ Body:
       if (.@r>=9)
          bonus2 bMagicAtkEle,Ele_Dark,10;
   - Id: 450121
-    AegisName: Noblesse_Super_Novice_Suit
+    AegisName: Noblesse_Snovice_Suit
     Name: Noblesse Super Novice Suit
     Type: Armor
     Buy: 20
@@ -144588,7 +144588,7 @@ Body:
       if (.@r>=9)
          bonus bMaxHPrate,5;
   - Id: 450122
-    AegisName: Noblesse_Super_Novice_Robe
+    AegisName: Noblesse_Snovice_Robe
     Name: Noblesse Super Novice Robe
     Type: Armor
     Buy: 20
