@@ -1046,7 +1046,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef node) {
 			item->script = nullptr;
 		}
 
-		item->script = parse_script(script.c_str(), this->getCurrentFile().c_str(), parser.location(node["Script"]).line, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
+		item->script = parse_script(script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["Script"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS);
 	} else {
 		if (!exists) 
 			item->script = nullptr;
@@ -1063,7 +1063,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef node) {
 			item->equip_script = nullptr;
 		}
 
-		item->equip_script = parse_script(script.c_str(), this->getCurrentFile().c_str(), parser.location(node["EquipScript"]).line, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
+		item->equip_script = parse_script(script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["EquipScript"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS);
 	} else {
 		if (!exists)
 			item->equip_script = nullptr;
@@ -1080,7 +1080,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef node) {
 			item->unequip_script = nullptr;
 		}
 
-		item->unequip_script = parse_script(script.c_str(), this->getCurrentFile().c_str(), parser.location(node["UnEquipScript"]).line, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
+		item->unequip_script = parse_script(script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["UnEquipScript"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS);
 	} else {
 		if (!exists)
 			item->unequip_script = nullptr;
@@ -2503,7 +2503,7 @@ uint64 ComboDatabase::parseBodyNode(const ryml::NodeRef node) {
 				script_free_code(combo->script);
 				combo->script = nullptr;
 			}
-			combo->script = parse_script(script.c_str(), this->getCurrentFile().c_str(), parser.location(node["Script"]).line, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
+			combo->script = parse_script(script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["Script"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS);
 		} else {
 			if (!exists) {
 				combo->script = nullptr;
@@ -3056,7 +3056,7 @@ uint64 RandomOptionDatabase::parseBodyNode(const ryml::NodeRef node) {
 			randopt->script = nullptr;
 		}
 
-		randopt->script = parse_script(script.c_str(), this->getCurrentFile().c_str(), parser.location(node["Script"]).line, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
+		randopt->script = parse_script(script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["Script"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS);
 	}
 
 	if (!exists)
