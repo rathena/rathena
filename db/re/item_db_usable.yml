@@ -48102,7 +48102,7 @@ Body:
     Script: |
       laphine_upgrade();
   - Id: 100130
-    AegisName: Grace_Refine_Ticket
+    AegisName: Grace_Rifine_Ticket
     Name: Grace Refine Ticket
     Type: Delayconsume
     Buy: 20
@@ -48150,7 +48150,7 @@ Body:
     Script: |
       laphine_upgrade();
   - Id: 100133
-    AegisName: Grace_P_Mo_Garment
+    AegisName: Grace_Convert1
     Name: Grace Physical Modification Permit (Garment)
     Type: Delayconsume
     Buy: 20
@@ -48166,7 +48166,7 @@ Body:
     Script: |
       laphine_upgrade();
   - Id: 100134
-    AegisName: Grace_M_Mo_Garment
+    AegisName: Grace_Convert2
     Name: Grace Magical Modification Permit (Garment)
     Type: Delayconsume
     Buy: 20
@@ -48214,7 +48214,7 @@ Body:
     Script: |
       laphine_upgrade();
   - Id: 100137
-    AegisName: Grace_P_Mo_Armor
+    AegisName: Grace_Convert3
     Name: Grace Physical Modification Permit (Armor)
     Type: Delayconsume
     Buy: 20
@@ -48230,7 +48230,7 @@ Body:
     Script: |
       laphine_upgrade();
   - Id: 100138
-    AegisName: Grace_M_Mo_Armor
+    AegisName: Grace_Convert4
     Name: Grace Magical Modification Permit (Armor)
     Type: Delayconsume
     Buy: 20
