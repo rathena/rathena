@@ -99,7 +99,7 @@ uint64 QuestDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (this->nodeExists(node, "Targets")) {
 		const auto& targets = node["Targets"];
 
-		for (const auto& targetNode : targets.children()) {
+		for (const auto& targetNode : targets) {
 			if (quest->objectives.size() >= MAX_QUEST_OBJECTIVES) {
 				this->invalidWarning(targetNode, "Targets list exceeds the maximum of %d, skipping.\n", MAX_QUEST_OBJECTIVES);
 				return 0;
@@ -317,7 +317,7 @@ uint64 QuestDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (this->nodeExists(node, "Drops")) {
 		const auto& drops = node["Drops"];
 
-		for (const auto& dropNode : drops.children()) {
+		for (const auto& dropNode : drops) {
 			uint32 mob_id = 0; // Can be 0 which means all monsters
 
 			if (this->nodeExists(dropNode, "Mob")) {

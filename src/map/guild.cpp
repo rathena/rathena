@@ -129,7 +129,7 @@ uint64 GuildSkillTreeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 
 	if( this->nodeExists( node, "Required" ) ){
 		const auto& reqNode = node["Required"];
-		for( const auto&  requiredNode : reqNode.children() ){
+		for( const auto&  requiredNode : reqNode ){
 			std::string requiredName;
 
 			if( !this->asString( requiredNode, "Id", requiredName ) ){

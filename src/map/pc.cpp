@@ -175,7 +175,7 @@ uint64 AttendanceDatabase::parseBodyNode(const ryml::NodeRef& node){
 	if( this->nodeExists( node, "Rewards" ) ){
 		const auto& rewardsNode = node["Rewards"];
 
-		for( const auto& rewardNode : rewardsNode.children() ){
+		for( const auto& rewardNode : rewardsNode ){
 			uint32 day;
 
 			if( !this->asUInt32( rewardNode, "Day", day ) ){
@@ -300,7 +300,7 @@ uint64 PenaltyDatabase::parseBodyNode(const ryml::NodeRef& node){
 	}
 
 	if( this->nodeExists( node, "LevelDifferences" ) ){
-		for( const auto& levelNode : node["LevelDifferences"].children() ){
+		for( const auto& levelNode : node["LevelDifferences"] ){
 			if( !this->nodesExist( levelNode, { "Difference", "Rate" } ) ){
 				return 0;
 			}

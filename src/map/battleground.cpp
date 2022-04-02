@@ -220,7 +220,7 @@ uint64 BattlegroundDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (this->nodeExists(node, "JobRestrictions")) {
 		const auto& jobsNode = node["JobRestrictions"];
 
-		for (const auto& jobit : jobsNode.children()) {
+		for (const auto& jobit : jobsNode) {
 			std::string job_name;
 			c4::from_chars(jobit.key(), &job_name);
 			std::string job_name_constant = "JOB_" + job_name;
@@ -246,7 +246,7 @@ uint64 BattlegroundDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (this->nodeExists(node, "Locations")) {
 		int count = 0;
 
-		for (const auto& location : node["Locations"].children()) {
+		for (const auto& location : node["Locations"]) {
 			s_battleground_map map_entry;
 
 			if (this->nodeExists(location, "Map")) {

@@ -23005,7 +23005,7 @@ template<typename T, size_t S> bool SkillDatabase::parseNode(const std::string& 
 	} else {
 		uint16 max_level = 0;
 
-		for (const auto& it : skNode.children()) {
+		for (const auto& it : skNode) {
 			uint16 skill_lv;
 
 			if (!this->asUInt16(it, "Level", skill_lv))
@@ -23160,7 +23160,7 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (this->nodeExists(node, "DamageFlags")) {
 		const auto& damageNode = node["DamageFlags"];
 
-		for (const auto& it : damageNode.children()) {
+		for (const auto& it : damageNode) {
 			std::string nk;
 			c4::from_chars(it.key(), &nk);
 			std::string nk_constant = "NK_" + nk;
@@ -23186,7 +23186,7 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (this->nodeExists(node, "Flags")) {
 		const auto& infoNode = node["Flags"];
 
-		for (const auto& it : infoNode.children()) {
+		for (const auto& it : infoNode) {
 			std::string inf2;
 			c4::from_chars(it.key(), &inf2);
 			std::string inf2_constant = "INF2_" + inf2;
@@ -23268,7 +23268,7 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 			memset(skill->element, static_cast<e_element>(constant), sizeof(skill->element));
 		} else {
-			for (const auto& it : elementNode.children()) {
+			for (const auto& it : elementNode) {
 				uint16 skill_lv;
 
 				if (!this->asUInt16(it, "Level", skill_lv))
@@ -23364,7 +23364,7 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (this->nodeExists(copyNode, "RemoveRequirement")) {
 			const auto& copyreqNode = copyNode["RemoveRequirement"];
 
-			for (const auto& it : copyreqNode.children()) {
+			for (const auto& it : copyreqNode) {
 				std::string req;
 				c4::from_chars(it.key(), &req);
 				std::string req_constant = "SKILL_REQ_" + req;
@@ -23401,7 +23401,7 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (this->nodeExists(npcNode, "Type")) {
 			const auto& npctypeNode = npcNode["Type"];
 
-			for (const auto& it : npctypeNode.children()) {
+			for (const auto& it : npctypeNode) {
 				std::string type;
 				c4::from_chars(it.key(), &type);
 				std::string type_constant = "SKILL_NONEAR_" + type;
@@ -23513,7 +23513,7 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (this->nodeExists(node, "CastTimeFlags")) {
 		const auto& castNode = node["CastTimeFlags"];
 
-		for (const auto& it : castNode.children()) {
+		for (const auto& it : castNode) {
 			std::string flag;
 			c4::from_chars(it.key(), &flag);
 			std::string flag_constant = "SKILL_CAST_" + flag;
@@ -23539,7 +23539,7 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (this->nodeExists(node, "CastDelayFlags")) {
 		const auto& castNode = node["CastDelayFlags"];
 
-		for (const auto& it : castNode.children()) {
+		for (const auto& it : castNode) {
 			std::string flag;
 			c4::from_chars(it.key(), &flag);
 			std::string flag_constant = "SKILL_CAST_" + flag;
@@ -23641,7 +23641,7 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				if (active)
 					skill->require.weapon = 0;
 			} else {
-				for (const auto& it : weaponNode.children()) {
+				for (const auto& it : weaponNode) {
 					std::string weapon;
 					c4::from_chars(it.key(), &weapon);
 					std::string weapon_constant = "W_" + weapon;
@@ -23680,7 +23680,7 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				if (active)
 					skill->require.ammo = 0;
 			} else {
-				for (const auto& it : ammoNode.children()) {
+				for (const auto& it : ammoNode) {
 					std::string ammo;
 					c4::from_chars(it.key(), &ammo);
 					std::string ammo_constant = "AMMO_" + ammo;
@@ -23740,7 +23740,7 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (this->nodeExists(requireNode, "Status")) {
 			const auto& statusNode = requireNode["Status"];
 
-			for (const auto& it : statusNode.children()) {
+			for (const auto& it : statusNode) {
 				std::string status;
 				c4::from_chars(it.key(), &status);
 				std::string status_constant = "SC_" + status;
@@ -23777,7 +23777,7 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			const auto itemNode = requireNode["ItemCost"];
 			int32 count = 0;
 
-			for (const auto& it : itemNode.children()) {
+			for (const auto& it : itemNode) {
 				std::string item_name;
 
 				if (!this->asString(it, "Item", item_name))
@@ -23821,7 +23821,7 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (this->nodeExists(requireNode, "Equipment")) {
 			const auto& equipNode = requireNode["Equipment"];
 
-			for (const auto& it : equipNode.children()) {
+			for (const auto& it : equipNode) {
 				std::string item_name;
 				c4::from_chars(it.key(), &item_name);
 
@@ -23950,7 +23950,7 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (this->nodeExists(unitNode, "Flag")) {
 			const auto& flagNode = unitNode["Flag"];
 
-			for (const auto& it : flagNode.children()) {
+			for (const auto& it : flagNode) {
 				std::string flag;
 				c4::from_chars(it.key(), &flag);
 				std::string flag_constant = "UF_" + flag;
@@ -24274,7 +24274,7 @@ uint64 SkillArrowDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 	const auto& MakeNode = node["Make"];
 
-	for (const auto &it : MakeNode.children()) {
+	for (const auto &it : MakeNode) {
 		std::string item_name;
 
 		if (!this->asString(it, "Item", item_name))
@@ -24358,7 +24358,7 @@ uint64 AbraDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		} else {
 			abra->per.fill(0);
 
-			for (const auto& it : probNode.children()) {
+			for (const auto& it : probNode) {
 				uint16 skill_lv;
 
 				if (!this->asUInt16(it, "Level", skill_lv))

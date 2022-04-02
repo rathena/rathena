@@ -152,7 +152,7 @@ void YamlDatabase::parse( const ryml::Tree& tree ){
 		size_t childNodesProgressed = 0;
 		const char* fileName = this->currentFile.c_str();
 
-		for( const ryml::NodeRef &node : bodyNode.children() ){
+		for( const ryml::NodeRef &node : bodyNode ){
 			count += this->parseBodyNode( node );
 
 			ShowStatus( "Loading [%" PRIdPTR "/%" PRIdPTR "] entries from '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\r", ++childNodesProgressed, childNodesCount, fileName );
@@ -169,7 +169,7 @@ void YamlDatabase::parseImports( const ryml::Tree& rootNode ){
 		if( this->nodeExists( footerNode, "Imports") ){
 			const ryml::NodeRef& importsNode = footerNode["Imports"];
 
-			for( const ryml::NodeRef &node : importsNode.children() ){
+			for( const ryml::NodeRef &node : importsNode ){
 				std::string importFile;
 
 				if( !this->asString( node, "Path", importFile ) ){

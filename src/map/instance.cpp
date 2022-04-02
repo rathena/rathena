@@ -193,7 +193,7 @@ uint64 InstanceDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (this->nodeExists(node, "AdditionalMaps")) {
 		const auto& mapNode = node["AdditionalMaps"];
 
-		for (const auto& mapIt : mapNode.children()) {
+		for (const auto& mapIt : mapNode) {
 			std::string map;
 			c4::from_chars(mapIt.key(), &map);
 

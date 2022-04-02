@@ -160,7 +160,7 @@ uint64 AtcommandAliasDatabase::parseBodyNode( const ryml::NodeRef& node ){
 			return 0;
 		}
 
-		for( const auto& subNode : aliasesNode.children() ){
+		for( const auto& subNode : aliasesNode ){
 			std::string alias;
 			subNode >> alias;
 

@@ -331,7 +331,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			itemdb_jobid2mapid(item->class_base, MAPID_ALL, active);
 		}
 
-		for (const auto& jobit : jobNode.children()) {
+		for (const auto& jobit : jobNode) {
 			std::string jobName;
 			c4::from_chars(jobit.key(), &jobName);
 
@@ -378,7 +378,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				item->class_upper &= ~ITEMJ_ALL;
 		}
 
-		for (const auto& classit : classNode.children()) {
+		for (const auto& classit : classNode) {
 			std::string className;
 			c4::from_chars(classit.key(), &className);
 
@@ -436,7 +436,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (this->nodeExists(node, "Locations")) {
 		const auto& locationNode = node["Locations"];
 
-		for (const auto& locit : locationNode.children()) {
+		for (const auto& locit : locationNode) {
 			std::string equipName;
 			c4::from_chars(locit.key(), &equipName);
 
@@ -2084,7 +2084,7 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (this->nodeExists(node, "SubGroups")) {
 		const auto& subNode = node["SubGroups"];
 
-		for (const auto& subit : subNode.children()) {
+		for (const auto& subit : subNode) {
 			if (this->nodeExists(subit, "Clear")) {
 				uint16 id;
 
@@ -2119,7 +2119,7 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 			const auto& listNode = subit["List"];
 
-			for (const auto& listit : listNode.children()) {
+			for (const auto& listit : listNode) {
 				if (this->nodeExists(listit, "Clear")) {
 					std::string item_name;
 
@@ -2406,7 +2406,7 @@ uint64 ComboDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 	const ryml::NodeRef& combosNode = node["Combos"];
 
-	for (const auto& comboit : combosNode.children()) {
+	for (const auto& comboit : combosNode) {
 		static const std::string nodeName = "Combo";
 
 		if (!this->nodesExist(comboit, { nodeName })) {
@@ -2422,7 +2422,7 @@ uint64 ComboDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 		std::vector<t_itemid> items = {};
 
-		for (const auto it : comboNode.children()) {
+		for (const auto it : comboNode) {
 			std::string item_name;
 			c4::from_chars(it.val(), &item_name);
 
@@ -3279,7 +3279,7 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 	if (this->nodeExists(node, "Slots")) {
 		const auto& slotsNode = node["Slots"];
-		for (const ryml::NodeRef& slotNode : slotsNode.children()) {
+		for (const ryml::NodeRef& slotNode : slotsNode) {
 			if (randopt->slots.size() >= MAX_ITEM_RDM_OPT) {
 				this->invalidWarning(slotNode, "Reached maximum of %d Random Option group options. Skipping the remaining slots...\n", MAX_ITEM_RDM_OPT);
 				break;
@@ -3302,7 +3302,7 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 			std::vector<std::shared_ptr<s_random_opt_group_entry>> entries;
 			const auto& optionsNode = slotNode["Options"];
-			for (const auto& optionNode : optionsNode.children()) {
+			for (const auto& optionNode : optionsNode) {
 				std::shared_ptr<s_random_opt_group_entry> entry;
 
 				if (!this->add_option(optionNode, entry))
@@ -3336,7 +3336,7 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		randopt->random_options.clear();
 
 		const auto& randomNode = node["Random"];
-		for (const auto& randomNode : randomNode.children()) {
+		for (const auto& randomNode : randomNode) {
 			std::shared_ptr<s_random_opt_group_entry> entry;
 
 			if (!this->add_option(randomNode, entry))

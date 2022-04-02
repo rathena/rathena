@@ -1061,7 +1061,7 @@ uint64 ElementalDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (this->nodeExists(node, "Mode")) {
 		const ryml::NodeRef& ModeNode = node["Mode"];
 
-		for (const auto &Modeit : ModeNode.children()) {
+		for (const auto &Modeit : ModeNode) {
 			std::string mode_name;
 			c4::from_chars(Modeit.key(), &mode_name);
 

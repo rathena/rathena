@@ -4194,7 +4194,7 @@ bool MobDatabase::parseDropNode(std::string nodeName, const ryml::NodeRef& node,
 		}
 	}
 
-	for (const auto& dropit : dropNode.children()) {
+	for (const auto& dropit : dropNode) {
 		uint16 index;
 
 		if (this->nodeExists(dropit, "Index")) {
@@ -4657,7 +4657,7 @@ uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (this->nodeExists(node, "RaceGroups")) {
 		const auto& raceNode = node["RaceGroups"];
 
-		for (const auto &raceit : raceNode.children()) {
+		for (const auto &raceit : raceNode) {
 			std::string raceName;
 			c4::from_chars(raceit.key(), &raceName);
 			std::string raceName_constant = "RC2_" + raceName;
@@ -4848,7 +4848,7 @@ uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (this->nodeExists(node, "Modes")) {
 		const auto& modeNode = node["Modes"];
 
-		for (const auto& modeit : modeNode.children()) {
+		for (const auto& modeit : modeNode) {
 			std::string modeName;
 			c4::from_chars(modeit.key(), &modeName);
 			std::string modeName_constant = "MD_" + modeName;
@@ -5473,7 +5473,7 @@ uint64 MobAvailDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (this->nodeExists(node, "Options")) {
 		const auto& optionNode = node["Options"];
 
-		for (const auto& it : optionNode.children()) {
+		for (const auto& it : optionNode) {
 			std::string option;
 			c4::from_chars(it.key(), &option);
 			std::string option_constant = "OPTION_" + option;
@@ -5566,7 +5566,7 @@ uint64 MobSummonDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (this->nodeExists(node, "Summon")) {
 		const auto& MobNode = node["Summon"];
 
-		for (const auto& mobit : MobNode.children()) {
+		for (const auto& mobit : MobNode) {
 			if (!this->nodesExist(mobit, { "Mob", "Rate" })) {
 				continue;
 			}
@@ -6038,7 +6038,7 @@ uint64 MobItemRatioDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (this->nodeExists(node, "List")) {
 		const auto& MobNode = node["List"];
 
-		for (const auto& mobit : MobNode.children()) {
+		for (const auto& mobit : MobNode) {
 			std::string mob_name;
 			c4::from_chars(mobit.key(), &mob_name);
 

@@ -404,7 +404,7 @@ uint64 PetDatabase::parseBodyNode( const ryml::NodeRef& node ){
 
 	if( this->nodeExists( node, "Evolution" ) ){
 		const auto& evolutionsNode = node["Evolution"];
-		for( const auto& evolutionNode : evolutionsNode.children() ){
+		for( const auto& evolutionNode : evolutionsNode ){
 			std::string target_name;
 
 			if( !this->asString( evolutionNode, "Target", target_name ) ){
@@ -434,7 +434,7 @@ uint64 PetDatabase::parseBodyNode( const ryml::NodeRef& node ){
 			}
 
 			const auto& requirementsNode = evolutionNode["ItemRequirements"];
-			for( const auto& requirementNode : requirementsNode.children() ){
+			for( const auto& requirementNode : requirementsNode ){
 				std::string item_name;
 
 				if( !this->asString( requirementNode, "Item", item_name ) ){

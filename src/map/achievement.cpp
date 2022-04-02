@@ -99,7 +99,7 @@ uint64 AchievementDatabase::parseBodyNode(const ryml::NodeRef& node){
 	if( this->nodeExists( node, "Targets" ) ){
 		const auto& targets = node["Targets"];
 
-		for( const auto& targetNode : targets.children() ){
+		for( const auto& targetNode : targets ){
 			uint16 targetId;
 
 			if( !this->asUInt16( targetNode, "Id", targetId ) ){
@@ -232,7 +232,7 @@ uint64 AchievementDatabase::parseBodyNode(const ryml::NodeRef& node){
 	if( this->nodeExists( node, "Dependents" ) ){
 		const auto& dependentNode = node["Dependents"];
 
-		for( const auto& it : dependentNode.children() ){
+		for( const auto& it : dependentNode ){
 			auto id_str = it.key();
 			uint32 dependent_achievement_id;
 			c4::atou<uint32>(id_str, &dependent_achievement_id);
