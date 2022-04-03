@@ -5052,7 +5052,7 @@ static bool mob_read_sqldb_sub(std::vector<std::string> str) {
 	if (!str[++index].empty() && strcmp(str[index].c_str(), "Normal") != 0)
 		node["Class"] << str[index];
 
-	ryml::NodeRef &modes = node["Modes"];
+	ryml::NodeRef modes = node["Modes"];
 	modes |= ryml::MAP;
 
 	if (!str[++index].empty())
