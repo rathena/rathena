@@ -2077,7 +2077,7 @@ public:
 
 	void clear() override{ }
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const ryml::NodeRef node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 };
 
 /**

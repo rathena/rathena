@@ -621,23 +621,23 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 
 		if ((skill = pc_checkskill(sd, NV_BREAKTHROUGH)) > 0)
 #ifdef RENEWAL
-			hp_bonus += 2;
+			hp_bonus += 2 * skill;
 #else
 			hp += hp * skill * 2 / 100;
 #endif
 
 		if ((skill = pc_checkskill(sd, NV_TRANSCENDENCE)) > 0)
 #ifdef RENEWAL
-			hp_bonus += 3;
+			hp_bonus += 3 * skill;
 #else
 			hp += hp * skill * 3 / 100;
 #endif
 
-	if (skill = pc_skillheal_bonus(sd, skill_id))
+		if (skill = pc_skillheal_bonus(sd, skill_id))
 #ifdef RENEWAL
-		hp_bonus += skill;
+			hp_bonus += skill;
 #else
-		hp += hp * skill / 100;
+			hp += hp * skill / 100;
 #endif
 	}
 
@@ -23006,9 +23006,9 @@ const std::string SkillDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/skill_db.yml";
 }
 
-template<typename T, size_t S> bool SkillDatabase::parseNode(std::string nodeName, std::string subNodeName, ryml::NodeRef node, T (&arr)[S]) {
+template<typename T, size_t S> bool SkillDatabase::parseNode(const std::string& nodeName, const std::string& subNodeName, const ryml::NodeRef& node, T (&arr)[S]) {
 	int32 value;
-	const auto skNode = node[c4::to_csubstr(nodeName)];
+	const auto& skNode = node[c4::to_csubstr(nodeName)];
 	if (!skNode.is_seq()) {
 		if (!this->asInt32(node, nodeName, value))
 			return false;
@@ -23018,7 +23018,7 @@ template<typename T, size_t S> bool SkillDatabase::parseNode(std::string nodeNam
 	} else {
 		uint16 max_level = 0;
 
-		for (const auto it : skNode.children()) {
+		for (const auto& it : skNode) {
 			uint16 skill_lv;
 
 			if (!this->asUInt16(it, "Level", skill_lv))
@@ -23076,7 +23076,7 @@ template<typename T, size_t S> bool SkillDatabase::parseNode(std::string nodeNam
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef node) {
+uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	uint16 skill_id;
 
 	if (!this->asUInt16(node, "Id", skill_id))
@@ -23171,9 +23171,9 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef node) {
 	}
 
 	if (this->nodeExists(node, "DamageFlags")) {
-		const auto damageNode = node["DamageFlags"];
+		const auto& damageNode = node["DamageFlags"];
 
-		for (const auto it : damageNode.children()) {
+		for (const auto& it : damageNode) {
 			std::string nk;
 			c4::from_chars(it.key(), &nk);
 			std::string nk_constant = "NK_" + nk;
@@ -23197,9 +23197,9 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef node) {
 	}
 
 	if (this->nodeExists(node, "Flags")) {
-		const auto infoNode = node["Flags"];
+		const auto& infoNode = node["Flags"];
 
-		for (const auto it : infoNode.children()) {
+		for (const auto& it : infoNode) {
 			std::string inf2;
 			c4::from_chars(it.key(), &inf2);
 			std::string inf2_constant = "INF2_" + inf2;
@@ -23281,7 +23281,7 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef node) {
 
 			memset(skill->element, static_cast<e_element>(constant), sizeof(skill->element));
 		} else {
-			for (const auto it : elementNode.children()) {
+			for (const auto& it : elementNode) {
 				uint16 skill_lv;
 
 				if (!this->asUInt16(it, "Level", skill_lv))
@@ -23341,10 +23341,10 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef node) {
 	}
 
 	if (this->nodeExists(node, "CopyFlags")) {
-		const auto copyNode = node["CopyFlags"];
+		const auto& copyNode = node["CopyFlags"];
 
 		if (this->nodeExists(copyNode, "Skill")) {
-			const auto copyskillNode = copyNode["Skill"];
+			const auto& copyskillNode = copyNode["Skill"];
 
 			if (this->nodeExists(copyskillNode, "Plagiarism")) {
 				bool active;
@@ -23375,9 +23375,9 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef node) {
 		}
 
 		if (this->nodeExists(copyNode, "RemoveRequirement")) {
-			const auto copyreqNode = copyNode["RemoveRequirement"];
+			const auto& copyreqNode = copyNode["RemoveRequirement"];
 
-			for (const auto it : copyreqNode.children()) {
+			for (const auto& it : copyreqNode) {
 				std::string req;
 				c4::from_chars(it.key(), &req);
 				std::string req_constant = "SKILL_REQ_" + req;
@@ -23397,7 +23397,7 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef node) {
 	}
 
 	if (this->nodeExists(node, "NoNearNpc")) {
-		const auto npcNode = node["NoNearNpc"];
+		const auto& npcNode = node["NoNearNpc"];
 
 		if (this->nodeExists(npcNode, "AdditionalRange")) {
 			uint16 range;
@@ -23412,9 +23412,9 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef node) {
 		}
 
 		if (this->nodeExists(npcNode, "Type")) {
-			const auto npctypeNode = npcNode["Type"];
+			const auto& npctypeNode = npcNode["Type"];
 
-			for (const auto it : npctypeNode.children()) {
+			for (const auto& it : npctypeNode) {
 				std::string type;
 				c4::from_chars(it.key(), &type);
 				std::string type_constant = "SKILL_NONEAR_" + type;
@@ -23524,9 +23524,9 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef node) {
 #endif
 
 	if (this->nodeExists(node, "CastTimeFlags")) {
-		const auto castNode = node["CastTimeFlags"];
+		const auto& castNode = node["CastTimeFlags"];
 
-		for (const auto it : castNode.children()) {
+		for (const auto& it : castNode) {
 			std::string flag;
 			c4::from_chars(it.key(), &flag);
 			std::string flag_constant = "SKILL_CAST_" + flag;
@@ -23550,9 +23550,9 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef node) {
 	}
 
 	if (this->nodeExists(node, "CastDelayFlags")) {
-		const auto castNode = node["CastDelayFlags"];
+		const auto& castNode = node["CastDelayFlags"];
 
-		for (const auto it : castNode.children()) {
+		for (const auto& it : castNode) {
 			std::string flag;
 			c4::from_chars(it.key(), &flag);
 			std::string flag_constant = "SKILL_CAST_" + flag;
@@ -23576,7 +23576,7 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef node) {
 	}
 
 	if (this->nodeExists(node, "Requires")) {
-		const auto requireNode = node["Requires"];
+		const auto& requireNode = node["Requires"];
 
 		if (this->nodeExists(requireNode, "HpCost")) {
 			if (!this->parseNode("HpCost", "Amount", requireNode, skill->require.hp))
@@ -23643,7 +23643,7 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef node) {
 		}
 
 		if (this->nodeExists(requireNode, "Weapon")) {
-			const auto weaponNode = requireNode["Weapon"];
+			const auto& weaponNode = requireNode["Weapon"];
 
 			if (this->nodeExists(weaponNode, "All")) {
 				bool active;
@@ -23654,7 +23654,7 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef node) {
 				if (active)
 					skill->require.weapon = 0;
 			} else {
-				for (const auto it : weaponNode.children()) {
+				for (const auto& it : weaponNode) {
 					std::string weapon;
 					c4::from_chars(it.key(), &weapon);
 					std::string weapon_constant = "W_" + weapon;
@@ -23682,7 +23682,7 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef node) {
 		}
 
 		if (this->nodeExists(requireNode, "Ammo")) {
-			const auto ammoNode = requireNode["Ammo"];
+			const auto& ammoNode = requireNode["Ammo"];
 
 			if (this->nodeExists(ammoNode, "None")) {
 				bool active;
@@ -23693,7 +23693,7 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef node) {
 				if (active)
 					skill->require.ammo = 0;
 			} else {
-				for (const auto it : ammoNode.children()) {
+				for (const auto& it : ammoNode) {
 					std::string ammo;
 					c4::from_chars(it.key(), &ammo);
 					std::string ammo_constant = "AMMO_" + ammo;
@@ -23751,9 +23751,9 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef node) {
 		}
 
 		if (this->nodeExists(requireNode, "Status")) {
-			const auto statusNode = requireNode["Status"];
+			const auto& statusNode = requireNode["Status"];
 
-			for (const auto it : statusNode.children()) {
+			for (const auto& it : statusNode) {
 				std::string status;
 				c4::from_chars(it.key(), &status);
 				std::string status_constant = "SC_" + status;
@@ -23790,7 +23790,7 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef node) {
 			const auto itemNode = requireNode["ItemCost"];
 			int32 count = 0;
 
-			for (const auto it : itemNode.children()) {
+			for (const auto& it : itemNode) {
 				std::string item_name;
 
 				if (!this->asString(it, "Item", item_name))
@@ -23832,9 +23832,9 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef node) {
 		}
 
 		if (this->nodeExists(requireNode, "Equipment")) {
-			const auto equipNode = requireNode["Equipment"];
+			const auto& equipNode = requireNode["Equipment"];
 
-			for (const auto it : equipNode.children()) {
+			for (const auto& it : equipNode) {
 				std::string item_name;
 				c4::from_chars(it.key(), &item_name);
 
@@ -23869,7 +23869,7 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef node) {
 	}
 
 	if (this->nodeExists(node, "Unit")) {
-		const auto unitNode = node["Unit"];
+		const auto& unitNode = node["Unit"];
 
 		if (this->nodeExists(unitNode, "Id")) {
 			std::string unit;
@@ -23961,9 +23961,9 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef node) {
 		}
 
 		if (this->nodeExists(unitNode, "Flag")) {
-			const auto flagNode = unitNode["Flag"];
+			const auto& flagNode = unitNode["Flag"];
 
-			for (const auto it : flagNode.children()) {
+			for (const auto& it : flagNode) {
 				std::string flag;
 				c4::from_chars(it.key(), &flag);
 				std::string flag_constant = "UF_" + flag;
@@ -24077,7 +24077,7 @@ const std::string ReadingSpellbookDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 ReadingSpellbookDatabase::parseBodyNode(const ryml::NodeRef node) {
+uint64 ReadingSpellbookDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	std::string skill_name;
 
 	if (!this->asString(node, "Skill", skill_name))
@@ -24143,7 +24143,7 @@ uint64 ReadingSpellbookDatabase::parseBodyNode(const ryml::NodeRef node) {
  * @return Spell data or nullptr otherwise
  */
 std::shared_ptr<s_skill_spellbook_db> ReadingSpellbookDatabase::findBook(t_itemid nameid) {
-	if (nameid == 0 || !itemdb_exists(nameid) || reading_spellbook_db.size() == 0)
+	if (nameid == 0 || !itemdb_exists(nameid) || reading_spellbook_db.empty())
 		return nullptr;
 
 	for (const auto &spell : reading_spellbook_db) {
@@ -24163,7 +24163,7 @@ const std::string MagicMushroomDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 MagicMushroomDatabase::parseBodyNode(const ryml::NodeRef node) {
+uint64 MagicMushroomDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	std::string skill_name;
 
 	if (!this->asString(node, "Skill", skill_name))
@@ -24262,7 +24262,7 @@ const std::string SkillArrowDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 SkillArrowDatabase::parseBodyNode(const ryml::NodeRef node) {
+uint64 SkillArrowDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	std::string source_name;
 
 	if (!this->asString(node, "Source", source_name))
@@ -24285,9 +24285,9 @@ uint64 SkillArrowDatabase::parseBodyNode(const ryml::NodeRef node) {
 		arrow->nameid = nameid;
 	}
 
-	const auto MakeNode = node["Make"];
+	const auto& MakeNode = node["Make"];
 
-	for (const auto &it : MakeNode.children()) {
+	for (const auto &it : MakeNode) {
 		std::string item_name;
 
 		if (!this->asString(it, "Item", item_name))
@@ -24333,7 +24333,7 @@ const std::string AbraDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 AbraDatabase::parseBodyNode(const ryml::NodeRef node) {
+uint64 AbraDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	std::string skill_name;
 
 	if (!this->asString(node, "Skill", skill_name))
@@ -24360,7 +24360,7 @@ uint64 AbraDatabase::parseBodyNode(const ryml::NodeRef node) {
 	}
 
 	if (this->nodeExists(node, "Probability")) {
-		const auto probNode = node["Probability"];
+		const auto& probNode = node["Probability"];
 		uint16 probability;
 
 		if (!probNode.is_seq()) {
@@ -24371,7 +24371,7 @@ uint64 AbraDatabase::parseBodyNode(const ryml::NodeRef node) {
 		} else {
 			abra->per.fill(0);
 
-			for (const auto it : probNode.children()) {
+			for (const auto& it : probNode) {
 				uint16 skill_lv;
 
 				if (!this->asUInt16(it, "Level", skill_lv))

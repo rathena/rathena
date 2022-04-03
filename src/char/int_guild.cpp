@@ -744,7 +744,7 @@ const std::string GuildExpDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/exp_guild.yml";
 }
 
-uint64 GuildExpDatabase::parseBodyNode(const ryml::NodeRef node) {
+uint64 GuildExpDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (!this->nodesExist(node, { "Level", "Exp" })) {
 		return 0;
 	}

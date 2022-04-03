@@ -49,7 +49,7 @@ const std::string InstanceDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 InstanceDatabase::parseBodyNode(const ryml::NodeRef node) {
+uint64 InstanceDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	int32 instance_id = 0;
 
 	if (!this->asInt32(node, "Id", instance_id))
@@ -150,7 +150,7 @@ uint64 InstanceDatabase::parseBodyNode(const ryml::NodeRef node) {
 	}
 
 	if (this->nodeExists(node, "Enter")) {
-		const auto enterNode = node["Enter"];
+		const auto& enterNode = node["Enter"];
 
 		if (!this->nodesExist(enterNode, { "Map", "X", "Y" }))
 			return 0;
@@ -191,9 +191,9 @@ uint64 InstanceDatabase::parseBodyNode(const ryml::NodeRef node) {
 	}
 
 	if (this->nodeExists(node, "AdditionalMaps")) {
-		const auto mapNode = node["AdditionalMaps"];
+		const auto& mapNode = node["AdditionalMaps"];
 
-		for (const auto mapIt : mapNode.children()) {
+		for (const auto& mapIt : mapNode) {
 			std::string map;
 			c4::from_chars(mapIt.key(), &map);
 
