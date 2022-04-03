@@ -44373,7 +44373,7 @@ Body:
     Script: |
       getgroupitem(IG_PITAPAT_BOX);
   - Id: 22721
-    AegisName: ?_Box
+    AegisName: "?_Box"
     Name: "? Box"
     Type: Cash
     Buy: 10
@@ -48070,7 +48070,7 @@ Body:
     Script: |
       laphine_upgrade();
   - Id: 100128
-    AegisName: Noblesses_Refine_Ticket
+    AegisName: Noblesse_Rifine_Ticket
     Name: Noblesses Refine Ticket
     Type: Delayconsume
     Buy: 20
@@ -48086,7 +48086,7 @@ Body:
     Script: |
       laphine_upgrade();
   - Id: 100129
-    AegisName: Imperial_Refine_Ticket
+    AegisName: Imperial_Rifine_Ticket
     Name: Imperial Refine Ticket
     Type: Delayconsume
     Buy: 20
@@ -48118,7 +48118,7 @@ Body:
     Script: |
       laphine_upgrade();
   - Id: 100131
-    AegisName: Imperial_P_Mo_Garment
+    AegisName: Imperial_Convert1
     Name: Imperial Physical Modification Permit (Garment)
     Type: Delayconsume
     Buy: 20
@@ -48134,7 +48134,7 @@ Body:
     Script: |
       laphine_upgrade();
   - Id: 100132
-    AegisName: Imperial_M_Mo_Garment
+    AegisName: Imperial_Convert2
     Name: Imperial Magical Modification Permit (Garment)
     Type: Delayconsume
     Buy: 20
@@ -48182,7 +48182,7 @@ Body:
     Script: |
       laphine_upgrade();
   - Id: 100135
-    AegisName: Imperial_P_Mo_Armor
+    AegisName: Imperial_Convert3
     Name: Imperial Physical Modification Permit (Armor)
     Type: Delayconsume
     Buy: 20
@@ -48198,7 +48198,7 @@ Body:
     Script: |
       laphine_upgrade();
   - Id: 100136
-    AegisName: Imperial_M_Mo_Armor
+    AegisName: Imperial_Convert4
     Name: Imperial Magical Modification Permit (Armor)
     Type: Delayconsume
     Buy: 20

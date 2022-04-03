@@ -97,7 +97,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode( const YAML::Node& node ) override;
+	uint64 parseBodyNode( const ryml::NodeRef& node ) override;
 
 	// Additional
 	std::shared_ptr<s_refine_level_info> findLevelInfo( const struct item_data& data, struct item& item );
@@ -118,7 +118,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node &node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 };
 
 extern SizeFixDatabase size_fix_db;
@@ -136,7 +136,7 @@ public:
 		std::fill_n(&attr_fix_table[0][0][0], MAX_ELE_LEVEL * ELE_MAX * ELE_MAX, 100);
 	}
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node& node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 
 	// Additional
 	int16 getAttribute(uint16 level, uint16 atk_ele, uint16 def_ele);
@@ -2849,6 +2849,9 @@ enum e_status_change_flag : uint16 {
 	SCF_SENDVAL3,
 	SCF_NOFORCEDEND,
 	SCF_NOWARNING,
+	SCF_REMOVEONUNEQUIP,
+	SCF_REMOVEONUNEQUIPWEAPON,
+	SCF_REMOVEONUNEQUIPARMOR,
 	SCF_MAX
 };
 
@@ -2885,7 +2888,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node &node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void loadingFinished() override;
 
 	// Determine who will receive a clif_status_change packet for effects that require one to display correctly
@@ -3012,7 +3015,8 @@ struct regen_data {
 
 	//tick accumulation before healing.
 	struct {
-		unsigned int hp,sp,shp,ssp;
+		t_tick hp, sp; //time of last natural recovery
+		unsigned int shp,ssp;
 	} tick;
 
 	//Regen rates. n/100
@@ -3225,7 +3229,6 @@ int status_change_clear(struct block_list* bl, int type);
 void status_change_clear_buffs(struct block_list* bl, uint8 type);
 void status_change_clear_onChangeMap(struct block_list *bl, struct status_change *sc);
 
-#define status_calc_bl(bl, flag) status_calc_bl_(bl, flag, SCO_NONE)
 #define status_calc_mob(md, opt) status_calc_bl_(&(md)->bl, status_db.getSCB_ALL(), opt)
 #define status_calc_pet(pd, opt) status_calc_bl_(&(pd)->bl, status_db.getSCB_ALL(), opt)
 #define status_calc_pc(sd, opt) status_calc_bl_(&(sd)->bl, status_db.getSCB_ALL(), opt)
@@ -3236,7 +3239,7 @@ void status_change_clear_onChangeMap(struct block_list *bl, struct status_change
 
 bool status_calc_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag);
 bool status_calc_cart_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag);
-void status_calc_bl_(struct block_list *bl, std::bitset<SCB_MAX> flag, uint8 opt);
+void status_calc_bl_(struct block_list *bl, std::bitset<SCB_MAX> flag, uint8 opt = SCO_NONE);
 int status_calc_mob_(struct mob_data* md, uint8 opt);
 void status_calc_pet_(struct pet_data* pd, uint8 opt);
 int status_calc_pc_(struct map_session_data* sd, uint8 opt);
@@ -3244,6 +3247,17 @@ int status_calc_homunculus_(struct homun_data *hd, uint8 opt);
 int status_calc_mercenary_(s_mercenary_data *md, uint8 opt);
 int status_calc_elemental_(s_elemental_data *ed, uint8 opt);
 int status_calc_npc_(struct npc_data *nd, uint8 opt);
+
+static void status_calc_bl(block_list *bl, std::vector<e_scb_flag> flags) {
+	static std::bitset<SCB_MAX> temp;
+
+	temp.reset();
+	for (const auto &scb : flags) {
+		temp.set(scb);
+	}
+
+	status_calc_bl_(bl, temp);
+}
 
 void status_calc_misc(struct block_list *bl, struct status_data *status, int level);
 void status_calc_regen(struct block_list *bl, struct status_data *status, struct regen_data *regen);

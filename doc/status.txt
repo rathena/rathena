@@ -229,6 +229,9 @@ Flags: Various status flags for specific status change events.
 	RemoveOnChangeMap     - Removed when changing map-server.
 	RemoveChemicalProtect - Removed by AM_CP_ARMOR/AM_CP_HELM/AM_CP_SHIELD/AM_CP_WEAPON.
 	RemoveElementalOption - Removed by elemental changing modes/quitting/EL_TIDAL_WEAPON/EL_WATER_SCREEN on the master and elemental.
+	RemoveOnUnequip       - Removed when unequipping any type of equipment.
+	RemoveOnUnequipWeapon - Removed when unequipping a weapon.
+	RemoveOnUnequipArmor  - Removed when unequipping an armor.
 
 	StopAttacking         - Makes the unit stop attacking.
 	StopCasting           - Makes the unit stop casting skills.
