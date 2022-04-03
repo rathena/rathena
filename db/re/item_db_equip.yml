@@ -138020,14 +138020,14 @@ Body:
     Refineable: true
     View: 2077
     Trade:
-      NoDrop: True
-      NoTrade: True
-      NoSell: True
-      NoCart: True
-      NoStorage: True
-      NoGuildStorage: True
-      NoMail: True
-      NoAuction: True
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 400128
     AegisName: aegis_400128
     Name: Costume Dropping Elly
@@ -143130,7 +143130,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,7;
   - Id: 450057
-    AegisName: Imperial_Aimed_Suit
+    AegisName: Imperial_Aim_Suit
     Name: Imperial Aimed Suit
     Type: Armor
     Buy: 20
@@ -143354,7 +143354,7 @@ Body:
       if (.@r>=9)
          bonus bMaxHPrate,4;
   - Id: 450064
-    AegisName: Imperial_Tornado_Armor
+    AegisName: Imperial_Tonado_Armor
     Name: Imperial Tornado Armor
     Type: Armor
     Buy: 20
@@ -143418,7 +143418,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,7;
   - Id: 450066
-    AegisName: Imperial_Cart_Cannon_Suit
+    AegisName: Imperial_Kart_Suit
     Name: Imperial Cart Cannon Suit
     Type: Armor
     Buy: 20
@@ -143450,7 +143450,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,7;
   - Id: 450067
-    AegisName: Imperial_Cart_Tornado_Suit
+    AegisName: Imperial_Kart_Suit2
     Name: Imperial Cart Tornado Suit
     Type: Armor
     Buy: 20
@@ -143514,7 +143514,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,7;
   - Id: 450069
-    AegisName: Imperial_Assassin_Suit
+    AegisName: Imperial_Assasin_Suit
     Name: Imperial Assassin Suit
     Type: Armor
     Buy: 20
@@ -143639,7 +143639,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,7;
   - Id: 450073
-    AegisName: Imperial_Catnip_Robe
+    AegisName: Imperial_Carrot_Robe
     Name: Imperial Catnip Robe
     Type: Armor
     Buy: 20
@@ -143697,7 +143697,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,7;
   - Id: 450075
-    AegisName: Imperial_Fire_Rain_Suit
+    AegisName: Imperial_Firerain_Suit
     Name: Imperial Fire Rain Suit
     Type: Armor
     Buy: 20
@@ -143976,7 +143976,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,7;
   - Id: 450084
-    AegisName: Imperial_Eswhoo_Robe
+    AegisName: Imperial_Swhoo_Robe
     Name: Imperial Eswhoo Robe
     Type: Armor
     Buy: 20
@@ -145168,7 +145168,7 @@ Body:
       if (.@r>=9)
          bonus bMaxHPrate,5;
   - Id: 450123
-    AegisName: Imperial_Super_Novice_Suit
+    AegisName: Imperial_Snovice_Suit
     Name: Imperial Super Novice Suit
     Type: Armor
     Buy: 20
@@ -145197,7 +145197,7 @@ Body:
       if (.@r>=9)
          bonus bMaxHPrate,7;
   - Id: 450124
-    AegisName: Imperial_Super_Novice_Robe
+    AegisName: Imperial_Snovice_Robe
     Name: Imperial Super Novice Robe
     Type: Armor
     Buy: 20
@@ -161908,13 +161908,13 @@ Body:
     EquipLevelMin: 100
     Refineable: true
     Trade:
-      NoDrop: True
-      NoTrade: True
-      NoCart: True
-      NoStorage: True
-      NoGuildStorage: True
-      NoMail: True
-      NoAuction: True
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@r = getrefine();
       bonus2 bAddClass,Class_All,2;
@@ -162700,13 +162700,13 @@ Body:
     EquipLevelMin: 100
     Refineable: true
     Trade:
-      NoDrop: True
-      NoTrade: True
-      NoCart: True
-      NoStorage: True
-      NoGuildStorage: True
-      NoMail: True
-      NoAuction: True
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@r = getrefine();
       bonus2 bAddClass,Class_All,2;
@@ -165212,13 +165212,13 @@ Body:
     EquipLevelMin: 100
     Refineable: true
     Trade:
-      NoDrop: True
-      NoTrade: True
-      NoCart: True
-      NoStorage: True
-      NoGuildStorage: True
-      NoMail: True
-      NoAuction: True
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@r = getrefine();
       bonus2 bAddClass,Class_All,2;

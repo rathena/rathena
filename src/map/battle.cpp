@@ -2072,6 +2072,9 @@ int64 battle_addmastery(struct map_session_data *sd,struct block_list *target,in
 		damage += (skill * 2);
 #endif
 
+	if ((skill = pc_checkskill(sd, NV_BREAKTHROUGH)) > 0)
+		damage += 15 * skill + (skill > 4 ? 25 : 0);
+
 	// Kagerou/Oboro Spirit Charm bonus
 	if (sd->spiritcharm >= MAX_SPIRITCHARM) {
 		if ((sd->spiritcharm_type == CHARM_TYPE_FIRE && status->def_ele == ELE_EARTH) ||
@@ -3396,13 +3399,6 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 			ATK_ADD(wd->damage, wd->damage2, 3 * skill);
 #ifdef RENEWAL
 			ATK_ADD(wd->masteryAtk, wd->masteryAtk2, 3 * skill);
-#endif
-		}
-
-		if (skill_id == NV_BREAKTHROUGH) {
-			ATK_ADD(wd->damage, wd->damage2, 15 * skill_lv + (skill_lv > 4 ? 25 : 0));
-#ifdef RENEWAL
-			ATK_ADD(wd->masteryAtk, wd->masteryAtk2, 15 * skill_lv + (skill_lv > 4 ? 25 : 0));
 #endif
 		}
 

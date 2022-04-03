@@ -117,7 +117,7 @@ const std::string RefineDatabase::getDefaultLocation(){
 	return std::string( db_path ) + "/refine.yml";
 }
 
-uint64 RefineDatabase::parseBodyNode( const ryml::NodeRef node ){
+uint64 RefineDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	std::string group_name;
 
 	if( !this->asString( node, "Group", group_name ) ){
@@ -142,8 +142,8 @@ uint64 RefineDatabase::parseBodyNode( const ryml::NodeRef node ){
 	}
 
 	if( this->nodeExists( node, "Levels" ) ){
-		const auto levelsNode = node["Levels"];
-		for( const auto levelNode : levelsNode.children() ){
+		const auto& levelsNode = node["Levels"];
+		for( const auto& levelNode : levelsNode ){
 			uint16 level;
 
 			if( !this->asUInt16( levelNode, "Level", level ) ){
@@ -159,8 +159,8 @@ uint64 RefineDatabase::parseBodyNode( const ryml::NodeRef node ){
 			}
 
 			if( this->nodeExists( levelNode, "RefineLevels" ) ){
-				const auto refineLevelsNode = levelNode["RefineLevels"];
-				for( const auto refineLevelNode : refineLevelsNode.children() ){
+				const auto& refineLevelsNode = levelNode["RefineLevels"];
+				for( const auto& refineLevelNode : refineLevelsNode ){
 					uint16 refine_level;
 
 					if( !this->asUInt16( refineLevelNode, "Level", refine_level ) ){
@@ -231,8 +231,8 @@ uint64 RefineDatabase::parseBodyNode( const ryml::NodeRef node ){
 					}
 
 					if( this->nodeExists( refineLevelNode, "Chances" ) ){
-						const auto chancesNode = refineLevelNode["Chances"];
-						for( const auto chanceNode : chancesNode ){
+						const auto& chancesNode = refineLevelNode["Chances"];
+						for( const auto& chanceNode : chancesNode ){
 							std::string cost_name;
 
 							if( !this->asString( chanceNode, "Type", cost_name ) ){
@@ -459,7 +459,7 @@ const std::string SizeFixDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 SizeFixDatabase::parseBodyNode(const ryml::NodeRef node) {
+uint64 SizeFixDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	std::string weapon_name;
 
 	if (!this->asString(node, "Weapon", weapon_name))
@@ -653,7 +653,7 @@ void StatusDatabase::changeSkillTree(map_session_data *sd, int32 class_) {
 		uint16 skill_id = it.first;
 		sc_type sc = skill_get_sc(skill_id);
 
-		if (sc > SC_COMMON_MAX && sd->sc.data[sc])
+		if (sc > SC_COMMON_MAX && sc < SC_MAX && sd->sc.data[sc])
 			status_change_end(&sd->bl, sc, INVALID_TIMER);
 	}
 }
@@ -14556,7 +14556,7 @@ const std::string AttributeDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 AttributeDatabase::parseBodyNode(const ryml::NodeRef node) {
+uint64 AttributeDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	uint16 level;
 
 	if (!this->asUInt16(node, "Level", level))
@@ -14571,7 +14571,7 @@ uint64 AttributeDatabase::parseBodyNode(const ryml::NodeRef node) {
 		if (!this->nodeExists(node, itatk.first))
 			continue;
 
-		const auto eleNode = node[c4::to_csubstr(itatk.first)];
+		const auto& eleNode = node[c4::to_csubstr(itatk.first)];
 
 		for (const auto &itdef : um_eleid2elename) {
 			if (!this->nodeExists(eleNode, itdef.first))
@@ -14622,7 +14622,7 @@ const std::string StatusDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef node) {
+uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	std::string status_name;
 
 	if (!this->asString(node, "Status", status_name))
@@ -14692,9 +14692,9 @@ uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef node) {
 	}
 
 	if (this->nodeExists(node, "States")) {
-		const ryml::NodeRef stateNode = node["States"];
+		const ryml::NodeRef& stateNode = node["States"];
 
-		for (const auto &it : stateNode.children()) {
+		for (const auto &it : stateNode) {
 			std::string state;
 			c4::from_chars(it.key(), &state);
 
@@ -14727,9 +14727,9 @@ uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef node) {
 	}
 
 	if (this->nodeExists(node, "CalcFlags")) {
-		const ryml::NodeRef flagNode = node["CalcFlags"];
+		const ryml::NodeRef& flagNode = node["CalcFlags"];
 
-		for (const auto &it : flagNode.children()) {
+		for (const auto &it : flagNode) {
 			if (this->nodeExists(it, "All")) {
 				bool active;
 
@@ -14743,7 +14743,7 @@ uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef node) {
 			}
 		}
 
-		for (const auto &it : flagNode.children()) {
+		for (const auto &it : flagNode) {
 			std::string flag;
 			c4::from_chars(it.key(), &flag);
 
@@ -14805,9 +14805,9 @@ uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef node) {
 	}
 
 	if (this->nodeExists(node, "Opt2")) {
-		const ryml::NodeRef optNode = node["Opt2"];
+		const ryml::NodeRef& optNode = node["Opt2"];
 
-		for (const auto &it : optNode.children()) {
+		for (const auto &it : optNode) {
 			std::string opt;
 			c4::from_chars(it.key(), &opt);
 
@@ -14840,9 +14840,9 @@ uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef node) {
 	}
 
 	if (this->nodeExists(node, "Opt3")) {
-		const ryml::NodeRef optNode = node["Opt3"];
+		const ryml::NodeRef& optNode = node["Opt3"];
 
-		for (const auto &it : optNode.children()) {
+		for (const auto &it : optNode) {
 			std::string opt;
 			c4::from_chars(it.key(), &opt);
 
@@ -14875,9 +14875,9 @@ uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef node) {
 	}
 
 	if (this->nodeExists(node, "Options")) {
-		const ryml::NodeRef optionNode = node["Options"];
+		const ryml::NodeRef& optionNode = node["Options"];
 
-		for (const auto &it : optionNode.children()) {
+		for (const auto &it : optionNode) {
 			std::string option;
 			c4::from_chars(it.key(), &option);
 
@@ -14910,9 +14910,9 @@ uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef node) {
 	}
 
 	if (this->nodeExists(node, "Flags")) {
-		const ryml::NodeRef flagNode = node["Flags"];
+		const ryml::NodeRef& flagNode = node["Flags"];
 
-		for (const auto &it : flagNode.children()) {
+		for (const auto &it : flagNode) {
 			std::string flag;
 			c4::from_chars(it.key(), &flag);
 
@@ -14969,9 +14969,9 @@ uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef node) {
 	}
 
 	if (this->nodeExists(node, "Fail")) {
-		const ryml::NodeRef failNode = node["Fail"];
+		const ryml::NodeRef& failNode = node["Fail"];
 
-		for (const auto &it : failNode.children()) {
+		for (const auto &it : failNode) {
 			std::string fail;
 			c4::from_chars(it.key(), &fail);
 
@@ -15001,9 +15001,9 @@ uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef node) {
 	}
 
 	if (this->nodeExists(node, "End")) {
-		const ryml::NodeRef endNode = node["End"];
+		const ryml::NodeRef& endNode = node["End"];
 
-		for (const auto &it : endNode.children()) {
+		for (const auto &it : endNode) {
 			std::string end;
 			c4::from_chars(it.key(), &end);
 
