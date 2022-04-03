@@ -1,54 +1,49 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Renters
-//===== By: ================================================== 
-//= rAthena Dev Team
-//===== Current Version: ===================================== 
-//= 2.2
-//===== Compatible With: ===================================== 
-//= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Renewal-specific breeder NPCs.
-//===== Additional Comments: ================================= 
+//===== Changelogs: ==========================================
 //= 2.1 Moved some renters to a separate renewal file. [Daegaladh]
 //= 2.2 Updated to match the official scripts. [Euphy]
-//============================================================ 
+//= 2.3 Added fourth class support. [Emistry]
+//============================================================
 
 // Dragon Breeder :: dragon
 //============================================================
 job3_rune01,88,62,5	script	Dragon Breeder	105,{
 	mes "[Dragon Breeder]";
-	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune_Knight) {
-		mes "ยินดีต้อนรับคุณต้องการเช่ามังกรไหม?";
+	if ((eaclass()&EAJ_THIRDMASK)==EAJ_RUNE_KNIGHT) {
+		mes "Welcome. Would you like to rent a Dragon?";
 		next;
-		switch(select("ใช่ข้าต้องการ:ไม่")) {
+		switch(select("Yes:No")) {
 		case 1:
 			//if (!getskilllv("RK_DRAGONTRAINING")) {
 			if (!getskilllv("KN_RIDING")) {
 				mes "[Dragon Breeder]";
-				mes "โปรดเรียนรู้วิธีขี่มังกรก่อน";
+				mes "Please learn how to ride a Dragon first.";
 				close;
 			}
 			else if (checkdragon()) {
 				mes "[Dragon Breeder]";
-				mes "เจ้ามีมังกรอยู่แล้ว";
+				mes "You already have a Dragon.";
 				close;
 			}
 			else if (ismounting()) {
 				mes "[Dragon Breeder]";
-				mes "กรุณาลงจากขี่สัตว์ของคุณออกก่อน";
+				mes "Please remove your cash mount.";
 				close;
 			}
 			setdragon;
 			close;
 		case 2:
 			mes "[Dragon Breeder]";
-			mes "ฉันเห็นแล้วมีวันที่ดี";
+			mes "I see. Then have a great day.";
 			close;
 		}
 	}
-	mes "เจ้ามาทำอะไรที่นี่";
-	mes "มีเพียง Rune Knights เท่านั้นที่สามารถเช่ามังกรได้";
+	mes "What are you doing here?";
+	mes "Only Rune Knights can rent a Dragon.";
 	close;
 }
 
@@ -56,64 +51,64 @@ job3_rune01,88,62,5	script	Dragon Breeder	105,{
 //============================================================
 prontera,130,213,5	script	Riding Creature Master	105,{
 	mes "[Riding Creature Master]";
-	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune_Knight) {
-		mes "ยินดีต้อนรับคุณต้องการเช่ามังกรไหม?";
+	if ((eaclass()&EAJ_THIRDMASK)==EAJ_RUNE_KNIGHT) {
+		mes "Welcome. Would you like to rent a Dragon?";
 		next;
-		switch(select("ใช่ข้าต้องการ:ไม่")) {
+		switch(select("Yes:No")) {
 		case 1:
 			//if (!getskilllv("RK_DRAGONTRAINING")) {
 			if (!getskilllv("KN_RIDING")) {
 				mes "[Riding Creature Master]";
-				mes "โปรดเรียนรู้วิธีขี่มังกรก่อน";
+				mes "Please learn how to ride a Dragon first.";
 				close;
 			}
 			else if (checkdragon()) {
 				mes "[Riding Creature Master]";
-				mes "เจ้ามีมังกรอยู่แล้ว";
+				mes "You already have a Dragon.";
 				close;
 			}
 			else if (ismounting()) {
 				mes "[Riding Creature Master]";
-				mes "กรุณาลงจากขี่สัตว์ของคุณออกก่อน";
+				mes "Please remove your cash mount.";
 				close;
 			}
 			setdragon;
 			close;
 		case 2:
 			mes "[Riding Creature Master]";
-			mes "ฉันเห็นแล้วมีวันที่ดี";
+			mes "I see. Then have a great day.";
 			close;
 		}
 	}
-	if (Class == Job_Royal_Guard || Class == Job_Royal_Guard_T || Class == Job_Baby_Royal_Guard) {
-		mes "ยินดีต้อนรับคุณต้องการเช่า Gryphon ไหม?";
+	if ((eaclass()&EAJ_THIRDMASK)==EAJ_ROYAL_GUARD) {
+		mes "Welcome. Would you like to rent a Gryphon?";
 		next;
-		switch(select("ใช่ข้าต้องการ:ไม่")) {
+		switch(select("Yes:No")) {
 		case 1:
 			if (!getskilllv("KN_RIDING")) {
 				mes "[Riding Creature Master]";
-				mes "โปรดเรียนรู้วิธีขี่ Gryphon ก่อน";
+				mes "Please learn how to ride a Gryphon first.";
 				close;
 			}
 			else if (checkriding()) {
 				mes "[Riding Creature Master]";
-				mes "เจ้ามี Gryphon อยู่แล้ว";
+				mes "You already have a Gryphon.";
 				close;
 			}
 			else if (ismounting()) {
 				mes "[Riding Creature Master]";
-				mes "กรุณาลงจากขี่สัตว์ของคุณออกก่อน";
+				mes "Please remove your cash mount.";
 				close;
 			}
 			setriding;
 			close;
 		case 2:
 			mes "[Riding Creature Master]";
-			mes "ฉันเห็นแล้วมีวันที่ดี";
+			mes "I see. Then have a great day.";
 			close;
 		}
 	}
-	mes "ข้าอยู่ที่นี่เพื่อมอบ Rune Knights และ Royal Guards ให้กับสัตว์ที่ขี่";
+	mes "I'm here to provide Rune Knights and Royal Guards with riding creatures.";
 	close;
 }
 geffen,100,55,3	duplicate(Riding Creature Master)	Riding Creature Master#2	105
@@ -126,27 +121,27 @@ rachel,106,130,5	duplicate(Riding Creature Master)	Riding Creature Master#6	105
 //============================================================
 prontera,125,208,5	script	Peco Peco Remover	105,{
 	mes "[Soldier]";
-	mes "ถ้าเจ้าไม่สามารถลงจาก Peco Peco";
-	mes "ด้วยเหตุผลบางอย่างที่ไม่ทราบ";
-	mes "ได้โปรดใช้บริการของข้าด้วย";
+	mes "If you're unable to dismount from a Peco Peco";
+	mes "for some unknown reason,";
+	mes "please feel free to use my services.";
 	if (checkriding()) {
 		next;
 		mes "[Soldier]";
-		mes "คุณกำลังขี่ Peco Peco";
-		mes "คุณต้องการลงจากหลังม้าหรือไม่";
+		mes "You're riding a Peco Peco.";
+		mes "Would you like to dismount?";
 		next;
-		switch(select("ใช่ข้าต้องการ:ไม่")) {
+		switch(select("Yes:No")) {
 		case 1:
 			setriding 0;
 			mes "[Soldier]";
-			mes "พูดแล้วรู้สึกยังไง";
-			mes "เหยียบพื้นด้วยตัวเอง";
-			mes "เท้าอีกครั้งเหรอ?";
+			mes "Say, how does it feel to";
+			mes "step on the ground on your own";
+			mes "feet again?";
 			close;
 		case 2:
 			mes "[Soldier]";
-			mes "ฉันเข้าใจแล้วโปรดถามฉัน";
-			mes "ถ้าคุณเปลี่ยนใจ";
+			mes "I see. Please feel free to ask me";
+			mes "if you change your mind.";
 			close;
 		}
 	}
@@ -157,112 +152,114 @@ prontera,125,208,5	script	Peco Peco Remover	105,{
 //============================================================
 -	script	::mgm	-1,{
 	mes "[Mado Gear Armorer]";
-	if (Class == Job_Mechanic || Class == Job_Mechanic_T || Class == Job_Baby_Mechanic) {
-		mes "ยินดีต้อนรับ, Mechanic";
-		mes "คุณต้องการเช่ารถเข็นหรือ";
-		mes "ขี่ Mado Gear?";
+	if ((eaclass()&EAJ_THIRDMASK)==EAJ_MECHANIC) {
+		mes "Welcome, Mechanic.";
+		mes "Would you like to rent a Pushcart or";
+		mes "ride a Mado Gear?";
 		next;
-		switch(select("เช่ารถเข็น:ขี่ Mado Gear:ซื้อ Emergency Magic Gear:อัพเกรดอุปกรณ์ระบายความร้อน:ยกเลิก")) {
+		switch(select("Rent a Pushcart:Ride a Mado Gear:Buy Emergency Mado Gear:Upgrade Cooling Device:Cancel")) {
 		case 1:
 			if (checkcart()) {
 				mes "[Mado Gear Armorer]";
-				mes "ฉันขอโทษ แต่คุณมีรถเข็นแล้ว";
+				mes "I'm sorry, but you already";
+				mes "have a Pushcart.";
 				close;
 			}
 			setcart;
 			mes "[Mado Gear Armorer]";
-			mes "เจ้าไปแล้ว!";
+			mes "There you go!";
 			close;
 		case 2:
 			if (checkmadogear()) {
 				mes "[Mado Gear Armorer]";
-				mes "ฉันขอโทษ แต่คุณกำลังขี่ Mado Gear อยู่แล้ว";
+				mes "I'm sorry, but you're already";
+				mes "riding a Mado Gear.";
 				close;
 			}
 			else if (!getskilllv("NC_MADOLICENCE")) {
 				mes "[Mado Gear Armorer]";
-				mes "โปรดเรียนรู้ทักษะเพื่อรับ Mado Gear License ก่อน";
+				mes "Please learn the skill to get the Mado Gear License first.";
 				close;
 			}
 			else if(ismounting()) {
 				mes "[Mado Gear Armorer]";
-				mes "กรุณาลงจากขี่สัตว์ของคุณออกก่อน";
+				mes "Please remove your cash mount.";
 				close;
 			}
 			setmadogear;
 			mes "[Mado Gear Armorer]";
-			mes "ขอให้สนุกและได้โปรดกลับมาอีกครั้ง!";
+			mes "Have fun, and please come again!";
 			close;
 		case 3:
 			mes "[Mado Gear Armorer]";
-			mes "Emergency Magic Gear มีประโยชน์จริง ๆ สำหรับสถานการณ์ฉุกเฉินและขายที่ 1,000,000 Zeny";
+			mes "Emergency Mado Gear is really useful for emergency situations and it is sold at 1,000,000 Zeny.";
 			next;
-			if (select("ซื้อ:ยกเลิก") == 2) {
+			if (select("Purchase:Cancel") == 2) {
 				mes "[Mado Gear Armorer]";
-				mes "ฉันเข้าใจแล้วโปรดถามฉัน";
-				mes "ถ้าคุณเปลี่ยนใจ";
+				mes "I see. Please feel free to ask me";
+				mes "if you change your mind.";
 				close;
 			}
 			if (countitem(23277) > 0) {
 				mes "[Mado Gear Armorer]";
-				mes "ฉันขอโทษ แต่คุณมี Emergency Mado Gear อยู่แล้ว";
+				mes "I'm sorry, but you already have an Emergency Mado Gear.";
 				close;
 			}
 			if (Zeny < 1000000) {
 				mes "[Mado Gear Armorer]";
-				mes "ฉันขอโทษ, แต่คุณไม่มี Zeny เพียงพอที่จะซื้อ Emergency Mado Gear";
+				mes "I'm sorry, but you don't have enough Zeny to purchase the Emergency Mado Gear.";
 				close;
 			}
 			Zeny -= 1000000;
 			getitem 23277,1; //Mado_Box
 			mes "[Mado Gear Armorer]";
-			mes "เจ้าไปแล้ว!";
+			mes "There you go!";
 			close;
 		case 4:
 			mes "[Mado Gear Armorer]";
-			mes "อุปกรณ์ใดที่คุณต้องการอัพเกรด";
+			mes "Which device do you want to upgrade?";
 			next;
-			if (select("อุปกรณ์ทำความเย็น:เครื่องทำความเย็นคุณภาพสูง") == 1) {
+			if (select("Cooling Device:High Quality Cooler") == 1) {
 				mes "[Mado Gear Armorer]";
-				mes "การอัพเกรดอุปกรณ์ทำความเย็นเป็นอุปกรณ์ทำความเย็นคุณภาพสูงต้องใช้อุปกรณ์ระบายความร้อน 1 เครื่องและ 2,000,000 Zeny";
+				mes "Upgrading Cooling Device to High Quality Cooler needs 1 Cooling Device and 2,000,000 Zeny.";
 				next;
 				.@itemid = 2804;
 				.@cost = 2000000;
 			} else {
 				mes "[Mado Gear Armorer]";
-				mes "การอัพเกรดตัวทำความเย็นคุณภาพสูงไปเป็นตัวทำความเย็นแบบพิเศษนั้นต้องใช้ตัวทำความเย็นคุณภาพสูง 1 ตัวและ Zeny 4,000,000 ตัว";
+				mes "Upgrading High Quality Cooler to Special Cooler needs 1 High Quality Cooler and 4,000,000 Zeny.";
 				next;
 				.@itemid = 2809;
 				.@cost = 4000000;
 			}
-			if (select("อัปเกรด:ยกเลิก") == 2) {
+			if (select("Upgrade:Cancel") == 2) {
 				mes "[Mado Gear Armorer]";
-				mes "ฉันเข้าใจแล้วโปรดถามฉัน";
-				mes "ถ้าคุณเปลี่ยนใจ";
+				mes "I see. Please feel free to ask me";
+				mes "if you change your mind.";
 				close;
 			}
 			if (!countitem(.@itemid)) {
 				mes "[Mado Gear Armorer]";
-				mes "ฉันขอโทษ แต่คุณไม่มี" + getitemname(.@itemid) + ".";
+				mes "I'm sorry, but you don't have the " + getitemname(.@itemid) + ".";
 				close;
 			}
 			if (Zeny < .@cost) {
 				mes "[Mado Gear Armorer]";
-				mes "ฉันขอโทษ, แต่คุณมี Zeny ไม่เพียงพอที่จะอัพเกรดอุปกรณ์";
+				mes "I'm sorry, but you don't have enough Zeny to upgrade the device.";
 				close;
 			}
 			Zeny -= .@cost;
 			delitem .@itemid,1;
 			getitem (.@itemid == 2804 ? 2809 : 2810),1; //High_Quality_Cooler,Special_Cooler
 			mes "[Mado Gear Armorer]";
-			mes "นี่ไง! " + getitemname(.@itemid) + " ของเจ้า";
+			mes "Here you are! Your very own " + getitemname(.@itemid) + ".";
 			close;
 		case 5:
 			close;
 		}
 	}
-	mes "ฉันจะช่วยคุณได้อย่างไร";
-	mes "Mado Gears มีให้เฉพาะกับ Mechanics";
+	mes "How may I help you?";
+	mes "Mado Gears are only available for Mechanics.";
 	close;
 }
 prontera,163,178,3	duplicate(mgm)	Mado Gear Armorer#prt	105
