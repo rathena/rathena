@@ -4964,6 +4964,7 @@ MobDatabase mob_db;
 static bool mob_read_sqldb_sub(std::vector<std::string> str) {
 	ryml::Tree tree;
 	ryml::NodeRef node = tree.rootref();
+	node |= ryml::MAP;
 	int32 index = -1;
 
 	node["Id"] << str[++index];
@@ -5016,11 +5017,17 @@ static bool mob_read_sqldb_sub(std::vector<std::string> str) {
 	if (!str[++index].empty() && strcmp(str[index].c_str(), "Formless") != 0)
 		node["Race"] << str[index];
 
+	ryml::NodeRef raceGroupsNode = node["RaceGroups"];
+	bool header = false;
+
 	for (uint16 i = 1; i < RC2_MAX; i++) {
 		if (!str[i + index].empty()) {
-			auto raceGroupsNode = node["RaceGroups"];
-			raceGroupsNode |= ryml::MAP;
-			node["RaceGroups"][c4::to_csubstr(script_get_constant_str("RC2_", i) + 4)] << (std::stoi(str[i + index]) ? "true" : "false");
+			if (!header) {
+				raceGroupsNode |= ryml::MAP;
+				header = true;
+			}
+
+			raceGroupsNode[c4::to_csubstr(script_get_constant_str("RC2_", i) + 4)] << (std::stoi(str[i + index]) ? "true" : "false");
 		}
 	}
 
@@ -5101,36 +5108,54 @@ static bool mob_read_sqldb_sub(std::vector<std::string> str) {
 	if (!str[++index].empty())
 		modes["SkillImmune"] << (std::stoi(str[index]) ? "true" : "false");
 
+	ryml::NodeRef mvpDropsNode = node["MvpDrops"];
+	bool mvpheader = false;
+
 	for (uint8 i = 0; i < MAX_MVP_DROP; i++) {
-		ryml::NodeRef mvpDropsNode = node["MvpDrops"];
-		mvpDropsNode |= ryml::SEQ;
-		
-		if (!str[++index].empty()) {
-			mvpDropsNode.append_child() << ryml::key("Item") << str[index];
-			if (!str[++index].empty())
-				mvpDropsNode[i].append_sibling() << ryml::key("Rate") << str[index];
-			if (!str[++index].empty() && strcmp(str[index].c_str(), "None") != 0)
-				mvpDropsNode[i].append_sibling() << ryml::key("RandomOptionGroup") << str[index];
-			if (!str[++index].empty() && std::stoi(str[index]) >= 0)
-				mvpDropsNode[i].append_sibling() << ryml::key("Index") << str[index];
+		if (!mvpheader) {
+			mvpDropsNode |= ryml::SEQ;
+			mvpheader = false;
 		}
+
+		if (!str[++index].empty()) {
+			ryml::NodeRef entry = mvpDropsNode[i];
+			entry |= ryml::MAP;
+
+			entry["Item"] << str[index];
+			if (!str[++index].empty())
+				entry["Rate"] << str[index];
+			if (!str[++index].empty() && strcmp(str[index].c_str(), "None") != 0)
+				entry["RandomOptionGroup"] << str[index];
+			if (!str[++index].empty() && std::stoi(str[index]) >= 0)
+				entry["Index"] << str[index];
+		} else
+			index += 3;
 	}
 
+	ryml::NodeRef dropsNode = node["Drops"];
+	bool dropheader = false;
+
 	for (uint8 i = 0; i < MAX_MOB_DROP; i++) {
-		ryml::NodeRef dropsNode = node["Drops"];
-		dropsNode |= ryml::SEQ;
+		if (!dropheader) {
+			dropsNode |= ryml::SEQ;
+			dropheader = true;
+		}
 
 		if (!str[++index].empty()) {
-			dropsNode.append_child() << ryml::key("Item") << str[index];
+			ryml::NodeRef entry = dropsNode[i];
+			entry |= ryml::MAP;
+
+			entry["Item"] << str[index];
 			if (!str[++index].empty())
-				dropsNode[i].append_sibling() << ryml::key("Rate") << str[index];
+				entry["Rate"] << str[index];
 			if (!str[++index].empty())
-				dropsNode[i].append_sibling() << ryml::key("StealProtected") << (std::stoi(str[index]) ? "true" : "false");
+				entry["StealProtected"] << (std::stoi(str[index]) ? "true" : "false");
 			if (!str[++index].empty() && strcmp(str[index].c_str(), "None") != 0)
-				dropsNode[i].append_sibling() << ryml::key("RandomOptionGroup") << str[index];
+				entry["RandomOptionGroup"] << str[index];
 			if (!str[++index].empty() && std::stoi(str[index]) >= 0)
-				dropsNode[i].append_sibling() << ryml::key("Index") << str[index];
-		}
+				entry["Index"] << str[index];
+		} else
+			index += 4;
 	}
 
 #ifdef RENEWAL
