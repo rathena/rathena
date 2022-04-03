@@ -37,7 +37,7 @@ const std::string PetDatabase::getDefaultLocation(){
 	return std::string(db_path) + "/pet_db.yml";
 }
 
-uint64 PetDatabase::parseBodyNode( const ryml::NodeRef node ){
+uint64 PetDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	std::string mob_name;
 
 	if( !this->asString( node, "Mob", mob_name ) ){
@@ -403,8 +403,8 @@ uint64 PetDatabase::parseBodyNode( const ryml::NodeRef node ){
 	}
 
 	if( this->nodeExists( node, "Evolution" ) ){
-		const auto evolutionsNode = node["Evolution"];
-		for( const auto evolutionNode : evolutionsNode.children() ){
+		const auto& evolutionsNode = node["Evolution"];
+		for( const auto& evolutionNode : evolutionsNode ){
 			std::string target_name;
 
 			if( !this->asString( evolutionNode, "Target", target_name ) ){
@@ -433,8 +433,8 @@ uint64 PetDatabase::parseBodyNode( const ryml::NodeRef node ){
 				evolution->target_mob_id = targetId;
 			}
 
-			const auto requirementsNode = evolutionNode["ItemRequirements"];
-			for( const auto requirementNode : requirementsNode.children() ){
+			const auto& requirementsNode = evolutionNode["ItemRequirements"];
+			for( const auto& requirementNode : requirementsNode ){
 				std::string item_name;
 
 				if( !this->asString( requirementNode, "Item", item_name ) ){

@@ -54,7 +54,7 @@ const std::string HomExpDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/exp_homun.yml";
 }
 
-uint64 HomExpDatabase::parseBodyNode(const ryml::NodeRef node) {
+uint64 HomExpDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (!this->nodesExist(node, { "Level", "Exp" })) {
 		return 0;
 	}

@@ -28,38 +28,38 @@ private:
 	bool load( const std::string& path );
 	void parse( const ryml::Tree& rootNode );
 	void parseImports( const ryml::Tree& rootNode );
-	template <typename R> bool asType( const ryml::NodeRef node, const std::string& name, R& out );
+	template <typename R> bool asType( const ryml::NodeRef& node, const std::string& name, R& out );
 
 // These should be visible/usable by the implementation provider
 protected:
 	ryml::Parser parser;
 
 	// Helper functions
-	bool nodeExists( const ryml::NodeRef node, const std::string& name );
-	bool nodesExist( const ryml::NodeRef node, std::initializer_list<const std::string> names );
-	int32 getLineNumber(const ryml::NodeRef node);
-	int32 getColumnNumber(const ryml::NodeRef node);
-	void invalidWarning( const ryml::NodeRef node, const char* fmt, ... );
+	bool nodeExists( const ryml::NodeRef& node, const std::string& name );
+	bool nodesExist( const ryml::NodeRef& node, std::initializer_list<const std::string> names );
+	int32 getLineNumber(const ryml::NodeRef& node);
+	int32 getColumnNumber(const ryml::NodeRef& node);
+	void invalidWarning( const ryml::NodeRef& node, const char* fmt, ... );
 	std::string getCurrentFile();
 
 	// Conversion functions
-	bool asBool(const ryml::NodeRef node, const std::string &name, bool &out);
-	bool asInt16(const ryml::NodeRef node, const std::string& name, int16& out );
-	bool asUInt16(const ryml::NodeRef node, const std::string& name, uint16& out);
-	bool asInt32(const ryml::NodeRef node, const std::string &name, int32 &out);
-	bool asUInt32(const ryml::NodeRef node, const std::string &name, uint32 &out);
-	bool asInt64(const ryml::NodeRef node, const std::string &name, int64 &out);
-	bool asUInt64(const ryml::NodeRef node, const std::string &name, uint64 &out);
-	bool asFloat(const ryml::NodeRef node, const std::string &name, float &out);
-	bool asDouble(const ryml::NodeRef node, const std::string &name, double &out);
-	bool asString(const ryml::NodeRef node, const std::string &name, std::string &out);
-	bool asUInt16Rate(const ryml::NodeRef node, const std::string& name, uint16& out, uint16 maximum=10000);
-	bool asUInt32Rate(const ryml::NodeRef node, const std::string& name, uint32& out, uint32 maximum=10000);
+	bool asBool(const ryml::NodeRef& node, const std::string &name, bool &out);
+	bool asInt16(const ryml::NodeRef& node, const std::string& name, int16& out );
+	bool asUInt16(const ryml::NodeRef& node, const std::string& name, uint16& out);
+	bool asInt32(const ryml::NodeRef& node, const std::string &name, int32 &out);
+	bool asUInt32(const ryml::NodeRef& node, const std::string &name, uint32 &out);
+	bool asInt64(const ryml::NodeRef& node, const std::string &name, int64 &out);
+	bool asUInt64(const ryml::NodeRef& node, const std::string &name, uint64 &out);
+	bool asFloat(const ryml::NodeRef& node, const std::string &name, float &out);
+	bool asDouble(const ryml::NodeRef& node, const std::string &name, double &out);
+	bool asString(const ryml::NodeRef& node, const std::string &name, std::string &out);
+	bool asUInt16Rate(const ryml::NodeRef& node, const std::string& name, uint16& out, uint16 maximum=10000);
+	bool asUInt32Rate(const ryml::NodeRef& node, const std::string& name, uint32& out, uint32 maximum=10000);
 
 	virtual void loadingFinished();
 
 public:
-	YamlDatabase( const std::string type_, uint16 version_, uint16 minimumVersion_ ){
+	YamlDatabase( const std::string& type_, uint16 version_, uint16 minimumVersion_ ){
 		this->type = type_;
 		this->version = version_;
 		this->minimumVersion = minimumVersion_;
@@ -75,7 +75,7 @@ public:
 	// Functions that need to be implemented for each type
 	virtual void clear() = 0;
 	virtual const std::string getDefaultLocation() = 0;
-	virtual uint64 parseBodyNode( const ryml::NodeRef node ) = 0;
+	virtual uint64 parseBodyNode( const ryml::NodeRef& node ) = 0;
 };
 
 template <typename keytype, typename datatype> class TypesafeYamlDatabase : public YamlDatabase{
@@ -83,7 +83,7 @@ protected:
 	std::unordered_map<keytype, std::shared_ptr<datatype>> data;
 
 public:
-	TypesafeYamlDatabase( const std::string type_, uint16 version_, uint16 minimumVersion_ ) : YamlDatabase( type_, version_, minimumVersion_ ){
+	TypesafeYamlDatabase( const std::string& type_, uint16 version_, uint16 minimumVersion_ ) : YamlDatabase( type_, version_, minimumVersion_ ){
 	}
 
 	TypesafeYamlDatabase( const std::string& type_, uint16 version_ ) : YamlDatabase( type_, version_, version_ ){
@@ -145,7 +145,7 @@ private:
 	std::vector<std::shared_ptr<datatype>> cache;
 
 public:
-	TypesafeCachedYamlDatabase( const std::string type_, uint16 version_, uint16 minimumVersion_ ) : TypesafeYamlDatabase<keytype, datatype>( type_, version_, minimumVersion_ ){
+	TypesafeCachedYamlDatabase( const std::string& type_, uint16 version_, uint16 minimumVersion_ ) : TypesafeYamlDatabase<keytype, datatype>( type_, version_, minimumVersion_ ){
 
 	}
 
@@ -177,7 +177,7 @@ public:
 			size_t key = this->calculateCacheKey(pair.first);
 
 			// Check if the key fits into the current cache size
-			if (this->cache.capacity() < key) {
+			if (this->cache.capacity() <= key) {
 				// Double the current size, so we do not have to resize that often
 				size_t new_size = key * 2;
 
@@ -193,5 +193,7 @@ public:
 		this->cache.shrink_to_fit();
 	}
 };
+
+void do_init_database();
 
 #endif /* DATABASE_HPP */
