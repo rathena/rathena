@@ -1,0 +1,95 @@
+name: emscripten
+
+defaults:
+  #if: "!contains(github.event.head_commit.message, 'skip ci')"  # SKIP
+  run:
+    # Use a bash shell so we can use the same syntax for environment variable
+    # access regardless of the host operating system
+    shell: bash -e -x {0}
+
+on:
+  # https://github.community/t/how-to-trigger-an-action-on-push-or-pull-request-but-not-both/16662
+  workflow_dispatch:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+    - master
+
+env:
+  PROJ_PFX_TARGET: c4core-
+  PROJ_PFX_CMAKE: C4CORE_
+  CMAKE_FLAGS:
+  NUM_JOBS_BUILD: # 4
+  EMSCRIPTEN_CACHE_FOLDER: 'emsdk-cache'
+
+
+# ubuntu-20.04:
+#   # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-README.md
+#   gcc: 7.5.0, 8.4.0, 9.3.0, 10.2.0
+#   clang: 8.0.1, 9.0.1, 10.0.0
+# ubuntu-18.04:
+#   # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu1804-README.md
+#   gcc: 7.5.0, 8.4.0, 9.3.0, 10.1.0
+#   clang: 6.0.0, 8.0.0, 9.0.0
+# macos-11.0: macOS Big Sur 11.0
+#   # https://github.com/actions/virtual-environments/blob/main/images/macos/macos-11.0-Readme.md
+#   Xcode 12.1 11.7
+#   clang/LLVM 10.0.1
+#   gcc-8 gcc-9
+# macos-10.15: macOS Catalina 10.15
+#   # https://github.com/actions/virtual-environments/blob/main/images/macos/macos-10.15-Readme.md
+#   Xcode 12.1 11.7
+#   clang/LLVM 11.0.0
+#   gcc-8 gcc-9
+# windows-2019:
+#   # https://github.com/actions/virtual-environments/blob/main/images/win/Windows2019-Readme.md
+#   vs2019
+# windows-2016:
+#   # https://github.com/actions/virtual-environments/blob/main/images/win/Windows2016-Readme.md
+#   vs2017
+
+jobs:
+
+  #----------------------------------------------------------------------------
+  emscripten:
+    name: emscripten/${{matrix.emver}}/c++${{matrix.std}}/${{matrix.bt}}
+    continue-on-error: true
+    if: always()  # https://stackoverflow.com/questions/62045967/github-actions-is-there-a-way-to-continue-on-error-while-still-getting-correct
+    runs-on: ${{matrix.os}}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {std: 11, cxx: em++, emver: 2.0.34, bt: Debug  , os: ubuntu-latest, bitlinks: static32}
+          - {std: 11, cxx: em++, emver: 2.0.34, bt: Release, os: ubuntu-latest, bitlinks: static32}
+          - {std: 20, cxx: em++, emver: 2.0.34, bt: Debug  , os: ubuntu-latest, bitlinks: static32}
+          - {std: 20, cxx: em++, emver: 2.0.34, bt: Release, os: ubuntu-latest, bitlinks: static32}
+          - {std: 11, cxx: em++, emver: 3.0.0 , bt: Debug  , os: ubuntu-latest, bitlinks: static32}
+          - {std: 11, cxx: em++, emver: 3.0.0 , bt: Release, os: ubuntu-latest, bitlinks: static32}
+          - {std: 20, cxx: em++, emver: 3.0.0 , bt: Debug  , os: ubuntu-latest, bitlinks: static32}
+          - {std: 20, cxx: em++, emver: 3.0.0 , bt: Release, os: ubuntu-latest, bitlinks: static32}
+    env:
+      STD: "${{matrix.std}}"
+      CXX_: "${{matrix.cxx}}"
+      BT: "${{matrix.bt}}"
+      BITLINKS: "${{matrix.bitlinks}}"
+      VG: "${{matrix.vg}}"
+      SAN: "${{matrix.san}}"
+      LINT: "${{matrix.lint}}"
+      OS: "${{matrix.os}}"
+    steps:
+      - {name: checkout, uses: actions/checkout@v2, with: {submodules: recursive}}
+      - name: setup emscripten cache
+        id: cache-system-libraries
+        uses: actions/cache@v2
+        with: {path: "${{env.EMSCRIPTEN_CACHE_FOLDER}}", key: "${{matrix.emver}}-${{runner.os}}"}
+      - name: setup emscripten
+        uses: mymindstorm/setup-emsdk@v11
+        with: {version: "${{matrix.emver}}", actions-cache-folder: "${{env.EMSCRIPTEN_CACHE_FOLDER}}"}
+      - {name: show info, run: source .github/setenv.sh && c4_show_info}
+      - name: static32-configure---------------------------------------------------
+        run: source .github/setenv.sh && c4_cfg_test static32
+      - {name: static32-build, run: source .github/setenv.sh && c4_build_test static32}
+      - {name: static32-run, run: source .github/setenv.sh && c4_run_test static32}

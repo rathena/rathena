@@ -602,6 +602,7 @@ struct map_session_data {
 		int ematk; // matk bonus from equipment
 		int eatk; // atk bonus from equipment
 		uint8 absorb_dmg_maxhp; // [Cydh]
+		uint8 absorb_dmg_maxhp2;
 		short critical_rangeatk;
 		short weapon_atk_rate, weapon_matk_rate;
 	} bonus;
@@ -992,7 +993,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node& node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void loadingFinished() override;
 };
 
@@ -1017,7 +1018,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node &node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void loadingFinished() override;
 
 	// Additional
@@ -1190,7 +1191,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node &node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 };
 
 extern AttendanceDatabase attendance_db;
@@ -1208,7 +1209,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node& node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void loadingFinished() override;
 
 	// Additional
@@ -1484,7 +1485,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node& node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void loadingFinished() override;
 
 	// Additional

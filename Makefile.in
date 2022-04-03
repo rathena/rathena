@@ -5,10 +5,10 @@ OMAP=@OMAP@
 ifeq ($(HAVE_MYSQL),yes)
 	ALL_DEPENDS=server tools
 	SERVER_DEPENDS=common login char map import
-	COMMON_DEPENDS=libconfig yaml-cpp
+	COMMON_DEPENDS=libconfig rapidyaml yaml-cpp
 	LOGIN_DEPENDS=libconfig common
-	CHAR_DEPENDS=libconfig common yaml-cpp
-	MAP_DEPENDS=libconfig common yaml-cpp
+	CHAR_DEPENDS=libconfig common rapidyaml
+	MAP_DEPENDS=libconfig common rapidyaml
 else
 	ALL_DEPENDS=needs_mysql
 	SERVER_DEPENDS=needs_mysql
@@ -55,6 +55,9 @@ libconfig:
 tools:
 	@$(MAKE) -C src/tool
 
+rapidyaml:
+	@$(MAKE) -C 3rdparty/rapidyaml
+
 yaml-cpp:
 	@$(MAKE) -C 3rdparty/yaml-cpp
 
@@ -76,6 +79,7 @@ import:
 clean:
 	@$(MAKE) -C src/common $@
 	@$(MAKE) -C 3rdparty/libconfig $@
+	@$(MAKE) -C 3rdparty/rapidyaml $@
 	@$(MAKE) -C 3rdparty/yaml-cpp $@
 	@$(MAKE) -C src/login $@
 	@$(MAKE) -C src/char $@
@@ -87,6 +91,7 @@ help:
 	@echo "possible targets are:"
 	@echo "'common'      - builds object files used for the three servers"
 	@echo "'libconfig'   - builds object files of libconfig"
+	@echo "'rapidyaml'   - builds object files of rapidyaml"
 	@echo "'yaml-cpp'    - builds object files of yaml-cpp"
 	@echo "'login'       - builds login server"
 	@echo "'char'        - builds char server"

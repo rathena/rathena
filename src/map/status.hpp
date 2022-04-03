@@ -97,7 +97,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode( const YAML::Node& node ) override;
+	uint64 parseBodyNode( const ryml::NodeRef& node ) override;
 
 	// Additional
 	std::shared_ptr<s_refine_level_info> findLevelInfo( const struct item_data& data, struct item& item );
@@ -118,7 +118,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node &node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 };
 
 extern SizeFixDatabase size_fix_db;
@@ -136,7 +136,7 @@ public:
 		std::fill_n(&attr_fix_table[0][0][0], MAX_ELE_LEVEL * ELE_MAX * ELE_MAX, 100);
 	}
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node& node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 
 	// Additional
 	int16 getAttribute(uint16 level, uint16 atk_ele, uint16 def_ele);
@@ -2693,62 +2693,57 @@ enum e_scs_flag : uint8 {
 };
 
 ///Define flags for the status_calc_bl function. [Skotlex]
-enum e_scb_flag : uint64 {
-	SCB_NONE	= 0x0,
-	SCB_BASE	= 0x00000001,
-	SCB_MAXHP	= 0x00000002,
-	SCB_MAXSP	= 0x00000004,
-	SCB_STR		= 0x00000008,
-	SCB_AGI		= 0x00000010,
-	SCB_VIT		= 0x00000020,
-	SCB_INT		= 0x00000040,
-	SCB_DEX		= 0x00000080,
-	SCB_LUK		= 0x00000100,
-	SCB_BATK	= 0x00000200,
-	SCB_WATK	= 0x00000400,
-	SCB_MATK	= 0x00000800,
-	SCB_HIT		= 0x00001000,
-	SCB_FLEE	= 0x00002000,
-	SCB_DEF		= 0x00004000,
-	SCB_DEF2	= 0x00008000,
-	SCB_MDEF	= 0x00010000,
-	SCB_MDEF2	= 0x00020000,
-	SCB_SPEED	= 0x00040000,
-	SCB_ASPD	= 0x00080000,
-	SCB_DSPD	= 0x00100000,
-	SCB_CRI		= 0x00200000,
-	SCB_FLEE2	= 0x00400000,
-	SCB_ATK_ELE	= 0x00800000,
-	SCB_DEF_ELE	= 0x01000000,
-	SCB_MODE	= 0x02000000,
-	SCB_SIZE	= 0x04000000,
-	SCB_RACE	= 0x08000000,
-	SCB_RANGE	= 0x10000000,
-	SCB_REGEN	= 0x20000000,
+enum e_scb_flag : uint8 {
+	SCB_NONE = 0,
+	SCB_BASE,
+	SCB_MAXHP,
+	SCB_MAXSP,
+	SCB_STR,
+	SCB_AGI,
+	SCB_VIT,
+	SCB_INT,
+	SCB_DEX,
+	SCB_LUK,
+	SCB_BATK,
+	SCB_WATK,
+	SCB_MATK,
+	SCB_HIT,
+	SCB_FLEE,
+	SCB_DEF,
+	SCB_DEF2,
+	SCB_MDEF,
+	SCB_MDEF2,
+	SCB_SPEED,
+	SCB_ASPD,
+	SCB_DSPD,
+	SCB_CRI,
+	SCB_FLEE2,
+	SCB_ATK_ELE,
+	SCB_DEF_ELE,
+	SCB_MODE,
+	SCB_SIZE,
+	SCB_RACE,
+	SCB_RANGE,
+	SCB_REGEN,
 
 	// 4th Job T.Stat/T.Sub-Stat Flags
-	SCB_MAXAP	= 0x40000000,
-	SCB_POW		= 0x80000000,
-	SCB_STA		= 0x000100000000,
-	SCB_WIS		= 0x000200000000,
-	SCB_SPL		= 0x000400000000,
-	SCB_CON		= 0x000800000000,
-	SCB_CRT		= 0x001000000000,
-	SCB_PATK	= 0x002000000000,
-	SCB_SMATK	= 0x004000000000,
-	SCB_RES		= 0x008000000000,
-	SCB_MRES	= 0x010000000000,
-	SCB_HPLUS	= 0x020000000000,
-	SCB_CRATE	= 0x040000000000,
+	SCB_MAXAP,
+	SCB_POW,
+	SCB_STA,
+	SCB_WIS,
+	SCB_SPL,
+	SCB_CON,
+	SCB_CRT,
+	SCB_PATK,
+	SCB_SMATK,
+	SCB_RES,
+	SCB_MRES,
+	SCB_HPLUS,
+	SCB_CRATE,
 
 	// Extra Flags
-	// These are flags not sent through battle/all flags. Always keep these last.
-	SCB_DYE		= 0x080000000000, // force cloth-dye change to 0 to avoid client crashes.
-
-	// Special flags for updating all stat/sub-stat stuff on request.
-	SCB_BATTLE	= 0x07FFFFFFFFFE, // All except BASE and extra flags.
-	SCB_ALL		= 0x07FFFFFFFFFF, // All except extra flags.
-	SCB_MAX		= 0x0FFFFFFFFFFF,
+	SCB_DYE, // force cloth-dye change to 0 to avoid client crashes.
+	SCB_MAX,
 };
 
 enum e_status_calc_opt : uint8 {
@@ -2853,37 +2848,47 @@ enum e_status_change_flag : uint16 {
 	SCF_SENDVAL2,
 	SCF_SENDVAL3,
 	SCF_NOFORCEDEND,
+	SCF_NOWARNING,
+	SCF_REMOVEONUNEQUIP,
+	SCF_REMOVEONUNEQUIPWEAPON,
+	SCF_REMOVEONUNEQUIPARMOR,
 	SCF_MAX
 };
 
 /// Struct of SC configs [Cydh]
 struct s_status_change_db {
-	sc_type type;				///< SC_
-	efst_type icon;				///< EFST_
-	std::bitset<SCS_MAX> state;	///< SCS_
-	uint64 calc_flag;			///< SCB_ flags
-	uint16 opt1;				///< OPT1_
-	uint16 opt2;				///< OPT2_
-	uint32 opt3;				///< OPT3_
-	uint32 look;				///, OPTION_ Changelook
-	std::bitset<SCF_MAX> flag;	///< SCF_ Flags, enum e_status_change_flag
-	bool display;				///< Display status effect/icon (for certain state)
-	uint16 skill_id;			///< Associated skill for (addeff) duration lookups
-	std::vector<sc_type> end;	///< List of SC that will be ended when this SC is activated
-	std::vector<sc_type> fail;	///< List of SC that causing this SC cannot be activated
-	bool end_return;			///< After SC ends the SC from end list, it does nothing
-	t_tick min_duration;		///< Minimum duration effect (after all status reduction)
-	uint16 min_rate;			///< Minimum rate to be applied (after all status reduction)
+	sc_type type;					///< SC_
+	efst_type icon;					///< EFST_
+	std::bitset<SCS_MAX> state;		///< SCS_
+	std::bitset<SCB_MAX> calc_flag;	///< SCB_ flags
+	uint16 opt1;					///< OPT1_
+	uint16 opt2;					///< OPT2_
+	uint32 opt3;					///< OPT3_
+	uint32 look;					///< OPTION_ Changelook
+	std::bitset<SCF_MAX> flag;		///< SCF_ Flags, enum e_status_change_flag
+	bool display;					///< Display status effect/icon (for certain state)
+	uint16 skill_id;				///< Associated skill for (addeff) duration lookups
+	std::vector<sc_type> end;		///< List of SC that will be ended when this SC is activated
+	std::vector<sc_type> fail;		///< List of SC that causing this SC cannot be activated
+	bool end_return;				///< After SC ends the SC from end list, it does nothing
+	t_tick min_duration;			///< Minimum duration effect (after all status reduction)
+	uint16 min_rate;				///< Minimum rate to be applied (after all status reduction)
 };
 
 class StatusDatabase : public TypesafeCachedYamlDatabase<uint16, s_status_change_db> {
 public:
 	StatusDatabase() : TypesafeCachedYamlDatabase("STATUS_DB", 1) {
-
+		// All except BASE and extra flags.
+		SCB_BATTLE.set();
+		SCB_BATTLE.reset(SCB_BASE);
+		SCB_BATTLE.reset(SCB_DYE);
+		// All except extra flags.
+		SCB_ALL.set();
+		SCB_ALL.reset(SCB_DYE);
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node &node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void loadingFinished() override;
 
 	// Determine who will receive a clif_status_change packet for effects that require one to display correctly
@@ -2891,13 +2896,18 @@ public:
 
 	// Extras
 	efst_type getIcon(sc_type type);
-	uint64 getCalcFlag(sc_type type);
+	std::bitset<SCB_MAX> getCalcFlag(sc_type type);
 	std::vector<sc_type> getEnd(sc_type type);
 	uint16 getSkill(sc_type type);
 	bool hasSCF(status_change *sc, e_status_change_flag flag);
 	void removeByStatusFlag(block_list *bl, std::vector<e_status_change_flag> flag);
 	void changeSkillTree(map_session_data *sd, int32 class_ = 0);
 	bool validateStatus(sc_type type);
+	std::bitset<SCB_MAX> getSCB_BATTLE();
+	std::bitset<SCB_MAX> getSCB_ALL();
+
+private:
+	std::bitset<SCB_MAX> SCB_BATTLE, SCB_ALL;
 };
 
 extern StatusDatabase status_db;
@@ -3005,7 +3015,8 @@ struct regen_data {
 
 	//tick accumulation before healing.
 	struct {
-		unsigned int hp,sp,shp,ssp;
+		t_tick hp, sp; //time of last natural recovery
+		unsigned int shp,ssp;
 	} tick;
 
 	//Regen rates. n/100
@@ -3218,18 +3229,17 @@ int status_change_clear(struct block_list* bl, int type);
 void status_change_clear_buffs(struct block_list* bl, uint8 type);
 void status_change_clear_onChangeMap(struct block_list *bl, struct status_change *sc);
 
-#define status_calc_bl(bl, flag) status_calc_bl_(bl, flag, SCO_NONE)
-#define status_calc_mob(md, opt) status_calc_bl_(&(md)->bl, SCB_ALL, opt)
-#define status_calc_pet(pd, opt) status_calc_bl_(&(pd)->bl, SCB_ALL, opt)
-#define status_calc_pc(sd, opt) status_calc_bl_(&(sd)->bl, SCB_ALL, opt)
-#define status_calc_homunculus(hd, opt) status_calc_bl_(&(hd)->bl, SCB_ALL, opt)
-#define status_calc_mercenary(md, opt) status_calc_bl_(&(md)->bl, SCB_ALL, opt)
-#define status_calc_elemental(ed, opt) status_calc_bl_(&(ed)->bl, SCB_ALL, opt)
-#define status_calc_npc(nd, opt) status_calc_bl_(&(nd)->bl, SCB_ALL, opt)
+#define status_calc_mob(md, opt) status_calc_bl_(&(md)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_pet(pd, opt) status_calc_bl_(&(pd)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_pc(sd, opt) status_calc_bl_(&(sd)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_homunculus(hd, opt) status_calc_bl_(&(hd)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_mercenary(md, opt) status_calc_bl_(&(md)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_elemental(ed, opt) status_calc_bl_(&(ed)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_npc(nd, opt) status_calc_bl_(&(nd)->bl, status_db.getSCB_ALL(), opt)
 
 bool status_calc_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag);
 bool status_calc_cart_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag);
-void status_calc_bl_(struct block_list *bl, uint64 flag, uint8 opt);
+void status_calc_bl_(struct block_list *bl, std::bitset<SCB_MAX> flag, uint8 opt = SCO_NONE);
 int status_calc_mob_(struct mob_data* md, uint8 opt);
 void status_calc_pet_(struct pet_data* pd, uint8 opt);
 int status_calc_pc_(struct map_session_data* sd, uint8 opt);
@@ -3237,6 +3247,17 @@ int status_calc_homunculus_(struct homun_data *hd, uint8 opt);
 int status_calc_mercenary_(s_mercenary_data *md, uint8 opt);
 int status_calc_elemental_(s_elemental_data *ed, uint8 opt);
 int status_calc_npc_(struct npc_data *nd, uint8 opt);
+
+static void status_calc_bl(block_list *bl, std::vector<e_scb_flag> flags) {
+	static std::bitset<SCB_MAX> temp;
+
+	temp.reset();
+	for (const auto &scb : flags) {
+		temp.set(scb);
+	}
+
+	status_calc_bl_(bl, temp);
+}
 
 void status_calc_misc(struct block_list *bl, struct status_data *status, int level);
 void status_calc_regen(struct block_list *bl, struct status_data *status, struct regen_data *regen);
