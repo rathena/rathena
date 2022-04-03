@@ -73,14 +73,14 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode( const ryml::NodeRef node ) override;
+	uint64 parseBodyNode( const ryml::NodeRef& node ) override;
 };
 
 const std::string GuildSkillTreeDatabase::getDefaultLocation(){
 	return std::string(db_path) + "/guild_skill_tree.yml";
 }
 
-uint64 GuildSkillTreeDatabase::parseBodyNode( const ryml::NodeRef node ){
+uint64 GuildSkillTreeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	std::string name;
 
 	if( !this->asString( node, "Id", name ) ){
@@ -128,8 +128,8 @@ uint64 GuildSkillTreeDatabase::parseBodyNode( const ryml::NodeRef node ){
 	}
 
 	if( this->nodeExists( node, "Required" ) ){
-		const auto reqNode = node["Required"];
-		for( const auto  requiredNode : reqNode.children() ){
+		const auto& reqNode = node["Required"];
+		for( const auto&  requiredNode : reqNode ){
 			std::string requiredName;
 
 			if( !this->asString( requiredNode, "Id", requiredName ) ){
@@ -274,7 +274,7 @@ const std::string CastleDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/castle_db.yml";
 }
 
-uint64 CastleDatabase::parseBodyNode(const ryml::NodeRef node) {
+uint64 CastleDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	int32 castle_id;
 
 	if (!this->asInt32(node, "Id", castle_id))
