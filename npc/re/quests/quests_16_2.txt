@@ -11374,6 +11374,105 @@ rebel_in,90,40,5	script	Hogar#pa0829	4_M_MASKMAN,{
 }
 
 // Exchanges
+rebel_in,100,40,4	script	Butterfly Merchant#rebel_in	4_M_ORIENT02,{
+	mes "[Butterfly Merchant]";
+	mes "... ... ... ... ...";
+	mes "Do you need " + getitemname(100904) + "?";	// Teleport_Ep16_01
+	close2;
+	callshop "shop_rebel_in";
+	end;
+}
+
+rebel_in,99,51,3	script	Imperial Operator#ext162	4_M_REPAIR,{
+	mes "[Imperial Operator]";
+	mes "Hello.";
+	mes "We have ^4d4dffImperial^000000 equipment that can be exchanged for <ITEM>[" + getitemname(6919) + "]<INFO>6919</INFO></ITEM>.";
+	mes "I will guide you to exchange items according to your job.";
+	close2;
+	switch( eaclass() & EAJ_THIRDMASK ) {
+	case EAJ_RUNE_KNIGHT:
+		.@str$ = "JOB_RUNE_KNIGHT";
+		break;
+	case EAJ_WARLOCK:
+		.@str$ = "JOB_WARLOCK";
+		break;
+	case EAJ_RANGER:
+		.@str$ = "JOB_RANGER";
+		break;
+	case EAJ_ARCH_BISHOP:
+		.@str$ = "JOB_ARCH_BISHOP";
+		break;
+	case EAJ_MECHANIC:
+		.@str$ = "JOB_MECHANIC";
+		break;
+	case EAJ_GUILLOTINE_CROSS:
+		.@str$ = "JOB_GUILLOTINE_CROSS";
+		break;
+	case EAJ_ROYAL_GUARD:
+		.@str$ = "JOB_ROYAL_GUARD";
+		break;
+	case EAJ_SORCERER:
+		.@str$ = "JOB_SORCERER";
+		break;
+	case EAJ_MINSTRELWANDERER:
+		.@str$ = "JOB_MINSTREL";
+		break;
+	case EAJ_SURA:
+		.@str$ = "JOB_SURA";
+		break;
+	case EAJ_GENETIC:
+		.@str$ = "JOB_GENETIC";
+		break;
+	case EAJ_SHADOW_CHASER:
+		.@str$ = "JOB_SHADOW_CHASER";
+		break;
+	default:
+		switch( Class ) {
+		case JOB_SUPER_NOVICE_E:
+		case JOB_SUPER_BABY_E:
+		case JOB_HYPER_NOVICE:
+			.@str$ = "JOB_SUPER_NOVICE_E";
+			break;
+		case JOB_KAGEROU:
+		case JOB_OBORO:
+		case JOB_BABY_KAGEROU:
+		case JOB_BABY_OBORO:
+		case JOB_SHINKIRO:
+		case JOB_SHIRANUI:
+			.@str$ = "JOB_KAGEROU";
+			break;
+		case JOB_REBELLION:
+		case JOB_BABY_REBELLION:
+		case JOB_NIGHT_WATCH:
+			.@str$ = "JOB_REBELLION";
+			break;
+		case JOB_SUMMONER:
+		case JOB_BABY_SUMMONER:
+		case JOB_SPIRIT_HANDLER:
+			.@str$ = "JOB_SUMMONER";
+			break;
+		case JOB_STAR_EMPEROR:
+		case JOB_BABY_STAR_EMPEROR:
+		case JOB_STAR_EMPEROR2:
+		case JOB_BABY_STAR_EMPEROR2:
+		case JOB_SKY_EMPEROR:
+		case JOB_SKY_EMPEROR2:
+			.@str$ = "JOB_STAR_EMPEROR";
+			break;
+		case JOB_SOUL_REAPER:
+		case JOB_BABY_SOUL_REAPER:
+		case JOB_SOUL_ASCETIC:
+			.@str$ = "JOB_SOUL_REAPER";
+			break;
+		default:
+			end;
+		}
+		break;
+	}
+	callshop "shop_ext162_" + .@str$;
+	end;
+}
+
 rebel_in,74,67,5	script	Strasse#rebel_in	4_M_TATIO,{
 	disable_items;
 	if (checkweight(501,1) == 0) {

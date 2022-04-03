@@ -5167,7 +5167,7 @@ Body:
           - Noblesse_Attack_Boots
           - Noblesse_Attack_Manteau
           - Noblesse_Attack_Ring
-          - Noblesse_Aimed_suit
+          - Noblesse_Aim_Suit
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
@@ -5215,7 +5215,7 @@ Body:
           - Noblesse_Attack_Boots
           - Noblesse_Attack_Manteau
           - Noblesse_Attack_Ring
-          - Noblesse_Tornado_Armor
+          - Noblesse_Tonado_Armor
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
@@ -5247,7 +5247,7 @@ Body:
           - Noblesse_Attack_Boots
           - Noblesse_Attack_Manteau
           - Noblesse_Attack_Ring
-          - Noblesse_Cart_Cannon_Suit
+          - Noblesse_Kart_Suit
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bVariableCastRate,-5;
@@ -5263,7 +5263,7 @@ Body:
           - Noblesse_Attack_Boots
           - Noblesse_Attack_Manteau
           - Noblesse_Attack_Ring
-          - Noblesse_Cart_Tornado_Suit
+          - Noblesse_Kart_Suit2
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
@@ -5295,12 +5295,12 @@ Body:
           - Noblesse_Attack_Boots
           - Noblesse_Attack_Manteau
           - Noblesse_Attack_Ring
-          - Noblesse_Assassin_Suit
+          - Noblesse_Assasin_Suit
       - Combo:
           - Imperial_Attack_Boots
           - Imperial_Attack_Manteau
           - Imperial_Attack_Ring
-          - Imperial_Assassin_Suit
+          - Imperial_Assasin_Suit
       - Combo:
           - Grace_Attack_Boots
           - Grace_Attack_Manteau
@@ -5369,7 +5369,7 @@ Body:
           - Noblesse_Attack_Boots
           - Noblesse_Attack_Manteau
           - Noblesse_Attack_Ring
-          - Noblesse_Fire_Rain_Suit
+          - Noblesse_Firerain_Suit
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
@@ -5465,12 +5465,12 @@ Body:
           - Noblesse_Attack_Boots
           - Noblesse_Attack_Manteau
           - Noblesse_Attack_Ring
-          - Noblesse_Super_Novice_Suit
+          - Noblesse_Snovice_Suit
       - Combo:
           - Imperial_Attack_Boots
           - Imperial_Attack_Manteau
           - Imperial_Attack_Ring
-          - Imperial_Super_Novice_Suit
+          - Imperial_Snovice_Suit
       - Combo:
           - Grace_Attack_Boots
           - Grace_Attack_Manteau
@@ -5555,7 +5555,7 @@ Body:
           - Noblesse_Magic_Boots
           - Noblesse_Magic_Manteau
           - Noblesse_Magic_Ring
-          - Noblesse_Catnip_Robe
+          - Noblesse_Carrot_Robe
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bVariableCastrate,-5;
@@ -5655,7 +5655,7 @@ Body:
           - Noblesse_Magic_Boots
           - Noblesse_Magic_Manteau
           - Noblesse_Magic_Ring
-          - Noblesse_Eswhoo_Robe
+          - Noblesse_Swhoo_Robe
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bVariableCastrate,-5;
@@ -5687,7 +5687,7 @@ Body:
           - Noblesse_Magic_Boots
           - Noblesse_Magic_Manteau
           - Noblesse_Magic_Ring
-          - Noblesse_Super_Novice_Robe
+          - Noblesse_Snovice_Robe
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bMaxHPrate,5;
@@ -5769,7 +5769,7 @@ Body:
           - Imperial_Attack_Boots
           - Imperial_Attack_Manteau
           - Imperial_Attack_Ring
-          - Imperial_Aimed_Suit
+          - Imperial_Aim_Suit
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
@@ -5849,7 +5849,7 @@ Body:
           - Imperial_Attack_Boots
           - Imperial_Attack_Manteau
           - Imperial_Attack_Ring
-          - Imperial_Tornado_Armor
+          - Imperial_Tonado_Armor
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
@@ -5881,7 +5881,7 @@ Body:
           - Imperial_Attack_Boots
           - Imperial_Attack_Manteau
           - Imperial_Attack_Ring
-          - Imperial_Cart_Cannon_Suit
+          - Imperial_Kart_Suit
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bVariableCastRate,-5;
@@ -5897,7 +5897,7 @@ Body:
           - Imperial_Attack_Boots
           - Imperial_Attack_Manteau
           - Imperial_Attack_Ring
-          - Imperial_Cart_Tornado_Suit
+          - Imperial_Kart_Suit2
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
@@ -5977,7 +5977,7 @@ Body:
           - Imperial_Attack_Boots
           - Imperial_Attack_Manteau
           - Imperial_Attack_Ring
-          - Imperial_Fire_Rain_Suit
+          - Imperial_Firerain_Suit
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
@@ -6105,7 +6105,7 @@ Body:
           - Imperial_Magic_Boots
           - Imperial_Magic_Manteau
           - Imperial_Magic_Ring
-          - Imperial_Catnip_Robe
+          - Imperial_Carrot_Robe
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bVariableCastrate,-5;
@@ -6205,7 +6205,7 @@ Body:
           - Imperial_Magic_Boots
           - Imperial_Magic_Manteau
           - Imperial_Magic_Ring
-          - Imperial_Eswhoo_Robe
+          - Imperial_Swhoo_Robe
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bVariableCastrate,-5;
@@ -6237,7 +6237,7 @@ Body:
           - Imperial_Magic_Boots
           - Imperial_Magic_Manteau
           - Imperial_Magic_Ring
-          - Imperial_Super_Novice_Robe
+          - Imperial_Snovice_Robe
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bMaxHPrate,5;
