@@ -898,7 +898,7 @@ const std::string InterServerDatabase::getDefaultLocation(){
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 InterServerDatabase::parseBodyNode( const ryml::NodeRef node ){
+uint64 InterServerDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	uint32 id;
 
 	if( !this->asUInt32( node, "ID", id ) ){

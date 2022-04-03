@@ -37,7 +37,7 @@ const std::string PetDatabase::getDefaultLocation(){
 	return std::string(db_path) + "/pet_db.yml";
 }
 
-uint64 PetDatabase::parseBodyNode( const ryml::NodeRef node ){
+uint64 PetDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	std::string mob_name;
 
 	if( !this->asString( node, "Mob", mob_name ) ){
@@ -376,7 +376,7 @@ uint64 PetDatabase::parseBodyNode( const ryml::NodeRef node ){
 			pet->pet_bonus_script = nullptr;
 		}
 
-		pet->pet_bonus_script = parse_script( script.c_str(), this->getCurrentFile().c_str(), parser.location(node["Script"]).line, SCRIPT_IGNORE_EXTERNAL_BRACKETS );
+		pet->pet_bonus_script = parse_script( script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["Script"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS );
 	}else{
 		if( !exists ){
 			pet->pet_bonus_script = nullptr;
@@ -395,7 +395,7 @@ uint64 PetDatabase::parseBodyNode( const ryml::NodeRef node ){
 			pet->pet_support_script = nullptr;
 		}
 
-		pet->pet_support_script = parse_script( script.c_str(), this->getCurrentFile().c_str(), parser.location(node["SupportScript"]).line, SCRIPT_IGNORE_EXTERNAL_BRACKETS );
+		pet->pet_support_script = parse_script( script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["SupportScript"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS );
 	}else{
 		if( !exists ){
 			pet->pet_support_script = nullptr;
@@ -403,8 +403,8 @@ uint64 PetDatabase::parseBodyNode( const ryml::NodeRef node ){
 	}
 
 	if( this->nodeExists( node, "Evolution" ) ){
-		const auto evolutionsNode = node["Evolution"];
-		for( const auto evolutionNode : evolutionsNode.children() ){
+		const auto& evolutionsNode = node["Evolution"];
+		for( const auto& evolutionNode : evolutionsNode ){
 			std::string target_name;
 
 			if( !this->asString( evolutionNode, "Target", target_name ) ){
@@ -433,8 +433,8 @@ uint64 PetDatabase::parseBodyNode( const ryml::NodeRef node ){
 				evolution->target_mob_id = targetId;
 			}
 
-			const auto requirementsNode = evolutionNode["ItemRequirements"];
-			for( const auto requirementNode : requirementsNode.children() ){
+			const auto& requirementsNode = evolutionNode["ItemRequirements"];
+			for( const auto& requirementNode : requirementsNode ){
 				std::string item_name;
 
 				if( !this->asString( requirementNode, "Item", item_name ) ){
