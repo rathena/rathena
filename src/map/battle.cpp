@@ -8321,7 +8321,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 		if (sc->data[SC_MAXPAIN])
 			rdamage = damage * sc->data[SC_MAXPAIN]->val1 * 10 / 100;
 	}
-	
+
 	return cap_value(i64min(rdamage,max_damage),INT_MIN,INT_MAX);
 }
 
