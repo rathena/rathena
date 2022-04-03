@@ -54,7 +54,7 @@ const std::string HomExpDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/exp_homun.yml";
 }
 
-uint64 HomExpDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 HomExpDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (!this->nodesExist(node, { "Level", "Exp" })) {
 		return 0;
 	}
@@ -1081,6 +1081,7 @@ void hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 {
 	struct homun_data *hd;
 	int i = 0;
+	t_tick tick = gettick();
 
 	nullpo_retv(sd);
 
@@ -1114,6 +1115,10 @@ void hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 	unit_calc_pos(&hd->bl, sd->bl.x, sd->bl.y, sd->ud.dir);
 	hd->bl.x = hd->ud.to_x;
 	hd->bl.y = hd->ud.to_y;
+
+	// Ticks need to be initialized before adding bl to map_addiddb
+	hd->regen.tick.hp = tick;
+	hd->regen.tick.sp = tick;
 
 	map_addiddb(&hd->bl);
 	status_calc_homunculus(hd, SCO_FIRST);
@@ -1176,7 +1181,7 @@ bool hom_call(struct map_session_data *sd)
 		clif_hominfo(sd,hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
 		clif_homskillinfoblock(sd);
 		if (battle_config.hom_setting&HOMSET_COPY_SPEED)
-			status_calc_bl(&hd->bl, SCB_SPEED);
+			status_calc_bl(&hd->bl, { SCB_SPEED });
 		hom_save(hd);
 	} else
 		//Warp him to master.

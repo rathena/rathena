@@ -4,7 +4,6 @@
 #include "battleground.hpp"
 
 #include <unordered_map>
-#include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/malloc.hpp"
@@ -43,7 +42,7 @@ const std::string BattlegroundDatabase::getDefaultLocation() {
  * @param node: The YAML node containing the entry
  * @return count of successfully parsed rows
  */
-uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 BattlegroundDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	uint32 id;
 
 	if (!this->asUInt32(node, "Id", id))
@@ -173,7 +172,7 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Join")) {
-		const YAML::Node &joinNode = node["Join"];
+		const auto& joinNode = node["Join"];
 
 		if (this->nodeExists(joinNode, "Solo")) {
 			bool active;
@@ -219,10 +218,12 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "JobRestrictions")) {
-		const YAML::Node &jobsNode = node["JobRestrictions"];
+		const auto& jobsNode = node["JobRestrictions"];
 
-		for (const auto &jobit : jobsNode) {
-			std::string job_name = jobit.first.as<std::string>(), job_name_constant = "JOB_" + job_name;
+		for (const auto& jobit : jobsNode) {
+			std::string job_name;
+			c4::from_chars(jobit.key(), &job_name);
+			std::string job_name_constant = "JOB_" + job_name;
 			int64 constant;
 
 			if (!script_get_constant(job_name_constant.c_str(), &constant)) {
@@ -245,8 +246,7 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 	if (this->nodeExists(node, "Locations")) {
 		int count = 0;
 
-		for (const auto &locationit : node["Locations"]) {
-			const YAML::Node &location = locationit;
+		for (const auto& location : node["Locations"]) {
 			s_battleground_map map_entry;
 
 			if (this->nodeExists(location, "Map")) {
@@ -282,7 +282,8 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 			std::vector<std::string> team_list = { "TeamA", "TeamB" };
 
 			for (const auto &it : team_list) {
-				const YAML::Node &team = location;
+				c4::csubstr team_name = c4::to_csubstr(it);
+				const ryml::NodeRef& team = location;
 
 				if (this->nodeExists(team, it)) {
 					s_battleground_team *team_ptr;
@@ -292,22 +293,22 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 					else if (it.find("TeamB") != std::string::npos)
 						team_ptr = &map_entry.team2;
 					else {
-						this->invalidWarning(team[it], "An invalid Team is defined.\n");
+						this->invalidWarning(team[team_name], "An invalid Team is defined.\n");
 						return 0;
 					}
 
-					if (this->nodeExists(team[it], "RespawnX")) {
-						if (!this->asInt16(team[it], "RespawnX", team_ptr->warp_x))
+					if (this->nodeExists(team[team_name], "RespawnX")) {
+						if (!this->asInt16(team[team_name], "RespawnX", team_ptr->warp_x))
 							return 0;
 					}
 
-					if (this->nodeExists(team[it], "RespawnY")) {
-						if (!this->asInt16(team[it], "RespawnY", team_ptr->warp_y))
+					if (this->nodeExists(team[team_name], "RespawnY")) {
+						if (!this->asInt16(team[team_name], "RespawnY", team_ptr->warp_y))
 							return 0;
 					}
 
-					if (this->nodeExists(team[it], "DeathEvent")) {
-						if (!this->asString(team[it], "DeathEvent", team_ptr->death_event))
+					if (this->nodeExists(team[team_name], "DeathEvent")) {
+						if (!this->asString(team[team_name], "DeathEvent", team_ptr->death_event))
 							return 0;
 
 						team_ptr->death_event.resize(EVENT_NAME_LENGTH);
@@ -318,8 +319,8 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 						}
 					}
 
-					if (this->nodeExists(team[it], "QuitEvent")) {
-						if (!this->asString(team[it], "QuitEvent", team_ptr->quit_event))
+					if (this->nodeExists(team[team_name], "QuitEvent")) {
+						if (!this->asString(team[team_name], "QuitEvent", team_ptr->quit_event))
 							return 0;
 
 						team_ptr->quit_event.resize(EVENT_NAME_LENGTH);
@@ -330,8 +331,8 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 						}
 					}
 
-					if (this->nodeExists(team[it], "ActiveEvent")) {
-						if (!this->asString(team[it], "ActiveEvent", team_ptr->active_event))
+					if (this->nodeExists(team[team_name], "ActiveEvent")) {
+						if (!this->asString(team[team_name], "ActiveEvent", team_ptr->active_event))
 							return 0;
 
 						team_ptr->active_event.resize(EVENT_NAME_LENGTH);
@@ -342,8 +343,8 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 						}
 					}
 
-					if (this->nodeExists(team[it], "Variable")) {
-						if (!this->asString(team[it], "Variable", team_ptr->bg_id_var))
+					if (this->nodeExists(team[team_name], "Variable")) {
+						if (!this->asString(team[team_name], "Variable", team_ptr->bg_id_var))
 							return 0;
 
 						team_ptr->bg_id_var.resize(NAME_LENGTH);

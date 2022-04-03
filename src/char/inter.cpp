@@ -8,7 +8,6 @@
 #include <string>
 #include <sys/stat.h> // for stat/lstat/fstat - [Dekamaster/Ultimate GM Tool]
 #include <vector>
-#include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/database.hpp"
@@ -899,7 +898,7 @@ const std::string InterServerDatabase::getDefaultLocation(){
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 InterServerDatabase::parseBodyNode( const YAML::Node& node ){
+uint64 InterServerDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	uint32 id;
 
 	if( !this->asUInt32( node, "ID", id ) ){
