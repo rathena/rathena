@@ -4963,7 +4963,7 @@ MobDatabase mob_db;
  */
 static bool mob_read_sqldb_sub(std::vector<std::string> str) {
 	ryml::Tree tree;
-	ryml::NodeRef &node = tree.rootref();
+	ryml::NodeRef node = tree.rootref();
 	node |= ryml::MAP;
 	int32 index = -1;
 
@@ -5017,7 +5017,7 @@ static bool mob_read_sqldb_sub(std::vector<std::string> str) {
 	if (!str[++index].empty() && strcmp(str[index].c_str(), "Formless") != 0)
 		node["Race"] << str[index];
 
-	ryml::NodeRef &raceGroupsNode = node["RaceGroups"];
+	ryml::NodeRef raceGroupsNode = node["RaceGroups"];
 	bool header = false;
 
 	for (uint16 i = 1; i < RC2_MAX; i++) {
@@ -5108,7 +5108,7 @@ static bool mob_read_sqldb_sub(std::vector<std::string> str) {
 	if (!str[++index].empty())
 		modes["SkillImmune"] << (std::stoi(str[index]) ? "true" : "false");
 
-	ryml::NodeRef &mvpDropsNode = node["MvpDrops"];
+	ryml::NodeRef mvpDropsNode = node["MvpDrops"];
 	bool mvpheader = false;
 
 	for (uint8 i = 0; i < MAX_MVP_DROP; i++) {
@@ -5118,7 +5118,7 @@ static bool mob_read_sqldb_sub(std::vector<std::string> str) {
 		}
 
 		if (!str[++index].empty()) {
-			ryml::NodeRef &entry = mvpDropsNode[i];
+			ryml::NodeRef entry = mvpDropsNode[i];
 			entry |= ryml::MAP;
 
 			entry["Item"] << str[index];
@@ -5132,7 +5132,7 @@ static bool mob_read_sqldb_sub(std::vector<std::string> str) {
 			index += 3;
 	}
 
-	ryml::NodeRef &dropsNode = node["Drops"];
+	ryml::NodeRef dropsNode = node["Drops"];
 	bool dropheader = false;
 
 	for (uint8 i = 0; i < MAX_MOB_DROP; i++) {
@@ -5142,7 +5142,7 @@ static bool mob_read_sqldb_sub(std::vector<std::string> str) {
 		}
 
 		if (!str[++index].empty()) {
-			ryml::NodeRef &entry = dropsNode[i];
+			ryml::NodeRef entry = dropsNode[i];
 			entry |= ryml::MAP;
 
 			entry["Item"] << str[index];
