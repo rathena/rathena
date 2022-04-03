@@ -5018,13 +5018,13 @@ static bool mob_read_sqldb_sub(std::vector<std::string> str) {
 		node["Race"] << str[index];
 
 	ryml::NodeRef raceGroupsNode = node["RaceGroups"];
-	bool header = false;
+	bool groupheader = false;
 
 	for (uint16 i = 1; i < RC2_MAX; i++) {
 		if (!str[i + index].empty()) {
-			if (!header) {
+			if (!groupheader) {
 				raceGroupsNode |= ryml::MAP;
-				header = true;
+				groupheader = true;
 			}
 
 			raceGroupsNode[c4::to_csubstr(script_get_constant_str("RC2_", i) + 4)] << (std::stoi(str[i + index]) ? "true" : "false");
@@ -5114,7 +5114,7 @@ static bool mob_read_sqldb_sub(std::vector<std::string> str) {
 	for (uint8 i = 0; i < MAX_MVP_DROP; i++) {
 		if (!mvpheader) {
 			mvpDropsNode |= ryml::SEQ;
-			mvpheader = false;
+			mvpheader = true;
 		}
 
 		if (!str[++index].empty()) {
