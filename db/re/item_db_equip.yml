@@ -35099,6 +35099,8 @@ Body:
     EquipLevelMin: 99
     Script: |
       bonus bAgi,1;
+    UnEquipScript: |
+      sc_end SC_HOVERING;
   - Id: 2802
     AegisName: Suicidal_Device
     Name: Suicidal Device
@@ -108677,7 +108679,6 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-
       bonus bMaxHP,.@r*10;
       bonus bMaxSPrate,3;
       bonus bMdef,.@r*(getskilllv("WA_SWING_DANCE")+getskilllv("WA_SYMPHONY_OF_LOVER")+getskilllv("WA_MOONLIT_SERENADE"))/5;
@@ -133971,16 +133972,16 @@ Body:
     ArmorLevel: 1
     View: 973
   - Id: 31889
-    AegisName: aegis_31889
-    Name: Costume Gemini Crown    # !todo check english name
+    AegisName: C_Gemini_Crown
+    Name: Costume Gemini Crown
     Type: Armor
     Locations:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 551
   - Id: 31890
-    AegisName: aegis_31890
-    Name: Costume Sagittarius Diadem    # !todo check english name
+    AegisName: C_Sagittarius_Diadem
+    Name: Costume Sagittarius Diadem
     Type: Armor
     Locations:
       Costume_Head_Top: true
@@ -135919,7 +135920,7 @@ Body:
          bonus2 bSkillUseSP,"LG_EARTHDRIVE",25;
       }
   - Id: 32295
-    AegisName: aegis_32295
+    AegisName: Crystal_Blade_Necklace
     Name: Crystal Blade Necklace
     Type: Armor
     Weight: 500
@@ -135935,7 +135936,7 @@ Body:
       autobonus3 "{ bonus2 bAddEle,Ele_All,15; }",10,10000,"LK_AURABLADE";
       /*Unknow Rate*/
   - Id: 32296
-    AegisName: aegis_32296
+    AegisName: Crystal_Blade_Necklace_
     Name: Crystal Blade Necklace
     Type: Armor
     Weight: 500
@@ -137477,14 +137478,14 @@ Body:
     Refineable: true
     View: 2077
     Trade:
-      NoDrop: True
-      NoTrade: True
-      NoSell: True
-      NoCart: True
-      NoStorage: True
-      NoGuildStorage: True
-      NoMail: True
-      NoAuction: True
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 400128
     AegisName: aegis_400128
     Name: Costume Dropping Elly
@@ -140079,7 +140080,7 @@ Body:
       bonus bShortAtkRate,8;
       bonus bCritical,8;
   - Id: 410094
-    AegisName: aegis_410094
+    AegisName: Chain_Of_Seal_
     Name: Sealed Chain
     Type: Armor
     Weight: 100
@@ -140149,6 +140150,9 @@ Body:
     AegisName: C_Avenger
     Name: Costume Avengers    # !todo check english name
     Type: Armor
+    Jobs:
+      All: true
+      Summoner: false
     Locations:
       Costume_Head_Mid: true
     ArmorLevel: 1
@@ -141505,7 +141509,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,5;
   - Id: 450023
-    AegisName: Noblesse_Aimed_suit
+    AegisName: Noblesse_Aim_Suit
     Name: Noblesse Aimed suit
     Type: Armor
     Buy: 20
@@ -141665,7 +141669,7 @@ Body:
       if (.@r>=9)
          bonus bCritAtkRate,5;
   - Id: 450028
-    AegisName: Noblesse_Tornado_Armor
+    AegisName: Noblesse_Tonado_Armor
     Name: Noblesse Tornado Armor
     Type: Armor
     Buy: 20
@@ -141729,7 +141733,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,5;
   - Id: 450030
-    AegisName: Noblesse_Cart_Cannon_Suit
+    AegisName: Noblesse_Kart_Suit
     Name: Noblesse Cart Cannon Suit
     Type: Armor
     Buy: 20
@@ -141761,7 +141765,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,5;
   - Id: 450031
-    AegisName: Noblesse_Cart_Tornado_Suit
+    AegisName: Noblesse_Kart_Suit2
     Name: Noblesse Cart Tornado Suit
     Type: Armor
     Buy: 20
@@ -141825,7 +141829,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,5;
   - Id: 450033
-    AegisName: Noblesse_Assassin_Suit
+    AegisName: Noblesse_Assasin_Suit
     Name: Noblesse Assassin Suit
     Type: Armor
     Buy: 20
@@ -141950,7 +141954,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,5;
   - Id: 450037
-    AegisName: Noblesse_Catnip_Robe
+    AegisName: Noblesse_Carrot_Robe
     Name: Noblesse Catnip Robe
     Type: Armor
     Buy: 20
@@ -142008,7 +142012,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,5;
   - Id: 450039
-    AegisName: Noblesse_Fire_Rain_Suit
+    AegisName: Noblesse_Firerain_Suit
     Name: Noblesse Fire Rain Suit
     Type: Armor
     Buy: 20
@@ -142287,7 +142291,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,5;
   - Id: 450048
-    AegisName: Noblesse_Eswhoo_Robe
+    AegisName: Noblesse_Swhoo_Robe
     Name: Noblesse Eswhoo Robe
     Type: Armor
     Buy: 20
@@ -142575,7 +142579,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,7;
   - Id: 450057
-    AegisName: Imperial_Aimed_Suit
+    AegisName: Imperial_Aim_Suit
     Name: Imperial Aimed Suit
     Type: Armor
     Buy: 20
@@ -142799,7 +142803,7 @@ Body:
       if (.@r>=9)
          bonus bMaxHPrate,4;
   - Id: 450064
-    AegisName: Imperial_Tornado_Armor
+    AegisName: Imperial_Tonado_Armor
     Name: Imperial Tornado Armor
     Type: Armor
     Buy: 20
@@ -142863,7 +142867,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,7;
   - Id: 450066
-    AegisName: Imperial_Cart_Cannon_Suit
+    AegisName: Imperial_Kart_Suit
     Name: Imperial Cart Cannon Suit
     Type: Armor
     Buy: 20
@@ -142895,7 +142899,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,7;
   - Id: 450067
-    AegisName: Imperial_Cart_Tornado_Suit
+    AegisName: Imperial_Kart_Suit2
     Name: Imperial Cart Tornado Suit
     Type: Armor
     Buy: 20
@@ -142959,7 +142963,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,7;
   - Id: 450069
-    AegisName: Imperial_Assassin_Suit
+    AegisName: Imperial_Assasin_Suit
     Name: Imperial Assassin Suit
     Type: Armor
     Buy: 20
@@ -143084,7 +143088,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,7;
   - Id: 450073
-    AegisName: Imperial_Catnip_Robe
+    AegisName: Imperial_Carrot_Robe
     Name: Imperial Catnip Robe
     Type: Armor
     Buy: 20
@@ -143142,7 +143146,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,7;
   - Id: 450075
-    AegisName: Imperial_Fire_Rain_Suit
+    AegisName: Imperial_Firerain_Suit
     Name: Imperial Fire Rain Suit
     Type: Armor
     Buy: 20
@@ -143421,7 +143425,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,7;
   - Id: 450084
-    AegisName: Imperial_Eswhoo_Robe
+    AegisName: Imperial_Swhoo_Robe
     Name: Imperial Eswhoo Robe
     Type: Armor
     Buy: 20
@@ -144555,7 +144559,7 @@ Body:
       if (.@r>=9)
          bonus2 bMagicAtkEle,Ele_Dark,10;
   - Id: 450121
-    AegisName: Noblesse_Super_Novice_Suit
+    AegisName: Noblesse_Snovice_Suit
     Name: Noblesse Super Novice Suit
     Type: Armor
     Buy: 20
@@ -144584,7 +144588,7 @@ Body:
       if (.@r>=9)
          bonus bMaxHPrate,5;
   - Id: 450122
-    AegisName: Noblesse_Super_Novice_Robe
+    AegisName: Noblesse_Snovice_Robe
     Name: Noblesse Super Novice Robe
     Type: Armor
     Buy: 20
@@ -144613,7 +144617,7 @@ Body:
       if (.@r>=9)
          bonus bMaxHPrate,5;
   - Id: 450123
-    AegisName: Imperial_Super_Novice_Suit
+    AegisName: Imperial_Snovice_Suit
     Name: Imperial Super Novice Suit
     Type: Armor
     Buy: 20
@@ -144642,7 +144646,7 @@ Body:
       if (.@r>=9)
          bonus bMaxHPrate,7;
   - Id: 450124
-    AegisName: Imperial_Super_Novice_Robe
+    AegisName: Imperial_Snovice_Robe
     Name: Imperial Super Novice Robe
     Type: Armor
     Buy: 20
@@ -145041,7 +145045,7 @@ Body:
       if (.@r>=9)
          bonus2 bAddSize,Size_All,20;
   - Id: 450163
-    AegisName: aegis_450163
+    AegisName: White_Lily_Robe_
     Name: White Lily Robe
     Type: Armor
     Weight: 900
@@ -145562,7 +145566,7 @@ Body:
          bonus bMdef,15;
       }
   - Id: 450181
-    AegisName: aegis_450181
+    AegisName: White_Lily_Robe__
     Name: Awakened White Lily Robe
     Type: Armor
     Weight: 900
@@ -161326,13 +161330,13 @@ Body:
     EquipLevelMin: 100
     Refineable: true
     Trade:
-      NoDrop: True
-      NoTrade: True
-      NoCart: True
-      NoStorage: True
-      NoGuildStorage: True
-      NoMail: True
-      NoAuction: True
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@r = getrefine();
       bonus2 bAddClass,Class_All,2;
@@ -162118,13 +162122,13 @@ Body:
     EquipLevelMin: 100
     Refineable: true
     Trade:
-      NoDrop: True
-      NoTrade: True
-      NoCart: True
-      NoStorage: True
-      NoGuildStorage: True
-      NoMail: True
-      NoAuction: True
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@r = getrefine();
       bonus2 bAddClass,Class_All,2;
@@ -164630,13 +164634,13 @@ Body:
     EquipLevelMin: 100
     Refineable: true
     Trade:
-      NoDrop: True
-      NoTrade: True
-      NoCart: True
-      NoStorage: True
-      NoGuildStorage: True
-      NoMail: True
-      NoAuction: True
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@r = getrefine();
       bonus2 bAddClass,Class_All,2;
