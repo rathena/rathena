@@ -12099,8 +12099,21 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	if (sc_isnew && scdb->state.any() && type != SC_STONE)
 		status_calc_state(bl, sc, scdb->state, true);
 
-	if (sd && sd->pd)
-		pet_sc_check(sd, type); // Skotlex: Pet Status Effect Healing
+	if (sd) {
+		if (sd->pd)
+			pet_sc_check(sd, type); // Skotlex: Pet Status Effect Healing
+		switch (type) {
+			case SC_BERSERK:
+			case SC_MERC_HPUP:
+			case SC_MERC_SPUP:
+				status_calc_pc(sd, SCO_FORCE);
+				break;
+			default:
+				if (!sd->state.connect_new)
+					status_calc_pc(sd, SCO_NONE);
+				break;
+		}
+	}
 
 	// 1st thing to execute when loading status
 	switch (type) {
@@ -14737,7 +14750,7 @@ uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef& node) {
 					return 0;
 
 				if (active)
-					status->calc_flag = status_db.SCB_ALL;
+					status->calc_flag = this->getSCB_ALL();
 				else
 					status->calc_flag.reset();
 			}
