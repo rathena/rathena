@@ -741,7 +741,7 @@ Body:
       - Level: 10
         Time: 30000
       - Level: 11
-        Time: 33000
+        Time: 30000
     FixedCastTime: 160
     Requires:
       SpCost:
@@ -5947,7 +5947,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Dark
-    Duration2: 18000
+    Duration2: 28000
     Status: Curse
   - Id: 182
     Name: NPC_SLEEPATTACK
@@ -15596,7 +15596,7 @@ Body:
       - Level: 1
         Time: 5000
       - Level: 2
-        Time: 1000
+        Time: 10000
       - Level: 3
         Time: 15000
       - Level: 4
