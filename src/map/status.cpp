@@ -9618,9 +9618,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				pc_bonus_script_clear(sd, BSF_REM_ON_MADOGEAR);
 			break;
 		default:
-			// Allow Stone to overwrite StoneWait
-			if (sc->opt1 == OPT1_STONEWAIT && scdb->opt1 == OPT1_STONE)
-				break;
 			// If new SC has OPT1 while unit has OPT1, fail it!
 			if (sc->opt1 && scdb->opt1)
 				return 0;
