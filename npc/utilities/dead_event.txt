@@ -8,6 +8,8 @@ OnPCDieEvent:
 			|| (.@dead_map_name$ == "pvp_y_1-4")
 			|| (.@dead_map_name$ == "force_1-1")
 			|| (.@dead_map_name$ == "force_1-2")
+			|| (.@dead_map_name$ == "force_1-3")
+			|| (.@dead_map_name$ == "force_2-3")
 			|| (.@dead_map_name$ == "prontera")){
 		dispbottom "คุณตายใน Map ที่ไม่มีโทษใด ๆ";
 		end;
