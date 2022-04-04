@@ -33785,11 +33785,6 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-  - Id: 22814
-    AegisName: Cat_Hand_Ticket
-    Name: Cat Hand Ticket
-    Type: Etc
-    Buy: 10
   - Id: 22875
     AegisName: Sealed_Beelzebub_Card
     Name: Sealed Beelzebub Card
