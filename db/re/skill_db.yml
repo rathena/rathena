@@ -779,8 +779,8 @@ Body:
     Element: Earth
     CastCancel: true
     CastTime: 800
-    Duration1: 5000
-    Duration2: 20000
+    Duration1: 20000
+    Duration2: 5000
     FixedCastTime: 200
     Requires:
       SpCost:
@@ -807,7 +807,7 @@ Body:
       ItemCost:
         - Item: Red_Gemstone
           Amount: 1
-    Status: Stone
+    Status: StoneWait
   - Id: 17
     Name: MG_FIREBALL
     Description: Fire Ball
@@ -5934,8 +5934,9 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    Duration2: 20000
-    Status: Stone
+    Duration1: 20000
+    Duration2: 5000
+    Status: StoneWait
   - Id: 181
     Name: NPC_CURSEATTACK
     Description: Curse Attack
@@ -16312,8 +16313,9 @@ Body:
         Area: 11
       - Level: 5
         Area: 14
-    Duration2: 20000
-    Status: Stone
+    Duration1: 20000
+    Duration2: 5000
+    Status: StoneWait
   - Id: 667
     Name: NPC_WIDECONFUSE
     Description: Wide Confusion
@@ -19243,6 +19245,7 @@ Body:
         Time: 16000
       - Level: 5
         Time: 18000
+    Duration2: 5000
     Requires:
       SpCost:
         - Level: 1
@@ -19258,7 +19261,7 @@ Body:
       ItemCost:
         - Item: Red_Gemstone
           Amount: 2
-    Status: Stone
+    Status: StoneWait
   - Id: 2208
     Name: WL_RADIUS
     Description: Radius
@@ -32014,6 +32017,7 @@ Body:
     CastCancel: true
     AfterCastActDelay: 1000
     Duration1: 10000
+    Duration2: 5000
     Requires:
       SpCost: 30
     Unit:

@@ -161,6 +161,7 @@ enum sc_type : int16 {
 	SC_BLIND,
 	SC_BLEEDING,
 	SC_DPOISON, //10
+	SC_STONEWAIT,
 	SC_COMMON_MAX = 10, // end
 
 	//Next up, we continue on 20, to leave enough room for additional "common" ailments in the future.

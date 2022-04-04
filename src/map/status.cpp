@@ -1000,10 +1000,8 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 			for (const auto &it : status_db) {
 				sc_type type = static_cast<sc_type>(it.first);
 
-				if (it.second->flag[SCF_REMOVEONDAMAGED]) {
-					if (type != SC_STONE || (sc->data[SC_STONE] && sc->opt1 == OPT1_STONE))
-						status_change_end(target, type, INVALID_TIMER);
-				}
+				if (it.second->flag[SCF_REMOVEONDAMAGED])
+					status_change_end(target, type, INVALID_TIMER);
 			}
 			if ((sce=sc->data[SC_ENDURE]) && !sce->val4) {
 				/** [Skotlex]
@@ -1616,7 +1614,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		if((skill_id == WZ_STORMGUST || skill_id == WZ_FROSTNOVA || skill_id == NJ_HYOUSYOURAKU || skill_id == NPC_STORMGUST2)
 			&& tsc->data[SC_FREEZE])
 			return false;
-		if(skill_id == PR_LEXAETERNA && (tsc->data[SC_FREEZE] || (tsc->data[SC_STONE] && tsc->opt1 == OPT1_STONE)))
+		if(skill_id == PR_LEXAETERNA && (tsc->data[SC_FREEZE] || tsc->data[SC_STONE]))
 			return false;
 		if (tsc->data[SC__MANHOLE] && !skill_get_inf2(skill_id, INF2_TARGETMANHOLE))
 			return false;
@@ -4797,7 +4795,6 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, std::bi
 						(sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE
 						))
 				  || (sc->data[SC_CRYSTALIZE] && bl->type != BL_MOB)
-				  || (sc->data[SC_STONE] && sc->opt1 == OPT1_STONE)
  				 )
 				 sc->cant.move += (start ? 1 : ((sc->cant.move) ? -1 : 0));
 	}
@@ -6949,7 +6946,7 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 		def -= 20 + 10 * sc->data[SC_ANGRIFFS_MODUS]->val1;
 	if(sc->data[SC_STONEHARDSKIN])
 		def += sc->data[SC_STONEHARDSKIN]->val1;
-	if(sc->data[SC_STONE] && sc->opt1 == OPT1_STONE)
+	if(sc->data[SC_STONE])
 		def >>=1;
 	if(sc->data[SC_FREEZE])
 		def >>=1;
@@ -7113,7 +7110,7 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 		mdef += (sc->data[SC_ENDURE]->val4 == 0) ? sc->data[SC_ENDURE]->val1 : 1;
 	if(sc->data[SC_STONEHARDSKIN])
 		mdef += sc->data[SC_STONEHARDSKIN]->val1;
-	if(sc->data[SC_STONE] && sc->opt1 == OPT1_STONE)
+	if(sc->data[SC_STONE])
 		mdef += 25 * mdef / 100;
 	if(sc->data[SC_FREEZE])
 		mdef += 25 * mdef / 100;
@@ -7943,7 +7940,7 @@ static unsigned char status_calc_element(struct block_list *bl, struct status_ch
 
 	if(sc->data[SC_FREEZE] || sc->data[SC_CRYSTAL_ARMOR_OPTION])
 		return ELE_WATER;
-	if((sc->data[SC_STONE] && sc->opt1 == OPT1_STONE) || sc->data[SC_STRONG_PROTECTION_OPTION])
+	if(sc->data[SC_STONE] || sc->data[SC_STRONG_PROTECTION_OPTION])
 		return ELE_EARTH;
 	if(sc->data[SC_FLAMEARMOR_OPTION])
 		return ELE_FIRE;
@@ -7977,7 +7974,7 @@ static unsigned char status_calc_element_lv(struct block_list *bl, struct status
 
 	if(sc->data[SC_FREEZE])
 		return 1;
-	if(sc->data[SC_STONE] && sc->opt1 == OPT1_STONE)
+	if(sc->data[SC_STONE])
 		return 1;
 	if(sc->data[SC_BENEDICTIO])
 		return 1;
@@ -8661,6 +8658,7 @@ static int status_get_sc_interval(enum sc_type type)
 		case SC_MAGICMUSHROOM:
 			return 4000;
 		case SC_STONE:
+		case SC_STONEWAIT:
 			return 5000;
 		case SC_BLEEDING:
 		case SC_TOXIN:
@@ -9254,10 +9252,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if((!undead_flag && status->race!=RC_DEMON) || bl->type == BL_PC)
 				return 0;
 			break;
-		case SC_AETERNA:
-			if( sc->data[SC_STONE] && sc->opt1 == OPT1_STONE )
-				return 0;
-			break;
 		case SC_KYRIE:
 		case SC_TUNAPARTY:
 			if (bl->type == BL_MOB)
@@ -9578,13 +9572,18 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	// Before overlapping fail, one must check for status cured.
 	switch (type) {
+		case SC_STONEWAIT:
+			if (sc->data[SC_DANCING]) {
+				unit_stop_walking(bl, 1);
+				status_change_end(bl, SC_DANCING, INVALID_TIMER);
+			}
+			break;
 		case SC_BLESSING:
 			// !TODO: Blessing and Agi up should do 1 damage against players on Undead Status, even on PvM
 			// !but cannot be plagiarized (this requires aegis investigation on packets and official behavior) [Brainstorm]
 			if ((!undead_flag && status->race!=RC_DEMON) || bl->type == BL_PC) {
 				status_change_end(bl, SC_CURSE, INVALID_TIMER);
-				if (sc->data[SC_STONE] && sc->opt1 == OPT1_STONE)
-					status_change_end(bl, SC_STONE, INVALID_TIMER);
+				status_change_end(bl, SC_STONE, INVALID_TIMER);
 				if (sc->data[SC_CURSE]) {
 						status_change_end(bl, SC_CURSE, INVALID_TIMER);
 						return 1; // End Curse and do not give stat boost
@@ -9619,6 +9618,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				pc_bonus_script_clear(sd, BSF_REM_ON_MADOGEAR);
 			break;
 		default:
+			// Allow Stone to overwrite StoneWait
+			if (sc->opt1 == OPT1_STONEWAIT && scdb->opt1 == OPT1_STONE)
+				break;
 			// If new SC has OPT1 while unit has OPT1, fail it!
 			if (sc->opt1 && scdb->opt1)
 				return 0;
@@ -10064,11 +10066,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			}
 			break;
 
-		case SC_STONE:
-			val3 = max(val3, 100); // Incubation time
-			val4 = max(tick-val3, 100); // Petrify time
-			tick = val3;
-			calc_flag.reset(); // Actual status changes take effect on petrified state.
+		case SC_STONEWAIT:
+			val3 -= status_get_sc_interval(type); // Petrify time
 			break;
 
 		case SC_DPOISON:
@@ -10080,6 +10079,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				status_zap(bl, diff, 0);
 			}
 			// Fall through
+		case SC_STONE:
 		case SC_POISON:
 		case SC_BLEEDING:
 		case SC_BURNING:
@@ -11875,9 +11875,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				clif_changelook(bl,LOOK_BODY2,0);
 				break;
 			case SC_STONE:
-				if (val3 > 0)
-					break; //Incubation time still active
-				//Fall through
+			case SC_STONEWAIT:
 			case SC_POISON:
 			case SC_DPOISON:
 			case SC_BLEEDING:
@@ -11996,12 +11994,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	uint16 disable_opt_flag = false;
 
 	switch(type) {
-		case SC_STONE: 
-			if (val3 > 0)
-				sc->opt1 = OPT1_STONEWAIT;
-			else
-				sc->opt1 = OPT1_STONE;
-			break;
 		case SC_DANCING:
 			if ((val1&0xFFFF) != CG_MOONLIT)
 				sc->opt3 |= OPT3_MOONLIT;
@@ -12095,8 +12087,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	// Non-zero
-	// Calc state for SC_STONE when OPT1_STONE in the timer
-	if (sc_isnew && scdb->state.any() && type != SC_STONE)
+	if (sc_isnew && scdb->state.any())
 		status_calc_state(bl, sc, scdb->state, true);
 
 	if (sd) {
@@ -12350,8 +12341,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				// "Ugly workaround"  [Skotlex]
 				// delays status change ending so that a skill that sets opt1 fails to
 				// trigger when it also removed one
-				case SC_STONE:
-					sce->val4 = -1; // Petrify time
+				case SC_STONEWAIT:
 				case SC_FREEZE:
 				case SC_STUN:
 				case SC_SLEEP:
@@ -12918,9 +12908,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	bool disable_opt_flag = false;
 
 	switch (type) {
-		case SC_STONE:
-			sc->opt1 = OPT1_NONE;
-			break;
 		case SC_DANCING:
 			if ((sce->val1&0xFFFF) == CG_MOONLIT)
 				sc->opt3 &= ~OPT3_MOONLIT;
@@ -12996,6 +12983,10 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 
 	if(opt_flag[SCF_ONTOUCH] && sd && !sd->state.warping && map_getcell(bl->m,bl->x,bl->y,CELL_CHKNPC))
 		npc_touch_area_allnpc(sd,bl->m,bl->x,bl->y); // Trigger on-touch event.
+
+	// Needed to be here to make sure OPT1_STONEWAIT has been cleared from the target
+	if (type == SC_STONEWAIT)
+		sc_start2(bl, bl, SC_STONE, 100, sce->val1, sce->val2, sce->val3);
 
 	ers_free(sc_data_ers, sce);
 	return 1;
@@ -13106,27 +13097,9 @@ TIMER_FUNC(status_change_timer){
 		break;
 
 	case SC_STONE:
-		if (sc->opt1 == OPT1_STONEWAIT && sce->val4) {
-			sce->val3 = 0; //Incubation time used up
-			unit_stop_attack(bl);
-			if (sc->data[SC_DANCING]) {
-				unit_stop_walking(bl, 1);
-				status_change_end(bl, SC_DANCING, INVALID_TIMER);
-			}
-			status_change_end(bl, SC_AETERNA, INVALID_TIMER);
-			sc->opt1 = OPT1_STONE;
-
-			std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
-
-			status_calc_state(bl,sc,scdb->state,1);
-			clif_changeoption(bl);
-			sc_timer_next(min(sce->val4, interval) + tick);
-			sce->val4 -= interval; //Remaining time
-			status_calc_bl_(bl, scdb->calc_flag);
-			return 0;
-		}
-		if (sce->val4 >= 0 && !(sce->val3) && status->hp > status->max_hp / 4) {
-			status_percent_damage(NULL, bl, 1, 0, false);
+		if (sce->val4 >= 0) {
+			if (status->hp > status->max_hp / 4)
+				status_percent_damage(nullptr, bl, 1, 0, false);
 		}
 		break;
 

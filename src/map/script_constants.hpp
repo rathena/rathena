@@ -972,6 +972,7 @@
 	export_constant(SC_BLIND);
 	export_constant(SC_BLEEDING);
 	export_constant(SC_DPOISON);
+	export_constant(SC_STONEWAIT);
 	export_constant(SC_PROVOKE);
 	export_constant(SC_ENDURE);
 	export_constant(SC_TWOHANDQUICKEN);

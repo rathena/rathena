@@ -1622,7 +1622,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		break;
 
 	case NPC_PETRIFYATTACK:
-		sc_start4(src,bl,SC_STONE,(20*skill_lv),skill_lv,0,0,skill_get_time(skill_id,skill_lv),skill_get_time2(skill_id,skill_lv));
+		sc_start4(src,bl,SC_STONEWAIT,(20*skill_lv),skill_lv,src->id,skill_get_time(skill_id,skill_lv),0,skill_get_time2(skill_id,skill_lv));
 		break;
 	case NPC_CURSEATTACK:
 		sc_start(src,bl,SC_CURSE,(20*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
@@ -7948,8 +7948,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if( tsc && tsc->count )
 		{
 			status_change_end(bl, SC_FREEZE, INVALID_TIMER);
-			if( tsc->data[SC_STONE] && tsc->opt1 == OPT1_STONE )
-				status_change_end(bl, SC_STONE, INVALID_TIMER);
+			status_change_end(bl, SC_STONE, INVALID_TIMER);
 			status_change_end(bl, SC_SLEEP, INVALID_TIMER);
 			status_change_end(bl, SC_TRICKDEAD, INVALID_TIMER);
 		}
@@ -8725,7 +8724,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if (sd && sd->sc.data[SC_PETROLOGY_OPTION])
 				brate = sd->sc.data[SC_PETROLOGY_OPTION]->val3;
 
-			if (tsc && tsc->data[type]) {
+			if (tsc && tsc->data[SC_STONE]) {
 				status_change_end(bl, type, INVALID_TIMER);
 				if (sd) clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				break;
@@ -9846,8 +9845,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 			if(tsc && tsc->count){
 				status_change_end(bl, SC_FREEZE, INVALID_TIMER);
-				if(tsc->data[SC_STONE] && tsc->opt1 == OPT1_STONE)
-					status_change_end(bl, SC_STONE, INVALID_TIMER);
+				status_change_end(bl, SC_STONE, INVALID_TIMER);
 				status_change_end(bl, SC_SLEEP, INVALID_TIMER);
 			}
 
@@ -10333,8 +10331,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			case SC_BURNING:
 				sc_start4(src,bl,type,100,skill_lv,1000,src->id,0,skill_get_time2(skill_id,skill_lv));
 				break;
-			case SC_VOICEOFSIREN:
-				sc_start2(src,bl,type,100,skill_lv,src->id,skill_get_time2(skill_id,skill_lv));
+			case SC_STONEWAIT:
+				sc_start4(src,bl,type,100,skill_lv,src->id,skill_get_time(skill_id, skill_lv), 0, skill_get_time2(skill_id,skill_lv));
 				break;
 			default:
 				sc_start2(src,bl,type,100,skill_lv,src->id,skill_get_time2(skill_id,skill_lv));
@@ -15908,7 +15906,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 					case UNT_ZENKAI_LAND:
 						switch (rnd()%2 + 1) {
 							case 1:
-								sc_start2(ss, bl, SC_STONE, sg->val1*5, sg->skill_lv, ss->id, skill_get_time(sg->skill_id, sg->skill_lv));
+								sc_start4(ss, bl, SC_STONEWAIT, sg->val1*5, sg->skill_lv, ss->id, skill_get_time(sg->skill_id, sg->skill_lv), 0, skill_get_time2(sg->skill_id, sg->skill_lv));
 								break;
 							case 2:
 								sc_start2(ss, bl, SC_POISON, sg->val1*5, sg->skill_lv, ss->id, skill_get_time(sg->skill_id, sg->skill_lv));

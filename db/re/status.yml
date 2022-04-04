@@ -48,18 +48,19 @@ Body:
     DurationLookup: NPC_PETRIFYATTACK
     States:
       NoMove: true
-      NoMoveCond: true
       NoCast: true
       NoAttack: true
     CalcFlags:
       Def_Ele: true
       Def: true
       Mdef: true
+    Opt1: Stone
     Flags:
       SendOption: true
       BossResist: true
       StopAttacking: true
       StopCasting: true
+      RemoveOnDamaged: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -67,6 +68,14 @@ Body:
       Gvg_Stone: true
     End:
       Dancing: true
+  - Status: StoneWait
+    DurationLookup: NPC_PETRIFYATTACK
+    Opt1: StoneWait
+    Flags:
+      SendOption: true
+      StopAttacking: true
+    End:
+      Aeterna: true
   - Status: Freeze
     DurationLookup: NPC_WIDEFREEZE
     States:
@@ -515,6 +524,7 @@ Body:
     Flags:
       NoSave: true
     Fail:
+      Stone: true
       Freeze: true
   - Status: Adrenaline
     Icon: EFST_ADRENALINE
