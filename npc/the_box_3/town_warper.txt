@@ -1,26 +1,42 @@
+prontera	mapflag	noexp
+prontera	mapflag	noloot
+prontera	mapflag	nopenalty
+
 force_1-1	mapflag	monster_noteleport
 force_1-1	mapflag	noteleport
 force_1-1	mapflag	nomemo
 force_1-1	mapflag	nosave
 force_1-1	mapflag	tb
+force_1-1	mapflag	noexp
+force_1-1	mapflag	noloot
+force_1-1	mapflag	nopenalty
 
 force_1-2	mapflag	monster_noteleport
 force_1-2	mapflag	noteleport
 force_1-2	mapflag	nomemo
 force_1-2	mapflag	nosave
 force_1-2	mapflag	tb2
+force_1-2	mapflag	noexp
+force_1-2	mapflag	noloot
+force_1-2	mapflag	nopenalty
 
 force_1-3	mapflag	monster_noteleport
 force_1-3	mapflag	noteleport
 force_1-3	mapflag	nomemo
 force_1-3	mapflag	nosave
 force_1-3	mapflag	tb3
+force_1-3	mapflag	noexp
+force_1-3	mapflag	noloot
+force_1-3	mapflag	nopenalty
 
 force_2-3	mapflag	monster_noteleport
 force_2-3	mapflag	noteleport
 force_2-3	mapflag	nomemo
 force_2-3	mapflag	nosave
 force_2-3	mapflag	tb4
+force_2-3	mapflag	noexp
+force_2-3	mapflag	noloot
+force_2-3	mapflag	nopenalty
 
 -	script	backToCenter	-1,{
 	warp "prontera",156,191;
