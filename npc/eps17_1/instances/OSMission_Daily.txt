@@ -349,7 +349,7 @@ OnFirstSummon:
 		setunitdata 'summon[1],UMOB_DMGIMMUNE,1;
 		setunitdata 'summon[2],UMOB_DMGIMMUNE,1;
 		setunitdata 'summon[3],UMOB_DMGIMMUNE,1;
-		sleep 150;
+		sleep 1500;
 		if(unitexists('summon[0]))
 			unitkill 'summon[0];
 		if(unitexists('summon[1]))
@@ -378,7 +378,7 @@ OnSecondSummon:
 		setunitdata 'summon[5],UMOB_DMGIMMUNE,1;
 		setunitdata 'summon[6],UMOB_DMGIMMUNE,1;
 		setunitdata 'summon[7],UMOB_DMGIMMUNE,1;
-		sleep 150;
+		sleep 1500;
 		if(unitexists('summon[4]))
 			unitkill 'summon[4];
 		if(unitexists('summon[5]))
