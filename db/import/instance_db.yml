@@ -56,3 +56,10 @@ Body:
       Map: force_2-1
       X: 100
       Y: 100
+  - Id: 10003
+    Name: Ultima Wish
+    TimeLimit: 3600
+    Enter:
+      Map: poring_w01
+      X: 112
+      Y: 136

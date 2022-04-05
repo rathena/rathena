@@ -24,8 +24,6 @@ prontera,170,200,8	script	Self Challenge	10007,{
 	menu "เข้า",-;
 	// Create instance
 	self_challenge_id = instance_create(.instance_name$,IM_CHAR);
-	// Reset self challenge initialize
-	is_self_test_init = 0;
 	// Enter instance
 	instance_enter(.instance_name$,100,100,getcharid(0),self_challenge_id);
 	end;

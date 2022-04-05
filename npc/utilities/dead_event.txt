@@ -20,6 +20,20 @@ OnPCDieEvent:
 		sc_end SC_EXPBOOST;
 		sc_end SC_ITEMBOOST;
 		
+		// Wish Points
+		if(.@dead_map_name$ == instance_mapname("poring_w01",ultima_wish_id)){
+			.@temporary_wish_points = wish_points;
+			.@temporary_wish_points /= 10;
+			if(.@temporary_wish_points <= 0)
+			.@temporary_wish_points = 1;
+			
+			wish_points -= .@temporary_wish_points;
+			if(wish_points <= 0)
+			wish_points = 0;
+			
+			dispbottom "แต้มปราถนาลดลง " + F_InsertComma(.@temporary_wish_points) + " คงเหลือ " + F_InsertComma(wish_points);
+		}
+		
 		// Auto warp
 		if((.@dead_map_name$ == "bossnia_01")
 				|| (.@dead_map_name$ == "bossnia_02")
