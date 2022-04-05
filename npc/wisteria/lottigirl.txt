@@ -77,6 +77,10 @@ OnInit:
 		1000336,	1,			1, // HD Elunium
 		6234,		1,			1, // +7 Armor Refine Ticket
 		6230,		1,			1, // +7 Weapon Refine Ticket
+		19439,		1,			1, // Vicious Mind Aura
+		20748,		1,			1, // Fallen Warrior Manteau
+		19871,		1,			1,	// Costume Decoration of Music
+		19950,		1,			1,	// Costume RWC Champ Crown		
 		19292,		1,			1, // Costume Smokie Knit Cap
 		19294,		1,			1, // Costume Cyber Cat Ear Headphones (Red)
 		31055,		1,			1, // Costume Poring Soap Pipe
