@@ -2871,6 +2871,7 @@ Body:
     Fail:
       Refresh: true
       Inspiration: true
+      Imprison: true
   - Status: Freezing
     Icon: EFST_FROSTMISTY
     DurationLookup: WL_FROSTMISTY

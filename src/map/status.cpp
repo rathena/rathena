@@ -8812,10 +8812,10 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 #endif
 			break;
 		case SC_CURSE:
-#ifndef RENEWAL
 			// Special property: immunity when luk is zero
 			if (status->luk == 0)
 				return 0;
+#ifndef RENEWAL
 			sc_def = status->luk*100;
 			sc_def2 = status->luk*10 - status_get_lv(src)*10; // Curse only has a level penalty and no resistance
 			tick_def = status->vit*100;
@@ -8877,7 +8877,10 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 		case SC_WHITEIMPRISON:
 			if( src == bl ) // 100% on caster
 				break;
-			sc_def = status->str * 10 + status_get_lv(bl) * 10 + status->luk * 10;
+			if (bl->type == BL_PC)
+				sc_def = status->str * 10 + status_get_lv(bl) * 10 + status->luk * 10;
+			else
+				tick_def2 = (status->vit + status->luk) * 50;
 			tick_def2 = -2000;
 			break;
 		case SC_FEAR:
@@ -9258,6 +9261,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_FREEZE:
 			// Undead are immune to Freeze/Stone
 			if (undead_flag && !(flag&SCSTART_NOAVOID))
+				return 0;
+			break;
+		case SC_BURNING:
+			// Level 2 Fire Element is immune
+			if (status->def_ele == ELE_FIRE && status->ele_lv == 2)
 				return 0;
 			break;
 		case SC_ALL_RIDING:
