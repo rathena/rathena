@@ -312,7 +312,7 @@ private:
 	/// Skill count, also as last index
 	uint16 skill_num;
 
-	template<typename T, size_t S> bool parseNode(std::string nodeName, std::string subNodeName, ryml::NodeRef node, T(&arr)[S]);
+	template<typename T, size_t S> bool parseNode(const std::string& nodeName, const std::string& subNodeName, const ryml::NodeRef& node, T(&arr)[S]);
 
 public:
 	SkillDatabase() : TypesafeCachedYamlDatabase("SKILL_DB", 3, 1) {
@@ -320,7 +320,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const ryml::NodeRef node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void clear() override;
 	void loadingFinished() override;
 
@@ -462,7 +462,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const ryml::NodeRef node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 };
 
 extern SkillArrowDatabase skill_arrow_db;
@@ -480,21 +480,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const ryml::NodeRef node) override;
-};
-
-struct s_skill_improvise_db {
-	uint16 skill_id, per;
-};
-
-class ImprovisedSongDatabase : public TypesafeYamlDatabase<uint16, s_skill_improvise_db> {
-public:
-	ImprovisedSongDatabase() : TypesafeYamlDatabase("IMPROVISED_SONG_DB", 1) {
-
-	}
-
-	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const ryml::NodeRef node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 };
 
 void do_init_skill(void);
@@ -2568,7 +2554,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const ryml::NodeRef node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 
 	// Additional
 	std::shared_ptr<s_skill_spellbook_db> findBook(t_itemid nameid);
@@ -2591,7 +2577,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const ryml::NodeRef node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 };
 
 extern MagicMushroomDatabase magic_mushroom_db;
