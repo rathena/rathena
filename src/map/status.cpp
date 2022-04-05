@@ -8877,18 +8877,15 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 		case SC_WHITEIMPRISON:
 			if( src == bl ) // 100% on caster
 				break;
-			if (bl->type == BL_PC)
-				sc_def = status->str * 10 + status_get_lv(bl) * 10 + status->luk * 10;
-			else
-				tick_def2 = (status->vit + status->luk) * 50;
+			sc_def = status->str * 20 + status_get_lv(bl) * 20 + status->luk * 10;
 			tick_def2 = -2000;
 			break;
 		case SC_FEAR:
-			sc_def = status->int_ * 10 + status_get_lv(bl) * 10 + status->luk * 10;
+			sc_def = status->int_ * 20 + status_get_lv(bl) * 20 + status->luk * 10;
 			tick_def2 = -4000; // 2 seconds is applied twice on Aegis
 			break;
 		case SC_BURNING:
-			sc_def = status->agi * 10 + status_get_lv(bl) * 10 + status->luk * 10;
+			sc_def = status->agi * 20 + status_get_lv(bl) * 20 + status->luk * 10;
 			tick_def2 = -2000;
 			break;
 		case SC_FREEZING:
@@ -9033,6 +9030,19 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 		return i64max(tick, scdb->min_duration);
 
 	tick -= tick*tick_def/10000;
+
+#ifdef RENEWAL
+	// Renewal applies item resistance also to duration
+	if (sd) {
+		for (const auto &it : sd->reseff) {
+			if (it.id == type)
+				tick -= tick * it.val / 10000;
+		}
+		if (sd->sc.data[SC_COMMONSC_RESIST] && SC_COMMON_MIN <= type && type <= SC_COMMON_MAX)
+			tick -= tick * sd->sc.data[SC_COMMONSC_RESIST]->val1 / 100;
+	}
+#endif
+
 	tick -= tick_def2;
 
 	return i64max(tick, scdb->min_duration);
