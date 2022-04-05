@@ -147,6 +147,9 @@ Body:
     View: 1
     Script: |
       sc_end SC_POISON;
+  - Id: 31089
+    Script: |
+      hateffect(HAT_EF_BAKURETSU_HADOU,false);
   - Id: 10000000
     AegisName: Food_Buffs
     Name: Food Buffs
