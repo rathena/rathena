@@ -66,10 +66,14 @@ prontera,95,248,5	script	ตีบวก	10366,{
 					.@chance -= .@chance_penalty;
 					if(.@chance >= 9910)
 					successrefitem .@indices[.@i];
+					else
+					dispbottom "ไม่ติด";
 				}
 				// Rate over 1%
 				else if(.@chance > rand(100))
 				successrefitem .@indices[.@i];
+				else
+				dispbottom "ไม่ติด";
 			}
 		}
 	}
