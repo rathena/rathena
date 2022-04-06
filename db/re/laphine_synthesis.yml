@@ -1365,25 +1365,25 @@ Body:
         Amount: 10
       - Item: Core_Jelly
         Amount: 10
-      - Item: Clean_Bone
+      - Item: CleanBone
         Amount: 10
       - Item: DeadlyPoisonPowder
         Amount: 10
-      - Item: Bandits_Scarf
+      - Item: BanditsScarf
         Amount: 10
-      - Item: Crude_Ammo
+      - Item: CrudeAmmo
         Amount: 10
-      - Item: Broken_Shotgun
+      - Item: BrokenShotgun
         Amount: 10
-      - Item: Crude_Scimitar
+      - Item: CrudeScimiter
         Amount: 10
-      - Item: Worn_Revolver
+      - Item: WornRevolver
         Amount: 10
-      - Item: Brown_Muffler
+      - Item: BrownMuffler
         Amount: 10
-      - Item: Swamp_Bug_Shell
+      - Item: SwampBugPeelings
         Amount: 10
-      - Item: Brown_Rat_Tail
+      - Item: BrownRatTail
         Amount: 10
       - Item: Frozen_Stone_Fragment
         Amount: 10
@@ -1399,21 +1399,21 @@ Body:
         Amount: 10
       - Item: Recruitment_Leaflet
         Amount: 10
-      - Item: Illusion_Gemstone
+      - Item: IllusoryStone
         Amount: 10
-      - Item: Torn_Paper_
+      - Item: Torn_Diary
         Amount: 10
-      - Item: Well-dried_Clover
+      - Item: Dried_Clover
         Amount: 10
-      - Item: Short_Bat_Hair
+      - Item: Short_Bat_Fur
         Amount: 10
-      - Item: Cluster_of_Nightmares
+      - Item: NightmareOfLump
         Amount: 10
       - Item: Shining_Spore
         Amount: 10
       - Item: Dried_Leaf_Of_Ygg
         Amount: 10
-      - Item: Suspicious_Pentacle
+      - Item: SuspiciousMagicCircle
         Amount: 10
       - Item: Piece_of_Black_Horn
         Amount: 10
