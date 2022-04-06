@@ -1,0 +1,10 @@
+//===== rAthena Script =======================================
+//= Portals of Varmundt's mansion
+//===== Changelog: ===========================================
+//= 1.0 First version. [JohnnyPlayy]
+//============================================================
+
+//= Forgotten Valley
+//============================================================
+ba_maison,314,203,0	warp	Lost_In	1,1,ba_lost,162,37
+ba_lost,162,33,0	warp	Lost_Out	1,1,ba_maison,311,203
