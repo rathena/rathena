@@ -156,10 +156,11 @@ poring_w01,97,103,8	script	Ultima Wish#Controller	10007,{
 		.@monster_id = $all_mob_ids[rand(0,$all_mob_id_size - 1)];
 		
 		// Spawn
-		monster instance_mapname(.map_name$,ultima_wish_id),rand(80,114),rand(91,116),"--ja--",.@monster_id,1,.npc_name$ + "::OnMonsterDead";
+		monster instance_mapname(.map_name$,ultima_wish_id),0,0,"--ja--",.@monster_id,1,.npc_name$ + "::OnMonsterDead";
 		setunitdata $@mobid[0],UMOB_MAXHP,17000000;
 		setunitdata $@mobid[0],UMOB_HP,17000000;
 		setunitdata $@mobid[0],UMOB_MODE,500;
+		setunitdata $@mobid[0],UMOB_SPEED,70;
 		setunitdata $@mobid[0],UMOB_MODE,(MD_CANMOVE | MD_AGGRESSIVE | MD_CANATTACK | MD_ANGRY | MD_MVP | MD_KNOCKBACKIMMUNE | MD_KNOCKBACKIMMUNE | MD_DETECTOR | MD_STATUSIMMUNE);
 	}
 	
