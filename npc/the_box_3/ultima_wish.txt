@@ -141,7 +141,6 @@ wolfvill,142,150,8	script	Ultima Wish#Controller	10007,{
 	end;
 	
 	L_Spawn:
-
 	hideonnpc instance_npcname("Ultima Wish#Controller",instance_id(IM_PARTY));
 
 	// Spawn monster
@@ -179,6 +178,8 @@ OnMonsterDead:
 	if(getinstancevar('ultima_wish_kill_count, instance_id(IM_PARTY)) <= 0)
 	end;
 
+	killmonsterall instance_mapname(.map_name$,ultima_wish_id);
+	
 	// Unexpected error
 	if(playerattached()){
 		wish_points++;
