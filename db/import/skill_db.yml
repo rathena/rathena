@@ -140,3 +140,15 @@
 Header:
   Type: SKILL_DB
   Version: 3
+Body:
+  - Id: 407
+    Name: ASC_CDP
+    Description: Create Deadly Poison
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    AfterCastActDelay: 1000
+    Requires:
+      SpCost: 50
