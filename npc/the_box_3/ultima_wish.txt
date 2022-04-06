@@ -1,12 +1,12 @@
-poring_w01	mapflag	tb4
-poring_w01	mapflag	novending
-poring_w01	mapflag	nochat
-poring_w01	mapflag	noteleport
-poring_w01	mapflag	nowarp
-poring_w01	mapflag	nowarpto
-poring_w01	mapflag	nosave
-poring_w01	mapflag	nobranch
-poring_w01	mapflag	notomb
+wolfvill	mapflag	tb4
+wolfvill	mapflag	novending
+wolfvill	mapflag	nochat
+wolfvill	mapflag	noteleport
+wolfvill	mapflag	nowarp
+wolfvill	mapflag	nowarpto
+wolfvill	mapflag	nosave
+wolfvill	mapflag	nobranch
+wolfvill	mapflag	notomb
 
 prontera,163,208,8	script	Ultima Wish	10007,{
 	if(!is_party_leader()){
@@ -26,10 +26,9 @@ prontera,163,208,8	script	Ultima Wish	10007,{
 	mes "๐ ^FF2929Damage จะเหลือ 0.1%^000000";
 	mes "๐ ^FF2929Flee จะเหลือ 1%^000000";
 	mes "๐ ^FF2929Perfect Dodge จะเหลือ 1%^000000";
-	mes "๐ ^FF2929Monster จะโจมตีแรงขึ้น 50 เท่า^000000";
-	mes "๐ ^FF2929Monster จะมี HP 17m^000000";
+	mes "๐ ^FF2929Monster ที่มีรางวัลจะมี HP 1,700m^000000";
+	mes "๐ ^FF2929Monster ที่ไม่มีรางวัลจะมี HP 170m^000000";
 	mes "๐ ^FF2929Monster จะโจมตีทะลุพล้งป้องกันทุกชนิด^000000";
-	mes "๐ ^FF2929Monster จะเคลื่อนที่เร็ว^000000";
 	mes "๐ ^FF2929Monster จะก้าวร้าวทุกตัว^000000";
 	mes "---";
 	mes "รางวัล";
@@ -126,14 +125,14 @@ OnInit:
 	.req_item_id = 40017;
 	.req_item_amount = 7;
 	
-	.req_wish_points = 177;
+	.req_wish_points = 77;
 	
 	waitingroom "ห้อง Ultima Wish (Party)",0;
 	
 	end;
 }
 
-poring_w01,97,103,8	script	Ultima Wish#Controller	10007,{
+wolfvill,142,150,8	script	Ultima Wish#Controller	10007,{
 	if(is_party_leader())
 	menu "จ่ายค่าเข้า เพื่อเล่น",L_Respawn,"หยุดเล่น",-;
 	else
@@ -146,21 +145,27 @@ poring_w01,97,103,8	script	Ultima Wish#Controller	10007,{
 	hideonnpc instance_npcname("Ultima Wish#Controller",instance_id(IM_PARTY));
 
 	// Spawn monster
-	setinstancevar('ultima_wish_kill_count, rand(.monster_min_amount,.monster_max_amount), instance_id(IM_PARTY));
+	setinstancevar('ultima_wish_kill_count, 1, instance_id(IM_PARTY));
 
 	freeloop(1);
 	
-	for(.@i = 0; .@i < getinstancevar('ultima_wish_kill_count, instance_id(IM_PARTY)); .@i++){
+	for(.@i = 0; .@i < .monster_amount; .@i++){
 		.@monster_id = $all_mob_ids[rand(0,$all_mob_id_size - 1)];
 		while(F_IsDummyMonster(.@monster_id))
 		.@monster_id = $all_mob_ids[rand(0,$all_mob_id_size - 1)];
 		
 		// Spawn
-		monster instance_mapname(.map_name$,ultima_wish_id),rand(80,114),rand(101,116),"--ja--",.@monster_id,1,.npc_name$ + "::OnMonsterDead";
-		setunitdata $@mobid[0],UMOB_MAXHP,.monster_max_hp;
-		setunitdata $@mobid[0],UMOB_HP,.monster_max_hp;
+		if(.@i <= 0){
+			monster instance_mapname(.map_name$,ultima_wish_id),0,0,.target_monster_name$,.@monster_id,1,.npc_name$ + "::OnMonsterDead",Size_Large;
+			setunitdata $@mobid[0],UMOB_MAXHP,.target_monster_max_hp;
+			setunitdata $@mobid[0],UMOB_HP,.target_monster_max_hp;
+		}
+		else{
+			monster instance_mapname(.map_name$,ultima_wish_id),0,0,.creep_monster_name$,.@monster_id,1;
+			setunitdata $@mobid[0],UMOB_MAXHP,.creep_monster_max_hp;
+			setunitdata $@mobid[0],UMOB_HP,.creep_monster_max_hp;
+		}
 		setunitdata $@mobid[0],UMOB_MODE,500;
-		setunitdata $@mobid[0],UMOB_SPEED,70;
 		setunitdata $@mobid[0],UMOB_ULTIMA,1;
 		setunitdata $@mobid[0],UMOB_MODE,(MD_CANMOVE | MD_AGGRESSIVE | MD_CANATTACK | MD_ANGRY | MD_MVP | MD_KNOCKBACKIMMUNE | MD_DETECTOR | MD_STATUSIMMUNE);
 	}
@@ -213,14 +218,16 @@ OnMonsterDead:
 	end;
 	
 OnInit:
-	.map_name$ = "poring_w01";
+	.map_name$ = "wolfvill";
 
 	.npc_name$ = strnpcinfo(0);
 	
-	// Monster count
-	.monster_min_amount = 7;
-	.monster_max_amount = 7;
-	.monster_max_hp = 170000000;
+	// Monster
+	.monster_amount = 170;
+	.target_monster_name$ = "Wish";
+	.creep_monster_name$ = "Ultima";
+	.target_monster_max_hp = 1700000000;
+	.creep_monster_max_hp = 170000000;
 	
 	.req_zeny = 700000;
 	.req_item_id = 40017;

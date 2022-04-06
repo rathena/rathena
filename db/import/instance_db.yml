@@ -60,6 +60,6 @@ Body:
     Name: Ultima Wish
     TimeLimit: 3600
     Enter:
-      Map: poring_w01
-      X: 112
-      Y: 136
+      Map: wolfvill
+      X: 142
+      Y: 146

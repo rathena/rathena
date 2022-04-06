@@ -2022,52 +2022,64 @@ int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 
 	return damage;
 }
 
-int64 battle_calc_tb_damage(struct block_list* src, struct block_list* bl, int64 damage, uint16 skill_id, int flag)
+int64 battle_calc_tb_damage(struct block_list* src, struct block_list* bl, int64 damage, uint16 skill_id, int flag, bool is_ultima)
 {
 	if (!damage) //No reductions to make.
 		return 0;
 
 	if (BL_CAST(BL_MOB, src)) // [Start]
-		damage = damage * battle_config.tb_monster_damage_multiplier;
+	{
+		if (!is_ultima)
+			damage = damage * battle_config.tb_monster_damage_multiplier;
+	}
 	else
 		damage = damage * battle_config.tb_damage_rate / 100000;
 	damage = i64max(damage, 1);
 	return damage;
 }
 
-int64 battle_calc_tb2_damage(struct block_list* src, struct block_list* bl, int64 damage, uint16 skill_id, int flag)
+int64 battle_calc_tb2_damage(struct block_list* src, struct block_list* bl, int64 damage, uint16 skill_id, int flag, bool is_ultima)
 {
 	if (!damage) //No reductions to make.
 		return 0;
 
 	if (BL_CAST(BL_MOB, src)) // [Start]
-		damage = damage * battle_config.tb2_monster_damage_multiplier;
+	{
+		if (!is_ultima)
+			damage = damage * battle_config.tb2_monster_damage_multiplier;
+	}
 	else
 		damage = damage * battle_config.tb2_damage_rate / 100000;
 	damage = i64max(damage, 1);
 	return damage;
 }
 
-int64 battle_calc_tb3_damage(struct block_list* src, struct block_list* bl, int64 damage, uint16 skill_id, int flag)
+int64 battle_calc_tb3_damage(struct block_list* src, struct block_list* bl, int64 damage, uint16 skill_id, int flag, bool is_ultima)
 {
 	if (!damage) //No reductions to make.
 		return 0;
 
 	if (BL_CAST(BL_MOB, src)) // [Start]
-		damage = damage * battle_config.tb3_monster_damage_multiplier;
+	{
+		if (!is_ultima)
+			damage = damage * battle_config.tb3_monster_damage_multiplier;
+	}
 	else
 		damage = damage * battle_config.tb3_damage_rate / 100000;
 	damage = i64max(damage, 1);
 	return damage;
 }
 
-int64 battle_calc_tb4_damage(struct block_list* src, struct block_list* bl, int64 damage, uint16 skill_id, int flag)
+int64 battle_calc_tb4_damage(struct block_list* src, struct block_list* bl, int64 damage, uint16 skill_id, int flag, bool is_ultima)
 {
 	if (!damage) //No reductions to make.
 		return 0;
 
 	if (BL_CAST(BL_MOB, src)) // [Start]
-		damage = damage * battle_config.tb4_monster_damage_multiplier;
+	{
+		if(!is_ultima)
+			damage = damage * battle_config.tb4_monster_damage_multiplier;
+	}
 	else
 		damage = damage * battle_config.tb4_damage_rate / 100000;
 	damage = i64max(damage, 1);
@@ -6038,13 +6050,13 @@ static void battle_calc_attack_gvg_bg(struct Damage* wd, struct block_list *src,
 			else if( mapdata->flag[MF_BATTLEGROUND] )
 				wd->damage=battle_calc_bg_damage(src,target,wd->damage,skill_id,wd->flag);
 			else if( mapdata->flag[MF_TB] )
-				wd->damage=battle_calc_tb_damage(src,target,wd->damage,skill_id,wd->flag);
+				wd->damage=battle_calc_tb_damage(src,target,wd->damage,skill_id,wd->flag,wd->is_ultima);
 			else if (mapdata->flag[MF_TB2])
-				wd->damage = battle_calc_tb2_damage(src, target, wd->damage, skill_id, wd->flag);
+				wd->damage = battle_calc_tb2_damage(src, target, wd->damage, skill_id, wd->flag, wd->is_ultima);
 			else if (mapdata->flag[MF_TB3])
-				wd->damage = battle_calc_tb3_damage(src, target, wd->damage, skill_id, wd->flag);
+				wd->damage = battle_calc_tb3_damage(src, target, wd->damage, skill_id, wd->flag, wd->is_ultima);
 			else if (mapdata->flag[MF_TB4])
-				wd->damage = battle_calc_tb4_damage(src, target, wd->damage, skill_id, wd->flag);
+				wd->damage = battle_calc_tb4_damage(src, target, wd->damage, skill_id, wd->flag, wd->is_ultima);
 		}
 		else if(!wd->damage) {
 			wd->damage2 = battle_calc_damage(src,target,wd,wd->damage2,skill_id,skill_lv);
@@ -6053,13 +6065,13 @@ static void battle_calc_attack_gvg_bg(struct Damage* wd, struct block_list *src,
 			else if( mapdata->flag[MF_BATTLEGROUND] )
 				wd->damage2 = battle_calc_bg_damage(src,target,wd->damage2,skill_id,wd->flag);
 			else if (mapdata->flag[MF_TB])
-				wd->damage2 = battle_calc_tb_damage(src, target, wd->damage2, skill_id, wd->flag);
+				wd->damage2 = battle_calc_tb_damage(src, target, wd->damage2, skill_id, wd->flag, wd->is_ultima);
 			else if (mapdata->flag[MF_TB2])
-				wd->damage2 = battle_calc_tb2_damage(src, target, wd->damage2, skill_id, wd->flag);
+				wd->damage2 = battle_calc_tb2_damage(src, target, wd->damage2, skill_id, wd->flag, wd->is_ultima);
 			else if (mapdata->flag[MF_TB3])
-				wd->damage2 = battle_calc_tb3_damage(src, target, wd->damage2, skill_id, wd->flag);
+				wd->damage2 = battle_calc_tb3_damage(src, target, wd->damage2, skill_id, wd->flag, wd->is_ultima);
 			else if (mapdata->flag[MF_TB4])
-				wd->damage2 = battle_calc_tb4_damage(src, target, wd->damage2, skill_id, wd->flag);
+				wd->damage2 = battle_calc_tb4_damage(src, target, wd->damage2, skill_id, wd->flag, wd->is_ultima);
 		}
 		else {
 			int64 d1 = wd->damage + wd->damage2,d2 = wd->damage2;
@@ -6069,13 +6081,13 @@ static void battle_calc_attack_gvg_bg(struct Damage* wd, struct block_list *src,
 			else if( mapdata->flag[MF_BATTLEGROUND] )
 				wd->damage = battle_calc_bg_damage(src,target,wd->damage,skill_id,wd->flag);
 			else if (mapdata->flag[MF_TB])
-				wd->damage = battle_calc_tb_damage(src, target, wd->damage, skill_id, wd->flag);
+				wd->damage = battle_calc_tb_damage(src, target, wd->damage, skill_id, wd->flag, wd->is_ultima);
 			else if (mapdata->flag[MF_TB2])
-				wd->damage = battle_calc_tb2_damage(src, target, wd->damage, skill_id, wd->flag);
+				wd->damage = battle_calc_tb2_damage(src, target, wd->damage, skill_id, wd->flag, wd->is_ultima);
 			else if (mapdata->flag[MF_TB3])
-				wd->damage = battle_calc_tb3_damage(src, target, wd->damage, skill_id, wd->flag);
+				wd->damage = battle_calc_tb3_damage(src, target, wd->damage, skill_id, wd->flag, wd->is_ultima);
 			else if (mapdata->flag[MF_TB4])
-				wd->damage = battle_calc_tb4_damage(src, target, wd->damage, skill_id, wd->flag);
+				wd->damage = battle_calc_tb4_damage(src, target, wd->damage, skill_id, wd->flag, wd->is_ultima);
 			wd->damage2 = (int64)d2 * 100 / d1 * wd->damage / 100;
 			if(wd->damage > 1 && wd->damage2 < 1) wd->damage2 = 1;
 			wd->damage-=wd->damage2;
@@ -7870,13 +7882,13 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	else if (mapdata->flag[MF_BATTLEGROUND])
 		ad.damage = battle_calc_bg_damage(src,target,ad.damage,skill_id,ad.flag);
 	else if (mapdata->flag[MF_TB])
-		ad.damage = battle_calc_tb_damage(src, target, ad.damage, skill_id, ad.flag);
+		ad.damage = battle_calc_tb_damage(src, target, ad.damage, skill_id, ad.flag, ad.is_ultima);
 	else if (mapdata->flag[MF_TB2])
-		ad.damage = battle_calc_tb2_damage(src, target, ad.damage, skill_id, ad.flag);
+		ad.damage = battle_calc_tb2_damage(src, target, ad.damage, skill_id, ad.flag, ad.is_ultima);
 	else if (mapdata->flag[MF_TB3])
-		ad.damage = battle_calc_tb3_damage(src, target, ad.damage, skill_id, ad.flag);
+		ad.damage = battle_calc_tb3_damage(src, target, ad.damage, skill_id, ad.flag, ad.is_ultima);
 	else if (mapdata->flag[MF_TB4])
-		ad.damage = battle_calc_tb4_damage(src, target, ad.damage, skill_id, ad.flag);
+		ad.damage = battle_calc_tb4_damage(src, target, ad.damage, skill_id, ad.flag, ad.is_ultima);
 
 	// Skill damage adjustment
 	if ((skill_damage = battle_skill_damage(src,target,skill_id)) != 0)
@@ -8263,13 +8275,13 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	else if(mapdata->flag[MF_BATTLEGROUND])
 		md.damage = battle_calc_bg_damage(src,target,md.damage,skill_id,md.flag);
 	else if (mapdata->flag[MF_TB])
-		md.damage = battle_calc_tb_damage(src, target, md.damage, skill_id, md.flag);
+		md.damage = battle_calc_tb_damage(src, target, md.damage, skill_id, md.flag, md.is_ultima);
 	else if (mapdata->flag[MF_TB2])
-		md.damage = battle_calc_tb2_damage(src, target, md.damage, skill_id, md.flag);
+		md.damage = battle_calc_tb2_damage(src, target, md.damage, skill_id, md.flag, md.is_ultima);
 	else if (mapdata->flag[MF_TB3])
-		md.damage = battle_calc_tb3_damage(src, target, md.damage, skill_id, md.flag);
+		md.damage = battle_calc_tb3_damage(src, target, md.damage, skill_id, md.flag, md.is_ultima);
 	else if (mapdata->flag[MF_TB4])
-		md.damage = battle_calc_tb4_damage(src, target, md.damage, skill_id, md.flag);
+		md.damage = battle_calc_tb4_damage(src, target, md.damage, skill_id, md.flag, md.is_ultima);
 
 	// Skill damage adjustment
 	if ((skill_damage = battle_skill_damage(src,target,skill_id)) != 0)
