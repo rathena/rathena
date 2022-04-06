@@ -12536,6 +12536,8 @@
 20343,E-13EN0@KN_PIERCE,attack,56,5,500,700,5000,no,target,always,,,,,,,,
 20343,E-13EN0@NPC_RANGEATTACK,chase,160,1,500,0,5000,yes,target,always,,,,,,,,
 20343,E-13EN0@NPC_WATERATTACK,attack,184,3,500,500,5000,no,target,always,,,,,,,6,
+20344,Chemical Bug@NPC_METAMORPHOSIS,any,193,1,10000,5000,0,no,self,onspawn,0,2536,,,,,,
+20345,Chemical Bomb@NPC_SELFDESTRUCTION,any,173,1,10000,5000,0,no,self,onspawn,0,,,,,,,
 20346,Miguel@RK_IGNITIONBREAK,attack,2006,5,2000,2000,10000,no,target,always,0,,,,,,,
 20346,Miguel@AM_DEMONSTRATION,chase,229,5,5000,0,2000,yes,target,always,0,,,,,,6,
 20346,Miguel@NPC_WINDATTACK,attack,187,5,1000,0,5000,yes,target,always,0,,,,,,,
