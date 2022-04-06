@@ -4490,3 +4490,17 @@ Body:
 #      - Item: S_Blitz_Shoes
 #      - Item: S_Blitz_Pendent
 #      - Item: S_Blitz_Earring
+#  - Item: Auto_M_I_Box_A
+#    RewardGroup: AUTO_M_I_BOX_A
+#    RequiredRequirementsCount: 
+#    MinimumRefine: 
+#    MaximumRefine: 
+#    Requirements:
+#      - Item: 
+#  - Item: Auto_M_I_Box_B
+#    RewardGroup: AUTO_M_I_BOX_B
+#    RequiredRequirementsCount: 
+#    MinimumRefine: 
+#    MaximumRefine: 
+#    Requirements:
+#      - Item: 
