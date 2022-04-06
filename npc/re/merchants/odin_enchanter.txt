@@ -53,10 +53,10 @@ hu_in01,97,323,4	script	Susan Grey#enchanter	893,{
 				mes "This is my payment.";
 				next;
 				mes "[ Susan Gray ]";
-				mes "If the refine is higher than 9 and if you bring me 3 [<ITEM>Silvervine Fruit<INFO>6909</INFO></ITEM>], I can strengthen the equipment with better options.";
+				mes "If the refine is higher than 9 and if you bring me 3 [<ITEM>Silvervine Fruit<INFO>6417</INFO></ITEM>], I can strengthen the equipment with better options.";
 				next;
 				mes "[ Susan Gray ]";
-				mes "To reset the enchants, I need 500,000z or 2 x [<ITEM>Silvervine Fruit<INFO>6909</INFO></ITEM>]. There's a 30% chance of failure when resetting with zeny, so please take that into account.";
+				mes "To reset the enchants, I need 500,000z or 2 x [<ITEM>Silvervine Cat Fruit<INFO>6909</INFO></ITEM>]. There's a 30% chance of failure when resetting with zeny, so please take that into account.";
 				close;
 			}
 		case 2:
@@ -236,10 +236,10 @@ hu_in01,97,323,4	script	Susan Grey#enchanter	893,{
 							4802);	//SP + 150
 						} else {
 							mes "[ Susan Gray ]";
-							mes "Oh wait! Seems you have a powerful equipment there. I can give you a better enchant if you give me 3x [<ITEM>"+getitemname(6909)+"<INFO>6909</INFO></ITEM>].";
+							mes "Oh wait! Seems you have a powerful equipment there. I can give you a better enchant if you give me 3x [<ITEM>"+getitemname(6417)+"<INFO>6417</INFO></ITEM>].";
 							mes "What would you say?";
 							next;
-							switch (select("Cancel.:Proceed with Angel's Dream.:Proceed with "+getitemname(6909)+".")) {
+							switch (select("Cancel.:Proceed with Angel's Dream.:Proceed with "+getitemname(6417)+".")) {
 								case 1:
 									mes "[ Susan Gray ]";
 									mes "Please come again when you're ready to strengthen you equipment.";
@@ -279,12 +279,12 @@ hu_in01,97,323,4	script	Susan Grey#enchanter	893,{
 									4802);	//SP + 150
 									break;
 								case 3:
-									set .@itemused, 6909;
+									set .@itemused, 6417;
 									set .@cost, 3;
 									set .@zeny_cost, 0;
 									if (countitem(.@itemused) < .@cost) {
 										mes "[ Susan Gray ]";
-										mes "Hmm, you are missing " + (.@cost - countitem(.@itemused)) +" "+ getitemname(6909) +"s. Go get more, and then we can talk about more enchants.";
+										mes "Hmm, you are missing " + (.@cost - countitem(.@itemused)) +" "+ getitemname(6417) +"s. Go get more, and then we can talk about more enchants.";
 										specialeffect2 EF_PHARMACY_FAIL;
 										close;
 									} else {
