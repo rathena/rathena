@@ -26,9 +26,10 @@ prontera,163,208,8	script	Ultima Wish	10007,{
 	mes "๐ ^FF2929Damage จะเหลือ 0.1%^000000";
 	mes "๐ ^FF2929Flee จะเหลือ 1%^000000";
 	mes "๐ ^FF2929Perfect Dodge จะเหลือ 1%^000000";
-	mes "๐ ^FF2929ลดพลังป้องกันทุกชนิดลง 170%^000000";
 	mes "๐ ^FF2929Monster จะโจมตีแรงขึ้น 50 เท่า^000000";
 	mes "๐ ^FF2929Monster จะมี HP 17m^000000";
+	mes "๐ ^FF2929Monster จะโจมตีทะลุพล้งป้องกันทุกชนิด^000000";
+	mes "๐ ^FF2929Monster จะเคลื่อนที่เร็ว^000000";
 	mes "๐ ^FF2929Monster จะก้าวร้าวทุกตัว^000000";
 	mes "---";
 	mes "รางวัล";
@@ -44,7 +45,6 @@ prontera,163,208,8	script	Ultima Wish	10007,{
 	addrid(2,0,.@party_id);
 	ultima_wish_id = .temporary_ultima_wish_id;
 	instance_enter(.instance_name$,-1,-1,getcharid(0),ultima_wish_id);
-	bonus_script "bonus bNearAtkDef,-170; bonus bLongAtkDef,-170; bonus bMagicAtkDef,-170; bonus bMiscAtkDef,-170; bonus bNoWeaponDamage,-170; bonus bNoMagicDamage,-170; bonus bNoMiscDamage,-170; bonus2 bSubEle,Ele_All,-170; bonus2 bSubRace,RC_ALL,-170; bonus2 bSubClass,CLASS_ALL,-170; bonus2 bSubSize,SIZE_ALL,-170;",86400,8;
 	end;
 	
 	L_Trade:
@@ -126,7 +126,7 @@ OnInit:
 	.req_item_id = 40017;
 	.req_item_amount = 7;
 	
-	.req_wish_points = 77;
+	.req_wish_points = 177;
 	
 	waitingroom "ห้อง Ultima Wish (Party)",0;
 	
@@ -156,12 +156,13 @@ poring_w01,97,103,8	script	Ultima Wish#Controller	10007,{
 		.@monster_id = $all_mob_ids[rand(0,$all_mob_id_size - 1)];
 		
 		// Spawn
-		monster instance_mapname(.map_name$,ultima_wish_id),0,0,"--ja--",.@monster_id,1,.npc_name$ + "::OnMonsterDead";
-		setunitdata $@mobid[0],UMOB_MAXHP,17000000;
-		setunitdata $@mobid[0],UMOB_HP,17000000;
+		monster instance_mapname(.map_name$,ultima_wish_id),rand(80,114),rand(101,116),"--ja--",.@monster_id,1,.npc_name$ + "::OnMonsterDead";
+		setunitdata $@mobid[0],UMOB_MAXHP,.monster_max_hp;
+		setunitdata $@mobid[0],UMOB_HP,.monster_max_hp;
 		setunitdata $@mobid[0],UMOB_MODE,500;
 		setunitdata $@mobid[0],UMOB_SPEED,70;
-		setunitdata $@mobid[0],UMOB_MODE,(MD_CANMOVE | MD_AGGRESSIVE | MD_CANATTACK | MD_ANGRY | MD_MVP | MD_KNOCKBACKIMMUNE | MD_KNOCKBACKIMMUNE | MD_DETECTOR | MD_STATUSIMMUNE);
+		setunitdata $@mobid[0],UMOB_ULTIMA,1;
+		setunitdata $@mobid[0],UMOB_MODE,(MD_CANMOVE | MD_AGGRESSIVE | MD_CANATTACK | MD_ANGRY | MD_MVP | MD_KNOCKBACKIMMUNE | MD_DETECTOR | MD_STATUSIMMUNE);
 	}
 	
 	freeloop(0);
@@ -219,6 +220,7 @@ OnInit:
 	// Monster count
 	.monster_min_amount = 7;
 	.monster_max_amount = 7;
+	.monster_max_hp = 170000000;
 	
 	.req_zeny = 700000;
 	.req_item_id = 40017;

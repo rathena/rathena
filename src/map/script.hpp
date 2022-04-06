@@ -488,6 +488,7 @@ enum unitdata_mobtypes {
 	UMOB_IGNORE_CELL_STACK_LIMIT,
 	UMOB_RES,
 	UMOB_MRES,
+	UMOB_ULTIMA, // [Start]
 };
 
 enum unitdata_homuntypes {
