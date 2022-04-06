@@ -9685,14 +9685,19 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	// End the SCs from the list and immediately return
 	if (!scdb->endreturn.empty()) {
+		bool isRemoved = false;
+
 		for (const auto &it : scdb->endreturn) {
 			sc_type rem_sc = it;
 
-			if (sc->data[rem_sc])
+			if (sc->data[rem_sc]) {
 				status_change_end(bl, rem_sc, INVALID_TIMER);
+				isRemoved = true;
+			}
 		}
 
-		return 0; // Don't give the status
+		if (isRemoved) // Something was removed, don't give the status
+			return 0;
 	}
 
 	// Check for overlapping fails
