@@ -6206,11 +6206,11 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 	struct status_data *tstatus = status_get_status_data(target);
 	struct status_change *sc = status_get_sc(src);
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
-	struct mob_data *msd = BL_CAST(BL_MOB, src);
+	TBL_MOB *msd = BL_CAST(BL_MOB, src); // [Start]
 	struct Damage wd;
 
 	if(msd)
-		wd.is_ultima = msd->is_ultima; // [Start]
+		wd.is_ultima = msd->is_ultima;
 	wd.type = DMG_NORMAL; //Normal attack
 	wd.div_ = skill_id?skill_get_num(skill_id,skill_lv):1;
 	wd.amotion = (skill_id && skill_get_inf(skill_id)&INF_GROUND_SKILL)?0:sstatus->amotion; //Amotion should be 0 for ground skills.
@@ -6702,9 +6702,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 				}
 				break;
 			default:
-				wd.damage += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.damage, 2, wd.flag);
+				wd.damage += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.damage, 2, wd.flag, wd.is_ultima);
 				if( is_attack_left_handed(src, skill_id ))
-					wd.damage2 += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.damage2, 3, wd.flag);
+					wd.damage2 += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.damage2, 3, wd.flag, wd.is_ultima);
 				break;
 		}
 #endif
@@ -6788,7 +6788,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	}
 
 	msd = BL_CAST(BL_MOB, src);
-	
+
 	//Initial Values
 	if(msd)
 		ad.is_ultima = msd->is_ultima;
@@ -7867,7 +7867,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		}
 
 #ifndef RENEWAL
-		ad.damage += battle_calc_cardfix(BF_MAGIC, src, target, nk, s_ele, 0, ad.damage, 0, ad.flag);
+		ad.damage += battle_calc_cardfix(BF_MAGIC, src, target, nk, s_ele, 0, ad.damage, 0, ad.flag, ad.is_ultima);
 #endif
 	} //Hint: Against plants damage will still be 1 at this point
 
@@ -7913,6 +7913,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	short i, s_ele;
 
 	struct map_session_data *sd, *tsd;
+	TBL_MOB *msd;
 	struct Damage md; //DO NOT CONFUSE with md of mob_data!
 	struct status_data *sstatus = status_get_status_data(src);
 	struct status_data *tstatus = status_get_status_data(target);
@@ -7925,7 +7926,11 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		return md;
 	}
 
+	msd = BL_CAST(BL_MOB, src);
+
 	//Some initial values
+	if (msd)
+		md.is_ultima = msd->is_ultima;
 	md.amotion = (skill_get_inf(skill_id)&INF_GROUND_SKILL ? 0 : sstatus->amotion);
 	md.dmotion = tstatus->dmotion;
 	md.div_ = skill_get_num(skill_id,skill_lv);
