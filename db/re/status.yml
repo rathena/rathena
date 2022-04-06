@@ -36,12 +36,12 @@
 #   MinDuration               Minimum duration in milliseconds after status change reduction. (Default: 1)
 #   Fail:                     List of Status Changes that causes the status to fail to activate. (Optional)
 #   End:                      List of Status Changes that will end when the status activates. (Optional)
-#   EndReturn                 If the status has an End list and succeeds to remove these status changes, it won't give its effect. (Default: false)
+#   EndReturn:                List of Status Changes that will end when the status activates and won't give its effect. (Optional)
 ###########################################################################
 
 Header:
   Type: STATUS_DB
-  Version: 1
+  Version: 2
 
 Body:
   - Status: Stone
@@ -1270,9 +1270,8 @@ Body:
       NoDispell: true
     Fail:
       Quagmire: true
-    End:
+    EndReturn:
       Decreaseagi: true
-    EndReturn: true
   - Status: Chasewalk
     Icon: EFST_CHASEWALK
     DurationLookup: ST_CHASEWALK
@@ -4355,9 +4354,8 @@ Body:
     Fail:
       Quagmire: true
       Dontforgetme: true
-    End:
+    EndReturn:
       Decreaseagi: true
-    EndReturn: true
   - Status: Thornstrap
     Icon: EFST_THORNS_TRAP
     DurationLookup: GN_THORNS_TRAP
@@ -5963,9 +5961,8 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       NoForcedEnd: true
-    End:
+    EndReturn:
       All_Riding: true
-    EndReturn: true
   - Status: Teargas_Sob
     Flags:
       BossResist: true

@@ -9658,18 +9658,16 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 	}
 
-	std::vector<sc_type> list;
+	std::vector<sc_type> endlist;
 
 	if (type == SC_BERSERK && val3 == SC__BLOODYLUST) //There is some reasons that using SC_BERSERK first before SC__BLOODYLUST itself on Akinari's fix
-		list = status_db.getEnd(SC__BLOODYLUST);
+		endlist = status_db.getEnd(SC__BLOODYLUST);
 	else
-		list = scdb->end;
+		endlist = scdb->end;
 
 	// End the SCs from the list
-	if (!list.empty()) {
-		bool isRemoving = false;
-
-		for (const auto &it : list) {
+	if (!endlist.empty()) {
+		for (const auto &it : endlist) {
 			sc_type rem_sc = it;
 
 			if (sc->data[rem_sc]) {
@@ -9679,13 +9677,22 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 						sc->data[rem_sc]->val2 = 0; // Mark to not lose hp
 					default:
 						status_change_end(bl, rem_sc, INVALID_TIMER);
-						isRemoving = true;
 						break;
 				}
 			}
 		}
-		if (isRemoving && scdb->end_return)
-			return 0;
+	}
+
+	// End the SCs from the list and immediately return
+	if (!scdb->endreturn.empty()) {
+		for (const auto &it : scdb->endreturn) {
+			sc_type rem_sc = it;
+
+			if (sc->data[rem_sc])
+				status_change_end(bl, rem_sc, INVALID_TIMER);
+		}
+
+		return 0; // Don't give the status
 	}
 
 	// Check for overlapping fails
@@ -15048,15 +15055,35 @@ uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	}
 
 	if (this->nodeExists(node, "EndReturn")) {
-		bool end;
+		const ryml::NodeRef &endNode = node["EndReturn"];
 
-		if (!this->asBool(node, "EndReturn", end))
-			return 0;
+		for (const auto &it : endNode) {
+			std::string end;
+			c4::from_chars(it.key(), &end);
 
-		status->end_return = end;
-	} else {
-		if (!exists)
-			status->end_return = false;
+			std::string end_constant = "SC_" + end;
+			int64 constant;
+
+			if (!script_get_constant(end_constant.c_str(), &constant)) {
+				this->invalidWarning(endNode, "EndReturn status %s is invalid.\n", end.c_str());
+				return 0;
+			}
+
+			if (!this->validateStatus(static_cast<sc_type>(constant))) {
+				this->invalidWarning(endNode, "EndReturn status %s is out of bounds.\n", end.c_str());
+				return 0;
+			}
+
+			bool active;
+
+			if (!this->asBool(endNode, end, active))
+				return 0;
+
+			if (active)
+				status->endreturn.push_back(static_cast<sc_type>(constant));
+			else
+				util::vector_erase_if_exists(status->endreturn, static_cast<sc_type>(constant));
+		}
 	}
 
 	if (!exists) {
