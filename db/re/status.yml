@@ -71,7 +71,7 @@ Body:
       Stun: true
       Sleep: true
       Burning: true
-      Undead: true
+      #Undead: true
     End:
       Aeterna: true
     EndReturn:
@@ -91,7 +91,7 @@ Body:
       Stun: true
       Sleep: true
       Burning: true
-      Undead: true
+      #Undead: true
     EndReturn:
       StoneWait: true
       Stone: true

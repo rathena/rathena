@@ -66,12 +66,11 @@ Body:
       Inspiration: true
       Power_Of_Gaia: true
       Gvg_Stone: true
-    Fail:
       Freeze: true
       Stun: true
       Sleep: true
       Burning: true
-      Undead: true
+      #Undead: true
     End:
       Aeterna: true
     EndReturn:
@@ -90,7 +89,7 @@ Body:
       Stun: true
       Sleep: true
       Burning: true
-      Undead: true
+      #Undead: true
     EndReturn:
       StoneWait: true
       Stone: true

@@ -10110,7 +10110,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 
 		case SC_STONEWAIT:
-			val3 -= status_get_sc_interval(SC_STONE); // Petrify time
+			val3 -= tick; // Petrify time - Incubation time
 			break;
 
 		case SC_DPOISON:
