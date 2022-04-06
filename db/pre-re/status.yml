@@ -74,6 +74,9 @@ Body:
       Undead: true
     End:
       Aeterna: true
+    EndReturn:
+      StoneWait: true
+      Stone: true
   - Status: StoneWait
     DurationLookup: NPC_PETRIFYATTACK
     States:
@@ -88,6 +91,9 @@ Body:
       Sleep: true
       Burning: true
       Undead: true
+    EndReturn:
+      StoneWait: true
+      Stone: true
   - Status: Freeze
     DurationLookup: NPC_WIDEFREEZE
     States:
