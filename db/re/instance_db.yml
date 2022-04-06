@@ -345,3 +345,55 @@ Body:
       Map: 1@cor
       X: 176
       Y: 169
+  - Id: 50
+    Name: Twilight Garden
+    Enter:
+      Map: 1@bamn
+      X: 100
+      Y: 320
+    AdditionalMaps:
+       1@bamq: true
+  - Id: 51
+    Name: Hey! Sweety
+    Enter:
+      Map: 1@bamq
+      X: 16
+      Y: 39
+    AdditionalMaps:
+       1@bamn: true
+  - Id: 52
+    Name: Farm Lost in Time
+    Enter:
+      Map: 1@lost
+      X: 161
+      Y: 42
+  - Id: 53
+    Name: Water Garden
+    Enter:
+      Map: 1@ghg
+      X: 64
+      Y: 69
+  - Id: 54
+    Name: Water Garden Hard
+    Enter:
+      Map: 1@ghg
+      X: 64
+      Y: 69
+  - Id: 55
+    Name: Hidden Flower Garden
+    Enter:
+      Map: 1@herbs
+      X: 51
+      Y: 273
+  - Id: 56
+    Name: Security Area 1
+    Enter:
+      Map: 1@herbs
+      X: 45
+      Y: 208
+  - Id: 57
+    Name: Security Area 2
+    Enter:
+      Map: 1@herbs
+      X: 45
+      Y: 208

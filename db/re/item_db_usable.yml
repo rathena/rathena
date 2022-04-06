@@ -49330,6 +49330,27 @@ Body:
     Weight: 10
     Script: |
       laphine_upgrade();
+  - Id: 100147
+    AegisName: Bath_Foam_A
+    Name: Bath Foam A
+    Type: Usable
+    Weight: 10
+    Script: |
+      bonus_script "{ bonus2 bAddRace2,RC2_EP172BATH,5; }",900,1,0,EFST_BATH_FOAM_A;
+  - Id: 100148
+    AegisName: Bath_Foam_B
+    Name: Bath Foam B
+    Type: Usable
+    Weight: 10
+    Script: |
+      bonus_script "{ bonus2 bAddRace2,RC2_EP172BATH,10; }",900,1,0,EFST_BATH_FOAM_B;
+  - Id: 100149
+    AegisName: Bath_Foam_C
+    Name: Bath Foam C
+    Type: Usable
+    Weight: 10
+    Script: |
+      bonus_script "{ bonus2 bAddRace2,RC2_EP172BATH,15; }",900,1,0,EFST_BATH_FOAM_C;
   - Id: 100151
     AegisName: Skill_Sha_M_S_Weapon
     Name: Skill Shadow Weapon Combination Scroll
@@ -49356,6 +49377,30 @@ Body:
     Script: |
       specialeffect2 EF_CLAYMORE;
       setmadogear true,MADO_SUIT;
+  - Id: 100160
+    AegisName: Automatic_Module_Box
+    Name: Automatic Module Box
+    Type: Delayconsume
+    Script: |
+      laphine_synthesis();
+  - Id: 100161
+    AegisName: Epic_Module_Box
+    Name: Epic Module Box
+    Type: Delayconsume
+    Script: |
+      laphine_synthesis();
+  - Id: 100162
+    AegisName: Auto_M_I_Box_A
+    Name: Automatic Improvement Device Physical
+    Type: Delayconsume
+    Script: |
+      laphine_synthesis();
+  - Id: 100163
+    AegisName: Auto_M_I_Box_B
+    Name: Automatic Improvement Device Magical
+    Type: Delayconsume
+    Script: |
+      laphine_synthesis();
   - Id: 100164
     AegisName: Auto_Imp_Melee_1
     Name: Normal Automatic Improvement Device (Physical)
