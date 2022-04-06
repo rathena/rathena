@@ -5934,7 +5934,7 @@ Body:
     HitCount: 1
     Element: Weapon
     Duration1: 17000
-    Duration2: 5000
+    Duration2: 100
     Status: StoneWait
   - Id: 181
     Name: NPC_CURSEATTACK
@@ -16312,7 +16312,7 @@ Body:
       - Level: 5
         Area: 14
     Duration1: 17000
-    Duration2: 5000
+    Duration2: 100
     Status: StoneWait
   - Id: 667
     Name: NPC_WIDECONFUSE
@@ -19234,15 +19234,16 @@ Body:
     AfterCastActDelay: 2000
     Duration1:
       - Level: 1
-        Time: 7000
+        Time: 10000
       - Level: 2
-        Time: 9000
+        Time: 12000
       - Level: 3
-        Time: 11000
+        Time: 14000
       - Level: 4
-        Time: 13000
+        Time: 16000
       - Level: 5
-        Time: 15000
+        Time: 18000
+    Duration2: 100
     Requires:
       SpCost:
         - Level: 1
@@ -19258,6 +19259,7 @@ Body:
       ItemCost:
         - Item: Red_Gemstone
           Amount: 2
+    Status: StoneWait
   - Id: 2208
     Name: WL_RADIUS
     Description: Radius

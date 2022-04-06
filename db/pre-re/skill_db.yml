@@ -5664,7 +5664,7 @@ Body:
     HitCount: 1
     Element: Weapon
     Duration1: 20000
-    Duration2: 5000
+    Duration2: 100
     Status: StoneWait
   - Id: 181
     Name: NPC_CURSEATTACK
@@ -15913,7 +15913,7 @@ Body:
       - Level: 5
         Area: 14
     Duration1: 20000
-    Duration2: 5000
+    Duration2: 100
     Status: StoneWait
   - Id: 667
     Name: NPC_WIDECONFUSE

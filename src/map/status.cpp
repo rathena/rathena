@@ -8658,7 +8658,6 @@ static int status_get_sc_interval(enum sc_type type)
 		case SC_MAGICMUSHROOM:
 			return 4000;
 		case SC_STONE:
-		case SC_STONEWAIT:
 			return 5000;
 		case SC_BLEEDING:
 		case SC_TOXIN:
@@ -8728,7 +8727,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 		sc = NULL;
 
 #ifdef RENEWAL
-	uint16 levelAdv = (pow(max(0, status_get_lv(src) - status_get_lv(bl)), 2) / 5) * 100;
+	uint16 levelAdv = ((uint16)pow(max(0, status_get_lv(src) - status_get_lv(bl)), 2) / 5) * 100;
 #endif
 
 	switch (type) {
@@ -9607,7 +9606,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	// Before overlapping fail, one must check for status cured.
 	switch (type) {
-		case SC_STONEWAIT:
+		case SC_STONE:
 			if (sc->data[SC_DANCING]) {
 				unit_stop_walking(bl, 1);
 				status_change_end(bl, SC_DANCING, INVALID_TIMER);
@@ -10099,7 +10098,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 
 		case SC_STONEWAIT:
-			val3 -= status_get_sc_interval(type); // Petrify time
+			val3 -= status_get_sc_interval(SC_STONE); // Petrify time
 			break;
 
 		case SC_DPOISON:
@@ -13129,10 +13128,8 @@ TIMER_FUNC(status_change_timer){
 		break;
 
 	case SC_STONE:
-		if (sce->val4 >= 0) {
-			if (status->hp > status->max_hp / 4)
-				status_percent_damage(nullptr, bl, 1, 0, false);
-		}
+		if (sce->val4 >= 0 && status->hp > status->max_hp / 4)
+			status_percent_damage(nullptr, bl, 1, 0, false);
 		break;
 
 	case SC_POISON:

@@ -66,16 +66,29 @@ Body:
       Inspiration: true
       Power_Of_Gaia: true
       Gvg_Stone: true
+      Whiteimprison: true
+      Freeze: true
+      Stun: true
+      Sleep: true
+      Burning: true
+      Undead: true
     End:
-      Dancing: true
+      Aeterna: true
   - Status: StoneWait
     DurationLookup: NPC_PETRIFYATTACK
+    States:
+      NoCast: true
     Opt1: StoneWait
     Flags:
       SendOption: true
       StopAttacking: true
-    End:
-      Aeterna: true
+    Fail:
+      Whiteimprison: true
+      Freeze: true
+      Stun: true
+      Sleep: true
+      Burning: true
+      Undead: true
   - Status: Freeze
     DurationLookup: NPC_WIDEFREEZE
     States:
@@ -262,6 +275,11 @@ Body:
       BossResist: true
       Debuff: true
       NoSaveInfinite: true
+    End:
+      Freeze: true
+      Stone: true
+      Sleep: true
+      TrickDead: true
   - Status: Endure
     Icon: EFST_ENDURE
     DurationLookup: SM_ENDURE
@@ -1340,6 +1358,10 @@ Body:
     Flags:
       NoSave: true
       Debuff: true
+    End:
+      Freeze: true
+      Stone: true
+      Sleep: true
   - Status: Memorize
     Icon: EFST_MEMORIZE
     DurationLookup: PF_MEMORIZE
