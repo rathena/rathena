@@ -18657,7 +18657,7 @@ Body:
       - Level: 10
         Time: 2000
     AfterCastActDelay: 2000
-    Duration1: 8000
+    Duration1: 18000
     FixedCastTime: 500
     Requires:
       SpCost:
@@ -18704,7 +18704,7 @@ Body:
         Area: 6
       - Level: 5
         Area: 7
-    Duration1: 18000
+    Duration1: 15000
     Cooldown: 10000
     Requires:
       SpCost: 30
@@ -19421,7 +19421,6 @@ Body:
     CastCancel: true
     CastTime: 3000
     AfterCastActDelay: 500
-    Duration1: 13000
     Cooldown: 3000
     FixedCastTime: 1000
     Requires:
@@ -19436,7 +19435,6 @@ Body:
           Amount: 82
         - Level: 5
           Amount: 88
-    Status: Burning
   - Id: 2213
     Name: WL_COMET
     Description: Comet
@@ -23715,11 +23713,11 @@ Body:
         Time: 15000
     Duration2:
       - Level: 1
-        Time: 2000
+        Time: 4000
       - Level: 2
-        Time: 6000
+        Time: 8000
       - Level: 3
-        Time: 10000
+        Time: 12000
     Requires:
       SpCost:
         - Level: 1
@@ -27264,7 +27262,7 @@ Body:
       - Level: 5
         Time: 6000
     AfterCastActDelay: 1000
-    Duration: 18000
+    Duration1: 18000
     Cooldown: 2000
     FixedCastTime:
       - Level: 1
@@ -42854,15 +42852,15 @@ Body:
         Time: 30000
     Duration2:
       - Level: 1
-        Time: 3500
+        Time: 3000
       - Level: 2
-        Time: 5500
+        Time: 6000
       - Level: 3
-        Time: 8500
+        Time: 9000
       - Level: 4
-        Time: 11500
+        Time: 12000
       - Level: 5
-        Time: 14500
+        Time: 15000
     Requires:
       SpCost: 10
     Unit:
@@ -43507,25 +43505,25 @@ Body:
     AfterCastActDelay: 3000
     Duration2:
       - Level: 1
-        Time: 28000
+        Time: 30000
       - Level: 2
-        Time: 33000
+        Time: 35000
       - Level: 3
-        Time: 38000
+        Time: 40000
       - Level: 4
-        Time: 43000
+        Time: 45000
       - Level: 5
-        Time: 48000
+        Time: 50000
       - Level: 6
-        Time: 58000
+        Time: 60000
       - Level: 7
-        Time: 58000
+        Time: 60000
       - Level: 8
-        Time: 58000
+        Time: 60000
       - Level: 9
-        Time: 58000
+        Time: 60000
       - Level: 10
-        Time: 58000
+        Time: 60000
     Requires:
       SpCost:
         - Level: 1
