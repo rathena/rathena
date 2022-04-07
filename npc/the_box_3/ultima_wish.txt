@@ -20,14 +20,14 @@ prontera,163,208,8	script	Ultima Wish	10007,{
 	mes "๐ ต้องการ ^FF2929" + F_InsertComma(.req_zeny) + "z^000000 \nและ ^FF2929" + F_InsertComma(.req_item_amount) + " " + getitemname(.req_item_id) + "^000000 ในการเข้าห้อง";
 	mes "---";
 	mes "๐ ต้องมี Party และเป็นหัวหน้า Party (สมาชิกใน Party จะถูก Warp ไปด้วยทันทีเมื่อเข้า)";
-	mes "๐ Monster จะเกิดรอบละ 7 ตัว";
+	mes "๐ Monster จะเกิดรอบละ 170 ตัว";
 	mes "---";
 	mes "โทษภายในห้อง";
 	mes "๐ ^FF2929Damage จะเหลือ 0.1%^000000";
 	mes "๐ ^FF2929Flee จะเหลือ 1%^000000";
 	mes "๐ ^FF2929Perfect Dodge จะเหลือ 1%^000000";
-	mes "๐ ^FF2929Monster ที่มีรางวัลจะมี HP 1,700m^000000";
-	mes "๐ ^FF2929Monster ที่ไม่มีรางวัลจะมี HP 170m^000000";
+	mes "๐ ^FF2929Monster ที่มีรางวัลจะชื่อ Wish และมี HP 1,700m^000000";
+	mes "๐ ^FF2929Monster ที่ไม่มีรางวัลจะชื่อ Ultima และมี HP 170m^000000";
 	mes "๐ ^FF2929Monster จะโจมตีทะลุพล้งป้องกันทุกชนิด^000000";
 	mes "๐ ^FF2929Monster จะก้าวร้าวทุกตัว^000000";
 	mes "---";
