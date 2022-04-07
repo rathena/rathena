@@ -150,7 +150,7 @@ enum sc_type : int16 {
 
 	//First we enumerate common status ailments which are often used around.
 	SC_STONE = 0,
-	SC_COMMON_MIN = 0, // begin
+	SC_COMMON_MIN = SC_STONE, // begin
 	SC_FREEZE,
 	SC_STUN,
 	SC_SLEEP,
@@ -162,7 +162,7 @@ enum sc_type : int16 {
 	SC_BLEEDING,
 	SC_DPOISON, //10
 	SC_STONEWAIT,
-	SC_COMMON_MAX = 11, // end
+	SC_COMMON_MAX = SC_STONEWAIT, // end
 
 	//Next up, we continue on 20, to leave enough room for additional "common" ailments in the future.
 	SC_PROVOKE = 20,

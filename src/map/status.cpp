@@ -8727,7 +8727,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 		sc = NULL;
 
 #ifdef RENEWAL
-	uint16 levelAdv = ((uint16)pow(max(0, status_get_lv(src) - status_get_lv(bl)), 2) / 5) * 100;
+	uint16 levelAdv = (static_cast<uint16>(pow(max(0, status_get_lv(src) - status_get_lv(bl)), 2)) / 5) * 100;
 #endif
 
 	switch (type) {
@@ -12384,6 +12384,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				// "Ugly workaround"  [Skotlex]
 				// delays status change ending so that a skill that sets opt1 fails to
 				// trigger when it also removed one
+				case SC_STONE:
 				case SC_STONEWAIT:
 				case SC_FREEZE:
 				case SC_STUN:
