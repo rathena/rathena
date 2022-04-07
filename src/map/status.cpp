@@ -1000,7 +1000,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 			for (const auto &it : status_db) {
 				sc_type type = static_cast<sc_type>(it.first);
 
-				if (it.second->flag[SCF_REMOVEONDAMAGED])
+				if (sc->data[type] && it.second->flag[SCF_REMOVEONDAMAGED])
 					status_change_end(target, type, INVALID_TIMER);
 			}
 			if ((sce=sc->data[SC_ENDURE]) && !sce->val4) {
@@ -9605,6 +9605,49 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	// Before overlapping fail, one must check for status cured.
+	std::vector<sc_type> endlist;
+
+	if (type == SC_BERSERK && val3 == SC__BLOODYLUST) //There is some reasons that using SC_BERSERK first before SC__BLOODYLUST itself on Akinari's fix
+		endlist = status_db.getEnd(SC__BLOODYLUST);
+	else
+		endlist = scdb->end;
+
+	// End the SCs from the list
+	if (!endlist.empty()) {
+		for (const auto &it : endlist) {
+			sc_type rem_sc = it;
+
+			if (sc->data[rem_sc]) {
+				switch (rem_sc) {
+					case SC_BERSERK:
+					case SC_SATURDAYNIGHTFEVER:
+						sc->data[rem_sc]->val2 = 0; // Mark to not lose hp
+					default:
+						status_change_end(bl, rem_sc, INVALID_TIMER);
+						break;
+				}
+			}
+		}
+	}
+
+	// End the SCs from the list and immediately return
+	if (!scdb->endreturn.empty()) {
+		bool isRemoved = false;
+
+		for (const auto &it : scdb->endreturn) {
+			sc_type rem_sc = it;
+
+			if (sc->data[rem_sc]) {
+				status_change_end(bl, rem_sc, INVALID_TIMER);
+				isRemoved = true;
+			}
+		}
+
+		if (isRemoved) // Something was removed, don't give the status
+			return 0;
+	}
+
+	// List of hardcoded status cured.
 	switch (type) {
 		case SC_STONE:
 			if (sc->data[SC_DANCING]) {
@@ -9656,48 +9699,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if (sc->opt1 && scdb->opt1)
 				return 0;
 			break;
-	}
-
-	std::vector<sc_type> endlist;
-
-	if (type == SC_BERSERK && val3 == SC__BLOODYLUST) //There is some reasons that using SC_BERSERK first before SC__BLOODYLUST itself on Akinari's fix
-		endlist = status_db.getEnd(SC__BLOODYLUST);
-	else
-		endlist = scdb->end;
-
-	// End the SCs from the list
-	if (!endlist.empty()) {
-		for (const auto &it : endlist) {
-			sc_type rem_sc = it;
-
-			if (sc->data[rem_sc]) {
-				switch (rem_sc) {
-					case SC_BERSERK:
-					case SC_SATURDAYNIGHTFEVER:
-						sc->data[rem_sc]->val2 = 0; // Mark to not lose hp
-					default:
-						status_change_end(bl, rem_sc, INVALID_TIMER);
-						break;
-				}
-			}
-		}
-	}
-
-	// End the SCs from the list and immediately return
-	if (!scdb->endreturn.empty()) {
-		bool isRemoved = false;
-
-		for (const auto &it : scdb->endreturn) {
-			sc_type rem_sc = it;
-
-			if (sc->data[rem_sc]) {
-				status_change_end(bl, rem_sc, INVALID_TIMER);
-				isRemoved = true;
-			}
-		}
-
-		if (isRemoved) // Something was removed, don't give the status
-			return 0;
 	}
 
 	// Check for overlapping fails
@@ -12386,6 +12387,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				// trigger when it also removed one
 				case SC_STONE:
 				case SC_STONEWAIT:
+					sce->val4 = -1; // Petrify time
 				case SC_FREEZE:
 				case SC_STUN:
 				case SC_SLEEP:
@@ -13029,7 +13031,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		npc_touch_area_allnpc(sd,bl->m,bl->x,bl->y); // Trigger on-touch event.
 
 	// Needed to be here to make sure OPT1_STONEWAIT has been cleared from the target
-	if (type == SC_STONEWAIT)
+	if (type == SC_STONEWAIT && sce->val4 > -1)
 		sc_start2(bl, bl, SC_STONE, 100, sce->val1, sce->val2, sce->val3);
 
 	ers_free(sc_data_ers, sce);
