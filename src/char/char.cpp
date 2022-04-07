@@ -870,17 +870,17 @@ bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storag
  * @retval SEX_FEMALE if the per-character sex is female
  */
 int char_mmo_gender( const struct char_session_data *sd, const struct mmo_charstatus *p, char sex ){
-	switch( sex ){
 #if PACKETVER >= 20141016
+	switch( sex ){
 		case 'M':
 			return SEX_MALE;
 		case 'F':
 			return SEX_FEMALE;
-#else
-		// No matter what the database says, always return the account gender
-		// Per character gender is not supported before 2014-10-16
-#endif
 		default:
+#else
+	// No matter what the database says, always return the account gender
+	// Per character gender is not supported before 2014-10-16
+#endif
 			// There are calls to this function that do not contain the session
 			if( sd == nullptr ){
 				int i;
@@ -899,7 +899,9 @@ int char_mmo_gender( const struct char_session_data *sd, const struct mmo_charst
 #endif
 
 			return sd->sex;
+#if PACKETVER >= 20141016
 	}
+#endif
 }
 
 int char_mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p);
