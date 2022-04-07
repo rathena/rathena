@@ -2878,7 +2878,7 @@ struct s_status_change_db {
 
 class StatusDatabase : public TypesafeCachedYamlDatabase<uint16, s_status_change_db> {
 public:
-	StatusDatabase() : TypesafeCachedYamlDatabase("STATUS_DB", 2, 1) {
+	StatusDatabase() : TypesafeCachedYamlDatabase("STATUS_DB", 2) {
 		// All except BASE and extra flags.
 		SCB_BATTLE.set();
 		SCB_BATTLE.reset(SCB_BASE);
