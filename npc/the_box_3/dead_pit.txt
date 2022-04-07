@@ -49,53 +49,7 @@ prontera,155,208,8	script	Dead Pit	10007,{
 		mes "Item ID ในรอบนี้ถูกระบุไปแล้ว";
 		close;
 	}
-	// Check all item id had this item id
-	freeloop(1);
-	.@is_found = 0;
-	for(.@i = 0; .@i < getarraysize($weaponIds); .@i++){
-		if($weaponIds[.@i] == .@input){
-			.@is_found = 1;
-			break;
-		}
-	}
-	if(!.@is_found){
-		for(.@i = 0; .@i < getarraysize($equipmentIds); .@i++){
-			if($equipmentIds[.@i] == .@input){
-				.@is_found = 1;
-				break;
-			}
-		}
-	}
-	if(!.@is_found){
-		for(.@i = 0; .@i < getarraysize($costumeIds); .@i++){
-			if($costumeIds[.@i] == .@input){
-				.@is_found = 1;
-				break;
-			}
-		}
-	}
-	if(!.@is_found){
-		for(.@i = 0; .@i < getarraysize($cardIds); .@i++){
-			if($cardIds[.@i] == .@input){
-				.@is_found = 1;
-				break;
-			}
-		}
-	}
-	if(!.@is_found){
-		for(.@i = 0; .@i < getarraysize($enchantIds); .@i++){
-			if($enchantIds[.@i] == .@input){
-				.@is_found = 1;
-				break;
-			}
-		}
-	}
-	freeloop(0);
-	if(!.@is_found){
-		mes "Item ID: " + .@input + " ไม่สามารถกำหนด เป็นรางวัลได้";
-		close;
-	}
-	$dead_pit_reward_item_id = .@input;
+	$dead_pit_reward_item_id = F_IsItemIdAvailable(.@input);
 	$dead_pit_boss_id = $all_boss_ids[rand(0,($all_boss_id_size - 1))];
 	delitem .req_item_id,.req_item_amount;
 	callsub(L_Spawn);

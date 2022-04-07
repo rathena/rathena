@@ -48,6 +48,46 @@ function	script	F_EnchantmentMarketContain	{
 	return false;
 }
 
+prontera,53,54,5	script	บอกเวลาคงเหลือ	837,{
+	end;
+	
+OnTimer60000:
+	delwaitingroom;
+	waitingroom "กล่อง THE BOX จะเปลี่ยนของใน " + (10 - (gettime(DT_MINUTE) % 10)) + " นาที",0;
+	initnpctimer;
+	end;
+	
+OnInit:
+	waitingroom "กล่อง THE BOX จะเปลี่ยนของใน " + (10 - (gettime(DT_MINUTE) % 10)) + " นาที",0;
+	initnpctimer;
+	end;
+}
+
+prontera,53,48,5	script	แจ้งเตือนของที่อยากได้	837,{
+	if(wish_item_alert)
+	mes "ขณะนี้คุณตั้งแจ้งเตือนหาก " + getitemname(wish_item_alert) + " ปรากฎในกล่อง THE BOX";
+	else
+	mes "คุณยังไม่ได้ตั้งการแจ้งเตือนของที่อยากได้";
+	next;
+	menu "ตั้งแจ้งเตือนหาก Item ปรากฎในกล่อง THE BOX",L_AlertSetting,"นำการแจ้งเตือนออก",-;
+	wish_item_alert = 0;
+	mes "นำการแจ้งเตือนออกเรียบร้อยแล้ว";
+	close;
+	
+	L_AlertSetting:
+	mes "ระบุ Item ID ที่ต้องการให้แจ้งเตือน";
+	input .@i;
+	next;
+	wish_item_alert = F_IsItemIdAvailable(.@i);
+	mes "ขณะนี้คุณตั้งแจ้งเตือนหาก " + getitemname(wish_item_alert) + " ปรากฎในกล่อง THE BOX";
+	close;
+	
+OnInit:
+	waitingroom "ตั้งค่าการแจ้งเตือน",0;
+	initnpctimer;
+	end;
+}
+
 prontera,53,60,5	script	วิธีใช้กล่อง	837,{
 	mes "๐ ใช้ ^3629FF" + getitemname(.item_id) + "^000000 ในการเปิด";
 	mes "๐ กล่อง {THE BOX, Weapons, Equipments, Costumes, Cards, Enchantments}  -> Item ภายในกล่อง^3629FFจะเปลี่ยนทุก ๆ 10 นาที^000000 จะได้ Item ตามรายการ";
