@@ -89257,8 +89257,8 @@ Body:
     Hp: 42246
     BaseExp: 3928
     JobExp: 3769
-    Attack: 1711
-    Attack2: 1214
+    Attack: 1241
+    Attack2: 170
     Defense: 150
     MagicDefense: 45
     Str: 91
@@ -89280,18 +89280,18 @@ Body:
     AttackDelay: 1280
     AttackMotion: 576
     DamageMotion: 384
-    Ai: 09
+    Ai: 19
     Drops:
-      - Item: Short_Bat_Fur
-        Rate: 1500
-      - Item: Tooth_Of_Bat
-        Rate: 5000
       - Item: Carnium
+        Rate: 5000
+      - Item: Tooth_Of_Bat
         Rate: 5000
       - Item: Red_Jewel
         Rate: 50
       - Item: Wing_Of_Red_Bat
         Rate: 5000
+      - Item: Short_Bat_Fur
+        Rate: 1500
       - Item: MattDrainliar_Card
         Rate: 1
         StealProtected: true
@@ -89302,8 +89302,8 @@ Body:
     Hp: 53926
     BaseExp: 4189
     JobExp: 3947
-    Attack: 2042
-    Attack2: 1464
+    Attack: 1445
+    Attack2: 181
     Defense: 90
     MagicDefense: 24
     Str: 175
@@ -89325,13 +89325,13 @@ Body:
     AttackDelay: 500
     AttackMotion: 912
     DamageMotion: 288
-    Ai: 04
+    Ai: 19
     Drops:
-      - Item: Suspicious_Magical_Circle
+      - Item: Dried_Leaf_Of_Ygg
         Rate: 2000
       - Item: Cardinal_Jewel_
         Rate: 50
-      - Item: Dried_Leaf_Of_Ygg
+      - Item: SuspiciousMagicCircle
         Rate: 2000
       - Item: Skul_Ring_
         Rate: 5
@@ -89349,8 +89349,8 @@ Body:
     Hp: 40984
     BaseExp: 3621
     JobExp: 3177
-    Attack: 1726
-    Attack2: 1244
+    Attack: 1205
+    Attack2: 153
     Defense: 60
     MagicDefense: 20
     Str: 150
@@ -89372,22 +89372,14 @@ Body:
     AttackDelay: 924
     AttackMotion: 912
     DamageMotion: 288
-    Ai: 04
+    Ai: 19
     Drops:
-      - Item: Decayed_Nail
-        Rate: 9000
-      - Item: Cardinal_Jewel_
-        Rate: 50
-      - Item: Sticky_Mucus
-        Rate: 1000
-      - Item: Horrendous_Mouth
-        Rate: 50
-      - Item: White_Jewel
-        Rate: 70
-      - Item: Suspicious_Magical_Circle
-        Rate: 300
       - Item: Dried_Leaf_Of_Ygg
         Rate: 1500
+      - Item: Cardinal_Jewel_
+        Rate: 50
+      - Item: SuspiciousMagicCircle
+        Rate: 300
       - Item: Skul_Ring
         Rate: 5
       - Item: LivingDead_Card
@@ -89400,8 +89392,8 @@ Body:
     Hp: 67379
     BaseExp: 4422
     JobExp: 3937
-    Attack: 1987
-    Attack2: 1422
+    Attack: 1413
+    Attack2: 203
     Defense: 90
     MagicDefense: 30
     Str: 156
@@ -89423,26 +89415,22 @@ Body:
     AttackDelay: 2456
     AttackMotion: 912
     DamageMotion: 504
-    Ai: 04
+    Ai: 19
     Drops:
-      - Item: Horrendous_Mouth
-        Rate: 6000
-      - Item: Oridecon_Stone
-        Rate: 110
-      - Item: White_Herb
-        Rate: 700
-      - Item: Clump_of_Nightmares
-        Rate: 500
       - Item: Dried_Leaf_Of_Ygg
         Rate: 2000
-      - Item: Mementos
-        Rate: 150
-      - Item: Skul_Ring_IL
-        Rate: 1
-      - Item: Ghoul_Leg_IL
-        Rate: 2
-      - Item: Suspicious_Magical_Circle
+      - Item: Bradium
+        Rate: 100
+      - Item: SuspiciousMagicCircle
         Rate: 400
+      - Item: Ghoul_Leg
+        Rate: 10
+      - Item: Skul_Ring
+        Rate: 5
+      - Item: Poison_Herb_Scopolia
+        Rate: 30
+      - Item: Skul_Ring_
+        Rate: 1
       - Item: LivingDead_Card
         Rate: 1
         StealProtected: true
@@ -89453,8 +89441,8 @@ Body:
     Hp: 61334
     BaseExp: 4023
     JobExp: 4022
-    Attack: 1851
-    Attack2: 1327
+    Attack: 1310
+    Attack2: 597
     Defense: 116
     MagicDefense: 30
     Str: 144
@@ -89476,26 +89464,22 @@ Body:
     AttackDelay: 1826
     AttackMotion: 816
     DamageMotion: 432
-    Ai: 04
+    Ai: 19
     Modes:
       Detector: true
     Drops:
       - Item: Horseshoe
         Rate: 5000
-      - Item: Blue_Herb
-        Rate: 500
-      - Item: Wavy_Mane
-        Rate: 500
-      - Item: Old_Blue_Box
-        Rate: 30
       - Item: Blue_Potion
         Rate: 30
-      - Item: Black_Rosary
+      - Item: Carnium
+        Rate: 200
+      - Item: NightmareOfLump
+        Rate: 1500
+      - Item: Infiltrator
+        Rate: 10
+      - Item: Infiltrator_
         Rate: 2
-      - Item: Oridecon
-        Rate: 60
-      - Item: Infiltrator_IL
-        Rate: 1
       - Item: SweetNightM_Card
         Rate: 1
         StealProtected: true
@@ -89512,7 +89496,6 @@ Body:
     Int: 103
     Luk: 88
     AttackRange: 1
-    SkillRange: 7
     Size: Small
     Race: Plant
     RaceGroups:
@@ -89521,25 +89504,22 @@ Body:
     ElementLevel: 1
     WalkSpeed: 1000
     AttackMotion: 1
-    DamageMotion: 1
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
     Drops:
-      - Item: Shining_Spore
-        Rate: 1000
-      - Item: Mushroom_Spore
-        Rate: 5000
-      - Item: Mushroom_Band
-        Rate: 100
       - Item: Alchol
         Rate: 50
       - Item: Detrimindexta
         Rate: 50
       - Item: Dew_Laden_Moss
         Rate: 20
+      - Item: Mushroom_Spore
+        Rate: 5000
+      - Item: Shining_Spore
+        Rate: 1000
       - Item: Poison_Spore
         Rate: 500
       - Item: IllusoryStone
@@ -89551,8 +89531,8 @@ Body:
     Hp: 378510
     BaseExp: 15034
     JobExp: 13533
-    Attack: 4677
-    Attack2: 3194
+    Attack: 3709
+    Attack2: 1683
     Defense: 60
     MagicDefense: 60
     Str: 90
@@ -89573,23 +89553,27 @@ Body:
     WalkSpeed: 200
     AttackDelay: 1000
     AttackMotion: 864
-    DamageMotion: 288
-    Ai: 21
+    DamageMotion: 480
+    Ai: 19
+    Class: Boss
+    Modes:
+      IgnoreMisc: true
+      KnockBackImmune: true
     Drops:
-      - Item: Ripped_Paper_Sheet
-        Rate: 3000
-      - Item: Fragment_Of_Crystal
-        Rate: 500
-      - Item: Caviar_Pancake
-        Rate: 500
-      - Item: Robe_Of_Casting
+      - Item: Dark_Red_Jewel
+        Rate: 2000
+      - Item: Vampire's_Servant
         Rate: 100
-      - Item: Dead_Tree_Cane
-        Rate: 200
-      - Item: Gold
+      - Item: Torn_Diary
+        Rate: 3000
+      - Item: Bradium
+        Rate: 100
+      - Item: Carnium
+        Rate: 100
+      - Item: Bloodsuck_Plant_Seed
+        Rate: 500
+      - Item: Cape_Of_Ancient_Lord_
         Rate: 50
-      - Item: C_Vampire_Hairband
-        Rate: 1
       - Item: Bomi_Card
         Rate: 1
         StealProtected: true
@@ -89600,9 +89584,9 @@ Body:
     Hp: 6909690
     BaseExp: 2682753
     JobExp: 1817882
-    MvpExp: 156240
-    Attack: 8009
-    Attack2: 5450
+    MvpExp: 1341376
+    Attack: 6396
+    Attack2: 2765
     Defense: 252
     MagicDefense: 146
     Str: 195
@@ -89624,31 +89608,30 @@ Body:
     AttackDelay: 1290
     AttackMotion: 1140
     DamageMotion: 576
-    Ai: 21
+    Ai: 19
+    Class: Boss
     Modes:
       Mvp: true
     MvpDrops:
-      - Item: Vampire's_Servant
-        Rate: 30
-      - Item: Blood_Thirst
+      - Item: Old_Violet_Box
+        Rate: 5000
+      - Item: IllusionStone
         Rate: 500
-      - Item: Magic_Card_Album
-        Rate: 300
     Drops:
-      - Item: Well_Dried_Clover
+      - Item: Yggdrasilberry
+        Rate: 5000
+      - Item: Dried_Clover
         Rate: 2000
-      - Item: Wizardy_Staff_IL
-        Rate: 150
-      - Item: Balistar_IL
-        Rate: 250
-      - Item: Cape_Of_Ancient_Lord_IL
-        Rate: 150
-      - Item: Ring_IL
-        Rate: 50
-      - Item: Book_Of_The_Apo_IL
+      - Item: Balistar_
+        Rate: 80
+      - Item: Cape_Of_Ancient_Lord_
+        Rate: 80
+      - Item: Ring_
+        Rate: 80
+      - Item: Book_Of_The_Apocalypse
+        Rate: 80
+      - Item: Vampire's_Servant
         Rate: 100
-      - Item: Erhu
-        Rate: 300
       - Item: Ill_Dracula_Card
         Rate: 1
         StealProtected: true
