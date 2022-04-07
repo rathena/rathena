@@ -940,7 +940,7 @@
 	export_constant2("VAR_SHOES",LOOK_SHOES);
 
 	/* status changes */
-	export_constant2("Eff_Stone",SC_STONE);
+	export_constant2("Eff_Stone",SC_STONEWAIT);
 	export_constant2("Eff_Freeze",SC_FREEZE);
 	export_constant2("Eff_Stun",SC_STUN);
 	export_constant2("Eff_Sleep",SC_SLEEP);
