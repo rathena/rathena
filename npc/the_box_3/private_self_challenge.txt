@@ -191,7 +191,7 @@ OnInit:
 	
 	// Monster count
 	.monster_min_amount = 3;
-	.monster_max_amount = 9;
+	.monster_max_amount = 7;
 	
 	// Rewards
 	.reward_item_id = 40017;
