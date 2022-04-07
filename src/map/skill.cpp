@@ -8717,9 +8717,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 			if (sd && sd->sc.data[SC_PETROLOGY_OPTION])
 				brate = sd->sc.data[SC_PETROLOGY_OPTION]->val3;
-			// If the target has SC_STONEWAIT or SC_STONE, cancel at 100%
-			if (tsc->data[type] || tsc->data[SC_STONE])
-				brate = 100;
 
 			if (sc_start4(src,bl,type,(skill_lv*4+20)+brate,
 				skill_lv, src->id, skill_get_time(skill_id, skill_lv), 0,
