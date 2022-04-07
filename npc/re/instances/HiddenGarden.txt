@@ -105,12 +105,12 @@ end;
 		npctalk "It's strange. I've never seen an outsider with a mana pattern that matches more than 70% to that of Varmundt's.";
 		sleep2 5000;
 		setpcblock PCBLOCK_ALL,false;
-		if(select("I had the opportunity to meet Varmundt before:I don't know why") == 1){
+		if(select("I had the opportunity to meet Varmundt before.:I don't know why.") == 1){
 			sleep2 1000;
 			npctalk "There is a possibility that you have a similar mana pattern due to frequent contact with him in any form.";
 			sleep2 5000;
 		} else
-			sleep 1000;
+			sleep2 1000;
 		setpcblock PCBLOCK_ALL,true;
 		while(!.@s){
 			npctalk "Okay. From now on, I will set [" + .@admin$ + "] as our temporary administrator and take action accordingly. Do you agree?";
@@ -231,7 +231,7 @@ OnEvent02:
 	.@admin$ = get_instance_var("admin$");
 	if(!get_instance_var("trees")){
 		sleep 5000;
-		npctalk "We have satisfied the criteria of the temporary administrator [" + .admin$ + "] and will maintain the current management routine as it is.";
+		npctalk "We have satisfied the criteria of the temporary administrator [" + .@admin$ + "] and will maintain the current management routine as it is.";
 	}
 	sleep 5000;
 	npctalk "[" + .@admin$ + "], I'd like to request for you to continue the on-site inspection for the remaining sections.";
@@ -380,9 +380,9 @@ end;
 		npctalk "Thank you, [" + get_instance_var("admin$") + "] for responding to the evaluation.";
 		sleep2 5000;
 		if(.@talk)
-			mes "Automatic doll entering control mode to eradicate underground moles. Goodbye.";
+			npctalk "Automatic doll entering control mode to eradicate underground moles. Goodbye.";
 		else
-			mes "I'll move to the basement storage to check for new breeds.";
+			npctalk "I'll move to the basement storage to check for new breeds.";
 		setpcblock PCBLOCK_ALL,false;
 		progressbar_npc "3131FF",4;
 		instance_disable(strnpcinfo(0));
@@ -1309,10 +1309,10 @@ OnEvent13:
 end;
 	
 OnTouch:
-	if(get_instance_var("hgd") == 15 || get_instance_var("hgd") == 17)
+	if(get_instance_var("hgd") == 15 || get_instance_var("hgd") == 17){
+		removespecialeffect EF_MARKING_USE_CHANGEMONSTER;
 		specialeffect EF_MARKING_USE_CHANGEMONSTER;
-	specialeffect EF_WHITEBODY;
-	specialeffect EF_MOONSTAR;
+	}
 end;
 
 OnEffect:
