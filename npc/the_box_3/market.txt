@@ -65,23 +65,143 @@ OnInit:
 
 prontera,53,48,5	script	แจ้งเตือนของที่อยากได้	837,{
 	if(wish_item_alert)
-	mes "ขณะนี้คุณตั้งแจ้งเตือนหาก " + getitemname(wish_item_alert) + " ปรากฎในกล่อง THE BOX";
+	mes "ขณะนี้คุณตั้งแจ้งเตือนหาก ^3629FF" + getitemname(wish_item_alert) + "^000000 ปรากฎในกล่องใด ๆ\n๐ ระบบจะแจ้งอัตโนมัติ ^FF2929ทุก ๆ xx:x1น.^000000 (หลัง Item ในกล่องถูกเปลี่ยน 1 นาที)\n๐ กรณีผู้เล่นคุยกับ NPC ค้างไว้ ^FF2929ระบบจะไม่แจ้ง (กันบัค)^000000";
 	else
 	mes "คุณยังไม่ได้ตั้งการแจ้งเตือนของที่อยากได้";
 	next;
-	menu "ตั้งแจ้งเตือนหาก Item ปรากฎในกล่อง THE BOX",L_AlertSetting,"นำการแจ้งเตือนออก",-;
+	menu "^3629FFตั้งแจ้งเตือนหาก Item ปรากฎในกล่อง THE BOX^000000",L_AlertSetting,"^FF2929นำการแจ้งเตือนออก^000000",-,"ตรวจเดี๋ยวนี้",L_Check;
 	wish_item_alert = 0;
 	mes "นำการแจ้งเตือนออกเรียบร้อยแล้ว";
 	close;
 	
+	L_Check:
+	if(wish_item_alert){
+		.@is_found_item_in_market = 0;
+		
+		freeloop(1);
+		
+		if(F_MarketContain(wish_item_alert)){
+			.@is_found_item_in_market = 1;
+			
+			mes "กล่อง THE BOX #1\nมี ^3629FF" + getitemname(wish_item_alert) + "^000000 !!";
+		}
+		
+		if(F_Market2Contain(wish_item_alert)){
+			.@is_found_item_in_market = 1;
+			
+			mes "กล่อง THE BOX #2\nมี ^3629FF" + getitemname(wish_item_alert) + "^000000 !!";
+		}
+		
+		if(F_WeaponMarketContain(wish_item_alert)){
+			.@is_found_item_in_market = 1;
+			
+			mes "กล่อง Weapon\nมี ^3629FF" + getitemname(wish_item_alert) + "^000000 !!";
+		}
+		
+		if(F_EquipmentMarketContain(wish_item_alert)){
+			.@is_found_item_in_market = 1;
+			
+			mes "กล่อง Equipment\nมี ^3629FF" + getitemname(wish_item_alert) + "^000000 !!";
+		}
+		
+		if(F_CostumeMarketContain(wish_item_alert)){
+			.@is_found_item_in_market = 1;
+			
+			mes "กล่อง Costume\nมี ^3629FF" + getitemname(wish_item_alert) + "^000000 !!";
+		}
+		
+		if(F_CardMarketContain(wish_item_alert)){
+			.@is_found_item_in_market = 1;
+			
+			mes "กล่อง Card\nมี ^3629FF" + getitemname(wish_item_alert) + "^000000 !!";
+		}
+		
+		if(F_EnchantmentMarketContain(wish_item_alert)){
+			.@is_found_item_in_market = 1;
+			
+			mes "กล่อง Enchantment\nมี ^3629FF" + getitemname(wish_item_alert) + "^000000 !!";
+		}
+		freeloop(0);
+		
+		if(!.@is_found_item_in_market )
+		mes "ไม่มี Item ที่คุณต้องการภายในรอบนี้..";
+		
+		close;
+	}
+	else{
+		mes "คุณยังไม่ได้ตั้งการแจ้งเตือนของที่อยากได้";
+		close;
+	}
+
 	L_AlertSetting:
 	mes "ระบุ Item ID ที่ต้องการให้แจ้งเตือน";
 	input .@i;
 	next;
 	wish_item_alert = F_IsItemIdAvailable(.@i);
-	mes "ขณะนี้คุณตั้งแจ้งเตือนหาก " + getitemname(wish_item_alert) + " ปรากฎในกล่อง THE BOX";
+	mes "ขณะนี้คุณตั้งแจ้งเตือนหาก ^3629FF" + getitemname(wish_item_alert) + "^000000 ปรากฎในกล่อง THE BOX";
 	close;
 	
+OnMinute01:
+OnMinute11:
+OnMinute21:
+OnMinute31:
+OnMinute41:
+OnMinute51:
+	addrid(0,1);
+	if(wish_item_alert){
+		.@is_found_item_in_market = 0;
+		
+		freeloop(1);
+		
+		if(F_MarketContain(wish_item_alert)){
+			.@is_found_item_in_market = 1;
+			
+			announce "กล่อง THE BOX #1\nมี ^3629FF" + getitemname(wish_item_alert) + "^000000 !!",bc_self;
+		}
+		
+		if(F_Market2Contain(wish_item_alert)){
+			.@is_found_item_in_market = 1;
+			
+			announce "กล่อง THE BOX #2\nมี ^3629FF" + getitemname(wish_item_alert) + "^000000 !!",bc_self;
+		}
+		
+		if(F_WeaponMarketContain(wish_item_alert)){
+			.@is_found_item_in_market = 1;
+			
+			announce "กล่อง Weapon\nมี ^3629FF" + getitemname(wish_item_alert) + "^000000 !!",bc_self;
+		}
+		
+		if(F_EquipmentMarketContain(wish_item_alert)){
+			.@is_found_item_in_market = 1;
+			
+			announce "กล่อง Equipment\nมี ^3629FF" + getitemname(wish_item_alert) + "^000000 !!",bc_self;
+		}
+		
+		if(F_CostumeMarketContain(wish_item_alert)){
+			.@is_found_item_in_market = 1;
+			
+			announce "กล่อง Costume\nมี ^3629FF" + getitemname(wish_item_alert) + "^000000 !!",bc_self;
+		}
+		
+		if(F_CardMarketContain(wish_item_alert)){
+			.@is_found_item_in_market = 1;
+			
+			announce "กล่อง Card\nมี ^3629FF" + getitemname(wish_item_alert) + "^000000 !!",bc_self;
+		}
+		
+		if(F_EnchantmentMarketContain(wish_item_alert)){
+			.@is_found_item_in_market = 1;
+			
+			announce "กล่อง Enchantment\nมี ^3629FF" + getitemname(wish_item_alert) + "^000000 !!",bc_self;
+		}
+		freeloop(0);
+		
+		if(!.@is_found_item_in_market )
+		announce "ไม่มี Item ที่คุณต้องการภายในรอบนี้..",bc_self;
+		
+		end;
+	}
+	end;
 OnInit:
 	waitingroom "ตั้งค่าการแจ้งเตือน",0;
 	initnpctimer;
@@ -90,8 +210,7 @@ OnInit:
 
 prontera,53,60,5	script	วิธีใช้กล่อง	837,{
 	mes "๐ ใช้ ^3629FF" + getitemname(.item_id) + "^000000 ในการเปิด";
-	mes "๐ กล่อง {THE BOX, Weapons, Equipments, Costumes, Cards, Enchantments}  -> Item ภายในกล่อง^3629FFจะเปลี่ยนทุก ๆ 10 นาที^000000 จะได้ Item ตามรายการ";
-	mes "๐ กล่อง ชื่ออาชีพ -> Item ภายในกล่องจะไม่เปลี่ยน จะได้ Item ประเภท Weapon, Equipment หรือ Costume ที่อาชีพนั้น ๆ ใส่ได้";
+	mes "๐ Item ภายในกล่อง^3629FFจะเปลี่ยนทุก ๆ xx:x0น.^000000 จะได้ Item ตามรายการ";
 	menu "ดูของในกล่อง THE BOX #1",L_THE_BOX,
 	"ดูของในกล่อง THE BOX #2",L_THE_BOX2,
 	"ดูของในกล่อง Weapons",L_THE_BOX_WEAPON,
@@ -421,7 +540,7 @@ OnInit:
 	end;
 }
 
-prontera,66,58,5	script	Weapons	10249,{
+prontera,66,58,5	script	Weapon#Market	10249,{
 	menu "เริ่มสุ่ม (ใช้ " + .amount + " ดอก)",-;
 	if(countitem(.item_id) < .amount)
 	message strcharinfo(0),"คุณไม่มี " + .amount + " " + getitemname(.item_id);
@@ -452,11 +571,11 @@ prontera,66,58,5	script	Weapons	10249,{
 OnInit:
 	.item_id = 40017;
 	.amount = 9;
-	waitingroom "กล่อง Weapons",0;
+	waitingroom "กล่อง Weapon",0;
 	end;
 }
 
-prontera,70,62,5	script	Equipments	10249,{
+prontera,70,62,5	script	Equipment#Market	10249,{
 	menu "เริ่มสุ่ม (ใช้ " + .amount + " ดอก)",-;
 	if(countitem(.item_id) < .amount)
 	message strcharinfo(0),"คุณไม่มี " + .amount + " " + getitemname(.item_id);
@@ -487,11 +606,11 @@ prontera,70,62,5	script	Equipments	10249,{
 OnInit:
 	.item_id = 40017;
 	.amount = 9;
-	waitingroom "กล่อง Equipments",0;
+	waitingroom "กล่อง Equipment",0;
 	end;
 }
 
-prontera,74,58,5	script	Costumes	10249,{
+prontera,74,58,5	script	Costume#Market	10249,{
 	menu "เริ่มสุ่ม (ใช้ " + .amount + " ดอก)",-;
 	if(countitem(.item_id) < .amount)
 	message strcharinfo(0),"คุณไม่มี " + .amount + " " + getitemname(.item_id);
@@ -522,11 +641,11 @@ prontera,74,58,5	script	Costumes	10249,{
 OnInit:
 	.item_id = 40017;
 	.amount = 7;
-	waitingroom "กล่อง Costumes",0;
+	waitingroom "กล่อง Costume",0;
 	end;
 }
 
-prontera,78,62,5	script	Cards	10249,{
+prontera,78,62,5	script	Card#Market	10249,{
 	menu "เริ่มสุ่ม (ใช้ " + .amount + " ดอก)",-;
 	if(countitem(.item_id) < .amount)
 	message strcharinfo(0),"คุณไม่มี " + .amount + " " + getitemname(.item_id);
@@ -557,11 +676,11 @@ prontera,78,62,5	script	Cards	10249,{
 OnInit:
 	.item_id = 40017;
 	.amount = 15;
-	waitingroom "กล่อง Cards",0;
+	waitingroom "กล่อง Card",0;
 	end;
 }
 
-prontera,82,58,5	script	Enchantments	10249,{
+prontera,82,58,5	script	Enchantment#Market	10249,{
 	menu "เริ่มสุ่ม (ใช้ " + .amount + " ดอก)",-;
 	if(countitem(.item_id) < .amount)
 	message strcharinfo(0),"คุณไม่มี " + .amount + " " + getitemname(.item_id);
@@ -592,7 +711,7 @@ prontera,82,58,5	script	Enchantments	10249,{
 OnInit:
 	.item_id = 40017;
 	.amount = 30;
-	waitingroom "กล่อง Enchantments",0;
+	waitingroom "กล่อง Enchantment",0;
 	end;
 }
 
