@@ -1449,9 +1449,9 @@ int unit_is_walking(struct block_list *bl)
  * Some statuses are still checked here due too specific variables
  * @author [Skotlex]
  * @param bl: Object to check
- * @return Can move(1); Can't move(0)
+ * @return True - can move; False - can't move
  */
-int unit_can_move(struct block_list *bl) {
+bool unit_can_move(struct block_list *bl) {
 	struct map_session_data *sd;
 	struct unit_data *ud;
 	struct status_change *sc;
@@ -1463,37 +1463,20 @@ int unit_can_move(struct block_list *bl) {
 	sd = BL_CAST(BL_PC, bl);
 
 	if (!ud)
-		return 0;
+		return false;
 
 	if (ud->skilltimer != INVALID_TIMER && ud->skill_id != LG_EXEEDBREAK && (!sd || !pc_checkskill(sd, SA_FREECAST) || skill_get_inf2(ud->skill_id, INF2_ISGUILD)))
-		return 0; // Prevent moving while casting
+		return false; // Prevent moving while casting
 
 	if (DIFF_TICK(ud->canmove_tick, gettick()) > 0)
-		return 0;
+		return false;
 
 	if ((sd && (pc_issit(sd) || sd->state.vending || sd->state.buyingstore || (sd->state.block_action & PCBLOCK_MOVE) || sd->state.mail_writing)) || ud->state.blockedmove)
-		return 0; // Can't move
+		return false; // Can't move
 
 	// Status changes that block movement
-	if (sc) {
-		if( sc->cant.move // status placed here are ones that cannot be cached by sc->cant.move for they depend on other conditions other than their availability
-			|| sc->data[SC_SPIDERWEB]
-			|| (sc->data[SC_DANCING] && sc->data[SC_DANCING]->val4 && (
-#ifndef RENEWAL
-				!sc->data[SC_LONGING] ||
-#endif
-				(sc->data[SC_DANCING]->val1&0xFFFF) == CG_MOONLIT ||
-				(sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE
-				) )
-			)
-			return 0;
-
-		if (sc->opt1 > 0 && sc->opt1 != OPT1_STONEWAIT && sc->opt1 != OPT1_BURNING)
-			return 0;
-
-		if ((sc->option & OPTION_HIDE) && (!sd || pc_checkskill(sd, RG_TUNNELDRIVE) <= 0))
-			return 0;
-	}
+	if (sc && sc->cant.move)
+		return false;
 
 	// Icewall walk block special trapped monster mode
 	if(bl->type == BL_MOB) {
@@ -1501,11 +1484,11 @@ int unit_can_move(struct block_list *bl) {
 		if(md && ((status_has_mode(&md->status,MD_STATUSIMMUNE) && battle_config.boss_icewall_walk_block == 1 && map_getcell(bl->m,bl->x,bl->y,CELL_CHKICEWALL))
 			|| (!status_has_mode(&md->status,MD_STATUSIMMUNE) && battle_config.mob_icewall_walk_block == 1 && map_getcell(bl->m,bl->x,bl->y,CELL_CHKICEWALL)))) {
 			md->walktoxy_fail_count = 1; //Make sure rudeattacked skills are invoked
-			return 0;
+			return false;
 		}
 	}
 
-	return 1;
+	return true;
 }
 
 /**
@@ -1520,11 +1503,9 @@ TIMER_FUNC(unit_resume_running){
 	TBL_PC *sd = map_id2sd(id);
 
 	if (sd && pc_isridingwug(sd))
-		clif_skill_nodamage(ud->bl,ud->bl,RA_WUGDASH,ud->skill_lv,
-			sc_start4(ud->bl,ud->bl,status_skill2sc(RA_WUGDASH),100,ud->skill_lv,unit_getdir(ud->bl),0,0,0));
+		clif_skill_nodamage(ud->bl,ud->bl,RA_WUGDASH,ud->skill_lv,sc_start4(ud->bl,ud->bl,SC_WUGDASH,100,ud->skill_lv,unit_getdir(ud->bl),0,0,0));
 	else
-		clif_skill_nodamage(ud->bl,ud->bl,TK_RUN,ud->skill_lv,
-			sc_start4(ud->bl,ud->bl,status_skill2sc(TK_RUN),100,ud->skill_lv,unit_getdir(ud->bl),0,0,0));
+		clif_skill_nodamage(ud->bl,ud->bl,TK_RUN,ud->skill_lv,sc_start4(ud->bl,ud->bl,SC_RUN,100,ud->skill_lv,unit_getdir(ud->bl),0,0,0));
 
 	if (sd)
 		clif_walkok(sd);
@@ -2083,7 +2064,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		ud->skilltimer = add_timer( tick+casttime, skill_castend_id, src->id, 0 );
 
 		if( sd && (pc_checkskill(sd,SA_FREECAST) > 0 || skill_id == LG_EXEEDBREAK) )
-			status_calc_bl(&sd->bl, SCB_SPEED|SCB_ASPD);
+			status_calc_bl(&sd->bl, { SCB_SPEED, SCB_ASPD });
 	} else
 		skill_castend_id(ud->skilltimer,tick,src->id,0);
 
@@ -2275,7 +2256,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 		ud->skilltimer = add_timer( tick+casttime, skill_castend_pos, src->id, 0 );
 
 		if( (sd && pc_checkskill(sd,SA_FREECAST) > 0) || skill_id == LG_EXEEDBREAK)
-			status_calc_bl(&sd->bl, SCB_SPEED|SCB_ASPD);
+			status_calc_bl(&sd->bl, { SCB_SPEED, SCB_ASPD });
 	} else {
 		ud->skilltimer = INVALID_TIMER;
 		skill_castend_pos(ud->skilltimer,tick,src->id,0);
@@ -2402,23 +2383,6 @@ int unit_unattackable(struct block_list *bl)
 		pet_unlocktarget((struct pet_data*)bl);
 
 	return 0;
-}
-
-/**
- * Checks if the unit can attack, returns yes if so.
-*/
-bool unit_can_attack(struct block_list *src, int target_id)
-{
-	struct status_change *sc = status_get_sc(src);
-
-	if( sc != NULL ) {
-		if( sc->data[SC__MANHOLE] )
-			return false;
-	}
-
-	if( src->type == BL_PC )
-		return pc_can_attack(BL_CAST(BL_PC, src), target_id);
-	return true;
 }
 
 /**
@@ -2723,7 +2687,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 #ifdef OFFICIAL_WALKPATH
 	   || !path_search_long(NULL, src->m, src->x, src->y, target->x, target->y, CELL_CHKWALL)
 #endif
-	   || (sd && !pc_can_attack(sd, target->id)) )
+	   || !unit_can_attack(src, target->id) )
 		return 0; // Can't attack under these conditions
 
 	if( src->m != target->m ) {
@@ -2871,6 +2835,35 @@ static TIMER_FUNC(unit_attack_timer){
 }
 
 /**
+ * Determines whether a player can attack based on status changes
+ *  Why not use status_check_skilluse?
+ *  "src MAY be null to indicate we shouldn't check it, this is a ground-based skill attack."
+ *  Even ground-based attacks should be blocked by these statuses
+ * Called from unit_attack and unit_attack_timer_sub
+ * @retval true Can attack
+ **/
+bool unit_can_attack(struct block_list *bl, int target_id) {
+	nullpo_retr(false, bl);
+
+	if (bl->type == BL_PC) {
+		map_session_data *sd = ((TBL_PC *)bl);
+
+		if (sd && ((sd->state.block_action & PCBLOCK_ATTACK) || pc_isridingwug(sd)))
+			return false;
+	}
+
+	struct status_change *sc;
+
+	if (!(sc = status_get_sc(bl)))
+		return true;
+
+	if (sc->cant.attack || (sc->data[SC_VOICEOFSIREN] && sc->data[SC_VOICEOFSIREN]->val2 == target_id))
+		return false;
+
+	return true;
+}
+
+/**
  * Cancels a skill's cast
  * @param bl: Object to cancel cast
  * @param type: Cancel check flag
@@ -2919,7 +2912,7 @@ int unit_skillcastcancel(struct block_list *bl, char type)
 	ud->skilltimer = INVALID_TIMER;
 
 	if( sd && (pc_checkskill(sd,SA_FREECAST) > 0 || skill_id == LG_EXEEDBREAK) )
-		status_calc_bl(&sd->bl, SCB_SPEED|SCB_ASPD);
+		status_calc_bl(&sd->bl, { SCB_SPEED, SCB_ASPD });
 
 	if( sd ) {
 		switch( skill_id ) {
@@ -3059,50 +3052,17 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 	ud->attackabletime = ud->canmove_tick /*= ud->canact_tick*/ = gettick();
 
 	if(sc && sc->count ) { // map-change/warp dispells.
-		status_change_end(bl, SC_BLADESTOP, INVALID_TIMER);
-#ifdef RENEWAL
-		status_change_end(bl, SC_BASILICA_CELL, INVALID_TIMER);
-#else
-		status_change_end(bl, SC_BASILICA, INVALID_TIMER);
-#endif
-		status_change_end(bl, SC_ANKLE, INVALID_TIMER);
-		status_change_end(bl, SC_TRICKDEAD, INVALID_TIMER);
-		status_change_end(bl, SC_BLADESTOP_WAIT, INVALID_TIMER);
-		status_change_end(bl, SC_RUN, INVALID_TIMER);
-		status_change_end(bl, SC_DANCING, INVALID_TIMER);
-		status_change_end(bl, SC_WARM, INVALID_TIMER);
-		status_change_end(bl, SC_DEVOTION, INVALID_TIMER);
-		status_change_end(bl, SC_MARIONETTE, INVALID_TIMER);
-		status_change_end(bl, SC_MARIONETTE2, INVALID_TIMER);
-		status_change_end(bl, SC_CLOSECONFINE, INVALID_TIMER);
-		status_change_end(bl, SC_CLOSECONFINE2, INVALID_TIMER);
-		status_change_end(bl, SC_TINDER_BREAKER, INVALID_TIMER);
-		status_change_end(bl, SC_TINDER_BREAKER2, INVALID_TIMER);
-		status_change_end(bl, SC_FLASHKICK, INVALID_TIMER);
-		status_change_end(bl, SC_SERVANT_SIGN, INVALID_TIMER);
-		status_change_end(bl, SC_HIDING, INVALID_TIMER);
+		status_db.removeByStatusFlag(bl, { SCF_REMOVEONCHANGEMAP });
+
 		// Ensure the bl is a PC; if so, we'll handle the removal of cloaking and cloaking exceed later
 		if ( bl->type != BL_PC ) {
 			status_change_end(bl, SC_CLOAKING, INVALID_TIMER);
 			status_change_end(bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
 		}
-		status_change_end(bl, SC_CHASEWALK, INVALID_TIMER);
 		if (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)
 			status_change_end(bl, SC_GOSPEL, INVALID_TIMER);
-		if (sc->data[SC_PROVOKE] && sc->data[SC_PROVOKE]->timer == INVALID_TIMER)
+		if (sc->data[SC_PROVOKE] && sc->data[SC_PROVOKE]->val4 == 1)
 			status_change_end(bl, SC_PROVOKE, INVALID_TIMER); //End infinite provoke to prevent exploit
-		status_change_end(bl, SC_CHANGE, INVALID_TIMER);
-		status_change_end(bl, SC_STOP, INVALID_TIMER);
-		status_change_end(bl, SC_WUGDASH, INVALID_TIMER);
-		status_change_end(bl, SC_CAMOUFLAGE, INVALID_TIMER);
-		status_change_end(bl, SC_NEUTRALBARRIER_MASTER, INVALID_TIMER);
-		status_change_end(bl, SC_STEALTHFIELD_MASTER, INVALID_TIMER);
-		status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
-		status_change_end(bl, SC__MANHOLE, INVALID_TIMER);
-		status_change_end(bl, SC_VACUUM_EXTREME, INVALID_TIMER);
-		status_change_end(bl, SC_NEWMOON, INVALID_TIMER);
-		status_change_end(bl, SC_CURSEDCIRCLE_ATKER, INVALID_TIMER); // callme before warp
-		status_change_end(bl, SC_SUHIDE, INVALID_TIMER);
 	}
 
 	switch( bl->type ) {
@@ -3583,7 +3543,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 					sd->status.hom_id = 0;
 
 #ifdef RENEWAL
-				status_change_end(&sd->bl, status_skill2sc(AM_CALLHOMUN), INVALID_TIMER);
+				status_change_end(&sd->bl, SC_HOMUN_TIME, INVALID_TIMER);
 #endif
 			}
 

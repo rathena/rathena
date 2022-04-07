@@ -567,8 +567,8 @@ Body:
       - Item: S_Soul_Reaper_Shoes
       - Item: S_Tempest_Weapon
       - Item: S_Tempest_Armor
-      - Item: S_Perfect_Size_Weapon
-      - Item: S_Perfect_Size_Armor
+      - Item: S_PerfectSize_Weapon
+      - Item: S_PerfectSize_Armor
       - Item: S_M_Exo_Co_Weapon
       - Item: S_M_Viv_Dr_Weapon
       - Item: S_M_Sci_Hu_Weapon
@@ -1257,8 +1257,8 @@ Body:
       - Item: S_Cri_Hit_Armor
       - Item: S_Tempest_Weapon
       - Item: S_Tempest_Armor
-      - Item: S_Perfect_Size_Weapon
-      - Item: S_Perfect_Size_Armor
+      - Item: S_PerfectSize_Weapon
+      - Item: S_PerfectSize_Armor
       - Item: S_M_Exo_Co_Weapon
       - Item: S_M_Viv_Dr_Weapon
       - Item: S_M_Sci_Hu_Weapon
@@ -2083,8 +2083,8 @@ Body:
       - Item: S_Soul_Reaper_Shoes
       - Item: S_Tempest_Weapon
       - Item: S_Tempest_Armor
-      - Item: S_Perfect_Size_Weapon
-      - Item: S_Perfect_Size_Armor
+      - Item: S_PerfectSize_Weapon
+      - Item: S_PerfectSize_Armor
       - Item: S_M_Exo_Co_Weapon
       - Item: S_M_Viv_Dr_Weapon
       - Item: S_M_Sci_Hu_Weapon
@@ -2660,7 +2660,7 @@ Body:
 #      - Item: Metal_Foxtail
 #      - Item: Metal_Revolver
 #      - Item: Huuma_Metal_Shuriken
-  - Item: Noblesses_Refine_Ticket
+  - Item: Noblesse_Rifine_Ticket
     ResultRefine: 9
     CardsAllowed: true
     TargetItems:
@@ -2669,23 +2669,23 @@ Body:
       - Item: Noblesse_Spear_Armor
       - Item: Noblesse_Genesis_Armor
       - Item: Noblesse_Sharp_Suit
-      - Item: Noblesse_Aimed_suit
+      - Item: Noblesse_Aim_Suit
       - Item: Noblesse_Severe_Suit
       - Item: Noblesse_Reverb_Suit
       - Item: Noblesse_Adora_Robe
       - Item: Noblesse_Duple_Robe
-      - Item: Noblesse_Tornado_Armor
+      - Item: Noblesse_Tonado_Armor
       - Item: Noblesse_Vulcan_Armor
-      - Item: Noblesse_Cart_Cannon_Suit
-      - Item: Noblesse_Cart_Tornado_Suit
+      - Item: Noblesse_Kart_Suit
+      - Item: Noblesse_Kart_Suit2
       - Item: Noblesse_Rolling_Suit
-      - Item: Noblesse_Assassin_Suit
+      - Item: Noblesse_Assasin_Suit
       - Item: Noblesse_Fatal_Suit
       - Item: Noblesse_Stalker_Suit
       - Item: Noblesse_Picky_Robe
-      - Item: Noblesse_Catnip_Robe
+      - Item: Noblesse_Carrot_Robe
       - Item: Noblesse_Trip_Suit
-      - Item: Noblesse_Fire_Rain_Suit
+      - Item: Noblesse_Firerain_Suit
       - Item: Noblesse_Crimson_Robe
       - Item: Noblesse_Frost_Robe
       - Item: Noblesse_Psychic_Robe
@@ -2694,17 +2694,17 @@ Body:
       - Item: Noblesse_Moon_Suit
       - Item: Noblesse_Ninja_Suit
       - Item: Noblesse_Kunai_Suit
-      - Item: Noblesse_Eswhoo_Robe
+      - Item: Noblesse_Swhoo_Robe
       - Item: Noblesse_Explosion_Robe
       - Item: Noblesse_Knuckle_Suit
       - Item: Noblesse_Tiger_Suit
-      - Item: Noblesse_Super_Novice_Suit
-      - Item: Noblesse_Super_Novice_Robe
+      - Item: Noblesse_Snovice_Suit
+      - Item: Noblesse_Snovice_Robe
       - Item: Noblesse_Attack_Boots
       - Item: Noblesse_Magic_Boots
       - Item: Noblesse_Attack_Manteau
       - Item: Noblesse_Magic_Manteau
-  - Item: Imperial_Refine_Ticket
+  - Item: Imperial_Rifine_Ticket
     ResultRefine: 9
     CardsAllowed: true
     TargetItems:
@@ -2713,23 +2713,23 @@ Body:
       - Item: Imperial_Spear_Armor
       - Item: Imperial_Genesis_Armor
       - Item: Imperial_Sharp_Suit
-      - Item: Imperial_Aimed_Suit
+      - Item: Imperial_Aim_Suit
       - Item: Imperial_Severe_Suit
       - Item: Imperial_Reverb_Suit
       - Item: Imperial_Adora_Robe
       - Item: Imperial_Duple_Robe
-      - Item: Imperial_Tornado_Armor
+      - Item: Imperial_Tonado_Armor
       - Item: Imperial_Vulcan_Armor
-      - Item: Imperial_Cart_Cannon_Suit
-      - Item: Imperial_Cart_Tornado_Suit
+      - Item: Imperial_Kart_Suit
+      - Item: Imperial_Kart_Suit2
       - Item: Imperial_Rolling_Suit
-      - Item: Imperial_Assassin_Suit
+      - Item: Imperial_Assasin_Suit
       - Item: Imperial_Fatal_Suit
       - Item: Imperial_Stalker_Suit
       - Item: Imperial_Picky_Robe
-      - Item: Imperial_Catnip_Robe
+      - Item: Imperial_Carrot_Robe
       - Item: Imperial_Trip_Suit
-      - Item: Imperial_Fire_Rain_Suit
+      - Item: Imperial_Firerain_Suit
       - Item: Imperial_Crimson_Robe
       - Item: Imperial_Frost_Robe
       - Item: Imperial_Psychic_Robe
@@ -2738,12 +2738,12 @@ Body:
       - Item: Imperial_Moon_Suit
       - Item: Imperial_Ninja_Suit
       - Item: Imperial_Kunai_Suit
-      - Item: Imperial_Eswhoo_Robe
+      - Item: Imperial_Swhoo_Robe
       - Item: Imperial_Explosion_Robe
       - Item: Imperial_Knuckle_Suit
       - Item: Imperial_Tiger_Suit
-      - Item: Imperial_Super_Novice_Suit
-      - Item: Imperial_Super_Novice_Robe
+      - Item: Imperial_Snovice_Suit
+      - Item: Imperial_Snovice_Robe
       - Item: Imperial_Attack_Boots
       - Item: Imperial_Magic_Boots
       - Item: Imperial_Attack_Manteau
@@ -2792,13 +2792,13 @@ Body:
       - Item: Grace_Magic_Boots
       - Item: Grace_Attack_Manteau
       - Item: Grace_Magic_Manteau
-  - Item: Imperial_P_Mo_Garment
-    RandomOptionGroup: IMPERIAL_P_MO_GARMENT
+  - Item: Imperial_Convert1
+    RandomOptionGroup: IMPERIAL_CONVERT1
     TargetItems:
       - Item: Imperial_Attack_Manteau
       - Item: Imperial_Magic_Manteau
-  - Item: Imperial_M_Mo_Garment
-    RandomOptionGroup: IMPERIAL_M_MO_GARMENT
+  - Item: Imperial_Convert2
+    RandomOptionGroup: IMPERIAL_CONVERT2
     TargetItems:
       - Item: Imperial_Attack_Manteau
       - Item: Imperial_Magic_Manteau
@@ -2812,31 +2812,31 @@ Body:
     TargetItems:
       - Item: Grace_Attack_Manteau
       - Item: Grace_Magic_Manteau
-  - Item: Imperial_P_Mo_Armor
-    RandomOptionGroup: IMPERIAL_P_MO_ARMOR
+  - Item: Imperial_Convert3
+    RandomOptionGroup: IMPERIAL_CONVERT3
     TargetItems:
       - Item: Imperial_Breath_Armor
       - Item: Imperial_Knight_Armor
       - Item: Imperial_Spear_Armor
       - Item: Imperial_Genesis_Armor
       - Item: Imperial_Sharp_Suit
-      - Item: Imperial_Aimed_Suit
+      - Item: Imperial_Aim_Suit
       - Item: Imperial_Severe_Suit
       - Item: Imperial_Reverb_Suit
       - Item: Imperial_Adora_Robe
       - Item: Imperial_Duple_Robe
-      - Item: Imperial_Tornado_Armor
+      - Item: Imperial_Tonado_Armor
       - Item: Imperial_Vulcan_Armor
-      - Item: Imperial_Cart_Cannon_Suit
-      - Item: Imperial_Cart_Tornado_Suit
+      - Item: Imperial_Kart_Suit
+      - Item: Imperial_Kart_Suit2
       - Item: Imperial_Rolling_Suit
-      - Item: Imperial_Assassin_Suit
+      - Item: Imperial_Assasin_Suit
       - Item: Imperial_Fatal_Suit
       - Item: Imperial_Stalker_Suit
       - Item: Imperial_Picky_Robe
-      - Item: Imperial_Catnip_Robe
+      - Item: Imperial_Carrot_Robe
       - Item: Imperial_Trip_Suit
-      - Item: Imperial_Fire_Rain_Suit
+      - Item: Imperial_Firerain_Suit
       - Item: Imperial_Crimson_Robe
       - Item: Imperial_Frost_Robe
       - Item: Imperial_Psychic_Robe
@@ -2845,37 +2845,37 @@ Body:
       - Item: Imperial_Moon_Suit
       - Item: Imperial_Ninja_Suit
       - Item: Imperial_Kunai_Suit
-      - Item: Imperial_Eswhoo_Robe
+      - Item: Imperial_Swhoo_Robe
       - Item: Imperial_Explosion_Robe
       - Item: Imperial_Knuckle_Suit
       - Item: Imperial_Tiger_Suit
-      - Item: Imperial_Super_Novice_Suit
-      - Item: Imperial_Super_Novice_Robe
-  - Item: Imperial_M_Mo_Armor
-    RandomOptionGroup: IMPERIAL_M_MO_ARMOR
+      - Item: Imperial_Snovice_Suit
+      - Item: Imperial_Snovice_Robe
+  - Item: Imperial_Convert4
+    RandomOptionGroup: IMPERIAL_CONVERT4
     TargetItems:
       - Item: Imperial_Breath_Armor
       - Item: Imperial_Knight_Armor
       - Item: Imperial_Spear_Armor
       - Item: Imperial_Genesis_Armor
       - Item: Imperial_Sharp_Suit
-      - Item: Imperial_Aimed_Suit
+      - Item: Imperial_Aim_Suit
       - Item: Imperial_Severe_Suit
       - Item: Imperial_Reverb_Suit
       - Item: Imperial_Adora_Robe
       - Item: Imperial_Duple_Robe
-      - Item: Imperial_Tornado_Armor
+      - Item: Imperial_Tonado_Armor
       - Item: Imperial_Vulcan_Armor
-      - Item: Imperial_Cart_Cannon_Suit
-      - Item: Imperial_Cart_Tornado_Suit
+      - Item: Imperial_Kart_Suit
+      - Item: Imperial_Kart_Suit2
       - Item: Imperial_Rolling_Suit
-      - Item: Imperial_Assassin_Suit
+      - Item: Imperial_Assasin_Suit
       - Item: Imperial_Fatal_Suit
       - Item: Imperial_Stalker_Suit
       - Item: Imperial_Picky_Robe
-      - Item: Imperial_Catnip_Robe
+      - Item: Imperial_Carrot_Robe
       - Item: Imperial_Trip_Suit
-      - Item: Imperial_Fire_Rain_Suit
+      - Item: Imperial_Firerain_Suit
       - Item: Imperial_Crimson_Robe
       - Item: Imperial_Frost_Robe
       - Item: Imperial_Psychic_Robe
@@ -2884,12 +2884,12 @@ Body:
       - Item: Imperial_Moon_Suit
       - Item: Imperial_Ninja_Suit
       - Item: Imperial_Kunai_Suit
-      - Item: Imperial_Eswhoo_Robe
+      - Item: Imperial_Swhoo_Robe
       - Item: Imperial_Explosion_Robe
       - Item: Imperial_Knuckle_Suit
       - Item: Imperial_Tiger_Suit
-      - Item: Imperial_Super_Novice_Suit
-      - Item: Imperial_Super_Novice_Robe
+      - Item: Imperial_Snovice_Suit
+      - Item: Imperial_Snovice_Robe
   - Item: Grace_P_Mo_Armor
     RandomOptionGroup: GRACE_P_MO_ARMOR
     TargetItems:

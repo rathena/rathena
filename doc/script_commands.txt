@@ -398,15 +398,15 @@ implemented.
 Item and pet scripts
 --------------------
 
-Each item in the item database has three special fields - Script , OnEquip_Script
-and OnUnequip_Script. The first is script code run every time a character equips the item,
+Each item in the item database has three special fields - Script , EquipScript
+and UnEquipScript. The first is script code run every time a character equips the item,
 with the RID of the equipping character. Every time they unequip an item, all
 temporary bonuses given by the script commands are cleared, and all the scripts
 are executed once again to rebuild them. This also happens in several other
 situations (like upon login) but the full list is currently unknown.
 
-OnEquip_Script is a piece of script code run whenever the item is used by a character
-by double-clicking on it. OnUnequip_Script runs whenever the
+EquipScript is a piece of script code run whenever the item is used by a character
+by double-clicking on it. UnEquipScript runs whenever the
 equipment is unequip by a character
 
 Not all script commands work properly in the item scripts. Where commands and
@@ -4059,7 +4059,7 @@ The renewal feature to check is determined by the number <type>.
 *isequipped(<id>{,<id>{,..}})
 
 This function will return 1 if the invoking character has all of the item
-IDs given equipped (if card IDs are passed, then it checks if the cards are
+IDs given equipped (if item/card IDs are passed, then it checks if the items/cards are
 inserted into slots in the equipment they are currently wearing). Theoretically
 there is no limit to the number of items that may be tested for at the same time.
 If even one of the items given is not equipped, 0 will be returned.
@@ -4085,9 +4085,9 @@ Example:
 
 ---------------------------------------
 
-*checkequipedcard(<card id>)
+*checkequipedcard(<item id>)
 
-This function will return 1 if the card specified by its item ID number is
+This function will return 1 if the item/card specified by its item ID number is
 inserted into any equipment they have in their inventory, currently equipped or
 not.
 
@@ -4904,7 +4904,7 @@ in <time> seconds and be automatically deleted. When receiving a rental item,
 the character will receive a message in their chat window. The character will
 also receive warning messages in their chat window before the item disappears.
 
-When rentals expire it will call the OnUnequip Script of the item. This can be used
+When rentals expire it will call the UnEquipScript of the item. This can be used
 for special cases such as removing a status change or resetting a variable or state
 of the player.
 
@@ -8876,8 +8876,8 @@ You can remove an item's itemscript by leaving the itemscript argument empty.
 Returns 1 on success, or 0 on fail (item_id not found or new item script is invalid).
 Type can optionally be used indicates which script to set (default is 0):
  0 - Script
- 1 - OnEquip_Script
- 2 - OnUnequip_Script
+ 1 - EquipScript
+ 2 - UnEquipScript
 
 Example:
 	setitemscript 2637,"{ if (isequipped(2236) == 0)end; if (getskilllv(26)){skill 40,1;}else{skill 26,1+isequipped(2636);} }";
@@ -9709,6 +9709,13 @@ QMARK_NONE   - No Marker (default)
 QMARK_YELLOW - Yellow Marker
 QMARK_GREEN  - Green Marker
 QMARK_PURPLE - Purple Marker
+
+---------------------------------------
+
+*open_quest_ui {<quest ID>,{<char ID>}};
+
+Opens the quest UI for the attached player or the given character ID.
+Use 0 as the quest ID to open the main quest UI. If the quest ID is not 0 then the quest UI is opened to the given quest. If the quest data is not populated in the client LUB then a message will be displayed saying the quest doesn't exist.
 
 ---------------------------------------
 
@@ -10624,6 +10631,25 @@ index parameter can be 0 to MAX_ITEM_RDM_OPT-1 (default 0-4).
 ID - ID of random option. See db/item_randomopt_db.yml for constants.
 Value - Value of random option
 Param - Parameter of random option
+
+---------------------------------------
+
+*randomoptgroup <random option group ID>;
+
+This command fills the following arrays with the results of a random option group.
+The random option group IDs are specified in 'db/(pre-)re/item_randomopt_group.yml'.
+
+Arrays - from index 0 to MAX_ITEM_RDM_OPT-1 :
+.@opt_id[]                - array of random option ID.
+.@opt_value[]             - array of value.
+.@opt_param[]             - array of param.
+
+Example:
+	// Fill the arrays using the random option group ID 5 (group used for Crimson weapons).
+	randomoptgroup(5);
+
+	// Create a +9 Crimson Dagger [2] with the Group 5 applied
+	getitem3 28705,1,1,9,0,0,0,0,0,.@opt_id,.@opt_value,.@opt_param;
 
 ---------------------------------------
 

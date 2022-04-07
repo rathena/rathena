@@ -146,8 +146,7 @@ enum rune_item_list : t_itemid
 enum mechanic_item_list : t_itemid
 {
 	ITEMID_ACCELERATOR				= 2800,
-	ITEMID_HOVERING_BOOSTER,
-	ITEMID_SUICIDAL_DEVICE,
+	ITEMID_SUICIDAL_DEVICE				= 2802,
 	ITEMID_SHAPE_SHIFTER,
 	ITEMID_COOLING_DEVICE,
 	ITEMID_MAGNETIC_FIELD_GENERATOR,
@@ -890,6 +889,16 @@ enum e_random_item_group {
 	IG_PIERCING_MIX,
 	IG_HASTY_MIX,
 	IG_ENCHANTSTONE_RECIPE_4M,
+	IG_SHADOW_CUBE,
+	IG_SHADOW_CUBE_PENDANT,
+	IG_SHADOW_CUBE_EARING,
+	IG_ANGELPORING_BOX,
+	IG_HELM_OF_FAITH_BOX,
+	IG_2022_LUNARNEWYEARS_BOX,
+	IG_2020_REWARD_BOX,
+	IG_COSTUME_MILE_PACK_26_1,
+	IG_COSTUME_MILE_PACK_26_2,
+	IG_COSTUME_MILE_PACK_26_3,
 
 	IG_MAX,
 };
@@ -972,7 +981,7 @@ public:
 		this->combo_num = 0;
 	}
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node& node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void loadingFinished() override;
 };
 
@@ -1018,7 +1027,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node &node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void loadingFinished() override;
 
 	// Additional
@@ -1035,10 +1044,10 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node &node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 
 	// Additional
-	bool add_option(const YAML::Node &node, std::shared_ptr<s_random_opt_group_entry> &entry);
+	bool add_option(const ryml::NodeRef& node, std::shared_ptr<s_random_opt_group_entry> &entry);
 	bool option_exists(std::string name);
 	bool option_get_id(std::string name, uint16 &id);
 };
@@ -1186,7 +1195,7 @@ private:
 	std::unordered_map<std::string, std::shared_ptr<item_data>> nameToItemDataMap;
 	std::unordered_map<std::string, std::shared_ptr<item_data>> aegisNameToItemDataMap;
 
-	e_sex defaultGender( const YAML::Node &node, std::shared_ptr<item_data> id );
+	e_sex defaultGender( const ryml::NodeRef& node, std::shared_ptr<item_data> id );
 
 public:
 	ItemDatabase() : TypesafeCachedYamlDatabase("ITEM_DB", 2, 1) {
@@ -1194,7 +1203,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node& node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void loadingFinished() override;
 	void clear() override{
 		TypesafeCachedYamlDatabase::clear();
@@ -1217,7 +1226,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node& node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void loadingFinished() override;
 
 	// Additional
@@ -1251,7 +1260,7 @@ public:
 	}
 
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const YAML::Node& node );
+	uint64 parseBodyNode( const ryml::NodeRef& node );
 };
 
 extern LaphineSynthesisDatabase laphine_synthesis_db;
@@ -1276,7 +1285,7 @@ public:
 	}
 
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const YAML::Node& node );
+	uint64 parseBodyNode( const ryml::NodeRef& node );
 };
 
 extern LaphineUpgradeDatabase laphine_upgrade_db;

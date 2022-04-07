@@ -8,8 +8,6 @@
 #include <math.h>
 #include <stdlib.h>
 
-#include <yaml-cpp/yaml.h>
-
 #include "../common/cbasetypes.hpp"
 #include "../common/core.hpp" // get_svn_revision()
 #include "../common/database.hpp"
@@ -94,7 +92,7 @@ const std::string AttendanceDatabase::getDefaultLocation(){
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 AttendanceDatabase::parseBodyNode(const YAML::Node &node){
+uint64 AttendanceDatabase::parseBodyNode(const ryml::NodeRef& node){
 	uint32 start;
 
 	if( !this->asUInt32( node, "Start", start ) ){
@@ -175,9 +173,9 @@ uint64 AttendanceDatabase::parseBodyNode(const YAML::Node &node){
 	}
 
 	if( this->nodeExists( node, "Rewards" ) ){
-		const YAML::Node& rewardsNode = node["Rewards"];
+		const auto& rewardsNode = node["Rewards"];
 
-		for( const YAML::Node& rewardNode : rewardsNode ){
+		for( const auto& rewardNode : rewardsNode ){
 			uint32 day;
 
 			if( !this->asUInt32( rewardNode, "Day", day ) ){
@@ -268,7 +266,7 @@ const std::string PenaltyDatabase::getDefaultLocation(){
 	return std::string( db_path ) + "/level_penalty.yml";
 }
 
-uint64 PenaltyDatabase::parseBodyNode( const YAML::Node& node ){
+uint64 PenaltyDatabase::parseBodyNode(const ryml::NodeRef& node){
 	std::string type_constant;
 
 	if( !this->asString( node, "Type", type_constant ) ){
@@ -302,7 +300,7 @@ uint64 PenaltyDatabase::parseBodyNode( const YAML::Node& node ){
 	}
 
 	if( this->nodeExists( node, "LevelDifferences" ) ){
-		for( const YAML::Node& levelNode : node["LevelDifferences"] ){
+		for( const auto& levelNode : node["LevelDifferences"] ){
 			if( !this->nodesExist( levelNode, { "Difference", "Rate" } ) ){
 				return 0;
 			}
@@ -1295,7 +1293,7 @@ bool pc_isequipped(struct map_session_data *sd, t_itemid nameid)
 			continue;
 		if( sd->inventory_data[index]->nameid == nameid )
 			return true;
-		for( j = 0; j < sd->inventory_data[index]->slots; j++ ){
+		for( j = 0; j < MAX_SLOTS; j++ ){
 			if( sd->inventory.u.items_inventory[index].card[j] == nameid )
 				return true;
 		}
@@ -1683,6 +1681,9 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->canskill_tick = tick;
 	sd->cansendmail_tick = tick;
 	sd->idletime = last_tick;
+
+	sd->regen.tick.hp = tick;
+	sd->regen.tick.sp = tick;
 
 	for(int i = 0; i < MAX_SPIRITBALL; i++)
 		sd->spirit_timer[i] = INVALID_TIMER;
@@ -2690,7 +2691,7 @@ static void pc_bonus_addeff(std::vector<s_addeffect> &effect, enum sc_type sc, s
 		flag |= ATF_WEAPON; //Default type: weapon.
 
 	if (!duration)
-		duration = (unsigned int)skill_get_time2(status_sc2skill(sc), 7);
+		duration = (unsigned int)skill_get_time2(status_db.getSkill(sc), 7);
 
 	for (auto &it : effect) {
 		if (it.sc == sc && it.flag == flag) {
@@ -2732,7 +2733,7 @@ static void pc_bonus_addeff_onskill(std::vector<s_addeffectonskill> &effect, enu
 	}
 
 	if (!duration)
-		duration = (unsigned int)skill_get_time2(status_sc2skill(sc), 7);
+		duration = (unsigned int)skill_get_time2(status_db.getSkill(sc), 7);
 
 	for (auto &it : effect) {
 		if (it.sc == sc && it.skill_id == skill_id && it.target == target) {
@@ -3907,6 +3908,9 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 			break;
 		case SP_ABSORB_DMG_MAXHP: // bonus bAbsorbDmgMaxHP,n;
 			sd->bonus.absorb_dmg_maxhp = max(sd->bonus.absorb_dmg_maxhp, val);
+			break;
+		case SP_ABSORB_DMG_MAXHP2:
+			sd->bonus.absorb_dmg_maxhp2 = max(sd->bonus.absorb_dmg_maxhp2, val);
 			break;
 		case SP_CRITICAL_RANGEATK: // bonus bCriticalLong,n;
 			if (sd->state.lr_flag != 2)
@@ -5697,7 +5701,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 		case ITEMID_M_BERSERK_POTION:
 			if( sd->md == NULL || sd->md->db == NULL )
 				return false;
-			if( sd->md->sc.data[SC_BERSERK] )
+			if( sd->md->sc.cant.consume )
 				return false;
 			if( nameid == ITEMID_M_AWAKENING_POTION && sd->md->db->lv < 40 )
 				return false;
@@ -5738,24 +5742,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 	if (!pc_job_can_use_item(sd,item))
 		return false;
 	
-	if (sd->sc.count && (
-		sd->sc.data[SC_BERSERK] || sd->sc.data[SC_SATURDAYNIGHTFEVER] ||
-		(sd->sc.data[SC_GRAVITATION] && sd->sc.data[SC_GRAVITATION]->val3 == BCT_SELF) ||
-		sd->sc.data[SC_TRICKDEAD] ||
-		sd->sc.data[SC_HIDING] ||
-		sd->sc.data[SC__SHADOWFORM] ||
-		sd->sc.data[SC__INVISIBILITY] ||
-		sd->sc.data[SC__MANHOLE] ||
-		sd->sc.data[SC_DEEPSLEEP] ||
-		sd->sc.data[SC_CRYSTALIZE] ||
-		sd->sc.data[SC_KAGEHUMI] ||
-		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOITEM) ||
-		sd->sc.data[SC_KINGS_GRACE] ||
-		sd->sc.data[SC_SUHIDE] ||
-		sd->sc.data[SC_HANDICAPSTATE_FROSTBITE] ||
-		sd->sc.data[SC_HANDICAPSTATE_SWOONING] ||
-		sd->sc.data[SC_HANDICAPSTATE_LIGHTNINGSTRIKE] ||
-		sd->sc.data[SC_HANDICAPSTATE_CRYSTALLIZATION]))
+	if (sd->sc.cant.consume)
 		return false;
 	
 	if (!pc_isItemClass(sd,item))
@@ -6292,24 +6279,23 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 
 		sd->state.pmap = sd->bl.m;
 		if (sc && sc->count) { // Cancel some map related stuff.
-			if (sc->data[SC_JAILED])
-				return SETPOS_MAPINDEX; //You may not get out!
-			status_change_end(&sd->bl, SC_BOSSMAPINFO, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_WARM, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_SUN_COMFORT, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_MOON_COMFORT, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_STAR_COMFORT, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_MIRACLE, INVALID_TIMER);
-			if (sc->data[SC_KNOWLEDGE]) {
-				struct status_change_entry *sce = sc->data[SC_KNOWLEDGE];
-				if (sce->timer != INVALID_TIMER)
-					delete_timer(sce->timer, status_change_timer);
-				sce->timer = add_timer(gettick() + skill_get_time(SG_KNOWLEDGE, sce->val1), status_change_timer, sd->bl.id, SC_KNOWLEDGE);
+			if (sc->cant.warp)
+				return SETPOS_MAPINDEX; // You may not get out!
+
+			for (const auto &it : status_db) {
+				if (sc->data[it.first]) {
+					if (it.second->flag[SCF_REMOVEONMAPWARP])
+						status_change_end(&sd->bl, static_cast<sc_type>(it.first), INVALID_TIMER);
+
+					if (it.second->flag[SCF_RESTARTONMAPWARP] && it.second->skill_id > 0) {
+						status_change_entry *sce = sd->sc.data[it.first];
+
+						if (sce->timer != INVALID_TIMER)
+							delete_timer(sce->timer, status_change_timer);
+						sce->timer = add_timer(gettick() + skill_get_time(it.second->skill_id, sce->val1), status_change_timer, sd->bl.id, it.first);
+					}
+				}
 			}
-			status_change_end(&sd->bl, SC_PROPERTYWALK, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_CLOAKING, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_SUHIDE, INVALID_TIMER);
 		}
 		for(int i = 0; i < EQI_MAX; i++ ) {
 			if( sd->equip_index[i] >= 0 )
@@ -6326,10 +6312,18 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 		bg_send_dot_remove(sd);
 		if (sd->regen.state.gc)
 			sd->regen.state.gc = 0;
-		// make sure vending is allowed here
-		if (sd->state.vending && mapdata && mapdata->flag[MF_NOVENDING]) {
-			clif_displaymessage (sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
-			vending_closevending(sd);
+
+		if (mapdata) {
+			// make sure vending is allowed here
+			if (sd->state.vending && mapdata->flag[MF_NOVENDING]) {
+				clif_displaymessage(sd->fd, msg_txt(sd, 276)); // "You can't open a shop on this map"
+				vending_closevending(sd);
+			}
+			// make sure buyingstore is allowed here
+			if (sd->state.buyingstore && mapdata->flag[MF_NOBUYINGSTORE]) {
+				clif_displaymessage(sd->fd, msg_txt(sd, 276)); // "You can't open a shop on this map"
+				buyingstore_close(sd);
+			}
 		}
 
 		channel_pcquit(sd,4); //quit map chan
@@ -6367,6 +6361,8 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 
 		if (sd->state.vending) // Stop vending
 			vending_closevending(sd);
+		if (sd->state.buyingstore) // Stop buyingstore
+			buyingstore_close(sd);
 
 		npc_script_event(sd, NPCE_LOGOUT);
 		//remove from map, THEN change x/y coordinates
@@ -6413,6 +6409,10 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 	if (sd->state.vending && map_getcell(m,x,y,CELL_CHKNOVENDING)) {
 		clif_displaymessage (sd->fd, msg_txt(sd,204)); // "You can't open a shop on this cell."
 		vending_closevending(sd);
+	}
+	if (sd->state.buyingstore && map_getcell(m, x, y, CELL_CHKNOBUYINGSTORE)) {
+		clif_displaymessage(sd->fd, msg_txt(sd, 204)); // "You can't open a shop on this cell."
+		buyingstore_close(sd);
 	}
 
 	if(sd->bl.prev != NULL){
@@ -6472,6 +6472,11 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 	}
 	else 
 		sd->count_rewarp = 0;
+
+	if (sd->state.vending)
+		vending_update(*sd);
+	if (sd->state.buyingstore)
+		buyingstore_update(*sd);
 	
 	return SETPOS_OK;
 }
@@ -6685,47 +6690,26 @@ uint8 pc_checkskill_imperial_guard(struct map_session_data *sd, short flag)
  */
 static void pc_checkallowskill(struct map_session_data *sd)
 {
-	const enum sc_type scw_list[] = {
-		SC_TWOHANDQUICKEN,
-		SC_ONEHAND,
-		SC_AURABLADE,
-		SC_PARRYING,
-		SC_SPEARQUICKEN,
-		SC_ADRENALINE,
-		SC_ADRENALINE2,
-		SC_DANCING,
-		SC_GATLINGFEVER,
-		SC_DANCING_KNIFE,
-	};
-	uint8 i;
 	nullpo_retv(sd);
 
 	if(!sd->sc.count)
 		return;
 
-	for (i = 0; i < ARRAYLENGTH(scw_list); i++)
-	{	// Skills requiring specific weapon types
-		if( scw_list[i] == SC_DANCING && !battle_config.dancing_weaponswitch_fix )
-			continue;
-		if(sd->sc.data[scw_list[i]] &&
-			!pc_check_weapontype(sd,skill_get_weapontype(status_sc2skill(scw_list[i]))))
-			status_change_end(&sd->bl, scw_list[i], INVALID_TIMER);
-	}
+	for (const auto &it : status_db) {
+		sc_type status = it.second->type;
+		std::bitset<SCF_MAX> flag = it.second->flag;
 
-	if(sd->sc.data[SC_SPURT] && sd->status.weapon)
-		// Spurt requires bare hands (feet, in fact xD)
-		status_change_end(&sd->bl, SC_SPURT, INVALID_TIMER);
+		if (flag[SCF_REQUIREWEAPON]) { // Skills requiring specific weapon types
+			if (status == SC_DANCING && !battle_config.dancing_weaponswitch_fix)
+				continue;
+			if (sd->sc.data[status] && !pc_check_weapontype(sd, skill_get_weapontype(it.second->skill_id)))
+				status_change_end(&sd->bl, status, INVALID_TIMER);
+		}
 
-	if(sd->status.shield <= 0) { // Skills requiring a shield
-		const enum sc_type scs_list[] = {
-			SC_AUTOGUARD,
-			SC_DEFENDER,
-			SC_REFLECTSHIELD,
-			SC_REFLECTDAMAGE
-		};
-		for (i = 0; i < ARRAYLENGTH(scs_list); i++)
-			if(sd->sc.data[scs_list[i]])
-				status_change_end(&sd->bl, scs_list[i], INVALID_TIMER);
+		if (flag[SCF_REQUIRESHIELD]) { // Skills requiring a shield
+			if (sd->sc.data[status] && sd->status.shield <= 0)
+				status_change_end(&sd->bl, status, INVALID_TIMER);
+		}
 	}
 }
 
@@ -7539,16 +7523,17 @@ int pc_checkbaselevelup(struct map_session_data *sd) {
 	status_percent_heal(&sd->bl,100,100);
 
 	if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE) {
-		sc_start(&sd->bl,&sd->bl,status_skill2sc(PR_KYRIE),100,1,skill_get_time(PR_KYRIE,1));
-		sc_start(&sd->bl,&sd->bl,status_skill2sc(PR_IMPOSITIO),100,1,skill_get_time(PR_IMPOSITIO,1));
-		sc_start(&sd->bl,&sd->bl,status_skill2sc(PR_MAGNIFICAT),100,1,skill_get_time(PR_MAGNIFICAT,1));
-		sc_start(&sd->bl,&sd->bl,status_skill2sc(PR_GLORIA),100,1,skill_get_time(PR_GLORIA,1));
-		sc_start(&sd->bl,&sd->bl,status_skill2sc(PR_SUFFRAGIUM),100,1,skill_get_time(PR_SUFFRAGIUM,1));
+		for (const auto &status : status_db) {
+			if (status.second->flag[SCF_SUPERNOVICEANGEL])
+				sc_start(&sd->bl, &sd->bl, status.second->type, 100, 1, skill_get_time(status.second->skill_id, 1));
+		}
 		if (sd->state.snovice_dead_flag)
 			sd->state.snovice_dead_flag = 0; //Reenable steelbody resurrection on dead.
 	} else if( (sd->class_&MAPID_BASEMASK) == MAPID_TAEKWON ) {
-		sc_start(&sd->bl,&sd->bl,status_skill2sc(AL_INCAGI),100,10,600000);
-		sc_start(&sd->bl,&sd->bl,status_skill2sc(AL_BLESSING),100,10,600000);
+		for (const auto &status : status_db) {
+			if (status.second->flag[SCF_TAEKWONANGEL])
+				sc_start(&sd->bl, &sd->bl, status.second->type, 100, 10, 600000);
+		}
 	}
 	clif_misceffect(&sd->bl,0);
 	npc_script_event(sd, NPCE_BASELVUP); //LORDALFA - LVLUPEVENT
@@ -9035,7 +9020,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			clif_resurrection(&sd->bl, 1);
 			if(battle_config.pc_invincible_time)
 				pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
-			sc_start(&sd->bl,&sd->bl,status_skill2sc(MO_STEELBODY),100,5,skill_get_time(MO_STEELBODY,5));
+			sc_start(&sd->bl,&sd->bl,SC_STEELBODY,100,5,skill_get_time(MO_STEELBODY,5));
 			if(mapdata_flag_gvg2(mapdata))
 				pc_respawn_timer(INVALID_TIMER, gettick(), sd->bl.id, 0);
 			return 0;
@@ -9243,7 +9228,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	// changed penalty options, added death by player if pk_mode [Valaris]
 	if(battle_config.death_penalty_type
 		&& (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE	// only novices will receive no penalty
-		&& !sd->sc.data[SC_BABY] && !sd->sc.data[SC_LIFEINSURANCE]
+	    && !sd->sc.cant.deathpenalty
 		&& !mapdata->flag[MF_NOEXPPENALTY] && !mapdata_flag_gvg2(mapdata))
 	{
 		t_exp base_penalty = 0;
@@ -10154,16 +10139,7 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	}
 
 	if ( (b_class&MAPID_UPPERMASK) != (sd->class_&MAPID_UPPERMASK) ) { //Things to remove when changing class tree.
-		std::shared_ptr<s_skill_tree> tree = skill_tree_db.find(sd->status.class_);
-
-		if (tree != nullptr && !tree->skills.empty()) {
-			for (const auto &skillsit : tree->skills) {
-				//Remove status specific to your current tree skills.
-				enum sc_type sc = status_skill2sc(skillsit.first);
-				if (sc > SC_COMMON_MAX && sd->sc.data[sc])
-					status_change_end(&sd->bl, sc, INVALID_TIMER);
-			}
-		}
+		status_db.changeSkillTree(sd);
 	}
 
 	if( (sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR && (b_class&MAPID_UPPERMASK) != MAPID_STAR_GLADIATOR) {
@@ -10305,6 +10281,9 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 		status_change_end(&sd->bl, SC_SPRITEMABLE, INVALID_TIMER);
 	if (sd->sc.data[SC_SOULATTACK] && !pc_checkskill(sd, SU_SOULATTACK))
 		status_change_end(&sd->bl, SC_SOULATTACK, INVALID_TIMER);
+	if( sd->sc.data[SC_SPIRIT] ){
+		status_change_end( &sd->bl, SC_SPIRIT, INVALID_TIMER );
+	}
 
 	if(sd->status.manner < 0)
 		clif_changestatus(sd,SP_MANNER,sd->status.manner);
@@ -10611,45 +10590,6 @@ bool pc_candrop(struct map_session_data *sd, struct item *item)
 	if( !pc_can_give_items(sd) || sd->sc.cant.drop) //check if this GM level can drop items
 		return false;
 	return (itemdb_isdropable(item, pc_get_group_level(sd)));
-}
-
-/**
- * Determines whether a player can attack based on status changes
- *  Why not use status_check_skilluse?
- *  "src MAY be null to indicate we shouldn't check it, this is a ground-based skill attack."
- *  Even ground-based attacks should be blocked by these statuses
- * Called from unit_attack and unit_attack_timer_sub
- * @retval true Can attack
- **/
-bool pc_can_attack( struct map_session_data *sd, int target_id ) {
-	nullpo_retr(false, sd);
-
-	if( pc_is90overweight(sd) || pc_isridingwug(sd) )
-		return false;
-
-	if (sd->state.block_action & PCBLOCK_ATTACK)
-		return false;
-
-	if(
-#ifdef RENEWAL
-		sd->sc.data[SC_BASILICA_CELL] ||
-#else
-		sd->sc.data[SC_BASILICA] ||
-#endif
-		sd->sc.data[SC__SHADOWFORM] ||
-		sd->sc.data[SC_CURSEDCIRCLE_ATKER] ||
-		sd->sc.data[SC_CURSEDCIRCLE_TARGET] ||
-		sd->sc.data[SC_CRYSTALIZE] ||
-		sd->sc.data[SC_ALL_RIDING] || // The client doesn't let you, this is to make cheat-safe
-		sd->sc.data[SC_TRICKDEAD] ||
-		(sd->sc.data[SC_VOICEOFSIREN] && sd->sc.data[SC_VOICEOFSIREN]->val2 == target_id) ||
-		sd->sc.data[SC_BLADESTOP] ||
-		sd->sc.data[SC_DEEPSLEEP] ||
-		(sd->sc.data[SC_GRAVITATION] && sd->sc.data[SC_GRAVITATION]->val3 == BCT_SELF) ||
-		sd->sc.data[SC_KINGS_GRACE] )
-			return false;
-
-	return true;
 }
 
 /*==========================================
@@ -11355,8 +11295,7 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 		}
 		return false;
 	}
-	if( sd->sc.count && (sd->sc.data[SC_BERSERK] || sd->sc.data[SC_SATURDAYNIGHTFEVER] ||
-		sd->sc.data[SC_KYOUGAKU] || (sd->sc.data[SC_PYROCLASTIC] && sd->inventory_data[n]->type == IT_WEAPON)) ) {
+	if( sd->sc.count && (sd->sc.cant.equip || (sd->sc.data[SC_PYROCLASTIC] && sd->inventory_data[n]->type == IT_WEAPON)) ) {
 		if( equipswitch ){
 			clif_equipswitch_add( sd, n, req_pos, ITEM_EQUIP_ACK_FAIL );
 		}else{
@@ -11678,13 +11617,8 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 		return false; //Nothing to unequip
 	}
 	// status change that makes player cannot unequip equipment
-	if (!(flag&2) && sd->sc.count &&
-		(sd->sc.data[SC_BERSERK] ||
-		sd->sc.data[SC_SATURDAYNIGHTFEVER] ||
-		sd->sc.data[SC__BLOODYLUST] ||
-		sd->sc.data[SC_KYOUGAKU] ||
-		(sd->sc.data[SC_PYROCLASTIC] &&
-		sd->inventory_data[n]->type == IT_WEAPON)))	// can't switch weapon
+	if (!(flag&2) && sd->sc.count &&( sd->sc.cant.unequip ||
+		(sd->sc.data[SC_PYROCLASTIC] &&	sd->inventory_data[n]->type == IT_WEAPON)))	// can't switch weapon
 	{
 		clif_unequipitemack(sd,n,0,0);
 		return false;
@@ -11728,7 +11662,8 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 	clif_unequipitemack(sd,n,pos,1);
 	pc_set_costume_view(sd);
 
-	status_change_end(&sd->bl,SC_HEAT_BARREL,INVALID_TIMER);
+	status_db.removeByStatusFlag(&sd->bl, { SCF_REMOVEONUNEQUIP });
+
 	// On weapon change (right and left hand)
 	if ((pos & EQP_ARMS) && sd->inventory_data[n]->type == IT_WEAPON) {
 		if (battle_config.ammo_unequip && !(flag & 4)) {
@@ -11753,20 +11688,12 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 			}
 		}
 
-		skill_enchant_elemental_end(&sd->bl, SC_NONE);
-		status_change_end(&sd->bl, SC_FEARBREEZE, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_EXEEDBREAK, INVALID_TIMER);
-#ifdef RENEWAL
-		status_change_end(&sd->bl, SC_MAXOVERTHRUST, INVALID_TIMER);
-#endif
+		status_db.removeByStatusFlag(&sd->bl, { SCF_REMOVEONUNEQUIPWEAPON });
 	}
 
 	// On armor change
 	if (pos & EQP_ARMOR) {
-		if (sd->sc.data[SC_HOVERING] && sd->inventory_data[n]->nameid == ITEMID_HOVERING_BOOSTER)
-			status_change_end(&sd->bl, SC_HOVERING, INVALID_TIMER);
-		//status_change_end(&sd->bl, SC_BENEDICTIO, INVALID_TIMER); // No longer is removed? Need confirmation
-		status_change_end(&sd->bl, SC_ARMOR_RESIST, INVALID_TIMER);
+		status_db.removeByStatusFlag(&sd->bl, { SCF_REMOVEONUNEQUIPARMOR });
 	}
 
 	// On equipment change
@@ -12709,7 +12636,7 @@ const std::string SkillTreeDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 SkillTreeDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 SkillTreeDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	std::string job_name;
 
 	if (!this->asString(node, "Job", job_name))
@@ -12731,14 +12658,15 @@ uint64 SkillTreeDatabase::parseBodyNode(const YAML::Node &node) {
 		tree = std::make_shared<s_skill_tree>();
 
 	if (this->nodeExists(node, "Inherit")) {
-		const YAML::Node &InheritNode = node["Inherit"];
+		const ryml::NodeRef& InheritNode = node["Inherit"];
 
 		for (const auto &Inheritit : InheritNode) {
-			std::string inheritname = Inheritit.first.as<std::string>();
+			std::string inheritname;
+			c4::from_chars(Inheritit.key(), &inheritname);
 			std::string inheritname_constant = "JOB_" + inheritname;
 
 			if (!script_get_constant(inheritname_constant.c_str(), &constant) || !pcdb_checkid(constant)) {
-				this->invalidWarning(InheritNode[inheritname], "Invalid job %s.\n", inheritname.c_str());
+				this->invalidWarning(InheritNode[Inheritit.key()], "Invalid job %s.\n", inheritname.c_str());
 				return 0;
 			}
 
@@ -13052,12 +12980,14 @@ const std::string JobDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 JobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (this->nodeExists(node, "Jobs")) {
-		const YAML::Node &jobsNode = node["Jobs"];
+		const ryml::NodeRef& jobsNode = node["Jobs"];
 
 		for (const auto &jobit : jobsNode) {
-			std::string job_name = jobit.first.as<std::string>(), job_name_constant = "JOB_" + job_name;
+			std::string job_name;
+			c4::from_chars(jobit.key(), &job_name);
+			std::string job_name_constant = "JOB_" + job_name;
 			int64 job_id;
 
 			if (!script_get_constant(job_name_constant.c_str(), &job_id)) {
@@ -13133,7 +13063,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (this->nodeExists(node, "BaseASPD")) {
-				const YAML::Node &aspdNode = node["BaseASPD"];
+				const ryml::NodeRef& aspdNode = node["BaseASPD"];
 				uint8 max = MAX_WEAPON_TYPE;
 
 #ifdef RENEWAL // Renewal adds an extra column for shields
@@ -13146,7 +13076,9 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 				}
 
 				for (const auto &aspdit : aspdNode) {
-					std::string weapon = aspdit.first.as<std::string>(), weapon_constant = "W_" + weapon;
+					std::string weapon;
+					c4::from_chars(aspdit.key(), &weapon);
+					std::string weapon_constant = "W_" + weapon;
 					int64 constant;
 
 					if (!script_get_constant(weapon_constant.c_str(), &constant)) {
@@ -13179,10 +13111,12 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (this->nodeExists(node, "MaxStats")) {
-				const YAML::Node &statNode = node["MaxStats"];
+				const ryml::NodeRef& statNode = node["MaxStats"];
 
 				for (const auto &statit : statNode) {
-					std::string stat = statit.first.as<std::string>(), stat_constant = "PARAM_" + stat;
+					std::string stat;
+					c4::from_chars(statit.key(), &stat);
+					std::string stat_constant = "PARAM_" + stat;
 					int64 constant;
 
 					if (!script_get_constant(stat_constant.c_str(), &constant)) {
@@ -13222,7 +13156,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (this->nodeExists(node, "BaseExp")) {
-				for (const YAML::Node &bexpNode : node["BaseExp"]) {
+				for (const ryml::NodeRef& bexpNode : node["BaseExp"]) {
 					uint16 level;
 
 					if (!this->asUInt16(bexpNode, "Level", level))
@@ -13265,7 +13199,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (this->nodeExists(node, "JobExp")) {
-				for (const YAML::Node &jexpNode : node["JobExp"]) {
+				for (const ryml::NodeRef& jexpNode : node["JobExp"]) {
 					uint16 level;
 
 					if (!this->asUInt16(jexpNode, "Level", level))
@@ -13291,9 +13225,9 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (this->nodeExists(node, "BonusStats")) {
-				const YAML::Node &bonusNode = node["BonusStats"];
+				const ryml::NodeRef& bonusNode = node["BonusStats"];
 
-				for (const YAML::Node &levelNode : bonusNode) {
+				for (const ryml::NodeRef& levelNode : bonusNode) {
 					uint16 level;
 
 					if (!this->asUInt16(levelNode, "Level", level))
@@ -13319,7 +13253,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 
 #ifdef HP_SP_TABLES
 			if (this->nodeExists(node, "BaseHp")) {
-				for (const YAML::Node &bhpNode : node["BaseHp"]) {
+				for (const ryml::NodeRef& bhpNode : node["BaseHp"]) {
 					uint16 level;
 
 					if (!this->asUInt16(bhpNode, "Level", level))
@@ -13345,7 +13279,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (this->nodeExists(node, "BaseSp")) {
-				for (const YAML::Node &bspNode : node["BaseSp"]) {
+				for (const ryml::NodeRef& bspNode : node["BaseSp"]) {
 					uint16 level;
 
 					if (!this->asUInt16(bspNode, "Level", level))
@@ -13371,7 +13305,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (this->nodeExists(node, "BaseAp")) {
-				for (const YAML::Node &bapNode : node["BaseAp"]) {
+				for (const ryml::NodeRef& bapNode : node["BaseAp"]) {
 					uint16 level;
 
 					if (!this->asUInt16(bapNode, "Level", level))
@@ -13576,7 +13510,7 @@ const std::string PlayerStatPointDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/statpoint.yml";
 }
 
-uint64 PlayerStatPointDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 PlayerStatPointDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (!this->nodesExist(node, { "Level", "Points" })) {
 		return 0;
 	}
@@ -14236,7 +14170,7 @@ void pc_bonus_script(struct map_session_data *sd) {
  * @return New created entry pointer or NULL if failed or NULL if duplicate fail
  * @author [Cydh]
  **/
-struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, const char *script_str, t_tick dur, enum efst_types icon, uint16 flag, uint8 type) {
+struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, const char *script_str, t_tick dur, enum efst_type icon, uint16 flag, uint8 type) {
 	struct script_code *script = NULL;
 	struct linkdb_node *node = NULL;
 	struct s_bonus_script_entry *entry = NULL;
@@ -14361,7 +14295,7 @@ TIMER_FUNC(pc_bonus_script_timer){
 * @param flag: Reason to remove the bonus_script. e_bonus_script_flags or e_bonus_script_types
 * @author [Cydh]
 **/
-void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag) {
+void pc_bonus_script_clear(struct map_session_data *sd, uint32 flag) {
 	struct linkdb_node *node = NULL;
 	uint16 count = 0;
 

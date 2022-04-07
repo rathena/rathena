@@ -88907,7 +88907,7 @@ Body:
     DamageMotion: 500
     Ai: 04
     Drops:
-      - Item: Deadly_Poison_Powder
+      - Item: DeadlyPoisonPowder
         Rate: 2500
       - Item: Mould_Powder
         Rate: 1500
