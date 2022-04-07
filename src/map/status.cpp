@@ -8858,7 +8858,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			sc_def = status->agi*50;
 			break;
 		case SC_JOINTBEAT:
-			tick_def2 = 1000 * ((status->luk / 5 + status->agi / 2) / 2); // (50 * LUK / 100 + 20 * AGI / 100) / 2
+			tick_def2 = 1000 * ((status->luk / 2 + status->agi / 5) / 2); // (50 * LUK / 100 + 20 * AGI / 100) / 2
 			break;
 		case SC_DEEPSLEEP:
 			tick_def2 = status_get_base_status(bl)->int_ * 25 + status_get_lv(bl) * 50;
