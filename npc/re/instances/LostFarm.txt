@@ -5,49 +5,49 @@
 //= Episode 17.2 Lost Farm in Time
 //===== Changelog: ===========================================
 //= 1.0 Initial release [crazyarashi]
+//= 1.1 Optimizations and cleanup [Everade]
 //============================================================
 
 1@lost,1,1,0	script	#lost_farm_control	-1,{
 	end;
-	
+
 OnInstanceInit:
-	set_instance_var("map$",instance_mapname("1@lost"));
-	for(.@i = 0; .@i < 7; .@i++){
-		instance_enable("Wooden Box#172_lost_" + .@i,false);
-		instance_enable("Silk#172_lost_" + .@i,false);
+	'map$ = instance_mapname("1@lost");
+	for (.@i = 0; .@i < 7; .@i++) {
+		disablenpc instance_npcname("Wooden Box#172_lost_" + .@i);
+		disablenpc instance_npcname("Silk#172_lost_" + .@i);
 	}
-	for(.@i = 0; .@i < 5; .@i++){
-		instance_enable("#172_lost_trap_0-" + .@i,false);
-		instance_enable("#172_lost_trap_1-" + .@i,false);
+	for (.@i = 0; .@i < 5; .@i++) {
+		disablenpc instance_npcname("#172_lost_trap_0-" + .@i);
+		disablenpc instance_npcname("#172_lost_trap_1-" + .@i);
 	}
-	instance_enable("Big Meow#172_lost_ev_0",false);
-	instance_enable("Big Meow#172_lost_ev_1",false);
-	instance_enable("Wooden Box#172_lost_7",false);
-end;
+	disablenpc instance_npcname("Big Meow#172_lost_ev_0");
+	disablenpc instance_npcname("Big Meow#172_lost_ev_1");
+	disablenpc instance_npcname("Wooden Box#172_lost_7");
+	end;
 }
 
 1@lost,161,42,0	script	#lost_farm_ev_0	HIDDEN_WARP_NPC,3,3,{
 	end;
-	
+
 OnTouch:
-	if(!is_party_leader()) end;
-	instance_disable(strnpcinfo(0));
-	set_instance_var("lost_farm",0);
-	set_instance_var("mob",0);
-	instance_enable("Wooden Box#172_lost_0",true);
+	if (!is_party_leader()) end;
+	disablenpc();
+	'lost_farm = 0;
+	'mob = 0;
+	enablenpc instance_npcname("Wooden Box#172_lost_0");
 	npctalk "Oh! Guest! Over here!!",instance_npcname("Wooden Box#172_lost_0");
-end;
+	end;
 }
 
 1@lost,163,47,3	script	Wooden Box#172_lost_0	4_WOODBOX,{
-	if(!is_party_leader()){
+	if (!is_party_leader()) {
 		mes "[ Silk ]";
 		mes "I'll talk to the leader of the guests!";
 		mes "Please bring the leader here!";
-		end;
+		close;
 	}
-	.@var = get_instance_var("lost_farm");
-	if(.@var == 0){
+	if ('lost_farm == 0) {
 		mes "[ Silk ]";
 		mes "Welcome to the breeding ground! I'm silk the one in charge of collecting!";
 		npctalk "Silk : Welcome to the breeding ground! I'm silk the one in charge of collecting!";
@@ -56,22 +56,22 @@ end;
 		mes "Eeek... Save me!";
 		npctalk "Silk : Eeek... Save me!";
 		close2;
-		set_instance_var("lost_farm",1);
+		'lost_farm = 1;
 		sleep2 1000;
-		instance_event("#172_lost_mob","OnSummon",false);
+		donpcevent instance_npcname("#172_lost_mob") + "::OnSummon";
 		end;
 	}
-	if(mobcount(get_instance_var("map$"),instance_npcname("#172_lost_mob") + "::OnMobKill"))
+	if (mobcount('map$,instance_npcname("#172_lost_mob") + "::OnMobKill"))
 		npctalk "Silk : Calm down the Pitayas!";
 	end;
 }
 
 1@lost,163,47,3	script	Silk#172_lost_0	4_EP17_BASKET,{
-	if(!is_party_leader()){
+	if (!is_party_leader()) {
 		mes "[ Silk ]";
 		mes "I'll talk to the leader of the guests!";
 		mes "Please bring the leader here!";
-		end;
+		close;
 	}
 	mes "[ Silk ]";
 	mes "Thank you for saving my life! According to Luina, the Pitaya are a gentle creature!";
@@ -113,21 +113,20 @@ end;
 	mes "Let's move on to the next habitat, it's around here. Ready? Here we go!";
 	npctalk "Silk : Let's move on to the next habitat, it's around here. Ready? Here we go!";
 	close2;
-	instance_enable("Silk#172_lost_1",true);
-	instance_warpall get_instance_var("map$"),218,149,instance_id();
-	instance_disable(strnpcinfo(0),false);
+	enablenpc instance_npcname("Silk#172_lost_1");
+	instance_warpall 'map$,218,149,instance_id();
+	disablenpc();
 	end;
 }
 
 1@lost,214,146,3	script	Silk#172_lost_1	4_EP17_BASKET,{
-	if(!is_party_leader()){
+	if (!is_party_leader()) {
 		mes "[ Silk ]";
 		mes "I'll talk to the leader of the guests!";
 		mes "Please bring the leader here!";
-		end;
+		close;
 	}
-	.@var = get_instance_var("lost_farm");
-	if(.@var == 1){
+	if ('lost_farm == 1) {
 		mes "[ Silk ]";
 		mes "This facility... As you can see, this is a convenient breeding ground for our scaled friends.";
 		npctalk "Silk : This facility... As you can see, this is a convenient breeding ground for our scaled friends.";
@@ -148,19 +147,19 @@ end;
 		mes "Hey... Guys, it's time for bars and rice~";
 		npctalk "Silk : Hey... Guys, it's time for bars and rice~";
 		close2;
-		set_instance_var("lost_farm",2);
+		'lost_farm = 2;
 		npctalk "Silk : I've sprinkled the food already, they'll show up soon!";
-		instance_hide(strnpcinfo(0),true);
-		instance_enable("Wooden Box#172_lost_1",true);
+		hideonnpc();
+		enablenpc instance_npcname("Wooden Box#172_lost_1");
 		sleep 1000;
-		instance_event("#172_lost_mob","OnSummon",false);
+		donpcevent instance_npcname("#172_lost_mob") + "::OnSummon";
 		sleep 3000;
 		npctalk "Silk : He~, Help me~~~~",instance_npcname("Wooden Box#172_lost_1");
 		sleep 3000;
 		npctalk "Silk : Save the automatic doll~~~~~",instance_npcname("Wooden Box#172_lost_1");
 		end;
 	}
-	if(.@var == 2){
+	if ('lost_farm == 2) {
 		mes "[ Silk ]";
 		mes "Haa, haa... I was so scared...";
 		npctalk "Silk : Haa, haa... I was so scared...";
@@ -181,10 +180,10 @@ end;
 		mes "The next one is a playground with rocks and sand. When I harvest, I'll have to shake off the sand first...";
 		npctalk "Silk : The next one is a playground with rocks and sand. When I harvest, I'll have to shake off the sand first...";
 		close2;
-		set_instance_var("lost_farm",3);
-		instance_enable("Silk#172_lost_2",true);
-		instance_warpall get_instance_var("map$"),86,101,instance_id();
-		instance_disable(strnpcinfo(0));
+		'lost_farm = 3;
+		enablenpc instance_npcname("Silk#172_lost_2");
+		instance_warpall 'map$,86,101,instance_id();
+		disablenpc();
 	}
 	end;
 }
@@ -195,14 +194,13 @@ end;
 }
 
 1@lost,91,92,3	script	Silk#172_lost_2	4_EP17_BASKET,{
-	if(!is_party_leader()){
+	if (!is_party_leader()) {
 		mes "[ Silk ]";
 		mes "I'll talk to the leader of the guests!";
 		mes "Please bring the leader here!";
-		end;
+		close;
 	}
-	.@var = get_instance_var("lost_farm");
-	if(.@var == 3){
+	if ('lost_farm == 3) {
 		mes "[ Silk ]";
 		mes "Don't mind my location...";
 		npctalk "Silk : Don't mind my location...";
@@ -219,19 +217,19 @@ end;
 		mes "Anyway, help me with the next harvest! Hey, guys~ It's time to eat~~";
 		npctalk "Silk : Anyway, help me with the next harvest! Hey, guys~ It's time to eat~~";
 		close2;
-		set_instance_var("lost_farm",4);
+		'lost_farm = 4;
 		npctalk "Silk : I've spread the food, so they'll show up soon!";
-		instance_hide(strnpcinfo(0),true);
-		instance_enable("Wooden Box#172_lost_2",true);
+		hideonnpc();
+		enablenpc instance_npcname("Wooden Box#172_lost_2");
 		sleep 1000;
-		instance_event("#172_lost_mob","OnSummon",false);
+		donpcevent instance_npcname("#172_lost_mob") + "::OnSummon";
 		sleep 3000;
 		npctalk "Silk : Oh, don't come here~~~",instance_npcname("Wooden Box#172_lost_2");
 		sleep 3000;
 		npctalk "Silk : Not me, not meeee~~~",instance_npcname("Wooden Box#172_lost_2");
 		end;
 	}
-	if(.@var == 4){
+	if ('lost_farm == 4) {
 		mes "[ Silk ]";
 		mes "Woo...";
 		npctalk "Silk : Woo...";
@@ -260,10 +258,10 @@ end;
 		mes "Next is the playground with an oasis-like pool. Let us go...";
 		npctalk "Silk : Next is the playground with an oasis-like pool. Let us go...";
 		close2;
-		set_instance_var("lost_farm",5);
-		instance_enable("Silk#172_lost_3",true);
-		instance_warpall get_instance_var("map$"),226,256,instance_id();
-		instance_disable(strnpcinfo(0));
+		'lost_farm = 5;
+		enablenpc instance_npcname("Silk#172_lost_3");
+		instance_warpall 'map$,226,256,instance_id();
+		disablenpc();
 	}
 	end;
 }
@@ -274,14 +272,13 @@ end;
 }
 
 1@lost,232,257,3	script	Silk#172_lost_3	4_EP17_BASKET,{
-	if(!is_party_leader()){
+	if (!is_party_leader()) {
 		mes "[ Silk ]";
 		mes "I'll talk to the leader of the guests!";
 		mes "Please bring the leader here!";
-		end;
+		close;
 	}
-	.@var = get_instance_var("lost_farm");
-	if(.@var == 5){
+	if ('lost_farm == 5) {
 		mes "[ Silk ]";
 		mes "Again, don't worry about my location...";
 		npctalk "Silk : Again, don't worry about my location...";
@@ -302,19 +299,19 @@ end;
 		mes "Let's look at your talent and spread the food! Guys~~ It's time to eat~~~";
 		npctalk "Silk : Let's look at your talent and spread the food! Guys~~ It's time to eat~~~";
 		close2;
-		set_instance_var("lost_farm",6);
-		instance_hide(strnpcinfo(0),true);
-		instance_enable("Wooden Box#172_lost_3",true);
+		'lost_farm = 6;
+		hideonnpc();
+		enablenpc instance_npcname("Wooden Box#172_lost_3");
 		npctalk "Silk : Hey, guys~ Not me~",instance_npcname("Wooden Box#172_lost_3");
 		sleep 1000;
-		instance_event("#172_lost_mob","OnSummon",false);
+		donpcevent instance_npcname("#172_lost_mob") + "::OnSummon";
 		sleep 3000;
 		npctalk "Silk : Don't come! Don't comeee!",instance_npcname("Wooden Box#172_lost_3");
 		sleep 3000;
 		npctalk "Silk : Don't come this waaaaaay!",instance_npcname("Wooden Box#172_lost_3");
 		end;
 	}
-	if(.@var == 6){
+	if ('lost_farm == 6) {
 		mes "[ Silk ]";
 		mes "...";
 		npctalk "Silk : ...";
@@ -347,10 +344,10 @@ end;
 		mes "Next up is near the entrance, but according to Luina's information, it's a sleepy area. You think it's about to wake up?";
 		npctalk "Silk : Next up is near the entrance, but according to Luina's information, it's a sleepy area. You think he's about to wake up?";
 		close2;
-		set_instance_var("lost_farm",7);
-		instance_enable("Silk#172_lost_4",true);
-		instance_warpall get_instance_var("map$"),242,117,instance_id();
-		instance_disable(strnpcinfo(0));
+		'lost_farm = 7;
+		enablenpc instance_npcname("Silk#172_lost_4");
+		instance_warpall 'map$,242,117,instance_id();
+		disablenpc();
 	}
 	end;
 }
@@ -361,14 +358,13 @@ end;
 }
 
 1@lost,247,119,3	script	Silk#172_lost_4	4_EP17_BASKET,{
-	if(!is_party_leader()){
+	if (!is_party_leader()) {
 		mes "[ Silk ]";
 		mes "I'll talk to the leader of the guests!";
 		mes "Please bring the leader here!";
-		end;
+		close;
 	}
-	.@var = get_instance_var("lost_farm");
-	if(.@var == 7){
+	if ('lost_farm == 7) {
 		mes "[ Silk ]";
 		mes "Deep breaths... Deep Breaths...";
 		npctalk "Silk : Deep breaths... Deep Breaths...";
@@ -389,19 +385,19 @@ end;
 		mes "So let's move on... The Pitayas here are sleepyheads, so the responses may be a little different. Now, guys...Come here...";
 		npctalk "Silk : So let's move on... The Pitayas here are sleepyheads, so the responses may be a little different. Now, guys...Come here...";
 		close2;
-		set_instance_var("lost_farm",8);
-		instance_hide(strnpcinfo(0),true);
-		instance_enable("Wooden Box#172_lost_4",true);
+		'lost_farm = 8;
+		hideonnpc();
+		enablenpc instance_npcname("Wooden Box#172_lost_4");
 		npctalk "Silk : ...";
 		sleep 1000;
-		instance_event("#172_lost_mob","OnSummon",false);
+		donpcevent instance_npcname("#172_lost_mob") + "::OnSummon";
 		sleep 3000;
 		npctalk "Silk : .....";
 		sleep 3000;
 		npctalk "Silk : ........... what's the difference!";
 		end;
 	}
-	if(.@var == 8){
+	if ('lost_farm == 8) {
 		mes "[ Silk ]";
 		mes "Phew...";
 		npctalk "Silk : Phew...";
@@ -441,10 +437,10 @@ end;
 		mes "Do we still have something to harvest? I'm sorry about that, too. Let's move to the next section.";
 		npctalk "Silk : Do we still have something to harvest? I'm sorry about that, too. Let's move to the next section.";
 		close2;
-		set_instance_var("lost_farm",10);
-		instance_enable("Silk#172_lost_5",true);
-		instance_warpall get_instance_var("map$"),116,165,instance_id();
-		instance_disable(strnpcinfo(0));
+		'lost_farm = 10;
+		enablenpc instance_npcname("Silk#172_lost_5");
+		instance_warpall 'map$,116,165,instance_id();
+		disablenpc();
 	}
 	end;
 }
@@ -455,14 +451,13 @@ end;
 }
 
 1@lost,106,160,3	script	Silk#172_lost_5	4_EP17_BASKET,{
-	if(!is_party_leader()){
+	if (!is_party_leader()) {
 		mes "[ Silk ]";
 		mes "I'll talk to the leader of the guests!";
 		mes "Please bring the leader here!";
-		end;
+		close;
 	}
-	.@var = get_instance_var("lost_farm");
-	if(.@var == 10){
+	if ('lost_farm == 10) {
 		mes "[ Silk ]";
 		mes "I'm worried...";
 		npctalk "Silk : I'm worried...";
@@ -487,11 +482,11 @@ end;
 		mes "So let me call the Pitayas around here...";
 		npctalk "Silk : So let me call the Pitayas around here...";
 		close2;
-		set_instance_var("lost_farm",11);
-		instance_hide(strnpcinfo(0),true);
-		instance_enable("Wooden Box#172_lost_5",true);
+		'lost_farm = 11;
+		hideonnpc();
+		enablenpc instance_npcname("Wooden Box#172_lost_5");
 		sleep 1000;
-		instance_event("#172_lost_mob","OnSummon",false);
+		donpcevent instance_npcname("#172_lost_mob") + "::OnSummon";
 		npctalk "Silk : I'm~~~",instance_npcname("Wooden Box#172_lost_5");
 		sleep 1000;
 		npctalk "Silk : ...fine~~~~~",instance_npcname("Wooden Box#172_lost_5");
@@ -499,7 +494,7 @@ end;
 		npctalk "Silk : Well, I'm telling you~~~~~~~~ Ugh!",instance_npcname("Wooden Box#172_lost_5");
 		end;
 	}
-	if(.@var == 11){
+	if ('lost_farm == 11) {
 		mes "[ Silk ]";
 		mes "Sigh...";
 		npctalk "Silk : Sigh...";
@@ -536,7 +531,7 @@ end;
 		mes "Shall we go?";
 		npctalk "Silk : Shall we go?";
 		close2;
-		set_instance_var("lost_farm",12);
+		'lost_farm = 12;
 		setpcblock PCBLOCK_ALL,true;
 		sleep2 3000;
 		npctalk "Silk : The rose garden is where Boss Meow usually sleeps, is on the second floor.";
@@ -549,16 +544,17 @@ end;
 		sleep2 3000;
 		npctalk "Silk : That's okay, I have a good eyesight, so if you get there and give me a signal, I'll take care of it! Now, for the closest one, I'll show you the coordinates on the map...";
 		setpcblock PCBLOCK_ALL,false;
-		instance_enable("Big Meow#172_lost_ev_0",true);
-		instance_enable("Big Meow#172_lost_ev_1",true);
-		viewpoint2 get_instance_var("map$"),1,38,236,1,0xFFFF00;
-		viewpoint2 get_instance_var("map$"),1,287,236,2,0xFFFF00;
-		set_instance_var("lost_farm",12);
+		enablenpc instance_npcname("Big Meow#172_lost_ev_0");
+		enablenpc instance_npcname("Big Meow#172_lost_ev_1");
+		viewpointmap 'map$,1,38,236,1,0xFFFF00;
+		viewpointmap 'map$,1,287,236,2,0xFFFF00;
+		'lost_farm = 12;
 		end;
 	}
-	if(.@var == 12){
+	if ('lost_farm == 12) {
 		mes "[ Silk ]";
 		mes "You can choose one of the locations on the map and go.";
+		close;
 	}
 	end;
 }
@@ -569,14 +565,13 @@ end;
 }
 
 1@lost,161,315,3	script	Silk#172_lost_6	4_EP17_BASKET,{
-	.@var = get_instance_var("lost_farm");
-	if(!is_party_leader() && .@var < 21){
+	if (!is_party_leader() && 'lost_farm < 21) {
 		mes "[ Silk ]";
 		mes "I'll talk to the leader of the guests!";
 		mes "Please bring the leader here!";
-		end;
+		close;
 	}
-	if(.@var == 20){
+	if ('lost_farm == 20) {
 		mes "[ Silk ]";
 		mes "The parts that make up each one are different, so what can we use this for...?";
 		next;
@@ -595,25 +590,25 @@ end;
 		next;
 		mes "[ Silk ]";
 		mes "If you give me the Pitaya tail you have collected, today's farm experience is over! Come on, let's go outside!";
-		set_instance_var("lost_farm",21);
-		end;
+		'lost_farm = 21;
+		close;
 	}
-	if(isbegin_quest(8588) == 1){
+	if (isbegin_quest(8588) == 1) {
 		mes "[ Silk ]";
 		mes "Let's see... How many did you collect?";
 		next;
 		setarray .@item,1000093,1000094,1000095,1000096,1000097;
-		for(.@i = 0; .@i < getarraysize(.@item); .@i++){
-			if(countitem(.@item[.@i])){
+		for (.@i = 0; .@i < getarraysize(.@item); .@i++) {
+			if (countitem(.@item[.@i])) {
 				.@count += countitem(.@item[.@i]);
 				delitem .@item[.@i],countitem(.@item[.@i]);
 			}
 		}
-		if(.@count >= 20)
+		if (.@count >= 20)
 			.@reward = 4;
 		else
 			.@reward = 2;
-		if(countitem(1000098)){
+		if (countitem(1000098)) {
 			delitem 1000098,countitem(1000098);
 			.@reward += 2;
 		}
@@ -627,13 +622,13 @@ end;
 	mes "[ Silk ]";
 	mes "So... do you want to go out?";
 	next;
-	if(select("Go out.:Don't go out.") == 2){
+	if (select("Go out.:Don't go out.") == 2) {
 		mes "[ Silk ]";
 		mes "Are you waiting for your colleagues?";
 		mes "I'll wait for you, so please tell me when you want to go out~";
-		end;
+		close;
 	}
-	if(isbegin_quest(8589) == 0){
+	if (isbegin_quest(8589) == 0) {
 		mes "[ Silk ]";
 		mes "Luina... I finished the extension report, please say something to the guest after this!";
 		mes "I did a great job... *sob*";
@@ -646,18 +641,17 @@ end;
 }
 
 1@lost,161,315,3	script	Wooden Box#172_lost_6	4_WOODBOX,{
-	.@var = get_instance_var("lost_farm");
-	if(.@var < 19){
+	if ('lost_farm < 19) {
 		npctalk "Silk : You must play with all the Pitayas on your way here.";
 		end;
 	}
-	if(!is_party_leader()){
+	if (!is_party_leader()) {
 		mes "[ Silk ]";
 		mes "I'll talk to the leader of the guests!";
 		mes "Please bring the leader here!";
-		end;
+		close;
 	}
-	if(.@var == 19){
+	if ('lost_farm == 19) {
 		mes "[ Silk ]";
 		mes ".... come this way.";
 		npctalk "Silk : .... come this way.";
@@ -666,39 +660,38 @@ end;
 		mes "Boss Meow...!";
 		npctalk "Silk : Boss Meow...!";
 		close2;
-		instance_disable(strnpcinfo(0));
-		instance_enable("Wooden Box#172_lost_7",true);
+		disablenpc();
+		enablenpc instance_npcname("Wooden Box#172_lost_7");
 		sleep 2000;
-		instance_event("#172_lost_boss","OnBossSummon",false);
+		donpcevent instance_npcname("#172_lost_boss") + "::OnBossSummon";
 	}
 	end;
 }
 
 1@lost,161,315,3	script	Wooden Box#172_lost_7	4_WOODBOX,{
-	.@var = get_instance_var("lost_farm");
-	if(.@var == 19){
-		switch(rand(1,3)){
+	if ('lost_farm == 19) {
+		switch (rand(1,3)) {
 			case 1:
 				npctalk "Silk : He-Help me~~~~!";
 				break;
-				
+
 			case 2:
 				npctalk "Silk : Ca-calm Boss Meow down~~~";
 				break;
-				
+
 			case 3:
 				npctalk "Silk : Here~~ You can have my arm~~";
 				break;
 		}
 		end;
 	}
-	if(!is_party_leader()){
+	if (!is_party_leader()) {
 		mes "[ Silk ]";
 		mes "I'll talk to the leader of the guests!";
 		mes "Please bring the leader here!";
-		end;
+		close;
 	}
-	if(.@var == 20){
+	if ('lost_farm == 20) {
 		mes "[ Silk ]";
 		mes "Guest... Huh...";
 		npctalk "Silk : Guest... Huh...";
@@ -715,8 +708,8 @@ end;
 		mes "Come out for now.";
 		unittalk getcharid(3),strcharinfo(0) + " : Come out for now.";
 		close2;
-		instance_disable(strnpcinfo(0));
-		instance_enable("Silk#172_lost_6",true);
+		disablenpc();
+		enablenpc instance_npcname("Silk#172_lost_6");
 		npctalk "Silk : Yah!",instance_npcname("Silk#172_lost_6");
 	}
 	end;
@@ -727,53 +720,52 @@ end;
 	mes "Purr.";
 	next;
 	mes "-- Big meow is taking a nap. --";
-	end;
-	
+	close;
+
 OnTouch:
 	.@id = atoi(replacestr(strnpcinfo(2),"172_lost_ev_",""));
-	if(get_instance_var("lost_farm") == 12){
-		set_instance_var("lost_farm",13);
+	if ('lost_farm == 12) {
+		'lost_farm = 13;
 		npctalk "Big Meow : Grrrrrrr.";
-		instance_hide(strnpcinfo(0),true);
-		instance_event(strnpcinfo(0),"OnSummon",false);
-		for(.@i = 0; .@i < 5; .@i++)
-			instance_enable("#172_lost_trap_" + .@id + "-" + .@i,true);
-		instance_disable("Silk#172_lost_5");
-		instance_enable("Wooden Box#172_lost_6",true);
-		if(!.@id)
-			viewpoint2 get_instance_var("map$"),2,38,236,1,0xFFFF00;
+		hideonnpc();
+		donpcevent instance_npcname(strnpcinfo(0)) + "::OnSummon";
+		for (.@i = 0; .@i < 5; .@i++)
+			enablenpc instance_npcname("#172_lost_trap_" + .@id + "-" + .@i);
+		disablenpc instance_npcname("Silk#172_lost_5");
+		enablenpc instance_npcname("Wooden Box#172_lost_6");
+		if (!.@id)
+			viewpointmap 'map$,2,38,236,1,0xFFFF00;
 		else
-			viewpoint2 get_instance_var("map$"),2,287,236,2,0xFFFF00;
+			viewpointmap 'map$,2,287,236,2,0xFFFF00;
 		end;
 	}
-	if(get_instance_var("lost_farm") < 19){
+	if ('lost_farm < 19) {
 		npctalk "Big Meow : *Sneeze*";
-		if(.@id)
-			warp get_instance_var("map$"),287,226;
+		if (.@id)
+			warp 'map$,287,226;
 		else
-			warp get_instance_var("map$"),38,226;
+			warp 'map$,38,226;
 	}
-end;
+	end;
 
 OnSummon:
-	.@map$ = get_instance_var("map$");
 	getmapxy(.@m$,.@x,.@y,BL_NPC);
-	if(atoi(replacestr(strnpcinfo(2),"172_lost_ev_","")))
-		monster .@map$,.@x,.@y,"Big Meow",20661,1,instance_npcname(strnpcinfo(0)) + "::OnMobKill";
+	if (atoi(replacestr(strnpcinfo(2),"172_lost_ev_","")))
+		monster 'map$,.@x,.@y,"Big Meow",20661,1,instance_npcname(strnpcinfo(0)) + "::OnMobKill";
 	else
-		monster .@map$,.@x,.@y,"Big Meow",20662,1,instance_npcname(strnpcinfo(0)) + "::OnMobKill";
+		monster 'map$,.@x,.@y,"Big Meow",20662,1,instance_npcname(strnpcinfo(0)) + "::OnMobKill";
 	sleep 3000;
-	mapannounce .@map$,"Silk : Ahhhhhhhhhhhh! Save me!!",bc_yellow;
+	mapannounce 'map$,"Silk : Ahhhhhhhhhhhh! Save me!!",bc_yellow;
 	sleep 3000;
-	mapannounce .@map$,"Silk : I was successful!!!!!!",bc_yellow;
+	mapannounce 'map$,"Silk : I was successful!!!!!!",bc_yellow;
 	sleep 3000;
-	mapannounce .@map$,"Silk : I'll wait in front of the Boss Meow!",bc_yellow;
-end;
+	mapannounce 'map$,"Silk : I'll wait in front of the Boss Meow!",bc_yellow;
+	end;
 
 OnMobKill:
-	instance_disable(strnpcinfo(0));
-	set_instance_var("lost_farm",get_instance_var("lost_farm") + 1);
-end;
+	disablenpc();
+	'lost_farm += 1;
+	end;
 }
 
 1@lost,286,253,3	duplicate(Big Meow#172_lost_ev_0)	Big Meow#172_lost_ev_1	20661,4,4
@@ -781,31 +773,41 @@ end;
 
 1@lost,38,265,0	script	#172_lost_trap_0-0	HIDDEN_WARP_NPC,5,5,{
 	end;
-	
+
 OnTouch:
-	.@map$ = get_instance_var("map$");
 	.@id = atoi(replacestr(strnpcinfo(2),"172_lost_trap_0-",""));
-	if(get_instance_var(strnpcinfo(2))) end;
-	set_instance_var(strnpcinfo(2),1);
-	switch(.@id){
-		case 0: setarray .@xy$,39,269,20663,"Pearl",37,269,20662,"Sapphire",36,264,20660,"Ruby",38,268,20661,"Diamond",36,269,20664,"Emerald"; break;
-		case 1: setarray .@xy$,35,296,20660,"Sardonyx",40,296,20664,"Opal",36,294,20662,"Topaz",38,299,20661,"Zircon",34,298,20663,"Amethyst"; break;
-		case 2:
-			setarray .@xy$,48,319,20662,"Aquamarine",51,319,20660,"Garnet",45,317,20663,"Iolite",49,314,20661,"Citrine",49,320,20664,"Peridot",
-			39,300,20660,"Sardonyx",39,300,20664,"Opal",39,300,20662,"Topaz",39,300,20661,"Zircon",39,300,20663,"Amethyst";
+	if (getd("'" + strnpcinfo(2)))
+		end;
+	setd("'" + strnpcinfo(2),1);
+	switch (.@id) {
+		case 0:
+			setarray .@xy$,39,269,20663,"Pearl",37,269,20662,"Sapphire",36,264,20660,"Ruby",38,268,20661,"Diamond",36,269,20664,"Emerald";
 			break;
-			
-		case 3: setarray .@xy$,92,318,20660,"Rutile",95,317,20662,"Aragonite",91,316,20661,"Amber",90,315,20662,"Tanzanite",89,316,20662,"Obsidian"; break;
-		case 4: setarray .@xy$,139,317,20660,"Onyx",139,318,20663,"Tanzite",132,314,20660,"Jasper",137,313,20660,"Rodonite",133,319,20662,"Jet"; break;
+
+		case 1:
+			setarray .@xy$,35,296,20660,"Sardonyx",40,296,20664,"Opal",36,294,20662,"Topaz",38,299,20661,"Zircon",34,298,20663,"Amethyst";
+			break;
+
+		case 2:
+			setarray .@xy$,48,319,20662,"Aquamarine",51,319,20660,"Garnet",45,317,20663,"Iolite",49,314,20661,"Citrine",49,320,20664,"Peridot",39,300,20660,"Sardonyx",39,300,20664,"Opal",39,300,20662,"Topaz",39,300,20661,"Zircon",39,300,20663,"Amethyst";
+			break;
+
+		case 3:
+			setarray .@xy$,92,318,20660,"Rutile",95,317,20662,"Aragonite",91,316,20661,"Amber",90,315,20662,"Tanzanite",89,316,20662,"Obsidian";
+			break;
+
+		case 4:
+			setarray .@xy$,139,317,20660,"Onyx",139,318,20663,"Tanzite",132,314,20660,"Jasper",137,313,20660,"Rodonite",133,319,20662,"Jet";
+			break;
 	}
-	for(.@i = 0; .@i < getarraysize(.@xy$); .@i += 4)
-		monster .@map$,atoi(.@xy$[.@i]),atoi(.@xy$[.@i+1]),.@xy$[.@i+3],atoi(.@xy$[.@i+2]),1,instance_npcname(strnpcinfo(0)) + "::OnMobKill";	
-end;
+	for (.@i = 0; .@i < getarraysize(.@xy$); .@i += 4)
+		monster 'map$,atoi(.@xy$[.@i]),atoi(.@xy$[.@i+1]),.@xy$[.@i+3],atoi(.@xy$[.@i+2]),1,instance_npcname(strnpcinfo(0)) + "::OnMobKill";
+	end;
 
 OnMobKill:
-	if(!mobcount(get_instance_var("map$"),instance_npcname(strnpcinfo(0)) + "::OnMobKill"))
-		set_instance_var("lost_farm",get_instance_var("lost_farm") + 1);
-end;
+	if (!mobcount('map$,instance_npcname(strnpcinfo(0)) + "::OnMobKill"))
+		'lost_farm",'lost_farm + 1);
+	end;
 }
 
 1@lost,38,296,0	duplicate(#172_lost_trap_0-0)	#172_lost_trap_0-1	HIDDEN_WARP_NPC,5,5
@@ -815,27 +817,41 @@ end;
 
 1@lost,286,267,0	script	#172_lost_trap_1-0	HIDDEN_WARP_NPC,5,5,{
 	end;
-	
+
 OnTouch:
-	.@map$ = get_instance_var("map$");
 	.@id = atoi(replacestr(strnpcinfo(2),"172_lost_trap_1-",""));
-	if(get_instance_var(strnpcinfo(2))) end;
-	set_instance_var(strnpcinfo(2),1);
-	switch(.@id){
-		case 0: setarray .@xy$,283,265,20663,"Pearl",287,267,20662,"Sapphire",288,268,20660,"Ruby",290,265,20661,"Diamond",288,262,20664,"Emerald"; break;
-		case 1: setarray .@xy$,287,299,20660,"Sardonyx",289,298,20664,"Opal",284,295,20662,"Topaz",290,291,20661,"Zircon",287,293,20663,"Amethyst"; break;
-		case 2: setarray .@xy$,274,318,20662,"Aquamarine",272,316,20660,"Garnet",279,318,20663,"Iolite",278,316,20661,"Citrine",275,315,20664,"Peridot"; break;
-		case 3: setarray .@xy$,236,318,20660,"Rutile",234,318,20662,"Aragonite",241,316,20661,"Amber",241,315,20662,"Tanzanite",239,315,20662,"Obsidian"; break;
-		case 4: setarray .@xy$,201,317,20662,"Onyx",199,315,20663,"Tanzite",201,314,20660,"Jasper",202,317,20660,"Rodonite",202,318,20662,"Jet"; break;
+	if (getd("'" + strnpcinfo(2)))
+		end;
+	setd("'" + strnpcinfo(2),1);
+	switch (.@id) {
+		case 0:
+			setarray .@xy$,283,265,20663,"Pearl",287,267,20662,"Sapphire",288,268,20660,"Ruby",290,265,20661,"Diamond",288,262,20664,"Emerald";
+			break;
+
+		case 1:
+			setarray .@xy$,287,299,20660,"Sardonyx",289,298,20664,"Opal",284,295,20662,"Topaz",290,291,20661,"Zircon",287,293,20663,"Amethyst";
+			break;
+
+		case 2:
+			setarray .@xy$,274,318,20662,"Aquamarine",272,316,20660,"Garnet",279,318,20663,"Iolite",278,316,20661,"Citrine",275,315,20664,"Peridot";
+			break;
+
+		case 3:
+			setarray .@xy$,236,318,20660,"Rutile",234,318,20662,"Aragonite",241,316,20661,"Amber",241,315,20662,"Tanzanite",239,315,20662,"Obsidian";
+			break;
+
+		case 4:
+			setarray .@xy$,201,317,20662,"Onyx",199,315,20663,"Tanzite",201,314,20660,"Jasper",202,317,20660,"Rodonite",202,318,20662,"Jet";
+			break;
 	}
-	for(.@i = 0; .@i < getarraysize(.@xy$); .@i += 4)
-		monster .@map$,atoi(.@xy$[.@i]),atoi(.@xy$[.@i+1]),.@xy$[.@i+3],atoi(.@xy$[.@i+2]),1,instance_npcname(strnpcinfo(0)) + "::OnMobKill";	
-end;
+	for (.@i = 0; .@i < getarraysize(.@xy$); .@i += 4)
+		monster 'map$,atoi(.@xy$[.@i]),atoi(.@xy$[.@i+1]),.@xy$[.@i+3],atoi(.@xy$[.@i+2]),1,instance_npcname(strnpcinfo(0)) + "::OnMobKill";
+	end;
 
 OnMobKill:
-	if(!mobcount(get_instance_var("map$"),instance_npcname(strnpcinfo(0)) + "::OnMobKill"))
-		set_instance_var("lost_farm",get_instance_var("lost_farm") + 1);
-end;
+	if (!mobcount('map$,instance_npcname(strnpcinfo(0)) + "::OnMobKill"))
+		'lost_farm += 1;
+	end;
 }
 
 1@lost,287,296,0	duplicate(#172_lost_trap_1-0)	#172_lost_trap_1-1	HIDDEN_WARP_NPC,5,5
@@ -845,134 +861,127 @@ end;
 
 1@lost,1,1,0	script	#172_lost_mob	HIDDEN_WARP_NPC,{
 	end;
-	
+
 OnSummon:
-	.@map$ = get_instance_var("map$");
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill";
-	.@id = get_instance_var("mob");
-	switch(.@id){
+	switch ('mob) {
 		case 0:
 			setarray .@xy$,155,43,20660,"King Eyes",154,50,20664,"Happy",158,49,20661,"Toto",162,48,20662,"Lightning",168,49,20660,"Cutie",170,45,20663,"Woody",165,42,20664,"Rusk";
 			break;
-			
+
 		case 1:
 			setarray .@xy$,210,148,20662,"Lucy",208,153,20660,"Elizabeth",215,151,20664,"Dorothy",216,151,20661,"Clara",211,143,20662,"Coco",211,144,20663,"Cloud",216,151,20660,"Harmony";
 			break;
-			
+
 		case 2:
 			setarray .@xy$,81,103,20661,"Lotti",81,99,20660,"Sally",82,95,20662,"Glory",91,108,20664,"Connie",92,105,20661,"Boris",92,99,20664,"Rony",89,94,20663,"Mikey";
 			break;
-			
+
 		case 3:
 			setarray .@xy$,227,261,20664,"Rudolf",223,262,20663,"Daisy",217,260,20660,"Adonis",216,252,20662,"Bingo",223,253,20663,"Molly",228,247,20661,"Sammy",234,253,20662,"Joy";
 			break;
-			
+
 		case 4:
 			setarray .@xy$,248,115,20664,"Dough",247,110,20663,"Roro",246,120,20661,"Jasmine",243,124,20660,"Melody",247,120,20664,"Misty",244,115,20662,"Sandy",243,116,20661,"Bonnie";
 			break;
-			
+
 		case 5:
 			setarray .@xy$,108,164,20661,"Berry",107,169,20660,"Rain",111,173,20663,"Windy",115,173,20661,"Poppie",119,169,20662,"Lala",111,160,20664,"Sasha",115,161,20660,"Emerald";
 			break;
 	}
-	for(.@i = 0; .@i < getarraysize(.@xy$); .@i += 4)
-		monster .@map$,atoi(.@xy$[.@i]),atoi(.@xy$[.@i+1]),.@xy$[.@i+3],atoi(.@xy$[.@i+2]),1,.@event$;
-end;
+	for (.@i = 0; .@i < getarraysize(.@xy$); .@i += 4)
+		monster 'map$,atoi(.@xy$[.@i]),atoi(.@xy$[.@i+1]),.@xy$[.@i+3],atoi(.@xy$[.@i+2]),1,.@event$;
+	end;
 
 OnMobKill:
-	.@map$ = get_instance_var("map$");
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill";
-	.@id = get_instance_var("mob");
-	.@count = mobcount(.@map$,.@event$);
-	switch(.@id){
+	.@count = mobcount('map$,.@event$);
+	switch ('mob) {
 		case 0:
 			break;
-			
+
 		default:
-			if(!.@count) break;
-			if(.@count > 1) 
-				npctalk "Silk : There are " + .@count + " left!",instance_npcname("Wooden Box#172_lost_" + .@id);
+			if (!.@count) break;
+			if (.@count > 1)
+				npctalk "Silk : There are " + .@count + " left!",instance_npcname("Wooden Box#172_lost_" + 'mob);
 			else
-				npctalk "Silk : There is " + .@count + " left!",instance_npcname("Wooden Box#172_lost_" + .@id);
+				npctalk "Silk : There is " + .@count + " left!",instance_npcname("Wooden Box#172_lost_" + 'mob);
 			break;
 	}
-	if(!.@count){
-		instance_event(strnpcinfo(0),"OnEvent0" + .@id,false);
-		set_instance_var("mob",(.@id + 1));
+	if (!.@count) {
+		donpcevent instance_npcname(strnpcinfo(0)) + "::OnEvent0" + 'mob;
+		'mob += 1;
 	}
-end;
+	end;
 
 OnEvent00:
-	instance_disable("Wooden Box#172_lost_0");
-	instance_enable("Silk#172_lost_0",true);
+	disablenpc instance_npcname("Wooden Box#172_lost_0");
+	enablenpc instance_npcname("Silk#172_lost_0");
 	sleep 1000;
 	npctalk "Silk : !!",instance_npcname("Silk#172_lost_0");
-end;
+	end;
 
 OnEvent01:
-	instance_disable("Wooden Box#172_lost_1");
-	instance_hide("Silk#172_lost_1",false);
+	disablenpc instance_npcname("Wooden Box#172_lost_1");
+	hideoffnpc instance_npcname("Silk#172_lost_1");
 	npctalk "Silk : ...Is it over?",instance_npcname("Silk#172_lost_1");
-end;
+	end;
 
 OnEvent02:
-	instance_disable("Wooden Box#172_lost_2");
-	instance_hide("Silk#172_lost_2",false);
-end;
+	disablenpc instance_npcname("Wooden Box#172_lost_2");
+	hideoffnpc instance_npcname("Silk#172_lost_2");
+	end;
 
 OnEvent03:
-	instance_disable("Wooden Box#172_lost_3");
-	instance_hide("Silk#172_lost_3",false);
+	disablenpc instance_npcname("Wooden Box#172_lost_3");
+	hideoffnpc instance_npcname("Silk#172_lost_3");
 	npctalk "Silk : ...Oh, my...",instance_npcname("Silk#172_lost_3");
-end;
+	end;
 
 OnEvent04:
-	instance_disable("Wooden Box#172_lost_4");
-	instance_hide("Silk#172_lost_4",false);
+	disablenpc instance_npcname("Wooden Box#172_lost_4");
+	hideoffnpc instance_npcname("Silk#172_lost_4");
 	npctalk "Silk : Is it over?!",instance_npcname("Silk#172_lost_4");
-end;
+	end;
 
 OnEvent05:
-	instance_disable("Wooden Box#172_lost_5");
-	instance_hide("Silk#172_lost_5",false);
+	disablenpc instance_npcname("Wooden Box#172_lost_5");
+	hideoffnpc instance_npcname("Silk#172_lost_5");
 	npctalk "Silk : Sigh...",instance_npcname("Silk#172_lost_5");
-end;
+	end;
 }
 
 1@lost,1,1,0	script	#172_lost_boss	HIDDEN_WARP_NPC,{
 	end;
-	
+
 OnBossSummon:
-	.@map$ = get_instance_var("map$");
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnBossKill";
-	monster .@map$,167,318,"Boss Meow",20659,1,.@event$;
-	set_instance_var("gid",$@mobid[0]);
-	instance_event(strnpcinfo(0),"OnSlaveSummon",false);
-end;
+	monster 'map$,167,318,"Boss Meow",20659,1,.@event$;
+	'gid = $@mobid[0];
+	donpcevent instance_npcname(strnpcinfo(0)) + "::OnSlaveSummon";
+	end;
 
 OnBossKill:
-	.@map$ = get_instance_var("map$");
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnSlaveKill";
-	killmonster .@map$,.@event$;
-	set_instance_var("lost_farm",20);
-end;
+	killmonster 'map$,.@event$;
+	'lost_farm = 20;
+	end;
 
 OnSlaveSummon:
-	.@map$ = get_instance_var("map$");
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnSlaveKill";
 	setarray .@xy$,157,316,20661,"Mora",0,167,314,20664,"Max",0,166,319,20664,"Cache",3000,
 	172,318,20655,"Sammy",0,172,325,20656,"Lightning",0,169,329,20657,"Daisy",0,156,329,20658,"Rudolf",0,
 	155,318,20654,"Happy",3000,156,329,20658,"Joy",0,169,329,20657,"Glory",0,150,323,20664,"King Eyes",0,161,332,20656,"Elizabeth",6000,
 	150,320,20660,"Roro",0,152,314,20661,"Toto",0,166,327,20664,"Dough",174,318,20660,"Adonis",0,172,313,20662,"Coco",0;
-	for(.@i = 0; .@i < getarraysize(.@xy$); .@i += 5){
-		if(unitexists(get_instance_var("gid"))){
-			monster .@map$,atoi(.@xy$[.@i]),atoi(.@xy$[.@i+1]),.@xy$[.@i+3],atoi(.@xy$[.@i+2]),1,.@event$;
+	for (.@i = 0; .@i < getarraysize(.@xy$); .@i += 5) {
+		if (unitexists('gid)) {
+			monster 'map$,atoi(.@xy$[.@i]),atoi(.@xy$[.@i+1]),.@xy$[.@i+3],atoi(.@xy$[.@i+2]),1,.@event$;
 			sleep (atoi(.@xy$[.@i+4]) == 0 ? 1 : atoi(.@xy$[.@i+4]));
 		} else {
-			killmonster .@map$,.@event$;
+			killmonster 'map$,.@event$;
 			break;
 		}
 	}
 OnSlaveKill:
-end;
+	end;
 }
