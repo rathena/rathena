@@ -634,7 +634,10 @@ OnSummonSkill:
 	.@gid = 'boss_gid;
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnSummonKill";
 	freeloop(true);
-	while(unitexists(.@gid)) {	
+	while(unitexists(.@gid)) {
+		sleep 100;
+		if(!unitexists(.@gid)) 
+			end;
 		getunitdata .@gid,.@data;
 		if (.@data[UMOB_HP] <= ((.@data[UMOB_MAXHP]/10) * 3) && 'skill == 0)
 			'skill = 1;
@@ -656,7 +659,6 @@ OnSummonSkill:
 			}
 		} else
 			break;
-		sleep 100;
 	}
 	freeloop(false);
 OnSummonKill:
