@@ -90892,8 +90892,8 @@ Body:
     Name: EL1-A17T
     Level: 118
     Hp: 16412000
-    BaseExp: 5279658
-    JobExp: 4585648
+    BaseExp: 2639829
+    JobExp: 2292824
     Attack: 1543
     Attack2: 854
     Defense: 355
@@ -90911,8 +90911,8 @@ Body:
     Race: Formless
     Element: Neutral
     ElementLevel: 3
-    WalkSpeed: 110
-    AttackDelay: 1005
+    WalkSpeed: 220
+    AttackDelay: 128
     AttackMotion: 1004
     DamageMotion: 240
     Ai: 21
@@ -90936,8 +90936,8 @@ Body:
     Name: E-EA1L
     Level: 116
     Hp: 24810
-    BaseExp: 5376
-    JobExp: 4906
+    BaseExp: 2688
+    JobExp: 2453
     Attack: 1042
     Attack2: 185
     Defense: 75
@@ -90956,7 +90956,7 @@ Body:
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 110
-    AttackDelay: 819
+    AttackDelay: 741
     AttackMotion: 1536
     DamageMotion: 480
     Ai: 04
@@ -90975,8 +90975,8 @@ Body:
     Name: E-EA2S
     Level: 117
     Hp: 26200
-    BaseExp: 5448
-    JobExp: 4790
+    BaseExp: 2724
+    JobExp: 2395
     Attack: 1073
     Attack2: 190
     Defense: 101
@@ -91014,8 +91014,8 @@ Body:
     Name: E-13EN0
     Level: 118
     Hp: 26840
-    BaseExp: 5570
-    JobExp: 4992
+    BaseExp: 2785
+    JobExp: 2496
     Attack: 1082
     Attack2: 198
     Defense: 72
@@ -91034,7 +91034,7 @@ Body:
     Element: Water
     ElementLevel: 4
     WalkSpeed: 200
-    AttackDelay: 866
+    AttackDelay: 432
     AttackMotion: 864
     DamageMotion: 360
     Ai: 04
@@ -91117,8 +91117,8 @@ Body:
     Name: Miguel
     Level: 115
     Hp: 8600000
-    BaseExp: 2400000
-    JobExp: 1800000
+    BaseExp: 1200000
+    JobExp: 900000
     Attack: 4350
     Attack2: 2450
     Defense: 216
@@ -91137,7 +91137,7 @@ Body:
     Element: Wind
     ElementLevel: 4
     WalkSpeed: 250
-    AttackDelay: 1050
+    AttackDelay: 872
     AttackMotion: 1044
     DamageMotion: 432
     Ai: 21
@@ -91177,7 +91177,7 @@ Body:
     Element: Wind
     ElementLevel: 4
     WalkSpeed: 250
-    AttackDelay: 1048
+    AttackDelay: 872
     AttackMotion: 1044
     DamageMotion: 432
     Class: Boss
@@ -91187,8 +91187,8 @@ Body:
     Name: A013 - Caput
     Level: 110
     Hp: 31000
-    BaseExp: 520
-    JobExp: 500
+    BaseExp: 260
+    JobExp: 250
     Attack: 900
     Attack2: 150
     Defense: 79
@@ -91227,8 +91227,8 @@ Body:
     Name: A013 - Dolor
     Level: 111
     Hp: 31000
-    BaseExp: 5300
-    JobExp: 4800
+    BaseExp: 2650
+    JobExp: 2400
     Attack: 800
     Attack2: 200
     Defense: 42
@@ -91267,8 +91267,8 @@ Body:
     Name: A013 - Bellare
     Level: 112
     Hp: 38000
-    BaseExp: 6500
-    JobExp: 6000
+    BaseExp: 3250
+    JobExp: 3000
     Attack: 1140
     Attack2: 160
     Defense: 76
@@ -91287,7 +91287,7 @@ Body:
     Element: Neutral
     ElementLevel: 2
     WalkSpeed: 200
-    AttackDelay: 385
+    AttackDelay: 206
     AttackMotion: 384
     DamageMotion: 288
     Ai: 04
@@ -91317,7 +91317,7 @@ Body:
     Element: Neutral
     ElementLevel: 1
     WalkSpeed: 1000
-    AttackDelay: 387
+    AttackDelay: 76
     AttackMotion: 384
     DamageMotion: 288
     Class: Boss
@@ -91360,8 +91360,8 @@ Body:
     Name: Sorrow Crob
     Level: 111
     Hp: 3441000
-    BaseExp: 2350800
-    JobExp: 1174000
+    BaseExp: 1175400
+    JobExp: 587000
     Attack: 3400
     Attack2: 1900
     Defense: 42
@@ -91380,7 +91380,7 @@ Body:
     Element: Neutral
     ElementLevel: 2
     WalkSpeed: 250
-    AttackDelay: 1879
+    AttackDelay: 1872
     AttackMotion: 672
     DamageMotion: 480
     Ai: 21
@@ -91392,8 +91392,8 @@ Body:
     Name: Heart Hunter Bellare
     Level: 120
     Hp: 29619
-    BaseExp: 6582
-    JobExp: 5266
+    BaseExp: 3291
+    JobExp: 2633
     Attack: 840
     Attack2: 424
     Defense: 146
@@ -91412,7 +91412,7 @@ Body:
     Element: Neutral
     ElementLevel: 2
     WalkSpeed: 200
-    AttackDelay: 1269
+    AttackDelay: 864
     AttackMotion: 1268
     DamageMotion: 480
     Ai: 19
@@ -91437,8 +91437,8 @@ Body:
     Name: High Hunter Bellare
     Level: 165
     Hp: 473302
-    BaseExp: 86054
-    JobExp: 60238
+    BaseExp: 43027
+    JobExp: 30119
     Attack: 2454
     Attack2: 869
     Defense: 263
@@ -91482,8 +91482,8 @@ Body:
     Name: Heart Hunter Sanare
     Level: 120
     Hp: 30159
-    BaseExp: 6702
-    JobExp: 5362
+    BaseExp: 3351
+    JobExp: 2681
     Attack: 765
     Attack2: 504
     Defense: 200
@@ -91502,7 +91502,7 @@ Body:
     Element: Neutral
     ElementLevel: 2
     WalkSpeed: 200
-    AttackDelay: 531
+    AttackDelay: 432
     AttackMotion: 1268
     DamageMotion: 480
     Ai: 19
@@ -91527,8 +91527,8 @@ Body:
     Name: High Hunter Sanare
     Level: 168
     Hp: 482327
-    BaseExp: 87696
-    JobExp: 61388
+    BaseExp: 43848
+    JobExp: 30694
     Attack: 2289
     Attack2: 1579
     Defense: 276
@@ -91547,7 +91547,7 @@ Body:
     Element: Dark
     ElementLevel: 3
     WalkSpeed: 175
-    AttackDelay: 507
+    AttackDelay: 432
     AttackMotion: 1268
     DamageMotion: 480
     Ai: 19
@@ -91572,8 +91572,8 @@ Body:
     Name: Plaga
     Level: 164
     Hp: 466948
-    BaseExp: 84900
-    JobExp: 59430
+    BaseExp: 42450
+    JobExp: 29715
     Attack: 2952
     Attack2: 1235
     Defense: 160
@@ -91592,7 +91592,7 @@ Body:
     Element: Neutral
     ElementLevel: 2
     WalkSpeed: 200
-    AttackDelay: 1286
+    AttackDelay: 1280
     AttackMotion: 1080
     DamageMotion: 240
     Ai: 19
@@ -91615,8 +91615,8 @@ Body:
     Name: Mutant Plaga
     Level: 178
     Hp: 760548
-    BaseExp: 138282
-    JobExp: 96798
+    BaseExp: 69141
+    JobExp: 48399
     Attack: 4383
     Attack2: 1626
     Defense: 215
@@ -91658,8 +91658,8 @@ Body:
     Name: Dolor
     Level: 122
     Hp: 40204
-    BaseExp: 8934
-    JobExp: 7148
+    BaseExp: 4467
+    JobExp: 3574
     Attack: 1129
     Attack2: 561
     Defense: 227
@@ -91701,8 +91701,8 @@ Body:
     Name: Mutant Dolor
     Level: 173
     Hp: 742501
-    BaseExp: 135000
-    JobExp: 94500
+    BaseExp: 67500
+    JobExp: 47250
     Attack: 3655
     Attack2: 1396
     Defense: 305
@@ -91744,8 +91744,8 @@ Body:
     Name: Venenum
     Level: 123
     Hp: 40720
-    BaseExp: 9048
-    JobExp: 7240
+    BaseExp: 4449
+    JobExp: 3574
     Attack: 1184
     Attack2: 320
     Defense: 242
@@ -91764,7 +91764,7 @@ Body:
     Element: Poison
     ElementLevel: 2
     WalkSpeed: 200
-    AttackDelay: 785
+    AttackDelay: 768
     AttackMotion: 792
     DamageMotion: 432
     Ai: 19
@@ -91789,8 +91789,8 @@ Body:
     Name: Mutant Venenum
     Level: 176
     Hp: 755670
-    BaseExp: 137394
-    JobExp: 96176
+    BaseExp: 68697
+    JobExp: 48088
     Attack: 3894
     Attack2: 1396
     Defense: 314
@@ -91809,7 +91809,7 @@ Body:
     Element: Neutral
     ElementLevel: 3
     WalkSpeed: 150
-    AttackDelay: 793
+    AttackDelay: 768
     AttackMotion: 792
     DamageMotion: 432
     Ai: 19
@@ -91834,8 +91834,8 @@ Body:
     Name: Twin Caput
     Level: 125
     Hp: 41735
-    BaseExp: 9274
-    JobExp: 7420
+    BaseExp: 4637
+    JobExp: 3710
     Attack: 1047
     Attack2: 408
     Defense: 269
@@ -91854,7 +91854,7 @@ Body:
     Element: Dark
     ElementLevel: 2
     WalkSpeed: 220
-    AttackDelay: 951
+    AttackDelay: 936
     AttackMotion: 1020
     DamageMotion: 420
     Ai: 19
@@ -91877,8 +91877,8 @@ Body:
     Name: Mutant Twin Caput
     Level: 175
     Hp: 750501
-    BaseExp: 136454
-    JobExp: 95518
+    BaseExp: 68227
+    JobExp: 47759
     Attack: 4091
     Attack2: 1412
     Defense: 290
@@ -91897,7 +91897,7 @@ Body:
     Element: Dark
     ElementLevel: 2
     WalkSpeed: 200
-    AttackDelay: 1028
+    AttackDelay: 936
     AttackMotion: 1020
     DamageMotion: 420
     Ai: 19
