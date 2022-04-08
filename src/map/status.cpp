@@ -9254,7 +9254,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		}
 
 		if (isRemoved) // Something was removed, don't give the status
-			return 0;
+			return 1; // Return 1 so that sc_start can be checked as success
 	}
 
 	// Check failing SCs from list

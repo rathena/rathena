@@ -8713,13 +8713,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if(status_isimmune(bl) || !tsc)
 				break;
 
-			// Temporary solution to not consume item on failure when cancelling (see EndReturn logic)
-			if (tsc && (tsc->data[type] || tsc->data[SC_STONE])) {
-				status_change_end(bl, type, INVALID_TIMER);
-				status_change_end(bl, SC_STONE, INVALID_TIMER);
-				break;
-			}
-
 			int32 brate = 0;
 
 			if (sd && sd->sc.data[SC_PETROLOGY_OPTION])
