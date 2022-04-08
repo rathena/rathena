@@ -3,16 +3,15 @@
 //===== Description: =========================================
 //= [Walkthrough Conversion]
 //= Illusion series related merchants and enchanters
-//===== Changelogs: ==========================================
-//= 1.0 Initial release [crazyarashi]
+//===== Changelog: ===========================================
+//= 1.0 Initial release of Illusion of Moonlight [crazyarashi]
 //= 1.1 Cleanup and improvements [Everade]
-//= 1.2 Added Illusion of Vampire enchanter.
+//= 1.2 Added Illusion of Vampire enchanter [Capuche]
 //============================================================
 
 //============================================================
 //= Illusion of Moonlight
 //============================================================
-
 pay_d03_i,160,45,3	script	Gemcutter#ilp20	4_TOWER_17,3,3,{
 	mes "[ Gemcutter ]";
 	mes "Do you have business with me?";
@@ -254,7 +253,6 @@ OnTouch:
 //============================================================
 //= Illusion of Vampire
 //============================================================
-
 gef_dun01,139,228,3	script	Great Merchant#illgef	4_M_HUMERCHANT,{
 	if (checkweight(501,1) == 0 || (MaxWeight - Weight) < 1000) {
 		mes "[Great Merchant]";
@@ -295,7 +293,7 @@ gef_dun01,139,228,3	script	Great Merchant#illgef	4_M_HUMERCHANT,{
 				EQI_HAND_R,
 				1266,						// Infiltrator_
 				25271,80,					// Illusion Stones
-				25261,20					// Torn_Paper_
+				25261,20					// Torn_Diary
 			);
 		case 2:
 			mes "[Great Merchant]";
@@ -304,7 +302,7 @@ gef_dun01,139,228,3	script	Great Merchant#illgef	4_M_HUMERCHANT,{
 				EQI_HAND_R,
 				1260,						// Ghoul_Leg
 				25271,10,					// Illusion Stones
-				25264,100					// Cluster_of_Nightmares
+				25264,100					// NightmareOfLump
 			);
 		case 3:
 			mes "[Great Merchant]";
@@ -313,7 +311,7 @@ gef_dun01,139,228,3	script	Great Merchant#illgef	4_M_HUMERCHANT,{
 				EQI_HAND_R,
 				1473,						// Wizardy_Staff
 				25271,40,					// Illusion Stones
-				25261,100					// Suspicious_Pentacle
+				25261,100					// SuspiciousMagicCircle
 			);
 		case 4:
 			mes "[Great Merchant]";
@@ -331,7 +329,7 @@ gef_dun01,139,228,3	script	Great Merchant#illgef	4_M_HUMERCHANT,{
 				EQI_HAND_R,
 				1557,						// Book_Of_The_Apocalypse
 				25271,50,					// Illusion Stones
-				25262,10					// Well-dried_Clover
+				25262,10					// Dried_Clover
 			);
 		}
 	case 2:
@@ -346,7 +344,7 @@ gef_dun01,139,228,3	script	Great Merchant#illgef	4_M_HUMERCHANT,{
 			EQI_GARMENT,
 			2525,						// Cape_Of_Ancient_Lord_
 			25271,30,					// Illusion Stones
-			25263,200					// Short_Bat_Hair
+			25263,200					// Short_Bat_Fur
 		);
 	case 3:
 		setarray .@item_req[0],		// item equipped aren't required to build the menu color
@@ -374,7 +372,7 @@ gef_dun01,139,228,3	script	Great Merchant#illgef	4_M_HUMERCHANT,{
 			callsub( S_Accessory, 28509,	// Illusion_Ring
 				2621,						// Ring_
 				25271,50,					// Illusion Stones
-				25267,400					// Suspicious_Pentacle
+				25267,400					// SuspiciousMagicCircle
 			);
 		}
 	case 4:

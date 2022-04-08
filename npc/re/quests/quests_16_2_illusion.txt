@@ -5,12 +5,11 @@
 //= Quest NPCs for Episode 16.2 - Illusion series
 //
 //- Note: Probably missing some questinfo on Illusion of Vampire.
-//===== Changelogs: ==========================================
+//===== Changelog: ===========================================
 //= 1.0 Illusion of Moonlight initial release [crazyarashi]
 //= 1.1 Script & function cleanup [Everade]
-//= 1.2 Added Illusion of Vampire. [Capuche]
+//= 1.2 Added Illusion of Vampire [Capuche]
 //============================================================
-
 
 //============================================================
 //= Illusion of Moonlight
@@ -1345,7 +1344,7 @@ gef_dun01,134,224,1	script	Mojo#ilgf	2_F_MAGICMASTER,{
 		mes "[Mojo]";
 		mes "Thank you so much. See you tomorrow!";
 		delitem 25266,10;	// Dried_Yggdrasil_Leaf
-		delitem 25267,10;	// Suspicious_Pentacle
+		delitem 25267,10;	// SuspiciousMagicCircle
 		erasequest 14679;	// Curious by Nature
 		setquest 14680;		// Time to Research
 		getexp 500000,500000;
@@ -4297,7 +4296,7 @@ gef_d01_i,185,97,5	script	King#ilgf01	4_NFBAT,{
 		next;
 		mes "[Jojo]";
 		mes "Th-then see you tomorrow, Adventurer...";
-		delitem 25263,20;// Short_Bat_Hair
+		delitem 25263,20;// Short_Bat_Fur
 		erasequest 14675;// Noisy Neighbors
 		setquest 14676;// Break Time
 		getexp 500000,500000;
@@ -4570,7 +4569,7 @@ gef_d01_i,191,96,3	script	Wizard#ilgf02	4_M_JOB_WIZARD,5,5,{
 		next;
 		mes "[Jojo]";
 		mes "Adventurer, thank you for helping me study. These glowing spores don't last long. Could you come back tomorrow and get me more of them?";
-		delitem 25264,10;// Cluster_of_Nightmares
+		delitem 25264,10;// NightmareOfLump
 		delitem 25265,10;// Shining_Spore
 		erasequest 14677;// Studying in Dim Light
 		setquest 14678;// Time to Study

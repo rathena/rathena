@@ -91667,7 +91667,7 @@ Body:
         Rate: 150
       - Item: Elunium
         Rate: 12
-      - Item: Crude_Ammo
+      - Item: CrudeAmmo
         Rate: 800
       - Item: Explosive_Powder
         Rate: 30
@@ -91876,7 +91876,7 @@ Body:
     DamageMotion: 480
     Ai: 19
     Drops:
-      - Item: Crude_Ammo
+      - Item: CrudeAmmo
         Rate: 1000
       - Item: Heart_Hunter_Seal
         Rate: 1250
