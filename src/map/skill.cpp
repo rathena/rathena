@@ -8723,8 +8723,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				skill_get_time2(skill_id,skill_lv)))
 					clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 			else if(sd) {
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				// Level 6-10 doesn't consume a red gem if it fails [celest]
-				if (skill_lv > 5) { // not to consume items
+				if (skill_lv > 5)
+				{ // not to consume items
 					map_freeblock_unlock();
 					return 0;
 				}

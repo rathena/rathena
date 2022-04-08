@@ -13145,7 +13145,7 @@ TIMER_FUNC(status_change_timer){
 
 	case SC_STONE:
 		if (sce->val4 >= 0 && status->hp > status->max_hp / 4)
-			status_percent_damage(nullptr, bl, 1, 0, false);
+			status_percent_damage(nullptr, bl, -1, 0, false);
 		break;
 
 	case SC_POISON:
