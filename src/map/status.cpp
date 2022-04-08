@@ -9695,9 +9695,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				pc_bonus_script_clear(sd, BSF_REM_ON_MADOGEAR);
 			break;
 		default:
-			// If new SC has OPT1 while unit has OPT1, fail it!
-			if (sc->opt1 && scdb->opt1)
-				return 0;
 			break;
 	}
 
