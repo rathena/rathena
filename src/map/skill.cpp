@@ -18224,6 +18224,13 @@ struct s_skill_condition skill_get_requirement(struct map_session_data* sd, uint
 						break;
 					}
 				}
+				else {
+					// Process level_dependent requirement
+					if (level_dependent && skill_lv <= MAX_SKILL_ITEM_REQUIRE) {
+						req.itemid[0] = skill->require.itemid[skill_lv - 1];
+						req.amount[0] = skill->require.amount[skill_lv - 1];
+					}
+				}
 
 				// Check requirement for gemstone.
 				if (itemdb_group.item_exists(IG_GEMSTONE, req.itemid[i])) {
@@ -18242,12 +18249,6 @@ struct s_skill_condition skill_get_requirement(struct map_session_data* sd, uint
 				// Check requirement for Magic Gear Fuel
 				if (req.itemid[i] == ITEMID_MAGIC_GEAR_FUEL && sd->special_state.no_mado_fuel)
 					req.itemid[i] = req.amount[i] = 0;
-			}
-
-			// Process level_dependent requirement
-			if (level_dependent && skill_lv <= MAX_SKILL_ITEM_REQUIRE) {
-				req.itemid[0] = skill->require.itemid[skill_lv - 1];
-				req.amount[0] = skill->require.amount[skill_lv - 1];
 			}
 			break;
 	}
