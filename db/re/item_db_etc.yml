@@ -33807,6 +33807,17 @@ Body:
     Script: |
       bonus bVariableCastrate,-15;
       /*Item removed on 2014-12-17*/
+  - Id: 23063
+    AegisName: Freeze_Dream
+    Name: Freeze Dream    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 25000
     AegisName: SPdrainStone_Top
     Name: SP Absorption Stone(Upper)
@@ -36251,6 +36262,110 @@ Body:
     Trade:
       NoDrop: true
       NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25482
+    AegisName: Earth_Card_BZ
+    Name: Earth League Card    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25483
+    AegisName: Fire_Card_BZ
+    Name: Fire League Card    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25484
+    AegisName: Water_Card_BZ
+    Name: Water League Card    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25485
+    AegisName: Wind_Card_BZ
+    Name: Wind League Card    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25486
+    AegisName: Fire_Badge_BZ
+    Name: Fire Pride Badge    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25487
+    AegisName: Water_Badge_BZ
+    Name: Water Pride Badge    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25488
+    AegisName: Wind_Badge_BZ
+    Name: Wind Pride Badge    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25489
+    AegisName: Earth_Badge_BZ
+    Name: Earth Pride Badge    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
       NoCart: true
       NoStorage: true
       NoGuildStorage: true
@@ -40853,6 +40968,34 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bDelayrate,-5;
+  - Id: 27413
+    AegisName: aegis_27413
+    Name: Power of Shango    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      autobonus "{ bonus bDelayrate,-70; bonus bVariableCastrate,-70; bonus bHealPower,70; bonus bHealPower2,70; bonus bAddItemHealRate,70; }",30,10000,BF_WEAPON|BF_MAGIC,"{}";
+  - Id: 27414
+    AegisName: aegis_27414
+    Name: Power of Ochosi    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      autobonus "{ bonus bDelayrate,-70; bonus bVariableCastrate,-70; bonus2 bIgnoreDefClassRate,Class_Normal,70; bonus2 bIgnoreMdefClassRate,Class_Normal,70; }",30,10000,BF_WEAPON|BF_MAGIC,"{}";
+  - Id: 27415
+    AegisName: aegis_27415
+    Name: Power of Iansa    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      autobonus "{ bonus bDelayrate,-70; bonus bVariableCastrate,-70; bonus bAspdRate,70; }",30,10000,BF_WEAPON|BF_MAGIC,"{}";
+  - Id: 27416
+    AegisName: aegis_27416
+    Name: Power of Oshun    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      autobonus "{ bonus bDelayrate,-70; bonus bVariableCastrate,-70; bonus bUseSPrate,-70; }",30,10000,BF_WEAPON|BF_MAGIC,"{}";
   - Id: 29000
     AegisName: Neev_INT_1
     Name: Rune of Intellect Lv 1
@@ -42808,7 +42951,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      autobonus "{ bonus bFlee2,100; bonus2 bMagicAddClass,Class_Boss,100; }",50,10000,BF_MAGIC,"{ active_transform 1639,10000 }";
+      autobonus "{ bonus bFlee2,100; bonus2 bMagicAddClass,Class_Boss,100; }",50,10000,BF_MAGIC,"{ active_transform 1639,10000; }";
       /*Unknow Rate*/
   - Id: 29380
     AegisName: ATK5
@@ -59887,12 +60030,12 @@ Body:
     SubType: Enchant
     Script: |
       .@r = getrefine();
-      bonus bVariableCastrate,-7*(.@r/3);
+      bonus bVariableCastrate,-7;
       if (.@r>=9) {
-        bonus bVariableCastrate,8;
+        bonus bVariableCastrate,-8;
         .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
         if (.@i == W_2HSWORD || .@i == W_2HSPEAR || .@i == W_2HSTAFF || .@i == W_2HAXE || .@i == W_KATAR || .@i == W_BOW || .@i == W_HUUMA || .@i == W_REVOLVER || .@i == W_RIFLE || .@i == W_GATLING || .@i == W_SHOTGUN || .@i == W_GRENADE) {
-          bonus bVariableCastrate,5;
+          bonus bVariableCastrate,-5;
         }
       }
   - Id: 311346
@@ -59917,12 +60060,12 @@ Body:
     SubType: Enchant
     Script: |
       .@r = getrefine();
-      bonus bDelayrate,7;
+      bonus bDelayrate,-7;
       if (.@r>=9) {
-        bonus bDelayrate,8;
+        bonus bDelayrate,-8;
         .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
         if (.@i == W_2HSWORD || .@i == W_2HSPEAR || .@i == W_2HSTAFF || .@i == W_2HAXE || .@i == W_KATAR || .@i == W_BOW || .@i == W_HUUMA || .@i == W_REVOLVER || .@i == W_RIFLE || .@i == W_GATLING || .@i == W_SHOTGUN || .@i == W_GRENADE) {
-          bonus bDelayrate,5;
+          bonus bDelayrate,-5;
         }
       }
   - Id: 311348
@@ -59933,16 +60076,16 @@ Body:
     Script: |
       .@r = getrefine();
       bonus2 bAddRace,RC_All,10;
-      bonus2 bAddRace,RC_Brute,-10;
+      bonus2 bAddRace,RC_Player_Human,-10;
       bonus2 bAddRace,RC_Player_Doram,-10;
       if (.@r>=9) {
         bonus2 bAddRace,RC_All,10;
-        bonus2 bAddRace,RC_Brute,-10;
+        bonus2 bAddRace,RC_Player_Human,-10;
         bonus2 bAddRace,RC_Player_Doram,-10;
         .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
         if (.@i == W_2HSWORD || .@i == W_2HSPEAR || .@i == W_2HSTAFF || .@i == W_2HAXE || .@i == W_KATAR || .@i == W_BOW || .@i == W_HUUMA || .@i == W_REVOLVER || .@i == W_RIFLE || .@i == W_GATLING || .@i == W_SHOTGUN || .@i == W_GRENADE) {
           bonus2 bAddRace,RC_All,15;
-          bonus2 bAddRace,RC_Brute,-15;
+          bonus2 bAddRace,RC_Player_Human,-15;
           bonus2 bAddRace,RC_Player_Doram,-15;
         }
       }
