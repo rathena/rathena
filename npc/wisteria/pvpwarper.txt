@@ -1,0 +1,44 @@
+prontera,152,193,4	script	PVP Warper::pvp	4258,{
+
+	while(1) {
+		mes "["+strnpcinfo(0)+"]";
+		.@menu$ = "";
+		for (.@i = 0; .@i < .map_size; .@i++)
+			.@menu$ = .@menu$ + sprintf("%s [ %d / %d ]", .map_name$[.@i], getmapusers(.map$[.@i]), .map_max_player[.@i]) + ":";
+		.@i = select(.@menu$) - 1;
+		if (.map_max_player[.@i] && getmapusers(.map$[.@i]) >= .map_max_player[.@i]) {
+			mes "This map is currently full.";
+			next;
+		}
+		else {
+			warp .map$[.@i], 0, 0;
+			end;
+		}
+	}
+	close;
+	
+	OnInit:
+		setarray .map_name$, "Grand Arena", "Square Arena", "Sandwich Arena", "Prontera Arena";
+		setarray .map$, "grandarena", "guild_vs3", "pvp_n_8-1", "pvp_y_1-1";
+		setarray .map_max_player, 15, 20, 30, 60;
+		.map_size = getarraysize(.map$);
+
+	OnTimer1000:
+		for (.@i = 0; .@i < .map_size; .@i++) {
+			if (getmapusers(.map$[.@i]) > 0) {
+				specialeffect EF_BEGINSPELL6;
+				break;
+			}
+		}
+		initnpctimer;
+		end;
+}
+
+sec_in02,140,175,4	duplicate(pvp)	PVP Warper#vip	4258
+
+grandarena	mapflag	pvp
+grandarena	mapflag	pvp_noparty
+grandarena	mapflag	pvp_noguild
+grandarena	mapflag	nomemo
+grandarena	mapflag	nogo
+grandarena	mapflag	nowarp

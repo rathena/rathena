@@ -1,0 +1,16 @@
+//Ryoma
+
+//use_sql_db: yes
+login_server_pw: MzMxOW
+ipban_db_pw: MzMxOW
+char_server_pw: MzMxOW
+map_server_pw: MzMxOW
+log_db_pw: MzMxOW
+web_server_pw: MzMxOW
+login_server_db: ragnarok
+ipban_db_db: ragnarok
+char_server_db: ragnarok
+map_server_db: ragnarok
+web_server_db: ragnarok
+log_db_db: ragnarok
+party_share_level: 250

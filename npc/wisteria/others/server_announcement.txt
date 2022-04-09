@@ -1,0 +1,30 @@
+-	script	News	-1,{
+OnInit:
+set .Time,3600;  // Announce every x Seconds.
+setarray .News$[0], // Random Message to be Announced
+ "Respect all the players here in Wisteria Ragnarok Online especially the Admin and the Game Masters.",
+ "Please report all bugs that you will find immediately by using @request or posting it on our Bugs & Reports channel on our Discord Server.",
+ "Be respectful to others. This goes towards players, staff, the server, other people's opinions, etc. You are allowed to argue for yourself, but please stay respectful while doing so.",
+ "Do not impersonate any player, Admin or Game Masters on the server.",
+ "Do not make a character that has a inappropriate words in names, that might offend other players.",
+ "If you have any questions just enter @request or you can direct message us on our Facebook Page or Discord Server.",
+ "Do not give your account to others especially for those people who are pretending to be an Admin or Game Master.",
+ "Do not create false statements about the Admin and the Game Masters. You must never misinform players by telling them that an Admin or Game Master said something.",
+ "Do not spread false accusations against the Admin and the Game Masters.",
+ "Do not advertise other servers. Talking about official servers is allowed, but actively promoting them is not.",
+ "Do not automate game-play. This includes and is not limited to using third-party tools and macro software, or placing a weight on your keyboard to press keys for you. Any use of auto-teleport scripts, auto-feeders, auto-pots, auto-farming scripts and similar is strictly prohibited.",
+ "Do not scam other players. Do not attempt to trick and scam any player by attempting trades or using misleading shop titles.",
+ "Remember: Your Account and Items is your responsibility.",
+ "Be sure to join our Discord Server to know the announcements and updates!",
+ "Please do like our Official Facebook Page - Wisteria Ragnarok Online",
+ "Please vote for our server! You can vote in our Official Website to earn points!",
+ "Welcome to Wisteria Ragnarok Online!!!",
+ "Play Wisteria Ragnarok Online with your friends!",
+ "Enjoy playing and God Bless!";
+while(1)
+{
+announce .News$[ rand( getarraysize( .News$ ) ) ],0;
+sleep ( .Time * 1000 );
+}
+end;
+}

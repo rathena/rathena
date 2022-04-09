@@ -1,0 +1,137 @@
+//===== Hercules Script ======================================
+//= Weekly MVP Rank
+//===== By: ==================================================
+//= AnnieRuru
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: ===================================== 
+//= Hercules 2020-11-21
+//===== Description: =========================================
+//= MVP Ranking script, player has to come and claim the reward
+//===== Topic ================================================
+//= 
+//===== Additional Comments: =================================  
+//= remember to change the reward item at setarray .@reward
+//============================================================
+
+/*
+CREATE TABLE `mvp_rank` (
+	`char_id` INT PRIMARY KEY,
+	`name` VARCHAR(23),
+	`kills` INT,
+	KEY (`kills`)
+) ENGINE = InnoDB;
+
+CREATE TABLE `mvp_rank_archive` (
+	`weekindex` INT,
+	`rank` TINYINT UNSIGNED,
+	`char_id` INT,
+	`name` VARCHAR(23),
+	`kills` INT,
+	KEY (`weekindex`)
+) ENGINE = MyISAM;
+
+CREATE TABLE `mvp_rank_reward` (
+	`char_id` INT,
+	`weekindex` INT,
+	`rank` TINYINT UNSIGNED,
+	KEY (`char_id`)
+) ENGINE = InnoDB;
+*/
+
+prontera,164,171,3	script	MVP Ladder	4259,{
+	mes "[MVP Ladder]";
+	mes "Hello!";
+	mes "What are you doing here?";
+	next;
+	switch(select("Check rankings.", "My stats.", "Previous Week ranking", "Claim Rewards")) {
+	mes "[MVP Ladder]";
+	case 1:
+		mes "Rankings :->";
+		.@query$  = "SELECT `name`, IF(@d=t.`kills`, @r, @r:=@i), @d:=t.`kills`, @i:=@i+1 ";
+		.@query$ += "FROM `mvp_rank` t, (SELECT @d:=0, @r:=0, @i:=1)q ";
+		.@query$ += "ORDER BY `kills` DESC LIMIT 10";
+		.@nb = query_sql(.@query$, .@name$, .@rank, .@kills, .@dummy);
+		if (!.@nb) {
+			mes "  No entry.";
+			close;
+		}
+		for (.@i = 0; .@i < .@nb; ++.@i)
+			mes .@rank[.@i] +". "+ .@name$[.@i] +" -> "+ .@kills[.@i] +" points";
+		close;
+	case 2:
+		if (!query_sql("SELECT `kills`, 1+(SELECT COUNT(1) FROM `mvp_rank` t1 WHERE t1.`kills` > t2.`kills`) FROM `mvp_rank` t2 WHERE `char_id` = "+ getcharid(CHAR_ID_CHAR), .@kills, .@rank)) {
+			mes "You haven't kill MVP this week";
+			close;
+		}
+		mes "You have killed "+ .@kills +" MVPs";
+		mes "Your current rank is No."+ .@rank;
+		close;
+	case 3:
+		mes "Previous week ranking :->";
+		.@nb = query_sql( "SELECT `rank`, `name`, `kills` FROM `mvp_rank_archive` WHERE `weekindex` = "+(.this_week_index -1)+" ORDER BY `rank`", .@rank, .@name$, .@kills);
+		if (!.@nb) {
+			mes "  No entry";
+			close;
+		}
+		for ( .@i = 0; .@i < .@nb; ++.@i )
+			mes .@rank[.@i] +". "+ .@name$[.@i] +" -> "+ .@kills[.@i] +" points";
+		close;
+	case 4:
+		.@nb = query_sql("SELECT `weekindex`, `rank` FROM `mvp_rank_reward` WHERE `char_id` = "+ getcharid(CHAR_ID_CHAR), .@week, .@rank);
+		if (!.@nb) {
+			mes "You don't have unclaim rewards.";
+			close;
+		}
+		mes "You have ["+ .@nb +"] unclaimed rewards.";
+		for (.@i = 0; .@i < .@nb; ++.@i)
+			mes (.@i +1) +". Rank."+ .@rank[.@i] +" from "+(.this_week_index - .@week[.@i])+" weeks ago.";
+		next;
+		for (.@i = 0; .@i < .@nb; ++.@i)
+			.@menu$[.@i] = "Claim Rank."+ .@rank[.@i] +" from "+(.this_week_index - .@week[.@i])+" weeks ago.";
+		.@s = select(implode(.@menu$, ":")) -1;
+		if (checkweight(.reward[.@rank[.@s] -1], .amount[.@rank[.@s] -1]) == false) {
+			mes "You are currently overweight, store some items to continue.";
+			close;
+		}
+		getitem .reward[.@rank[.@s] -1], .amount[.@rank[.@s] -1];
+		query_sql "DELETE FROM `mvp_rank_reward` WHERE `char_id` = "+ getcharid(CHAR_ID_CHAR) +" AND `weekindex` = "+ .@week[.@s] +" AND `rank` = "+ .@rank[.@s];
+	}
+	close;
+OnInit:
+	// set reward here ... 1st place won 10 red pot, 2nd place won 9 orange pot ... etc ...
+	waitingroom strnpcinfo(1), 0;
+	setarray .reward, 30006, 30006, 30006, 30006, 30006, 30006, 30006, 30006, 30006, 30006;
+	setarray .amount, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10;
+	
+	if (!$mvp_rank_1st_sunday) {
+		query_sql "SELECT REPLACE(SUBDATE(CURDATE(), INTERVAL (DAYOFWEEK(CURDATE()) -1) DAY), '-', '')", $mvp_rank_1st_sunday; // TRICK !! how to save the 1st sunday once the script installed
+		end;
+	}
+OnSun0000:
+	query_sql "SELECT DATEDIFF(CURDATE(), '"+ $mvp_rank_1st_sunday +"') /7", .this_week_index;
+	if (.this_week_index == $mvp_rank_week_index) end;
+//	query_sql "TRUNCATE TABLE `mvp_rank_archive`"; // uncomment this line if you love to periodically clean your data
+	.@query$  = "SELECT char_id, `name`, IF(@d=t.`kills`, @r, @r:=@i), @d:=t.`kills`, @i:=@i+1 ";
+	.@query$ += "FROM `mvp_rank` t, (SELECT @d:=0, @r:=0, @i:=1)q ";
+	.@query$ += "ORDER BY `kills` DESC LIMIT 10";
+	.@nb = query_sql(.@query$, .@cid, .@name$, .@rank, .@kills, .@dummy);
+	if (.@nb) {
+		for (.@i = 0; .@i < .@nb; ++.@i) {
+			.@reward_query$[.@i] = "("+ .@cid[.@i] +", "+ $mvp_rank_week_index +", "+ .@rank[.@i] +")";
+			.@archive_query$[.@i] = "("+ $mvp_rank_week_index +", "+ .@rank[.@i] +", "+ .@cid[.@i] +", '"+ escape_sql(.@name$[.@i]) +"', "+ .@kills[.@i] +")";
+		}
+		query_sql "INSERT INTO `mvp_rank_reward` VALUES "+ implode(.@reward_query$, ", ");
+		query_sql "INSERT INTO `mvp_rank_archive` VALUES "+ implode(.@archive_query$, ", ");
+		query_sql "TRUNCATE TABLE `mvp_rank`";
+	}
+	$mvp_rank_week_index = .this_week_index;
+	end;
+OnNPCKillEvent:
+	if (getmonsterinfo(killedrid, MOB_MVPEXP)) {
+		query_sql "INSERT INTO `mvp_rank` VALUES ("+ getcharid(CHAR_ID_CHAR) +", '"+ escape_sql(strcharinfo(PC_NAME)) +"', 1) ON DUPLICATE KEY UPDATE `name` = '"+ escape_sql(strcharinfo(PC_NAME))+"', kills = kills +1";
+		query_sql "SELECT `kills` FROM `mvp_rank` WHERE `char_id` = "+ getcharid(CHAR_ID_CHAR), .@kills;
+		dispbottom "~ You've killed "+ .@kills +" MVP. ~";
+	}
+	end;
+}

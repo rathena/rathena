@@ -1,0 +1,35 @@
+// Information
+prontera,136,169,6	script	Streamer Guide	641,{
+	mes "[ ^0065DFServer Guide^000000 ]";
+	mes "Welcome to WisteriaRO! Do you want to be one of the Streamers here?";
+	next;
+	switch(select("How to be a Streamer?","What are the Streamer Benefits?","Terms and Conditions","Cancel")) {
+	case 1:
+		mes "[ ^0065DFHow to be a Streamer?^000000 ]";
+		mes "» You must have at least 100 followers";
+		mes "» You must stream Wisteria Ragnarok Online for at least 1 hour and max of 2 hours per stream";
+		mes "» Your profile must be presentable and a genuine account";
+		close;
+	case 2:
+		mes "[ ^0065DFWhat are the Streamer Benefits?^000000 ]";
+		mes "» Streamer Package";
+		mes "» Monthly Top Streamer Prizes";
+		mes "» Custom Items with Streamers Signature";
+		mes "» We will share your streams in RO Advertisements and Streaming groups";
+		close;
+	case 3:
+		mes "[ ^0065DFTerms and Conditions^000000 ]";
+		mes "» You are not allowed to promote other RO servers while streaming WisteriaRO";
+		mes "» You must put the Official WisteriaRO Website and Server Information in your stream";
+		mes "» You must use our Server's Overlay";
+	case 4:
+		close;
+	}
+
+}
+
+
+
+
+
+

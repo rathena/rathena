@@ -55,7 +55,7 @@ Body:
       Def_Ele: true
       Def: true
       Mdef: true
-    Opt1: Stone      
+    Opt1: Stone
     Flags:
       SendOption: true
       BossResist: true

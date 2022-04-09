@@ -1,0 +1,101 @@
+prontera,171,225,4	script	VIP Manager	759,{
+
+
+
+
+
+
+OnTalk:
+	mes .npc$;
+	mes (gettime(3)>= 6&&gettime(3)<= 12?"Good Morning":(gettime(3)>=13&&gettime(3)<=18?"Good Afternoon":"Good Evening"))+", ^008aff"+strcharinfo(0)+"^000000 !";
+	mes "Welcome to VIP Manager.";	
+	mes "How can I help?";
+	next;
+	switch (select(.bcor$+"I want to go to VIP Room.",""+.rcor$+"I do not want anything.")){
+		case 1:
+			
+			if (getgmlevel() > 20) {
+						warp .map$,.cord[0],.cord[1];
+			end;
+			}
+			
+			if (!vip_status(1) ) {
+				mes .npc$;
+				mes "Excuse me! Access to VIP Room is only allowed to ^008affVIP^000000 players.";
+				mes "-----------------------------------";
+				mes "Please Avail Wisteria Vip Card to become ^008affVIP^000000 player.";
+				mes "-----------------------------------";
+				close;
+			}
+			
+
+			warp .map$,.cord[0],.cord[1];
+			end;
+			
+
+		case 2:
+			close;
+	}
+
+OnVipStat:
+	mes .npc$;
+	mes (gettime(3)>= 6&&gettime(3)<= 12?"Good Morning":(gettime(3)>=13&&gettime(3)<=18?"Good Afternoon":"Good Evening"))+", ^008aff"+strcharinfo(0)+"^000000 !";
+	if (vip_status(1)) {
+		mes "^008affYour VIP access will expire on " + callfunc("Time2Str",vip_status(2)) + ".^000000";	
+		dispbottom "^008affYour VIP access will expire on " + callfunc("Time2Str",vip_status(2)) + ".^000000";
+		mes " ";	
+		end;
+	}else{
+	mes "^008affYour VIP access is Expired.^000000";
+	end;
+	}
+OnVipcommand:
+	if(vip_status(VIP_STATUS_ACTIVE)){
+	sc_start SC_EXPBOOST,1800000,300;
+	sc_start SC_ITEMBOOST,1800000,300;
+	sc_start SC_JEXPBOOST,1800000,300;
+	}else{
+		message strcharinfo(0),"This command only works for VIP!.";
+	}
+end;
+
+OnInit:
+	.npc$ = "^FF7F00[ VIP Manager ]^000000";						// Name of NPC;
+	.bcor$ = "^008aff[>]^000000 ";									// Option Button Symbol;
+	.rcor$ = "^ff0000[>]^000000 ";									// Cancel button symbol;
+	//setarray .vip_day,7,14,30;										// Number of days that can be purchased;
+	//setarray .vip_cashpoint,4000,7000,10000;						// Price in #CASHPOINTS;
+	bindatcmd "vipstatus", strnpcinfo(3) +"::OnVipStat", 0, 20;
+	bindatcmd "vipfree",strnpcinfo(3)+"::OnVipcommand",0,99;
+	.map$ = "sec_in02";												// VIP Room Map;
+	setarray .cord,133,162;											// X and Y Coordinate;
+	end;
+}
+
+
+-	script	kickmap_vip	-1,{
+	
+	OnInit:
+		.map$ = "sec_in02";
+		.interval = 5;
+		
+		setmapflag .map$, mf_loadevent;
+		end;
+		
+	OnPCLoadMapEvent:
+		if (strcharinfo(3) == .map$) {
+			if (getgroupid() < 1) {
+				warp "prontera",121,163;
+			}
+			else {
+				addtimer (.interval * 1000), strnpcinfo(0)+"::OnPCLoadMapEvent";
+			}
+		}
+		end;
+		
+		
+}
+
+
+
+sec_in02,128,162,0	warp	vipwarp01	1,1,prontera,167,222

@@ -1,0 +1,221 @@
+/*=========================================================
+
+Hercules Radio
+
+by Mumbles
+
+Edited By: Maczekiel of FaeRO Ragnarok Online
+
+===========================================================
+
+===========================================================
+
+Description:
+
+A radio NPC that plays preset selection of client-side
+
+songs (these songs are to be placed in the 'BGM' folder.
+
+The command '@radio' was added as a convenience, to allow
+
+songs to be played wherever the invoking player may be.
+
+Songs are played on the map in which the NPC was invoked,
+
+meaning that if a player is in pay_gld and types '@radio',
+
+(s)he and everyone on the map will hear the selected song.
+
+Each time a song is played, a lock is set for the preset
+
+minutes; this lock prevents the NPC from being accessed.
+
+A countdown in minutes and seconds is be displayed to
+
+reflect the remaining time until the next song can be
+
+played.
+
+===========================================================
+
+Compatibility:
+
+Optimised for Hercules emulators. only
+
+translated for Rathena
+
+===========================================================
+
+Changelog:
+
+v1.0 - First version.
+
+v1.0.1 - Removed support for backwards compatibility.
+
+v1.0.2 - Some housekeeping.
+
+v1.0.3 - I Added Dedication and global announcement
+
+Thanks Aeromesi
+
+=========================================================*/
+
+
+//prontera,148,178,5	script	DJ_Bidjay 4_F_05,{
+prontera,143,174,5	script	DJ_Bidjay	4_F_05,{
+
+	OnRequest:
+
+		// Check voucher amount
+
+		if (countitem(.voucher) < .amount) {
+
+		message strcharinfo(0), "You must have "+ .amount +" "+ getitemname(.voucher) +" to play a song.";
+
+		end;
+
+		}
+
+		switch(select("Dedication Song:No")) {
+
+		case 1:
+
+		mes "Would you like to Dedicate this to Someone?";
+
+		mes "type the name";
+
+		input .dedicate$;
+
+		next;
+
+		case 2:
+
+		mes "Choose Your Song";
+
+		//set .bitter$,"NO ONE!";
+
+		next;
+
+		}
+
+// Display menu
+
+		message strcharinfo(0), "Please select a song to play (cost: "+ .amount +" "+ getitemname(.voucher) +").";
+
+		set .@menu$,implode(.song$, ":");
+
+		set .@selection, select(.@menu$) -1;
+
+// Check lock time
+
+		if (.lock > gettimetick(2)) {
+
+// Calculate time left
+
+	.@minutes_left = (.lock - gettimetick(2)) / 60;
+
+	.@seconds_left = (.lock - gettimetick(2)) % 60;
+
+// Display time left
+
+				message strcharinfo(0), strnpcinfo(1) +" is not accepting requests at this time.";
+
+				if (.@minutes_left < 1) {
+
+				message strcharinfo(0), "Please try again in "+ .@seconds_left +" seconds.";
+
+				} else {
+
+				message strcharinfo(0), "Please try again in "+ .@minutes_left +" minute"+ (.@minutes_left > 1 ? "s" : "") +" and "+ .@seconds_left +" seconds.";
+
+						}
+
+				close;
+
+						}
+
+// Delete required vouchers
+
+				delitem .voucher, .amount;
+
+// Play and announce choice on the player's current map
+
+				playbgmall .file$[.@selection], strcharinfo(3);
+
+announce strnpcinfo(1) +": Now playing '"+ .song$[.@selection] +"' by "+ .artist$[.@selection] +" as requested by "+ strcharinfo(0) +" for "+ .dedicate$ +" .", bc_map;
+
+// Lock NPC for preset amount
+
+				.lock = .minutes * 60;
+
+				.lock += gettimetick(2);
+
+				close;
+
+				
+OnInit:
+
+// Configuration
+
+				.voucher = 30006; // Voucher item ID
+
+				.amount = 1; // Usage cost, in vouchers
+
+				.minutes = 3; // Lock time, in minutes
+
+				
+
+// Create @radio command
+
+				bindatcmd "radio", strnpcinfo(3) +"::OnRequest", 0, 40;
+
+				//bindatcmd "vipradio", strnpcinfo(3) +"::OnVip", 0, 40;
+
+// Songs
+
+// The song names for each track
+		setarray .song$[0],		"Cream n frosting",
+								"Lose Control",
+								"Sunday's Best",
+								"You know i'll go get",
+								"Dance monkey",
+								"Girls like you",
+								"Seniorita",
+								"10,000 hrs",
+								"Memories",
+								"Young blood";
+								
+								
+		// Artists
+		// The artist name for each track
+		setarray .artist$[0],	"Sabby Sousa",
+								"Meduza, Becky Hill, Goodboys",
+								"Surfaces",
+								"DJ Haning & Rizky Ayuba",
+								"Tones and I",
+								"Maroon 5",
+								"Camila Cabello, Shawn Mendes",
+								"Dan + Shay, Justin Bieber",
+								"Maroon 5",
+								"5 Seconds of Summer";
+								
+		// Files
+		// The file name for each track (no extension)
+		setarray .file$[0],	"1001",
+							"1002",
+							"1003",
+							"1004",
+							"1005",
+							"1006",
+							"1007",
+							"1008",
+							"1009",
+							"1010";
+		
+		// Waitingroom display
+		// Configured to show the NPC's display name
+		waitingroom strnpcinfo(1), 0;
+	
+	end;
+		
+}

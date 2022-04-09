@@ -1,0 +1,16 @@
+prontera,140,174,5	script	Server Time	837,{
+
+     OnInit:
+
+          while (1) {
+
+               delwaitingroom;
+               waitingroom ""+gettimestr("%H:%M:%S", 10)+"",0;
+
+               sleep 1000;
+
+          }
+
+          end;
+
+}

@@ -1,0 +1,1226 @@
+//===== rAthena Script =======================================
+
+einbroch,149,242,3	script	Teddy Bear Collector#teddybear	4_M_NFMAN,9,9,{
+	if(illusionteddybearquest == 9){
+		mes "[ Teddy Bear Collector ]";
+		mes "Hi ^ff0000"+strcharinfo(0)+"^000000!!!";
+		mes "I will never-never-never forget you!";
+		mes "Thank you for saving my beloved Teddy Bear!";
+		close;
+	}
+	if(illusionteddybearquest == 6){
+		mes "[ Teddy Bear Collector ]";
+		mes "Anyways, thanks for your help.";
+		mes "Please tell my uncle that I will be OK and I hope he will find a way to help my Teddy Bear soon.";
+		close;
+	}
+	if(illusionteddybearquest == 5){
+		emotion ET_HUK;
+		mes "[ Teddy Bear Collector ]";
+		mes "OMG! You back!";
+		mes "Did you find anything about my poor Teddy Bear?";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Yes. But please don't be sad.";
+		next;
+		mes "[ Teddy Bear Collector ]";
+		mes "I'm already sad.";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Your uncle knows where your Teddy Bear are, but still can't figure a way out to help him.";
+		mes "But he promisses that he and his mates will never give up on him.";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "He don't want to make you sad.";
+		next;
+		emotion ET_CRY;
+		mes "[ Teddy Bear Collector ]";
+		mes "My poor Teddy Bear.";
+		mes "I guess I can't do much either.";
+		mes "I only hope my uncle will bring him back soon.";
+		next;
+		mes "[ Teddy Bear Collector ]";
+		mes "Anyways, thanks for your help.";
+		mes "Please tell my uncle that I will be OK and I hope he will find a way to help my Teddy Bear soon.";
+		illusionteddybearquest = 6;
+		close;
+	}
+	if(illusionteddybearquest == 1){
+		mes "[ Teddy Bear Collector ]";
+		mes "Please ask around, my friend it's a ^ff0000Detective Teddy Bear^000000.";
+		mes "He and his ^ff0000Teddy Bear^000000 squad member are helping me figure out what happened to may beloved Teddy Bear.";
+		mes "I heard he is somewhere inside mine near Einbrooch.";
+		next;
+		mes "[ Teddy Bear Collector ]";
+		mes "Please go there now, I really-really-really want to know about my beloved Teddy Bear.";
+		close;
+	}
+	mes "[ Teddy Bear Collector ]";
+	mes "Hi there! Sorry but I really need your help please.";
+	next;
+	mes "[ Teddy Bear Collector ]";
+	mes "If you could help me it will makes me really happy.";
+	mes "If I have a time, I won't bother anyone to help me.";
+	mes "Please help me?";
+	next;
+	switch(select("What kind of help?","Sorry I'm busy")){
+			case 1:
+				break;
+			case 2:
+				mes "[ Detective Teddy Bear ]";
+				mes "Well, no worries.";
+				mes "I don't expect anything from a stranger to be honest.";
+				close;
+		}
+	mes "[ Teddy Bear Collector ]";
+	mes "I need to know about one of my Teddy Bear.";
+	mes "I need to know where he is and what happened to him.";
+	next;
+	mes "[ Teddy Bear Collector ]";
+	mes "He suddenly become crazy and not behave like a nice Teddy Bear anymore.";
+	next;
+	emotion ET_CRY;
+	mes "[ Teddy Bear Collector ]";
+	mes "It really makes me super-super-super sad.";
+	mes "I wish I can have him back.";
+	next;
+	mes "[ Teddy Bear Collector ]";
+	mes "My uncle ^ff0000Steven^000000 told me to ask around about it, but as you know, I'm kinda busy.";
+	mes "Would you help me?";
+	next;
+	switch(select("You can count on me!","Sorry I'm busy too")){
+			case 1:
+				break;
+			case 2:
+				mes "[ Teddy Bear Collector ]";
+				mes "Well, no worries.";
+				mes "But I wish you just help me.";
+				close;
+		}
+	illusionteddybearquest = 1;
+	mes "[ Teddy Bear Collector ]";
+	mes "Sweet!";
+	mes "Please ask around, my friend is a ^ff0000Detective Teddy Bear^000000.";
+	mes "He and his ^ff0000Teddy Bear^000000 squad member are helping me figure out what happened to may beloved Teddy Bear.";
+	mes "I heard he is somewhere inside mine near Einbrooch.";
+	next;
+	mes "[ Teddy Bear Collector ]";
+	mes "Please go there now, I really-really-really want to know about my beloved Teddy Bear.";
+	end;
+
+OnInit:
+	end;
+	
+	OnTouch:
+	{
+		OnPCLoadMapEvent:
+			if(strcharinfo(3) == strnpcinfo(4))
+			showevent 1, 1;
+			viewpoint 2,149,242,1,0xFF0000;
+			end;
+	}
+}
+
+ein_dun01,194,80,5	script	Detective Teddy Bear#teddybear	4_M_EINMAN2,{
+	if(illusionteddybearquest == 1){
+		emotion ET_CRY;
+		mes "[ Detective Teddy Bear ]";
+		mes "I failed as a detective, my squad member knows more than me.";
+		close;
+	}
+	if(illusionteddybearquest > 1){
+		emotion ET_CRY;
+		mes "[ Detective Teddy Bear ]";
+		mes "Hi ^ff0000"+strcharinfo(0)+"^000000, nice to see you again!";
+		close;
+	}
+	emotion ET_QUESTION;
+	mes "[ Detective Teddy Bear ]";
+	mes "What are you doing here?";
+	next;
+	mes "[ Detective Teddy Bear ]";
+	mes "If you have nothing to do, you should help my friend at Einbrooch.";
+	next;
+	mes "[ Detective Teddy Bear ]";
+	mes "He can really use your help.";
+	next;
+	mes "[ "+strcharinfo(0)+" ]";
+	mes "What kind of help?";
+	next;
+	mes "[ Detective Teddy Bear ]";
+	mes "Well, I can't say much but it's about his collection of Teddy Bear.";
+	mes "Just go and help him please?";
+	next;
+	switch(select("Ok I'll help","I'm sorry")){
+		case 1:
+			break;
+		case 2:
+			mes "[ Detective Teddy Bear ]";
+			mes "Well, no worries.";
+			mes "I don't expect anything from a stranger to be honest.";
+			close;
+	}
+	mes "[ Detective Teddy Bear ]";
+	mes "Aw~~~!";
+	mes "Thank you!";
+	next;
+	mes "[ Detective Teddy Bear ]";
+	mes "I can help you a little to go to Einbrooch directly, so you don't have to walk from here.";
+	next;
+	switch(select("Ok, send me to Einbrooch","It's OK, I can walk")){
+		case 1:
+			break;
+		case 2:
+		emotion ET_HUK;
+			mes "[ Detective Teddy Bear ]";
+			mes "OMG!";
+			mes "I admire your determination but I can't let you walk there alone.";
+			next;
+			mes "[ Detective Teddy Bear ]";
+			mes "Please take this little gift for me and let's go to Einbrooch.";
+			getitem 501, 10;
+	}
+	warp "einbroch",64,200;
+	end;
+}
+
+-	script	TeddyBearClue#teddybear	-1,{
+	end;
+	
+OnInit:
+	end;
+OnTouch:
+	{
+		OnPCLoadMapEvent:
+			if(strcharinfo(3) == strnpcinfo(4))
+			//showevent 1, 1;
+			//viewpoint 1,149,242,1,0xFF0000;
+			end;
+	}
+}
+einbroch,66,198,3	duplicate(TeddyBearClue#teddybear)	#TeedyBearClue_1	-1,5,5
+
+ein_dun01,196,80,1	script	Curious Teddy Bear#teddybear_c1	4_TEDDY_BEAR_W,{
+end;
+}
+
+ein_dun01,193,80,5	script	Curious Teddy Bear#teddybear_c2	4_TEDDY_BEAR_W,{
+end;
+}
+
+ein_dun01,191,80,5	script	Curious Teddy Bear#teddybear_c3	4_TEDDY_BEAR_W,{
+end;
+}
+
+ein_dun01,190,80,0	script	Curious Teddy Bear#teddybear_c4	4_TEDDY_BEAR_W,{
+end;
+}
+
+ein_dun01,189,82,0	script	Curious Teddy Bear#teddybear_c5	4_TEDDY_BEAR_W,{
+end;
+}
+
+ein_dun01,189,84,0	script	Curious Teddy Bear#teddybear_c6	4_TEDDY_BEAR_W,{
+end;
+}
+
+ein_dun01,189,85,0	script	Teddy Bear#teddybear_c7	4_TEDDY_BEAR_W,7,7,{
+	if(illusionteddybearquest == 3){
+		mes "[ Teddy Bear ]";
+		mes "Step to this strange blue-ish thingy above me.";
+		mes "But I won't dare to do that.";
+		mes "^ff0000Steven^000000 also said, that place filled with possessed angry Teddy Bear.";
+		close;
+	}
+	if(illusionteddybearquest == 2){
+		mes "[ Teddy Bear ]";
+		mes "The more I research the more scary this things goes.";
+		mes "Can you believe this?";
+		mes "A Glowing-Giant-Teddy-Bear?";
+		next;
+		mes "[ Teddy Bear ]";
+		mes "Sounds unreal but that's what I heard from ^ff0000Steven^000000.";
+		next;
+		mes "[ Teddy Bear ]";
+		mes "If you don't believe me, just ask ^ff0000Steven^000000 by your self.";
+		next;
+		mes "[ Teddy Bear ]";
+		mes "He is on another dimension of this place.";
+		mes "Step to this strange blue-ish thingy above me.";
+		next;
+		mes "[ Teddy Bear ]";
+		mes "But I'm not recommend you to do it.";
+		mes "^ff0000Steven^000000 also said, that place filled with possessed angry Teddy Bear.";
+		illusionteddybearquest = 3;
+		showevent QTYPE_NONE, 0;
+		close;
+		
+	}
+	mes "[ Teddy Bear ]";
+	mes "I don't know why people like you go to this place at this evening.";
+	end;
+
+OnInit:
+	end;
+	
+	OnTouch:
+	{
+		OnPCLoadMapEvent:
+		if(illusionteddybearquest != 2){
+			end;
+		}
+			if(strcharinfo(3) == strnpcinfo(4))
+			showevent 1, 1;
+			end;
+	}
+}
+
+ein_dun01,198,79,4	script	Teddy Bear#teddybear_c8	4_TEDDY_BEAR_W,5,5,{
+	if(illusionteddybearquest == 2){
+		mes "[ Teddy Bear ]";
+		mes "Ask my other fellow there near the strange blue-ish thingy.";
+		mes "I believe he discover more about this thing.";
+		close;
+	}
+	if(illusionteddybearquest == 1){
+		mes "[ Teddy Bear ]";
+		mes "This is bad!";
+		mes "This is really-really bad!";
+		next;
+		mes "[ Teddy Bear ]";
+		mes "I heard that a Teddy Bear is glowing!";
+		mes "I mean G-L-O-W-I-N-G!";
+		next;
+		mes "[ Teddy Bear ]";
+		mes "Can you believe that?";
+		mes "Ask my other fellow there near the stange blue-ish thingy.";
+		mes "I believe he discover more about this thing.";
+		illusionteddybearquest = 2;
+		showevent QTYPE_NONE, 0;
+		close;
+	}
+	mes "[ Teddy Bear ]";
+	mes "What a weird place to spend an evening.";
+	end;
+
+OnInit:
+	end;
+	
+	OnTouch:
+	{
+		OnPCLoadMapEvent:
+		if(illusionteddybearquest != 1){
+			end;
+		}
+			if(strcharinfo(3) == strnpcinfo(4))
+			showevent 1, 1;
+			end;
+	}
+}
+
+ein_d02_i,170,193,5	script	Steven#teddybear	4W_M_02,7,7,{
+	if(illusionteddybearquest == 9){
+		mes "[ Steven ]";
+		mes "Hi there!";
+		mes "Thank you for your help earlier!";
+		next;
+		mes "[ Steven ]";
+		mes "Now my nephews Teddy Bear is cured because of your help!";
+		next;
+		mes "[ Steven ]";
+		mes "If you walk down a bit then go to the right, you'll find a Teddy Bear there.";
+		mes "He have many powerful items that you can asked for.";
+		next;
+		mes "[ Steven ]";
+		mes "Try go talk to him.";
+		mes "He is a very nice Teddy Bear.";
+		viewpoint 1,177,158,1,0xFF0000;
+		close;
+	}
+	if(illusionteddybearquest == 8){
+		mes "[ Steven ]";
+		mes "What did ^ff0000Teddy Bear^000000 said?";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "He tell that you need to build a nice looking porcelain Teddy Bear doll!";
+		next;
+		mes "[ Steven ]";
+		mes "Porcelain doll of Teddy Bear?";
+		mes "Interesting! What's next?";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Then you need to make sure that your nephews Teddy Bear found that doll.";
+		mes "If he like it, maybe he will leave that poor Teddy Bear body and possess that doll instead.";
+		next;
+		emotion ET_HUK;
+		mes "[ Steven ]";
+		mes "OMG! That could works!";
+		mes "OK now, I will make that porcelain doll!";
+		next;
+		mes "[ Steven ]";
+		mes "And thank you so much for your help!";
+		mes "I have something for you.";
+		mes "Please take this 1 pc of ^ff0000Illusion Stone^000000.";
+		next;
+		mes "[ Steven ]";
+		mes "Go on your journey and thank you again!";
+		getitem 25271, 1;
+		illusionteddybearquest = 9;
+		close;
+	}
+	if(illusionteddybearquest == 7){
+		mes "[ Steven ]";
+		mes "Find a Teddy Bear that hiding at that place, I know it's kind of hard to do, but please help me.";
+		mes "Figure out what he has to say.";
+		viewpoint 1,137,230,1,0xFF0000;
+		close;
+	}
+	if(illusionteddybearquest == 6){
+		mes "[ Steven ]";
+		mes "Have you talked to my nephews yet?";
+		next;
+		switch(select("Not yet","I have")){
+			case 1:
+				mes "[ Steven ]";
+				mes "Please talk to him first.";
+				close;
+			case 2:
+				break;
+		}
+		mes "[ Steven ]";
+		mes "How's did he take it?";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Pretty well I guess.";
+		mes "Like you've said, I try to not make him more sad.";
+		mes "I leave something that I think he didn't need to know.";
+		next;
+		mes "[ Steven ]";
+		mes "Good!";
+		mes "And I have some good news!";
+		next;
+		mes "[ Steven ]";
+		mes "While you go to my nephews, my mates found something that could be a clue to help my nephews Teddy Bear.";
+		mes "Please go to north west from this place.";
+		next;
+		mes "[ Steven ]";
+		mes "Find a Teddy Bear that hiding at that place, I know it's kind of hard to do, but please help me.";
+		mes "Figure out what he has to say.";
+		illusionteddybearquest = 7;
+		viewpoint 1,137,230,1,0xFF0000;
+		close;
+	}
+	if(illusionteddybearquest == 5){
+		mes "[ Steven ]";
+		mes "Please tell my nephews with the nicest possible words that you can think of.";
+		mes "I don't want to make him sad, really.";
+		close;
+	}
+	if(illusionteddybearquest == 4){
+		mes "[ Steven ]";
+		mes "Wew!";
+		mes "Another living human here?";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Hahaha... I just wanna help your nephews.";
+		next;
+		mes "[ Steven ]";
+		mes "Ow, that a very nice of you.";
+		mes "What you've got so far?";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Not much.";
+		mes "Just giant glowing teddybear";
+		next;
+		mes "[ Steven ]";
+		mes "That's right.";
+		mes "There is much going on here actually.";
+		next;
+		mes "[ Steven ]";
+		mes "I just don't want to make my nephews sad";
+		mes "His Teddy Bear will never come back.";
+		next;
+		mes "[ Steven ]";
+		mes "A dark spirit already possessed my nephews Teddy Bear.";
+		mes "And I don't know anything to help that poor Teddy Bear, it's like they already merge together.";
+		next;
+		mes "[ Steven ]";
+		mes "Now please told my nephews this, that right now I still don't know how to help his Teddy Bear.";
+		next;
+		mes "[ Steven ]";
+		mes "But I will not stop looking for an answer, me and my mates will continue to research more until we know the answer.";
+		next;
+		mes "[ Steven ]";
+		mes "And please tell my nephews with the nicest possible words that you can think of.";
+		mes "I don't want to make him sad, really.";
+		illusionteddybearquest = 5;
+		close;
+	}
+	mes "[ Steven ]";
+	mes "I will not give up!";
+	mes "Wish me luck!";
+	end;
+
+OnInit:
+	end;
+	
+	OnTouch:
+	{
+		OnPCLoadMapEvent:
+		if(illusionteddybearquest != 4){
+			end;
+		}
+			if(strcharinfo(3) == strnpcinfo(4))
+			showevent 1, 1;
+			end;
+	}
+}
+
+// Gloomy Teddy Bear
+ein_d02_i,168,206,5	script	Gloomy Teddy Bear#teddybear	4_teddy_bear_b_l,{
+	if(daily_redteddybear == 2){
+		emotion ET_CONGRATULATION;
+		mes "[ Gloomy Teddy Bear ]";
+		mes "Ahaha! You did it! They will sorry for what they did to me.";
+		mes "You really made my day!";
+		next;
+		mes "[ Gloomy Teddy Bear ]";
+		mes "Now take this ^0000ffIllusion Stone^000000.";
+		hunt_illusionteddybear_progress = 0;
+		daily_redteddybear = 0;
+		delay_daily_redteddybear = gettimetick(2)+86400;
+		getitem 25271, 1;
+		next;
+		mes "[ Gloomy Teddy Bear ]";
+		mes "Come back to me tomorrow if you want to help me again, or you can hunt another coloured Teddy Bear.";
+		mes "Take care!";
+		end;
+	}
+	if(daily_yellowteddybear == 2){
+		emotion ET_CONGRATULATION;
+		mes "[ Gloomy Teddy Bear ]";
+		mes "Ahaha! You did it! They will sorry for what they did to me.";
+		mes "You really made my day!";
+		next;
+		mes "[ Gloomy Teddy Bear ]";
+		mes "Now take this ^0000ffIllusion Stone^000000.";
+		hunt_illusionteddybear_progress = 0;
+		daily_yellowteddybear = 0;
+		delay_daily_yellowteddybear = gettimetick(2)+86400;
+		getitem 25271, 1;
+		next;
+		mes "[ Gloomy Teddy Bear ]";
+		mes "Come back to me tomorrow if you want to help me again, or you can hunt another coloured Teddy Bear.";
+		mes "Take care!";
+		end;
+	}
+	if(daily_greenteddybear == 2){
+		emotion ET_CONGRATULATION;
+		mes "[ Gloomy Teddy Bear ]";
+		mes "Ahaha! You did it! They will sorry for what they did to me.";
+		mes "You really made my day!";
+		next;
+		mes "[ Gloomy Teddy Bear ]";
+		mes "Now take this ^0000ffIllusion Stone^000000.";
+		hunt_illusionteddybear_progress = 0;
+		daily_greenteddybear = 0;
+		delay_daily_greenteddybear = gettimetick(2)+86400;
+		getitem 25271, 1;
+		next;
+		mes "[ Gloomy Teddy Bear ]";
+		mes "Come back to me tomorrow if you want to help me again, or you can hunt another coloured Teddy Bear.";
+		mes "Take care!";
+		end;
+	}
+	if(daily_whiteteddybear == 2){
+		emotion ET_CONGRATULATION;
+		mes "[ Gloomy Teddy Bear ]";
+		mes "Ahaha! You did it! They will sorry for what they did to me.";
+		mes "You really made my day!";
+		next;
+		mes "[ Gloomy Teddy Bear ]";
+		mes "Now take this ^0000ffIllusion Stone^000000.";
+		hunt_illusionteddybear_progress = 0;
+		daily_whiteteddybear = 0;
+		delay_daily_whiteteddybear = gettimetick(2)+86400;
+		getitem 25271, 1;
+		next;
+		mes "[ Gloomy Teddy Bear ]";
+		mes "Come back to me tomorrow if you want to help me again, or you can hunt another coloured Teddy Bear.";
+		mes "Take care!";
+		end;
+	}
+	if(daily_blueteddybear == 2){
+		emotion ET_CONGRATULATION;
+		mes "[ Gloomy Teddy Bear ]";
+		mes "Ahaha! You did it! They will sorry for what they did to me.";
+		mes "You really made my day!";
+		next;
+		mes "[ Gloomy Teddy Bear ]";
+		mes "Now take this ^0000ffIllusion Stone^000000.";
+		hunt_illusionteddybear_progress = 0;
+		daily_blueteddybear = 0;
+		delay_daily_blueteddybear = gettimetick(2)+86400;
+		getitem 25271, 1;
+		next;
+		mes "[ Gloomy Teddy Bear ]";
+		mes "Come back to me tomorrow if you want to help me again, or you can hunt another coloured Teddy Bear.";
+		mes "Take care!";
+		end;
+	}
+	if(hunt_illusionteddybear_progress > 0){
+		mes "[ Gloomy Teddy Bear ]";
+		mes "You need to kill 25x ^009900"+.MobsName$[hunt_ID_illusionteddybear-1]+"^000000.";
+		mes "Talk to me when you done.";
+		end;
+	}
+	emotion ET_CRY;
+	mes "[ Gloomy Teddy Bear ]";
+	mes "So sad? I'm here alone.";
+	mes "All Teddy Bear is mean to me.";
+	next;
+	mes "[ Gloomy Teddy Bear ]";
+	mes "Please help me kick their butt!";
+	next;
+	switch(select("Sure","No")) {
+		case 1:
+			break;
+		case 2:
+		emotion ET_SURPRISE;
+			mes "[ Gloomy Teddy Bear ]";
+			mes "You just like them!";
+			mes "Leave me alone!";
+			end;
+	}
+	mes "[ Gloomy Teddy Bear ]";
+	mes "Ahahaha!";
+	mes "You can choose one that suit your color today.";
+	mes "I have 1pc of ^ff0000Illusion Stone^000000 for you later.";
+	next;
+	switch(select("Red Teddy Bear","Yellow Teddy Bear","Green Teddy Bear","White Teddy Bear","Blue Teddy Bear","Sorry, I can't.")){
+		case 1:
+			if(gettimetick(2) < delay_daily_redteddybear){
+				mes "[ Gloomy Teddy Bear ]";
+				mes "You need to wait until tomorrow to take this hunt challenge again.";
+				mes "Or you can choose another coloured Teddy Bear";
+				end;
+			}
+			hunt_ID_illusionteddybear = 1;
+			goto hunt_abyssturtleisland;
+			close;
+		case 2:
+			if(gettimetick(2) < delay_daily_yellowteddybear){
+				mes "[ Gloomy Teddy Bear ]";
+				mes "You need to wait until tomorrow to take this hunt challenge again.";
+				mes "Or you can choose another coloured Teddy Bear";
+				end;
+			}
+			hunt_ID_illusionteddybear = 2;
+			goto hunt_abyssturtleisland;
+			close;
+		case 3:
+			if(gettimetick(2) < delay_daily_greenteddybear){
+				mes "[ Gloomy Teddy Bear ]";
+				mes "You need to wait until tomorrow to take this hunt challenge again.";
+				mes "Or you can choose another coloured Teddy Bear";
+				end;
+			}
+			hunt_ID_illusionteddybear = 3;
+			goto hunt_abyssturtleisland;
+			close;
+		case 4:
+			if(gettimetick(2) < delay_daily_whiteteddybear){
+				mes "[ Gloomy Teddy Bear ]";
+				mes "You need to wait until tomorrow to take this hunt challenge again.";
+				mes "Or you can choose another coloured Teddy Bear";
+				end;
+			}
+			hunt_ID_illusionteddybear = 4;
+			goto hunt_abyssturtleisland;
+			close;
+		case 5:
+			if(gettimetick(2) < delay_daily_blueteddybear){
+				mes "[ Gloomy Teddy Bear ]";
+				mes "You need to wait until tomorrow to take this hunt challenge again.";
+				mes "Or you can choose another coloured Teddy Bear";
+				end;
+			}
+			hunt_ID_illusionteddybear = 5;
+			goto hunt_abyssturtleisland;
+			close;
+		case 6:
+			emotion ET_SWEAT;
+			mes "[ Gloomy Teddy Bear ]";
+			mes "You what?";
+			next;
+			mes "[ Gloomy Teddy Bear ]";
+			mes "I hate you!";
+			mes "Off you go!";
+			end;
+	}
+	
+	hunt_abyssturtleisland:
+	emotion ET_OOPS;
+	mes "[ Gloomy Teddy Bear ]";
+	mes "Great choice, ahahaha!";
+	mes "You choose to hunt 25x ^009900"+.MobsName$[hunt_ID_illusionteddybear-1]+"^000000.";
+	mes "Are you sure?";
+	next;
+	switch(select("Yes","No")){
+		case 1: break;
+		case 2:
+			emotion ET_CRY;
+			mes "[ Gloomy Teddy Bear ]";
+			mes "What you mean by NO?";
+			mes "I hate you!";
+			mes "Off you go!";
+			end;
+		}
+	if (hunt_ID_illusionteddybear == 1){
+		daily_redteddybear = 1;
+		daily_yellowteddybear = 0;
+		daily_greenteddybear = 0;
+		daily_whiteteddybear = 0;
+		daily_blueteddybear = 0;
+		kill_redteddybear_count = 0;
+		}
+	if (hunt_ID_illusionteddybear == 2){
+		daily_redteddybear = 0;
+		daily_yellowteddybear = 1;
+		daily_greenteddybear = 0;
+		daily_whiteteddybear = 0;
+		daily_blueteddybear = 0;
+		kill_yellowteddybear_count = 0;
+		}
+	if (hunt_ID_illusionteddybear == 3){
+		daily_redteddybear = 0;
+		daily_yellowteddybear = 0;
+		daily_greenteddybear = 1;
+		daily_whiteteddybear = 0;
+		daily_blueteddybear = 0;
+		kill_greenteddybear_count = 0;
+		}
+	if (hunt_ID_illusionteddybear == 4){
+		daily_redteddybear = 0;
+		daily_yellowteddybear = 0;
+		daily_greenteddybear = 0;
+		daily_whiteteddybear = 1;
+		daily_blueteddybear = 0;
+		kill_whiteteddybear_count = 0;
+		}
+	if (hunt_ID_illusionteddybear == 5){
+		daily_redteddybear = 0;
+		daily_yellowteddybear = 0;
+		daily_greenteddybear = 0;
+		daily_whiteteddybear = 0;
+		daily_blueteddybear = 1;
+		kill_blueteddybear_count = 0;
+		}
+	hunt_illusionteddybear_progress = 1;
+	mes "[ Gloomy Teddy Bear ]";
+	mes "Nice!";
+	mes "Come back to me when you done hunt them.";
+	mes "And I will give you this ^0000ffIllusion Stone^000000.";
+	next;
+	mes "[ Gloomy Teddy Bear ]";
+	mes "Good luck!";
+	close;
+	
+OnInit:
+	setarray .mobs_hunt_abyssturtleisland[0],20255,20256,20257,20258,20259;
+	//setarray .reward_hunt_abyssturtleisland[0],25271,25271,25271,25271,25271;
+	//setarray .reward_amount_hunt_abyssturtleisland[0],1,1,1,1,1;
+	setarray .MobsName$[0],"Red Teddy Bear","Yellow Teddy Bear","Green Teddy Bear","White Teddy Bear","Blue Teddy Bear";
+	end;
+	
+	OnTouch:
+	{
+		OnPCLoadMapEvent:
+			if(strcharinfo(3) == strnpcinfo(4))
+			showevent 1, 1;
+			end;
+	}
+}
+
+//Kill Daily Quest
+
+-	script	Red Teddy Bear#IllusionTeddyBear	-1,{
+	OnKill:
+		if(daily_redteddybear == 2){
+			unittalk getcharid(3),"I already kill 25x Red Teddy Bear. I need to talk to Gloomy Teddy Bear.",bc_self;
+			end;
+		}
+		if(daily_redteddybear == 1){
+			kill_redteddybear_count = kill_redteddybear_count + 1;
+			if(kill_redteddybear_count > 24){
+				unittalk getcharid(3),"I already kill 25x Red Teddy Bear. I need to talk to Gloomy Teddy Bear.",bc_self;
+				daily_redteddybear = 2;
+				end;
+			}
+			unittalk getcharid(3),"I already kill "+kill_redteddybear_count+" Red Teddy Bear!",bc_self;
+			end;
+		}
+	end;
+}
+
+-	script	Yellow Teddy Bear#IllusionTeddyBear	-1,{
+	OnKill:
+		if(daily_yellowteddybear == 2){
+			unittalk getcharid(3),"I already kill 25x Yellow Teddy Bear. I need to talk to Gloomy Teddy Bear.",bc_self;
+			end;
+		}
+		if(daily_yellowteddybear == 1){
+			kill_yellowteddybear_count = kill_yellowteddybear_count + 1;
+			if(kill_yellowteddybear_count > 24){
+				unittalk getcharid(3),"I already kill 25x Yellow Teddy Bear. I need to talk to Gloomy Teddy Bear.",bc_self;
+				daily_yellowteddybear = 2;
+				end;
+			}
+			unittalk getcharid(3),"I already kill "+kill_yellowteddybear_count+" Yellow Teddy Bear!",bc_self;
+			end;
+		}
+	end;
+}
+
+-	script	Green Teddy Bear#IllusionTeddyBear	-1,{
+	OnKill:
+		if(daily_greenteddybear == 2){
+			unittalk getcharid(3),"I already kill 25x Green Teddy Bear. I need to talk to Gloomy Teddy Bear.",bc_self;
+			end;
+		}
+		if(daily_greenteddybear == 1){
+			kill_greenteddybear_count = kill_greenteddybear_count + 1;
+			if(kill_greenteddybear_count > 24){
+				unittalk getcharid(3),"I already kill 25x Green Teddy Bear. I need to talk to Gloomy Teddy Bear.",bc_self;
+				daily_greenteddybear = 2;
+				end;
+			}
+			unittalk getcharid(3),"I already kill "+kill_greenteddybear_count+" Green Teddy Bear!",bc_self;
+			end;
+		}
+	end;
+}
+
+-	script	White Teddy Bear#IllusionTeddyBear	-1,{
+	OnKill:
+		if(daily_whiteteddybear == 2){
+			unittalk getcharid(3),"I already kill 25x White Teddy Bear. I need to talk to Gloomy Teddy Bear.",bc_self;
+			end;
+		}
+		if(daily_whiteteddybear == 1){
+			kill_whiteteddybear_count = kill_whiteteddybear_count + 1;
+			if(kill_whiteteddybear_count > 24){
+				unittalk getcharid(3),"I already kill 25x White Teddy Bear. I need to talk to Gloomy Teddy Bear.",bc_self;
+				daily_whiteteddybear = 2;
+				end;
+			}
+			unittalk getcharid(3),"I already kill "+kill_whiteteddybear_count+" White Teddy Bear!",bc_self;
+			end;
+		}
+	end;
+}
+
+-	script	Blue Teddy Bear#IllusionTeddyBear	-1,{
+	OnKill:
+		if(daily_blueteddybear == 2){
+			unittalk getcharid(3),"I already kill 25x Blue Teddy Bear. I need to talk to Gloomy Teddy Bear.",bc_self;
+			end;
+		}
+		if(daily_blueteddybear == 1){
+			kill_blueteddybear_count = kill_blueteddybear_count + 1;
+			if(kill_blueteddybear_count > 24){
+				unittalk getcharid(3),"I already kill 25x Blue Teddy Bear. I need to talk to Gloomy Teddy Bear.",bc_self;
+				daily_blueteddybear = 2;
+				end;
+			}
+			unittalk getcharid(3),"I already kill "+kill_blueteddybear_count+" Blue Teddy Bear!",bc_self;
+			end;
+		}
+	end;
+}
+
+ein_d02_i,191,192,3	script	Porcelain Doll Maker#teddybear	4_F_HUWOMAN,{
+end;
+}
+
+ein_d02_i,177,158,3	script	Powerful Teddy Bear#teddybear	4_TEDDY_BEAR_W,{
+	if(illusionteddybearquest != 9){
+		mes "[ Powerful Teddy Bear ]";
+		mes "I'm not talking to a stranger.";
+		close;
+	}
+	if (checkweight(1201,1) == 0) {
+		mes "Reduce the amount of items that you have in your inventory before continuing.";
+		end;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes "You are carrying too much in your inventory.";
+		end;
+	}
+	disable_items;
+	mes "[ Powerful Teddy Bear ]";
+	mes "Hi there!";
+	mes "Go on and choose which item did you wanna make.";
+	next;
+	mes "[ Powerful Teddy Bear ]";
+	mes "FYI, I don't offer this to just anybody, only for you!";
+	mes "Ahahaha...";
+	mes "Go on choose.";
+	next;
+	switch(select("Illusion Survivor's Staff[2]","Illusion Dagger Counter[2]","Illusion Gate Keeper-DD[2]","Illusion Boots[1]","Illusion Hot-blooded Headband[1]","Maybe later")){
+		case 1:
+			set .@location, EQI_HAND_R;
+			.@refine = getequiprefinerycnt(.@location);
+			.@equip_id = getequipid(.@location);
+			.@equip_id_req = 1618;
+			.@req_item_1 = 25271;
+			.@req_item_2 = 25619;
+			.@req_item_3 = 25618;
+			.@req_item_4 = 25617;
+			.@amount_req_item_1 = 125;
+			.@amount_req_item_2 = 15;
+			.@amount_req_item_3 = 100;
+			.@amount_req_item_4 = 100;
+			.@reward = 2051;
+			goto craft;
+		case 2:
+			set .@location, EQI_HAND_R;
+			.@refine = getequiprefinerycnt(.@location);
+			.@equip_id = getequipid(.@location);
+			.@equip_id_req = 1242;
+			.@req_item_1 = 25271;
+			.@req_item_2 = 25616;
+			.@req_item_3 = 25617;
+			.@req_item_4 = 0;
+			.@amount_req_item_1 = 95;
+			.@amount_req_item_2 = 75;
+			.@amount_req_item_3 = 50;
+			.@reward = 28745;
+			goto craft;
+		case 3:
+			set .@location, EQI_HAND_R;
+			.@refine = getequiprefinerycnt(.@location);
+			.@equip_id = getequipid(.@location);
+			.@equip_id_req = 13167;
+			.@req_item_1 = 25271;
+			.@req_item_2 = 25617;
+			.@req_item_3 = 25615;
+			.@req_item_4 = 0;
+			.@amount_req_item_1 = 95;
+			.@amount_req_item_2 = 75;
+			.@amount_req_item_3 = 150;
+			.@reward = 28244;
+			goto craft;
+		case 4:
+			set .@location, EQI_SHOES;
+			.@refine = getequiprefinerycnt(.@location);
+			.@equip_id = getequipid(.@location);
+			.@equip_id_req = 2406;
+			.@req_item_1 = 25271;
+			.@req_item_2 = 25616;
+			.@req_item_3 = 25618;
+			.@req_item_4 = 0;
+			.@amount_req_item_1 = 85;
+			.@amount_req_item_2 = 50;
+			.@amount_req_item_3 = 50;
+			.@reward = 22190;
+			goto craft;
+		case 5:
+			set .@location, EQI_HEAD_TOP;
+			.@refine = getequiprefinerycnt(.@location);
+			.@equip_id = getequipid(.@location);
+			.@equip_id_req = 5070;
+			.@req_item_1 = 25271;
+			.@req_item_2 = 25619;
+			.@req_item_3 = 25617;
+			.@req_item_4 = 25615;
+			.@amount_req_item_1 = 115;
+			.@amount_req_item_2 = 5;
+			.@amount_req_item_3 = 50;
+			.@amount_req_item_4 = 100;
+			.@reward = 19344;
+			goto craft;
+		case 6:
+			emotion ET_HUK;
+			mes "[ Powerful Teddy Bear ]";
+			mes "OK!";
+			mes "I will stay here waiting for you!";
+			mes "Ahahaha.";
+			misceffect 90;
+			close;
+	}
+	craft:
+		mes "[ Powerful Teddy Bear ]";
+		mes "If you want <ITEM>" +getitemname(.@reward)+ "<INFO>" +.@reward+"</INFO></ITEM>";
+		mes "Please bring all this material so I can craft it for you.";
+		next;
+		mes "[ Powerful Teddy Bear ]";
+		mes "Bring me all of this:";
+		mes " ";
+		mes "( ^009900"+.@equip_id_req+"^000000 ) ^ff0000+7^000000 "+getitemname(.@equip_id_req)+"";
+		mes "( ^009900"+.@req_item_1+"^000000 ) "+.@amount_req_item_1+" pcs of "+getitemname(.@req_item_1)+"";
+		mes "( ^009900"+.@req_item_2+"^000000 ) "+.@amount_req_item_2+" pcs of "+getitemname(.@req_item_2)+"";
+		mes "( ^009900"+.@req_item_3+"^000000 ) "+.@amount_req_item_3+" pcs of "+getitemname(.@req_item_3)+"";
+		if(.@req_item_4 > 0){
+			mes "( ^009900"+.@req_item_4+"^000000 ) "+.@amount_req_item_4+" pcs of "+getitemname(.@req_item_4)+"";
+		}
+		next;
+		mes "[ Powerful Teddy Bear ]";
+		mes "And looks like you are already prepared.";
+		mes "Don't forget, you need to wear the equip that you want to exchange.";
+		next;
+		switch(select("Let's trade!","I'm not prepared yet.")){
+			case 1:
+				break;
+			case 2:
+				mes "[ Powerful Teddy Bear ]";
+				mes "Ow... How sad.";
+				mes "Please come back when you are ready!";
+				end;
+		}
+		.@refine = getequiprefinerycnt(.@location);
+		.@equip_id = getequipid(.@location);
+		if(.@equip_id_req != .@equip_id || .@refine < 7){
+			mes "[ Powerful Teddy Bear ]";
+			mes "I want ^ff0000+7^000000 "+getitemname(.@equip_id_req)+".";
+			mes "Other items will not do.";
+			end;
+		}
+		if(.@req_item_4 > 0){
+			if(countitem(.@req_item_1) < .@amount_req_item_1 || countitem(.@req_item_2) < .@amount_req_item_2 || countitem(.@req_item_3) < .@amount_req_item_3 || countitem(.@req_item_4) < .@amount_req_item_4 ){
+				mes "[ Powerful Teddy Bear ]";
+				mes "Hahaha...";
+				mes "You don't bring enough items.";
+				mes "Go get me some!";
+				end;
+			}
+		}
+		if(.@req_item_4 == 0){
+			if(countitem(.@req_item_1) < .@amount_req_item_1 || countitem(.@req_item_2) < .@amount_req_item_2 || countitem(.@req_item_3) < .@amount_req_item_3 ){
+				mes "[ Powerful Teddy Bear ]";
+				mes "Hahaha...";
+				mes "You don't bring enough items.";
+				mes "Go get me some!";
+				end;
+			}
+		}
+		
+		emotion ET_SMILE;
+		specialeffect2 EF_PHARMACY_OK;
+		delequip .@location;
+		if(.@req_item_4 > 0){
+			delitem .@req_item_1, .@amount_req_item_1;
+			delitem .@req_item_2, .@amount_req_item_2;
+			delitem .@req_item_3, .@amount_req_item_3;
+			delitem .@req_item_4, .@amount_req_item_4;
+		}
+		if(.@req_item_4 == 0){
+			delitem .@req_item_1, .@amount_req_item_1;
+			delitem .@req_item_2, .@amount_req_item_2;
+			delitem .@req_item_3, .@amount_req_item_3;
+		}
+		getitem .@reward, 1;
+		mes "[ Powerful Teddy Bear ]";
+		mes "OK, that's what you came here for!";
+		mes "Take a good care of it.";
+		end;
+}
+
+ein_d02_i,137,230,3	script	Hiding Teddy Bear#teddybear	CLEAR_NPC,5,5,{
+	if(illusionteddybearquest == 8){
+		emotion ET_HUK;
+		mes "[ Teddy Bear ]";
+		mes "What are you still doing here?";
+		mes "Go talk to ^ff0000Steven^000000 now!";
+		close;
+	}
+	if(illusionteddybearquest == 7){
+		emotion ET_HUK;
+		mes "[ Teddy Bear ]";
+		mes "Who's there!";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Steven send me to find you.";
+		next;
+		mes "[ Teddy Bear ]";
+		mes "Shhhhh....";
+		mes "Lowered your voice!";
+		next;
+		mes "[ Teddy Bear ]";
+		mes "Let's make this quick.";
+		mes "I don't want to be possessed like any other Teddy Bear.";
+		next;
+		mes "[ Teddy Bear ]";
+		mes "And I know a way to make that giant glowing Teddy Bear come back normal again.";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Please tell me.";
+		next;
+		mes "[ Teddy Bear ]";
+		mes "Shhhhh... Just listen to me!";
+		mes "Ask ^ff0000Steven^000000 create a nice looking porcelain doll of Teddy Bear.";
+		mes "Tell him the doll must be as good as possible.";
+		next;
+		mes "[ Teddy Bear ]";
+		mes "Then, comes the hard part!";
+		mes "Lure that giant glowing Teddy Bear so he can see that porcelain doll.";
+		next;
+		mes "[ Teddy Bear ]";
+		mes "If he like it, maybe he will possessed that porcelain doll and leave Teddy Bear body.";
+		mes "That's it, now please go away!";
+		next;
+		mes "[ Teddy Bear ]";
+		mes "I don't want to be found by that giant glowing Teddy Bear.";
+		illusionteddybearquest = 8;
+		close;
+	}
+	end;
+OnInit:
+	end;
+	
+	OnTouch:
+	
+	{
+		OnPCLoadMapEvent:
+		if(illusionteddybearquest != 7){
+			end;
+		}
+			if(strcharinfo(3) == strnpcinfo(4))
+			showevent 1, 1;
+			end;
+	}
+}
+
+//Warper
+ein_dun01,189,87,4	script	Distorted Space#teddybear_1	4_ENERGY_BLUE,{
+	if(illusionteddybearquest == 3){
+		mes "^33cc33[ Distorted Space ]^000000";
+		mes "^00ccff----------------------------------^000000";
+		mes "You can feel something strange in this space.";
+		mes "What will you do?";
+		next;
+		switch(select("Step in","Step out")) {
+			case 1:
+				break;
+			case 2:
+			mes "^33cc33[ Distorted Space ]^000000";
+			mes "^00ccff----------------------------------^000000";
+			mes "Nothing happened.";
+			close;
+		}
+		mes "^33cc33[ Distorted Space ]^000000";
+		mes "^00ccff----------------------------------^000000";
+		mes "You can feel a force pulling you in!";
+		illusionteddybearquest = 4;
+		next;
+		if (BaseLevel < 140){
+			mes "^33cc33[ Distorted Space ]^000000";
+			mes "^00ccff----------------------------------^000000";
+			mes "Nothing happened.";
+			mes "You must be ^FF0000at least Level 140 ^000000to enter the Illusion of Teddy Bear.";
+			close;
+		}
+	
+		mes "^33cc33[ Distorted Space ]^000000";
+		mes "^00ccff----------------------------------^000000";
+		mes "You can feel a force pulling you in!";
+		next;
+		warp "ein_d02_i",168,196;
+		end;
+	}
+	if(illusionteddybearquest == 6){
+		mes "^33cc33[ Distorted Space ]^000000";
+		mes "^00ccff----------------------------------^000000";
+		mes "You can feel something strange in this space.";
+		mes "What will you do?";
+		next;
+		switch(select("Step in","Step out")) {
+			case 1:
+				break;
+			case 2:
+			mes "^33cc33[ Distorted Space ]^000000";
+			mes "^00ccff----------------------------------^000000";
+			mes "Nothing happened.";
+			close;
+		}
+		if (BaseLevel < 140){
+			mes "^33cc33[ Distorted Space ]^000000";
+			mes "^00ccff----------------------------------^000000";
+			mes "Nothing happened.";
+			mes "You must be ^FF0000at least Level 140 ^000000to enter the Illusion of Teddy Bear.";
+			close;
+		}		
+		mes "^33cc33[ Distorted Space ]^000000";
+		mes "^00ccff----------------------------------^000000";
+		mes "You can feel a force pulling you in!";
+		next;
+		warp "ein_d02_i",168,196;
+		end;
+	}
+	if(illusionteddybearquest <= 0){
+		mes "^33cc33[ Distorted Space ]^000000";
+		mes "^00ccff----------------------------------^000000";
+		mes "You can feel something strange in this space.";
+		close;
+	}
+	mes "^33cc33[ Distorted Space ]^000000";
+	mes "^00ccff----------------------------------^000000";
+	mes "You can feel something strange in this space.";
+	mes "What will you do?";
+	next;
+	switch(select("Step in","Step out")) {
+		case 1:
+			if (BaseLevel < 140){
+				mes "^33cc33[ Distorted Space ]^000000";
+				mes "^00ccff----------------------------------^000000";
+				mes "Nothing happened.";
+				mes "You must be ^FF0000at least Level 140 ^000000to enter the Illusion of Teddy Bear.";
+				close;
+			}
+		
+			mes "^33cc33[ Distorted Space ]^000000";
+			mes "^00ccff----------------------------------^000000";
+			mes "You can feel a force pulling you in!";
+			next;
+			warp "ein_d02_i",168,196;
+			close;
+		case 2:
+			mes "^33cc33[ Distorted Space ]^000000";
+			mes "^00ccff----------------------------------^000000";
+			mes "Nothing happened.";
+			close;
+	}
+	end;
+}
+
+ein_d02_i,161,188,4	script	Distorted Space#teddybear_2	4_ENERGY_BLUE,{
+	mes "^33cc33[ Distorted Space ]^000000";
+	mes "^00ccff----------------------------------^000000";
+	mes "You can feel something strange in this space.";
+	mes "What will you do?";
+	next;
+	switch(select("Step in","Step out")) {
+		case 1:
+			if (BaseLevel < 140){
+				mes "^33cc33[ Distorted Space ]^000000";
+				mes "^00ccff----------------------------------^000000";
+				mes "Nothing happened.";
+				mes "You must be ^FF0000at least Level 140 ^000000to enter the Illusion of Teddy Bear.";
+				close;
+				break;
+			}
+		
+			mes "^33cc33[ Distorted Space ]^000000";
+			mes "^00ccff----------------------------------^000000";
+			mes "You can feel a force pulling you in!";
+			next;
+			warp "ein_d02_i",168,196;
+			close;
+		case 2:
+			mes "^33cc33[ Distorted Space ]^000000";
+			mes "^00ccff----------------------------------^000000";
+			mes "Nothing happened.";
+			close;
+	}
+	end;
+}

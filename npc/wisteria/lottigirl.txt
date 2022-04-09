@@ -1,0 +1,288 @@
+//===== Hercules Script ======================================
+//= Lotti Girl
+//===== By: ==================================================
+//= AnnieRuru
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: ===================================== 
+//= Hercules 2019-02-22
+//===== Description: ========================================= 
+//= Roll a lottery ticket and get some cool items
+//= even if you get all the trash items, you still collecting points to buy in lotti shop
+//===== Topic ================================================
+//= http://herc.ws/board/topic/16579-lotti-girl/
+//===== Additional Comments: =================================
+//= 
+//============================================================
+
+function	script	F_MesItemInfo	{
+	.@item = getarg(0);
+	.@itemname$ = getitemname(.@item);
+	if (.@itemname$ != "null") {
+		.@itemslot = getitemslots(.@item);
+		if (.@itemslot)
+			.@itemname$ = sprintf("%s [%d]", .@itemname$, .@itemslot);
+	}
+	else
+		.@itemname$ = "Unknown Item";
+	if (PACKETVER >= 20150729)
+		return sprintf("<ITEM>%s<INFO>%d</INFO></ITEM>", .@itemname$, .@item);
+	else if (PACKETVER >= 20130130)
+		return sprintf("<ITEMLINK>%s<INFO>%d</INFO></ITEMLINK>", .@itemname$, .@item);
+	else
+		return .@itemname$;
+}
+
+/*
+create table lotti_rank (
+char_id int(11),
+name varchar(24),
+lotti_point int(11),
+primary key (char_id),
+key (lotti_point)
+) engine = innodb;
+*/
+
+sec_in02,146,173,3	script	Lotti Girl	1_F_MARIA,{
+	goto L_talk;
+OnInit:
+//	Announce to the server when player roll on a rare item
+	.rare_announcement = 1; 	// Default 1 : means any item with 0.00%~0.99%
+
+//	Amount of points gain for each roll
+	.lotti_points = 1;
+
+//	If the player choose to Roll Repeatedly, what is the maximum amount of Roll in the input
+	.max_roll = 100;
+
+	setarray .item,
+		30006,			// Item ID requirement
+		1,			// amount of the Item needed
+		100,			// chance of not getting any items
+
+	//	chance of getting the items
+	//	<Item ID>, <amount>, <chance>
+		663,		1,			800, // Korean Rice Cake
+		608,		1,			100, // Yggdrasil Seed
+		607,		1,			100, // Yggdrasil Berry
+		30006,		1,			20, // Wisteria
+		17292,		1,			10, // Shadow Box
+		17293,		1,			10, // Shadow Physical Package
+		17294,		1,			10, // Shadow Magical Package
+		22529,		1,			10, // Shadow Thump Box
+		23436,		1,			2, // Shadow Refine Hammer
+		6240,		1,			1, // HD Oridecon
+		6241,		1,			1, // HD Elunium
+		1000335,	1,			1, // HD Etherium
+		1000336,	1,			1, // HD Elunium
+		6234,		1,			1, // +7 Armor Refine Ticket
+		6230,		1,			1, // +7 Weapon Refine Ticket
+		19439,		1,			1, // Vicious Mind Aura
+		20748,		1,			1, // Fallen Warrior Manteau
+		19871,		1,			1,	// Costume Decoration of Music
+		19950,		1,			1,	// Costume RWC Champ Crown		
+		19292,		1,			1, // Costume Smokie Knit Cap
+		19294,		1,			1, // Costume Cyber Cat Ear Headphones (Red)
+		31055,		1,			1, // Costume Poring Soap Pipe
+		5377,		1,			1, // Gentleman's Pipe
+		6635,		1,			1, // Blacksmith's Blessing
+		7179,		1,			1; // PODS
+
+	setarray .itemshop,
+	//	Item sold in the shop
+	//	<Item ID>, <Lotti Points needed>
+		30001,	39000,
+		30002,	24000,
+		30003,	14000,
+		30004,	4000,
+		1294,	50000,
+		1395,	50000,
+		1396,	50000,
+		1436,	50000,
+		1492,	50000,
+		1586,	50000,
+		1587,	50000,
+		1832,	50000,
+		13072,	50000,
+		16020,	50000,
+		16021,	50000,
+		18113,	50000,
+		18114,	50000,
+		21001,	50000,
+		21002,	50000,
+		1293,	50000;
+
+//	=========================================================================================================
+
+	.size = getarraysize(.item);
+	for ( .@i = 2; .@i < .size; .@i += 3 )
+		.totalchance += .item[.@i];
+	for ( .@i = 2; .@i < .size; .@i += 3 ) {
+		.@chance = .item[.@i] *10000 / .totalchance;
+		.@division = .@chance / 100;
+		.@remainder$ = .@chance % 100;
+		while ( getstrlen(.@remainder$) < 2 )
+			.@remainder$ = insertchar(.@remainder$, "0", 0);
+		.chance_display$[.@i] = .@division +"."+ .@remainder$ +"%";
+		if ( .@division < .rare_announcement )
+			.announce[.@i] = true;
+	}
+	.shop_size = getarraysize(.itemshop);
+	npcshopdelitem "Lotti#hidden", 512;
+	for ( .@i = 0; .@i < .shop_size; .@i += 2 )
+		npcshopadditem "Lotti#hidden", .itemshop[.@i], .itemshop[.@i +1];
+	npcshopattach "Lotti#hidden";
+	.npcname$ = "[ "+strnpcinfo(3)+" ]";
+	end;
+L_talk:
+	mes .npcname$;
+	mes "Hello, do you want to play?";
+	next;
+	switch( select( "Deal me in!", "More Information", "Lotti Shop", "Lotti Ranking" ) ) {
+	mes .npcname$;
+	case 1:
+		mes "It costs "+.item[1]+"x "+F_MesItemInfo( .item[0] )+" to play.";
+		if ( countitem( .item[0] ) < .item[1] )
+			close;
+		next;
+		if ( select( "Play", "Roll Repeatedly" ) == 1 ) {
+			mes .npcname$;
+			while ( true ) {
+				mes "Here we go...";
+				mes " ";
+				.@r = rand(.totalchance);
+				for ( .@i = 2; ( .@r -= .item[.@i] ) >= 0; .@i += 3 );
+				if ( checkweight( .item[.@i -2], .item[.@i -1] ) == false ) {
+					mes "It appears you have overweight";
+					break;
+				}
+				delitem .item[0], .item[1];
+				if ( .@i == 2 )
+					mes "You get nothing...";
+				else {
+					mes "You get "+.item[.@i -1]+"x "+F_MesItemInfo(.item[.@i -2]);					getitem .item[.@i -2], .item[.@i -1];
+					if ( .announce[.@i] )
+						announce sprintf (( "Lotti Girl: Player [%s] has roll on [%s](%s)" ), strcharinfo(0), getitemname(.item[.@i -2]), .chance_display$[.@i] ), bc_all, C_PINK;
+				}
+				lotti_points += .lotti_points;
+				query_sql "insert into lotti_rank values ( "+ getcharid(CHAR_ID_CHAR) +", '"+ escape_sql( strcharinfo(PC_NAME) ) +"', "+ .lotti_points +" ) on duplicate key update lotti_point = lotti_point + "+ .lotti_points;
+				mes " ";
+				mes "wanna try again ?";
+				next;
+				if ( select( "Yes", "No" ) == 2 ) break;
+				mes .npcname$;
+				if ( countitem( .item[0] ) < .item[1] ) {
+					mes " ";
+					mes "It appears you have ran out of "+F_MesItemInfo( .item[0] );
+					break;
+				}
+			}
+		}
+		else {
+			mes .npcname$;
+			mes "Input how many rounds to roll";
+			mes "Currently you have "+countitem( .item[0] )+" "+F_MesItemInfo( .item[0] );
+			next;
+			input .@roll_input, 1, min( countitem( .item[0] ) / .item[1], .max_roll );
+			mes .npcname$;
+			mes "Are you sure you want to roll "+.@roll_input+" times ?";
+			next;
+			if ( select( "Yes", "No" ) == 2 ) close;
+			mes .npcname$;
+			mes "Here we go...";
+			mes " ";
+//			freeloop true;
+			for ( .@j = 0; .@j < .@roll_input; ++.@j ) {
+				.@r = rand(.totalchance);
+				for ( .@i = 2; ( .@r -= .item[.@i] ) >= 0; .@i += 3 );
+				if ( checkweight( .item[.@i -2], .item[.@i -1] ) == false ) {
+					mes "It appears you have overweight";
+					break;
+				}
+				delitem .item[0], .item[1];
+				if ( .@i == 2 )
+					mes "You get nothing...";
+				else {
+					mes "You get "+.item[.@i -1]+"x "+F_MesItemInfo(.item[.@i -2]);
+					getitem .item[.@i -2], .item[.@i -1];
+					if ( .announce[.@i] )
+						announce sprintf(( "Lotti Girl: Player [%s] has roll on [%s](%s)" ), strcharinfo(0), getitemname(.item[.@i -2]), .chance_display$[.@i] ), bc_all, C_PINK;
+				}
+				++.@roll;
+				sleep2 1; // prevent lag the server
+			}
+			lotti_points += .lotti_points * .@roll;
+			query_sql "insert into lotti_rank values ( "+ getcharid(CHAR_ID_CHAR) +", '"+ escape_sql( strcharinfo(PC_NAME) ) +"', "+ .lotti_points +" ) on duplicate key update lotti_point = lotti_point + "+( .lotti_points * .@roll );
+			mes "Total roll : "+.@roll+" times.";
+		}
+		mes " ";
+		mes "Thank you for using Lotti service~";
+		close;
+	case 2:
+		freeloop true;
+		mes "Item required: "+.item[1]+"x "+F_MesItemInfo(.item[0]);
+		if ( .item[2] )
+			mes "Chance to gain ^FF0000Nothing^000000 : " + .chance_display$[2];
+		mes "Possible gains:                                       ";
+		for ( .@i = 3; .@i < .size; .@i += 3 )
+			mes "^FF0000>^000000"+F_MesItemInfo(.item[.@i])+":" + .chance_display$[.@i +2] ;
+		next;
+		mes .npcname$;
+		mes "Each time you roll, will gain "+.lotti_points+" Lotti Point(s).";
+		mes "Which can be use to buy rare items in Lotti Shop.";
+		close;
+	case 3:
+		mes "You currently have ^0000FF"+lotti_points+"^000000 Lotti Point(s).";
+		dispbottom "You currently have "+lotti_points+" Lotti Point(s).";
+		close2;
+		callshop "Lotti#hidden", 1;
+		end;
+	case 4:
+		.@query$  = "SELECT `name`, IF(@d=t.`lotti_point`, @r, @r:=@i), @d:=t.`lotti_point`, @i:=@i+1 ";
+		.@query$ += "FROM `lotti_rank` t, (SELECT @d:=0, @r:=0, @i:=1)q ";
+		.@query$ += "ORDER BY `lotti_point` DESC LIMIT 5";
+		.@nb = query_sql(.@query$, .@name$, .@rank, .@points, .@dummy);
+		if ( !.@nb ) {
+			mes "There's no ranking yet ~";
+			close;
+		}
+		for ( .@i = 0; .@i < .@nb; ++.@i )
+			mes ""+.@rank[.@i]+". "+.@name$[.@i]+" : "+.@points[.@i]+" Point(s)";
+		mes " ";
+		if ( !query_sql( "SELECT `lotti_point`, 1+(SELECT COUNT(1) FROM `lotti_rank` t1 WHERE t1.lotti_point > t2.lotti_point) FROM `lotti_rank` t2 WHERE `char_id` = "+ getcharid(CHAR_ID_CHAR), .@points, .@rank ) ) {
+			mes "You are not in the rank.";
+			close;
+		}
+		mes "Your current :";
+		mes " > Rank : "+.@rank;
+		mes " > Point : "+.@points+" Point(s).";
+		close;
+	}
+	end; // shouldn't reach
+OnBuyItem:
+	mes .npcname$;
+	if ( !@bought_quantity ) end;
+	if ( checkweight2( @bought_nameid, @bought_quantity ) == false ) {
+		mes "It appears you can't carry them all";
+		close;
+	}
+	.@size = getarraysize( @bought_nameid );
+	for ( .@i = 0; .@i < .@size; .@i++ ) {
+		for ( .@j = 0; .@j < .shop_size; .@j += 2 )
+			if ( @bought_nameid[.@i] == .itemshop[.@j] )
+				break;
+		.@itemcost += .itemshop[.@j +1] * @bought_quantity[.@i];
+	}
+	if ( .@itemcost > lotti_points ) {
+		mes "You don't have enough Lotti Points";
+		close;
+	}
+	lotti_points -= .@itemcost;
+	for ( .@i = 0; .@i < .@size; ++.@i )
+		getitem @bought_nameid[.@i], @bought_quantity[.@i];
+	deletearray @bought_nameid;
+	deletearray @bought_quantity;
+	mes "Thanks for buying ~";
+	close;
+}
+-	shop	Lotti#hidden	-1,512:1000

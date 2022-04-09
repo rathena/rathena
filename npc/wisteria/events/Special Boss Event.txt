@@ -1,0 +1,120 @@
+//===== Natsukashi Designs Script =======================================
+//= Special Boss
+//===== Modified By ===================================================
+//= Dev Kael
+
+quiz_02,290,263,4	script	Special Boss Event	871,{
+//-	script	MonsterEvent	-1,{
+
+	set .gm,80;	// GM Level
+
+OnWhisperGlobal:
+	if(getgmlevel() >= .gm) {
+	if (.mob_left) {
+	mes "^FF0000[Special Boss Event CP]^000000";
+	mes "The Special Boss Event is already in progress!";
+	mes "Would you stop it?";
+	switch(select("Yes:No")){
+case 1:
+	close2;
+	goto OnStop2;
+case 2:
+	close;
+	}
+	}
+	mes "^FF0000[Special Boss Event CP]^000000";
+	mes "This is the Control Panel for the Special Boss Event.";
+	mes "How can I help you?";
+	next;
+	switch(select("Start:Stop:Cancel")){
+	
+case 1:
+	mes "^FF0000[Special Boss Event CP]^000000";
+	mes "Please select a map.";
+	// ADD YOUR MAPS HERE
+	setarray .maplist$,
+		"RANDOM MAP","alberta","aldebaran","amatsu","ayothaya","comodo",
+		"einbech","einbroch","geffen","gonryun","hugel","izlude","jawaii","lighthalzen","louyang",
+		"manuk","mid_camp","morocc","moscovia","niflheim","payon","prontera",
+		"rachel","skycity","splendide","umbala","veins","xmas","yuno";
+	.menu_count = getarraysize(.maplist$);
+	for (.@i = 0; .@i < .menu_count; .@i++)
+		.@menu$ = .@menu$ + .maplist$[.@i] + ":";
+	.@i = select(.@menu$) - 1;
+	if( .@i == 0 )
+		set .@i,rand(1,getarraysize(.maplist$)-1);
+	set .map$,.maplist$[.@i];
+	mes " ","The chosen map is [ ^0000FF"+.map$+" ^000000]"," ","Are you sure?";
+	if(select("Yes:No")==2)end;
+	close2;
+	goto OnStart;
+	
+case 2:
+case 3:
+	close;
+	}
+}
+	close;
+
+OnStart:
+	donpcevent strnpcinfo(0)+"::OnKillSummon";
+	set (.mobid,3599);	//Monster ID
+	set (.mobname$,"Arthur");	//Monster Name
+	set (.moba,1);	//Monster Count
+
+	//set .@rand,rand(0,getarraysize(.maplist$)-1);
+	//set .map$,.maplist$[.@rand];
+	setmapflag .map$,mf_restricted,1;
+	setmapflag .map$,mf_restricted,2;
+	sleep 1000;
+	if (.moba == 1){
+//		mapannounce "cell_game","[Special Boss Event]: "+.mobname$+" spawns at "+.map$+"",0;
+		announce ("[Special Boss Event]: "+.mobname$+" spawns at "+.map$+"",bc_all);
+	} else {
+//		mapannounce "cell_game","[Special Boss Event]: "+.moba+" "+.mobname$+" spawn at "+.map$+"",0;
+		announce ("[Special Boss Event]: "+.moba+" "+.mobname$+" spawn at "+.map$+"",bc_all);
+	}
+	monster .map$,0,0,.mobname$,.mobid,.moba,"Special Boss Event::OnMyMobDead",2;
+	set .mob_left,.moba;
+	end;
+
+OnKillSummon:
+	killmonster .map$,strnpcinfo(0)+"::OnMyMobDead";
+	set .mob_left,0;
+	end;
+
+OnStop2:
+	killmonster .map$,strnpcinfo(0)+"::OnMyMobDead";
+//	mapannounce "cell_game","The Special Boss Event was stopped by an Admin.",0;
+	announce "The Special Boss Event was stopped by an Admin.",bc_all;
+	set .mob_left,0;
+	removemapflag .map$,mf_restricted,1;
+	removemapflag .map$,mf_restricted,2;
+	end;
+
+OnStop:
+	sleep 2000;
+//	mapannounce "cell_game","Thank you for participating in Special Boss Event.",0;
+	announce "Thank you for participating in Special Boss Event.",bc_all;
+	removemapflag .map$,mf_restricted,1;
+	removemapflag .map$,mf_restricted,2;
+	end;
+
+OnMyMobDead:
+	set .mob_left,.mob_left-1;
+	if (.mob_left <= 0) {
+		if (.moba == 1){
+//			mapannounce "cell_game","[Special Boss Event]: "+strcharinfo(0)+" has killed "+.mobname$+".",0;
+	            	announce "[Special Boss Event]: "+strcharinfo(0)+" has killed "+.mobname$+".",bc_all;
+		} else {
+//			mapannounce "cell_game","[Special Boss Event]: "+strcharinfo(0)+" has killed the last "+.mobname$+".",0;
+	             	announce "[Special Boss Event]: "+strcharinfo(0)+" has killed the last "+.mobname$+".",bc_all;
+		}
+               donpcevent "Special Boss Event::OnStop";	
+        } else {
+//			mapannounce "cell_game","["+.mob_left+"/"+.moba+"] "+.mobname$+" left at "+.map$+".",0;
+               		announce "["+.mob_left+"/"+.moba+"] "+.mobname$+" left at "+.map$+".",bc_all;
+        }
+        end;
+
+}

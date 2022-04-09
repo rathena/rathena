@@ -1,0 +1,237 @@
+/* =============================================================
+/* Slot Machine - Triple Slot Machine
+/* =============================================================
+/* Version: v0.7
+/* v0.1 - Original Script Created.
+/* v0.2 - Added Option for Triple Slot Machine with animations.
+/* v0.3 - Added support for item pricing &/or zeny pricing.
+/* v0.4 - Cleaned up script variables for easy editing.
+/* v0.5 - Tested out some new scripting methods with IF(THEN).
+/* v0.6 - Added option to change slot machine modes ingame.
+/* v0.7 - Added optional sound effects to slot machines. - NOTE 
+/* =============================================================
+/* Description
+/* =============================================================
+/* This script will allow users to spend zeny &/or an item for a
+/* chance to win a prize from the slot machine. Currently there
+/* are 2 versions. First is a Single Slot Machine, where only 1 
+/* slot is rolled. Second is the Triple Slot machine, where 3
+/* slots are rolled. For either version, SUCCESS must be the 
+/* only thing displayed in order to win.
+/* =============================================================
+/* NOTE - If using soundeffects you must add the ".wav" files
+/* provided in the ".rar" file to your: data/wav  folder located
+/* in either your:  ( Ragnarok folder )  OR  ( .grf file )
+/* =============================================================
+/* Created By: GmOcean
+/* ===========================================================*/
+
+sec_in02,172,183,4	script	Triple PODS Machine::3slot	563,{
+
+	//if( getgmlevel() == 99 ) {
+		//mes "Welcome Administrator,What would you like to do?";
+		//menu "Play Game",-,"Change Slot Machine Mode",iMode;
+		//next;
+		//}
+		
+
+		
+		
+switch( getd(".mode"+strnpcinfo(3)+"") ){
+	case 0: // Single Slot machine mode.
+		mes "Do you want to play a game?";
+		if( !.payment ) { 
+		mes "It costs: "+ .ssm_payment_message$[0] +" & "+ .ssm_payment_message$[1] +" to play."; 
+		mes "Prize to win is "+ .ssm_prize[0] +" & "+ .ssm_prize_message$[1] +" .";
+		
+		
+		}
+		
+		
+			else if ( .payment == 1 ) {
+			mes "It costs: "+ .ssm_payment_message$[0] +" & "+ .ssm_payment_message$[1] +" to play."; 
+			mes "Prize to win is "+ .ssm_prize[0] +" & "+ .ssm_prize_message$[1] +" .";
+			
+			}
+			
+			
+				else if ( .payment == 2 ) { 
+				mes "It costs: "+ .ssm_payment_message$[0] +" & "+ .ssm_payment_message$[1] +" to play."; 
+				mes "Prize to win is "+ .ssm_prize[0] +" & "+ .ssm_prize_message$[1] +" .";
+				
+				}
+				
+				
+		if( select("YES:NO") == 2 || Zeny < .ssm_payment[0] && ( !.payment || .payment == 2 ) || countitem(.ssm_payment[1]) < .ssm_payment[2] && .payment ){ close; }
+		while( @menu == 1 ){
+			if( !.payment || .payment == 2 ) { Zeny -= .ssm_payment[0]; }
+			if( .payment ) { delitem( .ssm_payment[1], .ssm_payment[2] ); }
+			if( .soundeffects ) { soundeffect "slot_pay_coin.wav",0; }
+			.@a = rand(1,100);
+			if( .@a < atoi(.ssm_animate$[0]) ){ .@a = 1; } else { .@a = 2; }
+			.@b = 1;
+			while( .@b < atoi(.ssm_animate$[.@a]) ) {
+				cutin .ssm_animate$[3] + .@b,4; sleep2 ( ( atoi(.ssm_animate$[4]) * 1000 ) / atoi(.ssm_animate$[.@a]) ); .@b++;
+				}
+			if( .@a == 1 ){ 
+				cutin .ssm_animate$[3] + atoi(.ssm_animate$[.@a]),4;
+				dispbottom "Failed";
+				} 
+			else {
+				cutin .ssm_animate$[3] + atoi(.ssm_animate$[.@a]),4;
+				if( !.prize || .prize == 2 ) { Zeny += .ssm_prize[0]; }
+				if( .prize ) { getitem .ssm_prize[1], .ssm_prize[2]; }
+				if( .soundeffects ){ soundeffect "slot_jackpot.wav",0; }
+				}
+			if( select("Another Round:I'm done") == 2 || Zeny < .ssm_payment[0] && ( !.payment || .payment == 2 ) || countitem(.ssm_payment[1]) < .ssm_payment[2] && .payment ){ cutin "",255; close; }
+			}
+		end;
+	
+	case 1: // Triple Slot machine mode.
+		mes " ^880000Triple PODS Machine^000000 ";
+		mes "";
+		mes "Do you want to play a game?";
+		if( !.payment ) {
+		mes "It costs: "+ .tsm_payment_message$[0] +" to play."; 
+		mes "Prize to win is "+ .tsm_prize[0] +" & "+ .tsm_prize_message$[1] +" .";
+		
+		}
+		
+			else if ( .payment == 1 ) {
+			
+			
+			mes "";
+			mes "It costs: ^0000ff"+ .tsm_payment_message$[1] +"^000000 to play."; 
+			mes "";
+			mes "";
+			mes "Prize to win is ^ff0000"+ .tsm_prize_message$[1] +"^000000 .";
+			}
+			
+			
+				else if ( .payment == 2 ) { 
+				mes "It costs: "+ .tsm_payment_message$[0] +" & "+ .tsm_payment_message$[1] +" to play.";
+				mes "Prize to win is "+ .tsm_prize[0] +" & "+ .tsm_prize_message$[1] +" .";
+				
+				}
+				
+				
+		if( select("YES:NO") == 2 || Zeny < .tsm_payment[0] && ( !.payment || .payment == 2 ) || countitem(.tsm_payment[1]) < .tsm_payment[2] && .payment ){ close; }
+		while( @menu == 1 ){
+			if( !.payment || .payment == 2 ) { Zeny -= .tsm_payment[0]; }
+			if( .payment ) { delitem( .tsm_payment[1], .tsm_payment[2] ); }
+			if( .soundeffects ) { soundeffect "slot_pay_coin.wav",0; }
+			// Slot 1 = 100% Chance for success. (Because I didn't make a fail animation for it.
+			.@2 = rand(1,100); //Rolls dice for Slot 2
+			.@3 = rand(1,100); //Rolls dice for Slot 3
+				if( .@2 <= atoi(.tsm_animate$[0]) && .@3 <= atoi(.tsm_animate$[1]) ){ .@a = 8; }
+				else if( .@2 <= atoi(.tsm_animate$[0]) && .@3 > atoi(.tsm_animate$[1]) ){ .@a = 6; }
+				else if( .@2 > atoi(.tsm_animate$[0]) && .@3 <= atoi(.tsm_animate$[1]) ){ .@a = 4; }
+				else { .@a = 2; }
+			.@b = 1;
+			while( .@b < atoi(.tsm_animate$[.@a+1]) ) {
+				cutin .tsm_animate$[.@a] + .@b,4; sleep2 ( ( atoi(.tsm_animate$[10]) * 1000 ) / atoi(.tsm_animate$[.@a+1]) ); .@b++;
+				}
+			cutin .tsm_animate$[.@a] + atoi(.tsm_animate$[.@a+1]),4;
+				if( .@a == 2 ){
+					if( !.prize || .prize == 2 ) { Zeny += .tsm_prize[0]; }
+					if( .prize ) { getitem .tsm_prize[1], .tsm_prize[2]; }
+					if( .soundeffects ){ soundeffect "slot_jackpot.wav",1; }
+				} else { dispbottom "Failed"; }
+			if( select("Another Round:I'm done") == 2 || Zeny < .tsm_payment[0] && ( !.payment || .payment == 2 ) || countitem(.tsm_payment[1]) < .tsm_payment[2] && .payment ){ cutin "",255; close; }
+			}
+		end;
+	}
+OnSingleSlot:
+setd ".mode"+strnpcinfo(3)+"",0;
+end;
+OnTripleSlot:
+setd ".mode"+strnpcinfo(3)+"",1;
+end;
+
+iMode:
+next;
+mes "Which did you want to do?";
+menu "Change THIS machine's mode:Change ALL machine's mode",-;
+if( @menu == 1 ) {
+	next;
+	mes "What mode would you like this machine to have?";
+	menu "Single Slot Machine Mode:Triple Slot Machine Mode",-;
+	if( @menu == 1 ) {
+		setd ".mode"+strnpcinfo(3)+"",0;
+		} else {
+			setd ".mode"+strnpcinfo(3)+"",1;
+			}
+	close;
+	} else {
+		next;
+		mes "What mode would you like to change all slot machines to?";
+		menu "Single Slot Machine Mode:Triple Slot Machine Mode",-;
+		if( @menu == 1 ) {
+			donpcevent "::OnSingleSlot";
+			} else {
+				donpcevent "::OnTripleSlot";
+				}
+		close;
+		}
+
+OnInit:
+// 0 = Disabled, 1 = Enabled.
+.soundeffects = 1; 
+
+//[ 0 = Single Slot Machine Mode ]_[ 1 = Triple Slot Machine Mode ]
+setd ".mode"+strnpcinfo(3)+"",1;
+
+//[0] = Fail Rate
+//[1] = Fail (Do not change)
+//[2] = Success (Do not change)
+//[3] = File Name (Do not change)
+//[4] = Animation Time (Do not change, for best results :D)
+setarray .ssm_animate$[0],"70","29","33","slot_","3";
+
+//[0] = Fail Rate "Slot 2"
+//[1] = Fail Rate "Slot 3"
+//[2] = SSS (Do not change)
+//[3] = SSS_Count (Do not change)
+//[4] = SSF (Do not change)
+//[5] = SSF_Count (Do not change)
+//[6] = SFS (Do not change)
+//[7] = SFS_Count (Do not change)
+//[8] = SFF (Do not change)
+//[9] = SFF_Count (Do not change)
+//[10] = Animation Time (Do not change, for best results :D)
+setarray .tsm_animate$[0],"65","55","SSS_","41","SSF_","37","SFS_","41","SFF_","45","3";
+
+// Prize Settings
+// Prize Type
+// 0 = Zeny, 1 = Item, 2 = Zeny&Item
+.prize = 1;
+// [0] = Zeny, [1] = Item ID, [2] = Item Amount;
+setarray .ssm_prize[0],3000,7179,20;
+setarray .tsm_prize[0],12000,7179,20;
+
+// Payment Settings
+// Payment Type
+// 0 = Zeny, 1 = Item, 2 = Zeny&Item
+.payment = 1;
+// [0] = Zeny, [1] = Item ID, [2] = Item Amount;
+setarray .ssm_payment[0],1000,7179,5; // Single Slot Machine Payment Price
+setarray .tsm_payment[0],3000,7179,5; // Triple Slot Machine Payment Price
+
+// DO NOT CHANGE BELOW
+// Payment Text Syntax
+setarray .ssm_payment_message$[0],""+ .ssm_payment[0] +" zeny",""+ getitemname(.ssm_payment[1]) +" x"+ .ssm_payment[2] +"";
+setarray .tsm_payment_message$[0],""+ .tsm_payment[0] +" zeny",""+ getitemname(.tsm_payment[1]) +" x"+ .tsm_payment[2] +"";
+setarray .ssm_prize_message$[0],""+ .ssm_prize[0] +" zeny",""+ getitemname(.ssm_prize[1]) +" x"+ .ssm_prize[2] +"";
+setarray .tsm_prize_message$[0],""+ .tsm_prize[0] +" zeny",""+ getitemname(.tsm_prize[1]) +" x"+ .tsm_prize[2] +"";
+
+end;
+
+
+}
+
+
+//Duplicates
+//prontera,121,169,4	duplicate(3slot)	Double Slot Machine#2slot	563
+//prontera,125,169,4	duplicate(3slot)	Triple Slot Machine#4slot	563
+//mall01,129,108,4	duplicate(3slot)	Triple Slot Machine#3slot	563
+

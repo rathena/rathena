@@ -1,0 +1,7 @@
+//===== rAthena Script =======================================
+//= Portals of Varmundt's mansion
+
+//= Meditation Bathroom 
+//============================================================
+ba_in01,387,38,0	warp	Bath_In	1,1,ba_bath,159,26
+ba_bath,159,22,0	warp	Bath_Out	1,1,ba_in01,382,38

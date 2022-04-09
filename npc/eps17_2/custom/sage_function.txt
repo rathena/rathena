@@ -1,0 +1,95 @@
+//===== rAthena Script =======================================
+function	script	auto_module_box	{
+	.@type = getarg(0);
+	if(.@type == 1){
+		for(.@i = 1000105; .@i < 1000150; .@i++)
+			.@module[getarraysize(.@module)] = .@i;
+		.@module[getarraysize(.@module)] = 1000207;
+		.@module[getarraysize(.@module)] = 1000208;
+		.@module_id = .@module[rand(getarraysize(.@module))];
+		.@item_id = 100160;
+	} else {
+		for(.@i = 1000152; .@i < 1000203; .@i++)
+			.@module[getarraysize(.@module)] = .@i;
+		.@module_id = .@module[rand(getarraysize(.@module))];
+		.@item_id = 100161;
+	}
+	delitem .@item_id,1;
+	getitem .@module_id,1;
+	end;
+}
+
+function	script	instance_hide	{
+	.@npc$ = getarg(0);
+	.@type = getarg(1);
+	switch(.@type){
+		case 0:
+			hideoffnpc instance_npcname(.@npc$);
+			break;
+			
+		case 1:
+			hideonnpc instance_npcname(.@npc$);
+			break;
+			
+	}
+	return;
+}
+
+function	script	instance_enable	{
+	.@npc$ = getarg(0);
+	.@type = getarg(1);
+	switch(.@type){
+		case 0:
+			disablenpc instance_npcname(.@npc$);
+			break;
+			
+		case 1:
+			enablenpc instance_npcname(.@npc$);
+			break;
+	}
+	return;
+}
+
+function	script	instance_event	{
+	.@npc$ = getarg(0);
+	.@event$ = getarg(1);
+	.@type = getarg(2);
+	switch(.@type){
+		case 0:
+			donpcevent instance_npcname(.@npc$) + "::" + .@event$;
+			break;
+			
+		case 1:
+			doevent instance_npcname(.@npc$) + "::" + .@event$;
+			break;
+	}
+	return;
+}
+
+function	script	set_instance_var	{
+	.@var_name$ = getarg(0);
+	setd("'" + .@var_name$,getarg(1));
+	return;
+}
+
+function	script	get_instance_var	{
+	.@var_name$ = getarg(0);
+	return getd("'" + .@var_name$);
+}
+
+function	script	setd_instance_var	{
+	.@var_name$ = getarg(0);
+	.@var = getarg(1);
+	.@id = getarg(2);
+	set getvariableofinstance("'" + .@var_name$, .@id), .@var;
+	return;
+}
+
+function	script	getd_instance_var	{
+	.@var_name$ = getarg(0);
+	.@id = getarg(1);
+	return getvariableofinstance("'" + .@var_name$, .@id);
+}
+
+-	script	dummynpc2	-1,{ end; }
+-	script	instancedummynpc	1_ETC_01,{ OnInstanceInit: instance_enable(strnpcinfo(0),false); end; }

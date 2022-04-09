@@ -1,0 +1,194 @@
+// Original script by sandbox.
+// Edit by Mabuhay
+
+-	script	Event_Dice	-1,{
+OnInit:
+	// item reward
+	setarray .item,
+		1220005, 10,
+		607, 5;
+
+	// @dicestart - gm manual start
+	bindatcmd "dicestart", strnpcinfo(0)+"::OnStart",60,60;
+	
+	// @dice - player join event
+	bindatcmd "dice", strnpcinfo(0)+"::OnJoinEvent";
+	
+	// Event cooldown
+	.event_cd = 60 * 60 * 1; // 1hr
+	
+	// Mapflags
+	setarray .@mapflag,
+		mf_nowarp,
+		mf_nowarpto,
+		mf_noskill,
+		mf_noteleport,
+		mf_nomemo,
+		mf_nosave,
+		mf_noicewall,
+		mf_nobranch,
+		mf_noreturn;
+		
+	for ( .@i = 0; .@i < getarraysize(.@mapflag); .@i++)
+		setmapflag "quiz_02", .@mapflag[.@i];
+		
+	.@min = gettime(DT_MINUTE)*60;
+	.@sec = gettime(DT_SECOND);
+	.event_time = (gettimetick(2) - ( .@min + .@sec )) + .event_cd - 5;
+	end;
+	
+OnJoinEvent:
+	mes " [ Event Status ] ";
+	if ( !.start ) mes "Next schedule starts in ^FF0000"+ Time2Str(.event_time) +"^000000.";
+	if ( .start == 1 ) mes "Event is currently active.";
+	if ( .start == 2 ) mes "Event is currently on-going.";
+	next;
+	switch(select(
+		"Dice Event - "+ ((.start == 1) ? "^00ff00Join Event":((.start == 2) ? "^00ff00Event On-Going":"^ff0000Not Available"))+"^000000" )) {
+	case 1:
+		if ( !.start ) {
+			mes "Event is not available.";
+			close;
+		} else if ( .start == 2 ) {
+			mes "Event is on-going";
+			close;
+		}
+		else
+			warp "quiz_02",55,87;
+	}
+	end;
+
+OnStart: .@force = true;
+OnMinute00: // runs hourly
+	.@time = gettimetick(2);
+	.@min = gettime(DT_MINUTE)*90;
+	.@sec = gettime(DT_SECOND);
+	if ( .event_time > .@time && !.@force || .start && !.@force ) end; // doesnt start if cd isn't done.
+	.event_time = (.@time - ( .@min + .@sec )) + .event_cd - 5;  
+	.start = 1;
+	for(.@i = 1;.@i <= 4;.@i++) {
+		disablenpc "Back#"+.@i;
+		disablenpc "Box "+.@i;
+	}
+	announce "Dice: We are going to have a Dice event.",0;
+	sleep 10000;
+	announce "Dice: For those who wants to join, use @dice",0;
+	sleep 10000;
+	announce "Dice: After 1 Minute Event will close.",0;
+	sleep 10000;
+	announce "Dice: So please if you want to join. use @dice",0;
+	sleep 60000;
+	announce "Dice: The entry to the event is now closed.",bc_all,0x0ceedb;
+	if ( !getmapusers("quiz_02") ) {
+		announce "Dice: Not enough participants.",bc_all,0x0ceedb;
+		.start = false;
+		end;
+	}
+	.start = 2;
+	sleep 3500;
+	mapannounce "quiz_02","We're about to begin the event.",bc_map,0x0ceedb;
+	sleep 2500;
+	mapannounce "quiz_02","The rules are simple.",bc_map,0x0ceedb;
+	sleep 2500;
+	mapannounce "quiz_02","You'll have to enter one of the 4 avaiaible boxes.",bc_map,0x0ceedb;
+	sleep 2500;
+	mapannounce "quiz_02","Then a four sides dice will be thrown. The number it shows will be the saved number.",bc_map,0x0ceedb;
+	sleep 2500;
+	mapannounce "quiz_02","Remember to enter the boxes!",bc_map,0x0ceedb;
+	sleep 2000;
+	mapannounce "quiz_02","That's all. Let's begin.",bc_map,0x0ceedb;
+	sleep 3000;
+	while(!.@end && .start && .@rounds < 5) {
+		for(.@i = 1;.@i <= 4;.@i++) {
+			enablenpc "Back#"+.@i;
+			enablenpc "Box "+.@i;
+		}
+		sleep 1500;
+		mapannounce "quiz_02","The dice will soon be thrown. Enter the desired box clicking the metalic number inside them.",bc_map,0x0ceedb;
+		sleep 20000;
+		for(.@i = 5;.@i > 0;.@i--) {
+			mapannounce "quiz_02",.@i+"...",bc_map,0x0ceedb;
+			sleep 990;
+		}
+		for(.@i = 1;.@i <= 4;.@i++) {
+			disablenpc "Back#"+.@i;
+			disablenpc "Box "+.@i;
+		}
+		areawarp "quiz_02",32,95,79,76,"prontera",rand(148,163),rand(167,186);
+		areawarp "quiz_02",80,85,80,76,"prontera",rand(148,163),rand(167,186);
+		areawarp "quiz_02",31,85,31,76,"prontera",rand(148,163),rand(167,186);
+		.@n = rand(1,4);
+		mapannounce "quiz_02","Time! The dice shows the number "+.@n+".",bc_map,0x0ceedb;
+		setarray .@cords1[0],33,41;
+		setarray .@cords2[0],45,53;
+		setarray .@cords3[0],57,65;
+		setarray .@cords4[0],69,77;
+		for(.@i = 1;.@i <= 4;.@i++) {
+			if(.@i != .@n)
+				areawarp "quiz_02",getd(".@cords"+.@i+"[0]"),52,getd(".@cords"+.@i+"[1]"),73,"prontera",rand(148,163),rand(167,186);
+		}
+		sleep 3000;
+		.@players = getmapusers("quiz_02");
+		if(.@players <= 3 && .start && .@players) {
+			mapannounce "quiz_02","The event is now over! Winners, enjoy your prizes!",bc_map,0x0ceedb;
+			.@size = getmapunits(BL_PC,"quiz_02",.@players);
+			.@amt = getarraysize(.item);
+			.start = false;
+			for(.@i = 0;.@i < .@size;.@i++) {
+				attachrid .@players[.@i];
+				announce strcharinfo(0)+" has won the Dice Event.",bc_all,0x0ceedb;
+				for ( .@j = 0; .@j < .@amt; .@j += 2 )
+					getitem .item[.@j], .item[.@j+1];				
+				warp "prontera",rand(148,163),rand(167,186);
+			}
+		} else if( !.@players ) {
+			.@end = true;
+			.start = false;
+			announce "There was no winner on the Dice Event.",bc_all,0x0ceedb;
+		} else {
+			mapannounce "quiz_02","There's no clear winners yet, let's roll the dice again.",bc_map,0x0ceedb;
+		}
+		.@rounds++;
+	}
+	if(.@rounds >= 5) {
+		mapannounce "quiz_02","There were no winner clear in all of the event. The event is now over.",bc_map,0x0ceedb;
+		.start = false;
+	}
+	end;
+
+}
+
+quiz_02,37,80,3	script	Box 1	HIDDEN_NPC,{
+	warp "quiz_02",rand(33,41),rand(52,73);
+	end;
+
+}
+
+quiz_02,49,80,3	script	Box 2	HIDDEN_NPC,{
+	warp "quiz_02",rand(45,53),rand(52,73);
+	end;
+}
+
+quiz_02,61,80,3	script	Box 3	HIDDEN_NPC,{
+	warp "quiz_02",rand(57,65),rand(52,73);
+	end;
+}
+
+quiz_02,73,80,3	script	Box 4	HIDDEN_NPC,{
+	warp "quiz_02",rand(69,77),rand(52,73);
+	end;
+}
+
+quiz_02,55,90,3	script	Back to Prontera#dice	4_BULLETIN_BOARD2,{
+	warp "prontera",rand(148,163),rand(167,186);
+	end;
+}
+
+quiz_02,37,64,3	script	Back#1	4_BULLETIN_BOARD2,{
+	warp "quiz_02",55,76;
+	end;
+}
+
+quiz_02,49,64,3	duplicate(Back#1)	Back#2	4_BULLETIN_BOARD2
+quiz_02,61,64,3	duplicate(Back#1)	Back#3	4_BULLETIN_BOARD2
+quiz_02,73,64,3	duplicate(Back#1)	Back#4	4_BULLETIN_BOARD2

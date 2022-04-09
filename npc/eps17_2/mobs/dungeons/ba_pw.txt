@@ -1,0 +1,25 @@
+//===== rAthena Script =======================================
+//= Monsters from Varmundt's Mansion
+
+//= Power Plant - Level 1
+//=============================================================
+ba_pw01,0,0	monster	Broken Beta	20630,15,5000
+ba_pw01,0,0	monster	Heart Hunter Skirmisher	20680,15,5000
+ba_pw01,0,0	monster	Elite Bellare	20688,90,5000
+ba_pw01,0,0	monster	Magical Dolor	20689,80,5000
+ba_pw01,0,0	monster	Unleashed Magic	20690,50,5000
+
+//= Sewage Treatment Station
+//=============================================================
+ba_pw02,0,0	monster	Heart Hunter Skirmisher	20680,15,5000
+ba_pw02,0,0	monster	Savage Venenum	20685,60,5000
+ba_pw02,0,0	monster	Savage Clamp	20686,80,5000
+ba_pw02,0,0	monster	Savage Waterfall	20687,60,5000
+ba_pw02,0,0	monster	Elite Bellare	20688,60,5000
+
+//= Power Plant - Level 2
+//=============================================================
+ba_pw03,0,0	monster	Magic Poison Plaga	20691,80,5000
+ba_pw03,0,0	monster	Magic Poison Sanare	20692,80,5000
+ba_pw03,0,0	monster	Powerful Horsepower	20693,70,5000
+ba_pw03,0,0	monster	Sharp Horsepower	20694,70,5000
