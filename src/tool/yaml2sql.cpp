@@ -80,6 +80,7 @@ bool askConfirmation( const char* fmt, ... );
 
 YAML::Node inNode;
 std::ofstream outFile;
+bool yesToAll = false;
 
 // Implement the function instead of including the original version by linking
 void script_set_constant_(const char *name, int64 value, const char *constant_name, bool isparameter, bool deprecated) {
@@ -190,7 +191,24 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 	return true;
 }
 
+/**
+ * process the arguments
+ * @retval 0 = continue program
+ * @retval 1 = exit program (like --help)
+ */
+int process_args(int argc, char ** argv) {
+	for (int i = 0; i < argc; i++) {
+		if (!strcmp("--yes", argv[i])) {
+			yesToAll = true;
+			continue;
+		}
+	}
+	return 0;
+}
+
 int do_init( int argc, char** argv ){
+	if (process_args(argc, argv))
+		return 0;
 	const std::string path_db = std::string( db_path );
 	const std::string path_db_mode = path_db + "/" + DBPATH;
 	const std::string path_db_import = path_db + "/" + DBIMPORT + "/";
@@ -264,6 +282,9 @@ bool fileExists( const std::string& path ){
 
 bool askConfirmation( const char* fmt, ... ){
 	va_list ap;
+
+	if (yesToAll)
+		return true;
 
 	va_start( ap, fmt );
 
