@@ -150,7 +150,7 @@ enum sc_type : int16 {
 
 	//First we enumerate common status ailments which are often used around.
 	SC_STONE = 0,
-	SC_COMMON_MIN = 0, // begin
+	SC_COMMON_MIN = SC_STONE, // begin
 	SC_FREEZE,
 	SC_STUN,
 	SC_SLEEP,
@@ -161,7 +161,8 @@ enum sc_type : int16 {
 	SC_BLIND,
 	SC_BLEEDING,
 	SC_DPOISON, //10
-	SC_COMMON_MAX = 10, // end
+	SC_STONEWAIT,
+	SC_COMMON_MAX = SC_STONEWAIT, // end
 
 	//Next up, we continue on 20, to leave enough room for additional "common" ailments in the future.
 	SC_PROVOKE = 20,
@@ -2870,14 +2871,14 @@ struct s_status_change_db {
 	uint16 skill_id;				///< Associated skill for (addeff) duration lookups
 	std::vector<sc_type> end;		///< List of SC that will be ended when this SC is activated
 	std::vector<sc_type> fail;		///< List of SC that causing this SC cannot be activated
-	bool end_return;				///< After SC ends the SC from end list, it does nothing
+	std::vector<sc_type> endreturn;	///< List of SC that will be ended when this SC is activated and then immediately return
 	t_tick min_duration;			///< Minimum duration effect (after all status reduction)
 	uint16 min_rate;				///< Minimum rate to be applied (after all status reduction)
 };
 
 class StatusDatabase : public TypesafeCachedYamlDatabase<uint16, s_status_change_db> {
 public:
-	StatusDatabase() : TypesafeCachedYamlDatabase("STATUS_DB", 1) {
+	StatusDatabase() : TypesafeCachedYamlDatabase("STATUS_DB", 2) {
 		// All except BASE and extra flags.
 		SCB_BATTLE.set();
 		SCB_BATTLE.reset(SCB_BASE);
