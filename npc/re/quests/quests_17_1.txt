@@ -189,10 +189,10 @@ OnTouch:
 	end;
 }
 
-einbroch,42,208,3	script	Rage#171_einbr	4_M_LAZY,{
+einbroch,42,208,3	script	Lazy#171_einbr	4_M_LAZY,{
 	if (isbegin_quest(7850) == 0) {
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Hourray, finally some air, huh.";
 		mes "Let's go to Yuno. Huh?";
 		close3;
@@ -201,16 +201,16 @@ einbroch,42,208,3	script	Rage#171_einbr	4_M_LAZY,{
 		cloakoffnpc "Kaya Tos#171_einbr",getcharid(0);
 		cloakoffnpc "Aas#171_einbr",getcharid(0);
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Here, come. Here it is, Come over here.";
 		next;
 		select("Where are we going?");
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "That's what I'm trying to define adventurer. How can I set a destination when we have a VIP with us?";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Where do we go? The VIP will decide. I will follow wherever you choose.";
 		next;
 		cutin "ep171_kaya01",0;
@@ -218,21 +218,21 @@ einbroch,42,208,3	script	Rage#171_einbr	4_M_LAZY,{
 		mes "Don't you have to go the headquarters to investigate?";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I don't have to go to the headquarters to investigates~";
 		mes "Let's first look at the situation and the background information we have.";
 		mes "Then we'll look at the circumstances surrounding it.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Do you know how to investigate, set yourself a concrete goal with a detailed plan? I know a thing or two~";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Ahahaha! Courtesy, courtesy! Let's be polite to our VIP!";
 		npctalk "What Daisy is saying... It's true, but strangely unpleasant.","Kaya Tos#171_einbr",bc_self;
 		unittalk getcharid(3),strcharinfo(0) + " : I know right?",bc_self;
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "How about we start with something a little less difficult, how about we start this investigation differently? How about we let the VIP choose.";
 		next;
 		cutin "ep171_kaya01",0;
@@ -240,7 +240,7 @@ einbroch,42,208,3	script	Rage#171_einbr	4_M_LAZY,{
 		mes "Well, what am I supposed to choose?";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Pick on of the names on the list randomly. If I select one, you'd say I manipulated the results later otherwise.";
 		npctalk "I'm the embodiment of disbelief~","",bc_self;
 		next;
@@ -249,7 +249,7 @@ einbroch,42,208,3	script	Rage#171_einbr	4_M_LAZY,{
 		mes ".....";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Why are you looking at me like that? Don't you believe my heart?";
 		npctalk "Do you like my heart? I'm afraid I cant. My heart already has a owner.","",bc_self;
 		next;
@@ -258,23 +258,23 @@ einbroch,42,208,3	script	Rage#171_einbr	4_M_LAZY,{
 		mes "Here, I choose that one. What are we going to do next?";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Let me see... ^0000CDPatrick Kaufmann^000000.";
 		mes "Well... that name is long, let's call him ^0000CDPat^000000 instead.";
 		next;
 		select("Don't change his name!");
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Oh? Is it not economical? What's wrong, we'll save time using the name.";
 		mes "Also this will be a codename we can use among ourselves when refer to this scientist.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I've been an agent for a long time, I know these things. There's an official way to handle these, but I can't tell you that information.";
 		unittalk getcharid(3),strcharinfo(0) + " : I'm not surprised anymore.",bc_self;
 		npctalk "Oh... It's possible.","Kaya Tos#171_einbr",bc_self;
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Now, can we all go together and find Pat? Lighthalzen is to the east. It is often said to be a ^0000CDslum^000000. Of course, our VIP knows all about this already, right?";
 		mes "You'd have read this in your paperwork.";
 		npctalk "As you can see, no misunderstanding, only the truth~","",bc_self;
@@ -284,20 +284,20 @@ einbroch,42,208,3	script	Rage#171_einbr	4_M_LAZY,{
 		mes "What's your plan?";
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Since he was a child, he would pick things up and fix them, and then resell. It's a talent that's been lost nowadays.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "At the age 21, he received a special award for low-income families. It caused a lot of envy from the people around him.";
 		npctalk "Family pride~ huh, isn't that great.","",bc_self;
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "He was moved to another Rekenber facility after 5 months, and then there is no record after that.";
 		mes "That's all the information about Pat.";
 		npctalk "This is as far as I've investigated.","",bc_self;
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Our VIP has chosen a very suitable candidate for our investigation. I applaud you. It was a good idea.";
 		mes "It's not a common person on the list.";
 		next;
@@ -306,18 +306,18 @@ einbroch,42,208,3	script	Rage#171_einbr	4_M_LAZY,{
 		mes "Are we only going to investigate him? What about the others?";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "How do you want to investigate so many people with only so few of us?";
 		mes "We focus on one person, don't you know how it works?";
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "After all, they all disappeared in a similar fashion. So once we figure out what happened to one of them, we'll know what happened to the rest too.";
 		next;
 		select("What am I going to do here?");
 		cutin "16lei_01",2;
-		mes "[Rage]";
-		mes "Good morning~ From now on VIP's, the journey of Pat from his work to Rekenber to the present is for us to figure out~ with Rage and his team~";
+		mes "[Lazy]";
+		mes "Good morning~ From now on VIP's, the journey of Pat from his work to Rekenber to the present is for us to figure out~ with Lazy and his team~";
 		npctalk "Woah~ I usually get applauded here.","",bc_self;
 		next;
 		cutin "ep171_kaya03",0;
@@ -326,15 +326,15 @@ einbroch,42,208,3	script	Rage#171_einbr	4_M_LAZY,{
 		npctalk "Vice President, it's not too late to go back now.","Aas#171_einbr",bc_self;
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Do I seem like a joke to you VIP?";
 		mes "I'm quite serious, don't you believe me VIP?";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "We'll follow Pat's work schedule. We can follow his traces and understand a bit more about what happened as to why he's missing.";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "You've never taken a good look at the Lighthalzen village. I'm from a big city and I know a few places I can recommend to start with.";
 		next;
 		cutin "ep171_as01",1;
@@ -342,19 +342,19 @@ einbroch,42,208,3	script	Rage#171_einbr	4_M_LAZY,{
 		mes "When you say Lighthalzen is a village, what do you mean?";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Guard, are you tired? Compared to Yuno, Lighthalzen is a small village.";
 		mes "Yuno is a really nice place. I often say this. Yuno is the city of Sages. Well, I would say it differently.";
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "The jewel of Rune-Midgard, the heart of the country, is Yuno. Everyone should visit at least once.";
 		mes "If anyone would ask me about the future of Rune-Midgard, I'd bet my life it would be the brilliant city of Yuno.";
-		unittalk getcharid(3),strcharinfo(0) + " : Rage, I need you to be more modest.",bc_self;
+		unittalk getcharid(3),strcharinfo(0) + " : Lazy, I need you to be more modest.",bc_self;
 		npctalk "Aaaah. I love Yuno. *Laughs*","",bc_self;
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Anyway, there's nothing as good as traveling around here and there.";
 		mes "It's also very good to deceive others. Why would suspect a tourist? Right?";
 		npctalk "The VIP will take his special itinerary, we'll be waiting for you there.","",bc_self;
@@ -364,10 +364,10 @@ einbroch,42,208,3	script	Rage#171_einbr	4_M_LAZY,{
 		mes "Should we really do that? Go to the headquarters and investigate?";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "There are some things you can't learn from paperwork. Can a VIP explain what the yellow color is someone who doesn't know yellow?";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Wouldn't it be quicker to just show the person yellow flowers and explain it?";
 		next;
 		cutin "ep171_kaya01",0;
@@ -375,7 +375,7 @@ einbroch,42,208,3	script	Rage#171_einbr	4_M_LAZY,{
 		mes "There are many things I don't know outside my papers. That's partly why I came along with you.";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "That's right. Do you feel bad? It's the truth though. Only mouth to mouth reveal true facts.";
 		next;
 		cutin "ep171_kaya01",0;
@@ -385,18 +385,18 @@ einbroch,42,208,3	script	Rage#171_einbr	4_M_LAZY,{
 		npctalk "Doesn't it make sense to you? If I don't understand something, I have to see it.","",bc_self;
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "That's the purpose of this tour. Now let's go, we don't have much time.";
 		mes "Let's head over there with a non-fair First Class seat, it will be more comfortable.";
 		next;
 		select("First Class? Last time we traveled...");
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Hey!! I'm on official duty now! I'm also going to take First Class.";
 		mes "Does the adventurer not have a First Class fake pass?";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Nobody has the money to pay First Class except the VIP. He can just bring us along.";
 		next;
 		cutin "ep171_kaya03",0;
@@ -404,7 +404,7 @@ einbroch,42,208,3	script	Rage#171_einbr	4_M_LAZY,{
 		mes "Hmm!";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Thank you! Courtesy, courtesy! Now, let's all go to <NAVI>[Lighthalzen]<INFO>lighthalzen,259,215,0,101,0</INFO></NAVI>?";
 		completequest 17003;
 		setquest 17004;
@@ -415,7 +415,7 @@ einbroch,42,208,3	script	Rage#171_einbr	4_M_LAZY,{
 	}
 	if (isbegin_quest(17004) == 1) {
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Now, let's all go to <NAVI>[Lighthalzen]<INFO>lighthalzen,259,215,0,101,0</INFO></NAVI>.";
 		close2;
 		cutin "",255;
@@ -423,7 +423,7 @@ einbroch,42,208,3	script	Rage#171_einbr	4_M_LAZY,{
 		end;
 	}
 	cutin "16lei_01",2;
-	mes "[Rage]";
+	mes "[Lazy]";
 	mes "Aren't you supposed to be working right now?";
 	close3;
 
@@ -477,7 +477,7 @@ ein_fild01,95,146,5	script	Kaya Tos#171_einf	4_EP17_KAYA,{
 		select("There's nothing here.");
 		cutin "ep171_kaya02",0;
 		mes "[Kaya]";
-		mes "I thought it was here. Rage must be wondering ^0000FFwhat this means.^000000 I only saw the world from sitting at my desk. I believed my view was true.";
+		mes "I thought it was here. Lazy must be wondering ^0000FFwhat this means.^000000 I only saw the world from sitting at my desk. I believed my view was true.";
 		next;
 		cutin "ep171_kaya01",0;
 		mes "[Kaya]";
@@ -491,19 +491,19 @@ ein_fild01,95,146,5	script	Kaya Tos#171_einf	4_EP17_KAYA,{
 		mes "If you don't investigate with suspicious, you won't see any problems on the surface.";
 		next;
 		cloakoffnpc "Aas#171_einf",getcharid(0);
-		cloakoffnpc "Rage#171_einf",getcharid(0);
+		cloakoffnpc "Lazy#171_einf",getcharid(0);
 		mes "[Aas]";
 		mes "But that's so... not trusting...";
 		npctalk "But that's so... not trusting...","Aas#171_einf",bc_self;
-		npctalk "But it's very useful, isn't it?","Rage#171_einf",bc_self;
+		npctalk "But it's very useful, isn't it?","Lazy#171_einf",bc_self;
 		next;
 		mes "[Aas]";
 		mes "Yes... that's true.";
 		npctalk "Yes... that's true.","Aas#171_einf",bc_self;
-		npctalk "If you want, I can teach you more tricks. It's very useful in the real world.","Rage#171_einf",bc_self;
+		npctalk "If you want, I can teach you more tricks. It's very useful in the real world.","Lazy#171_einf",bc_self;
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Hey, you're there alrready. How is it? What have you found out with your own two eyes?";
 		npctalk "Oh... are there more techniques? I'm glad to hear it.","Aas#171_einf",bc_self;
 		next;
@@ -525,17 +525,17 @@ ein_fild01,95,146,5	script	Kaya Tos#171_einf	4_EP17_KAYA,{
 		mes "What do we do now?";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Well. We have to keep looking for the location of this new laboratory. When we find it, we'll have to research it from the inside.";
-		npctalk "Who else has better ideas?","Rage#171_einf",bc_self;
+		npctalk "Who else has better ideas?","Lazy#171_einf",bc_self;
 		next;
-		select("You don't have anything else Rage?");
+		select("You don't have anything else Lazy?");
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Dear adventurer, have you forgotten who's been helping you now? The Rebellion has been roaming these areas.";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "The laboratory that I discovered a while, and the waste site. I'm sure it's only a matter of time before it's revealed. It must be nearby.";
 		next;
 		select("How do you know?");
@@ -549,7 +549,7 @@ ein_fild01,95,146,5	script	Kaya Tos#171_einf	4_EP17_KAYA,{
 		mes "so we have to look for a secret location, I guess it's going to be in one of those locations.";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Did you hear that? That's smart.";
 		next;
 		cutin "ep171_kaya01",0;
@@ -557,7 +557,7 @@ ein_fild01,95,146,5	script	Kaya Tos#171_einf	4_EP17_KAYA,{
 		mes "As of now, Rekenber will now ^0000FFdedicate itself to cooperate with the investigation.^000000 Please tell me everything you need. We'll support you anyway we can.";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Alright, I'm glad to hear it, and I will gladly accept your cooperation.";
 		next;
 		cutin "ep171_kaya01",0;
@@ -567,21 +567,21 @@ ein_fild01,95,146,5	script	Kaya Tos#171_einf	4_EP17_KAYA,{
 		mes "[Kaya]";
 		mes "Daisy, if you need anything, please come and visit me at anytime.";
 		mes "You'll always be welcome.";
-		npctalk "Hmm... I don't have any objection with that.","Rage#171_einf",bc_self;
+		npctalk "Hmm... I don't have any objection with that.","Lazy#171_einf",bc_self;
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
-		mes "In the future, please call me Rage. Let's go with me for another adventurer one day. Come to Yuno everynow and then.";
-		npctalk "I always hide in Yuno's restaurants~","Rage#171_einf",bc_self;
+		mes "[Lazy]";
+		mes "In the future, please call me Lazy. Let's go with me for another adventurer one day. Come to Yuno everynow and then.";
+		npctalk "I always hide in Yuno's restaurants~","Lazy#171_einf",bc_self;
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "But that's for another day. Let's focus on the mission at hand.";
 		next;
 		select("Should I investigate further?");
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Why not? What more can you do here, Hmm. I'm a little hungry. My legs hurt too. I need to get back to work. I'll have to deal with the VIP as well.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "As such, I'm going to report the investigation regarding Pat's journey.";
 		mes "Everyone, let's go back to <NAVI>[Cat on Bullet]<INFO>pub_cat,93,105,0,000,0</INFO></NAVI>~";
 		getexp 600000,600000;
@@ -614,9 +614,9 @@ OnInit:
 	end;
 }
 
-ein_fild01,97,144,1	script	Rage#171_einf	4_M_LAZY,{
+ein_fild01,97,144,1	script	Lazy#171_einf	4_M_LAZY,{
 	cutin "16lei_03",2;
-	mes "[Rage]";
+	mes "[Lazy]";
 	mes "Let's go to <NAVI>[Cat on Bullet]<INFO>pub_cat,93,105,0,000,0</INFO></NAVI>.";
 	mes "I'm already hungry.";
 	close3;
@@ -942,16 +942,16 @@ OnInit:
 	end;
 }
 
-lighthalzen,259,215,3	script	Rage#171_lhz	4_M_LAZY,{
+lighthalzen,259,215,3	script	Lazy#171_lhz	4_M_LAZY,{
 	if (isbegin_quest(7850) == 0) {
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "The Rekenber roads are wide and gleaming~ everyone knows about the Schwarzald Republic~";
 		close3;
 	}
 	if (isbegin_quest(17004) == 1) {
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Please gather around~ Let's check the number of people! Kaya Tos! Kaya Tos?";
 		next;
 		cloakoffnpc "Kaya Tos#171_lhz",getcharid(0);
@@ -961,7 +961,7 @@ lighthalzen,259,215,3	script	Rage#171_lhz	4_M_LAZY,{
 		mes ".....";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Oh, there you are! Gather around!";
 		mes "There we're all together now!";
 		npctalk "The adventurer is my secretary, that's my guard.","",bc_self;
@@ -972,39 +972,39 @@ lighthalzen,259,215,3	script	Rage#171_lhz	4_M_LAZY,{
 		mes "The investigation is looking good, but could you stop this ridiculous behavior.";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I thought the VIP said there were only two conditions? Besides, everyone has already heard me.";
 		npctalk "Should I do everything to please you?","",bc_self;
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "We're now officially travelers from the Schwarzwald Republic. It would be hard to look around while hiding everywhere we went to anyway.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Traveling here is truly awesome~ I can feel this excitement. How do you think historians will write this day?";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Kaya, relax. Leave your problems behind and just pretend you're on a holiday. You'll get a clearer perspective.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "First, try to look around on this trip. See how you feel about it.";
 		mes "What should you do if you feel something? You should act upon it.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "A small report~ It's not just to admire and do nothing, right?";
 		mes "Surely... there's a reason why you're traveling with us.";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "By the way, did the VIP feel uncomfortable with non-fair use of the First Class? The start is uncomfortable, but the rest of the journey will be smooth.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "When I went by train, that felt like more First Class. Was it a good experience?";
 		npctalk "The meals were delicious. And there was no sickness.","",bc_self;
 		unittalk getcharid(3),strcharinfo(0) + " : I was feeling sick the whole time!",bc_self;
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "The VIP is getting familiar with us, it will give him some inspiration. Ahahaha.";
 		next;
 		cutin "ep171_kaya01",0;
@@ -1012,14 +1012,14 @@ lighthalzen,259,215,3	script	Rage#171_lhz	4_M_LAZY,{
 		mes "We should hurry up.";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "The VIP wants to be economical. I understand. Let me explain our plan as economically as possible.";
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Here at Lighthalzen, the downtown and the slums coexist with one another. Both sides has structures that make it hard to easily cross the railway from the side to the other.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Normally, we'd all be issued a pass to go around freely, but we don't have time for now this is the best I've managed to prepare.";
 		npctalk "Also it's easier than getting into my house.","",bc_self;
 		next;
@@ -1028,11 +1028,11 @@ lighthalzen,259,215,3	script	Rage#171_lhz	4_M_LAZY,{
 		mes "What is that?";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Oh, don't worry it's kind of a free pass for our agents. Of course, you don't need to know more.";
 		unittalk getcharid(3),strcharinfo(0) + " : I'm just glad we don't have to go through a small hole.",bc_self;
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Now we should go to the <NAVI>[slums]<INFO>lighthalzen,336,266,0,101,0</INFO></NAVI> next.";
 		completequest 17004;
 		setquest 17005;
@@ -1047,12 +1047,12 @@ lighthalzen,259,215,3	script	Rage#171_lhz	4_M_LAZY,{
 	}
 	if (isbegin_quest(17005) == 1) {
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I've found where to go next. Let's go over to the<NAVI>[slums]<INFO>lighthalzen,336,266,0,101,0</INFO></NAVI> next.";
 		close3;
 	}
 	cutin "16lei_01",2;
-	mes "[Rage]";
+	mes "[Lazy]";
 	mes "Let's go to the headquarters. The Rekenber roads are wide and gleaming~ everyone knows about the Schwarzald Republic~";
 	npctalk "The Rekenber roads are wide and gleaming~ everyone knows about the Schwarzald Republic~","",bc_self;
 	close3;
@@ -1073,12 +1073,12 @@ OnTouch:
 	end;
 }
 
-lighthalzen,336,266,3	script	Rage#171_lhz2	4_M_LAZY,{
+lighthalzen,336,266,3	script	Lazy#171_lhz2	4_M_LAZY,{
 	if (isbegin_quest(17005) == 1) {
 		cloakoffnpc "Kaya Tos#171_lhz2",getcharid(0);
 		cloakoffnpc "Aas#171_lhz2",getcharid(0);
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "This is Pat's home. This is where Pat first got into contact with Rekenber and met a staff member.";
 		sleep2 2000;
 		specialeffect EF_DA_SPACE,AREA,"Pat#171_lhz";
@@ -1095,7 +1095,7 @@ lighthalzen,336,266,3	script	Rage#171_lhz2	4_M_LAZY,{
 		npctalk "Are you sure?","Pat#171_lhz",bc_self;
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Pat probably worked hard to get a chance out of poverty and live a better life. He wanted to start anew.";
 		sleep2 2000;
 		npctalk "Thank you so much!","Pat#171_lhz",bc_self;
@@ -1105,7 +1105,7 @@ lighthalzen,336,266,3	script	Rage#171_lhz2	4_M_LAZY,{
 		cloakonnpc "Pat#171_lhz",getcharid(0);
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Heyo! There you are. Mom, Dad, how are you?";
 		next;
 		cloakoffnpc "Pat's Mother#171_lhz",getcharid(0);
@@ -1136,11 +1136,11 @@ lighthalzen,336,266,3	script	Rage#171_lhz2	4_M_LAZY,{
 		mes "It's how we're able to provide for Pat. But it's strange we haven't heard back from him yet.";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Heeey~ Mom, don't fight with Dad.";
 		npctalk "Who's fighting?","Pat's Father#171_lhz",bc_self;
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I came here with a very high ^0000FFimportant^000000 member of your son's company. What did I tell you the other day? He's came to see the welfare of the families who have hired special talent.";
 		unittalk getcharid(3),strcharinfo(0) + " : Have you already investigated this lead?",bc_self;
 		npctalk "It's one of the many ways to approach people, so watch and learn. I've got of plenty of tricks in my bag.","",bc_self;
@@ -1150,7 +1150,7 @@ lighthalzen,336,266,3	script	Rage#171_lhz2	4_M_LAZY,{
 		mes "Hello~ Is this him?";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Yes, that's him. You can ask him questions as much as you'd like. He came here for this sole reason.";
 		npctalk "You can use any words you want, you don't have to hesitate.","",bc_self;
 		sleep2 2000;
@@ -1202,10 +1202,10 @@ lighthalzen,336,266,3	script	Rage#171_lhz2	4_M_LAZY,{
 		mes "What the hell are you doing with the Enterprise people! How come it's gone this far!";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Gosh! Mom, Dad! Thank you! So you can't even contact him, aren't you curious what's happening with him? I'm sure you are.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "We'll meet with your son, keep going with our investigation and then contact you. You can both trust me and wait. You believe me right?";
 		next;
 		cutin "",255;
@@ -1216,7 +1216,7 @@ lighthalzen,336,266,3	script	Rage#171_lhz2	4_M_LAZY,{
 		mes "Aaah~ how to contact you! No matter what! Please contact us again, even if we're busy!";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Okay. Then we'll get going!";
 		next;
 		cutin "",255;
@@ -1227,7 +1227,7 @@ lighthalzen,336,266,3	script	Rage#171_lhz2	4_M_LAZY,{
 		sleep2 1800;
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Did you hear all of that? As stated in the documents, they never even got a call after he joined the Enterprise. Well, I don't like seeing them like that, but I have to keep my first tourist promise.";
 		next;
 		cutin "ep171_kaya01",0;
@@ -1235,12 +1235,12 @@ lighthalzen,336,266,3	script	Rage#171_lhz2	4_M_LAZY,{
 		mes "I'm sure the employees don't come visit their home during their vacations. Isn't it a ^0000FFprivacy matter^000000 that is none of our business?";
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "And you think it's like that for everyone in these documents? No way? Pat is a family person, do you really think he wouldn't come back home when he's on vacation because of personal problems? Do you really believe that?";
 		npctalk "You don't really believe that. Surely.","",bc_self;
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "How about you, guard?";
 		next;
 		cutin "ep171_as01",1;
@@ -1248,7 +1248,7 @@ lighthalzen,336,266,3	script	Rage#171_lhz2	4_M_LAZY,{
 		mes "Are you asking me?";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Yes, you. Your guard doesn't look like someone who enjoys sitting in a hotel, so how about you? Don't you meet with the people you know during your vacations?";
 		next;
 		cutin "ep171_as01",1;
@@ -1256,7 +1256,7 @@ lighthalzen,336,266,3	script	Rage#171_lhz2	4_M_LAZY,{
 		mes "Yes, I often meet with my family during my vacations, sometimes even my friends.";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "See? I knew it. Who wouldn't do that? Okay sure. Maybe one guy out of ten.";
 		next;
 		cutin "ep171_kaya01",0;
@@ -1264,7 +1264,7 @@ lighthalzen,336,266,3	script	Rage#171_lhz2	4_M_LAZY,{
 		mes "The company doesn't investigate private matters. It's private for a reason. Ask yourself if you'd want someone else to look into your private matters.";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Aah~ Do you want to meet with them for a few more minutes~ Will the VIP come here again?";
 		next;
 		cutin "ep171_kaya01",0;
@@ -1272,16 +1272,16 @@ lighthalzen,336,266,3	script	Rage#171_lhz2	4_M_LAZY,{
 		mes "I think I heard as much as I need to here. We'll find the rest of the information in the headquarters.";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "The people who made these documents don't know anything about Pat. It's not just one or two persons on this list. Should you really listen to one person?";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Aren't you tired of walking this path narrow, steep path?";
 		npctalk "Ahahaha. The VIP has never heard anything heavier than a gold spoon.","",bc_self;
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Are you tired already? There are people like this everyday. As your people suffer, more people suffer, so much that you can't even recognize pain.";
 		next;
 		cutin "ep171_kaya03",0;
@@ -1289,10 +1289,10 @@ lighthalzen,336,266,3	script	Rage#171_lhz2	4_M_LAZY,{
 		mes "Are you giving me orders?";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Hello~ I'm just a tourist guide, how can I give you orders. The judgement is done by the VIP's intellect, reasoning and conscience~";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Alright! We're going to follow up with Pat, so the tour's next location will be at the <NAVI>[Headquarters]<INFO>lighthalzen,107,165,0,101,0</INFO></NAVI>.";
 		completequest 17005;
 		setquest 17006;
@@ -1303,7 +1303,7 @@ lighthalzen,336,266,3	script	Rage#171_lhz2	4_M_LAZY,{
 	}
 	if (isbegin_quest(17006) == 1) {
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Alright! We're going to follow up with Pat, so the tour's next place will be at the <NAVI>[Headquarters]<INFO>lighthalzen,107,165,0,101,0</INFO></NAVI>.";
 		close2;
 		cutin "",255;
@@ -1311,7 +1311,7 @@ lighthalzen,336,266,3	script	Rage#171_lhz2	4_M_LAZY,{
 		end;
 	}
 	cutin "16lei_01",2;
-	mes "[Rage]";
+	mes "[Lazy]";
 	mes "The Rekenber roads are wide and gleaming~ everyone knows about the Schwarzald Republic~";
 	close3;
 
@@ -1320,27 +1320,27 @@ OnInit:
 	end;
 }
 
-lighthalzen,108,163,3	script	Rage#171_lhz3	4_M_LAZY,{
+lighthalzen,108,163,3	script	Lazy#171_lhz3	4_M_LAZY,{
 	if (isbegin_quest(17006) == 1) {
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Adventurer! You're here! Who else would it be?";
 		next;
 		cloakoffnpc "Kaya Tos#171_lhz3",getcharid(0);
 		cloakoffnpc "Aas#171_lhz3",getcharid(0);
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "You're finally here. Am I too fast for you? Or do you think perhaps it's because the VIP's shoes are not suited for long distances?";
 		unittalk getcharid(3),strcharinfo(0) + " : Why are we here?!",bc_self;
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "We're finally here at Rekenber.";
 		next;
 		specialeffect EF_DA_SPACE,AREA,"Pat#171_lhz2";
 		cloakoffnpc "Pat#171_lhz2",getcharid(0);
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "When Pat stood in front of the building, he was probably relieved.";
 		mes "The job in the slums wasn't that much different than the one at Rekenber.";
 		npctalk "Really... Rekenber... I... I'm here now...!","Pat#171_lhz2",bc_self;
@@ -1356,15 +1356,15 @@ lighthalzen,108,163,3	script	Rage#171_lhz3	4_M_LAZY,{
 		mes "Explanation?";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Ah! Well done. I wanted to introduce her to you. She's the fiance of ^0000FFanother missing person^000000 on the list.";
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Her fiance was hired by the Rekenber, and then she wasn't able to contact him anymore. Of course, she tried to contact the company and asked what was going on, but what did they tell her?";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Hey Eva! Hello! Come over here, over here!";
 		next;
 		cutin "",255;
@@ -1372,7 +1372,7 @@ lighthalzen,108,163,3	script	Rage#171_lhz3	4_M_LAZY,{
 		mes "Daisy? Hi. Do you have more information on what happened?";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Oh, that? I don't know yet, but I came here with the Vice President to find out.";
 		next;
 		cutin "",255;
@@ -1380,7 +1380,7 @@ lighthalzen,108,163,3	script	Rage#171_lhz3	4_M_LAZY,{
 		mes "The Vice... President? This person?";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Yeah, that's right. You have something to tell him? Go ahead!";
 		mes "This will be good, I don't regret getting out of bed today!";
 		npctalk "This guy, what is he thinking?","Aas#171_lhz3",bc_self;
@@ -1395,7 +1395,7 @@ lighthalzen,108,163,3	script	Rage#171_lhz3	4_M_LAZY,{
 		mes "You're looking for Marcus? Mar...cus... Holzman. He's from the East of Lighthalzen...";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Oh, what a coincidence. He's also from the Lighthalzen slums!";
 		next;
 		cutin "ep171_kaya01",0;
@@ -1433,7 +1433,7 @@ lighthalzen,108,163,3	script	Rage#171_lhz3	4_M_LAZY,{
 		next;
 		cloakonnpc "Protester#171_lhz",getcharid(0);
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "She said he saw the VIP...";
 		next;
 		cutin "ep171_kaya03",0;
@@ -1441,15 +1441,15 @@ lighthalzen,108,163,3	script	Rage#171_lhz3	4_M_LAZY,{
 		mes "What are you trying to say?";
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "You're a VIP. You're so beautiful, I'm very impressed. Tsk. Tsk. Tsk.";
 		npctalk "I am touched right now, I got tears in my eyes.","",bc_self;
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Listen carefully. As I said before, joining Rekenber is the envy of most people in the slums. If you can't imagine how excited it is for them, then maybe you can't think.";
 		npctalk "With that smart head of yours.","",bc_self;
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "For such people, Rekenber has been giving out special gifts as part of social welfare, don't you know about it. Rekenber is tricking people.";
 		next;
 		cutin "ep171_kaya03",0;
@@ -1457,16 +1457,16 @@ lighthalzen,108,163,3	script	Rage#171_lhz3	4_M_LAZY,{
 		mes "Are you disrespecting the company's welfare business? I get the same treatment as those who have been specially selected.";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "That's not what I'm saying VIP. The secretary here knows too. Do you really not know? Are you pretending?";
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Have you seen Rekenber's criteria for their special offer?";
 		mes "People who have healthy body and no families. Among them, why would they only pick the poorest?";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "What do you think this means? Why only people with good health~ or no money~ then they disappear only to get paychecks to their house~";
 		npctalk "Ohh~ I'm really curious~","",bc_self;
 		next;
@@ -1475,7 +1475,7 @@ lighthalzen,108,163,3	script	Rage#171_lhz3	4_M_LAZY,{
 		mes "But there's a single missing person around me.";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Woah, is that really surprising?";
 		mes "You're a guard? Your guard is from the borders of Rune-Midgard, right?";
 		next;
@@ -1484,11 +1484,11 @@ lighthalzen,108,163,3	script	Rage#171_lhz3	4_M_LAZY,{
 		mes "How did you know that?";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "It's easy to recognize a person from their personality and their tone of voice. It's easy for anyone to know, but I can see it just by looking at your face.";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Speaking of personalities, I'm like a guard myself and our spirits can't be broken. You can't break me like a wheel, I'll fight back.";
 		next;
 		cutin "ep171_as02",0;
@@ -1496,10 +1496,10 @@ lighthalzen,108,163,3	script	Rage#171_lhz3	4_M_LAZY,{
 		mes "I would rather use force than make compromises.";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Hah! That's it, that's the spirit. The type that day to day! You would have never allowed your friends to have gone missing just like that. Your personality is what saved our guard, for now anyway.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Anyway do you have a special unit in your guard? I know the answer already.";
 		next;
 		cutin "ep171_as01",0;
@@ -1507,14 +1507,14 @@ lighthalzen,108,163,3	script	Rage#171_lhz3	4_M_LAZY,{
 		mes "Yes... we do.";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I knew it. The VIP says you all get the same treatment. But he won't give security to the people of the slums.";
 		mes "The people in your team are the kind of people who don't go missing.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Simply because it's more troublesome to make a guard disappear. It makes more noises.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "With the money and the welfare paychecks, isn't it easier to just make someone disappear from a vulnerable family and then make their voices unheard?";
 		npctalk "Woah~ I told you~ It's scary~","",bc_self;
 		next;
@@ -1523,7 +1523,7 @@ lighthalzen,108,163,3	script	Rage#171_lhz3	4_M_LAZY,{
 		mes "Do you even know what you're insuating now? It's all speculations!";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Do you really know what I'm thinking?";
 		next;
 		cutin "ep171_kaya03",0;
@@ -1532,16 +1532,16 @@ lighthalzen,108,163,3	script	Rage#171_lhz3	4_M_LAZY,{
 		mes "Let's see why they never made contact. I don't know what they did during their vacations, but we can see where they are now.";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Hah, this guy, he's still all about privacy. Are statistics and odds not part of the economy? Why do all of these people go and never contact their house again?";
 		next;
 		select("Why are they giving their salaries?");
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Our adventurer asked a good question. They are almost all from the slums. In Rekenber, they offer you accomodations, with meals and lodging, you hardly have to spend any money at all.";
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "If the adventurer is from a poor family, and you have to support it, would you spare money for your meals?";
 		next;
 		select("I would send everything.");
@@ -1550,11 +1550,11 @@ lighthalzen,108,163,3	script	Rage#171_lhz3	4_M_LAZY,{
 		mes "These accomodations for the low-income classes is Rekenber's contribution to society. We do our best!";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Ahah! Was I not polite enough? Our VIP is getting angry~ But the adventurer and I have gone to many places before, we know these things.";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "It's an illegal laboratory. You know what an illegal laboratory is?";
 		mes "It would be used for illegal experiments with human life? Used like a lab rats?";
 		next;
@@ -1563,15 +1563,15 @@ lighthalzen,108,163,3	script	Rage#171_lhz3	4_M_LAZY,{
 		mes "Aren't you imagining too much now.";
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Our guard here and the VIP are not imaginative? I know you don't see to look at what's in front of you, but look at the reality of the situation here.";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Do you know what your colleagues ate and what they were doing before the day was over?";
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Did the VIP know about the disappearance of his employees until I pushed to investigate about it?";
 		next;
 		cutin "ep171_kaya03",0;
@@ -1579,7 +1579,7 @@ lighthalzen,108,163,3	script	Rage#171_lhz3	4_M_LAZY,{
 		mes "I still cannot conclude that they're missing.";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Alright, I see. Let's call it a problem, not a missing person. Do you feel better then? If it makes it easier for you, I'll call it that. Do you even want to solve this problem in a positive light?";
 		next;
 		cutin "ep171_kaya01",0;
@@ -1587,10 +1587,10 @@ lighthalzen,108,163,3	script	Rage#171_lhz3	4_M_LAZY,{
 		mes "Of course.";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Perfect, I had hoped you'd say that. I'm glad to see you're not angry anymore. So open your mind~ don't get angry~ breath slowly~ exhale~";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "If you're right, then let's check it out at the <NAVI>[Headquarters]<INFO>lhz_in01,107,137,0,101,0</INFO></NAVI>.";
 		completequest 17006;
 		setquest 17007;
@@ -1602,12 +1602,12 @@ lighthalzen,108,163,3	script	Rage#171_lhz3	4_M_LAZY,{
 	}
 	if (isbegin_quest(17007) == 1) {
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Come on, get inside the <NAVI>[Headquarters]<INFO>lhz_in01,107,137,0,101,0</INFO></NAVI>!";
 		close3;
 	}
 	cutin "16lei_01",2;
-	mes "[Rage]";
+	mes "[Lazy]";
 	mes "The Rekenber roads are wide and gleaming~ everyone knows about the Schwarzald Republic~";
 	close3;
 
@@ -1623,9 +1623,9 @@ lhz_in01,107,137,5	script	Staff#171_lhzin	4_F_01,{
 		next;
 		cloakoffnpc "Kaya Tos#171_lhzin",getcharid(0);
 		cloakoffnpc "Aas#171_lhzin",getcharid(0);
-		cloakoffnpc "Rage#171_lhzin",getcharid(0);
+		cloakoffnpc "Lazy#171_lhzin",getcharid(0);
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "We've finally enter the Rekenber's headquarters. I wonder if Pat was relieved when he first passed through this door. Where did he go next?";
 		sleep2 1500;
 		specialeffect EF_DA_SPACE,AREA,"Pat#171_lhzin";
@@ -1668,11 +1668,11 @@ lhz_in01,107,137,5	script	Staff#171_lhzin	4_F_01,{
 		cutin "",255;
 		mes "[Staff]";
 		mes "It's a system based on their ^0000FFplace of origin^000000. There are many people who are not familiar with the corporate culture. After many trials and errors, the new employees are now required to go through OT.";
-		npctalk "The exact same treatment, huh?","Rage#171_lhzin",bc_self;
+		npctalk "The exact same treatment, huh?","Lazy#171_lhzin",bc_self;
 		unittalk getcharid(3),strcharinfo(0) + " : Shush! Lower your voice!",bc_self;
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Let's go the <NAVI>[Conference Room]<INFO>lhz_in01,162,257,0,101,0</INFO></NAVI> where Pat started his life at Rekenber.";
 		completequest 17007;
 		setquest 17008;
@@ -1680,7 +1680,7 @@ lhz_in01,107,137,5	script	Staff#171_lhzin	4_F_01,{
 		cutin "",255;
 		cloakonnpc "Kaya Tos#171_lhzin",getcharid(0);
 		cloakonnpc "Aas#171_lhzin",getcharid(0);
-		cloakonnpc "Rage#171_lhzin",getcharid(0);
+		cloakonnpc "Lazy#171_lhzin",getcharid(0);
 		end;
 	}
 	if (isbegin_quest(17008) == 1) {
@@ -1723,15 +1723,15 @@ lhz_in01,163,258,5	script	Staff#171_lhzin2	4_M_EINMAN,{
 		npctalk "I like your response, we need more people like you!","",bc_self;
 		sleep2 2000;
 		cloakonnpc "Pat#171_lhzin2",getcharid(0);
-		cloakoffnpc "Rage#171_lhzin2",getcharid(0);
+		cloakoffnpc "Lazy#171_lhzin2",getcharid(0);
 		cloakoffnpc "Kaya Tos#171_lhzin2",getcharid(0);
 		cloakoffnpc "Aas#171_lhzin2",getcharid(0);
 		setpcblock PCBLOCK_ALL, false;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Let's ask this guy for information.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Do you know Kaufmann? Patrick Kaufmann.";
 		next;
 		cutin "",255;
@@ -1739,7 +1739,7 @@ lhz_in01,163,258,5	script	Staff#171_lhzin2	4_M_EINMAN,{
 		mes "Who are you?";
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "The Vice President is looking for Kaufmann.";
 		next;
 		cutin "",255;
@@ -1747,7 +1747,7 @@ lhz_in01,163,258,5	script	Staff#171_lhzin2	4_M_EINMAN,{
 		mes "I see, what is the purpose. And... who are you again?";
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Are you the secretary of the Vice President?";
 		next;
 		cutin "",255;
@@ -1765,14 +1765,14 @@ lhz_in01,163,258,5	script	Staff#171_lhzin2	4_M_EINMAN,{
 		npctalk "Think, come on, think.","",bc_self;
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "He is your Vice President.";
 		next;
 		cutin "",255;
 		mes "[Staff]";
 		mes "Aaah! Yes, right, right!!! ...Vice President? Oh, hello!";
 		npctalk "Is this guy really the Vice President?","",bc_self;
-		npctalk "I already told you that! I'm not lying.","Rage#171_lhzin2",bc_self;
+		npctalk "I already told you that! I'm not lying.","Lazy#171_lhzin2",bc_self;
 		next;
 		cutin "ep171_kaya01",0;
 		mes "[Kaya]";
@@ -1805,9 +1805,9 @@ lhz_in01,163,258,5	script	Staff#171_lhzin2	4_M_EINMAN,{
 		npctalk "It's kind of a problem to always send away the best workers everyday.","",bc_self;
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Do you know why so many people were drafted?";
-		npctalk "Do you know why so many people were drafted?","Rage#171_lhzin2,",bc_self;
+		npctalk "Do you know why so many people were drafted?","Lazy#171_lhzin2,",bc_self;
 		next;
 		cutin "",255;
 		mes "[Staff]";
@@ -1828,14 +1828,14 @@ lhz_in01,163,258,5	script	Staff#171_lhzin2	4_M_EINMAN,{
 		mes "Anyway, please be careful, it is a dangerous place.";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Ooh.. You cannot be transferred at least until a whole year, unless you are given ^0000FFan unusual request.^000000";
 		mes "But Pat didn't get neither one of these reasons. Is it really a laboratory?";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Did you know this VIP? was there anything about this in your documents? Why did the lab only take healthy and you people?";
-		npctalk "Ooooh~ What is the reason~ I'm so curious~","Rage#171_lhzin2",bc_self;
+		npctalk "Ooooh~ What is the reason~ I'm so curious~","Lazy#171_lhzin2",bc_self;
 		next;
 		cutin "ep171_kaya01",0;
 		mes "[Kaya]";
@@ -1846,7 +1846,7 @@ lhz_in01,163,258,5	script	Staff#171_lhzin2	4_M_EINMAN,{
 		mes "I was in charge of Regenschirm, but I've never seen Patrick Kaufmann.";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Yeah? You're getting curious too now, aren't you! Is that right?";
 		next;
 		cutin "ep171_as01",1;
@@ -1856,7 +1856,7 @@ lhz_in01,163,258,5	script	Staff#171_lhzin2	4_M_EINMAN,{
 		setquest 17009;
 		close2;
 		cutin "",255;
-		cloakonnpc "Rage#171_lhzin2",getcharid(0);
+		cloakonnpc "Lazy#171_lhzin2",getcharid(0);
 		cloakonnpc "Kaya Tos#171_lhzin2",getcharid(0);
 		cloakonnpc "Aas#171_lhzin2",getcharid(0);
 		end;
@@ -1881,23 +1881,23 @@ lhz_in01,80,210,5	script	Secretary#171_lhzin	4_M_RUSMAN1,{
 		mes "Hey, where are you going!";
 		next;
 		select("Are you talking to us?");
-		cloakoffnpc "Rage#171_lhzin3",getcharid(0);
+		cloakoffnpc "Lazy#171_lhzin3",getcharid(0);
 		cloakoffnpc "Kaya Tos#171_lhzin3",getcharid(0);
 		cloakoffnpc "Aas#171_lhzin3",getcharid(0);
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Adventurer, let's go quickly? Let's go together.";
-		npctalk "Don't forget we have a senior here, so you have to worry about your behavior.","Rage#171_lhzin3",bc_self;
+		npctalk "Don't forget we have a senior here, so you have to worry about your behavior.","Lazy#171_lhzin3",bc_self;
 		next;
 		cutin "",255;
 		mes "[Secretary]";
 		mes "You came all the way to the office, what's going in? You left me alone in here and then just disappeared.";
 		mes "Why are you sneaking in?";
 		unittalk getcharid(3),strcharinfo(0) + " : Oh, you're not talking to me.",bc_self;
-		npctalk "Who would talk to an adventurer like you in here?","Rage#171_lhzin3",bc_self;
+		npctalk "Who would talk to an adventurer like you in here?","Lazy#171_lhzin3",bc_self;
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Do you know who's the gentlemen next to me?";
 		next;
 		cutin "ep171_kaya01",0;
@@ -1905,7 +1905,7 @@ lhz_in01,80,210,5	script	Secretary#171_lhzin	4_M_RUSMAN1,{
 		mes "Yes, he is my secretary.";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Ah! Nice to meet you. My name is Daisy. I'm an old friend of the Vice President.";
 		next;
 		cutin "",255;
@@ -1929,7 +1929,7 @@ lhz_in01,80,210,5	script	Secretary#171_lhzin	4_M_RUSMAN1,{
 		mes "[Gray]";
 		mes "So you were hiding on purpose. Can you tell what this was all about?";
 		mes "Why all the secrecy?";
-		npctalk "The deal was to hide.","Rage#171_lhzin3",bc_self;
+		npctalk "The deal was to hide.","Lazy#171_lhzin3",bc_self;
 		next;
 		cutin "ep171_kaya01",0;
 		mes "[Kaya]";
@@ -1941,13 +1941,13 @@ lhz_in01,80,210,5	script	Secretary#171_lhzin	4_M_RUSMAN1,{
 		mes "I didn't think we'd be friends with these people again.";
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Why? Can't we be friends? You! You'll have to explain yourself!";
 		next;
 		cutin "",255;
 		mes "[Gray]";
 		mes "You don't seem that old.";
-		npctalk "Oh, you look younger than me? Ahahaha! I think I'm really starting to like this guy?","Rage#171_lhzin3",bc_self;
+		npctalk "Oh, you look younger than me? Ahahaha! I think I'm really starting to like this guy?","Lazy#171_lhzin3",bc_self;
 		next;
 		cutin "ep171_kaya01",0;
 		mes "[Kaya]";
@@ -1958,7 +1958,7 @@ lhz_in01,80,210,5	script	Secretary#171_lhzin	4_M_RUSMAN1,{
 		mes "Yes, sir.";
 		unittalk getcharid(3),strcharinfo(0) + " : Are you sure keeping secrets is a good idea?",bc_self;
 		sleep2 2000;
-		npctalk "Shush~ You're new at this. Give me some time to work this out.","Rage#171_lhzin3",bc_self;
+		npctalk "Shush~ You're new at this. Give me some time to work this out.","Lazy#171_lhzin3",bc_self;
 		next;
 		cutin "ep171_kaya01",0;
 		mes "[Kaya]";
@@ -1970,7 +1970,7 @@ lhz_in01,80,210,5	script	Secretary#171_lhzin	4_M_RUSMAN1,{
 		next;
 		mes "[Gray]";
 		mes "If you want to uncover secrets, it would wiser to straight to the document storage room and search for the documents yourself than going through the Human Resource department.";
-		npctalk "Eh.. I really like this person! He's one out of the that has a head on his shoulder!","Rage#171_lhzin3",bc_self;
+		npctalk "Eh.. I really like this person! He's one out of the that has a head on his shoulder!","Lazy#171_lhzin3",bc_self;
 		sleep2 2000;
 		unittalk getcharid(3),strcharinfo(0) + " : That must be why he's the secretary of the Vice President.",bc_self;
 		next;
@@ -1985,7 +1985,7 @@ lhz_in01,80,210,5	script	Secretary#171_lhzin	4_M_RUSMAN1,{
 		mes "[Gray]";
 		mes "Alright, then please be careful.";
 		mes "There are many eyes around here. You know what I mean, right?";
-		npctalk "Perfect to the end.","Rage#171_lhzin3",bc_self;
+		npctalk "Perfect to the end.","Lazy#171_lhzin3",bc_self;
 		next;
 		cutin "ep171_kaya01",0;
 		mes "[Kaya]";
@@ -1994,7 +1994,7 @@ lhz_in01,80,210,5	script	Secretary#171_lhzin	4_M_RUSMAN1,{
 		setquest 17012;
 		close2;
 		cutin "",255;
-		cloakonnpc "Rage#171_lhzin3",getcharid(0);
+		cloakonnpc "Lazy#171_lhzin3",getcharid(0);
 		cloakonnpc "Kaya Tos#171_lhzin3",getcharid(0);
 		cloakonnpc "Aas#171_lhzin3",getcharid(0);
 		end;
@@ -2018,7 +2018,7 @@ lhz_in01,32,264,5	script	Staff#171_lhzin4	4_M_HUMAN_02,{
 		mes "[Staff]";
 		mes "Hello, this is the document storage room.";
 		next;
-		cloakoffnpc "Rage#171_lhzin4",getcharid(0);
+		cloakoffnpc "Lazy#171_lhzin4",getcharid(0);
 		cloakoffnpc "Kaya Tos#171_lhzin4",getcharid(0);
 		cloakoffnpc "Aas#171_lhzin4",getcharid(0);
 		mes "[Staff]";
@@ -2054,7 +2054,7 @@ lhz_in01,32,264,5	script	Staff#171_lhzin4	4_M_HUMAN_02,{
 		mes "Daisy, can you compare the list please.";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Hmm.. there are many overlap with the names from both lists. I expected as such... but I'm confused.";
 		next;
 		cutin "ep171_kaya01",0;
@@ -2087,20 +2087,20 @@ lhz_in01,32,264,5	script	Staff#171_lhzin4	4_M_HUMAN_02,{
 		mes "The detailed records can be found inside the lab he is in, or another lab perhaps.";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "How was his vacations? Did he rest well?";
-		npctalk "I would have so much trouble to work here that I would never rest.","Rage#171_lhzin4",bc_self;
+		npctalk "I would have so much trouble to work here that I would never rest.","Lazy#171_lhzin4",bc_self;
 		next;
 		cutin "",255;
 		mes "[Staff]";
 		mes "On vacation... he has already used al of his days. Well... he drove out at the end of the year.";
-		npctalk "Oh~ he wasn't able to rest, until the end of the year. Rekeber is quite a place~","Rage#171_lhzin4",bc_self;
+		npctalk "Oh~ he wasn't able to rest, until the end of the year. Rekeber is quite a place~","Lazy#171_lhzin4",bc_self;
 		npctalk "Absolutely not!","Aas#171_lhzin4",bc_self;
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "And where did he go during his vacations? I already know the answer, but there is someone here who doesn't believe me.";
-		npctalk "Tell me what he did~","Rage#171_lhzin4",bc_self;
+		npctalk "Tell me what he did~","Lazy#171_lhzin4",bc_self;
 		next;
 		cutin "",255;
 		mes "[Staff]";
@@ -2119,7 +2119,7 @@ lhz_in01,32,264,5	script	Staff#171_lhzin4	4_M_HUMAN_02,{
 		mes "Well, Holzman went to Sinclair's laboratory.";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Did he use all of his vacations as well?";
 		next;
 		cutin "",255;
@@ -2136,7 +2136,7 @@ lhz_in01,32,264,5	script	Staff#171_lhzin4	4_M_HUMAN_02,{
 		mes "McDonald lab is located at ^0000FFSector 01 - Section 95-146 in the Einbroch Mountains^000000 and Sinclair's lab is located at Zone 11 - Sector 45-156 in the Einbroch Mountains.";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "And there it goes. Of course. I also know the asnwer, but I'll ask you anyway, are Patrick and Marcus still working at Rekenber?";
 		next;
 		cutin "",255;
@@ -2144,19 +2144,19 @@ lhz_in01,32,264,5	script	Staff#171_lhzin4	4_M_HUMAN_02,{
 		mes "Of course. They are being paid for work. If you leave, you wouldn't get paid anymore, right?";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Of course, that's common sense~";
 		npctalk ".....","Kaya Tos#171_lhzin4",bc_self;
 		npctalk "Are we really going back to this?","Aas#171_lhzin4",bc_self;
 		unittalk getcharid(3),strcharinfo(0) + " : Don't worry, he will tire himself out after a while.",bc_self;
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Now let's head to these new laboratories. There's probably a lot more we can find out over there.";
 		next;
 		select("How are we doing this?");
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "We can all go together. We came here for this reason.";
 		next;
 		cutin "ep171_as01",0;
@@ -2164,7 +2164,7 @@ lhz_in01,32,264,5	script	Staff#171_lhzin4	4_M_HUMAN_02,{
 		mes "How about we save some time and share information afterwards? Let's split and meet again at a specific location.";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "That's a good idea. Then me and you will go to Sinclair's laboratory together.";
 		mes "The adventurer will go to McDonald's laboratory with the VIP. When we finish the investigation, we'll meet you back over at McDonald's lab.";
 		next;
@@ -2173,15 +2173,15 @@ lhz_in01,32,264,5	script	Staff#171_lhzin4	4_M_HUMAN_02,{
 		mes "Why? Why am I going with you? Isn't it better for me to go back with the Vice President?";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Have you forgotten? The Vice PResident wants to do this operation as unbiased as possible.";
 		mes "Would you believe the findings of me and the adventurer?";
-		npctalk "I'm the image of distrust~","Rage#171_lhzin4",bc_self;
+		npctalk "I'm the image of distrust~","Lazy#171_lhzin4",bc_self;
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Do you want to give the Vice President a reason to be suspicious? We can't allow that?";
-		npctalk "It shouldn't be hard with the guard.","Rage#171_lhzin4",bc_self;
+		npctalk "It shouldn't be hard with the guard.","Lazy#171_lhzin4",bc_self;
 		next;
 		cutin "ep171_kaya01",0;
 		mes "[Kaya]";
@@ -2197,7 +2197,7 @@ lhz_in01,32,264,5	script	Staff#171_lhzin4	4_M_HUMAN_02,{
 		npctalk "Alright...","Aas#171_lhzin4",bc_self;
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Let's go now. You're heading for the <NAVI>[McDonald Laboratory]<INFO>ein_fild01,95,146,0,000,0</INFO></NAVI>, wait for us when you're done.";
 		completequest 17012;
 		setquest 17013;
@@ -2206,7 +2206,7 @@ lhz_in01,32,264,5	script	Staff#171_lhzin4	4_M_HUMAN_02,{
 		mes "[Staff]";
 		mes "Please have a look. If you need anything, let me know!";
 		close2;
-		cloakonnpc "Rage#171_lhzin4",getcharid(0);
+		cloakonnpc "Lazy#171_lhzin4",getcharid(0);
 		cloakonnpc "Kaya Tos#171_lhzin4",getcharid(0);
 		cloakonnpc "Aas#171_lhzin4",getcharid(0);
 		end;
@@ -2230,11 +2230,11 @@ rgsr_in,161,85,3	script	Laboratory Staff#171_rgsrin	4_LGTSCIENCE,{
 		mes "[Staff]";
 		mes "This place is restricted from outsiders, please leave.";
 		next;
-		cloakoffnpc "Rage#171_rgsrin",getcharid(0);
+		cloakoffnpc "Lazy#171_rgsrin",getcharid(0);
 		cloakoffnpc "Kaya Tos#171_rgsrin",getcharid(0);
 		cloakoffnpc "Aas#171_rgsrin",getcharid(0);
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Hello. Okay, you're busy so that you don't know when someone died? So what happened? Don't you think its a big deal?";
 		next;
 		cutin "",255;
@@ -2248,13 +2248,13 @@ rgsr_in,161,85,3	script	Laboratory Staff#171_rgsrin	4_LGTSCIENCE,{
 		cutin "",255;
 		mes "[Med]";
 		mes "Aas? Oh my, is it really you Aas? Are you okay? What are you doing here? Are you go to question someone who's betrayed us and changed sides?";
-		npctalk "I don't give up easily.","Rage#171_rgsrin",bc_self;
+		npctalk "I don't give up easily.","Lazy#171_rgsrin",bc_self;
 		unittalk getcharid(3),strcharinfo(0) + " : You're a natural.",bc_self;
 		next;
 		mes "[Med]";
 		mes "Are you going to arrest these traitors, cruelly torture them, and make them reveal all their sins?";
 		mes "This is like a spy novel!";
-		npctalk "Oooh! Someone else here has a lot of imagination.","Rage#171_rgsrin",bc_self;
+		npctalk "Oooh! Someone else here has a lot of imagination.","Lazy#171_rgsrin",bc_self;
 		next;
 		cutin "ep171_as01",0;
 		mes "[Aas]";
@@ -2274,7 +2274,7 @@ rgsr_in,161,85,3	script	Laboratory Staff#171_rgsrin	4_LGTSCIENCE,{
 		mes "And would you like to tell me who you are?";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "These people don't even know the face of the Vice President they work for.";
 		next;
 		cutin "",255;
@@ -2282,13 +2282,13 @@ rgsr_in,161,85,3	script	Laboratory Staff#171_rgsrin	4_LGTSCIENCE,{
 		mes "Ah!! That's you, I'm so sorry! I'll do my best!";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "We should go <NAVI>[here]<INFO>rgsr_in,12,46,0,000,0</INFO></NAVI> now~";
 		completequest 17009;
 		setquest 17010;
 		close2;
 		cutin "",255;
-		cloakonnpc "Rage#171_rgsrin",getcharid(0);
+		cloakonnpc "Lazy#171_rgsrin",getcharid(0);
 		cloakonnpc "Kaya Tos#171_rgsrin",getcharid(0);
 		cloakonnpc "Aas#171_rgsrin",getcharid(0);
 		end;
@@ -2312,7 +2312,7 @@ rgsr_in,12,46,7	script	Staff#171_rgsrin	4_M_04,{
 		mes "[Staff]";
 		mes "What are you doing here? You can't be here unless you have an apointment.";
 		next;
-		cloakoffnpc "Rage#171_rgsrin2",getcharid(0);
+		cloakoffnpc "Lazy#171_rgsrin2",getcharid(0);
 		cloakoffnpc "Kaya Tos#171_rgsrin2",getcharid(0);
 		cloakoffnpc "Aas#171_rgsrin2",getcharid(0);
 		cutin "ep171_as01",0;
@@ -2324,7 +2324,7 @@ rgsr_in,12,46,7	script	Staff#171_rgsrin	4_M_04,{
 		mes "Aas? What are you doing here...?";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Good afternoon. We want to ask you a few questions.";
 		next;
 		cutin "",255;
@@ -2332,7 +2332,7 @@ rgsr_in,12,46,7	script	Staff#171_rgsrin	4_M_04,{
 		mes "What do you want to ask me?";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "This is the Vice President, here with us.";
 		next;
 		cutin "",255;
@@ -2352,14 +2352,14 @@ rgsr_in,12,46,7	script	Staff#171_rgsrin	4_M_04,{
 		mes "Oh my, Vice President. What are you doing in such a place... oh, what do you want to know?";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Oh wow, look at the attitude change. All we had to do was say the magic words : Vice President.";
 		mes "That was too easy.";
 		unittalk getcharid(3),strcharinfo(0) + " : It does look a little to easy.",bc_self;
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I should probably use it more often from now on?";
-		unittalk getcharid(3),strcharinfo(0) + " : Then you'll be caught Rage.",bc_self;
+		unittalk getcharid(3),strcharinfo(0) + " : Then you'll be caught Lazy.",bc_self;
 		next;
 		cutin "ep171_kaya01",0;
 		mes "[Kaya]";
@@ -2416,30 +2416,30 @@ rgsr_in,12,46,7	script	Staff#171_rgsrin	4_M_04,{
 		mes "What happened to the people?";
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "A new laboratory... I couldn't investigate it. It's a new laboratory that needs a lot of people, but I wasn't able to find it. What do you think? Can you smell us getting closer?";
 		unittalk getcharid(3),strcharinfo(0) + " : It's very surprising.",bc_self;
-		npctalk "Right? It's also rude.","Rage#171_rgsrin2",bc_self;
+		npctalk "Right? It's also rude.","Lazy#171_rgsrin2",bc_self;
 		next;
 		cutin "ep171_kaya01",0;
 		mes "[Kaya]";
 		mes "This is certainly not in the papers I've received. There were only mentions of departures and few transfers. All the details were missing.";
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "They wrote it like that on purpose,";
 		mes "someone with enough suspicious would have figured out the truth.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Perhaps someone didn't want you to learn the truth and deliberately removed those details. Otherwise it would have been shown in the original documents.";
-		npctalk "They are so organized.","Rage#171_rgsrin2",bc_self;
+		npctalk "They are so organized.","Lazy#171_rgsrin2",bc_self;
 		next;
 		cutin "ep171_kaya02",0;
 		mes "[Kaya]";
 		mes "A new facility... I must find out where it is. There might be more things we don't know about.";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "You keep going on and on and on. If someone dies, I have to confirm it with my own eyes.";
 		next;
 		cutin "ep171_kaya01",0;
@@ -2447,7 +2447,7 @@ rgsr_in,12,46,7	script	Staff#171_rgsrin	4_M_04,{
 		mes "Let's get more information from the <NAVI>[Office]<INFO>lhz_in01,80,210,0,000,0</INFO></NAVI>.";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Are you going to the Human Resources?";
 		mes "I've already been there.";
 		next;
@@ -2456,19 +2456,19 @@ rgsr_in,12,46,7	script	Staff#171_rgsrin	4_M_04,{
 		mes "How deeply did you investigate the Enterprise?";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Oh no~ you still think I'm a liar.";
 		mes "Where else will you find someone as trustworthy as I am?";
 		next;
 		select("What did you just say?");
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "One of the employee here said that one of my very distant relative passed away and left a big legacy.";
 		mes "I wasn't able to reach him, and then I came here looking for what was left for me.";
 		next;
 		select("You believed him?");
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Why not? Does the adventurer have any relatives? I don't know...";
 		mes "Romance and thrills, hehe. We've always waited for this dream to happen.";
 		unittalk getcharid(3),strcharinfo(0) + " : Why look at people with such eyes.",bc_self;
@@ -2479,7 +2479,7 @@ rgsr_in,12,46,7	script	Staff#171_rgsrin	4_M_04,{
 		unittalk getcharid(3),strcharinfo(0) + " : Your eyes are glowing!",bc_self;
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Does your guard know some romance?";
 		next;
 		cutin "ep171_kaya01",0;
@@ -2489,7 +2489,7 @@ rgsr_in,12,46,7	script	Staff#171_rgsrin	4_M_04,{
 		setquest 17011;
 		close2;
 		cutin "",255;
-		cloakonnpc "Rage#171_rgsrin2",getcharid(0);
+		cloakonnpc "Lazy#171_rgsrin2",getcharid(0);
 		cloakonnpc "Kaya Tos#171_rgsrin2",getcharid(0);
 		cloakonnpc "Aas#171_rgsrin2",getcharid(0);
 		end;
@@ -2534,26 +2534,26 @@ lighthalzen,104,163,5	duplicate(dummy_cloaked_npc)	Kaya Tos#171_lhz3	4_EP17_KAYA
 lighthalzen,103,165,5	duplicate(dummy_cloaked_npc)	Aas#171_lhz3	4_EP17_AS
 lighthalzen,106,162,1	duplicate(dummy_cloaked_npc)	Pat#171_lhz2	4_M_REPAIR
 lighthalzen,106,162,5	duplicate(dummy_cloaked_npc)	Protester#171_lhz	4_F_ZONDAGIRL
-lhz_in01,105,134,7	duplicate(dummy_cloaked_npc)	Rage#171_lhzin	4_M_LAZY
+lhz_in01,105,134,7	duplicate(dummy_cloaked_npc)	Lazy#171_lhzin	4_M_LAZY
 lhz_in01,108,135,1	duplicate(dummy_cloaked_npc)	Pat#171_lhzin	4_M_REPAIR
 lhz_in01,109,134,1	duplicate(dummy_cloaked_npc)	Kaya Tos#171_lhzin	4_EP17_KAYA
 lhz_in01,109,136,3	duplicate(dummy_cloaked_npc)	Aas#171_lhzin	4_EP17_AS
-lhz_in01,161,255,7	duplicate(dummy_cloaked_npc)	Rage#171_lhzin2	4_M_LAZY
+lhz_in01,161,255,7	duplicate(dummy_cloaked_npc)	Lazy#171_lhzin2	4_M_LAZY
 lhz_in01,168,257,5	duplicate(dummy_cloaked_npc)	Staff#171_lhzin3	4_F_CHNDOCTOR
 lhz_in01,162,255,1	duplicate(dummy_cloaked_npc)	Pat#171_lhzin2	4_M_REPAIR
 lhz_in01,164,255,1	duplicate(dummy_cloaked_npc)	Kaya Tos#171_lhzin2	4_EP17_KAYA
 lhz_in01,164,256,3	duplicate(dummy_cloaked_npc)	Aas#171_lhzin2	4_EP17_AS
-lhz_in01,82,209,3	duplicate(dummy_cloaked_npc)	Rage#171_lhzin3	4_M_LAZY
+lhz_in01,82,209,3	duplicate(dummy_cloaked_npc)	Lazy#171_lhzin3	4_M_LAZY
 lhz_in01,81,208,1	duplicate(dummy_cloaked_npc)	Kaya Tos#171_lhzin3	4_EP17_KAYA
 lhz_in01,82,207,1	duplicate(dummy_cloaked_npc)	Aas#171_lhzin3	4_EP17_AS
-lhz_in01,33,263,3	duplicate(dummy_cloaked_npc)	Rage#171_lhzin4	4_M_LAZY
+lhz_in01,33,263,3	duplicate(dummy_cloaked_npc)	Lazy#171_lhzin4	4_M_LAZY
 lhz_in01,33,262,1	duplicate(dummy_cloaked_npc)	Kaya Tos#171_lhzin4	4_EP17_KAYA
 lhz_in01,34,262,3	duplicate(dummy_cloaked_npc)	Aas#171_lhzin4	4_EP17_AS
 
-rgsr_in,157,84,5	duplicate(dummy_cloaked_npc)	Rage#171_rgsrin	4_M_LAZY
+rgsr_in,157,84,5	duplicate(dummy_cloaked_npc)	Lazy#171_rgsrin	4_M_LAZY
 rgsr_in,158,87,5	duplicate(dummy_cloaked_npc)	Kaya Tos#171_rgsrin	4_EP17_KAYA
 rgsr_in,157,88,5	duplicate(dummy_cloaked_npc)	Aas#171_rgsrin	4_EP17_AS
-rgsr_in,16,49,3	duplicate(dummy_cloaked_npc)	Rage#171_rgsrin2	4_M_LAZY
+rgsr_in,16,49,3	duplicate(dummy_cloaked_npc)	Lazy#171_rgsrin2	4_M_LAZY
 rgsr_in,17,48,3	duplicate(dummy_cloaked_npc)	Kaya Tos#171_rgsrin2	4_EP17_KAYA
 rgsr_in,18,47,3	duplicate(dummy_cloaked_npc)	Aas#171_rgsrin2	4_EP17_AS
 rgsr_in,15,46,1	duplicate(dummy_cloaked_npc)	Pat#171_rgsrin	4_M_REPAIR
@@ -2708,7 +2708,7 @@ pub_cat,93,105,3	script	Philofontes#171_cat	4_M_PHILOFONTES,{
 		next;
 		mes "[Tes]";
 		mes "The information I got from Est was incredible.";
-		mes "And it seems Rage has something to tell you.";
+		mes "And it seems Lazy has something to tell you.";
 		next;
 		mes "[Tes]";
 		mes "Kaya should be there too.";
@@ -2717,7 +2717,7 @@ pub_cat,93,105,3	script	Philofontes#171_cat	4_M_PHILOFONTES,{
 		setquest 7864;
 		getitem 25669,25;
 		getexp 800000,800000;
-		cloakoffnpc "Rage#171_cat",getcharid(0);
+		cloakoffnpc "Lazy#171_cat",getcharid(0);
 		cloakoffnpc "Kaya Tos#171_cat",getcharid(0);
 		cloakoffnpc "Aas#171_cat",getcharid(0);
 		close3;
@@ -2742,9 +2742,9 @@ pub_cat,93,105,3	script	Philofontes#171_cat	4_M_PHILOFONTES,{
 	if (isbegin_quest(7864) == 1) {
 		cutin "ep16_tes01",2;
 		mes "[Tes]";
-		mes "Rage seems to be up to something.";
+		mes "Lazy seems to be up to something.";
 		mes "He's somewhere here in the pub, go and find him.";
-		cloakoffnpc "Rage#171_cat",getcharid(0);
+		cloakoffnpc "Lazy#171_cat",getcharid(0);
 		cloakoffnpc "Kaya Tos#171_cat",getcharid(0);
 		cloakoffnpc "Aas#171_cat",getcharid(0);
 		close3;
@@ -2752,7 +2752,7 @@ pub_cat,93,105,3	script	Philofontes#171_cat	4_M_PHILOFONTES,{
 	if (isbegin_quest(17014) == 1) {
 		cutin "ep16_tes01",1;
 		mes "[Tes]";
-		mes "I thought you were investigating with Rage, it looks like you didn't get great results.";
+		mes "I thought you were investigating with Lazy, it looks like you didn't get great results.";
 		next;
 		mes "[Tes]";
 		mes "I finished analyzing the information you gathered from Regenschirm earlier, there were traces of supplies and research data.";
@@ -3186,26 +3186,26 @@ pub_cat,107,65,5	script	#EP171_EVT_CAT01	HIDDEN_WARP_NPC,5,5,{
 
 OnTouch:
 	if (isbegin_quest(7864) == 1) {
-		cloakoffnpc "Rage#171_cat",getcharid(0);
+		cloakoffnpc "Lazy#171_cat",getcharid(0);
 		cloakoffnpc "Kaya Tos#171_cat",getcharid(0);
 		cloakoffnpc "Aas#171_cat",getcharid(0);
 		end;
 	}
 	if (isbegin_quest(17003) == 0) {
-		cloakoffnpc "Rage#171_cat2",getcharid(0);
+		cloakoffnpc "Lazy#171_cat2",getcharid(0);
 		cloakoffnpc "Kaya Tos#171_cat",getcharid(0);
 		cloakoffnpc "Aas#171_cat",getcharid(0);
 		end;
 	}
 	if (isbegin_quest(17003) == 1)
-		cloakoffnpc "Rage#171_cat2",getcharid(0);
+		cloakoffnpc "Lazy#171_cat2",getcharid(0);
 	end;
 }
 
-pub_cat,106,69,7	script	Rage#171_cat	4_M_LAZY,{
+pub_cat,106,69,7	script	Lazy#171_cat	4_M_LAZY,{
 	if (isbegin_quest(7864) == 1) {
 		cutin "16lei_03",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Look, that's all nice and good to have ^0000CDfacts^000000. But this is not even something you can use as a firepower.";
 		next;
 		cutin "ep171_kaya01",2;
@@ -3214,7 +3214,7 @@ pub_cat,106,69,7	script	Rage#171_cat	4_M_LAZY,{
 		mes "This is it, those are all the ^0000CDfacts.^000000";
 		next;
 		cutin "16lei_02",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Truth be told, it doesn't sound convincing. If I look at the front page of your report, it does not at all align with my investigation results.";
 		npctalk "If what you've written is true, then it's also true that the sky is red.","",bc_self;
 		next;
@@ -3223,7 +3223,7 @@ pub_cat,106,69,7	script	Rage#171_cat	4_M_LAZY,{
 		mes "If that's the case, then we should review the investigation methods and the credibility of the source.";
 		next;
 		cutin "16lei_03",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Oh sure, I have a lunch menu survey from the people in the neighborhood... is that what you want to use as facts?";
 		next;
 		cutin "ep171_kaya01",2;
@@ -3231,7 +3231,7 @@ pub_cat,106,69,7	script	Rage#171_cat	4_M_LAZY,{
 		mes "That's not what I said at all...";
 		next;
 		cutin "16lei_02",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "What, you don't believe me? Yeah? Is that it? You don't think it's a reliable source of information?";
 		next;
 		cutin "ep171_kaya03",2;
@@ -3240,11 +3240,11 @@ pub_cat,106,69,7	script	Rage#171_cat	4_M_LAZY,{
 		mes "Not only would we have access to more data, but the quality would be much higher than what's available to an outsider.";
 		next;
 		cutin "16lei_02",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Don't you think the Vice President would only share with us ^0000CDwhat he want us to know?^000000";
 		mes "Am I supposed to suspend all critical thinking and unquestioningly believe you?";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Won't that mean you can just report to the President and hide a plan from us? Yeah? Right?";
 		npctalk "No big crowds right?","",bc_self;
 		next;
@@ -3252,22 +3252,22 @@ pub_cat,106,69,7	script	Rage#171_cat	4_M_LAZY,{
 		mes "[Kaya]";
 		mes "I never said that.";
 		next;
-		select("Rage, what's wrong?");
+		select("Lazy, what's wrong?");
 		cutin "16lei_01",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Adventurer? Adventurer!! Hey, I haven't died yet!! Never been better!!";
 		mes "Listen to me.";
 		next;
 		cutin "ep171_kaya01",2;
 		mes "[Kaya]";
-		mes "Rage? Is your name Rage? Didn't you introduce yourself as Daisy?";
+		mes "Lazy? Is your name Lazy? Didn't you introduce yourself as Daisy?";
 		next;
 		cutin "16lei_02",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Oh, that? Don't worry about it, it's the name I use to distract people. There, now you know me. Oh by the way... nevermind, you don't need to know that.";
 		next;
 		select("If it's Daisy... are you a flower?");
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Look, although it may be true in my case, it doesn't mean it applies to me.";
 		mes "Don't take it too personal. Who in the world only has one name?";
 		unittalk getcharid(3),strcharinfo(0)+ " : Everyone else has one name?",bc_self;
@@ -3278,25 +3278,25 @@ pub_cat,106,69,7	script	Rage#171_cat	4_M_LAZY,{
 		mes "If you don't have anything else to say, then please explain why your name is different.";
 		next;
 		cutin "16lei_03",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I was born to talk about it, but who are you talking about?";
 		mes "I have so many things to talk about. I can talk about them all day long.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Now, as you know, this conversation is business meeting, aren't the Vice President's underlings standing right behind you?";
 		npctalk "Who else is getting paid by Rekenber here? The adventurer?","",bc_self;
 		npctalk "Are you talking about me?","Aas#171_cat",bc_self;
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "It's already known to our neighbors that Rekenber was performing illegal experiments. Maybe the people on this list could have also been involved.";
 		next;
 		cutin "16lei_02",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Don't you want to clear their suspicions? Get their cooperation to know what's in your backyard?";
 		mes "If it were up to me, I'd have done that already. When else would we get such an opportunity?";
 		next;
 		cutin "16lei_03",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "What more are you hiding in your backyard? Are you not here for asking our help? If there's anything hidden over there,";
 		mes "wouldn't the Vice President be in trouble?";
 		next;
@@ -3305,19 +3305,19 @@ pub_cat,106,69,7	script	Rage#171_cat	4_M_LAZY,{
 		mes "Requesting help and analyzing paperworks are separate matters.";
 		next;
 		cutin "16lei_03",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Is it a separate matter because you said so? When did you decide that?";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Now this has turned into a matter of trust, not merely a question about people missing!";
 		npctalk "Do you still take me for a daisy?!","",bc_self;
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Until we deal with these documents, how do you expect us to trust you?";
 		mes "Why would you assume so? Nobody here believe you?";
 		next;
 		cutin "16lei_02",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "So here's the real question! How can we really cooperate with you if we don't have trust between us?";
 		npctalk "The correct answer is we can't! I don't think that's possible.","",bc_self;
 		next;
@@ -3327,17 +3327,17 @@ pub_cat,106,69,7	script	Rage#171_cat	4_M_LAZY,{
 		mes "Whether you believe it or not, Daisy, I don't know how else to clear your doubts.";
 		next;
 		cutin "16lei_02",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "So you searched into the Enterprise very thoroughly and your information is ^0000CD100% reliable.^000000";
 		mes "So we have to believe it unconditionally. Isn't that strange? Do you have no evidence?";
 		npctalk "I didn't know Rekenber was a such a religious group.","",bc_self;
 		next;
 		cutin "16lei_03",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I mean, if this document is credible at anyway, then you're calling me a liar, Vice President!";
 		next;
 		cutin "16lei_01",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Oh... this is sudden. Should I seek the cooperation of the Vice President after I've been called a liar?";
 		npctalk "The question is, is it reliable?","",bc_self;
 		next;
@@ -3346,11 +3346,11 @@ pub_cat,106,69,7	script	Rage#171_cat	4_M_LAZY,{
 		mes "I never called you a liar...";
 		next;
 		cutin "16lei_02",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "No that's not it. You're requesting our cooperation, and asking us to trust you completely without any real evidence. How can we believe you?";
 		next;
 		cutin "16lei_03",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Now, even if you actively cooperate with me, it's hard for me to like trust this arrangement.";
 		next;
 		cutin "ep171_kaya01",2;
@@ -3358,7 +3358,7 @@ pub_cat,106,69,7	script	Rage#171_cat	4_M_LAZY,{
 		mes "You're repeating yourself now. I assure you, you can trust the documents.";
 		next;
 		cutin "16lei_02",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Why would I believe in you if you don't believe in me? I'm a compassionate person, patient and very humane.";
 		mes "Are your eyes so shut that you can't see what's in front of you?";
 		next;
@@ -3367,7 +3367,7 @@ pub_cat,106,69,7	script	Rage#171_cat	4_M_LAZY,{
 		mes "Now you're going too far!";
 		next;
 		cutin "16lei_02",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Don't worry, it's alright. You know it's all true.";
 		next;
 		cutin "ep171_as02",2;
@@ -3375,7 +3375,7 @@ pub_cat,106,69,7	script	Rage#171_cat	4_M_LAZY,{
 		mes "Why, what's the matter with you?";
 		next;
 		cutin "16lei_02",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Vice President, do you think that's right?";
 		next;
 		cutin "ep171_kaya01",2;
@@ -3383,21 +3383,21 @@ pub_cat,106,69,7	script	Rage#171_cat	4_M_LAZY,{
 		mes "........";
 		next;
 		cutin "16lei_02",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "No? Well that's alright with me.";
 		mes "I'm fine.";
 		mes "I'm not blind. Even in my position, I've noticed the the Enterprise is hiding something from us!";
 		next;
 		cutin "16lei_03",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Anyway, Vice President, I know how people like you are, I'll give my report and I'll do things my own way.";
 		npctalk "Have a good day!","",bc_self;
 		next;
 		mes "["+ strcharinfo(0) + "]";
-		mes "Eh? Rage? Where are you going!";
+		mes "Eh? Lazy? Where are you going!";
 		cloakonnpc strnpcinfo(0),getcharid(0);
 		sleep2 1000;
-		cloakoffnpc "Rage#171_cat2",getcharid(0);
+		cloakoffnpc "Lazy#171_cat2",getcharid(0);
 		completequest 7864;
 		setquest 17000;
 		close3;
@@ -3410,120 +3410,120 @@ OnInit:
 	end;
 }
 
-pub_cat,105,58,3	script	Rage#171_cat2	4_M_LAZY,{
+pub_cat,105,58,3	script	Lazy#171_cat2	4_M_LAZY,{
 	if (isbegin_quest(17000) == 1) {
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Ah, this is frustrating!";
 		mes "Adventurer! Listen to me! Listen to me and you'll be the judge of who's right. You know what these guys have been saying?";
 		unittalk getcharid(3),strcharinfo(0)+ " : It's a disgrace.",bc_self;
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Now, look at this ^0000CDpile of documents^000000 over here. You don't have to read it too carefully. Just look at the cover.";
 		next;
 		select("Rekenber... missing list..?");
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Yeah. It's a list of ^0000CDmissing people^000000 who used to work at Rekenber. I've investigated everything as much as I could.";
 		unittalk getcharid(3),strcharinfo(0)+ " : What did you find?",bc_self;
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Even though I'm acquainted with the information, it's impossible to go deeper inside the Enterprise.";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "If I wanted to do this, I was cautioned to proceed legally to avoid causing more frictions.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I believe the president has a relationship with the government and its businesses. So they have think carefully about this matters.";
 		npctalk "That's not my style.","",bc_self;
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "So when I met Kaya, I asked him to cooperate with me. You can help us in the yard, right?";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Because he's a Rekenber official, it should be easy for him to find this information right?";
 		next;
 		select("Right.");
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "But, well, I need you to check this out and cooperate with the investigation. You know how I get when I get thrown paper from the head office.";
 		npctalk "I'm do disappointed. What if the adventurer gets on a battle?","",bc_self;
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "The employees on the list are assigned to another work station and they're in constant rotation.";
 		mes "Payments are also confirmed to be monthly basis.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "It's just common sense, why would a company go out their way to pay a salary to an unemployed person?";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I'm telling you it's common sense~";
 		mes "I can say common sense in front of people who have studied hard~";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Wait, did I misunderstand the meaning of common sense?";
 		mes "Did I change the definition without knowing about it?";
 		unittalk getcharid(3),strcharinfo(0)+ " : Wouldn't you?",bc_self;
 		npctalk "Isn't that what it means?","",bc_self;
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "So either you're lying here, or I'm the one lying. Adventurer, am I the one lying?";
 		unittalk getcharid(3),strcharinfo(0)+ " : Um...",bc_self;
 		npctalk "What are you worried about? I'm a very reliable person, why are you looking at me like that!","",bc_self;
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "To sum it all up, we've lost many contacts to Rekenber's employees. Nobody really knows what happened to them.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "But they have such a long history?";
 		mes "The governent just now realized about this issue. There's definitely a connection between that and the missing people. That's why I decided to investigate further.";
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Who else would do the job if not me? That's why I have to investage.";
 		mes "I have to do it in very legitimate way, Because I told him I would do it without causing friction.";
 		next;
 		select("Are your results any different?");
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "If you spend a long time as an adventurer, you can add 1 and 1 together. I see the scheme.";
 		mes "Yes, it's real.";
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Yes, that's it. I'd like you to check again to figure out this mystery one and for all.";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "That's why ^0000CDI don't do desk jobs^000000.";
 		mes "When I look at papers, I don't know how the world outside is doing.";
 		mes "I prefer going outside on the field and learn with my own eyes.";
 		npctalk "Being an adventurer really suits me more.","",bc_self;
 		next;
 		select("Do you want to go along with the investigation?");
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Do you think these guys who won't listen will go? Will you accompany me to search for the truth?";
 		unittalk getcharid(3),strcharinfo(0)+ " : I'll check the documents from the Vice President and your finding as well.",bc_self;
 		npctalk "Do adventurers have bold ideas?","",bc_self;
 		next;
 		select("I'll be back as soon as possible.");
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "No, no, Adventurer. You don't have to do such a thing. You just need to report the situation to me and do it the way I told you.";
 		npctalk "I can sense their hate, but I can't hear them.","",bc_self;
 		next;
 		select("Let me speak with them");
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Yeah, well, if you want to talk, come to me anytime, but don't be too hard on yourself~ the energy and time of the adventurer is important.";
 		npctalk "If you go, don't give up alright?","",bc_self;
 		completequest 17000;
@@ -3532,27 +3532,27 @@ pub_cat,105,58,3	script	Rage#171_cat2	4_M_LAZY,{
 	}
 	if (isbegin_quest(17001) == 1) {
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I really like it here. Don't forget about the adventure, there's nothing to worry about.";
 		close3;
 	}
 	if (isbegin_quest(17002) == 1) {
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "What did he say? No, right?";
 		mes "See I told you. Persuading him is a waste of time. If you don't cooperate with me, there's no way I can report back to the President.";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "His stiffness is stronger than bamboo. He's so rigid that his knees wouldn't bend.";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "If you don't cooperate with him and do it my way from now on,";
 		mes "The President will give you permission.";
 		npctalk "My specialty is to go big!","",bc_self;
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "If you asked the enterprise to cooperate with us, but what are you going to do if they refused?";
 		npctalk "I feel better already. Amazing~","",bc_self;
 		next;
@@ -3563,7 +3563,7 @@ pub_cat,105,58,3	script	Rage#171_cat2	4_M_LAZY,{
 		mes "Hmm. Excuse me.";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Have you thought about it?";
 		npctalk "Have you thought about it?","",bc_self;
 		next;
@@ -3579,7 +3579,7 @@ pub_cat,105,58,3	script	Rage#171_cat2	4_M_LAZY,{
 		mes "This is a waste of time, no matter how I look at it. Even if you told me a hundred times, it's not economical for me to go. But I accept your proposal anyway.";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Economical? Of course it's economical. I also like being economical. So, I can do this economically on my own terms? Yeah?";
 		mes "Dear Vice President?";
 		npctalk "That settles it, we'll answer to the Vice President. I knew it!","",bc_self;
@@ -3603,18 +3603,18 @@ pub_cat,105,58,3	script	Rage#171_cat2	4_M_LAZY,{
 		mes "There is a limit to what you can do. This is my responsiblity and mine alone.";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Do you even know how to travel and cooperate?";
 		unittalk getcharid(3),strcharinfo(0) + " : Please! What's wrong? Let him come with us!",bc_self;
 		npctalk "No, no. I admire your efforts adventurer.","",bc_self;
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Good. Let's forget about the past altercation and focus on the future. Thank you Vice President.";
 		npctalk "Will you keep an open mind?","",bc_self;
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "While the rest are analyzing what they've brought from the lab, the Vice President and I will go deal with the list.";
 		next;
 		cutin "ep171_kaya02",0;
@@ -3623,7 +3623,7 @@ pub_cat,105,58,3	script	Rage#171_cat2	4_M_LAZY,{
 		mes "First, please have at least ^0000CDa minimum amount of courtesy.^000000";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Oh, aren't you a ^0000CDVIP^000000?";
 		mes "Okay, thank you very much, VIP.";
 		next;
@@ -3632,7 +3632,7 @@ pub_cat,105,58,3	script	Rage#171_cat2	4_M_LAZY,{
 		mes "Is it a hobby of yours to provoke other people?";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "If you don't like being called a VIP, then which title do you prefer?";
 		unittalk getcharid(3),strcharinfo(0) + " : Pff, what the hell is wrong with you?",bc_self;
 		npctalk "Why, what am I doing?","",bc_self;
@@ -3642,7 +3642,7 @@ pub_cat,105,58,3	script	Rage#171_cat2	4_M_LAZY,{
 		mes "... and second, I want a ^0000CDreliable person^000000 in your party.";
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Why?";
 		next;
 		cutin "ep171_kaya01",0;
@@ -3650,7 +3650,7 @@ pub_cat,105,58,3	script	Rage#171_cat2	4_M_LAZY,{
 		mes "I will need a witness in the future.";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Oh I see, so you don't believe me?";
 		npctalk "Oh no~ Mother~ I'm being punished~","",bc_self;
 		next;
@@ -3664,7 +3664,7 @@ pub_cat,105,58,3	script	Rage#171_cat2	4_M_LAZY,{
 		next;
 		select("Then I'll go.");
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Eh? Why the adventurer? If you're coming along, then you'll get to do all the fun parts...!";
 		npctalk "It'll be great!","",bc_self;
 		next;
@@ -3674,7 +3674,7 @@ pub_cat,105,58,3	script	Rage#171_cat2	4_M_LAZY,{
 		mes "Will both of our determinations combined, nothing can stop us.";
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Wait, but what about your guard?";
 		next;
 		cutin "ep171_kaya01",0;
@@ -3682,16 +3682,16 @@ pub_cat,105,58,3	script	Rage#171_cat2	4_M_LAZY,{
 		mes "I do not need a guard. I came here by myself the first time around. I will be just fine this time too.";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Very thoughtful. But you need to have a guard. It shouldn't be needed, but in case something goes wrong.";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Even though I'm a very talented person, I have to prioritize my own safety first.";
 		mes "Look, I can take care of myself, and If I have to, I can tag along with the adventurer, but what about a VIP?";
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "If you get hurt it will only cause a scandal. It would be bad! You know what I mean, right?";
 		mes "Plus we might not be able to get back right away, so it might get complicated.";
 		npctalk "The job is important, but protecting the VIP is also important.","",bc_self;
@@ -3706,7 +3706,7 @@ pub_cat,105,58,3	script	Rage#171_cat2	4_M_LAZY,{
 		mes "Well then I'll bring Aas with me...";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Also, it's really economical. Quick decision making, I like it.";
 		mes "So let's start with ^0000CDEinbroch^000000 at the <NAVI>[Airport]<INFO>einbroch,42,208,0,101,0</INFO></NAVI>.";
 		completequest 17002;
@@ -3716,7 +3716,7 @@ pub_cat,105,58,3	script	Rage#171_cat2	4_M_LAZY,{
 	}
 	if (isbegin_quest(17003) == 1) {
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "What are you doing here?.";
 		mes "Let's go to the <NAVI>[Einbroch Airport]<INFO>einbroch,42,208,0,101,0</INFO></NAVI>.";
 		close3;
@@ -3741,7 +3741,7 @@ pub_cat,109,71,3	script	Kaya Tos#171_cat	4_EP17_KAYA,{
 		mes "But why have you come to see me?";
 		next;
 		cutin "",255;
-		mes "- You explain to Kaya, about what you and Rage discussed. -";
+		mes "- You explain to Kaya, about what you and Lazy discussed. -";
 		next;
 		cutin "ep171_kaya03",2;
 		mes "[Kaya]";
@@ -3751,16 +3751,16 @@ pub_cat,109,71,3	script	Kaya Tos#171_cat	4_EP17_KAYA,{
 		mes "[Kaya]";
 		mes "I have no intention of debating this further with you, so I'll talk to the person in charge.";
 		next;
-		cloakonnpc "Rage#171_cat2",getcharid(0);
-		cloakoffnpc "Rage#171_cat",getcharid(0);
+		cloakonnpc "Lazy#171_cat2",getcharid(0);
+		cloakoffnpc "Lazy#171_cat",getcharid(0);
 		cutin "16lei_02",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Who's the responsible one?";
 		mes "The person in front of me?";
-		npctalk "Where are you looking at? There's no one there.","Rage#171_cat",bc_self;
+		npctalk "Where are you looking at? There's no one there.","Lazy#171_cat",bc_self;
 		next;
 		cutin "16lei_01",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "The president gave me his full authority on this matter.";
 		next;
 		cutin "ep171_kaya03",2;
@@ -3768,7 +3768,7 @@ pub_cat,109,71,3	script	Kaya Tos#171_cat	4_EP17_KAYA,{
 		mes "And who are you exactly?";
 		next;
 		cutin "16lei_02",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I already told you before, didn't I? Does the Vice President have a bad memory?";
 		next;
 		cutin "ep171_kaya03",2;
@@ -3776,23 +3776,23 @@ pub_cat,109,71,3	script	Kaya Tos#171_cat	4_EP17_KAYA,{
 		mes "Why would I believe a man who gave me a fake name?";
 		next;
 		cutin "16lei_03",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "A name is just a name. If I was called Shit, would I become Shit when talking to the Vice President?";
 		next;
 		select("Is it your hobby to eavesdrop?");
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Why? Isn't this where I should be?";
 		mes "Is it bad to listen? Don't bother with them it's not worth your time.";
 		unittalk getcharid(3),strcharinfo(0)+ " : Just let me handle it!",bc_self;
 		next;
 		cutin "",255;
-		cloakonnpc "Rage#171_cat",getcharid(0);
-		cloakoffnpc "Rage#171_cat2",getcharid(0);
+		cloakonnpc "Lazy#171_cat",getcharid(0);
+		cloakoffnpc "Lazy#171_cat2",getcharid(0);
 		mes "["+ strcharinfo(0) + "]";
-		mes "As Rage was saying... Even if you called Rage by Shit, Rage would still be Rage.";
+		mes "As Lazy was saying... Even if you called Lazy by Shit, Lazy would still be Lazy.";
 		next;
 		mes "["+ strcharinfo(0) + "]";
-		mes "Even if there is someone introduced Rage as Shit, would you always view him as Shit for the rest of his life?";
+		mes "Even if there is someone introduced Lazy as Shit, would you always view him as Shit for the rest of his life?";
 		next;
 		mes "["+ strcharinfo(0) + "]";
 		mes "Now here's what really matters. If you do not tell the truth about what really happened, you'll not be able to get their cooperation.";
@@ -3806,14 +3806,14 @@ pub_cat,109,71,3	script	Kaya Tos#171_cat	4_EP17_KAYA,{
 		next;
 		cutin "",255;
 		mes "["+ strcharinfo(0) + "]";
-		mes "I don't know everything that Rage knows, but he seems to have better grasp at the situation than you do, Vice President.";
+		mes "I don't know everything that Lazy knows, but he seems to have better grasp at the situation than you do, Vice President.";
 		next;
 		mes "["+ strcharinfo(0) + "]";
-		mes "Rage isn't the type of person that would spend time investigating these matter for no reason.";
+		mes "Lazy isn't the type of person that would spend time investigating these matter for no reason.";
 		unittalk getcharid(3),strcharinfo(0)+ " : If you want to build trust in the Enterprise, please reconsider.",bc_self;
 		next;
 		mes "["+ strcharinfo(0) + "]";
-		mes "Rage says he cannot believe the results the Vice President has provided, but do you not believe the results Reiji provided either, correct?";
+		mes "Lazy says he cannot believe the results the Vice President has provided, but do you not believe the results Reiji provided either, correct?";
 		next;
 		cutin "ep171_kaya01",2;
 		mes "[Kaya]";
@@ -3829,7 +3829,7 @@ pub_cat,109,71,3	script	Kaya Tos#171_cat	4_EP17_KAYA,{
 		next;
 		cutin "",255;
 		mes "["+ strcharinfo(0) + "]";
-		mes "As Rage said, he doesn't trust your findings.";
+		mes "As Lazy said, he doesn't trust your findings.";
 		mes "If you can't believe in each other results, why don't you guys start from the beginning?";
 		next;
 		mes "["+ strcharinfo(0) + "]";
@@ -3839,27 +3839,27 @@ pub_cat,109,71,3	script	Kaya Tos#171_cat	4_EP17_KAYA,{
 		mes "[Kaya]";
 		mes "That's valid argument. But do I need to go too? I would prefer talking to you.";
 		next;
-		cloakoffnpc "Rage#171_cat",getcharid(0);
-		cloakonnpc "Rage#171_cat2",getcharid(0);
+		cloakoffnpc "Lazy#171_cat",getcharid(0);
+		cloakonnpc "Lazy#171_cat2",getcharid(0);
 		cutin "16lei_02",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Can you believe what I've investigated so far? You still can't believe my findings, because you're assuming your documents are correct.";
 		next;
 		cutin "16lei_03",0;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Yeah, no. I didn't think so.";
-		npctalk "The truth is overwhelming.","Rage#171_cat",bc_self;
+		npctalk "The truth is overwhelming.","Lazy#171_cat",bc_self;
 		next;
 		select("Do you mind?");
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I can't help it. We're wasting our time with them, why bother? What's wrong? Do you have nothing to say?";
 		next;
-		select("Please wait a moment, Rage");
-		mes "[Rage]";
+		select("Please wait a moment, Lazy");
+		mes "[Lazy]";
 		mes "I don't have much time to wait for this sillyness.";
 		next;
-		cloakonnpc "Rage#171_cat",getcharid(0);
-		cloakoffnpc "Rage#171_cat2",getcharid(0);
+		cloakonnpc "Lazy#171_cat",getcharid(0);
+		cloakoffnpc "Lazy#171_cat2",getcharid(0);
 		cutin "ep171_kaya01",2;
 		mes "[Kaya]";
 		mes "The results will be the same no matter how many times we check them. We have a lot of other work to do.";
@@ -3870,7 +3870,7 @@ pub_cat,109,71,3	script	Kaya Tos#171_cat	4_EP17_KAYA,{
 		mes "With the current situation, nobody will believe your findings.";
 		next;
 		mes "["+ strcharinfo(0) + "]";
-		mes "If Rage was wrong after the joint investigation, then you'd simply have wasted a bit of your time, but for the Vice President, it's a huge issue.";
+		mes "If Lazy was wrong after the joint investigation, then you'd simply have wasted a bit of your time, but for the Vice President, it's a huge issue.";
 		next;
 		cutin "ep171_kaya01",2;
 		mes "[Kaya]";
@@ -4529,7 +4529,7 @@ function	script	171_worker_talk	{
 		case 91: .@talk$ = "Oh!!! What is all this!"; break;
 		case 92: .@talk$ = "Please, you're not alone!"; break;
 		case 93: .@talk$ = "Aaaaah!! Researcher!! It's us! We're here too!"; break;
-		case 94: .@talk$ = "El, Eliumina! Wait a second!"; break;
+		case 94: .@talk$ = "El, Elyumina! Wait a second!"; break;
 		case 95: .@talk$ = "The researcher is crazy!"; break;
 		case 96: .@talk$ = "She is!!"; break;
 		case 97: .@talk$ = "Hey!! Are you okay?!"; break;
@@ -5055,10 +5055,10 @@ sp_cor,166,81,7	script	Tes#171_rvs_1	4_M_PHILOFONTES,{
 		mes "That sounds like a good idea.";
 		171_worker_talk(85,.@old$);
 		next;
-		cloakoffnpc "Eliumina#171_rvs",getcharid(0);
+		cloakoffnpc "Elyumina#171_rvs",getcharid(0);
 		cloakoffnpc "Fool 1#171_rvs_1",getcharid(0);
 		cloakoffnpc "Fool 2#171_rvs_2",getcharid(0);
-		specialeffect EF_TELEPORTATION2,AREA,"Eliumina#171_rvs";
+		specialeffect EF_TELEPORTATION2,AREA,"Elyumina#171_rvs";
 		specialeffect EF_TELEPORTATION2,AREA,"Fool 1#171_rvs_1";
 		specialeffect EF_TELEPORTATION2,AREA,"Fool 2#171_rvs_2";
 		cutin "ep171_elyumina02",2;
@@ -5074,16 +5074,16 @@ sp_cor,166,81,7	script	Tes#171_rvs_1	4_M_PHILOFONTES,{
 		171_worker_talk(86,.@cook$);
 		next;
 		mes "[Worker]";
-		mes "Eliumina?";
+		mes "Elyumina?";
 		171_worker_talk(87,.@old$);
 		next;
 		cutin "ep171_elyumina02",2;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "Who gave you permission to approach my staff? You see them? Just try putting one hand on them, and I'll blow you up.";
 		171_worker_talk(88,.@moc$);
 		next;
 		cutin "ep171_elyumina04",2;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "No matter how stupid you are, it's always better to have your hands on your wrists, right?";
 		171_worker_talk(89,.@man$);
 		next;
@@ -5093,10 +5093,10 @@ sp_cor,166,81,7	script	Tes#171_rvs_1	4_M_PHILOFONTES,{
 		171_worker_talk(90,.@poor$);
 		next;
 		cutin "ep171_elyumina03",2;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "You all look like skeletons, why aren't you hiding? You will all disappear!";
 		next;
-		specialeffect EF_TETRA_FIRE,AREA,"Eliumina#171_rvs";
+		specialeffect EF_TETRA_FIRE,AREA,"Elyumina#171_rvs";
 		specialeffect EF_RAIN_PARTICLE2,AREA,.@poor$;
 		cutin "",255;
 		mes "[Worker]";
@@ -5108,7 +5108,7 @@ sp_cor,166,81,7	script	Tes#171_rvs_1	4_M_PHILOFONTES,{
 		171_worker_talk(95,.@cook$);
 		next;
 		cutin "ep171_elyumina02",2;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "You know what! If you have soybeans and rice, which one do you choose?";
 		mes "If you're in a hurry, you'll just mix them up!";
 		specialeffect EF_DESPERADO,AREA,"Fool 2#171_rvs_2";
@@ -5173,9 +5173,9 @@ sp_cor,166,81,7	script	Tes#171_rvs_1	4_M_PHILOFONTES,{
 		next;
 		specialeffect EF_RAPIDSHOWER,AREA,"Advance Squad#171_rvs_1";
 		specialeffect EF_RAPIDSHOWER,AREA,"Tommy#171_rvs_2";
-		specialeffect EF_SUI_EXPLOSION,AREA,"Eliumina#171_rvs";
+		specialeffect EF_SUI_EXPLOSION,AREA,"Elyumina#171_rvs";
 		cutin "ep171_elyumina02",2;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "Argh...";
 		171_worker_talk(105,.@cook$);
 		171_worker_talk(106,.@man$);
@@ -5186,7 +5186,7 @@ sp_cor,166,81,7	script	Tes#171_rvs_1	4_M_PHILOFONTES,{
 		specialeffect EF_RAPIDSHOWER,AREA,"Tommy#171_rvs_2";
 		specialeffect EF_RAPIDSHOWER,AREA,"Advance Squad#171_rvs_1";
 		specialeffect EF_RAPIDSHOWER,AREA,"Advance Squad#171_rvs_2";
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "What, what? Come on? Why is our attack.. not working...?";
 		171_worker_talk(107,.@cook$);
 		171_worker_talk(108,.@old$);
@@ -5202,7 +5202,7 @@ sp_cor,166,81,7	script	Tes#171_rvs_1	4_M_PHILOFONTES,{
 		specialeffect EF_RAPIDSHOWER,AREA,"Tommy#171_rvs_2";
 		specialeffect EF_HITDARK,AREA,"Fool 1#171_rvs_1";
 		cutin "ep171_elyumina02",2;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "Why? Why are they not budging? What about this?";
 		next;
 		specialeffect EF_DESPERADO,AREA,"Fool 2#171_rvs_2";
@@ -5211,19 +5211,19 @@ sp_cor,166,81,7	script	Tes#171_rvs_1	4_M_PHILOFONTES,{
 		mes "Oh, I've been hit! We should escape!";
 		next;
 		cutin "ep171_elyumina02",2;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "Why are they doing so well? Did we pick the wrong test subjects?";
 		next;
 		specialeffect EF_RAPIDSHOWER,AREA,"Advance Squad#171_rvs_1";
 		specialeffect EF_RAPIDSHOWER,AREA,"Advance Squad#171_rvs_2";
 		specialeffect EF_RAPIDSHOWER,AREA,"Magenta#171_rvs_2";
-		specialeffect EF_SUI_EXPLOSION,AREA,"Eliumina#171_rvs";
+		specialeffect EF_SUI_EXPLOSION,AREA,"Elyumina#171_rvs";
 		cutin "",255;
 		mes "[Fool 1]";
 		mes "These people are professionals!";
 		next;
 		cutin "ep171_elyumina02",2;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "You are professionals too!";
 		next;
 		specialeffect EF_DESPERADO,AREA,"Fool 2#171_rvs_2";
@@ -5236,13 +5236,13 @@ sp_cor,166,81,7	script	Tes#171_rvs_1	4_M_PHILOFONTES,{
 		specialeffect EF_RAPIDSHOWER,AREA,"Tommy#171_rvs_2";
 		specialeffect EF_HITDARK,AREA,"Fool 1#171_rvs_1";
 		cutin "ep171_elyumina02",2;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "No! Let me go! Now! I can't believe we can't avoid that kind of weapon! Let me go! Let me go!!";
 		next;
-		specialeffect EF_TELEPORTATION2,AREA,"Eliumina#171_rvs";
+		specialeffect EF_TELEPORTATION2,AREA,"Elyumina#171_rvs";
 		specialeffect EF_TELEPORTATION2,AREA,"Fool 1#171_rvs_1";
 		specialeffect EF_TELEPORTATION2,AREA,"Fool 2#171_rvs_2";
-		cloakonnpc "Eliumina#171_rvs",getcharid(0);
+		cloakonnpc "Elyumina#171_rvs",getcharid(0);
 		cloakonnpc "Fool 1#171_rvs_1",getcharid(0);
 		cloakonnpc "Fool 2#171_rvs_2",getcharid(0);
 		cutin "ep171_as02",0;
@@ -5445,7 +5445,7 @@ sp_cor,163,73,5	duplicate(dummy_cloaked_npc)	Worker#171_rvs_7	4_M_CHNCOOK
 sp_cor,162,72,5	duplicate(dummy_cloaked_npc)	Worker#171_rvs_8	4_M_03
 sp_cor,167,85,1	duplicate(dummy_cloaked_npc)	Worker#171_rvs_9	4_M_DIEMAN
 sp_cor,164,82,5	duplicate(dummy_cloaked_npc)	Worker#171_rvs_10	4_M_DSTMANDEAD
-sp_cor,165,86,5	duplicate(dummy_cloaked_npc)	Eliumina#171_rvs	4_EP17_ELYUMINA
+sp_cor,165,86,5	duplicate(dummy_cloaked_npc)	Elyumina#171_rvs	4_EP17_ELYUMINA
 sp_cor,163,87,5	duplicate(dummy_cloaked_npc)	Fool 1#171_rvs_1	3454
 sp_cor,166,88,5	duplicate(dummy_cloaked_npc)	Fool 2#171_rvs_2	3454
 sp_cor,159,68,7	duplicate(dummy_cloaked_npc)	Tes#171_rvs_2	4_M_PHILOFONTES
@@ -5472,10 +5472,10 @@ sp_cor,122,141,5	script	Tes#171_cor_0	4_M_PHILOFONTES,{
 		mes "Is everyone alright?";
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "No, really, just a little bit, I'm late am I? What is this all about, is it drugs?";
 		mes "Was I really this late? What is all of this, why is everyone wounded?";
-		npctalk "It's a mess, it's a total mess. You can't live without me.","Rage#sp_cor",bc_self;
+		npctalk "It's a mess, it's a total mess. You can't live without me.","Lazy#sp_cor",bc_self;
 		next;
 		cutin "ep16_tes01",0;
 		mes "[Tes]";
@@ -5483,7 +5483,7 @@ sp_cor,122,141,5	script	Tes#171_cor_0	4_M_PHILOFONTES,{
 		npctalk "If you arrived a little sooner, you'd have a hole on your tongue. You are quite lucky","",bc_self;
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Hey, I was worried about all of this!";
 		next;
 		cutin "",255;
@@ -5534,7 +5534,7 @@ sp_cor,122,141,5	script	Tes#171_cor_0	4_M_PHILOFONTES,{
 		next;
 		cutin "",255;
 		mes "[Worker]";
-		mes "Yes, she's one of the senior researchers, her name is ^0000FFEliumina.^000000";
+		mes "Yes, she's one of the senior researchers, her name is ^0000CDElyumina.^000000";
 		npctalk "There is a nice song in the yard.","Worker#171_rvs_11",bc_self;
 		next;
 		cutin "ep16_tes01",2;
@@ -5577,7 +5577,7 @@ sp_cor,122,141,5	script	Tes#171_cor_0	4_M_PHILOFONTES,{
 		npctalk "I agree!","Worker#171_rvs_13",bc_self;
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Good. We can continue with our investigation now. Vice President, please give me the documents.";
 		npctalk "What investigation?","Worker#171_rvs_12",bc_self;
 		next;
@@ -5586,12 +5586,12 @@ sp_cor,122,141,5	script	Tes#171_cor_0	4_M_PHILOFONTES,{
 		mes "What documents?";
 		next;
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "The list of missing people. I need to double check with who we have here.";
-		npctalk "I hope they would come out one after another.","Rage#sp_cor",bc_self;
+		npctalk "I hope they would come out one after another.","Lazy#sp_cor",bc_self;
 		next;
 		cutin "16lei_02",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Here, stand in line please. Make three rows. Please tell me your full name when your turn comes.";
 		npctalk "Let me go first. I feel like I'm going to die soon.","Worker#171_rvs_14",bc_self;
 		next;
@@ -5956,7 +5956,7 @@ sp_cor,135,147,3	script	Aas#171_cor	4_EP17_AS,{
 		select("These people are victims too...");
 		cutin "ep171_kaya01",2;
 		mes "[Kaya]";
-		mes "As Rage was saying, I think Rekenber has used these people because of their desperation.";
+		mes "As Lazy was saying, I think Rekenber has used these people because of their desperation.";
 		next;
 		cloakoffnpc "Search Team#171_cor",getcharid(0);
 		cutin "",255;
@@ -6102,15 +6102,15 @@ OnInit:
 	end;
 }
 
-sp_cor,124,139,1	script	Rage#171_cor	4_M_LAZY,{
+sp_cor,124,139,1	script	Lazy#171_cor	4_M_LAZY,{
 	if (isbegin_quest(17018) == 1) {
 		cutin "16lei_03",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "The <NAVI>[guard]<INFO>sp_cor,135,147,0,101,0</INFO></NAVI> seems to have something to say to the VIP. Is it a problem with the wounded people?";
 		close3;
 	}
 	cutin "16lei_03",2;
-	mes "[Rage]";
+	mes "[Lazy]";
 	mes "Do you think this is where they are? I have to find the missing people.";
 	close3;
 }
@@ -6161,7 +6161,7 @@ sp_cor,110,130,3	script	Elena Volkova#rm171_0	4_F_ELENA,{
 			cloakoffnpc "Rebellion#rm171_0", getcharid(0);
 			mes "[Rebellion]";
 			mes "Captain, there was another explosion near the facilities!";
-			mes "That researcher named ^0000CDEliumina^000000 must have done it. We'll go after him right away!";
+			mes "That researcher named ^0000CDElyumina^000000 must have done it. We'll go after him right away!";
 			next;
 			cutin "162elena_01",2;
 			cloakonnpc "Rebellion#rm171_0", getcharid(0);
@@ -6184,7 +6184,7 @@ sp_cor,110,130,3	script	Elena Volkova#rm171_0	4_F_ELENA,{
 		cutin "162elena_01",2;
 		mes "[Elena Volkova]";
 		if (isbegin_quest(16353) == 1) {
-			mes "There was an explosion near the facilities. It was caused by that researcher at this lab, Eliumina.";
+			mes "There was an explosion near the facilities. It was caused by that researcher at this lab, Elyumina.";
 			mes "We must capture him without fail this time. Come <NAVI>[this way]<INFO>sp_cor,180,169,0,101,0</INFO></NAVI>.";
 		} else {
 			mes "I hate untrained animals.";
@@ -6224,7 +6224,7 @@ sp_cor,180,169,3	script	Elena Volkova#rm171_1	4_F_ELENA,{
 		cutin "162elena_01",2;
 		mes "[Elena Volkova]";
 		mes "You're a bit late. Well, we didn't come exactly in time, either.";
-		mes "We lost Eliumina. He may not be a good fighter, but he's really good at running. Drat!";
+		mes "We lost Elyumina. He may not be a good fighter, but he's really good at running. Drat!";
 		next;
 		emotion 6;
 		mes "[Elena Volkova]";
@@ -6356,7 +6356,7 @@ sp_cor,180,169,3	script	Elena Volkova#rm171_1	4_F_ELENA,{
 					erasequest 16356;
 				if (isbegin_quest(16376) == 0)
 					setquest 16376;
-				mapannounce "sp_cor", strcharinfo(0) + " in the " + getpartyname(getcharid(1)) + " party has launched the operation to capture Eliumina.", bc_map, 0x00FF99;
+				mapannounce "sp_cor", strcharinfo(0) + " in the " + getpartyname(getcharid(1)) + " party has launched the operation to capture Elyumina.", bc_map, 0x00FF99;
 				break;
 			case IE_NOMEMBER:
 				cutin "162elena_01",2;
@@ -6405,7 +6405,7 @@ sp_cor,180,169,3	script	Elena Volkova#rm171_1	4_F_ELENA,{
 		next;
 		cutin "162elena_01",2;
 		mes "[Elena Volkova]";
-		mes "Thanks to you, we've successfully captured Eliumina. Now that we don't have to worry about his random attacks, the President's little soldiers and the civilians can go back home.";
+		mes "Thanks to you, we've successfully captured Elyumina. Now that we don't have to worry about his random attacks, the President's little soldiers and the civilians can go back home.";
 		next;
 		mes "[Elena Volkova]";
 		mes "Rookie and the President's soldiers called the Wings something are getting ready to interrogate him.";
@@ -6477,7 +6477,7 @@ OnInit:
 	end;
 }
 
-// Interrogation - Rookie, Rage, Elena, Goni, Tes, and Eliumina
+// Interrogation - Rookie, Lazy, Elena, Goni, Tes, and Elyumina
 sp_cor,136,210,7	script	Goni#rm171_1	4_M_GONY,{
 	switch (isbegin_quest(16358)) {
 	case 0:
@@ -6500,30 +6500,30 @@ sp_cor,136,210,7	script	Goni#rm171_1	4_M_GONY,{
 		cloakoffnpc "Philopontes#rm171_1", getcharid(0);
 		mes "[Rookie]";
 		mes "Ah, you came early. I thought you'd come later after a break.";
-		mes "Mr. Rage, please bring out the prisoner.";
+		mes "Mr. Lazy, please bring out the prisoner.";
 		next;
 		cutin "16lei_01",2;
-		cloakoffnpc "Rage#rm171_1", getcharid(0);
-		cloakoffnpc "Eliumina#rm171_1", getcharid(0);
-		mes "[Rage]";
+		cloakoffnpc "Lazy#rm171_1", getcharid(0);
+		cloakoffnpc "Elyumina#rm171_1", getcharid(0);
+		mes "[Lazy]";
 		mes "Yes, sir. Here he is.";
 		mes "It hasn't been that long since we met, and you're already bossing me around.";
 		next;
-		emotion 14, getnpcid(0,"Rage#rm171_1");
+		emotion 14, getnpcid(0,"Lazy#rm171_1");
 		emotion 6, getnpcid(0,"Rookie#rm171_1");
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I knew you had it in you, Lucky Rookie. I've got a good eye for people. I'm so amazing!";
-		npctalk "Rage: I can't wait to bring you to my side. Just the thought of it excites me!", "Rage#rm171_1", bc_self;
+		npctalk "Lazy: I can't wait to bring you to my side. Just the thought of it excites me!", "Lazy#rm171_1", bc_self;
 		npctalk "Rookie: ... Stop saying things like that in front of other people.", "Rookie#rm171_1", bc_self;
 		next;
 		cutin "ep171_elyumina02",0;
-		npctalk "Rage: Oooh, so demanding! I like that about you, too.", "Rage#rm171_1", bc_self;
-		emotion 6, getnpcid(0,"Eliumina#rm171_1");
-		mes "[Eliumina]";
+		npctalk "Lazy: Oooh, so demanding! I like that about you, too.", "Lazy#rm171_1", bc_self;
+		emotion 6, getnpcid(0,"Elyumina#rm171_1");
+		mes "[Elyumina]";
 		mes "Gah, you fools! Stop manhandling me! My body's precious! I'm more valuable than all of you muscleheads combined!";
 		next;
 		cutin "16lei_01",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Oops, sorry. Now, Rookie, good luck to you.";
 		completequest 16358;
 		setquest 16359;
@@ -6533,8 +6533,8 @@ sp_cor,136,210,7	script	Goni#rm171_1	4_M_GONY,{
 			cloakoffnpc "Rookie#rm171_1", getcharid(0);
 			cloakoffnpc "Elena Volkova#rm171_2", getcharid(0);
 			cloakoffnpc "Philopontes#rm171_1", getcharid(0);
-			cloakoffnpc "Rage#rm171_1", getcharid(0);
-			cloakoffnpc "Eliumina#rm171_1", getcharid(0);
+			cloakoffnpc "Lazy#rm171_1", getcharid(0);
+			cloakoffnpc "Elyumina#rm171_1", getcharid(0);
 		}
 		cutin "16go_01",0;
 		mes "[Goni]";
@@ -6564,11 +6564,11 @@ sp_cor,135,216,5	script	Rookie#rm171_1	4_M_ROOKIE,{
 		mes "[Rookie]";
 		mes "Err, then...";
 		mes "(Am I really interrogating him?)";
-		emotion 21, getnpcid(0,"Rage#rm171_1");
+		emotion 21, getnpcid(0,"Lazy#rm171_1");
 		emotion 21, getnpcid(0,"Elena Volkova#rm171_2");
-		npctalk "*Nod*", "Rage#rm171_1", bc_self;
+		npctalk "*Nod*", "Lazy#rm171_1", bc_self;
 		npctalk "*Nod*", "Elena Volkova#rm171_2", bc_self;
-		npctalk "Eliumina: Get off me! Ugh, I'm not going to run away! Where are my smart machines and stupid subordinates?", "Eliumina#rm171_1", bc_self;
+		npctalk "Elyumina: Get off me! Ugh, I'm not going to run away! Where are my smart machines and stupid subordinates?", "Elyumina#rm171_1", bc_self;
 		next;
 		emotion 4, getnpcid(0,"Rookie#rm171_1");
 		cutin "16loo_03",2;
@@ -6577,8 +6577,8 @@ sp_cor,135,216,5	script	Rookie#rm171_1	4_M_ROOKIE,{
 		mes "You've done some serious damage to us.";
 		next;
 		cutin "ep171_elyumina02",0;
-		emotion 7, getnpcid(0,"Eliumina#rm171_1");
-		mes "[Eliumina]";
+		emotion 7, getnpcid(0,"Elyumina#rm171_1");
+		mes "[Elyumina]";
 		mes "Stuff it! What about the damage you've done on me?";
 		mes "You invaded my lab and tried to steal my research results!";
 		next;
@@ -6596,7 +6596,7 @@ sp_cor,135,216,5	script	Rookie#rm171_1	4_M_ROOKIE,{
 		mes "Only the part that's legal, of course. But we'll make sure you can keep it. So, tell us everything you know about this place and your coworkers.";
 		next;
 		cutin "ep171_elyumina03",0;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "My coworkers? I don't care about those lunatics.";
 		mes "They're not my coworkers. I only used them for my research.";
 		next;
@@ -6606,30 +6606,30 @@ sp_cor,135,216,5	script	Rookie#rm171_1	4_M_ROOKIE,{
 		mes "Who are you? What kind of research did you need them for?";
 		next;
 		cutin "ep171_elyumina01",0;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "Don't you know who I am? I'm Schwarzwald's--no, the continent's greatest machine learning researcher. I bet you all have seen my serviceroids.";
 		next;
 		cutin "16loo_03",2;
 		mes "[Rookie]";
 		mes "... Nope.";
 		npctalk "Have you?", "Elena Volkova#rm171_2", bc_self;
-		npctalk "Nope.", "Rage#rm171_1", bc_self;
+		npctalk "Nope.", "Lazy#rm171_1", bc_self;
 		next;
 		cutin "ep171_elyumina01",0;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "Hmpf, you probably didn't even know they were serviceroids.";
 		mes "I was so close to transplanting human minds into my machines.";
 		next;
 		cutin "ep171_elyumina04",0;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "I could have given you my beautiful machine bodies, so you could forever preserve the knowledge that you all have worked so hard to accumulate.";
 		next;
 		cutin "ep171_elyumina03",0;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "Do you get it? I was doing something greater than any one of you fools can imagine.";
 		mes "My research is nothing compared to the childish works of Vor, Wer, whatever their names were.";
 		npctalk "Who says I need a machine body?", "Elena Volkova#rm171_2", bc_self;
-		npctalk "I don't need one, either.", "Rage#rm171_1", bc_self;
+		npctalk "I don't need one, either.", "Lazy#rm171_1", bc_self;
 		npctalk "Vor? ... I see.", "Rookie#rm171_1", bc_self;
 		next;
 		cutin "16loo_01",2;
@@ -6637,7 +6637,7 @@ sp_cor,135,216,5	script	Rookie#rm171_1	4_M_ROOKIE,{
 		mes "Vor-who? Vorseff? Or Werner? Do you know them?";
 		next;
 		cutin "ep171_elyumina03",0;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "Well, I know both names, but they don't interest me. Both of them risked their lives for stupid things.";
 		next;
 		cutin "16loo_01",2;
@@ -6645,7 +6645,7 @@ sp_cor,135,216,5	script	Rookie#rm171_1	4_M_ROOKIE,{
 		mes "Maybe it's time you should take more interest. We want you to talk.";
 		mes "Listen up. You've got two choices.";
 		next;
-		npctalk "Eliumina: ...", "Eliumina#rm171_1", bc_self;
+		npctalk "Elyumina: ...", "Elyumina#rm171_1", bc_self;
 		cutin "16loo_02",2;
 		mes "[Rookie]";
 		mes "First, you could decide to be stubborn";
@@ -6662,7 +6662,7 @@ sp_cor,135,216,5	script	Rookie#rm171_1	4_M_ROOKIE,{
 		mes "You'll have to pay for what you did, of course, but eventually, you'll be able to do what you want.";
 		next;
 		cutin "ep171_elyumina03",0;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "...";
 		next;
 		cutin "16loo_01",2;
@@ -6671,35 +6671,35 @@ sp_cor,135,216,5	script	Rookie#rm171_1	4_M_ROOKIE,{
 		mes "I hope you'll make the right decision.";
 		next;
 		cutin "ep171_elyumina03",0;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "... I really don't know what the others did in their rooms.";
 		mes "...Can I still keep the bargain?";
 		next;
 		cutin "16loo_02",2;
 		mes "[Rookie]";
 		mes "Mm... Sure, why not? If you cooperate with us as best as you can, then we can let the minor details slide.";
-		mes "Now, let's get down to the business, shall we? Please send him here, Mr. Rage.";
-		npctalk "Rage: Go do your best, Mr. Great Scientist.", "Rage#rm171_1", bc_self;
+		mes "Now, let's get down to the business, shall we? Please send him here, Mr. Lazy.";
+		npctalk "Lazy: Go do your best, Ms. Great Scientist.", "Lazy#rm171_1", bc_self;
 		next;
-		cloakonnpc "Eliumina#rm171_1", getcharid(0);
-		cloakoffnpc "Eliumina#rm171_2", getcharid(0);
+		cloakonnpc "Elyumina#rm171_1", getcharid(0);
+		cloakoffnpc "Elyumina#rm171_2", getcharid(0);
 		cutin "16lei_01",2;
 		npctalk "Rookie: ... So... Ah, I see...", "Rookie#rm171_1", bc_self;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "...";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "...";
 		mes "Hey, Hot-blooded Captain over there.";
 		next;
 		cutin "162elena_01",2;
-		npctalk "Eliumina: ... Yes, but anything else, I don't...", "Eliumina#rm171_2", bc_self;
+		npctalk "Elyumina: ... Yes, but anything else, I don't...", "Elyumina#rm171_2", bc_self;
 		mes "[Elena Volkova]";
 		mes "... Are you talking to me?";
 		next;
 		cutin "16lei_02",2;
-		npctalk "Eliumina: ... So, that's why... And...", "Eliumina#rm171_2", bc_self;
-		mes "[Rage]";
+		npctalk "Elyumina: ... So, that's why... And...", "Elyumina#rm171_2", bc_self;
+		mes "[Lazy]";
 		mes "Then, who else? You're the only captain here.";
 		mes "I was just going to ask you to stop glaring, since he's cooperating now.";
 		next;
@@ -6710,8 +6710,8 @@ sp_cor,135,216,5	script	Rookie#rm171_1	4_M_ROOKIE,{
 		mes "Rookie did a great job. I didn't know he was so good at persuasion.";
 		next;
 		cutin "16lei_03",2;
-		npctalk "Eliumina: ... Got it? You'd better keep your promise, or I won't...", "Eliumina#rm171_2", bc_self;
-		mes "[Rage]";
+		npctalk "Elyumina: ... Got it? You'd better keep your promise, or I won't...", "Elyumina#rm171_2", bc_self;
+		mes "[Lazy]";
 		mes "Of course not. You never gave him a chance.";
 		mes "But now that you know, let him handle the rest.";
 		next;
@@ -6727,10 +6727,10 @@ sp_cor,135,216,5	script	Rookie#rm171_1	4_M_ROOKIE,{
 		next;
 		cutin "16loo_03",2;
 		mes "[Rookie]";
-		mes "Eliumina doesn't seem to know a lot about his group, though.";
+		mes "Elyumina doesn't seem to know a lot about his group, though.";
 		mes "He had almost zero contact with the company. He received his funds from Illusion in exchange for his research results. That was why he wasn't on the list.";
-		npctalk "Rage: So, he was like a subcontractor of a subcontractor.", "Rage#rm171_1", bc_self;
-		npctalk "Eliumina: No! I was their research supporter!", "Eliumina#rm171_2", bc_self;
+		npctalk "Lazy: So, he was like a subcontractor of a subcontractor.", "Lazy#rm171_1", bc_self;
+		npctalk "Elyumina: No! I was their research supporter!", "Elyumina#rm171_2", bc_self;
 		next;
 		cutin "16loo_01",2;
 		mes "[Rookie]";
@@ -6738,11 +6738,11 @@ sp_cor,135,216,5	script	Rookie#rm171_1	4_M_ROOKIE,{
 		mes "Illusion was created after the mansion's discovery, to monopolize on the knowledge available inside the place.";
 		next;
 		mes "[Rookie]";
-		mes "Eliumina doesn't know how the mansion looks like on the inside";
-		mes "because he chose to stay behind the others who entered the mansion, to protect his research data.";
+		mes "Elyumina doesn't know how the mansion looks like on the inside";
+		mes "because she chose to stay behind the others who entered the mansion, to protect his research data.";
 		next;
 		cutin "16loo_02",2;
-		npctalk "Rookie: But he said he knows how to get in there.", "Rookie#rm171_1", bc_self;
+		npctalk "Rookie: But she said she knows how to get in there.", "Rookie#rm171_1", bc_self;
 		mes "[Rookie]";
 		mes "Through the <NAVI>[waterway]<INFO>sp_cor,255,285,0,101,0</INFO></NAVI> on the far right side of the fence.";
 		mes "We need more information and also have to round up the researchers. Why don't we all go together? Captain? Adventurer?";
@@ -6751,8 +6751,8 @@ sp_cor,135,216,5	script	Rookie#rm171_1	4_M_ROOKIE,{
 		close2;
 		cloakonnpc "Rookie#rm171_1", getcharid(0);
 		cloakonnpc "Elena Volkova#rm171_2", getcharid(0);
-		cloakonnpc "Rage#rm171_1", getcharid(0);
-		cloakonnpc "Eliumina#rm171_2", getcharid(0);
+		cloakonnpc "Lazy#rm171_1", getcharid(0);
+		cloakonnpc "Elyumina#rm171_2", getcharid(0);
 		cloakonnpc "Philopontes#rm171_1", getcharid(0);
 		cutin "",255;
 		end;
@@ -6778,7 +6778,7 @@ OnInit:
 	end;
 }
 
-// In front of waterway - Rookie, Goni, and Eliumina
+// In front of waterway - Rookie, Goni, and Elyumina
 sp_cor,255,285,1	script	Rookie#rm171_2	4_M_ROOKIE,{
 	switch (isbegin_quest(16360)) {
 	case 0:
@@ -6802,7 +6802,7 @@ sp_cor,255,285,1	script	Rookie#rm171_2	4_M_ROOKIE,{
 			close;
 		}
 		cloakoffnpc "Goni#rm171_2", getcharid(0);
-		cloakoffnpc "Eliumina#rm171_3", getcharid(0);
+		cloakoffnpc "Elyumina#rm171_3", getcharid(0);
 		cloakoffnpc "Elena Volkova#rm171_3", getcharid(0);
 		cutin "16loo_03",2;
 		emotion 19;
@@ -6836,8 +6836,8 @@ sp_cor,255,285,1	script	Rookie#rm171_2	4_M_ROOKIE,{
 		mes "Goni, are you serious? Ooh, I see. Interesting...";
 		next;
 		cutin "ep171_elyumina03",0;
-		emotion 23, getnpcid(0,"Eliumina#rm171_3");
-		mes "[Eliumina]";
+		emotion 23, getnpcid(0,"Elyumina#rm171_3");
+		mes "[Elyumina]";
 		mes "Why are you looking at me like that? I told you nothing but the truth. That really is the entrance.";
 		mes "Why would I lie in a situation like that? I'm not that stupid, you know.";
 		next;
@@ -6853,7 +6853,7 @@ sp_cor,255,285,1	script	Rookie#rm171_2	4_M_ROOKIE,{
 		mes "You're more loyal than I thought. Not stupid, either.";
 		next;
 		cutin "16loo_01",2;
-		npctalk "Eliumina: ... Don't make fun of me! Arrgh!", "Eliumina#rm171_3", bc_self;
+		npctalk "Elyumina: ... Don't make fun of me! Arrgh!", "Elyumina#rm171_3", bc_self;
 		mes "[Rookie]";
 		mes "Adventurer, the Rebellion will keep this place surrounded and investigate the perimeter.";
 		mes "Now that we know what that place is, we can't leave it alone.";
@@ -6869,7 +6869,7 @@ sp_cor,255,285,1	script	Rookie#rm171_2	4_M_ROOKIE,{
 		next;
 		cutin "162elena_01",2;
 		mes "[Elena Volkova]";
-		mes "Ah, right. Eliumina will also be kept here for a while.";
+		mes "Ah, right. Elyumina will also be kept here for a while.";
 		mes "He knows Illusion better than we do. We can't afford to lose him.";
 		next;
 		cutin "162elena_01",2;
@@ -6890,7 +6890,7 @@ sp_cor,255,285,1	script	Rookie#rm171_2	4_M_ROOKIE,{
 		getexp 0,400000;
 		close2;
 		cloakonnpc "Goni#rm171_2", getcharid(0);
-		cloakonnpc "Eliumina#rm171_3", getcharid(0);
+		cloakonnpc "Elyumina#rm171_3", getcharid(0);
 		cloakonnpc "Elena Volkova#rm171_3", getcharid(0);
 		cutin "",255;
 		end;
@@ -6898,7 +6898,7 @@ sp_cor,255,285,1	script	Rookie#rm171_2	4_M_ROOKIE,{
 		cutin "16loo_01",2;
 		mes "[Rookie]";
 		mes "I'll let you know if we come across more information. Until then, please get some rest.";
-		mes "Also, Eliumina will be kept here with us for the time being.";
+		mes "Also, Elyumina will be kept here with us for the time being.";
 		next;
 		cutin "16loo_01",2;
 		mes "[Rookie]";
@@ -6919,7 +6919,7 @@ sp_cor,255,285,1	script	Rookie#rm171_2	4_M_ROOKIE,{
 		mes "[Rookie]";
 		mes "You're welcome.";
 		mes "I opened the entrance here last night.";
-		mes "Eliumina said that somehow the device that was sealing it from the inside is broken.";
+		mes "Elyumina said that somehow the device that was sealing it from the inside is broken.";
 		next;
 		mes "[Rookie]";
 		mes "It must have been one of the devices of the Illusion and Heart Hunters to keep the entrance shut.";
@@ -7696,10 +7696,10 @@ sp_cor,113,130,3	script	Rebellion#rm171_8	4_M_REBELLION3,{
 		mes "[Rebellion]";
 		mes "Mina said you can come back later. It's too early for his lovely children to be up and about.";
 		next;
-		cloakoffnpc "Eliumina#rm171_4", getcharid(0);
+		cloakoffnpc "Elyumina#rm171_4", getcharid(0);
 		cutin "ep171_elyumina03",0;
-		npctalk "Eliumina: S-stop calling me that ridiculous name!", "Eliumina#rm171_4", bc_self;
-		mes "[Eliumina]";
+		npctalk "Elyumina: S-stop calling me that ridiculous name!", "Elyumina#rm171_4", bc_self;
+		mes "[Elyumina]";
 		mes "... The security devices and traps that summon monsters are still in low power mode. Leave them alone, or they can get easily overheated.";
 		next;
 		cutin "",255;
@@ -7707,7 +7707,7 @@ sp_cor,113,130,3	script	Rebellion#rm171_8	4_M_REBELLION3,{
 		mes "Please come back after dawn when Mina's children wake up and get ready for another energetic day!";
 		next;
 		cutin "ep171_elyumina02",0;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "They'll be fully charged after dawn, and ready to operate again. Come back, then.";
 		npctalk "(This mercenary seems to know how to handle that troublemaker.)", "", bc_self;
 		close3;
@@ -7721,10 +7721,10 @@ sp_cor,113,130,3	script	Rebellion#rm171_8	4_M_REBELLION3,{
 		npctalk "Mina?", "", bc_self;
 		next;
 		cutin "ep171_elyumina03",0;
-		cloakoffnpc "Eliumina#rm171_4", getcharid(0);
-		npctalk "Eliumina: S-stop calling me that!", "Eliumina#rm171_4", bc_self;
+		cloakoffnpc "Elyumina#rm171_4", getcharid(0);
+		npctalk "Elyumina: S-stop calling me that!", "Elyumina#rm171_4", bc_self;
 		npctalk "You?", "", bc_self;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "Just let me explain. When you came after me, my machines that used to protect me--";
 		next;
 		cutin "",255;
@@ -7732,8 +7732,8 @@ sp_cor,113,130,3	script	Rebellion#rm171_8	4_M_REBELLION3,{
 		mes "No, we didn't catch Mina's machines. They've been in hiding, sleeping.";
 		next;
 		cutin "ep171_elyumina02",0;
-		mes "[Eliumina]";
-		mes "It's Eliumina's! Eliumina's machines! And traps! ... They go stealth in low power mode in case of emergency. And it's time that they show back up and start rampaging again.";
+		mes "[Elyumina]";
+		mes "It's Elyumina's! Elyumina's machines! And traps! ... They go stealth in low power mode in case of emergency. And it's time that they show back up and start rampaging again.";
 		next;
 		cutin "",255;
 		npctalk "... They're yours. Just turn them off.", "", bc_self;
@@ -7741,17 +7741,17 @@ sp_cor,113,130,3	script	Rebellion#rm171_8	4_M_REBELLION3,{
 		mes "Well, the problem is, Mina--";
 		next;
 		cutin "ep171_elyumina02",0;
-		mes "[Eliumina]";
-		mes "It's Eliumina, and I can't do it! They're equipped with a high-tech machine learning module.";
+		mes "[Elyumina]";
+		mes "It's Elyumina, and I can't do it! They're equipped with a high-tech machine learning module.";
 		mes "Since that day, they used data about you, their most powerful enemy, and they've used it to grow rapidly.";
 		next;
 		cutin "ep171_elyumina03",0;
 		npctalk "Rebellion: So, now they're refusing to listen to Mina, and--", "Rebellion#rm171_8", bc_self;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "I can't control them! ... This is completely unexpected.";
 		mes "The only solution I can think of is to exhaust their batteries until they stop working.";
 		next;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "And the only person who can do it is you. You beat the EL1_A17T. Of course, I'll go with you, but I'll only be there to collect new data from them.";
 		next;
 		cutin "",255;
@@ -7759,8 +7759,8 @@ sp_cor,113,130,3	script	Rebellion#rm171_8	4_M_REBELLION3,{
 		mes "I'd love to go too, but Mina won't let me. I wonder if it's because he cares.";
 		next;
 		cutin "ep171_elyumina03",0;
-		npctalk "Eliumina: No. NO!", "Eliumina#rm171_4", bc_self;
-		mes "[Eliumina]";
+		npctalk "Elyumina: No. NO!", "Elyumina#rm171_4", bc_self;
+		mes "[Elyumina]";
 		mes "Anyway, I don't think you can handle them by yourself.";
 		mes "That hooligan who detained me that day also won't be enough. Come back in a party with other adventurers, will you?";
 		next;
@@ -7769,7 +7769,7 @@ sp_cor,113,130,3	script	Rebellion#rm171_8	4_M_REBELLION3,{
 		mes "Then, we've at least got four, including me and Mina--";
 		next;
 		cutin "ep171_elyumina02",0;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "I'll give you more details when we're inside. Please, say yes!";
 		mes "Please! Before he gives me a coronary!";
 		setquest 16361;
@@ -7779,13 +7779,13 @@ sp_cor,113,130,3	script	Rebellion#rm171_8	4_M_REBELLION3,{
 		mes "It's time Mina's children are up and about, Adventurer.";
 		mes "Do you want to play with them and tuck them back into bed while everyone else waits for you to finish?";
 		next;
-		cloakoffnpc "Eliumina#rm171_4", getcharid(0);
+		cloakoffnpc "Elyumina#rm171_4", getcharid(0);
 		cutin "ep171_elyumina03",0;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "... Soon, my security devices and traps will come out of their low power mode and become mobile again.";
 		next;
 		cutin "ep171_elyumina02",0;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "Do you want to lock down Cor, exhaust them, and collect data again?";
 		mes "Please say yes. Let me follow you. I can't wait to get away from this guy.";
 	}
@@ -7841,7 +7841,7 @@ sp_cor,113,130,3	script	Rebellion#rm171_8	4_M_REBELLION3,{
 		end;
 	case 3:
 		cutin "ep171_elyumina02",0;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "What are you doing? Come on, let's go. Please? I don't want to stay even a moment longer with that jerk who keeps calling me by that terrible nickname.";
 		close3;
 	}
@@ -8322,7 +8322,7 @@ sp_cor,183,170,3	script	Rebellion#rm171_9	4_M_REBELLION3,{
 	close;
 }
 
-// Eliumina Interrogation
+// Elyumina Interrogation
 sp_cor,141,215,3	script	Elena Volkova#rm171_2	4_F_ELENA,{
 	cutin "162elena_01",2;
 	mes "[Elena Volkova]";
@@ -8331,37 +8331,37 @@ sp_cor,141,215,3	script	Elena Volkova#rm171_2	4_F_ELENA,{
 
 OnInit:
 	cloakonnpc();
-	cloakonnpc "Rage#rm171_1";
-	cloakonnpc "Eliumina#rm171_1";
+	cloakonnpc "Lazy#rm171_1";
+	cloakonnpc "Elyumina#rm171_1";
 	cloakonnpc "Philopontes#rm171_1";
 	end;
 }
 
-sp_cor,141,211,1	script	Rage#rm171_1	4_M_LAZY,{
+sp_cor,141,211,1	script	Lazy#rm171_1	4_M_LAZY,{
 	cutin "16lei_01",2;
-	mes "[Rage]";
+	mes "[Lazy]";
 	mes "Finally, it's time for Lucky Rookie to shine. Ooh, can't wait!";
 	close3;
 }
 
-sp_cor,140,213,3	script	Eliumina#rm171_1	4_EP17_ELYUMINA,{
+sp_cor,140,213,3	script	Elyumina#rm171_1	4_EP17_ELYUMINA,{
 	cutin "ep171_elyumina03",0;
-	mes "[Eliumina]";
+	mes "[Elyumina]";
 	mes "...";
 	next;
 	cutin "ep171_elyumina02",0;
-	mes "[Eliumina]";
+	mes "[Elyumina]";
 	mes "Stop talking to me!";
 	close3;
 }
 
-sp_cor,136,217,3	duplicate(dummy_cloaked_npc)	Eliumina#rm171_2	4_EP17_ELYUMINA
+sp_cor,136,217,3	duplicate(dummy_cloaked_npc)	Elyumina#rm171_2	4_EP17_ELYUMINA
 
 sp_cor,138,220,3	script	Philopontes#rm171_1	4_M_PHILOFONTES,{
 	cutin "ep16_tes01",1;
 	mes "[Tes]";
 	mes "Since this is an important interrogation, there should be as many government agents present as the others, to prevent miscommunication later.";
-	npctalk "Rage: Philopon Woman, you're so thorough.", "Rage#rm171_1", bc_self;
+	npctalk "Lazy: Philopon Woman, you're so thorough.", "Lazy#rm171_1", bc_self;
 	close3;
 }
 
@@ -8382,7 +8382,7 @@ sp_cor,154,223,1	script	Rebellion#rm171_12	4_M_REBELLION3,{
 
 // In front of the waterway
 sp_cor,254,284,7	duplicate(dummy_cloaked_npc)	Goni#rm171_2	4_M_GONY
-sp_cor,259,278,1	duplicate(dummy_cloaked_npc)	Eliumina#rm171_3	4_EP17_ELYUMINA
+sp_cor,259,278,1	duplicate(dummy_cloaked_npc)	Elyumina#rm171_3	4_EP17_ELYUMINA
 sp_cor,260,276,3	duplicate(dummy_cloaked_npc)	Elena Volkova#rm171_3	4_F_ELENA
 
 sp_cor,260,280,3	script	Rebellion#rm171_13	4_F_ANYA,{

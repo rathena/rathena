@@ -1109,7 +1109,7 @@ y_airport,168,41,3	script	Crux#ep162_04	4_EP16_CRUX,{
 		cutin "ep16_crux_findel01.bmp",2;
 		mes "[Crux]";
 		mes "The appointed place is ^4d4dffEinbroch train station^000000.";
-		mes "An agent named ^4d4dffRage^000000 is waiting for us.";
+		mes "An agent named ^4d4dffLazy^000000 is waiting for us.";
 		mes "We have to hurry.";
 		close3;
 	}
@@ -1167,7 +1167,7 @@ lhz_in02,237,146,6	script	Crux#ep162_05	4_EP16_CRUX,{
 		cutin "ep16_crux_findel01.bmp",2;
 		mes "[Crux]";
 		mes "The appointed place is ^4d4dffEinbroch train station^000000.";
-		mes "An agent named Rage is waiting for you.";
+		mes "An agent named Lazy is waiting for you.";
 		mes "We have to hurry.";
 		close3;
 	}
@@ -1350,10 +1350,10 @@ lhz_in02,239,148,4	script	Philopontess#ep162_01	4_M_PHILOFONTES,{
 		cutin "ep16_tes01.bmp",2;
 		mes "[Tess]";
 		mes "So you are going back, princess.";
-		mes "" + strcharinfo(0) + ". Please meet ^4d4dffRage^000000 in ^4d4dffEinbroch^000000 and work with him. He is a negotiator who we have prepared.";
+		mes "" + strcharinfo(0) + ". Please meet ^4d4dffLazy^000000 in ^4d4dffEinbroch^000000 and work with him. He is a negotiator who we have prepared.";
 		next;
 		mes "[Tess]";
-		mes "An agent named ^4d4dffRage^000000 will be waiting for you at the ^4d4dffEinbroch train station^000000.";
+		mes "An agent named ^4d4dffLazy^000000 will be waiting for you at the ^4d4dffEinbroch train station^000000.";
 		mes "Please don't forget it.";
 		mes "If possible, please hurry.";
 		next;
@@ -1371,7 +1371,7 @@ lhz_in02,239,148,4	script	Philopontess#ep162_01	4_M_PHILOFONTES,{
 		next;
 		cutin "ep16_spica_nerius01.bmp",0;
 		mes "[Spica]";
-		mes "I have to entrust you to meet ^4d4dffRage in Einbroch^000000... For additional issues, I will go back to the palace and handle them with the prince of the Heine family.";
+		mes "I have to entrust you to meet ^4d4dffLazy in Einbroch^000000... For additional issues, I will go back to the palace and handle them with the prince of the Heine family.";
 		next;
 		mes "[Spica]";
 		mes "Then, " + strcharinfo(0) + ".";
@@ -1459,17 +1459,17 @@ einbroch,239,269,3	script	Unusual person#16nego01	4_M_LAZY,{
 		next;
 		cutin "16lei_01.bmp",2;
 		mes "[???]";
-		mes "Are you sure you don't know anything? My name is ^0000cdRage^000000. Of course it's not my real name. For now, you can just remember that name.";
+		mes "Are you sure you don't know anything? My name is ^0000cdLazy^000000. Of course it's not my real name. For now, you can just remember that name.";
 		next;
 		mes "[???]";
 		mes "I have been assigned to this mission with you. We have to ask the Rebellion for cooperation.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "If you are Rage, you must be the agent of the Secret Wings. Right?";
+		mes "If you are Lazy, you must be the agent of the Secret Wings. Right?";
 		emotion ET_SWEAT, playerattached();
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Pipe down~ You must not say that word in a public place like this! You must always be careful! Remember that we are in the middle of a mission!";
 		npctalk "I taught my code name 'Heron' to them and you don't know that! Who was in charge of this communication? A drug user?", "", bc_self;
 		next;
@@ -1478,101 +1478,101 @@ einbroch,239,269,3	script	Unusual person#16nego01	4_M_LAZY,{
 		emotion ET_SWEAT, playerattached();
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Just by looking at you, I know they have brought someone very smart. And the callus in your hand indicates that you are a man of the world.";
 		emotion ET_BEST;
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "You are also taking someone off his/her guard by pretending to be a little naive. You deserve to be trusted by the royal families of Rune Midgarts.";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Please, let my hand go.", bc_self;
 		npctalk "Why is your face glow!", "", bc_self;
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "When I read about you in the report, I thought you would look a bit scary. But by seeing you directly, you seem to be different from what I heard. That's why we have to meet someone directly to know him/her well.";
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "By the way, how are you? Have you been to Arunafeltz?";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Well, yes. Kind of...";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Wow- Have you met the Pope? Her highness is great. I really like her.";
 		emotion ET_BIGTHROB;
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Oh, Pope... !!";
 		npctalk "My heart with the red blood belongs to the Pope...", "", bc_self;
 		emotion ET_CRY;
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I'd really love to meet the Pope. But I am not mentally ready to see the holy face of her highness. I guess I might black out once I see the Pope. If you have time later on, please take me to the Pope.";
 		emotion ET_SHY;
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "By the way, what are we doing here? Aren't we supposed to meet in ^0000cdEinbech^000000? I have been waiting for a long time and came here. And I found you here.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "They told me to come here.";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Hey~ Who? Who said that? There must have been some misunderstanding during the communication. We must go to Einbech.";
 		npctalk "Maybe somebody wanted you to struggle.", "", bc_self;
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Well, since I like a train, it doesn't matter how many times I take it.";
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Let's hurry up. We have a long way to go.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Where are we going now?";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "The most dangerous place.";
 		next;
 		cutin "16lei_02.bmp",2;
 		emotion ET_HUK, playerattached();
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Calm down! I'm just kidding. You are too serious. We are just going to the secret base of the Rebellion in Einbech.";
 		npctalk "Your face is pale now. Are you all right? If you want to vomit, you can do it over there.", "", bc_self;
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I'm just saying that I feel like it is dangerous. I don't mean it will really be dangerous. Calm down.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "If we are negotiating with the Rebellion, why are we going to Einbech instead of Einbroch?";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Have you heard of the mercenary revolt in Schwaltzvalt?";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "To tell you briefly, the mercenaries were used as a garrison of the republic. But as the republic developed a Guardian, they were about to be abandoned. Then the mercenaries rose in revolt and were nearly annihilated.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Some of the remnants went to Figel, But the rest of them gathered in Einbech and Einbroch to organize the Rebellion. By the way, Einbroch is a large city where many people live ans pass by. Isn't it?";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "So the Rebellion put their guild in Einbroch. The rest of them were hiding somewhere else in Einbroch. That's why I suggested you to meet in Einbech..";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Anyway, the government was overlooking the remnants for various reasons. I'm sure the government is still uncomfortable about it.";
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "That's why this negotiation is so important. We are going to asking for help to the guy who's angry at me. It won't be easy.";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "We should them a sense of apology and a promise of hope in the future. At the same time, ^0000cdwe have to relax their mind and promise with them to cooperate in future affairs^000000...";
 		npctalk "We have to do it alone.", "", bc_self;
 		next;
@@ -1580,18 +1580,18 @@ einbroch,239,269,3	script	Unusual person#16nego01	4_M_LAZY,{
 		mes "Just by listening to it, it sounds really difficult.";
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "The most difficult thing is how to enter the ^0000cdsecret base^000000 rather than talking to them.";
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Anyway, we will think about the method on our way there. You Just trust me and follow me. Nothing is impossible as long as you trust me. You can trust me in any situation.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "I don't have much faith in you.";
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "It's okay, because I trust myself. Out of all these people in this large world, I am the only one whom I trust. So you just follow me.";
 		emotion ET_BEST;
 		next;
@@ -1599,18 +1599,18 @@ einbroch,239,269,3	script	Unusual person#16nego01	4_M_LAZY,{
 		mes "You have great faith in yourself.";
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Of course. If I don't feel confident about myself, I can't do this job.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Sometimes I have to face some unpleasant situation, and do things that are not sometimes moral. But for my task and survival, I must not hesitate to make momentary decisions and execute my actions.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "And let's say you begin to doubt it. Once your mind starts to shake, the task will be in danger. Unwavering confidence is more important than anything else.";
 		emotion ET_OK;
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Of course, you need the capability to support your confidence. You can't trust anything without evidence.";
 		emotion ET_BEST;
 		next;
@@ -1618,18 +1618,18 @@ einbroch,239,269,3	script	Unusual person#16nego01	4_M_LAZY,{
 		mes "After listening to what you said, I don't fully trust you. But I feel like having to trust you.";
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "It's quite natural. Very good. Good luck in our mission. My goal is to build a reputation of a fantastic duo with you.";
 		emotion ET_BEST;
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Let's get going. This way.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "The ticket gate is over there! We have to pay for the train. Are you saying we will walk there?";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Yikes! Pipe down!! Of course we are taking a train. In a special place and in a special way.";
 		emotion ET_FRET;
 		next;
@@ -1637,22 +1637,22 @@ einbroch,239,269,3	script	Unusual person#16nego01	4_M_LAZY,{
 		mes "A free ride? Why?";
 		npctalk "Please don't brand it as a free ride.", "", bc_self;
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "If you want to call it a free ride, go ahead. But do you really want to discount your action as a 'free ride'? You can used the elegant expression 'occupation after closed infiltration'.";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Yes. Yes. It sounds great.", bc_self;
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Usually, we can feel buy tickets, say hello to the station staff eat delicious snacks, and enjoy our trip.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "But we are in the middle of a mission. It's already begun. It's kind of an emergency. So we have to be tense.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "I really don't understand the relationship between being tense and free riding.";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Do you really thing I'm just trying to save 200 Zeny? I know what I'm doing. You just follow me without nagging. We are in a hurry.";
 		setquest 14595;// To Einbech train station
 		terra_gloria_main = 10;
@@ -1660,23 +1660,23 @@ einbroch,239,269,3	script	Unusual person#16nego01	4_M_LAZY,{
 		navigateto( "einbroch",267,268,NAV_NONE,1 );
 		cutin "",255;
 		cloakonnpc "Unusual person#16nego01", getcharid(0);
-		cloakoffnpc "Rage#16nego06", getcharid(0);
+		cloakoffnpc "Lazy#16nego06", getcharid(0);
 		end;
 	}
 	if (terra_gloria_main == 10) {
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Why aren't you following me? We might miss the train!";
 		close2;
 		navigateto( "einbroch",267,268,NAV_NONE,1 );
 		cutin "",255;
 		cloakonnpc "Unusual person#16nego01", getcharid(0);
-		cloakoffnpc "Rage#16nego06", getcharid(0);
+		cloakoffnpc "Lazy#16nego06", getcharid(0);
 		end;
 	}
 	if (terra_gloria_main == 11) {
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Long time no see! I'm going to another mission spot. Got it? See you later!";
 		close2;
 		cutin "",255;
@@ -1685,7 +1685,7 @@ einbroch,239,269,3	script	Unusual person#16nego01	4_M_LAZY,{
 	}
 	if (terra_gloria_main < 17) {
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Are you okay to be here now?";
 		close2;
 		cutin "",255;
@@ -1693,7 +1693,7 @@ einbroch,239,269,3	script	Unusual person#16nego01	4_M_LAZY,{
 		end;
 	}
 	cutin "16lei_01.bmp",2;
-	mes "[Rage]";
+	mes "[Lazy]";
 	mes "Long time no see! I'm going to another mission spot. Got it? See you later!";
 	close2;
 	cutin "",255;
@@ -1708,7 +1708,7 @@ OnInit:
 einbroch,270,267,5	script	Very small hole#16nego0	4_CRACK,5,5,{
 	if (terra_gloria_main != 10 && terra_gloria_main != 11) {
 		cloakonnpc "Very small hole#16nego0", getcharid(0);
-		cloakonnpc "Rage#16nego06", getcharid(0);
+		cloakonnpc "Lazy#16nego06", getcharid(0);
 		end;
 	}
 	if (terra_gloria_main == 10) {
@@ -1726,13 +1726,13 @@ OnTouch:
 	end;
 }
 
-einbroch,270,268,3	script	Rage#16nego06	4_M_LAZY,{
+einbroch,270,268,3	script	Lazy#16nego06	4_M_LAZY,{
 	if (terra_gloria_main != 10) {
-		cloakonnpc "Rage#16nego06", getcharid(0);
+		cloakonnpc "Lazy#16nego06", getcharid(0);
 		end;
 	}
 	cutin "16lei_01.bmp",2;
-	mes "[Rage]";
+	mes "[Lazy]";
 	mes "We are going to take a train here. Do you see ^0000cdvery small hole^000000 in the sewer down there?";
 	next;
 	mes "[" + strcharinfo(0) + "]";
@@ -1741,7 +1741,7 @@ einbroch,270,268,3	script	Rage#16nego06	4_M_LAZY,{
 	next;
 	cutin "16lei_03.bmp",2;
 	emotion ET_SWEAT, playerattached();
-	mes "[Rage]";
+	mes "[Lazy]";
 	mes "Shh--- I told you not to mention that name. Be careful from now on. I don't want to be stabbed on my back for something I didn't do. If you really want to say it, call it Heron.";
 	npctalk "Your imagination? Seems like you've read too much novels.", "", bc_self;
 	next;
@@ -1750,29 +1750,29 @@ einbroch,270,268,3	script	Rage#16nego06	4_M_LAZY,{
 	mes "I mean, why do you have to go through a place like this? Don't they pay you any activity cost? Maybe his excellency doesn't care for all your comfort.";
 	next;
 	cutin "16lei_02.bmp",2;
-	mes "[Rage]";
+	mes "[Lazy]";
 	mes "It's not true. We receive a free pass to use all means of transportation in this continent. They includes airship, train and teleporting, etc.";
 	next;
 	mes "[" + strcharinfo(0) + "]";
 	mes "Then why do you have to go through a place like this?";
 	next;
 	cutin "16lei_01.bmp",2;
-	mes "[Rage]";
+	mes "[Lazy]";
 	mes "Because we don't want to leave the records. We must not be detected by others. Although we get captured, our moving route must be hidden. The moving routes can be a great clue.";
 	next;
-	mes "[Rage]";
+	mes "[Lazy]";
 	mes "No wonder we have the word 'secret' in our name. That's why I move so carefully during my mission.";
 	next;
-	mes "[Rage]";
+	mes "[Lazy]";
 	mes "To avoid being detected, duck yourself and follow me.";
 	terra_gloria_main = 11;
 	close2;
 	cutin "",255;
-	cloakonnpc "Rage#16nego06", getcharid(0);
+	cloakonnpc "Lazy#16nego06", getcharid(0);
 	end;
 
 OnInit:
-	cloakonnpc "Rage#16nego06";
+	cloakonnpc "Lazy#16nego06";
 	end;
 }
 
@@ -1782,13 +1782,13 @@ einbech,44,207,0	script	#16negobok06	HIDDEN_WARP_NPC,5,5,{
 OnTouch:
 	if (terra_gloria_main == 10 || terra_gloria_main == 11)
 		end;
-	cloakonnpc "Rage#16nego01", getcharid(0);
+	cloakonnpc "Lazy#16nego01", getcharid(0);
 	end;
 }
 einbech,66,208,0	duplicate(#16negobok06)	#16negobok13	HIDDEN_WARP_NPC,5,5
 einbech,90,218,0	duplicate(#16negobok06)	#16negobok14	HIDDEN_WARP_NPC,5,5
 
-einbech,46,208,3	script	Rage#16nego01	4_M_LAZY,{
+einbech,46,208,3	script	Lazy#16nego01	4_M_LAZY,{
 	if (terra_gloria_main < 9) {
 		cutin "16lei_01.bmp",2;
 		mes "[Someone crazy about Yuno]";
@@ -1797,20 +1797,20 @@ einbech,46,208,3	script	Rage#16nego01	4_M_LAZY,{
 	}
 	if (terra_gloria_main == 9) {
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "He told me he'd come here. Maybe he's still in Einbroch train station? I have to go there again.";
 		close2;
 		cutin "",255;
-		cloakonnpc "Rage#16nego01", getcharid(0);
+		cloakonnpc "Lazy#16nego01", getcharid(0);
 		end;
 	}
 	if (terra_gloria_main == 10 || terra_gloria_main == 11) {
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "This is Einbech. The last time I came here, I was being chased by 17 pursuers.";
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I'm sorry I can't tell more than that. It's confidential.";
 		npctalk "It's a national secret.", "", bc_self;
 		next;
@@ -1819,7 +1819,7 @@ einbech,46,208,3	script	Rage#16nego01	4_M_LAZY,{
 		mes "......";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Hey! I just cracked a joke before starting on the mission. You can't even accept?";
 		npctalk "Look at your face now! Don't look at me like that~", "", bc_self;
 		next;
@@ -1827,15 +1827,15 @@ einbech,46,208,3	script	Rage#16nego01	4_M_LAZY,{
 		mes "I'm a little nervous. A negotiation...";
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "You don't have to be nervous. I'm going to be in charge of talking to them. You just add several words beside me.";
 		npctalk "Being nervous? You are cuter than I thought.", "", bc_self;
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "In this mission, the trust is important. There is a reason why the government assigned you to this mission in addition to me, a professional negotiator.";
 		npctalk "It is extremely hard to build trust again. But what else can we do? They want us to stick the broken parts.", "", bc_self;
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "You are known as a hero in this Midgard continent and a symbol of trust. If you come with me, the Rebellion will be less stubborn to us. Once we get trusted by them, everything will work out.";
 		next;
 		emotion ET_BEST;
@@ -1843,28 +1843,28 @@ einbech,46,208,3	script	Rage#16nego01	4_M_LAZY,{
 		mes "Talking like that in that clothes, you don't look very persuasive.";
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "This is my critical costume I prepared for this mission. Who would ever find a tourist suspicious?";
 		npctalk "And these are mt special sunglasses.", "", bc_self;
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "As I mentioned before, our greatest challenge is to enter the Rebellion's secret base without any armed conflict. This costume is for that purpose.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "And Yuno is such a nice place. I have a dream to buy a building there after retirement and spend my golden years comfortably.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Don't they normally choose a resort like Comodo for golden years?";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Oh, I don't like a beach. I saw the sea every single day when I was young. Now I'm sick of its salty smell. To leave the sea, I used to have a dream to become a captain of airship.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "If you wanted to become a pilot, why did you become a secret agent?";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I can't tell you. It's confidential.";
 		next;
 		emotion ET_SWEAT, playerattached();
@@ -1873,7 +1873,7 @@ einbech,46,208,3	script	Rage#16nego01	4_M_LAZY,{
 		unittalk getcharid(3), "" + strcharinfo(0) + " : I never expected.", bc_self;
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Oh, when you get back after the mission, you can purchase a train ticket and show it to the employee in the train station. But it's free for me.";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : I have a favor to ask of you. Please let me hit you once.", bc_self;
 		next;
@@ -1881,7 +1881,7 @@ einbech,46,208,3	script	Rage#16nego01	4_M_LAZY,{
 		mes "Well, where should we go now?";
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "We have go somewhere deep inside the village. From here on, just trust me and follow me. Since the path is a little complicated, I will leave ^0000cdtraces^000000. Make sure you catch them up.";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : I can smell something from the traces.", bc_self;
 		erasequest 14595;// To Einbech train station
@@ -1891,36 +1891,36 @@ einbech,46,208,3	script	Rage#16nego01	4_M_LAZY,{
 		cutin "",255;
 		viewpoint 1,74,129,1,0x4D4DFF00;
 		navigateto( "einbech",74,129,NAV_NONE,1 );
-		cloakonnpc "Rage#16nego01", getcharid(0);
+		cloakonnpc "Lazy#16nego01", getcharid(0);
 		end;
 	}
 	if (terra_gloria_main == 12) {
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "What are you doing? I told you to follow me.";
 		close2;
 		cutin "",255;
 		viewpoint 1,74,129,1,0x4D4DFF00;
 		navigateto( "einbech",74,129,NAV_NONE,1 );
-		cloakonnpc "Rage#16nego01", getcharid(0);
+		cloakonnpc "Lazy#16nego01", getcharid(0);
 		end;
 	}
 	if (terra_gloria_main < 17) {
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "We are not supposed to be here now.";
 		mes "We must go to the rebellion.";
 		close2;
 		cutin "",255;
-		cloakonnpc "Rage#16nego01", getcharid(0);
+		cloakonnpc "Lazy#16nego01", getcharid(0);
 		end;
 	}
 	cutin "16lei_01.bmp",2;
-	mes "[Rage]";
+	mes "[Lazy]";
 	mes "Long time no see! I'm going to another mission spot. Got it? See you later!";
 	close2;
 	cutin "",255;
-	cloakonnpc "Rage#16nego01", getcharid(0);
+	cloakonnpc "Lazy#16nego01", getcharid(0);
 	end;
 }
 
@@ -1929,7 +1929,7 @@ einbech,94,127,0	script	#16negobok08	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
 	if (terra_gloria_main == 12) {
-		cloakoffnpc "Rage#16nego02", getcharid(0);
+		cloakoffnpc "Lazy#16nego02", getcharid(0);
 		cloakoffnpc "Enormous stack#16nego01", getcharid(0);
 	}
 	end;
@@ -1941,10 +1941,10 @@ einbech,76,111,0	duplicate(#16negobok08)	#16negobok10	HIDDEN_WARP_NPC,5,5
 einbech,74,130,5	duplicate(dummy_cloaked_npc)	Enormous stack#16nego01	4_SOIL
 einbech,74,130,5	duplicate(dummy_cloaked_npc)	Collapsed person#16nego	4_M_FALLENGONY
 
-einbech,76,131,3	script	Rage#16nego02	4_M_LAZY,{
+einbech,76,131,3	script	Lazy#16nego02	4_M_LAZY,{
 	if (terra_gloria_main == 12) {
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Wait. Stop right there. Somebody is lying down here. Don't step on it. Hey, watch out!";
 		next;
 		emotion ET_HUK, playerattached();
@@ -1953,14 +1953,14 @@ einbech,76,131,3	script	Rage#16nego02	4_M_LAZY,{
 		unittalk getcharid(3), "" + strcharinfo(0) + " : How come?", bc_self;
 		next;
 		cutin "",255;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "If I get rid of this and that...!";
 		npctalk "Come and help me!", "", bc_self;
 		next;
 		cloakonnpc "Enormous stack#16nego01", getcharid(0);
 		cloakoffnpc "Collapsed person#16nego", getcharid(0);
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Wow... I think today is a lucky day. This mission is going to be easier than we thought.";
 		next;
 		emotion ET_QUESTION, playerattached();
@@ -1968,12 +1968,12 @@ einbech,76,131,3	script	Rage#16nego02	4_M_LAZY,{
 		mes "What are you talking about?";
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "What's written on the bottom? Dying message? Are they words? How come he never practiced writing even if he was a Gunslinger?";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Hello? Would you please listen to me?", bc_self;
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Adventurer, try to heal this man. Although he has an injury, it's not so serious. Since he's collapsed due to an exhaustion, he'll probably recover himself by a simple treatment. Once he wakes up, I will take all the information from him.";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : All of a sudden?", bc_self;
 		sleep2 800;
@@ -1983,7 +1983,7 @@ einbech,76,131,3	script	Rage#16nego02	4_M_LAZY,{
 		mes "I don't know how to heal.";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Aren't you an adventurer?";
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -1992,15 +1992,15 @@ einbech,76,131,3	script	Rage#16nego02	4_M_LAZY,{
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Would you think about it only inside out?", bc_self;
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Well, I have no other choice.";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Odin, Freyja, Thor and a god of exhausted traveler. Please show us a mercy!";
 		next;
 		emotion ET_CRY;
-		specialeffect EF_DEVOTION, AREA, "Rage#16nego02";
+		specialeffect EF_DEVOTION, AREA, "Lazy#16nego02";
 		sleep2 800;
 		specialeffect EF_RESURRECTION, AREA, "Collapsed person#16nego";
 		sleep2 1000;
@@ -2012,22 +2012,22 @@ einbech,76,131,3	script	Rage#16nego02	4_M_LAZY,{
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Now you look different.", bc_self;
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Oh, after experiencing so many things, you should do it all.";
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I'am so good at various arts and craft. I am such a great person.";
 		npctalk "I'm so lovely~", "", bc_self;
 		emotion ET_CHUP;
-		specialeffect EF_HEARTCASTING, AREA, "Rage#16nego02";
+		specialeffect EF_HEARTCASTING, AREA, "Lazy#16nego02";
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "He won't wake up immediately, but he'll save his life anyway. If we were too late, he would have died.";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "What are you doing? Carry him.";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Should I do that?", bc_self;
 		sleep2 500;
@@ -2039,7 +2039,7 @@ einbech,76,131,3	script	Rage#16nego02	4_M_LAZY,{
 		mes "Are we carrying him? I thought we were on a secret mission.";
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "We ^0000cdmust bring^000000 him. No matter what happens, we must bring this man. He will be our ticket to the base.";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Ticket?", bc_self;
 		next;
@@ -2047,7 +2047,7 @@ einbech,76,131,3	script	Rage#16nego02	4_M_LAZY,{
 		mes "Who's this man?";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Good question. But since we don't have enough time, let me explain later. We must deliver him before he dies.";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : So you just kept him barely alive?", bc_self;
 		erasequest 14596;// Follow the trails
@@ -2057,26 +2057,26 @@ einbech,76,131,3	script	Rage#16nego02	4_M_LAZY,{
 		close2;
 		cutin "",255;
 		navigateto( "einbech",217,82,NAV_NONE,1 );
-		cloakonnpc "Rage#16nego02", getcharid(0);
+		cloakonnpc "Lazy#16nego02", getcharid(0);
 		cloakonnpc "Collapsed person#16nego", getcharid(0);
 		end;
 	}
 	if (terra_gloria_main == 13) {
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "What are you doing? I told you to follow me.";
 		close2;
 		cutin "",255;
 		viewpoint 1,217,82,1,0x4D4DFF00;
 		navigateto( "einbech",217,82,NAV_NONE,1 );
-		cloakonnpc "Rage#16nego02", getcharid(0);
+		cloakonnpc "Lazy#16nego02", getcharid(0);
 		cloakonnpc "Collapsed person#16nego", getcharid(0);
 		end;
 	}
 	end;
 
 OnInit:
-	cloakonnpc "Rage#16nego02";
+	cloakonnpc "Lazy#16nego02";
 	end;
 }
 
@@ -2084,7 +2084,7 @@ einbech,200,79,0	script	#16negobok12	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
 	if (terra_gloria_main == 13)
-		cloakoffnpc "Rage#16nego03", getcharid(0);
+		cloakoffnpc "Lazy#16nego03", getcharid(0);
 	end;
 }
 
@@ -2098,15 +2098,15 @@ OnInit:
 	end;
 }
 
-einbech,217,82,3	script	Rage#16nego03	4_M_LAZY,{
+einbech,217,82,3	script	Lazy#16nego03	4_M_LAZY,{
 	if (terra_gloria_main == 13) {
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Are you here now?";
 		npctalk "You are slower than I expected.", "", bc_self;
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Hey! I have been carrying an unconscious person!", bc_self;
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Put down what you have carried.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -2119,19 +2119,19 @@ einbech,217,82,3	script	Rage#16nego03	4_M_LAZY,{
 		mes "Where am I? There's nobody here.";
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "You can see as much as you know. That's why I'm always tired. People all want me to look at them.";
 		npctalk "I will look at them later.", "", bc_self;
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Anyway, let's get in here.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "So, where am I?";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "You talk too much! I told you we don't have much time. You can listen to my explanation later. Someone who was standing in front of this detected me already and went inside. We don't know what they will prepare.";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Well, you are type of a guy who really loves explaining things later on!", bc_self;
 		next;
@@ -2140,7 +2140,7 @@ einbech,217,82,3	script	Rage#16nego03	4_M_LAZY,{
 		mes "Wait, are we going to leave him here?";
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Yeah. Is there any problem? Is it a problem? Could it be a problem?";
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -2150,7 +2150,7 @@ einbech,217,82,3	script	Rage#16nego03	4_M_LAZY,{
 		npctalk "You can say all you want. I'm not afraid of you.", "", bc_self;
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Don't worry about him. He's not going to die. Humans do not die so easily. The fact I'm still alive is the evidence.";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : What kind of life was it...?", bc_self;
 		next;
@@ -2159,7 +2159,7 @@ einbech,217,82,3	script	Rage#16nego03	4_M_LAZY,{
 		mes "That's not the issue here.";
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Come on, let's get in. We don't have much time. Let's talk inside. Aren't you curious to know what's in there?";
 		npctalk "I'm curious! I'm curious! I want to know!", "", bc_self;
 		next;
@@ -2167,23 +2167,23 @@ einbech,217,82,3	script	Rage#16nego03	4_M_LAZY,{
 		mes "We have to see something to get in there.";
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Look at this. There's an entrance here. This is ^0000cdan entrance hidden in the wall of the beach^000000. It is so fishy. Let's get inside and check what's there.";
 		erasequest 14597;// Corner of Einbech
 		setquest 14598;// Invisible entrance
 		terra_gloria_main = 14;
 		close2;
-		cloakonnpc "Rage#16nego03", getcharid(0);
+		cloakonnpc "Lazy#16nego03", getcharid(0);
 		cutin "",255;
 		end;
 	}
 	if (terra_gloria_main == 14) {
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "What are you doing? Come in!";
 		close2;
 		cutin "",255;
-		cloakonnpc "Rage#16nego03", getcharid(0);
+		cloakonnpc "Lazy#16nego03", getcharid(0);
 		end;
 	}
 	end;
@@ -2223,7 +2223,7 @@ rebel_in,21,41,0	script	#16negobok05	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
 	if (terra_gloria_main != 14)
-		cloakonnpc "Rage#16nego04", getcharid(0);
+		cloakonnpc "Lazy#16nego04", getcharid(0);
 	end;
 }
 
@@ -2255,10 +2255,10 @@ OnInit:
 	end;
 }
 
-rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
+rebel_in,21,45,5	script	Lazy#16nego04	4_M_LAZY,{
 	if (terra_gloria_main == 14) {
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Ouch! The store looks smaller that it looks from outside. Is there a space behind the pillar?";
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -2283,14 +2283,14 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		npctalk "Calm down. Be cool.", "Eri#16nego01", bc_self;
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Yeah.. I hope we have what you're looking for.";
 		next;
 		mes "[Shopkeeper]";
 		mes "By the way... How did you find us? This is a small store that only limited people visit.";
 		npctalk "What are you saying?", "Eri#16nego01", bc_self;
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I wanted to buy a self-defense gun. And someone recommended me this store.";
 		next;
 		emotion ET_SWEAT, getnpcid(0, "Nemi#16nego01");
@@ -2298,11 +2298,11 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		mes "Who.. was it?";
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "What would you do if I tell you who that person is?";
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Wow, this looks cool. Is this the way you hold it?";
 		next;
 		mes "[Shopkeeper]";
@@ -2310,7 +2310,7 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		npctalk "Please take your hands away from there.", "Eri#16nego01", bc_self;
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Didn't you tell me to look all I want? This is so small! Can it ever fire a bullet? Look at the dust here. I guess you're out of business here.";
 		next;
 		mes "[Shopkeeper]";
@@ -2318,7 +2318,7 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		emotion ET_ANGER, getnpcid(0, "Nemi#16nego01");
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Is this a popular product? I can imagine the quality of this store.";
 		next;
 		mes "[Shopkeeper]";
@@ -2326,7 +2326,7 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		npctalk "I won't take it any more! Leave me alone!", "Nemi#16nego01", bc_self;
 		emotion ET_ANGER, getnpcid(0, "Nemi#16nego01");
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "No, I don't mean it. But if you heard it that way, then it's an insult.";
 		next;
 		mes "[Shopkeeper]";
@@ -2334,14 +2334,14 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		npctalk "Sir.", "Eri#16nego01", bc_self;
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Hmm... This looks quite good. How much is it?";
 		next;
 		mes "[Shopkeeper]";
 		mes "3.4 million Zeny.";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "That's the price of a snack. Give me one.";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Which snack is that expensive?", bc_self;
 		next;
@@ -2349,7 +2349,7 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		mes "Since it is a display product, we have to place an order. There are too many orders and you have to wait for eight months. Can you wait?";
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I'm not the one who's short-tempered. I guess it's you.";
 		npctalk "I can wait for eight months.", "", bc_self;
 		sleep2 300;
@@ -2360,7 +2360,7 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		mes "Calm down, Nemi.";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Rather than these, show me what you actually sell here. For example, ^0000cdFast Grinder Cutting through the Wind^000000?";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Is 'Grinder' the name of a bullet?", bc_self;
 		next;
@@ -2373,7 +2373,7 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		unittalk getcharid(3), "" + strcharinfo(0) + " : By looking at your response, it doesn't look the name of a bullet.", bc_self;
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Can't you see? I am a tourist and this is my secretary.";
 		next;
 		emotion ET_SWEAT, playerattached();
@@ -2388,7 +2388,7 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		mes "[Shopkeeper]";
 		mes "Which tourist comes all the way to the weapon store in a mining village where there is nothing to see? Where do you come from?";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I just arrived from Yuno. I went there and it was so~ wonderful.";
 		next;
 		mes "[Shopkeeper]";
@@ -2396,7 +2396,7 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		npctalk "Even if we had one, we would not sell it to you.", "Nemi#16nego01", bc_self;
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "So you're kicking us out? Mr. Nemieri. You can't do this.";
 		emotion ET_HNG;
 		next;
@@ -2404,7 +2404,7 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		mes "Why can't I kick you out? Go away before call someone.";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "You'd better take a look who's out there. His name was... ^0000cdGonie^000000. Right?";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Who?", bc_self;
 		next;
@@ -2412,7 +2412,7 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		mes "What are you talking about?";
 		emotion ET_QUESTION, getnpcid(0, "Nemi#16nego01");
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Just go outside and check it yourself.";
 		next;
 		mes "[Shopkeeper]";
@@ -2420,7 +2420,7 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		cloakonnpc "Nemi#16nego01", getcharid(0);
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Can he carry him alone?";
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -2428,7 +2428,7 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		unittalk getcharid(3), "" + strcharinfo(0) + " : How do you know his name?", bc_self;
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Didn't you know? That's why we struggled to bring him all the way here. Now look. He will use a magic after a short while.";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Was he a magician?", bc_self;
 		sleep2 300;
@@ -2449,7 +2449,7 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		mes "Eri. Go and bring ^0000cdLucky^000000.";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Lucky?";
 		emotion ET_QUESTION;
 		next;
@@ -2458,7 +2458,7 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		mes "Hey, what did you to this guy?";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Well, we did something. He was nearly dead and we brought him all the way here by keeping him alive. That was a great job.";
 		next;
 		mes "[Shopkeeper]";
@@ -2468,20 +2468,20 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		npctalk "Adventurer, calm down. Let me take of this. Save your strength.", "", bc_self;
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Why would I hand over the person I took hostage to you? If you really don't know what happened, wake him up and ask him. What would you do if we didn't hurt him?";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "You'll be so embarrassed, sorry and ashamed. Would you even lift your head up?";
 		next;
 		cutin "16lei_03.bmp",2;
 		emotion ET_STARE;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Why are you doubting us so much? Enough is enough. Not many villains try to swindle with an injured person.";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Right!", bc_self;
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "This is unfair. I've been victimized! Father! Mother!!";
 		emotion ET_CRY;
 		next;
@@ -2498,7 +2498,7 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		emotion ET_SCRATCH, getnpcid(0, "Nemi#16nego01");
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "He was nearly dead and we brought him all the way here by keeping him alive~ It was so tough~~";
 		npctalk "I saved his life!", "", bc_self;
 		next;
@@ -2507,7 +2507,7 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		mes "He's not doing very well. We have to take him there and lay him down. Wake up, Gonie. Can you walk?";
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "It will be difficult now. You will have to carry him. If it is hard for you, you can order my strong secretary to lift him~";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Why me again!", bc_self;
 		next;
@@ -2529,14 +2529,14 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		mes "....!";
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Oh, dear! You dropped him. Maybe you have been overworking.";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : That must hurt...", bc_self;
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "He opened his eyes! Looks like he is conscious!";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "No, he opened his eyes instinctively due to the impact. He's still unconscious.";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Is that possible?", bc_self;
 		next;
@@ -2558,7 +2558,7 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		mes "....!";
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "My god! You dropped him again. Don't work too hard.";
 		npctalk "Shouldn't you go and help?", "Eri#16nego01", bc_self;
 		sleep2 300;
@@ -2582,7 +2582,7 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		mes "......!!";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Gosh, why is your arm you so weak? Seems like this place is in trouble. You have no manpower so you hired such a weak person? My god.";
 		npctalk "Look at that. Gonie might die.", "Eri#16nego01", bc_self;
 		sleep2 300;
@@ -2593,7 +2593,7 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		mes "I don't know who you are. But I hear what you're saying!";
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Hear what? I was just speaking inside!";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : As I told you earlier, your big mouth is always a problem.", bc_self;
 		next;
@@ -2625,7 +2625,7 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		mes "Don't give Lucky too much pressure.";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I barely saved his life and now you're trying to kill him. It's a fortune that he is unconscious and cannot feel the pain.";
 		npctalk "Bye the way, he is so dull that he doesn't wake up in this situation.", "", bc_self;
 		sleep2 300;
@@ -2638,7 +2638,7 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		mes "Thanks, Nemi. Arrgh. Let's bring him and lay him down.";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Hey. Don't you have anything to tell us?";
 		next;
 		cutin "16loo_01.bmp",0;
@@ -2649,16 +2649,16 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		mes "See you later.";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Wait! They're sending us away like this? Seems like they are. Did I get it wrong?";
 		cloakonnpc "Nemi#16nego01", getcharid(0);
 		cloakonnpc "Lucky#16nego01", getcharid(0);
 		cloakonnpc "Gonie#16nego03", getcharid(0);
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Oops? They went inside! Come on!";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "You are sending us back after giving some money? You can't do this! At least, you should give me a cup of tea!";
 		next;
 		emotion ET_ANGER;
@@ -2666,15 +2666,15 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		mes "Please, customer. You shouldn't do this.";
 		next;
 		emotion ET_FRET;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Then tell them to come out! Come out now! Come out! Come out!";
 		npctalk "Why can't you!!", "", bc_self;
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Hmm, Rage. This is a little embarrassing. Let's go back now. We have a mission.";
+		mes "Hmm, Lazy. This is a little embarrassing. Let's go back now. We have a mission.";
 		next;
 		emotion ET_ANGER;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Never! I am impervious to shame so I will keep shouting until they come out! Hey! Rookie! Come out! Come out!";
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -2685,7 +2685,7 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		mes "Be quiet. If you keep making a fuss, I will call someone to get you out of here.";
 		next;
 		emotion ET_FRET;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Who kicks me out! That's impossible! I will lie down here! Come out!";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : I am so ashamed...", bc_self;
 		next;
@@ -2696,7 +2696,7 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		mes "Phew...";
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "He's here!!!";
 		next;
 		cutin "16loo_01.bmp",0;
@@ -2706,9 +2706,9 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		next;
 		cutin "16lei_01.bmp",2;
 		emotion ET_SMILE;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I can do something worse.";
-		unittalk getcharid(3), "" + strcharinfo(0) + " : Rage, please calm down!", bc_self;
+		unittalk getcharid(3), "" + strcharinfo(0) + " : Lazy, please calm down!", bc_self;
 		next;
 		cutin "16loo_01.bmp",0;
 		mes "[Lucky]";
@@ -2723,7 +2723,7 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		next;
 		cutin "16lei_01.bmp",2;
 		emotion ET_OK;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I feel weird, but I will skip it. Oh! I'm so thirsty~";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Really? Are you sure we are going in there?", bc_self;
 		next;
@@ -2731,7 +2731,7 @@ rebel_in,21,45,5	script	Rage#16nego04	4_M_LAZY,{
 		mes "[Lucky]";
 		mes "Follow me. It's this way.";
 		cloakonnpc "Lucky#16nego01", getcharid(0);
-		cloakonnpc "Rage#16nego04", getcharid(0);
+		cloakonnpc "Lazy#16nego04", getcharid(0);
 		erasequest 14598;// Invisible entrance
 		setquest 14599;// A glass of tea gratitude
 		terra_gloria_main = 15;
@@ -2824,7 +2824,7 @@ rebel_in,65,46,5	script	Rebellion Squadder#ep16	4_M_GUNSLINGER2,3,3,{
 		select("The heron ...");
 		cutin "ep16_tes01.bmp",0;
 		mes "[Tess]";
-		mes "The heron? Oh, Rage?";
+		mes "The heron? Oh, Lazy?";
 		mes "I'm sure he will take care of getting himself there.";
 		next;
 		mes "[Tess]";
@@ -3039,20 +3039,20 @@ OnTouch:
 		cloakoffnpc "Philopontess#ep162_03", getcharid(0);
 		cloakoffnpc "Skia#ep162_05", getcharid(0);
 		cloakoffnpc "Rookie#ep162_01", getcharid(0);
-		cloakoffnpc "Rage#ep162_01", getcharid(0);
-		npctalk "Mr. Rage, was that a joke?", "Philopontess#ep162_03", bc_self;
+		cloakoffnpc "Lazy#ep162_01", getcharid(0);
+		npctalk "Mr. Lazy, was that a joke?", "Philopontess#ep162_03", bc_self;
 		sleep2 2000;
-		npctalk "Uhm? Break-in or ambush ...", "Rage#ep162_01", bc_self;
+		npctalk "Uhm? Break-in or ambush ...", "Lazy#ep162_01", bc_self;
 		sleep2 3000;
 		npctalk "... That's not the issue here. We cannot just go there and knock the door!", "Philopontess#ep162_03", bc_self;
 		sleep2 3000;
 		npctalk "Unless we block the area first, they will shut down the laboratory in a flash and escape.", "Philopontess#ep162_03", bc_self;
 		sleep2 3000;
-		npctalk "I see, drug user. So you're saying ... We have a visitor.", "Rage#ep162_01", bc_self;
+		npctalk "I see, drug user. So you're saying ... We have a visitor.", "Lazy#ep162_01", bc_self;
 		sleep2 1000;
 		npctalk "Did you say 'drug user'?!", "Philopontess#ep162_03", bc_self;
 		sleep2 2000;
-		npctalk "Here comes the person our welcome visitors have been waiting for, right?", "Rage#ep162_01", bc_self;
+		npctalk "Here comes the person our welcome visitors have been waiting for, right?", "Lazy#ep162_01", bc_self;
 		sleep2 2000;
 		npctalk "This way.", "Nihil#ep162_02", bc_self;
 		sleep2 2000;
@@ -3255,24 +3255,24 @@ OnInit:
 	end;
 }
 
-ein_in01,274,278,3	script	Rage#ep162_01	4_M_LAZY,{
+ein_in01,274,278,3	script	Lazy#ep162_01	4_M_LAZY,{
 	if (terra_gloria_main == 18) {
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Well, it seems like everyone is here. Maybe I can step out?";
 		mes "From now on, Rookie, the heron emeritus agent, will handle it!";
 		close3;
 	}
 	if (terra_gloria_main == 19) {
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I've done my job~";
 		mes "Now I'm counting on Rookie!";
 		mes "I'm on vacation from now on!";
 		close3;
 		cutin "",255;
 		npctalk "Who says that?!", "Philopontess#ep162_03", bc_self;
-		npctalk "Hey, Rage! You are irresponsible!", "Rookie#ep162_01", bc_self;
+		npctalk "Hey, Lazy! You are irresponsible!", "Rookie#ep162_01", bc_self;
 		end;
 	}
 	end;
@@ -5080,7 +5080,7 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 		emotion ET_SCRATCH;
 		next;
 		mes "[Rebellion leader]";
-		mes "The man called Rage who came with you...";
+		mes "The man called Lazy who came with you...";
 		mes "He's been wandering around here.";
 		next;
 		mes "[Rebellion leader]";
@@ -5135,7 +5135,7 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 		next;
 		mes "[Rebellion leader]";
 		mes "He must know his position better than anyone else.";
-		mes "The man called Rage, too.";
+		mes "The man called Lazy, too.";
 		terra_gloria_lady_part = 1;
 		setquest 11454;// Doubt
 		close;
@@ -5457,7 +5457,7 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 		next;
 		mes "[Rebellion senior Dien]";
 		mes "Since you got the approval from Rupert, " + strcharinfo(0) + " why don't you go back for report?";
-		npctalk "Dien : The man who came with you.. Is his name Rage?", "Dien#162gmbs2", bc_self;
+		npctalk "Dien : The man who came with you.. Is his name Lazy?", "Dien#162gmbs2", bc_self;
 		cutin "ep162_dn01.bmp",2;
 		next;
 		mes "[Rebellion senior Dien]";
@@ -5649,21 +5649,21 @@ rebel_in,84,60,7	duplicate(dummy_cloaked_npc)	Senior#16nego02	4_M_HUGRANFA
 rebel_in,87,58,8	duplicate(dummy_cloaked_npc)	Senior#16nego03	4_M_HUOLDARMY
 rebel_in,88,58,1	duplicate(dummy_cloaked_npc)	Senior#16nego04	4_M_SEAMAN
 
-rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
+rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 	if (checkweight(501,1) == 0) {
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Why do you have so many things here? Your bag has to be light to carry a lot of new stuff.";
 		close;
 	}
 	if ((MaxWeight - Weight) < 1000) {
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Why do you have so many things here? Your bag has to be light to carry a lot of new stuff.";
 		close;
 	}
 	if (terra_gloria_main == 15) {
 		cutin "16lei_01.bmp",2;
 		emotion ET_SMILE;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Oh~ It's wonderful here. It's so cozy. ^0000cdWhat is this place for^000000? I want to stay here for a day.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -5675,7 +5675,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		mes "A sanatorium that looks after novices and senior citizens. There is nothing to see here. And it's too cold in here and your mouth might be twisted if you sleep here. That's why you'd better leave after drinking the tea.";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "You are too stingy. How can you do this to me after I saved his life?";
 		next;
 		cutin "16loo_03.bmp",0;
@@ -5687,7 +5687,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		npctalk "Are you laying a curse on me? Please! Don't make me bold!", "", bc_self;
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "There are things you cannot buy.";
 		emotion ET_MONEY;
 		next;
@@ -5697,7 +5697,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		npctalk "Sounds good. We can save money.", "Rookie#16nego02", bc_self;
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "No. According to my experience so far, everything that I cannot buy is useless.";
 		next;
 		cutin "16loo_03.bmp",0;
@@ -5743,7 +5743,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		cloakonnpc "Magenta#16nego01", getcharid(0);
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "They are looking for you everywhere. You are so popular. Aren't you?";
 		npctalk "Maybe that's why your name is Lucky?", "", bc_self;
 		next;
@@ -5783,7 +5783,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		npctalk "You guys are fighting again?", "Senior#16nego02", bc_self;
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Yes. I did it. I did it!";
 		npctalk "I see. I see. Let me drink the tea first. Okay? Can you wait?", "Senior#16nego04", bc_self;
 		sleep2 300;
@@ -5794,7 +5794,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		npctalk "And who are they?", "Senior#16nego01", bc_self;
 		npctalk "They don't seem to be our kids.", "Senior#16nego04", bc_self;
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "You have to exaggerate your performance. That's the way to be appreciated by others.";
 		npctalk "I get it when I see it, too.", "Senior#16nego01", bc_self;
 		npctalk "They look like Lucky's customers.", "Senior#16nego03", bc_self;
@@ -5807,10 +5807,10 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		npctalk "Then who invited them?", "Senior#16nego01", bc_self;
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
-		mes "Me? Rage. Although it's not my real name, call me Rage now.";
+		mes "[Lazy]";
+		mes "Me? Lazy. Although it's not my real name, call me Lazy now.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I am an, ^0000cdagent of Secret Wings^000000, an institution directly responsible to the President of Schwaltzvalt.";
 		npctalk "What?", "Senior#16nego03", bc_self;
 		next;
@@ -5820,7 +5820,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		npctalk "I think I misheard something now.", "Senior#16nego04", bc_self;
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "It's all right. This is our destination. ^0000cdClana Nemieri^000000, the stronghold of Rebellions.";
 		npctalk "He said he is an agent of Secret Wings, an institution directly responsible to the President of Schwaltzvalt! I heard everything!", "Senior#16nego01", bc_self;
 		next;
@@ -5872,7 +5872,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		npctalk "Why should we behave ourselves!", "Senior#16nego01", bc_self;
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "You are not surprised? So you knew it.";
 		next;
 		cutin "16loo_03.bmp",0;
@@ -5880,7 +5880,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		mes "I didn't know who you were. But I knew you had a certain purpose. I had not told you my name but you were shouting 'Come out Rookie'. So I had a clue.";
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I heard that the brain of a Rebellion is filled with bullets, but maybe not every Rebellion! So, is your name Lucky, or Rookie?";
 		npctalk "Did he just insult us?", "Senior#16nego03", bc_self;
 		npctalk "Be quite. Let's listen to what they say.", "Senior#16nego02", bc_self;
@@ -5926,21 +5926,21 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		next;
 		cloakonnpc "Rookie#16nego02", getcharid(0);
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Hahaha! Nice to meet you. Did I surprise you by coming in all of a sudden in leisure hours?";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "But I am not a dangerous person, so please relax. And this adventurer is much less dangerous.";
 		emotion ET_SMILE;
 		npctalk "You don't need to talk to us!", "Senior#16nego01", bc_self;
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "This person is an adventurer who settled various problems of the continent, including Schwaltzvalt. The adventurer is currently under the protection of Rune Midgarts Kingdom." + strcharinfo(0) + "";
 		emotion ET_BEST;
 		npctalk " Adventurer " + strcharinfo(0) + "? You must be that person in the royal palace in Rune Midgarts...", "Senior#16nego02", bc_self;
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "And I am a member of Secret Wings, an institution directly responsible to the President of Schwaltzvalt Republic. Since the President guarantees my identification, you don't have to worry.";
 		emotion ET_BEST;
 		npctalk "Ha!!! That's nonsense!!", "Senior#16nego03", bc_self;
@@ -5964,7 +5964,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		npctalk "What? Spoiled...?", "", bc_self;
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "That's what I am about to tell you now. Haha. So please put your guns down... Let's sit down first.";
 		next;
 		emotion ET_PROFUSELY_SWAT;
@@ -5974,7 +5974,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		next;
 		cutin "16lei_02.bmp",2;
 		emotion ET_PROFUSELY_SWAT;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Ahaha. I've got a disease that I can't sit down. By the way... As a guest, I couldn't come here with empty hands. This is a specialty good of Yuno... Please have some.";
 		next;
 		cutin "",255;
@@ -6038,11 +6038,11 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		npctalk "It's delicious.", "Senior#16nego03", bc_self;
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Wow~ This tea is great. It matches well with this specialty good. Try it. The President prepared it for you.";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Please listen to me. I'm here to ask you a very difficult request.";
 		npctalk "I'm here to ask you a very difficult request.", "", bc_self;
 		next;
@@ -6053,11 +6053,11 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		next;
 		cutin "16lei_01.bmp",2;
 		emotion ET_SPARK;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "That's why I came here. This mission cannot be accomplished by anyone except Rebellion. So the President sent me here.";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I think it will be such a confidential and cautious story. Please take this...";
 		npctalk "It will match well with the tea.", "", bc_self;
 		next;
@@ -6065,18 +6065,18 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		mes "Just tell us your point.";
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Yes! Although you pretend not to know, it's the story you all know.";
 		npctalk "I will explain it rapidly.", "", bc_self;
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "The President certainly regrets what happened in the past. His excellency has always been thinking about you and wanted to start a talk.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Upon your approval, his excellency wants to meet you in person, apologize, and wants to have an opportunity to harmonize with you.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I was also extremely sad to hear what happened to you. And I was looking for a chance to meet you and talk to you.";
 		emotion ET_CRY;
 		next;
@@ -6084,13 +6084,13 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		mes "Tell us your point!";
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "You are so cool. I like it. Then I will get down to the business.";
 		emotion ET_BEST;
 		npctalk "You are so cool. I like it.", "", bc_self;
 		next;
 		cutin "",255;
-		mes "[Rage began to talk about what happened recently and the request of the President.]";
+		mes "[Lazy began to talk about what happened recently and the request of the President.]";
 		next;
 		mes "[Senior]";
 		mes "I see. But it's your business and I don't get why we should help you. Do I?";
@@ -6108,15 +6108,15 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		npctalk "We don't need to listen any more.", "Senior#16nego03", bc_self;
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "That won't harm you under any circumstances!";
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "The adventurer approved by the royal family of Rune Midgarts is together with us in this mission.";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "With the cooperation of Schwaltzvalt President and Rune Midgarts Kingdom, you can now use the power of the adventurer.";
 		npctalk "Although you don't trust me, please trust the adventurer!", "", bc_self;
 		next;
@@ -6129,7 +6129,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		npctalk "You did it once. How can we believe that you won't do it again?", "Senior#16nego01", bc_self;
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "This is your opportunity. Along with this cooperation, you can eliminate the dishonor!";
 		sleep2 300;
 		npctalk "Do we have any dishonor?", "Senior#16nego02", bc_self;
@@ -6137,10 +6137,10 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		npctalk "What the hell is he talking about?", "Senior#16nego01", bc_self;
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "If you cannot trust the President, please trust the adventurer and the royal family of Rune Midgarts. They have already promised a full support.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Come on, say somthing.";
 		npctalk "Have a sense!", "", bc_self;
 		next;
@@ -6166,10 +6166,10 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		sleep2 1000;
 		cloakonnpc "Senior#16nego03", getcharid(0);
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Please, you can't leave like this...!!!";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Hmm... I knew it would be difficult. But I'm surprised that they are not even listening to me.";
 		next;
 		cutin "16loo_03.bmp",0;
@@ -6179,7 +6179,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		npctalk "Perhaps an inconvenience is their motto.", "Rookie#16nego02", bc_self;
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Your name is Rookie. Right?";
 		next;
 		cutin "16loo_01.bmp",0;
@@ -6188,17 +6188,17 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		npctalk "You have a strange habit.", "Rookie#16nego02", bc_self;
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Sorry. I guess I made a wrong judgment. I should have collected more accurate information.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "What's wrong with you? You make me nervous.";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Where's your confidence!", bc_self;
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Before I came here, I knew people who were sitting here had the authority, but I now realize that it is a little different.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Unless you live here, it's hard to find out who has the authority.";
 		next;
 		cutin "16loo_01.bmp",0;
@@ -6207,17 +6207,17 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		npctalk "I have so many things to do.", "Rookie#16nego02", bc_self;
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Rookie, please help us. If you think about it, you can tell that it's a win-win proposition. You don't want to hide yourself in this corner of the woods forever, do you?";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "You know that this is the opportunity to take advantage of the government's support and compassion for you. It will provide better fundamentals for Rebellions.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "If this works well. you'll be free to work in Schwaltzvalt and Rune Midgarts.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Look at this place. It's just a tiny shop. Can you call it headquarters? Don't you want to reclaim your glory?";
 		npctalk "It's frustrating to live like this. Isn't it?", "", bc_self;
 		next;
@@ -6227,7 +6227,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		npctalk "Although I wasn't directly involved in it, I don't want to help you either.", "Rookie#16nego02", bc_self;
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "That's why I am asking for your help. I guess you can change their mind by persuading them.";
 		next;
 		cutin "16loo_03.bmp",0;
@@ -6240,7 +6240,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		npctalk "Hahaha. You have a great sense of humor. Hahaha.", "", bc_self;
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "In every place, there is a hidden key person who moves the whole group even though you cannot that person easily. Here, it's you.";
 		next;
 		cutin "16loo_01.bmp",0;
@@ -6248,11 +6248,11 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		mes "Well, I guess you are overrating me. They regard me as an unimportant guy here. I dont't take any important mission. All I do is errands and clean-ups. Do you honestly think I'm a key person?";
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "No, no. That's not what I am talking about. Normally they call it a mood maker.";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "A while ago, you convinced the old men to listen to me. That's what I am talking about. You have such abilities.";
 		npctalk "Lucky Rookie. That's why they call you 'Lucky'. Right?", "", bc_self;
 		next;
@@ -6261,7 +6261,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		mes "I don't know what you mean by 'such abilities'. But I guess you have nothing to talk about by now. The seniors are gone.";
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "That's why I'm trying to help you. Please convince others.";
 		next;
 		cutin "16loo_01.bmp",0;
@@ -6274,10 +6274,10 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		mes "It may be a matter of cooperation for you. But for us, it's a matter of survival.";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Please. We are also desperate. The fates of the royal family of a country and another country are in danger.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "But if you help us, we can sort it out. That's something only you can do. We really need your help.";
 		next;
 		cutin "16loo_01.bmp",0;
@@ -6285,7 +6285,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		mes "If you really need help, go to someone else.";
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "You are as cold as ice. How merciless. Please show some mercy and help us.";
 		emotion ET_CRY;
 		npctalk "Please don't be so mean.", "", bc_self;
@@ -6308,7 +6308,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		mes "If you convince them, the public opinion change. Once the public opinion changes, what can seniors do about it?";
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Thank you. I prefer those who are wise and smart like you.";
 		emotion ET_BIGTHROB;
 		npctalk "So we've been talking to the wrong people.", "", bc_self;
@@ -6319,14 +6319,14 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		npctalk "We will be competitive anywhere we go.", "Rookie#16nego02", bc_self;
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Adventurer, it's time for you to take an action. Please persuade them.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Should I?";
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Did you seen the response from the seniors? Once I introduce myself, they might shoot at me make dozens of holes in my body.";
 		npctalk "I was so scared.", "", bc_self;
 		unittalk getcharid(3), "" + strcharinfo(0) + " : But you looked so calm!", bc_self;
@@ -6334,12 +6334,12 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		npctalk "I'm serious. You'd never imagine how nervous I was.", "", bc_self;
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Since those seniors were relatively rational, we are alive and talking like this. If only there was one person with a short-temper... Phew...";
 		npctalk "That's right. You are lucky that the person with a real short temper is in the upstairs now.", "Rookie#16nego02", bc_self;
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Adventurer. You are a symbol of faith. Please go and show them your faith. That will take care of everything. Did you see what I did a moment ago? Do as I did.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -6372,7 +6372,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		npctalk "I hope you won't have a hole in your head...", "Rookie#16nego02", bc_self;
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Adventurer, good luck! I will be talking to Rookie. Cheer up.";
 		npctalk "Come back alive!", "", bc_self;
 		erasequest 14599;// A glass of tea gratitude
@@ -6387,29 +6387,29 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 	if (terra_gloria_main == 16) {
 		if (isbegin_quest(14602) != 2 || terra_gloria_lady_part < 10) {
 			cutin "16lei_01.bmp",2;
-			mes "[Rage]";
+			mes "[Lazy]";
 			mes "Adventurer! How was it? You met all of them and persuaded them? Not yet? I guess not. If you go to the 2nd floor, you can meet all of them.";
 			next;
-			mes "[Rage]";
+			mes "[Lazy]";
 			mes "I will be cheering for you. Go, adventurer!";
 			close3;
 		}
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "You're back! So, have you met them? Are they going to help us?";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Yes... Several things happened, but they were not bad.";
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "No wonder you are a symbol of faith!! Now, we can wait for seniors and staffs. Right?";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Come on. Sit here and listen to Rookie's story. It's so interesting.";
 		npctalk "I know you've talked so much that you lost a lot of moisture. Drink some tea.", "", bc_self;
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "So, why did you leave your home?";
 		next;
 		cutin "16loo_03.bmp",0;
@@ -6424,7 +6424,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		mes "Normally they use the iron dug from mines. But since it cannot meet the demands, a lot of used iron is also consumed. Our family bought the iron and resold it.";
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "And you were not able to help them?";
 		npctalk "That's right.", "Rookie#16nego02", bc_self;
 		next;
@@ -6433,7 +6433,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		mes "My brothers helped my parents. As you see, I'm so small and used to be sick when I was a kid.";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Oh, so they regarded you as a useless kid?";
 		npctalk "Have you been to my house? How do you know it so well?", "Rookie#16nego02", bc_self;
 		next;
@@ -6442,7 +6442,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		mes "I had no other choice.";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I don't agree with you. Everyone has different ability and you must be good at something. You just didn't find it earlier. Anyway, what happened next?";
 		next;
 		cutin "16loo_01.bmp",0;
@@ -6450,7 +6450,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		mes "As my family ignored me, I decided to leave the house to find something I am capable of.";
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Well done. If you stayed there, you would have become such a useless person.";
 		npctalk "You are so smart and wise.", "", bc_self;
 		next;
@@ -6460,7 +6460,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		npctalk "Gonie? The guy who was bloody?", "", bc_self;
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Everyone is a monster here. Look at Gonie. He was bleeding and almost dead. But He was still alive. The truth is that other guys are extraordinary and you are normal.";
 		next;
 		cutin "16loo_01.bmp",0;
@@ -6470,7 +6470,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		npctalk "I guess so. While I train, I have no problem.", "Rookie#16nego02", bc_self;
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "So you are in charge of the housekeeping here?";
 		next;
 		cutin "16loo_02.bmp",0;
@@ -6564,7 +6564,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		mes "For the favor...";
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Did you hear that? He is in the middle of a silent meditation. How spiteful!";
 		npctalk "Ha... This place is full of monsters.", "", bc_self;
 		next;
@@ -6586,7 +6586,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		npctalk "Don't tell anyone that you are a member of the Rebellion!", "Senior#16nego01", bc_self;
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Did you hear that? They are so cool.";
 		npctalk "I like them!", "", bc_self;
 		next;
@@ -6622,7 +6622,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		mes "Seems like most of us agree. I don't think anything good will happen if you're still against it.";
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Phew... Sir, what would you do now? Hehe.";
 		emotion ET_SMILE;
 		npctalk "Seems like the decision has been made.", "", bc_self;
@@ -6642,7 +6642,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		next;
 		cutin "16lei_02.bmp",2;
 		cloakonnpc "Senior#16nego01", getcharid(0);
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Oh, what a passionate propose. I've never had anything like this in my life. I feel a little shy.";
 		npctalk "That's so cool.", "", bc_self;
 		next;
@@ -6668,12 +6668,12 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		next;
 		cutin "16lei_01.bmp",0;
 		cloakonnpc "Gonie#16nego04", getcharid(0);
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I've never imagined that this would be done so perfectly. I owe you for this. Thanks.";
 		npctalk "The happiness is always with me.", "", bc_self;
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Please go and send them a message. Tell them 'The Heron spread its wings' and they will understand.";
 		npctalk "What is that? Heron?", "Rookie#16nego02", bc_self;
 		sleep2 300;
@@ -6683,7 +6683,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		mes "Should I go alone? Don't you have to send the message directly?";
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I am staying here. Hahaha. I really like this fellow and we can work together.";
 		npctalk "What do you think? You like it. Don't you?", "", bc_self;
 		next;
@@ -6692,46 +6692,46 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		mes "Work with me? I don't think I can do anything useful for you.";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Exactly. That's something you should change. Self-confidence. In your case, the lack of confidence caused the lack of self-confidence.";
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Confidence can be obtained by yourself, through an achievement or by being approved by someone else a person. It's impossible here. This place is like a suit that does not fit for you.";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "As long as there is just one person who trusts you, you can grow to infinity.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "You may not have realized it. But you are already doing it to everyone here. They all counting on you. Just trust yourself a little more.";
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "If you don't get it, trust me. Because I trust you.";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : This is called 'infinite confidence'.", bc_self;
 		next;
 		cutin "16lei_03.bmp",2;
 		emotion ET_BEST;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Now the generation has shifted. Today is the last day for the old generation and the first day for the new generation. And you are the link.";
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "You're too good to waste your talent here.";
 		next;
 		cutin "16lei_03.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "First, you had the ability to find out that I had a certain purpose. You were also able to find out what's helpful for Rebellions. Then you had the guts to implement it. You also have the humanity...";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Just a little polishing will help you spread your wings. You're supposed to use your brain. Why do you suffer by working physically?";
 		npctalk "Wings? So it's what you meant when you mentioned Heron?", "Rookie#16nego02", bc_self;
 		sleep2 300;
 		npctalk "Strictly speaking, no. But let's say it is similar.", "", bc_self;
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "If you want, I can help you. What do you think? I need a partner and I'm sure we can make a great duo.";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : You said you'd make a duo with me.", bc_self;
 		sleep2 300;
@@ -6742,7 +6742,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		mes "Oh, could you be explain it to me in detail?";
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Sure. I have plenty of time. By the way, is it okay for me to stay here continuously?";
 		emotion ET_BEST;
 		next;
@@ -6756,7 +6756,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		mes "Don't you think you're scouting him too plainly in someone else's house?";
 		next;
 		cutin "16lei_02.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Is there anything wrong with it? You have this talented guy but you are not utilizing his ability. Are you? He's so talented!";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : I think you are regarding him as an item.", bc_self;
 		next;
@@ -6774,7 +6774,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		npctalk "Already?", "Rookie#16nego02", bc_self;
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "What did he say?";
 		next;
 		cutin "16loo_01.bmp",0;
@@ -6787,22 +6787,22 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		mes "Yes. I will meet that person and listen.";
 		next;
 		cutin "16lei_01.bmp",2;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Adventurer, I need to have a long talk from now on. So I'm counting on you. When you go there, don't forget to use that place. I mean 'that place'.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Pardon? I see.. See you later.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Yikes! Wait a minute! I almost forgot. This is the reward specially prepared for this mission. I am giving all of them to you. You can exchange this with something useful.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Token of honor?";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "Seems like the dull middle-aged person standing beside the stairs receives the tokens. His name is Strasse. If you are interested, go.";
 		next;
-		mes "[Rage]";
+		mes "[Lazy]";
 		mes "I gave you everything. Bye now. Say hello to the President!!";
 		npctalk "Tell his excellency to wait for a while even if his excellency misses me.", "", bc_self;
 		sleep2 300;
@@ -6816,7 +6816,7 @@ rebel_in,86,61,5	script	Rage#16nego05	4_M_LAZY,{
 		close3;
 	}
 	cutin "16lei_01.bmp",2;
-	mes "[Rage]";
+	mes "[Lazy]";
 	mes "Yo! Welcome! Do you want a cup of tea? Did you send the message properly?";
 	close3;
 
@@ -12027,7 +12027,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 		mes "Although they are quite frightening... they are all good people.";
 		next;
 		mes "[Rookie]";
-		mes "Don't you have to report to Rage now?";
+		mes "Don't you have to report to Lazy now?";
 		close3;
 	}
 	.@playtime_14609 = checkquest(14609,PLAYTIME);
@@ -12045,19 +12045,19 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			next;
 			cutin "16loo_02.bmp",2;
 			mes "[Rookie]";
-			mes "Adventurer, how was your business? Rage told me that I could fully trust you.";
+			mes "Adventurer, how was your business? Lazy told me that I could fully trust you.";
 			npctalk "But I was still worried about sending you alone...", "", bc_self;
 			sleep2 300;
-			npctalk "Hey! The adventurer is a hero who saved a nation without anybody's help. Trust me!", "Rage#16nego05", bc_self;
+			npctalk "Hey! The adventurer is a hero who saved a nation without anybody's help. Trust me!", "Lazy#16nego05", bc_self;
 			next;
 			mes "[Rookie]";
 			mes "All of us are also eager and preparing many things. We should not disappoint that person~";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			mes "I will do my best. Rookie, what have you been doing recently? How was your talk with Rage?";
+			mes "I will do my best. Rookie, what have you been doing recently? How was your talk with Lazy?";
 			next;
 			cutin "16lei_01.bmp",0;
-			mes "[Rage]";
+			mes "[Lazy]";
 			mes "I'm still here. This fellow cannot leave immediately. Neither can I.";
 			next;
 			cutin "16loo_01.bmp",2;

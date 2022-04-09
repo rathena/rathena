@@ -20,7 +20,7 @@ OnInstanceInit:
 	disablenpc instance_npcname("#rgsr_warp_0");
 	disablenpc instance_npcname("Est#rgsr");
 	disablenpc instance_npcname("Rebellion Crew#rgsr_dum01");
-	disablenpc instance_npcname("Ashley#rgsr3");
+	disablenpc instance_npcname("Aas#rgsr3");
 	disablenpc instance_npcname("Goni#rgsr");
 	disablenpc instance_npcname("Est#rgsr2");
 	disablenpc instance_npcname("Central Room#rgsr");
@@ -29,7 +29,7 @@ OnInstanceInit:
 	disablenpc instance_npcname("Control Device#rgsr1");
 	disablenpc instance_npcname("Control Device#rgsr2");
 	disablenpc instance_npcname("Control Device#rgsr3");
-	disablenpc instance_npcname("Ashley#rgsr4");
+	disablenpc instance_npcname("Aas#rgsr4");
 	end;
 
 OnEvent01:
@@ -64,29 +64,29 @@ OnEvent04:
 	close;
 }
 
-1@rgsr,131,58,3	script	Ashley#rgsr	4_EP17_AS,{
+1@rgsr,131,58,3	script	Aas#rgsr	4_EP17_AS,{
 	cutin "ep171_as02",1;
-	mes "[Ashley]";
+	mes "[Aas]";
 	mes "The door is normally locked with the security system, so I have to stay there and work with the controller.";
 	mes "As you can see most of the entrances have been blocked already.";
 	mes "Hi";
 	next;
-	mes "[Ashley]";
+	mes "[Aas]";
 	mes "It will take some time to go through them one by one.";
 	mes "I'll keep helping you through the intercom.";
 	next;
-	mes "[Ashley]";
+	mes "[Aas]";
 	mes "You'll have to go through the restaurant to reach the hallway.";
 	mes "Est will be performing the operation alone.";
 	next;
-	mes "[Ashley]";
+	mes "[Aas]";
 	mes "If there's a disturbance, Est may have caused it. So please check out with her before continuing.";
 	next;
-	mes "[Ashley]";
+	mes "[Aas]";
 	mes "You should go now adventurer. I'll keep working on securing the security controller.";
 	mes "There may be researchers detained inside.";
 	next;
-	mes "[Ashley]";
+	mes "[Aas]";
 	mes "Please consider their safety first.";
 	mes "Now go ahead.";
 	close2;
@@ -108,7 +108,7 @@ OnEvent04:
 		sleep2 2750;
 		npctalk "Activating Voice Transmission...";
 		sleep2 2750;
-		npctalk "Are you connected? It's Ashley.";
+		npctalk "Are you connected? It's Aas.";
 		sleep2 2750;
 		npctalk "I have gained control over some of the security system, but I haven't gained full access yet.";
 		sleep2 2750;
@@ -155,7 +155,7 @@ OnEvent04:
 		next;
 		cutin "ep162_est01",2;
 		mes "[Est]";
-		mes "It takes time for Ashley to come hack the controller and release the gas.";
+		mes "It takes time for Aas to come hack the controller and release the gas.";
 		mes "I was going to do it myself.";
 		next;
 		cutin "ep162_est02",2;
@@ -177,7 +177,7 @@ OnEvent04:
 		mes "If you get it, move quickly!";
 		next;
 		mes "[Est]";
-		mes "Okay, adventurer, find a communication device and get in contact with Ashley.";
+		mes "Okay, adventurer, find a communication device and get in contact with Aas.";
 		next;
 		mes "[Est]";
 		mes "You have to open the entrance of the private labs.";
@@ -188,7 +188,7 @@ OnEvent04:
 	cutin "ep162_est02",2;
 	mes "[Est]";
 	mes "Huh. We'll focus on rescuing the hostages first.";
-	mes "Look for the Security Guard's room that Ashley talked about.";
+	mes "Look for the Security Guard's room that Aas talked about.";
 	close3;
 }
 
@@ -204,17 +204,17 @@ OnEvent04:
 		'rgsr = 6;
 		npctalk "Waiting for communication response...";
 		sleep2 2750;
-		npctalk "Ashley : Commander Est? We closed the hall lock, but what is the problem?";
+		npctalk "Aas : Commander Est? We closed the hall lock, but what is the problem?";
 		sleep2 2750;
-		npctalk "Ashley : Oh you're the adventurer. I will give you the report. I have not fully taken over the security controller system yet.";
+		npctalk "Aas : Oh you're the adventurer. I will give you the report. I have not fully taken over the security controller system yet.";
 		sleep2 2750;
-		npctalk "Ashley : It seems it will take some time, but I've taken control of most of the monitoring modules.";
+		npctalk "Aas : It seems it will take some time, but I've taken control of most of the monitoring modules.";
 		sleep2 2750;
-		npctalk "Ashley : Most of the enemy troops were in the lobby and the resting area, so the lab area is less guarded.";
+		npctalk "Aas : Most of the enemy troops were in the lobby and the resting area, so the lab area is less guarded.";
 		sleep2 2750;
-		npctalk "Ashley : However, in order to secure the central control room, you have to go through the Guard's Room where many test subjects were detected.";
+		npctalk "Aas : However, in order to secure the central control room, you have to go through the Guard's Room where many test subjects were detected.";
 		sleep2 2750;
-		npctalk "Ashley : The priority should be to secure the laboratories and then the Guard Room.... *click*";
+		npctalk "Aas : The priority should be to secure the laboratories and then the Guard Room.... *click*";
 		sleep2 2000;
 		npctalk "Est : Eh, what was that?",instance_npcname("Est#rgsr");
 		'rgsr = 7;
@@ -229,7 +229,7 @@ OnEvent04:
 	}
 }
 
-1@rgsr,235,44,5	script	Ashley#rgsr2	4_EP17_AS,{
+1@rgsr,235,44,5	script	Aas#rgsr2	4_EP17_AS,{
 	if ('rgsr == 7) {
 		for (.@i = 0; .@i < 3; .@i++) {
 			if (!getd("'rescued[" + .@i + "]"))
@@ -237,22 +237,22 @@ OnEvent04:
 		}
 		if (.@miss) {
 			cutin "ep171_as02",2;
-			mes "[Ashley]";
+			mes "[Aas]";
 			mes "Hey, Did you check all the labs yet?";
 			mes "Please check if there are still Detained Researchers.";
 			close3;
 		}
 		cutin "ep171_as02",1;
-		mes "[Ashley]";
+		mes "[Aas]";
 		mes "The spare Master Key still remains.";
 		mes "Without it, I wouldn't have been able to control over the security systems. Are you okay?";
 		next;
-		mes "[Ashley]";
+		mes "[Aas]";
 		mes "Now you only need to check the Central Room.";
 		mes "Did you say Heart Hunters?";
 		mes "The traitors from Schlein have already escaped.";
 		next;
-		mes "[Ashley]";
+		mes "[Aas]";
 		mes "We've got our focus on that room.";
 		mes "That's the main idea.";
 		mes "Where is Est?";
@@ -262,11 +262,11 @@ OnEvent04:
 		mes "... ... ...";
 		next;
 		cutin "ep171_as02",1;
-		mes "[Ashley]";
+		mes "[Aas]";
 		mes "You have to keep looking for all the Researchers?";
 		mes "That's necessary, I understand.";
 		next;
-		mes "[Ashley]";
+		mes "[Aas]";
 		mes "Adventurer, we head to the Central Room.";
 		mes "Meet me over there.";
 		close2;
@@ -277,7 +277,7 @@ OnEvent04:
 		end;
 	}
 	cutin "ep171_as02",1;
-	mes "[Ashley]";
+	mes "[Aas]";
 	mes "Adventurer, we head to the Central Room.";
 	mes "Meet me over there.";
 	close3;
@@ -388,20 +388,20 @@ OnEvent04:
 		mes "Some have circles around them... others are crossed out.";
 		next;
 		cutin "ep171_as01",2;
-		mes "[Ashley]";
+		mes "[Aas]";
 		mes "The ones circled are probably those who accepted to be recruited...";
 		mes "My team is the one with a X marked next to it.";
 		next;
-		mes "[Ashley]";
+		mes "[Aas]";
 		mes "It's a mercenary contract...";
 		mes "There's a rough plan for the day of the raid.";
 		mes "I can't believe it came to this...";
 		next;
-		mes "[Ashley]";
+		mes "[Aas]";
 		mes "This is meant to provoke me.";
 		mes "It won't work this time. I'll track this to the end.";
 		next;
-		mes "[Ashley]";
+		mes "[Aas]";
 		mes "I'd better take it back to Tess and analyze it.";
 		setquest 7863;
 		close3;
@@ -418,10 +418,10 @@ OnInstanceInit:
 1@rgsr,125,157,0	script	Central Room#rgsr	4_ENERGY_BLUE,{
 	if ('rgsr == 8) {
 		'rgsr = 9;
-		enablenpc instance_npcname("Ashley#rgsr3");
+		enablenpc instance_npcname("Aas#rgsr3");
 		enablenpc instance_npcname("Goni#rgsr");
 		enablenpc instance_npcname("Est#rgsr2");
-		npctalk "Am I late?",instance_npcname("Ashley#rgsr3");
+		npctalk "Am I late?",instance_npcname("Aas#rgsr3");
 		sleep2 1800;
 		npctalk "No you arrived just in time.",instance_npcname("Est#rgsr2");
 		end;
@@ -430,19 +430,19 @@ OnInstanceInit:
 	close;
 }
 
-1@rgsr,128,157,3	script	Ashley#rgsr3	4_EP17_AS,{
+1@rgsr,128,157,3	script	Aas#rgsr3	4_EP17_AS,{
 	if ('rgsr > 13)
 		end;
 	if ('rgsr == 9) {
 		'rgsr = 10;
-		.@ashley$ = instance_npcname("Ashley#rgsr3");
+		.@aas$ = instance_npcname("Aas#rgsr3");
 		.@gonie$ = instance_npcname("Goni#rgsr");
 		.@erst$ = instance_npcname("Est#rgsr2");
-		npctalk "Ashley : The Central Room seems to be empty. I'll go in and check it out.",.@ashley$;
+		npctalk "Aas : The Central Room seems to be empty. I'll go in and check it out.",.@aas$;
 		sleep2 3000;
-		npctalk "Est : I'll go ahead and take the researchers out of here. Will that be okay?",.@erst$;
+		npctalk "Aas : I'll go ahead and take the researchers out of here. Will that be okay?",.@erst$;
 		sleep2 3000;
-		npctalk "Ashley : Yes. Nothing else is being detected on the system. With our progress so far, the enemies have all been restrained.",.@ashley$;
+		npctalk "Aas : Yes. Nothing else is being detected on the system. With our progress so far, the enemies have all been restrained.",.@aas$;
 		sleep2 3000;
 		npctalk "Est : What are you scared of something else? I'm going back already!",.@erst$;
 		sleep2 3000;
@@ -456,25 +456,25 @@ OnInstanceInit:
 		sleep2 3000;
 		disablenpc instance_npcname("Goni#rgsr");
 		disablenpc instance_npcname("Est#rgsr2");
-		npctalk "Ashley : So adventurer, let's check out the Central Room.",.@ashley$;
+		npctalk "Aas : So adventurer, let's check out the Central Room.",.@aas$;
 		'rgsr = 11;
 		end;
 	}
 	cutin "ep171_as02",1;
-	mes "[Ashley]";
+	mes "[Aas]";
 	mes "That's the Central Room right ahead.";
 	next;
 	if (select("Enter.:Wait.") == 2) {
-		mes "[Ashley]";
+		mes "[Aas]";
 		mes "Please speak to me when you're ready.";
 		mes "I don't know why, but it's tightly closed;. It takes some time to maintain access.";
 		next;
-		mes "[Ashley]";
+		mes "[Aas]";
 		mes "As confirmed by the security system, nothing is being detected on the inside...";
 		mes "I still want to confirm inside the room regardless.";
 		close3;
 	}
-	mes "[Ashley]";
+	mes "[Aas]";
 	mes "First I'll need to disable the auto-locking mechanism, and then I'll follow right away.";
 	if ('rgsr == 11) {
 		'rgsr = 12;
@@ -570,25 +570,25 @@ OnFail:
 1@rgsr,114,191,0	duplicate(Control Device#rgsr0)	Control Device#rgsr2	4_ENERGY_WHITE
 1@rgsr,143,168,0	duplicate(Control Device#rgsr0)	Control Device#rgsr3	4_ENERGY_YELLOW
 
-1@rgsr,127,164,3	script	Ashley#rgsr4	4_EP17_AS,{
+1@rgsr,127,164,3	script	Aas#rgsr4	4_EP17_AS,{
 	cutin "ep171_as01",2;
-	mes "[Ashley]";
+	mes "[Aas]";
 	mes "Est has handled everything else on the inside.";
 	mes "Sorry for not being able to help you at all.";
 	next;
-	mes "[Ashley]";
+	mes "[Aas]";
 	mes "Let's go back to Einbroch.";
 	mes "I'll... I'll go to my office and join you.";
 	next;
 	.@s = select("Move to Einbroch.:Move to Lighthalzen.:Stay for a while.");
 	if (.@s == 3) {
 		cutin "ep171_as02",2;
-		mes "[Ashley]";
+		mes "[Aas]";
 		mes "Do you have anything else to investigate?";
 		mes "I'll wait  here.";
 		close3;
 	}
-	mes "[Ashley]";
+	mes "[Aas]";
 	mes "We're going to wait for you in the Cat on Bullet.";
 	mes "Please head there and meet us in the headquarters.";
 	completequest 7862;
@@ -651,7 +651,7 @@ OnSummon:
 OnLeftKill:
 	.@event$ = instance_npcname(strnpcinfo(0))+"::OnLeftKill";
 	if (!mobcount('map$,.@event$)) {
-		mapannounce 'map$,"Est : Who is it? Are you Ashley? Are you the adventurer?",bc_map,0x0D98BA;
+		mapannounce 'map$,"Est : Who is it? Are you Aas? Are you the adventurer?",bc_map,0x0D98BA;
 		enablenpc instance_npcname("Est#rgsr");
 		enablenpc instance_npcname("Rebellion Crew#rgsr_dum01");
 	}
@@ -666,7 +666,7 @@ OnTopKill:
 OnSummon:
 	mapannounce 'map$,"Ahahaha.. ahahaha... I'll kill you all!!!!",bc_map,0x00FF00;
 	sleep 2000;
-	mapannounce 'map$,"Ashley : What is going on? *click* The lock is...!!",bc_map;
+	mapannounce 'map$,"Aas : What is going on? *click* The lock is...!!",bc_map;
 	sleep 2000;
 	mapannounce 'map$,"I'm not a defect! I'm not a monster!",bc_map,0x00FF00;
 	specialeffect EF_LORD,AREA,instance_npcname("Restrained Specimen#rgsr");
@@ -676,9 +676,9 @@ OnSummon:
 	end;
 
 OnBossKill:
-	hideonnpc instance_npcname("Ashley#rgsr3");
-	disablenpc instance_npcname("Ashley#rgsr3");
-	enablenpc instance_npcname("Ashley#rgsr4");
+	hideonnpc instance_npcname("Aas#rgsr3");
+	disablenpc instance_npcname("Aas#rgsr3");
+	enablenpc instance_npcname("Aas#rgsr4");
 	disablenpc();
 	end;
 }
