@@ -46136,6 +46136,17 @@ Body:
     Weight: 250
     Script: |
       getitem 13232,500;
+  - Id: 23136
+    AegisName: WOB_Box
+    Name: Butterfly Wing Box
+    Type: Usable
+    Buy: 10
+    Weight: 20
+    Script: |
+      getitem 12507,3;
+      getitem 12508,3;
+      getitem 12509,3;
+      getitem 12510,3;
   - Id: 23151
     AegisName: EnchantStone_Recipe
     Name: Enchant Stone Recipe
