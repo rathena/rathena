@@ -175,6 +175,7 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
+    Duration2: 4500
     Requires:
       SpCost:
         - Level: 1
@@ -720,27 +721,27 @@ Body:
     AfterCastActDelay: 500
     Duration2:
       - Level: 1
-        Time: 5500
+        Time: 3000
       - Level: 2
-        Time: 8500
+        Time: 6000
       - Level: 3
-        Time: 11500
+        Time: 9000
       - Level: 4
-        Time: 14500
+        Time: 12000
       - Level: 5
-        Time: 17500
+        Time: 15000
       - Level: 6
-        Time: 20500
+        Time: 18000
       - Level: 7
-        Time: 23500
+        Time: 21000
       - Level: 8
-        Time: 26500
+        Time: 24000
       - Level: 9
-        Time: 29500
+        Time: 27000
       - Level: 10
-        Time: 32500
+        Time: 30000
       - Level: 11
-        Time: 32500
+        Time: 30000
     FixedCastTime: 160
     Requires:
       SpCost:
@@ -779,8 +780,8 @@ Body:
     Element: Earth
     CastCancel: true
     CastTime: 800
-    Duration1: 5000
-    Duration2: 20000
+    Duration1: 17000
+    Duration2: 5000
     FixedCastTime: 200
     Requires:
       SpCost:
@@ -807,7 +808,7 @@ Body:
       ItemCost:
         - Item: Red_Gemstone
           Amount: 1
-    Status: Stone
+    Status: StoneWait
   - Id: 17
     Name: MG_FIREBALL
     Description: Fire Ball
@@ -2022,7 +2023,7 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    Duration2: 20000
+    Duration2: 18000
     Requires:
       SpCost: 12
     Status: Poison
@@ -2617,7 +2618,7 @@ Body:
     HitCount: 1
     CastCancel: true
     AfterCastActDelay: 2000
-    Duration2: 20000
+    Duration2: 18000
     Requires:
       SpCost: 5
     Status: Blind
@@ -3217,7 +3218,7 @@ Body:
         Time: 6000
       - Level: 10
         Time: 7000
-    Duration2: 5000
+    Duration2: 4500
     Cooldown: 7000
     FixedCastTime:
       - Level: 1
@@ -3432,7 +3433,7 @@ Body:
         Time: 4500
     AfterCastActDelay: 1000
     Duration1: 1000
-    Duration2: 20000
+    Duration2: 18000
     Cooldown: 5000
     FixedCastTime:
       - Level: 1
@@ -3664,25 +3665,25 @@ Body:
     AfterCastActDelay: 200
     Duration2:
       - Level: 1
-        Time: 4000
+        Time: 1500
       - Level: 2
-        Time: 5500
+        Time: 3000
       - Level: 3
-        Time: 7000
+        Time: 4500
       - Level: 4
-        Time: 8500
+        Time: 6000
       - Level: 5
-        Time: 10000
+        Time: 7500
       - Level: 6
-        Time: 11500
+        Time: 9000
       - Level: 7
-        Time: 13000
+        Time: 10500
       - Level: 8
-        Time: 14500
+        Time: 12000
       - Level: 9
-        Time: 16000
+        Time: 13500
       - Level: 10
-        Time: 17500
+        Time: 15000
     FixedCastTime:
       - Level: 1
         Time: 160
@@ -3768,7 +3769,7 @@ Body:
         Time: 6300
     AfterCastActDelay: 1000
     Duration1: 4500
-    Duration2: 30000
+    Duration2: 27000
     Cooldown: 6000
     FixedCastTime:
       - Level: 1
@@ -4161,7 +4162,7 @@ Body:
         Area: 2
       - Level: 6
         Area: 12
-    Duration2: 5000
+    Duration2: 4500
     Requires:
       SpCost: 10
       Weapon:
@@ -4428,7 +4429,7 @@ Body:
         Time: 80000
       - Level: 5
         Time: 40000
-    Duration2: 5000
+    Duration2: 4500
     FixedCastTime: 300
     Requires:
       SpCost: 10
@@ -4571,7 +4572,7 @@ Body:
         Time: 60000
       - Level: 5
         Time: 30000
-    Duration2: 20000
+    Duration2: 18000
     Requires:
       SpCost: 12
       ItemCost:
@@ -4616,7 +4617,7 @@ Body:
         Time: 60000
       - Level: 5
         Time: 30000
-    Duration2: 20000
+    Duration2: 18000
     Requires:
       SpCost: 12
       ItemCost:
@@ -4669,15 +4670,15 @@ Body:
         Time: 30000
     Duration2:
       - Level: 1
-        Time: 5500
+        Time: 3000
       - Level: 2
-        Time: 8500
+        Time: 6000
       - Level: 3
-        Time: 11500
+        Time: 9000
       - Level: 4
-        Time: 14500
+        Time: 12000
       - Level: 5
-        Time: 17500
+        Time: 15000
     Requires:
       SpCost: 10
       ItemCost:
@@ -5013,7 +5014,7 @@ Body:
     Hit: Multi_Hit
     HitCount: -8
     Element: Weapon
-    Duration2: 5000
+    Duration2: 4500
     Cooldown: 1000
     CastDelayFlags:
       IgnoreStatus: true
@@ -5219,7 +5220,7 @@ Body:
         Time: 45000
       - Level: 10
         Time: 50000
-    Duration2: 20000
+    Duration2: 18000
     Requires:
       SpCost: 20
       ItemCost:
@@ -5364,7 +5365,6 @@ Body:
     Type: Weapon
     Flags:
       IsQuest: true
-    Duration2: 5000
   - Id: 146
     Name: SM_AUTOBERSERK
     Description: Auto Berserk
@@ -5433,7 +5433,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Earth
-    Duration2: 20000
+    Duration2: 18000
     Requires:
       SpCost: 9
     Status: Blind
@@ -5468,7 +5468,6 @@ Body:
     Requires:
       SpCost: 2
       State: Recover_Weight_Rate
-    Status: Stun
   - Id: 152
     Name: TF_THROWSTONE
     Description: Stone Fling
@@ -5487,7 +5486,7 @@ Body:
         Plagiarism: true
         Reproduce: true
     AfterCastActDelay: 100
-    Duration1: 5000
+    Duration1: 4500
     Duration2: 20000
     Requires:
       SpCost: 2
@@ -5878,7 +5877,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    Duration2: 20000
+    Duration2: 18000
     Status: Poison
   - Id: 177
     Name: NPC_BLINDATTACK
@@ -5892,7 +5891,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    Duration2: 20000
+    Duration2: 18000
     Status: Blind
   - Id: 178
     Name: NPC_SILENCEATTACK
@@ -5906,7 +5905,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    Duration2: 20000
+    Duration2: 18000
     Status: Silence
   - Id: 179
     Name: NPC_STUNATTACK
@@ -5920,7 +5919,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    Duration2: 5000
+    Duration2: 4500
     Status: Stun
   - Id: 180
     Name: NPC_PETRIFYATTACK
@@ -5934,8 +5933,9 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    Duration2: 20000
-    Status: Stone
+    Duration1: 17000
+    Duration2: 100
+    Status: StoneWait
   - Id: 181
     Name: NPC_CURSEATTACK
     Description: Curse Attack
@@ -5948,7 +5948,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Dark
-    Duration2: 30000
+    Duration2: 28000
     Status: Curse
   - Id: 182
     Name: NPC_SLEEPATTACK
@@ -5962,7 +5962,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    Duration2: 30000
+    Duration2: 18000
     Status: Sleep
   - Id: 183
     Name: NPC_RANDOMATTACK
@@ -6320,7 +6320,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    Duration2: 5000
+    Duration2: 4500
     Status: Stun
   - Id: 207
     Name: NPC_HALLUCINATION
@@ -6393,7 +6393,7 @@ Body:
         Plagiarism: true
         Reproduce: true
     AfterCastActDelay: 500
-    Duration1: 5000
+    Duration1: 4500
     Cooldown: 500
     Requires:
       SpCost: 16
@@ -6841,7 +6841,7 @@ Body:
         Time: 12
       - Level: 5
         Time: 13
-    Duration2: 120000
+    Duration2: 108000
     FixedCastTime: 500
     Requires:
       SpCost: 15
@@ -7184,7 +7184,7 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    Duration2: 5000
+    Duration2: 4500
     Requires:
       SpCost: 10
       State: Shield
@@ -7267,7 +7267,7 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    Duration2: 20000
+    Duration2: 18000
     Requires:
       SpCost:
         - Level: 1
@@ -7313,7 +7313,7 @@ Body:
     AfterCastActDelay: 500
     AfterCastWalkDelay: 1000
     Duration1: 950
-    Duration2: 20000
+    Duration2: 18000
     Cooldown: 1000
     FixedCastTime: 500
     Requires:
@@ -8953,7 +8953,7 @@ Body:
     HitCount: 1
     SplashArea: -1
     AfterCastActDelay: 300
-    Duration2: 30000
+    Duration2: 27000
     Cooldown: 4000
     Requires:
       SpCost:
@@ -9210,7 +9210,7 @@ Body:
     HitCount: 1
     SplashArea: -1
     AfterCastActDelay: 300
-    Duration2: 5000
+    Duration2: 4500
     Cooldown: 4000
     Requires:
       SpCost:
@@ -9517,7 +9517,7 @@ Body:
     Hit: Multi_Hit
     HitCount: -2
     Element: Dark
-    Duration2: 20000
+    Duration2: 18000
     Status: Blind
   - Id: 339
     Name: NPC_GRANDDARKNESS
@@ -9536,7 +9536,7 @@ Body:
     HitCount: 1
     Element: Dark
     AfterCastWalkDelay: 1000
-    Duration1: 20000
+    Duration1: 18000
     Unit:
       Id: Dummyskill
       Layout: -1
@@ -11187,7 +11187,7 @@ Body:
     HitCount: 1
     Element: Weapon
     AfterCastActDelay: 500
-    Duration2: 120000
+    Duration2: 108000
     Requires:
       SpCost: 23
     Status: Bleeding
@@ -11267,7 +11267,7 @@ Body:
     CastCancel: true
     CastTime: 800
     AfterCastActDelay: 500
-    Duration2: 20000
+    Duration2: 18000
     Cooldown: 1000
     FixedCastTime: 200
     Requires:
@@ -11680,7 +11680,7 @@ Body:
     Hit: Multi_Hit
     HitCount: -3
     Element: Weapon
-    Duration2: 3000
+    Duration2: 2500
     Requires:
       SpCost:
         - Level: 1
@@ -13051,7 +13051,7 @@ Body:
     Element: Endowed
     CastTime: 80
     AfterCastActDelay: 500
-    Duration1: 2000
+    Duration1: 1500
     FixedCastTime: 20
     Requires:
       SpCost:
@@ -13573,7 +13573,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    Duration2: 5000
+    Duration2: 4500
     Requires:
       SpCost: 15
       ZenyCost:
@@ -14153,7 +14153,7 @@ Body:
     HitCount: 1
     Element: Weapon
     AfterCastActDelay: 1000
-    Duration2: 5000
+    Duration2: 4500
     Requires:
       SpCost: 10
       Ammo:
@@ -14301,7 +14301,7 @@ Body:
     Element: Weapon
     CastTime: 1200
     AfterCastActDelay: 500
-    Duration2: 120000
+    Duration2: 108000
     FixedCastTime: 300
     Requires:
       SpCost:
@@ -15595,15 +15595,15 @@ Body:
     Duration1: 100
     Duration2:
       - Level: 1
-        Time: 7500
+        Time: 5000
       - Level: 2
-        Time: 12500
+        Time: 10000
       - Level: 3
-        Time: 17500
+        Time: 15000
       - Level: 4
-        Time: 22500
+        Time: 20000
       - Level: 5
-        Time: 27500
+        Time: 25000
     Cooldown: 300
     FixedCastTime: 800
     Requires:
@@ -16083,7 +16083,7 @@ Body:
     Element: Water
     SplashArea: 3
     ActiveInstance: 14
-    Duration2: 30000
+    Duration2: 27000
     Status: Freeze
   - Id: 656
     Name: NPC_THUNDERBREATH
@@ -16113,7 +16113,7 @@ Body:
     Element: Poison
     SplashArea: 3
     ActiveInstance: 14
-    Duration2: 20000
+    Duration2: 18000
     Status: Poison
   - Id: 658
     Name: NPC_DARKNESSBREATH
@@ -16174,7 +16174,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    Duration2: 120000
+    Duration2: 108000
     Status: Bleeding
   - Id: 661
     Name: NPC_PULSESTRIKE
@@ -16192,7 +16192,6 @@ Body:
     HitCount: 1
     SplashArea: 7
     Knockback: 7
-    Status: Bleeding
   - Id: 662
     Name: NPC_HELLJUDGEMENT
     Description: Hell's Judgement
@@ -16208,7 +16207,7 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: 14
-    Duration2: 20000
+    Duration2: 18000
     Status: Curse
   - Id: 663
     Name: NPC_WIDESILENCE
@@ -16234,7 +16233,7 @@ Body:
         Area: 11
       - Level: 5
         Area: 14
-    Duration2: 20000
+    Duration2: 18000
     Status: Silence
   - Id: 664
     Name: NPC_WIDEFREEZE
@@ -16260,7 +16259,7 @@ Body:
         Area: 11
       - Level: 5
         Area: 14
-    Duration2: 30000
+    Duration2: 27000
     Status: Freeze
   - Id: 665
     Name: NPC_WIDEBLEEDING
@@ -16286,7 +16285,7 @@ Body:
         Area: 11
       - Level: 5
         Area: 14
-    Duration2: 120000
+    Duration2: 108000
     Status: Bleeding
   - Id: 666
     Name: NPC_WIDESTONE
@@ -16312,8 +16311,9 @@ Body:
         Area: 11
       - Level: 5
         Area: 14
-    Duration2: 20000
-    Status: Stone
+    Duration1: 17000
+    Duration2: 100
+    Status: StoneWait
   - Id: 667
     Name: NPC_WIDECONFUSE
     Description: Wide Confusion
@@ -16338,7 +16338,7 @@ Body:
         Area: 11
       - Level: 5
         Area: 14
-    Duration2: 30000
+    Duration2: 18000
     Status: Confusion
   - Id: 668
     Name: NPC_WIDESLEEP
@@ -16364,7 +16364,7 @@ Body:
         Area: 11
       - Level: 5
         Area: 14
-    Duration2: 30000
+    Duration2: 18000
     Status: Sleep
   - Id: 669
     Name: NPC_WIDESIGHT
@@ -16423,7 +16423,7 @@ Body:
         Time: 11900
       - Level: 10
         Time: 12900
-    Duration2: 20000
+    Duration2: 18000
     Unit:
       Id: Evilland
       Layout: 1
@@ -16631,7 +16631,7 @@ Body:
         Area: 11
       - Level: 5
         Area: 14
-    Duration2: 20000
+    Duration2: 18000
     Status: Curse
   - Id: 678
     Name: NPC_WIDESTUN
@@ -16657,7 +16657,7 @@ Body:
         Area: 11
       - Level: 5
         Area: 14
-    Duration2: 5000
+    Duration2: 4500
     Status: Stun
   - Id: 679
     Name: NPC_VAMPIRE_GIFT
@@ -17039,6 +17039,7 @@ Body:
     Range: 11
     Hit: Multi_Hit
     HitCount: -20
+    Duration1: 18000
     SplashArea: 9
     Knockback: 2
     CastCancel: true
@@ -17251,15 +17252,15 @@ Body:
         Area: 9
     Duration1:
       - Level: 1
-        Time: 12500
+        Time: 10000
       - Level: 2
-        Time: 17500
+        Time: 15000
       - Level: 3
-        Time: 22500
+        Time: 20000
       - Level: 4
-        Time: 27500
+        Time: 25000
       - Level: 5
-        Time: 32500
+        Time: 30000
     Status: Freeze
   - Id: 721
     Name: NPC_WIDEWEB
@@ -17308,7 +17309,7 @@ Body:
     HitCount: 1
     Element: Water
     Duration1: 4500
-    Duration2: 30000
+    Duration2: 27000
     Unit:
       Id: Dummyskill
       Layout: 5
@@ -17575,7 +17576,7 @@ Body:
     Element: Fire
     SplashArea: 3
     ActiveInstance: 3
-    Duration1: 3000
+    Duration1: 2500
     Unit:
       Id: Magma_Eruption
       Range: 3
@@ -18240,7 +18241,7 @@ Body:
     SplashArea: 1
     Knockback: 5
     AfterCastActDelay: 2000
-    Duration2: 5000
+    Duration2: 4500
     Requires:
       HpCost: 200
       SpCost: 40
@@ -18566,7 +18567,6 @@ Body:
         2hSword: true
         1hSpear: true
         2hSpear: true
-    Status: Fear
   - Id: 2006
     Name: RK_IGNITIONBREAK
     Description: Ignition Break
@@ -18659,7 +18659,7 @@ Body:
       - Level: 10
         Time: 2000
     AfterCastActDelay: 2000
-    Duration1: 10000
+    Duration1: 18000
     FixedCastTime: 500
     Requires:
       SpCost:
@@ -18933,7 +18933,7 @@ Body:
         Time: 12000
       - Level: 5
         Time: 14000
-    Duration2: 15000
+    Duration2: 18000
     Cooldown: 4000
     Requires:
       SpCost:
@@ -19234,15 +19234,16 @@ Body:
     AfterCastActDelay: 2000
     Duration1:
       - Level: 1
-        Time: 10000
+        Time: 7000
       - Level: 2
-        Time: 12000
+        Time: 9000
       - Level: 3
-        Time: 14000
+        Time: 11000
       - Level: 4
-        Time: 16000
+        Time: 13000
       - Level: 5
-        Time: 18000
+        Time: 15000
+    Duration2: 100
     Requires:
       SpCost:
         - Level: 1
@@ -19258,7 +19259,7 @@ Body:
       ItemCost:
         - Item: Red_Gemstone
           Amount: 2
-    Status: Stone
+    Status: StoneWait
   - Id: 2208
     Name: WL_RADIUS
     Description: Radius
@@ -19376,7 +19377,7 @@ Body:
     CastCancel: true
     CastTime: 5000
     AfterCastActDelay: 500
-    Duration1: 5000
+    Duration1: 4500
     Cooldown: 5000
     FixedCastTime: 1000
     Requires:
@@ -19423,7 +19424,6 @@ Body:
     CastCancel: true
     CastTime: 3000
     AfterCastActDelay: 500
-    Duration1: 15000
     Cooldown: 3000
     FixedCastTime: 1000
     Requires:
@@ -19438,7 +19438,6 @@ Body:
           Amount: 82
         - Level: 5
           Amount: 88
-    Status: Burning
   - Id: 2213
     Name: WL_COMET
     Description: Comet
@@ -21913,7 +21912,7 @@ Body:
       Skill:
         Reproduce: true
     Duration1: 15000
-    Duration2: 15000
+    Duration2: 13000
     Requires:
       SpCost: 10
       ItemCost:
@@ -24640,7 +24639,7 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    Duration1: 5000
+    Duration1: 4500
     Requires:
       SpCost:
         - Level: 1
@@ -24734,7 +24733,7 @@ Body:
         Time: 3000
       - Level: 5
         Time: 3000
-    Duration2: 5000
+    Duration2: 4500
     Cooldown: 3000
     Requires:
       SpCost:
@@ -27266,6 +27265,7 @@ Body:
       - Level: 5
         Time: 6000
     AfterCastActDelay: 1000
+    Duration1: 18000
     Cooldown: 2000
     FixedCastTime:
       - Level: 1
@@ -29227,7 +29227,7 @@ Body:
     Element: Weapon
     CastTime: 1000
     AfterCastActDelay: 1000
-    Duration1: 120000
+    Duration1: 108000
     Cooldown: 2000
     FixedCastTime: 2000
     Requires:
@@ -29971,7 +29971,7 @@ Body:
       - Level: 5
         Time: 9000
     AfterCastActDelay: 1000
-    Duration2: 2000
+    Duration2: 1500
     Cooldown: 5000
     FixedCastTime: 1000
     Requires:
@@ -30051,7 +30051,6 @@ Body:
       Weapon:
         Rifle: true
       SpiritSphereCost: -1
-    Status: Stun
   - Id: 2572
     Name: RL_R_TRIP_PLUSATK
     Description: Round Trip Plus Attack
@@ -30118,7 +30117,7 @@ Body:
     Element: Weapon
     SplashArea: 3
     CastCancel: true
-    Duration1: 20000
+    Duration1: 18000
     Cooldown: 1000
     Requires:
       SpCost:
@@ -30276,7 +30275,7 @@ Body:
     SplashArea: 3
     CastCancel: true
     AfterCastActDelay: 1000
-    Duration1: 7000
+    Duration1: 5000
     Cooldown: 10000
     FixedCastTime: 1000
     Requires:
@@ -31900,15 +31899,15 @@ Body:
     AfterCastActDelay: 1000
     Duration1:
       - Level: 1
-        Time: 8000
+        Time: 6000
       - Level: 2
-        Time: 10000
+        Time: 8000
       - Level: 3
-        Time: 12000
+        Time: 10000
       - Level: 4
-        Time: 14000
+        Time: 12000
       - Level: 5
-        Time: 16000
+        Time: 14000
     Cooldown: 10000
     Requires:
       SpCost:
@@ -32014,6 +32013,7 @@ Body:
     CastCancel: true
     AfterCastActDelay: 1000
     Duration1: 10000
+    Duration2: 5000
     Requires:
       SpCost: 30
     Unit:
@@ -32690,7 +32690,7 @@ Body:
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1: 5000
-    Duration2: 5000
+    Duration2: 4500
     Cooldown:
       - Level: 1
         Time: 10000
@@ -33021,7 +33021,7 @@ Body:
     Range: 1
     Hit: Single
     HitCount: 1
-    Duration2: 20000
+    Duration2: 18000
     Status: Burning
   - Id: 5018
     Name: SU_BASIC_SKILL
@@ -33073,7 +33073,7 @@ Body:
     SplashArea: 1
     CastCancel: true
     AfterCastActDelay: 1000
-    Duration2: 120000
+    Duration2: 108000
     Cooldown:
       - Level: 1
         Time: 3000
@@ -33165,7 +33165,7 @@ Body:
     CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 1000
-    Duration2: 120000
+    Duration2: 108000
     Requires:
       SpCost: 40
     Status: Bleeding
@@ -33264,7 +33264,7 @@ Body:
         Time: 3000
       - Level: 5
         Time: 3500
-    Duration2: 20000
+    Duration2: 18000
     Cooldown: 5000
     FixedCastTime: 3000
     Requires:
@@ -33484,7 +33484,7 @@ Body:
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
-    Duration2: 5000
+    Duration2: 4500
     Cooldown: 6000
     Requires:
       SpCost:
@@ -41723,7 +41723,7 @@ Body:
         Size: 9
     Hit: Single
     HitCount: 1
-    Duration1: 5000
+    Duration1: 4500
     FixedCastTime: 500
     Requires:
       SpCost:
@@ -42761,7 +42761,7 @@ Body:
         Time: 80000
       - Level: 5
         Time: 40000
-    Duration2: 5000
+    Duration2: 4500
     Requires:
       SpCost: 10
     Unit:
@@ -42801,17 +42801,7 @@ Body:
         Time: 60000
       - Level: 5
         Time: 30000
-    Duration2:
-      - Level: 1
-        Time: 12000
-      - Level: 2
-        Time: 14000
-      - Level: 3
-        Time: 16000
-      - Level: 4
-        Time: 18000
-      - Level: 5
-        Time: 20000
+    Duration2: 18000
     Requires:
       SpCost: 12
     Unit:
@@ -42856,15 +42846,15 @@ Body:
         Time: 30000
     Duration2:
       - Level: 1
-        Time: 5500
+        Time: 3000
       - Level: 2
-        Time: 8500
+        Time: 6000
       - Level: 3
-        Time: 11500
+        Time: 9000
       - Level: 4
-        Time: 14500
+        Time: 12000
       - Level: 5
-        Time: 17500
+        Time: 15000
     Requires:
       SpCost: 10
     Unit:
@@ -43264,7 +43254,7 @@ Body:
     Element: Weapon
     CastTime: 1000
     AfterCastActDelay: 2000
-    Duration2: 5000
+    Duration2: 4500
     CastTimeFlags:
       IgnoreDex: true
       IgnoreStatus: true
