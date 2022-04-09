@@ -140547,7 +140547,7 @@ Body:
     ArmorLevel: 1
     View: 2142
   - Id: 410072
-    AegisName: aegis_410072
+    AegisName: C_Demons_Familiar
     Name: Costume Demons Familia    # !todo check english name
     Type: Armor
     Locations:
@@ -141225,7 +141225,7 @@ Body:
     ArmorLevel: 1
     View: 2150
   - Id: 420079
-    AegisName: aegis_420079
+    AegisName: C_Inner_Color_Long
     Name: Costume Inner Color Long
     Type: Armor
     Locations:
@@ -151929,7 +151929,7 @@ Body:
          bonus bSPGainValue,10;
       }
   - Id: 490113
-    AegisName: aegis_490113
+    AegisName: Jasper_Ring
     Name: Jasper Ring    # !todo check english name
     Type: Armor
     Weight: 400

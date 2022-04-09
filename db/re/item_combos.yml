@@ -25748,7 +25748,7 @@ Body:
       bonus2 bIgnoreDefRaceRate,RC_All,5;
   - Combos:
       - Combo:
-          - aegis_490113     # 490113
+          - Jasper_Ring     # 490113
           - Bear's_Power     # 4875
     Script: |
       bonus2 bSkillCooldown,"RK_IGNITIONBREAK",-200;
