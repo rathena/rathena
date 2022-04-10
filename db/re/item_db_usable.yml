@@ -46175,6 +46175,14 @@ Body:
     Weight: 10
     Script: |
       laphine_synthesis();
+  - Id: 23161
+    AegisName: Gunslinger_Box
+    Name: Gunslinger Box
+    Type: Usable
+    Weight: 1
+    Script: |
+      getitem 23100,1;
+      getitem 19157,1;
   - Id: 23168
     AegisName: Mini_Fan_Box
     Name: Mini Fan Box
