@@ -46,7 +46,7 @@ const std::string AchievementDatabase::getDefaultLocation(){
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 AchievementDatabase::parseBodyNode(const ryml::NodeRef node){
+uint64 AchievementDatabase::parseBodyNode(const ryml::NodeRef& node){
 	uint32 achievement_id;
 
 	if( !this->asUInt32( node, "Id", achievement_id ) ){
@@ -97,9 +97,9 @@ uint64 AchievementDatabase::parseBodyNode(const ryml::NodeRef node){
 	}
 
 	if( this->nodeExists( node, "Targets" ) ){
-		const auto targets = node["Targets"];
+		const auto& targets = node["Targets"];
 
-		for( const auto targetNode : targets.children() ){
+		for( const auto& targetNode : targets ){
 			uint16 targetId;
 
 			if( !this->asUInt16( targetNode, "Id", targetId ) ){
@@ -230,9 +230,9 @@ uint64 AchievementDatabase::parseBodyNode(const ryml::NodeRef node){
 	}
 
 	if( this->nodeExists( node, "Dependents" ) ){
-		const auto dependentNode = node["Dependents"];
+		const auto& dependentNode = node["Dependents"];
 
-		for( const auto it : dependentNode.children() ){
+		for( const auto& it : dependentNode ){
 			auto id_str = it.key();
 			uint32 dependent_achievement_id;
 			c4::atou<uint32>(id_str, &dependent_achievement_id);
@@ -259,7 +259,7 @@ uint64 AchievementDatabase::parseBodyNode(const ryml::NodeRef node){
 	}
 
 	if( this->nodeExists( node, "Rewards" ) ){
-		const auto rewardNode = node["Rewards"];
+		const auto& rewardNode = node["Rewards"];
 
 		if( this->nodeExists( rewardNode, "Item" ) ){
 			std::string item_name;
@@ -387,7 +387,7 @@ const std::string AchievementLevelDatabase::getDefaultLocation(){
 	return std::string(db_path) + "/achievement_level_db.yml";
 }
 
-uint64 AchievementLevelDatabase::parseBodyNode( const ryml::NodeRef node ){
+uint64 AchievementLevelDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	if( !this->nodesExist( node, { "Level", "Points" } ) ){
 		return 0;
 	}

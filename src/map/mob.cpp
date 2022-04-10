@@ -4183,8 +4183,8 @@ const std::string MobDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/mob_db.yml";
 }
 
-bool MobDatabase::parseDropNode(std::string nodeName, ryml::NodeRef node, uint8 max, s_mob_drop *drops) {
-	const auto dropNode = node[c4::to_csubstr(nodeName)];
+bool MobDatabase::parseDropNode(std::string nodeName, const ryml::NodeRef& node, uint8 max, s_mob_drop *drops) {
+	const auto& dropNode = node[c4::to_csubstr(nodeName)];
 	uint16 i;
 
 	// Find first empty spot
@@ -4194,7 +4194,7 @@ bool MobDatabase::parseDropNode(std::string nodeName, ryml::NodeRef node, uint8 
 		}
 	}
 
-	for (const auto dropit : dropNode.children()) {
+	for (const auto& dropit : dropNode) {
 		uint16 index;
 
 		if (this->nodeExists(dropit, "Index")) {
@@ -4264,7 +4264,7 @@ bool MobDatabase::parseDropNode(std::string nodeName, ryml::NodeRef node, uint8 
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 MobDatabase::parseBodyNode(const ryml::NodeRef node) {
+uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	uint32 mob_id;
 
 	if (!this->asUInt32(node, "Id", mob_id))
@@ -4655,9 +4655,9 @@ uint64 MobDatabase::parseBodyNode(const ryml::NodeRef node) {
 	}
 
 	if (this->nodeExists(node, "RaceGroups")) {
-		const auto raceNode = node["RaceGroups"];
+		const auto& raceNode = node["RaceGroups"];
 
-		for (const auto &raceit : raceNode.children()) {
+		for (const auto &raceit : raceNode) {
 			std::string raceName;
 			c4::from_chars(raceit.key(), &raceName);
 			std::string raceName_constant = "RC2_" + raceName;
@@ -4846,9 +4846,9 @@ uint64 MobDatabase::parseBodyNode(const ryml::NodeRef node) {
 	}
 
 	if (this->nodeExists(node, "Modes")) {
-		const auto modeNode = node["Modes"];
+		const auto& modeNode = node["Modes"];
 
-		for (const auto modeit : modeNode.children()) {
+		for (const auto& modeit : modeNode) {
 			std::string modeName;
 			c4::from_chars(modeit.key(), &modeName);
 			std::string modeName_constant = "MD_" + modeName;
@@ -4964,6 +4964,7 @@ MobDatabase mob_db;
 static bool mob_read_sqldb_sub(std::vector<std::string> str) {
 	ryml::Tree tree;
 	ryml::NodeRef node = tree.rootref();
+	node |= ryml::MAP;
 	int32 index = -1;
 
 	node["Id"] << str[++index];
@@ -5016,11 +5017,17 @@ static bool mob_read_sqldb_sub(std::vector<std::string> str) {
 	if (!str[++index].empty() && strcmp(str[index].c_str(), "Formless") != 0)
 		node["Race"] << str[index];
 
+	ryml::NodeRef raceGroupsNode = node["RaceGroups"];
+	bool groupheader = false;
+
 	for (uint16 i = 1; i < RC2_MAX; i++) {
 		if (!str[i + index].empty()) {
-			auto raceGroupsNode = node["RaceGroups"];
-			raceGroupsNode |= ryml::MAP;
-			node["RaceGroups"][c4::to_csubstr(script_get_constant_str("RC2_", i) + 4)] << (std::stoi(str[i + index]) ? "true" : "false");
+			if (!groupheader) {
+				raceGroupsNode |= ryml::MAP;
+				groupheader = true;
+			}
+
+			raceGroupsNode[c4::to_csubstr(script_get_constant_str("RC2_", i) + 4)] << (std::stoi(str[i + index]) ? "true" : "false");
 		}
 	}
 
@@ -5101,36 +5108,54 @@ static bool mob_read_sqldb_sub(std::vector<std::string> str) {
 	if (!str[++index].empty())
 		modes["SkillImmune"] << (std::stoi(str[index]) ? "true" : "false");
 
+	ryml::NodeRef mvpDropsNode = node["MvpDrops"];
+	bool mvpheader = false;
+
 	for (uint8 i = 0; i < MAX_MVP_DROP; i++) {
-		ryml::NodeRef mvpDropsNode = node["MvpDrops"];
-		mvpDropsNode |= ryml::SEQ;
-		
-		if (!str[++index].empty()) {
-			mvpDropsNode.append_child() << ryml::key("Item") << str[index];
-			if (!str[++index].empty())
-				mvpDropsNode[i].append_sibling() << ryml::key("Rate") << str[index];
-			if (!str[++index].empty() && strcmp(str[index].c_str(), "None") != 0)
-				mvpDropsNode[i].append_sibling() << ryml::key("RandomOptionGroup") << str[index];
-			if (!str[++index].empty() && std::stoi(str[index]) >= 0)
-				mvpDropsNode[i].append_sibling() << ryml::key("Index") << str[index];
+		if (!mvpheader) {
+			mvpDropsNode |= ryml::SEQ;
+			mvpheader = true;
 		}
+
+		if (!str[++index].empty()) {
+			ryml::NodeRef entry = mvpDropsNode[i];
+			entry |= ryml::MAP;
+
+			entry["Item"] << str[index];
+			if (!str[++index].empty())
+				entry["Rate"] << str[index];
+			if (!str[++index].empty() && strcmp(str[index].c_str(), "None") != 0)
+				entry["RandomOptionGroup"] << str[index];
+			if (!str[++index].empty() && std::stoi(str[index]) >= 0)
+				entry["Index"] << str[index];
+		} else
+			index += 3;
 	}
 
+	ryml::NodeRef dropsNode = node["Drops"];
+	bool dropheader = false;
+
 	for (uint8 i = 0; i < MAX_MOB_DROP; i++) {
-		ryml::NodeRef dropsNode = node["Drops"];
-		dropsNode |= ryml::SEQ;
+		if (!dropheader) {
+			dropsNode |= ryml::SEQ;
+			dropheader = true;
+		}
 
 		if (!str[++index].empty()) {
-			dropsNode.append_child() << ryml::key("Item") << str[index];
+			ryml::NodeRef entry = dropsNode[i];
+			entry |= ryml::MAP;
+
+			entry["Item"] << str[index];
 			if (!str[++index].empty())
-				dropsNode[i].append_sibling() << ryml::key("Rate") << str[index];
+				entry["Rate"] << str[index];
 			if (!str[++index].empty())
-				dropsNode[i].append_sibling() << ryml::key("StealProtected") << (std::stoi(str[index]) ? "true" : "false");
+				entry["StealProtected"] << (std::stoi(str[index]) ? "true" : "false");
 			if (!str[++index].empty() && strcmp(str[index].c_str(), "None") != 0)
-				dropsNode[i].append_sibling() << ryml::key("RandomOptionGroup") << str[index];
+				entry["RandomOptionGroup"] << str[index];
 			if (!str[++index].empty() && std::stoi(str[index]) >= 0)
-				dropsNode[i].append_sibling() << ryml::key("Index") << str[index];
-		}
+				entry["Index"] << str[index];
+		} else
+			index += 4;
 	}
 
 #ifdef RENEWAL
@@ -5214,7 +5239,7 @@ const std::string MobAvailDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 MobAvailDatabase::parseBodyNode(const ryml::NodeRef node) {
+uint64 MobAvailDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	std::string mob_name;
 
 	if (!this->asString(node, "Mob", mob_name))
@@ -5471,9 +5496,9 @@ uint64 MobAvailDatabase::parseBodyNode(const ryml::NodeRef node) {
 	}
 
 	if (this->nodeExists(node, "Options")) {
-		const auto optionNode = node["Options"];
+		const auto& optionNode = node["Options"];
 
-		for (const auto it : optionNode.children()) {
+		for (const auto& it : optionNode) {
 			std::string option;
 			c4::from_chars(it.key(), &option);
 			std::string option_constant = "OPTION_" + option;
@@ -5520,7 +5545,7 @@ const std::string MobSummonDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 MobSummonDatabase::parseBodyNode(const ryml::NodeRef node) {
+uint64 MobSummonDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	std::string group_name;
 
 	if (!this->asString(node, "Group", group_name))
@@ -5564,9 +5589,9 @@ uint64 MobSummonDatabase::parseBodyNode(const ryml::NodeRef node) {
 	}
 
 	if (this->nodeExists(node, "Summon")) {
-		const auto MobNode = node["Summon"];
+		const auto& MobNode = node["Summon"];
 
-		for (const auto mobit : MobNode.children()) {
+		for (const auto& mobit : MobNode) {
 			if (!this->nodesExist(mobit, { "Mob", "Rate" })) {
 				continue;
 			}
@@ -5622,7 +5647,7 @@ const std::string MobChatDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 MobChatDatabase::parseBodyNode(const ryml::NodeRef node) {
+uint64 MobChatDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	uint16 id;
 
 	if (!this->asUInt16(node, "Id", id))
@@ -5999,7 +6024,7 @@ const std::string MobItemRatioDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 MobItemRatioDatabase::parseBodyNode(const ryml::NodeRef node) {
+uint64 MobItemRatioDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	std::string item_name;
 
 	if (!this->asString(node, "Item", item_name))
@@ -6036,9 +6061,9 @@ uint64 MobItemRatioDatabase::parseBodyNode(const ryml::NodeRef node) {
 	}
 
 	if (this->nodeExists(node, "List")) {
-		const auto MobNode = node["List"];
+		const auto& MobNode = node["List"];
 
-		for (const auto mobit : MobNode.children()) {
+		for (const auto& mobit : MobNode) {
 			std::string mob_name;
 			c4::from_chars(mobit.key(), &mob_name);
 
