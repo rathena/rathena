@@ -36,37 +36,65 @@
 #   MinDuration               Minimum duration in milliseconds after status change reduction. (Default: 1)
 #   Fail:                     List of Status Changes that causes the status to fail to activate. (Optional)
 #   End:                      List of Status Changes that will end when the status activates. (Optional)
-#   EndReturn                 If the status has an End list and succeeds to remove these status changes, it won't give its effect. (Default: false)
+#   EndReturn:                List of Status Changes that will end when the status activates and won't give its effect. (Optional)
 ###########################################################################
 
 Header:
   Type: STATUS_DB
-  Version: 1
+  Version: 2
 
 Body:
   - Status: Stone
     DurationLookup: NPC_PETRIFYATTACK
     States:
       NoMove: true
-      NoMoveCond: true
       NoCast: true
       NoAttack: true
     CalcFlags:
       Def_Ele: true
       Def: true
       Mdef: true
+    Opt1: Stone
     Flags:
       SendOption: true
       BossResist: true
       StopAttacking: true
       StopCasting: true
+      RemoveOnDamaged: true
     Fail:
       Refresh: true
       Inspiration: true
       Power_Of_Gaia: true
       Gvg_Stone: true
+      Whiteimprison: true
+      Freeze: true
+      Stun: true
+      Sleep: true
+      Burning: true
+      #Undead: true
     End:
-      Dancing: true
+      Aeterna: true
+    EndReturn:
+      StoneWait: true
+      Stone: true
+  - Status: StoneWait
+    DurationLookup: NPC_PETRIFYATTACK
+    States:
+      NoCast: true
+    Opt1: StoneWait
+    Flags:
+      SendOption: true
+      StopAttacking: true
+    Fail:
+      Whiteimprison: true
+      Freeze: true
+      Stun: true
+      Sleep: true
+      Burning: true
+      #Undead: true
+    EndReturn:
+      StoneWait: true
+      Stone: true
   - Status: Freeze
     DurationLookup: NPC_WIDEFREEZE
     States:
@@ -148,7 +176,7 @@ Body:
       Refresh: true
       Inspiration: true
   - Status: Curse
-    DurationLookup: NPC_CURSEATTACK
+    DurationLookup: NPC_WIDECURSE
     CalcFlags:
       Luk: true
       Batk: true
@@ -253,6 +281,11 @@ Body:
       BossResist: true
       Debuff: true
       NoSaveInfinite: true
+    End:
+      Freeze: true
+      Stone: true
+      Sleep: true
+      TrickDead: true
   - Status: Endure
     Icon: EFST_ENDURE
     DurationLookup: SM_ENDURE
@@ -515,6 +548,7 @@ Body:
     Flags:
       NoSave: true
     Fail:
+      Stone: true
       Freeze: true
   - Status: Adrenaline
     Icon: EFST_ADRENALINE
@@ -1242,9 +1276,8 @@ Body:
       NoDispell: true
     Fail:
       Quagmire: true
-    End:
+    EndReturn:
       Decreaseagi: true
-    EndReturn: true
   - Status: Chasewalk
     Icon: EFST_CHASEWALK
     DurationLookup: ST_CHASEWALK
@@ -1330,6 +1363,10 @@ Body:
     Flags:
       NoSave: true
       Debuff: true
+    End:
+      Freeze: true
+      Stone: true
+      Sleep: true
   - Status: Memorize
     Icon: EFST_MEMORIZE
     DurationLookup: PF_MEMORIZE
@@ -2938,6 +2975,7 @@ Body:
     Fail:
       Refresh: true
       Inspiration: true
+      Whiteimprison: true
   - Status: Freezing
     Icon: EFST_FROSTMISTY
     DurationLookup: WL_FROSTMISTY
@@ -2956,7 +2994,7 @@ Body:
       Debuff: true
       OverlapFail: true
       SpreadEffect: true
-    MinDuration: 6000
+    MinDuration: 10000
     Fail:
       Refresh: true
       Inspiration: true
@@ -4322,9 +4360,8 @@ Body:
     Fail:
       Quagmire: true
       Dontforgetme: true
-    End:
+    EndReturn:
       Decreaseagi: true
-    EndReturn: true
   - Status: Thornstrap
     Icon: EFST_THORNS_TRAP
     DurationLookup: GN_THORNS_TRAP
@@ -5930,9 +5967,8 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       NoForcedEnd: true
-    End:
+    EndReturn:
       All_Riding: true
-    EndReturn: true
   - Status: Teargas_Sob
     Flags:
       BossResist: true
