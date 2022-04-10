@@ -8103,7 +8103,7 @@ This function is intended for use in item scripts.
 
 *openbank({<char id>})
 
-Opens the Bank UI for the attached player or the given character id.
+Opens the Bank UI for the attached player or the given character ID.
 
 This command requires packet version 2015-01-28 or newer.
 
