@@ -25841,16 +25841,24 @@ BUILDIN_FUNC( open_quest_ui ){
 }
 
 BUILDIN_FUNC(openbank){
-	TBL_PC* sd = nullptr;
+#if PACKETVER < 20150128
+	ShowError( "buildin_openbank: This command requires PACKETVER 20150128 or newer.\n" );
+	return SCRIPT_CMD_FAILURE;
+#else
+	struct map_session_data* sd = nullptr;
 
 	if (!script_charid2sd(2, sd)) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-#if PACKETVER >= 20150128
+	if( !battle_config.feature_banking ){
+		ShowError( "buildin_openbank: banking is disabled.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	clif_ui_open( sd, OUT_UI_BANK, 0 );
-#endif
 	return SCRIPT_CMD_SUCCESS;
+#endif
 }
 
 #include "../custom/script.inc"
