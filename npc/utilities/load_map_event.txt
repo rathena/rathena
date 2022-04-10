@@ -1,43 +1,19 @@
 prontera	mapflag	loadevent
+morocc	mapflag	loadevent
 
 -	script	LoadMapEvent	-1,{
 	end;
 	
 OnPCLoadMapEvent:
-	if(strcharinfo(3) == "prontera")
+	if((strcharinfo(3) == "morocc")
+			&& (is_small_wish_granted
+				|| (small_wish_points >= 100))){
+		warp "prontera",156,191;
+		
+		end;
+	}
+	else if(strcharinfo(3) == "prontera")
 	bonus_script_clear 1;
-	/*else if(((strcharinfo(3) == .map_1_name$) && (BaseLevel >= .tier_1_lv))
-			|| ((strcharinfo(3) == .map_2_name$) && ((BaseLevel < .tier_1_lv) || (BaseLevel >= .tier_2_lv)))
-			|| ((strcharinfo(3) == .map_3_name$) && ((BaseLevel < .tier_2_lv) || (BaseLevel >= .tier_3_lv)))
-			|| ((strcharinfo(3) == .map_4_name$) && ((BaseLevel < .tier_3_lv) || (BaseLevel >= .tier_4_lv)))
-			|| ((strcharinfo(3) == .map_5_name$) && ((BaseLevel < .tier_4_lv) || (BaseLevel >= .tier_5_lv)))
-			|| ((strcharinfo(3) == .map_6_name$) && ((BaseLevel < .tier_5_lv) || (BaseLevel >= .tier_6_lv)))
-			|| ((strcharinfo(3) == .map_7_name$) && (BaseLevel < .tier_6_lv)))
-	callsub L_LevelMismatch;*/
-	end;
-	
-	L_LevelMismatch:
-	warp "prontera",156,191;
-	message strcharinfo(0),"Level สูงหรือต่่ำเกินไป";
-	return;
-	
-OnInit:
-	// Level range
-	/*.tier_1_lv = 10;
-	.tier_2_lv = 40;
-	.tier_3_lv = 60;
-	.tier_4_lv = 80;
-	.tier_5_lv = 100;
-	.tier_6_lv = 120;
-	.tier_7_lv = 150;*/
-	
-	// Maps
-	/*.map_1_name$ = "payon";
-	.map_2_name$ = "geffen";
-	.map_3_name$ = "morocc";
-	.map_4_name$ = "xmas";
-	.map_5_name$ = "amatsu";
-	.map_6_name$ = "lighthalzen";
-	.map_7_name$ = "dewata";*/
+
 	end;
 }

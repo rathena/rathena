@@ -1,0 +1,124 @@
+prontera,156,176,8	script	THE BOX 100 DAY	10007,{
+	if(is_small_wish_granted
+			|| (gettime(DT_DAYOFMONTH) >= 16)){
+		mes "ขอบคุณที่มาลองเล่นนะครับ";
+		close;
+	}
+	
+	// Information
+	mes "๐ ที่เมือง Morocc จะมี Monster 100 ตัว";
+	mes "---";
+	mes "๐ ^FF2929Monster จะมี HP 100m^000000";
+	mes "๐ ^FF2929Monster จะโจมตีทะลุพล้งป้องกันทุกชนิด^000000";
+	mes "๐ ^FF2929Monster จะก้าวร้าวทุกตัว^000000";
+	mes "---";
+	mes "รางวัล";
+	mes "๐ ^3629FFแต้มปราถนา (เล็ก) 1 แต้ม สำหรับผู้เล่นที่ Last Shot ได้เท่านั้น เก็บได้มากสุด 100 แต้ม^000000";
+	mes "๐ ^3629FFสามารถใช้แลก Item ที่ต้องการได้ (โอกาสได้ 1%)^000000";
+	mes "๐ ^FF29291 ตัวละครสามารถ แลกรางวัลได้ครั้งเดียวเท่านั้น^000000";
+	mes "๐ ^FF2929หมดเขต 15 เมษายน 2022 เวลา 23.59น.^000000";
+	next;
+	menu "เข้า",-,"แลก Item",L_Trade;
+	warp .map_name$,0,0;
+	end;
+	
+	L_Trade:
+	if(small_wish_points < .req_small_wish_points){
+		mes "ต้องการแต้มปราถนา (เล็ก) " + F_InsertComma(.req_small_wish_points) + " แต้ม";
+		mes "คุณมีแต้มปราถนา (เล็ก) " + F_InsertComma(small_wish_points) + " แต้ม";
+		close;
+	}
+	mes "โปรดระบุ Item ID ที่ต้องการ";
+	next;
+	input .@input;
+	wish_item_id = F_IsItemIdAvailable(.@input);
+	mes "คุณมีแต้มปราถนา (เล็ก) " + F_InsertComma(small_wish_points) + " แต้ม";
+	mes "ต้องการแลก " + getitemname(wish_item_id) + " ด้วย " + F_InsertComma(.req_small_wish_points) + " แต้มปราถนา (เล็ก)?";
+	next;
+	menu "ยกเลิก",-,"ยืนยัน",L_Confirm;
+	close;
+	
+	L_Confirm:
+	if(!checkweight(wish_item_id,1)){
+		mes "น้ำหนักเกินหรือกระเป๋าเต็มแล้ว";
+		close;
+	}
+	while((small_wish_points > 0 )
+	&& !is_small_wish_granted){
+		small_wish_points -= .req_small_wish_points;
+		
+		if(rand(0,100) == 0){
+			clear;
+			mes "ยินดีด้วย คุณได้รับรางวัลแล้ว!";
+			
+			getitem wish_item_id,1;
+			
+			is_small_wish_granted = 1;
+			
+			break;
+		}
+		else{
+			clear;
+			mes "เสียใจด้วย.. ดูเหมือนโชคจะยังไม่เข้าข้างคุณนะ... แต้มปราถนา (เล็ก) คงเหลือ " + F_InsertComma(small_wish_points) + " แต้ม";
+		}
+	}
+	
+	close;
+	
+	L_Spawn:
+	.spawn_amount = getarg(0,0);
+	
+	freeloop(1);
+	
+	for(.@i = 0; .@i < .spawn_amount; .@i++){
+		.@monster_id = $all_mob_ids[rand(0,$all_mob_id_size - 1)];
+		while(F_IsDummyMonster(.@monster_id))
+		.@monster_id = $all_mob_ids[rand(0,$all_mob_id_size - 1)];
+		
+		// Spawn
+		monster .map_name$,0,0,"--ja--",.@monster_id,1,.npc_name$ + "::OnMonsterDead";
+		setunitdata $@mobid[0],UMOB_MAXHP,.monster_max_hp;
+		setunitdata $@mobid[0],UMOB_HP,.monster_max_hp;
+
+		setunitdata $@mobid[0],UMOB_MODE,500;
+		setunitdata $@mobid[0],UMOB_ULTIMA,1;
+		setunitdata $@mobid[0],UMOB_MODE,(MD_CANMOVE | MD_AGGRESSIVE | MD_CANATTACK | MD_ANGRY | MD_MVP | MD_KNOCKBACKIMMUNE | MD_DETECTOR | MD_STATUSIMMUNE);
+	}
+	
+	freeloop(0);
+	
+	return;
+	
+OnMonsterDead:
+	callsub L_Spawn,1;
+
+	// Unexpected error
+	if(playerattached()){
+		if(small_wish_points < .max_small_wish_points){
+			small_wish_points++;
+			message strcharinfo(0),"ได้รับ 1 แต้มปราถนา (เล็ก) รวมเป็น " + F_InsertComma(small_wish_points) + " แต้ม";
+		}
+		else
+		warp "prontera",156,191;
+	}
+	
+	end;
+	
+OnInit:
+	.map_name$ = "morocc";
+	
+	.npc_name$ = strnpcinfo(0);
+	
+	// Monster
+	.monster_amount = 100;
+	.monster_max_hp = 100000000;
+	
+	.req_small_wish_points = 1;
+	.max_small_wish_points = 100;
+	
+	waitingroom "ขอบคุณทุกท่าน! ผ่านมา 100 วันแล้วนะ",0;
+	
+	callsub L_Spawn,.monster_amount;
+	
+	end;
+}
