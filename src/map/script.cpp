@@ -25840,6 +25840,19 @@ BUILDIN_FUNC( open_quest_ui ){
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(openbank){
+	TBL_PC* sd = nullptr;
+
+	if (!script_charid2sd(2, sd)) {
+		return SCRIPT_CMD_FAILURE;
+	}
+
+#if PACKETVER >= 20150128
+	clif_ui_open( sd, OUT_UI_BANK, 0 );
+#endif
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -26553,6 +26566,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(laphine_upgrade, ""),
 	BUILDIN_DEF(randomoptgroup,"i"),
 	BUILDIN_DEF(open_quest_ui, "??"),
+	BUILDIN_DEF(openbank,"?"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
