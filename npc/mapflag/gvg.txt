@@ -15,14 +15,18 @@
 //= 1.4 Disable costumes in GvG castles. [Aleos]
 //============================================================
 
-// GvG Arenas =============
+//============================================================
+// GvG Arenas
+//============================================================
 guild_vs1	mapflag	gvg
 guild_vs2	mapflag	gvg
 guild_vs3	mapflag	gvg
 guild_vs4	mapflag	gvg
 guild_vs5	mapflag	gvg
 
-// Guild Castles ==========
+//============================================================
+// WoE:FE Castles
+//============================================================
 aldeg_cas01	mapflag	gvg_castle
 aldeg_cas02	mapflag	gvg_castle
 aldeg_cas03	mapflag	gvg_castle
@@ -43,6 +47,10 @@ prtg_cas02	mapflag	gvg_castle
 prtg_cas03	mapflag	gvg_castle
 prtg_cas04	mapflag	gvg_castle
 prtg_cas05	mapflag	gvg_castle
+
+//============================================================
+// WoE:SE Castles
+//============================================================
 schg_cas01	mapflag	gvg_castle
 schg_cas02	mapflag	gvg_castle
 schg_cas03	mapflag	gvg_castle
@@ -54,55 +62,24 @@ arug_cas03	mapflag	gvg_castle
 arug_cas04	mapflag	gvg_castle
 arug_cas05	mapflag	gvg_castle
 
-//Uncomment to disable monsters teleporting (prevents them from "escaping" when rude attacked)
-//aldeg_cas01	mapflag	monster_noteleport
-//aldeg_cas02	mapflag	monster_noteleport
-//aldeg_cas03	mapflag	monster_noteleport
-//aldeg_cas04	mapflag	monster_noteleport
-//aldeg_cas05	mapflag	monster_noteleport
-//gefg_cas01	mapflag	monster_noteleport
-//gefg_cas02	mapflag	monster_noteleport
-//gefg_cas03	mapflag	monster_noteleport
-//gefg_cas04	mapflag	monster_noteleport
-//gefg_cas05	mapflag	monster_noteleport
-//payg_cas01	mapflag	monster_noteleport
-//payg_cas02	mapflag	monster_noteleport
-//payg_cas03	mapflag	monster_noteleport
-//payg_cas04	mapflag	monster_noteleport
-//payg_cas05	mapflag	monster_noteleport
-//prtg_cas01	mapflag	monster_noteleport
-//prtg_cas02	mapflag	monster_noteleport
-//prtg_cas03	mapflag	monster_noteleport
-//prtg_cas04	mapflag	monster_noteleport
-//prtg_cas05	mapflag	monster_noteleport
-//schg_cas01	mapflag	monster_noteleport
-//schg_cas02	mapflag	monster_noteleport
-//schg_cas03	mapflag	monster_noteleport
-//schg_cas04	mapflag	monster_noteleport
-//schg_cas05	mapflag	monster_noteleport
-//arug_cas01	mapflag	monster_noteleport
-//arug_cas02	mapflag	monster_noteleport
-//arug_cas03	mapflag	monster_noteleport
-//arug_cas04	mapflag	monster_noteleport
-//arug_cas05	mapflag	monster_noteleport
-
-// Novice Guild Castles ===
+//============================================================
+// WoE:Novice Castles
+//============================================================
 //n_castle	mapflag	gvg_castle
 nguild_alde	mapflag	gvg_castle
 nguild_gef	mapflag	gvg_castle
 nguild_pay	mapflag	gvg_castle
 nguild_prt	mapflag	gvg_castle
 
-//nguild_alde	mapflag	monster_noteleport
-//nguild_gef	mapflag	monster_noteleport
-//nguild_pay	mapflag	monster_noteleport
-//nguild_prt	mapflag	monster_noteleport
-
-// Guild Dungeons =========
+//============================================================
+// Guild Dungeons
+//============================================================
 arug_dun01	mapflag	gvg_dungeon
 schg_dun01	mapflag	gvg_dungeon
 
-// RWC Maps ===============
+//============================================================
+// RWC
+//============================================================
 2009rwc_01	mapflag	gvg
 2009rwc_02	mapflag	gvg
 2009rwc_03	mapflag	gvg
@@ -120,40 +97,3 @@ schg_dun01	mapflag	gvg_dungeon
 2012rwc_06	mapflag	gvg
 2012rwc_07	mapflag	gvg
 2012rwc_08	mapflag	gvg
-
-// Disable Costumes =======
-aldeg_cas01	mapflag	nocostume
-aldeg_cas02	mapflag	nocostume
-aldeg_cas03	mapflag	nocostume
-aldeg_cas04	mapflag	nocostume
-aldeg_cas05	mapflag	nocostume
-gefg_cas01	mapflag	nocostume
-gefg_cas02	mapflag	nocostume
-gefg_cas03	mapflag	nocostume
-gefg_cas04	mapflag	nocostume
-gefg_cas05	mapflag	nocostume
-payg_cas01	mapflag	nocostume
-payg_cas02	mapflag	nocostume
-payg_cas03	mapflag	nocostume
-payg_cas04	mapflag	nocostume
-payg_cas05	mapflag	nocostume
-prtg_cas01	mapflag	nocostume
-prtg_cas02	mapflag	nocostume
-prtg_cas03	mapflag	nocostume
-prtg_cas04	mapflag	nocostume
-prtg_cas05	mapflag	nocostume
-schg_cas01	mapflag	nocostume
-schg_cas02	mapflag	nocostume
-schg_cas03	mapflag	nocostume
-schg_cas04	mapflag	nocostume
-schg_cas05	mapflag	nocostume
-arug_cas01	mapflag	nocostume
-arug_cas02	mapflag	nocostume
-arug_cas03	mapflag	nocostume
-arug_cas04	mapflag	nocostume
-arug_cas05	mapflag	nocostume
-//n_castle	mapflag	nocostume
-nguild_alde	mapflag	nocostume
-nguild_gef	mapflag	nocostume
-nguild_pay	mapflag	nocostume
-nguild_prt	mapflag	nocostume

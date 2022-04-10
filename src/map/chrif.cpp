@@ -1000,34 +1000,45 @@ int chrif_changedsex(int fd) {
 			return 0; //Do nothing? Likely safe.
 		sd->status.sex = !sd->status.sex;
 
-		// reset skill of some job
-		if ((sd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER) {
-			int i;
-			// remove specifical skills of Bard classes
-			for(i = BA_MUSICALLESSON; i <= BA_APPLEIDUN; i++) {
-				uint16 sk_idx = skill_get_index(i);
-				if (sd->status.skill[sk_idx].id > 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PERMANENT) {
-					sd->status.skill_point += sd->status.skill[sk_idx].lv;
-					sd->status.skill[sk_idx].id = 0;
-					sd->status.skill[sk_idx].lv = 0;
+		// Reset skills of gender split jobs.
+		if ((sd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER || (sd->class_&MAPID_UPPERMASK) == MAPID_KAGEROUOBORO) {
+			const static struct {
+				e_skill start;
+				e_skill end;
+			} ranges[] = {
+				// Bard class exclusive skills
+				{ BA_MUSICALLESSON, BA_APPLEIDUN },
+				// Dancer class exclusive skills
+				{ DC_DANCINGLESSON, DC_SERVICEFORYOU },
+				// Minstrel class exclusive skills
+				{ MI_RUSH_WINDMILL, MI_HARMONIZE },
+				// Wanderer class exclusive skills
+				{ WA_SWING_DANCE, WA_MOONLIT_SERENADE },
+				// Kagerou class exclusive skills
+				{ KG_KAGEHUMI, KG_KAGEMUSYA },
+				// Oboro class exclusive skills
+				{ OB_ZANGETSU, OB_AKAITSUKI },
+			};
+
+			for( const auto& range : ranges ){
+				for( uint16 skill_id = range.start; skill_id <= range.end; skill_id++ ){
+					uint16 sk_idx = skill_get_index( skill_id );
+
+					if( sd->status.skill[sk_idx].id > 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PERMANENT ){
+						sd->status.skill_point += sd->status.skill[sk_idx].lv;
+						sd->status.skill[sk_idx].id = 0;
+						sd->status.skill[sk_idx].lv = 0;
+					}
 				}
 			}
-			// remove specifical skills of Dancer classes
-			for(i = DC_DANCINGLESSON; i <= DC_SERVICEFORYOU; i++) {
-				uint16 sk_idx = skill_get_index(i);
-				if (sd->status.skill[sk_idx].id > 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PERMANENT) {
-					sd->status.skill_point += sd->status.skill[sk_idx].lv;
-					sd->status.skill[sk_idx].id = 0;
-					sd->status.skill[sk_idx].lv = 0;
-				}
-			}
+
 			clif_updatestatus(sd, SP_SKILLPOINT);
-			// change job if necessary
-			if (sd->status.sex) //Changed from Dancer
+			// Change to other gender version of the job if needed.
+			if (sd->status.sex)// Changed from female version of job.
 				sd->status.class_ -= 1;
-			else	//Changed from Bard
+			else// Changed from male version of job.
 				sd->status.class_ += 1;
-			//sd->class_ needs not be updated as both Dancer/Bard are the same.
+			//sd->class_ Does not need to be updated as both versions of the job are the same.
 		}
 		// save character
 		sd->login_id1++; // change identify, because if player come back in char within the 5 seconds, he can change its characters
@@ -1211,24 +1222,14 @@ int chrif_disconnectplayer(int fd) {
 /*==========================================
  * Request/Receive top 10 Fame character list
  *------------------------------------------*/
-int chrif_updatefamelist(struct map_session_data* sd) {
-	char type;
-
+int chrif_updatefamelist(map_session_data &sd, e_rank ranktype) {
 	chrif_check(-1);
-
-	switch(sd->class_ & MAPID_UPPERMASK) {
-		case MAPID_BLACKSMITH: type = RANK_BLACKSMITH; break;
-		case MAPID_ALCHEMIST:  type = RANK_ALCHEMIST; break;
-		case MAPID_TAEKWON:    type = RANK_TAEKWON; break;
-		default:
-			return 0;
-	}
 
 	WFIFOHEAD(char_fd, 11);
 	WFIFOW(char_fd,0) = 0x2b10;
-	WFIFOL(char_fd,2) = sd->status.char_id;
-	WFIFOL(char_fd,6) = sd->status.fame;
-	WFIFOB(char_fd,10) = type;
+	WFIFOL(char_fd,2) = sd.status.char_id;
+	WFIFOL(char_fd,6) = sd.status.fame;
+	WFIFOB(char_fd,10) = ranktype;
 	WFIFOSET(char_fd,11);
 
 	return 0;
@@ -1655,7 +1656,8 @@ int chrif_bsdata_save(struct map_session_data *sd, bool quit) {
 
 	// Removing...
 	if (quit && sd->bonus_script.head) {
-		uint16 flag = BSF_REM_ON_LOGOUT; //Remove bonus when logout
+		uint32 flag = BSF_REM_ON_LOGOUT; //Remove bonus when logout
+
 		if (battle_config.debuff_on_logout&1) //Remove negative buffs
 			flag |= BSF_REM_DEBUFF;
 		if (battle_config.debuff_on_logout&2) //Remove positive buffs
@@ -1733,7 +1735,7 @@ int chrif_bsdata_received(int fd) {
 			if (bs->script_str[0] == '\0' || !bs->tick)
 				continue;
 
-			if (!(entry = pc_bonus_script_add(sd, bs->script_str, bs->tick, (enum efst_types)bs->icon, bs->flag, bs->type)))
+			if (!(entry = pc_bonus_script_add(sd, bs->script_str, bs->tick, (enum efst_type)bs->icon, bs->flag, bs->type)))
 				continue;
 
 			linkdb_insert(&sd->bonus_script.head, (void *)((intptr_t)entry), entry);

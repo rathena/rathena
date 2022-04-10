@@ -6148,6 +6148,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 					mes "^3355FFYou received a letter for";
 					mes "Niren from High Priest Zhed.^000000";
 					set aru_em,13;
+					changequest 2133,2134;
 				}
 				else if((aru_em == 13) || (aru_em == 14)) {
 					mes "[High Priest Zhed]";
@@ -6274,6 +6275,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 					mes "Your place in Valhalla is";
 					mes "already assured, I'm sure.";
 					set aru_em,24;
+					completequest 2142;
 					getexp (checkre(3))?150000:1500000,0;
 				}
 				else {
@@ -7022,6 +7024,7 @@ ra_temsky,99,99,5	script	Pope#rachel	936,{
 				mes "pretty exhausted. I better...";
 				mes "I better get some rest...";
 				set aru_em,16;
+				changequest 2135,2136;
 				close2;
 				cutin "",255;
 				end;
@@ -7247,8 +7250,8 @@ OnTouch:
 		set ra_tem_q,19;
 		if (isbegin_quest(8102) == 1)
 			changequest 8102,8103;
-		else
-			setquest 8103;
+		else if (isbegin_quest(8101) == 1)
+			changequest 8101,8103;
 		close;
 	}
 	end;

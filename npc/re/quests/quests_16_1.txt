@@ -975,6 +975,8 @@ OnTouch:
 OnInit:
 	cloakonnpc "Mysterious Guest#ep16_01";
 	cloakonnpc "Chamberlain#ep16_01";
+
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(7687) == 1" );
 	end;
 }
 prt_cas,179,155,6	script	Mysterious Guest#ep16_01	4_LGTSCIENCE,{ end; }
@@ -1501,6 +1503,8 @@ OnInit:
 	cloakonnpc "Skia Nerius#ep16_7689";
 	cloakonnpc "#ep16_7689_02";
 	cloakonnpc "#ep16_7689_01";
+
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(7690) == 1" );
 	end;
 }
 prt_cas,186,163,3	script	Skia Nerius#ep16_7689	4_EP16_SKIA,{ end; }
@@ -2081,7 +2085,7 @@ prt_lib,80,79,3	script	Kronecker G. Heine#ep16_01_lib01	4_EP16_GRANZ,{
 	}
 	end;
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	cloakonnpc "Kronecker G. Heine#ep16_01_lib02";
 	cloakonnpc "Nyhill M. Heine#ep16_lib01";
 	end;
@@ -2723,7 +2727,7 @@ prt_lib_q,88,90,1	script	Swaying Space#evt_gate02	4_ENERGY_RED,{
 	}
 	end;
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -4356,7 +4360,7 @@ prt_cas_q,18,136,3	script	Spica Nerius#ep16_room02	4_EP16_SPICA,{
 	}
 	end;
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	cloakonnpc "Nyhill M. Heine#ep16_nroom01";
 	end;
 }
@@ -4364,7 +4368,7 @@ OnInit:
 prt_cas_q,23,187,3	script	Mysterious Person#ep16wal	4_M_04,{
 	end;
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -7859,7 +7863,7 @@ prt_cas_q,92,182,7	script	Myer Roegenburg#ep16lug	4_EP16_MEYER,{
 	end;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -8653,7 +8657,7 @@ prontera,269,73,5	script	Ordinary Man#ep16lug02	4_M_04,{
 	close;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -9686,6 +9690,10 @@ OnTouch:
 		ep16_gaobs = 7;
 		close;
 	}
+	end;
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11405) == 1" );
+	end;
 }
 
 prt_cas,84,232,0	script	#ep16_1Whisper2	HIDDEN_WARP_NPC,3,3,{
@@ -9703,6 +9711,10 @@ OnTouch:
 		ep16_gaobs = 8;
 		close;
 	}
+	end;
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11406) == 1" );
+	end;
 }
 
 prt_cas,110,242,0	script	#ep16_1Whisper3	HIDDEN_WARP_NPC,3,3,{
@@ -9731,6 +9743,10 @@ OnTouch:
 		ep16_gaobs = 9;
 		close;
 	}
+	end;
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11407) == 1" );
+	end;
 }
 
 prt_cas,111,218,0	script	#ep16_1Whisper4	HIDDEN_WARP_NPC,3,3,{
@@ -9744,6 +9760,10 @@ OnTouch:
 		ep16_gaobs = 10;
 		close;
 	}
+	end;
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11408) == 1" );
+	end;
 }
 
 prt_cas,92,224,0	script	#ep16_1Whisper5	HIDDEN_WARP_NPC,3,3,{
@@ -9760,6 +9780,10 @@ OnTouch:
 		ep16_gaobs = 11;
 		close;
 	}
+	end;
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11409) == 1" );
+	end;
 }
 
 prt_cas,77,223,0	script	#ep16_1Whisper6	HIDDEN_WARP_NPC,3,3,{
@@ -9784,6 +9808,10 @@ OnTouch:
 		ep16_gaobs = 12;
 		close;
 	}
+	end;
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11410) == 1" );
+	end;
 }
 
 prt_cas,93,226,0	script	#ep16_1Whisper7	HIDDEN_WARP_NPC,3,3,{
@@ -9801,6 +9829,10 @@ OnTouch:
 		ep16_gaobs = 13;
 		close;
 	}
+	end;
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11411) == 1" );
+	end;
 }
 
 // At room entrance
@@ -11893,7 +11925,7 @@ prt_cas_q,94,7,7	script	Isaac Wigner#ep16wig	4_EP16_ISAAC,{
 prt_cas_q,80,23,5	script	Jurgen Wigner#ep16wig00	4_M_4THPRIN1,{
 	end;
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 prt_cas_q,93,10,4	duplicate(Jurgen Wigner#ep16wig00)	Maid#ep16wig01	1_F_04
@@ -14223,6 +14255,96 @@ prt_cas,161,168,5	script	Royal Guardian Knight#02	4_M_CRU,{
 prt_cas,270,168,3	duplicate(Royal Guardian Knight#02)	Royal Guardian Knight#03	4_M_CRU
 
 // Exchanges and enchants npc
+prt_cas,165,260,6	script	Noblesse Operator#ext161	4_F_CRU,{
+	mes "[Noblesse Operator]";
+	mes "Hello.";
+	mes "We have ^4d4dffNoblesse^000000 equipment that can be exchanged for <ITEM>[Honor Token]<INFO>6919</INFO></ITEM>.";
+	mes "I will guide you to exchange items according to your job.";
+	close2;
+	switch( eaclass() & EAJ_THIRDMASK ) {
+	case EAJ_RUNE_KNIGHT:
+		.@str$ = "JOB_RUNE_KNIGHT";
+		break;
+	case EAJ_WARLOCK:
+		.@str$ = "JOB_WARLOCK";
+		break;
+	case EAJ_RANGER:
+		.@str$ = "JOB_RANGER";
+		break;
+	case EAJ_ARCH_BISHOP:
+		.@str$ = "JOB_ARCH_BISHOP";
+		break;
+	case EAJ_MECHANIC:
+		.@str$ = "JOB_MECHANIC";
+		break;
+	case EAJ_GUILLOTINE_CROSS:
+		.@str$ = "JOB_GUILLOTINE_CROSS";
+		break;
+	case EAJ_ROYAL_GUARD:
+		.@str$ = "JOB_ROYAL_GUARD";
+		break;
+	case EAJ_SORCERER:
+		.@str$ = "JOB_SORCERER";
+		break;
+	case EAJ_MINSTRELWANDERER:
+		.@str$ = "JOB_MINSTREL";
+		break;
+	case EAJ_SURA:
+		.@str$ = "JOB_SURA";
+		break;
+	case EAJ_GENETIC:
+		.@str$ = "JOB_GENETIC";
+		break;
+	case EAJ_SHADOW_CHASER:
+		.@str$ = "JOB_SHADOW_CHASER";
+		break;
+	default:
+		switch( Class ) {
+		case JOB_SUPER_NOVICE_E:
+		case JOB_SUPER_BABY_E:
+		case JOB_HYPER_NOVICE:
+			.@str$ = "JOB_SUPER_NOVICE_E";
+			break;
+		case JOB_KAGEROU:
+		case JOB_OBORO:
+		case JOB_BABY_KAGEROU:
+		case JOB_BABY_OBORO:
+		case JOB_SHINKIRO:
+		case JOB_SHIRANUI:
+			.@str$ = "JOB_KAGEROU";
+			break;
+		case JOB_REBELLION:
+		case JOB_BABY_REBELLION:
+		case JOB_NIGHT_WATCH:
+			.@str$ = "JOB_REBELLION";
+			break;
+		case JOB_SUMMONER:
+		case JOB_BABY_SUMMONER:
+		case JOB_SPIRIT_HANDLER:
+			.@str$ = "JOB_SUMMONER";
+			break;
+		case JOB_STAR_EMPEROR:
+		case JOB_BABY_STAR_EMPEROR:
+		case JOB_STAR_EMPEROR2:
+		case JOB_BABY_STAR_EMPEROR2:
+		case JOB_SKY_EMPEROR:
+		case JOB_SKY_EMPEROR2:
+			.@str$ = "JOB_STAR_EMPEROR";
+			break;
+		case JOB_SOUL_REAPER:
+		case JOB_BABY_SOUL_REAPER:
+		case JOB_SOUL_ASCETIC:
+			.@str$ = "JOB_SOUL_REAPER";
+			break;
+		default:
+			end;
+		}
+		break;
+	}
+	callshop "shop_ext161_" + .@str$;
+	end;
+}
+
 prt_cas,165,255,7	script	Commissary#ep16	4_M_JOB_KNIGHT2,{
 	mes "[Commissary Arner]";
 	mes "You can exchange the Honor Marks given by the noble people of Rune-Midgarts as the token of trust with some valuable items of Prontera.";
@@ -14846,7 +14968,7 @@ prt_q,221,193,4	script	Village Lad#EP161HO01	4_M_03,{
 	end;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -14953,7 +15075,7 @@ prt_q,77,98,8	script	Village Lad#EP161HO03	4_M_03,{
 	end;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -15127,7 +15249,7 @@ prt_q,276,242,4	script	Girl#EP161GU01	4_F_RUSCHILD,{
 	end;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -15333,7 +15455,7 @@ prt_q,229,317,6	script	Girl#EP161GU03	4_F_RUSCHILD,{
 	end;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -15430,7 +15552,7 @@ prt_q,55,347,6	script	Rosa Erinin#EP161GU07	4W_F_01,{
 	end;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 prt_q,57,346,4	duplicate(Rosa Erinin#EP161GU07)	Girl#EP161GU06	4_F_RUSCHILD
@@ -15533,7 +15655,7 @@ prt_q,68,336,4	script	Soldier#EP161HU02	4_M_GEF_SOLDIER,{
 	end;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -15597,7 +15719,7 @@ prt_q,79,102,8	script	Soldier#EP161HU03	4_M_GEF_SOLDIER,{
 	end;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -15667,7 +15789,7 @@ prt_q,38,261,6	script	Eryus#EP161BU01	4_F_03,{
 	end;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -15774,7 +15896,7 @@ prt_q,231,310,4	script	Eryus#EP161BU02	4_F_03,{
 	end;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -15814,7 +15936,7 @@ prt_q,108,164,4	script	Female#EP161BU03	4W_F_01,{
 	close;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -15875,7 +15997,7 @@ prt_q,229,310,6	script	Female#EP161BU04	4W_F_01,{
 	end;
 
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }
 
@@ -15911,7 +16033,7 @@ OnTouch_:
 	monster "prt_q",.@x,.@y,"Resurrected Corpse",1015,1, strnpcinfo(0) + "::OnMyMobDead";// ZOMBIE
 	monster "prt_q",.@x,.@y,"Maggot",1194,1, strnpcinfo(0) + "::OnMyMobDead";// ARCLOUSE
 	monster "prt_q",.@x,.@y,"Fly",1035,1, strnpcinfo(0) + "::OnMyMobDead";// HUNTER_FLY
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	initnpctimer;
 	end;
 OnMyMobDead:
@@ -15919,7 +16041,7 @@ OnMyMobDead:
 OnTimer180000:
 	killmonster "prt_q", strnpcinfo(0) + "::OnMyMobDead";
 	stopnpctimer;
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 }
 prt_q,214,85,6	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE02	4_M_LIEMAN,2,2
@@ -15959,7 +16081,7 @@ OnTouch_:
 	monster "prt_q",.@x,.@y,"Resurrected Corpse",1015,1, strnpcinfo(0) + "::OnMyMobDead";// ZOMBIE
 	monster "prt_q",.@x,.@y,"Maggot",1194,1, strnpcinfo(0) + "::OnMyMobDead";// ARCLOUSE
 	monster "prt_q",.@x,.@y,"Fly",1035,1, strnpcinfo(0) + "::OnMyMobDead";// HUNTER_FLY
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 OnMyMobDead:
 	if (mobcount( "prt_q", strnpcinfo(0) + "::OnMyMobDead" ) < 1)
@@ -15967,7 +16089,7 @@ OnMyMobDead:
 	end;
 OnTimer300000:
 	stopnpctimer;
-	cloakoffnpc strnpcinfo(0);
+	cloakoffnpc();
 	end;
 }
 prt_q,88,279,2	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE07	4_M_LIEMAN,2,2
@@ -17201,7 +17323,7 @@ prt_prison,205,139,4	script	Dark Shape#EP161A01	4_GHOST_STAND,{
 	.@num = atoi( replacestr( strnpcinfo(2), "EP161A0", "" ) );
 	setarray .@npc_num[1],1,2,3,4,5;
 	deletearray .@npc_num[.@num],1;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	enablenpc "Dark Shape#EP161A0" + .@npc_num[ rand(1,4) ];// enable another npc randomly
 	close;
 
@@ -17210,7 +17332,7 @@ OnInit:
 	if (.num_enabled == 0)
 		.num_enabled = rand(1,5);
 	if (.num_enabled != .@npc_num)
-		disablenpc strnpcinfo(0);// disable 4/5 npcs
+		disablenpc();// disable 4/5 npcs
 	end;
 }
 prt_prison,153,175,4	duplicate(Dark Shape#EP161A01)	Dark Shape#EP161A02	4_GHOST_STAND
@@ -17585,7 +17707,7 @@ prt_prison,118,247,4	script	Rubbish heap#EP161C01	4_ENERGY_BLACK,{
 					setquest 5435;// [Repeat]Cleaning is complete.
 			}
 			initnpctimer;
-			disablenpc strnpcinfo(0);
+			disablenpc();
 		}
 		close;
 	}
@@ -17601,12 +17723,12 @@ OnTimer240000:
 OnTimer270000:
 	if (rand(1,2) == 1) {
 		stopnpctimer;
-		enablenpc strnpcinfo(0);
+		enablenpc();
 	}
 	end;
 OnTimer300000:
 	stopnpctimer;
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 }
 prt_prison,171,247,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C02	4_ENERGY_BLACK
@@ -17912,7 +18034,7 @@ prt_prison,146,268,4	script	Torch#EP161EB01	CLEAR_NPC,{
 			mes "You carefully collected the light but it scattered.";
 		}
 		initnpctimer;
-		disablenpc strnpcinfo(0);
+		disablenpc();
 	}
 	close;
 
@@ -17923,12 +18045,12 @@ OnTimer120000:
 OnTimer150000:
 	if (rand(1,2) == 1) {
 		stopnpctimer;
-		enablenpc strnpcinfo(0);
+		enablenpc();
 	}
 	end;
 OnTimer180000:
 	stopnpctimer;
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 }
 prt_prison,177,268,4	duplicate(Torch#EP161EB01)	Torch#EP161EB02	CLEAR_NPC

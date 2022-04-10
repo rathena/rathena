@@ -853,10 +853,10 @@ OnTouch:
 
 OnInstanceInit:
 OnDisable:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 OnEnable:
-	enablenpc instance_npcname(strnpcinfo(0));
+	enablenpc();
 	end;
 }
 
@@ -913,7 +913,7 @@ OnInstanceInit:
 
 OnInstanceInit:
 OnEnable:
-	enablenpc instance_npcname(strnpcinfo(0));
+	enablenpc();
 	end;
 }
 

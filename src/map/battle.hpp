@@ -87,9 +87,6 @@ struct Damage {
 	bool isspdamage; /// Display blue damage numbers in clif_damage
 };
 
-//(Used in read pc.cpp) attribute table (battle_attr_fix)
-extern int attr_fix_table[MAX_ELE_LEVEL][ELE_MAX][ELE_MAX];
-
 // Damage Calculation
 
 struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct block_list *target,uint16 skill_id,uint16 skill_lv,int flag);
@@ -98,7 +95,6 @@ int64 battle_calc_return_damage(struct block_list *bl, struct block_list *src, i
 
 void battle_drain(struct map_session_data *sd, struct block_list *tbl, int64 rdamage, int64 ldamage, int race, int class_);
 
-int battle_attr_ratio(int atk_elem,int def_type, int def_lv);
 int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 damage,int atk_elem,int def_type, int def_lv);
 int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_list *target, std::bitset<NK_MAX> nk, int s_ele, int s_ele_, int64 damage, int left, int flag);
 
@@ -427,7 +423,6 @@ struct Battle_Config
 	int display_hallucination;	// [Skotlex]
 	int use_statpoint_table;	// [Skotlex]
 
-	int berserk_cancels_buffs; // [Aru]
 	int debuff_on_logout; // Removes a few "official" negative Scs on logout. [Skotlex]
 	int mob_ai; //Configures various mob_ai settings to make them smarter or dumber(official). [Skotlex]
 	int hom_setting; //Configures various homunc settings which make them behave unlike normal characters.. [Skotlex]
@@ -444,6 +439,8 @@ struct Battle_Config
 	int character_size; // if riders have size=2, and baby class riders size=1 [Lupus]
 	int mob_max_skilllvl; // Max possible skill level [Lupus]
 	int rare_drop_announce; // chance <= to show rare drops global announces
+	int drop_rate_cap;  // Drop rate can't be raised above this amount by drop bonus items
+	int drop_rate_cap_vip;
 
 	int retaliate_to_master;	//Whether when a mob is attacked by another mob, it will retaliate versus the mob or the mob's master. [Skotlex]
 
@@ -526,6 +523,7 @@ struct Battle_Config
 	int max_third_trans_parameter;
 	int max_extended_parameter;
 	int max_summoner_parameter;
+	int max_fourth_parameter;
 	int max_third_aspd;
 	int max_summoner_aspd;
 	int vcast_stat_scale;
@@ -691,6 +689,26 @@ struct Battle_Config
 	int mer_idle_no_share;
 	int idletime_mer_option;
 	int feature_refineui;
+	int rndopt_drop_pillar;
+	int pet_legacy_formula;
+	int pet_distance_check;
+	int pet_hide_check;
+
+	// 4th Jobs Stuff
+	int trait_points_job_change;
+	int use_traitpoint_table;
+	int max_trait_parameter;
+	int max_res_mres_reduction;
+	int max_ap;
+	int ap_rate;
+	int restart_ap_rate;
+	int loose_ap_on_death;
+	int loose_ap_on_map;
+	int keep_ap_on_logout;
+	int attack_machine_level_difference;
+
+	int feature_barter;
+	int feature_barter_extended;
 
 #include "../custom/battle_config_struct.inc"
 };
