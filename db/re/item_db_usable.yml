@@ -46081,7 +46081,7 @@ Body:
       getitem 25184,1;
       getitem 25185,1;
   - Id: 23100
-    AegisName: Drooping_Gunslinger_Scroll
+    AegisName: Gunslinger_Enchant
     Name: Drooping Gunslinger Scroll
     Type: Delayconsume
     Weight: 10

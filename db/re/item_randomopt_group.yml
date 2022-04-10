@@ -7456,7 +7456,7 @@ Body:
         Chance: 625
   # TODO: Confirm official rates
   - Id: 100
-    Group: DROOPING_GUNSLINGER_SCROLL
+    Group: GUNSLINGER_ENCHANT
     Slots:
       - Slot: 1
         Options:
