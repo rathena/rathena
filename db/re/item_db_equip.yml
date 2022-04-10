@@ -140719,7 +140719,7 @@ Body:
     Script: |
       bonus bVariableCastrate,-5;
   - Id: 410087
-    AegisName: C_Demons_Familiar
+    AegisName: C_Demons_Familiar_K
     Name: Costume Robotic Watcher
     Type: Armor
     Locations:
