@@ -1854,8 +1854,8 @@ Body:
     RewardGroup: FAN_MODIFICATION_KIT
     Requirements:
       - Item: Sea_Otter_Mini_Fan
-  - Item: Uniform_Repair_Kit
-    RewardGroup: UNIFORM_REPAIR_KIT
+  - Item: Suit_Upgrade_Kit
+    RewardGroup: SUIT_UPGRADE_KIT
     Requirements:
       - Item: Kafra_Uniform
   - Item: Scroll_of_Fallen_Angel_Wings

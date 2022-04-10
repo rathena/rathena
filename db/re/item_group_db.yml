@@ -25388,12 +25388,12 @@ Body:
             Rate: 73
           - Item: S_FullPene_Earring
             Rate: 73
-  - Group: DROOPING_GUNSLINGER_SCROLL
+  - Group: GUNSLINGER_ENCHANT
     SubGroups:
       - SubGroup: 0
         List:
           - Item: Drooping_Rebellion_
-            RandomOptionGroup: DROOPING_GUNSLINGER_SCROLL
+            RandomOptionGroup: GUNSLINGER_ENCHANT
   - Group: ENCHANTSTONE_RECIPE
     SubGroups:
       - SubGroup: 1
@@ -26052,12 +26052,12 @@ Body:
         List:
           - Item: Sea_Otter_Mini_Fan
             RandomOptionGroup: FAN_MODIFICATION_KIT
-  - Group: UNIFORM_REPAIR_KIT
+  - Group: SUIT_UPGRADE_KIT
     SubGroups:
       - SubGroup: 0
         List:
           - Item: Kafra_Uniform
-            RandomOptionGroup: UNIFORM_REPAIR_KIT
+            RandomOptionGroup: SUIT_UPGRADE_KIT
   - Group: SCROLL_OF_FALLEN_ANGEL_WINGS
     SubGroups:
       - SubGroup: 0

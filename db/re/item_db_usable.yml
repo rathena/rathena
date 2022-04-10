@@ -46219,7 +46219,7 @@ Body:
     Script: |
       getgroupitem(IG_Enchant_Stone_Box11);
   - Id: 23175
-    AegisName: Uniform_Repair_Kit
+    AegisName: Suit_Upgrade_Kit
     Name: Uniform Repair Kit
     Type: Delayconsume
     Weight: 10

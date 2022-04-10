@@ -7672,7 +7672,7 @@ Body:
             Chance: 769
   # Source: https://ro.gnjoy.com/news/probability/View.asp?seq=3964871
   - Id: 102
-    Group: UNIFORM_REPAIR_KIT
+    Group: SUIT_UPGRADE_KIT
     Slots:
       - Slot: 1
         Options:

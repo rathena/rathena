@@ -5545,7 +5545,7 @@
 	export_constant(IG_PET_EGG_BOX);
 	export_constant(IG_COSTUME_EXCHANGE_BOX);
 	export_constant(IG_FAN_MODIFICATION_KIT);
-	export_constant(IG_UNIFORM_REPAIR_KIT);
+	export_constant(IG_SUIT_UPGRADE_KIT);
 	export_constant(IG_SCROLL_OF_FALLEN_ANGEL_WINGS);
 	export_constant(IG_CLASS_SHADOW_BOX_WEAPON);
 	export_constant(IG_CLASS_SHADOW_BOX_ARMOR);
