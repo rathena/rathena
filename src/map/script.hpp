@@ -39,6 +39,8 @@
 #define script_lastdata(st) ( (st)->end - (st)->start - 1 )
 /// Pushes an int into the stack
 #define script_pushint(st,val) push_val((st)->stack, C_INT, (val))
+/// Pushes an int64 into the stack
+#define script_pushint64( st, val ) push_val2( (st)->stack, C_INT, val, nullptr )
 /// Pushes a string into the stack (script engine frees it automatically)
 #define script_pushstr(st,val) push_str((st)->stack, C_STR, (val))
 /// Pushes a copy of a string into the stack

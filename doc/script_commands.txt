@@ -4579,6 +4579,22 @@ Unlike 'getexp', this command ignores the adjustment factors!
 
 ---------------------------------------
 
+*getbaseexp_ratio(<percent>{,<base_level>{,char_id});
+
+Returns the amount of base experience representing the given <percent> of the
+required base experience at base level <base_level>. If no base level is specified
+the base level of the attached character will be used.
+
+---------------------------------------
+
+*getjobexp_ratio(<percent>{,<job_level>{,char_id});
+
+Returns the amount of job experience representing the given <percent> of the
+required job experience at job level <base_level>. If no job level is specified
+the job level of the attached character will be used.
+
+---------------------------------------
+
 *setlook <look type>,<look value>{,<char_id>};
 *changelook <look type>,<look value>{,<char_id>};
 
