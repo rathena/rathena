@@ -5540,7 +5540,7 @@
 	export_constant(IG_THIRD_JOB_STONE_BOTTOM_BOX);
 	export_constant(IG_THIRD_JOB_STONE_BOTTOM_BOX2);
 	export_constant(IG_SHADOW_EXCHANGE_BOX);
-	export_constant(IG_DROOPING_GUNSLINGER_SCROLL);
+	export_constant(IG_GUNSLINGER_ENCHANT);
 	export_constant(IG_ENCHANTSTONE_RECIPE);
 	export_constant(IG_PET_EGG_BOX);
 	export_constant(IG_COSTUME_EXCHANGE_BOX);
