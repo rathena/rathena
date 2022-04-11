@@ -8152,6 +8152,14 @@ This feature requires packet version 2017-07-26 or newer.
 This function is intended for use in item scripts.
 
 ---------------------------------------
+
+*openbank({<char id>})
+
+Opens the Bank UI for the attached player or the given character ID.
+
+This command requires packet version 2015-01-28 or newer.
+
+---------------------------------------
 \\
 6,1.- Unit-related commands
 \\
