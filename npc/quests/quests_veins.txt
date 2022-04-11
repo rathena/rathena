@@ -43,7 +43,7 @@
 //= 2.3 Fixed incorrect use of 'close'. [Joseph]
 //= 2.4 Updated RE/Pre-RE EXP. [Euphy]
 //= 2.5 Added GM management NPC. [Euphy]
-//= 2.6 Reverted custom/inofficial quest log support for: [Everade]
+//= 2.6 Reverted custom/unofficial quest log support for: [Everade]
 //=     - Nameless Island Access Quest
 //============================================================
 
