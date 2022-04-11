@@ -431,7 +431,7 @@ OnTimer17000:
 	if (!getd("'rf_" + strnpcinfo(2))) {
 		setd("'rf_" + strnpcinfo(2),1);
 		specialeffect2 EF_ENHANCE;
-		specialeffect2 1199;
+		specialeffect2 EF_LIGHTSPHERE_STAR;
 		sc_start SC_GLASTHEIM_STATE,30000,1,10000,SCSTART_NOTICKDEF;
 		npctalk "Power, Overwhelming power!";
 		unittalk getcharid(3),strcharinfo(0) + " : My whole body is full of power!",bc_self;
@@ -871,7 +871,7 @@ OnTouch:
 	if (!getd("'rf_" + strnpcinfo(2))) {
 		setd("'rf_" + strnpcinfo(2),1);
 		specialeffect2 EF_ENHANCE;
-		specialeffect2 1199;
+		specialeffect2 EF_LIGHTSPHERE_STAR;
 		sc_start SC_GLASTHEIM_STATE,30000,1,10000,SCSTART_NOTICKDEF;
 		npctalk "Power, Overwhelming power!";
 		unittalk getcharid(3),strcharinfo(0) + " : My whole body is full of power!",bc_self;

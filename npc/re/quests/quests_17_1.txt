@@ -8134,7 +8134,7 @@ sp_cor,160,135,5	script	Green Beans#rm171_2	4_ENERGY_YELLOW,{
 		mes "Why do they still look wilted?";
 		close;
 	}
-	specialeffect 325;
+	specialeffect EF_HEAL4;
 	mes "[Green Beans]";
 	mes "Oooh, I can tell the green beans are happy now!";
 	completequest .@quest_id;
@@ -8192,7 +8192,7 @@ sp_cor,240,87,5	script	Pumpkins#rm171_3	4_ENERGY_YELLOW,{
 		mes "Why do they still look wilted?";
 		close;
 	}
-	specialeffect 325;
+	specialeffect EF_HEAL4;
 	mes "[Pumpkins]";
 	mes "Oooh, I can tell the pumpkins are happy now!";
 	completequest .@quest_id;
@@ -8250,7 +8250,7 @@ sp_cor,249,85,5	script	Grapes#rm171_1	4_ENERGY_YELLOW,{
 		mes "Why do they still look wilted?";
 		close;
 	}
-	specialeffect 325;
+	specialeffect EF_HEAL4;
 	mes "[Grapes]";
 	mes "Oooh, I can tell the grapes are happy now!";
 	completequest .@quest_id;
@@ -8691,7 +8691,7 @@ pub_cat,64,66,1	script	Guest#171_pub_5	4_F_MONK,{
 pub_cat,63,69,5	script	Guest#171_pub_6	4_M_ROGUE,{
 	setpcblock PCBLOCK_ALL,true;
 	npctalk "I'm the God of Wind!! Hya!!","",bc_self;
-	specialeffect 775;
+	specialeffect EF_CASTSPIN2;
 	sleep2 2000;
 	npctalk "Go spin again!","Guest#171_pub_5",bc_self;
 	setpcblock PCBLOCK_ALL,false;
