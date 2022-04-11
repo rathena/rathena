@@ -42,7 +42,7 @@
 //= 2.2 Moved "Wincing Old Man" to pre-re/re coordinates. [Euphy]
 //= 2.3 Fixed incorrect use of 'close'. [Joseph]
 //= 2.4 Updated RE/Pre-RE EXP. [Euphy]
-//= 2.5 Added GM management NPC. [Euphy]
+//= 2.5 Added GM management NPC and quest log support. [Euphy]
 //= 2.6 Reverted custom/unofficial quest log support for: [Everade]
 //=     - Nameless Island Access Quest
 //============================================================

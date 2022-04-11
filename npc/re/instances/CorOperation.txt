@@ -60,7 +60,6 @@ OnInstanceInit:
 		disablenpc instance_npcname("Chemical Poison#171_cor_" + .@i);
 	}
 	disablenpc instance_npcname("Reinforced Energy#171_cor_0");
-
 	end;
 
 OnStory01:
@@ -171,7 +170,7 @@ OnTouch:
 		next;
 		cutin "162elena_02",2;
 		mes "[Elena Volkova]";
-		mes "I ask you to act separately adventurer. Please check your^0000CDminimap^000000 to organize the situationn as quickly as possible. Join the team if they need support!";
+		mes "I ask you to act separately adventurer. Please check your ^0000CDminimap^000000 to organize the situation as quickly as possible. Join the team if they need support!";
 		close2;
 		cutin "",255;
 		donpcevent instance_npcname("#171_cor_control") + "::OnStory01";
@@ -208,7 +207,7 @@ OnTouch:
 		next;
 		mes "[Elyumina]";
 		mes "Here, take the map. The information will also be delivered to the party members as well.";
-		mes "You aren't alone right? You know my childre are powerful?";
+		mes "You aren't alone right? You know my children are powerful?";
 		npctalk "Elyumina : Here, take the map. The information will also be delivered to the party members as well.",.@elyumina$;
 		viewpointmap 'map$,1,140,79,1,0xFFFFFF;
 		viewpointmap 'map$,1,160,119,2,0xFFFFFF;
@@ -299,7 +298,7 @@ OnTouch:
 		close;
 	}
 	if (isbegin_quest(16355) == 1 && !mobcount('map$,.@event$)) {
-	OnTalk:
+OnTalk:
 		mes "[Rebellion]";
 		mes "Sorry for the late analysis. It wasn't a device to summon monsters.";
 		next;
@@ -458,7 +457,7 @@ OnTimer17000:
 		close;
 	}
 	if (isbegin_quest(16356) == 1 && !mobcount('map$,.@event$)) {
-	OnTalk:
+OnTalk:
 		mes "[Rebellion]";
 		mes "It's an awful but interesting device. It wasn't a device meant to summon monsters.";
 		next;
@@ -556,6 +555,8 @@ OnTouch:
 		monster 'map$,.@x,.@y,"",20344,1,.@event$;
 	}
 	initnpctimer;
+	end;
+
 OnPoisonKill:
 	end;
 
@@ -754,7 +755,7 @@ OnTimer10000:
 	end;
 }
 1@cor,141,220,3	script	Rebellion#171_cmd_7	4_F_ANYA,{
-	npctalk "We've succesfully captured her alive, the operation is over!";
+	npctalk "We've successfully captured her alive, the operation is over!";
 	end;
 }
 
@@ -1057,6 +1058,8 @@ OnTouch:
 			monster 'map$,.@x,.@y,"--ja--",.@mob,1,.@event2$;
 		initnpctimer;
 	}
+	end;
+
 OnMobKill:
 	end;
 
@@ -1092,7 +1095,8 @@ OnTimer17000:
 	.@event$ = instance_npcname("Box#171_box_d" + .@id) + "::OnMobKill";
 	if (unitexists(getnpcid(0,instance_npcname("Reinforced Energy#171_cor_0"))))
 		disablenpc instance_npcname("Reinforced Energy#171_trap_" + .@id);
-	if (mobcount('map$,.@event$)) initnpctimer instance_npcname("Box#171_box_d" + .@id);
+	if (mobcount('map$,.@event$))
+		initnpctimer instance_npcname("Box#171_box_d" + .@id);
 	end;
 }
 

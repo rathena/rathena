@@ -850,8 +850,8 @@ OnTouch:
 }
 
 1@rgsr,198,199,0	script	Research Report#rgsr_01	4_ENERGY_BLUE,{
-	mes "Some of the drawing has been torned.";
-	mes "Somebody intentionally destroyed the relevants parts.";
+	mes "Some of the drawing has been torn.";
+	mes "Somebody intentionally destroyed the relevant parts.";
 	close;
 }
 
@@ -868,7 +868,7 @@ OnTouch:
 }
 
 1@rgsr,231,223,0	script	Research Report#rgsr_04	4_ENERGY_BLUE,{
-	mes "The booklet is missing some pages. Someone has deliberately ommited the material.";
+	mes "The booklet is missing some pages. Someone has deliberately omitted the material.";
 	close;
 }
 

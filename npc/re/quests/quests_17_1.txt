@@ -193,7 +193,7 @@ einbroch,42,208,3	script	Lazy#171_einbr	4_M_LAZY,{
 	if (isbegin_quest(7850) == 0) {
 		cutin "16lei_03",2;
 		mes "[Lazy]";
-		mes "Hourray, finally some air, huh.";
+		mes "Hooray, finally some air, huh.";
 		mes "Let's go to Yuno. Huh?";
 		close3;
 	}
@@ -504,7 +504,7 @@ ein_fild01,95,146,5	script	Kaya Tos#171_einf	4_EP17_KAYA,{
 		next;
 		cutin "16lei_02",2;
 		mes "[Lazy]";
-		mes "Hey, you're there alrready. How is it? What have you found out with your own two eyes?";
+		mes "Hey, you're there already. How is it? What have you found out with your own two eyes?";
 		npctalk "Oh... are there more techniques? I'm glad to hear it.","Aas#171_einf",bc_self;
 		next;
 		cutin "ep171_kaya02",0;
@@ -545,7 +545,7 @@ ein_fild01,95,146,5	script	Kaya Tos#171_einf	4_EP17_KAYA,{
 		mes "Wouldn't it be too hard for such supplies to pass through the borders?";
 		next;
 		mes "[Kaya]";
-		mes "So the laboratory is probasbly still in Schartzwald. The materials can't be transported in the open,";
+		mes "So the laboratory is probably still in Schartzwald. The materials can't be transported in the open,";
 		mes "so we have to look for a secret location, I guess it's going to be in one of those locations.";
 		next;
 		cutin "16lei_01",2;
@@ -571,7 +571,7 @@ ein_fild01,95,146,5	script	Kaya Tos#171_einf	4_EP17_KAYA,{
 		next;
 		cutin "16lei_01",2;
 		mes "[Lazy]";
-		mes "In the future, please call me Lazy. Let's go with me for another adventurer one day. Come to Yuno everynow and then.";
+		mes "In the future, please call me Lazy. Let's go with me for another adventurer one day. Come to Yuno every now and then.";
 		npctalk "I always hide in Yuno's restaurants~","Lazy#171_einf",bc_self;
 		next;
 		mes "[Lazy]";
@@ -855,7 +855,7 @@ lighthalzen,56,270,3	script	Republic Guard#171_light	4_M_EIN_SOLDIER,{
 		mes "[Republic Guard]";
 		mes "The entrance is secured by Oscar who is standing up ahead the front gate.";
 		mes "Me and the Rebellions will stay outside. Aas will be inside.";
-		mes "Goodluck!";
+		mes "Good luck!";
 	}
 	close;
 
@@ -1290,7 +1290,7 @@ lighthalzen,336,266,3	script	Lazy#171_lhz2	4_M_LAZY,{
 		next;
 		cutin "16lei_01",2;
 		mes "[Lazy]";
-		mes "Hello~ I'm just a tourist guide, how can I give you orders. The judgement is done by the VIP's intellect, reasoning and conscience~";
+		mes "Hello~ I'm just a tourist guide, how can I give you orders. The judgment is done by the VIP's intellect, reasoning and conscience~";
 		next;
 		mes "[Lazy]";
 		mes "Alright! We're going to follow up with Pat, so the tour's next location will be at the <NAVI>[Headquarters]<INFO>lighthalzen,107,165,0,101,0</INFO></NAVI>.";
@@ -1520,7 +1520,7 @@ lighthalzen,108,163,3	script	Lazy#171_lhz3	4_M_LAZY,{
 		next;
 		cutin "ep171_kaya03",0;
 		mes "[Kaya]";
-		mes "Do you even know what you're insuating now? It's all speculations!";
+		mes "Do you even know what you're insinuating now? It's all speculations!";
 		next;
 		cutin "16lei_01",2;
 		mes "[Lazy]";
@@ -1538,7 +1538,7 @@ lighthalzen,108,163,3	script	Lazy#171_lhz3	4_M_LAZY,{
 		select("Why are they giving their salaries?");
 		cutin "16lei_01",2;
 		mes "[Lazy]";
-		mes "Our adventurer asked a good question. They are almost all from the slums. In Rekenber, they offer you accomodations, with meals and lodging, you hardly have to spend any money at all.";
+		mes "Our adventurer asked a good question. They are almost all from the slums. In Rekenber, they offer you accommodations, with meals and lodging, you hardly have to spend any money at all.";
 		next;
 		cutin "16lei_03",2;
 		mes "[Lazy]";
@@ -1547,7 +1547,7 @@ lighthalzen,108,163,3	script	Lazy#171_lhz3	4_M_LAZY,{
 		select("I would send everything.");
 		cutin "ep171_kaya03",0;
 		mes "[Kaya]";
-		mes "These accomodations for the low-income classes is Rekenber's contribution to society. We do our best!";
+		mes "These accommodations for the low-income classes is Rekenber's contribution to society. We do our best!";
 		next;
 		cutin "16lei_01",2;
 		mes "[Lazy]";
@@ -1800,7 +1800,7 @@ lhz_in01,163,258,5	script	Staff#171_lhzin2	4_M_EINMAN,{
 		next;
 		cutin "",255;
 		mes "[Staff]";
-		mes "Well you see... I need mor epeople for repairs. There's always something broken, so I always need more manpower. But recently,";
+		mes "Well you see... I need more people for repairs. There's always something broken, so I always need more manpower. But recently,";
 		mes "There's been ^0000FFa  lot more workforce requested.^000000";
 		npctalk "It's kind of a problem to always send away the best workers everyday.","",bc_self;
 		next;
@@ -1863,7 +1863,7 @@ lhz_in01,163,258,5	script	Staff#171_lhzin2	4_M_EINMAN,{
 	}
 	if (isbegin_quest(17009) == 1) {
 		mes "[Staff]";
-		mes "They are waiting for you at the <NAVI>[laboratory]<INFO>rgsr_in,157,84,0,000,0</INFO></NAVI>, shouldn't you go aswell?";
+		mes "They are waiting for you at the <NAVI>[laboratory]<INFO>rgsr_in,157,84,0,000,0</INFO></NAVI>, shouldn't you go as well?";
 		close;
 	}
 	mes "[Staff]";
@@ -2035,7 +2035,7 @@ lhz_in01,32,264,5	script	Staff#171_lhzin4	4_M_HUMAN_02,{
 		mes "Patrick Kaufmann. Transfer Code 12-4332.";
 		next;
 		mes "[Staff]";
-		mes "He was working as part of the facility maintenance department and then trasnferred to a new facility.";
+		mes "He was working as part of the facility maintenance department and then transferred to a new facility.";
 		mes "It says the director, McDonald, came here directly and gave a list of people to transfer.";
 		next;
 		cutin "ep171_kaya01",0;
@@ -2093,8 +2093,8 @@ lhz_in01,32,264,5	script	Staff#171_lhzin4	4_M_HUMAN_02,{
 		next;
 		cutin "",255;
 		mes "[Staff]";
-		mes "On vacation... he has already used al of his days. Well... he drove out at the end of the year.";
-		npctalk "Oh~ he wasn't able to rest, until the end of the year. Rekeber is quite a place~","Lazy#171_lhzin4",bc_self;
+		mes "On vacation... he has already used all of his days. Well... he drove out at the end of the year.";
+		npctalk "Oh~ he wasn't able to rest, until the end of the year. Rekenber is quite a place~","Lazy#171_lhzin4",bc_self;
 		npctalk "Absolutely not!","Aas#171_lhzin4",bc_self;
 		next;
 		cutin "16lei_02",2;
@@ -2137,7 +2137,7 @@ lhz_in01,32,264,5	script	Staff#171_lhzin4	4_M_HUMAN_02,{
 		next;
 		cutin "16lei_02",2;
 		mes "[Lazy]";
-		mes "And there it goes. Of course. I also know the asnwer, but I'll ask you anyway, are Patrick and Marcus still working at Rekenber?";
+		mes "And there it goes. Of course. I also know the answer, but I'll ask you anyway, are Patrick and Marcus still working at Rekenber?";
 		next;
 		cutin "",255;
 		mes "[Staff]";
@@ -2310,7 +2310,7 @@ OnInit:
 rgsr_in,12,46,7	script	Staff#171_rgsrin	4_M_04,{
 	if (isbegin_quest(17010) == 1) {
 		mes "[Staff]";
-		mes "What are you doing here? You can't be here unless you have an apointment.";
+		mes "What are you doing here? You can't be here unless you have an appointment.";
 		next;
 		cloakoffnpc "Lazy#171_rgsrin2",getcharid(0);
 		cloakoffnpc "Kaya Tos#171_rgsrin2",getcharid(0);
@@ -2500,7 +2500,7 @@ rgsr_in,12,46,7	script	Staff#171_rgsrin	4_M_04,{
 		close;
 	}
 	mes "[Staff]";
-	mes "What are you doing here? You can't be here unless you have an apointment.";
+	mes "What are you doing here? You can't be here unless you have an appointment.";
 	close;
 
 OnInit:
@@ -2660,7 +2660,7 @@ pub_cat,93,105,3	script	Philofontes#171_cat	4_M_PHILOFONTES,{
 		next;
 		mes "[Tes]";
 		mes "I don't think it's a research facility, even by looking at the other member's report.";
-		mes "It seems to be a place to cover up unsuccesful experiments.";
+		mes "It seems to be a place to cover up unsuccessful experiments.";
 		next;
 		cutin "ep16_tes03",1;
 		mes "[Tes]";
@@ -2729,7 +2729,7 @@ pub_cat,93,105,3	script	Philofontes#171_cat	4_M_PHILOFONTES,{
 		mes  "Aas told me you had something to deliver.";
 		next;
 		mes "[Tes]";
-		mes "I think it's a concious decision from Schlein to have left these documents.";
+		mes "I think it's a conscious decision from Schlein to have left these documents.";
 		mes "Tsk, that Schlein.";
 		next;
 		mes "[Tes]";
@@ -2771,7 +2771,7 @@ pub_cat,93,105,3	script	Philofontes#171_cat	4_M_PHILOFONTES,{
 		mes "[Kaya]";
 		mes "What I've seen so far was only the tip of the iceberg.";
 		mes "My eyes are now wide opened.";
-		npctalk "I'm sorry to interupt so suddenly.","Kaya#pub_cat_dummy",bc_self;
+		npctalk "I'm sorry to interrupt so suddenly.","Kaya#pub_cat_dummy",bc_self;
 		next;
 		cutin "ep16_tes02",1;
 		mes "[Tes]";
@@ -2951,7 +2951,7 @@ pub_cat,160,102,5	script	Philofontes#171_cat2	4_M_PHILOFONTES,{
 		mes "Oh, sorry, I'm senior Rekenber security officer, Aas.";
 		next;
 		mes "[Aas]";
-		mes "The traitor is the chief security officer, Schlein, who has substancial support within the guard forces.";
+		mes "The traitor is the chief security officer, Schlein, who has substantial support within the guard forces.";
 		next;
 		mes "[Aas]";
 		mes "It's these guards, let by Schlein,";
@@ -3264,7 +3264,7 @@ pub_cat,106,69,7	script	Lazy#171_cat	4_M_LAZY,{
 		next;
 		cutin "16lei_02",0;
 		mes "[Lazy]";
-		mes "Oh, that? Don't worry about it, it's the name I use to distract people. There, now you know me. Oh by the way... nevermind, you don't need to know that.";
+		mes "Oh, that? Don't worry about it, it's the name I use to distract people. There, now you know me. Oh by the way... never mind, you don't need to know that.";
 		next;
 		select("If it's Daisy... are you a flower?");
 		mes "[Lazy]";
@@ -3302,7 +3302,7 @@ pub_cat,106,69,7	script	Lazy#171_cat	4_M_LAZY,{
 		next;
 		cutin "ep171_kaya01",2;
 		mes "[Kaya]";
-		mes "Requesting help and analyzing paperworks are separate matters.";
+		mes "Requesting help and analyzing paperwork are separate matters.";
 		next;
 		cutin "16lei_03",0;
 		mes "[Lazy]";
@@ -3485,11 +3485,11 @@ pub_cat,105,58,3	script	Lazy#171_cat2	4_M_LAZY,{
 		next;
 		mes "[Lazy]";
 		mes "But they have such a long history?";
-		mes "The governent just now realized about this issue. There's definitely a connection between that and the missing people. That's why I decided to investigate further.";
+		mes "The government just now realized about this issue. There's definitely a connection between that and the missing people. That's why I decided to investigate further.";
 		next;
 		cutin "16lei_03",2;
 		mes "[Lazy]";
-		mes "Who else would do the job if not me? That's why I have to investage.";
+		mes "Who else would do the job if not me? That's why I have to investigate.";
 		mes "I have to do it in very legitimate way, Because I told him I would do it without causing friction.";
 		next;
 		select("Are your results any different?");
@@ -3600,7 +3600,7 @@ pub_cat,105,58,3	script	Lazy#171_cat2	4_M_LAZY,{
 		next;
 		cutin "ep171_kaya02",0;
 		mes "[Kaya]";
-		mes "There is a limit to what you can do. This is my responsiblity and mine alone.";
+		mes "There is a limit to what you can do. This is my responsibility and mine alone.";
 		next;
 		cutin "16lei_02",2;
 		mes "[Lazy]";
@@ -3856,7 +3856,7 @@ pub_cat,109,71,3	script	Kaya Tos#171_cat	4_EP17_KAYA,{
 		next;
 		select("Please wait a moment, Lazy");
 		mes "[Lazy]";
-		mes "I don't have much time to wait for this sillyness.";
+		mes "I don't have much time to wait for this silliness.";
 		next;
 		cloakonnpc "Lazy#171_cat",getcharid(0);
 		cloakoffnpc "Lazy#171_cat2",getcharid(0);
@@ -4859,7 +4859,7 @@ sp_cor,165,79,1	script	Kaya#171_rvs_1	4_EP17_KAYA,{
 		mes "And what about the person next to you?";
 		next;
 		mes "[Worker]";
-		mes "I carry waste materials and laboratory equipments.";
+		mes "I carry waste materials and laboratory equipment.";
 		171_worker_talk(52,.@poor$);
 		next;
 		cutin "ep171_kaya01",2;
@@ -5551,7 +5551,7 @@ sp_cor,122,141,5	script	Tes#171_cor_0	4_M_PHILOFONTES,{
 		npctalk "Yeah. She used to laugh strangely before.","Worker#171_rvs_13",bc_self;
 		next;
 		mes "[Worker]";
-		mes "Have you evere seen her room? I was frightened when I saw it the first time. She closed the door quicly, but I saw it.";
+		mes "Have you ever seen her room? I was frightened when I saw it the first time. She closed the door quickly, but I saw it.";
 		npctalk "I've seen some signs too.","Worker#171_rvs_12",bc_self;
 		next;
 		cutin "ep171_kaya01",2;
@@ -6963,7 +6963,7 @@ sp_cor,255,285,1	script	Rookie#rm171_2	4_M_ROOKIE,{
 		next;
 		mes "[Rookie]";
 		mes "The gate you're about to enter... we're calling it the entrance, but it's actually the exit.";
-		mes "It's a gaint sewer. If you walk along the sewer, you'll find a huge sewage treatment plant inside.";
+		mes "It's a giant sewer. If you walk along the sewer, you'll find a huge sewage treatment plant inside.";
 		next;
 		mes "[Rookie]";
 		mes "If you go past the sewage treatment plant, there is a one huge magic power plant inside.";
@@ -7096,7 +7096,7 @@ sp_cor,224,77,3	script	Researcher#171_rvs_0	4_F_SCIENCE,{
 		next;
 		select("I'm looking for a person.");
 		mes "[Researcher]";
-		mes "Who? Patrick? I don't know him. I don't know many peopl, I'm only focused on the field work here.";
+		mes "Who? Patrick? I don't know him. I don't know many people, I'm only focused on the field work here.";
 		npctalk "I can tell you the names of all the vegetables.","",bc_self;
 		next;
 		select("Why are the researchers doing the field work?");
@@ -7111,7 +7111,7 @@ sp_cor,224,77,3	script	Researcher#171_rvs_0	4_F_SCIENCE,{
 		mes "The chief researchers here know all the details. I honestly didn't know they would just leave like that. I thought they were like a family to me...";
 		next;
 		mes "[Researcher]";
-		mes "The chief told me to pack my bags because there was a disturbance outside. I was hesitating because I had to take care of my crops, but then everyonen had already left.";
+		mes "The chief told me to pack my bags because there was a disturbance outside. I was hesitating because I had to take care of my crops, but then everyone had already left.";
 		npctalk "I feel discarded.","",bc_self;
 		next;
 		mes "[Researcher]";
@@ -7193,7 +7193,7 @@ sp_cor,151,180,5	script	Worker#171_rvs_15	4_M_RUSMAN2,{
 		next;
 		select("Yes, that's him.");
 		mes "[Marcus]";
-		mes "That's right, that's right! The guy who looked tall and big. I wanted to be his friend becase we came from the same place. I couldn't see him one day. Then I was moved.";
+		mes "That's right, that's right! The guy who looked tall and big. I wanted to be his friend because we came from the same place. I couldn't see him one day. Then I was moved.";
 		next;
 		mes "[Marcus]";
 		mes "It was a Facility Maintenance Department, I told them things weren't supposed to work that way.";
@@ -7236,7 +7236,7 @@ sp_cor,70,263,5	script	Worker#171_rvs_16	4_M_02,{
 		npctalk "Be careful here.","",bc_self;
 		next;
 		mes "[Worker]";
-		mes "Oh... did you come to pick up the materials? I have arranged it as best as I could, but I cann't classify it because I don't know what it is.";
+		mes "Oh... did you come to pick up the materials? I have arranged it as best as I could, but I cannot classify it because I don't know what it is.";
 		next;
 		select("Can I have a look?");
 		mes "[Worker]";
@@ -7248,7 +7248,7 @@ sp_cor,70,263,5	script	Worker#171_rvs_16	4_M_02,{
 		next;
 		select("How do the researchers handle the garbage?");
 		mes "[Worker]";
-		mes "We collect the garbage from each room and then nprocess it. Well, usually that's what we do for neat people. They don't say much.";
+		mes "We collect the garbage from each room and then process it. Well, usually that's what we do for neat people. They don't say much.";
 		npctalk "I can't understand how people who are so smart can be so dirty and messy.";
 		next;
 		mes "[Worker]";
@@ -7256,7 +7256,7 @@ sp_cor,70,263,5	script	Worker#171_rvs_16	4_M_02,{
 		next;
 		select("Do you also burn the contaminated materials?");
 		mes "[Worker]";
-		mes "That's not it. I only categorize large materials or technical equipments.";
+		mes "That's not it. I only categorize large materials or technical equipment.";
 		next;
 		mes "[Worker]";
 		mes "There are separate waste dumps that collect only contaminated materials that can't be burned. We're often in contact with one another.";
@@ -7364,7 +7364,7 @@ sp_rudus,15,280,5	script	Discarded Person#171_rudus	4_F_MUT1,{
 		mes "You want to know why a person who led experiments was thrown out in a dumpster and abandoned.";
 		next;
 		mes "[Discarded Person]";
-		mes "My only goal is being succesful, and I've done all sort of things.";
+		mes "My only goal is being successful, and I've done all sort of things.";
 		mes "That's a proper ending for me don't you think?";
 		next;
 		mes "[Discarded Person]";
@@ -7390,7 +7390,7 @@ sp_rudus,15,280,5	script	Discarded Person#171_rudus	4_F_MUT1,{
 		mes "If they had a ^0000FFcertain physical condition and a poor background^000000, sometimes just homeless, it was easier to experiment on them.";
 		next;
 		mes "[Discarded Person]";
-		mes "Don't look at me like that. The porrer you are, the better off your family is, we would be fools to not take advantage of these people. At least that's what I thought back then.";
+		mes "Don't look at me like that. The poorer you are, the better off your family is, we would be fools to not take advantage of these people. At least that's what I thought back then.";
 		next;
 		mes "[Discarded Person]";
 		mes "Where do you think all these missing people have gone to over the years?";
@@ -7417,7 +7417,7 @@ sp_rudus,15,280,5	script	Discarded Person#171_rudus	4_F_MUT1,{
 		mes "The wrist band is a bracelet. The names of the specimens are written on it.";
 		next;
 		mes "[Discarded Person]";
-		mes "If he did, there would be a braclet somewhere on the floor. It might not even be there anymore...";
+		mes "If he did, there would be a bracelet somewhere on the floor. It might not even be there anymore...";
 		next;
 		mes "[Discarded Person]";
 		mes "If you can't find him, you can probably just buy a bracelet at a market and have a proper burial instead.";
@@ -7438,7 +7438,7 @@ sp_rudus,15,280,5	script	Discarded Person#171_rudus	4_F_MUT1,{
 		mes "Even if I received treatments, there's no chance I'd survive. I know this well. Wouldn't it be best for me to have a quiet life here without anyone?";
 		next;
 		mes "[Discarded Person]";
-		mes "See, this is my family nmow. Why do I have to carry such a heavy load? It's a hundred times easier to give up hope than to be alive elsewhere isn't it?";
+		mes "See, this is my family now. Why do I have to carry such a heavy load? It's a hundred times easier to give up hope than to be alive elsewhere isn't it?";
 		next;
 		mes "[Discarded Person]";
 		mes "Do I sound weird when I say stuff like that? I think I'm losing it a little.";
@@ -7468,7 +7468,7 @@ sp_rudus,15,280,5	script	Discarded Person#171_rudus	4_F_MUT1,{
 	}
 	mes "[Discarded Person]";
 	mes "You should try and look for an ^0000FFIdentification Bracelet^000000 in the pile of garbage. Do you know what it is?";
-	mes "The wrist band is a bracelet. And thats where the names of the specimens are written.";
+	mes "The wrist band is a bracelet. And that is where the names of the specimens are written.";
 	close;
 
 OnInit:
@@ -7628,7 +7628,7 @@ sp_cor,160,55,5	script	Operation Officer#171_ocp	4_M_ILYA,{
 	if (isbegin_quest(12454) == 2) erasequest 12454;
 	if (isbegin_quest(12454) == 0) {
 		mes "[Operation Officer]";
-		mes "Even though we suppresed the enemy from the first annihilation operation, the mutants started crawling out again.";
+		mes "Even though we suppressed the enemy from the first annihilation operation, the mutants started crawling out again.";
 		next;
 		mes "[Operation Officer]";
 		mes "It will be easier if we can destroy the source. But those on the top won't approve it, so we'll have to begin a secondary search.";
@@ -7900,7 +7900,7 @@ sp_cor,155,94,3	script	Juslan#171_daily_merc	4_M_GUNSLINGER3,{
 		mes "It seems like their equipment or abilities have increased in various ways.";
 		next;
 		mes "[Juslan]";
-		mes "I wonder if those were strengthened through the experimentations in this lab?";
+		mes "I wonder if those were strengthened through the experimentation in this lab?";
 		mes "They've become so strong now, I don't trust these people...";
 		next;
 		mes "[Juslan]";

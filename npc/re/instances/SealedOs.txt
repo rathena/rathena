@@ -92,10 +92,10 @@ OnEvent05:
 }
 
 1@os_b,188,45,5	script	Ridsh#171_os_0	4_F_LEEDSH,{
-	.@dien$ =  instance_npcname("Dien#171_os_0");
-	.@cot$ = instance_npcname("Cotnes#171_os_0");
 	if (!is_party_leader())
 		end;
+	.@dien$ =  instance_npcname("Dien#171_os_0");
+	.@cot$ = instance_npcname("Cotnes#171_os_0");
 	cutin "ep162_rds01",2;
 	mes "[Ridsh]";
 	mes "Oh?";
@@ -108,8 +108,8 @@ OnEvent05:
 	mes "We can't have anyone know we're here~~";
 	npctalk "Ridsh : We're in trouble~~ We can't have anyone know we're here~~";
 	next;
-	hideoffnpc instance_npcname("Dien#171_os_0");
-	hideoffnpc instance_npcname("Cotnes#171_os_0");
+	hideoffnpc .@dien$;
+	hideoffnpc .@cot$;
 	cutin "ep162_dn03",2;
 	mes "[Dien]";
 	mes "The adventurer is here too!";
@@ -257,7 +257,7 @@ OnTalk:
 	cutin "ep162_dn01",2;
 	mes "[Dien]";
 	mes "Oh!";
-	mes "If you go to theright, I think you can go back on the railroad without having to break the door.";
+	mes "If you go to the right, I think you can go back on the railroad without having to break the door.";
 	npctalk "Dien : Oh! If you go to the right, I think you can go back on the railroad without having to break the door";
 	if (!'unlocked)
 		donpcevent instance_npcname("#171_sealedos_control") + "::OnEvent04";
@@ -285,7 +285,7 @@ OnTalk:
 	mes "Argh!";
 	npctalk "Ridsh : Argh!";
 	next;
-	hideoffnpc instance_npcname("Est#171_os_0");
+	hideoffnpc .@Est$;
 	sleep2 500;
 	specialeffect EF_BLASTMINEBOMB,AREA,instance_npcname("#171_sos_dummy_6");
 	sleep2 500;
@@ -328,7 +328,7 @@ OnTalk:
 	mes "I don't think I heard that wrong. Did I?";
 	next;
 	disablenpc instance_npcname("Cotnes#171_os_2");
-	hideoffnpc instance_npcname("Cotnes#171_os_3");
+	hideoffnpc .@cot$;
 	cutin "ep162_ctn01",2;
 	mes "[Cotnes]";
 	mes "You two really~";
@@ -336,7 +336,7 @@ OnTalk:
 	npctalk "Cotnes : You two really~ Please stop fighting.",.@cot$;
 	next;
 	disablenpc instance_npcname("Dien#171_os_3");
-	hideoffnpc instance_npcname("Dien#171_os_4");
+	hideoffnpc .@dien$;
 	cutin "ep162_dn03",2;
 	mes "[Dien]";
 	mes "How do you always fight like that?";

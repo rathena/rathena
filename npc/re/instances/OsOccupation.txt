@@ -261,10 +261,8 @@ OnTouch:
 		if (.@id < 2) {
 			enablenpc instance_npcname("#171_ocp_wrp_" + (.@id + 1));
 			hideonnpc instance_npcname("#171_ocp_wrp_" + (.@id + 1));
-		}
-		if (.@id < 2)
 			donpcevent instance_npcname("#171_ocp_wrp_" + (.@id + 1)) + "::OnSummon";
-		else
+		}else
 			donpcevent instance_npcname("#171_ocp_wrp_2") + "::OnBossSummon";
 		switch (.@id) {
 		case 0:
@@ -317,6 +315,8 @@ OnSummon:
 	}
 	for (.@i = 0; .@i < getarraysize(.@xy); .@i += 3)
 		monster 'map$,.@xy[.@i],.@xy[.@i+1],"Incomplete " + getmonsterinfo(.@xy[.@i+2],MOB_NAME),.@xy[.@i+2],1,.@event$;
+	end;
+
 OnMobKill:
 	end;
 
@@ -508,6 +508,8 @@ OnSummonStory01:
 		areamonster 'map$,26,349,37,357,"Incomplete " + getmonsterinfo(.@id,MOB_NAME),.@id,1,instance_npcname(strnpcinfo(0))+"::OnStoryKill";
 		sleep 10000;
 	}
+	end;
+
 OnStoryKill:
 	end;
 
@@ -531,6 +533,8 @@ OnSummon:
 		donpcevent instance_npcname(strnpcinfo(0)) + "::OnEvent0" + .@id;
 	for (.@i = 0; .@i < getarraysize(.@xy); .@i += 3)
 		monster 'map$,.@xy[.@i],.@xy[.@i+1],"CP" + .@id + " " + getmonsterinfo(.@xy[.@i+2],MOB_NAME),.@xy[.@i+2],1,.@event$;
+	end;
+
 OnMobKill:
 	end;
 
@@ -661,6 +665,8 @@ OnSummonSkill:
 			break;
 	}
 	freeloop(false);
+	end;
+
 OnSummonKill:
 	end;
 
@@ -673,6 +679,8 @@ OnPoisonStory:
 OnPoisonDaily:
 	monster 'map$,252,107,"",2536,1,instance_npcname(strnpcinfo(0)) + "::OnPoisonKill";
 	monster 'map$,255,107,"",2536,1,instance_npcname(strnpcinfo(0)) + "::OnPoisonKill";
+	end;
+
 OnPoisonKill:
 	end;
 }

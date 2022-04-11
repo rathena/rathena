@@ -6,5 +6,5 @@
 //= 1.0 First Version [crazyarashi]
 //============================================================
 
-// Reckenberg Research Institute
+// Rekenber Research Institute
 rgsr_in,127,32,0	warp	rekenber_to_lhz	1,1,lighthalzen,53,275
