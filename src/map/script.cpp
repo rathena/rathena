@@ -6896,11 +6896,11 @@ static int buildin_viewpointmap_sub(block_list *bl, va_list ap) {
 }
 
 BUILDIN_FUNC(viewpointmap) {
-	std::string map = script_getstr(st, 2);
-	int16 mapid = map_mapname2mapid(map.c_str());
+	const char* map = script_getstr(st, 2);
+	int16 mapid = map_mapname2mapid(map);
 
 	if (mapid < 0) {
-		ShowError("buildin_viewpointmap: Unknown map name %s.\n", map.c_str());
+		ShowError("buildin_viewpointmap: Unknown map name %s.\n", map);
 		return SCRIPT_CMD_FAILURE;
 	}
 
