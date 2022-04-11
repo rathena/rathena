@@ -44,8 +44,7 @@
 //= 2.7 Corrected 'IProntera' typo. (bugreport:4522) [L0ne_W0lf]
 //= 2.8 Updated RE/Pre-RE EXP. [Euphy]
 //= 2.9 Updated Nameless Island addition and added questlog support. [Euphy]
-//= 3.0 Reverted custom/unofficial quest log support for: [Everade]
-//=     - Geoborg Family Curse Quest (Nameless Island addition)
+//= 3.0 Commented custom quest log support for Geoborg Family Curse Quest [Everade]
 //============================================================
 
 // Prontera Culvert :: prt_npc

@@ -1850,7 +1850,7 @@ enum e_special_effects {
 	EF_TIME_ACCESSORY,
 	EF_SPRITEMABLE,
 	EF_TUNAPARTY,
-	EF_MAX = 1200
+	EF_MAX = 1200	// Missing constants up to 1199 which are currently utilized
 };
 
 enum e_hat_effects : int16{

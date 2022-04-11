@@ -946,7 +946,7 @@ lighthalzen,259,215,3	script	Lazy#171_lhz	4_M_LAZY,{
 	if (isbegin_quest(7850) == 0) {
 		cutin "16lei_01",2;
 		mes "[Lazy]";
-		mes "The Rekenber roads are wide and gleaming~ everyone knows about the Schwarzald Republic~";
+		mes "The Rekenber roads are wide and gleaming~ everyone knows about the Schwarzwald Republic~";
 		close3;
 	}
 	if (isbegin_quest(17004) == 1) {
@@ -1053,8 +1053,8 @@ lighthalzen,259,215,3	script	Lazy#171_lhz	4_M_LAZY,{
 	}
 	cutin "16lei_01",2;
 	mes "[Lazy]";
-	mes "Let's go to the headquarters. The Rekenber roads are wide and gleaming~ everyone knows about the Schwarzald Republic~";
-	npctalk "The Rekenber roads are wide and gleaming~ everyone knows about the Schwarzald Republic~","",bc_self;
+	mes "Let's go to the headquarters. The Rekenber roads are wide and gleaming~ everyone knows about the Schwarzwald Republic~";
+	npctalk "The Rekenber roads are wide and gleaming~ everyone knows about the Schwarzwald Republic~","",bc_self;
 	close3;
 
 OnInit:
@@ -1312,7 +1312,7 @@ lighthalzen,336,266,3	script	Lazy#171_lhz2	4_M_LAZY,{
 	}
 	cutin "16lei_01",2;
 	mes "[Lazy]";
-	mes "The Rekenber roads are wide and gleaming~ everyone knows about the Schwarzald Republic~";
+	mes "The Rekenber roads are wide and gleaming~ everyone knows about the Schwarzwald Republic~";
 	close3;
 
 OnInit:
@@ -1608,7 +1608,7 @@ lighthalzen,108,163,3	script	Lazy#171_lhz3	4_M_LAZY,{
 	}
 	cutin "16lei_01",2;
 	mes "[Lazy]";
-	mes "The Rekenber roads are wide and gleaming~ everyone knows about the Schwarzald Republic~";
+	mes "The Rekenber roads are wide and gleaming~ everyone knows about the Schwarzwald Republic~";
 	close3;
 
 OnInit:
@@ -7916,7 +7916,7 @@ sp_cor,155,94,3	script	Juslan#171_daily_merc	4_M_GUNSLINGER3,{
 		end;
 	}
 	mes "[Juslan]";
-	mes "The Heart Hunters and the Bellare are not like those we've met before.";
+	mes "The Heart Hunters Bellares and the Sanares are not like those we've met before.";
 	mes "They are hard to deal with.";
 	next;
 	mes "[Juslan]";

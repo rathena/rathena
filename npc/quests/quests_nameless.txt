@@ -57,8 +57,7 @@
 //= 2.3 Updated RE/Pre-RE EXP. [Euphy]
 //= 2.4 Moved Dorian to pre-re/re paths. [Euphy]
 //= 2.5 Updated Nameless Island quests and added questlog support. [Euphy]
-//= 2.6 Reverted custom/unofficial quest log support for: [Everade]
-//=     - Nameless Island Quest
+//= 2.6 Commented custom quest log support for the Nameless Island Quest [Everade]
 //============================================================
 
 // Nameless Island and Cursed Monestary Access Quest :: aru_monas
