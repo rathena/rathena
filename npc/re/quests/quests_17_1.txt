@@ -545,7 +545,7 @@ ein_fild01,95,146,5	script	Kaya Tos#171_einf	4_EP17_KAYA,{
 		mes "Wouldn't it be too hard for such supplies to pass through the borders?";
 		next;
 		mes "[Kaya]";
-		mes "So the laboratory is probably still in Schartzwald. The materials can't be transported in the open,";
+		mes "So the laboratory is probably still in Schwarzwald. The materials can't be transported in the open,";
 		mes "so we have to look for a secret location, I guess it's going to be in one of those locations.";
 		next;
 		cutin "16lei_01",2;
