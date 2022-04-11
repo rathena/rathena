@@ -3,7 +3,7 @@
 //===== Description: =========================================
 //= [Walkthrough Conversion]
 //= Episode 17.1 - Sealed OS
-//===== Changelogs: ==========================================
+//===== Changelog: ===========================================
 //= 1.0 Initial release [crazyarashi]
 //= 1.1 Optimizations and cleanup [Everade]
 //============================================================

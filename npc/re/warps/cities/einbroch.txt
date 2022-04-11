@@ -2,7 +2,7 @@
 //= Einbroch Warp Script
 //===== Description: =========================================
 //= Warp Points for Einbroch
-//===== Changelogs: ==========================================
+//===== Changelog: ===========================================
 //= 1.0 Some warps have been changed in renewal ep16.2 [Capuche]
 //= 1.1 Episode 17.1 - Illusion update [crazyarashi]
 //============================================================

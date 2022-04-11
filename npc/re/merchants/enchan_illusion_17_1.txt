@@ -3,7 +3,7 @@
 //===== Description: =========================================
 //= [Walkthrough Conversion]
 //= Illusion related merchants and enchanters
-//===== Changelogs: ==========================================
+//===== Changelog: ===========================================
 //= 1.0 Initial release [crazyarashi]
 //= 1.1 Optimizations and cleanup [Everade]
 //= 1.2 iRO conversion for 2 NPCs [Capuche, Everade]
@@ -146,18 +146,18 @@ sp_cor,108,130,5	script	Rebellion#rm171_7	4_F_REBELLION3,{
 	mes "[Rebellion]";
 	mes "Did you bring Damaged Weapons? Would you like to see that science criminal? He's in there. Want me to call him for you?";
 	mes "Or do you have business with me? I can exchange Weapon Modification Devices and Armor Modification Modules.";
-	cloakoffnpc "Eliumina#rm171_4", getcharid(0);
+	cloakoffnpc "Elyumina#rm171_4", getcharid(0);
 	npctalk "Rebellion: Hey, criminal. You're wanted.", "Rebellion#rm171_7", bc_self;
-	npctalk "Eliumina: Alright, alright! I'm coming! You're so pathetic that without me, you'll have to fight with bean bags.", "Eliumina#rm171_4", bc_self;
+	npctalk "Elyumina: Alright, alright! I'm coming! You're so pathetic that without me, you'll have to fight with bean bags.", "Elyumina#rm171_4", bc_self;
 	next;
-	switch (select("See Eliumina.", "Request Weapon Modification Device.", "Request Armor Modification Module.")) {
+	switch (select("See Elyumina.", "Request Weapon Modification Device.", "Request Armor Modification Module.")) {
 	case 1:
 		mes "[Rebellion]";
 		mes "Okay, enjoy your conversation.";
 		mes "It took a long time to coax him, but he eventually agreed to modify our weapons and armor. He's pretty good at it, too. He's been working all day, every day.";
 		close;
 	case 2:
-		npctalk "Eliumina: What? If you were just going to keep me standing here like a statue, why did you even call me? You jerks!", "Eliumina#rm171_4", bc_self;
+		npctalk "Elyumina: What? If you were just going to keep me standing here like a statue, why did you even call me? You jerks!", "Elyumina#rm171_4", bc_self;
 		if (checkweight(1201,3) == 0) {
 			mes "[Rebellion]";
 			mes "Do you want a Weapon Modification Device? It's 5 <ITEM>[Cor Cores]<INFO>25723</INFO></ITEM> or 1 million Zeny.";
@@ -166,7 +166,7 @@ sp_cor,108,130,5	script	Rebellion#rm171_7	4_F_REBELLION3,{
 		}
 		mes "[Rebellion]";
 		mes "Do you want a Weapon Modification Device? It's 5 <ITEM>[Cor Cores]<INFO>25723</INFO></ITEM> or 1 million Zeny.";
-		mes "If you want a weapon, you can talk to Eliumina.";
+		mes "If you want a weapon, you can talk to Elyumina.";
 		next;
 		if (select("Request Weapon Modification Device (Physical).", "Request Weapon Modification Device (Magic).") == 1)
 			setarray .@ids[0],23776,23777,23778;
@@ -212,7 +212,7 @@ sp_cor,108,130,5	script	Rebellion#rm171_7	4_F_REBELLION3,{
 		mes "If you want to refine it, the <NAVI>[Tin Can]<INFO>sp_cor,106,136,0,101,0</INFO></NAVI> next to me can take good care of you.";
 		close;
 	case 3:
-		npctalk "Eliumina: What? If you were just going to keep me standing here like a statue, why did you even call me? You brutes!", "Eliumina#rm171_4", bc_self;
+		npctalk "Elyumina: What? If you were just going to keep me standing here like a statue, why did you even call me? You brutes!", "Elyumina#rm171_4", bc_self;
 		mes "[Rebellion]";
 		mes "Do you want an Armor Modification Module? It's 30 <ITEM>[Mysterious Components]<INFO>25669</INFO></ITEM> and 5 <ITEM>[Cor Cores]<INFO>25723</INFO></ITEM>.";
 		if (checkweight(1201,3) == 0) {
@@ -253,43 +253,43 @@ OnInit:
 }
 
 // Equipment Exchange NPC - Official iRO Conversion
-sp_cor,111,130,3	script	Eliumina#rm171_4	4_EP17_ELYUMINA,{
+sp_cor,111,130,3	script	Elyumina#rm171_4	4_EP17_ELYUMINA,{
 	if (isbegin_quest(16360) < 2) {
 		cutin "ep171_elyumina02",0;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "Argh! Why do you keep asking for me when I need to focus on my research? I'm busy, alright? If you're bored, go bring me more damaged weapons!";
 		close2;
-		cloakonnpc "Eliumina#rm171_3", getcharid(0);
+		cloakonnpc "Elyumina#rm171_3", getcharid(0);
 		cutin "",255;
 		end;
 	}
 	if (checkweight(28136,2) == 0) {
 		cutin "ep171_elyumina03",0;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "Didn't you come for weapons or armor? Your bag is full. I don't have time to wait for you while you rummage through your bag. Come back later.";
 		next;
 		mes " - Your bag is full. Please make some room, and then talk to me again. -";
 		close3;
 	}
 	cutin "ep171_elyumina01",0;
-	mes "[Eliumina]";
+	mes "[Elyumina]";
 	mes "What is it so important that you had to interrupt my research? This had better be important.";
 	next;
 	cutin "",255;
 	switch (select("Request OS Weapon.", "Request Illusion Armor.")) {
 	case 1:
 		cutin "ep171_elyumina01",0;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "OS weapons? I'll handle that if you bring me 1 <ITEM>[Damaged Weapon]<INFO>25668</INFO></ITEM> and 50 <ITEM>[Mysterious Components]<INFO>25669</INFO></ITEM>.";
 		mes "I'll give you whatever kind I want to give you, among the ones I have. Why should I let you pick?";
 		next;
 		cutin "",255;
 		if (select("Exchange OS Weapon.", "Check the available list.") == 2) {
 			cutin "ep171_elyumina03",0;
-			mes "[Eliumina]";
+			mes "[Elyumina]";
 			mes "Tsk, tsk. I said everything I make is good. Do you really have to choose? Alright, then listen up.";
 			next;
-			mes "[Eliumina]";
+			mes "[Elyumina]";
 			mes "Sword: <ITEM>[Cannon Rapier-OS]<INFO>13493</INFO></ITEM>";
 			mes "Two-handed Sword: <ITEM>[Beam Claymore-OS]<INFO>21047</INFO></ITEM>";
 			mes "Staff: <ITEM>[Rutilus Stick-OS]<INFO>26151</INFO></ITEM>";
@@ -310,19 +310,19 @@ sp_cor,111,130,3	script	Eliumina#rm171_4	4_EP17_ELYUMINA,{
 		disable_items;
 		if (countitem(25668) < 1 || countitem(25669) < 50) {
 			cutin "ep171_elyumina03",0;
-			mes "[Eliumina]";
+			mes "[Elyumina]";
 			mes "I told you, bring me 1 Damaged Weapon and 50 Mysterious Components. You should listen when people talk.";
 			close3;
 		}
 		if (checkweight(28136,2) == 0) {
 			cutin "ep171_elyumina03",0;
-			mes "[Eliumina]";
+			mes "[Elyumina]";
 			mes "... What the? There's a problem.";
 			mes "Not on my end, of course. This is on you. Check if your bag is full or you have all the materials you need.";
 			close3;
 		}
 		cutin "ep171_elyumina04",0;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "There. If you want another, then bring me more Damaged Weapons and Mysterious Components.";
 		mes "I'm locked up in here, fixing toys, because of you. You can deal with this, right?";
 		delitem 25668,1;	// EP17_1_EVT01
@@ -331,7 +331,7 @@ sp_cor,111,130,3	script	Eliumina#rm171_4	4_EP17_ELYUMINA,{
 		close3;
 	case 2:
 		cutin "ep171_elyumina04",0;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "If you want Illusion armor, bring me 50 <ITEM>[Cor Cores]<INFO>25723</INFO></ITEM>. I'll give you a piece.";
 		mes "Let's see... Ooh, when did I make so many varieties? Alright, I feel generous. What do you want?";
 		next;
@@ -354,7 +354,7 @@ sp_cor,111,130,3	script	Eliumina#rm171_4	4_EP17_ELYUMINA,{
 			break;
 		}
 		cutin "ep171_elyumina01",0;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "<ITEM>[" + getitemname(.@item[0]) + "]<INFO>" + .@item[0] + "</INFO></ITEM>";
 		mes "<ITEM>[" + getitemname(.@item[1]) + "]<INFO>" + .@item[1] + "</INFO></ITEM>";
 		mes "Which one?";
@@ -362,26 +362,26 @@ sp_cor,111,130,3	script	Eliumina#rm171_4	4_EP17_ELYUMINA,{
 		cutin "",255;
 		.@id = .@item[ select( getitemname(.@item[0]), getitemname(.@item[1]) ) -1 ];
 		cutin "ep171_elyumina04",0;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "Alright, " + getitemname(.@id) + ", right? Do you really want to trade it for 50 Cor Cores?";
 		next;
 		cutin "",255;
 		if (select( "Exchange.", "Do not exchange." ) == 2) {
 			cutin "ep171_elyumina03",0;
-			mes "[Eliumina]";
+			mes "[Elyumina]";
 			mes "Hey, are you kidding me? Hey, I tried to be nice!";
 			close3;
 		}
 		disable_items;
 		if (countitem(25723) < 50) {
 			cutin "ep171_elyumina02",0;
-			mes "[Eliumina]";
+			mes "[Elyumina]";
 			mes "Hey, are you kidding me? You don't have all the Cor Cores! Hey, I tried to be nice!";
 			enable_items;
 			close3;
 		}
 		cutin "ep171_elyumina04",0;
-		mes "[Eliumina]";
+		mes "[Elyumina]";
 		mes "Here, take this " + getitemname(.@id) + ". I bet it's probably the best armor you've ever had. You really ought to be grateful.";
 		delitem 25723,5;	// EP17_1_EVT390
 		getitem .@id,1;

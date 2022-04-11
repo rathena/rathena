@@ -4,7 +4,7 @@
 //= [Walkthrough Conversion]
 //= Episode 17.1 - OS Occupation Operation
 //= 2nd OS Search
-//===== Changelogs: ==========================================
+//===== Changelog: ===========================================
 //= 1.0 Initial release [crazyarashi]
 //= 1.1 Optimizations and cleanup [Everade]
 //============================================================

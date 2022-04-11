@@ -2,7 +2,7 @@
 //= Lighthalzen Warp Script
 //===== Description: =========================================
 //= Warp Points for Lighthalzen
-//===== Additional Comments: =================================
+//===== Changelog: ===========================================
 //= 1.0 First Version [crazyarashi]
 //============================================================
 

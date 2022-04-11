@@ -3,7 +3,7 @@
 //===== Description: =========================================
 //= [Walkthrough Conversion]
 //--- NPCs quests for Episode 16.2
-//===== Changelogs: ==========================================
+//===== Changelog: ===========================================
 //= 1.0 First version. [Capuche]
 //= 1.1 Updated with some iRO NPC names. [Everade]
 //============================================================
