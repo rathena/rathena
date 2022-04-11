@@ -58,5 +58,5 @@ jobs:
                       ENABLE_PRERE=${{ github.event.inputs.prere }}
                       ENABLE_VIP=${{ github.event.inputs.vip }}
                   tags: "rathena/${{ github.event.inputs.image_name }}:${{ github.event.inputs.image_tag }}"
-                  platforms: linux/amd64
+                  platforms: linux/amd64, linux/386, linux/arm64, linux/arm/v7
                   push: true
