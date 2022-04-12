@@ -13,6 +13,10 @@
 
 OnInstanceInit:
 	'map$ = instance_mapname("1@rgsr");
+	'rgsr = 'activate = 0;
+	deletearray 'rescued;
+	deletearray'rsgr_c;
+
 	disablenpc instance_npcname("Researcher#rgsr_ev_0");
 	disablenpc instance_npcname("Access Controller#rgsr");
 	disablenpc instance_npcname("#rgsr_touch_mob_0");
@@ -52,8 +56,10 @@ OnEvent03:
 	end;
 
 OnEvent04:
-	'rgsr = 14;
-	donpcevent instance_npcname("#rgsr_boss") + "::OnSummon";
+	if ('rgsr == 13) {
+		'rgsr = 14;
+		donpcevent instance_npcname("#rgsr_boss") + "::OnSummon";
+	}
 	end;
 }
 
@@ -90,7 +96,7 @@ OnEvent04:
 	mes "Please consider their safety first.";
 	mes "Now go ahead.";
 	close2;
-	if (!'rgsr) {
+	if ('rgsr == 0) {
 		'rgsr = 1;
 		donpcevent instance_npcname("#171_rgsr_control") + "::OnEvent01";
 	}
@@ -201,7 +207,8 @@ OnEvent04:
 	if ('rgsr == 5) {
 		mes "Voice Transmission Connected.";
 		close2;
-		'rgsr = 6;
+		if ('rgsr == 5)
+			'rgsr = 6;
 		npctalk "Waiting for communication response...";
 		sleep2 2750;
 		npctalk "Aas : Commander Est? We closed the hall lock, but what is the problem?";
@@ -217,7 +224,8 @@ OnEvent04:
 		npctalk "Aas : The priority should be to secure the laboratories and then the Guard Room.... *click*";
 		sleep2 2000;
 		npctalk "Est : Eh, what was that?",instance_npcname("Est#rgsr");
-		'rgsr = 7;
+		if ('rgsr == 6)
+			'rgsr = 7;
 		end;
 	}
 	if ('rgsr < 7)
@@ -232,7 +240,7 @@ OnEvent04:
 1@rgsr,235,44,5	script	Aas#rgsr2	4_EP17_AS,{
 	if ('rgsr == 7) {
 		for (.@i = 0; .@i < 3; .@i++) {
-			if (!getd("'rescued[" + .@i + "]"))
+			if (!'rescued[.@i])
 				.@miss++;
 		}
 		if (.@miss) {
@@ -271,9 +279,11 @@ OnEvent04:
 		mes "Meet me over there.";
 		close2;
 		cutin "",255;
-		enablenpc instance_npcname("Central Room#rgsr");
-		'rgsr = 8;
-		disablenpc instance_npcname("#rgsr_mob_2");
+		if ('rgsr == 7) {
+			enablenpc instance_npcname("Central Room#rgsr");
+			'rgsr = 8;
+			disablenpc instance_npcname("#rgsr_mob_2");
+		}
 		end;
 	}
 	cutin "ep171_as02",1;
@@ -457,7 +467,8 @@ OnInstanceInit:
 		disablenpc instance_npcname("Goni#rgsr");
 		disablenpc instance_npcname("Est#rgsr2");
 		npctalk "Aas : So adventurer, let's check out the Central Room.",.@aas$;
-		'rgsr = 11;
+		if ('rgsr == 10)
+			'rgsr = 11;
 		end;
 	}
 	cutin "ep171_as02",1;
@@ -526,7 +537,7 @@ OnFail:
 	}
 	.@index = atoi(replacestr(strnpcinfo(2),"rgsr",""));
 	if (.@index > 0) {
-		if (!getd("'rsgr_c["+(.@index - 1)+"]")) {
+		if (!'rsgr_c[ (.@index - 1) ]) {
 			mes "This device has an unknown purpose.";
 			mes "There are four buttons in the room.";
 			next;
@@ -535,7 +546,7 @@ OnFail:
 			close;
 		}
 	}
-	if (!getd("'rsgr_c["+.@index+"]")) {
+	if (!'rsgr_c[.@index]) {
 		switch (.@index) {
 			case 0: .@answer = 2; .@string$ = "three phases"; break;
 			case 1: .@answer = 1; .@string$ = "two phases"; break;
@@ -552,9 +563,9 @@ OnFail:
 			specialeffect EF_BEGINSPELL3,AREA,instance_npcname("Restrained Specimen#rgsr");
 			if (.@index < 3) {
 				mapannounce 'map$,"Gravity control adjustment... completed... There are " + .@string$ +" remaining.",bc_map,0x0D98BA;
-				setd("'rsgr_c["+.@index+"]",1);
+				'rsgr_c[.@index] = 1;
 			} else {
-				setd("'rsgr_c["+.@index+"]",1);
+				'rsgr_c[.@index] = 1;
 				mapannounce 'map$,"Gravity control adjustment... completed... Restraints have been disengaged.",bc_map,0x0D98BA;
 				sleep2 2500;
 				donpcevent instance_npcname("#171_rgsr_control") + "::OnEvent04";
@@ -571,6 +582,8 @@ OnFail:
 1@rgsr,143,168,0	duplicate(Control Device#rgsr0)	Control Device#rgsr3	4_ENERGY_YELLOW
 
 1@rgsr,127,164,3	script	Aas#rgsr4	4_EP17_AS,{
+	if ('rgsr != 15)
+		end;
 	cutin "ep171_as01",2;
 	mes "[Aas]";
 	mes "Est has handled everything else on the inside.";
@@ -622,7 +635,7 @@ OnSummon:
 
 OnMobKill:
 	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill";
-	if (!mobcount('map$,.@event$)) {
+	if (!mobcount('map$,.@event$) && 'rgsr == 1) {
 		'rgsr = 2;
 		disablenpc();
 		enablenpc instance_npcname("Access Controller#rgsr");
@@ -663,6 +676,7 @@ OnTopKill:
 }
 
 1@rgsr,1,1,0	script	#rgsr_boss	HIDDEN_WARP_NPC,{
+	end;
 OnSummon:
 	mapannounce 'map$,"Ahahaha.. ahahaha... I'll kill you all!!!!",bc_map,0x00FF00;
 	sleep 2000;
@@ -670,16 +684,18 @@ OnSummon:
 	sleep 2000;
 	mapannounce 'map$,"I'm not a defect! I'm not a monster!",bc_map,0x00FF00;
 	specialeffect EF_LORD,AREA,instance_npcname("Restrained Specimen#rgsr");
-	hideonnpc instance_npcname("Restrained Specimen#rgsr");
 	disablenpc instance_npcname("Restrained Specimen#rgsr");
 	monster 'map$,125,188,"Failed Specimen",20353,1,instance_npcname(strnpcinfo(0))+"::OnBossKill";
 	end;
 
 OnBossKill:
-	hideonnpc instance_npcname("Aas#rgsr3");
-	disablenpc instance_npcname("Aas#rgsr3");
-	enablenpc instance_npcname("Aas#rgsr4");
-	disablenpc();
+	if ('rgsr == 14) {
+		'rgsr = 15;
+		hideonnpc instance_npcname("Aas#rgsr3");
+		disablenpc instance_npcname("Aas#rgsr3");
+		enablenpc instance_npcname("Aas#rgsr4");
+		disablenpc();
+	}
 	end;
 }
 
@@ -687,7 +703,6 @@ OnBossKill:
 	end;
 
 OnTouch:
-	hideonnpc();
 	disablenpc();
 	.@v = atoi(replacestr(strnpcinfo(2),"rgsr_touch_mob_",""));
 	if (!.@v)
@@ -702,13 +717,7 @@ OnTouch:
 1@rgsr,95,93,5	duplicate(#rgsr_touch_mob_0)	#rgsr_touch_mob_1	3622,4,6
 
 //= Warp/Other
-1@rgsr,59,136,0	script	#rgsr_warp_0	WARPNPC,1,2,{
-	end;
-
-OnTouch:
-	warp 'map$,66,136;
-	end;
-}
+1@rgsr,59,136,0	warp	#rgsr_warp_0	1,2,1@rgsr,66,136
 
 1@rgsr,51,184,0	script	#rgsr_warp_1	WARPNPC,1,2,{
 	end;

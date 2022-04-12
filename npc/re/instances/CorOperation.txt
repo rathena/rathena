@@ -14,6 +14,7 @@
 
 OnInstanceInit:
 	'map$ = instance_mapname("1@cor");
+	'step = 0;
 	setcell 'map$,159,216,159,225,CELL_WALKABLE,0;
 	setcell 'map$,159,216,159,225,CELL_SHOOTABLE,0;
 	setcell 'map$,98,216,98,225,CELL_WALKABLE,0;
@@ -173,7 +174,10 @@ OnTouch:
 		mes "I ask you to act separately adventurer. Please check your ^0000CDminimap^000000 to organize the situation as quickly as possible. Join the team if they need support!";
 		close2;
 		cutin "",255;
-		donpcevent instance_npcname("#171_cor_control") + "::OnStory01";
+		if ('step == 0) {
+			'step = 1;
+			donpcevent instance_npcname("#171_cor_control") + "::OnStory01";
+		}
 	} else {
 		enablenpc instance_npcname("Elyumina#171_cmd_0");
 		.@elyumina$ = instance_npcname("Elyumina#171_cmd_0");
@@ -237,7 +241,10 @@ OnTouch:
 		npctalk "Elena Volkova : ...I'll have a conversation with this criminal in a bit... Anyways. I'm counting on you, adventurers!";
 		close2;
 		cutin "",255;
-		donpcevent instance_npcname("#171_cor_control") + "::OnDaily01";
+		if ('step == 0) {
+			'step = 1;
+			donpcevent instance_npcname("#171_cor_control") + "::OnDaily01";
+		}
 	}
 	end;
 
@@ -274,7 +281,10 @@ OnTouch:
 	close2;
 	cutin "",255;
 	viewpointmap 'map$,2,172,223,5,0xFFFFFF;
-	donpcevent instance_npcname("#171_cor_control") + "::OnDaily03";
+	if ('step == 1) {
+		'step = 2;
+		donpcevent instance_npcname("#171_cor_control") + "::OnDaily03";
+	}
 	end;
 }
 
@@ -318,8 +328,10 @@ OnTalk:
 		disablenpc();
 		disablenpc instance_npcname("Box#" + strnpcinfo(2));
 		viewpointmap 'map$,2,224,236,4,0xFFFFFF;
-		if (isbegin_quest(16355) == 2 && isbegin_quest(16356) == 2)
+		if (isbegin_quest(16355) == 2 && isbegin_quest(16356) == 2 && 'step == 1) {
+			'step = 2;
 			doevent instance_npcname("#171_cor_control") + "::OnStory02";
+		}
 	}
 	end;
 }
@@ -474,8 +486,10 @@ OnTalk:
 		disablenpc instance_npcname("Box#" + strnpcinfo(2));
 		viewpointmap 'map$,2,220,170,3,0xFFFFFF;
 		completequest 16356;
-		if (isbegin_quest(16355) == 2 && isbegin_quest(16356) == 2)
+		if (isbegin_quest(16355) == 2 && isbegin_quest(16356) == 2 && 'step == 1) {
+			'step = 2;
 			doevent instance_npcname("#171_cor_control") + "::OnStory02";
+		}
 	}
 	end;
 }
@@ -673,7 +687,10 @@ OnTimer10000:
 	close2;
 	cutin "",255;
 	viewpointmap 'map$,2,172,223,5,0xFFFFFF;
-	donpcevent instance_npcname("#171_cor_control") + "::OnStory03";
+	if ('step == 2) {
+		'step = 3;
+		donpcevent instance_npcname("#171_cor_control") + "::OnStory03";
+	}
 	end;
 }
 
@@ -799,6 +816,7 @@ OnClear:
 	}
 	killmonster 'map$,instance_npcname(strnpcinfo(0)) + "::OnPoisonKill";
 	killmonster 'map$,instance_npcname(strnpcinfo(0)) + "::OnBombKill";
+	killmonster 'map$,instance_npcname(strnpcinfo(0)) + "::OnBossKill";
 	end;
 
 OnTimer30000:

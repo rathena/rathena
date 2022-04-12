@@ -81,7 +81,7 @@ OnTouch:
 }
 
 einbech,219,80,3	script	Rebellion Crew#171_einb	4_M_REBELLION2,{
-	if (terra_gloria_main == 26 && isbegin_quest(7850) == 0) {
+	if (terra_gloria_main == 26 && isbegin_quest(7850) == 0) {	// note: talking to this npc is not a prerequisite to the main quest
 		mes "[Rebellion Crew]";
 		mes "Hold on!";
 		mes "We have recently expanded the field of operations.";
@@ -190,7 +190,7 @@ OnTouch:
 }
 
 einbroch,42,208,3	script	Lazy#171_einbr	4_M_LAZY,{
-	if (isbegin_quest(7850) == 0) {
+	if (isbegin_quest(7850) < 2) {
 		cutin "16lei_03",2;
 		mes "[Lazy]";
 		mes "Hooray, finally some air, huh.";
@@ -943,7 +943,7 @@ OnInit:
 }
 
 lighthalzen,259,215,3	script	Lazy#171_lhz	4_M_LAZY,{
-	if (isbegin_quest(7850) == 0) {
+	if (isbegin_quest(7850) < 2) {
 		cutin "16lei_01",2;
 		mes "[Lazy]";
 		mes "The Rekenber roads are wide and gleaming~ everyone knows about the Schwarzwald Republic~";
@@ -2561,13 +2561,13 @@ rgsr_in,13,49,5	duplicate(dummy_cloaked_npc)	Laboratory Staff#171_rgsrin2	4_M_SC
 
 //= PUBCAT MAP
 pub_cat,93,105,3	script	Philofontes#171_cat	4_M_PHILOFONTES,{
-	if (isbegin_quest(7850) == 0) {
+	if (terra_gloria_main < 26) {
 		mes "[Tes]";
 		mes "Who knew that there was such a place.";
 		mes "It's more amazing than you think.";
 		close;
 	}
-	if (isbegin_quest(7850) == 1) {
+	if (terra_gloria_main == 26 && isbegin_quest(7850) < 2) {
 		cutin "ep16_tes01",1;
 		npctalk "That's it.","",bc_self;
 		mes "[Tes]";
@@ -2637,6 +2637,8 @@ pub_cat,93,105,3	script	Philofontes#171_cat	4_M_PHILOFONTES,{
 		mes "[Tes]";
 		mes "I'll call this location <NAVI>[Rudus]<INFO>ein_fild05,158,284,0,101,0</INFO></NAVI> from now on.";
 		mes "I would be grateful if you joined.";
+		if (isbegin_quest(7850) == 0)
+			setquest 7850;
 		completequest 7850;
 		setquest 7851;
 		next;
@@ -2834,7 +2836,7 @@ pub_cat,93,105,3	script	Philofontes#171_cat	4_M_PHILOFONTES,{
 	close3;
 
 OnInit:
-	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(7850) == 1");
+	questinfo(QTYPE_QUEST,QMARK_YELLOW,"terra_gloria_main == 26");
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(7859) == 1");
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(7862) == 2 && isbegin_quest(7864) == 0");
 	questinfo(QTYPE_QUEST,QMARK_YELLOW,"isbegin_quest(7863) == 1");
@@ -3917,7 +3919,7 @@ sp_rudus,184,360,5	script	Elena Volkova#171_rudus	4_F_ELENA,{
 		next;
 		mes "[Elena Volkova]";
 		mes "You remember Lucky? I brought him along, so go ahead and ask him about the progress.";
-		completequest 7851;
+		erasequest 7851;
 		setquest 7852;
 		close3;
 	}
@@ -3998,14 +4000,14 @@ sp_rudus,193,284,0	script	Rookie#171_rudus	4_M_ROOKIE,{
 		mes "[Rookie]";
 		mes "Other rebellion members are already looking for an entry point. If you don't mind, can you check on them?";
 		mes "Maybe you'll find something out.";
-		completequest 7852;
+		erasequest 7852;
 		setquest 7853;
 		next;
 		mes "[Rookie]";
 		mes "The abandoned mine is beyond this barrier. Be careful.";
 		close3;
 	}
-	if (isbegin_quest(7853) == 1 && isbegin_quest(7857) == 0) {
+	if (isbegin_quest(7853) == 1) {
 		cutin "16loo_01",2;
 		mes "[Rookie]";
 		mes "Other rebellion members are already looking for an entry point. If you don't mind, look for them adventurer.";
@@ -4099,16 +4101,6 @@ OnInit:
 	end;
 }
 
-function	script	ep171_rudus_check	{
-	for (.@i = 7854; .@i < 7857; .@i++)
-		if (isbegin_quest(.@i) != 1) .@skip = true;
-	if (.@skip) return;
-	for (.@i = 7854; .@i < 7857; .@i++)
-		completequest .@i;
-	setquest 7857;
-	return;
-}
-
 sp_rudus,304,266,3	script	Rebellion Crew#171_rudus01	4_M_REBELLION3,{
 	if (isbegin_quest(7853) == 1 && isbegin_quest(7854) == 0) {
 		mes "[Rebellion Crew]";
@@ -4139,7 +4131,13 @@ sp_rudus,304,266,3	script	Rebellion Crew#171_rudus01	4_M_REBELLION3,{
 		mes "I'll have a closer look and join you later.";
 		mes "Please tell Lucky.";
 		setquest 7854;
-		ep171_rudus_check;
+		if (isbegin_quest(7854) == 1 && isbegin_quest(7855) == 1 && isbegin_quest(7856) == 1) {
+			erasequest 7854;
+			erasequest 7855;
+			erasequest 7856;
+			completequest 7853;
+			setquest 7857;
+		}
 		close;
 	}
 	if (isbegin_quest(7853) == 1) {
@@ -4175,7 +4173,13 @@ sp_rudus,122,286,3	script	Rebellion Crew#171_rudus02	4_M_REBELLION3,{
 		mes "When I was looking up there, I think I saw something move.";
 		mes "I'm going to make sure of what I saw by going back up!";
 		setquest 7855;
-		ep171_rudus_check;
+		if (isbegin_quest(7854) == 1 && isbegin_quest(7855) == 1 && isbegin_quest(7856) == 1) {
+			erasequest 7854;
+			erasequest 7855;
+			erasequest 7856;
+			completequest 7853;
+			setquest 7857;
+		}
 		close;
 	}
 	if (isbegin_quest(7853) == 1) {
@@ -4197,7 +4201,13 @@ sp_rudus,27,300,0	script	Small Hole#171_rudus	4_ENERGY_BLUE,{
 		mes "It seems like an animal has dug this hole and made a little cave.";
 		mes "Let's have another look around.";
 		setquest 7856;
-		ep171_rudus_check;
+		if (isbegin_quest(7854) == 1 && isbegin_quest(7855) == 1 && isbegin_quest(7856) == 1) {
+			erasequest 7854;
+			erasequest 7855;
+			erasequest 7856;
+			completequest 7853;
+			setquest 7857;
+		}
 		close;
 	}
 	if (isbegin_quest(7853) == 1) {
