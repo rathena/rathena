@@ -1839,6 +1839,8 @@
 	export_constant(SC_DEEP_POISONING_OPTION);
 	export_constant(SC_POISON_SHIELD);
 	export_constant(SC_POISON_SHIELD_OPTION);
+	export_constant(SC_RUSH_QUAKE1);
+	export_constant(SC_RUSH_QUAKE2);
 
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
