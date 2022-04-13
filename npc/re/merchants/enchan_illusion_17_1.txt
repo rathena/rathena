@@ -169,8 +169,10 @@ sp_cor,108,130,5	script	Rebellion#rm171_7	4_F_REBELLION3,{
 		mes "If you want a weapon, you can talk to Elyumina.";
 		next;
 		if (select("Request Weapon Modification Device (Physical).", "Request Weapon Modification Device (Magic).") == 1)
+			.@item_id = 23773;	// EP17_1_SPC02
 			setarray .@ids[0],23776,23777,23778;
 		else
+			.@item_id = 23774;	// EP17_1_SPC03
 			setarray .@ids[0],23779,23780,23781;
 		mes "[Rebellion]";
 		mes "I can randomly give you a <ITEM>[" + getitemname(.@ids[0]) + "]<INFO>" + .@ids[0] + "</INFO></ITEM>,";
@@ -206,7 +208,6 @@ sp_cor,108,130,5	script	Rebellion#rm171_7	4_F_REBELLION3,{
 			}
 			Zeny -= 1000000;
 		}
-		.@item_id = .@ids[rand(getarraysize(.@ids))];
 		consumeitem .@item_id;
 		mes "[Rebellion]";
 		mes "I gave you the best I had left.";
