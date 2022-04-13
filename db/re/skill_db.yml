@@ -33239,17 +33239,7 @@ Body:
     Range: 9
     Hit: Multi_Hit
     HitCount: -5
-    SplashArea:
-      - Level: 1
-        Area: 1
-      - Level: 2
-        Area: 1
-      - Level: 3
-        Area: 2
-      - Level: 4
-        Area: 2
-      - Level: 5
-        Area: 3
+    SplashArea: 3
     CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 1000
@@ -33656,17 +33646,7 @@ Body:
     Range: 9
     Hit: Multi_Hit
     HitCount: -5
-    SplashArea:
-      - Level: 1
-        Area: 1
-      - Level: 2
-        Area: 1
-      - Level: 3
-        Area: 2
-      - Level: 4
-        Area: 2
-      - Level: 5
-        Area: 3
+    SplashArea: 3
     CastCancel: true
     Duration1:
       - Level: 1

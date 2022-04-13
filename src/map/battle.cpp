@@ -5007,8 +5007,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case SU_LUNATICCARROTBEAT:
 		case SU_LUNATICCARROTBEAT2:
-			skillratio += 100 + 100 * skill_lv + sstatus->str / 6; // !TODO: What's the STR bonus?
-			RE_LVL_MOD(100);
+			skillratio += 100 + 100 * skill_lv + sstatus->str * 5; // !TODO: What's the STR bonus?
+			RE_LVL_DMOD(100);
 			if (sd && pc_checkskill(sd, SU_SPIRITOFLIFE))
 				skillratio += skillratio * status_get_hp(src) / status_get_max_hp(src);
 			break;
@@ -7318,8 +7318,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case SU_CN_METEOR:
 					case SU_CN_METEOR2:
-						skillratio += 100 + 100 * skill_lv + sstatus->int_ / 6; // !TODO: Confirm INT bonus
-						RE_LVL_MOD(100);
+						skillratio += 100 + 100 * skill_lv + sstatus->int_ * 5; // !TODO: Confirm INT bonus
+						RE_LVL_DMOD(100);
 						break;
 					case NPC_VENOMFOG:
 						skillratio += 600 + 100 * skill_lv;
