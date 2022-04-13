@@ -5305,7 +5305,7 @@ Body:
           - Grace_Attack_Boots
           - Grace_Attack_Manteau
           - Grace_Attack_Ring
-          - Grace_Assassin_Suit
+          - Grace_Assasin_Suit
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
@@ -5475,7 +5475,7 @@ Body:
           - Grace_Attack_Boots
           - Grace_Attack_Manteau
           - Grace_Attack_Ring
-          - Grace_Super_Novice_Suit
+          - Grace_Snovice_Suit
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bMaxHPrate,5;
@@ -6319,7 +6319,7 @@ Body:
           - Grace_Attack_Boots
           - Grace_Attack_Manteau
           - Grace_Attack_Ring
-          - Grace_Aimed_Suit
+          - Grace_Aim_Suit
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-10;
@@ -6399,7 +6399,7 @@ Body:
           - Grace_Attack_Boots
           - Grace_Attack_Manteau
           - Grace_Attack_Ring
-          - Grace_Tornado_Armor
+          - Grace_Tonado_Armor
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
@@ -6431,7 +6431,7 @@ Body:
           - Grace_Attack_Boots
           - Grace_Attack_Manteau
           - Grace_Attack_Ring
-          - Grace_Cart_Cannon_Suit
+          - Grace_Kart_Suit
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bVariableCastRate,-5;
@@ -6447,7 +6447,7 @@ Body:
           - Grace_Attack_Boots
           - Grace_Attack_Manteau
           - Grace_Attack_Ring
-          - Grace_Cart_Tornado_Suit
+          - Grace_Kart_Suit2
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
@@ -6527,7 +6527,7 @@ Body:
           - Grace_Attack_Boots
           - Grace_Attack_Manteau
           - Grace_Attack_Ring
-          - Grace_Fire_Rain_Suit
+          - Grace_Firerain_Suit
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
@@ -6655,7 +6655,7 @@ Body:
           - Grace_Magic_Boots
           - Grace_Magic_Manteau
           - Grace_Magic_Ring
-          - Grace_Catnip_Robe
+          - Grace_Carrot_Robe
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bVariableCastrate,-5;
@@ -6755,7 +6755,7 @@ Body:
           - Grace_Magic_Boots
           - Grace_Magic_Manteau
           - Grace_Magic_Ring
-          - Grace_Eswhoo_Robe
+          - Grace_Swhoo_Robe
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bVariableCastrate,-5;
@@ -6787,7 +6787,7 @@ Body:
           - Grace_Magic_Boots
           - Grace_Magic_Manteau
           - Grace_Magic_Ring
-          - Grace_Super_Novice_Robe
+          - Grace_Snovice_Robe
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bMaxHPrate,5;
