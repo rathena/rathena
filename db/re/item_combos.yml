@@ -5305,7 +5305,7 @@ Body:
           - Grace_Attack_Boots
           - Grace_Attack_Manteau
           - Grace_Attack_Ring
-          - Grace_Assassin_Suit
+          - Grace_Assasin_Suit
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
@@ -5475,7 +5475,7 @@ Body:
           - Grace_Attack_Boots
           - Grace_Attack_Manteau
           - Grace_Attack_Ring
-          - Grace_Super_Novice_Suit
+          - Grace_Snovice_Suit
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bMaxHPrate,5;
@@ -6319,7 +6319,7 @@ Body:
           - Grace_Attack_Boots
           - Grace_Attack_Manteau
           - Grace_Attack_Ring
-          - Grace_Aimed_Suit
+          - Grace_Aim_Suit
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-10;
@@ -6399,7 +6399,7 @@ Body:
           - Grace_Attack_Boots
           - Grace_Attack_Manteau
           - Grace_Attack_Ring
-          - Grace_Tornado_Armor
+          - Grace_Tonado_Armor
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
@@ -6431,7 +6431,7 @@ Body:
           - Grace_Attack_Boots
           - Grace_Attack_Manteau
           - Grace_Attack_Ring
-          - Grace_Cart_Cannon_Suit
+          - Grace_Kart_Suit
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bVariableCastRate,-5;
@@ -6447,7 +6447,7 @@ Body:
           - Grace_Attack_Boots
           - Grace_Attack_Manteau
           - Grace_Attack_Ring
-          - Grace_Cart_Tornado_Suit
+          - Grace_Kart_Suit2
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
@@ -6527,7 +6527,7 @@ Body:
           - Grace_Attack_Boots
           - Grace_Attack_Manteau
           - Grace_Attack_Ring
-          - Grace_Fire_Rain_Suit
+          - Grace_Firerain_Suit
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
@@ -6655,7 +6655,7 @@ Body:
           - Grace_Magic_Boots
           - Grace_Magic_Manteau
           - Grace_Magic_Ring
-          - Grace_Catnip_Robe
+          - Grace_Carrot_Robe
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bVariableCastrate,-5;
@@ -6755,7 +6755,7 @@ Body:
           - Grace_Magic_Boots
           - Grace_Magic_Manteau
           - Grace_Magic_Ring
-          - Grace_Eswhoo_Robe
+          - Grace_Swhoo_Robe
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bVariableCastrate,-5;
@@ -6787,7 +6787,7 @@ Body:
           - Grace_Magic_Boots
           - Grace_Magic_Manteau
           - Grace_Magic_Ring
-          - Grace_Super_Novice_Robe
+          - Grace_Snovice_Robe
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bMaxHPrate,5;
@@ -10401,8 +10401,11 @@ Body:
       }
   - Combos:
       - Combo:
-          - Shoes_Of_Punishment
-          - Holy_Stick
+          - Shoes_Of_Punishment     # 22120
+          - Holy_Stick     # 1631
+      - Combo:
+          - Shoes_Of_Punishment_BR     # 22182
+          - Holy_Stick     # 1631
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
       .@cast = -5*getskilllv("AB_ORATIO");
@@ -20849,7 +20852,7 @@ Body:
     Script: |
       bonus bInt,40;
       bonus bIntravision;
-      if (BaseJob == Job_Warlock) {
+      if ((eaclass()&EAJ_THIRDMASK)==EAJ_WARLOCK) {
          bonus2 bSkillAtk,"WZ_SIGHTRASHER",6*BaseLevel;
          bonus4 bAutoSpellOnSkill,"WZ_SIGHTRASHER","MG_SIGHT",1,1000;
       }
@@ -25175,7 +25178,7 @@ Body:
     Script: |
       if ((eaclass()&EAJ_THIRDMASK)==EAJ_MINSTRELWANDERER) {
          bonus bNoSizeFix;
-         autobonus3 "{ bonus3 bAutoSpell,\"RA_UNLIMIT\",5,1000; }",10,20000,"WM_SEVERE_RAINSTORM","{}";
+         autobonus3 "{}",10,100,"WM_SEVERE_RAINSTORM","{ sc_start SC_UNLIMIT,20000,5; }";
       }
   - Combos:
       - Combo:
@@ -25644,3 +25647,222 @@ Body:
          bonus2 bMagicAddRace,RC_All,10;
          bonus2 bIgnoreMdefRaceRate,RC_All,70;
       }
+  - Combos:
+      - Combo:
+          - Charm_Of_Flame_Heart_BR     # 15920
+          - Manteau_Of_Flame_Heart     # 20735
+    Script: |
+      bonus bBaseAtk,50;
+      bonus bMagicDamageReturn,2*getequiprefinerycnt(EQI_GARMENT);
+  - Combos:
+      - Combo:
+          - Charm_Of_Nature_BR     # 15921
+          - Manteau_Great_Nature     # 20747
+    Script: |
+      bonus bMatk,50;
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      if (.@r >= 5) {
+         .@val = 1;
+         if (.@r >= 7)
+            .@val += 4;
+         bonus3 bAutoSpell,NPC_STONESKIN,8,.@val*10;
+      }
+      if (.@r >= 10)
+         bonus bIntravision;
+  - Combos:
+      - Combo:
+          - Charm_Of_Frozen_BR     # 15922
+          - Manteau_Of_Mistic_Froz     # 20745
+    Script: |
+      bonus2 bSkillCooldown,"AB_CHEAL",-2000;
+      bonus4 bAutoSpellOnSkill,"AL_HEAL","AL_INCAGI",max(getskilllv("AL_INCAGI"),1),1000;
+      bonus4 bAutoSpellOnSkill,"AL_INCAGI","AL_BLESSING",max(getskilllv("AL_BLESSING"),1),1000;
+      bonus4 bAutoSpellOnSkill,"AB_CANTO","AB_CLEMENTIA",max(getskilllv("AB_CLEMENTIA"),1),1000;
+  - Combos:
+      - Combo:
+          - Charm_Of_Wind_BR     # 15923
+          - Manteau_Of_Leafwind     # 20734
+    Script: |
+      bonus2 bSubSkill,"ASC_BREAKER",40;
+      bonus2 bSubSkill,"HT_BLITZBEAT",40;
+      bonus2 bSubSkill,"GS_SPREADATTACK",40;
+      bonus2 bSubEle,Ele_All,getequiprefinerycnt(EQI_GARMENT);
+  - Combos:
+      - Combo:
+          - Shining_Trapezohedron     # 2998
+          - 10_Gallon_Hat_Of_Flame     # 18940
+    Script: |
+      bonus2 bAddClass,Class_All,9;
+      bonus bMatkRate,9;
+      bonus2 bSubRace,RC_DemiHuman,5;
+      if (getequiprefinerycnt(EQI_HEAD_TOP) >= 7)
+         bonus2 bSubRace,RC_DemiHuman,5;
+  - Combos:
+      - Combo:
+          - Shining_Trapezohedron     # 2998
+          - Hunting_Cap_Of_Gust     # 18941
+    Script: |
+      bonus bLongAtkDef,5;
+      bonus bMagicAtkDef,5;
+      bonus2 bSubRace,RC_DemiHuman,5;
+      if (getequiprefinerycnt(EQI_HEAD_TOP) >= 7)
+         bonus2 bSubRace,RC_DemiHuman,5;
+  - Combos:
+      - Combo:
+          - Shining_Trapezohedron     # 2998
+          - Knit_Cap_Of_Water     # 18942
+    Script: |
+      bonus bVariableCastrate,-15;
+      bonus2 bSubRace,RC_DemiHuman,5;
+      if (getequiprefinerycnt(EQI_HEAD_TOP) >= 7)
+         bonus2 bSubRace,RC_DemiHuman,5;
+  - Combos:
+      - Combo:
+          - Shining_Trapezohedron     # 2998
+          - Silk_Hat_Of_Earth     # 18943
+    Script: |
+      bonus bMaxHPrate,5;
+      bonus2 bAddItemHealRate,547,10;
+      bonus2 bSubRace,RC_DemiHuman,5;
+      if (getequiprefinerycnt(EQI_HEAD_TOP) >= 7)
+         bonus2 bSubRace,RC_DemiHuman,5;
+  - Combos:
+      - Combo:
+          - Pirates_Foolish     # 18955
+          - Special_Eyepatch     # 19900
+    Script: |
+      bonus bMaxHP,500;
+      bonus bMaxSP,30;
+  - Combos:
+      - Combo:
+          - Bell_Pigeon_J     # 19321
+          - Valhalla_Idol     # 19109
+      - Combo:
+          - Bell_Pigeon_J     # 19321
+          - Valhalla_Idol_     # 19110
+    Script: |
+      bonus4 bAutoSpellWhenHit,"MG_SAFETYWALL",10,50+(readparam(bStr)/18),0;
+      bonus bMagicAtkDef,5;
+      bonus2 bIgnoreMdefRaceRate,RC_All,5*(readparam(bLuk)/18);
+      bonus bBaseAtk,25;
+      bonus2 bIgnoreDefRaceRate,RC_All,5;
+  - Combos:
+      - Combo:
+          - aegis_490113     # 490113
+          - Bear's_Power     # 4875
+    Script: |
+      bonus2 bSkillCooldown,"RK_IGNITIONBREAK",-200;
+  - Combos:
+      - Combo:
+          - ShoesOfHero     # 22129
+          - Veteran_Sword_     # 1188
+      - Combo:
+          - ShoesOfHero     # 22129
+          - Veteran_Sword_     # 21024
+    Script: |
+      bonus2 bSkillAtk,"SM_BASH",10*getskilllv("RK_ENCHANTBLADE");
+      bonus2 bSkillAtk,"SM_BASH",10*getskilllv("LK_AURABLADE");
+      bonus2 bSkillAtk,"KN_BOWLINGBASH",10*getskilllv("RK_ENCHANTBLADE");
+      bonus2 bSkillAtk,"KN_BOWLINGBASH",10*getskilllv("LK_AURABLADE");
+  - Combos:
+      - Combo:
+          - Ring_Of_Brave     # 28561
+          - ShoesOfHero     # 22129
+          - Veteran_Sword     # 1188
+      - Combo:
+          - Ring_Of_Brave     # 28561
+          - ShoesOfHero     # 22129
+          - Veteran_Sword_     # 21024
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillUseSP,"SM_BASH",5;
+      bonus2 bSkillUseSP,"KN_BOWLINGBASH",10;
+      if (.@r >= 7) {
+         bonus2 bSkillAtk,"SM_BASH",100;
+         bonus2 bSkillAtk,"KN_BOWLINGBASH",100;
+      }
+      if (.@r >= 9) {
+         bonus2 bSkillAtk,"SM_BASH",200;
+         bonus2 bSkillAtk,"KN_BOWLINGBASH",200;
+      }
+  - Combos:
+      - Combo:
+          - ShoesOfHero     # 22129
+          - Veteran_Hammer     # 1548
+      - Combo:
+          - ShoesOfHero     # 22129
+          - Veteran_Hammer_     # 16056
+    Script: |
+      bonus bAspdRate,getskilllv("AB_DUPLELIGHT");
+      bonus2 bIgnoreDefRaceRate,RC_Undead,10*getskilllv("PR_MACEMASTERY");
+      bonus2 bIgnoreDefRaceRate,RC_Demon,10*getskilllv("PR_MACEMASTERY");
+      bonus2 bIgnoreDefRaceRate,RC_DemiHuman,10*getskilllv("PR_MACEMASTERY");
+      bonus2 bCriticalAddRace,RC_Undead,5*getskilllv("PR_MACEMASTERY");
+      bonus2 bCriticalAddRace,RC_Demon,5*getskilllv("PR_MACEMASTERY");
+      bonus2 bCriticalAddRace,RC_DemiHuman,5*getskilllv("PR_MACEMASTERY");
+  - Combos:
+      - Combo:
+          - Ring_Of_Brave     # 28561
+          - ShoesOfHero     # 22129
+          - Veteran_Hammer     # 1548
+      - Combo:
+          - Ring_Of_Brave     # 28561
+          - ShoesOfHero     # 22129
+          - Veteran_Hammer_     # 16056
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bCriticalAddRace,RC_Undead,50;
+      bonus2 bCriticalAddRace,RC_Demon,50;
+      bonus2 bCriticalAddRace,RC_DemiHuman,50;
+      /* todo auto spell */
+      if (.@r >= 7) {
+         bonus2 bAddClass,Class_All,5;
+         bonus bMatkRate,5;
+         bonus2 bSkillAtk,"CR_HOLYCROSS",50;
+      }
+      if (.@r >= 9) {
+         bonus2 bAddClass,Class_All,15;
+         bonus bMatkRate,15;
+         bonus2 bSkillAtk,"CR_HOLYCROSS",100;
+      }
+      /* todo CR_HOLYCROSS skill */
+  - Combos:
+      - Combo:
+          - ShoesOfHero     # 22129
+          - Veteran_Axe     # 1384
+      - Combo:
+          - ShoesOfHero     # 22129
+          - Veteran_Axe_     # 28114
+    Script: |
+      if (getskilllv("BS_DAGGER") == 3)
+         bonus bBaseAtk,10;
+      if (getskilllv("BS_SWORD") == 3)
+         bonus bBaseAtk,10;
+      if (getskilllv("BS_TWOHANDSWORD") == 3)
+         bonus bBaseAtk,10;
+      if (getskilllv("BS_KNUCKLE") == 3)
+         bonus bBaseAtk,10;
+      if (getskilllv("BS_SPEAR") == 3)
+         bonus bBaseAtk,10;
+      if (getskilllv("BS_AXE") == 3)
+         bonus bBaseAtk,10;
+      if (getskilllv("BS_MACE") == 3)
+         bonus bBaseAtk,10;
+      bonus2 bSkillCooldown,"NC_AXETORNADO",-200*getskilllv("NC_RESEARCHFE");
+  - Combos:
+      - Combo:
+          - Ring_Of_Brave     # 28561
+          - ShoesOfHero     # 22129
+          - Veteran_Axe     # 1384
+      - Combo:
+          - Ring_Of_Brave     # 28561
+          - ShoesOfHero     # 22129
+          - Veteran_Axe_     # 28114
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillCooldown,"NC_AXETORNADO",-500;
+      bonus2 bAddMonsterDropItem,522,10;
+      if (.@r >= 7)
+         bonus2 bSkillAtk,"NC_AXETORNADO",20;
+      if (.@r >= 9)
+         bonus2 bSkillAtk,"NC_AXETORNADO",40;

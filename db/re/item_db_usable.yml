@@ -2495,6 +2495,9 @@ Body:
       BuyingStore: true
     Script: |
       itemheal rand(300,400),0;
+      if (getequipid(EQI_HEAD_MID) == 15385)
+         warp "dali",113,82;
+      /* todo check map x y */
   - Id: 11516
     AegisName: Asai_Fruit
     Name: Asai Fruit
@@ -2935,6 +2938,9 @@ Body:
       BuyingStore: true
     Script: |
       itemheal 0,100;
+      if (getequipid(EQI_HEAD_MID) == 15385)
+         warp "xmas",147,134;
+      /* todo check map x y */
   - Id: 11564
     AegisName: Sweet_Canape
     Name: Sweet Canape
@@ -43682,6 +43688,9 @@ Body:
          sc_start SC_PACKING_ENVELOPE9,30000,33; // +crit
       else
          sc_start SC_PACKING_ENVELOPE10,30000,33; // +hit
+      if (getequipid(EQI_HEAD_MID) == 15385)
+         warp "verus04",115,243;
+      /* todo check map x y */
   - Id: 22612
     AegisName: Decomposition_Potion
     Name: Corrupt Reagents
@@ -45762,6 +45771,25 @@ Body:
     Weight: 1
     Script: |
       callfunc("F_Cursed_Fragment");
+  - Id: 23027
+    AegisName: Dandelion_Ring
+    Name: Dandelion Ring    # !todo check english name
+    Type: Usable
+    Flags:
+      NoConsume: true
+    Delay:
+      Duration: 3600000
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      warp "rachel",120,125;
   - Id: 23033
     AegisName: Invisible_Box
     Name: Invisible Box
@@ -45816,6 +45844,23 @@ Body:
       NoAuction: true
     Script: |
       getitem 23042,30;
+  - Id: 23044
+    AegisName: Elvira_Candy
+    Name: Elvira Candy    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Delay:
+      Duration: 10000
+    Flags:
+      BuyingStore: true
+    Script: |
+      specialeffect2 EF_HEAL3;
+      sc_end SC_SILENCE;
+      sc_end SC_BLEEDING;
+      sc_end SC_POISON;
+      sc_end SC_CURSE;
+      sc_end SC_ORCISH;
+      sc_end SC_CHANGEUNDEAD;
   - Id: 23046
     AegisName: S_Mystic_Powder
     Name: "[Sale] Mystic Powder"
@@ -46724,6 +46769,70 @@ Body:
     Script: |
       input .@megaphone$;
       announce strcharinfo(0) + ": " + .@megaphone$,bc_all,0xFF0000;
+  - Id: 23374
+    AegisName: Fire_Armor_S
+    Name: Fire Armor Scroll
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      specialeffect2 EF_FIREHIT;
+      sc_start4 SC_ELEMENTALCHANGE,1800000,1,Ele_Fire,1,0;
+  - Id: 23375
+    AegisName: Cold_Armor_S
+    Name: Water Armor Scroll
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      specialeffect2 EF_COLDHIT;
+      sc_start4 SC_ELEMENTALCHANGE,1800000,1,Ele_Water,1,0;
+  - Id: 23376
+    AegisName: Wind_Armor_S
+    Name: Wind Armor Scroll
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      specialeffect2 EF_WINDHIT;
+      sc_start4 SC_ELEMENTALCHANGE,1800000,1,Ele_Wind,1,0;
+  - Id: 23377
+    AegisName: Earth_Armor_S
+    Name: Earth Armor Scroll
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      specialeffect2 EF_EARTHHIT;
+      sc_start4 SC_ELEMENTALCHANGE,1800000,1,Ele_Earth,1,0;
   - Id: 23388
     AegisName: CookingBox10
     Name: "[Scroll] Food Box"
@@ -46808,6 +46917,70 @@ Body:
     Weight: 10
     Script: |
       laphine_upgrade();
+  - Id: 23549
+    AegisName: Snow_Cookie
+    Name: Snow Cookie
+    Type: Usable
+    Weight: 50
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      percentheal 5,0;
+      sc_start SC_HITFOOD,600000,30;
+  - Id: 23550
+    AegisName: Winter_Cookie
+    Name: Winter Cookie
+    Type: Usable
+    Weight: 50
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      percentheal 5,0;
+      sc_start SC_ATKPOTION,600000,3;
+  - Id: 23551
+    AegisName: Festi_Cookie
+    Name: Festi Cookie
+    Type: Usable
+    Weight: 50
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      percentheal 5,0;
+      sc_start SC_ASPDPOTION0,600000,10;
+  - Id: 23552
+    AegisName: Flora_Cookie
+    Name: Flora Cookie
+    Type: Usable
+    Weight: 50
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      percentheal 5,0;
+      sc_start SC_MATKPOTION,600000,3;
   - Id: 23604
     AegisName: Main_Dish_Course
     Name: Main Dish Course
@@ -47069,6 +47242,94 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box16);
+  - Id: 23771
+    AegisName: Mysterious_Plastic
+    Name: Mysterious Plastic Bag
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Flags:
+      Container: true
+    Script: |
+      /* unknown */
+  - Id: 23772
+    AegisName: EP17_1_SPC01
+    Name: OS Weapon Chest
+    Type: Usable
+    Weight: 100
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_EP17_1_SPC01);
+  - Id: 23773
+    AegisName: EP17_1_SPC02
+    Name: Weapon Modification Device Chest (Physical)
+    Type: Usable
+    Weight: 750
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_EP17_1_SPC02);
+  - Id: 23774
+    AegisName: EP17_1_SPC03
+    Name: Weapon Modification Device Chest (Magic)
+    Type: Usable
+    Weight: 750
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_EP17_1_SPC03);
+  - Id: 23775
+    AegisName: EP17_1_SPC04
+    Name: Modification Module Chest
+    Type: Usable
+    Weight: 100
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_EP17_1_SPC04);
   - Id: 23776
     AegisName: EP17_1_SPC05
     Name: Weapon Modifier (Physical)
@@ -48102,7 +48363,7 @@ Body:
     Script: |
       laphine_upgrade();
   - Id: 100130
-    AegisName: Grace_Refine_Ticket
+    AegisName: Grace_Rifine_Ticket
     Name: Grace Refine Ticket
     Type: Delayconsume
     Buy: 20
@@ -48150,7 +48411,7 @@ Body:
     Script: |
       laphine_upgrade();
   - Id: 100133
-    AegisName: Grace_P_Mo_Garment
+    AegisName: Grace_Convert1
     Name: Grace Physical Modification Permit (Garment)
     Type: Delayconsume
     Buy: 20
@@ -48166,7 +48427,7 @@ Body:
     Script: |
       laphine_upgrade();
   - Id: 100134
-    AegisName: Grace_M_Mo_Garment
+    AegisName: Grace_Convert2
     Name: Grace Magical Modification Permit (Garment)
     Type: Delayconsume
     Buy: 20
@@ -48214,7 +48475,7 @@ Body:
     Script: |
       laphine_upgrade();
   - Id: 100137
-    AegisName: Grace_P_Mo_Armor
+    AegisName: Grace_Convert3
     Name: Grace Physical Modification Permit (Armor)
     Type: Delayconsume
     Buy: 20
@@ -48230,7 +48491,7 @@ Body:
     Script: |
       laphine_upgrade();
   - Id: 100138
-    AegisName: Grace_M_Mo_Armor
+    AegisName: Grace_Convert4
     Name: Grace Magical Modification Permit (Armor)
     Type: Delayconsume
     Buy: 20

@@ -3,7 +3,7 @@
 //===== By:==================================================
 //= rAthena Dev Team
 //===== Last Updated:========================================
-//= 20201115
+//= 20220308
 //===== Description:=========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -4579,6 +4579,22 @@ Unlike 'getexp', this command ignores the adjustment factors!
 
 ---------------------------------------
 
+*getbaseexp_ratio(<percent>{,<base_level>{,char_id});
+
+Returns the amount of base experience representing the given <percent> of the
+required base experience at <base_level>. If no base level is specified the base
+level of the attached character will be used.
+
+---------------------------------------
+
+*getjobexp_ratio(<percent>{,<job_level>{,char_id});
+
+Returns the amount of job experience representing the given <percent> of the
+required job experience at <job_level>. If no job level is specified the job
+level of the attached character will be used.
+
+---------------------------------------
+
 *setlook <look type>,<look value>{,<char_id>};
 *changelook <look type>,<look value>{,<char_id>};
 
@@ -7854,6 +7870,42 @@ memory of where the points are set whatsoever.
 
 ---------------------------------------
 
+*viewpointmap "<map name>",<action>,<x>,<y>,<point number>,<color>;
+
+This command will mark places on the mini map in the client for all players currently
+on the defined map. It uses the normal X and Y coordinates from the main map.
+The colors of the marks are defined using a hexadecimal number, same as the ones
+used to color text in 'mes' output, but are written as hexadecimal numbers in C.
+(They look like 0x<six numbers>.)
+
+Action is what you want to do with a point, 1 will set it, while 2 will clear
+it. 0 will also set it, but automatically removes the point after 15 seconds.
+Point number is the number of the point - you can have several. If more than
+one point is drawn at the same coordinates, they will cycle, which can be used
+to create flashing marks.
+
+	// This command will show a mark at coordinates X 30 Y 40, is mark number 1,
+	// and will be red for all players currently on the map Prontera.
+
+	viewpointmap "prontera",1,30,40,1,0xFF0000;
+
+This will create three points:
+	.@map$ = "prontera";
+	viewpointmap .@map$,1,30,40,1,0xFF0000;
+	viewpointmap .@map$,1,35,45,2,0xFF0000;
+	viewpointmap .@map$,1,40,50,3,0xFF0000;
+
+And this is how you remove them:
+	.@map$ = "prontera";
+	viewpointmap .@map$,2,30,40,1,0xFF0000;
+	viewpointmap .@map$,2,35,45,2,0xFF0000;
+	viewpointmap .@map$,2,40,50,3,0xFF0000;
+
+The client determines what it does with the points entirely, the server keeps no
+memory of where the points are set whatsoever.
+
+---------------------------------------
+
 *cutin "<filename>",<position>;
 
 This command will display a picture, usually an NPC illustration, also called
@@ -8098,6 +8150,14 @@ Opens the laphine upgrade UI for the attached player.
 This feature requires packet version 2017-07-26 or newer.
 
 This function is intended for use in item scripts.
+
+---------------------------------------
+
+*openbank({<char id>})
+
+Opens the Bank UI for the attached player or the given character ID.
+
+This command requires packet version 2015-01-28 or newer.
 
 ---------------------------------------
 \\
@@ -9562,7 +9622,7 @@ Examples:
 *questinfo <Icon>{,<Map Mark Color>{,"<condition>"}};
 
 This command should only be used in OnInit/OnInstanceInit labels.
-Show an emotion on top of a NPC, and optionally, a colored mark in the mini-map like "viewpoint".
+Show an emotion on top of a NPC, and optionally, a colored mark in the mini-map like "viewpoint" or "viewpointmap".
 When a user is doing some action, each NPC is checked for questinfo that has been set on the map.
 If questinfo is present, it will check if the player fulfill the condition.
 If he/she does or no condition has been set, the bubble will appear.
@@ -9688,7 +9748,7 @@ Return the state of the quest:
 *showevent <icon>{,<mark color>{,<char_id>}}
 
 Show an emotion on top of a NPC, and optionally,
-a colored mark in the mini-map like "viewpoint".
+a colored mark in the mini-map like "viewpoint" or "viewpointmap".
 This is used to indicate that a NPC has a quest or an event to
 a certain player.
 
