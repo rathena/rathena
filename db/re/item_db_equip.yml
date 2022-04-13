@@ -48316,7 +48316,7 @@ Body:
       bonus bInt,4;
       bonus bMdef,10;
       bonus bVariableCastrate,-10;
-      if (.@r == 7 || .@r == 8) {
+      if (.@r >= 7) {
          bonus bDef,2;
          bonus bMatkRate,5;
          bonus bVariableCastrate,-5;
@@ -144200,7 +144200,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,10;
   - Id: 450091
-    AegisName: Grace_Aimed_Suit
+    AegisName: Grace_Aim_Suit
     Name: Grace Aimed Suit
     Type: Armor
     Buy: 20
@@ -144424,7 +144424,7 @@ Body:
       if (.@r>=9)
          bonus bMaxHPrate,5;
   - Id: 450098
-    AegisName: Grace_Tornado_Armor
+    AegisName: Grace_Tonado_Armor
     Name: Grace Tornado Armor
     Type: Armor
     Buy: 20
@@ -144488,7 +144488,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,10;
   - Id: 450100
-    AegisName: Grace_Cart_Cannon_Suit
+    AegisName: Grace_Kart_Suit
     Name: Grace Cart Cannon Suit
     Type: Armor
     Buy: 20
@@ -144520,7 +144520,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,10;
   - Id: 450101
-    AegisName: Grace_Cart_Tornado_Suit
+    AegisName: Grace_Kart_Suit2
     Name: Grace Cart Tornado Suit
     Type: Armor
     Buy: 20
@@ -144584,7 +144584,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,10;
   - Id: 450103
-    AegisName: Grace_Assassin_Suit
+    AegisName: Grace_Assasin_Suit
     Name: Grace Assassin Suit
     Type: Armor
     Buy: 20
@@ -144709,7 +144709,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,10;
   - Id: 450107
-    AegisName: Grace_Catnip_Robe
+    AegisName: Grace_Carrot_Robe
     Name: Grace Catnip Robe
     Type: Armor
     Buy: 20
@@ -144767,7 +144767,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,10;
   - Id: 450109
-    AegisName: Grace_Fire_Rain_Suit
+    AegisName: Grace_Firerain_Suit
     Name: Grace Fire Rain Suit
     Type: Armor
     Buy: 20
@@ -145046,7 +145046,7 @@ Body:
       if (.@r>=9)
          bonus bLongAtkRate,10;
   - Id: 450118
-    AegisName: Grace_Eswhoo_Robe
+    AegisName: Grace_Swhoo_Robe
     Name: Grace Eswhoo Robe
     Type: Armor
     Buy: 20
@@ -145226,7 +145226,7 @@ Body:
       if (.@r>=9)
          bonus bMaxHPrate,7;
   - Id: 450125
-    AegisName: Grace_Super_Novice_Suit
+    AegisName: Grace_Snovice_Suit
     Name: Grace Super Novice Suit
     Type: Armor
     Buy: 20
@@ -145255,7 +145255,7 @@ Body:
       if (.@r>=9)
          bonus bMaxHPrate,10;
   - Id: 450126
-    AegisName: Grace_Super_Novice_Robe
+    AegisName: Grace_Snovice_Robe
     Name: Grace Super Novice Robe
     Type: Armor
     Buy: 20

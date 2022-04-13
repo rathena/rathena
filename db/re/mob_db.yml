@@ -89299,7 +89299,6 @@ Body:
     Class: Boss
     Modes:
       Mvp: true
-      KnockBackImmune: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5000
@@ -90888,60 +90887,1034 @@ Body:
 #    AegisName: NIGHTMARE_TERROR_MJ
 #  - Id: 20339
 #    AegisName: BLAZZER_MJ
-#  - Id: 20340
-#    AegisName: MD_EL_A17T
-#  - Id: 20341
-#    AegisName: MD_E_EA1L
-#  - Id: 20342
-#    AegisName: MD_E_EA2S
-#  - Id: 20343
-#    AegisName: MD_E_13EN0
-#  - Id: 20344
-#    AegisName: MD_VENOM_BUG
-#  - Id: 20345
-#    AegisName: MD_CONSTANT
-#  - Id: 20346
-#    AegisName: MD_MIGUEL
-#  - Id: 20347
-#    AegisName: MD_MIGUEL_G
-#  - Id: 20348
-#    AegisName: MD_A013_CAPUT
-#  - Id: 20349
-#    AegisName: MD_A013_DOLOR
-#  - Id: 20350
-#    AegisName: MD_A013_BELLARE
-#  - Id: 20351
-#    AegisName: MD_MANHOLE2
-#  - Id: 20352
-#    AegisName: MD_POMPOM
-#  - Id: 20353
-#    AegisName: MD_CROB
+  - Id: 20340
+    AegisName: MD_EL_A17T
+    Name: EL1-A17T
+    Level: 118
+    Hp: 16412000
+    BaseExp: 2639829
+    JobExp: 2292824
+    Attack: 1543
+    Attack2: 854
+    Defense: 355
+    MagicDefense: 42
+    Str: 173
+    Agi: 143
+    Vit: 77
+    Int: 148
+    Dex: 202
+    Luk: 84
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 220
+    AttackDelay: 128
+    AttackMotion: 1004
+    DamageMotion: 240
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Old_Steel_Plate
+        Rate: 3500
+      - Item: EP17_1_EVT02
+        Rate: 2500
+      - Item: EP17_1_EVT01
+        Rate: 100
+      - Item: EP17_1_EVT39
+        Rate: 1000
+      - Item: Crushed_Can_Iron_Plate
+        Rate: 1500
+      - Item: EL_A17T_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20341
+    AegisName: MD_E_EA1L
+    Name: E-EA1L
+    Level: 116
+    Hp: 24810
+    BaseExp: 2688
+    JobExp: 2453
+    Attack: 1042
+    Attack2: 185
+    Defense: 75
+    MagicDefense: 37
+    Str: 80
+    Agi: 46
+    Vit: 45
+    Int: 71
+    Dex: 95
+    Luk: 32
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 110
+    AttackDelay: 741
+    AttackMotion: 1536
+    DamageMotion: 480
+    Ai: 04
+    Drops:
+      - Item: Needle_Pouch
+        Rate: 1250
+      - Item: EP17_1_EVT02
+        Rate: 10
+      - Item: Scarlet_Dyestuffs
+        Rate: 30
+      - Item: E_EA1L_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20342
+    AegisName: MD_E_EA2S
+    Name: E-EA2S
+    Level: 117
+    Hp: 26200
+    BaseExp: 2724
+    JobExp: 2395
+    Attack: 1073
+    Attack2: 190
+    Defense: 101
+    MagicDefense: 37
+    Str: 110
+    Agi: 75
+    Vit: 47
+    Int: 49
+    Dex: 86
+    Luk: 61
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 165
+    AttackDelay: 1552
+    AttackMotion: 1152
+    DamageMotion: 336
+    Ai: 04
+    Drops:
+      - Item: Screw
+        Rate: 1250
+      - Item: Burnt_Parts
+        Rate: 1000
+      - Item: EP17_1_EVT02
+        Rate: 10
+      - Item: E_EA2S_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20343
+    AegisName: MD_E_13EN0
+    Name: E-13EN0
+    Level: 118
+    Hp: 26840
+    BaseExp: 2785
+    JobExp: 2496
+    Attack: 1082
+    Attack2: 198
+    Defense: 72
+    MagicDefense: 29
+    Str: 95
+    Agi: 76
+    Vit: 38
+    Int: 76
+    Dex: 86
+    Luk: 61
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Fish
+    Element: Water
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 432
+    AttackMotion: 864
+    DamageMotion: 360
+    Ai: 04
+    Drops:
+      - Item: Sticky_Mucus
+        Rate: 1250
+      - Item: Sticky_Poison
+        Rate: 1000
+      - Item: Fluorescent_Liquid
+        Rate: 800
+      - Item: Elunium_Stone
+        Rate: 120
+      - Item: Elunium
+        Rate: 20
+      - Item: EP17_1_EVT39
+        Rate: 3
+  - Id: 20344
+    AegisName: MD_VENOM_BUG
+    Name: Chemical Poison
+    Level: 110
+    Hp: 10000
+    Defense: 200
+    MagicDefense: 200
+    Str: 100
+    Agi: 100
+    Vit: 100
+    Int: 100
+    Dex: 100
+    Luk: 100
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Poison
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 101
+    DamageMotion: 480
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
+      TeleportBlock: true
+  - Id: 20345
+    AegisName: MD_CONSTANT
+    Name: Bio Battery
+    Level: 110
+    Hp: 10000
+    Defense: 200
+    MagicDefense: 200
+    Str: 100
+    Agi: 100
+    Vit: 100
+    Int: 100
+    Dex: 100
+    Luk: 100
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 720
+    AttackMotion: 360
+    DamageMotion: 360
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
+      TeleportBlock: true
+  - Id: 20346
+    AegisName: MD_MIGUEL
+    Name: Miguel
+    Level: 115
+    Hp: 8600000
+    BaseExp: 1200000
+    JobExp: 900000
+    Attack: 4350
+    Attack2: 2450
+    Defense: 216
+    MagicDefense: 95
+    Str: 192
+    Agi: 115
+    Vit: 28
+    Int: 66
+    Dex: 179
+    Luk: 85
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Wind
+    ElementLevel: 4
+    WalkSpeed: 250
+    AttackDelay: 872
+    AttackMotion: 1044
+    DamageMotion: 432
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Tiger's_Skin
+        Rate: 3000
+      - Item: EP17_1_EVT02
+        Rate: 2500
+      - Item: EP17_1_EVT01
+        Rate: 100
+      - Item: EP17_1_EVT39
+        Rate: 1000
+      - Item: Miguel_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20347
+    AegisName: MD_MIGUEL_G
+    Name: Miguel G.
+    Level: 115
+    Hp: 8600000
+    Attack: 4350
+    Attack2: 2450
+    Defense: 216
+    MagicDefense: 95
+    Str: 192
+    Agi: 115
+    Vit: 28
+    Int: 66
+    Dex: 179
+    Luk: 85
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Wind
+    ElementLevel: 4
+    WalkSpeed: 250
+    AttackDelay: 872
+    AttackMotion: 1044
+    DamageMotion: 432
+    Class: Boss
+    Ai: 21
+  - Id: 20348
+    AegisName: MD_A013_CAPUT
+    Name: A013 - Caput
+    Level: 110
+    Hp: 31000
+    BaseExp: 260
+    JobExp: 250
+    Attack: 900
+    Attack2: 150
+    Defense: 79
+    MagicDefense: 40
+    Str: 115
+    Agi: 85
+    Vit: 81
+    Int: 92
+    Dex: 121
+    Luk: 47
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 1872
+    AttackMotion: 360
+    DamageMotion: 864
+    Ai: 04
+    Drops:
+      - Item: Rune_Of_Darkness
+        Rate: 1250
+      - Item: Piece_Of_Darkness
+        Rate: 1000
+      - Item: Tooth_Of_
+        Rate: 800
+      - Item: Tendon
+        Rate: 2000
+      - Item: EP17_1_EVT39
+        Rate: 3
+  - Id: 20349
+    AegisName: MD_A013_DOLOR
+    Name: A013 - Dolor
+    Level: 111
+    Hp: 31000
+    BaseExp: 2650
+    JobExp: 2400
+    Attack: 800
+    Attack2: 200
+    Defense: 42
+    MagicDefense: 65
+    Str: 105
+    Agi: 45
+    Vit: 42
+    Int: 88
+    Dex: 180
+    Luk: 65
+    AttackRange: 5
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Poison
+    ElementLevel: 3
+    WalkSpeed: 250
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 04
+    Drops:
+      - Item: Tough_Scalelike_Stem
+        Rate: 1250
+      - Item: Sticky_Poison
+        Rate: 1000
+      - Item: Wooden_Block
+        Rate: 1000
+      - Item: EP17_1_EVT39
+        Rate: 3
+      - Item: Bloody_Rune
+        Rate: 800
+  - Id: 20350
+    AegisName: MD_A013_BELLARE
+    Name: A013 - Bellare
+    Level: 112
+    Hp: 38000
+    BaseExp: 3250
+    JobExp: 3000
+    Attack: 1140
+    Attack2: 160
+    Defense: 76
+    MagicDefense: 15
+    Str: 107
+    Agi: 82
+    Vit: 44
+    Int: 29
+    Dex: 148
+    Luk: 62
+    AttackRange: 7
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 206
+    AttackMotion: 384
+    DamageMotion: 288
+    Ai: 04
+    Drops:
+      - Item: Heart_Hunter_Seal
+        Rate: 1250
+      - Item: Elunium_Stone
+        Rate: 150
+      - Item: Elunium
+        Rate: 12
+      - Item: Crude_Ammo
+        Rate: 800
+      - Item: Explosive_Powder
+        Rate: 30
+      - Item: EP17_1_EVT02
+        Rate: 7
+  - Id: 20351
+    AegisName: MD_MANHOLE2
+    Name: Manhole   #!todo check english name
+    Level: 1
+    Hp: 1000
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 76
+    AttackMotion: 384
+    DamageMotion: 288
+    Class: Boss
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
+      TeleportBlock: true
+  - Id: 20352
+    AegisName: MD_POMPOM
+    Name: Fatal Pompom
+    Level: 112
+    Hp: 35000
+    Attack: 855
+    Attack2: 185
+    Defense: 85
+    MagicDefense: 42
+    Str: 63
+    Agi: 84
+    Vit: 12
+    Int: 55
+    Dex: 138
+    Luk: 12
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Poison
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 1100
+    AttackMotion: 650
+    DamageMotion: 500
+    Ai: 04
+  - Id: 20353
+    AegisName: MD_CROB
+    Name: Sorrow Crob
+    Level: 111
+    Hp: 3441000
+    BaseExp: 1175400
+    JobExp: 587000
+    Attack: 3400
+    Attack2: 1900
+    Defense: 42
+    MagicDefense: 65
+    Str: 160
+    Agi: 77
+    Vit: 100
+    Int: 40
+    Dex: 235
+    Luk: 55
+    AttackRange: 5
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 250
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 21
+    Class: Boss
 #  - Id: 20354
 #    AegisName: E_FINE_DUST
-#  - Id: 20355
-#    AegisName: EP17_1_BELLARE1
-#  - Id: 20356
-#    AegisName: EP17_1_BELLARE2
-#  - Id: 20357
-#    AegisName: EP17_1_SANARE1
-#  - Id: 20358
-#    AegisName: EP17_1_SANARE2
-#  - Id: 20359
-#    AegisName: EP17_1_PLAGA1
-#  - Id: 20360
-#    AegisName: EP17_1_PLAGA2
-#  - Id: 20361
-#    AegisName: EP17_1_DOLOR1
-#  - Id: 20362
-#    AegisName: EP17_1_DOLOR2
-#  - Id: 20363
-#    AegisName: EP17_1_VENENUM1
-#  - Id: 20364
-#    AegisName: EP17_1_VENENUM2
-#  - Id: 20365
-#    AegisName: EP17_1_TWIN_CAPUT1
-#  - Id: 20366
-#    AegisName: EP17_1_TWIN_CAPUT2
+  - Id: 20355
+    AegisName: EP17_1_BELLARE1
+    Name: Heart Hunter Bellare
+    Level: 120
+    Hp: 29619
+    BaseExp: 3291
+    JobExp: 2633
+    Attack: 840
+    Attack2: 424
+    Defense: 146
+    MagicDefense: 27
+    Str: 56
+    Agi: 72
+    Vit: 43
+    Int: 53
+    Dex: 131
+    Luk: 67
+    AttackRange: 9
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 864
+    AttackMotion: 1268
+    DamageMotion: 480
+    Ai: 19
+    Drops:
+      - Item: Heart_Hunter_Seal
+        Rate: 1250
+      - Item: Elunium_Stone
+        Rate: 150
+      - Item: Elunium
+        Rate: 12
+      - Item: EP17_1_EVT39
+        Rate: 5
+      - Item: EP17_1_EVT02
+        Rate: 10
+      - Item: Explosive_Powder
+        Rate: 30
+      - Item: Bellare_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20356
+    AegisName: EP17_1_BELLARE2
+    Name: High Hunter Bellare
+    Level: 165
+    Hp: 473302
+    BaseExp: 43027
+    JobExp: 30119
+    Attack: 2454
+    Attack2: 869
+    Defense: 263
+    MagicDefense: 37
+    Str: 119
+    Agi: 101
+    Vit: 90
+    Int: 79
+    Dex: 172
+    Luk: 93
+    AttackRange: 9
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 175
+    AttackDelay: 1270
+    AttackMotion: 1268
+    DamageMotion: 480
+    Ai: 19
+    Drops:
+      - Item: Heart_Hunter_Seal
+        Rate: 2500
+      - Item: Elunium_Stone
+        Rate: 300
+      - Item: Elunium
+        Rate: 24
+      - Item: EP17_1_EVT39
+        Rate: 10
+      - Item: Explosive_Powder
+        Rate: 60
+      - Item: EP17_1_EVT02
+        Rate: 30
+      - Item: High_Bellare_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20357
+    AegisName: EP17_1_SANARE1
+    Name: Heart Hunter Sanare
+    Level: 120
+    Hp: 30159
+    BaseExp: 3351
+    JobExp: 2681
+    Attack: 765
+    Attack2: 504
+    Defense: 200
+    MagicDefense: 27
+    Str: 51
+    Agi: 51
+    Vit: 70
+    Int: 63
+    Dex: 117
+    Luk: 77
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 432
+    AttackMotion: 1268
+    DamageMotion: 480
+    Ai: 19
+    Drops:
+      - Item: Crude_Ammo
+        Rate: 1000
+      - Item: Heart_Hunter_Seal
+        Rate: 1250
+      - Item: Oridecon_Stone
+        Rate: 150
+      - Item: Oridecon
+        Rate: 12
+      - Item: EP17_1_EVT02
+        Rate: 10
+      - Item: Explosive_Powder
+        Rate: 30
+      - Item: Sanare_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20358
+    AegisName: EP17_1_SANARE2
+    Name: High Hunter Sanare
+    Level: 168
+    Hp: 482327
+    BaseExp: 43848
+    JobExp: 30694
+    Attack: 2289
+    Attack2: 1579
+    Defense: 276
+    MagicDefense: 41
+    Str: 109
+    Agi: 97
+    Vit: 96
+    Int: 141
+    Dex: 139
+    Luk: 77
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 175
+    AttackDelay: 432
+    AttackMotion: 1268
+    DamageMotion: 480
+    Ai: 19
+    Drops:
+      - Item: Heart_Hunter_Seal
+        Rate: 2500
+      - Item: Elunium_Stone
+        Rate: 300
+      - Item: Elunium
+        Rate: 24
+      - Item: EP17_1_EVT39
+        Rate: 10
+      - Item: Explosive_Powder
+        Rate: 60
+      - Item: EP17_1_EVT02
+        Rate: 30
+      - Item: High_Sanare_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20359
+    AegisName: EP17_1_PLAGA1
+    Name: Plaga
+    Level: 164
+    Hp: 466948
+    BaseExp: 42450
+    JobExp: 29715
+    Attack: 2952
+    Attack2: 1235
+    Defense: 160
+    MagicDefense: 38
+    Str: 144
+    Agi: 60
+    Vit: 39
+    Int: 113
+    Dex: 125
+    Luk: 70
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Dragon
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 1280
+    AttackMotion: 1080
+    DamageMotion: 240
+    Ai: 19
+    Drops:
+      - Item: Fluorescent_Liquid
+        Rate: 1250
+      - Item: Solid_Shell
+        Rate: 800
+      - Item: Dragon's_Skin
+        Rate: 1000
+      - Item: Azure_Jewel
+        Rate: 50
+      - Item: EP17_1_EVT39
+        Rate: 5
+      - Item: Plaga_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20360
+    AegisName: EP17_1_PLAGA2
+    Name: Mutant Plaga
+    Level: 178
+    Hp: 760548
+    BaseExp: 69141
+    JobExp: 48399
+    Attack: 4383
+    Attack2: 1626
+    Defense: 215
+    MagicDefense: 71
+    Str: 197
+    Agi: 93
+    Vit: 63
+    Int: 137
+    Dex: 172
+    Luk: 90
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Dragon
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 175
+    AttackDelay: 1289
+    AttackMotion: 1080
+    DamageMotion: 240
+    Ai: 19
+    Drops:
+      - Item: Fluorescent_Liquid
+        Rate: 2500
+      - Item: Solid_Shell
+        Rate: 800
+      - Item: Dragon's_Skin
+        Rate: 1000
+      - Item: Azure_Jewel
+        Rate: 50
+      - Item: EP17_1_EVT39
+        Rate: 10
+      - Item: Mutant_Plaga_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20361
+    AegisName: EP17_1_DOLOR1
+    Name: Dolor
+    Level: 122
+    Hp: 40204
+    BaseExp: 4467
+    JobExp: 3574
+    Attack: 1129
+    Attack2: 561
+    Defense: 227
+    MagicDefense: 28
+    Str: 74
+    Agi: 71
+    Vit: 83
+    Int: 69
+    Dex: 111
+    Luk: 2
+    AttackRange: 5
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Poison
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 1768
+    AttackMotion: 768
+    DamageMotion: 576
+    Ai: 19
+    Drops:
+      - Item: Tough_Scalelike_Stem
+        Rate: 1250
+      - Item: Sticky_Poison
+        Rate: 1000
+      - Item: Wooden_Block
+        Rate: 1000
+      - Item: EP17_1_EVT39
+        Rate: 5
+      - Item: Bloody_Rune
+        Rate: 800
+      - Item: Dolor_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20362
+    AegisName: EP17_1_DOLOR2
+    Name: Mutant Dolor
+    Level: 173
+    Hp: 742501
+    BaseExp: 67500
+    JobExp: 47250
+    Attack: 3655
+    Attack2: 1396
+    Defense: 305
+    MagicDefense: 68
+    Str: 169
+    Agi: 103
+    Vit: 109
+    Int: 121
+    Dex: 161
+    Luk: 6
+    AttackRange: 5
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Poison
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1781
+    AttackMotion: 768
+    DamageMotion: 576
+    Ai: 19
+    Drops:
+      - Item: Tough_Scalelike_Stem
+        Rate: 2500
+      - Item: Sticky_Poison
+        Rate: 2000
+      - Item: Wooden_Block
+        Rate: 2000
+      - Item: EP17_1_EVT39
+        Rate: 5
+      - Item: Bloody_Rune
+        Rate: 1600
+      - Item: Mt_Dolor_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20363
+    AegisName: EP17_1_VENENUM1
+    Name: Venenum
+    Level: 123
+    Hp: 40720
+    BaseExp: 4449
+    JobExp: 3574
+    Attack: 1184
+    Attack2: 320
+    Defense: 242
+    MagicDefense: 27
+    Str: 77
+    Agi: 37
+    Vit: 90
+    Int: 39
+    Dex: 103
+    Luk: 3
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Poison
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 768
+    AttackMotion: 792
+    DamageMotion: 432
+    Ai: 19
+    Drops:
+      - Item: Sticky_Mucus
+        Rate: 1250
+      - Item: Sticky_Poison
+        Rate: 1000
+      - Item: Fluorescent_Liquid
+        Rate: 800
+      - Item: Elunium_Stone
+        Rate: 120
+      - Item: Elunium
+        Rate: 10
+      - Item: EP17_1_EVT39
+        Rate: 5
+      - Item: Venenum_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20364
+    AegisName: EP17_1_VENENUM2
+    Name: Mutant Venenum
+    Level: 176
+    Hp: 755670
+    BaseExp: 68697
+    JobExp: 48088
+    Attack: 3894
+    Attack2: 1396
+    Defense: 314
+    MagicDefense: 69
+    Str: 177
+    Agi: 91
+    Vit: 113
+    Int: 119
+    Dex: 193
+    Luk: 9
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 768
+    AttackMotion: 792
+    DamageMotion: 432
+    Ai: 19
+    Drops:
+      - Item: Sticky_Mucus
+        Rate: 2500
+      - Item: Sticky_Poison
+        Rate: 2000
+      - Item: Fluorescent_Liquid
+        Rate: 1600
+      - Item: Elunium_Stone
+        Rate: 240
+      - Item: Elunium
+        Rate: 20
+      - Item: EP17_1_EVT39
+        Rate: 10
+      - Item: Mt_Venenum_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20365
+    AegisName: EP17_1_TWIN_CAPUT1
+    Name: Twin Caput
+    Level: 125
+    Hp: 41735
+    BaseExp: 4637
+    JobExp: 3710
+    Attack: 1047
+    Attack2: 408
+    Defense: 269
+    MagicDefense: 27
+    Str: 67
+    Agi: 45
+    Vit: 103
+    Int: 49
+    Dex: 90
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 220
+    AttackDelay: 936
+    AttackMotion: 1020
+    DamageMotion: 420
+    Ai: 19
+    Drops:
+      - Item: Rune_Of_Darkness
+        Rate: 1250
+      - Item: Piece_Of_Darkness
+        Rate: 1000
+      - Item: Tooth_Of_
+        Rate: 800
+      - Item: Tendon
+        Rate: 1000
+      - Item: EP17_1_EVT39
+        Rate: 5
+      - Item: Caput_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20366
+    AegisName: EP17_1_TWIN_CAPUT2
+    Name: Mutant Twin Caput
+    Level: 175
+    Hp: 750501
+    BaseExp: 68227
+    JobExp: 47759
+    Attack: 4091
+    Attack2: 1412
+    Defense: 290
+    MagicDefense: 68
+    Str: 187
+    Agi: 90
+    Vit: 101
+    Int: 121
+    Dex: 143
+    Luk: 45
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 936
+    AttackMotion: 1020
+    DamageMotion: 420
+    Ai: 19
+    Drops:
+      - Item: Rune_Of_Darkness
+        Rate: 2500
+      - Item: Piece_Of_Darkness
+        Rate: 2000
+      - Item: Tooth_Of_
+        Rate: 1600
+      - Item: Tendon
+        Rate: 2000
+      - Item: EP17_1_EVT39
+        Rate: 10
+      - Item: Mt_Caput_Card
+        Rate: 1
+        StealProtected: true
 #  - Id: 20367
 #    AegisName: RAYDRIC_H
 #  - Id: 20368
@@ -90970,11 +91943,82 @@ Body:
 #    AegisName: ICE_GHOST_H
 #  - Id: 20380
 #    AegisName: FLAME_GHOST_H
-#  - Id: 20381
-#    AegisName: EP17_1_R4885_BESTIA
-#    DamageTaken: 10
-#  - Id: 20382
-#    AegisName: G_TWIN_CAPUT2
+  - Id: 20381
+    AegisName: EP17_1_R4885_BESTIA
+    Name: R48-85-Bestia
+    Level: 174
+    Hp: 8885000
+    BaseExp: 8003000
+    JobExp: 6009000
+    MvpExp: 4001500
+    Attack: 4520
+    Attack2: 4150
+    Defense: 855
+    MagicDefense: 124
+    Str: 220
+    Agi: 244
+    Vit: 72
+    Int: 118
+    Dex: 255
+    Luk: 95
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Brute
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 1020
+    AttackMotion: 144
+    DamageMotion: 288
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Old_Violet_Box
+        Rate: 4000
+      - Item: Seed_Of_Yggdrasil
+        Rate: 3000
+    Drops:
+      - Item: Piece_Of_Bone_Armor
+        Rate: 4000
+      - Item: EP17_1_EVT02
+        Rate: 5000
+      - Item: Zelunium
+        Rate: 5000
+      - Item: R48_85_Bestia_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20382
+    AegisName: G_TWIN_CAPUT2
+    Name: Twin Capute
+    Level: 175
+    Hp: 603341
+    Attack: 3619
+    Attack2: 1206
+    Defense: 618
+    MagicDefense: 196
+    Str: 197
+    Agi: 90
+    Vit: 139
+    Int: 35
+    Dex: 143
+    Luk: 45
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 300
+    AttackDelay: 1028
+    AttackMotion: 1020
+    DamageMotion: 420
+    Ai: 21
 #  - Id: 20383
 #    AegisName: E_WICKED_NYMPH
 #  - Id: 20384
