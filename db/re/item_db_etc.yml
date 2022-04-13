@@ -36749,11 +36749,10 @@ Body:
     Type: Etc
     Weight: 10
   - Id: 25670
-    AegisName: M_M_Defense
+    AegisName: EP17_1_EVT03
     Name: Modification Module (Defense)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       .@r = getrefine();
@@ -36765,11 +36764,10 @@ Body:
       }
       bonus bDef,.@def;
   - Id: 25671
-    AegisName: M_M_Magic_Defense
+    AegisName: EP17_1_EVT04
     Name: Modification Module (Magic Defense)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       .@r = getrefine();
@@ -36781,121 +36779,108 @@ Body:
       }
       bonus bMDef,.@mdef;
   - Id: 25672
-    AegisName: M_M_Vit
+    AegisName: EP17_1_EVT05
     Name: Modification Module (Vit)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       bonus bVit,3;
   - Id: 25673
-    AegisName: M_M_Luk
+    AegisName: EP17_1_EVT06
     Name: Modification Module (Luk)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       bonus bLuk,3;
   - Id: 25674
-    AegisName: M_M_Str
+    AegisName: EP17_1_EVT07
     Name: Modification Module (Str)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       bonus bStr,3;
   - Id: 25675
-    AegisName: M_M_Agi
+    AegisName: EP17_1_EVT08
     Name: Modification Module (Agi)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       bonus bAgi,3;
   - Id: 25676
-    AegisName: M_M_Int
+    AegisName: EP17_1_EVT09
     Name: Modification Module (Int)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       bonus bInt,3;
   - Id: 25677
-    AegisName: M_M_Dex
+    AegisName: EP17_1_EVT10
     Name: Modification Module (Dex)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       bonus bDex,3;
   - Id: 25678
-    AegisName: M_M_HP_recovery
+    AegisName: EP17_1_EVT11
     Name: Modification Module (HP recovery)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       bonus bHPrecovRate,20;
   - Id: 25679
-    AegisName: M_M_SP_recovery
+    AegisName: EP17_1_EVT12
     Name: Modification Module (SP recovery)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       bonus bSPrecovRate,20;
   - Id: 25680
-    AegisName: M_M_Spell5
+    AegisName: EP17_1_EVT13
     Name: Modification Module (Spell)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       bonus bMatk,18;
       bonus bVariableCastrate,-10;
   - Id: 25681
-    AegisName: M_M_Attack_Delay_4
+    AegisName: EP17_1_EVT14
     Name: Modification Module (Attack Speed)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       bonus bAspdRate,10;
   - Id: 25682
-    AegisName: M_M_Fatal4
+    AegisName: EP17_1_EVT15
     Name: Modification Module (Fatal)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       bonus bCritAtkRate,10;
       bonus bCritical,4;
   - Id: 25683
-    AegisName: M_M_Expert_Archer5
+    AegisName: EP17_1_EVT16
     Name: Modification Module (Expert Archer)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       bonus bLongAtkRate,10;
   - Id: 25684
-    AegisName: M_M_Vital
+    AegisName: EP17_1_EVT17
     Name: Modification Module (Vital)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       .@r = getrefine();
@@ -36906,11 +36891,10 @@ Body:
          bonus bMaxHP,500;
       }
   - Id: 25685
-    AegisName: M_M_Mental
+    AegisName: EP17_1_EVT18
     Name: Modification Module (Mental)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       .@r = getrefine();
@@ -36921,11 +36905,10 @@ Body:
          bonus bMaxSP,100;
       }
   - Id: 25686
-    AegisName: M_M_Heal
+    AegisName: EP17_1_EVT19
     Name: Modification Module (Heal)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       .@r = getrefine();
@@ -36937,11 +36920,10 @@ Body:
       }
       bonus bHealPower,.@val;
   - Id: 25687
-    AegisName: M_M_Power
+    AegisName: EP17_1_EVT20
     Name: Modification Module (Power)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       .@r = getrefine();
@@ -36952,11 +36934,10 @@ Body:
          bonus bBaseAtk,25;
       }
   - Id: 25688
-    AegisName: M_M_Magic
+    AegisName: EP17_1_EVT21
     Name: Modification Module (Magic)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       .@r = getrefine();
@@ -36967,11 +36948,10 @@ Body:
          bonus bMatk,25;
       }
   - Id: 25689
-    AegisName: M_M_Shooter
+    AegisName: EP17_1_EVT22
     Name: Modification Module (Shooter)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       .@r = getrefine();
@@ -36983,11 +36963,10 @@ Body:
       }
       bonus bLongAtkRate,.@val;
   - Id: 25690
-    AegisName: M_M_Fast
+    AegisName: EP17_1_EVT23
     Name: Modification Module (Fast)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       .@r = getrefine();
@@ -36998,11 +36977,10 @@ Body:
          bonus bAspdRate,3;
       }
   - Id: 25691
-    AegisName: M_M_Caster
+    AegisName: EP17_1_EVT24
     Name: Modification Module (Caster)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       .@r = getrefine();
@@ -37014,11 +36992,10 @@ Body:
       }
       bonus bVariableCastrate,.@val;
   - Id: 25692
-    AegisName: M_M_Critical
+    AegisName: EP17_1_EVT25
     Name: Modification Module (Critical)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       .@r = getrefine();
@@ -37029,11 +37006,10 @@ Body:
          bonus bCritAtkRate,5;
       }
   - Id: 25693
-    AegisName: M_M_Delay_After_skill
+    AegisName: EP17_1_EVT26
     Name: Modification Module (Delay after skill)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       .@r = getrefine();
@@ -37045,11 +37021,10 @@ Body:
       }
       bonus bDelayrate,.@val;
   - Id: 25694
-    AegisName: M_M_Fixed_Casting
+    AegisName: EP17_1_EVT27
     Name: Modification Module (Fixed Casting)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       .@r = getrefine();
@@ -37061,11 +37036,10 @@ Body:
       }
       bonus bFixedCast,.@val;
   - Id: 25695
-    AegisName: M_M_Above_All
+    AegisName: EP17_1_EVT28
     Name: Modification Module (Above All)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       .@r = getrefine();
@@ -37077,97 +37051,87 @@ Body:
       bonus2 bSubRace,RC_Player_Human,-5;
       } }
   - Id: 25696
-    AegisName: M_M_Drain_Life
+    AegisName: EP17_1_EVT29
     Name: Modification Module (Drain Life)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       bonus2 bHPDrainRate,20,2;
   - Id: 25697
-    AegisName: M_M_Drain_Soul
+    AegisName: EP17_1_EVT30
     Name: Modification Module (Drain Soul)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       bonus2 bSPDrainRate,10,1;
   - Id: 25698
-    AegisName: M_M_Magic_Healing
+    AegisName: EP17_1_EVT31
     Name: Modification Module (Magic Healing)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       autobonus "{ bonus2 bHPRegenRate,400,500; }",20,10000,BF_MAGIC;
   - Id: 25699
-    AegisName: M_M_Magic_Soul
+    AegisName: EP17_1_EVT32
     Name: Modification Module (Magic Soul)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       autobonus "{ bonus2 bSPRegenRate,80,500; }",10,10000,BF_MAGIC;
   - Id: 25700
-    AegisName: M_M_Unlimited_Vital
+    AegisName: EP17_1_EVT33
     Name: Modification Module (Unlimited Vital)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       autobonus2 "{ bonus bVit,50; bonus2 bHPRegenRate,400,500; bonus2 bSPLossRate,20,1000; }",10,10000,BF_WEAPON|BF_MAGIC;
       /* unknown rate */
   - Id: 25701
-    AegisName: M_M_Spell_Buster
+    AegisName: EP17_1_EVT34
     Name: Modification Module (Spell Buster)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       autobonus "{ bonus bInt,50; bonus bMatkRate,15; bonus2 bAddClass,Class_All,-15; }",20,10000,BF_MAGIC;
       /* unknown rate */
   - Id: 25702
-    AegisName: M_M_Firing_Shot
+    AegisName: EP17_1_EVT35
     Name: Modification Module (Firing Shot)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       autobonus "{ bonus bDex,50; bonus bLongAtkRate,10; bonus2 bSPLossRate,20,1000; }",20,10000,BF_WEAPON;
       /* unknown rate */
   - Id: 25703
-    AegisName: M_M_Overpower
+    AegisName: EP17_1_EVT36
     Name: Modification Module (Overpower)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       autobonus "{ bonus bStr,50; bonus2 bAddClass,Class_All,15; bonus bMatkRate,-15; }",20,10000,BF_WEAPON;
       /* unknown rate */
   - Id: 25704
-    AegisName: M_M_Fatal_Flash
+    AegisName: EP17_1_EVT37
     Name: Modification Module (Fatal Flash)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       autobonus "{ bonus bStr,50; bonus bCritAtkRate,10; bonus2 bHPLossRate,300,1000; }",20,10000,BF_WEAPON;
       /* unknown rate */
   - Id: 25705
-    AegisName: M_M_Lucky_Strike
+    AegisName: EP17_1_EVT38
     Name: Modification Module (Lucky Strike)
     Type: Card
     SubType: Enchant
-    Buy: 20
     Weight: 10
     Script: |
       autobonus "{ bonus bLuk,50; bonus2 bMagicAtkEle,Ele_All,10; bonus2 bHPLossRate,300,1000; }",20,10000,BF_MAGIC;
