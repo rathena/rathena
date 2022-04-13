@@ -5661,6 +5661,10 @@
 	export_constant(IG_COSTUME_MILE_PACK_26_1);
 	export_constant(IG_COSTUME_MILE_PACK_26_2);
 	export_constant(IG_COSTUME_MILE_PACK_26_3);
+	export_constant(IG_EP17_1_SPC01);
+	export_constant(IG_EP17_1_SPC02);
+	export_constant(IG_EP17_1_SPC03);
+	export_constant(IG_EP17_1_SPC04);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
@@ -8028,6 +8032,35 @@
 	export_constant(EF_TIME_ACCESSORY);
 	export_constant(EF_SPRITEMABLE);
 	export_constant(EF_TUNAPARTY);
+	export_constant(EF_FRESHSHRIMP);
+	export_constant(EF_SU_GROOMING);
+	export_constant(EF_SU_CHATTERING);
+	export_constant(EF_FIREDANCE);
+	export_constant(EF_RICHS_COIN_A);
+	export_constant(EF_E_CHAIN);
+	export_constant(EF_HEAT_BARREL);
+	export_constant(EF_H_MINE);
+	export_constant(EF_FALLEN_ANGEL);
+	export_constant(EF_IMMUNE_PROPERTY);
+	export_constant(EF_MOVE_COORDINATE);
+	export_constant(EF_LIGHTSPHERE_SUN);
+	export_constant(EF_LIGHTSPHERE_MOON);
+	export_constant(EF_LIGHTSPHERE_STAR);
+	export_constant(EF_NOVAEXPLOSING);
+	export_constant(EF_STAR_EMPEROR);
+	export_constant(EF_SMA_BLACK);
+	export_constant(EF_ENERGYDRAIN_BLACK);
+	export_constant(EF_BLINK_BODY);
+	export_constant(EF_SOLARBURST);
+	export_constant(EF_SJ_DOCUMENT);
+	export_constant(EF_FALLING_STAR);
+	export_constant(EF_STORMKICK8);
+	export_constant(EF_NEWMOON_KICK);
+	export_constant(EF_FULLMOON_KICK);
+	export_constant(EF_BOOK_OF_DIMENSION);
+	export_constant(EF_CURSE_EXPLOSION);
+	export_constant(EF_SOUL_REAPER);
+	export_constant(EF_SOUL_EXPLOSION);
 
 	/* hat effects */
 	export_constant(HAT_EF_BLOSSOM_FLUTTERING);

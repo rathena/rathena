@@ -3,8 +3,9 @@
 //===== Description: =========================================
 //= [Walkthrough Conversion]
 //--- NPCs quests for Episode 16.2
-//===== Changelogs: ==========================================
+//===== Changelog: ===========================================
 //= 1.0 First version. [Capuche]
+//= 1.1 Updated with some iRO NPC names. [Everade]
 //============================================================
 
 prt_cas_q,29,28,0	script	#ep162_evt_npc_con	HIDDEN_WARP_NPC,2,2,{
@@ -3848,7 +3849,7 @@ OnInit:
 }
 
 // Part Elena - Fight
-rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
+rebel_in,70,78,3	script	Elena Volkova#16.2rm	4_F_ELENA,{
 	if (terra_gloria_main < 16) {
 		cutin "162elena_01.bmp",2;
 		mes "[USU commander Elena]";
@@ -3901,7 +3902,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			mes "[USU commander Elena]";
 			mes "Tell me exactly how you got here and where you came from unless you want to die. ";
 			sleep2 300;
-			npctalk "Elena Bolkova: Otherwise I will have some fun and you won't.", "", bc_self;
+			npctalk "Elena Volkova: Otherwise I will have some fun and you won't.", "", bc_self;
 			next;
 			cutin "",255;
 			mes "[" + strcharinfo(0) + "]";
@@ -3956,7 +3957,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			next;
 			if (select( "Fight Elena.", "I don't listen to someone weaker than me." ) == 1) {
 				mes "[" + strcharinfo(0) + "]";
-				mes "(I have no choice. Let's prepare for the fight and talk to Elena Bolkova again.)";
+				mes "(I have no choice. Let's prepare for the fight and talk to Elena Volkova again.)";
 				setquest 16060;	// Fighting is the language of warmonger
 				setquest 16061;	// Fair and equitable result
 				close3;
@@ -3968,7 +3969,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			emotion ET_SMILE;
 			mes "[USU commander Elena]";
 			mes "Hmm? I misheard something. Haha, could you repeat it?";
-			npctalk "Elena Bolkova: Well, it should have been some dogs barking.", "", bc_self;
+			npctalk "Elena Volkova: Well, it should have been some dogs barking.", "", bc_self;
 			next;
 			cutin "",255;
 			mes "[" + strcharinfo(0) + "]";
@@ -4074,7 +4075,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 					next;
 					mes "[USU commander Elena]";
 					mes "I don't mess with clerics. I don't feel good after fighting them.";
-					npctalk "Elena Bolkova: My mom told me I shouldn't beat a cleric.", "Elena Bolkova#16.2rm"; // 116
+					npctalk "Elena Volkova: My mom told me I shouldn't beat a cleric.", "Elena Volkova#16.2rm"; // 116
 					next;
 					mes "[USU commander Elena]";
 					mes "So I'll support the cooperation with the Secret Wings. Do you need my signature?";
@@ -4214,7 +4215,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 				mes "Good. ...... By the way,";
 				mes "If you have time, visit the arena any time.";
 				mes "I will fight you even if you come every day.";
-				npctalk "Elena Bolkova: Make sure you come back here.", "", bc_self;
+				npctalk "Elena Volkova: Make sure you come back here.", "", bc_self;
 				next;
 				mes "[USU commander Elena]";
 				mes "Since you are our cooperator now, go around and see if there is anyone who has any problem.";
@@ -4583,7 +4584,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			mes "[USU commander Elena]";
 			mes "In case you don't get any outcome after talking to them, talk to other fellows.";
 			mes "The mess personnel... and another fellow in the outside store seems to want to say something.";
-			npctalk "Elena Bolkova: Are they it Mason and Milo in Clana Nemieri..?", "", bc_self;
+			npctalk "Elena Volkova: Are they it Mason and Milo in Clana Nemieri..?", "", bc_self;
 			setquest 16012;// Troublesome twin
 			lebedev_quest_16_2 = 1;
 			questinfo_refresh();
@@ -4605,7 +4606,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			next;
 			mes "[USU commander Elena]";
 			mes "If you cannot judge it easily, you can talk to ^0000CDother fellows around them^000000.";
-			npctalk "Elena Bolkova: Seems like Milo and Mason have many things to say.", "", bc_self;
+			npctalk "Elena Volkova: Seems like Milo and Mason have many things to say.", "", bc_self;
 			close3;
 		}
 		if (lebedev_quest_16_2 == 5) {
@@ -4620,7 +4621,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			mes "[USU commander Elena]";
 			mes "...There's someone you should talk to lastly.";
 			mes "I didn't want to do this.";
-			npctalk "Elena Bolkova: I wanted to solve this problem myself if possible.", "", bc_self;
+			npctalk "Elena Volkova: I wanted to solve this problem myself if possible.", "", bc_self;
 			next;
 			mes "[USU commander Elena]";
 			mes "Go downstairs and find ^0000CDEricsson Adler, commander of a detached force^000000. He must be nearby the fireplace.";
@@ -4641,7 +4642,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			next;
 			mes "[USU commander Elena]";
 			mes "He's a former boss of the twins.";
-			npctalk "Elena Bolkova: I didn't want to do this.", "", bc_self;
+			npctalk "Elena Volkova: I didn't want to do this.", "", bc_self;
 			close3;
 		}
 		if (lebedev_quest_16_2 == 7) {
@@ -4651,7 +4652,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 		}
 		if (lebedev_quest_16_2 == 8) {
 			cutin "",255;
-			mes "You told Elena Bolkova what Lebedev twins told you.";
+			mes "You told Elena Volkova what Lebedev twins told you.";
 			next;
 			cutin "162elena_01.bmp",2;
 			mes "[USU commander Elena]";
@@ -4705,7 +4706,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			npctalk "Jana Levedeva: Yes!", "Jana Levedeva#16.2rms", bc_self;
 			npctalk "Ilya Lebedev: Yes! Yep!", "Ilya Lebedev#16.2rms", bc_self;
 			next;
-			emotion ET_ANGER, getnpcid(0, "Elena Bolkova#16.2rm");
+			emotion ET_ANGER, getnpcid(0, "Elena Volkova#16.2rm");
 			mes "[USU commander Elena]";
 			mes "Are you insane? You ran away from the unit for a private reason. And you hurt your companion!";
 			next;
@@ -4732,7 +4733,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			mes "[USU commander Elena]";
 			mes "This is totally my fault and my mistake.";
 			mes "I apologize. You had a rough time of it.";
-			npctalk "Elena Bolkova: I sincerely apologize.", "", bc_self;
+			npctalk "Elena Volkova: I sincerely apologize.", "", bc_self;
 			next;
 			cutin "",255;
 			mes "[Lebedev twins]";
@@ -4775,7 +4776,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			mes "[Ilya Lebedev]";
 			mes "Oh... Thank you so much!";
 			mes "And... Sorry.";
-			npctalk "Ilya Lebedev: I'm sorry... Commander Bolkova...", "Ilya Lebedev#16.2rms", bc_self;
+			npctalk "Ilya Lebedev: I'm sorry... Commander Volkova...", "Ilya Lebedev#16.2rms", bc_self;
 			next;
 			mes "[Jana Levedeva]";
 			mes "Thank you, commander...!";
@@ -4898,7 +4899,7 @@ OnTouch:
 	.base_job = BaseJob;
 	end;
 OnStart:
-	monster "rebel_in",201,19, "Elena Bolkova",3630,1, "#job_rmA::OnMobDead";	// EP16_2_E_BOLKOBA
+	monster "rebel_in",201,19, "Elena Volkova",3630,1, "#job_rmA::OnMobDead";	// EP16_2_E_BOLKOBA
 	if (.base_job == Job_Priest)
 		setunitdata $@mobid[0], UMOB_HP, 19000;
 	else
@@ -4925,7 +4926,7 @@ OnTimer4000:
 	npctalk "Milo River: Hel, hello. I am Milo River, the referee of this fight.";
 	end;
 OnTimer6000:
-	npctalk "Milo River: The fight starts after 10 seconds. If you defeat commander Bolkova in two minutes, you win.";
+	npctalk "Milo River: The fight starts after 10 seconds. If you defeat commander Volkova in two minutes, you win.";
 	end;
 OnTimer11000:
 	npctalk "Milo River: Five more seconds.";
@@ -9056,21 +9057,21 @@ rebel_in,91,67,3	script	Ericsson Adler#16.2rm	4_MAL_CAPTAIN,{
 		mes "You... You're the adventurer who showed up with the Secret Wings.";
 		mes "What can I do for you?";
 		next;
-		mes "You told him what you heard from Elena Bolkova and asked him for a consultation.";
+		mes "You told him what you heard from Elena Volkova and asked him for a consultation.";
 		next;
 		mes "[Detached Force commander Ericsson]";
 		mes "If it was about the Secret Wings, I would not have mentioned anything. But for that issue, I will help you.";
-		mes "As commander Bolkova said, I brought those kids.";
+		mes "As commander Volkova said, I brought those kids.";
 		next;
 		mes "[Detached Force commander Ericsson]";
 		mes "...I heard what happened to them lately. But I didn't know they were suffering like that.";
 		next;
 		mes "[Detached Force commander Ericsson]";
-		mes "I want to talk to Lebedev twins myself. But it is an arrogation and it will be bad for Commander Bolkova.";
-		mes "Commander Bolkova knows that too. That's why she sent you.";
+		mes "I want to talk to Lebedev twins myself. But it is an arrogation and it will be bad for Commander Volkova.";
+		mes "Commander Volkova knows that too. That's why she sent you.";
 		next;
 		mes "[Detached Force commander Ericsson]";
-		mes "There are some people who do not like commander Bolkova.";
+		mes "There are some people who do not like commander Volkova.";
 		mes "Her unit is USU. The commander didn't manage to take care of her squadders so the squadders talked to their former commander? It's a bad scenario.";
 		next;
 		mes "[Detached Force commander Ericsson]";
@@ -9595,7 +9596,7 @@ rebel_in,19,48,5	script	Mason Bender#16.2rm	4_M_KHMAN,{
 			mes "I am not interested in you and the noisy tourist either.";
 			next;
 			mes "[Mason Bender]";
-			mes "......Phew, a request from commander Bolkova... I have no choice but to answer you. But I can only tell you negative things about those kids.";
+			mes "......Phew, a request from commander Volkova... I have no choice but to answer you. But I can only tell you negative things about those kids.";
 			next;
 			mes "[Mason Bender]";
 			mes "There's nothing they can do properly. Plus, they don't even listen to us.";
@@ -13818,7 +13819,7 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 			npctalk "Ilya Lebedev: Don't listen, Jaja...!!", "Ilya Lebedev#16.2rm", bc_self;
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			mes "(......Looks like a huge mistake. Let's go back to ^0000CDElena Bolkova^000000.)";
+			mes "(......Looks like a huge mistake. Let's go back to ^0000CDElena Volkova^000000.)";
 		}
 		else {
 			mes "[" + strcharinfo(0) + "]";
@@ -13836,7 +13837,7 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 			npctalk "Ilya Lebedev: ......", "Ilya Lebedev#16.2rm", bc_self;
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			mes "(......This is getting difficult. Let's go back to ^0000CDElena Bolkova^000000.)";
+			mes "(......This is getting difficult. Let's go back to ^0000CDElena Volkova^000000.)";
 		}
 		setquest 16015;// The cause of failure is a careless attempt
 		lebedev_quest_16_2 = 5;
@@ -13897,7 +13898,7 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "As I told you earlier, please think about commander Adler.";
-		mes "He's so worried about you. So am I, and so is commander Bolkova.";
+		mes "He's so worried about you. So am I, and so is commander Volkova.";
 		next;
 		mes "[Jana Levedeva]";
 		mes "We...";
@@ -13975,7 +13976,7 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		npctalk "Ilya Lebedev: Yes. please.", "Ilya Lebedev#16.2rm", bc_self;
 		npctalk "Jana Levedeva: Yes...", "", bc_self;
 		mes "[" + strcharinfo(0) + "]";
-		mes "(You heard their story. Let's go to ^0000CDElena Bolkova^000000 and tell her.)";
+		mes "(You heard their story. Let's go to ^0000CDElena Volkova^000000 and tell her.)";
 		lebedev_quest_16_2 = 8;
 		delitem 25161,1;// Handmade_cookie2
 		erasequest 16033;// Bring dessert and listen the story
