@@ -1,0 +1,11 @@
+//===== rAthena Script ======================================= 
+//= Rudus Dungeon Warps Script
+//===== Changelog: ===========================================
+//= 1.0 First version [crazyarashi]
+//============================================================
+
+sp_rudus,200,382,0	warp	rudus_to_field	1,1,ein_fild05,158,289
+sp_rudus,180,258,0	warp	rudus1_to_rudus2	1,1,sp_rudus2,185,258
+sp_rudus2,180,258,0	warp	rudus2_to_rudus1	1,1,sp_rudus,185,258
+sp_rudus2,359,206,0	warp	rudus2_to_rudus3	1,1,sp_rudus3,366,207
+sp_rudus3,371,207,0	warp	rudus3_to_rudus2	1,1,sp_rudus2,355,206

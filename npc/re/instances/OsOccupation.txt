@@ -1,0 +1,712 @@
+//===== rAthena Script =======================================
+//= OS Occupation Operation
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//= Episode 17.1 - OS Occupation Operation
+//= 2nd OS Search
+//===== Changelog: ===========================================
+//= 1.0 Initial release [crazyarashi]
+//= 1.1 Optimizations and cleanup [Everade]
+//============================================================
+
+1@os_a,1,1,0	script	#os_occupation_control	HIDDEN_WARP_NPC,{
+	end;
+
+OnInstanceInit:
+	'map$ = instance_mapname("1@os_a");
+	for (.@i = 1; .@i < 26; .@i++)
+		disablenpc instance_npcname("#ocp_rebel_" + .@i);
+	hideonnpc instance_npcname("Est#171_ocp_0");
+	disablenpc instance_npcname("#171_ocp_dev_0");
+	disablenpc instance_npcname("#171_ocp_dev_1");
+	disablenpc instance_npcname("#171_ocp_wrp_0");
+	disablenpc instance_npcname("#171_ocp_wrp_1");
+	disablenpc instance_npcname("#171_ocp_wrp_2");
+	disablenpc instance_npcname("#171_ocp_miguel");
+	disablenpc instance_npcname("Est#171_ocp_1");
+	disablenpc instance_npcname("Operation Officer#171_osd");
+	end;
+
+OnStory01:
+	donpcevent instance_npcname("#171_ocp_mob") + "::OnPoisonStory";
+	for (.@i = 1; .@i < 26; .@i++)
+		enablenpc instance_npcname("#ocp_rebel_" + .@i);
+	enablenpc instance_npcname("#171_ocp_dev_0");
+	sleep2 1000;
+	hideoffnpc instance_npcname("Est#171_ocp_0");
+	doevent instance_npcname("Est#171_ocp_0") + "::OnEvent";
+	end;
+
+OnStory02:
+	for (.@i = 1; .@i < 26; .@i++)
+		hideonnpc instance_npcname("#ocp_rebel_" + .@i);
+	disablenpc instance_npcname("Est#171_ocp_0");
+	sleep2 3000;
+	donpcevent instance_npcname("#171_ocp_mob") + "::OnSummonStory01";
+	doevent instance_npcname("#171_ocp_dev_0") + "::OnEvent01";
+	end;
+
+OnStory03:
+	enablenpc instance_npcname("#171_ocp_dev_1");
+	for (.@i = 1; .@i < 26; .@i++)
+		disablenpc instance_npcname("#ocp_rebel_" + .@i);
+	end;
+
+OnDaily01:
+	'osd = 1;
+	donpcevent instance_npcname("#171_ocp_mob") + "::OnSummon";
+	donpcevent instance_npcname("#171_ocp_mob") + "::OnPoisonDaily";
+	end;
+}
+
+1@os_a,30,352,0	script	#os_occupation_ev_0	HIDDEN_WARP_NPC,4,4,{
+	end;
+
+OnTouch:
+	if (!is_party_leader())
+		end;
+	disablenpc();
+	disablenpc instance_npcname("#os_occupation_ev_1");
+	doevent instance_npcname("#os_occupation_control") + "::OnStory01";
+	end;
+}
+
+1@os_a,335,34,0	script	#os_occupation_ev_1	HIDDEN_WARP_NPC,4,4,{
+	end;
+
+OnTouch:
+	if (!is_party_leader())
+		end;
+	disablenpc();
+	disablenpc instance_npcname("#os_occupation_ev_0");
+	doevent instance_npcname("#os_occupation_control") + "::OnDaily01";
+	disablenpc instance_npcname("Est#171_ocp_0");
+	end;
+}
+
+1@os_a,30,360,3	script	Est#171_ocp_0	4_F_ESTLOVELOY,{
+	cutin "ep162_est01",2;
+	mes "[Est]";
+	mes "Focus on the briefing.";
+	close3;
+
+OnEvent:
+	sleep2 3000;
+	npctalk "Est : I have confirmed that there's biogas spreading at the front and it's currently under treatment.";
+	sleep2 5000;
+	npctalk "Est : If you get too close, you'll die immediately, so don't move until the treatment is finished...";
+	sleep2 5000;
+	npctalk "Est : First, we need to establish bases here. We don't know how many individuals are lurking around.";
+	sleep2 5000;
+	npctalk "Est : There isn't much information, so it's our duty to create those information. From now on, we'll split into 3 groups and subdue this place.";
+	sleep2 5000;
+	npctalk "Est : Alpha Team, start searching around the southern waterway.";
+	sleep2 5000;
+	npctalk "Est : Bravo Team, you will be sweeping with me before the eastern boundary.";
+	sleep2 5000;
+	npctalk "Est : The Echo team is in charge of backups under the command of " + strcharinfo(0) + ". You will block this place and prevent individuals from going outside.";
+	sleep2 5000;
+	npctalk "Est : We shouldn't have situations where we'll ask for support, but if such situation occurs, the Echo team will be called.";
+	sleep2 5000;
+	mapannounce 'map$,"Chemical Treatment Unit : The biogas facilities locked has been completed. The residual gas will continue for the next few minutes.",bc_map,0xFFCC00;
+	sleep2 5000;
+	npctalk "Est : It's time. We're moving. " + strcharinfo(0) + "'s unit is a support team, wait here and respond to communications.";
+	sleep2 5000;
+	doevent instance_npcname("#os_occupation_control") + "::OnStory02";
+	end;
+}
+
+1@os_a,29,360,3	script	#171_ocp_dev_0	4_SCR_MT_ROBOTS,{
+	if ('ocp >= 5) {
+		mes "## Received Message ##";
+		mes "## Team Alpha's last communication was at Oscar Sierra 52 177 ##";
+		navigateto("1@os_a",52,177);
+		close;
+	}
+	switch ('ocp) {
+	case 1:
+		mes "## Enter Message Input ##";
+		next;
+		setarray .@input$,
+		"Engaging with mutants on north.","Engaging with small mutants.","Ah~! I want to go home!";
+		.@menu$ = implode(.@input$,":");
+		.@s = select(.@menu$) - 1;
+		'ocp = 2;
+		mapannounce 'map$,strcharinfo(0) + " : " + .@input$[.@s],bc_map,0xEE66EE;
+		doevent instance_npcname(strnpcinfo(0)) + "::OnEvent02";
+		close;
+	case 3:
+		mes "## Enter Message Input ##";
+		next;
+		setarray .@input$,
+		"Echo is fighting too. Requesting for support.","There was an engagement, but it's over.","Save me!";
+		.@menu$ = implode(.@input$,":");
+		.@s = select(.@menu$) - 1;
+		'ocp = 4;
+		mapannounce 'map$,strcharinfo(0) + " : " + .@input$[.@s],bc_map,0xEE66EE;
+		doevent instance_npcname(strnpcinfo(0)) + "::OnEvent03";
+		close;
+	default:
+		mes "## No Communication Status ##";
+		close;
+	}
+	end;
+
+OnEvent01:
+	mapannounce 'map$,"Alpha : Alpha is approaching south. We found a number of mutants heading north towards Echo.",bc_map,0xCCCC00;
+	sleep2 6000;
+	mapannounce 'map$,"Est : Reception sensitivity is good, Echo prepare for response, and report when anything occurs.",bc_map,0x00EEEE;
+	sleep2 6000;
+	mapannounce 'map$,"Alpha : Alpha found a number of mutants on southern drainage. We're going to engage in battle.",bc_map,0xCCCC00;
+	sleep2 9000;
+	mapannounce 'map$,"Est : ---Roger.",bc_map,0x00EEEE;
+	sleep2 3000;
+	mapannounce 'map$,"Est : Alpha, send a transmission after you're done with the engagement.",bc_map,0x00EEEE;
+	sleep2 6000;
+	mapannounce 'map$,"Alpha : The drainage channel is now clear of mutants. Residual biological experiments were confirmed. We are preparing for the second engagement.",bc_map,0xCCCC00;
+	sleep2 6000;
+	mapannounce 'map$,"Est : Alpha, roger. Echo, status report.",bc_map,0x00EEEE;
+	sleep2 3000;
+	mapannounce 'map$,"Est : " + strcharinfo(0) + "!! Response your current situation!!",bc_map,0x00EEEE;
+	'ocp = 1;
+	specialeffect EF_BIG_PORTAL;
+	end;
+
+OnEvent02:
+	sleep2 3000;
+	mapannounce 'map$,"Est : Echo's reception is not smooth. Re-transmit the message.",bc_map,0x00EEEE;
+	sleep2 10000;
+	mapannounce 'map$,"Alpha : It's an ambush! Current coordinates are are Oscar Sierra 9...@$%**!",bc_map,0xCCCC00;
+	sleep2 6000;
+	mapannounce 'map$,"Est : Alpha retransmit your coordinates. Alpha!!! Please respond!!.",bc_map,0x00EEEE;
+	sleep2 6000;
+	mapannounce 'map$,"Alpha : ---- Tchhhhhhh ----",bc_map,0xCCCC00;
+	sleep2 6000;
+	mapannounce 'map$,"Est : Damn!... Echo, check if you can get support to Alpha's coordinates.",bc_map,0xCCCC00;
+	sleep2 3000;
+	mapannounce 'map$,"Est : " + strcharinfo(0) + "! Check Alpha's coordinates if it's available!",bc_map,0x00EEEE;
+	'ocp = 3;
+	specialeffect EF_BIG_PORTAL;
+	end;
+
+OnEvent03:
+	sleep2 6000;
+	mapannounce 'map$,"?????? : This is Foxtrot. Ground artillery support has been prepared. Please send the coordinates that needs support.",bc_map,0x00FF44;
+	sleep2 6000;
+	mapannounce 'map$,"Est : Alpha is unresponsive. " + strcharinfo(0) + " please support them. The coordinates are Oscar Sierra 32 356",bc_map,0x00EEEE;
+	sleep2 6000;
+	specialeffect EF_CLOUD4,AREA,instance_npcname("#ocp_rebel_5");
+	mapannounce 'map$,"?????? : Foxtrot reporting, coordinates received. Please be careful to hit only the mutants.",bc_map,0x00FF44;
+	sleep2 6000;
+	mapannounce 'map$,"?????? : In 3 seconds, the mutant only ground artillery will be sent on the side of Echo.",bc_map,0x00FF44;
+	sleep2 3000;
+	for (.@i = 1; .@i < 26; .@i++) {
+		specialeffect EF_METEORSTORM,AREA,instance_npcname("#ocp_rebel_" + .@i);
+		killmonster 'map$,instance_npcname("#171_ocp_mob")+"::OnStoryKill";
+		sleep2 300;
+	}
+	killmonster 'map$,instance_npcname("#171_ocp_mob")+"::OnPoisonKill";
+	sleep2 1000;
+	mapannounce 'map$,"?????? : Echo-coordinates mutant artillery support is complete.",bc_map,0x00FF44;
+	sleep2 6000;
+	mapannounce 'map$,"Est : Engagement on our side has ended.",bc_map,0x00EEEE;
+	sleep2 6000;
+	mapannounce 'map$,"Est : I will send the estimated coordinates of their last contact point using the radio. Please send support after getting the information on the radio.",bc_map,0x00EEEE;
+	sleep2 3000;
+	'ocp = 5;
+	specialeffect EF_BIG_PORTAL;
+	donpcevent instance_npcname("#os_occupation_control") + "::OnStory03";
+	end;
+}
+
+1@os_a,52,177,3	script	#171_ocp_dev_1	4_SCR_MT_ROBOTS,3,3,{
+	if ('ocp == 5) {
+		mes "## Send Message Input ##";
+		next;
+		select("There is no trace of alpha. Only the radio.");
+		'ocp = 6;
+		mapannounce 'map$,strcharinfo(0) + " : There is no trace of alpha. Only the radio is here.",bc_map,0xEE66EE;
+		sleep2 4000;
+		mapannounce 'map$,"Est : " + strcharinfo(0) + ". Please look around if there are any traces left.",bc_map,0x00EEEE;
+		sleep2 3000;
+		select("Nothing in particular.");
+		mapannounce 'map$,strcharinfo(0) + " : Nothing in particular.",bc_map,0xEE66EE;
+		sleep2 3000;
+		mapannounce 'map$,"Est : Bravo has completed the search on the east side.",bc_map,0x00EEEE;
+		sleep2 4000;
+		mapannounce 'map$,"Est : We are going to move south. I'll transmit the new coordinates. Please prepare yourselves for an engagement.",bc_map,0x00EEEE;
+		mes "## Coordinates Received ##";
+		enablenpc instance_npcname("#171_ocp_wrp_0");
+		hideonnpc instance_npcname("#171_ocp_wrp_0");
+		donpcevent instance_npcname("#171_ocp_wrp_0") + "::OnMobSpawn";
+		initnpctimer instance_npcname("#171_ocp_wrp_0");
+	}
+	navigateto("1@os_a",84,256);
+	end;
+
+OnTouch:
+	if ('ocp == 5)
+		npctalk "Est : " + strcharinfo(0) + " can you hear me? If you can, please respond.";
+	end;
+}
+
+1@os_a,84,256,5	script	#171_ocp_wrp_0	4_ENERGY_BLUE,4,4,{
+	end;
+
+OnTouch:
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill";
+	if (getd("'" + strnpcinfo(2)) && !mobcount('map$,.@event$)) {
+		disablenpc();
+		.@id = atoi(replacestr(strnpcinfo(2),"171_ocp_wrp_",""));
+		if (.@id < 2) {
+			enablenpc instance_npcname("#171_ocp_wrp_" + (.@id + 1));
+			hideonnpc instance_npcname("#171_ocp_wrp_" + (.@id + 1));
+			donpcevent instance_npcname("#171_ocp_wrp_" + (.@id + 1)) + "::OnSummon";
+		}else
+			donpcevent instance_npcname("#171_ocp_wrp_2") + "::OnBossSummon";
+		switch (.@id) {
+		case 0:
+			monster 'map$,144,275,"",2536,1,instance_npcname("#171_ocp_mob") + "::OnPoisonKill";
+			navigateto("1@os_a",163,266);
+			mapannounce 'map$,"Est : " + strcharinfo(0) + ", can you hear me?",bc_map,0x00EEEE;
+			sleep2 3000;
+			mapannounce 'map$,"Est : I transmitted the second search coordinates. Be careful not to lose your records.",bc_map,0x00EEEE;
+			sleep2 6000;
+			mapannounce 'map$,"Est : " + strcharinfo(0) + ", check if there are any traces around there.",bc_map,0x00EEEE;
+			initnpctimer instance_npcname("#171_ocp_wrp_1");
+			sleep2 3000;
+			mapannounce 'map$,strcharinfo(0) + " : I have found a troop of mutants along the route.",bc_map,0xEE66EE;
+			sleep2 3000;
+			mapannounce 'map$,"Est : If you see a mutant who can communicate, immediately capture it. Other than that... You can subdue them all.",bc_map,0x00EEEE;
+			break;
+		case 1:
+			navigateto("1@os_a",138,174);
+			initnpctimer instance_npcname("#171_ocp_wrp_2");
+			mapannounce 'map$,"Est : " + strcharinfo(0) + ", are you still alive?",bc_map,0x00EEEE;
+			sleep2 3000;
+			mapannounce 'map$,strcharinfo(0) + " : Team Echo is still alive. We are moving towards the southern point.",bc_map,0xEE66EE;
+			sleep2 3000;
+			mapannounce 'map$,"Est : Bravo is also moving towards there, we're skipping the eastern point.",bc_map,0x00EEEE;
+			sleep2 3000;
+			mapannounce 'map$,strcharinfo(0) + " : I hope that Bravo arrive safely.",bc_map,0xEE66EE;
+			sleep2 3000;
+			mapannounce 'map$,"Est : I wish the same for Team Echo.",bc_map,0x00EEEE;
+			break;
+		case 2:
+			navigateto("1@os_a",161,178);
+			mapannounce 'map$,"???? : Grrr...",bc_map,0xFF9999;
+		}
+	}
+	end;
+
+OnMobSpawn:
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill";
+	setarray .@xy,63,214,20349,63,230,20349,63,218,20350,63,222,20350,63,226,20350,63,234,20350,63,238,20350,63,242,20350;
+	for (.@i = 0; .@i < getarraysize(.@xy); .@i += 3)
+		monster 'map$,.@xy[.@i],.@xy[.@i+1],"Incomplete " + getmonsterinfo(.@xy[.@i+2],MOB_NAME),.@xy[.@i+2],1,.@event$;
+	end;
+
+OnSummon:
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill";
+	.@id = atoi(replacestr(strnpcinfo(2),"171_ocp_wrp_",""));
+	switch (.@id) {
+		case 1: setarray .@xy,146,266,20349,166,266,20349,170,266,20349,154,266,20349,126,266,20350,130,266,20350,134,266,20350,138,266,20350,142,266,20350,150,266,20350,158,266,20350,162,266,20350,174,266,20350; break;
+		case 2: setarray .@xy,151,243,20348,144,216,20349,141,213,20349,137,210,20349,132,207,20349,139,200,20349,146,199,20349,139,196,20349,146,216,20350,141,213,20350,135,213,20350,137,212,20350,143,203,20350,139,209,20350,134,199,20350;
+	}
+	for (.@i = 0; .@i < getarraysize(.@xy); .@i += 3)
+		monster 'map$,.@xy[.@i],.@xy[.@i+1],"Incomplete " + getmonsterinfo(.@xy[.@i+2],MOB_NAME),.@xy[.@i+2],1,.@event$;
+	end;
+
+OnMobKill:
+	end;
+
+OnBossSummon:
+	setarray .@xy,161,178,20347;
+	.@event$ = instance_npcname("#171_ocp_mob") + "::OnBossKillStory";
+	monster 'map$,.@xy[.@i],.@xy[.@i+1],"????",.@xy[.@i+2],1,.@event$;
+	getunitdata $@mobid[0],.@boss_data;
+	.@DAMAGE = (.@boss_data[UMOB_MAXHP]/10) * 9;
+	.@HP = (.@boss_data[UMOB_MAXHP] - .@DAMAGE)/2;
+	setunitdata $@mobid[0],UMOB_HP,.@HP;
+	end;
+
+OnTimer10000:
+	stopnpctimer;
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill";
+	.@id = atoi(replacestr(strnpcinfo(2),"171_ocp_wrp_",""));
+	.@count = mobcount('map$,.@event$);
+	if (.@count) {
+		mapannounce 'map$,"Remaining Mutant Survivor - " + .@count,bc_map,0xFFFF00;
+		initnpctimer;
+	} else {
+		mapannounce 'map$,"Intermediate point secured.",bc_map,0xFFFF00;
+		setd("'" + strnpcinfo(2),1);
+		hideoffnpc();
+	}
+	end;
+}
+
+1@os_a,163,266,5	duplicate(#171_ocp_wrp_0)	#171_ocp_wrp_1	4_ENERGY_BLUE,4,4
+1@os_a,138,174,5	duplicate(#171_ocp_wrp_0)	#171_ocp_wrp_2	4_ENERGY_BLUE,4,4
+
+1@os_a,162,176,5	script	#171_ocp_miguel	4_EP17_MIGUEL_D,{
+	if (isbegin_quest(12452) == 1) {
+		mes "^0000FFI think he stopped breathing.^000000";
+		close;
+	}
+	cutin "ep171_miguel01",0;
+	mes "[???]";
+	mes "Krrr. I guess you're not someone of Regenschirm. Can you move aside, I have something to say to that person.";
+	next;
+	cutin "",255;
+	mes "^0000FFThe mutant who's life is running out is trying to say something.^000000";
+	close;
+}
+
+1@os_a,165,176,3	script	Est#171_ocp_1	4_F_ESTLOVELOY,{
+	if (isbegin_quest(12452) == 1) {
+		cutin "ep162_est01",2;
+		mes "[Est]";
+		mes strcharinfo(0) + ", I didn't think I'd survive and see you again. You're pretty good.";
+		next;
+		select("Ask about the fallen mutant.");
+		mes "[Est]";
+		mes "Well, even if you ask me... it's the first time that I'll talk to a mutant.";
+		emotion ET_SCRATCH;
+		next;
+		cutin "ep171_miguel03",0;
+		mes "[???]";
+		mes "... Est?";
+		next;
+		cutin "ep162_est01",2;
+		mes "[Est]";
+		mes "How do you know my name? Who are you! I'll finish you painlessly, so be honest.";
+		emotion ET_SURPRISE;
+		next;
+		cutin "ep171_miguel03",0;
+		mes "[???]";
+		mes "Est... Rebellion Ghost Squad... Do you remember uncle Miguel?";
+		next;
+		cutin "ep162_est01",2;
+		mes "[Est]";
+		mes "How do you know that name...";
+		next;
+		cutin "ep171_miguel03",0;
+		mes "[???]";
+		mes "Ha... haha... you still remember.";
+		next;
+		mes "^0000FFThe identification tag on the mutant's neck stands out.^000000";
+		next;
+		select("Get the identification tag and hand it to Est.");
+		cutin "ep162_est01",2;
+		mes "[Est]";
+		mes "Mi... guel...?";
+		next;
+		cutin "ep171_miguel03",0;
+		mes "[Miguel]";
+		mes "... Est, the last thing I'll see... is your face... That's a relief.";
+		next;
+		cutin "ep162_est01",2;
+		mes "[Est]";
+		mes "Uncle Miguel!? How did this happen!";
+		next;
+		cutin "ep171_miguel03",0;
+		mes "[Miguel]";
+		mes "Before I die... I always wanted to see my old colleagues... You fulfilled my wish.";
+		next;
+		cutin "ep162_est01",2;
+		mes "[Est]";
+		mes "Uncle! What is this! What happened to you?";
+		next;
+		cutin "ep171_miguel01",0;
+		mes "[Miguel]";
+		mes "Ugh... I don't have much time left... Listen carefully, Est.";
+		next;
+		mes "[Miguel]";
+		mes "Somewhere in here... the mad research results of Regenschirm... can be found somewhere in here.";
+		next;
+		mes "[Miguel]";
+		mes "Find everything... and you'll know what happened to me... you'll see things that can't be explained here.";
+		next;
+		cutin "ep162_est01",2;
+		mes "[Est]";
+		mes "Uncle! Wake up!! Let's go out. If we go out, we can save you!";
+		next;
+		cutin "ep171_miguel02",0;
+		mes "[Miguel]";
+		mes  "Est... you still have a big heart... that kind of feeling... on the battlefield... I taught you...";
+		next;
+		cutin "ep162_est01",2;
+		mes "[Est]";
+		mes "Uncle! Uncle!!";
+		next;
+		cutin "",255;
+		mes "[Miguel]";
+		mes "...";
+		if (isbegin_quest(12452) == 1)
+			completequest 12452;
+		getitem 25668,1;
+		getitem 25723,5;
+		getexp 300000,300000;
+		close;
+	}
+	select("Ask about Miguel");
+	cutin "ep162_est01",2;
+	mes "[Est]";
+	mes strcharinfo(0) +", I'm sorry but I don't feel like talking about him right now.";
+	next;
+	select("Ask about the records.");
+	mes "[Est]";
+	mes "I checked the northeast section and saw a place over the railway that seemed to be a research facility.";
+	next;
+	mes "[Est]";
+	mes "Maybe the research Miguel was talking about... is somewhere in there. I'm going to have to start another operation right away.";
+	next;
+	mes "[Est]";
+	mes "I don't think there will be anything else to do here.";
+	next;
+	select("I want to go back.");
+	warp "sp_cor",162,63;
+	end;
+}
+
+1@os_a,187,195,5	script	Operation Officer#171_osd	4_M_ILYA,{
+	if (isbegin_quest(12454) == 1) {
+		mes "[Operation Officer]";
+		mes "You've dealt with a CP7 Mutant by yourself... did the battle went well?";
+		next;
+		mes "[Operation Officer]";
+		mes "Here are the supplies and experience given to the troops that joined the operation. Take it.";
+		erasequest 12454;
+		getexp 150000,150000;
+		getitem 25669,5;
+		getitem 25723,1;
+		next;
+		mes "[Operation Officer]";
+		mes "Even though it's a CP7 Rated, sorry I couldn't give you more experience.";
+		close;
+	}
+	mes "[Operation Officer]";
+	mes "Let's go out now. We need to prepare for repairs quickly.";
+	next;
+	if (select("Look around more.:Go Out") == 1) {
+		mes "[Operation Officer]";
+		mes "Is that so? Don't delay it for too long.";
+		close;
+	}
+	warp "sp_cor",162,63;
+	end;
+}
+
+1@os_a,1,1,0	script	#171_ocp_mob	HIDDEN_WARP_NPC,{
+	end;
+
+OnSummonStory01:
+	setarray .@mob,20348,20349,20350;
+	for (.@i = 0; .@i < 12; .@i++) { //Summons max 12 mobs randomly
+		.@id = .@mob[rand(3)];
+		areamonster 'map$,26,349,37,357,"Incomplete " + getmonsterinfo(.@id,MOB_NAME),.@id,1,instance_npcname(strnpcinfo(0))+"::OnStoryKill";
+		sleep 10000;
+	}
+	end;
+
+OnStoryKill:
+	end;
+
+OnSummon:
+	.@id = 'osd;
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill";
+	switch (.@id) {
+		case 1: setarray .@xy,334,66,20348,291,95,20348,287,97,20348,280,95,20348,272,91,20348,265,89,20349,265,93,20349,263,95,20349,267,92,20350; break;
+		case 2: setarray .@xy,252,82,20348,257,72,20348,260,70,20348,254,64,20348,263,83,20350,254,70,20350,259,66,20350; break;
+		case 3: setarray .@xy,205,90,20348,201,90,20348,208,79,20348,204,71,20348,203,81,20348,200,81,20348,211,80,20349,202,75,20349,210,88,20349,207,93,20349,200,77,20349,206,79,20349,207,78,20350,208,83,20350; break;
+		case 4: setarray .@xy,209,118,20348,208,129,20348,214,136,20348,222,131,20348,215,134,20348,204,137,20348,205,127,20349,222,127,20349,225,136,20349,221,132,20349,206,132,20349,217,132,20349,208,135,20350,216,129,20350,210,136,20350; break;
+		case 5: setarray .@xy,257,153,20348,263,156,20348,261,158,20348,256,161,20348,252,161,20348,246,156,20349,240,156,20349,248,157,20349,256,158,20349,243,156,20350,249,156,20350,237,153,20350,252,161,20350,253,161,20350; break;
+		case 6: setarray .@xy,200,190,20348,213,189,20348,227,190,20348,206,191,20348,201,189,20348,198,183,20348,200,170,20348,197,187,20349,200,191,20349,215,190,20349,207,190,20349,209,183,20349,218,184,20349,212,184,20349,229,185,20349,219,184,20350,199,183,20350,207,184,20350,206,182,20350,226,188,20350,203,187,20350,197,183,20350; break;
+		case 7: donpcevent instance_npcname(strnpcinfo(0)) + "::OnSummonBoss"; end;
+	}
+	if (.@id == 1) {
+		'osd = 2;
+		donpcevent instance_npcname(strnpcinfo(0)) + "::OnSummon";
+	}
+	if (.@id != 2)
+		donpcevent instance_npcname(strnpcinfo(0)) + "::OnEvent0" + .@id;
+	for (.@i = 0; .@i < getarraysize(.@xy); .@i += 3)
+		monster 'map$,.@xy[.@i],.@xy[.@i+1],"CP" + .@id + " " + getmonsterinfo(.@xy[.@i+2],MOB_NAME),.@xy[.@i+2],1,.@event$;
+	end;
+
+OnMobKill:
+	end;
+
+OnTimer10000:
+	stopnpctimer;
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill";
+	.@count = mobcount('map$,.@event$);
+	if (.@count) {
+		mapannounce 'map$,"Remaining Mutant Survivor - " + .@count,bc_map,0xFFFF00;
+		initnpctimer;
+	} else {
+		mapannounce 'map$,"Sector " + ('osd - 1) + " secured.",bc_map,0x00FF00;
+		.@id = 'osd + 1;
+		'osd = .@id;
+		if (.@id == 5)
+			killmonster 'map$,instance_npcname(strnpcinfo(0)) + "::OnPoisonKill";
+		donpcevent instance_npcname(strnpcinfo(0)) + "::OnSummon";
+	}
+	end;
+
+OnEvent01:
+	mapannounce 'map$,"Operation Officer : The Alpha team should be prepare to fight the moment you felt a Mutant's reaction near you.",bc_map,0x00EEEE;
+	sleep 6000;
+	mapannounce 'map$,"Operation Officer : There are no civilian in the main search area, so you can safely subdue any moving creatures.",bc_map,0x00EEEE;
+	sleep 6000;
+	mapannounce 'map$,"Operation Officer : Charlie, and Delta Team, if there is an engagement situation, immediately go into battle without reporting.",bc_map,0x00EEEE;
+	initnpctimer;
+	end;
+
+OnEvent03:
+	mapannounce 'map$,"Operation Officer : We received a precaution within this area.",bc_map,0x00EEEE;
+	sleep 6000;
+	mapannounce 'map$,"Operation Officer : A mutant labeled with A013 is a independent mutant unrelated to its base.",bc_map,0x00EEEE;
+	sleep 6000;
+	mapannounce 'map$,"Operation Officer : It is said that it's combat ability is stronger than of ordinary mutants, avoid combat unless you are willing to fight.",bc_map,0x00EEEE;
+	initnpctimer;
+	end;
+
+OnEvent04:
+	mapannounce 'map$,"Operation Officer : Be careful when dealing with CP4 or higher grade mutants.",bc_map,0x00EEEE;
+	sleep 6000;
+	mapannounce 'map$,"Operation Officer : They are the same type as CP1, but their destructive power increases with their grade. Be careful not to be surrounded.",bc_map,0x00EEEE;
+	initnpctimer;
+	end;
+
+OnEvent05:
+	mapannounce 'map$,"Operation Officer : Sector 4 is said to be a confidential documents storage room.",bc_map,0x00EEEE;
+	sleep 6000;
+	mapannounce 'map$,"Operation Officer : The advanced team already searched the area, but there was nothing special, so focus on the battle and be careful to not get surrounded.",bc_map,0x00EEEE;
+	initnpctimer;
+	end;
+
+OnEvent06:
+	mapannounce 'map$,"Operation Officer : Bravo Team. Is engaged with CP6 Mutants. Their offense is very powerful.",bc_map,0x00EEEE;
+	sleep 6000;
+	mapannounce 'map$,"Operation Officer : Alpha, Charlie, Delta team should also be careful. Don't get surrounded by CP6 Grade mutants!",bc_map,0x00EEEE;
+	initnpctimer;
+	end;
+
+OnSummonBoss:
+	sleep 3000;
+	mapannounce 'map$,"Operation Officer : To all team. If you find an S-Class mutant, please engage in the battle immediately.",bc_map,0x00EEEE;
+	sleep 3000;
+	mapannounce 'map$,"???? : Grrr...",bc_map,0xFF9999;
+	sleep 3000;
+	mapannounce 'map$,"Operation Officer : Be careful, it's difficult to deal with mutants with high CP grade!",bc_map,0x00EEEE;
+	monster 'map$,205,188,"CP7 Miguel",20346,1,instance_npcname(strnpcinfo(0)) + "::OnBossKill";
+	'boss_gid = $@mobid[0];
+	donpcevent instance_npcname(strnpcinfo(0)) + "::OnBossSkill";
+	end;
+
+OnBossKillStory:
+	enablenpc instance_npcname("#171_ocp_miguel");
+	enablenpc instance_npcname("Est#171_ocp_1");
+	end;
+
+OnBossKill:
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnSummonKill";
+	killmonster 'map$,.@event$;
+	mapannounce 'map$,"Operation Officer : Guess I'm a little late!",bc_map,0x00EEEE;
+	enablenpc instance_npcname("Operation Officer#171_osd");
+	end;
+
+OnBossSkill:
+	.@gid = 'boss_gid;
+	freeloop(true);
+	while(unitexists(.@gid)) {
+		if (unitexists(.@gid)) {
+			getunitdata .@gid,.@data;
+			if (.@data[UMOB_HP] <= ((.@data[UMOB_MAXHP]/10) * 7)) {
+				donpcevent instance_npcname(strnpcinfo(0)) + "::OnSummonSkill";
+				break;
+			}
+		}
+		sleep 100;
+	}
+	freeloop(false);
+	end;
+
+OnSummonSkill:
+	.@gid = 'boss_gid;
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnSummonKill";
+	freeloop(true);
+	while(unitexists(.@gid)) {
+		sleep 100;
+		if(!unitexists(.@gid)) 
+			end;
+		getunitdata .@gid,.@data;
+		if (.@data[UMOB_HP] <= ((.@data[UMOB_MAXHP]/10) * 3) && 'skill == 0)
+			'skill = 1;
+		if (.@data[UMOB_X] == 'gid_x && .@data[UMOB_Y] == 'gid_y)
+			continue;
+		killmonster 'map$,.@event$;
+		if (unitexists(.@gid)) {
+			'gid_x = .@data[UMOB_X];
+			'gid_y = .@data[UMOB_Y];
+			monster 'map$,.@data[UMOB_X] - 7,.@data[UMOB_Y],"",20351,1,.@event$;
+			monster 'map$,.@data[UMOB_X] + 7,.@data[UMOB_Y],"",20351,1,.@event$;
+			monster 'map$,.@data[UMOB_X],.@data[UMOB_Y] - 7,"",20351,1,.@event$;
+			monster 'map$,.@data[UMOB_X],.@data[UMOB_Y] + 7,"",20351,1,.@event$;
+			if ('skill) {
+				monster 'map$,.@data[UMOB_X] - 5,.@data[UMOB_Y] + 5,"",20351,1,.@event$;
+				monster 'map$,.@data[UMOB_X] + 5,.@data[UMOB_Y] + 5,"",20351,1,.@event$;
+				monster 'map$,.@data[UMOB_X] - 5,.@data[UMOB_Y] - 5,"",20351,1,.@event$;
+				monster 'map$,.@data[UMOB_X] + 5,.@data[UMOB_Y] - 5,"",20351,1,.@event$;
+			}
+		} else
+			break;
+	}
+	freeloop(false);
+	end;
+
+OnSummonKill:
+	end;
+
+OnPoisonStory:
+	monster 'map$,44,340,"",2536,1,instance_npcname(strnpcinfo(0)) + "::OnPoisonKill";
+	monster 'map$,44,344,"",2536,1,instance_npcname(strnpcinfo(0)) + "::OnPoisonKill";
+	monster 'map$,43,360,"",2536,1,instance_npcname(strnpcinfo(0)) + "::OnPoisonKill";
+	end;
+
+OnPoisonDaily:
+	monster 'map$,252,107,"",2536,1,instance_npcname(strnpcinfo(0)) + "::OnPoisonKill";
+	monster 'map$,255,107,"",2536,1,instance_npcname(strnpcinfo(0)) + "::OnPoisonKill";
+	end;
+
+OnPoisonKill:
+	end;
+}
+
+1@os_a,26,345,7	duplicate(dummy_npc)	#ocp_rebel_1	4_M_GUNSLINGER3
+1@os_a,38,357,1	duplicate(dummy_npc)	#ocp_rebel_2	4_F_GUNSLINGER3
+1@os_a,29,348,7	duplicate(dummy_npc)	#ocp_rebel_3	4_M_REBELLION2
+1@os_a,29,351,7	duplicate(dummy_npc)	#ocp_rebel_4	4_M_REBELLION2
+1@os_a,32,351,7	duplicate(dummy_npc)	#ocp_rebel_5	4_M_REBELLION3
+1@os_a,29,345,7	duplicate(dummy_npc)	#ocp_rebel_6	4_M_REBELLION2
+1@os_a,26,348,7	duplicate(dummy_npc)	#ocp_rebel_7	4_M_REBELLION2
+1@os_a,29,357,7	duplicate(dummy_npc)	#ocp_rebel_8	4_M_REBELLION2
+1@os_a,38,348,1	duplicate(dummy_npc)	#ocp_rebel_9	4_F_GUNSLINGER3
+1@os_a,32,348,7	duplicate(dummy_npc)	#ocp_rebel_10	4_M_REBELLION3
+1@os_a,26,351,7	duplicate(dummy_npc)	#ocp_rebel_11	4_M_GUNSLINGER3
+1@os_a,35,345,1	duplicate(dummy_npc)	#ocp_rebel_12	4_F_GUNSLINGER2
+1@os_a,35,348,1	duplicate(dummy_npc)	#ocp_rebel_13	4_F_GUNSLINGER2
+1@os_a,26,357,7	duplicate(dummy_npc)	#ocp_rebel_14	4_M_GUNSLINGER3
+1@os_a,26,354,7	duplicate(dummy_npc)	#ocp_rebel_15	4_M_GUNSLINGER3
+1@os_a,32,354,7	duplicate(dummy_npc)	#ocp_rebel_16	4_M_REBELLION3
+1@os_a,29,354,7	duplicate(dummy_npc)	#ocp_rebel_17	4_M_REBELLION2
+1@os_a,35,351,1	duplicate(dummy_npc)	#ocp_rebel_18	4_F_GUNSLINGER2
+1@os_a,35,354,1	duplicate(dummy_npc)	#ocp_rebel_19	4_F_GUNSLINGER2
+1@os_a,32,345,7	duplicate(dummy_npc)	#ocp_rebel_20	4_M_REBELLION3
+1@os_a,38,351,1	duplicate(dummy_npc)	#ocp_rebel_21	4_F_GUNSLINGER3
+1@os_a,35,357,1	duplicate(dummy_npc)	#ocp_rebel_22	4_F_GUNSLINGER2
+1@os_a,38,354,1	duplicate(dummy_npc)	#ocp_rebel_23	4_F_GUNSLINGER3
+1@os_a,38,345,1	duplicate(dummy_npc)	#ocp_rebel_24	4_F_GUNSLINGER3
+1@os_a,32,357,7	duplicate(dummy_npc)	#ocp_rebel_25	4_M_REBELLION3
