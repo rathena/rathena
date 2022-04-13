@@ -1,13 +1,14 @@
 //===== rAthena Script =======================================
 //= Soutanes Enchanter
 //===== Description: =========================================
-//= [Unofficial]
+//= [Walkthrough Conversion]
 //= Merchant for enchanting Soutanes and Clergy equipment.
 //===== Additional Comments: =================================
 //= 1.0 First release. [mundussan]
+//= 1.1 Improved translations, added randomoption check [Everade]
 //============================================================
 
-hu_in01,97,323,4	script	Susan Grey#enchanter	893,{
+hu_in01,97,322,5	script	Susan Grey#odin	4_F_HUWOMAN,{
 	disable_items;
 	if (MaxWeight - Weight < 1000) {
 		mes "[ Susan Gray ]";
@@ -17,22 +18,22 @@ hu_in01,97,323,4	script	Susan Grey#enchanter	893,{
 	mes "[ Susan Gray ]";
 	mes "I'm Susan Gray, studying about Odin's Relics. Do you need my help?";
 	next;
-	switch (select("What we do here?:Enchant equipments.:Reset enchants.")) {
+	switch (select("What are you doing here?:Enchant equipment:Reset enchants")) {
 		case 1:
 			mes "[ Susan Gray ]";
-			mes "You know that there are quite a few adventurers who visit this place who like the Temple of Odin.";
+			mes "You know that there are quite a few adventurers who visit this place who patronize the Temple of Odin.";
 			next;
 			mes "[ Susan Gray ]";
-			mes "And sometimes they bring me this...";
+			mes "These are the items they bring me sometimes.";
 			mes "[<ITEM>Odin Relics<INFO>23986</INFO></ITEM>].";
 			next;
 			mes "[ Susan Gray ]";
-			mes "As you may have noticed, there are many kinds of equipment in this relics. I'm a scholar who studies them.";
+			mes "As you may have noticed, there are many kinds of equipment amongst these relics. I'm a scholar who studies them.";
 			next;
 			mes "[ Susan Gray ]";
-			mes "I can handle some of them with my own hands, so it's now possible for me to strengthen them.";
+			mes "I can handle some of them with my own hands, so I can now even enchant them.";
 			next;
-			if (select("Show me what you can do.") == 1) {
+			if (select("Show me what you can do") == 1) {
 				mes "[ Susan Gray ]";
 				mes "[<ITEM>Str Soutane<INFO>15397</INFO></ITEM>]";
 				mes "[<ITEM>Agi Soutane<INFO>15398</INFO></ITEM>]";
@@ -44,26 +45,28 @@ hu_in01,97,323,4	script	Susan Grey#enchanter	893,{
 				mes "[<ITEM>Clergy's Manteau<INFO>20947</INFO></ITEM>]";
 				next;
 				mes "[ Susan Gray ]";
-				mes "This is what I can handle.";
+				mes "These are the items I can handle.";
 				next;
 				mes "[ Susan Gray ]";
-				mes "Generally";
-				mes "3 x [<ITEM>Angel's Dream<INFO>25767</INFO></ITEM>]";
-				mes "and 500,000z.";
-				mes "This is my payment.";
+				mes "Generally, you need";
+				mes "3x [<ITEM>Angel's Dream<INFO>25767</INFO></ITEM>]";
+				mes "and 500,000 Zeny.";
+				mes "worth of material.";
 				next;
 				mes "[ Susan Gray ]";
-				mes "If the refine is higher than 9 and if you bring me 3 [<ITEM>Silvervine Fruit<INFO>6909</INFO></ITEM>], I can strengthen the equipment with better options.";
+				mes "However, if it's refined to 9 or higher,";
+				mes "you can enchant it using 3x [<ITEM>Silvervine Fruit<INFO>6909</INFO></ITEM>], and of course you get to aim for better options.";
 				next;
 				mes "[ Susan Gray ]";
-				mes "To reset the enchants, I need 500,000z or 2 x [<ITEM>Silvervine Fruit<INFO>6909</INFO></ITEM>]. There's a 30% chance of failure when resetting with zeny, so please take that into account.";
+				mes "For 500,000 Zeny,";
+				mes "or 1x [<ITEM>Silvervine Fruit<INFO>6909</INFO></ITEM>], you can reset the enchants. There's a 30% chance of failure when resetting with Zeny, so please keep that in mind.";
 				close;
 			}
 		case 2:
 			mes "[ Susan Gray ]";
 			mes "Which equipment do you want me to work on?";
 			next;
-			switch (select("Cancel.:Armor.:Garment.:Shoes.")) {
+			switch (select("Cancel:Armor:Garment:Shoes")) {
 				case 1:
 					mes "[ Susan Gray ]";
 					mes "Come back whenever you want.";
@@ -78,8 +81,12 @@ hu_in01,97,323,4	script	Susan Grey#enchanter	893,{
 					.@part = EQI_SHOES;
 					break;
 			}
+			if (getequiprandomoption(.@part,0,ROA_ID)) {
+				mes "^ff0000Random option found. The equipment cannot be enchanted.^000000";
+				close;
+			}
 			.@equip_id = getequipid(.@part);
-			switch ( .@equip_id ) {
+			switch (.@equip_id) {
 				case 15397:
 				case 15398:
 				case 15399:
@@ -95,7 +102,7 @@ hu_in01,97,323,4	script	Susan Grey#enchanter	893,{
 					close;
 				default:
 					mes "[ Susan Gray ]";
-					mes "I don't handle items like this.";
+					mes "This equipment is not an item that can be processed by our branch.";
 					close;
 			}
 			.@refine = getequiprefinerycnt(.@part);
@@ -104,13 +111,13 @@ hu_in01,97,323,4	script	Susan Grey#enchanter	893,{
 			set .@zeny_cost, 500000;
 			mes "[ Susan Gray ]";
 			mes "[<ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>]";
-			mes "[<ITEM>Angel's Dream<INFO>25767</INFO></ITEM>] x 3";
-			mes "500,000z";
-			mes "Are you sure you want to strengthen this equipment?";
+			mes "[<ITEM>Angel's Dream<INFO>25767</INFO></ITEM>] x3";
+			mes "500,000 Zeny";
+			mes "Are you sure you want to enchant this equipment?";
 			next;
 			if (select("Cancel:Proceed") == 1) {
 				mes "[ Susan Gray ]";
-				mes "Please come again when you're ready to strengthen you equipment.";
+				mes "Please come again when you're ready to enchant your equipment.";
 				close;
 			} else {
 				setarray .@card[0],getequipcardid(.@part,0),getequipcardid(.@part,1),getequipcardid(.@part,2),getequipcardid(.@part,3);
@@ -123,12 +130,12 @@ hu_in01,97,323,4	script	Susan Grey#enchanter	893,{
 				}
 				if (.@card[1] > 0 && .@card[2] > 0 && .@card[3] > 0) {
 					mes "[ Susan Gray ]";
-					mes "This equipment is reinforced to its limit. No further reinforcement is possible.";
+					mes "This equipment is enchanted to its limit. No further enchantment is possible.";
 					close;
 				}
 				if (countitem(.@itemused) < .@cost ||  Zeny < .@zeny_cost) {
 					mes "[ Susan Gray ]";
-					mes "Hmm, you are missing " + (.@cost - countitem(.@itemused)) + " Angel's Dreams or you doesn't have 500000z. Go get more, and then we can talk about more enchants.";
+					mes "Hmm, you are missing " + (.@cost - countitem(.@itemused)) + " Angel's Dreams or you don't have 500,000 Zeny. Go get more, and then we can talk about more enchants.";
 					specialeffect2 EF_PHARMACY_FAIL;
 					close;
 				} else {
@@ -239,10 +246,10 @@ hu_in01,97,323,4	script	Susan Grey#enchanter	893,{
 							mes "Oh wait! Seems you have a powerful equipment there. I can give you a better enchant if you give me 3x [<ITEM>"+getitemname(6909)+"<INFO>6909</INFO></ITEM>].";
 							mes "What would you say?";
 							next;
-							switch (select("Cancel.:Proceed with Angel's Dream.:Proceed with "+getitemname(6909)+".")) {
+							switch (select("Cancel:Proceed with Angel's Dream:Proceed with "+getitemname(6909))) {
 								case 1:
 									mes "[ Susan Gray ]";
-									mes "Please come again when you're ready to strengthen you equipment.";
+									mes "Please come again when you're ready to enchant your equipment.";
 									close;
 								case 2:
 									.@card[1] = callfunc("F_Rand",
@@ -363,7 +370,7 @@ hu_in01,97,323,4	script	Susan Grey#enchanter	893,{
 					delequip .@part;
 					getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
 					mes "[ Susan Gray ]";
-					mes "Reinforcement of [<ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>] has been completed.";
+					mes "Enchantment of [<ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>] has been completed.";
 					close;
 				}
 			}
@@ -371,7 +378,7 @@ hu_in01,97,323,4	script	Susan Grey#enchanter	893,{
 			mes "[ Susan Gray ]";
 			mes "Which equipment do you want me to work on?";
 			next;
-			switch (select("Cancel.:Armor.:Garment.:Shoes.")) {
+			switch (select("Cancel:Armor:Garment:Shoes")) {
 				case 1:
 					mes "[ Susan Gray ]";
 					mes "Come back whenever you want.";
@@ -384,10 +391,13 @@ hu_in01,97,323,4	script	Susan Grey#enchanter	893,{
 					break;
 				case 4:
 					.@part = EQI_SHOES;
-					break;
+			}
+			if (getequiprandomoption(.@part,0,ROA_ID)) {
+				mes "^ff0000Random option found. The equipment cannot be enchanted.^000000";
+				close;
 			}
 			.@equip_id = getequipid(.@part);
-			switch ( .@equip_id ) {
+			switch (.@equip_id) {
 				case 15397:
 				case 15398:
 				case 15399:
@@ -403,7 +413,7 @@ hu_in01,97,323,4	script	Susan Grey#enchanter	893,{
 					close;
 				default:
 					mes "[ Susan Gray ]";
-					mes "I don't handle items like this.";
+					mes "This equipment is not an item that can be processed by our branch.";
 					close;
 			}
 			.@refine = getequiprefinerycnt(.@part);
@@ -417,22 +427,22 @@ hu_in01,97,323,4	script	Susan Grey#enchanter	893,{
 			mes "[ Susan Gray ]";
 			mes "[<ITEM>"+getitemname(.@equip_id)+"<INFO>"+.@equip_id+"</INFO></ITEM>]";
 			mes "==============================";
-			mes "500,000z";
+			mes "500,000 Zeny";
 			mes "What type of reset are you going to use?";
 			next;
-			switch (select("Cancel:Using "+getitemname(6909)+".:Using zeny.")) {
+			switch (select("Cancel:Using "+getitemname(6909)+":Using Zeny")) {
 				case 1:
 					mes "[ Susan Gray ]";
-					mes "Please come again when you're ready to strengthen you equipment.";
+					mes "Please come again when you're ready to enchant you equipment.";
 					close;
 				case 2:
 					if (.@card[1] >0) {
-						if (countitem(6909) < 2) {
+						if (countitem(6909) < 1) {
 							mes "[ Susan Gray ]";
-							mes "Hmmm, I think you forgot something... I need you bring me more "+2 - countitem(6909)+" "+ getitemname(6909)+"s to reset.";
+							mes "Hmmm, I think you forgot something... I need you to bring me 1 "+ getitemname(6909)+" to reset.";
 							close;
 						} else {
-							delitem 6909, 2;
+							delitem 6909, 1;
 							delequip .@part;
 							specialeffect2 EF_REPAIRWEAPON;
 							getitem2 .@equip_id,1,1,.@refine,0,.@card[0],0,0,0;
@@ -449,7 +459,7 @@ hu_in01,97,323,4	script	Susan Grey#enchanter	893,{
 					if (.@card[1] >0) {
 						if (Zeny < 500000) {
 							mes "[ Susan Gray ]";
-							mes "Hmmm, I think you forgot something... I need you bring me 500,000z to reset.";
+							mes "Hmmm, I think you forgot something... I need you to bring me 500,000 Zeny to reset.";
 							close;
 						} else {
 							Zeny = Zeny - 500000;
