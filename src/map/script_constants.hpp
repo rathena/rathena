@@ -5661,6 +5661,10 @@
 	export_constant(IG_COSTUME_MILE_PACK_26_1);
 	export_constant(IG_COSTUME_MILE_PACK_26_2);
 	export_constant(IG_COSTUME_MILE_PACK_26_3);
+	export_constant(IG_EP17_1_SPC01);
+	export_constant(IG_EP17_1_SPC02);
+	export_constant(IG_EP17_1_SPC03);
+	export_constant(IG_EP17_1_SPC04);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

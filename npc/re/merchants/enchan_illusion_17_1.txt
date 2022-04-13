@@ -21,7 +21,7 @@ sp_cor,152,158,4	script	Butterfly Merchant#sp_cor	4_M_ORIENT01,{
 sp_cor,136,156,3	script	Grace Operator#ext162	4_M_REPAIR,{
 	mes "[Grace Operator]";
 	mes "Hello.";
-	mes "We have ^4d4dffImperial^000000 equipment that can be exchanged for <ITEM>[" + getitemname(25723) + "]<INFO>25723</INFO></ITEM>.";
+	mes "We have ^4d4dffGrace^000000 equipment that can be exchanged for <ITEM>[" + getitemname(25723) + "]<INFO>25723</INFO></ITEM>.";
 	mes "I will guide you to exchange items according to your job.";
 	close2;
 	switch( eaclass() & EAJ_THIRDMASK ) {
@@ -206,7 +206,8 @@ sp_cor,108,130,5	script	Rebellion#rm171_7	4_F_REBELLION3,{
 			}
 			Zeny -= 1000000;
 		}
-		consumeitem 23773;	// EP17_1_SPC02
+		.@item_id = .@ids[rand(getarraysize(.@ids))];
+		consumeitem .@item_id;
 		mes "[Rebellion]";
 		mes "I gave you the best I had left.";
 		mes "If you want to refine it, the <NAVI>[Tin Can]<INFO>sp_cor,106,136,0,101,0</INFO></NAVI> next to me can take good care of you.";
@@ -383,7 +384,7 @@ sp_cor,111,130,3	script	Elyumina#rm171_4	4_EP17_ELYUMINA,{
 		cutin "ep171_elyumina04",0;
 		mes "[Elyumina]";
 		mes "Here, take this " + getitemname(.@id) + ". I bet it's probably the best armor you've ever had. You really ought to be grateful.";
-		delitem 25723,5;	// EP17_1_EVT390
+		delitem 25723,50;	// EP17_1_EVT390
 		getitem .@id,1;
 		enable_items;
 		close3;

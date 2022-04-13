@@ -15,7 +15,7 @@ OnInstanceInit:
 	'map$ = instance_mapname("1@rgsr");
 	'rgsr = 'activate = 0;
 	deletearray 'rescued;
-	deletearray'rsgr_c;
+	deletearray 'rsgr_c;
 
 	disablenpc instance_npcname("Researcher#rgsr_ev_0");
 	disablenpc instance_npcname("Access Controller#rgsr");
