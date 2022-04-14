@@ -9650,6 +9650,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	// List of hardcoded status cured.
 	switch (type) {
 		case SC_STONE:
+		case SC_FREEZE:
+		case SC_STUN:
 			if (sc->data[SC_DANCING]) {
 				unit_stop_walking(bl, 1);
 				status_change_end(bl, SC_DANCING, INVALID_TIMER);

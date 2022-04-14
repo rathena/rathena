@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20220406
+//= 20220414
 //===== Description: =========================================
 //= Explanation of the status.yml file and structure.
 //============================================================
@@ -113,6 +113,7 @@ Opt1: Special effect when status is active (Aegis: BODYSTATE_*). This option is 
 
 	None         - No effect (Default)
 	Stone        - Stone curse effect
+	StoneWait    - Stone curse incubation effect
 	Freeze       - Freeze effect
 	Stun         - Stun effect
 	Sleep        - Sleep effect

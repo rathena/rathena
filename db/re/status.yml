@@ -71,7 +71,6 @@ Body:
       Stun: true
       Sleep: true
       Burning: true
-      #Undead: true
     End:
       Aeterna: true
     EndReturn:
@@ -91,7 +90,6 @@ Body:
       Stun: true
       Sleep: true
       Burning: true
-      #Undead: true
     EndReturn:
       StoneWait: true
       Stone: true
@@ -124,9 +122,7 @@ Body:
       Stun: true
       Sleep: true
       Burning: true
-      #Undead: true
     End:
-      Dancing: true
       Aeterna: true
   - Status: Stun
     DurationLookup: NPC_STUNATTACK
@@ -147,14 +143,12 @@ Body:
       Gvg_Stun: true
       Stun: true
     End:
-      Dancing: true
       Whiteimprison: true
       Stone: true
       StoneWait: true
       Freeze: true
       Sleep: true
       Burning: true
-      #Undead: true
   - Status: Sleep
     DurationLookup: NPC_SLEEPATTACK
     States:
@@ -173,6 +167,7 @@ Body:
       Refresh: true
       Inspiration: true
       Gvg_Sleep: true
+      Sleep: true
     End:
       Dancing: true
       Whiteimprison: true
@@ -181,7 +176,6 @@ Body:
       Freeze: true
       Stun: true
       Burning: true
-      #Undead: true
   - Status: Poison
     DurationLookup: NPC_POISON
     CalcFlags:
@@ -3013,7 +3007,6 @@ Body:
       Freeze: true
       Stun: true
       Sleep: true
-      #Undead: true
   - Status: Freezing
     Icon: EFST_FROSTMISTY
     DurationLookup: WL_FROSTMISTY
@@ -3232,6 +3225,8 @@ Body:
       Freezing: true
       Freeze: true
       Stone: true
+      StoneWait: true
+      Sleep: true
   - Status: Marshofabyss
     Icon: EFST_MARSHOFABYSS
     DurationLookup: WL_MARSHOFABYSS
