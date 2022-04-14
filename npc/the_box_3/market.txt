@@ -53,12 +53,12 @@ prontera,53,54,5	script	บอกเวลาคงเหลือ	837,{
 	
 OnTimer60000:
 	delwaitingroom;
-	waitingroom "กล่องจะเปลี่ยนของใน " + (10 - (gettime(DT_MINUTE) % 10)) + " นาที",0;
+	waitingroom "ของจะเปลี่ยนใน " + (10 - (gettime(DT_MINUTE) % 10)) + "m",0;
 	initnpctimer;
 	end;
 	
 OnInit:
-	waitingroom "กล่องจะเปลี่ยนของใน " + (10 - (gettime(DT_MINUTE) % 10)) + " นาที",0;
+	waitingroom "ของจะเปลี่ยนใน " + (10 - (gettime(DT_MINUTE) % 10)) + "m",0;
 	initnpctimer;
 	end;
 }
