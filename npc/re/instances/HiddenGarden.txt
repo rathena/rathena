@@ -1528,7 +1528,7 @@ OnEvent:
 OnTouch:
 	.@id = atoi(replacestr(strnpcinfo(2),"172_sec_warp_",""));
 	if (!getd("'warp_" + .@id) && .@id < 3) {
-		setd("'warp_" + .@id = 1);
+		setd("'warp_" + .@id,1);
 		donpcevent instance_npcname("#172_sec_mob") + "::OnSummon";
 	}
 	switch (.@id) {

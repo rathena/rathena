@@ -806,7 +806,7 @@ OnTouch:
 
 OnMobKill:
 	if (!mobcount('map$,instance_npcname(strnpcinfo(0)) + "::OnMobKill"))
-		'lost_farm",'lost_farm + 1);
+		'lost_farm += 1;
 	end;
 }
 
