@@ -6924,7 +6924,7 @@ sp_cor,255,285,1	script	Rookie#rm171_2	4_M_ROOKIE,{
 		close3;
 	}
 	// Episode 17.2 - START - (Walkthrough Conversion)
-/*	if (isbegin_quest(18000) == 0) {
+	if (isbegin_quest(18000) == 0) {
 		cutin "16loo_01",2;
 		mes "[Rookie]";
 		mes "You're welcome.";
@@ -7019,7 +7019,7 @@ sp_cor,255,285,1	script	Rookie#rm171_2	4_M_ROOKIE,{
 	mes "The path we took with you adventurer is a fresh feeling for me.";
 	mes "I feel really alive these days.";
 	close;
-*/ // Episode 17.2 - END
+	// Episode 17.2 - END
 	end;
 
 OnInit:

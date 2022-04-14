@@ -2105,8 +2105,8 @@ Body:
 #      }
   - Mob: EP17_2_CHILD_ADMIN1
     CaptureRate : 1000
-    EggItem: Child_Admin_Beta_Egg
-    EquipItem: Little_Headdress_Beta
+    EggItem: Ep17_2_C_Admin1_Egg
+    EquipItem: Ep_17_2_C_Admin1_Acc
     FoodItem: Cloud_Cotton
     Fullness: 2
     IntimacyFed: 20
@@ -2130,8 +2130,8 @@ Body:
             Amount: 500
   - Mob: EP17_2_CHILD_ADMIN2
     CaptureRate : 1000
-    EggItem: Child_Admin_Alpha_Egg
-    EquipItem: Little_Headdress_Alpha
+    EggItem: Ep17_2_C_Admin2_Egg
+    EquipItem: Ep_17_2_C_Admin2_Acc
     FoodItem: Pet_Food
     Fullness: 2
     IntimacyFed: 20

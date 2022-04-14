@@ -5668,6 +5668,10 @@
 	export_constant(IG_EP17_1_SPC02);
 	export_constant(IG_EP17_1_SPC03);
 	export_constant(IG_EP17_1_SPC04);
+	export_constant(IG_AUTOMATIC_MODULE_MIX);
+	export_constant(IG_EPIC_MODULE_MIX);
+	export_constant(IG_AUTO_M_I_BOX_A);
+	export_constant(IG_ILLUSION_MODULE_MIX);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

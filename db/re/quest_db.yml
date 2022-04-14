@@ -10442,7 +10442,7 @@ Body:
     Title: Parts of the repeater
     Drops:
       - Mob: EP17_2_BETA_BASIC_NG
-        Item: Com_chip_Auto_Doll
+        Item: Autodoll_Communicator
         Rate: 5000
   - Id: 17336
     Title: "Repeater Confirmed: Riverbank"
@@ -10456,7 +10456,7 @@ Body:
     Title: Supply the spare parts
     Drops:
       - Mob: EP17_2_BETA_BASIC_NG
-        Item: Com_chip_Auto_Doll
+        Item: Autodoll_Communicator
         Rate: 5000
   - Id: 17341
     Title: No Signal - Waiting

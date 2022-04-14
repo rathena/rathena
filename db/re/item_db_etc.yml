@@ -45065,7 +45065,7 @@ Body:
       bonus2 bSkillAtk,"NC_AXEBOOMERANG",10;
       bonus2 bSkillAtk,"NC_VULCANARM",10;
   - Id: 300078
-    AegisName: Sweetie_Card
+    AegisName: Sweety_Card
     Name: Sweetie Card
     Type: Card
     Weight: 10
@@ -45078,7 +45078,7 @@ Body:
       bonus2 bSkillAtk,"RL_FIREDANCE",60;
       bonus bUseSPrate,25;
   - Id: 300079
-    AegisName: Red_Pepper_Card
+    AegisName: Redpepper_Card
     Name: Red Pepper Card
     Type: Card
     Weight: 10
@@ -45286,7 +45286,7 @@ Body:
       bonus2 bSkillAtk,"GS_DESPERADO",10;
       bonus2 bSkillAtk,"GS_FULLBUSTER",10;
   - Id: 300092
-    AegisName: MD_Papila_H_Card
+    AegisName: Papila_Ruba_H_Card
     Name: Greater Papila Card
     Type: Card
     Weight: 10
@@ -45427,7 +45427,7 @@ Body:
       bonus2 bSubClass,Class_Boss,25;
       bonus bHealPower2,30;
   - Id: 300101
-    AegisName: Broken_Cleaner_Card
+    AegisName: Beta_Cleaner_Card
     Name: Broken Cleaner Card
     Type: Card
     Weight: 10
@@ -45442,7 +45442,7 @@ Body:
       bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",10;
       bonus2 bSkillAtk,"RK_DRAGONBREATH",10;
   - Id: 300102
-    AegisName: Bath_Manager_Card
+    AegisName: Beta_Baths_A_Card
     Name: Bath Manager Card
     Type: Card
     Weight: 10
@@ -45493,7 +45493,7 @@ Body:
       bonus2 bSkillAtk,"SO_DIAMONDDUST",10;
       bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",10;
   - Id: 300105
-    AegisName: Roaming_Spellbook_Card
+    AegisName: Roaming_Splbook_Card
     Name: Roaming Spellbook Card
     Type: Card
     Weight: 10
@@ -45509,7 +45509,7 @@ Body:
       bonus2 bSkillAtk,"WL_CRIMSONROCK",10;
       bonus2 bSkillAtk,"WL_COMET",10;
   - Id: 300106
-    AegisName: Red_Pitaya_Card
+    AegisName: Pitaya_R_Card
     Name: Red Pitaya Card
     Type: Card
     Weight: 10
@@ -45530,8 +45530,8 @@ Body:
          bonus2 bMagicAtkEle,Ele_Fire,10;
       }
   - Id: 300107
-    AegisName: Meow_Card
-    Name: Meow Card
+    AegisName: Pitaya_Boss_Card
+    Name: Pitaya Boss Card
     Type: Card
     Weight: 10
     Locations:
@@ -45543,7 +45543,7 @@ Body:
       bonus2 bAddItemHealRate,513,500;
       bonus2 bAddItemHealRate,512,500;
   - Id: 300108
-    AegisName: Sewage_Venenum_Card
+    AegisName: Venenum3_Card
     Name: Sewage Venenum Card
     Type: Card
     Weight: 10
@@ -45559,7 +45559,7 @@ Body:
       bonus2 bSkillAtk,"SC_FATALMENACE",10;
       bonus2 bSkillAtk,"SC_TRIANGLESHOT",10;
   - Id: 300109
-    AegisName: Sewage_Cramp_Card
+    AegisName: EP17_2_Cramp_Card
     Name: Sewage Cramp Card
     Type: Card
     Weight: 10
@@ -45575,7 +45575,7 @@ Body:
       bonus2 bSkillAtk,"GC_COUNTERSLASH",10;
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",10;
   - Id: 300110
-    AegisName: Sewage_Waterfall_Card
+    AegisName: Waterfall_Card
     Name: Sewage Waterfall Card
     Type: Card
     Weight: 10
@@ -45624,7 +45624,7 @@ Body:
       bonus2 bSkillAtk,"SP_CURSEEXPLOSION",10;
       bonus2 bSkillAtk,"SP_SWHOO",10;
   - Id: 300113
-    AegisName: Unleashed_Magic_Card
+    AegisName: Plasma_Y_Card
     Name: Unleashed Magic Card
     Type: Card
     Weight: 10
@@ -45677,7 +45677,7 @@ Body:
       bonus2 bSkillAtk,"AB_ADORAMUS",10;
       bonus2 bSkillAtk,"AB_JUDEX",10;
   - Id: 300116
-    AegisName: Powerful_Magic_Card
+    AegisName: Plasma_R_Card
     Name: Powerful Magic Card
     Type: Card
     Weight: 10
@@ -45693,7 +45693,7 @@ Body:
       bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",10;
       bonus2 bSkillAtk,"SR_TIGERCANNON",10;
   - Id: 300117
-    AegisName: Sharp_Magic_Card
+    AegisName: Plasma_R2_Card
     Name: Sharp Magic Card
     Type: Card
     Weight: 10
@@ -45709,7 +45709,7 @@ Body:
       bonus2 bSkillAtk,"RA_ARROWSTORM",10;
       bonus2 bSkillAtk,"RA_CLUSTERBOMB",10;
   - Id: 300118
-    AegisName: Boiling_Phen_Card
+    AegisName: EP17_2_Phen_Card
     Name: Boiling Phen Card
     Type: Card
     Weight: 10
@@ -45725,7 +45725,7 @@ Body:
       bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",10;
       bonus2 bSkillAtk,"SJ_FULLMOONKICK",10;
   - Id: 300119
-    AegisName: Boiling_Swordfish_Card
+    AegisName: EP17_2_Sword_Fish_Card
     Name: Boiling Swordfish Card
     Type: Card
     Weight: 10
@@ -45741,7 +45741,7 @@ Body:
       bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",10;
       bonus2 bSkillAtk,"RL_R_TRIP",10;
   - Id: 300120
-    AegisName: Boiling_Piranha_Card
+    AegisName: EP17_2_Piranha_Card
     Name: Boiling Piranha Card
     Type: Card
     Weight: 10
@@ -45753,7 +45753,7 @@ Body:
     Script: |
       bonus bMatkRate,2;
   - Id: 300121
-    AegisName: Boiling_Marc_Card
+    AegisName: EP17_2_Marc_Card
     Name: Boiling Marc Card
     Type: Card
     Weight: 10
@@ -45769,7 +45769,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Holy,(.@r/2);
       bonus2 bMagicAtkEle,Ele_Water,(.@r/2);
   - Id: 300122
-    AegisName: Yellow_Pitaya_Card
+    AegisName: Pitaya_Y_Card
     Name: Yellow Pitaya Card
     Type: Card
     Weight: 10
@@ -45782,7 +45782,7 @@ Body:
       bonus2 bSubEle,Ele_Neutral,15;
       bonus2 bMagicAtkEle,Ele_Holy,3*getrefine();
   - Id: 300123
-    AegisName: Purple_Pitaya_Card
+    AegisName: Pitaya_V_Card
     Name: Purple Pitaya Card
     Type: Card
     Weight: 10
@@ -45795,7 +45795,7 @@ Body:
       bonus2 bSubEle,Ele_Neutral,15;
       bonus2 bMagicAtkEle,Ele_Neutral,3*getrefine();
   - Id: 300124
-    AegisName: Blue_Pitaya_Card
+    AegisName: Pitaya_B_Card
     Name: Blue Pitaya Card
     Type: Card
     Weight: 10
@@ -45816,7 +45816,7 @@ Body:
          bonus2 bMagicAtkEle,Ele_Water,10;
       }
   - Id: 300125
-    AegisName: Green_Pitaya_Card
+    AegisName: Pitaya_G_Card
     Name: Green Pitaya Card
     Type: Card
     Weight: 10

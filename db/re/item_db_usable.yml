@@ -2939,8 +2939,7 @@ Body:
     Script: |
       itemheal 0,100;
       if (getequipid(EQI_HEAD_MID) == 15385)
-         warp "xmas",147,134;
-      /* todo check map x y */
+         warp "xmas",233,296;
   - Id: 11564
     AegisName: Sweet_Canape
     Name: Sweet Canape
@@ -48566,13 +48565,13 @@ Body:
     Script: |
       laphine_synthesis();
   - Id: 100160
-    AegisName: Automatic_Module_Box
+    AegisName: Auto_M_Box
     Name: Automatic Module Box
     Type: Delayconsume
     Script: |
       laphine_synthesis();
   - Id: 100161
-    AegisName: Epic_Module_Box
+    AegisName: Epic_M_Box
     Name: Epic Module Box
     Type: Delayconsume
     Script: |

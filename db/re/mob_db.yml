@@ -92527,21 +92527,28 @@ Body:
     Ai: 17
     Class: Boss
     Modes:
-      Aggressive: true
       Mvp: true
     MvpDrops:
       - Item: Old_Card_Album
-        Rate: 5000
-      - Item: Old_Violet_Box
-        Rate: 5000
+        Rate: 3000
+      - Item: Old_Blue_Box
+        Rate: 3000
     Drops:
-      - Item: Scell
-        Rate: 5000
-      - Item: Red_Gemstone
-        Rate: 5000
-      - Item: Old_Violet_Box
-        Rate: 5000
-      - Item: Red_Pepper_Card
+      - Item: Ep172_1h_Hammer
+        Rate: 25
+      - Item: Ep172_1h_Sword
+        Rate: 25
+      - Item: Ep172_1h_Foxtail
+        Rate: 25
+      - Item: Ep172_Bh_Bow3
+        Rate: 25
+      - Item: Ep172_Bh_Sword
+        Rate: 25
+      - Item: Ep172_1h_Grenade
+        Rate: 25
+      - Item: Magical_Igni_Stone
+        Rate: 3000
+      - Item: Redpepper_Card
         Rate: 1
         StealProtected: true
   - Id: 20621
@@ -92573,18 +92580,30 @@ Body:
     Ai: 17
     Class: Boss
     Modes:
-      Aggressive: true
       Mvp: true
     MvpDrops:
       - Item: Old_Card_Album
-        Rate: 5000
-      - Item: Old_Violet_Box
-        Rate: 5000
+        Rate: 3000
+      - Item: Old_Blue_Box
+        Rate: 3000
     Drops:
-      - Item: Old_Violet_Box
-        Rate: 5000
-      - Item: Red_Pepper_Card
+      - Item: Ep172_1h_Hammer
+        Rate: 50
+      - Item: Ep172_1h_Sword
+        Rate: 50
+      - Item: Ep172_1h_Foxtail
+        Rate: 50
+      - Item: Ep172_Bh_Bow3
+        Rate: 50
+      - Item: Ep172_Bh_Sword
+        Rate: 50
+      - Item: Ep172_1h_Grenade
+        Rate: 50
+      - Item: Magical_Igni_Stone
+        Rate: 6000
+      - Item: Redpepper_Card
         Rate: 1
+        StealProtected: true
   - Id: 20622
     AegisName: MD_ASSISTANT
     Name: Broken Gardener Beta
@@ -92615,12 +92634,16 @@ Body:
     Modes:
       Assist: true
     Drops:
+      - Item: Screw
+        Rate: 1500
       - Item: Iron
         Rate: 1000
       - Item: Steel
         Rate: 500
       - Item: Sturdy_Iron_Piece
-        Rate: 2000
+        Rate: 1000
+      - Item: Hot_Tee
+        Rate: 500
       - Item: Assistant_Card
         Rate: 1
         StealProtected: true
@@ -92655,13 +92678,17 @@ Body:
     Modes:
       Assist: true
     Drops:
+      - Item: Screw
+        Rate: 1500
       - Item: Iron
         Rate: 1000
       - Item: Steel
         Rate: 500
       - Item: Sturdy_Iron_Piece
-        Rate: 2000
-      - Item: Assistant_H_Card
+        Rate: 1000
+      - Item: Hot_Tee
+        Rate: 500
+      - Item: Assistant_Card
         Rate: 1
         StealProtected: true
   - Id: 20624
@@ -93027,7 +93054,7 @@ Body:
         Rate: 500
       - Item: Sturdy_Iron_Piece
         Rate: 2000
-      - Item: Bath_Manager_Card
+      - Item: Beta_Baths_A_Card
         Rate: 1
         StealProtected: true
   - Id: 20634
@@ -93068,7 +93095,7 @@ Body:
         Rate: 2000
       - Item: Burnt_Parts
         Rate: 2000
-      - Item: Bath_Manager_Card
+      - Item: Beta_Baths_A_Card
         Rate: 1
   - Id: 20635
     AegisName: EP17_2_BETA_BATHS_A
@@ -93304,7 +93331,7 @@ Body:
         Rate: 500
       - Item: Blue_Potion
         Rate: 5000
-      - Item: Sweetie_Card
+      - Item: Sweety_Card
         Rate: 1
         StealProtected: true
   - Id: 20643
@@ -93347,7 +93374,7 @@ Body:
         Rate: 3000
       - Item: Skyblue_Jewel
         Rate: 300
-      - Item: Boiling_Phen_Card
+      - Item: EP17_2_Phen_Card
         Rate: 1
         StealProtected: true
   - Id: 20644
@@ -93388,7 +93415,7 @@ Body:
         Rate: 2000
       - Item: Meat
         Rate: 5000
-      - Item: Boiling_Marc_Card
+      - Item: EP17_2_Marc_Card
         Rate: 1
         StealProtected: true
   - Id: 20645
@@ -93427,7 +93454,7 @@ Body:
         Rate: 2000
       - Item: Gill
         Rate: 5000
-      - Item: Boiling_Swordfish_Card
+      - Item: EP17_2_Sword_Fish_Card
         Rate: 1
         StealProtected: true
   - Id: 20646
@@ -93468,7 +93495,7 @@ Body:
         Rate: 9000
       - Item: Fin
         Rate: 2000
-      - Item: Boiling_Piranha_Card
+      - Item: EP17_2_Piranha_Card
         Rate: 1
         StealProtected: true
   - Id: 20647
@@ -93559,7 +93586,7 @@ Body:
         Rate: 9000
       - Item: Old_Card_Album
         Rate: 5000
-      - Item: Meow_Card
+      - Item: Pitaya_Boss_Card
         Rate: 1
         StealProtected: true
   - Id: 20649
@@ -93602,7 +93629,7 @@ Body:
         Rate: 3000
       - Item: Strawberry
         Rate: 500
-      - Item: Red_Pitaya_Card
+      - Item: Pitaya_R_Card
         Rate: 1
         StealProtected: true
   - Id: 20650
@@ -93645,7 +93672,7 @@ Body:
         Rate: 3000
       - Item: Banana
         Rate: 500
-      - Item: Yellow_Pitaya_Card
+      - Item: Pitaya_Y_Card
         Rate: 1
         StealProtected: true
   - Id: 20651
@@ -93688,7 +93715,7 @@ Body:
         Rate: 1500
       - Item: Prickly_Fruit
         Rate: 500
-      - Item: Blue_Pitaya_Card
+      - Item: Pitaya_B_Card
         Rate: 1
         StealProtected: true
   - Id: 20652
@@ -93731,7 +93758,7 @@ Body:
         Rate: 3000
       - Item: Grape
         Rate: 500
-      - Item: Purple_Pitaya_Card
+      - Item: Pitaya_V_Card
         Rate: 1
         StealProtected: true
   - Id: 20653
@@ -93774,7 +93801,7 @@ Body:
         Rate: 500
       - Item: Melon
         Rate: 500
-      - Item: Green_Pitaya_Card
+      - Item: Pitaya_G_Card
         Rate: 1
         StealProtected: true
   - Id: 20654
@@ -93961,7 +93988,7 @@ Body:
         Rate: 5000
       - Item: Fruit_Basket
         Rate: 9000
-      - Item: Meow_Card
+      - Item: Pitaya_Boss_Card
         Rate: 1
   - Id: 20660
     AegisName: MD_PITAYA_R
@@ -94001,7 +94028,7 @@ Body:
         Rate: 500
       - Item: Fruit_Basket
         Rate: 3000
-      - Item: Red_Pitaya_Card
+      - Item: Pitaya_R_Card
         Rate: 1
   - Id: 20661
     AegisName: MD_PITAYA_Y
@@ -94041,7 +94068,7 @@ Body:
         Rate: 500
       - Item: Fruit_Basket
         Rate: 3000
-      - Item: Yellow_Pitaya_Card
+      - Item: Pitaya_Y_Card
         Rate: 1
   - Id: 20662
     AegisName: MD_PITAYA_B
@@ -94081,7 +94108,7 @@ Body:
         Rate: 500
       - Item: Fruit_Basket
         Rate: 3000
-      - Item: Blue_Pitaya_Card
+      - Item: Pitaya_B_Card
         Rate: 1
   - Id: 20663
     AegisName: MD_PITAYA_V
@@ -94121,7 +94148,7 @@ Body:
         Rate: 500
       - Item: Fruit_Basket
         Rate: 3000
-      - Item: Purple_Pitaya_Card
+      - Item: Pitaya_V_Card
         Rate: 1
   - Id: 20664
     AegisName: MD_PITAYA_G
@@ -94161,7 +94188,7 @@ Body:
         Rate: 500
       - Item: Fruit_Basket
         Rate: 3000
-      - Item: Green_Pitaya_Card
+      - Item: Pitaya_G_Card
         Rate: 1
   - Id: 20665
     AegisName: MD_VERPORTA
@@ -94254,7 +94281,7 @@ Body:
       - Item: Gula_Teeth
         Rate: 5
         StealProtected: true
-      - Item: Verporte_Card
+      - Item: Verporte_H_Card
         Rate: 1
         StealProtected: true
   - Id: 20667
@@ -94441,7 +94468,7 @@ Body:
       - Item: Great_Wing
         Rate: 1000
         StealProtected: true
-      - Item: MD_Papila_H_Card
+      - Item: Papila_Ruba_H_Card
         Rate: 1
         StealProtected: true
   - Id: 20671
@@ -94970,7 +94997,7 @@ Body:
         Rate: 2000
       - Item: Bookclip_In_Memory
         Rate: 500
-      - Item: Roaming_Spellbook_Card
+      - Item: Roaming_Splbook_Card
         Rate: 1
         StealProtected: true
   - Id: 20685
@@ -95011,7 +95038,7 @@ Body:
         Rate: 150
       - Item: Sticky_Poison
         Rate: 300
-      - Item: Sewage_Venenum_Card
+      - Item: Venenum3_Card
         Rate: 1
         StealProtected: true
   - Id: 20686
@@ -95049,7 +95076,7 @@ Body:
         Rate: 500
       - Item: Monster's_Feed
         Rate: 800
-      - Item: Sewage_Cramp_Card
+      - Item: EP17_2_Cramp_Card
         Rate: 1
         StealProtected: true
   - Id: 20687
@@ -95088,7 +95115,7 @@ Body:
         Rate: 300
       - Item: Coal
         Rate: 150
-      - Item: Sewage_Waterfall_Card
+      - Item: Waterfall_Card
         Rate: 1
         StealProtected: true
   - Id: 20688
@@ -95211,7 +95238,7 @@ Body:
         Rate: 1200
       - Item: Light_Granule
         Rate: 100
-      - Item: Unleashed_Magic_Card
+      - Item: Plasma_Y_Card
         Rate: 1
         StealProtected: true
   - Id: 20691
@@ -95287,7 +95314,7 @@ Body:
     Modes:
       Assist: true
     Drops:
-      - Item: Potato_Chips
+      - Item: GAMJammingChip
         Rate: 2500
       - Item: Heart_Hunter_Seal
         Rate: 2000
@@ -95336,7 +95363,7 @@ Body:
         Rate: 1200
       - Item: Light_Granule
         Rate: 100
-      - Item: Powerful_Magic_Card
+      - Item: Plasma_R_Card
         Rate: 1
         StealProtected: true
   - Id: 20694
@@ -95377,7 +95404,7 @@ Body:
         Rate: 1200
       - Item: Red_Gemstone
         Rate: 100
-      - Item: Sharp_Magic_Card
+      - Item: Plasma_R2_Card
         Rate: 1
         StealProtected: true
   - Id: 20696
