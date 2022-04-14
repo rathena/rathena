@@ -2748,7 +2748,7 @@ Body:
       - Item: Imperial_Magic_Boots
       - Item: Imperial_Attack_Manteau
       - Item: Imperial_Magic_Manteau
-  - Item: Grace_Refine_Ticket
+  - Item: Grace_Rifine_Ticket
     ResultRefine: 9
     CardsAllowed: true
     TargetItems:
@@ -2757,23 +2757,23 @@ Body:
       - Item: Grace_Spear_Armor
       - Item: Grace_Genesis_Armor
       - Item: Grace_Sharp_Suit
-      - Item: Grace_Aimed_Suit
+      - Item: Grace_Aim_Suit
       - Item: Grace_Severe_Suit
       - Item: Grace_Reverb_Suit
       - Item: Grace_Adora_Robe
       - Item: Grace_Duple_Robe
-      - Item: Grace_Tornado_Armor
+      - Item: Grace_Tonado_Armor
       - Item: Grace_Vulcan_Armor
-      - Item: Grace_Cart_Cannon_Suit
-      - Item: Grace_Cart_Tornado_Suit
+      - Item: Grace_Kart_Suit
+      - Item: Grace_Kart_Suit2
       - Item: Grace_Rolling_Suit
-      - Item: Grace_Assassin_Suit
+      - Item: Grace_Assasin_Suit
       - Item: Grace_Fatal_Suit
       - Item: Grace_Stalker_Suit
       - Item: Grace_Picky_Robe
-      - Item: Grace_Catnip_Robe
+      - Item: Grace_Carrot_Robe
       - Item: Grace_Trip_Suit
-      - Item: Grace_Fire_Rain_Suit
+      - Item: Grace_Firerain_Suit
       - Item: Grace_Crimson_Robe
       - Item: Grace_Frost_Robe
       - Item: Grace_Psychic_Robe
@@ -2782,12 +2782,12 @@ Body:
       - Item: Grace_Moon_Suit
       - Item: Grace_Ninja_Suit
       - Item: Grace_Kunai_Suit
-      - Item: Grace_Eswhoo_Robe
+      - Item: Grace_Swhoo_Robe
       - Item: Grace_Explosion_Robe
       - Item: Grace_Knuckle_Suit
       - Item: Grace_Tiger_Suit
-      - Item: Grace_Super_Novice_Suit
-      - Item: Grace_Super_Novice_Robe
+      - Item: Grace_Snovice_Suit
+      - Item: Grace_Snovice_Robe
       - Item: Grace_Attack_Boots
       - Item: Grace_Magic_Boots
       - Item: Grace_Attack_Manteau
@@ -2802,13 +2802,13 @@ Body:
     TargetItems:
       - Item: Imperial_Attack_Manteau
       - Item: Imperial_Magic_Manteau
-  - Item: Grace_P_Mo_Garment
-    RandomOptionGroup: GRACE_P_MO_GARMENT
+  - Item: Grace_Convert1
+    RandomOptionGroup: GRACE_CONVERT1
     TargetItems:
       - Item: Grace_Attack_Manteau
       - Item: Grace_Magic_Manteau
-  - Item: Grace_M_Mo_Garment
-    RandomOptionGroup: GRACE_M_MO_GARMENT
+  - Item: Grace_Convert2
+    RandomOptionGroup: GRACE_CONVERT2
     TargetItems:
       - Item: Grace_Attack_Manteau
       - Item: Grace_Magic_Manteau
@@ -2890,31 +2890,31 @@ Body:
       - Item: Imperial_Tiger_Suit
       - Item: Imperial_Snovice_Suit
       - Item: Imperial_Snovice_Robe
-  - Item: Grace_P_Mo_Armor
-    RandomOptionGroup: GRACE_P_MO_ARMOR
+  - Item: Grace_Convert3
+    RandomOptionGroup: GRACE_CONVERT3
     TargetItems:
       - Item: Grace_Breath_Armor
       - Item: Grace_Knight_Armor
       - Item: Grace_Spear_Armor
       - Item: Grace_Genesis_Armor
       - Item: Grace_Sharp_Suit
-      - Item: Grace_Aimed_Suit
+      - Item: Grace_Aim_Suit
       - Item: Grace_Severe_Suit
       - Item: Grace_Reverb_Suit
       - Item: Grace_Adora_Robe
       - Item: Grace_Duple_Robe
-      - Item: Grace_Tornado_Armor
+      - Item: Grace_Tonado_Armor
       - Item: Grace_Vulcan_Armor
-      - Item: Grace_Cart_Cannon_Suit
-      - Item: Grace_Cart_Tornado_Suit
+      - Item: Grace_Kart_Suit
+      - Item: Grace_Kart_Suit2
       - Item: Grace_Rolling_Suit
-      - Item: Grace_Assassin_Suit
+      - Item: Grace_Assasin_Suit
       - Item: Grace_Fatal_Suit
       - Item: Grace_Stalker_Suit
       - Item: Grace_Picky_Robe
-      - Item: Grace_Catnip_Robe
+      - Item: Grace_Carrot_Robe
       - Item: Grace_Trip_Suit
-      - Item: Grace_Fire_Rain_Suit
+      - Item: Grace_Firerain_Suit
       - Item: Grace_Crimson_Robe
       - Item: Grace_Frost_Robe
       - Item: Grace_Psychic_Robe
@@ -2923,37 +2923,37 @@ Body:
       - Item: Grace_Moon_Suit
       - Item: Grace_Ninja_Suit
       - Item: Grace_Kunai_Suit
-      - Item: Grace_Eswhoo_Robe
+      - Item: Grace_Swhoo_Robe
       - Item: Grace_Explosion_Robe
       - Item: Grace_Knuckle_Suit
       - Item: Grace_Tiger_Suit
-      - Item: Grace_Super_Novice_Suit
-      - Item: Grace_Super_Novice_Robe
-  - Item: Grace_M_Mo_Armor
-    RandomOptionGroup: GRACE_M_MO_ARMOR
+      - Item: Grace_Snovice_Suit
+      - Item: Grace_Snovice_Robe
+  - Item: Grace_Convert4
+    RandomOptionGroup: GRACE_CONVERT4
     TargetItems:
       - Item: Grace_Breath_Armor
       - Item: Grace_Knight_Armor
       - Item: Grace_Spear_Armor
       - Item: Grace_Genesis_Armor
       - Item: Grace_Sharp_Suit
-      - Item: Grace_Aimed_Suit
+      - Item: Grace_Aim_Suit
       - Item: Grace_Severe_Suit
       - Item: Grace_Reverb_Suit
       - Item: Grace_Adora_Robe
       - Item: Grace_Duple_Robe
-      - Item: Grace_Tornado_Armor
+      - Item: Grace_Tonado_Armor
       - Item: Grace_Vulcan_Armor
-      - Item: Grace_Cart_Cannon_Suit
-      - Item: Grace_Cart_Tornado_Suit
+      - Item: Grace_Kart_Suit
+      - Item: Grace_Kart_Suit2
       - Item: Grace_Rolling_Suit
-      - Item: Grace_Assassin_Suit
+      - Item: Grace_Assasin_Suit
       - Item: Grace_Fatal_Suit
       - Item: Grace_Stalker_Suit
       - Item: Grace_Picky_Robe
-      - Item: Grace_Catnip_Robe
+      - Item: Grace_Carrot_Robe
       - Item: Grace_Trip_Suit
-      - Item: Grace_Fire_Rain_Suit
+      - Item: Grace_Firerain_Suit
       - Item: Grace_Crimson_Robe
       - Item: Grace_Frost_Robe
       - Item: Grace_Psychic_Robe
@@ -2962,12 +2962,12 @@ Body:
       - Item: Grace_Moon_Suit
       - Item: Grace_Ninja_Suit
       - Item: Grace_Kunai_Suit
-      - Item: Grace_Eswhoo_Robe
+      - Item: Grace_Swhoo_Robe
       - Item: Grace_Explosion_Robe
       - Item: Grace_Knuckle_Suit
       - Item: Grace_Tiger_Suit
-      - Item: Grace_Super_Novice_Suit
-      - Item: Grace_Super_Novice_Robe
+      - Item: Grace_Snovice_Suit
+      - Item: Grace_Snovice_Robe
 #  - Item: Abyss_Ddbox2
 #    TargetItems:
 #      - Item: DragonA_Red
