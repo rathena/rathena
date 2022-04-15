@@ -7497,7 +7497,7 @@ Body:
     Buy: 1800
     Weight: 100
     Script: |
-      sc_start SC_INCALLSTATUS,20000,20;
+      sc_start SC_INCALLSTATUS,20000,10;
   - Id: 12329
     AegisName: Recall_MaleGM
     Name: Summon Male GameMaster Scroll
