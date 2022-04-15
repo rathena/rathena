@@ -169,7 +169,6 @@ Body:
       Gvg_Sleep: true
       Sleep: true
     End:
-      Dancing: true
       Whiteimprison: true
       Stone: true
       StoneWait: true
@@ -449,8 +448,6 @@ Body:
     Flags:
       BossResist: true
       TaekwonAngel: true
-    EndReturn:
-      Curse: true
   - Status: Signumcrucis
     Icon: EFST_CRUCIS
     DurationLookup: AL_CRUCIS
@@ -3226,6 +3223,8 @@ Body:
       Freeze: true
       Stone: true
       StoneWait: true
+      Sleep: true
+      Stun: true
       Sleep: true
   - Status: Marshofabyss
     Icon: EFST_MARSHOFABYSS

@@ -165,7 +165,6 @@ Body:
       Gvg_Sleep: true
       Sleep: true
     End:
-      Dancing: true
       Stone: true
       StoneWait: true
       Freeze: true
