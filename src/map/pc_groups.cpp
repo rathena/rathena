@@ -17,6 +17,45 @@ const std::string PlayerGroupDatabase::getDefaultLocation() {
 	return std::string( conf_path ) + "/groups.yml";
 }
 
+bool PlayerGroupDatabase::parseCommands( const ryml::NodeRef& node, std::vector<std::string>& commands ){
+	for( const auto& it : node.children() ){
+		std::string command;
+
+		c4::from_chars( it.key(), &command );
+
+		bool allowed;
+
+		if( !this->asBool( node, command, allowed ) ){
+			return false;
+		}
+
+		if( !atcommand_exists( command.c_str() ) ){
+			this->invalidWarning( it, "Unknown atcommand: %s\n", command.c_str() );
+			return false;
+		}
+
+		util::tolower( command );
+
+		if( allowed ){
+			if( util::vector_exists( commands, command ) ){
+				this->invalidWarning( it, "Group does already have command \"%s\". Please check your data.\n", command.c_str() );
+				return false;
+			}else{
+				commands.push_back( command );
+			}
+		}else{
+			if( !util::vector_exists( commands, command ) ){
+				this->invalidWarning( it, "Group does not have command \"%s\". Please check your data.\n", command.c_str() );
+				return false;
+			}else{
+				util::vector_erase_if_exists( commands, command );
+			}
+		}
+	}
+
+	return true;
+}
+
 uint64 PlayerGroupDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	uint32 groupId;
 
@@ -71,52 +110,12 @@ uint64 PlayerGroupDatabase::parseBodyNode( const ryml::NodeRef& node ){
 		}
 	}
 
-	if( this->nodeExists( node, "Commands" ) ){
-		const auto& commands = node["Commands"];
-
-		for( const auto& it : commands.children() ){
-			std::string command;
-
-			c4::from_chars( it.key(), &command );
-
-			bool allowed;
-
-			if( !this->asBool( commands, command, allowed ) ){
-				return 0;
-			}
-
-			if( !atcommand_exists( command.c_str() ) ){
-				this->invalidWarning( it, "Unknown atcommand: %s\n", command.c_str() );
-				return 0;
-			}
-
-			group->commands[command] = allowed;
-		}
+	if( this->nodeExists( node, "Commands" ) && !this->parseCommands( node["Commands"], group->commands ) ){
+		return 0;
 	}
 
-	if( this->nodeExists( node, "CharCommands" ) ){
-		const auto& commands = node["CharCommands"];
-
-		for( const auto& it : commands.children() ){
-			std::string command;
-
-			c4::from_chars( it.key(), &command );
-
-			bool allowed;
-
-			if( !this->asBool( commands, command, allowed ) ){
-				return 0;
-			}
-
-			util::tolower( command );
-
-			if( !atcommand_exists( command.c_str() ) ){
-				this->invalidWarning( it, "Unknown atcommand: %s\n", command.c_str() );
-				return 0;
-			}
-
-			group->char_commands[command] = allowed;
-		}
+	if( this->nodeExists( node, "CharCommands" ) && !this->parseCommands( node["CharCommands"], group->char_commands ) ){
+		return 0;
 	}
 
 	if( this->nodeExists( node, "Permissions" ) ){
@@ -248,15 +247,15 @@ void PlayerGroupDatabase::loadingFinished(){
 
 						// Inherit atcommands
 						for( auto& command : otherGroup->commands ){
-							if( command.second ){
-								group->commands[command.first] = command.second;
+							if( !util::vector_exists( group->commands, command ) ){
+								group->commands.push_back( command );
 							}
 						}
 
 						// Inherit charcommands
-						for( auto& command : otherGroup->commands ){
-							if( command.second ){
-								group->commands[command.first] = command.second;
+						for( auto& command : otherGroup->char_commands ){
+							if( !util::vector_exists( group->char_commands, command ) ){
+								group->char_commands.push_back( command );
 							}
 						}
 
@@ -314,24 +313,18 @@ bool s_player_group::can_use_command( const std::string& command, AtCommandType 
 		return true;
 	}
 
-	std::unordered_map<std::string, bool>* map;
+	std::string command_lower = command;
+
+	util::tolower( command_lower );
 
 	switch( type ){
 		case COMMAND_ATCOMMAND:
-			map = &this->commands;
-			break;
+			return util::vector_exists( this->commands, command_lower );
 		case COMMAND_CHARCOMMAND:
-			map = &this->char_commands;
-			break;
+			return util::vector_exists( this->char_commands, command_lower );
 	}
 
-	const auto& it = map->find( command );
-
-	if( it != map->end() ){
-		return it->second;
-	}else{
-		return false;
-	}
+	return false;
 }
 
 /**

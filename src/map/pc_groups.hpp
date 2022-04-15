@@ -6,7 +6,6 @@
 
 #include <bitset>
 #include <map>
-#include <unordered_map>
 #include <vector>
 
 #include "../common/cbasetypes.hpp"
@@ -92,8 +91,8 @@ struct s_player_group{
 	std::string name;
 	uint32 level;
 	bool log_commands;
-	std::unordered_map<std::string, bool> commands;
-	std::unordered_map<std::string, bool> char_commands;
+	std::vector<std::string> commands;
+	std::vector<std::string> char_commands;
 	std::bitset<PC_PERM_MAX> permissions;
 	uint32 index;
 
@@ -106,6 +105,7 @@ public:
 class PlayerGroupDatabase : public TypesafeYamlDatabase<uint32, s_player_group>{
 private:
 	std::map<uint32, std::vector<std::string>> inheritance;
+	bool parseCommands( const ryml::NodeRef& node, std::vector<std::string>& commands );
 
 public:
 	PlayerGroupDatabase() : TypesafeYamlDatabase( "PLAYER_GROUP_DB", 1 ){
