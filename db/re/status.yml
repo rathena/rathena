@@ -3225,7 +3225,6 @@ Body:
       StoneWait: true
       Sleep: true
       Stun: true
-      Sleep: true
   - Status: Marshofabyss
     Icon: EFST_MARSHOFABYSS
     DurationLookup: WL_MARSHOFABYSS
