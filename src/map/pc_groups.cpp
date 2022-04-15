@@ -17,7 +17,7 @@ const std::string PlayerGroupDatabase::getDefaultLocation() {
 	return std::string( conf_path ) + "/groups.yml";
 }
 
-uint64 PlayerGroupDatabase::parseBodyNode( const ryml::NodeRef node ){
+uint64 PlayerGroupDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	uint32 groupId;
 
 	if( !this->asUInt32( node, "Id", groupId ) ){
@@ -34,7 +34,7 @@ uint64 PlayerGroupDatabase::parseBodyNode( const ryml::NodeRef node ){
 
 		group = std::make_shared<s_player_group>();
 		group->id = groupId;
-		group->permissions = PC_PERM_NONE;
+		group->permissions.reset();
 	}
 
 	if( this->nodeExists( node, "Name" ) ){
@@ -137,11 +137,20 @@ uint64 PlayerGroupDatabase::parseBodyNode( const ryml::NodeRef node ){
 			bool found = false;
 
 			for( const auto& permission_name : pc_g_permission_name ){
-				if( strcmpi( permission_name.name, str ) == 0 ){
+				if( strcmpi( "all_permission", str ) == 0 ){
 					if( allowed ){
-						group->permissions |= permission_name.permission;
+						group->permissions.set();
 					}else{
-						group->permissions &= ~permission_name.permission;
+						group->permissions.reset();
+					}
+
+					found = true;
+					break;
+				}else if( strcmpi( permission_name.name, str ) == 0 ){
+					if( allowed ){
+						group->permissions.set( permission_name.permission );
+					}else{
+						group->permissions.reset( permission_name.permission );
 					}
 
 					found = true;
@@ -350,7 +359,7 @@ void pc_group_pc_load(struct map_session_data * sd) {
  * @param permission permission to check
  */
 bool s_player_group::has_permission( e_pc_permission permission ){
-	return ( this->permissions&permission ) != 0;
+	return this->permissions.test( permission );
 }
 
 /**

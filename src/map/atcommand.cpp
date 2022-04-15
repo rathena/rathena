@@ -9815,17 +9815,17 @@ ACMD_FUNC(addperm) {
 		return -1;
 	}
 
-	if( add && (sd->permissions&pc_g_permission_name[i].permission) ) {
+	if( add && pc_has_permission( sd, pc_g_permission_name[i].permission) ){
 		sprintf(atcmd_output,  msg_txt(sd,1381),sd->status.name,pc_g_permission_name[i].name); // User '%s' already possesses the '%s' permission.
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
-	} else if ( !add && !(sd->permissions&pc_g_permission_name[i].permission) ) {
+	}else if( !add && !pc_has_permission( sd, pc_g_permission_name[i].permission ) ){
 		sprintf(atcmd_output,  msg_txt(sd,1382),sd->status.name,pc_g_permission_name[i].name); // User '%s' doesn't possess the '%s' permission.
 		clif_displaymessage(fd, atcmd_output);
 		sprintf(atcmd_output,msg_txt(sd,1383),sd->status.name); // -- User '%s' Permissions
 		clif_displaymessage(fd, atcmd_output);
 		for( i = 0; i < perm_size; i++ ) {
-			if( sd->permissions&pc_g_permission_name[i].permission ) {
+			if( pc_has_permission( sd, pc_g_permission_name[i].permission ) ){
 				sprintf(atcmd_output,"- %s",pc_g_permission_name[i].name);
 				clif_displaymessage(fd, atcmd_output);
 			}
@@ -9834,10 +9834,11 @@ ACMD_FUNC(addperm) {
 		return -1;
 	}
 
-	if( add )
-		sd->permissions |= pc_g_permission_name[i].permission;
-	else
-		sd->permissions &=~ pc_g_permission_name[i].permission;
+	if( add ){
+		sd->permissions.set( pc_g_permission_name[i].permission );
+	}else{
+		sd->permissions.reset( pc_g_permission_name[i].permission );
+	}
 
 
 	sprintf(atcmd_output, msg_txt(sd,1384),sd->status.name); // User '%s' permissions updated successfully. The changes are temporary.

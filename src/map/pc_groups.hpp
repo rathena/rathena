@@ -4,6 +4,7 @@
 #ifndef PC_GROUPS_HPP
 #define PC_GROUPS_HPP
 
+#include <bitset>
 #include <map>
 #include <unordered_map>
 #include <vector>
@@ -20,43 +21,42 @@ void do_final_pc_groups(void);
 void pc_groups_reload(void);
 
 enum e_pc_permission : uint32 {
-	PC_PERM_NONE                = 0,
-	PC_PERM_TRADE               = 0x00000001,
-	PC_PERM_PARTY               = 0x00000002,
-	PC_PERM_ALL_SKILL           = 0x00000004,
-	PC_PERM_USE_ALL_EQUIPMENT   = 0x00000008,
-	PC_PERM_SKILL_UNCONDITIONAL = 0x00000010,
-	PC_PERM_JOIN_ALL_CHAT       = 0x00000020,
-	PC_PERM_NO_CHAT_KICK        = 0x00000040,
-	PC_PERM_HIDE_SESSION        = 0x00000080,
-	PC_PERM_WHO_DISPLAY_AID     = 0x00000100,
-	PC_PERM_RECEIVE_HACK_INFO   = 0x00000200,
-	PC_PERM_WARP_ANYWHERE       = 0x00000400,
-	PC_PERM_VIEW_HPMETER        = 0x00000800,
-	PC_PERM_VIEW_EQUIPMENT      = 0x00001000,
-	PC_PERM_USE_CHECK           = 0x00002000,
-	PC_PERM_USE_CHANGEMAPTYPE   = 0x00004000,
-	PC_PERM_USE_ALL_COMMANDS    = 0x00008000,
-	PC_PERM_RECEIVE_REQUESTS    = 0x00010000,
-	PC_PERM_SHOW_BOSS           = 0x00020000,
-	PC_PERM_DISABLE_PVM         = 0x00040000,
-	PC_PERM_DISABLE_PVP         = 0x00080000,
-	PC_PERM_DISABLE_CMD_DEAD    = 0x00100000,
-	PC_PERM_CHANNEL_ADMIN       = 0x00200000,
-	PC_PERM_TRADE_BOUNDED       = 0x00400000,
-	PC_PERM_ITEM_UNCONDITIONAL  = 0x00800000,
-	PC_PERM_ENABLE_COMMAND      = 0x01000000,
-	PC_PERM_BYPASS_STAT_ONCLONE = 0x02000000,
-	PC_PERM_BYPASS_MAX_STAT     = 0x04000000,
-	PC_PERM_ATTENDANCE          = 0x08000000,
+	PC_PERM_TRADE = 1,
+	PC_PERM_PARTY,
+	PC_PERM_ALL_SKILL,
+	PC_PERM_USE_ALL_EQUIPMENT,
+	PC_PERM_SKILL_UNCONDITIONAL,
+	PC_PERM_JOIN_ALL_CHAT,
+	PC_PERM_NO_CHAT_KICK,
+	PC_PERM_HIDE_SESSION,
+	PC_PERM_WHO_DISPLAY_AID,
+	PC_PERM_RECEIVE_HACK_INFO,
+	PC_PERM_WARP_ANYWHERE,
+	PC_PERM_VIEW_HPMETER,
+	PC_PERM_VIEW_EQUIPMENT,
+	PC_PERM_USE_CHECK,
+	PC_PERM_USE_CHANGEMAPTYPE,
+	PC_PERM_USE_ALL_COMMANDS,
+	PC_PERM_RECEIVE_REQUESTS,
+	PC_PERM_SHOW_BOSS,
+	PC_PERM_DISABLE_PVM,
+	PC_PERM_DISABLE_PVP,
+	PC_PERM_DISABLE_CMD_DEAD,
+	PC_PERM_CHANNEL_ADMIN,
+	PC_PERM_TRADE_BOUNDED,
+	PC_PERM_ITEM_UNCONDITIONAL,
+	PC_PERM_ENABLE_COMMAND,
+	PC_PERM_BYPASS_STAT_ONCLONE,
+	PC_PERM_BYPASS_MAX_STAT,
+	PC_PERM_ATTENDANCE,
 	//.. add other here
-	PC_PERM_ALLPERMISSION       = 0xFFFFFFFF,
+	PC_PERM_MAX,
 };
 
 static const struct s_pcg_permission_name {
 	const char *name;
 	enum e_pc_permission permission;
-} pc_g_permission_name[] = {
+} pc_g_permission_name[PC_PERM_MAX] = {
 	{ "can_trade", PC_PERM_TRADE },
 	{ "can_party", PC_PERM_PARTY },
 	{ "all_skill", PC_PERM_ALL_SKILL },
@@ -85,7 +85,6 @@ static const struct s_pcg_permission_name {
 	{ "bypass_stat_onclone",PC_PERM_BYPASS_STAT_ONCLONE },
 	{ "bypass_max_stat",PC_PERM_BYPASS_MAX_STAT },
 	{ "attendance",PC_PERM_ATTENDANCE },
-	{ "all_permission", PC_PERM_ALLPERMISSION },
 };
 
 struct s_player_group{
@@ -95,7 +94,7 @@ struct s_player_group{
 	bool log_commands;
 	std::unordered_map<std::string, bool> commands;
 	std::unordered_map<std::string, bool> char_commands;
-	uint32 permissions;
+	std::bitset<PC_PERM_MAX> permissions;
 	uint32 index;
 
 public:
@@ -113,9 +112,9 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const ryml::NodeRef node );
-	void loadingFinished();
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode( const ryml::NodeRef& node ) override;
+	void loadingFinished() override;
 };
 
 extern PlayerGroupDatabase player_group_db;

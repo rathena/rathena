@@ -12458,6 +12458,10 @@ bool pc_can_use_command( struct map_session_data *sd, const char *command, AtCom
 	return sd->group->can_use_command( command, type );
 }
 
+bool pc_has_permission( struct map_session_data* sd, e_pc_permission permission ){
+	return sd->permissions.test( permission );
+}
+
 /**
  * Checks if commands used by a player should be logged
  * according to their group setting.

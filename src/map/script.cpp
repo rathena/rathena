@@ -15206,8 +15206,7 @@ int atcommand_sub(struct script_state* st,int type) {
 
 		// Init Group ID, Level, & permissions
 		sd->group_id = 99;
-		sd->group = player_group_db.find( sd->group_id );
-		sd->permissions |= PC_PERM_ALLPERMISSION;
+		pc_group_pc_load( sd );
 	}
 
 	if (!is_atcommand(fd, sd, cmd, type)) {
