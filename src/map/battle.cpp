@@ -2972,9 +2972,17 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 			case NPC_POISONATTACK:
 			case NPC_HOLYATTACK:
 			case NPC_DARKNESSATTACK:
-			case NPC_UNDEADATTACK:
 			case NPC_TELEKINESISATTACK:
+			case NPC_UNDEADATTACK:
+			case NPC_CHANGEUNDEAD:
 			case NPC_EARTHQUAKE:
+			case NPC_POISON:
+			case NPC_BLINDATTACK:
+			case NPC_SILENCEATTACK:
+			case NPC_STUNATTACK:
+			case NPC_PETRIFYATTACK:
+			case NPC_CURSEATTACK:
+			case NPC_SLEEPATTACK:
 			case NPC_BLEEDING:
 				hitrate += hitrate * 20 / 100;
 				break;
