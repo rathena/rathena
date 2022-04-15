@@ -92991,15 +92991,15 @@ Body:
     DamageMotion: 246
     Ai: 09
     Drops:
-      - Item: Avaritia_Metal
+      - Item: Ep172_Bh_Katar
         Rate: 5
-      - Item: Luxuria_Pierce
+      - Item: Ep172_Bh_Spear
         Rate: 5
-      - Item: Pride_Stone
+      - Item: Ep172_Bh_Staff
         Rate: 5
-      - Item: Wrath_Wheel
+      - Item: Ep172_Bh_Huuma
         Rate: 5
-      - Item: Superbia_String
+      - Item: Ep172_Bh_Bow
         Rate: 5
       - Item: Iron
         Rate: 500
@@ -93008,7 +93008,7 @@ Body:
       - Item: Screw
         Rate: 1500
         StealProtected: true
-      - Item: Pigritia_Rhythm
+      - Item: Ep172_Bh_Bow3
         Rate: 5
         StealProtected: true
       - Item: Beta_Basic_H_Card
@@ -93048,7 +93048,7 @@ Body:
         Rate: 2000
       - Item: Steel
         Rate: 300
-      - Item: Broken_Automatic_Doll_Part
+      - Item: Broken_AutoDoll_Parts
         Rate: 3
       - Item: Iron
         Rate: 500
@@ -93236,7 +93236,7 @@ Body:
         StealProtected: true
   - Id: 20640
     AegisName: EP17_2_OMEGA_CLEANER
-    Name: Broken Cleaning Robot Omega
+    Name: Cleaning Robot Ω
     Level: 130
     Attack: 572
     Attack2: 1573
@@ -93262,7 +93262,7 @@ Body:
     Ai: 09
   - Id: 20641
     AegisName: EP17_2_OMEGA_CLEANER_NG
-    Name: Broken Cleaning Robot Omega
+    Name: Broken Cleaning Robot Ω
     Level: 175
     Hp: 1200685
     Attack: 1240
@@ -94269,19 +94269,19 @@ Body:
         Rate: 1500
       - Item: Sticky_Poison
         Rate: 1500
-      - Item: Hypocrisy_Machine
+      - Item: Ep172_1h_Sword
         Rate: 5
-      - Item: Sloth_Text
+      - Item: Ep172_1h_Book
         Rate: 5
-      - Item: Addiction_Plant
+      - Item: Ep172_1h_Foxtail
         Rate: 5
-      - Item: Pigritia_Spark
-        Rate: 5
-        StealProtected: true
-      - Item: Gula_Teeth
+      - Item: Ep172_1h_Whip
         Rate: 5
         StealProtected: true
-      - Item: Verporte_H_Card
+      - Item: Ep172_1h_Dagger2
+        Rate: 5
+        StealProtected: true
+      - Item: Verporte_Card
         Rate: 1
         StealProtected: true
   - Id: 20667
@@ -94448,13 +94448,13 @@ Body:
     Modes:
       Assist: true
     Drops:
-      - Item: Invidia_Bundle
+      - Item: Ep172_1h_Sword2
         Rate: 5
-      - Item: Pride_Steel
+      - Item: Ep172_1h_Axe
         Rate: 5
-      - Item: Sloth_Bible
+      - Item: Ep172_1h_Book2
         Rate: 5
-      - Item: Ira_Fist
+      - Item: Ep172_Bh_Knuck
         Rate: 5
       - Item: Flower
         Rate: 500
@@ -94554,9 +94554,9 @@ Body:
         Rate: 800
       - Item: Great_Wing
         Rate: 1000
-      - Item: Lust_Pointer
+      - Item: Ep172_1h_Rifle
         Rate: 5
-      - Item: Lust_Crusher
+      - Item: Ep172_1h_Gatling
         Rate: 5
       - Item: MD_Papila_Ruba_H_Card
         Rate: 1
@@ -94676,7 +94676,7 @@ Body:
         Rate: 1000
       - Item: Lust_Shatter
         Rate: 5
-      - Item: Lust_Boom
+      - Item: Ep172_1h_Grenade
         Rate: 5
       - Item: MD_Papila_Cae_H_Card
         Rate: 1
@@ -94778,17 +94778,17 @@ Body:
     Modes:
       Assist: true
     Drops:
-      - Item: Wrath_Rack
+      - Item: Ep172_1h_Dagger
         Rate: 5
-      - Item: Gluttony_Stick
+      - Item: Ep172_1h_Spear
         Rate: 5
-      - Item: Greed_Wand
+      - Item: Ep172_1h_Wand
         Rate: 5
-      - Item: Pigritia_Wave
+      - Item: Ep172_1h_Inst
         Rate: 5
-      - Item: Hypocrisy_Edge
+      - Item: Ep172_Bh_Sword
         Rate: 5
-      - Item: Envy_Blunt
+      - Item: Ep172_1h_Hammer
         Rate: 5
       - Item: Great_Wing
         Rate: 2000

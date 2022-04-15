@@ -29784,75 +29784,75 @@ Body:
     SubGroups:
       - SubGroup: 1
         List:
-          - Item: M_M_Defense
+          - Item: EP17_1_EVT03
             Rate: 50
-          - Item: M_M_Magic_Defense
+          - Item: EP17_1_EVT04
             Rate: 50
-          - Item: M_M_Vit
+          - Item: EP17_1_EVT05
             Rate: 60
-          - Item: M_M_Luk
+          - Item: EP17_1_EVT06
             Rate: 60
-          - Item: M_M_Str
+          - Item: EP17_1_EVT07
             Rate: 60
-          - Item: M_M_Agi
+          - Item: EP17_1_EVT08
             Rate: 60
-          - Item: M_M_Int
+          - Item: EP17_1_EVT09
             Rate: 60
-          - Item: M_M_Dex
+          - Item: EP17_1_EVT10
             Rate: 60
-          - Item: M_M_HP_recovery
+          - Item: EP17_1_EVT11
             Rate: 50
-          - Item: M_M_SP_recovery
+          - Item: EP17_1_EVT12
             Rate: 50
-          - Item: M_M_Spell5
+          - Item: EP17_1_EVT13
             Rate: 30
-          - Item: M_M_Attack_Delay_4
+          - Item: EP17_1_EVT14
             Rate: 30
-          - Item: M_M_Fatal4
+          - Item: EP17_1_EVT15
             Rate: 30
-          - Item: M_M_Expert_Archer5
+          - Item: EP17_1_EVT16
             Rate: 30
-          - Item: M_M_Vital
+          - Item: EP17_1_EVT17
             Rate: 30
-          - Item: M_M_Mental
+          - Item: EP17_1_EVT18
             Rate: 30
-          - Item: M_M_Heal
+          - Item: EP17_1_EVT19
             Rate: 30
-          - Item: M_M_Power
+          - Item: EP17_1_EVT20
             Rate: 30
-          - Item: M_M_Magic
+          - Item: EP17_1_EVT21
             Rate: 30
-          - Item: M_M_Shooter
+          - Item: EP17_1_EVT22
             Rate: 30
-          - Item: M_M_Fast
+          - Item: EP17_1_EVT23
             Rate: 30
-          - Item: M_M_Caster
+          - Item: EP17_1_EVT24
             Rate: 30
-          - Item: M_M_Critical
+          - Item: EP17_1_EVT25
             Rate: 30
-          - Item: M_M_Delay_After_skill
+          - Item: EP17_1_EVT26
             Rate: 3
-          - Item: M_M_Fixed_Casting
+          - Item: EP17_1_EVT27
             Rate: 5
-          - Item: M_M_Above_All
+          - Item: EP17_1_EVT28
             Rate: 4
-          - Item: M_M_Drain_Life
+          - Item: EP17_1_EVT29
             Rate: 5
-          - Item: M_M_Drain_Soul
+          - Item: EP17_1_EVT30
             Rate: 5
-          - Item: M_M_Magic_Healing
+          - Item: EP17_1_EVT31
             Rate: 5
-          - Item: M_M_Magic_Soul
+          - Item: EP17_1_EVT32
             Rate: 5
-          - Item: M_M_Unlimited_Vital
+          - Item: EP17_1_EVT33
             Rate: 3
-          - Item: M_M_Spell_Buster
+          - Item: EP17_1_EVT34
             Rate: 3
-          - Item: M_M_Firing_Shot
+          - Item: EP17_1_EVT35
             Rate: 3
-          - Item: M_M_Overpower
+          - Item: EP17_1_EVT36
             Rate: 3
-          - Item: M_M_Fatal_Flash
+          - Item: EP17_1_EVT37
             Rate: 3
-          - Item: M_M_Lucky_Strike
+          - Item: EP17_1_EVT38
             Rate: 3

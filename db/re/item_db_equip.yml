@@ -137221,7 +137221,7 @@ Body:
          bonus bDelayrate,-15;
       }
   - Id: 400043
-    AegisName: aegis_400043
+    AegisName: Fallen_Angel_feather
     Name: Fallen Angel Hairband
     Type: Armor
     Weight: 100
@@ -145322,7 +145322,7 @@ Body:
          bonus bVariableCastrate,-15;
       }
   - Id: 450131
-    AegisName: aegis_450131
+    AegisName: Fallen_Angel_Armor_TW
     Name: Fallen Angel Armor
     Type: Armor
     Weight: 1000
@@ -149268,7 +149268,7 @@ Body:
       }
   - Id: 480023
     AegisName: Arabian_Manteau
-    Name: Arabian Manteau    # !todo check english name
+    Name: Arabian Manteau
     Type: Armor
     Defense: 10
     Weight: 300
@@ -150961,7 +150961,7 @@ Body:
       if (getskilllv("WL_RECOGNIZEDSPELL") == 5)
          bonus bDelayrate,-30;
   - Id: 490033
-    AegisName: aegis_490033
+    AegisName: Fallen_Angel_tear
     Name: Fallen Angel's Tear
     Type: Armor
     Weight: 100
