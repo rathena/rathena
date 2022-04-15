@@ -48316,7 +48316,7 @@ Body:
       bonus bInt,4;
       bonus bMdef,10;
       bonus bVariableCastrate,-10;
-      if (.@r == 7 || .@r == 8) {
+      if (.@r >= 7) {
          bonus bDef,2;
          bonus bMatkRate,5;
          bonus bVariableCastrate,-5;
