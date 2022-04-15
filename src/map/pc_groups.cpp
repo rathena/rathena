@@ -38,7 +38,7 @@ bool PlayerGroupDatabase::parseCommands( const ryml::NodeRef& node, std::vector<
 
 		if( allowed ){
 			if( util::vector_exists( commands, command ) ){
-				this->invalidWarning( it, "Group does already have command \"%s\". Please check your data.\n", command.c_str() );
+				this->invalidWarning( it, "Group already has command \"%s\". Please check your data.\n", command.c_str() );
 				return false;
 			}else{
 				commands.push_back( command );
