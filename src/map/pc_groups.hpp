@@ -20,7 +20,7 @@ void do_final_pc_groups(void);
 void pc_groups_reload(void);
 
 enum e_pc_permission : uint32 {
-	PC_PERM_TRADE = 1,
+	PC_PERM_TRADE = 0,
 	PC_PERM_PARTY,
 	PC_PERM_ALL_SKILL,
 	PC_PERM_USE_ALL_EQUIPMENT,
