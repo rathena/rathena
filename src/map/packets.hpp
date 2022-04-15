@@ -246,6 +246,41 @@ struct PACKET_ZC_SUMMON_HP_UPDATE {
 	uint32 Value;
 } __attribute__((packed));
 
+struct PACKET_CZ_REQ_STATUS_GM {
+	int16 packetType;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+
+struct PACKET_ZC_ACK_STATUS_GM {
+	int16 packetType;
+	uint8 str;
+	uint8 standardStr;
+	uint8 agi;
+	uint8 standardAgi;
+	uint8 vit;
+	uint8 standardVit;
+	uint8 Int;
+	uint8 standardInt;
+	uint8 dex;
+	uint8 standardDex;
+	uint8 luk;
+	uint8 standardLuk;
+	int16 attPower;
+	int16 refiningPower;
+	int16 max_mattPower;
+	int16 min_mattPower;
+	int16 itemdefPower;
+	int16 plusdefPower;
+	int16 mdefPower;
+	int16 plusmdefPower;
+	int16 hitSuccessValue;
+	int16 avoidSuccessValue;
+	int16 plusAvoidSuccessValue;
+	int16 criticalSuccessValue;
+	int16 ASPD;
+	int16 plusASPD;
+} __attribute__((packed));
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -301,6 +336,8 @@ DEFINE_PACKET_HEADER(ZC_UNCONFIRMED_SPIRITS3, 0xb73)
 DEFINE_PACKET_HEADER(CZ_UNCONFIRMED_RODEX_RETURN, 0xb98)
 DEFINE_PACKET_HEADER(ZC_SUMMON_HP_INIT, 0xb6b)
 DEFINE_PACKET_HEADER(ZC_SUMMON_HP_UPDATE, 0xb6c)
+DEFINE_PACKET_HEADER(CZ_REQ_STATUS_GM, 0x0213)
+DEFINE_PACKET_HEADER(ZC_ACK_STATUS_GM, 0x0214)
 
 const int16 MAX_INVENTORY_ITEM_PACKET_NORMAL = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_normal ) - ( sizeof( struct NORMALITEM_INFO ) * MAX_ITEMLIST) ) ) / sizeof( struct NORMALITEM_INFO ) );
 const int16 MAX_INVENTORY_ITEM_PACKET_EQUIP = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_equip ) - ( sizeof( struct EQUIPITEM_INFO ) * MAX_ITEMLIST ) ) ) / sizeof( struct EQUIPITEM_INFO ) );

@@ -15657,59 +15657,63 @@ void clif_parse_AutoRevive(int fd, struct map_session_data *sd)
 ///      <itemdefPower>.W <plusdefPower>.W <mdefPower>.W <plusmdefPower>.W
 ///      <hitSuccessValue>.W <avoidSuccessValue>.W <plusAvoidSuccessValue>.W
 ///      <criticalSuccessValue>.W <ASPD>.W <plusASPD>.W
-void clif_check(int fd, struct map_session_data* pl_sd)
+void clif_checkstatus_ack(map_session_data& sd, map_session_data& pl_sd)
 {
-	WFIFOHEAD(fd,packet_len(0x214));
-	WFIFOW(fd, 0) = 0x214;
-	WFIFOB(fd, 2) = min(pl_sd->status.str, UINT8_MAX);
-	WFIFOB(fd, 3) = pc_need_status_point(pl_sd, SP_STR, 1);
-	WFIFOB(fd, 4) = min(pl_sd->status.agi, UINT8_MAX);
-	WFIFOB(fd, 5) = pc_need_status_point(pl_sd, SP_AGI, 1);
-	WFIFOB(fd, 6) = min(pl_sd->status.vit, UINT8_MAX);
-	WFIFOB(fd, 7) = pc_need_status_point(pl_sd, SP_VIT, 1);
-	WFIFOB(fd, 8) = min(pl_sd->status.int_, UINT8_MAX);
-	WFIFOB(fd, 9) = pc_need_status_point(pl_sd, SP_INT, 1);
-	WFIFOB(fd,10) = min(pl_sd->status.dex, UINT8_MAX);
-	WFIFOB(fd,11) = pc_need_status_point(pl_sd, SP_DEX, 1);
-	WFIFOB(fd,12) = min(pl_sd->status.luk, UINT8_MAX);
-	WFIFOB(fd,13) = pc_need_status_point(pl_sd, SP_LUK, 1);
-	WFIFOW(fd,14) = pl_sd->battle_status.batk+pl_sd->battle_status.rhw.atk+pl_sd->battle_status.lhw.atk;
-	WFIFOW(fd,16) = pl_sd->battle_status.rhw.atk2+pl_sd->battle_status.lhw.atk2;
-	WFIFOW(fd,18) = pl_sd->battle_status.matk_max;
-	WFIFOW(fd,20) = pl_sd->battle_status.matk_min;
-	WFIFOW(fd,22) = pl_sd->battle_status.def;
-	WFIFOW(fd,24) = pl_sd->battle_status.def2;
-	WFIFOW(fd,26) = pl_sd->battle_status.mdef;
-	WFIFOW(fd,28) = pl_sd->battle_status.mdef2;
-	WFIFOW(fd,30) = pl_sd->battle_status.hit;
-	WFIFOW(fd,32) = pl_sd->battle_status.flee;
-	WFIFOW(fd,34) = pl_sd->battle_status.flee2/10;
-	WFIFOW(fd,36) = pl_sd->battle_status.cri/10;
-	WFIFOW(fd,38) = (2000-pl_sd->battle_status.amotion)/10;  // aspd
-	WFIFOW(fd,40) = 0;  // FIXME: What is 'plusASPD' supposed to be? Maybe adelay?
-	WFIFOSET(fd,packet_len(0x214));
+#if PACKETVER >= 20040816
+	struct PACKET_ZC_ACK_STATUS_GM p = {};
+
+	p.packetType = HEADER_ZC_ACK_STATUS_GM;
+
+	p.str = min(pl_sd.status.str, UINT8_MAX);
+	p.standardStr = pc_need_status_point(&pl_sd, SP_STR, 1);
+	p.agi = min(pl_sd.status.agi, UINT8_MAX);
+	p.standardAgi = pc_need_status_point(&pl_sd, SP_AGI, 1);
+	p.vit = min(pl_sd.status.vit, UINT8_MAX);
+	p.standardVit = pc_need_status_point(&pl_sd, SP_VIT, 1);
+	p.Int = min(pl_sd.status.int_, UINT8_MAX);
+	p.standardInt = pc_need_status_point(&pl_sd, SP_INT, 1);
+	p.dex = min(pl_sd.status.dex, UINT8_MAX);
+	p.standardDex = pc_need_status_point(&pl_sd, SP_DEX, 1);
+	p.luk = min(pl_sd.status.luk, UINT8_MAX);
+	p.standardLuk = pc_need_status_point(&pl_sd, SP_LUK, 1);
+	p.attPower = pl_sd.battle_status.batk + pl_sd.battle_status.rhw.atk + pl_sd.battle_status.lhw.atk;
+	p.refiningPower = pl_sd.battle_status.rhw.atk2 + pl_sd.battle_status.lhw.atk2;
+	p.max_mattPower = pl_sd.battle_status.matk_max;
+	p.min_mattPower = pl_sd.battle_status.matk_min;
+	p.itemdefPower = pl_sd.battle_status.def;
+	p.plusdefPower = pl_sd.battle_status.def2;
+	p.mdefPower = pl_sd.battle_status.mdef;
+	p.plusmdefPower = pl_sd.battle_status.mdef2;
+	p.hitSuccessValue = pl_sd.battle_status.hit;
+	p.avoidSuccessValue = pl_sd.battle_status.flee;
+	p.plusAvoidSuccessValue = pl_sd.battle_status.flee2 / 10;
+	p.criticalSuccessValue = pl_sd.battle_status.cri / 10;
+	p.ASPD = (2000 - pl_sd.battle_status.amotion) / 10;  // aspd
+	p.plusASPD = 0;  // FIXME: What is 'plusASPD' supposed to be? Maybe adelay?
+
+	clif_send(&p, sizeof(p), &sd.bl, SELF);
+#endif
 }
 
 
 /// /check (CZ_REQ_STATUS_GM).
 /// Request character's status values.
 /// 0213 <char name>.24B
-void clif_parse_Check(int fd, struct map_session_data *sd)
+void clif_parse_ReqStatusGM(int fd, struct map_session_data *sd)
 {
+#if PACKETVER >= 20040816
 	char charname[NAME_LENGTH];
-	struct map_session_data* pl_sd;
+	char command[CHAT_SIZE_MAX];
+	struct PACKET_CZ_REQ_STATUS_GM* p = (struct PACKET_CZ_REQ_STATUS_GM*)RFIFOP(fd, 0);
 
-	if(!pc_has_permission(sd, PC_PERM_USE_CHECK))
+	if (!pc_has_permission(sd, PC_PERM_USE_CHECK))
 		return;
 
-	safestrncpy(charname, RFIFOCP(fd,packet_db[RFIFOW(fd,0)].pos[0]), sizeof(charname));
+	safestrncpy(charname, p->name, NAME_LENGTH);
+	safesnprintf(command, sizeof(command), "%ccheckstatus %s", atcommand_symbol, charname);
 
-	if( ( pl_sd = map_nick2sd(charname,false) ) == NULL || pc_get_group_level(sd) < pc_get_group_level(pl_sd) )
-	{
-		return;
-	}
-
-	clif_check(fd, pl_sd);
+	is_atcommand(fd, sd, command, 1);
+#endif
 }
 
 
