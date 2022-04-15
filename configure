@@ -7805,7 +7805,7 @@ do
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "src/common/Makefile") CONFIG_FILES="$CONFIG_FILES src/common/Makefile" ;;
     "3rdparty/libconfig/Makefile") CONFIG_FILES="$CONFIG_FILES 3rdparty/libconfig/Makefile" ;;
-    "3rdparty/yamlc-pp/Makefile") CONFIG_FILES="$CONFIG_FILES 3rdparty/yaml-cpp/Makefile" ;;
+    "3rdparty/yaml-cpp/Makefile") CONFIG_FILES="$CONFIG_FILES 3rdparty/yaml-cpp/Makefile" ;;
     "3rdparty/rapidyaml/Makefile") CONFIG_FILES="$CONFIG_FILES 3rdparty/rapidyaml/Makefile" ;;
     "src/char/Makefile") CONFIG_FILES="$CONFIG_FILES src/char/Makefile" ;;
     "src/login/Makefile") CONFIG_FILES="$CONFIG_FILES src/login/Makefile" ;;

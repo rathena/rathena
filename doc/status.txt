@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20220222
+//= 20220406
 //===== Description: =========================================
 //= Explanation of the status.yml file and structure.
 //============================================================
@@ -270,7 +270,9 @@ End: List of status that will end if the status activates.
 
 ---------------------------------------
 
-EndReturn: If the status has any 'End' and succeeds to end other status in the list, it won't give its effect.
+EndReturn: List of status that will end if the status activates and it won't give its effect.
+           The statuses checked in this list are done at the beginning of status_change_start(). If at least 1 status from this list
+		   is removed then it will return back and not check anything else.
 
 ---------------------------------------
 

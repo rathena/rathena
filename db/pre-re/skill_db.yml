@@ -175,6 +175,7 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
+    Duration2: 5000
     Requires:
       SpCost:
         - Level: 1
@@ -795,8 +796,8 @@ Body:
     Element: Earth
     CastCancel: true
     CastTime: 1000
-    Duration1: 5000
-    Duration2: 20000
+    Duration1: 20000
+    Duration2: 5000
     Requires:
       SpCost:
         - Level: 1
@@ -822,7 +823,7 @@ Body:
       ItemCost:
         - Item: Red_Gemstone
           Amount: 1
-    Status: Stone
+    Status: StoneWait
   - Id: 17
     Name: MG_FIREBALL
     Description: Fire Ball
@@ -5101,7 +5102,6 @@ Body:
     Type: Weapon
     Flags:
       IsQuest: true
-    Duration2: 5000
   - Id: 146
     Name: SM_AUTOBERSERK
     Description: Auto Berserk
@@ -5663,8 +5663,9 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    Duration2: 20000
-    Status: Stone
+    Duration1: 20000
+    Duration2: 100
+    Status: StoneWait
   - Id: 181
     Name: NPC_CURSEATTACK
     Description: Curse Attack
@@ -9388,16 +9389,15 @@ Body:
     Name: NPC_CHANGEUNDEAD
     Description: Undead Attribute Change
     MaxLevel: 5
-    Type: Magic
+    Type: Weapon
     TargetType: Attack
-    DamageFlags:
-      NoDamage: true
     Flags:
       IsNpc: true
-    Range: 9
+    Range: -2
+    Hit: Single
     HitCount: 1
     Element: Undead
-    Duration1: 30000
+    Duration2: 60000
     Status: ChangeUndead
   - Id: 349
     Name: NPC_POWERUP
@@ -15911,8 +15911,9 @@ Body:
         Area: 11
       - Level: 5
         Area: 14
-    Duration2: 20000
-    Status: Stone
+    Duration1: 20000
+    Duration2: 100
+    Status: StoneWait
   - Id: 667
     Name: NPC_WIDECONFUSE
     Description: Wide Confusion
@@ -32628,17 +32629,7 @@ Body:
         Time: 60000
       - Level: 5
         Time: 30000
-    Duration2:
-      - Level: 1
-        Time: 12000
-      - Level: 2
-        Time: 14000
-      - Level: 3
-        Time: 16000
-      - Level: 4
-        Time: 18000
-      - Level: 5
-        Time: 20000
+    Duration2: 30000
     Requires:
       SpCost: 12
     Unit:

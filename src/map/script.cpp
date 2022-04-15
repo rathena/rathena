@@ -2356,7 +2356,7 @@ const std::string ConstantDatabase::getDefaultLocation(){
 	return std::string(db_path) + "/const.yml";
 }
 
-uint64 ConstantDatabase::parseBodyNode( const ryml::NodeRef node ) {
+uint64 ConstantDatabase::parseBodyNode( const ryml::NodeRef& node ) {
 	std::string constant_name;
 
 	if (!this->asString( node, "Name", constant_name ))
@@ -6879,6 +6879,33 @@ BUILDIN_FUNC(viewpoint)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+static int buildin_viewpointmap_sub(block_list *bl, va_list ap) {
+	int oid, type, x, y, id, color;
+
+	oid = va_arg(ap, int);
+	type = va_arg(ap, int);
+	x = va_arg(ap, int);
+	y = va_arg(ap, int);
+	id = va_arg(ap, int);
+	color = va_arg(ap, int);
+
+	clif_viewpoint((map_session_data *)bl, oid, type, x, y, id, color);
+	return 0;
+}
+
+BUILDIN_FUNC(viewpointmap) {
+	const char* map = script_getstr(st, 2);
+	int16 mapid = map_mapname2mapid(map);
+
+	if (mapid < 0) {
+		ShowError("buildin_viewpointmap: Unknown map name %s.\n", map);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	map_foreachinmap(buildin_viewpointmap_sub, mapid, BL_PC, st->oid, script_getnum(st, 3), script_getnum(st, 4), script_getnum(st, 5), script_getnum(st, 6), script_getnum(st, 7));
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /**
  * Set random options for new item
  * @param st Script state
@@ -7433,7 +7460,7 @@ BUILDIN_FUNC(checkweight2)
 	slots = pc_inventoryblank(sd);
 	for(i=0; i<nb_it; i++) {
 		t_itemid nameid = (t_itemid)get_val2_num( st, reference_uid( id_it, idx_it + i ), reference_getref( data_it ) );
-		unsigned short amount = (unsigned short)get_val2_num( st, reference_uid( id_nb, idx_nb + i ), reference_getref( data_nb ) );
+		uint16 amount = (uint16)get_val2_num( st, reference_uid( id_nb, idx_nb + i ), reference_getref( data_nb ) );
 
 		if(fail)
 			continue; //cpntonie to depop rest
@@ -7443,7 +7470,7 @@ BUILDIN_FUNC(checkweight2)
 			fail=1;
 			continue;
 		}
-		if(amount < 0 ) {
+		if(amount == 0 ) {
 			ShowError("buildin_checkweight2: Invalid amount '%d'.\n", amount);
 			fail = 1;
 			continue;
@@ -15938,7 +15965,7 @@ BUILDIN_FUNC(mapid2name)
 {
 	uint16 m = script_getnum(st, 2);
 
-	if (m < 0) {
+	if (m >= MAX_MAP_PER_SERVER) {
 		script_pushconststr(st, "");
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -23263,7 +23290,7 @@ BUILDIN_FUNC(mergeitem2) {
 		if (!it || !it->unique_id || it->expire_time || !itemdb_isstackable(it->nameid))
 			continue;
 		if ((!nameid || (nameid == it->nameid))) {
-			uint8 k;
+			uint16 k;
 			if (!count) {
 				CREATE(items, struct item, 1);
 				memcpy(&items[count++], it, sizeof(struct item));
@@ -25839,6 +25866,121 @@ BUILDIN_FUNC( open_quest_ui ){
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(openbank){
+#if PACKETVER < 20150128
+	ShowError( "buildin_openbank: This command requires PACKETVER 20150128 or newer.\n" );
+	return SCRIPT_CMD_FAILURE;
+#else
+	struct map_session_data* sd = nullptr;
+
+	if (!script_charid2sd(2, sd)) {
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( !battle_config.feature_banking ){
+		ShowError( "buildin_openbank: banking is disabled.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_ui_open( sd, OUT_UI_BANK, 0 );
+	return SCRIPT_CMD_SUCCESS;
+#endif
+}
+
+BUILDIN_FUNC(getbaseexp_ratio){
+	struct map_session_data *sd;
+
+	if( !script_charid2sd( 4, sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int32 percent = script_getnum( st, 2 );
+
+	if( percent < 0 || percent > 100 ){
+		ShowError( "getbaseexp_ratio: percentage is out of range.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int32 base_level;
+
+	if( script_hasdata( st, 3 ) ){
+		base_level = script_getnum( st, 3 );
+
+		if( base_level < 1 ){
+			ShowError( "getbaseexp_ratio: level cannot be below 1.\n" );
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		uint32 max_level = job_db.get_maxBaseLv( sd->status.class_ );
+
+		if( base_level > max_level ){
+			ShowError( "getbaseexp_ratio: level is above maximum base level %u for job %s.\n", max_level, job_name( sd->status.class_ ) );
+			return SCRIPT_CMD_FAILURE;
+		}
+	}else{
+		base_level = sd->status.base_level;
+	}
+
+	t_exp class_exp = job_db.get_baseExp( sd->status.class_, base_level );
+
+	if( class_exp <= 0 ){
+		ShowError( "getbaseexp_ratio: No base experience defined for class %s at base level %d.\n", job_name( sd->status.class_ ), base_level );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	double result = ( class_exp * percent ) / 100.0;
+
+	script_pushint64( st, static_cast<t_exp>( result ) );
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(getjobexp_ratio){
+	struct map_session_data *sd;
+
+	if( !script_charid2sd( 4, sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int32 percent = script_getnum( st, 2 );
+
+	if( percent < 0 || percent > 100 ){
+		ShowError( "getjobexp_ratio: percentage is out of range.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int32 job_level;
+
+	if( script_hasdata( st, 3 ) ){
+		job_level = script_getnum( st, 3 );
+
+		if( job_level < 1 ){
+			ShowError( "getjobexp_ratio: level cannot be below 1.\n" );
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		uint32 max_level = job_db.get_maxJobLv( sd->status.class_ );
+
+		if( job_level > max_level ){
+			ShowError( "getjobexp_ratio: level is above maximum job level %u for job %s.\n", max_level, job_name( sd->status.class_ ) );
+			return SCRIPT_CMD_FAILURE;
+		}
+	}else{
+		job_level = sd->status.job_level;
+	}
+
+	t_exp class_exp = job_db.get_baseExp( sd->status.class_, job_level );
+
+	if( class_exp <= 0 ){
+		ShowError( "getjobexp_ratio: No job experience defined for class %s at job level %d.\n", job_name( sd->status.class_ ), job_level );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	double result = ( class_exp * percent ) / 100.0;
+
+	script_pushint64( st, static_cast<t_exp>( result ) );
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -25946,6 +26088,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(disableitemuse,"disable_items",""),
 	BUILDIN_DEF(cutin,"si"),
 	BUILDIN_DEF(viewpoint,"iiiii?"),
+	BUILDIN_DEF(viewpointmap, "siiiii"),
 	BUILDIN_DEF(heal,"ii?"),
 	BUILDIN_DEF(healap,"i?"),
 	BUILDIN_DEF(itemheal,"ii?"),
@@ -26552,6 +26695,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(laphine_upgrade, ""),
 	BUILDIN_DEF(randomoptgroup,"i"),
 	BUILDIN_DEF(open_quest_ui, "??"),
+	BUILDIN_DEF(openbank,"?"),
+	BUILDIN_DEF(getbaseexp_ratio, "i??"),
+	BUILDIN_DEF(getjobexp_ratio, "i??"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

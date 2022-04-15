@@ -529,7 +529,7 @@ const std::string ItemDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/item_db.yml";
 }
 
-uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef node) {
+uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	t_itemid nameid;
 
 	if (!this->asUInt32(node, "Id", nameid))
@@ -552,7 +552,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef node) {
 
 		if (look > 0) {
 			if (this->nodeExists(node, "Locations")) {
-				const ryml::NodeRef locationNode = node["Locations"];
+				const ryml::NodeRef& locationNode = node["Locations"];
 
 				static std::vector<std::string> locations = {
 					"Head_Low",
@@ -608,7 +608,7 @@ const std::string SkillDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/skill_db.yml";
 }
 
-uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef node) {
+uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	t_itemid nameid;
 
 	if (!this->asUInt32(node, "Id", nameid))
@@ -639,7 +639,7 @@ const std::string MobDatabase::getDefaultLocation(){
 	return std::string( db_path ) + "/mob_db.yml";
 }
 
-uint64 MobDatabase::parseBodyNode(const ryml::NodeRef node) {
+uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	uint16 mob_id;
 
 	if (!this->asUInt16(node, "Id", mob_id))

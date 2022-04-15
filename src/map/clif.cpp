@@ -6283,7 +6283,7 @@ void clif_skill_produce_mix_list( struct map_session_data *sd, int skill_id, int
 	int count = 0;
 	for( int i = 0; i < MAX_SKILL_PRODUCE_DB; i++ ){
 		if (skill_can_produce_mix(sd,skill_produce_db[i].nameid, trigger, 1) &&
-			(skill_id <= 0 || (skill_id > 0 && skill_produce_db[i].req_skill == skill_id))
+			(skill_id <= 0 || skill_produce_db[i].req_skill == skill_id)
 			)
 		{
 			p->items[count].itemId = client_nameid( skill_produce_db[i].nameid );
@@ -8672,7 +8672,7 @@ void clif_mvp_exp(struct map_session_data *sd, t_exp exp) {
 	fd = sd->fd;
 	WFIFOHEAD(fd, packet_len(0x10b));
 	WFIFOW(fd,0) = 0x10b;
-	WFIFOL(fd,2) = (uint32)min( exp, MAX_EXP );
+	WFIFOL(fd,2) = (uint32)u64min( exp, MAX_EXP );
 	WFIFOSET(fd, packet_len(0x10b));
 #endif
 }
@@ -18944,6 +18944,15 @@ static void clif_parse_ReqOpenBuyingStore( int fd, struct map_session_data* sd )
 		return;
 	}
 
+	if (map_getmapflag(sd->bl.m, MF_NOBUYINGSTORE)) {
+		clif_displaymessage(sd->fd, msg_txt(sd, 276)); // "You can't open a shop on this map"
+		return;
+	}
+	if (map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOBUYINGSTORE)) {
+		clif_displaymessage(sd->fd, msg_txt(sd, 204)); // "You can't open a shop on this cell."
+		return;
+	}
+
 	char storename[MESSAGE_SIZE];
 
 	safestrncpy( storename, p->storeName, sizeof( storename ) );
@@ -19253,6 +19262,7 @@ static void clif_parse_SearchStoreInfo( int fd, struct map_session_data *sd ){
 ///     0 = no "next" label
 ///     1 = "next" label to retrieve more results
 void clif_search_store_info_ack( struct map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20100817 || PACKETVER_RE_NUM >= 20100706 || defined(PACKETVER_ZERO)
 	nullpo_retv( sd );
 
 	int fd = sd->fd;
@@ -19306,6 +19316,7 @@ void clif_search_store_info_ack( struct map_session_data* sd ){
 	}
 
 	WFIFOSET( fd, len );
+#endif
 }
 
 
@@ -20855,9 +20866,9 @@ void clif_parse_merge_item_req(int fd, struct map_session_data* sd) {
 	}
 
 	for (i = 0, j = 0; i < n; i++) {
-		unsigned short idx = RFIFOW(fd, info->pos[1] + i*2) - 2;
+		uint16 idx = server_index( RFIFOW( fd, info->pos[1] + i * 2 ) );
 
-		if( idx < 0 || idx >= MAX_INVENTORY ){
+		if( idx >= MAX_INVENTORY ){
 			return;
 		}
 
