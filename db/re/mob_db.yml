@@ -92500,9 +92500,12 @@ Body:
 #    AegisName: GLOOMUNDERNIGHT2
   - Id: 20620
     AegisName: MD_REDPEPPER
-    Name: Kappa
+    Name: Red Pepper
     Level: 135
     Hp: 9500000
+    BaseExp: 23400000
+    JobExp: 3931200
+    MvpExp: 11700000
     Attack: 1783
     Attack2: 3365
     Defense: 345
@@ -92519,7 +92522,7 @@ Body:
     Size: Medium
     Race: Formless
     Element: Fire
-    ElementLevel: 4
+    ElementLevel: 3
     WalkSpeed: 330
     AttackDelay: 1344
     AttackMotion: 1592
@@ -92553,9 +92556,12 @@ Body:
         StealProtected: true
   - Id: 20621
     AegisName: MD_REDPEPPER_H
-    Name: Lambda
+    Name: Senior Red Pepper
     Level: 185
     Hp: 300000000
+    BaseExp: 23400000
+    JobExp: 3931200
+    MvpExp: 11700000
     Attack: 3967
     Attack2: 7414
     Defense: 386
@@ -92601,14 +92607,16 @@ Body:
         Rate: 50
       - Item: Magical_Igni_Stone
         Rate: 6000
-      - Item: Redpepper_Card
+      - Item: Red_Pepper_H_Card
         Rate: 1
         StealProtected: true
   - Id: 20622
     AegisName: MD_ASSISTANT
-    Name: Broken Gardener Beta
+    Name: Assistant Bot
     Level: 137
     Hp: 238512
+    BaseExp: 6839158
+    JobExp: 7659857
     Attack: 1481
     Attack2: 1856
     Defense: 365
@@ -92649,10 +92657,11 @@ Body:
         StealProtected: true
   - Id: 20623
     AegisName: MD_ASSISTANT_H
-    Name: Broken Gardener Beta
-    JapaneseName: "Broken Gardener Beta "
+    Name: Senior Assistant Bot
     Level: 189
     Hp: 2398802
+    BaseExp: 6839158
+    JobExp: 7659857
     Attack: 2176
     Attack2: 3232
     Defense: 505
@@ -92693,20 +92702,28 @@ Body:
         StealProtected: true
   - Id: 20624
     AegisName: MD_DRY_RAFFLESIA
-    Name: Dried Raflessia
+    Name: Dry Rafflesia
     Level: 140
     Hp: 248245
+    BaseExp: 8101132
+    JobExp: 1360990
     Attack: 766
     Attack2: 1332
     Defense: 200
     MagicDefense: 82
+    Str: 164
+    Agi: 143
+    Vit: 101
+    Int: 135
+    Dex: 244
+    Luk: 76
     AttackRange: 3
     SkillRange: 10
     ChaseRange: 12
     Size: Small
     Race: Plant
     Element: Earth
-    ElementLevel: 2
+    ElementLevel: 3
     WalkSpeed: 150
     AttackDelay: 512
     AttackMotion: 528
@@ -92728,9 +92745,11 @@ Body:
         StealProtected: true
   - Id: 20625
     AegisName: MD_DRY_RAFFLESIA_H
-    Name: Dried Raflessia
+    Name: Senior Dry Rafflesia
     Level: 190
     Hp: 2908909
+    BaseExp: 8101132
+    JobExp: 1360990
     Attack: 1884
     Attack2: 2986
     Defense: 292
@@ -92747,7 +92766,7 @@ Body:
     Size: Small
     Race: Plant
     Element: Earth
-    ElementLevel: 2
+    ElementLevel: 3
     WalkSpeed: 150
     AttackDelay: 512
     AttackMotion: 528
@@ -92769,8 +92788,11 @@ Body:
         StealProtected: true
   - Id: 20626
     AegisName: MD_ALNOLDI_EX
-    Name: Ex Alnoldi
+    Name: Special Alnoldi
     Level: 143
+    Hp: 7121315
+    BaseExp: 7975873
+    JobExp: 1339947
     Attack: 1262
     Attack2: 1453
     Defense: 272
@@ -92786,8 +92808,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Plant
-    Element: Earth
-    ElementLevel: 1
+    Element: Poison
+    ElementLevel: 2
     WalkSpeed: 300
     AttackDelay: 768
     AttackMotion: 768
@@ -92810,10 +92832,12 @@ Body:
         Rate: 1
         StealProtected: true
   - Id: 20627
-    AegisName: MD_ALNOLDI_EX
-    Name: Ex Alnoldi
+    AegisName: MD_ALNOLDI_EX_H
+    Name: Senior Special Alnoldi
     Level: 193
     Hp: 2954324
+    BaseExp: 7975873
+    JobExp: 1339947
     Attack: 1633
     Attack2: 2421
     Defense: 272
@@ -92829,8 +92853,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Plant
-    Element: Earth
-    ElementLevel: 1
+    Element: Poison
+    ElementLevel: 2
     WalkSpeed: 300
     AttackDelay: 768
     AttackMotion: 768
@@ -92897,6 +92921,8 @@ Body:
     Name: Broken Beta
     Level: 145
     Hp: 261170
+    BaseExp: 626808
+    JobExp: 94021
     Attack: 1241
     Attack2: 1892
     Defense: 349
@@ -92927,10 +92953,12 @@ Body:
       - Item: Screw
         Rate: 1500
   - Id: 20631
-    AegisName: aegis_20631
+    AegisName: MD_BETA_SCISSORE_NG
     Name: Broken Gardener Beta
     Level: 135
     Hp: 234017
+    BaseExp: 5936900
+    JobExp: 997399
     Attack: 1336
     Attack2: 1870
     Defense: 311
@@ -92960,14 +92988,17 @@ Body:
         Rate: 700
       - Item: Screw
         Rate: 1500
-      - Item: Beta_Basic_Card
+      - Item: Beta_Scissore_Ng_Card
         Rate: 1
         StealProtected: true
   - Id: 20632
     AegisName: MD_BETA_SCISSORE_NG_H
-    Name: Broken Gardener Beta
+    Name: S. Broken Gardener Beta
+#    JapaneseName: Senior Broken Gardener Beta
     Level: 185
     Hp: 2379158
+    BaseExp: 5936900
+    JobExp: 997399
     Attack: 1763
     Attack2: 2899
     Defense: 620
@@ -92991,32 +93022,18 @@ Body:
     DamageMotion: 246
     Ai: 09
     Drops:
-      - Item: Ep172_Bh_Katar
-        Rate: 5
-      - Item: Ep172_Bh_Spear
-        Rate: 5
-      - Item: Ep172_Bh_Staff
-        Rate: 5
-      - Item: Ep172_Bh_Huuma
-        Rate: 5
-      - Item: Ep172_Bh_Bow
-        Rate: 5
       - Item: Iron
         Rate: 500
       - Item: Mystery_Piece
         Rate: 700
       - Item: Screw
         Rate: 1500
-        StealProtected: true
-      - Item: Ep172_Bh_Bow3
-        Rate: 5
-        StealProtected: true
-      - Item: Beta_Basic_H_Card
+      - Item: B_Scissore_Ng_H_Card
         Rate: 1
         StealProtected: true
   - Id: 20633
     AegisName: EP17_2_BETA_CLEANER_A
-    Name: Broken Masseuse Beta
+    Name: Broken Cleaner
     Level: 135
     Hp: 147134
     Attack: 1261
@@ -93054,12 +93071,12 @@ Body:
         Rate: 500
       - Item: Sturdy_Iron_Piece
         Rate: 2000
-      - Item: Beta_Baths_A_Card
+      - Item: Beta_Cleaner_Card
         Rate: 1
         StealProtected: true
   - Id: 20634
     AegisName: EP17_2_BETA_CLEANER_B
-    Name: Broken Cleaner Beta
+    Name: Broken Cleaner
     Level: 135
     Hp: 150304
     Attack: 1462
@@ -93095,8 +93112,9 @@ Body:
         Rate: 2000
       - Item: Burnt_Parts
         Rate: 2000
-      - Item: Beta_Baths_A_Card
+      - Item: Beta_Cleaner_Card
         Rate: 1
+        StealProtected: true
   - Id: 20635
     AegisName: EP17_2_BETA_BATHS_A
     Name: Cleaning Robot
@@ -93111,7 +93129,7 @@ Body:
     Size: Small
     Race: Formless
     Element: Neutral
-    ElementLevel: 1
+    ElementLevel: 2
     WalkSpeed: 150
     AttackDelay: 1000
     AttackMotion: 1000
@@ -93120,6 +93138,9 @@ Body:
     Drops:
       - Item: Iron
         Rate: 1000
+      - Item: Beta_Baths_A_Card
+        Rate: 1
+        StealProtected: true
   - Id: 20636
     AegisName: EP17_2_BETA_BATHS_B
     Name: Cleaning Robot
@@ -93134,7 +93155,7 @@ Body:
     Size: Small
     Race: Formless
     Element: Neutral
-    ElementLevel: 1
+    ElementLevel: 2
     WalkSpeed: 150
     AttackDelay: 1000
     AttackMotion: 1000
@@ -93183,7 +93204,7 @@ Body:
         Rate: 1500
   - Id: 20638
     AegisName: EP17_2_BETA_GUARDS
-    Name: Guard Robot
+    Name: Beta Guards
     Level: 1
     Attack: 1
     Attack2: 1
@@ -93203,7 +93224,7 @@ Body:
     Ai: 25
   - Id: 20639
     AegisName: EP17_2_BETA_GUARDS_NG
-    Name: Broken Security Beta
+    Name: Broken Beta Guards
     Level: 1
     Hp: 1909523
     Attack: 1956
@@ -93236,8 +93257,11 @@ Body:
         StealProtected: true
   - Id: 20640
     AegisName: EP17_2_OMEGA_CLEANER
-    Name: Cleaning Robot Ω
+    Name: Omega Cleaner
     Level: 130
+    Hp: 365934
+    BaseExp: 439121
+    JobExp: 65868
     Attack: 572
     Attack2: 1573
     Defense: 424
@@ -93262,9 +93286,11 @@ Body:
     Ai: 09
   - Id: 20641
     AegisName: EP17_2_OMEGA_CLEANER_NG
-    Name: Broken Cleaning Robot Ω
+    Name: Broken Omega Cleaner
     Level: 175
     Hp: 1200685
+    BaseExp: 439121
+    JobExp: 65868
     Attack: 1240
     Attack2: 2731
     Defense: 475
@@ -93301,6 +93327,9 @@ Body:
     Name: Sweety
     Level: 139
     Hp: 5011304
+    BaseExp: 31200000
+    JobExp: 5241600
+    MvpExp: 15600000
     Attack: 1255
     Attack2: 2478
     Str: 141
@@ -93315,7 +93344,7 @@ Body:
     Size: Medium
     Race: Demihuman
     Element: Neutral
-    ElementLevel: 2
+    ElementLevel: 3
     WalkSpeed: 200
     AttackDelay: 751
     AttackMotion: 385
@@ -93336,7 +93365,7 @@ Body:
         StealProtected: true
   - Id: 20643
     AegisName: EP17_2_PHEN
-    Name: Boiled Water Phen
+    Name: Boiling Water Phen
     Level: 139
     Hp: 133096
     Attack: 943
@@ -93379,7 +93408,7 @@ Body:
         StealProtected: true
   - Id: 20644
     AegisName: EP17_2_MARC
-    Name: Boiled Water Marc
+    Name: Boiling Water Marc
     Level: 137
     Hp: 132060
     Attack: 996
@@ -93420,7 +93449,7 @@ Body:
         StealProtected: true
   - Id: 20645
     AegisName: EP17_2_SWORD_FISH
-    Name: Boiled Water Swordfish
+    Name: Boiling Water Swordfish
     Level: 138
     Hp: 133151
     Attack: 749
@@ -93459,7 +93488,7 @@ Body:
         StealProtected: true
   - Id: 20646
     AegisName: EP17_2_PIRANHA
-    Name: Boiled Water Piranha
+    Name: Boiling Water Piranha
     Level: 138
     Hp: 133024
     Attack: 851
@@ -93500,7 +93529,7 @@ Body:
         StealProtected: true
   - Id: 20647
     AegisName: EP17_2_BATH_MERMAID
-    Name: Lapis Lazuli
+    Name: Elder of Chung-Geum
     Level: 141
     Hp: 1108897
     Attack: 1981
@@ -93547,9 +93576,12 @@ Body:
         StealProtected: true
   - Id: 20648
     AegisName: EP17_2_PITAYA_BOSS
-    Name: Boss Meow
+    Name: Boss Pitaya
     Level: 168
-    Hp: 19298694
+    Hp: 19037292
+    BaseExp: 40656489
+    JobExp: 40459542
+    MvpExp: 20328244
     Attack: 1945
     Attack2: 3856
     Defense: 462
@@ -93563,7 +93595,7 @@ Body:
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
-    Size: Large
+    Size: Small
     Race: Plant
     RaceGroups:
       EP172BETA: true
@@ -93951,9 +93983,12 @@ Body:
       Assist: true
   - Id: 20659
     AegisName: MD_PITAYA_BOSS
-    Name: Boss Meow
+    Name: Boss Pitaya
     Level: 168
-    Hp: 19298694
+    Hp: 19037292
+    BaseExp: 40656489
+    JobExp: 40459542
+    MvpExp: 20328244
     Attack: 1945
     Attack2: 3856
     Defense: 462
@@ -93967,7 +94002,7 @@ Body:
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
-    Size: Large
+    Size: Medium
     Race: Plant
     Element: Fire
     ElementLevel: 3
@@ -93995,6 +94030,8 @@ Body:
     Name: Red Pitaya
     Level: 162
     Hp: 648023
+    BaseExp: 13014407
+    JobExp: 13010085
     Attack: 1567
     Attack2: 1974
     Defense: 351
@@ -94035,6 +94072,8 @@ Body:
     Name: Yellow Pitaya
     Level: 164
     Hp: 603341
+    BaseExp: 13014782
+    JobExp: 13010347
     Attack: 1617
     Attack2: 1921
     Defense: 434
@@ -94075,6 +94114,8 @@ Body:
     Name: Blue Pitaya
     Level: 165
     Hp: 603341
+    BaseExp: 13014878
+    JobExp: 13010414
     Attack: 1534
     Attack2: 1954
     Defense: 444
@@ -94115,6 +94156,8 @@ Body:
     Name: Violet Pitaya
     Level: 165
     Hp: 603341
+    BaseExp: 13015028
+    JobExp: 13010520
     Attack: 1543
     Attack2: 1986
     Defense: 525
@@ -94155,6 +94198,8 @@ Body:
     Name: Green Pitaya
     Level: 166
     Hp: 603341
+    BaseExp: 13015010
+    JobExp: 13010507
     Attack: 1438
     Attack2: 1988
     Defense: 269
@@ -94195,6 +94240,8 @@ Body:
     Name: Verporta
     Level: 136
     Hp: 239037
+    BaseExp: 9950885
+    JobExp: 1671749
     Attack: 881
     Attack2: 1243
     Defense: 424
@@ -94236,6 +94283,8 @@ Body:
     Name: Verporte
     Level: 186
     Hp: 2390934
+    BaseExp: 9725342
+    JobExp: 1633858
     Attack: 2168
     Attack2: 3264
     Defense: 600
@@ -94269,26 +94318,16 @@ Body:
         Rate: 1500
       - Item: Sticky_Poison
         Rate: 1500
-      - Item: Ep172_1h_Sword
-        Rate: 5
-      - Item: Ep172_1h_Book
-        Rate: 5
-      - Item: Ep172_1h_Foxtail
-        Rate: 5
-      - Item: Ep172_1h_Whip
-        Rate: 5
-        StealProtected: true
-      - Item: Ep172_1h_Dagger2
-        Rate: 5
-        StealProtected: true
       - Item: Verporte_Card
         Rate: 1
         StealProtected: true
   - Id: 20667
     AegisName: MD_SILVA_PAPILIA
-    Name: Silva Papilla
+    Name: Silva Papilia
     Level: 145
     Hp: 7347707
+    BaseExp: 37500000
+    JobExp: 6300000
     Attack: 2864
     Attack2: 4236
     Defense: 241
@@ -94332,9 +94371,11 @@ Body:
         StealProtected: true
   - Id: 20668
     AegisName: MD_GRAN_PAPILIA
-    Name: Grand Papillia
+    Name: Gran Papilia
     Level: 195
     Hp: 74730723
+    BaseExp: 37500000
+    JobExp: 6300000
     Attack: 3794
     Attack2: 5124
     Defense: 384
@@ -94377,9 +94418,11 @@ Body:
         Rate: 1
   - Id: 20669
     AegisName: MD_PAPILA
-    Name: Papilla
+    Name: Papila
     Level: 138
     Hp: 240713
+    BaseExp: 7248516
+    JobExp: 1217750
     Attack: 1241
     Attack2: 1564
     Defense: 378
@@ -94420,9 +94463,11 @@ Body:
         StealProtected: true
   - Id: 20670
     AegisName: MD_PAPILA_H
-    Name: Papilla
+    Name: Senior Papila
     Level: 188
     Hp: 2409593
+    BaseExp: 7248516
+    JobExp: 1217750
     Attack: 1564
     Attack2: 2321
     Defense: 467
@@ -94448,14 +94493,6 @@ Body:
     Modes:
       Assist: true
     Drops:
-      - Item: Ep172_1h_Sword2
-        Rate: 5
-      - Item: Ep172_1h_Axe
-        Rate: 5
-      - Item: Ep172_1h_Book2
-        Rate: 5
-      - Item: Ep172_Bh_Knuck
-        Rate: 5
       - Item: Flower
         Rate: 500
       - Item: Powder_Of_Butterfly
@@ -94473,9 +94510,11 @@ Body:
         StealProtected: true
   - Id: 20671
     AegisName: MD_PAPILA_RUBA
-    Name: Papilla
+    Name: Papila Ruba
     Level: 139
     Hp: 240713
+    BaseExp: 7167094
+    JobExp: 1204072
     Attack: 1241
     Attack2: 1564
     Defense: 346
@@ -94516,9 +94555,11 @@ Body:
         StealProtected: true
   - Id: 20672
     AegisName: MD_PAPILA_RUBA_H
-    Name: Papilla
+    Name: Senior Papila Ruba
     Level: 190
     Hp: 2409593
+    BaseExp: 7167094
+    JobExp: 1204072
     Attack: 1564
     Attack2: 2321
     Defense: 676
@@ -94554,18 +94595,16 @@ Body:
         Rate: 800
       - Item: Great_Wing
         Rate: 1000
-      - Item: Ep172_1h_Rifle
-        Rate: 5
-      - Item: Ep172_1h_Gatling
-        Rate: 5
       - Item: MD_Papila_Ruba_H_Card
         Rate: 1
         StealProtected: true
   - Id: 20673
     AegisName: MD_PAPILA_RUBA2
-    Name: Papilla
+    Name: Papila Ruba
     Level: 150
     Hp: 300
+    BaseExp: 7167094
+    JobExp: 1204072
     Attack: 1
     Attack2: 1
     Defense: 1
@@ -94593,9 +94632,11 @@ Body:
       KnockBackImmune: true
   - Id: 20674
     AegisName: MD_PAPILA_CAE
-    Name: Papilla
+    Name: Papila Cae
     Level: 138
     Hp: 237484
+    BaseExp: 7513587
+    JobExp: 1262282
     Attack: 1241
     Attack2: 1564
     Defense: 378
@@ -94636,9 +94677,11 @@ Body:
         StealProtected: true
   - Id: 20675
     AegisName: MD_PAPILA_CAE_H
-    Name: Papilla
+    Name: Senior Papila Cae
     Level: 188
     Hp: 2405191
+    BaseExp: 7513587
+    JobExp: 1262282
     Attack: 1564
     Attack2: 2321
     Defense: 467
@@ -94674,18 +94717,16 @@ Body:
         Rate: 800
       - Item: Great_Wing
         Rate: 1000
-      - Item: Ep172_1h_Shotgun
-        Rate: 5
-      - Item: Ep172_1h_Grenade
-        Rate: 5
       - Item: MD_Papila_Cae_H_Card
         Rate: 1
         StealProtected: true
   - Id: 20676
     AegisName: MD_PAPILA_CAE2
-    Name: Papilla
+    Name: Papila Cae
     Level: 150
     Hp: 300
+    BaseExp: 7513587
+    JobExp: 1262282
     Attack: 1
     Attack2: 1
     Defense: 1
@@ -94716,6 +94757,8 @@ Body:
     Name: Aries
     Level: 175
     Hp: 360702
+    BaseExp: 9305739
+    JobExp: 1563364
     Attack: 1241
     Attack2: 1861
     Defense: 356
@@ -94750,9 +94793,11 @@ Body:
         StealProtected: true
   - Id: 20678
     AegisName: MD_ARIES_H
-    Name: Aries
+    Name: Senior Aries
     Level: 175
     Hp: 603341
+    BaseExp: 8825543
+    JobExp: 1482691
     Attack: 2164
     Attack2: 3521
     Defense: 269
@@ -94778,18 +94823,6 @@ Body:
     Modes:
       Assist: true
     Drops:
-      - Item: Ep172_1h_Dagger
-        Rate: 5
-      - Item: Ep172_1h_Spear
-        Rate: 5
-      - Item: Ep172_1h_Wand
-        Rate: 5
-      - Item: Ep172_1h_Inst
-        Rate: 5
-      - Item: Ep172_Bh_Sword
-        Rate: 5
-      - Item: Ep172_1h_Hammer
-        Rate: 5
       - Item: Great_Wing
         Rate: 2000
       - Item: Fancy_Fairy_Wing
@@ -94830,6 +94863,8 @@ Body:
     Name: Heart Hunter Skirmisher
     Level: 130
     Hp: 180367
+    BaseExp: 509314
+    JobExp: 85565
     Attack: 867
     Attack2: 1521
     Defense: 334
@@ -94923,6 +94958,8 @@ Body:
     Name: Bookworm
     Level: 141
     Hp: 250264
+    BaseExp: 951003
+    JobExp: 475502
     Attack: 1764
     Attack2: 1941
     Defense: 210
@@ -94966,6 +95003,8 @@ Body:
     Name: Roaming Spellbook
     Level: 144
     Hp: 603341
+    BaseExp: 976026
+    JobExp: 488013
     Attack: 1274
     Attack2: 1477
     Defense: 258
@@ -95002,9 +95041,11 @@ Body:
         StealProtected: true
   - Id: 20685
     AegisName: EP17_2_VENENUM3
-    Name: Savage Venenum
+    Name: Sewage Venenum
     Level: 142
     Hp: 290128
+    BaseExp: 696307
+    JobExp: 104446
     Attack: 1451
     Attack2: 1897
     Defense: 277
@@ -95043,9 +95084,11 @@ Body:
         StealProtected: true
   - Id: 20686
     AegisName: EP17_2_CRAMP
-    Name: Savage Cramp
+    Name: Sewage Cramp
     Level: 175
     Hp: 285388
+    BaseExp: 684931
+    JobExp: 102740
     Attack: 981
     Attack2: 1541
     Defense: 254
@@ -95063,8 +95106,8 @@ Body:
     Race: Demihuman
     RaceGroups:
       EP172BETA: true
-    Element: Neutral
-    ElementLevel: 3
+    Element: Poison
+    ElementLevel: 1
     WalkSpeed: 100
     AttackDelay: 768
     AttackMotion: 500
@@ -95081,9 +95124,11 @@ Body:
         StealProtected: true
   - Id: 20687
     AegisName: EP17_2_WATERFALL
-    Name: Savage Waterfall
+    Name: Sewage Waterfall
     Level: 141
     Hp: 287987
+    BaseExp: 690953
+    JobExp: 103643
     Attack: 1241
     Attack2: 1687
     Defense: 270
@@ -95123,6 +95168,8 @@ Body:
     Name: Elite Bellare
     Level: 143
     Hp: 295508
+    BaseExp: 3617462
+    JobExp: 607734
     Attack: 1276
     Attack2: 1536
     Defense: 383
@@ -95161,9 +95208,11 @@ Body:
         StealProtected: true
   - Id: 20689
     AegisName: EP17_2_DOLOR3
-    Name: Magical Dolor
+    Name: Spell Addicted Dolor
     Level: 145
     Hp: 603341
+    BaseExp: 718440
+    JobExp: 107766
     Attack: 1326
     Attack2: 1841
     Defense: 376
@@ -95202,9 +95251,11 @@ Body:
         StealProtected: true
   - Id: 20690
     AegisName: EP17_2_PLASMA_Y
-    Name: Unleashed Magic
+    Name: Released Spell
     Level: 144
     Hp: 291046
+    BaseExp: 698510
+    JobExp: 104777
     Attack: 1244
     Attack2: 1876
     Defense: 445
@@ -95243,7 +95294,7 @@ Body:
         StealProtected: true
   - Id: 20691
     AegisName: EP17_2_PLAGA3
-    Name: Magic Poison Plaga
+    Name: Spell Addicted Plaga
     Level: 192
     Hp: 2946697
     Attack: 2451
@@ -95284,7 +95335,7 @@ Body:
         StealProtected: true
   - Id: 20692
     AegisName: EP17_2_SANARE3
-    Name: Magic Poison Sanare
+    Name: Spell Addicted Sanare
     Level: 194
     Hp: 603341
     Attack: 2046
@@ -95327,7 +95378,7 @@ Body:
         StealProtected: true
   - Id: 20693
     AegisName: EP17_2_PLASMA_R
-    Name: Powerful Horsepower
+    Name: Powerful Spell
     Level: 193
     Hp: 603341
     Attack: 1755
@@ -95368,7 +95419,7 @@ Body:
         StealProtected: true
   - Id: 20694
     AegisName: EP17_2_PLASMA_R2
-    Name: Sharp Horsepower
+    Name: Sharp Spell
     Level: 193
     Hp: 603341
     Attack: 1755
@@ -95504,7 +95555,7 @@ Body:
       Assist: true
   - Id: 20700
     AegisName: G_BETA_SCISSORE_NG
-    Name: Broken Scissor
+    Name: Broken Gardener Beta
     Level: 1
     Attack: 1
     Attack2: 1

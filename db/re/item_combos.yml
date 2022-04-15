@@ -14890,7 +14890,7 @@ Body:
       - Combo:
           - EP17_2_Phen_Card
           - Alnoldi_Ex_Card
-          - Beta_Basic_H_Card
+          - B_Scissore_Ng_H_Card
     Script: |
       bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",20;
       bonus2 bSkillAtk,"SJ_FULLMOONKICK",20;
@@ -14920,7 +14920,7 @@ Body:
   - Combos:
       - Combo:
           - Pitaya_G_Card
-          - Beta_Basic_Card
+          - Beta_Scissore_Ng_Card
           - Plaga3_Card
     Script: |
       bonus2 bSkillAtk,"SU_CN_METEOR",20;

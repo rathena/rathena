@@ -45035,7 +45035,7 @@ Body:
       bonus2 bAddEle,Ele_Undead,40;
   - Id: 300076
     AegisName: Beta_Guards_Card
-    Name: Broken Security Beta Card
+    Name: Broken Beta Guards Card
     Type: Card
     Weight: 10
     Locations:
@@ -45050,7 +45050,7 @@ Body:
       bonus2 bSkillAtk,"LG_CANNONSPEAR",10;
   - Id: 300077
     AegisName: Omega_Cleaner_Card
-    Name: Broken Cleaning Robot Omega Card
+    Name: Broken Omega Cleaner Card
     Type: Card
     Weight: 10
     Locations:
@@ -45066,7 +45066,7 @@ Body:
       bonus2 bSkillAtk,"NC_VULCANARM",10;
   - Id: 300078
     AegisName: Sweety_Card
-    Name: Sweetie Card
+    Name: Sweety Card
     Type: Card
     Weight: 10
     Locations:
@@ -45094,7 +45094,7 @@ Body:
       bonus2 bMagicAddEle,Ele_Water,30;
   - Id: 300080
     AegisName: Red_Pepper_H_Card
-    Name: Greater Red Pepper Card
+    Name: Senior Red Pepper Card
     Type: Card
     Weight: 10
     Locations:
@@ -45109,7 +45109,7 @@ Body:
       bonus2 bMagicAddEle,Ele_Water,50;
   - Id: 300081
     AegisName: Assistant_Card
-    Name: Research Assistant Bot Card
+    Name: Assistant Bot Card
     Type: Card
     Weight: 10
     Locations:
@@ -45124,7 +45124,7 @@ Body:
       bonus2 bSkillAtk,"MG_FIREBALL",25;
   - Id: 300082
     AegisName: Assistant_H_Card
-    Name: Greater Research Assistant Bot Card
+    Name: Senior Assistant Bot Card
     Type: Card
     Weight: 10
     Locations:
@@ -45139,7 +45139,7 @@ Body:
       bonus bLongAtkRate,2*(getrefine()/2);
   - Id: 300083
     AegisName: Dry_Rafflesia_Card
-    Name: Dried Rafflesia Card
+    Name: Dry Rafflesia Card
     Type: Card
     Weight: 10
     Locations:
@@ -45155,7 +45155,7 @@ Body:
       bonus2 bSkillAtk,"NJ_HYOUSENSOU",15;
   - Id: 300084
     AegisName: Dry_Rafflesia_H_Card
-    Name: Greater Dried Rafflesia Card
+    Name: Senior Dry Rafflesia Card
     Type: Card
     Weight: 10
     Locations:
@@ -45183,7 +45183,7 @@ Body:
       bonus bBaseAtk,getskilllv("TK_POWER");
   - Id: 300086
     AegisName: Alnoldi_Ex_H_Card
-    Name: Greater Special Alnoldi Card
+    Name: Senior Special Alnoldi Card
     Type: Card
     Weight: 10
     Locations:
@@ -45201,7 +45201,7 @@ Body:
          bonus bUnbreakableWeapon;
       }
   - Id: 300087
-    AegisName: Beta_Basic_Card
+    AegisName: Beta_Scissore_Ng_Card
     Name: Broken Gardener Beta Card
     Type: Card
     Weight: 10
@@ -45217,8 +45217,8 @@ Body:
       bonus2 bSkillAtk,"SU_SV_STEMSPEAR",10;
       bonus2 bSkillAtk,"SU_SCAROFTAROU",10;
   - Id: 300088
-    AegisName: Beta_Basic_H_Card
-    Name: Greater_Broken Gardener Beta Card
+    AegisName: B_Scissore_Ng_H_Card
+    Name: Senior Broken Gardener Card
     Type: Card
     Weight: 10
     Locations:
@@ -45287,7 +45287,7 @@ Body:
       bonus2 bSkillAtk,"GS_FULLBUSTER",10;
   - Id: 300092
     AegisName: Papila_Ruba_H_Card
-    Name: Greater Papila Card
+    Name: Senior Papila Card
     Type: Card
     Weight: 10
     Locations:
@@ -45317,7 +45317,7 @@ Body:
       bonus2 bSkillAtk,"AL_HOLYLIGHT",50;
   - Id: 300094
     AegisName: MD_Papila_Ruba_H_Card
-    Name: Greater Papila Ruba Card
+    Name: Senior Papila Ruba Card
     Type: Card
     Weight: 10
     Locations:
@@ -45347,7 +45347,7 @@ Body:
       bonus2 bSkillAtk,"AC_SHOWER",25;
   - Id: 300096
     AegisName: MD_Papila_Cae_H_Card
-    Name: Greater Papila Cae Card
+    Name: Senior Papila Cae Card
     Type: Card
     Weight: 10
     Locations:
@@ -45384,7 +45384,7 @@ Body:
       bonus2 bSkillAtk,"TF_POISON",25;
   - Id: 300098
     AegisName: Aries_H_Card
-    Name: Greater Aries Card
+    Name: Senior Aries Card
     Type: Card
     Weight: 10
     Locations:
@@ -45443,7 +45443,7 @@ Body:
       bonus2 bSkillAtk,"RK_DRAGONBREATH",10;
   - Id: 300102
     AegisName: Beta_Baths_A_Card
-    Name: Bath Manager Card
+    Name: Bath Administrator Card
     Type: Card
     Weight: 10
     Locations:
@@ -45458,7 +45458,7 @@ Body:
       bonus2 bSkillAtk,"GN_CARTCANNON",10;
   - Id: 300103
     AegisName: Bath_Mermaid_Card
-    Name: Azure Princess Card
+    Name: Elder of Chung-Geum Card
     Type: Card
     Weight: 10
     Locations:
@@ -45531,7 +45531,7 @@ Body:
       }
   - Id: 300107
     AegisName: Pitaya_Boss_Card
-    Name: Pitaya Boss Card
+    Name: Boss Pitaya Card
     Type: Card
     Weight: 10
     Locations:
@@ -45609,7 +45609,7 @@ Body:
       bonus2 bSkillAtk,"NJ_HUUJIN",10;
   - Id: 300112
     AegisName: Dolor3_Card
-    Name: Magic-poisoned Dolor Card
+    Name: Spell Addicted Dolor Card
     Type: Card
     Weight: 10
     Locations:
@@ -45625,7 +45625,7 @@ Body:
       bonus2 bSkillAtk,"SP_SWHOO",10;
   - Id: 300113
     AegisName: Plasma_Y_Card
-    Name: Unleashed Magic Card
+    Name: Released Spell Card
     Type: Card
     Weight: 10
     Locations:
@@ -45641,7 +45641,7 @@ Body:
       bonus2 bSkillAtk,"WM_REVERBERATION",10;
   - Id: 300114
     AegisName: Plaga3_Card
-    Name: Magic-poisoned Plaga Card
+    Name: Spell Addicted Plaga Card
     Type: Card
     Weight: 10
     Locations:
@@ -45662,7 +45662,7 @@ Body:
       }
   - Id: 300115
     AegisName: Sanare3_Card
-    Name: Magic-poisoned Sanare Card
+    Name: Spell Addicted Sanare Card
     Type: Card
     Weight: 10
     Locations:
@@ -45678,7 +45678,7 @@ Body:
       bonus2 bSkillAtk,"AB_JUDEX",10;
   - Id: 300116
     AegisName: Plasma_R_Card
-    Name: Powerful Magic Card
+    Name: Powerful Spell Card
     Type: Card
     Weight: 10
     Locations:
@@ -45694,7 +45694,7 @@ Body:
       bonus2 bSkillAtk,"SR_TIGERCANNON",10;
   - Id: 300117
     AegisName: Plasma_R2_Card
-    Name: Sharp Magic Card
+    Name: Sharp Spell Card
     Type: Card
     Weight: 10
     Locations:
