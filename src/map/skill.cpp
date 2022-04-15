@@ -1645,6 +1645,9 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	case NPC_BLEEDING:
 		sc_start(src,bl,SC_BLEEDING,(20*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
+	case NPC_CHANGEUNDEAD:
+		sc_start(src, bl, SC_CHANGEUNDEAD, (10 * skill_lv), skill_lv, skill_get_time2(skill_id, skill_lv));
+		break;
 	case NPC_ACIDBREATH:
 		sc_start(src,bl,SC_POISON,70,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
@@ -4989,6 +4992,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case NPC_DARKNESSATTACK:
 	case NPC_TELEKINESISATTACK:
 	case NPC_UNDEADATTACK:
+	case NPC_CHANGEUNDEAD:
 	case NPC_ARMORBRAKE:
 	case NPC_WEAPONBRAKER:
 	case NPC_HELMBRAKE:
@@ -9412,14 +9416,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case NPC_CHANGEHOLY:
 	case NPC_CHANGEDARKNESS:
 	case NPC_CHANGETELEKINESIS:
-		clif_skill_nodamage(src,bl,skill_id,skill_lv,
-			sc_start2(src,bl, type, 100, skill_lv, skill_get_ele(skill_id,skill_lv),
-				skill_get_time(skill_id, skill_lv)));
-		break;
-	case NPC_CHANGEUNDEAD:
-		//This skill should fail if target is wearing bathory/evil druid card [Brainstorm]
-		//TO-DO This is ugly, fix it
-		if(tstatus->def_ele==ELE_UNDEAD || tstatus->def_ele==ELE_DARK) break;
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
 			sc_start2(src,bl, type, 100, skill_lv, skill_get_ele(skill_id,skill_lv),
 				skill_get_time(skill_id, skill_lv)));
