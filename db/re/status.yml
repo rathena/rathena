@@ -142,13 +142,6 @@ Body:
       Inspiration: true
       Gvg_Stun: true
       Stun: true
-    End:
-      Whiteimprison: true
-      Stone: true
-      StoneWait: true
-      Freeze: true
-      Sleep: true
-      Burning: true
   - Status: Sleep
     DurationLookup: NPC_SLEEPATTACK
     States:
@@ -168,13 +161,6 @@ Body:
       Inspiration: true
       Gvg_Sleep: true
       Sleep: true
-    End:
-      Whiteimprison: true
-      Stone: true
-      StoneWait: true
-      Freeze: true
-      Stun: true
-      Burning: true
   - Status: Poison
     DurationLookup: NPC_POISON
     CalcFlags:
@@ -2998,12 +2984,6 @@ Body:
       Refresh: true
       Inspiration: true
       Whiteimprison: true
-    End:
-      Stone: true
-      StoneWait: true
-      Freeze: true
-      Stun: true
-      Sleep: true
   - Status: Freezing
     Icon: EFST_FROSTMISTY
     DurationLookup: WL_FROSTMISTY
@@ -3218,13 +3198,7 @@ Body:
       StopCasting: true
       OverlapFail: true
     End:
-      Burning: true
       Freezing: true
-      Freeze: true
-      Stone: true
-      StoneWait: true
-      Sleep: true
-      Stun: true
   - Status: Marshofabyss
     Icon: EFST_MARSHOFABYSS
     DurationLookup: WL_MARSHOFABYSS

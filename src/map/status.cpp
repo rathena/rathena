@@ -9621,6 +9621,16 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 	}
 
+	// Check for OPT1 stacking
+	if (sc->opt1 > OPT1_NONE && scdb->opt1 > OPT1_NONE) {
+		for (const auto &status_it : status_db) {
+			sc_type opt1_type = status_it.second->type;
+
+			if (sc->data[opt1_type] && status_it.second->opt1 > OPT1_NONE)
+				status_change_end(bl, opt1_type, INVALID_TIMER);
+		}
+	}
+
 	// Before overlapping fail, one must check for status cured.
 	std::vector<sc_type> endlist;
 
