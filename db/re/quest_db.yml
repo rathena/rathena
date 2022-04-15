@@ -10254,12 +10254,12 @@ Body:
     Title: Hunting Silva Papila - Waiting
     TimeLimit: 4h
   - Id: 16433
-    Title: Hunting Grand Papila
+    Title: Hunting Senior Papila
     Targets:
       - Mob: MD_GRAN_PAPILIA
         Count: 1
   - Id: 16434
-    Title: Hunting Grand Papila - Waiting
+    Title: Hunting Senior Papila - Waiting
     TimeLimit: 4h
   - Id: 16435
     Title: Searching for Gardener
