@@ -5850,6 +5850,8 @@ BUILDIN_FUNC(warpparty)
 						y = ny;
 					}
 				}
+
+				ret = pc_setpos(pl_sd, mapindex, x, y, CLR_TELEPORT);
 			}
 			break;
 		}
