@@ -919,13 +919,37 @@ bool account_db_sql_enable_webtoken( AccountDB* self, const uint32 account_id ){
 	return true;
 }
 
+/**
+ * Timered function to disable webtoken for user
+ * If the user is online, then they must have logged since we started the timer.
+ * In that case, do nothing. The new authtoken must be valid.
+ * @param tid: timer id
+ * @param tick: tick of execution
+ * @param id: user account id
+ * @param data: AccountDB // because we don't use singleton???
+ * @return :0
+ */
+TIMER_FUNC(account_disable_webtoken_timer){
+	const struct online_login_data* p = login_get_online_user(id);
+	AccountDB_SQL* db = reinterpret_cast<AccountDB_SQL*>(data);
+
+	if (p == nullptr) {
+		ShowInfo("Web Auth Token for account %d was disabled\n", id);
+		if( SQL_ERROR == Sql_Query( db->accounts, "UPDATE `%s` SET `web_auth_token_enabled` = '0' WHERE `account_id` = '%u'", db->account_db, id ) ){
+			Sql_ShowDebug( db->accounts );
+			return 0;
+		}
+	}
+
+	return 0;
+}
+
+
+
 bool account_db_sql_disable_webtoken( AccountDB* self, const uint32 account_id ){
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
 
-	if( SQL_ERROR == Sql_Query( db->accounts, "UPDATE `%s` SET `web_auth_token_enabled` = '0' WHERE `account_id` = '%u'", db->account_db, account_id ) ){
-		Sql_ShowDebug( db->accounts );
-		return false;
-	}
+	add_timer(gettick() + login_config.disable_webtoken_delay, account_disable_webtoken_timer, account_id, reinterpret_cast<intptr_t>(db));
 
 	return true;
 }

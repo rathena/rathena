@@ -19,12 +19,6 @@
 #define MAX_EMBLEM_SIZE 50000
 #define START_VERSION 1
 
-std::string getUniqueFileName(const int guild_id, const std::string& world_name, const int version) {
-	auto stream = std::ostringstream();
-	stream << world_name << "_" << guild_id << "_" << version;
-	return stream.str();
-}
-
 HANDLER_FUNC(emblem_download) {
 	if (!isAuthorized(req, false)) {
 		res.status = 400;
@@ -133,19 +127,19 @@ HANDLER_FUNC(emblem_upload) {
 
 	bool fail = false;
 	if (!req.has_file("GDID")) {
-		ShowDebug("Missing GuildID field for emblem download.\n");
+		ShowDebug("Missing GuildID field for emblem upload.\n");
 		fail = true;
 	}
 	if (!req.has_file("WorldName")) {
-		ShowDebug("Missing WorldName field for emblem download.\n");
+		ShowDebug("Missing WorldName field for emblem upload.\n");
 		fail = true;
 	}
 	if (!req.has_file("Img")) {
-		ShowDebug("Missing Img field for emblem download.\n");
+		ShowDebug("Missing Img field for emblem upload.\n");
 		fail = true;
 	}
 	if (!req.has_file("ImgType")) {
-		ShowDebug("Missing ImgType for emblem download.\n");
+		ShowDebug("Missing ImgType for emblem upload.\n");
 		fail = true;
 	}
 	if (fail) {
@@ -190,6 +184,7 @@ HANDLER_FUNC(emblem_upload) {
 			res.set_content("Error", "text/plain");
 			return;
 		}
+		// TODO: transparency check for GIF emblems
 	}
 	else if (imgtype_str == "BMP") {
 		if (length < 14) {
@@ -211,7 +206,7 @@ HANDLER_FUNC(emblem_upload) {
 			return;
 		}
 
-		if (web_config.emblem_transparency_limit < 100) {
+		if (inter_config.emblem_transparency_limit < 100) {
 			uint32 offset = RBUFL(img_cstr, 0x0A);
 			int i, transcount = 1, tmp[3];
 			for (i = offset; i < length - 1; i++) {
@@ -220,7 +215,7 @@ HANDLER_FUNC(emblem_upload) {
 				if (j == 2 && (tmp[0] == 0xFFFF00FF) && (tmp[1] == 0xFFFF00) && (tmp[2] == 0xFF00FFFF)) //if pixel is transparent
 					transcount++;
 			}
-			if (((transcount * 300) / (length - offset)) > web_config.emblem_transparency_limit) {
+			if (((transcount * 300) / (length - offset)) > inter_config.emblem_transparency_limit) {
 				ShowDebug("Bitmap transparency check failed.\n");
 				res.status = 400;
 				res.set_content("Error", "text/plain");

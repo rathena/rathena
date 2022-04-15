@@ -5,16 +5,11 @@ OMAP=@OMAP@
 ifeq ($(HAVE_MYSQL),yes)
 	ALL_DEPENDS=server tools
 	SERVER_DEPENDS=common login char map web import
-	COMMON_DEPENDS=libconfig yaml-cpp
-	LOGIN_DEPENDS=libconfig common
-	CHAR_DEPENDS=libconfig common yaml-cpp
-	MAP_DEPENDS=libconfig common yaml-cpp
-	WEB_DEPENDS=libconfig common yaml-cpp httplib
-	SERVER_DEPENDS=common login char map import
 	COMMON_DEPENDS=libconfig rapidyaml yaml-cpp
 	LOGIN_DEPENDS=libconfig common
 	CHAR_DEPENDS=libconfig common rapidyaml
 	MAP_DEPENDS=libconfig common rapidyaml
+	WEB_DEPENDS=libconfig common yaml-cpp httplib
 else
 	ALL_DEPENDS=needs_mysql
 	SERVER_DEPENDS=needs_mysql

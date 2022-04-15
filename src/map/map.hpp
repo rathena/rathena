@@ -824,6 +824,14 @@ struct map_data_other_server {
 	uint16 port;
 };
 
+struct inter_conf {
+	uint32 start_status_points;
+	bool emblem_woe_change;
+	uint32 emblem_transparency_limit;
+};
+
+extern struct inter_conf inter_config;
+
 int map_getcell(int16 m,int16 x,int16 y,cell_chk cellchk);
 int map_getcellp(struct map_data* m,int16 x,int16 y,cell_chk cellchk);
 void map_setcell(int16 m, int16 x, int16 y, cell_t cell, bool flag);
@@ -837,8 +845,6 @@ extern int minsave_interval;
 extern int16 save_settings;
 extern int night_flag; // 0=day, 1=night [Yor]
 extern int enable_spy; //Determines if @spy commands are active.
-
-extern uint32 start_status_points;
 
 // Agit Flags
 extern bool agit_flag;

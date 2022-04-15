@@ -29,6 +29,7 @@
 #include "emblem_controller.hpp"
 #include "http.hpp"
 #include "userconfig_controller.hpp"
+#include "merchantstore_controller.hpp"
 
 
 using namespace rathena;
@@ -37,6 +38,7 @@ using namespace rathena;
 static char* msg_table[WEB_MAX_MSG];	/// Web Server messages_conf
 
 struct Web_Config web_config {};
+struct Inter_Config inter_config {};
 std::shared_ptr<httplib::Server> http_server;
 
 int login_server_port = 3306;
@@ -67,6 +69,7 @@ char login_table[32] = "login";
 char guild_emblems_table[32] = "guild_emblems";
 char user_configs_table[32] = "user_configs";
 char char_configs_table[32] = "char_configs";
+char merchant_configs_table[32] = "merchant_configs";
 char guild_db_table[32] = "guild";
 char char_db_table[32] = "char";
 
@@ -135,8 +138,6 @@ bool web_config_read(const char* cfgName, bool normal) {
 			web_config.print_req_res = config_switch(w2);
 		else if (!strcmpi(w1, "import"))
 			web_config_read(w2, normal);
-		else if (!strcmpi(w1, "emblem_transparency_limit"))
-			web_config.emblem_transparency_limit = atoi(w2);
 		else if (!strcmpi(w1, "allow_gifs"))
 			web_config.allow_gifs = config_switch(w2) == 1;
 	}
@@ -168,7 +169,11 @@ int inter_config_read(const char* cfgName)
 		if (sscanf(line, "%23[^:]: %1023[^\r\n]", w1, w2) != 2)
 			continue;
 
-		if(!strcmpi(w1,"login_server_ip"))
+		if (!strcmpi(w1, "emblem_transparency_limit"))
+			inter_config.emblem_woe_change = atoi(w2);
+		else if (!strcmpi(w1, "emblem_transparency_limit"))
+			inter_config.emblem_woe_change = config_switch(w2) == 1;
+		else if(!strcmpi(w1,"login_server_ip"))
 			safestrncpy(login_server_ip,w2,sizeof(login_server_ip));
 		else if(!strcmpi(w1,"login_server_port"))
 			login_server_port = atoi(w2);
@@ -204,6 +209,8 @@ int inter_config_read(const char* cfgName)
 			safestrncpy(user_configs_table, w2, sizeof(user_configs_table));
 		else if (!strcmpi(w1, "char_configs"))
 			safestrncpy(char_configs_table, w2, sizeof(char_configs_table));
+		else if (!strcmpi(w1, "merchant_configs"))
+			safestrncpy(merchant_configs_table, w2, sizeof(merchant_configs_table));
 		else if (!strcmpi(w1, "guild_emblems"))
 			safestrncpy(guild_emblems_table, w2, sizeof(guild_emblems_table));
 		else if (!strcmpi(w1, "login_server_account_db"))
@@ -229,6 +236,9 @@ void web_set_defaults() {
 	safestrncpy(web_config.webconf_name, "conf/web_athena.conf", sizeof(web_config.webconf_name));
 	safestrncpy(web_config.msgconf_name, "conf/msg_conf/web_msg.conf", sizeof(web_config.msgconf_name));
 	web_config.print_req_res = false;
+
+	inter_config.emblem_transparency_limit = 100;
+	inter_config.emblem_woe_change = true;
 }
 
 
@@ -417,6 +427,8 @@ int do_init(int argc, char** argv) {
 	http_server->Post("/userconfig/save", userconfig_save);
 	http_server->Post("/charconfig/load", charconfig_load);
 	http_server->Post("/charconfig/save", charconfig_save);
+	http_server->Post("/MerchantStore/load", merchantstore_load);
+	http_server->Post("/MerchantStore/save", merchantstore_save);
 
 	// set up logger
 	http_server->set_logger(logger);

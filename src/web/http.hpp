@@ -4,12 +4,12 @@
 #ifndef HTTP_HPP
 #define HTTP_HPP
 
+#ifdef WIN32
+#include "../common/winapi.hpp"
+#endif
 
 #include <httplib.h>
 
-#ifdef WIN32
-#include <Windows.h>
-#endif
 
 typedef httplib::Request Request;
 typedef httplib::Response Response;

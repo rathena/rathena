@@ -11,6 +11,7 @@
 #include "auth.hpp"
 #include "http.hpp"
 #include "sqllock.hpp"
+#include "webutils.hpp"
 #include "web.hpp"
 
 HANDLER_FUNC(userconfig_save) {
@@ -27,6 +28,7 @@ HANDLER_FUNC(userconfig_save) {
 
 	if (req.has_file("data")) {
 		data = req.get_file_value("data").content;
+		addToJsonObject(data, "\"Type\": 1");
 	} else {
 		data = "{\"Type\": 1}";
 	}
@@ -133,7 +135,7 @@ HANDLER_FUNC(userconfig_load) {
 		return;
 	}
 
-	char databuf[10000];
+	char databuf[SQL_BUFFER_SIZE];
 
 	if (SQL_SUCCESS != SqlStmt_BindColumn(stmt, 0, SQLDT_STRING, &databuf, sizeof(databuf), NULL, NULL)
 		|| SQL_SUCCESS != SqlStmt_NextRow(stmt)
