@@ -93,6 +93,11 @@ uint64 PlayerGroupDatabase::parseBodyNode( const ryml::NodeRef& node ){
 			return 0;
 		}
 
+		if (level > 99) {
+			this->invalidWarning(node["Level"], "Group level %u exceeds 99, capping.\n", level);
+			level = 99;
+		}
+
 		group->level = level;
 	}
 
