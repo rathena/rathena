@@ -9659,14 +9659,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	// List of hardcoded status cured.
 	switch (type) {
-		case SC_STONE:
-		case SC_FREEZE:
-		case SC_STUN:
-			if (sc->data[SC_DANCING]) {
-				unit_stop_walking(bl, 1);
-				status_change_end(bl, SC_DANCING, INVALID_TIMER);
-			}
-			break;
 		case SC_BLESSING:
 			// !TODO: Blessing and Agi up should do 1 damage against players on Undead Status, even on PvM
 			// !but cannot be plagiarized (this requires aegis investigation on packets and official behavior) [Brainstorm]
@@ -12018,14 +12010,16 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					unit_stop_attack(bl);
 				}
 				break;
-			case SC_WHITEIMPRISON:
 			case SC_DEEPSLEEP:
 			case SC_CRYSTALIZE:
 			case SC_FREEZE:
 			case SC_STUN:
 			case SC_GRAVITYCONTROL:
-				if (sc->data[SC_DANCING])
+			case SC_STONE:
+				if (sc->data[SC_DANCING]) {
 					unit_stop_walking(bl, 1);
+					status_change_end(bl, SC_DANCING, INVALID_TIMER);
+				}
 				break;
 			default:
 				if (!unit_blown_immune(bl,0x1))
@@ -12389,26 +12383,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		}
 		if (sce->timer != INVALID_TIMER) // Could be a SC with infinite duration
 			delete_timer(sce->timer,status_change_timer);
-		if (sc->opt1)
-			switch (type) {
-				// "Ugly workaround"  [Skotlex]
-				// delays status change ending so that a skill that sets opt1 fails to
-				// trigger when it also removed one
-				case SC_STONE:
-				case SC_STONEWAIT:
-					sce->val4 = -1; // Petrify time
-				case SC_FREEZE:
-				case SC_STUN:
-				case SC_SLEEP:
-					if (sce->val1) {
-						// Removing the 'level' shouldn't affect anything in the code
-						// since these SC are not affected by it, and it lets us know
-						// if we have already delayed this attack or not.
-						sce->val1 = 0;
-						sce->timer = add_timer(gettick()+10, status_change_timer, bl->id, type);
-						return 1;
-					}
-			}
 	}
 
 	(sc->count)--;
