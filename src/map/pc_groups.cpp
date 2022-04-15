@@ -239,12 +239,16 @@ void PlayerGroupDatabase::loadingFinished(){
 
 						// Inherit atcommands
 						for( auto& command : otherGroup->commands ){
-							group->commands[command.first] = command.second;
+							if( command.second ){
+								group->commands[command.first] = command.second;
+							}
 						}
 
 						// Inherit charcommands
 						for( auto& command : otherGroup->commands ){
-							group->commands[command.first] = command.second;
+							if( command.second ){
+								group->commands[command.first] = command.second;
+							}
 						}
 
 						// Inherit permissions
