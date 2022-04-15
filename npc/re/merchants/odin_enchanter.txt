@@ -81,9 +81,11 @@ hu_in01,97,322,5	script	Susan Grey#odin	4_F_HUWOMAN,{
 					.@part = EQI_SHOES;
 					break;
 			}
-			if (getequiprandomoption(.@part,0,ROA_ID)) {
-				mes "^ff0000Random option found. The equipment cannot be enchanted.^000000";
-				close;
+			for (.@i = 0; .@i < MAX_ITEM_RDM_OPT; .@i++) {
+				if ( getequiprandomoption(EQI_HAND_R, .@i, ROA_ID)) {
+					mes "^ff0000Random option found. The equipment cannot be enchanted.^000000";
+					close;
+				}
 			}
 			.@equip_id = getequipid(.@part);
 			switch (.@equip_id) {
@@ -392,9 +394,11 @@ hu_in01,97,322,5	script	Susan Grey#odin	4_F_HUWOMAN,{
 				case 4:
 					.@part = EQI_SHOES;
 			}
-			if (getequiprandomoption(.@part,0,ROA_ID)) {
-				mes "^ff0000Random option found. The equipment cannot be enchanted.^000000";
-				close;
+			for (.@i = 0; .@i < MAX_ITEM_RDM_OPT; .@i++) {
+				if ( getequiprandomoption(EQI_HAND_R, .@i, ROA_ID)) {
+					mes "^ff0000Random option found. The equipment cannot be enchanted.^000000";
+					close;
+				}
 			}
 			.@equip_id = getequipid(.@part);
 			switch (.@equip_id) {
