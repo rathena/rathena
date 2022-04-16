@@ -88723,7 +88723,7 @@ Body:
     DamageMotion: 550
     Ai: 04
     Drops:
-      - Item: Crude_Ammo
+      - Item: CrudeAmmo
         Rate: 2500
       - Item: Vigilante_Bow
         Rate: 50
@@ -88768,7 +88768,7 @@ Body:
     DamageMotion: 480
     Ai: 04
     Drops:
-      - Item: Bandits_Scarf
+      - Item: BanditsScarf
         Rate: 2500
       - Item: Brigan
         Rate: 1000
@@ -88813,7 +88813,7 @@ Body:
     DamageMotion: 360
     Ai: 04
     Drops:
-      - Item: Brown_Muffler
+      - Item: BrownMuffler
         Rate: 2500
       - Item: Brigan
         Rate: 1000
@@ -88862,7 +88862,7 @@ Body:
       ChangeTargetChase: true
       ChangeTargetMelee: true
     Drops:
-      - Item: Clean_Bone
+      - Item: CleanBone
         Rate: 2500
       - Item: Rotten_Meat
         Rate: 1500
@@ -89141,7 +89141,7 @@ Body:
     DamageMotion: 660
     Ai: 04
     Drops:
-      - Item: Broken_Shotgun
+      - Item: BrokenShotgun
         Rate: 2500
       - Item: Brigan
         Rate: 2000
@@ -89188,7 +89188,7 @@ Body:
     DamageMotion: 600
     Ai: 04
     Drops:
-      - Item: Worn_Revolver
+      - Item: WornRevolver
         Rate: 2500
       - Item: Brigan
         Rate: 2000
@@ -89235,7 +89235,7 @@ Body:
     DamageMotion: 500
     Ai: 04
     Drops:
-      - Item: Crude_Scimitar
+      - Item: CrudeScimiter
         Rate: 2500
       - Item: Brigan
         Rate: 2000
@@ -89250,22 +89250,391 @@ Body:
       - Item: E_Cowraiders3_Card
         Rate: 1
         StealProtected: true
-#  - Id: 3750
-#    AegisName: ILL_DRAINLIAR
-#  - Id: 3751
-#    AegisName: ILL_ZOMBIE_C
-#  - Id: 3752
-#    AegisName: ILL_ZOMBIE
-#  - Id: 3753
-#    AegisName: ILL_GHOUL
-#  - Id: 3754
-#    AegisName: ILL_NIGHTMARE
-#  - Id: 3755
-#    AegisName: ILL_BLACK_MUSHROOM
-#  - Id: 3756
-#    AegisName: ILL_BOMI
-#  - Id: 3757
-#    AegisName: ILL_DRACULA
+  - Id: 3750
+    AegisName: ILL_DRAINLIAR
+    Name: Matt Drainliar
+    Level: 131
+    Hp: 42246
+    BaseExp: 3928
+    JobExp: 3769
+    Attack: 1241
+    Attack2: 170
+    Defense: 150
+    MagicDefense: 45
+    Str: 91
+    Agi: 129
+    Vit: 96
+    Int: 92
+    Dex: 168
+    Luk: 90
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    RaceGroups:
+      Illusion_Vampire: true
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 250
+    AttackDelay: 1280
+    AttackMotion: 576
+    DamageMotion: 384
+    Ai: 19
+    Drops:
+      - Item: Carnium
+        Rate: 5000
+      - Item: Tooth_Of_Bat
+        Rate: 5000
+      - Item: Red_Jewel
+        Rate: 50
+      - Item: Wing_Of_Red_Bat
+        Rate: 5000
+      - Item: Short_Bat_Fur
+        Rate: 1500
+      - Item: MattDrainliar_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3751
+    AegisName: ILL_ZOMBIE_C
+    Name: Living Dead
+    Level: 133
+    Hp: 53926
+    BaseExp: 4189
+    JobExp: 3947
+    Attack: 1445
+    Attack2: 181
+    Defense: 90
+    MagicDefense: 24
+    Str: 175
+    Agi: 90
+    Vit: 192
+    Int: 14
+    Dex: 184
+    Luk: 14
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    RaceGroups:
+      Illusion_Vampire: true
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 500
+    AttackMotion: 912
+    DamageMotion: 288
+    Ai: 19
+    Drops:
+      - Item: Dried_Leaf_Of_Ygg
+        Rate: 2000
+      - Item: Cardinal_Jewel_
+        Rate: 50
+      - Item: SuspiciousMagicCircle
+        Rate: 2000
+      - Item: Skul_Ring_
+        Rate: 5
+      - Item: Poison_Herb_Rantana
+        Rate: 60
+      - Item: Poison_Herb_Makulata
+        Rate: 60
+      - Item: LivingDead_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3752
+    AegisName: ILL_ZOMBIE
+    Name: Starving Living Dead
+    Level: 130
+    Hp: 40984
+    BaseExp: 3621
+    JobExp: 3177
+    Attack: 1205
+    Attack2: 153
+    Defense: 60
+    MagicDefense: 20
+    Str: 150
+    Agi: 70
+    Vit: 160
+    Int: 7
+    Dex: 150
+    Luk: 7
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    RaceGroups:
+      Illusion_Vampire: true
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 924
+    AttackMotion: 912
+    DamageMotion: 288
+    Ai: 19
+    Drops:
+      - Item: Dried_Leaf_Of_Ygg
+        Rate: 1500
+      - Item: Cardinal_Jewel_
+        Rate: 50
+      - Item: SuspiciousMagicCircle
+        Rate: 300
+      - Item: Skul_Ring
+        Rate: 5
+      - Item: LivingDead_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3753
+    AegisName: ILL_GHOUL
+    Name: Living Dead
+    Level: 136
+    Hp: 67379
+    BaseExp: 4422
+    JobExp: 3937
+    Attack: 1413
+    Attack2: 203
+    Defense: 90
+    MagicDefense: 30
+    Str: 156
+    Agi: 42
+    Vit: 109
+    Int: 101
+    Dex: 99
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    RaceGroups:
+      Illusion_Vampire: true
+    Element: Undead
+    ElementLevel: 2
+    WalkSpeed: 250
+    AttackDelay: 2456
+    AttackMotion: 912
+    DamageMotion: 504
+    Ai: 19
+    Drops:
+      - Item: Dried_Leaf_Of_Ygg
+        Rate: 2000
+      - Item: Bradium
+        Rate: 100
+      - Item: SuspiciousMagicCircle
+        Rate: 400
+      - Item: Ghoul_Leg
+        Rate: 10
+      - Item: Skul_Ring
+        Rate: 5
+      - Item: Poison_Herb_Scopolia
+        Rate: 30
+      - Item: Skul_Ring_
+        Rate: 1
+      - Item: LivingDead_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3754
+    AegisName: ILL_NIGHTMARE
+    Name: Sweet Nightmare
+    Level: 135
+    Hp: 61334
+    BaseExp: 4023
+    JobExp: 4022
+    Attack: 1310
+    Attack2: 597
+    Defense: 116
+    MagicDefense: 30
+    Str: 144
+    Agi: 94
+    Vit: 84
+    Int: 50
+    Dex: 189
+    Luk: 68
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    RaceGroups:
+      Illusion_Vampire: true
+    Element: Ghost
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1826
+    AttackMotion: 816
+    DamageMotion: 432
+    Ai: 19
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Horseshoe
+        Rate: 5000
+      - Item: Blue_Potion
+        Rate: 30
+      - Item: Carnium
+        Rate: 200
+      - Item: NightmareOfLump
+        Rate: 1500
+      - Item: Infiltrator
+        Rate: 10
+      - Item: Infiltrator_
+        Rate: 2
+      - Item: SweetNightM_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3755
+    AegisName: ILL_BLACK_MUSHROOM
+    Name: Black Mushroom
+    Level: 130
+    Hp: 150000
+    BaseExp: 2437
+    JobExp: 2284
+    Defense: 418
+    MagicDefense: 76
+    Vit: 150
+    Int: 103
+    Luk: 88
+    AttackRange: 1
+    Size: Small
+    Race: Plant
+    RaceGroups:
+      Illusion_Vampire: true
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackMotion: 1
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+    Drops:
+      - Item: Alchol
+        Rate: 50
+      - Item: Detrimindexta
+        Rate: 50
+      - Item: Dew_Laden_Moss
+        Rate: 20
+      - Item: Mushroom_Spore
+        Rate: 5000
+      - Item: Shining_Spore
+        Rate: 1000
+      - Item: Poison_Spore
+        Rate: 500
+      - Item: IllusoryStone
+        Rate: 500
+  - Id: 3756
+    AegisName: ILL_BOMI
+    Name: Bomi
+    Level: 137
+    Hp: 378510
+    BaseExp: 15034
+    JobExp: 13533
+    Attack: 3709
+    Attack2: 1683
+    Defense: 60
+    MagicDefense: 60
+    Str: 90
+    Agi: 87
+    Vit: 40
+    Int: 140
+    Dex: 199
+    Luk: 91
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    RaceGroups:
+      Illusion_Vampire: true
+    Element: Undead
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 864
+    DamageMotion: 480
+    Ai: 19
+    Class: Boss
+    Modes:
+      IgnoreMisc: true
+      KnockBackImmune: true
+    Drops:
+      - Item: Dark_Red_Jewel
+        Rate: 2000
+      - Item: Vampire's_Servant
+        Rate: 100
+      - Item: Torn_Diary
+        Rate: 3000
+      - Item: Bradium
+        Rate: 100
+      - Item: Carnium
+        Rate: 100
+      - Item: Bloodsuck_Plant_Seed
+        Rate: 500
+      - Item: Cape_Of_Ancient_Lord_
+        Rate: 50
+      - Item: Bomi_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3757
+    AegisName: ILL_DRACULA
+    Name: Dracula of Rage
+    Level: 139
+    Hp: 6909690
+    BaseExp: 2682753
+    JobExp: 1817882
+    MvpExp: 1341376
+    Attack: 6396
+    Attack2: 2765
+    Defense: 252
+    MagicDefense: 146
+    Str: 195
+    Agi: 239
+    Vit: 174
+    Int: 201
+    Dex: 270
+    Luk: 195
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    RaceGroups:
+      Illusion_Vampire: true
+    Element: Dark
+    ElementLevel: 4
+    WalkSpeed: 145
+    AttackDelay: 1290
+    AttackMotion: 1140
+    DamageMotion: 576
+    Ai: 19
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Old_Violet_Box
+        Rate: 5000
+      - Item: IllusionStone
+        Rate: 500
+    Drops:
+      - Item: Yggdrasilberry
+        Rate: 5000
+      - Item: Dried_Clover
+        Rate: 2000
+      - Item: Balistar_
+        Rate: 80
+      - Item: Cape_Of_Ancient_Lord_
+        Rate: 80
+      - Item: Ring_
+        Rate: 80
+      - Item: Book_Of_The_Apocalypse
+        Rate: 80
+      - Item: Vampire's_Servant
+        Rate: 100
+      - Item: Ill_Dracula_Card
+        Rate: 1
+        StealProtected: true
   - Id: 3758
     AegisName: ILL_MOONLIGHT
     Name: Angry Moonlight Flower
@@ -89304,7 +89673,7 @@ Body:
         Rate: 5000
       - Item: Yggdrasilberry
         Rate: 2000
-      - Item: Illusion_Stone
+      - Item: IllusionStone
         Rate: 500
     Drops:
       - Item: Bradium
@@ -89360,7 +89729,7 @@ Body:
         Rate: 100
       - Item: Carnium
         Rate: 100
-      - Item: Illusion_Gemstone
+      - Item: IllusoryStone
         Rate: 200
       - Item: Hazy_Dream_Fragment
         Rate: 500
@@ -89720,7 +90089,7 @@ Body:
     Modes:
       Detector: true
     Drops:
-      - Item: Swamp_Bug_Shell
+      - Item: SwampBugPeelings
         Rate: 2500
       - Item: Sticky_Mucus
         Rate: 1500
@@ -89766,7 +90135,7 @@ Body:
     DamageMotion: 1000
     Ai: 04
     Drops:
-      - Item: Brown_Rat_Tail
+      - Item: BrownRatTail
         Rate: 2500
       - Item: Monster's_Feed
         Rate: 100
@@ -91298,7 +91667,7 @@ Body:
         Rate: 150
       - Item: Elunium
         Rate: 12
-      - Item: Crude_Ammo
+      - Item: CrudeAmmo
         Rate: 800
       - Item: Explosive_Powder
         Rate: 30
@@ -91507,7 +91876,7 @@ Body:
     DamageMotion: 480
     Ai: 19
     Drops:
-      - Item: Crude_Ammo
+      - Item: CrudeAmmo
         Rate: 1000
       - Item: Heart_Hunter_Seal
         Rate: 1250
