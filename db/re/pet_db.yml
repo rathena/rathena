@@ -2104,3 +2104,18 @@ Body:
 #      } else {
 #        bonus bAtkRate,1;
 #      }
+#  - Mob: PHREEONI
+#    EggItem: Phreeoni_Egg
+#    FoodItem: ???
+#    Fullness: ?
+#    HungryDelay: ?
+#    IntimacyFed: ?
+#    CaptureRate: ?
+#    SpecialPerformance: ?
+#    AllowAutoFeed: ?
+#    Script: >
+#      if (isequipped(450217)) {
+#        bonus2 bAddClass,Class_All,7;
+#        bonus bAspd,2;
+#      }
+

@@ -5661,6 +5661,19 @@
 	export_constant(IG_COSTUME_MILE_PACK_26_1);
 	export_constant(IG_COSTUME_MILE_PACK_26_2);
 	export_constant(IG_COSTUME_MILE_PACK_26_3);
+	export_constant(IG_BS_ITEM_M_S_52);
+	export_constant(IG_BS_ITEM_M_S_53);
+	export_constant(IG_BS_ITEM_M_S_54);
+	export_constant(IG_BS_ITEM_M_S_55);
+	export_constant(IG_BS_ITEM_M_S_56);
+	export_constant(IG_BS_ITEM_M_S_57);
+	export_constant(IG_BS_ITEM_M_S_58);
+	export_constant(IG_BS_ITEM_M_S_59);
+	export_constant(IG_MONTHLY_PACKAGE_1);
+	export_constant(IG_MONTHLY_PACKAGE_2);
+	export_constant(IG_MONTHLY_PACKAGE_3);
+	export_constant(IG_MONTHLY_BUFF_PACKAGE);
+	export_constant(IG_MONTHLY_BATTLE_PACKAGE);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

@@ -31126,11 +31126,10 @@ Body:
     Buy: 20
     Weight: 10
   - Id: 7925
-    AegisName: Silver_Paper
-    Name: Silver Paper
+    AegisName: M_Dimension_Essence
+    Name: Powerful Dimensional Essence
     Type: Etc
     Buy: 20
-    Weight: 10
   - Id: 7926
     AegisName: Incense
     Name: Incense
@@ -60336,6 +60335,159 @@ Body:
           }
         }
       }
+  - Id: 311384
+    AegisName: Expert_Fighter1
+    Name: Expert Fighter Lv. 1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,2;
+  - Id: 311385
+    AegisName: Expert_Fighter2
+    Name: Expert Fighter Lv. 2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,4;
+  - Id: 311386
+    AegisName: Expert_Fighter3
+    Name: Expert Fighter Lv. 3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,6;
+  - Id: 311387
+    AegisName: Expert_Fighter4
+    Name: Expert Fighter Lv. 4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,8;
+  - Id: 311388
+    AegisName: Expert_Fighter5
+    Name: Expert Fighter Lv. 5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,10;
+  - Id: 311389
+    AegisName: Expert_Magician1
+    Name: Expert Magician Lv. 1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,2;
+  - Id: 311390
+    AegisName: Expert_Magician2
+    Name: Expert Magician Lv. 2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,4;
+  - Id: 311391
+    AegisName: Expert_Magician3
+    Name: Expert Magician Lv. 3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,6;
+  - Id: 311392
+    AegisName: Expert_Magician4
+    Name: Expert Magician Lv. 4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,8;
+  - Id: 311393
+    AegisName: Expert_Magician5
+    Name: Expert Magician Lv. 5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,10;
+  - Id: 311394
+    AegisName: Attack_Delay_5
+    Name: Attack Delay Lv. 5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAspdRate,10;
+      bonus bAspd,1;
+  - Id: 311395
+    AegisName: Hit_Plus1
+    Name: Hit Plus Lv. 1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bHit,5;
+      bonus bPerfectHitRate,3;
+  - Id: 311396
+    AegisName: Hit_Plus2
+    Name: Hit Plus Lv. 2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bHit,10;
+      bonus bPerfectHitRate,6;
+  - Id: 311397
+    AegisName: Hit_Plus3
+    Name: Hit Plus Lv. 3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bHit,15;
+      bonus bPerfectHitRate,9;
+  - Id: 311398
+    AegisName: Hit_Plus4
+    Name: Hit Plus Lv. 4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bHit,20;
+      bonus bPerfectHitRate,12;
+  - Id: 311399
+    AegisName: Hit_Plus5
+    Name: Hit Plus Lv. 5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bHit,25;
+      bonus bPerfectHitRate,15;
+  - Id: 311400
+    AegisName: Caster1
+    Name: Caster Lv. 1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-2;
+  - Id: 311401
+    AegisName: Caster2
+    Name: Caster Lv. 2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-4;
+  - Id: 311402
+    AegisName: Caster3
+    Name: Caster Lv. 3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-6;
+  - Id: 311403
+    AegisName: Caster4
+    Name: Caster Lv. 4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-8;
+  - Id: 311404
+    AegisName: Caster5
+    Name: Caster Lv. 5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-10;
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
