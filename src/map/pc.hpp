@@ -4,6 +4,7 @@
 #ifndef PC_HPP
 #define PC_HPP
 
+#include <bitset>
 #include <memory>
 #include <vector>
 
@@ -19,6 +20,7 @@
 #include "itemdb.hpp" // MAX_ITEMGROUP
 #include "map.hpp" // RC_ALL
 #include "mob.hpp" //e_size
+#include "pc_groups.hpp" // s_player_group
 #include "script.hpp" // struct script_reg, struct script_regstr
 #include "searchstore.hpp"  // struct s_search_store_info
 #include "status.hpp" // unit_data
@@ -408,8 +410,9 @@ struct map_session_data {
 	} special_state;
 	uint32 login_id1, login_id2;
 	uint64 class_;	//This is the internal job ID used by the map server to simplify comparisons/queries/etc. [Skotlex]
-	int group_id, group_pos, group_level;
-	unsigned int permissions;/* group permissions */
+	int group_id;
+	std::shared_ptr<s_player_group> group;
+	std::bitset<PC_PERM_MAX> permissions; // group permissions have to be copied, because they might be adjusted by atcommand addperm
 	int count_rewarp; //count how many time we being rewarped
 
 	int langtype;
@@ -1238,7 +1241,7 @@ bool pc_can_give_bounded_items(struct map_session_data *sd);
 bool pc_can_trade_item(map_session_data *sd, int index);
 
 bool pc_can_use_command(struct map_session_data *sd, const char *command, AtCommandType type);
-#define pc_has_permission(sd, permission) ( ((sd)->permissions&permission) != 0 )
+bool pc_has_permission( struct map_session_data* sd, e_pc_permission permission );
 bool pc_should_log_commands(struct map_session_data *sd);
 
 void pc_setrestartvalue(struct map_session_data *sd, char type);
