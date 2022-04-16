@@ -47242,6 +47242,94 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box16);
+  - Id: 23771
+    AegisName: Mysterious_Plastic
+    Name: Mysterious Plastic Bag
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Flags:
+      Container: true
+    Script: |
+      /* unknown */
+  - Id: 23772
+    AegisName: EP17_1_SPC01
+    Name: OS Weapon Chest
+    Type: Usable
+    Weight: 100
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_EP17_1_SPC01);
+  - Id: 23773
+    AegisName: EP17_1_SPC02
+    Name: Weapon Modification Device Chest (Physical)
+    Type: Usable
+    Weight: 750
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_EP17_1_SPC02);
+  - Id: 23774
+    AegisName: EP17_1_SPC03
+    Name: Weapon Modification Device Chest (Magic)
+    Type: Usable
+    Weight: 750
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_EP17_1_SPC03);
+  - Id: 23775
+    AegisName: EP17_1_SPC04
+    Name: Modification Module Chest
+    Type: Usable
+    Weight: 100
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_EP17_1_SPC04);
   - Id: 23776
     AegisName: EP17_1_SPC05
     Name: Weapon Modifier (Physical)
@@ -48275,7 +48363,7 @@ Body:
     Script: |
       laphine_upgrade();
   - Id: 100130
-    AegisName: Grace_Refine_Ticket
+    AegisName: Grace_Rifine_Ticket
     Name: Grace Refine Ticket
     Type: Delayconsume
     Buy: 20
@@ -48323,7 +48411,7 @@ Body:
     Script: |
       laphine_upgrade();
   - Id: 100133
-    AegisName: Grace_P_Mo_Garment
+    AegisName: Grace_Convert1
     Name: Grace Physical Modification Permit (Garment)
     Type: Delayconsume
     Buy: 20
@@ -48339,7 +48427,7 @@ Body:
     Script: |
       laphine_upgrade();
   - Id: 100134
-    AegisName: Grace_M_Mo_Garment
+    AegisName: Grace_Convert2
     Name: Grace Magical Modification Permit (Garment)
     Type: Delayconsume
     Buy: 20
@@ -48387,7 +48475,7 @@ Body:
     Script: |
       laphine_upgrade();
   - Id: 100137
-    AegisName: Grace_P_Mo_Armor
+    AegisName: Grace_Convert3
     Name: Grace Physical Modification Permit (Armor)
     Type: Delayconsume
     Buy: 20
@@ -48403,7 +48491,7 @@ Body:
     Script: |
       laphine_upgrade();
   - Id: 100138
-    AegisName: Grace_M_Mo_Armor
+    AegisName: Grace_Convert4
     Name: Grace Magical Modification Permit (Armor)
     Type: Delayconsume
     Buy: 20

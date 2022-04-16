@@ -12004,7 +12004,7 @@ Body:
             MaxValue: 5
             Chance: 1000
   - Id: 141
-    Group: GRACE_P_MO_GARMENT
+    Group: GRACE_CONVERT1
     Slots:
       - Slot: 1
         Options:
@@ -12103,7 +12103,7 @@ Body:
             MaxValue: 5
             Chance: 769
   - Id: 142
-    Group: GRACE_M_MO_GARMENT
+    Group: GRACE_CONVERT2
     Slots:
       - Slot: 1
         Options:
@@ -12202,7 +12202,7 @@ Body:
             MaxValue: 5
             Chance: 769
   - Id: 143
-    Group: GRACE_P_MO_ARMOR
+    Group: GRACE_CONVERT3
     Slots:
       - Slot: 1
         Options:
@@ -12293,7 +12293,7 @@ Body:
             MaxValue: 5
             Chance: 769
   - Id: 144
-    Group: GRACE_M_MO_ARMOR
+    Group: GRACE_CONVERT4
     Slots:
       - Slot: 1
         Options:

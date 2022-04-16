@@ -2972,9 +2972,17 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 			case NPC_POISONATTACK:
 			case NPC_HOLYATTACK:
 			case NPC_DARKNESSATTACK:
-			case NPC_UNDEADATTACK:
 			case NPC_TELEKINESISATTACK:
+			case NPC_UNDEADATTACK:
+			case NPC_CHANGEUNDEAD:
 			case NPC_EARTHQUAKE:
+			case NPC_POISON:
+			case NPC_BLINDATTACK:
+			case NPC_SILENCEATTACK:
+			case NPC_STUNATTACK:
+			case NPC_PETRIFYATTACK:
+			case NPC_CURSEATTACK:
+			case NPC_SLEEPATTACK:
 			case NPC_BLEEDING:
 				hitrate += hitrate * 20 / 100;
 				break;
@@ -9815,6 +9823,7 @@ static const struct _battle_data {
 	{ "mobs_level_up_exp_rate",             &battle_config.mobs_level_up_exp_rate,          1,      1,      INT_MAX,        },
 	{ "pk_min_level",                       &battle_config.pk_min_level,                    55,     1,      INT_MAX,        },
 	{ "skill_steal_max_tries",              &battle_config.skill_steal_max_tries,           0,      0,      UCHAR_MAX,      },
+	{ "skill_steal_random_options",         &battle_config.skill_steal_random_options,      0,      0,      1,              },
 	{ "motd_type",                          &battle_config.motd_type,                       0,      0,      1,              },
 	{ "finding_ore_rate",                   &battle_config.finding_ore_rate,                100,    0,      INT_MAX,        },
 	{ "exp_calc_type",                      &battle_config.exp_calc_type,                   0,      0,      1,              },
