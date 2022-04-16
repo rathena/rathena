@@ -220,7 +220,6 @@ Body:
     Flags:
       BossResist: true
       StopWalking: true
-      RemoveOnDamaged: true
       OverlapFail: true
       SpreadEffect: true
     Fail:
