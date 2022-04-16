@@ -4,46 +4,6 @@
 //= 1.0 First version. [crazyarashi]
 //============================================================
 
-sp_cor,258,287,0	script	#spcor_to_bapw2	WARPNPC,1,1,{
-	end;
-	
-OnTouch:
-	if(isbegin_quest(18000) < 2)
-		npctalk "Rookie : Oh? I haven't opened it yet! Hold on for a while, we're doing our best to open it!","Rookie#171_cor_2",bc_self;
-	else
-		warp "ba_pw02",275,20;
-end;
-}
-
-ba_pw02,275,15,0	warp	#bapw2_to_sprcor	1,1,sp_cor,257,285
-
-
-ba_pw02,7,149,0	script	#bapw2_to_bapw1	WARPNPC,1,1,{
-	end;
-	
-OnTouch:
-	if(isbegin_quest(11615) < 2)
-		mes "There is still some work to be done here. Let's look around more.";
-	else
-		warp "ba_pw01",13,115;
-end;
-}
-
-ba_pw01,10,115,0	warp	#bapw1_to_bapw2	1,1,ba_pw02,10,149
-
-ba_pw01,91,291,0	script	#bapw1_to_lobby	WARPNPC,1,1,{
-	end;
-	
-OnTouch:
-	if(isbegin_quest(11617) < 2)
-		mes "There is still some work to be done here. Let's look around more.";
-	else
-		warp "ba_in01",23,315;
-end;
-}
-
-ba_in01,24,306,0	warp	#lobby_to_bapw1	1,1,ba_pw01,91,288
-
 ba_in01,12,321,0	script	#lobby_to_maison	WARPNPC,1,1,{
 	end;
 	
@@ -135,6 +95,9 @@ ba_pw03,10,115,0	warp	#bapw3_to_maison	1,1,ba_maison,88,268
 ba_in01,387,38,0	warp	#bathent_to_babath	1,1,ba_bath,159,26
 ba_bath,159,22,0	warp	#babath_to_bathent	1,1,ba_in01,382,38
 
+//============================================================
+// Forgotten Valley
+//============================================================
 ba_maison,314,203,0	script	#maison_to_balost	WARPNPC,1,1,{
 	if(isbegin_quest(8586) != 2)
 		npctalk "Luina : Just a moment, If you want to get in there, I need to talk to you first...","Luina#172_lost_0",bc_self;
