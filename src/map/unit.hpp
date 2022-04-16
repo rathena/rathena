@@ -62,7 +62,6 @@ struct unit_data {
 	char walk_done_event[EVENT_NAME_LENGTH];
 	char title[NAME_LENGTH];
 	int32 group_id;
-	sc_type lastEffect;
 };
 
 struct view_data {

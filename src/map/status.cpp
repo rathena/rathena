@@ -1001,12 +1001,10 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 				sc_type type = static_cast<sc_type>(it.first);
 
 				if (sc->data[type] && it.second->flag[SCF_REMOVEONDAMAGED]) {
-					if (sc->opt1 > OPT1_NONE) {
-						unit_data *ud = unit_bl2ud(target);
-
-						if (ud != nullptr)
-							ud->lastEffect = type;
-					}
+					// A status change that gets broken by damage should still be considered when calculating if a status change can be applied or not (for the same attack).
+					// !TODO: This is a temporary solution until we refactor the code so that the calculation of an SC is done at the start of an attack rather than after the damage was applied.
+					if (sc->opt1 > OPT1_NONE)
+						sc->lastEffect = type;
 					status_change_end(target, type, INVALID_TIMER);
 				}
 			}
@@ -9265,18 +9263,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	// Check failing SCs from list
 	if (!scdb->fail.empty()) {
-		// Don't let OPT1 that have RemoveOnDamaged start a new effect
-		if (sc->opt1 > OPT1_NONE && scdb->flag[SCF_REMOVEONDAMAGED]) {
-			unit_data *ud = unit_bl2ud(bl);
-
-			if (ud != nullptr && ud->lastEffect == type) {
-				ud->lastEffect = SC_NONE;
+		for (const auto &it : scdb->fail) {
+			// Don't let OPT1 that have RemoveOnDamaged start a new effect in the same attack.
+			if (sc->lastEffect == it) {
+				sc->lastEffect = SC_NONE;
 				return 0;
 			}
-		}
 
-		for (const auto &it : scdb->fail) {
-			if (it && sc->data[it])
+			if (sc->data[it])
 				return 0;
 		}
 	}
