@@ -1342,7 +1342,7 @@ int intif_parse_WisEnd(int fd)
  */
 static int mapif_parse_WisToGM_sub(struct map_session_data* sd,va_list va)
 {
-	int permission = va_arg(va, int);
+	e_pc_permission permission = va_arg(va, e_pc_permission);
 	char *wisp_name;
 	char *message;
 	int len;

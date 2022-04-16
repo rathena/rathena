@@ -443,7 +443,7 @@ int pc_get_group_id(struct map_session_data *sd) {
 * @return Group Level
 */
 int pc_get_group_level(struct map_session_data *sd) {
-	return sd->group_level;
+	return sd->group->level;
 }
 
 /**
@@ -12454,9 +12454,12 @@ bool pc_isautolooting(struct map_session_data *sd, t_itemid nameid)
  * @param command Command name without @/# and params
  * @param type is it atcommand or charcommand
  */
-bool pc_can_use_command(struct map_session_data *sd, const char *command, AtCommandType type)
-{
-	return pc_group_can_use_command(pc_get_group_id(sd), command, type);
+bool pc_can_use_command( struct map_session_data *sd, const char *command, AtCommandType type ){
+	return sd->group->can_use_command( command, type );
+}
+
+bool pc_has_permission( struct map_session_data* sd, e_pc_permission permission ){
+	return sd->permissions.test( permission );
 }
 
 /**
@@ -12464,9 +12467,8 @@ bool pc_can_use_command(struct map_session_data *sd, const char *command, AtComm
  * according to their group setting.
  * @param sd Player map session data
  */
-bool pc_should_log_commands(struct map_session_data *sd)
-{
-	return pc_group_should_log_commands(pc_get_group_id(sd));
+bool pc_should_log_commands( struct map_session_data *sd ){
+	return sd->group->log_commands;
 }
 
 /**
