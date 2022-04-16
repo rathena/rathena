@@ -85549,7 +85549,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus2 bSubEle,Ele_Dark,(.@r >= 8 ? 25: 10);
-      /*.@bonus = 15;
+      .@bonus = 15;
       if (.@r >= 7) {
          .@bonus += 15;
       }
@@ -85558,7 +85558,7 @@ Body:
       }
       bonus2 bAddRace2,RC2_ILLUSION_VAMPIRE,.@bonus;
       bonus2 bSubRace2,RC2_ILLUSION_VAMPIRE,.@bonus;
-      bonus2 bMagicAddRace2,RC2_ILLUSION_VAMPIRE,.@bonus;*/
+      bonus2 bMagicAddRace2,RC2_ILLUSION_VAMPIRE,.@bonus;
   - Id: 19464
     AegisName: C_Melon_Cap
     Name: Costume Melon Bread Hat
