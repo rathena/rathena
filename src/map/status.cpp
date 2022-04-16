@@ -1000,8 +1000,15 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 			for (const auto &it : status_db) {
 				sc_type type = static_cast<sc_type>(it.first);
 
-				if (sc->data[type] && it.second->flag[SCF_REMOVEONDAMAGED])
+				if (sc->data[type] && it.second->flag[SCF_REMOVEONDAMAGED]) {
+					if (sc->opt1 > OPT1_NONE) {
+						unit_data *ud = unit_bl2ud(target);
+
+						if (ud != nullptr)
+							ud->lastEffect = type;
+					}
 					status_change_end(target, type, INVALID_TIMER);
+				}
 			}
 			if ((sce=sc->data[SC_ENDURE]) && !sce->val4) {
 				/** [Skotlex]
@@ -9258,6 +9265,16 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	// Check failing SCs from list
 	if (!scdb->fail.empty()) {
+		// Don't let OPT1 that have RemoveOnDamaged start a new effect
+		if (sc->opt1 > OPT1_NONE && scdb->flag[SCF_REMOVEONDAMAGED]) {
+			unit_data *ud = unit_bl2ud(bl);
+
+			if (ud != nullptr && ud->lastEffect == type) {
+				ud->lastEffect = SC_NONE;
+				return 0;
+			}
+		}
+
 		for (const auto &it : scdb->fail) {
 			if (it && sc->data[it])
 				return 0;
