@@ -9389,16 +9389,15 @@ Body:
     Name: NPC_CHANGEUNDEAD
     Description: Undead Attribute Change
     MaxLevel: 5
-    Type: Magic
+    Type: Weapon
     TargetType: Attack
-    DamageFlags:
-      NoDamage: true
     Flags:
       IsNpc: true
-    Range: 9
+    Range: -2
+    Hit: Single
     HitCount: 1
     Element: Undead
-    Duration1: 30000
+    Duration2: 60000
     Status: ChangeUndead
   - Id: 349
     Name: NPC_POWERUP

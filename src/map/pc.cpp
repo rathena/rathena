@@ -443,7 +443,7 @@ int pc_get_group_id(struct map_session_data *sd) {
 * @return Group Level
 */
 int pc_get_group_level(struct map_session_data *sd) {
-	return sd->group_level;
+	return sd->group->level;
 }
 
 /**
@@ -2422,54 +2422,121 @@ void pc_clean_skilltree(struct map_session_data *sd)
 	}
 }
 
-uint64 pc_calc_skilltree_normalize_job(struct map_session_data *sd)
-{
-	int skill_point, novice_skills;
-	uint64 c = sd->class_;
+uint64 pc_calc_skilltree_normalize_job_sub( struct map_session_data *sd ){
+	int skill_point = pc_calc_skillpoint( sd );
 
-	if (!battle_config.skillup_limit || pc_has_permission(sd, PC_PERM_ALL_SKILL))
-		return c;
+	if( sd->class_ & MAPID_SUMMONER ){
+		// Novice's skill points for basic skill.
+		std::shared_ptr<s_job_info> summoner_job = job_db.find( JOB_SUMMONER );
 
-	skill_point = pc_calc_skillpoint(sd);
+		int summoner_skills = summoner_job->max_job_level - 1;
 
-	// Novice's skill points for basic skill.
-	std::shared_ptr<s_job_info> novice_job = job_db.find(JOB_NOVICE);
+		if( skill_point < summoner_skills ){
+			return MAPID_SUMMONER;
+		}
 
-	novice_skills = novice_job->max_job_level - 1;
+		skill_point -= summoner_skills;
+	}else{
+		// Novice's skill points for basic skill.
+		std::shared_ptr<s_job_info> novice_job = job_db.find( JOB_NOVICE );
+
+		int novice_skills = novice_job->max_job_level - 1;
+
+		if( skill_point < novice_skills ){
+			return MAPID_NOVICE;
+		}
+
+		skill_point -= novice_skills;
+	}
 
 	// 1st Class Job LV Check
-	if (sd->class_ & JOBL_2 && (sd->class_ & MAPID_UPPERMASK) != MAPID_SUPER_NOVICE && !sd->change_level_2nd) {
-		sd->change_level_2nd = job_db.find(pc_mapid2jobid(sd->class_ & MAPID_BASEMASK, sd->status.sex))->max_job_level;
-		pc_setglobalreg(sd, add_str(JOBCHANGE2ND_VAR), sd->change_level_2nd);
+	if( sd->class_ & JOBL_2 && ( sd->class_ & MAPID_UPPERMASK ) != MAPID_SUPER_NOVICE ){
+		uint64 mapid_1st = sd->class_ & MAPID_BASEMASK;
+		int class_1st = pc_mapid2jobid( mapid_1st, sd->status.sex );
+
+		if( !sd->change_level_2nd ){
+			if( class_1st >= JOB_NOVICE ){
+				sd->change_level_2nd = job_db.find( class_1st )->max_job_level;
+			}else{
+				sd->change_level_2nd = 0;
+			}
+
+			pc_setglobalreg( sd, add_str( JOBCHANGE2ND_VAR ), sd->change_level_2nd );
+		}
+
+		if( class_1st > 0 && skill_point < ( sd->change_level_2nd - 1 ) ){
+			return mapid_1st;
+		}
+
+		skill_point -= ( sd->change_level_2nd - 1 );
 	}
 
 	// 2nd Class Job LV Check
-	if (sd->class_ & JOBL_THIRD && (sd->class_ & MAPID_THIRDMASK) != MAPID_SUPER_NOVICE_E && !sd->change_level_3rd) {
-		sd->change_level_3rd = job_db.find(pc_mapid2jobid(sd->class_ & MAPID_UPPERMASK, sd->status.sex))->max_job_level;
-		pc_setglobalreg(sd, add_str(JOBCHANGE3RD_VAR), sd->change_level_3rd);
+	if( sd->class_ & JOBL_THIRD && (sd->class_ & MAPID_THIRDMASK) != MAPID_SUPER_NOVICE_E ){
+		uint64 mapid_2nd = sd->class_ & MAPID_UPPERMASK;
+		int class_2nd = pc_mapid2jobid( mapid_2nd, sd->status.sex );
+
+		if( !sd->change_level_3rd ){
+			if( class_2nd >= JOB_NOVICE ){
+				sd->change_level_3rd = job_db.find( class_2nd )->max_job_level;
+			}else{
+				sd->change_level_3rd = 0;
+			}
+
+			pc_setglobalreg( sd, add_str( JOBCHANGE3RD_VAR ), sd->change_level_3rd );
+		}
+
+		if( class_2nd > 0 && skill_point < ( sd->change_level_3rd - 1 ) ){
+			return mapid_2nd;
+		}
+
+		skill_point -= ( sd->change_level_3rd - 1 );
 	}
 
 	// 3rd Class Job LV Check
-	if (sd->class_ & JOBL_FOURTH && !sd->change_level_4th) {
-		sd->change_level_4th = job_db.find(pc_mapid2jobid(sd->class_ & MAPID_THIRDMASK | JOBL_THIRD, sd->status.sex))->max_job_level;
-		pc_setglobalreg(sd, add_str(JOBCHANGE4TH_VAR), sd->change_level_4th);
+	if( sd->class_ & JOBL_FOURTH ){
+		uint64 mapid_3rd = sd->class_ & MAPID_THIRDMASK | JOBL_THIRD;
+		int class_3rd = pc_mapid2jobid( mapid_3rd, sd->status.sex );
+
+		if( !sd->change_level_4th ){
+			if( class_3rd >= JOB_NOVICE ){
+				sd->change_level_4th = job_db.find( class_3rd )->max_job_level;
+			}else{
+				sd->change_level_4th = 0;
+			}
+
+			pc_setglobalreg( sd, add_str( JOBCHANGE4TH_VAR ), sd->change_level_4th );
+		}
+
+		if( class_3rd > 0 && skill_point < ( sd->change_level_4th - 1 ) ){
+			return mapid_3rd;
+		}
+
+		skill_point -= ( sd->change_level_4th - 1 );
 	}
 
-	// Check the skill tree the player has access to depending on the used number of skill points.
-	if (skill_point < novice_skills && (sd->class_&MAPID_BASEMASK) != MAPID_SUMMONER) // Novice Skill Tree
-		c = MAPID_NOVICE;
-	else if (skill_point < novice_skills + (sd->change_level_2nd - 1) && (sd->class_&MAPID_UPPERMASK) != MAPID_SUPER_NOVICE) // 1st Job Skill Tree
-		c &= MAPID_BASEMASK;
-	else if (skill_point < novice_skills + (sd->change_level_2nd - 1) + (sd->change_level_3rd - 1) && (sd->class_&MAPID_THIRDMASK) != MAPID_SUPER_NOVICE_E) // 2nd Job Skill Tree
-		c &= MAPID_UPPERMASK;
-	else if (skill_point < novice_skills + (sd->change_level_2nd - 1) + (sd->change_level_3rd - 1) + (sd->change_level_4th - 1)) // 3rd Job Skill Tree
-		c &= MAPID_THIRDMASK;
+	return sd->class_;
+}
+
+uint64 pc_calc_skilltree_normalize_job( struct map_session_data *sd ){
+	if( !battle_config.skillup_limit || pc_has_permission( sd, PC_PERM_ALL_SKILL ) ){
+		return sd->class_;
+	}
+
+	uint64 c = pc_calc_skilltree_normalize_job_sub( sd );
 
 	// Special Masks
-	if (sd->class_&JOBL_UPPER)
-		c |= JOBL_UPPER;// Rebirth Job
-	if (sd->class_&JOBL_BABY)
-		c |= JOBL_BABY;// Baby Job
+	if( sd->class_&JOBL_UPPER ){
+		if( pc_mapid2jobid( c | JOBL_UPPER, sd->status.sex ) >= JOB_NOVICE ){
+			c |= JOBL_UPPER;// Rebirth Job
+		}
+	}
+
+	if( sd->class_&JOBL_BABY ){
+		if( pc_mapid2jobid( c | JOBL_BABY, sd->status.sex ) >= JOB_NOVICE ){
+			c |= JOBL_BABY;// Baby Job
+		}
+	}
 
 	return c;
 }
@@ -6108,7 +6175,6 @@ bool pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 ski
 	unsigned char flag = 0;
 	struct status_data *sd_status, *md_status;
 	struct mob_data *md;
-	struct item tmp_item;
 
 	if(!sd || !bl || bl->type!=BL_MOB)
 		return false;
@@ -6154,11 +6220,13 @@ bool pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 ski
 		return false;
 
 	itemid = md->db->dropitem[i].nameid;
-	memset(&tmp_item,0,sizeof(tmp_item));
+	struct item tmp_item = {};
 	tmp_item.nameid = itemid;
 	tmp_item.amount = 1;
 	tmp_item.identify = itemdb_isidentified(itemid);
-	mob_setdropitem_option(&tmp_item, &md->db->dropitem[i]);
+	if( battle_config.skill_steal_random_options ){
+		mob_setdropitem_option( &tmp_item, &md->db->dropitem[i] );
+	}
 	flag = pc_additem(sd,&tmp_item,1,LOG_TYPE_PICKDROP_PLAYER);
 
 	//TODO: Should we disable stealing when the item you stole couldn't be added to your inventory? Perhaps players will figure out a way to exploit this behaviour otherwise?
@@ -6941,6 +7009,7 @@ uint64 pc_jobid2mapid(unsigned short b_class)
 		case JOB_TROUVERE:              return MAPID_TROUBADOURTROUVERE;
 		case JOB_BIOLO:                 return MAPID_BIOLO;
 		case JOB_ABYSS_CHASER:          return MAPID_ABYSS_CHASER;
+		case JOB_SOUL_ASCETIC:          return MAPID_SOUL_ASCETIC;
 	//Unknown
 		default:
 			return -1;
@@ -7095,12 +7164,16 @@ int pc_mapid2jobid(uint64 class_, int sex)
 		case MAPID_SUMMONER:              return JOB_SUMMONER;
 		case MAPID_SPIRIT_HANDLER:        return JOB_SPIRIT_HANDLER;
 	//4-1 Jobs
+		case MAPID_HYPER_NOVICE:          return JOB_HYPER_NOVICE;
 		case MAPID_DRAGON_KNIGHT:         return JOB_DRAGON_KNIGHT;
 		case MAPID_ARCH_MAGE:             return JOB_ARCH_MAGE;
 		case MAPID_WINDHAWK:              return JOB_WINDHAWK;
 		case MAPID_CARDINAL:              return JOB_CARDINAL;
 		case MAPID_MEISTER:               return JOB_MEISTER;
 		case MAPID_SHADOW_CROSS:          return JOB_SHADOW_CROSS;
+		case MAPID_SKY_EMPEROR:           return JOB_SKY_EMPEROR;
+		case MAPID_NIGHT_WATCH:           return JOB_NIGHT_WATCH;
+		case MAPID_SHINKIRO_SHIRANUI:     return sex?JOB_SHINKIRO:JOB_SHIRANUI;
 	//4-2 Jobs
 		case MAPID_IMPERIAL_GUARD:        return JOB_IMPERIAL_GUARD;
 		case MAPID_ELEMENTAL_MASTER:      return JOB_ELEMENTAL_MASTER;
@@ -7108,6 +7181,7 @@ int pc_mapid2jobid(uint64 class_, int sex)
 		case MAPID_TROUBADOURTROUVERE:    return sex?JOB_TROUBADOUR:JOB_TROUVERE;
 		case MAPID_BIOLO:                 return JOB_BIOLO;
 		case MAPID_ABYSS_CHASER:          return JOB_ABYSS_CHASER;
+		case MAPID_SOUL_ASCETIC:          return JOB_SOUL_ASCETIC;
 	//Unknown
 		default:
 			return -1;
@@ -10098,20 +10172,18 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 		return false;
 	}
 
-	// changing from 1st to 2nd job
-	if ((b_class&JOBL_2) && !(sd->class_&JOBL_2) && (sd->class_&MAPID_UPPERMASK) != MAPID_SUPER_NOVICE) {
-		sd->change_level_2nd = sd->status.job_level;
-		pc_setglobalreg(sd, add_str(JOBCHANGE2ND_VAR), sd->change_level_2nd);
-	}
-	// changing from 2nd to 3rd job
-	else if((b_class&JOBL_THIRD) && !(sd->class_&JOBL_THIRD)) {
-		sd->change_level_3rd = sd->status.job_level;
-		pc_setglobalreg(sd, add_str(JOBCHANGE3RD_VAR), sd->change_level_3rd);
-	}
-	// changing from 3rd to 4th job
-	else if ((b_class&JOBL_FOURTH) && !(sd->class_&JOBL_FOURTH)) {
+	if( ( b_class&JOBL_FOURTH ) && !( sd->class_&JOBL_FOURTH ) ){
+		// Changing to 4th job
 		sd->change_level_4th = sd->status.job_level;
-		pc_setglobalreg(sd, add_str(JOBCHANGE4TH_VAR), sd->change_level_4th);
+		pc_setglobalreg( sd, add_str( JOBCHANGE4TH_VAR ) , sd->change_level_4th );
+	}else if( ( b_class&JOBL_THIRD ) && !( sd->class_&JOBL_THIRD ) ){
+		// changing from 2nd to 3rd job
+		sd->change_level_3rd = sd->status.job_level;
+		pc_setglobalreg( sd, add_str( JOBCHANGE3RD_VAR ), sd->change_level_3rd );
+	}else if( ( b_class&JOBL_2 ) && !( sd->class_&JOBL_2 ) ){
+		// changing from 1st to 2nd job
+		sd->change_level_2nd = sd->status.job_level;
+		pc_setglobalreg( sd, add_str( JOBCHANGE2ND_VAR ), sd->change_level_2nd );
 	}
 
 	if(sd->cloneskill_idx > 0) {
@@ -12382,9 +12454,12 @@ bool pc_isautolooting(struct map_session_data *sd, t_itemid nameid)
  * @param command Command name without @/# and params
  * @param type is it atcommand or charcommand
  */
-bool pc_can_use_command(struct map_session_data *sd, const char *command, AtCommandType type)
-{
-	return pc_group_can_use_command(pc_get_group_id(sd), command, type);
+bool pc_can_use_command( struct map_session_data *sd, const char *command, AtCommandType type ){
+	return sd->group->can_use_command( command, type );
+}
+
+bool pc_has_permission( struct map_session_data* sd, e_pc_permission permission ){
+	return sd->permissions.test( permission );
 }
 
 /**
@@ -12392,9 +12467,8 @@ bool pc_can_use_command(struct map_session_data *sd, const char *command, AtComm
  * according to their group setting.
  * @param sd Player map session data
  */
-bool pc_should_log_commands(struct map_session_data *sd)
-{
-	return pc_group_should_log_commands(pc_get_group_id(sd));
+bool pc_should_log_commands( struct map_session_data *sd ){
+	return sd->group->log_commands;
 }
 
 /**

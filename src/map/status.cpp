@@ -14759,18 +14759,16 @@ uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (this->nodeExists(node, "CalcFlags")) {
 		const ryml::NodeRef& flagNode = node["CalcFlags"];
 
-		for (const auto &it : flagNode) {
-			if (this->nodeExists(it, "All")) {
-				bool active;
+		if (this->nodeExists(flagNode, "All")) {
+			bool active;
 
-				if (!this->asBool(it, "All", active))
-					return 0;
+			if (!this->asBool(flagNode, "All", active))
+				return 0;
 
-				if (active)
-					status->calc_flag = this->getSCB_ALL();
-				else
-					status->calc_flag.reset();
-			}
+			if (active)
+				status->calc_flag = this->getSCB_ALL();
+			else
+				status->calc_flag.reset();
 		}
 
 		for (const auto &it : flagNode) {
