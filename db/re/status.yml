@@ -7572,6 +7572,7 @@ Body:
   - Status: Chargingpierce_Count
     Icon: EFST_CHARGINGPIERCE_COUNT
     Flags:
+      SendVal1: true
       DisplayPc: true
   - Status: Dragonic_Aura
     Icon: EFST_DRAGONIC_AURA
