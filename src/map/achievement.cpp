@@ -876,6 +876,9 @@ bool achievement_check_condition( struct script_code* condition, struct map_sess
 
 	// Only if there was an old script
 	if( previous_st != nullptr ){
+		if (previous_st->bk_st) // fails when a backup exists
+			return 0;
+
 		// Detach the player from the current script
 		script_detach_rid(previous_st);
 	}
