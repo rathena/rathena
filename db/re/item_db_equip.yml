@@ -136597,7 +136597,7 @@ Body:
     EquipLevelMin: 1
     View: 1918
   - Id: 400021
-    AegisName: aegis_400021
+    AegisName: Clock_Casket_RD
     Name: Red Clark Casquette
     Type: Armor
     View: 1777
@@ -136623,7 +136623,7 @@ Body:
          bonus2 bAddSize,Size_Medium,15;
       }
   - Id: 400022
-    AegisName: aegis_400022
+    AegisName: Ignis_CapK
     Name: Ignis Cap
     Type: Armor
     View: 803
@@ -136700,7 +136700,7 @@ Body:
       bonus2 bSubRace,RC_Player_Human,6;
       bonus2 bSubRace,RC_Player_Doram,6;
   - Id: 400044
-    AegisName: aegis_400044
+    AegisName: Phantom_Cap
     Name: Phantom Cap
     Type: Armor
     View: 1899
@@ -136769,7 +136769,7 @@ Body:
       if (.@r>=10)
          bonus bUseSPrate,-20;
   - Id: 400049
-    AegisName: aegis_400049
+    AegisName: Stripe_Hat
     Name: Stripe Hat
     Type: Armor
     View: 1728
@@ -136884,7 +136884,7 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
   - Id: 400059
-    AegisName: aegis_400059
+    AegisName: Scorpio_Diadem_K
     Name: Scorpio Celestial Coronet
     Type: Armor
     View: 606
@@ -136954,7 +136954,7 @@ Body:
       if (.@r>=10)
          autobonus "{ bonus bUseSPrate,-100; }",20,20000,BF_MAGIC;
   - Id: 400061
-    AegisName: aegis_400061
+    AegisName: Sagittarius_DiademK
     Name: Sagittarius Celestial Coronet
     Type: Armor
     View: 618
