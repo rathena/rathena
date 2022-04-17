@@ -290,7 +290,7 @@ Dungeons:
 	"Coal Mines",D10, "Culvert",D11, "Cursed Abbey",D12, "Dewata Dungeon",D13,
 	"Einbroch Dungeon",D14, "Gefenia",D15, "Geffen Dungeon",D16,
 	"Glast Heim",D17,"Nightmare Glast Heim",D46, "Kunlun Dungeon",D18, "Hidden Dungeon",D19,
-	"Ice Dungeon",D20, "Juperos",D21, "Kiel Dungeon",D22, "Lasagna Dungeon",D23,
+	"Ice Dungeon",D20,"Illusion of Vampire",D49, "Juperos",D21, "Kiel Dungeon",D22, "Lasagna Dungeon",D23,
 	"Luoyang Dungeon",D24, "Magma Dungeon",D25, "Malangdo Dungeon",D26,
 	"Moscovia Dungeon",D27, "Nidhogg's Dungeon",D28, "Odin Temple",D29,
 	"Orc Dungeon",D30, "Payon Dungeon",D31,"Payon Illusion Dungeon",D45, "Prontera Dungeon",D44, "Pyramids",D32, "Rachel Sanctuary",D33,
@@ -298,6 +298,8 @@ Dungeons:
 	"Scaraba Hole",D34, "Sphinx",D35, "Sunken Ship",D36,"Special Border Area",D48, "Thanatos Tower",D37,
 	"Thor Volcano",D38, "Toy Factory",D39, "Turtle Dungeon",D40, "Umbala Dungeon",D41;
 
+D49: setarray @c[2],0,0;
+	Disp("Floor 1"); Pick("","gef_d01_i");
 D48: setarray @c[2],0,0;
 	Disp("Floor 1"); Pick("","sp_os");
 D47: setarray @c[2],0,0,0,0,0,0;

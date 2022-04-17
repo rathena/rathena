@@ -14,3 +14,8 @@ gef_d01_i	monster	Starving Living Dead	3752,20
 gef_d01_i	monster	Living Dead	3753,30
 gef_d01_i	monster	Sweet Nightmare	3754,25
 gef_d01_i	monster	Black Mushroom	3755,15
+gef_d01_i	monster	--ja--	3760,25,30000,30000
+gef_d01_i	monster	--ja--	3761,25,30000,30000
+gef_d01_i	monster	--ja--	3762,25,30000,30000
+gef_d01_i	boss_monster	--ja--	3756,1,180000,180000
+gef_d01_i	boss_monster	--ja--	3757,1,180000,180000

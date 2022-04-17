@@ -2,7 +2,7 @@ prontera,95,248,5	script	ตีบวก	10366,{
 	mes "ต้องการตีบวกปกติ หรือตีบวกไวทั้งตัว?";
 	mes "---";
 	mes "การตีบวกไวทั้งตัว";
-	mes "๐ หากมี MvP Refine ระบบจะใช้ MvP Refine และคิดค่าตีบวกตามเดิม";
+	mes "๐ หากมี MvP Refine ระบบจะใช้ MvP Refine และคิดค่าตีบวกตามเดิม (เมื่ออัตราการตีบวกไม่ใช่ 100%)";
 	mes "___________";
 	mes "๐ หากไม่มี MvP Refine จะใช้ Zeny อย่างเดียว ไม่ต้องการแร่ตีบวกใด ๆ";
 	mes "ค่าตีบวกคิดตามเดิม + เพิ่มราคาตาม Level อุปกรณ์ดังนี้";
@@ -45,11 +45,15 @@ prontera,95,248,5	script	ตีบวก	10366,{
 			.@material_price = .price_weapon_level_5;
 			// Check refine count
 			while(getequiprefinerycnt(.@indices[.@i]) < 20){
+				// Is success
+				.@chance = getequippercentrefinery(.@indices[.@i]);
+				
 				// Get refine price
 				.@refine_price = getequiprefinecost(.@indices[.@i],REFINE_COST_NORMAL,REFINE_ZENY_COST);
 				
 				// MvP Refine
-				if(countitem(.mvp_refine_item_id) > 0){
+				if((countitem(.mvp_refine_item_id) > 0)
+						&& (.@chance < 100)){
 					.@refine_price = .price_mvp_refine;
 					.@material_price = 0;
 					.@mvp_refining = 1;
@@ -68,8 +72,7 @@ prontera,95,248,5	script	ตีบวก	10366,{
 				
 				Zeny -= (.@material_price + .@refine_price);
 				
-				// Is success
-				.@chance = getequippercentrefinery(.@indices[.@i]);
+				
 				
 				if(.@mvp_refining){
 					.@chance = 100;
