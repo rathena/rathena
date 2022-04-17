@@ -25888,3 +25888,47 @@ Body:
       .@r = getequiprefinerycnt(EQI_HAND_R);
       bonus2 bSkillCooldown,"RK_IGNITIONBREAK",-1000;
       bonus2 bSkillAtk,"RK_IGNITIONBREAK",7*(.@r/2);
+  - Combos:
+      - Combo:
+          - The_Origin_of_Fire
+          - The_Origin_of_fertility
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_ACC_R)+getequiprefinerycnt(EQI_ACC_L);
+      if (.@sum >= 17) {
+        bonus bBaseAtk,10;
+        bonus bLuk,4;
+        bonus bCritical,2;
+      }
+  - Combos:
+      - Combo:
+          - The_Origin_of_Grass
+          - The_Origin_of_fertility
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_ACC_R)+getequiprefinerycnt(EQI_ACC_L);
+      if (.@sum >= 17) {
+        bonus bSPrecovRate,10;
+        bonus bVariableCastrate,-5;
+        bonus bMatk,10;
+      }
+  - Combos:
+      - Combo:
+          - The_Origin_of_Wind
+          - The_Origin_of_fertility
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_ACC_R)+getequiprefinerycnt(EQI_ACC_L);
+      if (.@sum >= 17) {
+        bonus bAspdRate,5;
+        bonus bStr,3;
+        bonus bHit,3;
+      }
+  - Combos:
+      - Combo:
+          - The_Origin_of_Water
+          - The_Origin_of_fertility
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_ACC_R)+getequiprefinerycnt(EQI_ACC_L);
+      if (.@sum >= 17) {
+        bonus2 bMagicAtkEle,Ele_Water,5;
+        bonus bVariableCastrate,-5;
+        bonus bMatk,10;
+      }

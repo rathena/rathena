@@ -139859,6 +139859,19 @@ Body:
           }
         }
       }
+  - Id: 400268
+    AegisName: Rose_Crispinette
+    Name: Rosé Crespinette
+    Type: Armor
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    View: 2091
+    Script: |
+      bonus bBaseAtk,20;
+      bonus bMatk,20;
   - Id: 410005
     AegisName: C_Magic_Heir_TW
     Name: Costume Magic Heir
@@ -152669,6 +152682,180 @@ Body:
     UnEquipScript: |
       if ((eaclass()&EAJ_THIRDMASK)==EAJ_MINSTRELWANDERER)
          sc_end SC_UNLIMIT;
+  - Id: 490197
+    AegisName: The_Origin_of_Fire
+    Name: Origin of Fire
+    Type: Armor
+    Weight: 10
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine();
+      bonus bCritical,2;
+      bonus bBaseAtk,5;
+      if (.@r >= 7) {
+        bonus bBaseAtk,3;
+        bonus bHit,2;
+        bonus bCritical,3;
+        if (.@r >= 9) {
+          bonus bBaseAtk,5;
+          bonus bHit,3;
+          bonus bCritical,1;
+        }
+      }
+  - Id: 490199
+    AegisName: The_Origin_of_Grass
+    Name: Origin of Grass
+    Type: Armor
+    Weight: 10
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,20;
+      bonus bInt,4;
+      bonus bSPrecovRate,15;
+      if (.@r >= 7) {
+        bonus bHealPower,10;
+        if (.@r >= 9) {
+          bonus bVariableCastrate,-5;
+        }
+      }
+  - Id: 490200
+    AegisName: The_Origin_of_Wind
+    Name: Origin of Wind	
+    Type: Armor
+    Weight: 10
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      .@r = getrefine();
+      bonus bHit,5;
+      bonus bAspd,1;
+      if (.@r >= 7) {
+        bonus bBaseAtk,5;
+        bonus bHit,2;
+        if (.@r >= 9) {
+          bonus bBaseAtk,5;
+          bonus bAgi,3;
+        }
+      }
+  - Id: 490201
+    AegisName: The_Origin_of_fertility
+    Name: Origin of Fertility
+    Type: Armor
+    Weight: 10
+    Slots: 1
+    Locations:
+      Left_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      .@r = getrefine();
+      bonus bAllStats,1;
+      bonus bMaxHP,300;
+      bonus bMaxSP,200;
+      if (.@r >= 7) {
+        bonus bAllStats,2;
+        if (.@r >= 9) {
+          bonus bAllStats,2;
+        }
+      }
+  - Id: 490202
+    AegisName: The_Origin_of_Water
+    Name: Origin of Water
+    Type: Armor
+    Weight: 10
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,20;
+      bonus bInt,4;
+      bonus bSPrecovRate,15;
+      if (.@r >= 7) {
+        bonus2 bMagicAtkEle,Ele_Water,5;
+        if (.@r >= 9) {
+          bonus bVariableCastrate,-5;
+        }
+      }
+  - Id: 490203
+    AegisName: aegis_490203
+    Name: Ring of Resonance
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 110
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,15;
+      if (.@r >= 7) {
+        bonus2 bMagicAddRace,RC_Demon,10;
+        bonus2 bMagicAddRace,RC_Undead,10;
+        bonus bVariableCastrate,-7;
+        bonus bAspdRate,7;
+      }
+  - Id: 490204
+    AegisName: aegis_490204
+    Name: Spiritual Ring
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 110
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_Holy,5;
+      bonus bMatkRate,3;
+      bonus bDex,2;
+      if (.@r >= 7) {
+        bonus bVariableCastrate,-7;
+        bonus2 bMagicAddRace,RC_Demon,10;
+        bonus2 bMagicAddRace,RC_Undead,10;
+      }
+  - Id: 490205
+    AegisName: aegis_490205
+    Name: Ring of Flame Lord
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 110
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,15;
+      if (.@r >= 7) {
+        bonus2 bAddRace,RC_Demon,10;
+        bonus2 bAddRace,RC_Undead,10;
+        bonus bVariableCastrate,-7;
+        bonus bAspdRate,7;
+      }
   - Id: 500000
     AegisName: IDTest_weapon
     Name: IDTest weapon
@@ -160235,6 +160422,31 @@ Body:
     Refineable: true
     Script: |
       bonus bUnbreakableWeapon;
+  - Id: 550072
+    AegisName: Union_Staff
+    Name: Binding Staff
+    Type: Weapon
+    SubType: Staff
+    Weight: 270
+    Attack: 52
+    MagicAttack: 135
+    Range: 1
+    Slots: 1
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,1*(.@r/2);
   - Id: 550075
     AegisName: Rutilus_Stick_AD
     Name:  Rutilus Stick-OSAD

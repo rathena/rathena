@@ -50915,6 +50915,30 @@ Body:
     Type: DelayConsume
     Script: |
       /* reform(); */
+  - Id: 101356
+    AegisName: aegis_101356
+    Name: Rabbit Necromancy
+    Type: Usable
+    Script: |
+      bonus_script "{ bonus2 bResEff,Eff_Freeze,10000; }",1200,1,1;
+  - Id: 101357
+    AegisName: aegis_101357
+    Name: Rabbit's Blessed Egg
+    Type: Delayconsume
+    Script: |
+      itemskill "AL_BLESSING",10;
+  - Id: 101358
+    AegisName: aegis_101358
+    Name: Spring Rabbit's Empowered Egg
+    Type: Delayconsume
+    Script: |
+      itemskill "BS_OVERTHRUST",5,true;
+  - Id: 101365
+    AegisName: aegis_101365
+    Name: Happy Egg Festival Box
+    Type: Usable
+    Flags:
+      Container: true
   - Id: 101359
     AegisName: MajorAutoSpell_Up
     Name: Major Auto Spell Shadow Spellbook

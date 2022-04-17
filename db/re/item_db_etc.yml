@@ -47785,6 +47785,28 @@ Body:
       bonus2 bMagicAtkEle,Ele_Poison,100;
       bonus2 bMagicAtkEle,Ele_Undead,100;
       bonus2 bSubEle,Ele_All,-30;
+  - Id: 300383
+    AegisName: MD_Geffen_Saph3
+    Name: Veins Fighting Spirit
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddEle,Ele_Fire,10;
+      bonus2 bMagicAddEle,Ele_Fire,10;
+      bonus2 bAddEle,Ele_Ghost,10;
+      bonus2 bMagicAddEle,Ele_Ghost,10;
+  - Id: 300384
+    AegisName: MD_Geffen_Embe3
+    Name: Veins Exorcist
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_Demon,15;
+      bonus2 bMagicAddRace,RC_Demon,15;
+      bonus2 bAddRace,RC_Undead,15;
+      bonus2 bMagicAddRace,RC_Undead,15;
+      bonus2 bAddEle,Ele_Undead,15;
+      bonus2 bMagicAddEle,Ele_Undead,15;
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)
@@ -63490,11 +63512,65 @@ Body:
     Type: Etc
     Flags:
       BuyingStore: true
+  - Id: 1000876
+    AegisName: Veins_Quest_Soup
+    Name: Veins Soup
+    Type: Etc
+  - Id: 1000877
+    AegisName: UK_Invention
+    Name: Unknown Invention
+    Type: Etc
+    Weight: 10
+  - Id: 1000878
+    AegisName: Soap_Base
+    Name: Soap Base
+    Type: Etc
+    Weight: 10
+  - Id: 1000879
+    AegisName: Appetite_Booster
+    Name: Appetite Booster
+    Type: Etc
+    Weight: 10
+  - Id: 1000880
+    AegisName: Kofte
+    Name: Kofte
+    Type: Etc
+    Weight: 10
+  - Id: 1000881
+    AegisName: Veins_Sealed_Letter
+    Name: Sealed Letter
+    Type: Etc
+    Weight: 5
   - Id: 1000882
     AegisName: aegis_1000882
     Name: Electric Effect (Bottom)
     Type: Etc
     Weight: 100
+  - Id: 1000883
+    AegisName: Dangerous_Sacredness
+    Name: Dangerous Relict
+    Type: Etc
+    Weight: 20
+  - Id: 1000884
+    AegisName: Dangerous_Box
+    Name: Sealed Dangerous Box
+    Type: Etc
+    Weight: 40
+  - Id: 1000885
+    AegisName: VeinsQ_Violin
+    Name: Violin
+    Type: Etc
+    Weight: 800
+  - Id: 1000886
+    AegisName: Megaphone_Veins
+    Name: Megaphone
+    Type: Etc
+    Weight: 10
+  - Id: 1000888
+    AegisName: Veins_Coin
+    Name: Veins Coin
+    Type: Etc
+    Weight: 1
   - Id: 1000891
     AegisName: aegis_1000891
     Name: Special Red Pill Exchange
