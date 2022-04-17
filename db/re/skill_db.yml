@@ -9709,16 +9709,15 @@ Body:
     Name: NPC_CHANGEUNDEAD
     Description: Undead Attribute Change
     MaxLevel: 5
-    Type: Magic
+    Type: Weapon
     TargetType: Attack
-    DamageFlags:
-      NoDamage: true
     Flags:
       IsNpc: true
-    Range: 9
+    Range: -2
+    Hit: Single
     HitCount: 1
     Element: Undead
-    Duration1: 30000
+    Duration2: 60000
     Status: ChangeUndead
   - Id: 349
     Name: NPC_POWERUP
@@ -33239,19 +33238,9 @@ Body:
     Range: 9
     Hit: Multi_Hit
     HitCount: -5
-    SplashArea:
-      - Level: 1
-        Area: 1
-      - Level: 2
-        Area: 1
-      - Level: 3
-        Area: 2
-      - Level: 4
-        Area: 2
-      - Level: 5
-        Area: 3
+    SplashArea: 3
     CastCancel: true
-    CastTime: 3000
+    CastTime: 2000
     AfterCastActDelay: 1000
     Duration1:
       - Level: 1
@@ -33266,7 +33255,7 @@ Body:
         Time: 3500
     Duration2: 18000
     Cooldown: 5000
-    FixedCastTime: 3000
+    FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
@@ -33656,17 +33645,7 @@ Body:
     Range: 9
     Hit: Multi_Hit
     HitCount: -5
-    SplashArea:
-      - Level: 1
-        Area: 1
-      - Level: 2
-        Area: 1
-      - Level: 3
-        Area: 2
-      - Level: 4
-        Area: 2
-      - Level: 5
-        Area: 3
+    SplashArea: 3
     CastCancel: true
     Duration1:
       - Level: 1

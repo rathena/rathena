@@ -2913,8 +2913,37 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 		jobs["Summoner"] << (std::stoi(str[index]) ? "true" : "false");
 #endif
 
-	rootNode["Classes"] = classes;
-	rootNode["Jobs"] = jobs;
+	if( !jobs.has_children() ){
+		rootNode.remove_child( jobs );
+	}
+
+	if( !classes.has_children() ){
+		rootNode.remove_child( classes );
+	}
+
+	if( !locations.has_children() ){
+		rootNode.remove_child( locations );
+	}
+
+	if( !flags.has_children() ){
+		rootNode.remove_child( flags );
+	}
+
+	if( !delay.has_children() ){
+		rootNode.remove_child( delay );
+	}
+
+	if( !stack.has_children() ){
+		rootNode.remove_child( stack );
+	}
+
+	if( !nouse.has_children() ){
+		rootNode.remove_child( nouse );
+	}
+
+	if( !trade.has_children() ){
+		rootNode.remove_child( trade );
+	}
 
 	return item_db.parseBodyNode(rootNode) > 0;
 }

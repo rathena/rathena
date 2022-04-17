@@ -2972,9 +2972,17 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 			case NPC_POISONATTACK:
 			case NPC_HOLYATTACK:
 			case NPC_DARKNESSATTACK:
-			case NPC_UNDEADATTACK:
 			case NPC_TELEKINESISATTACK:
+			case NPC_UNDEADATTACK:
+			case NPC_CHANGEUNDEAD:
 			case NPC_EARTHQUAKE:
+			case NPC_POISON:
+			case NPC_BLINDATTACK:
+			case NPC_SILENCEATTACK:
+			case NPC_STUNATTACK:
+			case NPC_PETRIFYATTACK:
+			case NPC_CURSEATTACK:
+			case NPC_SLEEPATTACK:
 			case NPC_BLEEDING:
 				hitrate += hitrate * 20 / 100;
 				break;
@@ -3715,15 +3723,19 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 				if(sd->bonus.crit_atk_rate && is_attack_critical(wd, src, target, skill_id, skill_lv, false)) { // add +crit damage bonuses here in pre-renewal mode [helvetica]
 					ATK_ADDRATE(wd->damage, wd->damage2, sd->bonus.crit_atk_rate);
 				}
-#endif
 				if(sd->status.party_id && (skill=pc_checkskill(sd,TK_POWER)) > 0) {
 					if( (i = party_foreachsamemap(party_sub_count, sd, 0)) > 1 ) { // exclude the player himself [Inkfish]
 						// Reduce count by one (self) [Tydus1]
 						i -= 1; 
 						ATK_ADDRATE(wd->damage, wd->damage2, 2*skill*i);
-						RE_ALLATK_ADDRATE(wd, 2*skill*i);
 					}
 				}
+#else
+				if ((skill = pc_checkskill(sd, TK_POWER)) > 0) {
+					ATK_ADDRATE(wd->damage, wd->damage2, 10 + 15 * skill);
+					RE_ALLATK_ADDRATE(wd, 10 + 15 * skill);
+				}
+#endif
 			}
 #ifndef RENEWAL
 			if(tsd != nullptr && tsd->bonus.crit_def_rate != 0 && !skill_id && is_attack_critical(wd, src, target, skill_id, skill_lv, false)) {
@@ -5003,7 +5015,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case SU_LUNATICCARROTBEAT:
 		case SU_LUNATICCARROTBEAT2:
-			skillratio += 100 + 100 * skill_lv;
+			skillratio += 100 + 100 * skill_lv + sstatus->str * 5; // !TODO: What's the STR bonus?
+			RE_LVL_DMOD(100);
 			if (sd && pc_checkskill(sd, SU_SPIRITOFLIFE))
 				skillratio += skillratio * status_get_hp(src) / status_get_max_hp(src);
 			break;
@@ -7313,7 +7326,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case SU_CN_METEOR:
 					case SU_CN_METEOR2:
-						skillratio += 100 + 100 * skill_lv;
+						skillratio += 100 + 100 * skill_lv + sstatus->int_ * 5; // !TODO: Confirm INT bonus
+						RE_LVL_DMOD(100);
 						break;
 					case NPC_VENOMFOG:
 						skillratio += 600 + 100 * skill_lv;
@@ -9815,6 +9829,7 @@ static const struct _battle_data {
 	{ "mobs_level_up_exp_rate",             &battle_config.mobs_level_up_exp_rate,          1,      1,      INT_MAX,        },
 	{ "pk_min_level",                       &battle_config.pk_min_level,                    55,     1,      INT_MAX,        },
 	{ "skill_steal_max_tries",              &battle_config.skill_steal_max_tries,           0,      0,      UCHAR_MAX,      },
+	{ "skill_steal_random_options",         &battle_config.skill_steal_random_options,      0,      0,      1,              },
 	{ "motd_type",                          &battle_config.motd_type,                       0,      0,      1,              },
 	{ "finding_ore_rate",                   &battle_config.finding_ore_rate,                100,    0,      INT_MAX,        },
 	{ "exp_calc_type",                      &battle_config.exp_calc_type,                   0,      0,      1,              },

@@ -2781,9 +2781,39 @@ Body:
   - Id: 5855
     Title: "[Wait] Utan Fighting Operation"
     TimeLimit: 4h
+  - Id: 5856
+    Title: My Name is Morning
+  - Id: 5857
+    Title: Friends of Morning
+  - Id: 5858
+    Title: Friends of Morning
+  - Id: 5859
+    Title: Friends of Morning
+  - Id: 5860
+    Title: Friends of Morning
   - Id: 5861
     Title: "[Waiting] Take care of the morning"
     TimeLimit: 4h
+  - Id: 5862
+    Title: Morning's Menu Selection
+  - Id: 5863
+    Title: Morning's Menu Selection
+  - Id: 5864
+    Title: Morning's Menu Selection
+  - Id: 5865
+    Title: Morning's Menu Selection
+  - Id: 5866
+    Title: Morning's Menu Selection
+  - Id: 5867
+    Title: Morning's Menu Selection
+  - Id: 5868
+    Title: Morning's Menu Selection
+  - Id: 5869
+    Title: Morning's Menu Selection
+  - Id: 5870
+    Title: Morning's Menu Selection
+  - Id: 5871
+    Title: Morning's Menu Selection
   - Id: 5896
     Title: "[Waiting] Cleaning the sewage treatment plant."
     TimeLimit: 4h
@@ -4835,6 +4865,54 @@ Body:
   - Id: 7842
     Title: Today's Sweets Drops Avenger (Standby)
     TimeLimit: 4h
+  - Id: 7850
+    Title: Cat on Bullet
+  - Id: 7851
+    Title: New Operation
+  - Id: 7852
+    Title: Beyond the Barrier
+  - Id: 7853
+    Title: Barrier Investigation
+  - Id: 7854
+    Title: Wall on Barrier
+  - Id: 7855
+    Title: Watchtower
+  - Id: 7856
+    Title: Small Hole
+  - Id: 7857
+    Title: Report to Lucky
+  - Id: 7858
+    Title: Investigate the Strange Sounds
+    Targets:
+      - Mob: EP17_1_DOLOR1
+        Count: 10
+      - Mob: EP17_1_VENENUM1
+        Count: 10
+      - Mob: EP17_1_TWIN_CAPUT1
+        Count: 10
+  - Id: 7859
+    Title: Report to Tes
+  - Id: 7860
+    Title: Unexpected Guest
+  - Id: 7861
+    Title: Enterprise Crisis
+  - Id: 7862
+    Title: Reclaim Regenschirm
+  - Id: 7863
+    Title: Laboratory Data
+  - Id: 7864
+    Title: Ventilation
+  - Id: 7865
+    Title: Second Operation
+  - Id: 7866
+    Title: Along with Cat on Bullet
+  - Id: 7867
+    Title: Mercenary vs Mercenary
+    Targets:
+      - Mob: EP17_1_BELLARE1
+        Count: 15
+      - Mob: EP17_1_SANARE1
+        Count: 15
   - Id: 7868
     Title: Mercenary vs Mercenary - Waiting
     TimeLimit: 4h
@@ -7158,6 +7236,22 @@ Body:
   - Id: 11571
     Title: Let the light consume the darkness - Wait
     TimeLimit: 4h
+  - Id: 11596
+    Title: Old Memories
+  - Id: 11597
+    Title: Old Memories
+  - Id: 11598
+    Title: Old Memories
+  - Id: 11599
+    Title: Old Memories
+  - Id: 11600
+    Title: Old Memories
+  - Id: 11601
+    Title: Old Memories
+  - Id: 11602
+    Title: Old Memories
+  - Id: 11603
+    Title: Old Memories
   - Id: 11606
     Title: Jack The Giant Pumpkin (Standby)
     TimeLimit: 4h
@@ -8160,9 +8254,16 @@ Body:
   - Id: 12421
     Title: Aftereffects that saved the world
     TimeLimit: 4h
+  - Id: 12452
+    Title: OS Occupation
   - Id: 12453
     Title: Operation Waiting
     TimeLimit: 4h
+  - Id: 12454
+    Title: More Search Operations
+    Targets:
+      - Mob: MD_MIGUEL
+        Count: 1
   - Id: 12455
     Title: Operation Waiting
     TimeLimit: 4h
@@ -9325,7 +9426,7 @@ Body:
     Title: Time for repair
     TimeLimit: 4h
   - Id: 14613
-    Title: Erst on second floor
+    Title: Est on second floor
   - Id: 14614
     Title: Convince the leaders
   - Id: 14615
@@ -9351,12 +9452,84 @@ Body:
   - Id: 14650
     Title: Currently in production
     TimeLimit: 4h
+  - Id: 14651
+    Title: Decision on divorce should be made cautiously
+    TimeLimit: +4d
+  - Id: 14652
+    Title: Detailed Account 01
+  - Id: 14653
+    Title: Detailed Account 02
+  - Id: 14654
+    Title: Detailed Account 03
+  - Id: 14655
+    Title: I'm Ready
+  - Id: 14656
+    Title: Finding Father Grimm's Colleagues
+  - Id: 14657
+    Title: Jojo Is the Mage's Name
+  - Id: 14658
+    Title: Jubilee Is the Priest's Name
+  - Id: 14659
+    Title: Lost in Thought
+  - Id: 14660
+    Title: Ingredients for Fake Blood
+    Drops:
+      - Mob: ILL_DRAINLIAR
+        Item: Sticky_Blood
+        Rate: 7000
+      - Mob: ILL_BLACK_MUSHROOM
+        Item: Mushroom_Sap
+        Rate: 7000
+  - Id: 14661
+    Title: Jojo Is the Mage's Name 02
+  - Id: 14662
+    Title: You're Scaring Me
+  - Id: 14663
+    Title: Bloody Fight
+  - Id: 14664
+    Title: Deep Misunderstanding
+  - Id: 14665
+    Title: Is the Fight Over?
+  - Id: 14666
+    Title: Warden's Role
+  - Id: 14667
+    Title: Send the Dead Back to Earth
+    Targets:
+      - Mob: ILL_ZOMBIE_C
+        Count: 10
+      - Mob: ILL_ZOMBIE
+        Count: 10
+      - Mob: ILL_GHOUL
+        Count: 10
   - Id: 14668
     Title: Get Some Rest
     TimeLimit: 4h
+  - Id: 14669
+    Title: Sweet Dreams
+    Targets:
+      - Mob: ILL_NIGHTMARE
+        Count: 10
+    Drops:
+      - Mob: ILL_NIGHTMARE
+        Item: Swaying_Mane
+        Rate: 7000
   - Id: 14670
     Title: Time for Dreaming
     TimeLimit: 4h
+  - Id: 14671
+    Title: Unreliable Fake Blood
+    Targets:
+      - Mob: ILL_DRAINLIAR
+        Count: 5
+      - Mob: ILL_BLACK_MUSHROOM
+        Count: 5
+    Drops:
+      - Mob: ILL_DRAINLIAR
+        Item: Sticky_Blood
+        Rate: 7000
+      - Mob: ILL_BLACK_MUSHROOM
+        Item: Mushroom_Sap
+        Rate: 7000
   - Id: 14672
     Title: Preparing for the Firework Festival
     Targets:
@@ -9368,12 +9541,26 @@ Body:
   - Id: 14674
     Title: Time to Digest
     TimeLimit: 4h
+  - Id: 14675
+    Title: Noisy Neighbors
+    Targets:
+      - Mob: ILL_DRAINLIAR
+        Count: 10
   - Id: 14676
     Title: Break Time
     TimeLimit: 4h
+  - Id: 14677
+    Title: Studying in Dim Light
   - Id: 14678
     Title: Time to Study
     TimeLimit: 4h
+  - Id: 14679
+    Title: Curious by Nature
+    Targets:
+      - Mob: ILL_ZOMBIE_C
+        Count: 5
+      - Mob: ILL_ZOMBIE
+        Count: 5
   - Id: 14680
     Title: Time to Research
     TimeLimit: 4h
@@ -9913,12 +10100,61 @@ Body:
   - Id: 16344
     Title: Healthy Herb of June (Standby)
     TimeLimit: 4h
+  - Id: 16352
+    Title: Call from Elena Volkova
+  - Id: 16353
+    Title: Golden Troublemaker
+  - Id: 16354
+    Title: Operation of Elyumina
+  - Id: 16355
+    Title: Suspicious Box
+  - Id: 16356
+    Title: Suspicious Box
+  - Id: 16357
+    Title: Elyumina Secured
+  - Id: 16358
+    Title: Pure Wicked
+  - Id: 16359
+    Title: Pure Violence
+  - Id: 16360
+    Title: Pure Facts
+  - Id: 16361
+    Title: Pure Backward
   - Id: 16362
     Title: Pure Backstab (Standby)
     TimeLimit: 4h
+  - Id: 16363
+    Title: Process EL1_A17T
+    Targets:
+      - Mob: MD_E_EA1L
+        Count: 1
+  - Id: 16364
+    Title: Helping Farm Worker
   - Id: 16365
-    Title: Standby
+    Title: Helping Farm Worker - Standby
     TimeLimit: 4h
+  - Id: 16366
+    Title: Helping Farm Worker
+  - Id: 16367
+    Title: Growing Grapes
+  - Id: 16368
+    Title: Growing Grapes
+  - Id: 16369
+    Title: Growing Grapes
+  - Id: 16370
+    Title: Growing Bean Plants
+  - Id: 16371
+    Title: Growing Bean Plants
+  - Id: 16372
+    Title: Growing Bean Plants
+  - Id: 16373
+    Title: Growing Pumpkins
+  - Id: 16374
+    Title: Growing Pumpkins
+  - Id: 16375
+    Title: Growing Pumpkins
+  - Id: 16376
+    Title: Overpower EL1_A17T
   - Id: 16377
     Title: EL1_A17T Overpower (Standby)
     TimeLimit: +10mn
@@ -9988,6 +10224,8 @@ Body:
   - Id: 16538
     Title: Natural change - Waiting
     TimeLimit: 4h
+  - Id: 16546
+    Title: Farm Worker
   - Id: 17000
     Title: Meet with Father Bamph
   - Id: 17001
@@ -10024,8 +10262,49 @@ Body:
     Title: Regicide
   - Id: 17017
     Title: Reporting the King's Death
+  - Id: 17018
+    Title: Status of patients
+  - Id: 17019
+    Title: Urgent situation
+  - Id: 17020
+    Title: Resume investigation
+  - Id: 17021
+    Title: Finding Patrick
+  - Id: 17022
+    Title: Finding Patrick
+  - Id: 17023
+    Title: Finding Patrick
+  - Id: 17024
+    Title: Finding Patrick
+  - Id: 17025
+    Title: Finding Patrick
+  - Id: 17026
+    Title: Finding Patrick
+  - Id: 17027
+    Title: Finding Patrick
+  - Id: 17028
+    Title: Finding Patrick
+  - Id: 17029
+    Title: Finding Patrick
+  - Id: 17030
+    Title: Finding Patrick
+  - Id: 17031
+    Title: Finding Patrick
+  - Id: 17032
+    Title: Finding Patrick
+  - Id: 17033
+    Title: For all future work
+  - Id: 17034
+    Title: Rudus
+    Targets:
+      - Mob: EP17_1_DOLOR1
+        Count: 20
+    Drops:
+      - Mob: EP17_1_DOLOR1
+        Item: Id_Card
+        Rate: 5000
   - Id: 17035
-    Title: "Waiting: Ludusro"
+    Title: "Waiting: Rudus"
     TimeLimit: 4h
   - Id: 17037
     Title: "Wait: Replace attribute"
@@ -10105,6 +10384,8 @@ Body:
   - Id: 17566
     Title: (Standby) Code name! Is it a star button?
     TimeLimit: 4h
+  - Id: 18000
+    Title: Ready to enter
   - Id: 18001
     Title: Delivery for Rooney
   - Id: 18002
@@ -10157,64 +10438,6 @@ Body:
     TimeLimit: 4h
   - Id: 18028
     Title: The Memory of Thanatos the Magistrate - Waiting
-    TimeLimit: 4h
-  - Id: 18030
-    Title: Geoborg Family Curse
-    TimeLimit: 4h
-  - Id: 18031
-    Title: Geoborg Family Curse
-  - Id: 18032
-    Title: Geoborg Family Curse
-    TimeLimit: 4h
-  - Id: 18033
-    Title: Geoborg Family Curse
-  - Id: 18034
-    Title: Geoborg Family Curse
-    TimeLimit: 4h
-  - Id: 18035
-    Title: Geoborg Family Curse
-  - Id: 18036
-    Title: Geoborg Family Curse
-    TimeLimit: 4h
-  - Id: 18037
-    Title: Geoborg Family Curse
-  - Id: 18038
-    Title: Geoborg Family Curse
-    TimeLimit: 4h
-  - Id: 18039
-    Title: Geoborg Family Curse
-  - Id: 18040
-    Title: Geoborg Family Curse
-    TimeLimit: 4h
-  - Id: 18041
-    Title: Geoborg Family Curse
-  - Id: 18042
-    Title: Geoborg Family Curse
-    TimeLimit: 4h
-  - Id: 18043
-    Title: Geoborg Family Curse
-  - Id: 18044
-    Title: Geoborg Family Curse
-    TimeLimit: 4h
-  - Id: 18045
-    Title: Geoborg Family Curse
-  - Id: 18046
-    Title: Geoborg Family Curse
-    TimeLimit: 4h
-  - Id: 18047
-    Title: Geoborg Family Curse
-  - Id: 18048
-    Title: Geoborg Family Curse
-    TimeLimit: 4h
-  - Id: 18049
-    Title: Geoborg Family Curse
-  - Id: 18050
-    Title: Geoborg Family Curse
-    TimeLimit: 4h
-  - Id: 18051
-    Title: Geoborg Family Curse
-  - Id: 18052
-    Title: Geoborg Family Curse
     TimeLimit: 4h
   - Id: 18054
     Title: Nightmare on the clock tower - Standby
