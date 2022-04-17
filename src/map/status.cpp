@@ -7351,6 +7351,9 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 			val = max(val, 25); // !TODO: Confirm bonus movement speed
 		if (sc->data[SC_EMERGENCY_MOVE])
 			val = max(val, sc->data[SC_EMERGENCY_MOVE]->val2);
+		if( sc->data[SC_JAWAII_SERENADE] ){
+			val = max( val, 25 );
+		}
 
 		// !FIXME: official items use a single bonus for this [ultramage]
 		if( sc->data[SC_SPEEDUP0] ) // Temporary item-based speedup
