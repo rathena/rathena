@@ -46367,7 +46367,7 @@ Body:
   - Id: 23207
     AegisName: Premium_Flatrate_Box
     Name: Premium Flatrate Service Box
-    Type: Usable
+    Type: Cash
     Weight: 10
     Trade:
       NoDrop: true
@@ -50575,7 +50575,7 @@ Body:
   - Id: 100913
     AegisName: EXP_Drop_Up_7days
     Name: Kafra Buff (7 days)
-    Type: Usable
+    Type: Cash
     Trade:
       NoDrop: true
       NoTrade: true
