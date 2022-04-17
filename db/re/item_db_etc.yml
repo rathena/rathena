@@ -20935,6 +20935,8 @@ Body:
     Type: Etc
     Buy: 10
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 6650
     AegisName: Shabby_Ring
     Name: Old Ring
@@ -36370,6 +36372,8 @@ Body:
     Name: Orc Warlord Token
     Type: Etc
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25509
     AegisName: Shining_Round_Shell
     Name: Glowing Roundshell    # !todo check english name
@@ -36439,6 +36443,8 @@ Body:
     Name: White Snake's Tear
     Type: Etc
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25627
     AegisName: Gold_Card
     Name: Gold Card
@@ -36450,6 +36456,8 @@ Body:
     Name: Knotted Letter
     Type: Etc
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25633
     AegisName: Token_Of_Wootan
     Name: Wootan's Token

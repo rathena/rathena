@@ -47199,6 +47199,8 @@ Body:
     Name: Giant Orc Helm Combination SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23819
@@ -47206,6 +47208,8 @@ Body:
     Name: Crimson Rose SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23820
@@ -47213,6 +47217,8 @@ Body:
     Name: Grand Peco Hairband SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23821
@@ -47220,6 +47226,8 @@ Body:
     Name: Moonflower Hair Hat SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23822
@@ -47227,6 +47235,8 @@ Body:
     Name: Wings of 8 Purgatories SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23823
@@ -47234,6 +47244,8 @@ Body:
     Name: Tare Neko Cru SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23824
@@ -47241,6 +47253,8 @@ Body:
     Name: Glory Soccer Ball Hat SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23825
@@ -47248,6 +47262,8 @@ Body:
     Name: Wicket marching Hat SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23826
@@ -47255,6 +47271,8 @@ Body:
     Name: Wandering Wolf Hat SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23827
@@ -47262,6 +47280,8 @@ Body:
     Name: Status Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23828
@@ -47269,6 +47289,8 @@ Body:
     Name: Elegant Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23829
@@ -47276,6 +47298,8 @@ Body:
     Name: Tension Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23830
@@ -47283,6 +47307,8 @@ Body:
     Name: Restore Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23831
@@ -47290,6 +47316,8 @@ Body:
     Name: Healing Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23832
@@ -47297,6 +47325,8 @@ Body:
     Name: Amistr Cap SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23833
@@ -47304,6 +47334,8 @@ Body:
     Name: Tiger King Doll Hat SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23834
@@ -47311,6 +47343,8 @@ Body:
     Name: Bacsojin Doll SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23835
@@ -47318,6 +47352,8 @@ Body:
     Name: Candy Pouch Bag SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23836
@@ -47325,6 +47361,8 @@ Body:
     Name: Gold Fish Head Hat SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23837
@@ -47332,6 +47370,8 @@ Body:
     Name: Survival SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23838
@@ -47339,6 +47379,8 @@ Body:
     Name: Toy Sringe SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23839
@@ -47346,6 +47388,8 @@ Body:
     Name: Indigor Rear Ribbon SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23840
@@ -47353,6 +47397,8 @@ Body:
     Name: Magical Booster SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23841
@@ -47360,6 +47406,8 @@ Body:
     Name: Rosario's Necklace SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23842
@@ -47367,6 +47415,8 @@ Body:
     Name: Spirit Crown SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23843
@@ -47374,6 +47424,8 @@ Body:
     Name: Guard's Cap SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23844
@@ -47381,6 +47433,8 @@ Body:
     Name: Bandit's Hood SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23845
@@ -47388,6 +47442,8 @@ Body:
     Name: Angel's Blessing SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23846
@@ -47395,6 +47451,8 @@ Body:
     Name: Rabbit Magic Hat SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23847
@@ -47402,6 +47460,8 @@ Body:
     Name: Anubis Helm SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23848
@@ -47409,6 +47469,8 @@ Body:
     Name: Imp Hat SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23849
@@ -47416,6 +47478,8 @@ Body:
     Name: Red Marching Hat SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23850
@@ -47423,6 +47487,8 @@ Body:
     Name: Ifrit Mask SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23851
@@ -47430,6 +47496,8 @@ Body:
     Name: Incarnation Of Morocc Doll SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23852
@@ -47437,6 +47505,8 @@ Body:
     Name: Samambaia SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23853
@@ -47444,6 +47514,8 @@ Body:
     Name: Chick Hat SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23854
@@ -47451,6 +47523,8 @@ Body:
     Name: Class Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23855
@@ -47458,6 +47532,8 @@ Body:
     Name: Spell Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23856
@@ -47465,6 +47541,8 @@ Body:
     Name: Size Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23857
@@ -47472,6 +47550,8 @@ Body:
     Name: Race Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23858
@@ -47479,6 +47559,8 @@ Body:
     Name: Stability Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23859
@@ -47486,6 +47568,8 @@ Body:
     Name: Special Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23860
@@ -47493,6 +47577,8 @@ Body:
     Name: Physical Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23861
@@ -47500,6 +47586,8 @@ Body:
     Name: Magical Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23862
@@ -47507,6 +47595,8 @@ Body:
     Name: EXP Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23863
@@ -47514,6 +47604,8 @@ Body:
     Name: Mad Bunny SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23864
@@ -47521,6 +47613,8 @@ Body:
     Name: Archangel's Wings SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23865
@@ -47528,6 +47622,8 @@ Body:
     Name: Smokie's Transformation Leaf SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23866
@@ -47535,6 +47631,8 @@ Body:
     Name: Ifrit's Ear SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23867
@@ -47542,6 +47640,8 @@ Body:
     Name: Heartwing Band SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23868
@@ -47549,6 +47649,8 @@ Body:
     Name: Sigrun's Wings SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23869
@@ -47556,6 +47658,8 @@ Body:
     Name: Cat Headdress SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23870
@@ -47563,6 +47667,8 @@ Body:
     Name: Noble Mask SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23871
@@ -47570,6 +47676,8 @@ Body:
     Name: Gemstone Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23872
@@ -47577,6 +47685,8 @@ Body:
     Name: Bearers Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23873
@@ -47584,6 +47694,8 @@ Body:
     Name: Hasty Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23874
@@ -47591,6 +47703,8 @@ Body:
     Name: Critical Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23875
@@ -47598,6 +47712,8 @@ Body:
     Name: Mortal Blow Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23876
@@ -47605,6 +47721,8 @@ Body:
     Name: Fallen Angel Wings SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23877
@@ -47612,6 +47730,8 @@ Body:
     Name: Adventurer's Backpack SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23879
@@ -47619,6 +47739,8 @@ Body:
     Name: Spell Circuit SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23880
@@ -47626,6 +47748,8 @@ Body:
     Name: New Wave Sunglasses SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23881
@@ -47633,6 +47757,8 @@ Body:
     Name: Giant Snake Breath SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23882
@@ -47640,6 +47766,8 @@ Body:
     Name: Judge Hat SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23883
@@ -47647,6 +47775,8 @@ Body:
     Name: Dog Officer SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23884
@@ -47654,6 +47784,8 @@ Body:
     Name: Fancy Feather Hat SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23885
@@ -47661,6 +47793,8 @@ Body:
     Name: Amistr Beret SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23886
@@ -47668,6 +47802,8 @@ Body:
     Name: General Helm SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23887
@@ -47675,6 +47811,8 @@ Body:
     Name: Cursed Knight's Shield SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23888
@@ -47682,6 +47820,8 @@ Body:
     Name: Penetration Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23889
@@ -47689,6 +47829,8 @@ Body:
     Name: Tempest Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23890
@@ -47696,6 +47838,8 @@ Body:
     Name: Blitz Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23891
@@ -47703,6 +47847,8 @@ Body:
     Name: Reload Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23892
@@ -47710,6 +47856,8 @@ Body:
     Name: Force and Spirit Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23893
@@ -47717,6 +47865,8 @@ Body:
     Name: Infinity Shadow SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23894
@@ -47724,6 +47874,8 @@ Body:
     Name: Wickebine's Black Cat's Ear SynthesisBox
     Type: Delayconsume
     Weight: 10
+    Flags:
+      BuyingStore: true
     Script: |
       laphine_synthesis();
   - Id: 23899
