@@ -14496,7 +14496,7 @@ static TIMER_FUNC(status_natural_heal_timer){
  * @param data: data pushed through timer function
  * @return 0
  */
-static TIMER_FUNC(status_clear_lastEffect_timer) {
+TIMER_FUNC(status_clear_lastEffect_timer) {
 	block_list *bl = map_id2bl(id);
 
 	if (bl != nullptr) {
