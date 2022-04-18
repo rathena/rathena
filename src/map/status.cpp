@@ -1003,8 +1003,10 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 				if (sc->data[type] && it.second->flag[SCF_REMOVEONDAMAGED]) {
 					// A status change that gets broken by damage should still be considered when calculating if a status change can be applied or not (for the same attack).
 					// !TODO: This is a temporary solution until we refactor the code so that the calculation of an SC is done at the start of an attack rather than after the damage was applied.
-					if (sc->opt1 > OPT1_NONE)
+					if (sc->opt1 > OPT1_NONE && sc->lastEffectTimer == INVALID_TIMER) {
+						sc->lastEffectTimer = add_timer(gettick() + 10, status_clear_lastEffect_timer, target->id, 0);
 						sc->lastEffect = type;
+					}
 					status_change_end(target, type, INVALID_TIMER);
 				}
 			}
@@ -9267,12 +9269,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	if (!scdb->fail.empty()) {
 		for (const auto &it : scdb->fail) {
 			// Don't let OPT1 that have RemoveOnDamaged start a new effect in the same attack.
-			if (sc->lastEffect == it) {
-				if (sc->lastEffectTimer == INVALID_TIMER)
-					sc->lastEffectTimer = add_timer(gettick() + 10, status_clear_lastEffect_timer, bl->id, 0);
-				return 0;
-			}
-			if (sc->data[it])
+			if (sc->data[it] || sc->lastEffect == it)
 				return 0;
 		}
 	}
