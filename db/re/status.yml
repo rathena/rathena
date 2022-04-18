@@ -7862,6 +7862,7 @@ Body:
     DurationLookup: TR_JAWAII_SERENADE
     CalcFlags:
       Smatk: true
+      Speed: true
   - Status: Pron_March
     Icon: EFST_PRON_MARCH
     DurationLookup: TR_PRON_MARCH
