@@ -3723,15 +3723,19 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 				if(sd->bonus.crit_atk_rate && is_attack_critical(wd, src, target, skill_id, skill_lv, false)) { // add +crit damage bonuses here in pre-renewal mode [helvetica]
 					ATK_ADDRATE(wd->damage, wd->damage2, sd->bonus.crit_atk_rate);
 				}
-#endif
 				if(sd->status.party_id && (skill=pc_checkskill(sd,TK_POWER)) > 0) {
 					if( (i = party_foreachsamemap(party_sub_count, sd, 0)) > 1 ) { // exclude the player himself [Inkfish]
 						// Reduce count by one (self) [Tydus1]
 						i -= 1; 
 						ATK_ADDRATE(wd->damage, wd->damage2, 2*skill*i);
-						RE_ALLATK_ADDRATE(wd, 2*skill*i);
 					}
 				}
+#else
+				if ((skill = pc_checkskill(sd, TK_POWER)) > 0) {
+					ATK_ADDRATE(wd->damage, wd->damage2, 10 + 15 * skill);
+					RE_ALLATK_ADDRATE(wd, 10 + 15 * skill);
+				}
+#endif
 			}
 #ifndef RENEWAL
 			if(tsd != nullptr && tsd->bonus.crit_def_rate != 0 && !skill_id && is_attack_critical(wd, src, target, skill_id, skill_lv, false)) {
@@ -5011,7 +5015,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case SU_LUNATICCARROTBEAT:
 		case SU_LUNATICCARROTBEAT2:
-			skillratio += 100 + 100 * skill_lv;
+			skillratio += 100 + 100 * skill_lv + sstatus->str * 5; // !TODO: What's the STR bonus?
+			RE_LVL_DMOD(100);
 			if (sd && pc_checkskill(sd, SU_SPIRITOFLIFE))
 				skillratio += skillratio * status_get_hp(src) / status_get_max_hp(src);
 			break;
@@ -7321,7 +7326,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case SU_CN_METEOR:
 					case SU_CN_METEOR2:
-						skillratio += 100 + 100 * skill_lv;
+						skillratio += 100 + 100 * skill_lv + sstatus->int_ * 5; // !TODO: Confirm INT bonus
+						RE_LVL_DMOD(100);
 						break;
 					case NPC_VENOMFOG:
 						skillratio += 600 + 100 * skill_lv;

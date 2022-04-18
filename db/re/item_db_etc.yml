@@ -40941,28 +40941,28 @@ Body:
     Script: |
       bonus bDelayrate,-5;
   - Id: 27413
-    AegisName: aegis_27413
+    AegisName: Big_Fire_BR
     Name: Power of Shango    # !todo check english name
     Type: Card
     SubType: Enchant
     Script: |
       autobonus "{ bonus bDelayrate,-70; bonus bVariableCastrate,-70; bonus bHealPower,70; bonus bHealPower2,70; bonus bAddItemHealRate,70; }",30,10000,BF_WEAPON|BF_MAGIC,"{}";
   - Id: 27414
-    AegisName: aegis_27414
+    AegisName: Sky_Ground_BR
     Name: Power of Ochosi    # !todo check english name
     Type: Card
     SubType: Enchant
     Script: |
       autobonus "{ bonus bDelayrate,-70; bonus bVariableCastrate,-70; bonus2 bIgnoreDefClassRate,Class_Normal,70; bonus2 bIgnoreMdefClassRate,Class_Normal,70; }",30,10000,BF_WEAPON|BF_MAGIC,"{}";
   - Id: 27415
-    AegisName: aegis_27415
+    AegisName: Storm_BR
     Name: Power of Iansa    # !todo check english name
     Type: Card
     SubType: Enchant
     Script: |
       autobonus "{ bonus bDelayrate,-70; bonus bVariableCastrate,-70; bonus bAspdRate,70; }",30,10000,BF_WEAPON|BF_MAGIC,"{}";
   - Id: 27416
-    AegisName: aegis_27416
+    AegisName: Water_Sky_BR
     Name: Power of Oshun    # !todo check english name
     Type: Card
     SubType: Enchant
