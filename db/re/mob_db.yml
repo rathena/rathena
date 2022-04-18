@@ -89502,7 +89502,6 @@ Body:
     ElementLevel: 1
     WalkSpeed: 1000
     AttackMotion: 1
-    Ai: 6
     Drops:
       - Item: Alchol
         Rate: 50
