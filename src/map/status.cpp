@@ -8642,6 +8642,8 @@ void status_change_init(struct block_list *bl)
 	struct status_change *sc = status_get_sc(bl);
 	nullpo_retv(sc);
 	memset(sc, 0, sizeof (struct status_change));
+	sc->lastEffect = SC_NONE;
+	sc->lastEffectTimer = INVALID_TIMER;
 }
 
 /*========================================== [Playtester]
@@ -9266,10 +9268,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		for (const auto &it : scdb->fail) {
 			// Don't let OPT1 that have RemoveOnDamaged start a new effect in the same attack.
 			if (sc->lastEffect == it) {
-				sc->lastEffect = SC_NONE;
+				if (sc->lastEffectTimer == INVALID_TIMER)
+					sc->lastEffectTimer = add_timer(gettick() + 10, status_clear_lastEffect_timer, bl->id, 0);
 				return 0;
 			}
-
 			if (sc->data[it])
 				return 0;
 		}
@@ -14487,6 +14489,29 @@ static TIMER_FUNC(status_natural_heal_timer){
 }
 
 /**
+ * Clears the lastEffect value from a target
+ * @param tid: Timer ID
+ * @param tick: Current tick (time)
+ * @param id: Object ID
+ * @param data: data pushed through timer function
+ * @return 0
+ */
+static TIMER_FUNC(status_clear_lastEffect_timer) {
+	block_list *bl = map_id2bl(id);
+
+	if (bl != nullptr) {
+		status_change *sc = status_get_sc(bl);
+
+		if (sc != nullptr) {
+			sc->lastEffect = SC_NONE;
+			sc->lastEffectTimer = INVALID_TIMER;
+		}
+	}
+
+	return 0;
+}
+
+/**
  * Check if status is disabled on a map
  * @param type: Status Change data
  * @param mapIsVS: If the map is a map_flag_vs type
@@ -15177,6 +15202,7 @@ void do_init_status(void) {
 
 	add_timer_func_list(status_change_timer,"status_change_timer");
 	add_timer_func_list(status_natural_heal_timer,"status_natural_heal_timer");
+	add_timer_func_list(status_clear_lastEffect_timer, "status_clear_lastEffect_timer");
 	initDummyData();
 	status_readdb();
 	natural_heal_prev_tick = gettick();
