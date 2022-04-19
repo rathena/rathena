@@ -6431,7 +6431,7 @@ sp_cor,180,169,3	script	Elena Volkova#rm171_1	4_F_ELENA,{
 		mes "You can stand next to us and glare, or you can help Rookie interrogate.";
 		completequest 16357;
 		setquest 16358;
-		getbaseexp_ratio 10,110;
+		getexp2 getbaseexp_ratio(10,110),0;
 		getexp 0,300000;
 		getexp 0,300000;
 		getexp 0,250000;
@@ -6894,7 +6894,7 @@ sp_cor,255,285,1	script	Rookie#rm171_2	4_M_ROOKIE,{
 		mes "There are still many things to do around here. If you're not busy, maybe you can stay and help us.";
 		mes "Now, good luck, Adventurer! We'll contact you if we come across new information!";
 		completequest 16360;
-		getbaseexp_ratio 15,110;
+		getexp2 getbaseexp_ratio(15,110),0;
 		getexp 0,400000;
 		getexp 0,400000;
 		getexp 0,400000;
@@ -8015,7 +8015,7 @@ sp_cor,246,97,3	script	Farmhand#rm171_1	1_M_03,{
 					erasequest .@quest_id;
 
 			if (isbegin_quest(16364) == 1) {
-				getbaseexp_ratio 10,110;
+				getexp2 getbaseexp_ratio(10,110),0;
 				getexp 0,300000;
 				getexp 0,300000;
 				getexp 0,250000;
@@ -8024,7 +8024,7 @@ sp_cor,246,97,3	script	Farmhand#rm171_1	1_M_03,{
 				completequest 16364;
 			}
 			if (isbegin_quest(16366) == 1) {
-				getbaseexp_ratio 3,110;
+				getexp2 getbaseexp_ratio(3,110),0;
 				getexp 0,100000;
 				getexp 0,100000;
 				getexp 0,100000;
