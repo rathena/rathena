@@ -478,6 +478,13 @@
 	export_constant(MF_PRIVATEAIRSHIP_SOURCE);
 	export_constant(MF_PRIVATEAIRSHIP_DESTINATION);
 	export_constant(MF_SKILL_DURATION);
+#ifdef BGEXTENDED
+	// Battleground eAmod
+	export_constant(MF_NOECALL);
+	export_constant(MF_BG_CONSUME);
+	export_constant(MF_WOE_CONSUME);
+	export_constant(MF_BG_TOPSCORE);
+#endif
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
@@ -3790,6 +3797,9 @@
 	export_constant(AI_LEGION);
 	export_constant(AI_FAW);
 	export_constant(AI_GUILD);
+#ifdef BGEXTENDED
+	export_constant(AI_BOMB);
+#endif
 
 	/* battle flags */
 	export_constant(BF_NONE);
@@ -3800,6 +3810,13 @@
 	export_constant(BF_LONG);
 	export_constant(BF_SKILL);
 	export_constant(BF_NORMAL);
+
+#ifdef BGEXTENDED
+	/* npcinfo types [Grenat]*/
+	export_constant(NPC_MAP);
+	export_constant(NPC_X);
+	export_constant(NPC_Y);
+#endif
 
 	/* auto trigger flags */
 	export_constant(ATF_SELF);

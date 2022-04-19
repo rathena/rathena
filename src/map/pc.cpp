@@ -1755,6 +1755,10 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 
 	// Initialize BG queue
 	sd->bg_queue_id = 0;
+#ifdef BGEXTENDED
+	sd->ballx = 0;
+	sd->bally = 0;
+#endif
 
 #if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
 	sd->hatEffects = {};
@@ -5101,9 +5105,22 @@ int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_typ
  * @return Stored index in inventory, or -1 if not found.
  **/
 short pc_search_inventory(struct map_session_data *sd, t_itemid nameid) {
+#ifdef BGEXTENDED
+	short i,x,y;
+#else
 	short i;
+#endif
 	nullpo_retr(-1, sd);
-
+#ifdef BGEXTENDED
+	if (map_getmapflag(sd->bl.m, MF_BG_CONSUME)) {
+		ARR_FIND( 0, MAX_INVENTORY, x, sd->inventory.u.items_inventory[x].nameid == nameid && ( MakeDWord(sd->inventory.u.items_inventory[x].card[2], sd->inventory.u.items_inventory[x].card[3]) == battle_config.bg_reserved_char_id ) && (sd->inventory.u.items_inventory[x].amount > 0 || nameid == 0) );
+			if( x < MAX_INVENTORY ) return x;
+	}
+	if (map_getmapflag(sd->bl.m, MF_WOE_CONSUME)) {
+		ARR_FIND( 0, MAX_INVENTORY, y, sd->inventory.u.items_inventory[y].nameid == nameid && ( MakeDWord(sd->inventory.u.items_inventory[y].card[2], sd->inventory.u.items_inventory[y].card[3]) == battle_config.woe_reserved_char_id ) && (sd->inventory.u.items_inventory[y].amount > 0 || nameid == 0) );
+			if( y < MAX_INVENTORY ) return y;
+	}
+#endif
 	ARR_FIND( 0, MAX_INVENTORY, i, sd->inventory.u.items_inventory[i].nameid == nameid && (sd->inventory.u.items_inventory[i].amount > 0 || nameid == 0) );
 	return ( i < MAX_INVENTORY ) ? i : -1;
 }
@@ -5622,7 +5639,14 @@ int pc_useitem(struct map_session_data *sd,int n)
 		}
 		return 0;/* regardless, effect is not run */
 	}
-
+#ifdef BGEXTENDED
+	if( sd->inventory.u.items_inventory[n].card[0] == CARD0_CREATE) {
+		if (MakeDWord(sd->inventory.u.items_inventory[n].card[2], sd->inventory.u.items_inventory[n].card[3]) == battle_config.bg_reserved_char_id && !map_getmapflag(sd->bl.m, MF_BG_CONSUME))
+			return 0;
+		if (MakeDWord(sd->inventory.u.items_inventory[n].card[2], sd->inventory.u.items_inventory[n].card[3]) == battle_config.woe_reserved_char_id && !map_getmapflag(sd->bl.m, MF_WOE_CONSUME))
+			return 0;
+	}
+#endif
 	sd->itemid = item.nameid;
 	sd->itemindex = n;
 	if(sd->catch_target_class != PET_CATCH_FAIL) //Abort pet catching.
@@ -9821,6 +9845,14 @@ bool pc_candrop(struct map_session_data *sd, struct item *item)
 		return false;
 	if( !pc_can_give_items(sd) || sd->sc.cant.drop) //check if this GM level can drop items
 		return false;
+#ifdef BGEXTENDED
+	if( item->card[0] == CARD0_CREATE) {
+		if (MakeDWord(item->card[2], item->card[3]) == battle_config.bg_reserved_char_id)
+			return false;
+		if (MakeDWord(item->card[2], item->card[3]) == battle_config.woe_reserved_char_id)
+			return false;
+	}
+#endif
 	return (itemdb_isdropable(item, pc_get_group_level(sd)));
 }
 
@@ -13492,6 +13524,28 @@ void pc_set_costume_view(struct map_session_data *sd) {
 	if (robe != sd->status.robe)
 		clif_changelook(&sd->bl, LOOK_ROBE, sd->status.robe);
 }
+#ifdef BGEXTENDED
+/***********************************************************
+* Update Idle PC Timer
+***********************************************************/
+int pc_update_last_action(struct map_session_data *sd)
+{
+	int64 tick = gettick();
+
+	sd->idletime = last_tick;
+
+	std::shared_ptr<s_battleground_data> bgd = util::umap_find(bg_team_db, sd->bg_id);
+	if (sd->bg_id && sd->state.bg_afk && bgd != NULL && bgd->g)
+	{ // Battleground AFK announce
+		char output[128];
+		sprintf(output, "%s : %s is no longer away...", bgd->g->name, sd->status.name);
+		clif_bg_message(bgd.get(), sd->bg_id, bgd->g->name, output, strlen(output) + 1);
+		sd->state.bg_afk = 0;
+	}
+
+	return 1;
+}
+#endif
 
 std::shared_ptr<s_attendance_period> pc_attendance_period(){
 	uint32 date = date_get(DT_YYYYMMDD);

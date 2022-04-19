@@ -694,7 +694,9 @@ struct guild {
 	struct Channel *channel;
 	int instance_id;
 	time_t last_leader_change;
-
+#ifdef BGEXTENDED
+	int skill_block_timer[MAX_GUILDSKILL]; // BG eAmod
+#endif
 	/* Used by char-server to save events for guilds */
 	unsigned short save_flag;
 
