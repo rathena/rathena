@@ -220,7 +220,6 @@ Body:
     Flags:
       BossResist: true
       StopWalking: true
-      OverlapFail: true
       SpreadEffect: true
     Fail:
       Refresh: true
@@ -257,7 +256,6 @@ Body:
       BossResist: true
       NoSave: true
       NoClearance: true
-      OverlapFail: true
       SpreadEffect: true
     Fail:
       Refresh: true
@@ -272,7 +270,6 @@ Body:
     Flags:
       SendOption: true
       BossResist: true
-      OverlapFail: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -2958,7 +2955,6 @@ Body:
     Flags:
       BossResist: true
       StopWalking: true
-      OverlapFail: true
       Debuff: true
     Fail:
       Inspiration: true
@@ -3195,7 +3191,6 @@ Body:
       StopWalking: true
       StopAttacking: true
       StopCasting: true
-      OverlapFail: true
     End:
       Freezing: true
   - Status: Marshofabyss
