@@ -37,7 +37,7 @@ const std::string QuestDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 QuestDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	uint32 quest_id;
 
 	if (!this->asUInt32(node, "Id", quest_id))
@@ -97,9 +97,9 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Targets")) {
-		const YAML::Node &targets = node["Targets"];
+		const auto& targets = node["Targets"];
 
-		for (const YAML::Node &targetNode : targets) {
+		for (const auto& targetNode : targets) {
 			if (quest->objectives.size() >= MAX_QUEST_OBJECTIVES) {
 				this->invalidWarning(targetNode, "Targets list exceeds the maximum of %d, skipping.\n", MAX_QUEST_OBJECTIVES);
 				return 0;
@@ -121,14 +121,14 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asString(targetNode, "Mob", mob_name))
 					return 0;
 
-				struct mob_db *mob = mobdb_search_aegisname(mob_name.c_str());
+				std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(mob_name.c_str());
 
 				if (!mob) {
 					this->invalidWarning(targetNode["Mob"], "Mob %s does not exist, skipping.\n", mob_name.c_str());
 					return 0;
 				}
 
-				mob_id = mob->vd.class_;
+				mob_id = mob->id;
 
 				it = std::find_if(quest->objectives.begin(), quest->objectives.end(), [&](std::shared_ptr<s_quest_objective> const &v) {
 					return (*v).mob_id == mob_id;
@@ -315,14 +315,9 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Drops")) {
-		const YAML::Node &drops = node["Drops"];
+		const auto& drops = node["Drops"];
 
-		for (const YAML::Node &dropNode : drops) {
-			if (quest->objectives.size() >= MAX_QUEST_OBJECTIVES) {
-				this->invalidWarning(dropNode, "Drops list exceeds the maximum of %d, skipping.\n", MAX_QUEST_OBJECTIVES);
-				return 0;
-			}
-
+		for (const auto& dropNode : drops) {
 			uint32 mob_id = 0; // Can be 0 which means all monsters
 
 			if (this->nodeExists(dropNode, "Mob")) {
@@ -331,14 +326,14 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asString(dropNode, "Mob", mob_name))
 					return 0;
 
-				struct mob_db *mob = mobdb_search_aegisname(mob_name.c_str());
+				std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(mob_name.c_str());
 
 				if (!mob) {
 					this->invalidWarning(dropNode["Mob"], "Mob %s does not exist, skipping.\n", mob_name.c_str());
 					continue;
 				}
 
-				mob_id = mob->vd.class_;
+				mob_id = mob->id;
 			}
 
 			//std::shared_ptr<s_quest_dropitem> target = util::vector_find(quest->dropitem, mob_id);
@@ -375,7 +370,7 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asString(dropNode, "Item", item_name))
 					return 0;
 
-				struct item_data *item = itemdb_search_aegisname(item_name.c_str());
+				std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
 
 				if (!item) {
 					this->invalidWarning(dropNode["Item"], "Item %s does not exist, skipping.\n", item_name.c_str());
@@ -729,8 +724,14 @@ void quest_update_objective(struct map_session_data *sd, struct mob_data* md)
 					objective_check++;
 				if (qi->objectives[j]->element == ELE_ALL || qi->objectives[j]->element == md->status.def_ele)
 					objective_check++;
-				if (qi->objectives[j]->mapid < 0 || (qi->objectives[j]->mapid == sd->bl.m && md->spawn_timer != INVALID_TIMER))
+				if (qi->objectives[j]->mapid < 0 || (qi->objectives[j]->mapid == sd->bl.m && md->spawn != nullptr))
 					objective_check++;
+				else if (qi->objectives[j]->mapid >= 0) {
+					struct map_data *mapdata = map_getmapdata(sd->bl.m);
+
+					if (mapdata->instance_id && mapdata->instance_src_map == qi->objectives[j]->mapid)
+						objective_check++;
+				}
 			}
 
 			if (objective_check == 6 && sd->quest_log[i].count[j] < qi->objectives[j]->count)  {

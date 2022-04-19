@@ -891,7 +891,7 @@ OnInstanceInit:
 			specialeffect2 EF_HOLYHIT;
 			getitem 6001,1; //Essence_Of_Fire
 			mes "The symbol of inheritor shines. Then a small crystal falls into my hand from the torch.";
-			disablenpc instance_npcname(strnpcinfo(0));
+			disablenpc();
 			close;
 		}
 		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
@@ -914,7 +914,7 @@ OnInstanceInit:
 	}
 
 OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 }
 1@cata,267,210,0	duplicate(Bobbing Torch#SS)	Bobbing Torch#1	844
@@ -1087,13 +1087,13 @@ OnTouch_:
 	if (.@seal_check == 0 || .@seal_check == 1) {
 		specialeffect2 EF_SILENCEATTACK;
 		percentheal -50,0;
-		sc_start Eff_Stone,30000,0;
+		sc_start SC_Stone,30000,0;
 		mes "Your SP has not recovered yet. You lost your SP on the altar, but it seems the power of the seal has returned.";
 		close;
 	}
 	if (.@seal_check == 2) erasequest 3041;
 	specialeffect EF_LEXDIVINA;
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	set .@map$, instance_mapname("2@cata");
 	if (strnpcinfo(2) == "0") areamobuseskill .@map$,79,81,10,1929,"NPC_INVINCIBLEOFF",1,0,0,ET_HELP,0;
 	else if (strnpcinfo(2) == "2") areamobuseskill .@map$,123,109,10,1929,"NPC_INVINCIBLEOFF",1,0,0,ET_HELP,0;
@@ -1101,7 +1101,7 @@ OnTouch_:
 	else if (strnpcinfo(2) == "8") areamobuseskill .@map$,35,21,10,1929,"NPC_INVINCIBLEOFF",1,0,0,ET_HELP,0;
 	else if (strnpcinfo(2) == "10") areamobuseskill .@map$,35,109,10,1929,"NPC_INVINCIBLEOFF",1,0,0,ET_HELP,0;
 	percentheal -50,0;
-	sc_start Eff_Stone,20000,0;
+	sc_start SC_Stone,20000,0;
 	setquest 3041;
 	mapannounce .@map$, "The seal activated by putting magical power into the altar.",bc_map,"0x87ceeb";
 	mes "I can feel the power of the altar came back by adding magical power.";
@@ -1110,7 +1110,7 @@ OnTouch_:
 	close;
 
 OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 }
 2@cata,79,81,0	duplicate(Magical Seal#SS)	Magical Seal#0	844

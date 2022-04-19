@@ -9,7 +9,6 @@
 #include <string.h>
 
 #include "../common/cbasetypes.hpp"
-#include "../common/malloc.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/utilities.hpp"
@@ -31,26 +30,23 @@
 
 using namespace rathena;
 
+std::unordered_map<uint16, std::shared_ptr<struct s_storage_table>> storage_db;
+
 ///Databases of guild_storage : int guild_id -> struct guild_storage
 std::map<int, struct s_storage> guild_storage_db;
-
-struct s_storage_table *storage_db;
-int storage_count;
 
 /**
  * Get storage name
  * @param id Storage ID
  * @return Storage name or "Storage" if not found
- * @author [Cydh]
  **/
 const char *storage_getName(uint8 id) {
-	if (storage_db && storage_count) {
-		int i;
-		for (i = 0; i < storage_count; i++) {
-			if (&storage_db[i] && storage_db[i].id == id && storage_db[i].name[0])
-				return storage_db[i].name;
-		}
+	std::shared_ptr<struct s_storage_table> storage = util::umap_find( storage_db, (uint16)id );
+
+	if( storage ){
+		return storage->name;
 	}
+
 	return "Storage";
 }
 
@@ -60,14 +56,7 @@ const char *storage_getName(uint8 id) {
  * @return True:Valid, False:Invalid
  **/
 bool storage_exists(uint8 id) {
-	if (storage_db && storage_count) {
-		int i;
-		for (i = 0; i < storage_count; i++) {
-			if (storage_db[i].id == id)
-				return true;
-		}
-	}
-	return false;
+	return util::umap_find( storage_db, (uint16)id ) != nullptr;
 }
 
 /**
@@ -112,8 +101,6 @@ void storage_sortitem(struct item* items, unsigned int size)
  */
 void do_init_storage(void)
 {
-	storage_db = NULL;
-	storage_count = 0;
 }
 
 /**
@@ -124,10 +111,7 @@ void do_init_storage(void)
 void do_final_storage(void)
 {
 	guild_storage_db.clear();
-	if (storage_db)
-		aFree(storage_db);
-	storage_db = NULL;
-	storage_count = 0;
+	storage_db.clear();
 }
 
 /**
@@ -135,7 +119,7 @@ void do_final_storage(void)
  * @author [Skotlex]
  */
 void do_reconnect_storage(void){
-	for( auto entry : guild_storage_db ){
+	for( const auto& entry : guild_storage_db ){
 		struct s_storage stor = entry.second;
 
 		// Save closed storages.
@@ -420,7 +404,7 @@ void storage_storageaddfromcart(struct map_session_data *sd, struct s_storage *s
 		return;
 	}
 
-	result = storage_canAddItem(stor, index, sd->cart.u.items_inventory, amount, MAX_CART);
+	result = storage_canAddItem(stor, index, sd->cart.u.items_cart, amount, MAX_CART);
 	if (result == STORAGE_ADD_INVALID)
 		return;
 	else if (result == STORAGE_ADD_OK) {
@@ -483,23 +467,6 @@ void storage_storagesave(struct map_session_data *sd)
 }
 
 /**
- * Ack of storage has been saved
- * @param sd: Player who has the storage
- */
-void storage_storagesaved(struct map_session_data *sd)
-{
-	if (!sd)
-		return;
-
-	sd->storage.dirty = false;
-
-	if (sd->state.storage_flag == 1) {
-		sd->state.storage_flag = 0;
-		clif_storageclose(sd);
-	}
-}
-
-/**
  * Make player close his storage
  * @param sd: Player who has the storage
  * @author [massdriller] / modified by [Valaris]
@@ -513,12 +480,12 @@ void storage_storageclose(struct map_session_data *sd)
 			chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
 		else
 			storage_storagesave(sd);
-		if (sd->state.storage_flag == 1) {
-			sd->state.storage_flag = 0;
-			clif_storageclose(sd);
-		}
-	} else
-		storage_storagesaved(sd);
+	}
+	
+	if( sd->state.storage_flag == 1 ){
+		sd->state.storage_flag = 0;
+		clif_storageclose( sd );
+	}
 }
 
 /**
@@ -1212,22 +1179,6 @@ void storage_premiumStorage_save(struct map_session_data *sd) {
 }
 
 /**
- * Ack of secondary premium has been saved
- * @param sd Player who has the storage
- **/
-void storage_premiumStorage_saved(struct map_session_data *sd) {
-	if (!sd)
-		return;
-
-	sd->premiumStorage.dirty = 0;
-
-	if (sd->state.storage_flag == 3) {
-		sd->state.storage_flag = 0;
-		clif_storageclose(sd);
-	}
-}
-
-/**
  * Request to close premium storage
  * @param sd Player who has the storage
  * @author [Cydh]
@@ -1239,18 +1190,17 @@ void storage_premiumStorage_close(struct map_session_data *sd) {
 		if (save_settings&CHARSAVE_STORAGE)
 			chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
 		else
-			storage_premiumStorage_save(sd);
-		if (sd->state.storage_flag == 3) {
-			sd->state.storage_flag = 0;
-			clif_storageclose(sd);
-		}
+			storage_premiumStorage_save(sd);	
 	}
-	else 
-		storage_premiumStorage_saved(sd);
+
+	if( sd->state.storage_flag == 3 ){
+		sd->state.storage_flag = 0;
+		clif_storageclose( sd );
+	}
 }
 
 /**
- * Force save then close the premium storage
+ * Force save the premium storage
  * @param sd Player who has the storage
  * @author [Cydh]
  **/
