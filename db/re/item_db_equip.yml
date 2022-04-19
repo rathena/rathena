@@ -87086,7 +87086,7 @@ Body:
     Script: |
       bonus bVit,1;
   - Id: 19559
-    AegisName: C_Baby_Dragon_Hat
+    AegisName: C_B_Dragon_Hat
     Name: Costume Baby Dragon Hat
     Type: Armor
     Locations:
