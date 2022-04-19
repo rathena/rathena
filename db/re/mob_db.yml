@@ -89502,11 +89502,6 @@ Body:
     ElementLevel: 1
     WalkSpeed: 1000
     AttackMotion: 1
-    Modes:
-      IgnoreMagic: true
-      IgnoreMelee: true
-      IgnoreMisc: true
-      IgnoreRanged: true
     Drops:
       - Item: Alchol
         Rate: 50
