@@ -69125,7 +69125,7 @@ Body:
       if (.@r>=9)
          bonus2 bAddRace,RC_All,10;
   - Id: 15841
-    AegisName: aegis_15841
+    AegisName: C_Hat_of_Goggle
     Name: Costume Goggles Hat
     Type: Armor
     Locations:
@@ -69157,7 +69157,7 @@ Body:
     ArmorLevel: 1
     View: 2091
   - Id: 15888
-    AegisName: aegis_15888
+    AegisName: C_Hand_Of_Devil
     Name: Costume Dragon Claw Helm
     Type: Armor
     Locations:
@@ -69173,7 +69173,7 @@ Body:
     ArmorLevel: 1
     View: 808
   - Id: 15892
-    AegisName: aegis_15892
+    AegisName: Themis_Helm
     Name: Crown of Justice
     Type: Armor
     View: 2099
@@ -100182,7 +100182,7 @@ Body:
          bonus bDelayrate,-5;
       }
   - Id: 20985
-    AegisName: aegis_20985
+    AegisName: C_Gourd_bottle_J
     Name: Costume Gourd Bottle
     Type: Armor
     Locations:
@@ -100190,8 +100190,8 @@ Body:
     ArmorLevel: 1
     View: 82
   - Id: 20987
-    AegisName: aegis_20987
-    Name: Costume Heart Wing Backpack    # !todo check english name
+    AegisName: C_Heart_Wing_Bag_J
+    Name: Costume Piglering Bag
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -100226,7 +100226,7 @@ Body:
     UnEquipScript: |
       hateffect HAT_EF_GEARWHEEL,false;
   - Id: 20991
-    AegisName: aegis_20991
+    AegisName: Fairy_Of_Eden
     Name: Fairy of Eden
     Type: Armor
     Weight: 400
@@ -134024,7 +134024,7 @@ Body:
     ArmorLevel: 1
     View: 481
   - Id: 31809
-    AegisName: aegis_31809
+    AegisName: C_Red_Wizardry_Hat
     Name: Costume Red Mage Hat    # !todo check english name
     Type: Armor
     Locations:
@@ -134597,7 +134597,7 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
   - Id: 31882
-    AegisName: aegis_31882
+    AegisName: C_Choco_Stick_In_Mouth
     Name: Costume Choco Stick In Mouth    # !todo check english name
     Type: Armor
     Locations:
@@ -134638,7 +134638,7 @@ Body:
     ArmorLevel: 1
     View: 1952
   - Id: 31887
-    AegisName: aegis_31887
+    AegisName: C_Pure_Love_Muffler
     Name: Costume Pure Scarf
     Type: Armor
     View: 1981
@@ -134750,7 +134750,7 @@ Body:
     ArmorLevel: 1
     View: 1130
   - Id: 31910
-    AegisName: aegis_31910
+    AegisName: C_Shaving_Cream
     Name: Costume Festive Santa Beard
     Type: Armor
     Locations:
@@ -134806,7 +134806,7 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
   - Id: 31917
-    AegisName: aegis_31917
+    AegisName: C_2018_RTC_Cape4_TW_J
     Name: Costume Glorious Flag (Red)    # !todo check english name
     Type: Armor
     Locations:
@@ -134934,7 +134934,7 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
   - Id: 31935
-    AegisName: aegis_31935
+    AegisName: C_Baby_Dragon_Hat
     Name: Costume Baby Dragon Hat
     Type: Armor
     Locations:
@@ -134974,7 +134974,7 @@ Body:
     ArmorLevel: 1
     View: 1026
   - Id: 31940
-    AegisName: aegis_31940
+    AegisName: C_Earth_Godess_Mask
     Name: Costume flag mask
     Type: Armor
     Locations:
@@ -134982,7 +134982,7 @@ Body:
     ArmorLevel: 1
     View: 918
   - Id: 31941
-    AegisName: aegis_31941
+    AegisName: C_Super_Cell
     Name: Costume Storm Cell
     Type: Armor
     Locations:
@@ -135042,7 +135042,7 @@ Body:
     ArmorLevel: 1
     View: 1779
   - Id: 31949
-    AegisName: aegis_31949
+    AegisName: C_Diabolus_Wing
     Name: Costume Diablos Wings
     Type: Armor
     Locations:
@@ -135050,7 +135050,7 @@ Body:
     ArmorLevel: 1
     View: 680
   - Id: 31950
-    AegisName: aegis_31950
+    AegisName: C_Nut_Cracker_JP
     Name: Costume Replica Nut Cracker
     Type: Armor
     Locations:
@@ -135058,7 +135058,7 @@ Body:
     ArmorLevel: 1
     View: 1991
   - Id: 31951
-    AegisName: aegis_31951
+    AegisName: C_Happy_Cat_JP
     Name: Costume Happy Cat
     Type: Armor
     Locations:
@@ -135074,7 +135074,7 @@ Body:
     ArmorLevel: 1
     View: 2016
   - Id: 31953
-    AegisName: aegis_31953
+    AegisName: C_Cor_Core_Headset
     Name: Costume Cor Core Headset    # !todo check english name
     Type: Armor
     Locations:
@@ -135229,7 +135229,7 @@ Body:
     ArmorLevel: 1
     View: 2154
   - Id: 31976
-    AegisName: aegis_31976
+    AegisName: C_Focus_Beret
     Name: Costume Concentration Beret    # !todo check english name
     Type: Armor
     Locations:
@@ -137279,7 +137279,7 @@ Body:
     EquipLevelMin: 1
     View: 1918
   - Id: 400021
-    AegisName: aegis_400021
+    AegisName: Clock_Casket_RD
     Name: Red Clark Casquette
     Type: Armor
     View: 1777
@@ -137305,7 +137305,7 @@ Body:
          bonus2 bAddSize,Size_Medium,15;
       }
   - Id: 400022
-    AegisName: aegis_400022
+    AegisName: Ignis_CapK
     Name: Ignis Cap
     Type: Armor
     View: 803
@@ -137331,7 +137331,7 @@ Body:
          bonus2 bAddSize,Size_Medium,15;
       }
   - Id: 400023
-    AegisName: aegis_400023
+    AegisName: Dolor_HatK
     Name: Drooping Thanatos's Dolor
     Type: Armor
     View: 547
@@ -137382,7 +137382,7 @@ Body:
       bonus2 bSubRace,RC_Player_Human,6;
       bonus2 bSubRace,RC_Player_Doram,6;
   - Id: 400044
-    AegisName: aegis_400044
+    AegisName: Phantom_Cap
     Name: Phantom Cap
     Type: Armor
     View: 1899
@@ -137408,7 +137408,7 @@ Body:
          bonus2 bMagicAddSize,Size_Medium,15;
       }
   - Id: 400045
-    AegisName: aegis_400045
+    AegisName: C_Pierced_Apple
     Name: Pierced Apple
     Type: Armor
     View: 1952
@@ -137417,7 +137417,7 @@ Body:
     ArmorLevel: 1
     Refineable: true
   - Id: 400046
-    AegisName: aegis_400046
+    AegisName: C_Pierced_Apple_
     Name: Costume Pierced Apple
     Type: Armor
     View: 1952
@@ -137566,7 +137566,7 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
   - Id: 400059
-    AegisName: aegis_400059
+    AegisName: Scorpio_Diadem_K
     Name: Scorpio Celestial Coronet
     Type: Armor
     View: 606
@@ -137636,7 +137636,7 @@ Body:
       if (.@r>=10)
          autobonus "{ bonus bUseSPrate,-100; }",20,20000,BF_MAGIC;
   - Id: 400061
-    AegisName: aegis_400061
+    AegisName: Sagittarius_DiademK
     Name: Sagittarius Celestial Coronet
     Type: Armor
     View: 618
@@ -137718,7 +137718,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 400078
-    AegisName: aegis_400078
+    AegisName: BioWeapon_Helm_RK
     Name: Goral Crown
     Type: Armor
     View: 532
@@ -137748,7 +137748,7 @@ Body:
          bonus2 bAddSize,Size_All,10;
       }
   - Id: 400079
-    AegisName: aegis_400079
+    AegisName: BioWeapon_Helm_LG
     Name: Trial Diadem
     Type: Armor
     View: 594
@@ -137782,7 +137782,7 @@ Body:
          bonus2 bMagicAddSize,Size_All,10;
       }
   - Id: 400094
-    AegisName: aegis_400094
+    AegisName: BioWeapon_Helm_WL
     Name: Jade Crown
     Type: Armor
     View: 510
@@ -137815,7 +137815,7 @@ Body:
          bonus2 bMagicAtkEle,Ele_Fire,20;
       }
   - Id: 400095
-    AegisName: aegis_400095
+    AegisName: BioWeapon_Helm_SO
     Name: Spinel Diadem
     Type: Armor
     View: 509
@@ -137869,7 +137869,7 @@ Body:
          bonus bBaseAtk,40;
       }
   - Id: 400098
-    AegisName: aegis_400098
+    AegisName: BioWeapon_Helm_NC
     Name: Bull Crown
     Type: Armor
     View: 536
@@ -137899,7 +137899,7 @@ Body:
          bonus2 bAddSize,Size_All,10;
       }
   - Id: 400099
-    AegisName: aegis_400099
+    AegisName: BioWeapon_Helm_GN
     Name: Taurus Diadem
     Type: Armor
     View: 535
@@ -137944,7 +137944,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 400116
-    AegisName: aegis_400116
+    AegisName: BioWeapon_Helm_RA
     Name: Celestial Jewel Crown
     Type: Armor
     View: 574
@@ -137974,7 +137974,7 @@ Body:
          bonus2 bAddSize,Size_All,10;
       }
   - Id: 400117
-    AegisName: aegis_400117
+    AegisName: BioWeapon_Helm_WM
     Name: Libra Crown
     Type: Armor
     View: 593
@@ -138008,7 +138008,7 @@ Body:
          bonus2 bAddSize,Size_All,10;
       }
   - Id: 400118
-    AegisName: aegis_400118
+    AegisName: BioWeapon_Helm_AB
     Name: Saint Crown
     Type: Armor
     View: 560
@@ -138042,7 +138042,7 @@ Body:
          bonus2 bAddSize,Size_All,10;
       }
   - Id: 400119
-    AegisName: aegis_400119
+    AegisName: BioWeapon_Helm_SR
     Name: Lion Crown
     Type: Armor
     View: 565
@@ -138072,7 +138072,7 @@ Body:
          bonus2 bAddSize,Size_All,10;
       }
   - Id: 400120
-    AegisName: aegis_400120
+    AegisName: BioWeapon_Helm_SC
     Name: Goat Crown
     Type: Armor
     View: 621
@@ -138105,7 +138105,7 @@ Body:
          bonus2 bMagicAddSize,Size_All,10;
       }
   - Id: 400121
-    AegisName: aegis_400121
+    AegisName: BioWeapon_Helm_GC
     Name: Twin Crown
     Type: Armor
     View: 551
@@ -138169,7 +138169,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 400128
-    AegisName: aegis_400128
+    AegisName: C_Ep18_Mini_Elly
     Name: Costume Dropping Elly
     Type: Armor
     Locations:
@@ -138177,7 +138177,7 @@ Body:
     ArmorLevel: 1
     View: 2077
   - Id: 400131
-    AegisName: aegis_400131
+    AegisName: C_Diadem_Of_Bruenhild
     Name: Costume Diadem of Brunhild
     Type: Armor
     Locations:
@@ -139163,6 +139163,14 @@ Body:
       bonus bBaseAtk,10*(.@r/2);
       bonus2 bSkillAtk,"SC_TRIANGLESHOT",15*(.@r/3);
       bonus bLongAtkRate,7*(.@r/4);
+  - Id: 400197
+    AegisName: C_Sweet_Chef_Hat
+    Name: Costume Sweet Chef Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 2163
   - Id: 400198
     AegisName: Viva_Adul_Hat_RA1
     Name: Helm of Faith (Ranger)
@@ -140718,6 +140726,18 @@ Body:
     View: 1169
     Script: |
       bonus bVariableCastrate,-5;
+  - Id: 410081
+    AegisName: C_Released_Ground
+    Name: Costume Released Ground    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2136
+    Script: |
+      hateffect HAT_EF_C_Released_Ground,true;
+    UnEquipScript: |
+      hateffect HAT_EF_C_Released_Ground,false;
   - Id: 410087
     AegisName: C_Demons_Familiar_K
     Name: Costume Robotic Watcher
@@ -141874,7 +141894,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 440008
-    AegisName: aegis_440008
+    AegisName: C_Master
     Name: Costume Master
     Type: Armor
     Locations:
@@ -150401,7 +150421,7 @@ Body:
          bonus bSPGainValue,10;
       }
   - Id: 480136
-    AegisName: aegis_480136
+    AegisName: Thanatos_Sword
     Name: Magic Swordsman Thanatos's Sword
     Type: Armor
     Weight: 500
