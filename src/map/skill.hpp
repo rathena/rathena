@@ -2630,9 +2630,6 @@ enum e_skill_unit_id : uint16 {
 
 	UNT_KUNAIWAIKYOKU = 298, // Kunai - Distortion
 
-	UNT_GRENADES_DROPPING = 288,
-	UNT_MISSION_BOMBARD = 291,
-
 	// Skill units outside the normal unit range.
 	UNT_DEEPBLINDTRAP = 20852,
 	UNT_SOLIDTRAP,
