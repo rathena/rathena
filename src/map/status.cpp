@@ -11913,17 +11913,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_DEEP_POISONING_OPTION:
 			val3 = ELE_POISON;
 			break;
-		case SC_GRENADE_FRAGMENT:
-			skill_enchant_elemental_end(bl, type);
-			switch (val1) {
-			case 1: val2 = ELE_WATER; break;
-			case 2: val2 = ELE_WIND; break;
-			case 3: val2 = ELE_EARTH; break;
-			case 4: val2 = ELE_FIRE; break;
-			case 5: val2 = ELE_DARK; break;
-			case 6: val2 = ELE_HOLY; break;
-			}
-			break;
 		case SC_INTENSIVE_AIM:
 			tick = 500;
 			break;
@@ -13029,11 +13018,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	if (status_icon == EFST_WEAPONPROPERTY)
 		status_icon = EFST_ATTACK_PROPERTY_NOTHING + sce->val1; // Assign status icon for older clients
 #endif
-	switch (type) {
-		case SC_GRENADE_FRAGMENT:
-			status_icon = status_icon - 1 + sce->val1;
-			break;
-	}
 	clif_status_change(bl,status_icon,0,0,0,0,0);
 
 	if( opt_flag[SCF_NONPLAYER] ) // bugreport:681
@@ -14097,10 +14081,11 @@ TIMER_FUNC(status_change_timer){
 		break;
 	case SC_INTENSIVE_AIM:
 		if (!sc || !sc->data[SC_INTENSIVE_AIM_COUNT])
-			sce->val4 = 0;
-		if (sce->val4 < 10) {
-			sce->val4++;
-			sc_start(bl, bl, SC_INTENSIVE_AIM_COUNT, 100, sce->val4, INFINITE_TICK);
+			sce->val1 = 0;
+		if (sce->val1 < 10)
+		{
+			sce->val1++;
+			sc_start(bl, bl, SC_INTENSIVE_AIM_COUNT, 100, sce->val1, INFINITE_TICK);
 		}
 		sc_timer_next(500 + tick);
 		return 0;

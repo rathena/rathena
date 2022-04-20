@@ -1840,6 +1840,18 @@
 	export_constant(SC_POISON_SHIELD);
 	export_constant(SC_POISON_SHIELD_OPTION);
 
+	/* Night Watch */
+	export_constant(SC_INTENSIVE_AIM);
+	export_constant(SC_INTENSIVE_AIM_COUNT);
+	export_constant(SC_HIDDEN_CARD);
+	export_constant(SC_GRENADE_FRAGMENT_1);
+	export_constant(SC_GRENADE_FRAGMENT_2);
+	export_constant(SC_GRENADE_FRAGMENT_3);
+	export_constant(SC_GRENADE_FRAGMENT_4);
+	export_constant(SC_GRENADE_FRAGMENT_5);
+	export_constant(SC_GRENADE_FRAGMENT_6);
+	export_constant(SC_AUTO_FIRING_LAUNCHEREFST);
+
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif

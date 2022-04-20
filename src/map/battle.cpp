@@ -3209,8 +3209,18 @@ static int battle_get_weapon_element(struct Damage* wd, struct block_list *src, 
 		if(sc && sc->data[SC_ENCHANTARMS]) // Check for endows
 			element = sc->data[SC_ENCHANTARMS]->val1;
 		// Nigth Watch Grenade Fragment elementals affecting those skills.
-		if (sc && sc->data[SC_GRENADE_FRAGMENT] && (skill_id == NW_BASIC_GRENADE || skill_id == NW_HASTY_FIRE_IN_THE_HOLE || skill_id == NW_GRENADES_DROPPING || skill_id == NW_MISSION_BOMBARD))
-			element = sc->data[SC_GRENADE_FRAGMENT]->val2;
+		if (sc && sc->data[SC_GRENADE_FRAGMENT_1] && (skill_id == NW_BASIC_GRENADE || skill_id == NW_HASTY_FIRE_IN_THE_HOLE || skill_id == NW_GRENADES_DROPPING || skill_id == NW_MISSION_BOMBARD))
+			element = ELE_WATER;
+		if (sc && sc->data[SC_GRENADE_FRAGMENT_2] && (skill_id == NW_BASIC_GRENADE || skill_id == NW_HASTY_FIRE_IN_THE_HOLE || skill_id == NW_GRENADES_DROPPING || skill_id == NW_MISSION_BOMBARD))
+			element = ELE_WIND;
+		if (sc && sc->data[SC_GRENADE_FRAGMENT_3] && (skill_id == NW_BASIC_GRENADE || skill_id == NW_HASTY_FIRE_IN_THE_HOLE || skill_id == NW_GRENADES_DROPPING || skill_id == NW_MISSION_BOMBARD))
+			element = ELE_EARTH;
+		if (sc && sc->data[SC_GRENADE_FRAGMENT_4] && (skill_id == NW_BASIC_GRENADE || skill_id == NW_HASTY_FIRE_IN_THE_HOLE || skill_id == NW_GRENADES_DROPPING || skill_id == NW_MISSION_BOMBARD))
+			element = ELE_FIRE;
+		if (sc && sc->data[SC_GRENADE_FRAGMENT_5] && (skill_id == NW_BASIC_GRENADE || skill_id == NW_HASTY_FIRE_IN_THE_HOLE || skill_id == NW_GRENADES_DROPPING || skill_id == NW_MISSION_BOMBARD))
+			element = ELE_DARK;
+		if (sc && sc->data[SC_GRENADE_FRAGMENT_6] && (skill_id == NW_BASIC_GRENADE || skill_id == NW_HASTY_FIRE_IN_THE_HOLE || skill_id == NW_GRENADES_DROPPING || skill_id == NW_MISSION_BOMBARD))
+			element = ELE_HOLY;
 	} else if( element == ELE_ENDOWED ) //Use enchantment's element
 		element = status_get_attack_sc_element(src,sc);
 	else if( element == ELE_RANDOM ) //Use random element
@@ -9207,42 +9217,37 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	if (sd && tsc && wd.flag&BF_LONG && tsc->data[SC_WINDSIGN] && rand()%100 < tsc->data[SC_WINDSIGN]->val2)
 		status_heal(src, 0, 0, 1, 0);
 
-	if (sc && sc->data[SC_AUTO_FIRING_LAUNCHER])
-	{
-		switch (sc->data[SC_AUTO_FIRING_LAUNCHER]->val1)
-		{
-		case 1:
-			if (pc_checkskill(sd, NW_BASIC_GRENADE) && rnd() % 100 < 6)
-				skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, pc_checkskill(sd, NW_BASIC_GRENADE), tick, flag);
-			break;
-		case 2:
-			if (pc_checkskill(sd, NW_BASIC_GRENADE) && rnd() % 100 < 7)
-				skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, pc_checkskill(sd, NW_BASIC_GRENADE), tick, flag);
-			break;
-		case 3:
-			if (pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE) && rnd() % 100 < 3)
-				skill_castend_pos2(src, target->x, target->y, NW_HASTY_FIRE_IN_THE_HOLE, pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE), tick, flag);
-			else
-				if (pc_checkskill(sd, NW_BASIC_GRENADE) && rnd() % 100 < 8)
-					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, pc_checkskill(sd, NW_BASIC_GRENADE), tick, flag);
-			break;
-		case 4:
-			if (pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE) && rnd() % 100 < 5)
-				skill_castend_pos2(src, target->x, target->y, NW_HASTY_FIRE_IN_THE_HOLE, pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE), tick, flag);
-			else
-				if (pc_checkskill(sd, NW_BASIC_GRENADE) && rnd() % 100 < 9)
-					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, pc_checkskill(sd, NW_BASIC_GRENADE), tick, flag);
-			break;
-		case 5:
-			if (pc_checkskill(sd, NW_GRENADES_DROPPING) && rnd() % 100 < 3)
-				skill_castend_pos2(src, target->x, target->y, NW_GRENADES_DROPPING, pc_checkskill(sd, NW_GRENADES_DROPPING), tick, flag);
-			else
-			if (pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE) && rnd() % 100 < 7)
-				skill_castend_pos2(src, target->x, target->y, NW_HASTY_FIRE_IN_THE_HOLE, pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE), tick, flag);
-			else
-			if (pc_checkskill(sd, NW_BASIC_GRENADE) && rnd() % 100 < 10)
-				skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, pc_checkskill(sd, NW_BASIC_GRENADE), tick, flag);
-			break;
+	if (sc && sc->data[SC_AUTO_FIRING_LAUNCHEREFST]) {
+		uint16 skill_id = 0;
+		switch (sc->data[SC_AUTO_FIRING_LAUNCHEREFST]->val1) {
+			case 1:
+				if (pc_checkskill(sd, NW_BASIC_GRENADE) && rnd() % 100 < 6)
+					skill_id = NW_BASIC_GRENADE;
+				break;
+			case 2:
+				if (pc_checkskill(sd, NW_BASIC_GRENADE) && rnd() % 100 < 7)
+					skill_id = NW_BASIC_GRENADE;
+				break;
+			case 3:
+				if (pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE) && rnd() % 100 < 3)
+					skill_id = NW_HASTY_FIRE_IN_THE_HOLE;
+				else if (pc_checkskill(sd, NW_BASIC_GRENADE) && rnd() % 100 < 8)
+					skill_id = NW_BASIC_GRENADE;
+				break;
+			case 4:
+				if (pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE) && rnd() % 100 < 5)
+					skill_id = NW_HASTY_FIRE_IN_THE_HOLE;
+				else if (pc_checkskill(sd, NW_BASIC_GRENADE) && rnd() % 100 < 9)
+					skill_id = NW_BASIC_GRENADE;
+				break;
+			case 5:
+				if (pc_checkskill(sd, NW_GRENADES_DROPPING) && rnd() % 100 < 3)
+					skill_id = NW_GRENADES_DROPPING;
+				else if (pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE) && rnd() % 100 < 7)
+					skill_id = NW_HASTY_FIRE_IN_THE_HOLE;
+				else if (pc_checkskill(sd, NW_BASIC_GRENADE) && rnd() % 100 < 10)
+					skill_id = NW_BASIC_GRENADE;
+				break;
 		}
 	}
 

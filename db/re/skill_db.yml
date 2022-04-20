@@ -40592,6 +40592,7 @@ Body:
       SpCost:
         - Level: 1
           Amount: 10
+    Status: Intensive_Aim
   - Id: 5404
     Name: NW_GRENADE_FRAGMENT
     Description: Grenade Fragment
@@ -40986,6 +40987,7 @@ Body:
           Amount: 120
         - Level: 5
           Amount: 130
+    Status: Auto_Firing_Launcherefst
   - Id: 5414
     Name: NW_HIDDEN_CARD
     Description: Hidden Card
@@ -41001,6 +41003,7 @@ Body:
     Requires:
       SpCost: 150
       ApCost: 150
+    Status: Hidden_Card
   - Id: 5415
     Name: NW_MISSION_BOMBARD
     Description: Mission Bombard

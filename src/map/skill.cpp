@@ -7114,6 +7114,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	}
 
 	type = skill_get_sc(skill_id);
+	sc = status_get_sc(src);
 	tsc = status_get_sc(bl);
 	tsce = (tsc && type != SC_NONE)?tsc->data[type]:NULL;
 
@@ -12491,10 +12492,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case NW_INTENSIVE_AIM:
-		if (tsc && tsc->data[type])
-			status_change_end(bl, type, INVALID_TIMER);
+		if (tsc && tsc->count && tsc->data[SC_INTENSIVE_AIM_COUNT]) {
+			status_change_end(bl, SC_INTENSIVE_AIM_COUNT, INVALID_TIMER);
+			status_change_end(bl, SC_INTENSIVE_AIM, INVALID_TIMER);
+		}
 		else
+		{
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		}
 		clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
 		break;
 
@@ -12505,9 +12510,26 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case NW_GRENADE_FRAGMENT:
-		status_change_end(src, type, INVALID_TIMER);
-		if (skill_lv < 7)
-			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		if (skill_lv == 1)
+			sc_start(src, bl, SC_GRENADE_FRAGMENT_1, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		else if (skill_lv == 2)
+			sc_start(src, bl, SC_GRENADE_FRAGMENT_2, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		else if (skill_lv == 3)
+			sc_start(src, bl, SC_GRENADE_FRAGMENT_3, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		else if (skill_lv == 4)
+			sc_start(src, bl, SC_GRENADE_FRAGMENT_4, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		else if (skill_lv == 5)
+			sc_start(src, bl, SC_GRENADE_FRAGMENT_5, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		else if (skill_lv == 6)
+			sc_start(src, bl, SC_GRENADE_FRAGMENT_6, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		else if (skill_lv == 7) {
+			status_change_end(src, SC_GRENADE_FRAGMENT_1, INVALID_TIMER);
+			status_change_end(src, SC_GRENADE_FRAGMENT_2, INVALID_TIMER);
+			status_change_end(src, SC_GRENADE_FRAGMENT_3, INVALID_TIMER);
+			status_change_end(src, SC_GRENADE_FRAGMENT_4, INVALID_TIMER);
+			status_change_end(src, SC_GRENADE_FRAGMENT_5, INVALID_TIMER);
+			status_change_end(src, SC_GRENADE_FRAGMENT_6, INVALID_TIMER);
+		}
 		clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
 		break;
 
