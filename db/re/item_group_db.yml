@@ -29577,7 +29577,7 @@ Body:
           - Item: EP17_2_EP51
             Rate: 98
   # Source: https://ro.gnjoy.com/news/probability/View.asp?seq=4088011
-  - Group: AUTO_M_I_BOX_A
+  - Group: AUTOMATIC_MODULE_MIX
     SubGroups:
       - SubGroup: 1
         List:
@@ -29856,3 +29856,23 @@ Body:
             Rate: 3
           - Item: EP17_1_EVT38
             Rate: 3
+  - Group: AUTO_M_I_BOX_A
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Auto_Imp_Melee_1
+            Rate: 3333
+          - Item: Auto_Imp_Melee_2
+            Rate: 3333
+          - Item: Auto_Imp_Melee_3
+            Rate: 3333
+  - Group: AUTO_M_I_BOX_B
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Auto_Imp_Magic_1
+            Rate: 3333
+          - Item: Auto_Imp_Magic_2
+            Rate: 3333
+          - Item: Auto_Imp_Magic_3
+            Rate: 3333

@@ -48567,27 +48567,27 @@ Body:
   - Id: 100160
     AegisName: Auto_M_Box
     Name: Automatic Module Box
-    Type: Delayconsume
+    Type: Usable
     Script: |
-      laphine_synthesis();
+      getrandgroupitem(IG_AUTOMATIC_MODULE_MIX,1);
   - Id: 100161
     AegisName: Epic_M_Box
     Name: Epic Module Box
-    Type: Delayconsume
+    Type: Usable
     Script: |
-      laphine_synthesis();
+      getrandgroupitem(IG_EPIC_MODULE_MIX,1);
   - Id: 100162
     AegisName: Auto_M_I_Box_A
     Name: Automatic Improvement Device Physical
-    Type: Delayconsume
+    Type: Usable
     Script: |
-      laphine_synthesis();
+      getrandgroupitem(IG_AUTO_M_I_BOX_A,1);
   - Id: 100163
     AegisName: Auto_M_I_Box_B
     Name: Automatic Improvement Device Magical
-    Type: Delayconsume
+    Type: Usable
     Script: |
-      laphine_synthesis();
+      getrandgroupitem(IG_AUTO_M_I_BOX_B,1);
   - Id: 100164
     AegisName: Auto_Imp_Melee_1
     Name: Normal Automatic Improvement Device (Physical)
