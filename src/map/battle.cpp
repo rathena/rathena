@@ -3106,6 +3106,15 @@ static bool attack_ignores_def(struct Damage* wd, struct block_list *src, struct
 #endif
 	if (sc && sc->data[SC_FUSION])
 		return true;
+	else
+	if (skill_id == RK_WINDCUTTER && sd && sd->status.weapon == W_2HSWORD)
+		return true;
+	else
+	if (skill_id == NW_THE_VIGILANTE_AT_NIGHT && sd && sd->status.weapon == W_GATLING)
+		return true;
+	else
+	if (skill_id == NW_ONLY_ONE_BULLET && sd && sd->status.weapon == W_REVOLVER)
+		return true;
 	else if (skill_id != CR_GRANDCROSS && skill_id != NPC_GRANDDARKNESS)
 	{	//Ignore Defense?
 		if (sd && (sd->right_weapon.ignore_def_ele & (1<<tstatus->def_ele) || sd->right_weapon.ignore_def_ele & (1<<ELE_ALL) ||
@@ -3124,12 +3133,7 @@ static bool attack_ignores_def(struct Damage* wd, struct block_list *src, struct
 			} else if (weapon_position == EQI_HAND_L)
 				return true;
 		}
-	} else if (skill_id == RK_WINDCUTTER && sd && sd->status.weapon == W_2HSWORD)
-		return true;
-	else if (skill_id == NW_THE_VIGILANTE_AT_NIGHT && sd && sd->status.weapon == W_GATLING)
-		return true;
-	else if (skill_id == NW_ONLY_ONE_BULLET && sd && sd->status.weapon == W_REVOLVER)
-		return true;
+	}
 
 	return nk[NK_IGNOREDEFENSE] != 0;
 }
