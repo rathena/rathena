@@ -7114,7 +7114,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	}
 
 	type = skill_get_sc(skill_id);
-	sc = status_get_sc(src);
 	tsc = status_get_sc(bl);
 	tsce = (tsc && type != SC_NONE)?tsc->data[type]:NULL;
 
