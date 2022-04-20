@@ -975,6 +975,8 @@ OnTouch:
 OnInit:
 	cloakonnpc "Mysterious Guest#ep16_01";
 	cloakonnpc "Chamberlain#ep16_01";
+
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(7687) == 1" );
 	end;
 }
 prt_cas,179,155,6	script	Mysterious Guest#ep16_01	4_LGTSCIENCE,{ end; }
@@ -1501,6 +1503,8 @@ OnInit:
 	cloakonnpc "Skia Nerius#ep16_7689";
 	cloakonnpc "#ep16_7689_02";
 	cloakonnpc "#ep16_7689_01";
+
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(7690) == 1" );
 	end;
 }
 prt_cas,186,163,3	script	Skia Nerius#ep16_7689	4_EP16_SKIA,{ end; }
@@ -9686,6 +9690,10 @@ OnTouch:
 		ep16_gaobs = 7;
 		close;
 	}
+	end;
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11405) == 1" );
+	end;
 }
 
 prt_cas,84,232,0	script	#ep16_1Whisper2	HIDDEN_WARP_NPC,3,3,{
@@ -9703,6 +9711,10 @@ OnTouch:
 		ep16_gaobs = 8;
 		close;
 	}
+	end;
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11406) == 1" );
+	end;
 }
 
 prt_cas,110,242,0	script	#ep16_1Whisper3	HIDDEN_WARP_NPC,3,3,{
@@ -9731,6 +9743,10 @@ OnTouch:
 		ep16_gaobs = 9;
 		close;
 	}
+	end;
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11407) == 1" );
+	end;
 }
 
 prt_cas,111,218,0	script	#ep16_1Whisper4	HIDDEN_WARP_NPC,3,3,{
@@ -9744,6 +9760,10 @@ OnTouch:
 		ep16_gaobs = 10;
 		close;
 	}
+	end;
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11408) == 1" );
+	end;
 }
 
 prt_cas,92,224,0	script	#ep16_1Whisper5	HIDDEN_WARP_NPC,3,3,{
@@ -9760,6 +9780,10 @@ OnTouch:
 		ep16_gaobs = 11;
 		close;
 	}
+	end;
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11409) == 1" );
+	end;
 }
 
 prt_cas,77,223,0	script	#ep16_1Whisper6	HIDDEN_WARP_NPC,3,3,{
@@ -9784,6 +9808,10 @@ OnTouch:
 		ep16_gaobs = 12;
 		close;
 	}
+	end;
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11410) == 1" );
+	end;
 }
 
 prt_cas,93,226,0	script	#ep16_1Whisper7	HIDDEN_WARP_NPC,3,3,{
@@ -9801,6 +9829,10 @@ OnTouch:
 		ep16_gaobs = 13;
 		close;
 	}
+	end;
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11411) == 1" );
+	end;
 }
 
 // At room entrance
@@ -14223,6 +14255,96 @@ prt_cas,161,168,5	script	Royal Guardian Knight#02	4_M_CRU,{
 prt_cas,270,168,3	duplicate(Royal Guardian Knight#02)	Royal Guardian Knight#03	4_M_CRU
 
 // Exchanges and enchants npc
+prt_cas,165,260,6	script	Noblesse Operator#ext161	4_F_CRU,{
+	mes "[Noblesse Operator]";
+	mes "Hello.";
+	mes "We have ^4d4dffNoblesse^000000 equipment that can be exchanged for <ITEM>[Honor Token]<INFO>6919</INFO></ITEM>.";
+	mes "I will guide you to exchange items according to your job.";
+	close2;
+	switch( eaclass() & EAJ_THIRDMASK ) {
+	case EAJ_RUNE_KNIGHT:
+		.@str$ = "JOB_RUNE_KNIGHT";
+		break;
+	case EAJ_WARLOCK:
+		.@str$ = "JOB_WARLOCK";
+		break;
+	case EAJ_RANGER:
+		.@str$ = "JOB_RANGER";
+		break;
+	case EAJ_ARCH_BISHOP:
+		.@str$ = "JOB_ARCH_BISHOP";
+		break;
+	case EAJ_MECHANIC:
+		.@str$ = "JOB_MECHANIC";
+		break;
+	case EAJ_GUILLOTINE_CROSS:
+		.@str$ = "JOB_GUILLOTINE_CROSS";
+		break;
+	case EAJ_ROYAL_GUARD:
+		.@str$ = "JOB_ROYAL_GUARD";
+		break;
+	case EAJ_SORCERER:
+		.@str$ = "JOB_SORCERER";
+		break;
+	case EAJ_MINSTRELWANDERER:
+		.@str$ = "JOB_MINSTREL";
+		break;
+	case EAJ_SURA:
+		.@str$ = "JOB_SURA";
+		break;
+	case EAJ_GENETIC:
+		.@str$ = "JOB_GENETIC";
+		break;
+	case EAJ_SHADOW_CHASER:
+		.@str$ = "JOB_SHADOW_CHASER";
+		break;
+	default:
+		switch( Class ) {
+		case JOB_SUPER_NOVICE_E:
+		case JOB_SUPER_BABY_E:
+		case JOB_HYPER_NOVICE:
+			.@str$ = "JOB_SUPER_NOVICE_E";
+			break;
+		case JOB_KAGEROU:
+		case JOB_OBORO:
+		case JOB_BABY_KAGEROU:
+		case JOB_BABY_OBORO:
+		case JOB_SHINKIRO:
+		case JOB_SHIRANUI:
+			.@str$ = "JOB_KAGEROU";
+			break;
+		case JOB_REBELLION:
+		case JOB_BABY_REBELLION:
+		case JOB_NIGHT_WATCH:
+			.@str$ = "JOB_REBELLION";
+			break;
+		case JOB_SUMMONER:
+		case JOB_BABY_SUMMONER:
+		case JOB_SPIRIT_HANDLER:
+			.@str$ = "JOB_SUMMONER";
+			break;
+		case JOB_STAR_EMPEROR:
+		case JOB_BABY_STAR_EMPEROR:
+		case JOB_STAR_EMPEROR2:
+		case JOB_BABY_STAR_EMPEROR2:
+		case JOB_SKY_EMPEROR:
+		case JOB_SKY_EMPEROR2:
+			.@str$ = "JOB_STAR_EMPEROR";
+			break;
+		case JOB_SOUL_REAPER:
+		case JOB_BABY_SOUL_REAPER:
+		case JOB_SOUL_ASCETIC:
+			.@str$ = "JOB_SOUL_REAPER";
+			break;
+		default:
+			end;
+		}
+		break;
+	}
+	callshop "shop_ext161_" + .@str$;
+	end;
+}
+
 prt_cas,165,255,7	script	Commissary#ep16	4_M_JOB_KNIGHT2,{
 	mes "[Commissary Arner]";
 	mes "You can exchange the Honor Marks given by the noble people of Rune-Midgarts as the token of trust with some valuable items of Prontera.";

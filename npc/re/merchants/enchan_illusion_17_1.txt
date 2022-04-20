@@ -1,0 +1,617 @@
+//===== rAthena Script =======================================
+//= Episode 17.1 - Illusion Enchants
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//= Illusion related merchants and enchanters
+//===== Changelog: ===========================================
+//= 1.0 Initial release [crazyarashi]
+//= 1.1 Optimizations and cleanup [Everade]
+//= 1.2 iRO conversion for 2 NPCs [Capuche, Everade]
+//============================================================
+
+sp_cor,152,158,4	script	Butterfly Merchant#sp_cor	4_M_ORIENT01,{
+	mes "[Butterfly Merchant]";
+	mes "Hey, nice to meet you.";
+	mes "I'm selling " + getitemname(100903) + ", do you want to buy it?";	// Teleport_Ep17_01
+	close2;
+	callshop "shop_sp_cor";
+	end;
+}
+
+sp_cor,136,156,3	script	Grace Operator#ext162	4_M_REPAIR,{
+	mes "[Grace Operator]";
+	mes "Hello.";
+	mes "We have ^4d4dffGrace^000000 equipment that can be exchanged for <ITEM>[" + getitemname(25723) + "]<INFO>25723</INFO></ITEM>.";
+	mes "I will guide you to exchange items according to your job.";
+	close2;
+	switch( eaclass() & EAJ_THIRDMASK ) {
+	case EAJ_RUNE_KNIGHT:
+		.@str$ = "JOB_RUNE_KNIGHT";
+		break;
+	case EAJ_WARLOCK:
+		.@str$ = "JOB_WARLOCK";
+		break;
+	case EAJ_RANGER:
+		.@str$ = "JOB_RANGER";
+		break;
+	case EAJ_ARCH_BISHOP:
+		.@str$ = "JOB_ARCH_BISHOP";
+		break;
+	case EAJ_MECHANIC:
+		.@str$ = "JOB_MECHANIC";
+		break;
+	case EAJ_GUILLOTINE_CROSS:
+		.@str$ = "JOB_GUILLOTINE_CROSS";
+		break;
+	case EAJ_ROYAL_GUARD:
+		.@str$ = "JOB_ROYAL_GUARD";
+		break;
+	case EAJ_SORCERER:
+		.@str$ = "JOB_SORCERER";
+		break;
+	case EAJ_MINSTRELWANDERER:
+		.@str$ = "JOB_MINSTREL";
+		break;
+	case EAJ_SURA:
+		.@str$ = "JOB_SURA";
+		break;
+	case EAJ_GENETIC:
+		.@str$ = "JOB_GENETIC";
+		break;
+	case EAJ_SHADOW_CHASER:
+		.@str$ = "JOB_SHADOW_CHASER";
+		break;
+	default:
+		switch( Class ) {
+		case JOB_SUPER_NOVICE_E:
+		case JOB_SUPER_BABY_E:
+		case JOB_HYPER_NOVICE:
+			.@str$ = "JOB_SUPER_NOVICE_E";
+			break;
+		case JOB_KAGEROU:
+		case JOB_OBORO:
+		case JOB_BABY_KAGEROU:
+		case JOB_BABY_OBORO:
+		case JOB_SHINKIRO:
+		case JOB_SHIRANUI:
+			.@str$ = "JOB_KAGEROU";
+			break;
+		case JOB_REBELLION:
+		case JOB_BABY_REBELLION:
+		case JOB_NIGHT_WATCH:
+			.@str$ = "JOB_REBELLION";
+			break;
+		case JOB_SUMMONER:
+		case JOB_BABY_SUMMONER:
+		case JOB_SPIRIT_HANDLER:
+			.@str$ = "JOB_SUMMONER";
+			break;
+		case JOB_STAR_EMPEROR:
+		case JOB_BABY_STAR_EMPEROR:
+		case JOB_STAR_EMPEROR2:
+		case JOB_BABY_STAR_EMPEROR2:
+		case JOB_SKY_EMPEROR:
+		case JOB_SKY_EMPEROR2:
+			.@str$ = "JOB_STAR_EMPEROR";
+			break;
+		case JOB_SOUL_REAPER:
+		case JOB_BABY_SOUL_REAPER:
+		case JOB_SOUL_ASCETIC:
+			.@str$ = "JOB_SOUL_REAPER";
+			break;
+		default:
+			end;
+		}
+		break;
+	}
+	callshop "shop_ext171_" + .@str$;
+	end;
+}
+
+// Enchanting Supply Exchange NPC - Official iRO Conversion
+sp_cor,108,130,5	script	Rebellion#rm171_7	4_F_REBELLION3,{
+	if (isbegin_quest(17019) == 0) {
+		mes "[Rebellion]";
+		mes "The Rebellion is using this building for the moment.";
+		mes "Along with a few others around it.";
+		next;
+		mes "[Rebellion]";
+		mes "We haven't been this busy for a long time.";
+		mes "I don't like that we're working with the President and the company, but it still feels good to be busy with something.";
+		close;
+	}
+	if (isbegin_quest(16353) < 2) {
+		mes "[Rebellion]";
+		mes "So, you received the message. The Captains are having a meeting on the inside. Captain Elena Volkova must have called you.";
+		mes "... I was going to call her, but she's already here.";
+		cloakoffnpc "Elena Volkova#rm171_0", getcharid(0);
+		npctalk "Elena Volkova: Ah, I've been looking for you, Adventurer.", "Elena Volkova#rm171_0", bc_self;
+		if (isbegin_quest(16352) == 0)
+			setquest 16352;
+		close;
+	}
+	if (isbegin_quest(16360) < 2) {
+		mes "[Rebellion]";
+		mes "The Rebellion is using this building for the moment.";
+		mes "Along with a few others around it.";
+		next;
+		mes "[Rebellion]";
+		mes "We haven't been this busy for a long time.";
+		mes "I don't like that we're working with the President and the company, but it still feels good to be busy with something.";
+		close2;
+		if (isbegin_quest(16352) == 1)
+			erasequest 16352;
+		end;
+	}
+	mes "[Rebellion]";
+	mes "Did you bring Damaged Weapons? Would you like to see that science criminal? He's in there. Want me to call him for you?";
+	mes "Or do you have business with me? I can exchange Weapon Modification Devices and Armor Modification Modules.";
+	cloakoffnpc "Elyumina#rm171_4", getcharid(0);
+	npctalk "Rebellion: Hey, criminal. You're wanted.", "Rebellion#rm171_7", bc_self;
+	npctalk "Elyumina: Alright, alright! I'm coming! You're so pathetic that without me, you'll have to fight with bean bags.", "Elyumina#rm171_4", bc_self;
+	next;
+	switch (select("See Elyumina.", "Request Weapon Modification Device.", "Request Armor Modification Module.")) {
+	case 1:
+		mes "[Rebellion]";
+		mes "Okay, enjoy your conversation.";
+		mes "It took a long time to coax him, but he eventually agreed to modify our weapons and armor. He's pretty good at it, too. He's been working all day, every day.";
+		close;
+	case 2:
+		npctalk "Elyumina: What? If you were just going to keep me standing here like a statue, why did you even call me? You jerks!", "Elyumina#rm171_4", bc_self;
+		if (checkweight(1201,3) == 0) {
+			mes "[Rebellion]";
+			mes "Do you want a Weapon Modification Device? It's 5 <ITEM>[Cor Cores]<INFO>25723</INFO></ITEM> or 1 million Zeny.";
+			mes "Your bag is full. Please make some room first.";
+			close;
+		}
+		mes "[Rebellion]";
+		mes "Do you want a Weapon Modification Device? It's 5 <ITEM>[Cor Cores]<INFO>25723</INFO></ITEM> or 1 million Zeny.";
+		mes "If you want a weapon, you can talk to Elyumina.";
+		next;
+		if (select("Request Weapon Modification Device (Physical).", "Request Weapon Modification Device (Magic).") == 1) {
+			// .@item_id = 23773;	// EP17_1_SPC02
+			.@group = IG_EP17_1_SPC02;
+			setarray .@ids[0],23776,23777,23778;
+		} else {
+			// .@item_id = 23774;	// EP17_1_SPC03
+			.@group = IG_EP17_1_SPC03;	// EP17_1_SPC03
+			setarray .@ids[0],23779,23780,23781;
+		}
+		mes "[Rebellion]";
+		mes "I can randomly give you a <ITEM>[" + getitemname(.@ids[0]) + "]<INFO>" + .@ids[0] + "</INFO></ITEM>,";
+		mes "<ITEM>[" + getitemname(.@ids[1]) + "]<INFO>" + .@ids[1] + "</INFO></ITEM>,";
+		mes "or <ITEM>[" + getitemname(.@ids[2]) + "]<INFO>" + .@ids[2] + "</INFO></ITEM>.";
+		mes "Which one do you have, 5 Cor Cores or 1 million Zeny?";
+		next;
+		disable_items;
+		switch (select("5 Cor Cores", "1 million Zeny")) {
+		case 1:
+			if (checkweight(1201,3) == 0) {
+				mes "[Rebellion]";
+				mes "There seems to be a problem. Please check if your bag has enough free space, and you have all the exchange materials you need.";
+				close;
+			}
+			if (countitem(25723) < 5) {
+				mes "[Rebellion]";
+				mes "You don't have enough Cor Cores. Please check your bag again.";
+				close;
+			}
+			delitem 25723,5;	// EP17_1_EVT39
+			break;
+		case 2:
+			if (checkweight(1201,3) == 0) {
+				mes "[Rebellion]";
+				mes "There seems to be a problem. Please check if your bag has enough free space, and you have all the exchange materials you need.";
+				close;
+			}
+			if (Zeny < 1000000) {
+				mes "[Rebellion]";
+				mes "You don't have enough Zeny. Please check your wallet again.";
+				close;
+			}
+			Zeny -= 1000000;
+		}
+		// consumeitem .@item_id;
+		getgroupitem(.@group);
+		mes "[Rebellion]";
+		mes "I gave you the best I had left.";
+		mes "If you want to refine it, the <NAVI>[Tin Can]<INFO>sp_cor,106,136,0,101,0</INFO></NAVI> next to me can take good care of you.";
+		close;
+	case 3:
+		npctalk "Elyumina: What? If you were just going to keep me standing here like a statue, why did you even call me? You brutes!", "Elyumina#rm171_4", bc_self;
+		mes "[Rebellion]";
+		mes "Do you want an Armor Modification Module? It's 30 <ITEM>[Mysterious Components]<INFO>25669</INFO></ITEM> and 5 <ITEM>[Cor Cores]<INFO>25723</INFO></ITEM>.";
+		if (checkweight(1201,3) == 0) {
+			mes "Your bag is full. Please make some room first.";
+			close;
+		}
+		mes "The kind you get is randomly decided.";
+		next;
+		if (select("Request Armor Modification Module.", "Cancel.") == 2) {
+			mes "[Rebellion]";
+			mes "Feel feel to talk to me if you want Armor Modification Modules.";
+			close;
+		}
+		disable_items;
+		if (countitem(25669) < 30 || countitem(25723) < 5) {
+			mes "[Rebellion]";
+			mes "Each Module requires 30 Mysterious Components and 5 Cor Cores. You don't have them all. Please check.";
+			close;
+		}
+		if (checkweight(1201,3) == 0) {
+			mes "[Rebellion]";
+			mes "There seems to be a problem. Please check if your bag has enough free space, and you have all the exchange materials you need.";
+			close;
+		}
+		mes "[Rebellion]";
+		mes "I gave you an Armor Modification Module.";
+		mes "If you want to refine it, the <NAVI>[Tin Can]<INFO>sp_cor,106,136,0,101,0</INFO></NAVI> next to me can take good care of you.";
+		delitem 25669,30;	// EP17_1_EVT02
+		delitem 25723,5;	// EP17_1_EVT39
+		// consumeitem 23775;	// EP17_1_SPC04
+		getgroupitem(IG_EP17_1_SPC04);
+		close;
+	}
+	end;
+
+OnInit:
+	questinfo (QTYPE_QUEST, QMARK_YELLOW, " isbegin_quest(17019) == 1 && isbegin_quest(16352) == 0 ");
+	end;
+}
+
+// Equipment Exchange NPC - Official iRO Conversion
+sp_cor,111,130,3	script	Elyumina#rm171_4	4_EP17_ELYUMINA,{
+	if (isbegin_quest(16360) < 2) {
+		cutin "ep171_elyumina02",0;
+		mes "[Elyumina]";
+		mes "Argh! Why do you keep asking for me when I need to focus on my research? I'm busy, alright? If you're bored, go bring me more damaged weapons!";
+		close2;
+		cloakonnpc "Elyumina#rm171_3", getcharid(0);
+		cutin "",255;
+		end;
+	}
+	if (checkweight(28136,2) == 0) {
+		cutin "ep171_elyumina03",0;
+		mes "[Elyumina]";
+		mes "Didn't you come for weapons or armor? Your bag is full. I don't have time to wait for you while you rummage through your bag. Come back later.";
+		next;
+		mes " - Your bag is full. Please make some room, and then talk to me again. -";
+		close3;
+	}
+	cutin "ep171_elyumina01",0;
+	mes "[Elyumina]";
+	mes "What is it so important that you had to interrupt my research? This had better be important.";
+	next;
+	cutin "",255;
+	switch (select("Request OS Weapon.", "Request Illusion Armor.")) {
+	case 1:
+		cutin "ep171_elyumina01",0;
+		mes "[Elyumina]";
+		mes "OS weapons? I'll handle that if you bring me 1 <ITEM>[Damaged Weapon]<INFO>25668</INFO></ITEM> and 50 <ITEM>[Mysterious Components]<INFO>25669</INFO></ITEM>.";
+		mes "I'll give you whatever kind I want to give you, among the ones I have. Why should I let you pick?";
+		next;
+		cutin "",255;
+		if (select("Exchange OS Weapon.", "Check the available list.") == 2) {
+			cutin "ep171_elyumina03",0;
+			mes "[Elyumina]";
+			mes "Tsk, tsk. I said everything I make is good. Do you really have to choose? Alright, then listen up.";
+			next;
+			mes "[Elyumina]";
+			mes "Sword: <ITEM>[Cannon Rapier-OS]<INFO>13493</INFO></ITEM>";
+			mes "Two-handed Sword: <ITEM>[Beam Claymore-OS]<INFO>21047</INFO></ITEM>";
+			mes "Staff: <ITEM>[Rutilus Stick-OS]<INFO>26151</INFO></ITEM>";
+			mes "Book: <ITEM>[Circuit Board-OS]<INFO>28629</INFO></ITEM>";
+			mes "Axe: <ITEM>[Blasti-OS]<INFO>28136</INFO></ITEM>";
+			mes "Mace: <ITEM>[Saphir Hall-OS]<INFO>16088</INFO></ITEM>";
+			mes "Bow: <ITEM>[Virtual Bow-OS]<INFO>18178</INFO></ITEM>";
+			mes "Crossbow: <ITEM>[MH-P89-OS]<INFO>18179</INFO></ITEM>";
+			mes "Katar: <ITEM>[Meuchler-OS]<INFO>28038</INFO></ITEM>";
+			mes "Knuckle: <ITEM>[Burning Knuckle-OS]<INFO>1862</INFO></ITEM>";
+			mes "Sniper Rifle: <ITEM>[HR-S55-OS]<INFO>28253</INFO></ITEM>";
+			mes "Dagger: <ITEM>[Kuroiro-OS]<INFO>28755</INFO></ITEM>";
+			mes "Bow: <ITEM>[AC-B44-OS]<INFO>18180</INFO></ITEM>";
+			mes "Lance: <ITEM>[Boost Lance-OS]<INFO>32019</INFO></ITEM>";
+			mes "Mace: <ITEM>[Ultio-OS]<INFO>16089</INFO></ITEM>";
+			close3;
+		}
+		disable_items;
+		if (countitem(25668) < 1 || countitem(25669) < 50) {
+			cutin "ep171_elyumina03",0;
+			mes "[Elyumina]";
+			mes "I told you, bring me 1 Damaged Weapon and 50 Mysterious Components. You should listen when people talk.";
+			close3;
+		}
+		if (checkweight(28136,2) == 0) {
+			cutin "ep171_elyumina03",0;
+			mes "[Elyumina]";
+			mes "... What the? There's a problem.";
+			mes "Not on my end, of course. This is on you. Check if your bag is full or you have all the materials you need.";
+			close3;
+		}
+		cutin "ep171_elyumina04",0;
+		mes "[Elyumina]";
+		mes "There. If you want another, then bring me more Damaged Weapons and Mysterious Components.";
+		mes "I'm locked up in here, fixing toys, because of you. You can deal with this, right?";
+		delitem 25668,1;	// EP17_1_EVT01
+		delitem 25669,50;	// EP17_1_EVT02
+		// consumeitem 23772;	// EP17_1_SPC01
+		getgroupitem(IG_EP17_1_SPC01);
+		close3;
+	case 2:
+		cutin "ep171_elyumina04",0;
+		mes "[Elyumina]";
+		mes "If you want Illusion armor, bring me 50 <ITEM>[Cor Cores]<INFO>25723</INFO></ITEM>. I'll give you a piece.";
+		mes "Let's see... Ooh, when did I make so many varieties? Alright, I feel generous. What do you want?";
+		next;
+		cutin "",255;
+		switch (select("Illusion Armor", "Illusion Engine Wing", "Illusion Leg", "Illusion Booster", "Illusion Battle Chip")) {
+		case 1:
+			setarray .@item[0],15376,15377;
+			break;
+		case 2:
+			setarray .@item[0],20933,20934;
+			break;
+		case 3:
+			setarray .@item[0],22196,22197;
+			break;
+		case 4:
+			setarray .@item[0],32207,32208;
+			break;
+		case 5:
+			setarray .@item[0],32209,32210;
+			break;
+		}
+		cutin "ep171_elyumina01",0;
+		mes "[Elyumina]";
+		mes "<ITEM>[" + getitemname(.@item[0]) + "]<INFO>" + .@item[0] + "</INFO></ITEM>";
+		mes "<ITEM>[" + getitemname(.@item[1]) + "]<INFO>" + .@item[1] + "</INFO></ITEM>";
+		mes "Which one?";
+		next;
+		cutin "",255;
+		.@id = .@item[ select( getitemname(.@item[0]), getitemname(.@item[1]) ) -1 ];
+		cutin "ep171_elyumina04",0;
+		mes "[Elyumina]";
+		mes "Alright, " + getitemname(.@id) + ", right? Do you really want to trade it for 50 Cor Cores?";
+		next;
+		cutin "",255;
+		if (select( "Exchange.", "Do not exchange." ) == 2) {
+			cutin "ep171_elyumina03",0;
+			mes "[Elyumina]";
+			mes "Hey, are you kidding me? Hey, I tried to be nice!";
+			close3;
+		}
+		disable_items;
+		if (countitem(25723) < 50) {
+			cutin "ep171_elyumina02",0;
+			mes "[Elyumina]";
+			mes "Hey, are you kidding me? You don't have all the Cor Cores! Hey, I tried to be nice!";
+			enable_items;
+			close3;
+		}
+		cutin "ep171_elyumina04",0;
+		mes "[Elyumina]";
+		mes "Here, take this " + getitemname(.@id) + ". I bet it's probably the best armor you've ever had. You really ought to be grateful.";
+		delitem 25723,50;	// EP17_1_EVT390
+		getitem .@id,1;
+		enable_items;
+		close3;
+	}
+	end;
+
+OnInit:
+	cloakonnpc();
+	end;
+}
+
+// Illusion Enchanter - Walkthrough Conversion
+sp_cor,106,136,3	script	RS26#illusion_enchant	4_SYS_MSG,{
+	if(!checkweight(1201,1) || (MaxWeight - Weight) < 1000){
+		mes "You can't proceed with the conversation because you have a large quantity of items.";
+		mes "Please organize your items and try again.";
+		close;
+	}
+	disable_items;
+	mes "[RS26]";
+	mes strcharinfo(0)+".";
+	mes "Welcome, Welcome!";
+	next;
+	switch (select("Explore the devices.:Enchant Illusion Armor.:Enchant Illusion Engine Wing.:Enchant Illusion Leg.:Enchant Illusion Accessory [R]:Enchant Illusion Accessory [L]")) {
+	case 1:
+		mes "^0000FF# I'm the latest hologram technology perfected to show natural responses and gestures. #^000000";
+		next;
+		mes "[RS26]";
+		mes "My technology can only be found in future cities. I am RS26, a Regenschirm robotic machine.";
+		npctalk "Rebellion : Oh, that machine is useless without a module.","Rebellion#171_cor_merchant",bc_self;
+		next;
+		mes "[RS26]";
+		mes "If you bring Illusion equipment with strengthening modules, I will improve them as you desire.";
+		next;
+		mes "[RS26]";
+		mes "Since these modules work with the standard equipment, they will not destroy the items. However, the number of upgrades can vary depending on the equipment.";
+		next;
+		mes "[RS26]";
+		mes "Please come back if you need my help~";
+		close;
+	case 2:
+		.@part = EQI_ARMOR;
+		.@index = 0;
+		setarray .@id,15376,15377;
+		break;
+	case 3:
+		.@part = EQI_GARMENT;
+		.@index = 1;
+		setarray .@id,20933,20934;
+		break;
+	case 4:
+		.@part = EQI_SHOES;
+		.@index = 3;
+		setarray .@id,22196,22197;
+		break;
+	case 5:
+		.@part = EQI_ACC_R;
+		.@index = 2;
+		setarray .@id,32207,32209;
+		break;
+	case 6:
+		.@part = EQI_ACC_L;
+		.@index = 2;
+		setarray .@id,32208,32210;
+		break;
+	}
+	switch (select("Cancel.:Normal Grade.:Rare Grade.:Unique Grade.:Legendary Grade.")) {
+	case 1:
+		mes "[RS26]";
+		mes "I'm stopping here.";
+		close;
+		
+	case 2:
+		.@min = 25670;
+		.@max = 25677;
+		break;
+		
+	case 3:
+		.@min = 25678;
+		.@max = 25692;
+		break;
+		
+	case 4:
+		.@min = 25693;
+		.@max = 25699;
+		break;
+		
+	case 5:
+		.@min = 25700;
+		.@max = 25705;
+		break;
+	}
+	.@menu$ = "Cancel.:";
+	for(.@i = .@min; .@i < (.@max + 1); .@i++){
+		.@module_id[getarraysize(.@module_id)] = .@i;
+		.@item_name$ = getitemname(.@i);
+		.@item_name$ = replacestr(.@item_name$,"Modification Module (","");
+		.@item_name$ = replacestr(.@item_name$,")","");
+		.@menu$ += (!countitem(.@i) ? "^AAAAAA":"") + .@item_name$ + (!countitem(.@i) ? "^000000:":":");
+	}
+	.@s = select(.@menu$);
+	switch( .@s ) {
+	case 1:
+		mes "[RS26]";
+		mes "I'm stopping here.";
+		close;
+		
+	default:
+		function module_check;
+		.@s -= 2;
+		.@equip_id = getequipid(.@part);
+		if (!.@equip_id || .@id[0] != .@equip_id && .@id[1] != .@equip_id) {
+			mes "[RS26]";
+			mes "The equipment needs to be checked. That thing is not something this device can work with.";
+			close;
+		}
+		.@var$ = module_check(.@module_id[.@s],.@part,.@index);
+		explode(.@s$,.@var$,",");
+		switch (atoi(.@s$[0])) {
+			case 1:
+				mes "[RS26]";
+				mes "The module needs to be checked. This device cannot detect it.";
+				close;
+			case 2:
+				mes "[RS26]";
+				mes "Looks like the equipment you're trying to strengthen is already at it's limit.";
+				close;
+			case 3:
+				mes "[RS26]";
+				mes "You need to have a module that matches the efficacy to proceed with enhancement.";
+				close;
+			case 4:
+				mes "[RS26]";
+				mes "The capabilities of this module can be enchanted up to " + .@s$[1] + " " + (atoi(.@s$[1]) > 1 ? "times":"time") +". It seems that the module threshold is already at it's limit.";
+				close;
+			case 5:
+				.@item_name$ = getitemname(.@module_id[.@s]);
+				.@item_name$ = replacestr(.@item_name$,"Modification Module (","");
+				.@item_name$ = replacestr(.@item_name$,")","");
+				mes "[RS26]";
+				mes "^0000FFYou have selected " + getitemname(.@equip_id) + " " + .@item_name$ + "^000000";
+				mes "------------------";
+				mes "The selected module can be enchanted up to ^0000FF" + .@s$[2] + " " +  (atoi(.@s$[2]) > 1 ? "times":"time") +  "^000000 on the equipment. This equipment is currently enchanted with this module by ^0000FF" + .@s$[1] + ".";
+				mes "Do you want to proceed?";
+				next;
+				if (select("I'll think about it more...:Let's proceed.") == 1) {
+					mes "[RS26]";
+					mes "Then, please visit me again when you need my help~";
+					close;
+				}
+				for (.@i = 0; .@i < 4; .@i++)
+					.@card[.@i] = getequipcardid(.@part,.@i);
+				copyarray .@check[0],.@card[0],4;
+				for (.@i = 1; .@i < 4; .@i++) {
+					if (.@card[.@i] == 0) {
+						.@augment_slot = .@i;
+						break;
+					}
+				}
+				.@card[.@augment_slot] = atoi(.@s$[3]);
+				delitem .@module_id[.@s],1;
+				if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipRefineHack", .@part, .@refine) || callfunc("F_IsEquipCardHack", .@part, .@check[0], .@check[1], .@check[2], .@check[3]))
+					end;
+				specialeffect2 EF_REPAIRWEAPON;
+				delequip .@part;
+				getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
+				mes "[RS26]";
+				mes "Attempting to upgrade the slot ^990000" + .@augment_slot + "^000000 of the equipment.";
+				close;
+		}
+	}
+	
+OnInit:
+	setarray .module$,
+	"25670:29527:3,25671:29528:3,25687:29534:2,25688:29535:2,25689:29536:2,25693:29540:1",
+	"25670:29527:3,25671:29528:3,25690:29537:2,25691:29538:2,25692:29539:2,25695:29542:1",
+	"25672:4742:3,25673:4752:3,25674:4702:3,25675:4732:3,25676:4712:3,25677:4722:3,25678:29529:2,25679:29532:2,25680:4826:1,25681:4881:1,25682:4866:1,25683:4836:1,25696:29543:1,25697:29544:1,25698:29545:1,25699:29546:1",
+	"25670:29527:3,25671:29528:3,25684:29531:2,25685:29530:2,25686:29533:2,25694:29541:1",
+	"25700:29547,25701:29548,25702:29549,25703:29550,25704:29551,25705:29552";
+	end;
+	
+	function	module_check	{
+		if(!countitem(getarg(0)))
+			return "1";
+		for (.@i = 0; .@i < 4; .@i++)
+			.@card[.@i] = getequipcardid(getarg(1),.@i);
+		if(.@card[3]) return "2";
+		explode(.@T$,.module$[getarg(2)],",");
+		if(getarg(0) >= 25700 && getarg(0) <= 25705){
+			explode(.@TT$,.module$[4],",");
+			for (.@i = 0; .@i < getarraysize(.@TT$); .@i++) {
+				explode(.@module$,.@TT$[.@i],":");
+				if(getarg(0) == atoi(.@module$[0]))
+					.@enchant_id = atoi(.@module$[1]);
+				.@module = atoi(.@module$[0]);
+				.@enchant = atoi(.@module$[1]);
+				for (.@j = 1; .@j < 4; .@j++) {
+					if (.@card[.@j] == .@enchant)
+						return "4,1";
+				}
+			}
+			.@max = 1;
+		} else {
+			for (.@i = 0; .@i < getarraysize(.@T$); .@i++) {
+				explode(.@module$,.@T$[.@i],":");
+				if(getarg(0) == atoi(.@module$[0])){
+					.@enchant_id = atoi(.@module$[1]);
+					.@max = atoi(.@module$[2]);
+					break;
+				}
+			}
+		}
+		if(!.@enchant_id)
+			return "3";
+		for (.@j = 1; .@j < 4; .@j++) {
+			if (.@card[.@j] == .@enchant_id)
+				.@count++;
+		}
+		if (.@count == .@max)
+			return "4," + .@max;
+		return "5," + .@count + "," + .@max + "," + .@enchant_id;
+	}
+}

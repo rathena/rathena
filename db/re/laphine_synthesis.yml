@@ -1,0 +1,4492 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Laphine Synthesis Database
+###########################################################################
+#
+# Laphine Synthesis Settings
+#
+###########################################################################
+# - Item                       Item that triggers Laphine Synthesis.
+#   RewardGroup                Item Group that will be given out as a reward.
+#   RequiredRequirementsCount  Amount of requirements that have to be fulfilled. (Default: 1)
+#   MinimumRefine              Minimum refine level of the required items. (Default: 0)
+#   MaximumRefine              Maximum refine level of the required items. (Default: MAX_REFINE)
+#   Requirements:              List of possible requirement items.
+#     - Item                   Item name of the required item
+#       Amount                 Amount of specific required item. (Default: 1)
+###########################################################################
+
+Header:
+  Type: LAPHINE_SYNTHESIS_DB
+  Version: 1
+
+Body:
+  - Item: Shadow_Exchange_Box
+    RewardGroup: SHADOW_EXCHANGE_BOX
+    RequiredRequirementsCount: 3
+    Requirements:
+      - Item: S_Physical_Earring
+      - Item: S_Physical_Weapon
+      - Item: S_Physical_Pendant
+      - Item: S_Magical_Earring
+      - Item: S_Magical_Weapon
+      - Item: S_Magical_Pendant
+      - Item: S_Breezy_Armor
+      - Item: S_Champion_Shoes
+      - Item: S_Athena_Shield
+      - Item: S_Immune_Armor
+      - Item: S_Hard_Armor
+      - Item: S_Ancient_Armor
+      - Item: S_Critical_Armor
+      - Item: S_Kingbird_Weapon
+      - Item: S_Cri_Hit_Weapon
+      - Item: S_Healing_Weapon
+      - Item: S_Lucky_Weapon
+      - Item: S_Power_Earring
+      - Item: S_Int_Pendant
+      - Item: S_Dexterous_Armor
+      - Item: S_Vital_Shoes
+      - Item: S_Athletic_Shield
+      - Item: S_Lucky_Armor
+      - Item: S_Power_Pendant
+      - Item: S_Int_Earring
+      - Item: S_Dexterous_Weapon
+      - Item: S_Vital_Shield
+      - Item: S_Athletic_Shoes
+      - Item: S_Resist_Spell_Pendant
+      - Item: S_Rapid_Pendant
+      - Item: S_Caster_Pendant
+      - Item: S_Hard_Earring
+      - Item: S_Wise_Earring
+      - Item: S_Athena_Earring
+      - Item: S_Cranial_Shield
+      - Item: S_Safeguard_Shield
+      - Item: S_Brutal_Shield
+      - Item: S_Gargantua_Shield
+      - Item: S_Homers_Shield
+      - Item: S_Dragoon_Shield
+      - Item: S_Satanic_Shield
+      - Item: S_Flameguard_Shield
+      - Item: S_Requiem_Shield
+      - Item: S_Cadi_Shield
+      - Item: S_Bloody_Shoes
+      - Item: S_Liberation_Shoes
+      - Item: S_Chemical_Shoes
+      - Item: S_Clamorous_Shoes
+      - Item: S_Insecticide_Shoes
+      - Item: S_Fisher_Shoes
+      - Item: S_Seraphim_Shoes
+      - Item: S_Beholder_Shoes
+      - Item: S_Divine_Shoes
+      - Item: S_Dragoon_Shoes
+      - Item: S_Big_Armor
+      - Item: S_Medium_Armor
+      - Item: S_Small_Armor
+      - Item: S_Big_Weapon
+      - Item: S_Medium_Weapon
+      - Item: S_Small_Weapon
+      - Item: S_Spiritual_Weapon
+      - Item: S_Spiritual_Earring
+      - Item: S_Spiritual_Pendent
+      - Item: S_Malicious_Armor
+      - Item: S_Malicious_Shoes
+      - Item: S_Malicious_Shield
+      - Item: S_Gemstone_Armor
+      - Item: S_Gemstone_Shoes
+      - Item: S_Gemstone_Shield
+      - Item: S_Gemstone_Weapon
+      - Item: S_Gemstone_Earring
+      - Item: S_Gemstone_Pendent
+      - Item: S_Stability_Shield
+      - Item: S_Plasterer's_Armor
+      - Item: S_Plasterer's_Shoes
+      - Item: S_Insomniac_Armor
+      - Item: S_Insomniac_Shoes
+      - Item: S_Peerless_Armor
+      - Item: S_Peerless_Shoes
+      - Item: S_Adurate_Armor
+      - Item: S_Adurate_Shoes
+      - Item: Unfreez_Weapon_S
+      - Item: Unfreeze_Earing_S
+      - Item: Unfreeze_Pendent_S
+      - Item: Vitality_Earing_S
+      - Item: Vitality_Pendant_S
+      - Item: S_Neutral_Weapon
+      - Item: S_Neutral_Earring
+      - Item: S_Neutral_Pendent
+      - Item: S_Curse_Lift_Earring
+      - Item: S_Curse_Lift_Pendent
+      - Item: S_Caster_earring
+      - Item: S_Caster_Weapon
+      - Item: S_Spell_Flow_Shoes
+      - Item: S_Spell_Flow_Armor
+      - Item: S_Spell_Flow_Shield
+      - Item: S_Greed_Armor
+      - Item: S_Greed_Shoes
+      - Item: S_Greed_Shield
+      - Item: S_Greed_Weapon
+      - Item: S_Greed_Earring
+      - Item: S_Greed_Pendant
+      - Item: S_Heal_Armor
+      - Item: S_Heal_Shoes
+      - Item: S_Heal_Shield
+      - Item: S_Heal_Weapon
+      - Item: S_Heal_Earring
+      - Item: S_Heal_Pendant
+      - Item: S_Hiding_Armor
+      - Item: S_Hiding_Shoes
+      - Item: S_Hiding_Shield
+      - Item: S_Hiding_Weapon
+      - Item: S_Hiding_Earring
+      - Item: S_Hiding_Pendant
+      - Item: S_Cloaking_Armor
+      - Item: S_Cloaking_Shoes
+      - Item: S_Cloaking_Shield
+      - Item: S_Cloaking_Weapon
+      - Item: S_Cloaking_Earring
+      - Item: S_Cloaking_Pendant
+      - Item: S_Teleport_Armor
+      - Item: S_Teleport_Shoes
+      - Item: S_Teleport_Shield
+      - Item: S_Teleport_Weapon
+      - Item: S_Teleport_Earring
+      - Item: S_Teleport_Pendant
+      - Item: S_Steal_Armor
+      - Item: S_Steal_Shoes
+      - Item: S_Steal_Shield
+      - Item: S_Steal_Weapon
+      - Item: S_Steal_Earring
+      - Item: S_Steal_Pendant
+      - Item: S_Infinity_Earring
+      - Item: S_Infinity_Pendant
+      - Item: S_Solid_Weapon
+      - Item: S_Solid_Earring
+      - Item: S_Immortal_Armor
+      - Item: S_Immortal_Pendant
+      - Item: S_Executioner_Weapon
+      - Item: S_Exorcist_Weapon
+      - Item: S_Hunting_Weapon
+      - Item: S_Insect_Net_Weapon
+      - Item: S_Fishing_Weapon
+      - Item: S_Dragon_Killer_Weapon
+      - Item: S_Corrupt_Weapon
+      - Item: S_Vibration_Weapon
+      - Item: S_Holy_Water_Weapon
+      - Item: S_Scissors_Weapon
+      - Item: S_Penetration_Earring
+      - Item: S_Penetration_Pendent
+      - Item: S_Tempest_Earring
+      - Item: S_Tempest_Pendent
+      - Item: S_M_Executioner_Weapon
+      - Item: S_M_Exorcist_Weapon
+      - Item: S_M_Hunting_Weapon
+      - Item: S_M_Insect_Net_Weapon
+      - Item: S_M_Fishing_Weapon
+      - Item: S_M_Dragon_K_Weapon
+      - Item: S_M_Corrupt_Weapon
+      - Item: S_M_Vibration_Weapon
+      - Item: S_M_Holy_Water_Weapon
+      - Item: S_M_Scissors_Weapon
+      - Item: S_Bearers_Armor
+      - Item: S_Bearers_Shoes
+      - Item: S_Bearers_Shield
+      - Item: S_Bearers_Weapon
+      - Item: S_Bearers_Earring
+      - Item: S_Bearers_Pendent
+      - Item: S_Basis_Armor
+      - Item: S_Hallowed_Armor
+      - Item: S_Saharic_Armor
+      - Item: S_Underneath_Armor
+      - Item: S_Flam_Armor
+      - Item: S_Windy_Armor
+      - Item: S_Envenom_Armor
+      - Item: S_Damned_Armor
+      - Item: S_Geist_Armor
+      - Item: S_Divine_Armor
+      - Item: S_Hasty_Shoes
+      - Item: S_Hasty_Armor
+      - Item: S_Basis_Shield
+      - Item: S_Hallowed_Shield
+      - Item: S_Saharic_Shield
+      - Item: S_Underneath_Shield
+      - Item: S_Flam_Shield
+      - Item: S_Windy_Shield
+      - Item: S_Envenom_Shield
+      - Item: S_Damned_Shield
+      - Item: S_Geist_Shield
+      - Item: S_Divine_Shield
+      - Item: S_Expert_Shoes
+      - Item: S_Expert_Shield
+      - Item: S_Beginner_Shoes
+      - Item: S_Beginner_Shield
+      - Item: S_Rookie_Shoes
+      - Item: S_Rookie_Shield
+      - Item: S_Advanced_Shoes
+      - Item: S_Advanced_Shield
+      - Item: S_Attack_Armor
+      - Item: S_Blitz_Earring
+      - Item: S_Blitz_Pendent
+      - Item: S_ColdBolt_Armor
+      - Item: S_FireBolt_Armor
+      - Item: S_LightingBolt_Armor
+      - Item: S_EarthSpike_Armor
+      - Item: S_Enhance_Force_Weapon
+      - Item: S_Force_Weapon
+      - Item: S_Force_Earring
+      - Item: S_Force_Pendant
+      - Item: S_Enhance_Spirit_Weapon
+      - Item: S_Spirit_Weapon
+      - Item: S_Spirit_Earring
+      - Item: S_Spirit_Pendant
+      - Item: S_Blitz_Shoes
+      - Item: S_Blitz_Shield
+      - Item: S_Exceed_Weapon
+      - Item: S_Titan_Earring
+      - Item: S_Titan_Pendant
+      - Item: S_Boned_Earring
+      - Item: S_Boned_Pendant
+      - Item: S_Gigantic_Earring
+      - Item: S_Gigantic_Pendant
+      - Item: S_Caster_Shoes
+      - Item: S_Caster_Shield
+      - Item: S_Caster_Armor
+      - Item: S_Reload_Shoes
+      - Item: S_Reload_Shield
+      - Item: S_Reload_Armor
+      - Item: S_Swordman_earring
+      - Item: S_Merchant_earring
+      - Item: S_Acolyte_earring
+      - Item: S_Magician_earring
+      - Item: S_Swordman_Pendant
+      - Item: S_Merchant_Pendant
+      - Item: S_Acolyte_Pendant
+      - Item: S_Thief_Pendant
+      - Item: S_Magician_Pendant
+      - Item: S_Archer_Pendant
+      - Item: S_Knight_Shoes
+      - Item: S_Crusader_Shoes
+      - Item: S_Blacksmith_Shoes
+      - Item: S_Alchemist_Shoes
+      - Item: S_Priest_Shoes
+      - Item: S_Monk_Shoes
+      - Item: S_Assassin_Shoes
+      - Item: S_Rogue_Shoes
+      - Item: S_Wizard_Shoes
+      - Item: S_Sage_Shoes
+      - Item: S_Hunter_Shoes
+      - Item: S_Bard_Shoes
+      - Item: S_Dancer_Shoes
+      - Item: S_Knight_Armor
+      - Item: S_Crusader_Armor
+      - Item: S_Blacksmith_Armor
+      - Item: S_Alchemist_Armor
+      - Item: S_Priest_Armor
+      - Item: S_Monk_Armor
+      - Item: S_Assassin_Armor
+      - Item: S_Rogue_Armor
+      - Item: S_Wizard_Armor
+      - Item: S_Sage_Armor
+      - Item: S_Hunter_Armor
+      - Item: S_Bard_Armor
+      - Item: S_Dancer_Armor
+      - Item: S_SuperNovice_Weapon
+      - Item: S_Gunslinger_Weapon
+      - Item: S_Taekwon_Weapon
+      - Item: S_Ninja_Weapon
+      - Item: S_DoramMagical_Weapon
+      - Item: S_DoramPhysical_Weapon
+      - Item: S_Runeknight_Weapon
+      - Item: S_Royalguard_Weapon
+      - Item: S_Mechanic_weapon
+      - Item: S_Genetic_Weapon
+      - Item: S_Archbishop_Weapon
+      - Item: S_Sura_weapon
+      - Item: S_Guillotine_Weapon
+      - Item: S_Shadowchaser_Weapon
+      - Item: S_Warlock_Weapon
+      - Item: S_Sorcerer_Weapon
+      - Item: S_Ranger_Weapon
+      - Item: S_Minstrel_Weapon
+      - Item: S_Wanderer_Weapon
+      - Item: S_Runeknight_Shield
+      - Item: S_Royalguard_Shield
+      - Item: S_Mechanic_Shield
+      - Item: S_Genetic_Shield
+      - Item: S_Archbishop_Shield
+      - Item: S_Sura_Shield
+      - Item: S_Guillotine_Shield
+      - Item: S_Shadowchaser_Shield
+      - Item: S_Warlock_Shield
+      - Item: S_Sorcerer_Shield
+      - Item: S_Ranger_Shield
+      - Item: S_Minstrel_Shield
+      - Item: S_Wanderer_Shield
+      - Item: S_Ninja_Shield
+      - Item: S_Taekwon_Shield
+      - Item: S_DoramPhysical_Shield
+      - Item: S_DoramMagical_Shield
+      - Item: S_SuperNovice_Shield
+      - Item: S_Gunslinger_Shield
+      - Item: S_Thief_earring
+      - Item: S_Archer_earring
+      - Item: S_Hasty_Shoes_II
+      - Item: S_Bearer's_Pendant_II
+      - Item: S_Gemstone_Earring_II
+      - Item: S_Spellflow_Shield_II
+      - Item: S_Spiritual_Weapon_II
+      - Item: S_Malicious_Armor_II
+      - Item: S_Sigrun_Armor
+      - Item: S_Sigrun_Shield
+      - Item: S_Force_Executioner_Weapon
+      - Item: S_Spirit_Magic_Executioner_Weapon
+      - Item: S_Caster_Armor_II
+      - Item: S_Reload_Armor_II
+      - Item: S_Critical_Shield
+      - Item: S_Critical_Shoes
+      - Item: S_Magic_Compose_Armor
+      - Item: S_Gemstone_Weapon_II
+      - Item: S_Gemstone_Shield_II
+      - Item: S_Bearer's_Armor_II
+      - Item: S_Bearer's_Shoes_II
+      - Item: S_Almighty_Earring
+      - Item: S_Almighty_Pendant
+      - Item: S_Tempest_Shield
+      - Item: S_Tempest_Shoes
+      - Item: S_Magic_Executioner_Holy_Water_Armor
+      - Item: S_Magic_Exorcist_Corrupted_Armor
+      - Item: S_Magic_Vibration_Dragon_Killer_Armor
+      - Item: S_Magic_Scissor_Hunting_Armor
+      - Item: S_Magic_Fishing_Insect_Net_Armor
+      - Item: S_Plasterer's_Armor_II
+      - Item: S_Insomniac_Shoes_II
+      - Item: S_Peerless_Armor_II
+      - Item: S_Adulate_Shoes_II
+      - Item: S_Unfreezing_Weapon_II
+      - Item: S_Vitality_Earring_II
+      - Item: S_Neutral_Weapon_II
+      - Item: S_Uncursed_Pendant_II
+      - Item: S_Tension_Weapon
+      - Item: S_Tension_Earring
+      - Item: S_Tension_Pendent
+      - Item: S_Elegant_Weapon
+      - Item: S_Elegant_Earring
+      - Item: S_Elegant_Pendent
+      - Item: S_Healing_Shield
+      - Item: S_Healing_Shoes
+      - Item: S_Restore_Earring
+      - Item: S_Restore_Pendant
+      - Item: S_Mortal_Blow_Weapon
+      - Item: S_Mortal_Blow_Earring
+      - Item: S_Mortal_Blow_Pendant
+      - Item: S_Penetration_Shoes
+      - Item: S_Penetration_Shield
+      - Item: S_Executioner_Holy_Water_Armor
+      - Item: S_Exorcist_Corrupted_Armor
+      - Item: S_Vibration_Dragon_Killer_Armor
+      - Item: S_Scissor_Hunting_Armor
+      - Item: S_Fishing_Insect_Net_Armor
+      - Item: Sentimental_Weapone_S
+      - Item: Sentimental_Earring_S
+      - Item: Sentimental_Pendant_S
+      - Item: Enchanting_Weapone_S
+      - Item: Enchanting_Earring_S
+      - Item: Enchanting_Pendant_S
+      - Item: S_Infinity_Weapon
+      - Item: S_Physical_Shoes
+      - Item: S_Physical_Shield
+      - Item: S_Physical_Armor
+      - Item: S_Magical_Shoes
+      - Item: S_Magical_Shield
+      - Item: S_Magical_Armor
+      - Item: S_Immune_Athena_Shield
+      - Item: S_Hard_Champion_Shoes
+      - Item: S_Kingbird_Ancient_Armor
+      - Item: S_Cri_Hit_Armor
+      - Item: S_Rebellion_Armor
+      - Item: S_Kagerou_Armor
+      - Item: S_Oboro_Armor
+      - Item: S_Rebellion_Shoes
+      - Item: S_Kagerou_Shoes
+      - Item: S_Oboro_Shoes
+      - Item: S_DoramPhysical_Armor
+      - Item: S_DoramPhysical_Shoes
+      - Item: S_DoramMagical_Armor
+      - Item: S_DoramMagical_Shoes
+      - Item: S_Star_Emperor_Armor
+      - Item: S_Star_Emperor_Shoes
+      - Item: S_Soul_Reaper_Armor
+      - Item: S_Soul_Reaper_Shoes
+      - Item: S_Tempest_Weapon
+      - Item: S_Tempest_Armor
+      - Item: S_PerfectSize_Weapon
+      - Item: S_PerfectSize_Armor
+      - Item: S_M_Exo_Co_Weapon
+      - Item: S_M_Viv_Dr_Weapon
+      - Item: S_M_Sci_Hu_Weapon
+      - Item: S_M_Fis_In_Weapon
+      - Item: S_M_Exe_Ho_Weapon
+      - Item: S_Penetration_Weapon
+      - Item: S_Penetration_Armor
+      - Item: S_Exe_Ho_Weapon
+      - Item: S_Fis_In_Weapon
+      - Item: S_Sci_Hu_Weapon
+      - Item: S_Viv_Dr_Weapon
+      - Item: S_Exo_Co_Weapon
+      - Item: S_Hasty_Weapon
+      - Item: S_Sonic_Armor
+      - Item: S_Sonic_Shield
+      - Item: S_Sonic_Shoes
+      - Item: S_Ignition_Weapon
+      - Item: S_Ignition_Pendant
+      - Item: S_Ignition_Earing
+      - Item: S_W_Breath_Armor
+      - Item: S_W_Breath_Shield
+      - Item: S_W_Breath_Shoes
+      - Item: S_F_Breath_Weapon
+      - Item: S_F_Breath_Pendant
+      - Item: S_F_Breath_Earing
+      - Item: S_Cluster_Armor
+      - Item: S_Cluster_Shield
+      - Item: S_Cluster_Shoes
+      - Item: S_Aimed_Weapon
+      - Item: S_Aimed_Pendant
+      - Item: S_Aimed_Earing
+      - Item: S_Arrow_Armor
+      - Item: S_Arrow_Shield
+      - Item: S_Arrow_Shoes
+      - Item: S_Shooting_Weapon
+      - Item: S_Shooting_Pendant
+      - Item: S_Shooting_Earing
+      - Item: S_Tornado_Armor
+      - Item: S_Tornado_Shield
+      - Item: S_Tornado_Shoes
+      - Item: S_Boomerang_Weapon
+      - Item: S_Boomerang_Pendant
+      - Item: S_Boomerang_Earing
+      - Item: S_Vulcan_Armor
+      - Item: S_Vulcan_Shield
+      - Item: S_Vulcan_Shoes
+      - Item: S_Arms_Weapon
+      - Item: S_Arms_Pendant
+      - Item: S_Arms_Earing
+      - Item: S_Rampage_Armor
+      - Item: S_Rampage_Shield
+      - Item: S_Rampage_Shoes
+      - Item: S_Skynetblow_Weapon
+      - Item: S_Skynetblow_Pendant
+      - Item: S_Skynetblow_Earing
+      - Item: S_Knucklearrow_Armor
+      - Item: S_Knucklearrow_Shield
+      - Item: S_Knucklearrow_Shoes
+      - Item: S_TigerCannon_Weapon
+      - Item: S_Tigercannon_Pendant
+      - Item: S_Tigercannon_Earing
+      - Item: S_Duplelight_Armor
+      - Item: S_Duplelight_Shield
+      - Item: S_Duplelight_Shoes
+      - Item: S_Adoramus_Weapon
+      - Item: S_Adoramus_Pendant
+      - Item: S_Adoramus_Earing
+      - Item: S_Judex_Armor
+      - Item: S_Judex_Shield
+      - Item: S_Judex_Shoes
+      - Item: S_Magnus_Weapon
+      - Item: S_Magnus_Pendant
+      - Item: S_Magnus_Earing
+      - Item: S_Rainstorm_Armor
+      - Item: S_Rainstorm_Shield
+      - Item: S_Rainstorm_Shoes
+      - Item: S_Arrowvulcan_Weapon
+      - Item: S_Arrowvulcan_Pendant
+      - Item: S_Arrowvulcan_Earing
+      - Item: S_Metalic_Armor
+      - Item: S_Metalic_Shield
+      - Item: S_Metalic_Shoes
+      - Item: S_Reverberation_Weapon
+      - Item: S_Reverberation_Pendant
+      - Item: S_Reverberation_Earing
+      - Item: S_Triangle_Armor
+      - Item: S_Triangle_Shield
+      - Item: S_Triangle_Shoes
+      - Item: S_Shadowspell_Weapon
+      - Item: S_Shadowspell_Pendant
+      - Item: S_Shadowspell_Earing
+      - Item: S_Menace_Armor
+      - Item: S_Menace_Shield
+      - Item: S_Menace_Shoes
+      - Item: S_Paint_Weapon
+      - Item: S_Paint_Pendant
+      - Item: S_Paint_Earing
+      - Item: S_Rolling_Armor
+      - Item: S_Rolling_Shield
+      - Item: S_Rolling_Shoes
+      - Item: S_Katar_Weapon
+      - Item: S_Katar_Pendant
+      - Item: S_Katar_Earing
+      - Item: S_Slash_Armor
+      - Item: S_Slash_Shield
+      - Item: S_Slash_Shoes
+      - Item: S_Ripper_Weapon
+      - Item: S_Ripper_Pendant
+      - Item: S_Ripper_Earing
+      - Item: S_Dust_Armor
+      - Item: S_Dust_Shield
+      - Item: S_Dust_Shoes
+      - Item: S_Grave_Weapon
+      - Item: S_Grave_Pendant
+      - Item: S_Grave_Earing
+      - Item: S_Psychic_Armor
+      - Item: S_Psychic_Shield
+      - Item: S_Psychic_Shoes
+      - Item: S_Varetyr_Weapon
+      - Item: S_Varetyr_Pendant
+      - Item: S_Varetyr_Earing
+      - Item: S_Jack_Armor
+      - Item: S_Jack_Shield
+      - Item: S_Jack_Shoes
+      - Item: S_Strain_Weapon
+      - Item: S_Strain_Pendant
+      - Item: S_Strain_Earing
+      - Item: S_Crimson_Armor
+      - Item: S_Crimson_Shield
+      - Item: S_Crimson_Shoes
+      - Item: S_Chain_Weapon
+      - Item: S_Chain_Pendant
+      - Item: S_Chain_Earing
+      - Item: S_Cart_Tornado_Armor
+      - Item: S_Cart_Tornado_Shield
+      - Item: S_Cart_Tornado_Shoes
+      - Item: S_Cannon_Cart_Weapon
+      - Item: S_Cannon_Cart_Pendant
+      - Item: S_Cannon_Cart_Earing
+      - Item: S_Spore_Bomb_Armor
+      - Item: S_Spore_Bomb_Shield
+      - Item: S_Spore_Bomb_Shoes
+      - Item: S_Crazy_Weapon
+      - Item: S_Crazy_Pendant
+      - Item: S_Crazy_Earing
+      - Item: S_Brand_Armor
+      - Item: S_Brand_Shield
+      - Item: S_Brand_Shoes
+      - Item: S_Chain_Press_Weapon
+      - Item: S_Chain_Press_Pendant
+      - Item: S_Chain_Press_Earing
+      - Item: S_Banish_Cannon_Armor
+      - Item: S_Banish_Cannon_Shield
+      - Item: S_Banish_Cannon_Shoes
+      - Item: S_Genesis_Weapon
+      - Item: S_Genesis_Pendant
+      - Item: S_Genesis_Earing
+      - Item: S_Tail_Dragon_Weapon
+      - Item: S_Tail_Dragon_Shield
+      - Item: S_Tail_Dragon_Armor
+      - Item: S_Flare_Dance_Earing
+      - Item: S_Flare_Dance_Pendant
+      - Item: S_Flare_Dance_Shoes
+      - Item: S_God_Hammer_Weapon
+      - Item: S_God_Hammer_Shield
+      - Item: S_God_Hammer_Armor
+      - Item: S_Shatter_Buster_Earing
+      - Item: S_Shatter_B_Pendant
+      - Item: S_Shatter_Buster_Shoes
+      - Item: S_Trip_Weapon
+      - Item: S_Trip_Shield
+      - Item: S_Trip_Armor
+      - Item: S_Super_Magic_Shield
+      - Item: S_Super_Magic_Armor
+      - Item: S_Super_Magic_Shoes
+      - Item: S_Super_Power_Weapon
+      - Item: S_Super_Power_Pendant
+      - Item: S_Super_Power_Earing
+      - Item: S_Kunai_Weapon
+      - Item: S_Kunai_Shield
+      - Item: S_Kunai_Armor
+      - Item: S_Syuriken_Earing
+      - Item: S_Syuriken_Pendant
+      - Item: S_Syuriken_Shoes
+      - Item: S_Kamaenraku_Weapon
+      - Item: S_Kamaenraku_Shield
+      - Item: S_Kamaenraku_Armor
+      - Item: S_Huusouka_Earing
+      - Item: S_Huusouka_Pendant
+      - Item: S_Huusouka_Shoes
+      - Item: S_Pickyrush_Weapon
+      - Item: S_Pickyrush_Shield
+      - Item: S_Pickyrush_Armor
+      - Item: S_SavageRabbit_Earing
+      - Item: S_SavageRabbit_Pendant
+      - Item: S_SavageRabbit_Shoes
+      - Item: S_Catnip_Weapon
+      - Item: S_Catnip_Shield
+      - Item: S_Catnip_Armor
+      - Item: S_Silvervine_Earing
+      - Item: S_Silvervine_Pendant
+      - Item: S_Silvervine_Shoes
+      - Item: S_Sunshine_Weapon
+      - Item: S_Sunshine_Shield
+      - Item: S_Sunshine_Armor
+      - Item: S_Moonlight_Earring
+      - Item: S_Moonlight_Pendant
+      - Item: S_Moonlight_Shoes
+      - Item: S_Stardust_Weapon
+      - Item: S_Stardust_Shield
+      - Item: S_Stardust_Armor
+      - Item: S_S_Weapon
+      - Item: S_S_Shield
+      - Item: S_S_Armor
+      - Item: S_Evilcurse_Earring
+      - Item: S_Evilcurse_Pendant
+      - Item: S_Evilcurse_Shoes
+      - Item: S_FullPene_Shoes
+      - Item: S_FullPene_Armor
+      - Item: S_FullPene_Pendant
+      - Item: S_FullPene_Earring
+      - Item: S_All_Race_Shoes
+      - Item: S_All_Race_Shield
+      - Item: S_Blitz_Weapon
+      - Item: S_Blitz_Armor
+      - Item: S_FullTemp_Earring
+      - Item: S_FullTemp_Pendant
+      - Item: S_FullTemp_Armor
+      - Item: S_FullTemp_Shoes
+      - Item: S_Mammoth_Armor
+      - Item: S_Mammoth_Shoes
+      - Item: S_Mammoth_Pendant
+      - Item: S_Mammoth_Earring
+      - Item: S_Mammoth_Weapon
+      - Item: S_Mammoth_Shield
+      - Item: S_TrueGem_Armor
+      - Item: S_TrueGem_Shoes
+      - Item: S_TrueGem_Earring
+      - Item: S_TrueGem_Pendant
+      - Item: S_M_Mammoth_Armor
+      - Item: S_M_Mammoth_Shoes
+      - Item: S_M_Mammoth_Earring
+      - Item: S_M_Mammoth_Pendant
+      - Item: S_EXP_Shield
+      - Item: S_Absorb_Shield
+      - Item: S_Absorb_Weapon
+      - Item: S_AutoSpell_Shield
+      - Item: S_AutoSpell_Armor
+      - Item: S_AutoSpell_Shoes
+      - Item: S_AutoSpell_Weapon
+      - Item: S_AutoSpell_Pendant
+      - Item: S_AutoSpell_Earring
+      - Item: S_M_AutoSpell_Armor
+      - Item: S_M_AutoSpell_Shoes
+      - Item: S_M_AutoSpell_Earring
+      - Item: S_M_AutoSpell_Pendant
+      - Item: S_Hasty_Shield
+      - Item: S_Infinity_Shield
+      - Item: S_Durable_Weapon
+      - Item: S_Durable_Shield
+      - Item: S_Clever_Weapon
+      - Item: S_Clever_Shield
+      - Item: S_CriticalHit_Weapon
+      - Item: S_KingbirdAnc_Weapon
+      - Item: S_P_Power_Weapon
+      - Item: S_P_Power_Shield
+      - Item: S_M_Spell_Weapon
+      - Item: S_M_Spell_Shield
+      - Item: S_Concentration_Weapon
+      - Item: S_Concentration_Shield
+      - Item: S_Wisdom_Weapon
+      - Item: S_Wisdom_Shield
+      - Item: S_Stamina_Weapon
+      - Item: S_Stamina_Shield
+      - Item: S_Creative_Weapon
+      - Item: S_Creative_Shield
+      - Item: S_S_Reload_Shield
+      - Item: S_SpellCaster_Armor
+      - Item: S_SpellCaster_Shoes
+      - Item: S_SpellCaster_Earring
+      - Item: S_SpellCaster_Pendant
+      - Item: S_R_Bearers_Shoes
+      - Item: S_R_Bearers_Armor
+      - Item: S_R_Bearers_Pendant
+      - Item: S_R_Bearers_Earring
+      - Item: S_Mega_Blitz_Shield
+      - Item: S_Mega_Blitz_Weapon
+  - Item: Gunslinger_Enchant
+    RewardGroup: GUNSLINGER_ENCHANT
+    Requirements:
+      - Item: Drooping_Rebellion_
+  - Item: EnchantStone_Recipe
+    RewardGroup: ENCHANTSTONE_RECIPE
+    RequiredRequirementsCount: 3
+    Requirements:
+      - Item: HealStone_Top
+      - Item: HealStone2_Top
+      - Item: HealStone_Middle
+      - Item: HPStone_Middle
+      - Item: SPStone_Middle
+      - Item: HealStone_Bottom
+      - Item: STRStone_Top
+      - Item: INTStone_Top
+      - Item: AGIStone_Top
+      - Item: DEXStone_Top
+      - Item: VITStone_Top
+      - Item: LUKStone_Top
+      - Item: ATKStone_Middle
+      - Item: MATKStone_Middle
+      - Item: HITStone_Bottom
+      - Item: FLEEStone_Bottom
+      - Item: BigStone_Top
+      - Item: MediumStone_Top
+      - Item: SmallStone_Top
+      - Item: ASPDStone_Robe
+      - Item: ATKStone_Top
+      - Item: MATKStone_Top
+      - Item: STRStone_Middle
+      - Item: INTStone_Middle
+      - Item: AGIStone_Middle
+      - Item: DEXStone_Middle
+      - Item: VITStone_Middle
+      - Item: LUKStone_Middle
+      - Item: HPdrainStone_Robe
+      - Item: SPdrainStone_Robe
+      - Item: HPdrainStone_Top
+      - Item: SPdrainStone_Top
+      - Item: ATKStone_Bottom
+      - Item: MATKStone_Bottom
+      - Item: ChangeSTR_Bottom
+      - Item: ChangeSTR_Middle
+      - Item: ChangeINT_Bottom
+      - Item: ChangeINT_Middle
+      - Item: ChangeDEX_Bottom
+      - Item: ChangeDEX_Middle
+      - Item: ChangeVIT_Bottom
+      - Item: ChangeVIT_Middle
+      - Item: ChangeAGI_Bottom
+      - Item: ChangeAGI_Middle
+      - Item: ChangeLUK_Bottom
+      - Item: ChangeLUK_Middle
+      - Item: DEFStone_Middle
+      - Item: MDEFStone_Bottom
+      - Item: EXPStone_Bottom
+      - Item: CastingStone_Robe
+      - Item: Kyrie_Stone
+      - Item: ASPDStone_Top
+      - Item: Greed_Stone
+      - Item: ReloadStone_Top
+      - Item: ReloadStone_Middle
+      - Item: ReloadStone_Bottom
+      - Item: Critical_Stone
+      - Item: Range_Stone
+      - Item: TwinkleEffect_Top
+      - Item: GhostEffect_Middle
+      - Item: MaxHP2_Stone
+      - Item: MaxSP2_Stone
+      - Item: Detoxify_Stone
+      - Item: Recovery_Stone
+      - Item: ShrinkEffect_Middle
+      - Item: ElectricEffect_Middle
+      - Item: GreenFloor_Bottom
+      - Item: Identify_Stone
+      - Item: EXPStone_Middle
+      - Item: ShadowEffect_Middle
+      - Item: MinorCastingStone_Robe
+      - Item: LexAeternaStone_Middle
+      - Item: PinkGlowEffect_Middle
+      - Item: BlueAuraEffect_Middle
+      - Item: CastingStone_Top
+      - Item: CastingStone_Middle
+      - Item: CastingStone_Bottom
+      - Item: EXPStone_Top
+      - Item: Cri_Stone
+      - Item: MaxSP_Stone
+      - Item: MaxHP_Stone
+      - Item: ShrinkEffect_Bottom
+      - Item: ElectricEffect_Top
+      - Item: SPAbsorb_Stone_Top
+      - Item: HPAbsorb_Stone_Top
+      - Item: SPAbsorb_Stone_Robe
+      - Item: HPAbsorb_Stone_Robe
+      - Item: WaterFieldEffect_Bottom
+      - Item: ExplodingEffect_Middle
+      - Item: WhiteBodyEffect_Middle
+      - Item: Steal_Stone
+      - Item: Teleport_Stone
+      - Item: Heal_Stone
+      - Item: SuraStone_Top
+      - Item: SuraStone_Middle
+      - Item: SuraStone_Bottom
+      - Item: SuraStone_Robe
+      - Item: RangerStone_Top
+      - Item: RangerStone_Middle
+      - Item: RangerStone_Bottom
+      - Item: RangerStone_Robe
+      - Item: SorcererStone_Top
+      - Item: SorcererStone_Middle
+      - Item: SorcererStone_Bottom
+      - Item: SorcererStone_Robe
+      - Item: RuneknightStone_Top
+      - Item: RuneknightStone_Middle
+      - Item: RuneknightStone_Bottom
+      - Item: RuneknightStone_Robe
+      - Item: GeneticStone_Robe
+      - Item: GeneticStone_Top
+      - Item: GeneticStone_Middle
+      - Item: GeneticStone_Bottom
+      - Item: WarlockStone_Top
+      - Item: WarlockStone_Middle
+      - Item: WarlockStone_Bottom
+      - Item: WarlockStone_Robe
+      - Item: ShadowchaserStone_Top
+      - Item: ShadowchaseStone_Middle
+      - Item: ShadowchaseStone_Bottom
+      - Item: ShadowchaserStone_Robe
+      - Item: MechanicStone_Top
+      - Item: MechanicStone_Middle
+      - Item: MechanicStone_Bottom
+      - Item: MechanicStone_Robe
+      - Item: WanderMinstrelStone_Top
+      - Item: WanderMinstrelStone_Middle
+      - Item: WanderMinstrelStone_Bottom
+      - Item: WanderMinstrelStone_Robe
+      - Item: HPStone_Bottom
+      - Item: DoubleAttack_Stone
+      - Item: Critical_Stone_Robe
+      - Item: Critical_Stone_Top
+      - Item: Critical_Stone_Bottom
+      - Item: CastStone_Robe
+      - Item: HighpriestStone_Top
+      - Item: HighpriestStone_Middle
+      - Item: HighpriestStone_Bottom
+      - Item: ArchbishopStone_Robe
+      - Item: PaladinStone_Top
+      - Item: PaladinStone_Middle
+      - Item: PaladinStone_Bottom
+      - Item: RoyalguardStone_Robe
+      - Item: AssacrossStone_Top
+      - Item: AssacrossStone_Middle
+      - Item: AssacrossStone_Bottom
+      - Item: GuillcrossStone_Robe
+      - Item: SuraStone_Robe2
+      - Item: SuraStone_Bottom2
+      - Item: SuraStone_Middle2
+      - Item: SuraStone_Top2
+      - Item: SorcererStone_Robe2
+      - Item: SorcererStone_Bottom2
+      - Item: SorcererStone_Middle2
+      - Item: SorcererStone_Top2
+      - Item: ShadowchaserStone_Robe2
+      - Item: ShadowchasStone_Bottom2
+      - Item: ShadowchasStone_Middle2
+      - Item: ShadowchaserStone_Top2
+      - Item: SoulReaperStone_Robe
+      - Item: SoulLinkerStone_Top
+      - Item: SoulLinkerStone_Middle
+      - Item: SoulLinkerStone_Bottom
+      - Item: StarGladiatorStone_Top
+      - Item: StarGladiatorStone_Middle
+      - Item: StarGladiatorStone_Bottom
+      - Item: StarEmperorStone_Garment
+      - Item: NinjaStone_Top
+      - Item: NinjaStone_Middle
+      - Item: NinjaStone_Bottom
+      - Item: KagerouStone_Robe
+      - Item: OboroStone_Robe
+      - Item: GunslingerStone_Top
+      - Item: GunslingerStone_Middle
+      - Item: GunslingerStone_Bottom
+      - Item: GunslingerStone_Robe
+      - Item: DoramStone_Top
+      - Item: DoramStone_Middle
+      - Item: DoramStone_Bottom
+      - Item: DoramStone_Robe
+      - Item: RangerStone_II_Top
+      - Item: RangerStone_II_Middle
+      - Item: RangerStone_II_Bottom
+      - Item: RangerStone_II_Garment
+      - Item: MechanicStone_II_Top
+      - Item: MechanicStone_II_Middle
+      - Item: MechanicStone_II_Bottom
+      - Item: MechanicStone_II_Garment
+      - Item: HighpriestStone_II_Top
+      - Item: HighpriestStone_II_Middle
+      - Item: HighpriestStone_II_Bottom
+      - Item: ArchbishopStone_II_Garment
+      - Item: WarlockStone_Robe2
+      - Item: WarlockStone_Top2
+      - Item: WarlockStone_Middle2
+      - Item: WarlockStone_Bottom2
+      - Item: RoyalGuardStone_Robe2
+      - Item: RoyalGuardStone_Top2
+      - Item: RoyalGuardStone_Middle2
+      - Item: RoyalGuardStone_Bottom2
+      - Item: GuillotineCrossStone_Robe2
+      - Item: GuillotineCrossStone_Top2
+      - Item: GuillotineCrossStone_Middle2
+      - Item: GuillotineCrossStone_Bottom2
+      - Item: RuneknightStone_Robe2
+      - Item: RuneknightStone_Top2
+      - Item: RuneknightStone_Middle2
+      - Item: RuneknightStone_Bottom2
+      - Item: GeneticStone_Robe2
+      - Item: GeneticStone_Top2
+      - Item: GeneticStone_Middle2
+      - Item: GeneticStone_Bottom2
+      - Item: WanderMinsStone_Robe2
+      - Item: WanderMinsStone_Top2
+      - Item: WanderMinsStone_Middle2
+      - Item: WanderMinsStone_Bottom2
+      - Item: Range_Stone_Top
+      - Item: Range_Stone_Bottom
+      - Item: Melee_Stone_Top
+      - Item: Melee_Stone_Middle
+      - Item: Melee_Stone_Bottom
+      - Item: ASPDStone_Robe_D
+      - Item: CastStone_Robe_D
+      - Item: Melee_Stone_Robe_D
+      - Item: HPdrainStone_Robe_D
+      - Item: Magic_Stone_Robe_D
+      - Item: Magic_Stone_Top
+      - Item: Magic_Stone_Middle
+      - Item: Magic_Stone_Bottom
+      - Item: Range_Stone_Robe_D
+      - Item: MinorCastStone_Robe_D
+      - Item: SPdrainStone_Robe_D
+      - Item: RuneknightStone_Top3
+      - Item: RuneknightStone_Middle3
+      - Item: RuneknightStone_Bottom3
+      - Item: WarlockStone_Top3
+      - Item: WarlockStone_Middle3
+      - Item: WarlockStone_Bottom3
+      - Item: RoyalguardStone_Top3
+      - Item: RoyalguardStone_Middle3
+      - Item: RoyalguardStone_Bottom3
+      - Item: WanderMinsStone_Top3
+      - Item: WanderMinsStone_Middle3
+      - Item: WanderMinsStone_Bottom3
+      - Item: GeneticStone_Top3
+      - Item: GeneticStone_Middle3
+      - Item: GeneticStone_Bottom3
+      - Item: SorcererStone_Top3
+      - Item: SorcererStone_Middle3
+      - Item: SorcererStone_Bottom3
+      - Item: ReloadStone_Robe_D
+      - Item: CrtStone_Robe_D
+      - Item: CriticalStone_Robe_D
+      - Item: ConStone_Robe_D
+      - Item: ArchbishopStone_Top3
+      - Item: ArchbishopStone_Middle3
+      - Item: ArchbishopStone_Bottom3
+      - Item: RangerStone_Top3
+      - Item: RangerStone_Middle3
+      - Item: RangerStone_Bottom3
+      - Item: ShadowchasStone_Top3
+      - Item: ShadowchasStone_Middle3
+      - Item: ShadowchasStone_Bottom3
+  - Item: Collectibles_Box
+    # TODO: Add official rewards
+    RewardGroup: VIOLETBOX
+    RequiredRequirementsCount: 10
+    Requirements:
+      - Item: Danggie
+        Amount: 10
+      - Item: Tree_Root
+        Amount: 10
+      - Item: Reptile_Tongue
+        Amount: 10
+      - Item: Scorpion's_Tail
+        Amount: 10
+      - Item: Stem
+        Amount: 10
+      - Item: Pointed_Scale
+        Amount: 10
+      - Item: Resin
+        Amount: 10
+      - Item: Spawn
+        Amount: 10
+      - Item: Jellopy
+        Amount: 10
+      - Item: Garlet
+        Amount: 10
+      - Item: Scell
+        Amount: 10
+      - Item: Zargon
+        Amount: 10
+      - Item: Tooth_Of_Bat
+        Amount: 10
+      - Item: Fluff
+        Amount: 10
+      - Item: Chrysalis
+        Amount: 10
+      - Item: Feather_Of_Birds
+        Amount: 10
+      - Item: Talon
+        Amount: 10
+      - Item: Sticky_Webfoot
+        Amount: 10
+      - Item: Animal's_Skin
+        Amount: 10
+      - Item: Claw_Of_Wolves
+        Amount: 10
+      - Item: Mushroom_Spore
+        Amount: 10
+      - Item: Orcish_Cuspid
+        Amount: 10
+      - Item: Evil_Horn
+        Amount: 10
+      - Item: Powder_Of_Butterfly
+        Amount: 10
+      - Item: Bill_Of_Birds
+        Amount: 10
+      - Item: Scale_Of_Snakes
+        Amount: 10
+      - Item: Insect_Feeler
+        Amount: 10
+      - Item: Immortal_Heart
+        Amount: 10
+      - Item: Rotten_Bandage
+        Amount: 10
+      - Item: Orcish_Voucher
+        Amount: 10
+      - Item: Skel_Bone
+        Amount: 10
+      - Item: Shell
+        Amount: 10
+      - Item: Scales_Shell
+        Amount: 10
+      - Item: Posionous_Canine
+        Amount: 10
+      - Item: Sticky_Mucus
+        Amount: 10
+      - Item: Bee_Sting
+        Amount: 10
+      - Item: Grasshopper's_Leg
+        Amount: 10
+      - Item: Nose_Ring
+        Amount: 10
+      - Item: Yoyo_Tail
+        Amount: 10
+      - Item: Solid_Shell
+        Amount: 10
+      - Item: Horseshoe
+        Amount: 10
+      - Item: Raccoon_Leaf
+        Amount: 10
+      - Item: Snail's_Shell
+        Amount: 10
+      - Item: Horn
+        Amount: 10
+      - Item: Bear's_Foot
+        Amount: 10
+      - Item: Feather
+        Amount: 10
+      - Item: Heart_Of_Mermaid
+        Amount: 10
+      - Item: Fin
+        Amount: 10
+      - Item: Cactus_Needle
+        Amount: 10
+      - Item: Stone_Heart
+        Amount: 10
+      - Item: Shining_Scales
+        Amount: 10
+      - Item: Worm_Peelings
+        Amount: 10
+      - Item: Gill
+        Amount: 10
+      - Item: Decayed_Nail
+        Amount: 10
+      - Item: Horrendous_Mouth
+        Amount: 10
+      - Item: Rotten_Scale
+        Amount: 10
+      - Item: Nipper
+        Amount: 10
+      - Item: Conch
+        Amount: 10
+      - Item: Tentacle
+        Amount: 10
+      - Item: Sharp_Scale
+        Amount: 10
+      - Item: Crap_Shell
+        Amount: 10
+      - Item: Clam_Shell
+        Amount: 10
+      - Item: Flesh_Of_Clam
+        Amount: 10
+      - Item: Turtle_Shell
+        Amount: 10
+      - Item: Voucher_Of_Orcish_Hero
+        Amount: 10
+      - Item: Gold
+        Amount: 10
+      - Item: Lizard_Scruff
+        Amount: 10
+      - Item: Colorful_Shell
+        Amount: 10
+      - Item: Jaws_Of_Ant
+        Amount: 10
+      - Item: Thin_N'_Long_Tongue
+        Amount: 10
+      - Item: Rat_Tail
+        Amount: 10
+      - Item: Moustache_Of_Mole
+        Amount: 10
+      - Item: Nail_Of_Mole
+        Amount: 10
+      - Item: Wooden_Block
+        Amount: 10
+      - Item: Long_Hair
+        Amount: 10
+      - Item: Dokkaebi_Horn
+        Amount: 10
+      - Item: Fox_Tail
+        Amount: 10
+      - Item: Fish_Tail
+        Amount: 10
+      - Item: Chinese_Ink
+        Amount: 10
+      - Item: Spiderweb
+        Amount: 10
+      - Item: Acorn
+        Amount: 10
+      - Item: Porcupine_Spike
+        Amount: 10
+      - Item: Wild_Boar's_Mane
+        Amount: 10
+      - Item: Tiger's_Skin
+        Amount: 10
+      - Item: Tiger_Footskin
+        Amount: 10
+      - Item: Limb_Of_Mantis
+        Amount: 10
+      - Item: Blossom_Of_Maneater
+        Amount: 10
+      - Item: Root_Of_Maneater
+        Amount: 10
+      - Item: Cobold_Hair
+        Amount: 10
+      - Item: Dragon_Canine
+        Amount: 10
+      - Item: Dragon_Scale
+        Amount: 10
+      - Item: Dragon_Train
+        Amount: 10
+      - Item: Petite_DiablOfs_Horn
+        Amount: 10
+      - Item: Petite_DiablOfs_Wing
+        Amount: 10
+      - Item: Elder_Pixie's_Beard
+        Amount: 10
+      - Item: Lantern
+        Amount: 10
+      - Item: Short_Leg
+        Amount: 10
+      - Item: Nail_Of_Orc
+        Amount: 10
+      - Item: Tooth_Of_
+        Amount: 10
+      - Item: Sacred_Masque
+        Amount: 10
+      - Item: Tweezer
+        Amount: 10
+      - Item: Head_Of_Medusa
+        Amount: 10
+      - Item: Slender_Snake
+        Amount: 10
+      - Item: Skirt_Of_Virgin
+        Amount: 10
+      - Item: Tendon
+        Amount: 10
+      - Item: Detonator
+        Amount: 10
+      - Item: Single_Cell
+        Amount: 10
+      - Item: Tooth_Of_Ancient_Fish
+        Amount: 10
+      - Item: Lip_Of_Ancient_Fish
+        Amount: 10
+      - Item: Earthworm_Peeling
+        Amount: 10
+      - Item: Grit
+        Amount: 10
+      - Item: Moth_Dust
+        Amount: 10
+      - Item: Wing_Of_Moth
+        Amount: 10
+      - Item: Transparent_Cloth
+        Amount: 10
+      - Item: Golden_Hair
+        Amount: 10
+      - Item: Starsand_Of_Witch
+        Amount: 10
+      - Item: Pumpkin_Head
+        Amount: 10
+      - Item: Sharpened_Cuspid
+        Amount: 10
+      - Item: Reins
+        Amount: 10
+      - Item: Tree_Of_Archer_1
+        Amount: 10
+      - Item: Tree_Of_Archer_2
+        Amount: 10
+      - Item: Tree_Of_Archer_3
+        Amount: 10
+      - Item: Short_Daenggie
+        Amount: 10
+      - Item: Needle_Of_Alarm
+        Amount: 10
+      - Item: Round_Shell
+        Amount: 10
+      - Item: Worn_Out_Page
+        Amount: 10
+      - Item: Manacles
+        Amount: 10
+      - Item: Worn_Out_Prison_Uniform
+        Amount: 10
+      - Item: Light_Up_Card1
+        Amount: 10
+      - Item: Light_Up_Card2
+        Amount: 10
+      - Item: Light_Up_Card3
+        Amount: 10
+      - Item: Light_Up_Card4
+        Amount: 10
+      - Item: Fur
+        Amount: 10
+      - Item: Peaked_Hat
+        Amount: 10
+      - Item: Hard_Skin
+        Amount: 10
+      - Item: Mystic_Horn
+        Amount: 10
+      - Item: Rakehorn_Helm
+        Amount: 10
+      - Item: Antler_Helm
+        Amount: 10
+      - Item: Twinhorn_Helm
+        Amount: 10
+      - Item: Singlehorn_Helm
+        Amount: 10
+      - Item: White_Spider_Limb
+        Amount: 10
+      - Item: Fortune_Cookie_Fail
+        Amount: 10
+      - Item: Tikbalang_Thick_Spine
+        Amount: 10
+      - Item: Mould_Powder
+        Amount: 10
+      - Item: Ogre_Tooth
+        Amount: 10
+      - Item: Anolian_Skin
+        Amount: 10
+      - Item: Mud_Lump
+        Amount: 10
+      - Item: Skull
+        Amount: 10
+      - Item: Wing_Of_Red_Bat
+        Amount: 10
+      - Item: Claw_Of_Rat
+        Amount: 10
+      - Item: Stiff_Horn
+        Amount: 10
+      - Item: Glitter_Shell
+        Amount: 10
+      - Item: Tail_Of_Steel_Scorpion
+        Amount: 10
+      - Item: Claw_Of_Monkey
+        Amount: 10
+      - Item: Tough_Scalelike_Stem
+        Amount: 10
+      - Item: Coral_Reef
+        Amount: 10
+      - Item: Executioner's_Mitten
+        Amount: 10
+      - Item: Claw_Of_Desert_Wolf
+        Amount: 10
+      - Item: Old_Frying_Pan
+        Amount: 10
+      - Item: Piece_Of_Egg_Shell
+        Amount: 10
+      - Item: Poison_Spore
+        Amount: 10
+      - Item: Alice's_Apron
+        Amount: 10
+      - Item: Talon_Of_Griffin
+        Amount: 10
+      - Item: Cyfar
+        Amount: 10
+      - Item: Brigan
+        Amount: 10
+      - Item: Treasure_Box
+        Amount: 10
+      - Item: Old_White_Cloth
+        Amount: 10
+      - Item: Clattering_Skull
+        Amount: 10
+      - Item: Broken_Farming_Utensil
+        Amount: 10
+      - Item: Broken_Crown
+        Amount: 10
+      - Item: Glast_Decayed_Nail
+        Amount: 10
+      - Item: Glast_Horrendous_Mouth
+        Amount: 10
+      - Item: Shabby_Crown
+        Amount: 10
+      - Item: Cold_Core
+        Amount: 10
+      - Item: Silicone_Shell
+        Amount: 10
+      - Item: Hedgehog_Picks
+        Amount: 10
+      - Item: Old_Belt
+        Amount: 10
+      - Item: Moving_Dark_Matter
+        Amount: 10
+      - Item: Fragments_Valkyrie_Power
+        Amount: 10
+      - Item: Will_Master
+        Amount: 10
+      - Item: Piece_Of_Chimera
+        Amount: 10
+      - Item: Fallen_Leaves_Branch
+        Amount: 10
+      - Item: Core_Jelly
+        Amount: 10
+      - Item: CleanBone
+        Amount: 10
+      - Item: DeadlyPoisonPowder
+        Amount: 10
+      - Item: BanditsScarf
+        Amount: 10
+      - Item: CrudeAmmo
+        Amount: 10
+      - Item: BrokenShotgun
+        Amount: 10
+      - Item: CrudeScimiter
+        Amount: 10
+      - Item: WornRevolver
+        Amount: 10
+      - Item: BrownMuffler
+        Amount: 10
+      - Item: SwampBugPeelings
+        Amount: 10
+      - Item: BrownRatTail
+        Amount: 10
+      - Item: Frozen_Stone_Fragment
+        Amount: 10
+      - Item: Spirit_Jewel
+        Amount: 10
+      - Item: Snowball
+        Amount: 10
+      - Item: Ktullanux_Eye
+        Amount: 10
+      - Item: Hazy_Dream_Fragment
+        Amount: 10
+      - Item: Broken_Arrow
+        Amount: 10
+      - Item: Recruitment_Leaflet
+        Amount: 10
+      - Item: IllusoryStone
+        Amount: 10
+      - Item: Torn_Diary
+        Amount: 10
+      - Item: Dried_Clover
+        Amount: 10
+      - Item: Short_Bat_Fur
+        Amount: 10
+      - Item: NightmareOfLump
+        Amount: 10
+      - Item: Shining_Spore
+        Amount: 10
+      - Item: Dried_Leaf_Of_Ygg
+        Amount: 10
+      - Item: SuspiciousMagicCircle
+        Amount: 10
+      - Item: Piece_of_Black_Horn
+        Amount: 10
+      - Item: Fine_Old_Doll
+        Amount: 10
+      - Item: Old_Shell
+        Amount: 10
+      - Item: Ein_SOLIDDUST
+        Amount: 10
+      - Item: Ein_RUSTHELM
+        Amount: 10
+      - Item: Ein_EYEROCK
+        Amount: 10
+  - Item: Pet_Egg_Box
+    RewardGroup: PET_EGG_BOX
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Poring_Egg
+      - Item: Drops_Egg
+      - Item: Poporing_Egg
+      - Item: Lunatic_Egg
+      - Item: Picky_Egg
+      - Item: Chonchon_Egg
+      - Item: Steel_Chonchon_Egg
+      - Item: Hunter_Fly_Egg
+      - Item: Savage_Bebe_Egg
+      - Item: Baby_Desert_Wolf_Egg
+      - Item: Rocker_Egg
+      - Item: Spore_Egg
+      - Item: Poison_Spore_Egg
+      - Item: PecoPeco_Egg
+      - Item: Smokie_Egg
+      - Item: Yoyo_Egg
+      - Item: Orc_Warrior_Egg
+      - Item: Munak_Egg
+      - Item: Dokkaebi_Egg
+      - Item: Sohee_Egg
+      - Item: Isis_Egg
+      - Item: Green_Petite_Egg
+      - Item: Deviruchi_Egg
+      - Item: Bapho_Jr._Egg
+      - Item: Bongun_Egg
+      - Item: Zherlthsh_Egg
+      - Item: Alice_Egg
+      - Item: Rice_Cake_Egg
+      - Item: Santa_Goblin_Egg
+      - Item: Chung_E_Egg
+      - Item: Spring_Rabbit_Egg
+      - Item: Knife_Goblin_Egg
+      - Item: Flail_Goblin_Egg
+      - Item: Hammer_Goblin_Egg
+      - Item: Red_Deleter_Egg
+      - Item: Diabolic_Egg
+      - Item: Wanderer_Egg
+      - Item: New_Year_Doll_Egg
+      - Item: Bacsojin_Egg
+      - Item: Civil_Servant_Egg
+      - Item: Loli_Ruri_Egg
+      - Item: Marionette_Egg
+      - Item: Shinobi_Egg
+      - Item: Whisper_Egg
+      - Item: Goblin_Leader_Egg
+      - Item: Wicked_Nymph_Egg
+      - Item: Dullahan_Egg
+      - Item: Medusa_Egg
+      - Item: Stone_Shooter_Egg
+      - Item: Incubus_Egg
+      - Item: Golem_Egg
+      - Item: Nightmare_Terror_Egg
+      - Item: Succubus_Egg
+      - Item: Imp_Egg
+      - Item: Egg_Of_Tiny
+      - Item: Snow_Rabbit_Egg
+      - Item: Tikbalang_Pet
+      - Item: Brownie_Egg
+      - Item: Marin_Egg
+      - Item: Woodie_Egg
+      - Item: Blue_Unicorn_Egg
+      - Item: Nine_Tail_Egg
+      - Item: Teddy_Bear_Egg
+      - Item: Roween_Egg
+      - Item: Wilow_Egg
+      - Item: Gremlin_Egg
+      - Item: Mummy_Egg
+      - Item: Scatletoncarrier
+      - Item: Miyabi_Ningyo_Egg
+      - Item: Leaf_Cat_Egg
+      - Item: Dark_Priest_Egg
+  - Item: Costume_Exchange_Box
+    RewardGroup: COSTUME_EXCHANGE_BOX
+    Requirements:
+      - Item: C_Rabbit_Ear_Hat
+      - Item: C_J_Captain_Hat
+      - Item: C_Chick_Hat
+      - Item: C_Little_Angel_Doll
+      - Item: C_Robo_Eye
+      - Item: C_Darkness_Helm
+      - Item: C_Angel_Spirit
+      - Item: C_White_Cat_Hood
+      - Item: C_Sword_Master_Crown
+      - Item: C_Bell_Pigeon
+      - Item: C_Rudra_Wing
+      - Item: C_Whikebain_Ears
+      - Item: C_Evil_Marcher_Hat
+      - Item: C_Rabbit_Head_Dress
+      - Item: C_Banshee_Master_Kiss
+      - Item: C_Deviruchi_Balloon
+      - Item: C_Wing_Of_Happiness
+      - Item: C_Subject_Aura
+      - Item: C_Whisper_Tall_Hat
+      - Item: C_Poring_Mascot_Costume
+      - Item: C_Mask_Of_Bankrupt
+      - Item: C_Snowman_Hat
+      - Item: C_Celines_Ribbon
+      - Item: C_Gold_Angel_Sculpture
+      - Item: C_Soft_Sheep_Hat
+      - Item: C_Snownow_Hat
+      - Item: C_GreatDevilWing
+      - Item: C_Large_Ribbon_Muffler
+      - Item: C_Worg_In_Mouth
+      - Item: C_3D_Glasses
+      - Item: C_Lolita_Ten_Gallon_Hat
+      - Item: C_Sleep_Eclipse_Family
+      - Item: C_Hair_Of_The_Strong
+      - Item: C_Secret_Zipper
+      - Item: C_Love_Cheek
+      - Item: C_Tare_HSchool_Doll_Hat
+      - Item: C_Sombrero
+      - Item: C_Under_Rim_Glasses_Red
+      - Item: C_FlyingGalapago
+      - Item: C_Face_Crusher
+      - Item: C_Hill_Wind_Mask
+      - Item: C_Analyze_Eye
+      - Item: C_Cowlick_YL
+      - Item: C_Cowlick_GN
+      - Item: C_Cowlick_PP
+      - Item: C_Cowlick_RD
+      - Item: C_Cowlick_OM
+      - Item: C_Cowlick_BU
+      - Item: C_Cowlick_WH
+      - Item: C_Bouncing_Hair_Black
+      - Item: C_Straight_Pony_YL
+      - Item: C_Straight_Pony_GN
+      - Item: C_Straight_Pony_PP
+      - Item: C_Straight_Pony_RD
+      - Item: C_Straight_Pony_OM
+      - Item: C_Straight_Pony_BU
+      - Item: C_Straight_Pony_WH
+      - Item: C_Straight_Pony_Black
+      - Item: C_Loose_Wave_Twin_YL
+      - Item: C_Loose_Wave_Twin_GN
+      - Item: C_Loose_Wave_Twin_PP
+      - Item: C_Loose_Wave_Twin_RD
+      - Item: C_Loose_Wave_Twin_OM
+      - Item: C_Loose_Wave_Twin_BU
+      - Item: C_Loose_Wave_Twin_WH
+      - Item: C_Loose_Wave_Twin
+      - Item: C_Cupid_Wing_Pink
+      - Item: C_Pecopeco_Cap
+      - Item: C_Green_Hat
+      - Item: C_Little_Aquarium
+      - Item: C_Angel_Fluttering
+      - Item: C_Niflheim_Bunny_Hat
+      - Item: C_Crow_Tengu_Mask
+      - Item: C_Pumpkin_Head
+      - Item: C_Eremes_Scarf
+      - Item: C_Blessing_Of_Angels
+      - Item: C_White_Lily
+      - Item: C_Small_Poring_Band
+      - Item: C_Wild_Poring_Rider
+      - Item: C_Valhalla_Idol
+      - Item: C_Louise_Red_Hat
+      - Item: C_Poring_Bag
+      - Item: C_Morocc_Kid_Servant
+      - Item: C_Monochrome_RibbonHat
+      - Item: C_Khalitzburg_KN_Helm
+      - Item: C_Laser_of_Eagle
+      - Item: C_Devil_Wing
+      - Item: C_Tone_of_Gold
+      - Item: C_Dwarf_Beard
+      - Item: C_Mad_Hatter
+      - Item: C_Cons_Of_Water
+      - Item: C_Floral_Waltz
+      - Item: C_Gemini_Eyes
+      - Item: C_Pope_Crown
+      - Item: C_Charleston_Antenna
+      - Item: C_Wings_of_Uriel
+      - Item: C_Pig_Nose
+      - Item: C_Cat_Ears_Hat
+      - Item: C_Valkyrie_Circlet
+      - Item: C_Eremes_Scarf_Black
+      - Item: C_Eleanor_Wig
+      - Item: C_QueenAnzRevenge
+      - Item: C_Assassin_Skull_Mask
+      - Item: C_Vampire_Familiar
+      - Item: C_Ghostring_Tall_Hat
+      - Item: C_Magical_Feather
+      - Item: C_Steampunk_Hat
+      - Item: C_Poring_Soap_Pipe
+      - Item: C_SwordWing
+      - Item: C_Hair_Bun_BU
+      - Item: C_Hair_Bun_RD
+      - Item: C_Hair_Bun_YL
+      - Item: C_Hair_Bun_GN
+      - Item: C_Hair_Bun_BL
+      - Item: C_Hair_Bun_WH
+      - Item: C_Hair_Bun_OM
+      - Item: C_Hair_Bun_PP
+      - Item: C_Roll_Twin_BU
+      - Item: C_Roll_Twin_RD
+      - Item: C_Roll_Twin_YL
+      - Item: C_Roll_Twin_GN
+      - Item: C_Roll_Twin_BL
+      - Item: C_Roll_Twin_WH
+      - Item: C_Roll_Twin_OM
+      - Item: C_Roll_Twin_PP
+      - Item: C_Long_Pony_BU
+      - Item: C_Long_Pony_RD
+      - Item: C_Long_Pony_YL
+      - Item: C_Long_Pony_GN
+      - Item: C_Long_Pony_BL
+      - Item: C_Long_Pony_WH
+      - Item: C_Long_Pony_OM
+      - Item: C_Long_Pony_PP
+      - Item: C_Piggyback
+      - Item: C_RuneHelm
+      - Item: C_Shaving_Foam
+      - Item: C_Blue_Fairy_Wing
+      - Item: C_Black_Cat
+      - Item: C_White_Black_Temp
+      - Item: C_Hat_Of_Drowsy_Cat
+      - Item: C_Scratching_Cat
+      - Item: C_Thanatos_Sword
+      - Item: C_Warm_Cat_Muffler
+      - Item: C_Clock_Casket
+      - Item: C_Happy_Parrot_J
+      - Item: C_Flame_Muffler
+      - Item: C_Teddy_Bear_Hood
+      - Item: C_Mouton_Life_BL
+      - Item: C_Brown_Stall
+      - Item: C_Pope_Sitting_Head
+      - Item: C_Tare_Pope_Casual
+      - Item: C_BelieversCap
+      - Item: C_Pope_Ribbon
+      - Item: C_Alice_Wig
+      - Item: Khalitzburg_KN_Helm_BL
+      - Item: C_Wanderer_Sakkat
+      - Item: C_Wings_of_Michael
+      - Item: C_Shura_King_Pledge
+      - Item: C_CatEars_Cyber_HeadP_R
+      - Item: C_Moon_Eyepatch
+      - Item: C_Shiba_Inu
+      - Item: C_Magic_Circle
+      - Item: C_Chilly_Breath
+      - Item: C_Drooping_Argiope
+      - Item: C_Chain_Puppet
+      - Item: C_Sorcerer_Hood
+      - Item: C_Blinking_Thin_Eyes
+      - Item: C_Baby_Penguin
+      - Item: C_Fluffy_Heart_Earmuffs
+      - Item: C_Archangel_Wing
+      - Item: C_GiantCatBag_TW
+      - Item: C_Luwmin_Ice
+      - Item: C_Ghost_Holiday
+      - Item: C_Blessing_Sky_Lantern
+      - Item: C_Astro_Circle
+      - Item: C_Elephangel_TH
+      - Item: C_Flying_Drone
+      - Item: C_White_Cat
+      - Item: C_Bouquet_Hat
+      - Item: C_Poring_Muffler
+      - Item: C_Happy_Rabbit_Ribbon
+      - Item: C_PinkButterfly_Wing_T
+      - Item: C_Sepia_Cap
+      - Item: C_Heaven_Cage
+      - Item: C_Buddhist_Priest_Crown
+      - Item: C_Digital_Space
+      - Item: C_White_Rabbit_Ear
+      - Item: C_Autumn_Headband
+      - Item: C_Rabbit_Hopping
+      - Item: C_Halloween_Poring_Bag
+      - Item: C_Halloween_Hat_Orange
+      - Item: C_Vampire_Hairband
+      - Item: C_Black_Witch_Hat
+      - Item: C_Diabolic_Headphone
+      - Item: C_Princess_Ribbon_Crown
+      - Item: C_Poporing_Muffler
+      - Item: C_Protect_Cloth
+      - Item: C_Backside_Ribbon_Bell
+      - Item: C_Fallen_Angel_Wing
+      - Item: C_Snow_Rabbit_Knit_Hat
+      - Item: C_Snow_Bear_Food
+      - Item: C_LunaticMuffler
+      - Item: C_Sleep_Sheep_TW
+      - Item: C_HeartChocoBag
+      - Item: C_Cat_Ears_Punkish
+      - Item: C_CatCoffeeCup_TW
+      - Item: C_HeartOfCat_TW
+      - Item: C_Twin_Margaret
+      - Item: C_Black_Rabbit_Bonnet
+      - Item: C_Smiling_Eyes
+      - Item: C_WingOfHeart
+      - Item: C_Kishu_Inu
+      - Item: C_Panda_Rabbit
+      - Item: C_Full_BloomCherry_Tree
+      - Item: C_Fox
+      - Item: C_OpenAir_Headset
+      - Item: C_Mobile_Pursuit_System
+      - Item: C_Mecha_Cat_Ears
+      - Item: C_Cyber_Income
+      - Item: C_Cat_Fork
+      - Item: C_CatEarRibbon_TW
+      - Item: C_Garnet_Tiara
+      - Item: C_Peony_Hair_Ornament
+      - Item: C_Love_Piece
+      - Item: C_Pretty_Bear
+      - Item: C_Pigtail_Red_Hood
+      - Item: C_SharkHead
+      - Item: C_Baby_Panda
+      - Item: C_SavageB_On_Shoulder
+      - Item: C_BeachBall
+      - Item: C_Big_Foxtail
+      - Item: C_T_Bear_Bag
+      - Item: C_Poring_On_Shoulder
+      - Item: Costume_Yawata_Seal
+      - Item: C_Pretty_Bear_WH
+      - Item: C_Bicolor_Cat_Witch_Hat
+      - Item: C_Nifl_Bloom
+      - Item: C_Floating_Ball_TW
+      - Item: C_Dark_Snake_Lord_Stall
+      - Item: Costume_Twin_Cannon
+      - Item: C_Picnic_Basket
+      - Item: C_Magic_Helm
+      - Item: C_ManyStars_TW
+      - Item: C_Santa_Backpack
+      - Item: C_Fawn_Ear
+      - Item: C_Royalguard_Necklace
+      - Item: C_Happy_Cat_TW
+      - Item: C_Monochrome_Cap
+      - Item: C_Sky_of_Memory
+      - Item: C_Ice_Wing
+      - Item: C_Under_Rim_Glasses_Blue
+      - Item: C_Gimmick_One_Feather
+      - Item: C_Pocketwatch_Hair_Ornament
+      - Item: C_Poring_Traffic_Light
+      - Item: C_PGstone_Knit_Hat_PK
+      - Item: C_Lazy_Ninetail
+      - Item: C_Sakura_Wing
+      - Item: C_Looking
+      - Item: C_Wolf_Masquerade
+      - Item: C_Mike_Stand
+      - Item: C_Baby_Polar_Bear
+      - Item: C_Runaway_Accelerator
+      - Item: C_Half_Rim_Glasses
+      - Item: C_GiantCatBag_JP_BL
+      - Item: C_Romance_Rose_TW
+      - Item: C_Disapear_Time_TW
+      - Item: C_Magic_Heir_TW
+      - Item: C_Blink_Eyes_Sakura
+      - Item: Costume_Angola_Intention
+      - Item: C_Stole_Of_Dominion
+      - Item: C_Flowery_Vision_TH
+      - Item: C_Frill_Collar
+      - Item: C_Rose_Gothic_Bonnet
+      - Item: C_LittleGarden
+      - Item: Costume_Twinkling_Red_Eyes
+      - Item: C_P_Ulysses_Feather
+      - Item: C_DancingButterfly_TW
+      - Item: C_Blue_Pencil_In_Mouth
+      - Item: C_Nut_Donut_In_Mouth
+      - Item: C_Leaf_Umbrella
+      - Item: C_Krathong_Crown_TH
+      - Item: C_Unicorn_Ornament
+      - Item: C_Frog_Hood
+      - Item: C_Lude_Hood
+      - Item: C_Blessings_Of_Soul
+      - Item: C_Crow
+      - Item: C_Halloween_Hat
+      - Item: C_Blessed_Veil
+      - Item: C_Eyes_Of_Ifrit
+      - Item: C_Eyes_Of_Darkness
+      - Item: C_Sunglasses_Bball_Hat
+      - Item: C_Wildcat_Knit_Cap
+      - Item: C_Pink_Fur_Hat
+      - Item: C_Gift_Of_Snow
+      - Item: C_Large_Ribbon_Muffler_Red
+      - Item: C_Imperial_Glory
+      - Item: C_Black_Shiba_Inu_Hat
+      - Item: C_Black_Glasses
+      - Item: C_Snow_Powder
+      - Item: C_Blue_Pajamas_Hat
+      - Item: C_Lady_Tanee_TW
+      - Item: C_Fairy_Feathers
+      - Item: C_Giant_White_Rabbit
+      - Item: C_Katashiro_Flying
+      - Item: C_Yellow_Hunting_Cap
+      - Item: C_Sakura_Coronet
+      - Item: C_Full_Bloom_Hairpin
+      - Item: Cons_Of_Earth
+      - Item: Costume_Master_Of_Wind
+      - Item: C_Cons_Of_Darkness
+      - Item: C_Boitata_Hat_J
+      - Item: C_Jioia_TW
+      - Item: C_Baldr_Wing_TW
+      - Item: C_Brabery_Hat
+      - Item: C_Carefree_Face
+      - Item: C_Stings_Silk_Ribbon
+      - Item: C_Adventure_Cat_Bag
+      - Item: C_Flower_Summer_Hat
+      - Item: C_Cherry_Ribbon
+      - Item: C_Feather_Stola
+      - Item: C_Samba_Carnival
+      - Item: C_Whale_Cap
+      - Item: C_Sailor_Collar_WH
+      - Item: C_Giant_Shark
+      - Item: C_Triple_Ice_Cream
+      - Item: C_Wrapping_Ribbon
+      - Item: C_Bear_Head
+      - Item: C_Kindergarten_Hat
+      - Item: C_Poulet_TW
+      - Item: C_Avenger
+      - Item: C_WitchManteau
+      - Item: C_Ladys_Feather_Hat
+      - Item: C_Gothic_Pumpkin_Head
+      - Item: C_Barrel_Helm
+      - Item: C_White_Cat_On_Shoulder
+      - Item: C_Black_Rabbit_Ears
+      - Item: C_G_DaeHyon_Sword_TW
+      - Item: C_Cat_Ears_Cape_Red
+      - Item: C_Tare_W_Doll
+      - Item: C_Goat_Hat
+      - Item: C_Put_On_Coat
+      - Item: C_Pink_Pajamas_Hat
+      - Item: C_L_RibbonMuff_Black
+      - Item: C_Black_Cat_Ears_Beret
+      - Item: C_Watery_Eyes
+  - Item: Fan_Upgrade_Kit
+    RewardGroup: FAN_UPGRADE_KIT
+    Requirements:
+      - Item: Sea_Otter_Mini_Fan
+  - Item: Suit_Upgrade_Kit
+    RewardGroup: SUIT_UPGRADE_KIT
+    Requirements:
+      - Item: Kafra_Uniform
+  - Item: Scroll_of_Fallen_Angel_Wings
+    RewardGroup: SCROLL_OF_FALLEN_ANGEL_WINGS
+    Requirements:
+      - Item: Fallen_Angel_Wings_
+      - Item: Fallen_Angel_Wing
+  - Item: Class_Shadow_Box_Weapon
+    RewardGroup: CLASS_SHADOW_BOX_WEAPON
+    MinimumRefine: 7
+    Requirements:
+      - Item: S_SuperNovice_Weapon
+      - Item: S_Gunslinger_Weapon
+      - Item: S_Taekwon_Weapon
+      - Item: S_Ninja_Weapon
+      - Item: S_DoramMagical_Weapon
+      - Item: S_DoramPhysical_Weapon
+      - Item: S_Runeknight_Weapon
+      - Item: S_Royalguard_Weapon
+      - Item: S_Mechanic_weapon
+      - Item: S_Genetic_Weapon
+      - Item: S_Archbishop_Weapon
+      - Item: S_Sura_weapon
+      - Item: S_Guillotine_Weapon
+      - Item: S_Shadowchaser_Weapon
+      - Item: S_Warlock_Weapon
+      - Item: S_Sorcerer_Weapon
+      - Item: S_Ranger_Weapon
+      - Item: S_Minstrel_Weapon
+      - Item: S_Wanderer_Weapon
+  - Item: Class_Shadow_Box_Armor
+    RewardGroup: CLASS_SHADOW_BOX_ARMOR
+    MinimumRefine: 7
+    Requirements:
+      - Item: S_Knight_Armor
+      - Item: S_Crusader_Armor
+      - Item: S_Blacksmith_Armor
+      - Item: S_Alchemist_Armor
+      - Item: S_Priest_Armor
+      - Item: S_Monk_Armor
+      - Item: S_Assassin_Armor
+      - Item: S_Rogue_Armor
+      - Item: S_Wizard_Armor
+      - Item: S_Sage_Armor
+      - Item: S_Hunter_Armor
+      - Item: S_Bard_Armor
+      - Item: S_Dancer_Armor
+      - Item: S_Rebellion_Armor
+      - Item: S_Kagerou_Armor
+      - Item: S_Oboro_Armor
+      - Item: S_DoramPhysical_Armor
+      - Item: S_DoramMagical_Armor
+      - Item: S_Star_Emperor_Armor
+      - Item: S_Soul_Reaper_Armor
+  - Item: Class_Shadow_Box_Shoes
+    RewardGroup: CLASS_SHADOW_BOX_SHOES
+    MinimumRefine: 7
+    Requirements:
+      - Item: S_Knight_Shoes
+      - Item: S_Crusader_Shoes
+      - Item: S_Blacksmith_Shoes
+      - Item: S_Alchemist_Shoes
+      - Item: S_Priest_Shoes
+      - Item: S_Monk_Shoes
+      - Item: S_Assassin_Shoes
+      - Item: S_Rogue_Shoes
+      - Item: S_Wizard_Shoes
+      - Item: S_Sage_Shoes
+      - Item: S_Hunter_Shoes
+      - Item: S_Bard_Shoes
+      - Item: S_Dancer_Shoes
+      - Item: S_Rebellion_Shoes
+      - Item: S_Kagerou_Shoes
+      - Item: S_Oboro_Shoes
+      - Item: S_DoramPhysical_Shoes
+      - Item: S_DoramMagical_Shoes
+      - Item: S_Star_Emperor_Shoes
+      - Item: S_Soul_Reaper_Shoes
+  - Item: Class_Shadow_Box_Shield
+    RewardGroup: CLASS_SHADOW_BOX_SHIELD
+    MinimumRefine: 7
+    Requirements:
+      - Item: S_Runeknight_Shield
+      - Item: S_Royalguard_Shield
+      - Item: S_Mechanic_Shield
+      - Item: S_Genetic_Shield
+      - Item: S_Archbishop_Shield
+      - Item: S_Sura_Shield
+      - Item: S_Guillotine_Shield
+      - Item: S_Shadowchaser_Shield
+      - Item: S_Warlock_Shield
+      - Item: S_Sorcerer_Shield
+      - Item: S_Ranger_Shield
+      - Item: S_Minstrel_Shield
+      - Item: S_Wanderer_Shield
+      - Item: S_Ninja_Shield
+      - Item: S_Taekwon_Shield
+      - Item: S_DoramPhysical_Shield
+      - Item: S_DoramMagical_Shield
+      - Item: S_SuperNovice_Shield
+      - Item: S_Gunslinger_Shield
+  - Item: Class_Shadow_Box_Pendant
+    RewardGroup: CLASS_SHADOW_BOX_PENDANT
+    MinimumRefine: 7
+    Requirements:
+      - Item: S_Swordman_Pendant
+      - Item: S_Merchant_Pendant
+      - Item: S_Acolyte_Pendant
+      - Item: S_Thief_Pendant
+      - Item: S_Magician_Pendant
+      - Item: S_Archer_Pendant
+  - Item: Class_Shadow_Box_Earring
+    RewardGroup: CLASS_SHADOW_BOX_EARRING
+    MinimumRefine: 7
+    Requirements:
+      - Item: S_Swordman_earring
+      - Item: S_Merchant_earring
+      - Item: S_Acolyte_earring
+      - Item: S_Magician_earring
+      - Item: S_Thief_earring
+      - Item: S_Archer_earring
+  - Item: StatusShadow_Mix
+    RewardGroup: STATUSSHADOW_MIX
+    RequiredRequirementsCount: 5
+    MinimumRefine: 7
+    Requirements:
+      - Item: S_Lucky_Weapon
+      - Item: S_Power_Earring
+      - Item: S_Int_Pendant
+      - Item: S_Dexterous_Armor
+      - Item: S_Vital_Shoes
+      - Item: S_Athletic_Shield
+      - Item: S_Lucky_Armor
+      - Item: S_Power_Pendant
+      - Item: S_Int_Earring
+      - Item: S_Dexterous_Weapon
+      - Item: S_Vital_Shield
+      - Item: S_Athletic_Shoes
+  - Item: GemstoneShadow_Mix
+    RewardGroup: GEMSTONESHADOW_MIX
+    RequiredRequirementsCount: 3
+    MinimumRefine: 7
+    Requirements:
+      - Item: S_Gemstone_Pendent
+      - Item: S_Gemstone_Armor
+      - Item: S_Gemstone_Shoes
+      - Item: S_Gemstone_Shield
+      - Item: S_Gemstone_Earring
+      - Item: S_Gemstone_Weapon
+  - Item: BearersShadow_Mix
+    RewardGroup: BEARERSSHADOW_MIX
+    RequiredRequirementsCount: 3
+    MinimumRefine: 7
+    Requirements:
+      - Item: S_Bearers_Shoes
+      - Item: S_Bearers_Armor
+      - Item: S_Bearers_Shield
+      - Item: S_Bearers_Earring
+      - Item: S_Bearers_Weapon
+      - Item: S_Bearers_Pendent
+  - Item: ComposeShadow_Mix
+    RewardGroup: COMPOSESHADOW_MIX
+    RequiredRequirementsCount: 4
+    MinimumRefine: 7
+    Requirements:
+      - Item: S_ColdBolt_Armor
+      - Item: S_FireBolt_Armor
+      - Item: S_LightingBolt_Armor
+      - Item: S_EarthSpike_Armor
+  - Item: RaceShadow_Mix
+    RewardGroup: RACESHADOW_MIX
+    RequiredRequirementsCount: 4
+    MinimumRefine: 7
+    Requirements:
+      - Item: S_Homers_Shield
+      - Item: S_Cadi_Shield
+      - Item: S_Requiem_Shield
+      - Item: S_Flameguard_Shield
+      - Item: S_Satanic_Shield
+      - Item: S_Dragoon_Shield
+      - Item: S_Gargantua_Shield
+      - Item: S_Brutal_Shield
+      - Item: S_Cranial_Shield
+      - Item: S_Divine_Shoes
+      - Item: S_Beholder_Shoes
+      - Item: S_Seraphim_Shoes
+      - Item: S_Fisher_Shoes
+      - Item: S_Insecticide_Shoes
+      - Item: S_Clamorous_Shoes
+      - Item: S_Chemical_Shoes
+      - Item: S_Bloody_Shoes
+      - Item: S_Dragoon_Shoes
+  - Item: Candy_Bag_Scroll_Melee
+    RewardGroup: CANDY_BAG_SCROLL_MELEE
+    Requirements:
+      - Item: Bag_Of_Antonio_P
+  - Item: Candy_BAG_Scroll_Range
+    RewardGroup: CANDY_BAG_SCROLL_RANGE
+    Requirements:
+      - Item: Bag_Of_Antonio_S
+  - Item: Candy_BAG_Scroll_Magic
+    RewardGroup: CANDY_BAG_SCROLL_MAGIC
+    Requirements:
+      - Item: Bag_Of_Antonio_
+  - Item: Booster_Amplifier
+    RewardGroup: BOOSTER_AMPLIFIER
+    Requirements:
+      - Item: Magical_Booster_K
+  - Item: Magical_Cat_Hand
+    RewardGroup: MAGICAL_CAT_HAND
+    Requirements:
+      - Item: Neko_Headress
+  - Item: StabilityShadow_Mix
+    RewardGroup: STABILITYSHADOW_MIX
+    RequiredRequirementsCount: 3
+    MinimumRefine: 5
+    Requirements:
+      - Item: S_Plasterer's_Armor
+      - Item: S_Plasterer's_Shoes
+      - Item: S_Insomniac_Armor
+      - Item: S_Insomniac_Shoes
+      - Item: S_Peerless_Armor
+      - Item: S_Peerless_Shoes
+      - Item: S_Adurate_Armor
+      - Item: S_Adurate_Shoes
+      - Item: Unfreez_Weapon_S
+      - Item: Unfreeze_Earing_S
+      - Item: Unfreeze_Pendent_S
+      - Item: Vitality_Earing_S
+      - Item: Vitality_Pendant_S
+      - Item: S_Neutral_Weapon
+      - Item: S_Neutral_Earring
+      - Item: S_Neutral_Pendent
+      - Item: S_Curse_Lift_Earring
+      - Item: S_Curse_Lift_Pendent
+  - Item: InfinityShadow_Mix
+    RewardGroup: INFINITYSHADOW_MIX
+    RequiredRequirementsCount: 2
+    MinimumRefine: 7
+    Requirements:
+      - Item: S_Infinity_Earring
+      - Item: S_Infinity_Pendant
+  - Item: Silver_Statue
+    RewardGroup: SILVER_STATUE
+    Requirements:
+      - Item: Bloody_Knight_Shield
+  - Item: PhysicalMagical_Mix
+    RewardGroup: PHYSICALMAGICAL_MIX
+    RequiredRequirementsCount: 3
+    MinimumRefine: 7
+    Requirements:
+      - Item: S_Physical_Weapon
+      - Item: S_Physical_Earring
+      - Item: S_Physical_Pendant
+      - Item: S_Magical_Weapon
+      - Item: S_Magical_Earring
+      - Item: S_Magical_Pendant
+  - Item: ImmunedAthena_Mix
+    RewardGroup: IMMUNEDATHENA_MIX
+    RequiredRequirementsCount: 2
+    MinimumRefine: 7
+    Requirements:
+      - Item: S_Immune_Armor
+      - Item: S_Athena_Shield
+      - Item: S_Athena_Earring
+  - Item: HardChamption_Mix
+    RewardGroup: HARDCHAMPTION_MIX
+    RequiredRequirementsCount: 2
+    MinimumRefine: 7
+    Requirements:
+      - Item: S_Hard_Armor
+      - Item: S_Hard_Earring
+      - Item: S_Champion_Shoes
+  - Item: KingbirdAncient_Mix
+    RewardGroup: KINGBIRDANCIENT_MIX
+    RequiredRequirementsCount: 2
+    MinimumRefine: 7
+    Requirements:
+      - Item: S_Kingbird_Weapon
+      - Item: S_Ancient_Armor
+  - Item: CriticalHit_Mix
+    RewardGroup: CRITICALHIT_MIX
+    RequiredRequirementsCount: 2
+    MinimumRefine: 7
+    Requirements:
+      - Item: S_Critical_Shoes
+      - Item: S_Critical_Shield
+      - Item: S_Cri_Hit_Weapon
+      - Item: S_Critical_Armor
+  - Item: Bs_Item_M_S_2
+    RewardGroup: BS_ITEM_M_S_2
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 10
+      - Item: Token_of_OrcGeneral
+        Amount: 150
+  - Item: Bs_Item_M_S_8
+    RewardGroup: BS_ITEM_M_S_8
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 10
+      - Item: Valhalla_Flower
+        Amount: 150
+  - Item: Bs_Item_M_S_10
+    RewardGroup: BS_ITEM_M_S_10
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 10
+      - Item: Broken_Crown
+        Amount: 150
+  - Item: Bs_Item_M_S_11
+    RewardGroup: BS_ITEM_M_S_11
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 10
+      - Item: Mother's_Nightmare
+        Amount: 150
+  - Item: Bs_Item_M_S_34
+    RewardGroup: BS_ITEM_M_S_34
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 10
+      - Item: Piece_Of_Bone_Armor
+        Amount: 150
+  - Item: Bs_Item_M_S_41
+    RewardGroup: BS_ITEM_M_S_41
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 10
+      - Item: Mother's_Nightmare
+        Amount: 150
+  - Item: Bs_Item_M_S_42
+    RewardGroup: BS_ITEM_M_S_42
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 10
+      - Item: Shine_Spear_Blade
+        Amount: 50
+  - Item: Bs_Item_M_S_43
+    RewardGroup: BS_ITEM_M_S_43
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 10
+      - Item: Osiris_Doll
+        Amount: 30
+  - Item: Bs_Item_M_S_44
+    RewardGroup: BS_ITEM_M_S_44
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 10
+      - Item: Fang_Of_Garm
+        Amount: 120
+  - Item: Bs_Sha_M_S_1
+    RewardGroup: BS_SHA_M_S_1
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 10
+      - Item: Pocket_Watch__
+        Amount: 50
+  - Item: Bs_Sha_M_S_17
+    RewardGroup: BS_SHA_M_S_17
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 10
+      - Item: Osiris_Doll
+        Amount: 10
+  - Item: Bs_Sha_M_S_18
+    RewardGroup: BS_SHA_M_S_18
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 10
+      - Item: Baphomet_Doll
+        Amount: 10
+  - Item: Bs_Sha_M_S_19
+    RewardGroup: BS_SHA_M_S_19
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 10
+      - Item: Shine_Spear_Blade
+        Amount: 50
+  - Item: Bs_Sha_M_S_20
+    RewardGroup: BS_SHA_M_S_20
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 10
+      - Item: Loki's_Whispers
+        Amount: 50
+  - Item: Bs_Item_M_S_4
+    RewardGroup: BS_ITEM_M_S_4
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 20
+      - Item: Baphomet_Doll
+        Amount: 30
+  - Item: Bs_Item_M_S_6
+    RewardGroup: BS_ITEM_M_S_6
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 20
+      - Item: Tiger_Footskin
+        Amount: 150
+  - Item: Bs_Item_M_S_7
+    RewardGroup: BS_ITEM_M_S_7
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 20
+      - Item: White_Snake_Tear
+        Amount: 150
+  - Item: Bs_Item_M_S_12
+    RewardGroup: BS_ITEM_M_S_12
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 20
+      - Item: Gemstone
+        Amount: 150
+  - Item: Bs_Item_M_S_13
+    RewardGroup: BS_ITEM_M_S_13
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 20
+      - Item: Young_Twig
+        Amount: 150
+  - Item: Bs_Item_M_S_15
+    RewardGroup: BS_ITEM_M_S_15
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 20
+      - Item: Taegeuk_Plate
+        Amount: 150
+  - Item: Bs_Item_M_S_28
+    RewardGroup: BS_ITEM_M_S_28
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 20
+      - Item: Ice_Scale
+        Amount: 150
+  - Item: Bs_Item_M_S_29
+    RewardGroup: BS_ITEM_M_S_29
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 20
+      - Item: Gemstone
+        Amount: 150
+  - Item: Bs_Item_M_S_31
+    RewardGroup: BS_ITEM_M_S_31
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 20
+      - Item: Dark_Red_Scale
+        Amount: 150
+  - Item: Bs_Item_M_S_32
+    RewardGroup: BS_ITEM_M_S_32
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 20
+      - Item: Mother's_Nightmare
+        Amount: 150
+  - Item: Bs_Item_M_S_33
+    RewardGroup: BS_ITEM_M_S_33
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 20
+      - Item: Broken_Crown
+        Amount: 150
+  - Item: Bs_Item_M_S_36
+    RewardGroup: BS_ITEM_M_S_36
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 20
+      - Item: Tiger_Footskin
+        Amount: 150
+  - Item: Bs_Item_M_S_37
+    RewardGroup: BS_ITEM_M_S_37
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 20
+      - Item: Loki's_Whispers
+        Amount: 150
+  - Item: Bs_Item_M_S_38
+    RewardGroup: BS_ITEM_M_S_38
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 20
+      - Item: Pocket_Watch__
+        Amount: 150
+  - Item: Bs_Item_M_S_39
+    RewardGroup: BS_ITEM_M_S_39
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 20
+      - Item: Tutankhamen's_Mask
+        Amount: 150
+  - Item: Bs_Item_M_S_40
+    RewardGroup: BS_ITEM_M_S_40
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 20
+      - Item: Broken_Pharaoh_Symbol
+        Amount: 150
+  - Item: Bs_Item_M_S_45
+    RewardGroup: BS_ITEM_M_S_45
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 20
+      - Item: Dark_Red_Scale
+        Amount: 150
+  - Item: Bs_Item_M_S_46
+    RewardGroup: BS_ITEM_M_S_46
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 20
+      - Item: Scale_Of_Red_Dragon
+        Amount: 150
+  - Item: Bs_Item_M_S_47
+    RewardGroup: BS_ITEM_M_S_47
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 20
+      - Item: Konts_Letter
+        Amount: 150
+  - Item: Bs_Item_M_S_48
+    RewardGroup: BS_ITEM_M_S_48
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 20
+      - Item: Osiris_Doll
+        Amount: 30
+  - Item: Bs_Item_M_S_49
+    RewardGroup: BS_ITEM_M_S_49
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 20
+      - Item: Token_of_OrcGeneral
+        Amount: 150
+  - Item: Bs_Item_M_S_50
+    RewardGroup: BS_ITEM_M_S_50
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 20
+      - Item: Young_Twig
+        Amount: 150
+  - Item: Bs_Sha_M_S_2
+    RewardGroup: BS_SHA_M_S_2
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 20
+      - Item: Scale_Of_Red_Dragon
+        Amount: 50
+  - Item: Bs_Sha_M_S_5
+    RewardGroup: BS_SHA_M_S_5
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 20
+      - Item: Queen_Wing_Piece
+        Amount: 50
+  - Item: Bs_Sha_M_S_6
+    RewardGroup: BS_SHA_M_S_6
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 20
+      - Item: Tiger_Footskin
+        Amount: 50
+  - Item: Bs_Sha_M_S_7
+    RewardGroup: BS_SHA_M_S_7
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 20
+      - Item: Boroken_Shiled_Piece
+        Amount: 50
+  - Item: Bs_Sha_M_S_8
+    RewardGroup: BS_SHA_M_S_8
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 20
+      - Item: Will_Of_Darkness_
+        Amount: 50
+  - Item: Bs_Sha_M_S_13
+    RewardGroup: BS_SHA_M_S_13
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 20
+      - Item: Voucher_Of_Orcish_Hero
+        Amount: 50
+  - Item: Bs_Sha_M_S_15
+    RewardGroup: BS_SHA_M_S_15
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 20
+      - Item: Token_of_OrcGeneral
+        Amount: 50
+  - Item: Bs_Sha_M_S_16
+    RewardGroup: BS_SHA_M_S_16
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 20
+      - Item: Mother's_Nightmare
+        Amount: 50
+  - Item: Bs_Sha_M_S_23
+    RewardGroup: BS_SHA_M_S_23
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 20
+      - Item: Broken_Horn
+        Amount: 50
+  - Item: Bs_Item_M_S_5
+    RewardGroup: BS_ITEM_M_S_5
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 25
+      - Item: Osiris_Doll
+        Amount: 30
+  - Item: Bs_Item_M_S_9
+    RewardGroup: BS_ITEM_M_S_9
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 25
+      - Item: Valhalla_Flower
+        Amount: 150
+  - Item: Bs_Item_M_S_14
+    RewardGroup: BS_ITEM_M_S_14
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 25
+      - Item: Dark_Red_Scale
+        Amount: 150
+  - Item: Bs_Item_M_S_16
+    RewardGroup: BS_ITEM_M_S_16
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 25
+      - Item: Will_Of_Darkness_
+        Amount: 150
+  - Item: Bs_Item_M_S_17
+    RewardGroup: BS_ITEM_M_S_17
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 25
+      - Item: Mother's_Nightmare
+        Amount: 150
+  - Item: Bs_Item_M_S_19
+    RewardGroup: BS_ITEM_M_S_19
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 25
+      - Item: Ice_Scale
+        Amount: 150
+  - Item: Bs_Item_M_S_27
+    RewardGroup: BS_ITEM_M_S_27
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 25
+      - Item: Broken_Crown
+        Amount: 150
+  - Item: Bs_Item_M_S_35
+    RewardGroup: BS_ITEM_M_S_35
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 25
+      - Item: Will_Of_Darkness_
+        Amount: 150
+  - Item: Bs_Sha_M_S_9
+    RewardGroup: BS_SHA_M_S_9
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 25
+      - Item: Young_Twig
+        Amount: 50
+  - Item: Bs_Sha_M_S_10
+    RewardGroup: BS_SHA_M_S_10
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 25
+      - Item: Tiger_Footskin
+        Amount: 50
+  - Item: Bs_Sha_M_S_11
+    RewardGroup: BS_SHA_M_S_11
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 25
+      - Item: Will_Of_Darkness_
+        Amount: 50
+  - Item: Bs_Sha_M_S_21
+    RewardGroup: BS_SHA_M_S_21
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 25
+      - Item: Shine_Spear_Blade
+        Amount: 10
+  - Item: Bs_Sha_M_S_22
+    RewardGroup: BS_SHA_M_S_22
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 25
+      - Item: Fang_Of_Garm
+        Amount: 50
+  - Item: Bs_Item_M_S_1
+    RewardGroup: BS_ITEM_M_S_1
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 30
+      - Item: Valhalla_Flower
+        Amount: 300
+  - Item: Bs_Item_M_S_3
+    RewardGroup: BS_ITEM_M_S_3
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 30
+      - Item: Broken_Crown
+        Amount: 150
+  - Item: Bs_Item_M_S_18
+    RewardGroup: BS_ITEM_M_S_18
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 30
+      - Item: Rojerta_Piece
+        Amount: 150
+  - Item: Bs_Item_M_S_20
+    RewardGroup: BS_ITEM_M_S_20
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 30
+      - Item: Loki's_Whispers
+        Amount: 200
+  - Item: Bs_Item_M_S_21
+    RewardGroup: BS_ITEM_M_S_21
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 30
+      - Item: Broken_Horn
+        Amount: 150
+  - Item: Bs_Item_M_S_22
+    RewardGroup: BS_ITEM_M_S_22
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 30
+      - Item: Taegeuk_Plate
+        Amount: 150
+  - Item: Bs_Item_M_S_23
+    RewardGroup: BS_ITEM_M_S_23
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 30
+      - Item: Fang_Of_Garm
+        Amount: 150
+  - Item: Bs_Item_M_S_24
+    RewardGroup: BS_ITEM_M_S_24
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 30
+      - Item: Gemstone
+        Amount: 150
+  - Item: Bs_Item_M_S_25
+    RewardGroup: BS_ITEM_M_S_25
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 30
+      - Item: Young_Twig
+        Amount: 150
+  - Item: Bs_Item_M_S_26
+    RewardGroup: BS_ITEM_M_S_26
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 30
+      - Item: Boroken_Shiled_Piece
+        Amount: 150
+  - Item: Bs_Item_M_S_30
+    RewardGroup: BS_ITEM_M_S_30
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 30
+      - Item: Shine_Spear_Blade
+        Amount: 50
+  - Item: Bs_Sha_M_S_3
+    RewardGroup: BS_SHA_M_S_3
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 30
+      - Item: Piece_Of_Bone_Armor
+        Amount: 50
+  - Item: Bs_Sha_M_S_4
+    RewardGroup: BS_SHA_M_S_4
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 30
+      - Item: Konts_Letter
+        Amount: 50
+  - Item: Bs_Sha_M_S_12
+    RewardGroup: BS_SHA_M_S_12
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 30
+      - Item: Taegeuk_Plate
+        Amount: 50
+  - Item: Bs_Sha_M_S_14
+    RewardGroup: BS_SHA_M_S_14
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 30
+      - Item: Loki's_Whispers
+        Amount: 50
+  - Item: Bs_Sha_M_S_24
+    RewardGroup: BS_SHA_M_S_24
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 25
+      - Item: Pocket_Watch__
+        Amount: 150
+  - Item: Bs_Sha_M_S_25
+    RewardGroup: BS_SHA_M_S_25
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 25
+      - Item: Gemstone
+        Amount: 150
+  - Item: Bs_Item_M_S_51
+    RewardGroup: BS_ITEM_M_S_51
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 20
+      - Item: Queen_Wing_Piece
+        Amount: 150
+  - Item: EnchantStone_Recipe_9m
+    RewardGroup: ENCHANTSTONE_RECIPE_9M
+    Requirements:
+      - Item: C_Chain_Puppet
+      - Item: C_Drooping_Argiope
+      - Item: C_Baby_Penguin
+      - Item: C_Sorcerer_Hood
+      - Item: C_Fluffy_Heart_Earmuffs
+      - Item: C_Luwmin_Ice
+      - Item: C_Ghost_Holiday
+      - Item: C_Blessing_Sky_Lantern
+      - Item: C_Astro_Circle
+      - Item: C_Elephangel_TH
+      - Item: C_Flying_Drone
+      - Item: C_Bouquet_Hat
+      - Item: C_Poring_Muffler
+      - Item: C_Happy_Rabbit_Ribbon
+      - Item: C_Sepia_Cap
+      - Item: C_Heaven_Cage
+      - Item: C_Buddhist_Priest_Crown
+      - Item: C_White_Rabbit_Ear
+      - Item: C_Autumn_Headband
+      - Item: C_Rabbit_Hopping
+  - Item: IDTest_Special
+    RewardGroup: IDTEST_SPECIAL
+    RequiredRequirementsCount: 3
+    Requirements:
+      - Item: Jellopy
+      - Item: Fluff
+      - Item: Shell
+  - Item: PerfectSize_Mix
+    RewardGroup: PERFECTSIZE_MIX
+    RequiredRequirementsCount: 3
+    MinimumRefine: 7
+    Requirements:
+      - Item: S_Big_Weapon
+      - Item: S_Medium_Weapon
+      - Item: S_Small_Weapon
+      - Item: S_Big_Armor
+      - Item: S_Medium_Armor
+      - Item: S_Small_Armor
+  - Item: MagicPiercing_Mix
+    RewardGroup: MAGICPIERCING_MIX
+    RequiredRequirementsCount: 2
+    MinimumRefine: 7
+    Requirements:
+      - Item: S_M_Executioner_Weapon
+      - Item: S_M_Exorcist_Weapon
+      - Item: S_M_Hunting_Weapon
+      - Item: S_M_Insect_Net_Weapon
+      - Item: S_M_Fishing_Weapon
+      - Item: S_M_Dragon_K_Weapon
+      - Item: S_M_Corrupt_Weapon
+      - Item: S_M_Vibration_Weapon
+      - Item: S_M_Holy_Water_Weapon
+      - Item: S_M_Scissors_Weapon
+  - Item: Piercing_Mix
+    RewardGroup: PIERCING_MIX
+    RequiredRequirementsCount: 2
+    MinimumRefine: 7
+    Requirements:
+      - Item: S_Executioner_Weapon
+      - Item: S_Exorcist_Weapon
+      - Item: S_Hunting_Weapon
+      - Item: S_Insect_Net_Weapon
+      - Item: S_Fishing_Weapon
+      - Item: S_Dragon_Killer_Weapon
+      - Item: S_Corrupt_Weapon
+      - Item: S_Vibration_Weapon
+      - Item: S_Holy_Water_Weapon
+      - Item: S_Scissors_Weapon
+  - Item: Hasty_Mix
+    RewardGroup: HASTY_MIX
+    RequiredRequirementsCount: 2
+    MinimumRefine: 7
+    Requirements:
+      - Item: S_Hasty_Shoes_II
+      - Item: S_Hasty_Armor
+      - Item: S_Hasty_Shoes
+  - Item: EnchantStone_Recipe_4m
+    RewardGroup: ENCHANTSTONE_RECIPE_4M
+    Requirements:
+      - Item: C_White_Rabbit_Ear
+      - Item: C_Autumn_Headband
+      - Item: C_Rabbit_Hopping
+      - Item: C_Halloween_Hat_Orange
+      - Item: C_Vampire_Hairband
+      - Item: C_Black_Witch_Hat
+      - Item: C_Diabolic_Headphone
+      - Item: C_Poporing_Muffler
+      - Item: C_Princess_Ribbon_Crown
+      - Item: C_LunaticMuffler
+      - Item: C_Snow_Rabbit_Knit_Hat
+      - Item: C_Snow_Bear_Food
+      - Item: C_CatCoffeeCup_TW
+      - Item: C_Cat_Ears_Punkish
+      - Item: C_HeartOfCat_TW
+      - Item: C_Twin_Margaret
+      - Item: C_Black_Rabbit_Bonnet
+      - Item: C_Kishu_Inu
+      - Item: C_Panda_Rabbit
+      - Item: C_Fox
+      - Item: C_Full_BloomCherry_Tree
+#  - Item: Skill_Sha_M_S_Weapon
+#    RewardGroup: SKILL_SHA_M_S_WEAPON
+#    RequiredRequirementsCount: 2
+#    Requirements:
+#      - Item: Zelunium
+#        Amount: 50
+#      - Item: Shadowdecon
+#        Amount: 50
+#  - Item: Skill_Sha_M_S_Shield
+#    RewardGroup: SKILL_SHA_M_S_SHIELD
+#    RequiredRequirementsCount: 2
+#    Requirements:
+#      - Item: Zelunium
+#        Amount: 50
+#      - Item: Shadowdecon
+#        Amount: 50
+#  - Item: Skill_Sha_M_S_Pendant
+#    RewardGroup: SKILL_SHA_M_S_PENDANT
+#    Requirements:
+#      - Item: Shadowdecon
+#        Amount: 50
+#  - Item: Skill_Sha_M_S_Earing
+#    RewardGroup: SKILL_SHA_M_S_EARING
+#    Requirements:
+#      - Item: Shadowdecon
+#        Amount: 50
+#  - Item: Skill_Sha_M_S_Shoes
+#    RewardGroup: SKILL_SHA_M_S_SHOES
+#    Requirements:
+#      - Item: Zelunium
+#        Amount: 50
+#  - Item: Skill_Sha_M_S_Armor
+#    RewardGroup: SKILL_SHA_M_S_ARMOR
+#    Requirements:
+#      - Item: Zelunium
+#        Amount: 50
+  - Item: Remodel_Hero_Boots
+    RewardGroup: REMODEL_HERO_BOOTS
+    MinimumRefine: 9
+    Requirements:
+      - Item: Ancient_Hero_Boots
+  - Item: Oriental_Sword_Cube
+    RewardGroup: ORIENTAL_SWORD_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Oriental_Sword
+  - Item: Dragonic_Slayer_Cube
+    RewardGroup: DRAGONIC_SLAYER_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Dragonic_Slayer
+  - Item: Shiver_Katar_K_Cube
+    RewardGroup: SHIVER_KATAR_K_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Katar_of_Shiver
+  - Item: Blade_Katar_Cube
+    RewardGroup: BLADE_KATAR_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Blade_Katar
+  - Item: Sword_Of_Bluefire_Cube
+    RewardGroup: SWORD_OF_BLUEFIRE_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Sword_Of_Bluefire
+  - Item: Slate_Sword_Cube
+    RewardGroup: SLATE_SWORD_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Slate_Sword
+  - Item: Narcis_Bow_Cube
+    RewardGroup: NARCIS_BOW_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Narcis_Bow
+  - Item: Trumpet_Shell_K_Cube
+    RewardGroup: TRUMPET_SHELL_K_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Trumpet_Shell_K
+  - Item: Barb_Wire_K_Cube
+    RewardGroup: BARB_WIRE_K_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Barb_Wire_K
+  - Item: Avenger_Cube
+    RewardGroup: AVENGER_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Avenger
+  - Item: Meteor_Striker_Cube
+    RewardGroup: METEOR_STRIKER_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Meteor_Striker
+  - Item: Magic_Sword_Cube
+    RewardGroup: MAGIC_SWORD_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Magic_Sword
+  - Item: Fatalist_Cube
+    RewardGroup: FATALIST_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Fatalist
+  - Item: Royal_Bow_K_Cube
+    RewardGroup: ROYAL_BOW_K_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Royal_Bow_K
+  - Item: Scalet_Dragon_L_Cube
+    RewardGroup: SCALET_DRAGON_L_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Scalet_Dragon_L_Bow
+  - Item: Shadow_Staff_K_Cube
+    RewardGroup: SHADOW_STAFF_K_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Shadow_Staff_K
+  - Item: Freezing_Rod_Cube
+    RewardGroup: FREEZING_ROD_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Freezing_Rod
+#  - Item: 3Lv_9Refine_Weapon_7Gu
+#    RewardGroup: 3LV_9REFINE_WEAPON_7GU
+#    MinimumRefine: 9
+#    MaximumRefine: 9
+#    Requirements:
+#      - Item: Scarlet_Knuckle
+#      - Item: Scarlet_Dagger
+#      - Item: Scarlet_Lance
+#      - Item: Scarlet_Rod
+#      - Item: Scarlet_Revolver
+#      - Item: Scarlet_Mace
+#      - Item: Scarlet_Bible
+#      - Item: Scarlet_Viollin
+#      - Item: Scarlet_Bow
+#      - Item: Scarlet_Saber
+#      - Item: Scarlet_Staff
+#      - Item: Scarlet_Spear
+#      - Item: Scarlet_Wire
+#      - Item: Scarlet_Katar
+#      - Item: Scarlet_Twohand_Sword
+#      - Item: Scarlet_Twohand_Axe
+#      - Item: Scarlet_Huuma
+#  - Item: 3Lv_10Refine_Weapon_8Gu
+#    RewardGroup: 3LV_10REFINE_WEAPON_8GU
+#    MinimumRefine: 10
+#    MaximumRefine: 10
+#    Requirements:
+#      - Item: Scarlet_Knuckle
+#      - Item: Scarlet_Dagger
+#      - Item: Scarlet_Lance
+#      - Item: Scarlet_Rod
+#      - Item: Scarlet_Revolver
+#      - Item: Scarlet_Mace
+#      - Item: Scarlet_Bible
+#      - Item: Scarlet_Viollin
+#      - Item: Scarlet_Bow
+#      - Item: Scarlet_Saber
+#      - Item: Scarlet_Staff
+#      - Item: Scarlet_Spear
+#      - Item: Scarlet_Wire
+#      - Item: Scarlet_Katar
+#      - Item: Scarlet_Twohand_Sword
+#      - Item: Scarlet_Twohand_Axe
+#      - Item: Scarlet_Huuma
+#  - Item: 3Lv_11Refine_Weapon_9Gu
+#    RewardGroup: 3LV_11REFINE_WEAPON_9GU
+#    MinimumRefine: 11
+#    MaximumRefine: 11
+#    Requirements:
+#      - Item: Scarlet_Knuckle
+#      - Item: Scarlet_Dagger
+#      - Item: Scarlet_Lance
+#      - Item: Scarlet_Rod
+#      - Item: Scarlet_Revolver
+#      - Item: Scarlet_Mace
+#      - Item: Scarlet_Bible
+#      - Item: Scarlet_Viollin
+#      - Item: Scarlet_Bow
+#      - Item: Scarlet_Saber
+#      - Item: Scarlet_Staff
+#      - Item: Scarlet_Spear
+#      - Item: Scarlet_Wire
+#      - Item: Scarlet_Katar
+#      - Item: Scarlet_Twohand_Sword
+#      - Item: Scarlet_Twohand_Axe
+#      - Item: Scarlet_Huuma
+#  - Item: 3Lv_12Refine_Weapon_10G
+#    RewardGroup: 3LV_12REFINE_WEAPON_10G
+#    MinimumRefine: 12
+#    MaximumRefine: 12
+#    Requirements:
+#      - Item: Scarlet_Knuckle
+#      - Item: Scarlet_Dagger
+#      - Item: Scarlet_Lance
+#      - Item: Scarlet_Rod
+#      - Item: Scarlet_Revolver
+#      - Item: Scarlet_Mace
+#      - Item: Scarlet_Bible
+#      - Item: Scarlet_Viollin
+#      - Item: Scarlet_Bow
+#      - Item: Scarlet_Saber
+#      - Item: Scarlet_Staff
+#      - Item: Scarlet_Spear
+#      - Item: Scarlet_Wire
+#      - Item: Scarlet_Katar
+#      - Item: Scarlet_Twohand_Sword
+#      - Item: Scarlet_Twohand_Axe
+#      - Item: Scarlet_Huuma
+#  - Item: 4Lv_9Refine_Weapon_8Gu
+#    RewardGroup: 4LV_9REFINE_WEAPON_8GU
+#    MinimumRefine: 9
+#    MaximumRefine: 9
+#    Requirements:
+#      - Item: Thanos_Sword
+#      - Item: Thanos_Knuckle
+#      - Item: Thanos_Dagger
+#      - Item: Thanos_Great_Sword
+#      - Item: Thanos_Axe
+#      - Item: Thanos_Hammer
+#      - Item: Thanos_Violin
+#      - Item: Thanos_Rod
+#      - Item: Thanos_Long_Spear
+#      - Item: Thanos_Whip
+#      - Item: Thanos_Staff
+#      - Item: Thanos_Spear
+#      - Item: Thanos_Katar
+#      - Item: Thanos_Bow
+#      - Item: Sinister_Dagger
+#      - Item: Sinister_Lance
+#      - Item: Sinister_Rod
+#      - Item: Sinister_Revolver
+#      - Item: Sinister_Mace
+#      - Item: Sinister_Viollin
+#      - Item: Sinister_Bow
+#      - Item: Sinister_Book
+#      - Item: Sinister_Saber
+#      - Item: Sinister_Staff
+#      - Item: Sinister_Spear
+#      - Item: Sinister_Wire
+#      - Item: Sinister_Katar
+#      - Item: Sinister_Twohand_Sword
+#      - Item: Sinister_Twohand_Axe
+#      - Item: Sinister_Huuma
+#      - Item: Sinister_Fist
+#  - Item: 4Lv_10Refine_Weapon_9Gu
+#    RewardGroup: 4LV_10REFINE_WEAPON_9GU
+#    MinimumRefine: 10
+#    MaximumRefine: 10
+#    Requirements:
+#      - Item: Thanos_Sword
+#      - Item: Thanos_Knuckle
+#      - Item: Thanos_Dagger
+#      - Item: Thanos_Great_Sword
+#      - Item: Thanos_Axe
+#      - Item: Thanos_Hammer
+#      - Item: Thanos_Violin
+#      - Item: Thanos_Rod
+#      - Item: Thanos_Long_Spear
+#      - Item: Thanos_Whip
+#      - Item: Thanos_Staff
+#      - Item: Thanos_Spear
+#      - Item: Thanos_Katar
+#      - Item: Thanos_Bow
+#      - Item: Sinister_Dagger
+#      - Item: Sinister_Lance
+#      - Item: Sinister_Rod
+#      - Item: Sinister_Revolver
+#      - Item: Sinister_Mace
+#      - Item: Sinister_Viollin
+#      - Item: Sinister_Bow
+#      - Item: Sinister_Book
+#      - Item: Sinister_Saber
+#      - Item: Sinister_Staff
+#      - Item: Sinister_Spear
+#      - Item: Sinister_Wire
+#      - Item: Sinister_Katar
+#      - Item: Sinister_Twohand_Sword
+#      - Item: Sinister_Twohand_Axe
+#      - Item: Sinister_Huuma
+#      - Item: Sinister_Fist
+#  - Item: 4Lv_11Refine_Weapon_10G
+#    RewardGroup: 4LV_11REFINE_WEAPON_10G
+#    MinimumRefine: 11
+#    MaximumRefine: 11
+#    Requirements:
+#      - Item: Thanos_Sword
+#      - Item: Thanos_Knuckle
+#      - Item: Thanos_Dagger
+#      - Item: Thanos_Great_Sword
+#      - Item: Thanos_Axe
+#      - Item: Thanos_Hammer
+#      - Item: Thanos_Violin
+#      - Item: Thanos_Rod
+#      - Item: Thanos_Long_Spear
+#      - Item: Thanos_Whip
+#      - Item: Thanos_Staff
+#      - Item: Thanos_Spear
+#      - Item: Thanos_Katar
+#      - Item: Thanos_Bow
+#      - Item: Sinister_Dagger
+#      - Item: Sinister_Lance
+#      - Item: Sinister_Rod
+#      - Item: Sinister_Revolver
+#      - Item: Sinister_Mace
+#      - Item: Sinister_Viollin
+#      - Item: Sinister_Bow
+#      - Item: Sinister_Book
+#      - Item: Sinister_Saber
+#      - Item: Sinister_Staff
+#      - Item: Sinister_Spear
+#      - Item: Sinister_Wire
+#      - Item: Sinister_Katar
+#      - Item: Sinister_Twohand_Sword
+#      - Item: Sinister_Twohand_Axe
+#      - Item: Sinister_Huuma
+#      - Item: Sinister_Fist
+  - Item: Iron_Nail_K_Cube
+    RewardGroup: IRON_NAIL_K_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Iron_Nail_K
+  - Item: Ray_Knuckle_Cube
+    RewardGroup: RAY_KNUCKLE_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Ray_Knuckle
+  - Item: Undine_Spear_K_Cube
+    RewardGroup: UNDINE_SPEAR_K_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Undine_Spear_K
+  - Item: Light_Blade_Cube
+    RewardGroup: LIGHT_BLADE_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Light_Blade
+  - Item: Iron_Staff_Cube
+    RewardGroup: IRON_STAFF_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Aeon_Staff
+  - Item: Blue_Crystal_Staff_Cube
+    RewardGroup: BLUE_CRYSTAL_STAFF_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Blue_Crystal_Staff
+  - Item: Demon_Hunt_Bible_Cube
+    RewardGroup: DEMON_HUNT_BIBLE_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Exoricists_Bible_
+  - Item: Saint_Hall_Cube
+    RewardGroup: SAINT_HALL_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Saint_Hall
+  - Item: MeawFoxtail_Cube
+    RewardGroup: MEAWFOXTAIL_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: MeawFoxtail
+  - Item: Fog_Dew_Sword_Cube
+    RewardGroup: FOG_DEW_SWORD_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Fog_Dew_Sword
+  - Item: Humma_Clear_Cube
+    RewardGroup: HUMMA_CLEAR_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Humma_Clear
+  - Item: Thousand_Sun_Cube
+    RewardGroup: THOUSAND_SUN_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: OneSkyOneSun
+  - Item: Spirit_Pendulum_Cube
+    RewardGroup: SPIRIT_PENDULUM_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: SoulWeight
+  - Item: Crimson_Rose_Cube
+    RewardGroup: CRIMSON_ROSE_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Crimson_Rose
+  - Item: Master_Soul_Rifle_Cube
+    RewardGroup: MASTER_SOUL_RIFLE_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Master_Soul_Rifle
+  - Item: Golden_Lord_Launcher_Cube
+    RewardGroup: GOLDEN_LORD_LAUNCHER_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Golden_L_Launcher
+  - Item: The_Black_Cube
+    RewardGroup: THE_BLACK_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: The_Black_Gatling
+  - Item: Demon_Slayer_Shot_Cube
+    RewardGroup: DEMON_SLAYER_SHOT_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Demon_S_Shot
+#  - Item: EnchantStone_Recipe_3m
+#    RewardGroup: ENCHANTSTONE_RECIPE_3M
+#    Requirements:
+#      - Item: C_Pretty_Bear_WH
+#      - Item: Costume_Yawata_Seal
+#      - Item: C_Floating_Ball_TW
+#      - Item: C_Dark_Snake_Lord_Stall
+#      - Item: C_Bicolor_Cat_Witch_Hat
+#      - Item: Costume_Twin_Cannon
+#      - Item: C_Picnic_Basket
+#      - Item: C_Magic_Helm
+#      - Item: C_Fawn_Ear
+#      - Item: C_Happy_Cat_TW
+#      - Item: C_Royalguard_Necklace
+#      - Item: C_Sky_of_Memory
+#      - Item: C_Under_Rim_Glasses_Blue
+#      - Item: C_Monochrome_Cap
+#      - Item: C_Pocketwatch_Hair_Ornament
+#      - Item: C_Poring_Traffic_Light
+#      - Item: C_PGstone_Knit_Hat_PK
+#      - Item: C_Frill_Collar
+#      - Item: C_Rose_Gothic_Bonnet
+#      - Item: C_LittleGarden
+#      - Item: Costume_Twinkling_Red_Eyes
+#  - Item: Egirnion_Box
+#    RewardGroup: EGIRNION_BOX
+#    Requirements:
+#      - Item: Aegir_Helm
+#      - Item: Egir_Armor_K
+#      - Item: Egir_Shoes_K
+#      - Item: Egir_Manteau_K
+  - Item: FullPeneShadow_Mix
+    RewardGroup: FULLPENESHADOW_MIX
+    RequiredRequirementsCount: 10
+    MinimumRefine: 7
+    MaximumRefine: 10
+    Requirements:
+      - Item: S_Penetration_Shoes
+      - Item: S_Penetration_Shield
+      - Item: S_Executioner_Holy_Water_Armor
+      - Item: S_Exorcist_Corrupted_Armor
+      - Item: S_Vibration_Dragon_Killer_Armor
+      - Item: S_Scissor_Hunting_Armor
+      - Item: S_Fishing_Insect_Net_Armor
+      - Item: S_Penetration_Earring
+      - Item: S_Penetration_Pendent
+      - Item: S_Executioner_Weapon
+      - Item: S_Exorcist_Weapon
+      - Item: S_Hunting_Weapon
+      - Item: S_Insect_Net_Weapon
+      - Item: S_Fishing_Weapon
+      - Item: S_Dragon_Killer_Weapon
+      - Item: S_Corrupt_Weapon
+      - Item: S_Vibration_Weapon
+      - Item: S_Holy_Water_Weapon
+      - Item: S_Scissors_Weapon
+      - Item: S_Force_Executioner_Weapon
+      - Item: S_Penetration_Weapon
+      - Item: S_Penetration_Armor
+      - Item: S_Exe_Ho_Weapon
+      - Item: S_Fis_In_Weapon
+      - Item: S_Sci_Hu_Weapon
+      - Item: S_Viv_Dr_Weapon
+      - Item: S_Exo_Co_Weapon
+#  - Item: PendantStoneForWork
+#    RewardGroup: PENDANTSTONEFORWORK
+#    Requirements:
+#      - Item: Thanatos_Pendant
+  - Item: FullTempShadow_Mix
+    RewardGroup: FULLTEMPSHADOW_MIX
+    RequiredRequirementsCount: 10
+    MinimumRefine: 7
+    MaximumRefine: 10
+    Requirements:
+      - Item: S_Tempest_Shoes
+      - Item: S_Tempest_Shield
+      - Item: S_Magic_Executioner_Holy_Water_Armor
+      - Item: S_Magic_Exorcist_Corrupted_Armor
+      - Item: S_Magic_Vibration_Dragon_Killer_Armor
+      - Item: S_Magic_Scissor_Hunting_Armor
+      - Item: S_Magic_Fishing_Insect_Net_Armor
+      - Item: S_Tempest_Earring
+      - Item: S_Tempest_Pendent
+      - Item: S_M_Executioner_Weapon
+      - Item: S_M_Exorcist_Weapon
+      - Item: S_M_Hunting_Weapon
+      - Item: S_M_Insect_Net_Weapon
+      - Item: S_M_Fishing_Weapon
+      - Item: S_M_Dragon_K_Weapon
+      - Item: S_M_Corrupt_Weapon
+      - Item: S_M_Vibration_Weapon
+      - Item: S_M_Holy_Water_Weapon
+      - Item: S_M_Scissors_Weapon
+      - Item: S_Spirit_Magic_Executioner_Weapon
+      - Item: S_Tempest_Weapon
+      - Item: S_Tempest_Armor
+      - Item: S_M_Exe_Ho_Weapon
+      - Item: S_M_Fis_In_Weapon
+      - Item: S_M_Sci_Hu_Weapon
+      - Item: S_M_Viv_Dr_Weapon
+      - Item: S_M_Exo_Co_Weapon
+#  - Item: Shadow_Mix_Recipe2
+#    RewardGroup: SHADOW_MIX_RECIPE2
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: S_Physical_Earring
+#      - Item: S_Physical_Weapon
+#      - Item: S_Physical_Pendant
+#      - Item: S_Magical_Earring
+#      - Item: S_Magical_Weapon
+#      - Item: S_Magical_Pendant
+#      - Item: S_Breezy_Armor
+#      - Item: S_Champion_Shoes
+#      - Item: S_Athena_Shield
+#      - Item: S_Immune_Armor
+#      - Item: S_Hard_Armor
+#      - Item: S_Ancient_Armor
+#      - Item: S_Critical_Armor
+#      - Item: S_Kingbird_Weapon
+#      - Item: S_Cri_Hit_Weapon
+#      - Item: S_Healing_Weapon
+#      - Item: S_Lucky_Weapon
+#      - Item: S_Power_Earring
+#      - Item: S_Int_Pendant
+#      - Item: S_Dexterous_Armor
+#      - Item: S_Vital_Shoes
+#      - Item: S_Athletic_Shield
+#      - Item: S_Lucky_Armor
+#      - Item: S_Power_Pendant
+#      - Item: S_Int_Earring
+#      - Item: S_Dexterous_Weapon
+#      - Item: S_Vital_Shield
+#      - Item: S_Athletic_Shoes
+#      - Item: S_Resist_Spell_Pendant
+#      - Item: S_Rapid_Pendant
+#      - Item: S_Caster_Pendant
+#      - Item: S_Hard_Earring
+#      - Item: S_Wise_Earring
+#      - Item: S_Athena_Earring
+#      - Item: S_Cranial_Shield
+#      - Item: S_Safeguard_Shield
+#      - Item: S_Brutal_Shield
+#      - Item: S_Gargantua_Shield
+#      - Item: S_Homers_Shield
+#      - Item: S_Dragoon_Shield
+#      - Item: S_Satanic_Shield
+#      - Item: S_Flameguard_Shield
+#      - Item: S_Requiem_Shield
+#      - Item: S_Cadi_Shield
+#      - Item: S_Bloody_Shoes
+#      - Item: S_Liberation_Shoes
+#      - Item: S_Chemical_Shoes
+#      - Item: S_Clamorous_Shoes
+#      - Item: S_Insecticide_Shoes
+#      - Item: S_Fisher_Shoes
+#      - Item: S_Seraphim_Shoes
+#      - Item: S_Beholder_Shoes
+#      - Item: S_Divine_Shoes
+#      - Item: S_Dragoon_Shoes
+#      - Item: S_Big_Armor
+#      - Item: S_Medium_Armor
+#      - Item: S_Small_Armor
+#      - Item: S_Big_Weapon
+#      - Item: S_Medium_Weapon
+#      - Item: S_Small_Weapon
+#      - Item: S_Spiritual_Weapon
+#      - Item: S_Spiritual_Earring
+#      - Item: S_Spiritual_Pendent
+#      - Item: S_Malicious_Armor
+#      - Item: S_Malicious_Shoes
+#      - Item: S_Malicious_Shield
+#      - Item: S_Gemstone_Armor
+#      - Item: S_Gemstone_Shoes
+#      - Item: S_Gemstone_Shield
+#      - Item: S_Gemstone_Weapon
+#      - Item: S_Gemstone_Earring
+#      - Item: S_Gemstone_Pendent
+#      - Item: S_Stability_Shield
+#      - Item: S_Plasterer's_Armor
+#      - Item: S_Plasterer's_Shoes
+#      - Item: S_Insomniac_Armor
+#      - Item: S_Insomniac_Shoes
+#      - Item: S_Peerless_Armor
+#      - Item: S_Peerless_Shoes
+#      - Item: S_Adurate_Armor
+#      - Item: S_Adurate_Shoes
+#      - Item: Unfreez_Weapon_S
+#      - Item: Unfreeze_Earing_S
+#      - Item: Unfreeze_Pendent_S
+#      - Item: Vitality_Earing_S
+#      - Item: Vitality_Pendant_S
+#      - Item: S_Neutral_Weapon
+#      - Item: S_Neutral_Earring
+#      - Item: S_Neutral_Pendent
+#      - Item: S_Curse_Lift_Earring
+#      - Item: S_Curse_Lift_Pendent
+#      - Item: S_Caster_earring
+#      - Item: S_Caster_Weapon
+#      - Item: S_Spell_Flow_Shoes
+#      - Item: S_Spell_Flow_Armor
+#      - Item: S_Spell_Flow_Shield
+#      - Item: S_Greed_Armor
+#      - Item: S_Greed_Shoes
+#      - Item: S_Greed_Shield
+#      - Item: S_Greed_Weapon
+#      - Item: S_Greed_Earring
+#      - Item: S_Greed_Pendant
+#      - Item: S_Heal_Armor
+#      - Item: S_Heal_Shoes
+#      - Item: S_Heal_Shield
+#      - Item: S_Heal_Weapon
+#      - Item: S_Heal_Earring
+#      - Item: S_Heal_Pendant
+#      - Item: S_Hiding_Armor
+#      - Item: S_Hiding_Shoes
+#      - Item: S_Hiding_Shield
+#      - Item: S_Hiding_Weapon
+#      - Item: S_Hiding_Earring
+#      - Item: S_Hiding_Pendant
+#      - Item: S_Cloaking_Armor
+#      - Item: S_Cloaking_Shoes
+#      - Item: S_Cloaking_Shield
+#      - Item: S_Cloaking_Weapon
+#      - Item: S_Cloaking_Earring
+#      - Item: S_Cloaking_Pendant
+#      - Item: S_Teleport_Armor
+#      - Item: S_Teleport_Shoes
+#      - Item: S_Teleport_Shield
+#      - Item: S_Teleport_Weapon
+#      - Item: S_Teleport_Earring
+#      - Item: S_Teleport_Pendant
+#      - Item: S_Steal_Armor
+#      - Item: S_Steal_Shoes
+#      - Item: S_Steal_Shield
+#      - Item: S_Steal_Weapon
+#      - Item: S_Steal_Earring
+#      - Item: S_Steal_Pendant
+#      - Item: S_Infinity_Earring
+#      - Item: S_Infinity_Pendant
+#      - Item: S_Solid_Weapon
+#      - Item: S_Solid_Earring
+#      - Item: S_Immortal_Armor
+#      - Item: S_Immortal_Pendant
+#      - Item: S_Executioner_Weapon
+#      - Item: S_Exorcist_Weapon
+#      - Item: S_Hunting_Weapon
+#      - Item: S_Insect_Net_Weapon
+#      - Item: S_Fishing_Weapon
+#      - Item: S_Dragon_Killer_Weapon
+#      - Item: S_Corrupt_Weapon
+#      - Item: S_Vibration_Weapon
+#      - Item: S_Holy_Water_Weapon
+#      - Item: S_Scissors_Weapon
+#      - Item: S_Penetration_Earring
+#      - Item: S_Penetration_Pendent
+#      - Item: S_Tempest_Earring
+#      - Item: S_Tempest_Pendent
+#      - Item: S_M_Executioner_Weapon
+#      - Item: S_M_Exorcist_Weapon
+#      - Item: S_M_Hunting_Weapon
+#      - Item: S_M_Insect_Net_Weapon
+#      - Item: S_M_Fishing_Weapon
+#      - Item: S_M_Dragon_K_Weapon
+#      - Item: S_M_Corrupt_Weapon
+#      - Item: S_M_Vibration_Weapon
+#      - Item: S_M_Holy_Water_Weapon
+#      - Item: S_M_Scissors_Weapon
+#      - Item: S_Bearers_Armor
+#      - Item: S_Bearers_Shoes
+#      - Item: S_Bearers_Shield
+#      - Item: S_Bearers_Weapon
+#      - Item: S_Bearers_Earring
+#      - Item: S_Bearers_Pendent
+#      - Item: S_Basis_Armor
+#      - Item: S_Hallowed_Armor
+#      - Item: S_Saharic_Armor
+#      - Item: S_Underneath_Armor
+#      - Item: S_Flam_Armor
+#      - Item: S_Windy_Armor
+#      - Item: S_Envenom_Armor
+#      - Item: S_Damned_Armor
+#      - Item: S_Geist_Armor
+#      - Item: S_Divine_Armor
+#      - Item: S_Hasty_Shoes
+#      - Item: S_Hasty_Armor
+#      - Item: S_Basis_Shield
+#      - Item: S_Hallowed_Shield
+#      - Item: S_Saharic_Shield
+#      - Item: S_Underneath_Shield
+#      - Item: S_Flam_Shield
+#      - Item: S_Windy_Shield
+#      - Item: S_Envenom_Shield
+#      - Item: S_Damned_Shield
+#      - Item: S_Geist_Shield
+#      - Item: S_Divine_Shield
+#      - Item: S_Expert_Shoes
+#      - Item: S_Expert_Shield
+#      - Item: S_Beginner_Shoes
+#      - Item: S_Beginner_Shield
+#      - Item: S_Rookie_Shoes
+#      - Item: S_Rookie_Shield
+#      - Item: S_Advanced_Shoes
+#      - Item: S_Advanced_Shield
+#      - Item: S_Attack_Armor
+#      - Item: S_Blitz_Earring
+#      - Item: S_Blitz_Pendent
+#      - Item: S_ColdBolt_Armor
+#      - Item: S_FireBolt_Armor
+#      - Item: S_LightingBolt_Armor
+#      - Item: S_EarthSpike_Armor
+#      - Item: S_Enhance_Force_Weapon
+#      - Item: S_Force_Weapon
+#      - Item: S_Force_Earring
+#      - Item: S_Force_Pendant
+#      - Item: S_Enhance_Spirit_Weapon
+#      - Item: S_Spirit_Weapon
+#      - Item: S_Spirit_Earring
+#      - Item: S_Spirit_Pendant
+#      - Item: S_Blitz_Shoes
+#      - Item: S_Blitz_Shield
+#      - Item: S_Exceed_Weapon
+#      - Item: S_Titan_Earring
+#      - Item: S_Titan_Pendant
+#      - Item: S_Boned_Earring
+#      - Item: S_Boned_Pendant
+#      - Item: S_Gigantic_Earring
+#      - Item: S_Gigantic_Pendant
+#      - Item: S_Caster_Shoes
+#      - Item: S_Caster_Shield
+#      - Item: S_Caster_Armor
+#      - Item: S_Reload_Shoes
+#      - Item: S_Reload_Shield
+#      - Item: S_Reload_Armor
+#      - Item: S_Swordman_earring
+#      - Item: S_Merchant_earring
+#      - Item: S_Acolyte_earring
+#      - Item: S_Magician_earring
+#      - Item: S_Swordman_Pendant
+#      - Item: S_Merchant_Pendant
+#      - Item: S_Acolyte_Pendant
+#      - Item: S_Thief_Pendant
+#      - Item: S_Magician_Pendant
+#      - Item: S_Archer_Pendant
+#      - Item: S_Knight_Shoes
+#      - Item: S_Crusader_Shoes
+#      - Item: S_Blacksmith_Shoes
+#      - Item: S_Alchemist_Shoes
+#      - Item: S_Priest_Shoes
+#      - Item: S_Monk_Shoes
+#      - Item: S_Assassin_Shoes
+#      - Item: S_Rogue_Shoes
+#      - Item: S_Wizard_Shoes
+#      - Item: S_Sage_Shoes
+#      - Item: S_Hunter_Shoes
+#      - Item: S_Bard_Shoes
+#      - Item: S_Dancer_Shoes
+#      - Item: S_Knight_Armor
+#      - Item: S_Crusader_Armor
+#      - Item: S_Blacksmith_Armor
+#      - Item: S_Alchemist_Armor
+#      - Item: S_Priest_Armor
+#      - Item: S_Monk_Armor
+#      - Item: S_Assassin_Armor
+#      - Item: S_Rogue_Armor
+#      - Item: S_Wizard_Armor
+#      - Item: S_Sage_Armor
+#      - Item: S_Hunter_Armor
+#      - Item: S_Bard_Armor
+#      - Item: S_Dancer_Armor
+#      - Item: S_SuperNovice_Weapon
+#      - Item: S_Gunslinger_Weapon
+#      - Item: S_Taekwon_Weapon
+#      - Item: S_Ninja_Weapon
+#      - Item: S_DoramMagical_Weapon
+#      - Item: S_DoramPhysical_Weapon
+#      - Item: S_Runeknight_Weapon
+#      - Item: S_Royalguard_Weapon
+#      - Item: S_Mechanic_weapon
+#      - Item: S_Genetic_Weapon
+#      - Item: S_Archbishop_Weapon
+#      - Item: S_Sura_weapon
+#      - Item: S_Guillotine_Weapon
+#      - Item: S_Shadowchaser_Weapon
+#      - Item: S_Warlock_Weapon
+#      - Item: S_Sorcerer_Weapon
+#      - Item: S_Ranger_Weapon
+#      - Item: S_Minstrel_Weapon
+#      - Item: S_Wanderer_Weapon
+#      - Item: S_Runeknight_Shield
+#      - Item: S_Royalguard_Shield
+#      - Item: S_Mechanic_Shield
+#      - Item: S_Genetic_Shield
+#      - Item: S_Archbishop_Shield
+#      - Item: S_Sura_Shield
+#      - Item: S_Guillotine_Shield
+#      - Item: S_Shadowchaser_Shield
+#      - Item: S_Warlock_Shield
+#      - Item: S_Sorcerer_Shield
+#      - Item: S_Ranger_Shield
+#      - Item: S_Minstrel_Shield
+#      - Item: S_Wanderer_Shield
+#      - Item: S_Ninja_Shield
+#      - Item: S_Taekwon_Shield
+#      - Item: S_DoramPhysical_Shield
+#      - Item: S_DoramMagical_Shield
+#      - Item: S_SuperNovice_Shield
+#      - Item: S_Gunslinger_Shield
+#      - Item: S_Thief_earring
+#      - Item: S_Archer_earring
+#      - Item: S_Hasty_Shoes_II
+#      - Item: S_Bearer's_Pendant_II
+#      - Item: S_Gemstone_Earring_II
+#      - Item: S_Spellflow_Shield_II
+#      - Item: S_Spiritual_Weapon_II
+#      - Item: S_Malicious_Armor_II
+#      - Item: S_Sigrun_Armor
+#      - Item: S_Sigrun_Shield
+#      - Item: S_Force_Executioner_Weapon
+#      - Item: S_Spirit_Magic_Executioner_Weapon
+#      - Item: S_Caster_Armor_II
+#      - Item: S_Reload_Armor_II
+#      - Item: S_Critical_Shield
+#      - Item: S_Critical_Shoes
+#      - Item: S_Magic_Compose_Armor
+#      - Item: S_Gemstone_Weapon_II
+#      - Item: S_Gemstone_Shield_II
+#      - Item: S_Bearer's_Armor_II
+#      - Item: S_Bearer's_Shoes_II
+#      - Item: S_Almighty_Earring
+#      - Item: S_Almighty_Pendant
+#      - Item: S_Tempest_Shield
+#      - Item: S_Tempest_Shoes
+#      - Item: S_Magic_Executioner_Holy_Water_Armor
+#      - Item: S_Magic_Exorcist_Corrupted_Armor
+#      - Item: S_Magic_Vibration_Dragon_Killer_Armor
+#      - Item: S_Magic_Scissor_Hunting_Armor
+#      - Item: S_Magic_Fishing_Insect_Net_Armor
+#      - Item: S_Plasterer's_Armor_II
+#      - Item: S_Insomniac_Shoes_II
+#      - Item: S_Peerless_Armor_II
+#      - Item: S_Adulate_Shoes_II
+#      - Item: S_Unfreezing_Weapon_II
+#      - Item: S_Vitality_Earring_II
+#      - Item: S_Neutral_Weapon_II
+#      - Item: S_Uncursed_Pendant_II
+#      - Item: S_Tension_Weapon
+#      - Item: S_Tension_Earring
+#      - Item: S_Tension_Pendent
+#      - Item: S_Elegant_Weapon
+#      - Item: S_Elegant_Earring
+#      - Item: S_Elegant_Pendent
+#      - Item: S_Healing_Shield
+#      - Item: S_Healing_Shoes
+#      - Item: S_Restore_Earring
+#      - Item: S_Restore_Pendant
+#      - Item: S_Mortal_Blow_Weapon
+#      - Item: S_Mortal_Blow_Earring
+#      - Item: S_Mortal_Blow_Pendant
+#      - Item: S_Penetration_Shoes
+#      - Item: S_Penetration_Shield
+#      - Item: S_Executioner_Holy_Water_Armor
+#      - Item: S_Exorcist_Corrupted_Armor
+#      - Item: S_Vibration_Dragon_Killer_Armor
+#      - Item: S_Scissor_Hunting_Armor
+#      - Item: S_Fishing_Insect_Net_Armor
+#      - Item: Sentimental_Weapone_S
+#      - Item: Sentimental_Earring_S
+#      - Item: Sentimental_Pendant_S
+#      - Item: Enchanting_Weapone_S
+#      - Item: Enchanting_Earring_S
+#      - Item: Enchanting_Pendant_S
+#      - Item: S_Infinity_Weapon
+#      - Item: S_Physical_Shoes
+#      - Item: S_Physical_Shield
+#      - Item: S_Physical_Armor
+#      - Item: S_Magical_Shoes
+#      - Item: S_Magical_Shield
+#      - Item: S_Magical_Armor
+#      - Item: S_Immune_Athena_Shield
+#      - Item: S_Hard_Champion_Shoes
+#      - Item: S_Kingbird_Ancient_Armor
+#      - Item: S_Cri_Hit_Armor
+#      - Item: S_Rebellion_Armor
+#      - Item: S_Kagerou_Armor
+#      - Item: S_Oboro_Armor
+#      - Item: S_Rebellion_Shoes
+#      - Item: S_Kagerou_Shoes
+#      - Item: S_Oboro_Shoes
+#      - Item: S_DoramPhysical_Armor
+#      - Item: S_DoramPhysical_Shoes
+#      - Item: S_DoramMagical_Armor
+#      - Item: S_DoramMagical_Shoes
+#      - Item: S_Star_Emperor_Armor
+#      - Item: S_Star_Emperor_Shoes
+#      - Item: S_Soul_Reaper_Armor
+#      - Item: S_Soul_Reaper_Shoes
+#      - Item: S_Tempest_Weapon
+#      - Item: S_Tempest_Armor
+#      - Item: S_PerfectSize_Weapon
+#      - Item: S_PerfectSize_Armor
+#      - Item: S_M_Exo_Co_Weapon
+#      - Item: S_M_Viv_Dr_Weapon
+#      - Item: S_M_Sci_Hu_Weapon
+#      - Item: S_M_Fis_In_Weapon
+#      - Item: S_M_Exe_Ho_Weapon
+#      - Item: S_Penetration_Weapon
+#      - Item: S_Penetration_Armor
+#      - Item: S_Exe_Ho_Weapon
+#      - Item: S_Fis_In_Weapon
+#      - Item: S_Sci_Hu_Weapon
+#      - Item: S_Viv_Dr_Weapon
+#      - Item: S_Exo_Co_Weapon
+#      - Item: S_Hasty_Weapon
+#      - Item: S_Sonic_Armor
+#      - Item: S_Sonic_Shield
+#      - Item: S_Sonic_Shoes
+#      - Item: S_Ignition_Weapon
+#      - Item: S_Ignition_Pendant
+#      - Item: S_Ignition_Earing
+#      - Item: S_W_Breath_Armor
+#      - Item: S_W_Breath_Shield
+#      - Item: S_W_Breath_Shoes
+#      - Item: S_F_Breath_Weapon
+#      - Item: S_F_Breath_Pendant
+#      - Item: S_F_Breath_Earing
+#      - Item: S_Cluster_Armor
+#      - Item: S_Cluster_Shield
+#      - Item: S_Cluster_Shoes
+#      - Item: S_Aimed_Weapon
+#      - Item: S_Aimed_Pendant
+#      - Item: S_Aimed_Earing
+#      - Item: S_Arrow_Armor
+#      - Item: S_Arrow_Shield
+#      - Item: S_Arrow_Shoes
+#      - Item: S_Shooting_Weapon
+#      - Item: S_Shooting_Pendant
+#      - Item: S_Shooting_Earing
+#      - Item: S_Tornado_Armor
+#      - Item: S_Tornado_Shield
+#      - Item: S_Tornado_Shoes
+#      - Item: S_Boomerang_Weapon
+#      - Item: S_Boomerang_Pendant
+#      - Item: S_Boomerang_Earing
+#      - Item: S_Vulcan_Armor
+#      - Item: S_Vulcan_Shield
+#      - Item: S_Vulcan_Shoes
+#      - Item: S_Arms_Weapon
+#      - Item: S_Arms_Pendant
+#      - Item: S_Arms_Earing
+#      - Item: S_Rampage_Armor
+#      - Item: S_Rampage_Shield
+#      - Item: S_Rampage_Shoes
+#      - Item: S_Skynetblow_Weapon
+#      - Item: S_Skynetblow_Pendant
+#      - Item: S_Skynetblow_Earing
+#      - Item: S_Knucklearrow_Armor
+#      - Item: S_Knucklearrow_Shield
+#      - Item: S_Knucklearrow_Shoes
+#      - Item: S_TigerCannon_Weapon
+#      - Item: S_Tigercannon_Pendant
+#      - Item: S_Tigercannon_Earing
+#      - Item: S_Duplelight_Armor
+#      - Item: S_Duplelight_Shield
+#      - Item: S_Duplelight_Shoes
+#      - Item: S_Adoramus_Weapon
+#      - Item: S_Adoramus_Pendant
+#      - Item: S_Adoramus_Earing
+#      - Item: S_Judex_Armor
+#      - Item: S_Judex_Shield
+#      - Item: S_Judex_Shoes
+#      - Item: S_Magnus_Weapon
+#      - Item: S_Magnus_Pendant
+#      - Item: S_Magnus_Earing
+#      - Item: S_Rainstorm_Armor
+#      - Item: S_Rainstorm_Shield
+#      - Item: S_Rainstorm_Shoes
+#      - Item: S_Arrowvulcan_Weapon
+#      - Item: S_Arrowvulcan_Pendant
+#      - Item: S_Arrowvulcan_Earing
+#      - Item: S_Metalic_Armor
+#      - Item: S_Metalic_Shield
+#      - Item: S_Metalic_Shoes
+#      - Item: S_Reverberation_Weapon
+#      - Item: S_Reverberation_Pendant
+#      - Item: S_Reverberation_Earing
+#      - Item: S_Triangle_Armor
+#      - Item: S_Triangle_Shield
+#      - Item: S_Triangle_Shoes
+#      - Item: S_Shadowspell_Weapon
+#      - Item: S_Shadowspell_Pendant
+#      - Item: S_Shadowspell_Earing
+#      - Item: S_Menace_Armor
+#      - Item: S_Menace_Shield
+#      - Item: S_Menace_Shoes
+#      - Item: S_Paint_Weapon
+#      - Item: S_Paint_Pendant
+#      - Item: S_Paint_Earing
+#      - Item: S_Rolling_Armor
+#      - Item: S_Rolling_Shield
+#      - Item: S_Rolling_Shoes
+#      - Item: S_Katar_Weapon
+#      - Item: S_Katar_Pendant
+#      - Item: S_Katar_Earing
+#      - Item: S_Slash_Armor
+#      - Item: S_Slash_Shield
+#      - Item: S_Slash_Shoes
+#      - Item: S_Ripper_Weapon
+#      - Item: S_Ripper_Pendant
+#      - Item: S_Ripper_Earing
+#      - Item: S_Dust_Armor
+#      - Item: S_Dust_Shield
+#      - Item: S_Dust_Shoes
+#      - Item: S_Grave_Weapon
+#      - Item: S_Grave_Pendant
+#      - Item: S_Grave_Earing
+#      - Item: S_Psychic_Armor
+#      - Item: S_Psychic_Shield
+#      - Item: S_Psychic_Shoes
+#      - Item: S_Varetyr_Weapon
+#      - Item: S_Varetyr_Pendant
+#      - Item: S_Varetyr_Earing
+#      - Item: S_Jack_Armor
+#      - Item: S_Jack_Shield
+#      - Item: S_Jack_Shoes
+#      - Item: S_Strain_Weapon
+#      - Item: S_Strain_Pendant
+#      - Item: S_Strain_Earing
+#      - Item: S_Crimson_Armor
+#      - Item: S_Crimson_Shield
+#      - Item: S_Crimson_Shoes
+#      - Item: S_Chain_Weapon
+#      - Item: S_Chain_Pendant
+#      - Item: S_Chain_Earing
+#      - Item: S_Cart_Tornado_Armor
+#      - Item: S_Cart_Tornado_Shield
+#      - Item: S_Cart_Tornado_Shoes
+#      - Item: S_Cannon_Cart_Weapon
+#      - Item: S_Cannon_Cart_Pendant
+#      - Item: S_Cannon_Cart_Earing
+#      - Item: S_Spore_Bomb_Armor
+#      - Item: S_Spore_Bomb_Shield
+#      - Item: S_Spore_Bomb_Shoes
+#      - Item: S_Crazy_Weapon
+#      - Item: S_Crazy_Pendant
+#      - Item: S_Crazy_Earing
+#      - Item: S_Brand_Armor
+#      - Item: S_Brand_Shield
+#      - Item: S_Brand_Shoes
+#      - Item: S_Chain_Press_Weapon
+#      - Item: S_Chain_Press_Pendant
+#      - Item: S_Chain_Press_Earing
+#      - Item: S_Banish_Cannon_Armor
+#      - Item: S_Banish_Cannon_Shield
+#      - Item: S_Banish_Cannon_Shoes
+#      - Item: S_Genesis_Weapon
+#      - Item: S_Genesis_Pendant
+#      - Item: S_Genesis_Earing
+#      - Item: S_Tail_Dragon_Weapon
+#      - Item: S_Tail_Dragon_Shield
+#      - Item: S_Tail_Dragon_Armor
+#      - Item: S_Flare_Dance_Earing
+#      - Item: S_Flare_Dance_Pendant
+#      - Item: S_Flare_Dance_Shoes
+#      - Item: S_God_Hammer_Weapon
+#      - Item: S_God_Hammer_Shield
+#      - Item: S_God_Hammer_Armor
+#      - Item: S_Shatter_Buster_Earing
+#      - Item: S_Shatter_B_Pendant
+#      - Item: S_Shatter_Buster_Shoes
+#      - Item: S_Trip_Weapon
+#      - Item: S_Trip_Shield
+#      - Item: S_Trip_Armor
+#      - Item: S_Super_Magic_Shield
+#      - Item: S_Super_Magic_Armor
+#      - Item: S_Super_Magic_Shoes
+#      - Item: S_Super_Power_Weapon
+#      - Item: S_Super_Power_Pendant
+#      - Item: S_Super_Power_Earing
+#      - Item: S_Kunai_Weapon
+#      - Item: S_Kunai_Shield
+#      - Item: S_Kunai_Armor
+#      - Item: S_Syuriken_Earing
+#      - Item: S_Syuriken_Pendant
+#      - Item: S_Syuriken_Shoes
+#      - Item: S_Kamaenraku_Weapon
+#      - Item: S_Kamaenraku_Shield
+#      - Item: S_Kamaenraku_Armor
+#      - Item: S_Huusouka_Earing
+#      - Item: S_Huusouka_Pendant
+#      - Item: S_Huusouka_Shoes
+#      - Item: S_Pickyrush_Weapon
+#      - Item: S_Pickyrush_Shield
+#      - Item: S_Pickyrush_Armor
+#      - Item: S_SavageRabbit_Earing
+#      - Item: S_SavageRabbit_Pendant
+#      - Item: S_SavageRabbit_Shoes
+#      - Item: S_Catnip_Weapon
+#      - Item: S_Catnip_Shield
+#      - Item: S_Catnip_Armor
+#      - Item: S_Silvervine_Earing
+#      - Item: S_Silvervine_Pendant
+#      - Item: S_Silvervine_Shoes
+#      - Item: S_Sunshine_Weapon
+#      - Item: S_Sunshine_Shield
+#      - Item: S_Sunshine_Armor
+#      - Item: S_Moonlight_Earring
+#      - Item: S_Moonlight_Pendant
+#      - Item: S_Moonlight_Shoes
+#      - Item: S_Stardust_Weapon
+#      - Item: S_Stardust_Shield
+#      - Item: S_Stardust_Armor
+#      - Item: S_S_Weapon
+#      - Item: S_S_Shield
+#      - Item: S_S_Armor
+#      - Item: S_Evilcurse_Earring
+#      - Item: S_Evilcurse_Pendant
+#      - Item: S_Evilcurse_Shoes
+#      - Item: S_FullPene_Shoes
+#      - Item: S_FullPene_Armor
+#      - Item: S_FullPene_Pendant
+#      - Item: S_FullPene_Earring
+#      - Item: S_All_Race_Shoes
+#      - Item: S_All_Race_Shield
+#      - Item: S_Blitz_Weapon
+#      - Item: S_Blitz_Armor
+#      - Item: S_FullTemp_Earring
+#      - Item: S_FullTemp_Pendant
+#      - Item: S_FullTemp_Armor
+#      - Item: S_FullTemp_Shoes
+#      - Item: S_Mammoth_Armor
+#      - Item: S_Mammoth_Shoes
+#      - Item: S_Mammoth_Pendant
+#      - Item: S_Mammoth_Earring
+#      - Item: S_Mammoth_Weapon
+#      - Item: S_Mammoth_Shield
+#      - Item: S_TrueGem_Armor
+#      - Item: S_TrueGem_Shoes
+#      - Item: S_TrueGem_Earring
+#      - Item: S_TrueGem_Pendant
+#      - Item: S_M_Mammoth_Armor
+#      - Item: S_M_Mammoth_Shoes
+#      - Item: S_M_Mammoth_Earring
+#      - Item: S_M_Mammoth_Pendant
+#      - Item: S_EXP_Shield
+#      - Item: S_Absorb_Shield
+#      - Item: S_Absorb_Weapon
+#      - Item: S_AutoSpell_Shield
+#      - Item: S_AutoSpell_Armor
+#      - Item: S_AutoSpell_Shoes
+#      - Item: S_AutoSpell_Weapon
+#      - Item: S_AutoSpell_Pendant
+#      - Item: S_AutoSpell_Earring
+#      - Item: S_M_AutoSpell_Armor
+#      - Item: S_M_AutoSpell_Shoes
+#      - Item: S_M_AutoSpell_Earring
+#      - Item: S_M_AutoSpell_Pendant
+#      - Item: S_Hasty_Shield
+#      - Item: S_Infinity_Shield
+#      - Item: S_Durable_Weapon
+#      - Item: S_Durable_Shield
+#      - Item: S_Clever_Weapon
+#      - Item: S_Clever_Shield
+#      - Item: S_CriticalHit_Weapon
+#      - Item: S_KingbirdAnc_Weapon
+#      - Item: S_P_Power_Weapon
+#      - Item: S_P_Power_Shield
+#      - Item: S_M_Spell_Weapon
+#      - Item: S_M_Spell_Shield
+#      - Item: S_Concentration_Weapon
+#      - Item: S_Concentration_Shield
+#      - Item: S_Wisdom_Weapon
+#      - Item: S_Wisdom_Shield
+#      - Item: S_Stamina_Weapon
+#      - Item: S_Stamina_Shield
+#      - Item: S_Creative_Weapon
+#      - Item: S_Creative_Shield
+#      - Item: S_S_Reload_Shield
+#      - Item: S_SpellCaster_Armor
+#      - Item: S_SpellCaster_Shoes
+#      - Item: S_SpellCaster_Earring
+#      - Item: S_SpellCaster_Pendant
+#      - Item: S_R_Bearers_Shoes
+#      - Item: S_R_Bearers_Armor
+#      - Item: S_R_Bearers_Pendant
+#      - Item: S_R_Bearers_Earring
+#      - Item: S_Mega_Blitz_Shield
+#      - Item: S_Mega_Blitz_Weapon
+#  - Item: Illusion_Module_Mix
+#    RewardGroup: ILLUSION_MODULE_MIX
+#    RequiredRequirementsCount: 5
+#    Requirements:
+#      - Item: EP17_1_EVT03
+#      - Item: EP17_1_EVT04
+#      - Item: EP17_1_EVT05
+#      - Item: EP17_1_EVT06
+#      - Item: EP17_1_EVT07
+#      - Item: EP17_1_EVT08
+#      - Item: EP17_1_EVT09
+#      - Item: EP17_1_EVT10
+#      - Item: EP17_1_EVT11
+#      - Item: EP17_1_EVT12
+#      - Item: EP17_1_EVT13
+#      - Item: EP17_1_EVT14
+#      - Item: EP17_1_EVT15
+#      - Item: EP17_1_EVT16
+#      - Item: EP17_1_EVT17
+#      - Item: EP17_1_EVT18
+#      - Item: EP17_1_EVT19
+#      - Item: EP17_1_EVT20
+#      - Item: EP17_1_EVT21
+#      - Item: EP17_1_EVT22
+#      - Item: EP17_1_EVT23
+#      - Item: EP17_1_EVT24
+#      - Item: EP17_1_EVT25
+#      - Item: EP17_1_EVT26
+#      - Item: EP17_1_EVT27
+#      - Item: EP17_1_EVT28
+#      - Item: EP17_1_EVT29
+#      - Item: EP17_1_EVT30
+#      - Item: EP17_1_EVT31
+#      - Item: EP17_1_EVT32
+#      - Item: EP17_1_EVT33
+#      - Item: EP17_1_EVT34
+#      - Item: EP17_1_EVT35
+#      - Item: EP17_1_EVT36
+#      - Item: EP17_1_EVT37
+#      - Item: EP17_1_EVT38
+#  - Item: Automatic_Module_Mix
+#    RewardGroup: AUTOMATIC_MODULE_MIX
+#    RequiredRequirementsCount: 5
+#    Requirements:
+#      - Item: EP17_2_NO1
+#      - Item: EP17_2_NO2
+#      - Item: EP17_2_NO3
+#      - Item: EP17_2_NO4
+#      - Item: EP17_2_NO5
+#      - Item: EP17_2_NO6
+#      - Item: EP17_2_NO7
+#      - Item: EP17_2_NO8
+#      - Item: EP17_2_RA1
+#      - Item: EP17_2_RA2
+#      - Item: EP17_2_RA3
+#      - Item: EP17_2_RA4
+#      - Item: EP17_2_RA5
+#      - Item: EP17_2_RA6
+#      - Item: EP17_2_RA7
+#      - Item: EP17_2_RA8
+#      - Item: EP17_2_RA9
+#      - Item: EP17_2_RA10
+#      - Item: EP17_2_RA11
+#      - Item: EP17_2_RA12
+#      - Item: EP17_2_RA13
+#      - Item: EP17_2_RA14
+#      - Item: EP17_2_RA15
+#      - Item: EP17_2_RA16
+#      - Item: EP17_2_RA17
+#      - Item: EP17_2_RA18
+#      - Item: EP17_2_RA19
+#      - Item: EP17_2_RA20
+#      - Item: EP17_2_UQ1
+#      - Item: EP17_2_UQ2
+#      - Item: EP17_2_UQ3
+#      - Item: EP17_2_UQ4
+#      - Item: EP17_2_UQ5
+#      - Item: EP17_2_UQ6
+#      - Item: EP17_2_UQ7
+#      - Item: EP17_2_UQ8
+#      - Item: EP17_2_UQ9
+#      - Item: EP17_2_UQ10
+#      - Item: EP17_2_UQ11
+#      - Item: EP17_2_LE1
+#      - Item: EP17_2_LE2
+#      - Item: EP17_2_LE3
+#      - Item: EP17_2_LE4
+#      - Item: EP17_2_LE5
+#      - Item: EP17_2_LE6
+#      - Item: EP17_2_EP1
+#      - Item: EP17_2_EP2
+#      - Item: EP17_2_EP3
+#      - Item: EP17_2_EP4
+#      - Item: EP17_2_EP5
+#      - Item: EP17_2_EP6
+#      - Item: EP17_2_EP7
+#      - Item: EP17_2_EP8
+#      - Item: EP17_2_EP9
+#      - Item: EP17_2_EP10
+#      - Item: EP17_2_EP11
+#      - Item: EP17_2_EP12
+#      - Item: EP17_2_EP13
+#      - Item: EP17_2_EP14
+#      - Item: EP17_2_EP15
+#      - Item: EP17_2_EP16
+#      - Item: EP17_2_EP17
+#      - Item: EP17_2_EP18
+#      - Item: EP17_2_EP19
+#      - Item: EP17_2_EP20
+#      - Item: EP17_2_EP21
+#      - Item: EP17_2_EP22
+#      - Item: EP17_2_EP23
+#      - Item: EP17_2_EP24
+#      - Item: EP17_2_EP25
+#      - Item: EP17_2_EP26
+#      - Item: EP17_2_EP27
+#      - Item: EP17_2_EP28
+#      - Item: EP17_2_EP29
+#      - Item: EP17_2_EP30
+#      - Item: EP17_2_EP31
+#      - Item: EP17_2_EP32
+#      - Item: EP17_2_EP33
+#      - Item: EP17_2_EP34
+#      - Item: EP17_2_EP35
+#      - Item: EP17_2_EP36
+#      - Item: EP17_2_EP37
+#      - Item: EP17_2_EP38
+#      - Item: EP17_2_EP39
+#      - Item: EP17_2_EP40
+#      - Item: EP17_2_EP41
+#      - Item: EP17_2_EP42
+#      - Item: EP17_2_EP43
+#      - Item: EP17_2_EP44
+#      - Item: EP17_2_EP45
+#      - Item: EP17_2_EP46
+#      - Item: EP17_2_EP47
+#      - Item: EP17_2_EP48
+#      - Item: EP17_2_EP49
+#      - Item: EP17_2_EP50
+#      - Item: EP17_2_EP51
+#      - Item: EP17_2_RA21
+#      - Item: EP17_2_UQ12
+  - Item: True_GemShadow_Mix
+    RewardGroup: TRUE_GEMSHADOW_MIX
+    RequiredRequirementsCount: 6
+    MinimumRefine: 7
+    MaximumRefine: 10
+    Requirements:
+      - Item: S_Gemstone_Shoes
+      - Item: S_Gemstone_Shield
+      - Item: S_Gemstone_Weapon
+      - Item: S_Gemstone_Earring
+      - Item: S_Gemstone_Pendent
+      - Item: S_Gemstone_Armor
+      - Item: S_Gemstone_Weapon_II
+      - Item: S_Gemstone_Shield_II
+      - Item: S_Gemstone_Earring_II
+  - Item: Mammoth_Mix
+    RewardGroup: MAMMOTH_MIX
+    RequiredRequirementsCount: 6
+    MinimumRefine: 7
+    MaximumRefine: 10
+    Requirements:
+      - Item: S_Mammoth_Armor
+      - Item: S_Mammoth_Shoes
+      - Item: S_Mammoth_Pendant
+      - Item: S_Mammoth_Earring
+      - Item: S_Mammoth_Weapon
+      - Item: S_Mammoth_Shield
+#  - Item: EXPShadow_Mix
+#    RewardGroup: EXPSHADOW_MIX
+#    RequiredRequirementsCount: 5
+#    MinimumRefine: 7
+#    MaximumRefine: 10
+#    Requirements:
+#      - Item: S_Beginner_Shoes
+#      - Item: S_Beginner_Shield
+#      - Item: S_Rookie_Shoes
+#      - Item: S_Rookie_Shield
+#      - Item: S_Advanced_Shoes
+#      - Item: S_Advanced_Shield
+#      - Item: S_Expert_Shoes
+#      - Item: S_Expert_Shield
+  - Item: AbsorbShadow_Mix
+    RewardGroup: ABSORBSHADOW_MIX
+    RequiredRequirementsCount: 5
+    MinimumRefine: 7
+    MaximumRefine: 10
+    Requirements:
+      - Item: S_Spiritual_Weapon
+      - Item: S_Spiritual_Earring
+      - Item: S_Spiritual_Pendent
+      - Item: S_Spiritual_Weapon_II
+      - Item: S_Malicious_Armor
+      - Item: S_Malicious_Shoes
+      - Item: S_Malicious_Shield
+      - Item: S_Malicious_Armor_II
+  - Item: MajorAutoSpell_Mix
+    RewardGroup: MAJORAUTOSPELL_MIX
+    RequiredRequirementsCount: 6
+    MinimumRefine: 7
+    MaximumRefine: 10
+    Requirements:
+      - Item: S_AutoSpell_Shoes
+      - Item: S_AutoSpell_Armor
+      - Item: S_AutoSpell_Weapon
+      - Item: S_AutoSpell_Shield
+      - Item: S_AutoSpell_Earring
+      - Item: S_AutoSpell_Pendant
+  - Item: MagicalShadow_Mix
+    RewardGroup: MAGICALSHADOW_MIX
+    RequiredRequirementsCount: 6
+    MinimumRefine: 7
+    MaximumRefine: 10
+    Requirements:
+      - Item: S_Magical_Weapon
+      - Item: S_Magical_Earring
+      - Item: S_Magical_Pendant
+      - Item: S_Magical_Shoes
+      - Item: S_Magical_Armor
+      - Item: S_Magical_Shield
+  - Item: PhysicalShadow_Mix
+    RewardGroup: PHYSICALSHADOW_MIX
+    RequiredRequirementsCount: 6
+    MinimumRefine: 7
+    MaximumRefine: 10
+    Requirements:
+      - Item: S_Physical_Weapon
+      - Item: S_Physical_Earring
+      - Item: S_Physical_Pendant
+      - Item: S_Physical_Shoes
+      - Item: S_Physical_Armor
+      - Item: S_Physical_Shield
+  - Item: SLD_Card_Recipe
+    RewardGroup: SLD_CARD_RECIPE
+    RequiredRequirementsCount: 3
+    Requirements:
+      - Item: Sealed_D_Lord_Card
+      - Item: Sealed_Knight_WS_Card
+      - Item: Sealed_Berz_Card
+      - Item: Sealed_Kiel_Card
+      - Item: Sealed_Gloom_Card
+      - Item: Sealed_F_Bishop_Card
+      - Item: Sealed_Ifrit_Card
+      - Item: Sealed_TurtleG_Card
+      - Item: Sealed_Bacsojin_Card
+      - Item: Sealed_Pharaoh_Card
+      - Item: Sealed_M_Flower_Card
+      - Item: Sealed_B_Ygnizem_Card
+      - Item: Sealed_Apocalips_H_Card
+      - Item: Sealed_Dracula_Card
+      - Item: Sealed_B_Shecil_Card
+      - Item: Sealed_Orc_Hero_Card
+      - Item: Sealed_Lady_Tanee_Card
+      - Item: Sealed_Samurai_Card
+      - Item: Sealed_Orc_Load_Card
+      - Item: Sealed_B_Magaleta_Card
+      - Item: Sealed_B_Harword_Card
+      - Item: Sealed_Eddga_Card
+      - Item: Sealed_Ktullanux_Card
+      - Item: Sealed_Mistress_Card
+      - Item: SLD_Q_Scaraba_Card
+      - Item: SLD_Baphomet_Card
+      - Item: SLD_Maya_Card
+      - Item: SLD_Clown_Card
+      - Item: SLD_Professor_Card
+      - Item: SLD_Champion_Card
+      - Item: SLD_Creator_Card
+      - Item: SLD_Stalker_Card
+      - Item: SLD_Paladin_Card
+      - Item: SLD_Gypsy_Card
+      - Item: SLD_Daehyon_Card
+      - Item: SLD_Gioia_Card
+      - Item: SLD_Pyuriel_Card
+      - Item: SLD_Kades_Card
+      - Item: SLD_Timeholder_Card
+      - Item: Sealed_Tao_Card
+  - Item: ReloadShadow_Mix
+    RewardGroup: RELOADSHADOW_MIX
+    RequiredRequirementsCount: 3
+    MinimumRefine: 9
+    MaximumRefine: 10
+    Requirements:
+      - Item: S_Reload_Armor
+      - Item: S_Reload_Shoes
+      - Item: S_Reload_Shield
+      - Item: S_Reload_Armor_II
+  - Item: SpellCasterShadow_Mix
+    RewardGroup: SPELLCASTERSHADOW_MIX
+    RequiredRequirementsCount: 6
+    MinimumRefine: 7
+    MaximumRefine: 10
+    Requirements:
+      - Item: S_Spellflow_Shield_II
+      - Item: S_Spell_Flow_Shield
+      - Item: S_Spell_Flow_Armor
+      - Item: S_Spell_Flow_Shoes
+      - Item: S_Caster_Armor_II
+      - Item: S_Caster_Armor
+      - Item: S_Caster_Shield
+      - Item: S_Caster_Shoes
+      - Item: S_Caster_Weapon
+      - Item: S_Caster_earring
+      - Item: S_Caster_Pendant
+#  - Item: Ice_F_Stone_Box2
+#    RewardGroup: ICE_F_STONE_BOX2
+#    RequiredRequirementsCount: 3
+#    Requirements:
+#      - Item: Ice_F_Stone_Str
+#      - Item: Ice_F_Stone_Dex
+#      - Item: Ice_F_Stone_Agi
+#      - Item: Ice_F_Stone_Int
+#      - Item: Ice_F_Stone_Vit
+#      - Item: Ice_F_Stone_luk
+#      - Item: Ice_F_Stone_Def
+#      - Item: Ice_F_Stone_Mdef
+#      - Item: Ice_F_Stone_Ran
+#      - Item: Ice_F_Stone_War
+#      - Item: Ice_F_Stone_Mag
+#      - Item: Ice_F_Stone_R_Reject
+#      - Item: Ice_F_Stone_Force
+#      - Item: Ice_F_Stone_S_Delay
+#      - Item: Ice_F_Stone_Skill_1
+#      - Item: Ice_F_Stone_Skill_2
+#      - Item: Ice_F_Stone_Skill_3
+#      - Item: Ice_F_Stone_Skill_4
+#      - Item: Ice_F_Stone_Skill_5
+#      - Item: Ice_F_Stone_Skill_6
+#      - Item: Ice_F_Stone_Skill_7
+#      - Item: Ice_F_Stone_Skill_8
+#      - Item: Ice_F_Stone_Skill_9
+#      - Item: Ice_F_Stone_Skill_10
+#      - Item: Ice_F_Stone_Skill_11
+#      - Item: Ice_F_Stone_Skill_12
+#      - Item: Ice_F_Stone_Skill_13
+#      - Item: Ice_F_Stone_Skill_14
+#      - Item: Ice_F_Stone_Skill_15
+#      - Item: Ice_F_Stone_Skill_16
+#      - Item: Ice_F_Stone_Skill_17
+#      - Item: Ice_F_Stone_Skill_18
+#      - Item: Ice_F_Stone_Skill_19
+#      - Item: Ice_F_Stone_Skill_20
+#      - Item: Ice_F_Stone_Skill_21
+#      - Item: Ice_F_Stone_Skill_22
+#      - Item: Ice_F_Stone_Skill_23
+#      - Item: Ice_F_Stone_Skill_24
+#      - Item: Ice_F_Stone_Skill_25
+#      - Item: Ice_F_Stone_Skill_26
+#      - Item: Ice_F_Stone_Skill_27
+#      - Item: Ice_F_Stone_Skill_28
+#      - Item: Ice_F_Stone_Skill_29
+#      - Item: Ice_F_Stone_Skill_30
+#      - Item: Ice_F_Stone_Skill_31
+#      - Item: Ice_F_Stone_Skill_32
+#      - Item: Ice_F_Stone_Skill_33
+#      - Item: Ice_F_Stone_Skill_34
+#      - Item: Ice_F_Stone_Skill_35
+#      - Item: Ice_F_Stone_Skill_36
+#      - Item: Ice_F_Stone_Skill_37
+#      - Item: Ice_F_Stone_Skill_38
+#      - Item: Ice_F_Stone_Skill_39
+#      - Item: Ice_F_Stone_Skill_40
+#      - Item: Ice_F_Stone_Skill_41
+#      - Item: Ice_F_Stone_Skill_42
+#      - Item: Ice_F_Stone_Skill_43
+#      - Item: Ice_F_Stone_Skill_44
+#      - Item: Ice_F_Stone_Skill_45
+#      - Item: Ice_F_Stone_Skill_46
+#      - Item: Ice_F_Stone_Skill_47
+#      - Item: Ice_F_Stone_Skill_48
+#      - Item: Ice_F_Stone_Skill_49
+#      - Item: Ice_F_Stone_Skill_50
+#      - Item: Ice_F_Stone_Skill_51
+#      - Item: Ice_F_Stone_Skill_52
+#      - Item: Ice_F_Stone_Skill_53
+#      - Item: Ice_F_Stone_Skill_54
+#      - Item: Ice_F_Stone_Speed
+#      - Item: Ice_F_Stone_Caster
+#      - Item: Ice_F_Stone_Critical
+#      - Item: Ice_F_Stone_Guide
+#      - Item: Ice_F_Stone_Above
+#      - Item: Ice_F_Stone_P_Full
+#      - Item: Ice_F_Stone_M_Counter
+#      - Item: Ice_F_Stone_Hp
+#      - Item: Ice_F_Stone_Sp
+#      - Item: Ice_F_Stone_Heal
+#      - Item: Ice_F_Stone_Robust
+#      - Item: Ice_F_Stone_F_Cast
+#      - Item: Ice_F_Stone_M_F
+#      - Item: Ice_F_Stone_P_F
+#      - Item: Ice_F_Stone_Un_Vit
+#      - Item: Ice_F_Stone_Sp_Int
+#      - Item: Ice_F_Stone_Fi_Dex
+#      - Item: Ice_F_Stone_Ov_Str
+#      - Item: Ice_F_Stone_Fa_Agi
+#      - Item: Ice_F_Stone_Lu_Luk
+#      - Item: Ice_F_Stone_A_Delay
+#      - Item: Ice_F_Stone_E_Archer
+#      - Item: Ice_F_Stone_Fatal
+#      - Item: Ice_F_Stone_F_Spirit
+#      - Item: Ice_F_Stone_Spell
+#      - Item: Ice_F_Stone_HealHP
+#      - Item: Ice_F_Stone_HealSP
+#      - Item: Ice_F_Stone_Life
+#      - Item: Ice_F_Stone_Soul
+#      - Item: Ice_F_Stone_M_Heal
+#      - Item: Ice_F_Stone_M_Soul
+#      - Item: Ice_F_Stone_A_Force
+  - Item: R_BearersShadow_Mix
+    RewardGroup: R_BEARERSSHADOW_MIX
+    RequiredRequirementsCount: 6
+    MinimumRefine: 7
+    MaximumRefine: 10
+    Requirements:
+      - Item: S_Bearer's_Shoes_II
+      - Item: S_Bearer's_Armor_II
+      - Item: S_Bearer's_Pendant_II
+      - Item: S_Bearers_Earring
+      - Item: S_Bearers_Pendent
+      - Item: S_Bearers_Armor
+      - Item: S_Bearers_Weapon
+      - Item: S_Bearers_Shoes
+      - Item: S_Bearers_Shield
+  - Item: M_BlitzShadow_Mix
+    RewardGroup: M_BLITZSHADOW_MIX
+    RequiredRequirementsCount: 6
+    MinimumRefine: 7
+    MaximumRefine: 10
+    Requirements:
+      - Item: S_Blitz_Armor
+      - Item: S_Blitz_Weapon
+      - Item: S_Blitz_Shield
+      - Item: S_Blitz_Shoes
+      - Item: S_Blitz_Pendent
+      - Item: S_Blitz_Earring

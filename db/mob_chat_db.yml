@@ -114,6 +114,18 @@ Body:
     Dialog: Yes! Yearn for your freedom from this confined place, your captivity here will be permanent !!
   - Id: 41
     Dialog: Arrival!
+  - Id: 51
+    Dialog: I will not forgive humans!!
+  - Id: 52 # !todo Unknown dialogue
+    Dialog: I will not forgive humans!!
+  - Id: 53
+    Dialog: I will save you!
+  - Id: 54 # !todo Unknown dialogue
+    Dialog: I will save you!
+  - Id: 55
+    Dialog: This is the truth! Hahahahah!
+  - Id: 58 # !todo Unknown dialogue
+    Dialog: Attack!
 
 Footer:
   Imports:

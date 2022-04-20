@@ -1,0 +1,326 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>
+    </PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{492E2981-34F4-3A6A-BFD9-46096C641203}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectName>ryml</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir).vs\build\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir).vs\build\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ryml</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ryml</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir).vs\build\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir).vs\build\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ryml</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ryml</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir).vs\build\</OutDir>
+    <IntDir>$(SolutionDir).vs\build\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir).vs\build\</OutDir>
+    <IntDir>$(SolutionDir).vs\build\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnabled>false</VcpkgEnabled>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>src;ext\c4core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;CMAKE_INTDIR="Debug";_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;ext\c4core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>src;ext\c4core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>src;ext\c4core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;CMAKE_INTDIR="Debug";_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;ext\c4core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>src;ext\c4core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x86</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>src;ext\c4core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;ext\c4core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>src;ext\c4core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>src;ext\c4core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;ext\c4core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>src;ext\c4core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x86</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="src\ryml.hpp" />
+    <ClInclude Include="src\ryml_std.hpp" />
+    <ClInclude Include="src\c4\yml\detail\checks.hpp" />
+    <ClInclude Include="src\c4\yml\detail\parser_dbg.hpp" />
+    <ClInclude Include="src\c4\yml\detail\print.hpp" />
+    <ClInclude Include="src\c4\yml\detail\stack.hpp" />
+    <ClInclude Include="src\c4\yml\common.hpp" />
+    <ClCompile Include="src\c4\yml\common.cpp" />
+    <ClInclude Include="src\c4\yml\emit.def.hpp" />
+    <ClInclude Include="src\c4\yml\emit.hpp" />
+    <ClInclude Include="src\c4\yml\export.hpp" />
+    <ClInclude Include="src\c4\yml\node.hpp" />
+    <ClCompile Include="src\c4\yml\node.cpp" />
+    <ClInclude Include="src\c4\yml\parse.hpp" />
+    <ClCompile Include="src\c4\yml\parse.cpp" />
+    <ClInclude Include="src\c4\yml\preprocess.hpp" />
+    <ClCompile Include="src\c4\yml\preprocess.cpp" />
+    <ClInclude Include="src\c4\yml\std\map.hpp" />
+    <ClInclude Include="src\c4\yml\std\std.hpp" />
+    <ClInclude Include="src\c4\yml\std\string.hpp" />
+    <ClInclude Include="src\c4\yml\std\vector.hpp" />
+    <ClInclude Include="src\c4\yml\tree.hpp" />
+    <ClCompile Include="src\c4\yml\tree.cpp" />
+    <ClInclude Include="src\c4\yml\writer.hpp" />
+    <ClInclude Include="src\c4\yml\yml.hpp" />
+    <Natvis Include="src\ryml.natvis" />
+    <ClInclude Include="ext\c4core\src\c4\allocator.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\base64.hpp" />
+    <ClCompile Include="ext\c4core\src\c4\base64.cpp" />
+    <ClInclude Include="ext\c4core\src\c4\blob.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\bitmask.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\charconv.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\c4_pop.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\c4_push.hpp" />
+    <ClCompile Include="ext\c4core\src\c4\char_traits.cpp" />
+    <ClInclude Include="ext\c4core\src\c4\char_traits.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\common.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\compiler.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\config.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\cpu.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\ctor_dtor.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\dump.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\enum.hpp" />
+    <ClCompile Include="ext\c4core\src\c4\error.cpp" />
+    <ClInclude Include="ext\c4core\src\c4\error.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\export.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\format.hpp" />
+    <ClCompile Include="ext\c4core\src\c4\format.cpp" />
+    <ClInclude Include="ext\c4core\src\c4\hash.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\language.hpp" />
+    <ClCompile Include="ext\c4core\src\c4\language.cpp" />
+    <ClCompile Include="ext\c4core\src\c4\memory_resource.cpp" />
+    <ClInclude Include="ext\c4core\src\c4\memory_resource.hpp" />
+    <ClCompile Include="ext\c4core\src\c4\memory_util.cpp" />
+    <ClInclude Include="ext\c4core\src\c4\memory_util.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\platform.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\preprocessor.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\restrict.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\span.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\std\std.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\std\std_fwd.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\std\string.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\std\string_fwd.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\std\tuple.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\std\vector.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\std\vector_fwd.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\substr.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\substr_fwd.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\szconv.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\time.hpp" />
+    <ClCompile Include="ext\c4core\src\c4\time.cpp" />
+    <ClInclude Include="ext\c4core\src\c4\type_name.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\types.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\unrestrict.hpp" />
+    <ClCompile Include="ext\c4core\src\c4\utf.cpp" />
+    <ClInclude Include="ext\c4core\src\c4\utf.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\windows.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\windows_pop.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\windows_push.hpp" />
+    <Natvis Include="ext\c4core\src\c4\c4core.natvis" />
+    <ClInclude Include="ext\c4core\src\c4\ext\debugbreak\debugbreak.h" />
+    <ClInclude Include="ext\c4core\src\c4\ext\rng\rng.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\ext\sg14\inplace_function.h" />
+    <ClInclude Include="ext\c4core\src\c4\ext\fast_float.hpp" />
+    <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\ascii_number.h" />
+    <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\bigint.h" />
+    <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\decimal_to_binary.h" />
+    <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\digit_comparison.h" />
+    <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\fast_float.h" />
+    <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\fast_table.h" />
+    <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\float_common.h" />
+    <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\parse_number.h" />
+    <ClInclude Include="ext\c4core\src\c4\ext\fast_float\include\fast_float\simple_decimal_conversion.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -161,18 +161,20 @@ CREATE TABLE IF NOT EXISTS `npclog` (
 # (X) Other
 # (D) Stolen from mobs
 # (U) MVP Prizes
+# ($) Cash
 # (F) Guild/Party Bound retrieval
 # Lotter(Y)
 # (Z) Merged Items
 # (Q)uest
 # Private Airs(H)ip
 # Barter Shop (J)
+# Laphine systems (W)
 
 CREATE TABLE IF NOT EXISTS `picklog` (
   `id` int(11) NOT NULL auto_increment,
   `time` datetime NOT NULL,
   `char_id` int(11) NOT NULL default '0',
-  `type` enum('M','P','L','T','V','S','N','C','A','R','G','E','B','O','I','X','D','U','$','F','Y','Z','Q','H','J') NOT NULL default 'P',
+  `type` enum('M','P','L','T','V','S','N','C','A','R','G','E','B','O','I','X','D','U','$','F','Y','Z','Q','H','J','W') NOT NULL default 'P',
   `nameid` int(10) unsigned NOT NULL default '0',
   `amount` int(11) NOT NULL default '1',
   `refine` tinyint(3) unsigned NOT NULL default '0',
@@ -207,23 +209,28 @@ CREATE TABLE IF NOT EXISTS `picklog` (
 -- Table structure for table `zenylog`
 --
 # ZenyLog types
-# (M)onsters
 # (T)rade
 # (V)ending Sell/Buy
+# (P)layers Drop/Take
+# (M)onsters
 # (S)hop Sell/Buy
 # (N)PC Change amount
+# (D) Stolen from mobs
+# (C)onsumable Items
 # (A)dministrators
 # (E)Mail
+# Auct(I)on
 # (B)uying Store
 # Ban(K) Transactions
 # Barter Shop (J)
+# (X) Other
 
 CREATE TABLE IF NOT EXISTS `zenylog` (
   `id` int(11) NOT NULL auto_increment,
   `time` datetime NOT NULL,
   `char_id` int(11) NOT NULL default '0',
   `src_id` int(11) NOT NULL default '0',
-  `type` enum('T','V','P','M','S','N','D','C','A','E','I','B','K','J') NOT NULL default 'S',
+  `type` enum('T','V','P','M','S','N','D','C','A','E','I','B','K','J','X') NOT NULL default 'S',
   `amount` int(11) NOT NULL default '0',
   `map` varchar(11) NOT NULL default '',
   PRIMARY KEY  (`id`),

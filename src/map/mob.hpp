@@ -211,7 +211,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node &node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 };
 
 struct s_mob_item_drop_ratio {
@@ -227,7 +227,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node &node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 };
 
 struct spawn_info {
@@ -270,7 +270,7 @@ struct s_mob_db {
 
 class MobDatabase : public TypesafeCachedYamlDatabase <uint32, s_mob_db> {
 private:
-	bool parseDropNode(std::string nodeName, YAML::Node node, uint8 max, s_mob_drop *drops);
+	bool parseDropNode(std::string nodeName, const ryml::NodeRef& node, uint8 max, s_mob_drop *drops);
 
 public:
 	MobDatabase() : TypesafeCachedYamlDatabase("MOB_DB", 3, 1) {
@@ -278,7 +278,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node &node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void loadingFinished() override;
 };
 
@@ -363,7 +363,7 @@ public:
 
 	void clear() override{ };
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node& node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 };
 
 struct s_randomsummon_entry {
@@ -384,7 +384,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node &node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 };
 
 enum e_mob_skill_target {

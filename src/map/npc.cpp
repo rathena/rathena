@@ -129,7 +129,7 @@ const std::string StylistDatabase::getDefaultLocation(){
 	return std::string(db_path) + "/stylist.yml";
 }
 
-bool StylistDatabase::parseCostNode( std::shared_ptr<s_stylist_entry> entry, bool doram, const YAML::Node& node ){
+bool StylistDatabase::parseCostNode( std::shared_ptr<s_stylist_entry> entry, bool doram, const ryml::NodeRef& node ){
 	std::shared_ptr<s_stylist_costs> costs = doram ? entry->doram : entry->human;
 	bool costs_exists = costs != nullptr;
 
@@ -209,7 +209,7 @@ bool StylistDatabase::parseCostNode( std::shared_ptr<s_stylist_entry> entry, boo
 	return true;
 }
 
-uint64 StylistDatabase::parseBodyNode( const YAML::Node &node ){
+uint64 StylistDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	if( !this->nodesExist( node, { "Look", "Options" } ) ){
 		return 0;
 	}
@@ -250,7 +250,7 @@ uint64 StylistDatabase::parseBodyNode( const YAML::Node &node ){
 		list->look = (uint16)constant;
 	}
 
-	for( const YAML::Node& optionNode : node["Options"] ){
+	for( const ryml::NodeRef& optionNode : node["Options"] ){
 		int16 index;
 
 		if( !this->asInt16( optionNode, "Index", index ) ){
@@ -394,7 +394,7 @@ const std::string BarterDatabase::getDefaultLocation(){
 	return "npc/barters.yml";
 }
 
-uint64 BarterDatabase::parseBodyNode( const YAML::Node& node ){
+uint64 BarterDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	std::string npcname;
 
 	if( !this->asString( node, "Name", npcname ) ){
@@ -538,7 +538,7 @@ uint64 BarterDatabase::parseBodyNode( const YAML::Node& node ){
 	}
 
 	if( this->nodeExists( node, "Items" ) ){
-		for( const YAML::Node& itemNode : node["Items"] ){
+		for( const ryml::NodeRef& itemNode : node["Items"] ){
 			uint16 index;
 
 			if( !this->asUInt16( itemNode, "Index", index ) ){
@@ -610,7 +610,7 @@ uint64 BarterDatabase::parseBodyNode( const YAML::Node& node ){
 			}
 
 			if( this->nodeExists( itemNode, "RequiredItems" ) ){
-				for( const YAML::Node& requiredItemNode : itemNode["RequiredItems"] ){
+				for( const ryml::NodeRef& requiredItemNode : itemNode["RequiredItems"] ){
 					uint16 requirement_index;
 
 					if( !this->asUInt16( requiredItemNode, "Index", requirement_index ) ){
@@ -717,10 +717,12 @@ uint64 BarterDatabase::parseBodyNode( const YAML::Node& node ){
 
 void BarterDatabase::loadingFinished(){
 	for( const auto& pair : *this ){
-#if !( PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114 )
-		ShowError( "Barter system is not supported by your packet version.\n" );
-		return;
+		if( !battle_config.feature_barter && !battle_config.feature_barter_extended ){
+#ifndef BUILDBOT
+			ShowError( "Barter system is not enabled.\n" );
 #endif
+			return;
+		}
 
 		std::shared_ptr<s_npc_barter> barter = pair.second;
 
@@ -770,12 +772,12 @@ void BarterDatabase::loadingFinished(){
 			}
 		}
 
-#if !( PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106 || PACKETVER_ZERO_NUM >= 20191127 )
-		if( nd->u.barter.extended ){
-			ShowError( "Barter %s uses extended mechanics but this is not supported by the current packet version.\n", nd->name );
+		if( nd->u.barter.extended && !battle_config.feature_barter_extended ){
+#ifndef BUILDBOT
+			ShowError( "Barter %s uses extended mechanics but this is not enabled.\n", nd->name );
+#endif
 			continue;
 		}
-#endif
 
 		if( nd->bl.m >= 0 ){
 			map_addnpc( nd->bl.m, nd );
@@ -1856,7 +1858,7 @@ int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y, st
 	case NPCTYPE_WARP:
 		if ((!nd->trigger_on_hidden && (pc_ishiding(sd) || (sd->sc.count && sd->sc.data[SC_CAMOUFLAGE]))) || pc_isdead(sd))
 			break; // hidden or dead chars cannot use warps
-		if (!pc_job_can_entermap((enum e_job)sd->status.class_, map_mapindex2mapid(nd->u.warp.mapindex), sd->group_level))
+		if (!pc_job_can_entermap((enum e_job)sd->status.class_, map_mapindex2mapid(nd->u.warp.mapindex), pc_get_group_level(sd)))
 			break;
 		if (sd->count_rewarp > 10) {
 			ShowWarning("Prevented infinite warp loop for player (%d:%d). Please fix NPC: '%s', path: '%s'\n", sd->status.account_id, sd->status.char_id, nd->exname, nd->path);
@@ -2409,8 +2411,7 @@ static enum e_CASHSHOP_ACK npc_cashshop_process_payment(struct npc_data *nd, int
  * @param item_list: List of items to purchase
  * @return clif_cashshop_ack value to display
  */
-int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, struct PACKET_CZ_PC_BUY_CASH_POINT_ITEM_sub* item_list)
-{
+int npc_cashshop_buylist( struct map_session_data *sd, int points, std::vector<s_npc_buy_list>& item_list ){
 	int i, j, amount, new_, w, vt;
 	t_itemid nameid;
 	struct npc_data *nd = (struct npc_data *)map_id2bl(sd->npc_shopid);
@@ -2427,10 +2428,10 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, str
 	vt = 0; // Global Value
 
 	// Validating Process ----------------------------------------------------
-	for( i = 0; i < count; i++ )
+	for( i = 0; i < item_list.size(); i++ )
 	{
-		nameid = item_list[i].itemId;
-		amount = item_list[i].amount;
+		nameid = item_list[i].nameid;
+		amount = item_list[i].qty;
 		id = itemdb_exists(nameid);
 
 		if( !id || amount <= 0 )
@@ -2440,12 +2441,12 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, str
 		if( j == nd->u.shop.count || nd->u.shop.shop_item[j].value <= 0 )
 			return ERROR_TYPE_ITEM_ID;
 
-		nameid = item_list[i].itemId = nd->u.shop.shop_item[j].nameid; //item_avail replacement
+		nameid = item_list[i].nameid = nd->u.shop.shop_item[j].nameid; //item_avail replacement
 
 		if( !itemdb_isstackable2(id) && amount > 1 )
 		{
 			ShowWarning("Player %s (%d:%d) sent a hexed packet trying to buy %d of nonstackable item %u!\n", sd->status.name, sd->status.account_id, sd->status.char_id, amount, nameid);
-			amount = item_list[i].amount = 1;
+			amount = item_list[i].qty = 1;
 		}
 
 		if( nd->master_nd ) { // Script-controlled shops decide by themselves, what can be bought and for what price.
@@ -2466,7 +2467,7 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, str
 	}
 
 	if (nd->master_nd) //Script-based shops.
-		return npc_buylist_sub(sd,count,(struct s_npc_buy_list*)item_list,nd->master_nd);
+		return npc_buylist_sub(sd,item_list,nd->master_nd);
 
 	if( w + sd->weight > sd->max_weight )
 		return ERROR_TYPE_INVENTORY_WEIGHT;
@@ -2478,9 +2479,9 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, str
 		return res;
 
 	// Delivery Process ----------------------------------------------------
-	for( i = 0; i < count; i++ ) {
-		nameid = item_list[i].itemId;
-		amount = item_list[i].amount;
+	for( i = 0; i < item_list.size(); i++ ) {
+		nameid = item_list[i].nameid;
+		amount = item_list[i].qty;
 
 		if( !pet_create_egg(sd,nameid) ) {
 			struct item item_tmp;
@@ -2637,17 +2638,17 @@ int npc_cashshop_buy(struct map_session_data *sd, t_itemid nameid, int amount, i
 		return res;
 
 	if( !pet_create_egg(sd, nameid) ) {
-		struct item item_tmp;
-		unsigned short get_amt = amount, j;
+		unsigned short get_amt = amount;
 
-		memset(&item_tmp, 0, sizeof(item_tmp));
+		struct item item_tmp = {};
+
 		item_tmp.nameid = nameid;
 		item_tmp.identify = 1;
 
 		if (item->flag.guid)
 			get_amt = 1;
 
-		for (j = 0; j < amount; j += get_amt)
+		for (int j = 0; j < amount; j += get_amt)
 			pc_additem(sd,&item_tmp, get_amt, LOG_TYPE_NPC);
 	}
 
@@ -2661,16 +2662,16 @@ int npc_cashshop_buy(struct map_session_data *sd, t_itemid nameid, int amount, i
  * @param item_list: List of items
  * @param nd: Attached NPC
  */
-static int npc_buylist_sub(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *item_list, struct npc_data* nd) {
+static int npc_buylist_sub(struct map_session_data* sd, std::vector<s_npc_buy_list>& item_list, struct npc_data* nd) {
 	char npc_ev[EVENT_NAME_LENGTH];
-	int i, key_nameid = 0, key_amount = 0;
+	int key_nameid = 0, key_amount = 0;
 
 	// discard old contents
 	script_cleararray_pc( sd, "@bought_nameid" );
 	script_cleararray_pc( sd, "@bought_quantity" );
 
 	// save list of bought items
-	for (i = 0; i < n; i++) {
+	for( int i = 0; i < item_list.size(); i++ ){
 		script_setarray_pc( sd, "@bought_nameid", i, item_list[i].nameid, &key_nameid );
 		script_setarray_pc( sd, "@bought_quantity", i, item_list[i].qty, &key_amount );
 	}
@@ -2689,23 +2690,23 @@ static int npc_buylist_sub(struct map_session_data* sd, uint16 n, struct s_npc_b
  * @param item_list: List of items
  * @return result code for clif_parse_NpcBuyListSend/clif_npc_market_purchase_ack
  */
-e_purchase_result npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *item_list) {
+e_purchase_result npc_buylist( struct map_session_data* sd, std::vector<s_npc_buy_list>& item_list ){
 	struct npc_data* nd;
 	struct npc_item_list *shop = NULL;
 	double z;
-	int i,j,k,w,skill,new_;
+	int j,k,w,skill,new_;
 	uint8 market_index[MAX_INVENTORY];
 
 	nullpo_retr(e_purchase_result::PURCHASE_FAIL_COUNT, sd);
-	nullpo_retr(e_purchase_result::PURCHASE_FAIL_COUNT, item_list);
 
 	nd = npc_checknear(sd,map_id2bl(sd->npc_shopid));
 	if( nd == NULL )
 		return e_purchase_result::PURCHASE_FAIL_COUNT;
 	if( nd->subtype != NPCTYPE_SHOP && nd->subtype != NPCTYPE_MARKETSHOP )
 		return e_purchase_result::PURCHASE_FAIL_COUNT;
-	if (!item_list || !n)
+	if( item_list.empty() ){
 		return e_purchase_result::PURCHASE_FAIL_COUNT;
+	}
 
 	z = 0;
 	w = 0;
@@ -2715,7 +2716,7 @@ e_purchase_result npc_buylist(struct map_session_data* sd, uint16 n, struct s_np
 
 	memset(market_index, 0, sizeof(market_index));
 	// process entries in buy list, one by one
-	for( i = 0; i < n; ++i ) {
+	for( int i = 0; i < item_list.size(); ++i ){
 		t_itemid nameid;
 		unsigned short amount;
 		int value;
@@ -2732,7 +2733,7 @@ e_purchase_result npc_buylist(struct map_session_data* sd, uint16 n, struct s_np
 
 #if PACKETVER >= 20131223
 		if (nd->subtype == NPCTYPE_MARKETSHOP) {
-			if (item_list[i].qty > shop[j].qty)
+			if (shop[j].qty >= 0 && item_list[i].qty > shop[j].qty)
 				return e_purchase_result::PURCHASE_FAIL_COUNT;
 			market_index[i] = j;
 		}
@@ -2776,7 +2777,7 @@ e_purchase_result npc_buylist(struct map_session_data* sd, uint16 n, struct s_np
 	}
 
 	if (nd->master_nd){ //Script-based shops.
-		npc_buylist_sub(sd,n,item_list,nd->master_nd);
+		npc_buylist_sub(sd,item_list,nd->master_nd);
 		return e_purchase_result::PURCHASE_SUCCEED;
 	}
 
@@ -2790,17 +2791,20 @@ e_purchase_result npc_buylist(struct map_session_data* sd, uint16 n, struct s_np
 
 	pc_payzeny(sd, (int)z, LOG_TYPE_NPC, NULL);
 
-	for( i = 0; i < n; ++i ) {
+	for( int i = 0; i < item_list.size(); ++i ) {
 		t_itemid nameid = item_list[i].nameid;
 		unsigned short amount = item_list[i].qty;
 
 #if PACKETVER >= 20131223
 		if (nd->subtype == NPCTYPE_MARKETSHOP) {
 			j = market_index[i];
-			if (amount > shop[j].qty)
-				return e_purchase_result::PURCHASE_FAIL_MONEY;
-			shop[j].qty -= amount;
-			npc_market_tosql(nd->exname, &shop[j]);
+
+			if( shop[j].qty >= 0 ){
+				if (amount > shop[j].qty)
+					return e_purchase_result::PURCHASE_FAIL_COUNT;
+				shop[j].qty -= amount;
+				npc_market_tosql(nd->exname, &shop[j]);
+			}
 		}
 #endif
 
@@ -3298,7 +3302,7 @@ e_purchase_result npc_barter_purchase( struct map_session_data& sd, std::shared_
 //This doesn't remove it from map_db
 int npc_remove_map(struct npc_data* nd)
 {
-	int16 i;
+	int i;
 	nullpo_retr(1, nd);
 
 	if(nd->bl.prev == NULL || nd->bl.m < 0)
@@ -3676,7 +3680,7 @@ int npc_parseview(const char* w4, const char* start, const char* buffer, const c
 		if(!script_get_constant(viewid, &val_tmp)) {
 			std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(viewid);
 			if (mob != nullptr)
-				val = static_cast<int>(mob->vd.class_);
+				val = static_cast<int>(mob->id);
 			else {
 				ShowWarning("npc_parseview: Invalid NPC constant '%s' specified in file '%s', line'%d'. Defaulting to INVISIBLE. \n", viewid, filepath, strline(buffer,start-buffer));
 				val = JT_INVISIBLE;
@@ -3977,7 +3981,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	nd->u.shop.count = 0;
 	while ( p ) {
 		t_itemid nameid2;
-		unsigned short qty = 0;
+		int32 qty = -1;
 		int value;
 		struct item_data* id;
 		bool skip = false;
@@ -3987,7 +3991,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		switch(type) {
 			case NPCTYPE_MARKETSHOP:
 #if PACKETVER >= 20131223
-				if (sscanf(p, ",%u:%11d:%6hu", &nameid2, &value, &qty) != 3) {
+				if (sscanf(p, ",%u:%11d:%11d", &nameid2, &value, &qty) != 3) {
 					ShowError("npc_parse_shop: (MARKETSHOP) Invalid item definition in file '%s', line '%d'. Ignoring the rest of the line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer, start - buffer), w1, w2, w3, w4);
 					skip = true;
 				}
@@ -4021,10 +4025,10 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 			ShowWarning("npc_parse_shop: Item %s [%u] discounted buying price (%d->%d) is less than overcharged selling price (%d->%d) at file '%s', line '%d'.\n",
 				id->name.c_str(), nameid2, value, (int)(value*0.75), id->value_sell, (int)(id->value_sell*1.24), filepath, strline(buffer,start-buffer));
 		}
-		if (type == NPCTYPE_MARKETSHOP && (!qty || qty > UINT16_MAX)) {
-			ShowWarning("npc_parse_shop: Item %s [%u] is stocked with invalid value %d, changed to 1. File '%s', line '%d'.\n",
+		if (type == NPCTYPE_MARKETSHOP && qty < -1) {
+			ShowWarning("npc_parse_shop: Item %s [%u] is stocked with invalid value %hd, changed to unlimited (-1). File '%s', line '%d'.\n",
 				id->name.c_str(), nameid2, qty, filepath, strline(buffer,start-buffer));
-			qty = 1;
+			qty = -1;
 		}
 		//for logs filters, atcommands and iteminfo script command
 		if( id->maxchance == 0 )
@@ -4624,7 +4628,7 @@ int npc_instancedestroy(struct npc_data* nd)
  **/
 void npc_market_tosql(const char *exname, struct npc_item_list *list) {
 	SqlStmt* stmt = SqlStmt_Malloc(mmysql_handle);
-	if (SQL_ERROR == SqlStmt_Prepare(stmt, "REPLACE INTO `%s` (`name`,`nameid`,`price`,`amount`,`flag`) VALUES ('%s','%u','%d','%hu','%" PRIu8 "')",
+	if (SQL_ERROR == SqlStmt_Prepare(stmt, "REPLACE INTO `%s` (`name`,`nameid`,`price`,`amount`,`flag`) VALUES ('%s','%u','%d','%d','%" PRIu8 "')",
 		market_table, exname, list->nameid, list->value, list->qty, list->flag) ||
 		SQL_ERROR == SqlStmt_Execute(stmt))
 		SqlStmt_ShowDebug(stmt);
@@ -4707,7 +4711,7 @@ static int npc_market_checkall_sub(DBKey key, DBData *data, va_list ap) {
 			npc_market_tosql(nd->exname, &nd->u.shop.shop_item[j]);
 		}
 		else { // Removing "out-of-date" entry
-			ShowError("npc_market_checkall_sub: NPC '%s' does not sell item %u (qty %hu), deleting...\n", nd->exname, list->nameid, list->qty);
+			ShowError("npc_market_checkall_sub: NPC '%s' does not sell item %u (qty %d), deleting...\n", nd->exname, list->nameid, list->qty);
 			npc_market_delfromsql(nd->exname, list->nameid);
 		}
 	}

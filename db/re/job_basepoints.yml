@@ -8936,609 +8936,6 @@ Body:
       - Level: 99
         Hp: 4250
   - Jobs:
-      Dark_Collector: true
-    BaseHp:
-      - Level: 1
-        Hp: 40
-      - Level: 2
-        Hp: 46
-      - Level: 3
-        Hp: 53
-      - Level: 4
-        Hp: 60
-      - Level: 5
-        Hp: 68
-      - Level: 6
-        Hp: 76
-      - Level: 7
-        Hp: 85
-      - Level: 8
-        Hp: 94
-      - Level: 9
-        Hp: 104
-      - Level: 10
-        Hp: 114
-      - Level: 11
-        Hp: 125
-      - Level: 12
-        Hp: 136
-      - Level: 13
-        Hp: 148
-      - Level: 14
-        Hp: 160
-      - Level: 15
-        Hp: 173
-      - Level: 16
-        Hp: 186
-      - Level: 17
-        Hp: 200
-      - Level: 18
-        Hp: 214
-      - Level: 19
-        Hp: 229
-      - Level: 20
-        Hp: 244
-      - Level: 21
-        Hp: 260
-      - Level: 22
-        Hp: 276
-      - Level: 23
-        Hp: 293
-      - Level: 24
-        Hp: 310
-      - Level: 25
-        Hp: 328
-      - Level: 26
-        Hp: 346
-      - Level: 27
-        Hp: 365
-      - Level: 28
-        Hp: 384
-      - Level: 29
-        Hp: 404
-      - Level: 30
-        Hp: 424
-      - Level: 31
-        Hp: 445
-      - Level: 32
-        Hp: 466
-      - Level: 33
-        Hp: 488
-      - Level: 34
-        Hp: 510
-      - Level: 35
-        Hp: 533
-      - Level: 36
-        Hp: 556
-      - Level: 37
-        Hp: 580
-      - Level: 38
-        Hp: 604
-      - Level: 39
-        Hp: 629
-      - Level: 40
-        Hp: 654
-      - Level: 41
-        Hp: 680
-      - Level: 42
-        Hp: 706
-      - Level: 43
-        Hp: 733
-      - Level: 44
-        Hp: 760
-      - Level: 45
-        Hp: 788
-      - Level: 46
-        Hp: 816
-      - Level: 47
-        Hp: 845
-      - Level: 48
-        Hp: 874
-      - Level: 49
-        Hp: 904
-      - Level: 50
-        Hp: 934
-      - Level: 51
-        Hp: 965
-      - Level: 52
-        Hp: 996
-      - Level: 53
-        Hp: 1028
-      - Level: 54
-        Hp: 1060
-      - Level: 55
-        Hp: 1093
-      - Level: 56
-        Hp: 1126
-      - Level: 57
-        Hp: 1160
-      - Level: 58
-        Hp: 1194
-      - Level: 59
-        Hp: 1229
-      - Level: 60
-        Hp: 1264
-      - Level: 61
-        Hp: 1300
-      - Level: 62
-        Hp: 1336
-      - Level: 63
-        Hp: 1373
-      - Level: 64
-        Hp: 1410
-      - Level: 65
-        Hp: 1448
-      - Level: 66
-        Hp: 1486
-      - Level: 67
-        Hp: 1525
-      - Level: 68
-        Hp: 1564
-      - Level: 69
-        Hp: 1604
-      - Level: 70
-        Hp: 1644
-      - Level: 71
-        Hp: 1685
-      - Level: 72
-        Hp: 1726
-      - Level: 73
-        Hp: 1768
-      - Level: 74
-        Hp: 1810
-      - Level: 75
-        Hp: 1853
-      - Level: 76
-        Hp: 1896
-      - Level: 77
-        Hp: 1940
-      - Level: 78
-        Hp: 1984
-      - Level: 79
-        Hp: 2029
-      - Level: 80
-        Hp: 2074
-      - Level: 81
-        Hp: 2120
-      - Level: 82
-        Hp: 2166
-      - Level: 83
-        Hp: 2213
-      - Level: 84
-        Hp: 2260
-      - Level: 85
-        Hp: 2308
-      - Level: 86
-        Hp: 2356
-      - Level: 87
-        Hp: 2405
-      - Level: 88
-        Hp: 2454
-      - Level: 89
-        Hp: 2504
-      - Level: 90
-        Hp: 2554
-      - Level: 91
-        Hp: 2605
-      - Level: 92
-        Hp: 2656
-      - Level: 93
-        Hp: 2708
-      - Level: 94
-        Hp: 2760
-      - Level: 95
-        Hp: 2813
-      - Level: 96
-        Hp: 2866
-      - Level: 97
-        Hp: 2920
-      - Level: 98
-        Hp: 2974
-      - Level: 99
-        Hp: 3029
-  - Jobs:
-      Gangsi: true
-    BaseHp:
-      - Level: 1
-        Hp: 2040
-      - Level: 2
-        Hp: 2046
-      - Level: 3
-        Hp: 2053
-      - Level: 4
-        Hp: 2060
-      - Level: 5
-        Hp: 2068
-      - Level: 6
-        Hp: 2076
-      - Level: 7
-        Hp: 2085
-      - Level: 8
-        Hp: 2094
-      - Level: 9
-        Hp: 2104
-      - Level: 10
-        Hp: 2114
-      - Level: 11
-        Hp: 2125
-      - Level: 12
-        Hp: 2136
-      - Level: 13
-        Hp: 2148
-      - Level: 14
-        Hp: 2160
-      - Level: 15
-        Hp: 2173
-      - Level: 16
-        Hp: 2186
-      - Level: 17
-        Hp: 2200
-      - Level: 18
-        Hp: 2214
-      - Level: 19
-        Hp: 2229
-      - Level: 20
-        Hp: 2244
-      - Level: 21
-        Hp: 2260
-      - Level: 22
-        Hp: 2276
-      - Level: 23
-        Hp: 2293
-      - Level: 24
-        Hp: 2310
-      - Level: 25
-        Hp: 2328
-      - Level: 26
-        Hp: 2346
-      - Level: 27
-        Hp: 2365
-      - Level: 28
-        Hp: 2384
-      - Level: 29
-        Hp: 2404
-      - Level: 30
-        Hp: 2424
-      - Level: 31
-        Hp: 2445
-      - Level: 32
-        Hp: 2466
-      - Level: 33
-        Hp: 2488
-      - Level: 34
-        Hp: 2510
-      - Level: 35
-        Hp: 2533
-      - Level: 36
-        Hp: 2556
-      - Level: 37
-        Hp: 2580
-      - Level: 38
-        Hp: 2604
-      - Level: 39
-        Hp: 2629
-      - Level: 40
-        Hp: 2654
-      - Level: 41
-        Hp: 2680
-      - Level: 42
-        Hp: 2706
-      - Level: 43
-        Hp: 2733
-      - Level: 44
-        Hp: 2760
-      - Level: 45
-        Hp: 2788
-      - Level: 46
-        Hp: 2816
-      - Level: 47
-        Hp: 2845
-      - Level: 48
-        Hp: 2874
-      - Level: 49
-        Hp: 2904
-      - Level: 50
-        Hp: 2934
-      - Level: 51
-        Hp: 2965
-      - Level: 52
-        Hp: 2996
-      - Level: 53
-        Hp: 3028
-      - Level: 54
-        Hp: 3060
-      - Level: 55
-        Hp: 3093
-      - Level: 56
-        Hp: 3126
-      - Level: 57
-        Hp: 3160
-      - Level: 58
-        Hp: 3194
-      - Level: 59
-        Hp: 3229
-      - Level: 60
-        Hp: 3264
-      - Level: 61
-        Hp: 3300
-      - Level: 62
-        Hp: 3336
-      - Level: 63
-        Hp: 3373
-      - Level: 64
-        Hp: 3410
-      - Level: 65
-        Hp: 3448
-      - Level: 66
-        Hp: 3486
-      - Level: 67
-        Hp: 3525
-      - Level: 68
-        Hp: 3564
-      - Level: 69
-        Hp: 3604
-      - Level: 70
-        Hp: 3644
-      - Level: 71
-        Hp: 3685
-      - Level: 72
-        Hp: 3726
-      - Level: 73
-        Hp: 3768
-      - Level: 74
-        Hp: 3810
-      - Level: 75
-        Hp: 3853
-      - Level: 76
-        Hp: 3896
-      - Level: 77
-        Hp: 3940
-      - Level: 78
-        Hp: 3984
-      - Level: 79
-        Hp: 4029
-      - Level: 80
-        Hp: 4074
-      - Level: 81
-        Hp: 4120
-      - Level: 82
-        Hp: 4166
-      - Level: 83
-        Hp: 4213
-      - Level: 84
-        Hp: 4260
-      - Level: 85
-        Hp: 4308
-      - Level: 86
-        Hp: 4356
-      - Level: 87
-        Hp: 4405
-      - Level: 88
-        Hp: 4454
-      - Level: 89
-        Hp: 4504
-      - Level: 90
-        Hp: 4554
-      - Level: 91
-        Hp: 4605
-      - Level: 92
-        Hp: 4656
-      - Level: 93
-        Hp: 4708
-      - Level: 94
-        Hp: 4760
-      - Level: 95
-        Hp: 4813
-      - Level: 96
-        Hp: 4866
-      - Level: 97
-        Hp: 4920
-      - Level: 98
-        Hp: 4974
-      - Level: 99
-        Hp: 5029
-  - Jobs:
-      Death_Knight: true
-    BaseHp:
-      - Level: 1
-        Hp: 40
-      - Level: 2
-        Hp: 47
-      - Level: 3
-        Hp: 54
-      - Level: 4
-        Hp: 62
-      - Level: 5
-        Hp: 71
-      - Level: 6
-        Hp: 81
-      - Level: 7
-        Hp: 91
-      - Level: 8
-        Hp: 102
-      - Level: 9
-        Hp: 114
-      - Level: 10
-        Hp: 127
-      - Level: 11
-        Hp: 140
-      - Level: 12
-        Hp: 154
-      - Level: 13
-        Hp: 169
-      - Level: 14
-        Hp: 185
-      - Level: 15
-        Hp: 201
-      - Level: 16
-        Hp: 218
-      - Level: 17
-        Hp: 236
-      - Level: 18
-        Hp: 255
-      - Level: 19
-        Hp: 274
-      - Level: 20
-        Hp: 294
-      - Level: 21
-        Hp: 315
-      - Level: 22
-        Hp: 337
-      - Level: 23
-        Hp: 359
-      - Level: 24
-        Hp: 382
-      - Level: 25
-        Hp: 406
-      - Level: 26
-        Hp: 431
-      - Level: 27
-        Hp: 456
-      - Level: 28
-        Hp: 482
-      - Level: 29
-        Hp: 509
-      - Level: 30
-        Hp: 537
-      - Level: 31
-        Hp: 565
-      - Level: 32
-        Hp: 594
-      - Level: 33
-        Hp: 624
-      - Level: 34
-        Hp: 655
-      - Level: 35
-        Hp: 686
-      - Level: 36
-        Hp: 718
-      - Level: 37
-        Hp: 751
-      - Level: 38
-        Hp: 785
-      - Level: 39
-        Hp: 819
-      - Level: 40
-        Hp: 854
-      - Level: 41
-        Hp: 890
-      - Level: 42
-        Hp: 927
-      - Level: 43
-        Hp: 964
-      - Level: 44
-        Hp: 1002
-      - Level: 45
-        Hp: 1041
-      - Level: 46
-        Hp: 1081
-      - Level: 47
-        Hp: 1121
-      - Level: 48
-        Hp: 1162
-      - Level: 49
-        Hp: 1204
-      - Level: 50
-        Hp: 1247
-      - Level: 51
-        Hp: 1290
-      - Level: 52
-        Hp: 1334
-      - Level: 53
-        Hp: 1379
-      - Level: 54
-        Hp: 1425
-      - Level: 55
-        Hp: 1471
-      - Level: 56
-        Hp: 1518
-      - Level: 57
-        Hp: 1566
-      - Level: 58
-        Hp: 1615
-      - Level: 59
-        Hp: 1664
-      - Level: 60
-        Hp: 1714
-      - Level: 61
-        Hp: 1765
-      - Level: 62
-        Hp: 1817
-      - Level: 63
-        Hp: 1869
-      - Level: 64
-        Hp: 1922
-      - Level: 65
-        Hp: 1976
-      - Level: 66
-        Hp: 2031
-      - Level: 67
-        Hp: 2086
-      - Level: 68
-        Hp: 2142
-      - Level: 69
-        Hp: 2199
-      - Level: 70
-        Hp: 2257
-      - Level: 71
-        Hp: 2315
-      - Level: 72
-        Hp: 2374
-      - Level: 73
-        Hp: 2434
-      - Level: 74
-        Hp: 2495
-      - Level: 75
-        Hp: 2556
-      - Level: 76
-        Hp: 2618
-      - Level: 77
-        Hp: 2681
-      - Level: 78
-        Hp: 2745
-      - Level: 79
-        Hp: 2809
-      - Level: 80
-        Hp: 2874
-      - Level: 81
-        Hp: 2940
-      - Level: 82
-        Hp: 3007
-      - Level: 83
-        Hp: 3074
-      - Level: 84
-        Hp: 3142
-      - Level: 85
-        Hp: 3211
-      - Level: 86
-        Hp: 3281
-      - Level: 87
-        Hp: 3351
-      - Level: 88
-        Hp: 3422
-      - Level: 89
-        Hp: 3494
-      - Level: 90
-        Hp: 3567
-      - Level: 91
-        Hp: 3640
-      - Level: 92
-        Hp: 3714
-      - Level: 93
-        Hp: 3789
-      - Level: 94
-        Hp: 3865
-      - Level: 95
-        Hp: 3941
-      - Level: 96
-        Hp: 4018
-      - Level: 97
-        Hp: 4096
-      - Level: 98
-        Hp: 4175
-      - Level: 99
-        Hp: 4254
-  - Jobs:
       Summoner: true
       Baby_Summoner: true
     BaseHp:
@@ -9893,6 +9290,67 @@ Body:
       - Level: 175
         Hp: 23220
       # Levels 176-200 are unknown
+      # -----------------------------------------------------------------
+      # Provided by SSboyz
+      # data source: https://landgris.github.io/ROCalculator/
+      #
+      # Levels 176-200 HP Data Begin
+      # -----------------------------------------------------------------
+      - Level: 176
+        Hp: 23565
+      - Level: 177
+        Hp: 23910
+      - Level: 178
+        Hp: 24255
+      - Level: 178
+        Hp: 24600
+      - Level: 179
+        Hp: 24945
+      - Level: 180
+        Hp: 25305
+      - Level: 181
+        Hp: 25665
+      - Level: 182
+        Hp: 26025
+      - Level: 183
+        Hp: 26385
+      - Level: 184
+        Hp: 26745
+      - Level: 185
+        Hp: 27105
+      - Level: 186
+        Hp: 27480
+      - Level: 187
+        Hp: 27855
+      - Level: 188
+        Hp: 28230
+      - Level: 189
+        Hp: 28605
+      - Level: 190
+        Hp: 28980
+      - Level: 191
+        Hp: 29370
+      - Level: 192
+        Hp: 29760
+      - Level: 193
+        Hp: 30150
+      - Level: 194
+        Hp: 30540
+      - Level: 195
+        Hp: 30930
+      - Level: 196
+        Hp: 31335
+      - Level: 197
+        Hp: 31740
+      - Level: 198
+        Hp: 32145
+      - Level: 199
+        Hp: 32550
+      - Level: 200
+        Hp: 32955
+      # -----------------------------------------------------------------
+      # Levels 176-200 HP Data End
+      # -----------------------------------------------------------------
   - Jobs:
       Novice: true
       Super_Novice: true
@@ -18544,609 +18002,6 @@ Body:
       - Level: 99
         Sp: 900
   - Jobs:
-      Dark_Collector: true
-    BaseSp:
-      - Level: 1
-        Sp: 13
-      - Level: 2
-        Sp: 16
-      - Level: 3
-        Sp: 19
-      - Level: 4
-        Sp: 22
-      - Level: 5
-        Sp: 25
-      - Level: 6
-        Sp: 28
-      - Level: 7
-        Sp: 31
-      - Level: 8
-        Sp: 34
-      - Level: 9
-        Sp: 37
-      - Level: 10
-        Sp: 40
-      - Level: 11
-        Sp: 43
-      - Level: 12
-        Sp: 46
-      - Level: 13
-        Sp: 49
-      - Level: 14
-        Sp: 52
-      - Level: 15
-        Sp: 55
-      - Level: 16
-        Sp: 58
-      - Level: 17
-        Sp: 61
-      - Level: 18
-        Sp: 64
-      - Level: 19
-        Sp: 67
-      - Level: 20
-        Sp: 70
-      - Level: 21
-        Sp: 73
-      - Level: 22
-        Sp: 76
-      - Level: 23
-        Sp: 79
-      - Level: 24
-        Sp: 82
-      - Level: 25
-        Sp: 85
-      - Level: 26
-        Sp: 88
-      - Level: 27
-        Sp: 91
-      - Level: 28
-        Sp: 94
-      - Level: 29
-        Sp: 97
-      - Level: 30
-        Sp: 100
-      - Level: 31
-        Sp: 103
-      - Level: 32
-        Sp: 106
-      - Level: 33
-        Sp: 109
-      - Level: 34
-        Sp: 112
-      - Level: 35
-        Sp: 115
-      - Level: 36
-        Sp: 118
-      - Level: 37
-        Sp: 121
-      - Level: 38
-        Sp: 124
-      - Level: 39
-        Sp: 127
-      - Level: 40
-        Sp: 130
-      - Level: 41
-        Sp: 133
-      - Level: 42
-        Sp: 136
-      - Level: 43
-        Sp: 139
-      - Level: 44
-        Sp: 142
-      - Level: 45
-        Sp: 145
-      - Level: 46
-        Sp: 148
-      - Level: 47
-        Sp: 151
-      - Level: 48
-        Sp: 154
-      - Level: 49
-        Sp: 157
-      - Level: 50
-        Sp: 160
-      - Level: 51
-        Sp: 163
-      - Level: 52
-        Sp: 166
-      - Level: 53
-        Sp: 169
-      - Level: 54
-        Sp: 172
-      - Level: 55
-        Sp: 175
-      - Level: 56
-        Sp: 178
-      - Level: 57
-        Sp: 181
-      - Level: 58
-        Sp: 184
-      - Level: 59
-        Sp: 187
-      - Level: 60
-        Sp: 190
-      - Level: 61
-        Sp: 193
-      - Level: 62
-        Sp: 196
-      - Level: 63
-        Sp: 199
-      - Level: 64
-        Sp: 202
-      - Level: 65
-        Sp: 205
-      - Level: 66
-        Sp: 208
-      - Level: 67
-        Sp: 211
-      - Level: 68
-        Sp: 214
-      - Level: 69
-        Sp: 217
-      - Level: 70
-        Sp: 220
-      - Level: 71
-        Sp: 223
-      - Level: 72
-        Sp: 226
-      - Level: 73
-        Sp: 229
-      - Level: 74
-        Sp: 232
-      - Level: 75
-        Sp: 235
-      - Level: 76
-        Sp: 238
-      - Level: 77
-        Sp: 241
-      - Level: 78
-        Sp: 244
-      - Level: 79
-        Sp: 247
-      - Level: 80
-        Sp: 250
-      - Level: 81
-        Sp: 253
-      - Level: 82
-        Sp: 256
-      - Level: 83
-        Sp: 259
-      - Level: 84
-        Sp: 262
-      - Level: 85
-        Sp: 265
-      - Level: 86
-        Sp: 268
-      - Level: 87
-        Sp: 271
-      - Level: 88
-        Sp: 274
-      - Level: 89
-        Sp: 277
-      - Level: 90
-        Sp: 280
-      - Level: 91
-        Sp: 283
-      - Level: 92
-        Sp: 286
-      - Level: 93
-        Sp: 289
-      - Level: 94
-        Sp: 292
-      - Level: 95
-        Sp: 295
-      - Level: 96
-        Sp: 298
-      - Level: 97
-        Sp: 301
-      - Level: 98
-        Sp: 304
-      - Level: 99
-        Sp: 307
-  - Jobs:
-      Gangsi: true
-    BaseSp:
-      - Level: 1
-        Sp: 13
-      - Level: 2
-        Sp: 16
-      - Level: 3
-        Sp: 19
-      - Level: 4
-        Sp: 22
-      - Level: 5
-        Sp: 25
-      - Level: 6
-        Sp: 28
-      - Level: 7
-        Sp: 31
-      - Level: 8
-        Sp: 34
-      - Level: 9
-        Sp: 37
-      - Level: 10
-        Sp: 40
-      - Level: 11
-        Sp: 43
-      - Level: 12
-        Sp: 46
-      - Level: 13
-        Sp: 49
-      - Level: 14
-        Sp: 52
-      - Level: 15
-        Sp: 55
-      - Level: 16
-        Sp: 58
-      - Level: 17
-        Sp: 61
-      - Level: 18
-        Sp: 64
-      - Level: 19
-        Sp: 67
-      - Level: 20
-        Sp: 70
-      - Level: 21
-        Sp: 73
-      - Level: 22
-        Sp: 76
-      - Level: 23
-        Sp: 79
-      - Level: 24
-        Sp: 82
-      - Level: 25
-        Sp: 85
-      - Level: 26
-        Sp: 88
-      - Level: 27
-        Sp: 91
-      - Level: 28
-        Sp: 94
-      - Level: 29
-        Sp: 97
-      - Level: 30
-        Sp: 100
-      - Level: 31
-        Sp: 103
-      - Level: 32
-        Sp: 106
-      - Level: 33
-        Sp: 109
-      - Level: 34
-        Sp: 112
-      - Level: 35
-        Sp: 115
-      - Level: 36
-        Sp: 118
-      - Level: 37
-        Sp: 121
-      - Level: 38
-        Sp: 124
-      - Level: 39
-        Sp: 127
-      - Level: 40
-        Sp: 130
-      - Level: 41
-        Sp: 133
-      - Level: 42
-        Sp: 136
-      - Level: 43
-        Sp: 139
-      - Level: 44
-        Sp: 142
-      - Level: 45
-        Sp: 145
-      - Level: 46
-        Sp: 148
-      - Level: 47
-        Sp: 151
-      - Level: 48
-        Sp: 154
-      - Level: 49
-        Sp: 157
-      - Level: 50
-        Sp: 160
-      - Level: 51
-        Sp: 163
-      - Level: 52
-        Sp: 166
-      - Level: 53
-        Sp: 169
-      - Level: 54
-        Sp: 172
-      - Level: 55
-        Sp: 175
-      - Level: 56
-        Sp: 178
-      - Level: 57
-        Sp: 181
-      - Level: 58
-        Sp: 184
-      - Level: 59
-        Sp: 187
-      - Level: 60
-        Sp: 190
-      - Level: 61
-        Sp: 193
-      - Level: 62
-        Sp: 196
-      - Level: 63
-        Sp: 199
-      - Level: 64
-        Sp: 202
-      - Level: 65
-        Sp: 205
-      - Level: 66
-        Sp: 208
-      - Level: 67
-        Sp: 211
-      - Level: 68
-        Sp: 214
-      - Level: 69
-        Sp: 217
-      - Level: 70
-        Sp: 220
-      - Level: 71
-        Sp: 223
-      - Level: 72
-        Sp: 226
-      - Level: 73
-        Sp: 229
-      - Level: 74
-        Sp: 232
-      - Level: 75
-        Sp: 235
-      - Level: 76
-        Sp: 238
-      - Level: 77
-        Sp: 241
-      - Level: 78
-        Sp: 244
-      - Level: 79
-        Sp: 247
-      - Level: 80
-        Sp: 250
-      - Level: 81
-        Sp: 253
-      - Level: 82
-        Sp: 256
-      - Level: 83
-        Sp: 259
-      - Level: 84
-        Sp: 262
-      - Level: 85
-        Sp: 265
-      - Level: 86
-        Sp: 268
-      - Level: 87
-        Sp: 271
-      - Level: 88
-        Sp: 274
-      - Level: 89
-        Sp: 277
-      - Level: 90
-        Sp: 280
-      - Level: 91
-        Sp: 283
-      - Level: 92
-        Sp: 286
-      - Level: 93
-        Sp: 289
-      - Level: 94
-        Sp: 292
-      - Level: 95
-        Sp: 295
-      - Level: 96
-        Sp: 298
-      - Level: 97
-        Sp: 301
-      - Level: 98
-        Sp: 304
-      - Level: 99
-        Sp: 307
-  - Jobs:
-      Death_Knight: true
-    BaseSp:
-      - Level: 1
-        Sp: 17
-      - Level: 2
-        Sp: 24
-      - Level: 3
-        Sp: 31
-      - Level: 4
-        Sp: 38
-      - Level: 5
-        Sp: 45
-      - Level: 6
-        Sp: 52
-      - Level: 7
-        Sp: 59
-      - Level: 8
-        Sp: 66
-      - Level: 9
-        Sp: 73
-      - Level: 10
-        Sp: 80
-      - Level: 11
-        Sp: 87
-      - Level: 12
-        Sp: 94
-      - Level: 13
-        Sp: 101
-      - Level: 14
-        Sp: 108
-      - Level: 15
-        Sp: 115
-      - Level: 16
-        Sp: 122
-      - Level: 17
-        Sp: 129
-      - Level: 18
-        Sp: 136
-      - Level: 19
-        Sp: 143
-      - Level: 20
-        Sp: 150
-      - Level: 21
-        Sp: 157
-      - Level: 22
-        Sp: 164
-      - Level: 23
-        Sp: 171
-      - Level: 24
-        Sp: 178
-      - Level: 25
-        Sp: 185
-      - Level: 26
-        Sp: 192
-      - Level: 27
-        Sp: 199
-      - Level: 28
-        Sp: 206
-      - Level: 29
-        Sp: 213
-      - Level: 30
-        Sp: 220
-      - Level: 31
-        Sp: 227
-      - Level: 32
-        Sp: 234
-      - Level: 33
-        Sp: 241
-      - Level: 34
-        Sp: 248
-      - Level: 35
-        Sp: 255
-      - Level: 36
-        Sp: 262
-      - Level: 37
-        Sp: 269
-      - Level: 38
-        Sp: 276
-      - Level: 39
-        Sp: 283
-      - Level: 40
-        Sp: 290
-      - Level: 41
-        Sp: 297
-      - Level: 42
-        Sp: 304
-      - Level: 43
-        Sp: 311
-      - Level: 44
-        Sp: 318
-      - Level: 45
-        Sp: 325
-      - Level: 46
-        Sp: 332
-      - Level: 47
-        Sp: 339
-      - Level: 48
-        Sp: 346
-      - Level: 49
-        Sp: 353
-      - Level: 50
-        Sp: 360
-      - Level: 51
-        Sp: 367
-      - Level: 52
-        Sp: 374
-      - Level: 53
-        Sp: 381
-      - Level: 54
-        Sp: 388
-      - Level: 55
-        Sp: 395
-      - Level: 56
-        Sp: 402
-      - Level: 57
-        Sp: 409
-      - Level: 58
-        Sp: 416
-      - Level: 59
-        Sp: 423
-      - Level: 60
-        Sp: 430
-      - Level: 61
-        Sp: 437
-      - Level: 62
-        Sp: 444
-      - Level: 63
-        Sp: 451
-      - Level: 64
-        Sp: 458
-      - Level: 65
-        Sp: 465
-      - Level: 66
-        Sp: 472
-      - Level: 67
-        Sp: 479
-      - Level: 68
-        Sp: 486
-      - Level: 69
-        Sp: 493
-      - Level: 70
-        Sp: 500
-      - Level: 71
-        Sp: 507
-      - Level: 72
-        Sp: 514
-      - Level: 73
-        Sp: 521
-      - Level: 74
-        Sp: 528
-      - Level: 75
-        Sp: 535
-      - Level: 76
-        Sp: 542
-      - Level: 77
-        Sp: 549
-      - Level: 78
-        Sp: 556
-      - Level: 79
-        Sp: 563
-      - Level: 80
-        Sp: 570
-      - Level: 81
-        Sp: 577
-      - Level: 82
-        Sp: 584
-      - Level: 83
-        Sp: 591
-      - Level: 84
-        Sp: 598
-      - Level: 85
-        Sp: 605
-      - Level: 86
-        Sp: 612
-      - Level: 87
-        Sp: 619
-      - Level: 88
-        Sp: 626
-      - Level: 89
-        Sp: 633
-      - Level: 90
-        Sp: 640
-      - Level: 91
-        Sp: 647
-      - Level: 92
-        Sp: 654
-      - Level: 93
-        Sp: 661
-      - Level: 94
-        Sp: 668
-      - Level: 95
-        Sp: 675
-      - Level: 96
-        Sp: 682
-      - Level: 97
-        Sp: 689
-      - Level: 98
-        Sp: 696
-      - Level: 99
-        Sp: 703
-  - Jobs:
       Summoner: true
       Baby_Summoner: true
     BaseSp:
@@ -19501,6 +18356,65 @@ Body:
       - Level: 175
         Sp: 1074
       # Levels 176-200 are unknown
+      # -----------------------------------------------------------------
+      # Provided by SSboyz
+      # data source: https://landgris.github.io/ROCalculator/
+      #
+      # Levels 176-200 SP Data Begin
+      # -----------------------------------------------------------------
+      - Level: 176
+        Sp: 1082
+      - Level: 177
+        Sp: 1090
+      - Level: 178
+        Sp: 1098
+      - Level: 179
+        Sp: 1106
+      - Level: 180
+        Sp: 1114
+      - Level: 181
+        Sp: 1122
+      - Level: 182
+        Sp: 1130
+      - Level: 183
+        Sp: 1138
+      - Level: 184
+        Sp: 1146
+      - Level: 185
+        Sp: 1154
+      - Level: 186
+        Sp: 1162
+      - Level: 187
+        Sp: 1170
+      - Level: 188
+        Sp: 1178
+      - Level: 189
+        Sp: 1186
+      - Level: 190
+        Sp: 1194
+      - Level: 191
+        Sp: 1202
+      - Level: 192
+        Sp: 1210
+      - Level: 193
+        Sp: 1218
+      - Level: 194
+        Sp: 1226
+      - Level: 195
+        Sp: 1234
+      - Level: 196
+        Sp: 1242
+      - Level: 197
+        Sp: 1250
+      - Level: 198
+        Sp: 1258
+      - Level: 199
+        Sp: 1266
+      - Level: 200
+        Sp: 1274
+      # -----------------------------------------------------------------
+      # Levels 176-200 SP Data End
+      # -----------------------------------------------------------------
   - Jobs:
       Star_Emperor: true
       Baby_Star_Emperor: true
@@ -19662,6 +18576,65 @@ Body:
       - Level: 175
         Hp: 17486
       # Levels 176-200 are unknown
+      # -----------------------------------------------------------------
+      # Provided by SSboyz
+      # data source: https://landgris.github.io/ROCalculator/
+      #
+      # Levels 176-200 HP Data Begin
+      # -----------------------------------------------------------------
+      - Level: 176
+        Hp: 17708
+      - Level: 177
+        Hp: 17932
+      - Level: 178
+        Hp: 18158
+      - Level: 179
+        Hp: 18386
+      - Level: 180
+        Hp: 18616
+      - Level: 181
+        Hp: 18848
+      - Level: 182
+        Hp: 19082
+      - Level: 183
+        Hp: 19318
+      - Level: 184
+        Hp: 19556
+      - Level: 185
+        Hp: 19796
+      - Level: 186
+        Hp: 20038
+      - Level: 187
+        Hp: 20282
+      - Level: 188
+        Hp: 20528
+      - Level: 189
+        Hp: 20776
+      - Level: 190
+        Hp: 21026
+      - Level: 191
+        Hp: 21278
+      - Level: 192
+        Hp: 21532
+      - Level: 193
+        Hp: 21788
+      - Level: 194
+        Hp: 22046
+      - Level: 195
+        Hp: 22306
+      - Level: 196
+        Hp: 22568
+      - Level: 197
+        Hp: 22832
+      - Level: 198
+        Hp: 23098
+      - Level: 199
+        Hp: 23366
+      - Level: 200
+        Hp: 23636
+      # -----------------------------------------------------------------
+      # Levels 176-200 HP Data End
+      # -----------------------------------------------------------------
   - Jobs:
       Soul_Reaper: true
       Baby_Soul_Reaper: true
@@ -19821,6 +18794,65 @@ Body:
       - Level: 175
         Hp: 11635
       # Levels 176-200 are unknown
+      # -----------------------------------------------------------------
+      # Provided by SSboyz
+      # data source: https://landgris.github.io/ROCalculator/
+      #
+      # Levels 176-200 HP Data Begin
+      # -----------------------------------------------------------------
+      - Level: 176
+        Hp: 11810
+      - Level: 177
+        Hp: 11985
+      - Level: 178
+        Hp: 12160
+      - Level: 179
+        Hp: 12335
+      - Level: 180
+        Hp: 12510
+      - Level: 181
+        Hp: 12685
+      - Level: 182
+        Hp: 12860
+      - Level: 183
+        Hp: 13035
+      - Level: 184
+        Hp: 13210
+      - Level: 185
+        Hp: 13385
+      - Level: 186
+        Hp: 13560
+      - Level: 187
+        Hp: 13735
+      - Level: 188
+        Hp: 13910
+      - Level: 189
+        Hp: 14085
+      - Level: 190
+        Hp: 14260
+      - Level: 191
+        Hp: 14435
+      - Level: 192
+        Hp: 14610
+      - Level: 193
+        Hp: 14785
+      - Level: 194
+        Hp: 14960
+      - Level: 195
+        Hp: 15135
+      - Level: 196
+        Hp: 15310
+      - Level: 197
+        Hp: 15485
+      - Level: 198
+        Hp: 15660
+      - Level: 199
+        Hp: 15835
+      - Level: 200
+        Hp: 16010
+      # -----------------------------------------------------------------
+      # Levels 176-200 HP Data End
+      # -----------------------------------------------------------------
   - Jobs:
       Star_Emperor: true
       Baby_Star_Emperor: true
@@ -19982,6 +19014,65 @@ Body:
       - Level: 175
         Sp: 1220
       # Levels 176-200 are unknown
+      # -----------------------------------------------------------------
+      # Provided by SSboyz
+      # data source: https://landgris.github.io/ROCalculator/
+      #
+      # Levels 176-200 SP Data Begin
+      # -----------------------------------------------------------------
+      - Level: 176
+        Sp: 1228
+      - Level: 177
+        Sp: 1236
+      - Level: 178
+        Sp: 1244
+      - Level: 179
+        Sp: 1252
+      - Level: 180
+        Sp: 1260
+      - Level: 181
+        Sp: 1268
+      - Level: 182
+        Sp: 1276
+      - Level: 183
+        Sp: 1284
+      - Level: 184
+        Sp: 1292
+      - Level: 185
+        Sp: 1300
+      - Level: 186
+        Sp: 1308
+      - Level: 187
+        Sp: 1316
+      - Level: 188
+        Sp: 1324
+      - Level: 189
+        Sp: 1332
+      - Level: 190
+        Sp: 1340
+      - Level: 191
+        Sp: 1348
+      - Level: 192
+        Sp: 1356
+      - Level: 193
+        Sp: 1364
+      - Level: 194
+        Sp: 1372
+      - Level: 195
+        Sp: 1380
+      - Level: 196
+        Sp: 1388
+      - Level: 197
+        Sp: 1396
+      - Level: 198
+        Sp: 1404
+      - Level: 199
+        Sp: 1412
+      - Level: 200
+        Sp: 1420
+      # -----------------------------------------------------------------
+      # Levels 176-200 SP Data End
+      # -----------------------------------------------------------------
   - Jobs:
       Soul_Reaper: true
       Baby_Soul_Reaper: true
@@ -20141,6 +19232,65 @@ Body:
       - Level: 175
         Sp: 1615
       # Levels 176-200 are unknown
+      # -----------------------------------------------------------------
+      # Provided by SSboyz
+      # data source: https://landgris.github.io/ROCalculator/
+      #
+      # Levels 176-200 SP Data Begin
+      # -----------------------------------------------------------------
+      - Level: 176
+        Sp: 1627
+      - Level: 177
+        Sp: 1639
+      - Level: 178
+        Sp: 1651
+      - Level: 179
+        Sp: 1663
+      - Level: 180
+        Sp: 1675
+      - Level: 181
+        Sp: 1687
+      - Level: 182
+        Sp: 1699
+      - Level: 183
+        Sp: 1711
+      - Level: 184
+        Sp: 1723
+      - Level: 185
+        Sp: 1735
+      - Level: 186
+        Sp: 1747
+      - Level: 187
+        Sp: 1759
+      - Level: 188
+        Sp: 1771
+      - Level: 189
+        Sp: 1783
+      - Level: 190
+        Sp: 1795
+      - Level: 191
+        Sp: 1807
+      - Level: 192
+        Sp: 1819
+      - Level: 193
+        Sp: 1831
+      - Level: 194
+        Sp: 1843
+      - Level: 195
+        Sp: 1855
+      - Level: 196
+        Sp: 1867
+      - Level: 197
+        Sp: 1879
+      - Level: 198
+        Sp: 1891
+      - Level: 199
+        Sp: 1903
+      - Level: 200
+        Sp: 1915
+      # -----------------------------------------------------------------
+      # Levels 176-200 SP Data End
+      # -----------------------------------------------------------------
   - Jobs:
       Dragon_Knight: true
       Dragon_Knight2: true
