@@ -25598,13 +25598,13 @@ Body:
     Script: |
       bonus2 bSubEle,Ele_Fire,100;
       bonus2 bSubSkill,"NPC_CRITICALSLASH",100;
-#  - Combos:
-#      - Combo:
-#          - Arabian_Manteau     # 480023
-#          - aegis_300331     # 300331
-#    Script: |
-#      bonus2 bSubEle,Ele_Fire,30;
-#      bonus2 bSubSkill,"NPC_CRITICALSLASH",30;
+  - Combos:
+      - Combo:
+          - Arabian_Manteau     # 480023
+          - Sealed_Ifrit_Card_J     # 300331
+    Script: |
+      bonus2 bSubEle,Ele_Fire,30;
+      bonus2 bSubSkill,"NPC_CRITICALSLASH",30;
   - Combos:
       - Combo:
           - Pendant_of_Solomon     # 490035
@@ -25866,3 +25866,277 @@ Body:
          bonus2 bSkillAtk,"NC_AXETORNADO",20;
       if (.@r >= 9)
          bonus2 bSkillAtk,"NC_AXETORNADO",40;
+  - Combos:
+      - Combo:
+          - Isabella_Blue_Ear     # 18910
+          - aegis_420000     # 420000
+    Script: |
+      if (getequiprefinerycnt(EQI_HEAD_TOP) >= 9)
+         bonus2 bAddSize,Size_Medium,6;
+  - Combos:
+      - Combo:
+          - Isabella_Red_Ear     # 18908
+          - aegis_420000     # 420000
+    Script: |
+      if (getequiprefinerycnt(EQI_HEAD_TOP) >= 9)
+         bonus bAspdRate,6;
+  - Combos:
+      - Combo:
+          - Isabella_Brown_Ear     # 18909
+          - aegis_420000     # 420000
+    Script: |
+      if (getequiprefinerycnt(EQI_HEAD_TOP) >= 9) {
+         bonus2 bSubRace,RC_DemiHuman,6;
+         bonus2 bSubRace,RC_Player_Human,6;
+      }
+  - Combos:
+      - Combo:
+          - aegis_400101    # 400101
+          - Fenrir_Card    # 4556
+    Script: |
+      bonus bInt,30;
+      bonus bDex,30;
+      bonus2 bFixedCastrate,"WL_TETRAVORTEX",-100;
+  - Combos:
+      - Combo:
+          - Goddess_of_Abundance    # 311073
+          - Atroce_Card    # 4425
+    Script: |
+      bonus2 bAddClass,Class_All,25;
+      autobonus "{ bonus bAspdRate,100; }",5,30000,0,"{}";
+  - Combos:
+      - Combo:
+          - Goddess_of_Abundance    # 311073
+          - Ifrit_Card    # 4430
+    Script: |
+      bonus bBaseAtk,JobLevel;
+      bonus bCritical,JobLevel;
+      bonus bHit,JobLevel;
+      bonus3 bAutoSpellWhenHit,"NPC_EARTHQUAKE",6,10;
+  - Combos:
+      - Combo:
+          - Goddess_of_Abundance    # 311073
+          - Berzebub_Card    # 4145
+    Script: |
+      bonus bMatkRate,readparam(bLuk)/10;
+      if (readparam(bLuk)>=130) {
+         bonus bMatkRate,15;
+         skill "PF_HPCONVERSION",3;
+      }
+  - Combos:
+      - Combo:
+          - Goddess_of_Abundance    # 311073
+          - Fallen_Bishop_Card    # 4441
+    Script: |
+      bonus2 bMagicAddRace,RC_DemiHuman,50;
+      bonus2 bMagicAddRace,RC_Player_Human,50;
+  - Combos:
+      - Combo:
+          - Goddess_of_Abundance    # 311073
+          - Fallen_Bishop_Card    # 4441
+          - Runaway_Magic    # 4876
+    Script: |
+      bonus2 bMagicAddRace,RC_DemiHuman,-50;
+      bonus2 bMagicAddRace,RC_Player_Human,-50;
+  - Combos:
+      - Combo:
+          - Goddess_of_Abundance    # 311073
+          - Ktullanux_Card    # 4419
+    Script: |
+      bonus bMaxHPrate,50;
+      skill "SA_FROSTWEAPON",5;
+  - Combos:
+      - Combo:
+          - Goddess_of_Abundance    # 311073
+          - Gloom_Under_Night_Card    # 4408
+    Script: |
+      bonus bMaxHPrate,50;
+      skill "LG_PIETY",1;
+  - Combos:
+      - Combo:
+          - Goddess_of_Abundance    # 311073
+          - Sealed_Atroce_Card_J    # 300330
+    Script: |
+      bonus2 bAddClass,Class_All,15;
+      autobonus "{ bonus bAspdRate,30; }",5,30000,0,"{}";
+  - Combos:
+      - Combo:
+          - Goddess_of_Abundance    # 311073
+          - Sealed_Ifrit_Card_J    # 300331
+    Script: |
+      bonus bBaseAtk,JobLevel/2;
+      bonus bCritical,JobLevel/2;
+      bonus bHit,JobLevel/2;
+  - Combos:
+      - Combo:
+          - Sealed_Berz_Card_J    # 311071
+          - Hollow_Shoes    # 22212
+    Script: |
+      .@eq = getequiprefinerycnt(EQI_SHOES);
+      bonus2 bMagicAddEle,Ele_Dark,10;
+      bonus2 bMagicAddEle,Ele_Ghost,10;
+      bonus2 bMagicAddEle,Ele_Undead,10;
+      if (BaseLevel <= 99) {
+         bonus bMatk,2*.@eq;
+         bonus bVariableCastrate,-.@eq;
+      } else {
+         bonus bMatk,5*.@eq;
+         bonus bVariableCastrate,-(2*.@eq);
+      }
+  - Combos:
+      - Combo:
+          - Sealed_Berz_Card_J    # 311071
+          - Hollow_Shoes_    # 470113
+    Script: |
+      .@eq = getequiprefinerycnt(EQI_SHOES);
+      skill "PR_MAGNUS",10;
+      bonus2 bMagicAddEle,Ele_Dark,30;
+      bonus2 bMagicAddEle,Ele_Ghost,30;
+      bonus2 bMagicAddEle,Ele_Undead,30;
+      if (BaseLevel <= 99) {
+         bonus bMatk,5*.@eq;
+         bonus bVariableCastrate,-(2*.@eq);
+      } else {
+         bonus bMatk,15*.@eq;
+         bonus bVariableCastrate,-(7*.@eq);
+      }
+  - Combos:
+      - Combo:
+          - Goddess_of_Abundance    # 311073
+          - Sealed_Berz_Card_J    # 311071
+    Script: |
+      bonus bMatkRate,readparam(bLuk)/20;
+      if (readparam(bLuk)>=130)
+         bonus bMatkRate,10;
+  - Combos:
+      - Combo:
+          - Sealed_Berz_Card_J    # 311071
+          - VesperHeadGear    # 19436
+    Script: |
+      bonus bVariableCastrate,10;
+  - Combos:
+      - Combo:
+          - Goddess_of_Abundance    # 311073
+          - Sealed_Berz_Card_J    # 311071
+          - Hollow_Shoes    # 22212
+    Script: |
+      .@eq = getequiprefinerycnt(EQI_SHOES);
+      bonus2 bMagicAddEle,Ele_Dark,-10;
+      bonus2 bMagicAddEle,Ele_Ghost,-10;
+      bonus2 bMagicAddEle,Ele_Undead,-10;
+      if (BaseLevel <= 99) {
+         bonus bMatk,-2*.@eq;
+         bonus bVariableCastrate,.@eq;
+      } else {
+         bonus bMatk,-5*.@eq;
+         bonus bVariableCastrate,2*.@eq;
+      }
+  - Combos:
+      - Combo:
+          - Goddess_of_Abundance    # 311073
+          - Sealed_Berz_Card_J    # 311071
+          - Hollow_Shoes_    # 470113
+    Script: |
+      .@eq = getequiprefinerycnt(EQI_SHOES);
+      skill "PR_MAGNUS",10;
+      bonus2 bMagicAddEle,Ele_Dark,-30;
+      bonus2 bMagicAddEle,Ele_Ghost,-30;
+      bonus2 bMagicAddEle,Ele_Undead,-30;
+      if (BaseLevel <= 99) {
+         bonus bMatk,-5*.@eq;
+         bonus bVariableCastrate,2*.@eq;
+      } else {
+         bonus bMatk,-15*.@eq;
+         bonus bVariableCastrate,7*.@eq;
+      }
+  - Combos:
+      - Combo:
+          - Fallen_Bishop_Card    # 4441
+          - Moaning_of_EvilSpirits    # 470112
+    Script: |
+      bonus bMatkRate,10;
+      bonus2 bMagicAddRace,RC_Angel,50;
+      bonus2 bMagicAddRace,RC_DemiHuman,50;
+  - Combos:
+      - Combo:
+          - Fallen_Bishop_Card    # 4441
+          - Moaning_of_EvilSpirits    # 470112
+          - Goddess_of_Abundance    # 311073
+    Script: |
+      bonus2 bMagicAddRace,RC_Player_Human,50;
+  - Combos:
+      - Combo:
+          - Sealed_F_Bishop_Card_J    # 300334
+          - Moaning_of_EvilSpirits    # 470112
+    Script: |
+      bonus2 bMagicAddRace,RC_Angel,20;
+      bonus2 bMagicAddRace,RC_DemiHuman,20;
+  - Combos:
+      - Combo:
+          - Sealed_F_Bishop_Card_J    # 300334
+          - Moaning_of_EvilSpirits    # 470112
+          - Goddess_of_Abundance    # 311073
+    Script: |
+      bonus2 bMagicAddRace,RC_Player_Human,20;
+  - Combos:
+      - Combo:
+          - Moaning_of_EvilSpirits    # 470112
+          - Runaway_Magic    # 4876
+    Script: |
+      bonus bInt,40;
+      bonus bDelayrate,-40;
+  - Combos:
+      - Combo:
+          - Goddess_of_Abundance    # 311073
+          - Sealed_F_Bishop_Card_J    # 300334
+    Script: |
+      bonus2 bMagicAddRace,RC_Angel,20;
+      bonus2 bMagicAddRace,RC_DemiHuman,20;
+      bonus2 bMagicAddRace,RC_Player_Human,20;
+  - Combos:
+      - Combo:
+          - Goddess_of_Abundance    # 311073
+          - Sealed_F_Bishop_Card_J    # 300334
+          - Runaway_Magic    # 4876
+    Script: |
+      bonus2 bMagicAddRace,RC_Angel,-20;
+      bonus2 bMagicAddRace,RC_DemiHuman,-20;
+      bonus2 bMagicAddRace,RC_Player_Human,-20;
+  - Combos:
+      - Combo:
+          - Goddess_of_Abundance    # 311073
+          - Sealed_Ktullanux_Card    # 4481
+    Script: |
+      bonus bMaxHPrate,25;
+      bonus5 bAutoSpellWhenHit,"SA_FROSTWEAPON",1,10,BF_WEAPON,0;
+  - Combos:
+      - Combo:
+          - Goddess_of_Abundance    # 311073
+          - Sealed_Gloom_Card_J    # 300332
+    Script: |
+      bonus bMaxHPrate,25;
+      bonus2 bAddEle,Ele_Holy,10;
+      bonus2 bAddEle,Ele_Dark,10;
+      bonus2 bAddRace,RC_Angel,10;
+      bonus2 bAddRace,RC_Demon,10;
+  - Combos:
+      - Combo:
+          - Thornbush_Hairband    # 18804
+          - Thorn_Staff    # 1636
+      - Combo:
+          - Thornbush_Hairband    # 18804
+          - Thorn_Staff_    # 1664
+    Script: |
+      bonus bMatk,10*min(getequiprefinerycnt(EQI_HAND_R),10);
+  - Combos:
+      - Combo:
+          - Phantom_Of_Masquerade    # 19497
+          - Thanatos_Card    # 4399
+    Script: |
+      bonus bBaseAtk,pow(getrefine(),2)*4;
+  - Combos:
+      - Combo:
+          - Phantom_Of_Masquerade    # 19497
+          - SLD_Thanatos_Card_J    # 300338
+    Script: |
+      bonus bBaseAtk,pow(getrefine(),2)*2;

@@ -2779,6 +2779,9 @@ Body:
       NoClearance: true
       OverlapFail: true
       NoRemoveOnDead: true
+    End:
+      L_Lifepotion: true
+      M_Lifepotion: true
   - Status: L_Lifepotion
     Icon: EFST_L_LIFEPOTION
     Flags:
@@ -2787,6 +2790,9 @@ Body:
       NoClearance: true
       OverlapFail: true
       NoRemoveOnDead: true
+    End:
+      S_Lifepotion: true
+      M_Lifepotion: true
   - Status: Jexpboost
     Icon: EFST_CASH_PLUSONLYJOBEXP
     Flags:
@@ -8111,3 +8117,21 @@ Body:
       All: true
     Flags:
       RemoveElementalOption: true
+  - Status: M_Lifepotion
+    Icon: EFST_M_LIFEPOTION
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapFail: true
+      NoRemoveOnDead: true
+    End:
+      S_Lifepotion: true
+      L_Lifepotion: true
+  - Status: S_Manapotion
+    Icon: EFST_S_MANAPOTION
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapFail: true
