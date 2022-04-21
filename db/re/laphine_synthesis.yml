@@ -723,8 +723,8 @@ Body:
       - Item: S_R_Bearers_Earring
       - Item: S_Mega_Blitz_Shield
       - Item: S_Mega_Blitz_Weapon
-  - Item: Drooping_Gunslinger_Scroll
-    RewardGroup: DROOPING_GUNSLINGER_SCROLL
+  - Item: Gunslinger_Enchant
+    RewardGroup: GUNSLINGER_ENCHANT
     Requirements:
       - Item: Drooping_Rebellion_
   - Item: EnchantStone_Recipe
@@ -1365,25 +1365,25 @@ Body:
         Amount: 10
       - Item: Core_Jelly
         Amount: 10
-      - Item: Clean_Bone
+      - Item: CleanBone
         Amount: 10
       - Item: DeadlyPoisonPowder
         Amount: 10
-      - Item: Bandits_Scarf
+      - Item: BanditsScarf
         Amount: 10
-      - Item: Crude_Ammo
+      - Item: CrudeAmmo
         Amount: 10
-      - Item: Broken_Shotgun
+      - Item: BrokenShotgun
         Amount: 10
-      - Item: Crude_Scimitar
+      - Item: CrudeScimiter
         Amount: 10
-      - Item: Worn_Revolver
+      - Item: WornRevolver
         Amount: 10
-      - Item: Brown_Muffler
+      - Item: BrownMuffler
         Amount: 10
-      - Item: Swamp_Bug_Shell
+      - Item: SwampBugPeelings
         Amount: 10
-      - Item: Brown_Rat_Tail
+      - Item: BrownRatTail
         Amount: 10
       - Item: Frozen_Stone_Fragment
         Amount: 10
@@ -1399,21 +1399,21 @@ Body:
         Amount: 10
       - Item: Recruitment_Leaflet
         Amount: 10
-      - Item: Illusion_Gemstone
+      - Item: IllusoryStone
         Amount: 10
-      - Item: Torn_Paper_
+      - Item: Torn_Diary
         Amount: 10
-      - Item: Well-dried_Clover
+      - Item: Dried_Clover
         Amount: 10
-      - Item: Short_Bat_Hair
+      - Item: Short_Bat_Fur
         Amount: 10
-      - Item: Cluster_of_Nightmares
+      - Item: NightmareOfLump
         Amount: 10
       - Item: Shining_Spore
         Amount: 10
       - Item: Dried_Leaf_Of_Ygg
         Amount: 10
-      - Item: Suspicious_Pentacle
+      - Item: SuspiciousMagicCircle
         Amount: 10
       - Item: Piece_of_Black_Horn
         Amount: 10
@@ -1850,12 +1850,12 @@ Body:
       - Item: C_L_RibbonMuff_Black
       - Item: C_Black_Cat_Ears_Beret
       - Item: C_Watery_Eyes
-  - Item: Fan_Modification_Kit
-    RewardGroup: FAN_MODIFICATION_KIT
+  - Item: Fan_Upgrade_Kit
+    RewardGroup: FAN_UPGRADE_KIT
     Requirements:
       - Item: Sea_Otter_Mini_Fan
-  - Item: Uniform_Repair_Kit
-    RewardGroup: UNIFORM_REPAIR_KIT
+  - Item: Suit_Upgrade_Kit
+    RewardGroup: SUIT_UPGRADE_KIT
     Requirements:
       - Item: Kafra_Uniform
   - Item: Scroll_of_Fallen_Angel_Wings
@@ -2048,24 +2048,24 @@ Body:
       - Item: S_Chemical_Shoes
       - Item: S_Bloody_Shoes
       - Item: S_Dragoon_Shoes
-  - Item: Candy_Pouch_Blessing_Scroll_Melee
-    RewardGroup: CANDY_POUCH_BLESSING_SCROLL_MELEE
+  - Item: Candy_Bag_Scroll_Melee
+    RewardGroup: CANDY_BAG_SCROLL_MELEE
     Requirements:
       - Item: Bag_Of_Antonio_P
-  - Item: Candy_Pouch_Blessing_Scroll_Range
-    RewardGroup: CANDY_POUCH_BLESSING_SCROLL_RANGE
+  - Item: Candy_BAG_Scroll_Range
+    RewardGroup: CANDY_BAG_SCROLL_RANGE
     Requirements:
       - Item: Bag_Of_Antonio_S
-  - Item: Candy_Pouch_Blessing_Scroll_Magic
-    RewardGroup: CANDY_POUCH_BLESSING_SCROLL_MAGIC
+  - Item: Candy_BAG_Scroll_Magic
+    RewardGroup: CANDY_BAG_SCROLL_MAGIC
     Requirements:
       - Item: Bag_Of_Antonio_
-  - Item: Magical_Booster_Amplifier
-    RewardGroup: MAGICAL_BOOSTER_AMPLIFIER
+  - Item: Booster_Amplifier
+    RewardGroup: BOOSTER_AMPLIFIER
     Requirements:
       - Item: Magical_Booster_K
-  - Item: Magic_Cat_hand_Scroll
-    RewardGroup: MAGIC_CAT_HAND_SCROLL
+  - Item: Magical_Cat_Hand
+    RewardGroup: MAGICAL_CAT_HAND
     Requirements:
       - Item: Neko_Headress
   - Item: StabilityShadow_Mix

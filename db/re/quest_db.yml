@@ -9452,12 +9452,84 @@ Body:
   - Id: 14650
     Title: Currently in production
     TimeLimit: 4h
+  - Id: 14651
+    Title: Decision on divorce should be made cautiously
+    TimeLimit: +4d
+  - Id: 14652
+    Title: Detailed Account 01
+  - Id: 14653
+    Title: Detailed Account 02
+  - Id: 14654
+    Title: Detailed Account 03
+  - Id: 14655
+    Title: I'm Ready
+  - Id: 14656
+    Title: Finding Father Grimm's Colleagues
+  - Id: 14657
+    Title: Jojo Is the Mage's Name
+  - Id: 14658
+    Title: Jubilee Is the Priest's Name
+  - Id: 14659
+    Title: Lost in Thought
+  - Id: 14660
+    Title: Ingredients for Fake Blood
+    Drops:
+      - Mob: ILL_DRAINLIAR
+        Item: Sticky_Blood
+        Rate: 7000
+      - Mob: ILL_BLACK_MUSHROOM
+        Item: Mushroom_Sap
+        Rate: 7000
+  - Id: 14661
+    Title: Jojo Is the Mage's Name 02
+  - Id: 14662
+    Title: You're Scaring Me
+  - Id: 14663
+    Title: Bloody Fight
+  - Id: 14664
+    Title: Deep Misunderstanding
+  - Id: 14665
+    Title: Is the Fight Over?
+  - Id: 14666
+    Title: Warden's Role
+  - Id: 14667
+    Title: Send the Dead Back to Earth
+    Targets:
+      - Mob: ILL_ZOMBIE_C
+        Count: 10
+      - Mob: ILL_ZOMBIE
+        Count: 10
+      - Mob: ILL_GHOUL
+        Count: 10
   - Id: 14668
     Title: Get Some Rest
     TimeLimit: 4h
+  - Id: 14669
+    Title: Sweet Dreams
+    Targets:
+      - Mob: ILL_NIGHTMARE
+        Count: 10
+    Drops:
+      - Mob: ILL_NIGHTMARE
+        Item: Swaying_Mane
+        Rate: 7000
   - Id: 14670
     Title: Time for Dreaming
     TimeLimit: 4h
+  - Id: 14671
+    Title: Unreliable Fake Blood
+    Targets:
+      - Mob: ILL_DRAINLIAR
+        Count: 5
+      - Mob: ILL_BLACK_MUSHROOM
+        Count: 5
+    Drops:
+      - Mob: ILL_DRAINLIAR
+        Item: Sticky_Blood
+        Rate: 7000
+      - Mob: ILL_BLACK_MUSHROOM
+        Item: Mushroom_Sap
+        Rate: 7000
   - Id: 14672
     Title: Preparing for the Firework Festival
     Targets:
@@ -9469,12 +9541,26 @@ Body:
   - Id: 14674
     Title: Time to Digest
     TimeLimit: 4h
+  - Id: 14675
+    Title: Noisy Neighbors
+    Targets:
+      - Mob: ILL_DRAINLIAR
+        Count: 10
   - Id: 14676
     Title: Break Time
     TimeLimit: 4h
+  - Id: 14677
+    Title: Studying in Dim Light
   - Id: 14678
     Title: Time to Study
     TimeLimit: 4h
+  - Id: 14679
+    Title: Curious by Nature
+    Targets:
+      - Mob: ILL_ZOMBIE_C
+        Count: 5
+      - Mob: ILL_ZOMBIE
+        Count: 5
   - Id: 14680
     Title: Time to Research
     TimeLimit: 4h

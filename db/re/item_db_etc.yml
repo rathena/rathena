@@ -35354,39 +35354,46 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25261
-    AegisName: Torn_Paper_
+    AegisName: Torn_Diary
     Name: Torn Paper
     Type: Etc
+    Buy: 900
     Weight: 10
   - Id: 25262
-    AegisName: Well-dried_Clover
+    AegisName: Dried_Clover
     Name: Well-dried Clover
     Type: Etc
+    Buy: 1200
     Weight: 10
   - Id: 25263
-    AegisName: Short_Bat_Hair
+    AegisName: Short_Bat_Fur
     Name: Short Bat Hair
     Type: Etc
+    Buy: 790
     Weight: 10
   - Id: 25264
-    AegisName: Cluster_of_Nightmares
+    AegisName: NightmareOfLump
     Name: Cluster of Nightmares
     Type: Etc
+    Buy: 822
     Weight: 10
   - Id: 25265
     AegisName: Shining_Spore
     Name: Shining Spore
     Type: Etc
+    Buy: 342
     Weight: 10
   - Id: 25266
     AegisName: Dried_Leaf_Of_Ygg
     Name: Dried Yggdrasil Leaf
     Type: Etc
+    Buy: 450
     Weight: 10
   - Id: 25267
-    AegisName: Suspicious_Pentacle
+    AegisName: SuspiciousMagicCircle
     Name: Suspicious Pentacle
     Type: Etc
+    Buy: 970
     Weight: 10
   - Id: 25268
     AegisName: Sticky_Blood
@@ -35425,16 +35432,17 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25271
-    AegisName: Illusion_Stone
+    AegisName: IllusionStone
     Name: Illusion Stone
     Type: Etc
     Buy: 10
     Flags:
       BuyingStore: true
   - Id: 25272
-    AegisName: Illusion_Gemstone
+    AegisName: IllusoryStone
     Name: Illusion Gemstone
     Type: Etc
+    Buy: 590
     Weight: 10
   - Id: 25273
     AegisName: Mysterious_Medal
@@ -35455,7 +35463,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25276
-    AegisName: Clean_Bone
+    AegisName: CleanBone
     Name: Clean Bone
     Type: Etc
     Buy: 348
@@ -35467,49 +35475,49 @@ Body:
     Buy: 644
     Weight: 10
   - Id: 25278
-    AegisName: Bandits_Scarf
+    AegisName: BanditsScarf
     Name: Bandit's Scarf
     Type: Etc
     Buy: 330
     Weight: 10
   - Id: 25279
-    AegisName: Crude_Ammo
+    AegisName: CrudeAmmo
     Name: Crude Ammo
     Type: Etc
     Buy: 300
     Weight: 10
   - Id: 25280
-    AegisName: Broken_Shotgun
+    AegisName: BrokenShotgun
     Name: Broken Shotgun
     Type: Etc
     Buy: 910
     Weight: 10
   - Id: 25281
-    AegisName: Crude_Scimitar
+    AegisName: CrudeScimiter
     Name: Crude Scimitar
     Type: Etc
     Buy: 970
     Weight: 10
   - Id: 25282
-    AegisName: Worn_Revolver
+    AegisName: WornRevolver
     Name: Worn Revolver
     Type: Etc
     Buy: 820
     Weight: 10
   - Id: 25283
-    AegisName: Brown_Muffler
+    AegisName: BrownMuffler
     Name: Brown Muffler
     Type: Etc
     Buy: 420
     Weight: 10
   - Id: 25284
-    AegisName: Swamp_Bug_Shell
+    AegisName: SwampBugPeelings
     Name: Swamp Bug Shell
     Type: Etc
     Buy: 230
     Weight: 10
   - Id: 25285
-    AegisName: Brown_Rat_Tail
+    AegisName: BrownRatTail
     Name: Brown Rat Tail
     Type: Etc
     Buy: 210
@@ -40933,28 +40941,28 @@ Body:
     Script: |
       bonus bDelayrate,-5;
   - Id: 27413
-    AegisName: aegis_27413
+    AegisName: Big_Fire_BR
     Name: Power of Shango    # !todo check english name
     Type: Card
     SubType: Enchant
     Script: |
       autobonus "{ bonus bDelayrate,-70; bonus bVariableCastrate,-70; bonus bHealPower,70; bonus bHealPower2,70; bonus bAddItemHealRate,70; }",30,10000,BF_WEAPON|BF_MAGIC,"{}";
   - Id: 27414
-    AegisName: aegis_27414
+    AegisName: Sky_Ground_BR
     Name: Power of Ochosi    # !todo check english name
     Type: Card
     SubType: Enchant
     Script: |
       autobonus "{ bonus bDelayrate,-70; bonus bVariableCastrate,-70; bonus2 bIgnoreDefClassRate,Class_Normal,70; bonus2 bIgnoreMdefClassRate,Class_Normal,70; }",30,10000,BF_WEAPON|BF_MAGIC,"{}";
   - Id: 27415
-    AegisName: aegis_27415
+    AegisName: Storm_BR
     Name: Power of Iansa    # !todo check english name
     Type: Card
     SubType: Enchant
     Script: |
       autobonus "{ bonus bDelayrate,-70; bonus bVariableCastrate,-70; bonus bAspdRate,70; }",30,10000,BF_WEAPON|BF_MAGIC,"{}";
   - Id: 27416
-    AegisName: aegis_27416
+    AegisName: Water_Sky_BR
     Name: Power of Oshun    # !todo check english name
     Type: Card
     SubType: Enchant

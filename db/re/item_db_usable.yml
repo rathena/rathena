@@ -7497,7 +7497,7 @@ Body:
     Buy: 1800
     Weight: 100
     Script: |
-      sc_start SC_INCLUK,3600000,20;
+      sc_start SC_INCALLSTATUS,20000,10;
   - Id: 12329
     AegisName: Recall_MaleGM
     Name: Summon Male GameMaster Scroll
@@ -46081,7 +46081,7 @@ Body:
       getitem 25184,1;
       getitem 25185,1;
   - Id: 23100
-    AegisName: Drooping_Gunslinger_Scroll
+    AegisName: Gunslinger_Enchant
     Name: Drooping Gunslinger Scroll
     Type: Delayconsume
     Weight: 10
@@ -46136,6 +46136,17 @@ Body:
     Weight: 250
     Script: |
       getitem 13232,500;
+  - Id: 23136
+    AegisName: WOB_Box
+    Name: Butterfly Wing Box
+    Type: Usable
+    Buy: 10
+    Weight: 20
+    Script: |
+      getitem 12507,3;
+      getitem 12508,3;
+      getitem 12509,3;
+      getitem 12510,3;
   - Id: 23151
     AegisName: EnchantStone_Recipe
     Name: Enchant Stone Recipe
@@ -46164,6 +46175,14 @@ Body:
     Weight: 10
     Script: |
       laphine_synthesis();
+  - Id: 23161
+    AegisName: Gunslinger_Box
+    Name: Gunslinger Box
+    Type: Usable
+    Weight: 1
+    Script: |
+      getitem 23100,1;
+      getitem 19157,1;
   - Id: 23168
     AegisName: Mini_Fan_Box
     Name: Mini Fan Box
@@ -46184,7 +46203,7 @@ Body:
     Script: |
       getitem callfunc("F_Rand",7135,7136,7137,7138,7139),1;
   - Id: 23170
-    AegisName: Fan_Modification_Kit
+    AegisName: Fan_Upgrade_Kit
     Name: Fan Modification Kit
     Type: Delayconsume
     Weight: 10
@@ -46200,7 +46219,7 @@ Body:
     Script: |
       getgroupitem(IG_Enchant_Stone_Box11);
   - Id: 23175
-    AegisName: Uniform_Repair_Kit
+    AegisName: Suit_Upgrade_Kit
     Name: Uniform Repair Kit
     Type: Delayconsume
     Weight: 10
@@ -46653,22 +46672,22 @@ Body:
     Script: |
       itemskill "AL_TELEPORT",1;
   - Id: 23289
-    AegisName: Candy_Pouch_Blessing_Scroll_Melee
-    Name: Candy Pouch Blessing Scroll(Physical)
+    AegisName: Candy_Bag_Scroll_Melee
+    Name: Candy Bag Blessing Scroll(Physical)
     Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 23290
-    AegisName: Candy_Pouch_Blessing_Scroll_Range
-    Name: Candy Pouch Blessing Scroll(Ranged)
+    AegisName: Candy_Bag_Scroll_Range
+    Name: Candy Bag Blessing Scroll(Ranged)
     Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 23291
-    AegisName: Candy_Pouch_Blessing_Scroll_Magic
-    Name: Candy Pouch Blessing Scroll(Magic)
+    AegisName: Candy_Bag_Scroll_Magic
+    Name: Candy Bag Blessing Scroll(Magic)
     Type: Delayconsume
     Weight: 10
     Script: |
@@ -46734,15 +46753,15 @@ Body:
       bonus_script "{ bonus bDef,500; bonus bMdef,200; }",600;
       /* fix me: unknown flag and specialeffect */
   - Id: 23308
-    AegisName: Magical_Booster_Amplifier
-    Name: Magical Booster Amplifier
+    AegisName: Booster_Amplifier
+    Name: Booster Amplifier
     Type: Delayconsume
     Weight: 10
     Script: |
       laphine_synthesis();
   - Id: 23311
-    AegisName: Magic_Cat_hand_Scroll
-    Name: Magic Cat Hand Scroll
+    AegisName: Magical_Cat_Hand
+    Name: Magic Cat Hand
     Type: Delayconsume
     Weight: 10
     Script: |
