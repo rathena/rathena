@@ -7521,20 +7521,24 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case NPC_MOVE_COORDINATE:
 		if (status_get_class_(src) == CLASS_BOSS) {//if caster is a boss, the skill will pull target ahead of the boss, instead of switch coordinates with target. 
-			{
-				short x, y;
-				short dir = map_calc_dir(bl, src->x, src->y);
+			int16 x, y;
+			uint8 dir = map_calc_dir(bl, src->x, src->y);
 
-				if (dir > 0 && dir < 4) x = 1;
-				else if (dir > 4) x = -1;
-				else x = 0;
-				if (dir > 2 && dir < 6) y = 1;
-				else if (dir == 7 || dir < 2) y = -1;
-				else y = 0;
+			if (dir > 0 && dir < 4)
+				x = 1;
+			else if (dir > 4)
+				x = -1;
+			else
+				x = 0;
+			if (dir > 2 && dir < 6)
+				y = 1;
+			else if (dir == 7 || dir < 2)
+				y = -1;
+			else
+				y = 0;
 
-				if (skill_check_unit_movepos(1, bl, src->x, src->y, 1, 1)) {
-					skill_blown(src, bl, 1, map_calc_dir_xy(src->x + x, src->y + y, bl->x, bl->y, unit_getdir(src)), BLOWN_NONE);
-				}
+			if (skill_check_unit_movepos(1, bl, src->x, src->y, 1, 1) > 0) {
+				skill_blown(src, bl, 1, map_calc_dir_xy(src->x + x, src->y + y, bl->x, bl->y, unit_getdir(src)), BLOWN_NONE);
 			}
 		} else {
 			int x = src->x;
