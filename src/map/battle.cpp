@@ -1461,7 +1461,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 				element = tsd->spiritcharm_type; 
 		}
 		else if (element == ELE_ENDOWED) //Use enchantment's element
-			element = status_get_attack_sc_element(src, ssc);
+			element = status_get_attack_sc_element(src, status_get_sc(src));
 		else if (element == ELE_RANDOM) //Use random element
 			element = rnd() % ELE_ALL;
 
