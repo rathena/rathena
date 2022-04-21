@@ -7541,8 +7541,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				skill_blown(src, bl, 1, map_calc_dir_xy(src->x + x, src->y + y, bl->x, bl->y, unit_getdir(src)), BLOWN_NONE);
 			}
 		} else {
-			int x = src->x;
-			int y = src->y;
+			int16 x = src->x, y = src->y;
 			if (unit_movepos(src, bl->x, bl->y, 1, 1)) {
 				clif_blown(src);
 			}
