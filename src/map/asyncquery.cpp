@@ -86,12 +86,12 @@ Sql* getHandle(dbType type) {
 }
 
 // Main Thread Function
-void addDBJob(dbType dType, string query, futureJobFunc resultFunc) {
+void asyncquery_addDBJob(dbType dType, string query, futureJobFunc resultFunc) {
 	dbJobs.push_back({ dType, query, resultFunc });
 }
 
 // Main Thread Function
-void addDBJob(dbType dType, string query) {
+void asyncquery_addDBJob(dbType dType, string query) {
 	dbJobs.push_back({ dType, query, NULL });
 }
 
@@ -115,7 +115,7 @@ void doQuery(dbJob& job) {
 			for (size_t ColumnNum = 0; ColumnNum < r->ColumnNum; ColumnNum++)
 				r->SetData(Row, ColumnNum, handle);
 
-		add_future(job.resultFunc, (FutureData)r);
+		future_add(job.resultFunc, (FutureData)r);
 	}
 
 	Sql_FreeResult(handle);

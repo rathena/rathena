@@ -9,6 +9,7 @@
 
 #include "script.hpp"
 
+#include <atomic>
 #include <errno.h>
 #include <math.h>
 #include <setjmp.h>
@@ -74,6 +75,7 @@ unsigned int active_scripts;
 unsigned int next_id;
 struct eri *st_ers;
 struct eri *stack_ers;
+std::atomic<int> script_batch {0}; // For async SQL futures
 
 static bool script_rid2sd_( struct script_state *st, struct map_session_data** sd, const char *func );
 
@@ -4844,6 +4846,7 @@ void script_reload(void) {
 	DBIterator *iter;
 	struct script_state *st;
 
+	script_batch++; // Increment script batch number to prevent any pending async SQL future jobs from executing callback function after this point
 	userfunc_db->clear(userfunc_db, db_script_free_code_sub);
 	db_clear(scriptlabel_db);
 
@@ -17474,20 +17477,24 @@ static int buildin_query_sql_aysnc_sub(struct script_state* st, dbType type)
 {
 	if (!st->asyncSleep) {
 		const char* query = script_getstr(st, 2);
+		int batch_number = script_batch;
 		if (script_hasdata(st, 3)) {
 			st->state = RERUNLINE;
 			st->asyncSleep = true;
-			addDBJob(
+			asyncquery_addDBJob(
 				type,
 				query,
-				[st](FutureData result_data) {
+				[st, batch_number](FutureData result_data) {
+					if (batch_number != script_batch) {
+						return; // st is probably a danging pointer by now, do nothing.
+					}
 					query_sql_db[st->id] = (DBResultData*)result_data;
 					run_script_main(st);
 				}
 			);
 		}
 		else
-			addDBJob(type, query);
+			asyncquery_addDBJob(type, query);
 	}
 	else {
 		DBResultData result_data(query_sql_db[st->id]);

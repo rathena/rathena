@@ -14,5 +14,5 @@ struct futureJob {
 
 extern JobQueue<futureJob> futureJobs;
 
-void add_future(futureJobFunc callbackFunc, FutureData r);
+void future_add(futureJobFunc callbackFunc, FutureData r);
 void do_future(void);

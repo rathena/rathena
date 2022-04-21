@@ -9,7 +9,7 @@ JobQueue<futureJob> futureJobs;
 
 // Another Thread Function (mostly)
 // (but could be called by main thread also)
-void add_future(futureJobFunc callbackFunc, FutureData resultData) {
+void future_add(futureJobFunc callbackFunc, FutureData resultData) {
 	futureJob newjob;
 
 	newjob.callbackFunc = callbackFunc;

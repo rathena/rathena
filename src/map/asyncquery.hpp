@@ -56,7 +56,7 @@ struct dbJob {
 	futureJobFunc resultFunc; // Callback function after finishing Sql_Query()
 };
 
-void addDBJob(dbType dType, std::string query, futureJobFunc resultFunc);
-void addDBJob(dbType dType, std::string query);
+void asyncquery_addDBJob(dbType dType, std::string query, futureJobFunc resultFunc);
+void asyncquery_addDBJob(dbType dType, std::string query);
 void asyncquery_init(void);
 void asyncquery_final(void);
