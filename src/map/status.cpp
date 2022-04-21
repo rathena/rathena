@@ -12020,11 +12020,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					unit_stop_attack(bl);
 				}
 				break;
-			case SC_DEEPSLEEP:
-			case SC_CRYSTALIZE:
 			case SC_FREEZE:
 			case SC_STUN:
-			case SC_GRAVITYCONTROL:
 			case SC_STONE:
 				if (sc->data[SC_DANCING]) {
 					unit_stop_walking(bl, 1);
