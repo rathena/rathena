@@ -1302,11 +1302,24 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 				type = it.sc;
 				time = it.duration;
 
+				int32 val1 = 7, val2, val3;
+
+				if (type == SC_STONEWAIT) {
+					val2 = src->id;
+					val3 = skill_get_time(status_db.getSkill(type), 7);
+				} else {
+					val2 = 0;
+					if (type == SC_BURNING)
+						val3 = src->id;
+					else
+						val3 = 0;
+				}
+
 				if (it.flag&ATF_TARGET)
-					status_change_start(src,bl,type,rate,7,0,(type == SC_BURNING)?src->id:0,0,time,SCSTART_NONE);
+					status_change_start(src,bl,type,rate,val1,val2,val3,0,time,SCSTART_NONE);
 
 				if (it.flag&ATF_SELF)
-					status_change_start(src,src,type,rate,7,0,(type == SC_BURNING)?src->id:0,0,time,SCSTART_NONE);
+					status_change_start(src,src,type,rate,val1,val2,val3,0,time,SCSTART_NONE);
 			}
 		}
 
@@ -1321,10 +1334,23 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 				type = it.sc;
 				time = it.duration;
 
+				int32 val1 = 7, val2, val3;
+
+				if (type == SC_STONEWAIT) {
+					val2 = src->id;
+					val3 = skill_get_time(status_db.getSkill(type), 7);
+				} else {
+					val2 = 0;
+					if (type == SC_BURNING)
+						val3 = src->id;
+					else
+						val3 = 0;
+				}
+
 				if (it.target&ATF_TARGET)
-					status_change_start(src,bl,type,it.rate,7,0,0,0,time,SCSTART_NONE);
+					status_change_start(src,bl,type,it.rate,val1,val2,val3,0,time,SCSTART_NONE);
 				if (it.target&ATF_SELF)
-					status_change_start(src,src,type,it.rate,7,0,0,0,time,SCSTART_NONE);
+					status_change_start(src,src,type,it.rate,val1,val2,val3,0,time,SCSTART_NONE);
 			}
 			//"While the damage can be blocked by Pneuma, the chance to break armor remains", irowiki. [Cydh]
 			if (dmg_lv == ATK_BLOCK && skill_id == AM_ACIDTERROR) {
@@ -2519,11 +2545,24 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			type = it.sc;
 			time = it.duration;
 
+			int32 val1 = 7, val2, val3;
+
+			if (type == SC_STONEWAIT) {
+				val2 = src->id;
+				val3 = skill_get_time(status_db.getSkill(type), 7);
+			} else {
+				val2 = 0;
+				if (type == SC_BURNING)
+					val3 = src->id;
+				else
+					val3 = 0;
+			}
+
 			if (it.flag&ATF_TARGET && src != bl)
-				status_change_start(src,src,type,rate,7,0,0,0,time,SCSTART_NONE);
+				status_change_start(src,src,type,rate,val1,val2,val3,0,time,SCSTART_NONE);
 
 			if (it.flag&ATF_SELF && !status_isdead(bl))
-				status_change_start(src,bl,type,rate,7,0,0,0,time,SCSTART_NONE);
+				status_change_start(src,bl,type,rate,val1,val2,val3,0,time,SCSTART_NONE);
 		}
 	}
 
@@ -4848,10 +4887,14 @@ static int skill_tarotcard(struct block_list* src, struct block_list *target, ui
 	}
 	case 8: // THE HANGED MAN - stop, freeze or stoned
 	{
-		enum sc_type sc[] = { SC_STOP, SC_FREEZE, SC_STONE };
+		enum sc_type sc[] = { SC_STOP, SC_FREEZE, SC_STONEWAIT };
 		uint8 rand_eff = rnd() % 3;
 		int time = ((rand_eff == 0) ? skill_get_time2(skill_id, skill_lv) : skill_get_time2(status_db.getSkill(sc[rand_eff]), 1));
-		sc_start(src, target, sc[rand_eff], 100, skill_lv, time);
+
+		if (sc[rand_eff] == SC_STONEWAIT)
+			sc_start4(src, target, SC_STONEWAIT, 100, skill_lv, src->id, skill_get_time(status_db.getSkill(SC_STONEWAIT), 1), 0, time);
+		else
+			sc_start(src, target, sc[rand_eff], 100, skill_lv, time);
 		break;
 	}
 	case 9: // DEATH - curse, coma and poison

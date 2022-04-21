@@ -1000,8 +1000,15 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 			for (const auto &it : status_db) {
 				sc_type type = static_cast<sc_type>(it.first);
 
-				if (sc->data[type] && it.second->flag[SCF_REMOVEONDAMAGED])
+				if (sc->data[type] && it.second->flag[SCF_REMOVEONDAMAGED]) {
+					// A status change that gets broken by damage should still be considered when calculating if a status change can be applied or not (for the same attack).
+					// !TODO: This is a temporary solution until we refactor the code so that the calculation of an SC is done at the start of an attack rather than after the damage was applied.
+					if (sc->opt1 > OPT1_NONE && sc->lastEffectTimer == INVALID_TIMER) {
+						sc->lastEffectTimer = add_timer(gettick() + 10, status_clear_lastEffect_timer, target->id, 0);
+						sc->lastEffect = type;
+					}
 					status_change_end(target, type, INVALID_TIMER);
+				}
 			}
 			if ((sce=sc->data[SC_ENDURE]) && !sce->val4) {
 				/** [Skotlex]
@@ -8640,6 +8647,8 @@ void status_change_init(struct block_list *bl)
 	struct status_change *sc = status_get_sc(bl);
 	nullpo_retv(sc);
 	memset(sc, 0, sizeof (struct status_change));
+	sc->lastEffect = SC_NONE;
+	sc->lastEffectTimer = INVALID_TIMER;
 }
 
 /*========================================== [Playtester]
@@ -9262,7 +9271,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	// Check failing SCs from list
 	if (!scdb->fail.empty()) {
 		for (const auto &it : scdb->fail) {
-			if (it && sc->data[it])
+			// Don't let OPT1 that have RemoveOnDamaged start a new effect in the same attack.
+			if (sc->data[it] || sc->lastEffect == it)
 				return 0;
 		}
 	}
@@ -9624,6 +9634,16 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 	}
 
+	// Check for OPT1 stacking
+	if (sc->opt1 > OPT1_NONE && scdb->opt1 > OPT1_NONE) {
+		for (const auto &status_it : status_db) {
+			sc_type opt1_type = status_it.second->type;
+
+			if (sc->data[opt1_type] && status_it.second->opt1 > OPT1_NONE)
+				status_change_end(bl, opt1_type, INVALID_TIMER);
+		}
+	}
+
 	// Before overlapping fail, one must check for status cured.
 	std::vector<sc_type> endlist;
 
@@ -9652,12 +9672,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	// List of hardcoded status cured.
 	switch (type) {
-		case SC_STONE:
-			if (sc->data[SC_DANCING]) {
-				unit_stop_walking(bl, 1);
-				status_change_end(bl, SC_DANCING, INVALID_TIMER);
-			}
-			break;
 		case SC_BLESSING:
 			// !TODO: Blessing and Agi up should do 1 damage against players on Undead Status, even on PvM
 			// !but cannot be plagiarized (this requires aegis investigation on packets and official behavior) [Brainstorm]
@@ -9698,9 +9712,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				pc_bonus_script_clear(sd, BSF_REM_ON_MADOGEAR);
 			break;
 		default:
-			// If new SC has OPT1 while unit has OPT1, fail it!
-			if (sc->opt1 && scdb->opt1)
-				return 0;
 			break;
 	}
 
@@ -12012,14 +12023,13 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					unit_stop_attack(bl);
 				}
 				break;
-			case SC_WHITEIMPRISON:
-			case SC_DEEPSLEEP:
-			case SC_CRYSTALIZE:
 			case SC_FREEZE:
 			case SC_STUN:
-			case SC_GRAVITYCONTROL:
-				if (sc->data[SC_DANCING])
+			case SC_STONE:
+				if (sc->data[SC_DANCING]) {
 					unit_stop_walking(bl, 1);
+					status_change_end(bl, SC_DANCING, INVALID_TIMER);
+				}
 				break;
 			default:
 				if (!unit_blown_immune(bl,0x1))
@@ -12383,26 +12393,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		}
 		if (sce->timer != INVALID_TIMER) // Could be a SC with infinite duration
 			delete_timer(sce->timer,status_change_timer);
-		if (sc->opt1)
-			switch (type) {
-				// "Ugly workaround"  [Skotlex]
-				// delays status change ending so that a skill that sets opt1 fails to
-				// trigger when it also removed one
-				case SC_STONE:
-				case SC_STONEWAIT:
-					sce->val4 = -1; // Petrify time
-				case SC_FREEZE:
-				case SC_STUN:
-				case SC_SLEEP:
-					if (sce->val1) {
-						// Removing the 'level' shouldn't affect anything in the code
-						// since these SC are not affected by it, and it lets us know
-						// if we have already delayed this attack or not.
-						sce->val1 = 0;
-						sce->timer = add_timer(gettick()+10, status_change_timer, bl->id, type);
-						return 1;
-					}
-			}
 	}
 
 	(sc->count)--;
@@ -14496,6 +14486,29 @@ static TIMER_FUNC(status_natural_heal_timer){
 }
 
 /**
+ * Clears the lastEffect value from a target
+ * @param tid: Timer ID
+ * @param tick: Current tick (time)
+ * @param id: Object ID
+ * @param data: data pushed through timer function
+ * @return 0
+ */
+TIMER_FUNC(status_clear_lastEffect_timer) {
+	block_list *bl = map_id2bl(id);
+
+	if (bl != nullptr) {
+		status_change *sc = status_get_sc(bl);
+
+		if (sc != nullptr) {
+			sc->lastEffect = SC_NONE;
+			sc->lastEffectTimer = INVALID_TIMER;
+		}
+	}
+
+	return 0;
+}
+
+/**
  * Check if status is disabled on a map
  * @param type: Status Change data
  * @param mapIsVS: If the map is a map_flag_vs type
@@ -15184,6 +15197,7 @@ void do_init_status(void) {
 
 	add_timer_func_list(status_change_timer,"status_change_timer");
 	add_timer_func_list(status_natural_heal_timer,"status_natural_heal_timer");
+	add_timer_func_list(status_clear_lastEffect_timer, "status_clear_lastEffect_timer");
 	initDummyData();
 	status_readdb();
 	natural_heal_prev_tick = gettick();
