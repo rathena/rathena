@@ -1064,11 +1064,18 @@ struct s_random_opt_group_entry {
 	uint16 chance;
 };
 
+/// Struct of random group
+struct s_random_opt_random
+{
+	uint32 total_rate;
+	std::vector<std::shared_ptr<s_random_opt_group_entry>> data; /// item ID, s_item_group_entry
+};
+
 /// Struct for Random Option Group
 struct s_random_opt_group {
 	uint16 id;
 	std::string name;
-	std::map<uint16, std::vector<std::shared_ptr<s_random_opt_group_entry>>> slots;
+	std::map<uint16, std::shared_ptr<s_random_opt_random>> slots;
 	uint16 max_random;
 	std::vector<std::shared_ptr<s_random_opt_group_entry>> random_options;
 
@@ -1101,6 +1108,7 @@ public:
 
 	const std::string getDefaultLocation() override;
 	uint64 parseBodyNode(const ryml::NodeRef& node) override;
+	void loadingFinished() override;
 
 	// Additional
 	bool add_option(const ryml::NodeRef& node, std::shared_ptr<s_random_opt_group_entry> &entry);

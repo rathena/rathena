@@ -3247,22 +3247,26 @@ void s_random_opt_group::apply( struct item& item ){
 
 	// Apply Must options
 	for( size_t i = 0; i < this->slots.size(); i++ ){
-		// Try to apply an entry
-		for( size_t j = 0, max = this->slots[static_cast<uint16>(i)].size() * 3; j < max; j++ ){
-			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->slots[static_cast<uint16>(i)] );
 
-			if( rnd() % 10000 < option->chance ){
-				apply_sub( item.option[i], option );
-				break;
-			}
+		if (this->slots[static_cast<uint16>(i)]->data.size() == 0)
+		{
+			continue;
 		}
 
-		// If no entry was applied, assign one
-		if( item.option[i].id == 0 ){
-			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->slots[static_cast<uint16>(i)] );
+		if (this->slots[static_cast<uint16>(i)]->total_rate == 0)
+		{
+			continue;
+		}
 
-			// Apply an entry without checking the chance
-			apply_sub( item.option[i], option );
+		int rndVal = rnd() % this->slots[static_cast<uint16>(i)]->total_rate;
+
+		for (const auto& option : this->slots[static_cast<uint16>(i)]->data)
+		{
+			if (rndVal < option->chance) {
+				apply_sub(item.option[i], option);
+				break;
+			}
+			rndVal -= option->chance;
 		}
 	}
 
@@ -3333,13 +3337,21 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				return 0;
 
 			if (slot < 1 || slot > MAX_ITEM_RDM_OPT) {
-				this->invalidWarning(slotNode["Slot"], "Invalid Random Opton Slot number %hu given, must be between 1~%d, skipping.\n", slot, MAX_ITEM_RDM_OPT);
+				this->invalidWarning(slotNode["Slot"], "Invalid Random Option Slot number %hu given, must be between 1~%d, skipping.\n", slot, MAX_ITEM_RDM_OPT);
 				return 0;
 			}
 
 			if (!this->nodeExists(slotNode, "Options")) {
 				this->invalidWarning(slotNode, "Random option slot does not contain Options node, skipping.\n");
 				return 0;
+			}
+
+
+			std::shared_ptr<s_random_opt_random> random = util::map_find(randopt->slots, static_cast<uint16>(slot-1));
+
+			if (random == nullptr) {
+				random = std::make_shared<s_random_opt_random>();
+				randopt->slots[slot - 1] = random;
 			}
 
 			std::vector<std::shared_ptr<s_random_opt_group_entry>> entries;
@@ -3353,7 +3365,7 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				entries.push_back(entry);
 			}
 
-			randopt->slots[slot - 1] = entries;
+			random->data = entries;
 		}
 	}
 
@@ -3392,6 +3404,17 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		this->put(id, randopt);
 
 	return 1;
+}
+
+void RandomOptionGroupDatabase::loadingFinished() {
+	for (const auto& group : *this) {
+		for (const auto& random : group.second->slots) {
+			random.second->total_rate = 0;
+			for (const auto& it : random.second->data) {
+				random.second->total_rate += it->chance;
+			}
+		}
+	}
 }
 
 RandomOptionGroupDatabase random_option_group;
