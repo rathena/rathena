@@ -1687,14 +1687,27 @@ std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(std::shared_ptr<s_it
 	if (random == nullptr)
 		return nullptr;
 
-	for (size_t j = 0, max = random->data.size() * 3; j < max; j++) {
-		std::shared_ptr<s_item_group_entry> entry = util::umap_random(random->data);
-
-		if (entry->rate == 0 || rnd() % random->total_rate < entry->rate)	// always return entry for rate 0 ('must' item)
-			return entry;
+	if (random->data.size() == 0) {
+		return nullptr;
 	}
 
-	return util::umap_random(random->data);
+	if (random->total_rate == 0)
+	{
+		// Only item group 0 has no total rate, pick random item
+		return util::umap_random(random->data);
+	}
+
+	int rndVal = rnd() % random->total_rate;
+
+	for (const auto& entry : random->data)
+	{
+		if (rndVal < entry.second->rate) {
+			return entry.second;
+		}
+		rndVal -= entry.second->rate;
+	}
+
+	return nullptr;
 }
 
 /**
