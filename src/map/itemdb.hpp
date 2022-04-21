@@ -1069,6 +1069,7 @@ struct s_random_opt_random
 {
 	uint32 total_rate;
 	std::vector<std::shared_ptr<s_random_opt_group_entry>> data; /// item ID, s_item_group_entry
+	uint16 chance;
 };
 
 /// Struct for Random Option Group

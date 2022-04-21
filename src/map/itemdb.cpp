@@ -3248,6 +3248,10 @@ void s_random_opt_group::apply( struct item& item ){
 	// Apply Must options
 	for( size_t i = 0; i < this->slots.size(); i++ ){
 
+		if (!(rnd() % 10000 < this->slots[static_cast<uint16>(i)]->chance)) {
+			continue;
+		}
+		
 		if (this->slots[static_cast<uint16>(i)]->data.size() == 0)
 		{
 			continue;
@@ -3366,6 +3370,18 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			}
 
 			random->data = entries;
+
+			if (this->nodeExists(slotNode, "Chance")) {
+				uint16 chance;
+
+				if (!this->asUInt16Rate(slotNode, "Chance", chance))
+					return false;
+
+				random->chance = chance;
+			}
+			else {
+				random->chance = 10000;
+			}
 		}
 	}
 
