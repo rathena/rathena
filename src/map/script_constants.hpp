@@ -1842,6 +1842,7 @@
 	export_constant(SC_ALL_STAT_DOWN);
 	export_constant(SC_GRADUAL_GRAVITY);
 	export_constant(SC_DAMAGE_HEAL);
+	export_constant(SC_IMMUNE_PROPERTY);
 	export_constant(SC_IMMUNE_PROPERTY_NOTHING);
 	export_constant(SC_IMMUNE_PROPERTY_WATER);
 	export_constant(SC_IMMUNE_PROPERTY_GROUND);
