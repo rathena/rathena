@@ -2378,7 +2378,7 @@ Body:
       getitem 12791,50;
       getitembound 23919,11,Bound_Account;
   - Id: 9972
-    AegisName: Arca_Batalha2_BR
+    AegisName: Arca_Batalha_BR
     Name: Battle Ark    # !todo check english name
     Type: Usable
     Weight: 10
