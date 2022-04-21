@@ -1453,7 +1453,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	}
 	if (sc) {
 		int element = skill_get_ele(skill_id, skill_lv);
-		struct status_change *ssc = status_get_sc(src);
 		if (!skill_id || element == ELE_WEAPON) {
 				element = status_get_status_data(src)->rhw.ele | status_get_status_data(src)->lhw.ele;
 			if (tsd && tsd->state.arrow_atk && tsd->bonus.arrow_ele)
