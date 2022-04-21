@@ -1064,6 +1064,12 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 		unit_stop_walking( target, 1 );
 	}
 
+	if (status->hp == 0 &&
+		((skill_id == AL_INCAGI || skill_id == AL_BLESSING ||
+		  skill_id == CASH_BLESSING || skill_id == CASH_INCAGI ||
+		  skill_id == MER_INCAGI || skill_id == MER_BLESSING) && sc && sc->data[SC_CHANGEUNDEAD]))
+		status->hp = 1; // Can't be killed
+
 	if( status->hp || (flag&8) ) { // Still lives or has been dead before this damage.
 		if (walkdelay)
 			unit_set_walkdelay(target, gettick(), walkdelay, 0);
@@ -9656,14 +9662,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			}
 			break;
 		case SC_BLESSING:
-			// !TODO: Blessing and Agi up should do 1 damage against players on Undead Status, even on PvM
-			// !but cannot be plagiarized (this requires aegis investigation on packets and official behavior) [Brainstorm]
-			if ((!undead_flag && status->race!=RC_DEMON) || bl->type == BL_PC) {
-				status_change_end(bl, SC_CURSE, INVALID_TIMER);
-				status_change_end(bl, SC_STONE, INVALID_TIMER);
+			if (bl->type == BL_PC) {
+				// Remove Curse first, Stone is only removed if the target is not cursed
 				if (sc->data[SC_CURSE]) {
-						status_change_end(bl, SC_CURSE, INVALID_TIMER);
-						return 1; // End Curse and do not give stat boost
+					status_change_end(bl, SC_CURSE, INVALID_TIMER);
+					return 1; // End Curse and do not give stat boost
+				} else if (sc->data[SC_STONE]) {
+					status_change_end(bl, SC_STONE, INVALID_TIMER);
+					return 1; // End Stone and do not give stat boost
 				}
 			}
 			if(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_HIGH)
@@ -10501,7 +10507,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val3 = 5*val1; // SP cost
 			break;
 		case SC_BLESSING:
-			if ((!undead_flag && status->race!=RC_DEMON) || bl->type == BL_PC)
+			if (bl->type == BL_PC || (!undead_flag && status->race != RC_DEMON))
 				val2 = val1;
 			else
 				val2 = 0; // 0 -> Half stat.
