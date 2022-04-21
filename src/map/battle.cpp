@@ -1445,9 +1445,9 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 	if (sc && sc->data[SC_DAMAGE_HEAL]) {
 		int dmg_heal_lv = sc->data[SC_DAMAGE_HEAL]->val1;
-		if (heal && ((flag & BF_WEAPON && lv == 1) || (flag & BF_MAGIC && lv == 2) || (flag & BF_MISC && lv == 3))) {//Absorb MISC damage or WEAPON & MAGIC damage on level 3?
-			clif_skill_nodamage(NULL, bl, AL_HEAL, heal, 1);
-			status_heal(bl, heal, 0, 0);
+		if (damage != 0 && ((flag & BF_WEAPON && dmg_heal_lv == 1) || (flag & BF_MAGIC && dmg_heal_lv == 2) || (flag & BF_MISC && dmg_heal_lv == 3))) {//Absorb MISC damage or WEAPON & MAGIC damage on level 3?
+			clif_skill_nodamage(NULL, bl, AL_HEAL, damage, 1);
+			status_heal(bl, damage, 0, 0);
 			damage = 0;
 		}
 	}
