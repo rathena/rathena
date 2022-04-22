@@ -7565,7 +7565,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case MER_INCAGI:
 	case MER_BLESSING:
 		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-		if (dstsd != nullptr && tsc->data[SC_CHANGEUNDEAD]) {
+		if (dstsd != nullptr && tsc && tsc->data[SC_CHANGEUNDEAD]) {
 			if (tstatus->hp > 1)
 				skill_attack(BF_MISC,src,src,bl,skill_id,skill_lv,tick,flag);
 			break;
