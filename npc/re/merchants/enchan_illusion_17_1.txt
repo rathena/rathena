@@ -169,10 +169,12 @@ sp_cor,108,130,5	script	Rebellion#rm171_7	4_F_REBELLION3,{
 		mes "If you want a weapon, you can talk to Elyumina.";
 		next;
 		if (select("Request Weapon Modification Device (Physical).", "Request Weapon Modification Device (Magic).") == 1) {
-			.@item_id = 23773;	// EP17_1_SPC02
+			// .@item_id = 23773;	// EP17_1_SPC02
+			.@group = IG_EP17_1_SPC02;
 			setarray .@ids[0],23776,23777,23778;
 		} else {
-			.@item_id = 23774;	// EP17_1_SPC03
+			// .@item_id = 23774;	// EP17_1_SPC03
+			.@group = IG_EP17_1_SPC03;	// EP17_1_SPC03
 			setarray .@ids[0],23779,23780,23781;
 		}
 		mes "[Rebellion]";
@@ -209,7 +211,8 @@ sp_cor,108,130,5	script	Rebellion#rm171_7	4_F_REBELLION3,{
 			}
 			Zeny -= 1000000;
 		}
-		consumeitem .@item_id;
+		// consumeitem .@item_id;
+		getgroupitem(.@group);
 		mes "[Rebellion]";
 		mes "I gave you the best I had left.";
 		mes "If you want to refine it, the <NAVI>[Tin Can]<INFO>sp_cor,106,136,0,101,0</INFO></NAVI> next to me can take good care of you.";
@@ -245,7 +248,8 @@ sp_cor,108,130,5	script	Rebellion#rm171_7	4_F_REBELLION3,{
 		mes "If you want to refine it, the <NAVI>[Tin Can]<INFO>sp_cor,106,136,0,101,0</INFO></NAVI> next to me can take good care of you.";
 		delitem 25669,30;	// EP17_1_EVT02
 		delitem 25723,5;	// EP17_1_EVT39
-		consumeitem 23775;	// EP17_1_SPC04
+		// consumeitem 23775;	// EP17_1_SPC04
+		getgroupitem(IG_EP17_1_SPC04);
 		close;
 	}
 	end;
@@ -330,7 +334,8 @@ sp_cor,111,130,3	script	Elyumina#rm171_4	4_EP17_ELYUMINA,{
 		mes "I'm locked up in here, fixing toys, because of you. You can deal with this, right?";
 		delitem 25668,1;	// EP17_1_EVT01
 		delitem 25669,50;	// EP17_1_EVT02
-		consumeitem 23772;	// EP17_1_SPC01
+		// consumeitem 23772;	// EP17_1_SPC01
+		getgroupitem(IG_EP17_1_SPC01);
 		close3;
 	case 2:
 		cutin "ep171_elyumina04",0;

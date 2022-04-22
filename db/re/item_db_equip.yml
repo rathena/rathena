@@ -69209,6 +69209,14 @@ Body:
          bonus bHealPower,35;
          bonus2 bSkillAtk,"LG_RAYOFGENESIS",35;
       }
+  - Id: 15905
+    AegisName: C_Helmet_Of_Siegfried_J
+    Name: Costume Helmet of Siegfried
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1055
   - Id: 15920
     AegisName: Charm_Of_Flame_Heart_BR
     Name: Flaming Heart    # !todo check english name
@@ -85549,7 +85557,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus2 bSubEle,Ele_Dark,(.@r >= 8 ? 25: 10);
-      /*.@bonus = 15;
+      .@bonus = 15;
       if (.@r >= 7) {
          .@bonus += 15;
       }
@@ -85558,7 +85566,7 @@ Body:
       }
       bonus2 bAddRace2,RC2_ILLUSION_VAMPIRE,.@bonus;
       bonus2 bSubRace2,RC2_ILLUSION_VAMPIRE,.@bonus;
-      bonus2 bMagicAddRace2,RC2_ILLUSION_VAMPIRE,.@bonus;*/
+      bonus2 bMagicAddRace2,RC2_ILLUSION_VAMPIRE,.@bonus;
   - Id: 19464
     AegisName: C_Melon_Cap
     Name: Costume Melon Bread Hat
@@ -96013,6 +96021,54 @@ Body:
       hateffect(HAT_EF_C_POPPING_PORING_AURA,true);
     UnEquipScript: |
       hateffect(HAT_EF_C_POPPING_PORING_AURA,false);
+  - Id: 20549
+    AegisName: C_99LV_Royal_Guard_Blue
+    Name: Costume Aura of the Sea Glow
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      hateffect(HAT_EF_99LV_Royal_Guard_Blue,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_99LV_Royal_Guard_Blue,false);
+  - Id: 20550
+    AegisName: C_99LV_Warlock_Violet
+    Name: Costume Violet Energy
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      hateffect(HAT_EF_99LV_Warlock_Violet,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_99LV_Warlock_Violet,false);
+  - Id: 20551
+    AegisName: C_99LV_Sorcerer_LBlue
+    Name: Costume Light Blue Energy
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      hateffect(HAT_EF_99LV_Sorcerer_LBlue,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_99LV_Sorcerer_LBlue,false);
+  - Id: 20552
+    AegisName: C_99LV_Ranger_Green
+    Name: Costume Green Energy
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      hateffect(HAT_EF_99LV_Ranger_Green,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_99LV_Ranger_Green,false);
   - Id: 20553
     AegisName: C_99LV_Minstrel_Pink
     Name: Costume Pink Energy
@@ -96025,6 +96081,30 @@ Body:
       hateffect(HAT_EF_99LV_Minstrel_Pink,true);
     UnEquipScript: |
       hateffect(HAT_EF_99LV_Minstrel_Pink,false);
+  - Id: 20554
+    AegisName: C_99LV_Archbishop_White
+    Name: Costume Aura of Sanctity
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      hateffect(HAT_EF_99LV_Archbishop_White,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_99LV_Archbishop_White,false);
+  - Id: 20555
+    AegisName: C_99LV_Guill_Silver
+    Name: Costume Silver Energy
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      hateffect(HAT_EF_99LV_Guill_Silver,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_99LV_Guill_Silver,false);
   - Id: 20556
     AegisName: C_99LV_ShadowC_Black
     Name: Costume Aura of Night
@@ -96037,6 +96117,30 @@ Body:
       hateffect(HAT_EF_99LV_ShadowC_Black,true);
     UnEquipScript: |
       hateffect(HAT_EF_99LV_ShadowC_Black,false);
+  - Id: 20557
+    AegisName: C_99LV_Mechanic_Gold
+    Name: Costume Gold Energy
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      hateffect(HAT_EF_99LV_Mechanic_Gold,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_99LV_Mechanic_Gold,false);
+  - Id: 20558
+    AegisName: C_99LV_Genetic_YGreen
+    Name: Costume Yellow Green Energy
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      hateffect(HAT_EF_99LV_Genetic_YGreen,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_99LV_Genetic_YGreen,false);
   - Id: 20559
     AegisName: C_160LV_Rune_Red
     Name: Costume Red Aura
@@ -96073,6 +96177,30 @@ Body:
       hateffect(HAT_EF_160LV_Warlock_Violet,true);
     UnEquipScript: |
       hateffect(HAT_EF_160LV_Warlock_Violet,false);
+  - Id: 20562
+    AegisName: C_160LV_Sorcerer_LBlue
+    Name: Costume Light Blue Aura
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      hateffect(HAT_EF_160LV_Sorcerer_LBlue,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_160LV_Sorcerer_LBlue,false);
+  - Id: 20563
+    AegisName: C_160LV_Ranger_Green
+    Name: Costume Green Aura
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      hateffect(HAT_EF_160LV_Ranger_Green,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_160LV_Ranger_Green,false);
   - Id: 20564
     AegisName: C_160LV_Minstrel_Pink
     Name: Costume Pink Aura
@@ -96133,6 +96261,18 @@ Body:
       hateffect(HAT_EF_160LV_MECHANIC_GOLD,true);
     UnEquipScript: |
       hateffect(HAT_EF_160LV_MECHANIC_GOLD,false);
+  - Id: 20569
+    AegisName: C_160LV_Genetic_YGreen
+    Name: Costume Yellow Green Aura
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      hateffect(HAT_EF_160LV_Genetic_YGreen,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_160LV_Genetic_YGreen,false);
   - Id: 20570
     AegisName: C_HeartChocoBag
     Name: Costume HeartChocoBag
@@ -140547,7 +140687,7 @@ Body:
     ArmorLevel: 1
     View: 2142
   - Id: 410072
-    AegisName: aegis_410072
+    AegisName: C_Demons_Familiar
     Name: Costume Demons Familia    # !todo check english name
     Type: Armor
     Locations:
@@ -140579,7 +140719,7 @@ Body:
     Script: |
       bonus bVariableCastrate,-5;
   - Id: 410087
-    AegisName: C_Demons_Familiar
+    AegisName: C_Demons_Familiar_K
     Name: Costume Robotic Watcher
     Type: Armor
     Locations:
@@ -141225,7 +141365,7 @@ Body:
     ArmorLevel: 1
     View: 2150
   - Id: 420079
-    AegisName: aegis_420079
+    AegisName: C_Inner_Color_Long
     Name: Costume Inner Color Long
     Type: Armor
     Locations:
@@ -151929,7 +152069,7 @@ Body:
          bonus bSPGainValue,10;
       }
   - Id: 490113
-    AegisName: aegis_490113
+    AegisName: Jasper_Ring
     Name: Jasper Ring    # !todo check english name
     Type: Armor
     Weight: 400
