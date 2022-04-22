@@ -418,8 +418,6 @@ Body:
     Flags:
       BossResist: true
       TaekwonAngel: true
-    EndReturn:
-      Curse: true
   - Status: Signumcrucis
     Icon: EFST_CRUCIS
     DurationLookup: AL_CRUCIS

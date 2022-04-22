@@ -3650,7 +3650,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 
 	if( (skill_id == AL_INCAGI || skill_id == AL_BLESSING ||
 		skill_id == CASH_BLESSING || skill_id == CASH_INCAGI ||
-		skill_id == MER_INCAGI || skill_id == MER_BLESSING) && tsd->sc.data[SC_CHANGEUNDEAD] )
+		skill_id == MER_INCAGI || skill_id == MER_BLESSING) && tsc && tsc->data[SC_CHANGEUNDEAD] )
 		damage = 1;
 
 	if( damage && tsc && tsc->data[SC_GENSOU] && dmg.flag&BF_MAGIC ){
@@ -7564,10 +7564,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case AL_BLESSING:
 	case MER_INCAGI:
 	case MER_BLESSING:
-		if (dstsd != NULL && tsc->data[SC_CHANGEUNDEAD]) {
-			skill_attack(BF_MISC,src,src,bl,skill_id,skill_lv,tick,flag);
+		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+		if (dstsd != nullptr && tsc && tsc->data[SC_CHANGEUNDEAD]) {
+			if (tstatus->hp > 1)
+				skill_attack(BF_MISC,src,src,bl,skill_id,skill_lv,tick,flag);
 			break;
 		}
+		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		break;
 	case PR_SLOWPOISON:
 	case PR_LEXAETERNA:
 #ifndef RENEWAL
