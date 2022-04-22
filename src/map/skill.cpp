@@ -3648,6 +3648,11 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 
 	damage = dmg.damage + dmg.damage2;
 
+	if( (skill_id == AL_INCAGI || skill_id == AL_BLESSING ||
+		skill_id == CASH_BLESSING || skill_id == CASH_INCAGI ||
+		skill_id == MER_INCAGI || skill_id == MER_BLESSING) && tsc && tsc->data[SC_CHANGEUNDEAD] )
+		damage = 1;
+
 	if( damage && tsc && tsc->data[SC_GENSOU] && dmg.flag&BF_MAGIC ){
 		struct block_list *nbl;
 		nbl = battle_getenemyarea(bl,bl->x,bl->y,2,BL_CHAR,bl->id);
@@ -3864,18 +3869,6 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 				dmg.dmotion = clif_skill_damage(dsrc, bl, tick, 10, dmg.dmotion, damage, dmg.div_, skill_id, -1, DMG_SPLASH);
 			else
 				dmg.dmotion = clif_skill_damage(dsrc, bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, skill_lv, dmg_type);
-			break;
-		case AL_INCAGI:
-		case AL_BLESSING:
-		case CASH_BLESSING:
-		case CASH_INCAGI:
-		case MER_BLESSING:
-		case MER_INCAGI:
-			damage = 1;
-			dmg.dmotion = clif_skill_damage(dsrc, bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, skill_lv, dmg_type);
-
-			if (tstatus->hp == 1)
-				return 0; // No actual damage is given if the target has 1 HP.
 			break;
 		case AB_DUPLELIGHT_MELEE:
 		case AB_DUPLELIGHT_MAGIC:
@@ -7573,7 +7566,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case MER_BLESSING:
 		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 		if (dstsd != nullptr && tsc->data[SC_CHANGEUNDEAD]) {
-			skill_attack(BF_MISC,src,src,bl,skill_id,skill_lv,tick,flag);
+			if (tstatus->hp > 1)
+				skill_attack(BF_MISC,src,src,bl,skill_id,skill_lv,tick,flag);
 			break;
 		}
 		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
