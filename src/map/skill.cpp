@@ -3871,14 +3871,11 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		case CASH_INCAGI:
 		case MER_BLESSING:
 		case MER_INCAGI:
-			if (tsc && tsc->data[SC_CHANGEUNDEAD]) {
-				damage = 1;
-				dmg.dmotion = clif_skill_damage(dsrc, bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, skill_lv, dmg_type);
+			damage = 1;
+			dmg.dmotion = clif_skill_damage(dsrc, bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, skill_lv, dmg_type);
 
-				if (tstatus->hp == 1)
-					return 0; // No actual damage is given if the target has 1 HP.
-			} else
-				dmg.dmotion = clif_skill_damage(dsrc, bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, skill_lv, dmg_type);
+			if (tstatus->hp == 1)
+				return 0; // No actual damage is given if the target has 1 HP.
 			break;
 		case AB_DUPLELIGHT_MELEE:
 		case AB_DUPLELIGHT_MAGIC:
