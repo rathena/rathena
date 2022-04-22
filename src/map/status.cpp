@@ -1996,7 +1996,7 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 	int stat;
 
 	// Non players get the value set, players need to stack with previous bonuses.
-	if( bl->type != BL_PC )
+	if( bl->type != BL_PC ){
 		status->batk =
 		status->hit = status->flee =
 		status->def2 = status->mdef2 =
@@ -2006,6 +2006,7 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 		
 		if (bl->type != BL_MOB)	// BL_MOB has values set when loading mob_db
 			status->res = status->mres = 0;
+	}
 
 #ifdef RENEWAL // Renewal formulas
 	if (bl->type == BL_HOM) {
