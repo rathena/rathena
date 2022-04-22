@@ -1071,12 +1071,6 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 		unit_stop_walking( target, 1 );
 	}
 
-	if (status->hp == 0 &&
-		((skill_id == AL_INCAGI || skill_id == AL_BLESSING ||
-		  skill_id == CASH_BLESSING || skill_id == CASH_INCAGI ||
-		  skill_id == MER_INCAGI || skill_id == MER_BLESSING) && sc && sc->data[SC_CHANGEUNDEAD]))
-		status->hp = 1; // Can't be killed
-
 	if( status->hp || (flag&8) ) { // Still lives or has been dead before this damage.
 		if (walkdelay)
 			unit_set_walkdelay(target, gettick(), walkdelay, 0);
@@ -5775,7 +5769,7 @@ static unsigned short status_calc_str(struct block_list *bl, struct status_chang
 		if(sc->data[SC_BLESSING]->val2)
 			str += sc->data[SC_BLESSING]->val2;
 		else
-			str >>= 1;
+			str -= str / 2;
 	}
 	if(sc->data[SC_MARIONETTE])
 		str -= ((sc->data[SC_MARIONETTE]->val3)>>16)&0xFF;
@@ -6005,7 +5999,7 @@ static unsigned short status_calc_int(struct block_list *bl, struct status_chang
 		if (sc->data[SC_BLESSING]->val2)
 			int_ += sc->data[SC_BLESSING]->val2;
 		else
-			int_ >>= 1;
+			int_ -= int_ / 2;
 	}
 	if(sc->data[SC_NEN])
 		int_ += sc->data[SC_NEN]->val1;
@@ -6096,7 +6090,7 @@ static unsigned short status_calc_dex(struct block_list *bl, struct status_chang
 		if (sc->data[SC_BLESSING]->val2)
 			dex += sc->data[SC_BLESSING]->val2;
 		else
-			dex >>= 1;
+			dex -= dex / 2;
 	}
 	if(sc->data[SC_INCREASING])
 		dex += 4; // Added based on skill updates [Reddozen]
