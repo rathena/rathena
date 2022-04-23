@@ -17881,9 +17881,9 @@ void clif_quest_add(struct map_session_data *sd, struct quest *qd)
 
 	for (int i = 0, offset = 4; i < qi->objectives.size(); i++, offset += 12) {
 		WFIFOL(fd, offset) = qd->quest_id * 1000 + i;
-		WFIFOL(fd, offset+4) = qi->objectives[i]->mob_id;
-		WFIFOW(fd, offset + 10) = qi->objectives[i]->count;
-		WFIFOW(fd, offset + 12) = qd->count[i];
+		WFIFOL(fd, offset + 4) = qi->objectives[i]->mob_id;
+		WFIFOW(fd, offset + 8) = qi->objectives[i]->count;
+		WFIFOW(fd, offset + 10) = qd->count[i];
 	}
 
 	WFIFOSET(fd, len);
