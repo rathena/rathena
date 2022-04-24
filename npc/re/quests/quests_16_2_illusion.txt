@@ -3907,9 +3907,10 @@ gef_d01_i,81,135,5	script	Wizard#ilgf01	4_F_BOMI,5,5,{
 			specialeffect EF_DEVIL;
 			mes "[Bomi]";
 			mes "Oh, no! There is too many toxins in my body. It's getting dangerous!";
-			if (mobcount("gef_d01_i", "ill_vampire_spawn_bomi::OnMobDead") < 1 && mobcount("gef_d01_i", "ill_vampire_spawn_dracula::OnMobDead") < 1)
+			if (mobcount("gef_d01_i", "ill_vampire_spawn_bomi::OnMobDead") < 1 && mobcount("gef_d01_i", "ill_vampire_spawn_dracula::OnMobDead") < 1) {
 				.bomi_count = 0;
 				donpcevent "ill_vampire_spawn_bomi::OnStart";
+			}
 			close;
 		}
 		mes "[Bomi]";
