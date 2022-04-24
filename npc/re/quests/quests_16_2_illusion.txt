@@ -3967,7 +3967,6 @@ OnStart:
 	mapannounce "gef_d01_i", "Oh, no...	I can feel the toxins spreading through my body...!", bc_map, 0xFF0000;
 	if (mobcount("gef_d01_i", "ill_vampire_spawn_bomi::OnMobDead") < 1 && mobcount("gef_d01_i", "ill_vampire_spawn_dracula::OnMobDead") < 1) {
 		monster "gef_d01_i",84,135,"Berserk Bomi",3756,1,"ill_vampire_spawn_bomi::OnMobDead";
-		.bomi_count = 0;
 	}
 	end;
 OnMobDead:
