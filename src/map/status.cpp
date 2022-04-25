@@ -8804,6 +8804,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 #endif
 			break;
 		case SC_STONE:
+		case SC_STONEWAIT:
 #ifndef RENEWAL
 			sc_def = status->mdef*100;
 			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
