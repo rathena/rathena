@@ -8803,7 +8803,6 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			tick_def2 = -2000;
 #endif
 			break;
-		case SC_STONE:
 		case SC_STONEWAIT:
 #ifndef RENEWAL
 			sc_def = status->mdef*100;
@@ -10128,7 +10127,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 
 		case SC_STONEWAIT:
-			val3 -= tick; // Petrify time - Incubation time
+			val4 = val3;
+			val3 = tick - val3; // Petrify time - Incubation time
+			tick = val4; // Original incubation time
 			break;
 
 		case SC_DPOISON:
@@ -13027,8 +13028,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		npc_touch_area_allnpc(sd,bl->m,bl->x,bl->y); // Trigger on-touch event.
 
 	// Needed to be here to make sure OPT1_STONEWAIT has been cleared from the target
-	if (type == SC_STONEWAIT && sce->val4 > -1)
-		sc_start2(bl, bl, SC_STONE, 100, sce->val1, sce->val2, sce->val3);
+	if (type == SC_STONEWAIT)
+		status_change_start(bl, bl, SC_STONE, 100, sce->val1, sce->val2, 0, 0, sce->val3, SCSTART_NOAVOID);
 
 	ers_free(sc_data_ers, sce);
 	return 1;
