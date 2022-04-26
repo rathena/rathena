@@ -2782,7 +2782,6 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       OverlapFail: true
-      NoRemoveOnDead: true
   - Status: L_Lifepotion
     Icon: EFST_L_LIFEPOTION
     Flags:
@@ -2790,7 +2789,6 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       OverlapFail: true
-      NoRemoveOnDead: true
   - Status: Jexpboost
     Icon: EFST_CASH_PLUSONLYJOBEXP
     Flags:
