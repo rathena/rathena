@@ -2782,7 +2782,6 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       OverlapFail: true
-      NoRemoveOnDead: true
     End:
       L_Lifepotion: true
       M_Lifepotion: true
@@ -2793,7 +2792,6 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       OverlapFail: true
-      NoRemoveOnDead: true
     End:
       S_Lifepotion: true
       M_Lifepotion: true
@@ -8123,7 +8121,6 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       OverlapFail: true
-      NoRemoveOnDead: true
     End:
       S_Lifepotion: true
       L_Lifepotion: true
