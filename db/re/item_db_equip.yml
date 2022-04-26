@@ -54853,6 +54853,14 @@ Body:
          }
       }
       bonus2 bSubClass,Class_Boss,.@def;
+  - Id: 5977
+    AegisName: C_Poker_Card_In_Mouth
+    Name: Costume Poker Card In Mouth    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 889
   - Id: 5978
     AegisName: Toy_Syringe
     Name: Toy Syringe
@@ -138756,15 +138764,23 @@ Body:
     ArmorLevel: 1
     View: 2140
   - Id: 400166
-    AegisName: aegis_400166
+    AegisName: C_Egir_Helm
     Name: Costume Aegir Helm    # !todo check english name
     Type: Armor
     Locations:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 870
+  - Id: 400176
+    AegisName: C_Fishbowl_Parfait_Hat
+    Name: Costume Fishbowl Parfait Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 2145
   - Id: 400177
-    AegisName: aegis_400177
+    AegisName: Fafnir_Helm
     Name: Fafnir Helm
     Type: Armor
     View: 2149
