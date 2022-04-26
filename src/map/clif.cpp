@@ -889,27 +889,31 @@ void clif_dropflooritem( struct flooritem_data* fitem, bool canShowEffect ){
 
 		if( dropEffect > 0 ){
 			p.showdropeffect = 1;
-			p.dropeffectmode = dropEffect - 1;
-		}else if (battle_config.rndopt_drop_pillar != 0){
-			uint8 optionCount = 0;
+			if (dropEffect == 1) {
+				if (battle_config.rndopt_drop_pillar != 0) {
+					uint8 optionCount = 0;
 
-			for (uint8 i = 0; i < MAX_ITEM_RDM_OPT; i++) {
-				if (fitem->item.option[i].id != 0) {
-					optionCount++;
+					for (uint8 i = 0; i < MAX_ITEM_RDM_OPT; i++) {
+						if (fitem->item.option[i].id != 0) {
+							optionCount++;
+						}
+					}
+
+					if (optionCount > 0) {
+						if (optionCount == 1)
+							p.dropeffectmode = DROPEFFECT_BLUE_PILLAR - 1;
+						else if (optionCount == 2)
+							p.dropeffectmode = DROPEFFECT_YELLOW_PILLAR - 1;
+						else
+							p.dropeffectmode = DROPEFFECT_PURPLE_PILLAR - 1;
+					} else {
+						p.dropeffectmode = DROPEFFECT_CLIENT - 1;
+					}
+				} else {
+					p.dropeffectmode = DROPEFFECT_CLIENT - 1;
 				}
-			}
-
-			if (optionCount > 0) {
-				p.showdropeffect = 1;
-				if (optionCount == 1)
-					p.dropeffectmode = DROPEFFECT_BLUE_PILLAR - 1;
-				else if (optionCount == 2)
-					p.dropeffectmode = DROPEFFECT_YELLOW_PILLAR - 1;
-				else
-					p.dropeffectmode = DROPEFFECT_PURPLE_PILLAR - 1;
 			} else {
-				p.showdropeffect = 0;
-				p.dropeffectmode = DROPEFFECT_NONE;
+				p.dropeffectmode = dropEffect - 1;
 			}
 		} else {
 			p.showdropeffect = 0;
