@@ -714,14 +714,14 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			int64 constant;
 
 			if (!script_get_constant(effect_constant.c_str(), &constant) || constant < DROPEFFECT_NONE || constant > DROPEFFECT_MAX) {
-				this->invalidWarning(flagNode["DropEffect"], "Invalid item drop effect %s, defaulting to DROPEFFECT_NONE.\n", effect.c_str());
-				constant = DROPEFFECT_NONE;
+				this->invalidWarning(flagNode["DropEffect"], "Invalid item drop effect %s, defaulting to DROPEFFECT_CLIENT.\n", effect.c_str());
+				constant = DROPEFFECT_CLIENT;
 			}
 
 			item->flag.dropEffect = static_cast<e_item_drop_effect>(constant);
 		} else {
 			if (!exists)
-				item->flag.dropEffect = DROPEFFECT_NONE;
+				item->flag.dropEffect = DROPEFFECT_CLIENT;
 		}
 	} else {
 		if (!exists) {
@@ -733,7 +733,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			item->flag.broadcast = false;
 			if (!(item->flag.delay_consume & DELAYCONSUME_TEMP))
 				item->flag.delay_consume = DELAYCONSUME_NONE;
-			item->flag.dropEffect = DROPEFFECT_NONE;
+			item->flag.dropEffect = DROPEFFECT_CLIENT;
 		}
 	}
 
