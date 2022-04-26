@@ -3115,7 +3115,7 @@ static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
 		entry->min_value = (int16)strtoul(str[k + 1], nullptr, 10);
 		entry->max_value = 0;
 		entry->param = (int8)strtoul(str[k + 2], nullptr, 10);
-		entry->chance = 0;
+		entry->rate = 1;
 		entries.push_back(entry);
 		if (group == nullptr)
 			group_entry.slots[j] = entries;

@@ -3224,15 +3224,15 @@ bool RandomOptionGroupDatabase::add_option(const ryml::NodeRef& node, std::share
 		entry->param = 0;
 	}
 
-	if (this->nodeExists(node, "Chance")) {
-		uint16 chance;
+	if (this->nodeExists(node, "Rate")) {
+		uint16 rate;
 
-		if (!this->asUInt16Rate(node, "Chance", chance))
+		if (!this->asUInt16Rate(node, "Rate", rate))
 			return false;
 
-		entry->chance = chance;
+		entry->rate = rate;
 	} else {
-		entry->chance = 0;
+		entry->rate = 0;
 	}
 
 	return true;
@@ -3266,11 +3266,11 @@ void s_random_opt_group::apply( struct item& item ){
 
 		for (const auto& option : this->slots[static_cast<uint16>(i)]->data)
 		{
-			if (rndVal < option->chance) {
+			if (rndVal < option->rate) {
 				apply_sub(item.option[i], option);
 				break;
 			}
-			rndVal -= option->chance;
+			rndVal -= option->rate;
 		}
 	}
 
@@ -3284,7 +3284,7 @@ void s_random_opt_group::apply( struct item& item ){
 
 			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->random_options );
 
-			if( rnd() % 10000 < option->chance ){
+			if( rnd() % 10000 < option->rate ){
 				apply_sub( item.option[i], option );
 			}
 		}
@@ -3427,7 +3427,7 @@ void RandomOptionGroupDatabase::loadingFinished() {
 		for (const auto& random : group.second->slots) {
 			random.second->total_rate = 0;
 			for (const auto& it : random.second->data) {
-				random.second->total_rate += it->chance;
+				random.second->total_rate += it->rate;
 			}
 		}
 	}

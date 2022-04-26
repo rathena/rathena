@@ -1061,7 +1061,7 @@ struct s_random_opt_group_entry {
 	uint16 id;
 	int16 min_value, max_value;
 	int8 param;
-	uint16 chance;
+	uint16 rate;
 };
 
 /// Struct of random group
