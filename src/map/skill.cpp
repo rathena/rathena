@@ -1300,19 +1300,20 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 				}
 
 				type = it.sc;
-				time = it.duration;
 
 				int32 val1 = 7, val2, val3;
 
 				if (type == SC_STONEWAIT) {
 					val2 = src->id;
-					val3 = skill_get_time(status_db.getSkill(type), 7);
+					val3 = it.duration;
+					time = skill_get_time(status_db.getSkill(SC_STONEWAIT), 7);
 				} else {
 					val2 = 0;
 					if (type == SC_BURNING)
 						val3 = src->id;
 					else
 						val3 = 0;
+					time = it.duration;
 				}
 
 				if (it.flag&ATF_TARGET)
@@ -1331,20 +1332,22 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			for (const auto &it : sd->addeff_onskill) {
 				if (skill_id != it.skill_id || !it.rate)
 					continue;
+
 				type = it.sc;
-				time = it.duration;
 
 				int32 val1 = 7, val2, val3;
 
 				if (type == SC_STONEWAIT) {
 					val2 = src->id;
-					val3 = skill_get_time(status_db.getSkill(type), 7);
+					val3 = it.duration;
+					time = skill_get_time(status_db.getSkill(SC_STONEWAIT), 7);
 				} else {
 					val2 = 0;
 					if (type == SC_BURNING)
 						val3 = src->id;
 					else
 						val3 = 0;
+					time = it.duration;
 				}
 
 				if (it.target&ATF_TARGET)
@@ -1648,7 +1651,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		break;
 
 	case NPC_PETRIFYATTACK:
-		sc_start4(src,bl,SC_STONEWAIT,(20*skill_lv),skill_lv,src->id,skill_get_time(skill_id,skill_lv),0,skill_get_time2(skill_id,skill_lv));
+		sc_start4(src,bl,SC_STONEWAIT,(20*skill_lv),skill_lv,src->id,skill_get_time2(skill_id,skill_lv),0,skill_get_time(skill_id,skill_lv));
 		break;
 	case NPC_CURSEATTACK:
 		sc_start(src,bl,SC_CURSE,(20*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
@@ -2542,20 +2545,22 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 					(it.flag&ATF_SHORT && !(attack_type&BF_SHORT)))
 					continue; //Range Failed.
 			}
+
 			type = it.sc;
-			time = it.duration;
 
 			int32 val1 = 7, val2, val3;
 
 			if (type == SC_STONEWAIT) {
 				val2 = src->id;
-				val3 = skill_get_time(status_db.getSkill(type), 7);
+				val3 = it.duration;
+				time = skill_get_time(status_db.getSkill(SC_STONEWAIT), 7);
 			} else {
 				val2 = 0;
 				if (type == SC_BURNING)
 					val3 = src->id;
 				else
 					val3 = 0;
+				time = it.duration;
 			}
 
 			if (it.flag&ATF_TARGET && src != bl)
@@ -4892,7 +4897,7 @@ static int skill_tarotcard(struct block_list* src, struct block_list *target, ui
 		int time = ((rand_eff == 0) ? skill_get_time2(skill_id, skill_lv) : skill_get_time2(status_db.getSkill(sc[rand_eff]), 1));
 
 		if (sc[rand_eff] == SC_STONEWAIT)
-			sc_start4(src, target, SC_STONEWAIT, 100, skill_lv, src->id, skill_get_time(status_db.getSkill(SC_STONEWAIT), 1), 0, time);
+			sc_start4(src, target, SC_STONEWAIT, 100, skill_lv, src->id, time, 0, skill_get_time(status_db.getSkill(SC_STONEWAIT), 1));
 		else
 			sc_start(src, target, sc[rand_eff], 100, skill_lv, time);
 		break;
@@ -10358,7 +10363,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				sc_start4(src,bl,type,100,skill_lv,1000,src->id,0,skill_get_time2(skill_id,skill_lv));
 				break;
 			case SC_STONEWAIT:
-				sc_start4(src,bl,type,100,skill_lv,src->id,skill_get_time(skill_id, skill_lv), 0, skill_get_time2(skill_id,skill_lv));
+				sc_start4(src,bl,type,100,skill_lv,src->id,skill_get_time2(skill_id, skill_lv), 0, skill_get_time(skill_id,skill_lv));
 				break;
 			default:
 				sc_start2(src,bl,type,100,skill_lv,src->id,skill_get_time2(skill_id,skill_lv));
@@ -10808,7 +10813,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if( bl->id == skill_area_temp[1] )
 				break; // Already work on this target
 
-			status_change_start(src,bl,type,10000,skill_lv,src->id,skill_get_time(skill_id, skill_lv),0,skill_get_time2(skill_id,skill_lv), SCSTART_NOTICKDEF);
+			status_change_start(src,bl,type,10000,skill_lv,src->id,skill_get_time2(skill_id, skill_lv),0,skill_get_time(skill_id,skill_lv), SCSTART_NOTICKDEF);
 		} else {
 			int rate = 45 + 5 * skill_lv + ( sd? sd->status.job_level : 50 ) / 4;
 			// IroWiki says Rate should be reduced by target stats, but currently unknown
@@ -15922,7 +15927,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 					case UNT_ZENKAI_LAND:
 						switch (rnd()%2 + 1) {
 							case 1:
-								sc_start4(ss, bl, SC_STONEWAIT, sg->val1*5, sg->skill_lv, ss->id, skill_get_time(sg->skill_id, sg->skill_lv), 0, skill_get_time2(sg->skill_id, sg->skill_lv));
+								sc_start4(ss, bl, SC_STONEWAIT, sg->val1*5, sg->skill_lv, ss->id, skill_get_time2(sg->skill_id, sg->skill_lv), 0, skill_get_time(sg->skill_id, sg->skill_lv));
 								break;
 							case 2:
 								sc_start2(ss, bl, SC_POISON, sg->val1*5, sg->skill_lv, ss->id, skill_get_time(sg->skill_id, sg->skill_lv));
