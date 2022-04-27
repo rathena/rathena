@@ -1077,8 +1077,6 @@ struct s_random_opt_group {
 	uint16 id;
 	std::string name;
 	std::map<uint16, std::shared_ptr<s_random_opt_random>> slots;
-	uint16 max_random;
-	std::vector<std::shared_ptr<s_random_opt_group_entry>> random_options;
 
 public:
 	void apply( struct item& item );

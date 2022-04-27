@@ -3273,22 +3273,6 @@ void s_random_opt_group::apply( struct item& item ){
 			rndVal -= option->rate;
 		}
 	}
-
-	// Apply Random options (if available)
-	if( this->max_random > 0 ){
-		for( size_t i = 0; i < min( this->max_random, MAX_ITEM_RDM_OPT ); i++ ){
-			// If item already has an option in this slot, skip it
-			if( item.option[i].id > 0 ){
-				continue;
-			}
-
-			std::shared_ptr<s_random_opt_group_entry> option = util::vector_random( this->random_options );
-
-			if( rnd() % 10000 < option->rate ){
-				apply_sub( item.option[i], option );
-			}
-		}
-	}
 }
 
 /**
@@ -3397,37 +3381,6 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			else {
 				random->chance = 10000;
 			}
-		}
-	}
-
-	if (this->nodeExists(node, "MaxRandom")) {
-		uint16 max;
-
-		if (!this->asUInt16(node, "MaxRandom", max))
-			return 0;
-
-		if (max > MAX_ITEM_RDM_OPT) {
-			this->invalidWarning(node["MaxRandom"], "Exceeds the maximum of %d Random Option group options, capping to MAX_ITEM_RDM_OPT.\n", MAX_ITEM_RDM_OPT);
-			max = MAX_ITEM_RDM_OPT;
-		}
-
-		randopt->max_random = max;
-	} else {
-		if (!exists)
-			randopt->max_random = 0;
-	}
-
-	if (this->nodeExists(node, "Random")) {
-		randopt->random_options.clear();
-
-		const auto& randomNode = node["Random"];
-		for (const auto& randomNode : randomNode) {
-			std::shared_ptr<s_random_opt_group_entry> entry;
-
-			if (!this->add_option(randomNode, entry))
-				return 0;
-
-			randopt->random_options.push_back(entry);
 		}
 	}
 
