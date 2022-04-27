@@ -15900,10 +15900,10 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 					case UNT_ZENKAI_WATER:
 						switch (rnd()%2 + 1) {
 							case 1:
-								sc_start(ss, bl, SC_FREEZE, sg->val1*5, sg->skill_lv, skill_get_time(sg->skill_id, sg->skill_lv));
+								sc_start(ss, bl, SC_FREEZE, sg->val1*5, sg->skill_lv, skill_get_time2(sg->skill_id, sg->skill_lv));
 								break;
 							case 2:
-								sc_start(ss, bl, SC_FREEZING, sg->val1*5, sg->skill_lv, skill_get_time(sg->skill_id, sg->skill_lv));
+								sc_start(ss, bl, SC_FREEZING, sg->val1*5, sg->skill_lv, skill_get_time2(sg->skill_id, sg->skill_lv));
 								break;
 						}
 						break;
@@ -15913,29 +15913,29 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 								sc_start2(ss, bl, SC_STONEWAIT, sg->val1*5, sg->skill_lv, ss->id, skill_get_time2(sg->skill_id, sg->skill_lv), skill_get_time(sg->skill_id, sg->skill_lv));
 								break;
 							case 2:
-								sc_start2(ss, bl, SC_POISON, sg->val1*5, sg->skill_lv, ss->id, skill_get_time(sg->skill_id, sg->skill_lv));
+								sc_start2(ss, bl, SC_POISON, sg->val1*5, sg->skill_lv, ss->id, skill_get_time2(sg->skill_id, sg->skill_lv));
 								break;
 						}
 						break;
 					case UNT_ZENKAI_FIRE:
-						sc_start4(ss, bl, SC_BURNING, sg->val1*5, sg->skill_lv, 1000, ss->id, 0, skill_get_time(sg->skill_id, sg->skill_lv));
+						sc_start4(ss, bl, SC_BURNING, sg->val1*5, sg->skill_lv, 1000, ss->id, 0, skill_get_time2(sg->skill_id, sg->skill_lv));
 						break;
 					case UNT_ZENKAI_WIND:
 						switch (rnd()%3 + 1) {
 							case 1:
-								sc_start(ss, bl, SC_SLEEP, sg->val1*5, sg->skill_lv, skill_get_time(sg->skill_id, sg->skill_lv));
+								sc_start(ss, bl, SC_SLEEP, sg->val1*5, sg->skill_lv, skill_get_time2(sg->skill_id, sg->skill_lv));
 								break;
 							case 2:
-								sc_start(ss, bl, SC_SILENCE, sg->val1*5, sg->skill_lv, skill_get_time(sg->skill_id, sg->skill_lv));
+								sc_start(ss, bl, SC_SILENCE, sg->val1*5, sg->skill_lv, skill_get_time2(sg->skill_id, sg->skill_lv));
 								break;
 							case 3:
-								sc_start(ss, bl, SC_DEEPSLEEP, sg->val1*5, sg->skill_lv, skill_get_time(sg->skill_id, sg->skill_lv));
+								sc_start(ss, bl, SC_DEEPSLEEP, sg->val1*5, sg->skill_lv, skill_get_time2(sg->skill_id, sg->skill_lv));
 								break;
 						}
 						break;
 				}
 			} else
-				sc_start2(ss, bl,type,100,sg->val1,sg->val2,skill_get_time(sg->skill_id, sg->skill_lv));
+				sc_start2(ss, bl,type,100,sg->val1,sg->val2,skill_get_time2(sg->skill_id, sg->skill_lv));
 			break;
 
 		case UNT_POISON_MIST:
