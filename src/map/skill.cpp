@@ -1300,27 +1300,22 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 				}
 
 				type = it.sc;
+				time = it.duration;
 
-				int32 val1 = 7, val2, val3;
+				int32 val1 = 7, val2 = 0, val3 = 0, delay = 0;
 
 				if (type == SC_STONEWAIT) {
 					val2 = src->id;
-					val3 = it.duration;
-					time = skill_get_time(status_db.getSkill(SC_STONEWAIT), 7);
-				} else {
-					val2 = 0;
-					if (type == SC_BURNING)
-						val3 = src->id;
-					else
-						val3 = 0;
-					time = it.duration;
+					delay = skill_get_time(skill_id, skill_lv);
+				} else if (type == SC_BURNING) {
+					val3 = src->id;
 				}
 
 				if (it.flag&ATF_TARGET)
-					status_change_start(src,bl,type,rate,val1,val2,val3,0,time,SCSTART_NONE);
+					status_change_start(src,bl,type,rate,val1,val2,val3,0,time,SCSTART_NONE,delay);
 
 				if (it.flag&ATF_SELF)
-					status_change_start(src,src,type,rate,val1,val2,val3,0,time,SCSTART_NONE);
+					status_change_start(src,src,type,rate,val1,val2,val3,0,time,SCSTART_NONE,delay);
 			}
 		}
 
@@ -1334,26 +1329,21 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 					continue;
 
 				type = it.sc;
+				time = it.duration;
 
-				int32 val1 = 7, val2, val3;
+				int32 val1 = 7, val2 = 0, val3 = 0, delay = 0;
 
 				if (type == SC_STONEWAIT) {
 					val2 = src->id;
-					val3 = it.duration;
-					time = skill_get_time(status_db.getSkill(SC_STONEWAIT), 7);
-				} else {
-					val2 = 0;
-					if (type == SC_BURNING)
-						val3 = src->id;
-					else
-						val3 = 0;
-					time = it.duration;
+					delay = skill_get_time(skill_id, skill_lv);
+				} else if (type == SC_BURNING) {
+					val3 = src->id;
 				}
 
 				if (it.target&ATF_TARGET)
-					status_change_start(src,bl,type,it.rate,val1,val2,val3,0,time,SCSTART_NONE);
+					status_change_start(src,bl,type,it.rate,val1,val2,val3,0,time,SCSTART_NONE,delay);
 				if (it.target&ATF_SELF)
-					status_change_start(src,src,type,it.rate,val1,val2,val3,0,time,SCSTART_NONE);
+					status_change_start(src,src,type,it.rate,val1,val2,val3,0,time,SCSTART_NONE,delay);
 			}
 			//"While the damage can be blocked by Pneuma, the chance to break armor remains", irowiki. [Cydh]
 			if (dmg_lv == ATK_BLOCK && skill_id == AM_ACIDTERROR) {
@@ -1651,7 +1641,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		break;
 
 	case NPC_PETRIFYATTACK:
-		sc_start4(src,bl,SC_STONEWAIT,(20*skill_lv),skill_lv,src->id,skill_get_time2(skill_id,skill_lv),0,skill_get_time(skill_id,skill_lv));
+		sc_start2(src,bl,SC_STONEWAIT,(20*skill_lv),skill_lv,src->id,skill_get_time2(skill_id,skill_lv),skill_get_time(skill_id, skill_lv));
 		break;
 	case NPC_CURSEATTACK:
 		sc_start(src,bl,SC_CURSE,(20*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
@@ -2547,27 +2537,22 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			}
 
 			type = it.sc;
+			time = it.duration;
 
-			int32 val1 = 7, val2, val3;
+			int32 val1 = 7, val2 = 0, val3 = 0, delay = 0;
 
 			if (type == SC_STONEWAIT) {
 				val2 = src->id;
-				val3 = it.duration;
-				time = skill_get_time(status_db.getSkill(SC_STONEWAIT), 7);
-			} else {
-				val2 = 0;
-				if (type == SC_BURNING)
-					val3 = src->id;
-				else
-					val3 = 0;
-				time = it.duration;
+				delay = skill_get_time(skill_id, skill_lv);
+			} else if (type == SC_BURNING) {
+				val3 = src->id;
 			}
 
 			if (it.flag&ATF_TARGET && src != bl)
-				status_change_start(src,src,type,rate,val1,val2,val3,0,time,SCSTART_NONE);
+				status_change_start(src,src,type,rate,val1,val2,val3,0,time,SCSTART_NONE,delay);
 
 			if (it.flag&ATF_SELF && !status_isdead(bl))
-				status_change_start(src,bl,type,rate,val1,val2,val3,0,time,SCSTART_NONE);
+				status_change_start(src,bl,type,rate,val1,val2,val3,0,time,SCSTART_NONE,delay);
 		}
 	}
 
@@ -4897,7 +4882,7 @@ static int skill_tarotcard(struct block_list* src, struct block_list *target, ui
 		int time = ((rand_eff == 0) ? skill_get_time2(skill_id, skill_lv) : skill_get_time2(status_db.getSkill(sc[rand_eff]), 1));
 
 		if (sc[rand_eff] == SC_STONEWAIT)
-			sc_start4(src, target, SC_STONEWAIT, 100, skill_lv, src->id, time, 0, skill_get_time(status_db.getSkill(SC_STONEWAIT), 1));
+			sc_start2(src, target, SC_STONEWAIT, 100, skill_lv, src->id, time, skill_get_time(skill_id, skill_lv));
 		else
 			sc_start(src, target, sc[rand_eff], 100, skill_lv, time);
 		break;
@@ -8774,10 +8759,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if (sd && sd->sc.data[SC_PETROLOGY_OPTION])
 				brate = sd->sc.data[SC_PETROLOGY_OPTION]->val3;
 
-			if (sc_start4(src,bl,type,(skill_lv*4+20)+brate,
-				skill_lv, src->id, skill_get_time2(skill_id, skill_lv), 0,
-				skill_get_time(skill_id,skill_lv)))
-					clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
+			if (sc_start2(src, bl, type, (skill_lv * 4 + 20) + brate, skill_lv, src->id, skill_get_time2(skill_id, skill_lv), skill_get_time(skill_id, skill_lv)))
+				clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 			else if(sd) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				// Level 6-10 doesn't consume a red gem if it fails [celest]
@@ -10363,7 +10346,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				sc_start4(src,bl,type,100,skill_lv,1000,src->id,0,skill_get_time2(skill_id,skill_lv));
 				break;
 			case SC_STONEWAIT:
-				sc_start4(src,bl,type,100,skill_lv,src->id,skill_get_time2(skill_id, skill_lv), 0, skill_get_time(skill_id,skill_lv));
+				sc_start2(src,bl,type,100,skill_lv,src->id,skill_get_time2(skill_id,skill_lv),skill_get_time(skill_id, skill_lv));
 				break;
 			default:
 				sc_start2(src,bl,type,100,skill_lv,src->id,skill_get_time2(skill_id,skill_lv));
@@ -10813,12 +10796,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if( bl->id == skill_area_temp[1] )
 				break; // Already work on this target
 
-			status_change_start(src,bl,type,10000,skill_lv,src->id,skill_get_time2(skill_id, skill_lv),0,skill_get_time(skill_id,skill_lv), SCSTART_NOTICKDEF);
+			status_change_start(src,bl,type,10000,skill_lv,src->id,0,0,skill_get_time2(skill_id,skill_lv), SCSTART_NOTICKDEF, skill_get_time(skill_id, skill_lv));
 		} else {
 			int rate = 45 + 5 * skill_lv + ( sd? sd->status.job_level : 50 ) / 4;
 			// IroWiki says Rate should be reduced by target stats, but currently unknown
 			if( rnd()%100 < rate ) { // Success on First Target
-				if( status_change_start(src,bl,type,10000,skill_lv,src->id,skill_get_time(skill_id, skill_lv),0,skill_get_time2(skill_id,skill_lv), SCSTART_NOTICKDEF) ) {
+				if( status_change_start(src,bl,type,10000,skill_lv,src->id,0,0,skill_get_time2(skill_id,skill_lv), SCSTART_NOTICKDEF, skill_get_time(skill_id, skill_lv)) ) {
 					clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 					skill_area_temp[1] = bl->id;
 					map_foreachinallrange(skill_area_sub,bl,skill_get_splash(skill_id,skill_lv),BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_nodamage_id);
@@ -15927,7 +15910,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 					case UNT_ZENKAI_LAND:
 						switch (rnd()%2 + 1) {
 							case 1:
-								sc_start4(ss, bl, SC_STONEWAIT, sg->val1*5, sg->skill_lv, ss->id, skill_get_time2(sg->skill_id, sg->skill_lv), 0, skill_get_time(sg->skill_id, sg->skill_lv));
+								sc_start2(ss, bl, SC_STONEWAIT, sg->val1*5, sg->skill_lv, ss->id, skill_get_time2(sg->skill_id, sg->skill_lv), skill_get_time(sg->skill_id, sg->skill_lv));
 								break;
 							case 2:
 								sc_start2(ss, bl, SC_POISON, sg->val1*5, sg->skill_lv, ss->id, skill_get_time(sg->skill_id, sg->skill_lv));

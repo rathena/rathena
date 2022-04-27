@@ -9200,11 +9200,12 @@ void status_display_remove(struct block_list *bl, enum sc_type type) {
  * @param type: Status change (SC_*)
  * @param rate: Initial percentage rate of affecting bl (0~10000)
  * @param val1~4: Depends on type of status change
- * @param tick: Initial duration that the status change affects bl
+ * @param duration: Initial duration that the status change affects bl
  * @param flag: Value which determines what parts to calculate. See e_status_change_start_flags
+ * @param delay: Delay in milliseconds before the SC is applied
  * @return adjusted duration based on flag values
  */
-int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,t_tick duration,unsigned char flag) {
+int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,t_tick duration,unsigned char flag, int32 delay) {
 	struct map_session_data *sd = NULL;
 	struct status_change* sc;
 	struct status_change_entry* sce;
@@ -10127,9 +10128,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 
 		case SC_STONEWAIT:
-			val4 = val3;
-			val3 = max(1, tick - val3); // Petrify time - Incubation time
-			tick = val4; // Original incubation time
+			val3 = max(1, tick - delay); // Petrify time
+			tick = delay;
 			break;
 
 		case SC_DPOISON:
