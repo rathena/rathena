@@ -3121,7 +3121,7 @@ static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
 
 		entry->id = static_cast<uint16>(randid_tmp);
 		entry->min_value = (int16)strtoul(str[k + 1], nullptr, 10);
-		entry->max_value = 0;
+		entry->max_value = entry->min_value;
 		entry->param = (int8)strtoul(str[k + 2], nullptr, 10);
 		entry->rate = (int16)strtoul(str[1], nullptr, 10);
 		group_entry.slots[j]->data.push_back(entry);
@@ -3168,6 +3168,8 @@ static bool itemdb_randomopt_group_yaml(void) {
 
 				if (opt_it->min_value != 0)
 					body << YAML::Key << "MinValue" << YAML::Value << opt_it->min_value;
+				if (opt_it->max_value != 0)
+					body << YAML::Key << "MaxValue" << YAML::Value << opt_it->max_value;
 				if (opt_it->param != 0)
 					body << YAML::Key << "Param" << YAML::Value << opt_it->param;
 				body << YAML::Key << "Rate" << YAML::Value << opt_it->rate;
