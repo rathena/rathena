@@ -1272,9 +1272,6 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 #endif
 		) {
 			// Trigger status effects
-			enum sc_type type;
-			unsigned int time;
-
 			for (const auto &it : sd->addeff) {
 				rate = it.rate;
 				if( attack_type&BF_LONG ) // Any ranged physical attack takes status arrows into account (Grimtooth...) [DracoRPG]
@@ -1299,51 +1296,24 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 						continue; //Range Failed.
 				}
 
-				type = it.sc;
-				time = it.duration;
-
-				int32 val1 = 7, val2 = 0, val3 = 0, delay = 0;
-
-				if (type == SC_STONEWAIT) {
-					val2 = src->id;
-					delay = skill_get_time(status_db.getSkill(type), 7);
-				} else if (type == SC_BURNING) {
-					val3 = src->id;
-				}
-
 				if (it.flag&ATF_TARGET)
-					status_change_start(src,bl,type,rate,val1,val2,val3,0,time,SCSTART_NONE,delay);
+					sc_start(src, bl, it.sc, rate, 7, it.duration, 100);
 
 				if (it.flag&ATF_SELF)
-					status_change_start(src,src,type,rate,val1,val2,val3,0,time,SCSTART_NONE,delay);
+					sc_start(src, src, it.sc, rate, 7, it.duration, 100);
 			}
 		}
 
 		if( skill_id ) {
 			// Trigger status effects on skills
-			enum sc_type type;
-			unsigned int time;
-
 			for (const auto &it : sd->addeff_onskill) {
 				if (skill_id != it.skill_id || !it.rate)
 					continue;
 
-				type = it.sc;
-				time = it.duration;
-
-				int32 val1 = 7, val2 = 0, val3 = 0, delay = 0;
-
-				if (type == SC_STONEWAIT) {
-					val2 = src->id;
-					delay = skill_get_time(status_db.getSkill(type), 7);
-				} else if (type == SC_BURNING) {
-					val3 = src->id;
-				}
-
 				if (it.target&ATF_TARGET)
-					status_change_start(src,bl,type,it.rate,val1,val2,val3,0,time,SCSTART_NONE,delay);
+					sc_start(src, bl, it.sc, rate, 7, it.duration, 100);
 				if (it.target&ATF_SELF)
-					status_change_start(src,src,type,it.rate,val1,val2,val3,0,time,SCSTART_NONE,delay);
+					sc_start(src, src, it.sc, rate, 7, it.duration, 100);
 			}
 			//"While the damage can be blocked by Pneuma, the chance to break armor remains", irowiki. [Cydh]
 			if (dmg_lv == ATK_BLOCK && skill_id == AM_ACIDTERROR) {
@@ -2520,9 +2490,6 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	dstsd = BL_CAST(BL_PC, bl);
 
 	if(dstsd && attack_type&BF_WEAPON) {	//Counter effects.
-		enum sc_type type;
-		unsigned int time;
-
 		for (const auto &it : dstsd->addeff_atked) {
 			rate = it.rate;
 			if (attack_type&BF_LONG)
@@ -2536,23 +2503,11 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 					continue; //Range Failed.
 			}
 
-			type = it.sc;
-			time = it.duration;
-
-			int32 val1 = 7, val2 = 0, val3 = 0, delay = 0;
-
-			if (type == SC_STONEWAIT) {
-				val2 = src->id;
-				delay = skill_get_time(status_db.getSkill(type), 7);
-			} else if (type == SC_BURNING) {
-				val3 = src->id;
-			}
-
 			if (it.flag&ATF_TARGET && src != bl)
-				status_change_start(src,src,type,rate,val1,val2,val3,0,time,SCSTART_NONE,delay);
+				sc_start(src, src, it.sc, rate, 7, it.duration, 100);
 
 			if (it.flag&ATF_SELF && !status_isdead(bl))
-				status_change_start(src,bl,type,rate,val1,val2,val3,0,time,SCSTART_NONE,delay);
+				sc_start(src, bl, it.sc, rate, 7, it.duration, 100);
 		}
 	}
 
