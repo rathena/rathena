@@ -4882,7 +4882,7 @@ static int skill_tarotcard(struct block_list* src, struct block_list *target, ui
 		int time = ((rand_eff == 0) ? skill_get_time2(skill_id, skill_lv) : skill_get_time2(status_db.getSkill(sc[rand_eff]), 1));
 
 		if (sc[rand_eff] == SC_STONEWAIT)
-			sc_start2(src, target, SC_STONEWAIT, 100, skill_lv, src->id, time, skill_get_time(skill_id, skill_lv));
+			sc_start2(src, target, SC_STONEWAIT, 100, skill_lv, src->id, time, skill_get_time(status_db.getSkill(SC_STONEWAIT), 1));
 		else
 			sc_start(src, target, sc[rand_eff], 100, skill_lv, time);
 		break;
