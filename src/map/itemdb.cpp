@@ -3342,7 +3342,7 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				random->data = inheritRandom->data;
 			}
 
-			if (!this->nodeExists(slotNode, "Options") && !inheritSlot) {
+			else if (!this->nodeExists(slotNode, "Options")) {
 				this->invalidWarning(slotNode, "Random option slot does not contain Options node, skipping.\n");
 				return 0;
 			}
