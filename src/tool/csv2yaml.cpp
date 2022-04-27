@@ -3092,6 +3092,11 @@ static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
 	for (int j = 0, k = 2; k < columns && j < MAX_ITEM_RDM_OPT; k += 3) {
 		int32 randid_tmp = -1;
 
+		if (!group_entry.slots[j])
+		{
+			group_entry.slots[j] = std::make_shared<s_random_opt_random>();
+		}
+
 		for (const auto &opt : rand_opt_db) {
 			if (opt.second.compare(str[k]) == 0) {
 				randid_tmp = opt.first;
@@ -3107,7 +3112,7 @@ static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
 		std::vector<std::shared_ptr<s_random_opt_group_entry>> entries = {};
 
 		if (group != nullptr)
-			entries = group->slots[j];
+			entries = group->slots[j]->data;
 
 		std::shared_ptr<s_random_opt_group_entry> entry = std::make_shared<s_random_opt_group_entry>();
 
@@ -3117,10 +3122,11 @@ static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
 		entry->param = (int8)strtoul(str[k + 2], nullptr, 10);
 		entry->rate = 1;
 		entries.push_back(entry);
-		if (group == nullptr)
-			group_entry.slots[j] = entries;
+		if (group == nullptr) {
+			group_entry.slots[j]->data = entries;
+		}
 		else
-			group->slots[j] = entries;
+			group->slots[j]->data = entries;
 		j++;
 	}
 
@@ -3146,9 +3152,9 @@ static bool itemdb_randomopt_group_yaml(void) {
 			body << YAML::BeginSeq;
 
 			for (size_t j = 0; j < it.second.slots.size(); j++) {
-				std::vector<std::shared_ptr<s_random_opt_group_entry>> options = it.second.slots.at(static_cast<uint16>(j));
+				std::shared_ptr<s_random_opt_random> random = it.second.slots.at(static_cast<uint16>(j));
 
-				for (const auto &opt_it : options) {
+				for (const auto &opt_it : random->data) {
 					body << YAML::BeginMap;
 
 					for (const auto &opt : rand_opt_db) {
@@ -3162,7 +3168,7 @@ static bool itemdb_randomopt_group_yaml(void) {
 						body << YAML::Key << "MinValue" << YAML::Value << opt_it->min_value;
 					if (opt_it->param != 0)
 						body << YAML::Key << "Param" << YAML::Value << opt_it->param;
-					body << YAML::Key << "Chance" << YAML::Value << it.second.rate[i];
+					body << YAML::Key << "Rate" << YAML::Value << it.second.rate[i];
 					body << YAML::EndMap;
 				}
 			}
