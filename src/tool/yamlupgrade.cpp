@@ -5,6 +5,7 @@
 
 static bool upgrade_achievement_db(std::string file, const uint32 source_version);
 static bool upgrade_item_db(std::string file, const uint32 source_version);
+static bool upgrade_randopt_group_db(std::string file, const uint32 source_version);
 
 template<typename Func>
 bool process(const std::string &type, uint32 version, const std::vector<std::string> &paths, const std::string &name, Func lambda) {
@@ -111,6 +112,12 @@ int do_init(int argc, char** argv) {
 
 	if (!process("ITEM_DB", 2, root_paths, "item_db", [](const std::string& path, const std::string& name_ext, uint32 source_version) -> bool {
 		return upgrade_item_db(path + name_ext, source_version);
+		})) {
+		return 0;
+	}
+
+	if (!process("RANDOM_OPTION_GROUP", 2, root_paths, "item_randomopt_group", [](const std::string& path, const std::string& name_ext, uint32 source_version) -> bool {
+		return upgrade_randopt_group_db(path + name_ext, source_version);
 		})) {
 		return 0;
 	}
@@ -240,6 +247,81 @@ static bool upgrade_item_db(std::string file, const uint32 source_version) {
 		}
 
 		// TODO: this currently converts all scripts using Literal syntax to normal double quote strings
+		body << input;
+		entries++;
+	}
+
+	ShowStatus("Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' items in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+
+	return true;
+}
+
+
+static bool upgrade_randopt_group_db(std::string file, const uint32 source_version) {
+	size_t entries = 0;
+
+	for( auto input : inNode["Body"] ){
+		// If under version 2
+		if (source_version < 2) {
+
+			for (auto slot : input["Slots"])
+			{
+				for (auto option : slot["Options"])
+				{
+					if (option["Chance"].IsDefined())
+					{
+						option["Rate"] = option["Chance"].Scalar();
+						option.remove("Chance");
+					}
+				}
+			}
+			if (input["MaxRandom"].IsDefined() && input["Random"].IsDefined())
+			{
+				uint16 maxRandom = input["MaxRandom"].as<uint16>();
+				uint16 remaining = maxRandom;
+				uint16 usedSlots = 0;
+				uint16 firstRandomCopy = 0;
+				for (int i = 0; i < MAX_ITEM_RDM_OPT && remaining > 0; i++)
+				{
+					if (input["Slots"][i].IsDefined())
+					{
+						usedSlots++;
+					}
+					else
+					{
+						auto slot = input["Slots"][i];
+						slot["Slot"] = i + 1;
+						
+						if (!firstRandomCopy) {
+							firstRandomCopy = i;
+							slot["Options"] = Clone(input["Random"]);
+
+							for (auto option : slot["Options"])
+							{
+								if (option["Chance"].IsDefined())
+								{
+									option["Rate"] = option["Chance"].Scalar();
+									option.remove("Chance");
+								}
+							}
+						}
+						else
+						{
+							slot["Inherit"] = firstRandomCopy + 1;
+						}
+						
+						remaining--;
+					}
+				}
+				
+				if (remaining > 0)
+				{
+					ShowWarning("Existing Slot count (%d) and MaxRandom (%d) exceeded limit of %d slots. Ignoring remaining %d random slots.\n", usedSlots, maxRandom, MAX_ITEM_RDM_OPT, maxRandom);
+				}
+			}
+			input.remove("MaxRandom");
+			input.remove("Random");
+		}
 		body << input;
 		entries++;
 	}
