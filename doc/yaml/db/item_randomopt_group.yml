@@ -7,19 +7,14 @@
 ###########################################################################
 # - Id                  Item Random Option Group ID.
 #   Group               Item Random Option Group constant.
-#   Slots:              Slot in which an Item Random Option is guaranteed to be applied. Max of MAX_ITEM_RDM_OPT.
+#   Slots:              Slot in which an Item Random Option is to be applied. Max of MAX_ITEM_RDM_OPT.
 #     - Slot            Slot number.
-#       Options:        List of possible Item Random Options for slot.
+#       Chance          Chance to have this Item Random Option Slot be applied (1 = 0.01%, 10000 = 100%). (Default: 10000)
+#       Inherit         Inherits Random Options from specified Slot. Must be lower than current Slot and options must already have been specified. (Optional)
+#       Options:        List of possible Item Random Options for slot. (Optional when inheriting)
 #         - Option      Item Random Option constant.
 #           MinValue    Minimum value. (Default: 0)
 #           MaxValue    Maximum value. (Default: 0)
 #           Param       Parameter value. (Default: 0)
-#           Chance      Chance applied specifically to this Item Random Option (1 = 0.01%, 10000 = 100%). (Default: 0)
-#   MaxRandom           Maximum amount of random options applied. These options are not guaranteed to be applied. Max of (MAX_ITEM_RDM_OPT - Total 'Slots'). (Default: 0)
-#   Random:             List of possible Item Random Options for remaining slots. (Optional)
-#     - Option          Item Random Option constant.
-#       MinValue        Minimum value. (Default: 0)
-#       MaxValue        Maximum value. (Default: 0)
-#       Param           Parameter value. (Default: 0)
-#       Chance          Chance applied specifically to this Item Random Option (1 = 0.01%, 10000 = 100%). (Default: 0)
+#           Rate        Probability to get this Random Option. Not a percentage value! Chance is Rate/sumOfSlotRates. (Default: 1)
 ###########################################################################
