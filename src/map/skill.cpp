@@ -1306,7 +1306,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 
 				if (type == SC_STONEWAIT) {
 					val2 = src->id;
-					delay = skill_get_time(skill_id, skill_lv);
+					delay = skill_get_time(status_db.getSkill(type), 7);
 				} else if (type == SC_BURNING) {
 					val3 = src->id;
 				}
@@ -1335,7 +1335,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 
 				if (type == SC_STONEWAIT) {
 					val2 = src->id;
-					delay = skill_get_time(skill_id, skill_lv);
+					delay = skill_get_time(status_db.getSkill(type), 7);
 				} else if (type == SC_BURNING) {
 					val3 = src->id;
 				}
@@ -2543,7 +2543,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 
 			if (type == SC_STONEWAIT) {
 				val2 = src->id;
-				delay = skill_get_time(skill_id, skill_lv);
+				delay = skill_get_time(status_db.getSkill(type), 7);
 			} else if (type == SC_BURNING) {
 				val3 = src->id;
 			}
