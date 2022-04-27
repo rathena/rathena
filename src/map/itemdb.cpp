@@ -3232,7 +3232,7 @@ bool RandomOptionGroupDatabase::add_option(const ryml::NodeRef& node, std::share
 
 		entry->rate = rate;
 	} else {
-		entry->rate = 0;
+		entry->rate = 1;
 	}
 
 	return true;
@@ -3341,7 +3341,7 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				if (!this->asUInt16Rate(slotNode, "Inherit", inheritSlot))
 					return false;
 
-				if (inheritSlot < max(1,slot - 1) || inheritSlot > slot - 1) {
+				if (inheritSlot < 1 || inheritSlot > slot - 1) {
 					this->invalidWarning(slotNode["Inherit"], "Invalid Random Option Inherit Slot number %hu given, must be between 1~%d, skipping.\n", inheritSlot, slot - 1);
 					return 0;
 				}
