@@ -75,80 +75,63 @@ Body:
             MinValue: 1
             MaxValue: 5
             Rate: 5000
-    MaxRandom: 0 # These are listed but the group only has 1 slot max
-    Random:
-      - Option: VAR_MAXHPAMOUNT
-        MinValue: 50
-        MaxValue: 100
-        Chance: 5000
-      - Option: VAR_MAXSPAMOUNT
-        MinValue: 10
-        MaxValue: 50
-        Chance: 5000
-      - Option: VAR_MAXHPPERCENT
-        MinValue: 1
-        MaxValue: 5
-        Chance: 5000
-      - Option: VAR_MAXSPPERCENT
-        MinValue: 1
-        MaxValue: 5
-        Chance: 5000
-      - Option: VAR_HPACCELERATION
-        MinValue: 10
-        MaxValue: 50
-        Chance: 5000
-      - Option: VAR_SPACCELERATION
-        MinValue: 10
-        MaxValue: 50
-        Chance: 5000
-      - Option: VAR_ATKPERCENT
-        MinValue: 5
-        MaxValue: 10
-        Chance: 5000
-      - Option: VAR_MAGICATKPERCENT
-        MinValue: 5
-        MaxValue: 10
-        Chance: 5000
-      - Option: VAR_PLUSASPD
-        MinValue: 1
-        MaxValue: 2
-        Chance: 5000
-      - Option: VAR_PLUSASPDPERCENT
-        MinValue: 5
-        MaxValue: 10
-        Chance: 5000
-      - Option: VAR_ATTPOWER
-        MinValue: 10
-        MaxValue: 30
-        Chance: 5000
-      - Option: VAR_HITSUCCESSVALUE
-        MinValue: 10
-        MaxValue: 30
-        Chance: 5000
-      - Option: VAR_ATTMPOWER
-        MinValue: 10
-        MaxValue: 30
-        Chance: 5000
-      - Option: VAR_ITEMDEFPOWER
-        MinValue: 10
-        MaxValue: 30
-        Chance: 5000
-      - Option: VAR_MDEFPOWER
-        MinValue: 10
-        MaxValue: 30
-        Chance: 5000
-      - Option: VAR_AVOIDSUCCESSVALUE
-        MinValue: 10
-        MaxValue: 30
-        Chance: 5000
-      - Option: VAR_PLUSAVOIDSUCCESSVALUE
-        MinValue: 10
-        MaxValue: 30
-        Chance: 5000
-      - Option: VAR_CRITICALSUCCESSVALUE
-        MinValue: 10
-        MaxValue: 30
-        Chance: 5000
+#      - Slot: 1 # These are listed but the group only has 1 slot max
+#        Chance: 5000
+#        Options:
+#          - Option: VAR_MAXHPAMOUNT
+#            MinValue: 50
+#            MaxValue: 100
+#          - Option: VAR_MAXSPAMOUNT
+#            MinValue: 10
+#            MaxValue: 50
+#          - Option: VAR_MAXHPPERCENT
+#            MinValue: 1
+#            MaxValue: 5
+#          - Option: VAR_MAXSPPERCENT
+#            MinValue: 1
+#            MaxValue: 5
+#          - Option: VAR_HPACCELERATION
+#            MinValue: 10
+#            MaxValue: 50
+#          - Option: VAR_SPACCELERATION
+#            MinValue: 10
+#            MaxValue: 50
+#          - Option: VAR_ATKPERCENT
+#            MinValue: 5
+#            MaxValue: 10
+#          - Option: VAR_MAGICATKPERCENT
+#            MinValue: 5
+#            MaxValue: 10
+#          - Option: VAR_PLUSASPD
+#            MinValue: 1
+#            MaxValue: 2
+#          - Option: VAR_PLUSASPDPERCENT
+#            MinValue: 5
+#            MaxValue: 10
+#          - Option: VAR_ATTPOWER
+#            MinValue: 10
+#            MaxValue: 30
+#          - Option: VAR_HITSUCCESSVALUE
+#            MinValue: 10
+#            MaxValue: 30
+#          - Option: VAR_ATTMPOWER
+#            MinValue: 10
+#            MaxValue: 30
+#          - Option: VAR_ITEMDEFPOWER
+#            MinValue: 10
+#            MaxValue: 30
+#          - Option: VAR_MDEFPOWER
+#            MinValue: 10
+#            MaxValue: 30
+#          - Option: VAR_AVOIDSUCCESSVALUE
+#            MinValue: 10
+#            MaxValue: 30
+#          - Option: VAR_PLUSAVOIDSUCCESSVALUE
+#            MinValue: 10
+#            MaxValue: 30
+#          - Option: VAR_CRITICALSUCCESSVALUE
+#            MinValue: 10
+#            MaxValue: 30
   - Id: 2
     Group: Group_2
     Slots:
@@ -174,32 +157,27 @@ Body:
             MinValue: 10
             MaxValue: 20
             Rate: 5000
-    MaxRandom: 1
-    Random:
-      - Option: ATTR_TOLERACE_POISON
-        MinValue: 10
-        MaxValue: 20
+      - Slot: 2
         Chance: 5000
-      - Option: ATTR_TOLERACE_SAINT
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: ATTR_TOLERACE_DARKNESS
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: ATTR_TOLERACE_TELEKINESIS
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: ATTR_TOLERACE_UNDEAD
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: ATTR_TOLERACE_ALL
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
+        Options:
+          - Option: ATTR_TOLERACE_POISON
+            MinValue: 10
+            MaxValue: 20
+          - Option: ATTR_TOLERACE_SAINT
+            MinValue: 10
+            MaxValue: 20
+          - Option: ATTR_TOLERACE_DARKNESS
+            MinValue: 10
+            MaxValue: 20
+          - Option: ATTR_TOLERACE_TELEKINESIS
+            MinValue: 10
+            MaxValue: 20
+          - Option: ATTR_TOLERACE_UNDEAD
+            MinValue: 10
+            MaxValue: 20
+          - Option: ATTR_TOLERACE_ALL
+            MinValue: 10
+            MaxValue: 20
   - Id: 3
     Group: Group_3
     Slots:
@@ -233,60 +211,51 @@ Body:
             MinValue: 10
             MaxValue: 20
             Rate: 5000
-    MaxRandom: 2
-    Random:
-      - Option: DAMAGE_PROPERTY_FIRE_TARGET
-        MinValue: 10
-        MaxValue: 20
+      - Slot: 2
         Chance: 5000
-      - Option: DAMAGE_PROPERTY_WIND_USER
-        MinValue: 10
-        MaxValue: 20
+        Options:
+          - Option: DAMAGE_PROPERTY_FIRE_TARGET
+            MinValue: 10
+            MaxValue: 20
+          - Option: DAMAGE_PROPERTY_WIND_USER
+            MinValue: 10
+            MaxValue: 20
+          - Option: DAMAGE_PROPERTY_WIND_TARGET
+            MinValue: 10
+            MaxValue: 20
+          - Option: DAMAGE_PROPERTY_POISON_USER
+            MinValue: 10
+            MaxValue: 20
+          - Option: DAMAGE_PROPERTY_POISON_TARGET
+            MinValue: 10
+            MaxValue: 20
+          - Option: DAMAGE_PROPERTY_SAINT_USER
+            MinValue: 10
+            MaxValue: 20
+          - Option: DAMAGE_PROPERTY_SAINT_TARGET
+            MinValue: 10
+            MaxValue: 20
+          - Option: DAMAGE_PROPERTY_DARKNESS_USER
+            MinValue: 10
+            MaxValue: 20
+          - Option: DAMAGE_PROPERTY_DARKNESS_TARGET
+            MinValue: 10
+            MaxValue: 20
+          - Option: DAMAGE_PROPERTY_TELEKINESIS_USER
+            MinValue: 10
+            MaxValue: 20
+          - Option: DAMAGE_PROPERTY_TELEKINESIS_TARGET
+            MinValue: 10
+            MaxValue: 20
+          - Option: DAMAGE_PROPERTY_UNDEAD_USER
+            MinValue: 10
+            MaxValue: 20
+          - Option: DAMAGE_PROPERTY_UNDEAD_TARGET
+            MinValue: 10
+            MaxValue: 20
+      - Slot: 3
         Chance: 5000
-      - Option: DAMAGE_PROPERTY_WIND_TARGET
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: DAMAGE_PROPERTY_POISON_USER
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: DAMAGE_PROPERTY_POISON_TARGET
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: DAMAGE_PROPERTY_SAINT_USER
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: DAMAGE_PROPERTY_SAINT_TARGET
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: DAMAGE_PROPERTY_DARKNESS_USER
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: DAMAGE_PROPERTY_DARKNESS_TARGET
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: DAMAGE_PROPERTY_TELEKINESIS_USER
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: DAMAGE_PROPERTY_TELEKINESIS_TARGET
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: DAMAGE_PROPERTY_UNDEAD_USER
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: DAMAGE_PROPERTY_UNDEAD_TARGET
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
+        Inherit: 2
   - Id: 4
     Group: Group_4
     Slots:
@@ -304,76 +273,66 @@ Body:
             MinValue: 10
             MaxValue: 20
             Rate: 5000
-    MaxRandom: 3
-    Random:
-      - Option: MDAMAGE_PROPERTY_WATER_TARGET
-        MinValue: 10
-        MaxValue: 20
+      - Slot: 2
         Chance: 5000
-      - Option: MDAMAGE_PROPERTY_GROUND_USER
-        MinValue: 10
-        MaxValue: 20
+        Options:
+          - Option: MDAMAGE_PROPERTY_WATER_TARGET
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_GROUND_USER
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_GROUND_TARGET
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_FIRE_USER
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_FIRE_TARGET
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_WIND_USER
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_WIND_TARGET
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_POISON_USER
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_POISON_TARGET
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_SAINT_USER
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_SAINT_TARGET
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_DARKNESS_USER
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_DARKNESS_TARGET
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_TELEKINESIS_USER
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_TELEKINESIS_TARGET
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_UNDEAD_USER
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_UNDEAD_TARGET
+            MinValue: 10
+            MaxValue: 20
+      - Slot: 3
         Chance: 5000
-      - Option: MDAMAGE_PROPERTY_GROUND_TARGET
-        MinValue: 10
-        MaxValue: 20
+        Inherit: 2
+      - Slot: 4
         Chance: 5000
-      - Option: MDAMAGE_PROPERTY_FIRE_USER
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: MDAMAGE_PROPERTY_FIRE_TARGET
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: MDAMAGE_PROPERTY_WIND_USER
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: MDAMAGE_PROPERTY_WIND_TARGET
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: MDAMAGE_PROPERTY_POISON_USER
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: MDAMAGE_PROPERTY_POISON_TARGET
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: MDAMAGE_PROPERTY_SAINT_USER
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: MDAMAGE_PROPERTY_SAINT_TARGET
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: MDAMAGE_PROPERTY_DARKNESS_USER
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: MDAMAGE_PROPERTY_DARKNESS_TARGET
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: MDAMAGE_PROPERTY_TELEKINESIS_USER
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: MDAMAGE_PROPERTY_TELEKINESIS_TARGET
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: MDAMAGE_PROPERTY_UNDEAD_USER
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
-      - Option: MDAMAGE_PROPERTY_UNDEAD_TARGET
-        MinValue: 10
-        MaxValue: 20
-        Chance: 5000
+        Inherit: 2
   - Id: 5
     Group: Group_5
     Slots:
@@ -448,76 +407,60 @@ Body:
             MinValue: 1
             MaxValue: 10
             Rate: 2000
-    MaxRandom: 1
-    Random:
-      - Option: MDAMAGE_PROPERTY_WATER_TARGET
-        MinValue: 10
-        MaxValue: 20
+      - Slot: 5
         Chance: 2000
-      - Option: MDAMAGE_PROPERTY_GROUND_USER
-        MinValue: 10
-        MaxValue: 20
-        Chance: 2000
-      - Option: MDAMAGE_PROPERTY_GROUND_TARGET
-        MinValue: 10
-        MaxValue: 20
-        Chance: 2000
-      - Option: MDAMAGE_PROPERTY_FIRE_USER
-        MinValue: 10
-        MaxValue: 20
-        Chance: 2000
-      - Option: MDAMAGE_PROPERTY_FIRE_TARGET
-        MinValue: 10
-        MaxValue: 20
-        Chance: 2000
-      - Option: MDAMAGE_PROPERTY_WIND_USER
-        MinValue: 10
-        MaxValue: 20
-        Chance: 2000
-      - Option: MDAMAGE_PROPERTY_WIND_TARGET
-        MinValue: 10
-        MaxValue: 20
-        Chance: 2000
-      - Option: MDAMAGE_PROPERTY_POISON_USER
-        MinValue: 10
-        MaxValue: 20
-        Chance: 2000
-      - Option: MDAMAGE_PROPERTY_POISON_TARGET
-        MinValue: 10
-        MaxValue: 20
-        Chance: 2000
-      - Option: MDAMAGE_PROPERTY_SAINT_USER
-        MinValue: 10
-        MaxValue: 20
-        Chance: 2000
-      - Option: MDAMAGE_PROPERTY_SAINT_TARGET
-        MinValue: 10
-        MaxValue: 20
-        Chance: 2000
-      - Option: MDAMAGE_PROPERTY_DARKNESS_USER
-        MinValue: 10
-        MaxValue: 20
-        Chance: 2000
-      - Option: MDAMAGE_PROPERTY_DARKNESS_TARGET
-        MinValue: 10
-        MaxValue: 20
-        Chance: 2000
-      - Option: MDAMAGE_PROPERTY_TELEKINESIS_USER
-        MinValue: 10
-        MaxValue: 20
-        Chance: 2000
-      - Option: MDAMAGE_PROPERTY_TELEKINESIS_TARGET
-        MinValue: 10
-        MaxValue: 20
-        Chance: 2000
-      - Option: MDAMAGE_PROPERTY_UNDEAD_USER
-        MinValue: 10
-        MaxValue: 20
-        Chance: 2000
-      - Option: MDAMAGE_PROPERTY_UNDEAD_TARGET
-        MinValue: 10
-        MaxValue: 20
-        Chance: 2000
+        Options:
+          - Option: MDAMAGE_PROPERTY_WATER_TARGET
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_GROUND_USER
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_GROUND_TARGET
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_FIRE_USER
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_FIRE_TARGET
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_WIND_USER
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_WIND_TARGET
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_POISON_USER
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_POISON_TARGET
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_SAINT_USER
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_SAINT_TARGET
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_DARKNESS_USER
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_DARKNESS_TARGET
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_TELEKINESIS_USER
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_TELEKINESIS_TARGET
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_UNDEAD_USER
+            MinValue: 10
+            MaxValue: 20
+          - Option: MDAMAGE_PROPERTY_UNDEAD_TARGET
+            MinValue: 10
+            MaxValue: 20
   - Id: 7
     Group: AS_WEAPON_1 # Staff
     Slots:
@@ -1682,192 +1625,193 @@ Body:
             MinValue: 1
             MaxValue: 2
             Rate: 100
-    MaxRandom: 1
-    Random:
-      - Option: VAR_STRAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 36
-      - Option: VAR_AGIAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 36
-      - Option: VAR_VITAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 36
-      - Option: VAR_INTAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 36
-      - Option: VAR_DEXAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 36
-      - Option: VAR_LUKAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 36
-      - Option: VAR_MAXHPAMOUNT
-        MinValue: 200
-        MaxValue: 200
-        Chance: 26
-      - Option: VAR_MAXSPAMOUNT
-        MinValue: 25
-        MaxValue: 25
-        Chance: 26
-      - Option: VAR_MAXHPPERCENT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 21
-      - Option: VAR_MAXSPPERCENT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 21
-      - Option: VAR_HPACCELERATION
-        MinValue: 5
-        MaxValue: 10
-        Chance: 26
-      - Option: VAR_SPACCELERATION
-        MinValue: 5
-        MaxValue: 10
-        Chance: 26
-      - Option: VAR_ATTPOWER
-        MinValue: 5
-        MaxValue: 5
-        Chance: 11
-      - Option: VAR_ATTMPOWER
-        MinValue: 5
-        MaxValue: 5
-        Chance: 11
-      - Option: VAR_ATKPERCENT
-        MinValue: 1
-        MaxValue: 1
-        Chance: 9
-      - Option: VAR_MAGICATKPERCENT
-        MinValue: 1
-        MaxValue: 1
-        Chance: 9
-      - Option: VAR_PLUSASPD
-        MinValue: 1
-        MaxValue: 1
-        Chance: 21
-      - Option: VAR_PLUSASPDPERCENT
-        MinValue: 3
-        MaxValue: 5
-        Chance: 6
-      - Option: VAR_HITSUCCESSVALUE
-        MinValue: 5
-        MaxValue: 5
-        Chance: 11
-      - Option: VAR_AVOIDSUCCESSVALUE
-        MinValue: 3
-        MaxValue: 5
-        Chance: 26
-      - Option: VAR_ITEMDEFPOWER
-        MinValue: 10
-        MaxValue: 10
-        Chance: 26
-      - Option: VAR_MDEFPOWER
-        MinValue: 2
-        MaxValue: 3
-        Chance: 31
-      - Option: VAR_PLUSAVOIDSUCCESSVALUE
-        MinValue: 2
-        MaxValue: 3
-        Chance: 4
-      - Option: VAR_CRITICALSUCCESSVALUE
-        MinValue: 1
-        MaxValue: 2
-        Chance: 31
-      - Option: RANGE_ATTACK_DAMAGE_TARGET
-        MinValue: 1
-        MaxValue: 2
-        Chance: 3
-      - Option: HEAL_VALUE
-        MinValue: 2
-        MaxValue: 3
-        Chance: 11
-      - Option: HEAL_MODIFY_PERCENT
-        MinValue: 5
-        MaxValue: 5
-        Chance: 9
-      - Option: DEC_SPELL_CAST_TIME
-        MinValue: 1
-        MaxValue: 2
-        Chance: 6
-      - Option: DEC_SP_CONSUMPTION
-        MinValue: 2
-        MaxValue: 3
-        Chance: 4
-      - Option: RACE_TOLERACE_NOTHING
-        MinValue: 1
-        MaxValue: 2
-        Chance: 38
-      - Option: RACE_TOLERACE_UNDEAD
-        MinValue: 1
-        MaxValue: 2
-        Chance: 38
-      - Option: RACE_TOLERACE_ANIMAL
-        MinValue: 1
-        MaxValue: 2
-        Chance: 38
-      - Option: RACE_TOLERACE_PLANT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 38
-      - Option: RACE_TOLERACE_INSECT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 38
-      - Option: RACE_TOLERACE_FISHS
-        MinValue: 1
-        MaxValue: 2
-        Chance: 38
-      - Option: RACE_TOLERACE_DEVIL
-        MinValue: 1
-        MaxValue: 2
-        Chance: 38
-      - Option: RACE_TOLERACE_ANGEL
-        MinValue: 1
-        MaxValue: 2
-        Chance: 38
-      - Option: RACE_TOLERACE_DRAGON
-        MinValue: 1
-        MaxValue: 2
-        Chance: 38
-      - Option: VAR_MAXHPAMOUNT
-        MinValue: 400
-        MaxValue: 400
-        Chance: 15
-      - Option: VAR_MAXSPAMOUNT
-        MinValue: 50
-        MaxValue: 50
-        Chance: 15
-      - Option: VAR_ATTPOWER
-        MinValue: 10
-        MaxValue: 10
-        Chance: 5
-      - Option: VAR_ATTMPOWER
-        MinValue: 10
-        MaxValue: 10
-        Chance: 5
-      - Option: VAR_HITSUCCESSVALUE
-        MinValue: 10
-        MaxValue: 10
-        Chance: 7
-      - Option: VAR_ITEMDEFPOWER
-        MinValue: 20
-        MaxValue: 20
-        Chance: 15
-      - Option: VAR_ITEMDEFPOWER
-        MinValue: 30
-        MaxValue: 30
-        Chance: 5
-      - Option: HEAL_MODIFY_PERCENT
-        MinValue: 10
-        MaxValue: 10
-        Chance: 5
+      - Slot: 3
+        Chance: 1000 # Confirm rate
+        Options:
+          - Option: VAR_STRAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 36
+          - Option: VAR_AGIAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 36
+          - Option: VAR_VITAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 36
+          - Option: VAR_INTAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 36
+          - Option: VAR_DEXAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 36
+          - Option: VAR_LUKAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 36
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 200
+            MaxValue: 200
+            Rate: 26
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 25
+            MaxValue: 25
+            Rate: 26
+          - Option: VAR_MAXHPPERCENT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 21
+          - Option: VAR_MAXSPPERCENT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 21
+          - Option: VAR_HPACCELERATION
+            MinValue: 5
+            MaxValue: 10
+            Rate: 26
+          - Option: VAR_SPACCELERATION
+            MinValue: 5
+            MaxValue: 10
+            Rate: 26
+          - Option: VAR_ATTPOWER
+            MinValue: 5
+            MaxValue: 5
+            Rate: 11
+          - Option: VAR_ATTMPOWER
+            MinValue: 5
+            MaxValue: 5
+            Rate: 11
+          - Option: VAR_ATKPERCENT
+            MinValue: 1
+            MaxValue: 1
+            Rate: 9
+          - Option: VAR_MAGICATKPERCENT
+            MinValue: 1
+            MaxValue: 1
+            Rate: 9
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 1
+            Rate: 21
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 3
+            MaxValue: 5
+            Rate: 6
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 5
+            Rate: 11
+          - Option: VAR_AVOIDSUCCESSVALUE
+            MinValue: 3
+            MaxValue: 5
+            Rate: 26
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 10
+            MaxValue: 10
+            Rate: 26
+          - Option: VAR_MDEFPOWER
+            MinValue: 2
+            MaxValue: 3
+            Rate: 31
+          - Option: VAR_PLUSAVOIDSUCCESSVALUE
+            MinValue: 2
+            MaxValue: 3
+            Rate: 4
+          - Option: VAR_CRITICALSUCCESSVALUE
+            MinValue: 1
+            MaxValue: 2
+            Rate: 31
+          - Option: RANGE_ATTACK_DAMAGE_TARGET
+            MinValue: 1
+            MaxValue: 2
+            Rate: 3
+          - Option: HEAL_VALUE
+            MinValue: 2
+            MaxValue: 3
+            Rate: 11
+          - Option: HEAL_MODIFY_PERCENT
+            MinValue: 5
+            MaxValue: 5
+            Rate: 9
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 1
+            MaxValue: 2
+            Rate: 6
+          - Option: DEC_SP_CONSUMPTION
+            MinValue: 2
+            MaxValue: 3
+            Rate: 4
+          - Option: RACE_TOLERACE_NOTHING
+            MinValue: 1
+            MaxValue: 2
+            Rate: 38
+          - Option: RACE_TOLERACE_UNDEAD
+            MinValue: 1
+            MaxValue: 2
+            Rate: 38
+          - Option: RACE_TOLERACE_ANIMAL
+            MinValue: 1
+            MaxValue: 2
+            Rate: 38
+          - Option: RACE_TOLERACE_PLANT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 38
+          - Option: RACE_TOLERACE_INSECT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 38
+          - Option: RACE_TOLERACE_FISHS
+            MinValue: 1
+            MaxValue: 2
+            Rate: 38
+          - Option: RACE_TOLERACE_DEVIL
+            MinValue: 1
+            MaxValue: 2
+            Rate: 38
+          - Option: RACE_TOLERACE_ANGEL
+            MinValue: 1
+            MaxValue: 2
+            Rate: 38
+          - Option: RACE_TOLERACE_DRAGON
+            MinValue: 1
+            MaxValue: 2
+            Rate: 38
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 400
+            MaxValue: 400
+            Rate: 15
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 50
+            MaxValue: 50
+            Rate: 15
+          - Option: VAR_ATTPOWER
+            MinValue: 10
+            MaxValue: 10
+            Rate: 5
+          - Option: VAR_ATTMPOWER
+            MinValue: 10
+            MaxValue: 10
+            Rate: 5
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 10
+            MaxValue: 10
+            Rate: 7
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 20
+            MaxValue: 20
+            Rate: 15
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 30
+            MaxValue: 30
+            Rate: 5
+          - Option: HEAL_MODIFY_PERCENT
+            MinValue: 10
+            MaxValue: 10
+            Rate: 5
   - Id: 13
     Group: ALLMIGHTY_S_ATT
     Slots:
@@ -2031,192 +1975,193 @@ Body:
             MinValue: 1
             MaxValue: 2
             Rate: 10000
-    MaxRandom: 1
-    Random:
-      - Option: VAR_STRAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 36
-      - Option: VAR_AGIAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 36
-      - Option: VAR_VITAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 36
-      - Option: VAR_INTAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 36
-      - Option: VAR_DEXAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 36
-      - Option: VAR_LUKAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 36
-      - Option: VAR_MAXHPAMOUNT
-        MinValue: 200
-        MaxValue: 200
-        Chance: 26
-      - Option: VAR_MAXSPAMOUNT
-        MinValue: 25
-        MaxValue: 25
-        Chance: 26
-      - Option: VAR_MAXHPPERCENT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 21
-      - Option: VAR_MAXSPPERCENT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 21
-      - Option: VAR_HPACCELERATION
-        MinValue: 5
-        MaxValue: 10
-        Chance: 26
-      - Option: VAR_SPACCELERATION
-        MinValue: 5
-        MaxValue: 10
-        Chance: 26
-      - Option: VAR_ATTPOWER
-        MinValue: 5
-        MaxValue: 5
-        Chance: 11
-      - Option: VAR_ATTMPOWER
-        MinValue: 5
-        MaxValue: 5
-        Chance: 11
-      - Option: VAR_ATKPERCENT
-        MinValue: 1
-        MaxValue: 1
-        Chance: 9
-      - Option: VAR_MAGICATKPERCENT
-        MinValue: 1
-        MaxValue: 1
-        Chance: 9
-      - Option: VAR_PLUSASPD
-        MinValue: 1
-        MaxValue: 1
-        Chance: 21
-      - Option: VAR_PLUSASPDPERCENT
-        MinValue: 3
-        MaxValue: 5
-        Chance: 6
-      - Option: VAR_HITSUCCESSVALUE
-        MinValue: 5
-        MaxValue: 5
-        Chance: 11
-      - Option: VAR_AVOIDSUCCESSVALUE
-        MinValue: 3
-        MaxValue: 5
-        Chance: 26
-      - Option: VAR_ITEMDEFPOWER
-        MinValue: 10
-        MaxValue: 10
-        Chance: 26
-      - Option: VAR_MDEFPOWER
-        MinValue: 2
-        MaxValue: 3
-        Chance: 31
-      - Option: VAR_PLUSAVOIDSUCCESSVALUE
-        MinValue: 2
-        MaxValue: 3
-        Chance: 4
-      - Option: VAR_CRITICALSUCCESSVALUE
-        MinValue: 1
-        MaxValue: 2
-        Chance: 31
-      - Option: RANGE_ATTACK_DAMAGE_TARGET
-        MinValue: 1
-        MaxValue: 2
-        Chance: 3
-      - Option: HEAL_VALUE
-        MinValue: 2
-        MaxValue: 3
-        Chance: 11
-      - Option: HEAL_MODIFY_PERCENT
-        MinValue: 5
-        MaxValue: 5
-        Chance: 9
-      - Option: DEC_SPELL_CAST_TIME
-        MinValue: 1
-        MaxValue: 2
-        Chance: 6
-      - Option: DEC_SP_CONSUMPTION
-        MinValue: 2
-        MaxValue: 3
-        Chance: 4
-      - Option: RACE_TOLERACE_NOTHING
-        MinValue: 1
-        MaxValue: 2
-        Chance: 38
-      - Option: RACE_TOLERACE_UNDEAD
-        MinValue: 1
-        MaxValue: 2
-        Chance: 38
-      - Option: RACE_TOLERACE_ANIMAL
-        MinValue: 1
-        MaxValue: 2
-        Chance: 38
-      - Option: RACE_TOLERACE_PLANT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 38
-      - Option: RACE_TOLERACE_INSECT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 38
-      - Option: RACE_TOLERACE_FISHS
-        MinValue: 1
-        MaxValue: 2
-        Chance: 38
-      - Option: RACE_TOLERACE_DEVIL
-        MinValue: 1
-        MaxValue: 2
-        Chance: 38
-      - Option: RACE_TOLERACE_ANGEL
-        MinValue: 1
-        MaxValue: 2
-        Chance: 38
-      - Option: RACE_TOLERACE_DRAGON
-        MinValue: 1
-        MaxValue: 2
-        Chance: 38
-      - Option: VAR_MAXHPAMOUNT
-        MinValue: 400
-        MaxValue: 400
-        Chance: 15
-      - Option: VAR_MAXSPAMOUNT
-        MinValue: 50
-        MaxValue: 50
-        Chance: 15
-      - Option: VAR_ATTPOWER
-        MinValue: 10
-        MaxValue: 10
-        Chance: 5
-      - Option: VAR_ATTMPOWER
-        MinValue: 10
-        MaxValue: 10
-        Chance: 5
-      - Option: VAR_HITSUCCESSVALUE
-        MinValue: 10
-        MaxValue: 10
-        Chance: 7
-      - Option: VAR_ITEMDEFPOWER
-        MinValue: 20
-        MaxValue: 20
-        Chance: 15
-      - Option: VAR_ITEMDEFPOWER
-        MinValue: 30
-        MaxValue: 30
-        Chance: 5
-      - Option: HEAL_MODIFY_PERCENT
-        MinValue: 10
-        MaxValue: 10
-        Chance: 5
+      - Slot: 3
+        Chance: 1000 # Confirm rate
+        Options:
+          - Option: VAR_STRAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 36
+          - Option: VAR_AGIAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 36
+          - Option: VAR_VITAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 36
+          - Option: VAR_INTAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 36
+          - Option: VAR_DEXAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 36
+          - Option: VAR_LUKAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 36
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 200
+            MaxValue: 200
+            Rate: 26
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 25
+            MaxValue: 25
+            Rate: 26
+          - Option: VAR_MAXHPPERCENT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 21
+          - Option: VAR_MAXSPPERCENT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 21
+          - Option: VAR_HPACCELERATION
+            MinValue: 5
+            MaxValue: 10
+            Rate: 26
+          - Option: VAR_SPACCELERATION
+            MinValue: 5
+            MaxValue: 10
+            Rate: 26
+          - Option: VAR_ATTPOWER
+            MinValue: 5
+            MaxValue: 5
+            Rate: 11
+          - Option: VAR_ATTMPOWER
+            MinValue: 5
+            MaxValue: 5
+            Rate: 11
+          - Option: VAR_ATKPERCENT
+            MinValue: 1
+            MaxValue: 1
+            Rate: 9
+          - Option: VAR_MAGICATKPERCENT
+            MinValue: 1
+            MaxValue: 1
+            Rate: 9
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 1
+            Rate: 21
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 3
+            MaxValue: 5
+            Rate: 6
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 5
+            Rate: 11
+          - Option: VAR_AVOIDSUCCESSVALUE
+            MinValue: 3
+            MaxValue: 5
+            Rate: 26
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 10
+            MaxValue: 10
+            Rate: 26
+          - Option: VAR_MDEFPOWER
+            MinValue: 2
+            MaxValue: 3
+            Rate: 31
+          - Option: VAR_PLUSAVOIDSUCCESSVALUE
+            MinValue: 2
+            MaxValue: 3
+            Rate: 4
+          - Option: VAR_CRITICALSUCCESSVALUE
+            MinValue: 1
+            MaxValue: 2
+            Rate: 31
+          - Option: RANGE_ATTACK_DAMAGE_TARGET
+            MinValue: 1
+            MaxValue: 2
+            Rate: 3
+          - Option: HEAL_VALUE
+            MinValue: 2
+            MaxValue: 3
+            Rate: 11
+          - Option: HEAL_MODIFY_PERCENT
+            MinValue: 5
+            MaxValue: 5
+            Rate: 9
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 1
+            MaxValue: 2
+            Rate: 6
+          - Option: DEC_SP_CONSUMPTION
+            MinValue: 2
+            MaxValue: 3
+            Rate: 4
+          - Option: RACE_TOLERACE_NOTHING
+            MinValue: 1
+            MaxValue: 2
+            Rate: 38
+          - Option: RACE_TOLERACE_UNDEAD
+            MinValue: 1
+            MaxValue: 2
+            Rate: 38
+          - Option: RACE_TOLERACE_ANIMAL
+            MinValue: 1
+            MaxValue: 2
+            Rate: 38
+          - Option: RACE_TOLERACE_PLANT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 38
+          - Option: RACE_TOLERACE_INSECT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 38
+          - Option: RACE_TOLERACE_FISHS
+            MinValue: 1
+            MaxValue: 2
+            Rate: 38
+          - Option: RACE_TOLERACE_DEVIL
+            MinValue: 1
+            MaxValue: 2
+            Rate: 38
+          - Option: RACE_TOLERACE_ANGEL
+            MinValue: 1
+            MaxValue: 2
+            Rate: 38
+          - Option: RACE_TOLERACE_DRAGON
+            MinValue: 1
+            MaxValue: 2
+            Rate: 38
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 400
+            MaxValue: 400
+            Rate: 15
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 50
+            MaxValue: 50
+            Rate: 15
+          - Option: VAR_ATTPOWER
+            MinValue: 10
+            MaxValue: 10
+            Rate: 5
+          - Option: VAR_ATTMPOWER
+            MinValue: 10
+            MaxValue: 10
+            Rate: 5
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 10
+            MaxValue: 10
+            Rate: 7
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 20
+            MaxValue: 20
+            Rate: 15
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 30
+            MaxValue: 30
+            Rate: 5
+          - Option: HEAL_MODIFY_PERCENT
+            MinValue: 10
+            MaxValue: 10
+            Rate: 5
   - Id: 14
     Group: Bloody_Knight_Shield
     Slots:
@@ -2807,188 +2752,189 @@ Body:
             MinValue: 5
             MaxValue: 10
             Rate: 10000
-    MaxRandom: 1
-    Random:
-      - Option: VAR_PLUSASPD
-        MinValue: 1
-        MaxValue: 1
-        Chance: 10000
-      - Option: RACE_MDAMAGE_UNDEAD
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10000
-      - Option: RACE_MDAMAGE_PLANT
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10000
-      - Option: RACE_MDAMAGE_NOTHING
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10000
-      - Option: RACE_MDAMAGE_INSECT
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10000
-      - Option: RACE_MDAMAGE_HUMAN
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10000
-      - Option: RACE_MDAMAGE_FISHS
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10000
-      - Option: RACE_MDAMAGE_DRAGON
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10000
-      - Option: RACE_MDAMAGE_DEVIL
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10000
-      - Option: RACE_MDAMAGE_ANIMAL
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10000
-      - Option: RACE_MDAMAGE_ANGEL
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10000
-      - Option: RACE_IGNORE_MDEF_PERCENT_UNDEAD
-        MinValue: 30
-        MaxValue: 60
-        Chance: 10000
-      - Option: RACE_IGNORE_MDEF_PERCENT_PLANT
-        MinValue: 30
-        MaxValue: 60
-        Chance: 10000
-      - Option: RACE_IGNORE_MDEF_PERCENT_NOTHING
-        MinValue: 30
-        MaxValue: 60
-        Chance: 10000
-      - Option: RACE_IGNORE_MDEF_PERCENT_INSECT
-        MinValue: 30
-        MaxValue: 60
-        Chance: 10000
-      - Option: RACE_IGNORE_MDEF_PERCENT_HUMAN
-        MinValue: 30
-        MaxValue: 60
-        Chance: 10000
-      - Option: RACE_IGNORE_MDEF_PERCENT_FISHS
-        MinValue: 30
-        MaxValue: 60
-        Chance: 10000
-      - Option: RACE_IGNORE_MDEF_PERCENT_DRAGON
-        MinValue: 30
-        MaxValue: 60
-        Chance: 10000
-      - Option: RACE_IGNORE_MDEF_PERCENT_DEVIL
-        MinValue: 30
-        MaxValue: 60
-        Chance: 10000
-      - Option: RACE_IGNORE_MDEF_PERCENT_ANIMAL
-        MinValue: 30
-        MaxValue: 60
-        Chance: 10000
-      - Option: RACE_IGNORE_MDEF_PERCENT_ANGEL
-        MinValue: 30
-        MaxValue: 60
-        Chance: 10000
-      - Option: RACE_IGNORE_DEF_PERCENT_UNDEAD
-        MinValue: 30
-        MaxValue: 60
-        Chance: 10000
-      - Option: RACE_IGNORE_DEF_PERCENT_PLANT
-        MinValue: 30
-        MaxValue: 60
-        Chance: 10000
-      - Option: RACE_IGNORE_DEF_PERCENT_NOTHING
-        MinValue: 30
-        MaxValue: 60
-        Chance: 10000
-      - Option: RACE_IGNORE_DEF_PERCENT_INSECT
-        MinValue: 30
-        MaxValue: 60
-        Chance: 10000
-      - Option: RACE_IGNORE_DEF_PERCENT_HUMAN
-        MinValue: 30
-        MaxValue: 60
-        Chance: 10000
-      - Option: RACE_IGNORE_DEF_PERCENT_FISHS
-        MinValue: 30
-        MaxValue: 60
-        Chance: 10000
-      - Option: RACE_IGNORE_DEF_PERCENT_DRAGON
-        MinValue: 30
-        MaxValue: 60
-        Chance: 10000
-      - Option: RACE_IGNORE_DEF_PERCENT_DEVIL
-        MinValue: 30
-        MaxValue: 60
-        Chance: 10000
-      - Option: RACE_IGNORE_DEF_PERCENT_ANIMAL
-        MinValue: 30
-        MaxValue: 60
-        Chance: 10000
-      - Option: RACE_IGNORE_DEF_PERCENT_ANGEL
-        MinValue: 30
-        MaxValue: 60
-        Chance: 10000
-      - Option: RACE_DAMAGE_UNDEAD
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10000
-      - Option: RACE_DAMAGE_PLANT
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10000
-      - Option: RACE_DAMAGE_NOTHING
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10000
-      - Option: RACE_DAMAGE_INSECT
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10000
-      - Option: RACE_DAMAGE_HUMAN
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10000
-      - Option: RACE_DAMAGE_FISHS
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10000
-      - Option: RACE_DAMAGE_DRAGON
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10000
-      - Option: RACE_DAMAGE_DEVIL
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10000
-      - Option: RACE_DAMAGE_ANIMAL
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10000
-      - Option: RACE_DAMAGE_ANGEL
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10000
-      - Option: DEC_SPELL_DELAY_TIME
-        MinValue: 1
-        MaxValue: 5
-        Chance: 10000
-      - Option: DAMAGE_SIZE_PERFECT
-        MinValue: 1
-        MaxValue: 1
-        Chance: 2000
-      - Option: CLASS_IGNORE_MDEF_PERCENT_BOSS
-        MinValue: 30
-        MaxValue: 60
-        Chance: 4000
-      - Option: CLASS_IGNORE_DEF_PERCENT_BOSS
-        MinValue: 30
-        MaxValue: 60
-        Chance: 4000
+      - Slot: 3
+        Chance: 10000 # Confirm rate
+        Options:
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 1
+            Rate: 10000
+          - Option: RACE_MDAMAGE_UNDEAD
+            MinValue: 5
+            MaxValue: 10
+            Rate: 10000
+          - Option: RACE_MDAMAGE_PLANT
+            MinValue: 5
+            MaxValue: 10
+            Rate: 10000
+          - Option: RACE_MDAMAGE_NOTHING
+            MinValue: 5
+            MaxValue: 10
+            Rate: 10000
+          - Option: RACE_MDAMAGE_INSECT
+            MinValue: 5
+            MaxValue: 10
+            Rate: 10000
+          - Option: RACE_MDAMAGE_HUMAN
+            MinValue: 5
+            MaxValue: 10
+            Rate: 10000
+          - Option: RACE_MDAMAGE_FISHS
+            MinValue: 5
+            MaxValue: 10
+            Rate: 10000
+          - Option: RACE_MDAMAGE_DRAGON
+            MinValue: 5
+            MaxValue: 10
+            Rate: 10000
+          - Option: RACE_MDAMAGE_DEVIL
+            MinValue: 5
+            MaxValue: 10
+            Rate: 10000
+          - Option: RACE_MDAMAGE_ANIMAL
+            MinValue: 5
+            MaxValue: 10
+            Rate: 10000
+          - Option: RACE_MDAMAGE_ANGEL
+            MinValue: 5
+            MaxValue: 10
+            Rate: 10000
+          - Option: RACE_IGNORE_MDEF_PERCENT_UNDEAD
+            MinValue: 30
+            MaxValue: 60
+            Rate: 10000
+          - Option: RACE_IGNORE_MDEF_PERCENT_PLANT
+            MinValue: 30
+            MaxValue: 60
+            Rate: 10000
+          - Option: RACE_IGNORE_MDEF_PERCENT_NOTHING
+            MinValue: 30
+            MaxValue: 60
+            Rate: 10000
+          - Option: RACE_IGNORE_MDEF_PERCENT_INSECT
+            MinValue: 30
+            MaxValue: 60
+            Rate: 10000
+          - Option: RACE_IGNORE_MDEF_PERCENT_HUMAN
+            MinValue: 30
+            MaxValue: 60
+            Rate: 10000
+          - Option: RACE_IGNORE_MDEF_PERCENT_FISHS
+            MinValue: 30
+            MaxValue: 60
+            Rate: 10000
+          - Option: RACE_IGNORE_MDEF_PERCENT_DRAGON
+            MinValue: 30
+            MaxValue: 60
+            Rate: 10000
+          - Option: RACE_IGNORE_MDEF_PERCENT_DEVIL
+            MinValue: 30
+            MaxValue: 60
+            Rate: 10000
+          - Option: RACE_IGNORE_MDEF_PERCENT_ANIMAL
+            MinValue: 30
+            MaxValue: 60
+            Rate: 10000
+          - Option: RACE_IGNORE_MDEF_PERCENT_ANGEL
+            MinValue: 30
+            MaxValue: 60
+            Rate: 10000
+          - Option: RACE_IGNORE_DEF_PERCENT_UNDEAD
+            MinValue: 30
+            MaxValue: 60
+            Rate: 10000
+          - Option: RACE_IGNORE_DEF_PERCENT_PLANT
+            MinValue: 30
+            MaxValue: 60
+            Rate: 10000
+          - Option: RACE_IGNORE_DEF_PERCENT_NOTHING
+            MinValue: 30
+            MaxValue: 60
+            Rate: 10000
+          - Option: RACE_IGNORE_DEF_PERCENT_INSECT
+            MinValue: 30
+            MaxValue: 60
+            Rate: 10000
+          - Option: RACE_IGNORE_DEF_PERCENT_HUMAN
+            MinValue: 30
+            MaxValue: 60
+            Rate: 10000
+          - Option: RACE_IGNORE_DEF_PERCENT_FISHS
+            MinValue: 30
+            MaxValue: 60
+            Rate: 10000
+          - Option: RACE_IGNORE_DEF_PERCENT_DRAGON
+            MinValue: 30
+            MaxValue: 60
+            Rate: 10000
+          - Option: RACE_IGNORE_DEF_PERCENT_DEVIL
+            MinValue: 30
+            MaxValue: 60
+            Rate: 10000
+          - Option: RACE_IGNORE_DEF_PERCENT_ANIMAL
+            MinValue: 30
+            MaxValue: 60
+            Rate: 10000
+          - Option: RACE_IGNORE_DEF_PERCENT_ANGEL
+            MinValue: 30
+            MaxValue: 60
+            Rate: 10000
+          - Option: RACE_DAMAGE_UNDEAD
+            MinValue: 5
+            MaxValue: 10
+            Rate: 10000
+          - Option: RACE_DAMAGE_PLANT
+            MinValue: 5
+            MaxValue: 10
+            Rate: 10000
+          - Option: RACE_DAMAGE_NOTHING
+            MinValue: 5
+            MaxValue: 10
+            Rate: 10000
+          - Option: RACE_DAMAGE_INSECT
+            MinValue: 5
+            MaxValue: 10
+            Rate: 10000
+          - Option: RACE_DAMAGE_HUMAN
+            MinValue: 5
+            MaxValue: 10
+            Rate: 10000
+          - Option: RACE_DAMAGE_FISHS
+            MinValue: 5
+            MaxValue: 10
+            Rate: 10000
+          - Option: RACE_DAMAGE_DRAGON
+            MinValue: 5
+            MaxValue: 10
+            Rate: 10000
+          - Option: RACE_DAMAGE_DEVIL
+            MinValue: 5
+            MaxValue: 10
+            Rate: 10000
+          - Option: RACE_DAMAGE_ANIMAL
+            MinValue: 5
+            MaxValue: 10
+            Rate: 10000
+          - Option: RACE_DAMAGE_ANGEL
+            MinValue: 5
+            MaxValue: 10
+            Rate: 10000
+          - Option: DEC_SPELL_DELAY_TIME
+            MinValue: 1
+            MaxValue: 5
+            Rate: 10000
+          - Option: DAMAGE_SIZE_PERFECT
+            MinValue: 1
+            MaxValue: 1
+            Rate: 2000
+          - Option: CLASS_IGNORE_MDEF_PERCENT_BOSS
+            MinValue: 30
+            MaxValue: 60
+            Rate: 4000
+          - Option: CLASS_IGNORE_DEF_PERCENT_BOSS
+            MinValue: 30
+            MaxValue: 60
+            Rate: 4000
   - Id: 16
     Group: RTC_ALL_BOX # Taiwan RTC Event Box PENE
     Slots:
@@ -3248,80 +3194,63 @@ Body:
             MinValue: 5
             MaxValue: 10
             Rate: 5000
-    MaxRandom: 1
-    Random:
-      - Option: VAR_PLUSASPD
-        MinValue: 1
-        MaxValue: 3
-        Chance: 10
-      - Option: VAR_PLUSASPDPERCENT
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: VAR_PLUSAVOIDSUCCESSVALUE
-        MinValue: 3
-        MaxValue: 7
-        Chance: 10
-      - Option: RANGE_ATTACK_DAMAGE_TARGET
-        MinValue: 10
-        MaxValue: 15
-        Chance: 10
-      - Option: DEC_SPELL_CAST_TIME
-        MinValue: 10
-        MaxValue: 15
-        Chance: 10
-      - Option: DEC_SPELL_DELAY_TIME
-        MinValue: 3
-        MaxValue: 7
-        Chance: 10
-      - Option: ATTR_TOLERACE_NOTHING
-        MinValue: 10
-        MaxValue: 15
-        Chance: 10
-      - Option: CLASS_DAMAGE_BOSS_TARGET
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: CLASS_MDAMAGE_BOSS
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: CLASS_DAMAGE_BOSS_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: CLASS_IGNORE_DEF_PERCENT_BOSS
-        MinValue: 10
-        MaxValue: 30
-        Chance: 10
-      - Option: CLASS_IGNORE_MDEF_PERCENT_BOSS
-        MinValue: 10
-        MaxValue: 30
-        Chance: 10
-      - Option: DAMAGE_SIZE_SMALL_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: DAMAGE_SIZE_MIDIUM_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: DAMAGE_SIZE_LARGE_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: MDAMAGE_SIZE_SMALL_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: MDAMAGE_SIZE_MIDIUM_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: MDAMAGE_SIZE_LARGE_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
+      - Slot: 3
+        Chance: 180 # Confirm rate
+        Options:
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 3
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 5
+            MaxValue: 10
+          - Option: VAR_PLUSAVOIDSUCCESSVALUE
+            MinValue: 3
+            MaxValue: 7
+          - Option: RANGE_ATTACK_DAMAGE_TARGET
+            MinValue: 10
+            MaxValue: 15
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 10
+            MaxValue: 15
+          - Option: DEC_SPELL_DELAY_TIME
+            MinValue: 3
+            MaxValue: 7
+          - Option: ATTR_TOLERACE_NOTHING
+            MinValue: 10
+            MaxValue: 15
+          - Option: CLASS_DAMAGE_BOSS_TARGET
+            MinValue: 5
+            MaxValue: 10
+          - Option: CLASS_MDAMAGE_BOSS
+            MinValue: 5
+            MaxValue: 10
+          - Option: CLASS_DAMAGE_BOSS_USER
+            MinValue: 5
+            MaxValue: 10
+          - Option: CLASS_IGNORE_DEF_PERCENT_BOSS
+            MinValue: 10
+            MaxValue: 30
+          - Option: CLASS_IGNORE_MDEF_PERCENT_BOSS
+            MinValue: 10
+            MaxValue: 30
+          - Option: DAMAGE_SIZE_SMALL_USER
+            MinValue: 5
+            MaxValue: 10
+          - Option: DAMAGE_SIZE_MIDIUM_USER
+            MinValue: 5
+            MaxValue: 10
+          - Option: DAMAGE_SIZE_LARGE_USER
+            MinValue: 5
+            MaxValue: 10
+          - Option: MDAMAGE_SIZE_SMALL_USER
+            MinValue: 5
+            MaxValue: 10
+          - Option: MDAMAGE_SIZE_MIDIUM_USER
+            MinValue: 5
+            MaxValue: 10
+          - Option: MDAMAGE_SIZE_LARGE_USER
+            MinValue: 5
+            MaxValue: 10
   - Id: 17
     Group: RTC_ATK_BOX # Taiwan RTC Event Box ATK
     Slots:
@@ -3541,80 +3470,63 @@ Body:
             MinValue: 5
             MaxValue: 10
             Rate: 5000
-    MaxRandom: 1
-    Random:
-      - Option: VAR_PLUSASPD
-        MinValue: 1
-        MaxValue: 3
-        Chance: 10
-      - Option: VAR_PLUSASPDPERCENT
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: VAR_PLUSAVOIDSUCCESSVALUE
-        MinValue: 3
-        MaxValue: 7
-        Chance: 10
-      - Option: RANGE_ATTACK_DAMAGE_TARGET
-        MinValue: 10
-        MaxValue: 15
-        Chance: 10
-      - Option: DEC_SPELL_CAST_TIME
-        MinValue: 10
-        MaxValue: 15
-        Chance: 10
-      - Option: DEC_SPELL_DELAY_TIME
-        MinValue: 3
-        MaxValue: 7
-        Chance: 10
-      - Option: ATTR_TOLERACE_NOTHING
-        MinValue: 10
-        MaxValue: 15
-        Chance: 10
-      - Option: CLASS_DAMAGE_BOSS_TARGET
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: CLASS_MDAMAGE_BOSS
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: CLASS_DAMAGE_BOSS_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: CLASS_IGNORE_DEF_PERCENT_BOSS
-        MinValue: 10
-        MaxValue: 30
-        Chance: 10
-      - Option: CLASS_IGNORE_MDEF_PERCENT_BOSS
-        MinValue: 10
-        MaxValue: 30
-        Chance: 10
-      - Option: DAMAGE_SIZE_SMALL_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: DAMAGE_SIZE_MIDIUM_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: DAMAGE_SIZE_LARGE_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: MDAMAGE_SIZE_SMALL_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: MDAMAGE_SIZE_MIDIUM_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: MDAMAGE_SIZE_LARGE_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
+      - Slot: 3
+        Chance: 180 # Confirm rate
+        Options:
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 3
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 5
+            MaxValue: 10
+          - Option: VAR_PLUSAVOIDSUCCESSVALUE
+            MinValue: 3
+            MaxValue: 7
+          - Option: RANGE_ATTACK_DAMAGE_TARGET
+            MinValue: 10
+            MaxValue: 15
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 10
+            MaxValue: 15
+          - Option: DEC_SPELL_DELAY_TIME
+            MinValue: 3
+            MaxValue: 7
+          - Option: ATTR_TOLERACE_NOTHING
+            MinValue: 10
+            MaxValue: 15
+          - Option: CLASS_DAMAGE_BOSS_TARGET
+            MinValue: 5
+            MaxValue: 10
+          - Option: CLASS_MDAMAGE_BOSS
+            MinValue: 5
+            MaxValue: 10
+          - Option: CLASS_DAMAGE_BOSS_USER
+            MinValue: 5
+            MaxValue: 10
+          - Option: CLASS_IGNORE_DEF_PERCENT_BOSS
+            MinValue: 10
+            MaxValue: 30
+          - Option: CLASS_IGNORE_MDEF_PERCENT_BOSS
+            MinValue: 10
+            MaxValue: 30
+          - Option: DAMAGE_SIZE_SMALL_USER
+            MinValue: 5
+            MaxValue: 10
+          - Option: DAMAGE_SIZE_MIDIUM_USER
+            MinValue: 5
+            MaxValue: 10
+          - Option: DAMAGE_SIZE_LARGE_USER
+            MinValue: 5
+            MaxValue: 10
+          - Option: MDAMAGE_SIZE_SMALL_USER
+            MinValue: 5
+            MaxValue: 10
+          - Option: MDAMAGE_SIZE_MIDIUM_USER
+            MinValue: 5
+            MaxValue: 10
+          - Option: MDAMAGE_SIZE_LARGE_USER
+            MinValue: 5
+            MaxValue: 10
   - Id: 18
     Group: RTC_DEF_BOX # Taiwan RTC Event Box DEF
     Slots:
@@ -3790,80 +3702,63 @@ Body:
             MinValue: 5
             MaxValue: 10
             Rate: 5000
-    MaxRandom: 1
-    Random:
-      - Option: VAR_PLUSASPD
-        MinValue: 1
-        MaxValue: 3
-        Chance: 10
-      - Option: VAR_PLUSASPDPERCENT
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: VAR_PLUSAVOIDSUCCESSVALUE
-        MinValue: 3
-        MaxValue: 7
-        Chance: 10
-      - Option: RANGE_ATTACK_DAMAGE_TARGET
-        MinValue: 10
-        MaxValue: 15
-        Chance: 10
-      - Option: DEC_SPELL_CAST_TIME
-        MinValue: 10
-        MaxValue: 15
-        Chance: 10
-      - Option: DEC_SPELL_DELAY_TIME
-        MinValue: 3
-        MaxValue: 7
-        Chance: 10
-      - Option: ATTR_TOLERACE_NOTHING
-        MinValue: 10
-        MaxValue: 15
-        Chance: 10
-      - Option: CLASS_DAMAGE_BOSS_TARGET
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: CLASS_MDAMAGE_BOSS
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: CLASS_DAMAGE_BOSS_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: CLASS_IGNORE_DEF_PERCENT_BOSS
-        MinValue: 10
-        MaxValue: 30
-        Chance: 10
-      - Option: CLASS_IGNORE_MDEF_PERCENT_BOSS
-        MinValue: 10
-        MaxValue: 30
-        Chance: 10
-      - Option: DAMAGE_SIZE_SMALL_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: DAMAGE_SIZE_MIDIUM_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: DAMAGE_SIZE_LARGE_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: MDAMAGE_SIZE_SMALL_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: MDAMAGE_SIZE_MIDIUM_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: MDAMAGE_SIZE_LARGE_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
+      - Slot: 3
+        Chance: 180 # Confirm rate
+        Options:
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 3
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 5
+            MaxValue: 10
+          - Option: VAR_PLUSAVOIDSUCCESSVALUE
+            MinValue: 3
+            MaxValue: 7
+          - Option: RANGE_ATTACK_DAMAGE_TARGET
+            MinValue: 10
+            MaxValue: 15
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 10
+            MaxValue: 15
+          - Option: DEC_SPELL_DELAY_TIME
+            MinValue: 3
+            MaxValue: 7
+          - Option: ATTR_TOLERACE_NOTHING
+            MinValue: 10
+            MaxValue: 15
+          - Option: CLASS_DAMAGE_BOSS_TARGET
+            MinValue: 5
+            MaxValue: 10
+          - Option: CLASS_MDAMAGE_BOSS
+            MinValue: 5
+            MaxValue: 10
+          - Option: CLASS_DAMAGE_BOSS_USER
+            MinValue: 5
+            MaxValue: 10
+          - Option: CLASS_IGNORE_DEF_PERCENT_BOSS
+            MinValue: 10
+            MaxValue: 30
+          - Option: CLASS_IGNORE_MDEF_PERCENT_BOSS
+            MinValue: 10
+            MaxValue: 30
+          - Option: DAMAGE_SIZE_SMALL_USER
+            MinValue: 5
+            MaxValue: 10
+          - Option: DAMAGE_SIZE_MIDIUM_USER
+            MinValue: 5
+            MaxValue: 10
+          - Option: DAMAGE_SIZE_LARGE_USER
+            MinValue: 5
+            MaxValue: 10
+          - Option: MDAMAGE_SIZE_SMALL_USER
+            MinValue: 5
+            MaxValue: 10
+          - Option: MDAMAGE_SIZE_MIDIUM_USER
+            MinValue: 5
+            MaxValue: 10
+          - Option: MDAMAGE_SIZE_LARGE_USER
+            MinValue: 5
+            MaxValue: 10
   - Id: 19
     Group: RTC_PENE_BOX # Taiwan RTC Event Box PENE
     Slots:
@@ -4043,80 +3938,63 @@ Body:
             MinValue: 5
             MaxValue: 10
             Rate: 5000
-    MaxRandom: 1
-    Random:
-      - Option: VAR_PLUSASPD
-        MinValue: 1
-        MaxValue: 3
-        Chance: 10
-      - Option: VAR_PLUSASPDPERCENT
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: VAR_PLUSAVOIDSUCCESSVALUE
-        MinValue: 3
-        MaxValue: 7
-        Chance: 10
-      - Option: RANGE_ATTACK_DAMAGE_TARGET
-        MinValue: 10
-        MaxValue: 15
-        Chance: 10
-      - Option: DEC_SPELL_CAST_TIME
-        MinValue: 10
-        MaxValue: 15
-        Chance: 10
-      - Option: DEC_SPELL_DELAY_TIME
-        MinValue: 3
-        MaxValue: 7
-        Chance: 10
-      - Option: ATTR_TOLERACE_NOTHING
-        MinValue: 10
-        MaxValue: 15
-        Chance: 10
-      - Option: CLASS_DAMAGE_BOSS_TARGET
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: CLASS_MDAMAGE_BOSS
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: CLASS_DAMAGE_BOSS_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: CLASS_IGNORE_DEF_PERCENT_BOSS
-        MinValue: 10
-        MaxValue: 30
-        Chance: 10
-      - Option: CLASS_IGNORE_MDEF_PERCENT_BOSS
-        MinValue: 10
-        MaxValue: 30
-        Chance: 10
-      - Option: DAMAGE_SIZE_SMALL_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: DAMAGE_SIZE_MIDIUM_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: DAMAGE_SIZE_LARGE_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: MDAMAGE_SIZE_SMALL_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: MDAMAGE_SIZE_MIDIUM_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
-      - Option: MDAMAGE_SIZE_LARGE_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 10
+      - Slot: 3
+        Chance: 180 # Confirm rate
+        Options:
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 3
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 5
+            MaxValue: 10
+          - Option: VAR_PLUSAVOIDSUCCESSVALUE
+            MinValue: 3
+            MaxValue: 7
+          - Option: RANGE_ATTACK_DAMAGE_TARGET
+            MinValue: 10
+            MaxValue: 15
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 10
+            MaxValue: 15
+          - Option: DEC_SPELL_DELAY_TIME
+            MinValue: 3
+            MaxValue: 7
+          - Option: ATTR_TOLERACE_NOTHING
+            MinValue: 10
+            MaxValue: 15
+          - Option: CLASS_DAMAGE_BOSS_TARGET
+            MinValue: 5
+            MaxValue: 10
+          - Option: CLASS_MDAMAGE_BOSS
+            MinValue: 5
+            MaxValue: 10
+          - Option: CLASS_DAMAGE_BOSS_USER
+            MinValue: 5
+            MaxValue: 10
+          - Option: CLASS_IGNORE_DEF_PERCENT_BOSS
+            MinValue: 10
+            MaxValue: 30
+          - Option: CLASS_IGNORE_MDEF_PERCENT_BOSS
+            MinValue: 10
+            MaxValue: 30
+          - Option: DAMAGE_SIZE_SMALL_USER
+            MinValue: 5
+            MaxValue: 10
+          - Option: DAMAGE_SIZE_MIDIUM_USER
+            MinValue: 5
+            MaxValue: 10
+          - Option: DAMAGE_SIZE_LARGE_USER
+            MinValue: 5
+            MaxValue: 10
+          - Option: MDAMAGE_SIZE_SMALL_USER
+            MinValue: 5
+            MaxValue: 10
+          - Option: MDAMAGE_SIZE_MIDIUM_USER
+            MinValue: 5
+            MaxValue: 10
+          - Option: MDAMAGE_SIZE_LARGE_USER
+            MinValue: 5
+            MaxValue: 10
   - Id: 20
     Group: ATT_S # Shadow Property Box
     Slots:
@@ -4576,196 +4454,197 @@ Body:
             MinValue: 1
             MaxValue: 2
             Rate: 4500
-    MaxRandom: 1
-    Random:
-      - Option: VAR_MAXHPAMOUNT
-        MinValue: 200
-        MaxValue: 200
-        Chance: 13
-      - Option: VAR_MAXHPAMOUNT
-        MinValue: 400
-        MaxValue: 400
-        Chance: 12
-      - Option: VAR_MAXSPAMOUNT
-        MinValue: 25
-        MaxValue: 25
-        Chance: 13
-      - Option: VAR_MAXSPAMOUNT
-        MinValue: 50
-        MaxValue: 50
-        Chance: 12
-      - Option: VAR_STRAMOUNT
-        MinValue: 1
-        MaxValue: 1
-        Chance: 25
-      - Option: VAR_AGIAMOUNT
-        MinValue: 1
-        MaxValue: 1
-        Chance: 25
-      - Option: VAR_VITAMOUNT
-        MinValue: 1
-        MaxValue: 1
-        Chance: 25
-      - Option: VAR_INTAMOUNT
-        MinValue: 1
-        MaxValue: 1
-        Chance: 25
-      - Option: VAR_DEXAMOUNT
-        MinValue: 1
-        MaxValue: 1
-        Chance: 25
-      - Option: VAR_LUKAMOUNT
-        MinValue: 1
-        MaxValue: 1
-        Chance: 25
-      - Option: VAR_MAXHPPERCENT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 25
-      - Option: VAR_MAXSPPERCENT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 25
-      - Option: VAR_HPACCELERATION
-        MinValue: 5
-        MaxValue: 10
-        Chance: 25
-      - Option: VAR_SPACCELERATION
-        MinValue: 5
-        MaxValue: 10
-        Chance: 25
-      - Option: VAR_ATKPERCENT
-        MinValue: 1
-        MaxValue: 1
-        Chance: 25
-      - Option: VAR_MAGICATKPERCENT
-        MinValue: 1
-        MaxValue: 1
-        Chance: 25
-      - Option: VAR_PLUSASPDPERCENT
-        MinValue: 3
-        MaxValue: 5
-        Chance: 26
-      - Option: VAR_ATTPOWER
-        MinValue: 5
-        MaxValue: 5
-        Chance: 13
-      - Option: VAR_ATTPOWER
-        MinValue: 10
-        MaxValue: 10
-        Chance: 13
-      - Option: VAR_HITSUCCESSVALUE
-        MinValue: 5
-        MaxValue: 5
-        Chance: 13
-      - Option: VAR_HITSUCCESSVALUE
-        MinValue: 10
-        MaxValue: 10
-        Chance: 13
-      - Option: VAR_ATTMPOWER
-        MinValue: 5
-        MaxValue: 5
-        Chance: 13
-      - Option: VAR_ATTMPOWER
-        MinValue: 10
-        MaxValue: 10
-        Chance: 13
-      - Option: VAR_ITEMDEFPOWER
-        MinValue: 10
-        MaxValue: 10
-        Chance: 9
-      - Option: VAR_ITEMDEFPOWER
-        MinValue: 20
-        MaxValue: 20
-        Chance: 9
-      - Option: VAR_ITEMDEFPOWER
-        MinValue: 30
-        MaxValue: 30
-        Chance: 8
-      - Option: VAR_MDEFPOWER
-        MinValue: 2
-        MaxValue: 3
-        Chance: 26
-      - Option: VAR_AVOIDSUCCESSVALUE
-        MinValue: 3
-        MaxValue: 5
-        Chance: 26
-      - Option: VAR_CRITICALSUCCESSVALUE
-        MinValue: 1
-        MaxValue: 2
-        Chance: 26
-      - Option: HEAL_VALUE
-        MinValue: 2
-        MaxValue: 3
-        Chance: 26
-      - Option: HEAL_MODIFY_PERCENT
-        MinValue: 5
-        MaxValue: 5
-        Chance: 13
-      - Option: HEAL_MODIFY_PERCENT
-        MinValue: 10
-        MaxValue: 10
-        Chance: 13
-      - Option: DEC_SPELL_CAST_TIME
-        MinValue: 1
-        MaxValue: 2
-        Chance: 26
-      - Option: DEC_SP_CONSUMPTION
-        MinValue: 2
-        MaxValue: 3
-        Chance: 26
-      - Option: RANGE_ATTACK_DAMAGE_TARGET
-        MinValue: 1
-        MaxValue: 2
-        Chance: 26
-      - Option: RACE_TOLERACE_NOTHING
-        MinValue: 1
-        MaxValue: 2
-        Chance: 26
-      - Option: RACE_TOLERACE_UNDEAD
-        MinValue: 1
-        MaxValue: 2
-        Chance: 26
-      - Option: RACE_TOLERACE_ANIMAL
-        MinValue: 1
-        MaxValue: 2
-        Chance: 26
-      - Option: RACE_TOLERACE_PLANT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 26
-      - Option: RACE_TOLERACE_INSECT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 26
-      - Option: RACE_TOLERACE_FISHS
-        MinValue: 1
-        MaxValue: 2
-        Chance: 26
-      - Option: RACE_TOLERACE_DEVIL
-        MinValue: 1
-        MaxValue: 2
-        Chance: 26
-      - Option: RACE_TOLERACE_ANGEL
-        MinValue: 1
-        MaxValue: 2
-        Chance: 26
-      - Option: RACE_TOLERACE_DRAGON
-        MinValue: 1
-        MaxValue: 2
-        Chance: 26
-      - Option: RACE_TOLERACE_HUMAN
-        MinValue: 1
-        MaxValue: 2
-        Chance: 26
-      - Option: CLASS_IGNORE_DEF_PERCENT_BOSS
-        MinValue: 1
-        MaxValue: 2
-        Chance: 26
-      - Option: CLASS_IGNORE_MDEF_PERCENT_BOSS
-        MinValue: 1
-        MaxValue: 2
-        Chance: 26
+      - Slot: 3
+        Chance: 1000 # Confirm rate
+        Options:
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 200
+            MaxValue: 200
+            Rate: 13
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 400
+            MaxValue: 400
+            Rate: 12
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 25
+            MaxValue: 25
+            Rate: 13
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 50
+            MaxValue: 50
+            Rate: 12
+          - Option: VAR_STRAMOUNT
+            MinValue: 1
+            MaxValue: 1
+            Rate: 25
+          - Option: VAR_AGIAMOUNT
+            MinValue: 1
+            MaxValue: 1
+            Rate: 25
+          - Option: VAR_VITAMOUNT
+            MinValue: 1
+            MaxValue: 1
+            Rate: 25
+          - Option: VAR_INTAMOUNT
+            MinValue: 1
+            MaxValue: 1
+            Rate: 25
+          - Option: VAR_DEXAMOUNT
+            MinValue: 1
+            MaxValue: 1
+            Rate: 25
+          - Option: VAR_LUKAMOUNT
+            MinValue: 1
+            MaxValue: 1
+            Rate: 25
+          - Option: VAR_MAXHPPERCENT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 25
+          - Option: VAR_MAXSPPERCENT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 25
+          - Option: VAR_HPACCELERATION
+            MinValue: 5
+            MaxValue: 10
+            Rate: 25
+          - Option: VAR_SPACCELERATION
+            MinValue: 5
+            MaxValue: 10
+            Rate: 25
+          - Option: VAR_ATKPERCENT
+            MinValue: 1
+            MaxValue: 1
+            Rate: 25
+          - Option: VAR_MAGICATKPERCENT
+            MinValue: 1
+            MaxValue: 1
+            Rate: 25
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 3
+            MaxValue: 5
+            Rate: 26
+          - Option: VAR_ATTPOWER
+            MinValue: 5
+            MaxValue: 5
+            Rate: 13
+          - Option: VAR_ATTPOWER
+            MinValue: 10
+            MaxValue: 10
+            Rate: 13
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 5
+            Rate: 13
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 10
+            MaxValue: 10
+            Rate: 13
+          - Option: VAR_ATTMPOWER
+            MinValue: 5
+            MaxValue: 5
+            Rate: 13
+          - Option: VAR_ATTMPOWER
+            MinValue: 10
+            MaxValue: 10
+            Rate: 13
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 10
+            MaxValue: 10
+            Rate: 9
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 20
+            MaxValue: 20
+            Rate: 9
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 30
+            MaxValue: 30
+            Rate: 8
+          - Option: VAR_MDEFPOWER
+            MinValue: 2
+            MaxValue: 3
+            Rate: 26
+          - Option: VAR_AVOIDSUCCESSVALUE
+            MinValue: 3
+            MaxValue: 5
+            Rate: 26
+          - Option: VAR_CRITICALSUCCESSVALUE
+            MinValue: 1
+            MaxValue: 2
+            Rate: 26
+          - Option: HEAL_VALUE
+            MinValue: 2
+            MaxValue: 3
+            Rate: 26
+          - Option: HEAL_MODIFY_PERCENT
+            MinValue: 5
+            MaxValue: 5
+            Rate: 13
+          - Option: HEAL_MODIFY_PERCENT
+            MinValue: 10
+            MaxValue: 10
+            Rate: 13
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 1
+            MaxValue: 2
+            Rate: 26
+          - Option: DEC_SP_CONSUMPTION
+            MinValue: 2
+            MaxValue: 3
+            Rate: 26
+          - Option: RANGE_ATTACK_DAMAGE_TARGET
+            MinValue: 1
+            MaxValue: 2
+            Rate: 26
+          - Option: RACE_TOLERACE_NOTHING
+            MinValue: 1
+            MaxValue: 2
+            Rate: 26
+          - Option: RACE_TOLERACE_UNDEAD
+            MinValue: 1
+            MaxValue: 2
+            Rate: 26
+          - Option: RACE_TOLERACE_ANIMAL
+            MinValue: 1
+            MaxValue: 2
+            Rate: 26
+          - Option: RACE_TOLERACE_PLANT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 26
+          - Option: RACE_TOLERACE_INSECT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 26
+          - Option: RACE_TOLERACE_FISHS
+            MinValue: 1
+            MaxValue: 2
+            Rate: 26
+          - Option: RACE_TOLERACE_DEVIL
+            MinValue: 1
+            MaxValue: 2
+            Rate: 26
+          - Option: RACE_TOLERACE_ANGEL
+            MinValue: 1
+            MaxValue: 2
+            Rate: 26
+          - Option: RACE_TOLERACE_DRAGON
+            MinValue: 1
+            MaxValue: 2
+            Rate: 26
+          - Option: RACE_TOLERACE_HUMAN
+            MinValue: 1
+            MaxValue: 2
+            Rate: 26
+          - Option: CLASS_IGNORE_DEF_PERCENT_BOSS
+            MinValue: 1
+            MaxValue: 2
+            Rate: 26
+          - Option: CLASS_IGNORE_MDEF_PERCENT_BOSS
+            MinValue: 1
+            MaxValue: 2
+            Rate: 26
   - Id: 22
     Group: CHARLES_WEAPON_1 # Charleston Melee
     Slots:
@@ -5251,196 +5130,197 @@ Body:
             MinValue: 1
             MaxValue: 2
             Rate: 4500
-    MaxRandom: 1
-    Random:
-      - Option: VAR_STRAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 35
-      - Option: VAR_AGIAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 35
-      - Option: VAR_VITAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 35
-      - Option: VAR_INTAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 35
-      - Option: VAR_DEXAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 35
-      - Option: VAR_LUKAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 35
-      - Option: VAR_MAXHPAMOUNT
-        MinValue: 200
-        MaxValue: 200
-        Chance: 25
-      - Option: VAR_MAXHPAMOUNT
-        MinValue: 400
-        MaxValue: 400
-        Chance: 15
-      - Option: VAR_MAXSPAMOUNT
-        MinValue: 25
-        MaxValue: 25
-        Chance: 25
-      - Option: VAR_MAXSPAMOUNT
-        MinValue: 50
-        MaxValue: 50
-        Chance: 15
-      - Option: VAR_MAXHPPERCENT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 20
-      - Option: VAR_MAXSPPERCENT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 20
-      - Option: VAR_HPACCELERATION
-        MinValue: 5
-        MaxValue: 10
-        Chance: 25
-      - Option: VAR_SPACCELERATION
-        MinValue: 5
-        MaxValue: 10
-        Chance: 25
-      - Option: VAR_ATTPOWER
-        MinValue: 5
-        MaxValue: 5
-        Chance: 10
-      - Option: VAR_ATTPOWER
-        MinValue: 10
-        MaxValue: 10
-        Chance: 5
-      - Option: VAR_ATTMPOWER
-        MinValue: 5
-        MaxValue: 5
-        Chance: 10
-      - Option: VAR_ATTMPOWER
-        MinValue: 10
-        MaxValue: 10
-        Chance: 5
-      - Option: VAR_ATKPERCENT
-        MinValue: 1
-        MaxValue: 1
-        Chance: 8
-      - Option: VAR_MAGICATKPERCENT
-        MinValue: 1
-        MaxValue: 1
-        Chance: 8
-      - Option: VAR_PLUSASPD
-        MinValue: 1
-        MaxValue: 1
-        Chance: 5
-      - Option: VAR_PLUSASPDPERCENT
-        MinValue: 3
-        MaxValue: 5
-        Chance: 20
-      - Option: VAR_HITSUCCESSVALUE
-        MinValue: 5
-        MaxValue: 5
-        Chance: 11
-      - Option: VAR_HITSUCCESSVALUE
-        MinValue: 10
-        MaxValue: 10
-        Chance: 7
-      - Option: VAR_AVOIDSUCCESSVALUE
-        MinValue: 3
-        MaxValue: 5
-        Chance: 25
-      - Option: VAR_ITEMDEFPOWER
-        MinValue: 10
-        MaxValue: 10
-        Chance: 17
-      - Option: VAR_ITEMDEFPOWER
-        MinValue: 20
-        MaxValue: 20
-        Chance: 13
-      - Option: VAR_ITEMDEFPOWER
-        MinValue: 30
-        MaxValue: 30
-        Chance: 10
-      - Option: VAR_MDEFPOWER
-        MinValue: 2
-        MaxValue: 3
-        Chance: 30
-      - Option: VAR_PLUSAVOIDSUCCESSVALUE
-        MinValue: 2
-        MaxValue: 3
-        Chance: 2
-      - Option: VAR_CRITICALSUCCESSVALUE
-        MinValue: 1
-        MaxValue: 2
-        Chance: 30
-      - Option: RANGE_ATTACK_DAMAGE_TARGET
-        MinValue: 1
-        MaxValue: 2
-        Chance: 3
-      - Option: HEAL_VALUE
-        MinValue: 2
-        MaxValue: 3
-        Chance: 10
-      - Option: HEAL_MODIFY_PERCENT
-        MinValue: 5
-        MaxValue: 5
-        Chance: 8
-      - Option: HEAL_MODIFY_PERCENT
-        MinValue: 10
-        MaxValue: 10
-        Chance: 5
-      - Option: DEC_SPELL_CAST_TIME
-        MinValue: 1
-        MaxValue: 2
-        Chance: 5
-      - Option: DEC_SP_CONSUMPTION
-        MinValue: 2
-        MaxValue: 3
-        Chance: 2
-      - Option: RACE_TOLERACE_NOTHING
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
-      - Option: RACE_TOLERACE_UNDEAD
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
-      - Option: RACE_TOLERACE_ANIMAL
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
-      - Option: RACE_TOLERACE_PLANT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
-      - Option: RACE_TOLERACE_INSECT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
-      - Option: RACE_TOLERACE_FISHS
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
-      - Option: RACE_TOLERACE_DEVIL
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
-      - Option: RACE_TOLERACE_HUMAN
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
-      - Option: RACE_TOLERACE_ANGEL
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
-      - Option: RACE_TOLERACE_DRAGON
-        MinValue: 1
-        MaxValue: 2
-        Chance: 38
+      - Slot: 3
+        Chance: 1000 # Confirm rate
+        Options:
+          - Option: VAR_STRAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 35
+          - Option: VAR_AGIAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 35
+          - Option: VAR_VITAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 35
+          - Option: VAR_INTAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 35
+          - Option: VAR_DEXAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 35
+          - Option: VAR_LUKAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 35
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 200
+            MaxValue: 200
+            Rate: 25
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 400
+            MaxValue: 400
+            Rate: 15
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 25
+            MaxValue: 25
+            Rate: 25
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 50
+            MaxValue: 50
+            Rate: 15
+          - Option: VAR_MAXHPPERCENT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 20
+          - Option: VAR_MAXSPPERCENT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 20
+          - Option: VAR_HPACCELERATION
+            MinValue: 5
+            MaxValue: 10
+            Rate: 25
+          - Option: VAR_SPACCELERATION
+            MinValue: 5
+            MaxValue: 10
+            Rate: 25
+          - Option: VAR_ATTPOWER
+            MinValue: 5
+            MaxValue: 5
+            Rate: 10
+          - Option: VAR_ATTPOWER
+            MinValue: 10
+            MaxValue: 10
+            Rate: 5
+          - Option: VAR_ATTMPOWER
+            MinValue: 5
+            MaxValue: 5
+            Rate: 10
+          - Option: VAR_ATTMPOWER
+            MinValue: 10
+            MaxValue: 10
+            Rate: 5
+          - Option: VAR_ATKPERCENT
+            MinValue: 1
+            MaxValue: 1
+            Rate: 8
+          - Option: VAR_MAGICATKPERCENT
+            MinValue: 1
+            MaxValue: 1
+            Rate: 8
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 1
+            Rate: 5
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 3
+            MaxValue: 5
+            Rate: 20
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 5
+            Rate: 11
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 10
+            MaxValue: 10
+            Rate: 7
+          - Option: VAR_AVOIDSUCCESSVALUE
+            MinValue: 3
+            MaxValue: 5
+            Rate: 25
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 10
+            MaxValue: 10
+            Rate: 17
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 20
+            MaxValue: 20
+            Rate: 13
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 30
+            MaxValue: 30
+            Rate: 10
+          - Option: VAR_MDEFPOWER
+            MinValue: 2
+            MaxValue: 3
+            Rate: 30
+          - Option: VAR_PLUSAVOIDSUCCESSVALUE
+            MinValue: 2
+            MaxValue: 3
+            Rate: 2
+          - Option: VAR_CRITICALSUCCESSVALUE
+            MinValue: 1
+            MaxValue: 2
+            Rate: 30
+          - Option: RANGE_ATTACK_DAMAGE_TARGET
+            MinValue: 1
+            MaxValue: 2
+            Rate: 3
+          - Option: HEAL_VALUE
+            MinValue: 2
+            MaxValue: 3
+            Rate: 10
+          - Option: HEAL_MODIFY_PERCENT
+            MinValue: 5
+            MaxValue: 5
+            Rate: 8
+          - Option: HEAL_MODIFY_PERCENT
+            MinValue: 10
+            MaxValue: 10
+            Rate: 5
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 1
+            MaxValue: 2
+            Rate: 5
+          - Option: DEC_SP_CONSUMPTION
+            MinValue: 2
+            MaxValue: 3
+            Rate: 2
+          - Option: RACE_TOLERACE_NOTHING
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
+          - Option: RACE_TOLERACE_UNDEAD
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
+          - Option: RACE_TOLERACE_ANIMAL
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
+          - Option: RACE_TOLERACE_PLANT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
+          - Option: RACE_TOLERACE_INSECT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
+          - Option: RACE_TOLERACE_FISHS
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
+          - Option: RACE_TOLERACE_DEVIL
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
+          - Option: RACE_TOLERACE_HUMAN
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
+          - Option: RACE_TOLERACE_ANGEL
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
+          - Option: RACE_TOLERACE_DRAGON
+            MinValue: 1
+            MaxValue: 2
+            Rate: 38
   - Id: 25
     Group: TW_S1
     Slots:
@@ -5604,192 +5484,193 @@ Body:
             MinValue: 1
             MaxValue: 2
             Rate: 4500
-    MaxRandom: 1
-    Random:
-      - Option: VAR_MAXHPAMOUNT
-        MinValue: 200
-        MaxValue: 200
-        Chance: 25
-      - Option: VAR_MAXHPAMOUNT
-        MinValue: 400
-        MaxValue: 400
-        Chance: 15
-      - Option: VAR_MAXSPAMOUNT
-        MinValue: 25
-        MaxValue: 25
-        Chance: 25
-      - Option: VAR_MAXSPAMOUNT
-        MinValue: 50
-        MaxValue: 50
-        Chance: 15
-      - Option: VAR_STRAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 35
-      - Option: VAR_AGIAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 35
-      - Option: VAR_VITAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 35
-      - Option: VAR_INTAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 35
-      - Option: VAR_DEXAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 35
-      - Option: VAR_LUKAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 35
-      - Option: VAR_MAXHPPERCENT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 20
-      - Option: VAR_MAXSPPERCENT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 20
-      - Option: VAR_HPACCELERATION
-        MinValue: 5
-        MaxValue: 10
-        Chance: 25
-      - Option: VAR_SPACCELERATION
-        MinValue: 5
-        MaxValue: 10
-        Chance: 25
-      - Option: VAR_ATKPERCENT
-        MinValue: 1
-        MaxValue: 1
-        Chance: 8
-      - Option: VAR_MAGICATKPERCENT
-        MinValue: 1
-        MaxValue: 1
-        Chance: 8
-      - Option: VAR_PLUSASPD
-        MinValue: 1
-        MaxValue: 1
-        Chance: 5
-      - Option: VAR_PLUSASPDPERCENT
-        MinValue: 3
-        MaxValue: 5
-        Chance: 20
-      - Option: VAR_ATTPOWER
-        MinValue: 5
-        MaxValue: 5
-        Chance: 10
-      - Option: VAR_ATTPOWER
-        MinValue: 10
-        MaxValue: 10
-        Chance: 5
-      - Option: VAR_HITSUCCESSVALUE
-        MinValue: 5
-        MaxValue: 5
-        Chance: 11
-      - Option: VAR_HITSUCCESSVALUE
-        MinValue: 10
-        MaxValue: 10
-        Chance: 7
-      - Option: VAR_ATTMPOWER
-        MinValue: 5
-        MaxValue: 5
-        Chance: 10
-      - Option: VAR_ATTMPOWER
-        MinValue: 10
-        MaxValue: 10
-        Chance: 5
-      - Option: VAR_ITEMDEFPOWER
-        MinValue: 10
-        MaxValue: 10
-        Chance: 17
-      - Option: VAR_ITEMDEFPOWER
-        MinValue: 20
-        MaxValue: 20
-        Chance: 13
-      - Option: VAR_ITEMDEFPOWER
-        MinValue: 30
-        MaxValue: 30
-        Chance: 10
-      - Option: VAR_MDEFPOWER
-        MinValue: 2
-        MaxValue: 3
-        Chance: 30
-      - Option: VAR_AVOIDSUCCESSVALUE
-        MinValue: 3
-        MaxValue: 5
-        Chance: 25
-      - Option: VAR_PLUSAVOIDSUCCESSVALUE
-        MinValue: 2
-        MaxValue: 3
-        Chance: 2
-      - Option: VAR_CRITICALSUCCESSVALUE
-        MinValue: 1
-        MaxValue: 2
-        Chance: 30
-      - Option: HEAL_VALUE
-        MinValue: 2
-        MaxValue: 3
-        Chance: 10
-      - Option: HEAL_MODIFY_PERCENT
-        MinValue: 5
-        MaxValue: 5
-        Chance: 8
-      - Option: HEAL_MODIFY_PERCENT
-        MinValue: 10
-        MaxValue: 10
-        Chance: 5
-      - Option: DEC_SPELL_CAST_TIME
-        MinValue: 1
-        MaxValue: 2
-        Chance: 5
-      - Option: DEC_SP_CONSUMPTION
-        MinValue: 2
-        MaxValue: 3
-        Chance: 2
-      - Option: RANGE_ATTACK_DAMAGE_TARGET
-        MinValue: 1
-        MaxValue: 2
-        Chance: 3
-      - Option: RACE_TOLERACE_NOTHING
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
-      - Option: RACE_TOLERACE_UNDEAD
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
-      - Option: RACE_TOLERACE_ANIMAL
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
-      - Option: RACE_TOLERACE_PLANT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
-      - Option: RACE_TOLERACE_INSECT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
-      - Option: RACE_TOLERACE_FISHS
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
-      - Option: RACE_TOLERACE_DEVIL
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
-      - Option: RACE_TOLERACE_ANGEL
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
-      - Option: RACE_TOLERACE_DRAGON
-        MinValue: 1
-        MaxValue: 2
-        Chance: 38
+      - Slot: 3
+        Chance: 1000 # Confirm rate
+        Options:
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 200
+            MaxValue: 200
+            Rate: 25
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 400
+            MaxValue: 400
+            Rate: 15
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 25
+            MaxValue: 25
+            Rate: 25
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 50
+            MaxValue: 50
+            Rate: 15
+          - Option: VAR_STRAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 35
+          - Option: VAR_AGIAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 35
+          - Option: VAR_VITAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 35
+          - Option: VAR_INTAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 35
+          - Option: VAR_DEXAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 35
+          - Option: VAR_LUKAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 35
+          - Option: VAR_MAXHPPERCENT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 20
+          - Option: VAR_MAXSPPERCENT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 20
+          - Option: VAR_HPACCELERATION
+            MinValue: 5
+            MaxValue: 10
+            Rate: 25
+          - Option: VAR_SPACCELERATION
+            MinValue: 5
+            MaxValue: 10
+            Rate: 25
+          - Option: VAR_ATKPERCENT
+            MinValue: 1
+            MaxValue: 1
+            Rate: 8
+          - Option: VAR_MAGICATKPERCENT
+            MinValue: 1
+            MaxValue: 1
+            Rate: 8
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 1
+            Rate: 5
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 3
+            MaxValue: 5
+            Rate: 20
+          - Option: VAR_ATTPOWER
+            MinValue: 5
+            MaxValue: 5
+            Rate: 10
+          - Option: VAR_ATTPOWER
+            MinValue: 10
+            MaxValue: 10
+            Rate: 5
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 5
+            Rate: 11
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 10
+            MaxValue: 10
+            Rate: 7
+          - Option: VAR_ATTMPOWER
+            MinValue: 5
+            MaxValue: 5
+            Rate: 10
+          - Option: VAR_ATTMPOWER
+            MinValue: 10
+            MaxValue: 10
+            Rate: 5
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 10
+            MaxValue: 10
+            Rate: 17
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 20
+            MaxValue: 20
+            Rate: 13
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 30
+            MaxValue: 30
+            Rate: 10
+          - Option: VAR_MDEFPOWER
+            MinValue: 2
+            MaxValue: 3
+            Rate: 30
+          - Option: VAR_AVOIDSUCCESSVALUE
+            MinValue: 3
+            MaxValue: 5
+            Rate: 25
+          - Option: VAR_PLUSAVOIDSUCCESSVALUE
+            MinValue: 2
+            MaxValue: 3
+            Rate: 2
+          - Option: VAR_CRITICALSUCCESSVALUE
+            MinValue: 1
+            MaxValue: 2
+            Rate: 30
+          - Option: HEAL_VALUE
+            MinValue: 2
+            MaxValue: 3
+            Rate: 10
+          - Option: HEAL_MODIFY_PERCENT
+            MinValue: 5
+            MaxValue: 5
+            Rate: 8
+          - Option: HEAL_MODIFY_PERCENT
+            MinValue: 10
+            MaxValue: 10
+            Rate: 5
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 1
+            MaxValue: 2
+            Rate: 5
+          - Option: DEC_SP_CONSUMPTION
+            MinValue: 2
+            MaxValue: 3
+            Rate: 2
+          - Option: RANGE_ATTACK_DAMAGE_TARGET
+            MinValue: 1
+            MaxValue: 2
+            Rate: 3
+          - Option: RACE_TOLERACE_NOTHING
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
+          - Option: RACE_TOLERACE_UNDEAD
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
+          - Option: RACE_TOLERACE_ANIMAL
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
+          - Option: RACE_TOLERACE_PLANT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
+          - Option: RACE_TOLERACE_INSECT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
+          - Option: RACE_TOLERACE_FISHS
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
+          - Option: RACE_TOLERACE_DEVIL
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
+          - Option: RACE_TOLERACE_ANGEL
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
+          - Option: RACE_TOLERACE_DRAGON
+            MinValue: 1
+            MaxValue: 2
+            Rate: 38
   - Id: 26
     Group: H_Anto_Range
     Slots:
@@ -5913,56 +5794,57 @@ Body:
             MinValue: 1
             MaxValue: 3
             Rate: 400
-    MaxRandom: 1
-    Random:
-      - Option: VAR_PLUSASPD
-        MinValue: 1
-        MaxValue: 1
-        Chance: 80
-      - Option: VAR_PLUSASPDPERCENT
-        MinValue: 3
-        MaxValue: 7
-        Chance: 80
-      - Option: RANGE_ATTACK_DAMAGE_TARGET
-        MinValue: 3
-        MaxValue: 7
-        Chance: 100
-      - Option: DEC_SPELL_CAST_TIME
-        MinValue: 3
-        MaxValue: 7
-        Chance: 100
-      - Option: DEC_SPELL_DELAY_TIME
-        MinValue: 1
-        MaxValue: 5
-        Chance: 80
-      - Option: CLASS_DAMAGE_NORMAL_TARGET
-        MinValue: 3
-        MaxValue: 7
-        Chance: 80
-      - Option: CLASS_DAMAGE_BOSS_TARGET
-        MinValue: 5
-        MaxValue: 10
-        Chance: 80
-      - Option: CLASS_IGNORE_DEF_PERCENT_NORMAL
-        MinValue: 10
-        MaxValue: 20
-        Chance: 80
-      - Option: CLASS_IGNORE_DEF_PERCENT_BOSS
-        MinValue: 10
-        MaxValue: 30
-        Chance: 80
-      - Option: DAMAGE_SIZE_SMALL_TARGET
-        MinValue: 5
-        MaxValue: 10
-        Chance: 80
-      - Option: DAMAGE_SIZE_MIDIUM_TARGET
-        MinValue: 5
-        MaxValue: 10
-        Chance: 80
-      - Option: DAMAGE_SIZE_LARGE_TARGET
-        MinValue: 5
-        MaxValue: 10
-        Chance: 80
+      - Slot: 3
+        Chance: 1000 # Confirm rate
+        Options:
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 1
+            Rate: 80
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 3
+            MaxValue: 7
+            Rate: 80
+          - Option: RANGE_ATTACK_DAMAGE_TARGET
+            MinValue: 3
+            MaxValue: 7
+            Rate: 100
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 3
+            MaxValue: 7
+            Rate: 100
+          - Option: DEC_SPELL_DELAY_TIME
+            MinValue: 1
+            MaxValue: 5
+            Rate: 80
+          - Option: CLASS_DAMAGE_NORMAL_TARGET
+            MinValue: 3
+            MaxValue: 7
+            Rate: 80
+          - Option: CLASS_DAMAGE_BOSS_TARGET
+            MinValue: 5
+            MaxValue: 10
+            Rate: 80
+          - Option: CLASS_IGNORE_DEF_PERCENT_NORMAL
+            MinValue: 10
+            MaxValue: 20
+            Rate: 80
+          - Option: CLASS_IGNORE_DEF_PERCENT_BOSS
+            MinValue: 10
+            MaxValue: 30
+            Rate: 80
+          - Option: DAMAGE_SIZE_SMALL_TARGET
+            MinValue: 5
+            MaxValue: 10
+            Rate: 80
+          - Option: DAMAGE_SIZE_MIDIUM_TARGET
+            MinValue: 5
+            MaxValue: 10
+            Rate: 80
+          - Option: DAMAGE_SIZE_LARGE_TARGET
+            MinValue: 5
+            MaxValue: 10
+            Rate: 80
   - Id: 27
     Group: H_Anto_Melee
     Slots:
@@ -6086,56 +5968,57 @@ Body:
             MinValue: 1
             MaxValue: 3
             Rate: 400
-    MaxRandom: 1
-    Random:
-      - Option: VAR_ATKPERCENT
-        MinValue: 3
-        MaxValue: 7
-        Chance: 100
-      - Option: VAR_PLUSASPD
-        MinValue: 1
-        MaxValue: 1
-        Chance: 80
-      - Option: VAR_PLUSASPDPERCENT
-        MinValue: 3
-        MaxValue: 7
-        Chance: 80
-      - Option: DEC_SPELL_CAST_TIME
-        MinValue: 3
-        MaxValue: 7
-        Chance: 100
-      - Option: DEC_SPELL_DELAY_TIME
-        MinValue: 1
-        MaxValue: 5
-        Chance: 80
-      - Option: CLASS_DAMAGE_NORMAL_TARGET
-        MinValue: 3
-        MaxValue: 7
-        Chance: 80
-      - Option: CLASS_DAMAGE_BOSS_TARGET
-        MinValue: 5
-        MaxValue: 10
-        Chance: 80
-      - Option: CLASS_IGNORE_DEF_PERCENT_NORMAL
-        MinValue: 10
-        MaxValue: 20
-        Chance: 80
-      - Option: CLASS_IGNORE_DEF_PERCENT_BOSS
-        MinValue: 10
-        MaxValue: 30
-        Chance: 80
-      - Option: DAMAGE_SIZE_SMALL_TARGET
-        MinValue: 5
-        MaxValue: 10
-        Chance: 80
-      - Option: DAMAGE_SIZE_MIDIUM_TARGET
-        MinValue: 5
-        MaxValue: 10
-        Chance: 80
-      - Option: DAMAGE_SIZE_LARGE_TARGET
-        MinValue: 5
-        MaxValue: 10
-        Chance: 80
+      - Slot: 3
+        Chance: 1000 # Confirm rate
+        Options:
+          - Option: VAR_ATKPERCENT
+            MinValue: 3
+            MaxValue: 7
+            Rate: 100
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 1
+            Rate: 80
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 3
+            MaxValue: 7
+            Rate: 80
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 3
+            MaxValue: 7
+            Rate: 100
+          - Option: DEC_SPELL_DELAY_TIME
+            MinValue: 1
+            MaxValue: 5
+            Rate: 80
+          - Option: CLASS_DAMAGE_NORMAL_TARGET
+            MinValue: 3
+            MaxValue: 7
+            Rate: 80
+          - Option: CLASS_DAMAGE_BOSS_TARGET
+            MinValue: 5
+            MaxValue: 10
+            Rate: 80
+          - Option: CLASS_IGNORE_DEF_PERCENT_NORMAL
+            MinValue: 10
+            MaxValue: 20
+            Rate: 80
+          - Option: CLASS_IGNORE_DEF_PERCENT_BOSS
+            MinValue: 10
+            MaxValue: 30
+            Rate: 80
+          - Option: DAMAGE_SIZE_SMALL_TARGET
+            MinValue: 5
+            MaxValue: 10
+            Rate: 80
+          - Option: DAMAGE_SIZE_MIDIUM_TARGET
+            MinValue: 5
+            MaxValue: 10
+            Rate: 80
+          - Option: DAMAGE_SIZE_LARGE_TARGET
+            MinValue: 5
+            MaxValue: 10
+            Rate: 80
   - Id: 28
     Group: H_Anto_Magic
     Slots:
@@ -6259,56 +6142,57 @@ Body:
             MinValue: 1
             MaxValue: 3
             Rate: 400
-    MaxRandom: 1
-    Random:
-      - Option: VAR_MAGICATKPERCENT
-        MinValue: 3
-        MaxValue: 7
-        Chance: 100
-      - Option: VAR_PLUSASPD
-        MinValue: 1
-        MaxValue: 1
-        Chance: 80
-      - Option: VAR_PLUSASPDPERCENT
-        MinValue: 3
-        MaxValue: 7
-        Chance: 80
-      - Option: DEC_SPELL_CAST_TIME
-        MinValue: 3
-        MaxValue: 7
-        Chance: 100
-      - Option: DEC_SPELL_DELAY_TIME
-        MinValue: 1
-        MaxValue: 5
-        Chance: 80
-      - Option: CLASS_MDAMAGE_NORMAL
-        MinValue: 3
-        MaxValue: 7
-        Chance: 80
-      - Option: CLASS_MDAMAGE_BOSS
-        MinValue: 5
-        MaxValue: 10
-        Chance: 80
-      - Option: CLASS_IGNORE_MDEF_PERCENT_NORMAL
-        MinValue: 10
-        MaxValue: 20
-        Chance: 100 # TODO: '00'?
-      - Option: CLASS_IGNORE_MDEF_PERCENT_BOSS
-        MinValue: 10
-        MaxValue: 30
-        Chance: 80
-      - Option: MDAMAGE_SIZE_SMALL_TARGET
-        MinValue: 5
-        MaxValue: 10
-        Chance: 80
-      - Option: MDAMAGE_SIZE_MIDIUM_TARGET
-        MinValue: 5
-        MaxValue: 10
-        Chance: 80
-      - Option: MDAMAGE_SIZE_LARGE_TARGET
-        MinValue: 5
-        MaxValue: 10
-        Chance: 80
+      - Slot: 3
+        Chance: 1000 # Confirm rate
+        Options:
+          - Option: VAR_MAGICATKPERCENT
+            MinValue: 3
+            MaxValue: 7
+            Rate: 100
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 1
+            Rate: 80
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 3
+            MaxValue: 7
+            Rate: 80
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 3
+            MaxValue: 7
+            Rate: 100
+          - Option: DEC_SPELL_DELAY_TIME
+            MinValue: 1
+            MaxValue: 5
+            Rate: 80
+          - Option: CLASS_MDAMAGE_NORMAL
+            MinValue: 3
+            MaxValue: 7
+            Rate: 80
+          - Option: CLASS_MDAMAGE_BOSS
+            MinValue: 5
+            MaxValue: 10
+            Rate: 80
+          - Option: CLASS_IGNORE_MDEF_PERCENT_NORMAL
+            MinValue: 10
+            MaxValue: 20
+            Rate: 100 # TODO: '00'?
+          - Option: CLASS_IGNORE_MDEF_PERCENT_BOSS
+            MinValue: 10
+            MaxValue: 30
+            Rate: 80
+          - Option: MDAMAGE_SIZE_SMALL_TARGET
+            MinValue: 5
+            MaxValue: 10
+            Rate: 80
+          - Option: MDAMAGE_SIZE_MIDIUM_TARGET
+            MinValue: 5
+            MaxValue: 10
+            Rate: 80
+          - Option: MDAMAGE_SIZE_LARGE_TARGET
+            MinValue: 5
+            MaxValue: 10
+            Rate: 80
   - Id: 29
     Group: Anto_Range
     Slots:
@@ -6432,48 +6316,49 @@ Body:
             MinValue: 1
             MaxValue: 3
             Rate: 400
-    MaxRandom: 1
-    Random:
-      - Option: VAR_PLUSASPDPERCENT
-        MinValue: 3
-        MaxValue: 5
-        Chance: 50
-      - Option: RANGE_ATTACK_DAMAGE_TARGET
-        MinValue: 3
-        MaxValue: 5
-        Chance: 50
-      - Option: DEC_SPELL_CAST_TIME
-        MinValue: 3
-        MaxValue: 5
-        Chance: 50
-      - Option: CLASS_DAMAGE_NORMAL_TARGET
-        MinValue: 3
-        MaxValue: 5
-        Chance: 50
-      - Option: CLASS_DAMAGE_BOSS_TARGET
-        MinValue: 5
-        MaxValue: 10
-        Chance: 50
-      - Option: CLASS_IGNORE_DEF_PERCENT_NORMAL
-        MinValue: 5
-        MaxValue: 10
-        Chance: 50
-      - Option: CLASS_IGNORE_DEF_PERCENT_BOSS
-        MinValue: 5
-        MaxValue: 15
-        Chance: 50
-      - Option: DAMAGE_SIZE_SMALL_TARGET
-        MinValue: 3
-        MaxValue: 7
-        Chance: 50
-      - Option: DAMAGE_SIZE_MIDIUM_TARGET
-        MinValue: 3
-        MaxValue: 7
-        Chance: 50
-      - Option: DAMAGE_SIZE_LARGE_TARGET
-        MinValue: 3
-        MaxValue: 7
-        Chance: 50
+      - Slot: 3
+        Chance: 500 # Confirm rate
+        Options:
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 3
+            MaxValue: 5
+            Rate: 50
+          - Option: RANGE_ATTACK_DAMAGE_TARGET
+            MinValue: 3
+            MaxValue: 5
+            Rate: 50
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 3
+            MaxValue: 5
+            Rate: 50
+          - Option: CLASS_DAMAGE_NORMAL_TARGET
+            MinValue: 3
+            MaxValue: 5
+            Rate: 50
+          - Option: CLASS_DAMAGE_BOSS_TARGET
+            MinValue: 5
+            MaxValue: 10
+            Rate: 50
+          - Option: CLASS_IGNORE_DEF_PERCENT_NORMAL
+            MinValue: 5
+            MaxValue: 10
+            Rate: 50
+          - Option: CLASS_IGNORE_DEF_PERCENT_BOSS
+            MinValue: 5
+            MaxValue: 15
+            Rate: 50
+          - Option: DAMAGE_SIZE_SMALL_TARGET
+            MinValue: 3
+            MaxValue: 7
+            Rate: 50
+          - Option: DAMAGE_SIZE_MIDIUM_TARGET
+            MinValue: 3
+            MaxValue: 7
+            Rate: 50
+          - Option: DAMAGE_SIZE_LARGE_TARGET
+            MinValue: 3
+            MaxValue: 7
+            Rate: 50
   - Id: 30
     Group: Anto_Melee
     Slots:
@@ -6597,48 +6482,49 @@ Body:
             MinValue: 1
             MaxValue: 3
             Rate: 100
-    MaxRandom: 1
-    Random:
-      - Option: VAR_ATKPERCENT
-        MinValue: 3
-        MaxValue: 5
-        Chance: 50
-      - Option: VAR_PLUSASPDPERCENT
-        MinValue: 3
-        MaxValue: 5
-        Chance: 50
-      - Option: DEC_SPELL_CAST_TIME
-        MinValue: 3
-        MaxValue: 5
-        Chance: 50
-      - Option: CLASS_DAMAGE_NORMAL_TARGET
-        MinValue: 3
-        MaxValue: 5
-        Chance: 50
-      - Option: CLASS_DAMAGE_BOSS_TARGET
-        MinValue: 5
-        MaxValue: 10
-        Chance: 50
-      - Option: CLASS_IGNORE_DEF_PERCENT_NORMAL
-        MinValue: 5
-        MaxValue: 10
-        Chance: 50
-      - Option: CLASS_IGNORE_DEF_PERCENT_BOSS
-        MinValue: 5
-        MaxValue: 15
-        Chance: 50
-      - Option: DAMAGE_SIZE_SMALL_TARGET
-        MinValue: 3
-        MaxValue: 7
-        Chance: 50
-      - Option: DAMAGE_SIZE_MIDIUM_TARGET
-        MinValue: 3
-        MaxValue: 7
-        Chance: 50
-      - Option: DAMAGE_SIZE_LARGE_TARGET
-        MinValue: 3
-        MaxValue: 7
-        Chance: 50
+      - Slot: 3
+        Chance: 500 # Confirm rate
+        Options:
+          - Option: VAR_ATKPERCENT
+            MinValue: 3
+            MaxValue: 5
+            Rate: 50
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 3
+            MaxValue: 5
+            Rate: 50
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 3
+            MaxValue: 5
+            Rate: 50
+          - Option: CLASS_DAMAGE_NORMAL_TARGET
+            MinValue: 3
+            MaxValue: 5
+            Rate: 50
+          - Option: CLASS_DAMAGE_BOSS_TARGET
+            MinValue: 5
+            MaxValue: 10
+            Rate: 50
+          - Option: CLASS_IGNORE_DEF_PERCENT_NORMAL
+            MinValue: 5
+            MaxValue: 10
+            Rate: 50
+          - Option: CLASS_IGNORE_DEF_PERCENT_BOSS
+            MinValue: 5
+            MaxValue: 15
+            Rate: 50
+          - Option: DAMAGE_SIZE_SMALL_TARGET
+            MinValue: 3
+            MaxValue: 7
+            Rate: 50
+          - Option: DAMAGE_SIZE_MIDIUM_TARGET
+            MinValue: 3
+            MaxValue: 7
+            Rate: 50
+          - Option: DAMAGE_SIZE_LARGE_TARGET
+            MinValue: 3
+            MaxValue: 7
+            Rate: 50
   - Id: 31
     Group: Anto_Magic
     Slots:
@@ -6762,48 +6648,49 @@ Body:
             MinValue: 1
             MaxValue: 3
             Rate: 100
-    MaxRandom: 1
-    Random:
-      - Option: VAR_MAGICATKPERCENT
-        MinValue: 3
-        MaxValue: 5
-        Chance: 50
-      - Option: VAR_PLUSASPDPERCENT
-        MinValue: 3
-        MaxValue: 5
-        Chance: 50
-      - Option: DEC_SPELL_CAST_TIME
-        MinValue: 3
-        MaxValue: 5
-        Chance: 50
-      - Option: CLASS_MDAMAGE_NORMAL
-        MinValue: 3
-        MaxValue: 5
-        Chance: 50
-      - Option: CLASS_MDAMAGE_BOSS
-        MinValue: 5
-        MaxValue: 10
-        Chance: 50
-      - Option: CLASS_IGNORE_MDEF_PERCENT_NORMAL
-        MinValue: 5
-        MaxValue: 10
-        Chance: 50
-      - Option: CLASS_IGNORE_MDEF_PERCENT_BOSS
-        MinValue: 5
-        MaxValue: 15
-        Chance: 50
-      - Option: MDAMAGE_SIZE_SMALL_TARGET
-        MinValue: 3
-        MaxValue: 7
-        Chance: 50
-      - Option: MDAMAGE_SIZE_MIDIUM_TARGET
-        MinValue: 3
-        MaxValue: 7
-        Chance: 50
-      - Option: MDAMAGE_SIZE_LARGE_TARGET
-        MinValue: 3
-        MaxValue: 7
-        Chance: 50
+      - Slot: 3
+        Chance: 1000 # Confirm rate
+        Options:
+          - Option: VAR_MAGICATKPERCENT
+            MinValue: 3
+            MaxValue: 5
+            Rate: 50
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 3
+            MaxValue: 5
+            Rate: 50
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 3
+            MaxValue: 5
+            Rate: 50
+          - Option: CLASS_MDAMAGE_NORMAL
+            MinValue: 3
+            MaxValue: 5
+            Rate: 50
+          - Option: CLASS_MDAMAGE_BOSS
+            MinValue: 5
+            MaxValue: 10
+            Rate: 50
+          - Option: CLASS_IGNORE_MDEF_PERCENT_NORMAL
+            MinValue: 5
+            MaxValue: 10
+            Rate: 50
+          - Option: CLASS_IGNORE_MDEF_PERCENT_BOSS
+            MinValue: 5
+            MaxValue: 15
+            Rate: 50
+          - Option: MDAMAGE_SIZE_SMALL_TARGET
+            MinValue: 3
+            MaxValue: 7
+            Rate: 50
+          - Option: MDAMAGE_SIZE_MIDIUM_TARGET
+            MinValue: 3
+            MaxValue: 7
+            Rate: 50
+          - Option: MDAMAGE_SIZE_LARGE_TARGET
+            MinValue: 3
+            MaxValue: 7
+            Rate: 50
   - Id: 32
     Group: BF_Att_Box_TW
     Slots:
@@ -6951,88 +6838,89 @@ Body:
             MinValue: 5
             MaxValue: 10
             Rate: 6000
-    MaxRandom: 1
-    Random:
-      - Option: VAR_ATKPERCENT
-        MinValue: 3
-        MaxValue: 5
-        Chance: 90
-      - Option: VAR_MAGICATKPERCENT
-        MinValue: 3
-        MaxValue: 5
-        Chance: 90
-      - Option: VAR_PLUSASPD
-        MinValue: 1
-        MaxValue: 2
-        Chance: 40
-      - Option: VAR_PLUSASPDPERCENT
-        MinValue: 5
-        MaxValue: 10
-        Chance: 50
-      - Option: VAR_AVOIDSUCCESSVALUE
-        MinValue: 5
-        MaxValue: 10
-        Chance: 90
-      - Option: VAR_ITEMDEFPOWER
-        MinValue: 10
-        MaxValue: 30
-        Chance: 90
-      - Option: VAR_MDEFPOWER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 70
-      - Option: VAR_PLUSAVOIDSUCCESSVALUE
-        MinValue: 3
-        MaxValue: 7
-        Chance: 40
-      - Option: RANGE_ATTACK_DAMAGE_TARGET
-        MinValue: 5
-        MaxValue: 15
-        Chance: 40
-      - Option: DEC_SPELL_CAST_TIME
-        MinValue: 5
-        MaxValue: 15
-        Chance: 40
-      - Option: DEC_SPELL_DELAY_TIME
-        MinValue: 1
-        MaxValue: 5
-        Chance: 10
-      - Option: ATTR_TOLERACE_NOTHING
-        MinValue: 5
-        MaxValue: 15
-        Chance: 50
-      - Option: CLASS_IGNORE_DEF_PERCENT_BOSS
-        MinValue: 1
-        MaxValue: 20
-        Chance: 30
-      - Option: CLASS_IGNORE_MDEF_PERCENT_BOSS
-        MinValue: 1
-        MaxValue: 20
-        Chance: 30
-      - Option: DAMAGE_SIZE_SMALL_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 40
-      - Option: DAMAGE_SIZE_MIDIUM_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 40
-      - Option: DAMAGE_SIZE_LARGE_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 40
-      - Option: MDAMAGE_SIZE_SMALL_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 40
-      - Option: MDAMAGE_SIZE_MIDIUM_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 40
-      - Option: MDAMAGE_SIZE_LARGE_USER
-        MinValue: 5
-        MaxValue: 10
-        Chance: 40
+      - Slot: 3
+        Chance: 1000 # Confirm rate
+        Options:
+          - Option: VAR_ATKPERCENT
+            MinValue: 3
+            MaxValue: 5
+            Rate: 90
+          - Option: VAR_MAGICATKPERCENT
+            MinValue: 3
+            MaxValue: 5
+            Rate: 90
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 2
+            Rate: 40
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 5
+            MaxValue: 10
+            Rate: 50
+          - Option: VAR_AVOIDSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 10
+            Rate: 90
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 10
+            MaxValue: 30
+            Rate: 90
+          - Option: VAR_MDEFPOWER
+            MinValue: 5
+            MaxValue: 10
+            Rate: 70
+          - Option: VAR_PLUSAVOIDSUCCESSVALUE
+            MinValue: 3
+            MaxValue: 7
+            Rate: 40
+          - Option: RANGE_ATTACK_DAMAGE_TARGET
+            MinValue: 5
+            MaxValue: 15
+            Rate: 40
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 5
+            MaxValue: 15
+            Rate: 40
+          - Option: DEC_SPELL_DELAY_TIME
+            MinValue: 1
+            MaxValue: 5
+            Rate: 10
+          - Option: ATTR_TOLERACE_NOTHING
+            MinValue: 5
+            MaxValue: 15
+            Rate: 50
+          - Option: CLASS_IGNORE_DEF_PERCENT_BOSS
+            MinValue: 1
+            MaxValue: 20
+            Rate: 30
+          - Option: CLASS_IGNORE_MDEF_PERCENT_BOSS
+            MinValue: 1
+            MaxValue: 20
+            Rate: 30
+          - Option: DAMAGE_SIZE_SMALL_USER
+            MinValue: 5
+            MaxValue: 10
+            Rate: 40
+          - Option: DAMAGE_SIZE_MIDIUM_USER
+            MinValue: 5
+            MaxValue: 10
+            Rate: 40
+          - Option: DAMAGE_SIZE_LARGE_USER
+            MinValue: 5
+            MaxValue: 10
+            Rate: 40
+          - Option: MDAMAGE_SIZE_SMALL_USER
+            MinValue: 5
+            MaxValue: 10
+            Rate: 40
+          - Option: MDAMAGE_SIZE_MIDIUM_USER
+            MinValue: 5
+            MaxValue: 10
+            Rate: 40
+          - Option: MDAMAGE_SIZE_LARGE_USER
+            MinValue: 5
+            MaxValue: 10
+            Rate: 40
   - Id: 33
     Group: Hasty_Box
     Slots:
@@ -7196,264 +7084,250 @@ Body:
             MinValue: 1
             MaxValue: 2
             Rate: 4600
-    MaxRandom: 1
-    Random:
-      - Option: VAR_STRAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 35
-      - Option: VAR_AGIAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 35
-      - Option: VAR_VITAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 35
-      - Option: VAR_INTAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 35
-      - Option: VAR_DEXAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 35
-      - Option: VAR_LUKAMOUNT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 35
-      - Option: VAR_MAXHPAMOUNT
-        MinValue: 200
-        MaxValue: 200
-        Chance: 25
-      - Option: VAR_MAXHPAMOUNT
-        MinValue: 400
-        MaxValue: 400
-        Chance: 15
-      - Option: VAR_MAXSPAMOUNT
-        MinValue: 25
-        MaxValue: 25
-        Chance: 25
-      - Option: VAR_MAXSPAMOUNT
-        MinValue: 50
-        MaxValue: 50
-        Chance: 15
-      - Option: VAR_MAXHPPERCENT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 20
-      - Option: VAR_MAXSPPERCENT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 20
-      - Option: VAR_HPACCELERATION
-        MinValue: 5
-        MaxValue: 10
-        Chance: 25
-      - Option: VAR_SPACCELERATION
-        MinValue: 5
-        MaxValue: 10
-        Chance: 25
-      - Option: VAR_ATTPOWER
-        MinValue: 5
-        MaxValue: 5
-        Chance: 10
-      - Option: VAR_ATTPOWER
-        MinValue: 10
-        MaxValue: 10
-        Chance: 5
-      - Option: VAR_ATTMPOWER
-        MinValue: 5
-        MaxValue: 5
-        Chance: 10
-      - Option: VAR_ATTMPOWER
-        MinValue: 10
-        MaxValue: 10
-        Chance: 5
-      - Option: VAR_ATKPERCENT
-        MinValue: 1
-        MaxValue: 1
-        Chance: 8
-      - Option: VAR_MAGICATKPERCENT
-        MinValue: 1
-        MaxValue: 1
-        Chance: 8
-      - Option: VAR_PLUSASPD
-        MinValue: 1
-        MaxValue: 1
-        Chance: 5
-      - Option: VAR_PLUSASPDPERCENT
-        MinValue: 3
-        MaxValue: 5
-        Chance: 20
-      - Option: VAR_HITSUCCESSVALUE
-        MinValue: 5
-        MaxValue: 5
-        Chance: 11
-      - Option: VAR_HITSUCCESSVALUE
-        MinValue: 10
-        MaxValue: 10
-        Chance: 7
-      - Option: VAR_AVOIDSUCCESSVALUE
-        MinValue: 3
-        MaxValue: 5
-        Chance: 30
-      - Option: VAR_ITEMDEFPOWER
-        MinValue: 10
-        MaxValue: 10
-        Chance: 17
-      - Option: VAR_ITEMDEFPOWER
-        MinValue: 20
-        MaxValue: 20
-        Chance: 13
-      - Option: VAR_ITEMDEFPOWER
-        MinValue: 30
-        MaxValue: 30
-        Chance: 10
-      - Option: VAR_MDEFPOWER
-        MinValue: 2
-        MaxValue: 3
-        Chance: 30
-      - Option: VAR_PLUSAVOIDSUCCESSVALUE
-        MinValue: 2
-        MaxValue: 3
-        Chance: 2
-      - Option: VAR_CRITICALSUCCESSVALUE
-        MinValue: 1
-        MaxValue: 2
-        Chance: 30
-      - Option: RANGE_ATTACK_DAMAGE_TARGET
-        MinValue: 1
-        MaxValue: 2
-        Chance: 3
-      - Option: HEAL_VALUE
-        MinValue: 2
-        MaxValue: 3
-        Chance: 10
-      - Option: HEAL_MODIFY_PERCENT
-        MinValue: 5
-        MaxValue: 5
-        Chance: 8
-      - Option: HEAL_MODIFY_PERCENT
-        MinValue: 1
-        MaxValue: 10
-        Chance: 5
-      - Option: DEC_SPELL_CAST_TIME
-        MinValue: 1
-        MaxValue: 2
-        Chance: 5
-      - Option: DEC_SP_CONSUMPTION
-        MinValue: 2
-        MaxValue: 3
-        Chance: 2
-      - Option: RACE_TOLERACE_NOTHING
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
-      - Option: RACE_TOLERACE_UNDEAD
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
-      - Option: RACE_TOLERACE_ANIMAL
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
-      - Option: RACE_TOLERACE_PLANT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
-      - Option: RACE_TOLERACE_INSECT
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
-      - Option: RACE_TOLERACE_FISHS
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
-      - Option: RACE_TOLERACE_DEVIL
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
-      - Option: RACE_TOLERACE_HUMAN
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
-      - Option: RACE_TOLERACE_ANGEL
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
-      - Option: RACE_TOLERACE_DRAGON
-        MinValue: 1
-        MaxValue: 2
-        Chance: 37
+      - Slot: 3
+        Chance: 1000 # Confirm rate
+        Options:
+          - Option: VAR_STRAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 35
+          - Option: VAR_AGIAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 35
+          - Option: VAR_VITAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 35
+          - Option: VAR_INTAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 35
+          - Option: VAR_DEXAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 35
+          - Option: VAR_LUKAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 35
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 200
+            MaxValue: 200
+            Rate: 25
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 400
+            MaxValue: 400
+            Rate: 15
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 25
+            MaxValue: 25
+            Rate: 25
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 50
+            MaxValue: 50
+            Rate: 15
+          - Option: VAR_MAXHPPERCENT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 20
+          - Option: VAR_MAXSPPERCENT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 20
+          - Option: VAR_HPACCELERATION
+            MinValue: 5
+            MaxValue: 10
+            Rate: 25
+          - Option: VAR_SPACCELERATION
+            MinValue: 5
+            MaxValue: 10
+            Rate: 25
+          - Option: VAR_ATTPOWER
+            MinValue: 5
+            MaxValue: 5
+            Rate: 10
+          - Option: VAR_ATTPOWER
+            MinValue: 10
+            MaxValue: 10
+            Rate: 5
+          - Option: VAR_ATTMPOWER
+            MinValue: 5
+            MaxValue: 5
+            Rate: 10
+          - Option: VAR_ATTMPOWER
+            MinValue: 10
+            MaxValue: 10
+            Rate: 5
+          - Option: VAR_ATKPERCENT
+            MinValue: 1
+            MaxValue: 1
+            Rate: 8
+          - Option: VAR_MAGICATKPERCENT
+            MinValue: 1
+            MaxValue: 1
+            Rate: 8
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 1
+            Rate: 5
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 3
+            MaxValue: 5
+            Rate: 20
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 5
+            Rate: 11
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 10
+            MaxValue: 10
+            Rate: 7
+          - Option: VAR_AVOIDSUCCESSVALUE
+            MinValue: 3
+            MaxValue: 5
+            Rate: 30
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 10
+            MaxValue: 10
+            Rate: 17
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 20
+            MaxValue: 20
+            Rate: 13
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 30
+            MaxValue: 30
+            Rate: 10
+          - Option: VAR_MDEFPOWER
+            MinValue: 2
+            MaxValue: 3
+            Rate: 30
+          - Option: VAR_PLUSAVOIDSUCCESSVALUE
+            MinValue: 2
+            MaxValue: 3
+            Rate: 2
+          - Option: VAR_CRITICALSUCCESSVALUE
+            MinValue: 1
+            MaxValue: 2
+            Rate: 30
+          - Option: RANGE_ATTACK_DAMAGE_TARGET
+            MinValue: 1
+            MaxValue: 2
+            Rate: 3
+          - Option: HEAL_VALUE
+            MinValue: 2
+            MaxValue: 3
+            Rate: 10
+          - Option: HEAL_MODIFY_PERCENT
+            MinValue: 5
+            MaxValue: 5
+            Rate: 8
+          - Option: HEAL_MODIFY_PERCENT
+            MinValue: 1
+            MaxValue: 10
+            Rate: 5
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 1
+            MaxValue: 2
+            Rate: 5
+          - Option: DEC_SP_CONSUMPTION
+            MinValue: 2
+            MaxValue: 3
+            Rate: 2
+          - Option: RACE_TOLERACE_NOTHING
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
+          - Option: RACE_TOLERACE_UNDEAD
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
+          - Option: RACE_TOLERACE_ANIMAL
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
+          - Option: RACE_TOLERACE_PLANT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
+          - Option: RACE_TOLERACE_INSECT
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
+          - Option: RACE_TOLERACE_FISHS
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
+          - Option: RACE_TOLERACE_DEVIL
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
+          - Option: RACE_TOLERACE_HUMAN
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
+          - Option: RACE_TOLERACE_ANGEL
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
+          - Option: RACE_TOLERACE_DRAGON
+            MinValue: 1
+            MaxValue: 2
+            Rate: 37
   - Id: 99
     Group: None
-    MaxRandom: 1
-    Random:
-      - Option: RACE_IGNORE_DEF_PERCENT_PLANT
-        MinValue: 10
-        MaxValue: 50
-        Chance: 625
-      - Option: RACE_IGNORE_DEF_PERCENT_PLANT
-        MinValue: 10
-        MaxValue: 50
-        Chance: 625
-      - Option: VAR_AGIAMOUNT
-        MinValue: 1
-        MaxValue: 5
-        Chance: 625
-      - Option: VAR_AGIAMOUNT
-        MinValue: 1
-        MaxValue: 5
-        Chance: 625
-      - Option: VAR_DEXAMOUNT
-        MinValue: 1
-        MaxValue: 5
-        Chance: 625
-      - Option: VAR_DEXAMOUNT
-        MinValue: 1
-        MaxValue: 5
-        Chance: 625
-      - Option: VAR_HITSUCCESSVALUE
-        MinValue: 1
-        MaxValue: 5
-        Chance: 625
-      - Option: VAR_HITSUCCESSVALUE
-        MinValue: 1
-        MaxValue: 5
-        Chance: 625
-      - Option: VAR_INTAMOUNT
-        MinValue: 1
-        MaxValue: 5
-        Chance: 625
-      - Option: VAR_INTAMOUNT
-        MinValue: 1
-        MaxValue: 5
-        Chance: 625
-      - Option: VAR_LUKAMOUNT
-        MinValue: 1
-        MaxValue: 5
-        Chance: 625
-      - Option: VAR_LUKAMOUNT
-        MinValue: 1
-        MaxValue: 5
-        Chance: 625
-      - Option: VAR_STRAMOUNT
-        MinValue: 1
-        MaxValue: 5
-        Chance: 625
-      - Option: VAR_STRAMOUNT
-        MinValue: 1
-        MaxValue: 5
-        Chance: 625
-      - Option: VAR_VITAMOUNT
-        MinValue: 1
-        MaxValue: 5
-        Chance: 625
-      - Option: VAR_VITAMOUNT
-        MinValue: 1
-        MaxValue: 5
-        Chance: 625
+    Slots:
+      - Slot: 1
+        Options:
+          - Option: RACE_IGNORE_DEF_PERCENT_PLANT
+            MinValue: 10
+            MaxValue: 50
+          - Option: RACE_IGNORE_DEF_PERCENT_PLANT
+            MinValue: 10
+            MaxValue: 50
+          - Option: VAR_AGIAMOUNT
+            MinValue: 1
+            MaxValue: 5
+          - Option: VAR_AGIAMOUNT
+            MinValue: 1
+            MaxValue: 5
+          - Option: VAR_DEXAMOUNT
+            MinValue: 1
+            MaxValue: 5
+          - Option: VAR_DEXAMOUNT
+            MinValue: 1
+            MaxValue: 5
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 1
+            MaxValue: 5
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 1
+            MaxValue: 5
+          - Option: VAR_INTAMOUNT
+            MinValue: 1
+            MaxValue: 5
+          - Option: VAR_INTAMOUNT
+            MinValue: 1
+            MaxValue: 5
+          - Option: VAR_LUKAMOUNT
+            MinValue: 1
+            MaxValue: 5
+          - Option: VAR_LUKAMOUNT
+            MinValue: 1
+            MaxValue: 5
+          - Option: VAR_STRAMOUNT
+            MinValue: 1
+            MaxValue: 5
+          - Option: VAR_STRAMOUNT
+            MinValue: 1
+            MaxValue: 5
+          - Option: VAR_VITAMOUNT
+            MinValue: 1
+            MaxValue: 5
+          - Option: VAR_VITAMOUNT
+            MinValue: 1
+            MaxValue: 5
   # TODO: Confirm official rates
   - Id: 100
     Group: GUNSLINGER_ENCHANT
