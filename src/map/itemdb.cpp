@@ -3328,8 +3328,8 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				randopt->slots[slot - 1] = random;
 			}
 
-			uint16 inheritSlot = 0;
 			if (this->nodeExists(slotNode, "Inherit")) {
+				uint16 inheritSlot = 0;
 				if (!this->asUInt16Rate(slotNode, "Inherit", inheritSlot))
 					return false;
 
@@ -3341,7 +3341,6 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				std::shared_ptr<s_random_opt_random> inheritRandom = util::map_find(randopt->slots, static_cast<uint16>(inheritSlot - 1));
 				random->data = inheritRandom->data;
 			}
-
 			else if (!this->nodeExists(slotNode, "Options")) {
 				this->invalidWarning(slotNode, "Random option slot does not contain Options node, skipping.\n");
 				return 0;
