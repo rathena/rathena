@@ -3209,7 +3209,7 @@ bool RandomOptionGroupDatabase::add_option(const ryml::NodeRef& node, std::share
 	}
 
 	if (entry->min_value > entry->max_value) {
-		this->invalidWarning(node["MaxValue"], "MinValue %d is greater than MaxValue %d, setting MaxValue to MinValue + 1.\n", entry->min_value, entry->max_value);
+		this->invalidWarning(node, "MinValue %d is greater than MaxValue %d, setting MaxValue to MinValue + 1.\n", entry->min_value, entry->max_value);
 		entry->max_value = entry->min_value + 1;
 	}
 
