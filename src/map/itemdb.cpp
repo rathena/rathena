@@ -3345,12 +3345,6 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				return 0;
 			}
 
-			if (!this->nodeExists(slotNode, "Options")) {
-				this->invalidWarning(slotNode, "Random option slot does not contain Options node, skipping.\n");
-				return 0;
-			}
-
-
 			std::shared_ptr<s_random_opt_random> random = util::map_find(randopt->slots, static_cast<uint16>(slot-1));
 
 			if (random == nullptr) {
@@ -3358,18 +3352,39 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				randopt->slots[slot - 1] = random;
 			}
 
-			std::vector<std::shared_ptr<s_random_opt_group_entry>> entries;
-			const auto& optionsNode = slotNode["Options"];
-			for (const auto& optionNode : optionsNode) {
-				std::shared_ptr<s_random_opt_group_entry> entry;
+			uint16 inheritSlot = 0;
+			if (this->nodeExists(slotNode, "Inherit")) {
+				if (!this->asUInt16Rate(slotNode, "Inherit", inheritSlot))
+					return false;
 
-				if (!this->add_option(optionNode, entry))
+				if (inheritSlot < max(1,slot - 1) || inheritSlot > slot - 1) {
+					this->invalidWarning(slotNode["Inherit"], "Invalid Random Option Inherit Slot number %hu given, must be between 1~%d, skipping.\n", inheritSlot, slot - 1);
 					return 0;
-
-				entries.push_back(entry);
+				}
+				
+				std::shared_ptr<s_random_opt_random> inheritRandom = util::map_find(randopt->slots, static_cast<uint16>(inheritSlot - 1));
+				random->data = inheritRandom->data;
 			}
 
-			random->data = entries;
+			if (!this->nodeExists(slotNode, "Options") && !inheritSlot) {
+				this->invalidWarning(slotNode, "Random option slot does not contain Options node, skipping.\n");
+				return 0;
+			}
+
+			if (this->nodeExists(slotNode, "Options")) {
+				std::vector<std::shared_ptr<s_random_opt_group_entry>> entries = random->data;
+				const auto& optionsNode = slotNode["Options"];
+				for (const auto& optionNode : optionsNode) {
+					std::shared_ptr<s_random_opt_group_entry> entry;
+
+					if (!this->add_option(optionNode, entry))
+						return 0;
+
+					entries.push_back(entry);
+				}
+
+				random->data = entries;
+			}
 
 			if (this->nodeExists(slotNode, "Chance")) {
 				uint16 chance;
