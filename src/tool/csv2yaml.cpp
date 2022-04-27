@@ -322,7 +322,7 @@ int do_init( int argc, char** argv ){
 	}
 
 	rand_opt_group.clear();
-	if (!process("RANDOM_OPTION_GROUP", 1, root_paths, "item_randomopt_group", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("RANDOM_OPTION_GROUP", 2, root_paths, "item_randomopt_group", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 5, 2 + 5 * MAX_ITEM_RDM_OPT, -1, &itemdb_read_randomopt_group, false) && itemdb_randomopt_group_yaml();
 	})) {
 		return 0;
@@ -3082,20 +3082,28 @@ static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
 		return false;
 	}
 
-	uint16 id = static_cast<uint16>(rand_opt_group.size() + 1);
-	s_random_opt_group_csv *group = util::umap_find(rand_opt_group, id);
-	s_random_opt_group_csv group_entry;
+	s_random_opt_group group_entry;
+	bool newEntry = true;
 
-	if (group == nullptr)
-		group_entry.rate.push_back((uint16)strtoul(str[1], nullptr, 10));
+	for (auto it : rand_opt_group)
+	{
+		if (it.second.name.compare(str[0]))
+			continue;
+		group_entry = it.second;
+		newEntry = false;
+	}
+	
+	if (newEntry) {
+		group_entry.id = static_cast<uint16>(rand_opt_group.size() + 1);
+		group_entry.name = str[0];
+		for (int i = 0; i < MAX_ITEM_RDM_OPT; i++)
+		{
+			group_entry.slots[i] = std::make_shared<s_random_opt_random>();
+		}
+	}
 
 	for (int j = 0, k = 2; k < columns && j < MAX_ITEM_RDM_OPT; k += 3) {
 		int32 randid_tmp = -1;
-
-		if (!group_entry.slots[j])
-		{
-			group_entry.slots[j] = std::make_shared<s_random_opt_random>();
-		}
 
 		for (const auto &opt : rand_opt_db) {
 			if (opt.second.compare(str[k]) == 0) {
@@ -3109,29 +3117,21 @@ static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
 			continue;
 		}
 
-		std::vector<std::shared_ptr<s_random_opt_group_entry>> entries = {};
-
-		if (group != nullptr)
-			entries = group->slots[j]->data;
-
 		std::shared_ptr<s_random_opt_group_entry> entry = std::make_shared<s_random_opt_group_entry>();
 
 		entry->id = static_cast<uint16>(randid_tmp);
 		entry->min_value = (int16)strtoul(str[k + 1], nullptr, 10);
 		entry->max_value = 0;
 		entry->param = (int8)strtoul(str[k + 2], nullptr, 10);
-		entry->rate = 1;
-		entries.push_back(entry);
-		if (group == nullptr) {
-			group_entry.slots[j]->data = entries;
-		}
-		else
-			group->slots[j]->data = entries;
+		entry->rate = (int16)strtoul(str[1], nullptr, 10);
+		group_entry.slots[j]->data.push_back(entry);
 		j++;
 	}
 
-	if (group == nullptr)
-		rand_opt_group.insert({ id, group_entry });
+	if (newEntry)
+		rand_opt_group.insert({ group_entry.id, group_entry });
+	else
+		rand_opt_group[group_entry.id] = group_entry;
 
 	return true;
 }
@@ -3144,35 +3144,35 @@ static bool itemdb_randomopt_group_yaml(void) {
 		body << YAML::Key << "Slots";
 		body << YAML::BeginSeq;
 
-		for (size_t i = 0; i < it.second.rate.size(); i++) {
+		for (size_t j = 0; j < it.second.slots.size(); j++) {
+			std::shared_ptr<s_random_opt_random> random = it.second.slots.at(static_cast<uint16>(j));
+
+			if (!random->data.size())
+				continue;
+
 			body << YAML::BeginMap;
-			body << YAML::Key << "Slot" << YAML::Value << i + 1;
+			body << YAML::Key << "Slot" << YAML::Value << j + 1;
 
 			body << YAML::Key << "Options";
 			body << YAML::BeginSeq;
 
-			for (size_t j = 0; j < it.second.slots.size(); j++) {
-				std::shared_ptr<s_random_opt_random> random = it.second.slots.at(static_cast<uint16>(j));
+			for (const auto& opt_it : random->data) {
+				body << YAML::BeginMap;
 
-				for (const auto &opt_it : random->data) {
-					body << YAML::BeginMap;
-
-					for (const auto &opt : rand_opt_db) {
-						if (opt.first == opt_it->id) {
-							body << YAML::Key << "Option" << YAML::Value << opt.second;
-							break;
-						}
+				for (const auto& opt : rand_opt_db) {
+					if (opt.first == opt_it->id) {
+						body << YAML::Key << "Option" << YAML::Value << opt.second;
+						break;
 					}
-
-					if (opt_it->min_value != 0)
-						body << YAML::Key << "MinValue" << YAML::Value << opt_it->min_value;
-					if (opt_it->param != 0)
-						body << YAML::Key << "Param" << YAML::Value << opt_it->param;
-					body << YAML::Key << "Rate" << YAML::Value << it.second.rate[i];
-					body << YAML::EndMap;
 				}
-			}
 
+				if (opt_it->min_value != 0)
+					body << YAML::Key << "MinValue" << YAML::Value << opt_it->min_value;
+				if (opt_it->param != 0)
+					body << YAML::Key << "Param" << YAML::Value << opt_it->param;
+				body << YAML::Key << "Rate" << YAML::Value << opt_it->rate;
+				body << YAML::EndMap;
+			}
 			body << YAML::EndSeq;
 			body << YAML::EndMap;
 		}
