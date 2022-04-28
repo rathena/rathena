@@ -11446,7 +11446,7 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 		for(i=0;i<EQI_MAX;i++) {
 			if(pos & equip_bitmask[i]) {
 				if(sd->equip_index[i] >= 0) //Slot taken, remove item from there.
-					pc_unequipitem(sd,sd->equip_index[i],2 | 4);
+					pc_unequipitem(sd,sd->equip_index[i], 1 | 2 | 4);
 
 				sd->equip_index[i] = n;
 			}

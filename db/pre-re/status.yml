@@ -70,7 +70,6 @@ Body:
       Stun: true
       Sleep: true
       Burning: true
-      #Undead: true
     End:
       Aeterna: true
     EndReturn:
@@ -89,7 +88,6 @@ Body:
       Stun: true
       Sleep: true
       Burning: true
-      #Undead: true
     EndReturn:
       StoneWait: true
       Stone: true
@@ -115,8 +113,13 @@ Body:
       Inspiration: true
       Warmer: true
       Gvg_Freez: true
+      Stone: true
+      StoneWait: true
+      Freeze: true
+      Stun: true
+      Sleep: true
+      Burning: true
     End:
-      Dancing: true
       Aeterna: true
   - Status: Stun
     DurationLookup: NPC_STUNATTACK
@@ -135,8 +138,7 @@ Body:
       Refresh: true
       Inspiration: true
       Gvg_Stun: true
-    End:
-      Dancing: true
+      Stun: true
   - Status: Sleep
     DurationLookup: NPC_SLEEPATTACK
     States:
@@ -155,8 +157,7 @@ Body:
       Refresh: true
       Inspiration: true
       Gvg_Sleep: true
-    End:
-      Dancing: true
+      Sleep: true
   - Status: Poison
     DurationLookup: NPC_POISON
     CalcFlags:
@@ -172,6 +173,8 @@ Body:
     Fail:
       Refresh: true
       Inspiration: true
+      Poison: true
+      Dpoison: true
   - Status: Curse
     DurationLookup: NPC_CURSEATTACK
     CalcFlags:
@@ -189,6 +192,7 @@ Body:
       Refresh: true
       Inspiration: true
       Gvg_Curse: true
+      Curse: true
   - Status: Silence
     DurationLookup: NPC_SILENCEATTACK
     States:
@@ -204,16 +208,16 @@ Body:
       Refresh: true
       Inspiration: true
       Gvg_Silence: true
+      Silence: true
   - Status: Confusion
     DurationLookup: NPC_WIDECONFUSE
     Flags:
       BossResist: true
       StopWalking: true
-      RemoveOnDamaged: true
-      OverlapFail: true
     Fail:
       Refresh: true
       Inspiration: true
+    EndReturn:
       Confusion: true
   - Status: Blind
     DurationLookup: NPC_BLINDATTACK
@@ -231,6 +235,7 @@ Body:
       Inspiration: true
       Fear: true
       Gvg_Blind: true
+      Blind: true
   - Status: Bleeding
     Icon: EFST_BLOODING
     DurationLookup: NPC_BLEEDING
@@ -243,7 +248,6 @@ Body:
       BossResist: true
       NoSave: true
       NoClearance: true
-      OverlapFail: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -257,7 +261,6 @@ Body:
     Flags:
       SendOption: true
       BossResist: true
-      OverlapFail: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -2840,7 +2843,6 @@ Body:
     Flags:
       BossResist: true
       StopWalking: true
-      OverlapFail: true
       Debuff: true
     Fail:
       Inspiration: true
@@ -2849,6 +2851,8 @@ Body:
   - Status: Burning
     Icon: EFST_BURNT
     DurationLookup: RK_DRAGONBREATH
+    CalcFlags:
+      Mdef: true
     Opt1: Burning
     Flags:
       SendOption: true
@@ -2861,8 +2865,6 @@ Body:
     Fail:
       Refresh: true
       Inspiration: true
-    CalcFlags:
-      Mdef: true
   - Status: Freezing
     Icon: EFST_FROSTMISTY
     DurationLookup: WL_FROSTMISTY
@@ -3076,13 +3078,8 @@ Body:
       SetStand: true
       StopWalking: true
       StopAttacking: true
-      OverlapFail: true
     End:
-      Dancing: true
-      Burning: true
       Freezing: true
-      Freeze: true
-      Stone: true
   - Status: Marshofabyss
     Icon: EFST_MARSHOFABYSS
     DurationLookup: WL_MARSHOFABYSS
