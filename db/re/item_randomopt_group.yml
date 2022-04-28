@@ -6877,6 +6877,7 @@ Body:
             MinValue: 3
             MaxValue: 20
       - Slot: 2
+        Chance: 5000
         Options:
           - Option: VAR_ATTPOWER
             MinValue: 3
