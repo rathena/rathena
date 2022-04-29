@@ -1,0 +1,65 @@
+//===== rAthena Script =======================================
+//= Mapflag: Disable renewal level penalty.
+//===== Description: ========================================= 
+//= The file groups the 'norenewalexppenalty' and 'norenewaldroppenalty' mapflags.
+//===== Additional Comments: ================================= 
+//= 1.0 Added illusions dungeons maps. [Capuche]
+//============================================================
+
+//============================================================
+// Illusion of Moonlight
+//============================================================
+pay_d03_i	mapflag	norenewalexppenalty
+pay_d03_i	mapflag	norenewaldroppenalty
+
+//============================================================
+// Illusion of Vampire
+//============================================================
+gef_d01_i	mapflag	norenewalexppenalty
+gef_d01_i	mapflag	norenewaldroppenalty
+
+//============================================================
+// Illusion of Frozen
+//============================================================
+ice_d03_i	mapflag	norenewalexppenalty
+ice_d03_i	mapflag	norenewaldroppenalty
+
+//============================================================
+// Illusion of old Archery
+//============================================================
+tur_d03_i	mapflag	norenewalexppenalty
+tur_d03_i	mapflag	norenewaldroppenalty
+tur_d04_i	mapflag	norenewalexppenalty
+tur_d04_i	mapflag	norenewaldroppenalty
+
+//============================================================
+// Illusion of Teddy Bear
+//============================================================
+ein_d02_i	mapflag	norenewalexppenalty
+ein_d02_i	mapflag	norenewaldroppenalty
+
+//============================================================
+// Illusion of Twins
+//============================================================
+ant_d02_i	mapflag	norenewalexppenalty
+ant_d02_i	mapflag	norenewaldroppenalty
+
+//============================================================
+// Illusion of Luanda
+//============================================================
+com_d02_i	mapflag	norenewalexppenalty
+com_d02_i	mapflag	norenewaldroppenalty
+
+//============================================================
+// Illusion of Labyrinth
+//============================================================
+prt_mz03_i	mapflag	norenewalexppenalty
+prt_mz03_i	mapflag	norenewaldroppenalty
+
+//============================================================
+// Illusion of Underwater
+//============================================================
+iz_d04_i	mapflag	norenewalexppenalty
+iz_d04_i	mapflag	norenewaldroppenalty
+iz_d05_i	mapflag	norenewalexppenalty
+iz_d05_i	mapflag	norenewaldroppenalty

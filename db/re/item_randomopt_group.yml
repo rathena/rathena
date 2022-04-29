@@ -7456,7 +7456,7 @@ Body:
         Chance: 625
   # TODO: Confirm official rates
   - Id: 100
-    Group: DROOPING_GUNSLINGER_SCROLL
+    Group: GUNSLINGER_ENCHANT
     Slots:
       - Slot: 1
         Options:
@@ -7560,7 +7560,7 @@ Body:
             Chance: 1250
   # Source: https://ro.gnjoy.com/news/probability/View.asp?seq=3999572
   - Id: 101
-    Group: FAN_MODIFICATION_KIT
+    Group: FAN_UPGRADE_KIT
     Slots:
       - Slot: 1
         Options:
@@ -7672,7 +7672,7 @@ Body:
             Chance: 769
   # Source: https://ro.gnjoy.com/news/probability/View.asp?seq=3964871
   - Id: 102
-    Group: UNIFORM_REPAIR_KIT
+    Group: SUIT_UPGRADE_KIT
     Slots:
       - Slot: 1
         Options:
@@ -7810,7 +7810,7 @@ Body:
             Chance: 5000
   # Source: https://ro.gnjoy.com/news/probability/View.asp?seq=3999577
   - Id: 109
-    Group: CANDY_POUCH_BLESSING_SCROLL_MELEE
+    Group: CANDY_BAG_SCROLL_MELEE
     Slots:
       - Slot: 1
         Options:
@@ -7934,7 +7934,7 @@ Body:
             Chance: 454
   # Source: https://ro.gnjoy.com/news/probability/View.asp?seq=3999578
   - Id: 110
-    Group: CANDY_POUCH_BLESSING_SCROLL_RANGE
+    Group: CANDY_BAG_SCROLL_RANGE
     Slots:
       - Slot: 1
         Options:
@@ -8058,7 +8058,7 @@ Body:
             Chance: 454
   # Source: https://ro.gnjoy.com/news/probability/View.asp?seq=3999579
   - Id: 111
-    Group: CANDY_POUCH_BLESSING_SCROLL_MAGIC
+    Group: CANDY_BAG_SCROLL_MAGIC
     Slots:
       - Slot: 1
         Options:
@@ -8182,7 +8182,7 @@ Body:
             Chance: 454
   # Source: https://ro.gnjoy.com/news/probability/View.asp?seq=3964872
   - Id: 112
-    Group: MAGICAL_BOOSTER_AMPLIFIER
+    Group: BOOSTER_AMPLIFIER
     Slots:
       - Slot: 1
         Options:
@@ -8310,7 +8310,7 @@ Body:
             Chance: 714
   # Source: https://ro.gnjoy.com/news/probability/View.asp?seq=3964879
   - Id: 113
-    Group: MAGIC_CAT_HAND_SCROLL
+    Group: MAGICAL_CAT_HAND
     Slots:
       - Slot: 1
         Options:
