@@ -8803,7 +8803,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			tick_def2 = -2000;
 #endif
 			break;
-		case SC_STONE:
+		case SC_STONEWAIT:
 #ifndef RENEWAL
 			sc_def = status->mdef*100;
 			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
@@ -9200,11 +9200,12 @@ void status_display_remove(struct block_list *bl, enum sc_type type) {
  * @param type: Status change (SC_*)
  * @param rate: Initial percentage rate of affecting bl (0~10000)
  * @param val1~4: Depends on type of status change
- * @param tick: Initial duration that the status change affects bl
+ * @param duration: Initial duration that the status change affects bl
  * @param flag: Value which determines what parts to calculate. See e_status_change_start_flags
+ * @param delay: Delay in milliseconds before the SC is applied
  * @return adjusted duration based on flag values
  */
-int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,t_tick duration,unsigned char flag) {
+int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,t_tick duration,unsigned char flag, int32 delay) {
 	struct map_session_data *sd = NULL;
 	struct status_change* sc;
 	struct status_change_entry* sce;
@@ -9298,6 +9299,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				return 0;
 			break;
 		case SC_STONE:
+		case SC_STONEWAIT:
 		case SC_FREEZE:
 			// Undead are immune to Freeze/Stone
 			if (undead_flag && !(flag&SCSTART_NOAVOID))
@@ -10126,7 +10128,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 
 		case SC_STONEWAIT:
-			val3 -= tick; // Petrify time - Incubation time
+			val3 = max(1, tick - delay); // Petrify time
+			tick = delay;
 			break;
 
 		case SC_DPOISON:
@@ -13025,8 +13028,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		npc_touch_area_allnpc(sd,bl->m,bl->x,bl->y); // Trigger on-touch event.
 
 	// Needed to be here to make sure OPT1_STONEWAIT has been cleared from the target
-	if (type == SC_STONEWAIT && sce->val4 > -1)
-		sc_start2(bl, bl, SC_STONE, 100, sce->val1, sce->val2, sce->val3);
+	if (type == SC_STONEWAIT)
+		status_change_start(bl, bl, SC_STONE, 100, sce->val1, sce->val2, 0, 0, sce->val3, SCSTART_NOAVOID);
 
 	ers_free(sc_data_ers, sce);
 	return 1;

@@ -796,8 +796,8 @@ Body:
     Element: Earth
     CastCancel: true
     CastTime: 1000
-    Duration1: 20000
-    Duration2: 5000
+    Duration1: 5000
+    Duration2: 20000
     Requires:
       SpCost:
         - Level: 1
@@ -5663,8 +5663,8 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    Duration1: 20000
-    Duration2: 100
+    Duration1: 100
+    Duration2: 20000
     Status: StoneWait
   - Id: 181
     Name: NPC_CURSEATTACK
@@ -15911,8 +15911,8 @@ Body:
         Area: 11
       - Level: 5
         Area: 14
-    Duration1: 20000
-    Duration2: 100
+    Duration1: 100
+    Duration2: 20000
     Status: StoneWait
   - Id: 667
     Name: NPC_WIDECONFUSE
@@ -29647,7 +29647,8 @@ Body:
     HitCount: 1
     CastCancel: true
     AfterCastActDelay: 1000
-    Duration1: 10000
+    Duration1: 100
+    Duration2: 10000
     Requires:
       SpCost: 30
     Unit:

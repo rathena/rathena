@@ -780,8 +780,8 @@ Body:
     Element: Earth
     CastCancel: true
     CastTime: 800
-    Duration1: 17000
-    Duration2: 5000
+    Duration1: 5000
+    Duration2: 17000
     FixedCastTime: 200
     Requires:
       SpCost:
@@ -5933,8 +5933,8 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    Duration1: 17000
-    Duration2: 100
+    Duration1: 100
+    Duration2: 17000
     Status: StoneWait
   - Id: 181
     Name: NPC_CURSEATTACK
@@ -16310,8 +16310,8 @@ Body:
         Area: 11
       - Level: 5
         Area: 14
-    Duration1: 17000
-    Duration2: 100
+    Duration1: 100
+    Duration2: 17000
     Status: StoneWait
   - Id: 667
     Name: NPC_WIDECONFUSE
@@ -19231,7 +19231,8 @@ Body:
     CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 2000
-    Duration1:
+    Duration1: 100
+    Duration2:
       - Level: 1
         Time: 7000
       - Level: 2
@@ -19242,7 +19243,6 @@ Body:
         Time: 13000
       - Level: 5
         Time: 15000
-    Duration2: 100
     Requires:
       SpCost:
         - Level: 1
@@ -22658,14 +22658,19 @@ Body:
       ItemCost:
         - Item: RepairA
           Amount: 1
+          Level: 1
         - Item: RepairA
           Amount: 1
+          Level: 2
         - Item: RepairB
           Amount: 1
+          Level: 3
         - Item: RepairB
           Amount: 1
+          Level: 4
         - Item: RepairC
           Amount: 1
+          Level: 5
         - Item: Repair_Kit
           Amount: 0
   - Id: 2276
@@ -32011,8 +32016,8 @@ Body:
     HitCount: 1
     CastCancel: true
     AfterCastActDelay: 1000
-    Duration1: 10000
-    Duration2: 5000
+    Duration1: 100
+    Duration2: 10000
     Requires:
       SpCost: 30
     Unit:
