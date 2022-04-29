@@ -2517,11 +2517,11 @@ Body:
       if (.@r >= 7) {
          .@bonus = max(getskilllv("TF_DOUBLE"),5);
          skill "TF_DOUBLE",.@bonus;
-         bonus bDoubleRate,.@bonus*5;
+         bonus bDoubleRate,.@bonus*7;
       }
       else if (.@r >= 5) {
          skill "TF_DOUBLE",1;
-         bonus bDoubleRate,25;
+         bonus bDoubleRate,7;
       }
   - Combos:
       - Combo:
@@ -9909,7 +9909,7 @@ Body:
          .@val += 15;
          if ((.@weapon + .@eq) >= 22) {
             skill "TF_DOUBLE",4;
-            bonus bDoubleRate,20;
+            bonus bDoubleRate,28;
          }
       }
       bonus bAspdRate,.@val;
@@ -24792,6 +24792,7 @@ Body:
       bonus bCritAtkRate,3*(.@r/2);
       if (.@r>=12)
          skill "TF_DOUBLE",5;
+         bonus bDoubleRate,35;
   - Combos:
       - Combo:
           - aegis_480172     # 480172

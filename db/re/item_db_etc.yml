@@ -4212,8 +4212,9 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      skill "TF_DOUBLE",1;
-      bonus bDoubleRate,5;
+      .@bonus = max(getskilllv("TF_DOUBLE"), 1);
+      skill "TF_DOUBLE",.@bonus;
+      bonus bDoubleRate,.@bonus*7;
   - Id: 4118
     AegisName: Petit_Card
     Name: Earth Petite Card
@@ -42880,8 +42881,9 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      skill "TF_DOUBLE",3;
-      bonus bDoubleRate,15;
+      .@bonus = max(getskilllv("TF_DOUBLE"), 3);
+      skill "TF_DOUBLE",.@bonus;
+      bonus bDoubleRate,.@bonus*7;
   - Id: 29366
     AegisName: Strong_Blow1
     Name: Hard Blow 1
@@ -49516,8 +49518,9 @@ Body:
     Script: |
       bonus bCritAtkRate,15;
       if (getskilllv("AS_KATAR") >= 10) {
-         skill "TF_DOUBLE",3;
-         bonus bDoubleRate,15;
+         .@bonus = max(getskilllv("TF_DOUBLE"), 3);
+         skill "TF_DOUBLE",.@bonus;
+         bonus bDoubleRate,.@bonus*7;
       }
   - Id: 310189
     AegisName: GuillotineCross_Bottom2
