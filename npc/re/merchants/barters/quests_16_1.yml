@@ -47,7 +47,7 @@ Header:
 
 # Related to Noblesse Shop
 Body:
-  - Name: shop_ext161_JOB_RUNE_KNIGHT
+  - Name: shop_ext161_JOB_GUILLOTINE_CROSS
     Items:
       - Index: 0
         Item: Noblesse_Attack_Ring
@@ -819,7 +819,7 @@ Body:
           - Index: 0
             Item: TokenOfHonor
             Amount: 10
-  - Name: shop_ext161_JOB_STAR_EMPEROR
+  - Name: shop_ext161_JOB_MECHANIC
     Items:
       - Index: 0
         Item: Noblesse_Attack_Ring

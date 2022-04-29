@@ -55,7 +55,7 @@ Body:
           - Index: 0
             Item: EP17_1_EVT02
             Amount: 1
-  - Name: shop_ext171_JOB_RUNE_KNIGHT
+  - Name: shop_ext171_JOB_GUILLOTINE_CROSS
     Items:
       - Index: 0
         Item: Grace_Attack_Ring
@@ -1235,7 +1235,7 @@ Body:
           - Index: 0
             Item: EP17_1_EVT02
             Amount: 10
-  - Name: shop_ext171_JOB_STAR_EMPEROR
+  - Name: shop_ext171_JOB_MECHANIC
     Items:
       - Index: 0
         Item: Grace_Attack_Ring
