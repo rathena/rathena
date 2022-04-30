@@ -22658,14 +22658,19 @@ Body:
       ItemCost:
         - Item: RepairA
           Amount: 1
+          Level: 1
         - Item: RepairA
           Amount: 1
+          Level: 2
         - Item: RepairB
           Amount: 1
+          Level: 3
         - Item: RepairB
           Amount: 1
+          Level: 4
         - Item: RepairC
           Amount: 1
+          Level: 5
         - Item: Repair_Kit
           Amount: 0
   - Id: 2276
