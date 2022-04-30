@@ -25388,12 +25388,12 @@ Body:
             Rate: 73
           - Item: S_FullPene_Earring
             Rate: 73
-  - Group: DROOPING_GUNSLINGER_SCROLL
+  - Group: GUNSLINGER_ENCHANT
     SubGroups:
       - SubGroup: 0
         List:
           - Item: Drooping_Rebellion_
-            RandomOptionGroup: DROOPING_GUNSLINGER_SCROLL
+            RandomOptionGroup: GUNSLINGER_ENCHANT
   - Group: ENCHANTSTONE_RECIPE
     SubGroups:
       - SubGroup: 1
@@ -26046,18 +26046,18 @@ Body:
             Rate: 130
           - Item: C_Giant_White_Rabbit
             Rate: 130
-  - Group: FAN_MODIFICATION_KIT
+  - Group: FAN_UPGRADE_KIT
     SubGroups:
       - SubGroup: 0
         List:
           - Item: Sea_Otter_Mini_Fan
-            RandomOptionGroup: FAN_MODIFICATION_KIT
-  - Group: UNIFORM_REPAIR_KIT
+            RandomOptionGroup: FAN_UPGRADE_KIT
+  - Group: SUIT_UPGRADE_KIT
     SubGroups:
       - SubGroup: 0
         List:
           - Item: Kafra_Uniform
-            RandomOptionGroup: UNIFORM_REPAIR_KIT
+            RandomOptionGroup: SUIT_UPGRADE_KIT
   - Group: SCROLL_OF_FALLEN_ANGEL_WINGS
     SubGroups:
       - SubGroup: 0
@@ -26580,39 +26580,39 @@ Body:
             Rate: 1
           - Item: S_All_Race_Shield
             Rate: 1
-  - Group: CANDY_POUCH_BLESSING_SCROLL_MELEE
+  - Group: CANDY_BAG_SCROLL_MELEE
     SubGroups:
       - SubGroup: 0
         List:
           - Item: Bag_Of_Antonio_P
-            RandomOptionGroup: CANDY_POUCH_BLESSING_SCROLL_MELEE
-  - Group: CANDY_POUCH_BLESSING_SCROLL_RANGE
+            RandomOptionGroup: CANDY_BAG_SCROLL_MELEE
+  - Group: CANDY_BAG_SCROLL_RANGE
     SubGroups:
       - SubGroup: 0
         List:
           - Item: Bag_Of_Antonio_S
-            RandomOptionGroup: CANDY_POUCH_BLESSING_SCROLL_RANGE
-  - Group: CANDY_POUCH_BLESSING_SCROLL_MAGIC
+            RandomOptionGroup: CANDY_BAG_SCROLL_RANGE
+  - Group: CANDY_BAG_SCROLL_MAGIC
     SubGroups:
       - SubGroup: 0
         List:
           - Item: Bag_Of_Antonio_
-            RandomOptionGroup: CANDY_POUCH_BLESSING_SCROLL_MAGIC
-  - Group: MAGICAL_BOOSTER_AMPLIFIER
+            RandomOptionGroup: CANDY_BAG_SCROLL_MAGIC
+  - Group: BOOSTER_AMPLIFIER
     SubGroups:
       - SubGroup: 1
         List:
           - Item: Crimson_Booster
             Rate: 1
           - Item: Magical_Booster_K
-            RandomOptionGroup: MAGICAL_BOOSTER_AMPLIFIER
+            RandomOptionGroup: BOOSTER_AMPLIFIER
             Rate: 1
-  - Group: MAGIC_CAT_HAND_SCROLL
+  - Group: MAGICAL_CAT_HAND
     SubGroups:
       - SubGroup: 0
         List:
           - Item: Neko_Headress
-            RandomOptionGroup: MAGIC_CAT_HAND_SCROLL
+            RandomOptionGroup: MAGICAL_CAT_HAND
   - Group: INFINITYSHADOW_MIX
     SubGroups:
       - SubGroup: 0
