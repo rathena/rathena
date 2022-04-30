@@ -50618,12 +50618,16 @@ Body:
     AegisName: TestA
     Name: TestA
     Type: DelayConsume
+    Flags:
+      BuyingStore: true
     Script: |
       /* reform(); */
   - Id: 101062
     AegisName: TestB
     Name: TestB
     Type: DelayConsume
+    Flags:
+      BuyingStore: true
     Script: |
       /* reform(); */
   - Id: 101075
