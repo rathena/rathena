@@ -1112,6 +1112,17 @@ Body:
         bonus bMaxHPRate,3;
         bonus3 bAutoSpellWhenHit,"AL_HEAL",1,10;
       }
+#    Evolution:
+#      - Target: BLUEMOON_LOLI_RURI2
+#        ItemRequirements:
+#          - Item: Bat_Cage
+#            Amount: 500
+#          - Item: Blue_Herb
+#            Amount: 50
+#          - Item: Loki's_Whispers
+#            Amount: 1
+#          - Item: Loli_Ruri_Card
+#            Amount: 10
   - Mob: CIVIL_SERVANT
     TameItem: Fan_Of_Wind
     EggItem: Civil_Servant_Egg
@@ -1148,6 +1159,17 @@ Body:
         bonus2 bSubRace,RC_Brute,3;
         bonus2 bSubRace,RC_Player_Doram,3;
       }
+#    Evolution:
+#      - Target: WILD_ROSE3
+#        ItemRequirements:
+#          - Item: Great_Leaf
+#            Amount: 500
+#          - Item: Black_Kitty_Doll
+#            Amount: 200
+#          - Item: Fish_Tail
+#            Amount: 200
+#          - Item: Leaf_Cat_Card
+#            Amount: 10
   - Mob: BACSOJIN_
     TameItem: Shiny_Wing_Gown
     EggItem: Bacsojin_Egg
@@ -2119,3 +2141,124 @@ Body:
 #        bonus bAspd,2;
 #      }
 
+#  - Mob: WILD_ROSE3
+#    EggItem: Wild_Rose_Egg
+#    FoodItem: Pet_Food
+#    Fullness: 2
+#    HungryDelay: 120
+#    IntimacyFed: 15
+#    CaptureRate: 0
+#    SpecialPerformance: false
+#    AllowAutoFeed: true
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#      
+#      if (.@i >= PET_INTIMATE_LOYAL) {
+#        bonus bCritical,7;
+#        bonus bAspdRate,5;
+#      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+#        bonus bCritical,5;
+#        bonus bAspdRate,3;
+#      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
+#        bonus bCritical,3;
+#      } else {
+#        bonus bCritical,2;
+#      }
+#  - Mob: FARMILIAR2
+#    TameItem: Fruits_Set_Trap
+#    EggItem: Farmiliar_Egg
+#    FoodItem: Mixed_Fruits_Juice
+#    Fullness: 2
+#    HungryDelay: 120
+#    IntimacyFed: 15
+#    CaptureRate: 0
+#    SpecialPerformance: false
+#    AllowAutoFeed: false
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#      
+#      if (.@i >= PET_INTIMATE_LOYAL) {
+#        bonus bInt,5;
+#        bonus2 bResEff,Eff_Curse,20;
+#      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+#        bonus bInt,3;
+#        bonus2 bResEff,Eff_Curse,10;
+#      }
+#  - Mob: DARK_PRIEST
+#    EggItem: Dark_Priest_Egg
+#    FoodItem: Evil_Water
+#    Fullness: 2
+#    HungryDelay: 120
+#    IntimacyFed: 15
+#    CaptureRate: 0
+#    SpecialPerformance: false
+#    AllowAutoFeed: false
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#      
+#      if (.@i >= PET_INTIMATE_LOYAL) {
+#        bonus bInt,2;
+#        bonus2 bMagicAddEle,Ele_Holy,5;
+#      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+#        bonus bInt,1;
+#        bonus2 bMagicAddEle,Ele_Holy,3;
+#      }
+#    Evolution:
+#      - Target: DARK_ILLUSION2
+#        ItemRequirements:
+#          - Item: Skull
+#            Amount: 500
+#          - Item: Rosary
+#            Amount: 1
+#          - Item: Sacred_Marks
+#            Amount: 5
+#          - Item: Dark_Priest_Card
+#            Amount: 10
+#  - Mob: DARK_ILLUSION2
+#    EggItem: Dark_Illusion_Egg
+#    FoodItem: Pet_Food
+#    Fullness: 2
+#    HungryDelay: 120
+#    IntimacyFed: 15
+#    CaptureRate: 0
+#    SpecialPerformance: false
+#    AllowAutoFeed: true
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#      
+#      if (.@i >= PET_INTIMATE_LOYAL) {
+#        bonus bVariableCastrate,-5;
+#        bonus2 bMagicAtkEle,Ele_Dark,5;
+#      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+#        bonus bVariableCastrate,-4;
+#        bonus2 bMagicAtkEle,Ele_Dark,3;
+#      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
+#        bonus bVariableCastrate,-3;
+#      } else {
+#        bonus bVariableCastrate,-2;
+#      }
+#  - Mob: BLUEMOON_LOLI_RURI2
+#    EggItem: Bluemoon_Loli_Ruri_Egg
+#    FoodItem: Pet_Food
+#    Fullness: 2
+#    HungryDelay: 120
+#    IntimacyFed: 15
+#    CaptureRate: 0
+#    SpecialPerformance: false
+#    AllowAutoFeed: true
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#      
+#      if (.@i >= PET_INTIMATE_LOYAL) {
+#        bonus bVariableCastrate,-5;
+#        bonus2 bMagicAtkEle,Ele_Dark,5;
+#        bonus3 bAutoSpellWhenHit,"PR_KYRIE",max(2,getskilllv("PR_KYRIE")),100;
+#      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+#        bonus bVariableCastrate,-4;
+#        bonus2 bMagicAtkEle,Ele_Dark,3;
+#        bonus3 bAutoSpellWhenHit,"PR_KYRIE",max(2,getskilllv("PR_KYRIE")),100;
+#      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
+#        bonus bVariableCastrate,-3;
+#      } else {
+#        bonus bVariableCastrate,-2;
+#      }

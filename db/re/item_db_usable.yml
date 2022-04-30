@@ -49865,6 +49865,20 @@ Body:
     Buy: 10
     Script: |
       callfunc "F_CashReduceTraitStat",bCrt,-1,100457;
+  - Id: 100460
+    AegisName: MD_Airboat_Bexp
+    Name: Purified Growth Elixir
+    Type: Usable
+    EquipLevelMin: 200
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* get exp, lower amount after lv. 231 */
   - Id: 100465
     AegisName: aegis_100465
     Name: 3rd/Expanded Stone (Garment) Box
@@ -49895,6 +49909,14 @@ Body:
     Weight: 10
     Script: |
       laphine_synthesis();
+  - Id: 100475
+    AegisName: MD_Airboat_Expbox
+    Name: Purple Special Storage
+    Type: Usable
+    Flags:
+      Container: true
+    Script: |
+      /* getgroupitem(IG_MD_AIRBOAT_EXPBOX); */
   - Id: 100476
     AegisName: MD_Airboat_Random
     Name: Ymir Beads
@@ -51103,6 +51125,17 @@ Body:
     Type: Healing
     Script: |
       percentheal 30,30;
+  - Id: 101331
+    AegisName: Fruits_Set_Trap
+    Name: Assorted Fruit Trap
+    Type: Usable
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    NoUse:
+      Sitting: true
+    Script: |
+      pet 21632;
   - Id: 101336
     AegisName: aegis_101336
     Name: "[Scroll] DEX Biscuit Stick"

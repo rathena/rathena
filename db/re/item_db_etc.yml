@@ -62678,6 +62678,7 @@ Body:
     AegisName: Evil_Water
     Name: Evil Water
     Type: Etc
+    Buy: 1000
     Weight: 10
   - Id: 1000563
     AegisName: Soa_Charm
@@ -63699,6 +63700,14 @@ Body:
       NoCart: true
       NoGuildStorage: true
       NoAuction: true
+  - Id: 1000889
+    AegisName: Mixed_Fruits_Juice
+    Name: Complex Fruit Juice
+    Type: Etc
+    Buy: 1000
+    Flags:
+      BuyingStore: true
+    Weight: 10
   - Id: 1000891
     AegisName: aegis_1000891
     Name: Special Red Pill Exchange

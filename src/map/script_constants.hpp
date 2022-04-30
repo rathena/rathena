@@ -5730,6 +5730,7 @@
 	export_constant(IG_MONTHLY_PACKAGE_3);
 	export_constant(IG_MONTHLY_BUFF_PACKAGE);
 	export_constant(IG_MONTHLY_BATTLE_PACKAGE);
+	export_constant(IG_MD_AIRBOAT_EXPBOX);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

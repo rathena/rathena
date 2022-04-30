@@ -29495,3 +29495,12 @@ Body:
             Amount: 8
           - Item: K_Secret_Key
             Amount: 10
+#  - Group: MD_AIRBOAT_EXPBOX
+#    SubGroups:
+#      - SubGroup: 0
+#        List:
+#          - Item: MD_Airboat_Bexp
+#            Amount: ?
+#      - SubGroup: 1
+#        List:
+#          - Item: ??
