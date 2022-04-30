@@ -153274,7 +153274,6 @@ Body:
       NoDrop: true
       NoTrade: true
       NoCart: true
-      NoStorage: true
       NoGuildStorage: true
       NoAuction: true
     Script: |
@@ -153301,6 +153300,12 @@ Body:
       Right_Accessory: true
     ArmorLevel: 1
     EquipLevelMin: 100
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
     Script: |
       .@r = getrefine();
       bonus bMatk,20;
@@ -153322,6 +153327,12 @@ Body:
       Right_Accessory: true
     ArmorLevel: 1
     EquipLevelMin: 100
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
     Script: |
       .@r = getrefine();
       bonus bHit,5;
@@ -153344,6 +153355,12 @@ Body:
       Left_Accessory: true
     ArmorLevel: 1
     EquipLevelMin: 100
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
     Script: |
       .@r = getrefine();
       bonus bAllStats,1;
@@ -153365,6 +153382,12 @@ Body:
       Right_Accessory: true
     ArmorLevel: 1
     EquipLevelMin: 100
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
     Script: |
       .@r = getrefine();
       bonus bMatk,20;

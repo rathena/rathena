@@ -63641,6 +63641,13 @@ Body:
     Name: Soap Base
     Type: Etc
     Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoAuction: true
   - Id: 1000879
     AegisName: Appetite_Booster
     Name: Appetite Booster
@@ -63686,6 +63693,12 @@ Body:
     Name: Veins Coin
     Type: Etc
     Weight: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
   - Id: 1000891
     AegisName: aegis_1000891
     Name: Special Red Pill Exchange
