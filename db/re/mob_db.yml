@@ -92552,14 +92552,10 @@ Body:
     Drops:
       - Item: Angel_Dream
         Rate: 1500
-      - Item: Cassock_Boots
-        Rate: 1500
-      - Item: Cassock_Manteau
-        Rate: 1500          
       - Item: Rune_Of_Darkness
         Rate: 3000
       - Item: Odin_itembox
-        Rate: 2500
+        Rate: 5
       - Item: Stone_Of_Intelligence_
         Rate: 100
       - Item: Soft_Feather
@@ -92598,13 +92594,9 @@ Body:
     Ai: 21
     Drops:
       - Item: Angel_Dream
-        Rate: 1500
-      - Item: Cassock_Boots
-        Rate: 1500
-      - Item: Cassock_Manteau
-        Rate: 1500          
+        Rate: 1500 
       - Item: Odin_itembox
-        Rate: 2500
+        Rate: 5
       - Item: Rune_Of_Darkness
         Rate: 3000
       - Item: Soft_Feather
@@ -92644,14 +92636,10 @@ Body:
     Drops:
       - Item: Angel_Dream
         Rate: 350
-      - Item: Cassock_Boots
-        Rate: 1500
-      - Item: Cassock_Manteau
-        Rate: 1500          
       - Item: Rune_Of_Darkness
         Rate: 5000
       - Item: Odin_itembox
-        Rate: 2500
+        Rate: 5
       - Item: Soft_Feather
         Rate: 7000
       - Item: Brigan
@@ -92695,12 +92683,8 @@ Body:
         Rate: 10000
       - Item: Angel_Dream
         Rate: 1500
-      - Item: Cassock_Boots
-        Rate: 1500
-      - Item: Cassock_Manteau
-        Rate: 1500
       - Item: Odin_itembox
-        Rate: 2500                  
+        Rate: 5
       - Item: Soft_Feather
         Rate: 2000
       - Item: Shard_Blue
@@ -92743,15 +92727,13 @@ Body:
       - Item: Soft_Feather
         Rate: 10000
       - Item: Light_Granule
-        Rate: 10000
-      - Item: Cassock_Boots
-        Rate: 1500
-      - Item: Cassock_Manteau
-        Rate: 1500          
+        Rate: 10000 
       - Item: Old_Violet_Box
         Rate: 2500
       - Item: Crystal_Jewel_
         Rate: 1000
+      - Item: Odin_itembox
+        Rate: 5
       - Item: Plasma_Arch_Card
         Rate: 1
         StealProtected: true
@@ -92790,15 +92772,13 @@ Body:
       - Item: Soft_Feather
         Rate: 10000
       - Item: Light_Granule
-        Rate: 10000
-      - Item: Cassock_Boots
-        Rate: 1500
-      - Item: Cassock_Manteau
-        Rate: 1500          
+        Rate: 10000      
       - Item: Old_Violet_Box
         Rate: 2500
       - Item: Crystal_Jewel_
         Rate: 1000
+      - Item: Odin_itembox
+        Rate: 5
       - Item: Plasma_Spt_Card
         Rate: 1
         StealProtected: true

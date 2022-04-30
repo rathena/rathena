@@ -314,7 +314,6 @@ hu_in01,97,322,5	script	Susan Grey#odin	4_F_HUWOMAN,{
 									4801,	//SP + 100
 									4802);	//SP + 150
 							}
-						}
 					}
 				}
 			}
