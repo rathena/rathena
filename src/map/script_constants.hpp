@@ -5717,6 +5717,7 @@
 	export_constant(IG_GOLDEN_LORD_LAUNCHER_CUBE);
 	export_constant(IG_THE_BLACK_CUBE);
 	export_constant(IG_DEMON_SLAYER_SHOT_CUBE);
+	export_constant(IG_MD_AIRBOAT_EXPBOX);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

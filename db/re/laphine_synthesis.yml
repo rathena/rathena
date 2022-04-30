@@ -1502,6 +1502,7 @@ Body:
       - Item: Miyabi_Ningyo_Egg
       - Item: Leaf_Cat_Egg
       - Item: Dark_Priest_Egg
+      - Item: Farmiliar_Egg
   - Item: Costume_Exchange_Box
     RewardGroup: COSTUME_EXCHANGE_BOX
     Requirements:
@@ -1850,6 +1851,10 @@ Body:
       - Item: C_L_RibbonMuff_Black
       - Item: C_Black_Cat_Ears_Beret
       - Item: C_Watery_Eyes
+      - Item: C_Heart_Stick_Choco
+      - Item: C_Chocolate_Bomb
+      - Item: C_Charm_Of_Flame_Heart
+      - Item: C_Gothic_Heart_Wing_V
   - Item: Fan_Upgrade_Kit
     RewardGroup: FAN_UPGRADE_KIT
     Requirements:

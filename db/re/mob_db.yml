@@ -94981,6 +94981,12 @@ Body:
 #    AegisName: EP19_RE_RGAN_E
 #  - Id: 21601
 #    AegisName: EP19_ET_RGAN_D
+#  - Id: 21630
+#    AegisName: WILD_ROSE3
+#  - Id: 21631
+#    AegisName: BLUEMOON_LOLI_RURI2
+#  - Id: 21632
+#    AegisName: FARMILIAR2
 #  - Id: 22328
 #    AegisName: DESERT_WOLF_RAC
 #  - Id: 22329
@@ -95031,6 +95037,8 @@ Body:
 #    AegisName: MQ_KIND_OF_BEETLE3
 #  - Id: 22352
 #    AegisName: MQ_KIND_OF_BEETLE4
+#  - Id: 23000
+#    AegisName: DARK_ILLUSION2
 #  - Id: 31999
 #    AegisName: HUNTING_GID_DEFAULT
 #  - Id: 32000
