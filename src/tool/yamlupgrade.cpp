@@ -262,7 +262,7 @@ static bool upgrade_job_stats(std::string file, const uint32 source_version) {
 	for (auto input : inNode["Body"]) {
 		// If under version 2
 		if (source_version < 2) {
-			// Add armor level to all equipments
+			// Field name changes
 			if (input["HpMultiplicator"].IsDefined()) {
 				input["HpIncrease"] = input["HpMultiplicator"].as<uint32>();
 				input.remove("HpMultiplicator");
