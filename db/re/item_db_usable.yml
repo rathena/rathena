@@ -51310,6 +51310,31 @@ Body:
       BuyingStore: true
     Script: |
       /* reform(); */
+  - Id: 101389
+    AegisName: Helm_Of_Faith_Hammer
+    Name: Helm of Faith Refining Hammer
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* reform(); */
+  - Id: 101390
+    AegisName: Clock_Tower_W_Hammer
+    Name: Clock Tower Basement Equipment Refining Hammer
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* reform(); */
+  - Id: 101399
+    AegisName: aegis_101399
+    Name: Enchantment Ticket Envelope
+    Type: Etc
+    Weight: 10
+    Script: |
+      getitem 1000874,3;
   - Id: 200185
     AegisName: LI_Nyangvine_Box1_26
 #   Name: (Limited) Actinidia Cat Fruit Box I (Stone Box 26)

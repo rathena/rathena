@@ -53030,31 +53030,52 @@ Body:
     Name: Spring Energy(1Lv)
     Type: Card
     SubType: Enchant
+    Script: |
+      /* Event bonus */
+      bonus bShortAtkRate,5;
+      bonus bLongAtkRate,5;
   - Id: 310669
     AegisName: Spring_Energy_2
     Name: Spring Energy(2Lv)
     Type: Card
     SubType: Enchant
+    Script: |
+      /* Event bonus */
+      bonus bShortAtkRate,10;
+      bonus bLongAtkRate,10;
   - Id: 310670
     AegisName: Spring_Energy_3
     Name: Spring Energy(3Lv)
     Type: Card
     SubType: Enchant
+    Script: |
+      /* Event bonus */
+      bonus bShortAtkRate,15;
+      bonus bLongAtkRate,15;
   - Id: 310671
     AegisName: Spring_Warmth_1
     Name: Warmth of Spring(1Lv)
     Type: Card
     SubType: Enchant
+    Script: |
+      /* Event bonus */
+      bonus2 bMagicAtkEle,Ele_All,5;
   - Id: 310672
     AegisName: Spring_Warmth_2
     Name: Warmth of Spring(2Lv)
     Type: Card
     SubType: Enchant
+    Script: |
+      /* Event bonus */
+      bonus2 bMagicAtkEle,Ele_All,10;
   - Id: 310673
     AegisName: Spring_Warmth_3
     Name: Warmth of Spring(3Lv)
     Type: Card
     SubType: Enchant
+    Script: |
+      /* Event bonus */
+      bonus2 bMagicAtkEle,Ele_All,15;
   - Id: 310674
     AegisName: Star_Cluster_Of_Pow1
     Name: Star Cluster of Power Lv1
@@ -63720,6 +63741,102 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1000897
+    AegisName: aegis_1000897
+    Name: Donor List Chaos 1
+    Type: Etc
+  - Id: 1000898
+    AegisName: aegis_1000898
+    Name: Donor List Chaos 2
+    Type: Etc
+  - Id: 1000899
+    AegisName: aegis_1000899
+    Name: Donor List Chaos 3
+    Type: Etc
+  - Id: 1000900
+    AegisName: aegis_1000900
+    Name: Donor List Chaos 4
+    Type: Etc
+  - Id: 1000901
+    AegisName: aegis_1000901
+    Name: Donor List Loki 1
+    Type: Etc
+  - Id: 1000902
+    AegisName: aegis_1000902
+    Name: Donor List Loki 2
+    Type: Etc
+  - Id: 1000903
+    AegisName: aegis_1000903
+    Name: Donor List Loki 3
+    Type: Etc
+  - Id: 1000904
+    AegisName: aegis_1000904
+    Name: Donor List Loki 4
+    Type: Etc
+  - Id: 1000905
+    AegisName: aegis_1000905
+    Name: Donor List Iris 1
+    Type: Etc
+  - Id: 1000906
+    AegisName: aegis_1000906
+    Name: Donor List Iris 2
+    Type: Etc
+  - Id: 1000907
+    AegisName: aegis_1000907
+    Name: Donor List Iris 3
+    Type: Etc
+  - Id: 1000908
+    AegisName: aegis_1000908
+    Name: Donor List Iris 4
+    Type: Etc
+  - Id: 1000909
+    AegisName: aegis_1000909
+    Name: Donor List Sara 1
+    Type: Etc
+  - Id: 1000910
+    AegisName: aegis_1000910
+    Name: Donor List Sara 2
+    Type: Etc
+  - Id: 1000911
+    AegisName: aegis_1000911
+    Name: Donor List Sara 3
+    Type: Etc
+  - Id: 1000912
+    AegisName: aegis_1000912
+    Name: Donor List Fenrir 1
+    Type: Etc
+  - Id: 1000913
+    AegisName: aegis_1000913
+    Name: Donor List Fenrir 2
+    Type: Etc
+  - Id: 1000914
+    AegisName: aegis_1000914
+    Name: Donor List Fenrir 3
+    Type: Etc
+  - Id: 1000915
+    AegisName: aegis_1000915
+    Name: Donor List Lydia 1
+    Type: Etc
+  - Id: 1000916
+    AegisName: aegis_1000916
+    Name: Donor List Lydia 2
+    Type: Etc
+  - Id: 1000917
+    AegisName: aegis_1000917
+    Name: Donor List Baldur 1
+    Type: Etc
+  - Id: 1000918
+    AegisName: aegis_1000918
+    Name: Donor List Odin 1
+    Type: Etc
+  - Id: 1000919
+    AegisName: aegis_1000919
+    Name: Donor List Thor 1
+    Type: Etc
+  - Id: 1000920
+    AegisName: aegis_1000920
+    Name: Donor List Sakray 1
+    Type: Etc
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai

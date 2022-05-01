@@ -76339,6 +76339,14 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 20
     View: 823
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Plant,2;
   - Id: 18678
@@ -88513,6 +88521,9 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 571
+    Script: |
+      /* Event bonus */
+      bonus2 bAddItemHealRate,11608,300;
   - Id: 19714
     AegisName: C_Lady_Tanee_Doll
     Name: Costume Lady Tanee Doll
@@ -94103,6 +94114,9 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1340
+    Script: |
+      /* Event bonus */
+      autobonus "{ bonus bShortAtkRate,10; bonus bLongAtkRate,10; bonus2 bMagicAtkEle,Ele_All,10; }",30,10000;
   - Id: 20299
     AegisName: C_Face_Crusher
     Name: Costume Face Crusher
