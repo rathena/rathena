@@ -1297,10 +1297,9 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 				}
 
 				if (it.flag&ATF_TARGET)
-					sc_start(src, bl, it.sc, rate, 7, it.duration, 100);
-
+					status_change_start(src, bl, it.sc, rate, 7, 0, 0, 0, it.duration, SCSTART_NONE, 100);
 				if (it.flag&ATF_SELF)
-					sc_start(src, src, it.sc, rate, 7, it.duration, 100);
+					status_change_start(src, src, it.sc, rate, 7, 0, 0, 0, it.duration, SCSTART_NONE, 100);
 			}
 		}
 
@@ -1311,9 +1310,9 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 					continue;
 
 				if (it.target&ATF_TARGET)
-					sc_start(src, bl, it.sc, rate, 7, it.duration, 100);
+					status_change_start(src, bl, it.sc, rate, 7, 0, 0, 0, it.duration, SCSTART_NONE, 100);
 				if (it.target&ATF_SELF)
-					sc_start(src, src, it.sc, rate, 7, it.duration, 100);
+					status_change_start(src, src, it.sc, rate, 7, 0, 0, 0, it.duration, SCSTART_NONE, 100);
 			}
 			//"While the damage can be blocked by Pneuma, the chance to break armor remains", irowiki. [Cydh]
 			if (dmg_lv == ATK_BLOCK && skill_id == AM_ACIDTERROR) {
@@ -2504,10 +2503,9 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			}
 
 			if (it.flag&ATF_TARGET && src != bl)
-				sc_start(src, src, it.sc, rate, 7, it.duration, 100);
-
+				status_change_start(src, src, it.sc, rate, 7, 0, 0, 0, it.duration, SCSTART_NONE, 100);
 			if (it.flag&ATF_SELF && !status_isdead(bl))
-				sc_start(src, bl, it.sc, rate, 7, it.duration, 100);
+				status_change_start(src, bl, it.sc, rate, 7, 0, 0, 0, it.duration, SCSTART_NONE, 100);
 		}
 	}
 
