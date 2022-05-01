@@ -151121,6 +151121,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 124
+  - Id: 480168
+    AegisName: C_Melody_Wing
+    Name: Costume Melody Wing
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 126
   - Id: 480172
     AegisName: aegis_480172
     Name: Subject Cape (Melee)

@@ -51328,6 +51328,35 @@ Body:
       BuyingStore: true
     Script: |
       /* reform(); */
+  - Id: 101393
+    AegisName: aegis_101393
+    Name: Mugwort Rice Cake
+    Type: Healing
+    Weight: 10
+    Script: |
+      percentheal 0,20;
+      itemskill "PR_MAGNIFICAT",3;
+  - Id: 101394
+    AegisName: aegis_101393
+    Name: Azalea Wine
+    Type: Healing
+    Weight: 10
+    Script: |
+      percentheal 10,0;
+      skilleffect "AL_INCAGI",0;
+      sc_start SC_INCREASEAGI,60000,3;
+  - Id: 101395
+    AegisName: Season_Evt_Reward_04M
+    Name: Event Reward Box
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoAuction: true
   - Id: 101399
     AegisName: aegis_101399
     Name: Enchantment Ticket Envelope

@@ -60654,6 +60654,30 @@ Body:
     SubType: Enchant
     Script: |
       bonus bVariableCastrate,-10;
+  - Id: 311423
+    AegisName: aegis_311423
+    Name: Qingming
+    Type: Card
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Script: |
+      bonus bBaseAtk,15;
+      bonus bMatk,15;
+  - Id: 311424
+    AegisName: aegis_311424
+    Name: Gok Woo
+    Type: Card
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Script: |
+      bonus2 bAddRace,RC_Undead,10;
+      bonus2 bMagicAddRace,RC_Undead,10;
+      bonus2 bAddRace,RC_Fish,10;
+      bonus2 bMagicAddRace,RC_Fish,10;
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
