@@ -4390,9 +4390,9 @@ static bool pc_readdb_job1(char* fields[], int columns, int current) {
 	if (atoi(fields[2]) != 0)
 		body << YAML::Key << "HpFactor" << YAML::Value << atoi(fields[2]);
 	if (atoi(fields[3]) != 500)
-		body << YAML::Key << "HpMultiplicator" << YAML::Value << atoi(fields[3]);
+		body << YAML::Key << "HpIncrease" << YAML::Value << atoi(fields[3]);
 	if (atoi(fields[4]) != 100)
-		body << YAML::Key << "SpFactor" << YAML::Value << atoi(fields[4]);
+		body << YAML::Key << "SpIncrease" << YAML::Value << atoi(fields[4]);
 
 	body << YAML::Key << "BaseASPD";
 	body << YAML::BeginMap;
