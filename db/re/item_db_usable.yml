@@ -51337,7 +51337,7 @@ Body:
       percentheal 0,20;
       itemskill "PR_MAGNIFICAT",3;
   - Id: 101394
-    AegisName: aegis_101393
+    AegisName: aegis_101394
     Name: Azalea Wine
     Type: Healing
     Weight: 10
@@ -51364,6 +51364,15 @@ Body:
     Weight: 10
     Script: |
       getitem 1000874,3;
+  - Id: 101416
+    AegisName: aegis_101416
+    Name: Costume Enchant Stone Box 27
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_Enchant_Stone_Box27);
   - Id: 200185
     AegisName: LI_Nyangvine_Box1_26
 #   Name: (Limited) Actinidia Cat Fruit Box I (Stone Box 26)

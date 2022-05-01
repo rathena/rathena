@@ -5731,6 +5731,7 @@
 	export_constant(IG_MONTHLY_BUFF_PACKAGE);
 	export_constant(IG_MONTHLY_BATTLE_PACKAGE);
 	export_constant(IG_MD_AIRBOAT_EXPBOX);
+	export_constant(IG_ENCHANT_STONE_BOX27);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

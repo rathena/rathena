@@ -69176,6 +69176,15 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 2091
+  - Id: 15882
+    AegisName: C_Rhythm_Hairband
+    Name: Costume Open Headphones
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1180
   - Id: 15888
     AegisName: aegis_15888
     Name: Costume Dragon Claw Helm
@@ -76343,7 +76352,6 @@ Body:
       NoDrop: true
       NoTrade: true
       NoCart: true
-      NoStorage: true
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
@@ -141630,6 +141638,15 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
     View: 2155
+  - Id: 420081
+    AegisName: C_Carrot_In_Mouth_J
+    Name: Costume Carrot in Mouth
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 829
   - Id: 420082
     AegisName: C_WL_Hair_BU
     Name: Costume Side Roll Pony    # !todo check english name
@@ -151013,6 +151030,15 @@ Body:
             }
          }
       }
+  - Id: 480152
+    AegisName: C_Spoon_Fork_Set
+    Name: Costume Spoon Fork Set
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 121
   - Id: 480158
     AegisName: C_Lunatic_Bag
     Name: Costume Lunatic Bag
