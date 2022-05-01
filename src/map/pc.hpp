@@ -1016,7 +1016,7 @@ struct s_job_info {
 
 class JobDatabase : public TypesafeCachedYamlDatabase<uint16, s_job_info> {
 public:
-	JobDatabase() : TypesafeCachedYamlDatabase("JOB_STATS", 1) {
+	JobDatabase() : TypesafeCachedYamlDatabase("JOB_STATS", 2) {
 
 	}
 
