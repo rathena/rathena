@@ -51331,7 +51331,7 @@ Body:
   - Id: 101399
     AegisName: aegis_101399
     Name: Enchantment Ticket Envelope
-    Type: Etc
+    Type: Usable
     Weight: 10
     Script: |
       getitem 1000874,3;
