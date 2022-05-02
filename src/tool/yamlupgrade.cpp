@@ -263,13 +263,25 @@ static bool upgrade_job_stats(std::string file, const uint32 source_version) {
 		// If under version 2
 		if (source_version < 2) {
 			// Field name changes
+			if (input["HPFactor"].IsDefined()) {
+				input["HpFactor"] = input["HPFactor"].as<uint32>();
+				input.remove("HPFactor");
+			}
 			if (input["HpMultiplicator"].IsDefined()) {
 				input["HpIncrease"] = input["HpMultiplicator"].as<uint32>();
 				input.remove("HpMultiplicator");
 			}
+			if (input["HPMultiplicator"].IsDefined()) {
+				input["HpIncrease"] = input["HPMultiplicator"].as<uint32>();
+				input.remove("HPMultiplicator");
+			}
 			if (input["SpFactor"].IsDefined()) {
 				input["SpIncrease"] = input["SpFactor"].as<uint32>();
 				input.remove("SpFactor");
+			}
+			if (input["SPFactor"].IsDefined()) {
+				input["SpIncrease"] = input["SPFactor"].as<uint32>();
+				input.remove("SPFactor");
 			}
 		}
 
