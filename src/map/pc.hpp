@@ -1002,7 +1002,7 @@ public:
 
 struct s_job_info {
 	std::vector<uint32> base_hp, base_sp, base_ap; //Storage for the first calculation with hp/sp/ap factor and multiplicator
-	uint32 hp_factor, hp_multiplicator, sp_factor, max_weight_base;
+	uint32 hp_factor, hp_increase, sp_increase, max_weight_base;
 	std::vector<std::array<uint16,PARAM_MAX>> job_bonus;
 	std::vector<int16> aspd_base;
 	t_exp base_exp[MAX_LEVEL], job_exp[MAX_LEVEL];
@@ -1016,7 +1016,7 @@ struct s_job_info {
 
 class JobDatabase : public TypesafeCachedYamlDatabase<uint16, s_job_info> {
 public:
-	JobDatabase() : TypesafeCachedYamlDatabase("JOB_STATS", 1) {
+	JobDatabase() : TypesafeCachedYamlDatabase("JOB_STATS", 2) {
 
 	}
 
