@@ -25982,6 +25982,23 @@ BUILDIN_FUNC(getjobexp_ratio){
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC( enchantgradeui ){
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	struct map_session_data* sd;
+
+	if( !script_charid2sd( 2, sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_ui_open( sd, OUT_UI_ENCHANTGRADE, 0 );
+
+	return SCRIPT_CMD_SUCCESS;
+#else
+	ShowError( "buildin_enchantgradeui: This feature is not supported by your packet version.\n" );
+	return SCRIPT_CMD_FAILURE;
+#endif
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -26699,6 +26716,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(openbank,"?"),
 	BUILDIN_DEF(getbaseexp_ratio, "i??"),
 	BUILDIN_DEF(getjobexp_ratio, "i??"),
+	BUILDIN_DEF(enchantgradeui, "?" ),
+
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

@@ -114,9 +114,11 @@ typedef uint32 t_itemid;
 #ifdef RENEWAL
 	#define MAX_WEAPON_LEVEL 5
 	#define MAX_ARMOR_LEVEL 2
+	#define MAX_ENCHANTGRADE 4
 #else
 	#define MAX_WEAPON_LEVEL 4
 	#define MAX_ARMOR_LEVEL 1
+	#define MAX_ENCHANTGRADE 0
 #endif
 
 // for produce

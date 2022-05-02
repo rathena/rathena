@@ -1162,7 +1162,8 @@ enum out_ui_type : int8 {
 	OUT_UI_BANK = 0,
 	OUT_UI_STYLIST,
 	OUT_UI_QUEST = 6,
-	OUT_UI_ATTENDANCE = 7
+	OUT_UI_ATTENDANCE,
+	OUT_UI_ENCHANTGRADE,
 };
 
 void clif_ui_open( struct map_session_data *sd, enum out_ui_type ui_type, int32 data );

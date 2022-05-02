@@ -246,6 +246,54 @@ struct PACKET_ZC_SUMMON_HP_UPDATE {
 	uint32 Value;
 } __attribute__((packed));
 
+struct PACKET_ZC_UNCONFIRMED_ENCHANTGRADE_ADD_sub{
+	uint32 itemId;
+	uint32 amount;
+	uint32 zeny;
+	uint32 canDowngrade;
+	uint8 canBreak;
+} __attribute__((packed));
+
+struct PACKET_ZC_UNCONFIRMED_ENCHANTGRADE_ADD{
+	int16 packetType;
+	int16 PacketLength;
+	uint16 index;
+	uint32 chance;
+	uint32 catalysatorItemId;
+	uint32 catalysatorAmountPerStep;
+	uint32 catalysatorMaxSteps;
+	uint32 catalysatorChanceIncrease;
+	uint32 catalysator2ItemId;
+	uint32 catalysator2ChanceIncrease;
+	struct PACKET_ZC_UNCONFIRMED_ENCHANTGRADE_ADD_sub options[];
+} __attribute__((packed));
+
+struct PACKET_CZ_UNCONFIRMED_ENCHANTGRADE_ADD{
+	int16 packetType;
+	uint16 index;
+} __attribute__((packed));
+
+struct PACKET_CZ_UNCONFIRMED_ENCHANTGRADE_START{
+	int16 packetType;
+	uint16 index;
+	uint32 option;
+	uint8 useCatalysator;
+	uint16 catalysatorSteps;
+	uint8 useCatalysator2;
+	uint16 catalysator2Steps;
+} __attribute__((packed));
+
+struct PACKET_CZ_UNCONFIRMED_ENCHANTGRADE_CLOSE{
+	int16 packetType;
+} __attribute__((packed));
+
+struct PACKET_ZC_UNCONFIRMED_ENCHANTGRADE_RESULT{
+	int16 packetType;
+	uint16 index;
+	uint16 enchantgrade;
+	uint32 result;
+} __attribute__((packed));
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -297,6 +345,11 @@ DEFINE_PACKET_HEADER(CZ_REQ_STYLE_CHANGE2, 0xafc)
 DEFINE_PACKET_HEADER(ZC_REMOVE_EFFECT, 0x0b0d)
 DEFINE_PACKET_HEADER(CZ_UNCONFIRMED_TSTATUS_UP, 0x0b24)
 DEFINE_PACKET_HEADER(CZ_GUILD_EMBLEM_CHANGE2, 0x0b46)
+DEFINE_PACKET_HEADER(CZ_UNCONFIRMED_ENCHANTGRADE_ADD, 0x0b59)
+DEFINE_PACKET_HEADER(ZC_UNCONFIRMED_ENCHANTGRADE_ADD, 0x0b5a)
+DEFINE_PACKET_HEADER(CZ_UNCONFIRMED_ENCHANTGRADE_START, 0x0b5b)
+DEFINE_PACKET_HEADER(CZ_UNCONFIRMED_ENCHANTGRADE_CLOSE, 0x0b5c)
+DEFINE_PACKET_HEADER(ZC_UNCONFIRMED_ENCHANTGRADE_RESULT, 0x0b5d)
 DEFINE_PACKET_HEADER(ZC_UNCONFIRMED_SPIRITS3, 0xb73)
 DEFINE_PACKET_HEADER(CZ_UNCONFIRMED_RODEX_RETURN, 0xb98)
 DEFINE_PACKET_HEADER(ZC_SUMMON_HP_INIT, 0xb6b)

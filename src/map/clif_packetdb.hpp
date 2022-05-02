@@ -2456,6 +2456,9 @@
 
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 	parseable_packet( HEADER_CZ_UNCONFIRMED_TSTATUS_UP, sizeof( PACKET_CZ_UNCONFIRMED_TSTATUS_UP ), clif_parse_traitstatus_up, 0 );
+	parseable_packet( HEADER_CZ_UNCONFIRMED_ENCHANTGRADE_ADD, sizeof( struct PACKET_CZ_UNCONFIRMED_ENCHANTGRADE_ADD ), clif_parse_enchantgrade_add, 0 );
+	parseable_packet( HEADER_CZ_UNCONFIRMED_ENCHANTGRADE_START, sizeof( struct PACKET_CZ_UNCONFIRMED_ENCHANTGRADE_START ), clif_parse_enchantgrade_start, 0 );
+	parseable_packet( HEADER_CZ_UNCONFIRMED_ENCHANTGRADE_CLOSE, sizeof( struct PACKET_CZ_UNCONFIRMED_ENCHANTGRADE_CLOSE ), clif_parse_enchantgrade_close, 0 );
 #endif
 
 #if PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20210818

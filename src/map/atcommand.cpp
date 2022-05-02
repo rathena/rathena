@@ -10707,6 +10707,22 @@ ACMD_FUNC(addfame)
 	return 0;
 }
 
+/**
+ * Opens the enchantgrade UI
+ * Usage: @enchantgradeui
+ */
+ACMD_FUNC( enchantgradeui ){
+	nullpo_retr( -1, sd );
+
+#if !( PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724 )
+	return -1;
+#endif
+
+	clif_ui_open( sd, OUT_UI_ENCHANTGRADE, 0 );
+
+	return 0;
+}
+
 #include "../custom/atcommand.inc"
 
 /**
@@ -11029,6 +11045,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(refineui),
 		ACMD_DEFR(stylist, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEF(addfame),
+		ACMD_DEFR(enchantgradeui, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 	};
 	AtCommandInfo* atcommand;
 	int i;
