@@ -2,6 +2,7 @@
 //= Enchant Grade
 //===== Changelogs: ==========================================
 //= 1.0 First Version. [JohnnyPlayy]
+//= 1.1 Fixed small issues. [Lemongrass]
 //============================================================
 
 grademk,34,184,4	script	Sratos#sratos	4_JP_GARM_H,{
@@ -24,7 +25,7 @@ grademk,34,184,4	script	Sratos#sratos	4_JP_GARM_H,{
 			mes "[스라토스]";
 			mes "용기있는 우리 고객님께 행운이 함께하기를!";
 			close2;
-			//OpenEnchantGradeUI;
+			enchantgradeui();
 			end;
 		case 2:
 			mes "[스라토스]";
@@ -36,7 +37,7 @@ grademk,34,184,4	script	Sratos#sratos	4_JP_GARM_H,{
 		mes "등급 강화에 사용되는 보석들이야.";
 		mes "에텔 더스트와 베이스가 될 보석, 약간의 수수료를 준다면 에테르 보석으로 교환해 줄게.";
 		close2;
-		callshop "#EnchantGradeExchange",1;
+		callshop "EnchantGradeExchange",1;
 		end;
 
 	case 3:
@@ -65,5 +66,5 @@ OnInit:
 
 // = Portals
 //============================================================
-prontera,50,293,0	warp	Grademk_Int	1,1,grademk,50,293
-grademk,8,171,0	warp	Grademk_Out	1,1,prontera,50,290
+prontera,50,293,0	warp	Grademk_Int	1,1,grademk,13,172
+grademk,9,172,0	warp	Grademk_Out	1,1,prontera,50,290
