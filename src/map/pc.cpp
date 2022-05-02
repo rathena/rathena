@@ -12999,7 +12999,7 @@ void SkillTreeDatabase::loadingFinished() {
  */
 static unsigned int pc_calc_basehp(uint16 level, uint16 job_id) {
 	std::shared_ptr<s_job_info> job = job_db.find(job_id);
-	double base_hp = 35 + level * (job->hp_multiplicator / 100.);
+	double base_hp = 35 + level * (job->hp_increase / 100.);
 
 #ifndef RENEWAL
 	if (level >= 10 && (job_id == JOB_NINJA || job_id == JOB_GUNSLINGER))
@@ -13021,7 +13021,7 @@ static unsigned int pc_calc_basehp(uint16 level, uint16 job_id) {
  */
 static unsigned int pc_calc_basesp(uint16 level, uint16 job_id) {
 	std::shared_ptr<s_job_info> job = job_db.find(job_id);
-	double base_sp = 10 + floor(level * (job->sp_factor / 100.));
+	double base_sp = 10 + floor(level * (job->sp_increase / 100.));
 
 	switch (job_id) {
 		case JOB_NINJA:
@@ -13100,40 +13100,40 @@ uint64 JobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 					job->max_weight_base = 20000;
 			}
 
-			if (this->nodeExists(node, "HPFactor")) {
+			if (this->nodeExists(node, "HpFactor")) {
 				uint32 hp;
 
-				if (!this->asUInt32(node, "HPFactor", hp))
+				if (!this->asUInt32(node, "HpFactor", hp))
 					return 0;
 
 				job->hp_factor = hp;
 			} else {
 				if (!exists)
-					job->hp_factor = 20000;
+					job->hp_factor = 0;
 			}
 
-			if (this->nodeExists(node, "HPMultiplicator")) {
+			if (this->nodeExists(node, "HpIncrease")) {
 				uint32 hp;
 
-				if (!this->asUInt32(node, "HPMultiplicator", hp))
+				if (!this->asUInt32(node, "HpIncrease", hp))
 					return 0;
 
-				job->hp_multiplicator = hp;
+				job->hp_increase = hp;
 			} else {
 				if (!exists)
-					job->hp_multiplicator = 500;
+					job->hp_increase = 500;
 			}
 
-			if (this->nodeExists(node, "SPFactor")) {
+			if (this->nodeExists(node, "SpIncrease")) {
 				uint32 sp;
 
-				if (!this->asUInt32(node, "SPFactor", sp))
+				if (!this->asUInt32(node, "SpIncrease", sp))
 					return 0;
 
-				job->sp_factor = sp;
+				job->sp_increase = sp;
 			} else {
 				if (!exists)
-					job->sp_factor = 100;
+					job->sp_increase = 100;
 			}
 
 			if (this->nodeExists(node, "BaseASPD")) {
