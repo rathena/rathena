@@ -12,7 +12,6 @@
 #include "../common/cbasetypes.hpp"
 #include "../common/database.hpp"
 #include "../common/cli.hpp"
-#include "../common/conf.hpp"
 #include "../common/malloc.hpp"
 #include "../common/mmo.hpp"
 #include "../common/nullpo.hpp"
