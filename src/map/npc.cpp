@@ -4695,7 +4695,8 @@ static int npc_market_checkall_sub(DBKey key, DBData *data, va_list ap) {
 		ARR_FIND(0, nd->u.shop.count, j, nd->u.shop.shop_item[j].nameid == list->nameid);
 		if (j != nd->u.shop.count) {
 			nd->u.shop.shop_item[j].value = list->value;
-			nd->u.shop.shop_item[j].qty = list->qty;
+			if (nd->u.shop.shop_item[j].qty > -1)
+				nd->u.shop.shop_item[j].qty = list->qty;
 			nd->u.shop.shop_item[j].flag = list->flag;
 			npc_market_tosql(nd->exname, &nd->u.shop.shop_item[j]);
 			continue;
@@ -4705,7 +4706,8 @@ static int npc_market_checkall_sub(DBKey key, DBData *data, va_list ap) {
 			RECREATE(nd->u.shop.shop_item, struct npc_item_list, nd->u.shop.count+1);
 			nd->u.shop.shop_item[j].nameid = list->nameid;
 			nd->u.shop.shop_item[j].value = list->value;
-			nd->u.shop.shop_item[j].qty = list->qty;
+			if (nd->u.shop.shop_item[j].qty > -1)
+				nd->u.shop.shop_item[j].qty = list->qty;
 			nd->u.shop.shop_item[j].flag = list->flag;
 			nd->u.shop.count++;
 			npc_market_tosql(nd->exname, &nd->u.shop.shop_item[j]);
