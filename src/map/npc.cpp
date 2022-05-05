@@ -4424,6 +4424,27 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 	}
 	strdb_put(npcname_db, nd->exname, nd);
 
+	if (strcasecmp("script", w2) < 0) {
+		char state_name[128];
+		size_t length = strlen(w2);
+		int shift = 7;
+
+		// type name
+		if (w2[shift-1] != '(' || w2[length-1] != ')' || length <= shift || length-shift >= sizeof(state_name))
+			ShowWarning("npc_parse_script: Invalid npc state in file '%s', line '%d', defaulting to visible. w2=%s\n", filepath, strline(buffer,start-buffer), w2);
+		else {
+			safestrncpy(state_name, w2+shift, length-shift);
+			if (strcasecmp("CLOAKED", state_name) == 0)
+				npc_enable_target(*nd, 0, NPCVIEW_CLOAKON);
+			else if (strcasecmp("HIDDEN", state_name) == 0)
+				npc_enable_target(*nd, 0, NPCVIEW_HIDEON);
+			else if (strcasecmp("DISABLED", state_name) == 0)
+				npc_enable_target(*nd, 0, NPCVIEW_DISABLE);
+			else
+				ShowWarning("npc_parse_script: Invalid npc state in file '%s', line '%d', defaulting to visible. w2=%s\n", filepath, strline(buffer,start-buffer), w2);
+		}
+	}
+
 	//-----------------------------------------
 	// Loop through labels to export them as necessary
 	for (i = 0; i < nd->u.scr.label_list_num; i++) {
@@ -5608,16 +5629,21 @@ int npc_parsesrcfile(const char* filepath)
 			break;
 		}
 
+		bool has_script = false;
+
+		if (count > 3 && strncasecmp(w2, "script", 6) == 0)
+			has_script = true;
+
 		if( strcmp(w1,"-") !=0 && strcasecmp(w1,"function") != 0 )
 		{// w1 = <map name>,<x>,<y>,<facing>
 			char mapname[MAP_NAME_LENGTH_EXT];
 			int count2;
 
 			count2 = sscanf(w1,"%15[^,],%6hd,%6hd[^,]",mapname,&x,&y);
-			
+
 			if ( count2 < 1 ) {
 				ShowError("npc_parsesrcfile: Invalid script definition in file '%s', line '%d'. Skipping line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,p-buffer), w1, w2, w3, w4);
-				if (strcasecmp(w2,"script") == 0 && count > 3) {
+				if (has_script) {
 					if ((p = npc_skip_script(p,buffer,filepath)) == NULL)
 						break;
 				}
@@ -5631,7 +5657,7 @@ int npc_parsesrcfile(const char* filepath)
 			if( !mapindex_name2id(mapname) )
 			{// Incorrect map, we must skip the script info...
 				ShowError("npc_parsesrcfile: Unknown map '%s' in file '%s', line '%d'. Skipping line...\n", mapname, filepath, strline(buffer,p-buffer));
-				if( strcasecmp(w2,"script") == 0 && count > 3 )
+				if (has_script)
 				{
 					if((p = npc_skip_script(p,buffer,filepath)) == NULL)
 					{
@@ -5644,7 +5670,7 @@ int npc_parsesrcfile(const char* filepath)
 			m = map_mapname2mapid(mapname);
 			if( m < 0 )
 			{// "mapname" is not assigned to this server, we must skip the script info...
-				if( strcasecmp(w2,"script") == 0 && count > 3 )
+				if (has_script)
 				{
 					if((p = npc_skip_script(p,buffer,filepath)) == NULL)
 					{
@@ -5659,7 +5685,7 @@ int npc_parsesrcfile(const char* filepath)
 
 			if (x < 0 || x >= mapdata->xs || y < 0 || y >= mapdata->ys) {
 				ShowError("npc_parsesrcfile: Unknown coordinates ('%d', '%d') for map '%s' in file '%s', line '%d'. Skipping line...\n", x, y, mapname, filepath, strline(buffer,p-buffer));
-				if( strcasecmp(w2,"script") == 0 && count > 3 )
+				if (has_script)
 				{
 					if((p = npc_skip_script(p,buffer,filepath)) == NULL)
 					{
@@ -5675,9 +5701,15 @@ int npc_parsesrcfile(const char* filepath)
 			p = npc_parse_warp(w1,w2,w3,w4, p, buffer, filepath);
 		else if( (!strcasecmp(w2,"shop") || !strcasecmp(w2,"cashshop") || !strcasecmp(w2,"itemshop") || !strcasecmp(w2,"pointshop") || !strcasecmp(w2,"marketshop") ) && count > 3 )
 			p = npc_parse_shop(w1,w2,w3,w4, p, buffer, filepath);
-		else if( strcasecmp(w2,"script") == 0 && count > 3 ) {
-			if( strcasecmp(w1,"function") == 0 )
-				p = npc_parse_function(w1, w2, w3, w4, p, buffer, filepath);
+		else if (has_script) {
+			if (strcasecmp(w1,"function") == 0) {
+				if (strcasecmp(w2,"script") == 0)
+					p = npc_parse_function(w1, w2, w3, w4, p, buffer, filepath);
+				else {
+					ShowError("npc_parsesrcfile: Unable to parse, probably a missing or extra TAB in file '%s', line '%d'. Skipping line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,p-buffer), w1, w2, w3, w4);
+					p = strchr(p,'\n');// skip and continue
+				}
+			}
 			else
 				p = npc_parse_script(w1,w2,w3,w4, p, buffer, filepath);
 		}

@@ -233,6 +233,8 @@ Unlike 'warp', 'warp2' will also be triggered by hidden player.
 
 <map name>,<x>,<y>,<facing>%TAB%script%TAB%<NPC Name>%TAB%<sprite id>,{<code>}
 <map name>,<x>,<y>,<facing>%TAB%script%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>,{<code>}
+<map name>,<x>,<y>,<facing>%TAB%script(<state>)%TAB%<NPC Name>%TAB%<sprite id>,{<code>}
+<map name>,<x>,<y>,<facing>%TAB%script(<state>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>,{<code>}
 
 This will place an NPC object on a specified map at the specified location, and
 is a top-level command you will use the most in your custom scripting. The NPCs
@@ -245,6 +247,11 @@ will be meaningless. Facings are counted counterclockwise in increments of 45
 degrees, where 0 means facing towards the top of the map. (So to turn the sprite
 towards the bottom of the map, you use facing 4, and to make it look southeast
 it's facing 5.)
+
+The basic state of the npc can be defined here. Valid states are:
+CLOAKED		Make the NPC object specified cloaked.
+HIDDEN		Make the NPC object specified hidden.
+DISABLED	Make the NPC object specified disabled.
 
 Sprite ID is the sprite number or constant used to display this particular NPC.
 You may also use a monster's ID instead to display a monster sprite for this NPC.
