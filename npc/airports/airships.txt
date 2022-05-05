@@ -38,6 +38,7 @@ OnTouch_:
 	case 1: warp "einbroch",92,278; end;
 	case 2: warp "lighthalzen",302,75; end;
 	case 3: warp "hugel",181,146; end;
+	case 4: warp "rachel", 240, 210; end;
 	}
 }
 
