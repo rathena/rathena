@@ -5129,7 +5129,7 @@ int clif_damage(struct block_list* src, struct block_list* dst, t_tick tick, int
 	sc = status_get_sc(dst);
 	if(sc && sc->count) {
 		if(sc->data[SC_HALLUCINATION]) {
-			if(damage) damage = clif_hallucination_damage();
+			damage = clif_hallucination_damage();
 			if(damage2) damage2 = clif_hallucination_damage();
 		}
 	}

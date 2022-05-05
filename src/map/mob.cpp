@@ -3818,7 +3818,12 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event)
 					bl = &md->bl;
 					break;
 			}
-			if (!bl) continue;
+			if (!bl) {
+				if (battle_config.mob_ai & 0x1000)
+					continue;
+				else
+					break;
+			}
 
 			x = bl->x;
 		  	y = bl->y;
@@ -3835,7 +3840,10 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event)
 				!unit_skilluse_pos2(&md->bl, x, y, ms[i]->skill_id, ms[i]->skill_lv, ms[i]->casttime, ms[i]->cancel))
 			{
 				map_freeblock_unlock();
-				continue;
+				if (battle_config.mob_ai & 0x1000)
+					continue;
+				else
+					break;
 			}
 		} else {
 			//Targetted skill
@@ -3865,7 +3873,12 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event)
 					bl = &md->bl;
 					break;
 			}
-			if (!bl) continue;
+			if (!bl) {
+				if (battle_config.mob_ai & 0x1000)
+					continue;
+				else
+					break;
+			}
 
 			md->skill_idx = i;
 			map_freeblock_lock();
@@ -3873,7 +3886,10 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event)
 				!unit_skilluse_id2(&md->bl, bl->id, ms[i]->skill_id, ms[i]->skill_lv, ms[i]->casttime, ms[i]->cancel))
 			{
 				map_freeblock_unlock();
-				continue;
+				if (battle_config.mob_ai & 0x1000)
+					continue;
+				else
+					break;
 			}
 		}
 		//Skill used. Post-setups...
