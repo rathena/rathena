@@ -8371,7 +8371,7 @@ Body:
     Refineable: true
     Script: |
       bonus bMaxSP,-100;
-      bonus2 bSkillAtk,"LG_CANNONSPEAR",10+(getrefine()/3*3);
+      bonus2 bSkillAtk,"LG_CANNONSPEAR",10+(getrefine()*3);
   - Id: 1436
     AegisName: Velum_Spear
     Name: Vellum Spear

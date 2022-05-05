@@ -10403,9 +10403,6 @@ Body:
       - Combo:
           - Shoes_Of_Punishment     # 22120
           - Holy_Stick     # 1631
-      - Combo:
-          - Shoes_Of_Punishment_BR     # 22182
-          - Holy_Stick     # 1631
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
       .@cast = -5*getskilllv("AB_ORATIO");
@@ -10414,6 +10411,27 @@ Body:
       if (.@r >= 7) {
          .@magic = 30;
          if (.@r >= 9) {
+            .@magic += 20;
+            .@dmg = 20;
+         }
+         bonus2 bMagicAddRace,RC_Demon,.@magic;
+         bonus2 bMagicAddRace,RC_Undead,.@magic;
+         bonus2 bMagicAddEle,Ele_Undead,.@magic;
+         bonus2 bMagicAddEle,Ele_Dark,.@magic;
+      }
+      bonus2 bSkillAtk,"AB_ADORAMUS",.@dmg + 10*(getskilllv("AB_LAUDAAGNUS")+getskilllv("AB_LAUDARAMUS")+getskilllv("AB_CLEARANCE"));
+  - Combos:
+      - Combo:
+          - Shoes_Of_Punishment_BR     # 22182
+          - Holy_Stick     # 1631
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      .@cast = -5*getskilllv("AB_ORATIO");
+      bonus2 bVariableCastrate,"AB_JUDEX",.@cast;
+      bonus2 bVariableCastrate,"AB_ADORAMUS",.@cast;
+      if (.@r >= 8) {
+         .@magic = 30;
+         if (.@r >= 12) {
             .@magic += 20;
             .@dmg = 20;
          }
