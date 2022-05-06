@@ -129,7 +129,7 @@ const std::string StylistDatabase::getDefaultLocation(){
 	return std::string(db_path) + "/stylist.yml";
 }
 
-bool StylistDatabase::parseCostNode( std::shared_ptr<s_stylist_entry> entry, bool doram, const YAML::Node& node ){
+bool StylistDatabase::parseCostNode( std::shared_ptr<s_stylist_entry> entry, bool doram, const ryml::NodeRef& node ){
 	std::shared_ptr<s_stylist_costs> costs = doram ? entry->doram : entry->human;
 	bool costs_exists = costs != nullptr;
 
@@ -209,7 +209,7 @@ bool StylistDatabase::parseCostNode( std::shared_ptr<s_stylist_entry> entry, boo
 	return true;
 }
 
-uint64 StylistDatabase::parseBodyNode( const YAML::Node &node ){
+uint64 StylistDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	if( !this->nodesExist( node, { "Look", "Options" } ) ){
 		return 0;
 	}
@@ -250,7 +250,7 @@ uint64 StylistDatabase::parseBodyNode( const YAML::Node &node ){
 		list->look = (uint16)constant;
 	}
 
-	for( const YAML::Node& optionNode : node["Options"] ){
+	for( const ryml::NodeRef& optionNode : node["Options"] ){
 		int16 index;
 
 		if( !this->asInt16( optionNode, "Index", index ) ){
@@ -394,7 +394,7 @@ const std::string BarterDatabase::getDefaultLocation(){
 	return "npc/barters.yml";
 }
 
-uint64 BarterDatabase::parseBodyNode( const YAML::Node& node ){
+uint64 BarterDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	std::string npcname;
 
 	if( !this->asString( node, "Name", npcname ) ){
@@ -538,7 +538,7 @@ uint64 BarterDatabase::parseBodyNode( const YAML::Node& node ){
 	}
 
 	if( this->nodeExists( node, "Items" ) ){
-		for( const YAML::Node& itemNode : node["Items"] ){
+		for( const ryml::NodeRef& itemNode : node["Items"] ){
 			uint16 index;
 
 			if( !this->asUInt16( itemNode, "Index", index ) ){
@@ -610,7 +610,7 @@ uint64 BarterDatabase::parseBodyNode( const YAML::Node& node ){
 			}
 
 			if( this->nodeExists( itemNode, "RequiredItems" ) ){
-				for( const YAML::Node& requiredItemNode : itemNode["RequiredItems"] ){
+				for( const ryml::NodeRef& requiredItemNode : itemNode["RequiredItems"] ){
 					uint16 requirement_index;
 
 					if( !this->asUInt16( requiredItemNode, "Index", requirement_index ) ){
@@ -1858,7 +1858,7 @@ int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y, st
 	case NPCTYPE_WARP:
 		if ((!nd->trigger_on_hidden && (pc_ishiding(sd) || (sd->sc.count && sd->sc.data[SC_CAMOUFLAGE]))) || pc_isdead(sd))
 			break; // hidden or dead chars cannot use warps
-		if (!pc_job_can_entermap((enum e_job)sd->status.class_, map_mapindex2mapid(nd->u.warp.mapindex), sd->group_level))
+		if (!pc_job_can_entermap((enum e_job)sd->status.class_, map_mapindex2mapid(nd->u.warp.mapindex), pc_get_group_level(sd)))
 			break;
 		if (sd->count_rewarp > 10) {
 			ShowWarning("Prevented infinite warp loop for player (%d:%d). Please fix NPC: '%s', path: '%s'\n", sd->status.account_id, sd->status.char_id, nd->exname, nd->path);
@@ -2638,17 +2638,17 @@ int npc_cashshop_buy(struct map_session_data *sd, t_itemid nameid, int amount, i
 		return res;
 
 	if( !pet_create_egg(sd, nameid) ) {
-		struct item item_tmp;
-		unsigned short get_amt = amount, j;
+		unsigned short get_amt = amount;
 
-		memset(&item_tmp, 0, sizeof(item_tmp));
+		struct item item_tmp = {};
+
 		item_tmp.nameid = nameid;
 		item_tmp.identify = 1;
 
 		if (item->flag.guid)
 			get_amt = 1;
 
-		for (j = 0; j < amount; j += get_amt)
+		for (int j = 0; j < amount; j += get_amt)
 			pc_additem(sd,&item_tmp, get_amt, LOG_TYPE_NPC);
 	}
 
@@ -3302,7 +3302,7 @@ e_purchase_result npc_barter_purchase( struct map_session_data& sd, std::shared_
 //This doesn't remove it from map_db
 int npc_remove_map(struct npc_data* nd)
 {
-	int16 i;
+	int i;
 	nullpo_retr(1, nd);
 
 	if(nd->bl.prev == NULL || nd->bl.m < 0)
@@ -4695,7 +4695,8 @@ static int npc_market_checkall_sub(DBKey key, DBData *data, va_list ap) {
 		ARR_FIND(0, nd->u.shop.count, j, nd->u.shop.shop_item[j].nameid == list->nameid);
 		if (j != nd->u.shop.count) {
 			nd->u.shop.shop_item[j].value = list->value;
-			nd->u.shop.shop_item[j].qty = list->qty;
+			if (nd->u.shop.shop_item[j].qty > -1)
+				nd->u.shop.shop_item[j].qty = list->qty;
 			nd->u.shop.shop_item[j].flag = list->flag;
 			npc_market_tosql(nd->exname, &nd->u.shop.shop_item[j]);
 			continue;
@@ -4705,7 +4706,8 @@ static int npc_market_checkall_sub(DBKey key, DBData *data, va_list ap) {
 			RECREATE(nd->u.shop.shop_item, struct npc_item_list, nd->u.shop.count+1);
 			nd->u.shop.shop_item[j].nameid = list->nameid;
 			nd->u.shop.shop_item[j].value = list->value;
-			nd->u.shop.shop_item[j].qty = list->qty;
+			if (nd->u.shop.shop_item[j].qty > -1)
+				nd->u.shop.shop_item[j].qty = list->qty;
 			nd->u.shop.shop_item[j].flag = list->flag;
 			nd->u.shop.count++;
 			npc_market_tosql(nd->exname, &nd->u.shop.shop_item[j]);
