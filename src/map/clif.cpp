@@ -6817,7 +6817,7 @@ void clif_map_property(struct block_list *bl, enum map_property property, enum s
 		((mapdata->flag[MF_BATTLEGROUND])<<7)| // BATTLEFIELD - Unknown (Does something for battlegrounds areas)
 		((mapdata->flag[MF_NOCOSTUME])<<8)| // DISABLE_COSTUMEITEM - Disable costume sprites
 		((!mapdata->flag[MF_NOUSECART])<<9)| // USECART - Allow opening cart inventory (Well force it to always allow it)
-		((!mapdata->flag[MF_NOSUNMOONSTARMIRACLE])<<10); // SUNMOONSTAR_MIRACLE - Blocks Star Gladiator's Miracle from activating
+		((!mapdata->flag[MF_NOSUNMOONSTARMIRACLE])<<10); // SUNMOONSTAR_MIRACLE - Allows Star Gladiator's Miracle to activate
 		//(1<<11); // Unused bits. 1 - 10 is 0x1 length and 11 is 0x15 length. May be used for future settings.
 #endif
 	
