@@ -8733,7 +8733,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			return 0;
 	}
 
-	rate = max(0, rate);
+	rate = cap_value(rate, SHRT_MIN, SHRT_MAX);
 	sd = BL_CAST(BL_PC,bl);
 	status = status_get_status_data(bl);
 	status_src = status_get_status_data(src);

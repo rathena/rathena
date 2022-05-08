@@ -2743,7 +2743,7 @@ static void pc_bonus_autospell_onskill(std::vector<s_autospell> &spell, uint16 s
  * @param flag: Target flag
  * @param duration: Duration. If 0 use default duration lookup for associated skill with level 7
  */
-static void pc_bonus_addeff(std::vector<s_addeffect> &effect, enum sc_type sc, short rate, short arrow_rate, unsigned char flag, unsigned int duration)
+static void pc_bonus_addeff(std::vector<s_addeffect> &effect, enum sc_type sc, int rate, short arrow_rate, unsigned char flag, unsigned int duration)
 {
 	if (effect.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_bonus_addeff: Reached max (%d) number of add effects per character!\n", MAX_PC_BONUS);
@@ -2762,7 +2762,7 @@ static void pc_bonus_addeff(std::vector<s_addeffect> &effect, enum sc_type sc, s
 
 	for (auto &it : effect) {
 		if (it.sc == sc && it.flag == flag) {
-			it.rate = cap_value(it.rate + rate, -10000, 10000);
+			it.rate = cap_value(it.rate + rate, SHRT_MIN, SHRT_MAX);
 			it.arrow_rate += arrow_rate;
 			it.duration = umax(it.duration, duration);
 			return;
@@ -2771,11 +2771,11 @@ static void pc_bonus_addeff(std::vector<s_addeffect> &effect, enum sc_type sc, s
 
 	struct s_addeffect entry = {};
 
-	if (rate < -10000 || rate > 10000)
-		ShowWarning("pc_bonus_addeff: Item bonus rate %d exceeds -10000~10000 range, capping.\n", rate);
+	if (rate < SHRT_MIN || rate > SHRT_MAX)
+		ShowWarning("pc_bonus_addeff: Item bonus rate %d exceeds -%d~%d range, capping.\n", rate, SHRT_MIN, SHRT_MAX);
 
 	entry.sc = sc;
-	entry.rate = cap_value(rate, -10000, 10000);
+	entry.rate = cap_value(rate, SHRT_MIN, SHRT_MAX);
 	entry.arrow_rate = arrow_rate;
 	entry.flag = flag;
 	entry.duration = duration;
@@ -2792,7 +2792,7 @@ static void pc_bonus_addeff(std::vector<s_addeffect> &effect, enum sc_type sc, s
  * @param target: Target type
  * @param duration: Duration. If 0 use default duration lookup for associated skill with level 7
  */
-static void pc_bonus_addeff_onskill(std::vector<s_addeffectonskill> &effect, enum sc_type sc, short rate, short skill_id, unsigned char target, unsigned int duration)
+static void pc_bonus_addeff_onskill(std::vector<s_addeffectonskill> &effect, enum sc_type sc, int rate, short skill_id, unsigned char target, unsigned int duration)
 {
 	if (effect.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_bonus_addeff_onskill: Reached max (%d) number of add effects per character!\n", MAX_PC_BONUS);
@@ -2804,7 +2804,7 @@ static void pc_bonus_addeff_onskill(std::vector<s_addeffectonskill> &effect, enu
 
 	for (auto &it : effect) {
 		if (it.sc == sc && it.skill_id == skill_id && it.target == target) {
-			it.rate = cap_value(it.rate + rate, -10000, 10000);
+			it.rate = cap_value(it.rate + rate, SHRT_MIN, SHRT_MAX);
 			it.duration = umax(it.duration, duration);
 			return;
 		}
@@ -2812,11 +2812,11 @@ static void pc_bonus_addeff_onskill(std::vector<s_addeffectonskill> &effect, enu
 
 	struct s_addeffectonskill entry = {};
 
-	if (rate < -10000 || rate > 10000)
-		ShowWarning("pc_bonus_addeff_onskill: Item bonus rate %d exceeds -10000~10000 range, capping.\n", rate);
+	if (rate < SHRT_MIN || rate > SHRT_MAX)
+		ShowWarning("pc_bonus_addeff_onskill: Item bonus rate %d exceeds -%d~%d range, capping.\n", rate, SHRT_MIN, SHRT_MAX);
 
 	entry.sc = sc;
-	entry.rate = cap_value(rate, -10000, 10000);
+	entry.rate = cap_value(rate, SHRT_MIN, SHRT_MAX);
 	entry.skill_id = skill_id;
 	entry.target = target;
 	entry.duration = duration;
@@ -3333,7 +3333,7 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 				bonus = status->def + val;
 #ifdef RENEWAL
 				status->def = cap_value(bonus, SHRT_MIN, SHRT_MAX);
-#else
+#elsef
 				status->def = cap_value(bonus, CHAR_MIN, CHAR_MAX);
 #endif
 			}
