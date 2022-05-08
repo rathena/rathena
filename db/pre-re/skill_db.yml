@@ -9219,7 +9219,7 @@ Body:
     Unit:
       Id: Dummyskill
       Layout: -1
-      Interval: 320
+      Interval: 300
       Target: Enemy
     Status: Blind
   - Id: 340

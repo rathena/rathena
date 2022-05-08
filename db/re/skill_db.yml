@@ -7341,7 +7341,7 @@ Body:
     Unit:
       Id: Dummyskill
       Layout: -1
-      Interval: 320
+      Interval: 300
       Target: Enemy
       Flag:
         PathCheck: true
