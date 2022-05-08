@@ -6805,18 +6805,19 @@ void clif_map_property(struct block_list *bl, enum map_property property, enum s
 
 #if PACKETVER >= 20121010
 	struct map_data *mapdata = map_getmapdata(bl->m);
+	struct map_session_data *sd = BL_CAST(BL_PC, bl);
 
-	WBUFL(buf,4) = ((mapdata->flag[MF_PVP]?1:0 || (bl->type == BL_PC && ((TBL_PC *)bl)->duel_group > 0))<<0)| // PARTY - Show attack cursor on non-party members (PvP)
-		((mapdata->flag[MF_BATTLEGROUND] || mapdata_flag_gvg2(mapdata)?1:0)<<1)|// GUILD - Show attack cursor on non-guild members (GvG)
-		((mapdata->flag[MF_BATTLEGROUND] || mapdata_flag_gvg2(mapdata)?1:0)<<2)|// SIEGE - Show emblem over characters heads when in GvG (WoE castle)
-		((mapdata->flag[MF_NOMINEEFFECT] || !mapdata_flag_gvg2(mapdata)?0:1)<<3)| // USE_SIMPLE_EFFECT - Automatically enable /mineffect
-		((mapdata->flag[MF_NOLOCKON] || mapdata_flag_vs(mapdata)?1:0)<<4)| // DISABLE_LOCKON - Only allow attacks on other players with shift key or /ns active
-		((mapdata->flag[MF_PVP]?1:0)<<5)| // COUNT_PK - Show the PvP counter
-		((mapdata->flag[MF_PARTYLOCK]?1:0)<<6)| // NO_PARTY_FORMATION - Prevents party creation/modification (Might be used for instance dungeons)
-		((mapdata->flag[MF_BATTLEGROUND]?1:0)<<7)| // BATTLEFIELD - Unknown (Does something for battlegrounds areas)
-		((mapdata->flag[MF_NOCOSTUME]?1:0)<<8)| // DISABLE_COSTUMEITEM - Disable costume sprites
-		((mapdata->flag[MF_NOUSECART]?0:1)<<9)| // USECART - Allow opening cart inventory (Well force it to always allow it)
-		((mapdata->flag[MF_NOSUNMOONSTARMIRACLE]?0:1)<<10); // SUNMOONSTAR_MIRACLE - Blocks Star Gladiator's Miracle from activating
+	WBUFL(buf,4) = ((mapdata->flag[MF_PVP] || (sd && sd->duel_group > 0))<<0)| // PARTY - Show attack cursor on non-party members (PvP)
+		((mapdata->flag[MF_BATTLEGROUND] || mapdata_flag_gvg2(mapdata))<<1)|// GUILD - Show attack cursor on non-guild members (GvG)
+		((mapdata->flag[MF_BATTLEGROUND] || mapdata_flag_gvg2(mapdata))<<2)|// SIEGE - Show emblem over characters heads when in GvG (WoE castle)
+		((mapdata->flag[MF_NOMINEEFFECT] || mapdata_flag_gvg2(mapdata))<<3)| // USE_SIMPLE_EFFECT - Automatically enable /mineffect
+		((mapdata->flag[MF_NOLOCKON] || mapdata_flag_vs(mapdata) || (sd && sd->duel_group > 0))<<4)| // DISABLE_LOCKON - Only allow attacks on other players with shift key or /ns active
+		((mapdata->flag[MF_PVP])<<5)| // COUNT_PK - Show the PvP counter
+		((mapdata->flag[MF_PARTYLOCK])<<6)| // NO_PARTY_FORMATION - Prevents party creation/modification (Might be used for instance dungeons)
+		((mapdata->flag[MF_BATTLEGROUND])<<7)| // BATTLEFIELD - Unknown (Does something for battlegrounds areas)
+		((mapdata->flag[MF_NOCOSTUME])<<8)| // DISABLE_COSTUMEITEM - Disable costume sprites
+		((!mapdata->flag[MF_NOUSECART])<<9)| // USECART - Allow opening cart inventory (Well force it to always allow it)
+		((!mapdata->flag[MF_NOSUNMOONSTARMIRACLE])<<10); // SUNMOONSTAR_MIRACLE - Allows Star Gladiator's Miracle to activate
 		//(1<<11); // Unused bits. 1 - 10 is 0x1 length and 11 is 0x15 length. May be used for future settings.
 #endif
 	
