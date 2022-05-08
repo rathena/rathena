@@ -54755,7 +54755,7 @@ Body:
       bonus2 bSkillAtk,"HT_BLITZBEAT",getskilllv("HT_STEELCROW") * 40;
   - Id: 5968
     AegisName: DVAngelNurseCap
-    Name: DVAngelNurseCap
+    Name: Clergy Nurse Cap
     Type: Armor
     Weight: 500
     Defense: 10
@@ -79169,6 +79169,23 @@ Body:
          bonus bCritAtkRate,20;
       if (getskilllv("PR_MACEMASTERY") == 10)
          bonus bAspdRate,10;
+  - Id: 18866
+    AegisName: Owlduke_Silk_Hat
+    Name: Owl Duke Silk Hat
+    Type: Armor
+    Buy: 20
+    Weight: 500
+    Defense: 15
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 70
+    Refineable: true
+    Script: |
+      bonus bAgi,1;
+      bonus bInt,2;
+      bonus5 bAutoSpell,"HW_MAGICPOWER",2,5+(getrefine()-5),BF_MAGIC,0;
   - Id: 18867
     AegisName: Vajra
     Name: Vajra

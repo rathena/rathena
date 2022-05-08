@@ -580,8 +580,11 @@ Body:
       }
   - Combos:
       - Combo:
-          - Rafini_Staff
-          - Lapine_Shield
+          - Rafini_Staff     # 1649
+          - Lapine_Shield     # 2198
+      - Combo:
+          - Rafini_Staff_S     # 1679
+          - Lapine_Shield     # 2198
     Script: |
       .@r_2198 = getequiprefinerycnt(EQI_HAND_L);
       .@r_1649 = getequiprefinerycnt(EQI_HAND_R);
@@ -7721,8 +7724,11 @@ Body:
       bonus bHealPower,2*.@r;
   - Combos:
       - Combo:
-          - Kardui_Robe
-          - Rafini_Staff
+          - Kardui_Robe     # 15169
+          - Rafini_Staff     # 1649
+      - Combo:
+          - Kardui_Robe     # 15169
+          - Rafini_Staff_S     # 1679
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
       .@b = getequiprefinerycnt(EQI_ARMOR);
@@ -26158,3 +26164,40 @@ Body:
           - SLD_Thanatos_Card_J    # 300338
     Script: |
       bonus bBaseAtk,pow(getrefine(),2)*2;
+  - Combos:
+      - Combo:
+          - Walking_Stick_    # 1675
+          - Magician_Hat    # 5045
+    Script: |
+      bonus bDex,2;
+      bonus bInt,2;
+      bonus bSPrecovRate,5;
+      bonus bMatkRate,getequiprefinerycnt(EQI_HAND_R);
+  - Combos:
+      - Combo:
+          - Owlduke_Silk_Hat    # 18866
+          - Walking_Stick_    # 1675
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus5 bAutoSpell,"HW_MAGICPOWER",2,(.@r*4),BF_MAGIC,0;
+      if (.@r>= 10)
+         bonus bVariableCastrate,-20;
+  - Combos:
+      - Combo:
+          - Owlduke_Silk_Hat    # 18866
+          - One_Eyed_Glass    # 2239
+    Script: |
+      bonus5 bAutoSpell,"HW_MAGICPOWER",2,(getequiprefinerycnt(EQI_HEAD_TOP)-5),BF_MAGIC,0;
+  - Combos:
+      - Combo:
+          - Owlduke_Silk_Hat    # 18866
+          - Owl_Duke_Card    # 4237
+          - Owl_Baron_Card    # 4238
+    Script: |
+      bonus5 bAutoSpell,"HW_MAGICPOWER",6,2,BF_MAGIC,0;
+  - Combos:
+      - Combo:
+          - Owlduke_Silk_Hat    # 18866
+          - Owl_Baron_Card    # 4238
+    Script: |
+      bonus5 bAutoSpell,"HW_MAGICPOWER",4,3,BF_MAGIC,0;
