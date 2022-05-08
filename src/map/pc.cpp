@@ -3333,7 +3333,7 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 				bonus = status->def + val;
 #ifdef RENEWAL
 				status->def = cap_value(bonus, SHRT_MIN, SHRT_MAX);
-#elsef
+#else
 				status->def = cap_value(bonus, CHAR_MIN, CHAR_MAX);
 #endif
 			}
