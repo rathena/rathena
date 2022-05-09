@@ -548,7 +548,7 @@ const std::string EnchantgradeDatabase::getDefaultLocation(){
 	return std::string(db_path) + "/enchantgrade.yml";
 }
 
-uint64 EnchantgradeDatabase::parseBodyNode( const  ryml::NodeRef& node ){
+uint64 EnchantgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	if( !this->nodesExist( node, { "Type", "Levels" } ) ){
 		return 0;
 	}
@@ -661,6 +661,20 @@ uint64 EnchantgradeDatabase::parseBodyNode( const  ryml::NodeRef& node ){
 				}
 
 				grade->bonus = bonus;
+			}
+
+			if( this->nodeExists( gradeNode, "Announce" ) ){
+				bool announce;
+
+				if( !this->asBool( gradeNode, "Announce", announce ) ){
+					return 0;
+				}
+
+				grade->announce = announce;
+			}else{
+				if( !gradeExists ){
+					grade->announce = false;
+				}
 			}
 
 			if( this->nodeExists( gradeNode, "Catalysator") ){

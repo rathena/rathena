@@ -23451,20 +23451,21 @@ void clif_parse_laphine_upgrade( int fd, struct map_session_data* sd ){
 #endif
 }
 
-void clif_enchantgrade_add( struct map_session_data* sd, uint16 index = UINT16_MAX, std::shared_ptr<s_enchantgradelevel> gradeLevel = nullptr ){
+void clif_enchantgrade_add( struct map_session_data& sd, uint16 index = UINT16_MAX, std::shared_ptr<s_enchantgradelevel> gradeLevel = nullptr ){
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 	struct PACKET_ZC_GRADE_ENCHANT_MATERIAL_LIST* p = (struct PACKET_ZC_GRADE_ENCHANT_MATERIAL_LIST*)packet_buffer;
 
 	p->PacketType = HEADER_ZC_GRADE_ENCHANT_MATERIAL_LIST;
+	p->PacketLength = sizeof( struct PACKET_ZC_GRADE_ENCHANT_MATERIAL_LIST );
 
 	if( index < UINT16_MAX ){
 		p->index = client_index( index );
-		if( sd->inventory.u.items_inventory[index].refine >= gradeLevel->refine ){
+		if( sd.inventory.u.items_inventory[index].refine >= gradeLevel->refine ){
 			p->success_chance = gradeLevel->chance / 100;
 		}else{
 			p->success_chance = 0;
 		}
-		p->blessing_info.id = gradeLevel->catalysator.item;
+		p->blessing_info.id = client_nameid( gradeLevel->catalysator.item );
 		p->blessing_info.amount = gradeLevel->catalysator.amountPerStep;
 		p->blessing_info.max_blessing = gradeLevel->catalysator.maximumSteps;
 		p->blessing_info.bonus = gradeLevel->catalysator.chanceIncrease / 100;
@@ -23472,21 +23473,19 @@ void clif_enchantgrade_add( struct map_session_data* sd, uint16 index = UINT16_M
 		p->protect_itemid = 0;
 		p->protect_amount = 0;
 
-		p->PacketLength = sizeof( struct PACKET_ZC_GRADE_ENCHANT_MATERIAL_LIST );
-
 		int i = 0;
 		for( const auto& pair : gradeLevel->options ){
 			std::shared_ptr<s_enchantgradeoption> option = pair.second;
 
-			p->material_info[i].nameid = option->item;
+			p->material_info[i].nameid = client_nameid( option->item );
 			p->material_info[i].amount = option->amount;
 			p->material_info[i].price = option->zeny;
 			p->material_info[i].downgrade = option->downgrade_amount > 0;
 			p->material_info[i].breakable = option->breaking_rate > 0;
+
+			p->PacketLength += sizeof( struct GRADE_ENCHANT_MATERIAL );
 			i++;
 		}
-
-		p->PacketLength += i * sizeof( struct GRADE_ENCHANT_MATERIAL );
 	}else{
 		p->index = -1;
 		p->success_chance = 0;
@@ -23496,11 +23495,9 @@ void clif_enchantgrade_add( struct map_session_data* sd, uint16 index = UINT16_M
 		p->blessing_info.bonus = 0;
 		p->protect_itemid = 0;
 		p->protect_amount = 0;
-
-		p->PacketLength = sizeof( struct PACKET_ZC_GRADE_ENCHANT_MATERIAL_LIST );
 	}
 
-	clif_send( p, p->PacketLength, &sd->bl, SELF );
+	clif_send( p, p->PacketLength, &sd.bl, SELF );
 #endif
 }
 
@@ -23539,7 +23536,7 @@ void clif_parse_enchantgrade_add( int fd, struct map_session_data* sd ){
 
 	// Cannot upgrade this weapon or armor level
 	if( enchantgradelevels == enchantgrade->levels.end() ){
-		clif_enchantgrade_add( sd );
+		clif_enchantgrade_add( *sd );
 		return;
 	}
 
@@ -23550,7 +23547,7 @@ void clif_parse_enchantgrade_add( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	clif_enchantgrade_add( sd, index, enchantgradelevel );
+	clif_enchantgrade_add( *sd, index, enchantgradelevel );
 #endif
 }
 
@@ -23566,16 +23563,30 @@ void clif_parse_enchantgrade_add( int fd, struct map_session_data* sd ){
 ///  3= Equipment destroyed.
 ///  4= The equipment is protected.
 /// </param>
-void clif_enchantgrade_result( struct map_session_data* sd, uint16 index, e_enchantgrade_result result ){
+void clif_enchantgrade_result( struct map_session_data& sd, uint16 index, e_enchantgrade_result result ){
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 	struct PACKET_ZC_GRADE_ENCHANT_ACK p = {};
 
 	p.PacketType = HEADER_ZC_GRADE_ENCHANT_ACK;
 	p.index = client_index( index );
-	p.enchantgrade = sd->inventory.u.items_inventory[index].enchantgrade;
+	p.enchantgrade = sd.inventory.u.items_inventory[index].enchantgrade;
 	p.result = result;
 
-	clif_send( &p, sizeof( p ), &sd->bl, SELF );
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
+}
+
+void clif_enchantgrade_announce( struct map_session_data& sd, struct item& item, bool success ){
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	struct PACKET_ZC_GRADE_ENCHANT_BROADCAST_RESULT p = {};
+
+	p.packetType = HEADER_ZC_GRADE_ENCHANT_BROADCAST_RESULT;
+	safestrncpy( p.name, sd.status.name, sizeof( p.name ) );
+	p.itemId = client_nameid( item.nameid );
+	p.enchantgrade = item.enchantgrade;
+	p.status = success;
+
+	clif_send( &p, sizeof( p ), nullptr, ALL_CLIENT );
 #endif
 }
 
@@ -23724,19 +23735,29 @@ void clif_parse_enchantgrade_start( int fd, struct map_session_data* sd ){
 		// On successful enchantgrade increase the refine is reset
 		sd->inventory.u.items_inventory[index].refine = 0;
 		// Show success
-		clif_enchantgrade_result( sd, index, ENCHANTGRADE_UPGRADE_SUCCESS );
+		clif_enchantgrade_result( *sd, index, ENCHANTGRADE_UPGRADE_SUCCESS );
+
+		// Check if it has to be announced
+		if( enchantgradelevel->announce ){
+			clif_enchantgrade_announce( *sd, sd->inventory.u.items_inventory[index], true );
+		}
 	}else{
+		// Check if it has to be announced (has to be done before deleting the item from inventory)
+		if( enchantgradelevel->announce ){
+			clif_enchantgrade_announce( *sd, sd->inventory.u.items_inventory[index], false );
+		}
+
 		// Delete the item if it is breakable
 		if( option->breaking_rate > 0 && ( rnd() % 10000 ) < option->breaking_rate ){
 			pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_OTHER );
-			clif_enchantgrade_result( sd, index, ENCHANTGRADE_UPGRADE_BREAK );
+			clif_enchantgrade_result( *sd, index, ENCHANTGRADE_UPGRADE_BREAK );
 		// Downgrade the item if necessary
 		}else if( option->downgrade_amount > 0 ){
 			sd->inventory.u.items_inventory[index].refine = cap_value( sd->inventory.u.items_inventory[index].refine - option->downgrade_amount, 0, MAX_REFINE );
-			clif_enchantgrade_result( sd, index, ENCHANTGRADE_UPGRADE_DOWNGRADE );
+			clif_enchantgrade_result( *sd, index, ENCHANTGRADE_UPGRADE_DOWNGRADE );
 		// Only show failure, but dont do anything
 		}else{
-			clif_enchantgrade_result( sd, index, ENCHANTGRADE_UPGRADE_FAILED );
+			clif_enchantgrade_result( *sd, index, ENCHANTGRADE_UPGRADE_FAILED );
 		}
 	}
 #endif

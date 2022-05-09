@@ -166,6 +166,7 @@ struct s_enchantgradelevel{
 	uint16 refine;
 	uint16 chance;
 	uint16 bonus;
+	bool announce;
 	struct{
 		t_itemid item;
 		uint16 amountPerStep;

@@ -30,6 +30,7 @@
 #           Refine                      Required refine level
 #           Chance                      Base chance of success
 #           Bonus                       Enchantgrade bonus. (Default: 0)
+#           Announce                    Announce if someone tries to increase the enchantgrade? (Default: false)
 #           Catalysator:                Catalysator item to increase your chance of success
 #             Item                      The item that can be used
 #             AmountPerStep             How many of the specified items are needed
