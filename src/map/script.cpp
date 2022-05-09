@@ -11892,7 +11892,6 @@ BUILDIN_FUNC(enablenpc)
 {
 	npc_data* nd;
 	e_npcv_status flag = NPCVIEW_DISABLE;
-	int char_id = script_hasdata(st, 3) ? script_getnum(st, 3) : 0;
 	const char* command = script_getfuncname(st);
 
 	if (script_hasdata(st, 2))
@@ -11908,9 +11907,9 @@ BUILDIN_FUNC(enablenpc)
 		flag = NPCVIEW_HIDEOFF;
 	else if (!strcmp(command,"hideonnpc"))
 		flag = NPCVIEW_HIDEON;
-	else if (!strcmp(command,"cloakoffnpc"))
+	else if (!strcmp(command,"cloakoffnpc") || !strcmp(command,"cloakoffnpcself"))
 		flag = NPCVIEW_CLOAKOFF;
-	else if (!strcmp(command,"cloakonnpc"))
+	else if (!strcmp(command,"cloakonnpc") || !strcmp(command,"cloakonnpcself"))
 		flag = NPCVIEW_CLOAKON;
 	else{
 		ShowError( "buildin_enablenpc: Undefined command \"%s\".\n", command );
@@ -11923,6 +11922,19 @@ BUILDIN_FUNC(enablenpc)
 		else
 			ShowError("buildin_%s: Attempted to %s a non-existing NPC (flag=%d).\n", (flag & NPCVIEW_VISIBLE) ? "show" : "hide", command, flag);
 		return SCRIPT_CMD_FAILURE;
+	}
+
+	int char_id = 0;
+
+	if (script_hasdata(st, 3))
+		char_id = script_getnum(st, 3);
+	else if (!strcmp(command,"cloakoffnpcself") || !strcmp(command,"cloakonnpcself")) {
+		map_session_data* sd;
+
+		if (!script_rid2sd(sd))
+			return SCRIPT_CMD_SUCCESS;
+
+		char_id = sd->status.char_id;
 	}
 
 	if (npc_enable_target(*nd, char_id, flag))
@@ -26212,6 +26224,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(enablenpc, "hideonnpc", "?"),
 	BUILDIN_DEF2(enablenpc, "cloakoffnpc", "??"),
 	BUILDIN_DEF2(enablenpc, "cloakonnpc", "??"),
+	BUILDIN_DEF2(enablenpc, "cloakoffnpcself", "?"),
+	BUILDIN_DEF2(enablenpc, "cloakonnpcself", "?"),
 	BUILDIN_DEF(sc_start,"iii???"),
 	BUILDIN_DEF2(sc_start,"sc_start2","iiii???"),
 	BUILDIN_DEF2(sc_start,"sc_start4","iiiiii???"),
