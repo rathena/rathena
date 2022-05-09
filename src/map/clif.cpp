@@ -23720,20 +23720,24 @@ void clif_parse_enchantgrade_start( int fd, struct map_session_data* sd ){
 
 	// All items should be there, start deleting
 	for( const auto& pair : requiredItems ){
-		if( pc_delitem( sd, pair.first, pair.second, 0, 0, LOG_TYPE_OTHER ) != 0 ){
+		if( pc_delitem( sd, pair.first, pair.second, 0, 0, LOG_TYPE_ENCHANTGRADE ) != 0 ){
 			return;
 		}
 	}
 
-	if( pc_payzeny( sd, option->zeny, LOG_TYPE_OTHER, nullptr ) > 0 ){
+	if( pc_payzeny( sd, option->zeny, LOG_TYPE_ENCHANTGRADE, nullptr ) > 0 ){
 		return;
 	}
 
 	if( rnd()%10000 < totalChance ){
+		// Log removal of item
+		log_pick_pc( sd, LOG_TYPE_ENCHANTGRADE, -1, &sd->inventory.u.items_inventory[index] );
 		// Increase enchantgrade
 		sd->inventory.u.items_inventory[index].enchantgrade = min( sd->inventory.u.items_inventory[index].enchantgrade + 1, MAX_ENCHANTGRADE );
 		// On successful enchantgrade increase the refine is reset
 		sd->inventory.u.items_inventory[index].refine = 0;
+		// Log retrieving the item again -> with the new refine and enchantgrade
+		log_pick_pc( sd, LOG_TYPE_ENCHANTGRADE, 1, &sd->inventory.u.items_inventory[index] );
 		// Show success
 		clif_enchantgrade_result( *sd, index, ENCHANTGRADE_UPGRADE_SUCCESS );
 
@@ -23749,11 +23753,19 @@ void clif_parse_enchantgrade_start( int fd, struct map_session_data* sd ){
 
 		// Delete the item if it is breakable
 		if( option->breaking_rate > 0 && ( rnd() % 10000 ) < option->breaking_rate ){
-			pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_OTHER );
+			// Delete the item
+			pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_ENCHANTGRADE );
+			// Show failure
 			clif_enchantgrade_result( *sd, index, ENCHANTGRADE_UPGRADE_BREAK );
 		// Downgrade the item if necessary
 		}else if( option->downgrade_amount > 0 ){
+			// Log removal of item
+			log_pick_pc( sd, LOG_TYPE_ENCHANTGRADE, -1, &sd->inventory.u.items_inventory[index] );
+			// Decrease refine level
 			sd->inventory.u.items_inventory[index].refine = cap_value( sd->inventory.u.items_inventory[index].refine - option->downgrade_amount, 0, MAX_REFINE );
+			// Log retrieving the item again -> with the new refine
+			log_pick_pc( sd, LOG_TYPE_ENCHANTGRADE, 1, &sd->inventory.u.items_inventory[index] );
+			// Show downgrade
 			clif_enchantgrade_result( *sd, index, ENCHANTGRADE_UPGRADE_DOWNGRADE );
 		// Only show failure, but dont do anything
 		}else{
