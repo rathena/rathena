@@ -4429,7 +4429,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 		size_t length = strlen(w2);
 		int shift = 7;
 
-		// type name
+		// state name
 		if (w2[shift-1] != '(' || w2[length-1] != ')' || length <= shift || length-shift >= sizeof(state_name))
 			ShowWarning("npc_parse_script: Invalid npc state in file '%s', line '%d', defaulting to visible. w2=%s\n", filepath, strline(buffer,start-buffer), w2);
 		else {
@@ -5533,33 +5533,24 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
  */
 int npc_parsesrcfile(const char* filepath)
 {
-	int16 m, x, y;
-	int lines = 0;
-	FILE* fp;
-	size_t len;
-	char* buffer;
-	const char* p;
-
-	if(check_filepath(filepath)!=2) { //this is not a file 
+	if (check_filepath(filepath) != 2) { //this is not a file 
 		ShowDebug("npc_parsesrcfile: Path doesn't seem to be a file skipping it : '%s'.\n", filepath);
 		return 0;
 	} 
             
 	// read whole file to buffer
-	fp = fopen(filepath, "rb");
-	if( fp == NULL )
-	{
+	FILE* fp = fopen(filepath, "rb");
+	if (fp == nullptr) {
 		ShowError("npc_parsesrcfile: File not found '%s'.\n", filepath);
 		return 0;
 	}
 	fseek(fp, 0, SEEK_END);
-	len = ftell(fp);
-	buffer = (char*)aMalloc(len+1);
+	size_t len = ftell(fp);
+	char* buffer = (char*)aMalloc(len+1);
 	fseek(fp, 0, SEEK_SET);
 	len = fread(buffer, 1, len, fp);
 	buffer[len] = '\0';
-	if( ferror(fp) )
-	{
+	if (ferror(fp)) {
 		ShowError("npc_parsesrcfile: Failed to read file '%s' - %s\n", filepath, strerror(errno));
 		aFree(buffer);
 		fclose(fp);
@@ -5578,25 +5569,27 @@ int npc_parsesrcfile(const char* filepath)
 		return 0;
 	}
 
+	int lines = 0;
+
 	// parse buffer
-	for( p = skip_space(buffer); p && *p ; p = skip_space(p) )
-	{
+	for ( const char* p = skip_space(buffer); p && *p ; p = skip_space(p) ) {
 		int pos[9];
-		char w1[2048], w2[2048], w3[2048], w4[2048];
-		int i, count;
 		lines++;
 
 		// w1<TAB>w2<TAB>w3<TAB>w4
-		count = sv_parse(p, len+buffer-p, 0, '\t', pos, ARRAYLENGTH(pos), (e_svopt)(SV_TERMINATE_LF|SV_TERMINATE_CRLF));
-		if( count < 0 )
-		{
+		int count = sv_parse(p, len+buffer-p, 0, '\t', pos, ARRAYLENGTH(pos), (e_svopt)(SV_TERMINATE_LF|SV_TERMINATE_CRLF));
+
+		if (count < 0) {
 			ShowError("npc_parsesrcfile: Parse error in file '%s', line '%d'. Stopping...\n", filepath, strline(buffer,p-buffer));
 			break;
 		}
+
+		char w1[2048], w2[2048], w3[2048], w4[2048];
+
 		// fill w1
 		if( pos[3]-pos[2] > ARRAYLENGTH(w1)-1 )
 			ShowWarning("npc_parsesrcfile: w1 truncated, too much data (%d) in file '%s', line '%d'.\n", pos[3]-pos[2], filepath, strline(buffer,p-buffer));
-		i = min(pos[3]-pos[2], ARRAYLENGTH(w1)-1);
+		int i = min(pos[3]-pos[2], ARRAYLENGTH(w1)-1);
 		memcpy(w1, p+pos[2], i*sizeof(char));
 		w1[i] = '\0';
 		// fill w2
@@ -5614,8 +5607,7 @@ int npc_parsesrcfile(const char* filepath)
 		// fill w4 (to end of line)
 		if( pos[1]-pos[8] > ARRAYLENGTH(w4)-1 )
 			ShowWarning("npc_parsesrcfile: w4 truncated, too much data (%d) in file '%s', line '%d'.\n", pos[1]-pos[8], filepath, strline(buffer,p-buffer));
-		if( pos[8] != -1 )
-		{
+		if (pos[8] != -1) {
 			i = min(pos[1]-pos[8], ARRAYLENGTH(w4)-1);
 			memcpy(w4, p+pos[8], i*sizeof(char));
 			w4[i] = '\0';
@@ -5623,8 +5615,7 @@ int npc_parsesrcfile(const char* filepath)
 		else
 			w4[0] = '\0';
 
-		if( count < 3 )
-		{// Unknown syntax
+		if (count < 3) {// Unknown syntax
 			ShowError("npc_parsesrcfile: Unknown syntax in file '%s', line '%d'. Stopping...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,p-buffer), w1, w2, w3, w4);
 			break;
 		}
@@ -5634,72 +5625,53 @@ int npc_parsesrcfile(const char* filepath)
 		if (count > 3 && strncasecmp(w2, "script", 6) == 0)
 			has_script = true;
 
-		if( strcmp(w1,"-") !=0 && strcasecmp(w1,"function") != 0 )
-		{// w1 = <map name>,<x>,<y>,<facing>
+		if (strcmp(w1, "-") != 0 && strcasecmp(w1, "function") != 0) {// check the data of w1 = <map name>,<x>,<y>,<facing>
 			char mapname[MAP_NAME_LENGTH_EXT];
-			int count2;
+			int16 x, y;
+			int count2 = sscanf(w1,"%15[^,],%6hd,%6hd[^,]",mapname,&x,&y);
 
-			count2 = sscanf(w1,"%15[^,],%6hd,%6hd[^,]",mapname,&x,&y);
-
-			if ( count2 < 1 ) {
+			if (count2 < 1) {
 				ShowError("npc_parsesrcfile: Invalid script definition in file '%s', line '%d'. Skipping line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,p-buffer), w1, w2, w3, w4);
-				if (has_script) {
-					if ((p = npc_skip_script(p,buffer,filepath)) == NULL)
-						break;
-				}
+				if (has_script && (p = npc_skip_script(p,buffer,filepath)) == nullptr)
+					break;
 				p = strchr(p,'\n');// next line
 				continue;
-			}else if( count2 < 3 ){
+			}
+			else if (count2 < 3) {
 				// If we were not able to parse any x and y coordinates(usually used by mapflags)
 				x = y = 0;
 			}
 
-			if( !mapindex_name2id(mapname) )
-			{// Incorrect map, we must skip the script info...
+			if (!mapindex_name2id(mapname)) {// Incorrect map, we must skip the script info...
 				ShowError("npc_parsesrcfile: Unknown map '%s' in file '%s', line '%d'. Skipping line...\n", mapname, filepath, strline(buffer,p-buffer));
-				if (has_script)
-				{
-					if((p = npc_skip_script(p,buffer,filepath)) == NULL)
-					{
-						break;
-					}
-				}
+				if (has_script && (p = npc_skip_script(p,buffer,filepath)) == nullptr)
+					break;
 				p = strchr(p,'\n');// next line
 				continue;
 			}
-			m = map_mapname2mapid(mapname);
-			if( m < 0 )
-			{// "mapname" is not assigned to this server, we must skip the script info...
-				if (has_script)
-				{
-					if((p = npc_skip_script(p,buffer,filepath)) == NULL)
-					{
-						break;
-					}
-				}
+			int16 m = map_mapname2mapid(mapname);
+			if (m < 0) {// "mapname" is not assigned to this server, we must skip the script info...
+				if (has_script && (p = npc_skip_script(p,buffer,filepath)) == nullptr)
+					break;
 				p = strchr(p,'\n');// next line
 				continue;
 			}
 
-			struct map_data *mapdata = map_getmapdata(m);
+			map_data *mapdata = map_getmapdata(m);
 
 			if (x < 0 || x >= mapdata->xs || y < 0 || y >= mapdata->ys) {
 				ShowError("npc_parsesrcfile: Unknown coordinates ('%d', '%d') for map '%s' in file '%s', line '%d'. Skipping line...\n", x, y, mapname, filepath, strline(buffer,p-buffer));
-				if (has_script)
-				{
-					if((p = npc_skip_script(p,buffer,filepath)) == NULL)
-					{
-						break;
-					}
-				}
+				if (has_script && (p = npc_skip_script(p,buffer,filepath)) == nullptr)
+					break;
 				p = strchr(p,'\n');// next line
 				continue;
 			}
 		}
 
-		if((strcasecmp(w2,"warp") == 0 || strcasecmp(w2,"warp2") == 0) && count > 3)
+		// parse the data according to w2
+		if ((strcasecmp(w2,"warp") == 0 || strcasecmp(w2,"warp2") == 0) && count > 3)
 			p = npc_parse_warp(w1,w2,w3,w4, p, buffer, filepath);
-		else if( (!strcasecmp(w2,"shop") || !strcasecmp(w2,"cashshop") || !strcasecmp(w2,"itemshop") || !strcasecmp(w2,"pointshop") || !strcasecmp(w2,"marketshop") ) && count > 3 )
+		else if ((!strcasecmp(w2,"shop") || !strcasecmp(w2,"cashshop") || !strcasecmp(w2,"itemshop") || !strcasecmp(w2,"pointshop") || !strcasecmp(w2,"marketshop") ) && count > 3)
 			p = npc_parse_shop(w1,w2,w3,w4, p, buffer, filepath);
 		else if (has_script) {
 			if (strcasecmp(w1,"function") == 0) {
