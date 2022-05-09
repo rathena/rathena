@@ -2370,9 +2370,9 @@ void clif_parse_NPCMarketPurchase(int fd, struct map_session_data *sd) {
 		return;
 	}
 
-	const struct packet_npc_market_purchase *p = (struct packet_npc_market_purchase *)RFIFOP( fd, 0 );
+	const struct PACKET_CZ_NPC_MARKET_PURCHASE* p = (struct PACKET_CZ_NPC_MARKET_PURCHASE*)RFIFOP( fd, 0 );
 
-	int count = ( p->PacketLength - sizeof( struct packet_npc_market_purchase ) ) / sizeof( struct packet_npc_market_purchase_sub );
+	int count = ( p->PacketLength - sizeof( struct PACKET_CZ_NPC_MARKET_PURCHASE ) ) / sizeof( struct PACKET_CZ_NPC_MARKET_PURCHASE_sub );
 
 	std::vector<s_npc_buy_list> items;
 
@@ -7653,7 +7653,7 @@ void clif_vendinglist( struct map_session_data* sd, struct map_session_data* vsd
 
 	struct PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC* p = (struct PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC*)WFIFOP( fd, 0 );
 
-	p->packetType = vendinglistType;
+	p->packetType = HEADER_ZC_PC_PURCHASE_ITEMLIST_FROMMC;
 	p->packetLength = len;
 	p->AID = vsd->status.account_id;
 #if PACKETVER >= 20100105
@@ -7750,7 +7750,7 @@ void clif_openvending( struct map_session_data* sd, int id, struct s_vending* ve
 
 	struct PACKET_ZC_PC_PURCHASE_MYITEMLIST *p = (struct PACKET_ZC_PC_PURCHASE_MYITEMLIST *)WFIFOP( fd, 0 );
 
-	p->packetType = openvendingType;
+	p->packetType = HEADER_ZC_PC_PURCHASE_MYITEMLIST;
 	p->packetLength = len;
 	p->AID = id;
 
@@ -10076,9 +10076,9 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 		case BL_PET:
 		case BL_NPC:
 		case BL_ELEM: {
-			PACKET_ZC_ACK_REQNAME_TITLE packet = { 0 };
+			PACKET_ZC_ACK_REQNAMEALL_NPC packet = { 0 };
 
-			packet.packet_id = HEADER_ZC_ACK_REQNAME_TITLE;
+			packet.packet_id = HEADER_ZC_ACK_REQNAMEALL_NPC;
 			packet.gid = bl->id;
 
 			switch (bl->type) {
@@ -10153,9 +10153,9 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 
 				clif_send(&packet, sizeof(packet), src, target);
 			} else {
-				PACKET_ZC_ACK_REQNAME_TITLE packet = { 0 };
+				PACKET_ZC_ACK_REQNAMEALL_NPC packet = { 0 };
 
-				packet.packet_id = HEADER_ZC_ACK_REQNAME_TITLE;
+				packet.packet_id = HEADER_ZC_ACK_REQNAMEALL_NPC;
 				packet.gid = bl->id;
 				safestrncpy(packet.name, md->name, NAME_LENGTH);
 
@@ -19766,9 +19766,9 @@ static void clif_loadConfirm( struct map_session_data *sd ){
 #if PACKETVER_MAIN_NUM >= 20190403 || PACKETVER_RE_NUM >= 20190320 || PACKETVER_ZERO_NUM >= 20190410
 	nullpo_retv( sd );
 
-	struct PACKET_ZC_LOAD_CONFIRM p;
+	struct PACKET_ZC_NOTIFY_ACTORINIT p = {};
 
-	p.packetType = HEADER_ZC_LOAD_CONFIRM;
+	p.packetType = HEADER_ZC_NOTIFY_ACTORINIT;
 
 	clif_send( &p, sizeof(p), &sd->bl, SELF );
 
@@ -21093,10 +21093,10 @@ void clif_hat_effects( struct map_session_data* sd, struct block_list* bl, enum 
 		return;
 	}
 
-	struct PACKET_ZC_HAT_EFFECT* p = (struct PACKET_ZC_HAT_EFFECT*)packet_buffer;
+	struct PACKET_ZC_EQUIPMENT_EFFECT* p = (struct PACKET_ZC_EQUIPMENT_EFFECT*)packet_buffer;
 
-	p->packetType = HEADER_ZC_HAT_EFFECT;
-	p->packetLength = (int16)( sizeof( struct PACKET_ZC_HAT_EFFECT ) + sizeof( int16 ) * tsd->hatEffects.size() );
+	p->packetType = HEADER_ZC_EQUIPMENT_EFFECT;
+	p->packetLength = (int16)( sizeof( struct PACKET_ZC_EQUIPMENT_EFFECT ) + sizeof( int16 ) * tsd->hatEffects.size() );
 	p->aid = tsd->bl.id;
 	p->status = 1;
 
@@ -21112,10 +21112,10 @@ void clif_hat_effect_single( struct map_session_data* sd, uint16 effectId, bool 
 #if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
 	nullpo_retv( sd );
 
-	struct PACKET_ZC_HAT_EFFECT* p = (struct PACKET_ZC_HAT_EFFECT*)packet_buffer;
+	struct PACKET_ZC_EQUIPMENT_EFFECT* p = (struct PACKET_ZC_EQUIPMENT_EFFECT*)packet_buffer;
 
-	p->packetType = HEADER_ZC_HAT_EFFECT;
-	p->packetLength = (int16)( sizeof( struct PACKET_ZC_HAT_EFFECT ) + sizeof( int16 ) );
+	p->packetType = HEADER_ZC_EQUIPMENT_EFFECT;
+	p->packetLength = (int16)( sizeof( struct PACKET_ZC_EQUIPMENT_EFFECT ) + sizeof( int16 ) );
 	p->aid = sd->bl.id;
 	p->status = enable;
 	p->effects[0] = effectId;
@@ -22001,7 +22001,7 @@ void clif_parse_equipswitch_request_single( int fd, struct map_session_data* sd 
 
 void clif_parse_StartUseSkillToId( int fd, struct map_session_data* sd ){
 #if PACKETVER_MAIN_NUM >= 20181002 || PACKETVER_RE_NUM >= 20181002 || PACKETVER_ZERO_NUM >= 20181010
-	const struct PACKET_CZ_START_USE_SKILL *p = (struct PACKET_CZ_START_USE_SKILL *)RFIFOP( fd, 0 );
+	const struct PACKET_CZ_USE_SKILL_START* p = (struct PACKET_CZ_USE_SKILL_START*)RFIFOP( fd, 0 );
 
 	// Only rolling cutter is supported for now
 	if( p->skillId != GC_ROLLINGCUTTER ){
@@ -22024,7 +22024,7 @@ void clif_parse_StartUseSkillToId( int fd, struct map_session_data* sd ){
 
 void clif_parse_StopUseSkillToId( int fd, struct map_session_data* sd ){
 #if PACKETVER_MAIN_NUM >= 20181002 || PACKETVER_RE_NUM >= 20181002 || PACKETVER_ZERO_NUM >= 20181010
-	const struct PACKET_CZ_STOP_USE_SKILL *p = (struct PACKET_CZ_STOP_USE_SKILL *)RFIFOP( fd, 0 );
+	const struct PACKET_CZ_USE_SKILL_END* p = (struct PACKET_CZ_USE_SKILL_END*)RFIFOP( fd, 0 );
 
 	// Not running
 	if( sd->skill_keep_using.skill_id == 0 ){
@@ -22058,9 +22058,9 @@ void clif_ping( struct map_session_data* sd ){
 		return;
 	}
 
-	struct PACKET_ZC_PING p;
+	struct PACKET_ZC_PING_LIVE p = {};
 
-	p.packetType = HEADER_ZC_PING;
+	p.packetType = HEADER_ZC_PING_LIVE;
 
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
 #endif
@@ -22098,9 +22098,9 @@ void clif_refineui_open( struct map_session_data* sd ){
 #if PACKETVER >= 20161012
 	nullpo_retv( sd );
 
-	struct PACKET_ZC_REFINE_OPEN_WINDOW p;
+	struct PACKET_ZC_OPEN_REFINING_UI p = {};
 
-	p.packetType = HEADER_ZC_REFINE_OPEN_WINDOW;
+	p.packetType = HEADER_ZC_OPEN_REFINING_UI;
 
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
 
@@ -22153,10 +22153,10 @@ void clif_refineui_info( struct map_session_data* sd, uint16 index ){
 		return;
 	}
 
-	struct PACKET_ZC_REFINE_ADD_ITEM* p = (struct PACKET_ZC_REFINE_ADD_ITEM*)packet_buffer;
+	struct PACKET_ZC_REFINING_MATERIAL_LIST* p = (struct PACKET_ZC_REFINING_MATERIAL_LIST*)packet_buffer;
 
-	p->packetType = HEADER_ZC_REFINE_ADD_ITEM;
-	p->packtLength = sizeof( struct PACKET_ZC_REFINE_ADD_ITEM );
+	p->packetType = HEADER_ZC_REFINING_MATERIAL_LIST;
+	p->packetLength = sizeof( struct PACKET_ZC_REFINING_MATERIAL_LIST_SUB );
 	p->itemIndex = client_index( index );
 
 	std::shared_ptr<s_refine_level_info> info = refine_db.findLevelInfo( *id, *item );
@@ -22176,13 +22176,13 @@ void clif_refineui_info( struct map_session_data* sd, uint16 index ){
 				p->req[count].itemId = client_nameid( cost->nameid );
 				p->req[count].chance = (uint8)( cost->chance / 100 );
 				p->req[count].zeny = cost->zeny;
-				p->packtLength += sizeof( struct PACKET_ZC_REFINE_ADD_ITEM_SUB );
+				p->packetLength += sizeof( struct PACKET_ZC_REFINING_MATERIAL_LIST_SUB );
 				count++;
 			}
 		}
 	}
 
-	clif_send( p, p->packtLength, &sd->bl, SELF );
+	clif_send( p, p->packetLength, &sd->bl, SELF );
 #endif
 }
 
@@ -22192,7 +22192,7 @@ void clif_refineui_info( struct map_session_data* sd, uint16 index ){
  */
 void clif_parse_refineui_add( int fd, struct map_session_data* sd ){
 #if PACKETVER >= 20161012
-	struct PACKET_CZ_REFINE_ADD_ITEM* p = (struct PACKET_CZ_REFINE_ADD_ITEM*)RFIFOP( fd, 0 );
+	struct PACKET_CZ_REFINING_SELECT_ITEM* p = (struct PACKET_CZ_REFINING_SELECT_ITEM*)RFIFOP( fd, 0 );
 
 	uint16 index = server_index( p->index );
 
@@ -22217,7 +22217,7 @@ void clif_parse_refineui_add( int fd, struct map_session_data* sd ){
  */
 void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 #if PACKETVER >= 20161012
-	struct PACKET_CZ_REFINE_ITEM_REQUEST* p = (struct PACKET_CZ_REFINE_ITEM_REQUEST*)RFIFOP( fd, 0 );
+	struct PACKET_CZ_REQ_REFINING* p = (struct PACKET_CZ_REQ_REFINING*)RFIFOP( fd, 0 );
 
 	uint16 index = server_index( p->index );
 	t_itemid material = p->itemId;
@@ -22371,13 +22371,13 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 
 void clif_unequipall_reply( struct map_session_data* sd, bool failed ){
 #if PACKETVER_MAIN_NUM >= 20210818 || PACKETVER_RE_NUM >= 20211103
-	struct PACKET_ZC_TAKEOFF_EQUIP_ALL_ACK p = {};
+	struct PACKET_ZC_ACK_TAKEOFF_EQUIP_ALL p = {};
 
-	p.PacketType = HEADER_ZC_TAKEOFF_EQUIP_ALL_ACK;
+	p.PacketType = HEADER_ZC_ACK_TAKEOFF_EQUIP_ALL;
 	p.result = failed;
 
-	clif_send( &p, sizeof( struct PACKET_ZC_TAKEOFF_EQUIP_ALL_ACK ), &sd->bl, SELF );
-#endif  // PACKETVER_MAIN_NUM >= 20210818 || PACKETVER_RE_NUM >= 20211103
+	clif_send( &p, sizeof( p ), &sd->bl, SELF );
+#endif // PACKETVER_MAIN_NUM >= 20210818 || PACKETVER_RE_NUM >= 20211103
 }
 
 void clif_parse_unequipall( int fd, struct map_session_data* sd ){
@@ -22567,9 +22567,9 @@ void clif_inventory_expansion_info( struct map_session_data* sd ){
 #if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
 	nullpo_retv( sd );
 
-	struct PACKET_ZC_INVENTORY_EXPANSION_INFO p = {};
+	struct PACKET_ZC_EXTEND_BODYITEM_SIZE p = {};
 
-	p.packetType = HEADER_ZC_INVENTORY_EXPANSION_INFO;
+	p.packetType = HEADER_ZC_EXTEND_BODYITEM_SIZE;
 	p.expansionSize = sd->status.inventory_slots - INVENTORY_BASE_SIZE;
 
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
@@ -22588,9 +22588,9 @@ void clif_inventory_expansion_response( struct map_session_data* sd, e_inventory
 #if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
 	nullpo_retv( sd );
 
-	struct PACKET_ZC_ACK_INVENTORY_EXPAND p = {};
+	struct PACKET_ZC_ACK_OPEN_MSGBOX_EXTEND_BODYITEM_SIZE p = {};
 
-	p.packetType = HEADER_ZC_ACK_INVENTORY_EXPAND;
+	p.packetType = HEADER_ZC_ACK_OPEN_MSGBOX_EXTEND_BODYITEM_SIZE;
 	p.result = (uint8)response;
 	p.itemId = sd->state.inventory_expansion_confirmation;
 
@@ -22671,9 +22671,9 @@ void clif_inventory_expansion_result( struct map_session_data* sd, e_inventory_e
 #if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
 	nullpo_retv( sd );
 
-	struct PACKET_ZC_ACK_INVENTORY_EXPAND_RESULT p = {};
+	struct PACKET_ZC_ACK_EXTEND_BODYITEM_SIZE p = {};
 
-	p.packetType = HEADER_ZC_ACK_INVENTORY_EXPAND_RESULT;
+	p.packetType = HEADER_ZC_ACK_EXTEND_BODYITEM_SIZE;
 	p.result = (uint8)result;
 
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
@@ -22756,14 +22756,14 @@ void clif_barter_open( struct map_session_data& sd, struct npc_data& nd ){
 
 	sd.state.barter_open = true;
 
-	struct PACKET_ZC_NPC_BARTER_OPEN* p = (struct PACKET_ZC_NPC_BARTER_OPEN*)packet_buffer;
+	struct PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO* p = (struct PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO*)packet_buffer;
 
-	p->packetType = HEADER_ZC_NPC_BARTER_OPEN;
-	p->packetLength = (int16)sizeof( struct PACKET_ZC_NPC_BARTER_OPEN );
+	p->packetType = HEADER_ZC_NPC_BARTER_MARKET_ITEMINFO;
+	p->packetLength = (int16)sizeof( struct PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO );
 
 	int16 count = 0;
 	for( const auto& itemPair : barter->items ){
-		struct PACKET_ZC_NPC_BARTER_OPEN_sub* item = &p->list[count];
+		struct PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO_sub* item = &p->list[count];
 		struct item_data* id = itemdb_exists( itemPair.second->nameid );
 
 		item->nameid = client_nameid( id->nameid );
@@ -22838,9 +22838,9 @@ void clif_parse_barter_buy( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	struct PACKET_CZ_NPC_BARTER_PURCHASE* p = (struct PACKET_CZ_NPC_BARTER_PURCHASE*)RFIFOP( fd, 0 );
+	struct PACKET_CZ_NPC_BARTER_MARKET_PURCHASE* p = (struct PACKET_CZ_NPC_BARTER_MARKET_PURCHASE*)RFIFOP( fd, 0 );
 
-	uint16 entries = ( p->packetLength - sizeof( struct PACKET_CZ_NPC_BARTER_PURCHASE ) ) / sizeof( struct PACKET_CZ_NPC_BARTER_PURCHASE_sub );
+	uint16 entries = ( p->packetLength - sizeof( struct PACKET_CZ_NPC_BARTER_MARKET_PURCHASE ) ) / sizeof( struct PACKET_CZ_NPC_BARTER_MARKET_PURCHASE_sub );
 
 	// Empty purchase list
 	if( entries == 0 ){
@@ -22905,15 +22905,15 @@ void clif_barter_extended_open( struct map_session_data& sd, struct npc_data& nd
 
 	sd.state.barter_extended_open = true;
 
-	struct PACKET_ZC_NPC_EXPANDED_BARTER_OPEN* p = (struct PACKET_ZC_NPC_EXPANDED_BARTER_OPEN*)packet_buffer;
+	struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO* p = (struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO*)packet_buffer;
 
-	p->packetType = HEADER_ZC_NPC_EXPANDED_BARTER_OPEN;
-	p->packetLength = (int16)sizeof( struct PACKET_ZC_NPC_EXPANDED_BARTER_OPEN );
+	p->packetType = HEADER_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO;
+	p->packetLength = (int16)sizeof( struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO );
 	p->items_count = 0;
 
 	for( const auto& itemPair : barter->items ){
 		// Needs dynamic calculation, because of variable currencies
-		struct PACKET_ZC_NPC_EXPANDED_BARTER_OPEN_sub* item = (struct PACKET_ZC_NPC_EXPANDED_BARTER_OPEN_sub*)( ( (uint8*)p ) + p->packetLength );
+		struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub* item = (struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub*)( ( (uint8*)p ) + p->packetLength );
 		struct item_data* id = itemdb_exists( itemPair.second->nameid );
 
 		item->nameid = client_nameid( id->nameid );
@@ -22938,7 +22938,7 @@ void clif_barter_extended_open( struct map_session_data& sd, struct npc_data& nd
 
 		for( const auto& requirementPair : itemPair.second->requirements ){
 			// Needs dynamic calculation, because of variable currencies
-			struct PACKET_ZC_NPC_EXPANDED_BARTER_OPEN_sub2* req = (struct PACKET_ZC_NPC_EXPANDED_BARTER_OPEN_sub2*)( ( (uint8*)p ) + p->packetLength );
+			struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2* req = (struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2*)( ( (uint8*)p ) + p->packetLength );
 			std::shared_ptr<s_npc_barter_requirement> requirement = requirementPair.second;
 
 			req->nameid = requirement->nameid;
@@ -22998,9 +22998,9 @@ void clif_parse_barter_extended_buy( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	struct PACKET_CZ_NPC_EXPANDED_BARTER_PURCHASE* p = (struct PACKET_CZ_NPC_EXPANDED_BARTER_PURCHASE*)RFIFOP( fd, 0 );
+	struct PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE* p = (struct PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE*)RFIFOP( fd, 0 );
 
-	uint16 entries = ( p->packetLength - sizeof( struct PACKET_CZ_NPC_EXPANDED_BARTER_PURCHASE ) ) / sizeof( struct PACKET_CZ_NPC_EXPANDED_BARTER_PURCHASE_sub );
+	uint16 entries = ( p->packetLength - sizeof( struct PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE ) ) / sizeof( struct PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE_sub );
 
 	// Empty purchase list
 	if( entries == 0 ){
@@ -23095,9 +23095,9 @@ void clif_laphine_synthesis_open( struct map_session_data *sd, std::shared_ptr<s
 
 	sd->state.laphine_synthesis = synthesis->item_id;
 
-	struct PACKET_ZC_LAPINEDDUKDDAK_OPEN p = {};
+	struct PACKET_ZC_RANDOM_COMBINE_ITEM_UI_OPEN p = {};
 
-	p.packetType = HEADER_ZC_LAPINEDDUKDDAK_OPEN;
+	p.packetType = HEADER_ZC_RANDOM_COMBINE_ITEM_UI_OPEN;
 	p.itemId = client_nameid( synthesis->item_id );
 
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
@@ -23120,9 +23120,9 @@ void clif_laphine_synthesis_result( struct map_session_data* sd, enum e_laphine_
 #if PACKETVER_MAIN_NUM >= 20160601 || PACKETVER_RE_NUM >= 20160525 || defined(PACKETVER_ZERO)
 	nullpo_retv( sd );
 
-	struct PACKET_ZC_LAPINEDDUKDDAK_RESULT p = {};
+	struct PACKET_ZC_ACK_RANDOM_COMBINE_ITEM p = {};
 
-	p.packetType = HEADER_ZC_LAPINEDDUKDDAK_RESULT;
+	p.packetType = HEADER_ZC_ACK_RANDOM_COMBINE_ITEM;
 	p.result = result;
 
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
@@ -23135,7 +23135,7 @@ void clif_parse_laphine_synthesis( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	struct PACKET_CZ_LAPINEDDUKDDAK_ACK* p = (struct PACKET_CZ_LAPINEDDUKDDAK_ACK*)RFIFOP( fd, 0 );
+	struct PACKET_CZ_REQ_RANDOM_COMBINE_ITEM* p = (struct PACKET_CZ_REQ_RANDOM_COMBINE_ITEM*)RFIFOP( fd, 0 );
 
 	if( sd->state.laphine_synthesis != p->itemId ){
 		return;
@@ -23147,7 +23147,7 @@ void clif_parse_laphine_synthesis( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	size_t count = ( p->packetLength - sizeof( struct PACKET_CZ_LAPINEDDUKDDAK_ACK ) ) / sizeof( struct PACKET_CZ_LAPINEDDUKDDAK_ACK_sub );
+	size_t count = ( p->packetLength - sizeof( struct PACKET_CZ_REQ_RANDOM_COMBINE_ITEM ) ) / sizeof( struct PACKET_CZ_REQ_RANDOM_COMBINE_ITEM_sub );
 
 	// Player sent more or less than actually required
 	if( count != synthesis->requiredRequirements ){
@@ -23247,9 +23247,9 @@ void clif_laphine_upgrade_open( struct map_session_data* sd, std::shared_ptr<s_l
 
 	sd->state.laphine_upgrade = upgrade->item_id;
 
-	struct PACKET_ZC_LAPINEUPGRADE_OPEN p = {};
+	struct PACKET_ZC_RANDOM_UPGRADE_ITEM_UI_OPEN p = {};
 
-	p.packetType = HEADER_ZC_LAPINEUPGRADE_OPEN;
+	p.packetType = HEADER_ZC_RANDOM_UPGRADE_ITEM_UI_OPEN;
 	p.itemId = client_nameid( upgrade->item_id );
 
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
@@ -23264,9 +23264,9 @@ void clif_parse_laphine_upgrade_close( int fd, struct map_session_data* sd ){
 
 void clif_laphine_upgrade_result( struct map_session_data *sd, bool failed ){
 #if PACKETVER_MAIN_NUM >= 20170726 || PACKETVER_RE_NUM >= 20170621 || defined(PACKETVER_ZERO)
-	struct PACKET_ZC_LAPINEUPGRADE_RESULT p = {};
+	struct PACKET_ZC_ACK_RANDOM_UPGRADE_ITEM p = {};
 
-	p.packetType = HEADER_ZC_LAPINEUPGRADE_RESULT;
+	p.packetType = HEADER_ZC_ACK_RANDOM_UPGRADE_ITEM;
 	p.result = failed;
 
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
@@ -23279,9 +23279,9 @@ static void clif_item_preview( struct map_session_data *sd, int16 index ){
 
 	struct item* item = &sd->inventory.u.items_inventory[index];
 
-	struct PACKET_ZC_ITEM_PREVIEW p = {};
+	struct PACKET_ZC_CHANGE_ITEM_OPTION p = {};
 
-	p.packetType = HEADER_ZC_ITEM_PREVIEW;
+	p.packetType = HEADER_ZC_CHANGE_ITEM_OPTION;
 	p.index = client_index( index );
 #if PACKETVER_MAIN_NUM >= 20181017 || PACKETVER_RE_NUM >= 20181017 || PACKETVER_ZERO_NUM >= 20181024
 	p.isDamaged = item->attribute != 0;
@@ -23303,7 +23303,7 @@ void clif_parse_laphine_upgrade( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	struct PACKET_CZ_LAPINEUPGRADE_MAKE_ITEM* p = (struct PACKET_CZ_LAPINEUPGRADE_MAKE_ITEM*)RFIFOP( fd, 0 );
+	struct PACKET_CZ_REQ_RANDOM_UPGRADE_ITEM* p = (struct PACKET_CZ_REQ_RANDOM_UPGRADE_ITEM*)RFIFOP( fd, 0 );
 
 	if( sd->state.laphine_upgrade != p->itemId ){
 		return;
