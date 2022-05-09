@@ -23453,51 +23453,51 @@ void clif_parse_laphine_upgrade( int fd, struct map_session_data* sd ){
 
 void clif_enchantgrade_add( struct map_session_data* sd, uint16 index = UINT16_MAX, std::shared_ptr<s_enchantgradelevel> gradeLevel = nullptr ){
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-	struct PACKET_ZC_UNCONFIRMED_ENCHANTGRADE_ADD* p = (struct PACKET_ZC_UNCONFIRMED_ENCHANTGRADE_ADD*)packet_buffer;
+	struct PACKET_ZC_GRADE_ENCHANT_MATERIAL_LIST* p = (struct PACKET_ZC_GRADE_ENCHANT_MATERIAL_LIST*)packet_buffer;
 
-	p->packetType = HEADER_ZC_UNCONFIRMED_ENCHANTGRADE_ADD;
+	p->PacketType = HEADER_ZC_GRADE_ENCHANT_MATERIAL_LIST;
 
 	if( index < UINT16_MAX ){
 		p->index = client_index( index );
 		if( sd->inventory.u.items_inventory[index].refine >= gradeLevel->refine ){
-			p->chance = gradeLevel->chance / 100;
+			p->success_chance = gradeLevel->chance / 100;
 		}else{
-			p->chance = 0;
+			p->success_chance = 0;
 		}
-		p->catalysatorItemId = gradeLevel->catalysator.item;
-		p->catalysatorAmountPerStep = gradeLevel->catalysator.amountPerStep;
-		p->catalysatorMaxSteps = gradeLevel->catalysator.maximumSteps;
-		p->catalysatorChanceIncrease = gradeLevel->catalysator.chanceIncrease / 100;
+		p->blessing_info.id = gradeLevel->catalysator.item;
+		p->blessing_info.amount = gradeLevel->catalysator.amountPerStep;
+		p->blessing_info.max_blessing = gradeLevel->catalysator.maximumSteps;
+		p->blessing_info.bonus = gradeLevel->catalysator.chanceIncrease / 100;
 		// Not displayed by client
-		p->catalysator2ItemId = 0;
-		p->catalysator2ChanceIncrease = 0;
+		p->protect_itemid = 0;
+		p->protect_amount = 0;
 
-		p->PacketLength = sizeof( struct PACKET_ZC_UNCONFIRMED_ENCHANTGRADE_ADD );
+		p->PacketLength = sizeof( struct PACKET_ZC_GRADE_ENCHANT_MATERIAL_LIST );
 
 		int i = 0;
 		for( const auto& pair : gradeLevel->options ){
 			std::shared_ptr<s_enchantgradeoption> option = pair.second;
 
-			p->options[i].itemId = option->item;
-			p->options[i].amount = option->amount;
-			p->options[i].zeny = option->zeny;
-			p->options[i].canDowngrade = option->downgrade_amount > 0;
-			p->options[i].canBreak = option->breaking_rate > 0;
+			p->material_info[i].nameid = option->item;
+			p->material_info[i].amount = option->amount;
+			p->material_info[i].price = option->zeny;
+			p->material_info[i].downgrade = option->downgrade_amount > 0;
+			p->material_info[i].breakable = option->breaking_rate > 0;
 			i++;
 		}
 
-		p->PacketLength += i * sizeof( struct PACKET_ZC_UNCONFIRMED_ENCHANTGRADE_ADD_sub );
+		p->PacketLength += i * sizeof( struct GRADE_ENCHANT_MATERIAL );
 	}else{
 		p->index = -1;
-		p->chance = 0;
-		p->catalysatorItemId = 0;
-		p->catalysatorAmountPerStep = 0;
-		p->catalysatorMaxSteps = 0;
-		p->catalysatorChanceIncrease = 0;
-		p->catalysator2ItemId = 0;
-		p->catalysator2ChanceIncrease = 0;
+		p->success_chance = 0;
+		p->blessing_info.id = 0;
+		p->blessing_info.amount = 0;
+		p->blessing_info.max_blessing = 0;
+		p->blessing_info.bonus = 0;
+		p->protect_itemid = 0;
+		p->protect_amount = 0;
 
-		p->PacketLength = sizeof( struct PACKET_ZC_UNCONFIRMED_ENCHANTGRADE_ADD );
+		p->PacketLength = sizeof( struct PACKET_ZC_GRADE_ENCHANT_MATERIAL_LIST );
 	}
 
 	clif_send( p, p->PacketLength, &sd->bl, SELF );
@@ -23512,7 +23512,7 @@ void clif_parse_enchantgrade_add( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	struct PACKET_CZ_UNCONFIRMED_ENCHANTGRADE_ADD* p = (struct PACKET_CZ_UNCONFIRMED_ENCHANTGRADE_ADD*)RFIFOP( fd, 0 );
+	struct PACKET_CZ_GRADE_ENCHANT_SELECT_EQUIPMENT* p = (struct PACKET_CZ_GRADE_ENCHANT_SELECT_EQUIPMENT*)RFIFOP( fd, 0 );
 
 	uint16 index = server_index( p->index );
 
@@ -23568,9 +23568,9 @@ void clif_parse_enchantgrade_add( int fd, struct map_session_data* sd ){
 /// </param>
 void clif_enchantgrade_result( struct map_session_data* sd, uint16 index, e_enchantgrade_result result ){
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-	struct PACKET_ZC_UNCONFIRMED_ENCHANTGRADE_RESULT p = {};
+	struct PACKET_ZC_GRADE_ENCHANT_ACK p = {};
 
-	p.packetType = HEADER_ZC_UNCONFIRMED_ENCHANTGRADE_RESULT;
+	p.PacketType = HEADER_ZC_GRADE_ENCHANT_ACK;
 	p.index = client_index( index );
 	p.enchantgrade = sd->inventory.u.items_inventory[index].enchantgrade;
 	p.result = result;
@@ -23587,7 +23587,7 @@ void clif_parse_enchantgrade_start( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	struct PACKET_CZ_UNCONFIRMED_ENCHANTGRADE_START* p = (struct PACKET_CZ_UNCONFIRMED_ENCHANTGRADE_START*)RFIFOP( fd, 0 );
+	struct PACKET_CZ_GRADE_ENCHANT_REQUEST* p = (struct PACKET_CZ_GRADE_ENCHANT_REQUEST*)RFIFOP( fd, 0 );
 
 	uint16 index = server_index( p->index );
 
@@ -23629,7 +23629,7 @@ void clif_parse_enchantgrade_start( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	std::shared_ptr<s_enchantgradeoption> option = util::map_find( enchantgradelevel->options, (uint16)p->option );
+	std::shared_ptr<s_enchantgradeoption> option = util::map_find( enchantgradelevel->options, (uint16)p->material_index );
 
 	// Unknown option id - no answer
 	if( option == nullptr ){
@@ -23642,10 +23642,10 @@ void clif_parse_enchantgrade_start( int fd, struct map_session_data* sd ){
 	}
 
 	uint16 totalChance = enchantgradelevel->chance;
-	uint16 steps = min( p->catalysatorSteps, enchantgradelevel->catalysator.maximumSteps );
+	uint16 steps = min( p->blessing_amount, enchantgradelevel->catalysator.maximumSteps );
 	std::unordered_map<uint16, uint16> requiredItems;
 
-	if( p->useCatalysator ){
+	if( p->blessing_flag ){
 		// If the catalysator item is the same as the option item build the sum of amounts
 		if( enchantgradelevel->catalysator.item == option->item ){
 			uint16 amount = enchantgradelevel->catalysator.amountPerStep * steps + option->amount;
