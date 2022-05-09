@@ -1011,9 +1011,6 @@ Body:
       - famepoint
       - famepoints
   - Command: enchantgradeui
-    Aliases:
-      - enchantui
-      - enchant
     Help: |
       Opens the enchantgrade UI.
 
