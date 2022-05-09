@@ -13857,27 +13857,27 @@ Body:
       }
   - Combos:
       - Combo:
-          - R_Knuckle
-          - King_Schmidt_Suit
-          - King_Schmidt_Manteau
+          - R_Knuckle     # 1870
+          - King_Schmidt_Suit     # 15388
+          - King_Schmidt_Manteau     # 15389
       - Combo:
-          - R_Huuma_Shuriken
-          - King_Schmidt_Suit
-          - King_Schmidt_Manteau
+          - R_Huuma_Shuriken     # 13347
+          - King_Schmidt_Suit     # 15388
+          - King_Schmidt_Manteau     # 15389
       - Combo:
-          - G_Knight_Archer_Bow
-          - King_Schmidt_Suit
-          - King_Schmidt_Manteau
+          - G_Knight_Archer_Bow     # 18198
+          - King_Schmidt_Suit     # 15388
+          - King_Schmidt_Manteau     # 15389
       - Combo:
-          - R_Revolver
-          - King_Schmidt_Suit
-          - King_Schmidt_Manteau
+          - R_Revolver     # 32304
+          - King_Schmidt_Suit     # 15388
+          - King_Schmidt_Manteau     # 15389
     Script: |
       .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT);
       autobonus "{ bonus bLongAtkRate,10; }",1,10000,BF_WEAPON;
       bonus bBaseAtk,30;
       if (.@sum >= 30) {
-         bonus2 bAddRace,RC_Undead,20;
+         bonus2 bAddEle,Ele_Undead,20;
          bonus2 bAddEle,Ele_Holy,20;
       }
   - Combos:
