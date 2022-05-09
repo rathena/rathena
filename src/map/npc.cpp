@@ -4435,20 +4435,16 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 			ShowWarning("npc_parse_script: Invalid npc state in file '%s', line '%d', defaulting to visible. w2=%s\n", filepath, strline(buffer,start-buffer), w2);
 		else {
 			safestrncpy(state_name, w2+shift, length-shift);
-			if (strcasecmp("CLOAKED", state_name) == 0) {
-				npc_enable_target(*nd, 0, NPCVIEW_CLOAKON);
+			if (strcasecmp("CLOAKED", state_name) == 0)
 				nd->state = NPCVIEW_CLOAKON;
-			}
-			else if (strcasecmp("HIDDEN", state_name) == 0) {
-				npc_enable_target(*nd, 0, NPCVIEW_HIDEON);
+			else if (strcasecmp("HIDDEN", state_name) == 0)
 				nd->state = NPCVIEW_HIDEON;
-			}
-			else if (strcasecmp("DISABLED", state_name) == 0) {
-				npc_enable_target(*nd, 0, NPCVIEW_DISABLE);
+			else if (strcasecmp("DISABLED", state_name) == 0)
 				nd->state = NPCVIEW_DISABLE;
-			}
 			else
 				ShowWarning("npc_parse_script: Invalid npc state in file '%s', line '%d', defaulting to visible. w2=%s\n", filepath, strline(buffer,start-buffer), w2);
+			if (nd->state != NPCVIEW_ENABLE)
+				npc_enable_target(*nd, 0, nd->state);
 		}
 	}
 
