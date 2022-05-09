@@ -2762,8 +2762,8 @@ static void pc_bonus_addeff(std::vector<s_addeffect> &effect, enum sc_type sc, i
 
 	for (auto &it : effect) {
 		if (it.sc == sc && it.flag == flag) {
-			it.rate = util::safe_addition_cap(it.rate, rate, SHRT_MAX);
-			it.arrow_rate += arrow_rate;
+			it.rate = util::safe_addition_cap(it.rate, rate, INT_MAX);
+			it.arrow_rate = util::safe_addition_cap(it.arrow_rate, arrow_rate, (short)SHRT_MAX);
 			it.duration = umax(it.duration, duration);
 			return;
 		}
@@ -2771,11 +2771,8 @@ static void pc_bonus_addeff(std::vector<s_addeffect> &effect, enum sc_type sc, i
 
 	struct s_addeffect entry = {};
 
-	if (rate < SHRT_MIN || rate > SHRT_MAX)
-		ShowWarning("pc_bonus_addeff: Item bonus rate %d exceeds -%d~%d range, capping.\n", rate, SHRT_MIN, SHRT_MAX);
-
 	entry.sc = sc;
-	entry.rate = cap_value(rate, SHRT_MIN, SHRT_MAX);
+	entry.rate = rate;
 	entry.arrow_rate = arrow_rate;
 	entry.flag = flag;
 	entry.duration = duration;
@@ -2804,7 +2801,7 @@ static void pc_bonus_addeff_onskill(std::vector<s_addeffectonskill> &effect, enu
 
 	for (auto &it : effect) {
 		if (it.sc == sc && it.skill_id == skill_id && it.target == target) {
-			it.rate = util::safe_addition_cap(it.rate, rate, SHRT_MAX);
+			it.rate = util::safe_addition_cap(it.rate, rate, INT_MAX);
 			it.duration = umax(it.duration, duration);
 			return;
 		}
@@ -2812,11 +2809,8 @@ static void pc_bonus_addeff_onskill(std::vector<s_addeffectonskill> &effect, enu
 
 	struct s_addeffectonskill entry = {};
 
-	if (rate < SHRT_MIN || rate > SHRT_MAX)
-		ShowWarning("pc_bonus_addeff_onskill: Item bonus rate %d exceeds -%d~%d range, capping.\n", rate, SHRT_MIN, SHRT_MAX);
-
 	entry.sc = sc;
-	entry.rate = cap_value(rate, SHRT_MIN, SHRT_MAX);
+	entry.rate = rate;
 	entry.skill_id = skill_id;
 	entry.target = target;
 	entry.duration = duration;
