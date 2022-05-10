@@ -6793,6 +6793,13 @@ If no <character ID> is specified it will display to the area.
 
 ---------------------------------------
 
+*cloakonnpcself {"<NPC object name>"};
+*cloakoffnpcself {"<NPC object name>"};
+
+Same command as above, but an attached player is required. The NPC will only display to the attached player.
+
+---------------------------------------
+
 *isnpccloaked {"<NPC object name>"{,<character ID>}};
 
 Returns true if the NPC has been cloaked to the attached player or given
