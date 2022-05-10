@@ -245,8 +245,8 @@ struct s_autospell {
 /// AddEff and AddEff2 bonus struct
 struct s_addeffect {
 	enum sc_type sc; /// SC type/effect
-	short rate, /// Rate
-		arrow_rate; /// Arrow rate
+	int rate; /// Rate
+	short arrow_rate; /// Arrow rate
 	unsigned char flag; /// Flag
 	unsigned int duration; /// Duration the effect applied
 };
@@ -254,8 +254,8 @@ struct s_addeffect {
 /// AddEffOnSkill bonus struct
 struct s_addeffectonskill {
 	enum sc_type sc; /// SC type/effect
-	short rate, /// Rate
-		skill_id; /// Skill ID
+	int rate; /// Rate
+	short skill_id; /// Skill ID
 	unsigned char target; /// Target
 	unsigned int duration; /// Duration the effect applied
 };
