@@ -1996,7 +1996,7 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 	int stat;
 
 	// Non players get the value set, players need to stack with previous bonuses.
-	if( bl->type != BL_PC )
+	if( bl->type != BL_PC ){
 		status->batk =
 		status->hit = status->flee =
 		status->def2 = status->mdef2 =
@@ -2006,6 +2006,7 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 		
 		if (bl->type != BL_MOB)	// BL_MOB has values set when loading mob_db
 			status->res = status->mres = 0;
+	}
 
 #ifdef RENEWAL // Renewal formulas
 	if (bl->type == BL_HOM) {
@@ -2928,6 +2929,7 @@ static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned
 	if (isHP) { //Calculates MaxHP
 		double equip_bonus = 0, item_bonus = 0;
 		dmax = job->base_hp[level-1] * (1 + (umax(stat,1) * 0.01)) * ((sd->class_&JOBL_UPPER)?1.25:(pc_is_taekwon_ranker(sd))?3:1);
+		dmax += sd->indexed_bonus.param_equip[PARAM_VIT]; //Vit from equip gives +1 additional HP
 		dmax += status_get_hpbonus(&sd->bl,STATUS_BONUS_FIX);
 		equip_bonus = (dmax * status_get_hpbonus_equip(sd) / 100);
 		item_bonus = (dmax * status_get_hpbonus_item(&sd->bl) / 100);
@@ -2937,6 +2939,7 @@ static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned
 	else { //Calculates MaxSP
 		double equip_bonus = 0, item_bonus = 0;
 		dmax = job->base_sp[level-1] * (1 + (umax(stat,1) * 0.01)) * ((sd->class_&JOBL_UPPER)?1.25:(pc_is_taekwon_ranker(sd))?3:1);
+		dmax += sd->indexed_bonus.param_equip[PARAM_INT]; //Int from equip gives +1 additional SP
 		dmax += status_get_spbonus(&sd->bl,STATUS_BONUS_FIX);
 		equip_bonus = (dmax * status_get_spbonus_equip(sd) / 100);
 		item_bonus = (dmax * status_get_spbonus_item(&sd->bl) / 100);
@@ -3589,17 +3592,17 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 		base_status->int_ += 20;
 
 	// Bonuses from cards and equipment as well as base stat, remember to avoid overflows.
-	i = base_status->str + sd->status.str + sd->indexed_bonus.param_bonus[0] + sd->indexed_bonus.param_equip[0];
+	i = base_status->str + sd->status.str + sd->indexed_bonus.param_bonus[PARAM_STR] + sd->indexed_bonus.param_equip[PARAM_STR];
 	base_status->str = cap_value(i,0,USHRT_MAX);
-	i = base_status->agi + sd->status.agi + sd->indexed_bonus.param_bonus[1] + sd->indexed_bonus.param_equip[1];
+	i = base_status->agi + sd->status.agi + sd->indexed_bonus.param_bonus[PARAM_AGI] + sd->indexed_bonus.param_equip[PARAM_AGI];
 	base_status->agi = cap_value(i,0,USHRT_MAX);
-	i = base_status->vit + sd->status.vit + sd->indexed_bonus.param_bonus[2] + sd->indexed_bonus.param_equip[2];
+	i = base_status->vit + sd->status.vit + sd->indexed_bonus.param_bonus[PARAM_VIT] + sd->indexed_bonus.param_equip[PARAM_VIT];
 	base_status->vit = cap_value(i,0,USHRT_MAX);
-	i = base_status->int_+ sd->status.int_+ sd->indexed_bonus.param_bonus[3] + sd->indexed_bonus.param_equip[3];
+	i = base_status->int_+ sd->status.int_+ sd->indexed_bonus.param_bonus[PARAM_INT] + sd->indexed_bonus.param_equip[PARAM_INT];
 	base_status->int_ = cap_value(i,0,USHRT_MAX);
-	i = base_status->dex + sd->status.dex + sd->indexed_bonus.param_bonus[4] + sd->indexed_bonus.param_equip[4];
+	i = base_status->dex + sd->status.dex + sd->indexed_bonus.param_bonus[PARAM_DEX] + sd->indexed_bonus.param_equip[PARAM_DEX];
 	base_status->dex = cap_value(i,0,USHRT_MAX);
-	i = base_status->luk + sd->status.luk + sd->indexed_bonus.param_bonus[5] + sd->indexed_bonus.param_equip[5];
+	i = base_status->luk + sd->status.luk + sd->indexed_bonus.param_bonus[PARAM_LUK] + sd->indexed_bonus.param_equip[PARAM_LUK];
 	base_status->luk = cap_value(i,0,USHRT_MAX);
 	i = base_status->pow + sd->status.pow + sd->indexed_bonus.param_bonus[PARAM_POW] + sd->indexed_bonus.param_equip[PARAM_POW];
 	base_status->pow = cap_value(i, 0, USHRT_MAX);
@@ -5769,7 +5772,7 @@ static unsigned short status_calc_str(struct block_list *bl, struct status_chang
 		if(sc->data[SC_BLESSING]->val2)
 			str += sc->data[SC_BLESSING]->val2;
 		else
-			str >>= 1;
+			str -= str / 2;
 	}
 	if(sc->data[SC_MARIONETTE])
 		str -= ((sc->data[SC_MARIONETTE]->val3)>>16)&0xFF;
@@ -5999,7 +6002,7 @@ static unsigned short status_calc_int(struct block_list *bl, struct status_chang
 		if (sc->data[SC_BLESSING]->val2)
 			int_ += sc->data[SC_BLESSING]->val2;
 		else
-			int_ >>= 1;
+			int_ -= int_ / 2;
 	}
 	if(sc->data[SC_NEN])
 		int_ += sc->data[SC_NEN]->val1;
@@ -6090,7 +6093,7 @@ static unsigned short status_calc_dex(struct block_list *bl, struct status_chang
 		if (sc->data[SC_BLESSING]->val2)
 			dex += sc->data[SC_BLESSING]->val2;
 		else
-			dex >>= 1;
+			dex -= dex / 2;
 	}
 	if(sc->data[SC_INCREASING])
 		dex += 4; // Added based on skill updates [Reddozen]
@@ -8730,7 +8733,6 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			return 0;
 	}
 
-	rate = cap_value(rate, 0, 10000);
 	sd = BL_CAST(BL_PC,bl);
 	status = status_get_status_data(bl);
 	status_src = status_get_status_data(src);
@@ -8802,7 +8804,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			tick_def2 = -2000;
 #endif
 			break;
-		case SC_STONE:
+		case SC_STONEWAIT:
 #ifndef RENEWAL
 			sc_def = status->mdef*100;
 			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
@@ -9199,11 +9201,12 @@ void status_display_remove(struct block_list *bl, enum sc_type type) {
  * @param type: Status change (SC_*)
  * @param rate: Initial percentage rate of affecting bl (0~10000)
  * @param val1~4: Depends on type of status change
- * @param tick: Initial duration that the status change affects bl
+ * @param duration: Initial duration that the status change affects bl
  * @param flag: Value which determines what parts to calculate. See e_status_change_start_flags
+ * @param delay: Delay in milliseconds before the SC is applied
  * @return adjusted duration based on flag values
  */
-int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,t_tick duration,unsigned char flag) {
+int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,t_tick duration,unsigned char flag, int32 delay) {
 	struct map_session_data *sd = NULL;
 	struct status_change* sc;
 	struct status_change_entry* sce;
@@ -9297,6 +9300,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				return 0;
 			break;
 		case SC_STONE:
+		case SC_STONEWAIT:
 		case SC_FREEZE:
 			// Undead are immune to Freeze/Stone
 			if (undead_flag && !(flag&SCSTART_NOAVOID))
@@ -9673,14 +9677,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	// List of hardcoded status cured.
 	switch (type) {
 		case SC_BLESSING:
-			// !TODO: Blessing and Agi up should do 1 damage against players on Undead Status, even on PvM
-			// !but cannot be plagiarized (this requires aegis investigation on packets and official behavior) [Brainstorm]
-			if ((!undead_flag && status->race!=RC_DEMON) || bl->type == BL_PC) {
-				status_change_end(bl, SC_CURSE, INVALID_TIMER);
-				status_change_end(bl, SC_STONE, INVALID_TIMER);
+			if (bl->type == BL_PC) {
+				// Remove Curse first, Stone is only removed if the target is not cursed
 				if (sc->data[SC_CURSE]) {
-						status_change_end(bl, SC_CURSE, INVALID_TIMER);
-						return 1; // End Curse and do not give stat boost
+					status_change_end(bl, SC_CURSE, INVALID_TIMER);
+					return 1; // End Curse and do not give stat boost
+				} else if (sc->data[SC_STONE]) {
+					status_change_end(bl, SC_STONE, INVALID_TIMER);
+					return 1; // End Stone and do not give stat boost
 				}
 			}
 			if(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_HIGH)
@@ -10123,7 +10127,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 
 		case SC_STONEWAIT:
-			val3 -= tick; // Petrify time - Incubation time
+			val3 = max(1, tick - delay); // Petrify time
+			tick = delay;
 			break;
 
 		case SC_DPOISON:
@@ -10513,7 +10518,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val3 = 5*val1; // SP cost
 			break;
 		case SC_BLESSING:
-			if ((!undead_flag && status->race!=RC_DEMON) || bl->type == BL_PC)
+			if (bl->type == BL_PC || (!undead_flag && status->race != RC_DEMON))
 				val2 = val1;
 			else
 				val2 = 0; // 0 -> Half stat.
@@ -13022,8 +13027,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		npc_touch_area_allnpc(sd,bl->m,bl->x,bl->y); // Trigger on-touch event.
 
 	// Needed to be here to make sure OPT1_STONEWAIT has been cleared from the target
-	if (type == SC_STONEWAIT && sce->val4 > -1)
-		sc_start2(bl, bl, SC_STONE, 100, sce->val1, sce->val2, sce->val3);
+	if (type == SC_STONEWAIT)
+		status_change_start(bl, bl, SC_STONE, 100, sce->val1, sce->val2, 0, 0, sce->val3, SCSTART_NOAVOID);
 
 	ers_free(sc_data_ers, sce);
 	return 1;

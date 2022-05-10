@@ -2780,7 +2780,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      NoRemoveOnDead: true
     Fail:
       S_Lifepotion: true
   - Status: L_Lifepotion
@@ -2789,7 +2788,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      NoRemoveOnDead: true
     Fail:
       L_Lifepotion: true
   - Status: Jexpboost
