@@ -9534,7 +9534,8 @@ Body:
     HitCount: 1
     Element: Dark
     AfterCastWalkDelay: 1000
-    Duration1: 18000
+    Duration1: 950
+    Duration2: 18000
     Unit:
       Id: Dummyskill
       Layout: -1
