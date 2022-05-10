@@ -4,6 +4,7 @@
 //= 1.0 First Version. [JohnnyPlayy]
 //= 1.1 Fixed small issues. [Lemongrass]
 //= 1.2 Added translation. [Asheraf]
+//= 1.3 Added paramarket NPC and warps. [Balfear]
 //============================================================
 
 grademk,34,184,4	script	Sratos#sratos	4_JP_GARM_H,{
@@ -65,7 +66,65 @@ OnInit:
 	end;
 }
 
+paramk,34,184,4	script	슈리벨#suribell	4_F_FRUIT,{ // 1914
+	mes "[슈리벨]";
+	mes "언제나 행운이 함께하길!";
+	mes "파라마켓 등급강화소에 잘 오셨습니다~";
+	next;
+	switch( select( "장비의 등급을 강화한다.", "에테르 보석 교환", "등급 강화란?" )) {
+		case 1:
+			mes "[슈리벨]";
+			mes "아끼는 장비의 잠재력을 깨우고 싶은 거죠?";
+			mes "마력을 다루는 과정에서 폭발이 일어날 수도 있습니다.";
+			next;
+			mes "[슈리벨]";
+			mes "그래도 등급 강화에 도전하신다면 …!";
+			mes "이 슈리벨, 영혼까지 갈아넣어 열심히 하겠습니다!";
+			next;
+			switch( select( "그래도 한다!", "고민 좀 해볼게." )) {
+				case 1:
+					mes "[슈리벨]";
+					mes "우리 양손 잡고, 믿음을 가지고! 이 악물고 해 봐요!";
+					close2;
+					enchantgradeui();
+					end;
+				case 2:
+					mes "[슈리벨]";
+					mes "그래요! 냉수 한 잔 마시고 합시다!";
+					close;
+			}
+		case 2:
+			mes "[슈리벨]";
+			mes "등급 강화에는 에테르 보석이 필요하죠!";
+			mes "에텔 더스트와 보석을 조합해서 만들면, 짠! 모험가님을 위한 에테르 보석이 완성!";
+			mes "보석과 에텔 더스트 조합을 하시겠어요?";
+			close2;
+			callshop "EnchantGradeExchange",1;
+			end;
+		case 3:
+			mes "[슈리벨]";
+			mes "간혹 순도 높은 마력을 잔뜩 품은 불안정한 보석류가 발견될 때가 있습니다.";
+			mes "그런 보석들을 통칭 에테르 보석이라고 부르기로 했어요.";
+			mes "누가? 바로 이 슈리벨이!";
+			next;
+			mes "[슈리벨]";
+			mes "에테르 보석의 마력은 장비의 숨겨진 잠재능력을 깨울때가 있습니다.";
+			mes "우리는 그걸 한단계 등급이 올라간다고 해서 등급강화라고 부르지요!";
+			next;
+			mes "[슈리벨]";
+			mes "모험가님의 무구도 모르는 잠재능력을 가지고 있을지 모릅니다.";
+			mes "잘못하면 소멸할 수 있는 위험이 있긴 하지만 믿음을 가지고 도전해 보십시오!";
+			close;
+	}
+
+OnInit:
+	setunittitle(getnpcid(0), "<등급 강화제>");
+	end;
+}
+
 // = Portals
 //============================================================
 prontera,50,293,0	warp	Grademk_Int	1,1,grademk,13,172
 grademk,9,172,0	warp	Grademk_Out	1,1,prontera,50,290
+paramk,8,171,0	warp	grade_in	1,1,paramk,141,64
+paramk,145,64,0	warp	grade_out	1,1,paramk,11,171
