@@ -17633,11 +17633,11 @@ Body:
       .@r = getrefine();
       bonus bUnbreakableWeapon;
       if (.@r>=7) {
-         bonus2 bAddClass,CLASS_ALL,5;
+         bonus2 bAddClass,Class_All,5;
          bonus2 bSubRace,RC_Player_Human,5;
       }
       if (.@r>=9) {
-         bonus2 bAddClass,CLASS_ALL,5;
+         bonus2 bAddClass,Class_All,5;
          bonus2 bSubRace,RC_Player_Human,5;
       }
   - Id: 1862
@@ -149486,7 +149486,7 @@ Body:
       bonus bMdef,5;
       bonus bMatk,50;
       bonus bDelayrate,10;
-      bonus2 bMagicAddEle,RC_All,getrefine();
+      bonus2 bMagicAddEle,Ele_All,getrefine();
   - Id: 470115
     AegisName: Snowflower_Boots
     Name: Snowflower Boots
