@@ -50,7 +50,7 @@ prontera,150,168,4	script	Duplicate Command Test	909,{
 			$@y -= 2;
 			if(!(.@id = getnpcid(0,.@new_npc$))){
 				mes "Something went wrong!";
-				mes "The new npc is not found!";
+				mes "The new NPC could not be found!";
 				end;
 			}
 			unitwarp(.@id,.@m$,.@x,$@y);
