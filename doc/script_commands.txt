@@ -6647,8 +6647,8 @@ the values of the original NPC.
 The duplicate NPC Unique name is returned on success.
 
 NOTE:
-	Duplicates will always have the same npc variables as the original npc
-	Editing a npc variable in a duplicate or the original npc will change it for the others.
+	Duplicates will always have the same NPC variables as the original NPC.
+	Editing a NPC variable in a duplicate or the original NPC will change it for the others.
 
 ---------------------------------------
 
