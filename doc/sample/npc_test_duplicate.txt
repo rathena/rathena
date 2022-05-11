@@ -32,7 +32,7 @@ prontera,160,175,4	duplicate(Duplicate Test Script)	Duplicate Test3	909,3,3
 
 //duplicate command script
 prontera,150,168,4	script	Duplicate Command Test	909,{
-	mes "Would you like to create a new npc ?";
+	mes "Would you like to create a new NPC?";
 	.@original_npc$ = "original_npc_unique_name";
 	switch(.@s = select("Provide No info:With Name:With Name and Map:With Name, Map and look:With Name, Map, look and dir:cancel")){
 		clear;
