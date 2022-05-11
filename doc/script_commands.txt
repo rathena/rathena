@@ -6642,8 +6642,8 @@ This command will fully unload a NPC object and all of it's duplicates.
 *duplicate "<NPC name>"{,"<Duplicate NPC name>"{,"<map>",<x>,<y>{,<sprite>{,<dir>}}}};
 
 This command will duplicate the NPC provided. If the duplicate NPC name is not
-provided it will generate a new name, if map,x,y,sprite,dir is not provided , it will take
-the values of the original npc.
+provided it will generate a new name. If map,x,y,sprite,dir is not provided it will take
+the values of the original NPC.
 The duplicate NPC Unique name is returned on success.
 
 NOTE:
