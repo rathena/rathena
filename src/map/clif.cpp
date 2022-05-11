@@ -20499,6 +20499,8 @@ void clif_roulette_open( struct map_session_data* sd ){
 	p.SilverPoint = sd->roulette_point.silver;
 	p.BronzePoint = sd->roulette_point.bronze;
 
+	sd->state.roulette_open = true;
+
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
 }
 
@@ -20566,7 +20568,7 @@ void clif_parse_roulette_close( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	// What do we need this for? (other than state tracking), game client closes the window without our response.
+	sd->state.roulette_open = false;
 }
 
 /// Response to a item reward request
