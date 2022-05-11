@@ -39,7 +39,7 @@ prontera,150,168,4	script	Duplicate Command Test	909,{
 		case 1:
 		case 2:
 			if(.@s == 2){
-				mes "Input Npc Duplicate Name";
+				mes "Input Duplicate NPC Name";
 				input .@name$;
 				.@new_npc$ = duplicate(.@original_npc$,.@name$);
 			}else{
