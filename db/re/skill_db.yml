@@ -5601,7 +5601,7 @@ Body:
       IgnoreDefense: true
     Flags:
       IsNpc: true
-    Range: 3
+    Range: -7
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -5615,7 +5615,7 @@ Body:
       IgnoreFlee: true
     Flags:
       IsNpc: true
-    Range: -1
+    Range: -7
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -5627,7 +5627,7 @@ Body:
     TargetType: Attack
     Flags:
       IsNpc: true
-    Range: 9
+    Range: -7
     Hit: Single
     HitCount: 1
   - Id: 161
@@ -5766,7 +5766,7 @@ Body:
       Critical: true
     Flags:
       IsNpc: true
-    Range: -9
+    Range: -7
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -5778,7 +5778,7 @@ Body:
     TargetType: Attack
     Flags:
       IsNpc: true
-    Range: -9
+    Range: -7
     Hit: Multi_Hit
     HitCount:
       - Level: 1
@@ -5812,7 +5812,7 @@ Body:
       IgnoreFlee: true
     Flags:
       IsNpc: true
-    Range: -9
+    Range: -7
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -5830,7 +5830,6 @@ Body:
     Flags:
       IsNpc: true
       TargetTrap: true
-    Range: 5
     Hit: Single
     HitCount: 1
     Element: Fire
@@ -5873,7 +5872,7 @@ Body:
     TargetType: Attack
     Flags:
       IsNpc: true
-    Range: -9
+    Range: -7
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -5887,7 +5886,7 @@ Body:
     TargetType: Attack
     Flags:
       IsNpc: true
-    Range: -9
+    Range: -7
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -5901,7 +5900,7 @@ Body:
     TargetType: Attack
     Flags:
       IsNpc: true
-    Range: -9
+    Range: -7
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -5915,7 +5914,7 @@ Body:
     TargetType: Attack
     Flags:
       IsNpc: true
-    Range: -9
+    Range: -7
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -5929,7 +5928,7 @@ Body:
     TargetType: Attack
     Flags:
       IsNpc: true
-    Range: -9
+    Range: -7
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -5944,7 +5943,7 @@ Body:
     TargetType: Attack
     Flags:
       IsNpc: true
-    Range: -9
+    Range: -7
     Hit: Single
     HitCount: 1
     Element: Dark
@@ -5958,7 +5957,7 @@ Body:
     TargetType: Attack
     Flags:
       IsNpc: true
-    Range: -9
+    Range: -7
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -5972,7 +5971,7 @@ Body:
     TargetType: Attack
     Flags:
       IsNpc: true
-    Range: -9
+    Range: -7
     Hit: Single
     HitCount: 1
     Element: Random
@@ -5984,7 +5983,7 @@ Body:
     TargetType: Attack
     Flags:
       IsNpc: true
-    Range: -9
+    Range: -7
     Hit: Single
     HitCount: 1
     Element: Water
@@ -5997,7 +5996,7 @@ Body:
     Flags:
       IsNpc: true
       TargetHidden: true
-    Range: -9
+    Range: -7
     Hit: Single
     HitCount: 1
     Element: Earth
@@ -6009,7 +6008,7 @@ Body:
     TargetType: Attack
     Flags:
       IsNpc: true
-    Range: -9
+    Range: -7
     Hit: Single
     HitCount: 1
     Element: Fire
@@ -6021,7 +6020,7 @@ Body:
     TargetType: Attack
     Flags:
       IsNpc: true
-    Range: -9
+    Range: -7
     Hit: Single
     HitCount: 1
     Element: Wind
@@ -6033,7 +6032,7 @@ Body:
     TargetType: Attack
     Flags:
       IsNpc: true
-    Range: -9
+    Range: -7
     Hit: Single
     HitCount: 1
     Element: Poison
@@ -6046,7 +6045,7 @@ Body:
     TargetType: Attack
     Flags:
       IsNpc: true
-    Range: -9
+    Range: -7
     Hit: Single
     HitCount: 1
     Element: Holy
@@ -6058,7 +6057,7 @@ Body:
     TargetType: Attack
     Flags:
       IsNpc: true
-    Range: -9
+    Range: -7
     Hit: Single
     HitCount: 1
     Element: Dark
@@ -6070,7 +6069,7 @@ Body:
     TargetType: Attack
     Flags:
       IsNpc: true
-    Range: -9
+    Range: -7
     Hit: Single
     HitCount: 1
     Element: Ghost
@@ -6082,7 +6081,7 @@ Body:
     TargetType: Attack
     Flags:
       IsNpc: true
-    Range: -9
+    Range: -7
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -6164,7 +6163,7 @@ Body:
       IgnoreFlee: true
     Flags:
       IsNpc: true
-    Range: 9
+    Range: -7
     Hit: Single
     HitCount: 1
     Element: Dark
@@ -7101,7 +7100,6 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Range: 9
     Hit: Single
     SplashArea: 1
     CastTime: 2000
@@ -9513,7 +9511,7 @@ Body:
     TargetType: Attack
     Flags:
       IsNpc: true
-    Range: -1
+    Range: -2
     Hit: Multi_Hit
     HitCount: -2
     Element: Dark
@@ -9531,12 +9529,12 @@ Body:
     Flags:
       IsNpc: true
       TargetSelf: true
-    Range: 5
     Hit: Single
     HitCount: 1
     Element: Dark
     AfterCastWalkDelay: 1000
-    Duration1: 18000
+    Duration1: 950
+    Duration2: 18000
     Unit:
       Id: Dummyskill
       Layout: -1
@@ -9639,7 +9637,7 @@ Body:
       NoDamage: true
     Flags:
       IsNpc: true
-    Range: 9
+    Range: -2
     Hit: Single
     Duration1: 15000
     Status: Stop
@@ -9664,7 +9662,7 @@ Body:
     TargetType: Attack
     Flags:
       IsNpc: true
-    Range: 9
+    Range: -2
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -9677,7 +9675,7 @@ Body:
     TargetType: Attack
     Flags:
       IsNpc: true
-    Range: 9
+    Range: -2
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -9689,7 +9687,7 @@ Body:
     TargetType: Attack
     Flags:
       IsNpc: true
-    Range: 9
+    Range: -2
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -9701,7 +9699,7 @@ Body:
     TargetType: Attack
     Flags:
       IsNpc: true
-    Range: -9
+    Range: -7
     Hit: Single
     HitCount: 1
     Element: Undead
@@ -9781,7 +9779,6 @@ Body:
       NoDamage: true
     Flags:
       IsNpc: true
-    Range: 2
   - Id: 353
     Name: NPC_INVISIBLE
     Description: Invisible
@@ -9802,7 +9799,6 @@ Body:
       NoDamage: true
     Flags:
       IsNpc: true
-    Range: 2
     Hit: Single
   - Id: 355
     Name: LK_AURABLADE
@@ -16519,7 +16515,7 @@ Body:
     TargetType: Attack
     Flags:
       IsNpc: true
-    Range: -9
+    Range: -7
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -16534,7 +16530,7 @@ Body:
       NoDamage: true
     Flags:
       IsNpc: true
-    Range: -9
+    Range: -7
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -16751,7 +16747,7 @@ Body:
       NoDamage: true
     Flags:
       IsNpc: true
-    Range: -9
+    Range: -7
     HitCount: 1
     Duration2: 180000
     Status: HellPower
@@ -40721,7 +40717,7 @@ Body:
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
-    Range: 1
+    Range: 15
     Hit: Multi_Hit
     HitCount:
       - Level: 1
@@ -40841,7 +40837,7 @@ Body:
     MaxLevel: 3
     Type: Weapon
     TargetType: Attack
-    Range: 1
+    Range: 15
     Hit: Single
     HitCount: 1
     AfterCastActDelay: 1000
@@ -40853,7 +40849,7 @@ Body:
     MaxLevel: 5
     Type: Magic
     TargetType: Attack
-    Range: 9
+    Range: 15
     Hit: Single
     HitCount:
       - Level: 1
@@ -40918,7 +40914,6 @@ Body:
       IgnoreElement: true
       IgnoreFlee: true
       IgnoreDefCard: true
-    Range: 4
     Hit: Single
     HitCount: 1
     Element: Weapon

@@ -1245,11 +1245,11 @@ int hom_recv_data(uint32 account_id, struct s_homunculus *sh, int flag)
 		clif_hominfo(sd,hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
 		clif_homskillinfoblock(sd);
 		hom_init_timers(hd);
-	}
 
 #ifdef RENEWAL
-	sc_start(&sd->bl, &sd->bl, SC_HOMUN_TIME, 100, 1, skill_get_time(AM_CALLHOMUN, 1));
+		sc_start(&sd->bl, &sd->bl, SC_HOMUN_TIME, 100, 1, skill_get_time(AM_CALLHOMUN, 1));
 #endif
+	}
 
 	return 1;
 }

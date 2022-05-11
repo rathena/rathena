@@ -1297,10 +1297,9 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 				}
 
 				if (it.flag&ATF_TARGET)
-					sc_start(src, bl, it.sc, rate, 7, it.duration, 100);
-
+					status_change_start(src, bl, it.sc, rate, 7, 0, 0, 0, it.duration, SCSTART_NONE, 100);
 				if (it.flag&ATF_SELF)
-					sc_start(src, src, it.sc, rate, 7, it.duration, 100);
+					status_change_start(src, src, it.sc, rate, 7, 0, 0, 0, it.duration, SCSTART_NONE, 100);
 			}
 		}
 
@@ -1311,9 +1310,9 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 					continue;
 
 				if (it.target&ATF_TARGET)
-					sc_start(src, bl, it.sc, rate, 7, it.duration, 100);
+					status_change_start(src, bl, it.sc, rate, 7, 0, 0, 0, it.duration, SCSTART_NONE, 100);
 				if (it.target&ATF_SELF)
-					sc_start(src, src, it.sc, rate, 7, it.duration, 100);
+					status_change_start(src, src, it.sc, rate, 7, 0, 0, 0, it.duration, SCSTART_NONE, 100);
 			}
 			//"While the damage can be blocked by Pneuma, the chance to break armor remains", irowiki. [Cydh]
 			if (dmg_lv == ATK_BLOCK && skill_id == AM_ACIDTERROR) {
@@ -1527,7 +1526,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		break;
 
 	case NPC_GRANDDARKNESS:
-		sc_start(src, bl, SC_BLIND, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		sc_start(src, bl, SC_BLIND, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
 		attack_type |= BF_WEAPON;
 		break;
 
@@ -2504,10 +2503,9 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			}
 
 			if (it.flag&ATF_TARGET && src != bl)
-				sc_start(src, src, it.sc, rate, 7, it.duration, 100);
-
+				status_change_start(src, src, it.sc, rate, 7, 0, 0, 0, it.duration, SCSTART_NONE, 100);
 			if (it.flag&ATF_SELF && !status_isdead(bl))
-				sc_start(src, bl, it.sc, rate, 7, it.duration, 100);
+				status_change_start(src, bl, it.sc, rate, 7, 0, 0, 0, it.duration, SCSTART_NONE, 100);
 		}
 	}
 
@@ -14753,6 +14751,10 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 			case NJ_KAENSIN:
 				unit_val2 = group->val2;
 				break;
+			case CR_GRANDCROSS:
+			case NPC_GRANDDARKNESS:
+				unit_val1 = (skill_get_time(skill_id, skill_lv) / interval); //Default: 950/300 = 3 hits
+				break;
 			case WZ_ICEWALL:
 				unit_val1 = 200 + 200*skill_lv;
 				unit_val2 = map_getcell(src->m, ux, uy, CELL_GETTYPE);
@@ -15259,9 +15261,6 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 		if (diff < 0)
 			return 0;
 		ts->tick = tick+sg->interval;
-
-		if ((skill_id==CR_GRANDCROSS || skill_id==NPC_GRANDDARKNESS) && !battle_config.gx_allhit)
-			ts->tick += (t_tick)sg->interval*(map_count_oncell(bl->m,bl->x,bl->y,BL_CHAR,0)-1);
 	}
 
 	// Wall of Thorn damaged by Fire element unit [Cydh]
@@ -15356,6 +15355,12 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 							status_heal(ss,heal,0,0);
 						}
 					}
+					break;
+				case CR_GRANDCROSS:
+				case NPC_GRANDDARKNESS:
+					if(!battle_config.gx_allhit)
+						unit->val1--;
+					skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 					break;
 				default:
 					skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
@@ -20711,7 +20716,8 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 			}
 		}
 		else if (group->skill_id == WZ_METEOR || group->skill_id == SU_CN_METEOR || group->skill_id == SU_CN_METEOR2 || 
-			group->skill_id == AG_VIOLENT_QUAKE_ATK || group->skill_id == AG_ALL_BLOOM_ATK || group->skill_id == AG_ALL_BLOOM_ATK2) {
+			group->skill_id == AG_VIOLENT_QUAKE_ATK || group->skill_id == AG_ALL_BLOOM_ATK || group->skill_id == AG_ALL_BLOOM_ATK2 ||
+			((group->skill_id == CR_GRANDCROSS || group->skill_id == NPC_GRANDDARKNESS) && unit->val1 <= 0)) {
 			skill_delunit(unit);
 			return 0;
 		}
