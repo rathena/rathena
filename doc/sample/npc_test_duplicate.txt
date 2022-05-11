@@ -54,7 +54,7 @@ prontera,150,168,4	script	Duplicate Command Test	909,{
 				end;
 			}
 			unitwarp(.@id,.@m$,.@x,$@y);
-			mes "The npc is moved to " + .@m$ + "," + .@x + "," + $@y;
+			mes "The NPC is now at " + .@m$ + "," + .@x + "," + $@y;
 			mes "Done";
 			end;
 		case 3:
