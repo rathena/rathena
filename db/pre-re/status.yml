@@ -1401,6 +1401,8 @@ Body:
       Mdef: true
       Aspd: true
       Speed: true
+    Flags:
+      NoSave: true
     Opt3:
       SteelBody: true
   - Status: Orcish
