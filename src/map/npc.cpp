@@ -4623,7 +4623,18 @@ int npc_script_event(struct map_session_data* sd, enum npce_event type){
 	return vector.size();
 }
 
-struct npc_data* dup_npc(npc_data* dnd, char name[NPC_NAME_LENGTH + 1], int16 m, int16 x, int16 y, int class_,uint8 dir)
+/**
+ * Duplicates a NPC.
+ * dnd: Duplicate NPC data
+ * name: Duplicate NPC name
+ * m: Map ID of duplicate NPC
+ * x: X coordinate of duplicate NPC
+ * y: Y coordinate of duplicate NPC
+ * class_: View of duplicate NPC
+ * dir: Facing direction of duplicate NPC
+ * Returns duplicate NPC data on success
+ */
+npc_data* npc_duplicate_npc(npc_data* dnd, char name[NPC_NAME_LENGTH + 1], int16 m, int16 x, int16 y, int class_, uint8 dir)
 {
 	static char w1[128], w2[128], w3[128], w4[128];
 	const char* stat_buf = "- call from duplicate subsystem -\n";
