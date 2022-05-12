@@ -6733,7 +6733,6 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Range: 9
     Hit: Single
     SplashArea: 1
     CastTime: 2000
@@ -16349,7 +16348,7 @@ Body:
       NoDamage: true
     Flags:
       IsNpc: true
-    Range: -2
+    Range: -7
     HitCount: 1
     Duration2: 180000
     Status: HellPower
