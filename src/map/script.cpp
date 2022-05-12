@@ -24279,7 +24279,7 @@ BUILDIN_FUNC(duplicate)
 	if (script_hasdata(st, 8)) {
 		dir = script_getnum(st, 8);
 	}
-	npc_data* nd = dup_npc(dnd, name, m, x, y, class_,dir);
+	npc_data* nd = npc_duplicate_npc(dnd, name, m, x, y, class_, dir);
 	script_pushstr(st, aStrdup(nd->exname));
 	return SCRIPT_CMD_SUCCESS;
 }
