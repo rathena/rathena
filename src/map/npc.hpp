@@ -1339,7 +1339,7 @@ void npc_parse_mob2(struct spawn_data* mob);
 struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short from_y, short xs, short ys, unsigned short to_mapindex, short to_x, short to_y);
 int npc_globalmessage(const char* name,const char* mes);
 const char *npc_get_script_event_name(int npce_index);
-struct npc_data* dup_npc(npc_data* dnd, char name[NPC_NAME_LENGTH + 1], int16 m, int16 x, int16 y, int class_,uint8 dir);
+npc_data* npc_duplicate_npc(npc_data* dnd, char name[NPC_NAME_LENGTH + 1], int16 m, int16 x, int16 y, int class_, uint8 dir);
 
 void npc_setcells(struct npc_data* nd);
 void npc_unsetcells(struct npc_data* nd);
