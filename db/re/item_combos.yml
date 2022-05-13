@@ -26201,3 +26201,89 @@ Body:
           - Owl_Baron_Card    # 4238
     Script: |
       bonus5 bAutoSpell,"HW_MAGICPOWER",4,3,BF_MAGIC,0;
+  - Combos:
+      - Combo:
+          - Jirant_Dress    # 15387
+          - Jirant_Staff_BR    # 2047
+      - Combo:
+          - Jirant_Dress    # 15387
+          - Jirant_Staff    # 2041
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      .@a = min(4,.@r-6);
+      skill "AL_INCAGI",1;
+      bonus2 bSkillAtk,"SO_ELECTRICWALK",30*.@r;
+      bonus2 bSkillAtk,"SO_FIREWALK",30*.@r;
+      bonus bMagicHPGainValue,50*.@r;
+      if (.@r>=7)
+         skill "AL_INCAGI",.@a;
+  - Combos:
+      - Combo:
+          - Jirant_Dress    # 15387
+          - Jirant_Cloak_BR    # 20908
+      - Combo:
+          - Jirant_Dress    # 15387
+          - Jirant_Cloak    # 20852
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      bonus bMatkRate,2*.@r;
+      bonus bVariableCastrate,-2*.@r;
+  - Combos:
+      - Combo:
+          - Jirant_Dress    # 15387
+          - Professor_Card    # 4561
+    Script: |
+      bonus2 bResEff,Eff_Freeze,100;
+      bonus2 bVariableCastrate,"SO_PSYCHIC_WAVE",-100;
+      bonus5 bAutoSpellWhenHit,"SA_LANDPROTECTOR",5,-100,BF_MAGIC,0;
+  - Combos:
+      - Combo:
+          - Staff_170_J    # 2038
+          - Immortal_Dog_Tag    # 32204
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      bonus bInt,2*.@r;
+      bonus2 bSkillAtk,"WL_CRIMSONROCK",.@r;
+      if (.@r >= 9) {
+         bonus bMagicHPGainValue,500;
+         autobonus "{ bonus2 bMagicAtkEle,Ele_Fire,50; }",10,10000,BF_MAGIC,"{ specialeffect2 255; }";
+      }
+  - Combos:
+      - Combo:
+          - Jirant_Staff    # 2041
+          - Jirant_Cloak    # 20852
+    Script: |
+      bonus bMatkRate,5;
+      bonus2 bSubEle,Ele_Fire,20;
+      bonus2 bSubEle,Ele_Wind,20;
+  - Combos:
+      - Combo:
+          - Jirant_Staff_BR    # 2047
+          - Jirant_Cloak_BR    # 20908
+    Script: |
+      bonus bMatkRate,5;
+      bonus2 bSubEle,Ele_Fire,10;
+      bonus2 bSubEle,Ele_Wind,10;
+  - Combos:
+      - Combo:
+          - Jirant_Mirror    # 28956
+          - Jirant_Dress    # 15387
+    Script: |
+      bonus bMatkRate,5;
+      bonus2 bIgnoreDefClassRate,Class_Boss,25;
+      if (getequiprefinerycnt(EQI_HAND_L)>=8) {
+         bonus bMatkRate,5;
+         bonus2 bIgnoreDefClassRate,Class_Boss,25;
+      }
+  - Combos:
+      - Combo:
+          - Jirant_Mirror    # 28956
+          - Jirant_Cloak    # 20852
+    Script: |
+      bonus bMatkRate,5;
+      bonus bVariableCastrate,-5;
+      if (getequiprefinerycnt(EQI_HAND_L)>=8) {
+         bonus bFlee2,20;
+         bonus bMatkRate,5;
+         bonus bVariableCastrate,-5;
+      }

@@ -20742,6 +20742,7 @@ Body:
     Weight: 3000
     Attack: 200
     MagicAttack: 280
+    Range: 1
     Jobs:
       Sage: true
       SoulLinker: true
@@ -20770,7 +20771,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -20778,7 +20779,7 @@ Body:
       bonus bInt,25;
       bonus bDex,25;
       bonus3 bAddEff,Eff_Poison,1000,ATF_MAGIC;
-      bonus3 bAutoSpell,"AB_SILENTIUM",1,100;
+      bonus3 bAutoSpellWhenHit,"AB_SILENTIUM",1,100;
       bonus bUnbreakableWeapon;
   - Id: 2022
     AegisName: Staff_Of_Geffen
@@ -20844,6 +20845,7 @@ Body:
     Weight: 500
     Attack: 30
     MagicAttack: 170
+    Range: 1
     Slots: 1
     Jobs:
       Monk: true
@@ -20925,6 +20927,7 @@ Body:
     Attack: 150
     MagicAttack: 320
     Slots: 2
+    Range: 1
     Jobs:
       Monk: true
       Priest: true
@@ -20944,6 +20947,84 @@ Body:
       bonus bMatkRate,(.@r/2);
       bonus bDelayrate,(.@r*-1);
       bonus bUnbreakableWeapon;
+  - Id: 2028
+    AegisName: Aion_Staff
+    Name: Iron Staff
+    Type: Weapon
+    SubType: 2hStaff
+    Buy: 49800
+    Weight: 2500
+    Attack: 180
+    MagicAttack: 24
+    Range: 1
+    Slots: 2
+    Jobs:
+      Wizard: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 110
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAtkEle,Ele_Ghost;
+      bonus bMatk,24*(getskilllv("HW_MAGICPOWER"));
+      bonus2 bSkillUseSP,"WL_READING_SB",24;
+      bonus2 bIgnoreMdefClassRate,Class_All,8*(.@r/3);
+      bonus2 bSkillVariableCast,"WL_READING_SB",-1000*(getskilllv("WL_FREEZE_SP"));
+      autobonus3 "{ bonus bMatkRate,8*(getskilllv(\"WL_RADIUS\"); }",1000,1000,"WL_RELEASE";
+      if (getskilllv("WL_RELEASE") == 2) {
+         bonus2 bSkillVariableCast,"WL_SUMMONFB",-1000;
+         bonus2 bSkillVariableCast,"WL_SUMMONWB",-1000;
+         bonus2 bSkillVariableCast,"WL_SUMMONSTONE",-1000;
+         bonus2 bSkillVariableCast,"WL_SUMMONBL",-1000;
+      }
+  - Id: 2029
+    AegisName: TStaff_Of_E_Slayer_J
+    Name: Devil God's Staff
+    Type: Weapon
+    SubType: 2hStaff
+    Buy: 56000
+    Weight: 800
+    Attack: 30
+    MagicAttack: 155
+    Range: 1
+    Jobs:
+      Acolyte: true
+      Mage: true
+      Monk: true
+      Novice: true
+      Priest: true
+      Sage: true
+      SoulLinker: true
+      SuperNovice: true
+      Wizard: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 70
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddDamageClass,1916,40;
+      bonus2 bAddMagicDamageClass,1916,40;
+      bonus2 bAddDefMonster,1916,10;
+      bonus2 bAddMDefMonster,1916,10;
+      if (.@r>=7) {
+         bonus2 bAddDamageClass,1916,60;
+         bonus2 bAddMagicDamageClass,1916,60;
+         bonus2 bAddDefMonster,1916,20;
+         bonus2 bAddMDefMonster,1916,20;
+      }
+      if (.@r>=9) {
+         bonus2 bAddDamageClass,1916,80;
+         bonus2 bAddMagicDamageClass,1916,80;
+         bonus2 bAddDefMonster,1916,40;
+         bonus2 bAddMDefMonster,1916,40;
+      }
   - Id: 2030
     AegisName: Unity_Two-Handed_Staff
     Name: Unity Two-Handed Staff
@@ -20990,7 +21071,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -21045,6 +21126,49 @@ Body:
       if (BaseJob == JOB_WIZARD) {
          bonus bMatk,15;
       }
+  - Id: 2034
+    AegisName: Avenger_Wizardy_Staff
+    Name: Avenger Wizard Staff
+    Type: Weapon
+    SubType: 2hStaff
+    Buy: 20
+    Attack: 70
+    MagicAttack: 210
+    Range: 1
+    Jobs:
+      Monk: true
+      Priest: true
+      Sage: true
+      SoulLinker: true
+      SuperNovice: true
+      Wizard: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus2 bMagicAddRace,RC_DemiHuman,25;
+      bonus2 bSubRace,RC_DemiHuman,10;
+      bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,5*.@r;
+      if (.@r>4) {
+         bonus2 bMagicAddRace,RC_DemiHuman,10;
+         bonus2 bSubRace,RC_DemiHuman,10;
+      }
+      if (.@r>6) {
+         .@bonus = 10;
+         if(.@r>7)
+            .@bonus += min((.@r - 7) * 2,6);
+         bonus2 bMagicAddRace,RC_DemiHuman,.@bonus;
+         bonus2 bSubRace,RC_DemiHuman,10;
+      }
+      if (.@r>8)
+         bonus2 bSkillAtk,"WL_COMET",20;
   - Id: 2035
     AegisName: Diva_Staff
     Name: Diva Staff
@@ -21109,6 +21233,64 @@ Body:
          bonus bMatkRate,4;
       if (.@r>=9)
          bonus bMatkRate,4;
+  - Id: 2037
+    AegisName: Sinister_Staff_J
+    Name: Staff of Vicious Mind
+    Type: Weapon
+    SubType: 2hStaff
+    Buy: 100000
+    Weight: 1000
+    Attack: 100
+    MagicAttack: 200
+    Range: 1
+    Jobs:
+      Monk: true
+      Priest: true
+      Sage: true
+      SoulLinker: true
+      SuperNovice: true
+      Wizard: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      bonus bMatk,getrefine();
+  - Id: 2038
+    AegisName: Staff_170_J
+    Name: Sunflower Kid
+    Type: Weapon
+    SubType: 2hStaff
+    Buy: 10
+    Weight: 900
+    Attack: 40
+    MagicAttack: 210
+    Range: 1
+    Slots: 1
+    Jobs:
+      Wizard: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bIgnoreMdefClassRate,Class_All,5*.@r;
+      bonus2 bMagicAtkEle,Ele_Fire,3*.@r;
+      if (getskilllv("WZ_SIGHTRASHER") == 10)
+         bonus2 bMagicAtkEle,Ele_Fire,20;
+      autobonus3 "{ bonus2 bSkillAtk,\"WZ_METEOR\",60; }",10*.@r,5000,"WZ_METEOR";
+      /*Unknown Rate*/
   - Id: 2039
     AegisName: Wizardy_Staff_IL
     Name: Illusion Wizardry Staff
@@ -21170,6 +21352,48 @@ Body:
       if (getrefine()>=7) {
          bonus bMatkRate,getskilllv("WZ_STORMGUST");
       }
+  - Id: 2041
+    AegisName: Jirant_Staff
+    Name: Flame Thunder Witch's Wand
+    Type: Weapon
+    SubType: 2hStaff
+    Weight: 2700
+    Attack: 200
+    MagicAttack: 350
+    Range: 1
+    Slots: 1
+    Jobs:
+      Sage: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus bInt,5;
+      bonus bDex,10;
+      bonus bVariableCastrate,-30;
+      bonus2 bMagicAtkEle,Ele_Fire,(getskilllv("SO_FIREWALK")*10)+(.@r*5);
+      bonus2 bMagicAtkEle,Ele_Wind,(getskilllv("SO_ELECTRICWALK")*10)+(.@r*5);
+      bonus2 bSkillAtk,"SO_FIREWALK",30*(.@r/2);
+      bonus2 bSkillAtk,"SO_ELECTRICWALK",30*(.@r/2);
+      bonus2 bIgnoreMdefClassRate,Class_All,5*@r;
+      if (.@r>=9) {
+         bonus3 bAddEffOnSkill,"SO_ELECTRICWALK",Eff_Silence,1000;
+         bonus3 bAddEffOnSkill,"SO_FIREWALK",Eff_Curse,1000;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"SO_FIREWALK",100;
+         bonus2 bSkillAtk,"SO_ELECTRICWALK",100;
+      }
+      if (.@r>=12)
+         bonus bFixedCastrate,-70;
   - Id: 2046
     AegisName: Novice_Warlock's_Staff
     Name: Novice Warlock's Staff
@@ -21195,6 +21419,48 @@ Body:
       if (.@r>=7) {
          bonus2 bSkillAtk,"WL_CRIMSONROCK",15;
       }
+  - Id: 2047
+    AegisName: Jirant_Staff_BR
+    Name: Witch's Staff
+    Type: Weapon
+    SubType: 2hStaff
+    Weight: 2700
+    Attack: 20
+    MagicAttack: 350
+    Range: 1
+    Slots: 1
+    Jobs:
+      Sage: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus bInt,5;
+      bonus bDex,10;
+      bonus bVariableCastrate,-30;
+      bonus2 bMagicAtkEle,Ele_Fire,(getskilllv("SO_FIREWALK")*10)+(.@r*5);
+      bonus2 bMagicAtkEle,Ele_Wind,(getskilllv("SO_ELECTRICWALK")*10)+(.@r*5);
+      bonus2 bSkillAtk,"SO_FIREWALK",30*.@r;
+      bonus2 bSkillAtk,"SO_ELECTRICWALK",30*.@r;
+      bonus2 bIgnoreMdefClassRate,Class_All,5*.@r;
+      if (.@r>=7) {
+         bonus3 bAddEffOnSkill,"SO_ELECTRICWALK",Eff_Silence,1000;
+         bonus3 bAddEffOnSkill,"SO_FIREWALK",Eff_Curse,1000;
+      }
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SO_FIREWALK",100;
+         bonus2 bSkillAtk,"SO_ELECTRICWALK",100;
+      }
+      if (.@r>=10)
+         bonus bFixedCastrate,-70;
   - Id: 2048
     AegisName: Aeon_Staff
     Name: Aeon Staff
@@ -68671,6 +68937,25 @@ Body:
     Script: |
       skill "MC_IDENTIFY",1;
       skill "WZ_ESTIMATION",1;
+  - Id: 15387
+    AegisName: Jirant_Dress
+    Name: Witch's Dress
+    Type: Armor
+    Buy: 20
+    Weight: 800
+    Defense: 35
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus2 bIgnoreDefClassRate,Class_Boss,50;
+      bonus2 bMagicAtkEle,Ele_Wind,2*.@r;
+      bonus bMatk,15*.@r;
   - Id: 15388
     AegisName: King_Schmidt_Suit
     Name: King Schmidt's Suit
@@ -99178,6 +99463,32 @@ Body:
     Refineable: true
     Script: |
       bonus bVit,15;
+  - Id: 20852
+    AegisName: Jirant_Cloak
+    Name: Witch's Cloak
+    Type: Armor
+    Weight: 1000
+    Defense: 16
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSubEle,Ele_Fire,5*@r;
+      bonus2 bSubEle,Ele_Wind,5*@r;
+      if (.@r>=7) {
+         bonus bMatkRate,5;
+         bonus bVariableCastrate,-5;
+      }
+      if (.@r>=9) {
+         bonus bMatkRate,5;
+         bonus bVariableCastrate,-5;
+      }
+      if (.@r>=10)
+         bonus bNoWalkDelay;
   - Id: 20854
     AegisName: Medical_Cape
     Name: Medical Cape
@@ -99465,6 +99776,32 @@ Body:
     Script: |
       bonus2 bSubEle,Ele_Neutral,20;
       bonus bVariableCastrate,-5;
+  - Id: 20908
+    AegisName: Jirant_Cloak_BR
+    Name: Witch's Cloak
+    Type: Armor
+    Weight: 1000
+    Defense: 16
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSubEle,Ele_Fire,5*(.@r/2);
+      bonus2 bSubEle,Ele_Wind,5*(.@r/2);
+      if (.@r>=5) {
+         bonus bMatkRate,5;
+         bonus bVariableCastrate,-5;
+      }
+      if (.@r>=7) {
+         bonus bMatkRate,5;
+         bonus bVariableCastrate,-5;
+      }
+      if (.@r>=15)
+         bonus bNoWalkDelay;
   - Id: 20918
     AegisName: Angel_Poring_Wing
     Name: Angel Poring Wing
@@ -127132,6 +127469,26 @@ Body:
          if (readparam(bLuk)>=90)
             bonus bCritAtkRate,5;
       }
+  - Id: 28956
+    AegisName: Jirant_Mirror
+    Name: Witch's Hand Mirror
+    Type: Armor
+    View: 1
+    Buy: 20
+    Weight: 500
+    Defense: 80
+    Slots: 1
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 65
+    Refineable: true
+    Script: |
+      bonus bMdef,5;
+      bonus2 bSubEle,Ele_Fire,20;
+      bonus2 bSubEle,Ele_Wind,20;
+      bonus2 bSubEle,Ele_Holy,20+(getskilllv("CR_TRUST")*2);
+      bonus2 bSubEle,Ele_Ghost,20;
   - Id: 31027
     AegisName: C_Pretty_Bear
     Name: Costume Pretty Bear
