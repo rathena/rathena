@@ -33818,16 +33818,6 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-  - Id: 23150
-    AegisName: Lapine_DdukddakBox
-    Name: Lapine Big Box
-    Type: Etc
-    Weight: 10
-  - Id: 23817
-    AegisName: Bs_Making_S
-    Name: Mysterious Combination Bundle
-    Type: Etc
-    Weight: 10
   - Id: 25000
     AegisName: SPdrainStone_Top
     Name: SP Absorption Stone(Upper)

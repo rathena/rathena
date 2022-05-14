@@ -17492,7 +17492,7 @@ Body:
     EquipLevelMin: 100
     Refineable: true
     Script: |
-      bonus bBaseAtk,getrefine;
+      bonus bBaseAtk,getrefine();
   - Id: 1845
     AegisName: Probation_Knuckle
     Name: Trial Sura's Knuckle
@@ -79595,9 +79595,11 @@ Body:
     EquipLevelMin: 70
     Refineable: true
     Script: |
+      if (getrefine() > 6)
+         .@val = getrefine();
       bonus bAgi,1;
       bonus bInt,2;
-      bonus5 bAutoSpell,"HW_MAGICPOWER",2,5+(getrefine()-5),BF_MAGIC,0;
+      bonus5 bAutoSpell,"HW_MAGICPOWER",2,5+.@val,BF_MAGIC,0;
   - Id: 18867
     AegisName: Vajra
     Name: Vajra

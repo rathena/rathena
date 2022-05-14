@@ -12610,7 +12610,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus_script "{ bonus bBaseAtk,30; bonus bMatk,30; bonus bAspdRate,5; bonus bVariableCastrate,-5; bonus bMaxHPrate,-10;  bonus bMaxSPrate,-10; bonus5 bAutoSpell,\"AC_CONCENTRATION\",max(getskilllv(\"AC_CONCENTRATION\"),3),10,BF_WEAPON|BF_MAGIC,0; }",600,1,1,EFST_2011RWC_SCROLL;
+      itemskill "AC_CONCENTRATION",max(getskilllv("AC_CONCENTRATION"),3);
+      /*bonus_script "{ bonus bBaseAtk,30; bonus bMatk,30; bonus bAspdRate,5; bonus bVariableCastrate,-5; bonus bMaxHPrate,-10;  bonus bMaxSPrate,-10; bonus5 bAutoSpell,\"AC_CONCENTRATION\",max(getskilllv(\"AC_CONCENTRATION\"),3),10,BF_WEAPON|BF_MAGIC,0; }",600,1,1,EFST_2011RWC_SCROLL; TODO implement new staus*/
       specialeffect2 EF_POTION_BERSERK;
       showscript "Oh My GOODNESS!!! I FEEL AWESOMELY STRONG!!! WOWOW";
   - Id: 12797
@@ -46278,6 +46279,13 @@ Body:
       getitem 12508,3;
       getitem 12509,3;
       getitem 12510,3;
+  - Id: 23150
+    AegisName: Lapine_DdukddakBox
+    Name: Lapine Big Box
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      /* TODO Update Description */
   - Id: 23151
     AegisName: EnchantStone_Recipe
     Name: Enchant Stone Recipe
@@ -47578,6 +47586,13 @@ Body:
     Weight: 50
     Script: |
       laphine_upgrade();
+  - Id: 23817
+    AegisName: Bs_Making_S
+    Name: Mysterious Combination Bundle
+    Type: Delayconsume
+    Weight: 10
+    Script: |
+      /* TODO Update Description */
   - Id: 23818
     AegisName: Bs_Item_M_S_2
     Name: Giant Orc Helm Combination SynthesisBox
