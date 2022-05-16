@@ -38607,10 +38607,10 @@ Body:
     Script: |
       getitem 6047,1;
   - Id: 16864
-    AegisName: C_Siege_Scroll_Box1_10
-    Name: WoE Teleport Scroll 100 Box
+    AegisName: Siege_Map_Teleport_Scroll_Box_10
+    Name: Siege Map Teleport Scroll Box(10)
     Type: Cash
-    Sell: 10
+    Buy: 20
     Weight: 10
     Trade:
       NoDrop: true
@@ -38621,8 +38621,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14591,100;
-      getitembound 23919,1,Bound_Account;
+      getitem 14591,10;
   - Id: 16865
     AegisName: Siege_Map_Teleport_Scroll_Box_30
     Name: Siege Map Teleport Scroll Box(30)
@@ -38656,10 +38655,10 @@ Body:
     Script: |
       getitem 14591,10;
   - Id: 16867
-    AegisName: C_Siege_Scroll_Box2_30
-    Name: WoE Teleport Scroll 500 Box
+    AegisName: Siege_Map_Teleport_Scroll_II_Box_30
+    Name: Siege Map Teleport Scroll II Box(30)
     Type: Cash
-    Sell: 10
+    Buy: 20
     Weight: 10
     Trade:
       NoDrop: true
@@ -38670,8 +38669,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14591,500;
-      getitembound 23919,11,Bound_Account;
+      getitem 14591,30;
   - Id: 16972
     AegisName: Weather_Report_Box
     Name: Weather Report Box
