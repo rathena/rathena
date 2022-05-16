@@ -1023,7 +1023,7 @@ har_in01,89,26,5	script	Johnny James#har_in01	4_M_JOHNNYJAMES,{
 		setpcblock PCBLOCK_NPC, true;
 		npctalk "You sneaky bastards, how dare you show up again? Go to hell!", "", bc_self;
 		sleep2 2000;
-		cloakoffnpc  "Ivoka Skudi#har02", getcharid(0);
+		cloakoffnpcself(  "Ivoka Skudi#har02" );
 		setpcblock PCBLOCK_NPC, false;
 		npctalk "Ah, you'd better show some respect to our future mayor.", "Ivoka Skudi#har02", bc_self;
 		mes "[Ivoka Skudi]";
@@ -1212,7 +1212,7 @@ har_in01,88,22,6	script	Ivoka Skudi#har02	4_M_EVOKASCUDI,{
 		mes "[Ivoka Skudi]";
 		mes "(Whispering) He's more simpleminded than I thought. Let's go report to the Sheriff.";
 		close2;
-		cloakonnpc  "Ivoka Skudi#har02", getcharid(0);
+		cloakonnpcself(  "Ivoka Skudi#har02" );
 		end;
 	}
 	end;
@@ -1234,19 +1234,19 @@ rockrdg1,156,312,3	script	Unmoving Freight Train#	4_ENERGY_RED,{
 		setpcblock PCBLOCK_NPC, true;
 		unittalk getcharid(3), "" + strcharinfo(0) + " : I think this is the place, but maybe I came too early.", bc_self;
 		sleep2 2000;
-		cloakoffnpc "Johnny James#revt04", getcharid(0);
+		cloakoffnpcself( "Johnny James#revt04" );
 		sleep2 1000;
 		emotion ET_QUESTION, getnpcid(0,"Johnny James#revt04");
 		npctalk "Who's this? You're not the one I was expecting.", "Johnny James#revt04", bc_self;
 		sleep2 1000;
-		cloakoffnpc "Albert Ford#revt08", getcharid(0);
+		cloakoffnpcself( "Albert Ford#revt08" );
 		npctalk "Hey Boss, I told you not to go without me.", "Albert Ford#revt08", bc_self;
 		sleep2 2000;
 		npctalk "Mm? I don't remember if Costello looks like that.", "Albert Ford#revt08", bc_self;
 		sleep2 2500;
 		npctalk "Hey, I'm having an important meeting here. Scram!", "Johnny James#revt04", bc_self;
 		sleep2 2000;
-		cloakoffnpc "Wyatt Warp#revt03", getcharid(0);
+		cloakoffnpcself( "Wyatt Warp#revt03" );
 		sleep2 1000;
 		npctalk "Johnny James? You shouldn't be so rude to the Officer.", "Wyatt Warp#revt03", bc_self;
 		sleep2 2500;
@@ -1277,10 +1277,10 @@ rockrdg1,156,312,3	script	Unmoving Freight Train#	4_ENERGY_RED,{
 		npctalk "What? I haven't even started?", "Johnny James#revt04", bc_self;
 		sleep2 500;
 		specialeffect 563, AREA, "Johnny James#revt04";
-		cloakoffnpc "Cactus Gunslinger#revt05", getcharid(0);
-		cloakoffnpc "Cactus Gunslinger#revt06", getcharid(0);
-		cloakoffnpc "Cactus Gunslinger#revt07", getcharid(0);
-		cloakoffnpc "Ivoka Skudi#revt02", getcharid(0);
+		cloakoffnpcself( "Cactus Gunslinger#revt05" );
+		cloakoffnpcself( "Cactus Gunslinger#revt06" );
+		cloakoffnpcself( "Cactus Gunslinger#revt07" );
+		cloakoffnpcself( "Ivoka Skudi#revt02" );
 		npctalk "Freeze!", "Ivoka Skudi#revt02", bc_self;
 		sleep2 1000;
 		specialeffect 453, AREA, "Johnny James#revt04";
@@ -1306,7 +1306,7 @@ rockrdg1,156,312,3	script	Unmoving Freight Train#	4_ENERGY_RED,{
 		npctalk "I-I'll go bring the rest of our gang!", "Albert Ford#revt08", bc_self;
 		sleep2 1000;
 		npctalk "WHAT?", "Johnny James#revt04", bc_self;
-		cloakonnpc "Albert Ford#revt08", getcharid(0);
+		cloakonnpcself( "Albert Ford#revt08" );
 		sleep2 1000;
 		npctalk "ALBERT!", "Johnny James#revt04", bc_self;
 		sleep2 2000;
@@ -1329,11 +1329,11 @@ rockrdg1,156,312,3	script	Unmoving Freight Train#	4_ENERGY_RED,{
 		sleep2 1000;
 		npctalk "Guys, let's go!", "Ivoka Skudi#revt02", bc_self;
 		sleep2 2000;
-		cloakonnpc "Cactus Gunslinger#revt05", getcharid(0);
-		cloakonnpc "Cactus Gunslinger#revt06", getcharid(0);
-		cloakonnpc "Cactus Gunslinger#revt07", getcharid(0);
-		cloakonnpc "Ivoka Skudi#revt02", getcharid(0);
-		cloakonnpc "Johnny James#revt04", getcharid(0);
+		cloakonnpcself( "Cactus Gunslinger#revt05" );
+		cloakonnpcself( "Cactus Gunslinger#revt06" );
+		cloakonnpcself( "Cactus Gunslinger#revt07" );
+		cloakonnpcself( "Ivoka Skudi#revt02" );
+		cloakonnpcself( "Johnny James#revt04" );
 		sleep2 2000;
 		npctalk "Let's go back, shall we?", "Wyatt Warp#revt03", bc_self;
 		rock_main_quest = 6;
@@ -1367,7 +1367,7 @@ rockrdg1,153,303,5	script	Wyatt Warp#revt03	4_M_YATTWARP,{
 		mes "[Wyatt Warp]";
 		mes "Let's go back to my office.";
 		close2;
-		cloakonnpc  "Wyatt Warp#revt03", getcharid(0);
+		cloakonnpcself(  "Wyatt Warp#revt03" );
 		end;
 	}
 	end;
@@ -1820,14 +1820,14 @@ rockrdg2,279,313,3	script	Concaved Rock#revt09	4_ENERGY_RED,{
 			close;
 		}
 		npctalk "Boss? Is that you, Boss?", "Albert Ford#rockrdg2", bc_self;
-		cloakoffnpc "Albert Ford#rockrdg2", getcharid(0);
+		cloakoffnpcself( "Albert Ford#rockrdg2" );
 		close;
 	}
 	if (rock_main_quest == 14) {
 		if (countitem(25249) < 1) {
 			mes "I knocked on the signaling rock, and Albert Ford came out running.";
 			npctalk "Who are you?!", "Albert Ford#rockrdg2", bc_self;
-			cloakoffnpc "Albert Ford#rockrdg2", getcharid(0);
+			cloakoffnpcself( "Albert Ford#rockrdg2" );
 			close;
 		}
 		mes "I don't have to use this right now.";
@@ -1840,7 +1840,7 @@ rockrdg2,279,313,3	script	Concaved Rock#revt09	4_ENERGY_RED,{
 		}
 		mes "I knocked on the signaling rock, and Albert Ford came out running.";
 		npctalk "Who are you?!", "Albert Ford#rockrdg2", bc_self;
-		cloakoffnpc "Albert Ford#rockrdg2", getcharid(0);
+		cloakoffnpcself( "Albert Ford#rockrdg2" );
 		close;
 	}
 	if (rock_main_quest == 20) {
@@ -1850,7 +1850,7 @@ rockrdg2,279,313,3	script	Concaved Rock#revt09	4_ENERGY_RED,{
 		}
 		if (countitem(25249) < 1) {
 			mes "I knocked on the signaling rock, and Albert Ford came out running.";
-			cloakoffnpc "Albert Ford#rockrdg2", getcharid(0);
+			cloakoffnpcself( "Albert Ford#rockrdg2" );
 			npctalk "Who are you?!", "Albert Ford#rockrdg2", bc_self;
 			close;
 		}
@@ -2066,7 +2066,7 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	4_M_ALBERTFORD,{
 		setquest 7803;// Happy for Broken Trust
 		rock_main_quest = 14;
 		close2;
-		cloakonnpc strnpcinfo(0), getcharid(0);
+		cloakonnpcself();
 		end;
 	}
 	if (rock_main_quest == 14 && countitem(25249) < 1) {
@@ -2084,7 +2084,7 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	4_M_ALBERTFORD,{
 		mes "Here, take it.";
 		getitem 25249,1;// Mane_Of_Cow
 		close2;
-		cloakonnpc strnpcinfo(0), getcharid(0);
+		cloakonnpcself();
 		end;
 	}
 	if (rock_main_quest == 20 && checkquest(7807,HUNTING) == 2) {
@@ -2096,7 +2096,7 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	4_M_ALBERTFORD,{
 			mes "What? What is it?";
 			mes "Don't call me unless you have something to tell me!";
 			close2;
-			cloakonnpc strnpcinfo(0), getcharid(0);
+			cloakonnpcself();
 			end;
 		}
 		mes "[Albert Ford]";
@@ -2189,7 +2189,7 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	4_M_ALBERTFORD,{
 			setquest 7808;// Case Solved
 			rock_main_quest = 21;
 			close2;
-			cloakonnpc strnpcinfo(0), getcharid(0);
+			cloakonnpcself();
 		}
 		end;
 	}
@@ -2516,7 +2516,7 @@ rockrdg1,182,124,3	script	Suspicious Sand Mound#rremef05	4_ENERGY_RED,15,15,{
 	getitem 25246,1;	// Juice_Package
 	setquest 16082;
 	completequest 16082;
-	cloakonnpc "Suspicious Sand Mound#rremef05", getcharid(0);
+	cloakonnpcself( "Suspicious Sand Mound#rremef05" );
 	if (countitem("Juice_Package") > 4) {
 		next;
 		.@name$ = strcharinfo(0);
@@ -2532,9 +2532,9 @@ rockrdg1,182,124,3	script	Suspicious Sand Mound#rremef05	4_ENERGY_RED,15,15,{
 	close;
 OnTouch:
 	if (checkquest(16078,HUNTING) != 0 && checkquest(16078,HUNTING) != 1 || countitem("Juice_Package") > 4 || isbegin_quest(16082) == 2)
-		cloakonnpc "Suspicious Sand Mound#rremef05", getcharid(0);
+		cloakonnpcself( "Suspicious Sand Mound#rremef05" );
 	else
-		cloakoffnpc "Suspicious Sand Mound#rremef05", getcharid(0);
+		cloakoffnpcself( "Suspicious Sand Mound#rremef05" );
 	end;
 OnInit:
 	cloakonnpc();
@@ -2564,7 +2564,7 @@ rockrdg1,286,247,3	script	Suspicious Sand Mound#rremef06	4_ENERGY_RED,15,15,{
 		getitem 25246,1;	// Juice_Package
 		setquest .@quest_id;
 		completequest .@quest_id;
-		cloakonnpc .@npc_name$, getcharid(0);
+		cloakonnpcself( .@npc_name$ );
 		if (countitem("Juice_Package") > 4) {
 			next;
 			.@name$ = strcharinfo(0);
@@ -2584,7 +2584,7 @@ rockrdg1,286,247,3	script	Suspicious Sand Mound#rremef06	4_ENERGY_RED,15,15,{
 	mes "- It's not usable. I'll just have to leave it and look for another one. -";
 	setquest .@quest_id;
 	completequest .@quest_id;
-	cloakonnpc strnpcinfo(0), getcharid(0);
+	cloakonnpcself();
 	close;
 
 S_Quest:
@@ -2608,9 +2608,9 @@ OnTouch:
 	.@quest_id = callsub( S_Quest );
 	.@npc_name$ = callsub( S_Name );
 	if (checkquest(16078,HUNTING) != 0 && checkquest(16078,HUNTING) != 1 || countitem("Juice_Package") > 4 || isbegin_quest(.@quest_id) == 2)
-		cloakonnpc .@npc_name$, getcharid(0);
+		cloakonnpcself( .@npc_name$ );
 	else
-		cloakoffnpc .@npc_name$, getcharid(0);
+		cloakoffnpcself( .@npc_name$ );
 	end;
 
 OnInit:
@@ -2702,7 +2702,7 @@ rockrdg1,146,164,1	script	Wasteland Cactuten#rremef01	4_ENERGY_RED,15,15,{
 		getitem 25246,1;// Juice_Package
 		setquest 16083;// Discovered Wasteland Cactuten
 		erasequest 16083;// Discovered Wasteland Cactuten
-		cloakonnpc "Wasteland Cactuten#rremef01", getcharid(0);
+		cloakonnpcself( "Wasteland Cactuten#rremef01" );
 		if (countitem(25246) > 4) {
 			next;
 			mes "[" + .@player_name$ + "]";
@@ -2722,9 +2722,9 @@ rockrdg1,146,164,1	script	Wasteland Cactuten#rremef01	4_ENERGY_RED,15,15,{
 
 OnTouch:
 	if (isbegin_quest(16078) != 1 || countitem("Juice_Package") > 4 || isbegin_quest(16083) > 1)
-		cloakonnpc "Wasteland Cactuten#rremef01", getcharid(0);
+		cloakonnpcself( "Wasteland Cactuten#rremef01" );
 	else
-		cloakoffnpc "Wasteland Cactuten#rremef01", getcharid(0);
+		cloakoffnpcself( "Wasteland Cactuten#rremef01" );
 	end;
 
 OnInit:
@@ -2737,9 +2737,9 @@ rockrdg1,195,183,3	script	Curious Coyote#rremef03	4_ENERGY_RED,15,15,{
 	end;
 OnTouch:
 	if (isbegin_quest(16078) != 1 || countitem("Juice_Package") > 4 || isbegin_quest(16085) > 1)
-		cloakonnpc "Curious Coyote#rremef03", getcharid(0);
+		cloakonnpcself( "Curious Coyote#rremef03" );
 	else
-		cloakoffnpc "Curious Coyote#rremef03", getcharid(0);
+		cloakoffnpcself( "Curious Coyote#rremef03" );
 	end;
 OnInit:
 	cloakonnpc();
@@ -2770,7 +2770,7 @@ OnTouch:
 		getitem 25246,1;// Juice_Package
 		setquest 16085;// Discovered Coyote
 		completequest 16085;// Discovered Coyote
-		cloakonnpc "Curious Coyote#rremef03", getcharid(0);
+		cloakonnpcself( "Curious Coyote#rremef03" );
 		if (countitem(25246) > 4) {
 			next;
 			mes "[" + .@player_name$ + "]";
@@ -2843,7 +2843,7 @@ rockrdg1,305,200,3	script	Cactus Girl#rremef02	4_ENERGY_RED,15,15,{
 		getitem 25246,1;// Juice_Package
 		setquest 16087;// Discovered Cactus Girl
 		completequest 16087;// Discovered Cactus Girl
-		cloakonnpc "Cactus Girl#rremef02", getcharid(0);
+		cloakonnpcself( "Cactus Girl#rremef02" );
 		if (countitem(25246) > 4) {
 			next;
 			mes "[" + .@player_name$ + "]";
@@ -2865,9 +2865,9 @@ rockrdg1,305,200,3	script	Cactus Girl#rremef02	4_ENERGY_RED,15,15,{
 
 OnTouch:
 	if (isbegin_quest(16078) != 1 || countitem("Juice_Package") > 4 || isbegin_quest(16087) > 1)
-		cloakonnpc "Cactus Girl#rremef02", getcharid(0);
+		cloakonnpcself( "Cactus Girl#rremef02" );
 	else
-		cloakoffnpc "Cactus Girl#rremef02", getcharid(0);
+		cloakoffnpcself( "Cactus Girl#rremef02" );
 	end;
 
 OnInit:
@@ -2880,9 +2880,9 @@ rockrdg1,266,219,3	script	Absorbed Coyote#rremef04	4_ENERGY_RED,15,15,{
 	end;
 OnTouch:
 	if (isbegin_quest(16078) != 1 || countitem("Juice_Package") > 4 || isbegin_quest(16088) > 1)
-		cloakonnpc "Absorbed Coyote#rremef04", getcharid(0);
+		cloakonnpcself( "Absorbed Coyote#rremef04" );
 	else
-		cloakoffnpc "Absorbed Coyote#rremef04", getcharid(0);
+		cloakoffnpcself( "Absorbed Coyote#rremef04" );
 	end;
 OnInit:
 	cloakonnpc();
@@ -2913,7 +2913,7 @@ OnTouch:
 		getitem 25246,1;// Juice_Package
 		setquest 16088;// Discovered Coyote
 		completequest 16088;// Discovered Coyote
-		cloakonnpc "Absorbed Coyote#rremef04", getcharid(0);
+		cloakonnpcself( "Absorbed Coyote#rremef04" );
 		if (countitem(25246) > 4) {
 			next;
 			mes "[" + .@player_name$ + "]";
@@ -5162,16 +5162,16 @@ rockrdg1,36,250,5	script	Mr. McPhy#rkdlout	4W_M_02,{
 			next;
 			mes "[Mr. McPhy]";
 			mes "But he couldn't have gone too far because he came back to me pretty quickly. Why don't you walk along the fence and look for holes with white hair floating around them?";
-			cloakoffnpc "#rkq1321", getcharid(0);
-			cloakoffnpc "#rkdqgd11", getcharid(0);
-			cloakoffnpc "#rkdqgd22", getcharid(0);
-			cloakoffnpc "#rkdqgd33", getcharid(0);
+			cloakoffnpcself( "#rkq1321" );
+			cloakoffnpcself( "#rkdqgd11" );
+			cloakoffnpcself( "#rkdqgd22" );
+			cloakoffnpcself( "#rkdqgd33" );
 			close;
 		}
 		if (isbegin_quest(1322) == 1 || isbegin_quest(1328) == 1) {
 			mes "[Mr. McPhy]";
 			mes "Did you find something? Then let's go back!";
-			cloakonnpc "Mr. McPhy#rkdlout", getcharid(0);
+			cloakonnpcself( "Mr. McPhy#rkdlout" );
 			close;
 		}
 		mes "[Mr. McPhy]";
@@ -5179,15 +5179,15 @@ rockrdg1,36,250,5	script	Mr. McPhy#rkdlout	4W_M_02,{
 		next;
 		mes "[Mr. McPhy]";
 		mes "Oh, right! Spotty has been shedding a lot lately. Maybe you should look for holes with white hair floating around them.";
-		cloakoffnpc "#rkq1321", getcharid(0);
-		cloakoffnpc "#rkq1323", getcharid(0);
-		cloakoffnpc "#rkq1324", getcharid(0);
-		cloakoffnpc "#rkq1325", getcharid(0);
-		cloakoffnpc "#rkq1326", getcharid(0);
-		cloakoffnpc "#rkq1327", getcharid(0);
-		cloakoffnpc "#rkdqgd11", getcharid(0);
-		cloakoffnpc "#rkdqgd22", getcharid(0);
-		cloakoffnpc "#rkdqgd33", getcharid(0);
+		cloakoffnpcself( "#rkq1321" );
+		cloakoffnpcself( "#rkq1323" );
+		cloakoffnpcself( "#rkq1324" );
+		cloakoffnpcself( "#rkq1325" );
+		cloakoffnpcself( "#rkq1326" );
+		cloakoffnpcself( "#rkq1327" );
+		cloakoffnpcself( "#rkdqgd11" );
+		cloakoffnpcself( "#rkdqgd22" );
+		cloakoffnpcself( "#rkdqgd33" );
 		next;
 		mes "[Mr. McPhy]";
 		mes "And he doesn't seem to venture out too far. It's probably because he's still young. I've marked three possible locations in the middle of your map. You don't have to look further than those locations.";
@@ -5209,7 +5209,7 @@ rockrdg1,36,250,5	script	Mr. McPhy#rkdlout	4W_M_02,{
 	}
 	mes "[Mr. McPhy]";
 	mes "*Gasp* Buffalo Bandits!";
-	cloakonnpc "Mr. McPhy#rkdlout", getcharid(0);
+	cloakonnpcself( "Mr. McPhy#rkdlout" );
 	close;
 
 OnInit:
@@ -5274,10 +5274,10 @@ rockrdg1,43,145,3	script	Hole#rkq1321	4_CRACK,{
 			mes "I should take it with me for now. -";
 			completequest 1321;
 			setquest 1322;// Found Something
-			cloakonnpc "#rkq1321", getcharid(0);
-			cloakonnpc "#rkdqgd11", getcharid(0);
-			cloakonnpc "#rkdqgd22", getcharid(0);
-			cloakonnpc "#rkdqgd33", getcharid(0);
+			cloakonnpcself( "#rkq1321" );
+			cloakonnpcself( "#rkdqgd11" );
+			cloakonnpcself( "#rkdqgd22" );
+			cloakonnpcself( "#rkdqgd33" );
 			close;
 		}
 		mes "It has something inside it. -";
@@ -5285,15 +5285,15 @@ rockrdg1,43,145,3	script	Hole#rkq1321	4_CRACK,{
 		mes "- This must be what Mr. McPhy is looking for. I should bring it to her. -";
 		erasequest .@list[.@i];
 		setquest 1328;// Found Missing Items
-		cloakonnpc "#rkq1321", getcharid(0);
-		cloakonnpc "#rkq1323", getcharid(0);
-		cloakonnpc "#rkq1324", getcharid(0);
-		cloakonnpc "#rkq1325", getcharid(0);
-		cloakonnpc "#rkq1326", getcharid(0);
-		cloakonnpc "#rkq1327", getcharid(0);
-		cloakonnpc "#rkdqgd11", getcharid(0);
-		cloakonnpc "#rkdqgd22", getcharid(0);
-		cloakonnpc "#rkdqgd33", getcharid(0);
+		cloakonnpcself( "#rkq1321" );
+		cloakonnpcself( "#rkq1323" );
+		cloakonnpcself( "#rkq1324" );
+		cloakonnpcself( "#rkq1325" );
+		cloakonnpcself( "#rkq1326" );
+		cloakonnpcself( "#rkq1327" );
+		cloakonnpcself( "#rkdqgd11" );
+		cloakonnpcself( "#rkdqgd22" );
+		cloakonnpcself( "#rkdqgd33" );
 		close;
 	}
 	switch( .@list[.@i] ) {

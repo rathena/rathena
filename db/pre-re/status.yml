@@ -418,8 +418,6 @@ Body:
     Flags:
       BossResist: true
       TaekwonAngel: true
-    EndReturn:
-      Curse: true
   - Status: Signumcrucis
     Icon: EFST_CRUCIS
     DurationLookup: AL_CRUCIS
@@ -1403,6 +1401,8 @@ Body:
       Mdef: true
       Aspd: true
       Speed: true
+    Flags:
+      NoSave: true
     Opt3:
       SteelBody: true
   - Status: Orcish
