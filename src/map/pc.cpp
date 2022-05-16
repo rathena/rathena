@@ -6428,7 +6428,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 
 		npc_script_event(sd, NPCE_LOGOUT);
 		//remove from map, THEN change x/y coordinates
-		unit_remove_map_pc(sd,clrtype);
+		unit_remove_map_pc(sd,clrtype,true);
 		sd->mapindex = mapindex;
 		sd->bl.x=x;
 		sd->bl.y=y;
