@@ -1116,7 +1116,7 @@ int mob_spawn (struct mob_data *md)
 
 	md->last_thinktime = tick;
 	if (md->bl.prev != NULL)
-		unit_remove_map(&md->bl,CLR_RESPAWN);
+		unit_remove_map(&md->bl,CLR_RESPAWN, false);
 	else
 	if (md->spawn && md->mob_id != md->spawn->id)
 	{
@@ -6462,7 +6462,7 @@ void mob_reload_itemmob_data(void) {
 static int mob_reload_sub( struct mob_data *md, va_list args ){
 	// Slaves have to be killed
 	if( md->master_id != 0 ){
-		unit_remove_map( &md->bl, CLR_OUTSIGHT );
+		unit_remove_map( &md->bl, CLR_OUTSIGHT, false);
 		return 0;
 	}
 
@@ -6475,7 +6475,7 @@ static int mob_reload_sub( struct mob_data *md, va_list args ){
 			ShowDebug( "mob_reload_sub: The monster was removed from map %s (%hu/%hu).\n", map_mapid2mapname( md->bl.m ), md->bl.x, md->bl.y );
 		}
 
-		unit_remove_map( &md->bl, CLR_OUTSIGHT );
+		unit_remove_map( &md->bl, CLR_OUTSIGHT, false);
 
 		return 0;
 	}

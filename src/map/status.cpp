@@ -1157,7 +1157,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 	if(flag&4) // Delete from memory. (also invokes map removal code)
 		unit_free(target,CLR_DEAD);
 	else if(flag&2) // remove from map
-		unit_remove_map(target,CLR_DEAD);
+		unit_remove_map(target,CLR_DEAD, false);
 	else { // Some death states that would normally be handled by unit_remove_map
 		unit_stop_attack(target);
 		unit_stop_walking(target,1);

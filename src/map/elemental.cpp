@@ -209,7 +209,7 @@ int elemental_delete(s_elemental_data *ed) {
 	sd->ed = NULL;
 	sd->status.ele_id = 0;
 
-	return unit_remove_map(&ed->bl, CLR_OUTSIGHT);
+	return unit_remove_map(&ed->bl, CLR_OUTSIGHT, false);
 }
 
 void elemental_summon_init(s_elemental_data *ed) {

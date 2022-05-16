@@ -1318,7 +1318,7 @@ int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
 	if (bl->type == BL_PC) // Use pc_setpos
 		return pc_setpos((TBL_PC*)bl, map_id2index(m), x, y, type);
 
-	if (!unit_remove_map(bl, type))
+	if (!unit_remove_map(bl, type, false))
 		return 3;
 
 	if (bl->m != m && battle_config.clear_unit_onwarp &&
@@ -3359,7 +3359,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 	map_freeblock_lock();
 
 	if( bl->prev )	// Players are supposed to logout with a "warp" effect.
-		unit_remove_map(bl, clrtype);
+		unit_remove_map(bl, clrtype, false);
 
 	switch( bl->type ) {
 		case BL_PC: {
