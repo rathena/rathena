@@ -41091,12 +41091,16 @@ Body:
     AegisName: E_HYDRA
     Name: Strange Hydra
     JapaneseName: Suspicious Hydra
-    Level: 34
-    Hp: 854
-    Attack: 1
-    Attack2: 2
+    Level: 14
+    Hp: 660
+    Attack: 22
+    Attack2: 28
     Defense: 100
     MagicDefense: 100
+    Agi: 14
+    Vit: 14
+    Dex: 40
+    Luk: 2
     AttackRange: 7
     SkillRange: 10
     ChaseRange: 12
