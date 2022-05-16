@@ -245,8 +245,8 @@ struct s_autospell {
 /// AddEff and AddEff2 bonus struct
 struct s_addeffect {
 	enum sc_type sc; /// SC type/effect
-	short rate, /// Rate
-		arrow_rate; /// Arrow rate
+	int rate; /// Rate
+	short arrow_rate; /// Arrow rate
 	unsigned char flag; /// Flag
 	unsigned int duration; /// Duration the effect applied
 };
@@ -254,8 +254,8 @@ struct s_addeffect {
 /// AddEffOnSkill bonus struct
 struct s_addeffectonskill {
 	enum sc_type sc; /// SC type/effect
-	short rate, /// Rate
-		skill_id; /// Skill ID
+	int rate; /// Rate
+	short skill_id; /// Skill ID
 	unsigned char target; /// Target
 	unsigned int duration; /// Duration the effect applied
 };
@@ -393,6 +393,7 @@ struct map_session_data {
 		uint16 inventory_expansion_amount;
 		t_itemid laphine_synthesis;
 		t_itemid laphine_upgrade;
+		bool roulette_open;
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -1002,7 +1003,7 @@ public:
 
 struct s_job_info {
 	std::vector<uint32> base_hp, base_sp, base_ap; //Storage for the first calculation with hp/sp/ap factor and multiplicator
-	uint32 hp_factor, hp_multiplicator, sp_factor, max_weight_base;
+	uint32 hp_factor, hp_increase, sp_increase, max_weight_base;
 	std::vector<std::array<uint16,PARAM_MAX>> job_bonus;
 	std::vector<int16> aspd_base;
 	t_exp base_exp[MAX_LEVEL], job_exp[MAX_LEVEL];
@@ -1016,7 +1017,7 @@ struct s_job_info {
 
 class JobDatabase : public TypesafeCachedYamlDatabase<uint16, s_job_info> {
 public:
-	JobDatabase() : TypesafeCachedYamlDatabase("JOB_STATS", 1) {
+	JobDatabase() : TypesafeCachedYamlDatabase("JOB_STATS", 2) {
 
 	}
 
@@ -1065,7 +1066,8 @@ static bool pc_cant_act2( struct map_session_data* sd ){
 		|| sd->state.trading || sd->state.storage_flag || sd->state.prevend || sd->state.refineui_open
 		|| sd->state.stylist_open || sd->state.inventory_expansion_confirmation || sd->npc_shopid
 		|| sd->state.barter_open || sd->state.barter_extended_open
-		|| sd->state.laphine_synthesis || sd->state.laphine_upgrade;
+		|| sd->state.laphine_synthesis || sd->state.laphine_upgrade
+		|| sd->state.roulette_open;
 }
 // equals pc_cant_act2 and additionally checks for chat rooms and npcs
 static bool pc_cant_act( struct map_session_data* sd ){
