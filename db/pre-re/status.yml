@@ -331,6 +331,7 @@ Body:
       NoBanishingBuster: true
       NoDispell: true
       NoClearance: true
+      NoSave: true
     End:
       Closeconfine: true
       Closeconfine2: true
@@ -734,6 +735,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       RemoveOnMapWarp: true
+      NoSave: true
     MinDuration: 5000
   - Status: Keeping
     DurationLookup: NPC_KEEPING
@@ -960,6 +962,7 @@ Body:
       NoMove: true
     Flags:
       RemoveOnMapWarp: true
+      NoSave: true
   - Status: Bladestop
     Icon: EFST_BLADESTOP
     DurationLookup: MO_BLADESTOP
@@ -1284,6 +1287,7 @@ Body:
       NoBanishingBuster: true
       NoDispell: true
       NoClearance: true
+      NoSave: true
   - Status: Rejectsword
     Icon: EFST_SWORDREJECT
     DurationLookup: ST_REJECTSWORD
@@ -1301,6 +1305,7 @@ Body:
       Marionette: true
     Flags:
       RemoveOnMapWarp: true
+      NoSave: true
       OverlapFail: true
   - Status: Marionette2
     Icon: EFST_MARIONETTE
@@ -1316,6 +1321,7 @@ Body:
       Marionette: true
     Flags:
       RemoveOnMapWarp: true
+      NoSave: true
       OverlapFail: true
   - Status: Changeundead
     Icon: EFST_PROPERTYUNDEAD
@@ -1677,6 +1683,7 @@ Body:
       RemoveOnMapWarp: true
       RequireWeapon: true
       OverlapIgnoreLevel: true
+      NoSave: true
   - Status: Elementalchange
     Icon: EFST_ARMOR_PROPERTY
     DurationLookup: NPC_ATTRICHANGE
@@ -2156,6 +2163,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       RemoveOnMapWarp: true
+      NoSave: true
   - Status: Sun_Comfort
     Icon: EFST_SUN_COMFORT
     DurationLookup: SG_SUN_COMFORT
@@ -2163,6 +2171,7 @@ Body:
       Def2: true
     Flags:
       RemoveOnMapWarp: true
+      NoSave: true
   - Status: Moon_Comfort
     Icon: EFST_MOON_COMFORT
     DurationLookup: SG_MOON_COMFORT
@@ -2170,6 +2179,7 @@ Body:
       Flee: true
     Flags:
       RemoveOnMapWarp: true
+      NoSave: true
   - Status: Star_Comfort
     Icon: EFST_STAR_COMFORT
     DurationLookup: SG_STAR_COMFORT
@@ -2177,6 +2187,7 @@ Body:
       Aspd: true
     Flags:
       RemoveOnMapWarp: true
+      NoSave: true
   - Status: Fusion
     DurationLookup: SG_FUSION
     CalcFlags:
@@ -2373,6 +2384,7 @@ Body:
       Int: true
     Flags:
       RemoveOnMapWarp: true
+      NoSave: true
     Fail:
       Change: true
   - Status: Bloodlust
@@ -4616,6 +4628,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       RemoveOnMapWarp: true
+      NoSave: true
   - Status: _Bloodylust
     Icon: EFST_BLOODYLUST
     DurationLookup: SC_BLOODYLUST
@@ -6637,6 +6650,7 @@ Body:
       NoClearance: true
       NoClearbuff: true
       RemoveOnMapWarp: true
+      NoSave: true
   - Status: Entry_Queue_Apply_Delay
     Icon: EFST_ENTRY_QUEUE_APPLY_DELAY
     Flags:
