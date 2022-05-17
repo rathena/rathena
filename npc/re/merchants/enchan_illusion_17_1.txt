@@ -124,7 +124,7 @@ sp_cor,108,130,5	script	Rebellion#rm171_7	4_F_REBELLION3,{
 		mes "[Rebellion]";
 		mes "So, you received the message. The Captains are having a meeting on the inside. Captain Elena Volkova must have called you.";
 		mes "... I was going to call her, but she's already here.";
-		cloakoffnpc "Elena Volkova#rm171_0", getcharid(0);
+		cloakoffnpcself( "Elena Volkova#rm171_0" );
 		npctalk "Elena Volkova: Ah, I've been looking for you, Adventurer.", "Elena Volkova#rm171_0", bc_self;
 		if (isbegin_quest(16352) == 0)
 			setquest 16352;
@@ -146,7 +146,7 @@ sp_cor,108,130,5	script	Rebellion#rm171_7	4_F_REBELLION3,{
 	mes "[Rebellion]";
 	mes "Did you bring Damaged Weapons? Would you like to see that science criminal? He's in there. Want me to call him for you?";
 	mes "Or do you have business with me? I can exchange Weapon Modification Devices and Armor Modification Modules.";
-	cloakoffnpc "Elyumina#rm171_4", getcharid(0);
+	cloakoffnpcself( "Elyumina#rm171_4" );
 	npctalk "Rebellion: Hey, criminal. You're wanted.", "Rebellion#rm171_7", bc_self;
 	npctalk "Elyumina: Alright, alright! I'm coming! You're so pathetic that without me, you'll have to fight with bean bags.", "Elyumina#rm171_4", bc_self;
 	next;
@@ -266,7 +266,7 @@ sp_cor,111,130,3	script	Elyumina#rm171_4	4_EP17_ELYUMINA,{
 		mes "[Elyumina]";
 		mes "Argh! Why do you keep asking for me when I need to focus on my research? I'm busy, alright? If you're bored, go bring me more damaged weapons!";
 		close2;
-		cloakonnpc "Elyumina#rm171_3", getcharid(0);
+		cloakonnpcself( "Elyumina#rm171_3" );
 		cutin "",255;
 		end;
 	}
