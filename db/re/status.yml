@@ -136,7 +136,6 @@ Body:
       BossResist: true
       StopAttacking: true
       StopCasting: true
-      OverlapFail: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -155,7 +154,6 @@ Body:
       StopAttacking: true
       StopCasting: true
       RemoveOnDamaged: true
-      OverlapFail: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -172,7 +170,6 @@ Body:
       SendOption: true
       BossResist: true
       StopAttacking: true
-      OverlapFail: true
       SpreadEffect: true
     Fail:
       Refresh: true
@@ -191,7 +188,6 @@ Body:
     Flags:
       SendOption: true
       BossResist: true
-      OverlapFail: true
       SpreadEffect: true
     Fail:
       Refresh: true
@@ -208,7 +204,6 @@ Body:
       SendOption: true
       BossResist: true
       StopCasting: true
-      OverlapFail: true
       SpreadEffect: true
     Fail:
       Refresh: true
@@ -236,7 +231,6 @@ Body:
     Flags:
       SendOption: true
       BossResist: true
-      OverlapFail: true
       SpreadEffect: true
     Fail:
       Refresh: true
@@ -1104,9 +1098,10 @@ Body:
       NoClearbuff: true
       NoDispell: true
       NoBanishingBuster: true
-      OverlapFail: true
       NoClearance: true
       NoForcedEnd: true
+    Fail:
+      Nochat: true
   - Status: Protectexp
     Icon: EFST_PROTECTEXP
     DurationLookup: WE_BABY
@@ -1317,7 +1312,8 @@ Body:
       Marionette: true
     Flags:
       RemoveOnChangeMap: true
-      OverlapFail: true
+    Fail:
+      Marionette: true
   - Status: Marionette2
     Icon: EFST_MARIONETTE
     DurationLookup: CG_MARIONETTE
@@ -1332,7 +1328,8 @@ Body:
       Marionette: true
     Flags:
       RemoveOnChangeMap: true
-      OverlapFail: true
+    Fail:
+      Marionette2: true
   - Status: Changeundead
     Icon: EFST_PROPERTYUNDEAD
     DurationLookup: NPC_CHANGEUNDEAD
@@ -1656,7 +1653,8 @@ Body:
       NoSave: true
       NoRemoveOnDead: true
       RemoveOnChangeMap: true
-      OverlapFail: true
+    Fail:
+      Closeconfine2: true
   - Status: Dancing
     Icon: EFST_BDPLAYING
     DurationLookup: BD_ENCORE
@@ -2614,7 +2612,8 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       RemoveOnMapWarp: true
-      OverlapFail: true
+    Fail:
+      Bossmapinfo: true
   - Status: Lifeinsurance
     Icon: EFST_CASH_DEATHPENALTY
     States:
@@ -2783,14 +2782,16 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
+    Fail:
+      S_Lifepotion: true
   - Status: L_Lifepotion
     Icon: EFST_L_LIFEPOTION
     Flags:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
+    Fail:
+      L_Lifepotion: true
   - Status: Jexpboost
     Icon: EFST_CASH_PLUSONLYJOBEXP
     Flags:
@@ -2972,7 +2973,6 @@ Body:
       RemoveOnLuxAnima: true
       BossResist: true
       Debuff: true
-      OverlapFail: true
       SpreadEffect: true
     MinDuration: 10000
     Fail:
@@ -2995,13 +2995,13 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       Debuff: true
-      OverlapFail: true
       SpreadEffect: true
     MinDuration: 10000
     Fail:
       Refresh: true
       Inspiration: true
       Warmer: true
+      Freezing: true
   - Status: Enchantblade
     Icon: EFST_ENCHANTBLADE
     DurationLookup: RK_ENCHANTBLADE
@@ -3045,8 +3045,9 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
+    Fail:
+      Reuse_Refresh: true
   - Status: Giantgrowth
     Icon: EFST_GIANTGROWTH
     DurationLookup: RK_GIANTGROWTH
@@ -3105,7 +3106,8 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
+    Fail:
+      Abundance: true
   - Status: Adoramus
     Icon: EFST_ADORAMUS
     DurationLookup: AB_ADORAMUS
@@ -3285,8 +3287,9 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoSave: true
-      OverlapFail: true
       NoClearance: true
+    Fail:
+      Electricshocker: true
   - Status: Wugdash
     Icon: EFST_WUGDASH
     DurationLookup: RA_WUGDASH
@@ -3551,8 +3554,9 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       Debuff: true
-      OverlapFail: true
       SpreadEffect: true
+    Fail:
+      Toxin: true
   - Status: Paralyse
     Icon: EFST_PARALYSE
     CalcFlags:
@@ -3566,7 +3570,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       Debuff: true
-      OverlapFail: true
       SpreadEffect: true
     Fail:
       Refresh: true
@@ -3590,7 +3593,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       Debuff: true
-      OverlapFail: true
       SpreadEffect: true
     Fail:
       Refresh: true
@@ -3614,7 +3616,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       Debuff: true
-      OverlapFail: true
       SpreadEffect: true
     Fail:
       Refresh: true
@@ -3638,7 +3639,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       Debuff: true
-      OverlapFail: true
       SpreadEffect: true
     Fail:
       Refresh: true
@@ -3662,7 +3662,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       Debuff: true
-      OverlapFail: true
       SpreadEffect: true
     Fail:
       Refresh: true
@@ -3689,7 +3688,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       Debuff: true
-      OverlapFail: true
       SpreadEffect: true
     Fail:
       Refresh: true
@@ -3711,7 +3709,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       Debuff: true
-      OverlapFail: true
       SpreadEffect: true
     Fail:
       Refresh: true
@@ -3786,18 +3783,20 @@ Body:
       Def: true
     Flags:
       DisplayPc: true
-      OverlapFail: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
       SendVal1: true
+    Fail:
+      Banding: true
     End:
       Prestige: true
   - Status: Banding_Defence
     Icon: EFST_BANDING_DEFENCE
     Flags:
       BossResist: true
-      OverlapFail: true
+    Fail:
+      Banding_Defence: true
   - Status: Earthdrive
     Icon: EFST_EARTHDRIVE
     DurationLookup: LG_EARTHDRIVE
@@ -3849,11 +3848,11 @@ Body:
       StopCasting: true
       SetStand: true
       Debuff: true
-      OverlapFail: true
     Fail:
       Refresh: true
       Inspiration: true
       Warmer: true
+      Crystalize: true
   - Status: Striking
     Icon: EFST_STRIKING
     DurationLookup: SO_STRIKING
@@ -4035,11 +4034,11 @@ Body:
       RemoveOnDamaged: true
       NoSave: true
       Debuff: true
-      OverlapFail: true
     MinDuration: 5000
     Fail:
       Refresh: true
       Inspiration: true
+      Deepsleep: true
     End:
       Dancing: true
       Voiceofsiren: true
@@ -4252,8 +4251,9 @@ Body:
       DisplayPc: true
       BossResist: true
       StopWalking: true
-      OverlapFail: true
       Debuff: true
+    Fail:
+      Netherworld: true
   - Status: Crescentelbow
     Icon: EFST_CRESCENTELBOW
     DurationLookup: SR_CRESCENTELBOW
@@ -4296,7 +4296,8 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
+    Fail:
+      Cursedcircle_Target: true
   - Status: Lightningwalk
     Icon: EFST_LIGHTNINGWALK
     DurationLookup: SR_LIGHTNINGWALK
@@ -4413,10 +4414,10 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       Debuff: true
-      OverlapFail: true
     Fail:
       Refresh: true
       Inspiration: true
+      Mandragora: true
   - Status: Stomachache
     Icon: EFST_STOMACHACHE
     CalcFlags:
@@ -4668,13 +4669,13 @@ Body:
       Batk: true
       Watk: true
     Flags:
-      OverlapFail: true
       BossResist: true
       NoBanishingBuster: true
       NoClearance: true
       SendVal2: true
     Fail:
       Inspiration: true
+      _Enervation: true
   - Status: _Groomy
     Icon: EFST_GROOMY
     DurationLookup: SC_GROOMY
@@ -4682,25 +4683,25 @@ Body:
       Aspd: true
       Hit: true
     Flags:
-      OverlapFail: true
       BossResist: true
       NoBanishingBuster: true
       NoClearance: true
       SendVal3: true
     Fail:
       Inspiration: true
+      _Groomy: true
   - Status: _Ignorance
     Icon: EFST_IGNORANCE
     DurationLookup: SC_IGNORANCE
     States:
       NoCast: true
     Flags:
-      OverlapFail: true
       BossResist: true
       NoBanishingBuster: true
       NoClearance: true
     Fail:
       Inspiration: true
+      _Ignorance: true
   - Status: _Laziness
     Icon: EFST_LAZINESS
     DurationLookup: SC_LAZINESS
@@ -4708,13 +4709,13 @@ Body:
       Flee: true
       Speed: true
     Flags:
-      OverlapFail: true
       BossResist: true
       NoBanishingBuster: true
       NoClearance: true
       SendVal3: true
     Fail:
       Inspiration: true
+      _Laziness: true
   - Status: _Unlucky
     Icon: EFST_UNLUCKY
     DurationLookup: SC_UNLUCKY
@@ -4722,26 +4723,26 @@ Body:
       Cri: true
       Flee2: true
     Flags:
-      OverlapFail: true
       BossResist: true
       NoBanishingBuster: true
       NoClearance: true
       SendVal3: true
     Fail:
       Inspiration: true
+      _Unlucky: true
   - Status: _Weakness
     Icon: EFST_WEAKNESS
     DurationLookup: SC_WEAKNESS
     CalcFlags:
       MaxHp: true
     Flags:
-      OverlapFail: true
       BossResist: true
       NoBanishingBuster: true
       NoClearance: true
       SendVal2: true
     Fail:
       Inspiration: true
+      _Weakness: true
   - Status: _Stripaccessory
     Icon: EFST_STRIPACCESSARY
     DurationLookup: SC_STRIPACCESSARY
@@ -5455,7 +5456,8 @@ Body:
     Flags:
       NoSave: true
       RemoveOnChangeMap: true
-      OverlapFail: true
+    Fail:
+      Tinder_Breaker2: true
   - Status: Cbc
     Icon: EFST_CBC
     DurationLookup: MH_CBC
@@ -5580,14 +5582,14 @@ Body:
     Icon: EFST_SET_NUM_DEF
     CalcFlags:
       Def: true
-    Flags:
-      OverlapFail: true
+    Fail:
+      Defset: true
   - Status: Mdefset
     Icon: EFST_SET_NUM_MDEF
     CalcFlags:
       Mdef: true
-    Flags:
-      OverlapFail: true
+    Fail:
+      Mdefset: true
   - Status: Darkcrow
     Icon: EFST_DARKCROW
     DurationLookup: GC_DARKCROW
@@ -6151,8 +6153,9 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
+    Fail:
+      Reuse_Limit_A: true
   - Status: Reuse_Limit_B
     Icon: EFST_REUSE_LIMIT_B
     Flags:
@@ -6161,8 +6164,9 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
+    Fail:
+      Reuse_Limit_B: true
   - Status: Reuse_Limit_C
     Icon: EFST_REUSE_LIMIT_C
     Flags:
@@ -6171,8 +6175,9 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
+    Fail:
+      Reuse_Limit_C: true
   - Status: Reuse_Limit_D
     Icon: EFST_REUSE_LIMIT_D
     Flags:
@@ -6181,8 +6186,9 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
+    Fail:
+      Reuse_Limit_D: true
   - Status: Reuse_Limit_E
     Icon: EFST_REUSE_LIMIT_E
     Flags:
@@ -6191,8 +6197,9 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
+    Fail:
+      Reuse_Limit_E: true
   - Status: Reuse_Limit_F
     Icon: EFST_REUSE_LIMIT_F
     Flags:
@@ -6201,8 +6208,9 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
+    Fail:
+      Reuse_Limit_F: true
   - Status: Reuse_Limit_G
     Icon: EFST_REUSE_LIMIT_G
     Flags:
@@ -6211,8 +6219,9 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
+    Fail:
+      Reuse_Limit_G: true
   - Status: Reuse_Limit_H
     Icon: EFST_REUSE_LIMIT_H
     Flags:
@@ -6221,8 +6230,9 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
+    Fail:
+      Reuse_Limit_H: true
   - Status: Reuse_Limit_Mtf
     Icon: EFST_REUSE_LIMIT_MTF
     Flags:
@@ -6231,8 +6241,9 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
+    Fail:
+      Reuse_Limit_Mtf: true
   - Status: Reuse_Limit_Aspd_Potion
     Icon: EFST_REUSE_LIMIT_ASPD_POTION
     Flags:
@@ -6241,8 +6252,9 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
+    Fail:
+      Reuse_Limit_Aspd_Potion: true
   - Status: Reuse_Millenniumshield
     Icon: EFST_REUSE_MILLENNIUMSHIELD
     Flags:
@@ -6251,8 +6263,9 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
+    Fail:
+      Reuse_Millenniumshield: true
   - Status: Reuse_Crushstrike
     Icon: EFST_REUSE_CRUSHSTRIKE
     Flags:
@@ -6261,8 +6274,9 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
+    Fail:
+      Reuse_Crushstrike: true
   - Status: Reuse_Stormblast
     Icon: EFST_REUSE_STORMBLAST
     Flags:
@@ -6271,8 +6285,9 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
+    Fail:
+      Reuse_Stormblast: true
   - Status: All_Riding_Reuse_Limit
     Icon: EFST_ALL_RIDING_REUSE_LIMIT
     Flags:
@@ -6281,8 +6296,9 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
+    Fail:
+      All_Riding_Reuse_Limit: true
   - Status: Reuse_Limit_Ecl
     Icon: EFST_REUSE_LIMIT_ECL
     Flags:
@@ -6291,8 +6307,9 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
+    Fail:
+      Reuse_Limit_Ecl: true
   - Status: Reuse_Limit_Recall
     Icon: EFST_REUSE_LIMIT_RECALL
     Flags:
@@ -6301,8 +6318,9 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      OverlapFail: true
       NoForcedEnd: true
+    Fail:
+      Reuse_Limit_Recall: true
   - Status: Promote_Health_Reserch
     Icon: EFST_PROMOTE_HEALTH_RESERCH
     CalcFlags:
@@ -6313,8 +6331,8 @@ Body:
       MaxSp: true
   - Status: Norecover_State
     Icon: EFST_HANDICAPSTATE_NORECOVER
-    Flags:
-      OverlapFail: true
+    Fail:
+      Norecover_State: true
   - Status: Suhide
     Icon: EFST_SUHIDE
     DurationLookup: SU_HIDE
@@ -6684,9 +6702,10 @@ Body:
       NoRemoveOnDead: true
       NoClearbuff: true
       NoBanishingBuster: true
-      OverlapFail: true
       NoDispell: true
       NoClearance: true
+    Fail:
+      Doram_Buf_01: true
   - Status: Doram_Buf_02
     Icon: EFST_DORAM_BUF_02
     CalcFlags:
@@ -6695,9 +6714,10 @@ Body:
       NoRemoveOnDead: true
       NoClearbuff: true
       NoBanishingBuster: true
-      OverlapFail: true
       NoDispell: true
       NoClearance: true
+    Fail:
+      Doram_Buf_02: true
   - Status: Hiss
     Icon: EFST_HISS
     DurationLookup: SU_HISS
@@ -7211,9 +7231,10 @@ Body:
       NoBanishingBuster: true
       NoDispell: true
       NoClearance: true
-      OverlapFail: true
       NoRemoveOnDead: true
       NoClearbuff: true
+    Fail:
+      Reuse_Limit_Luxanima: true
   - Status: Ensemblefatigue
     Icon: EFST_ENSEMBLEFATIGUE
     States:
