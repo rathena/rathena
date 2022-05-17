@@ -4026,6 +4026,13 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 	nullpo_retv(sd);
 
 	switch(type){
+	case SP_SPEED_RATE:	//Non stackable increase
+		if (sd->state.lr_flag != 2) {
+			sd->bonus.speed_rate = min(sd->bonus.speed_rate, -val);
+			sd->special_state.movehaste = true;
+			clif_status_load(&sd->bl, EFST_MOVHASTE_INFINITY, 1);
+		}
+		break;
 	case SP_ADDELE: // bonus2 bAddEle,e,x;
 		PC_BONUS_CHK_ELEMENT(type2,SP_ADDELE);
 		if(!sd->state.lr_flag || sd->state.lr_flag == 3)

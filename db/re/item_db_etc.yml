@@ -4411,9 +4411,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
-    UnEquipScript: |
-      sc_end SC_MOVEHASTE_INFINITY;
+      bonus2 bSpeedRate,25;
   - Id: 4132
     AegisName: Mistress_Card
     Name: Mistress Card
@@ -11027,9 +11025,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      autobonus "{ bonus bAgi,44; sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25; heal 0,-40; }",500,3000,0,"{ specialeffect2 EF_POTION_BERSERK; showscript \"I got the signal!!!!\"; }";
-    UnEquipScript: |
-      sc_end SC_MOVEHASTE_INFINITY;
+      autobonus "{ bonus bAgi,44; bonus2 bSpeedRate,25; heal 0,-40; }",500,3000,0,"{ specialeffect2 EF_POTION_BERSERK; showscript \"I got the signal!!!!\"; }";
   - Id: 4582
     AegisName: Bungisngis_Card
     Name: Bungisngis Card
@@ -44725,7 +44721,7 @@ Body:
       bonus5 bAutoSpellWhenHit,"SO_FIREWALK",5,35,BF_WEAPON,0;
       bonus5 bAutoSpellWhenHit,"SO_ELECTRICWALK",5,80,BF_MAGIC,0;
       autobonus "{ bonus bFlee,200; }",30,10000,BF_WEAPON,"{ specialeffect2 EF_TEIHIT1; }";
-      autobonus "{ bonus bSpeedRate,25; }",25,10000,BF_MAGIC,"{ specialeffect2 EF_POTION_BERSERK; }";
+      autobonus "{ bonus2 bSpeedRate,25; }",25,10000,BF_MAGIC,"{ specialeffect2 EF_POTION_BERSERK; }";
   - Id: 300000
     AegisName: IDTest_Card
     Name: IDTest Card
@@ -45884,7 +45880,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus bSpeedRate,25;
+      bonus2 bSpeedRate,25;
       bonus bHit,-50;
   - Id: 300140
     AegisName: ILL_Sropho_Card

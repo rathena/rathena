@@ -8110,13 +8110,3 @@ Body:
       All: true
     Flags:
       RemoveElementalOption: true
-  - Status: Movehaste_Infinity
-    Icon: EFST_MOVHASTE_INFINITY
-    CalcFlags:
-      Speed: true
-    Flags:
-      NoRemoveOnDead: true
-      NoClearbuff: true
-      NoSave: true
-    Fail:
-      Movehaste_Infinity: true
