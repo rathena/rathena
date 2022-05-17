@@ -15255,7 +15255,7 @@ BUILDIN_FUNC(getpetinfo)
 {
 	map_session_data* sd;
 
-	if (!script_charid2sd(3, sd)
+	if (!script_charid2sd(3, sd))
 		return SCRIPT_CMD_FAILURE;
 
 	TBL_PET *pd = sd->pd;
@@ -15297,7 +15297,7 @@ BUILDIN_FUNC(gethominfo)
 {
 	map_session_data* sd;
 
-	if (!script_charid2sd(3, sd)
+	if (!script_charid2sd(3, sd))
 		return SCRIPT_CMD_FAILURE;
 
 	TBL_HOM *hd = sd->hd;
@@ -15330,10 +15330,11 @@ BUILDIN_FUNC(gethominfo)
 BUILDIN_FUNC(addhomintimacy)
 {
 	map_session_data *sd;
-	homun_data *hd;
 
 	if (!script_charid2sd(3, sd))
 		return SCRIPT_CMD_FAILURE;
+
+	homun_data *hd = sd->hd;
 
 	if (hd == nullptr)
 		return SCRIPT_CMD_SUCCESS;
