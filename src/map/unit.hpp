@@ -23,7 +23,7 @@ struct unit_data {
 	struct block_list *bl; ///link to owner object BL_PC|BL_MOB|BL_PET|BL_NPC|BL_HOM|BL_MER|BL_ELEM
 	struct walkpath_data walkpath;
 	struct skill_timerskill *skilltimerskill[MAX_SKILLTIMERSKILL];
-	struct skill_unit_group *skillunit[MAX_SKILLUNITGROUP];
+	std::vector<std::shared_ptr<s_skill_unit_group>> skillunits;
 	struct skill_unit_group_tickset skillunittick[MAX_SKILLUNITGROUPTICKSET];
 	short attacktarget_lv;
 	short to_x, to_y;
@@ -57,6 +57,7 @@ struct unit_data {
 		unsigned walk_script : 1;
 		unsigned blockedmove : 1;
 		unsigned blockedskill : 1;
+		unsigned ignore_cell_stack_limit : 1;
 	} state;
 	char walk_done_event[EVENT_NAME_LENGTH];
 	char title[NAME_LENGTH];
@@ -64,11 +65,7 @@ struct unit_data {
 };
 
 struct view_data {
-#ifdef __64BIT__
-	unsigned int class_; //why arch dependant ??? make no sense imo [lighta]
-#else
-	unsigned short class_;
-#endif
+	uint16 class_;
 	t_itemid
 		weapon,
 		shield, //Or left-hand weapon.
@@ -118,7 +115,7 @@ TIMER_FUNC(unit_delay_walktobl_timer);
 
 // Causes the target object to stop moving.
 int unit_stop_walking(struct block_list *bl,int type);
-int unit_can_move(struct block_list *bl);
+bool unit_can_move(struct block_list *bl);
 int unit_is_walking(struct block_list *bl);
 int unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int type);
 
@@ -141,6 +138,7 @@ int unit_stopattack(struct block_list *bl, va_list ap);
 void unit_stop_attack(struct block_list *bl);
 int unit_attack(struct block_list *src,int target_id,int continuous);
 int unit_cancel_combo(struct block_list *bl);
+bool unit_can_attack(struct block_list *bl, int target_id);
 
 // Cast on a unit
 int unit_skilluse_id(struct block_list *src, int target_id, uint16 skill_id, uint16 skill_lv);
@@ -160,6 +158,7 @@ int unit_set_target(struct unit_data* ud, int target_id);
 
 // unit_data
 void unit_dataset(struct block_list *bl);
+void unit_skillunit_maxcount(unit_data& ud, uint16 skill_id, int& maxcount);
 
 // Remove unit
 struct unit_data* unit_bl2ud(struct block_list *bl);

@@ -7,7 +7,6 @@
 #include <fstream>
 #include <functional>
 #include <iostream>
-#include <locale>
 #include <map>
 #include <unordered_map>
 #include <vector>
@@ -21,6 +20,8 @@
 #endif
 
 #include <yaml-cpp/yaml.h>
+#include <ryml_std.hpp>
+#include <ryml.hpp>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/core.hpp"
@@ -43,6 +44,7 @@
 #include "../map/chat.hpp"
 #include "../map/date.hpp"
 #include "../map/instance.hpp"
+#include "../map/elemental.hpp"
 #include "../map/mercenary.hpp"
 #include "../map/mob.hpp"
 #include "../map/npc.hpp"
@@ -81,7 +83,8 @@ std::unordered_map<const char *, int64> constants;
 
 // Implement the function instead of including the original version by linking
 void script_set_constant_(const char *name, int64 value, const char *constant_name, bool isparameter, bool deprecated) {
-	constants[name] = value;
+	if (!deprecated)
+		constants[name] = value;
 }
 
 const char *constant_lookup(int32 value, const char *prefix) {
@@ -263,13 +266,14 @@ void finalizeBody(void) {
 /**
  * Split the string with ':' as separator and put each value for a skilllv
  * @param str: String to split
- * @param val: Array of MAX_SKILL_LEVEL to put value into
- * @return 0:error, x:number of value assign (should be MAX_SKILL_LEVEL)
+ * @param val: Array to store value into
+ * @param max: Max array size (Default: MAX_SKILL_LEVEL)
+ * @return 0:error, x:number of value assign (max value)
  */
-int skill_split_atoi(char *str, int *val) {
+int skill_split_atoi(char *str, int *val, int max = MAX_SKILL_LEVEL) {
 	int i;
 
-	for (i = 0; i < MAX_SKILL_LEVEL; i++) {
+	for (i = 0; i < max; i++) {
 		if (!str)
 			break;
 		val[i] = atoi(str);
@@ -288,7 +292,7 @@ int skill_split_atoi(char *str, int *val) {
 }
 
 /**
- * Split string to int by constant value (const.txt) or atoi()
+ * Split string to int by constant value (const.yml) or atoi()
  * @param *str: String input
  * @param *val: Temporary storage
  * @param *delim: Delimiter (for multiple value support)
@@ -378,7 +382,7 @@ static bool isMultiLevel(int arr[]) {
  * @return Converted string
  */
 std::string name2Upper(std::string name) {
-	std::transform(name.begin(), name.end(), name.begin(), ::tolower);
+	util::tolower( name );
 	name[0] = toupper(name[0]);
 
 	for (size_t i = 0; i < name.size(); i++) {
@@ -525,7 +529,7 @@ const std::string ItemDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/item_db.yml";
 }
 
-uint64 ItemDatabase::parseBodyNode(const YAML::Node& node) {
+uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	t_itemid nameid;
 
 	if (!this->asUInt32(node, "Id", nameid))
@@ -548,7 +552,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node& node) {
 
 		if (look > 0) {
 			if (this->nodeExists(node, "Locations")) {
-				const YAML::Node& locationNode = node["Locations"];
+				const ryml::NodeRef& locationNode = node["Locations"];
 
 				static std::vector<std::string> locations = {
 					"Head_Low",
@@ -604,7 +608,7 @@ const std::string SkillDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/skill_db.yml";
 }
 
-uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	t_itemid nameid;
 
 	if (!this->asUInt32(node, "Id", nameid))
@@ -626,13 +630,16 @@ void SkillDatabase::clear() {
 	TypesafeCachedYamlDatabase::clear();
 }
 
+void SkillDatabase::loadingFinished(){
+}
+
 SkillDatabase skill_db;
 
 const std::string MobDatabase::getDefaultLocation(){
 	return std::string( db_path ) + "/mob_db.yml";
 }
 
-uint64 MobDatabase::parseBodyNode(const YAML::Node& node) {
+uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	uint16 mob_id;
 
 	if (!this->asUInt16(node, "Id", mob_id))

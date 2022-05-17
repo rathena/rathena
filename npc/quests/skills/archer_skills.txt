@@ -48,7 +48,7 @@ moc_ruins,118,99,5	script	Roberto	88,{
 				next;
 				delitem 907,20; //Resin
 				delitem 921,7; //Mushroom_Spore
-				delitem 906,41; //Tough_Scalelike_Stem
+				delitem 906,41; //Pointed_Scale
 				delitem 1019,13; //Wooden_Block
 				delitem 501,1; //Red_Potion
 				skill "AC_MAKINGARROW",1,SKILL_PERM;
@@ -100,7 +100,7 @@ moc_ruins,118,99,5	script	Roberto	88,{
 				next;
 				mes "[Roberto]";
 				mes "I've been very lonely since I left my hometown.";
-				mes "I would like to treat my homesick-ness";
+				mes "I would like to treat my homesickness";
 				mes "with things from there.";
 				mes "Bring me 20 Resins from the trees in the ";
 				mes "Payon forest, and 1 Red Potion";
@@ -108,10 +108,10 @@ moc_ruins,118,99,5	script	Roberto	88,{
 				next;
 				mes "[Roberto]";
 				mes "Also, 13 Trunks from the Willows that";
-				mes "lives near the Payon Forest,";
+				mes "live near the Payon Forest,";
 				mes "41 Pointed Scale,";
 				mes "7 Mushroom Spores.";
-				mes "If you bring me all of these.";
+				mes "If you bring me all of these,";
 				next;
 				mes "[Roberto]";
 				mes "I will teach you the skill.";

@@ -1,0 +1,305 @@
+//===== rAthena Documentation ================================
+//= Status Change Database Structure
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20220414
+//===== Description: =========================================
+//= Explanation of the status.yml file and structure.
+//============================================================
+
+---------------------------------------
+
+Status: Status change name.
+
+See src/map/script_constants.hpp for SC_ constants.
+
+---------------------------------------
+
+Icon: Status change icon or client effect that will be displayed client-side.
+
+See src/map/script_constants.hpp for EFST_ constants.
+
+---------------------------------------
+
+DurationLookup: Used for default duration lookup in skill_db.yml. The lookup is used for some item bonuses as default duration.
+
+---------------------------------------
+
+States: Specified states given when the SC is active.
+
+	None               - No special state. (Default)
+	NoMove             - Cannot move.
+	NoMoveCond         - Condition check for SCS_NOMOVE.
+	NoPickItem         - Cannot pick item.
+	NoPickItemCond     - Condition check for SCS_NOPICKITEM.
+	NoDropItem         - Cannot drop item.
+	NoDropItemCond     - Condition check for SCS_NODROPITEM.
+	NoCast             - Cannot cast a skill.
+	NoCastCond         - Condition check for SCS_NOCAST.
+	NoChat             - Cannot chat and open chat room.
+	NoChatCond         - Condition check for SCS_NOCHATCOND.
+	NoEquipItem        - Cannot put on equipment.
+	NoEquipItemCond    - Condition check for SCS_NOEQUIPITEM.
+	NoUnEquipItem      - Cannot put off equipment.
+	NoUnEquipItemCond  - Condition check for SCS_NOUNEQUIPITEM.
+	NoConsumeItem      - Cannot consume item.
+	NoConsumeItemCond  - Condition check for SCS_NOCONSUMEITEM.
+	NoAttack           - Cannot attack.
+	NoAttackCond       - Condition check for SCS_NOATTACK.
+	NoWarp             - Cannot warp.
+	NoWarpCond         - Condition check for SCS_NOWARP.
+	NoDeathPenalty     - Cannot lose experience on death.
+	NoDeathPenaltyCond - Condition check for SCS_NODEATHPENALTY.
+	NoInteract         - Cannot interact with client (sit/stand or talk with NPC).
+	NoInteractCond     - Condition check for SCS_NOINTERACT.
+
+States that have a suffix of "Cond" means the State has hard coded conditions in status.cpp::status_calc_state
+
+---------------------------------------
+
+CalcFlags: Flag that indicates which status calculation needs to be performed. Even if the value is changed in the status_db.yml the SC must have the respective bonus defined in source.
+
+	None    - Calculates nothing. (Default)
+	Base    - Base status
+	MaxHp   - Maximum HP
+	MaxSp   - Maximum SP
+	Str     - STR
+	Agi     - AGI
+	Vit     - VIT
+	Int     - INT
+	Dex     - DEX
+	Luk     - LUK
+	Batk    - Base Attack
+	Watk    - Weapon Attack
+	Matk    - Magic Attack
+	Hit     - Hit/accuracy rate
+	Flee    - Flee/dodge rate
+	Def     - Equipment Defense
+	Def2    - Defense
+	Mdef    - Equipment Magic Defense
+	Mdef2   - Magic Defense
+	Speed   - Walk speed
+	Aspd    - Attack speed
+	Dspd    - Damage delay speed
+	Cri     - Critical rate
+	Flee2   - Perfect dodge rate
+	Atk_Ele - Attack Element
+	Def_Ele - Defense Element
+	Mode    - Mode
+	Size    - Size
+	Race    - Race
+	Range   - Range
+	Regen   - Regeneration
+	MaxAp   - Maximum AP
+	Pow     - POW
+	Sta     - STA
+	Wis     - WIS
+	Spl     - SPL
+	Con     - CON
+	Crt     - CRT
+	Patk    - Physical Power
+	Smatk   - Spell Magic Attack
+	Res     - Physical Resistance
+	Mres    - Magic Resistance
+	Hplus   - Heal Plus
+	Crate   - Critical Rate
+	Dye     - Dye
+	All     - Calculates all CalcFlags
+
+---------------------------------------
+
+Opt1: Special effect when status is active (Aegis: BODYSTATE_*). This option is not stackable. These effects also apply their special behaviors.
+
+	None         - No effect (Default)
+	Stone        - Stone curse effect
+	StoneWait    - Stone curse incubation effect
+	Freeze       - Freeze effect
+	Stun         - Stun effect
+	Sleep        - Sleep effect
+	StoneWait    - Effect before Stone is really applied
+	Burning      - Burning effect
+	Imprison     - Imprison effect
+	Crystalize   - Crystalize effect
+
+---------------------------------------
+
+Opt2: Special option/client effect when status is active (Aegis: HEALTHSTATE_*).
+
+	None           - No effect (Default)
+	Poison         - Posioned effect
+	Curse          - Cursed effect
+	Silence        - Silenced effect
+	SignumCrucis   - Signum Crucis effect
+	Blind          - Blind effect
+	Angelus        - Angelus effect
+	Bleeding       - Bleeding effect
+	Dpoison        - Heavy Poisoned effect
+	Fear           - Fear effect
+
+---------------------------------------
+
+Opt3: Special option/client effect when status is active (Aegis: SHOW_EFST_*)
+
+	Normal            - No effect (Default)
+	Quicken           - Quicken effect
+	OverThrust        - Overthrust effect
+	EnergyCoat        - Energy Coat effect
+	ExplosionSpirits  - Explosion Spirits effect
+	SteelBody         - Steel Body effect
+	BladeStop         - Blade Stop effect
+	AuraBlade         - Aura Blade effect
+	Berserk           - Berserk effect
+	LightBlade        - Light Blade effect
+	Moonlit           - Moonlit effect
+	Marionette        - Marionette effect
+	Assumptio         - Assumptio effect
+	Warm              - Warm effect
+	Kaite             - Kaite effect
+	Bunsin            - Bunshin effect
+	SoulLink          - Soul Link effect
+	Undead            - Undead effect
+	Contract          - Contract effect
+
+---------------------------------------
+
+Options: Special option/client effect state when status is active.
+
+	Nothing        - No effect (Default)
+	Sight          - Sight effect
+	Hide           - Hide effect
+	Cloak          - Cloaking effect
+	Falcon         - Falcon effect
+	Riding         - Riding effect
+	Invisible      - Invisible effect
+	Orcish         - Orcish effect, the ugly face!
+	Wedding        - Wedding costume
+	Ruwach         - Ruwach effect
+	ChaseWalk      - Chasewalk effect
+	Flying         - Flying effect (Star Gladiator's Union)
+	Xmas           - Christmas costume
+	Transform      - Transformation
+	Summer         - Summer costume
+	Dragon1        - Dragon
+	Dragon2        - Dragon
+	Dragon3        - Dragon
+	Dragon4        - Dragon
+	Dragon5        - Dragon
+	Wug            - Wug
+	WugRider       - Riding a Wug
+	Madogear       - Madogear
+	Hanbok         - Hanbok costume
+	Oktoberfest    - Oktoberfest costume
+
+---------------------------------------
+
+Flags: Various status flags for specific status change events.
+
+	None                  - No special flag. (Default)
+	BlEffect              - Status should have BL_SCEFFECT as relevant effect, must have an EFST (displays on BL_PC, BL_HOM, BL_MER, BL_MOB, BL_ELEM). BL_PC is the default value.
+	DisplayPc             - Displays status effect when player logs in.
+	DislpayNpc            - Displays status effect on a NPC.
+	Debuff                - Status is considered a debuff. Used in combination with 'battle_config.debuff_on_logout'.
+	SetStand              - Sets player to standing state.
+	OverlapFail           - The status will fail to activate if the status is already active.
+	OverlapIgnoreLevel    - The status will successfully activate for any level if the status is already active.
+	FailedMado            - Cannot be applied if Madogear is active.
+	MadoCancel            - Cancels the status when mounting Madogear.
+	MadoEndCancel         - Cancels the status when unmounting Madogear.
+	MobLoseTarget         - When active on a monster it will lose the target.
+	RestartOnMapWarp      - Restarts the timer of a status when warping to another map.
+	SpreadEffect          - Passes the status onto a target when SC_DEADLYINFECT is active.
+	SendVal1              - Notifies the client of a status change (val1).
+	SendVal2              - Notifies the client of a status change (val2).
+	SendVal3              - Notifies the client of a status change (val3).
+
+	NoClearbuff           - Cannot be removed by 'status_change_clear_buffs()', 'sc_end SC_ALL', 'status_change_clear(3)', etc.
+	NoForcedEnd           - Cannot be removed by sc_end.
+	NoRemoveOnDead        - Cannot be removed when a player dies.
+	NoDispell             - Cannot be removed by SA_DISPELL.
+	NoClearance           - Cannot be removed by AB_CLEARANCE.
+	NoBanishingBuster     - Cannot be removed by RL_BANISHING_BUSTER.
+	NoSave                - Won't be saved when player logs out.
+	NoSaveInfinite        - Infinite duration status won't be saved when player logs out.
+	NoWarning             - Ignores the status_change_start check for statuses that have no defining features associated to them in the status database.
+
+	RemoveOnDamaged       - Removed when receiving damage.
+	RemoveOnRefresh       - Removed by RK_REFRESH.
+	RemoveOnLuxAnima      - Removed by RK_LUXANIMA.
+	RemoveOnMapWarp       - Removed when warping to another map.
+	RemoveOnChangeMap     - Removed when changing map-server.
+	RemoveChemicalProtect - Removed by AM_CP_ARMOR/AM_CP_HELM/AM_CP_SHIELD/AM_CP_WEAPON.
+	RemoveElementalOption - Removed by elemental changing modes/quitting/EL_TIDAL_WEAPON/EL_WATER_SCREEN on the master and elemental.
+	RemoveOnUnequip       - Removed when unequipping any type of equipment.
+	RemoveOnUnequipWeapon - Removed when unequipping a weapon.
+	RemoveOnUnequipArmor  - Removed when unequipping an armor.
+
+	StopAttacking         - Makes the unit stop attacking.
+	StopCasting           - Makes the unit stop casting skills.
+	StopWalking           - Makes the unit stop walking.
+
+	BossResist            - Cannot be applied to Boss Monster (Mob has mode MD_STATUS_IMMUNE).
+	MvpResist             - Cannot be applied to MvP (Mob has mode MD_MVP).
+
+	SendOption            - Sends the STATE_CHANGE packet. For statuses that have Opt1, Opt2, or Opt3 values.
+	SendLook              - Sends the STATE_CHANGE packet. For statuses that have body/look changes through 'Option' flags (only for players).
+	OnTouch               - Triggers OnTouch_ NPC events. For statuses that have an invisible effect.
+	UnitMove              - Triggers when the player has moved location and invokes the skill unit on place.
+	NonPlayer             - Sends the NPC_SHOWEFST_UPDATE packet. Used to send effects to NPC/monsters.
+
+	RequireWeapon         - Status requires a weapon to be equipped.
+	RequireShield         - Status requires a shield to be equipped.
+
+	SuperNoviceAngel      - Status that is given from Super Novice Angel.
+	TaekwonAngel          - Status that is given from Taekwon Angel.
+
+---------------------------------------
+
+MinDuration: Minimum duration, in milliseconds, after reduction calculation for status resistance.
+
+---------------------------------------
+
+MinRate: Minimum success rate, at n/10000, after reduction calculation for status resistance.
+
+---------------------------------------
+
+Fail: List of status that causes the status to fail to activate.
+
+---------------------------------------
+
+End: List of status that will end if the status activates.
+
+---------------------------------------
+
+EndReturn: List of status that will end if the status activates and it won't give its effect.
+           The statuses checked in this list are done at the beginning of status_change_start(). If at least 1 status from this list
+		   is removed then it will return back and not check anything else.
+
+---------------------------------------
+
+Notes:
+
+By default, statuses are 'Buff' (those that aren't explicitely given the 'Debuff' flag) which are removable by 'map_quit' in combination with 'battle_config.debuff_on_logout'.
+
+The NoClearbuff flag prevents some permanent and non-permanent statuses that cannot be removed by 'status_change_clear', 'status_change_clear_buffs', 'map_quit', or other
+clearing means.
+The function 'status_change_clear_buffs' is called by CG_TAROTCARD, RK_REFRESH, RK_LUXANIMA, CG_HERMODE, PA_GOSPEL, and LG_INSPIRATION.
+
+CG_TAROTCARD and CG_HERMODE only remove buffs while PA_GOSPEL and LG_INSPIRATION remove buffs and debuffs.
+
+RK_REFRESH and RK_LUXANIMA only remove statuses that have the Rem_On_Rerfresh or RemoveOnLuxAnima flag. Works just like SA_DISPELL, AB_CLEARANCE, RL_BANISHING_BUSTER that has the
+effect to remove buffs or debuffs.
+
+---- Removed comments from source ----
+- Mado is immune to increase agi, wind walk, cart boost, etc (others above) [Ind]
+- Cart Boost cannot be affected by Slow grace. Assumed if player got Slow Grace first, Cart Boost is failed since Cart Boost doesn't cancel Slow Grace effect
+  http://irowiki.org/wiki/Cart_Boost_%28Genetic%29 (view date: 2014-01-26)
+  http://irowiki.org/wiki/Cart_Boost (view date: 2014-01-26)
+- kRO Update 2014-02-12: Cannot be stacked with Platinum Alter and Madness Canceler (and otherwise?) [Cydh]
+- SC_BERSERK, SC_SATURDAYNIGHTFEVER, and SC__BLOODYLUST are all like berserk, do not everlap each other.
+- SC_STONE, SC_FREEZE, SC_DEEPSLEEP, SC_SLEEP, SC_STUN, SC_FREEZING, and SC_CRYSTALIZE cannot override other opt1 status changes. [Skotlex]
+  TODO: SC that has OPT1: SC_STONE, SC_FREEZE, SC_STUN, SC_SLEEP, SC_BURNING, SC_WHITEIMPRISON, SC_CRYSTALIZE
+- Immune to Frozen and Freezing status if under Warmer status. [Jobbie]
+- SC_ONEHAND removes the Aspd potion effect, as reported by Vicious. [Skotlex]
+- SC_ALL_RIDING. Already mounted, just dismount.
+- SC_GN_CARTBOOST andSC_CARTBOOST cancel Decrease Agi, but take no further effect [Skotlex]

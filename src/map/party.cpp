@@ -242,18 +242,21 @@ static void party_check_state(struct party_data *p)
 			case JOB_SURA:
 			case JOB_SURA_T:
 			case JOB_BABY_SURA:
+			case JOB_INQUISITOR:
 				p->state.monk = 1;
 			break;
 			case JOB_STAR_GLADIATOR:
 			case JOB_BABY_STAR_GLADIATOR:
 			case JOB_STAR_EMPEROR:
 			case JOB_BABY_STAR_EMPEROR:
+			case JOB_SKY_EMPEROR:
 				p->state.sg = 1;
 			break;
 			case JOB_SUPER_NOVICE:
 			case JOB_SUPER_BABY:
 			case JOB_SUPER_NOVICE_E:
 			case JOB_SUPER_BABY_E:
+			case JOB_HYPER_NOVICE:
 				p->state.snovice = 1;
 			break;
 			case JOB_TAEKWON:
@@ -1245,35 +1248,6 @@ int party_sub_count_class(struct block_list *bl, va_list ap)
 
 	if( (sd->class_&mask) != mapid_class )
 		return 0;
-
-	return 1;
-}
-
-/**
- * Special check for Royal Guard's Banding skill.
- * @param bl: Object invoking the counter
- * @param ap: List of parameters: Check Type
- * @return 1 or total HP on success or 0 otherwise
- */
-int party_sub_count_banding(struct block_list *bl, va_list ap)
-{
-	struct map_session_data *sd = (TBL_PC *)bl;
-	int type = va_arg(ap, int); // 0 = Banding Count, 1 = HP Check
-
-	if (sd->state.autotrade)
-		return 0;
-
-	if (battle_config.idle_no_share && pc_isidle_party(sd))
-		return 0;
-
-	if ((sd->class_&MAPID_THIRDMASK) != MAPID_ROYAL_GUARD)
-		return 0;
-
-	if (!sd->sc.data[SC_BANDING])
-		return 0;
-
-	if (type == 1)
-		return status_get_hp(bl);
 
 	return 1;
 }

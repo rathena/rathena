@@ -1,0 +1,8112 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Status Change Database
+###########################################################################
+#
+# Status Change Settings
+#
+###########################################################################
+# - Status                    Status change name.
+#   Icon                      Status change icon. (Default: EFST_BLANK)
+#   DurationLookup            Default status change duration. (Default: 0)
+#   States:                   Status change state to determine player states. (Default: None)
+#   CalcFlags:                Status change calculation to indicate which stat is adjusted. (Default: None)
+#   Opt1                      Special effect when a status change is active. Non-stackable. (Default: None)
+#   Opt2:                     Special options/client effects when a status change is active. (Default: None)
+#   Opt3:                     Special options/client effects when a status change is active. (Default: Normal)
+#   Options:                  Special options/client effects when a status change is active. (Default: Nothing)
+#   Flags:                    Special flags which trigger during certain events.  (Default: None)
+#   MinRate                   Minimum rate after status change reduction (10000 = 100%). (Default: 0)
+#   MinDuration               Minimum duration in milliseconds after status change reduction. (Default: 1)
+#   Fail:                     List of Status Changes that causes the status to fail to activate. (Optional)
+#   End:                      List of Status Changes that will end when the status activates. (Optional)
+#   EndReturn:                List of Status Changes that will end when the status activates and won't give its effect. (Optional)
+###########################################################################
+
+Header:
+  Type: STATUS_DB
+  Version: 2
+
+Body:
+  - Status: Stone
+    DurationLookup: NPC_PETRIFYATTACK
+    States:
+      NoMove: true
+      NoCast: true
+      NoAttack: true
+    CalcFlags:
+      Def_Ele: true
+      Def: true
+      Mdef: true
+    Opt1: Stone
+    Flags:
+      SendOption: true
+      BossResist: true
+      StopAttacking: true
+      StopCasting: true
+      RemoveOnDamaged: true
+    Fail:
+      Refresh: true
+      Inspiration: true
+      Power_Of_Gaia: true
+      Gvg_Stone: true
+      Whiteimprison: true
+      Freeze: true
+      Stun: true
+      Sleep: true
+      Burning: true
+    End:
+      Aeterna: true
+    EndReturn:
+      StoneWait: true
+      Stone: true
+  - Status: StoneWait
+    DurationLookup: NPC_PETRIFYATTACK
+    States:
+      NoCast: true
+    Opt1: StoneWait
+    Flags:
+      SendOption: true
+      StopAttacking: true
+    Fail:
+      Whiteimprison: true
+      Freeze: true
+      Stun: true
+      Sleep: true
+      Burning: true
+    EndReturn:
+      StoneWait: true
+      Stone: true
+  - Status: Freeze
+    DurationLookup: NPC_WIDEFREEZE
+    States:
+      NoMove: true
+      NoCast: true
+      NoAttack: true
+    CalcFlags:
+      Def_Ele: true
+      Def: true
+      Mdef: true
+    Opt1: Freeze
+    Flags:
+      SendOption: true
+      BossResist: true
+      StopAttacking: true
+      StopCasting: true
+      RemoveOnDamaged: true
+    Fail:
+      Refresh: true
+      Inspiration: true
+      Warmer: true
+      Gvg_Freez: true
+      Whiteimprison: true
+      Stone: true
+      StoneWait: true
+      Freeze: true
+      Stun: true
+      Sleep: true
+      Burning: true
+    End:
+      Aeterna: true
+  - Status: Stun
+    DurationLookup: NPC_STUNATTACK
+    States:
+      NoMove: true
+      NoCast: true
+      NoAttack: true
+    Opt1: Stun
+    Flags:
+      SendOption: true
+      BossResist: true
+      StopAttacking: true
+      StopCasting: true
+      OverlapFail: true
+    Fail:
+      Refresh: true
+      Inspiration: true
+      Gvg_Stun: true
+      Stun: true
+  - Status: Sleep
+    DurationLookup: NPC_SLEEPATTACK
+    States:
+      NoMove: true
+      NoCast: true
+      NoAttack: true
+    Opt1: Sleep
+    Flags:
+      SendOption: true
+      BossResist: true
+      StopAttacking: true
+      StopCasting: true
+      RemoveOnDamaged: true
+      OverlapFail: true
+    Fail:
+      Refresh: true
+      Inspiration: true
+      Gvg_Sleep: true
+      Sleep: true
+  - Status: Poison
+    DurationLookup: NPC_POISON
+    CalcFlags:
+      Def2: true
+      Regen: true
+    Opt2:
+      Poison: true
+    Flags:
+      SendOption: true
+      BossResist: true
+      StopAttacking: true
+      OverlapFail: true
+      SpreadEffect: true
+    Fail:
+      Refresh: true
+      Inspiration: true
+      Poison: true
+      Dpoison: true
+  - Status: Curse
+    DurationLookup: NPC_WIDECURSE
+    CalcFlags:
+      Luk: true
+      Batk: true
+      Watk: true
+      Speed: true
+    Opt2:
+      Curse: true
+    Flags:
+      SendOption: true
+      BossResist: true
+      OverlapFail: true
+      SpreadEffect: true
+    Fail:
+      Refresh: true
+      Inspiration: true
+      Gvg_Curse: true
+      Curse: true
+  - Status: Silence
+    DurationLookup: NPC_SILENCEATTACK
+    States:
+      NoCast: true
+    Opt2:
+      Silence: true
+    Flags:
+      SendOption: true
+      BossResist: true
+      StopCasting: true
+      OverlapFail: true
+      SpreadEffect: true
+    Fail:
+      Refresh: true
+      Inspiration: true
+      Gvg_Silence: true
+      Silence: true
+  - Status: Confusion
+    DurationLookup: NPC_WIDECONFUSE
+    Flags:
+      BossResist: true
+      StopWalking: true
+      SpreadEffect: true
+    Fail:
+      Refresh: true
+      Inspiration: true
+    EndReturn:
+      Confusion: true
+  - Status: Blind
+    DurationLookup: NPC_BLINDATTACK
+    CalcFlags:
+      Hit: true
+      Flee: true
+    Opt2:
+      Blind: true
+    Flags:
+      SendOption: true
+      BossResist: true
+      OverlapFail: true
+      SpreadEffect: true
+    Fail:
+      Refresh: true
+      Inspiration: true
+      Fear: true
+      Gvg_Blind: true
+      Blind: true
+  - Status: Bleeding
+    Icon: EFST_BLOODING
+    DurationLookup: NPC_BLEEDING
+    CalcFlags:
+      Regen: true
+    Opt2:
+      Bleeding: true
+    Flags:
+      SendOption: true
+      BossResist: true
+      NoSave: true
+      NoClearance: true
+      SpreadEffect: true
+    Fail:
+      Refresh: true
+      Inspiration: true
+  - Status: Dpoison
+    DurationLookup: NPC_POISON
+    CalcFlags:
+      Def2: true
+      Regen: true
+    Opt2:
+      Dpoison: true
+    Flags:
+      SendOption: true
+      BossResist: true
+    Fail:
+      Refresh: true
+      Inspiration: true
+  - Status: Provoke
+    Icon: EFST_PROVOKE
+    DurationLookup: SM_PROVOKE
+    CalcFlags:
+      Def: true
+      Def2: true
+      Batk: true
+      Watk: true
+    Flags:
+      BossResist: true
+      Debuff: true
+      NoSaveInfinite: true
+    End:
+      Freeze: true
+      Stone: true
+      Sleep: true
+      TrickDead: true
+  - Status: Endure
+    Icon: EFST_ENDURE
+    DurationLookup: SM_ENDURE
+    CalcFlags:
+      Mdef: true
+      Dspd: true
+    Flags:
+      NoRemoveOnDead: true
+      NoSaveInfinite: true
+  - Status: Twohandquicken
+    Icon: EFST_TWOHANDQUICKEN
+    DurationLookup: KN_TWOHANDQUICKEN
+    CalcFlags:
+      Aspd: true
+      Hit: true
+      Cri: true
+    Opt3:
+      Quicken: true
+    Flags:
+      RequireWeapon: true
+    Fail:
+      Decreaseagi: true
+  - Status: Concentrate
+    Icon: EFST_CONCENTRATION
+    DurationLookup: AC_CONCENTRATION
+    CalcFlags:
+      Agi: true
+      Dex: true
+    Flags:
+      FailedMado: true
+    Fail:
+      Quagmire: true
+  - Status: Hiding
+    Icon: EFST_HIDING
+    DurationLookup: TF_HIDING
+    States:
+      NoMove: true
+      NoMoveCond: true
+      NoPickItem: true
+      NoConsumeItem: true
+    CalcFlags:
+      Speed: true
+    Options:
+      Hide: true
+    Flags:
+      OnTouch: true
+      StopAttacking: true
+      RemoveOnDamaged: true
+      RemoveOnChangeMap: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+    End:
+      Closeconfine: true
+      Closeconfine2: true
+  - Status: Cloaking
+    Icon: EFST_CLOAKING
+    DurationLookup: AS_CLOAKING
+    States:
+      NoPickItem: true
+    CalcFlags:
+      Cri: true
+      Speed: true
+    Options:
+      Cloak: true
+    Flags:
+      OnTouch: true
+      StopAttacking: true
+      RemoveOnDamaged: true
+      RemoveOnMapWarp: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Encpoison
+    Icon: EFST_ENCHANTPOISON
+    DurationLookup: AS_ENCHANTPOISON
+    CalcFlags:
+      Atk_Ele: true
+    End:
+      Aspersio: true
+      Fireweapon: true
+      Waterweapon: true
+      Windweapon: true
+      Earthweapon: true
+      Shadowweapon: true
+      Ghostweapon: true
+  - Status: Poisonreact
+    Icon: EFST_POISONREACT
+    DurationLookup: AS_POISONREACT
+  - Status: Quagmire
+    Icon: EFST_QUAGMIRE
+    DurationLookup: WZ_QUAGMIRE
+    CalcFlags:
+      Agi: true
+      Dex: true
+      Aspd: true
+      Speed: true
+    Flags:
+      NoSave: true
+      NoClearance: true
+      Debuff: true
+    Fail:
+      Speedup1: true
+    End:
+      Loud: true
+      Concentrate: true
+      Truesight: true
+      Windwalk: true
+      Magneticfield: true
+      Cartboost: true
+      Gn_Cartboost: true
+      Increaseagi: true
+      Adrenaline: true
+      Adrenaline2: true
+      Spearquicken: true
+      Twohandquicken: true
+      Onehand: true
+      Merc_Quicken: true
+      Acceleration: true
+  - Status: Angelus
+    Icon: EFST_ANGELUS
+    DurationLookup: AL_ANGELUS
+    CalcFlags:
+      Def2: true
+      MaxHp: true
+    Opt2:
+      Angelus: true
+    Flags:
+      SendOption: true
+  - Status: Blessing
+    Icon: EFST_BLESSING
+    DurationLookup: AL_BLESSING
+    CalcFlags:
+      Str: true
+      Int: true
+      Dex: true
+      Hit: true
+    Flags:
+      BossResist: true
+      TaekwonAngel: true
+  - Status: Signumcrucis
+    Icon: EFST_CRUCIS
+    DurationLookup: AL_CRUCIS
+    CalcFlags:
+      Def: true
+    Opt2:
+      SignumCrucis: true
+    Flags:
+      SendOption: true
+      Debuff: true
+  - Status: Increaseagi
+    Icon: EFST_INC_AGI
+    DurationLookup: AL_INCAGI
+    CalcFlags:
+      Agi: true
+      Speed: true
+      Aspd: true
+    Flags:
+      FailedMado: true
+      TaekwonAngel: true
+    Fail:
+      Quagmire: true
+    End:
+      Decreaseagi: true
+      Adoramus: true
+  - Status: Decreaseagi
+    Icon: EFST_DEC_AGI
+    DurationLookup: AL_DECAGI
+    CalcFlags:
+      Agi: true
+      Speed: true
+    Flags:
+      BossResist: true
+      NoSave: true
+      Debuff: true
+    Fail:
+      Speedup1: true
+    End:
+      Cartboost: true
+      Gn_Cartboost: true
+      Increaseagi: true
+      Adrenaline: true
+      Adrenaline2: true
+      Spearquicken: true
+      Twohandquicken: true
+      Onehand: true
+      Merc_Quicken: true
+      Acceleration: true
+  - Status: Slowpoison
+    Icon: EFST_SLOWPOISON
+    DurationLookup: PR_SLOWPOISON
+    Flags:
+      NoClearance: true
+  - Status: Impositio
+    Icon: EFST_IMPOSITIO
+    DurationLookup: PR_IMPOSITIO
+    CalcFlags:
+      Watk: true
+      Matk: true
+    Flags:
+      SuperNoviceAngel: true
+    End:
+      Impositio: true
+  - Status: Suffragium
+    Icon: EFST_SUFFRAGIUM
+    DurationLookup: PR_SUFFRAGIUM
+    Flags:
+      SuperNoviceAngel: true
+  - Status: Aspersio
+    Icon: EFST_ASPERSIO
+    DurationLookup: PR_ASPERSIO
+    CalcFlags:
+      Atk_Ele: true
+    Flags:
+      RemoveOnUnequipWeapon: true
+    End:
+      Encpoison: true
+      Fireweapon: true
+      Waterweapon: true
+      Windweapon: true
+      Earthweapon: true
+      Shadowweapon: true
+      Ghostweapon: true
+      Enchantarms: true
+  - Status: Benedictio
+    Icon: EFST_BENEDICTIO
+    DurationLookup: PR_BENEDICTIO
+    CalcFlags:
+      Def_Ele: true
+    Flags:
+      NoSave: true
+      NoClearance: true
+      #RemoveOnUnequipArmor: true
+  - Status: Kyrie
+    Icon: EFST_KYRIE
+    DurationLookup: PR_KYRIE
+    Flags:
+      SuperNoviceAngel: true
+  - Status: Magnificat
+    Icon: EFST_MAGNIFICAT
+    DurationLookup: PR_MAGNIFICAT
+    CalcFlags:
+      Regen: true
+    Flags:
+      FailedMado: true
+      NoSave: true
+      SuperNoviceAngel: true
+    Fail:
+      Offertorium: true
+  - Status: Gloria
+    Icon: EFST_GLORIA
+    DurationLookup: PR_GLORIA
+    CalcFlags:
+      Luk: true
+    Flags:
+      SuperNoviceAngel: true
+  - Status: Aeterna
+    Icon: EFST_LEXAETERNA
+    DurationLookup: PR_LEXAETERNA
+    Flags:
+      NoSave: true
+    Fail:
+      Stone: true
+      Freeze: true
+  - Status: Adrenaline
+    Icon: EFST_ADRENALINE
+    DurationLookup: BS_ADRENALINE
+    CalcFlags:
+      Aspd: true
+      Hit: true
+    Flags:
+      MadoCancel: true
+      RequireWeapon: true
+    Fail:
+      Quagmire: true
+      Decreaseagi: true
+  - Status: Weaponperfection
+    Icon: EFST_WEAPONPERFECT
+    DurationLookup: BS_WEAPONPERFECT
+    Flags:
+      MadoCancel: true
+  - Status: Overthrust
+    Icon: EFST_OVERTHRUST
+    DurationLookup: BS_OVERTHRUST
+    Opt3:
+      OverThrust: true
+    Flags:
+      MadoCancel: true
+    Fail:
+      Maxoverthrust: true
+  - Status: Maximizepower
+    Icon: EFST_MAXIMIZE
+    DurationLookup: BS_MAXIMIZE
+    CalcFlags:
+      Regen: true
+    Flags:
+      MadoCancel: true
+  - Status: Trickdead
+    Icon: EFST_TRICKDEAD
+    DurationLookup: NV_TRICKDEAD
+    States:
+      NoMove: true
+      NoPickItem: true
+      NoConsumeItem: true
+      NoAttack: true
+      NoInteract: true
+    CalcFlags:
+      Regen: true
+    Flags:
+      StopWalking: true
+      StopAttacking: true
+      StopCasting: true
+      RemoveOnDamaged: true
+      NoSave: true
+      NoClearance: true
+      RemoveOnChangeMap: true
+    End:
+      Dancing: true
+  - Status: Loud
+    Icon: EFST_SHOUT
+    DurationLookup: MC_LOUD
+    Flags:
+      MadoCancel: true
+    CalcFlags:
+      Str: true
+      Batk: true
+  - Status: Energycoat
+    Icon: EFST_ENERGYCOAT
+    DurationLookup: MG_ENERGYCOAT
+    Opt3:
+      EnergyCoat: true
+  - Status: Brokenarmor
+    Icon: EFST_BROKENARMOR
+    DurationLookup: NPC_ARMORBRAKE
+  - Status: Brokenweapon
+    Icon: EFST_BROKENWEAPON
+    DurationLookup: NPC_WEAPONBRAKER
+  - Status: Hallucination
+    Icon: EFST_ILLUSION
+    DurationLookup: NPC_HALLUCINATION
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      Debuff: true
+      SpreadEffect: true
+    Fail:
+      Inspiration: true
+  - Status: Weight50
+    Icon: EFST_WEIGHTOVER50
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoSave: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoForcedEnd: true
+  - Status: Weight90
+    Icon: EFST_WEIGHTOVER90
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      StopAttacking: true
+      NoSave: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoForcedEnd: true
+  - Status: Aspdpotion0
+    Icon: EFST_ATTHASTE_POTION1
+    CalcFlags:
+      Aspd: true
+    Flags:
+      NoClearance: true
+      OverlapIgnoreLevel: true
+  - Status: Aspdpotion1
+    Icon: EFST_ATTHASTE_POTION2
+    CalcFlags:
+      Aspd: true
+    Flags:
+      NoClearance: true
+      OverlapIgnoreLevel: true
+  - Status: Aspdpotion2
+    Icon: EFST_ATTHASTE_POTION3
+    CalcFlags:
+      Aspd: true
+    Flags:
+      OverlapIgnoreLevel: true
+  - Status: Aspdpotion3
+    Icon: EFST_ATTHASTE_INFINITY
+    CalcFlags:
+      Aspd: true
+    Flags:
+      NoClearance: true
+      OverlapIgnoreLevel: true
+  - Status: Speedup0
+    Icon: EFST_MOVHASTE_HORSE
+    CalcFlags:
+      Speed: true
+    Flags:
+      NoSave: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+  - Status: Speedup1
+    Icon: EFST_MOVHASTE_POTION
+    CalcFlags:
+      Speed: true
+    Flags:
+      NoSave: true
+      NoClearance: true
+  - Status: Atkpotion
+    Icon: EFST_PLUSATTACKPOWER
+    CalcFlags:
+      Batk: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearance: true
+      OverlapIgnoreLevel: true
+  - Status: Matkpotion
+    Icon: EFST_PLUSMAGICPOWER
+    CalcFlags:
+      Matk: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearance: true
+      OverlapIgnoreLevel: true
+  - Status: Wedding
+    States:
+      NoAttack: true
+    CalcFlags:
+      Speed: true
+    Options:
+      Wedding: true
+    Flags:
+      SendLook: true
+      StopAttacking: true
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Slowdown
+    CalcFlags:
+      Speed: true
+    Flags:
+      Debuff: true
+  - Status: Ankle
+    Icon: EFST_ANKLESNARE
+    DurationLookup: HT_ANKLESNARE
+    States:
+      NoMove: true
+    Flags:
+      NoClearbuff: true
+      StopWalking: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      RemoveOnChangeMap: true
+    MinDuration: 5000
+  - Status: Keeping
+    DurationLookup: NPC_KEEPING
+    CalcFlags:
+      Def: true
+  - Status: Barrier
+    Icon: EFST_BARRIER
+    DurationLookup: NPC_BARRIER
+    CalcFlags:
+      Mdef: true
+      Def: true
+  - Status: Stripweapon
+    Icon: EFST_NOEQUIPWEAPON
+    DurationLookup: RG_STRIPWEAPON
+    CalcFlags:
+      Watk: true
+    Flags:
+      Debuff: true
+      BossResist: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Stripshield
+    Icon: EFST_NOEQUIPSHIELD
+    DurationLookup: RG_STRIPSHIELD
+    CalcFlags:
+      Def: true
+    Flags:
+      Debuff: true
+      BossResist: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Striparmor
+    Icon: EFST_NOEQUIPARMOR
+    DurationLookup: RG_STRIPARMOR
+    CalcFlags:
+      Vit: true
+    Flags:
+      Debuff: true
+      BossResist: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Striphelm
+    Icon: EFST_NOEQUIPHELM
+    DurationLookup: RG_STRIPHELM
+    CalcFlags:
+      Int: true
+    Flags:
+      Debuff: true
+      BossResist: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Cp_Weapon
+    Icon: EFST_PROTECTWEAPON
+    DurationLookup: AM_CP_WEAPON
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      RemoveChemicalProtect: true
+  - Status: Cp_Shield
+    Icon: EFST_PROTECTSHIELD
+    DurationLookup: AM_CP_SHIELD
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      RemoveChemicalProtect: true
+  - Status: Cp_Armor
+    Icon: EFST_PROTECTARMOR
+    DurationLookup: AM_CP_ARMOR
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      RemoveChemicalProtect: true
+  - Status: Cp_Helm
+    Icon: EFST_PROTECTHELM
+    DurationLookup: AM_CP_HELM
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      RemoveChemicalProtect: true
+  - Status: Autoguard
+    Icon: EFST_AUTOGUARD
+    DurationLookup: CR_AUTOGUARD
+    Flags:
+      NoClearance: true
+      RequireShield: true
+  - Status: Reflectshield
+    Icon: EFST_REFLECTSHIELD
+    DurationLookup: CR_REFLECTSHIELD
+    Flags:
+      NoClearance: true
+      RequireShield: true
+    End:
+      Reflectdamage: true
+  - Status: Splasher
+    Icon: EFST_SPLASHER
+    DurationLookup: AS_SPLASHER
+  - Status: Providence
+    Icon: EFST_PROVIDENCE
+    DurationLookup: CR_PROVIDENCE
+    CalcFlags:
+      All: true
+    Flags:
+      NoSave: true
+  - Status: Defender
+    Icon: EFST_DEFENDER
+    DurationLookup: CR_DEFENDER
+    CalcFlags:
+      Speed: true
+      Aspd: true
+    Flags:
+      RequireShield: true
+  - Status: Magicrod
+    Icon: EFST_MAGICROD
+    DurationLookup: SA_MAGICROD
+    Flags:
+      NoSave: true
+  - Status: Spellbreaker
+    Flags:
+      NoWarning: true
+  - Status: Autospell
+    Icon: EFST_AUTOSPELL
+    DurationLookup: SA_AUTOSPELL
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoRemoveOnDead: true
+      NoClearance: true
+  - Status: Sighttrasher
+    Flags:
+      NoWarning: true
+  - Status: Autoberserk
+    Icon: EFST_AUTOBERSERK
+    DurationLookup: SM_AUTOBERSERK
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Spearquicken
+    Icon: EFST_SPEARQUICKEN
+    DurationLookup: CR_SPEARQUICKEN
+    CalcFlags:
+      Aspd: true
+      Cri: true
+      Flee: true
+    Opt3:
+      Quicken: true
+    Flags:
+      FailedMado: true
+      RequireWeapon: true
+    Fail:
+      Quagmire: true
+  - Status: Autocounter
+    Icon: EFST_AUTOCOUNTER
+    DurationLookup: KN_AUTOCOUNTER
+    States:
+      NoAttack: true
+      NoMove: true
+      NoDropItem: true
+      NoInteract: true
+  - Status: Sight
+    DurationLookup: MG_SIGHT
+    Options:
+      Sight: true
+    Flags:
+      SendOption: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoSave: true
+  - Status: Safetywall
+    DurationLookup: MG_SAFETYWALL
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Ruwach
+    DurationLookup: AL_RUWACH
+    Options:
+      Ruwach: true
+    Flags:
+      SendOption: true
+  - Status: Extremityfist
+    DurationLookup: MO_EXTREMITYFIST
+    CalcFlags:
+      Regen: true
+    Flags:
+      Debuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Explosionspirits
+    Icon: EFST_EXPLOSIONSPIRITS
+    DurationLookup: MO_EXPLOSIONSPIRITS
+    CalcFlags:
+      Cri: true
+      Regen: true
+    Opt3:
+      ExplosionSpirits: true
+    Flags:
+      Debuff: true
+      NoClearance: true
+  - Status: Combo
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapIgnoreLevel: true
+  - Status: Bladestop_Wait
+    DurationLookup: MO_BLADESTOP
+    States:
+      NoMove: true
+    Flags:
+      RemoveOnChangeMap: true
+  - Status: Bladestop
+    Icon: EFST_BLADESTOP
+    DurationLookup: MO_BLADESTOP
+    States:
+      NoMove: true
+      NoPickItem: true
+      NoDropItem: true
+      NoAttack: true
+      NoInteract: true
+    Opt3:
+      BladeStop: true
+    Flags:
+      MobLoseTarget: true
+      NoClearbuff: true
+      NoSave: true
+      NoClearance: true
+      RemoveOnChangeMap: true
+  - Status: Fireweapon
+    Icon: EFST_PROPERTYFIRE
+    DurationLookup: SA_FLAMELAUNCHER
+    CalcFlags:
+      All: true
+    Flags:
+      NoRemoveOnDead: true
+    End:
+      Encpoison: true
+      Aspersio: true
+      Waterweapon: true
+      Windweapon: true
+      Earthweapon: true
+      Shadowweapon: true
+      Ghostweapon: true
+  - Status: Waterweapon
+    Icon: EFST_PROPERTYWATER
+    DurationLookup: SA_FROSTWEAPON
+    CalcFlags:
+      All: true
+    Flags:
+      NoRemoveOnDead: true
+    End:
+      Encpoison: true
+      Aspersio: true
+      Fireweapon: true
+      Windweapon: true
+      Earthweapon: true
+      Shadowweapon: true
+      Ghostweapon: true
+  - Status: Windweapon
+    Icon: EFST_PROPERTYWIND
+    DurationLookup: SA_LIGHTNINGLOADER
+    CalcFlags:
+      All: true
+    Flags:
+      NoRemoveOnDead: true
+    End:
+      Encpoison: true
+      Aspersio: true
+      Fireweapon: true
+      Waterweapon: true
+      Earthweapon: true
+      Shadowweapon: true
+      Ghostweapon: true
+  - Status: Earthweapon
+    Icon: EFST_PROPERTYGROUND
+    DurationLookup: SA_SEISMICWEAPON
+    CalcFlags:
+      All: true
+    Flags:
+      NoRemoveOnDead: true
+    End:
+      Encpoison: true
+      Aspersio: true
+      Fireweapon: true
+      Waterweapon: true
+      Windweapon: true
+      Shadowweapon: true
+      Ghostweapon: true
+  - Status: Volcano
+    Icon: EFST_GROUNDMAGIC
+    DurationLookup: SA_VOLCANO
+    CalcFlags:
+      Watk: true
+      Matk: true
+    Flags:
+      NoSave: true
+      NoClearance: true
+  - Status: Deluge
+    Icon: EFST_GROUNDMAGIC
+    DurationLookup: SA_DELUGE
+    CalcFlags:
+      MaxHp: true
+    Flags:
+      NoSave: true
+      NoClearance: true
+  - Status: Violentgale
+    Icon: EFST_GROUNDMAGIC
+    DurationLookup: SA_VIOLENTGALE
+    CalcFlags:
+      Flee: true
+    Flags:
+      NoSave: true
+      NoClearance: true
+  - Status: Watk_Element
+    DurationLookup: MS_MAGNUM
+  - Status: Armor
+    DurationLookup: NPC_DEFENDER
+  - Status: Armor_Element_Water
+    Icon: EFST_RESIST_PROPERTY_WATER
+    CalcFlags:
+      All: true
+    Flags:
+      NoDispell: true
+      OverlapIgnoreLevel: true
+  - Status: Nochat
+    States:
+      NoPickItem: true
+      NoPickItemCond: true
+      NoDropItem: true
+      NoDropItemCond: true
+      NoChat: true
+      NoChatCond: true
+      NoConsumeItem: true
+      NoConsumeItemCond: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      OverlapFail: true
+      NoClearance: true
+      NoForcedEnd: true
+  - Status: Protectexp
+    Icon: EFST_PROTECTEXP
+    DurationLookup: WE_BABY
+    States:
+      NoDeathPenalty: true
+  - Status: Aurablade
+    Icon: EFST_AURABLADE
+    DurationLookup: LK_AURABLADE
+    Opt3:
+      AuraBlade: true
+    Flags:
+      NoSave: true
+      RequireWeapon: true
+  - Status: Parrying
+    Icon: EFST_PARRYING
+    DurationLookup: LK_PARRYING
+    Flags:
+      NoSave: true
+      NoClearance: true
+      RequireWeapon: true
+  - Status: Concentration
+    Icon: EFST_LKCONCENTRATION
+    DurationLookup: LK_CONCENTRATION
+    CalcFlags:
+      Hit: true
+      Def: true
+    Opt3:
+      Quicken: true
+    Flags:
+      NoSave: true
+  - Status: Tensionrelax
+    Icon: EFST_TENSIONRELAX
+    DurationLookup: LK_TENSIONRELAX
+    CalcFlags:
+      Regen: true
+    Flags:
+      NoSave: true
+      NoClearance: true
+  - Status: Berserk
+    Icon: EFST_BERSERK
+    DurationLookup: LK_BERSERK
+    States:
+      NoCast: true
+      NoChat: true
+      NoEquipItem: true
+      NoUnEquipItem: true
+      NoConsumeItem: true
+    CalcFlags:
+      Def: true
+      Def2: true
+      Mdef: true
+      MDef2: true
+      Flee: true
+      Speed: true
+      Aspd: true
+      MaxHp: true
+      Regen: true
+    Opt3:
+      Berserk: true
+    Flags:
+      NoSave: true
+    Fail:
+      Saturdaynightfever: true
+      _Bloodylust: true
+  - Status: Fury
+    Flags:
+      NoWarning: true
+  - Status: Gospel
+    Icon: EFST_GOSPEL
+    DurationLookup: PA_GOSPEL
+    States:
+      NoMove: true
+      NoMoveCond: true
+    CalcFlags:
+      Speed: true
+      Aspd: true
+    Flags:
+      NoSave: true
+  - Status: Assumptio
+    Icon: EFST_ASSUMPTIO_BUFF
+    DurationLookup: HP_ASSUMPTIO
+    CalcFlags:
+      Def: true
+    Opt3:
+      Assumptio: true
+    End:
+      Kaite: true
+  - Status: Basilica
+    Icon: EFST_BASILICA_BUFF
+    DurationLookup: HP_BASILICA
+    CalcFlags:
+      All: true
+    States:
+      NoAttack: true
+    Flags:
+      NoSave: true
+      NoClearance: true
+  - Status: Guildaura
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Magicpower
+    Icon: EFST_MAGICPOWER
+    DurationLookup: HW_MAGICPOWER
+    CalcFlags:
+      Matk: true
+    Flags:
+      NoSave: true
+    End:
+      Magicpower: true
+  - Status: Edp
+    Icon: EFST_EDP
+    DurationLookup: ASC_EDP
+    CalcFlags:
+      Watk: true
+    Flags:
+      NoRemoveOnDead: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoSave: true
+  - Status: Truesight
+    Icon: EFST_TRUESIGHT
+    DurationLookup: SN_SIGHT
+    CalcFlags:
+      Str: true
+      Agi: true
+      Vit: true
+      Int: true
+      Dex: true
+      Luk: true
+      Cri: true
+      Hit: true
+    Flags:
+      FailedMado: true
+      NoSave: true
+    Fail:
+      Quagmire: true
+  - Status: Windwalk
+    Icon: EFST_WINDWALK
+    DurationLookup: SN_WINDWALK
+    CalcFlags:
+      Flee: true
+      Speed: true
+    Flags:
+      FailedMado: true
+      NoSave: true
+    Fail:
+      Quagmire: true
+  - Status: Meltdown
+    Icon: EFST_MELTDOWN
+    DurationLookup: WS_MELTDOWN
+    Flags:
+      MadoCancel: true
+      NoRemoveOnDead: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+  - Status: Cartboost
+    Icon: EFST_CARTBOOST
+    DurationLookup: WS_CARTBOOST
+    CalcFlags:
+      Speed: true
+    Flags:
+      MadoCancel: true
+      NoRemoveOnDead: true
+      NoClearance: true
+      NoSave: true
+      NoBanishingBuster: true
+      NoDispell: true
+    Fail:
+      Quagmire: true
+    EndReturn:
+      Decreaseagi: true
+  - Status: Chasewalk
+    Icon: EFST_CHASEWALK
+    DurationLookup: ST_CHASEWALK
+    States:
+      NoPickItem: true
+    CalcFlags:
+      Speed: true
+    Options:
+      ChaseWalk: true
+      Cloak: true
+    Flags:
+      OnTouch: true
+      StopAttacking: true
+      RemoveOnDamaged: true
+      RemoveOnChangeMap: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Rejectsword
+    Icon: EFST_SWORDREJECT
+    DurationLookup: ST_REJECTSWORD
+  - Status: Marionette
+    Icon: EFST_MARIONETTE_MASTER
+    DurationLookup: CG_MARIONETTE
+    CalcFlags:
+      Str: true
+      Agi: true
+      Vit: true
+      Int: true
+      Dex: true
+      Luk: true
+    Opt3:
+      Marionette: true
+    Flags:
+      RemoveOnChangeMap: true
+      OverlapFail: true
+  - Status: Marionette2
+    Icon: EFST_MARIONETTE
+    DurationLookup: CG_MARIONETTE
+    CalcFlags:
+      Str: true
+      Agi: true
+      Vit: true
+      Int: true
+      Dex: true
+      Luk: true
+    Opt3:
+      Marionette: true
+    Flags:
+      RemoveOnChangeMap: true
+      OverlapFail: true
+  - Status: Changeundead
+    Icon: EFST_PROPERTYUNDEAD
+    DurationLookup: NPC_CHANGEUNDEAD
+    CalcFlags:
+      Def_Ele: true
+    Opt3:
+      Undead: true
+    Flags:
+      Debuff: true
+      NoClearance: true
+    End:
+      Blessing: true
+      Increaseagi: true
+  - Status: Jointbeat
+    Icon: EFST_JOINTBEAT
+    DurationLookup: LK_JOINTBEAT
+    CalcFlags:
+      Batk: true
+      Def2: true
+      Speed: true
+      Aspd: true
+    Flags:
+      NoSave: true
+      NoClearance: true
+      Debuff: true
+  - Status: Mindbreaker
+    Icon: EFST_MINDBREAKER
+    DurationLookup: PF_MINDBREAKER
+    CalcFlags:
+      Matk: true
+      MDef2: true
+    Flags:
+      NoSave: true
+      Debuff: true
+    End:
+      Freeze: true
+      Stone: true
+      Sleep: true
+  - Status: Memorize
+    Icon: EFST_MEMORIZE
+    DurationLookup: PF_MEMORIZE
+    Flags:
+      NoSave: true
+  - Status: Fogwall
+    Icon: EFST_FOGWALL
+    DurationLookup: PF_FOGWALL
+    Flags:
+      BossResist: true
+      NoSave: true
+      NoClearance: true
+  - Status: Spiderweb
+    Icon: EFST_SPIDERWEB
+    DurationLookup: PF_SPIDERWEB
+    States:
+      NoMove: true
+    CalcFlags:
+      Flee: true
+    Flags:
+      StopWalking: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+      NoSave: true
+      Debuff: true
+  - Status: Devotion
+    Icon: EFST_DEVOTION
+    DurationLookup: CR_DEVOTION
+    Flags:
+      NoSave: true
+      RemoveOnChangeMap: true
+      OverlapIgnoreLevel: true
+  - Status: Sacrifice
+    DurationLookup: PA_SACRIFICE
+  - Status: Steelbody
+    Icon: EFST_STEELBODY
+    DurationLookup: MO_STEELBODY
+    States:
+      NoCast: true
+    CalcFlags:
+      Def: true
+      Mdef: true
+      Aspd: true
+      Speed: true
+    Flags:
+      NoSave: true
+    Opt3:
+      SteelBody: true
+  - Status: Orcish
+    DurationLookup: SA_REVERSEORCISH
+    Flags:
+      Debuff: true
+    Options:
+      Orcish: true
+    Flags:
+      SendOption: true
+  - Status: Readystorm
+    Icon: EFST_STORMKICK_ON
+    DurationLookup: TK_READYSTORM
+    Flags:
+      NoRemoveOnDead: true
+      NoSave: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Readydown
+    Icon: EFST_DOWNKICK_ON
+    DurationLookup: TK_READYDOWN
+    Flags:
+      NoRemoveOnDead: true
+      NoSave: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Readyturn
+    Icon: EFST_TURNKICK_ON
+    DurationLookup: TK_READYTURN
+    Flags:
+      NoRemoveOnDead: true
+      NoSave: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Readycounter
+    Icon: EFST_COUNTER_ON
+    DurationLookup: TK_READYCOUNTER
+    Flags:
+      NoRemoveOnDead: true
+      NoSave: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Dodge
+    Icon: EFST_DODGE_ON
+    DurationLookup: TK_DODGE
+    Flags:
+      NoRemoveOnDead: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+  - Status: Run
+    Icon: EFST_RUN
+    DurationLookup: TK_RUN
+    CalcFlags:
+      Speed: true
+      Dspd: true
+    Flags:
+      NoSave: true
+      NoClearance: true
+      RemoveOnChangeMap: true
+  - Status: Shadowweapon
+    Icon: EFST_PROPERTYDARK
+    DurationLookup: TK_SEVENWIND
+    CalcFlags:
+      Atk_Ele: true
+    Flags:
+      NoSave: true
+      NoClearance: true
+    End:
+      Encpoison: true
+      Aspersio: true
+      Fireweapon: true
+      Waterweapon: true
+      Windweapon: true
+      Earthweapon: true
+      Ghostweapon: true
+  - Status: Adrenaline2
+    Icon: EFST_ADRENALINE2
+    DurationLookup: BS_ADRENALINE2
+    CalcFlags:
+      Aspd: true
+    Flags:
+      MadoCancel: true
+      NoSave: true
+      RequireWeapon: true
+    Fail:
+      Quagmire: true
+      Decreaseagi: true
+  - Status: Ghostweapon
+    Icon: EFST_PROPERTYTELEKINESIS
+    DurationLookup: TK_SEVENWIND
+    CalcFlags:
+      Atk_Ele: true
+    Flags:
+      NoSave: true
+      NoClearance: true
+    End:
+      Encpoison: true
+      Aspersio: true
+      Fireweapon: true
+      Waterweapon: true
+      Windweapon: true
+      Earthweapon: true
+      Shadowweapon: true
+  - Status: Kaizel
+    Icon: EFST_KAIZEL
+    DurationLookup: SL_KAIZEL
+  - Status: Kaahi
+    Icon: EFST_KAAHI
+    DurationLookup: SL_KAAHI
+    Flags:
+      NoSave: true
+      NoClearance: true
+    End:
+      Kaahi: true
+  - Status: Kaupe
+    Icon: EFST_KAUPE
+    DurationLookup: SL_KAUPE
+    Flags:
+      NoSave: true
+      NoClearance: true
+  - Status: Onehand
+    Icon: EFST_ONEHANDQUICKEN
+    DurationLookup: KN_ONEHAND
+    CalcFlags:
+      Aspd: true
+    Opt3:
+      Quicken: true
+    Flags:
+      NoSave: true
+      NoClearance: true
+      RequireWeapon: true
+    Fail:
+      Decreaseagi: true
+    End:
+      Aspdpotion0: true
+      Aspdpotion1: true
+      Aspdpotion2: true
+      Aspdpotion3: true
+  - Status: Preserve
+    Icon: EFST_PRESERVE
+    DurationLookup: ST_PRESERVE
+    Flags:
+      NoSave: true
+  - Status: Battleorders
+    Icon: EFST_GDSKILL_BATTLEORDER
+    DurationLookup: GD_BATTLEORDER
+    CalcFlags:
+      Str: true
+      Int: true
+      Dex: true
+  - Status: Regeneration
+    Icon: EFST_GDSKILL_REGENERATION
+    DurationLookup: GD_REGENERATION
+    CalcFlags:
+      Regen: true
+    Flags:
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+      NoSaveInfinite: true
+  - Status: Doublecast
+    Icon: EFST_DOUBLECASTING
+    DurationLookup: PF_DOUBLECASTING
+    Flags:
+      NoSave: true
+      NoClearance: true
+  - Status: Maxoverthrust
+    Icon: EFST_OVERTHRUSTMAX
+    DurationLookup: WS_OVERTHRUSTMAX
+    Opt3:
+      OverThrust: true
+    Flags:
+      MadoCancel: true
+      NoSave: true
+      RemoveOnUnequipWeapon: true
+    End:
+      Overthrust: true
+  - Status: Hermode
+    Icon: EFST_HERMODE
+    DurationLookup: CG_HERMODE
+  - Status: Shrink
+    Icon: EFST_CR_SHRINK
+    DurationLookup: CR_SHRINK
+    Flags:
+      NoRemoveOnDead: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoSave: true
+  - Status: Sightblaster
+    Icon: EFST_WZ_SIGHTBLASTER
+    DurationLookup: WZ_SIGHTBLASTER
+    Options:
+      Sight: true
+    Flags:
+      NoSave: true
+      NoDispell: true
+      NoBanishingBuster: true
+  - Status: Winkcharm
+    Icon: EFST_DC_WINKCHARM
+    DurationLookup: DC_WINKCHARM
+    Flags:
+      RemoveOnDamaged: true
+      Debuff: true
+  - Status: Closeconfine
+    Icon: EFST_RG_CCONFINE_M
+    DurationLookup: RG_CLOSECONFINE
+    States:
+      NoMove: true
+    CalcFlags:
+      Flee: true
+    Flags:
+      StopWalking: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+      NoRemoveOnDead: true
+      RemoveOnChangeMap: true
+  - Status: Closeconfine2
+    Icon: EFST_RG_CCONFINE_S
+    DurationLookup: RG_CLOSECONFINE
+    States:
+      NoMove: true
+    Flags:
+      StopWalking: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+      NoRemoveOnDead: true
+      RemoveOnChangeMap: true
+      OverlapFail: true
+  - Status: Dancing
+    Icon: EFST_BDPLAYING
+    DurationLookup: BD_ENCORE
+    States:
+      NoMove: true
+      NoMoveCond: true
+    CalcFlags:
+      Speed: true
+      Regen: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      RemoveOnChangeMap: true
+      RequireWeapon: true
+      OverlapIgnoreLevel: true
+  - Status: Elementalchange
+    Icon: EFST_ARMOR_PROPERTY
+    DurationLookup: NPC_ATTRICHANGE
+    CalcFlags:
+      Def_Ele: true
+    Flags:
+      NoRemoveOnDead: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Richmankim
+    Icon: EFST_RICHMANKIM
+    DurationLookup: BD_RICHMANKIM
+    Flags:
+      BossResist: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Richmankim: true
+      Eternalchaos: true
+      Drumbattle: true
+      Nibelungen: true
+      Rokisweil: true
+      Intoabyss: true
+      Siegfried: true
+  - Status: Eternalchaos
+    Icon: EFST_ETERNALCHAOS
+    DurationLookup: BD_ETERNALCHAOS
+    CalcFlags:
+      Def2: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Richmankim: true
+      Eternalchaos: true
+      Drumbattle: true
+      Nibelungen: true
+      Rokisweil: true
+      Intoabyss: true
+      Siegfried: true
+  - Status: Drumbattle
+    Icon: EFST_DRUMBATTLEFIELD
+    DurationLookup: BD_DRUMBATTLEFIELD
+    CalcFlags:
+      Def: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Richmankim: true
+      Eternalchaos: true
+      Drumbattle: true
+      Nibelungen: true
+      Rokisweil: true
+      Intoabyss: true
+      Siegfried: true
+  - Status: Nibelungen
+    Icon: EFST_RINGNIBELUNGEN
+    DurationLookup: BD_RINGNIBELUNGEN
+    CalcFlags:
+      All: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Richmankim: true
+      Eternalchaos: true
+      Drumbattle: true
+      Nibelungen: true
+      Rokisweil: true
+      Intoabyss: true
+      Siegfried: true
+  - Status: Rokisweil
+    Icon: EFST_ROKISWEIL
+    DurationLookup: BD_ROKISWEIL
+    States:
+      NoCast: true
+    Flags:
+      BossResist: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Richmankim: true
+      Eternalchaos: true
+      Drumbattle: true
+      Nibelungen: true
+      Rokisweil: true
+      Intoabyss: true
+      Siegfried: true
+  - Status: Intoabyss
+    Icon: EFST_INTOABYSS
+    DurationLookup: BD_INTOABYSS
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Richmankim: true
+      Eternalchaos: true
+      Drumbattle: true
+      Nibelungen: true
+      Rokisweil: true
+      Intoabyss: true
+      Siegfried: true
+  - Status: Siegfried
+    Icon: EFST_SIEGFRIED
+    DurationLookup: BD_SIEGFRIED
+    CalcFlags:
+      All: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Richmankim: true
+      Eternalchaos: true
+      Drumbattle: true
+      Nibelungen: true
+      Rokisweil: true
+      Intoabyss: true
+      Siegfried: true
+  - Status: Whistle
+    Icon: EFST_WHISTLE
+    DurationLookup: BA_WHISTLE
+    CalcFlags:
+      Flee: true
+      Flee2: true
+    Flags:
+      NoRemoveOnDead: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Whistle: true
+      Assncros: true
+      Poembragi: true
+      Appleidun: true
+  - Status: Assncros
+    Icon: EFST_ASSASSINCROSS
+    DurationLookup: BA_ASSASSINCROSS
+    CalcFlags:
+      Aspd: true
+    Flags:
+      NoRemoveOnDead: true
+      FailedMado: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Fail:
+      Quagmire: true
+    End:
+      Whistle: true
+      Assncros: true
+      Poembragi: true
+      Appleidun: true
+  - Status: Poembragi
+    Icon: EFST_POEMBRAGI
+    DurationLookup: BA_POEMBRAGI
+    Flags:
+      NoRemoveOnDead: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Whistle: true
+      Assncros: true
+      Poembragi: true
+      Appleidun: true
+  - Status: Appleidun
+    Icon: EFST_APPLEIDUN
+    DurationLookup: BA_APPLEIDUN
+    CalcFlags:
+      MaxHp: true
+    Flags:
+      NoRemoveOnDead: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Whistle: true
+      Assncros: true
+      Poembragi: true
+      Appleidun: true
+  - Status: Modechange
+    DurationLookup: NPC_EMOTION
+    CalcFlags:
+      Mode: true
+  - Status: Humming
+    Icon: EFST_HUMMING
+    DurationLookup: DC_HUMMING
+    CalcFlags:
+      Hit: true
+    Flags:
+      NoRemoveOnDead: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Dontforgetme: true
+      Humming: true
+      Fortune: true
+      Service4u: true
+  - Status: Dontforgetme
+    Icon: EFST_DONTFORGETME
+    DurationLookup: DC_DONTFORGETME
+    CalcFlags:
+      Speed: true
+      Aspd: true
+    Flags:
+      NoRemoveOnDead: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Fail:
+      Speedup1: true
+    End:
+      Increaseagi: true
+      Adrenaline: true
+      Adrenaline2: true
+      Spearquicken: true
+      Twohandquicken: true
+      Onehand: true
+      Merc_Quicken: true
+      Acceleration: true
+      Dontforgetme: true
+      Humming: true
+      Fortune: true
+      Service4u: true
+  - Status: Fortune
+    Icon: EFST_FORTUNEKISS
+    DurationLookup: DC_FORTUNEKISS
+    CalcFlags:
+      All: true
+    Flags:
+      NoRemoveOnDead: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Dontforgetme: true
+      Humming: true
+      Fortune: true
+      Service4u: true
+  - Status: Service4u
+    Icon: EFST_SERVICEFORYOU
+    DurationLookup: DC_SERVICEFORYOU
+    CalcFlags:
+      All: true
+    Flags:
+      NoRemoveOnDead: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Dontforgetme: true
+      Humming: true
+      Fortune: true
+      Service4u: true
+  - Status: Stop
+    Icon: EFST_STOP
+    DurationLookup: NPC_STOP
+    States:
+      NoMove: true
+    Flags:
+      StopWalking: true
+      NoSave: true
+      NoClearance: true
+      RemoveOnChangeMap: true
+      Debuff: true
+  - Status: Spurt
+    Icon: EFST_STRUP
+    DurationLookup: TK_RUN
+    CalcFlags:
+      Str: true
+    Flags:
+      NoSave: true
+      NoClearance: true
+      RequireWeapon: true
+  - Status: Spirit
+    Icon: EFST_SOULLINK
+    DurationLookup: SL_HIGH
+    CalcFlags:
+      All: true
+    Opt3:
+      SoulLink: true
+    Flags:
+      NoClearance: true
+      NoSave: true
+      NoBanishingBuster: true
+    Fail:
+      Soulgolem: true
+      Soulshadow: true
+      Soulfalcon: true
+      Soulfairy: true
+  - Status: Coma
+    DurationLookup: NPC_DARKBLESSING
+    Flags:
+      BossResist: true
+      MvpResist: true
+  - Status: Intravision
+    Icon: EFST_CLAIRVOYANCE
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Incallstatus
+    CalcFlags:
+      Str: true
+      Agi: true
+      Vit: true
+      Int: true
+      Dex: true
+      Luk: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+  - Status: Incstr
+    CalcFlags:
+      Str: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+  - Status: Incagi
+    CalcFlags:
+      Agi: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Incvit
+    CalcFlags:
+      Vit: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Incint
+    CalcFlags:
+      Int: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Incdex
+    CalcFlags:
+      Dex: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Incluk
+    CalcFlags:
+      Luk: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Inchit
+    CalcFlags:
+      Hit: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Inchitrate
+    DurationLookup: NPC_POWERUP
+    CalcFlags:
+      Hit: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Incflee
+    CalcFlags:
+      Flee: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Incfleerate
+    DurationLookup: NPC_AGIUP
+    CalcFlags:
+      Flee: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Incmhprate
+    CalcFlags:
+      MaxHp: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Incmsprate
+    CalcFlags:
+      MaxSp: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Incatkrate
+    CalcFlags:
+      Batk: true
+      Watk: true
+    Opt3:
+      ExplosionSpirits: true
+    Flags:
+      SendOption: true
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Incmatkrate
+    CalcFlags:
+      Matk: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Incdefrate
+    CalcFlags:
+      Def: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Strfood
+    Icon: EFST_FOOD_STR
+    CalcFlags:
+      Str: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Food_Str_Cash: true
+  - Status: Agifood
+    Icon: EFST_FOOD_AGI
+    CalcFlags:
+      Agi: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Food_Agi_Cash: true
+  - Status: Vitfood
+    Icon: EFST_FOOD_VIT
+    CalcFlags:
+      Vit: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Food_Vit_Cash: true
+  - Status: Intfood
+    Icon: EFST_FOOD_INT
+    CalcFlags:
+      Int: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Food_Int_Cash: true
+  - Status: Dexfood
+    Icon: EFST_FOOD_DEX
+    CalcFlags:
+      Dex: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Food_Dex_Cash: true
+  - Status: Lukfood
+    Icon: EFST_FOOD_LUK
+    CalcFlags:
+      Luk: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Food_Luk_Cash: true
+  - Status: Hitfood
+    Icon: EFST_FOOD_BASICHIT
+    CalcFlags:
+      Hit: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Fleefood
+    Icon: EFST_FOOD_BASICAVOIDANCE
+    CalcFlags:
+      Flee: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Batkfood
+    CalcFlags:
+      Batk: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Watkfood
+    CalcFlags:
+      Watk: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Matkfood
+    CalcFlags:
+      Matk: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Scresist
+    DurationLookup: PA_GOSPEL
+  - Status: Xmas
+    States:
+      NoAttack: true
+    Options:
+      Xmas: true
+    Flags:
+      SendLook: true
+      StopAttacking: true
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Warm
+    Icon: EFST_SG_SUN_WARM
+    DurationLookup: SG_SUN_WARM
+    Opt3:
+      Warm: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      RemoveOnChangeMap: true
+      RemoveOnMapWarp: true
+  - Status: Sun_Comfort
+    Icon: EFST_SUN_COMFORT
+    DurationLookup: SG_SUN_COMFORT
+    CalcFlags:
+      Def2: true
+    Flags:
+      RemoveOnMapWarp: true
+  - Status: Moon_Comfort
+    Icon: EFST_MOON_COMFORT
+    DurationLookup: SG_MOON_COMFORT
+    CalcFlags:
+      Flee: true
+    Flags:
+      RemoveOnMapWarp: true
+  - Status: Star_Comfort
+    Icon: EFST_STAR_COMFORT
+    DurationLookup: SG_STAR_COMFORT
+    CalcFlags:
+      Aspd: true
+    Flags:
+      RemoveOnMapWarp: true
+  - Status: Fusion
+    DurationLookup: SG_FUSION
+    CalcFlags:
+      Speed: true
+    Options:
+      Flying: true
+    Flags:
+      SendOption: true
+      NoRemoveOnDead: true
+    End:
+      Spirit: true
+  - Status: Skillrate_Up
+    DurationLookup: SG_FRIEND
+  - Status: Ske
+    DurationLookup: SL_SKE
+    CalcFlags:
+      Batk: true
+      Watk: true
+      Def: true
+      Def2: true
+    Opt3:
+      EnergyCoat: true
+  - Status: Kaite
+    Icon: EFST_KAITE
+    DurationLookup: SL_KAITE
+    Opt3:
+      Kaite: true
+    Flags:
+      NoSave: true
+      NoClearance: true
+    End:
+      Assumptio: true
+  - Status: Swoo
+    Icon: EFST_SWOO
+    DurationLookup: SL_SWOO
+    CalcFlags:
+      Speed: true
+    Opt3:
+      OverThrust: true
+    Flags:
+      NonPlayer: true
+  - Status: Ska
+    DurationLookup: SL_SKA
+    CalcFlags:
+      Def2: true
+      MDef2: true
+      Speed: true
+      Aspd: true
+    Opt3:
+      SteelBody: true
+    Flags:
+      NonPlayer: true
+  - Status: Earthscroll
+    Icon: EFST_EARTHSCROLL
+    DurationLookup: TK_SPTIME
+    CalcFlags:
+      Def: true
+      Mdef: true
+      Aspd: true
+    Flags:
+      NoRemoveOnDead: true
+  - Status: Miracle
+    Icon: EFST_SOULLINK
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      RemoveOnMapWarp: true
+      NoRemoveOnDead: true
+      NoClearance: true
+  - Status: Madnesscancel
+    Icon: EFST_GS_MADNESSCANCEL
+    DurationLookup: GS_MADNESSCANCEL
+    States:
+      NoMove: true
+    CalcFlags:
+      Aspd: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+    Fail:
+      P_Alter: true
+      Heat_Barrel: true
+    End:
+      Adjustment: true
+  - Status: Adjustment
+    Icon: EFST_GS_ADJUSTMENT
+    DurationLookup: GS_ADJUSTMENT
+    CalcFlags:
+      Hit: true
+      Flee: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+    End:
+      Madnesscancel: true
+  - Status: Increasing
+    Icon: EFST_GS_ACCURACY
+    DurationLookup: GS_INCREASING
+    CalcFlags:
+      Agi: true
+      Dex: true
+      Hit: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Gatlingfever
+    Icon: EFST_GS_GATLINGFEVER
+    DurationLookup: GS_GATLINGFEVER
+    CalcFlags:
+      Flee: true
+      Speed: true
+      Aspd: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      RequireWeapon: true
+  - Status: Tatamigaeshi
+    DurationLookup: NJ_TATAMIGAESHI
+  - Status: Utsusemi
+    Icon: EFST_NJ_UTSUSEMI
+    DurationLookup: NJ_UTSUSEMI
+    Flags:
+      NoSave: true
+      NoClearance: true
+      NoBanishingBuster: true
+      NoDispell: true
+  - Status: Bunsinjyutsu
+    Icon: EFST_NJ_BUNSINJYUTSU
+    DurationLookup: NJ_BUNSINJYUTSU
+    CalcFlags:
+      Dye: true
+    Opt3:
+      Bunsin: true
+    Flags:
+      NoSave: true
+      NoClearance: true
+  - Status: Kaensin
+    Flags:
+      NoWarning: true
+  - Status: Suiton
+    Icon: EFST_NJ_SUITON
+    DurationLookup: NJ_SUITON
+    CalcFlags:
+      Agi: true
+      Speed: true
+    Flags:
+      BossResist: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+      NoRemoveOnDead: true
+      Debuff: true
+  - Status: Nen
+    Icon: EFST_NJ_NEN
+    DurationLookup: NJ_NEN
+    CalcFlags:
+      Str: true
+      Int: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Knowledge
+    DurationLookup: SG_KNOWLEDGE
+    CalcFlags:
+      All: true
+    Flags:
+      RestartOnMapWarp: true
+  - Status: Sma
+    Icon: EFST_SMA_READY
+    DurationLookup: SL_SMA
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Fling
+    DurationLookup: GS_FLING
+    CalcFlags:
+      Def: true
+      Def2: true
+  - Status: Avoid
+    DurationLookup: HLIF_AVOID
+    CalcFlags:
+      Speed: true
+  - Status: Change
+    DurationLookup: HLIF_CHANGE
+    CalcFlags:
+      Vit: true
+      Int: true
+    Flags:
+      RemoveOnChangeMap: true
+    Fail:
+      Change: true
+  - Status: Bloodlust
+    DurationLookup: HAMI_BLOODLUST
+    CalcFlags:
+      Batk: true
+      Watk: true
+  - Status: Fleet
+    DurationLookup: HFLI_FLEET
+    CalcFlags:
+      Aspd: true
+      Batk: true
+      Watk: true
+  - Status: Speed
+    DurationLookup: HFLI_SPEED
+    CalcFlags:
+      Flee: true
+  - Status: Defence
+    DurationLookup: HAMI_DEFENCE
+    CalcFlags:
+      Vit: true
+  - Status: Incaspdrate
+    CalcFlags:
+      Aspd: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Incflee2
+    Icon: EFST_PLUSAVOIDVALUE
+    CalcFlags:
+      Flee2: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+  - Status: Jailed
+    States:
+      NoWarp: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Enchantarms
+    Icon: EFST_WEAPONPROPERTY
+    DurationLookup: ITEM_ENCHANTARMS
+    CalcFlags:
+      Atk_Ele: true
+    Flags:
+      SendVal1: true
+      OverlapIgnoreLevel: true
+      RemoveOnUnequipWeapon: true
+    End:
+      Enchantarms: true
+      Aspersio: true
+  - Status: Magicalattack
+    DurationLookup: NPC_MAGICALATTACK
+    CalcFlags:
+      Matk: true
+  - Status: Armorchange
+    DurationLookup: NPC_STONESKIN
+    CalcFlags:
+      Def: true
+      Mdef: true
+  - Status: Criticalwound
+    Icon: EFST_CRITICALWOUND
+    DurationLookup: NPC_CRITICALWOUND
+    Flags:
+      Debuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Magicmirror
+    DurationLookup: NPC_MAGICMIRROR
+  - Status: Slowcast
+    Icon: EFST_SLOWCAST
+    DurationLookup: NPC_SLOWCAST
+    Flags:
+      Debuff: true
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Summer
+    States:
+      NoAttack: true
+    Options:
+      Summer: true
+    Flags:
+      SendLook: true
+      StopAttacking: true
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Expboost
+    Icon: EFST_CASH_PLUSEXP
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal1: true
+  - Status: Itemboost
+    Icon: EFST_CASH_RECEIVEITEM
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal1: true
+  - Status: Bossmapinfo
+    Icon: EFST_CASH_BOSS_ALARM
+    Flags:
+      NoSave: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      RemoveOnMapWarp: true
+      OverlapFail: true
+  - Status: Lifeinsurance
+    Icon: EFST_CASH_DEATHPENALTY
+    States:
+      NoDeathPenalty: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+  - Status: Inccri
+    Icon: EFST_CRITICALPERCENT
+    CalcFlags:
+      Cri: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  #- Status: Incdef
+  #- Status: Incbaseatk
+  #- Status: Fastcast
+  - Status: Mdef_Rate
+    Icon: EFST_PROTECT_MDEF
+    CalcFlags:
+      Mdef: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+  #- Status: Hpregen
+  - Status: Inchealrate
+    Icon: EFST_HEALPLUS
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Pneuma
+    DurationLookup: AL_PNEUMA
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Autotrade
+    Flags:
+      NoRemoveOnDead: true
+      NoSave: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Ksprotected
+    Flags:
+      NoWarning: true
+  - Status: Armor_Resist
+    CalcFlags:
+      All: true
+    Flags:
+      OverlapIgnoreLevel: true
+      RemoveOnUnequipArmor: true
+  - Status: Spcost_Rate
+    Icon: EFST_ATKER_BLOOD
+    CalcFlags:
+      All: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Commonsc_Resist
+    Icon: EFST_TARGET_BLOOD
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Sevenwind
+    DurationLookup: TK_SEVENWIND
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+  - Status: Def_Rate
+    Icon: EFST_PROTECT_DEF
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+  #- Status: Spregen
+  - Status: Walkspeed
+    CalcFlags:
+      Speed: true
+  - Status: Merc_Fleeup
+    Icon: EFST_MER_FLEE
+    CalcFlags:
+      Flee: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Merc_Atkup
+    Icon: EFST_MER_ATK
+    CalcFlags:
+      Watk: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Merc_Hpup
+    Icon: EFST_MER_HP
+    CalcFlags:
+      MaxHp: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Merc_Spup
+    Icon: EFST_MER_SP
+    CalcFlags:
+      MaxSp: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Merc_Hitup
+    Icon: EFST_MER_HIT
+    CalcFlags:
+      Hit: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Merc_Quicken
+    DurationLookup: MER_QUICKEN
+    CalcFlags:
+      Aspd: true
+    Opt3:
+      Quicken: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Fail:
+      Decreaseagi: true
+  - Status: Rebirth
+    DurationLookup: NPC_REBIRTH
+  #- Status: Skillcastrate
+  #- Status: Defratioatk
+  #- Status: Hpdrain
+  #- Status: Skillatkbonus
+  - Status: Itemscript
+    CalcFlags:
+      All: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: S_Lifepotion
+    Icon: EFST_S_LIFEPOTION
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapFail: true
+  - Status: L_Lifepotion
+    Icon: EFST_L_LIFEPOTION
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapFail: true
+  - Status: Jexpboost
+    Icon: EFST_CASH_PLUSONLYJOBEXP
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal1: true
+  #- Status: Ignoredef
+  - Status: Hellpower
+    Icon: EFST_HELLPOWER
+    DurationLookup: NPC_HELLPOWER
+    Flags:
+      NoRemoveOnDead: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Invincible
+    Icon: EFST_INVINCIBLE
+    DurationLookup: NPC_INVINCIBLE
+    CalcFlags:
+      Speed: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Invincibleoff: true
+  - Status: Invincibleoff
+    DurationLookup: NPC_INVINCIBLEOFF
+    CalcFlags:
+      Speed: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Invincible: true
+  - Status: Manu_Atk
+    Icon: EFST_MANU_ATK
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Manu_Def
+    Icon: EFST_MANU_DEF
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Spl_Atk
+    Icon: EFST_SPL_ATK
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Spl_Def
+    Icon: EFST_SPL_DEF
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Manu_Matk
+    Icon: EFST_MANU_MATK
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Spl_Matk
+    Icon: EFST_SPL_MATK
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Food_Str_Cash
+    Icon: EFST_FOOD_STR_CASH
+    CalcFlags:
+      Str: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Strfood: true
+  - Status: Food_Agi_Cash
+    Icon: EFST_FOOD_AGI_CASH
+    CalcFlags:
+      Agi: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Agifood: true
+  - Status: Food_Vit_Cash
+    Icon: EFST_FOOD_VIT_CASH
+    CalcFlags:
+      Vit: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Vitfood: true
+  - Status: Food_Dex_Cash
+    Icon: EFST_FOOD_DEX_CASH
+    CalcFlags:
+      Dex: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Intfood: true
+  - Status: Food_Int_Cash
+    Icon: EFST_FOOD_INT_CASH
+    CalcFlags:
+      Int: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Dexfood: true
+  - Status: Food_Luk_Cash
+    Icon: EFST_FOOD_LUK_CASH
+    CalcFlags:
+      Luk: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Lukfood: true
+  - Status: Fear
+    DurationLookup: RK_WINDCUTTER
+    States:
+      NoMove: true
+      NoMoveCond: true
+    CalcFlags:
+      Flee: true
+      Hit: true
+    Flags:
+      BossResist: true
+      StopWalking: true
+      Debuff: true
+    Fail:
+      Inspiration: true
+    End:
+      Blind: true
+  - Status: Burning
+    Icon: EFST_BURNT
+    DurationLookup: RK_DRAGONBREATH
+    CalcFlags:
+      Mdef: true
+    Opt1: Burning
+    Flags:
+      SendOption: true
+      RemoveOnRefresh: true
+      RemoveOnLuxAnima: true
+      BossResist: true
+      Debuff: true
+      OverlapFail: true
+      SpreadEffect: true
+    MinDuration: 10000
+    Fail:
+      Refresh: true
+      Inspiration: true
+      Whiteimprison: true
+  - Status: Freezing
+    Icon: EFST_FROSTMISTY
+    DurationLookup: WL_FROSTMISTY
+    CalcFlags:
+      Aspd: true
+      Speed: true
+      Def: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      RemoveOnRefresh: true
+      RemoveOnLuxAnima: true
+      BossResist: true
+      NoDispell: true
+      NoBanishingBuster: true
+      Debuff: true
+      OverlapFail: true
+      SpreadEffect: true
+    MinDuration: 10000
+    Fail:
+      Refresh: true
+      Inspiration: true
+      Warmer: true
+  - Status: Enchantblade
+    Icon: EFST_ENCHANTBLADE
+    DurationLookup: RK_ENCHANTBLADE
+  - Status: Deathbound
+    Icon: EFST_DEATHBOUND
+    DurationLookup: RK_DEATHBOUND
+    States:
+      NoCast: true
+    Flags:
+      NoSave: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Millenniumshield
+    Icon: EFST_REUSE_MILLENNIUMSHIELD
+    DurationLookup: RK_MILLENNIUMSHIELD
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Crushstrike
+    Icon: EFST_CRUSHSTRIKE
+    DurationLookup: RK_CRUSHSTRIKE
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+  - Status: Refresh
+    Icon: EFST_REFRESH
+    DurationLookup: RK_REFRESH
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoSave: true
+  - Status: Reuse_Refresh
+    Icon: EFST_REUSE_REFRESH
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapFail: true
+      NoForcedEnd: true
+  - Status: Giantgrowth
+    Icon: EFST_GIANTGROWTH
+    DurationLookup: RK_GIANTGROWTH
+    CalcFlags:
+      Str: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+  - Status: Stonehardskin
+    Icon: EFST_STONEHARDSKIN
+    DurationLookup: RK_STONEHARDSKIN
+    CalcFlags:
+      Def: true
+      Mdef: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoRemoveOnDead: true
+      NoSave: true
+  - Status: Vitalityactivation
+    Icon: EFST_VITALITYACTIVATION
+    DurationLookup: RK_VITALITYACTIVATION
+    CalcFlags:
+      Regen: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+  - Status: Stormblast
+    DurationLookup: RK_VITALITYACTIVATION
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoRemoveOnDead: true
+  - Status: Fightingspirit
+    Icon: EFST_FIGHTINGSPIRIT
+    DurationLookup: RK_FIGHTINGSPIRIT
+    CalcFlags:
+      Watk: true
+      Aspd: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal2: true
+    End:
+      Fightingspirit: true
+  - Status: Abundance
+    Icon: EFST_ABUNDANCE
+    DurationLookup: RK_ABUNDANCE
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapFail: true
+  - Status: Adoramus
+    Icon: EFST_ADORAMUS
+    DurationLookup: AB_ADORAMUS
+    CalcFlags:
+      Agi: true
+      Speed: true
+    Flags:
+      BossResist: true
+      Debuff: true
+    End:
+      Decreaseagi: true
+  - Status: Epiclesis
+    Icon: EFST_EPICLESIS
+    DurationLookup: AB_EPICLESIS
+    CalcFlags:
+      MaxHp: true
+    Flags:
+      NoRemoveOnDead: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Oratio
+    Icon: EFST_ORATIO
+    DurationLookup: AB_ORATIO
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      NoDispell: true
+      NoBanishingBuster: true
+  - Status: Laudaagnus
+    Icon: EFST_LAUDAAGNUS
+    DurationLookup: AB_LAUDAAGNUS
+    CalcFlags:
+      MaxHp: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+  - Status: Laudaramus
+    Icon: EFST_LAUDARAMUS
+    DurationLookup: AB_LAUDARAMUS
+    CalcFlags:
+      All: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+  - Status: Renovatio
+    Icon: EFST_RENOVATIO
+    DurationLookup: AB_RENOVATIO
+    CalcFlags:
+      Regen: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+  - Status: Expiatio
+    Icon: EFST_EXPIATIO
+    DurationLookup: AB_EXPIATIO
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+  - Status: Duplelight
+    Icon: EFST_DUPLELIGHT
+    DurationLookup: AB_DUPLELIGHT
+    Flags:
+      DisplayPc: true
+      NoDispell: true
+      NoBanishingBuster: true
+  - Status: Secrament
+    Icon: EFST_AB_SECRAMENT
+    DurationLookup: AB_SECRAMENT
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+  - Status: Whiteimprison
+    DurationLookup: WL_WHITEIMPRISON
+    States:
+      NoMove: true
+      NoCast: true
+    Opt1: Imprison
+    Flags:
+      SendOption: true
+      BossResist: true
+      SetStand: true
+      StopWalking: true
+      StopAttacking: true
+      StopCasting: true
+    End:
+      Freezing: true
+  - Status: Marshofabyss
+    Icon: EFST_MARSHOFABYSS
+    DurationLookup: WL_MARSHOFABYSS
+    CalcFlags:
+      Agi: true
+      Dex: true
+      Speed: true
+    Flags:
+      RemoveOnRefresh: true
+      RemoveOnLuxAnima: true
+      BossResist: true
+      NoDispell: true
+      NoBanishingBuster: true
+      Debuff: true
+    MinDuration: 5000
+    Fail:
+      Refresh: true
+    End:
+      Increaseagi: true
+      Windwalk: true
+      Aspdpotion0: true
+      Aspdpotion1: true
+      Aspdpotion2: true
+      Aspdpotion3: true
+  - Status: Recognizedspell
+    Icon: EFST_RECOGNIZEDSPELL
+    DurationLookup: WL_RECOGNIZEDSPELL
+    CalcFlags:
+      Matk: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Stasis
+    Icon: EFST_STASIS
+    DurationLookup: WL_STASIS
+    MinDuration: 10000
+  - Status: Sphere_1
+    Icon: EFST_SUMMON1
+    Flags:
+      DisplayPc: true
+      NoClearance: true
+      SendVal1: true
+  - Status: Sphere_2
+    Icon: EFST_SUMMON2
+    Flags:
+      DisplayPc: true
+      NoClearance: true
+      SendVal1: true
+  - Status: Sphere_3
+    Icon: EFST_SUMMON3
+    Flags:
+      DisplayPc: true
+      NoClearance: true
+      SendVal1: true
+  - Status: Sphere_4
+    Icon: EFST_SUMMON4
+    Flags:
+      DisplayPc: true
+      NoClearance: true
+      SendVal1: true
+  - Status: Sphere_5
+    Icon: EFST_SUMMON5
+    Flags:
+      DisplayPc: true
+      NoClearance: true
+      SendVal1: true
+  - Status: Reading_Sb
+    Flags:
+      NoWarning: true
+  - Status: Freeze_Sp
+    Icon: EFST_FREEZE_SP
+    Flags:
+      NoClearance: true
+  - Status: Fearbreeze
+    Icon: EFST_FEARBREEZE
+    DurationLookup: RA_FEARBREEZE
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      RemoveOnUnequipWeapon: true
+  - Status: Electricshocker
+    Icon: EFST_ELECTRICSHOCKER
+    DurationLookup: RA_ELECTRICSHOCKER
+    States:
+      NoMove: true
+    Flags:
+      StopWalking: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoSave: true
+      OverlapFail: true
+      NoClearance: true
+  - Status: Wugdash
+    Icon: EFST_WUGDASH
+    DurationLookup: RA_WUGDASH
+    CalcFlags:
+      Speed: true
+      Dspd: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+      RemoveOnChangeMap: true
+  - Status: Bite
+    Icon: EFST_WUGBITE
+    DurationLookup: RA_WUGBITE
+    States:
+      NoMove: true
+    Flags:
+      BossResist: true
+      StopWalking: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+      Debuff: true
+    MinRate: 5000
+  - Status: Camouflage
+    Icon: EFST_CAMOUFLAGE
+    DurationLookup: RA_CAMOUFLAGE
+    States:
+      NoMove: true
+      NoMoveCond: true
+    CalcFlags:
+      Speed: true
+    Flags:
+      DisplayPc: true
+      OnTouch: true
+      StopAttacking: true
+      RemoveOnDamaged: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+      RemoveOnChangeMap: true
+  - Status: Acceleration
+    Icon: EFST_ACCELERATION
+    DurationLookup: NC_ACCELERATION
+    CalcFlags:
+      Speed: true
+    Flags:
+      MadoEndCancel: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Hovering
+    Icon: EFST_HOVERING
+    DurationLookup: NC_HOVERING
+    CalcFlags:
+      Speed: true
+    Flags:
+      MadoEndCancel: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Shapeshift
+    Icon: EFST_SHAPESHIFT
+    DurationLookup: NC_SHAPESHIFT
+    CalcFlags:
+      Def_Ele: true
+    Flags:
+      MadoEndCancel: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Infraredscan
+    Icon: EFST_INFRAREDSCAN
+    DurationLookup: NC_INFRAREDSCAN
+    CalcFlags:
+      Flee: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Analyze
+    Icon: EFST_ANALYZE
+    DurationLookup: NC_ANALYZE
+    CalcFlags:
+      Def: true
+      Def2: true
+      Mdef: true
+      MDef2: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Magneticfield
+    Icon: EFST_MAGNETICFIELD
+    DurationLookup: NC_MAGNETICFIELD
+    States:
+      NoMove: true
+    Flags:
+      MadoEndCancel: true
+      BossResist: true
+      StopWalking: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+      Debuff: true
+    Fail:
+      Hovering: true
+  - Status: Neutralbarrier
+    Icon: EFST_NEUTRALBARRIER
+    DurationLookup: NC_NEUTRALBARRIER
+    CalcFlags:
+      Def: true
+      Mdef: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+  - Status: Neutralbarrier_Master
+    Icon: EFST_NEUTRALBARRIER_MASTER
+    Flags:
+      MadoEndCancel: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+      RemoveOnChangeMap: true
+  - Status: Stealthfield
+    Icon: EFST_STEALTHFIELD
+    DurationLookup: NC_STEALTHFIELD
+    CalcFlags:
+      Speed: true
+    Flags:
+      DisplayPc: true
+      OnTouch: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+      StopAttacking: true
+  - Status: Stealthfield_Master
+    Icon: EFST_STEALTHFIELD_MASTER
+    CalcFlags:
+      Speed: true
+    Flags:
+      MadoEndCancel: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+      RemoveOnChangeMap: true
+  - Status: Overheat
+    Icon: EFST_OVERHEAT
+    Flags:
+      MadoEndCancel: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal1: true
+  - Status: Overheat_Limitpoint
+    Icon: EFST_OVERHEAT_LIMITPOINT
+    Flags:
+      MadoEndCancel: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Venomimpress
+    Icon: EFST_VENOMIMPRESS
+    DurationLookup: GC_VENOMIMPRESS
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal2: true
+  - Status: Poisoningweapon
+    Icon: EFST_POISONINGWEAPON
+    DurationLookup: GC_POISONINGWEAPON
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal3: true
+  - Status: Weaponblocking
+    Icon: EFST_WEAPONBLOCKING
+    DurationLookup: GC_WEAPONBLOCKING
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal2: true
+  #- Status: Weaponblocking_Postdelay
+  #  Icon: EFST_WEAPONBLOCKING_POSTDELAY
+  #  Flags:
+  #    NoDispell: true
+  #    NoBanishingBuster: true
+  #    NoClearance: true
+  #    NoRemoveOnDead: true
+  #    NoSave: true
+  - Status: Cloakingexceed
+    Icon: EFST_CLOAKINGEXCEED
+    DurationLookup: GC_CLOAKINGEXCEED
+    States:
+      NoPickItem: true
+    CalcFlags:
+      Speed: true
+    Options:
+      Cloak: true
+    Flags:
+      OnTouch: true
+      StopAttacking: true
+      NoSave: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      RemoveOnMapWarp: true
+      SendVal3: true
+  - Status: Hallucinationwalk
+    Icon: EFST_HALLUCINATIONWALK
+    DurationLookup: GC_HALLUCINATIONWALK
+    CalcFlags:
+      Flee: true
+    Flags:
+      DisplayPc: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal3: true
+  - Status: Hallucinationwalk_Postdelay
+    Icon: EFST_HALLUCINATIONWALK_POSTDELAY
+    DurationLookup: GC_HALLUCINATIONWALK
+    CalcFlags:
+      Speed: true
+      Aspd: true
+    Flags:
+      NoRemoveOnDead: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+  - Status: Rollingcutter
+    Icon: EFST_ROLLINGCUTTER
+    DurationLookup: GC_ROLLINGCUTTER
+    Flags:
+      DisplayPc: true
+      NoSave: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal1: true
+  - Status: Toxin
+    Icon: EFST_TOXIN
+    Flags:
+      RemoveOnRefresh: true
+      RemoveOnLuxAnima: true
+      BossResist: true
+      NoDispell: true
+      NoBanishingBuster: true
+      Debuff: true
+      OverlapFail: true
+      SpreadEffect: true
+  - Status: Paralyse
+    Icon: EFST_PARALYSE
+    CalcFlags:
+      Flee: true
+      Speed: true
+      Aspd: true
+    Flags:
+      RemoveOnRefresh: true
+      RemoveOnLuxAnima: true
+      BossResist: true
+      NoDispell: true
+      NoBanishingBuster: true
+      Debuff: true
+      OverlapFail: true
+      SpreadEffect: true
+    Fail:
+      Refresh: true
+      Inspiration: true
+      Toxin: true
+      Paralyse: true
+      Venombleed: true
+      Magicmushroom: true
+      Deathhurt: true
+      Pyrexia: true
+      Oblivioncurse: true
+      Leechesend: true
+  - Status: Venombleed
+    Icon: EFST_VENOMBLEED
+    CalcFlags:
+      MaxHp: true
+    Flags:
+      RemoveOnRefresh: true
+      RemoveOnLuxAnima: true
+      BossResist: true
+      NoDispell: true
+      NoBanishingBuster: true
+      Debuff: true
+      OverlapFail: true
+      SpreadEffect: true
+    Fail:
+      Refresh: true
+      Inspiration: true
+      Toxin: true
+      Paralyse: true
+      Venombleed: true
+      Magicmushroom: true
+      Deathhurt: true
+      Pyrexia: true
+      Oblivioncurse: true
+      Leechesend: true
+  - Status: Magicmushroom
+    Icon: EFST_MAGICMUSHROOM
+    CalcFlags:
+      Regen: true
+    Flags:
+      RemoveOnRefresh: true
+      RemoveOnLuxAnima: true
+      BossResist: true
+      NoDispell: true
+      NoBanishingBuster: true
+      Debuff: true
+      OverlapFail: true
+      SpreadEffect: true
+    Fail:
+      Refresh: true
+      Inspiration: true
+      Toxin: true
+      Paralyse: true
+      Venombleed: true
+      Magicmushroom: true
+      Deathhurt: true
+      Pyrexia: true
+      Oblivioncurse: true
+      Leechesend: true
+  - Status: Deathhurt
+    Icon: EFST_DEATHHURT
+    CalcFlags:
+      Regen: true
+    Flags:
+      RemoveOnRefresh: true
+      RemoveOnLuxAnima: true
+      BossResist: true
+      NoDispell: true
+      NoBanishingBuster: true
+      Debuff: true
+      OverlapFail: true
+      SpreadEffect: true
+    Fail:
+      Refresh: true
+      Inspiration: true
+      Toxin: true
+      Paralyse: true
+      Venombleed: true
+      Magicmushroom: true
+      Deathhurt: true
+      Pyrexia: true
+      Oblivioncurse: true
+      Leechesend: true
+  - Status: Pyrexia
+    Icon: EFST_PYREXIA
+    CalcFlags:
+      All: true
+    Flags:
+      RemoveOnRefresh: true
+      RemoveOnLuxAnima: true
+      BossResist: true
+      NoDispell: true
+      NoBanishingBuster: true
+      Debuff: true
+      OverlapFail: true
+      SpreadEffect: true
+    Fail:
+      Refresh: true
+      Inspiration: true
+      Toxin: true
+      Paralyse: true
+      Venombleed: true
+      Magicmushroom: true
+      Deathhurt: true
+      Pyrexia: true
+      Oblivioncurse: true
+      Leechesend: true
+  - Status: Oblivioncurse
+    Icon: EFST_OBLIVIONCURSE
+    States:
+      NoCast: true
+      Nocastcond: true
+    CalcFlags:
+      Regen: true
+    Flags:
+      RemoveOnRefresh: true
+      RemoveOnLuxAnima: true
+      BossResist: true
+      NoDispell: true
+      NoBanishingBuster: true
+      Debuff: true
+      OverlapFail: true
+      SpreadEffect: true
+    Fail:
+      Refresh: true
+      Inspiration: true
+      Toxin: true
+      Paralyse: true
+      Venombleed: true
+      Magicmushroom: true
+      Deathhurt: true
+      Pyrexia: true
+      Oblivioncurse: true
+      Leechesend: true
+  - Status: Leechesend
+    Icon: EFST_LEECHESEND
+    Flags:
+      RemoveOnRefresh: true
+      RemoveOnLuxAnima: true
+      BossResist: true
+      NoDispell: true
+      NoBanishingBuster: true
+      Debuff: true
+      OverlapFail: true
+      SpreadEffect: true
+    Fail:
+      Refresh: true
+      Inspiration: true
+      Toxin: true
+      Paralyse: true
+      Venombleed: true
+      Magicmushroom: true
+      Deathhurt: true
+      Pyrexia: true
+      Oblivioncurse: true
+      Leechesend: true
+  - Status: Reflectdamage
+    Icon: EFST_LG_REFLECTDAMAGE
+    DurationLookup: LG_REFLECTDAMAGE
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      RequireShield: true
+    End:
+      Reflectshield: true
+  - Status: Forceofvanguard
+    Icon: EFST_FORCEOFVANGUARD
+    DurationLookup: LG_FORCEOFVANGUARD
+    CalcFlags:
+      MaxHp: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal3: true
+  - Status: Shieldspell_Hp
+    Icon: EFST_SHIELDSPELL
+    DurationLookup: LG_SHIELDSPELL
+    End:
+      Shieldspell_Sp: true
+      Shieldspell_Atk: true
+  - Status: Shieldspell_Sp
+    Icon: EFST_SHIELDSPELL
+    DurationLookup: LG_SHIELDSPELL
+    End:
+      Shieldspell_Hp: true
+      Shieldspell_Atk: true
+  - Status: Shieldspell_Atk
+    Icon: EFST_SHIELDSPELL
+    DurationLookup: LG_SHIELDSPELL
+    CalcFlags:
+      Watk: true
+      Matk: true
+    End:
+      Shieldspell_Hp: true
+      Shieldspell_Sp: true
+  - Status: Exeedbreak
+    Icon: EFST_EXEEDBREAK
+    DurationLookup: LG_EXEEDBREAK
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      RemoveOnUnequipWeapon: true
+  - Status: Prestige
+    Icon: EFST_PRESTIGE
+    DurationLookup: LG_PRESTIGE
+    CalcFlags:
+      Def: true
+    Flags:
+      SendVal2: true
+  - Status: Banding
+    Icon: EFST_BANDING
+    DurationLookup: LG_BANDING
+    CalcFlags:
+      Def: true
+    Flags:
+      DisplayPc: true
+      OverlapFail: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal1: true
+    End:
+      Prestige: true
+  - Status: Banding_Defence
+    Icon: EFST_BANDING_DEFENCE
+    Flags:
+      BossResist: true
+      OverlapFail: true
+  - Status: Earthdrive
+    Icon: EFST_EARTHDRIVE
+    DurationLookup: LG_EARTHDRIVE
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+  - Status: Inspiration
+    Icon: EFST_INSPIRATION
+    DurationLookup: LG_INSPIRATION
+    CalcFlags:
+      Watk: true
+      Matk: true
+      Str: true
+      Agi: true
+      Vit: true
+      Int: true
+      Dex: true
+      Luk: true
+      Hit: true
+      MaxHp: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Spellfist
+    Icon: EFST_SPELLFIST
+    DurationLookup: SO_SPELLFIST
+    Flags:
+      SendVal3: true
+  - Status: Crystalize
+    Icon: EFST_COLD
+    DurationLookup: SO_DIAMONDDUST
+    States:
+      NoMove: true
+      NoMoveCond: true
+      NoCast: true
+      NoCastCond: true
+      NoConsumeItem: true
+      NoAttack: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      SendOption: true
+      RemoveOnRefresh: true
+      RemoveOnLuxAnima: true
+      BossResist: true
+      StopAttacking: true
+      StopWalking: true
+      StopCasting: true
+      SetStand: true
+      Debuff: true
+      OverlapFail: true
+    Fail:
+      Refresh: true
+      Inspiration: true
+      Warmer: true
+  - Status: Striking
+    Icon: EFST_STRIKING
+    DurationLookup: SO_STRIKING
+    CalcFlags:
+      All: true
+    Flags:
+      NoSave: true
+  - Status: Warmer
+    Icon: EFST_WARMER
+    DurationLookup: SO_WARMER
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Crystalize: true
+      Freezing: true
+      Freeze: true
+  - Status: Vacuum_Extreme
+    Icon: EFST_VACUUM_EXTREME
+    DurationLookup: SO_VACUUM_EXTREME
+    Flags:
+      BossResist: true
+      StopWalking: true
+      StopAttacking: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+      RemoveOnChangeMap: true
+      Debuff: true
+    Fail:
+      Hallucinationwalk: true
+      Hovering: true
+      Npc_HallucinationWalk: true
+      Vacuum_Extreme: true
+    States:
+      Nomove: true
+  - Status: Propertywalk
+    Icon: EFST_PROPERTYWALK
+    DurationLookup: SO_FIREWALK
+    Flags:
+      NoSave: true
+      RemoveOnMapWarp: true
+      SendVal2: true
+  - Status: Swingdance
+    Icon: EFST_SWING
+    DurationLookup: WA_SWING_DANCE
+    CalcFlags:
+      Speed: true
+      Aspd: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Symphonyoflover: true
+      Moonlitserenade: true
+      Rushwindmill: true
+      Echosong: true
+      Harmonize: true
+  - Status: Symphonyoflover
+    Icon: EFST_SYMPHONY_LOVE
+    DurationLookup: WA_SYMPHONY_OF_LOVER
+    CalcFlags:
+      Mdef: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Swingdance: true
+      Moonlitserenade: true
+      Rushwindmill: true
+      Echosong: true
+      Harmonize: true
+  - Status: Moonlitserenade
+    Icon: EFST_MOONLIT_SERENADE
+    DurationLookup: WA_MOONLIT_SERENADE
+    CalcFlags:
+      Matk: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Swingdance: true
+      Symphonyoflover: true
+      Rushwindmill: true
+      Echosong: true
+      Harmonize: true
+  - Status: Rushwindmill
+    Icon: EFST_RUSH_WINDMILL
+    DurationLookup: MI_RUSH_WINDMILL
+    CalcFlags:
+      Watk: true
+      Speed: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Swingdance: true
+      Symphonyoflover: true
+      Moonlitserenade: true
+      Echosong: true
+      Harmonize: true
+  - Status: Echosong
+    Icon: EFST_ECHOSONG
+    DurationLookup: MI_ECHOSONG
+    CalcFlags:
+      Def: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Swingdance: true
+      Symphonyoflover: true
+      Moonlitserenade: true
+      Rushwindmill: true
+      Harmonize: true
+  - Status: Harmonize
+    Icon: EFST_HARMONIZE
+    DurationLookup: MI_HARMONIZE
+    CalcFlags:
+      Str: true
+      Agi: true
+      Vit: true
+      Int: true
+      Dex: true
+      Luk: true
+    End:
+      Swingdance: true
+      Symphonyoflover: true
+      Moonlitserenade: true
+      Rushwindmill: true
+      Echosong: true
+  - Status: Voiceofsiren
+    Icon: EFST_SIREN
+    DurationLookup: WM_VOICEOFSIREN
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      StopAttacking: true
+    MinDuration: 10000
+    End:
+      Deepsleep: true
+      Gloomyday: true
+      Gloomyday_Sk: true
+      Songofmana: true
+      Dancewithwug: true
+      Saturdaynightfever: true
+      Leradsdew: true
+      Melodyofsink: true
+      Beyondofwarcry: true
+      Unlimitedhummingvoice: true
+      Sircleofnature: true
+  - Status: Deepsleep
+    Icon: EFST_HANDICAPSTATE_DEEP_SLEEP
+    DurationLookup: WM_LULLABY_DEEPSLEEP
+    States:
+      NoCast: true
+      NoChat: true
+      NoConsumeItem: true
+      NoMove: true
+      NoAttack: true
+    Opt1: Sleep
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      RemoveOnRefresh: true
+      RemoveOnLuxAnima: true
+      BossResist: true
+      StopWalking: true
+      StopAttacking: true
+      StopCasting: true
+      SetStand: true
+      RemoveOnDamaged: true
+      NoSave: true
+      Debuff: true
+      OverlapFail: true
+    MinDuration: 5000
+    Fail:
+      Refresh: true
+      Inspiration: true
+    End:
+      Dancing: true
+      Voiceofsiren: true
+      Gloomyday: true
+      Gloomyday_Sk: true
+      Songofmana: true
+      Dancewithwug: true
+      Saturdaynightfever: true
+      Leradsdew: true
+      Melodyofsink: true
+      Beyondofwarcry: true
+      Unlimitedhummingvoice: true
+      Sircleofnature: true
+  - Status: Sircleofnature
+    Icon: EFST_SIRCLEOFNATURE
+    DurationLookup: WM_SIRCLEOFNATURE
+    End:
+      Deepsleep: true
+      Gloomyday: true
+      Gloomyday_Sk: true
+      Songofmana: true
+      Dancewithwug: true
+      Saturdaynightfever: true
+      Leradsdew: true
+      Melodyofsink: true
+      Beyondofwarcry: true
+      Unlimitedhummingvoice: true
+      Sircleofnature: true
+    CalcFlags:
+      Regen: true
+  - Status: Gloomyday
+    Icon: EFST_GLOOMYDAY
+    DurationLookup: WM_GLOOMYDAY
+    CalcFlags:
+      Flee: true
+      Speed: true
+      Aspd: true
+    End:
+      Voiceofsiren: true
+      Deepsleep: true
+      Songofmana: true
+      Dancewithwug: true
+      Saturdaynightfever: true
+      Leradsdew: true
+      Melodyofsink: true
+      Beyondofwarcry: true
+      Unlimitedhummingvoice: true
+  - Status: Gloomyday_Sk
+    Icon: EFST_GLOOMYDAY
+  - Status: Songofmana
+    Icon: EFST_SONG_OF_MANA
+    DurationLookup: WM_SONG_OF_MANA
+    End:
+      Voiceofsiren: true
+      Deepsleep: true
+      Gloomyday: true
+      Gloomyday_Sk: true
+      Dancewithwug: true
+      Saturdaynightfever: true
+      Leradsdew: true
+      Melodyofsink: true
+      Beyondofwarcry: true
+      Unlimitedhummingvoice: true
+      Sircleofnature: true
+    CalcFlags:
+      Regen: true
+  - Status: Dancewithwug
+    Icon: EFST_DANCE_WITH_WUG
+    DurationLookup: WM_DANCE_WITH_WUG
+    CalcFlags:
+      Aspd: true
+    End:
+      Voiceofsiren: true
+      Deepsleep: true
+      Gloomyday: true
+      Gloomyday_Sk: true
+      Songofmana: true
+      Saturdaynightfever: true
+      Leradsdew: true
+      Melodyofsink: true
+      Beyondofwarcry: true
+      Unlimitedhummingvoice: true
+      Sircleofnature: true
+  - Status: Saturdaynightfever
+    Icon: EFST_SATURDAY_NIGHT_FEVER
+    DurationLookup: WM_SATURDAY_NIGHT_FEVER
+    States:
+      NoCast: true
+      NoChat: true
+      NoEquipItem: true
+      NoUnEquipItem: true
+      NoConsumeItem: true
+    CalcFlags:
+      Hit: true
+      Flee: true
+      Regen: true
+    Flags:
+      NoSave: true
+    Fail:
+      Berserk: true
+      Inspiration: true
+    End:
+      Voiceofsiren: true
+      Deepsleep: true
+      Gloomyday: true
+      Gloomyday_Sk: true
+      Songofmana: true
+      Dancewithwug: true
+      Leradsdew: true
+      Melodyofsink: true
+      Beyondofwarcry: true
+      Unlimitedhummingvoice: true
+      Sircleofnature: true
+  - Status: Leradsdew
+    Icon: EFST_LERADS_DEW
+    DurationLookup: WM_LERADS_DEW
+    CalcFlags:
+      MaxHp: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Voiceofsiren: true
+      Deepsleep: true
+      Gloomyday: true
+      Gloomyday_Sk: true
+      Songofmana: true
+      Dancewithwug: true
+      Saturdaynightfever: true
+      Melodyofsink: true
+      Beyondofwarcry: true
+      Unlimitedhummingvoice: true
+      Sircleofnature: true
+  - Status: Melodyofsink
+    Icon: EFST_MELODYOFSINK
+    DurationLookup: WM_MELODYOFSINK
+    CalcFlags:
+      Int: true
+      MaxSp: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Voiceofsiren: true
+      Deepsleep: true
+      Gloomyday: true
+      Gloomyday_Sk: true
+      Songofmana: true
+      Dancewithwug: true
+      Saturdaynightfever: true
+      Leradsdew: true
+      Beyondofwarcry: true
+      Unlimitedhummingvoice: true
+      Sircleofnature: true
+  - Status: Beyondofwarcry
+    Icon: EFST_BEYOND_OF_WARCRY
+    DurationLookup: WM_BEYOND_OF_WARCRY
+    CalcFlags:
+      Str: true
+      MaxHp: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Voiceofsiren: true
+      Deepsleep: true
+      Gloomyday: true
+      Gloomyday_Sk: true
+      Songofmana: true
+      Dancewithwug: true
+      Saturdaynightfever: true
+      Leradsdew: true
+      Melodyofsink: true
+      Unlimitedhummingvoice: true
+      Sircleofnature: true
+  - Status: Unlimitedhummingvoice
+    Icon: EFST_UNLIMITED_HUMMING_VOICE
+    DurationLookup: WM_UNLIMITED_HUMMING_VOICE
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Voiceofsiren: true
+      Deepsleep: true
+      Gloomyday: true
+      Gloomyday_Sk: true
+      Songofmana: true
+      Dancewithwug: true
+      Saturdaynightfever: true
+      Leradsdew: true
+      Melodyofsink: true
+      Beyondofwarcry: true
+      Sircleofnature: true
+  - Status: Sitdown_Force
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Netherworld
+    Icon: EFST_NETHERWORLD
+    DurationLookup: WM_POEMOFNETHERWORLD
+    States:
+      NoMove: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      BossResist: true
+      StopWalking: true
+      OverlapFail: true
+      Debuff: true
+  - Status: Crescentelbow
+    Icon: EFST_CRESCENTELBOW
+    DurationLookup: SR_CRESCENTELBOW
+    Flags:
+      BossResist: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal2: true
+  - Status: Cursedcircle_Atker
+    Icon: EFST_CURSEDCIRCLE_ATKER
+    DurationLookup: SR_CURSEDCIRCLE
+    States:
+      NoMove: true
+      NoAttack: true
+    Flags:
+      DisplayPc: true
+      NoClearbuff: true
+      StopWalking: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      StopAttacking: true
+      RemoveOnChangeMap: true
+      SendVal3: true
+  - Status: Cursedcircle_Target
+    Icon: EFST_CURSEDCIRCLE_TARGET
+    DurationLookup: SR_CURSEDCIRCLE
+    States:
+      NoMove: true
+      NoCast: true
+      NoAttack: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      MobLoseTarget: true
+      NoClearbuff: true
+      StopWalking: true
+      StopAttacking: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapFail: true
+  - Status: Lightningwalk
+    Icon: EFST_LIGHTNINGWALK
+    DurationLookup: SR_LIGHTNINGWALK
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal1: true
+  - Status: Raisingdragon
+    Icon: EFST_RAISINGDRAGON
+    DurationLookup: SR_RAISINGDRAGON
+    CalcFlags:
+      MaxHp: true
+      MaxSp: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+  - Status: Gt_Energygain
+    Icon: EFST_GENTLETOUCH_ENERGYGAIN
+    DurationLookup: SR_GENTLETOUCH_ENERGYGAIN
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Gt_Change
+    Icon: EFST_GENTLETOUCH_CHANGE
+    DurationLookup: SR_GENTLETOUCH_CHANGE
+    CalcFlags:
+      Watk: true
+      Aspd: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Gt_Revitalize: true
+  - Status: Gt_Revitalize
+    Icon: EFST_GENTLETOUCH_REVITALIZE
+    DurationLookup: SR_GENTLETOUCH_REVITALIZE
+    CalcFlags:
+      MaxHp: true
+      Regen: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Gt_Change: true
+  - Status: Gn_Cartboost
+    Icon: EFST_GN_CARTBOOST
+    DurationLookup: GN_CARTBOOST
+    CalcFlags:
+      Speed: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Fail:
+      Quagmire: true
+      Dontforgetme: true
+    EndReturn:
+      Decreaseagi: true
+  - Status: Thornstrap
+    Icon: EFST_THORNS_TRAP
+    DurationLookup: GN_THORNS_TRAP
+    States:
+      NoMove: true
+    Flags:
+      StopWalking: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+  - Status: Bloodsucker
+    Icon: EFST_BLOOD_SUCKER
+    DurationLookup: GN_BLOOD_SUCKER
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+  - Status: Smokepowder
+    Icon: EFST_FIRE_EXPANSION_SMOKE_POWDER
+    DurationLookup: GN_FIRE_EXPANSION_SMOKE_POWDER
+    CalcFlags:
+      Flee: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+  - Status: Teargas
+    Icon: EFST_FIRE_EXPANSION_TEAR_GAS
+    DurationLookup: GN_FIRE_EXPANSION_TEAR_GAS
+    CalcFlags:
+      Hit: true
+      Flee: true
+    Flags:
+      BossResist: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+  - Status: Mandragora
+    Icon: EFST_MANDRAGORA
+    DurationLookup: GN_MANDRAGORA
+    CalcFlags:
+      Int: true
+    Flags:
+      RemoveOnRefresh: true
+      RemoveOnLuxAnima: true
+      NoDispell: true
+      NoBanishingBuster: true
+      Debuff: true
+      OverlapFail: true
+    Fail:
+      Refresh: true
+      Inspiration: true
+  - Status: Stomachache
+    Icon: EFST_STOMACHACHE
+    CalcFlags:
+      Str: true
+      Agi: true
+      Vit: true
+      Dex: true
+      Int: true
+      Luk: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      Debuff: true
+  - Status: Mysterious_Powder
+    Icon: EFST_MYSTERIOUS_POWDER
+    CalcFlags:
+      MaxHp: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      Debuff: true
+  - Status: Melon_Bomb
+    Icon: EFST_MELON_BOMB
+    CalcFlags:
+      Speed: true
+      Aspd: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+  - Status: Banana_Bomb
+    Icon: EFST_BANANA_BOMB
+    CalcFlags:
+      Luk: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Banana_Bomb_Sitdown
+    Icon: EFST_BANANA_BOMB_SITDOWN_POSTDELAY
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+  - Status: Savage_Steak
+    Icon: EFST_SAVAGE_STEAK
+    CalcFlags:
+      Str: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+  - Status: Cocktail_Warg_Blood
+    Icon: EFST_COCKTAIL_WARG_BLOOD
+    CalcFlags:
+      Int: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+  - Status: Minor_Bbq
+    Icon: EFST_MINOR_BBQ
+    CalcFlags:
+      Vit: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+  - Status: Siroma_Ice_Tea
+    Icon: EFST_SIROMA_ICE_TEA
+    CalcFlags:
+      Dex: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+  - Status: Drocera_Herb_Steamed
+    Icon: EFST_DROCERA_HERB_STEAMED
+    CalcFlags:
+      Agi: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+  - Status: Putti_Tails_Noodles
+    Icon: EFST_PUTTI_TAILS_NOODLES
+    CalcFlags:
+      Luk: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+  - Status: Boost500
+    Icon: EFST_BOOST500
+    CalcFlags:
+      Aspd: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Full_Swing_K
+    Icon: EFST_FULL_SWING_K
+    CalcFlags:
+      Batk: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Mana_Plus
+    Icon: EFST_MANA_PLUS
+    CalcFlags:
+      Matk: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Mustle_M
+    Icon: EFST_MUSTLE_M
+    CalcFlags:
+      MaxHp: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Life_Force_F
+    Icon: EFST_LIFE_FORCE_F
+    CalcFlags:
+      MaxSp: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Extract_White_Potion_Z
+    Icon: EFST_EXTRACT_WHITE_POTION_Z
+    CalcFlags:
+      Regen: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Vitata_500
+    Icon: EFST_VITATA_500
+    CalcFlags:
+      Regen: true
+      MaxSp: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Extract_Salamine_Juice
+    Icon: EFST_EXTRACT_SALAMINE_JUICE
+    CalcFlags:
+      Aspd: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: _Reproduce
+    Icon: EFST_REPRODUCE
+    DurationLookup: SC_REPRODUCE
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: _Autoshadowspell
+    Icon: EFST_AUTOSHADOWSPELL
+    DurationLookup: SC_AUTOSHADOWSPELL
+    CalcFlags:
+      Matk: true
+  - Status: _Shadowform
+    Icon: EFST_SHADOWFORM
+    DurationLookup: SC_SHADOWFORM
+    States:
+      NoCast: true
+      NoConsumeItem: true
+      NoAttack: true
+    Flags:
+      DisplayPc: true
+      OnTouch: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+      RemoveOnChangeMap: true
+      SendVal3: true
+  - Status: _Bodypaint
+    Icon: EFST_BODYPAINT
+    DurationLookup: SC_BODYPAINT
+    CalcFlags:
+      Aspd: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      SpreadEffect: true
+    Fail:
+      Inspiration: true
+  - Status: _Invisibility
+    Icon: EFST_INVISIBILITY
+    DurationLookup: SC_INVISIBILITY
+    States:
+      NoCast: true
+      NoConsumeItem: true
+    CalcFlags:
+      Aspd: true
+      Cri: true
+      Atk_Ele: true
+    Options:
+      Cloak: true
+    Flags:
+      OnTouch: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal2: true
+    Fail:
+      _Invisibility: true
+  - Status: _Deadlyinfect
+    Icon: EFST_DEADLYINFECT
+    DurationLookup: SC_DEADLYINFECT
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+  - Status: _Enervation
+    Icon: EFST_ENERVATION
+    DurationLookup: SC_ENERVATION
+    CalcFlags:
+      Batk: true
+      Watk: true
+    Flags:
+      OverlapFail: true
+      BossResist: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal2: true
+    Fail:
+      Inspiration: true
+  - Status: _Groomy
+    Icon: EFST_GROOMY
+    DurationLookup: SC_GROOMY
+    CalcFlags:
+      Aspd: true
+      Hit: true
+    Flags:
+      OverlapFail: true
+      BossResist: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal3: true
+    Fail:
+      Inspiration: true
+  - Status: _Ignorance
+    Icon: EFST_IGNORANCE
+    DurationLookup: SC_IGNORANCE
+    States:
+      NoCast: true
+    Flags:
+      OverlapFail: true
+      BossResist: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Fail:
+      Inspiration: true
+  - Status: _Laziness
+    Icon: EFST_LAZINESS
+    DurationLookup: SC_LAZINESS
+    CalcFlags:
+      Flee: true
+      Speed: true
+    Flags:
+      OverlapFail: true
+      BossResist: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal3: true
+    Fail:
+      Inspiration: true
+  - Status: _Unlucky
+    Icon: EFST_UNLUCKY
+    DurationLookup: SC_UNLUCKY
+    CalcFlags:
+      Cri: true
+      Flee2: true
+    Flags:
+      OverlapFail: true
+      BossResist: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal3: true
+    Fail:
+      Inspiration: true
+  - Status: _Weakness
+    Icon: EFST_WEAKNESS
+    DurationLookup: SC_WEAKNESS
+    CalcFlags:
+      MaxHp: true
+    Flags:
+      OverlapFail: true
+      BossResist: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal2: true
+    Fail:
+      Inspiration: true
+  - Status: _Stripaccessory
+    Icon: EFST_STRIPACCESSARY
+    DurationLookup: SC_STRIPACCESSARY
+    CalcFlags:
+      Dex: true
+      Int: true
+      Luk: true
+    Flags:
+      Debuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: _Manhole
+    Icon: EFST_MANHOLE
+    DurationLookup: SC_MANHOLE
+    States:
+      NoAttack: true
+      NoMove: true
+      NoCast: true
+      NoConsumeItem: true
+      NoInteract: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      MobLoseTarget: true
+      NoClearbuff: true
+      StopWalking: true
+      StopAttacking: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      RemoveOnChangeMap: true
+  - Status: _Bloodylust
+    Icon: EFST_BLOODYLUST
+    DurationLookup: SC_BLOODYLUST
+    States:
+      NoCast: true
+      NoUnEquipItem: true
+    CalcFlags:
+      Def: true
+      Def2: true
+      Batk: true
+      Watk: true
+    Flags:
+      Debuff: true
+      NoSave: true
+  - Status: Circle_Of_Fire
+    Icon: EFST_CIRCLE_OF_FIRE
+    Flags:
+      RemoveElementalOption: true
+  - Status: Circle_Of_Fire_Option
+    Icon: EFST_CIRCLE_OF_FIRE_OPTION
+    DurationLookup: EL_CIRCLE_OF_FIRE
+    CalcFlags:
+      All: true
+    Flags:
+      RemoveElementalOption: true
+      SendVal2: true
+  - Status: Fire_Cloak
+    Icon: EFST_FIRE_CLOAK
+    Flags:
+      RemoveElementalOption: true
+  - Status: Fire_Cloak_Option
+    Icon: EFST_FIRE_CLOAK_OPTION
+    DurationLookup: EL_FIRE_CLOAK
+    CalcFlags:
+      All: true
+    Flags:
+      RemoveElementalOption: true
+  - Status: Water_Screen
+    Icon: EFST_WATER_SCREEN
+    Flags:
+      RemoveElementalOption: true
+  - Status: Water_Screen_Option
+    Icon: EFST_WATER_SCREEN_OPTION
+    DurationLookup: EL_WATER_SCREEN
+    CalcFlags:
+      All: true
+    Flags:
+      RemoveElementalOption: true
+  - Status: Water_Drop
+    Icon: EFST_WATER_DROP
+    Flags:
+      RemoveElementalOption: true
+  - Status: Water_Drop_Option
+    Icon: EFST_WATER_DROP_OPTION
+    DurationLookup: EL_WATER_DROP
+    CalcFlags:
+      All: true
+    Flags:
+      RemoveElementalOption: true
+  - Status: Water_Barrier
+    Icon: EFST_WATER_BARRIER
+    DurationLookup: EL_WATER_BARRIER
+    CalcFlags:
+      Watk: true
+      Flee: true
+    Flags:
+      RemoveElementalOption: true
+      SendVal3: true
+  - Status: Wind_Step
+    Icon: EFST_WIND_STEP
+    Flags:
+      RemoveElementalOption: true
+  - Status: Wind_Step_Option
+    Icon: EFST_WIND_STEP_OPTION
+    DurationLookup: EL_WIND_STEP
+    CalcFlags:
+      Speed: true
+      Flee: true
+    Flags:
+      RemoveElementalOption: true
+  - Status: Wind_Curtain
+    Icon: EFST_WIND_CURTAIN
+    Flags:
+      RemoveElementalOption: true
+  - Status: Wind_Curtain_Option
+    Icon: EFST_WIND_CURTAIN_OPTION
+    DurationLookup: EL_WIND_CURTAIN
+    CalcFlags:
+      All: true
+    Flags:
+      RemoveElementalOption: true
+  - Status: Zephyr
+    Icon: EFST_ZEPHYR
+    DurationLookup: EL_ZEPHYR
+    CalcFlags:
+      Flee: true
+    Flags:
+      RemoveElementalOption: true
+  - Status: Solid_Skin
+    Icon: EFST_SOLID_SKIN
+    Flags:
+      RemoveElementalOption: true
+  - Status: Solid_Skin_Option
+    Icon: EFST_SOLID_SKIN_OPTION
+    DurationLookup: EL_SOLID_SKIN
+    CalcFlags:
+      Def: true
+      MaxHp: true
+    Flags:
+      RemoveElementalOption: true
+  - Status: Stone_Shield
+    Icon: EFST_STONE_SHIELD
+    Flags:
+      RemoveElementalOption: true
+  - Status: Stone_Shield_Option
+    Icon: EFST_STONE_SHIELD_OPTION
+    DurationLookup: EL_STONE_SHIELD
+    CalcFlags:
+      All: true
+    Flags:
+      RemoveElementalOption: true
+  - Status: Power_Of_Gaia
+    Icon: EFST_POWER_OF_GAIA
+    DurationLookup: EL_POWER_OF_GAIA
+    CalcFlags:
+      MaxHp: true
+      Def: true
+      Speed: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+      NoRemoveOnDead: true
+  - Status: Pyrotechnic
+    Icon: EFST_PYROTECHNIC
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      RemoveElementalOption: true
+  - Status: Pyrotechnic_Option
+    Icon: EFST_PYROTECHNIC_OPTION
+    DurationLookup: EL_PYROTECHNIC
+    CalcFlags:
+      Watk: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+      NoSave: true
+      RemoveElementalOption: true
+      SendVal3: true
+  - Status: Heater
+    Icon: EFST_HEATER
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      RemoveElementalOption: true
+  - Status: Heater_Option
+    Icon: EFST_HEATER_OPTION
+    DurationLookup: EL_HEATER
+    CalcFlags:
+      Watk: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+      NoSave: true
+      RemoveElementalOption: true
+      SendVal3: true
+  - Status: Tropic
+    Icon: EFST_TROPIC
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      RemoveElementalOption: true
+  - Status: Tropic_Option
+    Icon: EFST_TROPIC_OPTION
+    DurationLookup: EL_TROPIC
+    CalcFlags:
+      Watk: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+      NoSave: true
+      RemoveElementalOption: true
+  - Status: Aquaplay
+    Icon: EFST_AQUAPLAY
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      RemoveElementalOption: true
+  - Status: Aquaplay_Option
+    Icon: EFST_AQUAPLAY_OPTION
+    DurationLookup: EL_AQUAPLAY
+    CalcFlags:
+      Matk: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+      NoSave: true
+      RemoveElementalOption: true
+      SendVal3: true
+  - Status: Cooler
+    Icon: EFST_COOLER
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      RemoveElementalOption: true
+  - Status: Cooler_Option
+    Icon: EFST_COOLER_OPTION
+    DurationLookup: EL_COOLER
+    CalcFlags:
+      Matk: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+      NoSave: true
+      RemoveElementalOption: true
+      SendVal3: true
+  - Status: Chilly_Air
+    Icon: EFST_CHILLY_AIR
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      RemoveElementalOption: true
+  - Status: Chilly_Air_Option
+    Icon: EFST_CHILLY_AIR_OPTION
+    DurationLookup: EL_CHILLY_AIR
+    CalcFlags:
+      Matk: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+      NoSave: true
+      RemoveElementalOption: true
+      SendVal2: true
+  - Status: Gust
+    Icon: EFST_GUST
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      RemoveElementalOption: true
+  - Status: Gust_Option
+    Icon: EFST_GUST_OPTION
+    DurationLookup: EL_GUST
+    CalcFlags:
+      Aspd: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+      NoSave: true
+      RemoveElementalOption: true
+      SendVal2: true
+  - Status: Blast
+    Icon: EFST_BLAST
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      RemoveElementalOption: true
+  - Status: Blast_Option
+    Icon: EFST_BLAST_OPTION
+    DurationLookup: EL_BLAST
+    CalcFlags:
+      Aspd: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+      NoSave: true
+      RemoveElementalOption: true
+      SendVal3: true
+  - Status: Wild_Storm
+    Icon: EFST_WILD_STORM
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      RemoveElementalOption: true
+  - Status: Wild_Storm_Option
+    Icon: EFST_WILD_STORM_OPTION
+    DurationLookup: EL_WILD_STORM
+    CalcFlags:
+      Aspd: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+      NoSave: true
+      RemoveElementalOption: true
+      SendVal2: true
+  - Status: Petrology
+    Icon: EFST_PETROLOGY
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      RemoveElementalOption: true
+  - Status: Petrology_Option
+    Icon: EFST_PETROLOGY_OPTION
+    DurationLookup: EL_PETROLOGY
+    CalcFlags:
+      MaxHp: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+      NoSave: true
+      RemoveElementalOption: true
+      SendVal3: true
+  - Status: Cursed_Soil
+    Icon: EFST_CURSED_SOIL
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      RemoveElementalOption: true
+  - Status: Cursed_Soil_Option
+    Icon: EFST_CURSED_SOIL_OPTION
+    DurationLookup: EL_CURSED_SOIL
+    CalcFlags:
+      MaxHp: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+      NoSave: true
+      RemoveElementalOption: true
+      SendVal3: true
+  - Status: Upheaval
+    Icon: EFST_UPHEAVAL
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      RemoveElementalOption: true
+  - Status: Upheaval_Option
+    Icon: EFST_UPHEAVAL_OPTION
+    DurationLookup: EL_UPHEAVAL
+    CalcFlags:
+      MaxHp: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+      NoSave: true
+      RemoveElementalOption: true
+      SendVal2: true
+  - Status: Tidal_Weapon
+    Icon: EFST_TIDAL_WEAPON
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      RemoveElementalOption: true
+  - Status: Tidal_Weapon_Option
+    Icon: EFST_TIDAL_WEAPON_OPTION
+    DurationLookup: EL_TIDAL_WEAPON
+    CalcFlags:
+      All: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+      NoSave: true
+      RemoveElementalOption: true
+  - Status: Rock_Crusher
+    Icon: EFST_ROCK_CRUSHER
+    DurationLookup: EL_ROCK_CRUSHER
+    CalcFlags:
+      Def: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Rock_Crusher_Atk
+    Icon: EFST_ROCK_CRUSHER_ATK
+    DurationLookup: EL_ROCK_CRUSHER_ATK
+    CalcFlags:
+      Speed: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Leadership
+    DurationLookup: GD_LEADERSHIP
+    CalcFlags:
+      Str: true
+    Flags:
+      NoClearbuff: true
+      NoSave: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Glorywounds
+    DurationLookup: GD_GLORYWOUNDS
+    CalcFlags:
+      Vit: true
+    Flags:
+      NoClearbuff: true
+      NoSave: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Soulcold
+    DurationLookup: GD_SOULCOLD
+    CalcFlags:
+      Agi: true
+    Flags:
+      NoClearbuff: true
+      NoSave: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Hawkeyes
+    DurationLookup: GD_HAWKEYES
+    CalcFlags:
+      Dex: true
+    Flags:
+      NoClearbuff: true
+      NoSave: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Odins_Power
+    Icon: EFST_ODINS_POWER
+    DurationLookup: ALL_ODINS_POWER
+    CalcFlags:
+      Watk: true
+      Matk: true
+      Mdef: true
+      Def: true
+  - Status: Raid
+    Icon: EFST_RAID
+    DurationLookup: RG_RAID
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Fire_Insignia
+    Icon: EFST_FIRE_INSIGNIA
+    DurationLookup: SO_FIRE_INSIGNIA
+    CalcFlags:
+      Matk: true
+      Watk: true
+      Atk_Ele: true
+      Regen: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+  - Status: Water_Insignia
+    Icon: EFST_WATER_INSIGNIA
+    DurationLookup: SO_FIRE_INSIGNIA
+    CalcFlags:
+      Matk: true
+      Watk: true
+      Atk_Ele: true
+      Regen: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+  - Status: Wind_Insignia
+    Icon: EFST_WIND_INSIGNIA
+    DurationLookup: SO_WATER_INSIGNIA
+    CalcFlags:
+      Matk: true
+      Watk: true
+      Aspd: true
+      Atk_Ele: true
+      Regen: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+  - Status: Earth_Insignia
+    Icon: EFST_EARTH_INSIGNIA
+    DurationLookup: SO_WIND_INSIGNIA
+    CalcFlags:
+      Mdef: true
+      Def: true
+      MaxHp: true
+      MaxSp: true
+      Matk: true
+      Watk: true
+      Atk_Ele: true
+      Regen: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+  - Status: Push_Cart
+    Icon: EFST_ON_PUSH_CART
+    CalcFlags:
+      Speed: true
+    Flags:
+      DisplayPc: true
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal1: true
+      OverlapIgnoreLevel: true
+      NoForcedEnd: true
+  - Status: Spellbook1
+    Icon: EFST_SPELLBOOK1
+    Flags:
+      NoClearance: true
+  - Status: Spellbook2
+    Icon: EFST_SPELLBOOK2
+    Flags:
+      NoClearance: true
+  - Status: Spellbook3
+    Icon: EFST_SPELLBOOK3
+    Flags:
+      NoClearance: true
+  - Status: Spellbook4
+    Icon: EFST_SPELLBOOK4
+    Flags:
+      NoClearance: true
+  - Status: Spellbook5
+    Icon: EFST_SPELLBOOK5
+    Flags:
+      NoClearance: true
+  - Status: Spellbook6
+    Icon: EFST_SPELLBOOK6
+    Flags:
+      NoClearance: true
+  - Status: Maxspellbook
+    Icon: EFST_SPELLBOOK7
+    Flags:
+      NoClearance: true
+  - Status: Incmhp
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+    CalcFlags:
+      MaxHp: true
+  - Status: Incmsp
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+    CalcFlags:
+      MaxSp: true
+  - Status: Partyflee
+    Icon: EFST_PARTYFLEE
+    DurationLookup: ALL_PARTYFLEE
+    Flags:
+      NoClearance: true
+      NoBanishingBuster: true
+  - Status: Meikyousisui
+    Icon: EFST_MEIKYOUSISUI
+    DurationLookup: KO_MEIKYOUSISUI
+    States:
+      NoMove: true
+    Flags:
+      StopWalking: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Jyumonjikiri
+    Icon: EFST_KO_JYUMONJIKIRI
+    DurationLookup: KO_JYUMONJIKIRI
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Kyougaku
+    Icon: EFST_KYOUGAKU
+    DurationLookup: KO_KYOUGAKU
+    States:
+      NoMove: true
+      NoEquipItem: true
+      NoUnEquipItem: true
+    CalcFlags:
+      Str: true
+      Agi: true
+      Vit: true
+      Int: true
+      Dex: true
+      Luk: true
+    Flags:
+      StopWalking: true
+      NoSave: true
+      Debuff: true
+  - Status: Izayoi
+    Icon: EFST_IZAYOI
+    DurationLookup: KO_IZAYOI
+    CalcFlags:
+      Matk: true
+  - Status: Zenkai
+    Icon: EFST_ZENKAI
+    DurationLookup: KO_ZENKAI
+  - Status: Kagehumi
+    Icon: EFST_KG_KAGEHUMI
+    DurationLookup: KG_KAGEHUMI
+    States:
+      NoMove: true
+      NoConsumeItem: true
+  - Status: Kyomu
+    Icon: EFST_KYOMU
+    DurationLookup: KG_KYOMU
+  - Status: Kagemusya
+    Icon: EFST_KAGEMUSYA
+    DurationLookup: KG_KAGEMUSYA
+  - Status: Zangetsu
+    Icon: EFST_ZANGETSU
+    DurationLookup: OB_ZANGETSU
+    CalcFlags:
+      Matk: true
+      Batk: true
+  - Status: Gensou
+    Icon: EFST_GENSOU
+    DurationLookup: OB_OBOROGENSOU
+  - Status: Akaitsuki
+    Icon: EFST_AKAITSUKI
+    DurationLookup: OB_AKAITSUKI
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      Debuff: true
+  - Status: Style_Change
+    DurationLookup: MH_STYLE_CHANGE
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoForcedEnd: true
+  - Status: Tinder_Breaker
+    Icon: EFST_TINDER_BREAKER_POSTDELAY
+    DurationLookup: MH_TINDER_BREAKER
+    CalcFlags:
+      Flee: true
+    Flags:
+      NoSave: true
+      RemoveOnChangeMap: true
+  - Status: Tinder_Breaker2
+    Icon: EFST_TINDER_BREAKER
+    DurationLookup: MH_TINDER_BREAKER
+    CalcFlags:
+      Flee: true
+    Flags:
+      NoSave: true
+      RemoveOnChangeMap: true
+      OverlapFail: true
+  - Status: Cbc
+    Icon: EFST_CBC
+    DurationLookup: MH_CBC
+    CalcFlags:
+      Flee: true
+    Flags:
+      NoSave: true
+  - Status: Eqc
+    Icon: EFST_EQC
+    DurationLookup: MH_EQC
+    CalcFlags:
+      Def2: true
+      MaxHp: true
+    Flags:
+      NoSave: true
+    End:
+      Tinder_Breaker2: true
+  - Status: Goldene_Ferse
+    Icon: EFST_GOLDENE_FERSE
+    DurationLookup: MH_GOLDENE_FERSE
+    CalcFlags:
+      Aspd: true
+      Flee: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Fail:
+      Angriffs_Modus: true
+  - Status: Angriffs_Modus
+    Icon: EFST_ANGRIFFS_MODUS
+    DurationLookup: MH_ANGRIFFS_MODUS
+    CalcFlags:
+      Batk: true
+      Def: true
+      Flee: true
+      MaxHp: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Fail:
+      Goldene_Ferse: true
+  - Status: Overed_Boost
+    Icon: EFST_OVERED_BOOST
+    DurationLookup: MH_OVERED_BOOST
+    CalcFlags:
+      Flee: true
+      Aspd: true
+      Def: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Overed_Boost: true
+  - Status: Light_Of_Regene
+    Icon: EFST_LIGHT_OF_REGENE
+    DurationLookup: MH_LIGHT_OF_REGENE
+    Flags:
+      NoRemoveOnDead: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Ash
+    Icon: EFST_VOLCANIC_ASH
+    DurationLookup: MH_VOLCANIC_ASH
+    CalcFlags:
+      Def: true
+      Def2: true
+      Hit: true
+      Batk: true
+      Flee: true
+  - Status: Granitic_Armor
+    Icon: EFST_GRANITIC_ARMOR
+    DurationLookup: MH_GRANITIC_ARMOR
+  - Status: Magma_Flow
+    Icon: EFST_MAGMA_FLOW
+    DurationLookup: MH_MAGMA_FLOW
+  - Status: Pyroclastic
+    Icon: EFST_PYROCLASTIC
+    DurationLookup: MH_PYROCLASTIC
+    CalcFlags:
+      Batk: true
+      Watk: true
+  - Status: Paralysis
+    Icon: EFST_NEEDLE_OF_PARALYZE
+    DurationLookup: MH_NEEDLE_OF_PARALYZE
+    States:
+      NoMove: true
+    CalcFlags:
+      Def2: true
+    Flags:
+      BossResist: true
+      StopWalking: true
+      NoRemoveOnDead: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Pain_Killer
+    Icon: EFST_PAIN_KILLER
+    DurationLookup: MH_PAIN_KILLER
+    Flags:
+      NoRemoveOnDead: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Hanbok
+    States:
+      NoAttack: true
+    Options:
+      Hanbok: true
+    Flags:
+      SendLook: true
+      StopAttacking: true
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Defset
+    Icon: EFST_SET_NUM_DEF
+    CalcFlags:
+      Def: true
+    Flags:
+      OverlapFail: true
+  - Status: Mdefset
+    Icon: EFST_SET_NUM_MDEF
+    CalcFlags:
+      Mdef: true
+    Flags:
+      OverlapFail: true
+  - Status: Darkcrow
+    Icon: EFST_DARKCROW
+    DurationLookup: GC_DARKCROW
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Full_Throttle
+    Icon: EFST_FULL_THROTTLE
+    DurationLookup: ALL_FULL_THROTTLE
+    CalcFlags:
+      Speed: true
+      Str: true
+      Agi: true
+      Vit: true
+      Int: true
+      Dex: true
+      Luk: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Rebound
+    Icon: EFST_REBOUND
+    CalcFlags:
+      Speed: true
+      Regen: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Unlimit
+    Icon: EFST_UNLIMIT
+    DurationLookup: RA_UNLIMIT
+    Flags:
+      DisplayPc: true
+  - Status: Kings_Grace
+    Icon: EFST_KINGS_GRACE
+    DurationLookup: LG_KINGS_GRACE
+    States:
+      NoCast: true
+      NoAttack: true
+      NoMove: true
+      NoConsumeItem: true
+    Flags:
+      StopAttacking: true
+      StopWalking: true
+      StopCasting: true
+    Fail:
+      Devotion: true
+      Whiteimprison: true
+    End:
+      Poison: true
+      Blind: true
+      Freeze: true
+      Stone: true
+      Stun: true
+      Sleep: true
+      Bleeding: true
+      Curse: true
+      Confusion: true
+      Hallucination: true
+      Silence: true
+      Burning: true
+      Crystalize: true
+      Freezing: true
+      Deepsleep: true
+      Fear: true
+      Mandragora: true
+  - Status: Telekinesis_Intense
+    Icon: EFST_TELEKINESIS_INTENSE
+    DurationLookup: WL_TELEKINESIS_INTENSE
+    Flags:
+      DisplayPc: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    CalcFlags:
+      Matk: true
+  - Status: Offertorium
+    Icon: EFST_OFFERTORIUM
+    DurationLookup: AB_OFFERTORIUM
+    Flags:
+      DisplayPc: true
+    Fail:
+      Magnificat: true
+    End:
+      Magnificat: true
+      Blind: true
+      Curse: true
+      Poison: true
+      Hallucination: true
+      Confusion: true
+      Bleeding: true
+      Burning: true
+      Freezing: true
+      Mandragora: true
+      Paralyse: true
+      Pyrexia: true
+      Deathhurt: true
+      Leechesend: true
+      Venombleed: true
+      Toxin: true
+      Magicmushroom: true
+  - Status: Frigg_Song
+    Icon: EFST_FRIGG_SONG
+    DurationLookup: WM_FRIGG_SONG
+    CalcFlags:
+      MaxHp: true
+  - Status: Monster_Transform
+    Icon: EFST_MONSTER_TRANSFORM
+    Flags:
+      DisplayPc: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal1: true
+      NoForcedEnd: true
+  - Status: Angel_Protect
+    Icon: EFST_ANGEL_PROTECT
+    Flags:
+      NoClearance: true
+      NoBanishingBuster: true
+      NoDispell: true
+  - Status: Illusiondoping
+    Icon: EFST_ILLUSIONDOPING
+    DurationLookup: GN_ILLUSIONDOPING
+    CalcFlags:
+      Hit: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Flashcombo
+    Icon: EFST_FLASHCOMBO
+    DurationLookup: SR_FLASHCOMBO
+    CalcFlags:
+      Watk: true
+  - Status: Moonstar
+    Icon: EFST_MOONSTAR
+    Flags:
+      NoSave: true
+      BlEffect: true
+      DisplayPc: true
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Super_Star
+    Icon: EFST_SUPER_STAR
+    Flags:
+      NoSave: true
+      BlEffect: true
+      DisplayPc: true
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Heat_Barrel
+    Icon: EFST_HEAT_BARREL
+    DurationLookup: RL_HEAT_BARREL
+    CalcFlags:
+      Hit: true
+      Aspd: true
+    Flags:
+      NoSave: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      RemoveOnUnequip: true
+    Fail:
+      P_Alter: true
+      Madnesscancel: true
+  - Status: Magicalbullet
+    Icon: EFST_GS_MAGICAL_BULLET
+    DurationLookup: GS_MAGICALBULLET
+  - Status: P_Alter
+    Icon: EFST_P_ALTER
+    DurationLookup: RL_P_ALTER
+    Flags:
+      NoSave: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Fail:
+      Heat_Barrel: true
+      Madnesscancel: true
+  - Status: E_Chain
+    Icon: EFST_E_CHAIN
+    DurationLookup: RL_E_CHAIN
+    Flags:
+      NoSave: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: C_Marker
+    Icon: EFST_C_MARKER
+    DurationLookup: RL_C_MARKER
+    CalcFlags:
+      Flee: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      NoSave: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Anti_M_Blast
+    Icon: EFST_ANTI_M_BLAST
+    DurationLookup: RL_AM_BLAST
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      Debuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: B_Trap
+    Icon: EFST_B_TRAP
+    DurationLookup: RL_B_TRAP
+    CalcFlags:
+      Speed: true
+    Flags:
+      Debuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: H_Mine
+    Icon: EFST_H_MINE
+    DurationLookup: RL_H_MINE
+    Flags:
+      Debuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Qd_Shot_Ready
+    Icon: EFST_E_QD_SHOT_READY
+    Flags:
+      NoSave: true
+  - Status: Mtf_Aspd
+    Icon: EFST_MTF_ASPD
+    CalcFlags:
+      Aspd: true
+      Hit: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoForcedEnd: true
+  - Status: Mtf_Rangeatk
+    Icon: EFST_MTF_RANGEATK
+    CalcFlags:
+      Batk: true
+      Watk: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoForcedEnd: true
+  - Status: Mtf_Matk
+    Icon: EFST_MTF_MATK
+    CalcFlags:
+      Matk: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoForcedEnd: true
+  - Status: Mtf_Mleatked
+    Icon: EFST_MTF_MLEATKED
+    CalcFlags:
+      All: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoForcedEnd: true
+  - Status: Mtf_Cridamage
+    Icon: EFST_MTF_CRIDAMAGE
+    CalcFlags:
+      All: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoForcedEnd: true
+  - Status: Oktoberfest
+    States:
+      NoAttack: true
+    Options:
+      Oktoberfest: true
+    Flags:
+      SendLook: true
+      StopAttacking: true
+      NoRemoveOnDead: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Strangelights
+    Icon: EFST_STRANGELIGHTS
+    Flags:
+      NoSave: true
+      DisplayPc: true
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      BlEffect: true
+  - Status: Decoration_Of_Music
+    Icon: EFST_DECORATION_OF_MUSIC
+    Flags:
+      NoSave: true
+      DisplayPc: true
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      BlEffect: true
+  - Status: Quest_Buff1
+    Icon: EFST_QUEST_BUFF1
+    CalcFlags:
+      Batk: true
+      Matk: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Quest_Buff2
+    Icon: EFST_QUEST_BUFF2
+    CalcFlags:
+      Batk: true
+      Matk: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Quest_Buff3
+    Icon: EFST_QUEST_BUFF3
+    CalcFlags:
+      Batk: true
+      Matk: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: All_Riding
+    Icon: EFST_ALL_RIDING
+    States:
+      NoAttack: true
+    CalcFlags:
+      Speed: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoForcedEnd: true
+    EndReturn:
+      All_Riding: true
+  - Status: Teargas_Sob
+    Flags:
+      BossResist: true
+  - Status: _Feintbomb
+    DurationLookup: SC_FEINTBOMB
+    States:
+      NoPickItem: true
+    Options:
+      Invisible: true
+    Flags:
+      UnitMove: true
+      OnTouch: true
+      StopAttacking: true
+  - Status: _Chaos
+    Flags:
+      StopWalking: true
+    Fail:
+      _Chaos: true
+  - Status: Chasewalk2
+    Icon: EFST_CHASEWALK2
+    CalcFlags:
+      Str: true
+    Flags:
+      NoSave: true
+      NoClearance: true
+      RemoveOnChangeMap: true
+      NoBanishingBuster: true
+      NoDispell: true
+  - Status: Extremityfist2
+    Icon: EFST_EXTREMITYFIST
+    DurationLookup: MO_EXTREMITYFIST
+    Flags:
+      NoRemoveOnDead: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Mtf_Aspd2
+    Icon: EFST_MTF_ASPD2
+    CalcFlags:
+      Aspd: true
+      Hit: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoForcedEnd: true
+  - Status: Mtf_Rangeatk2
+    Icon: EFST_MTF_RANGEATK2
+    CalcFlags:
+      Aspd: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoForcedEnd: true
+  - Status: Mtf_Matk2
+    Icon: EFST_MTF_MATK2
+    CalcFlags:
+      Matk: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoForcedEnd: true
+  - Status: 2011rwc_Scroll
+    Icon: EFST_2011RWC_SCROLL
+    CalcFlags:
+      Str: true
+      Agi: true
+      Vit: true
+      Int: true
+      Dex: true
+      Luk: true
+      Batk: true
+      Matk: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      Food_Str_Cash: true
+      Food_Agi_Cash: true
+      Food_Vit_Cash: true
+      Food_Int_Cash: true
+      Food_Dex_Cash: true
+      Food_Luk_Cash: true
+  - Status: Jp_Event04
+    Icon: EFST_JP_EVENT04
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal1: true
+  - Status: Mtf_Mhp
+    Icon: EFST_MTF_MHP
+    CalcFlags:
+      MaxHp: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoForcedEnd: true
+  - Status: Mtf_Msp
+    Icon: EFST_MTF_MSP
+    CalcFlags:
+      MaxSp: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoForcedEnd: true
+  - Status: Mtf_Pumpkin
+    Icon: EFST_MTF_PUMPKIN
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoForcedEnd: true
+  - Status: Mtf_Hitflee
+    Icon: EFST_MTF_HITFLEE
+    CalcFlags:
+      Hit: true
+      Flee: true
+      Cri: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoForcedEnd: true
+  - Status: Vacuum_Extreme_Postdelay
+    DurationLookup: SO_VACUUM_EXTREME
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Crifood
+    Icon: EFST_FOOD_CRITICALSUCCESSVALUE
+    CalcFlags:
+      Cri: true
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Atthaste_Cash
+    Icon: EFST_ATTHASTE_CASH
+    CalcFlags:
+      Aspd: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapIgnoreLevel: true
+      NoForcedEnd: true
+  - Status: Reuse_Limit_A
+    Icon: EFST_REUSE_LIMIT_A
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapFail: true
+      NoForcedEnd: true
+  - Status: Reuse_Limit_B
+    Icon: EFST_REUSE_LIMIT_B
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapFail: true
+      NoForcedEnd: true
+  - Status: Reuse_Limit_C
+    Icon: EFST_REUSE_LIMIT_C
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapFail: true
+      NoForcedEnd: true
+  - Status: Reuse_Limit_D
+    Icon: EFST_REUSE_LIMIT_D
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapFail: true
+      NoForcedEnd: true
+  - Status: Reuse_Limit_E
+    Icon: EFST_REUSE_LIMIT_E
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapFail: true
+      NoForcedEnd: true
+  - Status: Reuse_Limit_F
+    Icon: EFST_REUSE_LIMIT_F
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapFail: true
+      NoForcedEnd: true
+  - Status: Reuse_Limit_G
+    Icon: EFST_REUSE_LIMIT_G
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapFail: true
+      NoForcedEnd: true
+  - Status: Reuse_Limit_H
+    Icon: EFST_REUSE_LIMIT_H
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapFail: true
+      NoForcedEnd: true
+  - Status: Reuse_Limit_Mtf
+    Icon: EFST_REUSE_LIMIT_MTF
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapFail: true
+      NoForcedEnd: true
+  - Status: Reuse_Limit_Aspd_Potion
+    Icon: EFST_REUSE_LIMIT_ASPD_POTION
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapFail: true
+      NoForcedEnd: true
+  - Status: Reuse_Millenniumshield
+    Icon: EFST_REUSE_MILLENNIUMSHIELD
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapFail: true
+      NoForcedEnd: true
+  - Status: Reuse_Crushstrike
+    Icon: EFST_REUSE_CRUSHSTRIKE
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapFail: true
+      NoForcedEnd: true
+  - Status: Reuse_Stormblast
+    Icon: EFST_REUSE_STORMBLAST
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapFail: true
+      NoForcedEnd: true
+  - Status: All_Riding_Reuse_Limit
+    Icon: EFST_ALL_RIDING_REUSE_LIMIT
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapFail: true
+      NoForcedEnd: true
+  - Status: Reuse_Limit_Ecl
+    Icon: EFST_REUSE_LIMIT_ECL
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapFail: true
+      NoForcedEnd: true
+  - Status: Reuse_Limit_Recall
+    Icon: EFST_REUSE_LIMIT_RECALL
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapFail: true
+      NoForcedEnd: true
+  - Status: Promote_Health_Reserch
+    Icon: EFST_PROMOTE_HEALTH_RESERCH
+    CalcFlags:
+      MaxHp: true
+  - Status: Energy_Drink_Reserch
+    Icon: EFST_ENERGY_DRINK_RESERCH
+    CalcFlags:
+      MaxSp: true
+  - Status: Norecover_State
+    Icon: EFST_HANDICAPSTATE_NORECOVER
+    Flags:
+      OverlapFail: true
+  - Status: Suhide
+    Icon: EFST_SUHIDE
+    DurationLookup: SU_HIDE
+    States:
+      NoMove: true
+      NoPickItem: true
+      NoConsumeItem: true
+      NoAttack: true
+      NoInteract: true
+    Flags:
+      StopAttacking: true
+      RemoveOnDamaged: true
+      RemoveOnChangeMap: true
+      RemoveOnMapWarp: true
+  - Status: Su_Stoop
+    Icon: EFST_SU_STOOP
+    DurationLookup: SU_STOOP
+  - Status: Spritemable
+    Icon: EFST_SPRITEMABLE
+    Flags:
+      DisplayPc: true
+      NoRemoveOnDead: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+      NoClearbuff: true
+  - Status: Catnippowder
+    Icon: EFST_CATNIPPOWDER
+    DurationLookup: SU_CN_POWDERING
+    CalcFlags:
+      Watk: true
+      Matk: true
+      Speed: true
+      Regen: true
+    Flags:
+      BossResist: true
+  - Status: Sv_Roottwist
+    Icon: EFST_SV_ROOTTWIST
+    DurationLookup: SU_SV_ROOTTWIST
+    States:
+      NoMove: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      BossResist: true
+      StopWalking: true
+      NoSave: true
+  - Status: Bitescar
+    Icon: EFST_BITESCAR
+    DurationLookup: SU_SCAROFTAROU
+    Flags:
+      BossResist: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+  - Status: Arclousedash
+    Icon: EFST_ARCLOUSEDASH
+    DurationLookup: SU_ARCLOUSEDASH
+    CalcFlags:
+      Agi: true
+      Speed: true
+  - Status: Tunaparty
+    Icon: EFST_TUNAPARTY
+    DurationLookup: SU_TUNAPARTY
+  - Status: Shrimp
+    Icon: EFST_SHRIMP
+    DurationLookup: SU_BUNCHOFSHRIMP
+    CalcFlags:
+      Batk: true
+      Matk: true
+  - Status: Freshshrimp
+    Icon: EFST_FRESHSHRIMP
+    DurationLookup: SU_FRESHSHRIMP
+    Flags:
+      BossResist: true
+  - Status: Active_Monster_Transform
+    Icon: EFST_ACTIVE_MONSTER_TRANSFORM
+    Flags:
+      DisplayPc: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal1: true
+      NoForcedEnd: true
+   # deprecated
+   #- Status: Cloud_Kill
+  - Status: Ljosalfar
+    Icon: EFST_LJOSALFAR
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      NoRemoveOnDead: true
+      NoSave: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Mermaid_Longing
+    Icon: EFST_MERMAID_LONGING
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      NoRemoveOnDead: true
+      NoSave: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Hat_Effect
+    Icon: EFST_HAT_EFFECT
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      NoRemoveOnDead: true
+      NoSave: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Flowersmoke
+    Icon: EFST_FLOWERSMOKE
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      NoRemoveOnDead: true
+      NoSave: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Fstone
+    Icon: EFST_FSTONE
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      NoRemoveOnDead: true
+      NoSave: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Happiness_Star
+    Icon: EFST_HAPPINESS_STAR
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      NoRemoveOnDead: true
+      NoSave: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Maple_Falls
+    Icon: EFST_MAPLE_FALLS
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      NoRemoveOnDead: true
+      NoSave: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Time_Accessory
+    Icon: EFST_TIME_ACCESSORY
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      NoRemoveOnDead: true
+      NoSave: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Magical_Feather
+    Icon: EFST_MAGICAL_FEATHER
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      NoRemoveOnDead: true
+      NoSave: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Gvg_Giant
+    Icon: EFST_GVG_GIANT
+  - Status: Gvg_Golem
+    Icon: EFST_GVG_GOLEM
+  - Status: Gvg_Stun
+    Icon: EFST_GVG_STUN
+    End:
+      Gvg_Stun: true
+  - Status: Gvg_Stone
+    Icon: EFST_GVG_STONE
+    End:
+      Stone: true
+  - Status: Gvg_Freez
+    Icon: EFST_GVG_FREEZ
+    End:
+      Freeze: true
+  - Status: Gvg_Sleep
+    Icon: EFST_GVG_SLEEP
+    End:
+      Sleep: true
+  - Status: Gvg_Curse
+    Icon: EFST_GVG_CURSE
+    End:
+      Curse: true
+  - Status: Gvg_Silence
+    Icon: EFST_GVG_SILENCE
+    End:
+      Silence: true
+  - Status: Gvg_Blind
+    Icon: EFST_GVG_BLIND
+    End:
+      Blind: true
+  - Status: Clan_Info
+    Icon: EFST_CLAN_INFO
+    Flags:
+      DisplayPc: true
+      DisplayNpc: true
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal2: true
+  - Status: Swordclan
+    Icon: EFST_SWORDCLAN
+    CalcFlags:
+      Str: true
+      Vit: true
+      MaxHp: true
+      MaxSp: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal1: true
+  - Status: Arcwandclan
+    Icon: EFST_ARCWANDCLAN
+    CalcFlags:
+      Int: true
+      Dex: true
+      MaxHp: true
+      MaxSp: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal1: true
+  - Status: Goldenmaceclan
+    Icon: EFST_GOLDENMACECLAN
+    CalcFlags:
+      Luk: true
+      Int: true
+      MaxHp: true
+      MaxSp: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal1: true
+  - Status: Crossbowclan
+    Icon: EFST_CROSSBOWCLAN
+    CalcFlags:
+      Agi: true
+      Vit: true
+      MaxHp: true
+      MaxSp: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal1: true
+  - Status: Jumpingclan
+    Icon: EFST_JUMPINGCLAN
+    CalcFlags:
+      Str: true
+      Agi: true
+      Vit: true
+      Int: true
+      Dex: true
+      Luk: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal1: true
+  - Status: Tarotcard
+    Icon: EFST_TAROTCARD
+    DurationLookup: CG_TAROTCARD
+  - Status: Geffen_Magic1
+    Icon: EFST_GEFFEN_MAGIC1
+    CalcFlags:
+      All: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+  - Status: Geffen_Magic2
+    Icon: EFST_GEFFEN_MAGIC2
+    CalcFlags:
+      All: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+  - Status: Geffen_Magic3
+    Icon: EFST_GEFFEN_MAGIC3
+    CalcFlags:
+      All: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+  - Status: Maxpain
+    Icon: EFST_MAXPAIN
+    DurationLookup: NPC_MAXPAIN
+    Flags:
+      BlEffect: true
+  - Status: Armor_Element_Earth
+    Icon: EFST_RESIST_PROPERTY_GROUND
+    CalcFlags:
+      All: true
+    Flags:
+      NoDispell: true
+      OverlapIgnoreLevel: true
+  - Status: Armor_Element_Fire
+    Icon: EFST_RESIST_PROPERTY_FIRE
+    CalcFlags:
+      All: true
+    Flags:
+      NoDispell: true
+      OverlapIgnoreLevel: true
+  - Status: Armor_Element_Wind
+    Icon: EFST_RESIST_PROPERTY_WIND
+    CalcFlags:
+      All: true
+    Flags:
+      NoDispell: true
+      OverlapIgnoreLevel: true
+  - Status: Dailysendmailcnt
+    Icon: EFST_DAILYSENDMAILCNT
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoClearance: true
+      NoBanishingBuster: true
+      SendVal2: true
+  - Status: Doram_Buf_01
+    Icon: EFST_DORAM_BUF_01
+    CalcFlags:
+      Regen: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoBanishingBuster: true
+      OverlapFail: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Doram_Buf_02
+    Icon: EFST_DORAM_BUF_02
+    CalcFlags:
+      Regen: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoBanishingBuster: true
+      OverlapFail: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Hiss
+    Icon: EFST_HISS
+    DurationLookup: SU_HISS
+    Flags:
+      NoRemoveOnDead: true
+    CalcFlags:
+      Flee2: true
+  - Status: Nyanggrass
+    Icon: EFST_NYANGGRASS
+    DurationLookup: SU_NYANGGRASS
+    Flags:
+      NoRemoveOnDead: true
+    CalcFlags:
+      Def: true
+      Mdef: true
+  - Status: Grooming
+    Icon: EFST_GROOMING
+    DurationLookup: SU_GROOMING
+    CalcFlags:
+      Flee: true
+    Flags:
+      NoRemoveOnDead: true
+    Fail:
+      Grooming: true
+    End:
+      Stun: true
+      Freeze: true
+      Stone: true
+      Sleep: true
+      Silence: true
+      Bleeding: true
+      Poison: true
+      Fear: true
+      Mandragora: true
+      Crystalize: true
+      Freezing: true
+  - Status: Shrimpblessing
+    Icon: EFST_PROTECTIONOFSHRIMP
+    DurationLookup: SU_SHRIMPARTY
+    CalcFlags:
+      Regen: true
+    Flags:
+      NoRemoveOnDead: true
+  - Status: Chattering
+    Icon: EFST_CHATTERING
+    DurationLookup: SU_CHATTERING
+    CalcFlags:
+      Watk: true
+      Matk: true
+    Flags:
+      NoRemoveOnDead: true
+    Fail:
+      Chattering: true
+  - Status: Doram_Walkspeed
+    CalcFlags:
+      Speed: true
+  - Status: Doram_Matk
+    CalcFlags:
+      Matk: true
+  - Status: Doram_Flee2
+    CalcFlags:
+      Flee2: true
+  - Status: Doram_Svsp
+    Flags:
+      NoWarning: true
+  - Status: Fallen_Angel
+    DurationLookup: RL_FALLEN_ANGEL
+  - Status: Cheerup
+    Icon: EFST_CHEERUP
+    DurationLookup: WE_CHEERUP
+    CalcFlags:
+      Str: true
+      Agi: true
+      Vit: true
+      Int: true
+      Dex: true
+      Luk: true
+    Flags:
+      NoRemoveOnDead: true
+  - Status: Dressup
+    Icon: EFST_DRESS_UP
+    States:
+      NoAttack: true
+    Options:
+      Summer2: true
+    Flags:
+      DisplayPc: true
+      SendLook: true
+      StopAttacking: true
+      NoRemoveOnDead: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      SendVal1: true
+  - Status: Glastheim_Atk
+    Icon: EFST_GLASTHEIM_ATK
+    CalcFlags:
+      All: true
+    Flags:
+      NoSave: true
+  - Status: Glastheim_Def
+    Icon: EFST_GLASTHEIM_DEF
+    Flags:
+      NoSave: true
+  - Status: Glastheim_Heal
+    Icon: EFST_GLASTHEIM_HEAL
+    Flags:
+      NoSave: true
+  - Status: Glastheim_Hidden
+    Icon: EFST_GLASTHEIM_HIDDEN
+    Flags:
+      NoSave: true
+  - Status: Glastheim_State
+    Icon: EFST_GLASTHEIM_STATE
+    CalcFlags:
+      Str: true
+      Agi: true
+      Vit: true
+      Dex: true
+      Int: true
+      Luk: true
+    Flags:
+      NoSave: true
+  - Status: Glastheim_Itemdef
+    Icon: EFST_GLASTHEIM_ITEMDEF
+    CalcFlags:
+      Def: true
+      Mdef: true
+    Flags:
+      NoSave: true
+  - Status: Glastheim_Hpsp
+    Icon: EFST_GLASTHEIM_HPSP
+    CalcFlags:
+      MaxHp: true
+      MaxSp: true
+    Flags:
+      NoSave: true
+  - Status: Lhz_Dun_N1
+    Icon: EFST_LHZ_DUN_N1
+    Flags:
+      NoClearbuff: true
+      NoClearance: true
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      OverlapIgnoreLevel: true
+  - Status: Lhz_Dun_N2
+    Icon: EFST_LHZ_DUN_N2
+    Flags:
+      NoClearbuff: true
+      NoClearance: true
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      OverlapIgnoreLevel: true
+  - Status: Lhz_Dun_N3
+    Icon: EFST_LHZ_DUN_N3
+    Flags:
+      NoClearbuff: true
+      NoClearance: true
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      OverlapIgnoreLevel: true
+  - Status: Lhz_Dun_N4
+    Icon: EFST_LHZ_DUN_N4
+    Flags:
+      NoClearbuff: true
+      NoClearance: true
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      OverlapIgnoreLevel: true
+  - Status: Ancilla
+    Icon: EFST_ANCILLA
+    Flags:
+      NoRemoveOnDead: true
+    CalcFlags:
+      Regen: true
+  - Status: Earthshaker
+    Flags:
+      NoWarning: true
+  - Status: Weaponblock_On
+    Icon: EFST_WEAPONBLOCK_ON
+    DurationLookup: SHC_IMPACT_CRATER
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+      NoClearbuff: true
+  - Status: Spore_Explosion
+    Icon: EFST_SPORE_EXPLOSION_DEBUFF
+    DurationLookup: GN_SPORE_EXPLOSION
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Adaptation
+    Icon: EFST_ADAPTATION
+    DurationLookup: BD_ADAPTATION
+  - Status: Basilica_Cell
+    States:
+      NoCast: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoClearbuff: true
+      RemoveOnChangeMap: true
+  - Status: Entry_Queue_Apply_Delay
+    Icon: EFST_ENTRY_QUEUE_APPLY_DELAY
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+      NoClearbuff: true
+  - Status: Entry_Queue_Notify_Admission_Time_Out
+    Icon: EFST_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoRemoveOnDead: true
+      NoClearbuff: true
+  - Status: Lightofmoon
+    Icon: EFST_LIGHTOFMOON
+    DurationLookup: SJ_LIGHTOFMOON
+    End:
+      Lunarstance: true
+      Universestance: true
+  - Status: Lightofsun
+    Icon: EFST_LIGHTOFSUN
+    DurationLookup: SJ_LIGHTOFSUN
+    End:
+      Lightofsun: true
+      Universestance: true
+  - Status: Lightofstar
+    Icon: EFST_LIGHTOFSTAR
+    DurationLookup: SJ_LIGHTOFSTAR
+    End:
+      Starstance: true
+      Universestance: true
+  - Status: Lunarstance
+    Icon: EFST_LUNARSTANCE
+    DurationLookup: SJ_LUNARSTANCE
+    CalcFlags:
+      MaxHp: true
+    End:
+      Sunstance: true
+      Starstance: true
+      Universestance: true
+  - Status: Universestance
+    Icon: EFST_UNIVERSESTANCE
+    DurationLookup: SJ_UNIVERSESTANCE
+    CalcFlags:
+      Str: true
+      Agi: true
+      Vit: true
+      Int: true
+      Dex: true
+      Luk: true
+    End:
+      Sunstance: true
+      Lunarstance: true
+      Starstance: true
+  - Status: Sunstance
+    Icon: EFST_SUNSTANCE
+    DurationLookup: SJ_SUNSTANCE
+    CalcFlags:
+      Batk: true
+      Watk: true
+    End:
+      Lunarstance: true
+      Starstance: true
+      Universestance: true
+  - Status: Flashkick
+    Icon: EFST_FLASHKICK
+    DurationLookup: SJ_FLASHKICK
+    Flags:
+      RemoveOnChangeMap: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+      OverlapIgnoreLevel: true
+  - Status: Newmoon
+    Icon: EFST_NEWMOON
+    DurationLookup: SJ_NEWMOONKICK
+    States:
+      NoPickItem: true
+    Options:
+      Cloak: true
+    Flags:
+      OnTouch: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      StopAttacking: true
+      RemoveOnDamaged: true
+      RemoveOnChangeMap: true
+    Fail:
+      Bite: true
+  - Status: Starstance
+    Icon: EFST_STARSTANCE
+    DurationLookup: SJ_STARSTANCE
+    CalcFlags:
+      Aspd: true
+    End:
+      Sunstance: true
+      Lunarstance: true
+      Universestance: true
+  - Status: Dimension
+    Icon: EFST_DIMENSION
+    DurationLookup: SJ_BOOKOFDIMENSION
+    Flags:
+      NoClearance: true
+  - Status: Dimension1
+    Flags:
+      NoWarning: true
+  - Status: Dimension2
+    Flags:
+      NoWarning: true
+  - Status: Creatingstar
+    Icon: EFST_CREATINGSTAR
+    DurationLookup: SJ_BOOKOFCREATINGSTAR
+    CalcFlags:
+      Speed: true
+    Flags:
+      Debuff: true
+    Fail:
+      Speedup1: true
+  - Status: Fallingstar
+    Icon: EFST_FALLINGSTAR
+    DurationLookup: SJ_FALLINGSTAR
+  - Status: Novaexplosing
+    Icon: EFST_NOVAEXPLOSING
+    DurationLookup: SJ_NOVAEXPLOSING
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Gravitycontrol
+    Icon: EFST_GRAVITYCONTROL
+    DurationLookup: SJ_GRAVITYCONTROL
+    States:
+      NoMove: true
+      NoCast: true
+      NoAttack: true
+      NoInteract: true
+    Flags:
+      StopCasting: true
+      StopAttacking: true
+      StopWalking: true
+  - Status: Soulcollect
+    Icon: EFST_SOULCOLLECT
+    DurationLookup: SP_SOULCOLLECT
+    MinDuration: 1000
+  - Status: Soulreaper
+    Icon: EFST_SOULREAPER
+    DurationLookup: SP_SOULREAPER
+  - Status: Soulunity
+    Icon: EFST_SOULUNITY
+    DurationLookup: SP_SOULUNITY
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      OverlapIgnoreLevel: true
+  - Status: Soulshadow
+    Icon: EFST_SOULSHADOW
+    DurationLookup: SP_SOULSHADOW
+    CalcFlags:
+      Aspd: true
+      Cri: true
+    Flags:
+      NoSave: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Fail:
+      Spirit: true
+      Soulgolem: true
+      Soulfalcon: true
+      Soulfairy: true
+  - Status: Soulfairy
+    Icon: EFST_SOULFAIRY
+    DurationLookup: SP_SOULFAIRY
+    CalcFlags:
+      Matk: true
+    Flags:
+      NoSave: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Fail:
+      Spirit: true
+      Soulgolem: true
+      Soulshadow: true
+      Soulfalcon: true
+  - Status: Soulfalcon
+    Icon: EFST_SOULFALCON
+    DurationLookup: SP_SOULFALCON
+    CalcFlags:
+      Watk: true
+      Hit: true
+    Flags:
+      NoSave: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Fail:
+      Spirit: true
+      Soulgolem: true
+      Soulshadow: true
+      Soulfairy: true
+  - Status: Soulgolem
+    Icon: EFST_SOULGOLEM
+    DurationLookup: SP_SOULGOLEM
+    CalcFlags:
+      Def: true
+      Mdef: true
+    Flags:
+      NoSave: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Fail:
+      Spirit: true
+      Soulshadow: true
+      Soulfalcon: true
+      Soulfairy: true
+  - Status: Souldivision
+    Icon: EFST_SOULDIVISION
+    DurationLookup: SP_SOULDIVISION
+  - Status: Soulenergy
+    Icon: EFST_SOULENERGY
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Use_Skill_Sp_Spa
+    Icon: EFST_USE_SKILL_SP_SPA
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Use_Skill_Sp_Sha
+    Icon: EFST_USE_SKILL_SP_SHA
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Sp_Sha
+    Icon: EFST_SP_SHA
+    DurationLookup: SP_SHA
+    CalcFlags:
+      Speed: true
+    Flags:
+      BossResist: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Soulcurse
+    Icon: EFST_SOULCURSE
+    DurationLookup: SP_SOULCURSE
+  - Status: Hells_Plant
+    Icon: EFST_HELLS_PLANT_ARMOR
+    DurationLookup: GN_HELLS_PLANT
+    Flags:
+      NoSave: true
+      DisplayPc: true
+      BlEffect: true
+  - Status: Increase_Maxhp
+    Icon: EFST_ATKER_ASPD
+    CalcFlags:
+      MaxHp: true
+      Regen: true
+  - Status: Increase_Maxsp
+    Icon: EFST_ATKER_MOVESPEED
+    CalcFlags:
+      MaxHp: true
+      Regen: true
+  - Status: Ref_T_Potion
+    Icon: EFST_REF_T_POTION
+  - Status: Add_Atk_Damage
+    Icon: EFST_ADD_ATK_DAMAGE
+  - Status: Add_Matk_Damage
+    Icon: EFST_ADD_MATK_DAMAGE
+  - Status: Helpangel
+    Icon: EFST_HELPANGEL
+    DurationLookup: NV_HELPANGEL
+  - Status: Soundofdestruction
+    Icon: EFST_SOUND_OF_DESTRUCTION
+    DurationLookup: WM_SOUND_OF_DESTRUCTION
+  - Status: Luxanima
+    Icon: EFST_LUXANIMA
+    DurationLookup: RK_LUXANIMA
+    CalcFlags:
+      All: true
+    Flags:
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+      NoClearbuff: true
+  - Status: Reuse_Limit_Luxanima
+    Icon: EFST_REUSE_LIMIT_LUXANIMA
+    Flags:
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+      OverlapFail: true
+      NoRemoveOnDead: true
+      NoClearbuff: true
+  - Status: Ensemblefatigue
+    Icon: EFST_ENSEMBLEFATIGUE
+    States:
+      NoCast: true
+    CalcFlags:
+      Speed: true
+      Aspd: true
+  - Status: Misty_Frost
+    Icon: EFST_MISTY_FROST
+    Flags:
+      DisplayPc: true
+      SendVal1: true
+  - Status: Magic_Poison
+    Icon: EFST_MAGIC_POISON
+    DurationLookup: WL_COMET
+    Flags:
+      DisplayPc: true
+      BlEffect: true
+  - Status: Ep16_2_Buff_Ss
+    Icon: EFST_EP16_2_BUFF_SS
+    CalcFlags:
+      Aspd: true
+    Flags:
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+      NoClearbuff: true
+  - Status: Ep16_2_Buff_Sc
+    Icon: EFST_EP16_2_BUFF_SC
+    CalcFlags:
+      Cri: true
+    Flags:
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+      NoClearbuff: true
+  - Status: Ep16_2_Buff_Ac
+    Icon: EFST_EP16_2_BUFF_AC
+    Flags:
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+      NoClearbuff: true
+  - Status: OverBrandReady
+    Icon: EFST_OVERBRANDREADY
+    Flags:
+  - Status: Poison_Mist
+    Icon: EFST_POISON_MIST
+    DurationLookup: MH_POISON_MIST
+    CalcFlags:
+      Flee: true
+    Flags:
+  - Status: Stone_Wall
+    Icon: EFST_STONE_WALL
+    DurationLookup: MH_STEINWAND
+    CalcFlags:
+      Def: true
+      Mdef: true
+    Flags:
+  - Status: Cloud_Poison
+    Icon: EFST_CLOUD_POISON
+    DurationLookup: SO_CLOUD_KILL
+    Flags:
+  - Status: Homun_Time
+    Icon: EFST_HOMUN_TIME
+    Flags:
+      DisplayPc: true
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+      NoClearbuff: true
+  - Status: Emergency_Move
+    Icon: EFST_INC_AGI
+    DurationLookup: GD_EMERGENCY_MOVE
+    CalcFlags:
+      Speed: true
+    Flags:
+      NoSave: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+      NoClearbuff: true
+  - Status: Madogear
+    Icon: EFST_MADOGEAR
+    CalcFlags:
+      Speed: true
+    Flags:
+      DisplayPc: true
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+      NoClearbuff: true
+      SendVal1: true
+    End:
+      Shapeshift: true
+      Hovering: true
+      Acceleration: true
+      Overheat_Limitpoint: true
+      Overheat: true
+      Magneticfield: true
+      Neutralbarrier_Master: true
+      Stealthfield_Master: true
+  - Status: Npc_HallucinationWalk
+    Icon: EFST_NPC_HALLUCINATIONWALK
+    DurationLookup: NPC_HALLUCINATIONWALK
+    CalcFlags:
+      Flee: true
+    Flags:
+      SendVal3: true
+  - Status: Packing_Envelope1
+    Icon: EFST_PACKING_ENVELOPE1
+    CalcFlags:
+      Watk: true
+    Flags:
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Packing_Envelope2
+    Icon: EFST_PACKING_ENVELOPE2
+    CalcFlags:
+      Matk: true
+    Flags:
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Packing_Envelope3
+    Icon: EFST_PACKING_ENVELOPE3
+    CalcFlags:
+      MaxHp: true
+    Flags:
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Packing_Envelope4
+    Icon: EFST_PACKING_ENVELOPE4
+    CalcFlags:
+      MaxSp: true
+    Flags:
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Packing_Envelope5
+    Icon: EFST_PACKING_ENVELOPE5
+    CalcFlags:
+      Flee: true
+    Flags:
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Packing_Envelope6
+    Icon: EFST_PACKING_ENVELOPE6
+    CalcFlags:
+      Aspd: true
+    Flags:
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Packing_Envelope7
+    Icon: EFST_PACKING_ENVELOPE7
+    CalcFlags:
+      Def: true
+    Flags:
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Packing_Envelope8
+    Icon: EFST_PACKING_ENVELOPE8
+    CalcFlags:
+      Mdef: true
+    Flags:
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Packing_Envelope9
+    Icon: EFST_PACKING_ENVELOPE9
+    CalcFlags:
+      Cri: true
+    Flags:
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Packing_Envelope10
+    Icon: EFST_PACKING_ENVELOPE10
+    CalcFlags:
+      Hit: true
+    Flags:
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Soulattack
+    Icon: EFST_SOULATTACK
+    Flags:
+      DisplayPc: true
+      NoRemoveOnDead: true
+      NoClearbuff: true
+  - Status: Wideweb
+    Icon: EFST_WIDEWEB
+    DurationLookup: NPC_WIDEWEB
+    CalcFlags:
+      Flee: true
+    Flags:
+      StopWalking: true
+  - Status: Burnt
+    Icon: EFST_BURNT
+    DurationLookup: NPC_FIRESTORM
+    Flags:
+      BlEffect: true
+    Fail:
+      Chill: true
+  - Status: Chill
+    Icon: EFST_CHILL
+    End:
+      Burnt: true
+  - Status: Handicapstate_Deepblind
+    Icon: EFST_HANDICAPSTATE_DEEPBLIND
+    DurationLookup: DK_SERVANT_W_PHANTOM
+    CalcFlags:
+      Flee: true
+      Flee2: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Handicapstate_Deepsilence
+    Icon: EFST_HANDICAPSTATE_DEEPSILENCE
+    DurationLookup: CD_ARBITRIUM
+    #States:
+      #NoCast: true
+    CalcFlags:
+      Aspd: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Handicapstate_Lassitude
+    CalcFlags:
+      Speed: true
+      Cri: true
+    Flags:
+      DisplayPc: true
+  - Status: Handicapstate_Frostbite
+    Icon: EFST_HANDICAPSTATE_FROSTBITE
+    DurationLookup: EM_DIAMOND_STORM
+    States:
+      #NoMove: true
+      #NoCast: true
+      NoConsumeItem: true
+    CalcFlags:
+      Def: true
+      Mdef: true
+      Def_Ele: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      RemoveOnDamaged: true
+  - Status: Handicapstate_Swooning
+    Icon: EFST_HANDICAPSTATE_SWOONING
+    States:
+      #NoMove: true
+      #NoCast: true
+      NoConsumeItem: true
+    Flags:
+      DisplayPc: true
+      RemoveOnDamaged: true
+  - Status: Handicapstate_Lightningstrike
+    Icon: EFST_HANDICAPSTATE_LIGHTNINGSTRIKE
+    DurationLookup: WH_SWIFTTRAP
+    States:
+      #NoMove: true
+      #NoCast: true
+      NoConsumeItem: true
+    CalcFlags:
+      Def_Ele: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      RemoveOnDamaged: true
+  - Status: Handicapstate_Crystallization
+    Icon: EFST_HANDICAPSTATE_CRYSTALLIZATION
+    DurationLookup: WH_SOLIDTRAP
+    States:
+      #NoMove: true
+      #NoCast: true
+      NoConsumeItem: true
+    CalcFlags:
+      Mdef: true
+      Def_Ele: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      RemoveOnDamaged: true
+  - Status: Handicapstate_Conflagration
+    Icon: EFST_HANDICAPSTATE_CONFLAGRATION
+    DurationLookup: WH_FLAMETRAP
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Handicapstate_Misfortune
+    Icon: EFST_HANDICAPSTATE_MISFORTUNE
+    DurationLookup: ABC_UNLUCKY_RUSH
+    CalcFlags:
+      Hit: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Handicapstate_Deadlypoison
+    Icon: EFST_HANDICAPSTATE_DEADLYPOISON
+    DurationLookup: EM_VENOM_SWAMP
+    CalcFlags:
+      Def: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Handicapstate_Depression
+    Icon: EFST_HANDICAPSTATE_DEPRESSION
+    Flags:
+      DisplayPc: true
+  - Status: Handicapstate_Holyflame
+    Icon: EFST_HANDICAPSTATE_HOLYFLAME
+    Flags:
+      DisplayPc: true
+  - Status: Servantweapon
+    Icon: EFST_SERVANTWEAPON
+    DurationLookup: DK_SERVANTWEAPON
+    Flags:
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Servant_Sign
+    Icon: EFST_SERVANT_SIGN
+    DurationLookup: DK_SERVANT_W_SIGN
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      OverlapIgnoreLevel: true
+      RemoveOnChangeMap: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Chargingpierce
+    Icon: EFST_CHARGINGPIERCE
+    DurationLookup: DK_CHARGINGPIERCE
+    Flags:
+      SendVal1: true
+  - Status: Chargingpierce_Count
+    Icon: EFST_CHARGINGPIERCE_COUNT
+    Flags:
+      SendVal1: true
+      DisplayPc: true
+  - Status: Dragonic_Aura
+    Icon: EFST_DRAGONIC_AURA
+    DurationLookup: DK_DRAGONIC_AURA
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Vigor
+    Icon: EFST_VIGOR
+    DurationLookup: DK_VIGOR
+    CalcFlags:
+      All: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Deadly_Defeasance
+    Icon: EFST_DEADLY_DEFEASANCE
+    DurationLookup: AG_DEADLY_PROJECTION
+    CalcFlags:
+      All: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Climax_Des_Hu
+    Icon: EFST_CLIMAX_DES_HU
+    DurationLookup: AG_DESTRUCTIVE_HURRICANE
+    CalcFlags:
+      Matk: true
+  - Status: Climax
+    Icon: EFST_CLIMAX
+    DurationLookup: AG_CLIMAX
+    CalcFlags:
+      All: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      SendVal1: true
+  - Status: Climax_Earth
+    Icon: EFST_CLIMAX_EARTH
+    DurationLookup: AG_VIOLENT_QUAKE
+    CalcFlags:
+      All: true
+  - Status: Climax_Bloom
+    Icon: EFST_CLIMAX_BLOOM
+    DurationLookup: AG_ALL_BLOOM
+    CalcFlags:
+      All: true
+  - Status: Climax_Cryimp
+    Icon: EFST_CLIMAX_CRYIMP
+    DurationLookup: AG_CRYSTAL_IMPACT
+    CalcFlags:
+      All: true
+  - Status: Windsign
+    Icon: EFST_WINDSIGN
+    DurationLookup: WH_WIND_SIGN
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Crescivebolt
+    Icon: EFST_CRESCIVEBOLT
+    DurationLookup: WH_CRESCIVE_BOLT
+  - Status: Calamitygale
+    Icon: EFST_CALAMITYGALE
+    DurationLookup: WH_CALAMITYGALE
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Mediale
+    Icon: EFST_MEDIALE
+    DurationLookup: CD_MEDIALE_VOTUM
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: A_Vita
+    Icon: EFST_A_VITA
+    DurationLookup: CD_ARGUTUS_VITA
+  - Status: A_Telum
+    Icon: EFST_A_TELUM
+    DurationLookup: CD_ARGUTUS_TELUM
+  - Status: Pre_Acies
+    Icon: EFST_PRE_ACIES
+    DurationLookup: CD_PRESENS_ACIES
+    CalcFlags:
+      Crate: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Competentia
+    Icon: EFST_COMPETENTIA
+    DurationLookup: CD_COMPETENTIA
+    CalcFlags:
+      Patk: true
+      Smatk: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Religio
+    Icon: EFST_RELIGIO
+    DurationLookup: CD_RELIGIO
+    CalcFlags:
+      Sta: true
+      Wis: true
+      Spl: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Benedictum
+    Icon: EFST_BENEDICTUM
+    DurationLookup: CD_BENEDICTUM
+    CalcFlags:
+      Pow: true
+      Con: true
+      Crt: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Axe_Stomp
+    Icon: EFST_AXE_STOMP
+    DurationLookup: MT_AXE_STOMP
+  - Status: A_Machine
+    Icon: EFST_A_MACHINE
+    DurationLookup: MT_A_MACHINE
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: D_Machine
+    Icon: EFST_D_MACHINE
+    DurationLookup: MT_D_MACHINE
+    CalcFlags:
+      Def: true
+      Res: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Abr_Battle_Warior
+    Icon: EFST_ABR_BATTLE_WARIOR
+    DurationLookup: MT_SUMMON_ABR_BATTLE_WARIOR
+  - Status: Abr_Dual_Cannon
+    Icon: EFST_ABR_DUAL_CANNON
+    DurationLookup: MT_SUMMON_ABR_DUAL_CANNON
+  - Status: Abr_Mother_Net
+    Icon: EFST_ABR_MOTHER_NET
+    DurationLookup: MT_SUMMON_ABR_MOTHER_NET
+  - Status: Abr_Infinity
+    Icon: EFST_ABR_INFINITY
+    DurationLookup: MT_SUMMON_ABR_INFINITY
+  - Status: Shadow_Exceed
+    Icon: EFST_SHADOW_EXCEED
+    DurationLookup: SHC_SHADOW_EXCEED
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Dancing_Knife
+    Icon: EFST_DANCING_KNIFE
+    DurationLookup: SHC_DANCING_KNIFE
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      RequireWeapon: true
+  - Status: Potent_Venom
+    Icon: EFST_POTENT_VENOM
+    DurationLookup: SHC_POTENT_VENOM
+  - Status: Shadow_Scar
+    Icon: EFST_SHADOW_SCAR
+  - Status: E_Slash_Count
+    Icon: EFST_E_SLASH_COUNT
+    DurationLookup: SHC_ETERNAL_SLASH
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      SendVal1: true
+  - Status: Shadow_Weapon
+    Icon: EFST_SHADOW_WEAPON
+    DurationLookup: SHC_ENCHANTING_SHADOW
+  - Status: Guard_Stance
+    Icon: EFST_GUARD_STANCE
+    DurationLookup: IG_GUARD_STANCE
+    CalcFlags:
+      Watk: true
+      Def: true
+    Flags:
+      NoRemoveOnDead: true
+      NoSave: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+    End:
+      Attack_Stance: true
+  - Status: Attack_Stance
+    Icon: EFST_ATTACK_STANCE
+    DurationLookup: IG_ATTACK_STANCE
+    CalcFlags:
+      Watk: true
+      Def: true
+    Flags:
+      NoRemoveOnDead: true
+      NoSave: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+    End:
+      Guard_Stance: true
+  - Status: Guardian_S
+    Icon: EFST_GUARDIAN_S
+    DurationLookup: IG_GUARDIAN_SHIELD
+  - Status: Rebound_S
+    Icon: EFST_REBOUND_S
+    DurationLookup: IG_REBOUND_SHIELD
+  - Status: Holy_S
+    Icon: EFST_HOLY_S
+    DurationLookup: IG_HOLY_SHIELD
+    CalcFlags:
+      All: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Ultimate_S
+    Icon: EFST_ULTIMATE_S
+    DurationLookup: IG_ULTIMATE_SACRIFICE
+  - Status: Spear_Scar
+    Icon: EFST_SPEAR_SCAR
+    DurationLookup: IG_GRAND_JUDGEMENT
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Shield_Power
+    Icon: EFST_SHIELD_POWER
+    DurationLookup: IG_SHIELD_SHOOTING
+  - Status: Spell_Enchanting
+    Icon: EFST_SPELL_ENCHANTING
+    DurationLookup: EM_SPELL_ENCHANTING
+    CalcFlags:
+      Smatk: true
+  - Status: Summon_Elemental_Ardor
+    Icon: EFST_SUMMON_ELEMENTAL_ARDOR
+    DurationLookup: EM_SUMMON_ELEMENTAL_ARDOR
+  - Status: Summon_Elemental_Diluvio
+    Icon: EFST_SUMMON_ELEMENTAL_DILUVIO
+    DurationLookup: EM_SUMMON_ELEMENTAL_DILUVIO
+  - Status: Summon_Elemental_Procella
+    Icon: EFST_SUMMON_ELEMENTAL_PROCELLA
+    DurationLookup: EM_SUMMON_ELEMENTAL_PROCELLA
+  - Status: Summon_Elemental_Terremotus
+    Icon: EFST_SUMMON_ELEMENTAL_TERREMOTUS
+    DurationLookup: EM_SUMMON_ELEMENTAL_TERREMOTUS
+  - Status: Summon_Elemental_Serpens
+    Icon: EFST_SUMMON_ELEMENTAL_SERPENS
+    DurationLookup: EM_SUMMON_ELEMENTAL_SERPENS
+  - Status: Elemental_Veil
+    Icon: EFST_ELEMENTAL_VEIL
+    DurationLookup: EM_ELEMENTAL_VEIL
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Mystic_Symphony
+    Icon: EFST_MYSTIC_SYMPHONY
+    DurationLookup: TR_MYSTIC_SYMPHONY
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Kvasir_Sonata
+    Icon: EFST_KVASIR_SONATA
+    DurationLookup: TR_KVASIR_SONATA
+  - Status: Soundblend
+    Icon: EFST_SOUNDBLEND
+    DurationLookup: TR_SOUNDBLEND
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Gef_Nocturn
+    Icon: EFST_GEF_NOCTURN
+    DurationLookup: TR_GEF_NOCTURN
+    CalcFlags:
+      Mres: true
+  - Status: Ain_Rhapsody
+    Icon: EFST_AIN_RHAPSODY
+    DurationLookup: TR_AIN_RHAPSODY
+    CalcFlags:
+      Res: true
+  - Status: Musical_Interlude
+    Icon: EFST_MUSICAL_INTERLUDE
+    DurationLookup: TR_MUSICAL_INTERLUDE
+    CalcFlags:
+      Res: true
+  - Status: Jawaii_Serenade
+    Icon: EFST_JAWAII_SERENADE
+    DurationLookup: TR_JAWAII_SERENADE
+    CalcFlags:
+      Smatk: true
+      Speed: true
+  - Status: Pron_March
+    Icon: EFST_PRON_MARCH
+    DurationLookup: TR_PRON_MARCH
+    CalcFlags:
+      Patk: true
+  - Status: Roseblossom
+    Icon: EFST_ROSEBLOSSOM
+    DurationLookup: TR_ROSEBLOSSOM
+  - Status: Powerful_Faith
+    Icon: EFST_POWERFUL_FAITH
+    DurationLookup: IQ_POWERFUL_FAITH
+    CalcFlags:
+      Watk: true
+      Patk: true
+    End:
+      Powerful_Faith: true
+      Firm_Faith: true
+      Sincere_Faith: true
+  - Status: Sincere_Faith
+    Icon: EFST_SINCERE_FAITH
+    DurationLookup: IQ_SINCERE_FAITH
+    CalcFlags:
+      All: true
+    End:
+      Powerful_Faith: true
+      Firm_Faith: true
+      Sincere_Faith: true
+  - Status: Firm_Faith
+    Icon: EFST_FIRM_FAITH
+    DurationLookup: IQ_FIRM_FAITH
+    CalcFlags:
+      MaxHp: true
+      Res: true
+    End:
+      Powerful_Faith: true
+      Firm_Faith: true
+      Sincere_Faith: true
+  - Status: Holy_Oil
+    Icon: EFST_HOLY_OIL
+    DurationLookup: IQ_OLEUM_SANCTUM
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: First_Brand
+    Icon: EFST_FIRST_BRAND
+    DurationLookup: IQ_FIRST_BRAND
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+    End:
+      First_Brand: true
+      Second_Brand: true
+  - Status: Second_Brand
+    Icon: EFST_SECOND_BRAND
+    DurationLookup: IQ_SECOND_FLAME
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+    End:
+      First_Brand: true
+      Second_Brand: true
+  - Status: Second_Judge
+    Icon: EFST_SECOND_JUDGE
+    DurationLookup: IQ_JUDGE
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+    End:
+      First_Faith_Power: true
+      Second_Judge: true
+      Third_Exor_Flame: true
+  - Status: Third_Exor_Flame
+    Icon: EFST_THIRD_EXOR_FLAME
+    DurationLookup: IQ_THIRD_EXOR_FLAME
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+    End:
+      First_Faith_Power: true
+      Second_Judge: true
+      Third_Exor_Flame: true
+  - Status: First_Faith_Power
+    Icon: EFST_FIRST_FAITH_POWER
+    DurationLookup: IQ_FIRST_FAITH_POWER
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+    End:
+      First_Faith_Power: true
+      Second_Judge: true
+      Third_Exor_Flame: true
+  - Status: Massive_F_Blaster
+    Icon: EFST_MASSIVE_F_BLASTER
+    DurationLookup: IQ_MASSIVE_F_BLASTER
+  - Status: Protectshadowequip
+    Icon: EFST_PROTECTSHADOWEQUIP
+    DurationLookup: BO_ADVANCE_PROTECTION
+    Flags:
+      RemoveChemicalProtect: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Researchreport
+    Icon: EFST_RESEARCHREPORT
+    DurationLookup: BO_RESEARCHREPORT
+  - Status: Bo_Hell_Dusty
+    Icon: EFST_BO_HELL_DUSTY
+  - Status: Bionic_Woodenwarrior
+    DurationLookup: BO_WOODENWARRIOR
+  - Status: Bionic_Wooden_Fairy
+    DurationLookup: BO_WOODEN_FAIRY
+  - Status: Bionic_Creeper
+    DurationLookup: BO_CREEPER
+  - Status: Bionic_Helltree
+    DurationLookup: BO_HELLTREE
+  - Status: Shadow_Strip
+    Icon: EFST_SHADOW_STRIP
+    DurationLookup: ABC_STRIP_SHADOW
+    CalcFlags:
+      Res: true
+      Mres: true
+    Flags:
+      BossResist: true
+      NoClearbuff: true
+      Debuff: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Abyss_Dagger
+    Icon: EFST_ABYSS_DAGGER
+    DurationLookup: ABC_ABYSS_DAGGER
+  - Status: Abyssforceweapon
+    Icon: EFST_ABYSSFORCEWEAPON
+    DurationLookup: ABC_FROM_THE_ABYSS
+    Flags:
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Abyss_Slayer
+    Icon: EFST_ABYSS_SLAYER
+    DurationLookup: ABC_ABYSS_SLAYER
+    CalcFlags:
+      Hit: true
+      Patk: true
+      Smatk: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Flametechnic
+    Icon: EFST_FLAMETECHNIC
+    Flags:
+      RemoveElementalOption: true
+  - Status: Flametechnic_Option
+    Icon: EFST_FLAMETECHNIC_OPTION
+    DurationLookup: EM_EL_FLAMETECHNIC
+    Flags:
+      RemoveElementalOption: true
+  - Status: Flamearmor
+    Icon: EFST_FLAMEARMOR
+    Flags:
+      RemoveElementalOption: true
+  - Status: Flamearmor_Option
+    Icon: EFST_FLAMEARMOR_OPTION
+    DurationLookup: EM_EL_FLAMEARMOR
+    CalcFlags:
+      All: true
+    Flags:
+      RemoveElementalOption: true
+  - Status: Cold_Force
+    Icon: EFST_COLD_FORCE
+    Flags:
+      RemoveElementalOption: true
+  - Status: Cold_Force_Option
+    Icon: EFST_COLD_FORCE_OPTION
+    DurationLookup: EM_EL_COLD_FORCE
+    Flags:
+      RemoveElementalOption: true
+  - Status: Crystal_Armor
+    Icon: EFST_CRYSTAL_ARMOR
+    Flags:
+      RemoveElementalOption: true
+  - Status: Crystal_Armor_Option
+    Icon: EFST_CRYSTAL_ARMOR_OPTION
+    DurationLookup: EM_EL_CRYSTAL_ARMOR
+    CalcFlags:
+      All: true
+    Flags:
+      RemoveElementalOption: true
+  - Status: Grace_Breeze
+    Icon: EFST_GRACE_BREEZE
+    Flags:
+      RemoveElementalOption: true
+  - Status: Grace_Breeze_Option
+    Icon: EFST_GRACE_BREEZE_OPTION
+    DurationLookup: EM_EL_GRACE_BREEZE
+    Flags:
+      RemoveElementalOption: true
+  - Status: Eyes_Of_Storm
+    Icon: EFST_EYES_OF_STORM
+    Flags:
+      RemoveElementalOption: true
+  - Status: Eyes_Of_Storm_Option
+    Icon: EFST_EYES_OF_STORM_OPTION
+    DurationLookup: EM_EL_EYES_OF_STORM
+    CalcFlags:
+      All: true
+    Flags:
+      RemoveElementalOption: true
+  - Status: Earth_Care
+    Icon: EFST_EARTH_CARE
+    Flags:
+      RemoveElementalOption: true
+  - Status: Earth_Care_Option
+    Icon: EFST_EARTH_CARE_OPTION
+    DurationLookup: EM_EL_EARTH_CARE
+    Flags:
+      RemoveElementalOption: true
+  - Status: Strong_Protection
+    Icon: EFST_STRONG_PROTECTION
+    Flags:
+      RemoveElementalOption: true
+  - Status: Strong_Protection_Option
+    Icon: EFST_STRONG_PROTECTION_OPTION
+    DurationLookup: EM_EL_STRONG_PROTECTION
+    CalcFlags:
+      All: true
+    Flags:
+      RemoveElementalOption: true
+  - Status: Deep_Poisoning
+    Icon: EFST_DEEP_POISONING
+    Flags:
+      RemoveElementalOption: true
+  - Status: Deep_Poisoning_Option
+    Icon: EFST_DEEP_POISONING_OPTION
+    DurationLookup: EM_EL_DEEP_POISONING
+    Flags:
+      RemoveElementalOption: true
+  - Status: Poison_Shield
+    Icon: EFST_POISON_SHIELD
+    Flags:
+      RemoveElementalOption: true
+  - Status: Poison_Shield_Option
+    Icon: EFST_POISON_SHIELD_OPTION
+    DurationLookup: EM_EL_POISON_SHIELD
+    CalcFlags:
+      All: true
+    Flags:
+      RemoveElementalOption: true

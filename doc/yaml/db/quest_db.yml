@@ -25,7 +25,9 @@
 #       Element     Monster element target (default All). Valid elements are Dark, Earth, Fire, Ghost, Holy, Neutral, Poison, Undead, Water, Wind, All.
 #       MinLevel    Minimum monster level target. If not supplied but MaxLevel defined, MinLevel is 1. Set to 0 to ignore MinLevel on import. (Default: 0)
 #       MaxLevel    Maximum monster level target. Set to 0 to ignore MaxLevel on import. (Default: 0)
-#       Location    Name of hunting location from mapindex. (Default any location)
+#       Location    Map name where kills are counted. (Default any location)
+#                   On normal maps only kills of permanently spawned monsters increase the counter.
+#                   On instance maps all monster kills increase the counter.
 #       MapName     Displayed map name in quest UI. (Default: empty string)
 #   Drops:          Quest item drop targets. (Default: null)
 #     - Mob         Monster to kill. 0 will apply to all monsters. (Default: 0)

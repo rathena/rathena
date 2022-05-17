@@ -4,6 +4,10 @@
 #ifndef SCRIPT_HPP
 #define SCRIPT_HPP
 
+#include <ryml_std.hpp>
+#include <ryml.hpp>
+
+#include "../common/database.hpp"
 #include "../common/cbasetypes.hpp"
 #include "../common/db.hpp"
 #include "../common/mmo.hpp"
@@ -35,6 +39,8 @@
 #define script_lastdata(st) ( (st)->end - (st)->start - 1 )
 /// Pushes an int into the stack
 #define script_pushint(st,val) push_val((st)->stack, C_INT, (val))
+/// Pushes an int64 into the stack
+#define script_pushint64( st, val ) push_val2( (st)->stack, C_INT, val, nullptr )
 /// Pushes a string into the stack (script engine frees it automatically)
 #define script_pushstr(st,val) push_str((st)->stack, C_STR, (val))
 /// Pushes a copy of a string into the stack
@@ -355,6 +361,8 @@ enum monsterinfo_types {
 	MOB_ATK2,
 	MOB_DEF,
 	MOB_MDEF,
+	MOB_RES,
+	MOB_MRES,
 	MOB_STR,
 	MOB_AGI,
 	MOB_VIT,
@@ -479,6 +487,9 @@ enum unitdata_mobtypes {
 	UMOB_ROBE,
 	UMOB_BODY2,
 	UMOB_GROUP_ID,
+	UMOB_IGNORE_CELL_STACK_LIMIT,
+	UMOB_RES,
+	UMOB_MRES,
 };
 
 enum unitdata_homuntypes {
@@ -1839,6 +1850,47 @@ enum e_special_effects {
 	EF_TIME_ACCESSORY,
 	EF_SPRITEMABLE,
 	EF_TUNAPARTY,
+	EF_FRESHSHRIMP,
+
+	EF_SU_GROOMING = 1123,
+	EF_SU_CHATTERING,
+
+	EF_FIREDANCE = 1133,
+	EF_RICHS_COIN_A,
+
+	EF_E_CHAIN = 1137,
+	EF_HEAT_BARREL,
+	EF_H_MINE,
+	EF_FALLEN_ANGEL,
+
+	EF_IMMUNE_PROPERTY = 1149,
+	EF_MOVE_COORDINATE,
+
+	EF_LIGHTSPHERE_SUN = 1197,
+	EF_LIGHTSPHERE_MOON,
+	EF_LIGHTSPHERE_STAR,
+
+	EF_NOVAEXPLOSING = 1202,
+	EF_STAR_EMPEROR,
+	EF_SMA_BLACK,
+
+	EF_ENERGYDRAIN_BLACK = 1208,
+	EF_BLINK_BODY,
+
+	EF_SOLARBURST = 1218,
+	EF_SJ_DOCUMENT,
+	EF_FALLING_STAR,
+
+	EF_STORMKICK8 = 1223,
+
+	EF_NEWMOON_KICK = 1229,
+	EF_FULLMOON_KICK,
+	EF_BOOK_OF_DIMENSION,
+
+	EF_CURSE_EXPLOSION = 1233,
+	EF_SOUL_REAPER,
+
+	EF_SOUL_EXPLOSION = 1242,
 	EF_MAX
 };
 
@@ -1992,6 +2044,22 @@ enum e_hat_effects : int16{
 	HAT_EF_99LV_SOUL_R_GRAY,
 	HAT_EF_160LV_SOUL_R_GRAY,
 	HAT_EF_GEARWHEEL,
+	HAT_EF_GIFT_OF_SNOW,
+	HAT_EF_SNOW_POWDER,
+	HAT_EF_FALLING_SNOW,
+	HAT_EF_C_PHIGASIA_SCARF_EXE,
+	HAT_EF_C_KYEL_HYRE_ULTI_TW,
+	HAT_EF_C_MASTER,
+	HAT_EF_C_TIME_ACCESSORY,
+	HAT_EF_C_HELM_OF_RA,
+	HAT_EF_C_2021RTC_HEADSET_TW,
+	HAT_EF_C_MOONSTAR_ACCESSORY,
+	HAT_EF_BLACK_THUNDER,
+	HAT_EF_BLACK_THUNDER_DARK,
+	HAT_EF_C_RELEASED_GROUND,
+	HAT_EF_C_SAMBA_CARNIVAL,
+	HAT_EF_POISON_MASTER,
+	HAT_EF_C_SWIRLING_FLAME,
 	HAT_EF_MAX
 };
 
@@ -2017,6 +2085,42 @@ enum e_pcblock_action_flag : uint16 {
 	PCBLOCK_NPC      = 0x18D,
 	PCBLOCK_EMOTION  = 0x200,
 	PCBLOCK_ALL      = 0x3FF,
+};
+
+/* getiteminfo/setiteminfo script commands */
+enum e_iteminfo : uint8 {
+	ITEMINFO_BUY = 0,
+	ITEMINFO_SELL,
+	ITEMINFO_TYPE,
+	ITEMINFO_MAXCHANCE,
+	ITEMINFO_GENDER,
+	ITEMINFO_LOCATIONS,
+	ITEMINFO_WEIGHT,
+	ITEMINFO_ATTACK,
+	ITEMINFO_DEFENSE,
+	ITEMINFO_RANGE,
+	ITEMINFO_SLOT,
+	ITEMINFO_VIEW,
+	ITEMINFO_EQUIPLEVELMIN,
+	ITEMINFO_WEAPONLEVEL,
+	ITEMINFO_ALIASNAME,
+	ITEMINFO_EQUIPLEVELMAX,
+	ITEMINFO_MAGICATTACK,
+	ITEMINFO_ID,
+	ITEMINFO_AEGISNAME,	// 18
+	ITEMINFO_ARMORLEVEL,
+	ITEMINFO_SUBTYPE,
+};
+
+class ConstantDatabase : public YamlDatabase {
+public:
+	ConstantDatabase() : YamlDatabase("CONSTANT_DB", 1) {
+
+	}
+
+	void clear() override{ }
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 };
 
 /**
