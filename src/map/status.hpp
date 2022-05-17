@@ -4,25 +4,31 @@
 #ifndef STATUS_HPP
 #define STATUS_HPP
 
+#include <algorithm>
+#include <bitset>
+#include <memory>
+#include <unordered_map>
 #include <vector>
 
 #include "../common/database.hpp"
 #include "../common/mmo.hpp"
 #include "../common/timer.hpp"
 
+#include "map.hpp"
+#include "script.hpp"
+
 enum e_race2 : uint8;
 struct block_list;
 struct mob_data;
 struct pet_data;
 struct homun_data;
-struct mercenary_data;
-struct elemental_data;
+struct s_mercenary_data;
+struct s_elemental_data;
 struct npc_data;
 struct status_change;
 
 /**
  * Max Refine available to your server
- * Changing this limit requires edits to refine_db.txt
  **/
 #ifdef RENEWAL
 #	define MAX_REFINE 20
@@ -31,36 +37,74 @@ struct status_change;
 #endif
 
 /// Refine type
-enum refine_type {
-	REFINE_TYPE_ARMOR	= 0,
-	REFINE_TYPE_WEAPON1	= 1,
-	REFINE_TYPE_WEAPON2	= 2,
-	REFINE_TYPE_WEAPON3	= 3,
-	REFINE_TYPE_WEAPON4	= 4,
-	REFINE_TYPE_SHADOW	= 5,
-	REFINE_TYPE_MAX		= 6
+enum e_refine_type : uint16{
+	REFINE_TYPE_ARMOR = 0,
+	REFINE_TYPE_WEAPON,
+	REFINE_TYPE_SHADOW_ARMOR,
+	REFINE_TYPE_SHADOW_WEAPON,
+	REFINE_TYPE_MAX
 };
 
 /// Refine cost type
-enum refine_cost_type {
+enum e_refine_cost_type : uint16{
 	REFINE_COST_NORMAL = 0,
-	REFINE_COST_OVER10,
 	REFINE_COST_HD,
 	REFINE_COST_ENRICHED,
-	REFINE_COST_OVER10_HD,
-	REFINE_COST_HOLINK,
-	REFINE_COST_WAGJAK,
 	REFINE_COST_MAX
 };
 
-struct refine_cost {
-	t_itemid nameid;
-	int zeny;
+/// Refine script parameters
+enum e_refine_parameter{
+	REFINE_MATERIAL_ID = 0,
+	REFINE_ZENY_COST
 };
 
-/// Get refine chance
-int status_get_refine_chance(enum refine_type wlv, int refine, bool enriched);
-int status_get_refine_cost(int weapon_lv, int type, bool what);
+struct s_refine_cost{
+	uint16 index;
+	t_itemid nameid;
+	uint16 chance;
+	uint32 zeny;
+	uint16 breaking_rate;
+	uint16 downgrade_amount;
+};
+
+struct s_refine_level_info{
+	uint16 level;
+	uint32 bonus;
+	uint32 randombonus_max;
+	uint16 blessing_amount;
+	std::unordered_map<uint16, std::shared_ptr<s_refine_cost>> costs;
+};
+
+struct s_refine_levels_info{
+	uint16 level;
+	std::unordered_map<uint16, std::shared_ptr<s_refine_level_info>> levels;
+};
+
+struct s_refine_info{
+	uint16 groupId;
+	std::unordered_map<uint16, std::shared_ptr<s_refine_levels_info>> levels;
+};
+
+class RefineDatabase : public TypesafeYamlDatabase<uint16, s_refine_info>{
+private:
+	bool calculate_refine_info( const struct item_data& data, e_refine_type& refine_type, uint16& level );
+	std::shared_ptr<s_refine_level_info> findLevelInfoSub( const struct item_data& data, struct item& item, uint16 refine );
+
+public:
+	RefineDatabase() : TypesafeYamlDatabase( "REFINE_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode( const ryml::NodeRef& node ) override;
+
+	// Additional
+	std::shared_ptr<s_refine_level_info> findLevelInfo( const struct item_data& data, struct item& item );
+	std::shared_ptr<s_refine_level_info> findCurrentLevelInfo( const struct item_data& data, struct item& item );
+};
+
+extern RefineDatabase refine_db;
 
 /// Weapon attack modification for size
 struct s_sizefix_db {
@@ -73,11 +117,32 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node &node);
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 };
 
 extern SizeFixDatabase size_fix_db;
+
+class AttributeDatabase : public YamlDatabase {
+private:
+	int16 attr_fix_table[MAX_ELE_LEVEL][ELE_MAX][ELE_MAX];
+
+public:
+	AttributeDatabase() : YamlDatabase("ATTRIBUTE_DB", 1) {
+		this->clear();
+	}
+
+	void clear() override{
+		std::fill_n(&attr_fix_table[0][0][0], MAX_ELE_LEVEL * ELE_MAX * ELE_MAX, 100);
+	}
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
+
+	// Additional
+	int16 getAttribute(uint16 level, uint16 atk_ele, uint16 def_ele);
+};
+
+extern AttributeDatabase elemental_attribute_db;
 
 /// Status changes listing. These code are for use by the server.
 enum sc_type : int16 {
@@ -85,7 +150,7 @@ enum sc_type : int16 {
 
 	//First we enumerate common status ailments which are often used around.
 	SC_STONE = 0,
-	SC_COMMON_MIN = 0, // begin
+	SC_COMMON_MIN = SC_STONE, // begin
 	SC_FREEZE,
 	SC_STUN,
 	SC_SLEEP,
@@ -96,7 +161,8 @@ enum sc_type : int16 {
 	SC_BLIND,
 	SC_BLEEDING,
 	SC_DPOISON, //10
-	SC_COMMON_MAX = 10, // end
+	SC_STONEWAIT,
+	SC_COMMON_MAX = SC_STONEWAIT, // end
 
 	//Next up, we continue on 20, to leave enough room for additional "common" ailments in the future.
 	SC_PROVOKE = 20,
@@ -186,7 +252,7 @@ enum sc_type : int16 {
 	SC_ARMOR,
 	SC_ARMOR_ELEMENT_WATER,
 	SC_NOCHAT,
-	SC_BABY,
+	SC_PROTECTEXP,
 	SC_AURABLADE,
 	SC_PARRYING,
 	SC_CONCENTRATION, //110
@@ -484,9 +550,9 @@ enum sc_type : int16 {
 	 **/
 	SC_REFLECTDAMAGE,
 	SC_FORCEOFVANGUARD,
-	SC_SHIELDSPELL_DEF,
-	SC_SHIELDSPELL_MDEF,
-	SC_SHIELDSPELL_REF,//380
+	SC_SHIELDSPELL_HP,
+	SC_SHIELDSPELL_SP,
+	SC_SHIELDSPELL_ATK,//380
 	SC_EXEEDBREAK,
 	SC_PRESTIGE,
 	SC_BANDING,
@@ -938,11 +1004,175 @@ enum sc_type : int16 {
 	SC_EP16_2_BUFF_SS,
 	SC_EP16_2_BUFF_SC,
 	SC_EP16_2_BUFF_AC,
+	
+	// Job Improvement Bundle
+	SC_OVERBRANDREADY,
+	SC_POISON_MIST,
+	SC_STONE_WALL,
+	SC_CLOUD_POISON,
+	SC_HOMUN_TIME,
 
 	SC_EMERGENCY_MOVE,
 	SC_MADOGEAR,
 
 	SC_NPC_HALLUCINATIONWALK,
+
+	SC_PACKING_ENVELOPE1,
+	SC_PACKING_ENVELOPE2,
+	SC_PACKING_ENVELOPE3,
+	SC_PACKING_ENVELOPE4,
+	SC_PACKING_ENVELOPE5,
+	SC_PACKING_ENVELOPE6,
+	SC_PACKING_ENVELOPE7,
+	SC_PACKING_ENVELOPE8,
+	SC_PACKING_ENVELOPE9,
+	SC_PACKING_ENVELOPE10,
+
+	SC_SOULATTACK,
+
+	SC_WIDEWEB,
+	SC_BURNT,
+	SC_CHILL,
+
+	// 4th Job Common Status
+	SC_HANDICAPSTATE_DEEPBLIND,
+	SC_HANDICAPSTATE_DEEPSILENCE,
+	SC_HANDICAPSTATE_LASSITUDE,
+	SC_HANDICAPSTATE_FROSTBITE,
+	SC_HANDICAPSTATE_SWOONING,
+	SC_HANDICAPSTATE_LIGHTNINGSTRIKE,
+	SC_HANDICAPSTATE_CRYSTALLIZATION,
+	SC_HANDICAPSTATE_CONFLAGRATION,
+	SC_HANDICAPSTATE_MISFORTUNE,
+	SC_HANDICAPSTATE_DEADLYPOISON,
+	SC_HANDICAPSTATE_DEPRESSION,
+	SC_HANDICAPSTATE_HOLYFLAME,
+
+	// Dragon Knight
+	SC_SERVANTWEAPON,
+	SC_SERVANT_SIGN,
+	SC_CHARGINGPIERCE,
+	SC_CHARGINGPIERCE_COUNT,
+	SC_DRAGONIC_AURA,
+	SC_VIGOR,
+
+	// Arch Mage
+	SC_DEADLY_DEFEASANCE,
+	SC_CLIMAX_DES_HU,
+	SC_CLIMAX,
+	SC_CLIMAX_EARTH,
+	SC_CLIMAX_BLOOM,
+	SC_CLIMAX_CRYIMP,
+
+	// Windhawk
+	SC_WINDSIGN,
+	SC_CRESCIVEBOLT,
+	SC_CALAMITYGALE,
+
+	// Cardinal
+	SC_MEDIALE,
+	SC_A_VITA,
+	SC_A_TELUM,
+	SC_PRE_ACIES,
+	SC_COMPETENTIA,
+	SC_RELIGIO,
+	SC_BENEDICTUM,
+
+	// Meister
+	SC_AXE_STOMP,
+	SC_A_MACHINE,
+	SC_D_MACHINE,
+	SC_ABR_BATTLE_WARIOR,
+	SC_ABR_DUAL_CANNON,
+	SC_ABR_MOTHER_NET,
+	SC_ABR_INFINITY,
+
+	// Shadow Cross
+	SC_SHADOW_EXCEED,
+	SC_DANCING_KNIFE,
+	SC_POTENT_VENOM,
+	SC_SHADOW_SCAR,
+	SC_E_SLASH_COUNT,
+	SC_SHADOW_WEAPON,
+
+	// Imperial Guard
+	SC_GUARD_STANCE,
+	SC_ATTACK_STANCE,
+	SC_GUARDIAN_S,
+	SC_REBOUND_S,
+	SC_HOLY_S,
+	SC_ULTIMATE_S,
+	SC_SPEAR_SCAR,
+	SC_SHIELD_POWER,
+
+	// Elemental Master
+	SC_SPELL_ENCHANTING,
+	SC_SUMMON_ELEMENTAL_ARDOR,
+	SC_SUMMON_ELEMENTAL_DILUVIO,
+	SC_SUMMON_ELEMENTAL_PROCELLA,
+	SC_SUMMON_ELEMENTAL_TERREMOTUS,
+	SC_SUMMON_ELEMENTAL_SERPENS,
+	SC_ELEMENTAL_VEIL,
+
+	// Troubadour/Trouvere
+	SC_MYSTIC_SYMPHONY,
+	SC_KVASIR_SONATA,
+	SC_SOUNDBLEND,
+	SC_GEF_NOCTURN,
+	SC_AIN_RHAPSODY,
+	SC_MUSICAL_INTERLUDE,
+	SC_JAWAII_SERENADE,
+	SC_PRON_MARCH,
+	SC_ROSEBLOSSOM,
+
+	// Inquisitor
+	SC_POWERFUL_FAITH,
+	SC_SINCERE_FAITH,
+	SC_FIRM_FAITH,
+	SC_HOLY_OIL,
+	SC_FIRST_BRAND,
+	SC_SECOND_BRAND,
+	SC_SECOND_JUDGE,
+	SC_THIRD_EXOR_FLAME,
+	SC_FIRST_FAITH_POWER,
+	SC_MASSIVE_F_BLASTER,
+
+	// Biolo
+	SC_PROTECTSHADOWEQUIP,
+	SC_RESEARCHREPORT,
+	SC_BO_HELL_DUSTY,
+	SC_BIONIC_WOODENWARRIOR,
+	SC_BIONIC_WOODEN_FAIRY,
+	SC_BIONIC_CREEPER,
+	SC_BIONIC_HELLTREE,
+
+	// Abyss Chaser
+	SC_SHADOW_STRIP,
+	SC_ABYSS_DAGGER,
+	SC_ABYSSFORCEWEAPON,
+	SC_ABYSS_SLAYER,
+
+	// Super Elementals
+	SC_FLAMETECHNIC,
+	SC_FLAMETECHNIC_OPTION,
+	SC_FLAMEARMOR,
+	SC_FLAMEARMOR_OPTION,
+	SC_COLD_FORCE,
+	SC_COLD_FORCE_OPTION,
+	SC_CRYSTAL_ARMOR,
+	SC_CRYSTAL_ARMOR_OPTION,
+	SC_GRACE_BREEZE,
+	SC_GRACE_BREEZE_OPTION,
+	SC_EYES_OF_STORM,
+	SC_EYES_OF_STORM_OPTION,
+	SC_EARTH_CARE,
+	SC_EARTH_CARE_OPTION,
+	SC_STRONG_PROTECTION,
+	SC_STRONG_PROTECTION_OPTION,
+	SC_DEEP_POISONING,
+	SC_DEEP_POISONING_OPTION,
+	SC_POISON_SHIELD,
+	SC_POISON_SHIELD_OPTION,
 
 	SC_MOVEHASTE_INFINITY,
 
@@ -953,7 +1183,7 @@ enum sc_type : int16 {
 };
 
 /// Official status change ids, used to display status icons on the client.
-enum efst_types : short{
+enum efst_type : short{
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_ENUM)
 	EFST_BLANK = -1,
@@ -1891,8 +2121,8 @@ enum efst_types : short{
 	EFST_AID_PERIOD_DEADPENALTY,
 	EFST_AID_PERIOD_ADDSTOREITEMCOUNT,
 	EFST_ALL_GLASTHEIM_RECALL,
-
-	EFST_ALL_THANATOS_RECALL = 945,
+	EFST_REUSE_LIMIT_PEPO_MD,
+	EFST_ALL_THANATOS_RECALL,
 
 	EFST_MAGICSTONE_OF_GRACE_SET = 948,
 
@@ -2237,6 +2467,74 @@ enum efst_types : short{
 	EFST_CURSE_R_CUBE,
 	EFST_CURSE_B_CUBE,
 	EFST_KILLING_AURA,
+
+	EFST_TOXIN_OF_MANDARA = 1341,
+	EFST_GOLDENE_TONE,
+	EFST_TEMPERING,
+	EFST_NW_P_F_I,
+	EFST_INTENSIVE_AIM,
+	EFST_INTENSIVE_AIM_COUNT,
+	EFST_GRENADE_FRAGMENT_1,
+	EFST_GRENADE_FRAGMENT_2,
+	EFST_GRENADE_FRAGMENT_3,
+	EFST_GRENADE_FRAGMENT_4,
+	EFST_GRENADE_FRAGMENT_5,
+	EFST_GRENADE_FRAGMENT_6,
+	EFST_AUTO_FIRING_LAUNCHEREFST,
+	EFST_HIDDEN_CARD,
+	EFST_NW_GRENADE_MASTERY,
+	EFST_TALISMAN_OF_PROTECTION,
+	EFST_TALISMAN_OF_WARRIOR,
+	EFST_TALISMAN_OF_MAGICIAN,
+	EFST_TALISMAN_OF_FIVE_ELEMENTS,
+	EFST_T_FIRST_GOD,
+	EFST_T_SECOND_GOD,
+	EFST_T_THIRD_GOD,
+	EFST_T_FOURTH_GOD,
+	EFST_T_FIVETH_GOD,
+	EFST_HEAVEN_AND_EARTH,
+	EFST_HOGOGONG,
+	EFST_MARINE_FESTIVAL,
+	EFST_SANDY_FESTIVAL,
+	EFST_KI_SUL_RAMPAGE,
+	EFST_COLORS_OF_HYUN_ROK_1,
+	EFST_COLORS_OF_HYUN_ROK_2,
+	EFST_COLORS_OF_HYUN_ROK_3,
+	EFST_COLORS_OF_HYUN_ROK_4,
+	EFST_COLORS_OF_HYUN_ROK_5,
+	EFST_COLORS_OF_HYUN_ROK_6,
+	EFST_COLORS_OF_HYUN_ROK_BUFF,
+	EFST_TEMPORARY_COMMUNION,
+	EFST_BLESSING_OF_M_CREATURES,
+	EFST_BLESSING_OF_M_C_DEBUFF,
+	EFST_SHIELDCHAINRUSH,
+	EFST_MISTYFROST,
+	EFST_GROUNDGRAVITY,
+	EFST_BREAKINGLIMIT,
+	EFST_RULEBREAK,
+	EFST_RISING_SUN,
+	EFST_NOON_SUN,
+	EFST_SUNSET_SUN,
+	EFST_RISING_MOON,
+	EFST_MIDNIGHT_MOON,
+	EFST_DAWN_MOON,
+	EFST_STAR_BURST,
+	EFST_SKY_ENCHANT,
+	EFST_SHADOW_CLOCK,
+	EFST_SHINKIROU_CALL,
+	EFST_NIGHTMARE,
+	EFST_NOODLE_FES_1,
+	EFST_NOODLE_FES_2,
+	EFST_NOODLE_FES_3,
+	EFST_NOODLE_FES_4,
+	EFST_NOODLE_FES_5,
+
+	EFST_RUSH_QUAKE1 = 1402,
+	EFST_RUSH_QUAKE2,
+
+	EFST_SBUNSHIN = 1415,
+
+	EFST_MTP_W_POTION_100 = 1418,
 /// @APIHOOK_END
 /// Do not modify code above this, since it will be automatically generated by the API again
 	EFST_MAX,
@@ -2262,7 +2560,8 @@ extern short current_equip_opt_index;
 //who were not on your field of sight when it happened)
 
 ///opt1: (BODYSTATE_*) Non stackable status changes.
-enum sc_opt1 {
+enum e_sc_opt1 : uint16 {
+	OPT1_NONE = 0,
 	OPT1_STONE = 1, //Petrified
 	OPT1_FREEZE,
 	OPT1_STUN,
@@ -2271,10 +2570,12 @@ enum sc_opt1 {
 	OPT1_STONEWAIT = 6, //Petrifying
 	OPT1_BURNING,
 	OPT1_IMPRISON,
+	OPT1_MAX
 };
 
 ///opt2: (HEALTHSTATE_*) Stackable status changes.
-enum sc_opt2 {
+enum e_sc_opt2 : uint16 {
+	OPT2_NONE		= 0x0,
 	OPT2_POISON		= 0x0001,
 	OPT2_CURSE		= 0x0002,
 	OPT2_SILENCE		= 0x0004,
@@ -2284,11 +2585,12 @@ enum sc_opt2 {
 	OPT2_BLEEDING		= 0x0040,
 	OPT2_DPOISON		= 0x0080,
 	OPT2_FEAR		= 0x0100,
+	OPT2_MAX
 };
 
 ///opt3: (SHOW_EFST_*)
-enum sc_opt3 {
-	OPT3_NORMAL		= 0x00000000,
+enum e_sc_opt3 : uint32 {
+	OPT3_NORMAL			= 0x0,
 	OPT3_QUICKEN		= 0x00000001,
 	OPT3_OVERTHRUST		= 0x00000002,
 	OPT3_ENERGYCOAT		= 0x00000004,
@@ -2307,11 +2609,12 @@ enum sc_opt3 {
 	OPT3_SOULLINK		= 0x00008000,
 	OPT3_UNDEAD		= 0x00010000,
 	OPT3_CONTRACT		= 0x00020000,
+	OPT3_MAX
 };
 
 ///Option (EFFECTSTATE_*)
-enum e_option {
-	OPTION_NOTHING		= 0x00000000,
+enum e_option : uint32 {
+	OPTION_NOTHING		= 0x0,
 	OPTION_SIGHT		= 0x00000001,
 	OPTION_HIDE			= 0x00000002,
 	OPTION_CLOAK		= 0x00000004,
@@ -2342,6 +2645,7 @@ enum e_option {
 	OPTION_HANBOK		= 0x08000000,
 	OPTION_OKTOBERFEST	= 0x10000000,
 	OPTION_SUMMER2		= 0x20000000,
+	OPTION_MAX,
 
 	// compound constant for older carts
 	OPTION_CART	= OPTION_CART1|OPTION_CART2|OPTION_CART3|OPTION_CART4|OPTION_CART5,
@@ -2362,68 +2666,98 @@ enum manner_flags
 };
 
 /// Status Change State Flags
-enum scs_flag {
-	SCS_NOMOVECOND		= 0x00000001, ///< cond flag for nomove
-	SCS_NOMOVE			= 0x00000002, ///< unit unable to move
-	SCS_NOPICKITEMCOND	= 0x00000004, ///< cond flag for nopickitem
-	SCS_NOPICKITEM		= 0x00000008, ///< player unable to pick up items
-	SCS_NODROPITEMCOND	= 0x00000010, ///< cond flag for nodropitem
-	SCS_NODROPITEM		= 0x00000020, ///< player unable to drop items
-	SCS_NOCASTCOND		= 0x00000040, ///< cond flag for nocast
-	SCS_NOCAST			= 0x00000080, ///< unit unable to cast skills
-	SCS_NOCHAT			= 0x00000100, ///< unit can't talk
-	SCS_NOCHATCOND		= 0x00000200, ///< cond flag for notalk
+enum e_scs_flag : uint8 {
+	SCS_NONE = 0,
+	SCS_NOMOVECOND, ///< cond flag for SCS_NOMOVE
+	SCS_NOMOVE, ///< unit unable to move
+	SCS_NOPICKITEMCOND, ///< cond flag for SCS_NOPICKITEM
+	SCS_NOPICKITEM, ///< player unable to pick up items
+	SCS_NODROPITEMCOND, ///< cond flag for SCS_NODROPITEM
+	SCS_NODROPITEM, ///< player unable to drop items
+	SCS_NOCASTCOND, ///< cond flag for SCS_NOCAST
+	SCS_NOCAST, ///< unit unable to cast skills
+	SCS_NOCHAT, ///< unit can't talk
+	SCS_NOCHATCOND, ///< cond flag for SCS_NOCHAT
+	SCS_NOEQUIPITEM, ///< player can't puts on equip
+	SCS_NOEQUIPITEMCOND, ///< cond flag for SCS_NOEQUIPITEM
+	SCS_NOUNEQUIPITEM, ///< player can't puts off equip
+	SCS_NOUNEQUIPITEMCOND, ///< cond flag for SCS_NOUNEQUIPITEM
+	SCS_NOCONSUMEITEM, ///< player can't consumes equip
+	SCS_NOCONSUMEITEMCOND, ///< cond flag for SCS_NOCONSUMEITEM
+	SCS_NOATTACK, ///< unit can't attack
+	SCS_NOATTACKCOND, ///< cond flag for SCS_NOATTACK
+	SCS_NOWARP, ///< unit can't warp
+	SCS_NOWARPCOND, ///< cond flag for SCS_NOWARP
+	SCS_NODEATHPENALTY, ///< player doesn't experience EXP loss
+	SCS_NODEATHPENALTYCOND, ///< cond flag for SCS_NODEATHPENALTYCOND
+	SCS_NOINTERACT, ///< player can't sit/stand/talk to NPC
+	SCS_NOINTERACTCOND, ///< cond flag for SCS_NOINTERACT
+	SCS_MAX
 };
 
 ///Define flags for the status_calc_bl function. [Skotlex]
-enum scb_flag
-{
-	SCB_NONE	= 0x00000000,
-	SCB_BASE	= 0x00000001,
-	SCB_MAXHP	= 0x00000002,
-	SCB_MAXSP	= 0x00000004,
-	SCB_STR		= 0x00000008,
-	SCB_AGI		= 0x00000010,
-	SCB_VIT		= 0x00000020,
-	SCB_INT		= 0x00000040,
-	SCB_DEX		= 0x00000080,
-	SCB_LUK		= 0x00000100,
-	SCB_BATK	= 0x00000200,
-	SCB_WATK	= 0x00000400,
-	SCB_MATK	= 0x00000800,
-	SCB_HIT		= 0x00001000,
-	SCB_FLEE	= 0x00002000,
-	SCB_DEF		= 0x00004000,
-	SCB_DEF2	= 0x00008000,
-	SCB_MDEF	= 0x00010000,
-	SCB_MDEF2	= 0x00020000,
-	SCB_SPEED	= 0x00040000,
-	SCB_ASPD	= 0x00080000,
-	SCB_DSPD	= 0x00100000,
-	SCB_CRI		= 0x00200000,
-	SCB_FLEE2	= 0x00400000,
-	SCB_ATK_ELE	= 0x00800000,
-	SCB_DEF_ELE	= 0x01000000,
-	SCB_MODE	= 0x02000000,
-	SCB_SIZE	= 0x04000000,
-	SCB_RACE	= 0x08000000,
-	SCB_RANGE	= 0x10000000,
-	SCB_REGEN	= 0x20000000,
-	SCB_DYE		= 0x40000000, // force cloth-dye change to 0 to avoid client crashes.
+enum e_scb_flag : uint8 {
+	SCB_NONE = 0,
+	SCB_BASE,
+	SCB_MAXHP,
+	SCB_MAXSP,
+	SCB_STR,
+	SCB_AGI,
+	SCB_VIT,
+	SCB_INT,
+	SCB_DEX,
+	SCB_LUK,
+	SCB_BATK,
+	SCB_WATK,
+	SCB_MATK,
+	SCB_HIT,
+	SCB_FLEE,
+	SCB_DEF,
+	SCB_DEF2,
+	SCB_MDEF,
+	SCB_MDEF2,
+	SCB_SPEED,
+	SCB_ASPD,
+	SCB_DSPD,
+	SCB_CRI,
+	SCB_FLEE2,
+	SCB_ATK_ELE,
+	SCB_DEF_ELE,
+	SCB_MODE,
+	SCB_SIZE,
+	SCB_RACE,
+	SCB_RANGE,
+	SCB_REGEN,
 
-	SCB_BATTLE	= 0x3FFFFFFE,
-	SCB_ALL		= 0x3FFFFFFF
+	// 4th Job T.Stat/T.Sub-Stat Flags
+	SCB_MAXAP,
+	SCB_POW,
+	SCB_STA,
+	SCB_WIS,
+	SCB_SPL,
+	SCB_CON,
+	SCB_CRT,
+	SCB_PATK,
+	SCB_SMATK,
+	SCB_RES,
+	SCB_MRES,
+	SCB_HPLUS,
+	SCB_CRATE,
+
+	// Extra Flags
+	SCB_DYE, // force cloth-dye change to 0 to avoid client crashes.
+	SCB_MAX,
 };
 
-enum e_status_calc_opt {
+enum e_status_calc_opt : uint8 {
 	SCO_NONE  = 0x0,
 	SCO_FIRST = 0x1, ///< Trigger the calculations that should take place only onspawn/once, process base status initialization code
 	SCO_FORCE = 0x2, ///< Only relevant to BL_PC types, ensures call bypasses the queue caused by delayed damage
 };
 
 /// Flags for status_change_start and status_get_sc_def
-enum e_status_change_start_flags {
-	SCSTART_NONE       = 0x00,
+enum e_status_change_start_flags : int64 {
+	SCSTART_NONE       = 0x0,
 	SCSTART_NOAVOID    = 0x01, /// Cannot be avoided (it has to start)
 	SCSTART_NOTICKDEF  = 0x02, /// Tick should not be reduced (by statuses or bonuses)
 	SCSTART_LOADED     = 0x04, /// When sc_data loaded (fetched from table), no values (val1 ~ val4) have to be altered/recalculate
@@ -2432,7 +2766,7 @@ enum e_status_change_start_flags {
 };
 
 /// Enum for status_change_clear_buffs
-enum e_status_change_clear_buffs_flags {
+enum e_status_change_clear_buffs_flags : int64 {
 	SCCB_BUFFS        = 0x01,
 	SCCB_DEBUFFS      = 0x02,
 	SCCB_REFRESH      = 0x04,
@@ -2441,7 +2775,7 @@ enum e_status_change_clear_buffs_flags {
 };
 
 ///Enum for bonus_script's flag [Cydh]
-enum e_bonus_script_flags {
+enum e_bonus_script_flags : uint32 {
 	BSF_REM_ON_DEAD				= 0x001, ///< Removed when dead
 	BSF_REM_ON_DISPELL			= 0x002, ///< Removed by Dispell
 	BSF_REM_ON_CLEARANCE		= 0x004, ///< Removed by Clearance
@@ -2468,6 +2802,118 @@ enum e_status_bonus {
 	STATUS_BONUS_FIX = 0,
 	STATUS_BONUS_RATE = 1,
 };
+
+///Enum of Status Change Flags [Cydh]
+enum e_status_change_flag : uint16 {
+	SCF_NONE = 0,
+	SCF_BLEFFECT,
+	SCF_DISPLAYPC,
+	SCF_NOCLEARBUFF,
+	SCF_NOREMOVEONDEAD,
+	SCF_NODISPELL,
+	SCF_NOCLEARANCE,
+	SCF_NOBANISHINGBUSTER,
+	SCF_NOSAVE,
+	SCF_NOSAVEINFINITE,
+	SCF_REMOVEONDAMAGED,
+	SCF_REMOVEONREFRESH,
+	SCF_REMOVEONLUXANIMA,
+	SCF_STOPATTACKING,
+	SCF_STOPCASTING,
+	SCF_STOPWALKING,
+	SCF_BOSSRESIST,
+	SCF_MVPRESIST,
+	SCF_SETSTAND,
+	SCF_FAILEDMADO,
+	SCF_DEBUFF,
+	SCF_REMOVEONCHANGEMAP,
+	SCF_REMOVEONMAPWARP,
+	SCF_REMOVECHEMICALPROTECT,
+	SCF_OVERLAPFAIL,
+	SCF_OVERLAPIGNORELEVEL,
+	SCF_SENDOPTION,
+	SCF_ONTOUCH,
+	SCF_UNITMOVE,
+	SCF_NONPLAYER,
+	SCF_SENDLOOK,
+	SCF_DISPLAYNPC,
+	SCF_REQUIREWEAPON,
+	SCF_REQUIRESHIELD,
+	SCF_MOBLOSETARGET,
+	SCF_REMOVEELEMENTALOPTION,
+	SCF_SUPERNOVICEANGEL,
+	SCF_TAEKWONANGEL,
+	SCF_MADOCANCEL,
+	SCF_MADOENDCANCEL,
+	SCF_RESTARTONMAPWARP,
+	SCF_SPREADEFFECT,
+	SCF_SENDVAL1,
+	SCF_SENDVAL2,
+	SCF_SENDVAL3,
+	SCF_NOFORCEDEND,
+	SCF_NOWARNING,
+	SCF_REMOVEONUNEQUIP,
+	SCF_REMOVEONUNEQUIPWEAPON,
+	SCF_REMOVEONUNEQUIPARMOR,
+	SCF_MAX
+};
+
+/// Struct of SC configs [Cydh]
+struct s_status_change_db {
+	sc_type type;					///< SC_
+	efst_type icon;					///< EFST_
+	std::bitset<SCS_MAX> state;		///< SCS_
+	std::bitset<SCB_MAX> calc_flag;	///< SCB_ flags
+	uint16 opt1;					///< OPT1_
+	uint16 opt2;					///< OPT2_
+	uint32 opt3;					///< OPT3_
+	uint32 look;					///< OPTION_ Changelook
+	std::bitset<SCF_MAX> flag;		///< SCF_ Flags, enum e_status_change_flag
+	bool display;					///< Display status effect/icon (for certain state)
+	uint16 skill_id;				///< Associated skill for (addeff) duration lookups
+	std::vector<sc_type> end;		///< List of SC that will be ended when this SC is activated
+	std::vector<sc_type> fail;		///< List of SC that causing this SC cannot be activated
+	std::vector<sc_type> endreturn;	///< List of SC that will be ended when this SC is activated and then immediately return
+	t_tick min_duration;			///< Minimum duration effect (after all status reduction)
+	uint16 min_rate;				///< Minimum rate to be applied (after all status reduction)
+};
+
+class StatusDatabase : public TypesafeCachedYamlDatabase<uint16, s_status_change_db> {
+public:
+	StatusDatabase() : TypesafeCachedYamlDatabase("STATUS_DB", 2) {
+		// All except BASE and extra flags.
+		SCB_BATTLE.set();
+		SCB_BATTLE.reset(SCB_BASE);
+		SCB_BATTLE.reset(SCB_DYE);
+		// All except extra flags.
+		SCB_ALL.set();
+		SCB_ALL.reset(SCB_DYE);
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
+	void loadingFinished() override;
+
+	// Determine who will receive a clif_status_change packet for effects that require one to display correctly
+	uint16 StatusRelevantBLTypes[EFST_MAX];
+
+	// Extras
+	efst_type getIcon(sc_type type);
+	std::bitset<SCB_MAX> getCalcFlag(sc_type type);
+	std::vector<sc_type> getEnd(sc_type type);
+	uint16 getSkill(sc_type type);
+	bool hasSCF(status_change *sc, e_status_change_flag flag);
+	void removeByStatusFlag(block_list *bl, std::vector<e_status_change_flag> flag);
+	void changeSkillTree(map_session_data *sd, int32 class_ = 0);
+	bool validateStatus(sc_type type);
+	std::bitset<SCB_MAX> getSCB_BATTLE();
+	std::bitset<SCB_MAX> getSCB_ALL();
+
+private:
+	std::bitset<SCB_MAX> SCB_BATTLE, SCB_ALL;
+};
+
+extern StatusDatabase status_db;
 
 /// Enum for status_calc_weight and status_calc_cart_weight
 enum e_status_calc_weight_opt {
@@ -2506,21 +2952,14 @@ struct weapon_atk {
 #endif
 };
 
-extern sc_type SkillStatusChangeTable[MAX_SKILL];   /// skill  -> status
-extern int StatusIconChangeTable[SC_MAX];           /// status -> "icon" (icon is a bit of a misnomer, since there exist values with no icon associated)
-extern unsigned int StatusChangeFlagTable[SC_MAX];  /// status -> flags
-extern int StatusSkillChangeTable[SC_MAX];          /// status -> skill
-extern int StatusRelevantBLTypes[EFST_MAX];           /// "icon" -> enum bl_type (for clif->status_change to identify for which bl types to send packets)
-extern unsigned int StatusChangeStateTable[SC_MAX]; /// status -> flags
-extern unsigned int StatusDisplayType[SC_MAX];
-
 ///For holding basic status (which can be modified by status changes)
 struct status_data {
 	unsigned int
-		hp, sp,  // see status_cpy before adding members before hp and sp
-		max_hp, max_sp;
+		hp, sp, ap, // see status_cpy before adding members before hp and sp
+		max_hp, max_sp, max_ap;
 	short
 		str, agi, vit, int_, dex, luk,
+		pow, sta, wis, spl, con, crt,
 		eatk;
 	unsigned short
 		batk,
@@ -2531,14 +2970,17 @@ struct status_data {
 		matk_min, matk_max,
 		speed,
 		amotion, adelay, dmotion;
-	enum e_mode mode;
+	int mode;
 	short
 		hit, flee, cri, flee2,
 		def2, mdef2,
 #ifdef RENEWAL_ASPD
 		aspd_rate2,
 #endif
-		aspd_rate;
+		aspd_rate,
+		patk, smatk,
+		res, mres,
+		hplus, crate;
 	/**
 	 * defType is RENEWAL dependent and defined in src/config/const.hpp
 	 **/
@@ -2576,7 +3018,8 @@ struct regen_data {
 
 	//tick accumulation before healing.
 	struct {
-		unsigned int hp,sp,shp,ssp;
+		t_tick hp, sp; //time of last natural recovery
+		unsigned int shp,ssp;
 	} tick;
 
 	//Regen rates. n/100
@@ -2614,13 +3057,22 @@ struct status_change {
 	unsigned short opt1;// body state
 	unsigned short opt2;// health state (bitfield)
 	unsigned char count;
+	sc_type lastEffect; // Used to check for stacking damageable SC on the same attack
+	int32 lastEffectTimer; // Timer for lastEffect
 	//! TODO: See if it is possible to implement the following SC's without requiring extra parameters while the SC is inactive.
 	struct {
-		unsigned char move;
-		unsigned char pickup;
-		unsigned char drop;
-		unsigned char cast;
-		unsigned char chat;
+		uint8 move;
+		uint8 pickup;
+		uint8 drop;
+		uint8 cast;
+		uint8 chat;
+		uint8 equip;
+		uint8 unequip;
+		uint8 consume;
+		uint8 attack;
+		uint8 warp;
+		uint8 deathpenalty;
+		uint8 interact;
 	} cant;/* status change state flags */
 	//int sg_id; //ID of the previous Storm gust that hit you
 	short comet_x, comet_y; // Point where src casted Comet - required to calculate damage from this point
@@ -2630,52 +3082,59 @@ struct status_change {
 #ifndef RENEWAL
 	unsigned char sg_counter; //Storm gust counter (previous hits from storm gust)
 #endif
-	unsigned char bs_counter; // Blood Sucker counter
 	struct status_change_entry *data[SC_MAX];
 };
 
-/// Statuses that are cancelled/disabled while on Madogear
-static const std::vector<sc_type> mado_statuses = {
-	SC_LOUD,
-	SC_CARTBOOST,
-	SC_MELTDOWN,
-	SC_ADRENALINE,
-	SC_ADRENALINE2,
-	SC_WEAPONPERFECTION,
-	SC_MAXIMIZEPOWER,
-	SC_OVERTHRUST,
-	SC_MAXOVERTHRUST
-};
-
-// for looking up associated data
-sc_type status_skill2sc(int skill);
-int status_sc2skill(sc_type sc);
-unsigned int status_sc2scb_flag(sc_type sc);
-int status_type2relevant_bl_types(int type);
-
-int status_damage(struct block_list *src,struct block_list *target,int64 dhp,int64 dsp, t_tick walkdelay, int flag, uint16 skill_id);
+int status_damage( struct block_list *src, struct block_list *target, int64 dhp, int64 dsp, int64 dap, t_tick walkdelay, int flag, uint16 skill_id );
+static int status_damage( struct block_list *src, struct block_list *target, int64 dhp, int64 dsp, t_tick walkdelay, int flag, uint16 skill_id ){
+	return status_damage( src, target, dhp, dsp, 0, walkdelay, flag, skill_id );
+}
 //Define for standard HP damage attacks.
-#define status_fix_damage(src, target, hp, walkdelay, skill) status_damage(src, target, hp, 0, walkdelay, 0, skill)
+static int status_fix_damage( struct block_list *src, struct block_list *target, int64 hp, t_tick walkdelay, uint16 skill_id ){
+	return status_damage( src, target, hp, 0, walkdelay, 0, skill_id );
+}
 //Define for standard SP damage attacks.
-#define status_fix_spdamage(src, target, sp, walkdelay, skill) status_damage(src, target, 0, sp, walkdelay, 0, skill)
-//Define for standard HP/SP damage triggers.
-#define status_zap(bl, hp, sp) status_damage(NULL, bl, hp, sp, 0, 1, 0)
-//Define for standard HP/SP skill-related cost triggers (mobs require no HP/SP to use skills)
+static int status_fix_spdamage( struct block_list *src, struct block_list *target, int64 sp, t_tick walkdelay, uint16 skill_id ){
+	return status_damage( src, target, 0, sp, walkdelay, 0, skill_id );
+}
+//Define for standard AP damage attacks.
+static int status_fix_apdamage( struct block_list *src, struct block_list *target, int64 ap, t_tick walkdelay, uint16 skill_id ){
+	return status_damage( src, target, 0, 0, ap, walkdelay, 0, skill_id );
+}
+//Define for standard HP/SP/AP damage triggers.
+static int status_zap( struct block_list* bl, int64 hp, int64 sp, int64 ap = 0 ){
+	return status_damage( nullptr, bl, hp, sp, ap, 0, 1, 0 );
+}
+//Define for standard HP/SP skill-related cost triggers (mobs require no HP/SP/AP to use skills)
 int64 status_charge(struct block_list* bl, int64 hp, int64 sp);
-int status_percent_change(struct block_list *src, struct block_list *target, int8 hp_rate, int8 sp_rate, uint8 flag);
+int status_percent_change(struct block_list *src, struct block_list *target, int8 hp_rate, int8 sp_rate, int8 ap_rate, uint8 flag);
 //Easier handling of status_percent_change
-#define status_percent_heal(bl, hp_rate, sp_rate) status_percent_change(NULL, bl, -(hp_rate), -(sp_rate), 0)
-/// Deals % damage from 'src' to 'target'. If rate is > 0 is % of current HP/SP, < 0 % of MaxHP/MaxSP
-#define status_percent_damage(src, target, hp_rate, sp_rate, kill) status_percent_change(src, target, hp_rate, sp_rate, (kill)?1:2)
+static int status_percent_heal( struct block_list* bl, int8 hp_rate, int8 sp_rate, int8 ap_rate = 0 ){
+	return status_percent_change( nullptr, bl, -(hp_rate), -(sp_rate), -(ap_rate), 0 );
+}
+/// Deals % damage from 'src' to 'target'. If rate is > 0 is % of current HP/SP/AP, < 0 % of MaxHP/MaxSP/MaxAP
+static int status_percent_damage( struct block_list* src, struct block_list* target, int8 hp_rate, int8 sp_rate, bool kill ){
+	return status_percent_change( src, target, hp_rate, sp_rate, 0, kill ? 1 : 2 );
+}
+static int status_percent_damage( struct block_list* src, struct block_list* target, int8 hp_rate, int8 sp_rate, int8 ap_rate, bool kill ){
+	return status_percent_change( src, target, hp_rate, sp_rate, ap_rate, kill ? 1 : 2 );
+}
 //Instant kill with no drops/exp/etc
-#define status_kill(bl) status_percent_damage(NULL, bl, 100, 0, true)
-//Used to set the hp/sp of an object to an absolute value (can't kill)
+static int status_kill( struct block_list* bl ){
+	return status_percent_damage( nullptr, bl, 100, 0, 0, true );
+}
+//Used to set the hp/sp/ap of an object to an absolute value (can't kill)
 int status_set_hp(struct block_list *bl, unsigned int hp, int flag);
 int status_set_maxhp(struct block_list *bl, unsigned int hp, int flag);
 int status_set_sp(struct block_list *bl, unsigned int sp, int flag);
 int status_set_maxsp(struct block_list *bl, unsigned int hp, int flag);
-int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int flag);
-int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per_sp);
+int status_set_ap(struct block_list *bl, unsigned int ap, int flag);
+int status_set_maxap(struct block_list *bl, unsigned int ap, int flag);
+int status_heal( struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int flag );
+static int status_heal( struct block_list *bl,int64 hhp,int64 hsp, int flag ){
+	return status_heal( bl, hhp, hsp, 0, flag );
+}
+int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per_sp, unsigned char per_ap = 0);
 
 struct regen_data *status_get_regen_data(struct block_list *bl);
 struct status_data *status_get_status_data(struct block_list *bl);
@@ -2688,12 +3147,20 @@ int status_get_lv(struct block_list *bl);
 #define status_get_max_hp(bl) status_get_status_data(bl)->max_hp
 #define status_get_sp(bl) status_get_status_data(bl)->sp
 #define status_get_max_sp(bl) status_get_status_data(bl)->max_sp
+#define status_get_ap(bl) status_get_status_data(bl)->ap
+#define status_get_max_ap(bl) status_get_status_data(bl)->max_ap
 #define status_get_str(bl) status_get_status_data(bl)->str
 #define status_get_agi(bl) status_get_status_data(bl)->agi
 #define status_get_vit(bl) status_get_status_data(bl)->vit
 #define status_get_int(bl) status_get_status_data(bl)->int_
 #define status_get_dex(bl) status_get_status_data(bl)->dex
 #define status_get_luk(bl) status_get_status_data(bl)->luk
+#define status_get_pow(bl) status_get_status_data(bl)->pow
+#define status_get_sta(bl) status_get_status_data(bl)->sta
+#define status_get_wis(bl) status_get_status_data(bl)->wis
+#define status_get_spl(bl) status_get_status_data(bl)->spl
+#define status_get_con(bl) status_get_status_data(bl)->con
+#define status_get_crt(bl) status_get_status_data(bl)->crt
 #define status_get_hit(bl) status_get_status_data(bl)->hit
 #define status_get_flee(bl) status_get_status_data(bl)->flee
 defType status_get_def(struct block_list *bl);
@@ -2713,6 +3180,12 @@ unsigned short status_get_speed(struct block_list *bl);
 #define status_get_adelay(bl) status_get_status_data(bl)->adelay
 #define status_get_amotion(bl) status_get_status_data(bl)->amotion
 #define status_get_dmotion(bl) status_get_status_data(bl)->dmotion
+#define status_get_patk(bl) status_get_status_data(bl)->patk
+#define status_get_smatk(bl) status_get_status_data(bl)->smatk
+#define status_get_res(bl) status_get_status_data(bl)->res
+#define status_get_mres(bl) status_get_status_data(bl)->mres
+#define status_get_hplus(bl) status_get_status_data(bl)->hplus
+#define status_get_crate(bl) status_get_status_data(bl)->crate
 #define status_get_element(bl) status_get_status_data(bl)->def_ele
 #define status_get_element_level(bl) status_get_status_data(bl)->ele_lv
 unsigned char status_calc_attack_element(struct block_list *bl, struct status_change *sc, int element);
@@ -2747,12 +3220,17 @@ int status_isdead(struct block_list *bl);
 int status_isimmune(struct block_list *bl);
 
 t_tick status_get_sc_def(struct block_list *src,struct block_list *bl, enum sc_type type, int rate, t_tick tick, unsigned char flag);
+int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,t_tick duration,unsigned char flag, int32 delay = 0);
 //Short version, receives rate in 1->100 range, and does not uses a flag setting.
-#define sc_start(src, bl, type, rate, val1, tick) status_change_start(src,bl,type,100*(rate),val1,0,0,0,tick,SCSTART_NONE)
-#define sc_start2(src, bl, type, rate, val1, val2, tick) status_change_start(src,bl,type,100*(rate),val1,val2,0,0,tick,SCSTART_NONE)
-#define sc_start4(src, bl, type, rate, val1, val2, val3, val4, tick) status_change_start(src,bl,type,100*(rate),val1,val2,val3,val4,tick,SCSTART_NONE)
-
-int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,t_tick duration,unsigned char flag);
+static int sc_start(block_list *src, block_list *bl, sc_type type, int32 rate, int32 val1, t_tick duration, int32 delay = 0) {
+	return status_change_start(src, bl, type, 100 * rate, val1, 0, 0, 0, duration, SCSTART_NONE, delay);
+}
+static int sc_start2(block_list *src, block_list *bl, sc_type type, int32 rate, int32 val1, int32 val2, t_tick duration, int32 delay = 0) {
+	return status_change_start(src, bl, type, 100 * rate, val1, val2, 0, 0, duration, SCSTART_NONE, delay);
+}
+static int sc_start4(block_list *src, block_list *bl, sc_type type, int32 rate, int32 val1, int32 val2, int32 val3, int32 val4, t_tick duration, int32 delay = 0) {
+	return status_change_start(src, bl, type, 100 * rate, val1, val2, val3, val4, duration, SCSTART_NONE, delay);
+}
 int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const char* file, int line);
 #define status_change_end(bl,type,tid) status_change_end_(bl,type,tid,__FILE__,__LINE__)
 TIMER_FUNC(status_change_timer);
@@ -2760,37 +3238,49 @@ int status_change_timer_sub(struct block_list* bl, va_list ap);
 int status_change_clear(struct block_list* bl, int type);
 void status_change_clear_buffs(struct block_list* bl, uint8 type);
 void status_change_clear_onChangeMap(struct block_list *bl, struct status_change *sc);
+TIMER_FUNC(status_clear_lastEffect_timer);
 
-#define status_calc_bl(bl, flag) status_calc_bl_(bl, (enum scb_flag)(flag), SCO_NONE)
-#define status_calc_mob(md, opt) status_calc_bl_(&(md)->bl, SCB_ALL, opt)
-#define status_calc_pet(pd, opt) status_calc_bl_(&(pd)->bl, SCB_ALL, opt)
-#define status_calc_pc(sd, opt) status_calc_bl_(&(sd)->bl, SCB_ALL, opt)
-#define status_calc_homunculus(hd, opt) status_calc_bl_(&(hd)->bl, SCB_ALL, opt)
-#define status_calc_mercenary(md, opt) status_calc_bl_(&(md)->bl, SCB_ALL, opt)
-#define status_calc_elemental(ed, opt) status_calc_bl_(&(ed)->bl, SCB_ALL, opt)
-#define status_calc_npc(nd, opt) status_calc_bl_(&(nd)->bl, SCB_ALL, opt)
+#define status_calc_mob(md, opt) status_calc_bl_(&(md)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_pet(pd, opt) status_calc_bl_(&(pd)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_pc(sd, opt) status_calc_bl_(&(sd)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_homunculus(hd, opt) status_calc_bl_(&(hd)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_mercenary(md, opt) status_calc_bl_(&(md)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_elemental(ed, opt) status_calc_bl_(&(ed)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_npc(nd, opt) status_calc_bl_(&(nd)->bl, status_db.getSCB_ALL(), opt)
 
 bool status_calc_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag);
 bool status_calc_cart_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag);
-void status_calc_bl_(struct block_list *bl, enum scb_flag flag, enum e_status_calc_opt opt);
-int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt);
-void status_calc_pet_(struct pet_data* pd, enum e_status_calc_opt opt);
-int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt);
-int status_calc_homunculus_(struct homun_data *hd, enum e_status_calc_opt opt);
-int status_calc_mercenary_(struct mercenary_data *md, enum e_status_calc_opt opt);
-int status_calc_elemental_(struct elemental_data *ed, enum e_status_calc_opt opt);
-int status_calc_npc_(struct npc_data *nd, enum e_status_calc_opt opt);
+void status_calc_bl_(struct block_list *bl, std::bitset<SCB_MAX> flag, uint8 opt = SCO_NONE);
+int status_calc_mob_(struct mob_data* md, uint8 opt);
+void status_calc_pet_(struct pet_data* pd, uint8 opt);
+int status_calc_pc_(struct map_session_data* sd, uint8 opt);
+int status_calc_homunculus_(struct homun_data *hd, uint8 opt);
+int status_calc_mercenary_(s_mercenary_data *md, uint8 opt);
+int status_calc_elemental_(s_elemental_data *ed, uint8 opt);
+int status_calc_npc_(struct npc_data *nd, uint8 opt);
+
+static void status_calc_bl(block_list *bl, std::vector<e_scb_flag> flags) {
+	static std::bitset<SCB_MAX> temp;
+
+	temp.reset();
+	for (const auto &scb : flags) {
+		temp.set(scb);
+	}
+
+	status_calc_bl_(bl, temp);
+}
 
 void status_calc_misc(struct block_list *bl, struct status_data *status, int level);
 void status_calc_regen(struct block_list *bl, struct status_data *status, struct regen_data *regen);
 void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, struct status_change *sc);
+void status_calc_state(struct block_list *bl, struct status_change *sc, std::bitset<SCS_MAX> flag, bool start);
 
 void status_calc_slave_mode(struct mob_data *md, struct mob_data *mmd);
 
 bool status_check_skilluse(struct block_list *src, struct block_list *target, uint16 skill_id, int flag);
 int status_check_visibility(struct block_list *src, struct block_list *target);
 
-int status_change_spread(struct block_list *src, struct block_list *bl, bool type);
+int status_change_spread(block_list *src, block_list *bl);
 
 #ifndef RENEWAL
 unsigned short status_base_matk_min(const struct status_data* status);
@@ -2805,9 +3295,11 @@ unsigned short status_base_matk_max(struct block_list *bl, const struct status_d
 
 unsigned short status_base_atk(const struct block_list *bl, const struct status_data *status, int level);
 
-void initChangeTables(void);
-int status_readdb(void);
-int do_init_status(void);
+// Status changes accessors for StatusChange database
+uint16 status_efst_get_bl_type(enum efst_type efst);
+
+void status_readdb( bool reload = false );
+void do_init_status(void);
 void do_final_status(void);
 
 #endif /* STATUS_HPP */

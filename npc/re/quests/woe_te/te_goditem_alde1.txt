@@ -370,9 +370,9 @@ S_Fuse:
 
 OnInit:
 	if ($2012_tegod_kafra == 3 || agitcheck3())// 3 -> quest failed
-		disablenpc strnpcinfo(0);
+		disablenpc();
 	else
-		enablenpc strnpcinfo(0);
+		enablenpc();
 	end;
 }
 
@@ -996,7 +996,7 @@ OnCommandOn:
 OnCommandOff:
 	setnpcdisplay strnpcinfo(0),CLEAR_NPC;
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 }
 te_aldecas1,227,35,3	duplicate(#end_aira_alde01)	#end_kuluna_alde01	CLEAR_NPC

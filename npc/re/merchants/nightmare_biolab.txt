@@ -104,11 +104,11 @@ function	script	F_Cursed_Fragment	{	// 23016
 	}
 	else if (.@r == 5) {
 		showscript "Please... Stay with me...";
-		warp "Random",0,0;
+		itemskill "AL_TELEPORT",1;
 	}
 	else if (.@r == 6) {
 		showscript "Stay... here with me...";
-		warp "Random",0,0;
+		itemskill "AL_TELEPORT",1;
 	}
 	else if (.@r == 7) {
 		showscript "You shouldn't have come here...";
@@ -1714,7 +1714,7 @@ lhz_dun_n,75,121,0	script	#Alphoccio_Basil_A1	HIDDEN_WARP_NPC,3,3,{
 	end;
 OnTouch:
 	specialeffect EF_BAT2;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	initnpctimer;
 	end;
 OnTimer1000:
@@ -1974,7 +1974,7 @@ OnTimer1000:
 	end;
 OnTimer40000:
 	stopnpctimer;
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 }
 

@@ -1,0 +1,10 @@
+//===== rAthena Script ======================================= 
+//= Alberta City Portals
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [JohnnyPlayy]
+//============================================================
+
+//= Portal - ( Stylist )
+//============================================================
+alberta,45,145,0	warp	Room_Entrance#alberta-01	1,1,alberta_in,69,141
+alberta_in,73,142,0	warp	Room_Exit#alberta-01	1,1,alberta,48,145
