@@ -4210,9 +4210,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
-    UnEquipScript: |
-      sc_end SC_MOVEHASTE_INFINITY;
+      bonus2 bSpeedRate,25;
   - Id: 4132
     AegisName: Mistress_Card
     Name: Mistress Card

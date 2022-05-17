@@ -11025,7 +11025,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      autobonus "{ bonus bAgi,44; bonus2 bSpeedRate,25; heal 0,-40; }",500,3000,0,"{ specialeffect2 EF_POTION_BERSERK; showscript \"I got the signal!!!!\"; }";
+      autobonus2 "{ bonus bAgi,44; bonus bNoWalkDelay; bonus2 bSpeedRate,25; heal 0,-40; }",500,3000,0,"{ specialeffect2 EF_POTION_BERSERK; showscript \"I got the signal!!!!\"; }";
   - Id: 4582
     AegisName: Bungisngis_Card
     Name: Bungisngis Card

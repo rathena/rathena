@@ -5360,9 +5360,7 @@ Body:
     Refineable: true
     Script: |
       bonus bStr,10;
-      sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
-    UnEquipScript: |
-      sc_end SC_MOVEHASTE_INFINITY;
+      bonus2 bSpeedRate,25;
   - Id: 1364
     AegisName: Great_Axe
     Name: Great Axe
@@ -5437,9 +5435,7 @@ Body:
       bonus bAtkEle,Ele_Holy;
       skill "AL_HEAL",3;
       bonus2 bAddRace,RC_Demon,3;
-      sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
-    UnEquipScript: |
-      sc_end SC_MOVEHASTE_INFINITY;
+      bonus2 bSpeedRate,25;
   - Id: 1367
     AegisName: Slaughter
     Name: Slaughter
@@ -18922,10 +18918,8 @@ Body:
       bonus bMaxHPrate,20;
       bonus bMaxSPrate,20;
       bonus bSPrecovRate,15;
-      sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
+      bonus2 bSpeedRate,25;
       bonus bInt,25;
-    UnEquipScript: |
-      sc_end SC_MOVEHASTE_INFINITY;
   - Id: 2411
     AegisName: Grave
     Name: Greaves
@@ -29584,11 +29578,10 @@ Body:
     Refineable: true
     View: 305
     Script: |
-      sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
+      bonus2 bSpeedRate,25;
       bonus bDef,4;
       skill "TF_HIDING",1;
     UnEquipScript: |
-      sc_end SC_MOVEHASTE_INFINITY;
       sc_end SC_HIDING;
   - Id: 5274
     AegisName: Shiny_Wig
@@ -29604,11 +29597,10 @@ Body:
     Refineable: true
     View: 306
     Script: |
-      sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
+      bonus2 bSpeedRate,25;
       bonus bDef,4;
       skill "TF_HIDING",1;
     UnEquipScript: |
-      sc_end SC_MOVEHASTE_INFINITY;
       sc_end SC_HIDING;
   - Id: 5275
     AegisName: Marvelous_Wig
@@ -29624,11 +29616,10 @@ Body:
     Refineable: true
     View: 307
     Script: |
-      sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
+      bonus2 bSpeedRate,25;
       bonus bDef,4;
       skill "TF_HIDING",1;
     UnEquipScript: |
-      sc_end SC_MOVEHASTE_INFINITY;
       sc_end SC_HIDING;
   - Id: 5276
     AegisName: Fantastic_Wig
@@ -29644,11 +29635,10 @@ Body:
     Refineable: true
     View: 308
     Script: |
-      sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
+      bonus2 bSpeedRate,25;
       bonus bDef,4;
       skill "TF_HIDING",1;
     UnEquipScript: |
-      sc_end SC_MOVEHASTE_INFINITY;
       sc_end SC_HIDING;
   - Id: 5277
     AegisName: Yellow_Bandana
