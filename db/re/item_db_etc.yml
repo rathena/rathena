@@ -6820,8 +6820,6 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus3 bAutoSpellWhenHit,"CR_AUTOGUARD",3+7*(getskilllv("CR_AUTOGUARD") == 10),30;
-    UnEquipScript: |
-      sc_end SC_AUTOGUARD;
   - Id: 4300
     AegisName: Chimera_Card
     Name: Chimera Card
