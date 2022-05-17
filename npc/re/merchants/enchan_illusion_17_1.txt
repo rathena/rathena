@@ -503,6 +503,7 @@ sp_cor,106,136,3	script	RS26#illusion_enchant	4_SYS_MSG,{
 		function module_check;
 		.@s -= 2;
 		.@equip_id = getequipid(.@part);
+		.@refine = getequiprefinerycnt(.@part);
 		if (!.@equip_id || .@id[0] != .@equip_id && .@id[1] != .@equip_id) {
 			mes "[RS26]";
 			mes "The equipment needs to be checked. That thing is not something this device can work with.";
@@ -544,7 +545,6 @@ sp_cor,106,136,3	script	RS26#illusion_enchant	4_SYS_MSG,{
 				}
 				for (.@i = 0; .@i < 4; .@i++)
 					.@card[.@i] = getequipcardid(.@part,.@i);
-				copyarray .@check[0],.@card[0],4;
 				for (.@i = 1; .@i < 4; .@i++) {
 					if (.@card[.@i] == 0) {
 						.@augment_slot = .@i;
@@ -553,7 +553,7 @@ sp_cor,106,136,3	script	RS26#illusion_enchant	4_SYS_MSG,{
 				}
 				.@card[.@augment_slot] = atoi(.@s$[3]);
 				delitem .@module_id[.@s],1;
-				if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipRefineHack", .@part, .@refine) || callfunc("F_IsEquipCardHack", .@part, .@check[0], .@check[1], .@check[2], .@check[3]))
+				if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipRefineHack", .@part, .@refine))
 					end;
 				specialeffect2 EF_REPAIRWEAPON;
 				delequip .@part;
