@@ -14188,7 +14188,6 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 
 		if (!sc->data[status] || flag[SCF_NOCLEARBUFF]) //Skip status with SCF_NOCLEARBUFF, no matter what
 			continue;
-
 		// &SCCB_LUXANIMA : Cleared by RK_LUXANIMA
 		if (!(type&SCCB_LUXANIMA) && flag[SCF_REMOVEONLUXANIMA])
 			continue;
