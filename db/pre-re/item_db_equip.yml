@@ -28300,8 +28300,6 @@ Body:
       bonus bMaxHP,50;
       bonus bMaxSP,10;
       skill "AL_RUWACH",1;
-    UnEquipScript: |
-      sc_end SC_RUWACH;
   - Id: 5213
     AegisName: Black_Bunny_Band
     Name: Sheila Hairnet
@@ -31603,8 +31601,6 @@ Body:
     Script: |
       bonus bVit,1;
       skill "AL_ANGELUS",1;
-    UnEquipScript: |
-      sc_end SC_ANGELUS;
   - Id: 5383
     AegisName: Hunting_Cap
     Name: Hunter's Cap
