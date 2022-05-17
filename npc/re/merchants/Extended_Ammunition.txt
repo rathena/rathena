@@ -45,26 +45,32 @@ OnInit:
 	mes "Hi!";
 	mes "What did you come to see?";
 	next;
-	switch ( select( "Buy Ammunition", "Cartridge Exchange", "Sell Items", "Cancel" )) {
+	switch ( select( "Buy Weapons", "Buy Ammunition", "Cartridge Exchange", "Sell Items", "Cancel" )) {
 	case 1:
+		mes "[Ammunition Merchant]";
+		mes "I will prepare the weapon.";
+		close2;
+		callshop "Weapons_Gunslinger", 1;
+		break;
+	case 2:
 		mes "[Ammunition Merchant]";
 		mes "I will start preparing the ammunition.";
 		close2;
 		callshop "Ammunition_Gunslinger", 1;
 		break;
-	case 2:
+	case 3:
 		mes "[Ammunition Merchant]";
 		mes "I will start preparing ammunition cartridges!";
 		close2;
 		callshop "Box_Exchange_Gunslinger", 1;
 		break;
-	case 3:
+	case 4:
 		mes "[Ammunition Merchant]";
 		mes "What would you like to sell?";
 		close2;
 		callshop "Selling_Items", 2;
 		break;
-	case 4:
+	case 5:
 		mes "[Ammunition Merchant]";
 		mes "You can take a look at other things more calmly.";
 		close;
@@ -188,6 +194,7 @@ OnInit:
 -	marketshop	Arrow_Archer	HIDDEN_NPC,1750:-1:-1,1770:3:-1,1751:5:-1,1752:5:-1,1754:5:-1,1755:5:-1,1756:5:-1,1757:5:-1,1767:5:-1,1762:5:-1,1065:50:-1,7940:100:-1
 
 //= Gunslinger
+-	shop	Weapons_Gunslinger	-1,13120:-1,13122:-1,13189:-1,13195:-1,13192:-1,13193:-1,13194:-1,13197:-1,13198:-1,28200:-1,28201:-1
 
 -	marketshop	Ammunition_Gunslinger	HIDDEN_NPC,13200:-1:-1,13221:-1:-1,13228:-1:-1,13229:-1:-1,13230:-1:-1,13231:-1:-1,13232:-1:-1,13222:-1:-1,13215:-1:-1,13216:-1:-1,13217:-1:-1,13218:-1:-1,13219:-1:-1,13220:-1:-1,7663:-1:-1,7665:15:-1,7664:-1:-1,25187:-1:-1,1000564:-1:-1
 
