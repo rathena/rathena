@@ -1,27 +1,7 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : localhost_3306
- Source Server Type    : MySQL
- Source Server Version : 80021
- Source Host           : localhost:3306
- Source Schema         : tb3
-
- Target Server Type    : MySQL
- Target Server Version : 80021
- File Encoding         : 65001
-
- Date: 16/03/2022 11:55:07
-*/
-
-SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
-
 -- ----------------------------
 -- Table structure for storage2
 -- ----------------------------
-DROP TABLE IF EXISTS `storage2`;
-CREATE TABLE `storage2`  (
+CREATE TABLE IF NOT EXISTS `storage2`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `account_id` int UNSIGNED NOT NULL DEFAULT 0,
   `nameid` int UNSIGNED NOT NULL DEFAULT 0,
@@ -55,13 +35,12 @@ CREATE TABLE `storage2`  (
   `enchantgrade` tinyint UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `account_id`(`account_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 148832 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = FIXED;
+) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 -- ----------------------------
 -- Table structure for storage3
 -- ----------------------------
-DROP TABLE IF EXISTS `storage3`;
-CREATE TABLE `storage3`  (
+CREATE TABLE IF NOT EXISTS `storage3`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `account_id` int UNSIGNED NOT NULL DEFAULT 0,
   `nameid` int UNSIGNED NOT NULL DEFAULT 0,
@@ -95,13 +74,12 @@ CREATE TABLE `storage3`  (
   `enchantgrade` tinyint UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `account_id`(`account_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 148832 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = FIXED;
+) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 -- ----------------------------
 -- Table structure for storage4
 -- ----------------------------
-DROP TABLE IF EXISTS `storage4`;
-CREATE TABLE `storage4`  (
+CREATE TABLE IF NOT EXISTS `storage4`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `account_id` int UNSIGNED NOT NULL DEFAULT 0,
   `nameid` int UNSIGNED NOT NULL DEFAULT 0,
@@ -135,13 +113,12 @@ CREATE TABLE `storage4`  (
   `enchantgrade` tinyint UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `account_id`(`account_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 148832 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = FIXED;
+) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 -- ----------------------------
 -- Table structure for storage5
 -- ----------------------------
-DROP TABLE IF EXISTS `storage5`;
-CREATE TABLE `storage5`  (
+CREATE TABLE IF NOT EXISTS `storage5`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `account_id` int UNSIGNED NOT NULL DEFAULT 0,
   `nameid` int UNSIGNED NOT NULL DEFAULT 0,
@@ -175,13 +152,12 @@ CREATE TABLE `storage5`  (
   `enchantgrade` tinyint UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `account_id`(`account_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 148832 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = FIXED;
+) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 -- ----------------------------
 -- Table structure for storage6
 -- ----------------------------
-DROP TABLE IF EXISTS `storage6`;
-CREATE TABLE `storage6`  (
+CREATE TABLE IF NOT EXISTS `storage6`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `account_id` int UNSIGNED NOT NULL DEFAULT 0,
   `nameid` int UNSIGNED NOT NULL DEFAULT 0,
@@ -215,13 +191,12 @@ CREATE TABLE `storage6`  (
   `enchantgrade` tinyint UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `account_id`(`account_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 148832 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = FIXED;
+) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 -- ----------------------------
 -- Table structure for storage7
 -- ----------------------------
-DROP TABLE IF EXISTS `storage7`;
-CREATE TABLE `storage7`  (
+CREATE TABLE IF NOT EXISTS `storage7`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `account_id` int UNSIGNED NOT NULL DEFAULT 0,
   `nameid` int UNSIGNED NOT NULL DEFAULT 0,
@@ -255,13 +230,12 @@ CREATE TABLE `storage7`  (
   `enchantgrade` tinyint UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `account_id`(`account_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 148832 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = FIXED;
+) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 -- ----------------------------
 -- Table structure for storage8
 -- ----------------------------
-DROP TABLE IF EXISTS `storage8`;
-CREATE TABLE `storage8`  (
+CREATE TABLE IF NOT EXISTS `storage8`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `account_id` int UNSIGNED NOT NULL DEFAULT 0,
   `nameid` int UNSIGNED NOT NULL DEFAULT 0,
@@ -295,13 +269,12 @@ CREATE TABLE `storage8`  (
   `enchantgrade` tinyint UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `account_id`(`account_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 148832 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = FIXED;
+) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 -- ----------------------------
 -- Table structure for storage9
 -- ----------------------------
-DROP TABLE IF EXISTS `storage9`;
-CREATE TABLE `storage9`  (
+CREATE TABLE IF NOT EXISTS `storage9`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `account_id` int UNSIGNED NOT NULL DEFAULT 0,
   `nameid` int UNSIGNED NOT NULL DEFAULT 0,
@@ -335,13 +308,12 @@ CREATE TABLE `storage9`  (
   `enchantgrade` tinyint UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `account_id`(`account_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 148832 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = FIXED;
+) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 -- ----------------------------
 -- Table structure for storage10
 -- ----------------------------
-DROP TABLE IF EXISTS `storage10`;
-CREATE TABLE `storage10`  (
+CREATE TABLE IF NOT EXISTS `storage10`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `account_id` int UNSIGNED NOT NULL DEFAULT 0,
   `nameid` int UNSIGNED NOT NULL DEFAULT 0,
@@ -375,6 +347,4 @@ CREATE TABLE `storage10`  (
   `enchantgrade` tinyint UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `account_id`(`account_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 148832 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = FIXED;
-
-SET FOREIGN_KEY_CHECKS = 1;
+) ENGINE=MyISAM AUTO_INCREMENT=1;
