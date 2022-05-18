@@ -3512,6 +3512,13 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 			if(sd->state.lr_flag != 2)
 				sd->bonus.speed_add_rate -= val;
 			break;
+		case SP_MOVE_HASTE:	//Non stackable increase
+			if (sd->state.lr_flag != 2) {
+				sd->bonus.speed_rate = min(sd->bonus.speed_rate, -val);
+				sd->special_state.movehaste = true;
+				clif_status_load(&sd->bl, EFST_MOVHASTE_INFINITY, 1);
+			}
+			break;
 		case SP_ASPD:	//Raw increase
 			if(sd->state.lr_flag != 2)
 				sd->bonus.aspd_add -= 10*val;
@@ -4026,13 +4033,6 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 	nullpo_retv(sd);
 
 	switch(type){
-	case SP_SPEED_RATE:	//Non stackable increase
-		if (sd->state.lr_flag != 2) {
-			sd->bonus.speed_rate = min(sd->bonus.speed_rate, -val);
-			sd->special_state.movehaste = true;
-			clif_status_load(&sd->bl, EFST_MOVHASTE_INFINITY, 1);
-		}
-		break;
 	case SP_ADDELE: // bonus2 bAddEle,e,x;
 		PC_BONUS_CHK_ELEMENT(type2,SP_ADDELE);
 		if(!sd->state.lr_flag || sd->state.lr_flag == 3)
@@ -9592,6 +9592,7 @@ int64 pc_readparam(struct map_session_data* sd,int64 type)
 		case SP_SPRATE:		     val = sd->dsprate; break;
 		case SP_SPEED_RATE:	     val = sd->bonus.speed_rate; break;
 		case SP_SPEED_ADDRATE:   val = sd->bonus.speed_add_rate; break;
+		case SP_MOVE_HASTE:      val = sd->bonus.speed_rate; break;
 		case SP_ASPD_RATE:
 #ifndef RENEWAL_ASPD
 			val = sd->battle_status.aspd_rate;

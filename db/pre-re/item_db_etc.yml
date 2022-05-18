@@ -4210,7 +4210,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
   - Id: 4132
     AegisName: Mistress_Card
     Name: Mistress Card

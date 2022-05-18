@@ -5703,7 +5703,7 @@ Body:
       bonus bStr,10;
       bonus2 bAddRace,RC_Demon,3;
       skill "AL_HEAL",3;
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
   - Id: 1316
     AegisName: Adventure_Axe
     Name: Adventure Axe
@@ -6479,7 +6479,7 @@ Body:
     Refineable: true
     Script: |
       bonus bStr,10;
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
   - Id: 1364
     AegisName: Great_Axe
     Name: Great Axe
@@ -6554,7 +6554,7 @@ Body:
       bonus bAtkEle,Ele_Holy;
       skill "AL_HEAL",3;
       bonus2 bAddRace,RC_Demon,3;
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
   - Id: 1367
     AegisName: Slaughter
     Name: Slaughter
@@ -6726,7 +6726,7 @@ Body:
       skill "AL_HEAL",3;
       bonus2 bAddRace,RC_Demon,3;
       bonus bStr,10;
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
       /*Gold PC Room: bonus bBaseAtk,10; bonus bMatk,10;*/
   - Id: 1373
     AegisName: Brood_Axe_C
@@ -23542,7 +23542,7 @@ Body:
       bonus bMaxHPrate,200;
       bonus bNoKnockback;
       bonus bDelayrate,-100;
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
       bonus bIntravision;
       bonus bNoWalkDelay;
       bonus bNoGemStone;
@@ -27308,7 +27308,7 @@ Body:
       bonus bMaxHPrate,20;
       bonus bMaxSPrate,20;
       bonus bSPrecovRate,25;
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
       bonus bInt,25;
   - Id: 2411
     AegisName: Grave
@@ -28421,7 +28421,7 @@ Body:
       bonus bMaxHPrate,20;
       bonus bMaxSPrate,20;
       bonus bSPrecovRate,15;
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
   - Id: 2463
     AegisName: Feral_Boots
     Name: Feral Boots
@@ -29001,7 +29001,7 @@ Body:
       .@r = getrefine();
       bonus bMdef,.@r;
       if (.@r>=14) {
-         bonus2 bSpeedRate,25;
+         bonus bMoveHaste,25;
       }
   - Id: 2492
     AegisName: Bayani_Bangungot_Boots
@@ -29020,7 +29020,7 @@ Body:
       .@r = getrefine();
       bonus bMdef,.@r;
       if (.@r>=12) {
-         bonus2 bSpeedRate,25;
+         bonus bMoveHaste,25;
       }
   - Id: 2493
     AegisName: Goibne's_Combat_Boots_
@@ -40688,7 +40688,7 @@ Body:
     ArmorLevel: 1
     View: 219
     Script: |
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
   - Id: 5151
     AegisName: Headset_OST
     Name: Note Headphones
@@ -41616,7 +41616,7 @@ Body:
     ArmorLevel: 1
     View: 253
     Script: |
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
   - Id: 5204
     AegisName: Event_Pierrot_Nose
     Name: Rudolph's Nose
@@ -42887,7 +42887,7 @@ Body:
     Refineable: true
     View: 305
     Script: |
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
       bonus bDef,4;
       skill "TF_HIDING",1;
     UnEquipScript: |
@@ -42906,7 +42906,7 @@ Body:
     Refineable: true
     View: 306
     Script: |
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
       bonus bDef,4;
       skill "TF_HIDING",1;
     UnEquipScript: |
@@ -42925,7 +42925,7 @@ Body:
     Refineable: true
     View: 307
     Script: |
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
       bonus bDef,4;
       skill "TF_HIDING",1;
     UnEquipScript: |
@@ -42944,7 +42944,7 @@ Body:
     Refineable: true
     View: 308
     Script: |
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
       bonus bDef,4;
       skill "TF_HIDING",1;
     UnEquipScript: |
@@ -43158,7 +43158,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
       bonus bAspdRate,5;
       bonus bVariableCastrate,-5;
   - Id: 5287
@@ -49532,7 +49532,7 @@ Body:
     ArmorLevel: 1
     View: 314
     Script: |
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
       bonus bAspdRate,10;
       bonus bVariableCastrate,-25;
   - Id: 5629
@@ -49820,7 +49820,7 @@ Body:
     View: 308
     Script: |
       bonus bDef,4;
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
       skill "TF_HIDING",1;
     UnEquipScript: |
       sc_end SC_HIDING;
@@ -52861,7 +52861,7 @@ Body:
       NoAuction: true
     Script: |
       bonus bAllStats,5;
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
   - Id: 5810
     AegisName: Ph.D_Hat_V
     Name: Ph.D Hat V
@@ -53669,7 +53669,7 @@ Body:
     View: 999
     Script: |
       bonus2 bAddEffWhenHit,Eff_Stone,600;
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
   - Id: 5870
     AegisName: Bunny_Egg_Shell
     Name: Bunny Egg Shell
@@ -75424,7 +75424,7 @@ Body:
       bonus bAllStats,2;
       bonus bMdef,5;
       bonus bUnbreakableHelm;
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
   - Id: 18626
     AegisName: Gelato_Hat
     Name: Gelato Hat
@@ -75618,7 +75618,7 @@ Body:
       bonus bStr,2;
       bonus bVit,1;
       if (getrefine() > 7)
-         bonus2 bSpeedRate,25;
+         bonus bMoveHaste,25;
   - Id: 18638
     AegisName: Citron_Hat
     Name: Citron Hat
@@ -82598,7 +82598,7 @@ Body:
          bonus bAspd,1;
       }
       if (.@r >= 12) {
-         bonus2 bSpeedRate,25;
+         bonus bMoveHaste,25;
       }
       bonus2 bExpAddRace,RC_All,5;
       bonus2 bDropAddRace,RC_All,5;
@@ -83842,7 +83842,7 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 30
     Script: |
-      autobonus "{ bonus2 bSpeedRate,25; }",50,5000,BF_NORMAL,"{ showscript \"Smokie-formation!\"; active_transform 1056,5000; /*SMOKIE*/ }";
+      autobonus "{ bonus bMoveHaste,25; }",50,5000,BF_NORMAL,"{ showscript \"Smokie-formation!\"; active_transform 1056,5000; /*SMOKIE*/ }";
   - Id: 19239
     AegisName: PoringTownCarrot
     Name: Poring Village Carrot
@@ -83855,7 +83855,7 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 30
     Script: |
-      autobonus "{ bonus2 bSpeedRate,25; }",50,5000,BF_NORMAL,"{ showscript \"Lunatic-formation!\"; active_transform 1063,5000; /*LUNATIC*/ }";
+      autobonus "{ bonus bMoveHaste,25; }",50,5000,BF_NORMAL,"{ showscript \"Lunatic-formation!\"; active_transform 1063,5000; /*LUNATIC*/ }";
   - Id: 19240
     AegisName: Toy_Syringe_K
     Name: Toy Syringe
@@ -90329,7 +90329,7 @@ Body:
     View: 691
     Script: |
       if (gettime(DT_MONTH) == OCTOBER)
-        bonus2 bSpeedRate,25;
+        bonus bMoveHaste,25;
   - Id: 19918
     AegisName: C_Lude_Mask
     Name: Costume Lude Mask
@@ -90903,7 +90903,7 @@ Body:
     Script: |
       if (gettime(DT_MONTH) == DECEMBER) {
         bonus bAspdRate,10;
-        bonus2 bSpeedRate,25;
+        bonus bMoveHaste,25;
       }
   - Id: 19977
     AegisName: C_Golden_Exclamation
@@ -99840,7 +99840,7 @@ Body:
          bonus bLongHPGainValue,5;
       }
       if (.@r>=8)
-         bonus2 bSpeedRate,25;
+         bonus bMoveHaste,25;
       if (.@r>=9) {
          bonus bMaxHPrate,10;
          bonus bMaxSPrate,10;
@@ -102607,7 +102607,7 @@ Body:
       bonus bMaxHPRate,4+(.@r/3);
       bonus bMaxSPRate,4+(.@r/3);
       if (.@r > 9)
-         bonus2 bSpeedRate,25;
+         bonus bMoveHaste,25;
   - Id: 22075
     AegisName: Shoes_Of_Cracks
     Name: Rift Shoes
@@ -103582,7 +103582,7 @@ Body:
       }
       if (.@r >=9) {
         .@bonus += 5;
-        bonus2 bSpeedRate,25;
+        bonus bMoveHaste,25;
       }
       bonus bMaxSPrate,.@bonus;
   - Id: 22132
@@ -111315,7 +111315,7 @@ Body:
          bonus bFlee,15;
       }
       if (.@r >= 10)
-         bonus2 bSpeedRate,25;
+         bonus bMoveHaste,25;
   - Id: 24440
     AegisName: S_Sonic_Armor
     Name: Sonic Shadow Armor
@@ -116383,7 +116383,7 @@ Body:
          bonus bDef,15;
          bonus bFlee,15;
          if (.@r>=10) {
-            bonus2 bSpeedRate,25;
+            bonus bMoveHaste,25;
          }
       }
   - Id: 24733

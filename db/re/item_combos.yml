@@ -405,7 +405,7 @@ Body:
           - Shield_Of_Gust
           - Shining_Trapezohedron
     Script: |
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
   - Combos:
       - Combo:
           - Survival_Rod
@@ -1980,7 +1980,7 @@ Body:
           - S_Dancer_Shoes
           - S_Dancer_Armor
     Script: |
-      autobonus3 "{ bonus bAspdRate,10; bonus2 bSpeedRate,25; }",1000,5000,"BD_ADAPTATION";
+      autobonus3 "{ bonus bAspdRate,10; bonus bMoveHaste,25; }",1000,5000,"BD_ADAPTATION";
       /* Unknow Specialeffect */
   - Combos:
       - Combo:
@@ -4383,7 +4383,7 @@ Body:
       bonus bAgi,5;
       bonus bStr,5;
       bonus bAspdRate,5;
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
       bonus bSPDrainValue,1;
       if (BaseClass == Job_Thief)
          bonus bNoGemStone;
@@ -7932,7 +7932,7 @@ Body:
           - Puente_Robe_IL
           - Nurse_Cap_IL
     Script: |
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
       /* unknown speed value */
       bonus bHealPower,10;
   - Combos:
@@ -10751,7 +10751,7 @@ Body:
           - White_Wing_Suits
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
       bonus bCritAtkRate,4*(readparam(bluk)/20);
       if (.@r >= 7) {
          bonus bAspdRate,8;
@@ -10774,7 +10774,7 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
       bonus bHPGainValue,500;
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
       bonus2 bSkillAtk,"RA_CLUSTERBOMB",30*(readparam(bint)/20);
       bonus2 bSkillUseSP,"RA_ELECTRICSHOCKER",30;
       if (.@r >= 7) {
@@ -11609,7 +11609,7 @@ Body:
     Script: |
       bonus bFlee,5;
       if ((getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_SHOES)) >= 15) {
-         bonus2 bSpeedRate,25; /* unknown value */
+         bonus bMoveHaste,25; /* unknown value */
       }
   - Combos:
       - Combo:

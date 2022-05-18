@@ -145,7 +145,7 @@ Body:
           - Staff_Of_Wing
           - Wing_Of_Eagle
     Script: |
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
   - Combos:
       - Combo:
           - Survival_Rod_
@@ -888,7 +888,7 @@ Body:
       bonus bAgi,5;
       bonus bStr,5;
       bonus bAspdRate,5;
-      bonus2 bSpeedRate,25;
+      bonus bMoveHaste,25;
       bonus bSPDrainValue,1;
       if (BaseClass == Job_Thief)
          bonus bNoGemStone;
