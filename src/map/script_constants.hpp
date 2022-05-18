@@ -8975,7 +8975,6 @@
 	export_constant(SCF_REMOVEONCHANGEMAP);
 	export_constant(SCF_REMOVEONMAPWARP);
 	export_constant(SCF_REMOVECHEMICALPROTECT);
-	export_constant(SCF_OVERLAPFAIL);
 	export_constant(SCF_OVERLAPIGNORELEVEL);
 	export_constant(SCF_SENDOPTION);
 	export_constant(SCF_ONTOUCH);

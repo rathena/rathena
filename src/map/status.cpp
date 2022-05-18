@@ -9742,8 +9742,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	// Check for overlapping fails
 	if( (sce = sc->data[type]) ) {
-		if (scdb->flag[SCF_OVERLAPFAIL])
-			return 0;
 		switch( type ) {
 			case SC_MERC_FLEEUP:
 			case SC_MERC_ATKUP:
