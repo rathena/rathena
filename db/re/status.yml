@@ -1422,10 +1422,9 @@ Body:
     DurationLookup: SA_REVERSEORCISH
     Flags:
       Debuff: true
+      SendOption: true
     Options:
       Orcish: true
-    Flags:
-      SendOption: true
   - Status: Readystorm
     Icon: EFST_STORMKICK_ON
     DurationLookup: TK_READYSTORM
