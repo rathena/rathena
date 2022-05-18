@@ -189,7 +189,13 @@ void YamlDatabase::parseImports( const ryml::Tree& rootNode ){
 						// Skip this import
 						continue;
 					}
-				}				
+				}
+
+// RENEWAL mode with RENEWAL_ASPD off, load pre-re ASPD
+#if defined(RENEWAL) && !defined(RENEWAL_ASPD)
+				if (importFile.find("job_aspd") != std::string::npos)
+					importFile = "db/pre-re/job_aspd.yml";
+#endif
 
 				this->load( importFile );
 			}
