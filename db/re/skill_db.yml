@@ -34332,6 +34332,7 @@ Body:
       - Level: 5
         Amount: 30
     CastCancel: true
+    AfterCastActDelay: 500
     Duration1:
       - Level: 1
         Time: 30000
@@ -34435,7 +34436,7 @@ Body:
     CastCancel: true
     AfterCastActDelay: 500
     Duration1: 20000
-    Cooldown: 2000
+    Cooldown: 3000
     FixedCastTime: 500
     Requires:
       SpCost: 40
@@ -34481,6 +34482,7 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
+    CastTime: 800
     AfterCastActDelay: 500
     Duration1:
       - Level: 1
@@ -34505,6 +34507,7 @@ Body:
         Time: 180000
     Duration2: 5000
     Cooldown: 60000
+    FixedCastTime: 400
     Requires:
       SpCost:
         - Level: 1
@@ -34547,7 +34550,10 @@ Body:
     HitCount: 1
     Element: Weapon
     CastCancel: true
+    CastTime: 400
     AfterCastActDelay: 500
+    Cooldown: 350
+    FixedCastTime: 400
     Requires:
       SpCost:
         - Level: 1
@@ -34619,9 +34625,11 @@ Body:
     HitCount: 1
     Element: Weapon
     CastCancel: true
-    AfterCastActDelay: 1000
+    CastTime: 2000
+    AfterCastActDelay: 500
     Duration1: 300000
-    Cooldown: 60000
+    Cooldown: 120000
+    FixedCastTime: 500
     Requires:
       SpCost: 100
       ApCost: 150
@@ -34651,9 +34659,10 @@ Body:
         Area: 3
     GiveAp: 2
     CastCancel: true
+    CastTime: 400
     AfterCastActDelay: 500
-    Cooldown: 2000
-    FixedCastTime: 500
+    Cooldown: 350
+    FixedCastTime: 400
     Requires:
       SpCost:
         - Level: 1
@@ -34759,7 +34768,7 @@ Body:
     HitCount: 1
     Element: Undead
     CastCancel: true
-    CastTime: 4000
+    CastTime: 3000
     AfterCastActDelay: 500
     Duration1:
       - Level: 1
@@ -34810,7 +34819,7 @@ Body:
       - Level: 5
         Area: 5
     CastCancel: true
-    CastTime: 4000
+    CastTime: 3000
     AfterCastActDelay: 1000
     Duration2: 900000
     Cooldown: 6000
@@ -35072,7 +35081,7 @@ Body:
     CastTime: 3000
     AfterCastActDelay: 500
     Duration1: 4000
-    Cooldown: 5000
+    Cooldown: 4000
     FixedCastTime: 1500
     Requires:
       SpCost:
@@ -35407,11 +35416,11 @@ Body:
       - Level: 10
         Area: 5
     CastCancel: true
-    CastTime: 8000
+    CastTime: 4000
     AfterCastActDelay: 500
     Duration1: 15000
     Cooldown: 60000
-    FixedCastTime: 2000
+    FixedCastTime: 1500
     Requires:
       SpCost: 150
       ApCost: 150
@@ -35465,10 +35474,11 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    AfterCastActDelay: 300
+    CastTime: 2000
+    AfterCastActDelay: 500
     Duration1: 300000
     Cooldown: 300000
-    FixedCastTime: 4000
+    FixedCastTime: 2500
     Requires:
       SpCost: 60
       ApCost: 200
@@ -35626,8 +35636,7 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    CastTime: 2000
-    AfterCastActDelay: 500
+    CastTime: 1500
     Duration1:
       - Level: 1
         Time: 120000
@@ -35640,7 +35649,7 @@ Body:
       - Level: 5
         Time: 240000
     Cooldown: 60000
-    FixedCastTime: 1000
+    FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
@@ -35664,8 +35673,7 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    CastTime: 2000
-    AfterCastActDelay: 500
+    CastTime: 1500
     Duration1:
       - Level: 1
         Time: 120000
@@ -35678,7 +35686,7 @@ Body:
       - Level: 5
         Time: 240000
     Cooldown: 60000
-    FixedCastTime: 1000
+    FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
@@ -35760,8 +35768,7 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    CastTime: 2000
-    AfterCastActDelay: 500
+    CastTime: 1500
     Duration1:
       - Level: 1
         Time: 120000
@@ -35774,7 +35781,7 @@ Body:
       - Level: 5
         Time: 240000
     Cooldown: 60000
-    FixedCastTime: 1000
+    FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
@@ -35802,7 +35809,7 @@ Body:
     Element: Weapon
     SplashArea: 4
     CastCancel: true
-    AfterCastActDelay: 500
+    AfterCastActDelay: 1000
     Duration1: 300000
     Cooldown: 60000
     Requires:
@@ -35834,8 +35841,7 @@ Body:
         Area: 4
     GiveAp: 5
     CastCancel: true
-    AfterCastActDelay: 500
-    Cooldown: 5000
+    Cooldown: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -35907,7 +35913,6 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    CastTime: 2000
     AfterCastActDelay: 500
     Duration1:
       - Level: 1
@@ -35920,8 +35925,18 @@ Body:
         Time: 240000
       - Level: 5
         Time: 300000
-    Cooldown: 150000
-    FixedCastTime: 1000
+    Cooldown:
+      - Level: 1
+        Time: 60000
+      - Level: 2
+        Time: 120000
+      - Level: 3
+        Time: 180000
+      - Level: 4
+        Time: 240000
+      - Level: 5
+        Time: 300000
+    FixedCastTime: 2000
     Requires:
       SpCost: 60
     Status: First_Faith_Power
@@ -35935,7 +35950,6 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    CastTime: 2000
     AfterCastActDelay: 500
     Duration1:
       - Level: 1
@@ -35948,8 +35962,18 @@ Body:
         Time: 240000
       - Level: 5
         Time: 300000
-    Cooldown: 150000
-    FixedCastTime: 1000
+    Cooldown:
+      - Level: 1
+        Time: 60000
+      - Level: 2
+        Time: 120000
+      - Level: 3
+        Time: 180000
+      - Level: 4
+        Time: 240000
+      - Level: 5
+        Time: 300000
+    FixedCastTime: 2000
     Requires:
       SpCost: 60
       ApCost: 100
@@ -36198,7 +36222,6 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    CastTime: 2000
     AfterCastActDelay: 500
     Duration1:
       - Level: 1
@@ -36211,8 +36234,18 @@ Body:
         Time: 120000
       - Level: 5
         Time: 150000
-    Cooldown: 150000
-    FixedCastTime: 1000
+    Cooldown:
+      - Level: 1
+        Time: 60000
+      - Level: 2
+        Time: 120000
+      - Level: 3
+        Time: 180000
+      - Level: 4
+        Time: 240000
+      - Level: 5
+        Time: 300000
+    FixedCastTime: 2000
     Requires:
       SpCost: 60
       ApCost: 150
@@ -36231,7 +36264,8 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    FixedCastTime: 500
+    CastTime: 1000
+    FixedCastTime: 1000
     Requires:
       SpCost: 50
       State: Shield
@@ -36251,7 +36285,7 @@ Body:
     SplashArea: 10
     CastCancel: true
     CastTime: 2000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 1000
     Duration1: 60000
     Cooldown: 15000
     FixedCastTime: 1000
@@ -36271,7 +36305,7 @@ Body:
     HitCount: 1
     CastCancel: true
     CastTime: 2000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 1000
     Duration1: 60000
     Cooldown: 15000
     FixedCastTime: 1000
@@ -36298,7 +36332,8 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    FixedCastTime: 500
+    CastTime: 1000
+    FixedCastTime: 1000
     Requires:
       SpCost: 50
     Status: Attack_Stance
@@ -36323,8 +36358,7 @@ Body:
       - Level: 5
         Area: 3
     CastCancel: true
-    CastTime: 2000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 1000
     Duration1: 300000
     Cooldown:
       - Level: 1
@@ -36337,7 +36371,11 @@ Body:
         Time: 80000
       - Level: 5
         Time: 100000
-    FixedCastTime: 1000
+    FixedCastTime: 2000
+    CastTimeFlags:
+      IgnoreDex: true
+      IgnoreStatus: true
+      IgnoreItemBonus: true
     Requires:
       SpCost: 120
       Status:
@@ -36353,10 +36391,10 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    CastTime: 2000
-    AfterCastActDelay: 500
+    CastTime: 2500
+    AfterCastActDelay: 1000
     Duration1: 180000
-    Cooldown: 120000
+    Cooldown: 40000
     FixedCastTime: 1000
     Requires:
       SpCost: 60
@@ -36421,10 +36459,10 @@ Body:
     HitCount: -10
     Element: Holy
     CastCancel: true
-    CastTime: 2000
-    AfterCastActDelay: 1000
+    CastTime: 4000
+    AfterCastActDelay: 1500
     Cooldown: 60000
-    FixedCastTime: 1000
+    FixedCastTime: 1500
     Requires:
       SpCost: 150
       ApCost: 150
@@ -36516,7 +36554,7 @@ Body:
     Element: Holy
     GiveAp: 5
     CastCancel: true
-    CastTime: 1000
+    CastTime: 4000
     AfterCastActDelay: 500
     Duration1: 4500
     Cooldown: 5000
@@ -36582,8 +36620,6 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    CastTime: 2000
-    AfterCastActDelay: 500
     Cooldown:
       - Level: 1
         Time: 150000
@@ -36595,7 +36631,7 @@ Body:
         Time: 30000
       - Level: 5
         Time: 10000
-    FixedCastTime: 1000
+    FixedCastTime: 2000
     Requires:
       SpCost: 120
   - Id: 5269
@@ -36614,7 +36650,6 @@ Body:
     SplashArea: 4
     CastCancel: true
     CastTime: 2000
-    AfterCastActDelay: 500
     Duration1:
       - Level: 1
         Time: 40000
@@ -36627,7 +36662,7 @@ Body:
       - Level: 5
         Time: 120000
     Cooldown: 60000
-    FixedCastTime: 1000
+    FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
@@ -36659,7 +36694,7 @@ Body:
     HitCount: 1
     CastCancel: true
     CastTime: 2000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 1000
     Duration1:
       - Level: 1
         Time: 120000
@@ -36671,8 +36706,7 @@ Body:
         Time: 210000
       - Level: 5
         Time: 240000
-    Cooldown: 1000
-    FixedCastTime: 1000
+    FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
@@ -36700,7 +36734,7 @@ Body:
     HitCount: 1
     CastCancel: true
     CastTime: 2000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 1000
     Duration1:
       - Level: 1
         Time: 120000
@@ -36712,8 +36746,7 @@ Body:
         Time: 210000
       - Level: 5
         Time: 240000
-    Cooldown: 1000
-    FixedCastTime: 1000
+    FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
@@ -36738,11 +36771,11 @@ Body:
     HitCount: 1
     Element: Holy
     CastCancel: true
-    CastTime: 2000
+    CastTime: 4000
     AfterCastActDelay: 500
     Duration1: 20000
-    Cooldown: 3000
-    FixedCastTime: 1000
+    Cooldown: 2000
+    FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
@@ -36815,7 +36848,7 @@ Body:
     HitCount: 1
     CastCancel: true
     CastTime: 2000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 1000
     Duration1:
       - Level: 1
         Time: 120000
@@ -36827,8 +36860,7 @@ Body:
         Time: 210000
       - Level: 5
         Time: 240000
-    Cooldown: 1000
-    FixedCastTime: 1000
+    FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
@@ -36857,8 +36889,7 @@ Body:
     HitCount: -7
     Element: Weapon
     CastCancel: true
-    AfterCastActDelay: 500
-    Cooldown: 60000
+    Cooldown: 2000
     Requires:
       SpCost: 60
       ApCost: 100
@@ -36878,7 +36909,6 @@ Body:
     HitCount: 1
     SplashArea: 10
     CastCancel: true
-    CastTime: 8000
     AfterCastActDelay: 500
     Duration1:
       - Level: 1
@@ -36892,7 +36922,7 @@ Body:
       - Level: 5
         Time: 240000
     Cooldown: 60000
-    FixedCastTime: 2000
+    FixedCastTime: 4000
     Requires:
       SpCost: 60
       ApCost: 200
@@ -36908,11 +36938,11 @@ Body:
     HitCount: -10
     Element: Holy
     CastCancel: true
-    CastTime: 3000
-    AfterCastActDelay: 500
+    CastTime: 4000
+    AfterCastActDelay: 1500
     Duration1: 12000
     Cooldown: 60000
-    FixedCastTime: 2000
+    FixedCastTime: 1500
     Requires:
       SpCost: 150
       ApCost: 150
@@ -36970,9 +37000,9 @@ Body:
         Area: 3
     GiveAp: 1
     CastCancel: true
-    CastTime: 2000
     AfterCastActDelay: 500
-    FixedCastTime: 1000
+    Cooldown: 300
+    FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
@@ -36997,8 +37027,7 @@ Body:
     HitCount: 1
     GiveAp: 1
     CastCancel: true
-    CastTime: 2000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 700
     Duration1:
       - Level: 1
         Time: 120000
@@ -37010,6 +37039,7 @@ Body:
         Time: 210000
       - Level: 5
         Time: 240000
+    Cooldown: 250
     FixedCastTime: 1000
     Requires:
       SpCost:
@@ -37036,8 +37066,7 @@ Body:
     HitCount: 1
     GiveAp: 1
     CastCancel: true
-    CastTime: 2000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 700
     Duration1:
       - Level: 1
         Time: 120000
@@ -37049,6 +37078,7 @@ Body:
         Time: 210000
       - Level: 5
         Time: 240000
+    Cooldown: 250
     FixedCastTime: 1000
     Requires:
       SpCost:
@@ -37098,8 +37128,7 @@ Body:
         Area: 4
     GiveAp: 2
     CastCancel: true
-    AfterCastActDelay: 500
-    Cooldown: 2000
+    Cooldown: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -37151,10 +37180,10 @@ Body:
         Area: 3
     GiveAp: 3
     CastCancel: true
-    CastTime: 2000
+    CastTime: 5000
     AfterCastActDelay: 500
-    Cooldown: 3000
-    FixedCastTime: 1000
+    Cooldown: 300
+    FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
@@ -37177,8 +37206,7 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    CastTime: 1000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 1000
     Duration1:
       - Level: 1
         Time: 60000
@@ -37220,7 +37248,7 @@ Body:
     SplashArea: 2
     CastCancel: true
     CastTime: 1000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 1000
     Duration1: 120000
     Cooldown: 30000
     FixedCastTime: 1000
@@ -37316,7 +37344,6 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    AfterCastActDelay: 500
     Duration1:
       - Level: 1
         Time: 30000
@@ -37449,11 +37476,11 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    AfterCastActDelay: 500
+    AfterCastActDelay: 1000
     Duration1: 180000
     Duration2: 30000
-    Cooldown: 150000
-    FixedCastTime: 2000
+    Cooldown: 30000
+    FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
@@ -37481,9 +37508,11 @@ Body:
     Element: Weapon
     SplashArea: 3
     CastCancel: true
+    CastTime: 4000
     AfterCastActDelay: 500
     Duration1: 20000
     Cooldown: 60000
+    FixedCastTime: 1500
     Requires:
       SpCost: 150
       ApCost: 150
@@ -37586,7 +37615,6 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    AfterCastActDelay: 500
     Requires:
       SpCost:
         - Level: 1
@@ -37629,7 +37657,6 @@ Body:
       - Level: 5
         Area: 3
     CastCancel: true
-    AfterCastActDelay: 500
     Duration1:
       - Level: 1
         Time: 80000
@@ -37671,7 +37698,6 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    AfterCastActDelay: 500
     Duration1:
       - Level: 1
         Time: 80000
@@ -37721,7 +37747,7 @@ Body:
     ActiveInstance: 1
     GiveAp: 20
     CastCancel: true
-    AfterCastActDelay: 500
+    CastTime: 1000
     Duration1:
       - Level: 1
         Time: 120000
@@ -37761,7 +37787,7 @@ Body:
     ActiveInstance: 1
     GiveAp: 20
     CastCancel: true
-    AfterCastActDelay: 500
+    CastTime: 1000
     Duration1:
       - Level: 1
         Time: 120000
@@ -37801,7 +37827,7 @@ Body:
     ActiveInstance: 1
     GiveAp: 20
     CastCancel: true
-    AfterCastActDelay: 500
+    CastTime: 1000
     Duration1:
       - Level: 1
         Time: 120000
@@ -37840,7 +37866,7 @@ Body:
     HitCount: 1
     ActiveInstance: 1
     CastCancel: true
-    AfterCastActDelay: 500
+    CastTime: 1000
     Duration1:
       - Level: 1
         Time: 120000
@@ -37962,6 +37988,8 @@ Body:
         Time: 90000
       - Level: 5
         Time: 100000
+    Cooldown: 2000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -37999,8 +38027,18 @@ Body:
       - Level: 4
         Time: 8000
       - Level: 5
-        Time: 10000
-    Cooldown: 3000
+        Time: 15000
+    Cooldown:
+      - Level: 1
+        Time: 1500
+      - Level: 2
+        Time: 1200
+      - Level: 3
+        Time: 900
+      - Level: 4
+        Time: 600
+      - Level: 5
+        Time: 300
     Requires:
       SpCost:
         - Level: 1
@@ -38031,8 +38069,17 @@ Body:
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1: 20000
-    Cooldown: 2000
-    FixedCastTime: 1000
+    Cooldown:
+      - Level: 1
+        Time: 1250
+      - Level: 2
+        Time: 1000
+      - Level: 3
+        Time: 750
+      - Level: 4
+        Time: 500
+      - Level: 5
+        Time: 250
     Requires:
       SpCost:
         - Level: 1
@@ -38147,9 +38194,8 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    CastTime: 2000
-    AfterCastActDelay: 500
-    Duration1: 60000
+    AfterCastActDelay: 1000
+    Duration1: 300000
     Cooldown: 60000
     FixedCastTime: 1000
     Requires:
@@ -38166,11 +38212,11 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    CastTime: 2000
+    CastTime: 4000
     AfterCastActDelay: 500
     Duration1: 100
     Cooldown: 60000
-    FixedCastTime: 1000
+    FixedCastTime: 1500
     Requires:
       SpCost: 150
       ApCost: 150
@@ -38251,11 +38297,11 @@ Body:
     HitCount: 1
     GiveAp: 4
     CastCancel: true
-    CastTime: 2000
+    CastTime: 5000
     AfterCastActDelay: 500
-    Duration1: 4000
-    Cooldown: 4000
-    FixedCastTime: 1000
+    Duration1: 3000
+    Cooldown: 3000
+    FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
@@ -38334,6 +38380,7 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
+    AfterCastActDelay: 150
     Duration1:
       - Level: 1
         Time: 20000
@@ -38375,6 +38422,7 @@ Body:
     Hit: Multi_Hit
     HitCount: -2
     CastCancel: true
+    Cooldown: 150
     Requires:
       SpCost:
         - Level: 1
@@ -38416,10 +38464,10 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    AfterCastActDelay: 500
+    AfterCastActDelay: 150
     Duration1: 60000
     Cooldown: 300000
-    FixedCastTime: 1000
+    FixedCastTime: 1750
     Requires:
       SpCost: 300
       ApCost: 200
@@ -38436,10 +38484,9 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    CastTime: 800
+    CastTime: 3000
     AfterCastActDelay: 500
-    Cooldown: 30000
-    FixedCastTime: 200
+    FixedCastTime: 1000
     Requires:
       SpCost: 120
       ApCost: 50
@@ -38481,8 +38528,8 @@ Body:
       - Level: 10
         Area: 5
     CastCancel: true
-    CastTime: 3500
-    AfterCastActDelay: 500
+    CastTime: 1000
+    AfterCastActDelay: 150
     Cooldown: 2000
     FixedCastTime: 500
     Requires:
@@ -38540,7 +38587,8 @@ Body:
       - Level: 5
         Time: 60000
     Duration2: 20000
-    Cooldown: 30000
+    Cooldown: 20000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -38593,7 +38641,8 @@ Body:
       - Level: 5
         Time: 60000
     Duration2: 10000
-    Cooldown: 30000
+    Cooldown: 20000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -38646,7 +38695,8 @@ Body:
       - Level: 5
         Time: 60000
     Duration2: 10000
-    Cooldown: 30000
+    Cooldown: 20000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -38685,10 +38735,11 @@ Body:
     Element: Weapon
     GiveAp: 1
     CastCancel: true
-    CastTime: 800
+    CastTime: 1000
     AfterCastActDelay: 500
     Duration1: 10000
-    FixedCastTime: 200
+    Cooldown: 150
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -38745,7 +38796,8 @@ Body:
       - Level: 5
         Time: 60000
     Duration2: 20000
-    Cooldown: 30000
+    Cooldown: 20000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -38780,7 +38832,6 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    AfterCastActDelay: 500
     Requires:
       SpCost: 30
   - Id: 5337
@@ -38810,7 +38861,7 @@ Body:
         Area: 15
     GiveAp: 20
     CastCancel: true
-    CastTime: 2000
+    CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
       - Level: 1
@@ -38824,7 +38875,7 @@ Body:
       - Level: 5
         Time: 180000
     Cooldown: 10000
-    FixedCastTime: 1000
+    FixedCastTime: 500
     Requires:
       SpCost:
         - Level: 1
@@ -38860,7 +38911,7 @@ Body:
       - Level: 4
         Amount: 3
     CastCancel: true
-    CastTime: 2000
+    CastTime: 1000
     AfterCastActDelay: 500
     Duration1:
       - Level: 1
@@ -38871,7 +38922,7 @@ Body:
         Time: 50000
       - Level: 4
         Time: 60000
-    FixedCastTime: 1000
+    FixedCastTime: 500
     Requires:
       SpCost:
         - Level: 1
@@ -38921,7 +38972,7 @@ Body:
       - Level: 5
         Amount: 5
     CastCancel: true
-    CastTime: 1000
+    CastTime: 2000
     AfterCastActDelay: 500
     Duration1: 10000
     Cooldown: 2000
@@ -38983,7 +39034,7 @@ Body:
       - Level: 5
         Amount: 5
     CastCancel: true
-    CastTime: 1000
+    CastTime: 2000
     AfterCastActDelay: 500
     Duration1: 10000
     Cooldown: 2000
@@ -39045,7 +39096,7 @@ Body:
       - Level: 5
         Amount: 5
     CastCancel: true
-    CastTime: 1000
+    CastTime: 2000
     AfterCastActDelay: 500
     Duration1: 10000
     Cooldown: 2000
@@ -39107,7 +39158,7 @@ Body:
       - Level: 5
         Amount: 5
     CastCancel: true
-    CastTime: 1000
+    CastTime: 2000
     AfterCastActDelay: 500
     Duration1: 10000
     Cooldown: 2000
@@ -39146,7 +39197,7 @@ Body:
     ActiveInstance: 1
     GiveAp: 20
     CastCancel: true
-    AfterCastActDelay: 500
+    CastTime: 1000
     Duration1:
       - Level: 1
         Time: 120000
@@ -39158,8 +39209,8 @@ Body:
         Time: 300000
       - Level: 5
         Time: 360000
-    Cooldown: 30000
-    FixedCastTime: 4000
+    Cooldown: 15000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -39188,7 +39239,7 @@ Body:
     ActiveInstance: 1
     GiveAp: 20
     CastCancel: true
-    AfterCastActDelay: 500
+    CastTime: 1000
     Duration1:
       - Level: 1
         Time: 120000
@@ -39200,8 +39251,8 @@ Body:
         Time: 300000
       - Level: 5
         Time: 360000
-    Cooldown: 30000
-    FixedCastTime: 4000
+    Cooldown: 15000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -39230,7 +39281,7 @@ Body:
     ActiveInstance: 1
     GiveAp: 10
     CastCancel: true
-    AfterCastActDelay: 500
+    CastTime: 1000
     Duration1:
       - Level: 1
         Time: 120000
@@ -39242,8 +39293,8 @@ Body:
         Time: 300000
       - Level: 5
         Time: 360000
-    Cooldown: 30000
-    FixedCastTime: 4000
+    Cooldown: 15000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -39290,7 +39341,7 @@ Body:
     HitCount: 1
     ActiveInstance: 1
     CastCancel: true
-    AfterCastActDelay: 500
+    CastTime: 1000
     Duration1:
       - Level: 1
         Time: 60000
@@ -39326,6 +39377,8 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 5000
     Requires:
       SpCost: 1
   - Id: 5351
@@ -39338,11 +39391,9 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    CastTime: 2000
-    AfterCastActDelay: 500
-    Duration1: 60000
-    Cooldown: 120000
-    FixedCastTime: 1000
+    CastTime: 1000
+    Duration1: 150000
+    Cooldown: 60000
     Requires:
       SpCost: 250
       ApCost: 100
@@ -39362,10 +39413,9 @@ Body:
     HitCount: 1
     CastCancel: true
     CastTime: 2000
-    AfterCastActDelay: 500
+    AfterCastActDelay: 150
     Duration1: 60000
     Cooldown: 120000
-    FixedCastTime: 1000
     Requires:
       SpCost: 300
       ApCost: 100
@@ -39386,11 +39436,10 @@ Body:
     Element: Weapon
     GiveAp: 5
     CastCancel: true
-    CastTime: 1000
-    AfterCastActDelay: 500
+    CastTime: 2000
+    AfterCastActDelay: 150
     Duration1: 500
-    Cooldown: 3000
-    FixedCastTime: 1000
+    Cooldown: 500
     Requires:
       SpCost:
         - Level: 1
@@ -39458,10 +39507,8 @@ Body:
       - Level: 5
         Amount: 2
     CastCancel: true
-    CastTime: 1000
-    AfterCastActDelay: 500
-    Cooldown: 1000
-    FixedCastTime: 1000
+    CastTime: 2000
+    AfterCastActDelay: 150
     Requires:
       SpCost:
         - Level: 1
@@ -39516,7 +39563,8 @@ Body:
       - Level: 5
         Amount: 5
     CastCancel: true
-    Cooldown: 1000
+    AfterCastActDelay: 300
+    Cooldown: 500
     Requires:
       SpCost:
         - Level: 1
@@ -39560,6 +39608,7 @@ Body:
         Amount: 3
     CastCancel: true
     CastTime: 1000
+    AfterCastActDelay: 150
     Duration1:
       - Level: 1
         Time: 10000
@@ -39571,8 +39620,6 @@ Body:
         Time: 15000
       - Level: 5
         Time: 20000
-    Cooldown: 1000
-    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -39612,11 +39659,9 @@ Body:
         Area: 11
     GiveAp: 20
     CastCancel: true
-    CastTime: 2000
-    AfterCastActDelay: 500
+    CastTime: 1000
     Duration1: 30000
     Cooldown: 10000
-    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -39659,12 +39704,10 @@ Body:
         Area: 11
     GiveAp: 20
     CastCancel: true
-    CastTime: 2000
-    AfterCastActDelay: 500
+    CastTime: 1000
     Duration1: 20000
     Duration2: 20000
     Cooldown: 10000
-    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -39706,11 +39749,9 @@ Body:
         Area: 11
     GiveAp: 20
     CastCancel: true
-    CastTime: 2000
-    AfterCastActDelay: 500
+    CastTime: 1000
     Duration1: 30000
     Cooldown: 10000
-    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -39753,11 +39794,9 @@ Body:
         Area: 11
     GiveAp: 10
     CastCancel: true
-    CastTime: 2000
-    AfterCastActDelay: 500
+    CastTime: 1000
     Duration1: 180000
     Cooldown: 10000
-    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -39800,11 +39839,9 @@ Body:
         Area: 11
     GiveAp: 10
     CastCancel: true
-    CastTime: 2000
-    AfterCastActDelay: 500
+    CastTime: 1000
     Duration1: 180000
     Cooldown: 10000
-    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -39847,12 +39884,10 @@ Body:
         Area: 11
     GiveAp: 20
     CastCancel: true
-    CastTime: 2000
-    AfterCastActDelay: 500
+    CastTime: 1000
     Duration1: 20000
     Duration2: 20000
     Cooldown: 10000
-    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -39894,11 +39929,9 @@ Body:
         Area: 11
     GiveAp: 10
     CastCancel: true
-    CastTime: 2000
-    AfterCastActDelay: 500
+    CastTime: 1000
     Duration1: 180000
     Cooldown: 10000
-    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -39935,7 +39968,6 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    AfterCastActDelay: 500
     Duration1:
       - Level: 1
         Time: 80000
@@ -39972,9 +40004,9 @@ Body:
     HitCount: 1
     CastCancel: true
     CastTime: 2000
-    AfterCastActDelay: 500
-    Cooldown: 60000
-    FixedCastTime: 1000
+    AfterCastActDelay: 1000
+    Cooldown: 8000
+    FixedCastTime: 2000
     Requires:
       SpCost:
         - Level: 1
@@ -40001,10 +40033,9 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    CastTime: 2000
     AfterCastActDelay: 500
-    Cooldown: 5000
-    FixedCastTime: 1000
+    Cooldown: 2500
+    FixedCastTime: 3000
     Requires:
       SpCost:
         - Level: 1
@@ -40030,12 +40061,12 @@ Body:
     Element: Water
     GiveAp: 4
     CastCancel: true
-    CastTime: 4000
+    CastTime: 5000
     AfterCastActDelay: 500
     Duration1: 100
     Duration2: 10000
-    Cooldown: 4000
-    FixedCastTime: 1000
+    Cooldown: 2000
+    FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
@@ -40068,12 +40099,12 @@ Body:
     Element: Wind
     GiveAp: 4
     CastCancel: true
-    CastTime: 4000
+    CastTime: 5000
     AfterCastActDelay: 500
     Duration1: 4000
     Duration2: 10000
-    Cooldown: 4000
-    FixedCastTime: 1000
+    Cooldown: 2000
+    FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
@@ -40107,12 +40138,12 @@ Body:
     Element: Poison
     GiveAp: 4
     CastCancel: true
-    CastTime: 4000
+    CastTime: 5000
     AfterCastActDelay: 500
     Duration1: 4000
     Duration2: 20000
-    Cooldown: 4000
-    FixedCastTime: 1000
+    Cooldown: 2000
+    FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
@@ -40146,12 +40177,12 @@ Body:
     Element: Fire
     GiveAp: 4
     CastCancel: true
-    CastTime: 4000
+    CastTime: 5000
     AfterCastActDelay: 500
     Duration1: 4000
     Duration2: 20000
-    Cooldown: 4000
-    FixedCastTime: 1000
+    Cooldown: 2000
+    FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
@@ -40185,12 +40216,12 @@ Body:
     Element: Earth
     GiveAp: 4
     CastCancel: true
-    CastTime: 4000
+    CastTime: 5000
     AfterCastActDelay: 500
     Duration1: 100
     Duration2: 10000
-    Cooldown: 4000
-    FixedCastTime: 1000
+    Cooldown: 2000
+    FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
@@ -40225,11 +40256,11 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    CastTime: 3000
-    AfterCastActDelay: 500
+    CastTime: 5000
+    AfterCastActDelay: 1000
     Duration1: 1500000
     Cooldown: 900000
-    FixedCastTime: 2000
+    FixedCastTime: 3000
     Requires:
       SpCost: 100
       ItemCost:
@@ -40246,11 +40277,11 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    CastTime: 3000
-    AfterCastActDelay: 500
+    CastTime: 5000
+    AfterCastActDelay: 1000
     Duration1: 1500000
     Cooldown: 900000
-    FixedCastTime: 2000
+    FixedCastTime: 3000
     Requires:
       SpCost: 100
       ItemCost:
@@ -40267,11 +40298,11 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    CastTime: 3000
-    AfterCastActDelay: 500
+    CastTime: 5000
+    AfterCastActDelay: 1000
     Duration1: 1500000
     Cooldown: 900000
-    FixedCastTime: 2000
+    FixedCastTime: 3000
     Requires:
       SpCost: 100
       ItemCost:
@@ -40288,11 +40319,11 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    CastTime: 3000
-    AfterCastActDelay: 500
+    CastTime: 5000
+    AfterCastActDelay: 1000
     Duration1: 1500000
     Cooldown: 900000
-    FixedCastTime: 2000
+    FixedCastTime: 3000
     Requires:
       SpCost: 100
       ItemCost:
@@ -40309,11 +40340,11 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    CastTime: 3000
-    AfterCastActDelay: 500
+    CastTime: 5000
+    AfterCastActDelay: 1000
     Duration1: 1500000
     Cooldown: 900000
-    FixedCastTime: 2000
+    FixedCastTime: 3000
     Requires:
       SpCost: 100
       ItemCost:
@@ -40329,8 +40360,8 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    CastTime: 8000
-    AfterCastActDelay: 500
+    CastTime: 4000
+    AfterCastActDelay: 1500
     Cooldown: 60000
     FixedCastTime: 2000
     Requires:
@@ -40346,8 +40377,8 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    CastTime: 2000
-    AfterCastActDelay: 500
+    CastTime: 4000
+    AfterCastActDelay: 1000
     Duration1:
       - Level: 1
         Time: 120000
@@ -40360,7 +40391,7 @@ Body:
       - Level: 5
         Time: 240000
     Cooldown: 10000
-    FixedCastTime: 1000
+    FixedCastTime: 2000
     Requires:
       SpCost:
         - Level: 1
