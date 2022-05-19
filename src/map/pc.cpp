@@ -3515,8 +3515,9 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 		case SP_MOVE_HASTE:	//Non stackable increase
 			if (sd->state.lr_flag != 2) {
 				sd->bonus.speed_rate = min(sd->bonus.speed_rate, -val);
-				sd->special_state.movehaste = true;
-				clif_status_load(&sd->bl, EFST_MOVHASTE_INFINITY, 1);
+				sd->special_state.movehaste++;
+				if (sd->special_state.movehaste == 1)
+					clif_status_load(&sd->bl, EFST_MOVHASTE_INFINITY, 1);
 			}
 			break;
 		case SP_ASPD:	//Raw increase
