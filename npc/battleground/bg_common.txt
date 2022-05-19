@@ -31,57 +31,57 @@ bat_room,161,160,3	script	Gen. Guillaume's Aide#03	419,{ end; }
 bat_room,160,141,3	script	Prince Croix	416,{
 	cutin "bat_crua1",2;
 	mes "[Prince Croix]";
-	mes "Wise adventurer, why don't you lend us your power for victory?";
+	mes "Petualang yang bijaksana, mengapa kamu tidak meminjamkan kami kekuatanmu untuk kemenangan?";
 	next;
-	switch(select("What's the reason for the Battle?:Tell me about General Guillaume")) {
+	switch(select("Apa alasan Pertempuran?:Ceritakan tentang Jenderal Guillaume")) {
 	case 1:
 		cutin "bat_crua2",2;
 		mes "[Prince Croix]";
-		mes "Maroll's great king, Marcel Marollo VII, is very sick lately.";
-		mes "His Majesty has declared that he will be leaving the future of Maroll to me or the 3rd prince, General Guillaume.";
+		mes "Raja agung Maroll, Marcel Marrollo VII, sedang sakit keras akhir-akhir ini.";
+		mes "Yang Mulia telah menyatakan bahwa dia akan menyerahkan masa depan Maroll kepada saya atau pangeran ke-3, Jenderal Guillaume.";
 		next;
 		mes "[Prince Croix]";
-		mes "General Guillaume may have an advantage in this battle as he is the great general of Maroll, but that doesn't automatically mean he'll win.";
-		mes "I want to win this battle so that I can bring prosperity to the people of Maroll. They've suffered enough from war...";
+		mes "Jenderal Guillaume mungkin memiliki keuntungan dalam pertempuran ini karena dia adalah jenderal besar Maroll, tetapi itu tidak otomatis berarti dia akan menang.";
+		mes "Saya ingin memenangkan pertempuran ini sehingga saya dapat membawa kemakmuran bagi orang-orang Maroll. Mereka sudah cukup menderita akibat perang...";
 		next;
-		switch(select("Yes, I want to join you.:End Conversation")) {
+		switch(select("Ya, saya ingin bergabung dengan Anda.:Akhiri Percakapan")) {
 		case 1:
 			cutin "bat_crua1",2;
 			mes "[Prince Croix]";
-			mes "Thank you so much. I feel like I can win with the help of adventurers like you.";
-			mes "Now, please go downstairs and join your comrades in sharpening their skills to fight the enemy!";
+			mes "Terima kasih banyak. Saya merasa bisa menang dengan bantuan petualang seperti Anda.";
+			mes "Sekarang, silakan turun dan bergabunglah dengan rekan-rekan Anda untuk mengasah keterampilan mereka untuk melawan musuh!";
 			break;
 		case 2:
 			mes "[Prince Croix]";
-			mes "For Maroll!";
+			mes "Untuk Maroll!";
 			break;
 		}
 		break;
 	case 2:
 		cutin "bat_crua2",2;
 		mes "[Prince Croix]";
-		mes "The 3rd Prince Guillaume is the great general of Maroll.";
-		mes "It's a waste of time to explain to you how great a leader or warlord he is, since he commands the great military power of Maroll.";
+		mes "Pangeran ke-3 Guillaume adalah jenderal besar Maroll.";
+		mes "Buang-buang waktu untuk menjelaskan kepada Anda betapa hebatnya dia sebagai pemimpin atau panglima perang, karena dia memimpin kekuatan militer besar Maroll.";
 		next;
 		mes "[Prince Croix]";
-		mes "Unfortunately, there's something he and his followers are unaware of:";
-		mes "Do the people of Maroll really want them to spend so much money on military power?";
-		mes "We have suffered enough from wars.";
-		mes "I believe weapons aren't the best way to bring prosperity to a nation.";
+		mes "Sayangnya, ada sesuatu yang dia dan pengikutnya tidak sadari:";
+		mes "Apakah orang-orang Maroll benar-benar ingin mereka menghabiskan begitu banyak uang untuk kekuatan militer?";
+		mes "Kami sudah cukup menderita akibat perang.";
+		mes "Saya percaya senjata bukanlah cara terbaik untuk membawa kemakmuran bagi suatu bangsa.";
 		next;
 		mes "[Prince Croix]";
-		mes "I do not wish to shed blood, but I have no choice but to fight for the possibility of peace and for the sake of my people.";
+		mes "Saya tidak ingin menumpahkan darah, tetapi saya tidak punya pilihan selain berjuang untuk kemungkinan perdamaian dan demi rakyat saya.";
 		next;
-		switch(select("Yes, I want to join you.:End Conversation")) {
+		switch(select("Ya, saya ingin bergabung dengan Anda.:Akhiri Percakapan")) {
 		case 1:
 			cutin "bat_crua1",2;
 			mes "[Prince Croix]";
-			mes "Thank you so much. I feel like I can win with the help of adventurers like you.";
-			mes "Now, please go downstairs and join your comrades in sharpening their skills to fight the enemy!";
+			mes "Terima kasih banyak. Saya merasa bisa menang dengan bantuan petualang seperti Anda.";
+			mes "Sekarang, silakan turun dan bergabunglah dengan rekan-rekan Anda untuk mengasah keterampilan mereka untuk melawan musuh!";
 			break;
 		case 2:
 			mes "[Prince Croix]";
-			mes "For Maroll!";
+			mes "Untuk Maroll!";
 			break;
 		}
 		break;
@@ -98,71 +98,71 @@ bat_room,161,142,3	script	Prince Croix's Aide#02	415,{ end; }
 bat_room,160,159,3	script	General Guillaume	420,{
 	cutin "bat_kiyom2",2;
 	mes "[General Guillaume]";
-	mes "Hot-blooded adventurer, we need your ability to win this battle.";
+	mes "Petualang berdarah panas, kami membutuhkan kemampuanmu untuk memenangkan pertempuran ini.";
 	next;
-	switch(select("What's the reason for the Battle?:Tell me about Prince Croix")) {
+	switch(select("Apa alasan Pertempuran?:Ceritakan tentang Pangeran Croix")) {
 	case 1:
 		cutin "bat_kiyom1",2;
 		mes "[General Guillaume]";
-		mes "Our great king, Marcel Marollo VII, is very sick lately.";
-		mes "His Majesty has declared that he has chosen either me or Prince Croix as the next king amongst his 9 sons.";
+		mes "Raja agung kita, Marcel Marrollo VII, sedang sakit keras akhir-akhir ini.";
+		mes "Yang Mulia telah menyatakan bahwa dia telah memilih saya atau Pangeran Croix sebagai raja berikutnya di antara 9 putranya.";
 		next;
 		mes "[General Guillaume]";
-		mes "Two kings can't share a nation! Only the one victorious from His Majesty's appointed battle will be enthroned.";
+		mes "Dua raja tidak bisa berbagi bangsa! Hanya satu pemenang dari pertempuran yang ditunjuk Yang Mulia yang akan dinobatkan.";
 		next;
 		mes "[General Guillaume]";
-		mes "This is, however, not just a battle between us. This battle will determine the future of this country.";
-		mes "I pledge on my honor to prove that I'm the one who can protect this Maroll from outside threats.";
+		mes "Namun, ini bukan hanya pertempuran di antara kami. Pertempuran ini akan menentukan masa depan negara ini.";
+		mes "Saya berjanji pada kehormatan saya untuk membuktikan bahwa sayalah yang dapat melindungi Marol ini dari ancaman luar.";
 		next;
-		switch(select("Yes, I want to join you.:End Conversation")) {
+		switch(select("Ya, saya ingin bergabung dengan Anda.:Akhiri Percakapan")) {
 		case 1:
 			cutin "bat_kiyom2",2;
 			mes "[General Guillaume]";
-			mes "Welcome to my army, comrade.";
-			mes "Your eyes tell me that you're a soldier that I can trust.";
+			mes "Selamat datang di pasukanku, kawan.";
+			mes "Matamu memberitahuku bahwa kau adalah seorang prajurit yang bisa kupercaya.";
 			next;
 			mes "[General Guillaume]";
-			mes "Now, go upstairs and apply for battle with your comrades.";
-			mes "I'm sure they'll welcome you whole-heartedly!";
+			mes "Sekarang, naik ke atas dan ajukan pertempuran dengan rekan-rekanmu.";
+			mes "Saya yakin mereka akan menyambut Anda dengan sepenuh hati!";
 			break;
 		case 2:
 			mes "[General Guillaume]";
-			mes "I'll be the one who will capture the flag!";
+			mes "Saya akan menjadi orang yang akan menangkap bendera!";
 			break;
 		}
 		break;
 	case 2:
 		cutin "bat_kiyom1",2;
 		mes "[General Guillaume]";
-		mes "The 5th Prince Croix is currently titled as the Prime Minister of Maroll.";
-		mes "He thinks all national matters of a nation can be discussed and determined on a desk,";
-		mes "and believes in peaceful co-existence with other countries.";
+		mes "Pangeran Croix ke-5 saat ini bergelar Perdana Menteri Maroll.";
+		mes "Dia pikir semua masalah nasional suatu bangsa dapat dibahas dan ditentukan di atas meja,";
+		mes "dan percaya akan hidup berdampingan secara damai dengan negara-negara lain.";
 		next;
 		mes "[General Guillaume]";
-		mes "He's too ignorant to admit that so-called peace is built on countless lives that are sacrificed in wars while normal citizens and upper classes can live, oblivious to the horrors that allow them to live that way.";
+		mes "Dia terlalu bodoh untuk mengakui bahwa apa yang disebut perdamaian dibangun di atas kehidupan yang tak terhitung jumlahnya yang dikorbankan dalam perang sementara warga biasa dan kelas atas dapat hidup, tidak menyadari kengerian yang memungkinkan mereka hidup seperti itu.";
 		next;
 		mes "[General Guillaume]";
-		mes "He's too naive to understand the reality....";
-		mes "I can't leave Maroll to someone like him who lives in a dream!";
+		mes "Dia terlalu naif untuk memahami kenyataan....";
+		mes "Saya tidak bisa meninggalkan Marol untuk orang seperti dia yang hidup dalam mimpi!";
 		next;
 		mes "[General Guillaume]";
-		mes "His unrealistic beliefs will drown this country in poverty and make the people weak. If he becomes the king, Maroll will never rest from the onslaughts of other countries.";
-		mes "I want to teach him what makes this small country so powerful and prosperous. It's military power!";
+		mes "Keyakinannya yang tidak realistis akan menenggelamkan negara ini dalam kemiskinan dan membuat rakyatnya lemah. Jika dia menjadi raja, Marroll tidak akan pernah berhenti dari gempuran negara lain.";
+		mes "Saya ingin mengajarinya apa yang membuat negara kecil ini begitu kuat dan makmur. Ini adalah kekuatan militer!";
 		next;
-		switch(select("I want to join your army!:End Conversation")) {
+		switch(select("Saya ingin bergabung dengan tentara Anda!:Akhiri Percakapan")) {
 		case 1:
 			cutin "bat_kiyom2",2;
 			mes "[General Guillaume]";
-			mes "Welcome to my army, comrade.";
-			mes "Your eyes tell me that you're a soldier that I can trust.";
+			mes "Selamat datang di pasukanku, kawan.";
+			mes "Matamu memberitahuku bahwa kau adalah seorang prajurit yang bisa kupercaya.";
 			next;
 			mes "[General Guillaume]";
-			mes "Now, go upstairs and apply for battle from your comrades.";
-			mes "I'm sure they'll welcome you whole-heartedly!";
+			mes "Sekarang, naik ke atas dan ajukan pertempuran dari rekan-rekanmu.";
+			mes "Saya yakin mereka akan menyambut Anda dengan sepenuh hati!";
 			break;
 		case 2:
 			mes "[General Guillaume]";
-			mes "I'll be the one who will capture the flag!";
+			mes "Saya akan menjadi orang yang akan menangkap bendera!";
 			break;
 		}
 		break;
@@ -184,9 +184,9 @@ bat_room,160,159,3	script	General Guillaume	420,{
 //============================================================
 bat_room,148,150,5	script	Teleporter#Battlefield	124,{
 	mes "[Teleporter]";
-	mes "Do you wish to leave the battlefield? Use my services to return to town.";
+	mes "Apakah Anda ingin meninggalkan medan perang? Gunakan layanan saya untuk kembali ke kota.";
 	next;
-	switch(select("Leave:Don't Leave")) {
+	switch(select("Meninggalkan:Jangan Tinggalkan")) {
 	case 1:
 		mes "[Teleporter]";
 		switch(bat_return) {
@@ -224,13 +224,13 @@ bat_room,148,150,5	script	Teleporter#Battlefield	124,{
 			setarray .@xy[0],156,46;
 			break;
 		}
-		mes "You will be sent back to "+.@mapname$[0]+".";
+		mes "Anda akan dikirim kembali ke "+.@mapname$[0]+".";
 		close2;
 		warp .@mapname$[1],.@xy[0],.@xy[1];
 		break;
 	case 2:
 		mes "[Teleporter]";
-		mes "I'll be here whenever you're in need of my services.";
+		mes "Saya akan berada di sini kapan pun Anda membutuhkan layanan saya.";
 		close;
 	}
 	end;
@@ -238,17 +238,17 @@ bat_room,148,150,5	script	Teleporter#Battlefield	124,{
 
 -	script	Maroll Battle Recruiter::BatRecruit	728,{
 	mes "[Maroll Battle Recruiter]";
-	mes "Good day, adventurer.";
-	mes "I'm a knight from a far country called Maroll Kingdom.";
+	mes "Selamat siang, petualang.";
+	mes "Saya seorang ksatria dari negara jauh bernama Kerajaan Maroll.";
 	next;
 	mes "[Maroll Battle Recruiter]";
-	mes "The two princes of the kingdom are now battling for the throne of Maroll, and are in need of experienced soldiers like you.";
-	mes "How would you like to lend your power to one of the princes in the Maroll Kingdom?";
+	mes "Dua pangeran kerajaan sekarang berjuang untuk tahta Marroll, dan membutuhkan tentara berpengalaman seperti Anda.";
+	mes "Bagaimana Anda ingin meminjamkan kekuatan Anda kepada salah satu pangeran di Kerajaan Maroll?";
 	next;
-	switch(select("Join:Don't Join")) {
+	switch(select("Bergabung:Jangan Bergabung")) {
 	case 1:
 		mes "[Maroll Battle Recruiter]";
-		mes "May the war god bless you.";
+		mes "Semoga dewa perang memberkati Anda.";
 		close2;
 		getmapxy(.@mapname$,.@x,.@y,BL_NPC);
 		if (.@mapname$ == "prontera")
@@ -273,7 +273,7 @@ bat_room,148,150,5	script	Teleporter#Battlefield	124,{
 		break;
 	case 2:
 		mes "[Maroll Battle Recruiter]";
-		mes "I'll always be stationed here for more soldiers. Feel free to come back whenever you're interested.";
+		mes "Saya akan selalu ditempatkan di sini untuk lebih banyak tentara. Jangan ragu untuk kembali kapan pun Anda tertarik.";
 		close;
 	}
 	end;
@@ -335,14 +335,14 @@ bat_room,138,144,4	script	Repairman#bg	86,{
 bat_room,1,151,3	script	Switch#batgnd	81,{
 	set .@i, callfunc("F_GM_NPC",1854,0);
 	if (.@i == -1) {
-		mes "The command has been cancelled.";
+		mes "Perintah telah dibatalkan.";
 		close;
 	} else if (.@i == 0) {
 		end;
 	} else {
-		mes "May I help you?";
+		mes "Dapatkah saya membantu Anda?";
 		next;
-		switch(select("Close Battlefield:Open Battlefield:Reset a01:Reset b01:Reset a02:Reset b02")) {
+		switch(select("Tutup Medan Perang:Buka Medan Perang:Mengatur ulang a01:Mengatur ulang b01:Mengatur ulang a02:Mengatur ulang b02")) {
 		case 1:
 			disablenpc "Tierra Gorge Officer#01a";
 			disablenpc "Tierra Gorge Officer#02a";
@@ -376,7 +376,7 @@ bat_room,1,151,3	script	Switch#batgnd	81,{
 			donpcevent "start#bat_b02::OnEnable";
 			break;
 		}
-		mes "Complete";
+		mes "Menyelesaikan";
 		close;
 	}
 }
@@ -385,58 +385,58 @@ bat_room,1,151,3	script	Switch#batgnd	81,{
 //============================================================
 bat_room,160,150,3	script	Erundek	109,{
 	if (checkweight(1201,1) == 0) {
-		mes "- Wait a minute !! -";
-		mes "- Currently you're carrying -";
-		mes "- too many items with you. -";
-		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- Tunggu sebentar !! -";
+		mes "- Saat ini Anda sedang membawa -";
+		mes "- erlalu banyak barang bersamamu. -";
+		mes "- Silakan coba lagi -";
+		mes "- setelah Anda kehilangan berat badan. -";
 		close;
 	}
 	mes "[Erundek]";
-	mes "Do you have the battlefield badges?";
-	mes "I can exchange Bravery Badges and Valor Badges for reward items.";
+	mes "Apakah kamu memiliki lencana medan perang?";
+	mes "Saya bisa menukarkan Bravery Badge dan Valor Badge dengan barang hadiah.";
 	next;
-	switch(select("Exchange Badges:Check the Catalog")) {
+	switch(select("Lencana Pertukaran:Periksa Katalog")) {
 	case 1:
 		mes "[Erundek]";
-		mes "Which type of items would you like to exchange?";
-		mes "To check more information about the reward items, please use our ^3131FFCatalog^000000.";
+		mes "Apa jenis barang yang ingin Anda tukarkan?";
+		mes "Untuk memeriksa informasi lebih lanjut tentang item hadiah, silakan gunakan ^3131FFKatalog^000000 kami.";
 		next;
 		switch(select("Weapon:Armor:Accessory:Consumable")) {
 		case 1:
 			mes "[Erundek]";
-			mes "You chose ^3131FFWeapon^000000.";
-			mes "The following weapons are available for exchange with the battlefield badges.";
-			mes "Please note that items for ^3131FFBravery Badges are indicated as (BB)^000000, and ^3131FFValor Badges as (VB)^000000.";
+			mes "Anda memilih ^3131FFSenjata^000000.";
+			mes "Senjata berikut tersedia untuk ditukar dengan lencana medan perang.";
+			mes "Harap dicatat bahwa item untuk ^3131FFLencana Keberanian ditunjukkan sebagai (BB)^000000, dan ^3131FFLencana Valor sebagai (VB)^000000.";
 			next;
 			switch(select("Dagger/OneSword/TwoSword/TwoSpear:Staff/Mace/TwoAxe/Shuriken:Bow/Katar/Music/Whip:Book/Knuckle:Revolver/Rifle/Gatling/Shotgun/Launcher")) {
 			case 1:
 				mes "[Erundek]";
-				mes "The following items are available in the ^3131FFDagger, One-Handed Sword, Two-Handed Sword, and Two-Handed Spear^000000 category.";
+				mes "Item berikut tersedia dalam kategori ^3131FFDagger, One-Handed Sword, Two-Handed Sword, and Two-Handed Spear^000000 kategori.";
 				next;
 				setarray .@Weapons[0],13036,7828,13037,7829,13411,7828,13410,7829,1183,7828,1184,7829,1425,7828,1482,7829;
 				break;
 			case 2:
 				mes "[Erundek]";
-				mes "The following items are available in the ^3131FFStaff / Mace / Two-Handed Axe / Huuma Shuriken^000000 category.";
+				mes "Item berikut tersedia dalam kategori ^3131FFStaff / Mace / Two-Handed Axe / Huuma Shuriken^000000 kategori.";
 				next;
 				setarray .@Weapons[0],1632,7828,1633,7829,1634,7828,1635,7829,1543,7828,1542,7829,1380,7828,1379,7829,13305,7828,13306,7829;
 				break;
 			case 3:
 				mes "[Erundek]";
-				mes "The following weapons are available in the ^3131FFBow / Katar / Musical Instrument / Whip^000000 category.";
+				mes "Item berikut tersedia dalam kategori ^3131FFBow / Katar / Musical Instrument / Whip^000000 kategori.";
 				next;
 				setarray .@Weapons[0],1739,7828,1738,7829,1279,7828,1280,7829,1924,7828,1923,7829,1978,7828,1977,7829;
 				break;
 			case 4:
 				mes "[Erundek]";
-				mes "The following weapons are available in the ^3131FFBook / Knuckle^000000 category.";
+				mes "Item berikut tersedia dalam kategori ^3131FFBook / Knuckle^000000 kategori.";
 				next;
 				setarray .@Weapons[0],1574,7828,1575,7829,1824,7828,1823,7829;
 				break;
 			case 5:
 				mes "[Erundek]";
-				mes "The following weapons are available in the ^3131FFRevolver / Rifle / Gatling Gun / Shotgun / Grenade Launcher^000000 category.";
+				mes "Item berikut tersedia dalam kategori ^3131FFRevolver / Rifle / Gatling Gun / Shotgun / Grenade Launcher^000000 kategori.";
 				next;
 				setarray .@Weapons[0],13108,7828,13171,7829,13172,7828,13173,7829,13174,7829;
 				break;
@@ -447,29 +447,29 @@ bat_room,160,150,3	script	Erundek	109,{
 			set .@i, (select(.@menu$)-1)*2;
 			set .@type$, ((.@Weapons[.@i+1]==7828)?"(BB)":"(VB)");
 			mes "[Erundek]";
-			mes "You chose ^3131FF"+getitemname(.@Weapons[.@i])+.@type$+"^000000.";
-			mes "You can exchange for this item with ^FF0000100 "+getitemname(.@Weapons[.@i+1])+"^000000.";
-			mes "Would you like to exchange?";
+			mes "Anda memilih ^3131FF"+getitemname(.@Weapons[.@i])+.@type$+"^000000.";
+			mes "Anda dapat menukar item ini dengan ^FF0000100 "+getitemname(.@Weapons[.@i+1])+"^000000.";
+			mes "Mau Menukarkan?";
 			next;
-			switch(select("Do not exchange:Exchange")) {
+			switch(select("Jangan bertukar:Menukarkan")) {
 			case 1:
 				break;
 			case 2:
 				mes "[Erundek]";
-				mes "Would you like to spend ^FF0000100 "+getitemname(.@Weapons[.@i+1])+"^000000 and receive a ^3131FF"+getitemname(.@Weapons[.@i])+.@type$+"^000000?";
+				mes "Apakah Anda ingin menghabiskan ^FF0000100 "+getitemname(.@Weapons[.@i+1])+"^000000 dan menerima ^3131FF"+getitemname(.@Weapons[.@i])+.@type$+"^000000?";
 				next;
 				mes "[Erundek]";
-				mes "Remember, Battleground Reward Items are ^FF0000Character Bound^000000. Are you sure you want this item?";
+				mes "Ingat, Item Hadiah Battleground adalah ^FF0000Terikat Karakter^000000. Apakah Anda yakin menginginkan barang ini?";
 				next;
-				switch(select("Yes:No")) {
+				switch(select("Iya:Tidak")) {
 				case 1:
 					mes "[Erundek]";
 					if (countitem(.@Weapons[.@i+1]) >= 100) {
-						mes "Thank you for exchanging.";
+						mes "Terima kasih sudah bertukar.";
 						delitem .@Weapons[.@i+1],100;
 						getitem .@Weapons[.@i],1;
 					}
-					else mes "I'm sorry, but you don't have enough badges to exchange.";
+					else mes "Maaf, tetapi Anda tidak memiliki cukup lencana untuk ditukar.";
 					close;
 				case 2:
 					break;
@@ -477,12 +477,12 @@ bat_room,160,150,3	script	Erundek	109,{
 				break;
 			}
 			mes "[Erundek]";
-			mes "Do you need more time to check the items?";
+			mes "Apakah Anda perlu lebih banyak waktu untuk memeriksa item?";
 			close;
 		case 2:
 			mes "[Erundek]";
-			mes "You chose ^3131FFArmor^000000.";
-			mes "The following armors are available for exchange with the battlefield badges.";
+			mes "Anda memilih ^3131FFArmor^000000.";
+			mes "Armor berikut tersedia untuk ditukar dengan lencana medan perang.";
 			next;
 			switch(select("Garments / Shoes:Armor")) {
 			case 1:
@@ -495,16 +495,16 @@ bat_room,160,150,3	script	Erundek	109,{
 			break;
 		case 3:
 			mes "[Erundek]";
-			mes "You chose ^3131FFAccessory^000000.";
-			mes "You can exchange the Medal of Honors with your Badges according to the job classes, as follows:";
+			mes "Anda memilih ^3131FFAccessory^000000.";
+			mes "Anda dapat menukar Medal of Honours dengan Lencana Anda sesuai dengan kelas pekerjaan, sebagai berikut:";
 			next;
 			setarray .@Items[0],2733,500,2720,500,2721,500,2722,500,2723,500,2724,500,2725,500;
 			set .@menu1$,"Gunslinger:Swordman/Taekwon Master:Thief:Acolyte:Magician:Archer:Merchant";
 			break;
 		case 4:
 			mes "[Erundek]";
-			mes "You chose ^3131FFConsumable^000000.";
-			mes "The following consumable items are available for exchange with the battlefield badges:";
+			mes "Anda memilih ^3131FFConsumable^000000.";
+			mes "Barang konsumsi berikut tersedia untuk ditukar dengan lencana medan perang:";
 			next;
 			setarray .@Items[0],12269,10,12270,10,12271,5,12272,10,12273,10;
 			break;
@@ -512,7 +512,7 @@ bat_room,160,150,3	script	Erundek	109,{
 		break;
 	case 2:
 		mes "[Erundek]";
-		mes "We have many items, so please take a look and purchase deliberately.";
+		mes "Kami memiliki banyak item, jadi silakan lihat dan beli dengan sengaja.";
 		close2;
 		readbook 11010,1;
 		end;
@@ -523,7 +523,7 @@ bat_room,160,150,3	script	Erundek	109,{
 		set .@menu$, .@menu$+getitemname(.@Items[.@i])+":";
 	set .@i, (select(.@menu$)-1)*2;
 	mes "[Erundek]";
-	mes "You chose ^3131FF"+getitemname(.@Items[.@i])+"^000000.";
+	mes "Anda memilih ^3131FF"+getitemname(.@Items[.@i])+"^000000.";
 	switch(.@Items[.@i]) {
 		case 2720: mes "This item is for Swordman and Taekwon Master Class only."; break;
 		case 2721: mes "This item is for Thief Class only."; break;
@@ -534,37 +534,37 @@ bat_room,160,150,3	script	Erundek	109,{
 		case 2733: mes "This item is for Gunslinger only."; break;
 		default: break;
 	}
-	mes "You can exchange for this item with ^FF0000"+.@Items[.@i+1]+" "+getitemname(7828)+" or "+.@Items[.@i+1]+" "+getitemname(7829)+"^000000.";
-	mes "Would you like to exchange?";
+	mes "Anda dapat menukar item ini dengan ^FF0000"+.@Items[.@i+1]+" "+getitemname(7828)+" atau "+.@Items[.@i+1]+" "+getitemname(7829)+"^000000.";
+	mes "Mau tukar tambah?";
 	next;
-	switch(select("Do not exchange:Exchange")) {
+	switch(select("Jangan bertukar:Menukarkan")) {
 	case 1:
 		mes "[Erundek]";
-		mes "Do you need more time to check the items?";
+		mes "Apakah Anda perlu lebih banyak waktu untuk memeriksa barang?";
 		break;
 	case 2:
 		mes "[Erundek]";
-		mes "Which Badge do you want to exchange?";
-		mes "You need ^3131FF"+.@Items[.@i+1]+" Badges^000000 to exchange.";
+		mes "Lencana mana yang ingin Anda tukarkan?";
+		mes "Anda membutuhkan ^3131FF"+.@Items[.@i+1]+" Lencana^000000 untuk menukarkan.";
 		next;
 		if (.@item[0] < 12269 || .@item[0] > 12273 ) {
 			mes "[Erundek]";
-			mes "Remember, Battleground Reward Items are ^FF0000Character Bound^000000. Are you sure you want this item?";
+			mes "Ingat, Item Hadiah Battleground adalah ^FF0000Terikat Karakter^000000. Apakah Anda yakin menginginkan barang ini?";
 			next;
 		}
 		set .@j, select("Bravery Badge:Valor Badge:Cancel");
 		mes "[Erundek]";
 		if (.@j == 3) {
-			mes "You cancelled the exchange.";
+			mes "Anda membatalkan pertukaran.";
 			break;
 		}
 		set .@cost, ((.@j==1)?7828:7829);
 		if (countitem(.@cost) >= .@Items[.@i+1]) {
-			mes "Thank you for exchanging.";
+			mes "Terima kasih sudah bertukar.";
 			delitem .@cost, .@Items[.@i+1];
 			getitem .@Items[.@i],1;
 		}
-		else mes "You do not have enough "+getitemname(.@cost)+"s.";
+		else mes "Anda tidak punya cukup "+getitemname(.@cost)+"s.";
 		break;
 	}
 	close;
@@ -591,25 +591,25 @@ function	script	F_BG_Badge	{
 		set .@amount, .@amount_win;
 		if (.@team$ == "Guillaume") {
 			mes "[Axl Rose]";
-			mes "Blessed Guillaume!";
+			mes "Guillaume Diberkati!";
 		} else if (.@team$ == "Croix") {
 			mes "[Swandery]";
-			mes "Blessed Croix!";
+			mes "Croix Diberkati!";
 		}
-		mes "Let's enjoy our glorious victory!";
-		mes strcharinfo(0)+", it's a sign reflecting victory.";
+		mes "Mari kita nikmati kemenangan gemilang kita!";
+		mes strcharinfo(0)+", itu adalah tanda yang mencerminkan kemenangan.";
 	} else {
 		set .@amount, .@amount_lose;
 		if (.@team$ == "Guillaume") {
 			mes "[Axl Rose]";
-			mes "You lost, but you're dedicated to this battle.";
-			mes "This is a reward for your great dedication by Guillaume Marollo!";
-			mes "Just take this defeat as a lesson, and next time you will definitely win.";
+			mes "Kamu kalah, tapi kamu berdedikasi untuk pertempuran ini.";
+			mes "Ini adalah hadiah atas dedikasi Anda yang luar biasa oleh Guillaume Marrollo!";
+			mes "Anggap saja kekalahan ini sebagai pelajaran, dan lain kali kamu pasti menang.";
 		} else if (.@team$ == "Croix") {
 			mes "[Swandery]";
-			mes "Oh, "+strcharinfo(0)+" Don't be sad.";
-			mes "Even though we didn't win, we did our best.";
-			mes "This is a Royal gift from Croix, and please don't forget this battle. We will win the next one.";
+			mes "Oh, "+strcharinfo(0)+" Jangan sedih.";
+			mes "Meskipun kami tidak menang, kami melakukan yang terbaik.";
+			mes "Ini adalah hadiah Kerajaan dari Croix, dan tolong jangan lupakan pertempuran ini. Kita akan memenangkan pertempuran berikutnya.";
 		}
 	}
 	close2;
