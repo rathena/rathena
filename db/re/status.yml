@@ -1181,7 +1181,7 @@ Body:
     Flags:
       NoSave: true
   - Status: Assumptio
-    Icon: EFST_ASSUMPTIO_BUFF
+    Icon: EFST_ASSUMPTIO2
     DurationLookup: HP_ASSUMPTIO
     CalcFlags:
       Def: true
