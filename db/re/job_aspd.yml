@@ -83,6 +83,13 @@ Header:
 Body:
   - Jobs:
       Novice: true
+      Super_Novice: true
+      Novice_High: true
+      Baby: true
+      Super_Baby: true
+      Super_Novice_E: true
+      Super_Baby_E: true
+      Hyper_Novice: true
     BaseASPD:
       Fist: 40
       Dagger: 55
@@ -325,24 +332,6 @@ Body:
       Bow: 48
       Whip: 45
       Shield: 7
-  - Jobs:
-      Super_Novice: true
-      Novice_High: true
-      Baby: true
-      Super_Baby: true
-      Super_Novice_E: true
-      Super_Baby_E: true
-      Hyper_Novice: true
-    BaseASPD:
-      Fist: 40
-      Dagger: 55
-      1hSword: 57
-      1hAxe: 50
-      Mace: 50
-      2hMace: 55
-      Staff: 65
-      2hStaff: 65
-      Shield: 10
   - Jobs:
       Gunslinger: true
       Rebellion: true

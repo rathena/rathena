@@ -84,6 +84,7 @@ Body:
   - Jobs:
       Novice: true
       Super_Novice: true
+      Novice_High: true
       Baby: true
       Super_Baby: true
     BaseASPD:
