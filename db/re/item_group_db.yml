@@ -25388,12 +25388,12 @@ Body:
             Rate: 73
           - Item: S_FullPene_Earring
             Rate: 73
-  - Group: DROOPING_GUNSLINGER_SCROLL
+  - Group: GUNSLINGER_ENCHANT
     SubGroups:
       - SubGroup: 0
         List:
           - Item: Drooping_Rebellion_
-            RandomOptionGroup: DROOPING_GUNSLINGER_SCROLL
+            RandomOptionGroup: GUNSLINGER_ENCHANT
   - Group: ENCHANTSTONE_RECIPE
     SubGroups:
       - SubGroup: 1
@@ -26046,18 +26046,18 @@ Body:
             Rate: 130
           - Item: C_Giant_White_Rabbit
             Rate: 130
-  - Group: FAN_MODIFICATION_KIT
+  - Group: FAN_UPGRADE_KIT
     SubGroups:
       - SubGroup: 0
         List:
           - Item: Sea_Otter_Mini_Fan
-            RandomOptionGroup: FAN_MODIFICATION_KIT
-  - Group: UNIFORM_REPAIR_KIT
+            RandomOptionGroup: FAN_UPGRADE_KIT
+  - Group: SUIT_UPGRADE_KIT
     SubGroups:
       - SubGroup: 0
         List:
           - Item: Kafra_Uniform
-            RandomOptionGroup: UNIFORM_REPAIR_KIT
+            RandomOptionGroup: SUIT_UPGRADE_KIT
   - Group: SCROLL_OF_FALLEN_ANGEL_WINGS
     SubGroups:
       - SubGroup: 0
@@ -26580,39 +26580,39 @@ Body:
             Rate: 1
           - Item: S_All_Race_Shield
             Rate: 1
-  - Group: CANDY_POUCH_BLESSING_SCROLL_MELEE
+  - Group: CANDY_BAG_SCROLL_MELEE
     SubGroups:
       - SubGroup: 0
         List:
           - Item: Bag_Of_Antonio_P
-            RandomOptionGroup: CANDY_POUCH_BLESSING_SCROLL_MELEE
-  - Group: CANDY_POUCH_BLESSING_SCROLL_RANGE
+            RandomOptionGroup: CANDY_BAG_SCROLL_MELEE
+  - Group: CANDY_BAG_SCROLL_RANGE
     SubGroups:
       - SubGroup: 0
         List:
           - Item: Bag_Of_Antonio_S
-            RandomOptionGroup: CANDY_POUCH_BLESSING_SCROLL_RANGE
-  - Group: CANDY_POUCH_BLESSING_SCROLL_MAGIC
+            RandomOptionGroup: CANDY_BAG_SCROLL_RANGE
+  - Group: CANDY_BAG_SCROLL_MAGIC
     SubGroups:
       - SubGroup: 0
         List:
           - Item: Bag_Of_Antonio_
-            RandomOptionGroup: CANDY_POUCH_BLESSING_SCROLL_MAGIC
-  - Group: MAGICAL_BOOSTER_AMPLIFIER
+            RandomOptionGroup: CANDY_BAG_SCROLL_MAGIC
+  - Group: BOOSTER_AMPLIFIER
     SubGroups:
       - SubGroup: 1
         List:
           - Item: Crimson_Booster
             Rate: 1
           - Item: Magical_Booster_K
-            RandomOptionGroup: MAGICAL_BOOSTER_AMPLIFIER
+            RandomOptionGroup: BOOSTER_AMPLIFIER
             Rate: 1
-  - Group: MAGIC_CAT_HAND_SCROLL
+  - Group: MAGICAL_CAT_HAND
     SubGroups:
       - SubGroup: 0
         List:
           - Item: Neko_Headress
-            RandomOptionGroup: MAGIC_CAT_HAND_SCROLL
+            RandomOptionGroup: MAGICAL_CAT_HAND
   - Group: INFINITYSHADOW_MIX
     SubGroups:
       - SubGroup: 0
@@ -28597,4 +28597,774 @@ Body:
             Amount: 50
           - Item: aegis_101271
             Amount: 10
-
+  - Group: EP17_1_SPC01
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Burning_Knuckle_OS
+            Rate: 625
+          - Item: Cannon_Rapier_OS
+            Rate: 625
+          - Item: Saphir_Hall_OS
+            Rate: 625
+          - Item: Ultio_Spes_OS
+            Rate: 625
+          - Item: Virtual_Bow_OS
+            Rate: 625
+          - Item: MH_P89_OS
+            Rate: 625
+          - Item: AC_B44_OS
+            Rate: 625
+          - Item: Beam_Claymore_OS
+            Rate: 625
+          - Item: Rutilus_Stick_OS
+            Rate: 625
+          - Item: ElectricFox_OS
+            Rate: 625
+          - Item: Meuchler_OS
+            Rate: 625
+          - Item: Blasti_OS
+            Rate: 625
+          - Item: HR_S55_OS
+            Rate: 625
+          - Item: Circuit_Board_OS
+            Rate: 625
+          - Item: Kuroiro_OS
+            Rate: 625
+          - Item: Boost_Lance_OS
+            Rate: 625
+  - Group: EP17_1_SPC02
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: EP17_1_SPC05
+            Rate: 7500
+          - Item: EP17_1_SPC06
+            Rate: 2000
+          - Item: EP17_1_SPC07
+            Rate: 500
+  - Group: EP17_1_SPC03
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: EP17_1_SPC08
+            Rate: 7500
+          - Item: EP17_1_SPC09
+            Rate: 2000
+          - Item: EP17_1_SPC10
+            Rate: 500
+  - Group: EP17_1_SPC04
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: EP17_1_EVT03
+            Rate: 900
+          - Item: EP17_1_EVT04
+            Rate: 900
+          - Item: EP17_1_EVT05
+            Rate: 904
+          - Item: EP17_1_EVT06
+            Rate: 904
+          - Item: EP17_1_EVT07
+            Rate: 904
+          - Item: EP17_1_EVT08
+            Rate: 904
+          - Item: EP17_1_EVT09
+            Rate: 904
+          - Item: EP17_1_EVT10
+            Rate: 904
+          - Item: EP17_1_EVT11
+            Rate: 300
+          - Item: EP17_1_EVT12
+            Rate: 300
+          - Item: EP17_1_EVT13
+            Rate: 300
+          - Item: EP17_1_EVT14
+            Rate: 300
+          - Item: EP17_1_EVT15
+            Rate: 300
+          - Item: EP17_1_EVT16
+            Rate: 300
+          - Item: EP17_1_EVT17
+            Rate: 100
+          - Item: EP17_1_EVT18
+            Rate: 100
+          - Item: EP17_1_EVT19
+            Rate: 100
+          - Item: EP17_1_EVT20
+            Rate: 100
+          - Item: EP17_1_EVT21
+            Rate: 100
+          - Item: EP17_1_EVT22
+            Rate: 100
+          - Item: EP17_1_EVT23
+            Rate: 100
+          - Item: EP17_1_EVT24
+            Rate: 100
+          - Item: EP17_1_EVT25
+            Rate: 100
+          - Item: EP17_1_EVT26
+            Rate: 10
+          - Item: EP17_1_EVT27
+            Rate: 10
+          - Item: EP17_1_EVT28
+            Rate: 10
+          - Item: EP17_1_EVT29
+            Rate: 10
+          - Item: EP17_1_EVT30
+            Rate: 10
+          - Item: EP17_1_EVT31
+            Rate: 10
+          - Item: EP17_1_EVT32
+            Rate: 10
+          - Item: EP17_1_EVT33
+            Rate: 1
+          - Item: EP17_1_EVT34
+            Rate: 1
+          - Item: EP17_1_EVT35
+            Rate: 1
+          - Item: EP17_1_EVT36
+            Rate: 1
+          - Item: EP17_1_EVT37
+            Rate: 1
+          - Item: EP17_1_EVT38
+            Rate: 1
+  - Group: STABILITYSHADOW_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_Plasterer's_Armor_II
+            Rate: 1
+          - Item: S_Insomniac_Shoes_II
+            Rate: 1
+          - Item: S_Peerless_Armor_II
+            Rate: 1
+          - Item: S_Adulate_Shoes_II
+            Rate: 1
+          - Item: S_Unfreezing_Weapon_II
+            Rate: 1
+          - Item: S_Vitality_Earring_II
+            Rate: 1
+          - Item: S_Neutral_Weapon_II
+            Rate: 1
+          - Item: S_Uncursed_Pendant_II
+            Rate: 1
+  - Group: BS_SHA_M_S_2
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_Swordman_earring
+            Rate: 1
+          - Item: S_Merchant_earring
+            Rate: 1
+          - Item: S_Acolyte_earring
+            Rate: 1
+          - Item: S_Magician_earring
+            Rate: 1
+          - Item: S_Swordman_Pendant
+            Rate: 1
+          - Item: S_Merchant_Pendant
+            Rate: 1
+          - Item: S_Acolyte_Pendant
+            Rate: 1
+          - Item: S_Thief_Pendant
+            Rate: 1
+          - Item: S_Magician_Pendant
+            Rate: 1
+          - Item: S_Archer_Pendant
+            Rate: 1
+          - Item: S_Knight_Shoes
+            Rate: 1
+          - Item: S_Crusader_Shoes
+            Rate: 1
+          - Item: S_Blacksmith_Shoes
+            Rate: 1
+          - Item: S_Alchemist_Shoes
+            Rate: 1
+          - Item: S_Priest_Shoes
+            Rate: 1
+          - Item: S_Monk_Shoes
+            Rate: 1
+          - Item: S_Assassin_Shoes
+            Rate: 1
+          - Item: S_Rogue_Shoes
+            Rate: 1
+          - Item: S_Wizard_Shoes
+            Rate: 1
+          - Item: S_Sage_Shoes
+            Rate: 1
+          - Item: S_Hunter_Shoes
+            Rate: 1
+          - Item: S_Bard_Shoes
+            Rate: 1
+          - Item: S_Dancer_Shoes
+            Rate: 1
+          - Item: S_Knight_Armor
+            Rate: 1
+          - Item: S_Crusader_Armor
+            Rate: 1
+          - Item: S_Blacksmith_Armor
+            Rate: 1
+          - Item: S_Alchemist_Armor
+            Rate: 1
+          - Item: S_Priest_Armor
+            Rate: 1
+          - Item: S_Monk_Armor
+            Rate: 1
+          - Item: S_Assassin_Armor
+            Rate: 1
+          - Item: S_Rogue_Armor
+            Rate: 1
+          - Item: S_Wizard_Armor
+            Rate: 1
+          - Item: S_Sage_Armor
+            Rate: 1
+          - Item: S_Hunter_Armor
+            Rate: 1
+          - Item: S_Bard_Armor
+            Rate: 1
+          - Item: S_Dancer_Armor
+            Rate: 1
+          - Item: S_SuperNovice_Weapon
+            Rate: 1
+          - Item: S_Gunslinger_Weapon
+            Rate: 1
+          - Item: S_Taekwon_Weapon
+            Rate: 1
+          - Item: S_Ninja_Weapon
+            Rate: 1
+          - Item: S_DoramMagical_Weapon
+            Rate: 1
+          - Item: S_DoramPhysical_Weapon
+            Rate: 1
+          - Item: S_Runeknight_Weapon
+            Rate: 1
+          - Item: S_Royalguard_Weapon
+            Rate: 1
+          - Item: S_Mechanic_weapon
+            Rate: 1
+          - Item: S_Genetic_Weapon
+            Rate: 1
+          - Item: S_Archbishop_Weapon
+            Rate: 1
+          - Item: S_Sura_weapon
+            Rate: 1
+          - Item: S_Guillotine_Weapon
+            Rate: 1
+          - Item: S_Shadowchaser_Weapon
+            Rate: 1
+          - Item: S_Warlock_Weapon
+            Rate: 1
+          - Item: S_Sorcerer_Weapon
+            Rate: 1
+          - Item: S_Ranger_Weapon
+            Rate: 1
+          - Item: S_Minstrel_Weapon
+            Rate: 1
+          - Item: S_Wanderer_Weapon
+            Rate: 1
+          - Item: S_Runeknight_Shield
+            Rate: 1
+          - Item: S_Royalguard_Shield
+            Rate: 1
+          - Item: S_Mechanic_Shield
+            Rate: 1
+          - Item: S_Genetic_Shield
+            Rate: 1
+          - Item: S_Archbishop_Shield
+            Rate: 1
+          - Item: S_Sura_Shield
+            Rate: 1
+          - Item: S_Guillotine_Shield
+            Rate: 1
+          - Item: S_Shadowchaser_Shield
+            Rate: 1
+          - Item: S_Warlock_Shield
+            Rate: 1
+          - Item: S_Sorcerer_Shield
+            Rate: 1
+          - Item: S_Ranger_Shield
+            Rate: 1
+          - Item: S_Minstrel_Shield
+            Rate: 1
+          - Item: S_Wanderer_Shield
+            Rate: 1
+          - Item: S_Ninja_Shield
+            Rate: 1
+          - Item: S_Taekwon_Shield
+            Rate: 1
+          - Item: S_DoramPhysical_Shield
+            Rate: 1
+          - Item: S_DoramMagical_Shield
+            Rate: 1
+          - Item: S_SuperNovice_Shield
+            Rate: 1
+          - Item: S_Gunslinger_Shield
+            Rate: 1
+  - Group: BS_SHA_M_S_22
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_Mortal_Blow_Weapon
+            Rate: 1
+          - Item: S_Mortal_Blow_Earring
+            Rate: 1
+          - Item: S_Mortal_Blow_Pendant
+            Rate: 1
+  - Group: SLD_CARD_RECIPE
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Sealed_Kiel_Card
+            Rate: 1
+          - Item: Sealed_Ktullanux_Card
+            Rate: 1
+          - Item: Sealed_B_Ygnizem_Card
+            Rate: 1
+          - Item: Sealed_Dracula_Card
+            Rate: 1
+          - Item: Sealed_Mistress_Card
+            Rate: 1
+          - Item: Sealed_Gloom_Card
+            Rate: 1
+          - Item: Sealed_Berz_Card
+            Rate: 1
+          - Item: Sealed_Ifrit_Card
+            Rate: 1
+          - Item: Sealed_D_Lord_Card
+            Rate: 1
+          - Item: Sealed_Pharaoh_Card
+            Rate: 1
+          - Item: Sealed_M_Flower_Card
+            Rate: 1
+          - Item: Sealed_B_Shecil_Card
+            Rate: 1
+          - Item: Sealed_Orc_Hero_Card
+            Rate: 1
+          - Item: Sealed_Tao_Card
+            Rate: 1
+          - Item: Sealed_TurtleG_Card
+            Rate: 1
+          - Item: Sealed_Knight_WS_Card
+            Rate: 1
+          - Item: Sealed_Lady_Tanee_Card
+            Rate: 1
+          - Item: Sealed_Samurai_Card
+            Rate: 1
+          - Item: Sealed_Orc_Load_Card
+            Rate: 1
+          - Item: Sealed_B_Magaleta_Card
+            Rate: 1
+          - Item: Sealed_B_Harword_Card
+            Rate: 1
+          - Item: Sealed_Apocalips_H_Card
+            Rate: 1
+          - Item: Sealed_Eddga_Card
+            Rate: 1
+          - Item: Sealed_Bacsojin_Card
+            Rate: 1
+          - Item: Sealed_F_Bishop_Card
+            Rate: 1
+          - Item: SLD_Q_Scaraba_Card
+            Rate: 1
+          - Item: SLD_Baphomet_Card
+            Rate: 1
+          - Item: SLD_Maya_Card
+            Rate: 1
+          - Item: SLD_Clown_Card
+            Rate: 1
+          - Item: SLD_Professor_Card
+            Rate: 1
+          - Item: SLD_Champion_Card
+            Rate: 1
+          - Item: SLD_Creator_Card
+            Rate: 1
+          - Item: SLD_Stalker_Card
+            Rate: 1
+          - Item: SLD_Paladin_Card
+            Rate: 1
+          - Item: SLD_Gypsy_Card
+            Rate: 1
+          - Item: SLD_Daehyon_Card
+            Rate: 1
+          - Item: SLD_Gioia_Card
+            Rate: 1
+          - Item: SLD_Pyuriel_Card
+            Rate: 1
+          - Item: SLD_Kades_Card
+            Rate: 1
+          - Item: SLD_Timeholder_Card
+            Rate: 1
+  - Group: R_BEARERSSHADOW_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_R_Bearers_Shoes
+            Rate: 1
+          - Item: S_R_Bearers_Armor
+            Rate: 1
+          - Item: S_R_Bearers_Pendant
+            Rate: 1
+          - Item: S_R_Bearers_Earring
+            Rate: 1
+  - Group: M_BLITZSHADOW_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_Mega_Blitz_Shield
+            Rate: 1
+          - Item: S_Mega_Blitz_Weapon
+            Rate: 1
+  - Group: RELOADSHADOW_MIX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_S_Reload_Shield
+  - Group: SPELLCASTERSHADOW_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_SpellCaster_Armor
+            Rate: 1
+          - Item: S_SpellCaster_Shoes
+            Rate: 1
+          - Item: S_SpellCaster_Earring
+            Rate: 1
+          - Item: S_SpellCaster_Pendant
+            Rate: 1
+  - Group: MAGICALSHADOW_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_Clever_Weapon
+            Rate: 1
+          - Item: S_Clever_Shield
+            Rate: 1
+  - Group: PHYSICALSHADOW_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_Durable_Weapon
+            Rate: 1
+          - Item: S_Durable_Shield
+            Rate: 1
+  - Group: MAJORAUTOSPELL_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_M_AutoSpell_Armor
+            Rate: 1
+          - Item: S_M_AutoSpell_Shoes
+            Rate: 1
+          - Item: S_M_AutoSpell_Earring
+            Rate: 1
+          - Item: S_M_AutoSpell_Pendant
+            Rate: 1
+  - Group: ABSORBSHADOW_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_Absorb_Shield
+            Rate: 1
+          - Item: S_Absorb_Weapon
+            Rate: 1
+  - Group: TRUE_GEMSHADOW_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_TrueGem_Armor
+            Rate: 1
+          - Item: S_TrueGem_Shoes
+            Rate: 1
+          - Item: S_TrueGem_Earring
+            Rate: 1
+          - Item: S_TrueGem_Pendant
+            Rate: 1
+  - Group: MAMMOTH_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_M_Mammoth_Armor
+            Rate: 1
+          - Item: S_M_Mammoth_Shoes
+            Rate: 1
+          - Item: S_M_Mammoth_Earring
+            Rate: 1
+          - Item: S_M_Mammoth_Pendant
+            Rate: 1
+  - Group: FULLTEMPSHADOW_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_FullTemp_Earring
+            Rate: 1
+          - Item: S_FullTemp_Shoes
+            Rate: 1
+          - Item: S_FullTemp_Armor
+            Rate: 1
+          - Item: S_FullTemp_Pendant
+            Rate: 1
+  - Group: FULLPENESHADOW_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_FullPene_Earring
+            Rate: 1
+          - Item: S_FullPene_Pendant
+            Rate: 1
+          - Item: S_FullPene_Armor
+            Rate: 1
+          - Item: S_FullPene_Shoes
+            Rate: 1
+  - Group: REMODEL_HERO_BOOTS
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Great_Hero_Boots
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: ORIENTAL_SWORD_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Oriental_Sword
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: DRAGONIC_SLAYER_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Dragonic_Slayer
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: SHIVER_KATAR_K_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Shiver_Katar_K
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: BLADE_KATAR_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Blade_Katar
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: SWORD_OF_BLUEFIRE_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Sword_Of_Bluefire
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: SLATE_SWORD_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Slate_Sword
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: NARCIS_BOW_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Narcis_Bow
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: TRUMPET_SHELL_K_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Trumpet_Shell_K
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: BARB_WIRE_K_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Barb_Wire_K
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: AVENGER_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Avenger
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: METEOR_STRIKER_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Meteor_Striker
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: MAGIC_SWORD_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Magic_Sword
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: FATALIST_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Fatalist
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: ROYAL_BOW_K_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Royal_Bow_K
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: SCALET_DRAGON_L_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Scalet_Dragon_L_Bow
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: SHADOW_STAFF_K_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Shadow_Staff_K
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: FREEZING_ROD_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Freezing_Rod
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: IRON_NAIL_K_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Iron_Nail_K
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: RAY_KNUCKLE_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Ray_Knuckle
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: UNDINE_SPEAR_K_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Undine_Spear_K
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: LIGHT_BLADE_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Light_Blade
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: IRON_STAFF_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Iron_Staff
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: BLUE_CRYSTAL_STAFF_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Blue_Crystal_Staff
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: DEMON_HUNT_BIBLE_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Demon_Hunting_Bible
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: SAINT_HALL_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Saint_Hall
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: MEAWFOXTAIL_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_MeawFoxtail
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: FOG_DEW_SWORD_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Fog_Dew_Sword
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: HUMMA_CLEAR_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Humma_Clear
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: THOUSAND_SUN_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Thousand_Sun
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: SPIRIT_PENDULUM_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Spirit_Pendulum_
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: CRIMSON_ROSE_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Crimson_Rose
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: MASTER_SOUL_RIFLE_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Master_Soul_Rifle
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: GOLDEN_LORD_LAUNCHER_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Golden_Lord_Launcher
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: THE_BLACK_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_The_Black
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: DEMON_SLAYER_SHOT_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Demon_Slayer_Shot
+            RefineMinimum: 7
+            RefineMaximum: 7

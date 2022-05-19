@@ -146,8 +146,7 @@ enum rune_item_list : t_itemid
 enum mechanic_item_list : t_itemid
 {
 	ITEMID_ACCELERATOR				= 2800,
-	ITEMID_HOVERING_BOOSTER,
-	ITEMID_SUICIDAL_DEVICE,
+	ITEMID_SUICIDAL_DEVICE				= 2802,
 	ITEMID_SHAPE_SHIFTER,
 	ITEMID_COOLING_DEVICE,
 	ITEMID_MAGNETIC_FIELD_GENERATOR,
@@ -779,12 +778,12 @@ enum e_random_item_group {
 	IG_THIRD_JOB_STONE_BOTTOM_BOX,
 	IG_THIRD_JOB_STONE_BOTTOM_BOX2,
 	IG_SHADOW_EXCHANGE_BOX,
-	IG_DROOPING_GUNSLINGER_SCROLL,
+	IG_GUNSLINGER_ENCHANT,
 	IG_ENCHANTSTONE_RECIPE,
 	IG_PET_EGG_BOX,
 	IG_COSTUME_EXCHANGE_BOX,
-	IG_FAN_MODIFICATION_KIT,
-	IG_UNIFORM_REPAIR_KIT,
+	IG_FAN_UPGRADE_KIT,
+	IG_SUIT_UPGRADE_KIT,
 	IG_SCROLL_OF_FALLEN_ANGEL_WINGS,
 	IG_CLASS_SHADOW_BOX_WEAPON,
 	IG_CLASS_SHADOW_BOX_ARMOR,
@@ -797,11 +796,11 @@ enum e_random_item_group {
 	IG_BEARERSSHADOW_MIX,
 	IG_COMPOSESHADOW_MIX,
 	IG_RACESHADOW_MIX,
-	IG_CANDY_POUCH_BLESSING_SCROLL_MELEE,
-	IG_CANDY_POUCH_BLESSING_SCROLL_RANGE,
-	IG_CANDY_POUCH_BLESSING_SCROLL_MAGIC,
-	IG_MAGICAL_BOOSTER_AMPLIFIER,
-	IG_MAGIC_CAT_HAND_SCROLL,
+	IG_CANDY_BAG_SCROLL_MELEE,
+	IG_CANDY_BAG_SCROLL_RANGE,
+	IG_CANDY_BAG_SCROLL_MAGIC,
+	IG_BOOSTER_AMPLIFIER,
+	IG_MAGICAL_CAT_HAND,
 	IG_INFINITYSHADOW_MIX,
 	IG_SILVER_STATUE,
 	IG_PHYSICALMAGICAL_MIX,
@@ -900,6 +899,62 @@ enum e_random_item_group {
 	IG_COSTUME_MILE_PACK_26_1,
 	IG_COSTUME_MILE_PACK_26_2,
 	IG_COSTUME_MILE_PACK_26_3,
+	IG_EP17_1_SPC01,
+	IG_EP17_1_SPC02,
+	IG_EP17_1_SPC03,
+	IG_EP17_1_SPC04,
+	IG_STABILITYSHADOW_MIX,
+	IG_BS_SHA_M_S_2,
+	IG_BS_SHA_M_S_22,
+	IG_SLD_CARD_RECIPE,
+	IG_R_BEARERSSHADOW_MIX,
+	IG_M_BLITZSHADOW_MIX,
+	IG_RELOADSHADOW_MIX,
+	IG_SPELLCASTERSHADOW_MIX,
+	IG_MAGICALSHADOW_MIX,
+	IG_PHYSICALSHADOW_MIX,
+	IG_MAJORAUTOSPELL_MIX,
+	IG_ABSORBSHADOW_MIX,
+	IG_TRUE_GEMSHADOW_MIX,
+	IG_MAMMOTH_MIX,
+	IG_FULLTEMPSHADOW_MIX,
+	IG_FULLPENESHADOW_MIX,
+	IG_REMODEL_HERO_BOOTS,
+	IG_ORIENTAL_SWORD_CUBE,
+	IG_DRAGONIC_SLAYER_CUBE,
+	IG_SHIVER_KATAR_K_CUBE,
+	IG_BLADE_KATAR_CUBE,
+	IG_SWORD_OF_BLUEFIRE_CUBE,
+	IG_SLATE_SWORD_CUBE,
+	IG_NARCIS_BOW_CUBE,
+	IG_TRUMPET_SHELL_K_CUBE,
+	IG_BARB_WIRE_K_CUBE,
+	IG_AVENGER_CUBE,
+	IG_METEOR_STRIKER_CUBE,
+	IG_MAGIC_SWORD_CUBE,
+	IG_FATALIST_CUBE,
+	IG_ROYAL_BOW_K_CUBE,
+	IG_SCALET_DRAGON_L_CUBE,
+	IG_SHADOW_STAFF_K_CUBE,
+	IG_FREEZING_ROD_CUBE,
+	IG_IRON_NAIL_K_CUBE,
+	IG_RAY_KNUCKLE_CUBE,
+	IG_UNDINE_SPEAR_K_CUBE,
+	IG_LIGHT_BLADE_CUBE,
+	IG_IRON_STAFF_CUBE,
+	IG_BLUE_CRYSTAL_STAFF_CUBE,
+	IG_DEMON_HUNT_BIBLE_CUBE,
+	IG_SAINT_HALL_CUBE,
+	IG_MEAWFOXTAIL_CUBE,
+	IG_FOG_DEW_SWORD_CUBE,
+	IG_HUMMA_CLEAR_CUBE,
+	IG_THOUSAND_SUN_CUBE,
+	IG_SPIRIT_PENDULUM_CUBE,
+	IG_CRIMSON_ROSE_CUBE,
+	IG_MASTER_SOUL_RIFLE_CUBE,
+	IG_GOLDEN_LORD_LAUNCHER_CUBE,
+	IG_THE_BLACK_CUBE,
+	IG_DEMON_SLAYER_SHOT_CUBE,
 
 	IG_MAX,
 };
@@ -982,7 +1037,7 @@ public:
 		this->combo_num = 0;
 	}
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node& node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void loadingFinished() override;
 };
 
@@ -1028,7 +1083,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node &node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void loadingFinished() override;
 
 	// Additional
@@ -1045,10 +1100,10 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node &node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 
 	// Additional
-	bool add_option(const YAML::Node &node, std::shared_ptr<s_random_opt_group_entry> &entry);
+	bool add_option(const ryml::NodeRef& node, std::shared_ptr<s_random_opt_group_entry> &entry);
 	bool option_exists(std::string name);
 	bool option_get_id(std::string name, uint16 &id);
 };
@@ -1196,7 +1251,7 @@ private:
 	std::unordered_map<std::string, std::shared_ptr<item_data>> nameToItemDataMap;
 	std::unordered_map<std::string, std::shared_ptr<item_data>> aegisNameToItemDataMap;
 
-	e_sex defaultGender( const YAML::Node &node, std::shared_ptr<item_data> id );
+	e_sex defaultGender( const ryml::NodeRef& node, std::shared_ptr<item_data> id );
 
 public:
 	ItemDatabase() : TypesafeCachedYamlDatabase("ITEM_DB", 2, 1) {
@@ -1204,7 +1259,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node& node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void loadingFinished() override;
 	void clear() override{
 		TypesafeCachedYamlDatabase::clear();
@@ -1227,7 +1282,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node& node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void loadingFinished() override;
 
 	// Additional
@@ -1261,7 +1316,7 @@ public:
 	}
 
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const YAML::Node& node );
+	uint64 parseBodyNode( const ryml::NodeRef& node );
 };
 
 extern LaphineSynthesisDatabase laphine_synthesis_db;
@@ -1286,7 +1341,7 @@ public:
 	}
 
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const YAML::Node& node );
+	uint64 parseBodyNode( const ryml::NodeRef& node );
 };
 
 extern LaphineUpgradeDatabase laphine_upgrade_db;

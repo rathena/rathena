@@ -516,7 +516,8 @@
 	export_constant(MF_NOITEMCONSUMPTION);
 	export_constant(MF_NOSUNMOONSTARMIRACLE);
 	export_deprecated_constant3("mf_sumstarmiracle", MF_NOSUNMOONSTARMIRACLE, "MF_NOSUNMOONSTARMIRACLE");
-	export_constant(MF_NOMINEEFFECT);
+	export_constant(MF_FORCEMINEFFECT);
+	export_deprecated_constant3("mf_nomineeffect", MF_FORCEMINEFFECT, "MF_FORCEMINEFFECT");
 	export_constant(MF_NOLOCKON);
 	export_constant(MF_NOTOMB);
 	export_constant(MF_SKILL_DAMAGE);
@@ -534,6 +535,7 @@
 	export_constant(MF_NORENEWALDROPPENALTY);
 	export_constant(MF_NORENEWALEXPPENALTY);
 	export_constant(MF_NOPETCAPTURE);
+	export_constant(MF_NOBUYINGSTORE);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
@@ -546,6 +548,7 @@
 	export_constant(CELL_NOCHAT);
 	export_constant(CELL_MAELSTROM);
 	export_constant(CELL_ICEWALL);
+	export_constant(CELL_NOBUYINGSTORE);
 
 	/* getcell types */
 	export_constant(CELL_CHKWALL);
@@ -564,6 +567,7 @@
 	export_constant(CELL_CHKNOCHAT);
 	export_constant(CELL_CHKMAELSTROM);
 	export_constant(CELL_CHKICEWALL);
+	export_constant(CELL_CHKNOBUYINGSTORE);
 
 	/* parameters */
 	export_parameter("StatusPoint",SP_STATUSPOINT);
@@ -843,6 +847,7 @@
 	export_constant2("bCritDefRate",SP_CRIT_DEF_RATE);
 	export_constant2("bMagicSubDefEle", SP_MAGIC_SUBDEF_ELE);
 	export_constant2("bReduceDamageReturn",SP_REDUCE_DAMAGE_RETURN);
+	export_constant2("bAbsorbDmgMaxHP2", SP_ABSORB_DMG_MAXHP2);
 	export_constant2("bAddItemSPHealRate", SP_ADD_ITEM_SPHEAL_RATE);
 	export_constant2("bAddItemGroupSPHealRate", SP_ADD_ITEMGROUP_SPHEAL_RATE);
 	export_constant2("bWeaponSubSize", SP_WEAPON_SUBSIZE);
@@ -936,7 +941,7 @@
 	export_constant2("VAR_SHOES",LOOK_SHOES);
 
 	/* status changes */
-	export_constant2("Eff_Stone",SC_STONE);
+	export_constant2("Eff_Stone",SC_STONEWAIT);
 	export_constant2("Eff_Freeze",SC_FREEZE);
 	export_constant2("Eff_Stun",SC_STUN);
 	export_constant2("Eff_Sleep",SC_SLEEP);
@@ -952,6 +957,7 @@
 	export_constant2("Eff_Crystalize",SC_CRYSTALIZE);
 	export_constant2("Eff_Freezing",SC_FREEZING);
 	export_constant2("Eff_Heat",SC_BURNT);
+	export_constant2("Eff_Deepsleep",SC_DEEPSLEEP);
 
 	export_constant2("SC_ALL",SC_NONE);
 
@@ -967,6 +973,7 @@
 	export_constant(SC_BLIND);
 	export_constant(SC_BLEEDING);
 	export_constant(SC_DPOISON);
+	export_constant(SC_STONEWAIT);
 	export_constant(SC_PROVOKE);
 	export_constant(SC_ENDURE);
 	export_constant(SC_TWOHANDQUICKEN);
@@ -5534,12 +5541,12 @@
 	export_constant(IG_THIRD_JOB_STONE_BOTTOM_BOX);
 	export_constant(IG_THIRD_JOB_STONE_BOTTOM_BOX2);
 	export_constant(IG_SHADOW_EXCHANGE_BOX);
-	export_constant(IG_DROOPING_GUNSLINGER_SCROLL);
+	export_constant(IG_GUNSLINGER_ENCHANT);
 	export_constant(IG_ENCHANTSTONE_RECIPE);
 	export_constant(IG_PET_EGG_BOX);
 	export_constant(IG_COSTUME_EXCHANGE_BOX);
-	export_constant(IG_FAN_MODIFICATION_KIT);
-	export_constant(IG_UNIFORM_REPAIR_KIT);
+	export_constant(IG_FAN_UPGRADE_KIT);
+	export_constant(IG_SUIT_UPGRADE_KIT);
 	export_constant(IG_SCROLL_OF_FALLEN_ANGEL_WINGS);
 	export_constant(IG_CLASS_SHADOW_BOX_WEAPON);
 	export_constant(IG_CLASS_SHADOW_BOX_ARMOR);
@@ -5552,11 +5559,11 @@
 	export_constant(IG_BEARERSSHADOW_MIX);
 	export_constant(IG_COMPOSESHADOW_MIX);
 	export_constant(IG_RACESHADOW_MIX);
-	export_constant(IG_CANDY_POUCH_BLESSING_SCROLL_MELEE);
-	export_constant(IG_CANDY_POUCH_BLESSING_SCROLL_RANGE);
-	export_constant(IG_CANDY_POUCH_BLESSING_SCROLL_MAGIC);
-	export_constant(IG_MAGICAL_BOOSTER_AMPLIFIER);
-	export_constant(IG_MAGIC_CAT_HAND_SCROLL);
+	export_constant(IG_CANDY_BAG_SCROLL_MELEE);
+	export_constant(IG_CANDY_BAG_SCROLL_RANGE);
+	export_constant(IG_CANDY_BAG_SCROLL_MAGIC);
+	export_constant(IG_BOOSTER_AMPLIFIER);
+	export_constant(IG_MAGICAL_CAT_HAND);
 	export_constant(IG_INFINITYSHADOW_MIX);
 	export_constant(IG_SILVER_STATUE);
 	export_constant(IG_PHYSICALMAGICAL_MIX);
@@ -5655,6 +5662,62 @@
 	export_constant(IG_COSTUME_MILE_PACK_26_1);
 	export_constant(IG_COSTUME_MILE_PACK_26_2);
 	export_constant(IG_COSTUME_MILE_PACK_26_3);
+	export_constant(IG_EP17_1_SPC01);
+	export_constant(IG_EP17_1_SPC02);
+	export_constant(IG_EP17_1_SPC03);
+	export_constant(IG_EP17_1_SPC04);
+	export_constant(IG_STABILITYSHADOW_MIX);
+	export_constant(IG_BS_SHA_M_S_2);
+	export_constant(IG_BS_SHA_M_S_22);
+	export_constant(IG_SLD_CARD_RECIPE);
+	export_constant(IG_R_BEARERSSHADOW_MIX);
+	export_constant(IG_M_BLITZSHADOW_MIX);
+	export_constant(IG_RELOADSHADOW_MIX);
+	export_constant(IG_SPELLCASTERSHADOW_MIX);
+	export_constant(IG_MAGICALSHADOW_MIX);
+	export_constant(IG_PHYSICALSHADOW_MIX);
+	export_constant(IG_MAJORAUTOSPELL_MIX);
+	export_constant(IG_ABSORBSHADOW_MIX);
+	export_constant(IG_TRUE_GEMSHADOW_MIX);
+	export_constant(IG_MAMMOTH_MIX);
+	export_constant(IG_FULLTEMPSHADOW_MIX);
+	export_constant(IG_FULLPENESHADOW_MIX);
+	export_constant(IG_REMODEL_HERO_BOOTS);
+	export_constant(IG_ORIENTAL_SWORD_CUBE);
+	export_constant(IG_DRAGONIC_SLAYER_CUBE);
+	export_constant(IG_SHIVER_KATAR_K_CUBE);
+	export_constant(IG_BLADE_KATAR_CUBE);
+	export_constant(IG_SWORD_OF_BLUEFIRE_CUBE);
+	export_constant(IG_SLATE_SWORD_CUBE);
+	export_constant(IG_NARCIS_BOW_CUBE);
+	export_constant(IG_TRUMPET_SHELL_K_CUBE);
+	export_constant(IG_BARB_WIRE_K_CUBE);
+	export_constant(IG_AVENGER_CUBE);
+	export_constant(IG_METEOR_STRIKER_CUBE);
+	export_constant(IG_MAGIC_SWORD_CUBE);
+	export_constant(IG_FATALIST_CUBE);
+	export_constant(IG_ROYAL_BOW_K_CUBE);
+	export_constant(IG_SCALET_DRAGON_L_CUBE);
+	export_constant(IG_SHADOW_STAFF_K_CUBE);
+	export_constant(IG_FREEZING_ROD_CUBE);
+	export_constant(IG_IRON_NAIL_K_CUBE);
+	export_constant(IG_RAY_KNUCKLE_CUBE);
+	export_constant(IG_UNDINE_SPEAR_K_CUBE);
+	export_constant(IG_LIGHT_BLADE_CUBE);
+	export_constant(IG_IRON_STAFF_CUBE);
+	export_constant(IG_BLUE_CRYSTAL_STAFF_CUBE);
+	export_constant(IG_DEMON_HUNT_BIBLE_CUBE);
+	export_constant(IG_SAINT_HALL_CUBE);
+	export_constant(IG_MEAWFOXTAIL_CUBE);
+	export_constant(IG_FOG_DEW_SWORD_CUBE);
+	export_constant(IG_HUMMA_CLEAR_CUBE);
+	export_constant(IG_THOUSAND_SUN_CUBE);
+	export_constant(IG_SPIRIT_PENDULUM_CUBE);
+	export_constant(IG_CRIMSON_ROSE_CUBE);
+	export_constant(IG_MASTER_SOUL_RIFLE_CUBE);
+	export_constant(IG_GOLDEN_LORD_LAUNCHER_CUBE);
+	export_constant(IG_THE_BLACK_CUBE);
+	export_constant(IG_DEMON_SLAYER_SHOT_CUBE);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
@@ -8022,6 +8085,35 @@
 	export_constant(EF_TIME_ACCESSORY);
 	export_constant(EF_SPRITEMABLE);
 	export_constant(EF_TUNAPARTY);
+	export_constant(EF_FRESHSHRIMP);
+	export_constant(EF_SU_GROOMING);
+	export_constant(EF_SU_CHATTERING);
+	export_constant(EF_FIREDANCE);
+	export_constant(EF_RICHS_COIN_A);
+	export_constant(EF_E_CHAIN);
+	export_constant(EF_HEAT_BARREL);
+	export_constant(EF_H_MINE);
+	export_constant(EF_FALLEN_ANGEL);
+	export_constant(EF_IMMUNE_PROPERTY);
+	export_constant(EF_MOVE_COORDINATE);
+	export_constant(EF_LIGHTSPHERE_SUN);
+	export_constant(EF_LIGHTSPHERE_MOON);
+	export_constant(EF_LIGHTSPHERE_STAR);
+	export_constant(EF_NOVAEXPLOSING);
+	export_constant(EF_STAR_EMPEROR);
+	export_constant(EF_SMA_BLACK);
+	export_constant(EF_ENERGYDRAIN_BLACK);
+	export_constant(EF_BLINK_BODY);
+	export_constant(EF_SOLARBURST);
+	export_constant(EF_SJ_DOCUMENT);
+	export_constant(EF_FALLING_STAR);
+	export_constant(EF_STORMKICK8);
+	export_constant(EF_NEWMOON_KICK);
+	export_constant(EF_FULLMOON_KICK);
+	export_constant(EF_BOOK_OF_DIMENSION);
+	export_constant(EF_CURSE_EXPLOSION);
+	export_constant(EF_SOUL_REAPER);
+	export_constant(EF_SOUL_EXPLOSION);
 
 	/* hat effects */
 	export_constant(HAT_EF_BLOSSOM_FLUTTERING);
@@ -8394,6 +8486,7 @@
 	export_constant(INF2_IGNORECICADA);
 	export_constant(INF2_SHOWSCALE);
 	export_constant(INF2_IGNOREGTB);
+	export_constant(INF2_TOGGLEABLE);
 
 	/* skill no near npc flags */
 	export_constant(SKILL_NONEAR_WARPPORTAL);
@@ -8614,7 +8707,6 @@
 	export_constant(UNT_DUMMY_0);
 	export_constant(UNT_RAIN_OF_CRYSTAL);
 	export_constant(UNT_MYSTERY_ILLUSION);
-	export_constant(UNT_UNKNOWN_1);
 	export_constant(UNT_STRANTUM_TREMOR);
 	export_constant(UNT_VIOLENT_QUAKE);
 	export_constant(UNT_ALL_BLOOM);
@@ -8878,7 +8970,6 @@
 	export_constant(SCF_REMOVEONCHANGEMAP);
 	export_constant(SCF_REMOVEONMAPWARP);
 	export_constant(SCF_REMOVECHEMICALPROTECT);
-	export_constant(SCF_OVERLAPFAIL);
 	export_constant(SCF_OVERLAPIGNORELEVEL);
 	export_constant(SCF_SENDOPTION);
 	export_constant(SCF_ONTOUCH);
@@ -8901,6 +8992,9 @@
 	export_constant(SCF_SENDVAL3);
 	export_constant(SCF_NOFORCEDEND);
 	export_constant(SCF_NOWARNING);
+	export_constant(SCF_REMOVEONUNEQUIP);
+	export_constant(SCF_REMOVEONUNEQUIPWEAPON);
+	export_constant(SCF_REMOVEONUNEQUIPARMOR);
 
 	#undef export_constant
 	#undef export_constant2

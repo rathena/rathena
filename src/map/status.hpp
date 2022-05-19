@@ -97,7 +97,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode( const YAML::Node& node ) override;
+	uint64 parseBodyNode( const ryml::NodeRef& node ) override;
 
 	// Additional
 	std::shared_ptr<s_refine_level_info> findLevelInfo( const struct item_data& data, struct item& item );
@@ -118,7 +118,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node &node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 };
 
 extern SizeFixDatabase size_fix_db;
@@ -136,7 +136,7 @@ public:
 		std::fill_n(&attr_fix_table[0][0][0], MAX_ELE_LEVEL * ELE_MAX * ELE_MAX, 100);
 	}
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node& node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 
 	// Additional
 	int16 getAttribute(uint16 level, uint16 atk_ele, uint16 def_ele);
@@ -150,7 +150,7 @@ enum sc_type : int16 {
 
 	//First we enumerate common status ailments which are often used around.
 	SC_STONE = 0,
-	SC_COMMON_MIN = 0, // begin
+	SC_COMMON_MIN = SC_STONE, // begin
 	SC_FREEZE,
 	SC_STUN,
 	SC_SLEEP,
@@ -161,7 +161,8 @@ enum sc_type : int16 {
 	SC_BLIND,
 	SC_BLEEDING,
 	SC_DPOISON, //10
-	SC_COMMON_MAX = 10, // end
+	SC_STONEWAIT,
+	SC_COMMON_MAX = SC_STONEWAIT, // end
 
 	//Next up, we continue on 20, to leave enough room for additional "common" ailments in the future.
 	SC_PROVOKE = 20,
@@ -2826,7 +2827,6 @@ enum e_status_change_flag : uint16 {
 	SCF_REMOVEONCHANGEMAP,
 	SCF_REMOVEONMAPWARP,
 	SCF_REMOVECHEMICALPROTECT,
-	SCF_OVERLAPFAIL,
 	SCF_OVERLAPIGNORELEVEL,
 	SCF_SENDOPTION,
 	SCF_ONTOUCH,
@@ -2849,6 +2849,9 @@ enum e_status_change_flag : uint16 {
 	SCF_SENDVAL3,
 	SCF_NOFORCEDEND,
 	SCF_NOWARNING,
+	SCF_REMOVEONUNEQUIP,
+	SCF_REMOVEONUNEQUIPWEAPON,
+	SCF_REMOVEONUNEQUIPARMOR,
 	SCF_MAX
 };
 
@@ -2867,14 +2870,14 @@ struct s_status_change_db {
 	uint16 skill_id;				///< Associated skill for (addeff) duration lookups
 	std::vector<sc_type> end;		///< List of SC that will be ended when this SC is activated
 	std::vector<sc_type> fail;		///< List of SC that causing this SC cannot be activated
-	bool end_return;				///< After SC ends the SC from end list, it does nothing
+	std::vector<sc_type> endreturn;	///< List of SC that will be ended when this SC is activated and then immediately return
 	t_tick min_duration;			///< Minimum duration effect (after all status reduction)
 	uint16 min_rate;				///< Minimum rate to be applied (after all status reduction)
 };
 
 class StatusDatabase : public TypesafeCachedYamlDatabase<uint16, s_status_change_db> {
 public:
-	StatusDatabase() : TypesafeCachedYamlDatabase("STATUS_DB", 1) {
+	StatusDatabase() : TypesafeCachedYamlDatabase("STATUS_DB", 2) {
 		// All except BASE and extra flags.
 		SCB_BATTLE.set();
 		SCB_BATTLE.reset(SCB_BASE);
@@ -2885,7 +2888,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node &node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void loadingFinished() override;
 
 	// Determine who will receive a clif_status_change packet for effects that require one to display correctly
@@ -3012,7 +3015,8 @@ struct regen_data {
 
 	//tick accumulation before healing.
 	struct {
-		unsigned int hp,sp,shp,ssp;
+		t_tick hp, sp; //time of last natural recovery
+		unsigned int shp,ssp;
 	} tick;
 
 	//Regen rates. n/100
@@ -3050,6 +3054,8 @@ struct status_change {
 	unsigned short opt1;// body state
 	unsigned short opt2;// health state (bitfield)
 	unsigned char count;
+	sc_type lastEffect; // Used to check for stacking damageable SC on the same attack
+	int32 lastEffectTimer; // Timer for lastEffect
 	//! TODO: See if it is possible to implement the following SC's without requiring extra parameters while the SC is inactive.
 	struct {
 		uint8 move;
@@ -3211,12 +3217,17 @@ int status_isdead(struct block_list *bl);
 int status_isimmune(struct block_list *bl);
 
 t_tick status_get_sc_def(struct block_list *src,struct block_list *bl, enum sc_type type, int rate, t_tick tick, unsigned char flag);
+int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,t_tick duration,unsigned char flag, int32 delay = 0);
 //Short version, receives rate in 1->100 range, and does not uses a flag setting.
-#define sc_start(src, bl, type, rate, val1, tick) status_change_start(src,bl,type,100*(rate),val1,0,0,0,tick,SCSTART_NONE)
-#define sc_start2(src, bl, type, rate, val1, val2, tick) status_change_start(src,bl,type,100*(rate),val1,val2,0,0,tick,SCSTART_NONE)
-#define sc_start4(src, bl, type, rate, val1, val2, val3, val4, tick) status_change_start(src,bl,type,100*(rate),val1,val2,val3,val4,tick,SCSTART_NONE)
-
-int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,t_tick duration,unsigned char flag);
+static int sc_start(block_list *src, block_list *bl, sc_type type, int32 rate, int32 val1, t_tick duration, int32 delay = 0) {
+	return status_change_start(src, bl, type, 100 * rate, val1, 0, 0, 0, duration, SCSTART_NONE, delay);
+}
+static int sc_start2(block_list *src, block_list *bl, sc_type type, int32 rate, int32 val1, int32 val2, t_tick duration, int32 delay = 0) {
+	return status_change_start(src, bl, type, 100 * rate, val1, val2, 0, 0, duration, SCSTART_NONE, delay);
+}
+static int sc_start4(block_list *src, block_list *bl, sc_type type, int32 rate, int32 val1, int32 val2, int32 val3, int32 val4, t_tick duration, int32 delay = 0) {
+	return status_change_start(src, bl, type, 100 * rate, val1, val2, val3, val4, duration, SCSTART_NONE, delay);
+}
 int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const char* file, int line);
 #define status_change_end(bl,type,tid) status_change_end_(bl,type,tid,__FILE__,__LINE__)
 TIMER_FUNC(status_change_timer);
@@ -3224,8 +3235,8 @@ int status_change_timer_sub(struct block_list* bl, va_list ap);
 int status_change_clear(struct block_list* bl, int type);
 void status_change_clear_buffs(struct block_list* bl, uint8 type);
 void status_change_clear_onChangeMap(struct block_list *bl, struct status_change *sc);
+TIMER_FUNC(status_clear_lastEffect_timer);
 
-#define status_calc_bl(bl, flag) status_calc_bl_(bl, flag, SCO_NONE)
 #define status_calc_mob(md, opt) status_calc_bl_(&(md)->bl, status_db.getSCB_ALL(), opt)
 #define status_calc_pet(pd, opt) status_calc_bl_(&(pd)->bl, status_db.getSCB_ALL(), opt)
 #define status_calc_pc(sd, opt) status_calc_bl_(&(sd)->bl, status_db.getSCB_ALL(), opt)
@@ -3236,7 +3247,7 @@ void status_change_clear_onChangeMap(struct block_list *bl, struct status_change
 
 bool status_calc_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag);
 bool status_calc_cart_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag);
-void status_calc_bl_(struct block_list *bl, std::bitset<SCB_MAX> flag, uint8 opt);
+void status_calc_bl_(struct block_list *bl, std::bitset<SCB_MAX> flag, uint8 opt = SCO_NONE);
 int status_calc_mob_(struct mob_data* md, uint8 opt);
 void status_calc_pet_(struct pet_data* pd, uint8 opt);
 int status_calc_pc_(struct map_session_data* sd, uint8 opt);
@@ -3244,6 +3255,17 @@ int status_calc_homunculus_(struct homun_data *hd, uint8 opt);
 int status_calc_mercenary_(s_mercenary_data *md, uint8 opt);
 int status_calc_elemental_(s_elemental_data *ed, uint8 opt);
 int status_calc_npc_(struct npc_data *nd, uint8 opt);
+
+static void status_calc_bl(block_list *bl, std::vector<e_scb_flag> flags) {
+	static std::bitset<SCB_MAX> temp;
+
+	temp.reset();
+	for (const auto &scb : flags) {
+		temp.set(scb);
+	}
+
+	status_calc_bl_(bl, temp);
+}
 
 void status_calc_misc(struct block_list *bl, struct status_data *status, int level);
 void status_calc_regen(struct block_list *bl, struct status_data *status, struct regen_data *regen);

@@ -1745,7 +1745,7 @@ Body:
     Hp: 1175840
     BaseExp: 122760
     JobExp: 100440
-    MvpExp: 122760
+    MvpExp: 61380
     Attack: 1980
     Attack2: 1503
     Defense: 172
@@ -1804,7 +1804,7 @@ Body:
     Hp: 668000
     BaseExp: 218089
     JobExp: 167053
-    MvpExp: 198262
+    MvpExp: 109044
     Attack: 3150
     Attack2: 1984
     Defense: 379
@@ -2124,7 +2124,7 @@ Body:
     Hp: 380000
     BaseExp: 172260
     JobExp: 125280
-    MvpExp: 156600
+    MvpExp: 86130
     Attack: 2103
     Attack2: 1176
     Defense: 246
@@ -2742,7 +2742,7 @@ Body:
     Hp: 378000
     BaseExp: 184140
     JobExp: 150660
-    MvpExp: 184140
+    MvpExp: 92070
     Attack: 985
     Attack2: 1967
     Defense: 287
@@ -3961,7 +3961,7 @@ Body:
     Hp: 222750
     BaseExp: 102060
     JobExp: 77760
-    MvpExp: 97200
+    MvpExp: 51030
     Attack: 952
     Attack2: 843
     Defense: 159
@@ -4018,7 +4018,7 @@ Body:
     Hp: 362000
     BaseExp: 53460
     JobExp: 48600
-    MvpExp: 53460
+    MvpExp: 26730
     Attack: 662
     Attack2: 441
     Defense: 197
@@ -5224,7 +5224,7 @@ Body:
     Hp: 804500
     BaseExp: 309096
     JobExp: 208980
-    MvpExp: 257580
+    MvpExp: 154548
     Attack: 2519
     Attack2: 1403
     Defense: 279
@@ -5371,7 +5371,7 @@ Body:
     Hp: 947500
     BaseExp: 103950
     JobExp: 74250
-    MvpExp: 99000
+    MvpExp: 51975
     Attack: 1509
     Attack2: 776
     Defense: 166
@@ -6907,7 +6907,7 @@ Body:
     Hp: 380000
     BaseExp: 89280
     JobExp: 66960
-    MvpExp: 89280
+    MvpExp: 44640
     Attack: 555
     Attack2: 265
     Defense: 183
@@ -7062,7 +7062,7 @@ Body:
     Hp: 324000
     BaseExp: 183744
     JobExp: 135720
-    MvpExp: 167040
+    MvpExp: 91872
     Attack: 2232
     Attack2: 1251
     Defense: 254
@@ -7398,7 +7398,7 @@ Body:
     Hp: 900000
     BaseExp: 229680
     JobExp: 167040
-    MvpExp: 208800
+    MvpExp: 104400
     Attack: 1624
     Attack2: 1782
     Defense: 124
@@ -7504,7 +7504,7 @@ Body:
     Hp: 300000
     BaseExp: 63800
     JobExp: 90000
-    MvpExp: 58000
+    MvpExp: 31900
     Attack: 693
     Attack2: 967
     Defense: 269
@@ -8854,7 +8854,7 @@ Body:
     Hp: 552000
     BaseExp: 78120
     JobExp: 61380
-    MvpExp: 31102
+    MvpExp: 15553
     Attack: 780
     Attack2: 648
     Defense: 256
@@ -11604,7 +11604,7 @@ Body:
     Hp: 630500
     BaseExp: 248280
     JobExp: 151100
-    MvpExp: 206900
+    MvpExp: 124140
     Attack: 3480
     Attack2: 1433
     Defense: 306
@@ -11664,7 +11664,7 @@ Body:
     Hp: 1275500
     BaseExp: 455328
     JobExp: 306900
-    MvpExp: 379440
+    MvpExp: 227664
     Attack: 2421
     Attack2: 1733
     Defense: 173
@@ -12620,7 +12620,7 @@ Body:
     Hp: 1190900
     BaseExp: 428544
     JobExp: 279000
-    MvpExp: 357120
+    MvpExp: 214272
     Attack: 3935
     Attack2: 2585
     Defense: 330
@@ -14489,7 +14489,7 @@ Body:
     Hp: 1442000
     BaseExp: 559872
     JobExp: 411642
-    MvpExp: 466560
+    MvpExp: 279936
     Attack: 3169
     Attack2: 2066
     Defense: 394
@@ -16671,7 +16671,7 @@ Body:
     Hp: 603883
     BaseExp: 262272
     JobExp: 172626
-    MvpExp: 218560
+    MvpExp: 131136
     Attack: 5351
     Attack2: 1962
     Defense: 336
@@ -17412,7 +17412,7 @@ Body:
     Hp: 350000
     BaseExp: 171864
     JobExp: 122760
-    MvpExp: 156240
+    MvpExp: 85932
     Attack: 2454
     Attack2: 1812
     Defense: 252
@@ -17813,7 +17813,7 @@ Body:
     Hp: 1264000
     BaseExp: 41225
     JobExp: 12553
-    MvpExp: 130875
+    MvpExp: 68709
     Attack: 1939
     Attack2: 420
     Defense: 35
@@ -18615,7 +18615,7 @@ Body:
     Hp: 1101000
     BaseExp: 432000
     JobExp: 346500
-    MvpExp: 78120
+    MvpExp: 46872
     Attack: 2882
     Attack2: 1986
     Defense: 314
@@ -20022,7 +20022,7 @@ Body:
     Ai: 04
   - Id: 1468
     AegisName: G_REQUIEM
-    Name: Requim
+    Name: Requiem
     Level: 71
     Hp: 3089
     Attack: 348
@@ -20690,7 +20690,7 @@ Body:
     Hp: 901000
     BaseExp: 451008
     JobExp: 327294
-    MvpExp: 375840
+    MvpExp: 225504
     Attack: 2855
     Attack2: 936
     Defense: 296
@@ -21090,7 +21090,7 @@ Body:
     Hp: 95000000
     BaseExp: 47115
     JobExp: 12553
-    MvpExp: 43625
+    MvpExp: 26177
     Attack: 6500
     Attack2: 5000
     MagicDefense: 10
@@ -21526,7 +21526,7 @@ Body:
     Hp: 1009000
     BaseExp: 120060
     JobExp: 93960
-    MvpExp: 120060
+    MvpExp: 60030
     Attack: 2090
     Attack2: 2052
     Defense: 213
@@ -22562,7 +22562,7 @@ Body:
     DamageMotion: 384
     Ai: 10
   - Id: 1542
-    AegisName: G_INCANTATION_SAMURA
+    AegisName: G_INCANTATION_SAMURAI
     Name: Incantation Samurai
     Level: 100
     Hp: 901000
@@ -23712,7 +23712,7 @@ Body:
     Hp: 1252000
     BaseExp: 540000
     JobExp: 396000
-    MvpExp: 450000
+    MvpExp: 270000
     Attack: 3757
     Attack2: 1260
     Defense: 404
@@ -25174,7 +25174,7 @@ Body:
     Hp: 1001000
     BaseExp: 432000
     JobExp: 316800
-    MvpExp: 360000
+    MvpExp: 216000
     Attack: 3010
     Attack2: 976
     Defense: 317
@@ -25452,7 +25452,7 @@ Body:
     Hp: 720500
     BaseExp: 400896
     JobExp: 271440
-    MvpExp: 334080
+    MvpExp: 200448
     Attack: 1414
     Attack2: 2036
     Defense: 210
@@ -26178,7 +26178,7 @@ Body:
     Hp: 4680000
     BaseExp: 3017664
     JobExp: 1915056
-    MvpExp: 2321280
+    MvpExp: 1508832
     Attack: 6435
     Attack2: 2342
     Defense: 567
@@ -26238,7 +26238,7 @@ Body:
     Hp: 4230000
     BaseExp: 2720250
     JobExp: 1730916
-    MvpExp: 2092500
+    MvpExp: 1360125
     Attack: 6083
     Attack2: 1378
     Defense: 445
@@ -26299,7 +26299,7 @@ Body:
     Hp: 6750000
     BaseExp: 2310750
     JobExp: 1465200
-    MvpExp: 1777500
+    MvpExp: 1155375
     Attack: 5250
     Attack2: 1465
     Defense: 301
@@ -26360,7 +26360,7 @@ Body:
     Hp: 4800000
     BaseExp: 2252250
     JobExp: 1386000
-    MvpExp: 1732500
+    MvpExp: 1126125
     Attack: 2499
     Attack2: 3396
     Defense: 231
@@ -26421,7 +26421,7 @@ Body:
     Hp: 4140000
     BaseExp: 2669472
     JobExp: 1694088
-    MvpExp: 2053440
+    MvpExp: 1334736
     Attack: 4155
     Attack2: 1550
     Defense: 178
@@ -26482,7 +26482,7 @@ Body:
     Hp: 4500000
     BaseExp: 2106000
     JobExp: 1336500
-    MvpExp: 1620000
+    MvpExp: 1053000
     Attack: 2097
     Attack2: 4254
     Defense: 215
@@ -26843,7 +26843,7 @@ Body:
     Hp: 2910088
     BaseExp: 685360
     JobExp: 1023000
-    MvpExp: 527200
+    MvpExp: 342680
     Attack: 5986
     Attack2: 2351
     Defense: 373
@@ -27918,7 +27918,7 @@ Body:
     Hp: 3802000
     BaseExp: 1755000
     JobExp: 1237500
-    MvpExp: 100000
+    MvpExp: 64935
     Attack: 3668
     Attack2: 4656
     Defense: 402
@@ -28073,7 +28073,7 @@ Body:
     Hp: 360000
     BaseExp: 183744
     JobExp: 130500
-    MvpExp: 167040
+    MvpExp: 91872
     Attack: 1936
     Attack2: 925
     Defense: 241
@@ -28976,7 +28976,7 @@ Body:
     Hp: 1445660
     BaseExp: 779640
     JobExp: 965277
-    MvpExp: 649700
+    MvpExp: 389820
     Attack: 4956
     Attack2: 1671
     Defense: 364
@@ -29456,7 +29456,7 @@ Body:
     Hp: 6005000
     BaseExp: 2808000
     JobExp: 1881000
-    MvpExp: 2160000
+    MvpExp: 1404000
     Attack: 6108
     Attack2: 2662
     Defense: 364
@@ -29931,7 +29931,7 @@ Body:
     Hp: 2502000
     BaseExp: 1170000
     JobExp: 792000
-    MvpExp: 900000
+    MvpExp: 585000
     Attack: 4112
     Attack2: 3580
     Defense: 314
@@ -30532,7 +30532,7 @@ Body:
     Hp: 3205000
     BaseExp: 1300000
     JobExp: 1210000
-    MvpExp: 1000000
+    MvpExp: 650000
     Attack: 7343
     Attack2: 4412
     Defense: 588
@@ -31156,7 +31156,7 @@ Body:
     Hp: 3005000
     BaseExp: 1404000
     JobExp: 990000
-    MvpExp: 1080000
+    MvpExp: 702000
     Attack: 6592
     Attack2: 2785
     Defense: 479
@@ -31683,7 +31683,7 @@ Body:
     Hp: 2626000
     BaseExp: 621345
     JobExp: 474971
-    MvpExp: 517788
+    MvpExp: 310672
     Attack: 3754
     Attack2: 2680
     Defense: 129
@@ -31974,7 +31974,7 @@ Body:
     Hp: 1502000
     BaseExp: 702000
     JobExp: 470250
-    MvpExp: 540000
+    MvpExp: 351000
     Attack: 2843
     Attack2: 1503
     Defense: 316
@@ -32461,7 +32461,7 @@ Body:
       - Item: Gem_Of_Ruin
         Rate: 5000
   - Id: 1799
-    AegisName: G_SEYREN_
+    AegisName: B_SEYREN_
     Name: Lord Knight Seyren
     Level: 99
     Hp: 1647590
@@ -32494,7 +32494,7 @@ Body:
       - Item: Evil_Mind
         Rate: 5000
   - Id: 1800
-    AegisName: G_EREMES_
+    AegisName: B_EREMES_
     Name: Assassin Cross Eremes
     Level: 99
     Hp: 1411230
@@ -32527,7 +32527,7 @@ Body:
       - Item: Evil_Mind
         Rate: 5000
   - Id: 1801
-    AegisName: G_HARWORD_
+    AegisName: B_HARWORD_
     Name: Mastersmith Howard
     JapaneseName: Whitesmith Harword
     Level: 99
@@ -32561,7 +32561,7 @@ Body:
       - Item: Evil_Mind
         Rate: 5000
   - Id: 1802
-    AegisName: G_MAGALETA_
+    AegisName: B_MAGALETA_
     Name: High Priest Margaretha
     JapaneseName: High Priest Magaleta
     Level: 99
@@ -32594,7 +32594,7 @@ Body:
       - Item: Evil_Mind
         Rate: 5000
   - Id: 1803
-    AegisName: G_SHECIL_
+    AegisName: B_SHECIL_
     Name: Sniper Cecil
     JapaneseName: Sniper Shecil
     Level: 99
@@ -32627,7 +32627,7 @@ Body:
       - Item: Evil_Mind
         Rate: 5000
   - Id: 1804
-    AegisName: G_KATRINN_
+    AegisName: B_KATRINN_
     Name: High Wizard Kathryne
     JapaneseName: High Wizard Katrinn
     Level: 99
@@ -32660,7 +32660,7 @@ Body:
       - Item: Evil_Mind
         Rate: 5000
   - Id: 1805
-    AegisName: B_SEYREN_
+    AegisName: G_SEYREN_
     Name: Lord Knight Seyren
     Level: 10
     Hp: 10
@@ -32692,7 +32692,7 @@ Body:
       - Item: 3D_Glasses_Box
         Rate: 2500
   - Id: 1806
-    AegisName: B_EREMES_
+    AegisName: G_EREMES_
     Name: Assassin Cross Eremes
     Level: 10
     Hp: 10
@@ -32724,7 +32724,7 @@ Body:
       - Item: 3D_Glasses_Box
         Rate: 2500
   - Id: 1807
-    AegisName: B_HARWORD_
+    AegisName: G_HARWORD_
     Name: Mastersmith Howard
     JapaneseName: Whitesmith Harword
     Level: 10
@@ -32757,7 +32757,7 @@ Body:
       - Item: 3D_Glasses_Box
         Rate: 2500
   - Id: 1808
-    AegisName: B_MAGALETA_
+    AegisName: G_MAGALETA_
     Name: High Priest Margaretha
     JapaneseName: High Priest Magaleta
     Level: 10
@@ -32790,7 +32790,7 @@ Body:
       - Item: 3D_Glasses_Box
         Rate: 2500
   - Id: 1809
-    AegisName: B_SHECIL_
+    AegisName: G_SHECIL_
     Name: Sniper Cecil
     JapaneseName: Sniper Shecil
     Level: 10
@@ -32823,7 +32823,7 @@ Body:
       - Item: 3D_Glasses_Box
         Rate: 2500
   - Id: 1810
-    AegisName: B_KATRINN_
+    AegisName: G_KATRINN_
     Name: High Wizard Kathryne
     JapaneseName: High Wizard Katrinn
     Level: 10
@@ -33091,7 +33091,7 @@ Body:
         Rate: 5000
   - Id: 1817
     AegisName: EVENT_DETALE
-    Name: Detarderous
+    Name: Detardeurus
     JapaneseName: Detale
     Level: 99
     Hp: 8880000
@@ -33438,7 +33438,7 @@ Body:
         Rate: 1500
   - Id: 1828
     AegisName: EVENT_GULLINBURSTI
-    Name: Gullinbrusti
+    Name: Gullinbursti
     Level: 20
     Hp: 20
     Attack: 59
@@ -33619,7 +33619,7 @@ Body:
     Hp: 6935000
     BaseExp: 4352400
     JobExp: 2673000
-    MvpExp: 3348000
+    MvpExp: 2176200
     Attack: 8063
     Attack2: 3389
     Defense: 436
@@ -35159,7 +35159,7 @@ Body:
     Hp: 5655000
     BaseExp: 1755000
     JobExp: 1039500
-    MvpExp: 1350000
+    MvpExp: 877500
     Attack: 4290
     Attack2: 4636
     Defense: 274
@@ -35274,7 +35274,7 @@ Body:
     Hp: 4805000
     BaseExp: 4582500
     JobExp: 3877500
-    MvpExp: 3525000
+    MvpExp: 2291250
     Attack: 6666
     Attack2: 4444
     Defense: 418
@@ -35367,7 +35367,7 @@ Body:
     Hp: 99000000
     BaseExp: 70925
     JobExp: 19505
-    MvpExp: 59104
+    MvpExp: 35462
     Attack: 4459
     Attack2: 802
     Defense: 75
@@ -35737,7 +35737,7 @@ Body:
     Hp: 1120500
     BaseExp: 428544
     JobExp: 290160
-    MvpExp: 357120
+    MvpExp: 214272
     Attack: 2584
     Attack2: 1861
     Defense: 355
@@ -36650,7 +36650,7 @@ Body:
     Hp: 5000000
     BaseExp: 2632500
     JobExp: 1673100
-    MvpExp: 2025000
+    MvpExp: 1316250
     Attack: 4530
     Attack2: 2880
     Defense: 425
@@ -38840,7 +38840,7 @@ Body:
     Hp: 633600
     BaseExp: 49500
     JobExp: 45000
-    MvpExp: 45000
+    MvpExp: 24750
     Attack: 1298
     Attack2: 220
     Defense: 22
@@ -40506,7 +40506,7 @@ Body:
     Hp: 3452000
     BaseExp: 2808000
     JobExp: 1930500
-    MvpExp: 2160000
+    MvpExp: 1404000
     Attack: 6656
     Attack2: 3840
     Defense: 60
@@ -41470,7 +41470,7 @@ Body:
     Hp: 100000000
     BaseExp: 428544
     JobExp: 279000
-    MvpExp: 1005
+    MvpExp: 214272
     Attack: 3935
     Attack2: 2585
     Defense: 330
@@ -42381,7 +42381,6 @@ Body:
     Name: Ragunta
     Level: 99
     Hp: 53822010
-    MvpExp: 4999999
     Attack: 4620
     Attack2: 2600
     Defense: 42
@@ -42850,7 +42849,7 @@ Body:
     Hp: 2441600
     BaseExp: 266643
     JobExp: 116710
-    MvpExp: 205110
+    MvpExp: 133321
     Attack: 2834
     Attack2: 1240
     Defense: 350
@@ -43150,7 +43149,7 @@ Body:
     Hp: 362000
     BaseExp: 1005
     JobExp: 1005
-    MvpExp: 1005
+    MvpExp: 502
     Attack: 662
     Attack2: 441
     Defense: 197
@@ -43208,7 +43207,7 @@ Body:
     Hp: 947500
     BaseExp: 1005
     JobExp: 1005
-    MvpExp: 1005
+    MvpExp: 502
     Attack: 1509
     Attack2: 776
     Defense: 166
@@ -43266,7 +43265,7 @@ Body:
     Hp: 475840
     BaseExp: 1005
     JobExp: 1005
-    MvpExp: 1005
+    MvpExp: 502
     Attack: 1580
     Attack2: 903
     Defense: 172
@@ -43324,7 +43323,7 @@ Body:
     Hp: 350000
     BaseExp: 1105
     JobExp: 1005
-    MvpExp: 1005
+    MvpExp: 502
     Attack: 1454
     Attack2: 1812
     Defense: 152
@@ -43382,7 +43381,7 @@ Body:
     Hp: 380000
     BaseExp: 1105
     JobExp: 1005
-    MvpExp: 1005
+    MvpExp: 502
     Attack: 1803
     Attack2: 1176
     Defense: 246
@@ -43440,7 +43439,7 @@ Body:
     Hp: 378000
     BaseExp: 1005
     JobExp: 1005
-    MvpExp: 1005
+    MvpExp: 502
     Attack: 985
     Attack2: 1367
     Defense: 187
@@ -43498,7 +43497,7 @@ Body:
     Hp: 668000
     BaseExp: 1105
     JobExp: 1005
-    MvpExp: 1005
+    MvpExp: 502
     Attack: 3150
     Attack2: 1284
     Defense: 279
@@ -43555,7 +43554,7 @@ Body:
     Hp: 603883
     BaseExp: 1206
     JobExp: 1005
-    MvpExp: 1005
+    MvpExp: 603
     Attack: 5351
     Attack2: 962
     Defense: 336
@@ -43663,7 +43662,7 @@ Body:
     Hp: 2626000
     BaseExp: 1206
     JobExp: 1005
-    MvpExp: 1005
+    MvpExp: 603
     Attack: 3754
     Attack2: 2680
     Defense: 129
@@ -43722,7 +43721,7 @@ Body:
     Hp: 1101000
     BaseExp: 1206
     JobExp: 1105
-    MvpExp: 1005
+    MvpExp: 603
     Attack: 2882
     Attack2: 1986
     Defense: 314
@@ -43780,7 +43779,7 @@ Body:
     Hp: 1442000
     BaseExp: 1206
     JobExp: 1105
-    MvpExp: 1005
+    MvpExp: 603
     Attack: 3169
     Attack2: 2066
     Defense: 394
@@ -43838,7 +43837,7 @@ Body:
     Hp: 3802000
     BaseExp: 1306
     JobExp: 1105
-    MvpExp: 1005
+    MvpExp: 653
     Attack: 3668
     Attack2: 4656
     Defense: 402
@@ -43897,7 +43896,7 @@ Body:
     Hp: 5655000
     BaseExp: 1306
     JobExp: 1105
-    MvpExp: 1005
+    MvpExp: 653
     Attack: 4290
     Attack2: 4636
     Defense: 274
@@ -43956,7 +43955,7 @@ Body:
     Hp: 3005000
     BaseExp: 1306
     JobExp: 1105
-    MvpExp: 1005
+    MvpExp: 653
     Attack: 6592
     Attack2: 2785
     Defense: 479
@@ -44009,13 +44008,12 @@ Body:
         StealProtected: true
   - Id: 2109
     AegisName: E_RANDGRIS
-    Name: Valkyrie Randgris1
-    JapaneseName: Valkyrie Randgris
+    Name: Valkyrie Randgris
     Level: 141
     Hp: 3205000
     BaseExp: 1306
     JobExp: 1105
-    MvpExp: 1005
+    MvpExp: 653
     Attack: 7343
     Attack2: 4412
     Defense: 588
@@ -44073,7 +44071,7 @@ Body:
     Hp: 6935000
     BaseExp: 1306
     JobExp: 1105
-    MvpExp: 1005
+    MvpExp: 653
     Attack: 8063
     Attack2: 3389
     Defense: 436
@@ -44132,7 +44130,7 @@ Body:
     Hp: 6750000
     BaseExp: 1306
     JobExp: 1105
-    MvpExp: 1005
+    MvpExp: 653
     Attack: 5250
     Attack2: 1465
     Defense: 301
@@ -44190,7 +44188,7 @@ Body:
     Hp: 4680000
     BaseExp: 1306
     JobExp: 1105
-    MvpExp: 1005
+    MvpExp: 653
     Attack: 6435
     Attack2: 2342
     Defense: 567
@@ -44245,7 +44243,7 @@ Body:
     Hp: 4230000
     BaseExp: 1306
     JobExp: 1105
-    MvpExp: 1005
+    MvpExp: 653
     Attack: 6083
     Attack2: 1378
     Defense: 445
@@ -44602,7 +44600,7 @@ Body:
     Hp: 608920
     BaseExp: 19500
     JobExp: 19800
-    MvpExp: 15000
+    MvpExp: 9750
     Attack: 1975
     Attack2: 530
     Defense: 60
@@ -45399,7 +45397,7 @@ Body:
     Hp: 1266000
     BaseExp: 236400
     JobExp: 150060
-    MvpExp: 236400
+    MvpExp: 118200
     Attack: 3723
     Attack2: 1284
     Defense: 280
@@ -45772,7 +45770,7 @@ Body:
     Hp: 6441600
     BaseExp: 605110
     JobExp: 336710
-    MvpExp: 2051100
+    MvpExp: 302555
     Attack: 4889
     Attack2: 6440
     Defense: 350
@@ -48703,7 +48701,7 @@ Body:
     Hp: 6870000
     BaseExp: 3674489
     JobExp: 2149566
-    MvpExp: 2310750
+    MvpExp: 1837244
     Attack: 5537
     Attack2: 3017
     Defense: 667
@@ -48762,7 +48760,7 @@ Body:
     Hp: 4230000
     BaseExp: 2611785
     JobExp: 1446694
-    MvpExp: 2611785
+    MvpExp: 1305892
     Attack: 2355
     Attack2: 2514
     Defense: 253
@@ -48822,7 +48820,7 @@ Body:
     Hp: 3847804
     BaseExp: 2513654
     JobExp: 1380385
-    MvpExp: 2513654
+    MvpExp: 1256827
     Attack: 2481
     Attack2: 3114
     Defense: 201
@@ -48879,7 +48877,7 @@ Body:
     Sp: 1553
     BaseExp: 2556784
     JobExp: 1614235
-    MvpExp: 2556784
+    MvpExp: 1278392
     Attack: 3617
     Attack2: 1947
     Defense: 216
@@ -48937,7 +48935,7 @@ Body:
     Hp: 4057279
     BaseExp: 2210349
     JobExp: 1480200
-    MvpExp: 2210349
+    MvpExp: 1105174
     Attack: 6162
     Attack2: 1274
     Defense: 251
@@ -48995,7 +48993,7 @@ Body:
     Hp: 3894278
     BaseExp: 2113018
     JobExp: 1357934
-    MvpExp: 2113018
+    MvpExp: 1056509
     Attack: 2641
     Attack2: 3749
     Defense: 201
@@ -49051,7 +49049,7 @@ Body:
     Hp: 3894278
     BaseExp: 2231879
     JobExp: 1409702
-    MvpExp: 2231879
+    MvpExp: 1115939
     Attack: 2016
     Attack2: 4036
     Defense: 181
@@ -55303,7 +55301,7 @@ Body:
     Hp: 265203
     BaseExp: 106267
     JobExp: 87747
-    MvpExp: 106267
+    MvpExp: 53133
     Attack: 4220
     Attack2: 2107
     Defense: 510
@@ -55354,7 +55352,7 @@ Body:
     Hp: 268800
     BaseExp: 108810
     JobExp: 89000
-    MvpExp: 108810
+    MvpExp: 54405
     Attack: 5877
     Attack2: 3526
     Defense: 410
@@ -55403,7 +55401,7 @@ Body:
     Hp: 270000
     BaseExp: 110000
     JobExp: 90000
-    MvpExp: 110000
+    MvpExp: 55000
     Attack: 827
     Attack2: 285
     Defense: 149
@@ -55443,7 +55441,7 @@ Body:
     Hp: 270000
     BaseExp: 110000
     JobExp: 90000
-    MvpExp: 110000
+    MvpExp: 55000
     Attack: 739
     Attack2: 153
     Defense: 109
@@ -55483,7 +55481,7 @@ Body:
     Hp: 270000
     BaseExp: 110000
     JobExp: 90000
-    MvpExp: 110000
+    MvpExp: 55000
     Attack: 782
     Attack2: 253
     Defense: 117
@@ -55563,7 +55561,7 @@ Body:
     Hp: 270000
     BaseExp: 110000
     JobExp: 90000
-    MvpExp: 110000
+    MvpExp: 55000
     Attack: 512
     Attack2: 650
     Defense: 69
@@ -55603,7 +55601,7 @@ Body:
     Hp: 270000
     BaseExp: 110000
     JobExp: 90000
-    MvpExp: 110000
+    MvpExp: 55000
     Attack: 644
     Attack2: 498
     Defense: 97
@@ -55643,7 +55641,7 @@ Body:
     Hp: 270000
     BaseExp: 110000
     JobExp: 90000
-    MvpExp: 110000
+    MvpExp: 55000
     Attack: 852
     Attack2: 342
     Defense: 136
@@ -56616,7 +56614,7 @@ Body:
         StealProtected: true
   - Id: 2476
     AegisName: MG_AMDARAIS
-    Name: Amdarias
+    Name: Amdarais
     Level: 150
     Hp: 4290000
     BaseExp: 1145662
@@ -88723,7 +88721,7 @@ Body:
     DamageMotion: 550
     Ai: 04
     Drops:
-      - Item: Crude_Ammo
+      - Item: CrudeAmmo
         Rate: 2500
       - Item: Vigilante_Bow
         Rate: 50
@@ -88768,7 +88766,7 @@ Body:
     DamageMotion: 480
     Ai: 04
     Drops:
-      - Item: Bandits_Scarf
+      - Item: BanditsScarf
         Rate: 2500
       - Item: Brigan
         Rate: 1000
@@ -88813,7 +88811,7 @@ Body:
     DamageMotion: 360
     Ai: 04
     Drops:
-      - Item: Brown_Muffler
+      - Item: BrownMuffler
         Rate: 2500
       - Item: Brigan
         Rate: 1000
@@ -88862,7 +88860,7 @@ Body:
       ChangeTargetChase: true
       ChangeTargetMelee: true
     Drops:
-      - Item: Clean_Bone
+      - Item: CleanBone
         Rate: 2500
       - Item: Rotten_Meat
         Rate: 1500
@@ -89141,7 +89139,7 @@ Body:
     DamageMotion: 660
     Ai: 04
     Drops:
-      - Item: Broken_Shotgun
+      - Item: BrokenShotgun
         Rate: 2500
       - Item: Brigan
         Rate: 2000
@@ -89188,7 +89186,7 @@ Body:
     DamageMotion: 600
     Ai: 04
     Drops:
-      - Item: Worn_Revolver
+      - Item: WornRevolver
         Rate: 2500
       - Item: Brigan
         Rate: 2000
@@ -89235,7 +89233,7 @@ Body:
     DamageMotion: 500
     Ai: 04
     Drops:
-      - Item: Crude_Scimitar
+      - Item: CrudeScimiter
         Rate: 2500
       - Item: Brigan
         Rate: 2000
@@ -89250,22 +89248,386 @@ Body:
       - Item: E_Cowraiders3_Card
         Rate: 1
         StealProtected: true
-#  - Id: 3750
-#    AegisName: ILL_DRAINLIAR
-#  - Id: 3751
-#    AegisName: ILL_ZOMBIE_C
-#  - Id: 3752
-#    AegisName: ILL_ZOMBIE
-#  - Id: 3753
-#    AegisName: ILL_GHOUL
-#  - Id: 3754
-#    AegisName: ILL_NIGHTMARE
-#  - Id: 3755
-#    AegisName: ILL_BLACK_MUSHROOM
-#  - Id: 3756
-#    AegisName: ILL_BOMI
-#  - Id: 3757
-#    AegisName: ILL_DRACULA
+  - Id: 3750
+    AegisName: ILL_DRAINLIAR
+    Name: Matt Drainliar
+    Level: 131
+    Hp: 42246
+    BaseExp: 3928
+    JobExp: 3769
+    Attack: 1241
+    Attack2: 170
+    Defense: 150
+    MagicDefense: 45
+    Str: 91
+    Agi: 129
+    Vit: 96
+    Int: 92
+    Dex: 168
+    Luk: 90
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    RaceGroups:
+      Illusion_Vampire: true
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 250
+    AttackDelay: 1280
+    AttackMotion: 576
+    DamageMotion: 384
+    Ai: 19
+    Drops:
+      - Item: Carnium
+        Rate: 5000
+      - Item: Tooth_Of_Bat
+        Rate: 5000
+      - Item: Red_Jewel
+        Rate: 50
+      - Item: Wing_Of_Red_Bat
+        Rate: 5000
+      - Item: Short_Bat_Fur
+        Rate: 1500
+      - Item: MattDrainliar_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3751
+    AegisName: ILL_ZOMBIE_C
+    Name: Living Dead
+    Level: 133
+    Hp: 53926
+    BaseExp: 4189
+    JobExp: 3947
+    Attack: 1445
+    Attack2: 181
+    Defense: 90
+    MagicDefense: 24
+    Str: 175
+    Agi: 90
+    Vit: 192
+    Int: 14
+    Dex: 184
+    Luk: 14
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    RaceGroups:
+      Illusion_Vampire: true
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 500
+    AttackMotion: 912
+    DamageMotion: 288
+    Ai: 19
+    Drops:
+      - Item: Dried_Leaf_Of_Ygg
+        Rate: 2000
+      - Item: Cardinal_Jewel_
+        Rate: 50
+      - Item: SuspiciousMagicCircle
+        Rate: 2000
+      - Item: Skul_Ring_
+        Rate: 5
+      - Item: Poison_Herb_Rantana
+        Rate: 60
+      - Item: Poison_Herb_Makulata
+        Rate: 60
+      - Item: LivingDead_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3752
+    AegisName: ILL_ZOMBIE
+    Name: Starving Living Dead
+    Level: 130
+    Hp: 40984
+    BaseExp: 3621
+    JobExp: 3177
+    Attack: 1205
+    Attack2: 153
+    Defense: 60
+    MagicDefense: 20
+    Str: 150
+    Agi: 70
+    Vit: 160
+    Int: 7
+    Dex: 150
+    Luk: 7
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    RaceGroups:
+      Illusion_Vampire: true
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 924
+    AttackMotion: 912
+    DamageMotion: 288
+    Ai: 19
+    Drops:
+      - Item: Dried_Leaf_Of_Ygg
+        Rate: 1500
+      - Item: Cardinal_Jewel_
+        Rate: 50
+      - Item: SuspiciousMagicCircle
+        Rate: 300
+      - Item: Skul_Ring
+        Rate: 5
+      - Item: LivingDead_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3753
+    AegisName: ILL_GHOUL
+    Name: Living Dead
+    Level: 136
+    Hp: 67379
+    BaseExp: 4422
+    JobExp: 3937
+    Attack: 1413
+    Attack2: 203
+    Defense: 90
+    MagicDefense: 30
+    Str: 156
+    Agi: 42
+    Vit: 109
+    Int: 101
+    Dex: 99
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    RaceGroups:
+      Illusion_Vampire: true
+    Element: Undead
+    ElementLevel: 2
+    WalkSpeed: 250
+    AttackDelay: 2456
+    AttackMotion: 912
+    DamageMotion: 504
+    Ai: 19
+    Drops:
+      - Item: Dried_Leaf_Of_Ygg
+        Rate: 2000
+      - Item: Bradium
+        Rate: 100
+      - Item: SuspiciousMagicCircle
+        Rate: 400
+      - Item: Ghoul_Leg
+        Rate: 10
+      - Item: Skul_Ring
+        Rate: 5
+      - Item: Poison_Herb_Scopolia
+        Rate: 30
+      - Item: Skul_Ring_
+        Rate: 1
+      - Item: LivingDead_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3754
+    AegisName: ILL_NIGHTMARE
+    Name: Sweet Nightmare
+    Level: 135
+    Hp: 61334
+    BaseExp: 4023
+    JobExp: 4022
+    Attack: 1310
+    Attack2: 597
+    Defense: 116
+    MagicDefense: 30
+    Str: 144
+    Agi: 94
+    Vit: 84
+    Int: 50
+    Dex: 189
+    Luk: 68
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    RaceGroups:
+      Illusion_Vampire: true
+    Element: Ghost
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1826
+    AttackMotion: 816
+    DamageMotion: 432
+    Ai: 19
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Horseshoe
+        Rate: 5000
+      - Item: Blue_Potion
+        Rate: 30
+      - Item: Carnium
+        Rate: 200
+      - Item: NightmareOfLump
+        Rate: 1500
+      - Item: Infiltrator
+        Rate: 10
+      - Item: Infiltrator_
+        Rate: 2
+      - Item: SweetNightM_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3755
+    AegisName: ILL_BLACK_MUSHROOM
+    Name: Black Mushroom
+    Level: 130
+    Hp: 150000
+    BaseExp: 2437
+    JobExp: 2284
+    Defense: 418
+    MagicDefense: 76
+    Vit: 150
+    Int: 103
+    Luk: 88
+    AttackRange: 1
+    Size: Small
+    Race: Plant
+    RaceGroups:
+      Illusion_Vampire: true
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackMotion: 1
+    Drops:
+      - Item: Alchol
+        Rate: 50
+      - Item: Detrimindexta
+        Rate: 50
+      - Item: Dew_Laden_Moss
+        Rate: 20
+      - Item: Mushroom_Spore
+        Rate: 5000
+      - Item: Shining_Spore
+        Rate: 1000
+      - Item: Poison_Spore
+        Rate: 500
+      - Item: IllusoryStone
+        Rate: 500
+  - Id: 3756
+    AegisName: ILL_BOMI
+    Name: Bomi
+    Level: 137
+    Hp: 378510
+    BaseExp: 15034
+    JobExp: 13533
+    Attack: 3709
+    Attack2: 1683
+    Defense: 60
+    MagicDefense: 60
+    Str: 90
+    Agi: 87
+    Vit: 40
+    Int: 140
+    Dex: 199
+    Luk: 91
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    RaceGroups:
+      Illusion_Vampire: true
+    Element: Undead
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 864
+    DamageMotion: 480
+    Ai: 19
+    Class: Boss
+    Modes:
+      IgnoreMisc: true
+      KnockBackImmune: true
+    Drops:
+      - Item: Dark_Red_Jewel
+        Rate: 2000
+      - Item: Vampire's_Servant
+        Rate: 100
+      - Item: Torn_Diary
+        Rate: 3000
+      - Item: Bradium
+        Rate: 100
+      - Item: Carnium
+        Rate: 100
+      - Item: Bloodsuck_Plant_Seed
+        Rate: 500
+      - Item: Cape_Of_Ancient_Lord_
+        Rate: 50
+      - Item: Bomi_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3757
+    AegisName: ILL_DRACULA
+    Name: Dracula of Rage
+    Level: 139
+    Hp: 6909690
+    BaseExp: 2682753
+    JobExp: 1817882
+    MvpExp: 1341376
+    Attack: 6396
+    Attack2: 2765
+    Defense: 252
+    MagicDefense: 146
+    Str: 195
+    Agi: 239
+    Vit: 174
+    Int: 201
+    Dex: 270
+    Luk: 195
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    RaceGroups:
+      Illusion_Vampire: true
+    Element: Dark
+    ElementLevel: 4
+    WalkSpeed: 145
+    AttackDelay: 1290
+    AttackMotion: 1140
+    DamageMotion: 576
+    Ai: 19
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Old_Violet_Box
+        Rate: 5000
+      - Item: IllusionStone
+        Rate: 500
+    Drops:
+      - Item: Yggdrasilberry
+        Rate: 5000
+      - Item: Dried_Clover
+        Rate: 2000
+      - Item: Balistar_
+        Rate: 80
+      - Item: Cape_Of_Ancient_Lord_
+        Rate: 80
+      - Item: Ring_
+        Rate: 80
+      - Item: Book_Of_The_Apocalypse
+        Rate: 80
+      - Item: Vampire's_Servant
+        Rate: 100
+      - Item: Ill_Dracula_Card
+        Rate: 1
+        StealProtected: true
   - Id: 3758
     AegisName: ILL_MOONLIGHT
     Name: Angry Moonlight Flower
@@ -89299,13 +89661,12 @@ Body:
     Class: Boss
     Modes:
       Mvp: true
-      KnockBackImmune: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5000
       - Item: Yggdrasilberry
         Rate: 2000
-      - Item: Illusion_Stone
+      - Item: IllusionStone
         Rate: 500
     Drops:
       - Item: Bradium
@@ -89361,7 +89722,7 @@ Body:
         Rate: 100
       - Item: Carnium
         Rate: 100
-      - Item: Illusion_Gemstone
+      - Item: IllusoryStone
         Rate: 200
       - Item: Hazy_Dream_Fragment
         Rate: 500
@@ -89721,7 +90082,7 @@ Body:
     Modes:
       Detector: true
     Drops:
-      - Item: Swamp_Bug_Shell
+      - Item: SwampBugPeelings
         Rate: 2500
       - Item: Sticky_Mucus
         Rate: 1500
@@ -89767,7 +90128,7 @@ Body:
     DamageMotion: 1000
     Ai: 04
     Drops:
-      - Item: Brown_Rat_Tail
+      - Item: BrownRatTail
         Rate: 2500
       - Item: Monster's_Feed
         Rate: 100
@@ -90888,60 +91249,1034 @@ Body:
 #    AegisName: NIGHTMARE_TERROR_MJ
 #  - Id: 20339
 #    AegisName: BLAZZER_MJ
-#  - Id: 20340
-#    AegisName: MD_EL_A17T
-#  - Id: 20341
-#    AegisName: MD_E_EA1L
-#  - Id: 20342
-#    AegisName: MD_E_EA2S
-#  - Id: 20343
-#    AegisName: MD_E_13EN0
-#  - Id: 20344
-#    AegisName: MD_VENOM_BUG
-#  - Id: 20345
-#    AegisName: MD_CONSTANT
-#  - Id: 20346
-#    AegisName: MD_MIGUEL
-#  - Id: 20347
-#    AegisName: MD_MIGUEL_G
-#  - Id: 20348
-#    AegisName: MD_A013_CAPUT
-#  - Id: 20349
-#    AegisName: MD_A013_DOLOR
-#  - Id: 20350
-#    AegisName: MD_A013_BELLARE
-#  - Id: 20351
-#    AegisName: MD_MANHOLE2
-#  - Id: 20352
-#    AegisName: MD_POMPOM
-#  - Id: 20353
-#    AegisName: MD_CROB
+  - Id: 20340
+    AegisName: MD_EL_A17T
+    Name: EL1-A17T
+    Level: 118
+    Hp: 16412000
+    BaseExp: 2639829
+    JobExp: 2292824
+    Attack: 1543
+    Attack2: 854
+    Defense: 355
+    MagicDefense: 42
+    Str: 173
+    Agi: 143
+    Vit: 77
+    Int: 148
+    Dex: 202
+    Luk: 84
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 220
+    AttackDelay: 128
+    AttackMotion: 1004
+    DamageMotion: 240
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Old_Steel_Plate
+        Rate: 3500
+      - Item: EP17_1_EVT02
+        Rate: 2500
+      - Item: EP17_1_EVT01
+        Rate: 100
+      - Item: EP17_1_EVT39
+        Rate: 1000
+      - Item: Crushed_Can_Iron_Plate
+        Rate: 1500
+      - Item: EL_A17T_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20341
+    AegisName: MD_E_EA1L
+    Name: E-EA1L
+    Level: 116
+    Hp: 24810
+    BaseExp: 2688
+    JobExp: 2453
+    Attack: 1042
+    Attack2: 185
+    Defense: 75
+    MagicDefense: 37
+    Str: 80
+    Agi: 46
+    Vit: 45
+    Int: 71
+    Dex: 95
+    Luk: 32
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 110
+    AttackDelay: 741
+    AttackMotion: 1536
+    DamageMotion: 480
+    Ai: 04
+    Drops:
+      - Item: Needle_Pouch
+        Rate: 1250
+      - Item: EP17_1_EVT02
+        Rate: 10
+      - Item: Scarlet_Dyestuffs
+        Rate: 30
+      - Item: E_EA1L_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20342
+    AegisName: MD_E_EA2S
+    Name: E-EA2S
+    Level: 117
+    Hp: 26200
+    BaseExp: 2724
+    JobExp: 2395
+    Attack: 1073
+    Attack2: 190
+    Defense: 101
+    MagicDefense: 37
+    Str: 110
+    Agi: 75
+    Vit: 47
+    Int: 49
+    Dex: 86
+    Luk: 61
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 165
+    AttackDelay: 1552
+    AttackMotion: 1152
+    DamageMotion: 336
+    Ai: 04
+    Drops:
+      - Item: Screw
+        Rate: 1250
+      - Item: Burnt_Parts
+        Rate: 1000
+      - Item: EP17_1_EVT02
+        Rate: 10
+      - Item: E_EA2S_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20343
+    AegisName: MD_E_13EN0
+    Name: E-13EN0
+    Level: 118
+    Hp: 26840
+    BaseExp: 2785
+    JobExp: 2496
+    Attack: 1082
+    Attack2: 198
+    Defense: 72
+    MagicDefense: 29
+    Str: 95
+    Agi: 76
+    Vit: 38
+    Int: 76
+    Dex: 86
+    Luk: 61
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Fish
+    Element: Water
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 432
+    AttackMotion: 864
+    DamageMotion: 360
+    Ai: 04
+    Drops:
+      - Item: Sticky_Mucus
+        Rate: 1250
+      - Item: Sticky_Poison
+        Rate: 1000
+      - Item: Fluorescent_Liquid
+        Rate: 800
+      - Item: Elunium_Stone
+        Rate: 120
+      - Item: Elunium
+        Rate: 20
+      - Item: EP17_1_EVT39
+        Rate: 3
+  - Id: 20344
+    AegisName: MD_VENOM_BUG
+    Name: Chemical Poison
+    Level: 110
+    Hp: 10000
+    Defense: 200
+    MagicDefense: 200
+    Str: 100
+    Agi: 100
+    Vit: 100
+    Int: 100
+    Dex: 100
+    Luk: 100
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Poison
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 101
+    DamageMotion: 480
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
+      TeleportBlock: true
+  - Id: 20345
+    AegisName: MD_CONSTANT
+    Name: Bio Battery
+    Level: 110
+    Hp: 10000
+    Defense: 200
+    MagicDefense: 200
+    Str: 100
+    Agi: 100
+    Vit: 100
+    Int: 100
+    Dex: 100
+    Luk: 100
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 720
+    AttackMotion: 360
+    DamageMotion: 360
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
+      TeleportBlock: true
+  - Id: 20346
+    AegisName: MD_MIGUEL
+    Name: Miguel
+    Level: 115
+    Hp: 8600000
+    BaseExp: 1200000
+    JobExp: 900000
+    Attack: 4350
+    Attack2: 2450
+    Defense: 216
+    MagicDefense: 95
+    Str: 192
+    Agi: 115
+    Vit: 28
+    Int: 66
+    Dex: 179
+    Luk: 85
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Wind
+    ElementLevel: 4
+    WalkSpeed: 250
+    AttackDelay: 872
+    AttackMotion: 1044
+    DamageMotion: 432
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Tiger's_Skin
+        Rate: 3000
+      - Item: EP17_1_EVT02
+        Rate: 2500
+      - Item: EP17_1_EVT01
+        Rate: 100
+      - Item: EP17_1_EVT39
+        Rate: 1000
+      - Item: Miguel_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20347
+    AegisName: MD_MIGUEL_G
+    Name: Miguel G.
+    Level: 115
+    Hp: 8600000
+    Attack: 4350
+    Attack2: 2450
+    Defense: 216
+    MagicDefense: 95
+    Str: 192
+    Agi: 115
+    Vit: 28
+    Int: 66
+    Dex: 179
+    Luk: 85
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Wind
+    ElementLevel: 4
+    WalkSpeed: 250
+    AttackDelay: 872
+    AttackMotion: 1044
+    DamageMotion: 432
+    Class: Boss
+    Ai: 21
+  - Id: 20348
+    AegisName: MD_A013_CAPUT
+    Name: A013 - Caput
+    Level: 110
+    Hp: 31000
+    BaseExp: 260
+    JobExp: 250
+    Attack: 900
+    Attack2: 150
+    Defense: 79
+    MagicDefense: 40
+    Str: 115
+    Agi: 85
+    Vit: 81
+    Int: 92
+    Dex: 121
+    Luk: 47
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 1872
+    AttackMotion: 360
+    DamageMotion: 864
+    Ai: 04
+    Drops:
+      - Item: Rune_Of_Darkness
+        Rate: 1250
+      - Item: Piece_Of_Darkness
+        Rate: 1000
+      - Item: Tooth_Of_
+        Rate: 800
+      - Item: Tendon
+        Rate: 2000
+      - Item: EP17_1_EVT39
+        Rate: 3
+  - Id: 20349
+    AegisName: MD_A013_DOLOR
+    Name: A013 - Dolor
+    Level: 111
+    Hp: 31000
+    BaseExp: 2650
+    JobExp: 2400
+    Attack: 800
+    Attack2: 200
+    Defense: 42
+    MagicDefense: 65
+    Str: 105
+    Agi: 45
+    Vit: 42
+    Int: 88
+    Dex: 180
+    Luk: 65
+    AttackRange: 5
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Poison
+    ElementLevel: 3
+    WalkSpeed: 250
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 04
+    Drops:
+      - Item: Tough_Scalelike_Stem
+        Rate: 1250
+      - Item: Sticky_Poison
+        Rate: 1000
+      - Item: Wooden_Block
+        Rate: 1000
+      - Item: EP17_1_EVT39
+        Rate: 3
+      - Item: Bloody_Rune
+        Rate: 800
+  - Id: 20350
+    AegisName: MD_A013_BELLARE
+    Name: A013 - Bellare
+    Level: 112
+    Hp: 38000
+    BaseExp: 3250
+    JobExp: 3000
+    Attack: 1140
+    Attack2: 160
+    Defense: 76
+    MagicDefense: 15
+    Str: 107
+    Agi: 82
+    Vit: 44
+    Int: 29
+    Dex: 148
+    Luk: 62
+    AttackRange: 7
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 206
+    AttackMotion: 384
+    DamageMotion: 288
+    Ai: 04
+    Drops:
+      - Item: Heart_Hunter_Seal
+        Rate: 1250
+      - Item: Elunium_Stone
+        Rate: 150
+      - Item: Elunium
+        Rate: 12
+      - Item: CrudeAmmo
+        Rate: 800
+      - Item: Explosive_Powder
+        Rate: 30
+      - Item: EP17_1_EVT02
+        Rate: 7
+  - Id: 20351
+    AegisName: MD_MANHOLE2
+    Name: Manhole   #!todo check english name
+    Level: 1
+    Hp: 1000
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 76
+    AttackMotion: 384
+    DamageMotion: 288
+    Class: Boss
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
+      TeleportBlock: true
+  - Id: 20352
+    AegisName: MD_POMPOM
+    Name: Fatal Pompom
+    Level: 112
+    Hp: 35000
+    Attack: 855
+    Attack2: 185
+    Defense: 85
+    MagicDefense: 42
+    Str: 63
+    Agi: 84
+    Vit: 12
+    Int: 55
+    Dex: 138
+    Luk: 12
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Poison
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 1100
+    AttackMotion: 650
+    DamageMotion: 500
+    Ai: 04
+  - Id: 20353
+    AegisName: MD_CROB
+    Name: Sorrow Crob
+    Level: 111
+    Hp: 3441000
+    BaseExp: 1175400
+    JobExp: 587000
+    Attack: 3400
+    Attack2: 1900
+    Defense: 42
+    MagicDefense: 65
+    Str: 160
+    Agi: 77
+    Vit: 100
+    Int: 40
+    Dex: 235
+    Luk: 55
+    AttackRange: 5
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 250
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 21
+    Class: Boss
 #  - Id: 20354
 #    AegisName: E_FINE_DUST
-#  - Id: 20355
-#    AegisName: EP17_1_BELLARE1
-#  - Id: 20356
-#    AegisName: EP17_1_BELLARE2
-#  - Id: 20357
-#    AegisName: EP17_1_SANARE1
-#  - Id: 20358
-#    AegisName: EP17_1_SANARE2
-#  - Id: 20359
-#    AegisName: EP17_1_PLAGA1
-#  - Id: 20360
-#    AegisName: EP17_1_PLAGA2
-#  - Id: 20361
-#    AegisName: EP17_1_DOLOR1
-#  - Id: 20362
-#    AegisName: EP17_1_DOLOR2
-#  - Id: 20363
-#    AegisName: EP17_1_VENENUM1
-#  - Id: 20364
-#    AegisName: EP17_1_VENENUM2
-#  - Id: 20365
-#    AegisName: EP17_1_TWIN_CAPUT1
-#  - Id: 20366
-#    AegisName: EP17_1_TWIN_CAPUT2
+  - Id: 20355
+    AegisName: EP17_1_BELLARE1
+    Name: Heart Hunter Bellare
+    Level: 120
+    Hp: 29619
+    BaseExp: 3291
+    JobExp: 2633
+    Attack: 840
+    Attack2: 424
+    Defense: 146
+    MagicDefense: 27
+    Str: 56
+    Agi: 72
+    Vit: 43
+    Int: 53
+    Dex: 131
+    Luk: 67
+    AttackRange: 9
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 864
+    AttackMotion: 1268
+    DamageMotion: 480
+    Ai: 19
+    Drops:
+      - Item: Heart_Hunter_Seal
+        Rate: 1250
+      - Item: Elunium_Stone
+        Rate: 150
+      - Item: Elunium
+        Rate: 12
+      - Item: EP17_1_EVT39
+        Rate: 5
+      - Item: EP17_1_EVT02
+        Rate: 10
+      - Item: Explosive_Powder
+        Rate: 30
+      - Item: Bellare_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20356
+    AegisName: EP17_1_BELLARE2
+    Name: High Hunter Bellare
+    Level: 165
+    Hp: 473302
+    BaseExp: 43027
+    JobExp: 30119
+    Attack: 2454
+    Attack2: 869
+    Defense: 263
+    MagicDefense: 37
+    Str: 119
+    Agi: 101
+    Vit: 90
+    Int: 79
+    Dex: 172
+    Luk: 93
+    AttackRange: 9
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 175
+    AttackDelay: 1270
+    AttackMotion: 1268
+    DamageMotion: 480
+    Ai: 19
+    Drops:
+      - Item: Heart_Hunter_Seal
+        Rate: 2500
+      - Item: Elunium_Stone
+        Rate: 300
+      - Item: Elunium
+        Rate: 24
+      - Item: EP17_1_EVT39
+        Rate: 10
+      - Item: Explosive_Powder
+        Rate: 60
+      - Item: EP17_1_EVT02
+        Rate: 30
+      - Item: High_Bellare_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20357
+    AegisName: EP17_1_SANARE1
+    Name: Heart Hunter Sanare
+    Level: 120
+    Hp: 30159
+    BaseExp: 3351
+    JobExp: 2681
+    Attack: 765
+    Attack2: 504
+    Defense: 200
+    MagicDefense: 27
+    Str: 51
+    Agi: 51
+    Vit: 70
+    Int: 63
+    Dex: 117
+    Luk: 77
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 432
+    AttackMotion: 1268
+    DamageMotion: 480
+    Ai: 19
+    Drops:
+      - Item: CrudeAmmo
+        Rate: 1000
+      - Item: Heart_Hunter_Seal
+        Rate: 1250
+      - Item: Oridecon_Stone
+        Rate: 150
+      - Item: Oridecon
+        Rate: 12
+      - Item: EP17_1_EVT02
+        Rate: 10
+      - Item: Explosive_Powder
+        Rate: 30
+      - Item: Sanare_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20358
+    AegisName: EP17_1_SANARE2
+    Name: High Hunter Sanare
+    Level: 168
+    Hp: 482327
+    BaseExp: 43848
+    JobExp: 30694
+    Attack: 2289
+    Attack2: 1579
+    Defense: 276
+    MagicDefense: 41
+    Str: 109
+    Agi: 97
+    Vit: 96
+    Int: 141
+    Dex: 139
+    Luk: 77
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 175
+    AttackDelay: 432
+    AttackMotion: 1268
+    DamageMotion: 480
+    Ai: 19
+    Drops:
+      - Item: Heart_Hunter_Seal
+        Rate: 2500
+      - Item: Elunium_Stone
+        Rate: 300
+      - Item: Elunium
+        Rate: 24
+      - Item: EP17_1_EVT39
+        Rate: 10
+      - Item: Explosive_Powder
+        Rate: 60
+      - Item: EP17_1_EVT02
+        Rate: 30
+      - Item: High_Sanare_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20359
+    AegisName: EP17_1_PLAGA1
+    Name: Plaga
+    Level: 164
+    Hp: 466948
+    BaseExp: 42450
+    JobExp: 29715
+    Attack: 2952
+    Attack2: 1235
+    Defense: 160
+    MagicDefense: 38
+    Str: 144
+    Agi: 60
+    Vit: 39
+    Int: 113
+    Dex: 125
+    Luk: 70
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Dragon
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 1280
+    AttackMotion: 1080
+    DamageMotion: 240
+    Ai: 19
+    Drops:
+      - Item: Fluorescent_Liquid
+        Rate: 1250
+      - Item: Solid_Shell
+        Rate: 800
+      - Item: Dragon's_Skin
+        Rate: 1000
+      - Item: Azure_Jewel
+        Rate: 50
+      - Item: EP17_1_EVT39
+        Rate: 5
+      - Item: Plaga_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20360
+    AegisName: EP17_1_PLAGA2
+    Name: Mutant Plaga
+    Level: 178
+    Hp: 760548
+    BaseExp: 69141
+    JobExp: 48399
+    Attack: 4383
+    Attack2: 1626
+    Defense: 215
+    MagicDefense: 71
+    Str: 197
+    Agi: 93
+    Vit: 63
+    Int: 137
+    Dex: 172
+    Luk: 90
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Dragon
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 175
+    AttackDelay: 1289
+    AttackMotion: 1080
+    DamageMotion: 240
+    Ai: 19
+    Drops:
+      - Item: Fluorescent_Liquid
+        Rate: 2500
+      - Item: Solid_Shell
+        Rate: 800
+      - Item: Dragon's_Skin
+        Rate: 1000
+      - Item: Azure_Jewel
+        Rate: 50
+      - Item: EP17_1_EVT39
+        Rate: 10
+      - Item: Mutant_Plaga_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20361
+    AegisName: EP17_1_DOLOR1
+    Name: Dolor
+    Level: 122
+    Hp: 40204
+    BaseExp: 4467
+    JobExp: 3574
+    Attack: 1129
+    Attack2: 561
+    Defense: 227
+    MagicDefense: 28
+    Str: 74
+    Agi: 71
+    Vit: 83
+    Int: 69
+    Dex: 111
+    Luk: 2
+    AttackRange: 5
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Poison
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 1768
+    AttackMotion: 768
+    DamageMotion: 576
+    Ai: 19
+    Drops:
+      - Item: Tough_Scalelike_Stem
+        Rate: 1250
+      - Item: Sticky_Poison
+        Rate: 1000
+      - Item: Wooden_Block
+        Rate: 1000
+      - Item: EP17_1_EVT39
+        Rate: 5
+      - Item: Bloody_Rune
+        Rate: 800
+      - Item: Dolor_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20362
+    AegisName: EP17_1_DOLOR2
+    Name: Mutant Dolor
+    Level: 173
+    Hp: 742501
+    BaseExp: 67500
+    JobExp: 47250
+    Attack: 3655
+    Attack2: 1396
+    Defense: 305
+    MagicDefense: 68
+    Str: 169
+    Agi: 103
+    Vit: 109
+    Int: 121
+    Dex: 161
+    Luk: 6
+    AttackRange: 5
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Poison
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1781
+    AttackMotion: 768
+    DamageMotion: 576
+    Ai: 19
+    Drops:
+      - Item: Tough_Scalelike_Stem
+        Rate: 2500
+      - Item: Sticky_Poison
+        Rate: 2000
+      - Item: Wooden_Block
+        Rate: 2000
+      - Item: EP17_1_EVT39
+        Rate: 5
+      - Item: Bloody_Rune
+        Rate: 1600
+      - Item: Mt_Dolor_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20363
+    AegisName: EP17_1_VENENUM1
+    Name: Venenum
+    Level: 123
+    Hp: 40720
+    BaseExp: 4449
+    JobExp: 3574
+    Attack: 1184
+    Attack2: 320
+    Defense: 242
+    MagicDefense: 27
+    Str: 77
+    Agi: 37
+    Vit: 90
+    Int: 39
+    Dex: 103
+    Luk: 3
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Poison
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 768
+    AttackMotion: 792
+    DamageMotion: 432
+    Ai: 19
+    Drops:
+      - Item: Sticky_Mucus
+        Rate: 1250
+      - Item: Sticky_Poison
+        Rate: 1000
+      - Item: Fluorescent_Liquid
+        Rate: 800
+      - Item: Elunium_Stone
+        Rate: 120
+      - Item: Elunium
+        Rate: 10
+      - Item: EP17_1_EVT39
+        Rate: 5
+      - Item: Venenum_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20364
+    AegisName: EP17_1_VENENUM2
+    Name: Mutant Venenum
+    Level: 176
+    Hp: 755670
+    BaseExp: 68697
+    JobExp: 48088
+    Attack: 3894
+    Attack2: 1396
+    Defense: 314
+    MagicDefense: 69
+    Str: 177
+    Agi: 91
+    Vit: 113
+    Int: 119
+    Dex: 193
+    Luk: 9
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 768
+    AttackMotion: 792
+    DamageMotion: 432
+    Ai: 19
+    Drops:
+      - Item: Sticky_Mucus
+        Rate: 2500
+      - Item: Sticky_Poison
+        Rate: 2000
+      - Item: Fluorescent_Liquid
+        Rate: 1600
+      - Item: Elunium_Stone
+        Rate: 240
+      - Item: Elunium
+        Rate: 20
+      - Item: EP17_1_EVT39
+        Rate: 10
+      - Item: Mt_Venenum_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20365
+    AegisName: EP17_1_TWIN_CAPUT1
+    Name: Twin Caput
+    Level: 125
+    Hp: 41735
+    BaseExp: 4637
+    JobExp: 3710
+    Attack: 1047
+    Attack2: 408
+    Defense: 269
+    MagicDefense: 27
+    Str: 67
+    Agi: 45
+    Vit: 103
+    Int: 49
+    Dex: 90
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 220
+    AttackDelay: 936
+    AttackMotion: 1020
+    DamageMotion: 420
+    Ai: 19
+    Drops:
+      - Item: Rune_Of_Darkness
+        Rate: 1250
+      - Item: Piece_Of_Darkness
+        Rate: 1000
+      - Item: Tooth_Of_
+        Rate: 800
+      - Item: Tendon
+        Rate: 1000
+      - Item: EP17_1_EVT39
+        Rate: 5
+      - Item: Caput_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20366
+    AegisName: EP17_1_TWIN_CAPUT2
+    Name: Mutant Twin Caput
+    Level: 175
+    Hp: 750501
+    BaseExp: 68227
+    JobExp: 47759
+    Attack: 4091
+    Attack2: 1412
+    Defense: 290
+    MagicDefense: 68
+    Str: 187
+    Agi: 90
+    Vit: 101
+    Int: 121
+    Dex: 143
+    Luk: 45
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 936
+    AttackMotion: 1020
+    DamageMotion: 420
+    Ai: 19
+    Drops:
+      - Item: Rune_Of_Darkness
+        Rate: 2500
+      - Item: Piece_Of_Darkness
+        Rate: 2000
+      - Item: Tooth_Of_
+        Rate: 1600
+      - Item: Tendon
+        Rate: 2000
+      - Item: EP17_1_EVT39
+        Rate: 10
+      - Item: Mt_Caput_Card
+        Rate: 1
+        StealProtected: true
 #  - Id: 20367
 #    AegisName: RAYDRIC_H
 #  - Id: 20368
@@ -90970,11 +92305,82 @@ Body:
 #    AegisName: ICE_GHOST_H
 #  - Id: 20380
 #    AegisName: FLAME_GHOST_H
-#  - Id: 20381
-#    AegisName: EP17_1_R4885_BESTIA
-#    DamageTaken: 10
-#  - Id: 20382
-#    AegisName: G_TWIN_CAPUT2
+  - Id: 20381
+    AegisName: EP17_1_R4885_BESTIA
+    Name: R48-85-Bestia
+    Level: 174
+    Hp: 8885000
+    BaseExp: 8003000
+    JobExp: 6009000
+    MvpExp: 4001500
+    Attack: 4520
+    Attack2: 4150
+    Defense: 855
+    MagicDefense: 124
+    Str: 220
+    Agi: 244
+    Vit: 72
+    Int: 118
+    Dex: 255
+    Luk: 95
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Brute
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 1020
+    AttackMotion: 144
+    DamageMotion: 288
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Old_Violet_Box
+        Rate: 4000
+      - Item: Seed_Of_Yggdrasil
+        Rate: 3000
+    Drops:
+      - Item: Piece_Of_Bone_Armor
+        Rate: 4000
+      - Item: EP17_1_EVT02
+        Rate: 5000
+      - Item: Zelunium
+        Rate: 5000
+      - Item: R48_85_Bestia_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20382
+    AegisName: G_TWIN_CAPUT2
+    Name: Twin Capute
+    Level: 175
+    Hp: 603341
+    Attack: 3619
+    Attack2: 1206
+    Defense: 618
+    MagicDefense: 196
+    Str: 197
+    Agi: 90
+    Vit: 139
+    Int: 35
+    Dex: 143
+    Luk: 45
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 300
+    AttackDelay: 1028
+    AttackMotion: 1020
+    DamageMotion: 420
+    Ai: 21
 #  - Id: 20383
 #    AegisName: E_WICKED_NYMPH
 #  - Id: 20384

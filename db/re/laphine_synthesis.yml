@@ -723,8 +723,8 @@ Body:
       - Item: S_R_Bearers_Earring
       - Item: S_Mega_Blitz_Shield
       - Item: S_Mega_Blitz_Weapon
-  - Item: Drooping_Gunslinger_Scroll
-    RewardGroup: DROOPING_GUNSLINGER_SCROLL
+  - Item: Gunslinger_Enchant
+    RewardGroup: GUNSLINGER_ENCHANT
     Requirements:
       - Item: Drooping_Rebellion_
   - Item: EnchantStone_Recipe
@@ -1365,25 +1365,25 @@ Body:
         Amount: 10
       - Item: Core_Jelly
         Amount: 10
-      - Item: Clean_Bone
+      - Item: CleanBone
         Amount: 10
       - Item: DeadlyPoisonPowder
         Amount: 10
-      - Item: Bandits_Scarf
+      - Item: BanditsScarf
         Amount: 10
-      - Item: Crude_Ammo
+      - Item: CrudeAmmo
         Amount: 10
-      - Item: Broken_Shotgun
+      - Item: BrokenShotgun
         Amount: 10
-      - Item: Crude_Scimitar
+      - Item: CrudeScimiter
         Amount: 10
-      - Item: Worn_Revolver
+      - Item: WornRevolver
         Amount: 10
-      - Item: Brown_Muffler
+      - Item: BrownMuffler
         Amount: 10
-      - Item: Swamp_Bug_Shell
+      - Item: SwampBugPeelings
         Amount: 10
-      - Item: Brown_Rat_Tail
+      - Item: BrownRatTail
         Amount: 10
       - Item: Frozen_Stone_Fragment
         Amount: 10
@@ -1399,21 +1399,21 @@ Body:
         Amount: 10
       - Item: Recruitment_Leaflet
         Amount: 10
-      - Item: Illusion_Gemstone
+      - Item: IllusoryStone
         Amount: 10
-      - Item: Torn_Paper_
+      - Item: Torn_Diary
         Amount: 10
-      - Item: Well-dried_Clover
+      - Item: Dried_Clover
         Amount: 10
-      - Item: Short_Bat_Hair
+      - Item: Short_Bat_Fur
         Amount: 10
-      - Item: Cluster_of_Nightmares
+      - Item: NightmareOfLump
         Amount: 10
       - Item: Shining_Spore
         Amount: 10
       - Item: Dried_Leaf_Of_Ygg
         Amount: 10
-      - Item: Suspicious_Pentacle
+      - Item: SuspiciousMagicCircle
         Amount: 10
       - Item: Piece_of_Black_Horn
         Amount: 10
@@ -1850,12 +1850,12 @@ Body:
       - Item: C_L_RibbonMuff_Black
       - Item: C_Black_Cat_Ears_Beret
       - Item: C_Watery_Eyes
-  - Item: Fan_Modification_Kit
-    RewardGroup: FAN_MODIFICATION_KIT
+  - Item: Fan_Upgrade_Kit
+    RewardGroup: FAN_UPGRADE_KIT
     Requirements:
       - Item: Sea_Otter_Mini_Fan
-  - Item: Uniform_Repair_Kit
-    RewardGroup: UNIFORM_REPAIR_KIT
+  - Item: Suit_Upgrade_Kit
+    RewardGroup: SUIT_UPGRADE_KIT
     Requirements:
       - Item: Kafra_Uniform
   - Item: Scroll_of_Fallen_Angel_Wings
@@ -2048,49 +2048,49 @@ Body:
       - Item: S_Chemical_Shoes
       - Item: S_Bloody_Shoes
       - Item: S_Dragoon_Shoes
-  - Item: Candy_Pouch_Blessing_Scroll_Melee
-    RewardGroup: CANDY_POUCH_BLESSING_SCROLL_MELEE
+  - Item: Candy_Bag_Scroll_Melee
+    RewardGroup: CANDY_BAG_SCROLL_MELEE
     Requirements:
       - Item: Bag_Of_Antonio_P
-  - Item: Candy_Pouch_Blessing_Scroll_Range
-    RewardGroup: CANDY_POUCH_BLESSING_SCROLL_RANGE
+  - Item: Candy_BAG_Scroll_Range
+    RewardGroup: CANDY_BAG_SCROLL_RANGE
     Requirements:
       - Item: Bag_Of_Antonio_S
-  - Item: Candy_Pouch_Blessing_Scroll_Magic
-    RewardGroup: CANDY_POUCH_BLESSING_SCROLL_MAGIC
+  - Item: Candy_BAG_Scroll_Magic
+    RewardGroup: CANDY_BAG_SCROLL_MAGIC
     Requirements:
       - Item: Bag_Of_Antonio_
-  - Item: Magical_Booster_Amplifier
-    RewardGroup: MAGICAL_BOOSTER_AMPLIFIER
+  - Item: Booster_Amplifier
+    RewardGroup: BOOSTER_AMPLIFIER
     Requirements:
       - Item: Magical_Booster_K
-  - Item: Magic_Cat_hand_Scroll
-    RewardGroup: MAGIC_CAT_HAND_SCROLL
+  - Item: Magical_Cat_Hand
+    RewardGroup: MAGICAL_CAT_HAND
     Requirements:
       - Item: Neko_Headress
-#  - Item: StabilityShadow_Mix
-#    RewardGroup: STABILITYSHADOW_MIX
-#    RequiredRequirementsCount: 3
-#    MinimumRefine: 5
-#    Requirements:
-#      - Item: S_Plasterer's_Armor
-#      - Item: S_Plasterer's_Shoes
-#      - Item: S_Insomniac_Armor
-#      - Item: S_Insomniac_Shoes
-#      - Item: S_Peerless_Armor
-#      - Item: S_Peerless_Shoes
-#      - Item: S_Adurate_Armor
-#      - Item: S_Adurate_Shoes
-#      - Item: Unfreez_Weapon_S
-#      - Item: Unfreeze_Earing_S
-#      - Item: Unfreeze_Pendent_S
-#      - Item: Vitality_Earing_S
-#      - Item: Vitality_Pendant_S
-#      - Item: S_Neutral_Weapon
-#      - Item: S_Neutral_Earring
-#      - Item: S_Neutral_Pendent
-#      - Item: S_Curse_Lift_Earring
-#      - Item: S_Curse_Lift_Pendent
+  - Item: StabilityShadow_Mix
+    RewardGroup: STABILITYSHADOW_MIX
+    RequiredRequirementsCount: 3
+    MinimumRefine: 5
+    Requirements:
+      - Item: S_Plasterer's_Armor
+      - Item: S_Plasterer's_Shoes
+      - Item: S_Insomniac_Armor
+      - Item: S_Insomniac_Shoes
+      - Item: S_Peerless_Armor
+      - Item: S_Peerless_Shoes
+      - Item: S_Adurate_Armor
+      - Item: S_Adurate_Shoes
+      - Item: Unfreez_Weapon_S
+      - Item: Unfreeze_Earing_S
+      - Item: Unfreeze_Pendent_S
+      - Item: Vitality_Earing_S
+      - Item: Vitality_Pendant_S
+      - Item: S_Neutral_Weapon
+      - Item: S_Neutral_Earring
+      - Item: S_Neutral_Pendent
+      - Item: S_Curse_Lift_Earring
+      - Item: S_Curse_Lift_Pendent
   - Item: InfinityShadow_Mix
     RewardGroup: INFINITYSHADOW_MIX
     RequiredRequirementsCount: 2
@@ -2433,14 +2433,14 @@ Body:
         Amount: 20
       - Item: Young_Twig
         Amount: 150
-#  - Item: Bs_Sha_M_S_2
-#    RewardGroup: BS_SHA_M_S_2
-#    RequiredRequirementsCount: 2
-#    Requirements:
-#      - Item: Shadowdecon
-#        Amount: 20
-#      - Item: Scale_Of_Red_Dragon
-#        Amount: 50
+  - Item: Bs_Sha_M_S_2
+    RewardGroup: BS_SHA_M_S_2
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 20
+      - Item: Scale_Of_Red_Dragon
+        Amount: 50
   - Item: Bs_Sha_M_S_5
     RewardGroup: BS_SHA_M_S_5
     RequiredRequirementsCount: 2
@@ -2601,14 +2601,14 @@ Body:
         Amount: 25
       - Item: Shine_Spear_Blade
         Amount: 10
-#  - Item: Bs_Sha_M_S_22
-#    RewardGroup: BS_SHA_M_S_22
-#    RequiredRequirementsCount: 2
-#    Requirements:
-#      - Item: Shadowdecon
-#        Amount: 25
-#      - Item: Fang_Of_Garm
-#        Amount: 50
+  - Item: Bs_Sha_M_S_22
+    RewardGroup: BS_SHA_M_S_22
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 25
+      - Item: Fang_Of_Garm
+        Amount: 50
   - Item: Bs_Item_M_S_1
     RewardGroup: BS_ITEM_M_S_1
     RequiredRequirementsCount: 2
@@ -2892,96 +2892,96 @@ Body:
 #    Requirements:
 #      - Item: Zelunium
 #        Amount: 50
-#  - Item: Remodel_Hero_Boots
-#    RewardGroup: REMODEL_HERO_BOOTS
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Ancient_Hero_Boots
-#  - Item: Oriental_Sword_Cube
-#    RewardGroup: ORIENTAL_SWORD_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Oriental_Sword
-#  - Item: Dragonic_Slayer_Cube
-#    RewardGroup: DRAGONIC_SLAYER_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Dragonic_Slayer
-#  - Item: Shiver_Katar_K_Cube
-#    RewardGroup: SHIVER_KATAR_K_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Katar_of_Shiver
-#  - Item: Blade_Katar_Cube
-#    RewardGroup: BLADE_KATAR_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Blade_Katar
-#  - Item: Sword_Of_Bluefire_Cube
-#    RewardGroup: SWORD_OF_BLUEFIRE_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Sword_Of_Bluefire
-#  - Item: Slate_Sword_Cube
-#    RewardGroup: SLATE_SWORD_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Slate_Sword
-#  - Item: Narcis_Bow_Cube
-#    RewardGroup: NARCIS_BOW_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Narcis_Bow
-#  - Item: Trumpet_Shell_K_Cube
-#    RewardGroup: TRUMPET_SHELL_K_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Trumpet_Shell_K
-#  - Item: Barb_Wire_K_Cube
-#    RewardGroup: BARB_WIRE_K_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Barb_Wire_K
-#  - Item: Avenger_Cube
-#    RewardGroup: AVENGER_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Avenger
-#  - Item: Meteor_Striker_Cube
-#    RewardGroup: METEOR_STRIKER_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Meteor_Striker
-#  - Item: Magic_Sword_Cube
-#    RewardGroup: MAGIC_SWORD_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Magic_Sword
-#  - Item: Fatalist_Cube
-#    RewardGroup: FATALIST_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Fatalist
-#  - Item: Royal_Bow_K_Cube
-#    RewardGroup: ROYAL_BOW_K_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Royal_Bow_K
-#  - Item: Scalet_Dragon_L_Cube
-#    RewardGroup: SCALET_DRAGON_L_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Scalet_Dragon_L_Bow
-#  - Item: Shadow_Staff_K_Cube
-#    RewardGroup: SHADOW_STAFF_K_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Shadow_Staff_K
-#  - Item: Freezing_Rod_Cube
-#    RewardGroup: FREEZING_ROD_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Freezing_Rod
+  - Item: Remodel_Hero_Boots
+    RewardGroup: REMODEL_HERO_BOOTS
+    MinimumRefine: 9
+    Requirements:
+      - Item: Ancient_Hero_Boots
+  - Item: Oriental_Sword_Cube
+    RewardGroup: ORIENTAL_SWORD_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Oriental_Sword
+  - Item: Dragonic_Slayer_Cube
+    RewardGroup: DRAGONIC_SLAYER_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Dragonic_Slayer
+  - Item: Shiver_Katar_K_Cube
+    RewardGroup: SHIVER_KATAR_K_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Katar_of_Shiver
+  - Item: Blade_Katar_Cube
+    RewardGroup: BLADE_KATAR_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Blade_Katar
+  - Item: Sword_Of_Bluefire_Cube
+    RewardGroup: SWORD_OF_BLUEFIRE_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Sword_Of_Bluefire
+  - Item: Slate_Sword_Cube
+    RewardGroup: SLATE_SWORD_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Slate_Sword
+  - Item: Narcis_Bow_Cube
+    RewardGroup: NARCIS_BOW_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Narcis_Bow
+  - Item: Trumpet_Shell_K_Cube
+    RewardGroup: TRUMPET_SHELL_K_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Trumpet_Shell_K
+  - Item: Barb_Wire_K_Cube
+    RewardGroup: BARB_WIRE_K_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Barb_Wire_K
+  - Item: Avenger_Cube
+    RewardGroup: AVENGER_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Avenger
+  - Item: Meteor_Striker_Cube
+    RewardGroup: METEOR_STRIKER_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Meteor_Striker
+  - Item: Magic_Sword_Cube
+    RewardGroup: MAGIC_SWORD_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Magic_Sword
+  - Item: Fatalist_Cube
+    RewardGroup: FATALIST_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Fatalist
+  - Item: Royal_Bow_K_Cube
+    RewardGroup: ROYAL_BOW_K_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Royal_Bow_K
+  - Item: Scalet_Dragon_L_Cube
+    RewardGroup: SCALET_DRAGON_L_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Scalet_Dragon_L_Bow
+  - Item: Shadow_Staff_K_Cube
+    RewardGroup: SHADOW_STAFF_K_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Shadow_Staff_K
+  - Item: Freezing_Rod_Cube
+    RewardGroup: FREEZING_ROD_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Freezing_Rod
 #  - Item: 3Lv_9Refine_Weapon_7Gu
 #    RewardGroup: 3LV_9REFINE_WEAPON_7GU
 #    MinimumRefine: 9
@@ -3178,96 +3178,96 @@ Body:
 #      - Item: Sinister_Twohand_Axe
 #      - Item: Sinister_Huuma
 #      - Item: Sinister_Fist
-#  - Item: Iron_Nail_K_Cube
-#    RewardGroup: IRON_NAIL_K_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Iron_Nail_K
-#  - Item: Ray_Knuckle_Cube
-#    RewardGroup: RAY_KNUCKLE_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Ray_Knuckle
-#  - Item: Undine_Spear_K_Cube
-#    RewardGroup: UNDINE_SPEAR_K_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Undine_Spear_K
-#  - Item: Light_Blade_Cube
-#    RewardGroup: LIGHT_BLADE_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Light_Blade
-#  - Item: Iron_Staff_Cube
-#    RewardGroup: IRON_STAFF_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Aeon_Staff
-#  - Item: Blue_Crystal_Staff_Cube
-#    RewardGroup: BLUE_CRYSTAL_STAFF_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Blue_Crystal_Staff
-#  - Item: Demon_Hunt_Bible_Cube
-#    RewardGroup: DEMON_HUNT_BIBLE_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Exoricists_Bible_
-#  - Item: Saint_Hall_Cube
-#    RewardGroup: SAINT_HALL_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Saint_Hall
-#  - Item: MeawFoxtail_Cube
-#    RewardGroup: MEAWFOXTAIL_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: MeawFoxtail
-#  - Item: Fog_Dew_Sword_Cube
-#    RewardGroup: FOG_DEW_SWORD_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Fog_Dew_Sword
-#  - Item: Humma_Clear_Cube
-#    RewardGroup: HUMMA_CLEAR_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Humma_Clear
-#  - Item: Thousand_Sun_Cube
-#    RewardGroup: THOUSAND_SUN_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: OneSkyOneSun
-#  - Item: Spirit_Pendulum_Cube
-#    RewardGroup: SPIRIT_PENDULUM_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: SoulWeight
-#  - Item: Crimson_Rose_Cube
-#    RewardGroup: CRIMSON_ROSE_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Crimson_Rose
-#  - Item: Master_Soul_Rifle_Cube
-#    RewardGroup: MASTER_SOUL_RIFLE_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Master_Soul_Rifle
-#  - Item: Golden_Lord_Launcher_Cube
-#    RewardGroup: GOLDEN_LORD_LAUNCHER_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Golden_L_Launcher
-#  - Item: The_Black_Cube
-#    RewardGroup: THE_BLACK_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: The_Black_Gatling
-#  - Item: Demon_Slayer_Shot_Cube
-#    RewardGroup: DEMON_SLAYER_SHOT_CUBE
-#    MinimumRefine: 9
-#    Requirements:
-#      - Item: Demon_S_Shot
+  - Item: Iron_Nail_K_Cube
+    RewardGroup: IRON_NAIL_K_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Iron_Nail_K
+  - Item: Ray_Knuckle_Cube
+    RewardGroup: RAY_KNUCKLE_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Ray_Knuckle
+  - Item: Undine_Spear_K_Cube
+    RewardGroup: UNDINE_SPEAR_K_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Undine_Spear_K
+  - Item: Light_Blade_Cube
+    RewardGroup: LIGHT_BLADE_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Light_Blade
+  - Item: Iron_Staff_Cube
+    RewardGroup: IRON_STAFF_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Aeon_Staff
+  - Item: Blue_Crystal_Staff_Cube
+    RewardGroup: BLUE_CRYSTAL_STAFF_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Blue_Crystal_Staff
+  - Item: Demon_Hunt_Bible_Cube
+    RewardGroup: DEMON_HUNT_BIBLE_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Exoricists_Bible_
+  - Item: Saint_Hall_Cube
+    RewardGroup: SAINT_HALL_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Saint_Hall
+  - Item: MeawFoxtail_Cube
+    RewardGroup: MEAWFOXTAIL_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: MeawFoxtail
+  - Item: Fog_Dew_Sword_Cube
+    RewardGroup: FOG_DEW_SWORD_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Fog_Dew_Sword
+  - Item: Humma_Clear_Cube
+    RewardGroup: HUMMA_CLEAR_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Humma_Clear
+  - Item: Thousand_Sun_Cube
+    RewardGroup: THOUSAND_SUN_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: OneSkyOneSun
+  - Item: Spirit_Pendulum_Cube
+    RewardGroup: SPIRIT_PENDULUM_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: SoulWeight
+  - Item: Crimson_Rose_Cube
+    RewardGroup: CRIMSON_ROSE_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Crimson_Rose
+  - Item: Master_Soul_Rifle_Cube
+    RewardGroup: MASTER_SOUL_RIFLE_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Master_Soul_Rifle
+  - Item: Golden_Lord_Launcher_Cube
+    RewardGroup: GOLDEN_LORD_LAUNCHER_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Golden_L_Launcher
+  - Item: The_Black_Cube
+    RewardGroup: THE_BLACK_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: The_Black_Gatling
+  - Item: Demon_Slayer_Shot_Cube
+    RewardGroup: DEMON_SLAYER_SHOT_CUBE
+    MinimumRefine: 9
+    Requirements:
+      - Item: Demon_S_Shot
 #  - Item: EnchantStone_Recipe_3m
 #    RewardGroup: ENCHANTSTONE_RECIPE_3M
 #    Requirements:
@@ -3299,76 +3299,76 @@ Body:
 #      - Item: Egir_Armor_K
 #      - Item: Egir_Shoes_K
 #      - Item: Egir_Manteau_K
-#  - Item: FullPeneShadow_Mix
-#    RewardGroup: FULLPENESHADOW_MIX
-#    RequiredRequirementsCount: 10
-#    MinimumRefine: 7
-#    MaximumRefine: 10
-#    Requirements:
-#      - Item: S_Penetration_Shoes
-#      - Item: S_Penetration_Shield
-#      - Item: S_Executioner_Holy_Water_Armor
-#      - Item: S_Exorcist_Corrupted_Armor
-#      - Item: S_Vibration_Dragon_Killer_Armor
-#      - Item: S_Scissor_Hunting_Armor
-#      - Item: S_Fishing_Insect_Net_Armor
-#      - Item: S_Penetration_Earring
-#      - Item: S_Penetration_Pendent
-#      - Item: S_Executioner_Weapon
-#      - Item: S_Exorcist_Weapon
-#      - Item: S_Hunting_Weapon
-#      - Item: S_Insect_Net_Weapon
-#      - Item: S_Fishing_Weapon
-#      - Item: S_Dragon_Killer_Weapon
-#      - Item: S_Corrupt_Weapon
-#      - Item: S_Vibration_Weapon
-#      - Item: S_Holy_Water_Weapon
-#      - Item: S_Scissors_Weapon
-#      - Item: S_Force_Executioner_Weapon
-#      - Item: S_Penetration_Weapon
-#      - Item: S_Penetration_Armor
-#      - Item: S_Exe_Ho_Weapon
-#      - Item: S_Fis_In_Weapon
-#      - Item: S_Sci_Hu_Weapon
-#      - Item: S_Viv_Dr_Weapon
-#      - Item: S_Exo_Co_Weapon
+  - Item: FullPeneShadow_Mix
+    RewardGroup: FULLPENESHADOW_MIX
+    RequiredRequirementsCount: 10
+    MinimumRefine: 7
+    MaximumRefine: 10
+    Requirements:
+      - Item: S_Penetration_Shoes
+      - Item: S_Penetration_Shield
+      - Item: S_Executioner_Holy_Water_Armor
+      - Item: S_Exorcist_Corrupted_Armor
+      - Item: S_Vibration_Dragon_Killer_Armor
+      - Item: S_Scissor_Hunting_Armor
+      - Item: S_Fishing_Insect_Net_Armor
+      - Item: S_Penetration_Earring
+      - Item: S_Penetration_Pendent
+      - Item: S_Executioner_Weapon
+      - Item: S_Exorcist_Weapon
+      - Item: S_Hunting_Weapon
+      - Item: S_Insect_Net_Weapon
+      - Item: S_Fishing_Weapon
+      - Item: S_Dragon_Killer_Weapon
+      - Item: S_Corrupt_Weapon
+      - Item: S_Vibration_Weapon
+      - Item: S_Holy_Water_Weapon
+      - Item: S_Scissors_Weapon
+      - Item: S_Force_Executioner_Weapon
+      - Item: S_Penetration_Weapon
+      - Item: S_Penetration_Armor
+      - Item: S_Exe_Ho_Weapon
+      - Item: S_Fis_In_Weapon
+      - Item: S_Sci_Hu_Weapon
+      - Item: S_Viv_Dr_Weapon
+      - Item: S_Exo_Co_Weapon
 #  - Item: PendantStoneForWork
 #    RewardGroup: PENDANTSTONEFORWORK
 #    Requirements:
 #      - Item: Thanatos_Pendant
-#  - Item: FullTempShadow_Mix
-#    RewardGroup: FULLTEMPSHADOW_MIX
-#    RequiredRequirementsCount: 10
-#    MinimumRefine: 7
-#    MaximumRefine: 10
-#    Requirements:
-#      - Item: S_Tempest_Shoes
-#      - Item: S_Tempest_Shield
-#      - Item: S_Magic_Executioner_Holy_Water_Armor
-#      - Item: S_Magic_Exorcist_Corrupted_Armor
-#      - Item: S_Magic_Vibration_Dragon_Killer_Armor
-#      - Item: S_Magic_Scissor_Hunting_Armor
-#      - Item: S_Magic_Fishing_Insect_Net_Armor
-#      - Item: S_Tempest_Earring
-#      - Item: S_Tempest_Pendent
-#      - Item: S_M_Executioner_Weapon
-#      - Item: S_M_Exorcist_Weapon
-#      - Item: S_M_Hunting_Weapon
-#      - Item: S_M_Insect_Net_Weapon
-#      - Item: S_M_Fishing_Weapon
-#      - Item: S_M_Dragon_K_Weapon
-#      - Item: S_M_Corrupt_Weapon
-#      - Item: S_M_Vibration_Weapon
-#      - Item: S_M_Holy_Water_Weapon
-#      - Item: S_M_Scissors_Weapon
-#      - Item: S_Spirit_Magic_Executioner_Weapon
-#      - Item: S_Tempest_Weapon
-#      - Item: S_Tempest_Armor
-#      - Item: S_M_Exe_Ho_Weapon
-#      - Item: S_M_Fis_In_Weapon
-#      - Item: S_M_Sci_Hu_Weapon
-#      - Item: S_M_Viv_Dr_Weapon
-#      - Item: S_M_Exo_Co_Weapon
+  - Item: FullTempShadow_Mix
+    RewardGroup: FULLTEMPSHADOW_MIX
+    RequiredRequirementsCount: 10
+    MinimumRefine: 7
+    MaximumRefine: 10
+    Requirements:
+      - Item: S_Tempest_Shoes
+      - Item: S_Tempest_Shield
+      - Item: S_Magic_Executioner_Holy_Water_Armor
+      - Item: S_Magic_Exorcist_Corrupted_Armor
+      - Item: S_Magic_Vibration_Dragon_Killer_Armor
+      - Item: S_Magic_Scissor_Hunting_Armor
+      - Item: S_Magic_Fishing_Insect_Net_Armor
+      - Item: S_Tempest_Earring
+      - Item: S_Tempest_Pendent
+      - Item: S_M_Executioner_Weapon
+      - Item: S_M_Exorcist_Weapon
+      - Item: S_M_Hunting_Weapon
+      - Item: S_M_Insect_Net_Weapon
+      - Item: S_M_Fishing_Weapon
+      - Item: S_M_Dragon_K_Weapon
+      - Item: S_M_Corrupt_Weapon
+      - Item: S_M_Vibration_Weapon
+      - Item: S_M_Holy_Water_Weapon
+      - Item: S_M_Scissors_Weapon
+      - Item: S_Spirit_Magic_Executioner_Weapon
+      - Item: S_Tempest_Weapon
+      - Item: S_Tempest_Armor
+      - Item: S_M_Exe_Ho_Weapon
+      - Item: S_M_Fis_In_Weapon
+      - Item: S_M_Sci_Hu_Weapon
+      - Item: S_M_Viv_Dr_Weapon
+      - Item: S_M_Exo_Co_Weapon
 #  - Item: Shadow_Mix_Recipe2
 #    RewardGroup: SHADOW_MIX_RECIPE2
 #    RequiredRequirementsCount: 3
@@ -4059,42 +4059,42 @@ Body:
 #    RewardGroup: ILLUSION_MODULE_MIX
 #    RequiredRequirementsCount: 5
 #    Requirements:
-#      - Item: M_M_Defense
-#      - Item: M_M_Magic_Defense
-#      - Item: M_M_Vit
-#      - Item: M_M_Luk
-#      - Item: M_M_Str
-#      - Item: M_M_Agi
-#      - Item: M_M_Int
-#      - Item: M_M_Dex
-#      - Item: M_M_HP_recovery
-#      - Item: M_M_SP_recovery
-#      - Item: M_M_Spell5
-#      - Item: M_M_Attack_Delay_4
-#      - Item: M_M_Fatal4
-#      - Item: M_M_Expert_Archer5
-#      - Item: M_M_Vital
-#      - Item: M_M_Mental
-#      - Item: M_M_Heal
-#      - Item: M_M_Power
-#      - Item: M_M_Magic
-#      - Item: M_M_Shooter
-#      - Item: M_M_Fast
-#      - Item: M_M_Caster
-#      - Item: M_M_Critical
-#      - Item: M_M_Delay_After_skill
-#      - Item: M_M_Fixed_Casting
-#      - Item: M_M_Above_All
-#      - Item: M_M_Drain_Life
-#      - Item: M_M_Drain_Soul
-#      - Item: M_M_Magic_Healing
-#      - Item: M_M_Magic_Soul
-#      - Item: M_M_Unlimited_Vital
-#      - Item: M_M_Spell_Buster
-#      - Item: M_M_Firing_Shot
-#      - Item: M_M_Overpower
-#      - Item: M_M_Fatal_Flash
-#      - Item: M_M_Lucky_Strike
+#      - Item: EP17_1_EVT03
+#      - Item: EP17_1_EVT04
+#      - Item: EP17_1_EVT05
+#      - Item: EP17_1_EVT06
+#      - Item: EP17_1_EVT07
+#      - Item: EP17_1_EVT08
+#      - Item: EP17_1_EVT09
+#      - Item: EP17_1_EVT10
+#      - Item: EP17_1_EVT11
+#      - Item: EP17_1_EVT12
+#      - Item: EP17_1_EVT13
+#      - Item: EP17_1_EVT14
+#      - Item: EP17_1_EVT15
+#      - Item: EP17_1_EVT16
+#      - Item: EP17_1_EVT17
+#      - Item: EP17_1_EVT18
+#      - Item: EP17_1_EVT19
+#      - Item: EP17_1_EVT20
+#      - Item: EP17_1_EVT21
+#      - Item: EP17_1_EVT22
+#      - Item: EP17_1_EVT23
+#      - Item: EP17_1_EVT24
+#      - Item: EP17_1_EVT25
+#      - Item: EP17_1_EVT26
+#      - Item: EP17_1_EVT27
+#      - Item: EP17_1_EVT28
+#      - Item: EP17_1_EVT29
+#      - Item: EP17_1_EVT30
+#      - Item: EP17_1_EVT31
+#      - Item: EP17_1_EVT32
+#      - Item: EP17_1_EVT33
+#      - Item: EP17_1_EVT34
+#      - Item: EP17_1_EVT35
+#      - Item: EP17_1_EVT36
+#      - Item: EP17_1_EVT37
+#      - Item: EP17_1_EVT38
 #  - Item: Automatic_Module_Mix
 #    RewardGroup: AUTOMATIC_MODULE_MIX
 #    RequiredRequirementsCount: 5
@@ -4197,33 +4197,33 @@ Body:
 #      - Item: EP17_2_EP51
 #      - Item: EP17_2_RA21
 #      - Item: EP17_2_UQ12
-#  - Item: True_GemShadow_Mix
-#    RewardGroup: TRUE_GEMSHADOW_MIX
-#    RequiredRequirementsCount: 6
-#    MinimumRefine: 7
-#    MaximumRefine: 10
-#    Requirements:
-#      - Item: S_Gemstone_Shoes
-#      - Item: S_Gemstone_Shield
-#      - Item: S_Gemstone_Weapon
-#      - Item: S_Gemstone_Earring
-#      - Item: S_Gemstone_Pendent
-#      - Item: S_Gemstone_Armor
-#      - Item: S_Gemstone_Weapon_II
-#      - Item: S_Gemstone_Shield_II
-#      - Item: S_Gemstone_Earring_II
-#  - Item: Mammoth_Mix
-#    RewardGroup: MAMMOTH_MIX
-#    RequiredRequirementsCount: 6
-#    MinimumRefine: 7
-#    MaximumRefine: 10
-#    Requirements:
-#      - Item: S_Mammoth_Armor
-#      - Item: S_Mammoth_Shoes
-#      - Item: S_Mammoth_Pendant
-#      - Item: S_Mammoth_Earring
-#      - Item: S_Mammoth_Weapon
-#      - Item: S_Mammoth_Shield
+  - Item: True_GemShadow_Mix
+    RewardGroup: TRUE_GEMSHADOW_MIX
+    RequiredRequirementsCount: 6
+    MinimumRefine: 7
+    MaximumRefine: 10
+    Requirements:
+      - Item: S_Gemstone_Shoes
+      - Item: S_Gemstone_Shield
+      - Item: S_Gemstone_Weapon
+      - Item: S_Gemstone_Earring
+      - Item: S_Gemstone_Pendent
+      - Item: S_Gemstone_Armor
+      - Item: S_Gemstone_Weapon_II
+      - Item: S_Gemstone_Shield_II
+      - Item: S_Gemstone_Earring_II
+  - Item: Mammoth_Mix
+    RewardGroup: MAMMOTH_MIX
+    RequiredRequirementsCount: 6
+    MinimumRefine: 7
+    MaximumRefine: 10
+    Requirements:
+      - Item: S_Mammoth_Armor
+      - Item: S_Mammoth_Shoes
+      - Item: S_Mammoth_Pendant
+      - Item: S_Mammoth_Earring
+      - Item: S_Mammoth_Weapon
+      - Item: S_Mammoth_Shield
 #  - Item: EXPShadow_Mix
 #    RewardGroup: EXPSHADOW_MIX
 #    RequiredRequirementsCount: 5
@@ -4238,127 +4238,127 @@ Body:
 #      - Item: S_Advanced_Shield
 #      - Item: S_Expert_Shoes
 #      - Item: S_Expert_Shield
-#  - Item: AbsorbShadow_Mix
-#    RewardGroup: ABSORBSHADOW_MIX
-#    RequiredRequirementsCount: 5
-#    MinimumRefine: 7
-#    MaximumRefine: 10
-#    Requirements:
-#      - Item: S_Spiritual_Weapon
-#      - Item: S_Spiritual_Earring
-#      - Item: S_Spiritual_Pendent
-#      - Item: S_Spiritual_Weapon_II
-#      - Item: S_Malicious_Armor
-#      - Item: S_Malicious_Shoes
-#      - Item: S_Malicious_Shield
-#      - Item: S_Malicious_Armor_II
-#  - Item: MajorAutoSpell_Mix
-#    RewardGroup: MAJORAUTOSPELL_MIX
-#    RequiredRequirementsCount: 6
-#    MinimumRefine: 7
-#    MaximumRefine: 10
-#    Requirements:
-#      - Item: S_AutoSpell_Shoes
-#      - Item: S_AutoSpell_Armor
-#      - Item: S_AutoSpell_Weapon
-#      - Item: S_AutoSpell_Shield
-#      - Item: S_AutoSpell_Earring
-#      - Item: S_AutoSpell_Pendant
-#  - Item: MagicalShadow_Mix
-#    RewardGroup: MAGICALSHADOW_MIX
-#    RequiredRequirementsCount: 6
-#    MinimumRefine: 7
-#    MaximumRefine: 10
-#    Requirements:
-#      - Item: S_Magical_Weapon
-#      - Item: S_Magical_Earring
-#      - Item: S_Magical_Pendant
-#      - Item: S_Magical_Shoes
-#      - Item: S_Magical_Armor
-#      - Item: S_Magical_Shield
-#  - Item: PhysicalShadow_Mix
-#    RewardGroup: PHYSICALSHADOW_MIX
-#    RequiredRequirementsCount: 6
-#    MinimumRefine: 7
-#    MaximumRefine: 10
-#    Requirements:
-#      - Item: S_Physical_Weapon
-#      - Item: S_Physical_Earring
-#      - Item: S_Physical_Pendant
-#      - Item: S_Physical_Shoes
-#      - Item: S_Physical_Armor
-#      - Item: S_Physical_Shield
-#  - Item: SLD_Card_Recipe
-#    RewardGroup: SLD_CARD_RECIPE
-#    RequiredRequirementsCount: 3
-#    Requirements:
-#      - Item: Sealed_D_Lord_Card
-#      - Item: Sealed_Knight_WS_Card
-#      - Item: Sealed_Berz_Card
-#      - Item: Sealed_Kiel_Card
-#      - Item: Sealed_Gloom_Card
-#      - Item: Sealed_F_Bishop_Card
-#      - Item: Sealed_Ifrit_Card
-#      - Item: Sealed_TurtleG_Card
-#      - Item: Sealed_Bacsojin_Card
-#      - Item: Sealed_Pharaoh_Card
-#      - Item: Sealed_M_Flower_Card
-#      - Item: Sealed_B_Ygnizem_Card
-#      - Item: Sealed_Apocalips_H_Card
-#      - Item: Sealed_Dracula_Card
-#      - Item: Sealed_B_Shecil_Card
-#      - Item: Sealed_Orc_Hero_Card
-#      - Item: Sealed_Lady_Tanee_Card
-#      - Item: Sealed_Samurai_Card
-#      - Item: Sealed_Orc_Load_Card
-#      - Item: Sealed_B_Magaleta_Card
-#      - Item: Sealed_B_Harword_Card
-#      - Item: Sealed_Eddga_Card
-#      - Item: Sealed_Ktullanux_Card
-#      - Item: Sealed_Mistress_Card
-#      - Item: SLD_Q_Scaraba_Card
-#      - Item: SLD_Baphomet_Card
-#      - Item: SLD_Maya_Card
-#      - Item: SLD_Clown_Card
-#      - Item: SLD_Professor_Card
-#      - Item: SLD_Champion_Card
-#      - Item: SLD_Creator_Card
-#      - Item: SLD_Stalker_Card
-#      - Item: SLD_Paladin_Card
-#      - Item: SLD_Gypsy_Card
-#      - Item: SLD_Daehyon_Card
-#      - Item: SLD_Gioia_Card
-#      - Item: SLD_Pyuriel_Card
-#      - Item: SLD_Kades_Card
-#      - Item: SLD_Timeholder_Card
-#      - Item: Sealed_Tao_Card
-#  - Item: ReloadShadow_Mix
-#    RewardGroup: RELOADSHADOW_MIX
-#    RequiredRequirementsCount: 3
-#    MinimumRefine: 9
-#    MaximumRefine: 10
-#    Requirements:
-#      - Item: S_Reload_Armor
-#      - Item: S_Reload_Shoes
-#      - Item: S_Reload_Shield
-#      - Item: S_Reload_Armor_II
-#  - Item: SpellCasterShadow_Mix
-#    RewardGroup: SPELLCASTERSHADOW_MIX
-#    RequiredRequirementsCount: 6
-#    MinimumRefine: 7
-#    MaximumRefine: 10
-#    Requirements:
-#      - Item: S_Spellflow_Shield_II
-#      - Item: S_Spell_Flow_Shield
-#      - Item: S_Spell_Flow_Armor
-#      - Item: S_Spell_Flow_Shoes
-#      - Item: S_Caster_Armor_II
-#      - Item: S_Caster_Armor
-#      - Item: S_Caster_Shield
-#      - Item: S_Caster_Shoes
-#      - Item: S_Caster_Weapon
-#      - Item: S_Caster_earring
-#      - Item: S_Caster_Pendant
+  - Item: AbsorbShadow_Mix
+    RewardGroup: ABSORBSHADOW_MIX
+    RequiredRequirementsCount: 5
+    MinimumRefine: 7
+    MaximumRefine: 10
+    Requirements:
+      - Item: S_Spiritual_Weapon
+      - Item: S_Spiritual_Earring
+      - Item: S_Spiritual_Pendent
+      - Item: S_Spiritual_Weapon_II
+      - Item: S_Malicious_Armor
+      - Item: S_Malicious_Shoes
+      - Item: S_Malicious_Shield
+      - Item: S_Malicious_Armor_II
+  - Item: MajorAutoSpell_Mix
+    RewardGroup: MAJORAUTOSPELL_MIX
+    RequiredRequirementsCount: 6
+    MinimumRefine: 7
+    MaximumRefine: 10
+    Requirements:
+      - Item: S_AutoSpell_Shoes
+      - Item: S_AutoSpell_Armor
+      - Item: S_AutoSpell_Weapon
+      - Item: S_AutoSpell_Shield
+      - Item: S_AutoSpell_Earring
+      - Item: S_AutoSpell_Pendant
+  - Item: MagicalShadow_Mix
+    RewardGroup: MAGICALSHADOW_MIX
+    RequiredRequirementsCount: 6
+    MinimumRefine: 7
+    MaximumRefine: 10
+    Requirements:
+      - Item: S_Magical_Weapon
+      - Item: S_Magical_Earring
+      - Item: S_Magical_Pendant
+      - Item: S_Magical_Shoes
+      - Item: S_Magical_Armor
+      - Item: S_Magical_Shield
+  - Item: PhysicalShadow_Mix
+    RewardGroup: PHYSICALSHADOW_MIX
+    RequiredRequirementsCount: 6
+    MinimumRefine: 7
+    MaximumRefine: 10
+    Requirements:
+      - Item: S_Physical_Weapon
+      - Item: S_Physical_Earring
+      - Item: S_Physical_Pendant
+      - Item: S_Physical_Shoes
+      - Item: S_Physical_Armor
+      - Item: S_Physical_Shield
+  - Item: SLD_Card_Recipe
+    RewardGroup: SLD_CARD_RECIPE
+    RequiredRequirementsCount: 3
+    Requirements:
+      - Item: Sealed_D_Lord_Card
+      - Item: Sealed_Knight_WS_Card
+      - Item: Sealed_Berz_Card
+      - Item: Sealed_Kiel_Card
+      - Item: Sealed_Gloom_Card
+      - Item: Sealed_F_Bishop_Card
+      - Item: Sealed_Ifrit_Card
+      - Item: Sealed_TurtleG_Card
+      - Item: Sealed_Bacsojin_Card
+      - Item: Sealed_Pharaoh_Card
+      - Item: Sealed_M_Flower_Card
+      - Item: Sealed_B_Ygnizem_Card
+      - Item: Sealed_Apocalips_H_Card
+      - Item: Sealed_Dracula_Card
+      - Item: Sealed_B_Shecil_Card
+      - Item: Sealed_Orc_Hero_Card
+      - Item: Sealed_Lady_Tanee_Card
+      - Item: Sealed_Samurai_Card
+      - Item: Sealed_Orc_Load_Card
+      - Item: Sealed_B_Magaleta_Card
+      - Item: Sealed_B_Harword_Card
+      - Item: Sealed_Eddga_Card
+      - Item: Sealed_Ktullanux_Card
+      - Item: Sealed_Mistress_Card
+      - Item: SLD_Q_Scaraba_Card
+      - Item: SLD_Baphomet_Card
+      - Item: SLD_Maya_Card
+      - Item: SLD_Clown_Card
+      - Item: SLD_Professor_Card
+      - Item: SLD_Champion_Card
+      - Item: SLD_Creator_Card
+      - Item: SLD_Stalker_Card
+      - Item: SLD_Paladin_Card
+      - Item: SLD_Gypsy_Card
+      - Item: SLD_Daehyon_Card
+      - Item: SLD_Gioia_Card
+      - Item: SLD_Pyuriel_Card
+      - Item: SLD_Kades_Card
+      - Item: SLD_Timeholder_Card
+      - Item: Sealed_Tao_Card
+  - Item: ReloadShadow_Mix
+    RewardGroup: RELOADSHADOW_MIX
+    RequiredRequirementsCount: 3
+    MinimumRefine: 9
+    MaximumRefine: 10
+    Requirements:
+      - Item: S_Reload_Armor
+      - Item: S_Reload_Shoes
+      - Item: S_Reload_Shield
+      - Item: S_Reload_Armor_II
+  - Item: SpellCasterShadow_Mix
+    RewardGroup: SPELLCASTERSHADOW_MIX
+    RequiredRequirementsCount: 6
+    MinimumRefine: 7
+    MaximumRefine: 10
+    Requirements:
+      - Item: S_Spellflow_Shield_II
+      - Item: S_Spell_Flow_Shield
+      - Item: S_Spell_Flow_Armor
+      - Item: S_Spell_Flow_Shoes
+      - Item: S_Caster_Armor_II
+      - Item: S_Caster_Armor
+      - Item: S_Caster_Shield
+      - Item: S_Caster_Shoes
+      - Item: S_Caster_Weapon
+      - Item: S_Caster_earring
+      - Item: S_Caster_Pendant
 #  - Item: Ice_F_Stone_Box2
 #    RewardGroup: ICE_F_STONE_BOX2
 #    RequiredRequirementsCount: 3
@@ -4463,30 +4463,30 @@ Body:
 #      - Item: Ice_F_Stone_M_Heal
 #      - Item: Ice_F_Stone_M_Soul
 #      - Item: Ice_F_Stone_A_Force
-#  - Item: R_BearersShadow_Mix
-#    RewardGroup: R_BEARERSSHADOW_MIX
-#    RequiredRequirementsCount: 6
-#    MinimumRefine: 7
-#    MaximumRefine: 10
-#    Requirements:
-#      - Item: S_Bearer's_Shoes_II
-#      - Item: S_Bearer's_Armor_II
-#      - Item: S_Bearer's_Pendant_II
-#      - Item: S_Bearers_Earring
-#      - Item: S_Bearers_Pendent
-#      - Item: S_Bearers_Armor
-#      - Item: S_Bearers_Weapon
-#      - Item: S_Bearers_Shoes
-#      - Item: S_Bearers_Shield
-#  - Item: M_BlitzShadow_Mix
-#    RewardGroup: M_BLITZSHADOW_MIX
-#    RequiredRequirementsCount: 6
-#    MinimumRefine: 7
-#    MaximumRefine: 10
-#    Requirements:
-#      - Item: S_Blitz_Armor
-#      - Item: S_Blitz_Weapon
-#      - Item: S_Blitz_Shield
-#      - Item: S_Blitz_Shoes
-#      - Item: S_Blitz_Pendent
-#      - Item: S_Blitz_Earring
+  - Item: R_BearersShadow_Mix
+    RewardGroup: R_BEARERSSHADOW_MIX
+    RequiredRequirementsCount: 6
+    MinimumRefine: 7
+    MaximumRefine: 10
+    Requirements:
+      - Item: S_Bearer's_Shoes_II
+      - Item: S_Bearer's_Armor_II
+      - Item: S_Bearer's_Pendant_II
+      - Item: S_Bearers_Earring
+      - Item: S_Bearers_Pendent
+      - Item: S_Bearers_Armor
+      - Item: S_Bearers_Weapon
+      - Item: S_Bearers_Shoes
+      - Item: S_Bearers_Shield
+  - Item: M_BlitzShadow_Mix
+    RewardGroup: M_BLITZSHADOW_MIX
+    RequiredRequirementsCount: 6
+    MinimumRefine: 7
+    MaximumRefine: 10
+    Requirements:
+      - Item: S_Blitz_Armor
+      - Item: S_Blitz_Weapon
+      - Item: S_Blitz_Shield
+      - Item: S_Blitz_Shoes
+      - Item: S_Blitz_Pendent
+      - Item: S_Blitz_Earring
