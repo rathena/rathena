@@ -3727,6 +3727,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       RequireShield: true
+      NoSave: true
     End:
       Reflectshield: true
   - Status: Forceofvanguard
