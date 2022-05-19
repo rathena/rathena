@@ -978,29 +978,14 @@ bool mob_is_chasing(int state)
 }
 
 /*==========================================
- * Reachability to a Specification ID existence place
- * state indicates type of 'seek' mob should do:
- * - MSS_LOOT: Looking for item, path must be easy.
- * - MSS_RUSH: Chasing attacking player, path is complex
- * - MSS_FOLLOW: Initiative/support seek, path is complex
+ * Checks if a monster can reach a target by walking
+ * Range: Maximum number of cells to be walked
  *------------------------------------------*/
-int mob_can_reach(struct mob_data *md,struct block_list *bl,int range, int state)
+int mob_can_reach(struct mob_data *md,struct block_list *bl,int range)
 {
-	int easy = 0;
-
 	nullpo_ret(md);
 	nullpo_ret(bl);
-	switch (state) {
-		case MSS_RUSH:
-		case MSS_FOLLOW:
-			easy = 0; //(battle_config.mob_ai&0x1?0:1);
-			break;
-		case MSS_LOOT:
-		default:
-			easy = 1;
-			break;
-	}
-	return unit_can_reach_bl(&md->bl, bl, range, easy, NULL, NULL);
+	return unit_can_reach_bl(&md->bl, bl, range, 0, NULL, NULL);
 }
 
 /*==========================================
@@ -1023,7 +1008,7 @@ int mob_linksearch(struct block_list *bl,va_list ap)
 		&& !md->target_id)
 	{
 		md->last_linktime = tick;
-		if( mob_can_reach(md,target,md->db->range2, MSS_FOLLOW) ){	// Reachability judging
+		if( mob_can_reach(md,target,md->db->range2) ){	// Reachability judging
 			md->target_id = target->id;
 			md->min_chase=md->db->range3;
 			return 1;
@@ -1382,7 +1367,7 @@ static int mob_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 	target = va_arg(ap,struct block_list**);
 
 	dist = distance_bl(&md->bl, bl);
-	if (mob_can_reach(md,bl,dist+1, MSS_LOOT) && (
+	if (mob_can_reach(md, bl, md->db->range3) && (
 		(*target) == nullptr ||
 		(battle_config.monster_loot_search_type && md->target_id > bl->id) ||
 		(!battle_config.monster_loot_search_type && !check_distance_bl(&md->bl, *target, dist)) // New target closer than previous one.
@@ -1755,7 +1740,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 						|| md->sc.data[SC__MANHOLE] // Not yet confirmed if boss will teleport once it can't reach target.
 						|| md->walktoxy_fail_count > 0)
 					)
-					|| !mob_can_reach(md, tbl, md->min_chase, MSS_RUSH)
+					|| !mob_can_reach(md, tbl, md->min_chase)
 				)
 			&&  md->state.attacked_count++ >= RUDE_ATTACKED_COUNT
 			&&  !mobskill_use(md, tick, MSC_RUDEATTACKED) // If can't rude Attack
@@ -1780,7 +1765,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 						|| md->sc.data[SC__MANHOLE] // Not yet confirmed if boss will teleport once it can't reach target.
 						|| md->walktoxy_fail_count > 0)
 					)
-					|| !mob_can_reach(md, abl, dist+md->db->range3, MSS_RUSH)
+					|| !mob_can_reach(md, abl, dist+md->db->range3)
 				   )
 				) )
 			{ // Rude attacked
@@ -1880,7 +1865,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 			if (!can_move) //Stuck. Wait before walking.
 				return true;
 			md->state.skillstate = MSS_LOOT;
-			if (!unit_walktobl(&md->bl, tbl, 0, 1))
+			if (!unit_walktobl(&md->bl, tbl, 0, 0))
 				mob_unlocktarget(md, tick); //Can't loot...
 			return true;
 		}
@@ -1978,7 +1963,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 
 	//Follow up if possible.
 	//Hint: Chase skills are handled in the walktobl routine
-	if(!mob_can_reach(md, tbl, md->min_chase, MSS_RUSH) ||
+	if(!mob_can_reach(md, tbl, md->min_chase) ||
 		!unit_walktobl(&md->bl, tbl, md->status.rhw.range, 2))
 		mob_unlocktarget(md,tick);
 
