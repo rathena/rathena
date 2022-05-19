@@ -83,6 +83,7 @@ Header:
 Body:
   - Jobs:
       Novice: true
+      Super_Novice: true
       Super_Baby: true
     BaseASPD:
       Fist: 500
@@ -303,6 +304,21 @@ Body:
       Dagger: 550
       Bow: 650
       Whip: 575
+  - Jobs:
+      Gunslinger: true
+    BaseASPD:
+      Fist: 500
+      Revolver: 700
+      Rifle: 750
+      Gatling: 700
+      Shotgun: 1500
+      Grenade: 1500
+  - Jobs:
+      Ninja: true
+    BaseASPD:
+      Fist: 400
+      Dagger: 500
+      Huuma: 750
   - Jobs:
       Taekwon: true
     BaseASPD:
