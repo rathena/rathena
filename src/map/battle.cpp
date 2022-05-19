@@ -8279,6 +8279,8 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 	if (sc) {
 		if (sc->data[SC_HELLS_PLANT])
 			return 0;
+		if (sc->data[SC_REF_T_POTION])
+			return 1; // Returns 1 damage
 	}
 
 	map_session_data *tsd = BL_CAST(BL_PC, tbl);
@@ -8340,16 +8342,12 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 	}
 
 	if (sc) {
-		if (status_reflect && sc->data[SC_REFLECTDAMAGE]) {
+		if (status_reflect && sc->data[SC_REFLECTDAMAGE])
 			rdamage -= damage * sc->data[SC_REFLECTDAMAGE]->val2 / 100;
-			if (--(sc->data[SC_REFLECTDAMAGE]->val3) < 1) // TODO: Confirm if reflect count still exists
-				status_change_end(tbl, SC_REFLECTDAMAGE, INVALID_TIMER);
-		}
 		if (sc->data[SC_VENOMBLEED] && sc->data[SC_VENOMBLEED]->val3 == 0)
 			rdamage -= damage * sc->data[SC_VENOMBLEED]->val2 / 100;
 
-		if (rdamage > 0 && sc->data[SC_REF_T_POTION])
-			return 1; // Returns 1 damage
+		rdamage = i64max(rdamage, 1);
 	}
 
 	if (tsc) {
