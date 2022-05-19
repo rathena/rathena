@@ -84,6 +84,7 @@ Body:
   - Jobs:
       Novice: true
       Super_Novice: true
+      Baby: true
       Super_Baby: true
     BaseASPD:
       Fist: 500
