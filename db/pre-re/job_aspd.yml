@@ -83,6 +83,7 @@ Header:
 Body:
   - Jobs:
       Novice: true
+      Super_Baby: true
     BaseASPD:
       Fist: 500
       Dagger: 650
@@ -94,389 +95,7 @@ Body:
       2hStaff: 650
   - Jobs:
       Swordman: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 500
-      1hSword: 550
-      2hSword: 600
-      1hSpear: 650
-      2hSpear: 700
-      1hAxe: 700
-      2hAxe: 750
-      Mace: 650
-      2hMace: 700
-  - Jobs:
-      Mage: true
-    BaseASPD:
-      Fist: 500
-      Dagger: 600
-      Staff: 700
-      2hStaff: 700
-  - Jobs:
-      Archer: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 600
-      Bow: 700
-  - Jobs:
-      Acolyte: true
-    BaseASPD:
-      Fist: 400
-      Mace: 600
-      2hMace: 600
-      Staff: 600
-      2hStaff: 600
-  - Jobs:
-      Merchant: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 600
-      1hSword: 700
-      1hAxe: 700
-      2hAxe: 750
-      Mace: 700
-      2hMace: 700
-  - Jobs:
-      Thief: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 500
-      1hSword: 650
-      1hAxe: 800
-      Bow: 800
-  - Jobs:
-      Knight: true
-      Knight2: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 500
-      1hSword: 500
-      2hSword: 550
-      1hSpear: 600
-      2hSpear: 600
-      1hAxe: 700
-      2hAxe: 700
-      Mace: 650
-      2hMace: 700
-  - Jobs:
-      Priest: true
-    BaseASPD:
-      Fist: 400
-      Mace: 600
-      2hMace: 600
-      Staff: 600
-      Book: 600
-      2hStaff: 600
-  - Jobs:
-      Wizard: true
-    BaseASPD:
-      Fist: 500
-      Dagger: 575
-      Staff: 625
-      2hStaff: 625
-  - Jobs:
-      Blacksmith: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 600
-      1hSword: 650
-      1hAxe: 650
-      2hAxe: 650
-      Mace: 675
-      2hMace: 675
-  - Jobs:
-      Hunter: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 600
-      Bow: 600
-  - Jobs:
-      Assassin: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 500
-      1hSword: 650
-      1hAxe: 800
-      Katar: 500
-  - Jobs:
-      Crusader: true
-      Crusader2: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 500
-      1hSword: 500
-      2hSword: 550
-      1hSpear: 600
-      2hSpear: 600
-      1hAxe: 700
-      2hAxe: 700
-      Mace: 650
-      2hMace: 700
-  - Jobs:
-      Monk: true
-    BaseASPD:
-      Fist: 400
-      Mace: 575
-      2hMace: 575
-      Staff: 575
-      Knuckle: 475
-      2hStaff: 575
-  - Jobs:
-      Sage: true
-    BaseASPD:
-      Fist: 450
-      Dagger: 525
-      Staff: 625
-      Book: 550
-      2hStaff: 625
-  - Jobs:
-      Rogue: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 500
-      1hSword: 550
-      Bow: 650
-  - Jobs:
-      Alchemist: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 550
-      1hSword: 575
-      1hAxe: 675
-      2hAxe: 700
-      Mace: 650
-      2hMace: 650
-  - Jobs:
-      Bard: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 550
-      Bow: 650
-      Musical: 575
-  - Jobs:
-      Dancer: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 550
-      Bow: 650
-      Whip: 575
-  - Jobs:
-      Supernovice: true
-    BaseASPD:
-      Fist: 500
-      Dagger: 650
-      1hSword: 700
-      1hAxe: 800
-      Mace: 700
-      2hMace: 700
-      Staff: 650
-      2hStaff: 650
-  - Jobs:
-      Gunslinger: true
-    BaseASPD:
-      Fist: 500
-      Revolver: 700
-      Rifle: 750
-      Gatling: 700
-      Shotgun: 1500
-      Grenade: 1500
-  - Jobs:
-      Ninja: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 500
-      Huuma: 750
-  - Jobs:
-      Novice_High: true
-    BaseASPD:
-      Fist: 500
-      Dagger: 650
-      1hSword: 700
-      1hAxe: 800
-      Mace: 700
-      2hMace: 700
-      Staff: 650
-      2hStaff: 650
-  - Jobs:
       Swordman_High: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 500
-      1hSword: 550
-      2hSword: 600
-      1hSpear: 650
-      2hSpear: 700
-      1hAxe: 700
-      2hAxe: 750
-      Mace: 650
-      2hMace: 700
-  - Jobs:
-      Mage_High: true
-    BaseASPD:
-      Fist: 500
-      Dagger: 600
-      Staff: 700
-      2hStaff: 700
-  - Jobs:
-      Archer_High: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 600
-      Bow: 700
-  - Jobs:
-      Acolyte_High: true
-    BaseASPD:
-      Fist: 400
-      Mace: 600
-      2hMace: 600
-      Staff: 600
-      2hStaff: 600
-  - Jobs:
-      Merchant_High: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 600
-      1hSword: 700
-      1hAxe: 700
-      2hAxe: 750
-      Mace: 700
-      2hMace: 700
-  - Jobs:
-      Thief_High: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 500
-      1hSword: 650
-      1hAxe: 800
-      Bow: 800
-  - Jobs:
-      Lord_Knight: true
-      Lord_Knight2: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 500
-      1hSword: 500
-      2hSword: 550
-      1hSpear: 600
-      2hSpear: 600
-      1hAxe: 700
-      2hAxe: 700
-      Mace: 650
-      2hMace: 700
-  - Jobs:
-      High_Priest: true
-    BaseASPD:
-      Fist: 400
-      Mace: 600
-      2hMace: 600
-      Staff: 600
-      Book: 600
-      2hStaff: 600
-  - Jobs:
-      High_Wizard: true
-    BaseASPD:
-      Fist: 500
-      Dagger: 575
-      Staff: 625
-      2hStaff: 625
-  - Jobs:
-      Whitesmith: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 600
-      1hSword: 650
-      1hAxe: 650
-      2hAxe: 650
-      Mace: 675
-      2hMace: 675
-  - Jobs:
-      Sniper: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 600
-      Bow: 600
-  - Jobs:
-      Assassin_Cross: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 500
-      1hSword: 650
-      1hAxe: 800
-      Katar: 500
-  - Jobs:
-      Paladin: true
-      Paladin2: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 500
-      1hSword: 500
-      2hSword: 550
-      1hSpear: 600
-      2hSpear: 600
-      1hAxe: 700
-      2hAxe: 700
-      Mace: 650
-      2hMace: 700
-  - Jobs:
-      Champion: true
-    BaseASPD:
-      Fist: 400
-      Mace: 575
-      2hMace: 575
-      Staff: 575
-      Knuckle: 475
-      2hStaff: 575
-  - Jobs:
-      Professor: true
-    BaseASPD:
-      Fist: 450
-      Dagger: 525
-      Staff: 625
-      Book: 550
-      2hStaff: 625
-  - Jobs:
-      Stalker: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 500
-      1hSword: 550
-      Bow: 650
-  - Jobs:
-      Creator: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 550
-      1hSword: 575
-      1hAxe: 675
-      2hAxe: 700
-      Mace: 650
-      2hMace: 650
-  - Jobs:
-      Clown: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 550
-      Bow: 650
-      Musical: 575
-  - Jobs:
-      Gypsy: true
-    BaseASPD:
-      Fist: 400
-      Dagger: 550
-      Bow: 650
-      Whip: 575
-  - Jobs:
-      Baby: true
-    BaseASPD:
-      Fist: 500
-      Dagger: 650
-      1hSword: 700
-      1hAxe: 800
-      Mace: 700
-      2hMace: 700
-      Staff: 650
-      2hStaff: 650
-  - Jobs:
       Baby_Swordman: true
     BaseASPD:
       Fist: 400
@@ -490,6 +109,8 @@ Body:
       Mace: 650
       2hMace: 700
   - Jobs:
+      Mage: true
+      Mage_High: true
       Baby_Mage: true
     BaseASPD:
       Fist: 500
@@ -497,12 +118,16 @@ Body:
       Staff: 700
       2hStaff: 700
   - Jobs:
+      Archer: true
+      Archer_High: true
       Baby_Archer: true
     BaseASPD:
       Fist: 400
       Dagger: 600
       Bow: 700
   - Jobs:
+      Acolyte: true
+      Acolyte_High: true
       Baby_Acolyte: true
     BaseASPD:
       Fist: 400
@@ -511,6 +136,8 @@ Body:
       Staff: 600
       2hStaff: 600
   - Jobs:
+      Merchant: true
+      Merchant_High: true
       Baby_Merchant: true
     BaseASPD:
       Fist: 400
@@ -521,6 +148,8 @@ Body:
       Mace: 700
       2hMace: 700
   - Jobs:
+      Thief: true
+      Thief_High: true
       Baby_Thief: true
     BaseASPD:
       Fist: 400
@@ -529,6 +158,10 @@ Body:
       1hAxe: 800
       Bow: 800
   - Jobs:
+      Knight: true
+      Knight2: true
+      Lord_Knight: true
+      Lord_Knight2: true
       Baby_Knight: true
       Baby_Knight2: true
     BaseASPD:
@@ -543,6 +176,8 @@ Body:
       Mace: 650
       2hMace: 700
   - Jobs:
+      Priest: true
+      High_Priest: true
       Baby_Priest: true
     BaseASPD:
       Fist: 400
@@ -552,6 +187,8 @@ Body:
       Book: 600
       2hStaff: 600
   - Jobs:
+      Wizard: true
+      High_Wizard: true
       Baby_Wizard: true
     BaseASPD:
       Fist: 500
@@ -559,6 +196,8 @@ Body:
       Staff: 625
       2hStaff: 625
   - Jobs:
+      Blacksmith: true
+      Whitesmith: true
       Baby_Blacksmith: true
     BaseASPD:
       Fist: 400
@@ -569,12 +208,16 @@ Body:
       Mace: 675
       2hMace: 675
   - Jobs:
+      Hunter: true
+      Sniper: true
       Baby_Hunter: true
     BaseASPD:
       Fist: 400
       Dagger: 600
       Bow: 600
   - Jobs:
+      Assassin: true
+      Assassin_Cross: true
       Baby_Assassin: true
     BaseASPD:
       Fist: 400
@@ -583,6 +226,10 @@ Body:
       1hAxe: 800
       Katar: 500
   - Jobs:
+      Crusader: true
+      Crusader2: true
+      Paladin: true
+      Paladin2: true
       Baby_Crusader: true
       Baby_Crusader2: true
     BaseASPD:
@@ -597,6 +244,8 @@ Body:
       Mace: 650
       2hMace: 700
   - Jobs:
+      Monk: true
+      Champion: true
       Baby_Monk: true
     BaseASPD:
       Fist: 400
@@ -606,6 +255,8 @@ Body:
       Knuckle: 475
       2hStaff: 575
   - Jobs:
+      Sage: true
+      Professor: true
       Baby_Sage: true
     BaseASPD:
       Fist: 450
@@ -614,6 +265,8 @@ Body:
       Book: 550
       2hStaff: 625
   - Jobs:
+      Rogue: true
+      Stalker: true
       Baby_Rogue: true
     BaseASPD:
       Fist: 400
@@ -621,6 +274,8 @@ Body:
       1hSword: 550
       Bow: 650
   - Jobs:
+      Alchemist: true
+      Creator: true
       Baby_Alchemist: true
     BaseASPD:
       Fist: 400
@@ -631,6 +286,8 @@ Body:
       Mace: 650
       2hMace: 650
   - Jobs:
+      Bard: true
+      Clown: true
       Baby_Bard: true
     BaseASPD:
       Fist: 400
@@ -638,23 +295,14 @@ Body:
       Bow: 650
       Musical: 575
   - Jobs:
+      Dancer: true
+      Gypsy: true
       Baby_Dancer: true
     BaseASPD:
       Fist: 400
       Dagger: 550
       Bow: 650
       Whip: 575
-  - Jobs:
-      Super_Baby: true
-    BaseASPD:
-      Fist: 500
-      Dagger: 650
-      1hSword: 700
-      1hAxe: 800
-      Mace: 700
-      2hMace: 700
-      Staff: 650
-      2hStaff: 650
   - Jobs:
       Taekwon: true
     BaseASPD:
