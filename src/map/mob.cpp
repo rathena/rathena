@@ -2655,6 +2655,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				if (per > 2) per = 2; // prevents unlimited exp gain
 			}
 
+			//Exclude rebirth tap from this calculation
+			count -= md->state.rebirth;
 			if (count>1 && battle_config.exp_bonus_attacker) {
 				//Exp bonus per additional attacker.
 				if (count > battle_config.exp_bonus_max_attacker)
@@ -3122,9 +3124,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 }
 
 /**
- * Resurect a mob with x hp (reset value and respawn on map)
+ * Resurrects a mob (reset values and respawn on map)
  * @param md : mob pointer
- * @param hp : hp to resurect him with, @FIXME unused atm
+ * @param hp : hp to resurrect it with (only used for exp calculation)
  */
 void mob_revive(struct mob_data *md, unsigned int hp)
 {
@@ -3134,7 +3136,9 @@ void mob_revive(struct mob_data *md, unsigned int hp)
 	md->next_walktime = tick+rnd()%1000+MIN_RANDOMWALKTIME;
 	md->last_linktime = tick;
 	md->last_pcneartime = 0;
-	memset(md->dmglog, 0, sizeof(md->dmglog));	// Reset the damage done on the rebirthed monster, otherwise will grant full exp + damage done. [Valaris]
+	//We reset the damage log and then set the already lost damage as self damage so players don't get exp for it [Playtester]
+	memset(md->dmglog, 0, sizeof(md->dmglog));
+	mob_log_damage(md, &md->bl, md->status.max_hp - hp);
 	md->tdmg = 0;
 	if (!md->bl.prev){
 		if(map_addblock(&md->bl))
