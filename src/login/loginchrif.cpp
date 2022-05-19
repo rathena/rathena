@@ -703,7 +703,7 @@ int logchrif_parse_reqvipdata(int fd) {
 * Get account info that asked by inter/char-server
 */
 int logchrif_parse_accinfo(int fd) {
-	if( RFIFOREST(fd) < 23 )
+	if( RFIFOREST(fd) < 19 )
 		return 0;
 	else {
 		int map_fd = RFIFOL(fd, 2), u_fd = RFIFOL(fd, 6), u_aid = RFIFOL(fd, 10), account_id = RFIFOL(fd, 14);

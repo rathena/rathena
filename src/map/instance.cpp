@@ -4,7 +4,7 @@
 #include "instance.hpp"
 
 #include <stdlib.h>
-#include <yaml-cpp/yaml.h>
+#include <math.h>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/db.hpp"
@@ -49,7 +49,7 @@ const std::string InstanceDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 InstanceDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	int32 instance_id = 0;
 
 	if (!this->asInt32(node, "Id", instance_id))
@@ -111,6 +111,32 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 			instance->timeout = 300;
 	}
 
+	if (this->nodeExists(node, "NoNpc")) {
+		bool nonpc;
+
+		if (!this->asBool(node, "NoNpc", nonpc))
+			return 0;
+
+		instance->nonpc = nonpc;
+	}
+	else {
+		if (!exists)
+			instance->nonpc = false;
+	}
+
+	if (this->nodeExists(node, "NoMapFlag")) {
+		bool nomapflag;
+
+		if (!this->asBool(node, "NoMapFlag", nomapflag))
+			return 0;
+
+		instance->nomapflag = nomapflag;
+	}
+	else {
+		if (!exists)
+			instance->nomapflag = false;
+	}
+
 	if (this->nodeExists(node, "Destroyable")) {
 		bool destroy;
 
@@ -124,7 +150,7 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Enter")) {
-		const YAML::Node &enterNode = node["Enter"];
+		const auto& enterNode = node["Enter"];
 
 		if (!this->nodesExist(enterNode, { "Map", "X", "Y" }))
 			return 0;
@@ -165,10 +191,12 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "AdditionalMaps")) {
-		const YAML::Node &mapNode = node["AdditionalMaps"];
+		const auto& mapNode = node["AdditionalMaps"];
 
-		for (const auto &mapIt : mapNode) {
-			std::string map = mapIt.first.as<std::string>();
+		for (const auto& mapIt : mapNode) {
+			std::string map;
+			c4::from_chars(mapIt.key(), &map);
+
 			int16 m = map_mapname2mapid(map.c_str());
 
 			if (m == instance->enter.map) {
@@ -331,7 +359,7 @@ static TIMER_FUNC(instance_subscription_timer){
 bool instance_startkeeptimer(std::shared_ptr<s_instance_data> idata, int instance_id)
 {
 	// No timer
-	if (!idata || idata->keep_timer != INVALID_TIMER)
+	if (!idata || idata->keep_timer != INVALID_TIMER || idata->keep_limit == 0)
 		return false;
 
 	std::shared_ptr<s_instance_db> db = instance_db.find(idata->id);
@@ -429,7 +457,6 @@ bool instance_stopidletimer(std::shared_ptr<s_instance_data> idata, int instance
 		return false;
 
 	// Delete the timer - Party has returned or instance is destroyed
-	idata->idle_limit = 0;
 	delete_timer(idata->idle_timer, instance_delete_timer);
 	idata->idle_timer = INVALID_TIMER;
 
@@ -438,19 +465,19 @@ bool instance_stopidletimer(std::shared_ptr<s_instance_data> idata, int instance
 			break;
 		case IM_CHAR:
 			if (map_charid2sd(idata->owner_id)) // Notify the player
-				clif_instance_changestatus(instance_id, IN_NOTIFY, idata->idle_limit);
+				clif_instance_changestatus(instance_id, IN_NOTIFY, 0);
 			break;
 		case IM_PARTY:
 			if (party_search(idata->owner_id)) // Notify the party
-				clif_instance_changestatus(instance_id, IN_NOTIFY, idata->idle_limit);
+				clif_instance_changestatus(instance_id, IN_NOTIFY, 0);
 			break;
 		case IM_GUILD:
 			if (guild_search(idata->owner_id)) // Notify the guild
-				clif_instance_changestatus(instance_id, IN_NOTIFY, idata->idle_limit);
+				clif_instance_changestatus(instance_id, IN_NOTIFY, 0);
 			break;
 		case IM_CLAN:
 			if (clan_search(idata->owner_id)) // Notify the clan
-				clif_instance_changestatus(instance_id, IN_NOTIFY, idata->idle_limit);
+				clif_instance_changestatus(instance_id, IN_NOTIFY, 0);
 			break;
 		default:
 			return false;
@@ -467,7 +494,6 @@ static int instance_npcinit(struct block_list *bl, va_list ap)
 	struct npc_data* nd;
 
 	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
 	nullpo_retr(0, nd = (struct npc_data *)bl);
 
 	return npc_instanceinit(nd);
@@ -481,7 +507,6 @@ static int instance_npcdestroy(struct block_list *bl, va_list ap)
 	struct npc_data* nd;
 
 	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
 	nullpo_retr(0, nd = (struct npc_data *)bl);
 
 	return npc_instancedestroy(nd);
@@ -495,7 +520,6 @@ static int instance_addnpc_sub(struct block_list *bl, va_list ap)
 	struct npc_data* nd;
 
 	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
 	nullpo_retr(0, nd = (struct npc_data *)bl);
 
 	return npc_duplicate4instance(nd, va_arg(ap, int));
@@ -653,13 +677,22 @@ int instance_addmap(int instance_id) {
 
 	// Set to busy, update timers
 	idata->state = INSTANCE_BUSY;
-	idata->idle_limit = static_cast<unsigned int>(time(nullptr)) + db->timeout;
-	idata->idle_timer = add_timer(gettick() + db->timeout * 1000, instance_delete_timer, instance_id, 0);
+	if (db->timeout > 0) {
+		idata->idle_limit = static_cast<unsigned int>(time(nullptr)) + db->timeout;
+		idata->idle_timer = add_timer(gettick() + db->timeout * 1000, instance_delete_timer, instance_id, 0);
+	}
+
+	if (db->limit > 0) {
+		//This will allow the instance to get a time in 'instance_startkeeptimer'
+		idata->keep_limit = 1;
+	}
+	idata->nomapflag = db->nomapflag;
+	idata->nonpc = db->nonpc;
 
 	int16 m;
 
 	// Add initial map
-	if ((m = map_addinstancemap(db->enter.map, instance_id)) < 0) {
+	if ((m = map_addinstancemap(db->enter.map, instance_id, db->nomapflag)) < 0) {
 		ShowError("instance_addmap: Failed to create initial map for instance '%s' (%d).\n", db->name.c_str(), instance_id);
 		return 0;
 	}
@@ -672,7 +705,7 @@ int instance_addmap(int instance_id) {
 
 	// Add extra maps (if any)
 	for (const auto &it : db->maplist) {
-		if ((m = map_addinstancemap(it, instance_id)) < 0) { // An error occured adding a map
+		if ((m = map_addinstancemap(it, instance_id, db->nomapflag)) < 0) { // An error occured adding a map
 			ShowError("instance_addmap: No maps added to instance '%s' (%d).\n", db->name.c_str(), instance_id);
 			return 0;
 		} else {
@@ -683,7 +716,8 @@ int instance_addmap(int instance_id) {
 	}
 
 	// Create NPCs on all maps
-	instance_addnpc(idata);
+	if(!db->nonpc)
+		instance_addnpc(idata);
 
 	switch(idata->mode) {
 		case IM_NONE:
@@ -712,6 +746,26 @@ int instance_addmap(int instance_id) {
 }
 
 /**
+ * Fills outname with the name of the instance map name
+ * @param map_id: Mapid to use
+ * @param instance_id: Instance id
+ * @param outname: Pointer to allocated memory that will be filled in
+ */
+void instance_generate_mapname(int map_id, int instance_id, char outname[MAP_NAME_LENGTH]) {
+
+#if MAX_MAP_PER_SERVER > 9999
+	#error This algorithm is only safe for up to 9999 maps, change at your own risk.
+#endif
+	// Safe up to 9999 maps per map-server
+	static const int prefix_length = 4;
+	// Full map name length - prefix length - seperator character - zero termination
+	static const int suffix_length = MAP_NAME_LENGTH - prefix_length - 1 - 1;
+	static const int prefix_limit = static_cast<int>(pow(10, prefix_length));
+	static const int suffix_limit = static_cast<int>(pow(10, suffix_length));
+	safesnprintf(outname, MAP_NAME_LENGTH, "%0*u#%0*u", prefix_length, map_id % prefix_limit, suffix_length, instance_id % suffix_limit);
+}
+
+/**
  * Returns an instance map ID
  * @param m: Source map ID
  * @param instance_id: Instance to search
@@ -733,15 +787,8 @@ int16 instance_mapid(int16 m, int instance_id)
 
 	for (const auto &it : idata->map) {
 		if (it.src_m == m) {
-			char iname[MAP_NAME_LENGTH], alt_name[MAP_NAME_LENGTH];
-
-			strcpy(iname, name);
-
-			if (!(strchr(iname, '@')) && strlen(iname) > 8) {
-				memmove(iname, iname + (strlen(iname) - 9), strlen(iname));
-				snprintf(alt_name, sizeof(alt_name), "%d#%s", (instance_id % 1000), iname);
-			} else
-				snprintf(alt_name, sizeof(alt_name), "%.3d%s", (instance_id % 1000), iname);
+			char alt_name[MAP_NAME_LENGTH];
+			instance_generate_mapname(m, instance_id, alt_name);
 			return map_mapname2mapid(alt_name);
 		}
 	}
@@ -1087,7 +1134,7 @@ bool instance_addusers(int instance_id)
 {
 	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
 
-	if(!idata || idata->state != INSTANCE_BUSY)
+	if(!idata || idata->state != INSTANCE_BUSY || idata->idle_limit == 0)
 		return false;
 
 	// Stop the idle timer if we had one
@@ -1108,7 +1155,7 @@ bool instance_delusers(int instance_id)
 {
 	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
 
-	if(!idata || idata->state != INSTANCE_BUSY)
+	if(!idata || idata->state != INSTANCE_BUSY || idata->idle_limit == 0)
 		return false;
 
 	int users = 0;
@@ -1137,12 +1184,13 @@ void do_reload_instance(void)
 			continue;
 		else {
 			// First we load the NPCs again
-			instance_addnpc(idata);
+			if(!idata->nonpc)
+				instance_addnpc(idata);
 
 			// Create new keep timer
 			std::shared_ptr<s_instance_db> db = instance_db.find(idata->id);
 
-			if (db)
+			if (db && db->limit > 0)
 				idata->keep_limit = static_cast<unsigned int>(time(nullptr)) + db->limit;
 		}
 	}

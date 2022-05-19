@@ -8,7 +8,6 @@
 #include <string>
 #include <sys/stat.h> // for stat/lstat/fstat - [Dekamaster/Ultimate GM Tool]
 #include <vector>
-#include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/database.hpp"
@@ -62,7 +61,7 @@ int inter_recv_packet_length[] = {
 	-1,-1,10,10,  0,-1,12, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3050-  Auction System [Zephyrus]
 	 6,-1, 6,-1, 16+NAME_LENGTH+ACHIEVEMENT_NAME_LENGTH, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3060-  Quest system [Kevin] [Inkfish] / Achievements [Aleos]
 	-1,10, 6,-1,  0, 0, 0, 0,  0, 0, 0, 0, -1,10,  6,-1,	// 3070-  Mercenary packets [Zephyrus], Elemental packets [pakpil]
-	48,14,-1, 6,  0, 0, 0, 0,  0, 0,13,-1,  0, 0,  0, 0,	// 3080-  Pet System, Storage
+	52,14,-1, 6,  0, 0, 0, 0,  0, 0,13,-1,  0, 0,  0, 0,	// 3080-  Pet System, Storage
 	-1,10,-1, 6,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3090-  Homunculus packets [albator]
 	 2,-1, 6, 6,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 30A0-  Clan packets
 };
@@ -321,6 +320,45 @@ const char* job_name(int class_) {
 
 		case JOB_BABY_STAR_EMPEROR2:
 			return msg_txt(120);
+
+		case JOB_DRAGON_KNIGHT:
+		case JOB_MEISTER:
+		case JOB_SHADOW_CROSS:
+		case JOB_ARCH_MAGE:
+		case JOB_CARDINAL:
+		case JOB_WINDHAWK:
+		case JOB_IMPERIAL_GUARD:
+		case JOB_BIOLO:
+		case JOB_ABYSS_CHASER:
+		case JOB_ELEMENTAL_MASTER:
+		case JOB_INQUISITOR:
+		case JOB_TROUBADOUR:
+		case JOB_TROUVERE:
+			return msg_txt( 122 - JOB_DRAGON_KNIGHT + class_ );
+
+		case JOB_WINDHAWK2:
+			return msg_txt( 127 );
+
+		case JOB_MEISTER2:
+			return msg_txt( 123 );
+
+		case JOB_DRAGON_KNIGHT2:
+			return msg_txt( 122 );
+
+		case JOB_IMPERIAL_GUARD2:
+			return msg_txt( 128 );
+
+		case JOB_SKY_EMPEROR:
+		case JOB_SOUL_ASCETIC:
+		case JOB_SHINKIRO:
+		case JOB_SHIRANUI:
+		case JOB_NIGHT_WATCH:
+		case JOB_HYPER_NOVICE:
+		case JOB_SPIRIT_HANDLER:
+			return msg_txt( 135 - JOB_SKY_EMPEROR + class_ );
+
+		case JOB_SKY_EMPEROR2:
+			return msg_txt( 135 );
 
 		default:
 			return msg_txt(199);
@@ -860,7 +898,7 @@ const std::string InterServerDatabase::getDefaultLocation(){
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 InterServerDatabase::parseBodyNode( const YAML::Node& node ){
+uint64 InterServerDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	uint32 id;
 
 	if( !this->asUInt32( node, "ID", id ) ){
@@ -1064,7 +1102,7 @@ int mapif_account_reg_reply(int fd, uint32 account_id, uint32 char_id, int type)
 //Request to kick char from a certain map server. [Skotlex]
 int mapif_disconnectplayer(int fd, uint32 account_id, uint32 char_id, int reason)
 {
-	if (fd >= 0)
+	if (session_isValid(fd))
 	{
 		WFIFOHEAD(fd,7);
 		WFIFOW(fd,0) = 0x2b1f;
@@ -1125,13 +1163,13 @@ int mapif_parse_broadcast(int fd)
 
 /**
  * Parse received item broadcast and sends it to all connected map-serves
- * ZI 3009 <cmd>.W <len>.W <nameid>.W <source>.W <type>.B <name>.24B <srcname>.24B
- * IZ 3809 <cmd>.W <len>.W <nameid>.W <source>.W <type>.B <name>.24B <srcname>.24B
+ * ZI 3009 <cmd>.W <len>.W <nameid>.L <source>.W <type>.B <name>.24B <srcname>.24B
+ * IZ 3809 <cmd>.W <len>.W <nameid>.L <source>.W <type>.B <name>.24B <srcname>.24B
  * @param fd
  * @return
  **/
 int mapif_parse_broadcast_item(int fd) {
-	unsigned char buf[9 + NAME_LENGTH*2];
+	unsigned char buf[11 + NAME_LENGTH*2];
 
 	memcpy(WBUFP(buf, 0), RFIFOP(fd, 0), RFIFOW(fd,2));
 	WBUFW(buf, 0) = 0x3809;

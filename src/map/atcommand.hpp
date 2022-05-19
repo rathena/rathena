@@ -9,12 +9,6 @@
 
 struct map_session_data;
 
-//This is the distance at which @autoloot works,
-//if the item drops farther from the player than this,
-//it will not be autolooted. [Skotlex]
-//Note: The range is unlimited unless this define is set.
-//#define AUTOLOOT_DISTANCE AREA_SIZE
-
 //global var
 extern char atcommand_symbol;
 extern char charcommand_symbol;
@@ -31,7 +25,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 
 void do_init_atcommand(void);
 void do_final_atcommand(void);
-void atcommand_db_load_groups(int* group_ids);
+void atcommand_db_load_groups();
 
 bool atcommand_exists(const char* name);
 

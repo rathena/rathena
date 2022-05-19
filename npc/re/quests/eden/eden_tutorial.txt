@@ -152,7 +152,7 @@ moc_para01,34,178,3	script	Tutorial Instructor	904,{
 		close;
 	} else if (checkquest(9168) == 0 || checkquest(9168) == 1) {
 		if (checkweight(607,1) == 0) {
-			if (MaxWeight - Weight < getiteminfo(607,6)) {
+			if (MaxWeight - Weight < getiteminfo(607, ITEMINFO_WEIGHT)) {
 				mes "[Tutorial Instructor]";
 				mes "You seemed to be sluggish with a lot of items";
 				mes "in your inventory making you heavy...";
@@ -354,7 +354,7 @@ moc_para01,34,178,3	script	Tutorial Instructor	904,{
 			}
 		}
 		if (checkweight(607,6) == 0) {
-			if (MaxWeight - Weight < getiteminfo(607,6)) {
+			if (MaxWeight - Weight < getiteminfo(607, ITEMINFO_WEIGHT)) {
 				mes "[Tutorial Instructor]";
 				mes "Your inventory seems to be really full";
 				mes "with various stuff... Do you think";
@@ -573,7 +573,7 @@ moc_para01,34,178,3	script	Tutorial Instructor	904,{
 
 moc_para01,32,179,4	script	Tutorial Goal	895,{
 	if (checkweight(608,7) == 0) {
-		if (MaxWeight - Weight < getiteminfo(608,7)) {
+		if (MaxWeight - Weight < getiteminfo(608, ITEMINFO_WEIGHT)) {
 			mes "[Tutorial Goal]";
 			mes "You seem to be overweight with items. Go put some stuff away then come back.";
 			close;

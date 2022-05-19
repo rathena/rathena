@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2019 rAthena Development Team
+#   Copyright(C) 2021 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -49,13 +49,16 @@
 #   Knockback:                Amount of tiles the skill knockbacks. (Default: 0)
 #     - Level                 Skill level.
 #       Amount                Knockback count at specific skill level.
+#   GiveAp:                   Gives AP on successful skill cast. (Default: 0)
+#     - Level                 Skill level.
+#       Amount                AP gained at specific skill level.
 #   CopyFlags:                Determines if the skill is copyable. (Optional)
 #     Skill:                  Type of skill that can copy.
 #     RemoveRequirement:      Remove a requirement type. (Optional)
 #   NoNearNPC:                Determines if the skill can be used near a NPC. (Optional)
 #     AdditionalRange         Number of cells from an NPC where the skill can be cast. (Optional)
 #     Type:                   Type of NPC.
-#   CastCancel                Cancel cast when hit. (Default: true)
+#   CastCancel                Cancel cast when hit. (Default: false)
 #   CastDefenseReduction      Defense reduction rate during skill cast. (Default: 0)
 #   CastTime:                 Time to cast the skill in milliseconds. (Default: 0)
 #     - Level                 Skill level.
@@ -87,12 +90,18 @@
 #     SpCost:                 SP required to cast. (Default: 0)
 #       - Level               Skill level.
 #         Amount              SP required at specific skill level.
+#     ApCost:                 AP required to cast. (Default: 0)
+#       - Level               Skill level.
+#         Amount              AP required at specific skill level.
 #     HpRateCost:             HP rate required to cast. If positive, uses current HP, else uses Max HP. (Default: 0)
 #       - Level               Skill level.
 #         Amount              HP rate required at specific skill level.
 #     SpRateCost:             SP rate required to cast. If positive, uses current SP, else uses Max SP. (Default: 0)
 #       - Level               Skill level.
 #         Amount              SP rate required at specific skill level.
+#     ApRateCost:             AP rate required to cast. If positive, uses current AP, else uses Max AP. (Default: 0)
+#       - Level               Skill level.
+#         Amount              AP rate required at specific skill level.
 #     MaxHpTrigger:           Maximum amount of HP to cast the skill. (Default: 0)
 #       - Level               Skill level.
 #         Amount              Maximum HP trigger required at specific skill level.
@@ -112,6 +121,7 @@
 #     ItemCost:               Item required to cast. (Default: 0)
 #       - Item                Item name.
 #         Amount              Item amount.
+#         Level               Skill level. Makes the skill item check become level dependent if supplied. (Default: applies to all levels)
 #     Equipment:              Equipped item required to cast. (Default: nullptr)
 #   Unit:                     Skill unit values. (Optional)
 #     Id                      Skill unit ID.
@@ -125,11 +135,12 @@
 #     Interval                Skill unit interval in milliseconds. (Default: 0)
 #     Target                  Skill unit target type. (Default: All)
 #     Flag:                   Skill unit flags. (Default: None)
+#   Status                    Status Change that is associated to the skill. (Optional)
 ###########################################################################
 
 Header:
   Type: SKILL_DB
-  Version: 1
+  Version: 3
 
 Footer:
   Imports:

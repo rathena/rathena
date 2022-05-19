@@ -2,6 +2,7 @@
 /autom4te.cache/requests
 /autom4te.cache/traces.0
 #Global
+.vscode
 .Apple*
 .DS_Store
 .clang_complete
@@ -41,11 +42,16 @@ Thumbs.db
 /map-server
 /mapcache
 /nbproject
+/yaml2sql
+/yamlupgrade
 
 # /3rdparty/libconfig/
 /3rdparty/libconfig/Makefile
 /3rdparty/libconfig/*.o
 /3rdparty/libconfig/obj
+
+# /3rdparty/rapidyaml/
+/3rdparty/rapidyaml/Makefile
 
 # /3rdparty/yaml-cpp/
 /3rdparty/yaml-cpp/Makefile
@@ -119,6 +125,8 @@ Thumbs.db
 /mapserv.bat
 /runserver.bat
 /serv.bat
+/yaml2sql.bat
+/yamlupgrade.bat
 
 # dlls
 /libmysql.dll

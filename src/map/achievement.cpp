@@ -8,7 +8,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/database.hpp"
@@ -25,6 +24,7 @@
 #include "intif.hpp"
 #include "itemdb.hpp"
 #include "map.hpp"
+#include "mob.hpp"
 #include "npc.hpp"
 #include "pc.hpp"
 #include "script.hpp"
@@ -46,11 +46,10 @@ const std::string AchievementDatabase::getDefaultLocation(){
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
+uint64 AchievementDatabase::parseBodyNode(const ryml::NodeRef& node){
 	uint32 achievement_id;
 
-	// TODO: doesnt match camel case
-	if( !this->asUInt32( node, "ID", achievement_id ) ){
+	if( !this->asUInt32( node, "Id", achievement_id ) ){
 		return 0;
 	}
 
@@ -58,11 +57,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 	bool exists = achievement != nullptr;
 
 	if( !exists ){
-		if( !this->nodeExists( node, "Group" ) ){
-			return 0;
-		}
-
-		if( !this->nodeExists( node, "Name" ) ){
+		if( !this->nodesExist( node, { "Name" } ) ){
 			return 0;
 		}
 
@@ -77,14 +72,18 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 			return 0;
 		}
 
+		std::string group_name_constant = "AG_" + group_name;
 		int64 constant;
 
-		if( !script_get_constant( group_name.c_str(), &constant ) ){
-			this->invalidWarning( node, "achievement_read_db_sub: Invalid group %s for achievement %d, skipping.\n", group_name.c_str(), achievement_id );
+		if( !script_get_constant( group_name_constant.c_str(), &constant ) ){
+			this->invalidWarning( node, "Invalid Group %s for achievement %d, skipping.\n", group_name.c_str(), achievement_id );
 			return 0;
 		}
 
 		achievement->group = (e_achievement_group)constant;
+	} else {
+		if (!exists)
+			achievement->group = AG_NONE;
 	}
 
 	if( this->nodeExists( node, "Name" ) ){
@@ -97,15 +96,10 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 		achievement->name = name;
 	}
 
-	if( this->nodeExists( node, "Target" ) ){
-		const YAML::Node& targets = node["Target"];
+	if( this->nodeExists( node, "Targets" ) ){
+		const auto& targets = node["Targets"];
 
-		for( const YAML::Node& targetNode : targets ){
-			if( achievement->targets.size() >= MAX_ACHIEVEMENT_OBJECTIVES ){
-				this->invalidWarning( targetNode, "Node \"Target\" list exceeds the maximum of %d, skipping.\n", MAX_ACHIEVEMENT_OBJECTIVES );
-				return 0;
-			}
-
+		for( const auto& targetNode : targets ){
 			uint16 targetId;
 
 			if( !this->asUInt16( targetNode, "Id", targetId ) ){
@@ -113,16 +107,16 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 			}
 
 			if( targetId >= MAX_ACHIEVEMENT_OBJECTIVES ){
-				this->invalidWarning( targetNode["Id"], "Node \"Id\" is out of valid range [0,%d], skipping.\n", MAX_ACHIEVEMENT_OBJECTIVES );
-				return 0;
+				this->invalidWarning( targetNode["Id"], "Target Id is out of valid range [0,%d], skipping.\n", MAX_ACHIEVEMENT_OBJECTIVES );
+				continue;
 			}
 
 			std::shared_ptr<achievement_target> target = rathena::util::map_find( achievement->targets, targetId );
 			bool targetExists = target != nullptr;
 
 			if( !targetExists ){
-				if( !this->nodeExists( targetNode, "Count" ) && !this->nodeExists( targetNode, "MobID" ) ){
-					this->invalidWarning( targetNode, "Node \"Target\" has no data specified, skipping.\n" );
+				if( !this->nodeExists( targetNode, "Count" ) && !this->nodeExists( targetNode, "Mob" ) ){
+					this->invalidWarning( targetNode, "Target has no data specified, skipping.\n" );
 					return 0;
 				}
 
@@ -136,30 +130,43 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 					return 0;
 				}
 
+				if( count == 0 ){
+					if( targetExists ){
+						achievement->targets.erase( targetId );
+						continue;
+					}else{
+						this->invalidWarning( targetNode["Count"], "Target count has to be > 0, skipping.\n" );
+						return 0;
+					}
+				}
+
 				target->count = count;
 			}else{
 				if( !targetExists ){
-					target->count = 0;
+					target->count = 1;
 				}
 			}
 
-			if( this->nodeExists( targetNode, "MobID" ) ){
+			if( this->nodeExists( targetNode, "Mob" ) ){
 				if( achievement->group != AG_BATTLE && achievement->group != AG_TAMING ){
-					this->invalidWarning( targets, "Node \"MobID\" is only supported for targets in group AG_BATTLE or AG_TAMING, skipping.\n" );
+					this->invalidWarning( targets, "Target Mob is only supported for targets in group AG_BATTLE or AG_TAMING, skipping.\n" );
+					continue;
+				}
+
+				std::string mob_name;
+
+				if( !this->asString( targetNode, "Mob", mob_name ) ){
 					return 0;
 				}
 
-				uint32 mob_id;
+				std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname( mob_name.c_str() );
 
-				// TODO: not camel case
-				if( !this->asUInt32( targetNode, "MobID", mob_id ) ){
+				if (mob == nullptr) {
+					this->invalidWarning(targetNode["Mob"], "Target Mob %s does not exist, skipping.\n", mob_name.c_str());
 					return 0;
 				}
 
-				if( mob_db( mob_id ) == nullptr ){
-					this->invalidWarning( targetNode["MobID"], "Unknown monster ID %d, skipping.\n", mob_id );
-					return 0;
-				}
+				uint32 mob_id = mob->id;
 
 				if( !this->mobexists( mob_id ) ){
 					this->achievement_mobs.push_back( mob_id );
@@ -188,18 +195,19 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 		}
 
 		if( achievement->condition ){
-			aFree( achievement->condition );
+			script_free_code( achievement->condition );
 			achievement->condition = nullptr;
 		}
 
-		achievement->condition = parse_script( condition.c_str(), this->getCurrentFile().c_str(), node["Condition"].Mark().line + 1, SCRIPT_IGNORE_EXTERNAL_BRACKETS );
+		achievement->condition = parse_script( condition.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["Condition"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS );
 	}else{
-		achievement->condition = nullptr;
+		if (!exists)
+			achievement->condition = nullptr;
 	}
 
 	if( this->nodeExists( node, "Map" ) ){
-		if( achievement->group != AG_CHAT ){
-			this->invalidWarning( node, "Node \"Map\" can only be used with the group AG_CHATTING, skipping.\n" );
+		if( achievement->group != AG_CHATTING ){
+			this->invalidWarning( node, "Map can only be used with the group AG_CHATTING, skipping.\n" );
 			return 0;
 		}
 
@@ -212,7 +220,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 		achievement->mapindex = map_mapname2mapid( mapname.c_str() );
 
 		if( achievement->mapindex == -1 ){
-			this->invalidWarning( node["Map"], "Unknown map name '%s'.\n", mapname.c_str() );
+			this->invalidWarning( node["Map"], "Map %s does not exist, skipping.\n", mapname.c_str() );
 			return 0;
 		}
 	}else{
@@ -221,43 +229,53 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 		}
 	}
 
-	if( this->nodeExists( node, "Dependent" ) ){
-		for( const YAML::Node& subNode : node["Dependent"] ){
+	if( this->nodeExists( node, "Dependents" ) ){
+		const auto& dependentNode = node["Dependents"];
+
+		for( const auto& it : dependentNode ){
+			auto id_str = it.key();
 			uint32 dependent_achievement_id;
+			c4::atou<uint32>(id_str, &dependent_achievement_id);
+			bool active;
 
-			if( !this->asUInt32( subNode, "Id", dependent_achievement_id ) ){
+			if (!this->asBool(dependentNode, std::to_string(dependent_achievement_id), active))
 				return 0;
-			}
 
-			// TODO: import logic for clearing => continue
-			// TODO: change to set to prevent multiple entries with the same id?
-			achievement->dependent_ids.push_back( dependent_achievement_id );
+			if (active) {
+				if (std::find(achievement->dependent_ids.begin(), achievement->dependent_ids.end(), dependent_achievement_id) != achievement->dependent_ids.end()) {
+					this->invalidWarning(dependentNode, "Dependent achievement %d is already part of the list, skipping.\n", dependent_achievement_id);
+					continue;
+				}
+
+				if (achievement->dependent_ids.size() >= MAX_ACHIEVEMENT_DEPENDENTS) {
+					this->invalidWarning(dependentNode, "Maximum amount (%d) of dependent achievements reached, skipping.\n", MAX_ACHIEVEMENT_DEPENDENTS);
+					break;
+				}
+
+				achievement->dependent_ids.push_back(dependent_achievement_id);
+			} else
+				util::vector_erase_if_exists(achievement->dependent_ids, dependent_achievement_id);
 		}
 	}
 
-	// TODO: not plural
-	if( this->nodeExists( node, "Reward" ) ){
-		const YAML::Node& rewardNode = node["Reward"];
+	if( this->nodeExists( node, "Rewards" ) ){
+		const auto& rewardNode = node["Rewards"];
 
-		// TODO: not camel case
-		if( this->nodeExists( rewardNode, "ItemID" ) ){
-			uint16 itemId;
+		if( this->nodeExists( rewardNode, "Item" ) ){
+			std::string item_name;
 
-			if( !this->asUInt16( rewardNode, "ItemID", itemId ) ){
+			if( !this->asString( rewardNode, "Item", item_name ) ){
 				return 0;
 			}
 
-			if( !itemdb_exists( itemId ) ){
-				this->invalidWarning( rewardNode["ItemID"], "Unknown item with ID %hu.\n", itemId );
+			std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
+
+			if (item == nullptr) {
+				this->invalidWarning(rewardNode["Item"], "Reward Item %s does not exist, skipping.\n", item_name.c_str());
 				return 0;
 			}
 
-			achievement->rewards.nameid = itemId;
-
-			if( achievement->rewards.amount == 0 ){
-				// Default the amount to 1
-				achievement->rewards.amount = 1;
-			}
+			achievement->rewards.nameid = item->nameid;
 		}
 
 		if( this->nodeExists( rewardNode, "Amount" ) ){
@@ -268,6 +286,9 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 			}
 
 			achievement->rewards.amount = amount;
+		} else {
+			if (!exists)
+				achievement->rewards.amount = 1;
 		}
 
 		if( this->nodeExists( rewardNode, "Script" ) ){
@@ -278,24 +299,32 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 			}
 
 			if( achievement->rewards.script ){
-				aFree( achievement->rewards.script );
+				script_free_code( achievement->rewards.script );
 				achievement->rewards.script = nullptr;
 			}
 
-			achievement->rewards.script = parse_script( script.c_str(), this->getCurrentFile().c_str(), achievement_id, SCRIPT_IGNORE_EXTERNAL_BRACKETS );
+			achievement->rewards.script = parse_script( script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(rewardNode["Script"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS );
 		}else{
-			achievement->rewards.script = nullptr;
+			if (!exists)
+				achievement->rewards.script = nullptr;
 		}
 
-		// TODO: not camel case
-		if( this->nodeExists( rewardNode, "TitleID" ) ){
+		if( this->nodeExists( rewardNode, "TitleId" ) ){
 			uint32 title;
 
-			if( !this->asUInt32( rewardNode, "TitleID", title ) ){
+			if( !this->asUInt32( rewardNode, "TitleId", title ) ){
+				return 0;
+			}
+
+			if (title < TITLE_BASE || title > TITLE_MAX) {
+				this->invalidWarning(rewardNode["TitleId"], "Reward Title ID %u does not exist (%hu~%hu), skipping.\n", title, TITLE_BASE, TITLE_MAX);
 				return 0;
 			}
 
 			achievement->rewards.title_id = title;
+		} else {
+			if (!exists)
+				achievement->rewards.title_id = 0;
 		}
 	}
 
@@ -307,6 +336,9 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 		}
 
 		achievement->score = score;
+	} else {
+		if (!exists)
+			achievement->score = 0;
 	}
 
 	if( !exists ){
@@ -314,6 +346,25 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 	}
 
 	return 1;
+}
+
+void AchievementDatabase::loadingFinished(){
+	for (const auto &achit : *this) {
+		const std::shared_ptr<s_achievement_db> ach = achit.second;
+
+		for (auto dep = ach->dependent_ids.begin(); dep != ach->dependent_ids.end(); dep++) {
+			if (!this->exists(*dep)) {
+				ShowWarning("achievement_read_db: An invalid Dependent ID %d was given for Achievement %d. Removing from list.\n", *dep, ach->achievement_id);
+				dep = ach->dependent_ids.erase(dep);
+
+				if (dep == ach->dependent_ids.end()) {
+					break;
+				}
+			}
+		}
+
+		ach->dependent_ids.shrink_to_fit();
+	}
 }
 
 AchievementDatabase achievement_db;
@@ -336,7 +387,7 @@ const std::string AchievementLevelDatabase::getDefaultLocation(){
 	return std::string(db_path) + "/achievement_level_db.yml";
 }
 
-uint64 AchievementLevelDatabase::parseBodyNode( const YAML::Node &node ){
+uint64 AchievementLevelDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	if( !this->nodesExist( node, { "Level", "Points" } ) ){
 		return 0;
 	}
@@ -506,8 +557,8 @@ bool achievement_check_dependent(struct map_session_data *sd, int achievement_id
 
 	// Check if the achievement has a dependent
 	// If so, then do a check on all dependents to see if they're complete
-	for (int i = 0; i < adb->dependent_ids.size(); i++) {
-		if (!achievement_done(sd, adb->dependent_ids[i]))
+	for (const auto &depit : adb->dependent_ids) {
+		if (!achievement_done(sd, depit))
 			return false; // One of the dependent is not complete!
 	}
 
@@ -771,7 +822,7 @@ int *achievement_level(struct map_session_data *sd, bool flag)
 	for( sd->achievement_data.level = 0; /* Break condition's inside the loop */; sd->achievement_data.level++ ){
 		std::shared_ptr<s_achievement_level> level = achievement_level_db.find( sd->achievement_data.level );
 
-		if( sd->achievement_data.total_score > level->points ){
+		if( level != nullptr && sd->achievement_data.total_score > level->points ){
 			std::shared_ptr<s_achievement_level> next_level = achievement_level_db.find( sd->achievement_data.level + 1 );
 
 			// Check if there is another level
@@ -792,7 +843,11 @@ int *achievement_level(struct map_session_data *sd, bool flag)
 
 		if( sd->achievement_data.level == 0 ){
 			left_score = sd->achievement_data.total_score;
-			right_score = level->points;
+			if( level == nullptr ){
+				right_score = 0;
+			}else{
+				right_score = level->points;
+			}
 			break;
 		}else{
 			std::shared_ptr<s_achievement_level> previous_level = achievement_level_db.find( sd->achievement_data.level - 1 );
@@ -850,6 +905,19 @@ bool achievement_check_condition( struct script_code* condition, struct map_sess
 }
 
 /**
+ * Check to see if an achievement's target count is complete
+ * @param ad: Achievement data
+ * @param current_count: Current target data
+ * @return True if all target values meet the requirements or false otherwise
+ */
+static bool achievement_target_complete(std::shared_ptr<s_achievement_db> ad, std::array<int, MAX_ACHIEVEMENT_OBJECTIVES> current_count) {
+	return std::find_if(ad->targets.begin(), ad->targets.end(),
+		[current_count](const std::pair<uint16, std::shared_ptr<achievement_target>> &target) -> bool {
+		return current_count[target.first] < target.second->count;
+	}) == ad->targets.end();
+}
+
+/**
  * Update achievement objectives.
  * @param sd: Player to update
  * @param ad: Achievement data to compare for completion
@@ -891,9 +959,9 @@ static bool achievement_update_objectives(struct map_session_data *sd, std::shar
 	switch (group) {
 		case AG_ADD_FRIEND:
 		case AG_BABY:
-		case AG_CHAT_COUNT:
-		case AG_CHAT_CREATE:
-		case AG_CHAT_DYING:
+		case AG_CHATTING_COUNT:
+		case AG_CHATTING_CREATE:
+		case AG_CHATTING_DYING:
 		case AG_GET_ITEM:
 		case AG_GET_ZENY:
 		case AG_GOAL_LEVEL:
@@ -901,8 +969,8 @@ static bool achievement_update_objectives(struct map_session_data *sd, std::shar
 		case AG_JOB_CHANGE:
 		case AG_MARRY:
 		case AG_PARTY:
-		case AG_REFINE_FAIL:
-		case AG_REFINE_SUCCESS:
+		case AG_ENCHANT_FAIL:
+		case AG_ENCHANT_SUCCESS:
 			if (!ad->condition)
 				return false;
 
@@ -913,14 +981,8 @@ static bool achievement_update_objectives(struct map_session_data *sd, std::shar
 			complete = true;
 			break;
 		case AG_SPEND_ZENY:
-		//case AG_CHAT: // No information on trigger events
 			if (ad->targets.empty() || !ad->condition)
 				return false;
-
-			//if (group == AG_CHAT) {
-			//	if (ad->mapindex > -1 && sd->bl.m != ad->mapindex)
-			//		return false;
-			//}
 
 			for (const auto &it : ad->targets) {
 				if (current_count[it.first] < it.second->count)
@@ -932,11 +994,7 @@ static bool achievement_update_objectives(struct map_session_data *sd, std::shar
 
 			changed = true;
 
-			if (std::find_if(ad->targets.begin(), ad->targets.end(),
-				[current_count](const std::pair<uint16, std::shared_ptr<achievement_target>> &target) -> bool {
-					return current_count[target.first] < target.second->count;
-				}
-			) == ad->targets.end())
+			if (achievement_target_complete(ad, current_count))
 				complete = true;
 			break;
 		case AG_BATTLE:
@@ -954,13 +1012,38 @@ static bool achievement_update_objectives(struct map_session_data *sd, std::shar
 			if (!changed)
 				return false;
 
-			if (std::find_if(ad->targets.begin(), ad->targets.end(),
-				[current_count](const std::pair<uint16, std::shared_ptr<achievement_target>> &target) -> bool {
-					return current_count[target.first] < target.second->count;
-				}
-			) == ad->targets.end())
+			if (achievement_target_complete(ad, current_count))
 				complete = true;
 			break;
+		case AG_GOAL_ACHIEVE:
+			if (!achievement_check_condition(ad->condition, sd)) // Parameters weren't met
+				return false;
+
+			changed = true;
+			complete = true;
+			break;
+		/*
+		case AG_CHATTING:
+			if (ad->targets.empty())
+				return false;
+
+			if (ad->mapindex > -1 && sd->bl.m != ad->mapindex)
+				return false;
+
+			for (const auto &it : ad->targets) {
+				if (current_count[it.first] < it.second->count) {
+					current_count[it.first]++;
+					changed = true;
+				}
+			}
+
+			if (!changed)
+				return false;
+
+			if (achievement_target_complete(ad, current_count))
+				complete = true;
+			break;
+		*/
 	}
 
 	if( isNew ){
@@ -1021,15 +1104,8 @@ void achievement_update_objective(struct map_session_data *sd, enum e_achievemen
 		}
 		va_end(ap);
 
-		switch(group) {
-			case AG_CHAT: //! TODO: Not sure how this works officially
-				// These have no objective use.
-				break;
-			default:
-				for (auto &ach : achievement_db)
-					achievement_update_objectives(sd, ach.second, group, count);
-				break;
-		}
+		for (auto &ach : achievement_db)
+			achievement_update_objectives(sd, ach.second, group, count);
 
 		// Remove variables that might have been set
 		for (int i = 0; i < arg_count; i++){
@@ -1069,33 +1145,10 @@ int achievement_update_objective_sub(block_list *bl, va_list ap)
 }
 
 /**
- * Loads achievements from the achievement db.
- */
-void achievement_read_db(void)
-{	
-	achievement_db.load();
-
-	for (auto &achit : achievement_db) {
-		const auto ach = achit.second;
-
-		for (int i = 0; i < ach->dependent_ids.size(); i++) {
-			if (!achievement_db.exists(ach->dependent_ids[i])) {
-				ShowWarning("achievement_read_db: An invalid Dependent ID %d was given for Achievement %d. Removing from list.\n", ach->dependent_ids[i], ach->achievement_id);
-				ach->dependent_ids.erase(ach->dependent_ids.begin() + i);
-			}
-		}
-	}
-
-	achievement_level_db.load();
-}
-
-/**
  * Reloads the achievement database
  */
 void achievement_db_reload(void)
 {
-	if (!battle_config.feature_achievement)
-		return;
 	do_final_achievement();
 	do_init_achievement();
 }
@@ -1107,7 +1160,8 @@ void do_init_achievement(void)
 {
 	if (!battle_config.feature_achievement)
 		return;
-	achievement_read_db();
+	achievement_db.load();
+	achievement_level_db.load();
 }
 
 /**
@@ -1128,7 +1182,7 @@ s_achievement_db::s_achievement_db()
 	, targets()
 	, dependent_ids()
 	, condition(nullptr)
-	, mapindex(0)
+	, mapindex(-1)
 	, rewards()
 	, score(0)
 	, has_dependent(0)

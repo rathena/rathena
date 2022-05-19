@@ -9,7 +9,6 @@
 #include <string.h>
 
 #include "../common/cbasetypes.hpp"
-#include "../common/malloc.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/utilities.hpp"
@@ -28,26 +27,23 @@
 
 using namespace rathena;
 
+std::unordered_map<uint16, std::shared_ptr<struct s_storage_table>> storage_db;
+
 ///Databases of guild_storage : int guild_id -> struct guild_storage
 std::map<int, struct s_storage> guild_storage_db;
-
-struct s_storage_table *storage_db;
-int storage_count;
 
 /**
  * Get storage name
  * @param id Storage ID
  * @return Storage name or "Storage" if not found
- * @author [Cydh]
  **/
 const char *storage_getName(uint8 id) {
-	if (storage_db && storage_count) {
-		int i;
-		for (i = 0; i < storage_count; i++) {
-			if (&storage_db[i] && storage_db[i].id == id && storage_db[i].name[0])
-				return storage_db[i].name;
-		}
+	std::shared_ptr<struct s_storage_table> storage = util::umap_find( storage_db, (uint16)id );
+
+	if( storage ){
+		return storage->name;
 	}
+
 	return "Storage";
 }
 
@@ -57,14 +53,7 @@ const char *storage_getName(uint8 id) {
  * @return True:Valid, False:Invalid
  **/
 bool storage_exists(uint8 id) {
-	if (storage_db && storage_count) {
-		int i;
-		for (i = 0; i < storage_count; i++) {
-			if (storage_db[i].id == id)
-				return true;
-		}
-	}
-	return false;
+	return util::umap_find( storage_db, (uint16)id ) != nullptr;
 }
 
 /**
@@ -109,8 +98,6 @@ void storage_sortitem(struct item* items, unsigned int size)
  */
 void do_init_storage(void)
 {
-	storage_db = NULL;
-	storage_count = 0;
 }
 
 /**
@@ -121,10 +108,7 @@ void do_init_storage(void)
 void do_final_storage(void)
 {
 	guild_storage_db.clear();
-	if (storage_db)
-		aFree(storage_db);
-	storage_db = NULL;
-	storage_count = 0;
+	storage_db.clear();
 }
 
 /**
@@ -132,7 +116,7 @@ void do_final_storage(void)
  * @author [Skotlex]
  */
 void do_reconnect_storage(void){
-	for( auto entry : guild_storage_db ){
+	for( const auto& entry : guild_storage_db ){
 		struct s_storage stor = entry.second;
 
 		// Save closed storages.
@@ -160,8 +144,8 @@ int storage_storageopen(struct map_session_data *sd)
 	}
 
 	sd->state.storage_flag = 1;
-	storage_sortitem(sd->storage.u.items_storage, sd->storage.max_amount);
-	clif_storagelist(sd, sd->storage.u.items_storage, sd->storage.max_amount, storage_getName(0));
+	storage_sortitem(sd->storage.u.items_storage, ARRAYLENGTH(sd->storage.u.items_storage));
+	clif_storagelist(sd, sd->storage.u.items_storage, ARRAYLENGTH(sd->storage.u.items_storage), storage_getName(0));
 	clif_updatestorageamount(sd, sd->storage.amount, sd->storage.max_amount);
 
 	return 0;
@@ -417,7 +401,7 @@ void storage_storageaddfromcart(struct map_session_data *sd, struct s_storage *s
 		return;
 	}
 
-	result = storage_canAddItem(stor, index, sd->cart.u.items_inventory, amount, MAX_CART);
+	result = storage_canAddItem(stor, index, sd->cart.u.items_cart, amount, MAX_CART);
 	if (result == STORAGE_ADD_INVALID)
 		return;
 	else if (result == STORAGE_ADD_OK) {
@@ -480,23 +464,6 @@ void storage_storagesave(struct map_session_data *sd)
 }
 
 /**
- * Ack of storage has been saved
- * @param sd: Player who has the storage
- */
-void storage_storagesaved(struct map_session_data *sd)
-{
-	if (!sd)
-		return;
-
-	sd->storage.dirty = false;
-
-	if (sd->state.storage_flag == 1) {
-		sd->state.storage_flag = 0;
-		clif_storageclose(sd);
-	}
-}
-
-/**
  * Make player close his storage
  * @param sd: Player who has the storage
  * @author [massdriller] / modified by [Valaris]
@@ -510,12 +477,12 @@ void storage_storageclose(struct map_session_data *sd)
 			chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
 		else
 			storage_storagesave(sd);
-		if (sd->state.storage_flag == 1) {
-			sd->state.storage_flag = 0;
-			clif_storageclose(sd);
-		}
-	} else
-		storage_storagesaved(sd);
+	}
+	
+	if( sd->state.storage_flag == 1 ){
+		sd->state.storage_flag = 0;
+		clif_storageclose( sd );
+	}
 }
 
 /**
@@ -645,7 +612,7 @@ void storage_guild_log( struct map_session_data* sd, struct item* item, int16 am
 	StringBuf buf;
 	StringBuf_Init(&buf);
 
-	StringBuf_Printf(&buf, "INSERT INTO `%s` (`time`, `guild_id`, `char_id`, `name`, `nameid`, `amount`, `identify`, `refine`, `attribute`, `unique_id`, `bound`", guild_storage_log_table);
+	StringBuf_Printf(&buf, "INSERT INTO `%s` (`time`, `guild_id`, `char_id`, `name`, `nameid`, `amount`, `identify`, `refine`, `attribute`, `unique_id`, `bound`, `enchantgrade`", guild_storage_log_table);
 	for (i = 0; i < MAX_SLOTS; ++i)
 		StringBuf_Printf(&buf, ", `card%d`", i);
 	for (i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
@@ -653,11 +620,11 @@ void storage_guild_log( struct map_session_data* sd, struct item* item, int16 am
 		StringBuf_Printf(&buf, ", `option_val%d`", i);
 		StringBuf_Printf(&buf, ", `option_parm%d`", i);
 	}
-	StringBuf_Printf(&buf, ") VALUES(NOW(),'%u','%u', '%s', '%d', '%d','%d','%d','%d','%" PRIu64 "','%d'",
-		sd->status.guild_id, sd->status.char_id, sd->status.name, item->nameid, amount, item->identify, item->refine,item->attribute, item->unique_id, item->bound);
+	StringBuf_Printf(&buf, ") VALUES(NOW(),'%u','%u', '%s', '%u', '%d','%d','%d','%d','%" PRIu64 "','%d','%d'",
+		sd->status.guild_id, sd->status.char_id, sd->status.name, item->nameid, amount, item->identify, item->refine,item->attribute, item->unique_id, item->bound, item->enchantgrade);
 
 	for (i = 0; i < MAX_SLOTS; i++)
-		StringBuf_Printf(&buf, ",'%d'", item->card[i]);
+		StringBuf_Printf(&buf, ",'%u'", item->card[i]);
 	for (i = 0; i < MAX_ITEM_RDM_OPT; i++)
 		StringBuf_Printf(&buf, ",'%d','%d','%d'", item->option[i].id, item->option[i].value, item->option[i].param);
 	StringBuf_Printf(&buf, ")");
@@ -676,7 +643,7 @@ enum e_guild_storage_log storage_guild_log_read_sub( struct map_session_data* sd
 	StringBuf_Init(&buf);
 
 	StringBuf_AppendStr(&buf, "SELECT `id`, `time`, `name`, `amount`");
-	StringBuf_AppendStr(&buf, " , `nameid`, `identify`, `refine`, `attribute`, `expire_time`, `bound`, `unique_id`");
+	StringBuf_AppendStr(&buf, " , `nameid`, `identify`, `refine`, `attribute`, `expire_time`, `bound`, `unique_id`, `enchantgrade`");
 	for (j = 0; j < MAX_SLOTS; ++j)
 		StringBuf_Printf(&buf, ", `card%d`", j);
 	for (j = 0; j < MAX_ITEM_RDM_OPT; ++j) {
@@ -707,19 +674,20 @@ enum e_guild_storage_log storage_guild_log_read_sub( struct map_session_data* sd
 	SqlStmt_BindColumn(stmt, 3, SQLDT_SHORT,     &entry.amount,           0, NULL, NULL);
 
 	// Item data
-	SqlStmt_BindColumn(stmt, 4, SQLDT_USHORT,    &entry.item.nameid,      0, NULL, NULL);
+	SqlStmt_BindColumn(stmt, 4, SQLDT_UINT,      &entry.item.nameid,      0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 5, SQLDT_CHAR,      &entry.item.identify,    0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 6, SQLDT_CHAR,      &entry.item.refine,      0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 7, SQLDT_CHAR,      &entry.item.attribute,   0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 8, SQLDT_UINT,      &entry.item.expire_time, 0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 9, SQLDT_UINT,      &entry.item.bound,       0, NULL, NULL);
-	SqlStmt_BindColumn(stmt, 10, SQLDT_UINT64,    &entry.item.unique_id,   0, NULL, NULL);
+	SqlStmt_BindColumn(stmt, 10, SQLDT_UINT64,   &entry.item.unique_id,   0, NULL, NULL);
+	SqlStmt_BindColumn(stmt, 11, SQLDT_INT8,     &entry.item.enchantgrade,0, NULL, NULL);
 	for( j = 0; j < MAX_SLOTS; ++j )
-		SqlStmt_BindColumn(stmt, 11+j, SQLDT_USHORT, &entry.item.card[j], 0, NULL, NULL);
+		SqlStmt_BindColumn(stmt, 12+j, SQLDT_UINT, &entry.item.card[j], 0, NULL, NULL);
 	for( j = 0; j < MAX_ITEM_RDM_OPT; ++j ) {
-		SqlStmt_BindColumn(stmt, 11+MAX_SLOTS+j*3, SQLDT_SHORT, &entry.item.option[j].id, 0, NULL, NULL);
-		SqlStmt_BindColumn(stmt, 11+MAX_SLOTS+j*3+1, SQLDT_SHORT, &entry.item.option[j].value, 0, NULL, NULL);
-		SqlStmt_BindColumn(stmt, 11+MAX_SLOTS+j*3+2, SQLDT_CHAR, &entry.item.option[j].param, 0, NULL, NULL);
+		SqlStmt_BindColumn(stmt, 12+MAX_SLOTS+j*3, SQLDT_SHORT, &entry.item.option[j].id, 0, NULL, NULL);
+		SqlStmt_BindColumn(stmt, 12+MAX_SLOTS+j*3+1, SQLDT_SHORT, &entry.item.option[j].value, 0, NULL, NULL);
+		SqlStmt_BindColumn(stmt, 12+MAX_SLOTS+j*3+2, SQLDT_CHAR, &entry.item.option[j].param, 0, NULL, NULL);
 	}
 
 	log.reserve(max);
@@ -771,7 +739,7 @@ bool storage_guild_additem(struct map_session_data* sd, struct s_storage* stor, 
 
 	id = itemdb_search(item_data->nameid);
 
-	if( id->stack.guildstorage && amount > id->stack.amount ) // item stack limitation
+	if( id->stack.guild_storage && amount > id->stack.amount ) // item stack limitation
 		return false;
 
 	if (!itemdb_canguildstore(item_data, pc_get_group_level(sd)) || item_data->expire_time) { // Check if item is storable. [Skotlex]
@@ -787,7 +755,7 @@ bool storage_guild_additem(struct map_session_data* sd, struct s_storage* stor, 
 	if(itemdb_isstackable2(id)) { //Stackable
 		for(i = 0; i < stor->max_amount; i++) {
 			if(compare_item(&stor->u.items_guild[i], item_data)) {
-				if( amount > MAX_AMOUNT - stor->u.items_guild[i].amount || ( id->stack.guildstorage && amount > id->stack.amount - stor->u.items_guild[i].amount ) )
+				if( amount > MAX_AMOUNT - stor->u.items_guild[i].amount || ( id->stack.guild_storage && amount > id->stack.amount - stor->u.items_guild[i].amount ) )
 					return false;
 
 				stor->u.items_guild[i].amount += amount;
@@ -842,9 +810,9 @@ bool storage_guild_additem2(struct s_storage* stor, struct item* item, int amoun
 		for (i = 0; i < stor->max_amount; i++) {
 			if (compare_item(&stor->u.items_guild[i], item)) {
 				// Set the amount, make it fit with max amount
-				amount = min(amount, ((id->stack.guildstorage) ? id->stack.amount : MAX_AMOUNT) - stor->u.items_guild[i].amount);
+				amount = min(amount, ((id->stack.guild_storage) ? id->stack.amount : MAX_AMOUNT) - stor->u.items_guild[i].amount);
 				if (amount != item->amount)
-					ShowWarning("storage_guild_additem2: Stack limit reached! Altered amount of item \"" CL_WHITE "%s" CL_RESET "\" (%d). '" CL_WHITE "%d" CL_RESET "' -> '" CL_WHITE"%d" CL_RESET "'.\n", id->name, id->nameid, item->amount, amount);
+					ShowWarning("storage_guild_additem2: Stack limit reached! Altered amount of item \"" CL_WHITE "%s" CL_RESET "\" (%u). '" CL_WHITE "%d" CL_RESET "' -> '" CL_WHITE"%d" CL_RESET "'.\n", id->name.c_str(), id->nameid, item->amount, amount);
 				stor->u.items_guild[i].amount += amount;
 				stor->dirty = true;
 				return true;
@@ -1148,8 +1116,8 @@ void storage_premiumStorage_open(struct map_session_data *sd) {
 	nullpo_retv(sd);
 
 	sd->state.storage_flag = 3;
-	storage_sortitem(sd->premiumStorage.u.items_storage, sd->premiumStorage.max_amount);
-	clif_storagelist(sd, sd->premiumStorage.u.items_storage, sd->premiumStorage.max_amount, storage_getName(sd->premiumStorage.stor_id));
+	storage_sortitem(sd->premiumStorage.u.items_storage, ARRAYLENGTH(sd->premiumStorage.u.items_storage));
+	clif_storagelist(sd, sd->premiumStorage.u.items_storage, ARRAYLENGTH(sd->premiumStorage.u.items_storage), storage_getName(sd->premiumStorage.stor_id));
 	clif_updatestorageamount(sd, sd->premiumStorage.amount, sd->premiumStorage.max_amount);
 }
 
@@ -1200,22 +1168,6 @@ void storage_premiumStorage_save(struct map_session_data *sd) {
 }
 
 /**
- * Ack of secondary premium has been saved
- * @param sd Player who has the storage
- **/
-void storage_premiumStorage_saved(struct map_session_data *sd) {
-	if (!sd)
-		return;
-
-	sd->premiumStorage.dirty = 0;
-
-	if (sd->state.storage_flag == 3) {
-		sd->state.storage_flag = 0;
-		clif_storageclose(sd);
-	}
-}
-
-/**
  * Request to close premium storage
  * @param sd Player who has the storage
  * @author [Cydh]
@@ -1227,18 +1179,17 @@ void storage_premiumStorage_close(struct map_session_data *sd) {
 		if (save_settings&CHARSAVE_STORAGE)
 			chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
 		else
-			storage_premiumStorage_save(sd);
-		if (sd->state.storage_flag == 3) {
-			sd->state.storage_flag = 0;
-			clif_storageclose(sd);
-		}
+			storage_premiumStorage_save(sd);	
 	}
-	else 
-		storage_premiumStorage_saved(sd);
+
+	if( sd->state.storage_flag == 3 ){
+		sd->state.storage_flag = 0;
+		clif_storageclose( sd );
+	}
 }
 
 /**
- * Force save then close the premium storage
+ * Force save the premium storage
  * @param sd Player who has the storage
  * @author [Cydh]
  **/

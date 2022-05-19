@@ -8,8 +8,6 @@
 
 #include <stdlib.h>
 
-#include <yaml-cpp/yaml.h>
-
 #include "../common/db.hpp"
 #include "../common/ers.hpp"
 #include "../common/malloc.hpp"
@@ -39,21 +37,21 @@ const std::string PetDatabase::getDefaultLocation(){
 	return std::string(db_path) + "/pet_db.yml";
 }
 
-uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
+uint64 PetDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	std::string mob_name;
 
 	if( !this->asString( node, "Mob", mob_name ) ){
 		return 0;
 	}
 
-	struct mob_db* mob = mobdb_search_aegisname( mob_name.c_str() );
+	std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname( mob_name.c_str() );
 
 	if( mob == nullptr ){
-		this->invalidWarning( node["Target"], "Mob %s does not exist and cannot be used as a pet.\n", mob_name.c_str() );
+		this->invalidWarning( node["Mob"], "Mob %s does not exist and cannot be used as a pet.\n", mob_name.c_str() );
 		return 0;
 	}
 
-	uint16 mob_id = mob->vd.class_;
+	uint16 mob_id = mob->id;
 
 	std::shared_ptr<s_pet_db> pet = this->find( mob_id );
 	bool exists = pet != nullptr;
@@ -75,7 +73,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 			return 0;
 		}
 
-		struct item_data* item = itemdb_search_aegisname( item_name.c_str() );
+		std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
 
 		if( item == nullptr ){
 			this->invalidWarning( node["TameItem"], "Taming item %s does not exist.\n", item_name.c_str() );
@@ -96,7 +94,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 			return 0;
 		}
 
-		struct item_data* item = itemdb_search_aegisname( item_name.c_str() );
+		std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
 
 		if( item == nullptr ){
 			this->invalidWarning( node["EggItem"], "Egg item %s does not exist.\n", item_name.c_str() );
@@ -113,7 +111,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 			return 0;
 		}
 
-		struct item_data* item = itemdb_search_aegisname( item_name.c_str() );
+		std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
 
 		if( item == nullptr ){
 			this->invalidWarning( node["EquipItem"], "Equip item %s does not exist.\n", item_name.c_str() );
@@ -134,7 +132,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 			return 0;
 		}
 
-		struct item_data* item = itemdb_search_aegisname( item_name.c_str() );
+		std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
 
 		if( item == nullptr ){
 			this->invalidWarning( node["FoodItem"], "Food item %s does not exist.\n", item_name.c_str() );
@@ -373,7 +371,12 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 			return 0;
 		}
 
-		pet->pet_bonus_script = parse_script( script.c_str(), this->getCurrentFile().c_str(), node["Script"].Mark().line + 1, SCRIPT_IGNORE_EXTERNAL_BRACKETS );
+		if( pet->pet_bonus_script != nullptr ){
+			script_free_code( pet->pet_bonus_script );
+			pet->pet_bonus_script = nullptr;
+		}
+
+		pet->pet_bonus_script = parse_script( script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["Script"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS );
 	}else{
 		if( !exists ){
 			pet->pet_bonus_script = nullptr;
@@ -387,7 +390,12 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 			return 0;
 		}
 
-		pet->pet_support_script = parse_script( script.c_str(), this->getCurrentFile().c_str(), node["SupportScript"].Mark().line + 1, SCRIPT_IGNORE_EXTERNAL_BRACKETS );
+		if( pet->pet_support_script != nullptr ){
+			script_free_code( pet->pet_support_script );
+			pet->pet_support_script = nullptr;
+		}
+
+		pet->pet_support_script = parse_script( script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["SupportScript"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS );
 	}else{
 		if( !exists ){
 			pet->pet_support_script = nullptr;
@@ -395,21 +403,22 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 	}
 
 	if( this->nodeExists( node, "Evolution" ) ){
-		for( const YAML::Node& evolutionNode : node["Evolution"] ){
+		const auto& evolutionsNode = node["Evolution"];
+		for( const auto& evolutionNode : evolutionsNode ){
 			std::string target_name;
 
 			if( !this->asString( evolutionNode, "Target", target_name ) ){
 				return 0;
 			}
 
-			struct mob_db* mob = mobdb_search_aegisname( target_name.c_str() );
+			std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname( target_name.c_str() );
 
 			if( mob == nullptr ){
 				this->invalidWarning( evolutionNode["Target"], "Evolution target %s does not exist.\n", target_name.c_str() );
 				return 0;
 			}
 
-			uint16 targetId = mob->vd.class_;
+			uint16 targetId = mob->id;
 
 			if( !this->nodeExists( evolutionNode, "ItemRequirements" ) ){
 				this->invalidWarning( evolutionNode, "Missing required node \"ItemRequirements\".\n" );
@@ -424,23 +433,24 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 				evolution->target_mob_id = targetId;
 			}
 
-			for( const YAML::Node& requirementNode : evolutionNode["ItemRequirements"] ){
+			const auto& requirementsNode = evolutionNode["ItemRequirements"];
+			for( const auto& requirementNode : requirementsNode ){
 				std::string item_name;
 
 				if( !this->asString( requirementNode, "Item", item_name ) ){
 					return 0;
 				}
 
-				struct item_data* item = itemdb_search_aegisname( item_name.c_str() );
+				std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
 
 				if( item == nullptr ){
 					this->invalidWarning( requirementNode["Item"], "Evolution requirement item %s does not exist.\n", item_name.c_str() );
 					return 0;
 				}
 
-				uint32 amount;
+				uint16 amount;
 
-				if( !this->asUInt32( requirementNode, "Amount", amount ) ){
+				if( !this->asUInt16( requirementNode, "Amount", amount ) ){
 					return 0;
 				}
 
@@ -543,7 +553,7 @@ static int pet_reload_sub( struct map_session_data *sd, va_list args ){
 	pet_clear_support_bonuses(sd);
 
 	// Relink the pet to the new database entry
-	pd->db = mob_db( pet_db_ptr->class_ );
+	pd->db = mob_db.find( pet_db_ptr->class_ );
 
 	if( battle_config.pet_status_support ){
 		run_script( pet_db_ptr->pet_support_script, 0, sd->bl.id, 0 );
@@ -649,14 +659,14 @@ void pet_set_intimate(struct pet_data *pd, int value)
  * @param item_id : item ID of tamer
  * @return true:success, false:failure
  */
-bool pet_create_egg(struct map_session_data *sd, unsigned short item_id)
+bool pet_create_egg(struct map_session_data *sd, t_itemid item_id)
 {
 	std::shared_ptr<s_pet_db> pet = pet_db_search(item_id, PET_EGG);
 
 	if (!pet)
 		return false; //No pet egg here.
 
-	struct mob_db* mdb = mob_db(pet->class_);
+	std::shared_ptr<s_mob_db> mdb = mob_db.find(pet->class_);
 
 	if( mdb == nullptr ){
 		return false;
@@ -666,7 +676,7 @@ bool pet_create_egg(struct map_session_data *sd, unsigned short item_id)
 		return false; // Inventory full
 
 	sd->catch_target_class = pet->class_;
-	intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname);
+	intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname.c_str());
 
 	return true;
 }
@@ -1016,7 +1026,7 @@ bool pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 	pd->bl.id = npc_get_new_npc_id();
 
 	pd->master = sd;
-	pd->db = mob_db(pet->class_);
+	pd->db = mob_db.find(pet->class_);
 	memcpy(&pd->pet, pet, sizeof(struct s_pet));
 	status_set_viewdata(&pd->bl, pet->class_);
 	unit_dataset(&pd->bl);
@@ -1056,7 +1066,7 @@ bool pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 	pd->masterteleport_timer = INVALID_TIMER;
 
 	if( !pet->rename_flag ){
-		safestrncpy( sd->pd->pet.name, pd->db->jname, NAME_LENGTH );
+		safestrncpy( sd->pd->pet.name, pd->db->jname.c_str(), NAME_LENGTH );
 	}
 
 	return true;
@@ -1105,6 +1115,7 @@ int pet_birth_process(struct map_session_data *sd, struct s_pet *pet)
 #endif
 		clif_pet_equip_area(sd->pd);
 		clif_send_petstatus(sd);
+		clif_pet_autofeed_status(sd,true);
 	}
 
 	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->master == sd);
@@ -1186,7 +1197,7 @@ int pet_select_egg(struct map_session_data *sd,short egg_index)
 
 	std::shared_ptr<s_pet_db> pet = pet_db_search(sd->inventory.u.items_inventory[egg_index].nameid, PET_EGG);
 	if (!pet) {
-		ShowError("pet does not exist, egg id %d\n", sd->inventory.u.items_inventory[egg_index].nameid);
+		ShowError("pet does not exist, egg id %u\n", sd->inventory.u.items_inventory[egg_index].nameid);
 		return 0;
 	}
 
@@ -1207,6 +1218,11 @@ int pet_select_egg(struct map_session_data *sd,short egg_index)
 int pet_catch_process1(struct map_session_data *sd,int target_class)
 {
 	nullpo_ret(sd);
+
+	if (map_getmapflag(sd->bl.m, MF_NOPETCAPTURE)) {
+		clif_displaymessage(sd->fd, msg_txt(sd, 669)); // You can't catch any pet on this map.
+		return 0;
+	}
 
 	sd->catch_target_class = target_class;
 	clif_catch_process(sd);
@@ -1232,7 +1248,17 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 	if(!md || md->bl.type != BL_MOB || md->bl.prev == NULL) { // Invalid inputs/state, abort capture.
 		clif_pet_roulette(sd,0);
 		sd->catch_target_class = PET_CATCH_FAIL;
-		sd->itemid = sd->itemindex = -1;
+		sd->itemid = 0;
+		sd->itemindex = -1;
+		return 1;
+	}
+
+	if (map_getmapflag(sd->bl.m, MF_NOPETCAPTURE)) {
+		clif_pet_roulette(sd, 0);
+		sd->catch_target_class = PET_CATCH_FAIL;
+		sd->itemid = 0;
+		sd->itemindex = -1;
+		clif_displaymessage(sd->fd, msg_txt(sd, 669)); // You can't catch any pet on this map.
 		return 1;
 	}
 
@@ -1243,7 +1269,7 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 	// If the target is a valid pet, we have a few exceptions
 	if( pet ){
 		//catch_target_class == PET_CATCH_UNIVERSAL is used for universal lures (except bosses for now). [Skotlex]
-		if (sd->catch_target_class == PET_CATCH_UNIVERSAL && !status_has_mode(&md->status,MD_STATUS_IMMUNE)){
+		if (sd->catch_target_class == PET_CATCH_UNIVERSAL && !status_has_mode(&md->status,MD_STATUSIMMUNE)){
 			sd->catch_target_class = md->mob_id;
 		//catch_target_class == PET_CATCH_UNIVERSAL_ITEM is used for catching any monster required the lure item used
 		}else if (sd->catch_target_class == PET_CATCH_UNIVERSAL_ITEM && sd->itemid == pet->itemID){
@@ -1259,7 +1285,27 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 		return 1;
 	}
 
-	pet_catch_rate = (pet->capture + (sd->status.base_level - md->level)*30 + sd->battle_status.luk*20)*(200 - get_percentage(md->status.hp, md->status.max_hp))/100;
+	if( battle_config.pet_distance_check && distance_bl( &sd->bl, &md->bl ) > battle_config.pet_distance_check ){
+		clif_pet_roulette( sd, 0 );
+		sd->catch_target_class = PET_CATCH_FAIL;
+
+		return 1;
+	}
+
+	struct status_change* tsc = status_get_sc( &md->bl );
+
+	if( battle_config.pet_hide_check && tsc && ( tsc->data[SC_HIDING] || tsc->data[SC_CLOAKING] || tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_NEWMOON] || tsc->data[SC_CLOAKINGEXCEED] ) ){
+		clif_pet_roulette( sd, 0 );
+		sd->catch_target_class = PET_CATCH_FAIL;
+
+		return 1;
+	}
+
+	if( battle_config.pet_legacy_formula ){
+		pet_catch_rate = ( pet->capture + ( sd->status.base_level - md->level ) * 30 + sd->battle_status.luk * 20 ) * ( 200 - get_percentage( md->status.hp, md->status.max_hp ) ) / 100;
+	}else{
+		pet_catch_rate = pet->capture + ( ( 100 - get_percentage( md->status.hp, md->status.max_hp ) ) * pet->capture ) / 100;
+	}
 
 	if(pet_catch_rate < 1)
 		pet_catch_rate = 1;
@@ -1273,9 +1319,9 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 		status_kill(&md->bl);
 		clif_pet_roulette(sd,1);
 
-		struct mob_db *mdb = mob_db(pet->class_);
+		std::shared_ptr<s_mob_db> mdb = mob_db.find(pet->class_);
 
-		intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname);
+		intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname.c_str());
 	} else {
 		clif_pet_roulette(sd,0);
 		sd->catch_target_class = PET_CATCH_FAIL;
@@ -1450,7 +1496,6 @@ int pet_change_name_ack(struct map_session_data *sd, char* name, int flag)
 int pet_equipitem(struct map_session_data *sd,int index)
 {
 	struct pet_data *pd;
-	unsigned short nameid;
 
 	nullpo_retr(1, sd);
 
@@ -1465,7 +1510,7 @@ int pet_equipitem(struct map_session_data *sd,int index)
 		return 1;
 	}
 
-	nameid = sd->inventory.u.items_inventory[index].nameid;
+	t_itemid nameid = sd->inventory.u.items_inventory[index].nameid;
 
 	if(pet_db_ptr->AcceID == 0 || nameid != pet_db_ptr->AcceID || pd->pet.equip != 0) {
 		clif_equipitemack(sd,0,0,ITEM_EQUIP_ACK_FAIL);
@@ -1503,13 +1548,12 @@ int pet_equipitem(struct map_session_data *sd,int index)
 static int pet_unequipitem(struct map_session_data *sd, struct pet_data *pd)
 {
 	struct item tmp_item;
-	unsigned short nameid;
 	unsigned char flag = 0;
 
 	if(pd->pet.equip == 0)
 		return 1;
 
-	nameid = pd->pet.equip;
+	t_itemid nameid = pd->pet.equip;
 	pd->pet.equip = 0;
 	status_set_viewdata(&pd->bl, pd->pet.class_);
 	clif_pet_equip_area(pd);
@@ -2261,9 +2305,9 @@ void pet_evolution(struct map_session_data *sd, int16 pet_id) {
 	sd->pd->pet.egg_id = new_data->EggID;
 	pet_set_intimate(sd->pd, new_data->intimate);
 	if( !sd->pd->pet.rename_flag ){
-		struct mob_db* mdb = mob_db( pet_id );
+		std::shared_ptr<s_mob_db> mdb = mob_db.find( pet_id );
 
-		safestrncpy(sd->pd->pet.name, mdb->jname, NAME_LENGTH);
+		safestrncpy(sd->pd->pet.name, mdb->jname.c_str(), NAME_LENGTH);
 	}
 	status_set_viewdata(&sd->pd->bl, pet_id);
 
