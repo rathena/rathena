@@ -49,124 +49,124 @@ OnInit:
 	initnpctimer;
 	end;
 OnTimer20000:
-	mapannounce "airplane","We are heading to Einbroch.",bc_map,"0x00ff00";
+	mapannounce "airplane","Kita menuju ke Einbroch.",bc_map,"0x00ff00";
 	end;
 OnTimer50000:
-	mapannounce "airplane","We will arrive in Einbroch shortly.",bc_map,"0x00ff00";
+	mapannounce "airplane","Kita akan segera tiba di Einbroch.",bc_map,"0x00ff00";
 	end;
 OnTimer60000:
 	set $@airplanelocation,1;
 	donpcevent "#AirshipWarp-1::OnUnhide";
 	donpcevent "#AirshipWarp-2::OnUnhide";
-	mapannounce "airplane","Welcome to Einbroch. Have a safe trip.",bc_map,"0x00ff00";
+	mapannounce "airplane","Selamat datang di Einbroch. Semoga selamat sampai tujuan.",bc_map,"0x00ff00";
 	end;
 OnTimer70000:
-	mapannounce "airplane","Currently we are in Einbroch. The Airship will take off shortly.",bc_map,"0x00ff00";
+	mapannounce "airplane","Kita saat ini berada di Einbroch. Pesawat Udara akan segera lepas landas.",bc_map,"0x00ff00";
 	end;
 OnTimer80000:
 	donpcevent "#AirshipWarp-1::OnHide";
 	donpcevent "#AirshipWarp-2::OnHide";
-	mapannounce "airplane","The Airship is now taking off. Our next destination is Lighthalzen.",bc_map,"0x70dbdb";
+	mapannounce "airplane","Pesawat Udara sekarang lepas landas. Tujuan kita selanjutnya adalah Lighthalzen.",bc_map,"0x70dbdb";
 	end;
 OnTimer100000:
-	mapannounce "airplane","We are heading to Lighthalzen.",bc_map,"0x70dbdb";
+	mapannounce "airplane","Kita menuju ke Lighthalzen.",bc_map,"0x70dbdb";
 	end;
 OnTimer130000:
-	mapannounce "airplane","We will arrive in Lighthalzen shortly.",bc_map,"0x70dbdb";
+	mapannounce "airplane","Kita akan segera tiba di Lighthalzen.",bc_map,"0x70dbdb";
 	end;
 OnTimer140000:
 	set $@airplanelocation,2;
 	donpcevent "#AirshipWarp-1::OnUnhide";
 	donpcevent "#AirshipWarp-2::OnUnhide";
-	mapannounce "airplane","Welcome to Lighthalzen. Have a safe trip.",bc_map,"0x70dbdb";
+	mapannounce "airplane","Selamat datang di Lighthalzen. Semoga selamat sampai tujuan.",bc_map,"0x70dbdb";
 	end;
 OnTimer150000:
-	mapannounce "airplane","Currently we are in Lighthalzen. The Airship will leave shortly.",bc_map,"0x70dbdb";
+	mapannounce "airplane","Kita saat ini berada di Lighthalzen. Pesawat Udara akan segera lepas landas.",bc_map,"0x70dbdb";
 	end;
 OnTimer160000:
 	donpcevent "#AirshipWarp-1::OnHide";
 	donpcevent "#AirshipWarp-2::OnHide";
-	mapannounce "airplane","The Airship is leaving the ground. Our next destination is Einbroch.",bc_map,"0x00ff00";
+	mapannounce "airplane","Pesawat Udara sekarang lepas landas. Tujuan kita selanjutnya adalah Einbroch.",bc_map,"0x00ff00";
 	end;
 OnTimer180000:
-	mapannounce "airplane","We are heading to Einbroch.",bc_map,"0x00ff00";
+	mapannounce "airplane","Kita menuju ke Einbroch.",bc_map,"0x00ff00";
 	end;
 OnTimer210000:
-	mapannounce "airplane","We will arrive in Einbroch shortly.",bc_map,"0x00FF00";
+	mapannounce "airplane","Kita akan segera tiba di Einbroch.",bc_map,"0x00FF00";
 	end;
 OnTimer220000:
 	set $@airplanelocation,1;
 	donpcevent "#AirshipWarp-1::OnUnhide";
 	donpcevent "#AirshipWarp-2::OnUnhide";
-	mapannounce "airplane","Welcome to Einbroch. Have a safe trip.",bc_map,"0x00ff00";
+	mapannounce "airplane","Selamat datang di Einbroch. Semoga selamat sampai tujuan.",bc_map,"0x00ff00";
 	end;
 OnTimer230000:
-	mapannounce "airplane","Currently we are in Einbroch. The Airship will take off shortly.",bc_map,"0x00ff00";
+	mapannounce "airplane","Kita saat ini berada di Einbroch. Pesawat Udara akan segera lepas landas.",bc_map,"0x00ff00";
 	end;
 OnTimer240000:
 	donpcevent "#AirshipWarp-1::OnHide";
 	donpcevent "#AirshipWarp-2::OnHide";
-	mapannounce "airplane","The Airship is now taking off. Our next destination is Juno.",bc_map,"0xff8200";
+	mapannounce "airplane","Pesawat Udara sekarang lepas landas. Tujuan kita selanjutnya adalah Juno.",bc_map,"0xff8200";
 	end;
 OnTimer260000:
-	mapannounce "airplane","We are heading to Juno.",bc_map,"0xff8200";
+	mapannounce "airplane","Kita menuju ke Juno.",bc_map,"0xff8200";
 	end;
 OnTimer290000:
-	mapannounce "airplane","We will arrive in Juno shortly.",bc_map,"0xff8200";
+	mapannounce "airplane","Kita akan segera tiba di Juno.",bc_map,"0xff8200";
 	end;
 OnTimer300000:
 	set $@airplanelocation,0;
 	donpcevent "#AirshipWarp-1::OnUnhide";
 	donpcevent "#AirshipWarp-2::OnUnhide";
-	mapannounce "airplane","Welcome to Juno. Have a safe trip.",bc_map,"0xff8200";
+	mapannounce "airplane","Selamat datang di Juno. Semoga selamat sampai tujuan.",bc_map,"0xff8200";
 	end;
 OnTimer310000:
-	mapannounce "airplane","Currently we are in Juno. The Airship will leave shortly.",bc_map,"0xff8200";
+	mapannounce "airplane","Kita saat ini berada di Einbroch. Pesawat Udara akan segera lepas landas.",bc_map,"0xff8200";
 	end;
 OnTimer320000:
 	donpcevent "#AirshipWarp-1::OnHide";
 	donpcevent "#AirshipWarp-2::OnHide";
-	mapannounce "airplane","The Airship is leaving the ground. Our next destination is Hugel.",bc_map,"0xca4bf3";
+	mapannounce "airplane","Pesawat Udara sekarang lepas landas. Tujuan kita selanjutnya adalah Hugel.",bc_map,"0xca4bf3";
 	end;
 OnTimer340000:
-	mapannounce "airplane","We are heading to Hugel.",bc_map,"0xca4bf3";
+	mapannounce "airplane","Kita menuju ke Hugel.",bc_map,"0xca4bf3";
 	end;
 OnTimer370000:
-	mapannounce "airplane","We will arrive in Hugel shortly.",bc_map,"0xca4bf3";
+	mapannounce "airplane","Kita akan segera tiba di Hugel.",bc_map,"0xca4bf3";
 	end;
 OnTimer380000:
 	set $@airplanelocation,3;
 	donpcevent "#AirshipWarp-1::OnUnhide";
 	donpcevent "#AirshipWarp-2::OnUnhide";
-	mapannounce "airplane","Welcome to Hugel. Have a safe trip.",bc_map,"0xca4bf3";
+	mapannounce "airplane","Selamat datang di Hugel. Semoga selamat sampai tujuan.",bc_map,"0xca4bf3";
 	end;
 OnTimer390000:
-	mapannounce "airplane","Currently we are in Hugel. The Airship will leave shortly.",bc_map,"0xca4bf3";
+	mapannounce "airplane","Kita saat ini berada di Hugel. Pesawat Udara akan segera lepas landas.",bc_map,"0xca4bf3";
 	end;
 OnTimer400000:
 	donpcevent "#AirshipWarp-1::OnHide";
 	donpcevent "#AirshipWarp-2::OnHide";
-	mapannounce "airplane","The Airship is leaving the ground. Our next destination is Juno.",bc_map,"0xff8200";
+	mapannounce "airplane","Pesawat Udara sekarang lepas landas. Tujuan kita selanjutnya adalah Juno.",bc_map,"0xff8200";
 	end;
 OnTimer420000:
-	mapannounce "airplane","We are heading to Juno.",bc_map,"0xff8200";
+	mapannounce "airplane","Kita menuju ke Juno.",bc_map,"0xff8200";
 	end;
 OnTimer450000:
-	mapannounce "airplane","We will arrive in Juno shortly.",bc_map,"0xff8200";
+	mapannounce "airplane","Kita akan segera tiba di Juno.",bc_map,"0xff8200";
 	end;
 OnTimer460000:
 	set $@airplanelocation,0;
 	donpcevent "#AirshipWarp-1::OnUnhide";
 	donpcevent "#AirshipWarp-2::OnUnhide";
-	mapannounce "airplane","Welcome to Juno. Have a safe trip.",bc_map,"0xff8200";
+	mapannounce "airplane","Selamat datang di Juno. Semoga selamat sampai tujuan.",bc_map,"0xff8200";
 	end;
 OnTimer470000:
-	mapannounce "airplane","Currently we are in Juno. The Airship will leave shortly.",bc_map,"0xff8200";
+	mapannounce "airplane","Kita saat ini berada di Juno. Pesawat Udara akan segera lepas landas.",bc_map,"0xff8200";
 	end;
 OnTimer480000:
 	donpcevent "#AirshipWarp-1::OnHide";
 	donpcevent "#AirshipWarp-2::OnHide";
-	mapannounce "airplane","The Airship is leaving the ground. Our next destination is Einbroch.",bc_map,"0x00ff00";
+	mapannounce "airplane","Pesawat Udara sekarang lepas landas. Tujuan kita selanjutnya adalah Einbroch.",bc_map,"0x00ff00";
 	stopnpctimer;
 	initnpctimer;
 }
@@ -180,12 +180,12 @@ airplane,247,40,1	duplicate(ExitAirplane)	Exit#airplane2b	857
 
 airplane,100,69,3	script	Airship Crew#ein-1	852,{
 	mes "[Airship Crew]";
-	mes "If we've landed at";
-	mes "your destination and";
-	mes "you'd like to leave the";
-	mes "Airship, please use the";
-	mes "stairs up ahead. Thank";
-	mes "you for your patronage.";
+	mes "Jika kita sudah mendarat di";
+	mes "tujuan Anda dan";
+	mes "Anda ingin meninggalkan";
+	mes "Pesawat Udara, silakan gunakan";
+	mes "tangga di depan. Terima kasih";
+	mes "untuk perlindungan Anda.";
 	close;
 }
 
@@ -193,10 +193,10 @@ airplane,64,94,1	script	Umbala Kid#ein_p	787,{
 	emotion ET_PROFUSELY_SWEAT;
 	mes "[Kid]";
 	if (event_umbala >= 3) {
-		mes "Wow, mom!";
-		mes "L-look at this!";
-		mes "We're flying! W-we're...";
-		mes "We're in the freakin' sky!";
+		mes "Wah, ibu!";
+		mes "L-lihat ini!";
+		mes "Kami terbang! K-kami...";
+		mes "Kami berada di langit yang aneh!";
 	}
 	else {
 		mes "Makumalagu!";
@@ -211,11 +211,11 @@ airplane,66,93,3	script	Umbala Lady#ein_p	783,{
 	emotion ET_THINK;
 	mes "[Lady]";
 	if (event_umbala >= 3) {
-		mes "Shush...";
-		mes "Honey, behave~";
-		mes "Don't act so excited";
-		mes "when we're out in a";
-		mes "public place like this!";
+		mes "Diam...";
+		mes "Sayang, bersikaplah~";
+		mes "Jangan terlalu bersemangat";
+		mes "saat kita keluar";
+		mes "tempat umum seperti ini!";
 	}
 	else {
 		mes "Chooktu!";
@@ -229,31 +229,31 @@ airplane,66,93,3	script	Umbala Lady#ein_p	783,{
 airplane,71,91,7	script	Umbala Man#ein_p	789,{
 	if (event_umbala >= 3) {
 		mes "[Chrmlim]";
-		mes "Hey there~";
-		mes "From that look on";
-		mes "your face, I see that";
-		mes "you can understand";
-		mes "me. ^333333*Whew...!*^000000";
+		mes "Hei disana~";
+		mes "Dari tampilan itu";
+		mes "wajahmu, aku melihatnya";
+		mes "kamu bisa mengerti";
+		mes "saya. ^333333*Wah...!*^000000";
 		next;
 		emotion ET_HNG;
 		mes "[Chrmlim]";
-		mes "I've been helping the";
-		mes "Airship enterprise by";
-		mes "having the Airship Crewmen";
-		mes "train in Umbala to overcome";
-		mes "any acrophobia they might have through bungee jumping. Neat, eh?";
+		mes "Saya sudah membantu";
+		mes "Perusahaan Pesawat Udara oleh";
+		mes "memiliki Awak Pesawat Udara";
+		mes "berlatih di Umbala untuk mengatasi";
+		mes "akrofobia apa pun mereka mungkin telah melalui lompat bungee. Rapi, ya?";
 		next;
 		mes "[Chrmlim]";
-		mes "But...";
-		mes "Some of them couldn't";
-		mes "overcome their fear of";
-		mes "heights. And a few even";
-		mes "ended up, um, ^333333in Niflheim^000000.";
+		mes "Tapi...";
+		mes "Beberapa dari mereka tidak bisa";
+		mes "mengatasi ketakutan mereka dari ";
+		mes "ketinggian. Dan beberapa bahkan";
+		mes "berakhir, di, ^333333in Niflheim^000000.";
 	}
 	else {
 		mes "[Chrmlim]";
 		mes "Bajoo ga";
-		mes "nukta Airship.";
+		mes "nukta Pesawat Udara.";
 		next;
 		mes "[Chrmlim]";
 		mes "...";
@@ -262,7 +262,7 @@ airplane,71,91,7	script	Umbala Man#ein_p	789,{
 		emotion ET_HNG;
 		mes "[Chrmlim]";
 		mes "Shabala moow bajama";
-		mes "Airship kulaha googoona ";
+		mes "Pesawat Udara kulaha googoona ";
 		mes "salu. Dama, kookoo na nu";
 		mes "yukuta. Um, fashuku na ret!";
 	}
@@ -273,92 +273,92 @@ airplane,250,58,2	script	Airship Staff#airplane	67,{
 	// Hugel quest addition
 	if (hg_ma1 == 3) {
 		mes "[Airship Staff]";
-		mes "Welcome";
-		mes "to the Airship.";
-		mes "How may I help you?";
+		mes "Selamat datang";
+		mes "di Pesawat Udara.";
+		mes "Ada yang bisa saya bantu?";
 		next;
-		select("Do you have a passenger named Thierry?");
+		select("Apakah Anda memiliki penumpang bernama Thierry?");
 		mes "[Airship Staff]";
-		mes "I am sorry, but I do not think that we have a passenger by that name.";
+		mes "Maaf, tapi saya rasa kita tidak memiliki penumpang dengan nama itu.";
 		close;
 	}
 	// Hugel quest end
 	mes "[Airship Staff]";
-	mes "Welcome";
-	mes "to the Airship.";
-	mes "How may I help you?";
+	mes "Selamat datang";
+	mes "di Pesawat Udara.";
+	mes "Ada yang bisa saya bantu?";
 	next;
-	switch (select("Using the Airship:Captain's Cabin:Facilities:Cancel")) {
+	switch (select("Menggunakan Pesawat Udara:Kabin Kapten:Fasilitas:Batal")) {
 	case 1:
 		mes "[Airship Staff]";
-		mes "When you see a broadcast";
-		mes "announcing that we have";
-		mes "arrived at your destination,";
-		mes "please use one of the exits";
-		mes "located at the north and";
-		mes "south ends of the Airship.";
+		mes "Saat Anda melihat siaran";
+		mes "mengumumkan bahwa kami memiliki";
+		mes "sudah sampai di tempat tujuan,";
+		mes "silakan gunakan salah satu pintu keluar";
+		mes "terletak di utara dan";
+		mes "ujung selatan Pesawat Udara.";
 		next;
 		mes "[Airship Staff]";
-		mes "If you happen to miss";
-		mes "your stop, don't worry.";
-		mes "The Airship is constantly";
-		mes "en route and you'll get";
-		mes "another chance to arrive";
-		mes "to your intended destination.";
+		mes "Kalau kebetulan kamu ketinggalan";
+		mes "Anda berhenti, jangan khawatir.";
+		mes "Pesawat Udara terus-menerus";
+		mes "dalam perjalanan dan Anda akan mendapatkan";
+		mes "kesempatan lain untuk datang";
+		mes "ke tujuan yang Anda tuju.";
 		close;
 	case 2:
 		mes "[Airship Staff]";
-		mes "The Captain's Cabin";
-		mes "is located at the front";
-		mes "of the Airship. There, you";
-		mes "can meet the captain and";
-		mes "the pilot of the Airship.";
+		mes "Kabin Kapten";
+		mes "terletak di depan";
+		mes "dari Pesawat Udara. Di sana, kamu";
+		mes "bisa bertemu kapten dan";
+		mes "pilot Pesawat Udara.";
 		close;
 	case 3:
 		mes "[Airship Staff]";
-		mes "The Airship provides";
-		mes "various Mini Games for";
-		mes "the entertainment of all";
-		mes "our passengers. We invite";
-		mes "you to try your luck and skills";
-		mes "in the Airship's Mini Games~";
+		mes "Pesawat Udara menyediakan";
+		mes "berbagai Mini Games untuk";
+		mes "hiburan semua";
+		mes "penumpang kami. Kami undang";
+		mes "Anda untuk mencoba keberuntungan dan keterampilan Anda";
+		mes "di Permainan Kecil Pesawat Udara~";
 		close;
 	case 4:
 		mes "[Airship Staff]";
-		mes "Well, I hope you";
-		mes "your flight aboard";
-		mes "our Airships. Thank";
-		mes "you and have a good day.";
+		mes "Ya, saya harap Anda";
+		mes "penerbangan Anda";
+		mes "Pesawat Udara kami. Terima kasih";
+		mes "Anda dan semoga hari Anda menyenangkan.";
 		close;
 	}
 }
 
 airplane,80,71,2	script	Zerta#01airplane	834,{
 	mes "[Zerta]";
-	mes "Oh, hello adventurer.";
-	mes "I am currently on a";
-	mes "sacred journey, offering";
-	mes "prayer for the sake of the";
-	mes "Midgard continent.";
+	mes "Oh, halo petualang.";
+	mes "Saya sedang berada di";
+	mes "perjalanan suci, persembahan";
+	mes "doa demi";
+	mes "Benua Midgard.";
 	close;
 }
 
 airplane,65,63,4	script	Maelin#01airplane	714,{
 	mes "[Maelin]";
-	mes "Um, this Airship is";
-	mes "to Lutie, isn't it? I've";
-	mes "waiting so long,";
-	mes "but I haven't heard any";
-	mes "broadcast about Lutie.";
+	mes "Um, ini Airship-nya";
+	mes "ke Lutie, kan? Saya sudah";
+	mes "menunggu begitu lama,";
+	mes "tapi saya belum mendengarnya";
+	mes "siaran tentang Lutie.";
 	close;
 }
 
 airplane,72,34,6	script	Aanos#01airplane	702,{
 	mes "[Aanos]";
 	mes "Oh wooow~";
-	mes "The sky looks";
-	mes "so different and";
-	mes "pretty from up there!";
+	mes "Langit terlihat";
+	mes "sangat berbeda dan";
+	mes "cantik dari atas sana!";
 	close;
 }
 
@@ -366,152 +366,152 @@ airplane,221,158,2	script	Pilot#airplane	852,{
 	// Hugel quest addition
 	if (hg_ma1 == 3) {
 		mes "[Pilot]";
-		mes "I wish that I could go drink a cold fresh beer.";
-		mes "Drinking is the goal of my life! Drinking gives me energy!";
-		mes "I am nothing without drinks!";
+		mes "Saya berharap saya bisa minum bir segar yang dingin.";
+		mes "Minum adalah tujuan hidup saya! Minum memberi saya energi!";
+		mes "Saya bukan siapa-siapa tanpa minuman!";
 		next;
 		mes "[Pilot]";
-		mes "But! Driving under the influence is not good.";
-		mes "But! That makes me want to drink more and more!";
+		mes "Tapi! Mengemudi di bawah pengaruh itu tidak baik.";
+		mes "Tapi! Itu membuatku ingin minum lagi dan lagi!";
 		emotion ET_CRY;
 		next;
 		select("Do you know a passenger named Thierry?");
 		mes "[Pilot]";
-		mes "This uniform is";
-		mes "really dapper, but";
-		mes "it's way too thick to";
-		mes "wear around the Airship.";
+		mes "Seragam ini";
+		mes "sangat necis, tapi";
+		mes "terlalu tebal untuk";
+		mes "pakai di sekitar Airship.";
 		next;
 		mes "[Pilot]";
 		mes "...";
 		mes "......";
-		mes "No one ever really";
-		mes "comes into this room.";
-		mes "And the captain IS a reindeer. I could just strip to my boxers.";
+		mes "Tidak ada yang pernah benar-benar";
+		mes "masuk ke ruangan ini.";
+		mes "Dan kaptennya adalah rusa kutub. Saya hanya bisa menelanjangi petinju saya.";
 		next;
 		emotion ET_HUK;
 		mes "[Pilot]";
-		mes "Wah!? Who is it!";
+		mes "Wah!? Siapa itu!";
 		next;
-		mes "- ...He is not listening to you, at all. -";
+		mes "- ...Dia sama sekali tidak mendengarkanmu. -";
 		close;
 	}
 	// Hugel quest end
 	switch (rand(1,4)) {
 	case 1:
 		mes "[Pilot]";
-		mes "It's been sooo";
-		mes "long since I've";
-		mes "enjoyed a nice, cold";
-		mes "alcoholic brew. But the";
-		mes "job requires me to be as";
-		mes "clear headed as I can!";
+		mes "Sudah sangat";
+		mes "sudah lama aku";
+		mes "menikmati yang baik, dingin";
+		mes "minuman beralkohol. Tapi";
+		mes "pekerjaan mengharuskan saya menjadi seperti";
+		mes "berpikiran jernih semampuku!";
 		next;
 		mes "[Pilot]";
-		mes "Always drink responsibly!";
-		mes "Still, I can't remember the";
-		mes "last time I had a real vacation";
-		mes "or even a day off. Yeap, some";
-		mes "booze, some chips, some TV";
-		mes "and serious R&R is in order.";
+		mes "Selalu minum dengan bertanggung jawab!";
+		mes "Tetap saja, saya tidak ingat";
+		mes "terakhir kali saya benar-benar berlibur";
+		mes "atau bahkan hari libur. Ya, beberapa";
+		mes "minuman keras, beberapa keripik, beberapa TV";
+		mes "dan R&R yang serius sudah beres.";
 		emotion ET_CRY;
 		close;
 	case 2:
 		mes "[Pilot]";
-		mes "Man, the weather";
-		mes "is really nice today.";
-		mes "Bright, open skies make";
-		mes "for some good visibility";
-		mes "and safe, carefree flying.";
+		mes "Astaga, cuacanya";
+		mes "sangat menyenangkan hari ini.";
+		mes "Cerah, langit terbuka membuat";
+		mes "untuk beberapa kebaikan jarak penglihatan";
+		mes "dan aman, terbang tanpa beban.";
 		close;
 	case 3:
 		mes "[Pilot]";
-		mes "You know, our captain's a";
-		mes "respectable guy. Him and";
-		mes "his brother are actually well";
-		mes "known in the aircraft industry.";
-		mes "Who knew reindeer made";
-		mes "such good captains?";
+		mes "Anda tahu, kapten kami adalah seorang";
+		mes "pria terhormat. Dia dan";
+		mes "saudaranya sebenarnya baik-baik saja";
+		mes "dikenal di industri Pesawat Udara.";
+		mes "Siapa yang tahu rusa kutub dibuat";
+		mes "kapten yang baik?";
 		next;
 		mes "[Pilot]";
-		mes "Just between you";
-		mes "and me, I gotta tell";
-		mes "you, that Santa was onto";
-		mes "something, getting reindeers";
-		mes "and elves to work for him.";
-		mes "The man must be a genius!";
+		mes "Hanya di antara kalian";
+		mes "dan saya, saya harus memberitahu";
+		mes "kamu, Santa itu ke";
+		mes "sesuatu, mendapatkan rusa";
+		mes "dan para elf bekerja untuknya";
+		mes "Pria itu pasti jenius!";
 		close;
 	default:
 		mes "[Pilot]";
-		mes "You know, this whole";
-		mes "piloting thing in the air,";
-		mes "it's rather new, you know?";
-		mes "Yeah, they got this Airship";
-		mes "operation in a hurry.";
+		mes "Kau tahu, ini semua";
+		mes "menerbangkan benda di udara,";
+		mes "agak baru ya?";
+		mes "Ya, mereka mendapatkan Pesawat Udara ini";
+		mes "operasi terburu-buru.";
 		next;
 		emotion ET_HUK;
 		mes "[Pilot]";
-		mes "Still, they were real";
-		mes "serious, really thought";
-		mes "ahead. I mean, they had us";
-		mes "training while the Airships";
-		mes "were still being invented.";
-		mes "Isn't that freakin' crazy?!";
+		mes "Tetap saja, mereka nyata";
+		mes "serius, benar-benar berpikir";
+		mes "di depan. Maksudku, mereka memiliki kita";
+		mes "pelatihan sementara Pesawat Udara";
+		mes "masih ditemukan.";
+		mes "Bukankah itu gila?!";
 		close;
 	}
 }
 
 airplane,50,66,5	script	Apple Merchant#airplane	86,{
 	mes "[Fruitz]";
-	mes "Welcome to Fruitz's";
-	mes "Shop where you can";
-	mes "purchase Apples or grind";
-	mes "them to make Apple Juice.";
+	mes "Selamat datang di Fruitz's";
+	mes "Belanja di mana saja";
+	mes "beli Apel atau giling";
+	mes "mereka membuat Jus Apel.";
 	next;
-	switch (select("Buy Apples.:Make Apple Juice.:Why are you here?:Cancel.")) {
+	switch (select("Beli Apples.:Buat Apple Juice.:Mengapa kamu di sini?:Batal.")) {
 	case 1:
 		mes "[Fruitz]";
-		mes "Please enter the amount";
-		mes "of Apples that you wish to";
-		mes "buy. Each Apple is 15 zeny";
-		mes "and you can buy a maximum";
-		mes "of 500 at a time. Please enter";
-		mes " '0' to cancel your order.";
+		mes "Silakan masukkan jumlahnya";
+		mes "dari Apel yang Anda inginkan";
+		mes "beli. Setiap Apple adalah 15 zeny";
+		mes "dan Anda dapat membeli secara maksimal";
+		mes "dari 500 sekaligus. Silakan masukkan";
+		mes " '0' untuk membatalkan pesanan Anda.";
 		next;
 		while (1) {
 			input .@input;
 			set .@pay, .@input * 15;
 			if (.@input == 0) {
 				mes "[Fruitz]";
-				mes "Thanks for stopping";
-				mes "by my shop. Farewell!";
-				mes "Come by anytime when";
-				mes "you feel like having an";
-				mes "Apple to snack on~";
+				mes "Terima kasih sudah berhenti";
+				mes "di toko saya. Selamat tinggal!";
+				mes "Datanglah kapan saja";
+				mes "Anda merasa ingin memiliki";
+				mes "Apel untuk dimakan~";
 				close;
 			}
 			else if (.@input < 1 || .@input > 500) {
 				mes "[Fruitz]";
-				mes "You've entered a number";
-				mes "higher than the maximum";
-				mes "value of 500. Please enter";
-				mes "the number of Apples you";
-				mes "wish to purchase again.";
+				mes "Anda telah memasukkan nomor";
+				mes "lebih tinggi dari maksimum";
+				mes "nilai 500. Silakan masukkan";
+				mes "jumlah Apel kamu";
+				mes "ingin membeli lagi.";
 				next;
 			}
 			else {
 				mes "[Fruitz]";
-				mes "A total of ^FF0000" + .@input + "^000000 Apples";
-				mes "will cost you ^FF0000" + .@pay + "^000000 zeny.";
-				mes "Would you like to continue?";
+				mes "Total ^FF0000" + .@input + "^000000 Apel";
+				mes "akan dikenakan biaya ^FF0000" + .@pay + "^000000 zeny.";
+				mes "Apakah Anda ingin melanjutkan?";
 				next;
 				if (select("Yes:No") == 2) {
 					mes "[Fruitz]";
-					mes "Thanks for stopping";
-					mes "by my shop. Farewell!";
-					mes "Come by anytime when";
-					mes "you feel like having an";
-					mes "Apple to snack on~";
+					mes "Terima kasih sudah berhenti";
+					mes "di toko saya. Selamat tinggal!";
+					mes "Datanglah kapan saja";
+					mes "Anda merasa ingin memiliki";
+					mes "Apel untuk dimakan~";
 					close;
 				}
 				break;
@@ -519,130 +519,130 @@ airplane,50,66,5	script	Apple Merchant#airplane	86,{
 		}
 		if (Zeny < .@pay) {
 			mes "[Fruitz]";
-			mes "I'm sorry, but you don't";
-			mes "have enough money to";
-			mes "purchase that many Apples.";
-			mes "Please check your zeny or";
-			mes "purchase fewer Apples.";
+			mes "Maaf, tapi kamu tidak";
+			mes "memiliki cukup uang untuk";
+			mes "membeli Apel sebanyak itu.";
+			mes "Silakan periksa zeny atau";
+			mes "membeli lebih sedikit Apel.";
 			close;
 		}
 		else if (checkweight(512,.@input) == 0) {
 			mes "[Fruitz]";
-			mes "Hmmm, I don't think";
-			mes "you've got enough room in";
-			mes "your inventory to carry this";
-			mes "many Apples. Why don't you free up some of your inventory space?";
+			mes "Hmmm, saya rasa tidak";
+			mes "ruangan Anda cukup";
+			mes "inventaris Anda untuk membawa ini";
+			mes "banyak Apel. Mengapa Anda tidak mengosongkan sebagian ruang inventaris Anda?";
 			close;
 		}
 		else {
 			set Zeny, Zeny - .@pay;
 			getitem 512,.@input; //Apple
 			mes "[Fruitz]";
-			mes "Thanks for stopping by";
-			mes "my shop. I hope you enjoy";
-			mes "the flavor of these Apples~!";
+			mes "Terima kasih sudah mampir";
+			mes "toko saya. Saya harap Anda menikmati";
+			mes "rasa Apel ini~!";
 			close;
 		}
 	case 2:
 		mes "[Fruitz]";
-		mes "Okay, I'll need";
-		mes "^FF00003 Apples and 1 Empty Bottle^000000";
-		mes "to make 1 Apple Juice for you.";
-		mes "Would you like to proceed?";
+		mes "Oke, saya perlu";
+		mes "^FF00003 Apel dan 1 Botol Kosong^000000";
+		mes "untuk membuatkan 1 Jus Apel untukmu.";
+		mes "Apakah Anda ingin melanjutkan?";
 		next;
-		switch (select("Yes:No")) {
+		switch (select("Iya:Tidak")) {
 		case 1:
 			if (countitem(512) < 3 || countitem(713) < 1) {
 				mes "[Fruitz]";
-				mes "I'm sorry, but you don't";
-				mes "have enough materials to";
-				mes "create a bottle of Apple Juice.";
-				mes "Remember, I need 3 Apples";
-				mes "and 1 Empty Bottle to do it.";
+				mes "Maaf, tapi kamu tidak";
+				mes "memiliki cukup bahan untuk";
+				mes "buat sebotol Jus Apel.";
+				mes "Ingat, saya butuh 3 Apel";
+				mes "dan 1 Botol Kosong untuk melakukannya.";
 				close;
 			}
 			else {
 				mes "[Fruitz]";
-				mes "Thank you,";
-				mes "please wait";
-				mes "just a moment.";
+				mes "Terima kasih,";
+				mes "tolong tunggu";
+				mes "sebentar lagi.";
 				next;
-				mes "^3355FF*Grind grind*";
-				mes "*Grind grind*";
-				mes "*Clang...!*^000000";
+				mes "^3355FF*Menggiling gilingan*";
+				mes "*Menggiling gilingan*";
+				mes "*Dentang...!*^000000";
 				next;
 				delitem 512,3; //Apple
 				delitem 713,1; //Empty_Bottle
 				getitem 531,1; //Apple_Juice
 				mes "[Fruitz]";
-				mes "There you go~";
-				mes "I hope you enjoy!";
-				mes "Please feel free to";
-				mes "stop by for your Apple";
-				mes "and Apple Juice needs";
-				mes "at anytime, adventurer~";
+				mes "Ini dia~";
+				mes "Saya harap Anda menikmati!";
+				mes "Tolong rasakan bebas untuk";
+				mes "mampir untuk Apple Anda";
+				mes "dan kebutuhan Jus Apel";
+				mes "kapan saja, petualang~";
 				close;
 			}
 		case 2:
 			mes "[Fruitz]";
-			mes "Thanks for stopping";
-			mes "by my shop. Farewell!";
-			mes "Come by anytime when";
-			mes "you feel like having an";
-			mes "Apple to snack on~";
+			mes "Terima kasih sudah berhenti";
+			mes "di toko saya. Selamat tinggal!";
+			mes "Datanglah kapan saja";
+			mes "Anda merasa ingin memiliki";
+			mes "Apel untuk dimakan~";
 			close;
 		}
 	case 3:
 		mes "[Fruitz]";
-		mes "I used to be a wandering";
-		mes "vagabond when, one day,";
-		mes "I took a nap and something";
-		mes "struck my head and awoke";
-		mes "me from my restful slumber.";
+		mes "saya menggunakan untuk menjadi pengembaraan";
+		mes "gelandangan ketika, suatu hari nanti,";
+		mes "Saya tidur siang dan sesuatu";
+		mes "memukul kepalaku dan terbangun";
+		mes "aku dari tidur nyenyakku.";
 		next;
 		mes "[Fruitz]";
-		mes "It turns out that I was";
-		mes "sleeping beneath an apple";
-		mes "tree and that an apple fell";
-		mes "and hit me on the head.";
-		mes "I was dying of hunger and";
-		mes "was about to eat that Apple...";
+		mes "Ternyata aku Dulu";
+		mes "tidur di bawah pohon";
+		mes "apel dan sebuah apel tumbang";
+		mes "dan pukul kepalaku.";
+		mes "Saya sekarat karena kelaparan dan";
+		mes "akan memakan apel itu...";
 		next;
 		mes "[Fruitz]";
-		mes "But suddenly, Kain, my old";
-		mes "friend from the mining days,";
-		mes "asked me to help him around";
-		mes "on the Airship. So I did, and";
-		mes "it was there where I found some";
-		mes "people playing the Dice game.";
+		mes "Tapi tiba-tiba keadatangan";
+		mes "teman lama dari masa penambangan,";
+		mes "meminta saya untuk membantunya berkeliling";
+		mes "di Pesawat Udara. Jadi saya melakukannya, dan";
+		mes "di sanalah saya menemukan beberapa";
+		mes "orang-orang memainkan permainan Dadu.";
 		next;
 		mes "[Fruitz]";
-		mes "I was bored and curious";
-		mes "and ended up wagering that";
-		mes "single Apple in a game of";
-		mes "dice. But for some reason,";
-		mes "I had this incredible lucky";
-		mes "streak. One apple became two... ";
+		mes "Saya bosan dan penasaran";
+		mes "dan akhirnya bertaruh itu";
+		mes "Apel tunggal dalam permainan";
+		mes "dadu. Tapi untuk beberapa alasan,";
+		mes "Saya sangat beruntung";
+		mes "bergaris. Satu apel menjadi dua... ";
 		next;
 		mes "[Fruitz]";
-		mes "Two became four and";
-		mes "before I knew it, I had";
-		mes "cornered the Apple market!";
-		mes "I won so many Apples, I just";
-		mes "started my own business here";
-		mes "on the Airship. Weird, huh?";
+		mes "Dua menjadi empat dan";
+		mes "sebelum saya menyadarinya, saya sudah";
+		mes "memojokkan pasar Apple!";
+		mes "Saya memenangkan banyak Apel, saya hanya";
+		mes "memulai bisnis saya sendiri di sini";
+		mes "di Pesawat Udara. Aneh ya?";
 		next;
 		mes "[Fruitz]";
-		mes "So Apples are good";
-		mes "for you. They were";
-		mes "certainly very good";
-		mes "to me. Hahahahaah~!";
+		mes "Jadi Apel itu baik";
+		mes "untukmu. Mereka";
+		mes "tentu saja sangat bagus";
+		mes "untukku. Hahahahaah~!";
 		close;
 	case 4:
 		mes "[Fruitz]";
-		mes "Thank you for";
-		mes "using my shop.";
-		mes "Farewell~";
+		mes "Terima kasih untuk";
+		mes "menggunakan toko saya.";
+		mes "Selamat tinggal~";
 		close;
 	}
 }
@@ -688,64 +688,64 @@ OnEnable:
 	initnpctimer;
 	end;
 OnTimer25000:
-	mapannounce "airplane_01","We are heading to Izlude.",bc_map,"0x00ff00";
+	mapannounce "airplane_01","Kita menuju ke Izlude.",bc_map,"0x00ff00";
 	end;
 OnTimer50000:
-	mapannounce "airplane_01","We will arrive in Izlude shortly.",bc_map,"0x00ff00";
+	mapannounce "airplane_01","Kita akan segera tiba di Izlude.",bc_map,"0x00ff00";
 	end;
 OnTimer60000:
 	set $@airplanelocation2,1;
 	donpcevent "#AirshipWarp-3::OnUnhide";
 	donpcevent "#AirshipWarp-4::OnUnhide";
-	mapannounce "airplane_01","Welcome to Izlude. Have a safe trip.",bc_map,"0x00ff00";
+	mapannounce "airplane_01","Selamat datang di Izlude. Semoga selamat sampai tujuan.",bc_map,"0x00ff00";
 	end;
 OnTimer70000:
-	mapannounce "airplane_01","We are currently in Izlude. The Airship will take off shortly.",bc_map,"0x00ff00";
+	mapannounce "airplane_01","Kita saat ini di Izlude. Airship akan segera lepas landas.",bc_map,"0x00ff00";
 	end;
 OnTimer80000:
 	donpcevent "#AirshipWarp-3::OnHide";
 	donpcevent "#AirshipWarp-4::OnHide";
-	mapannounce "airplane_01","The Airship is now taking off. Our next destination is Juno.",bc_map,"0x70dbdb";
+	mapannounce "airplane_01","Airship sekarang lepas landas. Tujuan kami selanjutnya adalah Juno.",bc_map,"0x70dbdb";
 	end;
 OnTimer105000:
-	mapannounce "airplane_01","We are heading to Juno.",bc_map,"0x70dbdb";
+	mapannounce "airplane_01","Kita menuju ke Juno.",bc_map,"0x70dbdb";
 	end;
 OnTimer130000:
-	mapannounce "airplane_01","We will arrive in Juno shortly.",bc_map,"0x70dbdb";
+	mapannounce "airplane_01","Kita akan segera tiba di Juno.",bc_map,"0x70dbdb";
 	end;
 OnTimer140000:
 	set $@airplanelocation2,2;
 	donpcevent "#AirshipWarp-3::OnUnhide";
 	donpcevent "#AirshipWarp-4::OnUnhide";
-	mapannounce "airplane_01","Welcome to Juno. Have a safe trip.",bc_map,"0x70dbdb";
+	mapannounce "airplane_01","Selamat datang di Juno. Semoga selamat sampai tujuan.",bc_map,"0x70dbdb";
 	end;
 OnTimer150000:
-	mapannounce "airplane_01","We are currently in Juno. The Airship will leave shortly.",bc_map,"0x70dbdb";
+	mapannounce "airplane_01","Kita saat ini di Juno. Airship akan segera lepas landas.",bc_map,"0x70dbdb";
 	end;
 OnTimer160000:
 	donpcevent "#AirshipWarp-3::OnHide";
 	donpcevent "#AirshipWarp-4::OnHide";
-	mapannounce "airplane_01","The Airship is leaving the ground. Our next destination is Rachel.",bc_map,"0xFF8200";
+	mapannounce "airplane_01","Airship sekarang lepas landas. Tujuan kami selanjutnya adalah Rachel.",bc_map,"0xFF8200";
 	end;
 OnTimer185000:
-	mapannounce "airplane_01","We are heading to Rachel.",bc_map,"0xFF8200";
+	mapannounce "airplane_01","Kita menuju ke Rachel.",bc_map,"0xFF8200";
 	end;
 OnTimer210000:
-	mapannounce "airplane_01","We will arrive in Rachel shortly.",bc_map,"0xFF8200";
+	mapannounce "airplane_01","Kita akan segera tiba di Rachel.",bc_map,"0xFF8200";
 	end;
 OnTimer220000:
 	set $@airplanelocation2,0;
 	donpcevent "#AirshipWarp-3::OnUnhide";
 	donpcevent "#AirshipWarp-4::OnUnhide";
-	mapannounce "airplane_01","Welcome to Rachel. Have a safe trip.",bc_map,"0xFF8200";
+	mapannounce "airplane_01","Selamat datang di Rachel. Semoga selamat sampai tujuan.",bc_map,"0xFF8200";
 	end;
 OnTimer230000:
-	mapannounce "airplane_01","We are currently in Rachel. The Airship will take off shortly.",bc_map,"0xFF8200";
+	mapannounce "airplane_01","Kita saat ini di Rachel. Airship akan segera lepas landas.",bc_map,"0xFF8200";
 	end;
 OnTimer240000:
 	donpcevent "#AirshipWarp-3::OnHide";
 	donpcevent "#AirshipWarp-4::OnHide";
-	mapannounce "airplane_01","The Airship is now taking off. Our next destination is Izlude.",bc_map,"0x00ff00";
+	mapannounce "airplane_01","Airship sekarang lepas landas. Tujuan kami selanjutnya adalah Izlude.",bc_map,"0x00ff00";
 	stopnpctimer;
 	set .moninv, .moninv + 1;
 	if (.moninv == 7) {
@@ -768,114 +768,114 @@ airplane_01,247,40,1	duplicate(ExitAirplane01)	Exit#airplane_012b	857
 
 airplane_01,250,58,2	script	Airship Staff#airplane01	67,{
 	mes "[Airship Staff]";
-	mes "Welcome";
-	mes "to the Airship.";
-	mes "How may I help you?";
+	mes "Selamat datang";
+	mes "di Pesawat Udara.";
+	mes "Ada yang bisa saya bantu?";
 	next;
-	switch (select("Using the Airship:Captain's Cabin:Facilities:Cancel")) {
+	switch (select("Menggunakan Pesawat Udara:Kabin Kapten:Fasilitas:Batal")) {
 	case 1:
 		mes "[Airship Staff]";
-		mes "When you see a broadcast";
-		mes "announcing that we have";
-		mes "arrived at your destination,";
-		mes "please use one of the exits";
-		mes "located at the north and";
-		mes "south ends of the Airship.";
+		mes "Saat Anda melihat siaran";
+		mes "mengumumkan bahwa kami memiliki";
+		mes "sudah sampai di tempat tujuan,";
+		mes "silakan gunakan salah satu pintu keluar";
+		mes "terletak di utara dan";
+		mes "ujung selatan Pesawat Udara.";
 		next;
 		mes "[Airship Staff]";
-		mes "If you happen to miss";
-		mes "your stop, don't worry.";
-		mes "The Airship is constantly";
-		mes "en route and you'll get";
-		mes "another chance to arrive";
-		mes "to your intended destination.";
+		mes "Kalau kebetulan kamu ketinggalan";
+		mes "Anda berhenti, jangan khawatir.";
+		mes "Pesawat Udara terus-menerus";
+		mes "dalam perjalanan dan Anda akan mendapatkan";
+		mes "kesempatan lain untuk datang";
+		mes "ke tujuan yang Anda tuju.";;
 		close;
 	case 2:
 		mes "[Airship Staff]";
-		mes "The Captain's Cabin";
-		mes "is located at the front";
-		mes "of the Airship. There, you";
-		mes "can meet the captain and";
-		mes "the pilot of the Airship.";
+		mes "Kabin Kapten";
+		mes "terletak di depan";
+		mes "dari Pesawat Udara. Di sana, kamu";
+		mes "bisa bertemu kapten dan";
+		mes "pilot Pesawat Udara.";
 		close;
 	case 3:
 		mes "[Airship Staff]";
-		mes "The Airship provides";
-		mes "various Mini Games for";
-		mes "the entertainment of all";
-		mes "our passengers. We invite";
-		mes "you to try your luck and skills";
-		mes "in the Airship's Mini Games~";
+		mes "Pesawat Udara menyediakan";
+		mes "berbagai Mini Games untuk";
+		mes "hiburan semua";
+		mes "penumpang kami. Kami undang";
+		mes "Anda untuk mencoba keberuntungan dan keterampilan Anda";
+		mes "di Permainan Kecil Pesawat Udara~";
 		close;
 	case 4:
 		mes "[Airship Staff]";
-		mes "Well, I hope you";
-		mes "your flight aboard";
-		mes "our Airships. Thank";
-		mes "you and have a good day.";
+		mes "Ya, saya harap Anda";
+		mes "penerbangan Anda";
+		mes "Pesawat Udara kami. Terima kasih";
+		mes "Anda dan semoga hari Anda menyenangkan.";
 		close;
 	}
 }
 
 airplane_01,50,66,5	script	Apple Merchant#air01	86,{
 	if (checkweight(1201,1) == 0) {
-		mes "- Wait a minute !! -";
-		mes "- Currently you're carrying -";
-		mes "- too many items with you. -";
-		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- Tunggu sebentar !! -";
+		mes "- Saat ini Anda sedang membawa -";
+		mes "- terlalu banyak barang bersamamu. -";
+		mes "- Silakan coba lagi -";
+		mes "- setelah Anda kehilangan berat badan. -";
 		close;
 	}
 	mes "[Meltz]";
-	mes "Welcome to Meltz's";
-	mes "Shop where you can";
-	mes "purchase Apples or grind";
-	mes "them to make Apple Juice.";
+	mes "Selamat datang di Meltz's";
+	mes "Belanja di mana saja";
+	mes "beli Apel atau giling";
+	mes "mereka membuat Jus Apel.";
 	next;
-	switch (select("Buy Apples.:Make Apple Juice.:Cancel.")) {
+	switch (select("Beli Apples.:Buat Apple Juice.:Mengapa kamu di sini?:Batal.")) {
 	case 1:
 		mes "[Meltz]";
-		mes "Please enter the amount";
-		mes "of Apples that you wish to";
-		mes "buy. Each Apple is 15 zeny";
-		mes "and you can buy a maximum";
-		mes "of 500 at a time. Please enter";
-		mes "'0' to cancel your order.";
+		mes "Silakan masukkan jumlahnya";
+		mes "dari Apel yang Anda inginkan";
+		mes "beli. Setiap Apple adalah 15 zeny";
+		mes "dan Anda dapat membeli secara maksimal";
+		mes "dari 500 sekaligus. Silakan masukkan";
+		mes " '0' untuk membatalkan pesanan Anda.";
 		next;
 		while (1) {
 			input .@input;
 			set .@pay, .@input * 15;
 			if (.@input == 0) {
 				mes "[Meltz]";
-				mes "Thanks for stopping";
-				mes "by my shop. Farewell!";
-				mes "Come by anytime when";
-				mes "you feel like having an";
-				mes "Apple to snack on~";
+				mes "Terima kasih sudah berhenti";
+				mes "di toko saya. Selamat tinggal!";
+				mes "Datanglah kapan saja";
+				mes "Anda merasa ingin memiliki";
+				mes "Apel untuk dimakan~";
 				close;
 			}
 			else if (.@input < 1 || .@input > 500) {
 				mes "[Meltz]";
-				mes "You've entered a number";
-				mes "higher than the maximum";
-				mes "value of 500. Please enter";
-				mes "the number of Apples you";
-				mes "wish to purchase again.";
+				mes "Anda telah memasukkan nomor";
+				mes "lebih tinggi dari maksimum";
+				mes "nilai 500. Silakan masukkan";
+				mes "jumlah Apel kamu";
+				mes "ingin membeli lagi.";
 				next;
 			}
 			else {
 				mes "[Meltz]";
-				mes "A total of ^FF0000" + .@input + "^000000 Apples";
-				mes "will cost you ^FF0000" + .@pay + "^000000 zeny.";
-				mes "Would you like to continue?";
+				mes "Total ^FF0000" + .@input + "^000000 Apel";
+				mes "akan dikenakan biaya ^FF0000" + .@pay + "^000000 zeny.";
+				mes "Apakah Anda ingin melanjutkan?";
 				next;
 				if (select("Yes:No") == 2) {
 					mes "[Meltz]";
-					mes "Thanks for stopping";
-					mes "by my shop. Farewell!";
-					mes "Come by anytime when";
-					mes "you feel like having an";
-					mes "Apple to snack on~";
+					mes "Terima kasih sudah berhenti";
+					mes "di toko saya. Selamat tinggal!";
+					mes "Datanglah kapan saja";
+					mes "Anda merasa ingin memiliki";
+					mes "Apel untuk dimakan~";
 					close;
 				}
 				break;
@@ -883,80 +883,130 @@ airplane_01,50,66,5	script	Apple Merchant#air01	86,{
 		}
 		if (Zeny < .@pay) {
 			mes "[Meltz]";
-			mes "I'm sorry, you don't have";
-			mes "enough money with you.";
-			mes "Please check your funds or";
-			mes "purchase less Apples.";
+			mes "Maaf, tapi kamu tidak";
+			mes "memiliki cukup uang untuk";
+			mes "membeli Apel sebanyak itu.";
+			mes "Silakan periksa zeny atau";
+			mes "membeli lebih sedikit Apel.";
 			close;
 		}
 		else if (checkweight(512,.@input) == 0) {
 			mes "[Meltz]";
-			mes "Hmm, I don't think you've";
-			mes "got enough room to carry";
-			mes "this many Apples. You might";
-			mes "want to free up your inventory";
-			mes "space.";
+			mes "Hmmm, saya rasa tidak";
+			mes "ruangan Anda cukup";
+			mes "inventaris Anda untuk membawa ini";
+			mes "banyak Apel. Mengapa Anda tidak mengosongkan sebagian ruang inventaris Anda?";
 			close;
 		}
 		else {
 			set Zeny, Zeny - .@pay;
 			getitem 512,.@input; //Apple
 			mes "[Meltz]";
-			mes "Thanks for stopping by";
-			mes "my shop. I hope you enjoy";
-			mes "the flavor of these Apples~!";
+			mes "Terima kasih sudah mampir";
+			mes "toko saya. Saya harap Anda menikmati";
+			mes "rasa Apel ini~!";
 			close;
 		}
 	case 2:
 		mes "[Meltz]";
-		mes "Okay, I'll need";
-		mes "^FF00003 Apples and 1 Empty Bottle^000000";
-		mes "to make 1 Apple Juice for you.";
-		mes "Would you like to proceed?";
+		mes "Oke, saya perlu";
+		mes "^FF00003 Apel dan 1 Botol Kosong^000000";
+		mes "untuk membuatkan 1 Jus Apel untukmu.";
+		mes "Apakah Anda ingin melanjutkan?";
 		next;
-		switch (select("Yes:No")) {
+		switch (select("Iya:Tidak")) {
 		case 1:
 			if (countitem(512) < 3 || countitem(713) < 1) {
 				mes "[Meltz]";
-				mes "I'm sorry, but you don't";
-				mes "have enough materials to";
-				mes "create a bottle of Apple Juice.";
-				mes "Remember, I need 3 Apples";
-				mes "and 1 Empty Bottle to do it.";
+				mes "Maaf, tapi kamu tidak";
+				mes "memiliki cukup bahan untuk";
+				mes "buat sebotol Jus Apel.";
+				mes "Ingat, saya butuh 3 Apel";
+				mes "dan 1 Botol Kosong untuk melakukannya.";
 				close;
 			}
 			else {
 				mes "[Meltz]";
-				mes "Thank you, please wait.";
+				mes "Terima kasih,";
+				mes "tolong tunggu";
+				mes "sebentar lagi.";
 				next;
-				mes "^3355FF*Grind* *Grind*";
-				mes "*Grind* *Grind*";
-				mes "*Clang...!*^000000";
+				mes "^3355FF*Menggiling gilingan*";
+				mes "*Menggiling gilingan*";
+				mes "*Dentang...!*^000000";
 				next;
 				delitem 512,3; //Apple
 				delitem 713,1; //Empty_Bottle
 				getitem 531,1; //Apple_Juice
 				mes "[Meltz]";
-				mes "There you go~";
-				mes "Please come again.";
+				mes "Ini dia~";
+				mes "Saya harap Anda menikmati!";
+				mes "Tolong rasakan bebas untuk";
+				mes "mampir untuk Apple Anda";
+				mes "dan kebutuhan Jus Apel";
+				mes "kapan saja, petualang~";
 				close;
 			}
 		case 2:
 			mes "[Meltz]";
-			mes "Thanks for stopping";
-			mes "by my shop. Farewell!";
-			mes "Come by anytime when";
-			mes "you feel like having an";
-			mes "Apple to snack on~";
+			mes "Terima kasih sudah berhenti";
+			mes "di toko saya. Selamat tinggal!";
+			mes "Datanglah kapan saja";
+			mes "Anda merasa ingin memiliki";
+			mes "Apel untuk dimakan~";
 			close;
 		}
 	case 3:
 		mes "[Meltz]";
-		mes "Thanks for stopping";
-		mes "by my shop. Farewell!";
-		mes "Come by anytime when";
-		mes "you feel like having an";
-		mes "Apple to snack on~";
+		mes "saya menggunakan untuk menjadi pengembaraan";
+		mes "gelandangan ketika, suatu hari nanti,";
+		mes "Saya tidur siang dan sesuatu";
+		mes "memukul kepalaku dan terbangun";
+		mes "aku dari tidur nyenyakku.";
+		next;
+		mes "[Meltz]";
+		mes "Ternyata aku Dulu";
+		mes "tidur di bawah pohon";
+		mes "apel dan sebuah apel tumbang";
+		mes "dan pukul kepalaku.";
+		mes "Saya sekarat karena kelaparan dan";
+		mes "akan memakan apel itu...";
+		next;
+		mes "[Meltz]";
+		mes "Tapi tiba-tiba keadatangan";
+		mes "teman lama dari masa penambangan,";
+		mes "meminta saya untuk membantunya berkeliling";
+		mes "di Pesawat Udara. Jadi saya melakukannya, dan";
+		mes "di sanalah saya menemukan beberapa";
+		mes "orang-orang memainkan permainan Dadu.";
+		next;
+		mes "[Meltz]";
+		mes "Saya bosan dan penasaran";
+		mes "dan akhirnya bertaruh itu";
+		mes "Apel tunggal dalam permainan";
+		mes "dadu. Tapi untuk beberapa alasan,";
+		mes "Saya sangat beruntung";
+		mes "bergaris. Satu apel menjadi dua... ";
+		next;
+		mes "[Meltz]";
+		mes "Dua menjadi empat dan";
+		mes "sebelum saya menyadarinya, saya sudah";
+		mes "memojokkan pasar Apple!";
+		mes "Saya memenangkan banyak Apel, saya hanya";
+		mes "memulai bisnis saya sendiri di sini";
+		mes "di Pesawat Udara. Aneh ya?";
+		next;
+		mes "[Meltz]";
+		mes "Jadi Apel itu baik";
+		mes "untukmu. Mereka";
+		mes "tentu saja sangat bagus";
+		mes "untukku. Hahahahaah~!";
+		close;
+	case 4:
+		mes "[Meltz]";
+		mes "Terima kasih untuk";
+		mes "menggunakan toko saya.";
+		mes "Selamat tinggal~";
 		close;
 	}
 }
@@ -965,66 +1015,66 @@ airplane_01,221,158,2	script	Pilot#airplane_01	852,{
 	switch (rand(1,4)) {
 	case 1:
 		mes "[Pilot]";
-		mes "Longitude, 131 degrees east.";
-		mes "Latitude, 37 degrees north.";
-		mes "We're right on course, captain.";
+		mes "Bujur, 131 derajat timur.";
+		mes "Lintang, 37 derajat utara.";
+		mes "Kami berada di jalur yang benar, kapten.";
 		close;
 	case 2:
 		mes "[Pilot]";
-		mes "Looks like a really";
-		mes "cloudy day. Always hard";
-		mes "to navigate when the skies";
-		mes "aren't clear. Guess we'll";
-		mes "need to amp the radar.";
+		mes "Sepertinya benar-benar";
+		mes "hari mendung. Selalu sulit";
+		mes "untuk menavigasi saat langit";
+		mes "tidak jelas. Kira kita akan";
+		mes "perlu memperkuat radar.";
 		close;
 	case 3:
 		mes "[Pilot]";
-		mes "The Captain is a good";
-		mes "man and I can't think of";
-		mes "a finer person to command";
-		mes "this ship. Still, he's pretty";
-		mes "tough, a real slave driver.";
+		mes "Kapten itu baik";
+		mes "aku tidak bisa memikirkan";
+		mes "orang yang lebih baik untuk memerintah";
+		mes "kapal ini. Tetap saja, dia cantik";
+		mes "tangguh, seorang sopir budak sejati.";
 		next;
 		mes "[^ff0000Tarlock^000000]";
 		mes "^ff0000Hey...!^000000";
-		mes "^ff0000Less chit-chat^000000";
-		mes "^ff0000and more piloting!^000000";
+		mes "^ff0000Kurang mengobrol^000000";
+		mes "^ff0000dan banyak lagi uji coba!^000000";
 		next;
 		mes "[Pilot]";
-		mes "R-right away, sir!";
-		mes "(See what I mean?)";
+		mes "B-segera, Pak!";
+		mes "(Lihat apa yang saya maksud?)";
 		close;
 	default:
 		mes "[Pilot]";
-		mes "This uniform is";
-		mes "really dapper, but";
-		mes "it's way too thick to";
-		mes "wear around the Airship.";
+		mes "Seragam ini";
+		mes "sangat necis, tapi";
+		mes "terlalu tebal untuk";
+		mes "pakai di sekitar Airship.";
 		next;
 		mes "[Pilot]";
 		mes "...";
 		mes "......";
-		mes "No one ever really";
-		mes "comes into this room.";
-		mes "And the captain IS a reindeer.";
-		mes "I could just strip to my boxers.";
+		mes "Tidak ada yang pernah benar-benar";
+		mes "masuk ke ruangan ini.";
+		mes "Dan kaptennya adalah rusa kutub.";
+		mes "Saya hanya bisa telanjang dada.";
 		next;
 		emotion ET_HUK;
 		mes "[Pilot]";
-		mes "Oh...! Hello there!";
-		mes "E-e-enjoying your flight?!";
+		mes "Oh...! Halo!";
+		mes "S-menikmati penerbanganmu?!";
 		close;
 	}
 }
 
 airplane_01,83,61,2	script	Dianne#01airplane_01	72,2,2,{
 	mes "[Dianne]";
-	mes "It's so weird!";
-	mes "I went to visit the";
-	mes "Airship Captain and";
-	mes "all I saw was this";
-	mes "weird reindeer. Oh!";
-	mes "Do you think that...";
+	mes "Aneh sekali!";
+	mes "Saya pergi mengunjungi";
+	mes "Kapten Pesawat Udara dan";
+	mes "yang saya lihat hanyalah ini";
+	mes "rusa kutub aneh. O!";
+	mes "Menurutmu...";
 	close;
 
 OnTouch_:
@@ -1034,27 +1084,27 @@ OnTouch_:
 
 airplane_01,69,63,2	script	Mendel#01airplane_01	55,{
 	mes "[Mendel]";
-	mes "As I expected, the";
-	mes "in-flight meals are";
-	mes "three star quality at best.";
-	mes "*Harrrumph* I really should";
-	mes "have brought my chef so that";
-	mes "I could enjoy a real meal.";
+	mes "Seperti yang saya harapkan";
+	mes "makanan dalam penerbangan adalah";
+	mes "kualitas bintang tiga terbaik.";
+	mes "*Harrrumph* Saya benar-benar harus";
+	mes "telah membawa koki saya sehingga";
+	mes "Saya bisa menikmati makanan yang sesungguhnya.";
 	close;
 }
 
 airplane_01,71,31,2	script	Swordsman Shimizu#air_01	106,{
 	mes "[Swordsman Shimizu]";
-	mes "Finally, after five";
-	mes "years of waiting...";
-	mes "I can have my revenge!";
+	mes "Akhirnya, setelah lima";
+	mes "tahun penantian...";
+	mes "Saya bisa membalas dendam!";
 	next;
 	mes "[Swordsman Shimizu]";
-	mes "I just...";
-	mes "Have to make sure that";
-	mes "I don't keep missing my";
-	mes "stop. But soon, very soon,";
-	mes "vengeance will be mine!";
+	mes "Saya hanya...";
+	mes "Harus dipastikan";
+	mes "Saya tidak menyimpan rindu";
+	mes "berhenti. Tapi segera, segera,";
+	mes "pembalasan akan menjadi milikku!";
 	close;
 }
 
@@ -1063,20 +1113,20 @@ airplane_01,71,31,2	script	Swordsman Shimizu#air_01	106,{
 //============================================================ 
 airplane_01,32,61,4	script	Nils#ein	49,1,1,{
 	mes "[Nils]";
-	mes "Welcome to the";
-	mes "^ff0000RO Typing Challenge^000000.";
-	mes "Would you like to play";
-	mes "a quick typing game?";
+	mes "Selamat datang di";
+	mes "^ff0000Tantangan Mengetik RO^000000.";
+	mes "Apakah kamu ingin bermain";
+	mes "permainan mengetik cepat?";
 	next;
-	switch (select("Play ^ff0000RO Typing Challenge^000000:Information:View Top Records:Cancel")) {
+	switch (select("Bermain ^ff0000Tantangan Mengetik RO^000000:Informasi:Lihat Rekor Teratas:Batal")) {
 	case 1:
 		mes "[Nils]";
-		mes "Okay, we have";
-		mes "a new challenger!";
-		mes "Enter the following";
-		mes "text as quickly as you";
-		mes "can without making any";
-		mes "mistakes! Let's start~!";
+		mes "Oke, kita punya";
+		mes "penantang baru!";
+		mes "Masukkan yang berikut ini";
+		mes "teks secepat Anda";
+		mes "bisa tanpa bikin";
+		mes "kesalahan! Mari kita mulai~!";
 		setarray .@line1_1$[0],	"^3cbcbccallipygian salacius lascivious^000000",
 					"^3cbcbcBy the power of^000000",
 					"^0000ffthkelfkskeldmsiejdlslehfndkelsheidl^000000",
@@ -1155,26 +1205,26 @@ airplane_01,32,61,4	script	Nils#ein	49,1,1,{
 		set .@tasoo, (.@letters[.@wordtest] / .@total_time) * 6;
 		if ((.@save1$ == .@word1$[.@wordtest]) && (.@save2$ == .@word2$[.@wordtest])) {
 			mes "[Nils]";
-			mes "Your record is ^ff0000" + .@total_time + " seconds^000000 and";
-			mes "the total letters are " + .@tasoo + ".";
+			mes "Catatan Anda adalah ^ff0000" + .@total_time + " detik^000000 dan";
+			mes "jumlah hurufnya adalah " + .@tasoo + ".";
 			next;
 			if (.@tasoo >= 1300) {
 				mes "[Nils]";
-				mes "Hmmm, this record isn't";
-				mes "humanly possible unless you";
-				mes "copy and paste the whole";
-				mes "sentence. Please play fairly";
-				mes "next time.";
+				mes "Hmmm, catatan ini tidak";
+				mes "secara manusiawi mungkin kecuali Anda";
+				mes "salin dan tempel keseluruhan";
+				mes "kalimat. Tolong mainkan dengan adil";
+				mes "lain kali.";
 				close;
 			}
 			if (.@tasoo >= $050320_ein_typing) {
 				mes "[Nils]";
-				mes "The previous top record was";
-				mes "made by ^0000ff" + $050320_minus1_typing$ + "^000000";
-				mes "with the total ^0000ff" + $050320_ein_typing + "^000000 letters.";
-				mes "However, ^ff0000" + strcharinfo(0) + "^000000,";
-				mes "you made the new top record";
-				mes "this time. Congratulations!";
+				mes "Rekor teratas sebelumnya adalah";
+				mes "dibuat oleh ^0000ff" + $050320_minus1_typing$ + "^000000";
+				mes "dengan total ^0000ff" + $050320_ein_typing + "^000000 huruf.";
+				mes "Namun, ^ff0000" + strcharinfo(0) + "^000000,";
+				mes "Anda membuat rekor tertinggi baru";
+				mes "kali ini. Selamat!";
 				set $050320_minus1_typing$, strcharinfo(0);
 				set $050320_ein_typing, .@tasoo;
 				close;
@@ -1182,53 +1232,53 @@ airplane_01,32,61,4	script	Nils#ein	49,1,1,{
 			else {
 				mes "[Nils]";
 				mes "^0000ff" + $050320_minus1_typing$ + "^000000";
-				mes "is the current";
-				mes "record holder with";
-				mes "a letter total of ^0000ff" + $050320_ein_typing + "^000000";
-				mes "characters. Try to beat";
-				mes "that record next time~";
+				mes "adalah saat ini";
+				mes "pemegang rekor dengan";
+				mes "total huruf ^0000ff" + $050320_ein_typing + "^000000";
+				mes "karakter. Cobalah untuk mengalahkan";
+				mes "rekaman itu lain kali~";
 				close;
 			}
 		}
 		else {
 			mes "[Nils]";
 			mes "Oooh...";
-			mes "I'm sorry, but";
-			mes "you entered the";
-			mes "text incorrectly...";
+			mes "Maaf, tapi";
+			mes "Anda masuk";
+			mes "teks salah...";
 			close;
 		}
 	case 2:
 		mes "[Nils]";
-		mes "The ^ff0000RO Typing Challenge^000000";
-		mes "is a game where you enter";
-		mes "the given text as quickly as you";
-		mes "can. The name of the top player";
-		mes "is recorded for posterity. If you";
-		mes "want fame, here's your chance!";
+		mes "^ff0000Tantangan Mengetik RO^000000";
+		mes "adalah permainan di mana Anda masuk";
+		mes "teks yang diberikan secepat Anda";
+		mes "bisa. Nama pemain top";
+		mes "dicatat untuk anak cucu. Jika Anda";
+		mes "ingin ketenaran, inilah kesempatanmu!";
 		next;
 		mes "[Nils]";
-		mes "I'd just like to let";
-		mes "you know that you type";
-		mes "all the text that you see";
-		mes "in the single input line that";
-		mes "you're given. So don't press";
-		mes "the enter key, just click 'OK.'";
+		mes "Saya hanya ingin membiarkan";
+		mes "Anda tahu bahwa Anda mengetik";
+		mes "semua teks yang Anda lihat";
+		mes "di baris input tunggal itu";
+		mes "Anda diberi. Jadi jangan tekan";
+		mes "tombol enter, klik saja 'OK.'";
 		close;
 	case 3:
 		mes "[Nils]";
 		mes "^0000ff" + $050320_minus1_typing$ + "^000000";
-		mes "is the current";
-		mes "record holder with";
-		mes "a letter total of ^0000ff" + $050320_ein_typing + "^000000";
-		mes "characters. Try to beat";
-		mes "that record next time~";
+		mes "adalah arus";
+		mes "pemegang rekor dengan";
+		mes "total huruf ^0000ff" + $050320_ein_typing + "^000000";
+		mes "karakter. Cobalah untuk mengalahkan";
+		mes "catatan itu lain kali~";
 		close;
 	case 4:
 		mes "[Nils]";
-		mes "Feel free to take on the";
-		mes "^ff0000RO Typing Challenge^000000";
-		mes "anytime. I'll be here~";
+		mes "Jangan ragu untuk mengambil";
+		mes "^ff0000Tantangan Mengetik RO^000000";
+		mes "kapan saja. Aku akan ada disini~";
 		close;
 	}
 }
@@ -1238,10 +1288,10 @@ airplane_01,32,61,4	script	Nils#ein	49,1,1,{
 //============================================================ 
 airplane_01,33,68,4	script	Clarice	74,{
 	mes "[Clarice]";
-	mes "Hi, I'm Clarice~";
-	mes "How would you like";
-	mes "to wager some Apples";
-	mes "in a friendly game of Dice?";
+	mes "Hai, saya Clarice~";
+	mes "Bagaimana menurutmu";
+	mes "untuk bertaruh beberapa Apel";
+	mes "dalam permainan dadu persahabatan?";
 	next;
 	callfunc "applegamble","Clarice";
 	end;
@@ -1249,123 +1299,123 @@ airplane_01,33,68,4	script	Clarice	74,{
 
 function	script	applegamble	{
 	.@npc_name$ = getarg(0);
-	switch (select("Play Dice Game:Learn Dice Game Rules:Cancel")) {
+	switch (select("Mainkan Game Dadu:Pelajari Aturan Game Dadu:Batal")) {
 	case 3:
 		mes "["+ .@npc_name$ +"]";
-		mes "I'm up for a game of";
-		mes "dice whenever you feel";
-		mes "like it. Just talk to me if";
-		mes "you ever get hit with the";
-		mes "sudden urge to gamble, kay?";
+		mes "Saya siap bermain";
+		mes "dadu kapan pun Anda mau";
+		mes "suka. Bicaralah dengan saya jika";
+		mes "kamu pernah dipukul";
+		mes "keinginan untuk berjudi tiba-tiba?";
 		close;
 	case 2:
 		mes "["+ .@npc_name$ +"]";
-		mes "The rules for the Dice game";
-		mes "are pretty simple. First, you";
-		mes "place a bet by wagering Apples.";
-		mes "You can bet a maximum of 50";
-		mes "Apples at a time. To keep things";
-		mes "legal, I can only accept Apples.";
+		mes "Aturan permainan Dadu";
+		mes "cukup sederhana. Pertama, kamu";
+		mes "memasang taruhan dengan bertaruh Apel.";
+		mes "Anda bisa bertaruh maksimal 50";
+		mes "Apel sekaligus. Untuk menyimpan sesuatu";
+		mes "hukum, saya hanya bisa menerima Apel.";
 		next;
 		mes "["+ .@npc_name$ +"]";
-		mes "But hey, if all that zeny";
-		mes "is burning a hole in your";
-		mes "pocket, head over to Fruitz";
-		mes "and you can buy as many";
-		mes "Apples as you want, playah~";
+		mes "Tapi hei, kalau semua itu zeny";
+		mes "membakar lubang di hatimu";
+		mes "saku, pergilah ke Fruitz";
+		mes "dan Anda dapat membeli sebanyak mungkin";
+		mes "Apel sesukamu, playah~";
 		next;
 		mes "["+ .@npc_name$ +"]";
-		mes "Now, we begin with me";
-		mes "rolling two 6-sided dice.";
-		mes "When it's your turn, you'll";
-		mes "roll two 6-sided dice. After";
-		mes "that, both of us will have the";
-		mes "option of rolling a third die.";
+		mes "Sekarang, kita mulai dari saya";
+		mes "melempar dua dadu bersisi 6.";
+		mes "Saat giliranmu, kamu akan";
+		mes "melempar dua dadu bersisi 6, Setelah";
+		mes "bahwa, kita berdua akan memiliki";
+		mes "pilihan untuk melempar dadu ketiga.";
 		next;
 		mes "["+ .@npc_name$ +"]";
-		mes "Now here's the important";
-		mes "thing. If your total is higher";
-		mes "than 12, you'll bust, meaning";
-		mes "that you lose. Otherwise, the";
-		mes "person with the higher total";
-		mes "is the winner. Got it?";
+		mes "Sekarang ini yang penting";
+		mes "hal. Jika total Anda lebih tinggi";
+		mes "dari 12, Anda akan gagal, artinya";
+		mes "bahwa Anda kalah. Jika tidak, itu";
+		mes "orang dengan total yang lebih tinggi";
+		mes "adalah pemenangnya. Mengerti?";
 		next;
 		mes "["+ .@npc_name$ +"]";
-		mes "Now, you'll be the first";
-		mes "to decide whether or not";
-		mes "you'll roll the third die. Then,";
-		mes "depending on your result, I'll";
-		mes "roll my third die... Or maybe not.";
+		mes "Sekarang, kamu akan menjadi yang pertama";
+		mes "untuk memutuskan apakah atau tidak";
+		mes "Anda akan melempar dadu ketiga. Lalu,";
+		mes "tergantung pada hasil Anda, saya akan";
+		mes "melempar dadu ketiga saya... Atau mungkin tidak.";
 		next;
 		mes "["+ .@npc_name$ +"]";
-		mes "When you win, you'll";
-		mes "receive twice as many";
-		mes "Apples as you wagered.";
-		mes "But if we happen to tie, you";
-		mes "get the Apples that you bet";
-		mes "returned to you. Fair, right?";
+		mes "Saat Anda menang, Anda akan";
+		mes "menerima dua kali lebih banyak";
+		mes "Apel seperti yang Anda pertaruhkan.";
+		mes "Tapi kalau kebetulan kita ikat, kamu";
+		mes "dapatkan Apel yang Anda pertaruhkan";
+		mes "kembali padamu. Adil, kan?";
 		close;
 	case 1:
 		break;
 	}
 	mes "["+ .@npc_name$ +"]";
-	mes "Ooh, so you'll play with";
-	mes "me? Great! How many";
-	mes "Apples would you like to bet?";
-	mes "Remember, you can wager";
-	mes "up to 50 Apples. If you'd like";
-	mes "to cancel, please enter '0'.";
+	mes "Ooh, jadi kamu akan bermain dengan";
+	mes "saya? Bagus! Berapa banyak";
+	mes "Apel yang ingin Anda pertaruhkan?";
+	mes "Ingat, Anda bisa bertaruh";
+	mes "hingga 50 Apel. Jika Anda mau";
+	mes "untuk membatalkan, masukkan '0'.";
 	next;
 	while(1) {
 		input .@amount;
 		if (.@amount == 0) {
 			mes "["+ .@npc_name$ +"]";
-			mes "Changed your mind?";
-			mes "I understand. Well then,";
-			mes "I hope we can play sometime.";
+			mes "Berubah pikiran?";
+			mes "Saya mengerti. Kalau begitu,";
+			mes "Saya harap kita bisa bermain kapan-kapan.";
 			close;
 		}
 		else if (.@amount < 1 || .@amount > 50) {
 			mes "["+ .@npc_name$ +"]";
-			mes "You can't bet more than";
-			mes "50 Apples. Remember, we";
-			mes "need to keep these stakes";
-			mes "reasonable. Please enter";
-			mes "a value no greater than 50.";
+			mes "Anda tidak bisa bertaruh lebih dari";
+			mes "50 Apel. Ingat, kita";
+			mes "perlu menyimpan taruhan ini";
+			mes "masuk akal. Silahkan masuk";
+			mes "nilai tidak lebih besar dari 50.";
 			next;
 			continue;
 		}
 		mes "["+ .@npc_name$ +"]";
-		mes "So you'll be";
-		mes "betting ^FF0000"+.@amount+"^000000 Apples.";
-		mes "Is that right?";
+		mes "Jadilah kamu";
+		mes "taruhan ^FF0000"+.@amount+"^000000 Apel.";
+		mes "Benarkah?";
 		next;
 		if (select("Yes:No") == 2) {
 			mes "["+ .@npc_name$ +"]";
-			mes "Mm, made a mistake?";
-			mes "Alright, please enter the";
-			mes "number of Apples you";
-			mes "wish to place in this bet";
+			mes "Mm, melakukan kesalahan?";
+			mes "Baiklah, silahkan masukkan";
+			mes "jumlah Apel kamu";
+			mes "ingin memasang taruhan ini";
 			next;
 			continue;
 		}
 		if (countitem(512) <.@amount) {
-			mes "I'm sorry, but you";
-			mes "don't seem to have";
-			mes "enough Apples for this";
-			mes "bet... You can't gamble";
-			mes "if you can't play, you know.";
+			mes "Maaf, tapi kamu";
+			mes "epertinya tidak ada";
+			mes "Apel yang cukup untuk ini";
+			mes "bertaruh... Anda tidak bisa berjudi";
+			mes "kalau tidak bisa main, tahu.";
 			next;
 			continue;
 		}
 		delitem 512,.@amount;
 		mes "["+ .@npc_name$ +"]";
-		mes "Good!";
-		mes "Now we can start";
-		mes "this game! I'll roll first~";
+		mes "Bagus!";
+		mes "Sekarang kita bisa mulai";
+		mes "permainan ini! Aku akan berguling dulu~";
 		break;
 	}
-	mes "^3355FF*Rolling and rumbling*^000000";
+	mes "^3355FF*Berguling dan bergemuruh*^000000";
 	next;
 	set .@giveapple, .@amount*2;
 	set .@table1, rand(1,6);
@@ -1373,12 +1423,12 @@ function	script	applegamble	{
 	set .@tablesub, .@table1 + .@table2;
 	set .@tabletotal, .@tablesub;
 	mes "["+ .@npc_name$ +"]";
-	mes "I got a ^0000FF" + .@table1 + "^000000 and a ^0000FF" + .@table2 + "^000000.";
-	mes "That's a total of ^0000FF" + .@tablesub + "^000000.";
-	mes "^FF0000" + strcharinfo(0) + "^000000, now it's your turn.";
+	mes "Saya mendapat ^0000FF" + .@table1 + "^000000 dan ^0000FF" + .@table2 + "^000000.";
+	mes "Jumlahnya ^0000FF" + .@tablesub + "^000000.";
+	mes "^FF0000" + strcharinfo(0) + "^000000, sekarang giliranmu.";
 	next;
-	select("Cast Dice.");
-	mes "^3355FF*Rolling and rumbling*^000000";
+	select("Lempar Dadu.");
+	mes "^3355FF*Berguling dan bergemuruh*^000000";
 	set .@player1, rand(1,6);
 	set .@player2, rand(1,6);
 	set .@playersub, .@player1 + .@player2;
@@ -1390,96 +1440,96 @@ function	script	applegamble	{
 	set .@playertotal, .@playersub;
 	next;
 	mes "["+ .@npc_name$ +"]";
-	mes "^FF0000" + strcharinfo(0) + "^000000, you have ^FF0000" + .@player1 + "^000000 and ^FF0000" + .@player2 + "^000000. The total is ^FF0000" + .@playersub + "^000000 .";
+	mes "^FF0000" + strcharinfo(0) + "^000000, Anda memiliki ^FF0000" + .@player1 + "^000000 dan ^FF0000" + .@player2 + "^000000. Totalnya adalah ^FF0000" + .@playersub + "^000000 .";
 	next;
 	mes "["+ .@npc_name$ +"]";
 	if(.@playersub == .@tablesub) {
-		mes "Currently my total is ^0000FF" + .@tablesub + "^000000 and ^FF0000" + strcharinfo(0) + "^000000, your total is ^FF0000" + .@playersub + "^000000. We are making an even game. Would you like to cast dice again?";
+		mes "Saat ini total saya adalah ^0000FF" + .@tablesub + "^000000 dan ^FF0000" + strcharinfo(0) + "^000000, total Anda adalah ^FF0000" + .@playersub + "^000000. Kami sedang membuat bahkan permainan. Apakah Anda ingin melempar dadu lagi?";
 	} else if (.@playersub > .@tablesub) {
-		mes "Currently my total is ^0000FF" + .@tablesub + "^000000 and ^FF0000" + strcharinfo(0) + "^000000, your total is ^FF0000" + .@playersub + "^000000. ^FF0000" + strcharinfo(0) + "^000000, you are currently winning this game. Would you like to cast dice again?";
+		mes "Saat ini total saya adalah ^0000FF" + .@tablesub + "^000000 dan ^FF0000" + strcharinfo(0) + "^000000, total Anda adalah ^FF0000" + .@playersub + "^000000. ^FF0000" + strcharinfo(0) + "^000000, Anda sedang memenangkan permainan ini. Apakah Anda ingin melempar dadu lagi?";
 	} else if(.@tablesub > .@playersub) {
-		mes "Currently my total is ^0000FF" + .@tablesub + "^000000 and ^FF0000" + strcharinfo(0) + "^000000, your total is ^FF0000" + .@playersub + "^000000. I am winning this game. Would you like to cast dice again?";
+		mes "Saat ini total saya adalah ^0000FF" + .@tablesub + "^000000 dan ^FF0000" + strcharinfo(0) + "^000000, total Anda adalah ^FF0000" + .@playersub + "^000000. Saya memenangkan permainan ini. Apakah Anda ingin melempar dadu lagi?";
 	}
 	next;
-	switch (select("Cast dice.:Cancel.")) {
+	switch (select("Lempar dadu.:Batal.")) {
 	case 1:
-		mes "^3355FF*Rolling and rumbling*^000000";
+		mes "^3355FF*Berguling dan bergemuruh*^000000";
 		set .@player3, rand(1,6);
 		set .@playertotal, .@playertotal + .@player3;
 		next;
 		mes "["+ .@npc_name$ +"]";
 		if (.@playertotal > 12) {
-			mes "^FF0000" + strcharinfo(0) + "^000000, you got ^FF0000" + .@player3 + "^000000 and the total is now ^FF0000" + .@playertotal + "^000000. You lost this game. I am sorry but please try again.";
+			mes "^FF0000" + strcharinfo(0) + "^000000, Anda mendapatkan ^FF0000" + .@player3 + "^000000 dan totalnya sekarang ^FF0000" + .@playertotal + "^000000. Anda kalah dalam permainan ini. Saya minta maaf tapi tolong coba lagi.";
 			close;
 		}
 		else if (.@playertotal < .@tablesub) {
-			mes "^FF0000" + strcharinfo(0) + "^000000, you got ^FF0000" + .@player3 + "^000000 and the total is now ^FF0000" + .@playertotal + "^000000. Even though you casted dice again, still your total is smaller than mine. You lost the game. I am sorry and please try again.";
+			mes "^FF0000" + strcharinfo(0) + "^000000, Anda mendapatkan ^FF0000" + .@player3 + "^000000 dan totalnya sekarang ^FF0000" + .@playertotal + "^000000. Meskipun Anda melemparkan dadu lagi, tetap saja total Anda lebih kecil dari saya. Anda kehilangan permainan. Saya minta maaf dan silakan coba lagi.";
 			close;
 		}
 		else if (.@playertotal == .@tablesub) {
 			if (.@tablesub > 8) {
-				mes "^FF0000" + strcharinfo(0) + "^000000, you got ^FF0000" + .@player3 + "^000000 and the total is now ^FF0000" + .@playertotal + "^000000. I don't want to take any risk, let's end this game in a draw. Let's play again some other time~";
+				mes "^FF0000" + strcharinfo(0) + "^000000, Anda mendapatkan ^FF0000" + .@player3 + "^000000 dan totalnya sekarang ^FF0000" + .@playertotal + "^000000. Saya tidak ingin mengambil risiko, mari kita akhiri permainan ini dengan seri. Ayo main lagi lain waktu~";
 				close2;
 				getitem 512,.@amount; //Apple
 				end;
 			}
-			mes "Alright.";
-			mes "Let me cast the dice again.";
+			mes "Baiklah.";
+			mes "Biarkan saya melempar dadu lagi.";
 		}
 		else {
-			mes "^FF0000" + strcharinfo(0) + "^000000, you got ^FF0000" + .@player3 + "^000000 and the total is now ^FF0000" + .@playertotal + "^000000. Now it is my turn.";
+			mes "^FF0000" + strcharinfo(0) + "^000000, Anda mendapatkan ^FF0000" + .@player3 + "^000000 dan totalnya sekarang ^FF0000" + .@playertotal + "^000000. Sekarang giliranku.";
 		}
 		break;
 	case 2:
 		mes "["+ .@npc_name$ +"]";
 		if (.@playersub > .@tablesub) {
-			mes "I see, you don't want to take risk of losing the game. Okay, let me cast dice again.";
+			mes "Saya mengerti, Anda tidak ingin mengambil risiko kehilangan permainan. Oke, biarkan saya melempar dadu lagi.";
 		}
 		else if (.@playersub == .@tablesub) {
 			if (.@tablesub > 8) {
-				mes "I see, you don't want to take risk of losing this game. Neither do I, let's end this game in a draw. Let's play again some other time~";
+				mes "Begitu, kamu tidak ingin mengambil risiko kehilangan permainan ini. Aku juga, mari kita akhiri permainan ini dengan seri. Mari kita bermain lagi lain kali~";
 				close2;
 				getitem 512,.@amount; //Apple
 				end;
 			}
-			mes "Alright.";
-			mes "Let me cast the dice again.";
+			mes "Baiklah.";
+			mes "Biarkan saya melempar dadu lagi.";
 		}
 		else {
-			mes "It couldn't hurt to try.";
-			mes "Well, I win this time.";
-			mes "I'm sorry, let's try play";
-			mes "again sometime.";
+			mes "Tidak ada salahnya mencoba.";
+			mes "Yah, aku menang kali ini.";
+			mes "Maaf, ayo coba main";
+			mes "sekali lagi.";
 			close;
 		}
 		break;
 	}
 	next;
-	mes "^3355FF*Rolling and rumbling*^000000";
+	mes "^3355FF*Berguling dan bergemuruh*^000000";
 	set .@table3, rand(1,6);
 	set .@tabletotal, .@tabletotal + .@table3;
 	next;
 	mes "["+ .@npc_name$ +"]";
 	if (.@tabletotal > 12) {
-		mes "I got ^0000FF" + .@table3 + "^000000 and the total is now ^0000FF" + .@tabletotal + "^000000. I lost this game since my total exceeded 12. Let me give you my apples. Congratulations, that was a great game.";
+		mes "Saya mendapat ^0000FF" + .@table3 + "^000000 dan totalnya sekarang ^0000FF" + .@tabletotal + "^000000. Saya kalah dalam game ini karena total saya melebihi 12. Biarkan saya memberi Anda apel saya. Selamat , itu adalah permainan yang hebat.";
 		close2;
 		getitem 512,.@giveapple; //Apple
 		end;
 	}
 	else if (.@playertotal > .@tabletotal) {
-		mes "I got ^0000FF" + .@table3 + "^000000 and the total is now ^0000FF" + .@tabletotal + "^000000. With total ^FF0000" + .@playertotal + "^000000 you won this game, ^FF0000" + strcharinfo(0) + "^000000. Let me give you my apples. It was a great game and I hope we will play again some other time.";
+		mes "aya mendapat  ^0000FF" + .@table3 + "^000000 dan totalnya sekarang ^0000FF" + .@tabletotal + "^000000. Dengan total ^FF0000" + .@playertotal + "^000000 kamu memenangkan permainan ini, ^FF0000" + strcharinfo(0) + "^000000. Biarkan saya memberi Anda apel saya. Itu adalah permainan yang hebat dan saya harap kami akan bermain lagi di lain waktu.";
 		close2;
 		getitem 512,.@giveapple; //Apple
 		end;
 	}
 	else if (.@playertotal == .@tabletotal) {
-		mes "I got ^0000FF" + .@table3 + "^000000 and the total is now ^0000FF" + .@tabletotal + "^000000. With total ^FF0000" + .@playertotal + "^000000 this game came out even, ^FF0000" + strcharinfo(0) + "^000000. Let me give you your apple back. It was a great game and I hope we will play again some other time.";
+		mes "aya mendapat  ^0000FF" + .@table3 + "^000000 dan totalnya sekarang ^0000FF" + .@tabletotal + "^000000. Dengan total ^FF0000" + .@playertotal + "^000000 game ini keluar genap, ^FF0000" + strcharinfo(0) + "^000000. Biarkan saya mengembalikan apel Anda. Itu adalah permainan yang hebat dan saya harap kami akan bermain lagi di lain waktu.";
 		close2;
 		getitem 512,.@amount; //Apple
 		end;
 	}
 	else if (.@playertotal < .@tabletotal) {
-		mes "I got ^0000FF" + .@table3 + "^000000 and the total is now ^0000FF" + .@tabletotal + "^000000. With total ^FF0000" + .@playertotal + "^000000 you lost this game, ^FF0000" + strcharinfo(0) + "^000000. I am sorry but please try again.";
+		mes "aya mendapat  ^0000FF" + .@table3 + "^000000 dan totalnya sekarang ^0000FF" + .@tabletotal + "^000000. Dengan total ^FF0000" + .@playertotal + "^000000 kamu kalah dalam permainan ini, ^FF0000" + strcharinfo(0) + "^000000. Saya minta maaf tapi tolong coba lagi.";
 		close;
 	}
 }

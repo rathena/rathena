@@ -14,21 +14,21 @@
 
 airport,143,43,5	script	Airport Staff#airport1a::airport1	90,{
 	mes "[Airport Staff]";
-	mes "Welcome to the";
-	mes "Einbroch Airport,";
-	mes "where we offer nonstop";
-	mes "flights to the cities of";
-	mes "Juno, Lighthalzen and Hugel.";
+	mes "Selamat datang di";
+	mes "Bandara Einbroch,";
+	mes "tempat kami menawarkan nonstop";
+	mes "penerbangan ke kota-kota";
+	mes "Juno, Lighthalzen dan Hugel.";
 	next;
-	if (select("Board the Airship:Cancel") == 1) {
+	if (select("Naik Kapal Udara:Batal") == 1) {
 		mes "[Airport Staff]";
-		mes "The Airship boarding fee";
-		mes "is 1,200 zeny, but if you've";
-		mes "got a Free Ticket for Airship,";
-		mes "the fee will be waived. Will";
-		mes "you board the Airship?";
+		mes "Biaya naik Kapal Udara";
+		mes "adalah 1.200 zeny, tetapi jika Anda sudah";
+		mes "mendapat Tiket Kapal Udara Gratis,";
+		mes "biaya akan dibebaskan. Maukah";
+		mes "Anda naik Kapal Udara?";
 		next;
-		if (select("Yes:No") == 1) {
+		if (select("Iya:Tidak") == 1) {
 			if (countitem(7311) > 0) {
 				delitem 7311,1; //Free_Flying_Ship_Ticket
 				warp "airport",148,51;
@@ -40,18 +40,18 @@ airport,143,43,5	script	Airport Staff#airport1a::airport1	90,{
 				end;
 			}
 			mes "[Airport Staff]";
-			mes "I'm sorry, but you don't";
-			mes "have a Free Ticket for";
-			mes "Airship and you don't have";
-			mes "enough zeny for boarding";
-			mes "the Airship. Remember, the";
-			mes "boarding fee is 1,200 zeny.";
+			mes "Maaf, tapi kamu tidak";
+			mes "memiliki Tiket Gratis untuk";
+			mes "Kapal Udara dan kamu tidak punya";
+			mes "cukup zeny untuk boarding";
+			mes "Kapal Udara. Ingat, itu";
+			mes "biaya boarding 1.200 zeny.";
 			close;
 		}
 	}
 	mes "[Airport Staff]";
-	mes "Thank you and";
-	mes "have a nice day.";
+	mes "Terima kasih dan";
+	mes "semoga harimu menyenangkan.";
 	close;
 }
 
@@ -60,30 +60,30 @@ airport,126,43,5	duplicate(airport1)	Airport Staff#airport1c	90
 
 airport,143,49,3	script	Arrival Staff#airport2a::airport2	90,{
 	mes "[Arrival Staff]";
-	mes "Welcome to Einbroch Airport.";
-	mes "If you are arriving from your";
-	mes "flight, let me guide you to the";
-	mes "main terminal. Otherwise, please board the Airship to depart to";
-	mes "Juno, Lighthalzen and Hugel.";
+	mes "Selamat datang di Bandara Einbroch.";
+	mes "Jika Anda datang dari Anda";
+	mes "penerbangan, biarkan saya memandu Anda ke";
+	mes "terminal utama. Jika tidak, silakan naik ke Kapal Udara untuk berangkat ke";
+	mes "Juno, Lighthalzen dan Hugel.";
 	next;
-	if (select("Exit to main terminal.:Cancel.") == 1) {
+	if (select("Keluar ke terminal utama.:Batal.") == 1) {
 		mes "[Arrival Staff]";
-		mes "Once you're in the main terminal, you will need to pay the fee again";
-		mes "to board an Airship. You should";
-		mes "only exit if the city of Einbroch";
-		mes "is your intended destination.";
-		mes "Proceed to the main terminal?";
+		mes "Begitu Anda berada di terminal utama, Anda harus membayar biaya lagi";
+		mes "untuk menaiki sebuah Kapal Udara. Anda harus";
+		mes "hanya keluar jika kota Einbroch";
+		mes "adalah tujuan yang Anda tuju.";
+		mes "Lanjutkan ke terminal utama?";
 		next;
-		if (select("Yes:No") == 1) {
+		if (select("Iya:Tidak") == 1) {
 			warp "airport",142,40;
 			end;
 		}
 	}
 	mes "[Arrival Staff]";
-	mes "Alright, thank you";
-	mes "for your patronage";
-	mes "and I hope you have";
-	mes "a pleasant flight~";
+	mes "Baiklah, terima kasih";
+	mes "untuk perlindungan Anda";
+	mes "adan saya harap Anda punya";
+	mes "penerbangan yang menyenangkan~";
 	close;
 }
 
@@ -92,19 +92,19 @@ airport,158,50,3	duplicate(airport2)	Arrival Staff#airport2c	90
 
 einbroch,94,267,3	script	Airship Staff#ein01	91,{
 	mes "[Airship Staff]";
-	mes "Welcome to the";
-	mes "Einbroch Airport.";
-	mes "Please use this door to";
-	mes "board the Airship which stops";
-	mes "over Juno, Lighthalzen and";
-	mes "Hugel in the Schwarzwald Republic.";
+	mes "Selamat datang di";
+	mes "Bandara Einbroch.";
+	mes "Silakan gunakan pintu ini untuk";
+	mes "naik Kapal Udara yang berhenti";
+	mes "atas Juno, Lighthalzen dan";
+	mes "Hugel di Republik Schwarzwald.";
 	next;
 	mes "[Airship Staff]";
-	mes "Otherwise, if Einbroch is";
-	mes "your intended destination,";
-	mes "please head down the stairs";
-	mes "and ask the Arrival Staff to lead";
-	mes "you to the main terminal. Thank";
-	mes "you, and enjoy your travels.";
+	mes "Jika tidak, jika Einbroch";
+	mes "tujuan yang Anda tuju,";
+	mes "silahkan turun tangga";
+	mes "dan minta Staf Kedatangan untuk memimpin";
+	mes "Anda ke terminal utama. Terima kasih";
+	mes "Anda, dan nikmati perjalanan Anda.";
 	close;
 }

@@ -14,19 +14,19 @@
 
 lhz_airport,143,43,5	script	Airport Staff#lhz_air1a::lhz_airport1	90,{
 	mes "[Airport Staff]";
-	mes "Welcome to the";
-	mes "Lighthalzen Airport,";
-	mes "where we offer nonstop";
-	mes "flights to Einbroch, Juno and Hugel.";
+	mes "Selamat datang di";
+	mes "Bandara Lighthalzen,";
+	mes "tempat kami menawarkan nonstop";
+	mes "penerbangan ke Einbroch, Juno dan Hugel.";
 	next;
-	if (select("Board the Airship.:Cancel.") == 1) {
+	if (select("Naik Kapal Udara.:Batal.") == 1) {
 		mes "[Airport Staff]";
-		mes "The boarding fee is";
-		mes "1,200 zeny, but you can";
-		mes "waive the fee if you redeem";
-		mes "a Free Ticket for Airship.";
+		mes "Biaya boarding adalah";
+		mes "1.200 zeny, tapi bisa";
+		mes "bebaskan biaya jika Anda menebus";
+		mes "Tiket Gratis Pesawat.";
 		next;
-		if (select("Yes:No") == 1) {
+		if (select("Iya:Tidak") == 1) {
 			if (countitem(7311) > 0) {
 				delitem 7311,1; //Free_Flying_Ship_Ticket
 				warp "lhz_airport",148,51;
@@ -38,16 +38,16 @@ lhz_airport,143,43,5	script	Airport Staff#lhz_air1a::lhz_airport1	90,{
 				end;
 			}
 			mes "[Airship Staff]";
-			mes "I'm sorry, but you don't";
-			mes "have 1,200 zeny to pay";
-			mes "for the boarding fee.";
+			mes "Maaf, tapi kamu tidak";
+			mes "memiliki 1.200 zeny untuk membayar";
+			mes "untuk biaya boarding.";
 			close;
 		}
 	}
 	mes "[Airport Staff]";
-	mes "Thank you and";
-	mes "please come again.";
-	mes "Have a good day~";
+	mes "Terima kasih dan";
+	mes "silakan datang lagi.";
+	mes "Semoga harimu menyenangkan~";
 	close;
 }
 
@@ -56,28 +56,28 @@ lhz_airport,126,43,5	duplicate(lhz_airport1)	Airship Staff#lhz_air1c	90
 
 lhz_airport,143,49,3	script	Arrival Staff#lhz_air2a::lhz_airport2	90,{
 	mes "[Arrival Staff]";
-	mes "Welcome to Lighthalzen Airport.";
-	mes "Please let me guide you to the";
-	mes "main terminal if you are arriving from your flight. Otherwise, please";
-	mes "board the departing Airship to reach your intended destination.";
+	mes "Selamat datang di Bandara Lighthalzen.";
+	mes "Tolong izinkan saya memandu Anda ke";
+	mes "terminal utama jika Anda tiba dari penerbangan Anda. Jika tidak, silakan";
+	mes "naik Kapal Udara yang berangkat untuk mencapai tujuan yang Anda tuju.";
 	next;
-	if (select("Exit to main terminal.:Cancel.") == 1) {
+	if (select("Keluar ke terminal utama.:Batal.") == 1) {
 		mes "[Arrival Staff]";
-		mes "Once you're in the main terminal, you will need to pay the fee again";
-		mes "to board an Airship. You should";
-		mes "only exit if Lighthalzen is your intended destination. Shall we";
-		mes "proceed to the main terminal?";
+		mes "Begitu Anda berada di terminal utama, Anda harus membayar biaya lagi";
+		mes "untuk menaiki sebuah Kapal Udara. Anda harus";
+		mes "hanya keluar jika Lighthalzen adalah tujuan yang Anda tuju. Bagaimana kalau kita";
+		mes "lanjutkan ke terminal utama?";
 		next;
-		if (select("Yes:No") == 1) {
+		if (select("Iya:Tidak") == 1) {
 			warp "lhz_airport",142,40;
 			end;
 		}
 	}
 	mes "[Arrival Staff]";
-	mes "Alright, thank you";
-	mes "for your patronage";
-	mes "and I hope you have";
-	mes "a pleasant flight~";
+	mes "Baiklah, terima kasih";
+	mes "untuk perlindungan Anda";
+	mes "dan saya harap Anda punya";
+	mes "penerbangan yang menyenangkan~";
 	close;
 }
 

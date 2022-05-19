@@ -14,20 +14,20 @@
 
 -	script	::Airship_Staff_izlude	-1,{
 	mes "[Airship Staff]";
-	mes "Welcome! Would you like";
-	mes "to board the Airship that";
-	mes "departs on the flight which stops";
-	mes "in Juno and Rachel?";
+	mes "Selamat datang! Maukah Anda";
+	mes "untuk naik ke Kapal Udara itu";
+	mes "berangkat dengan penerbangan yang berhenti";
+	mes "di Juno dan Rachel?";
 	next;
-	if (select("Board the Airship to Juno/Rachel.:Cancel.") == 1) {
+	if (select("Naiki Kapal Udara ke Juno/Rachel.:Batal.") == 1) {
 		mes "[Airship Staff]";
-		mes "The boarding fee is";
-		mes "1,200 zeny. However, this";
-		mes "charged is waived if you use";
-		mes "a Free Ticket for Airship. Now,";
-		mes "would you still like to board?";
+		mes "Biaya boarding adalah";
+		mes "1.200 zeny. Namun, ini";
+		mes "dikenakan biaya dibebaskan jika Anda menggunakan";
+		mes "Tiket Gratis Kapal Udara. Sekarang,";
+		mes "masih mau naik?";
 		next;
-		if (select("Yes:No") == 1) {
+		if (select("Iya:Tidak") == 1) {
 			if (countitem(7311) > 0) {
 				delitem 7311,1; //Free_Flying_Ship_Ticket
 				warp "airplane_01",244,58;
@@ -39,15 +39,15 @@
 				end;
 			}
 			mes "[Airship Staff]";
-			mes "I'm sorry, but you don't";
-			mes "have 1,200 zeny to pay";
-			mes "for the boarding fee.";
+			mes "Maaf, tapi kamu tidak";
+			mes "memiliki 1.200 zeny untuk membayar";
+			mes "untuk biaya boarding.";
 			close;
 		}
 	}
 	mes "[Airship Staff]";
-	mes "Thank you and";
-	mes "please come again.";
-	mes "Have a good day~";
+	mes "Terima kasih dan";
+	mes "silakan datang lagi.";
+	mes "Semoga harimu menyenangkan~";
 	close;
 }
