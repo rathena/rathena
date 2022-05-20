@@ -8342,12 +8342,14 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 	}
 
 	if (sc) {
-		if (status_reflect && sc->data[SC_REFLECTDAMAGE])
+		if (status_reflect && sc->data[SC_REFLECTDAMAGE]) {
 			rdamage -= damage * sc->data[SC_REFLECTDAMAGE]->val2 / 100;
-		if (sc->data[SC_VENOMBLEED] && sc->data[SC_VENOMBLEED]->val3 == 0)
+			rdamage = i64max(rdamage, 1);
+		}
+		if (sc->data[SC_VENOMBLEED] && sc->data[SC_VENOMBLEED]->val3 == 0) {
 			rdamage -= damage * sc->data[SC_VENOMBLEED]->val2 / 100;
-
-		rdamage = i64max(rdamage, 1);
+			rdamage = i64max(rdamage, 1);
+		}
 	}
 
 	if (tsc) {
