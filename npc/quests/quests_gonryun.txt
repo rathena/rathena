@@ -3805,6 +3805,7 @@ gon_fild01,245,257,0	script	#gonknife	111,3,3,{
 OnTouch_:
 	if (nakha == 1) {
 		set nakha,2;
+		changequest 10034,10035;
 		mes "^3355FFHm? What's this?";
 		mes " ";
 		mes "Something was hidden beneath the leaves...^000000";
@@ -3812,7 +3813,6 @@ OnTouch_:
 		mes "- You have found an old knife -";
 		close2;
 		getitem 1201,1; //Knife
-		changequest 10034,10035;
 	}
 	end;
 }
