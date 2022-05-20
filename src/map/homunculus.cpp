@@ -1336,6 +1336,8 @@ int hom_ressurect(struct map_session_data* sd, unsigned char per, short x, short
 		clif_spawn(&hd->bl);
 	}
 
+	hd->ud.state.blockedmove = false;
+
 #ifdef RENEWAL
 	sc_start(&sd->bl, &sd->bl, SC_HOMUN_TIME, 100, 1, skill_get_time(AM_CALLHOMUN, 1));
 #endif
