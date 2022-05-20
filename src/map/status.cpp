@@ -11081,7 +11081,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_REFLECTDAMAGE:
 			val2 = 10 * val1; // Reflect reduction amount
-			val3 = val1*5 + 25; // Number of reflects
 			val4 = tick/1000; // Number of SP cycles (duration)
 			tick_time = 1000; // [GodLesZ] tick time
 			break;
