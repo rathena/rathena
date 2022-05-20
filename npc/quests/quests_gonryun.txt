@@ -3713,6 +3713,7 @@ gonryun,237,226,3	script	Han Ran Jiao#gon	776,{
 		next;
 		if (BaseLevel >= 20) {
 			set nakha,1;
+			setquest 10034;
 			mes "[Han Ran Jiao]";
 			mes "I need to go down to get it";
 			mes "but...the monsters...";
@@ -3759,6 +3760,7 @@ gonryun,237,226,3	script	Han Ran Jiao#gon	776,{
 		next;
 		if (select("Return the knife.:Refuse.") == 1) {
 			set nakha,3;
+			completequest 10035;
 			delitem 1201,1; //Knife
 			mes "[Han Ran Jiao]";
 			mes "Thank you! Thank you so much!";
@@ -3810,6 +3812,7 @@ OnTouch_:
 		mes "- You have found an old knife -";
 		close2;
 		getitem 1201,1; //Knife
+		changequest 10034,10035;
 	}
 	end;
 }
