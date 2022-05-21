@@ -516,7 +516,8 @@
 	export_constant(MF_NOITEMCONSUMPTION);
 	export_constant(MF_NOSUNMOONSTARMIRACLE);
 	export_deprecated_constant3("mf_sumstarmiracle", MF_NOSUNMOONSTARMIRACLE, "MF_NOSUNMOONSTARMIRACLE");
-	export_constant(MF_NOMINEEFFECT);
+	export_constant(MF_FORCEMINEFFECT);
+	export_deprecated_constant3("mf_nomineeffect", MF_FORCEMINEFFECT, "MF_FORCEMINEFFECT");
 	export_constant(MF_NOLOCKON);
 	export_constant(MF_NOTOMB);
 	export_constant(MF_SKILL_DAMAGE);
@@ -8983,7 +8984,6 @@
 	export_constant(SCF_REMOVEONCHANGEMAP);
 	export_constant(SCF_REMOVEONMAPWARP);
 	export_constant(SCF_REMOVECHEMICALPROTECT);
-	export_constant(SCF_OVERLAPFAIL);
 	export_constant(SCF_OVERLAPIGNORELEVEL);
 	export_constant(SCF_SENDOPTION);
 	export_constant(SCF_ONTOUCH);
