@@ -8359,7 +8359,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 		if (rdamage > 0 && ssc->data[SC_REF_T_POTION])
 			return 1; // Returns 1 damage
 	}
-	
+
 	if (tsc) {
 		if (tsc->data[SC_MAXPAIN])
 			rdamage = damage * tsc->data[SC_MAXPAIN]->val1 * 10 / 100;
