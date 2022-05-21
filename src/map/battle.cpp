@@ -8318,7 +8318,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 				if (!skill_id && battle_config.devotion_rdamage_skill_only && sc->data[SC_REFLECTSHIELD]->val4)
 					rdamage = 0;
 				else {
-					rdamage += damage * sc->data[SC_REFLECTSHIELD]->val2 / 100;
+					rdamage += damage * tsc->data[SC_REFLECTSHIELD]->val2 / 100;
 				}
 			}
 
@@ -8335,32 +8335,31 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 			}
 		}
 	} else {
-		if (!status_reflect && sd && sd->bonus.long_weapon_damage_return) {
-			rdamage += damage * sd->bonus.long_weapon_damage_return / 100;
+		if (!status_reflect && tsd && tsd->bonus.long_weapon_damage_return) {
+			rdamage += damage * tsd->bonus.long_weapon_damage_return / 100;
 		}
 	}
-
-	int64 reduce = 0;
-	map_session_data* ssd = BL_CAST(BL_PC, src);
 	
-	if (ssd && ssd->bonus.reduce_damage_return != 0) {
-		reduce += ssd->bonus.reduce_damage_return;
+	int64 reduce = 0;
+	map_session_data* sd = BL_CAST(BL_PC, src);
+
+	if (sd && sd->bonus.reduce_damage_return != 0) {
+		reduce += (sd->bonus.reduce_damage_return);
 	}
 
-	if (ssc) {
-		if (ssc->data[SC_REFLECTDAMAGE]) {
-			reduce += (ssc->data[SC_REFLECTDAMAGE]->val2);
-			if (--(ssc->data[SC_REFLECTDAMAGE]->val3) < 1) // TODO: Confirm if reflect count still exists
-				status_change_end(bl, SC_REFLECTDAMAGE, INVALID_TIMER);
+	if (sc) {
+		if (status_reflect && sc->data[SC_REFLECTDAMAGE]) {
+			reduce += sc->data[SC_REFLECTDAMAGE]->val2;
 		}
-		if (ssc->data[SC_VENOMBLEED] && ssc->data[SC_VENOMBLEED]->val3 == 0)
-			reduce += ssc->data[SC_VENOMBLEED]->val2;
-
-		if (ssc->data[SC_REF_T_POTION])
+		if (sc->data[SC_VENOMBLEED] && sc->data[SC_VENOMBLEED]->val3 == 0) {
+			reduce += sc->data[SC_VENOMBLEED]->val2;
+		}
+		if (sc->data[SC_REF_T_POTION] || sc->data[SC_REF_T_POTION2])//PC custom
 			reduce += 100;
 	}
+
 	if (rdamage > 0) {
-		rdamage -= rdamage * i64min(100, reduce)/100;
+		rdamage -= rdamage * i64min(100, reduce) / 100;
 		rdamage = i64max(rdamage, 1);
 	}
 
