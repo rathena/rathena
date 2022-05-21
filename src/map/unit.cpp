@@ -811,7 +811,7 @@ static TIMER_FUNC(unit_walktobl_sub){
 	struct block_list *bl = map_id2bl(id);
 	struct unit_data *ud = bl?unit_bl2ud(bl):NULL;
 
-	if (ud && ud->walktimer == INVALID_TIMER && ud->target == data) {
+	if (ud && ud->walktimer == INVALID_TIMER && ud->target && ud->target == data) {
 		if (DIFF_TICK(ud->canmove_tick, tick) > 0) // Keep waiting?
 			add_timer(ud->canmove_tick+1, unit_walktobl_sub, id, data);
 		else if (unit_can_move(bl)) {
@@ -3040,6 +3040,9 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 
 	if (ud->walktimer != INVALID_TIMER)
 		unit_stop_walking(bl,0);
+
+	if (clrtype == CLR_DEAD)
+		ud->state.blockedmove = true;
 
 	if (ud->skilltimer != INVALID_TIMER)
 		unit_skillcastcancel(bl,0);
