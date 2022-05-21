@@ -8296,16 +8296,17 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 	}
 
 	if (flag & BF_SHORT) {//Bounces back part of the damage.
-		if ( (skill_get_inf2(skill_id, INF2_ISTRAP) || !status_reflect) && sd && sd->bonus.short_weapon_damage_return ) {
-			rdamage += damage * sd->bonus.short_weapon_damage_return / 100;
-		} else if( status_reflect && sc && sc->count ) {
-			if( sc->data[SC_REFLECTSHIELD] ) {
-				struct status_change_entry *sce_d;
-				struct block_list *d_bl = NULL;
+		if ( (skill_get_inf2(skill_id, INF2_ISTRAP) || !status_reflect) && tsd && tsd->bonus.short_weapon_damage_return ) {
+			rdamage += damage * tsd->bonus.short_weapon_damage_return / 100;
+			rdamage = i64max(rdamage, 1);
+		} else if( status_reflect && tsc && tsc->count ) {
+			if( tsc->data[SC_REFLECTSHIELD] ) {
+				status_change_entry *sce_d;
+				block_list *d_bl;
 
-				if( (sce_d = sc->data[SC_DEVOTION]) && (d_bl = map_id2bl(sce_d->val1)) &&
-					((d_bl->type == BL_MER && ((TBL_MER*)d_bl)->master && ((TBL_MER*)d_bl)->master->bl.id == bl->id) ||
-					(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce_d->val2] == bl->id)) )
+				if( (sce_d = tsc->data[SC_DEVOTION]) && (d_bl = map_id2bl(sce_d->val1)) &&
+					((d_bl->type == BL_MER && ((TBL_MER*)d_bl)->master && ((TBL_MER*)d_bl)->master->bl.id == tbl->id) ||
+					(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce_d->val2] == tbl->id)) )
 				{ //Don't reflect non-skill attack if has SC_REFLECTSHIELD from Devotion bonus inheritance
 					if( (!skill_id && battle_config.devotion_rdamage_skill_only && sc->data[SC_REFLECTSHIELD]->val4) ||
 						!check_distance_bl(bl,d_bl,sce_d->val3) )
