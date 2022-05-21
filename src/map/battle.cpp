@@ -8319,6 +8319,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 					rdamage = 0;
 				else {
 					rdamage += damage * tsc->data[SC_REFLECTSHIELD]->val2 / 100;
+					rdamage = i64max(rdamage, 1);
 				}
 			}
 
