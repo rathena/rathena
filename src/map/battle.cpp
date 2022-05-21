@@ -8319,7 +8319,6 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 					rdamage = 0;
 				else {
 					rdamage += damage * tsc->data[SC_REFLECTSHIELD]->val2 / 100;
-					rdamage = i64max(rdamage, 1);
 				}
 			}
 
@@ -8338,27 +8337,28 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 	} else {
 		if (!status_reflect && tsd && tsd->bonus.long_weapon_damage_return) {
 			rdamage += damage * tsd->bonus.long_weapon_damage_return / 100;
-			rdamage = i64max(rdamage, 1);
 		}
 	}
 
-	if (rdamage > 0) {
-		map_session_data* sd = BL_CAST(BL_PC, src);
-		if (sd && sd->bonus.reduce_damage_return != 0) {
-			rdamage -= rdamage * sd->bonus.reduce_damage_return / 100;
-			rdamage = i64max(rdamage, 1);
-		}
+	int64 reduce = 0;
+	map_session_data* sd = BL_CAST(BL_PC, src);
+
+	if (sd && sd->bonus.reduce_damage_return != 0) {
+		reduce += (sd->bonus.reduce_damage_return);
 	}
 
 	if (sc) {
 		if (status_reflect && sc->data[SC_REFLECTDAMAGE]) {
-			rdamage -= damage * sc->data[SC_REFLECTDAMAGE]->val2 / 100;
-			rdamage = i64max(rdamage, 1);
+			reduce += sc->data[SC_REFLECTDAMAGE]->val2;
 		}
 		if (sc->data[SC_VENOMBLEED] && sc->data[SC_VENOMBLEED]->val3 == 0) {
-			rdamage -= damage * sc->data[SC_VENOMBLEED]->val2 / 100;
-			rdamage = i64max(rdamage, 1);
+			reduce += sc->data[SC_VENOMBLEED]->val2;
 		}
+	}
+
+	if (rdamage > 0) {
+		rdamage -= rdamage * i64min(100, reduce) / 100;
+		rdamage = i64max(rdamage, 1);
 	}
 
 	if (tsc) {
