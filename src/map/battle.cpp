@@ -8359,8 +8359,16 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 		if (rdamage > 0 && ssc->data[SC_REF_T_POTION])
 			return 1; // Returns 1 damage
 	}
+	
+	if (tsc) {
+		if (tsc->data[SC_MAXPAIN])
+			rdamage = damage * tsc->data[SC_MAXPAIN]->val1 * 10 / 100;
+	}
 
-	return cap_value(i64min(rdamage,max_damage),INT_MIN,INT_MAX);
+	if (rdamage == 0)
+		return 0; // No reflecting damage calculated.
+	else
+		return cap_value(rdamage, 1, status_get_max_hp(tbl));
 }
 
 /**
