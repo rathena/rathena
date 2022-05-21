@@ -8356,7 +8356,7 @@ moscovia,166,145,1	script	Worried Mother#rus19	4_F_RUSWOMAN3,{
 			mes "You must have something to protect yourself from Lusalka. '^0000ffHoly Water^000000' will protect you from Lusalka'a gaze.";
 			next;
 			mes "[Worried Mother]";
-			mes "And Lusalka is noctournal. You should be able to find here from ^ff00005 pm to 6 am PST^000000.";
+			mes "And Lusalka is nocturnal. You should be able to find her from ^ff00005 pm to 6 am PST^000000.";
 			next;
 			mes "[Worried Mother]";
 			mes "Don't forget. You have to bring '^0000ffHoly Water^000000' with you, and find her from ^ff00005 pm to 6 am PST^000000.";
@@ -8374,7 +8374,7 @@ moscovia,166,145,1	script	Worried Mother#rus19	4_F_RUSWOMAN3,{
 			mes "You must have something to protect yourself from Lusalka. '^0000ffHoly Water^000000' will protect you from Lusalka'a gaze.";
 			next;
 			mes "[Worried Mother]";
-			mes "And Lusalka is noctournal. You should be able to find here from ^ff00005 pm to 6 am PST^000000.";
+			mes "And Lusalka is nocturnal. You should be able to find her from ^ff00005 pm to 6 am PST^000000.";
 			next;
 			mes "[Worried Mother]";
 			mes "Don't forget. You have to bring '^0000ffHoly Water^000000' with you, and find her from ^ff00005 pm to 6 am PST^000000.";
