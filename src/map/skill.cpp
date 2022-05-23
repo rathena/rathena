@@ -7537,7 +7537,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			}
 		}
 		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-		clif_specialeffect(bl, EF_MOVE_COORDINATE, AREA);
+		clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SINGLE);
 		break;
 
 	case PR_KYRIE:
@@ -7718,7 +7718,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case NPC_ALL_STAT_DOWN:
 		clif_skill_nodamage(src, bl, skill_id, skill_lv,
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
-		clif_specialeffect(bl, EF_ENERVATION7, AREA); //Add effect, but still need to add sound.
+		clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SINGLE);
 		break;
 
 	case LG_SHIELDSPELL:
