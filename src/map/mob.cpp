@@ -2477,6 +2477,12 @@ int mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int b
 
 			if (sd->sc.data[SC_ITEMBOOST])
 				drop_rate_bonus += sd->sc.data[SC_ITEMBOOST]->val1;
+	
+			// APACHE PREMIUM SERVICE		EOS-STUDIO
+			if (sd->sc.data[SC_APACHE_ITEMBOOST_A])
+				drop_rate_bonus += sd->sc.data[SC_APACHE_ITEMBOOST_A]->val1;
+			if (sd->sc.data[SC_APACHE_ITEMBOOST_S])
+				drop_rate_bonus += sd->sc.data[SC_APACHE_ITEMBOOST_S]->val1;		
 
 			int cap;
 
