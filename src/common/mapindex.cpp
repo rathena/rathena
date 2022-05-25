@@ -203,7 +203,7 @@ void mapindex_check_mapdefault(const std::string &mapname) {
 	std::string temp = mapindex_getmapname(mapname);
 
 	if (!mapindex_name2idx(temp, ""))
-		ShowError("mapindex_init: Default map '%s' not found in cache! Please change in (by default in) char_athena.conf!\n", mapname);
+		ShowError("mapindex_init: Default map '%s' not found in cache! Please change in (by default in) char_athena.conf!\n", mapname.c_str());
 }
 
 void mapindex_init(void) {
