@@ -37,3 +37,24 @@ te_aldecas2	mapflag	gvg_te_castle
 te_aldecas3	mapflag	gvg_te_castle
 te_aldecas4	mapflag	gvg_te_castle
 te_aldecas5	mapflag	gvg_te_castle
+
+//============================================================
+// RWC
+//============================================================
+2009rwc_01	mapflag	gvg
+2009rwc_02	mapflag	gvg
+2009rwc_03	mapflag	gvg
+2009rwc_04	mapflag	gvg
+2009rwc_05	mapflag	gvg
+2009rwc_06	mapflag	gvg
+2009rwc_07	mapflag	gvg
+2009rwc_08	mapflag	gvg
+2009rwc_f01	mapflag	gvg
+2012rwc_01	mapflag	gvg
+2012rwc_02	mapflag	gvg
+2012rwc_03	mapflag	gvg
+2012rwc_04	mapflag	gvg
+2012rwc_05	mapflag	gvg
+2012rwc_06	mapflag	gvg
+2012rwc_07	mapflag	gvg
+2012rwc_08	mapflag	gvg

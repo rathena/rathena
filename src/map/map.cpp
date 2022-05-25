@@ -126,6 +126,7 @@ static int bl_list_count = 0;
 	#define MAP_MAX_MSG 1550
 #endif
 
+MapDataDatabase map_data_db;
 struct map_data map[MAX_MAP_PER_SERVER];
 int map_num = 0;
 
@@ -183,6 +184,65 @@ struct s_map_default map_default;
 int console = 0;
 int enable_spy = 0; //To enable/disable @spy commands, which consume too much cpu time when sending packets. [Skotlex]
 int enable_grf = 0;	//To enable/disable reading maps from GRF files, bypassing mapcache [blackhole89]
+
+const std::string MapDataDatabase::getDefaultLocation() {
+	return std::string(conf_path) + "/maps_athena.yml";
+}
+
+/**
+ * Reads and parses an entry from the maps_athena.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
+uint64 MapDataDatabase::parseBodyNode(const ryml::NodeRef &node) {
+	std::string map_name;
+
+	if (!this->asString(node, "Map", map_name))
+		return 0;
+
+	if (this->nodeExists(node, "Mode")) {
+		std::string mode;
+
+		if (!this->asString(node, "Mode", mode))
+			return 0;
+
+#ifdef RENEWAL
+		std::string compiledMode = "Renewal";
+#else
+		std::string compiledMode = "Prerenewal";
+#endif
+
+		if (compiledMode != mode) {
+			//this->invalidWarning(node["Mode"], "Map's Mode is set to be loaded on %s but the server is compiled for %s. Skipping...\n", mode.c_str(), compiledMode.c_str());
+			return 0;
+		}
+	}
+
+	bool found = false;
+
+	for (uint16 i = 0; i < MAX_MAP_PER_SERVER; i++) {
+		if (strcmpi(map_name.c_str(), map[i].name) == 0) {
+			found = true;
+			break;
+		}
+	}
+
+	if (found) {
+		this->invalidWarning(node["Map"], "Map %s has already been added. Skipping...\n", map_name.c_str());
+		return 0;
+	}
+
+	if (map_num >= MAX_MAP_PER_SERVER - 1) {
+		ShowError("Could not add map '" CL_WHITE "%s" CL_RESET "', the limit of maps has been reached.\n", map_name.c_str());
+		return 1;
+	}
+
+	map_name = mapindex_getmapname(map_name);
+	strcpy(map[map_num].name, map_name.c_str());
+	map_num++;
+
+	return 1;
+}
 
 /**
  * Get the map data
@@ -3490,7 +3550,7 @@ static char *map_init_mapcache(FILE *fp)
 	// Read file into buffer..
 	if(fread(buffer, 1, size, fp) != size) {
 		ShowError("map_init_mapcache: Could not read entire mapcache file\n");
-		return NULL;
+		return "";
 	}
 
 	return buffer;
@@ -3547,50 +3607,12 @@ int map_readfromcache(struct map_data *m, char *buffer, char *decode_buffer)
 	return 0; // Not found
 }
 
-int map_addmap(char* mapname)
-{
-	if( strcmpi(mapname,"clear")==0 )
-	{
-		map_num = 0;
-		instance_start = 0;
-		return 0;
-	}
-
-	if (map_num >= MAX_MAP_PER_SERVER - 1) {
-		ShowError("Could not add map '" CL_WHITE "%s" CL_RESET "', the limit of maps has been reached.\n", mapname);
-		return 1;
-	}
-
-	mapindex_getmapname(mapname, map[map_num].name);
-	map_num++;
-	return 0;
-}
-
 static void map_delmapid(int id)
 {
 	ShowNotice("Removing map [ %s ] from maplist" CL_CLL "\n",map[id].name);
 	for (int i = id; i < map_num - 1; i++)
 		map[i] = map[i + 1];
 	map_num--;
-}
-
-int map_delmap(char* mapname){
-	char map_name[MAP_NAME_LENGTH];
-
-	if (strcmpi(mapname, "all") == 0) {
-		map_num = 0;
-		return 0;
-	}
-
-	mapindex_getmapname(mapname, map_name);
-	for (int i = 0; i < map_num; i++) {
-		if (strcmp(map[i].name, map_name) == 0) {
-			map_delmapid(i);
-			return 1;
-		}
-	}
-
-	return 0;
 }
 
 /// Initializes map flags and adjusts them depending on configuration.
@@ -3744,38 +3766,30 @@ int map_readallmaps (void)
 {
 	FILE* fp=NULL;
 	// Has the uncompressed gat data of all maps, so just one allocation has to be made
-	char *map_cache_buffer[2] = {
-		NULL,
-		NULL
-	};
+	std::vector<char *> map_cache_buffer = {};
 	char map_cache_decode_buffer[MAX_MAP_SIZE];
 
 	if( enable_grf )
 		ShowStatus("Loading maps (using GRF files)...\n");
 	else {
-		const char* mapcachefilepath[] = {
+		const std::vector<std::string> mapcachefilepath = {
 			"db/" DBPATH "map_cache.dat",
 			"db/" DBIMPORT "/map_cache.dat"
 		};
 
-		for( int i = 0; i < 2; i++ ){
-			ShowStatus( "Loading maps (using %s as map cache)...\n", mapcachefilepath[i] );
+		for( const auto &mapdat : mapcachefilepath ){
+			ShowStatus( "Loading maps (using %s as map cache)...\n", mapdat.c_str() );
 
-			if( ( fp = fopen(mapcachefilepath[i], "rb") ) == NULL ){
-				if( i == 0 ){
-					ShowFatalError( "Unable to open map cache file " CL_WHITE "%s" CL_RESET "\n", mapcachefilepath[i] );
-					exit(EXIT_FAILURE); //No use launching server if maps can't be read.
-				}else{
-					ShowWarning( "Unable to open map cache file " CL_WHITE "%s" CL_RESET "\n", mapcachefilepath[i] );
-					break;
-				}
+			if( ( fp = fopen(mapdat.c_str(), "rb")) == nullptr) {
+				ShowFatalError( "Unable to open map cache file " CL_WHITE "%s" CL_RESET "\n", mapdat );
+				exit(EXIT_FAILURE); //No use launching server if maps can't be read.
 			}
 
 			// Init mapcache data. [Shinryo]
-			map_cache_buffer[i] = map_init_mapcache(fp);
+			map_cache_buffer.push_back(map_init_mapcache(fp));
 
-			if( !map_cache_buffer[i] ) {
-				ShowFatalError( "Failed to initialize mapcache data (%s)..\n", mapcachefilepath[i] );
+			if( map_cache_buffer.back() == "" ) {
+				ShowFatalError( "Failed to initialize mapcache data (%s)..\n", mapdat );
 				exit(EXIT_FAILURE);
 			}
 
@@ -3798,15 +3812,14 @@ int map_readallmaps (void)
 			// try to load the map
 			success = map_readgat(mapdata) != 0;
 		}else{
-			// try to load the map
-			// Read from import first, in case of override
-			if( map_cache_buffer[1] != NULL ){
-				success = map_readfromcache( mapdata, map_cache_buffer[1], map_cache_decode_buffer ) != 0;
-			}
+			// Load the map cache in reverse order to account for import
+			for (size_t z = map_cache_buffer.size() - 1; z >= 0; z--) {
+				if (map_cache_buffer.back() != "") {
+					success = map_readfromcache(mapdata, map_cache_buffer[z], map_cache_decode_buffer) != 0;
 
-			// Nothing was found in import - try to find it in the main file
-			if( !success ){
-				success = map_readfromcache( mapdata, map_cache_buffer[0], map_cache_decode_buffer ) != 0;
+					if (success)
+						break;
+				}
 			}
 		}
 
@@ -3855,10 +3868,7 @@ int map_readallmaps (void)
 
 	if( !enable_grf ) {
 		// The cache isn't needed anymore, so free it. [Shinryo]
-		if( map_cache_buffer[1] != NULL ){
-			aFree(map_cache_buffer[1]);
-		}
-		aFree(map_cache_buffer[0]);
+		map_cache_buffer.clear();
 	}
 
 	if (maps_removed)
@@ -4001,11 +4011,7 @@ int map_config_read(const char *cfgName)
 		else if (strcmpi(w1, "map_port") == 0) {
 			clif_setport(atoi(w2));
 			map_port = (atoi(w2));
-		} else if (strcmpi(w1, "map") == 0)
-			map_addmap(w2);
-		else if (strcmpi(w1, "delmap") == 0)
-			map_delmap(w2);
-		else if (strcmpi(w1, "npc") == 0)
+		} else if (strcmpi(w1, "npc") == 0)
 			npc_addsrcfile(w2, false);
 		else if (strcmpi(w1, "delnpc") == 0)
 			npc_delsrcfile(w2);
@@ -5124,6 +5130,7 @@ int do_init(int argc, char *argv[])
 
 	rnd_init();
 	map_config_read(MAP_CONF_NAME);
+	map_data_db.load();
 
 	if (save_settings == CHARSAVE_NONE)
 		ShowWarning("Value of 'save_settings' is not set, player's data only will be saved every 'autosave_time' (%d seconds).\n", autosave_interval/1000);

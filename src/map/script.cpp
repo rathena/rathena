@@ -13498,8 +13498,8 @@ BUILDIN_FUNC(flagemblem)
 
 BUILDIN_FUNC(getcastlename)
 {
-	const char* mapname = mapindex_getmapname(script_getstr(st,2),NULL);
-	std::shared_ptr<guild_castle> gc = castle_db.mapname2gc(mapname);
+	const std::string mapname = mapindex_getmapname(script_getstr(st,2));
+	std::shared_ptr<guild_castle> gc = castle_db.mapname2gc(mapname.c_str());
 	const char* name = (gc) ? gc->castle_name : "";
 	script_pushstrcopy(st,name);
 	return SCRIPT_CMD_SUCCESS;
@@ -13507,13 +13507,13 @@ BUILDIN_FUNC(getcastlename)
 
 BUILDIN_FUNC(getcastledata)
 {
-	const char *mapname = mapindex_getmapname(script_getstr(st,2),NULL);
+	const std::string mapname = mapindex_getmapname(script_getstr(st,2));
 	int index = script_getnum(st,3);
-	std::shared_ptr<guild_castle> gc = castle_db.mapname2gc(mapname);
+	std::shared_ptr<guild_castle> gc = castle_db.mapname2gc(mapname.c_str());
 
 	if (gc == NULL) {
 		script_pushint(st,0);
-		ShowWarning("buildin_getcastledata: guild castle for map '%s' not found\n", mapname);
+		ShowWarning("buildin_getcastledata: guild castle for map '%s' not found\n", mapname.c_str());
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -13550,13 +13550,13 @@ BUILDIN_FUNC(getcastledata)
 
 BUILDIN_FUNC(setcastledata)
 {
-	const char *mapname = mapindex_getmapname(script_getstr(st,2),NULL);
+	const std::string mapname = mapindex_getmapname(script_getstr(st,2));
 	int index = script_getnum(st,3);
 	int value = script_getnum(st,4);
-	std::shared_ptr<guild_castle> gc = castle_db.mapname2gc(mapname);
+	std::shared_ptr<guild_castle> gc = castle_db.mapname2gc(mapname.c_str());
 
 	if (gc == NULL) {
-		ShowWarning("buildin_setcastledata: guild castle for map '%s' not found\n", mapname);
+		ShowWarning("buildin_setcastledata: guild castle for map '%s' not found\n", mapname.c_str());
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -14152,11 +14152,11 @@ BUILDIN_FUNC(checkwall)
 ///
 BUILDIN_FUNC(guardianinfo)
 {
-	const char* mapname = mapindex_getmapname(script_getstr(st,2),NULL);
+	const std::string mapname = mapindex_getmapname(script_getstr(st,2));
 	int id = script_getnum(st,3);
 	int type = script_getnum(st,4);
 
-	std::shared_ptr<guild_castle> gc = castle_db.mapname2gc(mapname);
+	std::shared_ptr<guild_castle> gc = castle_db.mapname2gc(mapname.c_str());
 	struct mob_data* gd;
 
 	if( gc == NULL || id < 0 || id >= MAX_GUARDIANS )

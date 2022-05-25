@@ -4,9 +4,10 @@
 #ifndef MAPINDEX_HPP
 #define MAPINDEX_HPP
 
+#include "../common/database.hpp"
 #include "../common/mmo.hpp"
 
-#define MAX_MAPINDEX 2000
+//#define MAX_MAPINDEX 2000
 
 //Some definitions for the major city maps.
 #define MAP_PRONTERA "prontera"
@@ -52,19 +53,45 @@
 #define MAP_ECLAGE_IN "ecl_in01"
 #define MAP_LASAGNA "lasagna"
 
-const char* mapindex_getmapname(const char* string, char* output);
-const char* mapindex_getmapname_ext(const char* string, char* output);
+struct s_map_index {
+	std::string name;
+};
 
-unsigned short mapindex_name2idx(const char* name, const char *func);
+class MapIndexDatabase : public TypesafeCachedYamlDatabase<uint16, s_map_index> {
+private:
+	uint16 index;
+	std::vector<std::string> mapNameToIndex;
+
+public:
+	MapIndexDatabase() : TypesafeCachedYamlDatabase("MAP_INDEX", 1) {
+		index = 1;
+		mapNameToIndex.push_back("Unknown"); // Index 0
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef &node) override;
+
+	// Additional
+	const uint16 getIndex();
+	uint16 increaseIndex();
+	const uint16 name2index(const std::string &name);
+};
+
+extern MapIndexDatabase map_index_db;
+
+const std::string mapindex_getmapname(const std::string &string);
+const std::string mapindex_getmapname_ext(const std::string &string);
+
+uint16 mapindex_name2idx(const std::string &name, const std::string &func);
 #define mapindex_name2id(mapname) mapindex_name2idx((mapname), __FUNCTION__)
 
-const char* mapindex_idx2name(unsigned short id, const char *func);
-#define mapindex_id2name(mapindex) mapindex_idx2name((mapindex), __FUNCTION__)
+const std::string mapindex_idx2name(const uint16 id, const std::string &func);
+#define mapindex_id2name(mapindex) mapindex_idx2name((mapindex), __FUNCTION__).c_str()
 
-int mapindex_addmap(int index, const char* name);
-int mapindex_removemap(int index);
+uint16 mapindex_addmap(uint16 index, const std::string &name);
+void mapindex_removemap(uint16 index);
 
-void mapindex_check_mapdefault(const char *mapname);
+void mapindex_check_mapdefault(const std::string &mapname);
 
 void mapindex_init(void);
 void mapindex_final(void);

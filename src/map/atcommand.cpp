@@ -596,7 +596,7 @@ ACMD_FUNC(mapmove)
 			return -1;
 	}
 
-	mapindex = mapindex_name2idx(map_name, nullptr);
+	mapindex = mapindex_name2idx(map_name, "");
 	if (mapindex)
 		m = map_mapindex2mapid(mapindex);
 
@@ -7158,11 +7158,10 @@ ACMD_FUNC(users)
 {
 	char buf[CHAT_SIZE_MAX];
 	int i;
-	int users[MAX_MAPINDEX];
+	std::vector<int32> users = {};
 	int users_all;
 	struct s_mapiterator* iter;
 
-	memset(users, 0, sizeof(users));
 	users_all = 0;
 
 	// count users on each map
@@ -7173,7 +7172,7 @@ ACMD_FUNC(users)
 		if( sd2 == NULL )
 			break;// no more users
 
-		if( sd2->mapindex >= MAX_MAPINDEX )
+		if( sd2->mapindex >= map_index_db.size() )
 			continue;// invalid mapindex
 
 		if( users[sd2->mapindex] < INT_MAX ) ++users[sd2->mapindex];
@@ -7182,7 +7181,7 @@ ACMD_FUNC(users)
 	mapit_free(iter);
 
 	// display results for each map
-	for( i = 0; i < MAX_MAPINDEX; ++i )
+	for( i = 0; i < map_index_db.size(); ++i)
 	{
 		if( users[i] == 0 )
 			continue;// empty

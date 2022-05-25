@@ -1,0 +1,34 @@
+//===== rAthena Script =======================================
+//= Mapflag: gvg_noparty.
+//===== Description: =========================================
+//= Ignores party alliances on GvG-enabled maps.
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [Aleos]
+//============================================================
+
+//============================================================
+// Guild Dungeons
+//============================================================
+teg_dun01	mapflag	nocostume
+teg_dun02	mapflag	nocostume
+
+//============================================================
+// RWC
+//============================================================
+2009rwc_01	mapflag	gvg_noparty
+2009rwc_02	mapflag	gvg_noparty
+2009rwc_03	mapflag	gvg_noparty
+2009rwc_04	mapflag	gvg_noparty
+2009rwc_05	mapflag	gvg_noparty
+2009rwc_06	mapflag	gvg_noparty
+2009rwc_07	mapflag	gvg_noparty
+2009rwc_08	mapflag	gvg_noparty
+2009rwc_f01	mapflag	gvg_noparty
+2012rwc_01	mapflag	gvg_noparty
+2012rwc_02	mapflag	gvg_noparty
+2012rwc_03	mapflag	gvg_noparty
+2012rwc_04	mapflag	gvg_noparty
+2012rwc_05	mapflag	gvg_noparty
+2012rwc_06	mapflag	gvg_noparty
+2012rwc_07	mapflag	gvg_noparty
+2012rwc_08	mapflag	gvg_noparty

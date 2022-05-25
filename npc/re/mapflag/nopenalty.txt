@@ -51,6 +51,7 @@ ecl_in03	mapflag	nopenalty
 ecl_in04	mapflag	nopenalty
 ecl_hub01	mapflag	nopenalty
 que_avan01	mapflag	nopenalty
+moc_para01	mapflag	nopenalty
 
 //============================================================
 // Job Quests
@@ -107,3 +108,29 @@ lasa_in01	mapflag	nopenalty
 conch_in	mapflag	nopenalty
 
 wolfvill	mapflag	nopenalty
+
+//============================================================
+// RWC
+//============================================================
+2009rwc_01	mapflag	nopenalty
+2009rwc_02	mapflag	nopenalty
+2009rwc_03	mapflag	nopenalty
+2009rwc_04	mapflag	nopenalty
+2009rwc_05	mapflag	nopenalty
+2009rwc_06	mapflag	nopenalty
+2009rwc_07	mapflag	nopenalty
+2009rwc_08	mapflag	nopenalty
+2009rwc_f01	mapflag	nopenalty
+2012rwc_01	mapflag	nopenalty
+2012rwc_02	mapflag	nopenalty
+2012rwc_03	mapflag	nopenalty
+2012rwc_04	mapflag	nopenalty
+2012rwc_05	mapflag	nopenalty
+2012rwc_06	mapflag	nopenalty
+2012rwc_07	mapflag	nopenalty
+2012rwc_08	mapflag	nopenalty
+
+//============================================================
+// Events
+//============================================================
+//evt_zombie	mapflag	nopenalty

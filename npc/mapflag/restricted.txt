@@ -84,7 +84,6 @@ alberta	mapflag	restricted	7
 aldebaran	mapflag	restricted	7
 amatsu	mapflag	restricted	7
 ayothaya	mapflag	restricted	7
-brasilis	mapflag	restricted	7
 comodo	mapflag	restricted	7
 einbroch	mapflag	restricted	7
 einbech	mapflag	restricted	7

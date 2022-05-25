@@ -40,6 +40,27 @@ teg_dun01	mapflag	hidemobhpbar
 teg_dun02	mapflag	hidemobhpbar
 
 //============================================================
+// RWC
+//============================================================
+2009rwc_01	mapflag	hidemobhpbar
+2009rwc_02	mapflag	hidemobhpbar
+2009rwc_03	mapflag	hidemobhpbar
+2009rwc_04	mapflag	hidemobhpbar
+2009rwc_05	mapflag	hidemobhpbar
+2009rwc_06	mapflag	hidemobhpbar
+2009rwc_07	mapflag	hidemobhpbar
+2009rwc_08	mapflag	hidemobhpbar
+2009rwc_f01	mapflag	hidemobhpbar
+2012rwc_01	mapflag	hidemobhpbar
+2012rwc_02	mapflag	hidemobhpbar
+2012rwc_03	mapflag	hidemobhpbar
+2012rwc_04	mapflag	hidemobhpbar
+2012rwc_05	mapflag	hidemobhpbar
+2012rwc_06	mapflag	hidemobhpbar
+2012rwc_07	mapflag	hidemobhpbar
+2012rwc_08	mapflag	hidemobhpbar
+
+//============================================================
 // Episode 15 - Phantasmagorica
 //============================================================
 verus04	mapflag	hidemobhpbar

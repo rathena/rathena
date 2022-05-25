@@ -30,8 +30,3 @@ quiz_test	mapflag	noskill
 que_bingo	mapflag	noskill
 p_track01	mapflag	noskill
 p_track02	mapflag	noskill
-
-//============================================================
-// Events
-//============================================================
-//evt_zombie	mapflag	noskill

@@ -14567,7 +14567,7 @@ void pc_show_questinfo(struct map_session_data *sd) {
 #if PACKETVER >= 20090218
 	nullpo_retv(sd);
 
-	if (sd->bl.m < 0 || sd->bl.m >= MAX_MAPINDEX)
+	if (sd->bl.m < 0 || sd->bl.m >= map_index_db.size())
 		return;
 
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
@@ -14626,7 +14626,7 @@ void pc_show_questinfo_reinit(struct map_session_data *sd) {
 
 	sd->qi_display.clear();
 
-	if (sd->bl.m < 0 || sd->bl.m >= MAX_MAPINDEX)
+	if (sd->bl.m < 0 || sd->bl.m >= map_index_db.size())
 		return;
 
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);

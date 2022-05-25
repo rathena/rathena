@@ -2085,7 +2085,7 @@ void clif_changemap(struct map_session_data *sd, short m, int x, int y)
 
 	WFIFOHEAD(fd,packet_len(0x91));
 	WFIFOW(fd,0) = 0x91;
-	mapindex_getmapname_ext(map_mapid2mapname(m), WFIFOCP(fd,2));
+	strcpy(WFIFOCP(fd, 2), mapindex_getmapname_ext(map_mapid2mapname(m)).c_str());
 	WFIFOW(fd,18) = x;
 	WFIFOW(fd,20) = y;
 	WFIFOSET(fd,packet_len(0x91));
@@ -2108,7 +2108,7 @@ void clif_changemapserver(struct map_session_data* sd, unsigned short map_index,
 
 	WFIFOHEAD(fd,packet_len(cmd));
 	WFIFOW(fd,0) = cmd;
-	mapindex_getmapname_ext(mapindex_id2name(map_index), WFIFOCP(fd,2));
+	strcpy(WFIFOCP(fd,2), mapindex_getmapname_ext(mapindex_id2name(map_index)).c_str());
 	WFIFOW(fd,18) = x;
 	WFIFOW(fd,20) = y;
 	WFIFOL(fd,22) = htonl(ip);
@@ -5262,7 +5262,7 @@ void clif_changemapcell(int fd, int16 m, int x, int y, int type, enum send_targe
 	WBUFW(buf,2) = x;
 	WBUFW(buf,4) = y;
 	WBUFW(buf,6) = type;
-	mapindex_getmapname_ext(map_mapid2mapname(m),WBUFCP(buf,8));
+	strcpy(WBUFCP(buf,8), mapindex_getmapname_ext(map_mapid2mapname(m)).c_str());
 
 	if( session_isActive(fd) )
 	{
@@ -6162,10 +6162,10 @@ void clif_skill_warppoint(struct map_session_data* sd, uint16 skill_id, uint16 s
 	memset(WFIFOP(fd,4), 0x00, 4*MAP_NAME_LENGTH_EXT);
 	if (map1 == (unsigned short)-1) strcpy(WFIFOCP(fd,4), "Random");
 	else // normal map name
-	if (map1 > 0) mapindex_getmapname_ext(mapindex_id2name(map1), WFIFOCP(fd,4));
-	if (map2 > 0) mapindex_getmapname_ext(mapindex_id2name(map2), WFIFOCP(fd,20));
-	if (map3 > 0) mapindex_getmapname_ext(mapindex_id2name(map3), WFIFOCP(fd,36));
-	if (map4 > 0) mapindex_getmapname_ext(mapindex_id2name(map4), WFIFOCP(fd,52));
+	if (map1 > 0) strcpy(WFIFOCP(fd,4), mapindex_getmapname_ext(mapindex_id2name(map1)).c_str());
+	if (map2 > 0) strcpy(WFIFOCP(fd,20), mapindex_getmapname_ext(mapindex_id2name(map2)).c_str());
+	if (map3 > 0) strcpy(WFIFOCP(fd,36), mapindex_getmapname_ext(mapindex_id2name(map3)).c_str());
+	if (map4 > 0) strcpy(WFIFOCP(fd,52), mapindex_getmapname_ext(mapindex_id2name(map4)).c_str());
 	WFIFOSET(fd,packet_len(0x11c));
 
 	sd->menuskill_id = skill_id;
@@ -7875,7 +7875,7 @@ void clif_party_member_info(struct party_data *p, struct map_session_data *sd)
 	WBUFB(buf,offset+14) = (p->party.member[i].online)?0:1;
 	safestrncpy(WBUFCP(buf,offset+15), p->party.name, NAME_LENGTH);
 	safestrncpy(WBUFCP(buf,offset+39), sd->status.name, NAME_LENGTH);
-	mapindex_getmapname_ext(map_mapid2mapname(sd->bl.m), WBUFCP(buf,offset+63));
+	strcpy(WBUFCP(buf,offset+63), mapindex_getmapname_ext(map_mapid2mapname(sd->bl.m)).c_str());
 	WBUFB(buf,offset+79) = (p->party.item&1)?1:0;
 	WBUFB(buf,offset+80) = (p->party.item&2)?1:0;
 	clif_send(buf,packet_len(cmd),&sd->bl,PARTY);
@@ -7919,7 +7919,7 @@ void clif_party_info(struct party_data* p, struct map_session_data *sd)
 
 		WBUFL(buf,PRE_SIZE+c*M_SIZE) = m->account_id;
 		safestrncpy(WBUFCP(buf,PRE_SIZE+c*M_SIZE+4), m->name, NAME_LENGTH);
-		mapindex_getmapname_ext(mapindex_id2name(m->map), WBUFCP(buf,PRE_SIZE+c*M_SIZE+PRE_SIZE));
+		strcpy(WBUFCP(buf,PRE_SIZE+c*M_SIZE+PRE_SIZE), mapindex_getmapname_ext(mapindex_id2name(m->map)).c_str());
 		WBUFB(buf,PRE_SIZE+c*M_SIZE+44) = (m->leader) ? 0 : 1;
 		WBUFB(buf,PRE_SIZE+c*M_SIZE+45) = (m->online) ? 0 : 1;
 #if PACKETVER >= 20170502
@@ -10327,7 +10327,7 @@ void clif_feel_info(struct map_session_data* sd, unsigned char feel_level, unsig
 {
 	char mapname[MAP_NAME_LENGTH_EXT];
 
-	mapindex_getmapname_ext(mapindex_id2name(sd->feel_map[feel_level].index), mapname);
+	strcpy(mapname, mapindex_getmapname_ext(mapindex_id2name(sd->feel_map[feel_level].index)).c_str());
 	clif_starskill(sd, mapname, 0, feel_level, type ? 1 : 0);
 }
 
@@ -13153,9 +13153,8 @@ void clif_parse_UseSkillMap(int fd, struct map_session_data* sd)
 {
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 	uint16 skill_id = RFIFOW(fd,info->pos[0]);
-	char map_name[MAP_NAME_LENGTH];
+	const std::string map_name = mapindex_getmapname(RFIFOCP(fd,info->pos[1]));
 
-	mapindex_getmapname(RFIFOCP(fd,info->pos[1]), map_name);
 	sd->state.workinprogress = WIP_DISABLE_NONE;
 
 	if(skill_id != sd->menuskill_id)
@@ -13168,7 +13167,7 @@ void clif_parse_UseSkillMap(int fd, struct map_session_data* sd)
 	}
 
 	pc_delinvincibletimer(sd);
-	skill_castend_map(sd,skill_id,map_name);
+	skill_castend_map(sd,skill_id,map_name.c_str());
 }
 
 
@@ -20335,7 +20334,7 @@ void clif_clan_basicinfo( struct map_session_data *sd ){
 	offset += NAME_LENGTH;
 	safestrncpy( WFIFOCP( fd, offset ), clan->master, NAME_LENGTH );
 	offset += NAME_LENGTH;
-	mapindex_getmapname_ext( clan->map, mapname );
+	strcpy( mapname, mapindex_getmapname_ext( clan->map ).c_str() );
 	safestrncpy( WFIFOCP( fd, offset ), mapname, MAP_NAME_LENGTH_EXT );
 	offset += MAP_NAME_LENGTH_EXT;
 

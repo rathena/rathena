@@ -256,8 +256,3 @@ bat_b01	mapflag	noreturn
 bat_b02	mapflag	noreturn
 bat_a01	mapflag	noreturn
 bat_a02	mapflag	noreturn
-
-//============================================================
-// Events
-//============================================================
-//evt_zombie	mapflag	noreturn

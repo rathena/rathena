@@ -142,8 +142,3 @@ man_in01	mapflag	pvp	off
 splendide	mapflag	pvp	off
 spl_in01	mapflag	pvp	off
 spl_in02	mapflag	pvp	off
-
-//============================================================
-// Events
-//============================================================
-//evt_zombie	mapflag	pvp	off

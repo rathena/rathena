@@ -824,6 +824,16 @@ struct map_data_other_server {
 	uint16 port;
 };
 
+class MapDataDatabase : public YamlDatabase {
+public:
+	MapDataDatabase() : YamlDatabase("MAPS_DB", 1) {
+	}
+
+	void clear() override {};
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef &node) override;
+};
+
 int map_getcell(int16 m,int16 x,int16 y,cell_chk cellchk);
 int map_getcellp(struct map_data* m,int16 x,int16 y,cell_chk cellchk);
 void map_setcell(int16 m, int16 x, int16 y, cell_t cell, bool flag);
@@ -1164,7 +1174,6 @@ int map_random_dir(struct block_list *bl, int16 *x, int16 *y); // [Skotlex]
 
 int cleanup_sub(struct block_list *bl, va_list ap);
 
-int map_delmap(char* mapname);
 void map_flags_init(void);
 
 bool map_iwall_exist(const char* wall_name);

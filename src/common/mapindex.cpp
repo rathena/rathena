@@ -10,188 +10,208 @@
 #include "showmsg.hpp"
 #include "strlib.hpp"
 
-DBMap *mapindex_db;
-struct _indexes {
-	char name[MAP_NAME_LENGTH]; //Stores map name
-} indexes[MAX_MAPINDEX];
+using namespace rathena;
 
-int max_index = 0;
+MapIndexDatabase map_index_db;
 
-#define mapindex_exists(id) (indexes[id].name[0] != '\0')
-
-/// Retrieves the map name from 'string' (removing .gat extension if present).
-/// Result gets placed either into 'buf' or in a static local buffer.
-const char* mapindex_getmapname(const char* string, char* output) {
-	static char buf[MAP_NAME_LENGTH];
-	char* dest = (output != NULL) ? output : buf;
-
-	size_t len = strnlen(string, MAP_NAME_LENGTH_EXT);
-	if (len == MAP_NAME_LENGTH_EXT) {
-		ShowWarning("(mapindex_normalize_name) Map name '%*s' is too long!\n", 2*MAP_NAME_LENGTH_EXT, string);
-		len--;
-	}
-	if (len >= 4 && stricmp(&string[len-4], ".gat") == 0)
-		len -= 4; // strip .gat extension
-
-	len = zmin(len, MAP_NAME_LENGTH-1);
-	safestrncpy(dest, string, len+1);
-	memset(&dest[len], '\0', MAP_NAME_LENGTH-len);
-
-	return dest;
+const uint16 MapIndexDatabase::getIndex() {
+	return this->index;
 }
 
-/// Retrieves the map name from 'string' (adding .gat extension if not already present).
-/// Result gets placed either into 'buf' or in a static local buffer.
-const char* mapindex_getmapname_ext(const char* string, char* output) {
-	static char buf[MAP_NAME_LENGTH_EXT];
-	char* dest = (output != NULL) ? output : buf;
-
-	size_t len;
-
-	strcpy(buf,string);
-	sscanf(string,"%*[^#]%*[#]%15s",buf);
-
-	len = safestrnlen(buf, MAP_NAME_LENGTH);
-
-	if (len == MAP_NAME_LENGTH) {
-		ShowWarning("(mapindex_normalize_name) Map name '%*s' is too long!\n", 2*MAP_NAME_LENGTH, buf);
-		len--;
-	}
-	safestrncpy(dest, buf, len+1);
-
-	if (len < 4 || stricmp(&dest[len-4], ".gat") != 0) {
-		strcpy(&dest[len], ".gat");
-		len += 4; // add .gat extension
-	}
-
-	memset(&dest[len], '\0', MAP_NAME_LENGTH_EXT-len);
-
-	return dest;
+uint16 MapIndexDatabase::increaseIndex() {
+	return this->index++;
 }
 
-/// Adds a map to the specified index
-/// Returns 1 if successful, 0 oherwise
-int mapindex_addmap(int index, const char* name) {
-	char map_name[MAP_NAME_LENGTH];
-	if (index == -1){ //autogive index
-		ARR_FIND(1,max_index,index,(indexes[index].name[0] == '\0'));
+const uint16 MapIndexDatabase::name2index(const std::string &name) {
+	auto map = util::vector_get(this->mapNameToIndex, name);
+
+	if (map != this->mapNameToIndex.end())
+		return map - this->mapNameToIndex.begin();
+	else
+		return 0;
+}
+
+/**
+ * Retrieves the map name from 'string' (removing.gat extension if present).
+ * @param string: Map name
+ * @return Adjusted map name.
+ */
+const std::string mapindex_getmapname(const std::string &string) {
+	std::string temp = string;
+
+	if (temp.size() > MAP_NAME_LENGTH)
+		temp.resize(MAP_NAME_LENGTH - 1);
+
+	size_t len = temp.size();
+
+	if (len >= MAP_NAME_LENGTH_EXT) {
+		ShowWarning("mapindex_normalize_name: Map name '%*s' is too long!\n", 2 * MAP_NAME_LENGTH_EXT, string.c_str());
+		len--;
+		temp.resize(len);
 	}
 
-	if (index < 0 || index >= MAX_MAPINDEX) {
-		ShowError("(mapindex_add) Map index (%d) for \"%s\" out of range (max is %d)\n", index, name, MAX_MAPINDEX);
+	if (len >= 4 && string.find(".gat") != std::string::npos)
+		temp.erase(len - 4); // strip .gat extension
+
+	return temp;
+}
+
+/**
+ * Retrieves the map name from 'string' (adding.gat extension if not already present).
+ * @param string: Map name
+ * @return Adjusted map name.
+ */
+const std::string mapindex_getmapname_ext(const std::string &string) {
+	std::string temp = string;
+
+	if (temp.size() > MAP_NAME_LENGTH_EXT)
+		temp.resize(MAP_NAME_LENGTH_EXT - 1);
+
+	size_t len = temp.size();
+
+	if (len >= MAP_NAME_LENGTH) {
+		ShowWarning("mapindex_normalize_name: Map name '%*s' is too long!\n", 2 * MAP_NAME_LENGTH, temp.c_str());
+		len--;
+		temp.resize(len);
+	}
+
+	if (len < 4 || temp.find(".gat") == std::string::npos)
+		temp += ".gat"; // add .gat extension
+
+	return temp;
+	//return &(*temp.begin());
+	//return const_cast<char *>(temp.c_str());
+}
+
+/**
+ * Adds a map to the specified index.
+ * @param index: Map index
+ * @param name: Map name
+ * @ return Map index if successful, 0 otherwise
+ */
+uint16 mapindex_addmap(uint16 index, const std::string &name) {
+	if (index == 0) // Autogive index
+		index = static_cast<uint16>(map_index_db.size() + 1);
+
+	if (index < 1) {
+		ShowError("mapindex_add: Map index (%hu) for \"%s\" must be greater than 1. Skipping...\n", index, name.c_str());
 		return 0;
 	}
 
-	mapindex_getmapname(name, map_name);
+	std::string map_name = mapindex_getmapname(name);
 
-	if (map_name[0] == '\0') {
-		ShowError("(mapindex_add) Cannot add maps with no name.\n");
+	if (map_name.empty()) {
+		ShowError("mapindex_add: Cannot add maps with no name.\n");
 		return 0;
 	}
 
-	if (strlen(map_name) >= MAP_NAME_LENGTH) {
-		ShowError("(mapindex_add) Map name %s is too long. Maps are limited to %d characters.\n", map_name, MAP_NAME_LENGTH);
+	if (map_name.size() >= MAP_NAME_LENGTH) {
+		ShowError("mapindex_add: Map name %s is too long. Maps are limited to %d characters.\n", map_name.c_str(), MAP_NAME_LENGTH);
 		return 0;
 	}
 
-	if (mapindex_exists(index)) {
-		ShowWarning("(mapindex_add) Overriding index %d: map \"%s\" -> \"%s\"\n", index, indexes[index].name, map_name);
-		strdb_remove(mapindex_db, indexes[index].name);
-	}
+	std::shared_ptr<s_map_index> map = map_index_db.find(index);
 
-	safestrncpy(indexes[index].name, map_name, MAP_NAME_LENGTH);
-	strdb_iput(mapindex_db, map_name, index);
-	if (max_index <= index)
-		max_index = index+1;
+	if (map != nullptr)
+		ShowWarning("mapindex_add: Overriding index %hu: map \"%s\" -> \"%s\"\n", index, map->name.c_str(), map_name.c_str());
+	else
+		map = std::make_shared<s_map_index>();
+
+	map->name = map_name;
+
+	map_index_db.put(index, map);
 
 	return index;
 }
 
-unsigned short mapindex_name2idx(const char* name, const char *func) {
-	int i;
-	char map_name[MAP_NAME_LENGTH];
-	mapindex_getmapname(name, map_name);
-
-	if( (i = strdb_iget(mapindex_db, map_name)) )
-		return i;
-
-	if (func)
-		ShowDebug("(%s) mapindex_name2id: Map \"%s\" not found in index list!\n", func, map_name);
-	return 0;
+/**
+ * Remove a map from the indexed list
+ * @param index: Map index to remove
+ */
+void mapindex_removemap(uint16 index) {
+	map_index_db.erase(index);
 }
 
-const char* mapindex_idx2name(unsigned short id, const char *func) {
-	if (id >= MAX_MAPINDEX || !mapindex_exists(id)) {
-		ShowDebug("(%s) mapindex_id2name: Requested name for non-existant map index [%d] in cache.\n", func, id);
-		return indexes[0].name; // dummy empty string so that the callee doesn't crash
-	}
-	return indexes[id].name;
+/**
+ * Gets the map index value from a map's name.
+ * @param name: Map name to lookup
+ * @param func: Optional function name used for reporting debug message
+ * @return Map Index
+ */
+uint16 mapindex_name2idx(const std::string &name, const std::string &func) {
+	std::string map_name = mapindex_getmapname(name);
+	uint16 index = map_index_db.name2index(map_name);
+
+	if (index == 0 && !func.empty())
+		ShowDebug("(%s) mapindex_name2id: Map \"%s\" not found in index list!\n", func.c_str(), map_name.c_str());
+	return index;
 }
 
-void mapindex_init(void) {
-	FILE *fp;
-	char line[1024];
-	int last_index = -1;
-	int index;
-	char map_name[MAP_NAME_LENGTH];
-	char path[255];
-	const char* mapindex_cfgfile[] = {
-		"map_index.txt",
-		DBIMPORT"/map_index.txt"
-	};
-
-	memset (&indexes, 0, sizeof (indexes));
-	mapindex_db = strdb_alloc(DB_OPT_DUP_KEY, MAP_NAME_LENGTH);
-
-	for( size_t i = 0; i < ARRAYLENGTH(mapindex_cfgfile); i++ ){
-		sprintf( path, "%s/%s", db_path, mapindex_cfgfile[i] );
-
-		if( ( fp = fopen( path, "r" ) ) == NULL ){
-			// It is only fatal if it is the main file
-			if( i == 0 ){
-				ShowFatalError("Unable to read mapindex config file %s!\n", path );
-				exit(EXIT_FAILURE); //Server can't really run without this file.
-			}else{
-				ShowWarning("Unable to read mapindex config file %s!\n", path );
-				break;
-			}
-		}
-
-		while(fgets(line, sizeof(line), fp)) {
-			if(line[0] == '/' && line[1] == '/')
-				continue;
-
-			switch (sscanf(line, "%11s\t%d", map_name, &index)) {
-				case 1: //Map with no ID given, auto-assign
-					index = last_index+1;
-				case 2: //Map with ID given
-					mapindex_addmap(index,map_name);
-					break;
-				default:
-					continue;
-			}
-			last_index = index;
-		}
-		fclose(fp);
+/**
+ * Gets the map name value from a map's index.
+ * @param id: Map index to lookup
+ * @param func: Optional function name used for reporting debug message
+ */
+const std::string mapindex_idx2name(const uint16 id, const std::string &func) {
+	if (id >= map_index_db.size() || !map_index_db.exists(id)) {
+		ShowDebug("(%s) mapindex_id2name: Requested name for non-existant map index [%hu] in cache.\n", func.c_str(), id);
+		return ""; // dummy empty string so that the callee doesn't crash
 	}
+
+	return map_index_db.find(id)->name;
+}
+
+const std::string MapIndexDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/map_index.yml";
+}
+
+/**
+ * Reads and parses an entry from the map_index.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
+uint64 MapIndexDatabase::parseBodyNode(const ryml::NodeRef &node) {
+	std::string map_name;
+
+	if (!this->asString(node, "Map", map_name))
+		return 0;
+
+	uint16 mapindex;
+
+	if (this->nodeExists(node, "Index")) {
+		if (!this->asUInt16(node, "Index", mapindex))
+			return 0;
+
+		if (mapindex < 1) {
+			this->invalidWarning(node["Index"], "Index %hu needs to be greater than 0. Skipping...\n", mapindex);
+			return 0;
+		}
+	} else {
+		mapindex = this->index;
+	}
+
+	this->increaseIndex();
+	mapindex_addmap(mapindex, map_name);
+	this->mapNameToIndex.push_back(map_name);
+
+	return 1;
 }
 
 /**
  * Check default map (only triggered once by char-server)
- * @param mapname
- **/
-void mapindex_check_mapdefault(const char *mapname) {
-	mapname = mapindex_getmapname(mapname, NULL);
-	if( !strdb_iget(mapindex_db, mapname) ) {
+ * @param mapname: Default map name
+ */
+void mapindex_check_mapdefault(const std::string &mapname) {
+	std::string temp = mapindex_getmapname(mapname);
+
+	if (!mapindex_name2idx(temp, ""))
 		ShowError("mapindex_init: Default map '%s' not found in cache! Please change in (by default in) char_athena.conf!\n", mapname);
-	}
 }
 
-int mapindex_removemap(int index){
-	indexes[index].name[0] = '\0';
-	return 0;
+void mapindex_init(void) {
+	map_index_db.load();
 }
 
 void mapindex_final(void) {
-	db_destroy(mapindex_db);
+	map_index_db.clear();
 }

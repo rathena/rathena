@@ -99,7 +99,6 @@ veins	mapflag	nopenalty
 ve_in	mapflag	nopenalty
 ve_in02	mapflag	nopenalty
 thor_camp	mapflag	nopenalty
-moc_para01	mapflag	nopenalty
 mid_camp	mapflag	nopenalty
 mid_campin	mapflag	nopenalty
 moc_fild22b	mapflag	nopenalty
@@ -293,29 +292,3 @@ bat_b01	mapflag	nopenalty
 bat_b02	mapflag	nopenalty
 bat_a01	mapflag	nopenalty
 bat_a02	mapflag	nopenalty
-
-//============================================================
-// RWC
-//============================================================
-2009rwc_01	mapflag	nopenalty
-2009rwc_02	mapflag	nopenalty
-2009rwc_03	mapflag	nopenalty
-2009rwc_04	mapflag	nopenalty
-2009rwc_05	mapflag	nopenalty
-2009rwc_06	mapflag	nopenalty
-2009rwc_07	mapflag	nopenalty
-2009rwc_08	mapflag	nopenalty
-2009rwc_f01	mapflag	nopenalty
-2012rwc_01	mapflag	nopenalty
-2012rwc_02	mapflag	nopenalty
-2012rwc_03	mapflag	nopenalty
-2012rwc_04	mapflag	nopenalty
-2012rwc_05	mapflag	nopenalty
-2012rwc_06	mapflag	nopenalty
-2012rwc_07	mapflag	nopenalty
-2012rwc_08	mapflag	nopenalty
-
-//============================================================
-// Events
-//============================================================
-//evt_zombie	mapflag	nopenalty

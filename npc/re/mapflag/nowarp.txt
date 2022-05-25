@@ -56,3 +56,24 @@ que_swat	mapflag	nowarp
 //============================================================
 un_myst	mapflag	nowarp
 rockmi2	mapflag	nowarp
+
+//============================================================
+// RWC
+//============================================================
+2009rwc_01	mapflag	nowarp
+2009rwc_02	mapflag	nowarp
+2009rwc_03	mapflag	nowarp
+2009rwc_04	mapflag	nowarp
+2009rwc_05	mapflag	nowarp
+2009rwc_06	mapflag	nowarp
+2009rwc_07	mapflag	nowarp
+2009rwc_08	mapflag	nowarp
+2009rwc_f01	mapflag	nowarp
+2012rwc_01	mapflag	nowarp
+2012rwc_02	mapflag	nowarp
+2012rwc_03	mapflag	nowarp
+2012rwc_04	mapflag	nowarp
+2012rwc_05	mapflag	nowarp
+2012rwc_06	mapflag	nowarp
+2012rwc_07	mapflag	nowarp
+2012rwc_08	mapflag	nowarp

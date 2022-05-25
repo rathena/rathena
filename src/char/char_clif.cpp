@@ -792,7 +792,7 @@ void chclif_send_map_data( int fd, struct mmo_charstatus *cd, uint32 ipl, int ma
 	WFIFOHEAD(fd,size);
 	WFIFOW(fd,0) = cmd;
 	WFIFOL(fd,2) = cd->char_id;
-	mapindex_getmapname_ext(mapindex_id2name(cd->last_point.map), WFIFOCP(fd,6));
+	strcpy(WFIFOCP(fd,6), mapindex_getmapname_ext(mapindex_id2name(cd->last_point.map)).c_str());
 	uint32 subnet_map_ip = char_lan_subnetcheck(ipl); // Advanced subnet check [LuzZza]
 	WFIFOL(fd,22) = htonl((subnet_map_ip) ? subnet_map_ip : map_server[map_server_index].ip);
 	WFIFOW(fd,26) = ntows(htons(map_server[map_server_index].port)); // [!] LE byte order here [!]

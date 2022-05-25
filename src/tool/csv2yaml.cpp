@@ -538,6 +538,12 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
+	if (!process("MAP_INDEX", 1, root_paths, "map_index", [](const std::string &path, const std::string &name_ext) -> bool {
+		return mapindex_read((path + name_ext).c_str());
+	})) {
+		return 0;
+	}
+
 	// TODO: add implementations ;-)
 
 	return 0;
@@ -4913,6 +4919,47 @@ static bool itemdb_read_combos(const char* file) {
 
 		count++;
 	}
+	fclose(fp);
+	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, file);
+
+	return true;
+}
+
+// Copied and adjusted from mapindex.cpp
+static bool mapindex_read(const char *file) {
+	FILE *fp = fopen(file, "r");
+
+	if (fp == nullptr) {
+		ShowError("Can't read %s\n", file);
+		return false;
+	}
+
+	char line[1024];
+	int last_index = -1, index, count = 0;
+	char map_name[MAP_NAME_LENGTH];
+
+	while (fgets(line, sizeof(line), fp)) {
+		if (line[0] == '/' && line[1] == '/')
+			continue;
+
+		switch (sscanf(line, "%11s\t%d", map_name, &index)) {
+			case 1: //Map with no ID given, auto-assign
+				index = last_index + 1;
+			case 2: //Map with ID given
+				body << YAML::BeginMap;
+				body << YAML::Key << "Index" << YAML::Value << index;
+				body << YAML::Key << "Map" << YAML::Value << map_name;
+				body << YAML::EndMap;
+				break;
+			default:
+				ShowWarning("mapindex_read: Invalid format supplied for %s, skipping...\n", map_name);
+				continue;
+		}
+
+		last_index = index;
+		count++;
+	}
+
 	fclose(fp);
 	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, file);
 

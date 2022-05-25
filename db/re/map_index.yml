@@ -1,0 +1,813 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Map Index Database
+###########################################################################
+#
+# Map Index Settings
+#
+###########################################################################
+# - Index                   Map index that aligns with the map_cache.
+#   Map                     Map name.
+###########################################################################
+
+Header:
+  Type: MAP_INDEX
+  Version: 1
+
+Body:
+  - Index: 739
+    Map: moc_para01
+  - Index: 740
+    Map: job3_arch01
+  - Index: 741
+    Map: job3_arch02
+  - Index: 742
+    Map: job3_arch03
+  - Index: 743
+    Map: job3_guil01
+  - Index: 744
+    Map: job3_guil02
+  - Index: 745
+    Map: job3_guil03
+  - Index: 746
+    Map: job3_rang01
+  - Index: 747
+    Map: job3_rang02
+  - Index: 748
+    Map: job3_rune01
+  - Index: 749
+    Map: job3_rune02
+  - Index: 750
+    Map: job3_rune03
+  - Index: 751
+    Map: job3_war01
+  - Index: 752
+    Map: job3_war02
+  - Index: 753
+    Map: jupe_core2
+  - Index: 754
+    Map: brasilis
+  - Index: 755
+    Map: bra_in01
+  - Index: 756
+    Map: bra_fild01
+  - Index: 757
+    Map: bra_dun01
+  - Index: 758
+    Map: bra_dun02
+  - Index: 759
+    Map: dicastes01
+  - Index: 760
+    Map: dicastes02
+  - Index: 761
+    Map: dic_in01
+  - Index: 762
+    Map: dic_fild01
+  - Index: 763
+    Map: dic_fild02
+  - Index: 764
+    Map: dic_dun01
+  - Index: 765
+    Map: dic_dun02
+  - Index: 766
+    Map: job3_gen01
+  - Index: 767
+    Map: s_atelier
+  - Index: 768
+    Map: job3_sha01
+#  - Index: 
+#    Map: evt_zombie
+#  - Index: 
+#    Map: evt_coke
+#  - Index: 
+#    Map: ac_sl_area
+#  - Index: 
+#    Map: ac_cl_hall
+#  - Index: 
+#    Map: ac_cl_room
+#  - Index: 
+#    Map: jp_s_dun11
+  - Index: 769
+    Map: mora
+  - Index: 770
+    Map: bif_fild01
+  - Index: 771
+    Map: bif_fild02
+  - Index: 772
+    Map: 1@mist
+  - Index: 773
+    Map: dewata
+  - Index: 774
+    Map: dew_in01
+  - Index: 775
+    Map: dew_fild01
+  - Index: 776
+    Map: dew_dun01
+  - Index: 777
+    Map: dew_dun02
+  - Index: 778
+    Map: que_house_s
+  - Index: 779
+    Map: malangdo
+  - Index: 780
+    Map: mal_in01
+  - Index: 781
+    Map: mal_in02
+  - Index: 782
+    Map: mal_dun01
+  - Index: 783
+    Map: 1@pump
+  - Index: 784
+    Map: 2@pump
+  - Index: 785
+    Map: 1@cash
+  - Index: 786
+    Map: iz_dun05
+  - Index: 787
+    Map: evt_mobroom
+  - Index: 788
+    Map: alde_tt03
+  - Index: 789
+    Map: dic_dun03
+#  - Index: 
+#    Map: mjolnir_04_1
+  - Index: 790
+    Map: 1@lhz
+  - Index: 791
+    Map: lhz_dun04
+  - Index: 792
+    Map: que_lhz
+  - Index: 793
+    Map: evt_swar_b
+  - Index: 794
+    Map: evt_swar_r
+  - Index: 795
+    Map: evt_swar_s
+  - Index: 796
+    Map: evt_swar_t
+  - Index: 797
+    Map: gld2_ald
+  - Index: 798
+    Map: gld2_gef
+  - Index: 799
+    Map: gld2_pay
+  - Index: 800
+    Map: gld2_prt
+  - Index: 801
+    Map: gld_dun01_2
+  - Index: 802
+    Map: gld_dun02_2
+  - Index: 803
+    Map: gld_dun03_2
+  - Index: 804
+    Map: gld_dun04_2
+  - Index: 805
+    Map: malaya
+  - Index: 806
+    Map: job_ko
+  - Index: 807
+    Map: ma_scene01
+  - Index: 808
+    Map: 1@ma_b
+  - Index: 809
+    Map: 1@ma_c
+  - Index: 810
+    Map: 1@ma_h
+  - Index: 811
+    Map: ma_in01
+  - Index: 812
+    Map: ma_dun01
+  - Index: 813
+    Map: ma_fild01
+  - Index: 814
+    Map: ma_fild02
+  - Index: 815
+    Map: ma_zif01
+  - Index: 816
+    Map: ma_zif02
+  - Index: 817
+    Map: ma_zif03
+  - Index: 818
+    Map: ma_zif04
+  - Index: 819
+    Map: ma_zif05
+  - Index: 820
+    Map: ma_zif06
+  - Index: 821
+    Map: ma_zif07
+  - Index: 822
+    Map: ma_zif08
+  - Index: 823
+    Map: ma_zif09
+  - Index: 824
+    Map: new_event
+  - Index: 825
+    Map: eclage
+  - Index: 826
+    Map: ecl_fild01
+  - Index: 827
+    Map: ecl_tdun01
+  - Index: 828
+    Map: ecl_tdun02
+  - Index: 829
+    Map: ecl_tdun03
+  - Index: 830
+    Map: ecl_tdun04
+  - Index: 831
+    Map: que_avan01
+  - Index: 832
+    Map: 1@ecl
+  - Index: 833
+    Map: ecl_in01
+  - Index: 834
+    Map: ecl_in02
+  - Index: 835
+    Map: ecl_in03
+  - Index: 836
+    Map: ecl_in04
+  - Index: 837
+    Map: ecl_hub01
+  - Index: 838
+    Map: moc_prydn1
+  - Index: 839
+    Map: moc_prydn2
+  - Index: 840
+    Map: iz_ac01
+  - Index: 841
+    Map: iz_ac02
+  - Index: 842
+    Map: treasure_n1
+  - Index: 843
+    Map: treasure_n2
+  - Index: 844
+    Map: iz_int
+  - Index: 845
+    Map: iz_ng01
+  - Index: 846
+    Map: iz_int01
+  - Index: 847
+    Map: iz_int02
+  - Index: 848
+    Map: iz_int03
+  - Index: 849
+    Map: iz_int04
+  - Index: 850
+    Map: iz_ac01_a
+  - Index: 851
+    Map: iz_ac02_a
+  - Index: 852
+    Map: iz_ac01_b
+  - Index: 853
+    Map: iz_ac02_b
+  - Index: 854
+    Map: iz_ac01_c
+  - Index: 855
+    Map: iz_ac02_c
+  - Index: 856
+    Map: iz_ac01_d
+  - Index: 857
+    Map: iz_ac02_d
+  - Index: 858
+    Map: te_prtcas01
+  - Index: 859
+    Map: te_prtcas02
+  - Index: 860
+    Map: te_prtcas03
+  - Index: 861
+    Map: te_prtcas04
+  - Index: 862
+    Map: te_prtcas05
+  - Index: 863
+    Map: te_aldecas1
+  - Index: 864
+    Map: te_aldecas2
+  - Index: 865
+    Map: te_aldecas3
+  - Index: 866
+    Map: te_aldecas4
+  - Index: 867
+    Map: te_aldecas5
+  - Index: 868
+    Map: prt_fild08a
+  - Index: 869
+    Map: prt_fild08b
+  - Index: 870
+    Map: prt_fild08c
+  - Index: 871
+    Map: prt_fild08d
+  - Index: 872
+    Map: izlude_a
+  - Index: 873
+    Map: izlude_b
+  - Index: 874
+    Map: izlude_c
+  - Index: 875
+    Map: izlude_d
+  - Index: 876
+    Map: te_prt_gld
+  - Index: 877
+    Map: te_alde_gld
+  - Index: 878
+    Map: teg_dun01
+  - Index: 879
+    Map: teg_dun02
+  - Index: 880
+    Map: 1@gl_k
+  - Index: 881
+    Map: 2@gl_k
+  - Index: 882
+    Map: gl_chyard_
+  - Index: 883
+    Map: gl_cas02_
+  - Index: 884
+    Map: evt_bomb
+  - Index: 885
+    Map: 1@def01
+  - Index: 886
+    Map: 1@def02
+  - Index: 887
+    Map: 1@def03
+  - Index: 888
+    Map: 1@gef
+  - Index: 889
+    Map: 1@face
+  - Index: 890
+    Map: 1@sara
+  - Index: 891
+    Map: 1@gef_in
+  - Index: 892
+    Map: dali
+  - Index: 893
+    Map: dali02
+  - Index: 894
+    Map: 1@ge_st
+  - Index: 895
+    Map: 1@spa
+  - Index: 896
+    Map: 1@tnm1
+  - Index: 897
+    Map: 1@tnm2
+  - Index: 898
+    Map: 1@tnm3
+  - Index: 899
+    Map: 1@dth1
+  - Index: 900
+    Map: 1@dth2
+  - Index: 901
+    Map: 1@dth3
+  - Index: 902
+    Map: 1@eom
+  - Index: 903
+    Map: 1@jtb
+  - Index: 904
+    Map: 1@rev
+  - Index: 905
+    Map: 1@xm_d
+  - Index: 906
+    Map: moro_cav
+  - Index: 907
+    Map: moro_vol
+  - Index: 908
+    Map: silk_lair
+  - Index: 909
+    Map: c_tower2_
+  - Index: 910
+    Map: c_tower3_
+  - Index: 911
+    Map: 1@mcd
+  - Index: 912
+    Map: ver_eju
+  - Index: 913
+    Map: ver_tunn
+  - Index: 914
+    Map: verus03
+  - Index: 915
+    Map: verus04
+  - Index: 916
+    Map: job_gun
+  - Index: 917
+    Map: 1@air1
+  - Index: 918
+    Map: 1@air2
+  - Index: 919
+    Map: 1@glast
+  - Index: 920
+    Map: lhz_dun_n
+  - Index: 921
+    Map: lhz_d_n2
+  - Index: 922
+    Map: 1@gl_kh
+  - Index: 923
+    Map: 2@gl_kh
+  - Index: 924
+    Map: 1@lab
+  - Index: 925
+    Map: 1@uns
+  - Index: 926
+    Map: un_bk_q
+  - Index: 927
+    Map: un_bunker
+  - Index: 928
+    Map: un_myst
+  - Index: 929
+    Map: verus01
+  - Index: 930
+    Map: verus02
+  - Index: 931
+    Map: paramk
+  - Index: 932
+    Map: 1@infi
+  - Index: 933
+    Map: 1@ffp
+  - Index: 934
+    Map: 1@mir
+  - Index: 935
+    Map: 2@mir
+  - Index: 936
+    Map: 1@sthb
+  - Index: 937
+    Map: 1@sthc
+  - Index: 938
+    Map: 1@sthd
+  - Index: 939
+    Map: prt_cas
+  - Index: 940
+    Map: prt_cas_q
+  - Index: 941
+    Map: prt_prison
+  - Index: 942
+    Map: prt_lib
+  - Index: 943
+    Map: prt_lib_q
+  - Index: 944
+    Map: prt_q
+  - Index: 945
+    Map: prt_pri00
+  - Index: 946
+    Map: int_land
+  - Index: 947
+    Map: int_land01
+  - Index: 948
+    Map: int_land02
+  - Index: 949
+    Map: int_land03
+  - Index: 950
+    Map: int_land04
+  - Index: 951
+    Map: lasagna
+  - Index: 952
+    Map: lasa_fild01
+  - Index: 953
+    Map: lasa_fild02
+  - Index: 954
+    Map: lasa_dun01
+  - Index: 955
+    Map: lasa_dun02
+  - Index: 956
+    Map: lasa_dun03
+  - Index: 957
+    Map: conch_in
+  - Index: 958
+    Map: lasa_in01
+  - Index: 959
+    Map: lasa_dun_q
+  - Index: 960
+    Map: 1@pop1
+  - Index: 961
+    Map: 1@pop2
+  - Index: 962
+    Map: 1@pop3
+  - Index: 963
+    Map: 1@slw
+  - Index: 964
+    Map: 1@swat
+  - Index: 965
+    Map: que_swat
+  - Index: 966
+    Map: slabw01
+  - Index: 967
+    Map: rebel_in
+  - Index: 968
+    Map: 1@md_gef
+  - Index: 969
+    Map: 1@md_pay
+  - Index: 970
+    Map: har_in01
+  - Index: 971
+    Map: harboro1
+  - Index: 972
+    Map: harboro2
+  - Index: 973
+    Map: rockmi1
+  - Index: 974
+    Map: rockmi2
+  - Index: 975
+    Map: rockrdg1
+  - Index: 976
+    Map: rockrdg2
+  - Index: 977
+    Map: 1@gl_k2
+  - Index: 978
+    Map: 2@gl_k2
+  - Index: 979
+    Map: 1@xm_d2
+  - Index: 980
+    Map: pay_d03_i
+  - Index: 981
+    Map: gef_d01_i
+  - Index: 982
+    Map: ice_d03_i
+  - Index: 983
+    Map: 1@tre
+  - Index: 984
+    Map: 1@begi
+  - Index: 985
+    Map: tur_d03_i
+  - Index: 986
+    Map: tur_d04_i
+  - Index: 987
+    Map: 1@crd
+  - Index: 988
+    Map: ordeal_a00
+  - Index: 989
+    Map: ordeal_a02
+  - Index: 990
+    Map: pprontera
+  - Index: 991
+    Map: niflxmas
+  - Index: 992
+    Map: sch_lab
+  - Index: 993
+    Map: nakhyang
+  - Index: 994
+    Map: lasa_sea
+  - Index: 995
+    Map: 1@drdo
+  - Index: 996
+    Map: x_lhz
+  - Index: 997
+    Map: x_prt
+  - Index: 998
+    Map: x_ra
+  - Index: 999
+    Map: prt_evt_in
+  - Index: 1000
+    Map: vis_h01
+  - Index: 1001
+    Map: vis_h02
+  - Index: 1002
+    Map: vis_h03
+  - Index: 1003
+    Map: vis_h04
+  - Index: 1004
+    Map: ein_d02_i
+  - Index: 1005
+    Map: com_d02_i
+  - Index: 1006
+    Map: 1@soul
+  - Index: 1007
+    Map: star_frst
+  - Index: 1008
+    Map: star_in
+  - Index: 1009
+    Map: 2009rwc_01
+  - Index: 1010
+    Map: 2009rwc_02
+  - Index: 1011
+    Map: 2009rwc_03
+  - Index: 1012
+    Map: 2009rwc_04
+  - Index: 1013
+    Map: 2009rwc_05
+  - Index: 1014
+    Map: 2009rwc_06
+  - Index: 1015
+    Map: 2009rwc_07
+  - Index: 1016
+    Map: 2009rwc_08
+  - Index: 1017
+    Map: 2009rwc_f01
+  - Index: 1018
+    Map: 2012rwc_01
+  - Index: 1019
+    Map: 2012rwc_02
+  - Index: 1020
+    Map: 2012rwc_03
+  - Index: 1021
+    Map: 2012rwc_04
+  - Index: 1022
+    Map: 2012rwc_05
+  - Index: 1023
+    Map: 2012rwc_06
+  - Index: 1024
+    Map: 2012rwc_07
+  - Index: 1025
+    Map: 2012rwc_08
+  - Index: 1026
+    Map: 1@4cdn
+  - Index: 1027
+    Map: 1@4drk
+  - Index: 1028
+    Map: 1@4igd
+  - Index: 1029
+    Map: 1@4inq
+  - Index: 1030
+    Map: 1@4mag
+  - Index: 1031
+    Map: 1@4mst
+  - Index: 1032
+    Map: 1@4sac
+  - Index: 1033
+    Map: 1@4tro
+  - Index: 1034
+    Map: 1@4win
+  - Index: 1035
+    Map: 1@bamn
+  - Index: 1036
+    Map: 1@bamq
+  - Index: 1037
+    Map: 1@ch_t
+  - Index: 1038
+    Map: 1@cor
+  - Index: 1039
+    Map: 1@ge_sn
+  - Index: 1040
+    Map: 1@ghg
+  - Index: 1041
+    Map: 1@gl_he
+  - Index: 1042
+    Map: 1@gl_he2
+  - Index: 1043
+    Map: 1@gl_prq
+  - Index: 1044
+    Map: 1@gol1
+  - Index: 1045
+    Map: 1@gol2
+  - Index: 1046
+    Map: 1@halo
+  - Index: 1047
+    Map: 1@herbs
+  - Index: 1048
+    Map: 1@lost
+  - Index: 1049
+    Map: 1@mjo1
+  - Index: 1050
+    Map: 1@mjo2
+  - Index: 1051
+    Map: 1@odin
+  - Index: 1052
+    Map: 1@os_a
+  - Index: 1053
+    Map: 1@os_b
+  - Index: 1054
+    Map: 1@rgsr
+  - Index: 1055
+    Map: 1@spa2
+  - Index: 1056
+    Map: 1@thts
+  - Index: 1057
+    Map: 2@ch_t
+  - Index: 1058
+    Map: 2@thts
+  - Index: 1059
+    Map: 3@ch_t
+  - Index: 1060
+    Map: 3@thts
+  - Index: 1061
+    Map: 4@thts
+  - Index: 1062
+    Map: 5@thts
+  - Index: 1063
+    Map: 6@thts
+  - Index: 1064
+    Map: 7@thts
+  - Index: 1065
+    Map: 8@thts
+  - Index: 1066
+    Map: abyss_04
+  - Index: 1067
+    Map: amicitia1
+  - Index: 1068
+    Map: amicitia2
+  - Index: 1069
+    Map: ba_2whs01
+  - Index: 1070
+    Map: ba_2whs02
+  - Index: 1071
+    Map: ba_bath
+  - Index: 1072
+    Map: ba_chess
+  - Index: 1073
+    Map: ba_go
+  - Index: 1074
+    Map: ba_in01
+  - Index: 1075
+    Map: ba_lib
+  - Index: 1076
+    Map: ba_lost
+  - Index: 1077
+    Map: ba_maison
+  - Index: 1078
+    Map: ba_pw01
+  - Index: 1079
+    Map: ba_pw02
+  - Index: 1080
+    Map: ba_pw03
+  - Index: 1081
+    Map: ein_dun03
+  - Index: 1082
+    Map: e_hugel
+  - Index: 1083
+    Map: gl_cas01_
+  - Index: 1084
+    Map: grademk
+  - Index: 1085
+    Map: iz_d04_i
+  - Index: 1086
+    Map: iz_d05_i
+  - Index: 1087
+    Map: job4_bio
+  - Index: 1088
+    Map: job4_mag
+  - Index: 1089
+    Map: job4_tro
+  - Index: 1090
+    Map: mag_dun03
+  - Index: 1091
+    Map: nif_dun01
+  - Index: 1092
+    Map: nif_dun02
+  - Index: 1093
+    Map: odin_past
+  - Index: 1094
+    Map: prt_mz03_i
+  - Index: 1095
+    Map: pub_cat
+  - Index: 1096
+    Map: rgsr_in
+  - Index: 1097
+    Map: sp_cor
+  - Index: 1098
+    Map: sp_os
+  - Index: 1099
+    Map: sp_rudus
+  - Index: 1100
+    Map: sp_rudus2
+  - Index: 1101
+    Map: sp_rudus3
+  - Index: 1102
+    Map: sp_rudus4
+  - Index: 1103
+    Map: tra_fild
+  - Index: 1104
+    Map: verus02_a
+  - Index: 1105
+    Map: verus02_b
+  - Index: 1106
+    Map: 1@adv
+  - Index: 1107
+    Map: 1@advs
+  - Index: 1108
+    Map: 1@ch_u
+  - Index: 1109
+    Map: 1@nyr
+  - Index: 1110
+    Map: 1@oz
+  - Index: 1111
+    Map: 1@tcamp
+  - Index: 1112
+    Map: 2@nyr
+  - Index: 1113
+    Map: ant_d02_i
+  - Index: 1114
+    Map: gw_fild01
+  - Index: 1115
+    Map: gw_fild02
+  - Index: 1116
+    Map: oz_dun01
+  - Index: 1117
+    Map: oz_dun02
+  - Index: 1118
+    Map: que_thr
+  - Index: 1119
+    Map: tur_d04ia
+  - Index: 1120
+    Map: tur_d04ib
+  - Index: 1121
+    Map: wolfvill

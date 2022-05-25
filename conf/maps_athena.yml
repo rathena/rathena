@@ -1,0 +1,1908 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Maps Database
+###########################################################################
+#
+# Maps Settings
+#
+###########################################################################
+# - Map                     Map name.
+#   Mode                    Mode the map is loaded in. (Default: Both)
+###########################################################################
+
+Header:
+  Type: MAPS_DB
+  Version: 1
+
+Body:
+#------------------------- Normal Maps ---------------------------
+  - Map: alb_ship
+  - Map: alb2trea
+  - Map: alberta
+  - Map: alberta_in
+  - Map: alde_dun01
+  - Map: alde_dun02
+  - Map: alde_dun03
+  - Map: alde_dun04
+  - Map: aldeba_in
+  - Map: aldebaran
+  - Map: anthell01
+  - Map: anthell02
+  - Map: arena_room
+  - Map: c_tower1
+  - Map: c_tower2
+  - Map: c_tower3
+  - Map: c_tower4
+#  - Map: force_map1
+#  - Map: force_map2
+#  - Map: force_map3
+  - Map: force_1-1
+  - Map: force_2-1
+  - Map: force_3-1
+  - Map: force_4-1
+  - Map: force_5-1
+  - Map: force_1-2
+  - Map: force_2-2
+  - Map: force_3-2
+  - Map: force_1-3
+  - Map: force_2-3
+  - Map: force_3-3
+  - Map: gef_dun00
+  - Map: gef_dun01
+  - Map: gef_dun02
+  - Map: gef_dun03
+  - Map: gef_fild00
+  - Map: gef_fild01
+  - Map: gef_fild02
+  - Map: gef_fild03
+  - Map: gef_fild04
+  - Map: gef_fild05
+  - Map: gef_fild06
+  - Map: gef_fild07
+  - Map: gef_fild08
+  - Map: gef_fild09
+  - Map: gef_fild10
+  - Map: gef_fild11
+  - Map: gef_fild12
+  - Map: gef_fild13
+  - Map: gef_fild14
+  - Map: gef_tower
+  - Map: geffen
+  - Map: geffen_in
+  - Map: gl_cas01
+  - Map: gl_cas02
+  - Map: gl_church
+  - Map: gl_chyard
+  - Map: gl_dun01
+  - Map: gl_dun02
+  - Map: gl_in01
+  - Map: gl_knt01
+  - Map: gl_knt02
+  - Map: gl_prison
+  - Map: gl_prison1
+  - Map: gl_sew01
+  - Map: gl_sew02
+  - Map: gl_sew03
+  - Map: gl_sew04
+  - Map: gl_step
+  - Map: glast_01
+#  - Map: hunter_1-1
+#  - Map: hunter_2-1
+#  - Map: hunter_3-1
+  - Map: in_hunter
+  - Map: in_moc_16
+  - Map: in_orcs01
+  - Map: in_sphinx1
+  - Map: in_sphinx2
+  - Map: in_sphinx3
+  - Map: in_sphinx4
+  - Map: in_sphinx5
+  - Map: iz_dun00
+  - Map: iz_dun01
+  - Map: iz_dun02
+  - Map: iz_dun03
+  - Map: iz_dun04
+  - Map: izlu2dun
+  - Map: izlude
+  - Map: izlude_in
+  - Map: job_thief1
+#  - Map: knight_1-1
+#  - Map: knight_2-1
+#  - Map: knight_3-1
+  - Map: mjo_dun01
+  - Map: mjo_dun02
+  - Map: mjo_dun03
+  - Map: mjolnir_01
+  - Map: mjolnir_02
+  - Map: mjolnir_03
+  - Map: mjolnir_04
+  - Map: mjolnir_05
+  - Map: mjolnir_06
+  - Map: mjolnir_07
+  - Map: mjolnir_08
+  - Map: mjolnir_09
+  - Map: mjolnir_10
+  - Map: mjolnir_11
+  - Map: mjolnir_12
+  - Map: moc_castle
+  - Map: moc_fild01
+  - Map: moc_fild02
+  - Map: moc_fild03
+#  - Map: moc_fild04
+#  - Map: moc_fild05
+#  - Map: moc_fild06
+  - Map: moc_fild07
+#  - Map: moc_fild08
+#  - Map: moc_fild09
+#  - Map: moc_fild10
+  - Map: moc_fild11
+  - Map: moc_fild12
+  - Map: moc_fild13
+#  - Map: moc_fild14
+#  - Map: moc_fild15
+  - Map: moc_fild16
+  - Map: moc_fild17
+  - Map: moc_fild18
+  - Map: moc_fild19
+  - Map: moc_pryd01
+  - Map: moc_pryd02
+  - Map: moc_pryd03
+  - Map: moc_pryd04
+  - Map: moc_pryd05
+  - Map: moc_pryd06
+  - Map: moc_prydb1
+  - Map: moc_ruins
+  - Map: monk_in
+  - Map: morocc
+  - Map: morocc_in
+  - Map: new_zone01
+  - Map: new_zone02
+  - Map: new_zone03
+  - Map: new_zone04
+  - Map: new_1-1
+  - Map: new_1-2
+  - Map: new_1-3
+  - Map: new_1-4
+  - Map: new_2-1
+  - Map: new_2-2
+  - Map: new_2-3
+  - Map: new_2-4
+  - Map: new_3-1
+  - Map: new_3-2
+  - Map: new_3-3
+  - Map: new_3-4
+  - Map: new_4-1
+  - Map: new_4-2
+  - Map: new_4-3
+  - Map: new_4-4
+  - Map: new_5-1
+  - Map: new_5-2
+  - Map: new_5-3
+  - Map: new_5-4
+  - Map: orcsdun01
+  - Map: orcsdun02
+#  - Map: ordeal_a00
+#  - Map: ordeal_a02
+  - Map: ordeal_1-1
+  - Map: ordeal_1-2
+#  - Map: ordeal_1-3
+#  - Map: ordeal_1-4
+  - Map: ordeal_2-1
+  - Map: ordeal_2-2
+#  - Map: ordeal_2-3
+#  - Map: ordeal_2-4
+  - Map: ordeal_3-1
+  - Map: ordeal_3-2
+#  - Map: ordeal_3-3
+#  - Map: ordeal_3-4
+  - Map: pay_arche
+  - Map: pay_dun00
+  - Map: pay_dun01
+  - Map: pay_dun02
+  - Map: pay_dun03
+  - Map: pay_dun04
+  - Map: pay_fild01
+  - Map: pay_fild02
+  - Map: pay_fild03
+  - Map: pay_fild04
+  - Map: pay_fild05
+  - Map: pay_fild06
+  - Map: pay_fild07
+  - Map: pay_fild08
+  - Map: pay_fild09
+  - Map: pay_fild10
+  - Map: pay_fild11
+#  - Map: priest_1-1
+#  - Map: priest_2-1
+#  - Map: priest_3-1
+  - Map: prontera
+  - Map: prt_are_in
+  - Map: prt_are01
+  - Map: prt_castle
+  - Map: prt_church
+  - Map: prt_fild00
+  - Map: prt_fild01
+  - Map: prt_fild02
+  - Map: prt_fild03
+  - Map: prt_fild04
+  - Map: prt_fild05
+  - Map: prt_fild06
+  - Map: prt_fild07
+  - Map: prt_fild08
+  - Map: prt_fild09
+  - Map: prt_fild10
+  - Map: prt_fild11
+  - Map: prt_in
+  - Map: prt_maze01
+  - Map: prt_maze02
+  - Map: prt_maze03
+  - Map: prt_monk
+  - Map: prt_sewb1
+  - Map: prt_sewb2
+  - Map: prt_sewb3
+  - Map: prt_sewb4
+  - Map: pvp_room
+  - Map: pvp_2vs2
+  - Map: pvp_c_room
+  - Map: pvp_n_1-1
+  - Map: pvp_n_1-2
+  - Map: pvp_n_1-3
+  - Map: pvp_n_1-4
+  - Map: pvp_n_1-5
+  - Map: pvp_n_2-1
+  - Map: pvp_n_2-2
+  - Map: pvp_n_2-3
+  - Map: pvp_n_2-4
+  - Map: pvp_n_2-5
+  - Map: pvp_n_3-1
+  - Map: pvp_n_3-2
+  - Map: pvp_n_3-3
+  - Map: pvp_n_3-4
+  - Map: pvp_n_3-5
+  - Map: pvp_n_4-1
+  - Map: pvp_n_4-2
+  - Map: pvp_n_4-3
+  - Map: pvp_n_4-4
+  - Map: pvp_n_4-5
+  - Map: pvp_n_5-1
+  - Map: pvp_n_5-2
+  - Map: pvp_n_5-3
+  - Map: pvp_n_5-4
+  - Map: pvp_n_5-5
+  - Map: pvp_n_6-1
+  - Map: pvp_n_6-2
+  - Map: pvp_n_6-3
+  - Map: pvp_n_6-4
+  - Map: pvp_n_6-5
+  - Map: pvp_n_7-1
+  - Map: pvp_n_7-2
+  - Map: pvp_n_7-3
+  - Map: pvp_n_7-4
+  - Map: pvp_n_7-5
+  - Map: pvp_n_8-1
+  - Map: pvp_n_8-2
+  - Map: pvp_n_8-3
+  - Map: pvp_n_8-4
+  - Map: pvp_n_8-5
+  - Map: pvp_n_room
+  - Map: pvp_y_1-1
+  - Map: pvp_y_1-2
+  - Map: pvp_y_1-3
+  - Map: pvp_y_1-4
+  - Map: pvp_y_1-5
+  - Map: pvp_y_2-1
+  - Map: pvp_y_2-2
+  - Map: pvp_y_2-3
+  - Map: pvp_y_2-4
+  - Map: pvp_y_2-5
+  - Map: pvp_y_3-1
+  - Map: pvp_y_3-2
+  - Map: pvp_y_3-3
+  - Map: pvp_y_3-4
+  - Map: pvp_y_3-5
+  - Map: pvp_y_4-1
+  - Map: pvp_y_4-2
+  - Map: pvp_y_4-3
+  - Map: pvp_y_4-4
+  - Map: pvp_y_4-5
+  - Map: pvp_y_5-1
+  - Map: pvp_y_5-2
+  - Map: pvp_y_5-3
+  - Map: pvp_y_5-4
+  - Map: pvp_y_5-5
+  - Map: pvp_y_6-1
+  - Map: pvp_y_6-2
+  - Map: pvp_y_6-3
+  - Map: pvp_y_6-4
+  - Map: pvp_y_6-5
+  - Map: pvp_y_7-1
+  - Map: pvp_y_7-2
+  - Map: pvp_y_7-3
+  - Map: pvp_y_7-4
+  - Map: pvp_y_7-5
+  - Map: pvp_y_8-1
+  - Map: pvp_y_8-2
+  - Map: pvp_y_8-3
+  - Map: pvp_y_8-4
+  - Map: pvp_y_8-5
+  - Map: pvp_y_room
+  - Map: sword_1-1
+  - Map: sword_2-1
+  - Map: sword_3-1
+  - Map: treasure01
+  - Map: treasure02
+#  - Map: wizard_1-1
+#  - Map: wizard_2-1
+#  - Map: wizard_3-1
+  - Map: xmas
+  - Map: xmas_dun01
+  - Map: xmas_dun02
+  - Map: xmas_fild01
+  - Map: xmas_in
+
+#---Ep3.0 Comodo ---
+
+  - Map: beach_dun
+  - Map: beach_dun2
+  - Map: beach_dun3
+  - Map: cmd_fild01
+  - Map: cmd_fild02
+  - Map: cmd_fild03
+  - Map: cmd_fild04
+  - Map: cmd_fild05
+  - Map: cmd_fild06
+  - Map: cmd_fild07
+  - Map: cmd_fild08
+  - Map: cmd_fild09
+  - Map: cmd_in01
+  - Map: cmd_in02
+  - Map: comodo
+
+#---EP3.1 Quiz Revolution ---
+
+  - Map: quiz_00
+  - Map: quiz_01
+  - Map: g_room1-1
+  - Map: g_room1-2
+  - Map: g_room1-3
+  - Map: g_room2
+
+#--- Ep4.0 Turtle Island ---
+
+  - Map: tur_dun01
+  - Map: tur_dun02
+  - Map: tur_dun03
+  - Map: tur_dun04
+  - Map: tur_dun05
+  - Map: tur_dun06
+
+#--- Ep4.1 The War of Emperium ---
+
+  - Map: alde_gld
+  - Map: aldeg_cas01
+  - Map: aldeg_cas02
+  - Map: aldeg_cas03
+  - Map: aldeg_cas04
+  - Map: aldeg_cas05
+  - Map: gefg_cas01
+  - Map: gefg_cas02
+  - Map: gefg_cas03
+  - Map: gefg_cas04
+  - Map: gefg_cas05
+  - Map: gld_dun01
+  - Map: gld_dun02
+  - Map: gld_dun03
+  - Map: gld_dun04
+  - Map: guild_room
+  - Map: guild_vs1
+  - Map: guild_vs2
+  - Map: guild_vs3
+  - Map: guild_vs4
+  - Map: guild_vs5
+  - Map: guild_vs1-1
+  - Map: guild_vs1-2
+  - Map: guild_vs1-3
+  - Map: guild_vs1-4
+  - Map: guild_vs2-1
+  - Map: guild_vs2-2
+#  - Map: job_hunter
+  - Map: job_hunte
+#  - Map: job_knight
+  - Map: job_knt
+#  - Map: job_priest
+  - Map: job_prist
+  - Map: job_sword1
+#  - Map: job_wizard
+  - Map: job_wiz
+  - Map: pay_gld
+  - Map: payg_cas01
+  - Map: payg_cas02
+  - Map: payg_cas03
+  - Map: payg_cas04
+  - Map: payg_cas05
+  - Map: prt_gld
+  - Map: prtg_cas01
+  - Map: prtg_cas02
+  - Map: prtg_cas03
+  - Map: prtg_cas04
+  - Map: prtg_cas05
+
+
+#--- Ep5.0 Yuno ---
+
+  - Map: alde_alche
+  - Map: in_rogue
+  - Map: job_cru
+  - Map: job_duncer
+  - Map: job_monk
+  - Map: job_sage
+  - Map: mag_dun01
+  - Map: mag_dun02
+  - Map: monk_test
+  - Map: quiz_test
+  - Map: yuno
+  - Map: yuno_fild01
+  - Map: yuno_fild02
+  - Map: yuno_fild03
+  - Map: yuno_fild04
+  - Map: yuno_in01
+  - Map: yuno_in02
+  - Map: yuno_in03
+  - Map: yuno_in04
+  - Map: yuno_in05
+
+#--- Ep6.0 - Amatsu  ---
+# Requires: kRO 08-10-03 or newer
+# or kRO Sakray 09-09-03 or newer
+
+  - Map: ama_dun01
+  - Map: ama_dun02
+  - Map: ama_dun03
+  - Map: ama_fild01
+  - Map: ama_in01
+  - Map: ama_in02
+  - Map: ama_test
+  - Map: amatsu
+
+#--- Ep6.1 - Gon Ryun ---
+
+  - Map: gon_dun01
+  - Map: gon_dun02
+  - Map: gon_dun03
+  - Map: gon_fild01
+  - Map: gon_in
+  - Map: gon_test
+  - Map: gonryun
+  - Map: sec_in01
+  - Map: sec_in02
+  - Map: sec_pri
+
+#--- Ep6.2 - Umbala ---
+# Requires: kRO 01-27-04 or newer
+# or kRO Sakray 12-02-03 or newer
+# or Akaru's SuperGRF 1.22 or newer
+  - Map: umbala
+  - Map: um_dun01
+  - Map: um_dun02
+  - Map: um_fild01
+  - Map: um_fild02
+  - Map: um_fild03
+  - Map: um_fild04
+  - Map: um_in
+
+#--- Ep6.3 - Niflheim ---
+# Requires: kRO 02-23-04 or newer
+# or kRO Sakray 01-09-04 or newer
+# or Akaru's SuperGRF 1.32 or newer
+  - Map: niflheim
+  - Map: nif_fild01
+  - Map: nif_fild02
+  - Map: nif_in
+  - Map: yggdrasil01
+
+#--- Ep6.4 - Valkyrie ---
+# Requires: kRO ??-??-04 or newer
+# or kRO Sakray 02-03-04 or newer
+# or Akaru's SuperGRF 1.34 or newer
+  - Map: valkyrie
+  - Map: himinn
+
+#--- Ep6.5 - Castle of Dragon (LouYang) ---
+# Requires kRO Sakray 03-30 or newer
+#(Akaru's SuperGRF required version: 1.52)
+  - Map: lou_in01
+  - Map: lou_in02
+  - Map: lou_dun03
+  - Map: lou_dun02
+  - Map: lou_dun01
+  - Map: lou_fild01
+  - Map: louyang
+
+#--- Ep6.6 - Novice Guild Siege ---
+#Requires kRO Sakray 04-07 or newer
+#(Akaru's SuperGRF required version: 1.53)
+#  - Map: siege_test
+  - Map: n_castle
+  - Map: nguild_gef
+  - Map: nguild_prt
+  - Map: nguild_pay
+  - Map: nguild_alde
+
+#--- Ep6.7 - Jawaii ---
+#Requires kRO Sakray 06-22 or newer
+#(Akaru's SuperGRF required version: 1.63)
+  - Map: jawaii
+  - Map: jawaii_in
+
+# --- Ep6.8 - Geffenia ---
+# Requires kRO Sakray 07-13 or newer
+# (Akaru's SuperGRF required version: 1.64)
+  - Map: gefenia01
+  - Map: gefenia02
+  - Map: gefenia03
+  - Map: gefenia04
+
+# --- Ep6.9 - New Payon ---
+# Requires kRO Sakray 09-03
+# -- dunno --
+  - Map: payon
+  - Map: payon_in01
+  - Map: payon_in02
+  - Map: payon_in03
+#same names as old maps except that payon_in03 got added
+
+# --- Ep? - Ayothaya ---
+# Requires kRO Sakray 09-21
+# -- 2004-10-19sdata_k.gpf --
+  - Map: ayothaya
+  - Map: ayo_in01
+  - Map: ayo_in02
+  - Map: ayo_fild01
+  - Map: ayo_fild02
+  - Map: ayo_dun01
+  - Map: ayo_dun02
+
+# --- God item quests maps ---
+# -- 2004-10-12sdata_k3.gpf --
+  - Map: que_god01
+  - Map: que_god02
+
+# --- Ep? - Schwarzwald Republic ---
+# -- 2004-12-28sdata_k.gpf --
+  - Map: yuno_fild05
+  - Map: yuno_fild07
+  - Map: yuno_fild08
+  - Map: yuno_fild09
+  - Map: yuno_fild11
+  - Map: yuno_fild12
+
+# --- Turbo Track Arena ---
+# -- 2005-03-08sdata_k.gpf --
+  - Map: alde_tt02
+  - Map: turbo_n_1
+  - Map: turbo_n_4
+  - Map: turbo_n_8
+  - Map: turbo_n_16
+  - Map: turbo_e_4
+  - Map: turbo_e_8
+  - Map: turbo_e_16
+  - Map: turbo_room
+
+# --- Einbroch/Einbech ---
+# -- 2005-03-15sdata_k.gpf --
+  - Map: airplane
+  - Map: airport
+  - Map: einbech
+  - Map: einbroch
+  - Map: ein_dun01
+  - Map: ein_dun02
+  - Map: ein_fild06
+  - Map: ein_fild07
+  - Map: ein_fild08
+  - Map: ein_fild09
+  - Map: ein_fild10
+  - Map: ein_in01
+  - Map: que_sign01
+  - Map: que_sign02
+
+# --- Einbroch and Lightalzen ---
+# -- 2005-05-10sdata_k.gpf --
+  - Map: ein_fild03
+  - Map: ein_fild04
+  - Map: lhz_fild02
+  - Map: lhz_fild03
+
+# --- Lighthalzen and Juperos Dungeon ---
+# -- 2005-06-14sdata_k.gpf --
+  - Map: yuno_pre
+  - Map: lhz_fild01
+  - Map: lighthalzen
+  - Map: lhz_in01
+  - Map: lhz_in02
+  - Map: lhz_in03
+  - Map: lhz_que01
+  - Map: lhz_dun01
+  - Map: lhz_dun02
+  - Map: lhz_dun03
+  - Map: lhz_cube
+  - Map: juperos_01
+  - Map: juperos_02
+  - Map: jupe_area1
+  - Map: jupe_area2
+  - Map: jupe_core
+  - Map: jupe_ele
+  - Map: jupe_ele_r
+  - Map: jupe_gate
+
+# --- Lighthalzen & Juno Airport ---
+# -- resnametable clones of airport and airplane --
+  - Map: y_airport
+  - Map: lhz_airport
+  - Map: airplane_01
+
+# --- Juperos Dungeon ---
+# -- 2005-06-28sdata_k.gpf --
+  - Map: jupe_cave
+
+# --- Quiz Revolution ---
+# -- 2005-08-02sdata_k.gpf --
+  - Map: quiz_02
+
+# --- Hugel Field ---
+# -- 2005-08-23sdata_k.gpf --
+  - Map: hu_fild07
+  - Map: hu_fild05
+  - Map: hu_fild04
+  - Map: hu_fild01
+  - Map: yuno_fild06
+
+# --- Star Knight And Soul Linker Job Change Maps ---
+# -- 2005-08-23sdata_k.gpf --
+  - Map: job_soul
+  - Map: job_star
+
+# --- Abyss Lake, Thanatos Tower --
+# -- 2005-09-13sdata_k.gpf - 2005-09-13sdata_k6.gpf --
+  - Map: que_job01
+  - Map: que_job02
+  - Map: que_job03
+  - Map: abyss_01
+  - Map: abyss_02
+  - Map: abyss_03
+  - Map: thana_step
+  - Map: thana_boss
+  - Map: tha_scene01
+  - Map: tha_t01
+  - Map: tha_t02
+  - Map: tha_t03
+  - Map: tha_t04
+  - Map: tha_t07
+  - Map: tha_t05
+  - Map: tha_t06
+  - Map: tha_t08
+
+# --- Thanatos Tower ---
+# -- 2005-09-21sdata_k.gpf -- 
+  - Map: tha_t09
+  - Map: tha_t10
+  - Map: tha_t11
+  - Map: tha_t12
+
+# --- Auction Market ---
+# -- 2005-11-29sdata_k.gpf -- 
+  - Map: auction_01
+  - Map: auction_02
+
+# ???
+# -- 2005-12-06gdata_k.gpf
+# TODO: This map isn't used (out of range, mixed in renewal maps)
+  - Map: alde_tt03
+    Mode: Renewal
+
+# --- Garden City Hugel / Kiehl ---
+# -- 2005-12-20sdata_k.gpf -- 
+  - Map: hugel
+  - Map: hu_in01
+  - Map: que_bingo
+  - Map: que_hugel
+  - Map: p_track01
+  - Map: p_track02
+  - Map: odin_tem01
+  - Map: odin_tem02
+  - Map: odin_tem03
+  - Map: hu_fild02
+  - Map: hu_fild03
+  - Map: hu_fild06
+  - Map: ein_fild01
+  - Map: ein_fild02
+  - Map: ein_fild05
+  - Map: yuno_fild10
+  - Map: kh_kiehl02
+  - Map: kh_kiehl01
+  - Map: kh_dun02
+  - Map: kh_dun01
+  - Map: kh_mansion
+  - Map: kh_rossi
+  - Map: kh_school
+  - Map: kh_vila
+
+# --- Poring Arena (?) & Gunslinger/Ninja Job Map ---
+# -- 2006-03-28sdata_k.gpf --
+#  - Map: poring_c01
+#  - Map: poring_c02
+  - Map: que_ng
+
+# --- Arunafeltz & Ice Dungeon ---
+# -- 2006-05-30sdata_k.gpf --
+  - Map: rachel
+  - Map: ra_in01
+  - Map: ra_fild01
+  - Map: ra_fild02
+  - Map: ra_fild03
+  - Map: ra_fild04
+  - Map: ra_fild05
+  - Map: ra_fild06
+  - Map: ra_fild07
+  - Map: ra_fild08
+  - Map: ra_fild09
+  - Map: ra_fild10
+  - Map: ra_fild11
+  - Map: ra_fild12
+  - Map: ra_fild13
+  - Map: ra_san01
+  - Map: ra_san02
+  - Map: ra_san03
+  - Map: ra_san04
+  - Map: ra_san05
+  - Map: ra_temin
+  - Map: ra_temple
+  - Map: ra_temsky
+  - Map: que_rachel
+  - Map: que_san04
+  - Map: ice_dun01
+  - Map: ice_dun02
+  - Map: ice_dun03
+  - Map: ice_dun04
+
+# --- Veins & Thor Dungeon ---
+# -- 2006-12-19sdata_k.gpf --
+  - Map: que_thor
+  - Map: thor_camp
+  - Map: thor_v01
+  - Map: thor_v02
+  - Map: thor_v03
+  - Map: veins
+  - Map: ve_in
+  - Map: ve_in02
+  - Map: ve_fild01
+  - Map: ve_fild02
+  - Map: ve_fild03
+  - Map: ve_fild04
+  - Map: ve_fild05
+  - Map: ve_fild06
+  - Map: ve_fild07
+
+# --- Nameless Island & Abbey Dungeon ---
+# -- 2007-04-03sdata_k.gpf
+  - Map: nameless_i
+  - Map: nameless_n
+  - Map: nameless_in
+  - Map: abbey01
+  - Map: abbey02
+  - Map: abbey03
+  - Map: poring_w01
+  - Map: poring_w02
+
+# --- ??? ---
+# -- 2007-??-??
+  - Map: 06guild_r
+  - Map: 06guild_01
+  - Map: 06guild_02
+  - Map: 06guild_03
+  - Map: 06guild_04
+  - Map: 06guild_05
+  - Map: 06guild_06
+  - Map: 06guild_07
+  - Map: 06guild_08
+  - Map: z_agit
+  - Map: que_temsky
+  - Map: itemmall
+  - Map: bossnia_01
+  - Map: bossnia_02
+  - Map: bossnia_03
+  - Map: bossnia_04
+
+# --- Moscovia ---
+# -- 2007-06-???
+  - Map: moscovia
+  - Map: mosk_in
+  - Map: mosk_ship
+  - Map: mosk_fild01
+  - Map: mosk_fild02
+  - Map: mosk_dun01
+  - Map: mosk_dun02
+  - Map: mosk_dun03
+  - Map: mosk_que
+
+# --- Episode 12: Satan Morroc & Schwaltzvalt Seige ---
+# -- 2007-09-19sdata_k.gpf
+  - Map: schg_cas01
+  - Map: schg_cas02
+  - Map: schg_cas03
+  - Map: schg_cas04
+  - Map: schg_cas05
+  - Map: sch_gld
+  - Map: cave
+  - Map: moc_fild20
+  - Map: moc_fild21
+  - Map: moc_fild22
+  - Map: que_ba
+  - Map: que_moc_16
+  - Map: que_moon
+
+# Arunafeltz Seige
+# -- 2007-10-24sdata_k.gpf
+  - Map: arug_cas01
+  - Map: arug_cas02
+  - Map: arug_cas03
+  - Map: arug_cas04
+  - Map: arug_cas05
+  - Map: aru_gld
+
+# PVP Battle Fields: Tierra Valley, and Frebeus
+# -- 2007-11-14sdata_k.gpf
+  - Map: bat_room
+  - Map: bat_a01
+  - Map: bat_a02
+  - Map: bat_b01
+  - Map: bat_b02
+  - Map: que_qsch01
+  - Map: que_qsch02
+  - Map: que_qsch03
+  - Map: que_qsch04
+  - Map: que_qsch05
+  - Map: que_qaru01
+  - Map: que_qaru02
+  - Map: que_qaru03
+  - Map: que_qaru04
+  - Map: que_qaru05
+
+# Memorial Dungeon
+# -- 2007-11-28sdata_k.gpf
+  - Map: 1@cata
+  - Map: 2@cata
+  - Map: e_tower
+  - Map: 1@tower
+  - Map: 2@tower
+  - Map: 3@tower
+  - Map: 4@tower
+  - Map: 5@tower
+  - Map: 6@tower
+
+# 13.1 Another World
+# -- 2008-05-28sdata_k.gpf
+  - Map: mid_camp
+  - Map: mid_campin
+  - Map: man_fild01
+  - Map: man_fild03
+  - Map: spl_fild02
+  - Map: spl_fild03
+  - Map: moc_fild22b
+  - Map: que_dan01
+  - Map: que_dan02
+  - Map: schg_que01
+  - Map: schg_dun01
+  - Map: arug_que01
+  - Map: arug_dun01
+  - Map: 1@orcs
+  - Map: 2@orcs
+
+# Additional Battleground.
+# -- 2008-??-???
+  - Map: bat_c01
+  - Map: bat_c02
+  - Map: bat_c03
+
+# 13.2 Another World
+# -- 2008-11-26
+  - Map: 1@nyd
+  - Map: 2@nyd
+  - Map: nyd_dun01
+  - Map: nyd_dun02
+  - Map: manuk
+  - Map: man_fild02
+  - Map: man_in01
+  - Map: splendide
+  - Map: spl_fild01
+  - Map: spl_in01
+  - Map: spl_in02
+
+# 3rd Job Maps
+# -- 2009-01-29rdata_k2.gpf
+  - Map: job3_arch01
+    Mode: Renewal
+  - Map: job3_arch02
+    Mode: Renewal
+  - Map: job3_arch03
+    Mode: Renewal
+  - Map: job3_guil01
+    Mode: Renewal
+  - Map: job3_guil02
+    Mode: Renewal
+  - Map: job3_guil03
+    Mode: Renewal
+  - Map: job3_rang01
+    Mode: Renewal
+  - Map: job3_rang02
+    Mode: Renewal
+  - Map: job3_rune01
+    Mode: Renewal
+  - Map: job3_rune02
+    Mode: Renewal
+  - Map: job3_rune03
+    Mode: Renewal
+  - Map: job3_war01
+    Mode: Renewal
+  - Map: job3_war02
+    Mode: Renewal
+  - Map: jupe_core2
+    Mode: Renewal
+
+# ???
+# -- 2009-05-27rdata_k.gpf
+  - Map: moc_para01
+    Mode: Renewal
+
+# Brasilis Maps
+# -- 2009-08-05rdata_k.gpf
+  - Map: brasilis
+    Mode: Renewal
+  - Map: bra_in01
+    Mode: Renewal
+  - Map: bra_fild01
+    Mode: Renewal
+  - Map: bra_dun01
+    Mode: Renewal
+  - Map: bra_dun02
+    Mode: Renewal
+
+# ???
+# -- 2009-09-30rdata_k.gpf
+  - Map: s_atelier
+    Mode: Renewal
+
+# 13.3 El Discastes
+# -- 2009-12-09rdata_k.gpf
+  - Map: dicastes01
+    Mode: Renewal
+  - Map: dicastes02
+    Mode: Renewal
+  - Map: dic_in01
+    Mode: Renewal
+  - Map: dic_fild01
+    Mode: Renewal
+  - Map: dic_fild02
+    Mode: Renewal
+  - Map: dic_dun01
+    Mode: Renewal
+  - Map: dic_dun02
+    Mode: Renewal
+  - Map: job3_gen01
+    Mode: Renewal
+  - Map: job3_sha01
+    Mode: Renewal
+
+# Localized Event Maps
+#  - Map: evt_zombie
+#    Mode: Renewal
+#  - Map: evt_coke
+#    Mode: Renewal
+
+# Unknown Maps
+#ac_sl_area
+#ac_cl_hall
+#ac_cl_room
+#jp_s_dun11
+
+# 14.1 Bifrost
+# -- 2010-06-09rdata_x.gpf
+  - Map: mora
+    Mode: Renewal
+  - Map: bif_fild01
+    Mode: Renewal
+  - Map: bif_fild02
+    Mode: Renewal
+  - Map: 1@mist
+    Mode: Renewal
+
+# Dewata Maps
+# -- 2010-09-15rdata_x.gpf
+  - Map: dewata
+    Mode: Renewal
+  - Map: dew_in01
+    Mode: Renewal
+  - Map: dew_fild01
+    Mode: Renewal
+  - Map: dew_dun01
+    Mode: Renewal
+  - Map: dew_dun02
+    Mode: Renewal
+
+# ???
+# -- 2010-10-06rdata_x.gpf
+  - Map: que_house_s
+    Mode: Renewal
+
+# Malangdo Maps
+# -- 2010-11-03rdata_x.gpf
+  - Map: malangdo
+    Mode: Renewal
+  - Map: mal_in01
+    Mode: Renewal
+  - Map: mal_in02
+    Mode: Renewal
+  - Map: mal_dun01
+    Mode: Renewal
+  - Map: 1@pump
+    Mode: Renewal
+  - Map: 2@pump
+    Mode: Renewal
+  - Map: 1@cash
+    Mode: Renewal
+
+# Undersea Tunnel Expansion
+# -- 2010-11-10rdata_x.gpf
+  - Map: iz_dun05
+    Mode: Renewal
+
+# ???
+# -- 2010-12-01data_x.gpf
+  - Map: evt_mobroom
+    Mode: Renewal
+
+# ???
+  - Map: dic_dun03
+    Mode: Renewal
+#  - Map: mjolnir_04_1
+#    Mode: Renewal
+  - Map: evt_swar_b
+    Mode: Renewal
+  - Map: evt_swar_r
+    Mode: Renewal
+  - Map: evt_swar_s
+    Mode: Renewal
+  - Map: evt_swar_t
+    Mode: Renewal
+
+# Lighthalzen Dungeon F4, Wolfchev's Laboratory
+# -- 2011-03-16rdata_x.gpf
+  - Map: 1@lhz
+    Mode: Renewal
+  - Map: lhz_dun04
+    Mode: Renewal
+  - Map: que_lhz
+    Mode: Renewal
+
+# Hall Of Abyss
+# -- 2011-06-15rdata_x.gpf
+  - Map: gld2_ald
+    Mode: Renewal
+  - Map: gld2_gef
+    Mode: Renewal
+  - Map: gld2_pay
+    Mode: Renewal
+  - Map: gld2_prt
+    Mode: Renewal
+  - Map: gld_dun01_2
+    Mode: Renewal
+  - Map: gld_dun02_2
+    Mode: Renewal
+  - Map: gld_dun03_2
+    Mode: Renewal
+  - Map: gld_dun04_2
+    Mode: Renewal
+
+# Port Malaya
+# -- 2011-08-30rdata_j.gpf
+  - Map: malaya
+    Mode: Renewal
+  - Map: job_ko
+    Mode: Renewal
+  - Map: ma_scene01
+    Mode: Renewal
+  - Map: 1@ma_b
+    Mode: Renewal
+  - Map: 1@ma_c
+    Mode: Renewal
+  - Map: 1@ma_h
+    Mode: Renewal
+  - Map: ma_in01
+    Mode: Renewal
+  - Map: ma_dun01
+    Mode: Renewal
+  - Map: ma_fild01
+    Mode: Renewal
+  - Map: ma_fild02
+    Mode: Renewal
+  - Map: ma_zif01
+    Mode: Renewal
+  - Map: ma_zif02
+    Mode: Renewal
+  - Map: ma_zif03
+    Mode: Renewal
+  - Map: ma_zif04
+    Mode: Renewal
+  - Map: ma_zif05
+    Mode: Renewal
+  - Map: ma_zif06
+    Mode: Renewal
+  - Map: ma_zif07
+    Mode: Renewal
+  - Map: ma_zif08
+    Mode: Renewal
+  - Map: ma_zif09
+    Mode: Renewal
+
+# -- 2011-11-30data_j3.gpf
+  - Map: new_event
+    Mode: Renewal
+
+# 14.2 Eclage
+# -- 2011-11-30rdata_j.gpf
+  - Map: eclage
+    Mode: Renewal
+  - Map: ecl_fild01
+    Mode: Renewal
+  - Map: ecl_tdun01
+    Mode: Renewal
+  - Map: ecl_tdun02
+    Mode: Renewal
+  - Map: ecl_tdun03
+    Mode: Renewal
+  - Map: ecl_tdun04
+    Mode: Renewal
+  - Map: que_avan01
+    Mode: Renewal
+  - Map: 1@ecl
+    Mode: Renewal
+  - Map: ecl_in01
+    Mode: Renewal
+  - Map: ecl_in02
+    Mode: Renewal
+  - Map: ecl_in03
+    Mode: Renewal
+  - Map: ecl_in04
+    Mode: Renewal
+  - Map: ecl_hub01
+    Mode: Renewal
+
+# Pyramids Basement Nightmare Mode
+# -- 2011-11-30rdata_j2.gpf
+  - Map: moc_prydn1
+    Mode: Renewal
+  - Map: moc_prydn2
+    Mode: Renewal
+
+# Izlude Novice Tutorials
+# -- 2012-03-07aDataSak_sc.gpf
+  - Map: iz_ac01
+    Mode: Renewal
+  - Map: iz_ac02
+    Mode: Renewal
+  - Map: treasure_n1
+    Mode: Renewal
+  - Map: treasure_n2
+    Mode: Renewal
+  - Map: iz_int
+    Mode: Renewal
+  - Map: iz_ng01
+    Mode: Renewal
+  - Map: iz_int01
+    Mode: Renewal
+  - Map: iz_int02
+    Mode: Renewal
+  - Map: iz_int03
+    Mode: Renewal
+  - Map: iz_int04
+    Mode: Renewal
+
+# War of Emperium TE
+# -- 2012-04-18aData_sc.gpf
+  - Map: iz_ac01_a
+    Mode: Renewal
+  - Map: iz_ac02_a
+    Mode: Renewal
+  - Map: iz_ac01_b
+    Mode: Renewal
+  - Map: iz_ac02_b
+    Mode: Renewal
+  - Map: iz_ac01_c
+    Mode: Renewal
+  - Map: iz_ac02_c
+    Mode: Renewal
+  - Map: iz_ac01_d
+    Mode: Renewal
+  - Map: iz_ac02_d
+    Mode: Renewal
+  - Map: te_prtcas01
+    Mode: Renewal
+  - Map: te_prtcas02
+    Mode: Renewal
+  - Map: te_prtcas03
+    Mode: Renewal
+  - Map: te_prtcas04
+    Mode: Renewal
+  - Map: te_prtcas05
+    Mode: Renewal
+  - Map: te_aldecas1
+    Mode: Renewal
+  - Map: te_aldecas2
+    Mode: Renewal
+  - Map: te_aldecas3
+    Mode: Renewal
+  - Map: te_aldecas4
+    Mode: Renewal
+  - Map: te_aldecas5
+    Mode: Renewal
+  - Map: prt_fild08a
+    Mode: Renewal
+  - Map: prt_fild08b
+    Mode: Renewal
+  - Map: prt_fild08c
+    Mode: Renewal
+  - Map: prt_fild08d
+    Mode: Renewal
+  - Map: izlude_a
+    Mode: Renewal
+  - Map: izlude_b
+    Mode: Renewal
+  - Map: izlude_c
+    Mode: Renewal
+  - Map: izlude_d
+    Mode: Renewal
+  - Map: te_prt_gld
+    Mode: Renewal
+  - Map: te_alde_gld
+    Mode: Renewal
+  - Map: teg_dun01
+    Mode: Renewal
+  - Map: teg_dun02
+    Mode: Renewal
+
+# Glast Heim Memorial Dungeon / Nightmare Mode
+# -- 2012-05-16rData_sc.gpf
+  - Map: 1@gl_k
+    Mode: Renewal
+  - Map: 2@gl_k
+    Mode: Renewal
+  - Map: gl_chyard_
+    Mode: Renewal
+  - Map: gl_cas02_
+    Mode: Renewal
+
+# -- 2012-06-13rData_sc.gpf
+  - Map: evt_bomb
+    Mode: Renewal
+
+# Wave Mode Memorial Dungeon
+# -- 2012-07-25rData_sc.gpf
+  - Map: 1@def01
+    Mode: Renewal
+  - Map: 1@def02
+    Mode: Renewal
+  - Map: 1@def03
+    Mode: Renewal
+
+# Heroes' Trails - Part 1
+# -- 2012-08-08rData_sc.gpf
+  - Map: 1@gef
+    Mode: Renewal
+  - Map: 1@face
+    Mode: Renewal
+  - Map: 1@sara
+    Mode: Renewal
+  - Map: 1@gef_in
+    Mode: Renewal
+  - Map: dali
+    Mode: Renewal
+  - Map: dali02
+    Mode: Renewal
+
+# Heroes' Trails - Part 2
+  - Map: 1@ge_st
+    Mode: Renewal
+  - Map: 1@spa
+    Mode: Renewal
+  - Map: 1@tnm1
+    Mode: Renewal
+  - Map: 1@tnm2
+    Mode: Renewal
+  - Map: 1@tnm3
+    Mode: Renewal
+
+# EP 14.3
+  - Map: 1@dth1
+    Mode: Renewal
+  - Map: 1@dth2
+    Mode: Renewal
+  - Map: 1@dth3
+    Mode: Renewal
+  - Map: 1@eom
+    Mode: Renewal
+  - Map: 1@jtb
+    Mode: Renewal
+  - Map: 1@rev
+    Mode: Renewal
+  - Map: 1@xm_d
+    Mode: Renewal
+  - Map: moro_cav
+    Mode: Renewal
+  - Map: moro_vol
+    Mode: Renewal
+
+# ???
+  - Map: silk_lair
+    Mode: Renewal
+
+# Clock Nightmare Mode
+  - Map: c_tower2_
+    Mode: Renewal
+  - Map: c_tower3_
+    Mode: Renewal
+
+# EP 15.1 Fantasmagorica
+  - Map: 1@mcd
+    Mode: Renewal
+  - Map: ver_eju
+    Mode: Renewal
+  - Map: ver_tunn
+    Mode: Renewal
+  - Map: verus03
+    Mode: Renewal
+  - Map: verus04
+    Mode: Renewal
+
+# Rebellion Job Change Map
+  - Map: job_gun
+    Mode: Renewal
+
+# Heroes' Trails Part III - Airship Assault
+  - Map: 1@air1
+    Mode: Renewal
+  - Map: 1@air2
+    Mode: Renewal
+  - Map: 1@glast
+    Mode: Renewal
+
+# Biochemical Laboratory Nightmare
+  - Map: lhz_dun_n
+    Mode: Renewal
+  - Map: lhz_d_n2
+    Mode: Renewal
+
+# Copy of Old Glast Heim memorial map
+  - Map: 1@gl_kh
+    Mode: Renewal
+  - Map: 2@gl_kh
+    Mode: Renewal
+
+# EP 15.2 Memory Record
+  - Map: 1@lab
+    Mode: Renewal
+  - Map: 1@uns
+    Mode: Renewal
+  - Map: un_bk_q
+    Mode: Renewal
+  - Map: un_bunker
+    Mode: Renewal
+  - Map: un_myst
+    Mode: Renewal
+  - Map: verus01
+    Mode: Renewal
+  - Map: verus02
+    Mode: Renewal
+
+# Paradise Group Market
+  - Map: paramk
+    Mode: Renewal
+
+# Clan memorial
+  - Map: 1@ffp
+    Mode: Renewal
+
+# Infinite memorial
+  - Map: 1@infi
+    Mode: Renewal
+
+# EP 16.1 Banquet For Heroes
+  - Map: 1@mir
+    Mode: Renewal
+  - Map: 2@mir
+    Mode: Renewal
+  - Map: 1@sthb
+    Mode: Renewal
+  - Map: 1@sthc
+    Mode: Renewal
+  - Map: 1@sthd
+    Mode: Renewal
+
+  - Map: prt_cas
+    Mode: Renewal
+  - Map: prt_cas_q
+    Mode: Renewal
+  - Map: prt_prison
+    Mode: Renewal
+  - Map: prt_lib
+    Mode: Renewal
+  - Map: prt_lib_q
+    Mode: Renewal
+  - Map: prt_q
+    Mode: Renewal
+  - Map: prt_pri00
+    Mode: Renewal
+
+# New Novice Grounds
+  - Map: int_land
+    Mode: Renewal
+  - Map: int_land01
+    Mode: Renewal
+  - Map: int_land02
+    Mode: Renewal
+  - Map: int_land03
+    Mode: Renewal
+  - Map: int_land04
+    Mode: Renewal
+
+# Doram
+  - Map: lasagna
+    Mode: Renewal
+  - Map: lasa_fild01
+    Mode: Renewal
+  - Map: lasa_fild02
+    Mode: Renewal
+  - Map: lasa_dun01
+    Mode: Renewal
+  - Map: lasa_dun02
+    Mode: Renewal
+  - Map: lasa_dun03
+    Mode: Renewal
+  - Map: conch_in
+    Mode: Renewal
+  - Map: lasa_in01
+    Mode: Renewal
+  - Map: lasa_dun_q
+    Mode: Renewal
+
+# Pope Memorial Day
+  - Map: 1@pop1
+    Mode: Renewal
+  - Map: 1@pop2
+    Mode: Renewal
+  - Map: 1@pop3
+    Mode: Renewal
+
+# ep16.2
+  - Map: 1@slw
+    Mode: Renewal
+  - Map: 1@swat
+    Mode: Renewal
+  - Map: que_swat
+    Mode: Renewal
+  - Map: slabw01
+    Mode: Renewal
+  - Map: rebel_in
+    Mode: Renewal
+
+# Memorial day
+  - Map: 1@md_gef
+    Mode: Renewal
+  - Map: 1@md_pay
+    Mode: Renewal
+
+# Rockridge
+  - Map: har_in01
+    Mode: Renewal
+  - Map: harboro1
+    Mode: Renewal
+  - Map: harboro2
+    Mode: Renewal
+  - Map: rockmi1
+    Mode: Renewal
+  - Map: rockmi2
+    Mode: Renewal
+  - Map: rockrdg1
+    Mode: Renewal
+  - Map: rockrdg2
+    Mode: Renewal
+
+# Chicken Mode Nightmare Glastheim
+  - Map: 1@gl_k2
+    Mode: Renewal
+  - Map: 2@gl_k2
+    Mode: Renewal
+
+# Newbie Mode Horror Toy Factory
+  - Map: 1@xm_d2
+    Mode: Renewal
+
+# Illusion Of Moonlight
+  - Map: pay_d03_i
+    Mode: Renewal
+
+# Illusion Of Vampire
+  - Map: gef_d01_i
+    Mode: Renewal
+
+# Illusion Of Frozen
+  - Map: ice_d03_i
+    Mode: Renewal
+
+# Suspicious shipwreck
+  - Map: 1@tre
+    Mode: Renewal
+
+# Poring Village
+  - Map: 1@begi
+    Mode: Renewal
+
+# Illusion Of Turtle Island
+  - Map: tur_d03_i
+    Mode: Renewal
+  - Map: tur_d04_i
+    Mode: Renewal
+
+# Volcanic island Comodo
+  - Map: 1@crd
+    Mode: Renewal
+
+# ??
+  - Map: ordeal_a00
+    Mode: Renewal
+  - Map: ordeal_a02
+    Mode: Renewal
+  - Map: pprontera
+    Mode: Renewal
+
+# ??
+  - Map: niflxmas
+    Mode: Renewal
+  - Map: sch_lab
+    Mode: Renewal
+  - Map: nakhyang
+    Mode: Renewal
+
+# Noodles Festival July
+  - Map: lasa_sea
+    Mode: Renewal
+  - Map: 1@drdo
+    Mode: Renewal
+
+# X anniversary
+  - Map: x_lhz
+    Mode: Renewal
+  - Map: x_prt
+    Mode: Renewal
+  - Map: x_ra
+    Mode: Renewal
+
+# November hunting contest
+  - Map: prt_evt_in
+    Mode: Renewal
+
+# Welcome Corridor
+  - Map: vis_h01
+    Mode: Renewal
+  - Map: vis_h02
+    Mode: Renewal
+  - Map: vis_h03
+    Mode: Renewal
+  - Map: vis_h04
+    Mode: Renewal
+
+# Illusion of Teddy Bear
+  - Map: ein_d02_i
+    Mode: Renewal
+
+# Illusion of Luanda
+  - Map: com_d02_i
+    Mode: Renewal
+
+# Soul Reaper Job Change
+  - Map: 1@soul
+    Mode: Renewal
+
+# Star Emperor Job Change
+  - Map: star_frst
+    Mode: Renewal
+  - Map: star_in
+    Mode: Renewal
+
+# RWC Maps
+  - Map: 2009rwc_01
+    Mode: Renewal
+  - Map: 2009rwc_02
+    Mode: Renewal
+  - Map: 2009rwc_03
+    Mode: Renewal
+  - Map: 2009rwc_04
+    Mode: Renewal
+  - Map: 2009rwc_05
+    Mode: Renewal
+  - Map: 2009rwc_06
+    Mode: Renewal
+  - Map: 2009rwc_07
+    Mode: Renewal
+  - Map: 2009rwc_08
+    Mode: Renewal
+  - Map: 2009rwc_f01
+    Mode: Renewal
+  - Map: 2012rwc_01
+    Mode: Renewal
+  - Map: 2012rwc_02
+    Mode: Renewal
+  - Map: 2012rwc_03
+    Mode: Renewal
+  - Map: 2012rwc_04
+    Mode: Renewal
+  - Map: 2012rwc_05
+    Mode: Renewal
+  - Map: 2012rwc_06
+    Mode: Renewal
+  - Map: 2012rwc_07
+    Mode: Renewal
+  - Map: 2012rwc_08
+    Mode: Renewal
+
+# ep17.1
+  - Map: 1@cor
+    Mode: Renewal
+  - Map: 1@os_a
+    Mode: Renewal
+  - Map: 1@os_b
+    Mode: Renewal
+  - Map: 1@rgsr
+    Mode: Renewal
+  - Map: gl_cas01_
+    Mode: Renewal
+  - Map: mag_dun03
+    Mode: Renewal
+  - Map: pub_cat
+    Mode: Renewal
+  - Map: rgsr_in
+    Mode: Renewal
+  - Map: sp_cor
+    Mode: Renewal
+  - Map: sp_os
+    Mode: Renewal
+  - Map: sp_rudus
+    Mode: Renewal
+  - Map: sp_rudus2
+    Mode: Renewal
+  - Map: sp_rudus3
+    Mode: Renewal
+
+# ep17.2
+  - Map: 1@bamn
+    Mode: Renewal
+  - Map: 1@bamq
+    Mode: Renewal
+  - Map: 1@ghg
+    Mode: Renewal
+  - Map: 1@herbs
+    Mode: Renewal
+  - Map: 1@lost
+    Mode: Renewal
+  - Map: ba_2whs01
+    Mode: Renewal
+  - Map: ba_2whs02
+    Mode: Renewal
+  - Map: ba_bath
+    Mode: Renewal
+  - Map: ba_in01
+    Mode: Renewal
+  - Map: ba_lib
+    Mode: Renewal
+  - Map: ba_maison
+    Mode: Renewal
+  - Map: ba_pw01
+    Mode: Renewal
+  - Map: ba_pw02
+    Mode: Renewal
+  - Map: ba_pw03
+    Mode: Renewal
+  - Map: 1@odin
+    Mode: Renewal
+  - Map: ba_chess
+    Mode: Renewal
+  - Map: ba_go
+    Mode: Renewal
+  - Map: ba_lost
+    Mode: Renewal
+
+# Illusion of Labyrinth
+  - Map: prt_mz03_i
+    Mode: Renewal
+
+# Illusion of Underwater
+  - Map: iz_d04_i
+    Mode: Renewal
+  - Map: iz_d05_i
+    Mode: Renewal
+
+# 4th jobs change
+  - Map: 1@4win
+    Mode: Renewal
+  - Map: 1@4mag
+    Mode: Renewal
+  - Map: 1@4mst
+    Mode: Renewal
+  - Map: 1@4sac
+    Mode: Renewal
+  - Map: 1@4tro
+    Mode: Renewal
+  - Map: 1@4inq
+    Mode: Renewal
+  - Map: 1@4cdn
+    Mode: Renewal
+  - Map: 1@4igd
+    Mode: Renewal
+  - Map: 1@4drk
+    Mode: Renewal
+  - Map: job4_bio
+    Mode: Renewal
+  - Map: job4_mag
+    Mode: Renewal
+  - Map: job4_tro
+    Mode: Renewal
+
+# Gefen Night Arena
+  - Map: 1@ge_sn
+    Mode: Renewal
+
+# Traces of heroes
+  - Map: 1@mjo1
+    Mode: Renewal
+  - Map: 1@mjo2
+    Mode: Renewal
+  - Map: 1@spa2
+    Mode: Renewal
+
+# Instance Thanatos Tower
+  - Map: 1@thts
+    Mode: Renewal
+  - Map: 2@thts
+    Mode: Renewal
+  - Map: 3@thts
+    Mode: Renewal
+  - Map: 4@thts
+    Mode: Renewal
+  - Map: 5@thts
+    Mode: Renewal
+  - Map: 6@thts
+    Mode: Renewal
+  - Map: 7@thts
+    Mode: Renewal
+  - Map: 8@thts
+    Mode: Renewal
+
+# Glastheim Challenge Mode
+  - Map: 1@gl_he
+    Mode: Renewal
+  - Map: 1@gl_he2
+    Mode: Renewal
+
+# EDDA
+  - Map: 1@gl_prq
+    Mode: Renewal
+  - Map: 1@gol1
+    Mode: Renewal
+  - Map: 1@gol2
+    Mode: Renewal
+
+# 2018 Halloween
+  - Map: 1@halo
+    Mode: Renewal
+
+# Constellation Tower
+  - Map: 1@ch_t
+    Mode: Renewal
+  - Map: 2@ch_t
+    Mode: Renewal
+  - Map: 3@ch_t
+    Mode: Renewal
+
+# Level 200 Expansion
+  - Map: abyss_04
+    Mode: Renewal
+  - Map: ein_dun03
+    Mode: Renewal
+  - Map: odin_past
+    Mode: Renewal
+
+# Grade Enhancer
+  - Map: grademk
+    Mode: Renewal
+
+# Level 250 Expansion
+  - Map: sp_rudus4
+    Mode: Renewal
+  - Map: amicitia1
+    Mode: Renewal
+  - Map: amicitia2
+    Mode: Renewal
+  - Map: nif_dun01
+    Mode: Renewal
+  - Map: nif_dun02
+    Mode: Renewal
+
+# # Monster Invasion event
+  - Map: e_hugel
+    Mode: Renewal
+
+# Training Ground outside Prontera
+  - Map: tra_fild
+    Mode: Renewal
+
+# Episode 18: Direction of Prayer
+  - Map: 1@adv
+    Mode: Renewal
+  - Map: 1@advs
+    Mode: Renewal
+  - Map: 1@nyr
+    Mode: Renewal
+  - Map: 1@oz
+    Mode: Renewal
+  - Map: 1@tcamp
+    Mode: Renewal
+  - Map: 2@nyr
+    Mode: Renewal
+  - Map: gw_fild01
+    Mode: Renewal
+  - Map: gw_fild02
+    Mode: Renewal
+  - Map: oz_dun01
+    Mode: Renewal
+  - Map: oz_dun02
+    Mode: Renewal
+  - Map: que_thr
+    Mode: Renewal
+  - Map: wolfvill
+    Mode: Renewal
+
+# Sunken tower
+  - Map: 1@ch_u
+    Mode: Renewal
+
+# Illusion of Twins
+  - Map: ant_d02_i
+    Mode: Renewal
+
+# ??
+  - Map: verus02_a
+    Mode: Renewal
+  - Map: verus02_b
+    Mode: Renewal
+  - Map: tur_d04ia
+    Mode: Renewal
+  - Map: tur_d04ib
+    Mode: Renewal
+
+Footer:
+  Imports:
+  - Path: conf/import/maps_conf.yml

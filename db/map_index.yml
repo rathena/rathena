@@ -1,0 +1,1529 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Map Index Database
+###########################################################################
+#
+# Map Index Settings
+#
+###########################################################################
+# - Index                   Map index that aligns with the map_cache. New maps should be added to the end.
+#   Map                     Map name.
+###########################################################################
+
+Header:
+  Type: MAP_INDEX
+  Version: 1
+
+Body:
+  - Index: 1
+    Map: alb_ship
+  - Index: 2
+    Map: alb2trea
+  - Index: 3
+    Map: alberta
+  - Index: 4
+    Map: alberta_in
+  - Index: 5
+    Map: alde_dun01
+  - Index: 6
+    Map: alde_dun02
+  - Index: 7
+    Map: alde_dun03
+  - Index: 8
+    Map: alde_dun04
+  - Index: 9
+    Map: aldeba_in
+  - Index: 10
+    Map: aldebaran
+  - Index: 11
+    Map: anthell01
+  - Index: 12
+    Map: anthell02
+  - Index: 13
+    Map: arena_room
+  - Index: 14
+    Map: c_tower1
+  - Index: 15
+    Map: c_tower2
+  - Index: 16
+    Map: c_tower3
+  - Index: 17
+    Map: c_tower4
+  - Index: 18
+    Map: force_1-1
+  - Index: 19
+    Map: force_1-2
+  - Index: 20
+    Map: force_1-3
+  - Index: 21
+    Map: force_2-1
+  - Index: 22
+    Map: force_2-2
+  - Index: 23
+    Map: force_2-3
+  - Index: 24
+    Map: force_3-1
+  - Index: 25
+    Map: force_3-2
+  - Index: 26
+    Map: force_3-3
+  - Index: 27
+    Map: gef_dun00
+  - Index: 28
+    Map: gef_dun01
+  - Index: 29
+    Map: gef_dun02
+  - Index: 30
+    Map: gef_dun03
+  - Index: 31
+    Map: gef_fild00
+  - Index: 32
+    Map: gef_fild01
+  - Index: 33
+    Map: gef_fild02
+  - Index: 34
+    Map: gef_fild03
+  - Index: 35
+    Map: gef_fild04
+  - Index: 36
+    Map: gef_fild05
+  - Index: 37
+    Map: gef_fild06
+  - Index: 38
+    Map: gef_fild07
+  - Index: 39
+    Map: gef_fild08
+  - Index: 40
+    Map: gef_fild09
+  - Index: 41
+    Map: gef_fild10
+  - Index: 42
+    Map: gef_fild11
+  - Index: 43
+    Map: gef_fild12
+  - Index: 44
+    Map: gef_fild13
+  - Index: 45
+    Map: gef_fild14
+  - Index: 46
+    Map: gef_tower
+  - Index: 47
+    Map: geffen
+  - Index: 48
+    Map: geffen_in
+  - Index: 49
+    Map: gl_cas01
+  - Index: 50
+    Map: gl_cas02
+  - Index: 51
+    Map: gl_church
+  - Index: 52
+    Map: gl_chyard
+  - Index: 53
+    Map: gl_dun01
+  - Index: 54
+    Map: gl_dun02
+  - Index: 55
+    Map: gl_in01
+  - Index: 56
+    Map: gl_knt01
+  - Index: 57
+    Map: gl_knt02
+  - Index: 58
+    Map: gl_prison
+  - Index: 59
+    Map: gl_prison1
+  - Index: 60
+    Map: gl_sew01
+  - Index: 61
+    Map: gl_sew02
+  - Index: 62
+    Map: gl_sew03
+  - Index: 63
+    Map: gl_sew04
+  - Index: 64
+    Map: gl_step
+  - Index: 65
+    Map: glast_01
+  - Index: 66
+    Map: hunter_1-1
+  - Index: 67
+    Map: hunter_2-1
+  - Index: 68
+    Map: hunter_3-1
+  - Index: 69
+    Map: in_hunter
+  - Index: 70
+    Map: in_moc_16
+  - Index: 71
+    Map: in_orcs01
+  - Index: 72
+    Map: in_sphinx1
+  - Index: 73
+    Map: in_sphinx2
+  - Index: 74
+    Map: in_sphinx3
+  - Index: 75
+    Map: in_sphinx4
+  - Index: 76
+    Map: in_sphinx5
+  - Index: 77
+    Map: iz_dun00
+  - Index: 78
+    Map: iz_dun01
+  - Index: 79
+    Map: iz_dun02
+  - Index: 80
+    Map: iz_dun03
+  - Index: 81
+    Map: iz_dun04
+  - Index: 82
+    Map: job_sword1
+  - Index: 83
+    Map: izlu2dun
+  - Index: 84
+    Map: izlude
+  - Index: 85
+    Map: izlude_in
+  - Index: 86
+    Map: job_thief1
+  - Index: 87
+    Map: knight_1-1
+  - Index: 88
+    Map: knight_2-1
+  - Index: 89
+    Map: knight_3-1
+  - Index: 90
+    Map: mjo_dun01
+  - Index: 91
+    Map: mjo_dun02
+  - Index: 92
+    Map: mjo_dun03
+  - Index: 93
+    Map: mjolnir_01
+  - Index: 94
+    Map: mjolnir_02
+  - Index: 95
+    Map: mjolnir_03
+  - Index: 96
+    Map: mjolnir_04
+  - Index: 97
+    Map: mjolnir_05
+  - Index: 98
+    Map: mjolnir_06
+  - Index: 99
+    Map: mjolnir_07
+  - Index: 100
+    Map: mjolnir_08
+  - Index: 101
+    Map: mjolnir_09
+  - Index: 102
+    Map: mjolnir_10
+  - Index: 103
+    Map: mjolnir_11
+  - Index: 104
+    Map: mjolnir_12
+  - Index: 105
+    Map: moc_castle
+  - Index: 106
+    Map: moc_fild01
+  - Index: 107
+    Map: moc_fild02
+  - Index: 108
+    Map: moc_fild03
+  - Index: 109
+    Map: moc_fild04
+  - Index: 110
+    Map: moc_fild05
+  - Index: 111
+    Map: moc_fild06
+  - Index: 112
+    Map: moc_fild07
+  - Index: 113
+    Map: moc_fild08
+  - Index: 114
+    Map: moc_fild09
+  - Index: 115
+    Map: moc_fild10
+  - Index: 116
+    Map: moc_fild11
+  - Index: 117
+    Map: moc_fild12
+  - Index: 118
+    Map: moc_fild13
+  - Index: 119
+    Map: moc_fild14
+  - Index: 120
+    Map: moc_fild15
+  - Index: 121
+    Map: moc_fild16
+  - Index: 122
+    Map: moc_fild17
+  - Index: 123
+    Map: moc_fild18
+  - Index: 124
+    Map: moc_fild19
+  - Index: 125
+    Map: moc_pryd01
+  - Index: 126
+    Map: moc_pryd02
+  - Index: 127
+    Map: moc_pryd03
+  - Index: 128
+    Map: moc_pryd04
+  - Index: 129
+    Map: moc_pryd05
+  - Index: 130
+    Map: moc_pryd06
+  - Index: 131
+    Map: moc_prydb1
+  - Index: 132
+    Map: moc_ruins
+  - Index: 133
+    Map: monk_in
+  - Index: 134
+    Map: morocc
+  - Index: 135
+    Map: morocc_in
+  - Index: 136
+    Map: new_1-1
+  - Index: 137
+    Map: new_1-2
+  - Index: 138
+    Map: new_1-3
+  - Index: 139
+    Map: new_1-4
+  - Index: 140
+    Map: new_2-1
+  - Index: 141
+    Map: new_2-2
+  - Index: 142
+    Map: new_2-3
+  - Index: 143
+    Map: new_2-4
+  - Index: 144
+    Map: new_3-1
+  - Index: 145
+    Map: new_3-2
+  - Index: 146
+    Map: new_3-3
+  - Index: 147
+    Map: new_3-4
+  - Index: 148
+    Map: new_4-1
+  - Index: 149
+    Map: new_4-2
+  - Index: 150
+    Map: new_4-3
+  - Index: 151
+    Map: new_4-4
+  - Index: 152
+    Map: new_5-1
+  - Index: 153
+    Map: new_5-2
+  - Index: 154
+    Map: new_5-3
+  - Index: 155
+    Map: new_5-4
+  - Index: 156
+    Map: orcsdun01
+  - Index: 157
+    Map: orcsdun02
+  - Index: 158
+    Map: ordeal_1-1
+  - Index: 159
+    Map: ordeal_1-2
+#  - Index: 
+#    Map: ordeal_1-3
+#  - Index: 
+#    Map: ordeal_1-4
+  - Index: 160
+    Map: ordeal_2-1
+  - Index: 161
+    Map: ordeal_2-2
+#  - Index: 
+#    Map: ordeal_2-3
+#  - Index: 
+#    Map: ordeal_2-4
+  - Index: 162
+    Map: ordeal_3-1
+  - Index: 163
+    Map: ordeal_3-2
+#  - Index: 
+#    Map: ordeal_3-3
+#  - Index: 
+#    Map: ordeal_3-4
+  - Index: 164
+    Map: pay_arche
+  - Index: 165
+    Map: pay_dun00
+  - Index: 166
+    Map: pay_dun01
+  - Index: 167
+    Map: pay_dun02
+  - Index: 168
+    Map: pay_dun03
+  - Index: 169
+    Map: pay_dun04
+  - Index: 170
+    Map: pay_fild01
+  - Index: 171
+    Map: pay_fild02
+  - Index: 172
+    Map: pay_fild03
+  - Index: 173
+    Map: pay_fild04
+  - Index: 174
+    Map: pay_fild05
+  - Index: 175
+    Map: pay_fild06
+  - Index: 176
+    Map: pay_fild07
+  - Index: 177
+    Map: pay_fild08
+  - Index: 178
+    Map: pay_fild09
+  - Index: 179
+    Map: pay_fild10
+  - Index: 180
+    Map: pay_fild11
+  - Index: 181
+    Map: payon
+  - Index: 182
+    Map: payon_in01
+  - Index: 183
+    Map: payon_in02
+  - Index: 184
+    Map: priest_1-1
+  - Index: 185
+    Map: priest_2-1
+  - Index: 186
+    Map: priest_3-1
+  - Index: 187
+    Map: prontera
+  - Index: 188
+    Map: prt_are_in
+  - Index: 189
+    Map: prt_are01
+  - Index: 190
+    Map: pvp_room
+  - Index: 191
+    Map: prt_castle
+  - Index: 192
+    Map: prt_church
+  - Index: 193
+    Map: prt_fild00
+  - Index: 194
+    Map: prt_fild01
+  - Index: 195
+    Map: prt_fild02
+  - Index: 196
+    Map: prt_fild03
+  - Index: 197
+    Map: prt_fild04
+  - Index: 198
+    Map: prt_fild05
+  - Index: 199
+    Map: prt_fild06
+  - Index: 200
+    Map: prt_fild07
+  - Index: 201
+    Map: prt_fild08
+  - Index: 202
+    Map: prt_fild09
+  - Index: 203
+    Map: prt_fild10
+  - Index: 204
+    Map: prt_fild11
+  - Index: 205
+    Map: prt_in
+  - Index: 206
+    Map: prt_maze01
+  - Index: 207
+    Map: prt_maze02
+  - Index: 208
+    Map: prt_maze03
+  - Index: 209
+    Map: prt_monk
+  - Index: 210
+    Map: prt_sewb1
+  - Index: 211
+    Map: prt_sewb2
+  - Index: 212
+    Map: prt_sewb3
+  - Index: 213
+    Map: prt_sewb4
+  - Index: 214
+    Map: pvp_2vs2
+  - Index: 215
+    Map: pvp_c_room
+  - Index: 216
+    Map: pvp_n_1-1
+  - Index: 217
+    Map: pvp_n_1-2
+  - Index: 218
+    Map: pvp_n_1-3
+  - Index: 219
+    Map: pvp_n_1-4
+  - Index: 220
+    Map: pvp_n_1-5
+  - Index: 221
+    Map: pvp_n_2-1
+  - Index: 222
+    Map: pvp_n_2-2
+  - Index: 223
+    Map: pvp_n_2-3
+  - Index: 224
+    Map: pvp_n_2-4
+  - Index: 225
+    Map: pvp_n_2-5
+  - Index: 226
+    Map: pvp_n_3-1
+  - Index: 227
+    Map: pvp_n_3-2
+  - Index: 228
+    Map: pvp_n_3-3
+  - Index: 229
+    Map: pvp_n_3-4
+  - Index: 230
+    Map: pvp_n_3-5
+  - Index: 231
+    Map: pvp_n_4-1
+  - Index: 232
+    Map: pvp_n_4-2
+  - Index: 233
+    Map: pvp_n_4-3
+  - Index: 234
+    Map: pvp_n_4-4
+  - Index: 235
+    Map: pvp_n_4-5
+  - Index: 236
+    Map: pvp_n_5-1
+  - Index: 237
+    Map: pvp_n_5-2
+  - Index: 238
+    Map: pvp_n_5-3
+  - Index: 239
+    Map: pvp_n_5-4
+  - Index: 240
+    Map: pvp_n_5-5
+  - Index: 241
+    Map: pvp_n_6-1
+  - Index: 242
+    Map: pvp_n_6-2
+  - Index: 243
+    Map: pvp_n_6-3
+  - Index: 244
+    Map: pvp_n_6-4
+  - Index: 245
+    Map: pvp_n_6-5
+  - Index: 246
+    Map: pvp_n_7-1
+  - Index: 247
+    Map: pvp_n_7-2
+  - Index: 248
+    Map: pvp_n_7-3
+  - Index: 249
+    Map: pvp_n_7-4
+  - Index: 250
+    Map: pvp_n_7-5
+  - Index: 251
+    Map: pvp_n_8-1
+  - Index: 252
+    Map: pvp_n_8-2
+  - Index: 253
+    Map: pvp_n_8-3
+  - Index: 254
+    Map: pvp_n_8-4
+  - Index: 255
+    Map: pvp_n_8-5
+  - Index: 256
+    Map: pvp_n_room
+  - Index: 257
+    Map: pvp_y_1-1
+  - Index: 258
+    Map: pvp_y_1-2
+  - Index: 259
+    Map: pvp_y_1-3
+  - Index: 260
+    Map: pvp_y_1-4
+  - Index: 261
+    Map: pvp_y_1-5
+  - Index: 262
+    Map: pvp_y_2-1
+  - Index: 263
+    Map: pvp_y_2-2
+  - Index: 264
+    Map: pvp_y_2-3
+  - Index: 265
+    Map: pvp_y_2-4
+  - Index: 266
+    Map: pvp_y_2-5
+  - Index: 267
+    Map: pvp_y_3-1
+  - Index: 268
+    Map: pvp_y_3-2
+  - Index: 269
+    Map: pvp_y_3-3
+  - Index: 270
+    Map: pvp_y_3-4
+  - Index: 271
+    Map: pvp_y_3-5
+  - Index: 272
+    Map: pvp_y_4-1
+  - Index: 273
+    Map: pvp_y_4-2
+  - Index: 274
+    Map: pvp_y_4-3
+  - Index: 275
+    Map: pvp_y_4-4
+  - Index: 276
+    Map: pvp_y_4-5
+  - Index: 277
+    Map: pvp_y_5-1
+  - Index: 278
+    Map: pvp_y_5-2
+  - Index: 279
+    Map: pvp_y_5-3
+  - Index: 280
+    Map: pvp_y_5-4
+  - Index: 281
+    Map: pvp_y_5-5
+  - Index: 282
+    Map: pvp_y_6-1
+  - Index: 283
+    Map: pvp_y_6-2
+  - Index: 284
+    Map: pvp_y_6-3
+  - Index: 285
+    Map: pvp_y_6-4
+  - Index: 286
+    Map: pvp_y_6-5
+  - Index: 287
+    Map: pvp_y_7-1
+  - Index: 288
+    Map: pvp_y_7-2
+  - Index: 289
+    Map: pvp_y_7-3
+  - Index: 290
+    Map: pvp_y_7-4
+  - Index: 291
+    Map: pvp_y_7-5
+  - Index: 292
+    Map: pvp_y_8-1
+  - Index: 293
+    Map: pvp_y_8-2
+  - Index: 294
+    Map: pvp_y_8-3
+  - Index: 295
+    Map: pvp_y_8-4
+  - Index: 296
+    Map: pvp_y_8-5
+  - Index: 297
+    Map: pvp_y_room
+  - Index: 298
+    Map: sword_1-1
+  - Index: 299
+    Map: sword_2-1
+  - Index: 300
+    Map: sword_3-1
+  - Index: 301
+    Map: treasure01
+  - Index: 302
+    Map: treasure02
+  - Index: 303
+    Map: wizard_1-1
+  - Index: 304
+    Map: wizard_2-1
+  - Index: 305
+    Map: wizard_3-1
+  - Index: 306
+    Map: xmas
+  - Index: 307
+    Map: xmas_dun01
+  - Index: 308
+    Map: xmas_dun02
+  - Index: 309
+    Map: xmas_fild01
+  - Index: 310
+    Map: xmas_in
+  - Index: 311
+    Map: beach_dun
+  - Index: 312
+    Map: beach_dun2
+  - Index: 313
+    Map: beach_dun3
+  - Index: 314
+    Map: cmd_fild01
+  - Index: 315
+    Map: cmd_fild02
+  - Index: 316
+    Map: cmd_fild03
+  - Index: 317
+    Map: cmd_fild04
+  - Index: 318
+    Map: cmd_fild05
+  - Index: 319
+    Map: cmd_fild06
+  - Index: 320
+    Map: cmd_fild07
+  - Index: 321
+    Map: cmd_fild08
+  - Index: 322
+    Map: cmd_fild09
+  - Index: 323
+    Map: cmd_in01
+  - Index: 324
+    Map: cmd_in02
+  - Index: 325
+    Map: comodo
+  - Index: 326
+    Map: quiz_00
+  - Index: 327
+    Map: quiz_01
+  - Index: 328
+    Map: g_room1-1
+  - Index: 329
+    Map: g_room1-2
+  - Index: 330
+    Map: g_room1-3
+  - Index: 331
+    Map: g_room2
+  - Index: 332
+    Map: tur_dun01
+  - Index: 333
+    Map: tur_dun02
+  - Index: 334
+    Map: tur_dun03
+  - Index: 335
+    Map: tur_dun04
+  - Index: 336
+    Map: tur_dun05
+  - Index: 337
+    Map: tur_dun06
+  - Index: 338
+    Map: alde_gld
+  - Index: 339
+    Map: aldeg_cas01
+  - Index: 340
+    Map: aldeg_cas02
+  - Index: 341
+    Map: aldeg_cas03
+  - Index: 342
+    Map: aldeg_cas04
+  - Index: 343
+    Map: aldeg_cas05
+  - Index: 344
+    Map: gefg_cas01
+  - Index: 345
+    Map: gefg_cas02
+  - Index: 346
+    Map: gefg_cas03
+  - Index: 347
+    Map: gefg_cas04
+  - Index: 348
+    Map: gefg_cas05
+  - Index: 349
+    Map: gld_dun01
+  - Index: 350
+    Map: gld_dun02
+  - Index: 351
+    Map: gld_dun03
+  - Index: 352
+    Map: gld_dun04
+  - Index: 353
+    Map: guild_room
+  - Index: 354
+    Map: guild_vs1
+  - Index: 355
+    Map: guild_vs2
+  - Index: 356
+    Map: guild_vs3
+  - Index: 357
+    Map: guild_vs4
+  - Index: 358
+    Map: guild_vs5
+  - Index: 359
+    Map: guild_vs1-1
+  - Index: 360
+    Map: guild_vs1-2
+  - Index: 361
+    Map: guild_vs1-3
+  - Index: 362
+    Map: guild_vs1-4
+  - Index: 363
+    Map: guild_vs2-1
+  - Index: 364
+    Map: guild_vs2-2
+  - Index: 365
+    Map: job_hunte
+  - Index: 366
+    Map: job_knt
+  - Index: 367
+    Map: job_prist
+  - Index: 368
+    Map: job_wiz
+  - Index: 369
+    Map: pay_gld
+  - Index: 370
+    Map: payg_cas01
+  - Index: 371
+    Map: payg_cas02
+  - Index: 372
+    Map: payg_cas03
+  - Index: 373
+    Map: payg_cas04
+  - Index: 374
+    Map: payg_cas05
+  - Index: 375
+    Map: prt_gld
+  - Index: 376
+    Map: prtg_cas01
+  - Index: 377
+    Map: prtg_cas02
+  - Index: 378
+    Map: prtg_cas03
+  - Index: 379
+    Map: prtg_cas04
+  - Index: 380
+    Map: prtg_cas05
+  - Index: 381
+    Map: alde_alche
+  - Index: 382
+    Map: in_rogue
+  - Index: 383
+    Map: job_cru
+  - Index: 384
+    Map: job_duncer
+  - Index: 385
+    Map: job_monk
+  - Index: 386
+    Map: job_sage
+  - Index: 387
+    Map: mag_dun01
+  - Index: 388
+    Map: mag_dun02
+  - Index: 389
+    Map: monk_test
+  - Index: 390
+    Map: quiz_test
+  - Index: 391
+    Map: yuno
+  - Index: 392
+    Map: yuno_fild01
+  - Index: 393
+    Map: yuno_fild02
+  - Index: 394
+    Map: yuno_fild03
+  - Index: 395
+    Map: yuno_fild04
+  - Index: 396
+    Map: yuno_in01
+  - Index: 397
+    Map: yuno_in02
+  - Index: 398
+    Map: yuno_in03
+  - Index: 399
+    Map: yuno_in04
+  - Index: 400
+    Map: yuno_in05
+  - Index: 401
+    Map: ama_dun01
+  - Index: 402
+    Map: ama_dun02
+  - Index: 403
+    Map: ama_dun03
+  - Index: 404
+    Map: ama_fild01
+  - Index: 405
+    Map: ama_in01
+  - Index: 406
+    Map: ama_in02
+  - Index: 407
+    Map: ama_test
+  - Index: 408
+    Map: amatsu
+  - Index: 409
+    Map: gon_dun01
+  - Index: 410
+    Map: gon_dun02
+  - Index: 411
+    Map: gon_dun03
+  - Index: 412
+    Map: gon_fild01
+  - Index: 413
+    Map: gon_in
+  - Index: 414
+    Map: gon_test
+  - Index: 415
+    Map: gonryun
+  - Index: 416
+    Map: sec_in01
+  - Index: 417
+    Map: sec_in02
+  - Index: 418
+    Map: sec_pri
+  - Index: 419
+    Map: umbala
+  - Index: 420
+    Map: um_dun01
+  - Index: 421
+    Map: um_dun02
+  - Index: 422
+    Map: um_fild01
+  - Index: 423
+    Map: um_fild02
+  - Index: 424
+    Map: um_fild03
+  - Index: 425
+    Map: um_fild04
+  - Index: 426
+    Map: um_in
+  - Index: 427
+    Map: niflheim
+  - Index: 428
+    Map: nif_fild01
+  - Index: 429
+    Map: nif_fild02
+  - Index: 430
+    Map: nif_in
+  - Index: 431
+    Map: yggdrasil01
+  - Index: 432
+    Map: valkyrie
+  - Index: 433
+    Map: himinn
+  - Index: 434
+    Map: lou_in01
+  - Index: 435
+    Map: lou_in02
+  - Index: 436
+    Map: lou_dun03
+  - Index: 437
+    Map: lou_dun02
+  - Index: 438
+    Map: lou_dun01
+  - Index: 439
+    Map: lou_fild01
+  - Index: 440
+    Map: louyang
+  - Index: 441
+    Map: siege_test
+  - Index: 442
+    Map: n_castle
+  - Index: 443
+    Map: nguild_gef
+  - Index: 444
+    Map: nguild_prt
+  - Index: 445
+    Map: nguild_pay
+  - Index: 446
+    Map: nguild_alde
+  - Index: 447
+    Map: jawaii
+  - Index: 448
+    Map: jawaii_in
+  - Index: 449
+    Map: gefenia01
+  - Index: 450
+    Map: gefenia02
+  - Index: 451
+    Map: gefenia03
+  - Index: 452
+    Map: gefenia04
+  - Index: 453
+    Map: new_zone01
+  - Index: 454
+    Map: new_zone02
+  - Index: 455
+    Map: new_zone03
+  - Index: 456
+    Map: new_zone04
+  - Index: 457
+    Map: payon_in03
+  - Index: 458
+    Map: ayothaya
+  - Index: 459
+    Map: ayo_in01
+  - Index: 460
+    Map: ayo_in02
+  - Index: 461
+    Map: ayo_fild01
+  - Index: 462
+    Map: ayo_fild02
+  - Index: 463
+    Map: ayo_dun01
+  - Index: 464
+    Map: ayo_dun02
+  - Index: 465
+    Map: que_god01
+  - Index: 466
+    Map: que_god02
+  - Index: 467
+    Map: yuno_fild05
+  - Index: 468
+    Map: yuno_fild07
+  - Index: 469
+    Map: yuno_fild08
+  - Index: 470
+    Map: yuno_fild09
+  - Index: 471
+    Map: yuno_fild11
+  - Index: 472
+    Map: yuno_fild12
+  - Index: 473
+    Map: alde_tt02
+  - Index: 474
+    Map: turbo_n_1
+  - Index: 475
+    Map: turbo_n_4
+  - Index: 476
+    Map: turbo_n_8
+  - Index: 477
+    Map: turbo_n_16
+  - Index: 478
+    Map: turbo_e_4
+  - Index: 479
+    Map: turbo_e_8
+  - Index: 480
+    Map: turbo_e_16
+  - Index: 481
+    Map: turbo_room
+  - Index: 482
+    Map: airplane
+  - Index: 483
+    Map: airport
+  - Index: 484
+    Map: einbech
+  - Index: 485
+    Map: einbroch
+  - Index: 486
+    Map: ein_dun01
+  - Index: 487
+    Map: ein_dun02
+  - Index: 488
+    Map: ein_fild06
+  - Index: 489
+    Map: ein_fild07
+  - Index: 490
+    Map: ein_fild08
+  - Index: 491
+    Map: ein_fild09
+  - Index: 492
+    Map: ein_fild10
+  - Index: 493
+    Map: ein_in01
+  - Index: 494
+    Map: que_sign01
+  - Index: 495
+    Map: que_sign02
+  - Index: 496
+    Map: ein_fild03
+  - Index: 497
+    Map: ein_fild04
+  - Index: 498
+    Map: lhz_fild02
+  - Index: 499
+    Map: lhz_fild03
+  - Index: 500
+    Map: yuno_pre
+  - Index: 501
+    Map: lhz_fild01
+  - Index: 502
+    Map: lighthalzen
+  - Index: 503
+    Map: lhz_in01
+  - Index: 504
+    Map: lhz_in02
+  - Index: 505
+    Map: lhz_in03
+  - Index: 506
+    Map: lhz_que01
+  - Index: 507
+    Map: lhz_dun01
+  - Index: 508
+    Map: lhz_dun02
+  - Index: 509
+    Map: lhz_dun03
+  - Index: 510
+    Map: lhz_cube
+  - Index: 511
+    Map: juperos_01
+  - Index: 512
+    Map: juperos_02
+  - Index: 513
+    Map: jupe_area1
+  - Index: 514
+    Map: jupe_area2
+  - Index: 515
+    Map: jupe_core
+  - Index: 516
+    Map: jupe_ele
+  - Index: 517
+    Map: jupe_ele_r
+  - Index: 518
+    Map: jupe_gate
+  - Index: 519
+    Map: y_airport
+  - Index: 520
+    Map: lhz_airport
+  - Index: 521
+    Map: airplane_01
+  - Index: 522
+    Map: jupe_cave
+  - Index: 523
+    Map: quiz_02
+  - Index: 524
+    Map: hu_fild07
+  - Index: 525
+    Map: hu_fild05
+  - Index: 526
+    Map: hu_fild04
+  - Index: 527
+    Map: hu_fild01
+  - Index: 528
+    Map: yuno_fild06
+  - Index: 529
+    Map: job_soul
+  - Index: 530
+    Map: job_star
+  - Index: 531
+    Map: que_job01
+  - Index: 532
+    Map: que_job02
+  - Index: 533
+    Map: que_job03
+  - Index: 534
+    Map: abyss_01
+  - Index: 535
+    Map: abyss_02
+  - Index: 536
+    Map: abyss_03
+  - Index: 537
+    Map: thana_step
+  - Index: 538
+    Map: thana_boss
+  - Index: 539
+    Map: tha_scene01
+  - Index: 540
+    Map: tha_t01
+  - Index: 541
+    Map: tha_t02
+  - Index: 542
+    Map: tha_t03
+  - Index: 543
+    Map: tha_t04
+  - Index: 544
+    Map: tha_t07
+  - Index: 545
+    Map: tha_t05
+  - Index: 546
+    Map: tha_t06
+  - Index: 547
+    Map: tha_t08
+  - Index: 548
+    Map: tha_t09
+  - Index: 549
+    Map: tha_t10
+  - Index: 550
+    Map: tha_t11
+  - Index: 551
+    Map: tha_t12
+  - Index: 552
+    Map: auction_01
+  - Index: 553
+    Map: auction_02
+  - Index: 554
+    Map: hugel
+  - Index: 555
+    Map: hu_in01
+  - Index: 556
+    Map: que_bingo
+  - Index: 557
+    Map: que_hugel
+  - Index: 558
+    Map: p_track01
+  - Index: 559
+    Map: p_track02
+  - Index: 560
+    Map: odin_tem01
+  - Index: 561
+    Map: odin_tem02
+  - Index: 562
+    Map: odin_tem03
+  - Index: 563
+    Map: hu_fild02
+  - Index: 564
+    Map: hu_fild03
+  - Index: 565
+    Map: hu_fild06
+  - Index: 566
+    Map: ein_fild01
+  - Index: 567
+    Map: ein_fild02
+  - Index: 568
+    Map: ein_fild05
+  - Index: 569
+    Map: yuno_fild10
+  - Index: 570
+    Map: kh_kiehl02
+  - Index: 571
+    Map: kh_kiehl01
+  - Index: 572
+    Map: kh_dun02
+  - Index: 573
+    Map: kh_dun01
+  - Index: 574
+    Map: kh_mansion
+  - Index: 575
+    Map: kh_rossi
+  - Index: 576
+    Map: kh_school
+  - Index: 577
+    Map: kh_vila
+  - Index: 578
+    Map: force_map1
+  - Index: 579
+    Map: force_map2
+  - Index: 580
+    Map: force_map3
+  - Index: 581
+    Map: job_hunter
+  - Index: 582
+    Map: job_knight
+  - Index: 583
+    Map: job_priest
+  - Index: 584
+    Map: job_wizard
+  - Index: 585
+    Map: ve_in02
+  - Index: 586
+    Map: rachel
+  - Index: 587
+    Map: ra_in01
+  - Index: 588
+    Map: ra_fild01
+  - Index: 589
+    Map: ra_fild02
+  - Index: 590
+    Map: ra_fild03
+  - Index: 591
+    Map: ra_fild04
+  - Index: 592
+    Map: ra_fild05
+  - Index: 593
+    Map: ra_fild06
+  - Index: 594
+    Map: ra_fild07
+  - Index: 595
+    Map: ra_fild08
+  - Index: 596
+    Map: ra_fild09
+  - Index: 597
+    Map: ra_fild10
+  - Index: 598
+    Map: ra_fild11
+  - Index: 599
+    Map: ra_fild12
+  - Index: 600
+    Map: ra_fild13
+  - Index: 601
+    Map: ra_san01
+  - Index: 602
+    Map: ra_san02
+  - Index: 603
+    Map: ra_san03
+  - Index: 604
+    Map: ra_san04
+  - Index: 605
+    Map: ra_san05
+  - Index: 606
+    Map: ra_temin
+  - Index: 607
+    Map: ra_temple
+  - Index: 608
+    Map: ra_temsky
+  - Index: 609
+    Map: que_rachel
+  - Index: 610
+    Map: ice_dun01
+  - Index: 611
+    Map: ice_dun02
+  - Index: 612
+    Map: ice_dun03
+  - Index: 613
+    Map: ice_dun04
+  - Index: 614
+    Map: que_thor
+  - Index: 615
+    Map: thor_camp
+  - Index: 616
+    Map: thor_v01
+  - Index: 617
+    Map: thor_v02
+  - Index: 618
+    Map: thor_v03
+  - Index: 619
+    Map: veins
+  - Index: 620
+    Map: ve_in
+  - Index: 621
+    Map: ve_fild01
+  - Index: 622
+    Map: ve_fild02
+  - Index: 623
+    Map: ve_fild03
+  - Index: 624
+    Map: ve_fild04
+  - Index: 625
+    Map: ve_fild05
+  - Index: 626
+    Map: ve_fild06
+  - Index: 627
+    Map: ve_fild07
+  - Index: 628
+    Map: poring_c01
+  - Index: 629
+    Map: poring_c02
+  - Index: 630
+    Map: que_ng
+  - Index: 631
+    Map: nameless_i
+  - Index: 632
+    Map: nameless_n
+  - Index: 633
+    Map: nameless_in
+  - Index: 634
+    Map: abbey01
+  - Index: 635
+    Map: abbey02
+  - Index: 636
+    Map: abbey03
+  - Index: 637
+    Map: poring_w01
+  - Index: 638
+    Map: poring_w02
+  - Index: 639
+    Map: que_san04
+  - Index: 640
+    Map: moscovia
+  - Index: 641
+    Map: mosk_in
+  - Index: 642
+    Map: mosk_ship
+  - Index: 643
+    Map: mosk_fild01
+  - Index: 644
+    Map: mosk_fild02
+  - Index: 645
+    Map: mosk_dun01
+  - Index: 646
+    Map: mosk_dun02
+  - Index: 647
+    Map: mosk_dun03
+  - Index: 648
+    Map: mosk_que
+  - Index: 649
+    Map: force_4-1
+  - Index: 650
+    Map: force_5-1
+  - Index: 651
+    Map: 06guild_r
+  - Index: 652
+    Map: 06guild_01
+  - Index: 653
+    Map: 06guild_02
+  - Index: 654
+    Map: 06guild_03
+  - Index: 655
+    Map: 06guild_04
+  - Index: 656
+    Map: 06guild_05
+  - Index: 657
+    Map: 06guild_06
+  - Index: 658
+    Map: 06guild_07
+  - Index: 659
+    Map: 06guild_08
+  - Index: 660
+    Map: z_agit
+  - Index: 661
+    Map: que_temsky
+  - Index: 662
+    Map: itemmall
+  - Index: 663
+    Map: bossnia_01
+  - Index: 664
+    Map: bossnia_02
+  - Index: 665
+    Map: bossnia_03
+  - Index: 666
+    Map: bossnia_04
+  - Index: 667
+    Map: schg_cas01
+  - Index: 668
+    Map: schg_cas02
+  - Index: 669
+    Map: schg_cas03
+  - Index: 670
+    Map: schg_cas04
+  - Index: 671
+    Map: schg_cas05
+  - Index: 672
+    Map: sch_gld
+  - Index: 673
+    Map: cave
+  - Index: 674
+    Map: moc_fild20
+  - Index: 675
+    Map: moc_fild21
+  - Index: 676
+    Map: moc_fild22
+  - Index: 677
+    Map: que_ba
+  - Index: 678
+    Map: que_moc_16
+  - Index: 679
+    Map: que_moon
+  - Index: 680
+    Map: arug_cas01
+  - Index: 681
+    Map: arug_cas02
+  - Index: 682
+    Map: arug_cas03
+  - Index: 683
+    Map: arug_cas04
+  - Index: 684
+    Map: arug_cas05
+  - Index: 685
+    Map: aru_gld
+  - Index: 686
+    Map: bat_room
+  - Index: 687
+    Map: bat_a01
+  - Index: 688
+    Map: bat_a02
+  - Index: 689
+    Map: bat_b01
+  - Index: 690
+    Map: bat_b02
+  - Index: 691
+    Map: que_qsch01
+  - Index: 692
+    Map: que_qsch02
+  - Index: 693
+    Map: que_qsch03
+  - Index: 694
+    Map: que_qsch04
+  - Index: 695
+    Map: que_qsch05
+  - Index: 696
+    Map: que_qaru01
+  - Index: 697
+    Map: que_qaru02
+  - Index: 698
+    Map: que_qaru03
+  - Index: 699
+    Map: que_qaru04
+  - Index: 700
+    Map: que_qaru05
+  - Index: 701
+    Map: 1@cata
+  - Index: 702
+    Map: 2@cata
+  - Index: 703
+    Map: e_tower
+  - Index: 704
+    Map: 1@tower
+  - Index: 705
+    Map: 2@tower
+  - Index: 706
+    Map: 3@tower
+  - Index: 707
+    Map: 4@tower
+  - Index: 708
+    Map: 5@tower
+  - Index: 709
+    Map: 6@tower
+  - Index: 710
+    Map: mid_camp
+  - Index: 711
+    Map: mid_campin
+  - Index: 712
+    Map: man_fild01
+  - Index: 713
+    Map: man_fild03
+  - Index: 714
+    Map: spl_fild02
+  - Index: 715
+    Map: spl_fild03
+  - Index: 716
+    Map: moc_fild22b
+  - Index: 717
+    Map: que_dan01
+  - Index: 718
+    Map: que_dan02
+  - Index: 719
+    Map: schg_que01
+  - Index: 720
+    Map: schg_dun01
+  - Index: 721
+    Map: arug_que01
+  - Index: 722
+    Map: arug_dun01
+  - Index: 723
+    Map: 1@orcs
+  - Index: 724
+    Map: 2@orcs
+  - Index: 725
+    Map: 1@nyd
+  - Index: 726
+    Map: 2@nyd
+  - Index: 727
+    Map: nyd_dun01
+  - Index: 728
+    Map: nyd_dun02
+  - Index: 729
+    Map: manuk
+  - Index: 730
+    Map: man_fild02
+  - Index: 731
+    Map: man_in01
+  - Index: 732
+    Map: splendide
+  - Index: 733
+    Map: spl_fild01
+  - Index: 734
+    Map: spl_in01
+  - Index: 735
+    Map: spl_in02
+  - Index: 736
+    Map: bat_c01
+  - Index: 737
+    Map: bat_c02
+  - Index: 738
+    Map: bat_c03
+
+Footer:
+  Imports:
+  - Path: db/pre-re/map_index.yml
+    Mode: Prerenewal
+  - Path: db/re/map_index.yml
+    Mode: Renewal
+  - Path: db/import/map_index.yml
