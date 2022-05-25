@@ -479,7 +479,9 @@ int32 grfio_read_rsw_water_level( const char* fname ){
 
 	int32 level;
 
-	if( version >= 0x202 ){
+	if( version >= 0x205 ){
+		level = (int32)*(float*)( rsw + 171 );
+	} else if( version >= 0x202 ){
 		level = (int32)*(float*)( rsw + 167 );
 	}else{
 		level = (int32)*(float*)( rsw + 166 );
@@ -543,6 +545,7 @@ static int grfio_entryread(const char* grfname, int gentry)
 	if( strcmp((const char*)grf_header,"Master of Magic") != 0 || fseek(fp,getlong(grf_header+0x1e),SEEK_CUR) != 0 ) {
 		fclose(fp);
 		ShowError("GRF %s read error\n", grfname);
+		ShowError("GRF possibly over 2GB in size.\n");
 		return 2;	// 2:file format error
 	}
 
