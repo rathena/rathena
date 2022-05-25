@@ -88,4 +88,7 @@
 /// Check if the specified packetvresion supports the cashshop sale system
 #define PACKETVER_SUPPORTS_SALES PACKETVER >= 20131223
 
+/// Use web service?
+#define WEB_SERVER_ENABLE PACKETVER > 20200300
+
 #endif /* CONFIG_PACKETS_HPP */
