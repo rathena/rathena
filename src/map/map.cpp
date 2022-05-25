@@ -3868,7 +3868,12 @@ int map_readallmaps (void)
 
 	if( !enable_grf ) {
 		// The cache isn't needed anymore, so free it. [Shinryo]
-		map_cache_buffer.clear();
+		auto it = map_cache_buffer.begin();
+
+		while (it != map_cache_buffer.end()) {
+			aFree(*it);
+			it = map_cache_buffer.erase(it);
+		}
 	}
 
 	if (maps_removed)
