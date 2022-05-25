@@ -2991,7 +2991,7 @@ bool char_config_read(const char* cfgName, bool normal){
 		} else if (strcmpi(w1, "start_point_pre") == 0) {
 #endif
 			char_config_split_startpoint(w1, w2, charserv_config.start_point, &charserv_config.start_point_count);
-#if PACKETVER >= 20151001
+#if PACKETVER >= 20151001 && defined(RENEWAL)
 		} else if (strcmpi(w1, "start_point_doram") == 0) {
 			char_config_split_startpoint(w1, w2, charserv_config.start_point_doram, &charserv_config.start_point_count_doram);
 #endif
