@@ -79,8 +79,6 @@ const std::string mapindex_getmapname_ext(const std::string &string) {
 		temp += ".gat"; // add .gat extension
 
 	return temp;
-	//return &(*temp.begin());
-	//return const_cast<char *>(temp.c_str());
 }
 
 /**
