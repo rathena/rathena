@@ -471,7 +471,7 @@ int32 grfio_read_rsw_water_level( const char* fname ){
 
 	uint16 version = ( rsw[4] << 8 ) | rsw[5];
 
-	if( version < 0x104 || version > 0x202 ){
+	if( version < 0x104 || version > 0x205 ){
 		ShowError( "grfio_read_rsw_water_level: Unsupported RSW version 0x%04x in file %s\n", version, fname );
 		aFree( rsw );
 		return RSW_NO_WATER;
