@@ -3742,40 +3742,33 @@ void map_removemapdb(struct map_data *m)
  *--------------------------------------*/
 int map_readallmaps (void)
 {
-	FILE* fp=NULL;
+	FILE* fp;
 	// Has the uncompressed gat data of all maps, so just one allocation has to be made
-	char *map_cache_buffer[2] = {
-		NULL,
-		NULL
-	};
-	char map_cache_decode_buffer[MAX_MAP_SIZE];
+	std::vector<char *> map_cache_buffer = {};
 
 	if( enable_grf )
 		ShowStatus("Loading maps (using GRF files)...\n");
 	else {
-		const char* mapcachefilepath[] = {
+		// Load the map cache files in reverse order to account for import
+		const std::vector<std::string> mapcachefilepath = {
+			"db/" DBIMPORT "/map_cache.dat",
 			"db/" DBPATH "map_cache.dat",
-			"db/" DBIMPORT "/map_cache.dat"
+			"db/map_cache.dat",
 		};
 
-		for( int i = 0; i < 2; i++ ){
-			ShowStatus( "Loading maps (using %s as map cache)...\n", mapcachefilepath[i] );
+		for(const auto &mapdat : mapcachefilepath) {
+			ShowStatus( "Loading maps (using %s as map cache)...\n", mapdat.c_str() );
 
-			if( ( fp = fopen(mapcachefilepath[i], "rb") ) == NULL ){
-				if( i == 0 ){
-					ShowFatalError( "Unable to open map cache file " CL_WHITE "%s" CL_RESET "\n", mapcachefilepath[i] );
-					exit(EXIT_FAILURE); //No use launching server if maps can't be read.
-				}else{
-					ShowWarning( "Unable to open map cache file " CL_WHITE "%s" CL_RESET "\n", mapcachefilepath[i] );
-					break;
-				}
+			if( ( fp = fopen(mapdat.c_str(), "rb")) == nullptr) {
+				ShowFatalError( "Unable to open map cache file " CL_WHITE "%s" CL_RESET "\n", mapdat.c_str());
+				continue;
 			}
 
 			// Init mapcache data. [Shinryo]
-			map_cache_buffer[i] = map_init_mapcache(fp);
+			map_cache_buffer.push_back(map_init_mapcache(fp));
 
-			if( !map_cache_buffer[i] ) {
-				ShowFatalError( "Failed to initialize mapcache data (%s)..\n", mapcachefilepath[i] );
+			if( !map_cache_buffer.back() ) {
+				ShowFatalError( "Failed to initialize mapcache data (%s)..\n", mapdat.c_str());
 				exit(EXIT_FAILURE);
 			}
 
@@ -3790,6 +3783,7 @@ int map_readallmaps (void)
 		bool success = false;
 		unsigned short idx = 0;
 		struct map_data *mapdata = &map[i];
+		char map_cache_decode_buffer[MAX_MAP_SIZE];
 
 		// show progress
 		ShowStatus("Loading maps [%i/%i]: %s" CL_CLL "\r", i, map_num, mapdata->name);
@@ -3799,14 +3793,9 @@ int map_readallmaps (void)
 			success = map_readgat(mapdata) != 0;
 		}else{
 			// try to load the map
-			// Read from import first, in case of override
-			if( map_cache_buffer[1] != NULL ){
-				success = map_readfromcache( mapdata, map_cache_buffer[1], map_cache_decode_buffer ) != 0;
-			}
-
-			// Nothing was found in import - try to find it in the main file
-			if( !success ){
-				success = map_readfromcache( mapdata, map_cache_buffer[0], map_cache_decode_buffer ) != 0;
+			for (const auto &cache : map_cache_buffer) {
+				if ((success = map_readfromcache(mapdata, cache, map_cache_decode_buffer)) != 0)
+					break;
 			}
 		}
 
@@ -3855,10 +3844,12 @@ int map_readallmaps (void)
 
 	if( !enable_grf ) {
 		// The cache isn't needed anymore, so free it. [Shinryo]
-		if( map_cache_buffer[1] != NULL ){
-			aFree(map_cache_buffer[1]);
+		auto it = map_cache_buffer.begin();
+
+		while (it != map_cache_buffer.end()) {
+			aFree(*it);
+			it = map_cache_buffer.erase(it);
 		}
-		aFree(map_cache_buffer[0]);
 	}
 
 	if (maps_removed)
