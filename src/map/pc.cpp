@@ -9947,9 +9947,13 @@ bool pc_setparam(struct map_session_data *sd,int64 type,int64 val_tmp)
  *------------------------------------------*/
 void pc_heal(struct map_session_data *sd,unsigned int hp,unsigned int sp, unsigned int ap, int type)
 {// Is there going to be a effect for gaining AP soon??? [Rytech]
+	nullpo_retv(sd);
+
 	if (type&2) {
-		if (hp || type&4)
+		if (hp || type&4) {
 			clif_heal(sd->fd,SP_HP,hp);
+			clif_update_hp(sd);
+		}
 		if (sp)
 			clif_heal(sd->fd,SP_SP,sp);
 		if (ap)
