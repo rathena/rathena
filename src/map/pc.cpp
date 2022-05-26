@@ -9952,7 +9952,7 @@ void pc_heal(struct map_session_data *sd,unsigned int hp,unsigned int sp, unsign
 	if (type&2) {
 		if (hp || type&4) {
 			clif_heal(sd->fd,SP_HP,hp);
-			clif_update_hp(sd);
+			clif_update_hp(*sd);
 		}
 		if (sp)
 			clif_heal(sd->fd,SP_SP,sp);
