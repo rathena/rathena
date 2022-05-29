@@ -3,6 +3,8 @@
 
 #include "utils.hpp"
 
+#include <iostream>
+#include <string>
 #include <math.h> // floor()
 #include <stdlib.h>
 #include <string.h>
@@ -399,4 +401,14 @@ uint32 get_percentage_exp(const uint64 a, const uint64 b)
 	}
 
 	return (uint32)floor(result);
+}
+
+std::string InsertComma(int v){
+   auto s = std::to_string(v);
+   int n = s.length() - 3;
+   while (n > 0) {
+      s.insert(n, ",");
+      n -= 3;
+   }
+   return s;
 }
