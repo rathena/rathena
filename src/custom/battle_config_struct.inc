@@ -12,3 +12,14 @@
  *	 <datatype> name;
  **/
 
+/**
+* Extended Vending system [Lilith]
+**/
+int extended_vending;
+int show_broadcast_info;
+int show_item_vending;
+int ex_vending_info;
+int ex_vending_report;
+int ex_buying_bound;
+int item_zeny;
+int item_cash;
