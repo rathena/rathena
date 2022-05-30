@@ -29498,7 +29498,7 @@ Body:
       bonus2 bAddRace,RC_Player_Doram,5;
       bonus2 bMagicAddRace,RC_Player_Human,5;
       bonus2 bMagicAddRace,RC_Player_Doram,5;
-      bonus2 bResEff,Eff_Freeze,25;
+      bonus2 bResEff,Eff_Freeze,2500;
   - Id: 2497
     AegisName: TE_Woe_Boots
     Name: TE Woe Boots
@@ -29529,7 +29529,7 @@ Body:
       bonus bMaxSP,100;
       bonus2 bAddRace,RC_Player_Human,10;
       bonus2 bAddRace,RC_Player_Doram,10;
-      bonus2 bResEff,Eff_Freeze,25;
+      bonus2 bResEff,Eff_Freeze,2500;
   - Id: 2498
     AegisName: TE_Woe_Magic_Sandal
     Name: TE Woe Magic Sandal
@@ -29564,7 +29564,7 @@ Body:
       bonus bMaxSP,200;
       bonus2 bMagicAddRace,RC_Player_Human,5;
       bonus2 bMagicAddRace,RC_Player_Doram,5;
-      bonus2 bResEff,Eff_Freeze,25;
+      bonus2 bResEff,Eff_Freeze,2500;
   - Id: 2499
     AegisName: Temporal_Boots
     Name: Temporal Boots
