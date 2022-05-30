@@ -603,21 +603,21 @@ OnInit:
 		unloadnpc "Matestein";
 		unloadnpc "Fruel";
 
-		npcshopupdate "market_refine_prt_in",1010,0,999999;
-		npcshopupdate "market_refine_payon",1010,0,999999;
-		npcshopupdate "market_refine_morocc_in",1010,0,999999;
-		npcshopupdate "market_refine_alberta_in",1010,0,999999;
-		npcshopupdate "market_refine_yuno_in01",1010,0,999999;
-		npcshopupdate "market_refine_ein_in01",1010,0,999999;
-		npcshopupdate "market_refine_lhz_in02",1010,0,999999;
+		npcshopupdate "market_refine_prt_in",1010,200,999999;
+		npcshopupdate "market_refine_payon",1010,200,999999;
+		npcshopupdate "market_refine_morocc_in",1010,200,999999;
+		npcshopupdate "market_refine_alberta_in",1010,200,999999;
+		npcshopupdate "market_refine_yuno_in01",1010,200,999999;
+		npcshopupdate "market_refine_ein_in01",1010,200,999999;
+		npcshopupdate "market_refine_lhz_in02",1010,200,999999;
 		
-		npcshopupdate "market_refine_prt_in",1011,0,999999;
-		npcshopupdate "market_refine_payon",1011,0,999999;
-		npcshopupdate "market_refine_morocc_in",1011,0,999999;
-		npcshopupdate "market_refine_alberta_in",1011,0,999999;
-		npcshopupdate "market_refine_yuno_in01",1011,0,999999;
-		npcshopupdate "market_refine_ein_in01",1011,0,999999;
-		npcshopupdate "market_refine_lhz_in02",1011,0,999999;
+		npcshopupdate "market_refine_prt_in",1011,1000,999999;
+		npcshopupdate "market_refine_payon",1011,1000,999999;
+		npcshopupdate "market_refine_morocc_in",1011,1000,999999;
+		npcshopupdate "market_refine_alberta_in",1011,1000,999999;
+		npcshopupdate "market_refine_yuno_in01",1011,1000,999999;
+		npcshopupdate "market_refine_ein_in01",1011,1000,999999;
+		npcshopupdate "market_refine_lhz_in02",1011,1000,999999;
 	}
 	else {
 		unloadnpc "market_refine_prt_in";
