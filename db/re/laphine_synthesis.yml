@@ -2052,11 +2052,11 @@ Body:
     RewardGroup: CANDY_BAG_SCROLL_MELEE
     Requirements:
       - Item: Bag_Of_Antonio_P
-  - Item: Candy_BAG_Scroll_Range
+  - Item: Candy_Bag_Scroll_Range
     RewardGroup: CANDY_BAG_SCROLL_RANGE
     Requirements:
       - Item: Bag_Of_Antonio_S
-  - Item: Candy_BAG_Scroll_Magic
+  - Item: Candy_Bag_Scroll_Magic
     RewardGroup: CANDY_BAG_SCROLL_MAGIC
     Requirements:
       - Item: Bag_Of_Antonio_
