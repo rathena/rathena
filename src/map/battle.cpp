@@ -3397,10 +3397,7 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 			ATK_ADD(wd->masteryAtk, wd->masteryAtk2, 4);
 		if (skill_id != CR_SHIELDBOOMERANG)
 			ATK_ADD2(wd->masteryAtk, wd->masteryAtk2, ((wd->div_ < 1) ? 1 : wd->div_) * sd->right_weapon.star, ((wd->div_ < 1) ? 1 : wd->div_) * sd->left_weapon.star);
-		if (skill_id == MO_FINGEROFFENSIVE) {
-			ATK_ADD(wd->masteryAtk, wd->masteryAtk2, ((wd->div_ < 1) ? 1 : wd->div_) * sd->spiritball_old * 3);
-		} else
-			ATK_ADD(wd->masteryAtk, wd->masteryAtk2, ((wd->div_ < 1) ? 1 : wd->div_) * sd->spiritball * 3);
+		ATK_ADD(wd->masteryAtk, wd->masteryAtk2, ((wd->div_ < 1) ? 1 : wd->div_) * sd->spiritball * 3);
 #endif
 
 		if (skill_id == NJ_SYURIKEN && (skill = pc_checkskill(sd,NJ_TOBIDOUGU)) > 0) { // !TODO: Confirm new mastery formula
@@ -4708,7 +4705,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
  			break;
 		case SR_TIGERCANNON:
 			{
-				unsigned int hp = sstatus->max_hp * (12 + (skill_lv * 2)) / 100,
+				unsigned int hp = sstatus->max_hp * (10 + (skill_lv * 2)) / 100,
 							 sp = sstatus->max_sp * (5 + skill_lv) / 100;
 
 				if (wd->miscflag&8)
@@ -6162,8 +6159,10 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 				if (sd) {
 					if (battle_config.finger_offensive_type)
 						wd.div_ = 1;
+#ifndef RENEWAL
 					else if ((sd->spiritball + sd->spiritball_old) < wd.div_)
 						wd.div_ = sd->spiritball + sd->spiritball_old;
+#endif
 				}
 				break;
 
