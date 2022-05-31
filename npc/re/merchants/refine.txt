@@ -644,7 +644,7 @@ OnInit:
 
 prt_in,63,69,3	script	Dietrich#ns_prt	4_M_02,{
 	mes "[" + strnpcinfo(1) + "]";
-	mes "We sell and exchange various smelting ores used in smelting.";
+	mes "We sell and exchange various ores used in smelting.";
 	next;
 	switch( select( "View basic smelting ores", "View advanced smelting ores", "View Ether smelting ores", "Cancel" ) ) {
 	case 1:
