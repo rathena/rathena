@@ -3494,10 +3494,7 @@ static void battle_calc_damage_parts(struct Damage* wd, struct block_list *src,s
 		critical = true;
 
 	wd->weaponAtk += battle_calc_base_weapon_attack(src, tstatus, &sstatus->rhw, sd, critical);
-	wd->weaponAtk = battle_attr_fix(src, target, wd->weaponAtk, right_element, tstatus->def_ele, tstatus->ele_lv);
-
 	wd->weaponAtk2 += battle_calc_base_weapon_attack(src, tstatus, &sstatus->lhw, sd, critical);
-	wd->weaponAtk2 = battle_attr_fix(src, target, wd->weaponAtk2, left_element, tstatus->def_ele, tstatus->ele_lv);
 
 	// Weapon ATK gain bonus from SC_SUB_WEAPONPROPERTY here ( +x% pseudo element damage)
 	if (sd && sd->sc.data[SC_SUB_WEAPONPROPERTY]) {
@@ -3509,6 +3506,9 @@ static void battle_calc_damage_parts(struct Damage* wd, struct block_list *src,s
 		wd->weaponAtk += bonus_atk;
 		wd->weaponAtk2 += bonus_atk2;
 	}
+
+	wd->weaponAtk = battle_attr_fix(src, target, wd->weaponAtk, right_element, tstatus->def_ele, tstatus->ele_lv);
+	wd->weaponAtk2 = battle_attr_fix(src, target, wd->weaponAtk2, left_element, tstatus->def_ele, tstatus->ele_lv);
 
 	wd->equipAtk += battle_calc_equip_attack(src, skill_id);
 	wd->equipAtk = battle_attr_fix(src, target, wd->equipAtk, right_element, tstatus->def_ele, tstatus->ele_lv);
