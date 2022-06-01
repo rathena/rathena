@@ -6410,7 +6410,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	}
 
 	std::bitset<NK_MAX> nk = battle_skill_get_damage_properties(skill_id, wd.miscflag);
-	int i = 0;
 
 	// check if we're landing a hit
 	if(!is_attack_hitting(&wd, src, target, skill_id, skill_lv, true))
@@ -6441,6 +6440,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 				ATK_ADD(wd.weaponAtk, wd.weaponAtk2, sstatus->matk_min);
 		}
 #endif
+
+		int i = 0;
 
 #ifndef RENEWAL
 		// add any miscellaneous player ATK bonuses
@@ -6559,19 +6560,19 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 			battle_calc_attack_post_defense(&wd, src, target, skill_id, skill_lv);
 		}
-	}
 
 #ifdef RENEWAL
-	// add any miscellaneous player ATK bonuses
-	if( sd && skill_id && (i = pc_skillatk_bonus(sd, skill_id))) {
-		ATK_ADDRATE(wd.damage, wd.damage2, i);
-		RE_ALLATK_ADDRATE(&wd, i);
-	}
-	if (tsd && (i = pc_sub_skillatk_bonus(tsd, skill_id))) {
-		ATK_ADDRATE(wd.damage, wd.damage2, -i);
-		RE_ALLATK_ADDRATE(&wd, -i);
-	}
+		// add any miscellaneous player ATK bonuses
+		if( sd && skill_id && (i = pc_skillatk_bonus(sd, skill_id))) {
+			ATK_ADDRATE(wd.damage, wd.damage2, i);
+			RE_ALLATK_ADDRATE(&wd, i);
+		}
+		if (tsd && (i = pc_sub_skillatk_bonus(tsd, skill_id))) {
+			ATK_ADDRATE(wd.damage, wd.damage2, -i);
+			RE_ALLATK_ADDRATE(&wd, -i);
+		}
 #endif
+	}
 
 	battle_calc_element_damage(&wd, src, target, skill_id, skill_lv);
 
