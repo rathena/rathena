@@ -1502,6 +1502,7 @@ Body:
       - Item: Miyabi_Ningyo_Egg
       - Item: Leaf_Cat_Egg
       - Item: Dark_Priest_Egg
+      - Item: Farmiliar_Egg
   - Item: Costume_Exchange_Box
     RewardGroup: COSTUME_EXCHANGE_BOX
     Requirements:
@@ -1850,6 +1851,10 @@ Body:
       - Item: C_L_RibbonMuff_Black
       - Item: C_Black_Cat_Ears_Beret
       - Item: C_Watery_Eyes
+      - Item: C_Heart_Stick_Choco
+      - Item: C_Chocolate_Bomb
+      - Item: C_Charm_Of_Flame_Heart
+      - Item: C_Gothic_Heart_Wing_V
   - Item: Fan_Upgrade_Kit
     RewardGroup: FAN_UPGRADE_KIT
     Requirements:
@@ -2753,6 +2758,68 @@ Body:
         Amount: 20
       - Item: Queen_Wing_Piece
         Amount: 150
+  - Item: Bs_Item_M_S_52
+    RewardGroup: BS_ITEM_M_S_52
+    RequiredRequirementsCount: 1
+    Requirements:
+      - Item: Zelunium
+        Amount: 150
+  - Item: Bs_Item_M_S_53
+    RewardGroup: BS_ITEM_M_S_53
+    RequiredRequirementsCount: 1
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 150
+  - Item: Bs_Item_M_S_54
+    RewardGroup: BS_ITEM_M_S_54
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 200
+      - Item: Shadowdecon
+        Amount: 200
+  - Item: Bs_Item_M_S_55
+    RewardGroup: BS_ITEM_M_S_55
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 200
+      - Item: Shadowdecon
+        Amount: 200
+  - Item: Bs_Item_M_S_56
+    RewardGroup: BS_ITEM_M_S_56
+    RequiredRequirementsCount: 4
+    Requirements:
+      - Item: Powerful_Soul_Essence
+      - Item: M_Dimension_Essence
+      - Item: Zelunium
+        Amount: 150
+      - Item: Shadowdecon
+        Amount: 150
+  - Item: Bs_Item_M_S_57
+    RewardGroup: BS_ITEM_M_S_57
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Tiger's_Skin
+        Amount: 50
+      - Item: Zelunium
+        Amount: 250
+  - Item: Bs_Item_M_S_58
+    RewardGroup: BS_ITEM_M_S_58
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Will_Of_Darkness_
+        Amount: 30
+      - Item: Zelunium
+        Amount: 250
+  - Item: Bs_Item_M_S_59
+    RewardGroup: BS_ITEM_M_S_59
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Loki's_Whispers
+        Amount: 30
+      - Item: Zelunium
+        Amount: 250
   - Item: EnchantStone_Recipe_9m
     RewardGroup: ENCHANTSTONE_RECIPE_9M
     Requirements:

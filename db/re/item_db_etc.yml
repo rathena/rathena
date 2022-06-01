@@ -20933,6 +20933,8 @@ Body:
     Type: Etc
     Buy: 10
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 6650
     AegisName: Shabby_Ring
     Name: Old Ring
@@ -31124,11 +31126,10 @@ Body:
     Buy: 20
     Weight: 10
   - Id: 7925
-    AegisName: Silver_Paper
-    Name: Silver Paper
+    AegisName: M_Dimension_Essence
+    Name: Powerful Dimensional Essence
     Type: Etc
     Buy: 20
-    Weight: 10
   - Id: 7926
     AegisName: Incense
     Name: Incense
@@ -36492,6 +36493,8 @@ Body:
     Name: Orc Warlord Token
     Type: Etc
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25509
     AegisName: Shining_Round_Shell
     Name: Glowing Roundshell    # !todo check english name
@@ -36561,6 +36564,8 @@ Body:
     Name: White Snake's Tear
     Type: Etc
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25627
     AegisName: Gold_Card
     Name: Gold Card
@@ -36572,6 +36577,8 @@ Body:
     Name: Knotted Letter
     Type: Etc
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25633
     AegisName: Token_Of_Wootan
     Name: Wootan's Token
@@ -47891,6 +47898,28 @@ Body:
       bonus2 bMagicAtkEle,Ele_Poison,100;
       bonus2 bMagicAtkEle,Ele_Undead,100;
       bonus2 bSubEle,Ele_All,-30;
+  - Id: 300383
+    AegisName: MD_Geffen_Saph3
+    Name: Veins Fighting Spirit
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddEle,Ele_Fire,10;
+      bonus2 bMagicAddEle,Ele_Fire,10;
+      bonus2 bAddEle,Ele_Ghost,10;
+      bonus2 bMagicAddEle,Ele_Ghost,10;
+  - Id: 300384
+    AegisName: MD_Geffen_Embe3
+    Name: Veins Exorcist
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_Demon,15;
+      bonus2 bMagicAddRace,RC_Demon,15;
+      bonus2 bAddRace,RC_Undead,15;
+      bonus2 bMagicAddRace,RC_Undead,15;
+      bonus2 bAddEle,Ele_Undead,15;
+      bonus2 bMagicAddEle,Ele_Undead,15;
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)
@@ -52999,31 +53028,52 @@ Body:
     Name: Spring Energy(1Lv)
     Type: Card
     SubType: Enchant
+    Script: |
+      /* Event bonus */
+      bonus bShortAtkRate,5;
+      bonus bLongAtkRate,5;
   - Id: 310669
     AegisName: Spring_Energy_2
     Name: Spring Energy(2Lv)
     Type: Card
     SubType: Enchant
+    Script: |
+      /* Event bonus */
+      bonus bShortAtkRate,10;
+      bonus bLongAtkRate,10;
   - Id: 310670
     AegisName: Spring_Energy_3
     Name: Spring Energy(3Lv)
     Type: Card
     SubType: Enchant
+    Script: |
+      /* Event bonus */
+      bonus bShortAtkRate,15;
+      bonus bLongAtkRate,15;
   - Id: 310671
     AegisName: Spring_Warmth_1
     Name: Warmth of Spring(1Lv)
     Type: Card
     SubType: Enchant
+    Script: |
+      /* Event bonus */
+      bonus2 bMagicAtkEle,Ele_All,5;
   - Id: 310672
     AegisName: Spring_Warmth_2
     Name: Warmth of Spring(2Lv)
     Type: Card
     SubType: Enchant
+    Script: |
+      /* Event bonus */
+      bonus2 bMagicAtkEle,Ele_All,10;
   - Id: 310673
     AegisName: Spring_Warmth_3
     Name: Warmth of Spring(3Lv)
     Type: Card
     SubType: Enchant
+    Script: |
+      /* Event bonus */
+      bonus2 bMagicAtkEle,Ele_All,15;
   - Id: 310674
     AegisName: Star_Cluster_Of_Pow1
     Name: Star Cluster of Power Lv1
@@ -60449,6 +60499,262 @@ Body:
           }
         }
       }
+  - Id: 311384
+    AegisName: Expert_Fighter1
+    Name: Expert Fighter Lv. 1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,2;
+  - Id: 311385
+    AegisName: Expert_Fighter2
+    Name: Expert Fighter Lv. 2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,4;
+  - Id: 311386
+    AegisName: Expert_Fighter3
+    Name: Expert Fighter Lv. 3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,6;
+  - Id: 311387
+    AegisName: Expert_Fighter4
+    Name: Expert Fighter Lv. 4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,8;
+  - Id: 311388
+    AegisName: Expert_Fighter5
+    Name: Expert Fighter Lv. 5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,10;
+  - Id: 311389
+    AegisName: Expert_Magician1
+    Name: Expert Magician Lv. 1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,2;
+  - Id: 311390
+    AegisName: Expert_Magician2
+    Name: Expert Magician Lv. 2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,4;
+  - Id: 311391
+    AegisName: Expert_Magician3
+    Name: Expert Magician Lv. 3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,6;
+  - Id: 311392
+    AegisName: Expert_Magician4
+    Name: Expert Magician Lv. 4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,8;
+  - Id: 311393
+    AegisName: Expert_Magician5
+    Name: Expert Magician Lv. 5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,10;
+  - Id: 311394
+    AegisName: Attack_Delay_5
+    Name: Attack Delay Lv. 5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAspdRate,10;
+      bonus bAspd,1;
+  - Id: 311395
+    AegisName: Hit_Plus1
+    Name: Hit Plus Lv. 1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bHit,5;
+      bonus bPerfectHitRate,3;
+  - Id: 311396
+    AegisName: Hit_Plus2
+    Name: Hit Plus Lv. 2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bHit,10;
+      bonus bPerfectHitRate,6;
+  - Id: 311397
+    AegisName: Hit_Plus3
+    Name: Hit Plus Lv. 3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bHit,15;
+      bonus bPerfectHitRate,9;
+  - Id: 311398
+    AegisName: Hit_Plus4
+    Name: Hit Plus Lv. 4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bHit,20;
+      bonus bPerfectHitRate,12;
+  - Id: 311399
+    AegisName: Hit_Plus5
+    Name: Hit Plus Lv. 5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bHit,25;
+      bonus bPerfectHitRate,15;
+  - Id: 311400
+    AegisName: Caster1
+    Name: Caster Lv. 1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-2;
+  - Id: 311401
+    AegisName: Caster2
+    Name: Caster Lv. 2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-4;
+  - Id: 311402
+    AegisName: Caster3
+    Name: Caster Lv. 3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-6;
+  - Id: 311403
+    AegisName: Caster4
+    Name: Caster Lv. 4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-8;
+  - Id: 311404
+    AegisName: Caster5
+    Name: Caster Lv. 5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-10;
+  - Id: 311423
+    AegisName: aegis_311423
+    Name: Qingming
+    Type: Card
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Script: |
+      bonus bBaseAtk,15;
+      bonus bMatk,15;
+  - Id: 311424
+    AegisName: aegis_311424
+    Name: Gok Woo
+    Type: Card
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Script: |
+      bonus2 bAddRace,RC_Undead,10;
+      bonus2 bMagicAddRace,RC_Undead,10;
+      bonus2 bAddRace,RC_Fish,10;
+      bonus2 bMagicAddRace,RC_Fish,10;
+  - Id: 311425
+    AegisName: SplStone_Robe_D_
+    Name: Spell Stone (Dual)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSpl,5;
+  - Id: 311426
+    AegisName: SmatkStone_Robe_
+    Name: Spell Magic Attack Stone (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,3;
+  - Id: 311427
+    AegisName: SuraStone_Top3_
+    Name: Sura Stone (Upper)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bFixedCast,-100*(getskilllv("SR_RAISINGDRAGON")/2);
+  - Id: 311428
+    AegisName: SuraStone_Middle3_
+    Name: Sura Stone (Middle)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,2*getskilllv("SR_GENTLETOUCH_REVITALIZE");
+  - Id: 311429
+    AegisName: SuraStone_Bottom3_
+    Name: Sura Stone (Bottom)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,2*getskilllv("SR_GENTLETOUCH_CHANGE");
+  - Id: 311430
+    AegisName: MechanicStone_Top3_
+    Name: Mechanic Stone (Upper)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-getskilllv("NC_RESEARCHFE");
+  - Id: 311431
+    AegisName: MechanicStone_Middle3_
+    Name: Mechanic Stone (Middle)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@i = getskilllv("NC_MADOLICENCE");
+      bonus bShortAtkRate,.@i;
+      bonus bLongAtkRate,.@i;
+  - Id: 311432
+    AegisName: MechanicStone_Bottom3_
+    Name: Mechanic Stone (Bottom)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDelayrate,-(getskilllv("NC_TRAININGAXE")/2);
+  - Id: 311433
+    AegisName: GuillcrossStone_Top3_
+    Name: Guillotine Cross Stone (Upper)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDelayrate,-getskilllv("GC_RESEARCHNEWPOISON")/2;
+  - Id: 311434
+    AegisName: GuillcrossStone_Middle3_
+    Name: Guillotine Cross Stone (Middle)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,2*getskilllv("GC_DARKILLUSION");
+  - Id: 311435
+    AegisName: GuillcrossStone_Bottom3_
+    Name: Guillotine Cross Stone (Bottom)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,2*getskilllv("GC_CROSSRIPPERSLASHER");
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -62494,6 +62800,7 @@ Body:
     AegisName: Evil_Water
     Name: Evil Water
     Type: Etc
+    Buy: 1000
     Weight: 10
   - Id: 1000563
     AegisName: Soa_Charm
@@ -63443,11 +63750,86 @@ Body:
     Type: Etc
     Flags:
       BuyingStore: true
+  - Id: 1000876
+    AegisName: Veins_Quest_Soup
+    Name: Veins Soup
+    Type: Etc
+  - Id: 1000877
+    AegisName: UK_Invention
+    Name: Unknown Invention
+    Type: Etc
+    Weight: 10
+  - Id: 1000878
+    AegisName: Soap_Base
+    Name: Soap Base
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoAuction: true
+  - Id: 1000879
+    AegisName: Appetite_Booster
+    Name: Appetite Booster
+    Type: Etc
+    Weight: 10
+  - Id: 1000880
+    AegisName: Kofte
+    Name: Kofte
+    Type: Etc
+    Weight: 10
+  - Id: 1000881
+    AegisName: Veins_Sealed_Letter
+    Name: Sealed Letter
+    Type: Etc
+    Weight: 5
   - Id: 1000882
     AegisName: aegis_1000882
     Name: Electric Effect (Bottom)
     Type: Etc
     Weight: 100
+  - Id: 1000883
+    AegisName: Dangerous_Sacredness
+    Name: Dangerous Relict
+    Type: Etc
+    Weight: 20
+  - Id: 1000884
+    AegisName: Dangerous_Box
+    Name: Sealed Dangerous Box
+    Type: Etc
+    Weight: 40
+  - Id: 1000885
+    AegisName: VeinsQ_Violin
+    Name: Violin
+    Type: Etc
+    Weight: 800
+  - Id: 1000886
+    AegisName: Megaphone_Veins
+    Name: Megaphone
+    Type: Etc
+    Weight: 10
+  - Id: 1000888
+    AegisName: Veins_Coin
+    Name: Veins Coin
+    Type: Etc
+    Weight: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+  - Id: 1000889
+    AegisName: Mixed_Fruits_Juice
+    Name: Complex Fruit Juice
+    Type: Etc
+    Buy: 1000
+    Flags:
+      BuyingStore: true
+    Weight: 10
   - Id: 1000891
     AegisName: aegis_1000891
     Name: Special Red Pill Exchange
@@ -63460,6 +63842,157 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1000897
+    AegisName: aegis_1000897
+    Name: Donor List Chaos 1
+    Type: Etc
+  - Id: 1000898
+    AegisName: aegis_1000898
+    Name: Donor List Chaos 2
+    Type: Etc
+  - Id: 1000899
+    AegisName: aegis_1000899
+    Name: Donor List Chaos 3
+    Type: Etc
+  - Id: 1000900
+    AegisName: aegis_1000900
+    Name: Donor List Chaos 4
+    Type: Etc
+  - Id: 1000901
+    AegisName: aegis_1000901
+    Name: Donor List Loki 1
+    Type: Etc
+  - Id: 1000902
+    AegisName: aegis_1000902
+    Name: Donor List Loki 2
+    Type: Etc
+  - Id: 1000903
+    AegisName: aegis_1000903
+    Name: Donor List Loki 3
+    Type: Etc
+  - Id: 1000904
+    AegisName: aegis_1000904
+    Name: Donor List Loki 4
+    Type: Etc
+  - Id: 1000905
+    AegisName: aegis_1000905
+    Name: Donor List Iris 1
+    Type: Etc
+  - Id: 1000906
+    AegisName: aegis_1000906
+    Name: Donor List Iris 2
+    Type: Etc
+  - Id: 1000907
+    AegisName: aegis_1000907
+    Name: Donor List Iris 3
+    Type: Etc
+  - Id: 1000908
+    AegisName: aegis_1000908
+    Name: Donor List Iris 4
+    Type: Etc
+  - Id: 1000909
+    AegisName: aegis_1000909
+    Name: Donor List Sara 1
+    Type: Etc
+  - Id: 1000910
+    AegisName: aegis_1000910
+    Name: Donor List Sara 2
+    Type: Etc
+  - Id: 1000911
+    AegisName: aegis_1000911
+    Name: Donor List Sara 3
+    Type: Etc
+  - Id: 1000912
+    AegisName: aegis_1000912
+    Name: Donor List Fenrir 1
+    Type: Etc
+  - Id: 1000913
+    AegisName: aegis_1000913
+    Name: Donor List Fenrir 2
+    Type: Etc
+  - Id: 1000914
+    AegisName: aegis_1000914
+    Name: Donor List Fenrir 3
+    Type: Etc
+  - Id: 1000915
+    AegisName: aegis_1000915
+    Name: Donor List Lydia 1
+    Type: Etc
+  - Id: 1000916
+    AegisName: aegis_1000916
+    Name: Donor List Lydia 2
+    Type: Etc
+  - Id: 1000917
+    AegisName: aegis_1000917
+    Name: Donor List Baldur 1
+    Type: Etc
+  - Id: 1000918
+    AegisName: aegis_1000918
+    Name: Donor List Odin 1
+    Type: Etc
+  - Id: 1000919
+    AegisName: aegis_1000919
+    Name: Donor List Thor 1
+    Type: Etc
+  - Id: 1000920
+    AegisName: aegis_1000920
+    Name: Donor List Sakray 1
+    Type: Etc
+  - Id: 1000921
+    AegisName: SplStone_Robe_D
+    Name: Spell Stone (Dual)
+    Type: Etc
+    Weight: 100
+  - Id: 1000922
+    AegisName: SmatkStone_Robe
+    Name: Spell Magic Attack Stone (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1000968
+    AegisName: SuraStone_Top3
+    Name: Sura Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1000969
+    AegisName: SuraStone_Middle3
+    Name: Sura Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000970
+    AegisName: SuraStone_Bottom3
+    Name: Sura Stone (Bottom)
+    Type: Etc
+    Weight: 100
+  - Id: 1000971
+    AegisName: MechanicStone_Top3
+    Name: Mechanic Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1000972
+    AegisName: MechanicStone_Middle3
+    Name: Mechanic Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000973
+    AegisName: MechanicStone_Bottom3
+    Name: Mechanic Stone (Bottom)
+    Type: Etc
+    Weight: 100
+  - Id: 1000974
+    AegisName: GuillcrossStone_Top3
+    Name: Guillotine Cross Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1000975
+    AegisName: GuillcrossStone_Middle3
+    Name: Guillotine Cross Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000976
+    AegisName: GuillcrossStone_Bottom3
+    Name: Guillotine Cross Stone (Bottom)
+    Type: Etc
+    Weight: 100
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai

@@ -27420,6 +27420,49 @@ Body:
       - SubGroup: 0
         List:
           - Item: Wickebines_Black_Cat_Ears
+  - Group: BS_ITEM_M_S_52
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Blacksmith_Blessing
+            Amount: 2
+  - Group: BS_ITEM_M_S_53
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Shadow_Refine_Hammer
+            Amount: 2
+  - Group: BS_ITEM_M_S_54
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Powerful_Soul_Essence
+  - Group: BS_ITEM_M_S_55
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: M_Dimension_Essence
+  - Group: BS_ITEM_M_S_56
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Enchant_Ticket
+            Amount: 2
+  - Group: BS_ITEM_M_S_57
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: aegis_470122
+  - Group: BS_ITEM_M_S_58
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: aegis_480174
+  - Group: BS_ITEM_M_S_59
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: aegis_450217
   - Group: ENCHANTSTONE_RECIPE_9M
     SubGroups:
       - SubGroup: 1
@@ -29902,3 +29945,223 @@ Body:
             Rate: 1
           - Item: Angel_Dream
             Rate: 1
+  - Group: MONTHLY_PACKAGE_1
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Small_Life_Potion
+            Amount: 200
+          - Item: Med_Life_Potion
+            Amount: 200
+          - Item: Mysterious_Water
+            Amount: 200
+          - Item: Blacksmith_Blessing
+            Amount: 2
+          - Item: K_Secret_Key
+            Amount: 5
+          - Item: Cachua_Coupon
+            Amount: 5
+  - Group: MONTHLY_PACKAGE_2
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Small_Life_Potion
+            Amount: 200
+          - Item: Med_Life_Potion
+            Amount: 200
+          - Item: Mysterious_Water
+            Amount: 200
+          - Item: Infinity_Drink
+            Amount: 33
+          - Item: Almighty
+            Amount: 34
+          - Item: Limited_Power_Booster
+            Amount: 34
+          - Item: Blacksmith_Blessing
+            Amount: 4
+          - Item: K_Secret_Key
+            Amount: 10
+          - Item: Cachua_Coupon
+            Amount: 20
+  - Group: MONTHLY_PACKAGE_3
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Small_Life_Potion
+            Amount: 200
+          - Item: Med_Life_Potion
+            Amount: 200
+          - Item: Mysterious_Water
+            Amount: 200
+          - Item: Infinity_Drink
+            Amount: 33
+          - Item: Almighty
+            Amount: 34
+          - Item: Limited_Power_Booster
+            Amount: 34
+          - Item: Small_Mana_Potion
+            Amount: 50
+          - Item: Shining_Def_Scroll
+            Amount: 300
+          - Item: Blacksmith_Blessing
+            Amount: 4
+          - Item: K_Secret_Key
+            Amount: 10
+          - Item: Cachua_Coupon
+            Amount: 20
+  - Group: MONTHLY_BUFF_PACKAGE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Premium_Flatrate_Box
+          - Item: EXP_Drop_Up_7days
+          - Item: Actinidia_Cat_Fruit
+            Amount: 6
+          - Item: K_Secret_Key
+            Amount: 10
+  - Group: MONTHLY_BATTLE_PACKAGE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Battle_Manual
+            Amount: 12
+          - Item: Mental_Potion
+            Amount: 8
+          - Item: K_Secret_Key
+            Amount: 10
+#  - Group: MD_AIRBOAT_EXPBOX
+#    SubGroups:
+#      - SubGroup: 0
+#        List:
+#          - Item: MD_Airboat_Bexp
+#            Amount: ?
+#      - SubGroup: 1
+#        List:
+#          - Item: ??
+# Source: https://ro.gnjoy.com/news/probability/View.asp?category=2&seq=4140425
+  - Group: Enchant_Stone_Box27
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: SmatkStone_Robe
+            Rate: 1
+          - Item: SplStone_Robe_D
+            Rate: 1
+          - Item: Critical_Stone_Robe
+            Rate: 2
+          - Item: CastingStone_Robe
+            Rate: 2
+          - Item: SPdrainStone_Robe_D
+            Rate: 4
+          - Item: SPdrainStone_Top
+            Rate: 8
+          - Item: CastStone_Robe
+            Rate: 8
+          - Item: ASPDStone_Top
+            Rate: 16
+          - Item: ASPDStone_Robe_D
+            Rate: 8
+          - Item: HPdrainStone_Robe_D
+            Rate: 8
+          - Item: PinkGlowEffect_Middle
+            Rate: 16
+          - Item: SuraStone_Robe
+            Rate: 8
+          - Item: SuraStone_Robe2
+            Rate: 8
+          - Item: MechanicStone_Robe
+            Rate: 8
+          - Item: MechanicStone_II_Garment
+            Rate: 8
+          - Item: GuillcrossStone_Robe
+            Rate: 8
+          - Item: GuillotineCrossStone_Robe2
+            Rate: 8
+          - Item: SuraStone_Top3
+            Rate: 8
+          - Item: SuraStone_Middle3
+            Rate: 8
+          - Item: SuraStone_Bottom3
+            Rate: 8
+          - Item: MechanicStone_Top3
+            Rate: 8
+          - Item: MechanicStone_Middle3
+            Rate: 8
+          - Item: MechanicStone_Bottom3
+            Rate: 8
+          - Item: GuillcrossStone_Top3
+            Rate: 8
+          - Item: GuillcrossStone_Middle3
+            Rate: 8
+          - Item: GuillcrossStone_Bottom3
+            Rate: 8
+          - Item: aegis_100465
+            Rate: 16
+          - Item: aegis_100495
+            Rate: 16
+          - Item: Magic_Stone_Top
+            Rate: 24
+          - Item: Magic_Stone_Middle
+            Rate: 24
+          - Item: Magic_Stone_Bottom
+            Rate: 24
+          - Item: SuraStone_Top
+            Rate: 15
+          - Item: SuraStone_Middle
+            Rate: 15
+          - Item: SuraStone_Bottom
+            Rate: 15
+          - Item: SuraStone_Top2
+            Rate: 15
+          - Item: SuraStone_Middle2
+            Rate: 15
+          - Item: SuraStone_Bottom2
+            Rate: 15
+          - Item: MechanicStone_Top
+            Rate: 15
+          - Item: MechanicStone_Middle
+            Rate: 15
+          - Item: MechanicStone_Bottom
+            Rate: 15
+          - Item: MechanicStone_II_Top
+            Rate: 15
+          - Item: MechanicStone_II_Middle
+            Rate: 15
+          - Item: MechanicStone_II_Bottom
+            Rate: 15
+          - Item: AssacrossStone_Top
+            Rate: 15
+          - Item: AssacrossStone_Middle
+            Rate: 15
+          - Item: AssacrossStone_Bottom
+            Rate: 15
+          - Item: GuillotineCrossStone_Top2
+            Rate: 15
+          - Item: GuillotineCrossStone_Middle2
+            Rate: 15
+          - Item: GuillotineCrossStone_Bottom2
+            Rate: 15
+          - Item: aegis_100496
+            Rate: 36
+          - Item: aegis_100497
+            Rate: 36
+          - Item: aegis_100498
+            Rate: 36
+          - Item: aegis_100499
+            Rate: 36
+          - Item: aegis_100500
+            Rate: 36
+          - Item: aegis_100501
+            Rate: 36
+          - Item: CastingStone_Top
+            Rate: 36
+          - Item: CastingStone_Middle
+            Rate: 36
+          - Item: CastingStone_Bottom
+            Rate: 36
+          - Item: Critical_Stone_Top
+            Rate: 36
+          - Item: Critical_Stone
+            Rate: 36
+          - Item: Critical_Stone_Bottom
+            Rate: 36
