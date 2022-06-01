@@ -6444,12 +6444,10 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 #ifndef RENEWAL
 		// add any miscellaneous player ATK bonuses
-		if( sd && skill_id && (i = pc_skillatk_bonus(sd, skill_id))) {
+		if( sd && skill_id && (i = pc_skillatk_bonus(sd, skill_id)))
 			ATK_ADDRATE(wd.damage, wd.damage2, i);
-		}
-		if (tsd && (i = pc_sub_skillatk_bonus(tsd, skill_id))) {
+		if (tsd && (i = pc_sub_skillatk_bonus(tsd, skill_id)))
 			ATK_ADDRATE(wd.damage, wd.damage2, -i);
-		}
 #endif
 
 #ifdef RENEWAL
@@ -6516,9 +6514,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		// Advance Katar Mastery
 		if (sd) {
 			int skill = 0;
-			if (sd->status.weapon == W_KATAR && (skill = pc_checkskill(sd, ASC_KATAR)) > 0) { // Adv. Katar Mastery applied after calculate with skillratio.
+			if (sd->status.weapon == W_KATAR && (skill = pc_checkskill(sd, ASC_KATAR)) > 0) // Adv. Katar Mastery applied after calculate with skillratio.
 				ATK_ADDRATE(wd.damage, wd.damage2, (10 + 2 * skill));
-			}
 		}
 
 		// Res reduces physical damage by a percentage and
@@ -6585,15 +6582,13 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	if (is_attack_critical(&wd, src, target, skill_id, skill_lv, false)) {
 		if (sd) { //Check for player so we don't crash out, monsters don't have bonus crit rates [helvetica]
 			wd.damage = (int64)floor((float)((wd.damage * (1.4f + (0.01f * sstatus->crate)))));
-			if (is_attack_left_handed(src, skill_id)) {
+			if (is_attack_left_handed(src, skill_id))
 				wd.damage2 = (int64)floor((float)((wd.damage2 * (1.4f + (0.01f * sstatus->crate)))));
-			}
 		} else
 			wd.damage = (int64)floor((float)(wd.damage * 1.4f));
 
-		if (tsd && tsd->bonus.crit_def_rate != 0) {
+		if (tsd && tsd->bonus.crit_def_rate != 0)
 			ATK_ADDRATE(wd.damage, wd.damage2, -tsd->bonus.crit_def_rate);
-		}
 	}
 #endif
 
