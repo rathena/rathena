@@ -3839,10 +3839,17 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 	}
 	if (sd->status.weapon == W_2HSTAFF && (skill = pc_checkskill(sd, AG_TWOHANDSTAFF)) > 0)
 		base_status->smatk += skill * 2;
+	if ((skill = pc_checkskill(sd, NW_P_F_I)) > 0 && (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE)) {
+		base_status->patk += skill + 2;
+	}
 
 // ----- PHYSICAL RESISTANCE CALCULATION -----
 	if ((skill = pc_checkskill_imperial_guard(sd, 1)) > 0)// IG_SHIELD_MASTERY
 		base_status->res += skill * 3;
+
+// ----- CONCENTRATION CALCULATION -----
+	if ((skill = pc_checkskill(sd, NW_GRENADE_MASTERY)) > 0)
+		base_status->con += skill;
 
 // ----- EQUIPMENT-DEF CALCULATION -----
 
@@ -6392,6 +6399,8 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 #endif
 	if (sc->data[SC_SUNSTANCE])
 		batk += batk * sc->data[SC_SUNSTANCE]->val2 / 100;
+	if (sc->data[SC_INTENSIVE_AIM])
+		batk += 150;
 
 	return (unsigned short)cap_value(batk,0,USHRT_MAX);
 }
@@ -6690,6 +6699,8 @@ static signed short status_calc_critical(struct block_list *bl, struct status_ch
 		critical += sc->data[SC_MTF_HITFLEE]->val1;
 	if (sc->data[SC_PACKING_ENVELOPE9])
 		critical += sc->data[SC_PACKING_ENVELOPE9]->val1 * 10;
+	if (sc->data[SC_INTENSIVE_AIM])
+		critical += 300;
 
 	return (short)cap_value(critical,10,SHRT_MAX);
 }
@@ -6762,6 +6773,8 @@ static signed short status_calc_hit(struct block_list *bl, struct status_change 
 		hit += sc->data[SC_PACKING_ENVELOPE10]->val1;
 	if (sc->data[SC_ABYSS_SLAYER])
 		hit += sc->data[SC_ABYSS_SLAYER]->val3;
+	if (sc->data[SC_INTENSIVE_AIM])
+		hit += 250;
 
 	return (short)cap_value(hit,1,SHRT_MAX);
 }
@@ -7777,7 +7790,9 @@ static signed short status_calc_patk(struct block_list *bl, struct status_change
 		patk += sc->data[SC_PRON_MARCH]->val2;
 	if (sc->data[SC_ATTACK_STANCE])
 		patk += sc->data[SC_ATTACK_STANCE]->val3;
-
+	if (sc->data[SC_HIDDEN_CARD])
+		patk += sc->data[SC_HIDDEN_CARD]->val1*3;
+	
 	return (short)cap_value(patk, 0, SHRT_MAX);
 }
 
@@ -11915,6 +11930,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_DEEP_POISONING_OPTION:
 			val3 = ELE_POISON;
 			break;
+		case SC_INTENSIVE_AIM:
+			tick = 500;
+			break;
 
 		default:
 			if (calc_flag.none() && scdb->skill_id == 0 && scdb->icon == EFST_BLANK && scdb->opt1 == OPT1_NONE && scdb->opt2 == OPT2_NONE && scdb->state.none() && scdb->flag.none() && scdb->end.empty() && scdb->endreturn.empty() && scdb->fail.empty()) {
@@ -12106,7 +12124,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		if (status_icon == EFST_WEAPONPROPERTY)
 			status_icon = EFST_ATTACK_PROPERTY_NOTHING + val1; // Assign status icon for older clients
 #endif
-
 		clif_status_change(bl, status_icon, 1, tick, scdb->flag[SCF_SENDVAL1] ? val1 : 1, scdb->flag[SCF_SENDVAL2] ? val2 : 0, scdb->flag[SCF_SENDVAL3] ? val3 : 0);
 	}
 
@@ -12997,7 +13014,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	if (status_icon == EFST_WEAPONPROPERTY)
 		status_icon = EFST_ATTACK_PROPERTY_NOTHING + sce->val1; // Assign status icon for older clients
 #endif
-
 	clif_status_change(bl,status_icon,0,0,0,0,0);
 
 	if( opt_flag[SCF_NONPLAYER] ) // bugreport:681
@@ -14059,6 +14075,16 @@ TIMER_FUNC(status_change_timer){
 			dounlock = true;
 		}
 		break;
+	case SC_INTENSIVE_AIM:
+		if (!sc || !sc->data[SC_INTENSIVE_AIM_COUNT])
+			sce->val1 = 0;
+		if (sce->val1 < 10)
+		{
+			sce->val1++;
+			sc_start(bl, bl, SC_INTENSIVE_AIM_COUNT, 100, sce->val1, INFINITE_TICK);
+		}
+		sc_timer_next(500 + tick);
+		return 0;
 	}
 
 	// If status has an interval and there is at least 100ms remaining time, wait for next interval

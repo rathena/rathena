@@ -1843,6 +1843,18 @@
 	export_constant(SC_RUSH_QUAKE1);
 	export_constant(SC_RUSH_QUAKE2);
 
+	/* Night Watch */
+	export_constant(SC_INTENSIVE_AIM);
+	export_constant(SC_INTENSIVE_AIM_COUNT);
+	export_constant(SC_HIDDEN_CARD);
+	export_constant(SC_GRENADE_FRAGMENT_1);
+	export_constant(SC_GRENADE_FRAGMENT_2);
+	export_constant(SC_GRENADE_FRAGMENT_3);
+	export_constant(SC_GRENADE_FRAGMENT_4);
+	export_constant(SC_GRENADE_FRAGMENT_5);
+	export_constant(SC_GRENADE_FRAGMENT_6);
+	export_constant(SC_AUTO_FIRING_LAUNCHEREFST);
+
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -8754,6 +8766,9 @@
 	export_constant(UNT_SOLIDTRAP);
 	export_constant(UNT_SWIFTTRAP);
 	export_constant(UNT_FLAMETRAP);
+
+	export_constant(UNT_GRENADES_DROPPING);
+	export_constant(UNT_MISSION_BOMBARD);
 
 	export_constant(UNT_GD_LEADERSHIP);
 	export_constant(UNT_GD_GLORYWOUNDS);
