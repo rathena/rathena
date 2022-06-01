@@ -47975,6 +47975,24 @@ Body:
     Weight: 10
     Script: |
       laphine_upgrade();
+  - Id: 23986
+    AegisName: Odin_itembox
+    Name: Odin Relic
+    Type: Usable
+    Buy: 20
+    Weight: 100
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getrandgroupitem(IG_Odin_Relic,1,1,1);
   - Id: 100000
     AegisName: IDTest_Special
     Name: IDTest Special

@@ -960,6 +960,7 @@ enum e_random_item_group {
 	IG_AUTO_M_I_BOX_A,
 	IG_AUTO_M_I_BOX_B,
 	IG_ILLUSION_MODULE_MIX,
+	IG_ODIN_RELIC,
 
 	IG_MAX,
 };
