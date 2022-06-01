@@ -1,0 +1,481 @@
+//===== rAthena Script =======================================
+//= Episode 17.2 - Sage's Legacy Enchants
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//= Sage's Legacy related merchants and enchanters
+//===== Changelog: ===========================================
+//= 1.0 Initial release [crazyarashi]
+//= 1.1 Optimizations and cleanup [Everade]
+//============================================================
+
+ba_in01,87,370,3	script	Lisa#ep172_merchant	20698,{
+	disable_items;
+	mes "[ Lisa ]";
+	mes "Welcome welcome~";
+	next;
+	switch (select("Explore Devices:Automatic Engine Wing Enhancement:Automatic Armor Enhancement:Automatic Leg Enhancement:Automatic Accessories(R) Enhancement:Automatic Accessories(L) Enhancement")) {
+		case 1:
+			mes "[ Lisa ]";
+			mes "If you bring automatic equipment and reinforcement modules, we can enchant the appropriate module on the equipment.";
+			next;
+			mes "[ Lisa ]";
+			mes "This is done according to the specification module, so the equipment will not be destroyed. However, the number of upgrades can vary depending on the module.";
+			next;
+			mes "[ Lisa ]";
+			mes "Then please visit again when you need help~";
+			close;
+
+		case 2: .@part = EQI_GARMENT; setarray .@id,480020,480021; break;
+		case 3: .@part = EQI_ARMOR; setarray .@id,450127,450128; break;
+		case 4: .@part = EQI_SHOES; setarray .@id,470022,470023; break;
+		case 5: .@part = EQI_ACC_R; setarray .@id,490024,490026; break;
+		case 6: .@part = EQI_ACC_L; setarray .@id,490025,490027; break;
+	}
+	.@equip_id = getequipid(.@part);
+	.@equip_name$ = getequipname(.@part);
+	.@refine = getequiprefinerycnt(.@part);
+	for (.@i = 0; .@i < 4; .@i++)
+		.@card[.@i] = getequipcardid(.@part,.@i);
+	for (.@i = 0; .@i < 4; .@i++)
+		.@check[.@i] = getequipcardid(.@part,.@i);
+	mes "[ Lisa ]";
+	mes "If you bring automatic equipment and reinforcement modules, we can enchant the appropriate module on the equipment.";
+	next;
+	mes "[ Lisa ]";
+	mes strcharinfo(0) + ".";
+	mes "Please select the grade of module that you want to use.";
+	next;
+	.@s = select("Cancel:Normal Grade:Rare Grade:Unique Grade:Legendary Grade:Epic Grade 1:Epic Grade 2:Epic Grade 3");
+	if (.@s == 1) {
+		mes "[ Lisa ]";
+		mes "Stopping conversation.";
+		close;
+	}
+	.@menu$ = "Cancel:";
+	.@s -= 2;
+	explode(.@T$,.menu$[.@s],",");
+	for (.@i = 0; .@i < getarraysize(.@T$); .@i++) {
+		.@item_id = atoi(.@T$[.@i]);
+		if (!countitem(.@item_id))
+			.@menu$ += "^808080Module Amount 0^000000" + ":";
+		else {
+			.@item_name$ = getitemname(.@item_id);
+			.@item_name$ = replacestr(.@item_name$,"Automatic Modification Module(","");
+			.@item_name$ = replacestr(.@item_name$,")","");
+			.@menu$ += .@item_name$ + ":";
+		}
+	}
+	.@s = select(.@menu$);
+	if (.@s == 1) {
+		mes "[ Lisa ]";
+		mes "Stopping conversation.";
+		close;
+	}
+	.@s -= 2;
+	.@module_id = atoi(.@T$[.@s]);
+	if (!countitem(.@module_id)) {
+		mes "[ Lisa ]";
+		mes "You must possess a module in your inventory that matches the efficacy to proceed with the enhancement.";
+		close;
+	}
+	if (.@id[0] != .@equip_id && .@id[1] != .@equip_id) {
+		mes "[ Lisa ]";
+		mes "Please make sure you have equipped the proper automatic equipment that you want to enhance.";
+		close;
+	}
+	function enchant_check;
+	.@error = enchant_check(.@part,.@module_id);
+	switch (.@error) {
+		case 1:
+			mes "[ Lisa ]";
+			mes "You can not enchant this module to this automatic equipment.";
+			close;
+
+		case 2:
+			mes "[ Lisa ]";
+			mes "This automatic equipment has already maximized the enhancement from this module.";
+			mes "Please try another module.";
+			close;
+
+		case 3:
+			mes "[ Lisa ]";
+			mes "This automatic equipment is already at its maximum capacity.";
+			mes "Please try another automatic equipment.";
+			close;
+
+		default:
+			break;
+	}
+	mes "[ Lisa ]";
+	mes "Are you sure you want to enchance your ^FF0000" +.@equip_name$+"^000000 with ^0000CD" + getitemname(.@module_id) + "^000000? This process cannot be reversed.";
+	next;
+	if (select("Wait... Don't:I'm sure. Do it.") == 1) {
+		mes "[ Lisa ]";
+		mes "Stopping conversation.";
+		close;
+	}
+	for (.@i = 3; .@i > 0; .@i--) {
+		if (.@card[.@i] == 0) {
+			.@augment_slot = .@i;
+			break;
+		}
+	}
+	.@index = inarray(.auto_m,.@module_id);
+	delitem .@module_id,1;
+	.@card[.@augment_slot] = .auto_o[.@index];
+	if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipRefineHack", .@part, .@refine) || callfunc("F_IsEquipCardHack", .@part, .@check[0], .@check[1], .@check[2], .@check[3]))
+		end;
+	delequip .@part;
+	getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
+	mes "[ Lisa ]";
+	mes "Woaaaah~ I can feel the power of your automatic equipment already~!";
+	close;
+
+
+OnInit:
+	for (.@i = 310082; .@i < 310180; .@i++)
+		.auto_o[getarraysize(.auto_o)] = .@i;
+	for (.@i = 1000105; .@i < 1000203; .@i++) {
+		if (.@i == 1000150 || .@i == 1000151)
+			continue;
+		.auto_m[getarraysize(.auto_m)] = .@i;
+	}
+	.auto_m[getarraysize(.auto_m)] = 1000207;
+	.auto_m[getarraysize(.auto_m)] = 1000208;
+	setarray .armor_enchant,1000105,3,1000106,3,1000122,2,1000123,2,1000124,2,1000128,1,1000129,1,1000130,1,1000131,1,1000132,1,1000133,1,1000207,1,1000140,1;
+	setarray .wing_enchant,1000105,3,1000106,3,1000125,2,1000126,2,1000127,2,1000135,1,1000142,1,1000208,1;
+	setarray .leg_enchant,1000105,3,1000106,3,1000119,2,1000120,2,1000121,2,1000134,1,1000141,1,1000144,1,1000145,1,1000146,1,1000147,1,1000148,1,1000149,1;
+	setarray .legendary_enchant,1000144,1000145,1000146,1000147,1000148,1000149;
+	setarray .acce_enchant,1000107,3,1000108,3,1000109,3,1000110,3,1000111,3,1000112,3,1000113,2,1000114,2,1000115,1,1000116,1,1000117,1,1000118,1,1000136,1,1000137,1,1000138,1,1000139,1,1000143,1;
+	for (.@i = 1000152; .@i < 1000203; .@i++) {
+		.armor_enchant[getarraysize(.armor_enchant)] = .@i;
+		.armor_enchant[getarraysize(.armor_enchant)] = 2;
+		.epic_enchant[getarraysize(.epic_enchant)] = .@i;
+	}
+	setarray .menu$,"1000105,1000106,1000107,1000108,1000109,1000110,1000111,1000112","1000113,1000114,1000115,1000116,1000117,1000118,1000119,1000120,1000121,1000122,1000123,1000124,1000125,1000126,1000127",
+	"1000128,1000129,1000130,1000131,1000132,1000133,1000134,1000135,1000136,1000137,1000138,1000139,1000140,1000141,1000142,1000143,1000207,1000208","1000144,1000145,1000146,1000147,1000148,1000149",
+	"1000152,1000153,1000154,1000155,1000156,1000157,1000158,1000159,1000160,1000161,1000162,1000163,1000164,1000165,1000166,1000167,1000168",
+	"1000169,1000170,1000171,1000172,1000173,1000174,1000175,1000176,1000177,1000178,1000179,1000180,1000181,1000182,1000183,1000184,1000185",
+	"1000186,1000187,1000188,1000189,1000190,1000191,1000192,1000193,1000194,1000195,1000196,1000197,1000198,1000199,1000200,1000201,1000202";
+	end;
+
+function	enchant_check	{
+	.@part = getarg(0);
+	.@module_id = getarg(1);
+	for (.@i = 0; .@i < 4; .@i++)
+		.@card[.@i] = getequipcardid(.@part,.@i);
+	if (.@card[1] > 0)
+		return 3;
+	switch (.@part) {
+		case EQI_GARMENT:
+			.@array$ = "wing_enchant";
+			break;
+
+		case EQI_ARMOR:
+			.@array$ = "armor_enchant";
+			break;
+
+		case EQI_SHOES:
+			.@array$ = "leg_enchant";
+			break;
+
+		case EQI_ACC_L:
+		case EQI_ACC_R:
+			.@array$ = "acce_enchant";
+			break;
+	}
+	.@arr_id = inarray(getd("." + .@array$),.@module_id);
+	if (.@arr_id == -1)
+		return 1;
+	.@index = inarray(.auto_m,.@module_id);
+	if (.@index == -1) {
+		mes "Unknown error has occured.";
+		close;
+	}
+	for (.@i = 0; .@i < 4; .@i++) {
+		if (.@card[.@i] == .auto_o[.@index])
+			.@count++;
+	}
+	.@c_index = .@arr_id + 1;
+	.@total = getd("." + .@array$ + "["+.@c_index+"]");
+	if (.@count >= .@total)
+		return 2;
+	if (.@part == EQI_SHOES) {
+		.@legendary = inarray(.legendary_enchant,.@module_id);
+		if (.@legendary >= 0) {
+			for (.@x = 0; .@x < getarraysize(.legendary_enchant); .@x++) {
+				.@l_index = inarray(.auto_m,.legendary_enchant[.@x]);
+				for (.@i = 0; .@i < 4; .@i++) {
+					if (.@card[.@i] == .auto_o[.@l_index])
+						.@legend++;
+				}
+				if (.@legend)
+					return 2;
+			}
+		}
+	}
+	if (.@part == EQI_ARMOR) {
+		.@epic = inarray(.epic_enchant,.@module_id);
+		if (.@epic >= 0) {
+			for (.@x = 0; .@x < getarraysize(.epic_enchant); .@x++) {
+				.@epic_g = 0;
+				.@e_index = inarray(.auto_m,.epic_enchant[.@x]);
+				for (.@i = 0; .@i < 4; .@i++) {
+					if (.@card[.@i] == .auto_o[.@e_index])
+						.@epic_g++;
+				}
+				dispbottom "Grade : " + .@epic_g;
+				if (.@epic_g == 2)
+					return 2;
+			}
+		}
+	}
+	return 0;
+}
+
+}
+
+//= Merchants
+-	marketshop	ep172littlemanager00	-1,1000227:172:999999
+ba_in01,87,386,3	script	Child Manager ß#ep172_pet	20696,{
+	mes "[ Child Manager ß ]";
+	mes "I have a whole bunch of little stuffs!";
+	next;
+	switch (select("Little Manager:Cloud Cotton:Little Headress:Cancel")) {
+		case 1:
+			mes "[ Child Manager ß ]";
+			mes "If you want to play with the little manager, it would cost you 30 Barmeal Tickets.";
+			next;
+			if (select("Exchange.:Stop.") == 2) {
+				mes "[ Child Manager ß ]";
+				mes "Then, it's time for me to play!";
+				close;
+			}
+			if (countitem(1000103) < 30) {
+				mes "[ Child Manager ß ]";
+				mes "Like I said, if you want to play with the little manager, you'll need 30 Barmeal Tickets!";
+				close;
+			}
+			mes "[ Child Manager ß ]";
+			mes "Have fun with your new friend!";
+			delitem 1000103,30;
+			getitem 9123,1;
+			close;
+
+		case 2:
+			callshop "ep172littlemanager00";
+			break;
+
+		case 3:
+			callshop "ep172littlemanager01"; //TODO BARTERSHOP
+			break;
+
+		case 4:
+			mes "[ Child Manager ß ]";
+			mes "Then, it's time for me to play!";
+			close;
+	}
+	close;
+}
+
+//= Cube Shop
+-	shop	ep172cubeshop00	-1,no,100251:10000000,100252:30000000
+ba_in01,87,376,3	script	Cube Lane#ep172cube	4_EP17_GUARD_B,{
+	disable_items;
+	mes "[ Cube Lane ]";
+	mes "We are offering reinforcement cubes that will refine your ^0000CD+4^000000 Illusion and Automatic Equipment to ^FF0000+7^000000 in an instant!";
+	mes "Varmundt is no doubt the best man in the world!";
+	close2;
+	callshop "ep172cubeshop00";
+	end;
+}
+
+//= Module Shop
+ba_in01,87,373,3	script	Spiera#ep172_soapstone	20698,{
+	callshop "172epicmodule",1; //TODO BARTERSHOP
+	end;
+}
+
+//= Equipment Shop
+ba_in01,87,383,3	script	Yeoncheong#equipment_exchange	4_EP17_CLEANER_W,{
+	disable_items;
+	cutin "ep172_omega",2;
+	mes "[ Yeoncheong ]";
+	mes "We accept Barmeal Tickets for upgrading your Illusion Equipment into Automatic Requipments.";
+	mes "What would you like to exchange?";
+	next;
+	switch (select("Exchange Information:Automatic Equipment Exchange:Automatic Accessory Exchange:Quit")) {
+		case 1:
+			mes "[ Yeoncheong ]";
+			mes "You can exchange your ^0000CD+9 Illusion Armor, Engine, or Leg and 900 Barmeal Tickets^000000 to ^FF0000Automatic Armor, Engine, or Leg^000000.";
+			next;
+			mes "[ Yeoncheong ]";
+			mes "The ^FF0000Automatic Accessories^000000 can be exchanged for ^0000CDIllusion Accessories and 1500 Barmeal Tickets^000000.";
+			next;
+			mes "[ Yeoncheong ]";
+			mes "The equipment you want to exchange must be in your inventory and talk to me.";
+			mes "^FF0000Bring only one equipment that you want to exchange and proceed.^000000";
+			close3;
+
+		case 2:
+			.@shop$ = "auto_armor_shop";
+			break;
+
+		case 3:
+			.@shop$ = "auto_acce_shop";
+			close3;
+
+		case 4:
+			mes "[ Yeoncheong ]";
+			mes "Have a nice day, dear guest~";
+			close3;
+	}
+	mes "[ Yeoncheong ]";
+	mes "^FF0000Bring only one equipment that you want to exchange and proceed.^000000";
+	mes "If there are multiple equipments in your inventory, it will be exchanged randomly if it meets the condition.";
+	close2;
+	cutin "",255;
+	callshop .@shop$,1; //TODO BARTERSHOP
+	end;
+}
+
+//= Device Module Exchange
+ba_in01,87,380,3	script	Yecheon#ep172module_trader	4_EP17_CLEANER_W,{
+	disable_items;
+	cutin "ep172_omega",2;
+	mes "[ Yecheon ]";
+	mes "I can provide you an Automatic Module, Physical Automatic Improvement Device, and Magical Automatic Improvement Device. It will help you the improve abilites of your automatic equipments.";
+	next;
+	cutin "",255;
+	switch (select("More information.:Get Automatic Module:Get Physical Automatic Improvement Device:Get Magical Automatic Improvement Device:Cancel")) {
+		case 1:
+			cutin "ep172_omega",2;
+			mes "[ Yecheon ]";
+			mes "You can get an ^FF0000automatic module^000000 for ^0000CD90 Barmeal Tickets^000000. I will give you a random automatic module excluding the epic grade modules.";
+			next;
+			mes "[ Yecheon ]";
+			mes "I'm also providing ^FF0000Physical Automatic Improvement Device and Magical Automatic Improvement Device^000000. You can exchange it for ^0000CD45 Barmeal Tickets^000000, or ^0000CD1500000 Zeny^000000.";
+			next;
+			mes "[ Yecheon ]";
+			mes "Then, combat-specialized guest, do safely improve your abilities.";
+			close3;
+
+		case 2:
+			.@price = 90;
+			cutin "ep172_omega",2;
+			mes "[ Yecheon ]";
+			mes "I will exchange 1 random Automatic Module excluding the epic grade modules for 90 <ITEM>[Barmeal Ticket]<INFO>1000103</INFO></ITEM>.";
+			next;
+			cutin "",255;
+			if (select("Exchange Barmeal Ticket.:Do not exchange") == 2) {
+				mes "[ Yecheon ]";
+				mes "Transaction ended.";
+				close3;
+			}
+			cutin "ep172_omega",2;
+			if (countitem(1000103) < .@price) {
+				mes "[ Yecheon ]";
+				mes "You don't have enough Barmeal tickets for the exchange.";
+				close3;
+			}
+			mes "[ Yecheon ]";
+			mes "I exchanged it for one random Automatic Module.";
+			delitem 1000103,.@price;
+			getitem .module[rand(getarraysize(.module))],1;
+			close3;
+
+		case 3:
+			cutin "ep172_omega",2;
+			mes "[ Yecheon ]";
+			mes "I will exchange ^FF00001 Physical Automatic Improvement Device^000000 for 45 <ITEM>[Barmeal Ticket]<INFO>1000103</INFO></ITEM> or 1500000 Zeny.";
+			next;
+			cutin "",255;
+			.@price = 45;
+			.@zeny = 1500000;
+			switch (select("Exchange for Barmeal Ticket.:Exchange for 1500000 Zeny.:Do not exchange.")) {
+				case 1:
+					cutin "ep172_omega",2;
+					if (countitem(1000103) < .@price) {
+						mes "[ Yecheon ]";
+						mes "You don't have enough Barmeal tickets for the exchange.";
+						close3;
+					}
+					mes "[ Yecheon ]";
+					mes "I exchanged it for one random Physical Automatic Improvement Device.";
+					delitem 1000103,.@price;
+					getitem .p_rand[rand(getarraysize(.p_rand))],1;
+					close3;
+
+				case 2:
+					cutin "ep172_omega",2;
+					if (Zeny < .@zeny) {
+						mes "[ Yecheon ]";
+						mes "You don't have enough Zeny for the exchange.";
+						close3;
+					}
+					mes "[ Yecheon ]";
+					mes "I exchanged it for one random Physical Automatic Improvement Device.";
+					Zeny -= .@zeny;
+					getitem .p_rand[rand(getarraysize(.p_rand))],1;
+					close3;
+
+				case 3:
+					close;
+			}
+
+		case 4:
+			cutin "ep172_omega",2;
+			mes "[ Yecheon ]";
+			mes "I will exchange ^FF00001 Magical Automatic Improvement Device^000000 for 45 <ITEM>[Barmeal Ticket]<INFO>1000103</INFO></ITEM> or 1500000 Zeny.";
+			next;
+			cutin "",255;
+			.@price = 45;
+			.@zeny = 1500000;
+			switch (select("Exchange for Barmeal Ticket.:Exchange for 1500000 Zeny.:Do not exchange.")) {
+				case 1:
+					cutin "ep172_omega",2;
+					if (countitem(1000103) < .@price) {
+						mes "[ Yecheon ]";
+						mes "You don't have enough Barmeal tickets for the exchange.";
+						close3;
+					}
+					mes "[ Yecheon ]";
+					mes "I exchanged it for one random Magical Automatic Improvement Device.";
+					delitem 1000103,.@price;
+					getitem .m_rand[rand(getarraysize(.m_rand))],1;
+					close3;
+
+				case 2:
+					cutin "ep172_omega",2;
+					if (Zeny < .@zeny) {
+						mes "[ Yecheon ]";
+						mes "You don't have enough Zeny for the exchange.";
+						close3;
+					}
+					mes "[ Yecheon ]";
+					mes "I exchanged it for one random Magical Automatic Improvement Device.";
+					Zeny -= .@zeny;
+					getitem .m_rand[rand(getarraysize(.m_rand))],1;
+					close3;
+
+				case 3:
+					close;
+			}
+
+		case 5:
+			close;
+	}
+
+OnInit:
+	setarray .physical,100164,50,100165,30,100166,20;
+	setarray .magical,100167,50,100167,30,100167,20;
+	for (.@i = 0; .@i < getarraysize(.physical); .@i += 2) {
+		for (.@x = 0; .@x < .physical[.@i+1]; .@x++) {
+			.p_rand[getarraysize(.p_rand)] = .physical[.@i];
+			.m_rand[getarraysize(.m_rand)] = .magical[.@i];
+		}
+	}
+	for (.@i = 1000105; .@i < 1000150; .@i++)
+		.module[getarraysize(.module)] = .@i;
+	end;
+}

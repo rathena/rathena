@@ -29368,3 +29368,511 @@ Body:
           - Item: Up_Demon_Slayer_Shot
             RefineMinimum: 7
             RefineMaximum: 7
+  # todo! Custom Rates
+  - Group: AUTOMATIC_MODULE_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: EP17_2_NO1
+            Rate: 212
+          - Item: EP17_2_NO2
+            Rate: 212
+          - Item: EP17_2_NO3
+            Rate: 212
+          - Item: EP17_2_NO4
+            Rate: 212
+          - Item: EP17_2_NO5
+            Rate: 212
+          - Item: EP17_2_NO6
+            Rate: 212
+          - Item: EP17_2_NO7
+            Rate: 212
+          - Item: EP17_2_NO8
+            Rate: 212
+          - Item: EP17_2_RA1
+            Rate: 212
+          - Item: EP17_2_RA2
+            Rate: 212
+          - Item: EP17_2_RA3
+            Rate: 212
+          - Item: EP17_2_RA4
+            Rate: 212
+          - Item: EP17_2_RA5
+            Rate: 212
+          - Item: EP17_2_RA6
+            Rate: 212
+          - Item: EP17_2_RA7
+            Rate: 212
+          - Item: EP17_2_RA8
+            Rate: 212
+          - Item: EP17_2_RA9
+            Rate: 212
+          - Item: EP17_2_RA10
+            Rate: 212
+          - Item: EP17_2_RA11
+            Rate: 212
+          - Item: EP17_2_RA12
+            Rate: 212
+          - Item: EP17_2_RA13
+            Rate: 212
+          - Item: EP17_2_RA14
+            Rate: 212
+          - Item: EP17_2_RA15
+            Rate: 212
+          - Item: EP17_2_RA16
+            Rate: 212
+          - Item: EP17_2_RA17
+            Rate: 212
+          - Item: EP17_2_RA18
+            Rate: 212
+          - Item: EP17_2_RA19
+            Rate: 212
+          - Item: EP17_2_RA20
+            Rate: 212
+          - Item: EP17_2_RA21
+            Rate: 212
+          - Item: EP17_2_UQ1
+            Rate: 212
+          - Item: EP17_2_UQ2
+            Rate: 212
+          - Item: EP17_2_UQ3
+            Rate: 212
+          - Item: EP17_2_UQ4
+            Rate: 212
+          - Item: EP17_2_UQ5
+            Rate: 212
+          - Item: EP17_2_UQ6
+            Rate: 212
+          - Item: EP17_2_UQ7
+            Rate: 212
+          - Item: EP17_2_UQ8
+            Rate: 212
+          - Item: EP17_2_UQ9
+            Rate: 212
+          - Item: EP17_2_UQ10
+            Rate: 212
+          - Item: EP17_2_UQ11
+            Rate: 212
+          - Item: EP17_2_UQ12
+            Rate: 212
+          - Item: EP17_2_LE1
+            Rate: 212
+          - Item: EP17_2_LE2
+            Rate: 212
+          - Item: EP17_2_LE3
+            Rate: 212
+          - Item: EP17_2_LE4
+            Rate: 212
+          - Item: EP17_2_LE5
+            Rate: 212
+          - Item: EP17_2_LE6
+            Rate: 212
+  # todo! Custom Rates (50% Stone vs 50% Epic Module) 
+  - Group: EPIC_MODULE_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Magical_Igni_Stone
+            Rate: 5000
+          - Item: EP17_2_EP1
+            Rate: 98
+          - Item: EP17_2_EP2
+            Rate: 98
+          - Item: EP17_2_EP3
+            Rate: 98
+          - Item: EP17_2_EP4
+            Rate: 98
+          - Item: EP17_2_EP5
+            Rate: 98
+          - Item: EP17_2_EP6
+            Rate: 98
+          - Item: EP17_2_EP7
+            Rate: 98
+          - Item: EP17_2_EP8
+            Rate: 98
+          - Item: EP17_2_EP9
+            Rate: 98
+          - Item: EP17_2_EP10
+            Rate: 98
+          - Item: EP17_2_EP11
+            Rate: 98
+          - Item: EP17_2_EP12
+            Rate: 98
+          - Item: EP17_2_EP13
+            Rate: 98
+          - Item: EP17_2_EP14
+            Rate: 98
+          - Item: EP17_2_EP15
+            Rate: 98
+          - Item: EP17_2_EP16
+            Rate: 98
+          - Item: EP17_2_EP17
+            Rate: 98
+          - Item: EP17_2_EP18
+            Rate: 98
+          - Item: EP17_2_EP19
+            Rate: 98
+          - Item: EP17_2_EP20
+            Rate: 98
+          - Item: EP17_2_EP21
+            Rate: 98
+          - Item: EP17_2_EP22
+            Rate: 98
+          - Item: EP17_2_EP23
+            Rate: 98
+          - Item: EP17_2_EP24
+            Rate: 98
+          - Item: EP17_2_EP25
+            Rate: 98
+          - Item: EP17_2_EP26
+            Rate: 98
+          - Item: EP17_2_EP27
+            Rate: 98
+          - Item: EP17_2_EP28
+            Rate: 98
+          - Item: EP17_2_EP29
+            Rate: 98
+          - Item: EP17_2_EP30
+            Rate: 98
+          - Item: EP17_2_EP31
+            Rate: 98
+          - Item: EP17_2_EP32
+            Rate: 98
+          - Item: EP17_2_EP33
+            Rate: 98
+          - Item: EP17_2_EP34
+            Rate: 98
+          - Item: EP17_2_EP35
+            Rate: 98
+          - Item: EP17_2_EP36
+            Rate: 98
+          - Item: EP17_2_EP37
+            Rate: 98
+          - Item: EP17_2_EP38
+            Rate: 98
+          - Item: EP17_2_EP39
+            Rate: 98
+          - Item: EP17_2_EP40
+            Rate: 98
+          - Item: EP17_2_EP41
+            Rate: 98
+          - Item: EP17_2_EP42
+            Rate: 98
+          - Item: EP17_2_EP43
+            Rate: 98
+          - Item: EP17_2_EP44
+            Rate: 98
+          - Item: EP17_2_EP45
+            Rate: 98
+          - Item: EP17_2_EP46
+            Rate: 98
+          - Item: EP17_2_EP47
+            Rate: 98
+          - Item: EP17_2_EP48
+            Rate: 98
+          - Item: EP17_2_EP49
+            Rate: 98
+          - Item: EP17_2_EP50
+            Rate: 98
+          - Item: EP17_2_EP51
+            Rate: 98
+  # Source: https://ro.gnjoy.com/news/probability/View.asp?seq=4088011
+  - Group: AUTOMATIC_MODULE_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: EP17_2_NO1
+            Rate: 40
+          - Item: EP17_2_NO1
+            Rate: 39
+          - Item: EP17_2_NO2
+            Rate: 40
+          - Item: EP17_2_NO3
+            Rate: 40
+          - Item: EP17_2_NO4
+            Rate: 40
+          - Item: EP17_2_NO5
+            Rate: 40
+          - Item: EP17_2_NO6
+            Rate: 40
+          - Item: EP17_2_NO7
+            Rate: 40
+          - Item: EP17_2_NO8
+            Rate: 32
+          - Item: EP17_2_RA1
+            Rate: 32
+          - Item: EP17_2_RA2
+            Rate: 32
+          - Item: EP17_2_RA3
+            Rate: 32
+          - Item: EP17_2_RA4
+            Rate: 32
+          - Item: EP17_2_RA5
+            Rate: 32
+          - Item: EP17_2_RA6
+            Rate: 32
+          - Item: EP17_2_RA7
+            Rate: 32
+          - Item: EP17_2_RA8
+            Rate: 32
+          - Item: EP17_2_RA9
+            Rate: 32
+          - Item: EP17_2_RA10
+            Rate: 32
+          - Item: EP17_2_RA11
+            Rate: 32
+          - Item: EP17_2_RA12
+            Rate: 32
+          - Item: EP17_2_RA13
+            Rate: 32
+          - Item: EP17_2_RA14
+            Rate: 32
+          - Item: EP17_2_RA15
+            Rate: 32
+          - Item: EP17_2_RA16
+            Rate: 2
+          - Item: EP17_2_RA17
+            Rate: 2
+          - Item: EP17_2_RA18
+            Rate: 2
+          - Item: EP17_2_RA19
+            Rate: 2
+          - Item: EP17_2_RA20
+            Rate: 2
+          - Item: EP17_2_RA21
+            Rate: 2
+          - Item: EP17_2_UQ1
+            Rate: 2
+          - Item: EP17_2_UQ2
+            Rate: 2
+          - Item: EP17_2_UQ3
+            Rate: 2
+          - Item: EP17_2_UQ4
+            Rate: 2
+          - Item: EP17_2_UQ5
+            Rate: 2
+          - Item: EP17_2_UQ6
+            Rate: 2
+          - Item: EP17_2_UQ7
+            Rate: 2
+          - Item: EP17_2_UQ8
+            Rate: 2
+          - Item: EP17_2_UQ9
+            Rate: 2
+          - Item: EP17_2_UQ10
+            Rate: 2
+          - Item: EP17_2_UQ11
+            Rate: 2
+          - Item: EP17_2_UQ12
+            Rate: 2
+          - Item: EP17_2_LE1
+            Rate: 2
+          - Item: EP17_2_LE2
+            Rate: 2
+          - Item: EP17_2_LE3
+            Rate: 2
+          - Item: EP17_2_LE4
+            Rate: 2
+          - Item: EP17_2_LE5
+            Rate: 2
+          - Item: EP17_2_LE6
+            Rate: 2
+          - Item: EP17_2_EP1
+            Rate: 3
+          - Item: EP17_2_EP2
+            Rate: 3
+          - Item: EP17_2_EP3
+            Rate: 3
+          - Item: EP17_2_EP4
+            Rate: 3
+          - Item: EP17_2_EP5
+            Rate: 3
+          - Item: EP17_2_EP6
+            Rate: 3
+          - Item: EP17_2_EP7
+            Rate: 3
+          - Item: EP17_2_EP8
+            Rate: 3
+          - Item: EP17_2_EP9
+            Rate: 3
+          - Item: EP17_2_EP10
+            Rate: 3
+          - Item: EP17_2_EP11
+            Rate: 3
+          - Item: EP17_2_EP12
+            Rate: 3
+          - Item: EP17_2_EP13
+            Rate: 3
+          - Item: EP17_2_EP14
+            Rate: 3
+          - Item: EP17_2_EP15
+            Rate: 3
+          - Item: EP17_2_EP16
+            Rate: 3
+          - Item: EP17_2_EP17
+            Rate: 3
+          - Item: EP17_2_EP18
+            Rate: 3
+          - Item: EP17_2_EP19
+            Rate: 3
+          - Item: EP17_2_EP20
+            Rate: 3
+          - Item: EP17_2_EP21
+            Rate: 3
+          - Item: EP17_2_EP22
+            Rate: 3
+          - Item: EP17_2_EP23
+            Rate: 3
+          - Item: EP17_2_EP24
+            Rate: 3
+          - Item: EP17_2_EP25
+            Rate: 3
+          - Item: EP17_2_EP26
+            Rate: 3
+          - Item: EP17_2_EP27
+            Rate: 3
+          - Item: EP17_2_EP28
+            Rate: 3
+          - Item: EP17_2_EP29
+            Rate: 3
+          - Item: EP17_2_EP30
+            Rate: 3
+          - Item: EP17_2_EP31
+            Rate: 3
+          - Item: EP17_2_EP32
+            Rate: 3
+          - Item: EP17_2_EP33
+            Rate: 3
+          - Item: EP17_2_EP34
+            Rate: 3
+          - Item: EP17_2_EP35
+            Rate: 3
+          - Item: EP17_2_EP36
+            Rate: 3
+          - Item: EP17_2_EP37
+            Rate: 3
+          - Item: EP17_2_EP38
+            Rate: 3
+          - Item: EP17_2_EP39
+            Rate: 3
+          - Item: EP17_2_EP40
+            Rate: 3
+          - Item: EP17_2_EP41
+            Rate: 3
+          - Item: EP17_2_EP42
+            Rate: 3
+          - Item: EP17_2_EP43
+            Rate: 3
+          - Item: EP17_2_EP44
+            Rate: 3
+          - Item: EP17_2_EP45
+            Rate: 3
+          - Item: EP17_2_EP46
+            Rate: 3
+          - Item: EP17_2_EP47
+            Rate: 3
+          - Item: EP17_2_EP48
+            Rate: 3
+          - Item: EP17_2_EP49
+            Rate: 3
+          - Item: EP17_2_EP50
+            Rate: 3
+          - Item: EP17_2_EP51
+            Rate: 3
+  # Source: https://ro.gnjoy.com/news/probability/View.asp?seq=4088012
+  - Group: ILLUSION_MODULE_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: EP17_1_EVT03
+            Rate: 50
+          - Item: EP17_1_EVT04
+            Rate: 50
+          - Item: EP17_1_EVT05
+            Rate: 60
+          - Item: EP17_1_EVT06
+            Rate: 60
+          - Item: EP17_1_EVT07
+            Rate: 60
+          - Item: EP17_1_EVT08
+            Rate: 60
+          - Item: EP17_1_EVT09
+            Rate: 60
+          - Item: EP17_1_EVT10
+            Rate: 60
+          - Item: EP17_1_EVT11
+            Rate: 50
+          - Item: EP17_1_EVT12
+            Rate: 50
+          - Item: EP17_1_EVT13
+            Rate: 30
+          - Item: EP17_1_EVT14
+            Rate: 30
+          - Item: EP17_1_EVT15
+            Rate: 30
+          - Item: EP17_1_EVT16
+            Rate: 30
+          - Item: EP17_1_EVT17
+            Rate: 30
+          - Item: EP17_1_EVT18
+            Rate: 30
+          - Item: EP17_1_EVT19
+            Rate: 30
+          - Item: EP17_1_EVT20
+            Rate: 30
+          - Item: EP17_1_EVT21
+            Rate: 30
+          - Item: EP17_1_EVT22
+            Rate: 30
+          - Item: EP17_1_EVT23
+            Rate: 30
+          - Item: EP17_1_EVT24
+            Rate: 30
+          - Item: EP17_1_EVT25
+            Rate: 30
+          - Item: EP17_1_EVT26
+            Rate: 3
+          - Item: EP17_1_EVT27
+            Rate: 5
+          - Item: EP17_1_EVT28
+            Rate: 4
+          - Item: EP17_1_EVT29
+            Rate: 5
+          - Item: EP17_1_EVT30
+            Rate: 5
+          - Item: EP17_1_EVT31
+            Rate: 5
+          - Item: EP17_1_EVT32
+            Rate: 5
+          - Item: EP17_1_EVT33
+            Rate: 3
+          - Item: EP17_1_EVT34
+            Rate: 3
+          - Item: EP17_1_EVT35
+            Rate: 3
+          - Item: EP17_1_EVT36
+            Rate: 3
+          - Item: EP17_1_EVT37
+            Rate: 3
+          - Item: EP17_1_EVT38
+            Rate: 3
+  - Group: AUTO_M_I_BOX_A
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Auto_Imp_Melee_1
+            Rate: 3333
+          - Item: Auto_Imp_Melee_2
+            Rate: 3333
+          - Item: Auto_Imp_Melee_3
+            Rate: 3333
+  - Group: AUTO_M_I_BOX_B
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Auto_Imp_Magic_1
+            Rate: 3333
+          - Item: Auto_Imp_Magic_2
+            Rate: 3333
+          - Item: Auto_Imp_Magic_3
+            Rate: 3333

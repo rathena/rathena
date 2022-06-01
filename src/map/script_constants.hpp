@@ -4062,6 +4062,9 @@
 	export_constant(RC2_TEMPLE_DEMON);
 	export_constant(RC2_ILLUSION_VAMPIRE);
 	export_constant(RC2_MALANGDO);
+	export_constant(RC2_EP172ALPHA);
+	export_constant(RC2_EP172BETA);
+	export_constant(RC2_EP172BATH);
 	export_constant(RC2_MAX);
 
 	/* monster ai */
@@ -5718,6 +5721,11 @@
 	export_constant(IG_GOLDEN_LORD_LAUNCHER_CUBE);
 	export_constant(IG_THE_BLACK_CUBE);
 	export_constant(IG_DEMON_SLAYER_SHOT_CUBE);
+	export_constant(IG_AUTOMATIC_MODULE_MIX);
+	export_constant(IG_EPIC_MODULE_MIX);
+	export_constant(IG_AUTO_M_I_BOX_A);
+	export_constant(IG_AUTO_M_I_BOX_B);
+	export_constant(IG_ILLUSION_MODULE_MIX);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

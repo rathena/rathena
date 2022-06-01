@@ -1,0 +1,109 @@
+//===== rAthena Script =======================================
+//= Portals of Varmundt's mansion
+//===== Changelog: ===========================================
+//= 1.0 First version. [crazyarashi]
+//============================================================
+
+ba_in01,12,321,0	script	#lobby_to_maison	WARPNPC,1,1,{
+	end;
+	
+OnTouch:
+	if(isbegin_quest(11618) < 2)
+		mes "There is still some work to be done here. Let's look around more.";
+	else
+		warp "ba_maison",75,146;
+end;
+}
+
+ba_maison,78,146,0	warp	#maison_to_lobby	1,1,ba_in01,15,321
+
+//============================================================
+// Tea House
+//============================================================
+ba_maison,99,65,0	warp	#maison_to_teahouse	1,1,ba_in01,223,116
+ba_in01,226,116,0	warp	#teahouse_to_maison	1,1,ba_maison,103,65
+
+//============================================================
+// Guest House
+//============================================================
+ba_in01,32,144,0	warp	#jail_to_guesthouse	1,1,ba_in01,35,144
+ba_maison,103,323,0	warp	#maison_to_guesthouse-0	1,1,ba_in01,37,137
+ba_in01,37,134,0	warp	#guesthouse_to_maison-0	1,1,ba_maison,100,320
+ba_maison,87,324,0	warp	#maison_to_guesthouse-1	1,1,ba_in01,39,9
+ba_in01,39,6,0	warp	#guesthouse_to_maison-1	1,1,ba_maison,90,321
+ba_in01,37,210,0	warp	#guesthouse_to_guesthouse2-0	1,1,ba_in01,125,207
+ba_in01,125,210,0	warp	#guesthouse2_to_guesthouse-0	1,1,ba_in01,37,207
+ba_in01,39,106,0	warp	#guesthouse_to_guesthouse2-1	1,1,ba_in01,133,100
+ba_in01,133,104,0	warp	#guesthouse2_to_guesthouse-1	1,1,ba_in01,39,102
+
+//============================================================
+// Rooms
+//============================================================
+ba_maison,53,131,0	warp	#maison_to_storage	1,1,ba_in01,234,35
+ba_in01,237,35,0	warp	#storage_to_maison	1,1,ba_maison,56,130
+ba_in01,199,347,0	warp	#mansion_to_room-0	1,1,ba_in01,279,194
+ba_in01,276,194,0	warp	#room_to_mansion-0	1,1,ba_in01,197,347
+ba_in01,341,371,0	warp	#mansion_to_room-1	1,1,ba_in01,375,101
+ba_in01,375,98,0	warp	#room_to_mansion-1	1,1,ba_in01,341,368
+
+//============================================================
+// Underground
+//============================================================
+ba_maison,197,279,0	warp	#maison_to_underground	1,1,ba_in01,271,269
+ba_in01,271,265,0	warp	#underground_to_maison	1,1,ba_maison,197,274
+ba_in01,255,354,0	warp	#underground_to_bathent	1,1,ba_in01,307,34
+ba_in01,307,31,0	warp	#bathent_to_underground	1,1,ba_in01,255,351
+
+//============================================================
+// Airship Area
+//============================================================
+ba_maison,33,225,0	script	#maison_to_airship	WARPNPC,1,1,{
+	end;
+	
+OnTouch:
+	if(isbegin_quest(18018) == 0)
+		warp "ba_in01",63,255;
+	else
+		warp "ba_in01",13,255;
+end;
+}
+ba_in01,60,255,0	warp	#airship_to_maison-0	1,1,ba_maison,33,222
+ba_in01,10,255,0	warp	#airship_to_maison-1	1,1,ba_maison,33,222
+
+//============================================================
+// Library
+//============================================================
+ba_maison,197,105,0	warp	#maison_to_libent	1,1,ba_in01,211,163
+ba_in01,211,160,0	warp	#libent_to_maison	1,1,ba_maison,197,102
+ba_lib,159,4,0	warp	#library_to_libent	1,1,ba_in01,211,178
+
+//============================================================
+// Cafeteria
+//============================================================
+ba_maison,140,96,0	warp	#maison_to_cafeteria-0	1,1,ba_in01,80,367
+ba_maison,140,108,0	warp	#maison_to_cafeteria-1	1,1,ba_in01,23,375
+ba_in01,23,372,0	warp	#cafeteria_to_maison-0	1,1,ba_maison,137,108
+ba_in01,80,364,0	warp	#cafeteria_to_maison-1	1,1,ba_maison,137,96
+ba_in01,35,383,0	warp	#cafeteria_to_cafeteria-0	1,1,ba_in01,69,381
+ba_in01,66,381,0	warp	#cafeteria_to_cafeteria-1	1,1,ba_in01,32,383
+
+//============================================================
+// Dungeon
+//============================================================
+ba_maison,88,272,0	warp	#maison_to_bapw3	1,1,ba_pw03,13,115
+ba_pw03,10,115,0	warp	#bapw3_to_maison	1,1,ba_maison,88,268
+ba_in01,387,38,0	warp	#bathent_to_babath	1,1,ba_bath,159,26
+ba_bath,159,22,0	warp	#babath_to_bathent	1,1,ba_in01,382,38
+
+//============================================================
+// Forgotten Valley
+//============================================================
+ba_maison,314,203,0	script	#maison_to_balost	WARPNPC,1,1,{
+	if(isbegin_quest(8586) != 2)
+		npctalk "Luina : Just a moment, If you want to get in there, I need to talk to you first...","Luina#172_lost_0",bc_self;
+	else
+		warp "ba_lost",162,37;
+	end;
+}
+
+ba_lost,162,33,0	warp	#lost_to_bamaison	1,1,ba_maison,311,203

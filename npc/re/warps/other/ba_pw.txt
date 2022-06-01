@@ -1,0 +1,42 @@
+//===== rAthena Script =======================================
+//= Portals of Varmundt's mansion
+//===== Changelog: ===========================================
+//= 1.0 First version. [crazyarashi]
+//============================================================
+
+//= Power Plant
+//============================================================
+ba_pw01,91,291,0	script	#bapw1_to_lobby	WARPNPC,1,1,{
+	end;
+
+OnTouch:
+	if(isbegin_quest(11617) < 2)
+		mes "There is still some work to be done here. Let's look around more.";
+	else
+		warp "ba_in01",23,315;
+	end;
+}
+
+ba_pw01,10,115,0	warp	#bapw1_to_bapw2	1,1,ba_pw02,10,149
+ba_pw02,7,149,0	script	#bapw2_to_bapw1	WARPNPC,1,1,{
+	end;
+
+OnTouch:
+	if(isbegin_quest(11615) < 2)
+		mes "There is still some work to be done here. Let's look around more.";
+	else
+		warp "ba_pw01",13,115;
+	end;
+}
+
+ba_pw02,275,15,0	warp	#bapw2_to_sprcor	1,1,sp_cor,257,285
+sp_cor,258,287,0	script	#spcor_to_bapw2	WARPNPC,1,1,{
+	end;
+
+OnTouch:
+	if(isbegin_quest(18000) < 2)
+		npctalk "Rookie : Oh? I haven't opened it yet! Hold on for a while, we're doing our best to open it!","Rookie#171_cor_2",bc_self;
+	else
+		warp "ba_pw02",275,20;
+	end;
+}

@@ -1311,11 +1311,11 @@ Body:
           - ILL_Phen_Card
           - ILL_Obeaune_Card
       - Combo:
-          - Yellow_Pitaya_Card
-          - Boiling_Marc_Card
+          - Pitaya_Y_Card
+          - EP17_2_Marc_Card
       - Combo:
-          - Purple_Pitaya_Card
-          - Boiling_Marc_Card
+          - Pitaya_V_Card
+          - EP17_2_Marc_Card
     Script: |
       bonus2 bSubEle,Ele_Neutral,5;
   - Combos:
@@ -14123,7 +14123,7 @@ Body:
   - Combos:
       - Combo:
           - ILL_Obeaune_Card
-          - Boiling_Piranha_Card
+          - EP17_2_Piranha_Card
     Script: |
       bonus2 bMagicAddEle,Ele_Water,15;
   - Combos:
@@ -14723,7 +14723,7 @@ Body:
       - Combo:
           - Omega_Cleaner_Card
           - KickAndKick_Card
-          - MD_Papila_H_Card
+          - Papila_Ruba_H_Card
     Script: |
       bonus2 bSkillAtk,"NC_AXEBOOMERANG",20;
       bonus2 bSkillAtk,"NC_VULCANARM",20;
@@ -14733,7 +14733,7 @@ Body:
       bonus2 bSkillAtk,"NC_AXEBOOMERANG",5*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - Broken_Cleaner_Card
+          - Beta_Cleaner_Card
           - Verporta_Card
           - MD_Papila_Ruba_H_Card
     Script: |
@@ -14745,9 +14745,9 @@ Body:
       bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",5*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - Bath_Manager_Card
+          - Beta_Baths_A_Card
           - P_Archer_Skeleton_Card
-          - MD_Papila_H_Card
+          - Papila_Ruba_H_Card
     Script: |
       bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",20;
       bonus2 bSkillAtk,"GN_CARTCANNON",20;
@@ -14759,7 +14759,7 @@ Body:
       - Combo:
           - Bookworm_Card
           - Assistant_Card
-          - Blue_Pitaya_Card
+          - Pitaya_B_Card
     Script: |
       bonus2 bSkillAtk,"SO_DIAMONDDUST",20;
       bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",20;
@@ -14769,9 +14769,9 @@ Body:
       bonus2 bSkillAtk,"SO_DIAMONDDUST",5*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - Roaming_Spellbook_Card
+          - Roaming_Splbook_Card
           - Assistant_Card
-          - Red_Pitaya_Card
+          - Pitaya_R_Card
     Script: |
       bonus2 bSkillAtk,"WL_CRIMSONROCK",20;
       bonus2 bSkillAtk,"WL_COMET",20;
@@ -14781,7 +14781,7 @@ Body:
       bonus2 bSkillAtk,"WL_CRIMSONROCK",5*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - Sewage_Venenum_Card
+          - Venenum3_Card
           - Cowraiders3_Card
           - Aries_Card
     Script: |
@@ -14793,7 +14793,7 @@ Body:
       bonus2 bSkillAtk,"SC_TRIANGLESHOT",5*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - Sewage_Cramp_Card
+          - EP17_2_Cramp_Card
           - Mt_Dolor_Card
           - Aries_Card
     Script: |
@@ -14804,7 +14804,7 @@ Body:
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",5*(.@r_shoes/3);
   - Combos:
       - Combo:
-          - Sewage_Waterfall_Card
+          - Waterfall_Card
           - Soheon_Card
           - Dry_Rafflesia_Card
     Script: |
@@ -14840,7 +14840,7 @@ Body:
       bonus2 bSkillAtk,"SP_SWHOO",5*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - Unleashed_Magic_Card
+          - Plasma_Y_Card
           - MD_Papila_Cae_Card
           - MD_Papila_Cae_H_Card
     Script: |
@@ -14864,7 +14864,7 @@ Body:
       bonus2 bSkillAtk,"AB_JUDEX",5*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - Powerful_Magic_Card
+          - Plasma_R_Card
           - Mutant_Plaga_Card
           - MD_Papila_Ruba_Card
     Script: |
@@ -14876,7 +14876,7 @@ Body:
       bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",5*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - Sharp_Magic_Card
+          - Plasma_R2_Card
           - P_Archer_Skeleton_Card
           - MD_Papila_Cae_Card
     Script: |
@@ -14888,9 +14888,9 @@ Body:
       bonus2 bSkillAtk,"RA_ARROWSTORM",5*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - Boiling_Phen_Card
+          - EP17_2_Phen_Card
           - Alnoldi_Ex_Card
-          - Beta_Basic_H_Card
+          - B_Scissore_Ng_H_Card
     Script: |
       bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",20;
       bonus2 bSkillAtk,"SJ_FULLMOONKICK",20;
@@ -14900,7 +14900,7 @@ Body:
       bonus2 bSkillAtk,"SJ_FULLMOONKICK",5*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - Boiling_Swordfish_Card
+          - EP17_2_Sword_Fish_Card
           - High_Bellare_Card
           - MD_Papila_Card
     Script: |
@@ -14912,15 +14912,15 @@ Body:
       bonus2 bSkillAtk,"RL_R_TRIP",5*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - Boiling_Piranha_Card
+          - EP17_2_Piranha_Card
           - Piranha_Card
     Script: |
       bonus2 bMagicAddEle,Ele_Water,15;
       bonus bMatk,10;
   - Combos:
       - Combo:
-          - Green_Pitaya_Card
-          - Beta_Basic_Card
+          - Pitaya_G_Card
+          - Beta_Scissore_Ng_Card
           - Plaga3_Card
     Script: |
       bonus2 bSkillAtk,"SU_CN_METEOR",20;
@@ -19861,7 +19861,7 @@ Body:
       autobonus "{ bonus2 bIgnoreDefRaceRate,RC_All,100; }",5,.@time,BF_NORMAL;
   - Combos:
       - Combo:
-          - aegis_400043
+          - Fallen_Angel_feather
           - Fallen_Angel_Wing
     Script: |
       .@head = getequiprefinerycnt(EQI_HEAD_TOP);
@@ -19872,7 +19872,7 @@ Body:
       bonus2 bSubRace,RC_Angel,-3;
   - Combos:
       - Combo:
-          - aegis_450131
+          - Fallen_Angel_Armor_TW
           - Fallen_Angel_Wing
     Script: |
       if (getequiprefinerycnt(EQI_GARMENT) >= 9) {
@@ -19881,14 +19881,14 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_450131
-          - aegis_400043
+          - Fallen_Angel_Armor_TW
+          - Fallen_Angel_feather
     Script: |
       bonus bVit,2;
       bonus bMaxHPrate,10;
   - Combos:
       - Combo:
-          - aegis_490033
+          - Fallen_Angel_tear
           - Fallen_Angel_Wing
     Script: |
       if (getequiprefinerycnt(EQI_GARMENT) >= 9) {
@@ -19897,15 +19897,15 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_490033
-          - aegis_400043
+          - Fallen_Angel_tear
+          - Fallen_Angel_feather
     Script: |
       if (getequiprefinerycnt(EQI_HEAD_TOP) >= 9)
          bonus bVariableCastrate,-5;
   - Combos:
       - Combo:
-          - aegis_490033
-          - aegis_450131
+          - Fallen_Angel_tear
+          - Fallen_Angel_Armor_TW
     Script: |
       if (getequiprefinerycnt(EQI_ARMOR) >= 9)
          bonus bMaxHPrate,8;
@@ -20289,7 +20289,7 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_300310
+          - S_Helmut_Card
           - Skia_Nerius_Card
     Script: |
       bonus2 bAddRace,RC_All,3;
