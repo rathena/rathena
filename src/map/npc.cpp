@@ -3120,7 +3120,7 @@ e_purchase_result npc_barter_purchase( struct map_session_data& sd, std::shared_
 					return e_purchase_result::PURCHASE_FAIL_GOODS;
 				}
 			}else{
-				for( int i = 0; i < requirement->amount; i++ ){
+				for( int i = 0; i < (requirement->amount * amount); i++ ){
 					int j;
 
 					for( j = 0; j < MAX_INVENTORY; j++ ){
