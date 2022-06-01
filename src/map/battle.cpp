@@ -6441,9 +6441,10 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		}
 #endif
 
+int i = 0;
+
 #ifndef RENEWAL
 		// add any miscellaneous player ATK bonuses
-		int i = 0;
 		if( sd && skill_id && (i = pc_skillatk_bonus(sd, skill_id))) {
 			ATK_ADDRATE(wd.damage, wd.damage2, i);
 			RE_ALLATK_ADDRATE(&wd, i);
@@ -6568,7 +6569,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 #ifdef RENEWAL
 	// add any miscellaneous player ATK bonuses
-	int i = 0;
 	if( sd && skill_id && (i = pc_skillatk_bonus(sd, skill_id))) {
 		ATK_ADDRATE(wd.damage, wd.damage2, i);
 		RE_ALLATK_ADDRATE(&wd, i);
