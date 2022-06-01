@@ -7785,7 +7785,8 @@ Body:
     Icon: EFST_ATTACK_STANCE
     DurationLookup: IG_ATTACK_STANCE
     CalcFlags:
-      Watk: true
+      Patk: true
+      Smatk: true
       Def: true
     Flags:
       NoRemoveOnDead: true
@@ -8131,3 +8132,11 @@ Body:
       All: true
     Flags:
       RemoveElementalOption: true
+  - Status: Rush_Quake1
+    Icon: EFST_RUSH_QUAKE1
+    DurationLookup: MT_RUSH_QUAKE
+    Flags:
+      BlEffect: true
+  - Status: Rush_Quake2
+    Icon: EFST_RUSH_QUAKE2
+    DurationLookup: MT_RUSH_QUAKE

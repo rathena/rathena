@@ -2110,6 +2110,9 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	case AG_CRYSTAL_IMPACT:// Targets hit are dealt aftershock damage.
 		skill_castend_damage_id(src, bl, AG_CRYSTAL_IMPACT_ATK, skill_lv, tick, SD_LEVEL);
 		break;
+	case AG_CRIMSON_ARROW:
+		skill_castend_damage_id(src, bl, AG_CRIMSON_ARROW_ATK, skill_lv, tick, SD_LEVEL);
+		break;
 	case IQ_OLEUM_SANCTUM:
 		sc_start(src, bl, SC_HOLY_OIL, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
@@ -2173,6 +2176,9 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		break;
 	case EM_TERRA_DRIVE:
 		sc_start(src, bl, SC_HANDICAPSTATE_CRYSTALLIZATION, 40 + 10 * skill_lv, skill_lv, skill_get_time2(skill_id, skill_lv));
+		break;
+	case MT_RUSH_QUAKE:
+		sc_start(src, bl, SC_RUSH_QUAKE1, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
 		break;
 	} //end switch skill_id
 
@@ -3999,10 +4005,6 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 				if (skill_area_temp[1] == bl->id && rnd()%100 < 4 * skill_lv)// Need official autocast chance. [Rytech]
 					skill_addtimerskill(src, tick + dmg.amotion, bl->id, 0, 0, skill_id, skill_lv, BF_WEAPON, 2);
 				break;
-			case ABC_FRENZY_SHOT:
-				if (rnd()%100 < 4 * skill_lv)// Need official autocast chance. [Rytech]
-					skill_addtimerskill(src, tick + dmg.amotion, bl->id, 0, 0, skill_id, skill_lv, BF_WEAPON, 2);
-				break;
 		}
 	}
 
@@ -4588,11 +4590,8 @@ static TIMER_FUNC(skill_timerskill){
 					}
 					break;
 				case NPC_PULSESTRIKE2:
-					skill_castend_damage_id(src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
-					break;
 				case ABC_DEFT_STAB:
-				case ABC_FRENZY_SHOT:
-					skill_castend_damage_id(src, target, skl->skill_id, skl->skill_lv, tick, skl->flag);
+					skill_castend_damage_id(src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
 					break;
 				default:
 					skill_attack(skl->type,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
@@ -5248,8 +5247,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				skill_get_splash(skill_id, skill_lv), skill_get_maxcount(skill_id, skill_lv), splash_target(src),
 				skill_get_type(skill_id), src, src, skill_id, skill_lv, tick, flag, BCT_ENEMY);
 		}
-		if (skill_id == AG_CRIMSON_ARROW)
-			skill_attack(skill_get_type(AG_CRIMSON_ARROW_ATK), src, src, bl, AG_CRIMSON_ARROW_ATK, skill_lv, tick, flag|SD_LEVEL|SD_ANIMATION);
 		break;
 
 	case MO_INVESTIGATE:
@@ -5470,6 +5467,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case AG_SOUL_VC_STRIKE:
 	case AG_CRYSTAL_IMPACT:
 	case AG_CRYSTAL_IMPACT_ATK:
+	case AG_CRIMSON_ARROW_ATK:
 	case AG_ROCK_DOWN:
 	case AG_FROZEN_SLASH:
 	case IQ_OLEUM_SANCTUM:
@@ -5528,6 +5526,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			// Servant Weapon - Demol only hits if the target is marked with a sign by the attacking caster.
 			if (skill_id == DK_SERVANT_W_DEMOL && !(tsc && tsc->data[SC_SERVANT_SIGN] && tsc->data[SC_SERVANT_SIGN]->val1 == src->id))
 				break;
+
+			// Over Slash - Appears to deal a number of hits equal to 2 + Number of Enemys In AoE. Max of 7 hits.
+			if (skill_id == IG_OVERSLASH)
+				sflag |= skill_area_temp[0];
 
 			// Deft Stab - Make sure the flag of 2 is passed on when the skill is double casted.
 			if (skill_id == ABC_DEFT_STAB && flag&2)
@@ -5602,10 +5604,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					if (sd && pc_search_inventory(sd, skill_db.find(SU_LUNATICCARROTBEAT)->require.itemid[0]) >= 0)
 						skill_id = SU_LUNATICCARROTBEAT2;
 					break;
+				case MT_RUSH_QUAKE:
+					sc_start(src, src, SC_RUSH_QUAKE2, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+					// Fallthrough
 				case DK_SERVANT_W_PHANTOM:
 				case SHC_SAVAGE_IMPACT:
 				case SHC_FATAL_SHADOW_CROW:
-				case MT_RUSH_QUAKE:
 					// Jump to the target before attacking.
 					if (skill_check_unit_movepos(5, src, bl->x, bl->y, 0, 1))
 						skill_blown(src, src, 1, (map_calc_dir(bl, src->x, src->y) + 4) % 8, BLOWN_NONE);
@@ -7762,7 +7766,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case EM_INCREASING_ACTIVITY:
 		if (bl->type == BL_PC) {
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-			status_heal(bl, 0, 0, 20 + 5 * skill_lv, 0);
+			status_heal(bl, 0, 0, 10 + 10 * skill_lv, 0);
 		} else
 			clif_skill_fail(sd, skill_id, USESKILL_FAIL, 0);
 		break;

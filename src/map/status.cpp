@@ -2373,9 +2373,9 @@ int status_calc_mob_(struct mob_data* md, uint8 opt)
 						// Its unknown how the summoner's stats affects the ABR's stats.
 						// I decided to do something similar to elementals for now until I know.
 						// Also added hit increase from ABR-Mastery for balance reasons. [Rytech]
-						status->max_hp = (5000 + 2000 * abr_mastery) * mstatus->vit / 100;
-						status->rhw.atk = (2 * mstatus->batk + 500 + 200 * abr_mastery) * 70 / 100;
-						status->rhw.atk2 = 2 * mstatus->batk + 500 + 200 * abr_mastery;
+						status->max_hp = (5000 + 40000 * abr_mastery) * mstatus->vit / 100;
+						status->rhw.atk = (2 * mstatus->batk + 200 + 600 * abr_mastery) * 70 / 100;
+						status->rhw.atk2 = 2 * mstatus->batk + 200 + 600 * abr_mastery;
 						status->def = mstatus->def + 20 * abr_mastery;
 						status->mdef = mstatus->mdef + 4 * abr_mastery;
 						status->hit = mstatus->hit + 5 * abr_mastery / 2;
@@ -2408,10 +2408,10 @@ int status_calc_mob_(struct mob_data* md, uint8 opt)
 						// Its unknown how the summoner's stats affects the bionic's stats.
 						// I decided to do something similar to elementals for now until I know.
 						// Also added hit increase from Bionic-Mastery for balance reasons. [Rytech]
-						status->max_hp = (5000 + 2000 * bionic_mastery) * mstatus->vit / 100;
+						status->max_hp = (5000 + 40000 * bionic_mastery) * mstatus->vit / 100;
 						//status->max_sp = (50 + 20 * bionic_mastery) * mstatus->int_ / 100;// Wait what??? Bionic Mastery increases MaxSP? They have SP???
-						status->rhw.atk = (2 * mstatus->batk + 200 * bionic_mastery) * 70 / 100;
-						status->rhw.atk2 = 2 * mstatus->batk + 200 * bionic_mastery;
+						status->rhw.atk = (2 * mstatus->batk + 600 * bionic_mastery) * 70 / 100;
+						status->rhw.atk2 = 2 * mstatus->batk + 600 * bionic_mastery;
 						status->def = mstatus->def + 20 * bionic_mastery;
 						status->mdef = mstatus->mdef + 4 * bionic_mastery;
 						status->hit = mstatus->hit + 5 * bionic_mastery / 2;
@@ -2423,7 +2423,7 @@ int status_calc_mob_(struct mob_data* md, uint8 opt)
 						// costing summon. [Rytech]
 						if (ud->skill_id == BO_HELLTREE) {
 							status->max_hp += 20000;
-							status->rhw.atk += 1400; // 70% of 2000
+							status->rhw.atk += 5600; // 70% of 2000
 							status->rhw.atk2 += 2000;
 						}
 					}
@@ -3837,6 +3837,8 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 		base_status->patk += skill * 3;
 		base_status->smatk += skill * 3;
 	}
+	if (sd->status.weapon == W_2HSTAFF && (skill = pc_checkskill(sd, AG_TWOHANDSTAFF)) > 0)
+		base_status->smatk += skill * 2;
 
 // ----- PHYSICAL RESISTANCE CALCULATION -----
 	if ((skill = pc_checkskill_imperial_guard(sd, 1)) > 0)// IG_SHIELD_MASTERY
@@ -6498,8 +6500,6 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 		watk += sc->data[SC_POWERFUL_FAITH]->val2;
 	if (sc->data[SC_GUARD_STANCE])
 		watk -= sc->data[SC_GUARD_STANCE]->val3;
-	if (sc->data[SC_ATTACK_STANCE])
-		watk += sc->data[SC_ATTACK_STANCE]->val3;
 
 	return (unsigned short)cap_value(watk,0,USHRT_MAX);
 }
@@ -7775,6 +7775,8 @@ static signed short status_calc_patk(struct block_list *bl, struct status_change
 		patk += sc->data[SC_ABYSS_SLAYER]->val2;
 	if (sc->data[SC_PRON_MARCH])
 		patk += sc->data[SC_PRON_MARCH]->val2;
+	if (sc->data[SC_ATTACK_STANCE])
+		patk += sc->data[SC_ATTACK_STANCE]->val3;
 
 	return (short)cap_value(patk, 0, SHRT_MAX);
 }
@@ -7799,6 +7801,8 @@ static signed short status_calc_smatk(struct block_list *bl, struct status_chang
 		smatk += sc->data[SC_JAWAII_SERENADE]->val2;
 	if (sc->data[SC_SPELL_ENCHANTING])
 		smatk += sc->data[SC_SPELL_ENCHANTING]->val2;
+	if (sc->data[SC_ATTACK_STANCE])
+		smatk += sc->data[SC_ATTACK_STANCE]->val3;
 
 	return (short)cap_value(smatk, 0, SHRT_MAX);
 }
@@ -11780,7 +11784,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick = INFINITE_TICK;
 			break;
 		case SC_GUARDIAN_S:
-			val2 = status->max_hp * (50 * val1) / 100;// Barrier HP
+			val2 = (status->max_hp / 2) * (50 * val1 + status_get_lv(src) + status->sta * 15) / 100;// Barrier HP
 			break;
 		case SC_REBOUND_S:
 			val2 = 10 * val1;// Reduced Damage From Devotion
@@ -11789,7 +11793,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_ATTACK_STANCE:
 			val2 = 40 * val1;// DEF Decrease
-			val3 = 5 + 5 * val1;// ATK Increase
+			val3 = 3 * val1;// P.ATK/S.MATK Increase
 			tick = INFINITE_TICK;
 			break;
 		case SC_HOLY_S:
