@@ -6410,21 +6410,20 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	}
 
 	std::bitset<NK_MAX> nk = battle_skill_get_damage_properties(skill_id, wd.miscflag);
-	int i = 0;
 
 	// check if we're landing a hit
 	if(!is_attack_hitting(&wd, src, target, skill_id, skill_lv, true))
 		wd.dmg_lv = ATK_FLEE;
 	else if(!(infdef = is_infinite_defense(target, wd.flag))) { //no need for math against plants
-		int64 ratio = 0;
 
 		battle_calc_skill_base_damage(&wd, src, target, skill_id, skill_lv); // base skill damage
+
+		int64 ratio = 0;
 
 #ifndef RENEWAL
 		ratio = battle_calc_attack_skill_ratio(&wd, src, target, skill_id, skill_lv); // skill level ratios
 
 		ATK_RATE(wd.damage, wd.damage2, ratio);
-		RE_ALLATK_RATE(&wd, ratio);
 #endif
 
 		int64 bonus_damage = battle_calc_skill_constant_addition(&wd, src, target, skill_id, skill_lv); // other skill bonuses
@@ -6444,6 +6443,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 #ifndef RENEWAL
 		// add any miscellaneous player ATK bonuses
+		int i = 0;
 		if( sd && skill_id && (i = pc_skillatk_bonus(sd, skill_id))) {
 			ATK_ADDRATE(wd.damage, wd.damage2, i);
 			RE_ALLATK_ADDRATE(&wd, i);
