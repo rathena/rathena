@@ -8357,6 +8357,14 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 			rdamage = damage * tsc->data[SC_MAXPAIN]->val1 * 10 / 100;
 	}
 
+	// Skill damage adjustment
+	int skill_damage = battle_skill_damage(src, tbl, skill_id);
+
+	if (skill_damage != 0) {
+		rdamage += rdamage * skill_damage / 100;
+		rdamage = i64max(rdamage, 1);
+	}
+
 	if (rdamage == 0)
 		return 0; // No reflecting damage calculated.
 	else
