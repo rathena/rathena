@@ -3308,7 +3308,7 @@ void clif_guild_castle_list(struct map_session_data* sd)
 	if (castle_count > 0) {
 		int16 len = (int16)( sizeof(struct PACKET_ZC_GUILD_AGIT_INFO) + castle_count * sizeof(int8) );
 		struct PACKET_ZC_GUILD_AGIT_INFO* p = (struct PACKET_ZC_GUILD_AGIT_INFO*)packet_buffer;
-		p->packetType = HEADER_ZC_GUILD_CASTLE_LIST;
+		p->packetType = HEADER_ZC_GUILD_AGIT_INFO;
 		p->packetLength = len;
 
 		int i = 0;
