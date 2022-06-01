@@ -47416,7 +47416,7 @@ Body:
       NoGuildStorage: true
       NoAuction: true
     Script: |
-      getitem 504,20;
+      getitem 11565,20;
   - Id: 23582
     AegisName: E_Wing_Of_Fly_3Day_Box
     Name: "[Not for Sale] Infinite Flywing Box 7-Day"    # !todo check english name
