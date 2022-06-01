@@ -15520,7 +15520,7 @@ Body:
       autobonus3 "{ bonus2 bSkillAtk,\"RL_FIRE_RAIN\",35; }",1000,60000,"RL_RICHS_COIN";
   - Combos:
       - Combo:
-          - aegis_400044
+          - Phantom_Cap
           - Ultio_Spes_OS
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
@@ -15528,7 +15528,7 @@ Body:
       bonus bVariableCastrate,-3*(.@r/2);
   - Combos:
       - Combo:
-          - aegis_400044
+          - Phantom_Cap
           - Rutilus_Stick_OS
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
@@ -15537,7 +15537,7 @@ Body:
       bonus2 bSkillAtk,"SP_SWHOO",4*(.@r/2);
   - Combos:
       - Combo:
-          - aegis_400044
+          - Phantom_Cap
           - ElectricFox_OS
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
@@ -17263,7 +17263,7 @@ Body:
       bonus bVariableCastrate,-10;
   - Combos:
       - Combo:
-          - aegis_400021
+          - Clock_Casket_RD
           - Beam_Claymore_OS
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17272,7 +17272,7 @@ Body:
       bonus2 bMagicAddSize,Size_Large,4*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - aegis_400021
+          - Clock_Casket_RD
           - Meuchler_OS
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17280,7 +17280,7 @@ Body:
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",4*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - aegis_400021
+          - Clock_Casket_RD
           - Circuit_Board_OS
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17288,7 +17288,7 @@ Body:
       bonus2 bSkillAtk,"SJ_SOLARBURST",4*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - aegis_400022
+          - Ignis_CapK
           - Saphir_Hall_OS
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17296,7 +17296,7 @@ Body:
       bonus2 bSkillAtk,"GN_CARTCANNON",4*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - aegis_400022
+          - Ignis_CapK
           - Virtual_Bow_OS
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17304,7 +17304,7 @@ Body:
       bonus2 bWeaponDamageRate,W_BOW,7*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - aegis_400022
+          - Ignis_CapK
           - Blasti_OS
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17313,7 +17313,7 @@ Body:
       bonus2 bMagicSubSize,Size_Small,3*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - aegis_400059
+          - Scorpio_Diadem_K
           - Cannon_Rapier_OS
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17321,7 +17321,7 @@ Body:
       bonus2 bSkillAtk,"LG_RAYOFGENESIS",4*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - aegis_400059
+          - Scorpio_Diadem_K
           - Ultio_Spes_OS
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17329,7 +17329,7 @@ Body:
       bonus2 bSkillAtk,"AB_JUDEX",3*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - aegis_400059
+          - Scorpio_Diadem_K
           - Rutilus_Stick_OS
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17337,7 +17337,7 @@ Body:
       bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",3*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - aegis_400061
+          - Sagittarius_DiademK
           - Burning_Knuckle_OS
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17345,7 +17345,7 @@ Body:
       bonus bLongAtkRate,3*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - aegis_400061
+          - Sagittarius_DiademK
           - Saphir_Hall_OS
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17353,7 +17353,7 @@ Body:
       bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",3*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - aegis_400061
+          - Sagittarius_DiademK
           - HR_S55_OS
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17361,7 +17361,7 @@ Body:
       bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",3*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - aegis_400078
+          - BioWeapon_Helm_RK
           - Volar
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17369,7 +17369,7 @@ Body:
       bonus2 bSkillAtk,"RK_IGNITIONBREAK",12*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400078
+          - BioWeapon_Helm_RK
           - Vernan
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17377,7 +17377,7 @@ Body:
       bonus2 bSkillAtk,"RK_SONICWAVE",10*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400078
+          - BioWeapon_Helm_RK
           - Argen_Blanco
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17385,7 +17385,7 @@ Body:
       bonus2 bSkillAtk,"RK_HUNDREDSPEAR",10*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400079
+          - BioWeapon_Helm_LG
           - Harve
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17393,7 +17393,7 @@ Body:
       bonus2 bSkillAtk,"LG_SHIELDPRESS",10*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400079
+          - BioWeapon_Helm_LG
           - Fortridge
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17401,7 +17401,7 @@ Body:
       bonus2 bSkillAtk,"LG_CANNONSPEAR",12*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400079
+          - BioWeapon_Helm_LG
           - Farthezan
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17410,7 +17410,7 @@ Body:
       bonus2 bSkillAtk,"PA_PRESSURE",10*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400094
+          - BioWeapon_Helm_WL
           - Staff_of_Miracle
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17418,7 +17418,7 @@ Body:
       bonus2 bSkillAtk,"WL_SOULEXPANSION",3*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400094
+          - BioWeapon_Helm_WL
           - Gravitation_Staff
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17427,7 +17427,7 @@ Body:
       bonus2 bSkillAtk,"WL_COMET",3*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400094
+          - BioWeapon_Helm_WL
           - Crimson_Rose_Stick
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17435,7 +17435,7 @@ Body:
       bonus2 bSkillAtk,"WL_CRIMSONROCK",3*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400095
+          - BioWeapon_Helm_SO
           - Psychic_Spear_Rod
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17444,7 +17444,7 @@ Body:
       bonus2 bSkillAtk,"SO_VARETYR_SPEAR",3*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400095
+          - BioWeapon_Helm_SO
           - Dust_Grave
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17453,7 +17453,7 @@ Body:
       bonus2 bSkillAtk,"SO_DIAMONDDUST",3*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400095
+          - BioWeapon_Helm_SO
           - Boltijin
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17480,7 +17480,7 @@ Body:
       bonus2 bSubEle,Ele_Water,25;
   - Combos:
       - Combo:
-          - aegis_400098
+          - BioWeapon_Helm_NC
           - Golden_Wrench
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17488,7 +17488,7 @@ Body:
       bonus2 bSkillAtk,"NC_POWERSWING",10*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400098
+          - BioWeapon_Helm_NC
           - Engine_Pilebuncker
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17496,7 +17496,7 @@ Body:
       bonus2 bSkillAtk,"NC_ARMSCANNON",10*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400098
+          - BioWeapon_Helm_NC
           - Maxi_Spanner
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17504,7 +17504,7 @@ Body:
       bonus2 bSkillAtk,"NC_AXETORNADO",10*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400099
+          - BioWeapon_Helm_GN
           - Coolant_Injection
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17512,7 +17512,7 @@ Body:
       bonus2 bSkillAtk,"GN_CARTCANNON",10*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400099
+          - BioWeapon_Helm_GN
           - Gene_Rod
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17520,7 +17520,7 @@ Body:
       bonus2 bSkillAtk,"GN_CRAZYWEED",10*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400099
+          - BioWeapon_Helm_GN
           - Estal
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17528,7 +17528,7 @@ Body:
       bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",10*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400116
+          - BioWeapon_Helm_RA
           - Sharp_Star_Bow
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17536,7 +17536,7 @@ Body:
       bonus2 bSkillAtk,"SN_SHARPSHOOTING",10*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400116
+          - BioWeapon_Helm_RA
           - Aiming_Bow
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17544,7 +17544,7 @@ Body:
       bonus2 bSkillAtk,"RA_AIMEDBOLT",10*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400116
+          - BioWeapon_Helm_RA
           - Falken_Shooter
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17552,10 +17552,10 @@ Body:
       bonus2 bSkillAtk,"RA_ARROWSTORM",10*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400117
+          - BioWeapon_Helm_WM
           - Wind_Gale
       - Combo:
-          - aegis_400117
+          - BioWeapon_Helm_WM
           - Scarlet_Ribbon
           - Antique_Cello
     Script: |
@@ -17564,7 +17564,7 @@ Body:
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",10*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400117
+          - BioWeapon_Helm_WM
           - Heart_Whip
           - Black_Circle
     Script: |
@@ -17573,7 +17573,7 @@ Body:
       bonus2 bSkillAtk,"WM_METALICSOUND",5*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400118
+          - BioWeapon_Helm_AB
           - Adorare_Staff
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17581,7 +17581,7 @@ Body:
       bonus2 bSkillAtk,"AB_ADORAMUS",5*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400118
+          - BioWeapon_Helm_AB
           - Lucis_Flail
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17589,7 +17589,7 @@ Body:
       bonus2 bSkillAtk,"AB_DUPLELIGHT",10*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400118
+          - BioWeapon_Helm_AB
           - Penitentia
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17597,7 +17597,7 @@ Body:
       bonus2 bSkillAtk,"AB_JUDEX",10*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400119
+          - BioWeapon_Helm_SR
           - Raging_Dragon_Fist
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17605,7 +17605,7 @@ Body:
       bonus2 bSkillAtk,"CH_CHAINCRUSH",10*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400119
+          - BioWeapon_Helm_SR
           - Dedicated_Bandage
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17613,7 +17613,7 @@ Body:
       bonus2 bSkillAtk,"SR_KNUCKLEARROW",10*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400119
+          - BioWeapon_Helm_SR
           - Bright_Pendulum
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17621,7 +17621,7 @@ Body:
       bonus2 bSkillAtk,"MO_FINGEROFFENSIVE",10*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400120
+          - BioWeapon_Helm_SC
           - Rapid_Fire
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17629,7 +17629,7 @@ Body:
       bonus2 bSkillAtk,"SC_TRIANGLESHOT",10*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400120
+          - BioWeapon_Helm_SC
           - Jack_The_Knife
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17637,14 +17637,14 @@ Body:
       bonus2 bSkillAtk,"SC_FATALMENACE",10*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400120
+          - BioWeapon_Helm_SC
           - Platinum_Dagger
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
       bonus2 bMagicAtkEle,Ele_All,10+5*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400121
+          - BioWeapon_Helm_GC
           - Ripper_Cross
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17652,7 +17652,7 @@ Body:
       bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",10*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400121
+          - BioWeapon_Helm_GC
           - Agudo_Filo
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -17660,7 +17660,7 @@ Body:
       bonus bShortAtkRate,5*.@r_weapon;
   - Combos:
       - Combo:
-          - aegis_400121
+          - BioWeapon_Helm_GC
           - Judgement_Slasher
           - Repent_Slasher
     Script: |
@@ -18077,7 +18077,7 @@ Body:
   - Combos:
       - Combo:
          - Thanatos_Pendant
-         - aegis_400023
+         - Dolor_HatK
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       if (.@r >= 7) {
@@ -18094,7 +18094,7 @@ Body:
   - Combos:
       - Combo:
           - Blue_Mental_Pendant
-          - aegis_400023
+          - Dolor_HatK
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       bonus bDelayrate,-2*(.@r/4);
@@ -18112,7 +18112,7 @@ Body:
   - Combos:
       - Combo:
           - Red_Force_Pendant
-          - aegis_400023
+          - Dolor_HatK
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       bonus bDelayrate,-2*(.@r/4);
@@ -20840,14 +20840,14 @@ Body:
       bonus2 bSkillAtk,"SO_DIAMONDDUST",15;
   - Combos:
       - Combo:
-          - aegis_20991
+          - Fairy_Of_Eden
           - Garden_of_Eden
     Script: |
       bonus bMaxHPrate,50;
       bonus bSpeedAddRate,25;
   - Combos:
       - Combo:
-          - aegis_20991
+          - Fairy_Of_Eden
           - WizardOfVeritas_Card
     Script: |
       bonus bInt,40;
@@ -23258,8 +23258,8 @@ Body:
       bonus bShortAtkRate,10;
   - Combos:
       - Combo:
-          - aegis_480136
-          - aegis_400023
+          - Thanatos_Sword
+          - Dolor_HatK
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
       bonus bVariableCastrate,-10;
@@ -23283,10 +23283,10 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_480136
+          - Thanatos_Sword
           - Blue_Mental_Pendant
       - Combo:
-          - aegis_480136
+          - Thanatos_Sword
           - Red_Force_Pendant
     Script: |
       bonus bMatk,50;
