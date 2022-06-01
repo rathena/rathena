@@ -670,6 +670,11 @@ prt_in,63,69,3	script	Dietrich#ns_prt	4_M_02,{
 		mes "If you lack the materials used for smelting, come anytime.";
 		close;
 	}
+	end;
+
+OnInit:
+	setunittitle getnpcid(0), "<Responsible for smelting products>";
+	end;
 }
 payon,137,178,5	duplicate(Dietrich#ns_prt)	Hakhim#2	4_M_ORIENT01
 morocc_in,72,32,3	duplicate(Dietrich#ns_prt)	Abdula#2	4W_M_03
