@@ -6018,15 +6018,17 @@ static void battle_calc_attack_gvg_bg(struct Damage* wd, struct block_list *src,
 				wd->damage2 = battle_calc_bg_damage(src,target,wd->damage2,skill_id,wd->flag);
 		}
 		else {
-			int64 d1 = wd->damage + wd->damage2,d2 = wd->damage2;
-			wd->damage = battle_calc_damage(src,target,wd,d1,skill_id,skill_lv);
-			if( mapdata_flag_gvg2(mapdata) )
-				wd->damage = battle_calc_gvg_damage(src,target,wd->damage,skill_id,wd->flag);
-			else if( mapdata->flag[MF_BATTLEGROUND] )
-				wd->damage = battle_calc_bg_damage(src,target,wd->damage,skill_id,wd->flag);
-			wd->damage2 = (int64)d2*100/d1 * wd->damage/100;
+			wd->damage = battle_calc_damage(src, target, wd, wd->damage, skill_id, skill_lv);
+			wd->damage2 = battle_calc_damage(src, target, wd, wd->damage2, skill_id, skill_lv);
+			if (mapdata_flag_gvg2(mapdata)) {
+				wd->damage = battle_calc_gvg_damage(src, target, wd->damage, skill_id, wd->flag);
+				wd->damage2 = battle_calc_gvg_damage(src, target, wd->damage2, skill_id, wd->flag);
+			}
+			else if (mapdata->flag[MF_BATTLEGROUND]) {
+				wd->damage = battle_calc_bg_damage(src, target, wd->damage, skill_id, wd->flag);
+				wd->damage2 = battle_calc_bg_damage(src, target, wd->damage2, skill_id, wd->flag);
+			}
 			if(wd->damage > 1 && wd->damage2 < 1) wd->damage2 = 1;
-			wd->damage-=wd->damage2;
 		}
 	}
 }
