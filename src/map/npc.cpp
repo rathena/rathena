@@ -3223,7 +3223,7 @@ e_purchase_result npc_barter_purchase( struct map_session_data& sd, std::shared_
 				}
 			}
 
-			reducedWeight += ( purchase.amount * requirement->amount * amount * id->weight );
+			reducedWeight += ( purchase.amount * requirement->amount * id->weight );
 		}
 	}
 
