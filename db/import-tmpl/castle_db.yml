@@ -26,6 +26,11 @@
 #   Map               Map name to be considered as the castle map.
 #   Name              Name of the castle (used by scripts and guardian name tags).
 #   Npc               NPC unique name to invoke ::OnGuildBreak on, when a occupied castle is abandoned during guild break.
+#   EnableClientWarp  Toggle client teleport feature. Warp can be used only to castles with MF_GVG_CASTLE mapflag. (Default: true)
+#   WarpX             X position of warp request. (Default: 0)
+#   WarpY             Y position of warp request. (Default: 0)
+#   WarpCost          The zeny cost using the client warp. (Default: 100)
+#   WarpCostSiege     The zeny cost using the client warp during WoE. (Default: 100000)
 ###########################################################################
 
 Header:

@@ -330,6 +330,78 @@ uint64 CastleDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		safestrncpy(gc->castle_event, npc_name.c_str(), sizeof(gc->castle_event));
 	}
 
+	if (this->nodeExists(node, "EnableClientWarp")) {
+		bool enable_client_warp;
+
+		if (!this->asBool(node, "EnableClientWarp", enable_client_warp))
+			return 0;
+
+		gc->enable_client_warp = enable_client_warp;
+	}
+	else {
+		if (!exists)
+			gc->enable_client_warp = true;
+	}
+
+	if (this->nodeExists(node, "WarpX")) {
+		uint16 warp_x;
+
+		if (!this->asUInt16(node, "WarpX", warp_x)) {
+			this->invalidWarning(node["WarpX"], "Invalid WarpX %hu, defaulting to 0.\n", warp_x);
+			gc->warp_x = 0;
+		}
+
+		gc->warp_x = warp_x;
+	}
+	else {
+		if (!exists)
+			gc->warp_x = 0;
+	}
+
+	if (this->nodeExists(node, "WarpY")) {
+		uint16 warp_y;
+
+		if (!this->asUInt16(node, "WarpY", warp_y)) {
+			this->invalidWarning(node["WarpY"], "Invalid WarpY %hu, defaulting to 0.\n", warp_y);
+			gc->warp_y = 0;
+		}
+
+		gc->warp_y = warp_y;
+	}
+	else {
+		if (!exists)
+			gc->warp_y = 0;
+	}
+
+	if (this->nodeExists(node, "WarpCost")) {
+		uint32 zeny;
+
+		if (!this->asUInt32(node, "WarpCost", zeny)) {
+			this->invalidWarning(node["WarpCost"], "Invalid WarpCost %u, defaulting to 100.\n", zeny);
+			gc->zeny = 100;
+		}
+
+		gc->zeny = zeny;
+	} else {
+		if (!exists)
+			gc->zeny = 100;
+	}
+
+	if (this->nodeExists(node, "WarpCostSiege")) {
+		uint32 zeny_siege;
+
+		if (!this->asUInt32(node, "WarpCostSiege", zeny_siege)) {
+			this->invalidWarning(node["WarpCostSiege"], "Invalid WarpCostSiege %u, defaulting to 100000.\n", zeny_siege);
+			gc->zeny_siege = 100000;
+		}
+
+		gc->zeny_siege = zeny_siege;
+	}
+	else {
+		if (!exists)
+			gc->zeny_siege = 100000;
+	}
+
 	if (!exists)
 		this->put(castle_id, gc);
 

@@ -2417,6 +2417,11 @@
 	parseable_packet( HEADER_CZ_PING_LIVE, sizeof( struct PACKET_CZ_PING_LIVE ), clif_parse_dull, 0 );
 #endif
 
+#if PACKETVER_MAIN_NUM >= 20190522 || PACKETVER_RE_NUM >= 20190522 || PACKETVER_ZERO_NUM >= 20190515
+	parseable_packet( HEADER_CZ_CASTLE_TELEPORT_REQUEST, sizeof(PACKET_CZ_CASTLE_TELEPORT_REQUEST), clif_parse_guild_castle_teleport_request, 0);
+	parseable_packet( HEADER_CZ_CASTLE_INFO_REQUEST, sizeof(PACKET_CZ_CASTLE_INFO_REQUEST), clif_parse_guild_castle_info_request, 0);
+#endif
+
 #if PACKETVER >= 20190724
 	parseable_packet(HEADER_CZ_GUILD_EMBLEM_CHANGE2, sizeof( PACKET_CZ_GUILD_EMBLEM_CHANGE2 ), clif_parse_GuildChangeEmblem2, 0 );
 	packet(HEADER_ZC_CHANGE_GUILD, sizeof(PACKET_ZC_CHANGE_GUILD));
