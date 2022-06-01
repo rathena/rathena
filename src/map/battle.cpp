@@ -883,8 +883,10 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 						cardfix = cardfix * (100 + sd->right_weapon.addclass[tstatus->class_] + sd->left_weapon.addclass[tstatus->class_] +
 							sd->right_weapon.addclass[CLASS_ALL] + sd->left_weapon.addclass[CLASS_ALL]) / 100;
 					}
+#ifndef RENEWAL
 					if( sd->status.weapon == W_KATAR && (skill = pc_checkskill(sd,ASC_KATAR)) > 0 ) // Adv. Katar Mastery functions similar to a +%ATK card on official [helvetica]
 						cardfix = cardfix * (100 + (10 + 2 * skill)) / 100;
+#endif
 				}
 
 				//! CHECKME: These right & left hand weapon ignores 'left_cardfix_to_right'?
@@ -2210,7 +2212,7 @@ static int battle_calc_status_attack(struct status_data *status, short hand)
  * @param sd Player
  * @return Base weapon damage
  */
-static int battle_calc_base_weapon_attack(struct block_list *src, struct status_data *tstatus, struct weapon_atk *wa, struct map_session_data *sd)
+static int battle_calc_base_weapon_attack(struct block_list *src, struct status_data *tstatus, struct weapon_atk *wa, struct map_session_data *sd, bool critical)
 {
 	struct status_data *status = status_get_status_data(src);
 	uint8 type = (wa == &status->lhw)?EQI_HAND_L:EQI_HAND_R;
@@ -2248,7 +2250,11 @@ static int battle_calc_base_weapon_attack(struct block_list *src, struct status_
 		atkmin = max(0, (int)(atkmin - variance + base_stat_bonus));
 		atkmax = min(UINT16_MAX, (int)(atkmax + variance + base_stat_bonus));
 
+#ifdef RENEWAL
+		if ((sc && sc->data[SC_MAXIMIZEPOWER]) || critical == true)
+#else
 		if (sc && sc->data[SC_MAXIMIZEPOWER])
+#endif
 			damage = atkmax;
 		else
 			damage = rnd_value(atkmin, atkmax);
@@ -3467,6 +3473,7 @@ static void battle_calc_damage_parts(struct Damage* wd, struct block_list *src,s
 	struct status_data *sstatus = status_get_status_data(src);
 	struct status_data *tstatus = status_get_status_data(target);
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
+	bool critical = false;
 
 	int right_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_R, false);
 	int left_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_L, false);
@@ -3482,17 +3489,38 @@ static void battle_calc_damage_parts(struct Damage* wd, struct block_list *src,s
 		wd->statusAtk2 = battle_attr_fix(src, target, wd->statusAtk, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 	}
 
-	wd->weaponAtk += battle_calc_base_weapon_attack(src, tstatus, &sstatus->rhw, sd);
+	// Check critical
+	if (wd->type == DMG_MULTI_HIT_CRITICAL || wd->type == DMG_CRITICAL)
+		critical = true;
+
+	wd->weaponAtk += battle_calc_base_weapon_attack(src, tstatus, &sstatus->rhw, sd, critical);
 	wd->weaponAtk = battle_attr_fix(src, target, wd->weaponAtk, right_element, tstatus->def_ele, tstatus->ele_lv);
 
-	wd->weaponAtk2 += battle_calc_base_weapon_attack(src, tstatus, &sstatus->lhw, sd);
+	wd->weaponAtk2 += battle_calc_base_weapon_attack(src, tstatus, &sstatus->lhw, sd, critical);
 	wd->weaponAtk2 = battle_attr_fix(src, target, wd->weaponAtk2, left_element, tstatus->def_ele, tstatus->ele_lv);
+
+	// Weapon ATK gain bonus from SC_SUB_WEAPONPROPERTY here ( +x% pseudo element damage)
+	if (sd && sd->sc.data[SC_SUB_WEAPONPROPERTY]) {
+		int64 bonus_atk = (int64)floor((float)( wd->weaponAtk *  sd->sc.data[SC_SUB_WEAPONPROPERTY]->val2 / 100));
+		int64 bonus_atk2 = (int64)floor((float)( wd->weaponAtk2 *  sd->sc.data[SC_SUB_WEAPONPROPERTY]->val2 / 100));
+		bonus_atk = battle_attr_fix(src, target, bonus_atk, sd->sc.data[SC_SUB_WEAPONPROPERTY]->val1, tstatus->def_ele, tstatus->ele_lv);
+		bonus_atk2 = battle_attr_fix(src, target, bonus_atk2, sd->sc.data[SC_SUB_WEAPONPROPERTY]->val1, tstatus->def_ele, tstatus->ele_lv);
+
+		wd->weaponAtk += bonus_atk;
+		wd->weaponAtk2 += bonus_atk2;
+	}
 
 	wd->equipAtk += battle_calc_equip_attack(src, skill_id);
 	wd->equipAtk = battle_attr_fix(src, target, wd->equipAtk, right_element, tstatus->def_ele, tstatus->ele_lv);
 
 	wd->equipAtk2 += battle_calc_equip_attack(src, skill_id);
 	wd->equipAtk2 = battle_attr_fix(src, target, wd->equipAtk2, left_element, tstatus->def_ele, tstatus->ele_lv);
+
+	// AtkRate give static bonus from (W.ATK + E.ATK)
+	if (sd && sd->bonus.atk_rate) {
+		wd->percentAtk = (wd->weaponAtk + wd->equipAtk) * sd->bonus.atk_rate / 100;
+		wd->percentAtk2 = (wd->weaponAtk2 + wd->equipAtk2) * sd->bonus.atk_rate / 100;
+	}
 
 	//Mastery ATK is a special kind of ATK that has no elemental properties
 	//Because masteries are not elemental, they are unaffected by Ghost armors or Raydric Card
@@ -3715,10 +3743,6 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 			if(sd) {
 				int skill;
 
-				if (sd->bonus.atk_rate) {
-					ATK_ADDRATE(wd->damage, wd->damage2, sd->bonus.atk_rate);
-					RE_ALLATK_ADDRATE(wd, sd->bonus.atk_rate);
-				}
 #ifndef RENEWAL
 				if(sd->bonus.crit_atk_rate && is_attack_critical(wd, src, target, skill_id, skill_lv, false)) { // add +crit damage bonuses here in pre-renewal mode [helvetica]
 					ATK_ADDRATE(wd->damage, wd->damage2, sd->bonus.crit_atk_rate);
@@ -5467,10 +5491,10 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 #ifdef RENEWAL
 				default: // fall through to apply EDP bonuses
 					// Renewal EDP formula [helvetica]
-					// weapon atk * (1 + (edp level * .8))
-					// equip atk * (1 + (edp level * .6))
-					ATK_RATE(wd->weaponAtk, wd->weaponAtk2, 100 + (sc->data[SC_EDP]->val1 * 80));
-					ATK_RATE(wd->equipAtk, wd->equipAtk2, 100 + (sc->data[SC_EDP]->val1 * 60));
+					// weapon atk * (2.5 + (edp level * .3))
+					// equip atk * (2.5 + (edp level * .3))
+					ATK_RATE(wd->weaponAtk, wd->weaponAtk2, 250 + (sc->data[SC_EDP]->val1 * 30));
+					ATK_RATE(wd->equipAtk, wd->equipAtk2, 250 + (sc->data[SC_EDP]->val1 * 30));
 					break;
 #else
 				default:
@@ -5890,7 +5914,11 @@ static void battle_calc_attack_left_right_hands(struct Damage* wd, struct block_
 		} else if(sd->status.weapon == W_KATAR && !skill_id) { //Katars (offhand damage only applies to normal attacks, tested on Aegis 10.2)
 			skill = pc_checkskill(sd,TF_DOUBLE);
 			wd->damage2 = (int64)wd->damage * (1 + (skill * 2))/100;
+#ifdef RENEWAL
+		} else if(is_attack_right_handed(src, skill_id) && is_attack_left_handed(src, skill_id) && sd->status.weapon != W_KATAR) {	//Dual-wield
+#else
 		} else if(is_attack_right_handed(src, skill_id) && is_attack_left_handed(src, skill_id)) {	//Dual-wield
+#endif
 			if (wd->damage) {
 				if( (sd->class_&MAPID_BASEMASK) == MAPID_THIEF ) {
 					skill = pc_checkskill(sd,AS_RIGHT);
@@ -6131,6 +6159,7 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 	wd.damage = wd.damage2 =
 #ifdef RENEWAL
 	wd.statusAtk = wd.statusAtk2 = wd.equipAtk = wd.equipAtk2 = wd.weaponAtk = wd.weaponAtk2 = wd.masteryAtk = wd.masteryAtk2 =
+	wd.percentAtk = wd.percentAtk2 =
 #endif
 	0;
 
@@ -6379,19 +6408,22 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	}
 
 	std::bitset<NK_MAX> nk = battle_skill_get_damage_properties(skill_id, wd.miscflag);
+	int i = 0;
 
 	// check if we're landing a hit
 	if(!is_attack_hitting(&wd, src, target, skill_id, skill_lv, true))
 		wd.dmg_lv = ATK_FLEE;
 	else if(!(infdef = is_infinite_defense(target, wd.flag))) { //no need for math against plants
 		int64 ratio = 0;
-		int i = 0;
 
 		battle_calc_skill_base_damage(&wd, src, target, skill_id, skill_lv); // base skill damage
+
+#ifndef RENEWAL
 		ratio = battle_calc_attack_skill_ratio(&wd, src, target, skill_id, skill_lv); // skill level ratios
 
 		ATK_RATE(wd.damage, wd.damage2, ratio);
 		RE_ALLATK_RATE(&wd, ratio);
+#endif
 
 		int64 bonus_damage = battle_calc_skill_constant_addition(&wd, src, target, skill_id, skill_lv); // other skill bonuses
 
@@ -6407,6 +6439,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 				ATK_ADD(wd.weaponAtk, wd.weaponAtk2, sstatus->matk_min);
 		}
 #endif
+
+#ifndef RENEWAL
 		// add any miscellaneous player ATK bonuses
 		if( sd && skill_id && (i = pc_skillatk_bonus(sd, skill_id))) {
 			ATK_ADDRATE(wd.damage, wd.damage2, i);
@@ -6416,6 +6450,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			ATK_ADDRATE(wd.damage, wd.damage2, -i);
 			RE_ALLATK_ADDRATE(&wd, -i);
 		}
+#endif
 
 #ifdef RENEWAL
 		// In Renewal we only cardfix to the weapon and equip ATK
@@ -6450,13 +6485,40 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		battle_attack_sc_bonus(&wd, src, target, skill_id, skill_lv);
 
 		if (sd) { //monsters, homuns and pets have their damage computed directly
-			wd.damage = (wd.statusAtk + wd.weaponAtk + wd.equipAtk) * (100 + sstatus->patk) / 100 + wd.masteryAtk + bonus_damage;
+			wd.damage = (int64)floor((float)((wd.statusAtk + wd.weaponAtk + wd.equipAtk + wd.percentAtk) * (100 + sstatus->patk) / 100 + wd.masteryAtk + bonus_damage));
 			if (is_attack_left_handed(src, skill_id))
-				wd.damage2 = (wd.statusAtk2 + wd.weaponAtk2 + wd.equipAtk2) * (100 + sstatus->patk) / 100 + wd.masteryAtk2 + bonus_damage;
+				wd.damage2 = (int64)floor((float)((wd.statusAtk2 + wd.weaponAtk2 + wd.equipAtk2 + wd.percentAtk2) * (100 + sstatus->patk) / 100 + wd.masteryAtk2 + bonus_damage));
+
+			// CritAtkRate modifier
+			if (wd.type == DMG_CRITICAL || wd.type == DMG_MULTI_HIT_CRITICAL) {
+				if (skill_id > 0) {
+					wd.damage += (int64)floor((float)(wd.damage * sd->bonus.crit_atk_rate / 200));
+					if (is_attack_left_handed(src, skill_id))
+						wd.damage2 += (int64)floor((float)(wd.damage2 * sd->bonus.crit_atk_rate / 200));
+				}
+				else {
+					wd.damage += (int64)floor((float)(wd.damage * sd->bonus.crit_atk_rate / 100));
+					if (is_attack_left_handed(src, skill_id))
+						wd.damage2 += (int64)floor((float)(wd.damage2 * sd->bonus.crit_atk_rate / 100));
+				}
+			}
+
 			if (wd.flag & BF_SHORT)
 				ATK_ADDRATE(wd.damage, wd.damage2, sd->bonus.short_attack_atk_rate);
 			if(wd.flag&BF_LONG && (skill_id != RA_WUGBITE && skill_id != RA_WUGSTRIKE)) //Long damage rate addition doesn't use weapon + equip attack
 				ATK_ADDRATE(wd.damage, wd.damage2, sd->bonus.long_attack_atk_rate);
+		}
+
+		ratio = battle_calc_attack_skill_ratio(&wd, src, target, skill_id, skill_lv); // skill level ratios
+
+		ATK_RATE(wd.damage, wd.damage2, ratio);
+
+		// Advance Katar Mastery
+		if (sd) {
+			int skill = 0;
+			if (sd->status.weapon == W_KATAR && (skill = pc_checkskill(sd, ASC_KATAR)) > 0) { // Adv. Katar Mastery applied after calculate with skillratio.
+				ATK_ADDRATE(wd.damage, wd.damage2, (10 + 2 * skill));
+			}
 		}
 
 		// Res reduces physical damage by a percentage and
@@ -6488,6 +6550,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			wd.damage = wd.damage * (5000 + res) / (5000 + 10 * res);
 			wd.damage2 = wd.damage2 * (5000 + res) / (5000 + 10 * res);
 		}
+
 #else
 		// final attack bonuses that aren't affected by cards
 		battle_attack_sc_bonus(&wd, src, target, skill_id, skill_lv);
@@ -6501,6 +6564,18 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		}
 	}
 
+#ifdef RENEWAL
+	// add any miscellaneous player ATK bonuses
+	if( sd && skill_id && (i = pc_skillatk_bonus(sd, skill_id))) {
+		ATK_ADDRATE(wd.damage, wd.damage2, i);
+		RE_ALLATK_ADDRATE(&wd, i);
+	}
+	if (tsd && (i = pc_sub_skillatk_bonus(tsd, skill_id))) {
+		ATK_ADDRATE(wd.damage, wd.damage2, -i);
+		RE_ALLATK_ADDRATE(&wd, -i);
+	}
+#endif
+
 	battle_calc_element_damage(&wd, src, target, skill_id, skill_lv);
 
 	if(skill_id == CR_GRANDCROSS || skill_id == NPC_GRANDDARKNESS)
@@ -6509,18 +6584,12 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 #ifdef RENEWAL
 	if (is_attack_critical(&wd, src, target, skill_id, skill_lv, false)) {
 		if (sd) { //Check for player so we don't crash out, monsters don't have bonus crit rates [helvetica]
-			if (skill_id > 0)
-				wd.damage = (int64)floor((float)((wd.damage * (140 + sstatus->crate)) / 100 * (100 + (sd->bonus.crit_atk_rate / 2))) / 100);
-			else
-				wd.damage = (int64)floor((float)((wd.damage * (140 + sstatus->crate)) / 100 * (100 + sd->bonus.crit_atk_rate)) / 100);
+			wd.damage = (int64)floor((float)((wd.damage * (1.4f + (0.01f * sstatus->crate)))));
 			if (is_attack_left_handed(src, skill_id)) {
-				if (skill_id > 0)
-					wd.damage2 = (int64)floor((float)((wd.damage2 * (140 + sstatus->crate)) / 100 * (100 + (sd->bonus.crit_atk_rate / 2))) / 100);
-				else
-					wd.damage2 = (int64)floor((float)((wd.damage2 * (140 + sstatus->crate)) / 100 * (100 + sd->bonus.crit_atk_rate)) / 100);
+				wd.damage2 = (int64)floor((float)((wd.damage2 * (1.4f + (0.01f * sstatus->crate)))));
 			}
 		} else
-			wd.damage = (int64)floor((float)(wd.damage * 140) / 100);
+			wd.damage = (int64)floor((float)(wd.damage * 1.4f));
 
 		if (tsd && tsd->bonus.crit_def_rate != 0) {
 			ATK_ADDRATE(wd.damage, wd.damage2, -tsd->bonus.crit_def_rate);
