@@ -6410,6 +6410,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	}
 
 	std::bitset<NK_MAX> nk = battle_skill_get_damage_properties(skill_id, wd.miscflag);
+	int i = 0;
 
 	// check if we're landing a hit
 	if(!is_attack_hitting(&wd, src, target, skill_id, skill_lv, true))
@@ -6440,8 +6441,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 				ATK_ADD(wd.weaponAtk, wd.weaponAtk2, sstatus->matk_min);
 		}
 #endif
-
-int i = 0;
 
 #ifndef RENEWAL
 		// add any miscellaneous player ATK bonuses
