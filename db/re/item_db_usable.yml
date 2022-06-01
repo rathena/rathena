@@ -47393,7 +47393,7 @@ Body:
       laphine_upgrade();
   - Id: 23505
     AegisName: Yellow_Potion_B_20
-    Name: [Not for Sale] Yellow Potions Box 20   # !todo check english name
+    Name: "[Not for Sale] Yellow Potions Box 20"   # !todo check english name
     Type: Usable
     Trade:
       NoDrop: true
@@ -47406,7 +47406,7 @@ Body:
       getitem 11566,20;
   - Id: 23506
     AegisName: White_Potion_B_20
-    Name: [Not for Sale] White Potion Box 20   # !todo check english name
+    Name: "[Not for Sale] White Potion Box 20"   # !todo check english name
     Type: Usable
     Trade:
       NoDrop: true
@@ -47419,7 +47419,7 @@ Body:
       getitem 504,20;
   - Id: 23582
     AegisName: E_Wing_Of_Fly_3Day_Box
-    Name: [Not for Sale] Infinite Flywing Box 7-Day    # !todo check english name
+    Name: "[Not for Sale] Infinite Flywing Box 7-Day"    # !todo check english name
     Type: Usable
     Trade:
       NoDrop: true
