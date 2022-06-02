@@ -12651,15 +12651,8 @@ TIMER_FUNC(skill_castend_id){
 		//These should become skill_castend_pos
 		switch (ud->skill_id) {
 			case WE_CALLPARTNER:
-				if (sd) {
-					struct map_session_data *p_sd = pc_get_partner(sd);
-					if (!p_sd || p_sd->state.autotrade) {
-						fail = true;
-						break;
-					} else {
-						clif_callpartner(*sd,*p_sd);
-					}
-				}
+				if (sd)
+					clif_callpartner(*sd);
 				break;
 			case WE_CALLPARENT:
 				if (sd) {

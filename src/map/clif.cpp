@@ -9501,12 +9501,22 @@ void clif_wedding_effect(struct block_list *bl)
 
 /// Notifies the client of the name of the partner character (ZC_COUPLENAME).
 /// 01e6 <partner name>.24B
-void clif_callpartner(struct map_session_data& sd, struct map_session_data& p_sd)
+void clif_callpartner(struct map_session_data& sd)
 {
 	PACKET_ZC_COUPLENAME p = { 0 };
 
 	p.packetType = HEADER_ZC_COUPLENAME;
-	safestrncpy(p.name, p_sd.status.name, NAME_LENGTH);
+
+	if( sd.status.partner_id ) {
+		const char *p_name = map_charid2nick(sd.status.partner_id);
+		struct map_session_data *p_sd = pc_get_partner(&sd);
+		if (p_name != nullptr && p_sd != nullptr && !p_sd->state.autotrade)
+			safestrncpy(p.name, p_name, NAME_LENGTH);
+		else
+			p.name[0] = 0;
+	} else {// Send zero-length name if no partner, to initialize the client buffer.
+		p.name[0] = 0;
+	}
 
 	clif_send(&p, sizeof(p), &sd.bl, AREA);
 }
