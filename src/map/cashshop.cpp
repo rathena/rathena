@@ -576,35 +576,35 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, s
 		if (!id)
 			continue;
 
-		if (!pet_create_egg(sd, nameid)) {
-			unsigned short get_amt = quantity;
+		unsigned short get_amt = quantity;
 
-			if (id->flag.guid || !itemdb_isstackable2(id))
-				get_amt = 1;
+		if (id->flag.guid || !itemdb_isstackable2(id))
+			get_amt = 1;
 
 #if PACKETVER_SUPPORTS_SALES
-			struct sale_item_data* sale = nullptr;
+		struct sale_item_data* sale = nullptr;
 
-			if( tab == CASHSHOP_TAB_SALE ){
-				sale = sale_find_item( nameid, true );
+		if( tab == CASHSHOP_TAB_SALE ){
+			sale = sale_find_item( nameid, true );
 
-				if( sale == nullptr ){
-					// Client tried to buy an item from sale that was not even on sale
-					clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_UNKNOWN );
-					return false;
-				}
-
-				if( sale->amount < quantity ){
-					// Client tried to buy a higher quantity than is available
-					clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_UNKNOWN );
-					// Maybe he did not get refreshed in time -> do it now
-					clif_sale_amount( sale, &sd->bl, SELF );
-					return false;
-				}
+			if( sale == nullptr ){
+				// Client tried to buy an item from sale that was not even on sale
+				clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_UNKNOWN );
+				return false;
 			}
+
+			if( sale->amount < quantity ){
+				// Client tried to buy a higher quantity than is available
+				clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_UNKNOWN );
+				// Maybe he did not get refreshed in time -> do it now
+				clif_sale_amount( sale, &sd->bl, SELF );
+				return false;
+			}
+		}
 #endif
 
-			for (uint32 j = 0; j < quantity; j += get_amt) {
+		for (uint32 j = 0; j < quantity; j += get_amt) {
+			if( !pet_create_egg( sd, nameid ) ){
 				struct item item_tmp = { 0 };
 
 				item_tmp.nameid = nameid;
@@ -624,27 +624,27 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, s
 						clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_RUNE_OVERCOUNT );
 						return false;
 				}
+			}
 
-				clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_SUCCESS );
+			clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_SUCCESS );
 
 #if PACKETVER_SUPPORTS_SALES
-				if( tab == CASHSHOP_TAB_SALE ){
-					uint32 new_amount = sale->amount - get_amt;
+			if( tab == CASHSHOP_TAB_SALE ){
+				uint32 new_amount = sale->amount - get_amt;
 
-					if( new_amount == 0 ){
-						sale_remove_item(sale->nameid);
-					}else{
-						if( SQL_ERROR == Sql_Query( mmysql_handle, "UPDATE `%s` SET `amount` = '%d' WHERE `nameid` = '%u'", sales_table, new_amount, nameid ) ){
-							Sql_ShowDebug(mmysql_handle);
-						}
-
-						sale->amount = new_amount;
-
-						clif_sale_amount(sale, NULL, ALL_CLIENT);
+				if( new_amount == 0 ){
+					sale_remove_item(sale->nameid);
+				}else{
+					if( SQL_ERROR == Sql_Query( mmysql_handle, "UPDATE `%s` SET `amount` = '%d' WHERE `nameid` = '%u'", sales_table, new_amount, nameid ) ){
+						Sql_ShowDebug(mmysql_handle);
 					}
+
+					sale->amount = new_amount;
+
+					clif_sale_amount(sale, NULL, ALL_CLIENT);
 				}
-#endif
 			}
+#endif
 		}
 	}
 

@@ -85,6 +85,8 @@ static char log_picktype2char(e_log_pick_type type)
 		case LOG_TYPE_MERGE_ITEM:		return 'Z';  // Merged Item
 		case LOG_TYPE_QUEST:			return 'Q';  // (Q)uest Item
 		case LOG_TYPE_PRIVATE_AIRSHIP:	return 'H';  // Private Airs(H)ip
+		case LOG_TYPE_BARTER:			return 'J';  // Barter Shop
+		case LOG_TYPE_LAPHINE:			return 'W'; // Laphine UI
 	}
 
 	// should not get here, fallback
@@ -218,7 +220,7 @@ void log_pick(int id, int16 m, e_log_pick_type type, int amount, struct item* it
 		StringBuf buf;
 		StringBuf_Init(&buf);
 
-		StringBuf_Printf(&buf, "%s INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `map`, `unique_id`, `bound`", LOG_QUERY, log_config.log_pick);
+		StringBuf_Printf(&buf, "%s INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `map`, `unique_id`, `bound`, `enchantgrade`", LOG_QUERY, log_config.log_pick);
 		for (i = 0; i < MAX_SLOTS; ++i)
 			StringBuf_Printf(&buf, ", `card%d`", i);
 		for (i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
@@ -226,8 +228,8 @@ void log_pick(int id, int16 m, e_log_pick_type type, int amount, struct item* it
 			StringBuf_Printf(&buf, ", `option_val%d`", i);
 			StringBuf_Printf(&buf, ", `option_parm%d`", i);
 		}
-		StringBuf_Printf(&buf, ") VALUES(NOW(),'%u','%c','%u','%d','%d','%s','%" PRIu64 "','%d'",
-			id, log_picktype2char(type), itm->nameid, amount, itm->refine, map_getmapdata(m)->name[0] ? map_getmapdata(m)->name : "", itm->unique_id, itm->bound);
+		StringBuf_Printf(&buf, ") VALUES(NOW(),'%u','%c','%u','%d','%d','%s','%" PRIu64 "','%d','%d'",
+			id, log_picktype2char(type), itm->nameid, amount, itm->refine, map_getmapdata(m)->name[0] ? map_getmapdata(m)->name : "", itm->unique_id, itm->bound, itm->enchantgrade);
 
 		for (i = 0; i < MAX_SLOTS; i++)
 			StringBuf_Printf(&buf, ",'%u'", itm->card[i]);
@@ -251,7 +253,7 @@ void log_pick(int id, int16 m, e_log_pick_type type, int amount, struct item* it
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
-		fprintf(logfp,"%s - %d\t%c\t%u,%d,%d,%u,%u,%u,%u,%s,'%" PRIu64 "',%d\n", timestring, id, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], map_getmapdata(m)->name[0]?map_getmapdata(m)->name:"", itm->unique_id, itm->bound);
+		fprintf(logfp,"%s - %d\t%c\t%u,%d,%d,%u,%u,%u,%u,%s,'%" PRIu64 "',%d,%d\n", timestring, id, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], map_getmapdata(m)->name[0]?map_getmapdata(m)->name:"", itm->unique_id, itm->bound, itm->enchantgrade);
 		fclose(logfp);
 	}
 }

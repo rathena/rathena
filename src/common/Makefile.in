@@ -16,6 +16,12 @@ YAML_CPP_AR = ../../3rdparty/yaml-cpp/obj/yaml-cpp.a
 YAML_CPP_H = $(shell find ../../3rdparty/yaml-cpp/ -type f -name "*.h")
 YAML_CPP_INCLUDE = -I../../3rdparty/yaml-cpp/include
 
+RAPIDYAML_OBJ = $(shell find ../../3rdparty/rapidyaml/ -type f -name "*.cpp" | sed -e "s/\.cpp/\.o/g" )
+RAPIDYAML_DIR_OBJ = $(RAPIDYAML_OBJ:%=obj/%)
+RAPIDYAML_AR = ../../3rdparty/rapidyaml/obj/ryml.a
+RAPIDYAML_H = $(shell find ../../3rdparty/rapidyaml/ -type f -name "*.h*")
+RAPIDYAML_INCLUDE = -I../../3rdparty/rapidyaml/src -I../../3rdparty/rapidyaml/ext/c4core/src
+
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
 	SERVER_DEPENDS=common
@@ -58,11 +64,11 @@ $(COMMON_AR): $(COMMON_DIR_OBJ)
 	@echo "	AR	$@"
 	@@AR@ rcs $(COMMON_AR) $(COMMON_DIR_OBJ)
 
-common: obj $(COMMON_DIR_OBJ) $(LIBCONFIG_AR) $(YAML_CPP_AR) $(COMMON_AR)
+common: obj $(COMMON_DIR_OBJ) $(LIBCONFIG_AR) $(YAML_CPP_AR) $(RAPIDYAML_AR) $(COMMON_AR)
 
-obj/%.o: %.cpp $(COMMON_H) $(LIBCONFIG_H) $(YAML_CPP_H)
+obj/%.o: %.cpp $(COMMON_H) $(LIBCONFIG_H) $(RAPIDYAML_H)
 	@echo "	CXX	$<"
-	@@CXX@ @CXXFLAGS@ @CFLAGS_AR@ $(LIBCONFIG_INCLUDE) $(YAML_CPP_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@@CXX@ @CXXFLAGS@ @CFLAGS_AR@ $(LIBCONFIG_INCLUDE) $(RAPIDYAML_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 obj/mini%.o: %.cpp $(COMMON_H) $(LIBCONFIG_H) $(YAML_CPP_H)
 	@echo "	CXX	$<"
@@ -74,4 +80,7 @@ $(LIBCONFIG_AR):
 
 $(YAML_CPP_AR):
 	@$(MAKE) -C ../../3rdparty/yaml-cpp
+
+$(RAPIDYAML_AR):
+	@$(MAKE) -C ../../3rdparty/rapidyaml
 

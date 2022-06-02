@@ -534,7 +534,7 @@ OnTimer26000:
 	if ('devil_tower == 1) {
 		delitem 7641,1;
 		specialeffect EF_ENTRY;
-		disablenpc instance_npcname( strnpcinfo(0) );
+		disablenpc();
 		enablenpc instance_npcname( strnpcinfo(1) + "#" + replacestr( strnpcinfo(2), "_1", "" ) );
 		specialeffect EF_ENTRY,AREA, instance_npcname( strnpcinfo(1) + "#" + replacestr( strnpcinfo(2), "_1", "" ) );
 		mes "It worked.";
@@ -1276,7 +1276,7 @@ OnDisable:
 	stopnpctimer;
 	killmonster 'map_tnm2$, instance_npcname(strnpcinfo(0)) + "::OnMobDead";	// note : officially still alive
 	killmonster 'map_tnm2$, instance_npcname("#devil_seal_dead") + "::OnSeal_" + strnpcinfo(2);	// note : officially still alive
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 OnStop:
 	stopnpctimer;
@@ -1294,7 +1294,7 @@ OnMobDead:
 1@tnm2,1,1,0	script	seal_reach_center#DIR_NORTHWEST	HIDDEN_WARP_NPC,{
 	end;
 OnStart:
-	enablenpc instance_npcname(strnpcinfo(0));
+	enablenpc();
 	initnpctimer;
 	end;
 OnTimer2000:
@@ -1305,7 +1305,7 @@ OnTimer4000:
 	npctalk "Thanatos: Stop him! Prevent him from coming closer!!!", 'thanatos$;
 	mapannounce 'map_tnm2$, "Thanatos: Stop him! Prevent him from coming closer!!!", bc_map,0xFF00;
 	stopnpctimer;
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 }
 1@tnm2,1,1,0	duplicate(seal_reach_center#DIR_NORTHWEST)	seal_reach_center#DIR_SOUTHWEST	HIDDEN_WARP_NPC

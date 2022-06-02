@@ -1,12 +1,6 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Nameless Island Quests
-//===== By: ================================================== 
-//= L0ne_W0lf
-//===== Current Version: ===================================== 
-//= 2.4
-//===== Compatible With: ===================================== 
-//= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Collection of Nameless Island Quests
 //= Nameless Island:
@@ -34,7 +28,7 @@
 //= Rogue Guild Investigation Assistance:
 //- - Assist the Rogue Guild with their investigations.
 //= - Variable in use: rumour_nd (Max: 22)
-//===== Additional Comments: ================================= 
+//===== Changelog: ===========================================
 //= 1.0 First version. [L0ne_W0lf]
 //= 1.1 Made quest accessable to "Failed" Geoborg quest. [L0ne_W0lf]
 //= 1.1a Touch up to other Geoborg fail-points. [L0ne_W0lf]
@@ -63,7 +57,8 @@
 //= 2.3 Updated RE/Pre-RE EXP. [Euphy]
 //= 2.4 Moved Dorian to pre-re/re paths. [Euphy]
 //= 2.5 Updated Nameless Island quests and added questlog support. [Euphy]
-//============================================================ 
+//= 2.6 Commented custom quest log support for the Nameless Island Quest [Everade]
+//============================================================
 
 // Nameless Island and Cursed Monestary Access Quest :: aru_monas
 //============================================================
@@ -81,7 +76,7 @@ OnTouch:
 		mes "Church^000000. Please visit him";
 		mes "as soon as you can.";
 		set aru_monas,1;
-		setquest 17000;
+		//setquest 17000;
 		close2;
 		hideonnpc "Agent#pc1";
 	}
@@ -196,7 +191,7 @@ cmd_in02,111,52,3	script	Ordinary Man#pc2	97,{
 		mes "Arunafeltz so I wasn't able";
 		mes "to investigate any further.";
 		set aru_monas,4;
-		changequest 17001,17002;
+		//changequest 17001,17002;
 		close;
 	}
 	else {
@@ -437,7 +432,7 @@ OnTouch:
 		mes "like it! It's almost like";
 		mes "a dessert. God, it's good!";
 		set aru_monas,8;
-		changequest 17003,17004;
+		//changequest 17003,17004;
 		if (Zeny > 3000) {
 			set Zeny, Zeny-3000;
 			getitem 12052,4; //Vit_Dish02
@@ -474,7 +469,7 @@ ve_in,78,314,5	script	Magistrate#Aru	945,{
 		mes "comfortable talking to complete";
 		mes "strangers about my problems.";
 		set aru_monas,9;
-		changequest 17004,17005;
+		//changequest 17004,17005;
 		close;
 	}
 	else if (aru_monas == 9) {
@@ -518,7 +513,7 @@ ve_in,78,314,5	script	Magistrate#Aru	945,{
 		mes "Oh, and you're prohibited";
 		mes "asking anyone else, so behave.";
 		set aru_monas,11;
-		changequest 17006,17007;
+		//changequest 17006,17007;
 		close;
 	}
 	else if (aru_monas < 13) {
@@ -614,7 +609,7 @@ ve_in,78,314,5	script	Magistrate#Aru	945,{
 		mes "smugglers again? I don't";
 		mes "know what's going on...";
 		set aru_monas,14;
-		changequest 17009,17010;
+		//changequest 17009,17010;
 		next;
 		mes "[Al Hamad]";
 		mes "Even if I could make headway";
@@ -684,7 +679,7 @@ ve_in,81,296,3	script	Soldier#Aru	946,{
 		mes "interrogating the smugglers.";
 		mes "I'm not sure if he did since the smugglers were taken away.";
 		set aru_monas,10;
-		changequest 17005,17006;
+		//changequest 17005,17006;
 		close;
 	}
 	else if (aru_monas == 10) {
@@ -726,7 +721,7 @@ ve_in,239,115,0	script	Drunkard#Aru	943,{
 			mes "He thought he saw a ^DBDB70ghost^000000!";
 			mes "Bwah hah hah! Oooog... Hey...";
 			set aru_monas,15;
-			changequest 17010,17011;
+			//changequest 17010,17011;
 			next;
 			mes "["+strcharinfo(0)+"]";
 			mes "That's right!";
@@ -837,7 +832,7 @@ ve_fild07,125,128,0	script	Boat#Aru	111,{
 			mes "this will probably be";
 			mes "a pretty rocky ride...";
 			set aru_monas,17;
-			changequest 17012,17013;
+			//changequest 17012,17013;
 			close2;
 			hideonnpc "Secret Agent#Aru";
 			warp "nameless_i",257,217;
@@ -905,7 +900,7 @@ ve_fild07,128,130,1	script	Secret Agent#Aru	97,{
 			mes "this will probably be";
 			mes "a pretty rocky ride...";
 			set aru_monas,17;
-			changequest 17012,17013;
+			//changequest 17012,17013;
 			close2;
 			hideonnpc "Secret Agent#Aru";
 			warp "nameless_i",257,217;
@@ -1184,7 +1179,7 @@ OnTouch:
 		mes "for you in the boat. Learn";
 		mes "what you need to learn, and then come back safe, "+strcharinfo(0)+".";
 		set aru_monas,21;
-		changequest 17013,17014;
+		//changequest 17013,17014;
 		close2;
 		hideonnpc "Larjes#Monastery2";
 	}
@@ -1297,7 +1292,7 @@ nameless_n,259,218,3	script	Larjes#Boat1	97,{
 			mes "going... This is huge!";
 			delitem 7726,1; //Token_Of_King
 			set aru_monas,25;
-			changequest 17016,17017;
+			//changequest 17016,17017;
 			getexp (checkre(3))?100000:1000000,0;
 			close;
 		}
@@ -1344,7 +1339,7 @@ abbey02,224,70,0	script	Books#Mona1	111,{
 		next;
 		if(select("Examine Book:Ignore")==1) {
 			set aru_monas,22;
-			changequest 17014,17015;
+			//changequest 17014,17015;
 			getitem 7755,1; // Reasearch_Note
 			readbook 7755,1;
 			close;
@@ -1443,7 +1438,7 @@ abbey03,232,232,4	script	Dead Man#King	956,{
 		mes "this man is...!";
 		set aru_monas,24;
 		getitem 7726,1; //Token_of_King
-		changequest 17015,17016;
+		//changequest 17015,17016;
 		hideonnpc "Dead Man#King";
 		hideoffnpc "Man#King";
 		stopnpctimer;
@@ -1602,7 +1597,7 @@ ra_temple,165,57,5	script	Niren#ss	915,{
 			mes "were too preoccupied";
 			mes "with other matters. In fact,";
 			mes "I haven't gotten the chance";
-			mes "to think of what do with him...";
+			mes "to think of what to do with him...";
 			next;
 			mes "[Niren]";
 			mes "I want to ask you to";
@@ -1644,7 +1639,7 @@ ra_temple,165,57,5	script	Niren#ss	915,{
 			mes "come back and tell me if";
 			mes "you learn anything there.";
 			set aru_monas,13;
-			changequest 17008,17009;
+			//changequest 17008,17009;
 			next;
 			mes "[Niren]";
 			mes "I'll send a message to the";
@@ -1712,7 +1707,7 @@ ra_temple,165,57,5	script	Niren#ss	915,{
 				mes "comes from that place.";
 				delitem 7755,1; //Research_Note
 				set aru_monas,26;
-				completequest 17017;
+				//completequest 17017;
 				getexp (checkre(3))?50000:500000,0;
 				close2;
 			}
@@ -3213,7 +3208,7 @@ OnTimer53000:
 que_temsky,99,7,0	warp	quetemskyout	1,1,ra_temin,276,231
 
 // Muff's Loan :: zdan_total_edq
-//============================================================ 
+//============================================================
 comodo,224,187,3	script	Muff	86,{
 	if (checkweight(907,200) == 0) {
 		mes "[Muff]";
@@ -4658,7 +4653,7 @@ OnTouch:
 }
 
 // Broken Diamond
-//============================================================ 
+//============================================================
 moc_ruins,152,147,5	script	Ibrahim	732,3,3,{
 	if (checkweight(907,200) == 0) {
 		mes "[Ibrahim]";
@@ -6387,7 +6382,7 @@ OnInit:
 }
 
 // Z-Gang Quest
-//============================================================ 
+//============================================================
 prontera,150,326,0	script	Wanted Notice#edq	111,{
 	if (zdan_edq == 0) {
 		mes "====National Wanted Notice====";
@@ -9020,7 +9015,7 @@ OnInit:
 }
 
 // Unlucky Emerald
-//============================================================ 
+//============================================================
 morocc,143,63,3	script	Ragged Man#nd	929,{
 	if (treasure_nd == 0) {
 		mes "[Ragged Man]";
@@ -11410,7 +11405,7 @@ OnTouch:
 }
 
 // Rogue Guild Investigation
-//============================================================ 
+//============================================================
 prontera,163,204,3	script	Man from Morocc	99,{
 	if (rumour_nd == 0) {
 		mes "[Morocc Traveler]";
