@@ -20163,7 +20163,11 @@ Body:
         Time: 240000
       - Level: 5
         Time: 300000
-    Duration2: 300000
+    Duration2:
+      - Level: 1
+        Time: 15000
+      - Level: 2
+        Time: 300000
     Requires:
       SpCost:
         - Level: 1
@@ -20342,7 +20346,7 @@ Body:
     Unit:
       Id: Poisonsmoke
       Layout: 2
-      Interval: 1000
+      Interval: 2000
       Target: Enemy
       Flag:
         NoOverlap: true

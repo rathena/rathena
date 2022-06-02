@@ -13240,6 +13240,7 @@ TIMER_FUNC(status_change_timer){
 			map_freeblock_lock();
 			dounlock = true;
 			status_fix_damage(bl, bl, 100, clif_damage(bl, bl, tick, status->amotion, status->dmotion + 500, 100, 1, DMG_NORMAL, 0, false),0);
+			unit_skillcastcancel(bl, 2);
 		}
 		break;
 		
