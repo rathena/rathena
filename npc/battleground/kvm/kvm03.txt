@@ -111,6 +111,9 @@ OnTouch:
 	end;
 
 OnInit:
+	if (getbattleflag("feature.bgqueue"))
+		bg_unbook "bat_c03";
+	mapwarp "bat_c03","bat_room",154,150;
 	setwall "bat_c03",54,122,6,7,0,"batc03wall_a";
 	setwall "bat_c03",55,122,5,7,0,"batc03wall_b";
 	setwall "bat_c03",140,56,6,7,0,"batc03wall_c";
