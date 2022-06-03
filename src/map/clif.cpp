@@ -9508,10 +9508,9 @@ void clif_callpartner(struct map_session_data& sd)
 	p.packetType = HEADER_ZC_COUPLENAME;
 
 	if( sd.status.partner_id ) {
-		const char *p_name = map_charid2nick(sd.status.partner_id);
 		struct map_session_data *p_sd = pc_get_partner(&sd);
-		if (p_name != nullptr && p_sd != nullptr && !p_sd->state.autotrade)
-			safestrncpy(p.name, p_name, NAME_LENGTH);
+		if (p_sd != nullptr && !p_sd->state.autotrade)
+			safestrncpy(p.name, p_sd->status.name, NAME_LENGTH);
 		else
 			p.name[0] = 0;
 	} else {// Send zero-length name if no partner, to initialize the client buffer.
