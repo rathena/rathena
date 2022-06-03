@@ -4268,7 +4268,7 @@ int log_sql_init(void)
 	// log db connection
 	logmysql_handle = Sql_Malloc();
 
-	ShowInfo("" CL_WHITE "[SQL]" CL_RESET ": Connecting to the Log Database " CL_WHITE "%s" CL_RESET " At " CL_WHITE "%s" CL_RESET "...\n",log_db_db,log_db_ip.c_str());
+	ShowInfo("" CL_WHITE "[SQL]" CL_RESET ": Connecting to the Log Database " CL_WHITE "%s" CL_RESET " At " CL_WHITE "%s" CL_RESET "...\n",log_db_db.c_str(), log_db_ip.c_str());
 	if ( SQL_ERROR == Sql_Connect(logmysql_handle, log_db_id.c_str(), log_db_pw.c_str(), log_db_ip.c_str(), log_db_port, log_db_db.c_str()) ){
 		ShowError("Couldn't connect with uname='%s',host='%s',port='%d',database='%s'\n",
 			log_db_id.c_str(), log_db_ip.c_str(), log_db_port, log_db_db.c_str());
@@ -4276,7 +4276,7 @@ int log_sql_init(void)
 		Sql_Free(logmysql_handle);
 		exit(EXIT_FAILURE);
 	}
-	ShowStatus("" CL_WHITE "[SQL]" CL_RESET ": Successfully '" CL_GREEN "connected" CL_RESET "' to Database '" CL_WHITE "%s" CL_RESET "'.\n", log_db_db);
+	ShowStatus("" CL_WHITE "[SQL]" CL_RESET ": Successfully '" CL_GREEN "connected" CL_RESET "' to Database '" CL_WHITE "%s" CL_RESET "'.\n", log_db_db.c_str());
 
 	if( !default_codepage.empty() )
 		if ( SQL_ERROR == Sql_SetEncoding(logmysql_handle, default_codepage.c_str()) )
