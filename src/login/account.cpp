@@ -6,6 +6,7 @@
 #include <algorithm> //min / max
 #include <stdlib.h>
 #include <string.h>
+#include <string>
 
 #include "../common/malloc.hpp"
 #include "../common/mmo.hpp"
@@ -22,12 +23,12 @@
 typedef struct AccountDB_SQL {
 	AccountDB vtable;    // public interface
 	Sql* accounts;       // SQL handle accounts storage
-	char   db_hostname[64]; // Doubled for long hostnames (bugreport:8003)
+	std::string db_hostname; // Doubled for long hostnames (bugreport:8003)
 	uint16 db_port;
-	char   db_username[32];
-	char   db_password[32];
-	char   db_database[32];
-	char   codepage[32];
+	std::string db_username;
+	std::string db_password;
+	std::string db_database;
+	std::string codepage;
 	// other settings
 	bool case_sensitive;
 	//table name
@@ -86,12 +87,12 @@ AccountDB* account_db_sql(void) {
 	// initialize to default values
 	db->accounts = NULL;
 	// local sql settings
-	safestrncpy(db->db_hostname, "127.0.0.1", sizeof(db->db_hostname));
+	db->db_hostname = "127.0.0.1";
 	db->db_port = 3306;
-	safestrncpy(db->db_username, "ragnarok", sizeof(db->db_username));
-	safestrncpy(db->db_password, "", sizeof(db->db_password));
-	safestrncpy(db->db_database, "ragnarok", sizeof(db->db_database));
-	safestrncpy(db->codepage, "", sizeof(db->codepage));
+	db->db_username = "ragnarok";
+	db->db_password = "";
+	db->db_database = "ragnarok";
+	db->codepage = "";
 	// other settings
 	db->case_sensitive = false;
 	safestrncpy(db->account_db, "login", sizeof(db->account_db));
@@ -112,12 +113,12 @@ AccountDB* account_db_sql(void) {
 static bool account_db_sql_init(AccountDB* self) {
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
 	Sql* sql_handle;
-	const char* username = "ragnarok";
-	const char* password = "";
-	const char* hostname = "127.0.0.1";
+	std::string username = "ragnarok";
+	std::string password = "";
+	std::string hostname = "127.0.0.1";
 	uint16      port     = 3306;
-	const char* database = "ragnarok";
-	const char* codepage = "";
+	std::string database = "ragnarok";
+	std::string codepage = "";
 
 	db->accounts = Sql_Malloc();
 	sql_handle = db->accounts;
@@ -129,17 +130,17 @@ static bool account_db_sql_init(AccountDB* self) {
 	database = db->db_database;
 	codepage = db->codepage;
 
-	if( SQL_ERROR == Sql_Connect(sql_handle, username, password, hostname, port, database) )
+	if( SQL_ERROR == Sql_Connect(sql_handle, username.c_str(), password.c_str(), hostname.c_str(), port, database.c_str()))
 	{
                 ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-                        username, password, hostname, port, database);
+                        username.c_str(), password.c_str(), hostname.c_str(), port, database.c_str());
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(db->accounts);
 		db->accounts = NULL;
 		return false;
 	}
 
-	if( codepage[0] != '\0' && SQL_ERROR == Sql_SetEncoding(sql_handle, codepage) )
+	if( !codepage.empty() && SQL_ERROR == Sql_SetEncoding(sql_handle, codepage.c_str()))
 		Sql_ShowDebug(sql_handle);
 
 	self->remove_webtokens( self );
@@ -240,19 +241,19 @@ static bool account_db_sql_set_property(AccountDB* self, const char* key, const 
 	if( strncmp(key, signature, strlen(signature)) == 0 ) {
 		key += strlen(signature);
 		if( strcmpi(key, "ip") == 0 )
-			safestrncpy(db->db_hostname, value, sizeof(db->db_hostname));
+			db->db_hostname = value;
 		else
 		if( strcmpi(key, "port") == 0 )
 			db->db_port = (uint16)strtoul(value, NULL, 10);
 		else
 		if( strcmpi(key, "id") == 0 )
-			safestrncpy(db->db_username, value, sizeof(db->db_username));
+			db->db_username=  value;
 		else
 		if( strcmpi(key, "pw") == 0 )
-			safestrncpy(db->db_password, value, sizeof(db->db_password));
+			db->db_password = value;
 		else
 		if( strcmpi(key, "db") == 0 )
-			safestrncpy(db->db_database, value, sizeof(db->db_database));
+			db->db_database = value;
 		else
 		if( strcmpi(key, "account_db") == 0 )
 			safestrncpy(db->account_db, value, sizeof(db->account_db));
@@ -271,7 +272,7 @@ static bool account_db_sql_set_property(AccountDB* self, const char* key, const 
 	if( strncmpi(key, signature, strlen(signature)) == 0 ) {
 		key += strlen(signature);
 		if( strcmpi(key, "codepage") == 0 )
-			safestrncpy(db->codepage, value, sizeof(db->codepage));
+			db->codepage = value;
 		else
 		if( strcmpi(key, "case_sensitive") == 0 )
 			db->case_sensitive = (config_switch(value)==1);
