@@ -629,9 +629,8 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 				continue;
 
 			if( items[i].nameid == item.nameid
-			&&  items[i].card[0] == item.card[0]
-			&&  items[i].card[2] == item.card[2]
-			&&  items[i].card[3] == item.card[3]
+			&& (memcmp(items[i].card, item.card, sizeof(int) * MAX_SLOTS) == 0)
+			&& (memcmp(items[i].option, item.option, 5 * MAX_ITEM_RDM_OPT) == 0)
 			&&  items[i].unique_id == item.unique_id
 			) {	//They are the same item.
 				int k;
