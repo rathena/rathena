@@ -25634,15 +25634,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 40
+          Amount: 25
         - Level: 2
-          Amount: 50
+          Amount: 30
         - Level: 3
-          Amount: 60
+          Amount: 35
         - Level: 4
-          Amount: 70
+          Amount: 40
         - Level: 5
-          Amount: 80
+          Amount: 45
       SpiritSphereCost: 2
   - Id: 2350
     Name: WA_SWING_DANCE
