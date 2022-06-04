@@ -10,6 +10,7 @@
 //===== Changelogs: ==========================================
 //= 1.0 First version. [Capuche]
 //= 1.1 Moving Hair Designer to Merchants. [JohnnyPlayy]
+//= 1.2 Tool Dealer Update. [JohnnyPlayy]
 //============================================================
 
 lasa_fild01,47,297,0	script	#doint_evt01	HIDDEN_WARP_NPC,1,1,{
@@ -977,7 +978,11 @@ lasagna,165,125,5	script	Tool Merchant#doram05t	4_DR_M_01,{
 		mes "[Tool Merchant]";
 		mes "Do you need anything? I have basic potions, traps, magnifiers...You name it!";
 		close2;
-		callshop "tool_shop_lasagna",1;
+		if ( getbattleflag("feature.barter") ) {
+			callshop "tool_shop_lasagna#Extended",1;
+		} else {
+			callshop "tool_shop_lasagna",1;
+		}
 		end;
 	}
 	mes "[Tool Merchant]";
@@ -992,6 +997,7 @@ OnInit:
 }
 
 -	shop	tool_shop_lasagna	-1,1750:-1,611:-1,501:-1,502:-1,503:-1,504:-1,645:-1,656:-1,713:-1,601:-1,602:-1,1065:-1
+-	shop	tool_shop_lasagna#Extended	-1,611:-1,602:-1,601:-1,23280:-1,23288:-1,645:-1,656:-1,657:-1,501:-1,502:-1,503:-1,504:-1,506:-1,610:-1,713:-1,717:-1,1771:-1
 
 lasagna,224,126,5	script	Healer Haru#doram07t	4_DR_M_02,{
 	if (lasagna_quest[0] == 7) {

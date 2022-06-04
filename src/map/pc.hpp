@@ -4,6 +4,7 @@
 #ifndef PC_HPP
 #define PC_HPP
 
+#include <bitset>
 #include <memory>
 #include <vector>
 
@@ -19,6 +20,7 @@
 #include "itemdb.hpp" // MAX_ITEMGROUP
 #include "map.hpp" // RC_ALL
 #include "mob.hpp" //e_size
+#include "pc_groups.hpp" // s_player_group
 #include "script.hpp" // struct script_reg, struct script_regstr
 #include "searchstore.hpp"  // struct s_search_store_info
 #include "status.hpp" // unit_data
@@ -243,8 +245,8 @@ struct s_autospell {
 /// AddEff and AddEff2 bonus struct
 struct s_addeffect {
 	enum sc_type sc; /// SC type/effect
-	short rate, /// Rate
-		arrow_rate; /// Arrow rate
+	int rate; /// Rate
+	short arrow_rate; /// Arrow rate
 	unsigned char flag; /// Flag
 	unsigned int duration; /// Duration the effect applied
 };
@@ -252,8 +254,8 @@ struct s_addeffect {
 /// AddEffOnSkill bonus struct
 struct s_addeffectonskill {
 	enum sc_type sc; /// SC type/effect
-	short rate, /// Rate
-		skill_id; /// Skill ID
+	int rate; /// Rate
+	short skill_id; /// Skill ID
 	unsigned char target; /// Target
 	unsigned int duration; /// Duration the effect applied
 };
@@ -291,7 +293,7 @@ struct s_bonus_script_entry {
 	StringBuf *script_buf; //Used for comparing and storing on table
 	t_tick tick;
 	uint16 flag;
-	enum efst_types icon;
+	enum efst_type icon;
 	uint8 type; //0 - Ignore; 1 - Buff; 2 - Debuff
 	int tid;
 };
@@ -389,6 +391,9 @@ struct map_session_data {
 		bool refineui_open;
 		t_itemid inventory_expansion_confirmation;
 		uint16 inventory_expansion_amount;
+		t_itemid laphine_synthesis;
+		t_itemid laphine_upgrade;
+		bool roulette_open;
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -406,8 +411,9 @@ struct map_session_data {
 	} special_state;
 	uint32 login_id1, login_id2;
 	uint64 class_;	//This is the internal job ID used by the map server to simplify comparisons/queries/etc. [Skotlex]
-	int group_id, group_pos, group_level;
-	unsigned int permissions;/* group permissions */
+	int group_id;
+	std::shared_ptr<s_player_group> group;
+	std::bitset<PC_PERM_MAX> permissions; // group permissions have to be copied, because they might be adjusted by atcommand addperm
 	int count_rewarp; //count how many time we being rewarped
 
 	int langtype;
@@ -600,6 +606,7 @@ struct map_session_data {
 		int ematk; // matk bonus from equipment
 		int eatk; // atk bonus from equipment
 		uint8 absorb_dmg_maxhp; // [Cydh]
+		uint8 absorb_dmg_maxhp2;
 		short critical_rangeatk;
 		short weapon_atk_rate, weapon_matk_rate;
 	} bonus;
@@ -990,13 +997,13 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node& node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void loadingFinished() override;
 };
 
 struct s_job_info {
 	std::vector<uint32> base_hp, base_sp, base_ap; //Storage for the first calculation with hp/sp/ap factor and multiplicator
-	uint32 hp_factor, hp_multiplicator, sp_factor, max_weight_base;
+	uint32 hp_factor, hp_increase, sp_increase, max_weight_base;
 	std::vector<std::array<uint16,PARAM_MAX>> job_bonus;
 	std::vector<int16> aspd_base;
 	t_exp base_exp[MAX_LEVEL], job_exp[MAX_LEVEL];
@@ -1010,12 +1017,12 @@ struct s_job_info {
 
 class JobDatabase : public TypesafeCachedYamlDatabase<uint16, s_job_info> {
 public:
-	JobDatabase() : TypesafeCachedYamlDatabase("JOB_STATS", 1) {
+	JobDatabase() : TypesafeCachedYamlDatabase("JOB_STATS", 2) {
 
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node &node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void loadingFinished() override;
 
 	// Additional
@@ -1058,7 +1065,9 @@ static bool pc_cant_act2( struct map_session_data* sd ){
 	return sd->state.vending || sd->state.buyingstore || (sd->sc.opt1 && sd->sc.opt1 != OPT1_BURNING)
 		|| sd->state.trading || sd->state.storage_flag || sd->state.prevend || sd->state.refineui_open
 		|| sd->state.stylist_open || sd->state.inventory_expansion_confirmation || sd->npc_shopid
-		|| sd->state.barter_open || sd->state.barter_extended_open;
+		|| sd->state.barter_open || sd->state.barter_extended_open
+		|| sd->state.laphine_synthesis || sd->state.laphine_upgrade
+		|| sd->state.roulette_open;
 }
 // equals pc_cant_act2 and additionally checks for chat rooms and npcs
 static bool pc_cant_act( struct map_session_data* sd ){
@@ -1187,7 +1196,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node &node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 };
 
 extern AttendanceDatabase attendance_db;
@@ -1205,7 +1214,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node& node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void loadingFinished() override;
 
 	// Additional
@@ -1234,7 +1243,7 @@ bool pc_can_give_bounded_items(struct map_session_data *sd);
 bool pc_can_trade_item(map_session_data *sd, int index);
 
 bool pc_can_use_command(struct map_session_data *sd, const char *command, AtCommandType type);
-#define pc_has_permission(sd, permission) ( ((sd)->permissions&permission) != 0 )
+bool pc_has_permission( struct map_session_data* sd, e_pc_permission permission );
 bool pc_should_log_commands(struct map_session_data *sd);
 
 void pc_setrestartvalue(struct map_session_data *sd, char type);
@@ -1456,7 +1465,6 @@ void pc_regen (struct map_session_data *sd, t_tick diff_tick);
 
 bool pc_setstand(struct map_session_data *sd, bool force);
 bool pc_candrop(struct map_session_data *sd,struct item *item);
-bool pc_can_attack(struct map_session_data *sd, int target_id);
 
 uint64 pc_jobid2mapid(unsigned short b_class);	// Skotlex
 int pc_mapid2jobid(uint64 class_, int sex);	// Skotlex
@@ -1482,7 +1490,7 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
-	uint64 parseBodyNode(const YAML::Node& node) override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 	void loadingFinished() override;
 
 	// Additional
@@ -1570,8 +1578,8 @@ void pc_show_version(struct map_session_data *sd);
 
 TIMER_FUNC(pc_bonus_script_timer);
 void pc_bonus_script(struct map_session_data *sd);
-struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, const char *script_str, t_tick dur, enum efst_types icon, uint16 flag, uint8 type);
-void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag);
+struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, const char *script_str, t_tick dur, enum efst_type icon, uint16 flag, uint8 type);
+void pc_bonus_script_clear(struct map_session_data *sd, uint32 flag);
 
 void pc_cell_basilica(struct map_session_data *sd);
 

@@ -232,6 +232,20 @@ struct PACKET_CZ_REQ_STYLE_CLOSE{
 	int16 packetType;
 } __attribute__((packed));
 
+struct PACKET_ZC_SUMMON_HP_INIT {
+	int16 PacketType;
+	uint32 summonAID;
+	uint32 CurrentHP;
+	uint32 MaxHP;
+} __attribute__((packed));
+
+struct PACKET_ZC_SUMMON_HP_UPDATE {
+	int16 PacketType;
+	uint32 summonAID;
+	uint16 VarId;
+	uint32 Value;
+} __attribute__((packed));
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -274,7 +288,6 @@ DEFINE_PACKET_HEADER(ZC_NOTIFY_BARGAIN_SALE_SELLING, 0x9b2)
 DEFINE_PACKET_HEADER(ZC_NOTIFY_BARGAIN_SALE_CLOSE, 0x9b3)
 DEFINE_PACKET_HEADER(ZC_ACK_COUNT_BARGAIN_SALE_ITEM, 0x9c4)
 DEFINE_PACKET_HEADER(ZC_ACK_GUILDSTORAGE_LOG, 0x9da)
-DEFINE_PACKET_HEADER(CZ_NPC_MARKET_PURCHASE, 0x9d6)
 DEFINE_PACKET_HEADER(CZ_REQ_APPLY_BARGAIN_SALE_ITEM2, 0xa3d)
 DEFINE_PACKET_HEADER(CZ_REQ_STYLE_CHANGE, 0xa46)
 DEFINE_PACKET_HEADER(ZC_STYLE_CHANGE_RES, 0xa47)
@@ -285,6 +298,8 @@ DEFINE_PACKET_HEADER(CZ_UNCONFIRMED_TSTATUS_UP, 0x0b24)
 DEFINE_PACKET_HEADER(CZ_GUILD_EMBLEM_CHANGE2, 0x0b46)
 DEFINE_PACKET_HEADER(ZC_UNCONFIRMED_SPIRITS3, 0xb73)
 DEFINE_PACKET_HEADER(CZ_UNCONFIRMED_RODEX_RETURN, 0xb98)
+DEFINE_PACKET_HEADER(ZC_SUMMON_HP_INIT, 0xb6b)
+DEFINE_PACKET_HEADER(ZC_SUMMON_HP_UPDATE, 0xb6c)
 
 const int16 MAX_INVENTORY_ITEM_PACKET_NORMAL = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_normal ) - ( sizeof( struct NORMALITEM_INFO ) * MAX_ITEMLIST) ) ) / sizeof( struct NORMALITEM_INFO ) );
 const int16 MAX_INVENTORY_ITEM_PACKET_EQUIP = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_equip ) - ( sizeof( struct EQUIPITEM_INFO ) * MAX_ITEMLIST ) ) ) / sizeof( struct EQUIPITEM_INFO ) );

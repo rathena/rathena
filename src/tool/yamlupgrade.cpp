@@ -5,6 +5,7 @@
 
 static bool upgrade_achievement_db(std::string file, const uint32 source_version);
 static bool upgrade_item_db(std::string file, const uint32 source_version);
+static bool upgrade_job_stats(std::string file, const uint32 source_version);
 
 template<typename Func>
 bool process(const std::string &type, uint32 version, const std::vector<std::string> &paths, const std::string &name, Func lambda) {
@@ -35,33 +36,33 @@ bool process(const std::string &type, uint32 version, const std::vector<std::str
 
 			ShowNotice("Upgrade process has begun.\n");
 
-			std::ofstream out;
+			std::ofstream outFile;
 
 			body.~Emitter();
 			new (&body) YAML::Emitter();
-			out.open(to);
+			outFile.open(to);
 
-			if (!out.is_open()) {
+			if (!outFile.is_open()) {
 				ShowError("Can not open file \"%s\" for writing.\n", to.c_str());
 				return false;
 			}
 
-			prepareHeader(out, type, version, name);
+			prepareHeader(outFile, type, version, name);
 			if (inNode["Body"].IsDefined()) {
 				prepareBody();
 
 				if (!lambda(path, name_ext, source_version)) {
-					out.close();
+					outFile.close();
 					return false;
 				}
 
 				finalizeBody();
-				out << body.c_str();
+				outFile << body.c_str();
 			}
-			prepareFooter(out);
+			prepareFooter(outFile);
 			// Make sure there is an empty line at the end of the file for git
-			out << "\n";
-			out.close();
+			outFile << "\n";
+			outFile.close();
 		}
 	}
 
@@ -111,6 +112,12 @@ int do_init(int argc, char** argv) {
 
 	if (!process("ITEM_DB", 2, root_paths, "item_db", [](const std::string& path, const std::string& name_ext, uint32 source_version) -> bool {
 		return upgrade_item_db(path + name_ext, source_version);
+		})) {
+		return 0;
+	}
+
+	if (!process("JOB_STATS", 2, root_paths, "job_stats", [](const std::string& path, const std::string& name_ext, uint32 source_version) -> bool {
+		return upgrade_job_stats(path + name_ext, source_version);
 		})) {
 		return 0;
 	}
@@ -222,7 +229,7 @@ static bool upgrade_achievement_db(std::string file, const uint32 source_version
 		entries++;
 	}
 
-	ShowStatus("Done converting/upgrading '" CL_WHITE "%d" CL_RESET "' achievements in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+	ShowStatus("Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' achievements in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
 	return true;
 }
@@ -244,7 +251,45 @@ static bool upgrade_item_db(std::string file, const uint32 source_version) {
 		entries++;
 	}
 
-	ShowStatus("Done converting/upgrading '" CL_WHITE "%d" CL_RESET "' items in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+	ShowStatus("Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' items in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+
+	return true;
+}
+
+static bool upgrade_job_stats(std::string file, const uint32 source_version) {
+	size_t entries = 0;
+
+	for (auto input : inNode["Body"]) {
+		// If under version 2
+		if (source_version < 2) {
+			// Field name changes
+			if (input["HPFactor"].IsDefined()) {
+				input["HpFactor"] = input["HPFactor"].as<uint32>();
+				input.remove("HPFactor");
+			}
+			if (input["HpMultiplicator"].IsDefined()) {
+				input["HpIncrease"] = input["HpMultiplicator"].as<uint32>();
+				input.remove("HpMultiplicator");
+			}
+			if (input["HPMultiplicator"].IsDefined()) {
+				input["HpIncrease"] = input["HPMultiplicator"].as<uint32>();
+				input.remove("HPMultiplicator");
+			}
+			if (input["SpFactor"].IsDefined()) {
+				input["SpIncrease"] = input["SpFactor"].as<uint32>();
+				input.remove("SpFactor");
+			}
+			if (input["SPFactor"].IsDefined()) {
+				input["SpIncrease"] = input["SPFactor"].as<uint32>();
+				input.remove("SPFactor");
+			}
+		}
+
+		body << input;
+		entries++;
+	}
+
+	ShowStatus("Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' job stats in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
 	return true;
 }

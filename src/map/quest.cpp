@@ -37,7 +37,7 @@ const std::string QuestDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 QuestDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	uint32 quest_id;
 
 	if (!this->asUInt32(node, "Id", quest_id))
@@ -97,9 +97,9 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Targets")) {
-		const YAML::Node &targets = node["Targets"];
+		const auto& targets = node["Targets"];
 
-		for (const YAML::Node &targetNode : targets) {
+		for (const auto& targetNode : targets) {
 			if (quest->objectives.size() >= MAX_QUEST_OBJECTIVES) {
 				this->invalidWarning(targetNode, "Targets list exceeds the maximum of %d, skipping.\n", MAX_QUEST_OBJECTIVES);
 				return 0;
@@ -315,9 +315,9 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Drops")) {
-		const YAML::Node &drops = node["Drops"];
+		const auto& drops = node["Drops"];
 
-		for (const YAML::Node &dropNode : drops) {
+		for (const auto& dropNode : drops) {
 			uint32 mob_id = 0; // Can be 0 which means all monsters
 
 			if (this->nodeExists(dropNode, "Mob")) {

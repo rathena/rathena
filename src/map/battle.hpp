@@ -403,6 +403,7 @@ struct Battle_Config
 	int mobs_level_up_exp_rate; // [Valaris]
 	int pk_min_level; // [celest]
 	int skill_steal_max_tries; //max steal skill tries on a mob. if 0, then w/o limit [Lupus]
+	int skill_steal_random_options;
 	int motd_type; // [celest]
 	int finding_ore_rate; // orn
 	int exp_calc_type;
@@ -423,7 +424,6 @@ struct Battle_Config
 	int display_hallucination;	// [Skotlex]
 	int use_statpoint_table;	// [Skotlex]
 
-	int berserk_cancels_buffs; // [Aru]
 	int debuff_on_logout; // Removes a few "official" negative Scs on logout. [Skotlex]
 	int mob_ai; //Configures various mob_ai settings to make them smarter or dumber(official). [Skotlex]
 	int hom_setting; //Configures various homunc settings which make them behave unlike normal characters.. [Skotlex]

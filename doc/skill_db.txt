@@ -103,6 +103,7 @@ IgnoreAutoGuard				- Not blocked by SC_AUTOGUARD (When TargetType is Weapon only
 IgnoreCicada				- Not blocked by SC_UTSUSEMI or SC_BUNSINJYUTSU (When TargetType is Weapon only).
 ShowScale					- Shows AoE area while casting
 IgnoreGtb					- Not blocked by Golden Thief Bug card.
+Toggleable					- Skill can be toggled on and off. When toggled off the skill doesn't consume HP/SP.
 
 ---------------------------------------
 
@@ -925,3 +926,7 @@ CrazyWeedImmune		- Immune to GN_CRAZYWEED.
 RemovedByFireRain	- Removed by RL_FIRE_RAIN.
 KnockbackGroup		- Knock back a whole skill group (by default, skill unit is knocked back by each unit).
 HiddenTrap			- Hidden trap. See battle_config::traps_setting to enable this flag.
+
+------------------
+
+Status: Status Change that is associated to the skill. The status is used in association with the status.yml database.

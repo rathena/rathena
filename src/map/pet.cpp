@@ -8,8 +8,6 @@
 
 #include <stdlib.h>
 
-#include <yaml-cpp/yaml.h>
-
 #include "../common/db.hpp"
 #include "../common/ers.hpp"
 #include "../common/malloc.hpp"
@@ -39,7 +37,7 @@ const std::string PetDatabase::getDefaultLocation(){
 	return std::string(db_path) + "/pet_db.yml";
 }
 
-uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
+uint64 PetDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	std::string mob_name;
 
 	if( !this->asString( node, "Mob", mob_name ) ){
@@ -378,7 +376,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 			pet->pet_bonus_script = nullptr;
 		}
 
-		pet->pet_bonus_script = parse_script( script.c_str(), this->getCurrentFile().c_str(), node["Script"].Mark().line + 1, SCRIPT_IGNORE_EXTERNAL_BRACKETS );
+		pet->pet_bonus_script = parse_script( script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["Script"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS );
 	}else{
 		if( !exists ){
 			pet->pet_bonus_script = nullptr;
@@ -397,7 +395,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 			pet->pet_support_script = nullptr;
 		}
 
-		pet->pet_support_script = parse_script( script.c_str(), this->getCurrentFile().c_str(), node["SupportScript"].Mark().line + 1, SCRIPT_IGNORE_EXTERNAL_BRACKETS );
+		pet->pet_support_script = parse_script( script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["SupportScript"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS );
 	}else{
 		if( !exists ){
 			pet->pet_support_script = nullptr;
@@ -405,7 +403,8 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 	}
 
 	if( this->nodeExists( node, "Evolution" ) ){
-		for( const YAML::Node& evolutionNode : node["Evolution"] ){
+		const auto& evolutionsNode = node["Evolution"];
+		for( const auto& evolutionNode : evolutionsNode ){
 			std::string target_name;
 
 			if( !this->asString( evolutionNode, "Target", target_name ) ){
@@ -434,7 +433,8 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 				evolution->target_mob_id = targetId;
 			}
 
-			for( const YAML::Node& requirementNode : evolutionNode["ItemRequirements"] ){
+			const auto& requirementsNode = evolutionNode["ItemRequirements"];
+			for( const auto& requirementNode : requirementsNode ){
 				std::string item_name;
 
 				if( !this->asString( requirementNode, "Item", item_name ) ){
@@ -1219,6 +1219,11 @@ int pet_catch_process1(struct map_session_data *sd,int target_class)
 {
 	nullpo_ret(sd);
 
+	if (map_getmapflag(sd->bl.m, MF_NOPETCAPTURE)) {
+		clif_displaymessage(sd->fd, msg_txt(sd, 669)); // You can't catch any pet on this map.
+		return 0;
+	}
+
 	sd->catch_target_class = target_class;
 	clif_catch_process(sd);
 
@@ -1245,6 +1250,15 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 		sd->catch_target_class = PET_CATCH_FAIL;
 		sd->itemid = 0;
 		sd->itemindex = -1;
+		return 1;
+	}
+
+	if (map_getmapflag(sd->bl.m, MF_NOPETCAPTURE)) {
+		clif_pet_roulette(sd, 0);
+		sd->catch_target_class = PET_CATCH_FAIL;
+		sd->itemid = 0;
+		sd->itemindex = -1;
+		clif_displaymessage(sd->fd, msg_txt(sd, 669)); // You can't catch any pet on this map.
 		return 1;
 	}
 

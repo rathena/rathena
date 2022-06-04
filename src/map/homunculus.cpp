@@ -54,7 +54,7 @@ const std::string HomExpDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/exp_homun.yml";
 }
 
-uint64 HomExpDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 HomExpDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (!this->nodesExist(node, { "Level", "Exp" })) {
 		return 0;
 	}
@@ -270,7 +270,7 @@ int hom_dead(struct homun_data *hd)
 	clif_emotion(&sd->bl, ET_CRY);
 
 #ifdef RENEWAL
-	status_change_end(&sd->bl, status_skill2sc(AM_CALLHOMUN), INVALID_TIMER);
+	status_change_end(&sd->bl, SC_HOMUN_TIME, INVALID_TIMER);
 #endif
 
 	//Remove from map (if it has no intimacy, it is auto-removed from memory)
@@ -310,7 +310,7 @@ int hom_vaporize(struct map_session_data *sd, int flag)
 	hom_save(hd);
 
 #ifdef RENEWAL
-	status_change_end(&sd->bl, status_skill2sc(AM_CALLHOMUN), INVALID_TIMER);
+	status_change_end(&sd->bl, SC_HOMUN_TIME, INVALID_TIMER);
 #endif
 
 	return unit_remove_map(&hd->bl, CLR_OUTSIGHT);
@@ -1081,6 +1081,7 @@ void hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 {
 	struct homun_data *hd;
 	int i = 0;
+	t_tick tick = gettick();
 
 	nullpo_retv(sd);
 
@@ -1114,6 +1115,10 @@ void hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 	unit_calc_pos(&hd->bl, sd->bl.x, sd->bl.y, sd->ud.dir);
 	hd->bl.x = hd->ud.to_x;
 	hd->bl.y = hd->ud.to_y;
+
+	// Ticks need to be initialized before adding bl to map_addiddb
+	hd->regen.tick.hp = tick;
+	hd->regen.tick.sp = tick;
 
 	map_addiddb(&hd->bl);
 	status_calc_homunculus(hd, SCO_FIRST);
@@ -1176,14 +1181,14 @@ bool hom_call(struct map_session_data *sd)
 		clif_hominfo(sd,hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
 		clif_homskillinfoblock(sd);
 		if (battle_config.hom_setting&HOMSET_COPY_SPEED)
-			status_calc_bl(&hd->bl, SCB_SPEED);
+			status_calc_bl(&hd->bl, { SCB_SPEED });
 		hom_save(hd);
 	} else
 		//Warp him to master.
 		unit_warp(&hd->bl,sd->bl.m, sd->bl.x, sd->bl.y,CLR_OUTSIGHT);
 
 #ifdef RENEWAL
-	sc_start(&sd->bl, &sd->bl, status_skill2sc(AM_CALLHOMUN), 100, 1, skill_get_time(AM_CALLHOMUN, 1));
+	sc_start(&sd->bl, &sd->bl, SC_HOMUN_TIME, 100, 1, skill_get_time(AM_CALLHOMUN, 1));
 #endif
 
 	return true;
@@ -1240,11 +1245,11 @@ int hom_recv_data(uint32 account_id, struct s_homunculus *sh, int flag)
 		clif_hominfo(sd,hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
 		clif_homskillinfoblock(sd);
 		hom_init_timers(hd);
-	}
 
 #ifdef RENEWAL
-	sc_start(&sd->bl, &sd->bl, status_skill2sc(AM_CALLHOMUN), 100, 1, skill_get_time(AM_CALLHOMUN, 1));
+		sc_start(&sd->bl, &sd->bl, SC_HOMUN_TIME, 100, 1, skill_get_time(AM_CALLHOMUN, 1));
 #endif
+	}
 
 	return 1;
 }
@@ -1331,8 +1336,10 @@ int hom_ressurect(struct map_session_data* sd, unsigned char per, short x, short
 		clif_spawn(&hd->bl);
 	}
 
+	hd->ud.state.blockedmove = false;
+
 #ifdef RENEWAL
-	sc_start(&sd->bl, &sd->bl, status_skill2sc(AM_CALLHOMUN), 100, 1, skill_get_time(AM_CALLHOMUN, 1));
+	sc_start(&sd->bl, &sd->bl, SC_HOMUN_TIME, 100, 1, skill_get_time(AM_CALLHOMUN, 1));
 #endif
 
 	return status_revive(&hd->bl, per, 0);
