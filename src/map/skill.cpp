@@ -7525,6 +7525,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
+	case CR_REFLECTSHIELD:
+	case MS_REFLECTSHIELD:
+		if (tsc && tsc->data[SC_DARKCROW]) { // SC_DARKCROW prevents using reflecting skills
+			if (sd)
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL, 0);
+			break;
+		}
 	case PR_SLOWPOISON:
 	case PR_LEXAETERNA:
 #ifndef RENEWAL
