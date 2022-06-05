@@ -61,7 +61,7 @@ watch_serv(){
 	#now checking status and looping
 	count=0;
 	while true; do
-		for i in ${L_SRV} ${C_SRV} ${M_SRV}
+		for i in ${L_SRV} ${C_SRV} ${M_SRV} ${W_SRV}
 		do
 			LOGFILE="$LOG_DIR/$i.launch.log"
 			LOGRUN="$LOG_DIR/$i.log"
@@ -89,7 +89,7 @@ watch_serv(){
 restart(){
 	$0 stop
 	if [ $1 ]; then sleep $1; fi
-	for i in ${L_SRV} ${C_SRV} ${M_SRV}
+	for i in ${L_SRV} ${C_SRV} ${M_SRV} ${W_SRV}
 	do
 		FIFO="$1_fifo"
 		while true; do
@@ -117,7 +117,7 @@ case $1 in
 		else
 		 echo "Logging is disabled"
 		fi
-		for i in ${L_SRV} ${C_SRV} ${M_SRV}
+		for i in ${L_SRV} ${C_SRV} ${M_SRV} ${W_SRV}
 		do
 			start_serv $i $ENLOG
 		done
@@ -128,7 +128,7 @@ case $1 in
 		if [ -z $2 ]; then Restart_count=10; else Restart_count=$2; fi
 		if [ -z $3 ]; then Restart_sleep=3; else Restart_sleep=$3; fi
 		echo "Going to watch rAthena for restart_count = $Restart_count, restart_sleep = $Restart_sleep"
-		for i in ${L_SRV} ${C_SRV} ${M_SRV}
+		for i in ${L_SRV} ${C_SRV} ${M_SRV} ${W_SRV}
 		do
 			start_serv $i 1
 		done
@@ -136,7 +136,7 @@ case $1 in
 		echo "Watching rAthena now."
 	;;	
 	'stop')
-		for i in ${M_SRV} ${C_SRV} ${L_SRV}
+		for i in ${W_SRV} ${M_SRV} ${C_SRV} ${L_SRV}
 		do
 			PIDFILE=.${i}.pid
 			if [ -e ./${PIDFILE} ]; then
@@ -158,20 +158,20 @@ case $1 in
 		 restart
 	;;
 	'status')
-		for i in ${L_SRV} ${C_SRV} ${M_SRV}
+		for i in ${L_SRV} ${C_SRV} ${M_SRV} ${W_SRV}
 		do
 			get_status ${i}
 			if [ ${PSRUN} ]; then echo "'${i}' is running p${PSRUN}"; else echo "'${i}' seems to be down"; fi
 		done
 	;;
 	'val_runonce')
-		for i in ${L_SRV} ${C_SRV} ${M_SRV}
+		for i in ${L_SRV} ${C_SRV} ${M_SRV} ${W_SRV}
 		do
 			valgrind --leak-check=full --show-leak-kinds=all ./$i --run-once > "log/$i.runonce.leak"
 		done
 	;;
 	'valchk')
-		for i in ${L_SRV} ${C_SRV} ${M_SRV}
+		for i in ${L_SRV} ${C_SRV} ${M_SRV} ${W_SRV}
 		do
 			valgrind --leak-check=full --show-leak-kinds=all ./$i > "log/$i.runonce.leak"
 		done

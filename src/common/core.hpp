@@ -30,6 +30,7 @@ enum {
 	ATHENA_SERVER_CHAR = 2,	// char server
 	ATHENA_SERVER_INTER	= 4,	// inter server
 	ATHENA_SERVER_MAP = 8,	// map server
+	ATHENA_SERVER_WEB = 16, // web server
 };
 
 extern char SERVER_TYPE;
