@@ -898,7 +898,7 @@ int guild_calcinfo(struct guild *g)
 	}
 
 	// Set the max number of members, Guild Extention skill - currently adds 6 to max per skill lv.
-	g->max_member = 16 + guild_checkskill(g, GD_EXTENSION) * 6;
+	g->max_member = 16 + guild_checkskill(g, GD_EXTENSION) * 1;
 	if(g->max_member > MAX_GUILD)
 	{
 		ShowError("Guild %d:%s has capacity for too many guild members (%d), max supported is %d\n", g->guild_id, g->name, g->max_member, MAX_GUILD);

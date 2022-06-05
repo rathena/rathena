@@ -45,7 +45,7 @@
 	/// Comment to disable the official packet obfuscation support.
 	/// This requires PACKETVER 2011-08-17 or newer.
 	#ifndef PACKET_OBFUSCATION
-		#define PACKET_OBFUSCATION
+		//#define PACKET_OBFUSCATION
 
 		// Define these inside src/custom/defines_pre.hpp or src/custom/defines_post.hpp
 		//#define PACKET_OBFUSCATION_KEY1 <key1>
@@ -63,9 +63,9 @@
 
 /// Comment to disable the official Guild Storage skill.
 /// When enabled, this will set the guild storage size to the level of the skill * 100.
-#if PACKETVER >= 20131223
-	#define OFFICIAL_GUILD_STORAGE
-#endif
+//#if PACKETVER >= 20131223
+//	#define OFFICIAL_GUILD_STORAGE
+//#endif
 
 #ifndef DUMP_UNKNOWN_PACKET
 	//#define DUMP_UNKNOWN_PACKET
