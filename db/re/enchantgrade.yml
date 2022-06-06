@@ -53,7 +53,7 @@ Body:
     Levels:
       - Level: 2
         Grades:
-          - Grade: 0
+          - Grade: None
             Refine: 11
             Chance: 7000
             Bonus: 10
@@ -72,7 +72,7 @@ Body:
                 Item: Etel_Skyblue_Jewel
                 Amount: 5
                 Zeny: 875000
-          - Grade: 1
+          - Grade: D
             Refine: 11
             Chance: 6000
             Bonus: 30
@@ -91,7 +91,7 @@ Body:
                 Item: Etel_Topaz
                 Amount: 5
                 Zeny: 875000
-          - Grade: 2
+          - Grade: C
             Refine: 11
             Chance: 5000
             Bonus: 50
@@ -110,7 +110,7 @@ Body:
                 Item: Etel_Violet_Jewel
                 Amount: 5
                 Zeny: 875000
-          - Grade: 3
+          - Grade: B
             Refine: 11
             Chance: 4000
             Bonus: 100
@@ -133,7 +133,7 @@ Body:
     Levels:
       - Level: 5
         Grades:
-          - Grade: 0
+          - Grade: None
             Refine: 11
             Chance: 7000
             Bonus: 10
@@ -152,7 +152,7 @@ Body:
                 Item: Etel_Skyblue_Jewel
                 Amount: 5
                 Zeny: 875000
-          - Grade: 1
+          - Grade: D
             Refine: 11
             Chance: 6000
             Bonus: 30
@@ -171,7 +171,7 @@ Body:
                 Item: Etel_Topaz
                 Amount: 5
                 Zeny: 875000
-          - Grade: 2
+          - Grade: C
             Refine: 11
             Chance: 5000
             Bonus: 50
@@ -190,7 +190,7 @@ Body:
                 Item: Etel_Violet_Jewel
                 Amount: 5
                 Zeny: 875000
-          - Grade: 3
+          - Grade: B
             Refine: 11
             Chance: 4000
             Bonus: 100

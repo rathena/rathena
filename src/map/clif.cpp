@@ -23552,7 +23552,7 @@ void clif_parse_enchantgrade_add( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	std::shared_ptr<s_enchantgradelevel> enchantgradelevel = util::map_find( enchantgradelevels->second, (uint16)sd->inventory.u.items_inventory[index].enchantgrade );
+	std::shared_ptr<s_enchantgradelevel> enchantgradelevel = util::map_find( enchantgradelevels->second, (e_enchantgrade)sd->inventory.u.items_inventory[index].enchantgrade );
 
 	// Cannot increase enchantgrade any further - no answer, because client should have actually prevented this request
 	if( enchantgradelevel == nullptr ){
@@ -23640,7 +23640,7 @@ void clif_parse_enchantgrade_start( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	std::shared_ptr<s_enchantgradelevel> enchantgradelevel = util::map_find( enchantgradelevels->second, (uint16)sd->inventory.u.items_inventory[index].enchantgrade );
+	std::shared_ptr<s_enchantgradelevel> enchantgradelevel = util::map_find( enchantgradelevels->second, (e_enchantgrade)sd->inventory.u.items_inventory[index].enchantgrade );
 
 	// Cannot increase enchantgrade any further - no answer
 	if( enchantgradelevel == nullptr ){

@@ -162,7 +162,7 @@ struct s_enchantgradeoption{
 };
 
 struct s_enchantgradelevel{
-	uint16 grade;
+	e_enchantgrade grade;
 	uint16 refine;
 	uint16 chance;
 	uint16 bonus;
@@ -178,7 +178,7 @@ struct s_enchantgradelevel{
 
 struct s_enchantgrade{
 	uint16 itemtype;
-	std::map<uint16,std::map<uint16,std::shared_ptr<s_enchantgradelevel>>> levels;
+	std::map<uint16,std::map<e_enchantgrade,std::shared_ptr<s_enchantgradelevel>>> levels;
 };
 
 class EnchantgradeDatabase : public TypesafeYamlDatabase<uint16, s_enchantgrade>{

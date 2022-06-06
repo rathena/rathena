@@ -602,19 +602,26 @@ uint64 EnchantgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 			return 0;
 		}
 
-		std::map<uint16, std::shared_ptr<s_enchantgradelevel>>& grades = enchantgrade->levels[level];
+		std::map<e_enchantgrade, std::shared_ptr<s_enchantgradelevel>>& grades = enchantgrade->levels[level];
 
 		for( const ryml::NodeRef& gradeNode : levelNode["Grades"] ){
-			uint16 gradeLevel;
+			std::string gradeConstant;
 
-			if( !this->asUInt16( gradeNode, "Grade", gradeLevel ) ){
+			if( !this->asString( gradeNode, "Grade", gradeConstant ) ){
 				return 0;
 			}
 
-			if( gradeLevel >= MAX_ENCHANTGRADE ){
-				this->invalidWarning( gradeNode["Grade"], "Grade %hu is too high. Maximum: %hu.\n", gradeLevel, MAX_ENCHANTGRADE );
+			if( !script_get_constant( ( "ENCHANTGRADE_" + gradeConstant ).c_str(), &constant_value ) ){
+				this->invalidWarning( node["Grade"], "Unknown grade \"%s\".\n", gradeConstant.c_str() );
 				return 0;
 			}
+
+			if( constant_value >= MAX_ENCHANTGRADE ){
+				this->invalidWarning( gradeNode["Grade"], "Grade %" PRId64 " is too high. Maximum: %hu.\n", constant_value, MAX_ENCHANTGRADE - 1 );
+				return 0;
+			}
+
+			e_enchantgrade gradeLevel = (e_enchantgrade)constant_value;
 
 			std::shared_ptr<s_enchantgradelevel> grade = util::map_find( grades, gradeLevel );
 			bool gradeExists = grade != nullptr;
@@ -900,7 +907,7 @@ std::shared_ptr<s_enchantgradelevel> EnchantgradeDatabase::findCurrentLevelInfo(
 		return nullptr;
 	}
 
-	return util::map_find( enchantgradelevels->second, (uint16)( item.enchantgrade - 1 ) );
+	return util::map_find( enchantgradelevels->second, (e_enchantgrade)( item.enchantgrade - 1 ) );
 }
 
 EnchantgradeDatabase enchantgrade_db;
