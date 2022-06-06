@@ -8172,6 +8172,8 @@ This command requires packet version 2015-12-02 or newer.
 
 Opens the enchantgrade UI for the attached character or the player given by the char ID parameter.
 
+This command requires packet version 2020-07-24 or newer.
+
 ---------------------------------------
 \\
 6,1.- Unit-related commands

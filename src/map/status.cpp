@@ -778,6 +778,34 @@ uint64 EnchantgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 						option->id = optionIndex;
 					}
 
+					if( this->nodeExists( optionNode, "Amount" ) ){
+						uint16 amount;
+
+						if( !this->asUInt16( optionNode, "Amount", amount ) ){
+							return 0;
+						}
+
+						if( amount > MAX_AMOUNT ){
+							this->invalidWarning( optionNode["Amount"], "Amount %hu is too high, capping to %hu...\n", amount, MAX_AMOUNT );
+							amount = MAX_AMOUNT;
+						}
+
+						if( amount == 0 ){
+							if( grade->options.erase( optionIndex ) > 0 ){
+								continue;
+							}else{
+								this->invalidWarning( optionNode["Amount"], "Trying to remove invalid option %hu...\n", optionIndex );
+								return 0;
+							}
+						}
+
+						option->amount = amount;
+					}else{
+						if( !optionExists ){
+							option->amount = 1;
+						}
+					}
+
 					if( this->nodeExists( optionNode, "Item" ) ){
 						std::string itemName;
 
@@ -796,25 +824,6 @@ uint64 EnchantgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 					}else{
 						if( !optionExists ){
 							option->item = 0;
-						}
-					}
-
-					if( this->nodeExists( optionNode, "Amount" ) ){
-						uint16 amount;
-
-						if( !this->asUInt16( optionNode, "Amount", amount ) ){
-							return 0;
-						}
-
-						if( amount > MAX_AMOUNT ){
-							this->invalidWarning( optionNode["Amount"], "Amount %hu is too high, capping to %hu...\n", amount, MAX_AMOUNT );
-							amount = MAX_AMOUNT;
-						}
-
-						option->amount = amount;
-					}else{
-						if( !optionExists ){
-							option->amount = 1;
 						}
 					}
 
@@ -908,6 +917,22 @@ std::shared_ptr<s_enchantgradelevel> EnchantgradeDatabase::findCurrentLevelInfo(
 	}
 
 	return util::map_find( enchantgradelevels->second, (e_enchantgrade)( item.enchantgrade - 1 ) );
+}
+
+void EnchantgradeDatabase::loadingFinished(){
+	for( const auto& it_itemTypes : *this ){
+		for( const auto& it_itemLevels : it_itemTypes.second->levels ){
+			for( const auto& it_enchantgrades : it_itemLevels.second ){
+				std::shared_ptr<s_enchantgradelevel> enchantgradelevel = it_enchantgrades.second;
+
+				if( enchantgradelevel->catalyst.amountPerStep == 0 ){
+					enchantgradelevel->catalyst.item = 0;
+					enchantgradelevel->catalyst.chanceIncrease = 0;
+					enchantgradelevel->catalyst.maximumSteps = 0;
+				}
+			}
+		}
+	}
 }
 
 EnchantgradeDatabase enchantgrade_db;

@@ -187,8 +187,9 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const ryml::NodeRef& node );
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode( const ryml::NodeRef& node ) override;
+	void loadingFinished() override;
 
 	// Additional
 	std::shared_ptr<s_enchantgradelevel> findCurrentLevelInfo( const struct item_data& data, struct item& item );
