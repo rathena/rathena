@@ -2218,29 +2218,23 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		}
 		if( battle_config.equip_skill_break_rate && skill_id != WS_CARTTERMINATION && skill_id != ITM_TOMAHAWK )
 		{	// Cart Termination/Tomahawk won't trigger breaking data. Why? No idea, go ask Gravity.
-			int break_flag = BCT_ENEMY;
-
 			// Target weapon breaking
 			rate = 0;
 			if( sd )
 				rate += sd->bonus.break_weapon_rate;
-			if( sc && sc->data[SC_MELTDOWN] ) {
+			if( sc && sc->data[SC_MELTDOWN] )
 				rate += sc->data[SC_MELTDOWN]->val2;
-				break_flag |= 1;
-			}
 			if( rate )
-				skill_break_equip(src,bl, EQP_WEAPON, rate, break_flag);
+				skill_break_equip(src,bl, EQP_WEAPON, rate, BCT_ENEMY);
 
 			// Target armor breaking
 			rate = 0;
 			if( sd )
 				rate += sd->bonus.break_armor_rate;
-			if( sc && sc->data[SC_MELTDOWN] ) {
+			if( sc && sc->data[SC_MELTDOWN] )
 				rate += sc->data[SC_MELTDOWN]->val3;
-				break_flag |= 1;
-			}
 			if( rate )
-				skill_break_equip(src,bl, EQP_ARMOR, rate, break_flag);
+				skill_break_equip(src,bl, EQP_ARMOR, rate, BCT_ENEMY);
 		}
 		if (sd && !skill_id && bl->type == BL_PC) { // This effect does not work with skills.
 			if (sd->def_set_race[tstatus->race].rate)
@@ -2700,12 +2694,14 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
  - rate goes from 0 to 10000 (100.00%)
  - flag is a BCT_ flag to indicate which type of adjustment should be used
    (BCT_ENEMY/BCT_PARTY/BCT_SELF) are the valid values.
-   &1 - flag is used for WS_MELTDOWN which bypasses non-player check.
 --------------------------------------------------------------------------*/
 int skill_break_equip(struct block_list *src, struct block_list *bl, unsigned short where, int rate, int flag)
 {
+	status_change *src_sc = status_get_sc(src);
+
 	// Grant player skills/items the ability to "break" non-player equipment.
-	if (!battle_config.break_mob_equip && bl->type != BL_PC && !(flag & 1))
+	// WS_MELTDOWN is exempt from this check.
+	if (!battle_config.break_mob_equip && bl->type != BL_PC && !(src_sc && src_sc->data[SC_MELTDOWN]))
 		return 0;
 
 	const int where_list[6]     = { EQP_WEAPON, EQP_ARMOR, EQP_SHIELD, EQP_HELM, EQP_ACC, EQP_SHADOW_GEAR };
