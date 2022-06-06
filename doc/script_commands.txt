@@ -8163,7 +8163,7 @@ This command requires packet version 2015-01-28 or newer.
 
 *enchantgradeui {<char id>};
 
-Opens the enchantgrade UI for the attached character or the player given by the char id parameter.
+Opens the enchantgrade UI for the attached character or the player given by the char ID parameter.
 
 ---------------------------------------
 \\
