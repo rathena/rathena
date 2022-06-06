@@ -4515,8 +4515,8 @@ ACMD_FUNC(mapinfo) {
 		strcat(atcmd_output, " NoItemConsumption |");
 	if (map_getmapflag(m_id, MF_NOSUNMOONSTARMIRACLE))
 		strcat(atcmd_output, " NoSunMoonStarMiracle |");
-	if (map_getmapflag(m_id, MF_NOMINEEFFECT))
-		strcat(atcmd_output, " NoMineEffect |");
+	if (map_getmapflag(m_id, MF_FORCEMINEFFECT))
+		strcat(atcmd_output, " ForceMinEffect |");
 	if (map_getmapflag(m_id, MF_NOLOCKON))
 		strcat(atcmd_output, " NoLockOn |");
 	if (map_getmapflag(m_id, MF_NOTOMB))
@@ -7322,7 +7322,7 @@ ACMD_FUNC(setbattleflag)
 	int reload = 0;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || sscanf(message, "%127s %127s %11d", flag, value, &reload) != 2) {
+	if (!message || !*message || sscanf(message, "%127s %127s %11d", flag, value, &reload) < 2) {
         	clif_displaymessage(fd, msg_txt(sd,1231)); // Usage: @setbattleflag <flag> <value> {<reload>}
         	return -1;
     	}

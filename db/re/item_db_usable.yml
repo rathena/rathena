@@ -47391,6 +47391,139 @@ Body:
     Weight: 50
     Script: |
       laphine_upgrade();
+  - Id: 23505
+    AegisName: Yellow_Potion_B_20
+    Name: "[Not for Sale] Yellow Potions Box 20"   # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      getitem 11566,20;
+  - Id: 23506
+    AegisName: White_Potion_B_20
+    Name: "[Not for Sale] White Potion Box 20"   # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      getitem 11565,20;
+  - Id: 23582
+    AegisName: E_Wing_Of_Fly_3Day_Box
+    Name: "[Not for Sale] Infinite Flywing Box 7-Day"    # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      rentitem 12887,604800;
+  - Id: 23583
+    AegisName: Rebeginer_Box
+    Name: Beginner's Armor Box    # !todo check english name
+    Type: Usable
+    EquipLevelMin: 100
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 19310,1;
+      getitem 15250,1;
+      getitem 20906,1;
+      getitem 22173,1;
+      getitem 28566,1;
+  - Id: 23584
+    AegisName: Rebeginer_S_Box
+    Name: Shadow Box for Beginners    # !todo check english name
+    Type: Usable
+    EquipLevelMin: 120
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 24387,1;
+      getitem 24388,1;
+      getitem 24390,1;
+      getitem 24389,1;
+      getitem 24391,1;
+      getitem 24392,1;
+  - Id: 23585
+    AegisName: Rebeginer_Box_100
+    Name: Beginner Support Box (100)    # !todo check english name
+    Type: Usable
+    EquipLevelMin: 100
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 23505,25;
+      getitem 23583,1;
+      getitem 23582,1;
+      getitem 23427,1;
+      getitem 23586,1;
+  - Id: 23586
+    AegisName: Rebeginer_Box_110
+    Name: Beginner Support Box (110)    # !todo check english name
+    Type: Usable
+    EquipLevelMin: 110
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 23506,20;
+      getitem 23582,2;
+      getitem 23428,1;
+      getitem 23587,1;
+  - Id: 23587
+    AegisName: Rebeginer_Box_120
+    Name: Beginner Support Box (120)    # !todo check english name
+    Type: Usable
+    EquipLevelMin: 120
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 23506,25;
+      getitem 23582,3;
+      getitem 23584,1;
   - Id: 23815
     AegisName: Magma_Essence
     Name: Lava Essence

@@ -6810,7 +6810,7 @@ void clif_map_property(struct block_list *bl, enum map_property property, enum s
 	WBUFL(buf,4) = ((mapdata->flag[MF_PVP] || (sd && sd->duel_group > 0))<<0)| // PARTY - Show attack cursor on non-party members (PvP)
 		((mapdata->flag[MF_BATTLEGROUND] || mapdata_flag_gvg2(mapdata))<<1)|// GUILD - Show attack cursor on non-guild members (GvG)
 		((mapdata->flag[MF_BATTLEGROUND] || mapdata_flag_gvg2(mapdata))<<2)|// SIEGE - Show emblem over characters heads when in GvG (WoE castle)
-		((mapdata->flag[MF_NOMINEEFFECT] || mapdata_flag_gvg2(mapdata))<<3)| // USE_SIMPLE_EFFECT - Automatically enable /mineffect
+		((mapdata->flag[MF_FORCEMINEFFECT] || mapdata_flag_gvg2(mapdata))<<3)| // USE_SIMPLE_EFFECT - Forces simpler skill effects, like /mineffect command
 		((mapdata->flag[MF_NOLOCKON] || mapdata_flag_vs(mapdata) || (sd && sd->duel_group > 0))<<4)| // DISABLE_LOCKON - Only allow attacks on other players with shift key or /ns active
 		((mapdata->flag[MF_PVP])<<5)| // COUNT_PK - Show the PvP counter
 		((mapdata->flag[MF_PARTYLOCK])<<6)| // NO_PARTY_FORMATION - Prevents party creation/modification (Might be used for instance dungeons)
@@ -12607,6 +12607,8 @@ void clif_parse_PutItemToCart(int fd,struct map_session_data *sd)
 		return;
 	if (!pc_iscarton(sd))
 		return;
+	if (map_getmapflag(sd->bl.m, MF_NOUSECART))
+		return;
 	pc_putitemtocart(sd,RFIFOW(fd,info->pos[0])-2,RFIFOL(fd,info->pos[1]));
 }
 
@@ -12617,6 +12619,8 @@ void clif_parse_GetItemFromCart(int fd,struct map_session_data *sd)
 {
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 	if (!pc_iscarton(sd))
+		return;
+	if (map_getmapflag(sd->bl.m, MF_NOUSECART))
 		return;
 	pc_getitemfromcart(sd,RFIFOW(fd,info->pos[0])-2,RFIFOL(fd,info->pos[1]));
 }
@@ -13585,6 +13589,8 @@ void clif_parse_MoveToKafraFromCart(int fd, struct map_session_data *sd){
 		return;
 	if (!pc_iscarton(sd))
 		return;
+	if (map_getmapflag(sd->bl.m, MF_NOUSECART))
+		return;
 
 	if (idx < 0 || idx >= MAX_INVENTORY || amount < 1)
 		return;
@@ -13612,6 +13618,8 @@ void clif_parse_MoveFromKafraToCart(int fd, struct map_session_data *sd){
 	if( sd->state.vending )
 		return;
 	if (!pc_iscarton(sd))
+		return;
+	if (map_getmapflag(sd->bl.m, MF_NOUSECART))
 		return;
 
 	if (sd->state.storage_flag == 1)
@@ -20499,6 +20507,8 @@ void clif_roulette_open( struct map_session_data* sd ){
 	p.SilverPoint = sd->roulette_point.silver;
 	p.BronzePoint = sd->roulette_point.bronze;
 
+	sd->state.roulette_open = true;
+
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
 }
 
@@ -20566,7 +20576,7 @@ void clif_parse_roulette_close( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	// What do we need this for? (other than state tracking), game client closes the window without our response.
+	sd->state.roulette_open = false;
 }
 
 /// Response to a item reward request

@@ -9101,7 +9101,6 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			return 0;
 	}
 
-	rate = cap_value(rate, 0, 10000);
 	sd = BL_CAST(BL_PC,bl);
 	status = status_get_status_data(bl);
 	status_src = status_get_status_data(src);
@@ -10090,8 +10089,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	// Check for overlapping fails
 	if( (sce = sc->data[type]) ) {
-		if (scdb->flag[SCF_OVERLAPFAIL])
-			return 0;
 		switch( type ) {
 			case SC_MERC_FLEEUP:
 			case SC_MERC_ATKUP:
@@ -11450,7 +11447,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_REFLECTDAMAGE:
 			val2 = 10 * val1; // Reflect reduction amount
-			val3 = val1*5 + 25; // Number of reflects
 			val4 = tick/1000; // Number of SP cycles (duration)
 			tick_time = 1000; // [GodLesZ] tick time
 			break;
@@ -13612,6 +13608,7 @@ TIMER_FUNC(status_change_timer){
 			map_freeblock_lock();
 			dounlock = true;
 			status_fix_damage(bl, bl, 100, clif_damage(bl, bl, tick, status->amotion, status->dmotion + 500, 100, 1, DMG_NORMAL, 0, false),0);
+			unit_skillcastcancel(bl, 2);
 		}
 		break;
 		
