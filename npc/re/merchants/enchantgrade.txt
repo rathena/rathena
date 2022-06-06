@@ -16,8 +16,8 @@ grademk,34,184,4	script	Sratos#sratos	4_JP_GARM_H,{
 	switch( select( "Enhance the equipment's grade.", "Exchange Etel items", "What is Grade Enhancement?" )) {
 	case 1:
 		mes "[Sratos]";
-		mes "Our customer. You want to strengthen the level of equipment.";
-		mes "It is not easy to move the magical power of jewelry.";
+		mes "Our customer. You want to enhance the grade of equipment.";
+		mes "It is not easy to move the magical power of jewels.";
 		next;
 		mes "[Sratos]";
 		mes "Magical power can explode on the spot.";
@@ -37,8 +37,8 @@ grademk,34,184,4	script	Sratos#sratos	4_JP_GARM_H,{
 		}
 	case 2:
 		mes "[Sratos]";
-		mes "These are jewels used to strengthen grades.";
-		mes "Etel Dust, the jewelry that will be the base, and if you give me a small fee, I'll exchange it for etel jewelry.";
+		mes "These are jewels used to enhance grades.";
+		mes "Etel Dust, the jewels that will be the base, and if you give me a small fee, I'll exchange it for Etel jewels.";
 		close2;
 		callshop "EnchantGradeExchange";
 		end;
@@ -50,11 +50,11 @@ grademk,34,184,4	script	Sratos#sratos	4_JP_GARM_H,{
 		next;
 		mes "[Sratos]";
 		mes "You can transfer the magical power of the etheric gem to other weapons, but of course there is some risk.";
-		mes "It's delicate, so if you don't, it'll pop! and it will explode.";
+		mes "It's delicate, so if you don't, it'll pop! And it will explode.";
 		next;
 		mes "[Sratos]";
-		mes "Anyway, if you use this etheric gem, you can enchant the weapon you are using.";
-		mes "performance gets better. We call this grading.";
+		mes "Anyway, if you use this etheric gem, you can enhance the weapon you are using.";
+		mes "Performance gets better. We call this grade enhancement.";
 		next;
 		mes "[Sratos]";
 		mes "You too, wouldn't you be happy if the weapons you love grow one step further?";
@@ -97,7 +97,7 @@ paramk,34,184,4	script	Suribell#suribell	4_F_FRUIT,{
 		case 2:
 			mes "[Suribell]";
 			mes "You need etheric gems to enhance grades!";
-			mes "If you combine Etel Dust and jewels to make it, it is fine! An etel jewel for adventurers is complete!";
+			mes "If you combine Etel Dust and jewels to make it, it is fine! An Etel jewel for adventurers is complete!";
 			mes "Would you like to combine jewels and Etel Dust?";
 			close2;
 			callshop "EnchantGradeExchange";
