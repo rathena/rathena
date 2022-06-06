@@ -21551,30 +21551,30 @@ void clif_parse_changedress( int fd, struct map_session_data* sd ){
 
 /// Opens an UI window of the given type and initializes it with the given data
 /// 0AE2 <type>.B <data>.L
-void clif_ui_open( struct map_session_data *sd, enum out_ui_type ui_type, int32 data ){
-	nullpo_retv(sd);
-
+void clif_ui_open( struct map_session_data& sd, enum out_ui_type ui_type, int32 data ){
 	// If the UI requires state tracking
 	switch( ui_type ){
 		case OUT_UI_STYLIST:
-			sd->state.stylist_open = true;
+			sd.state.stylist_open = true;
 			break;
 		case OUT_UI_ENCHANTGRADE:
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
-			sd->state.enchantgrade_open = true;
+			sd.state.enchantgrade_open = true;
 			break;
 #else
 			return;
 #endif
 	}
 
-	int fd = sd->fd;
+	struct PACKET_ZC_UI_OPEN p = {};
 
-	WFIFOHEAD(fd,packet_len(0xae2));
-	WFIFOW(fd,0) = 0xae2;
-	WFIFOB(fd,2) = ui_type;
-	WFIFOL(fd,3) = data;
-	WFIFOSET(fd,packet_len(0xae2));
+	p.PacketType = HEADER_ZC_UI_OPEN;
+	p.UIType = ui_type;
+#if PACKETVER >= 20171122
+	p.data = data;
+#endif
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 }
 
 /// Request to open an UI window of the given type
@@ -21585,7 +21585,7 @@ void clif_parse_open_ui( int fd, struct map_session_data* sd ){
 			if( !pc_has_permission( sd, PC_PERM_ATTENDANCE ) ){
 				clif_messagecolor( &sd->bl, color_table[COLOR_RED], msg_txt( sd, 791 ), false, SELF ); // You are not allowed to use the attendance system.
 			}else if( pc_attendance_enabled() ){
-				clif_ui_open( sd, OUT_UI_ATTENDANCE, pc_attendance_counter( sd ) );
+				clif_ui_open( *sd, OUT_UI_ATTENDANCE, pc_attendance_counter( sd ) );
 			}else{
 				clif_msg_color( sd, MSG_ATTENDANCE_DISABLED, color_table[COLOR_RED] );
 			}

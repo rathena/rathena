@@ -25739,7 +25739,7 @@ BUILDIN_FUNC( openstylist ){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	clif_ui_open( sd, OUT_UI_STYLIST, 0 );
+	clif_ui_open( *sd, OUT_UI_STYLIST, 0 );
 
 	return SCRIPT_CMD_SUCCESS;
 #else
@@ -25860,6 +25860,10 @@ BUILDIN_FUNC(randomoptgroup)
 }
 
 BUILDIN_FUNC( open_quest_ui ){
+#if PACKETVER < 20151202
+	ShowError( "buildin_open_quest_ui: This command requires PACKETVER 20151202 or newer.\n" );
+	return SCRIPT_CMD_FAILURE;
+#else
 	struct map_session_data* sd;
 
 	if (!script_charid2sd(3, sd))
@@ -25874,14 +25878,15 @@ BUILDIN_FUNC( open_quest_ui ){
 			ShowWarning("buildin_open_quest_ui: Character %d doesn't have quest %d.\n", sd->status.char_id, quest_id);
 	}
 
-	clif_ui_open( sd, OUT_UI_QUEST, quest_id );
+	clif_ui_open( *sd, OUT_UI_QUEST, quest_id );
 
 	return SCRIPT_CMD_SUCCESS;
+#endif
 }
 
 BUILDIN_FUNC(openbank){
-#if PACKETVER < 20150128
-	ShowError( "buildin_openbank: This command requires PACKETVER 20150128 or newer.\n" );
+#if PACKETVER < 20151202
+	ShowError( "buildin_openbank: This command requires PACKETVER 20151202 or newer.\n" );
 	return SCRIPT_CMD_FAILURE;
 #else
 	struct map_session_data* sd = nullptr;
@@ -25895,7 +25900,7 @@ BUILDIN_FUNC(openbank){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	clif_ui_open( sd, OUT_UI_BANK, 0 );
+	clif_ui_open( *sd, OUT_UI_BANK, 0 );
 	return SCRIPT_CMD_SUCCESS;
 #endif
 }
@@ -26002,11 +26007,11 @@ BUILDIN_FUNC( enchantgradeui ){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	clif_ui_open( sd, OUT_UI_ENCHANTGRADE, 0 );
+	clif_ui_open( *sd, OUT_UI_ENCHANTGRADE, 0 );
 
 	return SCRIPT_CMD_SUCCESS;
 #else
-	ShowError( "buildin_enchantgradeui: This feature is not supported by your packet version.\n" );
+	ShowError( "buildin_enchantgradeui: This command requires PACKETVER 2020-07-24 or newer.\n" );
 	return SCRIPT_CMD_FAILURE;
 #endif
 }

@@ -1180,7 +1180,7 @@ If args are given, sets camera position.
 
 @enchantgradeui
 
-Open the enchantgrade UI.
+Opens the enchantgrade UI.
 
 ---------------------------------------
 

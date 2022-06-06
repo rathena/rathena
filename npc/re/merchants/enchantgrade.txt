@@ -99,7 +99,7 @@ paramk,34,184,4	script	슈리벨#suribell	4_F_FRUIT,{ // 1914
 			mes "에텔 더스트와 보석을 조합해서 만들면, 짠! 모험가님을 위한 에테르 보석이 완성!";
 			mes "보석과 에텔 더스트 조합을 하시겠어요?";
 			close2;
-			callshop "EnchantGradeExchange",1;
+			callshop "EnchantGradeExchange";
 			end;
 		case 3:
 			mes "[슈리벨]";

@@ -10662,7 +10662,7 @@ ACMD_FUNC( stylist ){
 		return -1;
 	}
 
-	clif_ui_open( sd, OUT_UI_STYLIST, 0 );
+	clif_ui_open( *sd, OUT_UI_STYLIST, 0 );
 	return 0;
 #endif
 }
@@ -10705,12 +10705,13 @@ ACMD_FUNC( enchantgradeui ){
 	nullpo_retr( -1, sd );
 
 #if !( PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724 )
+	sprintf( atcmd_output, msg_txt( sd, 798 ), "2020-07-24" ); // This command requires packet version %s or newer.
+	clif_displaymessage( fd, atcmd_output );
 	return -1;
-#endif
-
-	clif_ui_open( sd, OUT_UI_ENCHANTGRADE, 0 );
-
+#else
+	clif_ui_open( *sd, OUT_UI_ENCHANTGRADE, 0 );
 	return 0;
+#endif
 }
 
 #include "../custom/atcommand.inc"
