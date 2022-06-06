@@ -623,7 +623,7 @@ uint64 EnchantgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 				grade = std::make_shared<s_enchantgradelevel>();
 				grade->grade = gradeLevel;
 
-				if( !this->nodesExist( gradeNode, { "Refine", "Chance", "Options", "Bonus" } ) ){
+				if( !this->nodesExist( gradeNode, { "Refine", "Chance", "Options" } ) ){
 					return 0;
 				}
 			}
@@ -661,6 +661,10 @@ uint64 EnchantgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 				}
 
 				grade->bonus = bonus;
+			}else{
+				if( !gradeExists ){
+					grade->bonus = 0;
+				}
 			}
 
 			if( this->nodeExists( gradeNode, "Announce" ) ){
