@@ -39,7 +39,7 @@ grademk,34,184,4	script	Sratos#sratos	4_JP_GARM_H,{
 		mes "These are jewels used to strengthen grades.";
 		mes "Etel Dust, the jewelry that will be the base, and if you give me a small fee, I'll exchange it for etel jewelry.";
 		close2;
-		callshop "EnchantGradeExchange",1;
+		callshop "EnchantGradeExchange";
 		end;
 
 	case 3:

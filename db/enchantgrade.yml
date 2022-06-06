@@ -25,7 +25,7 @@
 # - Type                                Item type.
 #   Levels:                             Enchantgrade settings per item level.
 #     - Level                           Item level.
-#       Grades:                         Enchantgrade settings per refine level.
+#       Grades:                         Enchantgrade settings per grade level.
 #         - Grade                       Enchantgrade level.
 #           Refine                      Required refine level.
 #           Chance                      Base chance of success out of 0~10000.

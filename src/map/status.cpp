@@ -586,7 +586,7 @@ uint64 EnchantgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 		enchantgrade->itemtype = itemtype;
 	}
 
-	for( const  ryml::NodeRef& levelNode : node["Levels"] ){
+	for( const ryml::NodeRef& levelNode : node["Levels"] ){
 		if( !this->nodesExist( levelNode, { "Level", "Grades" } ) ){
 			return 0;
 		}
@@ -604,7 +604,7 @@ uint64 EnchantgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 
 		std::map<uint16, std::shared_ptr<s_enchantgradelevel>>& grades = enchantgrade->levels[level];
 
-		for( const  ryml::NodeRef& gradeNode : levelNode["Grades"] ){
+		for( const ryml::NodeRef& gradeNode : levelNode["Grades"] ){
 			uint16 gradeLevel;
 
 			if( !this->asUInt16( gradeNode, "Grade", gradeLevel ) ){
