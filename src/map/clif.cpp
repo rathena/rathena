@@ -23475,10 +23475,10 @@ void clif_enchantgrade_add( struct map_session_data& sd, uint16 index = UINT16_M
 		}else{
 			p->success_chance = 0;
 		}
-		p->blessing_info.id = client_nameid( gradeLevel->catalysator.item );
-		p->blessing_info.amount = gradeLevel->catalysator.amountPerStep;
-		p->blessing_info.max_blessing = gradeLevel->catalysator.maximumSteps;
-		p->blessing_info.bonus = gradeLevel->catalysator.chanceIncrease / 100;
+		p->blessing_info.id = client_nameid( gradeLevel->catalyst.item );
+		p->blessing_info.amount = gradeLevel->catalyst.amountPerStep;
+		p->blessing_info.max_blessing = gradeLevel->catalyst.maximumSteps;
+		p->blessing_info.bonus = gradeLevel->catalyst.chanceIncrease / 100;
 		// Not displayed by client
 		p->protect_itemid = 0;
 		p->protect_amount = 0;
@@ -23663,15 +23663,15 @@ void clif_parse_enchantgrade_start( int fd, struct map_session_data* sd ){
 	}
 
 	uint16 totalChance = enchantgradelevel->chance;
-	uint16 steps = min( p->blessing_amount, enchantgradelevel->catalysator.maximumSteps );
+	uint16 steps = min( p->blessing_amount, enchantgradelevel->catalyst.maximumSteps );
 	std::unordered_map<uint16, uint16> requiredItems;
 
 	if( p->blessing_flag ){
 		// If the catalysator item is the same as the option item build the sum of amounts
-		if( enchantgradelevel->catalysator.item == option->item ){
-			uint16 amount = enchantgradelevel->catalysator.amountPerStep * steps + option->amount;
+		if( enchantgradelevel->catalyst.item == option->item ){
+			uint16 amount = enchantgradelevel->catalyst.amountPerStep * steps + option->amount;
 
-			int16 index = pc_search_inventory( sd, enchantgradelevel->catalysator.item );
+			int16 index = pc_search_inventory( sd, enchantgradelevel->catalyst.item );
 
 			if( index < 0 ){
 				return;
@@ -23683,10 +23683,10 @@ void clif_parse_enchantgrade_start( int fd, struct map_session_data* sd ){
 
 			requiredItems[index] = amount;
 		}else{
-			uint16 amount = enchantgradelevel->catalysator.amountPerStep * steps;
+			uint16 amount = enchantgradelevel->catalyst.amountPerStep * steps;
 
 			// Check catalysator item
-			int16 index = pc_search_inventory( sd, enchantgradelevel->catalysator.item );
+			int16 index = pc_search_inventory( sd, enchantgradelevel->catalyst.item );
 
 			if( index < 0 ){
 				return;
@@ -23712,7 +23712,7 @@ void clif_parse_enchantgrade_start( int fd, struct map_session_data* sd ){
 			requiredItems[index] = option->amount;
 		}
 
-		totalChance += steps * enchantgradelevel->catalysator.chanceIncrease;
+		totalChance += steps * enchantgradelevel->catalyst.chanceIncrease;
 	}else{
 		// Check option item
 		int16 index = pc_search_inventory( sd, option->item );

@@ -57,7 +57,7 @@ Body:
             Refine: 11
             Chance: 7000
             Bonus: 10
-            Catalysator:
+            Catalyst:
                 Item: Blessed_Etel_Dust
                 AmountPerStep: 1
                 MaximumSteps: 10
@@ -76,7 +76,7 @@ Body:
             Refine: 11
             Chance: 6000
             Bonus: 30
-            Catalysator:
+            Catalyst:
                 Item: Blessed_Etel_Dust
                 AmountPerStep: 3
                 MaximumSteps: 10
@@ -95,7 +95,7 @@ Body:
             Refine: 11
             Chance: 5000
             Bonus: 50
-            Catalysator:
+            Catalyst:
                 Item: Blessed_Etel_Dust
                 AmountPerStep: 5
                 MaximumSteps: 10
@@ -115,7 +115,7 @@ Body:
             Chance: 4000
             Bonus: 100
             Announce: true
-            Catalysator:
+            Catalyst:
                 Item: Blessed_Etel_Dust
                 AmountPerStep: 7
                 MaximumSteps: 10
@@ -138,7 +138,7 @@ Body:
             Refine: 11
             Chance: 7000
             Bonus: 10
-            Catalysator:
+            Catalyst:
                 Item: Blessed_Etel_Dust
                 AmountPerStep: 1
                 MaximumSteps: 10
@@ -157,7 +157,7 @@ Body:
             Refine: 11
             Chance: 6000
             Bonus: 30
-            Catalysator:
+            Catalyst:
                 Item: Blessed_Etel_Dust
                 AmountPerStep: 3
                 MaximumSteps: 10
@@ -176,7 +176,7 @@ Body:
             Refine: 11
             Chance: 5000
             Bonus: 50
-            Catalysator:
+            Catalyst:
                 Item: Blessed_Etel_Dust
                 AmountPerStep: 5
                 MaximumSteps: 10
@@ -196,7 +196,7 @@ Body:
             Chance: 4000
             Bonus: 100
             Announce: true
-            Catalysator:
+            Catalyst:
                 Item: Blessed_Etel_Dust
                 AmountPerStep: 7
                 MaximumSteps: 10

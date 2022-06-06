@@ -172,7 +172,7 @@ struct s_enchantgradelevel{
 		uint16 amountPerStep;
 		uint16 maximumSteps;
 		uint16 chanceIncrease;
-	}catalysator;
+	}catalyst;
 	std::map<uint16,std::shared_ptr<s_enchantgradeoption>> options;
 };
 

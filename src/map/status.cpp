@@ -677,77 +677,77 @@ uint64 EnchantgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 				}
 			}
 
-			if( this->nodeExists( gradeNode, "Catalysator") ){
-				const ryml::NodeRef& catalysatorNode = gradeNode["Catalysator"];
+			if( this->nodeExists( gradeNode, "Catalyst") ){
+				const ryml::NodeRef& catalystNode = gradeNode["Catalyst"];
 
-				if( this->nodeExists( catalysatorNode, "Item" ) ){
+				if( this->nodeExists( catalystNode, "Item" ) ){
 					std::string itemName;
 
-					if( !this->asString( catalysatorNode, "Item", itemName ) ){
+					if( !this->asString( catalystNode, "Item", itemName ) ){
 						return 0;
 					}
 
 					std::shared_ptr<item_data> id = item_db.search_aegisname( itemName.c_str() );
 
 					if( id == nullptr ){
-						this->invalidWarning( catalysatorNode["Item"], "Unknown item \"%s\".\n", itemName.c_str() );
+						this->invalidWarning( catalystNode["Item"], "Unknown item \"%s\".\n", itemName.c_str() );
 						return 0;
 					}
 
-					grade->catalysator.item = id->nameid;
+					grade->catalyst.item = id->nameid;
 				}else{
 					if( !gradeExists ){
-						grade->catalysator.item = 0;
+						grade->catalyst.item = 0;
 					}
 				}
 
-				if( this->nodeExists( catalysatorNode, "AmountPerStep" ) ){
+				if( this->nodeExists( catalystNode, "AmountPerStep" ) ){
 					uint16 amountPerStep;
 
-					if( !this->asUInt16( catalysatorNode, "AmountPerStep", amountPerStep ) ){
+					if( !this->asUInt16( catalystNode, "AmountPerStep", amountPerStep ) ){
 						return 0;
 					}
 
-					grade->catalysator.amountPerStep = amountPerStep;
+					grade->catalyst.amountPerStep = amountPerStep;
 				}else{
 					if( !gradeExists ){
-						grade->catalysator.amountPerStep = 0;
+						grade->catalyst.amountPerStep = 0;
 					}
 				}
 
-				if( this->nodeExists( catalysatorNode, "MaximumSteps" ) ){
+				if( this->nodeExists( catalystNode, "MaximumSteps" ) ){
 					uint16 maximumSteps;
 
-					if( !this->asUInt16( catalysatorNode, "MaximumSteps", maximumSteps ) ){
+					if( !this->asUInt16( catalystNode, "MaximumSteps", maximumSteps ) ){
 						return 0;
 					}
 
-					grade->catalysator.maximumSteps = maximumSteps;
+					grade->catalyst.maximumSteps = maximumSteps;
 				}else{
 					if( !gradeExists ){
-						grade->catalysator.maximumSteps = 0;
+						grade->catalyst.maximumSteps = 0;
 					}
 				}
 
-				if( this->nodeExists( catalysatorNode, "ChanceIncrease" ) ){
+				if( this->nodeExists( catalystNode, "ChanceIncrease" ) ){
 					uint16 chanceIncrease;
 
-					if( !this->asUInt16Rate( catalysatorNode, "ChanceIncrease", chanceIncrease ) ){
+					if( !this->asUInt16Rate( catalystNode, "ChanceIncrease", chanceIncrease ) ){
 						return 0;
 					}
 
-					grade->catalysator.chanceIncrease = chanceIncrease;
+					grade->catalyst.chanceIncrease = chanceIncrease;
 				}else{
 					if( !gradeExists ){
-						grade->catalysator.chanceIncrease = 0;
+						grade->catalyst.chanceIncrease = 0;
 					}
 				}
 			}else{
 				if( !gradeExists ){
-					grade->catalysator.item = 0;
-					grade->catalysator.amountPerStep = 0;
-					grade->catalysator.maximumSteps = 0;
-					grade->catalysator.chanceIncrease = 0;
+					grade->catalyst.item = 0;
+					grade->catalyst.amountPerStep = 0;
+					grade->catalyst.maximumSteps = 0;
+					grade->catalyst.chanceIncrease = 0;
 				}
 			}
 
