@@ -21552,6 +21552,7 @@ void clif_parse_changedress( int fd, struct map_session_data* sd ){
 /// Opens an UI window of the given type and initializes it with the given data
 /// 0AE2 <type>.B <data>.L
 void clif_ui_open( struct map_session_data& sd, enum out_ui_type ui_type, int32 data ){
+#if PACKETVER >= 20151202
 	// If the UI requires state tracking
 	switch( ui_type ){
 		case OUT_UI_STYLIST:
@@ -21575,6 +21576,7 @@ void clif_ui_open( struct map_session_data& sd, enum out_ui_type ui_type, int32 
 #endif
 
 	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
 }
 
 /// Request to open an UI window of the given type
