@@ -19310,6 +19310,12 @@ BUILDIN_FUNC(unitwalk)
 
 	ud = unit_bl2ud(bl);
 
+	// Unit was already forced to walk.
+	if (ud != nullptr && ud->state.force_walk) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	if (bl->type == BL_NPC) {
 		if (!((TBL_NPC*)bl)->status.hp)
 			status_calc_npc(((TBL_NPC*)bl), SCO_FIRST);
@@ -19322,7 +19328,8 @@ BUILDIN_FUNC(unitwalk)
 		int y = script_getnum(st,4);
 
 		if (script_pushint(st, unit_can_reach_pos(bl,x,y,0))) {
-			ud->state.force_walk = true;
+			if (ud != nullptr)
+				ud->state.force_walk = true;
 			add_timer(gettick()+50, unit_delay_walktoxy_timer, bl->id, (x<<16)|(y&0xFFFF)); // Need timer to avoid mismatches
 		}
 	} else {
@@ -19333,7 +19340,8 @@ BUILDIN_FUNC(unitwalk)
 			script_pushint(st, 0);
 			return SCRIPT_CMD_FAILURE;
 		} else if (script_pushint(st, unit_can_reach_bl(bl, tbl, distance_bl(bl, tbl)+1, 0, NULL, NULL))) {
-			ud->state.force_walk = true;
+			if (ud != nullptr)
+				ud->state.force_walk = true;
 			add_timer(gettick()+50, unit_delay_walktobl_timer, bl->id, tbl->id); // Need timer to avoid mismatches
 		}
 		off = 4;
