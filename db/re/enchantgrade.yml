@@ -114,7 +114,6 @@ Body:
             Refine: 11
             Chance: 4000
             Bonus: 100
-            Announce: true
             Catalyst:
                 Item: Blessed_Etel_Dust
                 AmountPerStep: 7
@@ -195,7 +194,6 @@ Body:
             Refine: 11
             Chance: 4000
             Bonus: 100
-            Announce: true
             Catalyst:
                 Item: Blessed_Etel_Dust
                 AmountPerStep: 7
