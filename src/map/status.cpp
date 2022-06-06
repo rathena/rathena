@@ -677,7 +677,7 @@ uint64 EnchantgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 				grade->announce = announce;
 			}else{
 				if( !gradeExists ){
-					grade->announce = false;
+					grade->announce = true;
 				}
 			}
 
