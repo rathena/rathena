@@ -29368,3 +29368,29 @@ Body:
           - Item: Up_Demon_Slayer_Shot
             RefineMinimum: 7
             RefineMaximum: 7
+  - Group: ODIN_RELIC
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: CassockA_STR
+            Rate: 1
+          - Item: CassockA_AGI
+            Rate: 1
+          - Item: CassockA_VIT
+            Rate: 1
+          - Item: CassockA_INT
+            Rate: 1
+          - Item: CassockA_DEX
+            Rate: 1
+          - Item: CassockA_LUK
+            Rate: 1
+          - Item: Cassock_Manteau
+            Rate: 1
+          - Item: Cassock_Boots
+            Rate: 1
+          - Item: Soft_Feather
+            Rate: 1
+          - Item: Rune_Of_Darkness
+            Rate: 1
+          - Item: Angel_Dream
+            Rate: 1
