@@ -19313,7 +19313,7 @@ BUILDIN_FUNC(unitwalk)
 	// Unit was already forced to walk.
 	if (ud != nullptr && ud->state.force_walk) {
 		script_pushint(st, 0);
-		ShowWarning("buildin_%s: Unit has already been foced to walk and not reached its destination yet.\n", cmd);
+		ShowWarning("buildin_%s: Unit has already been forced to walk and not reached it's destination yet.\n", cmd);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -19495,10 +19495,16 @@ BUILDIN_FUNC(unitstopwalk)
 
 		if (ud != nullptr)
 			ud->state.force_walk = false;
-		unit_stop_walking(bl, flag);
-	}
 
-	return SCRIPT_CMD_SUCCESS;
+		if (unit_stop_walking(bl, flag) == 0 && flag != USW_FORCE_STOP) {
+			ShowWarning("buildin_unitstopwalk: Unable to find unit or unit is not walking.\n");
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		return SCRIPT_CMD_SUCCESS;
+	} else {
+		return SCRIPT_CMD_FAILURE;
+	}
 }
 
 /**
