@@ -10,7 +10,7 @@
 
 grademk,34,184,4	script	Sratos#sratos	4_JP_GARM_H,{
 	mes "[Sratos]";
-	mes "Hello, dear customer who walked in hope for a miracle today.";
+	mes "Hello, dear customer who walked in, let's hope for a miracle today.";
 	mes "How can I help you?";
 	next;
 	switch( select( "Enhance the equipment's grade.", "Exchange Etel items", "What is Grade Enhancement?" ) ){
@@ -21,7 +21,7 @@ grademk,34,184,4	script	Sratos#sratos	4_JP_GARM_H,{
 			next;
 			mes "[Sratos]";
 			mes "Magical power can explode on the spot.";
-			mes "Then, the weapon that will inherit the magical power also explodes!";
+			mes "Then the weapon that will inherit the magical power also explodes!";
 			next;
 			switch( select( "I'll still do it!", "I'll think about it." ) ){
 				case 1:
@@ -38,7 +38,7 @@ grademk,34,184,4	script	Sratos#sratos	4_JP_GARM_H,{
 		case 2:
 			mes "[Sratos]";
 			mes "These are jewels used to enhance grades.";
-			mes "Etel Dust, the jewels that will be the base, and if you give me a small fee, I'll exchange it for Etel jewels.";
+			mes "Etel Dust, the jewels that will be the base, and if you give me a small fee I'll exchange it for Etel jewels.";
 			close2;
 			callshop "EnchantGradeExchange";
 			end;
@@ -50,7 +50,7 @@ grademk,34,184,4	script	Sratos#sratos	4_JP_GARM_H,{
 			next;
 			mes "[Sratos]";
 			mes "You can transfer the magical power of the etheric gem to other weapons, but of course there is some risk.";
-			mes "It's delicate, so if you don't, it'll pop! And it will explode.";
+			mes "It's delicate, so if you aren't careful, pop! It will explode.";
 			next;
 			mes "[Sratos]";
 			mes "Anyway, if you use this etheric gem, you can enhance the weapon you are using.";
@@ -58,7 +58,7 @@ grademk,34,184,4	script	Sratos#sratos	4_JP_GARM_H,{
 			next;
 			mes "[Sratos]";
 			mes "You too, wouldn't you be happy if the weapons you love grow one step further?";
-			mes "We are the people who help it. It's a bit risky, though. ahahaha.";
+			mes "We are the people who assist it. It's a bit risky, though. ahahaha.";
 			close;
 	}
 
