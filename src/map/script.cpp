@@ -19310,6 +19310,13 @@ BUILDIN_FUNC(unitwalk)
 
 	ud = unit_bl2ud(bl);
 
+	// Unit was already forced to walk.
+	if (ud != nullptr && ud->state.force_walk) {
+		script_pushint(st, 0);
+		ShowWarning("buildin_%s: Unit has already been forced to walk and not reached it's destination yet.\n", cmd);
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	if (bl->type == BL_NPC) {
 		if (!((TBL_NPC*)bl)->status.hp)
 			status_calc_npc(((TBL_NPC*)bl), SCO_FIRST);
@@ -19321,8 +19328,11 @@ BUILDIN_FUNC(unitwalk)
 		int x = script_getnum(st,3);
 		int y = script_getnum(st,4);
 
-		if (script_pushint(st, unit_can_reach_pos(bl,x,y,0)))
+		if (script_pushint(st, unit_can_reach_pos(bl,x,y,0))) {
+			if (ud != nullptr)
+				ud->state.force_walk = true;
 			add_timer(gettick()+50, unit_delay_walktoxy_timer, bl->id, (x<<16)|(y&0xFFFF)); // Need timer to avoid mismatches
+		}
 	} else {
 		struct block_list* tbl = map_id2bl(script_getnum(st,3));
 
@@ -19330,8 +19340,11 @@ BUILDIN_FUNC(unitwalk)
 			ShowError("buildin_unitwalk: Bad target destination.\n");
 			script_pushint(st, 0);
 			return SCRIPT_CMD_FAILURE;
-		} else if (script_pushint(st, unit_can_reach_bl(bl, tbl, distance_bl(bl, tbl)+1, 0, NULL, NULL)))
+		} else if (script_pushint(st, unit_can_reach_bl(bl, tbl, distance_bl(bl, tbl)+1, 0, NULL, NULL))) {
+			if (ud != nullptr)
+				ud->state.force_walk = true;
 			add_timer(gettick()+50, unit_delay_walktobl_timer, bl->id, tbl->id); // Need timer to avoid mismatches
+		}
 		off = 4;
 	}
 
@@ -19477,10 +19490,21 @@ BUILDIN_FUNC(unitstopwalk)
 	if (script_hasdata(st, 3))
 		flag = script_getnum(st, 3);
 
-	if(script_rid2bl(2,bl))
-		unit_stop_walking(bl, flag);
+	if(script_rid2bl(2,bl)) {
+		unit_data *ud = unit_bl2ud(bl);
 
-	return SCRIPT_CMD_SUCCESS;
+		if (ud != nullptr)
+			ud->state.force_walk = false;
+
+		if (unit_stop_walking(bl, flag) == 0 && flag != USW_FORCE_STOP) {
+			ShowWarning("buildin_unitstopwalk: Unable to find unit or unit is not walking.\n");
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		return SCRIPT_CMD_SUCCESS;
+	} else {
+		return SCRIPT_CMD_FAILURE;
+	}
 }
 
 /**

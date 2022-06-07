@@ -8270,6 +8270,8 @@ values (can be combined using the pipe operator):
 	USW_MOVE_FULL_CELL = Enable moving to the next cell when unit was already half-way there (may cause on-touch/place side-effects, such as a scripted map change).
 	USW_FORCE_STOP = Force stop moving.
 
+This command will also remove the state tracking used for 'unitwalk' and 'unitwalkto'.
+
 ---------------------------------------
 
 *unittalk <GID>,"<text>"{,flag};
