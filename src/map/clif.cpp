@@ -3345,6 +3345,19 @@ static int clif_hpmeter(struct map_session_data *sd)
 	return 0;
 }
 
+/**
+ * Send HP bar update to others.
+ * @param sd: Player invoking update
+ */
+void clif_update_hp(map_session_data &sd) {
+	if (map_getmapdata(sd.bl.m)->hpmeter_visible)
+		clif_hpmeter(&sd);
+	if (!battle_config.party_hp_mode && sd.status.party_id)
+		clif_party_hp(&sd);
+	if (sd.bg_id)
+		clif_bg_hp(&sd);
+}
+
 /// Notifies client of a character parameter change.
 /// 00b0 <var id>.W <value>.L (ZC_PAR_CHANGE)
 /// 00b1 <var id>.W <value>.L (ZC_LONGPAR_CHANGE)
@@ -3717,15 +3730,7 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 			}
 			break;
 		case SP_HP:
-			if( map_getmapdata(sd->bl.m)->hpmeter_visible ){
-				clif_hpmeter(sd);
-			}
-			if( !battle_config.party_hp_mode && sd->status.party_id ){
-				clif_party_hp(sd);
-			}
-			if( sd->bg_id ){
-				clif_bg_hp(sd);
-			}
+			clif_update_hp(*sd);
 			break;
 	}
 }
