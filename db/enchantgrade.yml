@@ -1,0 +1,58 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Enchantgrade Database
+###########################################################################
+#
+# Enchantgrade Settings
+#
+###########################################################################
+# - Type                                Item type.
+#   Levels:                             Enchantgrade settings per item level.
+#     - Level                           Item level.
+#       Grades:                         Enchantgrade settings per grade level.
+#         - Grade                       Enchantgrade level.
+#           Refine                      Required refine level.
+#           Chance                      Base chance of success out of 0~10000.
+#           Bonus                       Enchantgrade bonus. (Default: 0)
+#           Announce                    Announce if someone tries to increase the enchantgrade. (Default: true)
+#           Catalyst:                   Catalyst item to increase chance of success.
+#             Item                      The item that can be used.
+#             AmountPerStep             Amount of Item needed.
+#                                       Set to 0 to disable the catalyst.
+#             MaximumSteps              Maximum amount of times Item can be used.
+#             ChanceIncrease            Amount at which the chance increases for each Item used.
+#           Options:                    Success chance based on cost type.
+#             - Option                  Index of the client option.
+#               Item                    Required item.
+#               Amount                  Amount of required item. (Default: 1)
+#                                       Set to 0 to remove an option.
+#               Price                   Amount of zeny required. (Default: 0)
+#               BreakingRate            Chance of item breaking out of 0~10000. (Default: 0)
+#               DowngradeAmount         Number of refine levels reduced on failure. (Default: 0)
+###########################################################################
+
+Header:
+  Type: ENCHANTGRADE_DB
+  Version: 1
+
+Footer:
+  Imports:
+  - Path: db/re/enchantgrade.yml
+    Mode: Renewal
+  - Path: db/import/enchantgrade.yml

@@ -146,6 +146,8 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 			if( !askConfirmation( "Found the file \"%s\", which can be converted to sql.\nDo you want to convert it now? (Y/N)\n", from.c_str() ) ){
 				continue;
 			}
+#else
+			ShowMessage("Found the file \"%s\", converting from yml to sql.\n", from.c_str());
 #endif
 
 			inNode.reset();

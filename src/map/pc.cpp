@@ -9947,9 +9947,13 @@ bool pc_setparam(struct map_session_data *sd,int64 type,int64 val_tmp)
  *------------------------------------------*/
 void pc_heal(struct map_session_data *sd,unsigned int hp,unsigned int sp, unsigned int ap, int type)
 {// Is there going to be a effect for gaining AP soon??? [Rytech]
+	nullpo_retv(sd);
+
 	if (type&2) {
-		if (hp || type&4)
+		if (hp || type&4) {
 			clif_heal(sd->fd,SP_HP,hp);
+			clif_update_hp(*sd);
+		}
 		if (sp)
 			clif_heal(sd->fd,SP_SP,sp);
 		if (ap)
@@ -13995,7 +13999,7 @@ void pc_scdata_received(struct map_session_data *sd) {
 	clif_weight_limit( sd );
 
 	if( pc_has_permission( sd, PC_PERM_ATTENDANCE ) && pc_attendance_enabled() && !pc_attendance_rewarded_today( sd ) ){
-		clif_ui_open( sd, OUT_UI_ATTENDANCE, pc_attendance_counter( sd ) );
+		clif_ui_open( *sd, OUT_UI_ATTENDANCE, pc_attendance_counter( sd ) );
 	}
 
 	sd->state.pc_loaded = true;

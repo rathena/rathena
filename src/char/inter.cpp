@@ -44,11 +44,11 @@ InterServerDatabase interServerDb;
 Sql* sql_handle = NULL;	///Link to mysql db, connection FD
 
 int char_server_port = 3306;
-char char_server_ip[64] = "127.0.0.1";
-char char_server_id[32] = "ragnarok";
-char char_server_pw[32] = ""; // Allow user to send empty password (bugreport:7787)
-char char_server_db[32] = "ragnarok";
-char default_codepage[32] = ""; //Feature by irmin.
+std::string char_server_ip = "127.0.0.1";
+std::string char_server_id = "ragnarok";
+std::string char_server_pw = ""; // Allow user to send empty password (bugreport:7787)
+std::string char_server_db = "ragnarok";
+std::string default_codepage = ""; //Feature by irmin.
 unsigned int party_share_level = 10;
 
 /// Received packet Lengths from map-server
@@ -844,17 +844,17 @@ int inter_config_read(const char* cfgName)
 			continue;
 
 		if(!strcmpi(w1,"char_server_ip"))
-			safestrncpy(char_server_ip,w2,sizeof(char_server_ip));
+			char_server_ip = w2;
 		else if(!strcmpi(w1,"char_server_port"))
 			char_server_port = atoi(w2);
 		else if(!strcmpi(w1,"char_server_id"))
-			safestrncpy(char_server_id,w2,sizeof(char_server_id));
+			char_server_id = w2;
 		else if(!strcmpi(w1,"char_server_pw"))
-			safestrncpy(char_server_pw,w2,sizeof(char_server_pw));
+			char_server_pw = w2;
 		else if(!strcmpi(w1,"char_server_db"))
-			safestrncpy(char_server_db,w2,sizeof(char_server_db));
+			char_server_db = w2;
 		else if(!strcmpi(w1,"default_codepage"))
-			safestrncpy(default_codepage,w2,sizeof(default_codepage));
+			default_codepage = w2;
 		else if(!strcmpi(w1,"party_share_level"))
 			party_share_level = (unsigned int)atof(w2);
 		else if(!strcmpi(w1,"log_inter"))
@@ -973,17 +973,17 @@ int inter_init_sql(const char *file)
 	//DB connection initialized
 	sql_handle = Sql_Malloc();
 	ShowInfo("Connect Character DB server.... (Character Server)\n");
-	if( SQL_ERROR == Sql_Connect(sql_handle, char_server_id, char_server_pw, char_server_ip, (uint16)char_server_port, char_server_db) )
+	if( SQL_ERROR == Sql_Connect(sql_handle, char_server_id.c_str(), char_server_pw.c_str(), char_server_ip.c_str(), (uint16)char_server_port, char_server_db.c_str()))
 	{
-		ShowError("Couldn't connect with username = '%s', password = '%s', host = '%s', port = '%d', database = '%s'\n",
-			char_server_id, char_server_pw, char_server_ip, char_server_port, char_server_db);
+		ShowError("Couldn't connect with username = '%s', host = '%s', port = '%d', database = '%s'\n",
+			char_server_id.c_str(), char_server_ip.c_str(), char_server_port, char_server_db.c_str());
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(sql_handle);
 		exit(EXIT_FAILURE);
 	}
 
-	if( *default_codepage ) {
-		if( SQL_ERROR == Sql_SetEncoding(sql_handle, default_codepage) )
+	if( !default_codepage.empty() ) {
+		if( SQL_ERROR == Sql_SetEncoding(sql_handle, default_codepage.c_str()) )
 			Sql_ShowDebug(sql_handle);
 	}
 

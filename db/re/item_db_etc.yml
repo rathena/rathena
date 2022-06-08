@@ -61848,6 +61848,7 @@ Body:
     AegisName: Amber
     Name: Amber
     Type: Etc
+    Buy: 45000
     Weight: 100
   - Id: 1000322
     AegisName: Etel_Dust
