@@ -35856,6 +35856,7 @@ Body:
     AegisName: Luxurious_Pet_Food
     Name: Luxurious Pet Food
     Type: Etc
+    Buy: 10000
     Weight: 10
   - Id: 25378
     AegisName: Hardly_Sealed_Letter
@@ -47475,6 +47476,77 @@ Body:
     Script: |
       bonus bVariableCastrate,-10;
       bonus bDelayrate,-10;
+  - Id: 300330
+    AegisName: Sealed_Atroce_Card_J
+    Name: Sealed Atroce Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bBaseAtk,25;
+      autobonus "{ bonus bAspdRate,30; }",5,10000,0,"{}";
+  - Id: 300331
+    AegisName: Sealed_Ifrit_Card_J
+    Name: Sealed Ifrit Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bBaseAtk,(JobLevel/20);
+      bonus bCritical,(JobLevel/20);
+      bonus bHit,(JobLevel/20);
+      bonus3 bAutoSpellWhenHit,"NPC_EARTHQUAKE",1,1;
+  - Id: 300332
+    AegisName: Sealed_Gloom_Card_J
+    Name: Sealed Gloom Under Night Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddEle,Ele_Holy,5;
+      bonus2 bAddEle,Ele_Dark,5;
+      bonus2 bAddRace,RC_Angel,5;
+      bonus2 bAddRace,RC_Demon,5;
+  - Id: 300334
+    AegisName: Sealed_F_Bishop_Card_J
+    Name: Sealed Fallen Bishop Hibram Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bMatkRate,10;
+      bonus bMaxSPrate,-50;
+  - Id: 300338
+    AegisName: SLD_Thanatos_Card_J
+    Name: Sealed Memory of Thanatos Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bIgnoreDefRaceRate,RC_All,100;
+      bonus bDef,-30;
+      bonus bFlee,-30;
+      bonus bSPDrainValue,-1;
   - Id: 300348
     AegisName: SLD_G_Amon_Ra_Card_J
     Name: Sealed Nightmare Amon Ra Card
@@ -56010,6 +56082,26 @@ Body:
           }
         }
       }
+  - Id: 311071
+    AegisName: Sealed_Berz_Card_J
+    Name: Sealed Berzebub Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bVariableCastrate,-10;
+  - Id: 311073
+    AegisName: Goddess_of_Abundance
+    Name: Goddess of Abundance    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bHealpower2,15;
+      bonus bAddItemHealRate,15;
   - Id: 311076
     AegisName: POW_1Lv
     Name: POW Lv1
@@ -63454,6 +63546,28 @@ Body:
     Name: Special Red Pill Exchange
     Type: Etc
     Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000895
+    AegisName: aegis_1000895
+    Name: Special Young Seed Exchange
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000956
+    AegisName: aegis_1000956
+    Name: Special Kunnam Exchange
+    Type: Etc
     Trade:
       NoDrop: true
       NoTrade: true
