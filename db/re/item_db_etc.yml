@@ -53106,16 +53106,16 @@ Body:
       .@g = getenchantgrade();
       bonus bShortAtkRate,.@param;
       bonus bBaseAtk,5*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bShortAtkRate,.@param;
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bShortAtkRate,.@param;
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bShortAtkRate,.@param;
                bonus bPAtk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bShortAtkRate,.@param;
                   bonus bPAtk,.@param;
                }
@@ -53132,16 +53132,16 @@ Body:
       .@g = getenchantgrade();
       bonus bShortAtkRate,.@param;
       bonus bBaseAtk,7*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bShortAtkRate,.@param;
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bShortAtkRate,.@param;
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bShortAtkRate,.@param;
                bonus bPAtk,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bShortAtkRate,2*.@param;
                   bonus bPAtk,2*.@param;
                }
@@ -53158,16 +53158,16 @@ Body:
       .@g = getenchantgrade();
       bonus bShortAtkRate,2*.@param;
       bonus bBaseAtk,15*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bShortAtkRate,.@param;
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bShortAtkRate,.@param;
             bonus bPAtk,2*.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bShortAtkRate,2*.@param;
                bonus bPAtk,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bShortAtkRate,3*.@param;
                   bonus bPAtk,3*.@param;
                }
@@ -53184,16 +53184,16 @@ Body:
       .@g = getenchantgrade();
       bonus bMaxHPrate,.@param;
       bonus bRes,.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxHPrate,.@param;
          bonus bRes,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bMaxHPrate,.@param;
             bonus bRes,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bMaxHPrate,.@param;
                bonus bRes,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bMaxHPrate,.@param;
                   bonus bRes,2*.@param;
                }
@@ -53210,16 +53210,16 @@ Body:
       .@g = getenchantgrade();
       bonus bMaxHPrate,2*.@param;
       bonus bRes,2*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxHPrate,.@param;
          bonus bRes,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bMaxHPrate,.@param;
             bonus bRes,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bMaxHPrate,2*.@param;
                bonus bRes,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bMaxHPrate,2*.@param;
                   bonus bRes,2*.@param;
                }
@@ -53236,16 +53236,16 @@ Body:
       .@g = getenchantgrade();
       bonus bMaxHPrate,3*.@param;
       bonus bRes,4*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxHPrate,.@param;
          bonus bRes,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bMaxHPrate,2*.@param;
             bonus bRes,2*.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bMaxHPrate,2*.@param;
                bonus bRes,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bMaxHPrate,3*.@param;
                   bonus bRes,3*.@param;
                }
@@ -53262,16 +53262,16 @@ Body:
       .@g = getenchantgrade();
       bonus bLongAtkRate,.@param;
       bonus bBaseAtk,5*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bLongAtkRate,.@param;
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,.@param;
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bLongAtkRate,.@param;
                bonus bPAtk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bLongAtkRate,.@param;
                   bonus bPAtk,2*.@param;
                }
@@ -53288,16 +53288,16 @@ Body:
       .@g = getenchantgrade();
       bonus bLongAtkRate,2*.@param;
       bonus bBaseAtk,7*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bLongAtkRate,.@param;
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,.@param;
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bLongAtkRate,.@param;
                bonus bPAtk,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bLongAtkRate,2*.@param;
                   bonus bPAtk,2*.@param;
                }
@@ -53314,16 +53314,16 @@ Body:
       .@g = getenchantgrade();
       bonus bLongAtkRate,2*.@param;
       bonus bBaseAtk,15*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bLongAtkRate,.@param;
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,2*.@param;
             bonus bPAtk,2*.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bLongAtkRate,2*.@param;
                bonus bPAtk,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bLongAtkRate,3*.@param;
                   bonus bPAtk,3*.@param;
                }
@@ -53340,16 +53340,16 @@ Body:
       .@g = getenchantgrade();
       bonus bCritAtkRate,.@param;
       bonus bBaseAtk,5*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bCritAtkRate,.@param;
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bCritAtkRate,.@param;
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bCritAtkRate,.@param;
                bonus bPAtk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bCritAtkRate,.@param;
                   bonus bPAtk,.@param;
                }
@@ -53366,16 +53366,16 @@ Body:
       .@g = getenchantgrade();
       bonus bCritAtkRate,2*.@param;
       bonus bBaseAtk,7*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bCritAtkRate,.@param;
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bCritAtkRate,.@param;
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bCritAtkRate,.@param;
                bonus bPAtk,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bCritAtkRate,2*.@param;
                   bonus bPAtk,2*.@param;
                }
@@ -53392,16 +53392,16 @@ Body:
       .@g = getenchantgrade();
       bonus bCritAtkRate,3*.@param;
       bonus bBaseAtk,15*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bCritAtkRate,.@param;
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bCritAtkRate,.@param;
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bCritAtkRate,2*.@param;
                bonus bPAtk,3*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bCritAtkRate,3*.@param;
                   bonus bCrate,.@param;
                }
@@ -53418,16 +53418,16 @@ Body:
       .@g = getenchantgrade();
       bonus2 bMagicAtkEle,Ele_All,.@param;
       bonus bMatk,5*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bMagicAtkEle,Ele_All,.@param;
          bonus bSmatk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_All,.@param;
             bonus bSmatk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bMagicAtkEle,Ele_All,.@param;
                bonus bSmatk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus2 bMagicAtkEle,Ele_All,.@param;
                   bonus bSmatk,.@param;
                }
@@ -53444,16 +53444,16 @@ Body:
       .@g = getenchantgrade();
       bonus2 bMagicAtkEle,Ele_All,2*.@param;
       bonus bMatk,7*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bMagicAtkEle,Ele_All,.@param;
          bonus bSmatk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_All,.@param;
             bonus bSmatk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bMagicAtkEle,Ele_All,2*.@param;
                bonus bSmatk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus2 bMagicAtkEle,Ele_All,2*.@param;
                   bonus bSmatk,2*.@param;
                }
@@ -53470,16 +53470,16 @@ Body:
       .@g = getenchantgrade();
       bonus2 bMagicAtkEle,Ele_All,3*.@param;
       bonus bMatk,15*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bMagicAtkEle,Ele_All,.@param;
          bonus bSmatk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_All,.@param;
             bonus bSmatk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bMagicAtkEle,Ele_All,2*.@param;
                bonus bSmatk,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus2 bMagicAtkEle,Ele_All,3*.@param;
                   bonus bSmatk,2*.@param;
                }
@@ -53496,18 +53496,18 @@ Body:
       .@g = getenchantgrade();
       bonus bMaxSPrate,.@param;
       bonus bHealPower,.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxSPrate,.@param;
          bonus bHealPower,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSPrecovRate,.@param;
             bonus bMaxSPrate,.@param;
             bonus bHealPower,2*.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSPrecovRate,2*.@param;
                bonus bMaxSPrate,.@param;
                bonus bHealPower,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bHplus,.@param;
                   bonus bMaxSPrate,.@param;
                }
@@ -53524,18 +53524,18 @@ Body:
       .@g = getenchantgrade();
       bonus bMaxSPrate,.@param;
       bonus bHealPower,3*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxSPrate,.@param;
          bonus bHealPower,2*.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSPrecovRate,.@param;
             bonus bMaxSPrate,.@param;
             bonus bHealPower,2*.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSPrecovRate,2*.@param;
                bonus bHplus,.@param;
                bonus bMaxSPrate,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bHplus,2*.@param;
                   bonus bMaxSPrate,2*.@param;
                }
@@ -53552,18 +53552,18 @@ Body:
       .@g = getenchantgrade();
       bonus bMaxSPrate,2*.@param;
       bonus bHealPower,5*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxSPrate,.@param;
          bonus bHealPower,2*.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSPrecovRate,2*.@param;
             bonus bMaxSPrate,.@param;
             bonus bHealPower,2*.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSPrecovRate,3*.@param;
                bonus bHplus,2*.@param;
                bonus bMaxSPrate,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bHplus,3*.@param;
                   bonus bMaxSPrate,2*.@param;
                }
@@ -54556,13 +54556,13 @@ Body:
       bonus bPow,1;
       bonus bPAtk,.@param;
       bonus bBaseAtk,3*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bPAtk,.@param;
                }
             }
@@ -54579,13 +54579,13 @@ Body:
       bonus bPow,2;
       bonus bPAtk,2*.@param;
       bonus bBaseAtk,4*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bPAtk,2*.@param;
                }
             }
@@ -54602,13 +54602,13 @@ Body:
       bonus bPow,3;
       bonus bPAtk,3*.@param;
       bonus bBaseAtk,5*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,2*.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bPAtk,2*.@param;
                }
             }
@@ -54625,13 +54625,13 @@ Body:
       bonus bSpl,1;
       bonus bSmatk,.@param;
       bonus bMatk,3*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSmatk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bSmatk,.@param;
                }
             }
@@ -54648,13 +54648,13 @@ Body:
       bonus bSpl,2;
       bonus bSmatk,2*.@param;
       bonus bMatk,4*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSmatk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bSmatk,2*.@param;
                }
             }
@@ -54671,13 +54671,13 @@ Body:
       bonus bSpl,3;
       bonus bSmatk,3*.@param;
       bonus bMatk,5*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSmatk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,2*.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bSmatk,2*.@param;
                }
             }
@@ -54694,13 +54694,13 @@ Body:
       bonus bCon,1;
       bonus bPAtk,.@param;
       bonus bBaseAtk,3*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bPAtk,.@param;
                }
             }
@@ -54717,13 +54717,13 @@ Body:
       bonus bCon,2;
       bonus bPAtk,2*.@param;
       bonus bBaseAtk,4*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bPAtk,2*.@param;
                }
             }
@@ -54740,13 +54740,13 @@ Body:
       bonus bCon,3;
       bonus bPAtk,3*.@param;
       bonus bBaseAtk,5*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,2*.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bPAtk,2*.@param;
                }
             }
@@ -54764,13 +54764,13 @@ Body:
       bonus bCritAtkRate,3*.@param;
       bonus bPAtk,.@param;
       bonus bBaseAtk,3*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bPAtk,2*.@param;
                }
             }
@@ -54788,13 +54788,13 @@ Body:
       bonus bCritAtkRate,4*.@param;
       bonus bPAtk,2*.@param;
       bonus bBaseAtk,4*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bPAtk,2*.@param;
                }
             }
@@ -54812,13 +54812,13 @@ Body:
       bonus bCritAtkRate,5*.@param;
       bonus bPAtk,2*.@param;
       bonus bBaseAtk,5*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bPAtk,2*.@param;
                }
             }
@@ -54835,16 +54835,16 @@ Body:
       bonus bWis,1;
       bonus bMaxSPrate,.@param;
       bonus bHealPower,.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxSPrate,.@param;
          bonus bHealPower,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bMaxSPrate,.@param;
             bonus bHealPower,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bMaxSPrate,.@param;
                bonus bHealPower,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bMaxSPrate,.@param;
                   bonus bHealPower,2*.@param;
                }
@@ -54862,16 +54862,16 @@ Body:
       bonus bWis,2;
       bonus bMaxSPrate,2*.@param;
       bonus bHealPower,2*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxSPrate,.@param;
          bonus bHealPower,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bMaxSPrate,.@param;
             bonus bHealPower,2*.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bMaxSPrate,.@param;
                bonus bHealPower,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bHplus,.@param;
                   bonus bMaxSPrate,2*.@param;
                }
@@ -54889,16 +54889,16 @@ Body:
       bonus bWis,3;
       bonus bMaxSPrate,3*.@param;
       bonus bHealPower,3*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxSPrate,.@param;
          bonus bHealPower,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bMaxSPrate,.@param;
             bonus bHealPower,2*.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bHplus,.@param;
                bonus bMaxSPrate,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bHplus,2*.@param;
                   bonus bMaxSPrate,2*.@param;
                }
@@ -54916,16 +54916,16 @@ Body:
       bonus bSta,1;
       bonus bMaxHP,250*.@param;
       bonus bRes,.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxHPrate,.@param;
          bonus bRes,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bMaxHPrate,.@param;
             bonus bRes,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bMaxHPrate,.@param;
                bonus bRes,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bMaxHPrate,.@param;
                   bonus bRes,.@param;
                }
@@ -54943,16 +54943,16 @@ Body:
       bonus bSta,2;
       bonus bMaxHP,400*.@param;
       bonus bRes,2*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxHPrate,.@param;
          bonus bRes,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bMaxHPrate,.@param;
             bonus bRes,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bMaxHPrate,.@param;
                bonus bRes,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bMaxHPrate,.@param;
                   bonus bRes,2*.@param;
                }
@@ -54970,16 +54970,16 @@ Body:
       bonus bSta,3;
       bonus bMaxHP,600*.@param;
       bonus bRes,3*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxHPrate,.@param;
          bonus bRes,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bMaxHPrate,.@param;
             bonus bRes,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bMaxHPrate,.@param;
                bonus bRes,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bMaxHPrate,2*.@param;
                   bonus bRes,2*.@param;
                }
