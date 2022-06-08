@@ -79,6 +79,8 @@ OnTimer1000:
 //============================================================
 bat_b02,15,15,3	script	start#bat_b02	844,{
 OnInit:
+	if (getbattleflag("feature.bgqueue"))
+		bg_unbook "bat_b02";
 	mapwarp "bat_b02","bat_room",154,150;
 	end;
 

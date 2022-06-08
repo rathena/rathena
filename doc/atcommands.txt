@@ -1178,6 +1178,12 @@ If args are given, sets camera position.
 
 ---------------------------------------
 
+@enchantgradeui
+
+Opens the enchantgrade UI.
+
+---------------------------------------
+
 ==============================
 | 5. Administrative Commands |
 ==============================

@@ -1010,6 +1010,9 @@ Body:
     Aliases:
       - famepoint
       - famepoints
+  - Command: enchantgradeui
+    Help: |
+      Opens the enchantgrade UI.
 
 Footer:
   Imports:

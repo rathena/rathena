@@ -58,6 +58,7 @@ struct unit_data {
 		unsigned blockedmove : 1;
 		unsigned blockedskill : 1;
 		unsigned ignore_cell_stack_limit : 1;
+		bool force_walk; ///< Used with script commands unitwalk/unitwalkto. Disables monster idle and random walk.
 	} state;
 	char walk_done_event[EVENT_NAME_LENGTH];
 	char title[NAME_LENGTH];
