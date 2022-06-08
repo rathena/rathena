@@ -5042,6 +5042,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      SendVal1: true
       OverlapIgnoreLevel: true
       NoForcedEnd: true
   - Status: Spellbook1
