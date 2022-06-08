@@ -2319,6 +2319,390 @@ Body:
     Weight: 10
     Script: |
       laphine_upgrade();
+  - Id: 9969
+    AegisName: Arca_Cura_BR
+    Name: Healing Ark    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14523,600;
+      getitem 14522,600;
+      getitembound 23919,11,Bound_Account;
+  - Id: 9970
+    AegisName: Arca_Palito_BR
+    Name: Stick Ark    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14616,5;
+      getitem 14617,5;
+      getitem 14618,5;
+      getitem 14619,5;
+      getitem 14620,5;
+      getitem 14621,5;
+      getitembound 23919,11,Bound_Account;
+  - Id: 9971
+    AegisName: Arca_Batalha2_BR
+    Name: Major Battle Ark    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 12208,20;
+      getitem 14592,20;
+      getitem 14601,20;
+      getitem 12832,60;
+      getitem 12791,50;
+      getitembound 23919,11,Bound_Account;
+  - Id: 9972
+    AegisName: Arca_Batalha_BR
+    Name: Battle Ark    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 12208,2;
+      getitem 14592,2;
+      getitem 14601,2;
+      getitem 12832,6;
+      getitem 12791,5;
+      getitembound 23919,1,Bound_Account;
+  - Id: 9973
+    AegisName: Arca_Vida2_BR
+    Name: Major Ark of Life    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14534,200;
+      getitem 14535,200;
+      getitem 12832,200;
+      getitembound 23919,11,Bound_Account;
+  - Id: 9974
+    AegisName: Arca_Vida_BR
+    Name: Ark of Life    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14534,20;
+      getitem 14535,20;
+      getitem 12832,20;
+      getitembound 23919,1,Bound_Account;
+  - Id: 9974
+    AegisName: Arca_Vida_BR
+    Name: Ark of Life    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 12516,20;
+      getitem 12515,20;
+      getitem 12832,20;
+      getitembound 23919,1,Bound_Account;
+  - Id: 9975
+    AegisName: Arca_Divina2_BR
+    Name: Divine Major Ark    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 12883,100;
+      getitem 23046,10;
+      getitem 23047,10;
+      getitem 23048,10;
+      getitem 23049,1;
+      getitem 23050,1;
+      getitembound 23919,11,Bound_Account;
+  - Id: 9976
+    AegisName: Arca_Divina_BR
+    Name: Divine Ark    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 12883,10;
+      getitem 23046,1;
+      getitem 23047,1;
+      getitem 23048,1;
+      getitembound 23919,1,Bound_Account;
+  - Id: 9977
+    AegisName: Arca_Refino2_BR
+    Name: Major Refining Ark    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 7620,50;
+      getitem 7619,50;
+      getitembound 23919,11,Bound_Account;
+  - Id: 9978
+    AegisName: Arca_Refino_BR
+    Name: Refining Ark    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 7620,5;
+      getitem 7619,5;
+      getitembound 23919,1,Bound_Account;
+  - Id: 9979
+    AegisName: Arca_Enriquecido_BR
+    Name: Perfect Ark    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6240,13;
+      getitem 6241,13;
+      getitem 14600,6;
+      getitembound 23919,11,Bound_Account;
+  - Id: 9980
+    AegisName: Arca_Minerio_BR
+    Name: Ore Ark    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6226,13;
+      getitem 6225,13;
+      getitem 14600,6;
+      getitembound 23919,11,Bound_Account;
+  - Id: 9981
+    AegisName: Arca_Pergaminho_BR
+    Name: Scroll Ark    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14588,50;
+      getitem 14589,50;
+      getitem 14590,50;
+      getitembound 23919,1,Bound_Account;
+  - Id: 9982
+    AegisName: Arca_Especial_BR
+    Name: Special Ark    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 14799,4;
+      getitembound 23919,11,Bound_Account;
+  - Id: 9983
+    AegisName: Arca_Celeste2_BR
+    Name: Major Celestial Ark    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6439,5;
+      getitem 6438,5;
+      getitembound 23919,11,Bound_Account;
+  - Id: 9984
+    AegisName: Arca_Celeste_BR
+    Name: Major Celestial Ark    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6439,1;
+      getitem 6438,1;
+      getitembound 23919,1,Bound_Account;
+  - Id: 9985
+    AegisName: Arca_Status_BR
+    Name: Potions Ark    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 22702,5;
+      getitem 22703,5;
+      getitem 22704,5;
+      getitem 22705,5;
+      getitem 22706,5;
+      getitem 22707,5;
+      getitembound 23919,1,Bound_Account;
+  - Id: 9986
+    AegisName: Arca_Reset_BR
+    Name: Reset Ark    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 12213,1;
+      getitem 6320,4;
+      getitembound 23919,11,Bound_Account;
+  - Id: 9987
+    AegisName: Arca_Up2_BR
+    Name: Major Evolve Ark    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 12375,100;
+      getitem 12796,100;
+      getitem 12684,50;
+      getitembound 23919,11,Bound_Account;
+  - Id: 9988
+    AegisName: Arca_Up_BR
+    Name: Evolve Ark    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 12375,10;
+      getitem 12796,10;
+      getitem 12684,5;
+      getitembound 23919,1,Bound_Account;
   - Id: 11500
     AegisName: Light_Yellow_Pot
     Name: Light Yellow Potion
@@ -38091,6 +38475,23 @@ Body:
       NoAuction: true
     Script: |
       getitem 12581,50;
+  - Id: 16794
+    AegisName: C_Giant_Fly_Wing_Box
+    Name: Giant Flywing 500 Box
+    Type: Cash
+    Sell: 10
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitembound 12212,500,Bound_Account;
+      getitembound 23919,1,Bound_Account;
   - Id: 16821
     AegisName: Dungeon_Teleport_Scroll_Box_5
     Name: Dungeon Teleport Scroll Box(5)
@@ -42891,6 +43292,74 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_Blessing_Scarlet_Scroll);
+  - Id: 17971
+    AegisName: A_3_Life_Potion_10pack
+    Name: Life Potion Sampler 10 Crate
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitembound 12832,100,Bound_Account;
+      getitem 14534,100;
+      getitem 14535,100;
+      getitembound 23919,11,Bound_Account;
+  - Id: 17972
+    AegisName: A_3_Life_Potion_pack
+    Name: Life Potion Sampler Crate
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitembound 12832,10,Bound_Account;
+      getitem 14534,10;
+      getitem 14535,10;
+      getitembound 23919,1,Bound_Account;
+  - Id: 17981
+    AegisName: A_Infinity_10_Box
+    Name: Infinity Drink 200 Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 23475,200;
+      getitembound 23919,11,Bound_Account;
+  - Id: 17982
+    AegisName: A_Infinity_Box
+    Name: Infinity Drink 20 Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 23475,20;
+      getitembound 23919,1,Bound_Account;
   - Id: 22507
     AegisName: ShabbyOldScroll
     Name: Old Scroll
@@ -47391,6 +47860,139 @@ Body:
     Weight: 50
     Script: |
       laphine_upgrade();
+  - Id: 23505
+    AegisName: Yellow_Potion_B_20
+    Name: "[Not for Sale] Yellow Potions Box 20"   # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      getitem 11566,20;
+  - Id: 23506
+    AegisName: White_Potion_B_20
+    Name: "[Not for Sale] White Potion Box 20"   # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      getitem 11565,20;
+  - Id: 23582
+    AegisName: E_Wing_Of_Fly_3Day_Box
+    Name: "[Not for Sale] Infinite Flywing Box 7-Day"    # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      rentitem 12887,604800;
+  - Id: 23583
+    AegisName: Rebeginer_Box
+    Name: Beginner's Armor Box    # !todo check english name
+    Type: Usable
+    EquipLevelMin: 100
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 19310,1;
+      getitem 15250,1;
+      getitem 20906,1;
+      getitem 22173,1;
+      getitem 28566,1;
+  - Id: 23584
+    AegisName: Rebeginer_S_Box
+    Name: Shadow Box for Beginners    # !todo check english name
+    Type: Usable
+    EquipLevelMin: 120
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 24387,1;
+      getitem 24388,1;
+      getitem 24390,1;
+      getitem 24389,1;
+      getitem 24391,1;
+      getitem 24392,1;
+  - Id: 23585
+    AegisName: Rebeginer_Box_100
+    Name: Beginner Support Box (100)    # !todo check english name
+    Type: Usable
+    EquipLevelMin: 100
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 23505,25;
+      getitem 23583,1;
+      getitem 23582,1;
+      getitem 23427,1;
+      getitem 23586,1;
+  - Id: 23586
+    AegisName: Rebeginer_Box_110
+    Name: Beginner Support Box (110)    # !todo check english name
+    Type: Usable
+    EquipLevelMin: 110
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 23506,20;
+      getitem 23582,2;
+      getitem 23428,1;
+      getitem 23587,1;
+  - Id: 23587
+    AegisName: Rebeginer_Box_120
+    Name: Beginner Support Box (120)    # !todo check english name
+    Type: Usable
+    EquipLevelMin: 120
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 23506,25;
+      getitem 23582,3;
+      getitem 23584,1;
   - Id: 23815
     AegisName: Magma_Essence
     Name: Lava Essence
@@ -47946,6 +48548,20 @@ Body:
     Script: |
       bonus_script "{ bonus bAllStats,10; bonus bBaseAtk,30; bonus bMatk,30; }",3600;
       sc_start SC_SPEEDUP0,600000,25;
+  - Id: 23919
+    AegisName: K_Secret_Key
+    Name: Kachua's Secret Key
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* callfunc "F_Kachua_Key"; */
   - Id: 23926
     AegisName: Shadow_9_Refine_Hammer
     Name: Shadow 9 Refine Hammer
@@ -50849,6 +51465,84 @@ Body:
     Script: |
       sc_start SC_FOOD_VIT_CASH,1800000,15;
       bonus_script "{ bonus bHPRecovRate,rand(11,33); }",1800,1;
+  - Id: 101463
+    AegisName: HD_Elunium_10Box_MSP
+    Name: (Limited) HD Elunium 10 Box
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6241,10;
+      getitembound 23919,11,Bound_Account;
+  - Id: 101465
+    AegisName: HD_Oridecon_10Box_MSP
+    Name: (Limited) HD Oridecon 10 Box
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6240,10;
+      getitembound 23919,11,Bound_Account;
+  - Id: 200055
+    AegisName: C_Acid_B_50Box
+    Name: Acid Bomb 50 Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitembound 7136,50,Bound_Account;
+      getitembound 23919,1,Bound_Account;
+  - Id: 200056
+    AegisName: C_Acid_B_500_Box
+    Name: Acid Bomb 500 Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitembound 7136,500,Bound_Account;
+      getitembound 23919,1,Bound_Account;
+  - Id: 200064
+    AegisName: Giant_Fly_Wing_2500
+    Name: Giant Flywing 2500 Box
+    Type: Cash
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitembound 12212,2500,Bound_Account;
+      getitembound 23919,12,Bound_Account;
   - Id: 200185
     AegisName: LI_Nyangvine_Box1_26
 #   Name: (Limited) Actinidia Cat Fruit Box I (Stone Box 26)

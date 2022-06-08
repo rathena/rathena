@@ -8996,6 +8996,14 @@
 	export_constant(SCF_REMOVEONUNEQUIPWEAPON);
 	export_constant(SCF_REMOVEONUNEQUIPARMOR);
 
+	/* enchantgrades */
+	export_constant(ENCHANTGRADE_NONE);
+	export_constant(ENCHANTGRADE_D);
+	export_constant(ENCHANTGRADE_C);
+	export_constant(ENCHANTGRADE_B);
+	export_constant(ENCHANTGRADE_A);
+	export_constant(MAX_ENCHANTGRADE);
+
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter

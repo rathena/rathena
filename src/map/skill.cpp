@@ -2697,6 +2697,13 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 --------------------------------------------------------------------------*/
 int skill_break_equip(struct block_list *src, struct block_list *bl, unsigned short where, int rate, int flag)
 {
+	status_change *src_sc = status_get_sc(src);
+
+	// Grant player skills/items the ability to "break" non-player equipment.
+	// WS_MELTDOWN is exempt from this check.
+	if (!battle_config.break_mob_equip && bl->type != BL_PC && !(src_sc && src_sc->data[SC_MELTDOWN]))
+		return 0;
+
 	const int where_list[6]     = { EQP_WEAPON, EQP_ARMOR, EQP_SHIELD, EQP_HELM, EQP_ACC, EQP_SHADOW_GEAR };
 	const enum sc_type scatk[6] = { SC_STRIPWEAPON, SC_STRIPARMOR, SC_STRIPSHIELD, SC_STRIPHELM, SC__STRIPACCESSORY, SC_SHADOW_STRIP };
 	const enum sc_type scdef[6] = { SC_CP_WEAPON, SC_CP_ARMOR, SC_CP_SHIELD, SC_CP_HELM, SC_NONE, SC_PROTECTSHADOWEQUIP };
@@ -12086,7 +12093,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		else if (status_get_hp(bl) != status_get_max_hp(bl))
 			heal = ((2 * skill_lv - 1) * 10) * status_get_max_hp(bl) / 100;
 		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-		status_heal(bl, heal, 0, 1|2|4);
+		status_heal(bl, heal, 0, 0);
 	}
 		break;
 
@@ -15729,8 +15736,8 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 			break;
 
 		case UNT_POISONSMOKE:
-			if( battle_check_target(ss,bl,BCT_ENEMY) > 0 && !(tsc && tsc->data[sg->val2]) && rnd()%100 < 20 )
-				sc_start(ss,bl,(sc_type)sg->val2,100,sg->val3,skill_get_time2(GC_POISONINGWEAPON, 1));
+			if( battle_check_target(ss,bl,BCT_ENEMY) > 0 && !(tsc && tsc->data[sg->val2]) && rnd()%100 < 50 )
+				sc_start4(ss,bl,(sc_type)sg->val2,100,sg->val3,0,1,0,skill_get_time2(GC_POISONINGWEAPON, 1));
 			break;
 
 		case UNT_EPICLESIS:
