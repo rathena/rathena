@@ -2830,7 +2830,7 @@ Body:
     AegisName: Protect_Neck_Candy
     Name: Protect Neck Candy
     Type: Healing
-    Buy: 200
+    Buy: 250
     Weight: 1
     Flags:
       BuyingStore: true

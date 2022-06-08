@@ -218,7 +218,7 @@ Body:
     AegisName: Empty_Bottle
     Name: Empty Bottle
     Type: Etc
-    Buy: 6
+    Buy: 400
     Weight: 20
     Flags:
       BuyingStore: true
@@ -282,7 +282,7 @@ Body:
     AegisName: Azure_Jewel
     Name: Emerald
     Type: Etc
-    Buy: 6000
+    Buy: 4500
     Weight: 100
     Flags:
       BuyingStore: true
@@ -298,7 +298,7 @@ Body:
     AegisName: Cardinal_Jewel
     Name: Ruby
     Type: Etc
-    Buy: 6000
+    Buy: 4500
     Weight: 100
     Flags:
       BuyingStore: true
@@ -322,7 +322,7 @@ Body:
     AegisName: Blue_Jewel
     Name: Sapphire
     Type: Etc
-    Buy: 6000
+    Buy: 4500
     Weight: 100
     Flags:
       BuyingStore: true
@@ -338,7 +338,7 @@ Body:
     AegisName: Golden_Jewel
     Name: Topaz
     Type: Etc
-    Buy: 6000
+    Buy: 4500
     Weight: 100
     Flags:
       BuyingStore: true
@@ -346,7 +346,7 @@ Body:
     AegisName: Bluish_Green_Jewel
     Name: Zircon
     Type: Etc
-    Buy: 6000
+    Buy: 4500
     Weight: 100
     Flags:
       BuyingStore: true
@@ -354,7 +354,7 @@ Body:
     AegisName: Crystal_Jewel
     Name: 1carat Diamond
     Type: Etc
-    Buy: 10000
+    Buy: 7500
     Weight: 100
     Flags:
       BuyingStore: true
@@ -502,7 +502,7 @@ Body:
     AegisName: Witherless_Rose
     Name: Witherless Rose
     Type: Etc
-    Buy: 55000
+    Buy: 41250
     Weight: 10
     Flags:
       BuyingStore: true
@@ -666,7 +666,7 @@ Body:
     AegisName: Scell
     Name: Scell
     Type: Etc
-    Buy: 160
+    Buy: 120
     Weight: 10
     Flags:
       BuyingStore: true
@@ -730,7 +730,7 @@ Body:
     AegisName: Animal's_Skin
     Name: Animal Skin
     Type: Etc
-    Buy: 36
+    Buy: 27
     Weight: 10
     Flags:
       BuyingStore: true
@@ -778,7 +778,7 @@ Body:
     AegisName: Bill_Of_Birds
     Name: Bill of Birds
     Type: Etc
-    Buy: 64
+    Buy: 48
     Weight: 10
     Flags:
       BuyingStore: true
@@ -1874,7 +1874,7 @@ Body:
     AegisName: Booby_Trap
     Name: Trap
     Type: Etc
-    Buy: 50
+    Buy: 75
     Weight: 2
     Flags:
       BuyingStore: true
@@ -16490,7 +16490,7 @@ Body:
     AegisName: Face_Paint
     Name: Face Paint
     Type: Etc
-    Buy: 120
+    Buy: 150
     Weight: 20
     Flags:
       BuyingStore: true
@@ -16526,7 +16526,7 @@ Body:
     AegisName: Surface_Paint
     Name: Surface Paint
     Type: Etc
-    Buy: 200
+    Buy: 250
     Weight: 30
     Flags:
       BuyingStore: true
@@ -16800,7 +16800,7 @@ Body:
     AegisName: Heartbroken_Tears
     Name: Regrettable Tears
     Type: Etc
-    Buy: 1000
+    Buy: 1250
     Weight: 2
     Flags:
       BuyingStore: true
@@ -16808,7 +16808,7 @@ Body:
     AegisName: Vulcan_Bullet
     Name: Vulcan Bullet
     Type: Etc
-    Buy: 10
+    Buy: 12
     Weight: 1
     Flags:
       BuyingStore: true
@@ -16816,7 +16816,7 @@ Body:
     AegisName: Magic_Gear_Fuel
     Name: Magic Gear Fuel
     Type: Etc
-    Buy: 250
+    Buy: 375
     Weight: 1
     Flags:
       BuyingStore: true
@@ -16824,7 +16824,7 @@ Body:
     AegisName: Liquid_Condensed_Bullet
     Name: Liquid Condensed Bullet
     Type: Etc
-    Buy: 100
+    Buy: 125
     Weight: 1
     Flags:
       BuyingStore: true
@@ -17810,7 +17810,7 @@ Body:
     AegisName: Melange_Pot
     Name: Melange Pot
     Type: Etc
-    Buy: 600
+    Buy: 750
     Weight: 10
     Flags:
       BuyingStore: true
@@ -17826,7 +17826,7 @@ Body:
     AegisName: Cooking_Skewer
     Name: Cooking Skewer
     Type: Etc
-    Buy: 300
+    Buy: 375
     Weight: 10
     Flags:
       BuyingStore: true
@@ -17834,7 +17834,7 @@ Body:
     AegisName: Black_Charcoal
     Name: Black Charcoal
     Type: Etc
-    Buy: 300
+    Buy: 375
     Weight: 10
     Flags:
       BuyingStore: true
@@ -17866,7 +17866,7 @@ Body:
     AegisName: Large_Cookpot
     Name: Large Cookpot
     Type: Etc
-    Buy: 500
+    Buy: 625
     Weight: 10
     Flags:
       BuyingStore: true
@@ -17890,7 +17890,7 @@ Body:
     AegisName: Comodo_Tropic_Fruit
     Name: Comodo Tropical Fruit
     Type: Etc
-    Buy: 800
+    Buy: 1000
     Weight: 10
     Flags:
       BuyingStore: true
@@ -17914,7 +17914,7 @@ Body:
     AegisName: Fine_Noodle
     Name: Fine Noodles
     Type: Etc
-    Buy: 500
+    Buy: 625
     Weight: 10
     Flags:
       BuyingStore: true
@@ -17922,7 +17922,7 @@ Body:
     AegisName: Cool_Gravy
     Name: Cool Gravy
     Type: Etc
-    Buy: 400
+    Buy: 500
     Weight: 10
     Flags:
       BuyingStore: true
@@ -20104,7 +20104,7 @@ Body:
     AegisName: Charm_Fire
     Name: Fire Amulet
     Type: Etc
-    Buy: 50
+    Buy: 100
     Weight: 1
     Flags:
       BuyingStore: true
@@ -20112,7 +20112,7 @@ Body:
     AegisName: Charm_Ice
     Name: Ice Amulet
     Type: Etc
-    Buy: 50
+    Buy: 100
     Weight: 1
     Flags:
       BuyingStore: true
@@ -20120,7 +20120,7 @@ Body:
     AegisName: Charm_Wind
     Name: Wind Amulet
     Type: Etc
-    Buy: 50
+    Buy: 100
     Weight: 1
     Flags:
       BuyingStore: true
@@ -27406,7 +27406,7 @@ Body:
     AegisName: Cookbook01
     Name: Level 1 Cookbook
     Type: Etc
-    Buy: 1000
+    Buy: 750
     Weight: 10
     Flags:
       BuyingStore: true
@@ -27414,7 +27414,7 @@ Body:
     AegisName: Cookbook02
     Name: Level 2 Cookbook
     Type: Etc
-    Buy: 1000
+    Buy: 750
     Weight: 10
     Flags:
       BuyingStore: true
@@ -27422,7 +27422,7 @@ Body:
     AegisName: Cookbook03
     Name: Level 3 Cookbook
     Type: Etc
-    Buy: 1000
+    Buy: 750
     Weight: 10
     Flags:
       BuyingStore: true
@@ -27430,7 +27430,7 @@ Body:
     AegisName: Cookbook04
     Name: Level 4 Cookbook
     Type: Etc
-    Buy: 1000
+    Buy: 750
     Weight: 10
     Flags:
       BuyingStore: true
@@ -27438,7 +27438,7 @@ Body:
     AegisName: Cookbook05
     Name: Level 5 Cookbook
     Type: Etc
-    Buy: 1000
+    Buy: 750
     Weight: 10
     Flags:
       BuyingStore: true
@@ -27486,7 +27486,7 @@ Body:
     AegisName: Pot
     Name: Pot
     Type: Etc
-    Buy: 150
+    Buy: 375
     Weight: 10
     Flags:
       BuyingStore: true
@@ -27931,7 +27931,7 @@ Body:
     AegisName: Flame_Stone
     Name: Flame Stone
     Type: Etc
-    Buy: 50
+    Buy: 112
     Weight: 1
     Flags:
       BuyingStore: true
@@ -27939,7 +27939,7 @@ Body:
     AegisName: Ice_Stone
     Name: Ice Stone
     Type: Etc
-    Buy: 50
+    Buy: 112
     Weight: 1
     Flags:
       BuyingStore: true
@@ -27947,7 +27947,7 @@ Body:
     AegisName: Wind_Stone
     Name: Wind Stone
     Type: Etc
-    Buy: 50
+    Buy: 112
     Weight: 1
     Flags:
       BuyingStore: true
@@ -27955,7 +27955,7 @@ Body:
     AegisName: Shadow_Orb
     Name: Shadow Orb
     Type: Etc
-    Buy: 200
+    Buy: 225
     Weight: 1
     Flags:
       BuyingStore: true
@@ -31261,7 +31261,7 @@ Body:
     AegisName: Special_Alloy_Trap
     Name: Special Alloy Trap
     Type: Etc
-    Buy: 100
+    Buy: 300
     Weight: 2
     Flags:
       BuyingStore: true
@@ -32498,7 +32498,7 @@ Body:
     Name: Bloody Shell
     Type: Ammo
     SubType: Bullet
-    Buy: 5
+    Buy: 10
     Weight: 1
     Attack: 30
     Jobs:
@@ -32666,7 +32666,7 @@ Body:
     Name: Shuriken
     Type: Ammo
     SubType: Shuriken
-    Buy: 2
+    Buy: 4
     Weight: 1
     Attack: 10
     Jobs:
@@ -32680,7 +32680,7 @@ Body:
     Name: Nimbus Shuriken
     Type: Ammo
     SubType: Shuriken
-    Buy: 4
+    Buy: 10
     Weight: 1
     Attack: 30
     Jobs:
@@ -32694,7 +32694,7 @@ Body:
     Name: Flash Shuriken
     Type: Ammo
     SubType: Shuriken
-    Buy: 6
+    Buy: 20
     Weight: 1
     Attack: 45
     Jobs:
@@ -32708,7 +32708,7 @@ Body:
     Name: Sharp Leaf Shuriken
     Type: Ammo
     SubType: Shuriken
-    Buy: 12
+    Buy: 40
     Weight: 1
     Attack: 70
     Jobs:
@@ -32722,7 +32722,7 @@ Body:
     Name: Thorn Needle Shuriken
     Type: Ammo
     SubType: Shuriken
-    Buy: 20
+    Buy: 100
     Weight: 1
     Attack: 100
     Jobs:
@@ -33413,7 +33413,7 @@ Body:
     Name: Explosive Kunai
     Type: Ammo
     SubType: Kunai
-    Buy: 50
+    Buy: 100
     Weight: 1
     Attack: 50
     Jobs:
@@ -33482,7 +33482,7 @@ Body:
     Name: Cannon Ball
     Type: Ammo
     SubType: Cannonball
-    Buy: 30
+    Buy: 100
     Weight: 1
     Attack: 100
     Jobs:
@@ -33499,7 +33499,7 @@ Body:
     Name: Holy Cannon Ball
     Type: Ammo
     SubType: Cannonball
-    Buy: 50
+    Buy: 200
     Weight: 1
     Attack: 120
     Jobs:
@@ -33518,7 +33518,7 @@ Body:
     Name: Dark Cannon Ball
     Type: Ammo
     SubType: Cannonball
-    Buy: 50
+    Buy: 200
     Weight: 1
     Attack: 120
     Jobs:
@@ -33537,7 +33537,7 @@ Body:
     Name: Soul Cannon Ball
     Type: Ammo
     SubType: Cannonball
-    Buy: 50
+    Buy: 200
     Weight: 1
     Attack: 120
     Jobs:
@@ -33556,7 +33556,7 @@ Body:
     Name: Iron Cannon Ball
     Type: Ammo
     SubType: Cannonball
-    Buy: 80
+    Buy: 500
     Weight: 1
     Attack: 250
     Jobs:
