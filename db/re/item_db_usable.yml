@@ -2433,24 +2433,6 @@ Body:
       getitem 14535,20;
       getitem 12832,20;
       getitembound 23919,1,Bound_Account;
-  - Id: 9974
-    AegisName: Arca_Vida_BR
-    Name: Ark of Life    # !todo check english name
-    Type: Usable
-    Weight: 10
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      getitem 12516,20;
-      getitem 12515,20;
-      getitem 12832,20;
-      getitembound 23919,1,Bound_Account;
   - Id: 9975
     AegisName: Arca_Divina2_BR
     Name: Divine Major Ark    # !todo check english name
@@ -2848,7 +2830,7 @@ Body:
     AegisName: Protect_Neck_Candy
     Name: Protect Neck Candy
     Type: Healing
-    Buy: 200
+    Buy: 250
     Weight: 1
     Flags:
       BuyingStore: true
