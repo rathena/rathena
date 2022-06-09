@@ -13700,6 +13700,7 @@ TIMER_FUNC(status_change_timer){
 
 	case SC_S_LIFEPOTION:
 	case SC_L_LIFEPOTION:
+	case SC_M_LIFEPOTION:
 		if( --(sce->val4) >= 0 ) {
 			// val1 < 0 = per max% | val1 > 0 = exact amount
 			int hp = 0;

@@ -2781,6 +2781,9 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    End:
+      L_Lifepotion: true
+      M_Lifepotion: true
     Fail:
       S_Lifepotion: true
   - Status: L_Lifepotion
@@ -2789,6 +2792,9 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    End:
+      S_Lifepotion: true
+      M_Lifepotion: true
     Fail:
       L_Lifepotion: true
   - Status: Jexpboost
