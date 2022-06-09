@@ -13710,7 +13710,6 @@ TIMER_FUNC(status_change_timer){
 			return 0;
 		}
 		break;
-		
 
 	case SC_S_MANAPOTION:
 		if( --(sce->val4) >= 0 ) {
