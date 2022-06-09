@@ -1840,6 +1840,8 @@
 	export_constant(SC_DEEP_POISONING_OPTION);
 	export_constant(SC_POISON_SHIELD);
 	export_constant(SC_POISON_SHIELD_OPTION);
+	export_constant(SC_M_LIFEPOTION);
+	export_constant(SC_S_MANAPOTION);
 
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
@@ -5718,6 +5720,19 @@
 	export_constant(IG_GOLDEN_LORD_LAUNCHER_CUBE);
 	export_constant(IG_THE_BLACK_CUBE);
 	export_constant(IG_DEMON_SLAYER_SHOT_CUBE);
+	export_constant(IG_RUNE_CRAFT_MATERIALS);
+	export_constant(IG_ELEMENTAL_CONVERTER);
+	export_constant(IG_POISONS);
+	export_constant(IG_BLACKSMITH);
+	export_constant(IG_POTION_CRAFT_MATERIALS);
+	export_constant(IG_KUNAI_BOX);
+	export_constant(IG_BULLET_CASE);
+	export_constant(IG_SOUL_LINKER);
+	export_constant(IG_ELEMENTAL_STONES);
+	export_constant(IG_SHADOW_CUBE_ARMOR);
+	export_constant(IG_SHADOW_CUBE_SHIELD);
+	export_constant(IG_SHADOW_CUBE_SHOES);
+	export_constant(IG_SHADOW_CUBE_WEAPON);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
