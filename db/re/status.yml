@@ -8131,6 +8131,25 @@ Body:
       All: true
     Flags:
       RemoveElementalOption: true
+  - Status: M_Lifepotion
+    Icon: EFST_M_LIFEPOTION
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      S_Lifepotion: true
+      L_Lifepotion: true
+    Fail:
+      M_Lifepotion: true
+  - Status: S_Manapotion
+    Icon: EFST_S_MANAPOTION
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Fail:
+      S_Manapotion: true
   - Status: ALL_STAT_DOWN
     Icon: EFST_ALL_STAT_DOWN
     DurationLookup: NPC_ALL_STAT_DOWN
