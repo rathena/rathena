@@ -13722,7 +13722,7 @@ TIMER_FUNC(status_change_timer){
 			return 0;
 		}
 		break;
-	
+
 	case SC_BOSSMAPINFO:
 		if( sd && --(sce->val4) >= 0 ) {
 			struct mob_data *boss_md = map_id2boss(sce->val1);
