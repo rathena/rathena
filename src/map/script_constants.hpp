@@ -1840,6 +1840,8 @@
 	export_constant(SC_DEEP_POISONING_OPTION);
 	export_constant(SC_POISON_SHIELD);
 	export_constant(SC_POISON_SHIELD_OPTION);
+	export_constant(SC_M_LIFEPOTION);
+	export_constant(SC_S_MANAPOTION);
 	export_constant(SC_ALL_STAT_DOWN);
 	export_constant(SC_GRADUAL_GRAVITY);
 	export_constant(SC_DAMAGE_HEAL);
