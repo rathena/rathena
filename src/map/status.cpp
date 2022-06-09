@@ -10631,14 +10631,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			}
 			break;
 
-		case SC_GRADUAL_GRAVITY:
-			val2 = 10 * val1;
-			val4 = tick / 1000;
-			tick_time = 1000;
-			break;
-		case SC_ALL_STAT_DOWN:
-			val2 = (val1 < 5)?(20 * val1 - 10):100;
-			break;
 		case SC_BOSSMAPINFO:
 			if( sd != NULL ) {
 				struct mob_data *boss_md = map_getmob_boss(bl->m); // Search for Boss on this Map
