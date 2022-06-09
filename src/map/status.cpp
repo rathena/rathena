@@ -10608,7 +10608,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_S_LIFEPOTION:
 		case SC_L_LIFEPOTION:
-		case SC_M_LIFEPOTION:
 			if( val1 == 0 ) return 0;
 			// val1 = heal percent/amout
 			// val2 = seconds between heals
