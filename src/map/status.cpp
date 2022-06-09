@@ -13720,18 +13720,6 @@ TIMER_FUNC(status_change_timer){
 			return 0;
 		}
 		break;
-
-	case SC_GRADUAL_GRAVITY:
-		if (--(sce->val4) >= 0) {
-			int hp = 0;
-			hp = status->max_hp * sce->val2 / 100;
-			if (!status_charge(bl, hp, 0))
-				status_zap(bl, hp, 0);
-			if (sc->data[type])
-				sc_timer_next(1000 + tick);
-			return 0;
-		}
-		break;
 			
 	case SC_BOSSMAPINFO:
 		if( sd && --(sce->val4) >= 0 ) {
