@@ -10608,6 +10608,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_S_LIFEPOTION:
 		case SC_L_LIFEPOTION:
+		case SC_M_LIFEPOTION:
 			if( val1 == 0 ) return 0;
 			// val1 = heal percent/amout
 			// val2 = seconds between heals
@@ -10616,18 +10617,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if( (val4 = tick/(val2 * 1000)) < 1 )
 				val4 = 1;
 			tick_time = val2 * 1000; // [GodLesZ] tick time
-			break;
-
-		case SC_S_MANAPOTION:
-			if( --(sce->val4) >= 0 ) {
-				// val1 < 0 = per max% | val1 > 0 = exact amount
-				int sp = 0;
-				if( status->sp < status->max_sp )
-					sp = (sce->val1 < 0) ? (int)(status->max_sp * -1 * sce->val1 / 100.) : sce->val1;
-				status_heal(bl, 0, sp, 2);
-				sc_timer_next((sce->val2 * 1000) + tick);
-				return 0;
-			}
 			break;
 
 		case SC_BOSSMAPINFO:
@@ -13720,7 +13709,20 @@ TIMER_FUNC(status_change_timer){
 			return 0;
 		}
 		break;
-			
+		
+
+	case SC_S_MANAPOTION:
+		if( --(sce->val4) >= 0 ) {
+			// val1 < 0 = per max% | val1 > 0 = exact amount
+			int sp = 0;
+			if( status->sp < status->max_sp )
+				sp = (sce->val1 < 0) ? (int)(status->max_sp * -1 * sce->val1 / 100.) : sce->val1;
+			status_heal(bl, 0, sp, 2);
+			sc_timer_next((sce->val2 * 1000) + tick);
+			return 0;
+		}
+		break;
+	
 	case SC_BOSSMAPINFO:
 		if( sd && --(sce->val4) >= 0 ) {
 			struct mob_data *boss_md = map_id2boss(sce->val1);
