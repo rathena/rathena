@@ -2781,6 +2781,9 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    End:
+      L_Lifepotion: true
+      M_Lifepotion: true
     Fail:
       S_Lifepotion: true
   - Status: L_Lifepotion
@@ -2789,6 +2792,9 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+    End:
+      S_Lifepotion: true
+      M_Lifepotion: true
     Fail:
       L_Lifepotion: true
   - Status: Jexpboost
@@ -8131,3 +8137,22 @@ Body:
       All: true
     Flags:
       RemoveElementalOption: true
+  - Status: M_Lifepotion
+    Icon: EFST_M_LIFEPOTION
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    End:
+      S_Lifepotion: true
+      L_Lifepotion: true
+    Fail:
+      M_Lifepotion: true
+  - Status: S_Manapotion
+    Icon: EFST_S_MANAPOTION
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Fail:
+      S_Manapotion: true
