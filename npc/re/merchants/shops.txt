@@ -125,7 +125,7 @@ morocc,154,55,6	shop	Jeweler#moc3	99,730:-1,2613:-1
 morocc,171,103,4	shop	Item Collector#moc3	85,911:-1,528:-1,919:-1,925:-1
 morocc,205,247,2	shop	Item Collector#moc4	85,911:-1,528:-1,919:-1,925:-1
 morocc,140,90,6	shop	Trader#moc6	99,513:-1,513:-1,513:-1,513:-1,513:-1,513:-1
-morocc,166,54,2	shop	Jeweler#moc4	102,721:-1,723:-1,726:-1,728:-1,729:-1
+morocc,166,54,2	shop	Jeweler#moc4	102,721:-1,723:-1,726:-1,728:-1,729:-1,1000321:-1
 morocc,34,68,0	shop	Trader#moc7	93,748:-1
 morocc,269,193,4	shop	Trader#moc8	89,2609:-1,1516:-1,1522:-1
 morocc,256,191,5	shop	Trader#moc9	93,2612:-1

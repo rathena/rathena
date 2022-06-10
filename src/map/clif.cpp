@@ -3345,6 +3345,19 @@ static int clif_hpmeter(struct map_session_data *sd)
 	return 0;
 }
 
+/**
+ * Send HP bar update to others.
+ * @param sd: Player invoking update
+ */
+void clif_update_hp(map_session_data &sd) {
+	if (map_getmapdata(sd.bl.m)->hpmeter_visible)
+		clif_hpmeter(&sd);
+	if (!battle_config.party_hp_mode && sd.status.party_id)
+		clif_party_hp(&sd);
+	if (sd.bg_id)
+		clif_bg_hp(&sd);
+}
+
 /// Notifies client of a character parameter change.
 /// 00b0 <var id>.W <value>.L (ZC_PAR_CHANGE)
 /// 00b1 <var id>.W <value>.L (ZC_LONGPAR_CHANGE)
@@ -3717,15 +3730,7 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 			}
 			break;
 		case SP_HP:
-			if( map_getmapdata(sd->bl.m)->hpmeter_visible ){
-				clif_hpmeter(sd);
-			}
-			if( !battle_config.party_hp_mode && sd->status.party_id ){
-				clif_party_hp(sd);
-			}
-			if( sd->bg_id ){
-				clif_bg_hp(sd);
-			}
+			clif_update_hp(*sd);
 			break;
 	}
 }
@@ -21551,23 +21556,32 @@ void clif_parse_changedress( int fd, struct map_session_data* sd ){
 
 /// Opens an UI window of the given type and initializes it with the given data
 /// 0AE2 <type>.B <data>.L
-void clif_ui_open( struct map_session_data *sd, enum out_ui_type ui_type, int32 data ){
-	nullpo_retv(sd);
-
+void clif_ui_open( struct map_session_data& sd, enum out_ui_type ui_type, int32 data ){
+#if PACKETVER >= 20151202
 	// If the UI requires state tracking
 	switch( ui_type ){
 		case OUT_UI_STYLIST:
-			sd->state.stylist_open = true;
+			sd.state.stylist_open = true;
 			break;
+		case OUT_UI_ENCHANTGRADE:
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+			sd.state.enchantgrade_open = true;
+			break;
+#else
+			return;
+#endif
 	}
 
-	int fd = sd->fd;
+	struct PACKET_ZC_UI_OPEN p = {};
 
-	WFIFOHEAD(fd,packet_len(0xae2));
-	WFIFOW(fd,0) = 0xae2;
-	WFIFOB(fd,2) = ui_type;
-	WFIFOL(fd,3) = data;
-	WFIFOSET(fd,packet_len(0xae2));
+	p.PacketType = HEADER_ZC_UI_OPEN;
+	p.UIType = ui_type;
+#if PACKETVER >= 20171122
+	p.data = data;
+#endif
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
 }
 
 /// Request to open an UI window of the given type
@@ -21578,7 +21592,7 @@ void clif_parse_open_ui( int fd, struct map_session_data* sd ){
 			if( !pc_has_permission( sd, PC_PERM_ATTENDANCE ) ){
 				clif_messagecolor( &sd->bl, color_table[COLOR_RED], msg_txt( sd, 791 ), false, SELF ); // You are not allowed to use the attendance system.
 			}else if( pc_attendance_enabled() ){
-				clif_ui_open( sd, OUT_UI_ATTENDANCE, pc_attendance_counter( sd ) );
+				clif_ui_open( *sd, OUT_UI_ATTENDANCE, pc_attendance_counter( sd ) );
 			}else{
 				clif_msg_color( sd, MSG_ATTENDANCE_DISABLED, color_table[COLOR_RED] );
 			}
@@ -23451,6 +23465,338 @@ void clif_parse_laphine_upgrade( int fd, struct map_session_data* sd ){
 
 	// Tell the client we are done
 	clif_laphine_upgrade_result( sd, false );
+#endif
+}
+
+void clif_enchantgrade_add( struct map_session_data& sd, uint16 index = UINT16_MAX, std::shared_ptr<s_enchantgradelevel> gradeLevel = nullptr ){
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	struct PACKET_ZC_GRADE_ENCHANT_MATERIAL_LIST* p = (struct PACKET_ZC_GRADE_ENCHANT_MATERIAL_LIST*)packet_buffer;
+
+	p->PacketType = HEADER_ZC_GRADE_ENCHANT_MATERIAL_LIST;
+	p->PacketLength = sizeof( struct PACKET_ZC_GRADE_ENCHANT_MATERIAL_LIST );
+
+	if( index < UINT16_MAX ){
+		p->index = client_index( index );
+		if( sd.inventory.u.items_inventory[index].refine >= gradeLevel->refine ){
+			p->success_chance = gradeLevel->chance / 100;
+		}else{
+			p->success_chance = 0;
+		}
+		p->blessing_info.id = client_nameid( gradeLevel->catalyst.item );
+		p->blessing_info.amount = gradeLevel->catalyst.amountPerStep;
+		p->blessing_info.max_blessing = gradeLevel->catalyst.maximumSteps;
+		p->blessing_info.bonus = gradeLevel->catalyst.chanceIncrease / 100;
+		// Not displayed by client
+		p->protect_itemid = 0;
+		p->protect_amount = 0;
+
+		int i = 0;
+		for( const auto& pair : gradeLevel->options ){
+			std::shared_ptr<s_enchantgradeoption> option = pair.second;
+
+			p->material_info[i].nameid = client_nameid( option->item );
+			p->material_info[i].amount = option->amount;
+			p->material_info[i].price = option->zeny;
+			p->material_info[i].downgrade = option->downgrade_amount > 0;
+			p->material_info[i].breakable = option->breaking_rate > 0;
+
+			p->PacketLength += sizeof( struct GRADE_ENCHANT_MATERIAL );
+			i++;
+		}
+	}else{
+		p->index = -1;
+		p->success_chance = 0;
+		p->blessing_info.id = 0;
+		p->blessing_info.amount = 0;
+		p->blessing_info.max_blessing = 0;
+		p->blessing_info.bonus = 0;
+		p->protect_itemid = 0;
+		p->protect_amount = 0;
+	}
+
+	clif_send( p, p->PacketLength, &sd.bl, SELF );
+#endif
+}
+
+void clif_parse_enchantgrade_add( int fd, struct map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	nullpo_retv( sd );
+
+	if( !sd->state.enchantgrade_open ){
+		return;
+	}
+
+	struct PACKET_CZ_GRADE_ENCHANT_SELECT_EQUIPMENT* p = (struct PACKET_CZ_GRADE_ENCHANT_SELECT_EQUIPMENT*)RFIFOP( fd, 0 );
+
+	uint16 index = server_index( p->index );
+
+	if( index >= MAX_INVENTORY || sd->inventory_data[index] == nullptr ){
+		return;
+	}
+
+	std::shared_ptr<s_enchantgrade> enchantgrade = enchantgrade_db.find( sd->inventory_data[index]->type );
+
+	// Unsupported item type - no answer, because client should have actually prevented this request
+	if( enchantgrade == nullptr ){
+		return;
+	}
+
+	uint16 level = 0;
+
+	if( sd->inventory_data[index]->type == IT_WEAPON ){
+		level = sd->inventory_data[index]->weapon_level;
+	}else if( sd->inventory_data[index]->type == IT_ARMOR ){
+		level = sd->inventory_data[index]->armor_level;
+	}
+
+	const auto& enchantgradelevels = enchantgrade->levels.find( level );
+
+	// Cannot upgrade this weapon or armor level
+	if( enchantgradelevels == enchantgrade->levels.end() ){
+		clif_enchantgrade_add( *sd );
+		return;
+	}
+
+	std::shared_ptr<s_enchantgradelevel> enchantgradelevel = util::map_find( enchantgradelevels->second, (e_enchantgrade)sd->inventory.u.items_inventory[index].enchantgrade );
+
+	// Cannot increase enchantgrade any further - no answer, because client should have actually prevented this request
+	if( enchantgradelevel == nullptr ){
+		return;
+	}
+
+	clif_enchantgrade_add( *sd, index, enchantgradelevel );
+#endif
+}
+
+/// <summary>
+/// Sends the result for trying to enchant an item
+/// </summary>
+/// <param name="sd">The player session</param>
+/// <param name="index">The target item</param>
+/// <param name="result">
+///  0= The grade has been successfully upgraded.
+///  1= Refinement failed.
+///  2= The refine level has decreased.
+///  3= Equipment destroyed.
+///  4= The equipment is protected.
+/// </param>
+void clif_enchantgrade_result( struct map_session_data& sd, uint16 index, e_enchantgrade_result result ){
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	struct PACKET_ZC_GRADE_ENCHANT_ACK p = {};
+
+	p.PacketType = HEADER_ZC_GRADE_ENCHANT_ACK;
+	p.index = client_index( index );
+	p.enchantgrade = sd.inventory.u.items_inventory[index].enchantgrade;
+	p.result = result;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+#endif
+}
+
+void clif_enchantgrade_announce( struct map_session_data& sd, struct item& item, bool success ){
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	struct PACKET_ZC_GRADE_ENCHANT_BROADCAST_RESULT p = {};
+
+	p.packetType = HEADER_ZC_GRADE_ENCHANT_BROADCAST_RESULT;
+	safestrncpy( p.name, sd.status.name, sizeof( p.name ) );
+	p.itemId = client_nameid( item.nameid );
+	p.enchantgrade = item.enchantgrade;
+	p.status = success;
+
+	clif_send( &p, sizeof( p ), nullptr, ALL_CLIENT );
+#endif
+}
+
+void clif_parse_enchantgrade_start( int fd, struct map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	nullpo_retv( sd );
+
+	if( !sd->state.enchantgrade_open ){
+		return;
+	}
+
+	struct PACKET_CZ_GRADE_ENCHANT_REQUEST* p = (struct PACKET_CZ_GRADE_ENCHANT_REQUEST*)RFIFOP( fd, 0 );
+
+	uint16 index = server_index( p->index );
+
+	if( index >= MAX_INVENTORY || sd->inventory_data[index] == nullptr ){
+		return;
+	}
+
+	std::shared_ptr<s_enchantgrade> enchantgrade = enchantgrade_db.find( sd->inventory_data[index]->type );
+
+	// Unsupported item type - no answer
+	if( enchantgrade == nullptr ){
+		return;
+	}
+
+	uint16 level = 0;
+
+	if( sd->inventory_data[index]->type == IT_WEAPON ){
+		level = sd->inventory_data[index]->weapon_level;
+	}else if( sd->inventory_data[index]->type == IT_ARMOR ){
+		level = sd->inventory_data[index]->armor_level;
+	}
+
+	const auto& enchantgradelevels = enchantgrade->levels.find( level );
+
+	// Cannot upgrade this weapon or armor level - no answer
+	if( enchantgradelevels == enchantgrade->levels.end() ){
+		return;
+	}
+
+	std::shared_ptr<s_enchantgradelevel> enchantgradelevel = util::map_find( enchantgradelevels->second, (e_enchantgrade)sd->inventory.u.items_inventory[index].enchantgrade );
+
+	// Cannot increase enchantgrade any further - no answer
+	if( enchantgradelevel == nullptr ){
+		return;
+	}
+
+	// Not refined enough
+	if( sd->inventory.u.items_inventory[index].refine < enchantgradelevel->refine ){
+		return;
+	}
+
+	std::shared_ptr<s_enchantgradeoption> option = util::map_find( enchantgradelevel->options, (uint16)p->material_index );
+
+	// Unknown option id - no answer
+	if( option == nullptr ){
+		return;
+	}
+
+	// Not enough zeny
+	if( sd->status.zeny < option->zeny ){
+		return;
+	}
+
+	uint16 totalChance = enchantgradelevel->chance;
+	uint16 steps = min( p->blessing_amount, enchantgradelevel->catalyst.maximumSteps );
+	std::unordered_map<uint16, uint16> requiredItems;
+
+	if( p->blessing_flag ){
+		// If the catalysator item is the same as the option item build the sum of amounts
+		if( enchantgradelevel->catalyst.item == option->item ){
+			uint16 amount = enchantgradelevel->catalyst.amountPerStep * steps + option->amount;
+
+			int16 index = pc_search_inventory( sd, enchantgradelevel->catalyst.item );
+
+			if( index < 0 ){
+				return;
+			}
+
+			if( sd->inventory.u.items_inventory[index].amount < amount ){
+				return;
+			}
+
+			requiredItems[index] = amount;
+		}else{
+			uint16 amount = enchantgradelevel->catalyst.amountPerStep * steps;
+
+			// Check catalysator item
+			int16 index = pc_search_inventory( sd, enchantgradelevel->catalyst.item );
+
+			if( index < 0 ){
+				return;
+			}
+
+			if( sd->inventory.u.items_inventory[index].amount < amount ){
+				return;
+			}
+
+			requiredItems[index] = amount;
+
+			// Check option item
+			index = pc_search_inventory( sd, option->item );
+
+			if( index < 0 ){
+				return;
+			}
+
+			if( sd->inventory.u.items_inventory[index].amount < option->amount ){
+				return;
+			}
+
+			requiredItems[index] = option->amount;
+		}
+
+		totalChance += steps * enchantgradelevel->catalyst.chanceIncrease;
+	}else{
+		// Check option item
+		int16 index = pc_search_inventory( sd, option->item );
+
+		if( index < 0 ){
+			return;
+		}
+
+		if( sd->inventory.u.items_inventory[index].amount < option->amount ){
+			return;
+		}
+
+		requiredItems[index] = option->amount;
+	}
+
+	// All items should be there, start deleting
+	for( const auto& pair : requiredItems ){
+		if( pc_delitem( sd, pair.first, pair.second, 0, 0, LOG_TYPE_ENCHANTGRADE ) != 0 ){
+			return;
+		}
+	}
+
+	if( pc_payzeny( sd, option->zeny, LOG_TYPE_ENCHANTGRADE, nullptr ) > 0 ){
+		return;
+	}
+
+	if( rnd()%10000 < totalChance ){
+		// Log removal of item
+		log_pick_pc( sd, LOG_TYPE_ENCHANTGRADE, -1, &sd->inventory.u.items_inventory[index] );
+		// Increase enchantgrade
+		sd->inventory.u.items_inventory[index].enchantgrade = min( sd->inventory.u.items_inventory[index].enchantgrade + 1, MAX_ENCHANTGRADE );
+		// On successful enchantgrade increase the refine is reset
+		sd->inventory.u.items_inventory[index].refine = 0;
+		// Log retrieving the item again -> with the new refine and enchantgrade
+		log_pick_pc( sd, LOG_TYPE_ENCHANTGRADE, 1, &sd->inventory.u.items_inventory[index] );
+		// Show success
+		clif_enchantgrade_result( *sd, index, ENCHANTGRADE_UPGRADE_SUCCESS );
+
+		// Check if it has to be announced
+		if( enchantgradelevel->announce ){
+			clif_enchantgrade_announce( *sd, sd->inventory.u.items_inventory[index], true );
+		}
+	}else{
+		// Check if it has to be announced (has to be done before deleting the item from inventory)
+		if( enchantgradelevel->announce ){
+			clif_enchantgrade_announce( *sd, sd->inventory.u.items_inventory[index], false );
+		}
+
+		// Delete the item if it is breakable
+		if( option->breaking_rate > 0 && ( rnd() % 10000 ) < option->breaking_rate ){
+			// Delete the item
+			pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_ENCHANTGRADE );
+			// Show failure
+			clif_enchantgrade_result( *sd, index, ENCHANTGRADE_UPGRADE_BREAK );
+		// Downgrade the item if necessary
+		}else if( option->downgrade_amount > 0 ){
+			// Log removal of item
+			log_pick_pc( sd, LOG_TYPE_ENCHANTGRADE, -1, &sd->inventory.u.items_inventory[index] );
+			// Decrease refine level
+			sd->inventory.u.items_inventory[index].refine = cap_value( sd->inventory.u.items_inventory[index].refine - option->downgrade_amount, 0, MAX_REFINE );
+			// Log retrieving the item again -> with the new refine
+			log_pick_pc( sd, LOG_TYPE_ENCHANTGRADE, 1, &sd->inventory.u.items_inventory[index] );
+			// Show downgrade
+			clif_enchantgrade_result( *sd, index, ENCHANTGRADE_UPGRADE_DOWNGRADE );
+		// Only show failure, but dont do anything
+		}else{
+			clif_enchantgrade_result( *sd, index, ENCHANTGRADE_UPGRADE_FAILED );
+		}
+	}
+#endif
+}
+
+void clif_parse_enchantgrade_close( int fd, struct map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	nullpo_retv( sd );
+
+	sd->state.enchantgrade_open = false;
 #endif
 }
 
