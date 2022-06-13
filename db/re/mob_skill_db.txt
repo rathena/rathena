@@ -12735,3 +12735,9 @@
 20836,ABR_MOTHER_NET@ABR_NET_SUPPORT,attack,8604,1,10000,500,5000,yes,self,always,0,,,,,,,
 20837,ABR_INFINITY@ABR_INFINITY_BUSTER,chase,8605,1,10000,500,5000,yes,target,always,0,,,,,,,
 20837,ABR_INFINITY@ABR_INFINITY_BUSTER,attack,8605,1,10000,500,5000,yes,target,always,0,,,,,,,
+// Biolo Summons
+20848,Wooden Warrior@BO_WOODEN_ATTACK,attack,5385,1,5000,500,5000,no,target,always,,,,,,,,
+20848,Wooden Warrior@BO_WOODEN_THROWROCK,attack,5384,1,5000,500,5000,no,target,always,,,,,,,,
+20849,Wooden Fairy@BO_FAIRY_DUSTY,attack,5388,1,5000,500,5000,no,target,always,,,,,,,,
+20851,Hell Tree@BO_HELL_DUSTY,any,5387,1,10000,500,30000,no,self,always,,,,,,,,
+20851,Hell Tree@BO_HELL_HOWLING,attack,5386,1,2000,500,15000,no,self,always,,,,,,,,

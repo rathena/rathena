@@ -7478,8 +7478,8 @@ Body:
   - Status: Handicapstate_Deepsilence
     Icon: EFST_HANDICAPSTATE_DEEPSILENCE
     DurationLookup: CD_ARBITRIUM
-    #States:
-      #NoCast: true
+    States:
+      NoCast: true
     CalcFlags:
       Aspd: true
     Flags:
@@ -7495,8 +7495,8 @@ Body:
     Icon: EFST_HANDICAPSTATE_FROSTBITE
     DurationLookup: EM_DIAMOND_STORM
     States:
-      #NoMove: true
-      #NoCast: true
+      NoMove: true
+      NoCast: true
       NoConsumeItem: true
     CalcFlags:
       Def: true
@@ -7509,18 +7509,18 @@ Body:
   - Status: Handicapstate_Swooning
     Icon: EFST_HANDICAPSTATE_SWOONING
     States:
-      #NoMove: true
-      #NoCast: true
+      NoMove: true
+      NoCast: true
       NoConsumeItem: true
     Flags:
       DisplayPc: true
       RemoveOnDamaged: true
   - Status: Handicapstate_Lightningstrike
     Icon: EFST_HANDICAPSTATE_LIGHTNINGSTRIKE
-    DurationLookup: WH_SWIFTTRAP
+    DurationLookup: EM_LIGHTNING_LAND
     States:
-      #NoMove: true
-      #NoCast: true
+      NoMove: true
+      NoCast: true
       NoConsumeItem: true
     CalcFlags:
       Def_Ele: true
@@ -7530,10 +7530,10 @@ Body:
       RemoveOnDamaged: true
   - Status: Handicapstate_Crystallization
     Icon: EFST_HANDICAPSTATE_CRYSTALLIZATION
-    DurationLookup: WH_SOLIDTRAP
+    DurationLookup: EM_TERRA_DRIVE
     States:
-      #NoMove: true
-      #NoCast: true
+      NoMove: true
+      NoCast: true
       NoConsumeItem: true
     CalcFlags:
       Mdef: true
@@ -7544,7 +7544,9 @@ Body:
       RemoveOnDamaged: true
   - Status: Handicapstate_Conflagration
     Icon: EFST_HANDICAPSTATE_CONFLAGRATION
-    DurationLookup: WH_FLAMETRAP
+    DurationLookup: EM_CONFLAGRATION
+    CalcFlags:
+      Def_Ele: true
     Flags:
       BlEffect: true
       DisplayPc: true
@@ -7612,6 +7614,7 @@ Body:
     CalcFlags:
       All: true
     Flags:
+      SendVal1: true
       BlEffect: true
       DisplayPc: true
   - Status: Deadly_Defeasance
@@ -7705,6 +7708,8 @@ Body:
     Flags:
       BlEffect: true
       DisplayPc: true
+    End:
+      Sandy_Festival: true
   - Status: Benedictum
     Icon: EFST_BENEDICTUM
     DurationLookup: CD_BENEDICTUM
@@ -7715,6 +7720,8 @@ Body:
     Flags:
       BlEffect: true
       DisplayPc: true
+    End:
+      Marine_Festival: true
   - Status: Axe_Stomp
     Icon: EFST_AXE_STOMP
     DurationLookup: MT_AXE_STOMP
@@ -7736,15 +7743,31 @@ Body:
   - Status: Abr_Battle_Warior
     Icon: EFST_ABR_BATTLE_WARIOR
     DurationLookup: MT_SUMMON_ABR_BATTLE_WARIOR
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
   - Status: Abr_Dual_Cannon
     Icon: EFST_ABR_DUAL_CANNON
     DurationLookup: MT_SUMMON_ABR_DUAL_CANNON
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
   - Status: Abr_Mother_Net
     Icon: EFST_ABR_MOTHER_NET
     DurationLookup: MT_SUMMON_ABR_MOTHER_NET
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
   - Status: Abr_Infinity
     Icon: EFST_ABR_INFINITY
     DurationLookup: MT_SUMMON_ABR_INFINITY
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
   - Status: Shadow_Exceed
     Icon: EFST_SHADOW_EXCEED
     DurationLookup: SHC_SHADOW_EXCEED
@@ -7791,7 +7814,8 @@ Body:
     Icon: EFST_ATTACK_STANCE
     DurationLookup: IG_ATTACK_STANCE
     CalcFlags:
-      Watk: true
+      Patk: true
+      Smatk: true
       Def: true
     Flags:
       NoRemoveOnDead: true
@@ -7998,12 +8022,28 @@ Body:
     Icon: EFST_BO_HELL_DUSTY
   - Status: Bionic_Woodenwarrior
     DurationLookup: BO_WOODENWARRIOR
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
   - Status: Bionic_Wooden_Fairy
     DurationLookup: BO_WOODEN_FAIRY
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
   - Status: Bionic_Creeper
     DurationLookup: BO_CREEPER
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
   - Status: Bionic_Helltree
     DurationLookup: BO_HELLTREE
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
   - Status: Shadow_Strip
     Icon: EFST_SHADOW_STRIP
     DurationLookup: ABC_STRIP_SHADOW
@@ -8156,3 +8196,387 @@ Body:
       NoClearance: true
     Fail:
       S_Manapotion: true
+  - Status: Rush_Quake1
+    Icon: EFST_RUSH_QUAKE1
+    DurationLookup: MT_RUSH_QUAKE
+    Flags:
+      BlEffect: true
+      Debuff: true
+  - Status: Rush_Quake2
+    Icon: EFST_RUSH_QUAKE2
+    DurationLookup: MT_RUSH_QUAKE
+  - Status: Intensive_Aim
+    Icon: EFST_INTENSIVE_AIM
+    States:
+      NoMove: true
+    CalcFlags:
+      Batk: true
+      Hit: true
+      Cri: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      SendVal1: true
+      NoSave: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Intensive_Aim_Count
+    Icon: EFST_INTENSIVE_AIM_COUNT
+    Flags:
+      DisplayPc: true
+      SendVal1: true
+      NoSave: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+  - Status: Hidden_Card
+    Icon: EFST_HIDDEN_CARD
+    DurationLookup: NW_HIDDEN_CARD
+    CalcFlags:
+      Patk: true
+  - Status: Grenade_Fragment_1
+    Icon: EFST_GRENADE_FRAGMENT_1
+    DurationLookup: NW_GRENADE_FRAGMENT
+    End:
+      Grenade_Fragment_2: true
+      Grenade_Fragment_3: true
+      Grenade_Fragment_4: true
+      Grenade_Fragment_5: true
+      Grenade_Fragment_6: true
+  - Status: Grenade_Fragment_2
+    Icon: EFST_GRENADE_FRAGMENT_2
+    DurationLookup: NW_GRENADE_FRAGMENT
+    End:
+      Grenade_Fragment_1: true
+      Grenade_Fragment_3: true
+      Grenade_Fragment_4: true
+      Grenade_Fragment_5: true
+      Grenade_Fragment_6: true
+  - Status: Grenade_Fragment_3
+    Icon: EFST_GRENADE_FRAGMENT_3
+    DurationLookup: NW_GRENADE_FRAGMENT
+    End:
+      Grenade_Fragment_1: true
+      Grenade_Fragment_2: true
+      Grenade_Fragment_4: true
+      Grenade_Fragment_5: true
+      Grenade_Fragment_6: true
+  - Status: Grenade_Fragment_4
+    Icon: EFST_GRENADE_FRAGMENT_4
+    DurationLookup: NW_GRENADE_FRAGMENT
+    End:
+      Grenade_Fragment_1: true
+      Grenade_Fragment_2: true
+      Grenade_Fragment_3: true
+      Grenade_Fragment_5: true
+      Grenade_Fragment_6: true
+  - Status: Grenade_Fragment_5
+    Icon: EFST_GRENADE_FRAGMENT_5
+    DurationLookup: NW_GRENADE_FRAGMENT
+    End:
+      Grenade_Fragment_1: true
+      Grenade_Fragment_2: true
+      Grenade_Fragment_3: true
+      Grenade_Fragment_4: true
+      Grenade_Fragment_6: true
+  - Status: Grenade_Fragment_6
+    Icon: EFST_GRENADE_FRAGMENT_6
+    DurationLookup: NW_GRENADE_FRAGMENT
+    End:
+      Grenade_Fragment_1: true
+      Grenade_Fragment_2: true
+      Grenade_Fragment_3: true
+      Grenade_Fragment_4: true
+      Grenade_Fragment_5: true
+  - Status: Auto_Firing_Launcher
+    Icon: EFST_AUTO_FIRING_LAUNCHEREFST
+    DurationLookup: NW_AUTO_FIRING_LAUNCHER
+    Flags:
+      SendVal1: true
+  - Status: Hogogong
+    Icon: EFST_HOGOGONG
+    DurationLookup: SH_HOWLING_OF_CHUL_HO
+    Flags:
+      Debuff: true
+      BlEffect: true
+      DisplayPc: true
+  - Status: Marine_Festival
+    Icon: EFST_MARINE_FESTIVAL
+    DurationLookup: SH_MARINE_FESTIVAL_OF_KI_SUL
+    CalcFlags:
+      Pow: true
+      Con: true
+      Crt: true
+    End:
+      Benedictum: true
+  - Status: Sandy_Festival
+    Icon: EFST_SANDY_FESTIVAL
+    DurationLookup: SH_SANDY_FESTIVAL_OF_KI_SUL
+    CalcFlags:
+      Spl: true
+      Wis: true
+      Sta: true
+    End:
+      Religio: true
+  - Status: Ki_Sul_Rampage
+    Icon: EFST_KI_SUL_RAMPAGE
+    DurationLookup: SH_KI_SUL_RAMPAGE
+  - Status: Colors_of_Hyun_Rok_Buff
+    Icon: EFST_COLORS_OF_HYUN_ROK_BUFF
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+  - Status: Colors_of_Hyun_Rok_1
+    Icon: EFST_COLORS_OF_HYUN_ROK_1
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    End:
+      Colors_of_Hyun_Rok_2: true
+      Colors_of_Hyun_Rok_3: true
+      Colors_of_Hyun_Rok_4: true
+      Colors_of_Hyun_Rok_5: true
+      Colors_of_Hyun_Rok_6: true
+  - Status: Colors_of_Hyun_Rok_2
+    Icon: EFST_COLORS_OF_HYUN_ROK_2
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    End:
+      Colors_of_Hyun_Rok_1: true
+      Colors_of_Hyun_Rok_3: true
+      Colors_of_Hyun_Rok_4: true
+      Colors_of_Hyun_Rok_5: true
+      Colors_of_Hyun_Rok_6: true
+  - Status: Colors_of_Hyun_Rok_3
+    Icon: EFST_COLORS_OF_HYUN_ROK_3
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    End:
+      Colors_of_Hyun_Rok_1: true
+      Colors_of_Hyun_Rok_2: true
+      Colors_of_Hyun_Rok_4: true
+      Colors_of_Hyun_Rok_5: true
+      Colors_of_Hyun_Rok_6: true
+  - Status: Colors_of_Hyun_Rok_4
+    Icon: EFST_COLORS_OF_HYUN_ROK_4
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    End:
+      Colors_of_Hyun_Rok_1: true
+      Colors_of_Hyun_Rok_2: true
+      Colors_of_Hyun_Rok_3: true
+      Colors_of_Hyun_Rok_5: true
+      Colors_of_Hyun_Rok_6: true
+  - Status: Colors_of_Hyun_Rok_5
+    Icon: EFST_COLORS_OF_HYUN_ROK_5
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    End:
+      Colors_of_Hyun_Rok_1: true
+      Colors_of_Hyun_Rok_2: true
+      Colors_of_Hyun_Rok_3: true
+      Colors_of_Hyun_Rok_4: true
+      Colors_of_Hyun_Rok_6: true
+  - Status: Colors_of_Hyun_Rok_6
+    Icon: EFST_COLORS_OF_HYUN_ROK_6
+    DurationLookup: SH_COLORS_OF_HYUN_ROK
+    End:
+      Colors_of_Hyun_Rok_1: true
+      Colors_of_Hyun_Rok_2: true
+      Colors_of_Hyun_Rok_3: true
+      Colors_of_Hyun_Rok_4: true
+      Colors_of_Hyun_Rok_5: true
+  - Status: Temporary_Communion
+    Icon: EFST_TEMPORARY_COMMUNION
+    DurationLookup: SH_TEMPORARY_COMMUNION
+    CalcFlags:
+      Patk: true
+      Smatk: true
+      Hplus: true
+  - Status: Blessing_of_M_Creatures
+    Icon: EFST_BLESSING_OF_M_CREATURES
+    DurationLookup: SH_BLESSING_OF_MYSTICAL_CREATURES
+    CalcFlags:
+      Patk: true
+      Smatk: true
+  - Status: Blessing_of_M_C_Debuff
+    Icon: EFST_BLESSING_OF_M_C_DEBUFF
+    DurationLookup: SH_BLESSING_OF_MYSTICAL_CREATURES
+    CalcFlags:
+      Patk: true
+      Smatk: true
+  - Status: Bo_Hell_Dusty
+    Icon: EFST_BO_HELL_DUSTY
+    DurationLookup: BO_HELL_DUSTY
+    CalcFlags:
+      All: true
+  - Status: Shieldchainrush
+    Icon: EFST_SHIELDCHAINRUSH
+    DurationLookup: HN_SHIELD_CHAIN_RUSH
+    CalcFlags:
+      Speed: true
+  - Status: Mistyfrost
+    Icon: EFST_MISTYFROST
+    DurationLookup: HN_JACK_FROST_NOVA
+  - Status: Groundgravity
+    Icon: EFST_GROUNDGRAVITY
+    DurationLookup: HN_GROUND_GRAVITATION
+    CalcFlags:
+      Speed: true
+  - Status: Breakinglimit
+    Icon: EFST_BREAKINGLIMIT
+    DurationLookup: HN_BREAKINGLIMIT
+  - Status: Rulebreak
+    Icon: EFST_RULEBREAK
+    DurationLookup: HN_RULEBREAK
+  - Status: Hnnoweapon
+    Icon: EFST_NOEQUIPWEAPON
+    DurationLookup: HN_DOUBLEBOWLINGBASH
+  - Status: Rising_Sun
+    Icon: EFST_RISING_SUN
+    DurationLookup: SKE_RISING_SUN
+    End:
+      Dawn_Moon: true
+  - Status: Noon_Sun
+    Icon: EFST_NOON_SUN
+    DurationLookup: SKE_RISING_SUN
+    End:
+      Rising_Sun: true
+  - Status: Sunset_Sun
+    Icon: EFST_SUNSET_SUN
+    DurationLookup: SKE_RISING_SUN
+    End:
+      Noon_Sun: true
+    Fail:
+      Sunset_Sun: true
+  - Status: Rising_Moon
+    Icon: EFST_RISING_MOON
+    DurationLookup: SKE_RISING_MOON
+    End:
+      Sunset_Sun: true
+  - Status: Midnight_Moon
+    Icon: EFST_MIDNIGHT_MOON
+    DurationLookup: SKE_RISING_MOON
+    End:
+      Rising_Moon: true
+  - Status: Dawn_Moon
+    Icon: EFST_DAWN_MOON
+    DurationLookup: SKE_RISING_MOON
+    End:
+      Midnight_Moon: true
+    Fail:
+      Dawn_Moon: true
+  - Status: Star_Burst
+    Icon: EFST_STAR_BURST
+    DurationLookup: SKE_STAR_BURST
+    Flags:
+      BlEffect: true
+  - Status: Sky_Enchant
+    Icon: EFST_SKY_ENCHANT
+    DurationLookup: SKE_ENCHANTING_SKY
+    End:
+      Rising_Sun: true
+      Noon_Sun: true
+      Sunset_Sun: true
+      Rising_Moon: true
+      Midnight_Moon: true
+      Dawn_Moon: true
+  - Status: Tempering
+    Icon: EFST_TEMPERING
+    DurationLookup: MH_TEMPERING
+    CalcFlags:
+      Patk: true
+  - Status: Goldene_Tone
+    Icon: EFST_GOLDENE_TONE
+    DurationLookup: MH_GOLDENE_TONE
+    CalcFlags:
+      Res: true
+      Mres: true
+  - Status: Toxin_of_Mandara
+    Icon: EFST_TOXIN_OF_MANDARA
+    DurationLookup: MH_TOXIN_OF_MANDARA
+    Flags:
+      Debuff: true
+    CalcFlags:
+      Res: true
+  - Status: Shadow_Clock
+    Icon: EFST_SHADOW_CLOCK
+    DurationLookup: SS_TOKEDASU
+    CalcFlags:
+      Speed: true
+  - Status: Shinkirou_Call
+    Icon: EFST_SBUNSHIN
+    DurationLookup: SS_SHINKIROU
+    CalcFlags:
+      Speed: true
+  - Status: Nightmare
+    Icon: EFST_NIGHTMARE
+    DurationLookup: SS_KAGEGARI
+    Flags:
+      Debuff: true
+      BlEffect: true
+      DisplayPc: true
+  - Status: Talisman_of_Protection
+    Icon: EFST_TALISMAN_OF_PROTECTION
+    DurationLookup: SOA_TALISMAN_OF_PROTECTION
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Talisman_of_Warrior
+    Icon: EFST_TALISMAN_OF_WARRIOR
+    DurationLookup: SOA_TALISMAN_OF_WARRIOR
+    CalcFlags:
+      Patk: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Talisman_of_Magician
+    Icon: EFST_TALISMAN_OF_MAGICIAN
+    DurationLookup: SOA_TALISMAN_OF_MAGICIAN
+    CalcFlags:
+      Smatk: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Talisman_of_five_Elements
+    Icon: EFST_TALISMAN_OF_FIVE_ELEMENTS
+    DurationLookup: SOA_TALISMAN_OF_FIVE_ELEMENTS
+    CalcFlags:
+      All: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Totem_of_Tutelary
+    Icon: EFST_BLANK
+    DurationLookup: SOA_TOTEM_OF_TUTELARY
+    CalcFlags:
+      Regen: true
+  - Status: T_First_God
+    Icon: EFST_T_FIRST_GOD
+    DurationLookup: SOA_TALISMAN_OF_BLUE_DRAGON
+  - Status: T_Second_God
+    Icon: EFST_T_SECOND_GOD
+    DurationLookup: SOA_TALISMAN_OF_WHITE_TIGER
+    Fail:
+      T_Second_God: true
+    End:
+      T_First_God: true
+  - Status: T_Third_God
+    Icon: EFST_T_THIRD_GOD
+    DurationLookup: SOA_TALISMAN_OF_RED_PHOENIX
+    Fail:
+      T_Third_God: true
+    End:
+      T_Second_God: true
+  - Status: T_Fourth_God
+    Icon: EFST_T_FOURTH_GOD
+    DurationLookup: SOA_TALISMAN_OF_BLACK_TORTOISE
+    Fail:
+      T_Fourth_God: true
+    End:
+      T_Third_God: true
+  - Status: T_Fifth_God
+    Icon: EFST_T_FIVETH_GOD
+    DurationLookup: SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS
+    CalcFlags:
+      Smatk: true
+    End:
+      T_Fourth_God: true
+  - Status: Heaven_and_Earth
+    Icon: EFST_HEAVEN_AND_EARTH
+    DurationLookup: SOA_SOUL_OF_HEAVEN_AND_EARTH
+    CalcFlags:
+      Smatk: true

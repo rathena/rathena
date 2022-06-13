@@ -33,11 +33,14 @@ struct status_change;
 #define MAX_SKILL_LEVEL 13 /// Max Skill Level (for skill_db storage)
 #define MAX_MOBSKILL_LEVEL 100	/// Max monster skill level (on skill usage)
 #define MAX_SKILL_CRIMSON_MARKER 3 /// Max Crimson Marker targets (RL_C_MARKER)
-#define SKILL_NAME_LENGTH 31 /// Max Skill Name length
-#define SKILL_DESC_LENGTH 31 /// Max Skill Desc length
+#define SKILL_NAME_LENGTH 40 /// Max Skill Name length
+#define SKILL_DESC_LENGTH 40 /// Max Skill Desc length
 
 /// Used with tracking the hitcount of Earthquake for skills that can avoid the first attack
 #define NPC_EARTHQUAKE_FLAG 0x800
+
+/// To control alternative skill scalings [Muh]
+#define SKILL_ALTDMG_FLAG 0x10
 
 /// Constants to identify a skill's nk value (damage properties)
 /// The NK value applies only to non INF_GROUND_SKILL skills
@@ -587,7 +590,8 @@ int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 
 #endif
 int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv);
 void skill_toggle_magicpower(struct block_list *bl, uint16 skill_id);
-
+//Check sc of bl [Muh]
+int skill_check_bl_sc(struct block_list *target, va_list ap);
 // Skill conditions check and remove [Inkfish]
 bool skill_check_condition_castbegin(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 bool skill_check_condition_castend(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
@@ -2297,6 +2301,13 @@ enum e_skill {
 	NW_THE_VIGILANTE_AT_NIGHT_GUN_SHOTGUN,
 	SS_FUUMAKOUCHIKU_BLASTING,
 
+	DK_DRAGONIC_BREATH = 6001,
+	MT_SPARK_BLASTER,
+	MT_TRIPLE_LASER,
+	MT_MIGHTY_SMASH,
+	BO_EXPLOSIVE_POWDER,
+	BO_MAYHEMIC_THORNS,
+
 	HLIF_HEAL = 8001,
 	HLIF_AVOID,
 	HLIF_BRAIN,
@@ -2340,6 +2351,22 @@ enum e_skill {
 	MH_LAVA_SLIDE,
 	MH_PYROCLASTIC,
 	MH_VOLCANIC_ASH,
+	MH_BLAST_FORGE,
+	MH_TEMPERING,
+	MH_CLASSY_FLUTTER,
+	MH_TWISTER_CUTTER,
+	MH_ABSOLUTE_ZEPHYR,
+	MH_BRUSHUP_CLAW,
+	MH_BLAZING_AND_FURIOUS,
+	MH_THE_ONE_FIGHTER_RISES,
+	MH_POLISHING_NEEDLE,
+	MH_TOXIN_OF_MANDARA,
+	MH_NEEDLE_STINGER,
+	MH_LICHT_GEHORN,
+	MH_GLANZEN_SPIES,
+	MH_HEILIGE_PFERD,
+	MH_GOLDENE_TONE,
+	MH_BLAZING_LAVA,
 
 	MS_BASH = 8201,
 	MS_MAGNUM,
@@ -2617,17 +2644,19 @@ enum e_skill_unit_id : uint16 {
 	UNT_TWINKLING_GALAXY,
 	UNT_STAR_CANNON,
 	UNT_GRENADES_DROPPING,
-
-	UNT_FUUMASHOUAKU = 290, // Huuma Shuriken - Grasp
+	UNT_UNKNOWN_2,// Shows Nothing
+	UNT_FUUMASHOUAKU,// Huuma Shuriken - Grasp
 	UNT_MISSION_BOMBARD,
 	UNT_TOTEM_OF_TUTELARY,
 	UNT_HYUN_ROKS_BREEZE,
-	UNT_SHINKIROU, // Mirage
+	UNT_SHINKIROU,// Mirage
 	UNT_JACK_FROST_NOVA,
 	UNT_GROUND_GRAVITATION,
+	UNT_KUNAIKAITEN,// Shows Nothing
+	UNT_KUNAIWAIKYOKU,// Kunai - Distortion
 
-	UNT_KUNAIWAIKYOKU = 298, // Kunai - Distortion
-
+	UNT_STAR_BURST = 2409,
+	
 	// Skill units outside the normal unit range.
 	UNT_DEEPBLINDTRAP = 20852,
 	UNT_SOLIDTRAP,
@@ -2738,7 +2767,7 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 enum sc_type skill_get_sc(int16 skill_id);
 void skill_reveal_trap_inarea(struct block_list *src, int range, int x, int y);
 int skill_get_time3(struct map_data *mapdata, uint16 skill_id, uint16 skill_lv);
-
+int skill_area_sub(struct block_list *bl, va_list ap);
 /// Variable name of copied skill by Plagiarism
 #define SKILL_VAR_PLAGIARISM "CLONE_SKILL"
 /// Variable name of copied skill level by Plagiarism
