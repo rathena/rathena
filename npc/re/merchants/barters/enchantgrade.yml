@@ -45,11 +45,66 @@ Header:
   Type: BARTER_DB
   Version: 1
 
-Footer:
-  Imports:
-  - Path: npc/re/merchants/barters/Extended_Ammunition.yml
-  - Path: npc/re/merchants/barters/quests_16_1.yml
-  - Path: npc/re/merchants/barters/quests_16_2.yml
-  - Path: npc/re/merchants/barters/quests_17_1.yml
-  - Path: npc/re/merchants/barters/refine.yml
-  - Path: npc/re/merchants/barters/enchantgrade.yml
+Body:
+###########################################################################
+##= Enchant Grade Exchange
+###########################################################################
+  - Name: EnchantGradeExchange
+    Items:
+      - Index: 0
+        Item: Etel_Stone
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Dust
+            Amount: 5
+      - Index: 1
+        Item: Blessed_Etel_Dust
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Dust
+            Amount: 5
+          - Index: 1
+            Item: Blacksmith_Blessing
+            Amount: 1
+      - Index: 2
+        Item: Etel_Skyblue_Jewel
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Stone
+            Amount: 3
+          - Index: 1
+            Item: Skyblue_Jewel
+            Amount: 1
+      - Index: 3
+        Item: Etel_Topaz
+        Zeny: 200000
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Stone
+            Amount: 6
+          - Index: 1
+            Item: Golden_Jewel
+            Amount: 1
+      - Index: 4
+        Item: Etel_Violet_Jewel
+        Zeny: 300000
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Stone
+            Amount: 10
+          - Index: 1
+            Item: Violet_Jewel
+            Amount: 1
+      - Index: 5
+        Item: Etel_Amber
+        Zeny: 300000
+        RequiredItems:
+          - Index: 0
+            Item: Etel_Stone
+            Amount: 15
+          - Index: 1
+            Item: Amber
+            Amount: 1

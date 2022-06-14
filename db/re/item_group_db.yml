@@ -29368,3 +29368,529 @@ Body:
           - Item: Up_Demon_Slayer_Shot
             RefineMinimum: 7
             RefineMaximum: 7
+  - Group: RUNE_CRAFT_MATERIALS
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Emperium
+            Rate: 1
+          - Item: Ogre_Tooth
+            Rate: 1
+          - Item: Cobold_Hair
+            Rate: 1
+          - Item: Broken_Armor_Piece
+            Rate: 1
+          - Item: Claw_Of_Desert_Wolf
+            Rate: 1
+          - Item: Tangled_Chain
+            Rate: 1
+          - Item: Dullahan_Armor
+            Rate: 1
+          - Item: Dragon's_Skin
+            Rate: 1
+          - Item: Dragon_Canine
+            Rate: 1
+          - Item: Honey
+            Rate: 1
+          - Item: Light_Granule
+            Rate: 1
+          - Item: Old_Magic_Circle
+            Rate: 1
+          - Item: Slender_Snake
+            Rate: 1
+          - Item: Round_Shell
+            Rate: 1
+          - Item: Burning_Heart
+            Rate: 1
+          - Item: Red_Gemstone
+            Rate: 1
+  - Group: ELEMENTAL_CONVERTER
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Scorpion's_Tail
+            Rate: 1
+          - Item: Snail's_Shell
+            Rate: 1
+          - Item: Horn
+            Rate: 1
+          - Item: Colorful_Shell
+            Rate: 1
+  - Group: POISONS
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Anolian_Skin
+            Rate: 1
+          - Item: Izidor
+            Rate: 1
+          - Item: Poison_Toad's_Skin
+            Rate: 1
+          - Item: Poison_Spore
+            Rate: 1
+          - Item: Poison_Herb_Amoena
+            Rate: 1
+          - Item: Poison_Herb_Scopolia
+            Rate: 1
+          - Item: Poison_Herb_Seratum
+            Rate: 1
+          - Item: Poison_Herb_Makulata
+            Rate: 1
+          - Item: Poison_Herb_Rantana
+            Rate: 1
+          - Item: Poison_Herb_Nerium
+            Rate: 1
+          - Item: Heart_Of_Mermaid
+            Rate: 1
+          - Item: Sticky_Poison
+            Rate: 1
+          - Item: Decayed_Nail
+            Rate: 1
+  - Group: BLACKSMITH
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Steel
+            Rate: 1
+          - Item: Iron
+            Rate: 1
+          - Item: Brigan
+            Rate: 1
+  - Group: POTION_CRAFT_MATERIALS
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Red_Herb
+            Rate: 1
+          - Item: Yellow_Herb
+            Rate: 1
+          - Item: White_Herb
+            Rate: 1
+          - Item: Blue_Herb
+            Rate: 1
+          - Item: Green_Herb
+            Rate: 1
+          - Item: Cactus_Needle
+            Rate: 1
+          - Item: Starsand_Of_Witch
+            Rate: 1
+          - Item: Moustache_Of_Mole
+            Rate: 1
+  - Group: KUNAI_BOX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Dried_Squid_Box
+            Rate: 1
+          - Item: Flying_Fish_Box
+            Rate: 1
+          - Item: Starfish_Box
+            Rate: 1
+  - Group: BULLET_CASE
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Bullet_Case
+            Rate: 1
+          - Item: Bullet_Case_Silver
+            Rate: 1
+          - Item: Bullet_Case_Blood
+            Rate: 1
+  - Group: SOUL_LINKER
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Witherless_Rose
+            Rate: 1
+          - Item: Crystal_Jewel__
+            Rate: 1
+          - Item: Immortal_Heart
+            Rate: 1
+  - Group: ELEMENTAL_STONES
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Flame_Heart
+            Rate: 1
+          - Item: Mistic_Frozen
+            Rate: 1
+          - Item: Rough_Wind
+            Rate: 1
+          - Item: Great_Nature
+            Rate: 1
+          - Item: Star_Crumb
+            Rate: 1
+          - Item: Sparkling_Dust
+            Rate: 1
+  - Group: SHADOW_CUBE_ARMOR
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_Breezy_Armor
+            Rate: 227
+          - Item: S_Immune_Armor
+            Rate: 227
+          - Item: S_Hard_Armor
+            Rate: 227
+          - Item: S_Ancient_Armor
+            Rate: 227
+          - Item: S_Critical_Armor
+            Rate: 227
+          - Item: S_Dexterous_Armor
+            Rate: 227
+          - Item: S_Lucky_Armor
+            Rate: 227
+          - Item: S_Big_Armor
+            Rate: 227
+          - Item: S_Medium_Armor
+            Rate: 227
+          - Item: S_Small_Armor
+            Rate: 227
+          - Item: S_Malicious_Armor
+            Rate: 227
+          - Item: S_Gemstone_Armor
+            Rate: 227
+          - Item: S_Plasterer's_Armor
+            Rate: 227
+          - Item: S_Insomniac_Armor
+            Rate: 227
+          - Item: S_Peerless_Armor
+            Rate: 227
+          - Item: S_Adurate_Armor
+            Rate: 227
+          - Item: S_Spell_Flow_Armor
+            Rate: 227
+          - Item: S_Greed_Armor
+            Rate: 227
+          - Item: S_Heal_Armor
+            Rate: 227
+          - Item: S_Hiding_Armor
+            Rate: 227
+          - Item: S_Cloaking_Armor
+            Rate: 227
+          - Item: S_Teleport_Armor
+            Rate: 227
+          - Item: S_Steal_Armor
+            Rate: 227
+          - Item: S_Immortal_Armor
+            Rate: 227
+          - Item: S_Bearers_Armor
+            Rate: 227
+          - Item: S_Basis_Armor
+            Rate: 227
+          - Item: S_Hallowed_Armor
+            Rate: 227
+          - Item: S_Saharic_Armor
+            Rate: 227
+          - Item: S_Underneath_Armor
+            Rate: 227
+          - Item: S_Flam_Armor
+            Rate: 227
+          - Item: S_Windy_Armor
+            Rate: 227
+          - Item: S_Envenom_Armor
+            Rate: 227
+          - Item: S_Damned_Armor
+            Rate: 227
+          - Item: S_Geist_Armor
+            Rate: 227
+          - Item: S_Divine_Armor
+            Rate: 227
+          - Item: S_Hasty_Armor
+            Rate: 227
+          - Item: S_Attack_Armor
+            Rate: 227
+          - Item: S_ColdBolt_Armor
+            Rate: 227
+          - Item: S_FireBolt_Armor
+            Rate: 227
+          - Item: S_LightingBolt_Armor
+            Rate: 227
+          - Item: S_EarthSpike_Armor
+            Rate: 227
+          - Item: S_Caster_Armor
+            Rate: 227
+          - Item: S_Reload_Armor
+            Rate: 227
+          - Item: S_Blitz_Armor
+            Rate: 227
+  - Group: SHADOW_CUBE_SHIELD
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_Athena_Shield
+            Rate: 233
+          - Item: S_Athletic_Shield
+            Rate: 233
+          - Item: S_Vital_Shield
+            Rate: 233
+          - Item: S_Cranial_Shield
+            Rate: 233
+          - Item: S_Safeguard_Shield
+            Rate: 233
+          - Item: S_Brutal_Shield
+            Rate: 233
+          - Item: S_Gargantua_Shield
+            Rate: 233
+          - Item: S_Homers_Shield
+            Rate: 233
+          - Item: S_Dragoon_Shield
+            Rate: 233
+          - Item: S_Satanic_Shield
+            Rate: 233
+          - Item: S_Flameguard_Shield
+            Rate: 233
+          - Item: S_Requiem_Shield
+            Rate: 233
+          - Item: S_Cadi_Shield
+            Rate: 233
+          - Item: S_Malicious_Shield
+            Rate: 233
+          - Item: S_Gemstone_Shield
+            Rate: 233
+          - Item: S_Stability_Shield
+            Rate: 233
+          - Item: S_Spell_Flow_Shield
+            Rate: 233
+          - Item: S_Greed_Shield
+            Rate: 233
+          - Item: S_Heal_Shield
+            Rate: 233
+          - Item: S_Hiding_Shield
+            Rate: 233
+          - Item: S_Cloaking_Shield
+            Rate: 233
+          - Item: S_Teleport_Shield
+            Rate: 233
+          - Item: S_Steal_Shield
+            Rate: 233
+          - Item: S_Bearers_Shield
+            Rate: 233
+          - Item: S_Basis_Shield
+            Rate: 233
+          - Item: S_Hallowed_Shield
+            Rate: 233
+          - Item: S_Saharic_Shield
+            Rate: 233
+          - Item: S_Underneath_Shield
+            Rate: 233
+          - Item: S_Flam_Shield
+            Rate: 233
+          - Item: S_Windy_Shield
+            Rate: 233
+          - Item: S_Envenom_Shield
+            Rate: 233
+          - Item: S_Damned_Shield
+            Rate: 233
+          - Item: S_Geist_Shield
+            Rate: 233
+          - Item: S_Divine_Shield
+            Rate: 233
+          - Item: S_Expert_Shield
+            Rate: 233
+          - Item: S_Beginner_Shield
+            Rate: 233
+          - Item: S_Rookie_Shield
+            Rate: 233
+          - Item: S_Advanced_Shield
+            Rate: 233
+          - Item: S_Blitz_Shield
+            Rate: 233
+          - Item: S_Caster_Shield
+            Rate: 233
+          - Item: S_Reload_Shield
+            Rate: 233
+          - Item: S_Critical_Shield
+            Rate: 233
+          - Item: S_Healing_Shield
+            Rate: 233
+  - Group: SHADOW_CUBE_SHOES
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_Champion_Shoes
+            Rate: 270
+          - Item: S_Vital_Shoes
+            Rate: 270
+          - Item: S_Athletic_Shoes
+            Rate: 270
+          - Item: S_Bloody_Shoes
+            Rate: 270
+          - Item: S_Liberation_Shoes
+            Rate: 270
+          - Item: S_Chemical_Shoes
+            Rate: 270
+          - Item: S_Clamorous_Shoes
+            Rate: 270
+          - Item: S_Insecticide_Shoes
+            Rate: 270
+          - Item: S_Fisher_Shoes
+            Rate: 270
+          - Item: S_Seraphim_Shoes
+            Rate: 270
+          - Item: S_Beholder_Shoes
+            Rate: 270
+          - Item: S_Divine_Shoes
+            Rate: 270
+          - Item: S_Dragoon_Shoes
+            Rate: 270
+          - Item: S_Malicious_Shoes
+            Rate: 270
+          - Item: S_Gemstone_Shoes
+            Rate: 270
+          - Item: S_Plasterer's_Shoes
+            Rate: 270
+          - Item: S_Insomniac_Shoes
+            Rate: 270
+          - Item: S_Peerless_Shoes
+            Rate: 270
+          - Item: S_Adurate_Shoes
+            Rate: 270
+          - Item: S_Spell_Flow_Shoes
+            Rate: 270
+          - Item: S_Greed_Shoes
+            Rate: 270
+          - Item: S_Heal_Shoes
+            Rate: 270
+          - Item: S_Hiding_Shoes
+            Rate: 270
+          - Item: S_Cloaking_Shoes
+            Rate: 270
+          - Item: S_Teleport_Shoes
+            Rate: 270
+          - Item: S_Steal_Shoes
+            Rate: 270
+          - Item: S_Bearers_Shoes
+            Rate: 270
+          - Item: S_Hasty_Shoes
+            Rate: 270
+          - Item: S_Expert_Shoes
+            Rate: 270
+          - Item: S_Beginner_Shoes
+            Rate: 270
+          - Item: S_Rookie_Shoes
+            Rate: 270
+          - Item: S_Advanced_Shoes
+            Rate: 270
+          - Item: S_Blitz_Shoes
+            Rate: 270
+          - Item: S_Caster_Shoes
+            Rate: 270
+          - Item: S_Reload_Shoes
+            Rate: 270
+          - Item: S_Critical_Shoes
+            Rate: 270
+          - Item: S_Healing_Shoes
+            Rate: 270
+  - Group: SHADOW_CUBE_WEAPON
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_Physical_Weapon
+            Rate: 185
+          - Item: S_Magical_Weapon
+            Rate: 185
+          - Item: S_Kingbird_Weapon
+            Rate: 185
+          - Item: S_Cri_Hit_Weapon
+            Rate: 185
+          - Item: S_Healing_Weapon
+            Rate: 185
+          - Item: S_Lucky_Weapon
+            Rate: 185
+          - Item: S_Dexterous_Weapon
+            Rate: 185
+          - Item: S_Big_Weapon
+            Rate: 185
+          - Item: S_Medium_Weapon
+            Rate: 185
+          - Item: S_Small_Weapon
+            Rate: 185
+          - Item: S_Spiritual_Weapon
+            Rate: 185
+          - Item: S_Gemstone_Weapon
+            Rate: 185
+          - Item: Unfreez_Weapon_S
+            Rate: 185
+          - Item: S_Neutral_Weapon
+            Rate: 185
+          - Item: S_Caster_Weapon
+            Rate: 185
+          - Item: S_Greed_Weapon
+            Rate: 185
+          - Item: S_Heal_Weapon
+            Rate: 185
+          - Item: S_Hiding_Weapon
+            Rate: 185
+          - Item: S_Cloaking_Weapon
+            Rate: 185
+          - Item: S_Teleport_Weapon
+            Rate: 185
+          - Item: S_Steal_Weapon
+            Rate: 185
+          - Item: S_Solid_Weapon
+            Rate: 185
+          - Item: S_Executioner_Weapon
+            Rate: 185
+          - Item: S_Exorcist_Weapon
+            Rate: 185
+          - Item: S_Hunting_Weapon
+            Rate: 185
+          - Item: S_Insect_Net_Weapon
+            Rate: 185
+          - Item: S_Fishing_Weapon
+            Rate: 185
+          - Item: S_Dragon_Killer_Weapon
+            Rate: 185
+          - Item: S_Corrupt_Weapon
+            Rate: 185
+          - Item: S_Vibration_Weapon
+            Rate: 185
+          - Item: S_Holy_Water_Weapon
+            Rate: 185
+          - Item: S_Scissors_Weapon
+            Rate: 185
+          - Item: S_M_Executioner_Weapon
+            Rate: 185
+          - Item: S_M_Exorcist_Weapon
+            Rate: 185
+          - Item: S_M_Hunting_Weapon
+            Rate: 185
+          - Item: S_M_Insect_Net_Weapon
+            Rate: 185
+          - Item: S_M_Fishing_Weapon
+            Rate: 185
+          - Item: S_M_Dragon_K_Weapon
+            Rate: 185
+          - Item: S_M_Corrupt_Weapon
+            Rate: 185
+          - Item: S_M_Vibration_Weapon
+            Rate: 185
+          - Item: S_M_Holy_Water_Weapon
+            Rate: 185
+          - Item: S_M_Scissors_Weapon
+            Rate: 185
+          - Item: S_Bearers_Weapon
+            Rate: 185
+          - Item: S_Enhance_Force_Weapon
+            Rate: 185
+          - Item: S_Force_Weapon
+            Rate: 185
+          - Item: S_Enhance_Spirit_Weapon
+            Rate: 185
+          - Item: S_Spirit_Weapon
+            Rate: 185
+          - Item: S_Exceed_Weapon
+            Rate: 185
+          - Item: S_Blitz_Weapon
+            Rate: 185
+          - Item: S_Tension_Weapon
+            Rate: 185
+          - Item: S_Elegant_Weapon
+            Rate: 185
+          - Item: S_Mortal_Blow_Weapon
+            Rate: 185
+          - Item: Sentimental_Weapone_S
+            Rate: 185
+          - Item: Enchanting_Weapone_S
+            Rate: 185

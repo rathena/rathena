@@ -218,7 +218,7 @@ Body:
     AegisName: Empty_Bottle
     Name: Empty Bottle
     Type: Etc
-    Buy: 6
+    Buy: 400
     Weight: 20
     Flags:
       BuyingStore: true
@@ -282,7 +282,7 @@ Body:
     AegisName: Azure_Jewel
     Name: Emerald
     Type: Etc
-    Buy: 6000
+    Buy: 4500
     Weight: 100
     Flags:
       BuyingStore: true
@@ -298,7 +298,7 @@ Body:
     AegisName: Cardinal_Jewel
     Name: Ruby
     Type: Etc
-    Buy: 6000
+    Buy: 4500
     Weight: 100
     Flags:
       BuyingStore: true
@@ -322,7 +322,7 @@ Body:
     AegisName: Blue_Jewel
     Name: Sapphire
     Type: Etc
-    Buy: 6000
+    Buy: 4500
     Weight: 100
     Flags:
       BuyingStore: true
@@ -338,7 +338,7 @@ Body:
     AegisName: Golden_Jewel
     Name: Topaz
     Type: Etc
-    Buy: 6000
+    Buy: 4500
     Weight: 100
     Flags:
       BuyingStore: true
@@ -346,7 +346,7 @@ Body:
     AegisName: Bluish_Green_Jewel
     Name: Zircon
     Type: Etc
-    Buy: 6000
+    Buy: 4500
     Weight: 100
     Flags:
       BuyingStore: true
@@ -354,7 +354,7 @@ Body:
     AegisName: Crystal_Jewel
     Name: 1carat Diamond
     Type: Etc
-    Buy: 10000
+    Buy: 7500
     Weight: 100
     Flags:
       BuyingStore: true
@@ -502,7 +502,7 @@ Body:
     AegisName: Witherless_Rose
     Name: Witherless Rose
     Type: Etc
-    Buy: 55000
+    Buy: 41250
     Weight: 10
     Flags:
       BuyingStore: true
@@ -666,7 +666,7 @@ Body:
     AegisName: Scell
     Name: Scell
     Type: Etc
-    Buy: 160
+    Buy: 120
     Weight: 10
     Flags:
       BuyingStore: true
@@ -730,7 +730,7 @@ Body:
     AegisName: Animal's_Skin
     Name: Animal Skin
     Type: Etc
-    Buy: 36
+    Buy: 27
     Weight: 10
     Flags:
       BuyingStore: true
@@ -778,7 +778,7 @@ Body:
     AegisName: Bill_Of_Birds
     Name: Bill of Birds
     Type: Etc
-    Buy: 64
+    Buy: 48
     Weight: 10
     Flags:
       BuyingStore: true
@@ -1874,7 +1874,7 @@ Body:
     AegisName: Booby_Trap
     Name: Trap
     Type: Etc
-    Buy: 50
+    Buy: 75
     Weight: 2
     Flags:
       BuyingStore: true
@@ -16490,7 +16490,7 @@ Body:
     AegisName: Face_Paint
     Name: Face Paint
     Type: Etc
-    Buy: 120
+    Buy: 150
     Weight: 20
     Flags:
       BuyingStore: true
@@ -16526,7 +16526,7 @@ Body:
     AegisName: Surface_Paint
     Name: Surface Paint
     Type: Etc
-    Buy: 200
+    Buy: 250
     Weight: 30
     Flags:
       BuyingStore: true
@@ -16800,7 +16800,7 @@ Body:
     AegisName: Heartbroken_Tears
     Name: Regrettable Tears
     Type: Etc
-    Buy: 1000
+    Buy: 1250
     Weight: 2
     Flags:
       BuyingStore: true
@@ -16808,7 +16808,7 @@ Body:
     AegisName: Vulcan_Bullet
     Name: Vulcan Bullet
     Type: Etc
-    Buy: 10
+    Buy: 12
     Weight: 1
     Flags:
       BuyingStore: true
@@ -16816,7 +16816,7 @@ Body:
     AegisName: Magic_Gear_Fuel
     Name: Magic Gear Fuel
     Type: Etc
-    Buy: 250
+    Buy: 375
     Weight: 1
     Flags:
       BuyingStore: true
@@ -16824,7 +16824,7 @@ Body:
     AegisName: Liquid_Condensed_Bullet
     Name: Liquid Condensed Bullet
     Type: Etc
-    Buy: 100
+    Buy: 125
     Weight: 1
     Flags:
       BuyingStore: true
@@ -17810,7 +17810,7 @@ Body:
     AegisName: Melange_Pot
     Name: Melange Pot
     Type: Etc
-    Buy: 600
+    Buy: 750
     Weight: 10
     Flags:
       BuyingStore: true
@@ -17826,7 +17826,7 @@ Body:
     AegisName: Cooking_Skewer
     Name: Cooking Skewer
     Type: Etc
-    Buy: 300
+    Buy: 375
     Weight: 10
     Flags:
       BuyingStore: true
@@ -17834,7 +17834,7 @@ Body:
     AegisName: Black_Charcoal
     Name: Black Charcoal
     Type: Etc
-    Buy: 300
+    Buy: 375
     Weight: 10
     Flags:
       BuyingStore: true
@@ -17866,7 +17866,7 @@ Body:
     AegisName: Large_Cookpot
     Name: Large Cookpot
     Type: Etc
-    Buy: 500
+    Buy: 625
     Weight: 10
     Flags:
       BuyingStore: true
@@ -17890,7 +17890,7 @@ Body:
     AegisName: Comodo_Tropic_Fruit
     Name: Comodo Tropical Fruit
     Type: Etc
-    Buy: 800
+    Buy: 1000
     Weight: 10
     Flags:
       BuyingStore: true
@@ -17914,7 +17914,7 @@ Body:
     AegisName: Fine_Noodle
     Name: Fine Noodles
     Type: Etc
-    Buy: 500
+    Buy: 625
     Weight: 10
     Flags:
       BuyingStore: true
@@ -17922,7 +17922,7 @@ Body:
     AegisName: Cool_Gravy
     Name: Cool Gravy
     Type: Etc
-    Buy: 400
+    Buy: 500
     Weight: 10
     Flags:
       BuyingStore: true
@@ -20104,7 +20104,7 @@ Body:
     AegisName: Charm_Fire
     Name: Fire Amulet
     Type: Etc
-    Buy: 50
+    Buy: 100
     Weight: 1
     Flags:
       BuyingStore: true
@@ -20112,7 +20112,7 @@ Body:
     AegisName: Charm_Ice
     Name: Ice Amulet
     Type: Etc
-    Buy: 50
+    Buy: 100
     Weight: 1
     Flags:
       BuyingStore: true
@@ -20120,7 +20120,7 @@ Body:
     AegisName: Charm_Wind
     Name: Wind Amulet
     Type: Etc
-    Buy: 50
+    Buy: 100
     Weight: 1
     Flags:
       BuyingStore: true
@@ -27406,7 +27406,7 @@ Body:
     AegisName: Cookbook01
     Name: Level 1 Cookbook
     Type: Etc
-    Buy: 1000
+    Buy: 750
     Weight: 10
     Flags:
       BuyingStore: true
@@ -27414,7 +27414,7 @@ Body:
     AegisName: Cookbook02
     Name: Level 2 Cookbook
     Type: Etc
-    Buy: 1000
+    Buy: 750
     Weight: 10
     Flags:
       BuyingStore: true
@@ -27422,7 +27422,7 @@ Body:
     AegisName: Cookbook03
     Name: Level 3 Cookbook
     Type: Etc
-    Buy: 1000
+    Buy: 750
     Weight: 10
     Flags:
       BuyingStore: true
@@ -27430,7 +27430,7 @@ Body:
     AegisName: Cookbook04
     Name: Level 4 Cookbook
     Type: Etc
-    Buy: 1000
+    Buy: 750
     Weight: 10
     Flags:
       BuyingStore: true
@@ -27438,7 +27438,7 @@ Body:
     AegisName: Cookbook05
     Name: Level 5 Cookbook
     Type: Etc
-    Buy: 1000
+    Buy: 750
     Weight: 10
     Flags:
       BuyingStore: true
@@ -27486,7 +27486,7 @@ Body:
     AegisName: Pot
     Name: Pot
     Type: Etc
-    Buy: 150
+    Buy: 375
     Weight: 10
     Flags:
       BuyingStore: true
@@ -27931,7 +27931,7 @@ Body:
     AegisName: Flame_Stone
     Name: Flame Stone
     Type: Etc
-    Buy: 50
+    Buy: 112
     Weight: 1
     Flags:
       BuyingStore: true
@@ -27939,7 +27939,7 @@ Body:
     AegisName: Ice_Stone
     Name: Ice Stone
     Type: Etc
-    Buy: 50
+    Buy: 112
     Weight: 1
     Flags:
       BuyingStore: true
@@ -27947,7 +27947,7 @@ Body:
     AegisName: Wind_Stone
     Name: Wind Stone
     Type: Etc
-    Buy: 50
+    Buy: 112
     Weight: 1
     Flags:
       BuyingStore: true
@@ -27955,7 +27955,7 @@ Body:
     AegisName: Shadow_Orb
     Name: Shadow Orb
     Type: Etc
-    Buy: 200
+    Buy: 225
     Weight: 1
     Flags:
       BuyingStore: true
@@ -31261,7 +31261,7 @@ Body:
     AegisName: Special_Alloy_Trap
     Name: Special Alloy Trap
     Type: Etc
-    Buy: 100
+    Buy: 300
     Weight: 2
     Flags:
       BuyingStore: true
@@ -32498,7 +32498,7 @@ Body:
     Name: Bloody Shell
     Type: Ammo
     SubType: Bullet
-    Buy: 5
+    Buy: 10
     Weight: 1
     Attack: 30
     Jobs:
@@ -32666,7 +32666,7 @@ Body:
     Name: Shuriken
     Type: Ammo
     SubType: Shuriken
-    Buy: 2
+    Buy: 4
     Weight: 1
     Attack: 10
     Jobs:
@@ -32680,7 +32680,7 @@ Body:
     Name: Nimbus Shuriken
     Type: Ammo
     SubType: Shuriken
-    Buy: 4
+    Buy: 10
     Weight: 1
     Attack: 30
     Jobs:
@@ -32694,7 +32694,7 @@ Body:
     Name: Flash Shuriken
     Type: Ammo
     SubType: Shuriken
-    Buy: 6
+    Buy: 20
     Weight: 1
     Attack: 45
     Jobs:
@@ -32708,7 +32708,7 @@ Body:
     Name: Sharp Leaf Shuriken
     Type: Ammo
     SubType: Shuriken
-    Buy: 12
+    Buy: 40
     Weight: 1
     Attack: 70
     Jobs:
@@ -32722,7 +32722,7 @@ Body:
     Name: Thorn Needle Shuriken
     Type: Ammo
     SubType: Shuriken
-    Buy: 20
+    Buy: 100
     Weight: 1
     Attack: 100
     Jobs:
@@ -33413,7 +33413,7 @@ Body:
     Name: Explosive Kunai
     Type: Ammo
     SubType: Kunai
-    Buy: 50
+    Buy: 100
     Weight: 1
     Attack: 50
     Jobs:
@@ -33482,7 +33482,7 @@ Body:
     Name: Cannon Ball
     Type: Ammo
     SubType: Cannonball
-    Buy: 30
+    Buy: 100
     Weight: 1
     Attack: 100
     Jobs:
@@ -33499,7 +33499,7 @@ Body:
     Name: Holy Cannon Ball
     Type: Ammo
     SubType: Cannonball
-    Buy: 50
+    Buy: 200
     Weight: 1
     Attack: 120
     Jobs:
@@ -33518,7 +33518,7 @@ Body:
     Name: Dark Cannon Ball
     Type: Ammo
     SubType: Cannonball
-    Buy: 50
+    Buy: 200
     Weight: 1
     Attack: 120
     Jobs:
@@ -33537,7 +33537,7 @@ Body:
     Name: Soul Cannon Ball
     Type: Ammo
     SubType: Cannonball
-    Buy: 50
+    Buy: 200
     Weight: 1
     Attack: 120
     Jobs:
@@ -33556,7 +33556,7 @@ Body:
     Name: Iron Cannon Ball
     Type: Ammo
     SubType: Cannonball
-    Buy: 80
+    Buy: 500
     Weight: 1
     Attack: 250
     Jobs:
@@ -35856,6 +35856,7 @@ Body:
     AegisName: Luxurious_Pet_Food
     Name: Luxurious Pet Food
     Type: Etc
+    Buy: 10000
     Weight: 10
   - Id: 25378
     AegisName: Hardly_Sealed_Letter
@@ -47475,6 +47476,77 @@ Body:
     Script: |
       bonus bVariableCastrate,-10;
       bonus bDelayrate,-10;
+  - Id: 300330
+    AegisName: Sealed_Atroce_Card_J
+    Name: Sealed Atroce Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bBaseAtk,25;
+      autobonus "{ bonus bAspdRate,30; }",5,10000,0,"{}";
+  - Id: 300331
+    AegisName: Sealed_Ifrit_Card_J
+    Name: Sealed Ifrit Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bBaseAtk,(JobLevel/20);
+      bonus bCritical,(JobLevel/20);
+      bonus bHit,(JobLevel/20);
+      bonus3 bAutoSpellWhenHit,"NPC_EARTHQUAKE",1,1;
+  - Id: 300332
+    AegisName: Sealed_Gloom_Card_J
+    Name: Sealed Gloom Under Night Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddEle,Ele_Holy,5;
+      bonus2 bAddEle,Ele_Dark,5;
+      bonus2 bAddRace,RC_Angel,5;
+      bonus2 bAddRace,RC_Demon,5;
+  - Id: 300334
+    AegisName: Sealed_F_Bishop_Card_J
+    Name: Sealed Fallen Bishop Hibram Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bMatkRate,10;
+      bonus bMaxSPrate,-50;
+  - Id: 300338
+    AegisName: SLD_Thanatos_Card_J
+    Name: Sealed Memory of Thanatos Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bIgnoreDefRaceRate,RC_All,100;
+      bonus bDef,-30;
+      bonus bFlee,-30;
+      bonus bSPDrainValue,-1;
   - Id: 300348
     AegisName: SLD_G_Amon_Ra_Card_J
     Name: Sealed Nightmare Amon Ra Card
@@ -53034,16 +53106,16 @@ Body:
       .@g = getenchantgrade();
       bonus bShortAtkRate,.@param;
       bonus bBaseAtk,5*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bShortAtkRate,.@param;
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bShortAtkRate,.@param;
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bShortAtkRate,.@param;
                bonus bPAtk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bShortAtkRate,.@param;
                   bonus bPAtk,.@param;
                }
@@ -53060,16 +53132,16 @@ Body:
       .@g = getenchantgrade();
       bonus bShortAtkRate,.@param;
       bonus bBaseAtk,7*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bShortAtkRate,.@param;
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bShortAtkRate,.@param;
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bShortAtkRate,.@param;
                bonus bPAtk,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bShortAtkRate,2*.@param;
                   bonus bPAtk,2*.@param;
                }
@@ -53086,16 +53158,16 @@ Body:
       .@g = getenchantgrade();
       bonus bShortAtkRate,2*.@param;
       bonus bBaseAtk,15*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bShortAtkRate,.@param;
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bShortAtkRate,.@param;
             bonus bPAtk,2*.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bShortAtkRate,2*.@param;
                bonus bPAtk,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bShortAtkRate,3*.@param;
                   bonus bPAtk,3*.@param;
                }
@@ -53112,16 +53184,16 @@ Body:
       .@g = getenchantgrade();
       bonus bMaxHPrate,.@param;
       bonus bRes,.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxHPrate,.@param;
          bonus bRes,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bMaxHPrate,.@param;
             bonus bRes,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bMaxHPrate,.@param;
                bonus bRes,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bMaxHPrate,.@param;
                   bonus bRes,2*.@param;
                }
@@ -53138,16 +53210,16 @@ Body:
       .@g = getenchantgrade();
       bonus bMaxHPrate,2*.@param;
       bonus bRes,2*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxHPrate,.@param;
          bonus bRes,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bMaxHPrate,.@param;
             bonus bRes,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bMaxHPrate,2*.@param;
                bonus bRes,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bMaxHPrate,2*.@param;
                   bonus bRes,2*.@param;
                }
@@ -53164,16 +53236,16 @@ Body:
       .@g = getenchantgrade();
       bonus bMaxHPrate,3*.@param;
       bonus bRes,4*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxHPrate,.@param;
          bonus bRes,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bMaxHPrate,2*.@param;
             bonus bRes,2*.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bMaxHPrate,2*.@param;
                bonus bRes,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bMaxHPrate,3*.@param;
                   bonus bRes,3*.@param;
                }
@@ -53190,16 +53262,16 @@ Body:
       .@g = getenchantgrade();
       bonus bLongAtkRate,.@param;
       bonus bBaseAtk,5*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bLongAtkRate,.@param;
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,.@param;
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bLongAtkRate,.@param;
                bonus bPAtk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bLongAtkRate,.@param;
                   bonus bPAtk,2*.@param;
                }
@@ -53216,16 +53288,16 @@ Body:
       .@g = getenchantgrade();
       bonus bLongAtkRate,2*.@param;
       bonus bBaseAtk,7*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bLongAtkRate,.@param;
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,.@param;
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bLongAtkRate,.@param;
                bonus bPAtk,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bLongAtkRate,2*.@param;
                   bonus bPAtk,2*.@param;
                }
@@ -53242,16 +53314,16 @@ Body:
       .@g = getenchantgrade();
       bonus bLongAtkRate,2*.@param;
       bonus bBaseAtk,15*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bLongAtkRate,.@param;
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,2*.@param;
             bonus bPAtk,2*.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bLongAtkRate,2*.@param;
                bonus bPAtk,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bLongAtkRate,3*.@param;
                   bonus bPAtk,3*.@param;
                }
@@ -53268,16 +53340,16 @@ Body:
       .@g = getenchantgrade();
       bonus bCritAtkRate,.@param;
       bonus bBaseAtk,5*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bCritAtkRate,.@param;
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bCritAtkRate,.@param;
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bCritAtkRate,.@param;
                bonus bPAtk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bCritAtkRate,.@param;
                   bonus bPAtk,.@param;
                }
@@ -53294,16 +53366,16 @@ Body:
       .@g = getenchantgrade();
       bonus bCritAtkRate,2*.@param;
       bonus bBaseAtk,7*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bCritAtkRate,.@param;
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bCritAtkRate,.@param;
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bCritAtkRate,.@param;
                bonus bPAtk,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bCritAtkRate,2*.@param;
                   bonus bPAtk,2*.@param;
                }
@@ -53320,16 +53392,16 @@ Body:
       .@g = getenchantgrade();
       bonus bCritAtkRate,3*.@param;
       bonus bBaseAtk,15*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bCritAtkRate,.@param;
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bCritAtkRate,.@param;
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bCritAtkRate,2*.@param;
                bonus bPAtk,3*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bCritAtkRate,3*.@param;
                   bonus bCrate,.@param;
                }
@@ -53346,16 +53418,16 @@ Body:
       .@g = getenchantgrade();
       bonus2 bMagicAtkEle,Ele_All,.@param;
       bonus bMatk,5*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bMagicAtkEle,Ele_All,.@param;
          bonus bSmatk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_All,.@param;
             bonus bSmatk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bMagicAtkEle,Ele_All,.@param;
                bonus bSmatk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus2 bMagicAtkEle,Ele_All,.@param;
                   bonus bSmatk,.@param;
                }
@@ -53372,16 +53444,16 @@ Body:
       .@g = getenchantgrade();
       bonus2 bMagicAtkEle,Ele_All,2*.@param;
       bonus bMatk,7*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bMagicAtkEle,Ele_All,.@param;
          bonus bSmatk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_All,.@param;
             bonus bSmatk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bMagicAtkEle,Ele_All,2*.@param;
                bonus bSmatk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus2 bMagicAtkEle,Ele_All,2*.@param;
                   bonus bSmatk,2*.@param;
                }
@@ -53398,16 +53470,16 @@ Body:
       .@g = getenchantgrade();
       bonus2 bMagicAtkEle,Ele_All,3*.@param;
       bonus bMatk,15*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bMagicAtkEle,Ele_All,.@param;
          bonus bSmatk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_All,.@param;
             bonus bSmatk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bMagicAtkEle,Ele_All,2*.@param;
                bonus bSmatk,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus2 bMagicAtkEle,Ele_All,3*.@param;
                   bonus bSmatk,2*.@param;
                }
@@ -53424,18 +53496,18 @@ Body:
       .@g = getenchantgrade();
       bonus bMaxSPrate,.@param;
       bonus bHealPower,.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxSPrate,.@param;
          bonus bHealPower,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSPrecovRate,.@param;
             bonus bMaxSPrate,.@param;
             bonus bHealPower,2*.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSPrecovRate,2*.@param;
                bonus bMaxSPrate,.@param;
                bonus bHealPower,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bHplus,.@param;
                   bonus bMaxSPrate,.@param;
                }
@@ -53452,18 +53524,18 @@ Body:
       .@g = getenchantgrade();
       bonus bMaxSPrate,.@param;
       bonus bHealPower,3*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxSPrate,.@param;
          bonus bHealPower,2*.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSPrecovRate,.@param;
             bonus bMaxSPrate,.@param;
             bonus bHealPower,2*.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSPrecovRate,2*.@param;
                bonus bHplus,.@param;
                bonus bMaxSPrate,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bHplus,2*.@param;
                   bonus bMaxSPrate,2*.@param;
                }
@@ -53480,18 +53552,18 @@ Body:
       .@g = getenchantgrade();
       bonus bMaxSPrate,2*.@param;
       bonus bHealPower,5*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxSPrate,.@param;
          bonus bHealPower,2*.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSPrecovRate,2*.@param;
             bonus bMaxSPrate,.@param;
             bonus bHealPower,2*.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSPrecovRate,3*.@param;
                bonus bHplus,2*.@param;
                bonus bMaxSPrate,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bHplus,3*.@param;
                   bonus bMaxSPrate,2*.@param;
                }
@@ -54484,13 +54556,13 @@ Body:
       bonus bPow,1;
       bonus bPAtk,.@param;
       bonus bBaseAtk,3*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bPAtk,.@param;
                }
             }
@@ -54507,13 +54579,13 @@ Body:
       bonus bPow,2;
       bonus bPAtk,2*.@param;
       bonus bBaseAtk,4*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bPAtk,2*.@param;
                }
             }
@@ -54530,13 +54602,13 @@ Body:
       bonus bPow,3;
       bonus bPAtk,3*.@param;
       bonus bBaseAtk,5*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,2*.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bPAtk,2*.@param;
                }
             }
@@ -54553,13 +54625,13 @@ Body:
       bonus bSpl,1;
       bonus bSmatk,.@param;
       bonus bMatk,3*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSmatk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bSmatk,.@param;
                }
             }
@@ -54576,13 +54648,13 @@ Body:
       bonus bSpl,2;
       bonus bSmatk,2*.@param;
       bonus bMatk,4*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSmatk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bSmatk,2*.@param;
                }
             }
@@ -54599,13 +54671,13 @@ Body:
       bonus bSpl,3;
       bonus bSmatk,3*.@param;
       bonus bMatk,5*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSmatk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,2*.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bSmatk,2*.@param;
                }
             }
@@ -54622,13 +54694,13 @@ Body:
       bonus bCon,1;
       bonus bPAtk,.@param;
       bonus bBaseAtk,3*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bPAtk,.@param;
                }
             }
@@ -54645,13 +54717,13 @@ Body:
       bonus bCon,2;
       bonus bPAtk,2*.@param;
       bonus bBaseAtk,4*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bPAtk,2*.@param;
                }
             }
@@ -54668,13 +54740,13 @@ Body:
       bonus bCon,3;
       bonus bPAtk,3*.@param;
       bonus bBaseAtk,5*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,2*.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bPAtk,2*.@param;
                }
             }
@@ -54692,13 +54764,13 @@ Body:
       bonus bCritAtkRate,3*.@param;
       bonus bPAtk,.@param;
       bonus bBaseAtk,3*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bPAtk,2*.@param;
                }
             }
@@ -54716,13 +54788,13 @@ Body:
       bonus bCritAtkRate,4*.@param;
       bonus bPAtk,2*.@param;
       bonus bBaseAtk,4*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bPAtk,2*.@param;
                }
             }
@@ -54740,13 +54812,13 @@ Body:
       bonus bCritAtkRate,5*.@param;
       bonus bPAtk,2*.@param;
       bonus bBaseAtk,5*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPAtk,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bPAtk,2*.@param;
                }
             }
@@ -54763,16 +54835,16 @@ Body:
       bonus bWis,1;
       bonus bMaxSPrate,.@param;
       bonus bHealPower,.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxSPrate,.@param;
          bonus bHealPower,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bMaxSPrate,.@param;
             bonus bHealPower,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bMaxSPrate,.@param;
                bonus bHealPower,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bMaxSPrate,.@param;
                   bonus bHealPower,2*.@param;
                }
@@ -54790,16 +54862,16 @@ Body:
       bonus bWis,2;
       bonus bMaxSPrate,2*.@param;
       bonus bHealPower,2*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxSPrate,.@param;
          bonus bHealPower,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bMaxSPrate,.@param;
             bonus bHealPower,2*.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bMaxSPrate,.@param;
                bonus bHealPower,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bHplus,.@param;
                   bonus bMaxSPrate,2*.@param;
                }
@@ -54817,16 +54889,16 @@ Body:
       bonus bWis,3;
       bonus bMaxSPrate,3*.@param;
       bonus bHealPower,3*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxSPrate,.@param;
          bonus bHealPower,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bMaxSPrate,.@param;
             bonus bHealPower,2*.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bHplus,.@param;
                bonus bMaxSPrate,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bHplus,2*.@param;
                   bonus bMaxSPrate,2*.@param;
                }
@@ -54844,16 +54916,16 @@ Body:
       bonus bSta,1;
       bonus bMaxHP,250*.@param;
       bonus bRes,.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxHPrate,.@param;
          bonus bRes,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bMaxHPrate,.@param;
             bonus bRes,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bMaxHPrate,.@param;
                bonus bRes,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bMaxHPrate,.@param;
                   bonus bRes,.@param;
                }
@@ -54871,16 +54943,16 @@ Body:
       bonus bSta,2;
       bonus bMaxHP,400*.@param;
       bonus bRes,2*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxHPrate,.@param;
          bonus bRes,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bMaxHPrate,.@param;
             bonus bRes,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bMaxHPrate,.@param;
                bonus bRes,.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bMaxHPrate,.@param;
                   bonus bRes,2*.@param;
                }
@@ -54898,16 +54970,16 @@ Body:
       bonus bSta,3;
       bonus bMaxHP,600*.@param;
       bonus bRes,3*.@param;
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxHPrate,.@param;
          bonus bRes,.@param;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bMaxHPrate,.@param;
             bonus bRes,.@param;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bMaxHPrate,.@param;
                bonus bRes,2*.@param;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bMaxHPrate,2*.@param;
                   bonus bRes,2*.@param;
                }
@@ -56010,6 +56082,26 @@ Body:
           }
         }
       }
+  - Id: 311071
+    AegisName: Sealed_Berz_Card_J
+    Name: Sealed Berzebub Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bVariableCastrate,-10;
+  - Id: 311073
+    AegisName: Goddess_of_Abundance
+    Name: Goddess of Abundance    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bHealpower2,15;
+      bonus bAddItemHealRate,15;
   - Id: 311076
     AegisName: POW_1Lv
     Name: POW Lv1
@@ -61756,6 +61848,7 @@ Body:
     AegisName: Amber
     Name: Amber
     Type: Etc
+    Buy: 45000
     Weight: 100
   - Id: 1000322
     AegisName: Etel_Dust
@@ -63453,6 +63546,28 @@ Body:
     Name: Special Red Pill Exchange
     Type: Etc
     Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000895
+    AegisName: aegis_1000895
+    Name: Special Young Seed Exchange
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000956
+    AegisName: aegis_1000956
+    Name: Special Kunnam Exchange
+    Type: Etc
     Trade:
       NoDrop: true
       NoTrade: true
