@@ -14694,7 +14694,7 @@ TIMER_FUNC(status_change_timer){
 	case SC_SERVANTWEAPON:
 		if (sce->val4 >= 0) {
 			if( sd && sd->servantball < MAX_SERVANTBALL ){
-				pc_addservantball( *sd, MAX_SERVANTBALL );
+				pc_addservantball( *sd, 1 );
 			}
 			interval = max(500, skill_get_time2(DK_SERVANTWEAPON, sce->val1));
 			map_freeblock_lock();

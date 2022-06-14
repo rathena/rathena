@@ -34318,8 +34318,6 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Hit: Single
-    HitCount: 1
     GiveAp:
       - Level: 1
         Amount: 6
@@ -34389,7 +34387,7 @@ Body:
       Splash: true
       Critical: true
     Range: 1
-    Hit: Single
+    Hit: Multi_Hit
     HitCount: 2
     Element: Weapon
     Requires:
@@ -37672,6 +37670,27 @@ Body:
     CastCancel: true
     Cooldown: 60000
     Duration1: 30000
+    Duration2: 
+      - Level: 1
+        Time: 30000
+      - Level: 2
+        Time: 60000
+      - Level: 3
+        Time: 90000
+      - Level: 4
+        Time: 120000
+      - Level: 5
+        Time: 150000
+      - Level: 6
+        Time: 180000
+      - Level: 7
+        Time: 210000
+      - Level: 8
+        Time: 240000
+      - Level: 9
+        Time: 270000
+      - Level: 10
+        Time: 300000
     Requires:
       SpCost: 150
       ApCost: 150

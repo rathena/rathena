@@ -5829,7 +5829,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					if (skill_check_unit_movepos(5, src, bl->x, bl->y, 0, 1))
 						skill_blown(src, src, 1, (map_calc_dir(bl, src->x, src->y) + 4) % 8, BLOWN_NONE);
 					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);// Trigger animation on servants.
-					sc_start(src,src,SC_RUSH_QUAKE2,100,skill_lv,skill_get_time(skill_id,skill_lv) * skill_lv);
+					sc_start(src,src,SC_RUSH_QUAKE2,100,skill_lv,skill_get_time2(skill_id,skill_lv));
 					break;
 				case AG_CRYSTAL_IMPACT_ATK:
 					if (sc && sc->data[SC_CLIMAX] && sc->data[SC_CLIMAX]->val1 == 5)
