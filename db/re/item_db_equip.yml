@@ -22588,7 +22588,7 @@ Body:
          autobonus2 "{ bonus bShortWeaponDamageReturn,("+.@r+"*3); }",10,5000,BF_WEAPON,"{ specialeffect2 EF_GUARD; }";
       }
       else {
-         autobonus2 "{ bonus bShortWeaponDamageReturn,30; }",10,5000+(.@r/2*1000),BF_WEAPON,"{ specialeffect2 EF_GUARD; }";
+         autobonus2 "{ bonus bShortWeaponDamageReturn,30; }",10,1000*(5+(.@r-10)/2),BF_WEAPON,"{ specialeffect2 EF_GUARD; }";
       }
   - Id: 2135
     AegisName: Shadow_Guard
@@ -68373,12 +68373,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSmatk,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus bSpl,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bMagicAtkEle,Ele_All,15;
             }
          }
@@ -102025,11 +102025,11 @@ Body:
       bonus2 bSkillAtk,"DK_STORMSLASH",6*(.@r/2);
       bonus2 bSkillAtk,"DK_HACKANDSLASHER",5*(.@r/3);
       bonus bShortAtkRate,3*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPow,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"DK_STORMSLASH",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -118276,12 +118276,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSmatk,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus bSpl,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bVariableCastrate,-5;
             }
          }
@@ -138948,9 +138948,9 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bShortAtkRate,5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,2;
             bonus bPow,2;
          }
@@ -139251,14 +139251,14 @@ Body:
       bonus bMatkRate,2*(.@r/3);
       bonus bAspd,(.@r/5);
       autobonus "{ .@r = getrefine(); bonus bMatk,100; bonus bHit,50; bonus3 bAutoSpell,\"SO_CLOUD_KILL\",max(3,getskilllv(\"SO_CLOUD_KILL\")),50; if (.@r>=7) { bonus bMatk,50; bonus bHit,25; if (.@r>=9) { bonus3 bAutoSpell,\"WL_HELLINFERNO\",5,50; if (.@r>=10) { bonus3 bAutoSpell,\"WL_CHAINLIGHTNING\",3,20; } } }",1,10000,BF_WEAPON;
-      if (.@g>=1 && .@r>=11) {
+      if (.@g >= ENCHANTGRADE_D && .@r>=11) {
          bonus5 bAutoSpell,"RK_IGNITIONBREAK",9,30,BF_MAGIC,1;
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus bPAtk,2;
          bonus bSMatk,2;
       }
-      if (.@g>=3 && .@r>=12) {
+      if (.@g >= ENCHANTGRADE_B && .@r>=12) {
          bonus bFixedCast,-500;
       }
   - Id: 400153
@@ -139293,15 +139293,15 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus bDelayrate,-5;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus bPAtk,2;
          bonus bSmatk,2;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             if (.@r>=12) {
                bonus bFixedCast,-500;
             }
@@ -139346,12 +139346,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bDelayrate,-5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,2;
             bonus bSmatk,2;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                if (.@r>=12) {
                   bonus bFixedCast,-500;
                }
@@ -139390,13 +139390,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bMagicAtkEle,Ele_Holy,5;
          bonus bShortAtkRate,5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,2;
             bonus bSmatk,2;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                if (.@r>=12) {
                   bonus bFixedCast,-500;
                }
@@ -139436,13 +139436,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bMagicAtkEle,Ele_Fire,5;
          bonus bShortAtkRate,5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,2;
             bonus bSmatk,2;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                if (.@r>=12) {
                   bonus bFixedCast,-500;
                }
@@ -140998,16 +140998,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,5;
          bonus bPow,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bFixedCast,-500;
             bonus bSta,2;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bRes,20;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bPAtk,7;
                }
             }
@@ -141045,16 +141045,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,5;
          bonus bSpl,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bFixedCast,-500;
             bonus bWis,2;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,3;
                bonus bMres,20;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bSmatk,7;
                }
             }
@@ -146688,19 +146688,19 @@ Body:
             bonus bShortAtkRate,20;
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,(.@r/2);
          bonus bBaseAtk,2*(.@r/2);
          bonus bShortAtkRate,(.@r/3);
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bAddClass,Class_All,(.@r/2);
             bonus bBaseAtk,3*(.@r/2);
             bonus bShortAtkRate,(.@r/3);
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bAddClass,Class_All,2*(.@r/2);
                bonus bShortAtkRate,(.@r/3);
                bonus bPAtk,(.@r/4);
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus2 bAddClass,Class_All,3*(.@r/2);
                   bonus bShortAtkRate,2*(.@r/3);
                   bonus bPAtk,2*(.@r/4);
@@ -146739,18 +146739,18 @@ Body:
             bonus bMaxHPrate,15;
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bDef,5*(.@r/2);
          bonus bHealPower,2*(.@r/2);
          bonus bRes,(.@r/4);
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bDef,7*(.@r/2);
             bonus bHealPower,3*(.@r/2);
             bonus bRes,2*(.@r/4);
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bMaxHPrate,(.@r/3);
                bonus bRes,3*(.@r/4);
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bMaxHPrate,2*(.@r/3);
                   bonus bRes,4*(.@r/4);
                }
@@ -146787,19 +146787,19 @@ Body:
             bonus bLongAtkRate,20;
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bAspdRate,(.@r/2);
          bonus2 bAddClass,Class_All,(.@r/2);
          bonus bBaseAtk,2*(.@r/2);
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bAspdRate,(.@r/2);
             bonus2 bAddClass,Class_All,2*(.@r/2);
             bonus bBaseAtk,3*(.@r/2);
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bAspdRate,2*(.@r/2);
                bonus bLongAtkRate,(.@r/3);
                bonus bPAtk,(.@r/4);
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bAspdRate,2*(.@r/2);
                   bonus bLongAtkRate,2*(.@r/3);
                   bonus bPAtk,2*(.@r/4);
@@ -146837,19 +146837,19 @@ Body:
             bonus bCritAtkRate,20;
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bBaseAtk,(.@r/2);
          bonus bCritAtkRate,2*(.@r/3);
          bonus bCritical,(.@r/3);
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bBaseAtk,2*(.@r/2);
             bonus bCritAtkRate,3*(.@r/3);
             bonus bCritical,2*(.@r/3);
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bCritAtkRate,5*(.@r/3);
                bonus bCrate,(.@r/4);
                bonus bPAtk,(.@r/4);
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bCritAtkRate,7*(.@r/3);
                   bonus bCrate,(.@r/4);
                   bonus bPAtk,2*(.@r/4);
@@ -146888,19 +146888,19 @@ Body:
             bonus2 bMagicAtkEle,Ele_All,15;
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,(.@r/2);
          bonus bMatk,2*(.@r/2);
          bonus2 bMagicAtkEle,Ele_All,3*(.@r/3);
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bMatkRate,(.@r/2);
             bonus bMatk,3*(.@r/2);
             bonus2 bMagicAtkEle,Ele_All,3*(.@r/3);
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bMatkRate,2*(.@r/2);
                bonus2 bMagicAtkEle,Ele_All,5*(.@r/3);
                bonus bSmatk,(.@r/4);
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bMatkRate,3*(.@r/2);
                   bonus2 bMagicAtkEle,Ele_All,5*(.@r/3);
                   bonus bSmatk,2*(.@r/4);
@@ -146940,19 +146940,19 @@ Body:
             bonus bVariableCastrate,-10;
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSPrecovRate,2*(.@r/2);
          bonus bHealPower,(.@r/2);
          bonus bMres,(.@r/3);
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSPrecovRate,3*(.@r/2);
             bonus bHealPower,2*(.@r/2);
             bonus bMres,2*(.@r/3);
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bMaxSPrate,(.@r/2);
                bonus bMres,2*(.@r/3);
                bonus bHplus,2*(.@r/4);
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bMaxSPrate,2*(.@r/2);
                   bonus bMres,3*(.@r/3);
                   bonus bHplus,3*(.@r/4);
@@ -147339,14 +147339,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bAddClass,Class_All,3;
             bonus bPow,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bShortAtkRate,10;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bDelayrate,-10;
                }
             }
@@ -147384,14 +147384,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxHPrate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bMaxHPrate,3;
             bonus bSta,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bDelayrate,-5;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bDelayrate,-10;
                }
             }
@@ -147429,14 +147429,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bMatkRate,3;
             bonus bSpl,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bMagicAtkEle,Ele_All,10;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bDelayrate,-10;
                }
             }
@@ -147474,14 +147474,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bAddClass,Class_All,3;
             bonus bCon,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bLongAtkRate,10;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bDelayrate,-10;
                }
             }
@@ -147669,11 +147669,11 @@ Body:
       bonus bMaxSPrate,5;
       bonus bMdef,10*(.@r/3);
       bonus bDef,50*(.@r/3);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,1;
                bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",15;
             }
@@ -147742,14 +147742,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
-         if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_D) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPow,2;
             bonus bSpl,2;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bSmatk,2;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bDelayrate,-5;
                }
             }
@@ -148992,7 +148992,7 @@ Body:
       if (.@r>=9) {
          bonus bAspdRate,7;
          if (.@r>=11) {
-            autobonus "{ .@g = getenchantgrade(); if (.@g>=1) { .@val = 25; if (.@g>=2) { .@val += 25; } } bonus bStr,175+.@val; }",1,10000,BF_WEAPON;
+            autobonus "{ .@g = getenchantgrade(); if (.@g >= ENCHANTGRADE_D) { .@val = 25; if (.@g >= ENCHANTGRADE_C) { .@val += 25; } } bonus bStr,175+.@val; }",1,10000,BF_WEAPON;
             if (.@r>=13) {
                bonus bShortAtkRate,7;
             }
@@ -149018,7 +149018,7 @@ Body:
       if (.@r>=9) {
          bonus bAspdRate,7;
          if (.@r>=11) {
-            autobonus "{ .@g = getenchantgrade(); if (.@g>=1) { .@val = 25; if (.@g>=2) { .@val += 25; } } bonus bDex,175+.@val; }",1,10000,BF_WEAPON|BF_MAGIC;
+            autobonus "{ .@g = getenchantgrade(); if (.@g >= ENCHANTGRADE_D) { .@val = 25; if (.@g >= ENCHANTGRADE_C) { .@val += 25; } } bonus bDex,175+.@val; }",1,10000,BF_WEAPON|BF_MAGIC;
             if (.@r>=13) {
                bonus bFixedCast,-500;
             }
@@ -149046,7 +149046,7 @@ Body:
          bonus bAspdRate,5;
          bonus bVariableCastrate,-5;
          if (.@r>=11) {
-            autobonus "{ .@g = getenchantgrade(); if (.@g>=1) { .@val = 25; if (.@g>=2) { .@val += 25; } } bonus bVit,175+.@val; }",1,10000,BF_WEAPON|BF_MAGIC;
+            autobonus "{ .@g = getenchantgrade(); if (.@g >= ENCHANTGRADE_D) { .@val = 25; if (.@g >= ENCHANTGRADE_C) { .@val += 25; } } bonus bVit,175+.@val; }",1,10000,BF_WEAPON|BF_MAGIC;
             if (.@r>=13) {
                bonus bDelayrate,-5;
             }
@@ -149073,7 +149073,7 @@ Body:
       if (.@r>=9) {
          bonus bVariableCastrate,-7;
          if (.@r>=11) {
-            autobonus "{ .@g = getenchantgrade(); if (.@g>=1) { .@val = 25; if (.@g>=2) { .@val += 25; } } bonus bInt,175+.@val; }",1,10000,BF_MAGIC;
+            autobonus "{ .@g = getenchantgrade(); if (.@g >= ENCHANTGRADE_D) { .@val = 25; if (.@g >= ENCHANTGRADE_C) { .@val += 25; } } bonus bInt,175+.@val; }",1,10000,BF_MAGIC;
             if (.@r>=13) {
                bonus2 bMagicAtkEle,Ele_All,7;
             }
@@ -149121,7 +149121,7 @@ Body:
       if (.@r>=9) {
          bonus bAspdRate,7;
          if (.@r>=11) {
-            autobonus "{ .@g = getenchantgrade(); if (.@g>=1) { .@val = 25; if (.@g>=2) { .@val += 25; } } bonus bAgi,175+.@val; }",1,10000,BF_WEAPON;
+            autobonus "{ .@g = getenchantgrade(); if (.@g >= ENCHANTGRADE_D) { .@val = 25; if (.@g >= ENCHANTGRADE_C) { .@val += 25; } } bonus bAgi,175+.@val; }",1,10000,BF_WEAPON;
             if (.@r>=13) {
                bonus bLongAtkRate,4;
                bonus bShortAtkRate,4;
@@ -149148,7 +149148,7 @@ Body:
       if (.@r>=9) {
          bonus bAspdRate,7;
          if (.@r>=11) {
-            autobonus "{ .@g = getenchantgrade(); if (.@g>=1) { .@val = 25; if (.@g>=2) { .@val += 25; } } bonus bLuk,175+.@val; }",1,10000,BF_WEAPON;
+            autobonus "{ .@g = getenchantgrade(); if (.@g >= ENCHANTGRADE_D) { .@val = 25; if (.@g >= ENCHANTGRADE_C) { .@val += 25; } } bonus bLuk,175+.@val; }",1,10000,BF_WEAPON;
             if (.@r>=13) {
                bonus bCritAtkRate,7;
                bonus bCritical,7;
@@ -149592,16 +149592,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMres,50;
          bonus bRes,50;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAddEle,Ele_All,10;
             bonus2 bAddEle,Ele_All,10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSta,5;
                bonus bWis,5;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bPAtk,5;
                   bonus bSmatk,5;
                   if (.@r>=13) {
@@ -149684,14 +149684,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxHPrate,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bFixedCast,-300;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bVariableCastrate,-5;
                bonus bMaxHPrate,2;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bFixedCast,-200;
                }
             }
@@ -149730,14 +149730,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bFixedCast,-300;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus2 bAddClass,Class_All,2;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bFixedCast,-200;
                }
             }
@@ -149776,14 +149776,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bFixedCast,-300;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bMatkRate,2;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bFixedCast,-200;
                }
             }
@@ -149822,14 +149822,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bFixedCast,-300;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus2 bAddClass,Class_All,2;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bCrate,1;
                }
             }
@@ -151409,15 +151409,15 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxHPrate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bMaxHPrate,3;
             bonus bMres,2;
             bonus bRes,2;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bDelayrate,-5;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bDelayrate,-10;
                }
             }
@@ -151454,14 +151454,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,2;
             bonus2 bAddClass,Class_All,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bShortAtkRate,5;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bDelayrate,-10;
                }
             }
@@ -151498,14 +151498,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,2;
             bonus bMatkRate,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bMagicAtkEle,Ele_All,5;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bDelayrate,-10;
                }
             }
@@ -151542,14 +151542,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,2;
             bonus2 bAddClass,Class_All,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bLongAtkRate,5;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bDelayrate,-10;
                }
             }
@@ -154476,12 +154476,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"IG_CROSS_RAIN",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus2 bSkillAtk,"IG_CROSS_RAIN",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,1;
                bonus2 bSkillAtk,"IG_CROSS_RAIN",12;
             }
@@ -154523,14 +154523,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",5;
          bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WATER",8;
             bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_GROUND",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,2;
                bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",10;
                bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",10;
@@ -154576,16 +154576,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,2;
          bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",10;
          bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",10;
          bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WATER",10;
          bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_GROUND",10;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bAddClass,Class_All,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",10;
                bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",10;
                bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WATER",10;
@@ -154702,16 +154702,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bMagicAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"LG_RAYOFGENESIS",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus bMatkRate,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bSmatk,(.@r/3);
                bonus bSpl,(.@r/3);
             }
@@ -154752,16 +154752,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"GN_CARTCANNON",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -155053,13 +155053,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_Holy,15;
             bonus2 bMagicAtkEle,Ele_Neutral,15;
             bonus bSmatk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bSpl,3;
             }
@@ -155108,12 +155108,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -155161,12 +155161,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bShortAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -155283,11 +155283,11 @@ Body:
       bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",6*(.@r/2);
       bonus2 bSkillAtk,"HN_MEGA_SONIC_BLOW",8*(.@r/3);
       bonus bShortAtkRate,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPow,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -155317,12 +155317,12 @@ Body:
       bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",6*(.@r/2);
       bonus2 bSkillAtk,"GN_CART_TORNADO",7*(.@r/3);
       bonus2 bAddClass,Class_All,5*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPow,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",10;
             bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -155361,14 +155361,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",5;
          bonus2 bSkillAtk,"HN_SHIELD_CHAIN_RUSH",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",3;
             bonus2 bSkillAtk,"HN_SHIELD_CHAIN_RUSH",3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,1;
                bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",5;
                bonus2 bSkillAtk,"HN_SHIELD_CHAIN_RUSH",5;
@@ -155849,12 +155849,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"SHC_SHADOW_STAB",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"SHC_SHADOW_STAB",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,1;
                bonus2 bSkillAtk,"SHC_SHADOW_STAB",12;
             }
@@ -155893,12 +155893,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"ABC_DEFT_STAB",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"ABC_DEFT_STAB",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,1;
                bonus2 bSkillAtk,"ABC_DEFT_STAB",12;
             }
@@ -155945,13 +155945,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,2;
          bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS",10;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus bMatkRate,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS",10;
             }
          }
@@ -156026,16 +156026,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SC_FATALMENACE",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -156311,12 +156311,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_All,15;
             bonus bSmatk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bSpl,3;
             }
@@ -156364,12 +156364,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bShortAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -156410,12 +156410,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSmatk,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus bSpl,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bMagicAtkEle,Ele_All,15;
             }
          }
@@ -156440,12 +156440,12 @@ Body:
     Refineable: true
     Script: |
       .@g = getenchantgrade();
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSpl,1;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"SS_SEKIENHOU",7;
             bonus2 bSkillAtk,"SS_REIKETSUHOU",7;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,1;
             }
          }
@@ -156475,11 +156475,11 @@ Body:
       bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",7*(.@r/2);
       bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS",10*(.@r/3);
       bonus2 bMagicAtkEle,Ele_All,3*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSpl,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
             }
          }
@@ -156508,11 +156508,11 @@ Body:
       bonus2 bSkillAtk,"SS_KAGENOMAI",5*(.@r/2);
       bonus2 bSkillAtk,"SS_KAGEGISSEN",7*(.@r/3);
       bonus bShortAtkRate,3*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPow,1;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"SS_KAGENOMAI",7;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,1;
             }
          }
@@ -156620,14 +156620,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"SS_KUNAIKAITEN",5;
          bonus2 bSkillAtk,"SS_KUNAIKUSSETSU",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"SS_KUNAIKAITEN",3;
             bonus2 bSkillAtk,"SS_KUNAIKUSSETSU",3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,1;
                bonus2 bSkillAtk,"SS_KUNAIKAITEN",5;
                bonus2 bSkillAtk,"SS_KUNAIKUSSETSU",5;
@@ -156675,14 +156675,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"SS_RAIDENPOU",5;
          bonus2 bSkillAtk,"SS_KINRYUUHOU",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus2 bSkillAtk,"SS_RAIDENPOU",3;
             bonus2 bSkillAtk,"SS_KINRYUUHOU",3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,1;
                bonus2 bSkillAtk,"SS_RAIDENPOU",5;
                bonus2 bSkillAtk,"SS_KINRYUUHOU",5;
@@ -156708,12 +156708,12 @@ Body:
     Refineable: true
     Script: |
       .@g = getenchantgrade();
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -156887,16 +156887,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"NC_AXEBOOMERANG",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -157239,12 +157239,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"IG_OVERSLASH",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"IG_OVERSLASH",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,1;
                bonus2 bSkillAtk,"IG_OVERSLASH",12;
             }
@@ -157287,13 +157287,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,2;
          bonus2 bSkillAtk,"IG_OVERSLASH",10;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bAddClass,Class_All,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"IG_OVERSLASH",10;
             }
          }
@@ -157368,16 +157368,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"LG_OVERBRAND",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -157534,12 +157534,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bAddEle,Ele_All,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -157571,11 +157571,11 @@ Body:
       bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",6*(.@r/2);
       bonus2 bSkillAtk,"PA_SHIELDCHAIN",15*(.@r/3);
       bonus bLongAtkRate,3*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPow,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -157915,14 +157915,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"EM_DIAMOND_STORM",5;
          bonus2 bSkillAtk,"EM_TERRA_DRIVE",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus2 bSkillAtk,"EM_DIAMOND_STORM",8;
             bonus2 bSkillAtk,"EM_TERRA_DRIVE",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,1;
                bonus2 bSkillAtk,"EM_DIAMOND_STORM",12;
                bonus2 bSkillAtk,"EM_TERRA_DRIVE",12;
@@ -157965,12 +157965,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"CD_PETITIO",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus2 bSkillAtk,"CD_PETITIO",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,1;
                bonus2 bSkillAtk,"CD_PETITIO",12;
             }
@@ -158185,16 +158185,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bMagicAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus bMatkRate,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bSmatk,(.@r/3);
                bonus bSpl,(.@r/3);
             }
@@ -158236,16 +158236,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bMagicAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SO_POISON_BUSTER",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus bMatkRate,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bSmatk,(.@r/3);
                bonus bSpl,(.@r/3);
             }
@@ -158288,18 +158288,18 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bMagicAddEle,Ele_All,15;
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"AB_DUPLELIGHT",25;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus bMatkRate,7;
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -158667,12 +158667,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_Holy,15;
             bonus bSmatk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bSpl,3;
             }
@@ -158801,12 +158801,12 @@ Body:
       bonus2 bSkillAtk,"EM_LIGHTNING_LAND",6*(.@r/2);
       bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",15*(.@r/3);
       bonus2 bMagicAtkEle,Ele_All,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSpl,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"EM_CONFLAGRATION",10;
             bonus2 bSkillAtk,"EM_LIGHTNING_LAND",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
             }
          }
@@ -158836,11 +158836,11 @@ Body:
       bonus2 bSkillAtk,"SKE_NOON_BLAST",6*(.@r/2);
       bonus2 bSkillAtk,"SKE_RISING_SUN",8*(.@r/3);
       bonus bShortAtkRate,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPow,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"SKE_NOON_BLAST",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -158903,14 +158903,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"SKE_SUNSET_BLAST",5;
          bonus2 bSkillAtk,"SKE_DAWN_BREAK",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"SKE_SUNSET_BLAST",3;
             bonus2 bSkillAtk,"SKE_DAWN_BREAK",3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,1;
                bonus2 bSkillAtk,"SKE_SUNSET_BLAST",5;
                bonus2 bSkillAtk,"SKE_DAWN_BREAK",5;
@@ -158952,16 +158952,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -159002,16 +159002,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SJ_FULLMOONKICK",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -159054,12 +159054,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bShortAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -159576,14 +159576,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"EM_CONFLAGRATION",5;
          bonus2 bSkillAtk,"EM_LIGHTNING_LAND",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus2 bSkillAtk,"EM_CONFLAGRATION",8;
             bonus2 bSkillAtk,"EM_LIGHTNING_LAND",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,1;
                bonus2 bSkillAtk,"EM_CONFLAGRATION",12;
                bonus2 bSkillAtk,"EM_LIGHTNING_LAND",12;
@@ -159627,12 +159627,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"CD_FRAMEN",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus2 bSkillAtk,"CD_FRAMEN",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,1;
                bonus2 bSkillAtk,"CD_FRAMEN",12;
             }
@@ -159677,13 +159677,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,2;
          bonus2 bSkillAtk,"EM_LIGHTNING_LAND",10;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus bMatkRate,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"EM_LIGHTNING_LAND",10;
             }
          }
@@ -159903,16 +159903,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bMagicAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"AB_ADORAMUS",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus bMatkRate,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bSmatk,(.@r/3);
                bonus bSpl,(.@r/3);
             }
@@ -160517,13 +160517,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_Poison,15;
             bonus2 bMagicAtkEle,Ele_Earth,15;
             bonus bSmatk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bSpl,3;
             }
@@ -160573,13 +160573,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_Water,15;
             bonus2 bMagicAtkEle,Ele_Wind,15;
             bonus bSmatk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bSpl,3;
             }
@@ -160790,11 +160790,11 @@ Body:
       bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",6*(.@r/2);
       bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",8*(.@r/3);
       bonus2 bMagicAtkEle,Ele_All,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSpl,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
             }
          }
@@ -160825,11 +160825,11 @@ Body:
       bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",6*(.@r/2);
       bonus2 bSkillAtk,"HN_NAPALM_VULCAN_STRIKE",10*(.@r/3);
       bonus2 bMagicAtkEle,Ele_All,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSpl,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
             }
          }
@@ -160863,12 +160863,12 @@ Body:
       bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",7*(.@r/3);
       bonus2 bMagicAtkEle,Ele_All,4*(.@r/4);
       bonus bLongAtkRate,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSpl,1;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",10;
             bonus2 bSkillAtk,"SH_HOWLING_OF_CHUL_HO",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,1;
                bonus bSmatk,1;
             }
@@ -160987,14 +160987,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",5;
          bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",8;
             bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,1;
                bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",12;
                bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",12;
@@ -161041,14 +161041,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"SOA_EXORCISM_OF_MALICIOUS_SOUL",5;
          bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus2 bSkillAtk,"SOA_EXORCISM_OF_MALICIOUS_SOUL",8;
             bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,1;
                bonus2 bSkillAtk,"SOA_EXORCISM_OF_MALICIOUS_SOUL",12;
                bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",12;
@@ -161093,14 +161093,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",5;
          bonus2 bSkillAtk,"HN_JACK_FROST_NOVA",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",8;
             bonus2 bSkillAtk,"HN_JACK_FROST_NOVA",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,1;
                bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",12;
                bonus2 bSkillAtk,"HN_JACK_FROST_NOVA",12;
@@ -161144,16 +161144,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bMagicAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SP_CURSEEXPLOSION",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus bMatkRate,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bSmatk,(.@r/3);
                bonus bSpl,(.@r/3);
             }
@@ -161202,16 +161202,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bMagicAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SP_SWHOO",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus bMatkRate,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bSmatk,(.@r/3);
                bonus bSpl,(.@r/3);
             }
@@ -161254,16 +161254,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bMagicAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SU_CN_METEOR",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus bMatkRate,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bSmatk,(.@r/3);
                bonus bSpl,(.@r/3);
             }
@@ -161305,16 +161305,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SU_PICKYPECK",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -161359,14 +161359,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_All,15;
             bonus2 bMagicAtkEle,Ele_Earth,15;
             bonus bSmatk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bSpl,3;
             }
@@ -161413,12 +161413,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_All,15;
             bonus bSmatk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bSpl,3;
             }
@@ -161778,12 +161778,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"IQ_SECOND_FAITH",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"IQ_SECOND_FAITH",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,1;
                bonus2 bSkillAtk,"IQ_SECOND_FAITH",12;
             }
@@ -161822,12 +161822,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"IQ_EXPOSION_BLASTER",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"IQ_EXPOSION_BLASTER",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,1;
                bonus2 bSkillAtk,"IQ_EXPOSION_BLASTER",12;
             }
@@ -161870,13 +161870,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,2;
          bonus2 bSkillAtk,"IQ_THIRD_FLAME_BOMB",10;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bAddClass,Class_All,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"IQ_THIRD_FLAME_BOMB",10;
             }
          }
@@ -161986,16 +161986,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SR_TIGERCANNON",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -162036,16 +162036,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -162232,12 +162232,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -162285,13 +162285,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bShortAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -162323,12 +162323,12 @@ Body:
       bonus2 bSkillAtk,"IQ_SECOND_FAITH",7*(.@r/2);
       bonus2 bSkillAtk,"IQ_SECOND_JUDGEMENT",7*(.@r/2);
       bonus bShortAtkRate,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPow,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"IQ_SECOND_FAITH",10;
             bonus2 bSkillAtk,"IQ_SECOND_JUDGEMENT",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -162639,12 +162639,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"TR_METALIC_FURY",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus2 bSkillAtk,"TR_METALIC_FURY",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,1;
                bonus2 bSkillAtk,"TR_METALIC_FURY",12;
             }
@@ -162688,13 +162688,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,2;
          bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",10;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bAddClass,Class_All,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",10;
             }
          }
@@ -162808,16 +162808,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -162860,16 +162860,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bMagicAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"WM_METALICSOUND",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus bMatkRate,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bSmatk,(.@r/3);
                bonus bSpl,(.@r/3);
             }
@@ -163075,12 +163075,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_All,15;
             bonus bSmatk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bSpl,3;
             }
@@ -163114,12 +163114,12 @@ Body:
       bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",7*(.@r/2);
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",10*(.@r/3);
       bonus bLongAtkRate,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bCon,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",10;
             bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -163431,12 +163431,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"TR_METALIC_FURY",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus2 bSkillAtk,"TR_METALIC_FURY",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,1;
                bonus2 bSkillAtk,"TR_METALIC_FURY",12;
             }
@@ -163480,13 +163480,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,2;
          bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",10;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bAddClass,Class_All,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",10;
             }
          }
@@ -163600,16 +163600,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -163652,16 +163652,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bMagicAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"WM_METALICSOUND",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus bMatkRate,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bSmatk,(.@r/3);
                bonus bSpl,(.@r/3);
             }
@@ -163867,12 +163867,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_All,15;
             bonus bSmatk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bSpl,3;
             }
@@ -163906,12 +163906,12 @@ Body:
       bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",7*(.@r/2);
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",10*(.@r/3);
       bonus bLongAtkRate,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bCon,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",10;
             bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -164341,11 +164341,11 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bLongAtkRate,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,1;
                bonus2 bSkillAtk,"NC_ARMSCANNON",10;
             }
@@ -164387,14 +164387,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",5;
          bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WATER",8;
             bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_GROUND",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,2;
                bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",10;
                bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",10;
@@ -164445,13 +164445,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
          bonus2 bSkillAtk,"CD_PETITIO",10;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"CD_PETITIO",10;
             }
          }
@@ -164564,16 +164564,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"NC_VULCANARM",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -164615,16 +164615,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"GN_CART_TORNADO",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -164852,12 +164852,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_Holy,15;
             bonus bSmatk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bSpl,3;
             }
@@ -164905,12 +164905,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -164944,10 +164944,10 @@ Body:
       bonus bUnbreakableWeapon;
       bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",7*(.@r/3);
       bonus2 bMagicAtkEle,Ele_All,3*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSpl,2;
-         if (.@g>=2) {
-            if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_C) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
             }
          }
@@ -165293,12 +165293,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"DK_STORMSLASH",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"DK_STORMSLASH",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,2;
                bonus2 bSkillAtk,"DK_STORMSLASH",12;
             }
@@ -165340,13 +165340,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,2;
          bonus2 bSkillAtk,"DK_SERVANTWEAPON_ATK",10;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bAddClass,Class_All,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"DK_SERVANTWEAPON_ATK",10;
             }
          }
@@ -165421,16 +165421,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RK_WINDCUTTER",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -165548,13 +165548,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bShortAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -165602,14 +165602,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxHPrate,3;
          bonus bMaxSPrate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bMres,30;
             bonus bRes,30;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSubEle,Ele_All,15;
             }
          }
@@ -165926,12 +165926,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"SHC_IMPACT_CRATER",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"SHC_IMPACT_CRATER",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,1;
                bonus2 bSkillAtk,"SHC_IMPACT_CRATER",12;
             }
@@ -165974,13 +165974,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
          bonus2 bSkillAtk,"SHC_IMPACT_CRATER",10;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bDelayrate,-5;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"SHC_IMPACT_CRATER",10;
             }
          }
@@ -166090,16 +166090,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -166140,16 +166140,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"GC_COUNTERSLASH",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -166379,12 +166379,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bShortAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -166434,13 +166434,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bShortAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -166472,11 +166472,11 @@ Body:
       bonus2 bSkillAtk,"SHC_IMPACT_CRATER",6*(.@r/2);
       bonus2 bSkillAtk,"SHC_SAVAGE_IMPACT",7*(.@r/3);
       bonus bShortAtkRate,3*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPow,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"SHC_IMPACT_CRATER",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -166638,12 +166638,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"MT_AXE_STOMP",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"MT_AXE_STOMP",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,2;
                bonus2 bSkillAtk,"MT_AXE_STOMP",12;
             }
@@ -166687,13 +166687,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,2;
          bonus2 bSkillAtk,"MT_AXE_STOMP",10;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bAddClass,Class_All,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"MT_AXE_STOMP",10;
             }
          }
@@ -166846,13 +166846,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bShortAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -166885,11 +166885,11 @@ Body:
       bonus2 bSkillAtk,"MT_AXE_STOMP",7*(.@r/2);
       bonus2 bSkillAtk,"NC_AXETORNADO",8*(.@r/3);
       bonus bShortAtkRate,3*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPow,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"MT_AXE_STOMP",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -167101,12 +167101,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"DK_MADNESS_CRUSHER",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"DK_MADNESS_CRUSHER",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,2;
                bonus2 bSkillAtk,"DK_MADNESS_CRUSHER",12;
             }
@@ -167182,16 +167182,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RK_HUNDREDSPEAR",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -167627,14 +167627,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",5;
          bonus2 bSkillAtk,"AG_FROZEN_SLASH",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",8;
             bonus2 bSkillAtk,"AG_FROZEN_SLASH",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,2;
                bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",12;
                bonus2 bSkillAtk,"AG_FROZEN_SLASH",12;
@@ -167680,14 +167680,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"AG_STORM_CANNON",5;
          bonus2 bSkillAtk,"AG_ROCK_DOWN",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus2 bSkillAtk,"AG_STORM_CANNON",8;
             bonus2 bSkillAtk,"AG_ROCK_DOWN",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,2;
                bonus2 bSkillAtk,"AG_STORM_CANNON",12;
                bonus2 bSkillAtk,"AG_ROCK_DOWN",12;
@@ -167733,14 +167733,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,2;
          bonus2 bSkillAtk,"AG_STRANTUM_TREMOR",10;
          bonus2 bSkillAtk,"AG_FLORAL_FLARE_ROAD",10;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus bMatkRate,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"AG_STRANTUM_TREMOR",10;
                bonus2 bSkillAtk,"AG_FLORAL_FLARE_ROAD",10;
             }
@@ -167857,16 +167857,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bMagicAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"WL_COMET",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus bMatkRate,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bSmatk,(.@r/3);
                bonus bSpl,(.@r/3);
             }
@@ -167909,16 +167909,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bMagicAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"WL_SOULEXPANSION",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus bMatkRate,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bSmatk,(.@r/3);
                bonus bSpl,(.@r/3);
             }
@@ -168140,13 +168140,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_Fire,15;
             bonus2 bMagicAtkEle,Ele_Earth,15;
             bonus bSmatk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bSpl,3;
             }
@@ -168200,14 +168200,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_Ghost,15;
             bonus2 bMagicAtkEle,Ele_Water,15;
             bonus2 bMagicAtkEle,Ele_Wind,15;
             bonus bSmatk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bSpl,3;
             }
@@ -168242,12 +168242,12 @@ Body:
       bonus2 bSkillAtk,"AG_FROZEN_SLASH",6*(.@r/2);
       bonus2 bSkillAtk,"AG_CRYSTAL_IMPACT_ATK",5*(.@r/3);
       bonus2 bMagicAtkEle,Ele_All,3*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSpl,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",10;
             bonus2 bSkillAtk,"AG_FROZEN_SLASH",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
             }
          }
@@ -168677,11 +168677,11 @@ Body:
       .@g = getenchantgrade();
       bonus bUnbreakableWeapon;
       bonus bLongAtkRate,4*(getrefine()/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPow,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"SS_FUUMASHOUAKU",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -168745,16 +168745,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"KO_JYUMONJIKIRI",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -168796,16 +168796,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"KO_HUUMARANKA",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -168850,12 +168850,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -169401,12 +169401,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"ABC_FRENZY_SHOT",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"ABC_FRENZY_SHOT",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bCon,1;
                bonus2 bSkillAtk,"ABC_FRENZY_SHOT",12;
             }
@@ -169445,12 +169445,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bCon,1;
                bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",12;
             }
@@ -169489,12 +169489,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"WH_GALESTORM",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"WH_GALESTORM",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bCon,1;
                bonus2 bSkillAtk,"WH_GALESTORM",12;
             }
@@ -169533,12 +169533,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bCon,1;
                bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",12;
             }
@@ -169581,13 +169581,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
          bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",10;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bDelayrate,-5;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",10;
             }
          }
@@ -169733,16 +169733,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SC_TRIANGLESHOT",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -169784,16 +169784,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RA_ARROWSTORM",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -169834,16 +169834,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RA_AIMEDBOLT",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -170154,12 +170154,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -170206,12 +170206,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -170261,12 +170261,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -170298,11 +170298,11 @@ Body:
       bonus2 bSkillAtk,"WH_GALESTORM",7*(.@r/2);
       bonus2 bSkillAtk,"RA_ARROWSTORM",10*(.@r/3);
       bonus bLongAtkRate,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bCon,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"WH_GALESTORM",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -170575,11 +170575,11 @@ Body:
       bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",7*(.@r/2);
       bonus2 bSkillAtk,"RL_FIREDANCE",10*(.@r/3);
       bonus bLongAtkRate,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bCon,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -170640,14 +170640,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",5;
          bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",3;
             bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bCon,1;
                bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",5;
                bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",5;
@@ -170690,16 +170690,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RL_FIREDANCE",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bCon,(.@r/3);
             }
@@ -170741,12 +170741,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -170922,11 +170922,11 @@ Body:
       bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",7*(.@r/2);
       bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",10*(.@r/3);
       bonus bLongAtkRate,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bCon,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -170988,14 +170988,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",5;
          bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",3;
             bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bCon,1;
                bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",5;
                bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",5;
@@ -171038,16 +171038,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bCon,(.@r/3);
             }
@@ -171090,12 +171090,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_Ghost,15;
             bonus bSmatk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bSpl,3;
             }
@@ -171245,11 +171245,11 @@ Body:
       bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",7*(.@r/2);
       bonus2 bSkillAtk,"RL_BANISHING_BUSTER",10*(.@r/3);
       bonus bLongAtkRate,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bCon,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -171310,16 +171310,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RL_S_STORM",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bCon,(.@r/3);
             }
@@ -171364,12 +171364,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -171623,11 +171623,11 @@ Body:
       bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",7*(.@r/2);
       bonus2 bSkillAtk,"RL_R_TRIP",10*(.@r/3);
       bonus bLongAtkRate,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bCon,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -171688,14 +171688,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",5;
          bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",3;
             bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bCon,1;
                bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",5;
                bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",5;
@@ -171737,16 +171737,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RL_R_TRIP",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bCon,(.@r/3);
             }
@@ -171788,12 +171788,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -171938,11 +171938,11 @@ Body:
       bonus2 bSkillAtk,"NW_WILD_FIRE",7*(.@r/2);
       bonus2 bSkillAtk,"RL_H_MINE",10*(.@r/3);
       bonus bLongAtkRate,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bCon,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"NW_WILD_FIRE",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -172004,14 +172004,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",5;
          bonus2 bSkillAtk,"NW_WILD_FIRE",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",3;
             bonus2 bSkillAtk,"NW_WILD_FIRE",3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bCon,1;
                bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",5;
                bonus2 bSkillAtk,"NW_WILD_FIRE",5;
@@ -172053,16 +172053,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RL_D_TAIL",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bCon,(.@r/3);
             }
@@ -172104,12 +172104,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
