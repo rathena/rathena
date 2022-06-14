@@ -17054,7 +17054,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 			++sg->val1;
 			if( bl->type == BL_PC ) {
 				if (sg->val1 % 3 == 0) {
-					int hp, sp, ap;
+					int hp, sp;
 					hp = (500 + (500 + 50 * pc_checkskill(tsd, SOA_TALISMAN_MASTERY) + 50 * status_get_crt(ss)) * sg->skill_lv) * status_get_lv(ss)/100;
 					sp = (50 + 5 * tstatus->crt + 5 * pc_checkskill(tsd, SOA_TALISMAN_MASTERY)) * sg->skill_lv * (100+status_get_lv(bl))/150 ;
 
