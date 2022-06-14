@@ -34548,8 +34548,8 @@ Body:
     DamageFlags:
       Splash: true
     Range: 2
-    Hit: Single
-    HitCount: 1
+    Hit: Multi_Hit
+    HitCount: 2
     Element: Weapon
     SplashArea:
       - Level: 1
@@ -34609,8 +34609,8 @@ Body:
     DamageFlags:
       Splash: true
     Range: 2
-    Hit: Single
-    HitCount: 1
+    Hit: Multi_Hit
+    HitCount: 2
     Element: Weapon
     SplashArea:
       - Level: 1
@@ -34762,11 +34762,11 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 35
-        - Level: 2
           Amount: 40
-        - Level: 3
+        - Level: 2
           Amount: 45
+        - Level: 3
+          Amount: 50
         - Level: 4
           Amount: 55
         - Level: 5
@@ -44361,7 +44361,7 @@ Body:
     CastTime: 2000
     AfterCastActDelay: 500
     Cooldown: 1000
-    FixedCastTime: 400
+    FixedCastTime: 500
     Requires:
       SpCost: 70
       ApCost: 20
@@ -44381,7 +44381,7 @@ Body:
     CastTime: 2000
     AfterCastActDelay: 500
     Cooldown: 1000
-    FixedCastTime: 400
+    FixedCastTime: 500
     Requires:
       SpCost: 70
       ApCost: 20

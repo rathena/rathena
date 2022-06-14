@@ -5944,7 +5944,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case DK_HACKANDSLASHER_ATK:
 		if (flag & 1) {
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-			skill_addtimerskill(src, tick + (200 + status_get_amotion(src)), bl->id, 0, 0, skill_id, skill_lv, BF_WEAPON, flag);
 		} else {
 			skill_area_temp[0] = 0;
 			skill_area_temp[1] = bl->id;
@@ -5952,7 +5951,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 			
-			map_foreachinrange(skill_area_sub, bl, skill_get_splash(DK_HACKANDSLASHER_ATK, skill_lv), BL_CHAR|BL_SKILL, src, DK_HACKANDSLASHER_ATK, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
+			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 		}
 		break;
 	case SS_FUUMAKOUCHIKU:
