@@ -4,6 +4,7 @@
 //= Warp Points for Prontera
 //===== Changelogs: ==========================================
 //= 1.0 Prontera castle map changed in ep16.1 [Capuche]
+//= 1.1 Episode 17.2 Sage's Legacy update [crazyarashi]
 //============================================================
 
 prt_lib_q,9,25,0	script	lib_q_to_pprt	WARPNPC,1,1,{
@@ -152,15 +153,19 @@ prt_cas,41,275,0	warp	cuisine_in_cuisine_out	1,1,prt_cas,320,182
 prt_cas,320,178,0	warp	cuisine_out_cuisine_in	1,1,prt_cas,41,271
 prt_cas,54,217,0	warp	dining_in_dining_out	1,1,prt_cas,388,137
 prt_cas,392,137,0	warp	dining_out_dining_in	1,1,prt_cas,58,217
-prt_cas,19,342,0	warp	queen_room_in_queen_room_out	1,1,prt_cas,269,313
-prt_cas,273,313,0	warp	queen_room_out_queen_room_in	1,1,prt_cas,23,342
-prt_cas,174,342,0	warp	king_room_in_king_room_out	1,1,prt_cas,322,336
-prt_cas,318,336,0	warp	king_room_out_king_room_in	1,1,prt_cas,170,342
-prt_cas,48,330,0	warp	queen_office_in_queein_office_out	1,1,prt_cas,251,242
-prt_cas,251,246,0	warp	queein_office_out_queen_office_in	1,1,prt_cas,48,334
-prt_cas,146,330,0	warp	king_office_in_king_office_out	1,1,prt_cas,309,288
-prt_cas,309,291,0	warp	king_office_out_king_office_in	1,1,prt_cas,146,334
-prt_cas,254,347,0	warp	garden_in_garden_out	1,1,prt_cas,96,18
-prt_cas,96,14,0	warp	garden_out_garden_in	1,1,prt_cas,254,343
 prt_cas,216,142,0	warp	cas_out_prt_to_cas	1,1,prontera,156,354
 prontera,156,358,0	warp	prt_to_cas_cas_out	1,1,prt_cas,216,146
+
+//============================================================
+//= Episode 17.2 Sage's Legacy update
+//============================================================
+prt_cas,146,330,0	warp	#ep172_prt_to_prt-0	1,1,prt_cas,309,288
+prt_cas,309,291,0	warp	#ep172_prt_to_prt-1	1,1,prt_cas,146,334
+prt_cas,48,330,0	warp	#ep172_prt_to_prt-2	1,1,prt_cas,252,242
+prt_cas,251,246,0	warp	#ep172_prt_to_prt-3	1,1,prt_cas,48,334
+prt_cas,20,342,0	warp	#ep172_prt_to_prt-4	1,1,prt_cas,269,313
+prt_cas,273,313,0	warp	#ep172_prt_to_prt-5	1,1,prt_cas,23,342
+prt_cas,254,347,0	warp	#ep172_prt_to_prt-6	1,1,prt_cas,96,18
+prt_cas,96,14,0	warp	#ep172_prt_to_prt-7	1,1,prt_cas,254,343
+prt_cas,174,342,0	warp	#ep172_prt_to_prt-8	1,1,prt_cas,322,336
+prt_cas,318,336,0	warp	#ep172_prt_to_prt-9	1,1,prt_cas,170,342
