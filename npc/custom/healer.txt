@@ -16,8 +16,8 @@
 -	script	Healer	-1,{
 
 	.@Price = 0;	// ค่าใช้จ่ายในการรักษา
-	.@Buffs = 0;	// บัฟผู้เล่นด้วย? (1: ใช่ / 0: ไม่)
-	.@Delay = 0;	// ระยะเวลารักษาเป็นวินาที
+	.@Buffs = 1;	// บัฟผู้เล่นด้วย? (1: ใช่ / 0: ไม่)
+	.@Delay = 3;	// ระยะเวลารักษาเป็นวินาที
 
 	if (@HD > gettimetick(2))
 		end;
@@ -36,6 +36,12 @@
 		sc_start SC_INCREASEAGI,240000,10;
 		specialeffect2 EF_BLESSING;
 		sc_start SC_BLESSING,240000,10;
+		specialeffect2 EF_IMPOSITIO;
+		sc_start SC_IMPOSITIO,240000,5;		
+		specialeffect2 EF_ODINS_POWER;
+		sc_start SC_ODINS_POWER,60000,2;
+		specialeffect2 AB_EXPIATIO;
+		sc_start SC_EXPIATIO,270000,5;		
 	}
 	if (.@Delay)
 		@HD = gettimetick(2) + .@Delay;
