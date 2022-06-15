@@ -8,7 +8,7 @@
 //= rAthena Project
 //===== Additional Comments: =================================
 //= 1.0 spawn N and spawn delays aren't yet correct, so I set
-//=     respawn delays quite big for now [Lupus]
+//=	 respawn delays quite big for now [Lupus]
 //= 1.1 Fixed monsters spawn places
 //= 1.2 Update monster spawn numbers according to info on emperium.org [MasterOfMuppets]
 //= 1.3 Official kRO 10.1 spawns [Playtester]
@@ -34,3 +34,16 @@ ein_dun02,0,0	monster	Obsidian	1615,40,5000
 ein_dun02,0,0	monster	Old Stove	1617,30,5000
 ein_dun02,0,0	monster	Teddy Bear	1622,30,5000
 ein_dun02,0,0,0,0	boss_monster	RSX-0806	1623,1,7500000,600000,0
+
+//==================================================
+// ein_dun03 - Mine Dungeon
+//==================================================
+ein_dun03,0,0	monster	Green Mineral	20594,30,5000
+ein_dun03,0,0	monster	Red Obsidian	20595,30,5000
+ein_dun03,0,0	monster	White Mineral	20596,30,5000
+ein_dun03,0,0	monster	Purple Mineral	20597,30,5000
+ein_dun03,0,0	monster	Jewelry Ant	20598,30,5000
+ein_dun03,0,0	monster	Jewel	20600,20,5000
+ein_dun03,0,0	monster	White Porcellio	20602,40,5000
+ein_dun03,0,0	monster	Abyssman	20603,40,5000
+ein_dun03,0,0,0,0	boss_monster	Jungoliant	20601,1,7500000,600000,0
