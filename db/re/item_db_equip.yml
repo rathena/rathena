@@ -22588,7 +22588,7 @@ Body:
          autobonus2 "{ bonus bShortWeaponDamageReturn,("+.@r+"*3); }",10,5000,BF_WEAPON,"{ specialeffect2 EF_GUARD; }";
       }
       else {
-         autobonus2 "{ bonus bShortWeaponDamageReturn,30; }",10,5000+(.@r/2*1000),BF_WEAPON,"{ specialeffect2 EF_GUARD; }";
+         autobonus2 "{ bonus bShortWeaponDamageReturn,30; }",10,1000*(5+(.@r-10)/2),BF_WEAPON,"{ specialeffect2 EF_GUARD; }";
       }
   - Id: 2135
     AegisName: Shadow_Guard
