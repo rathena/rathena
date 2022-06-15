@@ -30,3 +30,61 @@ mag_dun02,0,0	monster	Deleter	1384,38,5000
 mag_dun02,0,0	monster	Blazer	1367,20,5000
 mag_dun02,0,0	monster	Diabolic	1382,15,5000
 mag_dun02,0,0	monster	Gig	1387,10,5000
+
+//==================================================
+// mag_dun03 - Nogg Road
+//==================================================
+mag_dun03,0,0	monster	Rigid Blazer	20372,20,5000,5000,"#MagmaF3_Drop::OnMagma3MobDead"
+mag_dun03,0,0	monster	Rigid Nightmare	20373,35,5000,5000,"#MagmaF3_Drop::OnMagma3MobDead"
+mag_dun03,0,0	monster	Rigid Deleter	20374,40,5000,5000,"#MagmaF3_Drop::OnMagma3MobDead"
+mag_dun03,0,0	monster	Rigid Deleter	20375,45,5000,5000,"#MagmaF3_Drop::OnMagma3MobDead"
+mag_dun03,0,0	monster	Rigid Explosion	20376,20,5000,5000,"#MagmaF3_Drop::OnMagma3MobDead"
+mag_dun03,0,0	monster	Rigid Kaho	20377,20,5000,5000,"#MagmaF3_Drop::OnMagma3MobDead"
+mag_dun03,0,0	monster	Rigid Lava Golem	20378,15,5000,5000,"#MagmaF3_Drop::OnMagma3MobDead"
+
+mag_dun03,0,0	boss_monster	Rigid Muspellskoll	20419,1,7200000,600000,"#MagmaF3_Drop::OnMagma3MobDead"
+
+//==================================================
+// Party Drop Script
+//==================================================
+mag_dun03,0,0,0	script	#MagmaF3_Drop	-1,{
+
+OnMagma3MobDead:
+if(getcharid(1)) {
+    getpartymember getcharid(1),1;
+    getpartymember getcharid(1),2;
+    
+    for ( .@p = 0; .@p < $@partymembercount; .@p++)
+        if(attachrid($@partymemberaid[.@p],$@partymembercid[.@p]) == 1) {
+            if(strcharinfo(3) != strnpcinfo(4)) continue;
+            if(rand(1,10000) >= (10000 - .chance)) 
+                getitem .drop_id[rand(getarraysize(.drop_id))],1;
+        }
+
+} else {
+	if(rand(1,10000) >= (10000 - .chance)) 
+		getitem .drop_id[rand(getarraysize(.drop_id))],1;
+}
+end;
+
+OnInit:
+setarray .drop_id[0],15378, // Lava Leather Armor
+					 15379, // Lava Leather Suit
+					 15380, // Lava Leather Robe
+					 20935, // Lava Leather Manteau
+					 20936, // Lava Leather Muffler
+					 20937, // Lava Leather Hood
+					 22199, // Lava Leather Boots
+					 22200, // Lava Leather Shoes
+					 22201; // Lava Leather Sandals
+// ==== Drop Settings ====
+// Multiply the Drop Chance below with the Server Drop Chance for Equipment
+// 1 = Yes
+// 0 = No
+.battleconf_drop = 0;
+// General Drop Chance
+.drop = 50; // 50 = 0.5%
+// Calculation
+.chance = .drop * ( (.battleconf_drop)?( (getbattleflag("item_rate_equip")%100 > 0)? (getbattleflag("item_rate_equip")/100):1):1);
+end;
+}
