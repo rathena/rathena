@@ -288,10 +288,10 @@ menu	"Abyss Lakes",D1, "Amatsu Dungeon",D2, "Anthell",D3,
     	"Glast Heim",D17, "Kunlun Dungeon",D18, "Hidden Dungeon",D19,
     	"Ice Dungeon",D20, "Juperos",D21, "Kiel Dungeon",D22, "Lasagna Dungeon",D23,
 		"Luoyang Dungeon",D24, "Magma Dungeon",D25, "Malangdo Dungeon",D26,
-		"Moscovia Dungeon",D27, "Nidhogg's Dungeon",D28, "Odin Temple",D29,
-		"Orc Dungeon",D30, "Payon Dungeon",D31, "Pyramids",D32, "Rachel Sanctuary",D33,
-    	"Scaraba Hole",D34, "Sphinx",D35, "Sunken Ship",D36, "Thanatos Tower",D37,
-    	"Thor Volcano",D38, "Toy Factory",D39, "Turtle Dungeon",D40, "Umbala Dungeon",D41;
+		"Moscovia Dungeon",D27, "Nidhogg's Dungeon",D28, "Nifflheim Dungeon",D29, "Odin Temple",D30,
+		"Orc Dungeon",D31, "Payon Dungeon",D32, "Pyramids",D33, "Rachel Sanctuary",D34,
+    	"Scaraba Hole",D35, "Sphinx",D36, "Sunken Ship",D37, "Thanatos Tower",D38,
+    	"Thor Volcano",D39, "Toy Factory",D40, "Turtle Dungeon",D41, "Umbala Dungeon",D42;
 
 D1: setarray @c[2],261,272,275,270,116,27,163,166;
 	Disp("Abyss Lakes",1,4); Pick("abyss_");
@@ -358,38 +358,40 @@ D27: setarray @c[2],189,48,165,30,32,135;
 	 Disp("Moscovia Dungeon",1,3); Pick("mosk_dun");
 D28: setarray @c[2],61,239,60,271;
 	 Disp("Nidhogg's Dungeon",1,2); Pick("nyd_dun");
-D29: setarray @c[2],298,167,224,149,266,280;
+D29: setarray @c[2],146,88,150,18;
+	 Disp("Nifflheim Dungeon",1,2); Pick("nif_dun");
+D30: setarray @c[2],298,167,224,149,266,280;
 	 Disp("Odin Temple",1,3); Pick("odin_tem");
-D30: setarray @c[2],32,170,21,185;
+D31: setarray @c[2],32,170,21,185;
 	 Disp("Orc Dungeon",1,2); Pick("orcsdun");
-D31: setarray @c[0],21,183,19,33,19,63,155,159,201,204;
+D32: setarray @c[0],21,183,19,33,19,63,155,159,201,204;
 	 Disp("Payon Dungeon",1,5); Pick("pay_dun",1);
-D32: Restrict("RE",7,8);
+D33: Restrict("RE",7,8);
 	 setarray @c[2],192,9,10,192,100,92,181,11,94,96,192,8,94,96,192,8;
 	 Disp("Pyramids 1:Pyramids 2:Pyramids 3:Pyramids 4:Basement 1:Basement 2:Basement 1 - Nightmare Mode:Basement 2 - Nightmare Mode");
 	 Pick("","moc_pryd01","moc_pryd02","moc_pryd03","moc_pryd04","moc_pryd05","moc_pryd06","moc_prydn1","moc_prydn2");
-D33: setarray @c[2],140,11,32,21,8,149,204,218,150,9;
+D34: setarray @c[2],140,11,32,21,8,149,204,218,150,9;
 	 Disp("Rachel Sanctuary",1,5); Pick("ra_san");
-D34: Restrict("RE");
+D35: Restrict("RE");
 	 setarray @c[2],364,44,101,141;
 	 Disp("Scaraba Hole",1,2); Pick("dic_dun");
-D35: setarray @c[2],288,9,149,81,210,54,10,222,100,99;
+D36: setarray @c[2],288,9,149,81,210,54,10,222,100,99;
 	 Disp("Sphinx",1,5); Pick("","in_sphinx1","in_sphinx2","in_sphinx3","in_sphinx4","in_sphinx5");
-D36: setarray @c[2],69,24,102,27;
+D37: setarray @c[2],69,24,102,27;
 	 Disp("Sunken Ship",1,2); Pick("treasure");
-D37: setarray @c[2],150,39,150,136,220,158,59,143,62,11,89,221,35,166,93,148,29,107,159,138,19,20,130,52;
+D38: setarray @c[2],150,39,150,136,220,158,59,143,62,11,89,221,35,166,93,148,29,107,159,138,19,20,130,52;
 	 Disp("Thanatos Tower",1,12); Pick("tha_t");
-D38: setarray @c[2],21,228,75,205,34,272;
+D39: setarray @c[2],21,228,75,205,34,272;
 	 Disp("Thor Volcano",1,3); Pick("thor_v");
-D39: setarray @c[2],205,15,129,133;
+D40: setarray @c[2],205,15,129,133;
 	 Disp("Toy Factory",1,2); Pick("xmas_dun");
-D40: setarray @c[2],154,49,148,261,132,189,100,192;
+D41: setarray @c[2],154,49,148,261,132,189,100,192;
 	 Disp("Entrance:Turtle Dungeon 1:Turtle Dungeon 2:Turtle Dungeon 3"); Pick("tur_dun");
-D41: Restrict("Pre-RE",1,2);
+D42: Restrict("Pre-RE",1,2);
 	 setarray @c[2],42,31,48,30,204,78;
 	 Disp("Carpenter's Shop in the Tree:Passage to a Foreign World:Hvergermil's Fountain");
 	 Pick("","um_dun01","um_dun02","yggdrasil01");
-D42: Restrict("RE");
+D43: Restrict("RE");
 	 setarray @c[2],57,13,64,88,45,14,26,23;
 	 Disp("Bifrost Tower",1,4); Pick("ecl_tdun");
 
