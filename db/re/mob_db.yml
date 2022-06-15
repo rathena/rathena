@@ -96747,8 +96747,8 @@ Body:
     Element: Earth
     ElementLevel: 1
     WalkSpeed: 200
-    AttackDelay: 1000
-    AttackMotion: 500
+    AttackDelay: 250
+    AttackMotion: 200
     DamageMotion: 300
     Ai: 20
   - Id: 20850
@@ -96789,7 +96789,7 @@ Body:
     Int: 10
     Dex: 10
     Luk: 10
-    AttackRange: 5
+    AttackRange: 2
     SkillRange: 10
     ChaseRange: 12
     Size: Medium
