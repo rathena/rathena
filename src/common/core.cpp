@@ -306,8 +306,8 @@ static void display_title(void) {
 	ShowMessage("" CL_PASS "     " CL_BT_WHITE "                                                                 " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
 	ShowMessage("" CL_PASS "     " CL_BT_WHITE "              http://rathena.org/board/                        " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
 	ShowMessage("" CL_PASS "     " CL_BT_WHITE "                 rAthena-TH Project                       " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
-	ShowMessage("" CL_PASS "     " CL_BT_WHITE "                   Project : rAyam                         " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
-	ShowMessage("" CL_PASS "     " CL_BT_WHITE "                   MOD : null#6385                        " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
+	ShowMessage("" CL_PASS "     " CL_BT_WHITE "                 Project : rAyam                         " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
+	ShowMessage("" CL_PASS "     " CL_BT_WHITE "                 MOD : null#6385                        " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
 	ShowMessage("" CL_PASS "     " CL_BOLD "                                                                 " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
 
 	if( svn[0] != UNKNOWN_VERSION )
