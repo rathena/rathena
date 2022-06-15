@@ -1,7 +1,7 @@
 L_SRV=login-server
 C_SRV=char-server
 M_SRV=map-server
-INST_PATH=/opt/rathena/rathena
+INST_PATH=/opt
 PKG=rathena
 PKG_PATH=$INST_PATH/$PKG
 
