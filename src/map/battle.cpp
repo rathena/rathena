@@ -1410,7 +1410,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 	//TODO: What's causing this status?
 	if (sc->data[SC_HANDICAPSTATE_HOLYFLAME] && flag&BF_MAGIC)	{ 
 			clif_skill_nodamage(0, target, AL_HEAL,damage/2, 1);
-			status_heal(target,damage/2,0,0,0);
+			status_heal(target,(int)cap_value(damage/2, INT_MIN, INT_MAX),0,0,0);
 	}
 	
 	return true;
