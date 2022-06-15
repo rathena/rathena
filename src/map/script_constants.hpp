@@ -5733,6 +5733,7 @@
 	export_constant(IG_SHADOW_CUBE_SHIELD);
 	export_constant(IG_SHADOW_CUBE_SHOES);
 	export_constant(IG_SHADOW_CUBE_WEAPON);
+	export_constant(IG_ODIN_RELIC);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

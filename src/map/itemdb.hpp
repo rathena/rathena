@@ -968,6 +968,7 @@ enum e_random_item_group {
 	IG_SHADOW_CUBE_SHIELD,
 	IG_SHADOW_CUBE_SHOES,
 	IG_SHADOW_CUBE_WEAPON,
+	IG_ODIN_RELIC,
 
 	IG_MAX,
 };
