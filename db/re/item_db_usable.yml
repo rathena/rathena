@@ -2230,7 +2230,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus_script "{ bonus2 bRegenPercentHP,4,3000; }",600000,1;
+      specialeffect2 EF_HEAL3;
+      sc_start2 SC_M_LIFEPOTION,600000,-4,3;
   - Id: 9785
     AegisName: Frozen_Box_IL
     Name: Frozen Refine Box
@@ -13412,7 +13413,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus_script "{ bonus2 bRegenPercentHP,4,3000; }",600000,1;
+      specialeffect2 EF_HEAL3;
+      sc_start2 SC_M_LIFEPOTION,600000,-4,3;
   - Id: 12834
     AegisName: Undead_Egg
     Name: Undead Egg
@@ -46374,8 +46376,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus_script "bonus2 bRegenPercentSP,5,5000;",600,9;
-      /* fix me: unknown flag and specialeffect ;  disabled when LK_BERSERK */
+      specialeffect2 EF_HEAL3;
+      sc_start2 SC_S_MANAPOTION,3600000,-5,5;
   - Id: 23016
     AegisName: Pieces_Of_Grudge
     Name: Cursed Fragment
@@ -46957,7 +46959,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus_script "{ bonus2 bRegenPercentSP,5,5000; }",600,1;
+      specialeffect2 EF_HEAL3;
+      sc_start2 SC_S_MANAPOTION,3600000,-5,5;
   - Id: 23204
     AegisName: Shining_Def_Scroll
     Name: Shining Defense Scroll
@@ -46972,7 +46975,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus_script "{ bonus bDef,500; bonus bMdef,200; }",600,1;
+      specialeffect2 EF_HEAL3;
+      sc_start2 SC_M_DEFSCROLL,600000,500,200;
   - Id: 23207
     AegisName: Premium_Flatrate_Box
     Name: Premium Flatrate Service Box
@@ -47416,8 +47420,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus_script "{ bonus bDef,500; bonus bMdef,200; }",600;
-      /* fix me: unknown flag and specialeffect */
+      specialeffect2 EF_HEAL3;
+      sc_start2 SC_M_DEFSCROLL,600000,500,200;
   - Id: 23308
     AegisName: Booster_Amplifier
     Name: Booster Amplifier
@@ -49036,7 +49040,7 @@ Body:
       Sitting: true
     Script: |
       specialeffect2 EF_HEAL3;
-      bonus_script "{ bonus bDef,500; bonus bMdef,200; }",3600,0,1,EFST_M_DEFSCROLL;
+      sc_start2 SC_M_DEFSCROLL,600000,500,200;
       sc_start SC_SPEEDUP0,600000,25;
   - Id: 100007
     AegisName: G_Limit_Power_Booster

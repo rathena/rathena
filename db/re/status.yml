@@ -8156,3 +8156,15 @@ Body:
       NoClearance: true
     Fail:
       S_Manapotion: true
+      M_Lifepotion: true
+  - Status: M_DefScroll
+    Icon: EFST_M_DEFSCROLL
+    CalcFlags:
+      Def: true
+      Mdef: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Fail:
+      M_DefScroll: true
