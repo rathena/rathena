@@ -7251,7 +7251,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 	map_freeblock_unlock();
 
-	if( sd && !(flag&1) )
+	if( sd && !(flag&1))
 	{// ensure that the skill last-cast tick is recorded
 		sd->canskill_tick = gettick();
 
@@ -7261,7 +7261,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		}
 
 		// perform skill requirement consumption
-		skill_consume_requirement(sd,skill_id,skill_lv,2);
+		if (!(flag&SKILL_NOCONSUME_REQ))
+			skill_consume_requirement(sd,skill_id,skill_lv,2);
 	}
 
 	return 0;
@@ -13133,7 +13134,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		mobskill_event(dstmd, src, tick, MSC_SKILLUSED|(skill_id<<16));
 	}
 
-	if( sd && !(flag&1) )
+	if( sd && !(flag&1))
 	{// ensure that the skill last-cast tick is recorded
 		sd->canskill_tick = gettick();
 
@@ -13143,7 +13144,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		skill_onskillusage(sd, bl, skill_id, tick);
 		// perform skill requirement consumption
-		skill_consume_requirement(sd,skill_id,skill_lv,2);
+		if (!(flag&SKILL_NOCONSUME_REQ))
+			skill_consume_requirement(sd,skill_id,skill_lv,2);
 	}
 
 	map_freeblock_unlock();
@@ -15006,7 +15008,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		}
 		skill_onskillusage(sd, NULL, skill_id, tick);
 		// perform skill requirement consumption
-		skill_consume_requirement(sd,skill_id,skill_lv,2);
+		if (!(flag&SKILL_NOCONSUME_REQ))
+			skill_consume_requirement(sd,skill_id,skill_lv,2);
 	}
 
 	return 0;
