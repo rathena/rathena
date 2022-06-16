@@ -2443,7 +2443,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	case HFLI_SBR44:	//[orn]
 		if(src->type == BL_HOM){
 			struct homun_data *hd = (struct homun_data *)src;
-			hd->homunculus.intimacy = 200; // hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION)
+			hd->homunculus.intimacy = hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION);
 			if (hd->master)
 				clif_send_homdata(hd->master,SP_INTIMATE,hd->homunculus.intimacy / 100);
 		}
