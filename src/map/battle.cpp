@@ -5368,13 +5368,13 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case SHC_SAVAGE_IMPACT:
 			skillratio += -100 + 90 * skill_lv + 5 * sstatus->pow;
-			if (sc && sc->data[SC_CLOAKINGEXCEED])
+			if (sc && sc->data[SC_SHADOW_EXCEED])
 				skillratio += 20 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 		case SHC_ETERNAL_SLASH:
 			skillratio += -100 + 265 * skill_lv + 2 * sstatus->pow;
-			if (sc && sc->data[SC_CLOAKINGEXCEED])
+			if (sc && sc->data[SC_SHADOW_EXCEED])
 				skillratio += 100 * skill_lv + sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
@@ -6691,8 +6691,7 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 					wd.div_ = sc->data[SC_ROLLINGCUTTER]->val1;
 				break;
 			case SHC_SAVAGE_IMPACT:
-				if (sc && sc->data[SC_CLOAKINGEXCEED])
-					wd.div_ = 5;
+				wd.div_ = wd.div_ + wd.miscflag;
 				break;
 			case MT_AXE_STOMP:
 				if (sd && sd->status.weapon == W_2HAXE)

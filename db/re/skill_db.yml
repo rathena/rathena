@@ -36918,7 +36918,17 @@ Body:
     FixedCastTime: 4000
     Requires:
       SpCost: 60
-      ApCost: 160
+      ApCost:
+        - Level: 1
+          Amount: 200
+        - Level: 2
+          Amount: 190
+        - Level: 3
+          Amount: 180
+        - Level: 4
+          Amount: 170
+        - Level: 5
+          Amount: 160
     Status: Competentia
   - Id: 5279
     Name: CD_PNEUMATICUS_PROCELLA
@@ -38240,7 +38250,17 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    GiveAp: 20
+    GiveAp:
+      - Level: 1
+        Amount: 4
+      - Level: 2
+        Amount: 8
+      - Level: 3
+        Amount: 12
+      - Level: 4
+        Amount: 16
+      - Level: 5
+        Amount: 20
     CastCancel: true
     Duration1:
       - Level: 1
