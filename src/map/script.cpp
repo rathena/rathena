@@ -11892,7 +11892,6 @@ BUILDIN_FUNC(enablenpc)
 {
 	npc_data* nd;
 	e_npcv_status flag = NPCVIEW_DISABLE;
-	int char_id = script_hasdata(st, 3) ? script_getnum(st, 3) : 0;
 	const char* command = script_getfuncname(st);
 
 	if (script_hasdata(st, 2))
@@ -11908,9 +11907,9 @@ BUILDIN_FUNC(enablenpc)
 		flag = NPCVIEW_HIDEOFF;
 	else if (!strcmp(command,"hideonnpc"))
 		flag = NPCVIEW_HIDEON;
-	else if (!strcmp(command,"cloakoffnpc"))
+	else if (!strcmp(command,"cloakoffnpc") || !strcmp(command,"cloakoffnpcself"))
 		flag = NPCVIEW_CLOAKOFF;
-	else if (!strcmp(command,"cloakonnpc"))
+	else if (!strcmp(command,"cloakonnpc") || !strcmp(command,"cloakonnpcself"))
 		flag = NPCVIEW_CLOAKON;
 	else{
 		ShowError( "buildin_enablenpc: Undefined command \"%s\".\n", command );
@@ -11923,6 +11922,19 @@ BUILDIN_FUNC(enablenpc)
 		else
 			ShowError("buildin_%s: Attempted to %s a non-existing NPC (flag=%d).\n", (flag & NPCVIEW_VISIBLE) ? "show" : "hide", command, flag);
 		return SCRIPT_CMD_FAILURE;
+	}
+
+	int char_id = 0;
+
+	if (script_hasdata(st, 3))
+		char_id = script_getnum(st, 3);
+	else if (!strcmp(command,"cloakoffnpcself") || !strcmp(command,"cloakonnpcself")) {
+		map_session_data* sd;
+
+		if (!script_rid2sd(sd))
+			return SCRIPT_CMD_SUCCESS;
+
+		char_id = sd->status.char_id;
 	}
 
 	if (npc_enable_target(*nd, char_id, flag))
@@ -19298,6 +19310,13 @@ BUILDIN_FUNC(unitwalk)
 
 	ud = unit_bl2ud(bl);
 
+	// Unit was already forced to walk.
+	if (ud != nullptr && ud->state.force_walk) {
+		script_pushint(st, 0);
+		ShowWarning("buildin_%s: Unit has already been forced to walk and not reached it's destination yet.\n", cmd);
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	if (bl->type == BL_NPC) {
 		if (!((TBL_NPC*)bl)->status.hp)
 			status_calc_npc(((TBL_NPC*)bl), SCO_FIRST);
@@ -19309,8 +19328,11 @@ BUILDIN_FUNC(unitwalk)
 		int x = script_getnum(st,3);
 		int y = script_getnum(st,4);
 
-		if (script_pushint(st, unit_can_reach_pos(bl,x,y,0)))
+		if (script_pushint(st, unit_can_reach_pos(bl,x,y,0))) {
+			if (ud != nullptr)
+				ud->state.force_walk = true;
 			add_timer(gettick()+50, unit_delay_walktoxy_timer, bl->id, (x<<16)|(y&0xFFFF)); // Need timer to avoid mismatches
+		}
 	} else {
 		struct block_list* tbl = map_id2bl(script_getnum(st,3));
 
@@ -19318,8 +19340,11 @@ BUILDIN_FUNC(unitwalk)
 			ShowError("buildin_unitwalk: Bad target destination.\n");
 			script_pushint(st, 0);
 			return SCRIPT_CMD_FAILURE;
-		} else if (script_pushint(st, unit_can_reach_bl(bl, tbl, distance_bl(bl, tbl)+1, 0, NULL, NULL)))
+		} else if (script_pushint(st, unit_can_reach_bl(bl, tbl, distance_bl(bl, tbl)+1, 0, NULL, NULL))) {
+			if (ud != nullptr)
+				ud->state.force_walk = true;
 			add_timer(gettick()+50, unit_delay_walktobl_timer, bl->id, tbl->id); // Need timer to avoid mismatches
+		}
 		off = 4;
 	}
 
@@ -19465,10 +19490,21 @@ BUILDIN_FUNC(unitstopwalk)
 	if (script_hasdata(st, 3))
 		flag = script_getnum(st, 3);
 
-	if(script_rid2bl(2,bl))
-		unit_stop_walking(bl, flag);
+	if(script_rid2bl(2,bl)) {
+		unit_data *ud = unit_bl2ud(bl);
 
-	return SCRIPT_CMD_SUCCESS;
+		if (ud != nullptr)
+			ud->state.force_walk = false;
+
+		if (unit_stop_walking(bl, flag) == 0 && flag != USW_FORCE_STOP) {
+			ShowWarning("buildin_unitstopwalk: Unable to find unit or unit is not walking.\n");
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		return SCRIPT_CMD_SUCCESS;
+	} else {
+		return SCRIPT_CMD_FAILURE;
+	}
 }
 
 /**
@@ -25727,7 +25763,7 @@ BUILDIN_FUNC( openstylist ){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	clif_ui_open( sd, OUT_UI_STYLIST, 0 );
+	clif_ui_open( *sd, OUT_UI_STYLIST, 0 );
 
 	return SCRIPT_CMD_SUCCESS;
 #else
@@ -25848,6 +25884,10 @@ BUILDIN_FUNC(randomoptgroup)
 }
 
 BUILDIN_FUNC( open_quest_ui ){
+#if PACKETVER < 20151202
+	ShowError( "buildin_open_quest_ui: This command requires PACKETVER 20151202 or newer.\n" );
+	return SCRIPT_CMD_FAILURE;
+#else
 	struct map_session_data* sd;
 
 	if (!script_charid2sd(3, sd))
@@ -25862,14 +25902,15 @@ BUILDIN_FUNC( open_quest_ui ){
 			ShowWarning("buildin_open_quest_ui: Character %d doesn't have quest %d.\n", sd->status.char_id, quest_id);
 	}
 
-	clif_ui_open( sd, OUT_UI_QUEST, quest_id );
+	clif_ui_open( *sd, OUT_UI_QUEST, quest_id );
 
 	return SCRIPT_CMD_SUCCESS;
+#endif
 }
 
 BUILDIN_FUNC(openbank){
-#if PACKETVER < 20150128
-	ShowError( "buildin_openbank: This command requires PACKETVER 20150128 or newer.\n" );
+#if PACKETVER < 20151202
+	ShowError( "buildin_openbank: This command requires PACKETVER 20151202 or newer.\n" );
 	return SCRIPT_CMD_FAILURE;
 #else
 	struct map_session_data* sd = nullptr;
@@ -25883,7 +25924,7 @@ BUILDIN_FUNC(openbank){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	clif_ui_open( sd, OUT_UI_BANK, 0 );
+	clif_ui_open( *sd, OUT_UI_BANK, 0 );
 	return SCRIPT_CMD_SUCCESS;
 #endif
 }
@@ -25980,6 +26021,23 @@ BUILDIN_FUNC(getjobexp_ratio){
 
 	script_pushint64( st, static_cast<t_exp>( result ) );
 	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC( enchantgradeui ){
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	struct map_session_data* sd;
+
+	if( !script_charid2sd( 2, sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_ui_open( *sd, OUT_UI_ENCHANTGRADE, 0 );
+
+	return SCRIPT_CMD_SUCCESS;
+#else
+	ShowError( "buildin_enchantgradeui: This command requires PACKETVER 2020-07-24 or newer.\n" );
+	return SCRIPT_CMD_FAILURE;
+#endif
 }
 
 #include "../custom/script.inc"
@@ -26212,6 +26270,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(enablenpc, "hideonnpc", "?"),
 	BUILDIN_DEF2(enablenpc, "cloakoffnpc", "??"),
 	BUILDIN_DEF2(enablenpc, "cloakonnpc", "??"),
+	BUILDIN_DEF2(enablenpc, "cloakoffnpcself", "?"),
+	BUILDIN_DEF2(enablenpc, "cloakonnpcself", "?"),
 	BUILDIN_DEF(sc_start,"iii???"),
 	BUILDIN_DEF2(sc_start,"sc_start2","iiii???"),
 	BUILDIN_DEF2(sc_start,"sc_start4","iiiiii???"),
@@ -26699,6 +26759,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(openbank,"?"),
 	BUILDIN_DEF(getbaseexp_ratio, "i??"),
 	BUILDIN_DEF(getjobexp_ratio, "i??"),
+	BUILDIN_DEF(enchantgradeui, "?" ),
+
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

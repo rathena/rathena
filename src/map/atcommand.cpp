@@ -12,7 +12,6 @@
 #include "../common/cbasetypes.hpp"
 #include "../common/database.hpp"
 #include "../common/cli.hpp"
-#include "../common/conf.hpp"
 #include "../common/malloc.hpp"
 #include "../common/mmo.hpp"
 #include "../common/nullpo.hpp"
@@ -4142,15 +4141,6 @@ ACMD_FUNC(reload) {
 		hom_reload_skill();
 		clif_displaymessage(fd, msg_txt(sd,99)); // Skill database has been reloaded.
 	} else if (strstr(command, "atcommand") || strncmp(message, "atcommand", 4) == 0) {
-		config_t run_test;
-
-		if (conf_read_file(&run_test, "conf/groups.conf")) {
-			clif_displaymessage(fd, msg_txt(sd,1036)); // Error reading groups.conf, reload failed.
-			return -1;
-		}
-
-		config_destroy(&run_test);
-
 		atcommand_doload();
 		pc_groups_reload();
 		clif_displaymessage(fd, msg_txt(sd,254)); // GM command configuration has been reloaded.
@@ -4525,8 +4515,8 @@ ACMD_FUNC(mapinfo) {
 		strcat(atcmd_output, " NoItemConsumption |");
 	if (map_getmapflag(m_id, MF_NOSUNMOONSTARMIRACLE))
 		strcat(atcmd_output, " NoSunMoonStarMiracle |");
-	if (map_getmapflag(m_id, MF_NOMINEEFFECT))
-		strcat(atcmd_output, " NoMineEffect |");
+	if (map_getmapflag(m_id, MF_FORCEMINEFFECT))
+		strcat(atcmd_output, " ForceMinEffect |");
 	if (map_getmapflag(m_id, MF_NOLOCKON))
 		strcat(atcmd_output, " NoLockOn |");
 	if (map_getmapflag(m_id, MF_NOTOMB))
@@ -7332,7 +7322,7 @@ ACMD_FUNC(setbattleflag)
 	int reload = 0;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || sscanf(message, "%127s %127s %11d", flag, value, &reload) != 2) {
+	if (!message || !*message || sscanf(message, "%127s %127s %11d", flag, value, &reload) < 2) {
         	clif_displaymessage(fd, msg_txt(sd,1231)); // Usage: @setbattleflag <flag> <value> {<reload>}
         	return -1;
     	}
@@ -10672,7 +10662,7 @@ ACMD_FUNC( stylist ){
 		return -1;
 	}
 
-	clif_ui_open( sd, OUT_UI_STYLIST, 0 );
+	clif_ui_open( *sd, OUT_UI_STYLIST, 0 );
 	return 0;
 #endif
 }
@@ -10705,6 +10695,23 @@ ACMD_FUNC(addfame)
 	clif_displaymessage(fd, atcmd_output);
 
 	return 0;
+}
+
+/**
+ * Opens the enchantgrade UI
+ * Usage: @enchantgradeui
+ */
+ACMD_FUNC( enchantgradeui ){
+	nullpo_retr( -1, sd );
+
+#if !( PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724 )
+	sprintf( atcmd_output, msg_txt( sd, 798 ), "2020-07-24" ); // This command requires packet version %s or newer.
+	clif_displaymessage( fd, atcmd_output );
+	return -1;
+#else
+	clif_ui_open( *sd, OUT_UI_ENCHANTGRADE, 0 );
+	return 0;
+#endif
 }
 
 #include "../custom/atcommand.inc"
@@ -11029,6 +11036,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(refineui),
 		ACMD_DEFR(stylist, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEF(addfame),
+		ACMD_DEFR(enchantgradeui, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 	};
 	AtCommandInfo* atcommand;
 	int i;

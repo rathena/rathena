@@ -8371,7 +8371,7 @@ Body:
     Refineable: true
     Script: |
       bonus bMaxSP,-100;
-      bonus2 bSkillAtk,"LG_CANNONSPEAR",10+(getrefine()/3*3);
+      bonus2 bSkillAtk,"LG_CANNONSPEAR",10+(getrefine()*3);
   - Id: 1436
     AegisName: Velum_Spear
     Name: Vellum Spear
@@ -14814,6 +14814,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -14863,6 +14864,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -14883,6 +14885,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -14905,6 +14908,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -14927,6 +14931,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -14951,6 +14956,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -15053,6 +15059,7 @@ Body:
     Slots: 3
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -15076,6 +15083,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -15105,6 +15113,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -15134,6 +15143,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -15162,6 +15172,7 @@ Body:
     Slots: 3
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -15185,6 +15196,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -15212,6 +15224,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -15239,6 +15252,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -15294,6 +15308,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -17475,6 +17490,24 @@ Body:
          bonus bBaseAtk,30;
          bonus bHit,5;
       }
+  - Id: 1844
+    AegisName: Sinister_Fist_J
+    Name: Fist of Vicious Mind
+    Type: Weapon
+    Buy: 100000
+    Weight: 400
+    Attack: 80
+    Range: 1
+    Jobs:
+      Monk: true
+      Priest: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      bonus bBaseAtk,getrefine();
   - Id: 1845
     AegisName: Probation_Knuckle
     Name: Trial Sura's Knuckle
@@ -17615,11 +17648,11 @@ Body:
       .@r = getrefine();
       bonus bUnbreakableWeapon;
       if (.@r>=7) {
-         bonus2 bAddRace,RC_All,5;
+         bonus2 bAddClass,Class_All,5;
          bonus2 bSubRace,RC_Player_Human,5;
       }
       if (.@r>=9) {
-         bonus2 bAddRace,RC_All,5;
+         bonus2 bAddClass,Class_All,5;
          bonus2 bSubRace,RC_Player_Human,5;
       }
   - Id: 1862
@@ -18673,7 +18706,7 @@ Body:
       bonus2 bSkillUseSP,"MI_RUSH_WINDMILL",20;
   - Id: 1936
     AegisName: Ru_Blue_Violin
-    Name: Blue Violin
+    Name: Ru Blue Violin
     Type: Weapon
     SubType: Musical
     Weight: 1500
@@ -18845,6 +18878,28 @@ Body:
       if (.@r>=7)
          bonus2 bSkillAtk,"CG_ARROWVULCAN",200;
       bonus2 bAddRace2,RC2_BioLab,.@b;
+  - Id: 1943
+    AegisName: Erhu
+    Name: Erhu
+    Type: Weapon
+    SubType: Musical
+    Buy: 20
+    Weight: 700
+    Attack: 50
+    Range: 1
+    Slots: 3
+    Jobs:
+      BardDancer: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    EquipLevelMin: 90
+    Refineable: true
+    Script: |
+      autobonus3 "{ bonus2 bSPRegenRate,4,1000; }",1000,60000,"WM_SIRCLEOFNATURE";
+      if (getrefine()>=10)
+         bonus bUnbreakableWeapon;
   - Id: 1944
     AegisName: Hippie_Guitar
     Name: Hippie Guitar
@@ -18927,6 +18982,26 @@ Body:
          bonus2 bSkillAtk,"CG_ARROWVULCAN",150;
       if (.@r>=9)
          bonus2 bSkillAtk,"CG_ARROWVULCAN",50;
+  - Id: 1947
+    AegisName: Sinister_Viollin_J
+    Name: Violin of Vicious Mind
+    Type: Weapon
+    SubType: Musical
+    Buy: 100000
+    Weight: 250
+    Attack: 100
+    MagicAttack: 100
+    Range: 1
+    Jobs:
+      BardDancer: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      bonus bMatk,getrefine();
   - Id: 1948
     AegisName: Hippie_Guitar_J
     Name: Hippie Guitar
@@ -19855,7 +19930,7 @@ Body:
       bonus bAspdRate,20;
   - Id: 1990
     AegisName: Floral_Mic_Of_Igu
-    Name: Bloody Floral Decoration Microphone
+    Name: Floral Mic Of Aigu
     Type: Weapon
     SubType: Whip
     Buy: 20
@@ -19878,7 +19953,7 @@ Body:
       bonus2 bSkillUseSP,"WA_MOONLIT_SERENADE",20;
   - Id: 1991
     AegisName: Ru_Blue_Whip
-    Name: Blue Whip
+    Name: Ru Blue Whip
     Type: Weapon
     SubType: Whip
     Buy: 10
@@ -19920,6 +19995,26 @@ Body:
     Script: |
       bonus bDex,8;
       bonus bVit,8;
+  - Id: 1993
+    AegisName: Concertina_Wire
+    Name: Barbed Wire
+    Type: Weapon
+    SubType: Whip
+    Weight: 1200
+    Attack: 80
+    Range: 2
+    Slots: 1
+    Jobs:
+      BardDancer: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 105
+    Refineable: true
+    Script: |
+      bonus bDefRatioAtkClass,Class_All;
+      bonus bSPDrainValue,-3;
   - Id: 1994
     AegisName: Whip_Of_Infinite
     Name: Infinity Whip
@@ -20015,6 +20110,53 @@ Body:
       NoAuction: true
     Script: |
       bonus bBaseAtk,pow(getrefine(),2)*125/100;
+  - Id: 1998
+    AegisName: Thanos_Whip_J
+    Name: Requiem Blade Whip
+    Type: Weapon
+    Buy: 100000
+    Attack: 160
+    MagicAttack: 120
+    Range: 2
+    Jobs:
+      BardDancer: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      .@b = 40;
+      bonus bUnbreakableWeapon;
+      if (.@r>=5)
+         .@b += (.@r-5)*15+20;
+      if (.@r>=7)
+         bonus2 bSkillAtk,"CG_ARROWVULCAN",200;
+      bonus2 bAddRace2,RC2_BioLab,.@b;
+  - Id: 1999
+    AegisName: Moonlight_Bell
+    Name: Phantom Bell
+    Type: Weapon
+    SubType: Whip
+    Buy: 20
+    Weight: 400
+    Attack: 45
+    Range: 2
+    Slots: 3
+    Jobs:
+      BardDancer: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    EquipLevelMin: 90
+    Refineable: true
+    Script: |
+      autobonus3 "{ bonus2 bSPRegenRate,4,1000; }",1000,60000,"WM_SIRCLEOFNATURE";
+      if (getrefine()>=10)
+         bonus bUnbreakableWeapon;
   - Id: 2000
     AegisName: Destruction_Rod
     Name: Staff of Destruction
@@ -20615,6 +20757,7 @@ Body:
     Weight: 3000
     Attack: 200
     MagicAttack: 280
+    Range: 1
     Jobs:
       Sage: true
       SoulLinker: true
@@ -20643,7 +20786,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -20651,7 +20794,7 @@ Body:
       bonus bInt,25;
       bonus bDex,25;
       bonus3 bAddEff,Eff_Poison,1000,ATF_MAGIC;
-      bonus3 bAutoSpell,"AB_SILENTIUM",1,100;
+      bonus3 bAutoSpellWhenHit,"AB_SILENTIUM",1,100;
       bonus bUnbreakableWeapon;
   - Id: 2022
     AegisName: Staff_Of_Geffen
@@ -20717,6 +20860,7 @@ Body:
     Weight: 500
     Attack: 30
     MagicAttack: 170
+    Range: 1
     Slots: 1
     Jobs:
       Monk: true
@@ -20798,6 +20942,7 @@ Body:
     Attack: 150
     MagicAttack: 320
     Slots: 2
+    Range: 1
     Jobs:
       Monk: true
       Priest: true
@@ -20817,6 +20962,84 @@ Body:
       bonus bMatkRate,(.@r/2);
       bonus bDelayrate,(.@r*-1);
       bonus bUnbreakableWeapon;
+  - Id: 2028
+    AegisName: Aion_Staff
+    Name: Iron Staff
+    Type: Weapon
+    SubType: 2hStaff
+    Buy: 49800
+    Weight: 2500
+    Attack: 180
+    MagicAttack: 24
+    Range: 1
+    Slots: 2
+    Jobs:
+      Wizard: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 110
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAtkEle,Ele_Ghost;
+      bonus bMatk,24*(getskilllv("HW_MAGICPOWER"));
+      bonus2 bSkillUseSP,"WL_READING_SB",24;
+      bonus2 bIgnoreMdefClassRate,Class_All,8*(.@r/3);
+      bonus2 bSkillVariableCast,"WL_READING_SB",-1000*(getskilllv("WL_FREEZE_SP"));
+      autobonus3 "{ bonus bMatkRate,8*(getskilllv(\"WL_RADIUS\"); }",1000,1000,"WL_RELEASE";
+      if (getskilllv("WL_RELEASE") == 2) {
+         bonus2 bSkillVariableCast,"WL_SUMMONFB",-1000;
+         bonus2 bSkillVariableCast,"WL_SUMMONWB",-1000;
+         bonus2 bSkillVariableCast,"WL_SUMMONSTONE",-1000;
+         bonus2 bSkillVariableCast,"WL_SUMMONBL",-1000;
+      }
+  - Id: 2029
+    AegisName: TStaff_Of_E_Slayer_J
+    Name: Devil God's Staff
+    Type: Weapon
+    SubType: 2hStaff
+    Buy: 56000
+    Weight: 800
+    Attack: 30
+    MagicAttack: 155
+    Range: 1
+    Jobs:
+      Acolyte: true
+      Mage: true
+      Monk: true
+      Novice: true
+      Priest: true
+      Sage: true
+      SoulLinker: true
+      SuperNovice: true
+      Wizard: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 70
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddDamageClass,1916,40;
+      bonus2 bAddMagicDamageClass,1916,40;
+      bonus2 bAddDefMonster,1916,10;
+      bonus2 bAddMDefMonster,1916,10;
+      if (.@r>=7) {
+         bonus2 bAddDamageClass,1916,60;
+         bonus2 bAddMagicDamageClass,1916,60;
+         bonus2 bAddDefMonster,1916,20;
+         bonus2 bAddMDefMonster,1916,20;
+      }
+      if (.@r>=9) {
+         bonus2 bAddDamageClass,1916,80;
+         bonus2 bAddMagicDamageClass,1916,80;
+         bonus2 bAddDefMonster,1916,40;
+         bonus2 bAddMDefMonster,1916,40;
+      }
   - Id: 2030
     AegisName: Unity_Two-Handed_Staff
     Name: Unity Two-Handed Staff
@@ -20863,7 +21086,7 @@ Body:
       All_Third: true
       Fourth: true
     Locations:
-      Right_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -20918,6 +21141,49 @@ Body:
       if (BaseJob == JOB_WIZARD) {
          bonus bMatk,15;
       }
+  - Id: 2034
+    AegisName: Avenger_Wizardy_Staff
+    Name: Avenger Wizard Staff
+    Type: Weapon
+    SubType: 2hStaff
+    Buy: 20
+    Attack: 70
+    MagicAttack: 210
+    Range: 1
+    Jobs:
+      Monk: true
+      Priest: true
+      Sage: true
+      SoulLinker: true
+      SuperNovice: true
+      Wizard: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus2 bMagicAddRace,RC_DemiHuman,25;
+      bonus2 bSubRace,RC_DemiHuman,10;
+      bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,5*.@r;
+      if (.@r>4) {
+         bonus2 bMagicAddRace,RC_DemiHuman,10;
+         bonus2 bSubRace,RC_DemiHuman,10;
+      }
+      if (.@r>6) {
+         .@bonus = 10;
+         if(.@r>7)
+            .@bonus += min((.@r - 7) * 2,6);
+         bonus2 bMagicAddRace,RC_DemiHuman,.@bonus;
+         bonus2 bSubRace,RC_DemiHuman,10;
+      }
+      if (.@r>8)
+         bonus2 bSkillAtk,"WL_COMET",20;
   - Id: 2035
     AegisName: Diva_Staff
     Name: Diva Staff
@@ -20982,6 +21248,64 @@ Body:
          bonus bMatkRate,4;
       if (.@r>=9)
          bonus bMatkRate,4;
+  - Id: 2037
+    AegisName: Sinister_Staff_J
+    Name: Staff of Vicious Mind
+    Type: Weapon
+    SubType: 2hStaff
+    Buy: 100000
+    Weight: 1000
+    Attack: 100
+    MagicAttack: 200
+    Range: 1
+    Jobs:
+      Monk: true
+      Priest: true
+      Sage: true
+      SoulLinker: true
+      SuperNovice: true
+      Wizard: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      bonus bMatk,getrefine();
+  - Id: 2038
+    AegisName: Staff_170_J
+    Name: Sunflower Kid
+    Type: Weapon
+    SubType: 2hStaff
+    Buy: 10
+    Weight: 900
+    Attack: 40
+    MagicAttack: 210
+    Range: 1
+    Slots: 1
+    Jobs:
+      Wizard: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bIgnoreMdefClassRate,Class_All,5*.@r;
+      bonus2 bMagicAtkEle,Ele_Fire,3*.@r;
+      if (getskilllv("WZ_SIGHTRASHER") == 10)
+         bonus2 bMagicAtkEle,Ele_Fire,20;
+      autobonus3 "{ bonus2 bSkillAtk,\"WZ_METEOR\",60; }",10*.@r,5000,"WZ_METEOR";
+      /*Unknown Rate*/
   - Id: 2039
     AegisName: Wizardy_Staff_IL
     Name: Illusion Wizardry Staff
@@ -21043,6 +21367,48 @@ Body:
       if (getrefine()>=7) {
          bonus bMatkRate,getskilllv("WZ_STORMGUST");
       }
+  - Id: 2041
+    AegisName: Jirant_Staff
+    Name: Flame Thunder Witch's Wand
+    Type: Weapon
+    SubType: 2hStaff
+    Weight: 2700
+    Attack: 200
+    MagicAttack: 350
+    Range: 1
+    Slots: 1
+    Jobs:
+      Sage: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus bInt,5;
+      bonus bDex,10;
+      bonus bVariableCastrate,-30;
+      bonus2 bMagicAtkEle,Ele_Fire,(getskilllv("SO_FIREWALK")*10)+(.@r*5);
+      bonus2 bMagicAtkEle,Ele_Wind,(getskilllv("SO_ELECTRICWALK")*10)+(.@r*5);
+      bonus2 bSkillAtk,"SO_FIREWALK",30*(.@r/2);
+      bonus2 bSkillAtk,"SO_ELECTRICWALK",30*(.@r/2);
+      bonus2 bIgnoreMdefClassRate,Class_All,5*@r;
+      if (.@r>=9) {
+         bonus3 bAddEffOnSkill,"SO_ELECTRICWALK",Eff_Silence,1000;
+         bonus3 bAddEffOnSkill,"SO_FIREWALK",Eff_Curse,1000;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"SO_FIREWALK",100;
+         bonus2 bSkillAtk,"SO_ELECTRICWALK",100;
+      }
+      if (.@r>=12)
+         bonus bFixedCastrate,-70;
   - Id: 2046
     AegisName: Novice_Warlock's_Staff
     Name: Novice Warlock's Staff
@@ -21068,6 +21434,48 @@ Body:
       if (.@r>=7) {
          bonus2 bSkillAtk,"WL_CRIMSONROCK",15;
       }
+  - Id: 2047
+    AegisName: Jirant_Staff_BR
+    Name: Witch's Staff
+    Type: Weapon
+    SubType: 2hStaff
+    Weight: 2700
+    Attack: 20
+    MagicAttack: 350
+    Range: 1
+    Slots: 1
+    Jobs:
+      Sage: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus bInt,5;
+      bonus bDex,10;
+      bonus bVariableCastrate,-30;
+      bonus2 bMagicAtkEle,Ele_Fire,(getskilllv("SO_FIREWALK")*10)+(.@r*5);
+      bonus2 bMagicAtkEle,Ele_Wind,(getskilllv("SO_ELECTRICWALK")*10)+(.@r*5);
+      bonus2 bSkillAtk,"SO_FIREWALK",30*.@r;
+      bonus2 bSkillAtk,"SO_ELECTRICWALK",30*.@r;
+      bonus2 bIgnoreMdefClassRate,Class_All,5*.@r;
+      if (.@r>=7) {
+         bonus3 bAddEffOnSkill,"SO_ELECTRICWALK",Eff_Silence,1000;
+         bonus3 bAddEffOnSkill,"SO_FIREWALK",Eff_Curse,1000;
+      }
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SO_FIREWALK",100;
+         bonus2 bSkillAtk,"SO_ELECTRICWALK",100;
+      }
+      if (.@r>=10)
+         bonus bFixedCastrate,-70;
   - Id: 2048
     AegisName: Aeon_Staff
     Name: Aeon Staff
@@ -22195,7 +22603,7 @@ Body:
          autobonus2 "{ bonus bShortWeaponDamageReturn,("+.@r+"*3); }",10,5000,BF_WEAPON,"{ specialeffect2 EF_GUARD; }";
       }
       else {
-         autobonus2 "{ bonus bShortWeaponDamageReturn,30; }",10,5000+(.@r/2*1000),BF_WEAPON,"{ specialeffect2 EF_GUARD; }";
+         autobonus2 "{ bonus bShortWeaponDamageReturn,30; }",10,1000*(5+(.@r-10)/2),BF_WEAPON,"{ specialeffect2 EF_GUARD; }";
       }
   - Id: 2135
     AegisName: Shadow_Guard
@@ -29105,7 +29513,7 @@ Body:
       bonus2 bAddRace,RC_Player_Doram,5;
       bonus2 bMagicAddRace,RC_Player_Human,5;
       bonus2 bMagicAddRace,RC_Player_Doram,5;
-      bonus2 bResEff,Eff_Freeze,25;
+      bonus2 bResEff,Eff_Freeze,2500;
   - Id: 2497
     AegisName: TE_Woe_Boots
     Name: TE Woe Boots
@@ -29136,7 +29544,7 @@ Body:
       bonus bMaxSP,100;
       bonus2 bAddRace,RC_Player_Human,10;
       bonus2 bAddRace,RC_Player_Doram,10;
-      bonus2 bResEff,Eff_Freeze,25;
+      bonus2 bResEff,Eff_Freeze,2500;
   - Id: 2498
     AegisName: TE_Woe_Magic_Sandal
     Name: TE Woe Magic Sandal
@@ -29171,7 +29579,7 @@ Body:
       bonus bMaxSP,200;
       bonus2 bMagicAddRace,RC_Player_Human,5;
       bonus2 bMagicAddRace,RC_Player_Doram,5;
-      bonus2 bResEff,Eff_Freeze,25;
+      bonus2 bResEff,Eff_Freeze,2500;
   - Id: 2499
     AegisName: Temporal_Boots
     Name: Temporal Boots
@@ -38015,7 +38423,7 @@ Body:
       bonus bVariableCastrate,-25;
   - Id: 2989
     AegisName: Floral_Bracelet_Of_Igu
-    Name: Bloody Floral Decoration Bracelet
+    Name: Floral Bracelet Of Aigu
     Type: Armor
     Buy: 20
     Weight: 100
@@ -41773,8 +42181,6 @@ Body:
       bonus bMaxHP,50;
       bonus bMaxSP,10;
       skill "AL_RUWACH",1;
-    UnEquipScript: |
-      sc_end SC_RUWACH;
   - Id: 5213
     AegisName: Black_Bunny_Band
     Name: Sheila Hairnet
@@ -44957,8 +45363,6 @@ Body:
     Script: |
       bonus bVit,1;
       skill "AL_ANGELUS",1;
-    UnEquipScript: |
-      sc_end SC_ANGELUS;
   - Id: 5383
     AegisName: Hunting_Cap
     Name: Hunter's Cap
@@ -54755,7 +55159,7 @@ Body:
       bonus2 bSkillAtk,"HT_BLITZBEAT",getskilllv("HT_STEELCROW") * 40;
   - Id: 5968
     AegisName: DVAngelNurseCap
-    Name: DVAngelNurseCap
+    Name: Clergy Nurse Cap
     Type: Armor
     Weight: 500
     Defense: 10
@@ -54853,6 +55257,14 @@ Body:
          }
       }
       bonus2 bSubClass,Class_Boss,.@def;
+  - Id: 5977
+    AegisName: C_Poker_Card_In_Mouth
+    Name: Costume Poker Card In Mouth    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 889
   - Id: 5978
     AegisName: Toy_Syringe
     Name: Toy Syringe
@@ -66565,6 +66977,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -66602,6 +67015,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -66886,6 +67300,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -66904,6 +67319,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -67030,6 +67446,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -67976,12 +68393,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSmatk,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus bSpl,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bMagicAtkEle,Ele_All,15;
             }
          }
@@ -68544,6 +68961,25 @@ Body:
     Script: |
       skill "MC_IDENTIFY",1;
       skill "WZ_ESTIMATION",1;
+  - Id: 15387
+    AegisName: Jirant_Dress
+    Name: Witch's Dress
+    Type: Armor
+    Buy: 20
+    Weight: 800
+    Defense: 35
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus2 bIgnoreDefClassRate,Class_Boss,50;
+      bonus2 bMagicAtkEle,Ele_Wind,2*.@r;
+      bonus bMatk,15*.@r;
   - Id: 15388
     AegisName: King_Schmidt_Suit
     Name: King Schmidt's Suit
@@ -69125,7 +69561,7 @@ Body:
       if (.@r>=9)
          bonus2 bAddRace,RC_All,10;
   - Id: 15841
-    AegisName: aegis_15841
+    AegisName: C_Hat_of_Goggle
     Name: Costume Goggles Hat
     Type: Armor
     Locations:
@@ -69157,7 +69593,7 @@ Body:
     ArmorLevel: 1
     View: 2091
   - Id: 15888
-    AegisName: aegis_15888
+    AegisName: C_Hand_Of_Devil
     Name: Costume Dragon Claw Helm
     Type: Armor
     Locations:
@@ -69173,7 +69609,7 @@ Body:
     ArmorLevel: 1
     View: 808
   - Id: 15892
-    AegisName: aegis_15892
+    AegisName: Themis_Helm
     Name: Crown of Justice
     Type: Armor
     View: 2099
@@ -78247,6 +78683,33 @@ Body:
     Script: |
       .@dex = readparam(bDex);
       bonus bUseSPrate,-5-((.@dex >= 120)?5:0)-((.@dex >= 100)?5:0);
+  - Id: 18804
+    AegisName: Thornbush_Hairband
+    Name: Thornbush Hairband
+    Type: Armor
+    Weight: 300
+    Defense: 5
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 10
+    View: 921
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bInt,1;
+      bonus bDex,1;
+      bonus2 bMagicAddEle,Ele_Fire,5;
+      bonus2 bMagicAddEle,Ele_Water,5;
+      bonus2 bMagicAddEle,Ele_Wind,5;
+      bonus2 bMagicAddEle,Ele_Earth,5;
+      if (.@r>=5) {
+         bonus2 bMagicAddEle,Ele_Fire,min(.@r,10)*2;
+         bonus2 bMagicAddEle,Ele_Water,min(.@r,10)*2;
+         bonus2 bMagicAddEle,Ele_Wind,min(.@r,10)*2;
+         bonus2 bMagicAddEle,Ele_Earth,min(.@r,10)*2;
+      }
   - Id: 18805
     AegisName: Eclipse_Hat
     Name: Eclipse Hat
@@ -79142,6 +79605,25 @@ Body:
          bonus bCritAtkRate,20;
       if (getskilllv("PR_MACEMASTERY") == 10)
          bonus bAspdRate,10;
+  - Id: 18866
+    AegisName: Owlduke_Silk_Hat
+    Name: Owl Duke Silk Hat
+    Type: Armor
+    Buy: 20
+    Weight: 500
+    Defense: 15
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 70
+    Refineable: true
+    Script: |
+      if (getrefine() > 6)
+         .@val = getrefine();
+      bonus bAgi,1;
+      bonus bInt,2;
+      bonus5 bAutoSpell,"HW_MAGICPOWER",2,5+.@val,BF_MAGIC,0;
   - Id: 18867
     AegisName: Vajra
     Name: Vajra
@@ -81033,6 +81515,19 @@ Body:
     View: 870
     Script: |
       bonus bVit,3;
+  - Id: 19027
+    AegisName: 10_Type_Glasses
+    Name: 10 Type Glasses
+    Type: Armor
+    Weight: 200
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 10
+    View: 1237
+    Script: |
+      bonus2 bMagicAddRace,RC_Brute,5;
+      bonus2 bSubRace,RC_Brute,5;
   - Id: 19030
     AegisName: Pretty_Rabbit_Hood
     Name: Pretty Rabbit Hood
@@ -81389,6 +81884,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -81764,6 +82260,52 @@ Body:
          bonus bMatkRate,7;
          bonus bHealPower,7;
       }
+  - Id: 19108
+    AegisName: Wild_Poring_Rider
+    Name: Wild Poring Rider
+    Type: Armor
+    Weight: 1000
+    Defense: 9
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 30
+    View: 1422
+    Refineable: true
+    Script: |
+      if ((eaclass()&EAJ_UPPERMASK) == EAJ_KNIGHT)
+         bonus2 bAddMonsterDropItemGroup,IG_RUNE_CRAFT_MATERIALS,100;
+      else if ((eaclass()&EAJ_UPPERMASK) == EAJ_CRUSADER)
+         bonus2 bAddMonsterDropItemGroup,IG_JUICE,100;
+      else if ((eaclass()&EAJ_UPPERMASK) == EAJ_PRIEST)
+         bonus2 bAddMonsterDropItem,523,100;
+      else if ((eaclass()&EAJ_UPPERMASK) == EAJ_MONK)
+         bonus2 bAddMonsterDropItem,605,100;
+      else if ((eaclass()&EAJ_UPPERMASK) == EAJ_WIZARD)
+         bonus2 bAddMonsterDropItemGroup,IG_GEMSTONE,100;
+      else if ((eaclass()&EAJ_UPPERMASK) == EAJ_SAGE)
+         bonus2 bAddMonsterDropItemGroup,IG_ELEMENTAL_CONVERTER,100;
+      else if ((eaclass()&EAJ_UPPERMASK) == EAJ_ASSASSIN)
+         bonus2 bAddMonsterDropItemGroup,IG_POISONS,100;
+      else if ((eaclass()&EAJ_UPPERMASK) == EAJ_ROGUE || (eaclass()&EAJ_UPPERMASK) == EAJ_SUPER_NOVICE)
+         bonus2 bAddMonsterDropItem,23660,100;
+      else if ((eaclass()&EAJ_UPPERMASK) == EAJ_HUNTER || (eaclass()&EAJ_UPPERMASK) == EAJ_BARDDANCER)
+         bonus2 bAddMonsterDropItemGroup,IG_QUIVER,100;
+      else if ((eaclass()&EAJ_UPPERMASK) == EAJ_BLACKSMITH)
+         bonus2 bAddMonsterDropItemGroup,IG_BLACKSMITH,100;
+      else if ((eaclass()&EAJ_UPPERMASK) == EAJ_ALCHEMIST)
+         bonus2 bAddMonsterDropItemGroup,IG_POTION_CRAFT_MATERIALS,100;
+      else if ((eaclass()&EAJ_UPPERMASK) == EAJ_NINJA)
+         bonus2 bAddMonsterDropItemGroup,IG_KUNAI_BOX,100;
+      else if ((eaclass()&EAJ_UPPERMASK) == EAJ_GUNSLINGER)
+         bonus2 bAddMonsterDropItemGroup,IG_BULLET_CASE,100;
+      else if ((eaclass()&EAJ_UPPERMASK) == EAJ_SOUL_LINKER)
+         bonus2 bAddMonsterDropItemGroup,IG_SOUL_LINKER,100;
+      else if ((eaclass()&EAJ_UPPERMASK) == EAJ_STAR_GLADIATOR)
+         bonus2 bAddMonsterDropItemGroup,IG_ELEMENTAL_STONES,100;
+      else
+         bonus2 bAddMonsterDropItem,522,100;
   - Id: 19109
     AegisName: Valhalla_Idol
     Name: Valhalla Idol
@@ -83574,6 +84116,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -86257,6 +86800,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -86295,6 +86839,30 @@ Body:
       bonus bAllStats,10;
       /*bonus2 bAddRace2,RC2_TEMPLE_DEMON,30;
       bonus2 bMagicAddRace2,RC2_TEMPLE_DEMON,30;*/
+  - Id: 19497
+    AegisName: Phantom_Of_Masquerade
+    Name: Phantom of Masquerade
+    Type: Armor
+    Weight: 500
+    Defense: 12
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bStr,5;
+      bonus bAgi,5;
+      bonus2 bAddRace,RC_All,10;
+      bonus2 bResEff,Eff_Stone,5000;
+      if (.@r>=7) {
+         bonus2 bAddRace,RC_All,15;
+         bonus bDelayrate,-20;
+      }
+      if (.@r>=9)
+         bonus bDefRatioAtkClass,Class_All;
   - Id: 19498
     AegisName: CitrusRibbon
     Name: Citrus Ribbon
@@ -87086,7 +87654,7 @@ Body:
     Script: |
       bonus bVit,1;
   - Id: 19559
-    AegisName: C_Baby_Dragon_Hat
+    AegisName: C_B_Dragon_Hat
     Name: Costume Baby Dragon Hat
     Type: Armor
     Locations:
@@ -97750,6 +98318,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -97769,6 +98338,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -97790,6 +98360,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -98924,6 +99495,65 @@ Body:
     Refineable: true
     Script: |
       bonus bVit,15;
+  - Id: 20852
+    AegisName: Jirant_Cloak
+    Name: Witch's Cloak
+    Type: Armor
+    Weight: 1000
+    Defense: 16
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSubEle,Ele_Fire,5*@r;
+      bonus2 bSubEle,Ele_Wind,5*@r;
+      if (.@r>=7) {
+         bonus bMatkRate,5;
+         bonus bVariableCastrate,-5;
+      }
+      if (.@r>=9) {
+         bonus bMatkRate,5;
+         bonus bVariableCastrate,-5;
+      }
+      if (.@r>=10)
+         bonus bNoWalkDelay;
+  - Id: 20854
+    AegisName: Medical_Cape
+    Name: Medical Cape
+    Type: Armor
+    Weight: 600
+    Defense: 12
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 10
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      .@drop = 50;
+      bonus bHPGainValue,100;
+      bonus bMagicHPGainValue,100;
+      bonus bSPGainValue,10;
+      bonus bMagicSPGainValue,10;
+      if (.@r>=7)
+         .@drop += 50;
+      if (.@r>=9)
+         .@drop += 100;
+      bonus3 bAddMonsterDropItem,23360,RC_Brute,.@drop;
+      bonus3 bAddMonsterDropItem,23360,RC_Fish,.@drop;
+      bonus3 bAddMonsterDropItem,12791,RC_Fish,.@drop;
+      bonus3 bAddMonsterDropItem,12791,RC_Insect,.@drop;
+      bonus3 bAddMonsterDropItem,12016,RC_Demon,.@drop;
+      bonus3 bAddMonsterDropItem,12016,RC_DemiHuman,.@drop;
+      bonus3 bAddMonsterDropItem,23361,RC_Dragon,.@drop;
+      bonus3 bAddMonsterDropItem,23361,RC_Formless,.@drop;
+      bonus3 bAddMonsterDropItem,678,RC_Angel,.@drop;
+      bonus3 bAddMonsterDropItem,678,RC_Undead,.@drop;
   - Id: 20855
     AegisName: Rental_Oxygen_Bomb
     Name: Costume Oxygen Tank
@@ -99178,6 +99808,32 @@ Body:
     Script: |
       bonus2 bSubEle,Ele_Neutral,20;
       bonus bVariableCastrate,-5;
+  - Id: 20908
+    AegisName: Jirant_Cloak_BR
+    Name: Witch's Cloak
+    Type: Armor
+    Weight: 1000
+    Defense: 16
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSubEle,Ele_Fire,5*(.@r/2);
+      bonus2 bSubEle,Ele_Wind,5*(.@r/2);
+      if (.@r>=5) {
+         bonus bMatkRate,5;
+         bonus bVariableCastrate,-5;
+      }
+      if (.@r>=7) {
+         bonus bMatkRate,5;
+         bonus bVariableCastrate,-5;
+      }
+      if (.@r>=15)
+         bonus bNoWalkDelay;
   - Id: 20918
     AegisName: Angel_Poring_Wing
     Name: Angel Poring Wing
@@ -100182,7 +100838,7 @@ Body:
          bonus bDelayrate,-5;
       }
   - Id: 20985
-    AegisName: aegis_20985
+    AegisName: C_Gourd_bottle_J
     Name: Costume Gourd Bottle
     Type: Armor
     Locations:
@@ -100190,8 +100846,8 @@ Body:
     ArmorLevel: 1
     View: 82
   - Id: 20987
-    AegisName: aegis_20987
-    Name: Costume Heart Wing Backpack    # !todo check english name
+    AegisName: C_Heart_Wing_Bag_J
+    Name: Costume Piglering Bag
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -100226,7 +100882,7 @@ Body:
     UnEquipScript: |
       hateffect HAT_EF_GEARWHEEL,false;
   - Id: 20991
-    AegisName: aegis_20991
+    AegisName: Fairy_Of_Eden
     Name: Fairy of Eden
     Type: Armor
     Weight: 400
@@ -100954,6 +101610,11 @@ Body:
     Attack: 180
     Range: 1
     Slots: 2
+    Jobs:
+      Knight: true
+    Classes:
+      All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -101390,11 +102051,11 @@ Body:
       bonus2 bSkillAtk,"DK_STORMSLASH",6*(.@r/2);
       bonus2 bSkillAtk,"DK_HACKANDSLASHER",5*(.@r/3);
       bonus bShortAtkRate,3*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPow,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"DK_STORMSLASH",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -102635,6 +103296,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -102652,6 +103314,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -102800,6 +103463,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -102821,6 +103485,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -102842,6 +103507,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -108741,6 +109407,7 @@ Body:
     Type: Shadowgear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 1
@@ -108765,6 +109432,7 @@ Body:
     Type: Shadowgear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 1
@@ -109330,6 +109998,7 @@ Body:
     Buy: 10
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 1
@@ -109351,6 +110020,7 @@ Body:
     Buy: 10
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 1
@@ -110825,6 +111495,7 @@ Body:
     Buy: 10
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 100
@@ -110841,6 +111512,7 @@ Body:
     Buy: 10
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 100
@@ -110856,6 +111528,7 @@ Body:
     Buy: 10
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 100
@@ -110872,6 +111545,7 @@ Body:
     Buy: 10
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 100
@@ -114490,7 +115164,7 @@ Body:
          .@val += 5;
       }
       if (.@r>=9) {
-         skill "WZ_WATERBALL",getskilllv("HW_GRAVITATION");
+         skill "HW_GRAVITATION",getskilllv("WZ_WATERBALL");
       }
       bonus2 bMagicAtkEle,Ele_Neutral,.@val;
       bonus2 bMagicAtkEle,Ele_Fire,.@val;
@@ -114791,6 +115465,7 @@ Body:
     Type: ShadowGear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -114812,6 +115487,7 @@ Body:
     Type: ShadowGear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -114824,6 +115500,7 @@ Body:
     Type: ShadowGear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -114836,6 +115513,7 @@ Body:
     Type: ShadowGear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -114855,6 +115533,7 @@ Body:
     Type: ShadowGear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -114868,6 +115547,7 @@ Body:
     Type: ShadowGear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -114880,6 +115560,7 @@ Body:
     Type: ShadowGear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -114899,6 +115580,7 @@ Body:
     Type: ShadowGear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -114912,6 +115594,7 @@ Body:
     Type: ShadowGear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -114924,6 +115607,7 @@ Body:
     Type: ShadowGear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -114957,6 +115641,7 @@ Body:
     Type: ShadowGear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -114969,6 +115654,7 @@ Body:
     Type: ShadowGear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -116182,6 +116868,7 @@ Body:
     Type: Shadowgear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -116228,7 +116915,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bMatk,(.@r/2);
+      bonus bMatk,15+(.@r/2);
       if (.@r==9)
          bonus3 bAutoSpell,"MG_NAPALMBEAT",7,70;
       else if (.@r>9)
@@ -117185,6 +117872,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -117212,6 +117900,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -117394,6 +118083,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -117421,6 +118111,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -117515,6 +118206,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -117641,12 +118333,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSmatk,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus bSpl,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bVariableCastrate,-5;
             }
          }
@@ -117663,6 +118355,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -117693,6 +118386,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -117763,6 +118457,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -117791,6 +118486,14 @@ Body:
     MagicAttack: 175
     Range: 1
     Slots: 2
+    Jobs:
+      SuperNovice: true
+      Wizard: true
+      Priest: true
+      SoulLinker: true
+    Classes:
+      All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -117886,6 +118589,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -118127,6 +118831,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -118315,6 +119020,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -121731,6 +122437,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -121747,6 +122454,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -121763,6 +122471,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -121933,6 +122642,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -121955,6 +122665,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -121977,6 +122688,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -121999,6 +122711,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -122021,6 +122734,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -122043,6 +122757,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -122065,6 +122780,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -122087,6 +122803,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -122109,6 +122826,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -122131,6 +122849,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -122154,6 +122873,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -122177,6 +122897,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -126832,6 +127553,26 @@ Body:
          if (readparam(bLuk)>=90)
             bonus bCritAtkRate,5;
       }
+  - Id: 28956
+    AegisName: Jirant_Mirror
+    Name: Witch's Hand Mirror
+    Type: Armor
+    View: 1
+    Buy: 20
+    Weight: 500
+    Defense: 80
+    Slots: 1
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 65
+    Refineable: true
+    Script: |
+      bonus bMdef,5;
+      bonus2 bSubEle,Ele_Fire,20;
+      bonus2 bSubEle,Ele_Wind,20;
+      bonus2 bSubEle,Ele_Holy,20+(getskilllv("CR_TRUST")*2);
+      bonus2 bSubEle,Ele_Ghost,20;
   - Id: 31027
     AegisName: C_Pretty_Bear
     Name: Costume Pretty Bear
@@ -134024,7 +134765,7 @@ Body:
     ArmorLevel: 1
     View: 481
   - Id: 31809
-    AegisName: aegis_31809
+    AegisName: C_Red_Wizardry_Hat
     Name: Costume Red Mage Hat    # !todo check english name
     Type: Armor
     Locations:
@@ -134597,7 +135338,7 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
   - Id: 31882
-    AegisName: aegis_31882
+    AegisName: C_Choco_Stick_In_Mouth
     Name: Costume Choco Stick In Mouth    # !todo check english name
     Type: Armor
     Locations:
@@ -134638,7 +135379,7 @@ Body:
     ArmorLevel: 1
     View: 1952
   - Id: 31887
-    AegisName: aegis_31887
+    AegisName: C_Pure_Love_Muffler
     Name: Costume Pure Scarf
     Type: Armor
     View: 1981
@@ -134750,7 +135491,7 @@ Body:
     ArmorLevel: 1
     View: 1130
   - Id: 31910
-    AegisName: aegis_31910
+    AegisName: C_Shaving_Cream
     Name: Costume Festive Santa Beard
     Type: Armor
     Locations:
@@ -134806,7 +135547,7 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
   - Id: 31917
-    AegisName: aegis_31917
+    AegisName: C_2018_RTC_Cape4_TW_J
     Name: Costume Glorious Flag (Red)    # !todo check english name
     Type: Armor
     Locations:
@@ -134934,7 +135675,7 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
   - Id: 31935
-    AegisName: aegis_31935
+    AegisName: C_Baby_Dragon_Hat
     Name: Costume Baby Dragon Hat
     Type: Armor
     Locations:
@@ -134974,7 +135715,7 @@ Body:
     ArmorLevel: 1
     View: 1026
   - Id: 31940
-    AegisName: aegis_31940
+    AegisName: C_Earth_Godess_Mask
     Name: Costume flag mask
     Type: Armor
     Locations:
@@ -134982,7 +135723,7 @@ Body:
     ArmorLevel: 1
     View: 918
   - Id: 31941
-    AegisName: aegis_31941
+    AegisName: C_Super_Cell
     Name: Costume Storm Cell
     Type: Armor
     Locations:
@@ -135042,7 +135783,7 @@ Body:
     ArmorLevel: 1
     View: 1779
   - Id: 31949
-    AegisName: aegis_31949
+    AegisName: C_Diabolus_Wing
     Name: Costume Diablos Wings
     Type: Armor
     Locations:
@@ -135050,7 +135791,7 @@ Body:
     ArmorLevel: 1
     View: 680
   - Id: 31950
-    AegisName: aegis_31950
+    AegisName: C_Nut_Cracker_JP
     Name: Costume Replica Nut Cracker
     Type: Armor
     Locations:
@@ -135058,7 +135799,7 @@ Body:
     ArmorLevel: 1
     View: 1991
   - Id: 31951
-    AegisName: aegis_31951
+    AegisName: C_Happy_Cat_JP
     Name: Costume Happy Cat
     Type: Armor
     Locations:
@@ -135074,7 +135815,7 @@ Body:
     ArmorLevel: 1
     View: 2016
   - Id: 31953
-    AegisName: aegis_31953
+    AegisName: C_Cor_Core_Headset
     Name: Costume Cor Core Headset    # !todo check english name
     Type: Armor
     Locations:
@@ -135229,7 +135970,7 @@ Body:
     ArmorLevel: 1
     View: 2154
   - Id: 31976
-    AegisName: aegis_31976
+    AegisName: C_Focus_Beret
     Name: Costume Concentration Beret    # !todo check english name
     Type: Armor
     Locations:
@@ -137279,7 +138020,7 @@ Body:
     EquipLevelMin: 1
     View: 1918
   - Id: 400021
-    AegisName: aegis_400021
+    AegisName: Clock_Casket_RD
     Name: Red Clark Casquette
     Type: Armor
     View: 1777
@@ -137305,7 +138046,7 @@ Body:
          bonus2 bAddSize,Size_Medium,15;
       }
   - Id: 400022
-    AegisName: aegis_400022
+    AegisName: Ignis_CapK
     Name: Ignis Cap
     Type: Armor
     View: 803
@@ -137331,7 +138072,7 @@ Body:
          bonus2 bAddSize,Size_Medium,15;
       }
   - Id: 400023
-    AegisName: aegis_400023
+    AegisName: Dolor_HatK
     Name: Drooping Thanatos's Dolor
     Type: Armor
     View: 547
@@ -137382,7 +138123,7 @@ Body:
       bonus2 bSubRace,RC_Player_Human,6;
       bonus2 bSubRace,RC_Player_Doram,6;
   - Id: 400044
-    AegisName: aegis_400044
+    AegisName: Phantom_Cap
     Name: Phantom Cap
     Type: Armor
     View: 1899
@@ -137408,7 +138149,7 @@ Body:
          bonus2 bMagicAddSize,Size_Medium,15;
       }
   - Id: 400045
-    AegisName: aegis_400045
+    AegisName: C_Pierced_Apple
     Name: Pierced Apple
     Type: Armor
     View: 1952
@@ -137417,7 +138158,7 @@ Body:
     ArmorLevel: 1
     Refineable: true
   - Id: 400046
-    AegisName: aegis_400046
+    AegisName: C_Pierced_Apple_
     Name: Costume Pierced Apple
     Type: Armor
     View: 1952
@@ -137566,7 +138307,7 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
   - Id: 400059
-    AegisName: aegis_400059
+    AegisName: Scorpio_Diadem_K
     Name: Scorpio Celestial Coronet
     Type: Armor
     View: 606
@@ -137636,7 +138377,7 @@ Body:
       if (.@r>=10)
          autobonus "{ bonus bUseSPrate,-100; }",20,20000,BF_MAGIC;
   - Id: 400061
-    AegisName: aegis_400061
+    AegisName: Sagittarius_DiademK
     Name: Sagittarius Celestial Coronet
     Type: Armor
     View: 618
@@ -137718,7 +138459,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 400078
-    AegisName: aegis_400078
+    AegisName: BioWeapon_Helm_RK
     Name: Goral Crown
     Type: Armor
     View: 532
@@ -137748,7 +138489,7 @@ Body:
          bonus2 bAddSize,Size_All,10;
       }
   - Id: 400079
-    AegisName: aegis_400079
+    AegisName: BioWeapon_Helm_LG
     Name: Trial Diadem
     Type: Armor
     View: 594
@@ -137782,7 +138523,7 @@ Body:
          bonus2 bMagicAddSize,Size_All,10;
       }
   - Id: 400094
-    AegisName: aegis_400094
+    AegisName: BioWeapon_Helm_WL
     Name: Jade Crown
     Type: Armor
     View: 510
@@ -137815,7 +138556,7 @@ Body:
          bonus2 bMagicAtkEle,Ele_Fire,20;
       }
   - Id: 400095
-    AegisName: aegis_400095
+    AegisName: BioWeapon_Helm_SO
     Name: Spinel Diadem
     Type: Armor
     View: 509
@@ -137869,7 +138610,7 @@ Body:
          bonus bBaseAtk,40;
       }
   - Id: 400098
-    AegisName: aegis_400098
+    AegisName: BioWeapon_Helm_NC
     Name: Bull Crown
     Type: Armor
     View: 536
@@ -137899,7 +138640,7 @@ Body:
          bonus2 bAddSize,Size_All,10;
       }
   - Id: 400099
-    AegisName: aegis_400099
+    AegisName: BioWeapon_Helm_GN
     Name: Taurus Diadem
     Type: Armor
     View: 535
@@ -137928,6 +138669,55 @@ Body:
       if (.@r>=11) {
          bonus2 bAddSize,Size_All,10;
       }
+  - Id: 400101
+    AegisName: aegis_400101
+    Name: Gate of Netherworld
+    Type: Armor
+    Weight: 100
+    Defense: 12
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    View: 2016
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAgi,5;
+      bonus bInt,5;
+      bonus bDef,3;
+      bonus bMdef,10;
+      bonus2 bAddRace,RC_All,10;
+      bonus2 bMagicAddRace,RC_All,10;
+      if (.@i>=7) {
+         bonus2 bAddRace,RC_All,15;
+         bonus2 bMagicAddRace,RC_All,15;
+         bonus bFixedCastrate,-50;
+      }
+      if (.@i>=9) {
+         bonus bAspdRate,15;
+         bonus bFixedCastrate,-70;
+      }
+  - Id: 400113
+    AegisName: Victory_Ear_JP
+    Name: Victory Wing Ear
+    Type: Armor
+    Weight: 300
+    Defense: 2
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    View: 1185
+    Script: |
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,10;
+      bonus2 bResEff,Eff_Confusion,10000;
+      bonus2 bMagicAddSize,Size_All,10;
+      if (getskilllv("AB_ADORAMUS") >= 10)
+         bonus bNoGemStone;
+      if (getskilllv("AB_PRAEFATIO") >= 10)
+         bonus bDelayrate,-15;
   - Id: 400115
     AegisName: C_Rag_Origin_Hat
     Name: Costume Angeling Bread Hat
@@ -137944,7 +138734,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 400116
-    AegisName: aegis_400116
+    AegisName: BioWeapon_Helm_RA
     Name: Celestial Jewel Crown
     Type: Armor
     View: 574
@@ -137974,7 +138764,7 @@ Body:
          bonus2 bAddSize,Size_All,10;
       }
   - Id: 400117
-    AegisName: aegis_400117
+    AegisName: BioWeapon_Helm_WM
     Name: Libra Crown
     Type: Armor
     View: 593
@@ -138008,7 +138798,7 @@ Body:
          bonus2 bAddSize,Size_All,10;
       }
   - Id: 400118
-    AegisName: aegis_400118
+    AegisName: BioWeapon_Helm_AB
     Name: Saint Crown
     Type: Armor
     View: 560
@@ -138042,7 +138832,7 @@ Body:
          bonus2 bAddSize,Size_All,10;
       }
   - Id: 400119
-    AegisName: aegis_400119
+    AegisName: BioWeapon_Helm_SR
     Name: Lion Crown
     Type: Armor
     View: 565
@@ -138072,7 +138862,7 @@ Body:
          bonus2 bAddSize,Size_All,10;
       }
   - Id: 400120
-    AegisName: aegis_400120
+    AegisName: BioWeapon_Helm_SC
     Name: Goat Crown
     Type: Armor
     View: 621
@@ -138105,7 +138895,7 @@ Body:
          bonus2 bMagicAddSize,Size_All,10;
       }
   - Id: 400121
-    AegisName: aegis_400121
+    AegisName: BioWeapon_Helm_GC
     Name: Twin Crown
     Type: Armor
     View: 551
@@ -138169,7 +138959,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 400128
-    AegisName: aegis_400128
+    AegisName: C_Ep18_Mini_Elly
     Name: Costume Dropping Elly
     Type: Armor
     Locations:
@@ -138177,7 +138967,7 @@ Body:
     ArmorLevel: 1
     View: 2077
   - Id: 400131
-    AegisName: aegis_400131
+    AegisName: C_Diadem_Of_Bruenhild
     Name: Costume Diadem of Brunhild
     Type: Armor
     Locations:
@@ -138236,9 +139026,9 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bShortAtkRate,5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,2;
             bonus bPow,2;
          }
@@ -138539,14 +139329,14 @@ Body:
       bonus bMatkRate,2*(.@r/3);
       bonus bAspd,(.@r/5);
       autobonus "{ .@r = getrefine(); bonus bMatk,100; bonus bHit,50; bonus3 bAutoSpell,\"SO_CLOUD_KILL\",max(3,getskilllv(\"SO_CLOUD_KILL\")),50; if (.@r>=7) { bonus bMatk,50; bonus bHit,25; if (.@r>=9) { bonus3 bAutoSpell,\"WL_HELLINFERNO\",5,50; if (.@r>=10) { bonus3 bAutoSpell,\"WL_CHAINLIGHTNING\",3,20; } } }",1,10000,BF_WEAPON;
-      if (.@g>=1 && .@r>=11) {
+      if (.@g >= ENCHANTGRADE_D && .@r>=11) {
          bonus5 bAutoSpell,"RK_IGNITIONBREAK",9,30,BF_MAGIC,1;
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus bPAtk,2;
          bonus bSMatk,2;
       }
-      if (.@g>=3 && .@r>=12) {
+      if (.@g >= ENCHANTGRADE_B && .@r>=12) {
          bonus bFixedCast,-500;
       }
   - Id: 400153
@@ -138581,15 +139371,15 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus bDelayrate,-5;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus bPAtk,2;
          bonus bSmatk,2;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             if (.@r>=12) {
                bonus bFixedCast,-500;
             }
@@ -138634,12 +139424,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bDelayrate,-5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,2;
             bonus bSmatk,2;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                if (.@r>=12) {
                   bonus bFixedCast,-500;
                }
@@ -138678,13 +139468,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bMagicAtkEle,Ele_Holy,5;
          bonus bShortAtkRate,5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,2;
             bonus bSmatk,2;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                if (.@r>=12) {
                   bonus bFixedCast,-500;
                }
@@ -138724,13 +139514,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bMagicAtkEle,Ele_Fire,5;
          bonus bShortAtkRate,5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,2;
             bonus bSmatk,2;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                if (.@r>=12) {
                   bonus bFixedCast,-500;
                }
@@ -138756,15 +139546,23 @@ Body:
     ArmorLevel: 1
     View: 2140
   - Id: 400166
-    AegisName: aegis_400166
+    AegisName: C_Egir_Helm
     Name: Costume Aegir Helm    # !todo check english name
     Type: Armor
     Locations:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 870
+  - Id: 400176
+    AegisName: C_Fishbowl_Parfait_Hat
+    Name: Costume Fishbowl Parfait Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 2145
   - Id: 400177
-    AegisName: aegis_400177
+    AegisName: Fafnir_Helm
     Name: Fafnir Helm
     Type: Armor
     View: 2149
@@ -139163,6 +139961,14 @@ Body:
       bonus bBaseAtk,10*(.@r/2);
       bonus2 bSkillAtk,"SC_TRIANGLESHOT",15*(.@r/3);
       bonus bLongAtkRate,7*(.@r/4);
+  - Id: 400197
+    AegisName: C_Sweet_Chef_Hat
+    Name: Costume Sweet Chef Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 2163
   - Id: 400198
     AegisName: Viva_Adul_Hat_RA1
     Name: Helm of Faith (Ranger)
@@ -140169,6 +140975,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Head_Top: true
     ArmorLevel: 2
@@ -140208,6 +141015,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Head_Top: true
     ArmorLevel: 2
@@ -140270,16 +141078,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,5;
          bonus bPow,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bFixedCast,-500;
             bonus bSta,2;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bRes,20;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bPAtk,7;
                }
             }
@@ -140317,16 +141125,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,5;
          bonus bSpl,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bFixedCast,-500;
             bonus bWis,2;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,3;
                bonus bMres,20;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bSmatk,7;
                }
             }
@@ -140718,6 +141526,18 @@ Body:
     View: 1169
     Script: |
       bonus bVariableCastrate,-5;
+  - Id: 410081
+    AegisName: C_Released_Ground
+    Name: Costume Released Ground    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2136
+    Script: |
+      hateffect HAT_EF_C_Released_Ground,true;
+    UnEquipScript: |
+      hateffect HAT_EF_C_Released_Ground,false;
   - Id: 410087
     AegisName: C_Demons_Familiar_K
     Name: Costume Robotic Watcher
@@ -140934,6 +141754,20 @@ Body:
             bonus bCritAtkRate,7;
          }
       }
+  - Id: 420000
+    AegisName: aegis_420000
+    Name: Isabella Carrot
+    Type: Armor
+    Weight: 100
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 70
+    View: 829
+    Script: |
+      bonus bVit,1;
+      bonus bDex,1;
+      bonus bInt,1;
   - Id: 420003
     AegisName: CD_In_MouthK
     Name: CD in Mouth
@@ -141630,6 +142464,50 @@ Body:
       bonus bMaxSPrate,5;
       bonus bLongAtkDef,5;
       bonus bHealPower2,5;
+  - Id: 420134
+    AegisName: aegis_420134
+    Name: The Spirit Of World
+    Type: Armor
+    Weight: 600
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      .@str = readparam(bStr);
+      .@agi = readparam(bAgi);
+      .@vit = readparam(bVit);
+      .@int = readparam(bInt);
+      .@dex = readparam(bDex);
+      .@luk = readparam(bLuk);
+      bonus bMatk,60;
+      bonus2 bHPRegenRate,60,6000;
+      bonus2 bMagicAtkEle,Ele_Neutral,2*(.@str/10);
+      bonus2 bMagicAtkEle,Ele_Wind,2*(.@agi/10);
+      bonus2 bMagicAtkEle,Ele_Earth,2*(.@vit/10);
+      bonus2 bMagicAtkEle,Ele_Fire,2*(.@int/10);
+      bonus2 bMagicAtkEle,Ele_Water,2*(.@dex/10);
+      bonus2 bMagicAtkEle,Ele_Holy,2*(.@luk/10);
+      if (.@str + .@agi + .@vit + .@int + .@dex + .@luk >= 60)
+         bonus2 bMagicAtkEle,Ele_Ghost,2;
+      hateffect HAT_EF_STRANGELIGHTS,true;
+    UnEquipScript: |
+      hateffect HAT_EF_STRANGELIGHTS,false;
+  - Id: 420141
+    AegisName: aegis_420141
+    Name: Flutter Butterfly
+    Type: Armor
+    Weight: 100
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      bonus bAspd,1;
+      bonus bLongAtkRate,min(readparam(bDex)/10,10);
+      hateffect HAT_EF_FLUTTER_BUTTERFLY,true;
+    UnEquipScript: |
+      hateffect HAT_EF_FLUTTER_BUTTERFLY,false;
   - Id: 436000
     AegisName: aegis_436000
     Name: Thanatos's Maeror Mask
@@ -141874,7 +142752,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 440008
-    AegisName: aegis_440008
+    AegisName: C_Master
     Name: Costume Master
     Type: Armor
     Locations:
@@ -142624,6 +143502,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -142653,6 +143532,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -143758,6 +144638,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -143787,6 +144668,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -144828,6 +145710,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -144857,6 +145740,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -145890,19 +146774,19 @@ Body:
             bonus bShortAtkRate,20;
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,(.@r/2);
          bonus bBaseAtk,2*(.@r/2);
          bonus bShortAtkRate,(.@r/3);
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bAddClass,Class_All,(.@r/2);
             bonus bBaseAtk,3*(.@r/2);
             bonus bShortAtkRate,(.@r/3);
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bAddClass,Class_All,2*(.@r/2);
                bonus bShortAtkRate,(.@r/3);
                bonus bPAtk,(.@r/4);
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus2 bAddClass,Class_All,3*(.@r/2);
                   bonus bShortAtkRate,2*(.@r/3);
                   bonus bPAtk,2*(.@r/4);
@@ -145941,18 +146825,18 @@ Body:
             bonus bMaxHPrate,15;
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bDef,5*(.@r/2);
          bonus bHealPower,2*(.@r/2);
          bonus bRes,(.@r/4);
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bDef,7*(.@r/2);
             bonus bHealPower,3*(.@r/2);
             bonus bRes,2*(.@r/4);
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bMaxHPrate,(.@r/3);
                bonus bRes,3*(.@r/4);
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bMaxHPrate,2*(.@r/3);
                   bonus bRes,4*(.@r/4);
                }
@@ -145989,19 +146873,19 @@ Body:
             bonus bLongAtkRate,20;
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bAspdRate,(.@r/2);
          bonus2 bAddClass,Class_All,(.@r/2);
          bonus bBaseAtk,2*(.@r/2);
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bAspdRate,(.@r/2);
             bonus2 bAddClass,Class_All,2*(.@r/2);
             bonus bBaseAtk,3*(.@r/2);
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bAspdRate,2*(.@r/2);
                bonus bLongAtkRate,(.@r/3);
                bonus bPAtk,(.@r/4);
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bAspdRate,2*(.@r/2);
                   bonus bLongAtkRate,2*(.@r/3);
                   bonus bPAtk,2*(.@r/4);
@@ -146039,19 +146923,19 @@ Body:
             bonus bCritAtkRate,20;
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bBaseAtk,(.@r/2);
          bonus bCritAtkRate,2*(.@r/3);
          bonus bCritical,(.@r/3);
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bBaseAtk,2*(.@r/2);
             bonus bCritAtkRate,3*(.@r/3);
             bonus bCritical,2*(.@r/3);
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bCritAtkRate,5*(.@r/3);
                bonus bCrate,(.@r/4);
                bonus bPAtk,(.@r/4);
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bCritAtkRate,7*(.@r/3);
                   bonus bCrate,(.@r/4);
                   bonus bPAtk,2*(.@r/4);
@@ -146090,19 +146974,19 @@ Body:
             bonus2 bMagicAtkEle,Ele_All,15;
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,(.@r/2);
          bonus bMatk,2*(.@r/2);
          bonus2 bMagicAtkEle,Ele_All,3*(.@r/3);
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bMatkRate,(.@r/2);
             bonus bMatk,3*(.@r/2);
             bonus2 bMagicAtkEle,Ele_All,3*(.@r/3);
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bMatkRate,2*(.@r/2);
                bonus2 bMagicAtkEle,Ele_All,5*(.@r/3);
                bonus bSmatk,(.@r/4);
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bMatkRate,3*(.@r/2);
                   bonus2 bMagicAtkEle,Ele_All,5*(.@r/3);
                   bonus bSmatk,2*(.@r/4);
@@ -146142,19 +147026,19 @@ Body:
             bonus bVariableCastrate,-10;
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSPrecovRate,2*(.@r/2);
          bonus bHealPower,(.@r/2);
          bonus bMres,(.@r/3);
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSPrecovRate,3*(.@r/2);
             bonus bHealPower,2*(.@r/2);
             bonus bMres,2*(.@r/3);
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bMaxSPrate,(.@r/2);
                bonus bMres,2*(.@r/3);
                bonus bHplus,2*(.@r/4);
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bMaxSPrate,2*(.@r/2);
                   bonus bMres,3*(.@r/3);
                   bonus bHplus,3*(.@r/4);
@@ -146541,14 +147425,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bAddClass,Class_All,3;
             bonus bPow,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bShortAtkRate,10;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bDelayrate,-10;
                }
             }
@@ -146586,14 +147470,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxHPrate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bMaxHPrate,3;
             bonus bSta,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bDelayrate,-5;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bDelayrate,-10;
                }
             }
@@ -146631,14 +147515,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bMatkRate,3;
             bonus bSpl,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bMagicAtkEle,Ele_All,10;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bDelayrate,-10;
                }
             }
@@ -146676,14 +147560,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bAddClass,Class_All,3;
             bonus bCon,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bLongAtkRate,10;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bDelayrate,-10;
                }
             }
@@ -146871,11 +147755,11 @@ Body:
       bonus bMaxSPrate,5;
       bonus bMdef,10*(.@r/3);
       bonus bDef,50*(.@r/3);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,1;
                bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",15;
             }
@@ -146944,14 +147828,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
-         if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_D) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPow,2;
             bonus bSpl,2;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bSmatk,2;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bDelayrate,-5;
                }
             }
@@ -148194,7 +149078,7 @@ Body:
       if (.@r>=9) {
          bonus bAspdRate,7;
          if (.@r>=11) {
-            autobonus "{ .@g = getenchantgrade(); if (.@g>=1) { .@val = 25; if (.@g>=2) { .@val += 25; } } bonus bStr,175+.@val; }",1,10000,BF_WEAPON;
+            autobonus "{ .@g = getenchantgrade(); if (.@g >= ENCHANTGRADE_D) { .@val = 25; if (.@g >= ENCHANTGRADE_C) { .@val += 25; } } bonus bStr,175+.@val; }",1,10000,BF_WEAPON;
             if (.@r>=13) {
                bonus bShortAtkRate,7;
             }
@@ -148220,7 +149104,7 @@ Body:
       if (.@r>=9) {
          bonus bAspdRate,7;
          if (.@r>=11) {
-            autobonus "{ .@g = getenchantgrade(); if (.@g>=1) { .@val = 25; if (.@g>=2) { .@val += 25; } } bonus bDex,175+.@val; }",1,10000,BF_WEAPON|BF_MAGIC;
+            autobonus "{ .@g = getenchantgrade(); if (.@g >= ENCHANTGRADE_D) { .@val = 25; if (.@g >= ENCHANTGRADE_C) { .@val += 25; } } bonus bDex,175+.@val; }",1,10000,BF_WEAPON|BF_MAGIC;
             if (.@r>=13) {
                bonus bFixedCast,-500;
             }
@@ -148248,7 +149132,7 @@ Body:
          bonus bAspdRate,5;
          bonus bVariableCastrate,-5;
          if (.@r>=11) {
-            autobonus "{ .@g = getenchantgrade(); if (.@g>=1) { .@val = 25; if (.@g>=2) { .@val += 25; } } bonus bVit,175+.@val; }",1,10000,BF_WEAPON|BF_MAGIC;
+            autobonus "{ .@g = getenchantgrade(); if (.@g >= ENCHANTGRADE_D) { .@val = 25; if (.@g >= ENCHANTGRADE_C) { .@val += 25; } } bonus bVit,175+.@val; }",1,10000,BF_WEAPON|BF_MAGIC;
             if (.@r>=13) {
                bonus bDelayrate,-5;
             }
@@ -148275,7 +149159,7 @@ Body:
       if (.@r>=9) {
          bonus bVariableCastrate,-7;
          if (.@r>=11) {
-            autobonus "{ .@g = getenchantgrade(); if (.@g>=1) { .@val = 25; if (.@g>=2) { .@val += 25; } } bonus bInt,175+.@val; }",1,10000,BF_MAGIC;
+            autobonus "{ .@g = getenchantgrade(); if (.@g >= ENCHANTGRADE_D) { .@val = 25; if (.@g >= ENCHANTGRADE_C) { .@val += 25; } } bonus bInt,175+.@val; }",1,10000,BF_MAGIC;
             if (.@r>=13) {
                bonus2 bMagicAtkEle,Ele_All,7;
             }
@@ -148323,7 +149207,7 @@ Body:
       if (.@r>=9) {
          bonus bAspdRate,7;
          if (.@r>=11) {
-            autobonus "{ .@g = getenchantgrade(); if (.@g>=1) { .@val = 25; if (.@g>=2) { .@val += 25; } } bonus bAgi,175+.@val; }",1,10000,BF_WEAPON;
+            autobonus "{ .@g = getenchantgrade(); if (.@g >= ENCHANTGRADE_D) { .@val = 25; if (.@g >= ENCHANTGRADE_C) { .@val += 25; } } bonus bAgi,175+.@val; }",1,10000,BF_WEAPON;
             if (.@r>=13) {
                bonus bLongAtkRate,4;
                bonus bShortAtkRate,4;
@@ -148350,7 +149234,7 @@ Body:
       if (.@r>=9) {
          bonus bAspdRate,7;
          if (.@r>=11) {
-            autobonus "{ .@g = getenchantgrade(); if (.@g>=1) { .@val = 25; if (.@g>=2) { .@val += 25; } } bonus bLuk,175+.@val; }",1,10000,BF_WEAPON;
+            autobonus "{ .@g = getenchantgrade(); if (.@g >= ENCHANTGRADE_D) { .@val = 25; if (.@g >= ENCHANTGRADE_C) { .@val += 25; } } bonus bLuk,175+.@val; }",1,10000,BF_WEAPON;
             if (.@r>=13) {
                bonus bCritAtkRate,7;
                bonus bCritical,7;
@@ -148794,16 +149678,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMres,50;
          bonus bRes,50;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAddEle,Ele_All,10;
             bonus2 bAddEle,Ele_All,10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSta,5;
                bonus bWis,5;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bPAtk,5;
                   bonus bSmatk,5;
                   if (.@r>=13) {
@@ -148886,14 +149770,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxHPrate,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bFixedCast,-300;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bVariableCastrate,-5;
                bonus bMaxHPrate,2;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bFixedCast,-200;
                }
             }
@@ -148932,14 +149816,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bFixedCast,-300;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus2 bAddClass,Class_All,2;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bFixedCast,-200;
                }
             }
@@ -148978,14 +149862,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bFixedCast,-300;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bMatkRate,2;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bFixedCast,-200;
                }
             }
@@ -149024,19 +149908,62 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bFixedCast,-300;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus2 bAddClass,Class_All,2;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bCrate,1;
                }
             }
          }
       }
+  - Id: 470112
+    AegisName: Moaning_of_EvilSpirits
+    Name: Moaning of EvilSpirits    # !todo check english name
+    Type: Armor
+    Weight: 500
+    Defense: 15
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,15;
+      bonus bMatkRate,15;
+      bonus2 bSubClass,Class_Boss,5;
+      bonus bMaxHPrate,4*.@r;
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Dark,20;
+         bonus2 bMagicAtkEle,Ele_Neutral,20;
+      }
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Dark,25;
+         bonus2 bMagicAtkEle,Ele_Neutral,25;
+      }
+  - Id: 470113
+    AegisName: Hollow_Shoes_
+    Name: Hollow Shoes
+    Type: Armor
+    Weight: 500
+    Defense: 15
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus bMdef,5;
+      bonus bMatk,50;
+      bonus bDelayrate,10;
+      bonus2 bMagicAddEle,Ele_All,getrefine();
   - Id: 470115
     AegisName: Snowflower_Boots
     Name: Snowflower Boots
@@ -149082,6 +150009,32 @@ Body:
           bonus bSMatk,2;
         }
       }
+  - Id: 470123
+    AegisName: aegis_470123
+    Name: Hunting Shoes
+    Type: Armor
+    Weight: 900
+    Defense: 30
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 30
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHP,1000;
+      bonus bMaxSP,200;
+      if (.@r>=7)
+         bonus2 bExpAddClass,Class_All,8;
+      if (.@r>=9)
+         .@dmg = 15;
+      if (.@r>=11)
+         .@dmg += 20;
+      bonus2 RC_Brute,r,.@dmg;
+      bonus2 RC_Fish,r,.@dmg;
+      bonus2 RC_Brute,r,.@dmg;
+      bonus2 RC_Fish,r,.@dmg;
   - Id: 480000
     AegisName: Attacker_Booster_Manteau_
     Name: Attacker Booster Manteau
@@ -149921,6 +150874,39 @@ Body:
          bonus2 bSubEle,Ele_Fire,20;
          bonus2 bSubEle,Ele_Water,20;
       }
+  - Id: 480085
+    AegisName: Devil_Manteau_JP
+    Name: Devils Garment
+    Type: Armor
+    Weight: 300
+    Defense: 25
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,2;
+      bonus bMaxSPrate,2;
+      bonus2 bAddSize,Size_All,5;
+      bonus2 bSubRace,RC_Player_Human,5;
+      bonus2 bSubRace,RC_Player_Doram,5;
+      if (getskilllv("SR_EARTHSHAKER") >= 5)
+         bonus2 bSkillCooldown,"SR_HOWLINGOFLION",-200;
+      bonus2 bSkillAtk,"SR_HOWLINGOFLION",15*getskilllv("SR_RAMPAGEBLASTER");
+      bonus bPerfectHitRate,4*getskilllv("SR_RIDEINLIGHTNING");
+      if (.@r>=5) {
+         bonus bMaxHPrate,3;
+         bonus bMaxSPrate,3;
+         bonus bVariableCastrate,-5;
+      }
+      if (.@r>=7) {
+         bonus bMaxHPrate,5;
+         bonus bMaxSPrate,5;
+         bonus bVariableCastrate,-5;
+      }
   - Id: 480086
     AegisName: C_CAPOO_Bag_TW
     Name: Costume CAPOO Bag    # !todo check english name
@@ -150401,7 +151387,7 @@ Body:
          bonus bSPGainValue,10;
       }
   - Id: 480136
-    AegisName: aegis_480136
+    AegisName: Thanatos_Sword
     Name: Magic Swordsman Thanatos's Sword
     Type: Armor
     Weight: 500
@@ -150509,15 +151495,15 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxHPrate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bMaxHPrate,3;
             bonus bMres,2;
             bonus bRes,2;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bDelayrate,-5;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bDelayrate,-10;
                }
             }
@@ -150554,14 +151540,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,2;
             bonus2 bAddClass,Class_All,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bShortAtkRate,5;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bDelayrate,-10;
                }
             }
@@ -150598,14 +151584,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,2;
             bonus bMatkRate,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bMagicAtkEle,Ele_All,5;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bDelayrate,-10;
                }
             }
@@ -150642,14 +151628,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,2;
             bonus2 bAddClass,Class_All,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bLongAtkRate,5;
-               if (.@g>=4) {
+               if (.@g >= ENCHANTGRADE_A) {
                   bonus bDelayrate,-10;
                }
             }
@@ -150716,9 +151702,17 @@ Body:
     Slots: 1
     Jobs:
       Archer: true
+      Hunter: true
+      BardDancer: true
       Merchant: true
+      Blacksmith: true
+      Alchemist: true
       Swordman: true
+      Knight: true
+      Crusader: true
       Thief: true
+      Assassin: true
+      Rogue: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -150739,8 +151733,14 @@ Body:
     Slots: 1
     Jobs:
       Acolyte: true
+      Priest: true
+      Monk: true
       Archer: true
+      Hunter: true
+      BardDancer: true
       Mage: true
+      Wizard: true
+      Sage: true
       SoulLinker: true
     Locations:
       Garment: true
@@ -150762,9 +151762,17 @@ Body:
     Slots: 1
     Jobs:
       Swordman: true
+      Knight: true
+      Crusader: true
       Thief: true
+      Assassin: true
+      Rogue: true
       Acolyte: true
+      Priest: true
+      Monk: true
       Merchant: true
+      Blacksmith: true
+      Alchemist: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -150778,6 +151786,42 @@ Body:
       bonus bMaxSPrate,.@r/2;
       if (.@r>=9)
          bonus2 bAddClass,Class_All,5;
+  - Id: 480182
+    AegisName: aegis_480182
+    Name: Bastawtozaq Heart
+    Type: Armor
+    Weight: 100
+    Defense: 12
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSubEle,Ele_Fire,10;
+      bonus2 bSubEle,Ele_Water,10;
+      bonus bAspdRate,5;
+      bonus2 bSkillAtk,"RK_DRAGONBREATH",7*(.@r/3);
+      bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",7*(.@r/3);
+      if (getskilllv("RK_DRAGONBREATH") >= 10)
+         bonus bLongAtkRate,5;
+      if (getskilllv("RK_DRAGONBREATH_WATER") >= 10)
+         bonus bLongAtkRate,5;
+      if (.@r>=9) {
+         bonus2 bSubEle,Ele_Fire,5;
+         bonus2 bSubEle,Ele_Water,5;
+         bonus bLongAtkDef,10;
+         bonus bMaxHPrate,10;
+         bonus bMaxSPrate,10;
+      }
+      if (.@r>=11) {
+         bonus2 bSubEle,Ele_Fire,5;
+         bonus2 bSubEle,Ele_Water,5;
+         bonus bLongAtkDef,10;
+         bonus bAspdRate,5;
+      }
   - Id: 490004
     AegisName: Attacker_Booster_Ring
     Name: Attacker Booster Ring
@@ -153042,6 +154086,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Classes:
       Fourth: true
     Locations:
@@ -153518,12 +154563,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"IG_CROSS_RAIN",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus2 bSkillAtk,"IG_CROSS_RAIN",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,1;
                bonus2 bSkillAtk,"IG_CROSS_RAIN",12;
             }
@@ -153565,14 +154610,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",5;
          bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WATER",8;
             bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_GROUND",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,2;
                bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",10;
                bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",10;
@@ -153618,16 +154663,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,2;
          bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",10;
          bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",10;
          bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WATER",10;
          bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_GROUND",10;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bAddClass,Class_All,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",10;
                bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",10;
                bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WATER",10;
@@ -153744,16 +154789,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bMagicAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"LG_RAYOFGENESIS",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus bMatkRate,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bSmatk,(.@r/3);
                bonus bSpl,(.@r/3);
             }
@@ -153794,16 +154839,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"GN_CARTCANNON",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -154095,13 +155140,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_Holy,15;
             bonus2 bMagicAtkEle,Ele_Neutral,15;
             bonus bSmatk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bSpl,3;
             }
@@ -154150,12 +155195,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -154203,12 +155248,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bShortAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -154325,11 +155370,11 @@ Body:
       bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",6*(.@r/2);
       bonus2 bSkillAtk,"HN_MEGA_SONIC_BLOW",8*(.@r/3);
       bonus bShortAtkRate,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPow,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -154359,12 +155404,12 @@ Body:
       bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",6*(.@r/2);
       bonus2 bSkillAtk,"GN_CART_TORNADO",7*(.@r/3);
       bonus2 bAddClass,Class_All,5*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPow,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",10;
             bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -154403,14 +155448,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",5;
          bonus2 bSkillAtk,"HN_SHIELD_CHAIN_RUSH",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",3;
             bonus2 bSkillAtk,"HN_SHIELD_CHAIN_RUSH",3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,1;
                bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",5;
                bonus2 bSkillAtk,"HN_SHIELD_CHAIN_RUSH",5;
@@ -154891,12 +155936,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"SHC_SHADOW_STAB",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"SHC_SHADOW_STAB",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,1;
                bonus2 bSkillAtk,"SHC_SHADOW_STAB",12;
             }
@@ -154935,12 +155980,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"ABC_DEFT_STAB",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"ABC_DEFT_STAB",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,1;
                bonus2 bSkillAtk,"ABC_DEFT_STAB",12;
             }
@@ -154987,13 +156032,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,2;
          bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS",10;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus bMatkRate,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS",10;
             }
          }
@@ -155068,16 +156113,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SC_FATALMENACE",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -155353,12 +156398,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_All,15;
             bonus bSmatk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bSpl,3;
             }
@@ -155406,12 +156451,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bShortAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -155452,12 +156497,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSmatk,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus bSpl,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bMagicAtkEle,Ele_All,15;
             }
          }
@@ -155482,12 +156527,12 @@ Body:
     Refineable: true
     Script: |
       .@g = getenchantgrade();
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSpl,1;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"SS_SEKIENHOU",7;
             bonus2 bSkillAtk,"SS_REIKETSUHOU",7;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,1;
             }
          }
@@ -155517,11 +156562,11 @@ Body:
       bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",7*(.@r/2);
       bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS",10*(.@r/3);
       bonus2 bMagicAtkEle,Ele_All,3*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSpl,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
             }
          }
@@ -155550,11 +156595,11 @@ Body:
       bonus2 bSkillAtk,"SS_KAGENOMAI",5*(.@r/2);
       bonus2 bSkillAtk,"SS_KAGEGISSEN",7*(.@r/3);
       bonus bShortAtkRate,3*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPow,1;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"SS_KAGENOMAI",7;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,1;
             }
          }
@@ -155662,14 +156707,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"SS_KUNAIKAITEN",5;
          bonus2 bSkillAtk,"SS_KUNAIKUSSETSU",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"SS_KUNAIKAITEN",3;
             bonus2 bSkillAtk,"SS_KUNAIKUSSETSU",3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,1;
                bonus2 bSkillAtk,"SS_KUNAIKAITEN",5;
                bonus2 bSkillAtk,"SS_KUNAIKUSSETSU",5;
@@ -155717,14 +156762,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"SS_RAIDENPOU",5;
          bonus2 bSkillAtk,"SS_KINRYUUHOU",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus2 bSkillAtk,"SS_RAIDENPOU",3;
             bonus2 bSkillAtk,"SS_KINRYUUHOU",3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,1;
                bonus2 bSkillAtk,"SS_RAIDENPOU",5;
                bonus2 bSkillAtk,"SS_KINRYUUHOU",5;
@@ -155750,12 +156795,12 @@ Body:
     Refineable: true
     Script: |
       .@g = getenchantgrade();
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -155929,16 +156974,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"NC_AXEBOOMERANG",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -156281,12 +157326,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"IG_OVERSLASH",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"IG_OVERSLASH",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,1;
                bonus2 bSkillAtk,"IG_OVERSLASH",12;
             }
@@ -156329,13 +157374,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,2;
          bonus2 bSkillAtk,"IG_OVERSLASH",10;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bAddClass,Class_All,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"IG_OVERSLASH",10;
             }
          }
@@ -156410,16 +157455,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"LG_OVERBRAND",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -156576,12 +157621,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bAddEle,Ele_All,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -156613,11 +157658,11 @@ Body:
       bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",6*(.@r/2);
       bonus2 bSkillAtk,"PA_SHIELDCHAIN",15*(.@r/3);
       bonus bLongAtkRate,3*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPow,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -156957,14 +158002,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"EM_DIAMOND_STORM",5;
          bonus2 bSkillAtk,"EM_TERRA_DRIVE",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus2 bSkillAtk,"EM_DIAMOND_STORM",8;
             bonus2 bSkillAtk,"EM_TERRA_DRIVE",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,1;
                bonus2 bSkillAtk,"EM_DIAMOND_STORM",12;
                bonus2 bSkillAtk,"EM_TERRA_DRIVE",12;
@@ -157007,12 +158052,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"CD_PETITIO",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus2 bSkillAtk,"CD_PETITIO",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,1;
                bonus2 bSkillAtk,"CD_PETITIO",12;
             }
@@ -157227,16 +158272,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bMagicAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus bMatkRate,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bSmatk,(.@r/3);
                bonus bSpl,(.@r/3);
             }
@@ -157278,16 +158323,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bMagicAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SO_POISON_BUSTER",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus bMatkRate,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bSmatk,(.@r/3);
                bonus bSpl,(.@r/3);
             }
@@ -157330,18 +158375,18 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bMagicAddEle,Ele_All,15;
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"AB_DUPLELIGHT",25;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus bMatkRate,7;
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -157709,12 +158754,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_Holy,15;
             bonus bSmatk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bSpl,3;
             }
@@ -157843,12 +158888,12 @@ Body:
       bonus2 bSkillAtk,"EM_LIGHTNING_LAND",6*(.@r/2);
       bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",15*(.@r/3);
       bonus2 bMagicAtkEle,Ele_All,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSpl,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"EM_CONFLAGRATION",10;
             bonus2 bSkillAtk,"EM_LIGHTNING_LAND",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
             }
          }
@@ -157878,11 +158923,11 @@ Body:
       bonus2 bSkillAtk,"SKE_NOON_BLAST",6*(.@r/2);
       bonus2 bSkillAtk,"SKE_RISING_SUN",8*(.@r/3);
       bonus bShortAtkRate,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPow,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"SKE_NOON_BLAST",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -157945,14 +158990,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"SKE_SUNSET_BLAST",5;
          bonus2 bSkillAtk,"SKE_DAWN_BREAK",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"SKE_SUNSET_BLAST",3;
             bonus2 bSkillAtk,"SKE_DAWN_BREAK",3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,1;
                bonus2 bSkillAtk,"SKE_SUNSET_BLAST",5;
                bonus2 bSkillAtk,"SKE_DAWN_BREAK",5;
@@ -157994,16 +159039,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -158044,16 +159089,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SJ_FULLMOONKICK",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -158096,12 +159141,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bShortAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -158174,6 +159219,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -158206,6 +159252,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -158308,6 +159355,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -158521,6 +159569,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -158618,14 +159667,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"EM_CONFLAGRATION",5;
          bonus2 bSkillAtk,"EM_LIGHTNING_LAND",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus2 bSkillAtk,"EM_CONFLAGRATION",8;
             bonus2 bSkillAtk,"EM_LIGHTNING_LAND",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,1;
                bonus2 bSkillAtk,"EM_CONFLAGRATION",12;
                bonus2 bSkillAtk,"EM_LIGHTNING_LAND",12;
@@ -158669,12 +159718,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"CD_FRAMEN",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus2 bSkillAtk,"CD_FRAMEN",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,1;
                bonus2 bSkillAtk,"CD_FRAMEN",12;
             }
@@ -158719,13 +159768,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,2;
          bonus2 bSkillAtk,"EM_LIGHTNING_LAND",10;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus bMatkRate,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"EM_LIGHTNING_LAND",10;
             }
          }
@@ -158853,6 +159902,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -158886,6 +159936,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -158945,16 +159996,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bMagicAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"AB_ADORAMUS",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus bMatkRate,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bSmatk,(.@r/3);
                bonus bSpl,(.@r/3);
             }
@@ -159090,6 +160141,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -159250,6 +160302,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -159280,6 +160333,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -159387,6 +160441,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -159427,6 +160482,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -159559,13 +160615,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_Poison,15;
             bonus2 bMagicAtkEle,Ele_Earth,15;
             bonus bSmatk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bSpl,3;
             }
@@ -159615,13 +160671,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_Water,15;
             bonus2 bMagicAtkEle,Ele_Wind,15;
             bonus bSmatk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bSpl,3;
             }
@@ -159638,6 +160694,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -159681,6 +160738,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -159832,11 +160890,11 @@ Body:
       bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",6*(.@r/2);
       bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",8*(.@r/3);
       bonus2 bMagicAtkEle,Ele_All,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSpl,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
             }
          }
@@ -159867,11 +160925,11 @@ Body:
       bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",6*(.@r/2);
       bonus2 bSkillAtk,"HN_NAPALM_VULCAN_STRIKE",10*(.@r/3);
       bonus2 bMagicAtkEle,Ele_All,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSpl,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
             }
          }
@@ -159888,6 +160946,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Classes:
       Fourth: true
     Locations:
@@ -159905,12 +160964,12 @@ Body:
       bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",7*(.@r/3);
       bonus2 bMagicAtkEle,Ele_All,4*(.@r/4);
       bonus bLongAtkRate,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSpl,1;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",10;
             bonus2 bSkillAtk,"SH_HOWLING_OF_CHUL_HO",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,1;
                bonus bSmatk,1;
             }
@@ -159952,6 +161011,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Classes:
       Fourth: true
     Locations:
@@ -160001,6 +161061,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Classes:
       Fourth: true
     Locations:
@@ -160029,14 +161090,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",5;
          bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",8;
             bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,1;
                bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",12;
                bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",12;
@@ -160083,14 +161144,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"SOA_EXORCISM_OF_MALICIOUS_SOUL",5;
          bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus2 bSkillAtk,"SOA_EXORCISM_OF_MALICIOUS_SOUL",8;
             bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,1;
                bonus2 bSkillAtk,"SOA_EXORCISM_OF_MALICIOUS_SOUL",12;
                bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",12;
@@ -160135,14 +161196,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",5;
          bonus2 bSkillAtk,"HN_JACK_FROST_NOVA",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",8;
             bonus2 bSkillAtk,"HN_JACK_FROST_NOVA",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,1;
                bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",12;
                bonus2 bSkillAtk,"HN_JACK_FROST_NOVA",12;
@@ -160186,16 +161247,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bMagicAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SP_CURSEEXPLOSION",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus bMatkRate,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bSmatk,(.@r/3);
                bonus bSpl,(.@r/3);
             }
@@ -160244,16 +161305,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bMagicAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SP_SWHOO",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus bMatkRate,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bSmatk,(.@r/3);
                bonus bSpl,(.@r/3);
             }
@@ -160271,6 +161332,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Classes:
       Fourth: true
     Locations:
@@ -160296,16 +161358,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bMagicAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SU_CN_METEOR",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus bMatkRate,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bSmatk,(.@r/3);
                bonus bSpl,(.@r/3);
             }
@@ -160322,6 +161384,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Classes:
       Fourth: true
     Locations:
@@ -160347,16 +161410,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SU_PICKYPECK",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -160374,6 +161437,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 5
@@ -160401,14 +161465,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_All,15;
             bonus2 bMagicAtkEle,Ele_Earth,15;
             bonus bSmatk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bSpl,3;
             }
@@ -160455,12 +161519,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_All,15;
             bonus bSmatk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bSpl,3;
             }
@@ -160504,6 +161568,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 5
@@ -160820,12 +161885,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"IQ_SECOND_FAITH",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"IQ_SECOND_FAITH",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,1;
                bonus2 bSkillAtk,"IQ_SECOND_FAITH",12;
             }
@@ -160864,12 +161929,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"IQ_EXPOSION_BLASTER",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"IQ_EXPOSION_BLASTER",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,1;
                bonus2 bSkillAtk,"IQ_EXPOSION_BLASTER",12;
             }
@@ -160912,13 +161977,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,2;
          bonus2 bSkillAtk,"IQ_THIRD_FLAME_BOMB",10;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bAddClass,Class_All,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"IQ_THIRD_FLAME_BOMB",10;
             }
          }
@@ -161028,16 +162093,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SR_TIGERCANNON",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -161078,16 +162143,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -161274,12 +162339,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -161327,13 +162392,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bShortAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -161365,12 +162430,12 @@ Body:
       bonus2 bSkillAtk,"IQ_SECOND_FAITH",7*(.@r/2);
       bonus2 bSkillAtk,"IQ_SECOND_JUDGEMENT",7*(.@r/2);
       bonus bShortAtkRate,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPow,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"IQ_SECOND_FAITH",10;
             bonus2 bSkillAtk,"IQ_SECOND_JUDGEMENT",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -161681,12 +162746,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"TR_METALIC_FURY",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus2 bSkillAtk,"TR_METALIC_FURY",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,1;
                bonus2 bSkillAtk,"TR_METALIC_FURY",12;
             }
@@ -161730,13 +162795,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,2;
          bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",10;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bAddClass,Class_All,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",10;
             }
          }
@@ -161850,16 +162915,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -161902,16 +162967,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bMagicAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"WM_METALICSOUND",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus bMatkRate,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bSmatk,(.@r/3);
                bonus bSpl,(.@r/3);
             }
@@ -162117,12 +163182,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_All,15;
             bonus bSmatk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bSpl,3;
             }
@@ -162156,12 +163221,12 @@ Body:
       bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",7*(.@r/2);
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",10*(.@r/3);
       bonus bLongAtkRate,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bCon,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",10;
             bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -162473,12 +163538,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"TR_METALIC_FURY",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus2 bSkillAtk,"TR_METALIC_FURY",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,1;
                bonus2 bSkillAtk,"TR_METALIC_FURY",12;
             }
@@ -162522,13 +163587,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,2;
          bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",10;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bAddClass,Class_All,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",10;
             }
          }
@@ -162642,16 +163707,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -162694,16 +163759,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bMagicAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"WM_METALICSOUND",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus bMatkRate,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bSmatk,(.@r/3);
                bonus bSpl,(.@r/3);
             }
@@ -162909,12 +163974,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_All,15;
             bonus bSmatk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bSpl,3;
             }
@@ -162948,12 +164013,12 @@ Body:
       bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",7*(.@r/2);
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",10*(.@r/3);
       bonus bLongAtkRate,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bCon,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",10;
             bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -163383,11 +164448,11 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bLongAtkRate,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,1;
                bonus2 bSkillAtk,"NC_ARMSCANNON",10;
             }
@@ -163429,14 +164494,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",5;
          bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WATER",8;
             bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_GROUND",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,2;
                bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",10;
                bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",10;
@@ -163487,13 +164552,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
          bonus2 bSkillAtk,"CD_PETITIO",10;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"CD_PETITIO",10;
             }
          }
@@ -163606,16 +164671,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"NC_VULCANARM",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -163657,16 +164722,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"GN_CART_TORNADO",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -163894,12 +164959,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_Holy,15;
             bonus bSmatk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bSpl,3;
             }
@@ -163947,12 +165012,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -163986,10 +165051,10 @@ Body:
       bonus bUnbreakableWeapon;
       bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",7*(.@r/3);
       bonus2 bMagicAtkEle,Ele_All,3*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSpl,2;
-         if (.@g>=2) {
-            if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_C) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
             }
          }
@@ -164335,12 +165400,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"DK_STORMSLASH",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"DK_STORMSLASH",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,2;
                bonus2 bSkillAtk,"DK_STORMSLASH",12;
             }
@@ -164382,13 +165447,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,2;
          bonus2 bSkillAtk,"DK_SERVANTWEAPON_ATK",10;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bAddClass,Class_All,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"DK_SERVANTWEAPON_ATK",10;
             }
          }
@@ -164463,16 +165528,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RK_WINDCUTTER",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -164590,13 +165655,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bShortAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -164644,14 +165709,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMaxHPrate,3;
          bonus bMaxSPrate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bMres,30;
             bonus bRes,30;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSubEle,Ele_All,15;
             }
          }
@@ -164968,12 +166033,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"SHC_IMPACT_CRATER",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"SHC_IMPACT_CRATER",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,1;
                bonus2 bSkillAtk,"SHC_IMPACT_CRATER",12;
             }
@@ -165016,13 +166081,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
          bonus2 bSkillAtk,"SHC_IMPACT_CRATER",10;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bDelayrate,-5;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"SHC_IMPACT_CRATER",10;
             }
          }
@@ -165132,16 +166197,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -165182,16 +166247,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"GC_COUNTERSLASH",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -165421,12 +166486,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bShortAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -165476,13 +166541,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bShortAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -165514,11 +166579,11 @@ Body:
       bonus2 bSkillAtk,"SHC_IMPACT_CRATER",6*(.@r/2);
       bonus2 bSkillAtk,"SHC_SAVAGE_IMPACT",7*(.@r/3);
       bonus bShortAtkRate,3*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPow,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"SHC_IMPACT_CRATER",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -165680,12 +166745,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"MT_AXE_STOMP",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"MT_AXE_STOMP",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,2;
                bonus2 bSkillAtk,"MT_AXE_STOMP",12;
             }
@@ -165729,13 +166794,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,2;
          bonus2 bSkillAtk,"MT_AXE_STOMP",10;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bAddClass,Class_All,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"MT_AXE_STOMP",10;
             }
          }
@@ -165749,6 +166814,11 @@ Body:
     Attack: 250
     Range: 1
     Slots: 2
+    Jobs:
+      Blacksmith: true
+    Classes:
+      All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -165883,13 +166953,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bShortAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -165922,11 +166992,11 @@ Body:
       bonus2 bSkillAtk,"MT_AXE_STOMP",7*(.@r/2);
       bonus2 bSkillAtk,"NC_AXETORNADO",8*(.@r/3);
       bonus bShortAtkRate,3*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPow,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"MT_AXE_STOMP",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -166138,12 +167208,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"DK_MADNESS_CRUSHER",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"DK_MADNESS_CRUSHER",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPow,2;
                bonus2 bSkillAtk,"DK_MADNESS_CRUSHER",12;
             }
@@ -166219,16 +167289,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RK_HUNDREDSPEAR",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -166664,14 +167734,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",5;
          bonus2 bSkillAtk,"AG_FROZEN_SLASH",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",8;
             bonus2 bSkillAtk,"AG_FROZEN_SLASH",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,2;
                bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",12;
                bonus2 bSkillAtk,"AG_FROZEN_SLASH",12;
@@ -166717,14 +167787,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"AG_STORM_CANNON",5;
          bonus2 bSkillAtk,"AG_ROCK_DOWN",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus2 bSkillAtk,"AG_STORM_CANNON",8;
             bonus2 bSkillAtk,"AG_ROCK_DOWN",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSpl,2;
                bonus2 bSkillAtk,"AG_STORM_CANNON",12;
                bonus2 bSkillAtk,"AG_ROCK_DOWN",12;
@@ -166770,14 +167840,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,2;
          bonus2 bSkillAtk,"AG_STRANTUM_TREMOR",10;
          bonus2 bSkillAtk,"AG_FLORAL_FLARE_ROAD",10;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bSmatk,1;
             bonus bMatkRate,3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"AG_STRANTUM_TREMOR",10;
                bonus2 bSkillAtk,"AG_FLORAL_FLARE_ROAD",10;
             }
@@ -166894,16 +167964,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bMagicAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"WL_COMET",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus bMatkRate,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bSmatk,(.@r/3);
                bonus bSpl,(.@r/3);
             }
@@ -166946,16 +168016,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bMagicAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"WL_SOULEXPANSION",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus bMatkRate,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bSmatk,(.@r/3);
                bonus bSpl,(.@r/3);
             }
@@ -167177,13 +168247,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_Fire,15;
             bonus2 bMagicAtkEle,Ele_Earth,15;
             bonus bSmatk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bSpl,3;
             }
@@ -167237,14 +168307,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_Ghost,15;
             bonus2 bMagicAtkEle,Ele_Water,15;
             bonus2 bMagicAtkEle,Ele_Wind,15;
             bonus bSmatk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bSpl,3;
             }
@@ -167279,12 +168349,12 @@ Body:
       bonus2 bSkillAtk,"AG_FROZEN_SLASH",6*(.@r/2);
       bonus2 bSkillAtk,"AG_CRYSTAL_IMPACT_ATK",5*(.@r/3);
       bonus2 bMagicAtkEle,Ele_All,3*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bSpl,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",10;
             bonus2 bSkillAtk,"AG_FROZEN_SLASH",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
             }
          }
@@ -167714,11 +168784,11 @@ Body:
       .@g = getenchantgrade();
       bonus bUnbreakableWeapon;
       bonus bLongAtkRate,4*(getrefine()/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bPow,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"SS_FUUMASHOUAKU",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -167782,16 +168852,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"KO_JYUMONJIKIRI",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -167833,16 +168903,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"KO_HUUMARANKA",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -167887,12 +168957,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -168438,12 +169508,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"ABC_FRENZY_SHOT",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"ABC_FRENZY_SHOT",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bCon,1;
                bonus2 bSkillAtk,"ABC_FRENZY_SHOT",12;
             }
@@ -168482,12 +169552,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bCon,1;
                bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",12;
             }
@@ -168526,12 +169596,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"WH_GALESTORM",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"WH_GALESTORM",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bCon,1;
                bonus2 bSkillAtk,"WH_GALESTORM",12;
             }
@@ -168570,12 +169640,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",8;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bCon,1;
                bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",12;
             }
@@ -168618,13 +169688,13 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
          bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",10;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bDelayrate,-5;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",10;
             }
          }
@@ -168770,16 +169840,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SC_TRIANGLESHOT",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -168821,16 +169891,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RA_ARROWSTORM",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -168871,16 +169941,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RA_AIMEDBOLT",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
             }
@@ -169191,12 +170261,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -169243,12 +170313,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -169298,12 +170368,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -169335,11 +170405,11 @@ Body:
       bonus2 bSkillAtk,"WH_GALESTORM",7*(.@r/2);
       bonus2 bSkillAtk,"RA_ARROWSTORM",10*(.@r/3);
       bonus bLongAtkRate,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bCon,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"WH_GALESTORM",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -169612,11 +170682,11 @@ Body:
       bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",7*(.@r/2);
       bonus2 bSkillAtk,"RL_FIREDANCE",10*(.@r/3);
       bonus bLongAtkRate,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bCon,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -169677,14 +170747,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",5;
          bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",3;
             bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bCon,1;
                bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",5;
                bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",5;
@@ -169727,16 +170797,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RL_FIREDANCE",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bCon,(.@r/3);
             }
@@ -169778,12 +170848,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -169959,11 +171029,11 @@ Body:
       bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",7*(.@r/2);
       bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",10*(.@r/3);
       bonus bLongAtkRate,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bCon,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -170025,14 +171095,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",5;
          bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",3;
             bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bCon,1;
                bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",5;
                bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",5;
@@ -170075,16 +171145,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bCon,(.@r/3);
             }
@@ -170127,12 +171197,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bMatkRate,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_Ghost,15;
             bonus bSmatk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bSmatk,2;
                bonus bSpl,3;
             }
@@ -170282,11 +171352,11 @@ Body:
       bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",7*(.@r/2);
       bonus2 bSkillAtk,"RL_BANISHING_BUSTER",10*(.@r/3);
       bonus bLongAtkRate,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bCon,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -170347,16 +171417,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RL_S_STORM",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bCon,(.@r/3);
             }
@@ -170401,12 +171471,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -170660,11 +171730,11 @@ Body:
       bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",7*(.@r/2);
       bonus2 bSkillAtk,"RL_R_TRIP",10*(.@r/3);
       bonus bLongAtkRate,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bCon,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -170725,14 +171795,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",5;
          bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",3;
             bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bCon,1;
                bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",5;
                bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",5;
@@ -170774,16 +171844,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RL_R_TRIP",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bCon,(.@r/3);
             }
@@ -170825,12 +171895,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }
@@ -170975,11 +172045,11 @@ Body:
       bonus2 bSkillAtk,"NW_WILD_FIRE",7*(.@r/2);
       bonus2 bSkillAtk,"RL_H_MINE",10*(.@r/3);
       bonus bLongAtkRate,4*(.@r/4);
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus bCon,2;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus2 bSkillAtk,"NW_WILD_FIRE",10;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
             }
          }
@@ -171041,14 +172111,14 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",5;
          bonus2 bSkillAtk,"NW_WILD_FIRE",5;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",3;
             bonus2 bSkillAtk,"NW_WILD_FIRE",3;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bCon,1;
                bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",5;
                bonus2 bSkillAtk,"NW_WILD_FIRE",5;
@@ -171090,16 +172160,16 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          if (.@r>=11) {
             bonus2 bAddEle,Ele_All,15;
          }
       }
-      if (.@g>=2) {
+      if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RL_D_TAIL",15;
-         if (.@g>=3) {
+         if (.@g >= ENCHANTGRADE_B) {
             bonus2 bAddClass,Class_All,7;
-            if (.@g>=4) {
+            if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bCon,(.@r/3);
             }
@@ -171141,12 +172211,12 @@ Body:
             }
          }
       }
-      if (.@g>=1) {
+      if (.@g >= ENCHANTGRADE_D) {
          bonus2 bAddClass,Class_All,3;
-         if (.@g>=2) {
+         if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
-            if (.@g>=3) {
+            if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
                bonus bPow,3;
             }

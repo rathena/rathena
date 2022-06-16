@@ -1597,7 +1597,7 @@ ra_temple,165,57,5	script	Niren#ss	915,{
 			mes "were too preoccupied";
 			mes "with other matters. In fact,";
 			mes "I haven't gotten the chance";
-			mes "to think of what do with him...";
+			mes "to think of what to do with him...";
 			next;
 			mes "[Niren]";
 			mes "I want to ask you to";

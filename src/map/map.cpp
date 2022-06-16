@@ -52,13 +52,13 @@
 
 using namespace rathena;
 
-char default_codepage[32] = "";
+std::string default_codepage = "";
 
 int map_server_port = 3306;
-char map_server_ip[64] = "127.0.0.1";
-char map_server_id[32] = "ragnarok";
-char map_server_pw[32] = "";
-char map_server_db[32] = "ragnarok";
+std::string map_server_ip = "127.0.0.1";
+std::string map_server_id = "ragnarok";
+std::string map_server_pw = "";
+std::string map_server_db = "ragnarok";
 Sql* mmysql_handle;
 Sql* qsmysql_handle; /// For query_sql
 
@@ -91,11 +91,11 @@ char roulette_table[32] = "db_roulette";
 char guild_storage_log_table[32] = "guild_storage_log";
 
 // log database
-char log_db_ip[64] = "127.0.0.1";
+std::string log_db_ip = "127.0.0.1";
 int log_db_port = 3306;
-char log_db_id[32] = "ragnarok";
-char log_db_pw[32] = "";
-char log_db_db[32] = "log";
+std::string log_db_id = "ragnarok";
+std::string log_db_pw = "";
+std::string log_db_db = "log";
 Sql* logmysql_handle;
 
 uint32 start_status_points = 48;
@@ -3742,40 +3742,33 @@ void map_removemapdb(struct map_data *m)
  *--------------------------------------*/
 int map_readallmaps (void)
 {
-	FILE* fp=NULL;
+	FILE* fp;
 	// Has the uncompressed gat data of all maps, so just one allocation has to be made
-	char *map_cache_buffer[2] = {
-		NULL,
-		NULL
-	};
-	char map_cache_decode_buffer[MAX_MAP_SIZE];
+	std::vector<char *> map_cache_buffer = {};
 
 	if( enable_grf )
 		ShowStatus("Loading maps (using GRF files)...\n");
 	else {
-		const char* mapcachefilepath[] = {
+		// Load the map cache files in reverse order to account for import
+		const std::vector<std::string> mapcachefilepath = {
+			"db/" DBIMPORT "/map_cache.dat",
 			"db/" DBPATH "map_cache.dat",
-			"db/" DBIMPORT "/map_cache.dat"
+			"db/map_cache.dat",
 		};
 
-		for( int i = 0; i < 2; i++ ){
-			ShowStatus( "Loading maps (using %s as map cache)...\n", mapcachefilepath[i] );
+		for(const auto &mapdat : mapcachefilepath) {
+			ShowStatus( "Loading maps (using %s as map cache)...\n", mapdat.c_str() );
 
-			if( ( fp = fopen(mapcachefilepath[i], "rb") ) == NULL ){
-				if( i == 0 ){
-					ShowFatalError( "Unable to open map cache file " CL_WHITE "%s" CL_RESET "\n", mapcachefilepath[i] );
-					exit(EXIT_FAILURE); //No use launching server if maps can't be read.
-				}else{
-					ShowWarning( "Unable to open map cache file " CL_WHITE "%s" CL_RESET "\n", mapcachefilepath[i] );
-					break;
-				}
+			if( ( fp = fopen(mapdat.c_str(), "rb")) == nullptr) {
+				ShowFatalError( "Unable to open map cache file " CL_WHITE "%s" CL_RESET "\n", mapdat.c_str());
+				continue;
 			}
 
 			// Init mapcache data. [Shinryo]
-			map_cache_buffer[i] = map_init_mapcache(fp);
+			map_cache_buffer.push_back(map_init_mapcache(fp));
 
-			if( !map_cache_buffer[i] ) {
-				ShowFatalError( "Failed to initialize mapcache data (%s)..\n", mapcachefilepath[i] );
+			if( !map_cache_buffer.back() ) {
+				ShowFatalError( "Failed to initialize mapcache data (%s)..\n", mapdat.c_str());
 				exit(EXIT_FAILURE);
 			}
 
@@ -3790,6 +3783,7 @@ int map_readallmaps (void)
 		bool success = false;
 		unsigned short idx = 0;
 		struct map_data *mapdata = &map[i];
+		char map_cache_decode_buffer[MAX_MAP_SIZE];
 
 		// show progress
 		ShowStatus("Loading maps [%i/%i]: %s" CL_CLL "\r", i, map_num, mapdata->name);
@@ -3799,14 +3793,9 @@ int map_readallmaps (void)
 			success = map_readgat(mapdata) != 0;
 		}else{
 			// try to load the map
-			// Read from import first, in case of override
-			if( map_cache_buffer[1] != NULL ){
-				success = map_readfromcache( mapdata, map_cache_buffer[1], map_cache_decode_buffer ) != 0;
-			}
-
-			// Nothing was found in import - try to find it in the main file
-			if( !success ){
-				success = map_readfromcache( mapdata, map_cache_buffer[0], map_cache_decode_buffer ) != 0;
+			for (const auto &cache : map_cache_buffer) {
+				if ((success = map_readfromcache(mapdata, cache, map_cache_decode_buffer)) != 0)
+					break;
 			}
 		}
 
@@ -3855,10 +3844,12 @@ int map_readallmaps (void)
 
 	if( !enable_grf ) {
 		// The cache isn't needed anymore, so free it. [Shinryo]
-		if( map_cache_buffer[1] != NULL ){
-			aFree(map_cache_buffer[1]);
+		auto it = map_cache_buffer.begin();
+
+		while (it != map_cache_buffer.end()) {
+			aFree(*it);
+			it = map_cache_buffer.erase(it);
 		}
-		aFree(map_cache_buffer[0]);
 	}
 
 	if (maps_removed)
@@ -4171,41 +4162,41 @@ int inter_config_read(const char *cfgName)
 		else
 		//Map Server SQL DB
 		if(strcmpi(w1,"map_server_ip")==0)
-			safestrncpy(map_server_ip, w2, sizeof(map_server_ip));
+			map_server_ip = w2;
 		else
 		if(strcmpi(w1,"map_server_port")==0)
 			map_server_port=atoi(w2);
 		else
 		if(strcmpi(w1,"map_server_id")==0)
-			safestrncpy(map_server_id, w2, sizeof(map_server_id));
+			map_server_id = w2;
 		else
 		if(strcmpi(w1,"map_server_pw")==0)
-			safestrncpy(map_server_pw, w2, sizeof(map_server_pw));
+			map_server_pw = w2;
 		else
 		if(strcmpi(w1,"map_server_db")==0)
-			safestrncpy(map_server_db, w2, sizeof(map_server_db));
+			map_server_db = w2;
 		else
 		if(strcmpi(w1,"default_codepage")==0)
-			safestrncpy(default_codepage, w2, sizeof(default_codepage));
+			default_codepage = w2;
 		else
 		if(strcmpi(w1,"use_sql_db")==0) {
 			db_use_sqldbs = config_switch(w2);
 			ShowStatus ("Using SQL dbs: %s\n",w2);
 		} else
 		if(strcmpi(w1,"log_db_ip")==0)
-			safestrncpy(log_db_ip, w2, sizeof(log_db_ip));
+			log_db_ip = w2;
 		else
 		if(strcmpi(w1,"log_db_id")==0)
-			safestrncpy(log_db_id, w2, sizeof(log_db_id));
+			log_db_id = w2;
 		else
 		if(strcmpi(w1,"log_db_pw")==0)
-			safestrncpy(log_db_pw, w2, sizeof(log_db_pw));
+			log_db_pw = w2;
 		else
 		if(strcmpi(w1,"log_db_port")==0)
 			log_db_port = atoi(w2);
 		else
 		if(strcmpi(w1,"log_db_db")==0)
-			safestrncpy(log_db_db, w2, sizeof(log_db_db));
+			log_db_db = w2;
 		else
 		if(strcmpi(w1,"start_status_points")==0)
 			start_status_points=atoi(w2);
@@ -4232,11 +4223,11 @@ int map_sql_init(void)
 	qsmysql_handle = Sql_Malloc();
 
 	ShowInfo("Connecting to the Map DB Server....\n");
-	if( SQL_ERROR == Sql_Connect(mmysql_handle, map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db) ||
-		SQL_ERROR == Sql_Connect(qsmysql_handle, map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db) )
+	if( SQL_ERROR == Sql_Connect(mmysql_handle, map_server_id.c_str(), map_server_pw.c_str(), map_server_ip.c_str(), map_server_port, map_server_db.c_str()) ||
+		SQL_ERROR == Sql_Connect(qsmysql_handle, map_server_id.c_str(), map_server_pw.c_str(), map_server_ip.c_str(), map_server_port, map_server_db.c_str()) )
 	{
-		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-			map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db);
+		ShowError("Couldn't connect with uname='%s',host='%s',port='%d',database='%s'\n",
+			map_server_id.c_str(), map_server_ip.c_str(), map_server_port, map_server_db.c_str());
 		Sql_ShowDebug(mmysql_handle);
 		Sql_Free(mmysql_handle);
 		Sql_ShowDebug(qsmysql_handle);
@@ -4245,10 +4236,10 @@ int map_sql_init(void)
 	}
 	ShowStatus("Connect success! (Map Server Connection)\n");
 
-	if( strlen(default_codepage) > 0 ) {
-		if ( SQL_ERROR == Sql_SetEncoding(mmysql_handle, default_codepage) )
+	if( !default_codepage.empty() ) {
+		if ( SQL_ERROR == Sql_SetEncoding(mmysql_handle, default_codepage.c_str()) )
 			Sql_ShowDebug(mmysql_handle);
-		if ( SQL_ERROR == Sql_SetEncoding(qsmysql_handle, default_codepage) )
+		if ( SQL_ERROR == Sql_SetEncoding(qsmysql_handle, default_codepage.c_str()) )
 			Sql_ShowDebug(qsmysql_handle);
 	}
 	return 0;
@@ -4277,18 +4268,18 @@ int log_sql_init(void)
 	// log db connection
 	logmysql_handle = Sql_Malloc();
 
-	ShowInfo("" CL_WHITE "[SQL]" CL_RESET ": Connecting to the Log Database " CL_WHITE "%s" CL_RESET " At " CL_WHITE "%s" CL_RESET "...\n",log_db_db,log_db_ip);
-	if ( SQL_ERROR == Sql_Connect(logmysql_handle, log_db_id, log_db_pw, log_db_ip, log_db_port, log_db_db) ){
-		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-			log_db_id, log_db_pw, log_db_ip, log_db_port, log_db_db);
+	ShowInfo("" CL_WHITE "[SQL]" CL_RESET ": Connecting to the Log Database " CL_WHITE "%s" CL_RESET " At " CL_WHITE "%s" CL_RESET "...\n",log_db_db.c_str(), log_db_ip.c_str());
+	if ( SQL_ERROR == Sql_Connect(logmysql_handle, log_db_id.c_str(), log_db_pw.c_str(), log_db_ip.c_str(), log_db_port, log_db_db.c_str()) ){
+		ShowError("Couldn't connect with uname='%s',host='%s',port='%d',database='%s'\n",
+			log_db_id.c_str(), log_db_ip.c_str(), log_db_port, log_db_db.c_str());
 		Sql_ShowDebug(logmysql_handle);
 		Sql_Free(logmysql_handle);
 		exit(EXIT_FAILURE);
 	}
-	ShowStatus("" CL_WHITE "[SQL]" CL_RESET ": Successfully '" CL_GREEN "connected" CL_RESET "' to Database '" CL_WHITE "%s" CL_RESET "'.\n", log_db_db);
+	ShowStatus("" CL_WHITE "[SQL]" CL_RESET ": Successfully '" CL_GREEN "connected" CL_RESET "' to Database '" CL_WHITE "%s" CL_RESET "'.\n", log_db_db.c_str());
 
-	if( strlen(default_codepage) > 0 )
-		if ( SQL_ERROR == Sql_SetEncoding(logmysql_handle, default_codepage) )
+	if( !default_codepage.empty() )
+		if ( SQL_ERROR == Sql_SetEncoding(logmysql_handle, default_codepage.c_str()) )
 			Sql_ShowDebug(logmysql_handle);
 
 	return 0;

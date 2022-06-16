@@ -3706,32 +3706,18 @@ Body:
             MaxValue: 20
             Rate: 100
           - Option: WEAPON_ATTR_WATER
-            MinValue: 0
-            MaxValue: 0
             Rate: 50
           - Option: WEAPON_ATTR_GROUND
-            MinValue: 0
-            MaxValue: 0
             Rate: 50
           - Option: WEAPON_ATTR_FIRE
-            MinValue: 0
-            MaxValue: 0
             Rate: 50
           - Option: WEAPON_ATTR_WIND
-            MinValue: 0
-            MaxValue: 0
             Rate: 50
           - Option: WEAPON_ATTR_SAINT
-            MinValue: 0
-            MaxValue: 0
             Rate: 50
           - Option: WEAPON_ATTR_DARKNESS
-            MinValue: 0
-            MaxValue: 0
             Rate: 50
           - Option: DAMAGE_SIZE_PERFECT
-            MinValue: 0
-            MaxValue: 0
             Rate: 5
       - Slot: 2
         Options:
@@ -3865,32 +3851,18 @@ Body:
             MaxValue: 20
             Rate: 100
           - Option: WEAPON_ATTR_WATER
-            MinValue: 0
-            MaxValue: 0
             Rate: 50
           - Option: WEAPON_ATTR_GROUND
-            MinValue: 0
-            MaxValue: 0
             Rate: 50
           - Option: WEAPON_ATTR_FIRE
-            MinValue: 0
-            MaxValue: 0
             Rate: 50
           - Option: WEAPON_ATTR_WIND
-            MinValue: 0
-            MaxValue: 0
             Rate: 50
           - Option: WEAPON_ATTR_SAINT
-            MinValue: 0
-            MaxValue: 0
             Rate: 50
           - Option: WEAPON_ATTR_DARKNESS
-            MinValue: 0
-            MaxValue: 0
             Rate: 50
           - Option: DAMAGE_SIZE_PERFECT
-            MinValue: 0
-            MaxValue: 0
             Rate: 5
       - Slot: 2
         Options:
@@ -6931,8 +6903,6 @@ Body:
             MinValue: 3
             MaxValue: 20
           - Option: BODY_INDESTRUCTIBLE
-            MinValue: 1
-            MaxValue: 1
           - Option: BODY_ATTR_WATER
             MinValue: 3
             MaxValue: 20
@@ -7595,8 +7565,6 @@ Body:
             MinValue: 1
             MaxValue: 5
           - Option: DAMAGE_SIZE_PERFECT
-            MinValue: 1
-            MaxValue: 1
           - Option: CLASS_IGNORE_MDEF_PERCENT_NORMAL
             MinValue: 30
             MaxValue: 60
@@ -7668,23 +7636,11 @@ Body:
             MinValue: 5
             MaxValue: 10
           - Option: BODY_INDESTRUCTIBLE
-            MinValue: 1
-            MaxValue: 1
           - Option: BODY_ATTR_WATER
-            MinValue: 1
-            MaxValue: 1
           - Option: BODY_ATTR_WIND
-            MinValue: 1
-            MaxValue: 1
           - Option: BODY_ATTR_DARKNESS
-            MinValue: 1
-            MaxValue: 1
           - Option: BODY_ATTR_FIRE
-            MinValue: 1
-            MaxValue: 1
           - Option: BODY_ATTR_GROUND
-            MinValue: 1
-            MaxValue: 1
   - Id: 119
     Group: GRAY_CHARCOAL_MELEE
     Slots:
@@ -7721,32 +7677,18 @@ Body:
             MinValue: 1
             MaxValue: 20
           - Option: DAMAGE_SIZE_PERFECT
-            MinValue: 1
-            MaxValue: 1
           - Option: VAR_PLUSASPD
             MinValue: 1
             MaxValue: 1
           - Option: VAR_PLUSASPDPERCENT
             MinValue: 5
             MaxValue: 10
-          - Option: DAMAGE_PROPERTY_WATER_TARGET
-            MinValue: 1
-            MaxValue: 1
-          - Option: DAMAGE_PROPERTY_GROUND_TARGET
-            MinValue: 1
-            MaxValue: 1
-          - Option: DAMAGE_PROPERTY_FIRE_TARGET
-            MinValue: 1
-            MaxValue: 1
-          - Option: DAMAGE_PROPERTY_WIND_TARGET
-            MinValue: 1
-            MaxValue: 1
-          - Option: DAMAGE_PROPERTY_SAINT_TARGET
-            MinValue: 1
-            MaxValue: 1
-          - Option: DAMAGE_PROPERTY_DARKNESS_TARGET
-            MinValue: 1
-            MaxValue: 1
+          - Option: WEAPON_ATTR_WATER
+          - Option: WEAPON_ATTR_GROUND
+          - Option: WEAPON_ATTR_FIRE
+          - Option: WEAPON_ATTR_WIND
+          - Option: WEAPON_ATTR_SAINT
+          - Option: WEAPON_ATTR_DARKNESS
       - Slot: 2
         Options:
           - Option: RACE_DAMAGE_NOTHING
@@ -7792,8 +7734,6 @@ Body:
             MinValue: 5
             MaxValue: 20
           - Option: WEAPON_INDESTRUCTIBLE
-            MinValue: 1
-            MaxValue: 1
   - Id: 120
     Group: GRAY_CHARCOAL_MAGIC
     Slots:
@@ -7921,8 +7861,6 @@ Body:
             MinValue: 1
             MaxValue: 20
           - Option: DAMAGE_SIZE_PERFECT
-            MinValue: 1
-            MaxValue: 1
           - Option: VAR_PLUSASPD
             MinValue: 1
             MaxValue: 1
@@ -7933,8 +7871,6 @@ Body:
             MinValue: 5
             MaxValue: 10
           - Option: WEAPON_INDESTRUCTIBLE
-            MinValue: 1
-            MaxValue: 1
       - Slot: 2
         Options:
           - Option: RACE_DAMAGE_NOTHING
@@ -8127,26 +8063,12 @@ Body:
             MinValue: 1
             MaxValue: 20
           - Option: WEAPON_ATTR_WATER
-            MinValue: 1
-            MaxValue: 1
           - Option: WEAPON_ATTR_GROUND
-            MinValue: 1
-            MaxValue: 1
           - Option: WEAPON_ATTR_FIRE
-            MinValue: 1
-            MaxValue: 1
           - Option: WEAPON_ATTR_WIND
-            MinValue: 1
-            MaxValue: 1
           - Option: WEAPON_ATTR_SAINT
-            MinValue: 1
-            MaxValue: 1
           - Option: WEAPON_ATTR_DARKNESS
-            MinValue: 1
-            MaxValue: 1
           - Option: DAMAGE_SIZE_PERFECT
-            MinValue: 1
-            MaxValue: 1
   - Id: 124
     Group: CHARLESTON_PARTS_R
     Slots:
@@ -8207,26 +8129,12 @@ Body:
             MinValue: 1
             MaxValue: 20
           - Option: WEAPON_ATTR_WATER
-            MinValue: 1
-            MaxValue: 1
           - Option: WEAPON_ATTR_GROUND
-            MinValue: 1
-            MaxValue: 1
           - Option: WEAPON_ATTR_FIRE
-            MinValue: 1
-            MaxValue: 1
           - Option: WEAPON_ATTR_WIND
-            MinValue: 1
-            MaxValue: 1
           - Option: WEAPON_ATTR_SAINT
-            MinValue: 1
-            MaxValue: 1
           - Option: WEAPON_ATTR_DARKNESS
-            MinValue: 1
-            MaxValue: 1
           - Option: DAMAGE_SIZE_PERFECT
-            MinValue: 1
-            MaxValue: 1
   - Id: 125
     Group: SHADOW_RANDOM_MIX
     Slots:
@@ -8608,8 +8516,6 @@ Body:
             MinValue: 1
             MaxValue: 10
           - Option: WEAPON_INDESTRUCTIBLE
-            MinValue: 1
-            MaxValue: 1
   - Id: 129
     Group: EP17_1_SPC08
     Slots:
@@ -8899,8 +8805,6 @@ Body:
             MinValue: 1
             MaxValue: 10
           - Option: WEAPON_INDESTRUCTIBLE
-            MinValue: 1
-            MaxValue: 1
   - Id: 132
     Group: MAGMA_ESSENCE
     Slots:
@@ -9331,8 +9235,6 @@ Body:
             MinValue: 1
             MaxValue: 10
           - Option: WEAPON_INDESTRUCTIBLE
-            MinValue: 1
-            MaxValue: 1
   - Id: 136
     Group: ANCIENT_HERO_WISDOM
     Slots:

@@ -4759,18 +4759,18 @@ Body:
 #    MaximumRefine: 10
 #    CardsAllowed: true
 #    TargetItems:
-#      - Item: aegis_400078
-#      - Item: aegis_400079
-#      - Item: aegis_400094
-#      - Item: aegis_400095
-#      - Item: aegis_400098
-#      - Item: aegis_400099
-#      - Item: aegis_400116
-#      - Item: aegis_400117
-#      - Item: aegis_400118
-#      - Item: aegis_400119
-#      - Item: aegis_400120
-#      - Item: aegis_400121
+#      - Item: BioWeapon_Helm_RK
+#      - Item: BioWeapon_Helm_LG
+#      - Item: BioWeapon_Helm_WL
+#      - Item: BioWeapon_Helm_SO
+#      - Item: BioWeapon_Helm_NC
+#      - Item: BioWeapon_Helm_GN
+#      - Item: BioWeapon_Helm_RA
+#      - Item: BioWeapon_Helm_WM
+#      - Item: BioWeapon_Helm_AB
+#      - Item: BioWeapon_Helm_SR
+#      - Item: BioWeapon_Helm_SC
+#      - Item: BioWeapon_Helm_GC
 #  - Item: Twins_Box_IL
 #    MinimumRefine: 4
 #    MaximumRefine: 9

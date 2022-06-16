@@ -29,6 +29,8 @@ struct guardian_data;
 #define MAX_MOB_DROP_TOTAL (MAX_MOB_DROP+MAX_MOB_DROP_ADD)
 #define MAX_MVP_DROP_TOTAL (MAX_MVP_DROP+MAX_MVP_DROP_ADD)
 
+#define MAX_MINCHASE 30	//Max minimum chase value to use for mobs.
+
 //Min time between AI executions
 const t_tick MIN_MOBTHINKTIME = 100;
 //Min time before mobs do a check to call nearby friends for help (or for slaves to support their master)
