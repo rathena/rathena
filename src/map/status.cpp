@@ -12535,7 +12535,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		sce->timer = INVALID_TIMER; // Infinite duration
 
 	if (calc_flag.any()) {
-		if (sd) {
+		if (sd != nullptr) {
 			switch(type) {
 				// Statuses that adjust HP/SP and heal after starting
 				case SC_BERSERK:
@@ -12544,7 +12544,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					status_calc_bl_(bl, calc_flag, SCO_FORCE);
 					break;
 				default:
-					status_calc_bl_(bl, calc_flag);
+					if (!sd->state.connect_new)
+						status_calc_bl_(bl, calc_flag);
 					break;
 			}
 		} else
@@ -12555,21 +12556,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	if (sc_isnew && scdb->state.any())
 		status_calc_state(bl, sc, scdb->state, true);
 
-	if (sd) {
-		if (sd->pd)
-			pet_sc_check(sd, type); // Skotlex: Pet Status Effect Healing
-		switch (type) {
-			case SC_BERSERK:
-			case SC_MERC_HPUP:
-			case SC_MERC_SPUP:
-				status_calc_pc(sd, SCO_FORCE);
-				break;
-			default:
-				if (!sd->state.connect_new)
-					status_calc_pc(sd, SCO_NONE);
-				break;
-		}
-	}
+	if (sd != nullptr && sd->pd != nullptr)
+		pet_sc_check(sd, type); // Skotlex: Pet Status Effect Healing
 
 	// 1st thing to execute when loading status
 	switch (type) {
