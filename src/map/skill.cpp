@@ -1297,10 +1297,9 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 				}
 
 				if (it.flag&ATF_TARGET)
-					sc_start(src, bl, it.sc, rate, 7, it.duration, 100);
-
+					status_change_start(src, bl, it.sc, rate, 7, 0, 0, 0, it.duration, SCSTART_NONE, 100);
 				if (it.flag&ATF_SELF)
-					sc_start(src, src, it.sc, rate, 7, it.duration, 100);
+					status_change_start(src, src, it.sc, rate, 7, 0, 0, 0, it.duration, SCSTART_NONE, 100);
 			}
 		}
 
@@ -1311,9 +1310,9 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 					continue;
 
 				if (it.target&ATF_TARGET)
-					sc_start(src, bl, it.sc, rate, 7, it.duration, 100);
+					status_change_start(src, bl, it.sc, rate, 7, 0, 0, 0, it.duration, SCSTART_NONE, 100);
 				if (it.target&ATF_SELF)
-					sc_start(src, src, it.sc, rate, 7, it.duration, 100);
+					status_change_start(src, src, it.sc, rate, 7, 0, 0, 0, it.duration, SCSTART_NONE, 100);
 			}
 			//"While the damage can be blocked by Pneuma, the chance to break armor remains", irowiki. [Cydh]
 			if (dmg_lv == ATK_BLOCK && skill_id == AM_ACIDTERROR) {
@@ -1527,7 +1526,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		break;
 
 	case NPC_GRANDDARKNESS:
-		sc_start(src, bl, SC_BLIND, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		sc_start(src, bl, SC_BLIND, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
 		attack_type |= BF_WEAPON;
 		break;
 
@@ -2504,10 +2503,9 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			}
 
 			if (it.flag&ATF_TARGET && src != bl)
-				sc_start(src, src, it.sc, rate, 7, it.duration, 100);
-
+				status_change_start(src, src, it.sc, rate, 7, 0, 0, 0, it.duration, SCSTART_NONE, 100);
 			if (it.flag&ATF_SELF && !status_isdead(bl))
-				sc_start(src, bl, it.sc, rate, 7, it.duration, 100);
+				status_change_start(src, bl, it.sc, rate, 7, 0, 0, 0, it.duration, SCSTART_NONE, 100);
 		}
 	}
 
@@ -2519,12 +2517,13 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		sc_start(src,src,SC_BLIND,2*skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 	case HFLI_SBR44:	//[orn]
-	case HVAN_EXPLOSION:
 		if(src->type == BL_HOM){
-			TBL_HOM *hd = (TBL_HOM*)src;
-			hd->homunculus.intimacy = (skill_id == HFLI_SBR44) ? 200 : 100; // hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION)
-			if (hd->master)
-				clif_send_homdata(hd->master,SP_INTIMATE,hd->homunculus.intimacy/100);
+			struct homun_data *hd = (struct homun_data *)src;
+			if (hd != nullptr) {
+				hd->homunculus.intimacy = hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION);
+				if (hd->master)
+					clif_send_homdata(hd->master,SP_INTIMATE,hd->homunculus.intimacy / 100);
+			}
 		}
 		break;
 	case CR_GRANDCROSS:
@@ -2699,6 +2698,13 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 --------------------------------------------------------------------------*/
 int skill_break_equip(struct block_list *src, struct block_list *bl, unsigned short where, int rate, int flag)
 {
+	status_change *src_sc = status_get_sc(src);
+
+	// Grant player skills/items the ability to "break" non-player equipment.
+	// WS_MELTDOWN is exempt from this check.
+	if (!battle_config.break_mob_equip && bl->type != BL_PC && !(src_sc && src_sc->data[SC_MELTDOWN]))
+		return 0;
+
 	const int where_list[6]     = { EQP_WEAPON, EQP_ARMOR, EQP_SHIELD, EQP_HELM, EQP_ACC, EQP_SHADOW_GEAR };
 	const enum sc_type scatk[6] = { SC_STRIPWEAPON, SC_STRIPARMOR, SC_STRIPSHIELD, SC_STRIPHELM, SC__STRIPACCESSORY, SC_SHADOW_STRIP };
 	const enum sc_type scdef[6] = { SC_CP_WEAPON, SC_CP_ARMOR, SC_CP_SHIELD, SC_CP_HELM, SC_NONE, SC_PROTECTSHADOWEQUIP };
@@ -8406,6 +8412,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			return 1;
 		}
 		status_damage(src, src, sstatus->max_hp,0,0,1, skill_id);
+		if(skill_id == HVAN_EXPLOSION && src->type == BL_HOM) {
+			struct homun_data *hd = (struct homun_data *)src;
+			if (hd != nullptr) {
+				hd->homunculus.intimacy = hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION);
+				if (hd->master)
+					clif_send_homdata(hd->master,SP_INTIMATE,hd->homunculus.intimacy / 100);
+			}
+		}
 		break;
 	case AL_ANGELUS:
 #ifdef RENEWAL
@@ -12072,7 +12086,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		else if (status_get_hp(bl) != status_get_max_hp(bl))
 			heal = ((2 * skill_lv - 1) * 10) * status_get_max_hp(bl) / 100;
 		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-		status_heal(bl, heal, 0, 1|2|4);
+		status_heal(bl, heal, 0, 0);
 	}
 		break;
 
@@ -14737,6 +14751,10 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 			case NJ_KAENSIN:
 				unit_val2 = group->val2;
 				break;
+			case CR_GRANDCROSS:
+			case NPC_GRANDDARKNESS:
+				unit_val1 = (skill_get_time(skill_id, skill_lv) / interval); //Default: 950/300 = 3 hits
+				break;
 			case WZ_ICEWALL:
 				unit_val1 = 200 + 200*skill_lv;
 				unit_val2 = map_getcell(src->m, ux, uy, CELL_GETTYPE);
@@ -15243,9 +15261,6 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 		if (diff < 0)
 			return 0;
 		ts->tick = tick+sg->interval;
-
-		if ((skill_id==CR_GRANDCROSS || skill_id==NPC_GRANDDARKNESS) && !battle_config.gx_allhit)
-			ts->tick += (t_tick)sg->interval*(map_count_oncell(bl->m,bl->x,bl->y,BL_CHAR,0)-1);
 	}
 
 	// Wall of Thorn damaged by Fire element unit [Cydh]
@@ -15340,6 +15355,12 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 							status_heal(ss,heal,0,0);
 						}
 					}
+					break;
+				case CR_GRANDCROSS:
+				case NPC_GRANDDARKNESS:
+					if(!battle_config.gx_allhit)
+						unit->val1--;
+					skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 					break;
 				default:
 					skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
@@ -15708,8 +15729,8 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 			break;
 
 		case UNT_POISONSMOKE:
-			if( battle_check_target(ss,bl,BCT_ENEMY) > 0 && !(tsc && tsc->data[sg->val2]) && rnd()%100 < 20 )
-				sc_start(ss,bl,(sc_type)sg->val2,100,sg->val3,skill_get_time2(GC_POISONINGWEAPON, 1));
+			if( battle_check_target(ss,bl,BCT_ENEMY) > 0 && !(tsc && tsc->data[sg->val2]) && rnd()%100 < 50 )
+				sc_start4(ss,bl,(sc_type)sg->val2,100,sg->val3,0,1,0,skill_get_time2(GC_POISONINGWEAPON, 1));
 			break;
 
 		case UNT_EPICLESIS:
@@ -20695,7 +20716,8 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 			}
 		}
 		else if (group->skill_id == WZ_METEOR || group->skill_id == SU_CN_METEOR || group->skill_id == SU_CN_METEOR2 || 
-			group->skill_id == AG_VIOLENT_QUAKE_ATK || group->skill_id == AG_ALL_BLOOM_ATK || group->skill_id == AG_ALL_BLOOM_ATK2) {
+			group->skill_id == AG_VIOLENT_QUAKE_ATK || group->skill_id == AG_ALL_BLOOM_ATK || group->skill_id == AG_ALL_BLOOM_ATK2 ||
+			((group->skill_id == CR_GRANDCROSS || group->skill_id == NPC_GRANDDARKNESS) && unit->val1 <= 0)) {
 			skill_delunit(unit);
 			return 0;
 		}

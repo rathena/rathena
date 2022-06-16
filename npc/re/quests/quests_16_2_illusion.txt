@@ -1917,9 +1917,9 @@ OnTouch:
 		cloakoffnpc( "Wizard#ilgf28", .@char_id );
 	}
 	else if (ill_vampire == 10) {
-		cloakoffnpc "Dracula#ilgf02", getcharid(0);
-		cloakoffnpc "King#ilgf01", getcharid(0);
-		cloakoffnpc "Wizard#ilgf02", getcharid(0);
+		cloakoffnpcself( "Dracula#ilgf02" );
+		cloakoffnpcself( "King#ilgf01" );
+		cloakoffnpcself( "Wizard#ilgf02" );
 	}
 	else if (ill_vampire == 12 || ill_vampire == 13) {
 		.@char_id = getcharid(0);
@@ -3334,9 +3334,9 @@ gef_d01_i,81,135,5	script	Wizard#ilgf01	4_F_BOMI,5,5,{
 		next;
 		mes "[Bomi]";
 		mes "You'd better hurry.";
-		cloakoffnpc "Dracula#ilgf02", getcharid(0);
-		cloakoffnpc "King#ilgf01", getcharid(0);
-		cloakoffnpc "Wizard#ilgf02", getcharid(0);
+		cloakoffnpcself( "Dracula#ilgf02" );
+		cloakoffnpcself( "King#ilgf01" );
+		cloakoffnpcself( "Wizard#ilgf02" );
 		delitem 25268,10;// Sticky_Blood
 		delitem 25269,10;// Mushroom_Sap
 		erasequest 14660;// Ingredients for Fake Blood
@@ -3345,9 +3345,9 @@ gef_d01_i,81,135,5	script	Wizard#ilgf01	4_F_BOMI,5,5,{
 		close;
 	}
 	if (ill_vampire < 12) {
-		cloakoffnpc "Dracula#ilgf02", getcharid(0);
-		cloakoffnpc "King#ilgf01", getcharid(0);
-		cloakoffnpc "Wizard#ilgf02", getcharid(0);
+		cloakoffnpcself( "Dracula#ilgf02" );
+		cloakoffnpcself( "King#ilgf01" );
+		cloakoffnpcself( "Wizard#ilgf02" );
 		mes "[Bomi]";
 		mes "I hope you'll find your friend soon. Why don't you check the catacombs in the south? He might be there.";
 		close;

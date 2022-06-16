@@ -22,12 +22,12 @@
 typedef struct AccountDB_SQL {
 	AccountDB vtable;    // public interface
 	Sql* accounts;       // SQL handle accounts storage
-	char   db_hostname[64]; // Doubled for long hostnames (bugreport:8003)
+	char   db_hostname[1024]; // Doubled for long hostnames (bugreport:8003)
 	uint16 db_port;
-	char   db_username[32];
-	char   db_password[32];
-	char   db_database[32];
-	char   codepage[32];
+	char   db_username[1024];
+	char   db_password[1024];
+	char   db_database[1024];
+	char   codepage[1024];
 	// other settings
 	bool case_sensitive;
 	//table name
@@ -131,8 +131,8 @@ static bool account_db_sql_init(AccountDB* self) {
 
 	if( SQL_ERROR == Sql_Connect(sql_handle, username, password, hostname, port, database) )
 	{
-                ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-                        username, password, hostname, port, database);
+                ShowError("Couldn't connect with uname='%s',host='%s',port='%d',database='%s'\n",
+                        username, hostname, port, database);
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(db->accounts);
 		db->accounts = NULL;

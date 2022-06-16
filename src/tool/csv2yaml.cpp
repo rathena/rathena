@@ -464,20 +464,20 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
-	if (!process("JOB_STATS", 1, root_paths, "job_exp", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("JOB_STATS", 2, root_paths, "job_exp", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 4, 1000 + 3, CLASS_COUNT * 2, &pc_readdb_job_exp, false);
 	}, "job_exp")) {
 		return 0;
 	}
 
-	if (!process("JOB_STATS", 1, root_paths, "job_basehpsp_db", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("JOB_STATS", 2, root_paths, "job_basehpsp_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 4, 4 + 500, CLASS_COUNT * 2, &pc_readdb_job_basehpsp, false);
 	}, "job_basepoints")) {
 		return 0;
 	}
 
 	job_txt_data(path_db_mode, path_db);
-	if (!process("JOB_STATS", 1, { path_db_mode }, "job_db1", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("JOB_STATS", 2, { path_db_mode }, "job_db1", [](const std::string& path, const std::string& name_ext) -> bool {
 #ifdef RENEWAL_ASPD
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 6 + MAX_WEAPON_TYPE, 6 + MAX_WEAPON_TYPE, CLASS_COUNT, &pc_readdb_job1, false);
 #else
@@ -488,7 +488,7 @@ int do_init( int argc, char** argv ){
 	}
 
 	job_txt_data(path_db_import, path_db_import);
-	if (!process("JOB_STATS", 1, { path_db_import }, "job_db1", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("JOB_STATS", 2, { path_db_import }, "job_db1", [](const std::string& path, const std::string& name_ext) -> bool {
 #ifdef RENEWAL_ASPD
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 6 + MAX_WEAPON_TYPE, 6 + MAX_WEAPON_TYPE, CLASS_COUNT, &pc_readdb_job1, false);
 #else
@@ -4390,9 +4390,9 @@ static bool pc_readdb_job1(char* fields[], int columns, int current) {
 	if (atoi(fields[2]) != 0)
 		body << YAML::Key << "HpFactor" << YAML::Value << atoi(fields[2]);
 	if (atoi(fields[3]) != 500)
-		body << YAML::Key << "HpMultiplicator" << YAML::Value << atoi(fields[3]);
+		body << YAML::Key << "HpIncrease" << YAML::Value << atoi(fields[3]);
 	if (atoi(fields[4]) != 100)
-		body << YAML::Key << "SpFactor" << YAML::Value << atoi(fields[4]);
+		body << YAML::Key << "SpIncrease" << YAML::Value << atoi(fields[4]);
 
 	body << YAML::Key << "BaseASPD";
 	body << YAML::BeginMap;

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20220414
+//= 20220421
 //===== Description: =========================================
 //= Explanation of the status.yml file and structure.
 //============================================================
@@ -201,7 +201,6 @@ Flags: Various status flags for specific status change events.
 	DislpayNpc            - Displays status effect on a NPC.
 	Debuff                - Status is considered a debuff. Used in combination with 'battle_config.debuff_on_logout'.
 	SetStand              - Sets player to standing state.
-	OverlapFail           - The status will fail to activate if the status is already active.
 	OverlapIgnoreLevel    - The status will successfully activate for any level if the status is already active.
 	FailedMado            - Cannot be applied if Madogear is active.
 	MadoCancel            - Cancels the status when mounting Madogear.

@@ -516,7 +516,8 @@
 	export_constant(MF_NOITEMCONSUMPTION);
 	export_constant(MF_NOSUNMOONSTARMIRACLE);
 	export_deprecated_constant3("mf_sumstarmiracle", MF_NOSUNMOONSTARMIRACLE, "MF_NOSUNMOONSTARMIRACLE");
-	export_constant(MF_NOMINEEFFECT);
+	export_constant(MF_FORCEMINEFFECT);
+	export_deprecated_constant3("mf_nomineeffect", MF_FORCEMINEFFECT, "MF_FORCEMINEFFECT");
 	export_constant(MF_NOLOCKON);
 	export_constant(MF_NOTOMB);
 	export_constant(MF_SKILL_DAMAGE);
@@ -1839,6 +1840,8 @@
 	export_constant(SC_DEEP_POISONING_OPTION);
 	export_constant(SC_POISON_SHIELD);
 	export_constant(SC_POISON_SHIELD_OPTION);
+	export_constant(SC_M_LIFEPOTION);
+	export_constant(SC_S_MANAPOTION);
 
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
@@ -5717,6 +5720,19 @@
 	export_constant(IG_GOLDEN_LORD_LAUNCHER_CUBE);
 	export_constant(IG_THE_BLACK_CUBE);
 	export_constant(IG_DEMON_SLAYER_SHOT_CUBE);
+	export_constant(IG_RUNE_CRAFT_MATERIALS);
+	export_constant(IG_ELEMENTAL_CONVERTER);
+	export_constant(IG_POISONS);
+	export_constant(IG_BLACKSMITH);
+	export_constant(IG_POTION_CRAFT_MATERIALS);
+	export_constant(IG_KUNAI_BOX);
+	export_constant(IG_BULLET_CASE);
+	export_constant(IG_SOUL_LINKER);
+	export_constant(IG_ELEMENTAL_STONES);
+	export_constant(IG_SHADOW_CUBE_ARMOR);
+	export_constant(IG_SHADOW_CUBE_SHIELD);
+	export_constant(IG_SHADOW_CUBE_SHOES);
+	export_constant(IG_SHADOW_CUBE_WEAPON);
 	export_constant(IG_BS_ITEM_M_S_52);
 	export_constant(IG_BS_ITEM_M_S_53);
 	export_constant(IG_BS_ITEM_M_S_54);
@@ -8984,7 +9000,6 @@
 	export_constant(SCF_REMOVEONCHANGEMAP);
 	export_constant(SCF_REMOVEONMAPWARP);
 	export_constant(SCF_REMOVECHEMICALPROTECT);
-	export_constant(SCF_OVERLAPFAIL);
 	export_constant(SCF_OVERLAPIGNORELEVEL);
 	export_constant(SCF_SENDOPTION);
 	export_constant(SCF_ONTOUCH);
@@ -9010,6 +9025,14 @@
 	export_constant(SCF_REMOVEONUNEQUIP);
 	export_constant(SCF_REMOVEONUNEQUIPWEAPON);
 	export_constant(SCF_REMOVEONUNEQUIPARMOR);
+
+	/* enchantgrades */
+	export_constant(ENCHANTGRADE_NONE);
+	export_constant(ENCHANTGRADE_D);
+	export_constant(ENCHANTGRADE_C);
+	export_constant(ENCHANTGRADE_B);
+	export_constant(ENCHANTGRADE_A);
+	export_constant(MAX_ENCHANTGRADE);
 
 	#undef export_constant
 	#undef export_constant2

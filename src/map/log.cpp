@@ -86,7 +86,10 @@ static char log_picktype2char(e_log_pick_type type)
 		case LOG_TYPE_QUEST:			return 'Q';  // (Q)uest Item
 		case LOG_TYPE_PRIVATE_AIRSHIP:	return 'H';  // Private Airs(H)ip
 		case LOG_TYPE_BARTER:			return 'J';  // Barter Shop
-		case LOG_TYPE_LAPHINE:			return 'W'; // Laphine UI
+		case LOG_TYPE_LAPHINE:			return 'W';  // Laphine UI
+		case LOG_TYPE_ENCHANTGRADE:		return '0';  // Enchantgrade UI
+		case LOG_TYPE_REFORM:			return '1';  // Reform UI
+		case LOG_TYPE_ENCHANT:			return '2';  // Echant UI
 	}
 
 	// should not get here, fallback
