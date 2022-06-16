@@ -14888,8 +14888,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1,
 			skill_castend_damage_id);
 		if (!(flag & 1)) {
-			skill_addtimerskill(src, tick + 300, 0, x, y, skill_id, skill_lv, 0, flag | 1);
-			skill_addtimerskill(src, tick + 600, 0, x, y, skill_id, skill_lv, 0, flag | 3);
+			skill_addtimerskill(src, tick + 300, 0, x, y, skill_id, skill_lv, 0, flag | 1 | SKILL_NOCONSUME_REQ);
+			skill_addtimerskill(src, tick + 600, 0, x, y, skill_id, skill_lv, 0, flag | 3 | SKILL_NOCONSUME_REQ);
 		}
 		break;
 	case NW_BASIC_GRENADE:
@@ -18462,7 +18462,8 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			break;
 		case ST_SHIELD:
 			if(sd->status.shield <= 0) {
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+				//TODO: will this change from USESKILL_FAIL_LEVEL cause problems in older clients? [Muh]
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_NEED_SHIELD,0);
 				return false;
 			}
 			break;
