@@ -5841,24 +5841,33 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					if (sd && pc_search_inventory(sd, skill_db.find(SU_LUNATICCARROTBEAT)->require.itemid[0]) >= 0)
 						skill_id = SU_LUNATICCARROTBEAT2;
 					break;
-
+				case DK_SERVANT_W_PHANTOM:
+					// Jump to the target before attacking.
+					if (skill_check_unit_movepos(5, src, bl->x, bl->y, 0, 1))
+						skill_blown(src, src, 1, (map_calc_dir(bl, src->x, src->y) + 4) % 8, BLOWN_NONE);
+					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);// Trigger animation on servants.
+					// Deal no damage if no Servant Sign on Enemy
+					if( tsc == nullptr || tsc->data[SC_SERVANT_SIGN] == nullptr || tsc->data[SC_SERVANT_SIGN]->val1 != src->id ){
+						map_freeblock_unlock();
+						return 0;
+					}
+					break;
 				case SHC_SAVAGE_IMPACT:
 					if (sc && sc->data[SC_CLOAKINGEXCEED])
 						skill_area_temp[0] = 2;
 					status_change_end(src, SC_CLOAKINGEXCEED, INVALID_TIMER);
-				case DK_SERVANT_W_PHANTOM:
 				case SHC_FATAL_SHADOW_CROW:
 					// Jump to the target before attacking.
 					if (skill_check_unit_movepos(5, src, bl->x, bl->y, 0, 1))
 						skill_blown(src, src, 1, (map_calc_dir(bl, src->x, src->y) + 4) % 8, BLOWN_NONE);
 					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);// Trigger animation on servants.
-					sc_start(src,src,SC_RUSH_QUAKE2,100,skill_lv,skill_get_time2(skill_id,skill_lv));
 					break;
 				case MT_RUSH_QUAKE:
 					// Jump to the target before attacking.
 					if (skill_check_unit_movepos(5, src, bl->x, bl->y, 0, 1))
 						skill_blown(src, src, 1, (map_calc_dir(bl, src->x, src->y) + 4) % 8, BLOWN_NONE);
 					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);// Trigger animation on servants.
+					clif_blown(src);
 					//TODO: does this buff start before or after dealing damage? [Muh]
 					sc_start(src,src,SC_RUSH_QUAKE2,100,skill_lv,skill_get_time2(skill_id,skill_lv));
 					break;
