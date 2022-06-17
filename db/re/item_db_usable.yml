@@ -10970,6 +10970,8 @@ Body:
     Weight: 100
     Flags:
       BuyingStore: true
+    Script: |
+      getgroupitem(IG_Splendid_Box2);
   - Id: 12609
     AegisName: Old_Ore_Box
     Name: Old Ore Box
