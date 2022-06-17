@@ -5368,13 +5368,13 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case SHC_SAVAGE_IMPACT:
 			skillratio += -100 + 90 * skill_lv + 5 * sstatus->pow;
-			if (sc && sc->data[SC_CLOAKINGEXCEED])
+			if (sc && sc->data[SC_SHADOW_EXCEED])
 				skillratio += 20 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 		case SHC_ETERNAL_SLASH:
 			skillratio += -100 + 265 * skill_lv + 2 * sstatus->pow;
-			if (sc && sc->data[SC_CLOAKINGEXCEED])
+			if (sc && sc->data[SC_SHADOW_EXCEED])
 				skillratio += 100 * skill_lv + sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
@@ -6691,8 +6691,7 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 					wd.div_ = sc->data[SC_ROLLINGCUTTER]->val1;
 				break;
 			case SHC_SAVAGE_IMPACT:
-				if (sc && sc->data[SC_CLOAKINGEXCEED])
-					wd.div_ = 5;
+				wd.div_ = wd.div_ + wd.miscflag;
 				break;
 			case MT_AXE_STOMP:
 				if (sd && sd->status.weapon == W_2HAXE)
@@ -9722,35 +9721,34 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 
 	if (sc && sc->data[SC_AUTO_FIRING_LAUNCHER]) {
 		uint16 skill_lv = 0;
-		int r = rnd() % 100;
 		switch (sc->data[SC_AUTO_FIRING_LAUNCHER]->val1) {
 			case 1:
-				if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && r < 6)
-					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag);
+				if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && rnd() % 100 < 6)
+					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
 				break;
 			case 2:
-				if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && r < 7)
-					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag);
+				if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && rnd() % 100 < 7)
+					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
 				break;
 			case 3:
-				if ((skill_lv = pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE)) && r < 3)
-					skill_castend_pos2(src, target->x, target->y, NW_HASTY_FIRE_IN_THE_HOLE, skill_lv, tick, flag);
-				else if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && r < 11)
-					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag);
+				if ((skill_lv = pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE)) && rnd() % 100 < 3)
+					skill_castend_pos2(src, target->x, target->y, NW_HASTY_FIRE_IN_THE_HOLE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
+				if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && rnd() % 100 < 8)
+					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
 				break;
 			case 4:
-				if ((skill_lv = pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE)) && r < 5)
-					skill_castend_pos2(src, target->x, target->y, NW_HASTY_FIRE_IN_THE_HOLE, skill_lv, tick, flag);
-				else if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && r < 14)
-					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag);
+				if ((skill_lv = pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE)) && rnd() % 100 < 5)
+					skill_castend_pos2(src, target->x, target->y, NW_HASTY_FIRE_IN_THE_HOLE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
+				if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && rnd() % 100 < 9)
+					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
 				break;
 			case 5:
-				if ((skill_lv = pc_checkskill(sd, NW_GRENADES_DROPPING)) && r < 3)
-					skill_castend_pos2(src, target->x, target->y, NW_GRENADES_DROPPING, skill_lv, tick, flag);
-				else if ((skill_lv = pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE)) && r < 10)
-					skill_castend_pos2(src, target->x, target->y, NW_HASTY_FIRE_IN_THE_HOLE, skill_lv, tick, flag);
-				else if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && r < 20)
-					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag);
+				if ((skill_lv = pc_checkskill(sd, NW_GRENADES_DROPPING)) && rnd() % 100 < 3)
+					skill_castend_pos2(src, target->x, target->y, NW_GRENADES_DROPPING, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
+				if ((skill_lv = pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE)) && rnd() % 100 < 7)
+					skill_castend_pos2(src, target->x, target->y, NW_HASTY_FIRE_IN_THE_HOLE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
+				if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && rnd() % 100 < 10)
+					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
 				break;
 		}
 	}
