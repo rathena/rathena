@@ -14814,6 +14814,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -14863,6 +14864,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -14883,6 +14885,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -14905,6 +14908,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -14927,6 +14931,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -14951,6 +14956,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 1
@@ -15053,6 +15059,7 @@ Body:
     Slots: 3
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -15076,6 +15083,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -15105,6 +15113,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -15134,6 +15143,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -15162,6 +15172,7 @@ Body:
     Slots: 3
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -15185,6 +15196,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -15212,6 +15224,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -15239,6 +15252,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -15294,6 +15308,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -66962,6 +66977,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -66999,6 +67015,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -67283,6 +67300,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -67301,6 +67319,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -67427,6 +67446,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -81864,6 +81884,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -84095,6 +84116,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -86778,6 +86800,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -98295,6 +98318,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -98314,6 +98338,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -98335,6 +98360,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -103270,6 +103296,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -103287,6 +103314,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -103435,6 +103463,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -103456,6 +103485,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -103477,6 +103507,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -109376,6 +109407,7 @@ Body:
     Type: Shadowgear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 1
@@ -109400,6 +109432,7 @@ Body:
     Type: Shadowgear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 1
@@ -109965,6 +109998,7 @@ Body:
     Buy: 10
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 1
@@ -109986,6 +110020,7 @@ Body:
     Buy: 10
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 1
@@ -111460,6 +111495,7 @@ Body:
     Buy: 10
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 100
@@ -111476,6 +111512,7 @@ Body:
     Buy: 10
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 100
@@ -111491,6 +111528,7 @@ Body:
     Buy: 10
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 100
@@ -111507,6 +111545,7 @@ Body:
     Buy: 10
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 100
@@ -115426,6 +115465,7 @@ Body:
     Type: ShadowGear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -115447,6 +115487,7 @@ Body:
     Type: ShadowGear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -115459,6 +115500,7 @@ Body:
     Type: ShadowGear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -115471,6 +115513,7 @@ Body:
     Type: ShadowGear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -115490,6 +115533,7 @@ Body:
     Type: ShadowGear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -115503,6 +115547,7 @@ Body:
     Type: ShadowGear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -115515,6 +115560,7 @@ Body:
     Type: ShadowGear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -115534,6 +115580,7 @@ Body:
     Type: ShadowGear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -115547,6 +115594,7 @@ Body:
     Type: ShadowGear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -115559,6 +115607,7 @@ Body:
     Type: ShadowGear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -115592,6 +115641,7 @@ Body:
     Type: ShadowGear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -115604,6 +115654,7 @@ Body:
     Type: ShadowGear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -116817,6 +116868,7 @@ Body:
     Type: Shadowgear
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -117820,6 +117872,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -117847,6 +117900,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -118029,6 +118083,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -118056,6 +118111,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -118150,6 +118206,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -118298,6 +118355,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -118328,6 +118386,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -118398,6 +118457,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -118529,6 +118589,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -118770,6 +118831,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -118958,6 +119020,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -122374,6 +122437,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -122390,6 +122454,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -122406,6 +122471,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -122576,6 +122642,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -122598,6 +122665,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -122620,6 +122688,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -122642,6 +122711,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -122664,6 +122734,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -122686,6 +122757,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -122708,6 +122780,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -122730,6 +122803,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -122752,6 +122826,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -122774,6 +122849,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -122797,6 +122873,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -122820,6 +122897,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -140897,6 +140975,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Head_Top: true
     ArmorLevel: 2
@@ -140936,6 +141015,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Head_Top: true
     ArmorLevel: 2
@@ -143422,6 +143502,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -143451,6 +143532,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -144556,6 +144638,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -144585,6 +144668,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -145626,6 +145710,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -145655,6 +145740,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -154000,6 +154086,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Classes:
       Fourth: true
     Locations:
@@ -159132,6 +159219,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -159164,6 +159252,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -159266,6 +159355,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -159479,6 +159569,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -159811,6 +159902,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -159844,6 +159936,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -160048,6 +160141,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -160208,6 +160302,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -160238,6 +160333,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -160345,6 +160441,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -160385,6 +160482,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -160596,6 +160694,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -160639,6 +160738,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -160846,6 +160946,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Classes:
       Fourth: true
     Locations:
@@ -160910,6 +161011,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Classes:
       Fourth: true
     Locations:
@@ -160959,6 +161061,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Classes:
       Fourth: true
     Locations:
@@ -161229,6 +161332,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Classes:
       Fourth: true
     Locations:
@@ -161280,6 +161384,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Classes:
       Fourth: true
     Locations:
@@ -161332,6 +161437,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 5
@@ -161462,6 +161568,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
+      Spirit_Handler: true
     Locations:
       Right_Hand: true
     WeaponLevel: 5
