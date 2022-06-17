@@ -1165,6 +1165,14 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 			status_change_end(target, SC_GUARDIAN_S, INVALID_TIMER);
 	}
 
+	// Weapon Blocking can be triggered while the above statuses are active.
+	if ((sce = sc->data[SC_WEAPONBLOCKING]) && flag & (BF_SHORT | BF_WEAPON) && rnd() % 100 < sce->val2) {
+		clif_skill_nodamage(target, src, GC_WEAPONBLOCKING, sce->val1, 1);
+		sc_start(src, target, SC_WEAPONBLOCK_ON, 100, src->id, skill_get_time2(GC_WEAPONBLOCKING, sce->val1));
+		d->dmg_lv = ATK_BLOCK;
+		return false;
+	}
+
 	if (damage == 0)
 		return false;
 
@@ -1236,13 +1244,6 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 			d->dmg_lv = ATK_BLOCK;
 			return false;
 		}
-	}
-
-	if ((sce = sc->data[SC_WEAPONBLOCKING]) && flag&(BF_SHORT | BF_WEAPON) && rnd() % 100 < sce->val2) {
-		clif_skill_nodamage(target, src, GC_WEAPONBLOCKING, sce->val1, 1);
-		sc_start(src, target, SC_WEAPONBLOCK_ON, 100, src->id, skill_get_time2(GC_WEAPONBLOCKING, sce->val1));
-		d->dmg_lv = ATK_BLOCK;
-		return false;
 	}
 
 	if ((sce = sc->data[SC_MILLENNIUMSHIELD]) && sce->val2 > 0 && damage > 0) {
