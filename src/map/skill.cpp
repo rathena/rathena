@@ -5812,6 +5812,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				case SU_SCRATCH:
 				case BO_MAYHEMIC_THORNS:
 				case DK_DRAGONIC_BREATH:
+				case DK_HACKANDSLASHER:
 				case MT_SPARK_BLASTER:
 				case SOA_TALISMAN_OF_FOUR_BEARING_GOD:
 				case HN_JUPITEL_THUNDER_STORM:
