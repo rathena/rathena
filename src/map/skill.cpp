@@ -8641,6 +8641,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case LG_RAYOFGENESIS:
 	case NPC_RAYOFGENESIS:
 	case MH_THE_ONE_FIGHTER_RISES:
+	case MH_HEILIGE_PFERD:
 	case KO_HAPPOKUNAI:
 	case RL_FIREDANCE:
 	case RL_R_TRIP:
