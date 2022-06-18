@@ -38242,6 +38242,9 @@ Body:
     Script: |
       bonus bMaxSP,-300;
       skill "MG_SIGHT",1;
+      bonus2 bAddMonsterDropItem,970,50;
+      bonus2 bAddMonsterDropItem,971,50;
+      bonus2 bAddMonsterDropItem,972,50;
     UnEquipScript: |
       sc_end SC_SIGHT;
   - Id: 2977
