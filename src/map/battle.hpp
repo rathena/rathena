@@ -103,6 +103,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damage *d,int64 damage,uint16 skill_id,uint16 skill_lv);
 int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 damage,uint16 skill_id,int flag);
 int64 battle_calc_bg_damage(struct block_list *src,struct block_list *bl,int64 damage,uint16 skill_id,int flag);
+int64 battle_calc_pk_damage(block_list &src, block_list &bl, int64 damage, uint16 skill_id, int flag);
 int64 battle_calc_tb_damage(struct block_list *src,struct block_list *bl,int64 damage,uint16 skill_id,int flag, bool is_ultima);
 int64 battle_calc_tb2_damage(struct block_list *src,struct block_list *bl,int64 damage,uint16 skill_id,int flag, bool is_ultima);
 int64 battle_calc_tb3_damage(struct block_list *src,struct block_list *bl,int64 damage,uint16 skill_id,int flag, bool is_ultima);
