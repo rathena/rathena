@@ -98197,25 +98197,326 @@ Body:
 #    AegisName: G_SINS_WISDOM
 #  - Id: 20919
 #    AegisName: CARAT_TWEVENT
-#  - Id: 20920
-#    AegisName: CHIMERA_LAVA
-#  - Id: 20921
-#    AegisName: CHIMERA_FULGOR
-#  - Id: 20922
-#    AegisName: CHIMERA_NAPEO
-#  - Id: 20923
-#    AegisName: CHIMERA_GALENSIS
-#  - Id: 20924
-#    AegisName: CHIMERA_AMITERA
-#  - Id: 20925
-#    AegisName: CHIMERA_LITUS
-#  - Id: 20926
-#    AegisName: CHIMERA_FILLIA
-#  - Id: 20927
-#    AegisName: CHIMERA_VANILAQUS
-#  - Id: 20928
-#    AegisName: CHIMERA_THEONE
-#    DamageTaken: 10
+  - Id: 20920
+    AegisName: CHIMERA_LAVA
+    Name: Lavaeter
+    Level: 243
+    Hp: 9064251
+    BaseExp: 854120
+    JobExp: 675400
+    Attack: 6610
+    Attack2: 3200
+    Defense: 310
+    MagicDefense: 130
+    Str: 201
+    Agi: 131
+    Vit: 140
+    Int: 100
+    Dex: 248
+    Luk: 66
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 170
+    AttackDelay: 1020
+    AttackMotion: 620
+    DamageMotion: 620
+    Ai: 09
+    Modes:
+      ChangeChase: true
+    Drops:
+      - Item: aegis_300258
+        Rate: 1
+        StealProtected: true
+  - Id: 20921
+    AegisName: CHIMERA_FULGOR
+    Name: Fulgor
+    Level: 244
+    Hp: 8900729
+    BaseExp: 800000
+    JobExp: 640000
+    Attack: 6322
+    Attack2: 3145
+    Defense: 305
+    MagicDefense: 124
+    Str: 200
+    Agi: 198
+    Vit: 100
+    Int: 114
+    Dex: 254
+    Luk: 47
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 170
+    AttackDelay: 1047
+    AttackMotion: 640
+    DamageMotion: 632
+    Ai: 09
+    Modes:
+      ChangeChase: true
+    Drops:
+      - Item: aegis_300259
+        Rate: 1
+        StealProtected: true
+  - Id: 20922
+    AegisName: CHIMERA_NAPEO
+    Name: Napeo
+    Level: 244
+    Hp: 8700729
+    BaseExp: 810500
+    JobExp: 632000
+    Attack: 6010
+    Attack2: 3054
+    Defense: 303
+    MagicDefense: 120
+    Str: 133
+    Agi: 144
+    Vit: 109
+    Int: 195
+    Dex: 248
+    Luk: 77
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Wind
+    ElementLevel: 3
+    WalkSpeed: 170
+    AttackDelay: 1011
+    AttackMotion: 624
+    DamageMotion: 610
+    Ai: 09
+    Modes:
+      ChangeChase: true
+    Drops:
+      - Item: aegis_300260
+        Rate: 1
+        StealProtected: true
+  - Id: 20923
+    AegisName: CHIMERA_GALENSIS
+    Name: Galensis
+    Level: 244
+    Hp: 9300729
+    BaseExp: 894560
+    JobExp: 741200
+    Attack: 6400
+    Attack2: 2741
+    Defense: 310
+    MagicDefense: 130
+    Str: 211
+    Agi: 148
+    Vit: 100
+    Int: 98
+    Dex: 265
+    Luk: 85
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Earth
+    ElementLevel: 3
+    WalkSpeed: 170
+    AttackDelay: 960
+    AttackMotion: 614
+    DamageMotion: 623
+    Ai: 09
+    Modes:
+      ChangeChase: true
+    Drops:
+      - Item: aegis_300261
+        Rate: 1
+        StealProtected: true
+  - Id: 20924
+    AegisName: CHIMERA_AMITERA
+    Name: Amitera
+    Level: 227
+    Hp: 5814712
+    BaseExp: 687400
+    JobExp: 487000
+    Attack: 5200
+    Attack2: 2500
+    Defense: 266
+    MagicDefense: 112
+    Str: 180
+    Agi: 133
+    Vit: 115
+    Int: 108
+    Dex: 237
+    Luk: 49
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Earth
+    ElementLevel: 3
+    WalkSpeed: 170
+    AttackDelay: 1050
+    AttackMotion: 653
+    DamageMotion: 611
+    Ai: 09
+    Modes:
+      ChangeChase: true
+    Drops:
+      - Item: aegis_300254
+        Rate: 1
+        StealProtected: true
+  - Id: 20925
+    AegisName: CHIMERA_LITUS
+    Name: Litus
+    Level: 228
+    Hp: 6140768
+    BaseExp: 658000
+    JobExp: 500000
+    Attack: 5000
+    Attack2: 2865
+    Defense: 250
+    MagicDefense: 102
+    Str: 140
+    Agi: 125
+    Vit: 109
+    Int: 210
+    Dex: 235
+    Luk: 28
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Wind
+    ElementLevel: 3
+    WalkSpeed: 170
+    AttackDelay: 1100
+    AttackMotion: 650
+    DamageMotion: 625
+    Ai: 09
+    Modes:
+      ChangeChase: true
+    Drops:
+      - Item: aegis_300255
+        Rate: 1
+        StealProtected: true
+  - Id: 20926
+    AegisName: CHIMERA_FILLIA
+    Name: Fillia
+    Level: 229
+    Hp: 5766824
+    BaseExp: 689500
+    JobExp: 500000
+    Attack: 5144
+    Attack2: 2187
+    Defense: 240
+    MagicDefense: 104
+    Str: 201
+    Agi: 166
+    Vit: 110
+    Int: 99
+    Dex: 250
+    Luk: 47
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 170
+    AttackDelay: 950
+    AttackMotion: 640
+    DamageMotion: 618
+    Ai: 09
+    Modes:
+      ChangeChase: true
+    Drops:
+      - Item: aegis_300256
+        Rate: 1
+        StealProtected: true
+  - Id: 20927
+    AegisName: CHIMERA_VANILAQUS
+    Name: Vanilaqus
+    Level: 230
+    Hp: 6092880
+    BaseExp: 700000
+    JobExp: 475000
+    Attack: 4780
+    Attack2: 5541
+    Defense: 250
+    MagicDefense: 100
+    Str: 121
+    Agi: 147
+    Vit: 110
+    Int: 268
+    Dex: 222
+    Luk: 50
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 170
+    AttackDelay: 1087
+    AttackMotion: 645
+    DamageMotion: 633
+    Ai: 09
+    Modes:
+      ChangeChase: true
+    Drops:
+      - Item: aegis_300257
+        Rate: 1
+        StealProtected: true
+  - Id: 20928
+    AegisName: CHIMERA_THEONE
+    Name: The One
+    Level: 245
+    Hp: 95000000
+    BaseExp: 8542600
+    JobExp: 7505000
+    Attack: 13540
+    Attack2: 6352
+    Defense: 420
+    MagicDefense: 200
+    Str: 211
+    Agi: 151
+    Vit: 109
+    Int: 136
+    Dex: 278
+    Luk: 56
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 1011
+    AttackMotion: 642
+    DamageMotion: 642
+    DamageTaken: 50
+    Ai: 21
+    Class: Boss
+    Modes:
+      Detector: true
+      KnockBackImmune: true
+      StatusImmune: true
+      Mvp: true
+    Drops:
+      - Item: aegis_300262
+        Rate: 1
+        StealProtected: true
 #  - Id: 20929
 #    AegisName: GIANT_CAPUT
 #  - Id: 20930
