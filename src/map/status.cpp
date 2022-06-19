@@ -10319,6 +10319,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				if (sc && sc->data[type]->val2 & BREAK_NECK)
 					return 0; // BREAK_NECK cannot be stacked with new breaks until the status is over.
 				val2 |= sce->val2; // Stackable ailments
+			case SC_CLIMAX:
+				sce->val1 = val1;
+				break;
 			default:
 				if (scdb->flag[SCF_OVERLAPIGNORELEVEL])
 					break;
