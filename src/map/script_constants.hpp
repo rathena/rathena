@@ -5734,6 +5734,12 @@
 	export_constant(IG_SHADOW_CUBE_SHIELD);
 	export_constant(IG_SHADOW_CUBE_SHOES);
 	export_constant(IG_SHADOW_CUBE_WEAPON);
+	export_constant(IG_ENCHANT_STONE_BOX22);
+	export_constant(IG_ENCHANT_STONE_BOX23);
+	export_constant(IG_ENCHANT_STONE_BOX24);
+	export_constant(IG_ENCHANT_STONE_BOX25);
+	export_constant(IG_ENCHANT_STONE_BOX27);
+	export_constant(IG_ANCIENT_HERO_BOX_1);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
