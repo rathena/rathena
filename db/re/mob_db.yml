@@ -98229,6 +98229,20 @@ Body:
     Modes:
       ChangeChase: true
     Drops:
+      - Item: Boody_Red
+        Rate: 300
+      - Item: Cold_Magma
+        Rate: 2400
+      - Item: Burning_Heart
+        Rate: 300
+      - Item: Black_Powder
+        Rate: 250
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Zelunium
+        Rate: 20
+      - Item: Shadowdecon
+        Rate: 20
       - Item: aegis_300258
         Rate: 1
         StealProtected: true
@@ -98264,7 +98278,21 @@ Body:
     Modes:
       ChangeChase: true
     Drops:
-      - Item: aegis_300259
+      - Item: Horn
+        Rate: 2100
+      - Item: Animal's_Skin
+        Rate: 1000
+      - Item: Crystal_Blue
+        Rate: 300
+      - Item: Mistic_Frozen
+        Rate: 50
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Shadowdecon
+        Rate: 20
+      - Item: Fulgor_Card
         Rate: 1
         StealProtected: true
   - Id: 20922
@@ -98299,7 +98327,21 @@ Body:
     Modes:
       ChangeChase: true
     Drops:
-      - Item: aegis_300260
+      - Item: Insect_Feeler
+        Rate: 2000
+      - Item: Transparent_Cloth
+        Rate: 1600
+      - Item: Shadowdecon
+        Rate: 20
+      - Item: Wind_Of_Verdure
+        Rate: 300
+      - Item: Rough_Wind
+        Rate: 50
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Napeo_Card
         Rate: 1
         StealProtected: true
   - Id: 20923
@@ -98334,7 +98376,21 @@ Body:
     Modes:
       ChangeChase: true
     Drops:
-      - Item: aegis_300261
+      - Item: Fluff
+        Rate: 2000
+      - Item: Animal's_Skin
+        Rate: 1600
+      - Item: Yellow_Live
+        Rate: 20
+      - Item: Great_Nature
+        Rate: 300
+      - Item: Shadowdecon_Ore
+        Rate: 50
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Zelunium
+        Rate: 150
+      - Item: Galensis_Card
         Rate: 1
         StealProtected: true
   - Id: 20924
@@ -98369,7 +98425,21 @@ Body:
     Modes:
       ChangeChase: true
     Drops:
-      - Item: aegis_300254
+      - Item: Feather
+        Rate: 2400
+      - Item: Animal's_Skin
+        Rate: 1600
+      - Item: Shoot
+        Rate: 300
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Shadowdecon
+        Rate: 15
+      - Item: Zelunium
+        Rate: 15
+      - Item: Amitera_Card
         Rate: 1
         StealProtected: true
   - Id: 20925
@@ -98404,7 +98474,21 @@ Body:
     Modes:
       ChangeChase: true
     Drops:
-      - Item: aegis_300255
+      - Item: Soft_Leaf
+        Rate: 2400
+      - Item: Stone_Piece
+        Rate: 1600
+      - Item: Transparent_Cloth
+        Rate: 1000
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Shadowdecon
+        Rate: 15
+      - Item: Zelunium
+        Rate: 15
+      - Item: Litus_Card
         Rate: 1
         StealProtected: true
   - Id: 20926
@@ -98439,7 +98523,21 @@ Body:
     Modes:
       ChangeChase: true
     Drops:
-      - Item: aegis_300256
+      - Item: Feather_Of_Birds
+        Rate: 2500
+      - Item: Boody_Red
+        Rate: 300
+      - Item: Burning_Heart
+        Rate: 300
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Shadowdecon
+        Rate: 15
+      - Item: Zelunium
+        Rate: 15
+      - Item: Fillia_Card
         Rate: 1
         StealProtected: true
   - Id: 20927
@@ -98474,7 +98572,19 @@ Body:
     Modes:
       ChangeChase: true
     Drops:
-      - Item: aegis_300257
+      - Item: Crystal_Blue
+        Rate: 300
+      - Item: Sticky_Mucus
+        Rate: 2400
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Shadowdecon
+        Rate: 15
+      - Item: Zelunium
+        Rate: 15
+      - Item: Vanilaqus_Card
         Rate: 1
         StealProtected: true
   - Id: 20928
@@ -98514,7 +98624,17 @@ Body:
       StatusImmune: true
       Mvp: true
     Drops:
-      - Item: aegis_300262
+      - Item: Rough_Wind
+        Rate: 300
+      - Item: Great_Nature
+        Rate: 2400
+      - Item: Mistic_Frozen
+        Rate: 150
+      - Item: Shadowdecon
+        Rate: 150
+      - Item: Zelunium
+        Rate: 15
+      - Item: The_One_Card
         Rate: 1
         StealProtected: true
 #  - Id: 20929
