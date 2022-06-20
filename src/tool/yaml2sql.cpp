@@ -445,6 +445,10 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 				column.append("`job_sage`,");
 			if (appendEntry(jobs["SoulLinker"], value))
 				column.append("`job_soullinker`,");
+#ifdef RENEWAL
+			if (appendEntry(jobs["Spirit_Handler"], value))
+				column.append("`job_spirit_handler`,");
+#endif
 			if (appendEntry(jobs["StarGladiator"], value))
 				column.append("`job_stargladiator`,");
 #ifdef RENEWAL
