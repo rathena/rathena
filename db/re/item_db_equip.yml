@@ -88763,14 +88763,14 @@ Body:
     EquipLevelMin: 1
     View: 463
   - Id: 19669
-    AegisName: C_Reginleif_Hairband_
+    AegisName: C_Reginleif_Wings_J
     Name: Costume Reginleif Hairband
     Type: Armor
     Locations:
       Costume_Head_Mid: true
     ArmorLevel: 1
     EquipLevelMin: 1
-    View: 214
+    View: 468
   - Id: 19670
     AegisName: C_Southern_Cross
     Name: Costume Southern Cross
