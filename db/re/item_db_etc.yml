@@ -47409,7 +47409,7 @@ Body:
       if (.@r>=9)
          bonus2 bMagicAddRace,RC_Insect,7;
   - Id: 300297
-    AegisName: aegis_300297
+    AegisName: Goblin_King_Card
     Name: Goblin King Card
     Type: Card
     Weight: 10
