@@ -10965,11 +10965,12 @@ Body:
   - Id: 12608
     AegisName: Splendid_Box2
     Name: Splendid Box2
-    Type: Delayconsume
+    Type: Usable
     Buy: 20
     Weight: 100
     Flags:
       BuyingStore: true
+      Container: true
     Script: |
       getgroupitem(IG_Splendid_Box2);
   - Id: 12609
