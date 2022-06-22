@@ -1,0 +1,6 @@
+-	script	LogoutEvent	-1,{
+	end;
+	
+OnPCLogoutEvent:
+	end;
+}

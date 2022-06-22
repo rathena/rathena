@@ -70,7 +70,7 @@ gl_chyard,0,0	monster	Wraith	1192,55,5000
 gl_chyard,0,0	monster	Evil Druid	1117,15,5000
 gl_chyard,0,0	monster	Mimic	1191,4,5000
 gl_chyard,0,0	monster	Hunter Fly	1035,4,5000
-gl_chyard,0,0,0,0	boss_monster	Dark Lord	1272,1,3600000,600000,1
+gl_chyard,0,0,0,0	boss_monster	Dark Lord	1272,1,180000,180000
 gl_chyard,0,0	monster	Dark Illusion	1302,1,3600000,1800000
 
 //==================================================
@@ -201,4 +201,4 @@ gl_chyard_,0,0	monster	Wraith Dead (Nightmare)	2481,91,0,0,0
 gl_chyard_,0,0	monster	Wraith Dead	1291,31,0,0,0
 gl_chyard_,0,0	monster	Evil Druid (Nightmare)	2480,22,60000,0,0
 gl_chyard_,0,0	monster	Mimic (Nightmare)	2479,34,60000,0,0
-gl_chyard_,0,0,0,0	boss_monster	Dark Lord	1272,1,3600000,600000,1
+gl_chyard_,0,0,0,0	boss_monster	Dark Lord	1272,1,180000,180000

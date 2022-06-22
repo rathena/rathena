@@ -1,0 +1,15 @@
+-	script	Test	-1,{
+	end;
+	
+OnInit:
+	freeloop(1);
+	for(.@i = 1001; .@i <= 3790; .@i++){
+		if(isspawn(.@i)){
+			if(getmonsterinfo(.@i,MOB_BASEEXP) <= 2){
+				debugmes .@i + "|exp:" + getmonsterinfo(.@i,MOB_BASEEXP);
+			}
+		}
+	}
+	freeloop(0);
+	end;
+}

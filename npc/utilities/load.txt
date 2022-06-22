@@ -1,0 +1,15 @@
+-	script	LoadCommands	-1,{
+OnInit:
+	bindatcmd "load",strnpcinfo(3) + "::OnLoad";
+	end;
+	
+OnLoad:
+	if(strcharinfo(3) != "prontera"
+			&& strcharinfo(3) != "force_1-1"
+			&& strcharinfo(3) != "force_1-2"
+			&& strcharinfo(3) != "force_1-3"
+			&& strcharinfo(3) != "force_2-3")
+	progressbar "000000",3;
+	warp "prontera",156,191;
+	end;
+}

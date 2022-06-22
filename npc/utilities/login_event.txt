@@ -1,0 +1,12 @@
+-	script	LoginEvent	-1,{
+	end;
+	
+OnPCLoginEvent:
+	setpcblock PCBLOCK_ALL,false;
+	bonus_script_clear 1;
+	F_ExpMultiplier();
+	F_DropMultiplier();
+	atcommand "@alootid +40016";
+	atcommand "@alootid +40017";
+	end;
+}

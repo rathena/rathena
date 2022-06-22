@@ -1,0 +1,255 @@
+payon	mapflag	novending
+payon	mapflag	nochat
+payon	mapflag	monster_noteleport
+payon	mapflag	noteleport
+payon	mapflag	nowarp
+payon	mapflag	nowarpto
+payon	mapflag	nosave
+payon	mapflag	nobranch
+payon	mapflag	notomb
+payon	mapflag	loadevent
+
+geffen	mapflag	novending
+geffen	mapflag	nochat
+geffen	mapflag	monster_noteleport
+geffen	mapflag	noteleport
+geffen	mapflag	nowarp
+geffen	mapflag	nowarpto
+geffen	mapflag	nosave
+geffen	mapflag	nobranch
+geffen	mapflag	notomb
+geffen	mapflag	loadevent
+
+morocc	mapflag	novending
+morocc	mapflag	nochat
+morocc	mapflag	monster_noteleport
+morocc	mapflag	noteleport
+morocc	mapflag	nowarp
+morocc	mapflag	nowarpto
+morocc	mapflag	nosave
+morocc	mapflag	nobranch
+morocc	mapflag	notomb
+morocc	mapflag	loadevent
+
+xmas	mapflag	novending
+xmas	mapflag	nochat
+xmas	mapflag	monster_noteleport
+xmas	mapflag	noteleport
+xmas	mapflag	nowarp
+xmas	mapflag	nowarpto
+xmas	mapflag	nosave
+xmas	mapflag	nobranch
+xmas	mapflag	notomb
+xmas	mapflag	loadevent
+
+amatsu	mapflag	novending
+amatsu	mapflag	nochat
+amatsu	mapflag	monster_noteleport
+amatsu	mapflag	noteleport
+amatsu	mapflag	nowarp
+amatsu	mapflag	nowarpto
+amatsu	mapflag	nosave
+amatsu	mapflag	nobranch
+amatsu	mapflag	notomb
+amatsu	mapflag	loadevent
+
+lighthalzen	mapflag	novending
+lighthalzen	mapflag	nochat
+lighthalzen	mapflag	monster_noteleport
+lighthalzen	mapflag	noteleport
+lighthalzen	mapflag	nowarp
+lighthalzen	mapflag	nowarpto
+lighthalzen	mapflag	nosave
+lighthalzen	mapflag	nobranch
+lighthalzen	mapflag	notomb
+lighthalzen	mapflag	loadevent
+
+dewata	mapflag	novending
+dewata	mapflag	nochat
+dewata	mapflag	monster_noteleport
+dewata	mapflag	noteleport
+dewata	mapflag	nowarp
+dewata	mapflag	nowarpto
+dewata	mapflag	nosave
+dewata	mapflag	nobranch
+dewata	mapflag	notomb
+dewata	mapflag	loadevent
+
+prontera,177,200,8	script	Better Leveling	10007,{
+	mes "ภายใน Map จะ";
+	mes "๐ ^FF2929ไม่สามารถ ตั้งร้านค้า^000000";
+	mes "๐ ^FF2929ไม่สามารถ สร้างห้องสนทนา^000000";
+	mes "๐ ^FF2929ไม่สามารถ Teleport^000000";
+	mes "๐ ^FF2929ไม่สามารถ Warp^000000";
+	mes "๐ ^FF2929ไม่สามารถ Memo Map^000000";
+	mes "๐ ^FF2929ไม่สามารถ ใช้ไม้ผี^000000";
+	next;
+	menu "เข้า",-;
+	
+	addtimer 2000,strnpcinfo(0) + "::OnWarp";
+	
+	// Get tier
+	if(BaseLevel >= .tier_6_lv)
+	warp .map_7_name$,0,0;
+	else if(BaseLevel >= .tier_5_lv)
+	warp .map_6_name$,0,0;
+	else if(BaseLevel >= .tier_4_lv)
+	warp .map_5_name$,0,0;
+	else if(BaseLevel >= .tier_3_lv)
+	warp .map_4_name$,0,0;
+	else if(BaseLevel >= .tier_2_lv)
+	warp .map_3_name$,0,0;
+	else if(BaseLevel >= .tier_1_lv)
+	warp .map_2_name$,0,0;
+	else
+	warp .map_1_name$,0,0;
+
+	end;
+	
+OnWarp:
+	// Unexpected error
+	if(!playerattached())
+	end;
+
+	setpcblock PCBLOCK_ALL,false;
+	
+	end;
+	
+	L_GetMonsterID:
+	if(getarg(0,0) == 1)
+	return $all_mob_tier_1_ids[rand(0,$all_mob_id_tier_1_size - 1)];
+	else if(getarg(0,0) == 2)
+	return $all_mob_tier_2_ids[rand(0,$all_mob_id_tier_2_size - 1)];
+	else if(getarg(0,0) == 3)
+	return $all_mob_tier_3_ids[rand(0,$all_mob_id_tier_3_size - 1)];
+	else if(getarg(0,0) == 4)
+	return $all_mob_tier_4_ids[rand(0,$all_mob_id_tier_4_size - 1)];
+	else if(getarg(0,0) == 5)
+	return $all_mob_tier_5_ids[rand(0,$all_mob_id_tier_5_size - 1)];
+	else if(getarg(0,0) == 6)
+	return $all_mob_tier_6_ids[rand(0,$all_mob_id_tier_6_size - 1)];
+	else if(getarg(0,0) == 7)
+	return $all_mob_tier_7_ids[rand(0,$all_mob_id_tier_7_size - 1)];
+	else
+	return 0;
+
+OnCleanUp:
+	.no_respawn = 1;
+	killmonsterall .map_1_name$;
+	killmonsterall .map_2_name$;
+	killmonsterall .map_3_name$;
+	killmonsterall .map_4_name$;
+	killmonsterall .map_5_name$;
+	killmonsterall .map_6_name$;
+	killmonsterall .map_7_name$;
+	callsub L_Spawn;
+	.no_respawn = 0;
+	end;
+	
+OnMonsterDead:
+	if(.no_respawn)
+	end;
+
+	freeloop(1);
+
+	for(.@i = 1; .@i < 8; .@i++){
+		if(getd(".map_" + .@i + "_name$") == strcharinfo(3)){
+			.@monster_id = callsub(L_GetMonsterID,.@i);
+			
+			while(F_IsDummyMonster(.@monster_id)
+			|| (getmonsterinfo(.@monster_id,MOB_MVPEXP) > 0))
+			.@monster_id = callsub(L_GetMonsterID,.@i);
+			
+			// Spawn
+			monster strcharinfo(3),0,0,"--ja--",.@monster_id,1,strnpcinfo(0) + "::OnMonsterDead";
+			
+			break;
+		}
+	}
+	
+	freeloop(0);
+	
+	// Unexpected error
+	if(!playerattached())
+	end;
+
+	// Get EXP and Job EXP
+	getexp callsub(L_GetExp),callsub(L_GetJobExp);
+	
+	end;
+	
+	L_GetExp:
+	.@sum = callsub(L_CalExp);
+	if(.@sum <= 0)
+	.@sum = 1;
+	return .@sum;
+	
+	L_GetJobExp:
+	.@sum = callsub(L_CalJobExp);
+	if(.@sum <= 0)
+	.@sum = 1;
+	return .@sum;
+	
+	L_CalExp:
+	if(.reward_exp_max_divider > NextBaseExp)
+	return .reward_exp_max_divider;
+	return (NextBaseExp / rand(.reward_exp_min_divider,.reward_exp_max_divider));
+	
+	L_CalJobExp:
+	if(.reward_exp_max_divider > NextJobExp)
+	return .reward_exp_max_divider;
+	return (NextJobExp / rand(.reward_exp_min_divider,.reward_exp_max_divider));
+	
+	L_Spawn:
+	freeloop(1);
+	
+	for(.@map_index = 1; .@map_index < 8; .@map_index++){
+		.temp_map_name$ = getd(".map_" + .@map_index + "_name$");
+		for(.@i = 0; .@i < .monster_amount; .@i++){
+			.@monster_id = callsub(L_GetMonsterID,.@map_index);
+
+			while(F_IsDummyMonster(.@monster_id)
+			|| (getmonsterinfo(.@monster_id,MOB_MVPEXP) > 0))
+			.@monster_id = callsub(L_GetMonsterID,.@map_index);
+			
+			// Spawn
+			monster .temp_map_name$,0,0,"--ja--",.@monster_id,1,strnpcinfo(0) + "::OnMonsterDead";
+		}
+	}
+	
+	freeloop(0);
+	
+	return;
+	
+OnInit:
+	// Level range
+	.tier_1_lv = 10;
+	.tier_2_lv = 40;
+	.tier_3_lv = 60;
+	.tier_4_lv = 80;
+	.tier_5_lv = 100;
+	.tier_6_lv = 120;
+	.tier_7_lv = 150;
+	
+	// Maps
+	.map_1_name$ = "payon";
+	.map_2_name$ = "geffen";
+	.map_3_name$ = "morocc";
+	.map_4_name$ = "xmas";
+	.map_5_name$ = "amatsu";
+	.map_6_name$ = "lighthalzen";
+	.map_7_name$ = "dewata";
+
+	// Monster count
+	.monster_amount = 100;
+
+	// Rewards
+	.reward_exp_min_divider = 1900;
+	.reward_exp_max_divider = 4500;
+	
+	callsub(L_Spawn);
+	
+	waitingroom "เก็บ Level สนุก ๆ",0;
+	
+	end;
+}

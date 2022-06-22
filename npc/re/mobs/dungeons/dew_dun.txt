@@ -18,7 +18,7 @@
 // dew_dun01 - Volcanic Island of Krakatoa
 //==================================================
 dew_dun01,0,0	monster	Comodo	2152,100,5000
-dew_dun01,0,0,0,0	boss_monster	Leak	2156,1,7200000,0,1
+dew_dun01,0,0,0,0	boss_monster	Leak	2156,1,180000,180000
 
 //==================================================
 // dew_dun02 - Tina Grace Cave

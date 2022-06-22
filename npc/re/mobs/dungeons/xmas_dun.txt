@@ -35,4 +35,4 @@ xmas_dun02,0,0	monster	Myst Case	1249,70,5000
 xmas_dun02,0,0	monster	Cruiser	1248,49,5000
 xmas_dun02,0,0	monster	Cookie	1265,28,5000
 xmas_dun02,0,0	monster	Christmas Cookie	1246,28,5000
-xmas_dun02,0,0,0,0	boss_monster	Stormy Knight	1251,1,3600000,600000,0
+xmas_dun02,0,0,0,0	boss_monster	Stormy Knight	1251,1,180000,180000

@@ -1,0 +1,58 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Quest Database
+###########################################################################
+#
+# Quest Settings
+#
+###########################################################################
+# - Id              Quest ID.
+#   Title           Quest title.
+#   TimeLimit       Amount of time before the quest expires. (Default: 0)
+#                   Use a number following by "d" for day(s), "h" for hour(s), "mn" for minute(s), and "s" for second(s).
+#                   Specify with "+" for how long until the quest expires.
+#                   Specify without "+" for the exact time the quest expires using "d" (optional), [0-23]"h" (required), [0-59]"mn" (optional), [0-59]"s" (optional) format.
+#                   Please note the number before "d" only shift the exact timer to the given day(s).
+#   Targets:        Quest objective target. (Default: null)
+#                   The target can be a couple of node Mob/Count or of Id/Race/Size/Element/MinLevel/MaxLevel.
+#                   If Mob is supplied, Count is required and the other fields are ignored.
+#                   If Id is supplied, at least one other field of Race/Size/Element/MinLevel/MaxLevel is required.
+#                   If Id is supplied, Count is required for each new entry.
+#     - Mob         Monster to kill (aegis monster name).
+#       Count       Amount of monsters to kill. Set to 0 to skip the target on import.
+#       Id          Unique target index for the quest Id. Requires a positive number.
+#       Race        Monster race target (default All). Valid races are Angel, Brute, DemiHuman, Demon, Dragon, Fish, Formless, Insect, Plant, Undead, All.
+#       Size        Monster size target (default All). Valid sizes are Small, Medium, Large, All.
+#       Element     Monster element target (default All). Valid elements are Dark, Earth, Fire, Ghost, Holy, Neutral, Poison, Undead, Water, Wind, All.
+#       MinLevel    Minimum monster level target. If not supplied but MaxLevel defined, MinLevel is 1. Set to 0 to ignore MinLevel on import. (Default: 0)
+#       MaxLevel    Maximum monster level target. Set to 0 to ignore MaxLevel on import. (Default: 0)
+#       Location    Map name where kills are counted. (Default any location)
+#                   On normal maps only kills of permanently spawned monsters increase the counter.
+#                   On instance maps all monster kills increase the counter.
+#       MapName     Displayed map name in quest UI. (Default: empty string)
+#   Drops:          Quest item drop targets. (Default: null)
+#     - Mob         Monster to kill. 0 will apply to all monsters. (Default: 0)
+#       Item        Item to drop.
+#       Count       Amount of items that will drop. Non-stackable items default to 1. (Default: 1)
+#       Rate        Item drop rate. (10000 = 100%)
+###########################################################################
+
+Header:
+  Type: QUEST_DB
+  Version: 2

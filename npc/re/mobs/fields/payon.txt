@@ -103,7 +103,7 @@ pay_fild09,198,217,30,30	monster	Shining Plant	1083,1,1800000,900000
 pay_fild10,0,0	monster	Greatest General	1277,129,5000
 pay_fild10,0,0	monster	Beetle King	1494,64,5000
 pay_fild10,0,0	monster	Savage	1166,64,5000
-pay_fild10,0,0,0,0	boss_monster	Eddga	1115,1,7200000,600000,1
+pay_fild10,0,0,0,0	boss_monster	Eddga	1115,1,180000,180000
 pay_fild10,213,157,10,10	monster	Green Plant	1080,5,360000,180000
 pay_fild10,281,307,10,10	monster	Green Plant	1080,5,360000,180000
 pay_fild10,66,332,10,10	monster	Green Plant	1080,5,360000,180000

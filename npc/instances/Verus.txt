@@ -1,0 +1,10 @@
+prontera,149,77,6	script	Juperos & Verus	3248,{
+	.@index = select(.m$);
+	warp .mapName$[.@index - 1],0,0;
+	end;
+	
+OnInit:
+	.m$ = "ซากปรักหักพังด้านนอก Juperos:Juperos ด้านตะวันตก:ท่อ:หลุมหลบภัย:บริเวณก่อสร้าง:ห้าง:รีสอร์ท:ห้อง Lab OPTATIO";
+	setarray .mapName$[0],"juperos_01","ver_eju","ver_tunn","un_bunker","verus04","verus03","verus02","verus01";
+	end;
+}

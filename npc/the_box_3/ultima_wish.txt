@@ -1,0 +1,192 @@
+wolfvill	mapflag	tb4
+wolfvill	mapflag	novending
+wolfvill	mapflag	nochat
+wolfvill	mapflag	noteleport
+wolfvill	mapflag	nowarp
+wolfvill	mapflag	nowarpto
+wolfvill	mapflag	nosave
+wolfvill	mapflag	nobranch
+wolfvill	mapflag	notomb
+
+prontera,163,208,8	script	Ultima Wish	10007,{
+	if(!is_party_leader()){
+		mes "คุณไม่ใช่หัวหน้า Party";
+		close;
+	}
+	// Clean up old instance
+	if(instance_id(IM_PARTY))
+	instance_destroy(instance_id(IM_PARTY));
+	// Information
+	mes "๐ ต้องการ ^FF2929" + F_InsertComma(.req_zeny) + "z^000000 \nและ ^FF2929" + F_InsertComma(.req_item_amount) + " " + getitemname(.req_item_id) + "^000000 ในการเข้าห้อง";
+	mes "---";
+	mes "๐ ต้องมี Party และเป็นหัวหน้า Party (สมาชิกใน Party จะถูก Warp ไปด้วยทันทีเมื่อเข้า)";
+	mes "๐ Monster จะเกิดรอบละ 170 ตัว";
+	mes "---";
+	mes "โทษภายในห้อง";
+	mes "๐ ^FF2929Damage จะเหลือ 0.1%^000000";
+	mes "๐ ^FF2929Flee จะเหลือ 1%^000000";
+	mes "๐ ^FF2929Perfect Dodge จะเหลือ 1%^000000";
+	mes "๐ ^FF2929Monster ที่มีรางวัลจะชื่อ Wish และมี HP 1,700m^000000";
+	mes "๐ ^FF2929Monster ที่ไม่มีรางวัลจะชื่อ Ultima และมี HP 170m^000000";
+	mes "๐ ^FF2929Monster จะโจมตีทะลุพล้งป้องกันทุกชนิด^000000";
+	mes "๐ ^FF2929Monster จะก้าวร้าวทุกตัว^000000";
+	mes "---";
+	mes "รางวัล";
+	mes "๐ ^3629FFแต้มปราถนา 1 แต้ม สำหรับผู้เล่นที่ Last Shot ได้เท่านั้น^000000";
+	mes "๐ ^FF2929หากตายจะเสียแต้ม 10% จากที่มีอยู่^000000";
+	next;
+	menu "เข้า",-,"แลก Item",L_Trade;
+	// Create instance
+	.temporary_name$ = strcharinfo(0);
+	.temporary_ultima_wish_id = instance_create(.instance_name$,IM_PARTY);
+	// Enter instance
+	.@party_id = getcharid(1);
+	addrid(2,0,.@party_id);
+	ultima_wish_id = .temporary_ultima_wish_id;
+	instance_enter(.instance_name$,-1,-1,getcharid(0),ultima_wish_id);
+	end;
+	
+	L_Trade:
+	if(wish_points < .req_wish_points){
+		mes "ต้องการแต้มปราถนา " + F_InsertComma(.req_wish_points) + " แต้ม";
+		mes "คุณมีแต้มปราถนา " + F_InsertComma(wish_points) + " แต้ม";
+		close;
+	}
+	mes "โปรดระบุ Item ID ที่ต้องการ";
+	next;
+	input .@input;
+	wish_item_id = F_IsItemIdAvailable(.@input);
+	mes "คุณมีแต้มปราถนา " + F_InsertComma(wish_points) + " แต้ม";
+	mes "ต้องการแลก " + getitemname(wish_item_id) + " ด้วย " + F_InsertComma(.req_wish_points) + " แต้มปราถนา?";
+	next;
+	menu "ยกเลิก",-,"ยืนยัน",L_Confirm;
+	close;
+	
+	L_Confirm:
+	if(!checkweight(wish_item_id,1)){
+		mes "น้ำหนักเกินหรือกระเป๋าเต็มแล้ว";
+		close;
+	}
+	wish_points -= .req_wish_points;
+	mes "แต้มปราถนาคงเหลือ " + F_InsertComma(wish_points) + " แต้ม";
+	getitem wish_item_id,1;
+	close;
+	
+OnInit:
+	.instance_name$ = "Ultima Wish";
+	
+	.req_zeny = 700000;
+	.req_item_id = 40017;
+	.req_item_amount = 7;
+	
+	.req_wish_points = 77;
+	
+	waitingroom "ห้อง Ultima Wish (Party)",0;
+	
+	end;
+}
+
+wolfvill,142,150,8	script	Ultima Wish#Controller	10007,{
+	if(is_party_leader())
+	menu "จ่ายค่าเข้า เพื่อเล่น",L_Respawn,"หยุดเล่น",-;
+	else
+	menu "หยุดเล่น",-;
+	warp "prontera",156,191;
+	end;
+	
+	L_Spawn:
+	hideonnpc instance_npcname("Ultima Wish#Controller",instance_id(IM_PARTY));
+
+	// Spawn monster
+	setinstancevar('ultima_wish_kill_count, 1, instance_id(IM_PARTY));
+
+	freeloop(1);
+	
+	for(.@i = 0; .@i < .monster_amount; .@i++){
+		.@monster_id = $all_mob_ids[rand(0,$all_mob_id_size - 1)];
+		while(F_IsDummyMonster(.@monster_id))
+		.@monster_id = $all_mob_ids[rand(0,$all_mob_id_size - 1)];
+		
+		// Spawn
+		if(.@i <= 0){
+			monster instance_mapname(.map_name$,ultima_wish_id),0,0,.target_monster_name$,.@monster_id,1,.npc_name$ + "::OnMonsterDead",Size_Large;
+			setunitdata $@mobid[0],UMOB_MAXHP,.target_monster_max_hp;
+			setunitdata $@mobid[0],UMOB_HP,.target_monster_max_hp;
+		}
+		else{
+			monster instance_mapname(.map_name$,ultima_wish_id),0,0,.creep_monster_name$,.@monster_id,1;
+			setunitdata $@mobid[0],UMOB_MAXHP,.creep_monster_max_hp;
+			setunitdata $@mobid[0],UMOB_HP,.creep_monster_max_hp;
+		}
+		setunitdata $@mobid[0],UMOB_MODE,500;
+		setunitdata $@mobid[0],UMOB_ULTIMA,1;
+		setunitdata $@mobid[0],UMOB_MODE,(MD_CANMOVE | MD_AGGRESSIVE | MD_CANATTACK | MD_ANGRY | MD_MVP | MD_KNOCKBACKIMMUNE | MD_DETECTOR | MD_STATUSIMMUNE);
+	}
+	
+	freeloop(0);
+	
+	end;
+	
+OnMonsterDead:
+	// Unexpected double call
+	if(getinstancevar('ultima_wish_kill_count, instance_id(IM_PARTY)) <= 0)
+	end;
+
+	killmonsterall instance_mapname(.map_name$,ultima_wish_id);
+	
+	// Unexpected error
+	if(playerattached()){
+		wish_points++;
+		message strcharinfo(0),"ได้รับ 1 แต้มปราถนา รวมเป็น " + F_InsertComma(wish_points) + " แต้ม";
+	}
+	
+	// Counting
+	setinstancevar('ultima_wish_kill_count,(getinstancevar('ultima_wish_kill_count, instance_id(IM_PARTY)) - 1), instance_id(IM_PARTY));
+	
+	// All monster dead
+	if(getinstancevar('ultima_wish_kill_count, instance_id(IM_PARTY)) <= 0)
+				{
+					message strcharinfo(0),"คุณกำจัด Monster ครบแล้ว!";
+					
+					hideoffnpc instance_npcname("Ultima Wish#Controller",instance_id(IM_PARTY));
+				}
+				
+				end;
+				
+				L_Respawn:
+				// Check zeny
+				if (Zeny < .req_zeny){
+		mes "Zeny ไม่เพียงพอ";
+		close;
+	}
+	// Check item
+	if (countitem(.req_item_id) < .req_item_amount){
+		mes getitemname(.req_item_id) + " ไม่เพียงพอ";
+		close;
+	}
+	// Trade
+	Zeny -= .req_zeny;
+	delitem .req_item_id,.req_item_amount;
+	
+	callsub L_Spawn;
+	
+	end;
+	
+OnInit:
+	.map_name$ = "wolfvill";
+
+	.npc_name$ = strnpcinfo(0);
+	
+	// Monster
+	.monster_amount = 170;
+	.target_monster_name$ = "Wish";
+	.creep_monster_name$ = "Ultima";
+	.target_monster_max_hp = 1700000000;
+	.creep_monster_max_hp = 170000000;
+	
+	.req_zeny = 700000;
+	.req_item_id = 40017;
+	.req_item_amount = 7;
+	
+	end;
+}

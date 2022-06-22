@@ -1,0 +1,56 @@
+prontera,106,260,5	script	ซื้อ x Drop	10365,{
+	mes "๐ ^FF2929ตายแล้วต้องซื้อใหม่^000000";
+	mes "---";
+	mes "ปัจจุบัน Drop x^3629FF" + drop_multiplier;
+	mes "โปรดระบุจำนวน 1~10";
+	next;
+	input .@i;
+	if(.@i <= drop_multiplier){
+		mes "จำนวนที่ระบุน้อยกว่าหรือเท่ากับปัจจุบัน";
+		close;
+	}
+	else if(.@i < .min || .@i > .max){
+		mes "จำนวนผิดพลาด";
+		close;
+	}
+	else{
+		.@price = getd(".base_price_" + .@i);
+		
+		if(.@price <= 0)
+		.@price = 1000000000;
+		
+		mes "x" + .@i;
+		mes "ราคา: " + F_InsertComma(.@price) + "z";
+		next;
+		menu "จ่าย",-;
+		
+		if(Zeny < .@price){
+			mes "ต้องการ " + F_InsertComma(.@price) + "z";
+			close;
+		}
+		else{
+			Zeny -= .@price;
+			drop_multiplier = .@i;
+			mes "ปัจจุบัน Drop x^3629FF" + drop_multiplier;
+			F_DropMultiplier();
+			close;
+		}
+	}
+	
+OnInit:
+	.min = 1;
+	.max = 10;
+	.base_price_1 = 100;
+	.base_price_2 = 1000;
+	.base_price_3 = 10000;
+	.base_price_4 = 100000;
+	.base_price_5 = 1000000;
+	.base_price_6 = 2000000;
+	.base_price_7 = 4000000;
+	.base_price_8 = 6000000;
+	.base_price_9 = 8000000;
+	.base_price_10 = 10000000;
+
+	waitingroom "ซื้อ x Drop",0;
+	end;
+}

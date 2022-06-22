@@ -54,7 +54,7 @@ gef_fild02,164,194,1,1	monster	Shining Plant	1083,1,1800000,900000
 gef_fild03,0,0	monster	Orc Lady	1273,160,5000
 gef_fild03,0,0	monster	Orc Warrior	1023,73,5000
 gef_fild03,0,0	monster	Orc Baby	1686,24,5000
-gef_fild03,0,0,0,0	boss_monster	Orc Hero	1087,1,3600000,600000,1
+gef_fild03,0,0,0,0	boss_monster	Orc Hero	1087,1,180000,180000
 gef_fild03,45,350,3,3	monster	Green Plant	1080,1,180000,90000
 gef_fild03,66,300,3,3	monster	Green Plant	1080,1,180000,90000
 gef_fild03,80,252,3,3	monster	Green Plant	1080,1,180000,90000
@@ -169,7 +169,7 @@ gef_fild09,277,201,5,5	monster	Blue Plant	1079,3,900000,450000
 gef_fild10,0,0	monster	Orc Warrior	1023,179,5000
 gef_fild10,0,0	monster	Orc Lady	1273,55,5000
 gef_fild10,0,0	monster	Orc Baby	1686,27,5000
-gef_fild10,0,0,0,0	boss_monster	Orc Lord	1190,1,7200000,600000,0
+gef_fild10,0,0,0,0	boss_monster	Orc Lord	1190,1,180000,180000
 gef_fild10,46,350,5,5	monster	Blue Plant	1079,3,900000,450000
 gef_fild10,287,61,5,5	monster	Blue Plant	1079,3,900000,450000
 gef_fild10,300,253,5,5	monster	Green Plant	1080,3,360000,180000

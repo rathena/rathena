@@ -32,7 +32,7 @@ kh_dun02,0,0	monster	Aliot	1736,34,5000
 kh_dun02,0,0	monster	Constant	1738,20,5000
 kh_dun02,0,0	monster	Aliza	1737,13,5000
 kh_dun02,0,0	monster	Constant	1745,6,5000
-kh_dun02,0,0,0,0	boss_monster	Kiel D-01	1734,1,7200000,600000,0
+kh_dun02,0,0,0,0	boss_monster	Kiel D-01	1734,1,180000,180000
 
 //==================================================
 // kh_kiehl01 - Kiehl's Room 

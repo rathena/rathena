@@ -1,0 +1,100 @@
+new_5-3	mapflag	novending
+new_5-3	mapflag	nochat
+new_5-3	mapflag	noteleport
+new_5-3	mapflag	nowarp
+new_5-3	mapflag	nowarpto
+new_5-3	mapflag	nosave
+new_5-3	mapflag	nobranch
+new_5-3	mapflag	notomb
+
+prontera,155,200,8	script	Boss Private	10007,{
+	// Clean up old instance
+	if(instance_id(IM_CHAR))
+	instance_destroy(instance_id(IM_CHAR));
+	// Information
+	mes "๐ ต้องการ ^FF2929" + F_InsertComma(.req_zeny) + "z^000000 \nและ ^FF2929" + F_InsertComma(.req_item_amount) + " " + getitemname(.req_item_id) + "^000000 ในการเข้าห้อง";
+	mes "---";
+	mes "๐ ^3629FFห้อง Boss ส่วนตัว จะไม่มีการรบกวน จากผู้เล่นอื่น^000000";
+	mes "๐ ^3629FFมี Boss จำนวน 30 ตัว^000000";
+	mes "๐ ^3629FFมี เวลาเล่นรอบละ 10 นาที^000000";
+	next;
+	menu "เข้า",-;
+	// Check zeny
+	if (Zeny < .req_zeny){
+		mes "Zeny ไม่เพียงพอ";
+		close;
+	}
+	// Check item
+	if (countitem(.req_item_id) < .req_item_amount){
+		mes getitemname(.req_item_id) + " ไม่เพียงพอ";
+		close;
+	}
+	// Trade
+	Zeny -= .req_zeny;
+	delitem .req_item_id,.req_item_amount;
+	// Warp helper
+	setpcblock PCBLOCK_ALL,true;
+	setpcblock PCBLOCK_MOVE,false;
+	addtimer 2000,strnpcinfo(3) + "::OnWarp";
+	// Create instance
+	private_boss_id = instance_create(.instance_name$,IM_CHAR);
+	// Reset boss amount
+	private_boss_kill_count = .spawn_amount;
+	// Enter instance
+	instance_enter(.instance_name$,96,175,getcharid(0),private_boss_id);
+	end;
+	
+OnWarp:
+	setpcblock PCBLOCK_ALL,false;
+	end;
+	
+OnInit:
+	.map_name$ = "new_5-3";
+	.instance_name$ = "Boss Private";
+	
+	.req_zeny = 9000000;
+	.req_item_id = 40017;
+	.req_item_amount = 99;
+	
+	.spawn_amount = 30;
+	
+	waitingroom "ห้อง Boss (ส่วนตัว)",0;
+	
+	end;
+}
+
+new_5-3,1,1,8	script	Boss Private#Controller	10007,{
+	end;
+	
+OnInstanceInit:
+	for(.@i = 0; .@i < .spawn_amount; .@i++)
+	monster instance_mapname(.map_name$),0,0,"--ja--",$all_boss_ids[rand(0,($all_boss_id_size - 1))],1,.npc_name$ + "::OnMonsterDead";
+
+	end;
+	
+OnMonsterDead:
+	// Unexpected error
+	if(!playerattached())
+	end;
+
+	private_boss_kill_count--;
+	
+	if(private_boss_kill_count <= 0){
+		message strcharinfo(0),"คุณกำจัด Boss ครบแล้ว!";
+		
+		sleep2 1000;
+		
+		warp "prontera",156,191;
+	}
+	
+	end;
+	
+OnInit:
+	.npc_name$ = strnpcinfo(0);
+
+	.map_name$ = "new_5-3";
+	
+	.spawn_amount = 30;
+	
+	end;
+}

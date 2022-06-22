@@ -38,4 +38,4 @@ ama_dun03,0,0	monster	Firelock Soldier	1403,29,5000
 ama_dun03,0,0	monster	The Paper	1375,23,5000
 ama_dun03,0,0	monster	Mimic	1191,5,5000
 ama_dun03,0,0	monster	Miyabi Doll	1404,1,5000
-ama_dun03,0,0,0,0	boss_monster	Samurai Specter	1492,1,5460000,600000,0
+ama_dun03,0,0,0,0	boss_monster	Samurai Specter	1492,1,180000,180000

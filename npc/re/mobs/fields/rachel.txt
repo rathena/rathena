@@ -35,7 +35,7 @@ ra_fild03,0,0	monster	Hill Wind	1680,154,5000
 ra_fild03,0,0	monster	Roween	1782,35,5000
 ra_fild03,0,0	monster	Anacondaq	1030,23,5000
 ra_fild03,0,0	monster	Anopheles	1627,23,5000
-ra_fild03,0,0,0,0	boss_monster	Atroce	1785,1,10800000,600000,1
+ra_fild03,0,0,0,0	boss_monster	Atroce	1785,1,180000,180000
 
 //==================================================
 // ra_fild04 - Audhumbla Grassland
@@ -44,7 +44,7 @@ ra_fild04,0,0	monster	Hill Wind	1680,155,5000
 ra_fild04,0,0	monster	Roween	1782,35,5000
 ra_fild04,0,0	monster	Desert Wolf	1106,23,5000
 ra_fild04,0,0	monster	Anopheles	1627,23,5000
-ra_fild04,0,0,0,0	boss_monster	Atroce	1785,1,18000000,600000,1
+ra_fild04,0,0,0,0	boss_monster	Atroce	1785,1,180000,180000
 
 //==================================================
 // ra_fild05 - Audhumbla Grassland

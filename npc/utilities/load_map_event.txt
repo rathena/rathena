@@ -1,0 +1,19 @@
+prontera	mapflag	loadevent
+morocc	mapflag	loadevent
+
+-	script	LoadMapEvent	-1,{
+	end;
+	
+OnPCLoadMapEvent:
+	if((strcharinfo(3) == "morocc")
+			&& (is_small_wish_granted
+				|| (small_wish_points >= 100))){
+		warp "prontera",156,191;
+		
+		end;
+	}
+	else if(strcharinfo(3) == "prontera")
+	bonus_script_clear 1;
+
+	end;
+}

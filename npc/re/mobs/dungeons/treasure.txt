@@ -113,7 +113,7 @@ treasure02,108,57	monster	Hydra	1068,1,300000,100000
 treasure02,100,85	monster	Hydra	1068,1,300000,100000
 treasure02,101,85	monster	Hydra	1068,1,300000,100000
 treasure02,0,0	monster	Ghostring	1120,1,1980000,1200000
-treasure02,101,151,8,8	boss_monster	Drake	1112,1,7200000,600000,1
+treasure02,101,151,8,8	boss_monster	Drake	1112,1,180000,180000
 
 //==================================================
 // treasure_n1 - Izlude Sunken Ship 1F

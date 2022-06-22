@@ -1,0 +1,94 @@
+evt_swar_b	mapflag	tb3
+evt_swar_b	mapflag	pvp
+evt_swar_b	mapflag	novending
+evt_swar_b	mapflag	nochat
+evt_swar_b	mapflag	noteleport
+evt_swar_b	mapflag	nowarp
+evt_swar_b	mapflag	nowarpto
+evt_swar_b	mapflag	nosave
+evt_swar_b	mapflag	nobranch
+evt_swar_b	mapflag	notomb
+
+prontera,148,208,8	script	Boss Enchantment	10007,{
+	mes "๐ ต้องการ ^FF2929" + F_InsertComma(.req_zeny) + "z^000000 \nและ ^FF2929" + F_InsertComma(.req_item_amount) + " " + getitemname(.req_item_id) + "^000000 ในการเข้าห้อง";
+	mes "---";
+	mes "โทษภายในห้อง";
+	mes "๐ ^FF2929เป็นห้อง PvP^000000";
+	mes "๐ ^FF2929Damage จะเหลือ 1%^000000";
+	mes "๐ ^FF2929Flee จะเหลือ 1%^000000";
+	mes "๐ ^FF2929Perfect Dodge จะเหลือ 1%^000000";
+	mes "๐ ^FF2929Monster จะโจมตีแรงขึ้น 30 เท่า^000000";
+	mes "---";
+	mes "รางวัล";
+	mes "๐ ^3629FFเมื่อกำจัด Boss จะได้รับ Enchantment สุ่ม^000000";
+	next;
+	menu "เข้า",-;
+	// Check Zeny
+	if (Zeny < .req_zeny){
+		mes "Zeny ไม่เพียงพอ";
+		close;
+	}
+	// Check Item
+	if (countitem(.req_item_id) < .req_item_amount){
+		mes getitemname(.req_item_id) + " ไม่เพียงพอ";
+		close;
+	}
+	Zeny -= .req_zeny;
+	delitem .req_item_id,.req_item_amount;
+	setpcblock PCBLOCK_ALL,true;
+	setpcblock PCBLOCK_MOVE,false;
+	addtimer 2000,strnpcinfo(3) + "::OnWarp";
+	announce strcharinfo(0) + " เข้าห้อง Boss (Enchantment)",bc_all;
+	warp .map_name$,0,0;
+	end;
+	
+OnWarp:
+	setpcblock PCBLOCK_ALL,false;
+	end;
+	
+OnCleanUp:
+	.no_respawn = 1;
+	killmonsterall .map_name$;
+	callsub L_Spawn;
+	.no_respawn = 0;
+	end;
+	
+OnBossDead:
+	if(.no_respawn)
+	end;
+
+	monster .map_name$,0,0,"--ja--",$all_boss_ids[rand(0,($all_boss_id_size - 1))],1,strnpcinfo(0) + "::OnBossDead";
+
+	// Unexpected error
+	if(!playerattached())
+	end;
+
+	// Get enchantment
+	.@item_id = $enchantIds[rand(0,(getarraysize($enchantIds) - 1))];
+	
+	announce strcharinfo(0) + " ได้รับ " + getitemname(.@item_id),bc_map;
+	
+	getitem .@item_id,1;
+	
+	end;
+	
+	L_Spawn:
+	for(.@i = 0; .@i < .spawn_amount; .@i++)
+	monster .map_name$,0,0,"--ja--",$all_boss_ids[rand(0,($all_boss_id_size - 1))],1,strnpcinfo(0) + "::OnBossDead";
+	return;
+	
+OnInit:
+	.map_name$ = "evt_swar_b";
+	
+	.req_zeny = 900000;
+	.req_item_id = 40017;
+	.req_item_amount = 99;
+	
+	.spawn_amount = 50;
+	
+	waitingroom "ห้อง Boss (Enchantment)",0;
+	
+	callsub L_Spawn;
+	
+	end;
+}

@@ -29,7 +29,7 @@ dic_dun02,0,0	monster	Antler Scaraba	2085,50,5000
 dic_dun02,0,0	monster	Rake Scaraba	2086,45,5000
 dic_dun02,0,0	monster	Antler Scaraba Egg	2090,15,5000
 dic_dun02,0,0	monster	Rake Scaraba Egg	2091,15,5000
-dic_dun02,0,0,0,0	boss_monster	Scaraba Queen	2087,1,7200000,0,1
+dic_dun02,0,0,0,0	boss_monster	Scaraba Queen	2087,1,180000,180000
 
 //==================================================
 // dic_dun03 - Nightmare Scaraba Hole
@@ -42,4 +42,4 @@ dic_dun03,0,0	monster	Gold One-Horn Scaraba	2161,30,5000
 dic_dun03,0,0	monster	Gold Two-Horn Scaraba	2162,30,5000
 dic_dun03,0,0	monster	Gold Antler Scaraba	2163,40,5000
 dic_dun03,0,0	monster	Gold Rake Scaraba	2164,40,5000
-dic_dun03,0,0,0,0	boss_monster	Gold Queen Scaraba	2165,1,7200000,0,1
+dic_dun03,0,0,0,0	boss_monster	Gold Queen Scaraba	2165,1,180000,180000
