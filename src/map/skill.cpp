@@ -2374,6 +2374,15 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		}
 	}
 
+	// Pet Autobonus when attacking
+	if (sd != nullptr && sd->pd != nullptr && sd->pd->autobonus != nullptr) {
+		auto petbonus = sd->pd->autobonus;
+
+		if (rnd() % 1000 < petbonus->rate && (((petbonus->atk_type) & attack_type) & BF_WEAPONMASK || ((petbonus->atk_type) & attack_type) & BF_RANGEMASK || ((petbonus->atk_type) & attack_type) & BF_SKILLMASK)) {
+			pet_exeautobonus(*sd, petbonus);
+		}
+	}
+
 	//Polymorph
 	if(sd && sd->bonus.classchange && attack_type&BF_WEAPON &&
 		dstmd && !status_has_mode(tstatus,MD_STATUSIMMUNE) &&
@@ -2460,6 +2469,15 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint1
 			if (it->atk_type != skill_id)
 				continue;
 			pc_exeautobonus(*sd, &sd->autobonus3, it);
+		}
+	}
+
+	// Pet Autobonus when being attacked by skill_id
+	if (sd != nullptr && sd->pd != nullptr && sd->pd->autobonus3 != nullptr) {
+		auto petbonus = sd->pd->autobonus3;
+
+		if (rnd() % 1000 < petbonus->rate && petbonus->atk_type == skill_id) {
+			pet_exeautobonus(*sd, petbonus);
 		}
 	}
 
@@ -2684,6 +2702,15 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 				  ((it->atk_type)&attack_type)&BF_SKILLMASK))
 				continue; // one or more trigger conditions were not fulfilled
 			pc_exeautobonus(*dstsd, &dstsd->autobonus2, it);
+		}
+	}
+
+	// Pet Autobonus when attacked
+	if (dstsd != nullptr && dstsd->pd != nullptr && dstsd->pd->autobonus2 != nullptr && !status_isdead(bl) && !(skill_id && skill_get_nk(skill_id, NK_NODAMAGE))) {
+		auto petbonus = dstsd->pd->autobonus2;
+
+		if (rnd() % 1000 < petbonus->rate && (((petbonus->atk_type) & attack_type) & BF_WEAPONMASK || ((petbonus->atk_type) & attack_type) & BF_RANGEMASK || ((petbonus->atk_type) & attack_type) & BF_SKILLMASK)) {
+			pet_exeautobonus(*dstsd, petbonus);
 		}
 	}
 

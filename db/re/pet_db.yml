@@ -877,9 +877,9 @@ Body:
       .@i = getpetinfo(PETINFO_INTIMATE);
       
       if (.@i >= PET_INTIMATE_LOYAL) {
-        autobonus "{ bonus2 bSubEle,Ele_Neutral,2; heal 100,0; }",100,5000,BF_SHORT|BF_NORMAL;
+        petautobonus "{ bonus2 bSubEle,Ele_Neutral,2; heal 100,0; }",100,5000,BF_SHORT|BF_NORMAL;
       } else if (.@i >= PET_INTIMATE_CORDIAL) {
-        autobonus "{ bonus2 bSubEle,Ele_Neutral,2; heal 100,0; }",100,3000,BF_SHORT|BF_NORMAL;
+        petautobonus "{ bonus2 bSubEle,Ele_Neutral,2; heal 100,0; }",100,3000,BF_SHORT|BF_NORMAL;
       }
   - Mob: MEDUSA
     TameItem: Splendid_Mirror
@@ -1511,15 +1511,15 @@ Body:
       if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bCritical,6;
         bonus bHit,6;
-        autobonus "{ bonus2 bHPRegenRate,500,1000; bonus2 bSPRegenRate,20,1000; }",30,5000,BF_WEAPON|BF_SHORT;
+        petautobonus "{ bonus2 bHPRegenRate,500,1000; bonus2 bSPRegenRate,20,1000; }",30,5000,BF_WEAPON|BF_SHORT;
       } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bCritical,5;
         bonus bHit,5;
-        autobonus "{ bonus2 bHPRegenRate,400,1000; bonus2 bSPRegenRate,10,1000; }",30,5000,BF_WEAPON|BF_SHORT;
+        petautobonus "{ bonus2 bHPRegenRate,400,1000; bonus2 bSPRegenRate,10,1000; }",30,5000,BF_WEAPON|BF_SHORT;
       } else if (.@i >= PET_INTIMATE_NEUTRAL) {
         bonus bCritical,4;
         bonus bHit,4;
-        autobonus "{ bonus2 bHPRegenRate,300,1000; }",20,5000,BF_WEAPON|BF_SHORT;
+        petautobonus "{ bonus2 bHPRegenRate,300,1000; }",20,5000,BF_WEAPON|BF_SHORT;
       } else {
         bonus bCritical,3;
         bonus bHit,3;
@@ -1667,11 +1667,11 @@ Body:
       if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bCritical,5;
         bonus bHit,5;
-        autobonus "{ bonus2 bHPRegenRate,400,1000; }",20,5000,BF_WEAPON|BF_SHORT;
+        petautobonus "{ bonus2 bHPRegenRate,400,1000; }",20,5000,BF_WEAPON|BF_SHORT;
       } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bCritical,4;
         bonus bHit,4;
-        autobonus "{ bonus2 bHPRegenRate,300,1000; }",20,5000,BF_WEAPON|BF_SHORT;
+        petautobonus "{ bonus2 bHPRegenRate,300,1000; }",20,5000,BF_WEAPON|BF_SHORT;
       } else if (.@i >= PET_INTIMATE_NEUTRAL) {
         bonus bCritical,3;
         bonus bHit,3;
@@ -1780,10 +1780,10 @@ Body:
       
       if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bMaxSP,150;
-        autobonus "{ bonus2 bSPRegenRate,40,1000; }",30,5000,BF_MAGIC;
+        petautobonus "{ bonus2 bSPRegenRate,40,1000; }",30,5000,BF_MAGIC;
       } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bMaxSP,150;
-        autobonus "{ bonus2 bSPRegenRate,30,1000; }",30,5000,BF_MAGIC;
+        petautobonus "{ bonus2 bSPRegenRate,30,1000; }",30,5000,BF_MAGIC;
       } else if (.@i >= PET_INTIMATE_NEUTRAL) {
         bonus bMaxSP,100;
       } else {

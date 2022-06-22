@@ -6117,9 +6117,7 @@ kind in 'doc/item_bonus.txt'.
 *autobonus3 <bonus script>,<rate>,<duration>,<skill id>,{<other script>};
 *autobonus3 <bonus script>,<rate>,<duration>,"<skill name>",{<other script>};
 
-These commands are meant to be used in item scripts. They will probably work
-outside item scripts, but the bonus will not persist for long. They, as
-expected, refer only to an invoking character.
+These commands are meant to be used in item scripts only! See 'petautobonus' for pet usage.
 
 What these commands do is 'attach' a script to the player which will get
 executed on attack (or when attacked in the case of autobonus2).
@@ -10199,6 +10197,17 @@ owner is currently fighting. Skill IDs and levels are as per 'petskillsupport'.
 inflicted and the specified number of attacks.
 
 Value of 'rate' is between 1 and 100. 100 = 100%
+
+---------------------------------------
+
+*petautobonus <bonus script>,<rate>,<duration>{,<flag>,{<other script>}};
+*petautobonus2 <bonus script>,<rate>,<duration>{,<flag>,{<other script>}};
+*petautobonus3 <bonus script>,<rate>,<duration>,<skill id>,{<other script>};
+*petautobonus3 <bonus script>,<rate>,<duration>,"<skill name>",{<other script>};
+
+Only one of each autobonus can be active on a pet at once.
+
+See 'autobonus' for more details.
 
 ---------------------------------------
 
