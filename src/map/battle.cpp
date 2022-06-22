@@ -10614,7 +10614,6 @@ static const struct _battle_data {
 	{ "quest_exp_rate",                     &battle_config.quest_exp_rate,                  100,    0,      INT_MAX,        },
 	{ "at_mapflag",                         &battle_config.autotrade_mapflag,               0,      0,      1,              },
 	{ "at_timeout",                         &battle_config.at_timeout,                      0,      0,      INT_MAX,        },
-	{ "afk_timeout",                        &battle_config.afk_timeout,                     0,      0,      INT_MAX,        },
 	{ "homunculus_autoloot",                &battle_config.homunculus_autoloot,             0,      0,      1,              },
 	{ "idle_no_autoloot",                   &battle_config.idle_no_autoloot,                0,      0,      INT_MAX,        },
 	{ "max_guild_alliance",                 &battle_config.max_guild_alliance,              3,      0,      3,              },
