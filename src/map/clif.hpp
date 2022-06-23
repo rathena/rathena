@@ -1235,7 +1235,4 @@ void clif_summon_hp_bar(struct mob_data& md);
 void clif_laphine_synthesis_open( struct map_session_data *sd, std::shared_ptr<s_laphine_synthesis> synthesis );
 void clif_laphine_upgrade_open( struct map_session_data* sd, std::shared_ptr<s_laphine_upgrade> upgrade );
 
-/// Extended Vending [Lilith] update version by ex0ample
-int clif_vend(struct map_session_data *sd, int skill_lv);
-
 #endif /* CLIF_HPP */

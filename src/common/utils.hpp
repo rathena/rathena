@@ -5,7 +5,6 @@
 #define UTILS_HPP
 
 #include <stdio.h> // FILE*
-#include <string>
 
 #include "cbasetypes.hpp"
 
@@ -48,7 +47,5 @@ extern uint16 GetUShort(const unsigned char* buf);
 extern uint32 GetULong(const unsigned char* buf);
 extern int32 GetLong(const unsigned char* buf);
 extern float GetFloat(const unsigned char* buf);
-
-std::string InsertComma(int v);
 
 #endif /* UTILS_HPP */
