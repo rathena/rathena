@@ -14209,7 +14209,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		break;
 	case SKE_TWINKLING_GALAXY:
 		for (i = 0; i < skill_get_time(skill_id, skill_lv) / skill_get_unit_interval(skill_id); i++)
-			skill_addtimerskill(src, tick + i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
+			skill_addtimerskill(src, tick + (t_tick)i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
 		flag |= 1;
 		skill_unitsetting(src, skill_id, skill_lv, x, y, 0);
 		break;
@@ -14238,7 +14238,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 					skill_delunitgroup(sg);
 
 					for (i = 0; i < skill_get_time(skill_id, skill_lv) / skill_get_unit_interval(skill_id); i++)
-						skill_addtimerskill(src, tick + i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
+						skill_addtimerskill(src, tick + (t_tick)i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
 					flag |= 1;
 					skill_unitsetting(src, skill_id, skill_lv, x, y, 0);
 				}
@@ -14336,7 +14336,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | SKILL_ALTDMG_FLAG | 1, skill_castend_damage_id);
 		skill_unitsetting(src, skill_id, skill_lv, x, y, flag);
 		for (i = 1; i <= (skill_get_time(skill_id, skill_lv) / skill_get_unit_interval(skill_id)); i++) {
-			skill_addtimerskill(src, tick + i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
+			skill_addtimerskill(src, tick + (t_tick)i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
 		}
 		break;
 	}
@@ -14347,7 +14347,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 				src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | SKILL_ALTDMG_FLAG | 1, skill_castend_damage_id);
 			skill_unitsetting(src, skill_id, skill_lv, x, y, skill_get_unit_interval(skill_id));
 			for (i = 1; i <= (skill_get_time(skill_id, skill_lv) / skill_get_time2(skill_id, skill_lv)); i++) {
-				skill_addtimerskill(src, tick + i*skill_get_time2(skill_id, skill_lv), 0, x, y, skill_id, skill_lv, 0, flag);
+				skill_addtimerskill(src, tick + (t_tick)i*skill_get_time2(skill_id, skill_lv), 0, x, y, skill_id, skill_lv, 0, flag);
 			}
 		}
 		break;
@@ -14967,7 +14967,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			tmpy = y - area + rnd() % (area * 2 + 1);
 			skill_unitsetting(src, skill_id, skill_lv, tmpx, tmpy, flag);
 			for (i = 0; i <= (skill_get_time(skill_id, skill_lv) / skill_get_unit_interval(skill_id)); i++) {
-				skill_addtimerskill(src, tick + i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
+				skill_addtimerskill(src, tick + (t_tick)i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
 			}
 		} break;
 	case NW_MISSION_BOMBARD: {
@@ -14976,7 +14976,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		skill_unitsetting(src, skill_id, skill_lv, x, y, flag);
 
 		for (i = 1; i <= (skill_get_time(skill_id, skill_lv) / skill_get_unit_interval(skill_id)); i++) {
-			skill_addtimerskill(src, tick + i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
+			skill_addtimerskill(src, tick + (t_tick)i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
 		}
 	}
     	break;
