@@ -44165,7 +44165,7 @@ Body:
     Range: 9
     Hit: Multi_Hit
     HitCount: -6
-    Element: Fire
+    Element: Water
     DamageFlags:
       Splash: true
     SplashArea:
