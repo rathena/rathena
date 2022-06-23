@@ -359,24 +359,24 @@ function	script	Time2Str	{
 	
 	set .@Time$, "";
 	if( .@Days > 1 )
-		set .@Time$, .@Time$ + .@Days + " days, ";
+		set .@Time$, .@Time$ + .@Days + " วัน, ";
 	else if( .@Days > 0 )
-		set .@Time$, .@Time$ + .@Days + " day, ";
+		set .@Time$, .@Time$ + .@Days + " วัน, ";
 
 	if( .@Hours > 1 )
-		set .@Time$, .@Time$ + .@Hours + " hours, ";
+		set .@Time$, .@Time$ + .@Hours + " ชั่วโมง, ";
 	else if( .@Hours > 0 )
-		set .@Time$, .@Time$ + .@Hours + " hour, ";
+		set .@Time$, .@Time$ + .@Hours + " ชั่วโมง, ";
 
 	if( .@Minutes > 1 )
-		set .@Time$, .@Time$ + .@Minutes + " minutes, ";
+		set .@Time$, .@Time$ + .@Minutes + " นาที, ";
 	else if( .@Minutes > 0 )
-		set .@Time$, .@Time$ + .@Minutes + " minute, ";
+		set .@Time$, .@Time$ + .@Minutes + " นาที, ";
 
 	if( .@Time_Left > 1 || .@Time_Left == 0 )
-		set .@Time$, .@Time$ + .@Time_Left + " seconds";
+		set .@Time$, .@Time$ + .@Time_Left + " วินาที";
 	else if( .@Time_Left == 1 )
-		set .@Time$, .@Time$ + .@Time_Left + " second";
+		set .@Time$, .@Time$ + .@Time_Left + " วินาที";
 	
 	return .@Time$;
 }

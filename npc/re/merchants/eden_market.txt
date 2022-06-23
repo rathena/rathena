@@ -281,57 +281,57 @@ OnSat2200:
 // Eden Market Group Hustler
 moc_para01,106,38,4	script	Market Group Hustler#ent	4_M_YOYOROGUE,{
 	mes "[Hustler]";
-	mes "Hey, adventurer.";
-	mes "I can take you to somewhere nice. Are you interested?";
+	mes "เฮ้นักผจญภัย";
+	mes "ฉันสามารถพาคุณไปที่ที่สวยงามได้คุณสนใจหรือไม่";
 	next;
-	switch (select("Move to Eden Market Group!:About Eden Market Group.:Cancel.")) {
+	switch (select("ย้ายไปที่กลุ่มตลาด Eden!: เกี่ยวกับกลุ่มตลาด Eden: ยกเลิก")) {
 	case 1:
 		mes "[Hustler]";
-		mes "Moving~!";
+		mes "การย้าย ~!";
 		close2;
 		warp "paramk",97,17;
 		end;
 	case 2:
 		mes "[Hustler]";
-		mes "Hahaha... The Eden Market Group is a place where merchants gather around to sell various items.";
-		mes "And I don't mean common stuff like Jellopy, which you can acquire anywhere. Here, we only deal in real goods.";
+		mes "ฮ่าฮ่าฮ่า ... กลุ่มตลาด Eden เป็นสถานที่ที่พ่อค้ามารวมตัวกันเพื่อขายสินค้าต่าง ๆ ";
+		mes "และฉันไม่ได้หมายถึงสิ่งทั่วไปเช่น Jellopy ซึ่งคุณสามารถหาได้ทุกที่ที่นี่เราทำของจริงเท่านั้น";
 		next;
 		mes "[Hustler]";
-		mes "Simple ingredients, precious stones, rare items from dungeons and excavation sites, and exotic artifacts that hail from another dimension...";
-		mes "Everything you could ever want!";
+		mes "ส่วนผสมที่เรียบง่ายอัญมณีมีค่าของหายากจากดันเจี้ยนและไซต์ขุดและสิ่งประดิษฐ์แปลกใหม่ที่มาจากมิติอื่น ... ";
+		mes "ทุกสิ่งที่คุณต้องการ!";
 		next;
-		select("You mean, this is a black market?!");
+		select("คุณหมายถึงนี่เป็นตลาดมืดใช่มั้ย!");
 		mes "[Hustler]";
-		mes "Ah... I wouldn't say that.";
-		mes "This marketplace is, say, technically legal...";
-		mes "Keep in mind that most special products are of ^4d4dfflimited quantity^000000. If you are late, they might be sold out.";
-		next;
-		mes "[Hustler]";
-		mes "Don't expect discounts for most limited quantity items.";
-		mes "You have to pay the full price.";
+		mes "อ่า ... ข้าจะไม่พูดอย่างนั้น";
+		mes "ตลาดนี้พูดถูกกฎหมายในทางเทคนิค ... ";
+		mes "โปรดจำไว้ว่าผลิตภัณฑ์พิเศษส่วนใหญ่มี ^4d4dffจำนวน จำกัด^000000 ถ้าคุณมาช้าพวกเขาอาจจะถูกขายหมด";
 		next;
 		mes "[Hustler]";
-		mes "Adventurers sometimes come by to sell what they have found on their expeditions.";
-		mes "But you have to see for yourself!";
+		mes "อย่าคาดหวังส่วนลดสำหรับสินค้าที่มีจำนวน จำกัด ";
+		mes "คุณต้องจ่ายราคาเต็ม";
 		next;
 		mes "[Hustler]";
-		mes "Keep in mind that most stores are closed one day out of the week; ^4d4dffmost stores are not open on Wednesdays^000000.";
-		mes "Though, not all of them close on Wednesdays; majority of them are still open.";
+		mes "นักผจญภัยบางครั้งมาเพื่อขายสิ่งที่พบในการเดินทางของพวกเขา";
+		mes "แต่เจ้าต้องเห็นด้วยตัวเอง!";
 		next;
 		mes "[Hustler]";
-		mes "More special items are sold on weekends.";
-		mes "I have even seen an <ITEM>Izidor<INFO>709</INFO></ITEM> being sold~";
-		mes "It was amazing.";
-		mes "Of course it was super expensive and only a handful were up for sale.";
+		mes "โปรดจำไว้ว่าร้านค้าส่วนใหญ่จะปิดหนึ่งวันต่อสัปดาห์; ^4d4dffร้านค้าส่วนใหญ่จะไม่เปิดในวันพุธ^000000";
+		mes "แม้ว่าจะไม่ใช่ทุกคนที่ปิดในวันพุธ แต่ส่วนใหญ่ยังคงเปิดอยู่";
 		next;
 		mes "[Hustler]";
-		mes "How about it? Interested?";
-		mes "Isn't it worth paying a visit?";
-		mes "Hahahahaha!";
+		mes "มีรายการพิเศษเพิ่มเติมขายในช่วงวันหยุด";
+		mes "ฉันเคยเห็น <ITEM>Izidor<INFO>709</INFO></ITEM> กำลังขาย ~";
+		mes "มันช่างยอดเยี่ยม";
+		mes "แน่นอนมันแพงมากและมีเพียงไม่กี่คนเท่านั้นที่ขาย";
+		next;
+		mes "[Hustler]";
+		mes "แล้วมันสนใจไหม?";
+		mes "มันคุ้มค่าที่จะไปเยี่ยมไหม";
+		mes "ฮ่าฮ่าฮ่าฮ่าฮ่า!";
 		close;
 	case 3:
 		mes "[Hustler]";
-		mes "Come by anytime, if you want to go to the Eden Market Group!";
+		mes "มาทุกที่ทุกเวลาถ้าคุณอยากไปที่ Eden Market Group!";
 		close;
 	}
 }
@@ -339,61 +339,61 @@ moc_para01,106,38,4	script	Market Group Hustler#ent	4_M_YOYOROGUE,{
 // Eden Market Group Guide
 paramk,101,22,3	script	Market Group Guide#info	4_F_ZONDAGIRL,{
 	mes "[Guide]";
-	mes "Hello. Welcome to Eden Market Group, the official marketplace run by the continental merchant coalition, supported by the Eden Group.";
+	mes "สวัสดี. ยินดีต้อนรับสู่ Eden Market Group ตลาดอย่างเป็นทางการซึ่งดำเนินการโดยกลุ่มผู้ประกอบการค้าของทวีปโดยได้รับการสนับสนุนจากกลุ่ม Eden";
 	next;
-	switch (select("About when we're open.:About Special Products.:About Eden Market Group.:Cancel.")) {
+	switch (select("เกี่ยวกับเวลาที่เราเปิด: เกี่ยวกับผลิตภัณฑ์พิเศษ: เกี่ยวกับกลุ่มตลาด Eden: ยกเลิก")) {
 	case 1:
 		mes "[Guide]";
-		mes "Eden Market Group is a marketplace that contains many different shops.";
+		mes "กลุ่มตลาด Eden เป็นตลาดที่มีร้านค้ามากมาย";
 		next;
 		mes "[Guide]";
-		mes "Wednesday is an official holiday designated by the marketplace; most shops are closed on this day.";
+		mes "วันพุธ เป็นวันหยุดราชการที่กำหนดโดยตลาดร้านค้าส่วนใหญ่จะปิดในวันนี้";
 		next;
 		mes "[Guide]";
-		mes "However, depending on the owner's wishes, and the type of items being offered, some shops remain partially open even on the holiday.";
+		mes "อย่างไรก็ตามขึ้นอยู่กับความต้องการของเจ้าของและประเภทของสินค้าที่ถูกเสนอร้านค้าบางร้านยังคงเปิดบางส่วนแม้ในวันหยุด";
 		next;
 		mes "[Guide]";
-		mes "And, some shops offer special items on certain days of the week. Keep that in mind.";
+		mes "และร้านค้าบางแห่งมีสินค้าพิเศษในบางวันของสัปดาห์โปรดจำไว้";
 		close;
 	case 2:
 		mes "[Guide]";
-		mes "Some shops will sell different items on weekends, certain days of the week, or even during certain hours; these items are different than their usual daily items.";
+		mes "ร้านค้าบางแห่งจะจำหน่ายสินค้าต่าง ๆ ในช่วงวันหยุดสุดสัปดาห์บางวันในสัปดาห์หรือแม้กระทั่งในช่วงเวลาใดเวลาหนึ่ง; รายการเหล่านี้จะแตกต่างจากรายการประจำวันปกติของพวกเขา";
 		next;
 		mes "[Guide]";
-		mes "'Wonderful Friends' and 'Strong Friends' will sell one rare item each weekend.";
-		mes "'Miner's Coalition' will sell the anvil for blacksmithing only on weekends.";
+		mes "'Wonderful Friends' และ 'Strong Friends' จะขายของหายากหนึ่งรายการในแต่ละสัปดาห์";
+		mes "'Miner's Coalition' จะขายทั่งตีเหล็กสำหรับช่างตีเหล็กเฉพาะวันหยุดสุดสัปดาห์";
 		next;
 		mes "[Guide]";
-		mes "I cannot tell you what items individual shops sell, because they are all different.";
-		mes "Why don't you find out for yourself by visiting often?";
+		mes "ฉันไม่สามารถบอกคุณได้ว่าร้านค้าแต่ละร้านขายสินค้าอะไรเพราะพวกเขาต่างกัน";
+		mes "ทำไมเจ้าไม่ลองหาตัวเองด้วยการไปเยี่ยมบ่อย ๆ ";
 		close;
 	case 3:
 		mes "[Guide]";
-		mes "There are many people with the soul of a merchant that would like to sell their items to people in need of such.";
-		mes "Eden Market Group has designated a place for such people to buy and sell.";
+		mes "มีคนมากมายที่มีจิตวิญญาณของพ่อค้าที่ต้องการขายสินค้าของพวกเขาให้กับคนที่ต้องการเช่นนี้";
+		mes "กลุ่มตลาด Eden ได้กำหนดสถานที่สำหรับให้คนซื้อและขาย";
 		next;
 		mes "[Guide]";
-		mes "We provide the means for goods that would otherwise have been contraband to be bought and sold in a fair and transparent manner, working in conjunction with the merchant coalitions and adventurers.";
+		mes "เราจัดหาวิธีการสำหรับสินค้าที่อาจจะเป็นของต้องห้ามในการซื้อและขายในลักษณะที่เป็นธรรมและโปร่งใสทำงานร่วมกับกลุ่มพันธมิตรผู้ค้าและนักผจญภัย";
 		next;
 		mes "[Guide]";
-		mes "Some people mutter that Eden Market Group is a black market... Haha, what a silly idea...";
-		mes "We are merely a merchant coalition.";
+		mes "บางคนบ่นว่า Eden Market Group เป็นตลาดมืด ... ฮ่าฮ่าช่างเป็นความคิดที่โง่เขลา ... ";
+		mes "พวกเราเป็นแค่กลุ่มพันธมิตรพ่อค้า";
 		next;
 		mes "[Guide]";
-		mes "A portion of our profits go towards running the Eden Group, an adventurer's guild.";
-		mes "You can sell the loot from your adventures here, and the profits we make go towards providing services that benefit you. We are killing two birds with one stone, really.";
+		mes "ส่วนหนึ่งของผลกำไรของเรามุ่งสู่กลุ่ม Eden ซึ่งเป็นสมาคมนักผจญภัย";
+		mes "คุณสามารถขายของขวัญจากการผจญภัยของคุณที่นี่และผลกำไรที่เราได้รับจากการให้บริการที่เป็นประโยชน์ต่อคุณเรากำลังฆ่านกสองตัวด้วยหินก้อนเดียวจริง ๆ ";
 		next;
 		mes "[Guide]";
-		mes "Keep in mind that limited quantity items will never go on sale!";
+		mes "โปรดจำไว้ว่าสินค้าที่มีจำนวน จำกัด จะไม่ลดราคา!";
 		close;
 	case 4:
 		mes "[Guide]";
-		mes "Have a good time!";
+		mes "ขอให้มีความสุข!";
 		close;
 	}
 
 OnTimer60000:
-	npctalk "Welcome. This is the Eden Market Group.";
+	npctalk "ยินดีต้อนรับนี่คือกลุ่มตลาด Eden";
 
 OnInit:
 	initnpctimer;
@@ -405,19 +405,19 @@ paramk,103,17,3	script	Market Guard#1	4_M_YOUNGKNIGHT,{
 	callfunc("F_CoolDown", 5);
 	switch (atoi(strnpcinfo(2))) {
 	default:
-		npctalk "Welcome.";
+		npctalk "ยินดีต้อนรับ.";
 		break;
 	case 3:
-		npctalk "Welcome to the Eden Market Group.";
+		npctalk "ยินดีต้อนรับสู่ Eden Market Group";
 		break;
 	case 4:
-		npctalk "How are you? This is the Eden Market Group.";
+		npctalk "คุณเป็นอย่างไรบ้างนี่คือกลุ่มตลาด Eden";
 		break;
 	case 5:
-		npctalk "Thank you for shopping at the Eden Market Group.";
+		npctalk "ขอบคุณสำหรับการช็อปปิ้งที่ Eden Market Group";
 		break;
 	case 6:
-		npctalk "Welcome. The Eden Market Group welcomes you.";
+		npctalk "ยินดีต้อนรับกลุ่มตลาด Eden ยินดีต้อนรับคุณ";
 		break;
 	}
 	end;
@@ -436,7 +436,7 @@ paramk,53,67,3	duplicate(Market Guard#1)	Market Guard#6	4_M_YOUNGKNIGHT
 paramk,78,44,3	script	A wise customer#gst01	4_TOWER_14,6,6,{
 OnTouch:
 	callfunc("F_CoolDown", 4);
-	npctalk "I am waiting for the weapon that will be sold on the weekends. I heard that if I come by on the right day, both the red version and the blue version would be offered.";
+	npctalk "ฉันกำลังรออาวุธที่จะขายในวันหยุดสุดสัปดาห์ฉันได้ยินมาว่าถ้าฉันมาในวันที่เหมาะสมทั้งรุ่นสีแดงและสีน้ำเงินจะได้รับการเสนอ";
 	end;
 }
 
@@ -444,7 +444,7 @@ OnTouch:
 paramk,119,80,3	script	A dining customer#gst02	4_M_CHN8GUEK,6,6,{
 OnTouch:
 	callfunc("F_CoolDown", 4);
-	npctalk "So spicy! I don't care if this is the 'taste of our homeland' or whatever, it's far too spicy! Aaaaaaahh!";
+	npctalk "เผ็ดมาก! ฉันไม่สนหรอกว่านี่คือ 'รสชาติของบ้านเกิดเมืองนอนของเรา' หรืออะไรก็ตามมันเผ็ดเกินไป! Aaaaaaahh!";
 	end;
 }
 
@@ -452,7 +452,7 @@ OnTouch:
 paramk,106,61,3	script	Customer#gst03	4_TOWER_04,6,6,{
 OnTouch:
 	callfunc("F_CoolDown", 4);
-	npctalk "I come here when I need a break. I love this place. Comfortable, and lots of interesting items around.";
+	npctalk "ฉันมาที่นี่เมื่อฉันต้องการพักฉันรักสถานที่แห่งนี้สะดวกสบายและมีสิ่งที่น่าสนใจมากมาย";
 	end;
 }
 
@@ -460,17 +460,17 @@ OnTouch:
 paramk,77,60,3	script	Window-shopper#gst04	4_TOWER_02,6,6,{
 OnTouch:
 	callfunc("F_CoolDown", 4);
-	npctalk "I wonder if it's really okay for me to window-shop all day without buying anything...";
+	npctalk "ฉันสงสัยว่ามันโอเคสำหรับฉันที่จะไปซื้อของที่หน้าต่างตลอดทั้งวันโดยไม่ซื้ออะไรเลย ... ";
 	end;
 }
 
 // Cassie
 paramk,113,56,3	script	Cassie#gst05	1_F_PUBGIRL,6,6,{
-	npctalk "Welcome to the Eden Market Group~ You want a fancy drink?";
+	npctalk "ยินดีต้อนรับสู่ Eden Market Group ~ คุณต้องการเครื่องดื่มแนวแฟนซีไหม?";
 	mes "[Cassie]";
-	mes "Do you wish to buy a drink?";
+	mes "คุณต้องการซื้อเครื่องดื่มหรือไม่";
 	next;
-	switch (select("Tropical Sograt.:Vermilion on the Beach.:No.")) {
+	switch (select("Tropical Sograt.:Vermilion on the Beach.:ไม่เอาขอบคุณ")) {
 	case 1:
 		.@item = 12112;
 		break;
@@ -479,23 +479,23 @@ paramk,113,56,3	script	Cassie#gst05	1_F_PUBGIRL,6,6,{
 		break;
 	case 3:
 		mes "[Cassie]";
-		mes "Have a good time.";
+		mes "ขอให้มีความสุข";
 		close;
 	}
 	if (Zeny < 800) {
 		mes "[Cassie]";
-		mes "A drink costs 800z.";
+		mes "เครื่องดื่มราคา 800z.";
 		close;
 	}
 	mes "[Cassie]";
-	mes "Enjoy it";
+	mes "สนุกกับมัน";
 	Zeny -= 800;
 	getitem(.@item, 1);
 	close;
 
 OnTouch:
 	callfunc("F_CoolDown", 4);
-	npctalk "Welcome to the Eden Market Group. Do you want a fancy drink?";
+	npctalk "ยินดีต้อนรับสู่ Eden Market Group คุณต้องการเครื่องดื่มสุดพิเศษหรือไม่";
 	end;
 }
 
@@ -503,28 +503,28 @@ OnTouch:
 paramk,74,15,0	script	Leria#coin	4_M_BIBI,{
 	if ($event_paramk > 0) {
 		mes "[Leria]";
-		mes "I sell coins that I have collected from alternate dimensions.";
-		mes "Purchase whatever catches your eye.";
-		mes "Be warned: they are rather pricey. I had to go through immense trouble in order to procure them.";
+		mes "ฉันขายเหรียญที่ฉันรวบรวมได้จากมิติอื่น";
+		mes "ซื้ออะไรก็ตามที่ดึงดูดสายตาของคุณ";
+		mes "ได้รับคำเตือน: พวกมันค่อนข้างแพงฉันต้องผ่านปัญหาอันใหญ่หลวงเพื่อจะได้มา";
 		next;
-		if (select("See what is up for sale.:Cancel.") == 1) {
+		if (select("ดูว่ามีอะไรขายได้บ้าง: ยกเลิก") == 1) {
 			mes "[Leria]";
-			mes "I may not have any stock left since I sell only a handful of items.";
+			mes "ฉันอาจจะไม่มีสินค้าเหลือตั้งแต่ฉันขายเพียงไม่กี่รายการ";
 			close2;
 			callshop "para_coin10";
 			end;
 		}
 		mes "[Leria]";
-		mes "Since I scour the world to find the items that I sell, the price is high...";
-		mes "But there are those who buy them anyway.";
+		mes "เมื่อข้าค้นหาสิ่งที่ฉันขายออกไปทั่วโลกราคาก็สูง ... ";
+		mes "แต่มีคนที่ซื้อมันอยู่ดี";
 		next;
 		mes "[Leria]";
-		mes "Well, those who need them must pay the price. Isn't that so?";
+		mes "ผู้ที่ต้องการพวกเขาต้องจ่ายราคาไม่ใช่เหรอ?";
 		close;
 	} else { // holiday
 		mes "[Leria]";
-		mes "Ah... Today is the marketplace holiday.";
-		mes "Come back tomorrow if you need coins.";
+		mes "อ่า ... วันนี้เป็นวันหยุดของตลาด";
+		mes "กลับมาพรุ่งนี้ถ้าเจ้าต้องการเหรียญ";
 		close;
 	}
 }
@@ -533,25 +533,25 @@ paramk,74,15,0	script	Leria#coin	4_M_BIBI,{
 paramk,71,15,3	script	Heimhunter#hei	4_GEFFEN_11,{
 	if ($event_paramk > 0) {
 		mes "[Heimhunter]";
-		mes "Ah, are you the customer that wants 'that' from the ancient castle?";
-		mes "I can only get one per day, but I will sell it.";
+		mes "อาเจ้าเป็นลูกค้าที่ต้องการ 'นั่น' จากปราสาทโบราณหรือไม่?";
+		mes "ฉันจะได้แค่วันละหนึ่ง แต่ฉันจะขายมัน";
 		next;
-		if (select("See the item.:Cancel.") == 1) {
+		if (select("ดูรายการ: ยกเลิก") == 1) {
 			mes "[Heimhunter]";
-			mes "There's only one..";
-			mes "It might have been bought by someone else already.";
-			mes "Please understand.";
+			mes "มีเพียงอันเดียว .. ";
+			mes "อาจมีคนอื่นซื้อมันมาแล้ว";
+			mes "ได้โปรดเข้าใจ";
 			close2;
 			callshop "para_hei10";
 			end;
 		}
 		mes "[Heimhunter]";
-		mes "As you wish.";
+		mes "ตามที่คุณต้องการ";
 		close;
 	} else { // holiday
 		mes "[Heimhunter]";
-		mes "Today is the official market holiday.";
-		mes "I will take a break, too.";
+		mes "วันนี้เป็นวันหยุดทางการตลาดอย่างเป็นทางการ";
+		mes "ข้าจะหยุดพักเช่นกัน";
 		close;
 	}
 }
@@ -560,27 +560,27 @@ paramk,71,15,3	script	Heimhunter#hei	4_GEFFEN_11,{
 paramk,68,15,0	script	Zephet#key	4_M_HUMERCHANT,{
 	if ($event_paramk > 3) {
 		mes "[Zephet]";
-		mes "Do you need keys?";
-		mes "I may have some extra keys for the clock tower?..";
+		mes "คุณต้องการกุญแจหรือไม่";
+		mes "ข้าอาจมีกุญแจพิเศษสำหรับหอนาฬิกาเหรอ? .. ";
 		next;
-		if (select("Buy keys.:Cancel.") == 1) {
+		if (select("ซื้อกุญแจ: ยกเลิก") == 1) {
 			mes "[Zephet]";
-			mes "I gather and sell the keys for the clock tower all by myself...";
-			mes "Even though I scavenge for them all week, there's not a lot available.";
-			mes "They may be sold out already.";
+			mes "ข้ารวบรวมและขายกุญแจสำหรับหอนาฬิกาด้วยตัวเอง ... ";
+			mes "แม้ว่าข้าจะทำการไล่ล่าพวกมันตลอดทั้งสัปดาห์ แต่ก็ยังมีไม่มาก";
+			mes "พวกมันอาจจะขายหมดแล้ว";
 			close2;
 			callshop "para_key10";
 			end;
 		}
 		mes "[Zephet]";
-		mes "You have no need of keys?";
-		mes "Remember that I sell keys here only on weekends.";
-		mes "Just for your information.";
+		mes "เจ้าไม่ต้องการกุญแจเหรอ?";
+		mes "จำไว้ว่าข้าขายกุญแจที่นี่เฉพาะวันหยุดสุดสัปดาห์";
+		mes "สำหรับข้อมูลของคุณ";
 		close;
 	} else { // holiday
 		mes "[Zephet]";
-		mes "I don't have enough keys yet.";
-		mes "Come back after Saturday afternoon.";
+		mes "ข้ายังมีกุญแจไม่พอ";
+		mes "กลับมาหลังจากบ่ายวันเสาร์";
 		close;
 	}
 }
@@ -590,8 +590,8 @@ paramk,68,15,0	script	Zephet#key	4_M_HUMERCHANT,{
 // Sign
 paramk,72,33,0	script	[Strong Friends]#wp00	HIDDEN_NPC,{
 	mes " == Strong Friends == ";
-	mes "From common weapons to priceless jewel-encrusted swords!";
-	mes "Every weapon that you could ever want is here for your perusal.";
+	mes "จากอาวุธทั่วไปไปจนถึงดาบที่มีอัญมณีที่มีค่าและไม่มีค่า!";
+	mes "อาวุธทุกอย่างที่คุณอาจต้องการคือที่นี่เพื่อการตรวจของคุณ";
 	close;
 }
 
@@ -599,32 +599,32 @@ paramk,72,33,0	script	[Strong Friends]#wp00	HIDDEN_NPC,{
 paramk,65,30,3	script	Miffy#wp01	4_F_LGTGIRL,{
 	if ($event_paramk > 1) {
 		mes "[Miffy]";
-		mes "A limited collection, only available on fiery Friday, Saturday and Sunday!";
-		mes "We offer an assortment of ancient weapons that adventurers have retrieved from dungeons!";
+		mes "คอลเลกชั่นที่ จำกัด มีเฉพาะในวันศุกร์ที่ร้อนแรง, เสาร์และอาทิตย์เท่านั้น!";
+		mes "เราเสนออาวุธโบราณหลากหลายประเภทที่นักผจญภัยได้ค้นคืนจากคุกใต้ดิน!";
 		next;
-		if (select("Look at the items.:Cancel.") == 1) {
+		if (select("ดูรายการต่างๆ: ยกเลิก") == 1) {
 			mes "[Miffy]";
-			mes "Let us show you the 'Strong Friends' special collection.";
-			mes "If you open the chest and there's nothing there, ";
-			mes "That means the weapon has already been sold.";
-			mes "The spoils go toward people with quick reflexes.";
+			mes "ให้เราแสดงชุดพิเศษ 'Strong Friends'";
+			mes "ถ้าเจ้าเปิดหน้าอกและไม่มีสิ่งใด";
+			mes "นั่นแปลว่าอาวุธได้ถูกขายไปแล้ว";
+			mes "ความเสียหายนั้นจะเข้าหาคนที่มีปฏิกิริยาตอบสนองเร็ว";
 			close2;
 			callshop "para_wp00";
 			end;
 		}
 		mes "[Miffy]";
-		mes "Special weapons sold on weekends!";
-		mes "Come see us anytime!";
+		mes "อาวุธพิเศษที่ขายในวันหยุดสุดสัปดาห์!";
+		mes "มาพบพวกเราได้ตลอดเวลา!";
 		close;
 	} else { // Wednesday Holiday
 		mes "[Miffy]";
-		mes "Hello. This is the weapon shop 'Strong Friends'.";
-		mes "We sell weapons that adventurers retrieve from dungeons and in battle, ";
-		mes "roving over the continent.";
+		mes "สวัสดีนี่คือร้านขายอาวุธ 'Strong Friends'";
+		mes "เราขายอาวุธที่นักผจญภัยเก็บมาจากคุกใต้ดินและในการต่อสู้";
+		mes "ท่องเที่ยวข้ามทวีป";
 		next;
 		mes "[Miffy]";
-		mes "^000000Friday-Saturday-Sunday, a limited weapon collection offered for 3 consecutive days!^000000";
-		mes "Come see us anytime!";
+		mes "^000000วันศุกร์ - วันเสาร์ - วันอาทิตย์, มีการสะสมอาวุธจำนวน จำกัด ติดต่อกัน 3 วัน! ^000000";
+		mes "มาพบพวกเราได้ตลอดเวลา!";
 		close;
 	}
 }
@@ -655,33 +655,33 @@ paramk,70,31,3	script	Nelsha#wp02	4_M_SITDOWN,{
 // Sign
 paramk,72,33,3	script	[Reliable Friends]#arm00	HIDDEN_NPC,{
 	mes " == Reliable Friends == ";
-	mes "Do you need shields, armor, and sturdy helmets?";
-	mes "You can rely on Reliable Friends!";
+	mes "คุณต้องการเกราะเกราะและหมวกที่แข็งแรงหรือไม่";
+	mes "คุณสามารถพึ่งพาเพื่อนที่ไว้วางใจได้!";
 	close;
 }
 
 // Coco
 paramk,78,31,3	script	Coco#arm01	4_F_SITDOWN,{
 	mes "[Coco]";
-	mes "Do you need sturdy armors to protect your frail body?";
-	mes "Or shields, to block the blows of your enemies?";
+	mes "คุณต้องการชุดเกราะที่แข็งแรงเพื่อปกป้องร่างกายที่อ่อนแอของคุณหรือไม่";
+	mes "หรือโล้ป้องกัน, เพื่อป้องกันการระเบิดของศัตรูของคุณ";
 	next;
-	switch (select("Look at armors.:Look at shields.:Cancel.")) {
+	switch (select("ดูชุดเกราะ:ดูโลป้องกัน:ยกเลิก")) {
 	case 1:
 		mes "[Coco]";
-		mes "Cheap and sturdy armor.";
+		mes "เกราะราคาถูกและทนทาน";
 		close2;
 		callshop "para_arm01",1;
 		end;
 	case 2:
 		mes "[Coco]";
-		mes "May, or may not, block blows made with reasonable force...";
+		mes "May, หรืออาจจะ, ปิดกั้นการระเบิดที่ทำด้วยกำลังที่สมเหตุสมผล ... ";
 		close2;
 		callshop "para_arm02",1;
 		end;
 	case 3:
 		mes "[Coco]";
-		mes "Come again.";
+		mes "กลับมาอีกนะ";
 		close;
 	}
 }
@@ -691,7 +691,7 @@ paramk,78,31,3	script	Coco#arm01	4_F_SITDOWN,{
 // Sign
 paramk,84,33,3	script	[Handsome Friends]#cst00	HIDDEN_NPC,{
 	mes " == Handsome Friends == ";
-	mes "A clothier for someone who loves to dress up!";
+	mes "นวลกว่าสำหรับคนที่ชอบแต่งตัว!";
 	close;
 }
 
@@ -699,32 +699,32 @@ paramk,84,33,3	script	[Handsome Friends]#cst00	HIDDEN_NPC,{
 paramk,90,31,3	script	Minho Doh#cst01	4W_M_01,{
 	if ($event_paramk > 2) {
 		mes "[Minho Doh]";
-		mes "Limited item collection, only available on weekends!";
-		mes "Only one item. If you want it, purchase quickly! You know the drill.";
+		mes "การสะสมไอเท็มมีจำนวน จำกัด มีเฉพาะวันหยุดสุดสัปดาห์!";
+		mes "มีเพียงหนึ่งไอเท็มถ้าคุณต้องการสั่งซื้ออย่างรวดเร็ว! คุณรู้จักสว่าน";
 		next;
-		if (select("See the collection.:Cancel.") == 1) {
+		if (select("ดูชุดสะสม:ยกเลิก") == 1) {
 			mes "[Minho Doh]";
-			mes "Here is our special collection!";
-			mes "If all the chests are empty, that means you are too late!";
+			mes "นี่คือคอลเล็กชันพิเศษของเรา!";
+			mes "ถ้าหน้าอกว่างเปล่านั่นแปลว่าเจ้าสายเกินไป!";
 			close2;
 			callshop "para_arm10";
 			end;
 		}
 		mes "[Minho Doh]";
-		mes "See you again!";
-		mes "Hahahahaha!";
+		mes "แล้วเจอกันอีก!";
+		mes "ฮ่าฮ่าฮ่าฮ่าฮ่า!";
 		close;
 	} else { // holiday
 		mes "[Minho Doh]";
-		mes "Do you want to peruse our special collection of items?";
-		mes "But the collection wouldn't be special if you can see them every day, right?";
+		mes "คุณต้องการอ่านรายการพิเศษของเราหรือไม่";
+		mes "แต่ของสะสมจะไม่พิเศษถ้าเจ้าเห็นพวกมันทุกวันใช่มั้ย";
 		next;
 		mes "[Minho Doh]";
-		mes "Come on weekends if you want to see our special collection.";
-		mes "We sell ONE item per day, on ^000000 Saturdays and Sundays^000000.";
+		mes "มาวันหยุดสุดสัปดาห์ถ้าคุณต้องการดูชุดพิเศษของเรา";
+		mes "เราขายหนึ่งรายการต่อวันใน ^000000วันเสาร์และวันอาทิตย์^000000";
 		next;
 		mes "[Minho Doh]";
-		mes "Hahahaha.. Aren't you looking forward to the special items soon to be revealed? Muhahahahaha!";
+		mes "ฮ่าฮ่าฮ่าฮ่า.. เจ้าไม่ได้รอที่จะเปิดเผยไอเท็มพิเศษเร็ว ๆ นี้เหรอ? อืมมฮ่าฮ่าฮ่าฮ่า!";
 		close;
 	}
 }
@@ -732,27 +732,27 @@ paramk,90,31,3	script	Minho Doh#cst01	4W_M_01,{
 // Lapelt
 paramk,94,32,3	script	Lapelt#hat01	4_M_LGTMAN,{
 	mes "[Lapelt]";
-	mes "Welcome! This is 'Handsome Friends', a clothier that will make you fashionable!";
-	mes "We sell common clothing and hats even on holidays.";
+	mes "ยินดีต้อนรับ! นี่คือ 'Handsome Friends' นักแต่งตัวที่จะทำให้คุณทันสมัย!";
+	mes "เราขายเสื้อผ้าและหมวกทั่วไปแม้ในวันหยุด";
 	next;
-	switch (select("Clothes and shoes.:Hats and glasses.:Cancel.")) {
+	switch (select("เสื้อผ้าและรองเท้า:หมวกและแว่นตา:ยกเลิก")) {
 	case 1:
 		mes "[Lapelt]";
-		mes "Don't look down on the items just because they are cheap.";
-		mes "They are well-made items from all over the world.";
+		mes "อย่าดูที่สิ่งของเพียงเพราะมันราคาถูก";
+		mes "มันเป็นของที่ทำมาจากทั่วทุกมุมโลก";
 		close2;
 		callshop "para_hat01",1;
 		end;
 	case 2:
 		mes "[Lapelt]";
-		mes "Fashion comes from matching accessories!";
-		mes "With matching items and a good hat, you can stand on the apex of fashion!";
+		mes "แฟชั่นมาจากอุปกรณ์จับคู่!";
+		mes "ด้วยไอเท็มจับคู่และหมวกที่ดีคุณจะสามารถยืนอยู่บนจุดสูงสุดของแฟชั่น!";
 		close2;
 		callshop "para_hat02",1;
 		end;
 	case 3:
 		mes "[Lapelt]";
-		mes "Goodbye.";
+		mes "ลาก่อน";
 		close;
 	}
 }
@@ -762,11 +762,11 @@ paramk,94,32,3	script	Lapelt#hat01	4_M_LGTMAN,{
 // Sign
 paramk,96,33,3	script	[Meds for Pharma]#ptn00	HIDDEN_NPC,{
 	mes " == Meds for Pharmacists == ";
-	mes "We sell assorted potions.";
+	mes "เราขายยาสารพัน";
 	mes "";
 	mes "[Days of Operation]";
-	mes "Special potions - Mon, Tue, Thu, Fri, Sat";
-	mes "Common potions - every day";
+	mes "ยาพิเศษ - จันทร์, อังคาร, พฤหัสบดี, ศุกร์, เสาร์";
+	mes "ยาสามัญประจำวัน - ทุกวัน";
 	close;
 }
 
@@ -774,31 +774,31 @@ paramk,96,33,3	script	[Meds for Pharma]#ptn00	HIDDEN_NPC,{
 paramk,100,30,3	script	Head Pharmacist#ptn01	4_F_SCIENCE,{
 	if ($event_paramk > 0) {
 		mes "[Head Pharmacist]";
-		mes "Potent poisons that will knock you out with one sip, meds that will protect your body and spirit, meds that will temporarily grant supernatural speed.";
-		mes "We have them all.";
-		mes "'Meds for Pharmacists', here to supply you with the medication you need.";
+		mes "ยาพิษที่ทรงพลังที่จะทำให้คุณหมดสติไปกับจิบยาที่จะช่วยปกป้องร่างกายและวิญญาณของคุณยาที่จะให้ความเร็วเหนือธรรมชาติเป็นการชั่วคราว";
+		mes "พวกเรามีทั้งหมด";
+		mes "'Meds for Pharmacists' ที่นี่เพื่อจัดหายาที่จำเป็นให้กับคุณ";
 		next;
-		if (select("Meds, please!:Cancel.") == 1) {
+		if (select("ยาโปรด!:ยกเลิก") == 1) {
 			mes "[Head Pharmacist]";
-			mes "This is what we currently have left.";
-			mes "If there's nothing, it means that we are sold out.";
-			mes "We do not brew potions in large batches. Please understand.";
+			mes "นี่คือสิ่งที่เรายังเหลือ";
+			mes "ถ้าไม่มีอะไรก็หมายความว่าพวกเราถูกขายหมดแล้ว";
+			mes "เราไม่ได้ปรุงยาเป็นชุดใหญ่โปรดเข้าใจ";
 			close2;
 			callshop "para_ptn00";
 			end;
 		}
 		mes "[Head Pharmacist]";
-		mes "Come back if you have questions about the meds.";
+		mes "กลับมาถ้าเจ้ามีคำถามเกี่ยวกับยา";
 		close;
 	} else { // holiday
 		mes "[Head Pharmacist]";
-		mes "Oh, you need potions?";
-		mes "We do not sell common meds. We stick to special potions.";
-		mes "And today is a holiday. We are currently brewing new potions.";
+		mes "โอ้เจ้าต้องการยาหรือเปล่า";
+		mes "เราไม่ขายยาทั่วไปเรายึดติดกับยาปรุงพิเศษ";
+		mes "และวันนี้เป็นวันหยุดเรากำลังปรุงยาใหม่ ๆ ";
 		next;
 		mes "[Head Pharmacist]";
-		mes "I will show you a collection of our superior potions if you come back tomorrow, okay?";
-		mes "Hehe~";
+		mes "ข้าจะแสดงชุดยาที่ดีเลิศของเราถ้าเจ้ากลับมาพรุ่งนี้ได้ไหม";
+		mes "ฮิฮิ ~";
 		close;
 	}
 }
@@ -806,36 +806,36 @@ paramk,100,30,3	script	Head Pharmacist#ptn01	4_F_SCIENCE,{
 // Johanna
 paramk,106,32,3	script	Johanna#ptn02	4_M_BRZ_JACI,{
 	mes "[Johanna]";
-	mes "Welcome to 'Meds for Pharmacists'.";
-	mes "What do you need?";
+	mes "ยินดีต้อนรับสู่ 'Meds for Pharmacists'";
+	mes "คุณต้องการอะไร";
 	next;
-	switch (select("Look at items.:Sell items.:Days of Operation.:Cancel.")) {
+	switch (select("ดูรายการไอเท็ม:ขายไอเท็ม:วันของการดำเนินงาน:ยกเลิก")) {
 	case 1:
 		mes "[Johanna]";
-		mes "Healing potions here.";
-		mes "Good potions sold at an affordable price.";
+		mes "เยียวยายาที่นี่";
+		mes "ยาที่ดีขายได้ในราคาไม่แพง";
 		close2;
 		callshop "para_ptn01",1;
 		end;
 	case 2:
 		mes "[Johanna]";
-		mes "I will take them off your hands and pay you a hefty price.";
-		mes "Don't tell other people I paid so much.";
+		mes "ข้าจะถอดมันออกจากมือของเจ้าและจ่ายให้คุณในราคาแพง";
+		mes "อย่าบอกคนอื่นว่าข้าจ่ายมาก";
 		close2;
 		callshop "para_ptn01",2;
 		end;
 	case 3:
 		mes "[Johanna]";
-		mes "Most shops in the Eden Market Group do not operate on holidays.";
-		mes "Some shops remain open on holidays, however.";
+		mes "ร้านค้าส่วนใหญ่ในกลุ่มตลาด Eden ไม่ได้ทำงานในช่วงวันหยุด";
+		mes "ร้านค้าบางร้านยังคงเปิดให้บริการในวันหยุด";
 		next;
 		mes "[Johanna]";
-		mes "Our pharmacy offers common healing potions even on holidays, though not the special potions.";
-		mes "Take advantage of our services!";
+		mes "ร้านขายยาของเรามียารักษาร่วมกันแม้กระทั่งในวันหยุดแม้ว่าจะไม่ใช่ยาพิเศษ";
+		mes "ใช้ประโยชน์จากบริการของเรา!";
 		close;
 	case 4:
 		mes "[Johanna]";
-		mes "Goodbye.";
+		mes "ลาก่อน";
 		close;
 	}
 }

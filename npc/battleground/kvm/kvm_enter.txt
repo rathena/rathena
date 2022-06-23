@@ -21,7 +21,7 @@ bat_room,164,178,5	script	KVM Mercenary Officer#1	418,{
 	set .@kvm,checkquest(6026,PLAYTIME);
 	if ((.@kvm == 0) || (.@kvm == 1)) {
 		mes "[Croix Mercenary Officer]";
-		mes "I know that you've already signed with the Croix. Go back and join their team. We will not accept traitors to fight for us.";
+		mes "ข้ารู้ว่าท่านได้ลงนามกับ Croix แล้ว กลับไปและเข้าร่วมทีมกับพวกเขา เราจะไม่ยอมรับคนทรยศเยี่ยงท่านมาร่วมต่อสู้กับพวกเรา";
 		close;
 	}
 	else if (.@kvm == 2) erasequest 6026;
@@ -29,18 +29,18 @@ bat_room,164,178,5	script	KVM Mercenary Officer#1	418,{
 	set .@permit,checkquest(6025,PLAYTIME);
 	if ((.@permit == 0) || (.@permit == 1)) {
 		mes "[Guillaume Mercenary Officer]";
-		mes "It seems you have recently participated in a KVM battle. You must wait 5 minutes before signing up again.";
+		mes "ดูเหมือนว่าท่านเพิ่งเข้าร่วมการต่อสู้ KVM ท่านต้องรอ 5 นาที จึงจะสมัครใหม่อีกครั้งได้";
 		close;
 	}
 	else if (.@permit == 2) erasequest 6025;
 	mes "[Guillaume Mercenary Officer]";
-	mes "Let them know the real might of Guillaume!";
+	mes "บอกให้พวกเขารู้ถึงพลังที่แท้จริงของ Guillaume!";
 	next;
-	switch(select("I will fight with you.:End Conversation.")) {
+	switch(select("ข้าจะต่อสู้กับท่าน:จบการสนทนา")) {
 	case 1:
 		mes "[Guillaume Mercenary Officer]";
-		mes "Show them how strong we are.";
-		mes "Today, everyone will hear the shout of triumph from Guillaume!";
+		mes "แสดงให้พวกเขาเห็นว่าเราแข็งแกร่งแค่ไหน";
+		mes "วันนี้ทุกคนจะได้ยินเสียงโห่ร้องแห่งชัยชนะจาก Guillaume!";
 		close2;
 		//setquest 6025;
 		if (BaseLevel > 79)  warp "bat_room",169,223;
@@ -49,7 +49,7 @@ bat_room,164,178,5	script	KVM Mercenary Officer#1	418,{
 		end;
 	case 2:
 		mes "[Guillaume Mercenary Officer]";
-		mes "We will win!";
+		mes "เราจะชนะ!";
 		close;
 	}
 }
@@ -58,73 +58,73 @@ bat_room,164,178,5	script	KVM Mercenary Officer#1	418,{
 //============================================================
 bat_room,167,178,5	script	Guillaume Knight#kvm	417,{
 	mes "[Guillaume Knight]";
-	mes "Hello.";
-	mes "What do you want to know?";
+	mes "สวัสดี";
+	mes "ท่านต้องการรู้เรื่องอะไร?";
 	next;
-	switch(select("Apply for KVM.:What is KVM?:How do I participate in KVM?:I want to know my Kreiger Points.")) {
+	switch(select("สมัคร KVM:KVM คืออะไร?:ข้าจะเข้าร่วมใน KVM ได้อย่างไร?:ข้าต้องการทราบคะแนน Kreiger")) {
 	case 1:
 		mes "[Guillaume Knight]";
 		if (getbattleflag("feature.bgqueue"))
-			mes "If you are ready for battle, click the ^0000FFbattle button from the interface^000000 to apply for KVM battle!";
+			mes "หากท่านพร้อมสำหรับการต่อสู้ ให้คลิกปุ่ม ^0000FFต่อสู้จากอินเทอร์เฟซ^000000 เพื่อสมัครการรบ KVM!";
 		else {
-			mes "Applications are not available yet.";
-			mes "To apply, you need to go to a KVM Mercenary Officer.";
+			mes "แอปพลิเคชันยังไม่พร้อมใช้งาน";
+			mes "ในการสมัคร ท่านต้องไปที่ KVM Mercenary Officer";
 		}
 		close;
 	case 2:
 		mes "[Guillaume Knight]";
-		mes "KVM is the abbreviation of Kreiger Von Midgard.";
-		mes "Adventurer, are you aware that the way to the new world has been opened?";
+		mes "KVM เป็นตัวย่อของ Kreiger Von Midgard";
+		mes "นักผจญภัย ท่านรู้หรือไม่ว่าทางไปสู่โลกใหม่ได้ถูกเปิดออก?";
 		next;
 		mes "[Guillaume Knight]";
-		mes "We, the Guillaume Administration, have several plans to advance to the new world.";
-		mes "And KVM is one of them.";
+		mes "พวกเรา ผู้บริหาร Guillaume มีแผนการหลายอย่างที่จะก้าวไปสู่โลกใหม่";
+		mes "และ KVM ก็เป็นหนึ่งในนั้น";
 		next;
 		mes "[Guillaume Knight]";
-		mes "It means that we, one of many countries in the Midgard continent,";
-		mes "have decided to employ many adventurers for the immediate advance to the new world.";
+		mes "นั่นหมายความว่าเรา หนึ่งในหลาย ๆ ประเทศในทวีป Midgard";
+		mes "ได้ตัดสินใจที่จะจ้างนักผจญภัยมากมาย เพื่อที่จะก้าวไปสู่โลกใหม่ทันที";
 		next;
 		mes "[Guillaume Knight]";
-		mes "Therefore, to select the best adventurers, we are holding the KVM.";
-		mes "We exspect responses from many adventurers.";
+		mes "ดังนั้น เพื่อเลือกนักผจญภัยที่ดีที่สุด เรากำลังค้นหาใน KVM";
+		mes "เราคาดหวังคำตอบจากนักผจญภัยมากมาย";
 		next;
 		mes "[Guillaume Knight]";
-		mes "And we will give them rewards for their participation!";
-		mes "As for the rewards, please contact a KVM Logistic Officer.";
+		mes "และเราจะให้รางวัลแก่พวกเขาสำหรับการเข้าร่วม!";
+		mes "สำหรับรางวัล กรุณาติดต่อที่ KVM Logistic Officer";
 		close;
 	case 3:
 		mes "[Guillaume Knight]";
 		if (getbattleflag("feature.bgqueue")) {
-			mes "Basically, KVM is a 3 on 3 battle.";
-			mes "Apply by clicking on the ^0000FFbattle button from the interface^000000, as a group or individually.";
+			mes "โดยพื้นฐานแล้ว KVM คือการต่อสู้ 3 ต่อ 3";
+			mes "สมัครโดยคลิกที่ ^0000FFปุ่มการต่อสู้จากอินเทอร์เฟซ^000000, เป็นกลุ่ม หรือ เป็นรายบุคคล";
 		} else {
-			mes "Basically, KVM is a 5 on 5 battle.";
-			mes "First, you apply with a KVM receptionist, in a group or individually.";
+			mes "โดยพื้นฐานแล้ว KVM คือการต่อสู้ 5 ต่อ 5";
+			mes "ก่อนอื่น ท่านสมัครกับพนักงานต้อนรับ KVM เป็นกลุ่ม หรือ รายบุคคล";
 		}
 		next;
 		mes "[Guillaume Knight]";
 		if (getbattleflag("feature.bgqueue"))
-			mes "Group applications are for when you intend to enter the KVM with your party or guild members,";
+			mes "แอปพลิเคชันของกลุ่ม มีไว้สำหรับเมื่อท่านตั้งใจจะเข้าร่วม KVM กับปาร์ตี้ หรือ สมาชิกกิลด์ ของท่าน";
 		else
-			mes "Group applications are for when you intend to enter the KVM with your party members,";
-		mes "and a personal application is for when you intend to enter the KVM individually.";
+			mes "แอปพลิเคชันของกลุ่ม มีไว้สำหรับเมื่อท่านตั้งใจจะเข้าร่วม KVM กับปาร์ตี้ของท่าน";
+			mes "และ แอปพลิเคชันส่วนตัวนั้น ใช้สำหรับเมื่อท่านต้องจะเข้าร่วม KVM แยกต่างหาก";
 		next;
 		mes "[Guillaume Knight]";
 		if (getbattleflag("feature.bgqueue"))
-			mes "Please be noted, once you cancel you ^0000FFcannot apply again for 1 minute^000000.";
+			mes "โปรดทราบ, เมื่อท่านกดยกเลิก ^0000FFท่านจะไม่สามารถสมัครได้อีก 1 นาที^000000";
 		else {
-			mes "Please apply with a KVM officer, and he will contact you later when you are in Prontera.";
+			mes "กรุณาสมัครกับ KVM officer และเขาจะติดต่อท่านในภายหลังเมื่อท่านอยู่ใน Prontera";
 			next;
 			mes "[Guillaume Knight]";
-			mes "Then you enter and follow the instructions in the battlefield.";
+			mes "จากนั้น ท่านระบุและทำตามคำแนะนำในสนามรบ";
 			next;
 			mes "[Guillaume Knight]";
-			mes "However, please be advised that unless you are in the KVM office, he cannot contact you.";
+			mes "อย่างไรก็ตาม โปรดทราบว่าหากท่านไม่อยู่ใน KVM office เขาจะไม่สามารถติดต่อท่านได้";
 		}
 		close;
 	case 4:
 		mes "[Guillaume Knight]";
-		mes "Your Kreiger Points are:";
+		mes "คะแนน Kreiger ของท่านคือ:";
 		mes ""+kvm_point+".";
 		close;
 	}
@@ -139,7 +139,7 @@ bat_room,164,121,1	script	KVM Mercenary Officer#2	414,{
 	set .@kvm,checkquest(6025,PLAYTIME);
 	if ((.@kvm == 0) || (.@kvm == 1)) {
 		mes "[Croix Mercenary Officer]";
-		mes "I know that you've already signed with the Guillaume. Go back and join their team. We will not accept traitors to fight for us.";
+		mes "ข้ารู้ว่าท่านได้ลงนามกับ Guillaume แล้ว กลับไปและเข้าร่วมทีมกับพวกเขา เราจะไม่ยอมรับคนทรยศเยี่ยงท่านมาร่วมต่อสู้กับพวกเรา";
 		close;
 	}
 	else if (.@kvm == 2) erasequest 6025;
@@ -147,18 +147,18 @@ bat_room,164,121,1	script	KVM Mercenary Officer#2	414,{
 	set .@permit,checkquest(6025,PLAYTIME);
 	if ((.@permit == 0) || (.@permit == 1)) {
 		mes "[Croix Mercenary Officer]";
-		mes "It seems you have recently participated in a KVM battle. You must wait 5 minutes before signing up again.";
+		mes "ดูเหมือนว่าท่านเพิ่งเข้าร่วมการต่อสู้ KVM ท่านต้องรอ 5 นาที จึงจะสมัครใหม่อีกครั้งได้";
 		close;
 	}
 	else if (.@permit == 2) erasequest 6025;
 	mes "[Croix Mercenary Officer]";
-	mes "Let them know the real might of Croix!";
+	mes "บอกให้พวกเขารู้ถึงพลังที่แท้จริงของ Croix!";
 	next;
-	switch(select("I will fight with you.:End Conversation.")) {
+	switch(select("ข้าจะต่อสู้กับท่าน:จบการสนทนา")) {
 	case 1:
 		mes "[Croix Mercenary Officer]";
-		mes "Show them how strong we are.";
-		mes "Today, everyone will hear the shout of triumph from Croix!";
+		mes "แสดงให้พวกเขาเห็นว่าเราแข็งแกร่งแค่ไหน";
+		mes "วันนี้ทุกคนจะได้ยินเสียงโห่ร้องแห่งชัยชนะจาก Croix!";
 		close2;
 		//setquest 6026;
 		if (BaseLevel > 79) warp "bat_room",169,207;
@@ -167,7 +167,7 @@ bat_room,164,121,1	script	KVM Mercenary Officer#2	414,{
 		end;
 	case 2:
 		mes "[Croix Mercenary Officer]";
-		mes "We will win!";
+		mes "เราจะชนะ!";
 		close;
 	}
 }
@@ -176,73 +176,73 @@ bat_room,164,121,1	script	KVM Mercenary Officer#2	414,{
 //============================================================
 bat_room,167,121,1	script	Croix Knight#kvm	413,{
 	mes "[Croix Knight]";
-	mes "Hello.";
-	mes "What do you want to know?";
+	mes "สวัสดี";
+	mes "ท่านต้องการรู้เรื่องอะไร?";
 	next;
-	switch(select("Apply for KVM.:What is KVM?:How do I participate in KVM?:I want to know my Kreiger Points.")) {
+	switch(select("สมัคร KVM:KVM คืออะไร?:ข้าจะเข้าร่วมใน KVM ได้อย่างไร?:ข้าต้องการทราบคะแนน Kreiger")) {
 	case 1:
 		mes "[Croix Knight]";
 		if (getbattleflag("feature.bgqueue"))
-			mes "If you are ready for battle, click the ^0000FFbattle button from the interface^000000 to apply for KVM battle!";
+			mes "หากท่านพร้อมสำหรับการต่อสู้ ให้คลิกปุ่ม ^0000FFต่อสู้จากอินเทอร์เฟซ^000000 เพื่อสมัครการรบ KVM!";
 		else {
-			mes "Applications are not available yet.";
-			mes "To apply, you need to go to a KVM Mercenary Officer.";
+			mes "แอปพลิเคชันยังไม่พร้อมใช้งาน";
+			mes "ในการสมัคร ท่านต้องไปที่ KVM Mercenary Officer";
 		}
 		close;
 	case 2:
 		mes "[Croix Knight]";
-		mes "KVM is the abbreviation of Kreiger Von Midgard.";
-		mes "Adventurer, are you aware that the way to the new world has been opened?";
+		mes "KVM เป็นตัวย่อของ Kreiger Von Midgard";
+		mes "นักผจญภัย ท่านรู้หรือไม่ว่าทางไปสู่โลกใหม่ได้ถูกเปิดออก?";
 		next;
 		mes "[Croix Knight]";
-		mes "We, the Croix Administration, have several plans to advance to the new world.";
-		mes "And KVM is one of them.";
+		mes "พวกเรา ผู้บริหาร Guillaume มีแผนการหลายอย่างที่จะก้าวไปสู่โลกใหม่";
+		mes "และ KVM ก็เป็นหนึ่งในนั้น";
 		next;
 		mes "[Croix Knight]";
-		mes "It means that we, one of many countries in the Midgard continent,";
-		mes "have decided to employ many adventurers for the immediate advance to the new world.";
+		mes "นั่นหมายความว่าเรา หนึ่งในหลาย ๆ ประเทศในทวีป Midgard";
+		mes "ได้ตัดสินใจที่จะจ้างนักผจญภัยมากมาย เพื่อที่จะก้าวไปสู่โลกใหม่ทันที";
 		next;
 		mes "[Croix Knight]";
-		mes "Therefore, to select the best adventurers, we are holding the KVM.";
-		mes "We exspect responses from many adventurers.";
+		mes "ดังนั้น เพื่อเลือกนักผจญภัยที่ดีที่สุด เรากำลังค้นหาใน KVM";
+		mes "เราคาดหวังคำตอบจากนักผจญภัยมากมาย";
 		next;
 		mes "[Croix Knight]";
-		mes "And we will give them rewards for their participation!";
-		mes "As for the rewards, please contact a KVM Logistic Officer.";
+		mes "และเราจะให้รางวัลแก่พวกเขาสำหรับการเข้าร่วม!";
+		mes "สำหรับรางวัล กรุณาติดต่อที่ KVM Logistic Officer";
 		close;
 	case 3:
 		mes "[Croix Knight]";
 		if (getbattleflag("feature.bgqueue")) {
-			mes "Basically, KVM is a 3 on 3 battle.";
-			mes "Apply by clicking on the ^0000FFbattle button from the interface^000000, as a group or individually.";
+			mes "โดยพื้นฐานแล้ว KVM คือการต่อสู้ 3 ต่อ 3";
+			mes "สมัครโดยคลิกที่ ^0000FFปุ่มการต่อสู้จากอินเทอร์เฟซ^000000, เป็นกลุ่ม หรือ เป็นรายบุคคล";
 		} else {
-			mes "Basically, KVM is a 5 on 5 battle.";
-			mes "First, you apply with a KVM receptionist, in a group or individually.";
+			mes "โดยพื้นฐานแล้ว KVM คือการต่อสู้ 5 ต่อ 5";
+			mes "ก่อนอื่น ท่านสมัครกับพนักงานต้อนรับ KVM เป็นกลุ่ม หรือ รายบุคคล";
 		}
 		next;
 		mes "[Croix Knight]";
 		if (getbattleflag("feature.bgqueue"))
-			mes "Group applications are for when you intend to enter the KVM with your party or guild members,";
+			mes "แอปพลิเคชันของกลุ่ม มีไว้สำหรับเมื่อท่านตั้งใจจะเข้าร่วม KVM กับปาร์ตี้ หรือ สมาชิกกิลด์ ของท่าน";
 		else
-			mes "Group applications are for when you intend to enter the KVM with your party members,";
-		mes "and a personal application is for when you intend to enter the KVM individually.";
+			mes "แอปพลิเคชันของกลุ่ม มีไว้สำหรับเมื่อท่านตั้งใจจะเข้าร่วม KVM กับปาร์ตี้ของท่าน";
+		mes "และ แอปพลิเคชันส่วนตัวนั้น ใช้สำหรับเมื่อท่านต้องจะเข้าร่วม KVM แยกต่างหาก";
 		next;
 		mes "[Croix Knight]";
 		if (getbattleflag("feature.bgqueue"))
-			mes "Please be noted, once you cancel you ^0000FFcannot apply again for 1 minute^000000.";
+			mes "โปรดทราบ, เมื่อท่านกดยกเลิก ^0000FFท่านจะไม่สามารถสมัครได้อีก 1 นาที^000000";
 		else {
-			mes "Please apply with a KVM officer, and he will contact you later when you are in Prontera.";
+			mes "กรุณาสมัครกับ KVM officer และเขาจะติดต่อท่านในภายหลังเมื่อท่านอยู่ใน Prontera";
 			next;
 			mes "[Croix Knight]";
-			mes "Then you enter and follow the instructions in the battlefield.";
+			mes "จากนั้น ท่านระบุและทำตามคำแนะนำในสนามรบ";
 			next;
 			mes "[Croix Knight]";
-			mes "However, please be advised that unless you are in the KVM office, he cannot contact you.";
+			mes "อย่างไรก็ตาม โปรดทราบว่าหากท่านไม่อยู่ใน KVM office เขาจะไม่สามารถติดต่อท่านได้";
 		}
 		close;
 	case 4:
 		mes "[Croix Knight]";
-		mes "Your Kreiger Points are:";
+		mes "คะแนน Kreiger ของท่านคือ:";
 		mes ""+kvm_point+".";
 		close;
 	}

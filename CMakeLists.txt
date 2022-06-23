@@ -226,6 +226,10 @@ endif()
 message( STATUS "Detecting networking library (socket/nsl/ws2_32) - done" )
 endif()
 
+#
+# enable web server?
+#
+option( ENABLE_WEB_SERVER "Build web-server (default=ON)" ON )
 
 #
 # Test for big endian

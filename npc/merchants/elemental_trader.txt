@@ -17,144 +17,134 @@
 ama_in02,61,27,7	script	Alchemist#ama	749,{
 	mes "[Laspuchin Gregory]";
 	mes "KeekeekeeKeheheh.";
-	mes "This is amazing!";
-	mes "The results are extraordinary!!";
+	mes "นี่มันยอดเยี่ยมมาก!";
+	mes "ผลลัพธ์นั้นยอดเยี่ยม !!";
 	next;
 	mes "[Laspuchin Gregory]";
-	mes "Using my skills in this distant";
-	mes "land was unexpected...";
-	mes "Keheheh... The lord of palace";
-	mes "was quite accomodating.";
+	mes "การใช้ทักษะของฉันในดินแดนห่างไกลนี้ไม่คาดคิด ... ";
+	mes "Keheheh ... เจ้าแห่งวังค่อนข้างจะช่วยเหลือ";
 	next;
 	mes "[Laspuchin Gregory]";
-	mes "Oops, I better be careful...";
-	mes "If the guild finds out my";
-	mes "location, stupid Myster will";
-	mes "get mad at me. Kehehehkeh...";
+	mes "โอ๊ะฉันควรระวัง ... ";
+	mes "ถ้าสมาคมค้นพบที่ตั้งของฉัน Myster โง่ๆ จะโกรธฉัน Kehehehkeh ... ";
 	next;
 	mes "[Laspuchin Gregory]";
-	mes "What? Wanna say something?";
-	mes "If you are here for tourism,";
-	mes "enjoy your day off, then go back to your hometown.";
-	mes "Keekeekee... Or else,";
-	mes "I will let you taste my acid bottle...!";
+	mes "อะไรนะต้องการพูดอะไรบางอย่าง";
+	mes "ถ้าคุณอยู่ที่นี่เพื่อการท่องเที่ยว";
+	mes "สนุกกับวันหยุดของคุณแล้วกลับไปที่บ้านเกิดของคุณ";
+	mes "Keekeekee ... หรืออย่างอื่น";
+	mes "ฉันจะให้คุณได้ลิ้มรสขวดกรดของฉัน ... !";
 	next;
-	if (select("Please, excuse me:Do you need help?") == 1) {
+	if (select("ได้โปรดขอโทษด้วย:คุณต้องการความช่วยเหลือหรือไม่") == 1) {
 		mes "[Laspuchin Gregory]";
-		mes "Keheheh... Did you hear";
-		mes "what I said? It would be";
-		mes "better to forget...";
-		mes "Keekeekeekeekee...";
+		mes "Keheheh ... เจ้าเคยได้ยิน";
+		mes "สิ่งที่ฉันพูดมันจะเป็นอย่างไร";
+		mes "ดีกว่าที่จะลืม ... ";
+		mes "Keekeekeekeekee ... ";
 		close;
 	}
 	mes "[Laspuchin Gregory]";
-	mes "Help, eh?...";
-	mes "Now that I think about it...";
-	mes "I need some items right now...";
-	mes "Keeheeheekeehee...";
+	mes "ช่วยเหลือใช่มั้ย ... ";
+	mes "ตอนนี้ข้าคิดแล้ว ... ";
+	mes "ข้าต้องการไอเท็มบางอย่างในตอนนี้ ... ";
+	mes "Keeheeheekeehee ... ";
 	next;
 	mes "[Laspuchin Gregory]";
-	mes "Sir Laspuchin needs some";
-	mes "enchant stones for an experiment.";
-	mes "I will use it efficiently...";
-	mes "Do you have them now?";
+	mes "Sir Laspuchin ต้องการหินที่มีเสน่ห์สำหรับการทดลอง";
+	mes "ข้าจะใช้มันอย่างมีประสิทธิภาพ ... ";
+	mes "ตอนนี้เจ้ามีพวกมันแล้วหรือยัง?";
 	next;
-	if (select("Nope:I got some") == 1) {
+	if (select("ไม่:ฉันได้รับ") == 1) {
 		mes "[Laspuchin Gregory]";
-		mes "Then, find 8 stones of one kind.";
-		mes "If you bring 8 of one kind of";
-		mes "enchant stones, I will change it";
-		mes "to a better one...";
+		mes "จากนั้นหา 8 ก้อนชนิดเดียว";
+		mes "ถ้าเจ้านำหินที่มีเสน่ห์ 8 ชนิดมาหนึ่งข้าจะเปลี่ยนมันให้เป็นหินที่ดีกว่า ... ";
 		next;
 		mes "[Laspuchin Gregory]";
-		mes "Then, find 8 stones of one kind.";
-		mes "not the round gemstones but";
-		mes "enchant stones.";
-		mes "If you bring the wrong stones,";
-		mes "I will throw a flame bottle!";
+		mes "จากนั้นหา 8 ก้อนชนิดเดียว";
+		mes "ไม่ใช่อัญมณีทรงกลม แต่เป็นหินวิเศษ";
+		mes "ถ้าเจ้านำหินผิด";
+		mes "ฉันจะขว้างขวดใส่เปลวไฟ!";
 		next;
 		mes "[Laspuchin Gregory]";
-		mes "Bring me stones, slave~!!";
-		mes "And keep your promise! Kehehehkehkeh...";
+		mes "เอาหินมาให้ข้าทาส ~ !!";
+		mes "และรักษาสัญญาของคุณ! Kehehehkehkeh ... ";
 		close;
 	}
 	mes "[Laspuchin Gregory]";
-	mes "Uh-huh, what did you bring?";
+	mes "Uh-huh คุณนำอะไรมา?";
 	next;
 	setarray .@Items[1],995,997,994,996;
 	set .@i, .@Items[select("Mystic Frozen:Great Nature:Flame Heart:Rough Wind")];
 	mes "[Laspuchin Gregory]";
 	if (countitem(.@i) > 7) {
-		mes "I will take 8 of them and";
-		mes "give you an enchant stone.";
-		mes "How's that sound?";
-		mes "Keheheh.....";
+		mes "ข้าจะรับพวกมัน 8 ก้อนและมอบก้อนหินวิเศษให้เจ้า";
+		mes "เสียงนั้นเป็นอย่างไร";
+		mes "Keheheh..... ";
 		next;
 		mes "[Laspuchin Gregory]";
-		mes "HeeHee, what do you want? Choose one!";
+		mes "HeeHee คุณต้องการอะไรเลือกหนึ่งอย่าง!";
 		next;
 		set .@menu$, "";
 		for(set .@j,1; .@j<5; set .@j,.@j+1) {
 			if (.@Items[.@j] != .@i) set .@menu$, .@menu$+getitemname(.@Items[.@j]);
 			set .@menu$, .@menu$+":";
 		}
-		set .@menu$, .@menu$+"Cancel the trade";
+		set .@menu$, .@menu$+"ยกเลิกการค้าขาย";
 		set .@j, select(.@menu$);
 		mes "[Laspuchin Gregory]";
 		if (.@j == 5) {
-			mes "Oh, well.";
-			mes "Don't tell anyone about my location...";
-			mes "Keheheh...after all, you did promise~";
+			mes "โอ้สบายดี";
+			mes "อย่าบอกใครเกี่ยวกับตำแหน่งของฉัน ... ";
+			mes "Keheheh... หลังจากนี้ไปทั้งหมดคุณทำสัญญา ~";
 			close;
 		}
 		else if (.@j == 4) {
 			if (countitem(.@i) > 11) {
 				delitem .@i,12;
 				getitem 996,1;
-				mes "Kehhehheh, You know something?";
-				mes "I don't have many of those";
-				mes "so I'm going to take ^0000FF12^000000 of yours, okay?";
-				mes "Of course, it is okay.";
-				mes "It is an honor to help Laspuchin!";
+				mes "Kehhehheh คุณรู้อะไรมั้ย";
+				mes "ฉันไม่มีของเหล่านั้นมากมายดังนั้นฉันจะเอา ^0000FF12^000000 ของคุณโอเคไหม";
+				mes "แน่นอนมันไม่เป็นไร";
+				mes "มันเป็นเกียรติที่ได้ช่วยเหลือ Laspuchin!";
 				close;
 			}
-			mes "Keheheh, You know something.";
-			mes "I don't have many of these so";
-			mes "I can't just get 8 of yours.";
-			mes "If you want to change them to Rough Wind,";
-			mes "bring me 4 more stones. 8 + 4 = 12...";
-			mes "Requires ^0000FF12^000000 stones.";
+			mes "Keheheh, เจ้ารู้อะไรบางอย่าง";
+			mes "ข้าไม่มีสิ่งเหล่านี้มากมาย";
+			mes "ฉันไม่สามารถรับ 8 ของคุณได้";
+			mes "ถ้าคุณต้องการเปลี่ยนพวกมันเป็น Rough Wind";
+			mes "เอาหินมาให้ฉันอีก 4 ก้อน 8 + 4 = 12 ... ";
+			mes "ต้องใช้ ^0000FF12^000000 ก้อนหิน";
 			next;
 			mes "[Laspuchin Gregory]";
-			mes "Bring me stones, slave~!!";
-			mes "And keep your promise! Kehheheheheh...";
+			mes "เอาหินมาให้ข้าทาส ~ !!";
+			mes "และรักษาสัญญาของคุณ! Kehheheheheheh ... ";
 			close;
 		}
 		else {
 			delitem .@i,8;
 			getitem .@Items[.@j],1;
-			mes "Keheheh! You've chosen a good one!";
-			mes "Use it well...";
-			mes "Bring me other stones if you have them!";
+			mes "Keheheh! คุณเลือกอันดีแล้ว!";
+			mes "ใช้มันได้ดี ... ";
+			mes "เอาหินอื่นมาให้ฉันถ้าคุณมี!";
 			close;
 		}
 	} else if (countitem(.@i)) {
-		mes "You can't help Laspuchin with just a couple";
-		mes "of enchant stones... I said 8!";
-		mes "Bring me just 8 stones!";
+		mes "คุณไม่สามารถช่วยลาสปูชินในเวลาเพียงไม่กี่คู่";
+		mes "ของหินวิเศษ ... ฉันพูด 8!";
+		mes "เอาหินมาให้ฉันแค่ 8 ก้อน!";
 		mes "Keheheh.....";
 		next;
 		mes "[Laspuchin Gregory]";
-		mes "Bring me stones, slave~!!";
-		mes "And keep your promise! Keheheheheh...";
+		mes "เอาหินมาให้ข้าทาส ~ !!";
+		mes "และรักษาสัญญาของคุณ! Kehehehehehh ... ";
 		close;
 	}
-	mes "Keheheh~ Check your pockets";
-	mes "before you tell me";
-	mes "how foolish you are.....";
+	mes "Keheheh ~ ตรวจกระเป๋าของเจ้า";
+	mes "ก่อนที่เจ้าจะบอกข้า";
+	mes "เจ้าโง่แค่ไหน ..... ";
 	next;
 	mes "[Laspuchin Gregory]";
-	mes "Bring me stones! You said you are going to help me!";
-	mes "Keep your promises! Kehehehkehkeh...";
+	mes "เอาหินมาให้ข้า! เจ้าบอกว่านายจะช่วยข้าด้วย!";
+	mes "รักษาสัญญาของคุณ! Kehehehkehkeh ... ";
 	close;
 }

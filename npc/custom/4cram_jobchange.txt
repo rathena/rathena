@@ -1,0 +1,98 @@
+//===== eAthena Script ======================================= 
+//= 4CrAM Job Changer
+//===== By: ================================================== 
+//= Rytech
+//===== Current Version: ===================================== 
+//= 2.0
+//===== Compatible With: ===================================== 
+//= 4CrAM - Expanded Tier
+//===== Description: ========================================= 
+//= Allows changing into trait Era Jobs.
+//===== Additional Comments: ================================= 
+//= 1.0 Release Version.
+//= 1.01 Updated required job level to 70.
+//= 2.0 Added trait era expanded jobs.
+//============================================================
+prontera,165,170,4	script	Special 4cram Job Changer	485,{
+
+	mes "[Special Job Changer]";
+	mes "คุณต้องการที่จะเปลี่นยนเป็นคลาส 4 แล้วหรือยัง?";
+	next;
+	menu "ใช่",Xready,"ไม่",Xnotready;
+
+Xready:
+	set @reqbaselv,200;// Required base level to change to trait era jobs.
+	if (Class == Job_Summoner)
+		set @reqjoblv,60;// Required job level for Summoners.
+	else
+		set @reqjoblv,70;// Required job level for all over jobs.
+
+	if (checkcart() || checkfalcon() || checkriding() || checkdragon() || checkwug() || checkmadogear())
+		goto Xremove;
+
+	// Only trans versions of 3rd jobs are allowed to change to 4th jobs.
+	// kRO has some special method for allowing regular 3rd jobs to change to 4th but im not sure what it is.
+	// Maybe its a convert from regular 3rd to trans 3rd. Has to be since all 4th jobs get access to trans skills.
+	if (Class == Job_Super_Novice_E || (Class >= Job_Kagerou && Class <= Job_Summoner) || Class == Job_Star_Emperor || Class == Job_Soul_Reaper)
+		goto Xtraitjob;
+	else
+		goto Xcantchange;
+
+Xtraitjob:
+	if (BaseLevel >= @reqbaselv && JobLevel >= @reqjoblv)
+	{
+		if (Class == Job_Super_Novice_E)
+			jobchange Job_Hyper_Novice;
+		else if (Class == Job_Star_Emperor)
+			jobchange Job_Sky_Emperor;
+		else if (Class == Job_Soul_Reaper)
+			jobchange Job_Soul_Ascetic;
+		else if (Class == Job_Rebellion)
+			jobchange Job_Night_Watch;
+		else if (Class == Job_Kagerou)
+			jobchange Job_Shinkiro;
+		else if (Class == Job_Oboro)
+			jobchange Job_Shiranui;
+		else if (Class == Job_Summoner)
+			jobchange Job_Spirit_Handler;
+
+		goto Xcomplete;
+	}
+	else
+		goto Xlowlevel;
+
+Xremove:
+	mes "[Special Job Changer]";
+	mes "กรุณาถอดของคุณ " +
+			((checkfalcon()) ? "falcon" : "") +
+			((checkcart()) ? "cart" : "") +
+			((checkriding()) ? "Peco" : "") +
+			((ismounting()) ? "mount" : "") +
+			" ก่อนดำเนินการต่อ";
+	close;
+
+Xnotready:
+	mes "[Special Job Changer]";
+	mes "ไว้เจอกันใหม่ บาย บาย.";
+	close;
+
+
+Xcantchange:
+	mes "[Special Job Changer]";
+	mes "ไม่มีอาชีพเพิ่มเติมแล้ว.";
+	close;
+
+Xcomplete:
+	mes "[Special Job Changer]";
+	mes "ยินดีด้วยคุณได้เปลี่ยนอาชีพเป็น คลาสสี่ แล้ว";
+	close;
+
+Xlowlevel:
+	mes "[Special Job Changer]";
+	mes "เสียใจด้วย เราต้องการเลเวล "+@reqbaselv+" และจ้อบเลเวล "+@reqjoblv+".";
+	close;
+
+OnInit:
+    setunitdata getnpcid(0),UNPC_GROUP_ID,22;    //1-38
+    end;
+}

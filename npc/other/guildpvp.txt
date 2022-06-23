@@ -21,35 +21,28 @@ pvp_y_room,77,85,4	script	Guild Battle Guide	105,{
 	setarray .@mapY[1],49,49,50,49,50;
 
 	mes "[Guild Battle Guide]";
-	mes "How are you doing?";
-	mes "I'm the Guild Battle Guide";
-	mes "for the new PvP maps.";
-	mes "Let me know to which map";
-	mes "you want me to move you.";
+	mes "เป็นไงบ้าง";
+	mes "ฉันคือ Guild Battle Guide สำหรับแผนที่ PvP ใหม่";
+	mes "บอกให้ฉันรู้ว่าคุณต้องการให้ฉันย้ายคุณไปที่แผนที่ไหน";
 	next;
 	set .@i, select("Map 1:Map 2:Map 3:Map 4:Map 5");
 	mes "[Guild Battle Guide]";
-	mes "You've chosen Map "+.@i+".";
-	mes "Now, which team are";
-	mes "you on? You can choose";
-	mes "either Team 1 or Team 2.";
+	mes "คุณได้เลือกแผนที่" + .@i + ".";
+	mes "ตอนนี้คุณอยู่ทีมไหน";
+	mes "คุณสามารถเลือกทีม 1 หรือทีม 2 ก็ได้";
 	next;
-	set .@j, select("Team 1:Team 2");
+	set .@j, select("ทีม 1:ทีม 2");
 	mes "[Guild Battle Guide]";
-	mes "Alright, I'll move you";
-	mes "to Map "+.@i+" as a member";
-	mes "of Team "+.@j+". Are you ready";
-	mes "to be transported there now?";
+	mes "ได้เลยฉันจะย้ายคุณไปที่ Map "+.@i+" ในฐานะสมาชิกของทีม "+.@j+".";
+	mes "คุณพร้อมที่จะไปที่นั่นแล้วหรือยัง?";
 	next;
-	if(select("Yes:No") == 2) {
+	if(select("พร้อมแล้ว:ไม่") == 2) {
 		mes "[Guild Battle Guide]";
-		mes "Alright, I hope to";
-		mes "see you again on";
-		mes "the PvP fields!";
+		mes "เอาล่ะฉันหวังว่าจะได้พบคุณอีกครั้งในสนาม PvP!";
 		close;
 	}
 	mes "[Guild Battle Guide]";
-	mes "Great! Have a good time~";
+	mes "เยี่ยม! มีความสุข ~";
 	close2;
 	warp "guild_vs"+.@i,getd(".@map"+.@j+"X["+.@i+"]"),.@mapY[.@i];
 	end;

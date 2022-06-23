@@ -82,7 +82,7 @@
 //#define DEPRECATED_COMPILER_SUPPORT
 
 /// Uncomment for use with Nemo patch ExtendCashShopPreview
-//#define ENABLE_CASHSHOP_PREVIEW_PATCH
+#define ENABLE_CASHSHOP_PREVIEW_PATCH
 
 /**
  * No settings past this point

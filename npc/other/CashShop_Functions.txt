@@ -37,8 +37,8 @@
 function	script	F_CashStore	{
 	cutin "kafra_01",2;
 	mes "[Kafra Employee]";
-	mes "Welcome to the Kafra Corporation.";
-	mes "Here, let me open your Storage for you.";
+	mes "ยินดีต้อนรับสู่ Kafra Corporation";
+	mes "ที่นี่ให้ฉันเปิดคลังเก็บของของคุณ";
 	close2;
 	openstorage;
 	cutin "",255;
@@ -185,7 +185,7 @@ function	script	F_CashCity	{
 function	script	F_CashTele	{
 	switch(getarg(0)) {
 	case 1:
-		switch(select("Prontera:Geffen:Al de Baran:Izlude:Savepoint")) {
+		switch(select("Prontera:Geffen:Al de Baran:Izlude:กลับจุดเซฟ")) {
 		case 1: warp "prontera",119,77; end;
 		case 2: warp "geffen",119,39; end;
 		case 3: warp "aldebaran",165,107; end;
@@ -193,7 +193,7 @@ function	script	F_CashTele	{
 		case 5: warp "SavePoint",0,0; end;
 		}
 	case 2:
-		switch(select("Payon:Alberta:Morocc:Comodo:Savepoint")) {
+		switch(select("Payon:Alberta:Morocc:Comodo:กลับจุดเซฟ")) {
 		case 1: warp "payon",158,55; end;
 		case 2: warp "alberta",115,57; end;
 		case 3: warp "morocc",158,48; end;
@@ -201,7 +201,7 @@ function	script	F_CashTele	{
 		case 5: warp "SavePoint",0,0; end;
 		}
 	case 3:
-		switch(select("Luoyang:Amatsu:Kunlun Field:Ayothaya:Savepoint")) {
+		switch(select("Luoyang:Amatsu:Kunlun Field:Ayothaya:กลับจุดเซฟ")) {
 		case 1: warp "louyang",214,101; end;
 		case 2: warp "amatsu",112,145; end;
 		case 3: warp "gonryun",160,118; end;
@@ -209,14 +209,14 @@ function	script	F_CashTele	{
 		case 5: warp "SavePoint",0,0; end;
 		}
 	case 4:
-		switch(select("Lutie Field:Umbala:Niflheim:Savepoint")) {
+		switch(select("Lutie Field:Umbala:Niflheim:กลับจุดเซฟ")) {
 		case 1: warp "xmas",148,131; end;
 		case 2: warp "umbala",93,154; end;
 		case 3: warp "niflheim",187,189; end;
 		case 4: warp "SavePoint",0,0; end;
 		}
 	case 5:
-		switch(select("Juno:Einbroch:Lighthalzen:Hugel:Savepoint")) {
+		switch(select("Juno:Einbroch:Lighthalzen:Hugel:กลับจุดเซฟ")) {
 		case 1: warp "yuno",157,124; end;
 		case 2: warp "einbroch",230,192; end;
 		case 3: warp "lighthalzen",158,94; end;
@@ -224,7 +224,7 @@ function	script	F_CashTele	{
 		case 5: warp "SavePoint",0,0; end;
 		}
 	case 6:
-		switch(select("Rachel:Veins:Savepoint")) {
+		switch(select("Rachel:Veins:กลับจุดเซฟ")) {
 		case 1: warp "rachel",118,132; end;
 		case 2: warp "veins",214,125; end;
 		case 3: warp "SavePoint",0,0; end;
@@ -270,32 +270,32 @@ function	script	F_CashSiegeTele	{
 function	script	F_Snowball	{
 	cutin "rutie_snownow03",2;
 	mes "[Snowman]";
-	mes "Merry Christmas!";
-	switch(select("Restore Some HP/SP:Strengthen My Body!:Restore My SP Fully.:Return to Savepoint")) {
+	mes "สุขสันต์วันคริสต์มาส!";
+	switch(select("ฟื้นฟู HP/SP บางตัว:เสริมสร้างร่างกายของฉัน!:ฟื้นฟู SP ของฉันอย่างสมบูรณ์:กลับจุดเซฟ")) {
 	case 1:
-		mes "Aha!";
-		mes "Quiet night~";
+		mes "อะฮา!";
+		mes "คืนที่เงียบสงบ ~";
 		percentheal 70,70;
 		close2;
 		cutin "",255;
 		break;
 	case 2:
-		mes "Blessings.";
-		mes "Holy night~";
+		mes "กำลังขอพร";
+		mes "คืนศักดิ์สิทธิ์~";
 		unitskilluseid getcharid(3),"SM_ENDURE",10;
 		close2;
 		cutin "",255;
 		break;
 	case 3:
-		mes "Hey!";
-		mes "White Christmas~";
+		mes "เฮ้!";
+		mes "คริสต์มาสสีขาว~";
 		percentheal 0,100;
 		close2;
 		cutin "",255;
 		break;
 	case 4:
-		mes "Jingle Bells~";
-		mes "Jingle Bells~ Jingle Bells!";
+		mes "กระดิ่งกริ๊ง~";
+		mes "กระดิ่งกริ๊ง~ กระดิ่งกริ๊ง!";
 		close2;
 		cutin "",255;
 		warp "SavePoint",0,0;

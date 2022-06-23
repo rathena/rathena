@@ -13,7 +13,7 @@
 	/// Do NOT edit this line! To set your client version, please do this instead:
 	/// In Windows: Add this line in your src\custom\defines_pre.hpp file: #define PACKETVER YYYYMMDD
 	/// In Linux: The same as above or run the following command: ./configure --enable-packetver=YYYYMMDD
-	#define PACKETVER 20211103
+	#define PACKETVER 20211117
 #endif
 
 #ifndef PACKETVER_RE
@@ -87,5 +87,8 @@
 
 /// Check if the specified packetvresion supports the cashshop sale system
 #define PACKETVER_SUPPORTS_SALES PACKETVER >= 20131223
+
+/// Use web service?
+#define WEB_SERVER_ENABLE PACKETVER > 20200300
 
 #endif /* CONFIG_PACKETS_HPP */

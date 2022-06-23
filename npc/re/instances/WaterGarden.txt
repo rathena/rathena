@@ -1,0 +1,559 @@
+//===== rAthena Script =======================================
+//= Water Garden
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//= Episode 17.2 Water Garden
+//= Episode 17.2 Water Garden Hard Mode
+//===== Changelog: ===========================================
+//= 1.0 Initial release [crazyarashi]
+//= 1.1 Optimizations and cleanup [Everade]
+//============================================================
+
+1@ghg,1,1,0	script	#172_water_garden_control	-1,{
+	end;
+
+OnInstanceInit:
+	'map$ = instance_mapname("1@ghg");
+	for (.@i = 1; .@i < 5; .@i++) {
+		disablenpc instance_npcname("#172_wg_warp_" + .@i);
+		disablenpc instance_npcname("Gardener#172_wg_" + .@i);
+	}
+	for (.@i = 0; .@i < 3; .@i++) {
+		disablenpc instance_npcname("#172_light_blue_" + .@i);
+		disablenpc instance_npcname("#172_light_red_" + .@i);
+	}
+	disablenpc instance_npcname("Gardener#172_wg_5");
+	disablenpc instance_npcname("#172_wg_hpreducer");
+	end;
+}
+
+1@ghg,66,69,0	script	#172_wg_ev_0	HIDDEN_WARP_NPC,4,4,{
+	end;
+
+OnTouch:
+	if (!is_party_leader())
+		end;
+	if ('water_garden)
+		end;
+	if (isbegin_quest(16438)) {
+		erasequest 16438;
+		'boss = 20668;
+		'violet = 20670;
+		'red = 20672;
+		'blue = 20675;
+		'aries = 20678;
+		'snail = 20666;
+		'beta = 20623;
+	} else {
+		erasequest 16437;
+		'boss = 20667;
+		'violet = 20669;
+		'red = 20671;
+		'blue = 20674;
+		'aries = 20677;
+		'snail = 20665;
+		'beta = 20622;
+	}
+	'water_garden = 1;
+	end;
+}
+
+1@ghg,75,69,0	script	#172_wg_warp_0	WARPNPC,2,2,{
+	end;
+
+OnTouch:
+	if ('water_garden) {
+		mes "- You can enter the water garden after the party leader has entered the MD. -";
+		close;
+	}
+	.@id = atoi(replacestr(strnpcinfo(2),"172_wg_warp_",""));
+	switch (.@id) {
+		case 0: .@x = 208; .@y = 57; break;
+		case 1: .@x = 311; .@y = 67; break;
+		case 2: .@x = 343; .@y = 139; break;
+		case 3:
+			switch (rand(1,4)) {
+				case 1: .@x = 345; .@y = 235; break;
+				case 2: .@x = 345; .@y = 278; break;
+				case 3: .@x = 305; .@y = 310; break;
+				case 4: .@x = 305; .@y = 236; break;
+			}
+			break;
+
+		case 4: .@x = 189; .@y = 287; break;
+	}
+	warp 'map$,.@x,.@y;
+	end;
+}
+
+1@ghg,269,68,0	duplicate(#172_wg_warp_0)	#172_wg_warp_1	WARPNPC,2,2
+1@ghg,343,97,0	duplicate(#172_wg_warp_0)	#172_wg_warp_2	WARPNPC,2,2
+1@ghg,343,184,0	duplicate(#172_wg_warp_0)	#172_wg_warp_3	WARPNPC,2,2
+1@ghg,265,309,0	duplicate(#172_wg_warp_0)	#172_wg_warp_4	WARPNPC,2,2
+
+1@ghg,216,58,3	script	Gardener#172_wg_0	4_EP17_SCISSORE,{
+	if ('water_garden == 1) {
+		mes "[ Hetilla ]";
+		mes " Guests, welcome to the water garden,";
+		mes "Are you going to see Papilla? Papilla's been very sensitive about the intruders lately...";
+		npctalk "Guests, welcome to the water garden. Are you going to see Papilla? Papilla's been very sensitive about the intruders lately...";
+		next;
+		mes "[ Hetilla ]";
+		mes "Papillas are playing around here and there.";
+		mes "They use psychedelic materials from their wings to make short distance movements or use a dangerous magic over them.";
+		npctalk "Papillas are playing around here and there. They use psychedelic materials from their wings to make short distance movements or use a dangerous magic over them.";
+		next;
+		mes "[ Hetilla ]";
+		mes "I warned you on advanced, but be careful.";
+		mes "Pruning all overgrown plants and animals opens the door to the next area at 3 o'clock.";
+		npctalk "I warned you on advanced, but be careful. Pruning all overgrown plants and animals opens the door to the next area at 3 o'clock.";
+		close2;
+		if ('water_garden == 1) {
+			'water_garden = 2;
+			donpcevent instance_npcname("#172_wg_mob") + "::OnSummon";
+			donpcevent instance_npcname("#172_wg_area_1") + "::OnEvent";
+		}
+		end;
+	}
+	if ('water_garden == 2)
+		npctalk "Be careful of the papila's hallucinogens.";
+	else
+		npctalk "Guest, you can already move to the next area.";
+	end;
+}
+
+1@ghg,316,69,3	script	Gardener#172_wg_1	4_EP17_SCISSORE,{
+	if ('water_garden == 3) {
+		mes "[ Juventus ]";
+		mes "Be careful, Papillas' and other type of Papillas seems to be wandering around.";
+		npctalk "Be careful, Papillas' and other type of Papillas seems to be wandering around.";
+		next;
+		mes "[ Juventus ]";
+		mes "The attack range varies depending on the color of the Papilla.";
+		npctalk "The attack range varies depending on the color of the Papilla.";
+		next;
+		mes "[ Juventus ]";
+		mes "Also some of the gardeners were destroyed by the intruders.";
+		npctalk "Also some of the gardeners were destroyed by the intruders.";
+		next;
+		mes "[ Juventus ]";
+		mes "If they ever attack the guest, they're all broken gardeners, so don't hesitate to take it down.";
+		npctalk "If they ever attack the guest, they're all broken gardeners, so don't hesitate to take it down.";
+		close2;
+		if ('water_garden == 3) {
+			'water_garden = 4;
+			donpcevent instance_npcname("#172_wg_mob") + "::OnSummon";
+			donpcevent instance_npcname("#172_wg_area_2") + "::OnEvent";
+		}
+		end;
+	}
+	if ('water_garden == 4) {
+		mes "[ Juventus ]";
+		mes "If the gardeners ever attack the guest, they're all broken gardeners, so don't hesitate to take it down.";
+		close;
+	} else
+		npctalk "The obstructions is now gone, you can not move to the next area.";
+	end;
+}
+
+1@ghg,341,143,3	script	Gardener#172_wg_2	4_EP17_SCISSORE,5,1,{
+OnTalk:
+	if ('water_garden == 5)
+		'water_garden = 6;
+	mes "[ Aditura ]";
+	mes "The rose garden is a very beautiful place, but recently, we are having trouble maintaining it because of the swarms of animals and plants that appeared in groups.";
+	npctalk "The rose garden is a very beautiful place, but recently, we are having trouble maintaining it because of the swarms of animals and plants that appeared in groups.";
+	next;
+	mes "[ Aditura ]";
+	mes "Guest, I'd like you to please prune the plants and animals.";
+	npctalk "Guest, I'd like you to please prune the plants and animals.";
+	next;
+	mes "[ Aditura ]";
+	mes "At the end of the garden, there is a manager waiting to open the next area, so please speak to her when you reach there.";
+	npctalk "At the end of the garden, there is a manager waiting to open the next area, so please speak to her when you reach there.";
+	next;
+	mes "[ Aditura ]";
+	mes "It's a little slow, so you might have to wait, but... the next area will definitely open.";
+	npctalk "It's a little slow, so you might have to wait, but... the next area will definitely open.";
+	close;
+
+OnTouch:
+	if ('water_garden == 5)
+		doevent instance_npcname(strnpcinfo(0)) + "::OnTalk";
+	end;
+}
+
+1@ghg,344,173,3	script	Gardener#172_wg_3	4_EP17_SCISSORE,{
+	progressbar_npc "00FF00",5;
+	if ('water_garden < 6) {
+		npctalk "An error... has occurred.";
+		end;
+	}
+	mes "[ Higel ]";
+	mes "Next garden... portal creation complete... Move into the 12 o'clock direction... to use... Thank you...";
+	npctalk "Next garden... portal creation complete... Move into the 12 o'clock direction... to use... Thank you...";
+	next;
+	mes "[ Higel ]";
+	mes "After the move... Papilla in the maze... Please prune all of them.";
+	close2;
+	if ('water_garden == 6) {
+		'water_garden = 7;
+		enablenpc instance_npcname("#172_wg_warp_3");
+		specialeffect EF_READYPORTAL,AREA,instance_npcname("#172_wg_warp_3");
+		enablenpc instance_npcname("Gardener#172_wg_4");
+		donpcevent instance_npcname("#172_wg_mob") + "::OnSummon";
+	}
+	end;
+}
+
+1@ghg,334,310,3	script	Gardener#172_wg_4	4_EP17_SCISSORE,{
+	if (isbegin_quest(16435) == 1 && countitem(1000099) == 0) {
+		npctalk "Oh, I forgot to make regular contact! I'll get in touch. Would you like a cookie while you're here?","",bc_self;
+		getitem 1000099,1;
+		end;
+	}
+	if (isbegin_quest(16435) == 1 && countitem(1000099) == 1) {
+		npctalk "Do not worry, I already contacted Alpha. Hehe.","",bc_self;
+		end;
+	}
+	if ('water_garden == 7) {
+		npctalk "That's strange, I forgot it yesterday, but I forgot it today as well.";
+		end;
+	}
+	npctalk "The final garden opened. But... I forgot what should I do...";
+	end;
+}
+
+1@ghg,186,287,3	script	Gardener#172_wg_5	4_EP17_SCISSORE,{
+	if ('water_garden == 8) {
+		mes "[ Velkina ]";
+		mes "If a Papilla shows up during the battle, make it follow you to the pillar of the same color.";
+		next;
+		mes "[ Velkina ]";
+		mes "If the Papilla touches the light, it will take damage and die.";
+		next;
+		mes "[ Velkina ]";
+		mes "If you can safely stop Silva Papilla, we will handle the rest!";
+		next;
+		mes "[ Velkina ]";
+		mes "Then, I'll burn the incense that calls out Silva Papilla...";
+		close2;
+		if ('water_garden == 8) {
+			'water_garden = 9;
+			hideonnpc();
+			donpcevent instance_npcname("#172_wg_boss") + "::OnSummon";
+		}
+		end;
+	}
+	if ('water_garden == 10) {
+		mes "[ Velkina ]";
+		mes "You didn't forget your request from Seiyu, and came in here, right?";
+		next;
+		mes "[ Velkina ]";
+		mes "Don't forget to go out and talk to Seiyu to ^0000CDReceive your rewards^000000 from todays work.";
+		next;
+		mes "[ Velkina ]";
+		mes "Then, I'll show you the way outside again!";
+		close2;
+		warp "ba_maison",233,46;
+	}
+	end;
+}
+
+1@ghg,1,1,0	script	#172_wg_mob	HIDDEN_WARP_NPC,{
+	end;
+
+OnSummon:
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill";
+	switch ('summon) {
+		case 0:
+			setarray .@xy,247,89,'aries,257,90,'aries,228,89,'aries,227,93,'aries,238,54,'aries,245,52,'aries,251,89,'violet,253,92,'violet,244,53,'violet,227,96,'violet,226,83,'violet,244,59,'violet;
+			break;
+
+		case 1:
+			setarray .@xy,334,84,'aries,328,79,'aries,325,84,'aries,332,69,'aries,331,74,'aries,327,87,'aries,338,73,'aries,340,84,'aries,342,79,'aries,337,67,'beta,325,82,'beta,338,83,'beta;
+			break;
+
+		case 2:
+			setarray .@xy,314,301,'snail,317,296,'snail,324,296,'snail,317,275,'aries,318,266,'aries,311,268,'aries,277,279,'snail,278,241,'red,286,284,'snail,280,284,'snail,278,301,'blue;
+			break;
+
+	}
+	for (.@i = 0; .@i < getarraysize(.@xy); .@i += 3)
+		monster 'map$,.@xy[.@i],.@xy[.@i+1],"--ja--",.@xy[.@i+2],1,.@event$;
+	end;
+
+OnMobKill:
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill";
+	if (!mobcount('map$,.@event$)) {
+		'summon += 1;
+		'water_garden += 1;
+		switch ('summon) {
+			case 1:
+				specialeffect EF_READYPORTAL,AREA,instance_npcname("#172_wg_warp_1");
+				enablenpc instance_npcname("#172_wg_warp_1");
+				donpcevent instance_npcname("#172_wg_area_1") + "::OnStop";
+				enablenpc instance_npcname("Gardener#172_wg_1");
+				mapannounce 'map$,"Cleanup is complete. Please proceed to the next area.",bc_map,0xFFFF99;
+				break;
+
+			case 2:
+				specialeffect EF_READYPORTAL,AREA,instance_npcname("#172_wg_warp_2");
+				enablenpc instance_npcname("#172_wg_warp_2");
+				donpcevent instance_npcname("#172_wg_area_2") + "::OnStop";
+				enablenpc instance_npcname("Gardener#172_wg_2");
+				enablenpc instance_npcname("Gardener#172_wg_3");
+				mapannounce 'map$,"You have eliminated all the obstructions. Please proceed to the next area.",bc_map,0xFFFF99;
+				break;
+
+			case 3:
+				specialeffect EF_READYPORTAL,AREA,instance_npcname("#172_wg_warp_2");
+				enablenpc instance_npcname("#172_wg_warp_4");
+				mapannounce 'map$,"The final garden has opened. Please proceed to the next area.",bc_map,0xFFFF99;
+				enablenpc instance_npcname("Gardener#172_wg_5");
+				break;
+		}
+	}
+	end;
+}
+
+1@ghg,1,1,0	script	#172_wg_boss	-1,{
+	end;
+
+OnSummon:
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnBossKill";
+	monster 'map$,181,286,"--ja--",'boss,1,.@event$;
+	'gid = $@mobid[0];
+	donpcevent instance_npcname(strnpcinfo(0)) + "::OnSummonSlave";
+	end;
+
+OnBossKill:
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnDead";
+	killmonster 'map$,.@event$;
+	stopnpctimer;
+	'water_garden = 10;
+	hideoffnpc instance_npcname("Gardener#172_wg_5");
+	disablenpc instance_npcname("#172_wg_hpreducer");
+	end;
+
+OnSummonSlave:
+	.@red = rand(3);
+	.@blue = rand(3);
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnDead";
+	monster 'map$,182,286,"Papilla Ruba",'red,1,.@event$;
+	monster 'map$,182,286,"Papilla Cae",'blue,1,.@event$;
+	enablenpc instance_npcname("#172_light_blue_" + .@blue);
+	enablenpc instance_npcname("#172_light_red_" + .@red);
+	sleep 15000;
+	switch (rand(1,4)) {
+		case 1: .@x = 152; .@y = 287; break;
+		case 2: .@x = 182; .@y = 256; break;
+		case 3: .@x = 182; .@y = 310; break;
+		case 4: .@x = 214; .@y = 287; break;
+	}
+	disablenpc instance_npcname("#172_light_blue_" + .@blue);
+	disablenpc instance_npcname("#172_light_red_" + .@red);
+	enablenpc instance_npcname("#172_wg_hpreducer");
+	instance_warpall 'map$,182,286,instance_id();
+	sleep 100;
+	instance_warpall 'map$,.@x,.@y,instance_id();
+	disablenpc instance_npcname("#172_wg_hpreducer");
+	sleep 2000;
+	monster 'map$,.@x,.@y,"",2537,1,.@event$;
+	sleep 10000;
+	killmonster 'map$,.@event$;
+	initnpctimer;
+OnDead:
+	end;
+
+OnTimer5000:
+	stopnpctimer;
+	if (unitexists('gid))
+		donpcevent instance_npcname(strnpcinfo(0)) + "::OnSummonSlave";
+	end;
+}
+
+1@ghg,183,286,0	script	#172_wg_hpreducer	HIDDEN_WARP_NPC,4,4,{
+	end;
+
+OnTouch:
+	.@DAMAGE = MaxHp/2;
+	if (.@DAMAGE > Hp)
+		Hp = 1;
+	else
+		Hp -= .@DAMAGE;
+	end;
+}
+
+1@ghg,186,294,0	script	#172_light_blue_0	4_ENERGY_BLUE,2,2,{
+	end;
+
+OnTouchNPC:
+	getunitdata getattachedrid(),.@mob;
+	if (.@mob[UMOB_CLASS] == 'blue) {
+		if (unitexists(getattachedrid()))
+			unitkill getattachedrid();
+	}
+	end;
+}
+
+1@ghg,190,287,0	duplicate(#172_light_blue_0)	#172_light_blue_1	4_ENERGY_BLUE,2,2
+1@ghg,187,280,0	duplicate(#172_light_blue_0)	#172_light_blue_2	4_ENERGY_BLUE,2,2
+
+1@ghg,178,280,0	script	#172_light_red_0	4_ENERGY_RED,{
+	end;
+
+OnTouchNPC:
+	getunitdata getattachedrid(),.@mob;
+	if (.@mob[UMOB_CLASS] == 'red) {
+		if (unitexists(getattachedrid()))
+			unitkill getattachedrid();
+	}
+	end;
+}
+
+1@ghg,174,287,0	duplicate(#172_light_red_0)	#172_light_red_1	4_ENERGY_RED,1,1
+1@ghg,178,294,0	duplicate(#172_light_red_0)	#172_light_red_2	4_ENERGY_RED,1,1
+
+1@ghg,316,149,0	script	#172_wg_trap_0	HIDDEN_WARP_NPC,1,3,{
+	end;
+
+OnTouch:
+	.@id = atoi(replacestr(strnpcinfo(2),"172_wg_trap_",""));
+	switch (.@id) {
+		case 0: setarray .@xy,315,150,317,149,317,150; break;
+		case 1: setarray .@xy,298,148,294,150,296,147; break;
+		case 2: setarray .@xy,274,148,276,148,278,147; break;
+		case 3: setarray .@xy,254,151,258,149,256,150; break;
+		case 4: setarray .@xy,231,163,230,160,231,162; break;
+		case 5: setarray .@xy,253,174,254,173,252,174; break;
+		case 6: setarray .@xy,274,173,275,175,276,175; break;
+		case 7: setarray .@xy,293,173,295,171,292,173; break;
+		case 8: setarray .@xy,316,173,316,174,314,173; break;
+	}
+	disablenpc instance_npcname(strnpcinfo(0));
+	for (.@i = 0; .@i < getarraysize(.@xy); .@i += 2)
+		monster 'map$,.@xy[.@i],.@xy[.@i+1],"",'snail,1;
+	end;
+}
+
+1@ghg,295,149,0	duplicate(#172_wg_trap_0)	#172_wg_trap_1	HIDDEN_WARP_NPC,1,3
+1@ghg,275,149,0	duplicate(#172_wg_trap_0)	#172_wg_trap_2	HIDDEN_WARP_NPC,1,3
+1@ghg,255,149,0	duplicate(#172_wg_trap_0)	#172_wg_trap_3	HIDDEN_WARP_NPC,1,3
+1@ghg,231,162,0	duplicate(#172_wg_trap_0)	#172_wg_trap_4	HIDDEN_WARP_NPC,3,1
+1@ghg,255,173,0	duplicate(#172_wg_trap_0)	#172_wg_trap_5	HIDDEN_WARP_NPC,1,3
+1@ghg,275,173,0	duplicate(#172_wg_trap_0)	#172_wg_trap_6	HIDDEN_WARP_NPC,1,3
+1@ghg,295,173,0	duplicate(#172_wg_trap_0)	#172_wg_trap_7	HIDDEN_WARP_NPC,1,3
+1@ghg,315,173,0	duplicate(#172_wg_trap_0)	#172_wg_trap_8	HIDDEN_WARP_NPC,1,3
+
+
+1@ghg,1,1,0	script	#172_wg_area_1	HIDDEN_WARP_NPC,{
+	end;
+
+OnEvent:
+	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	setarray .@xy,
+	240,73,20676,9,
+	225,59,20676,4,
+	253,91,20676,4,
+	257,76,20676,6,
+	240,54,20673,6,
+	227,80,20673,4,
+	223,92,20673,6,
+	261,54,20673,4;
+	switch (rand(1,8)) {
+		case 1: .@x = 240; .@y = 73; break;
+		case 2: .@x = 225; .@y = 59; break;
+		case 3: .@x = 253; .@y = 91; break;
+		case 4: .@x = 257; .@y = 76; break;
+		case 5: .@x = 240; .@y = 54; break;
+		case 6: .@x = 227; .@y = 80; break;
+		case 7: .@x = 228; .@y = 92; break;
+		case 8: .@x = 261; .@y = 54; break;
+	}
+	instance_warpall 'map$,.@x,.@y,instance_id();
+	sleep 2000;
+	mapannounce 'map$,"The magic of the Papilla's has activated. Be careful!",bc_map,0xFFFF99;
+	sleep 2000;
+	for (.@i = 0; .@i < getarraysize(.@xy); .@i += 4) {
+		monster 'map$,.@xy[.@i],.@xy[.@i+1],"",.@xy[.@i+2],1,.@event$;
+		if (unitexists($@mobid[0]))
+			unitskillusepos $@mobid[0],"NPC_RAINOFMETEOR",.@xy[.@i+3],.@xy[.@i],.@xy[.@i+1],-10000;
+	}
+	sleep 5000;
+	killmonster 'map$,.@event$;
+	initnpctimer;
+OnMobKill:
+	end;
+
+OnStop:
+	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	stopnpctimer;
+	killmonster 'map$,.@event$;
+	disablenpc();
+	end;
+
+OnTimer15000:
+	.@event$ = instance_npcname("#172_wg_mob")+"::OnMobKill";
+	if (!mobcount('map$,.@event$))
+		stopnpctimer;
+	else
+		donpcevent instance_npcname(strnpcinfo(0)) + "::OnEvent";
+	end;
+}
+
+1@ghg,1,1,0	script	#172_wg_area_2	HIDDEN_WARP_NPC,{
+	end;
+
+OnEvent:
+	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill";
+	setarray .@xy$[1],
+	"320:91","325:91","330:91","335:91","340:91","345:91",
+	"320:86","325:86","330:86","335:86","340:86","345:86",
+	"320:81","325:81","330:81","335:81","340:81","345:81",
+	"320:76","325:76","330:76","335:76","340:76","345:76",
+	"320:71","325:71","330:71","335:71","340:71","345:71",
+	"320:66","325:66","330:66","335:66","340:66","345:66";
+	for (.@i = 0; .@i < 3; .@i++) {
+		.@val = rand(1,25);
+		while (inarray(.@index,.@val) >= 0)
+			.@val = rand(1,25);
+		.@index[.@i] = .@val;
+		.@mob[.@i] = (rand(1,2) == 1 ? 20673 : 20676);
+	}
+	mapannounce 'map$,"The Papilla's has returned!",bc_map,0xFFFF99;
+	for (.@i = 0; .@i < 3; .@i++) {
+		explode(.@T$,.@xy$[.@index[.@i]],":");
+		monster 'map$,atoi(.@T$[0]),atoi(.@T$[1]),"Papilla",.@mob[.@i],1,.@event$;
+		.@gid[.@i] = $@mobid[0];
+	}
+	sleep 5000;
+	for (.@i = 0; .@i < 3; .@i++) {
+		if (.@mob[.@i] == 20673)
+			.@level = 1; //Cross Pattern
+		else
+			.@level = 2; //Diagonal Pattern
+		unitskilluseid .@gid[.@i],"NPC_GROUNDDRIVE",.@level;
+		sleep 600;
+	}
+	sleep 5000;
+	killmonster 'map$,.@event$;
+	initnpctimer;
+OnMobKill:
+	end;
+
+OnStop:
+	.@event$ = instance_npcname(strnpcinfo(0))+"::OnMobKill";
+	stopnpctimer;
+	killmonster 'map$,.@event$;
+	disablenpc();
+	end;
+
+OnTimer15000:
+	.@event$ = instance_npcname("#172_wg_mob")+"::OnMobKill";
+	if (!mobcount('map$,.@event$))
+		stopnpctimer;
+	else
+		donpcevent instance_npcname(strnpcinfo(0)) + "::OnEvent";
+	end;
+}

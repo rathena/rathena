@@ -288,7 +288,7 @@ CREATE TABLE IF NOT EXISTS `char` (
   KEY `party_id` (`party_id`),
   KEY `guild_id` (`guild_id`),
   KEY `online` (`online`)
-) ENGINE=MyISAM AUTO_INCREMENT=150000; 
+) ENGINE=MyISAM DEFAULT CHARSET=tis620 AUTO_INCREMENT=150000 ; 
 
 --
 -- Table structure for table `char_reg_num`
@@ -1014,7 +1014,7 @@ CREATE TABLE IF NOT EXISTS `quest` (
 CREATE TABLE IF NOT EXISTS `skill` (
   `char_id` int(11) unsigned NOT NULL default '0',
   `id` smallint(11) unsigned NOT NULL default '0',
-  `lv` tinyint(4) unsigned NOT NULL default '0',
+  `lv` int(11) unsigned NOT NULL default '0',
   `flag` TINYINT(1) UNSIGNED NOT NULL default 0,
   PRIMARY KEY  (`char_id`,`id`)
 ) ENGINE=MyISAM;

@@ -31,113 +31,113 @@
 //============================================================
 morocc,150,120,5	script	Soldier - Morocc#01::MocSoldier	707,3,3,{
 	mes "[Morocc Soldier]";
-	mes "Hey, you! Stop there.";
+	mes "เฮ้คุณ! หยุดแค่นั้น";
 	next;
 	mes "[Morocc Soldier]";
-	mes "This is a restricted area. You can't come any further!";
+	mes "นี่คือเขตหวงห้ามคุณไม่สามารถไปได้อีกแล้ว!";
 	close;
 
 OnTouch_:
 	mes "[Morocc Soldier]";
-	mes "Hey, you! Stop there.";
+	mes "เฮ้คุณ! หยุดแค่นั้น";
 	next;
 	mes "[Morocc Soldier]";
-	mes "This is a restricted area. You can't come any further!";
+	mes "นี่คือเขตหวงห้ามคุณไม่สามารถไปได้อีกแล้ว!";
 	close;
 }
 
 morocc,202,244,0	script	Volunteer - Morocc#01	745,{
 	mes "[Morocc Volunteer]";
-	mes "After that terrible incident wiped out the entire Morocc, Rune-Midgarts Kingdom has gathered us volunteers to help restorations.";
+	mes "หลังจากเหตุการณ์เลวร้ายครั้งนั้นกวาดล้างชาวโมร็อกโกไปหมดอาณาจักร Rune-Midgarts ได้รวบรวมอาสาสมัครมาช่วยบูรณะ";
 	next;
 	mes "[Morocc Volunteer]";
-	mes "As important as it seems, everyone's being careful but there are always some that really don't realize the situation, don't you think?";
+	mes "ที่สำคัญก็คือทุกคนระวังตัว แต่มักจะมีบางคนที่ไม่เข้าใจสถานการณ์จริงๆ คุณไม่คิดเหรอ";
 	close;
 }
 
 morocc,88,133,3	script	Volunteer - Morocc#02	748,{
 	mes "[Morocc Volunteer]";
-	mes "We're... We're flooded with work...";
+	mes "เรา...งานล้นมือ...";
 	next;
 	mes "[Morocc Volunteer]";
-	mes "This work's like never-ending, no matter how hard we try!!!";
-	mes "People of Rune-Midgarts!! Please lend us a helping hand!!";
+	mes "งานนี้ไม่มีวันจบไม่ว่าเราจะพยายามแค่ไหน !!!";
+	mes "ชาว Rune-Midgarts!! ช่วยเราหน่อยนะ!!";
 	next;
 	mes "[Morocc Volunteer]";
-	mes "Haw.... Whew... Ugh...";
+	mes "อ้ำ .... ต๊าย...ฮึ...";
 	close;
 }
 
 morocc,202,110,0	script	Volunteer - Morocc#03	730,{
 	mes "[Morocc Volunteer]";
-	mes "We're still unable to estimate the overall damage.";
+	mes "เรายังประเมินความเสียหายโดยรวมไม่ได้";
 	next;
 	mes "[Morocc Volunteer]";
-	mes "Adventurers' Union and Prontera Kingdom are putting their efforts on restorations as well as restraints of the original cause of the disaster.";
+	mes "สหภาพนักผจญภัยและอาณาจักรพรอนเทรากำลังพยายามฟื้นฟูและยับยั้งสาเหตุดั้งเดิมของภัยพิบัติ";
 	next;
 	mes "[Morocc Volunteer]";
-	mes "Unless we settle the original cause, the damage will even spread out of Morocc. The only thing left is to get worse.";
+	mes "ถ้าเราไม่ยุติสาเหตุเดิมความเสียหายจะกระจายออกไปจากโมร็อกโกสิ่งเดียวที่เหลืออยู่คือเลวร้ายลง";
 	close;
 }
 
 morocc,268,287,3	script	Volunteer - Morocc#04	727,{
 	mes "[Morocc Volunteer]";
-	mes "As bad as it seems, we can't even ask for more support.";
-	mes "This sure must be the worst thing ever happened in Rune-Midgarts' history.";
+	mes "แย่อย่างที่คิดเราไม่สามารถขอการสนับสนุนเพิ่มเติมได้เลย";
+	mes "สิ่งนี้จะต้องเป็นสิ่งที่เลวร้ายที่สุดที่เคยเกิดขึ้นในประวัติศาสตร์ของ Rune-Midgarts";
 	next;
 	mes "[Morocc Volunteer]";
-	mes "I wish I knew how bad the damage is, but we can't even estimate it. It's like shovelling sand against the tide..";
+	mes "ฉันหวังว่าฉันจะรู้ว่าความเสียหายนั้นเลวร้ายแค่ไหน แต่เราไม่สามารถประเมินได้มันเหมือนกับการตักทรายกับกระแสน้ำ..";
 	close;
 }
 
 morocc,37,287,0	script	Volunteer - Morocc#05	79,{
 	mes "[Morocc Volunteer]";
-	mes "The town's all shattered, but the real problem is the towners.";
+	mes "เมืองนี้แตกเป็นเสี่ยงๆ แต่ปัญหาที่แท้จริงคือหอคอย";
 	next;
 	mes "[Morocc Volunteer]";
-	mes "It's a real pity to see those victims of the destroyed town, but the witnesses of the disaster are so much shocked. They're simply not normal now.";
+	mes "เป็นเรื่องน่าเสียดายจริงๆที่ได้เห็นเหยื่อของเมืองที่ถูกทำลาย แต่พยานของหายนะตกใจมากตอนนี้พวกเขาไม่ปกติแล้ว";
 	next;
 	mes "[Morocc Volunteer]";
-	mes "People are scared to death, but those are fortunate at least.. cause.. many others got mentally ill and stuff..";
+	mes "คนกลัวตาย แต่อย่างน้อยก็โชคดี..ทำให้..คนอื่นๆ หลายคนป่วยทางจิตและมีเรื่อง..";
 	close;
 }
 
 morocc,223,102,0	script	Volunteer - Morocc#06::MocVolunteer	741,{
 	mes "[Morocc Volunteer]";
-	mes "Ugh.. It's kinda spooky, here.. Even this dry wind of the desert seems to have a dark nature.";
+	mes "ฮึ..มันน่ากลัวนะที่นี่..แม้แต่ลมที่แห้งแล้งของทะเลทรายก็ดูเหมือนจะมืดมน";
 	next;
 	mes "[Morocc Volunteer]";
-	mes "Ooh!! Something... I can feel something! The dark and gloomy air flowing around this town is actually giving me a musical motiff!";
+	mes "โอ๊ะ !! บางอย่าง...ฉันรู้สึกได้บางอย่างอากาศที่มืดมนและมืดมนที่ไหลเวียนรอบเมืองนี้ทำให้ฉันได้รับแรงกระตุ้นทางดนตรีจริงๆ!";
 	next;
 	mes "[Morocc Volunteer]";
-	mes "Right, I think you should hear it! The title is.. 'The Rhapsody of Morocc Satan's Rebirth'!!";
+	mes "ใช่ฉันคิดว่าคุณน่าจะได้ยินนะ! ชื่อเรื่องคือ..'The Rhapsody of Morocc Satan's Rebirth' !!";
 	next;
 	mes "[Morocc Volunteer]";
-	mes "When finally wake up, it's just the same darkness";
-	mes "Failed to be reborn at the same place,";
-	mes "Gotta try harder and harder, never ever give up,";
-	mes "But even after hundreds and thousands of trying,";
-	mes "The great Satan of Morocc can't revive~";
+	mes "ในที่สุดเมื่อตื่นขึ้นมามันก็แค่ความมืดเหมือนเดิม";
+	mes "ไม่สามารถเกิดใหม่ที่เดิมได้";
+	mes "ต้องพยายามให้หนักขึ้นเรื่อยๆ อย่ายอมแพ้";
+	mes "แต่ถึงแม้จะพยายามเป็นร้อยเป็นพัน";
+	mes "ซาตานผู้ยิ่งใหญ่แห่งโมร็อกโกไม่สามารถชุบชีวิตได้~";
 	next;
 	mes "[Morocc Volunteer]";
-	mes "My stupid button men are useless,";
-	mes "Against those adventurers,";
-	mes "This time I must revive,";
-	mes "Cracking the time and the space,";
-	mes "Will be saved for the last~~~";
+	mes "ผู้ชายปุ่มโง่ของฉันไม่มีประโยชน์";
+	mes "กับเหล่านักผจญภัย";
+	mes "ครั้งนี้ฉันต้องฟื้น";
+	mes "แตกเวลาและช่องว่าง";
+	mes "จะถูกบันทึกไว้เป็นครั้งสุดท้าย~~~";
 	next;
 	mes "[Ringing Voice]";
-	mes "Be quiet! Can't you see what's going on?!";
+	mes "เงียบหน่อย! ไม่เห็นมีอะไรเกิดขึ้น?!";
 	specialeffect EF_HIT2,AREA,"Volunteer - Morocc#06";
 	next;
 	mes "[Morocc Volunteer]";
-	mes "Heyyy, you're being too harsh, Senyorita. Your fist may be as fragile as you are, but it sure can hurt somebody.";
+	mes "เฮ้คุณกำลังรุนแรงเกินไป Senyorita หมัดของคุณอาจจะบอบบางเหมือนกัน แต่มันสามารถทำร้ายใครบางคนได้";
 	next;
 	mes "[Ringing Voice]";
-	mes "Anyways, isn't that a crib? I think I heard something like that before..";
+	mes "ยังไงนั่นไม่ใช่เปลเหรอฉันคิดว่าฉันเคยได้ยินเรื่องแบบนั้นมาก่อน..";
 	next;
 	mes "[Morocc Volunteer]";
-	mes "No, No way!? It,, sure is not!";
+	mes "ไม่ไม่มีทาง!? มันไม่แน่ใจ!";
 	close;
 }
 
@@ -145,570 +145,509 @@ morocc,226,102,4	duplicate(MocVolunteer)	Volunteer - Morocc#07	726
 
 moc_ruins,123,154,0	script	Young Man#moc01	99,{
 	mes "[Young Man]";
-	mes "The town's completely destroyed, but that giant triangular structure hasn't been harmed at all. Maybe it's protected by some kinda special power.";
+	mes "เมืองนี้พังยับเยิน แต่โครงสร้างสามเหลี่ยมขนาดยักษ์นั่นไม่ได้รับอันตรายเลยบางทีมันอาจจะได้รับการปกป้องด้วยพลังพิเศษบางอย่าง";
 	next;
 	mes "[Young Man]";
-	mes "You know...Those giant, triangular buildings at the NorthWest corner of Morocc known are known to us as Pyramids...";
+	mes "รู้มั้ย...ตึกสามเหลี่ยมขนาดยักษ์ที่มุมทิศตะวันตกเฉียงเหนือของโมร็อกโกที่เรารู้จักกันในชื่อปิรามิด...";
 	next;
 	mes "[Young Man]";
-	mes "Those things have been around here for thousands and thousands of years. No one knows when and why they were built, or who built them.";
+	mes "สิ่งเหล่านั้นอยู่ที่นี่มาหลายพันปีแล้วไม่มีใครรู้ว่าสร้างขึ้นเมื่อใดและทำไมหรือใครเป็นผู้สร้าง";
 	next;
 	mes "[Young Man]";
-	mes "All we know is that tons of monsters live inside those weird buildings. You might wanna stay away from those really dangerous places.";
+	mes "ทั้งหมดที่เรารู้ก็คือมีสัตว์ประหลาดจำนวนมากอาศัยอยู่ในอาคารแปลกๆ พวกนั้นคุณอาจจะอยากอยู่ให้ห่างจากสถานที่อันตรายจริงๆ";
 	next;
 	mes "[Young Man]";
-	mes "Those monsters in the Pyramid would be very, very sensitive to sweet flash smell of people....";
+	mes "สัตว์ประหลาดเหล่านั้นในพีระมิดจะไวต่อกลิ่นวาบหวานของผู้คนมาก....";
 	close;
 }
 
 moc_ruins,128,153,0	script	Grampa#moc	61,{
 	mes "[Old Scholar]";
-	mes "I've devoted my life to researching the mysterious pyramids near Morocc. I haven't been able to concretely confirm anything yet, but...";
+	mes "ฉันอุทิศชีวิตให้กับการค้นคว้าเกี่ยวกับปิรามิดลึกลับที่อยู่ใกล้โมร็อกโกฉันยังไม่สามารถยืนยันอะไรได้เป็นรูปธรรม แต่...";
 	next;
 	mes "[Old Scholar]";
-	mes "I'm sure that the largest pyramid contains the tomb of the ancient king, Osiris! I'm willing to stake my life on it!";
+	mes "ฉันแน่ใจว่าพีระมิดที่ใหญ่ที่สุดมีสุสานของกษัตริย์โบราณโอซิริสฉันเต็มใจที่จะเดิมพันด้วยชีวิตของฉัน!";
 	close;
 }
 
 moc_ruins,132,144,0	script	Wolf Young Man#moc	85,{
 	mes "[Young Man]";
-	mes "I remember I said the bandits of desert are the desert wolves.. Those bastards always roam around in a bunch and they would get so cruel and outrageous if one of them got attacked.";
+	mes "ฉันจำได้ว่าฉันบอกว่าโจรแห่งทะเลทรายคือหมาป่าทะเลทราย..ไอ้พวกนั้นมักจะเดินเตร่ไปมาเป็นฝูงและพวกมันจะโหดร้ายและอุกอาจมากถ้าพวกมันถูกโจมตี";
 	next;
 	mes "[Young Man]";
-	mes "They are so vicious, and I'm telling ya, I'm no kidding. You can only find some bones and rotten milk in the backpack after these wolves sweep through.";
-	mes "Those things are so mean and vicious..";
+	mes "พวกมันดุร้ายมากและฉันก็บอกคุณว่าฉันไม่ได้ล้อเล่นคุณสามารถหากระดูกและนมเน่าๆ ในกระเป๋าเป้ได้หลังจากที่หมาป่าพวกนี้กวาดไปเท่านั้น";
+	mes "สิ่งเหล่านั้นช่างโหดร้ายและเลวทราม..";
 	next;
 	mes "[Young Man]";
-	mes "But the thing is that.. I even kinda feel those merciless cold-blooded monsters are nothing to be afraid of, compared to what has happened in Morocc. Morocc is already a hell.";
+	mes "แต่สิ่งนั้นก็คือ..ฉันรู้สึกว่าสัตว์ประหลาดเลือดเย็นที่ไร้ความปราณีเหล่านั้นไม่มีอะไรต้องกลัวเมื่อเทียบกับสิ่งที่เกิดขึ้นในโมร็อกโกโมร็อกโกเป็นนรกไปแล้ว";
 	close;
 }
 
 moc_ruins,115,144,3	script	Muka Young Man#moc	83,{
 	mes "[Young Man]";
-	mes "I work in the trading business, so I always have to cross the hot, dry Morocc Desert on business.";
+	mes "ฉันทำงานในธุรกิจการค้าดังนั้นฉันจึงต้องข้ามทะเลทรายโมร็อกโกที่ร้อนและแห้งแล้งเสมอเพื่อทำธุรกิจ";
 	next;
 	mes "[Young Man]";
-	mes "But I can't do that anymore.";
+	mes "แต่ฉันทำแบบนั้นไม่ได้อีกแล้ว";
 	next;
 	mes "[Young Man]";
-	mes "Now that I can't, I kind of miss the old days.";
+	mes "ตอนนี้ฉันทำไม่ได้ฉันคิดถึงวันเก่าๆ ";
 	next;
 	mes "[Young Man]";
-	mes "Like this one time, while I was in the middle of the desert, I got so thirsty that I caught a cactus.. but before I was able to cut it, it slapped me! Then it shot me in the arse with all these needles...";
+	mes "แบบนี้ครั้งหนึ่งตอนที่ฉันอยู่กลางทะเลทรายฉันกระหายน้ำมากจนจับต้นกระบองเพชร..แต่ก่อนที่ฉันจะตัดมันมันก็ตบฉัน! จากนั้นมันก็ยิงฉันที่ตูดทั้งหมด เข็มพวกนี้...";
 	next;
 	mes "[Young Man]";
-	mes "Later, I learned that it wasn't a normal cactus I found, but the monster we call 'Muka.'";
-	mes "Now I come to think of it, it was fun as much as dangerous.";
+	mes "ต่อมาฉันได้เรียนรู้ว่ามันไม่ใช่กระบองเพชรธรรมดาที่ฉันพบ แต่เป็นสัตว์ประหลาดที่เราเรียกว่า 'มูกะ'";
+	mes "ตอนนี้ฉันคิดว่ามันสนุกพอๆ กับอันตราย";
 	close;
 }
 
 moc_ruins,109,138,0	script	Diamond Young Man#moc	99,{
 	mes "[Young Man]";
-	mes "The undisputed queen of jewels has to be the Diamond. After looking at it just once, no one can deny its beauty.";
+	mes "ราชินีแห่งอัญมณีที่ไม่มีปัญหาจะต้องเป็นเพชรหลังจากมองเพียงครั้งเดียวก็ไม่มีใครปฏิเสธความงามของมันได้";
 	next;
 	mes "[Young Man]";
-	mes "Many factors determine its value, but the most important thing is its size.";
+	mes "ปัจจัยหลายอย่างกำหนดมูลค่าของมัน แต่สิ่งที่สำคัญที่สุดคือขนาดของมัน";
 	next;
 	mes "[Young Man]";
-	mes "It should also be a perfect crystal, not cracked or chipped, if you want to sell the Diamond for a lot of zeny.";
+	mes "นอกจากนี้ยังควรเป็นคริสตัลที่สมบูรณ์แบบไม่แตกหรือบิ่นหากคุณต้องการขายเพชรให้ได้จำนวนมาก";
 	next;
 	mes "[Young Man]";
-	mes "But look! The hardest stone in the world got broken in two!";
+	mes "แต่ดูสิหินที่แข็งที่สุดในโลกแตกเป็นสองท่อน!";
 	next;
 	mes "[Young Man]";
-	mes "I know it's not the time to worry about some gemstones but.. this.. was my everything..";
+	mes "ฉันรู้ว่ามันไม่ใช่เวลาที่ต้องกังวลเกี่ยวกับอัญมณี แต่..นี่คือทุกสิ่งทุกอย่างของฉัน..";
 	close;
 }
 
 morocc,54,251,0	script	Young Man#moc02	89,{
 	mes "[Drunken Young Man]";
-	mes "Wait a second..! Are you perhaps an adventurer? Welcome! How's your trip?";
-	mes "Heh heh~ Let me tell you a story. You know I just got out of that Tavern, there, huh?";
+	mes "เดี๋ยวก่อน..! คุณอาจจะเป็นนักผจญภัยหรือไม่ยินดีต้อนรับการเดินทางของคุณเป็นอย่างไรบ้าง";
+	mes "เฮ้เฮ้~ ขอเล่าเรื่องให้ฟังหน่อยรู้ไหมว่าฉันเพิ่งออกจากโรงเตี๊ยมนั่นไง";
 	next;
 	mes "[Drunken Young Man]";
-	mes "I heard the Satan Morocc has revived. It just got out of cracking the time and the space blar... hic~";
+	mes "ฉันได้ยินมาว่าซาตานโมร็อคฟื้นขึ้นมาแล้วมันเพิ่งหมดเวลาและเสียงลั่นของอวกาศ...hic~";
 	next;
 	mes "[Drunken Young Man]";
-	mes "Ah... I kinda wanna see that Satan with my own eyes, but! I really shouldn't. I shouldn't even dream of seeing that Satan in person.";
+	mes "อ่า...ฉันอยากเห็นซาตานตัวนั้นด้วยตาตัวเอง แต่ฉันไม่ควรจริงๆฉันไม่ควรฝันเห็นซาตานตัวนั้นด้วยซ้ำ";
 	next;
 	mes "[Drunken Young Man]";
-	mes "But I think there'd be nothing to lose if you, a person of bravery, who came through the wile desert try to find it, don't you think? Teehee~ Don't forget to buy me a drink when you find it!";
-	mes "Hic!";
+	mes "แต่ฉันคิดว่าคงไม่มีอะไรจะเสียถ้าคุณเป็นคนกล้าหาญที่ผ่านทะเลทรายอันเลวร้ายมาลองค้นหาดูสิไม่คิดเหรอ Teehee~ อย่าลืมซื้อเครื่องดื่มให้ฉันเมื่อคุณ หามัน! ";
+	mes "เฮ!";
 	next;
 	mes "[Drunken Young Man]";
-	mes "Anyway, do you know where we are? I just had a little drink at a tavern, but all of a sudden, the whole town's disappeared when I got out.. or, some five hundred years have passed???!";
+	mes "อย่างไรก็ตามคุณรู้ไหมว่าเราอยู่ที่ไหนฉันเพิ่งไปดื่มที่ร้านเหล้านิดหน่อย แต่ทันใดนั้นทั้งเมืองก็หายไปเมื่อฉันออกไป..หรือประมาณห้าร้อยปีผ่านไป ???!" ;
 	close;
 }
 
 moc_ruins,94,117,0	script	Pale Looking Young Man	48,{
 	mes "[Pale-looking Young Man]";
-	mes "... That day... I saw the bloody moon in the sky. It was too silent that it felt so spooky.";
+	mes "... วันนั้น...ฉันเห็นพระจันทร์สีเลือดบนท้องฟ้ามันเงียบเกินไปจนรู้สึกเหมือนผี";
 	next;
 	mes "[Pale-looking Young Man]";
-	mes "Not even a whistle of dry wind, and the air so heavy and stuffy, I could hardly breathe.";
+	mes "ไม่มีแม้แต่เสียงหวีดหวิวของลมแห้งและอากาศก็หนักและอบอ้าวจนแทบหายใจไม่ออก";
 	next;
 	mes "[Pale-looking Young Man]";
-	mes "But then, Bang! It was right that time that I saw the enormous amount of smoke rising up at the Castle of Morocc with an earsplitting sound.";
+	mes "แต่ปัง! มันถูกแล้วที่ฉันเห็นควันจำนวนมหาศาลพวยพุ่งขึ้นที่ปราสาทโมร็อคพร้อมกับเสียงที่กระทบหู";
 	next;
 	mes "[Pale-looking Young Man]";
-	mes "All happened so fast. The Oasis of the Castle was all dried up and the town was destroyed. And... and that voice... I heard a voice.";
+	mes "ทั้งหมดเกิดขึ้นอย่างรวดเร็วโอเอซิสของปราสาทแห้งไปหมดและเมืองก็ถูกทำลายและ...และเสียงนั้น...ฉันได้ยินเสียง";
 	next;
 	mes "[Pale-looking Young Man]";
-	mes "Blood... Blood is what it takes to pay for the soul... and that dark sound of laughter...";
-	mes "Aah!!! It's... It's still ringing in my ears!!! Aahhhhh!!!!";
+	mes "เลือด...เลือดคือสิ่งที่ใช้ชำระวิญญาณ...และเสียงหัวเราะอันมืดมนนั้น...";
+	mes "อ๊า !!! มัน...มันยังดังอยู่ในหูของฉัน !!! อ๊าาา !!!!";
 	next;
-	mes "- It'd be better not to disturb him anymore -";
+	mes "- จะดีกว่าถ้าไม่รบกวนเขาอีกต่อไป -";
 	close;
 }
 
 moc_ruins,115,82,0	script	Little Girl#moc	703,{
 	mes "[Little Girl]";
-	mes "-Crying-";
+	mes "- ร้องไห้ -";
 	next;
 	mes "[Little Girl]";
-	mes "I'm so scared! Where's mom and dad...! hhooooo... Where's our house...";
-	next;
-	mes "[Little Boy]";
-	mes "Please stop crying, Eliese... You could even faint if you cry all day long, you know...";
+	mes "กลัวจัง! พ่อกับแม่อยู่ไหน...! hhooooo...บ้านเราอยู่ไหน...";
 	next;
 	mes "[Little Girl]";
-	mes "No! No... Mommy... Daddy....";
+	mes "ได้โปรดหยุดร้องไห้ Eliese...คุณอาจจะเป็นลมได้ถ้าคุณร้องไห้ตลอดทั้งวันคุณก็รู้...";
+	next;
+	mes "[Little Girl]";
+	mes "ไม่! ไม่...แม่...พ่อ .... ";
 	close;
 }
 
 moc_ruins,118,82,1	script	Little Boy#moc	706,{
 	mes "[Little Boy]";
-	mes "............... Let's stop crying, Eliese...";
+	mes "............... หยุดร้องไห้กันเถอะ Eliese...";
 	next;
 	mes "[Little Girl]";
-	mes "Nooooooo... Mommy... Daddy....!!";
+	mes "โน๊ะ...แม่...พ่อ .... !!";
 	next;
 	mes "[Little Boy]";
-	mes "Mom and Dad are now...";
+	mes "ตอนนี้พ่อกับแม่...";
 	next;
 	mes "[Little Girl]";
-	mes "No...... noooooo...";
+	mes "ไม่ ...... noooooo...";
 	next;
 	mes "[Little Boy]";
-	mes "Right, you love ice-cream, don't you? I.. I can get you an ice-cream if you stop crying. Don't cry, Eliese, please.. Ok? Don't...";
+	mes "ใช่คุณรักไอศครีมใช่ไหมฉัน..ฉันจะได้ไอศกรีมถ้าคุณหยุดร้องไห้อย่าร้องไห้ Eliese ได้โปรด..ได้ไหมอย่า..." ;
 	close;
 }
 
 moc_ruins,121,116,4	script	Picky Lady#moc	66,{
 	mes "[Syvia]";
-	mes "The fields of Rune-Midgarts are infested with wild and dangerous monsters..But, you've got to admit a bunch of them are soooo cute!";
-	mes "You know, like how Spore sticks out its tongue after you kill it..";
+	mes "ทุ่ง Rune-Midgarts เต็มไปด้วยสัตว์ประหลาดที่ดุร้ายและอันตราย..แต่คุณต้องยอมรับว่าพวกมันน่ารักมาก!";
+	mes "คุณรู้ไหมว่าสปอร์แลบลิ้นออกมาอย่างไรหลังจากที่คุณฆ่ามัน..";
 	next;
 	mes "[Syvia]";
-	mes "Or, how little Picky wears that tiny egg shell sometimes?..";
+	mes "หรือว่าพิกกี้ตัวเล็กใส่เปลือกไข่เล็กๆ นั้นในบางครั้ง?..";
 	next;
 	mes "[Syvia]";
-	mes "I can't believe what just has happened.. Our town used to be the one with those cute little monsters, not that kinda of vicious dreadful Evil sleeping in! Whew...";
+	mes "ฉันไม่อยากจะเชื่อเลยว่ามันเกิดอะไรขึ้น..เมืองของเราเคยเป็นเมืองที่มีสัตว์ประหลาดตัวน้อยน่ารักพวกนั้นไม่ใช่ปีศาจร้ายที่น่ากลัวขนาดนั้นนอนหลับอยู่ต๊าย...";
 	next;
 	mes "[Syvia]";
-	mes "I'm so scared... I just wanna ease my mind watching over those cute little Porings...";
+	mes "ฉันกลัวมาก...ฉันแค่อยากจะผ่อนคลายความคิดของฉันที่เฝ้าดู Porings เล็กๆ ที่น่ารักเหล่านั้น ...";
 	next;
-	switch(select("What about Angeling?:How about Ghostring?:Quit Conversation")) {
+	switch(select("แล้ว Angeling ล่ะ:แล้ว Ghostring ล่ะ?:ออกจากการสนทนา")) {
 	case 1:
 		mes "[Syvia]";
-		mes "Ooh! Angeling is just like Poring, except it has angel wings! Of course, I don't know if they can actually fly..";
+		mes "Ooh! Angeling ก็เหมือนกับ Poring ยกเว้นว่ามันมีปีกนางฟ้าแน่นอนฉันไม่รู้ว่ามันบินได้จริงมั้ย..";
 		next;
 		mes "[Syvia]";
-		mes "Angelings are rarely seen, but can be found among large groups of Porings living in one of the fields south of Prontera.";
-		mes "Angeling is a high level monster with Holy property, so it's immune to most magic, aside from spells that have Neutral or Shadow attack properties.";
+		mes "Angelings แทบไม่มีให้เห็น แต่สามารถพบได้ในหมู่ Porings กลุ่มใหญ่ที่อาศัยอยู่ในทุ่งแห่งหนึ่งทางตอนใต้ของ Prontera";
+		mes "Angeling เป็นมอนสเตอร์ระดับสูงที่มีคุณสมบัติศักดิ์สิทธิ์ดังนั้นจึงมีภูมิคุ้มกันต่อเวทมนตร์ส่วนใหญ่นอกเหนือจากคาถาที่มีคุณสมบัติโจมตีเป็นกลางหรือเงา";
 		next;
 		mes "[Syvia]";
-		mes "Hehe~ Don't you think I know a lot about Porings? I love them soooo much";
+		mes "ฮิฮิ~ คุณไม่คิดว่าฉันรู้เรื่อง Porings มากเหรอฉันรักพวกเขามาก";
 		next;
 		mes "[Syvia]";
-		mes "Hehe... Poring... Hee......";
+		mes "อิอิ...พอริ่ง...ฮิ ...... ";
 		close;
 	case 2:
 		mes "[Syvia]";
-		mes "Ghostring is an evil ghost Poring. It's rarely seen, but can be found among mass groups of Porings living in one of the fields south of Prontera.";
+		mes "โกสต์ริงเป็นผีร้ายโพริงมันไม่ค่อยมีให้เห็น แต่สามารถพบได้ในกลุ่ม Porings จำนวนมากที่อาศัยอยู่ในทุ่งแห่งหนึ่งทางตอนใต้ของพรอนเทรา";
 		next;
 		mes "[Syvia]";
-		mes "Ghostring is a high-leveled monster with the Ghost property, so it can withstand all physical attacks.";
-		mes "Damage can only be caused to Ghostring through magic spells or weapons with an a specific property.";
+		mes "Ghostring เป็นมอนสเตอร์ระดับสูงที่มีคุณสมบัติ Ghost จึงสามารถต้านทานการโจมตีทางกายภาพได้ทั้งหมด";
+		mes "ความเสียหายสามารถเกิดขึ้นกับ Ghostring ผ่านเวทย์มนตร์หรืออาวุธที่มีคุณสมบัติเฉพาะเท่านั้น";
 		next;
 		mes "[Syvia]";
-		mes "Hehe~ Don't you think I know a lot about Porings? I love them soooo much~";
+		mes "ฮิฮิ~ คุณไม่คิดว่าฉันรู้เรื่อง Porings เยอะเหรอฉันรักพวกเขามากเลย~";
 		next;
 		mes "[Syvia]";
-		mes "Hehe... Poring... Teehee......";
+		mes "อิอิ...พอริ่ง...ทีฮี ...... ";
 		close;
 	case 3:
 		mes "[Syvia]";
-		mes "Hehe... Poring... Teehee......";
+		mes "อิอิ...พอริ่ง...ทีฮี ...... ";
 		close;
 	}
 }
 
 moc_ruins,155,107,4	script	Ant Man#moc	47,{
 	mes "[Akira]";
-	mes "Hey, you. Did you cross the desert?";
+	mes "เฮ้คุณข้ามทะเลทรายมาหรือยัง";
 	next;
 	mes "[Akira]";
-	mes "When you walk through the desert about one map North and 3 maps East, you'll find the entrance to Ant Hell.";
+	mes "เมื่อคุณเดินผ่านทะเลทรายประมาณ 1 แผนที่ ทิศเหนือ และ 3 แผนที่ ตะวันออก คุณจะพบทางเข้า Ant Hell";
 	next;
 	mes "[Akira]";
-	mes "There are two different entrances to the Ant Hell. When you get inside, the 1st and the 2nd underground levels of winding looking caves are connected to each other.";
+	mes "ทางเข้านรกมดมีสองทางที่แตกต่างกันเมื่อคุณเข้าไปข้างในชั้นที่ 1 และชั้น 2 ของถ้ำที่คดเคี้ยวใต้ดินจะเชื่อมถึงกัน";
 	next;
 	mes "[Akira]";
-	mes "I'm really wondered how those entrances are after the horrible destruction, but I can't go out.. If you ever hear anything about it, please get me informed.";
+	mes "ฉันสงสัยจริงๆว่าทางเข้าเหล่านั้นเป็นอย่างไรหลังจากการทำลายล้างที่น่าสยดสยอง แต่ฉันไม่สามารถออกไปได้..ถ้าคุณเคยได้ยินอะไรเกี่ยวกับเรื่องนี้โปรดแจ้งให้ฉันทราบ";
 	next;
-	switch(select("About 'Ant Hell':About Ants:End Conversation")) {
+	switch(select("เกี่ยวกับ 'Ant Hell':เกี่ยวกับ Ants:สิ้นสุดการสนทนา")) {
 	case 1:
 		mes "[Akira]";
-		mes "That cave is sure a dangerous hell, sticky and all... There are 2 underground levels.";
-		mes "Just head East till you see the bridge which connects to the Payon Forest.";
+		mes "ถ้ำนั้นเป็นนรกที่อันตรายเหนียวและทั้งหมด...มี 2 ชั้นใต้ดิน";
+		mes "มุ่งหน้าไปทางทิศตะวันออกจนเห็นสะพานที่เชื่อมต่อกับป่า Payon";
 		next;
 		mes "[Akira]";
-		mes "In the map right before that bridge, head north to find the entrance to Ant Hell, though I'm not sure if it's still there.";
+		mes "ในแผนที่ตรงหน้าสะพานนั้นให้มุ่งหน้าไปทางเหนือเพื่อหาทางเข้า Ant Hell แม้ว่าฉันจะไม่แน่ใจว่ายังอยู่ที่นั่น";
 		close;
 	case 2:
 		mes "[Akira]";
-		mes "Ant Hell is swarming with Ant monsters. You'll notice that they all classed with different names...";
+		mes "Ant Hell กำลังเต็มไปด้วยมอนสเตอร์ Ant คุณจะสังเกตเห็นว่าพวกมันทั้งหมดมีชื่อต่างกัน...";
 		next;
 		mes "[Akira]";
-		mes "Andre is the weakest, Piere is comparatively average, and Deniro is the strongest Ant. Keep that in mind so you can fight the Ants suitable to your level.";
+		mes "อังเดรอ่อนแอที่สุดปิแยร์ค่อนข้างปานกลางและเดนิโรเป็นแอนท์ที่แข็งแกร่งที่สุดจำไว้เพื่อให้คุณสามารถต่อสู้กับแอนท์ได้อย่างเหมาะสมกับระดับของคุณ";
 		next;
 		mes "[Akira]";
-		mes "Andre is colored in Ivory, Yellowish Green is Piere, and the Red one is Deniro.";
-		mes "It's really easy to distinguish those from Bitata, the common ants because they look very different.";
+		mes "อังเดรเป็นสีงาช้างสีเขียวอมเหลืองคือปีแยร์และสีแดงคือเดนิโร";
+		mes "มันง่ายมากที่จะแยกพวกมันออกจาก Bitata ซึ่งก็คือมดทั่วไปเพราะมันดูแตกต่างกันมาก";
 		next;
 		mes "[Akira]";
-		mes "Oh, and those ants are greedy as Porings and will try to steal your items, so keep that in mind.";
+		mes "โอ้มดพวกนั้นตะกละเหมือน Porings และจะพยายามขโมยของของคุณดังนั้นโปรดจำไว้ว่า";
 		next;
 		mes "[Akira]";
-		mes "If you ever, could cross the desert without any disturbances from the Satan...";
+		mes "ถ้าคุณเคยสามารถข้ามทะเลทรายโดยไม่มีการรบกวนจากซาตาน...";
 		close;
 	case 3:
 		mes "[Akira]";
-		mes "There's also an old man called Guias, the spirit of the earth. He's pretty hard to deal with.";
+		mes "นอกจากนี้ยังมีชายชราคนหนึ่งนามว่า Guias จิตวิญญาณแห่งโลกเขาค่อนข้างยากที่จะรับมือ";
 		next;
 		mes "[Akira]";
-		mes "Sharp teeth and strong jaws of the ants would be something that you should be careful of, but the shovelling skills of that old grandpa is very strong that you should watch out.";
+		mes "ฟันที่แหลมคมและขากรรไกรที่แข็งแรงของมดคงเป็นสิ่งที่คุณควรระวัง แต่ทักษะการขุดของคุณปู่ผู้นั้นแข็งแกร่งมากที่คุณควรระวัง";
 		next;
 		mes "[Akira]";
-		mes "...Well, what am I talking about? What is left to be afraid when the Satan of Morocc is revived? Huh..huhhuh...";
+		mes "... อืมฉันกำลังพูดถึงอะไรจะเหลืออะไรให้ต้องกลัวเมื่อซาตานแห่งโมรอคฟื้นขึ้นมาหึ.. หึ.. หึหึ...";
 		close;
 	}
 }
 
 moc_ruins,143,43,4	script	Assassin Boy#moc	118,{
 	mes "[Slayer Kid]";
-	mes "Unbeatable in man-to-man fights, Assassins always overcome their enemies! Erm, always overcome their enemies without a trace.";
+	mes "เหนือใครในการต่อสู้แบบคนต่อคน Assassins เอาชนะศัตรูได้เสมอเอิ่มเอาชนะศัตรูได้โดยไร้ร่องรอยเสมอ";
 	next;
 	mes "[Slayer Kid]";
-	mes "But what did they do when this destruction happened in Morocc!!!";
+	mes "แต่พวกเขาจะทำอย่างไรเมื่อการทำลายล้างนี้เกิดขึ้นในโมร็อกโก !!!";
 	next;
-	switch(select("?????:Where I can find the Assassin clan?:End Conversation")) {
+	switch(select("?????:ฉันจะหากลุ่ม Assassin ได้ที่ไหน:สิ้นสุดการสนทนา")) {
 	case 1:
 		mes "[Slayer Kid]";
-		mes "I hear Assassins practice killing people, quietly and stealthfully..";
+		mes "ฉันได้ยินเสียงแอสแซสซินฝึกฆ่าคนเงียบๆ และลอบเร้น..";
 		next;
 		mes "[Slayer Kid]";
-		mes "I left home three years ago, and have been searching for their secret base ever since...";
-		mes "Are they really that invisible?!";
+		mes "ฉันออกจากบ้านเมื่อสามปีก่อนและตามหาฐานลับของพวกเขาตั้งแต่นั้นมา...";
+		mes "พวกมันมองไม่เห็นจริงๆเหรอ?!";
 		next;
 		mes "[Slayer Kid]";
-		mes "Well.. Maybe it'd too late now..";
-		mes "Now that the whole town's destroyed... I don't even care what happens next...";
+		mes "อืม..บางทีมันอาจจะสายเกินไปแล้ว..";
+		mes "ตอนนี้เมืองทั้งเมืองถูกทำลาย...ฉันไม่สนใจด้วยซ้ำว่าจะเกิดอะไรขึ้นต่อไป...";
 		close;
 	case 2:
 		mes "[Slayer Kid]";
-		mes "You know what...";
-		mes "It seemed to be impossible to find.";
+		mes "คุณรู้อะไรไหม...";
+		mes "ดูเหมือนจะหาไม่ได้";
 		next;
 		mes "[Slayer Kid]";
-		mes "Well, I hear that if you leave this town and go 2 maps east, and then 2 maps South, you should be able to find it..";
+		mes "อืมฉันได้ยินมาว่าถ้าคุณออกจากเมืองนี้ไปทางตะวันออก 2 แผนที่แล้วก็แผนที่ South 2 แผนที่ก็น่าจะเจอ..";
 		next;
 		mes "[Slayer Kid]";
-		mes "The 'Mirage Tower,' the head building of Sograt Desert, is supposed to appear in this awesome sandstorm! But, I still haven't found it.";
+		mes "'Mirage Tower' ซึ่งเป็นอาคารส่วนหัวของทะเลทราย Sograt ควรจะปรากฏในพายุทรายที่น่ากลัวนี้! แต่ฉันยังหาไม่พบ";
 		next;
 		mes "[Slayer Kid]";
-		mes "If you find them, and the clan master thinks you're qualified, you can become an Assassin! Or, at least, I think..";
+		mes "ถ้าคุณพบพวกมันและหัวหน้าเผ่าคิดว่าคุณมีคุณสมบัติคุณก็สามารถเป็น Assassin ได้! หรืออย่างน้อยฉันก็คิดว่า..";
 		next;
 		mes "[Slayer Kid]";
-		mes "And I hear the coolest Assassin of them all is the Assassin Cross! But, that's even a bigger mystery~ You won't be able to see them unless you're a great thief!";
+		mes "และฉันได้ยินมาว่า Assassin ที่เจ๋งที่สุดในบรรดาพวกเขาคือ Assassin Cross! แต่นั่นเป็นปริศนาที่ยิ่งใหญ่กว่านั้นอีก~ คุณจะไม่สามารถมองเห็นพวกมันได้เว้นแต่คุณจะเป็นขโมยที่เก่งกาจ!";
 		next;
 		mes "[Slayer Kid]";
-		mes "But then... What the hell were they doing when Morocc was destroyed?!!!";
+		mes "แต่แล้ว...พวกเขาทำบ้าอะไรเมื่อโมรอคถูกทำลาย? !!!";
 		close;
 	case 3:
 		mes "[Slayer Kid]";
-		mes "Assassin is one of the advanced jobs for Thief, and specializes in fighting with Neutral and Poison property attacks.";
+		mes "Assassin เป็นหนึ่งในงานขั้นสูงสำหรับ Thief และเชี่ยวชาญในการต่อสู้กับการโจมตีด้วยคุณสมบัติ Neutral และ Poison";
 		next;
 		mes "[Slayer Kid]";
-		mes "They're also very sneaky! I hear that they're able to cloak so that no one can see them!";
+		mes "พวกมันก็ส่อเสียดเหมือนกัน! ฉันได้ยินมาว่าพวกเขาสามารถปิดบังเพื่อไม่ให้ใครเห็น!";
 		next;
 		mes "[Slayer Kid]";
-		mes "But then... What the hell were they doing when Morocc was destroyed?!!!";
+		mes "แต่แล้ว...พวกเขาทำบ้าอะไรเมื่อโมรอคถูกทำลาย? !!!";
 		close;
 	}
 }
 
 moc_ruins,173,141,4	script	Dimitri#moc	49,{
 	mes "[Dimitri]";
-	mes "The desert of Morocc has the highest average temperature in Midgard. You might as well think twice before you sit on the sand in the middle of the desert, cause your ass will be toasted.";
+	mes "ทะเลทรายของโมร็อกโกมีอุณหภูมิเฉลี่ยสูงที่สุดในมิดการ์ดคุณควรคิดให้ดีก่อนที่จะนั่งลงบนทรายกลางทะเลทรายเพราะตูดของคุณจะถูกปิ้ง";
 	next;
-	switch(select("About the desert sands:About the remedy for Fatigue:End Conversation")) {
+	switch(select("เกี่ยวกับทะเลทราย:เกี่ยวกับวิธีการรักษาความเหนื่อยล้า:สิ้นสุดการสนทนา")) {
 	case 1:
 		mes "[Dimitri]";
-		mes "......What I mean is that...";
-		mes "It seems like it should be all burnt, but it's not!";
+		mes "...... ฉันหมายความว่ายังไง...";
+		mes "ดูเหมือนว่ามันน่าจะไหม้ไปหมด แต่มันไม่ใช่!";
 		next;
 		mes "[Dimitri]";
-		mes "You can sit down and take a rest whenever you need to and your ass won't burn. I guess the Morocc sand doesn't conduct heat as much as it should.";
+		mes "คุณสามารถนั่งลงและพักผ่อนได้ทุกเมื่อที่คุณต้องการและตูดของคุณจะไม่ไหม้ฉันเดาว่าทรายของโมร็อกโกไม่นำความร้อนเท่าที่ควร";
 		next;
 		mes "[Dimitri]";
-		mes "That's why everyone could recover the HP and SP in the middle of desert.";
+		mes "นั่นคือเหตุผลที่ทุกคนสามารถฟื้น HP และ SP กลางทะเลทรายได้";
 		next;
 		mes "[Dimitri]";
-		mes "Now I come to think of it, maybe the reason why Morocc has exceptionally high average temperature is because that Satan is sealed within.";
+		mes "ตอนนี้ฉันมาคิดดูอาจจะเป็นเหตุผลว่าทำไมโมร็อกโกมีอุณหภูมิเฉลี่ยสูงเป็นพิเศษเพราะซาตานถูกผนึกไว้ภายใน";
 		close;
 	case 2:
 		mes "[Dimitri]";
-		mes "Recovery!";
-		mes "That's what the potions are for!";
-		mes "Red Potions have become steadily popular since they're so affordable, even though they only recover a little bit of HP.";
+		mes "ฟื้น!";
+		mes "นั่นคือสิ่งที่ปรุงเพื่อ!";
+		mes "Red Potions ได้รับความนิยมอย่างต่อเนื่องเนื่องจากมีราคาไม่แพงถึงแม้ว่าจะฟื้น HP ได้เพียงเล็กน้อยก็ตาม";
 		next;
 		mes "[Dimitri]";
-		mes "Try this bottle of ice-cold potion when you go into the Oasis around the Pyramid...";
-		mes "Yeah.. you want this bad.. but the situation's not good...";
+		mes "ลองยาเย็นน้ำแข็งขวดนี้เมื่อคุณเข้าไปในโอเอซิสรอบๆ พีระมิด...";
+		mes "ใช่.. คุณต้องการสิ่งนี้.. แต่สถานการณ์ไม่ดี...";
 		close;
 	case 3:
 		mes "[Dimitri]";
-		mes "Sometimes 'Milk' comes out of 'PecoPeco's Egg.' Now..";
-		mes "I'm not sure how the cow's milk comes out of some bird's egg...";
+		mes "บางครั้ง 'Milk' ก็ออกมาจาก 'PecoPeco's Egg.' ตอนนี้..";
+		mes "ฉันไม่แน่ใจว่านมวัวออกมาจากไข่นกได้อย่างไร...";
 		next;
 		mes "[Dimitri]";
-		mes "I may not be a man of science, but how is that even possible?.";
-		mes "I mean, did the Milk come prepackaged with the egg, or did it get in there somehow?..";
-		mes "Oh, whatever.. It's just not the time for this.";
+		mes "ฉันอาจจะไม่ใช่คนที่มีความรู้ทางวิทยาศาสตร์ แต่มันจะเป็นไปได้อย่างไร?.";
+		mes "ฉันหมายถึงนมมาพร้อมไข่แล้วหรือเปล่า?..";
+		mes "โอ้อะไรก็ได้..มันไม่ใช่เวลาสำหรับเรื่องนี้";
 		close;
 	}
 }
 
 moc_ruins,174,120,4	script	Fly Man#moc	54,{
 	mes "[Armani]";
-	mes "Ooh, Woooowwww.";
+	mes "โอววววววววว";
 	next;
 	mes "[Armani]";
-	mes "I... I really saw it.... The Fly Lord gets shattered in pieces in a blink of an eye...";
+	mes "ฉัน...ฉันเห็นมันจริงๆ .... เจ้าแมลงวันแตกเป็นชิ้นๆ ในพริบตา...";
 	next;
 	mes "[Armani]";
-	mes "What is really going on? Would it be possible for us to survive??";
+	mes "เกิดอะไรขึ้นจริงๆแล้วเราจะรอดมั้ย ??";
 	next;
-	switch(select("The Fly Lord?!")) {
+	switch(select("เจ้าแมลงวัน?!")) {
 	case 1:
 		mes "[Armani]";
-		mes "Yes, yes! I'm talking about the Dragon Fly, master of all flies!!";
-		mes "The Dragon Fly is a special one that stays in the North-east of the town.";
+		mes "ใช่ใช่ฉันกำลังพูดถึง Dragon Fly จ้าวแห่งแมลงวัน !!";
+		mes "Dragon Fly เป็นสิ่งพิเศษที่อยู่ทางตะวันออกเฉียงเหนือของเมือง";
 		next;
 		mes "[Armani]";
-		mes "It's so much stronger than the other flies.";
+		mes "มันแข็งแรงกว่าแมลงวันตัวอื่นมาก";
 		next;
 		mes "[Armani]";
-		mes "And when you kill it, there's even a chance that you might earn a ^880000Clip^000000 item!";
+		mes "และเมื่อคุณฆ่ามันยังมีโอกาสที่คุณจะได้รับไอเท็ม ^880000Clip^000000!";
 		next;
 		mes "[Armani]";
-		mes "Anyways, don't you think the Satan Morocc is so cruel?";
-		mes "They may not be the same kind, but still isn't it cruel to take that monster's soul with a single blow?";
+		mes "ยังไงก็ตามคุณไม่คิดว่าซาตานโมร็อคโหดร้ายขนาดนี้หรือ";
+		mes "พวกมันอาจจะไม่เหมือนกัน แต่ก็ยังไม่โหดร้ายที่จะเอาวิญญาณของมอนสเตอร์ตัวนั้นไปด้วยการโจมตีเพียงครั้งเดียว?";
 		next;
 		mes "[Armani]";
-		mes "What should we do when this dreadful evil has come to life again!";
+		mes "เราจะทำยังไงดีเมื่อความชั่วร้ายนี้กลับมามีชีวิตอีกครั้ง!";
 		close;
 	}
 }
 
 moc_ruins,173,70,4	script	Uncle Morocc#moc	48,{
 	mes "[Phlanette]";
-	mes "Morocc is located in an extremely dry region, surrounded by desert.";
-	mes "No place in the world is as hot as Morocc.";
+	mes "โมร็อคตั้งอยู่ในพื้นที่ที่แห้งแล้งมากล้อมรอบด้วยทะเลทราย";
+	mes "ไม่มีที่ไหนในโลกที่ร้อนเท่าโมร็อค";
 	next;
 	mes "[Phlanette]";
-	mes "I have a hunch that this hot and dry climate in Morocc is because of that Satan sealed deeper underground for so long.";
+	mes "ฉันมีลางสังหรณ์ว่าสภาพอากาศที่ร้อนและแห้งในโมร็อกโกนี้เป็นเพราะซาตานตัวนั้นปิดผนึกลึกลงไปใต้ดินนานมาก";
 	next;
-	switch(select("Tell me about the desert.:Quit Conversation")) {
+	switch(select("บอกฉันเกี่ยวกับทะเลทราย:เลิกสนทนา")) {
 	case 1:
 		mes "[Phlanette]";
-		mes "Um.. I'll briefly tell ya about the desert if you want to know.";
-		mes "Due to low annual rainfall, low humidity and high evaporation rate, little vegetation can be found in the desert.";
+		mes "อืม..ฉันจะเล่าสั้นๆ เกี่ยวกับทะเลทรายให้เธอฟังนะ";
+		mes "เนื่องจากฝนตกต่อปีต่ำความชื้นต่ำและอัตราการระเหยสูงจึงสามารถพบพืชพันธุ์เพียงเล็กน้อยในทะเลทราย";
 		next;
 		mes "[Phlanette]";
-		mes "Nonetheless, there are a few hardy plants that can survive and grow in the desert.";
+		mes "อย่างไรก็ตามมีพืชที่แข็งแรงไม่กี่ชนิดที่สามารถอยู่รอดและเติบโตได้ในทะเลทราย";
 		next;
 		mes "[Phlanette]";
-		mes "Unfortunately some of those plants growing around Morocc have been mutated into monsters.";
-		mes "One of those is Muka, the mutated cactus..";
+		mes "น่าเสียดายที่พืชบางชนิดที่เติบโตในโมร็อกโกได้กลายพันธุ์เป็นสัตว์ประหลาด";
+		mes "หนึ่งในนั้นคือ Muka กระบองเพชรที่กลายพันธุ์..";
 		next;
 		mes "[Phlanette]";
-		mes "However, now that the Satan has revived, no one's sure of what changes would be made in the life cycles of Morocc.";
+		mes "อย่างไรก็ตามตอนนี้ซาตานได้ฟื้นขึ้นมาแล้วไม่มีใครแน่ใจว่าจะมีการเปลี่ยนแปลงอะไรในวงจรชีวิตของโมร็อกโก";
 		close;
 	case 2:
 		mes "[Phlanette]";
-		mes "Here and there!";
-		mes "Sand everywhere...";
-		mes "Oh, I curse you, the desert of Morocc!!";
-		mes "Damn you!";
+		mes "นี่ไง!";
+		mes "ทรายทุกที่...";
+		mes "โอ้ขอสาปแช่งเจ้าทะเลทรายโมรอค !!";
+		mes "ไอ้บ้า!";
 		next;
 		mes "[Phlanette]";
-		mes "But our of all this hatred, I didn't want it to be completely destroyed...";
+		mes "แต่ความเกลียดชังของเราทั้งหมดนี้ฉันไม่อยากให้มันถูกทำลายไปทั้งหมด...";
 		next;
 		mes "[Phlanette]";
-		mes "How come it's never possible to know its value while it's still around?";
+		mes "ทำไมถึงไม่เคยรู้คุณค่าของมันในขณะที่มันยังอยู่รอบๆ ";
 		close;
 	}
 }
 
 moc_fild16,199,212,4	script	 Uncle Assassin#moc	55,{
 	mes "[Hashisid]";
-	mes "...Assassins are trained";
-	mes "to approach their enemies stealthily,";
-	mes " as well as";
-	mes "to shroud their intent.";
-	mes "For this purpose,";
-	mes "we never";
-	mes "look our targets in the eye.";
+	mes "... มือสังหารได้รับการฝึกฝนให้เข้าใกล้ศัตรูอย่างลอบเร้นเช่นเดียวกับ";
+	mes "เพื่อปกปิดเจตนาของพวกเขา";
+	mes "เพื่อจุดประสงค์นี้เราไม่เคยมองเป้าหมายของเราในสายตา";
 	next;
-	switch(select("Notion of Assassin:Quit Conversation")) {
+	switch(select("แนวคิดของ Assassin: ออกจากการสนทนา")) {
 	case 1:
 		mes "[Hashisid]";
-		mes "Well, then..";
-		mes "I'll tell you what it is!";
-		mes "Assassins ..";
-		mes "may be commonly known as";
-		mes "infiltrators and murderers";
-		mes "who kill without remorse.";
+		mes "ดีแล้ว..";
+		mes "ฉันจะบอกคุณว่ามันคืออะไร!";
+		mes "มือสังหาร..";
+		mes "อาจเป็นที่รู้จักกันทั่วไปว่าเป็นผู้แทรกซึมและฆาตกรที่ฆ่าโดยไม่สำนึกผิด";
 		next;
 		mes "[Hashisid]";
-		mes "In actuality,";
-		mes "the Assassin clan";
-		mes "is forbidden to harm innocent people,";
-		mes "or at least,";
-		mes "not without good reason";
+		mes "ในความเป็นจริงกลุ่ม Assassin ถูกห้ามมิให้ทำร้ายผู้บริสุทธิ์หรืออย่างน้อยก็ไม่ใช่โดยไม่มีเหตุผลที่ดี";
 		next;
 		mes "[Hashisid]";
-		mes "Our true directive is to assassinate evil creatures,";
-		mes "and to use our stealth to gather intelligence";
-		mes "for the good of all Rune-Midgarts.";
+		mes "คำสั่งที่แท้จริงของเราคือการลอบสังหารสัตว์ร้ายและใช้การซ่อนตัวของเราเพื่อรวบรวมข้อมูลเพื่อประโยชน์ของ Rune-Midgarts ทั้งหมด";
 		close;
 	case 2:
 		mes "[Hashisid]";
-		mes "Once upon a time,";
-		mes "our ancestors would";
-		mes "smoke tobacco called 'Hashish'";
-		mes "before performing their duties.";
-		mes "However, we no longer do so,";
-		mes "since insect or animal monsters are";
-		mes "very senstive to the smell.";
+		mes "กาลครั้งหนึ่งบรรพบุรุษของเราจะสูบบุหรี่ที่เรียกว่า 'Hashish' ก่อนปฏิบัติหน้าที่";
+		mes "อย่างไรก็ตามเราจะไม่ทำเช่นนั้นอีกต่อไปแล้วเนื่องจากสัตว์ประหลาดแมลงหรือสัตว์มีกลิ่นเหม็นมาก";
 		next;
 		mes "[Hashisid]";
-		mes "We strictly prohibit";
-		mes "smoking or eating";
-		mes "anything that has";
-		mes "strong smell...";
-		mes "If you ever,";
-		mes "try eating those";
-		mes "smelly garlic bread with spices,";
+		mes "ห้ามสูบบุหรี่หรือรับประทานอาหารที่มีกลิ่นแรงโดยเด็ดขาด...";
+		mes "ถ้าคุณเคยลองกินขนมปังกระเทียมที่มีกลิ่นเครื่องเทศ";
 		next;
 		mes "[Hashisid]";
-		mes "and try hiding against";
-		mes "those wild boars or wolves,";
-		mes "believe me,";
-		mes "you'll be ripped in pieces.";
+		mes "และพยายามซ่อนตัวสู้หมูป่าหรือหมาป่าเชื่อฉันเถอะว่าคุณจะถูกฉีกเป็นชิ้นๆ ";
 		close;
 	}
 }
 
 moc_fild16,211,254,4	script	Assassin#07rhea_30	118,{
 	mes "[La Conte]";
-	mes "Once Thiefs are promoted";
-	mes "to Assassins, which is very professional";
-	mes "they will be able to vary their battle style.";
-	mes "their battle style.";
-	mes "There are 2 main battle styles available to Assassins.";
-	mes "They may either wield dual daggers,";
-	mes "or fight with a set of Katars!";
+	mes "เมื่อ Thiefs ได้รับการเลื่อนขั้นเป็น Assassins ซึ่งเป็นมืออาชีพมากพวกเขาจะสามารถปรับเปลี่ยนรูปแบบการต่อสู้ของพวกเขาได้";
+	mes "รูปแบบการต่อสู้ของพวกเขา";
+	mes "Assassins มี 2 รูปแบบการต่อสู้หลักๆ ";
+	mes "พวกเขาอาจถือมีดสั้นคู่หรือต่อสู้ด้วยชุดคาทาร์สก็ได้!";
 	next;
-	switch(select("Specialty of Katar:Specialty of Dual Daggers:Quit Conversation")) {
+	switch(select("ความสามารถพิเศษของ Katar:ความสามารถพิเศษของ Daggers คู่:ออกจากการสนทนา")) {
 	case 1:
 		mes "[La Conte]";
-		mes "A set of Katars is";
-		mes "worn on both of the hands,";
-		mes "and allows Assassins";
-		mes "to quickly slash their enemies.";
-		mes "Anyone can buy a basic set of Katars";
-		mes "in Morocc somewhere.";
-		mes "Of course, only Assassins can use them.";
+		mes "ชุดคาทาร์สวมอยู่บนมือทั้งสองข้างและช่วยให้นักฆ่าฟันศัตรูได้อย่างรวดเร็ว";
+		mes "ใครๆ ก็สามารถซื้อชุดคาทาร์พื้นฐานในโมรอคได้ที่ไหนสักแห่ง";
+		mes "แน่นอนมีเพียง Assassins เท่านั้นที่สามารถใช้ได้";
 		next;
 		mes "[La Conte]";
-		mes "The right Katar";
-		mes "usually does more damage,";
-		mes "while the left Katar";
-		mes "is used for the follow-through.";
-		mes "But since Katars are equipped on both hands,";
-		mes "you can't equip a shield or an extra weapon.";
+		mes "Katar ทางขวามักจะสร้างความเสียหายได้มากกว่าในขณะที่ Katar ทางซ้ายใช้สำหรับการติดตามผ่าน";
+		mes "แต่เนื่องจากคาทาร์มีทั้งสองมือคุณจึงไม่สามารถสวมโล่หรืออาวุธเสริมได้";
 		next;
 		mes "[La Conte]";
-		mes "Compared to Dual Daggers,";
-		mes "Katars have faster attack speed.";
-		mes "Also, the ^663399Sonic Blow^000000 skill";
-		mes "can only be used with Katars.";
+		mes "เมื่อเทียบกับ Dual Daggers แล้ว Katars มีความเร็วในการโจมตีที่เร็วกว่า";
+		mes "นอกจากนี้สกิล ^663399Sonic Blow^000000 สามารถใช้ได้กับคาทาร์สเท่านั้น";
 		next;
 		mes "[La Conte]";
-		mes "You can learn the Sonic Blow skill";
-		mes "at ^663399Level 4 Katar Mastery^000000.";
-		mes "If you're an Assassin,";
-		mes "it's a handy skill to know.";
+		mes "คุณสามารถเรียนรู้ทักษะ Sonic Blow ได้ที่^663399Level 4 Katar Mastery^000000";
+		mes "ถ้าคุณเป็น Assassin มันเป็นทักษะที่มีประโยชน์ที่ควรรู้";
 		next;
 		mes "[La Conte]";
-		mes "Sonic Blow is the skill";
-		mes "that inflicts 8 continuous hits of";
-		mes "Neutral damage.";
+		mes "Sonic Blow เป็นสกิลที่สร้างความเสียหายเป็นกลางต่อเนื่อง 8 ครั้ง";
 		close;
 	case 2:
 		mes "[La Conte]";
-		mes "Dual Daggers";
-		mes "enables you to equip";
-		mes "2 different kinds of Daggers";
-		mes "at the same time.";
-		mes "Of course,";
-		mes "there are other weapons you can equip";
-		mes "aside from daggers,";
+		mes "มีดคู่ช่วยให้คุณสามารถใส่มีดสั้น 2 ชนิดได้ในเวลาเดียวกัน";
+		mes "แน่นอนว่ายังมีอาวุธอื่นๆ ที่คุณสามารถใส่ได้นอกเหนือจากมีดสั้น";
 		next;
 		mes "[La Conte]";
-		mes "but they'll probably";
-		mes "be lacking in attack speed.";
-		mes "So I suggest daggers.";
-		mes "Also, without a dagger";
-		mes "in your right hand,";
-		mes " you won't be able to use";
-		mes "the ^663399Double Attack^000000 skill.";
+		mes "แต่มันอาจจะขาดความเร็วในการโจมตี";
+		mes "งั้นฉันขอแนะนำมีดสั้น";
+		mes "นอกจากนี้หากไม่มีกริชในมือขวาคุณจะไม่สามารถใช้ทักษะ ^663399Double Attack^000000 ได้";
 		next;
 		mes "[La Conte]";
-		mes "So with Dual Daggers,";
-		mes "you would have a double attack";
-		mes "with the right hand dagger,";
-		mes " and a single attack with your left hand weapon.";
+		mes "ด้วยมีดคู่คุณจะต้องโจมตีสองครั้งด้วยกริชมือขวาและโจมตีด้วยอาวุธมือซ้ายเพียงครั้งเดียว";
 		next;
 		mes "[La Conte]";
-		mes "So that's three strikes";
-		mes "in one blow!";
-		mes "You can't argue";
-		mes "against that kind of damage!";
+		mes "นั่นคือการโจมตีสามครั้งในครั้งเดียว!";
+		mes "คุณไม่สามารถโต้แย้งความเสียหายแบบนั้นได้!";
 		close;
 	case 3:
 		mes "[La Conte]";
-		mes "Hopefully";
-		mes "you will make good use of";
-		mes "the weapons at your disposal.";
-		mes "Remember";
-		mes "the importance of";
-		mes "strategy and";
-		mes "planning your attacks.";
+		mes "หวังว่าคุณจะใช้ประโยชน์จากอาวุธให้เป็นประโยชน์";
+		mes "จำความสำคัญของกลยุทธ์และวางแผนการโจมตีของคุณ";
 		close;
 	}
 }
@@ -719,17 +658,16 @@ moc_fild16,211,254,4	script	Assassin#07rhea_30	118,{
 /*
 morocc_in,166,76,3	script	Bartender#02	46,{
 	mes "[Bartender]";
-	mes "What are you going to order?";
+	mes "คุณจะสั่งอะไร";
 	next;
-	switch(select("Tropical Sograt:Vermilion on the Beach:Nothing.")) {
+	switch(select("Tropical Sograt:Vermilion on the Beach:ไม่มีอะไร")) {
 	case 1:
 		if (Zeny >= 1000 ) {
 			set Zeny, Zeny-1000;
 			getitem 12112,1;
 			mes "[Bartender]";
-			mes "Here you go.";
-			mes "Fruits are major ingredients,";
-			mes "but don't drink too much.";
+			mes "ได้แล้ว";
+			mes "ผลไม้เป็นส่วนประกอบหลัก แต่อย่าดื่มมากเกินไป";
 			close;
 		}
 		break;
@@ -738,20 +676,20 @@ morocc_in,166,76,3	script	Bartender#02	46,{
 			set Zeny, Zeny-1000;
 			getitem 12113,1;
 			mes "[Bartender]";
-			mes "Here you go.";
-			mes "but don't drink too much.";
+			mes "ได้แล้ว";
+			mes "แต่อย่าดื่มมากเกินไป";
 			close;
 		}
 		break;
 	case 3:
 		mes "[Bartender]";
-		mes "Hmm...";
+		mes "หืม...";
 		close;
 	}
 	mes "[Bartender]";
-	mes "Are you asking me to give it for free?";
-	mes "You are one crazy person.";
-	mes "Don't even think about drinking if you don't have 1,000 zeny.";
+	mes "ขอให้แจกฟรี";
+	mes "คุณเป็นคนบ้าคนหนึ่ง";
+	mes "อย่าคิดแม้แต่จะดื่มถ้าคุณไม่มี 1,000 zeny";
 	close;
 }
 */
@@ -761,14 +699,14 @@ morocc_in,166,76,3	script	Bartender#02	46,{
 moc_fild16,195,281,4	script	Assassin Guardian#1::SinGuard	707,{
 	mes "[Assassin Guardian]";
 	if(BaseJob == Job_Assassin) {
-		mes "Welcome.";
+		mes "ยินดีต้อนรับ";
 		close;
 	}
 	set .@temp, rand(1,4);
 	if(.@temp == 1) mes "........";
-	if(.@temp == 2) mes "Hmmm..........";
-	if(.@temp == 3) mes "Hmmm... you shouldn't be here.....";
-	if(.@temp == 4) mes "You're trespassing on forbidden grounds.......";
+	if(.@temp == 2) mes "อืม.......... ";
+	if(.@temp == 3) mes "อืม... คุณไม่ควรอยู่ที่นี่.....";
+	if(.@temp == 4) mes "คุณกำลังละเมิดพื้นที่ต้องห้าม.......";
 	close;
 }
 

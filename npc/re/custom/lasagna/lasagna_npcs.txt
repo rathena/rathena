@@ -20,8 +20,8 @@ OnTouch:
 		setpcblock PCBLOCK_NPC, true;
 		sleep2 100;
 		setpcblock PCBLOCK_NPC, false;
-		npctalk "Hey, newbie! Get over here!", "Vigilante Ajegna#doram0", bc_self;
-		npctalk "Come on over here! Click me, quick!", "Vigilante Ajegna#doram0", bc_self;
+		npctalk "เฮ้มือใหม่! มาที่นี่!", "Vigilante Ajegna#doram0", bc_self;
+		npctalk "มานี่สิ! คลิกฉันด่วน!", "Vigilante Ajegna#doram0", bc_self;
 		setquest 7711;// Beginning
 	}
 	end;
@@ -30,64 +30,65 @@ OnTouch:
 lasa_fild01,49,304,3	script	Vigilante Ajegna#doram0	4_DR_SOLDIER,{
 	if (Class != Job_Summoner) {
 		mes "[Vigilante Ajegna]";
-		mes "Huh? I doubt you're from Far-Star.";
-		mes "I get it! You're from the New Continent, aren't you?";
+		mes "Huh? ฉันสงสัยว่าคุณมาจาก Far-Star";
+		mes "ข้าเข้าใจแล้วเจ้ามาจากทวีปใหม่ใช่ไหม?";
 		next;
 		mes "[Vigilante Ajegna]";
-		mes "If you're planning to cross that ridge, I wouldn't recommend it.";
-		mes "Why don't you just return to your village from here?";
+		mes "หากคุณวางแผนที่จะข้ามสันเขานั้นฉันจะไม่แนะนำ";
+		mes "ทำไมคุณไม่กลับไปที่หมู่บ้านของคุณจากที่นี่";
 		close;
 	}
 	switch( isbegin_quest(7712) ) {
 	case 0:
 		mes "[Vigilante Ajegna]";
-		mes "Oh, there you go!";
-		mes "You can talk to others in the same way you just spoke to me.";
+		mes "โอ้เจ้าไปแล้ว!";
+		mes "คุณสามารถพูดคุยกับคนอื่นในแบบเดียวกับที่คุณเพิ่งพูดกับฉัน";
 		next;
-		mes "!- Notice -!";
-		mes "^4d4dffBasically, you talk by left-clicking the mouse button while hovering the cursor over an NPC.";
-		mes "Left-click the mouse button to talk with an NPC, move about and attack a target.^000000";
+		mes "! - ประกาศ -!";
+		mes "^4d4dffโดยทั่วไปคุณพูดโดยคลิกซ้ายที่ปุ่มเมาส์ขณะที่วางเคอร์เซอร์ไว้เหนือ NPC";
+		mes "คลิกซ้ายที่ปุ่มเมาส์เพื่อพูดคุยกับ NPC ย้ายไปมาและโจมตีเป้าหมาย^000000";
 		cutin "tutorial01.bmp",4;
 		next;
 		cutin "",255;
 		mes "[Vigilante Ajegna]";
-		mes "Good work crossing over the mountain, newbie.";
-		mes "Just like yourself, there are a bunch of people who are crossing this mountain range these days to reach the ^4d4dffNew Continent^000000.";
+		mes "เก่งมากที่ข้ามภูเขา, มือใหม่";
+		mes "เช่นเดียวกับตัวเองมีคนมากมายที่ข้ามเทือกเขานี้ในวันนี้เพื่อไปถึง ^4d4dffทวีปใหม่^000000";
 		next;
 		mes "[Vigilante Ajegna]";
-		mes "Honestly, I was surprised, too.";
-		mes "I never imagined even in my wildest dreams that there would be any other continent other than ^4d4dffMidgard^000000 or ^4d4dffFar-Star,^000000 which we live in.";
+		mes "พูดตามตรงฉันก็แปลกใจเหมือนกัน";
+		mes "ฉันไม่เคยจินตนาการแม้แต่ในฝันที่ดุเดือดที่สุดของฉันว่าจะมีทวีปอื่นนอกเหนือจาก ^4d4dffMidgard^000000 หรือ ^4d4dffFar-Star,^000000 ที่เราอาศัยอยู่";
 		next;
 		mes "[Vigilante Ajegna]";
-		mes "That explains the slew of Dorams, who simply wander about, in ^4d4dffLasagna^000000, which was nothing but a fishing village in the border area.";
+		mes "นั่นอธิบายการสังหารของ Dorams ผู้ที่หลงทางใน ^4d4dffLasagna^000000 ซึ่งไม่ได้เป็นเพียงหมู่บ้านชาวประมงในเขตชายแดน";
 		next;
 		mes "[Vigilante Ajegna]";
-		mes "What's worse is that the Dorams who come from outside of Lasagna would often cause problems. This is really causing a headache for the Vigilante Corp.";
-		mes "A Vigilante's job is to assist the Dorams who are in the New Continent expedition, in addition to maintaining public order, so please help.";
+		mes "สิ่งที่แย่กว่านั้นคือ Dorams ที่มาจากด้านนอกของ Lasagna มักจะทำให้เกิดปัญหานี่เป็นสาเหตุที่ทำให้ปวดหัวสำหรับ Vigilante Corp. ";
+		mes "หน้าที่ของศาลเตี้ยคือการช่วยเหลือ Dorams ที่อยู่ในการสำรวจทวีปใหม่นอกเหนือจากการรักษาความสงบเรียบร้อยของสาธารณะดังนั้นโปรดช่วยด้วย";
 		next;
 		mes "[Vigilante Ajegna]";
-		mes "Do you see the Doram over there? He's ^4d4dffAglio^000000. He'll let you in on some useful stuff. Go meet the guy.";
+		mes "คุณเห็น Doram อยู่ตรงนั้นไหมเขา ^4d4dffAglio^000000 เขาจะให้คุณได้สิ่งที่มีประโยชน์ไปพบชายคนนั้น";
 		if (isbegin_quest(7711) == 0)
 			setquest 7711;
 		completequest 7711;// Beginning
+		getitembound 20307,1,Bound_Char;
 		setquest 7712;// Where am I? Who am I??
 		close;
 	case 1:
 		mes "[Vigilante Ajegna]";
-		mes "I should welcome the new Dorams coming in here.";
-		mes "^4d4dffAglio^000000 will let you in on more details. He's right over there.";
+		mes "ฉันควรจะต้อนรับ Dorams ใหม่ที่จะมาที่นี่";
+		mes "^4d4dffAglio^000000 จะให้รายละเอียดเพิ่มเติมแก่เขาเขาอยู่ตรงนั้น";
 		next;
 		mes "[Vigilante Ajegna]";
-		mes "Aglio is one of the very, I mean, very good Doram in the Farfalle Vigilante Corp, so watch and learn!";
+		mes "Aglio เป็นหนึ่งในคนที่ฉันหมายถึง Doram ที่ดีมากใน Farfalle Vigilante Corp ดังนั้นจงเฝ้าดูและเรียนรู้!";
 		close;
 	case 2:
 		mes "[Vigilante Ajegna]";
-		mes "If you have any questions, don't hesitate to ask him.";
-		mes "Don't be a stranger even when you're out on the New Continent!";
+		mes "ถ้าคุณมีคำถามอย่าลังเลที่จะถามเขา";
+		mes "อย่าเป็นคนแปลกหน้าแม้ว่าเจ้าจะอยู่ในทวีปใหม่!";
 		next;
 		mes "[Vigilante Ajegna]";
-		mes "The Lasagna Port is over that way!";
-		mes "Don't tell me you're here because you didn't know that.";
+		mes "ที่ Lasagna Port จบไปแล้ว!";
+		mes "อย่าบอกฉันว่าคุณอยู่ที่นี่เพราะคุณไม่รู้";
 		close;
 	}
 OnInit:
@@ -98,67 +99,67 @@ OnInit:
 lasa_fild01,53,322,3	script	Applicant Paul#doramt13	4_M_MERCAT1,4,4,{
 	if (Class != Job_Summoner) {
 		mes "[Paul]";
-		mes "~Shrieks~ You startled me!";
-		mes "A human? Wow, what an odd-looking one!";
+		mes "~ Shrieks ~ คุณทำให้ข้าตกใจ!";
+		mes "มนุษย์? ว้าวช่างเป็นอะไรที่แปลกประหลาด!";
 		close;
 	}
 	switch( isbegin_quest(7723) ) {
 	case 0:
 		mes "[Paul]";
-		mes "So, you're that adventurer Doram, eh?";
-		mes "Hey, what do you think?";
-		mes "You agree with me about damage, right? STR comes first!";
+		mes "เจ้าเป็นนักผจญภัยนั่น Doram ใช่มั้ย";
+		mes "เฮ้คุณคิดว่าไง?";
+		mes "คุณเห็นด้วยกับฉันเกี่ยวกับความเสียหายใช่ไหม STR มาก่อน!";
 		next;
 		mes "[Paul]";
-		mes "You need to be on the offense to win the battle.";
-		mes "^4d4dffThe quickest way to boost ATK is to boost STR^000000!";
+		mes "เจ้าต้องถูกโจมตีเพื่อที่จะชนะการต่อสู้";
+		mes "^4d4dffวิธีที่เร็วที่สุดในการเพิ่ม ATK คือการเพิ่ม STR^000000!";
 		next;
 		mes "[MacCarnie]";
-		mes "...Reckless attacks are of no use!";
-		mes "No attack will work if you miss the target!";
+		mes "... การโจมตีที่ไม่ประมาทไม่มีประโยชน์!";
+		mes "การโจมตีจะไม่ทำงานหากคุณพลาดเป้า!";
 		next;
 		mes "[MacCarnie]";
-		mes "So, ^4d4dffyou need to boost DEX first to increase Accuracy^000000.";
-		mes "It doesn't matter how strong you are. You need to hit the target first!";
+		mes "ดังนั้น ^4d4dffคุณต้องเพิ่ม DEX ก่อนเพื่อเพิ่มความแม่นยำ^000000";
+		mes "ไม่สำคัญหรอกว่าคุณแข็งแกร่งแค่ไหนคุณต้องยิงเป้าก่อน!";
 		next;
 		mes "[MacCarnie]";
-		mes "I refuse to use martial arts willy-nilly as you do!";
-		mes "^4d4dffI'm using the summoning skill by boosting INT for magical attacks!^000000";
+		mes "ฉันปฏิเสธที่จะใช้ศิลปะการต่อสู้อย่างจงใจตามที่คุณทำ!";
+		mes "^4d4dffฉันใช้ทักษะการเรียกโดยการเพิ่ม INT สำหรับการโจมตีเวทย์มนตร์!^000000";
 		next;
 		mes "[Paul]";
-		mes "Pfff! What's wrong with using the summoning skills to complement the physical skills?";
-		mes "Are you implying that I haven't got a clue?";
+		mes "Pfff! เกิดอะไรขึ้นกับการใช้ทักษะการเรียกเพื่อเสริมทักษะทางกายภาพ";
+		mes "เจ้าหมายถึงว่าข้าไม่มีเงื่อนงำ";
 		next;
 		mes "[MacCarnie]";
-		mes "...That's not what I meant! This cat's brains must be full of fat!";
+		mes "... นั่นไม่ใช่สิ่งที่ข้าหมาย! สมองของแมวตัวนี้ต้องอ้วนแน่!";
 		next;
 		mes "[Vigilante Gnocchi]";
-		mes "...Stop fighting, you two!";
-		mes "Hey, there. Newcomer.";
-		mes "You can ask me if there is something you'd like to know.";
-		npctalk "You can ask me if there is something you'd like to know.", "Vigilante Gnocchi#doramt13", bc_self;
+		mes "... หยุดการต่อสู้เจ้าสอง!";
+		mes "เฮ้มีผู้มาใหม่";
+		mes "คุณสามารถถามฉันว่ามีสิ่งที่คุณอยากรู้หรือไม่";
+		npctalk "คุณสามารถถามฉันว่ามีอะไรที่คุณอยากรู้ไหม", "Vigilante Gnocchi#doramt13", bc_self;
 		setquest 7723;// The potential within
 		close;
 	case 1:
 		mes "[Paul]";
-		mes "He might tell you What's good about being a Vigilante, so go ahead and ask him.";
-		mes "He'll prove that I was right, after all.";
+		mes "เขาอาจจะบอกคุณว่าอะไรดีเกี่ยวกับการเป็นศาลเตี้ยจึงไปข้างหน้าและถามเขา";
+		mes "เขาจะพิสูจน์ว่าข้าถูกแล้ว";
 		close;
 	case 2:
 		mes "[Paul]";
-		mes "So, is this all about boosting your abilities based on your competencies?";
+		mes "งั้นนี่คือทั้งหมดที่เกี่ยวกับการเพิ่มความสามารถของคุณตามความสามารถของคุณหรือไม่";
 		next;
 		mes "[Paul]";
-		mes "Come to think of it, there is a ^4d4dffhypnotist^000000 in the village.";
-		mes "^4d4dffYou can reset skills and statuses through a hypnotist^000000. Just so you know that you can.";
+		mes "มาคิดดูสิมันมี^4d4dffคนสะกดจิต^000000ในหมู่บ้าน";
+		mes "^4d4dffคุณสามารถรีเซ็ตทักษะและสถานะผ่านการสะกดจิต^000000 เพียงแค่นี้คุณก็รู้ว่าคุณทำได้";
 		close;
 	}
 OnTouch:
 	if (Class == Job_Summoner && isbegin_quest(7723) == 0) {
 		setpcblock PCBLOCK_NPC, true;
-		npctalk "You, dimwit! Nothing beats damage! You should boost your STR first!", "Applicant Paul#doramt13", bc_self;
+		npctalk "คุณสลัว! ไม่มีอะไรชนะความเสียหาย! คุณควรเพิ่ม STR ของคุณก่อน!", "Applicant Paul#doramt13", bc_self;
 		sleep2 2000;
-		npctalk "You have no idea! DEX comes first if you want your attack to be successful!!", "Applicant MacCarnie#doramt13", bc_self;
+		npctalk "คุณไม่มีความคิด! DEX มาก่อนถ้าคุณต้องการให้การโจมตีของคุณประสบความสำเร็จ !!", "Applicant MacCarnie#doramt13", bc_self;
 		sleep2 1000;
 		setpcblock PCBLOCK_NPC, false;
 		emotion ET_STARE, getnpcid(0, "Applicant Paul#doramt13");
@@ -175,66 +176,66 @@ lasa_fild01,50,321,6	duplicate(Applicant Paul#doramt13)	Applicant MacCarnie#dora
 lasa_fild01,54,325,3	script	Vigilante Gnocchi#doramt13	4_DR_SOLDIER,{
 	if (Class != Job_Summoner) {
 		mes "[Vigilante Gnocchi]";
-		mes "Ahem! This is like a gateway to the Far-Star Continent.";
-		mes "No more humans are allowed!";
+		mes "Ahem! นี่เป็นเหมือนประตูสู่ทวีป Far-Star";
+		mes "ไม่อนุญาตให้มนุษย์อีกต่อไป!";
 		close;
 	}
 	switch( isbegin_quest(7723) ) {
 	case 0:
-		npctalk "Do you happen to know why they are making so much noise?", "", bc_self;
+		npctalk "คุณรู้หรือไม่ว่าทำไมพวกเขาถึงทำเสียงดังมาก?", "", bc_self;
 		end;
 	case 1:
 		mes "[Vigilante Gnocchi]";
-		mes "So they were having an animated discussion over status.";
+		mes "ดังนั้นพวกเขาจึงถกเถียงเรื่องสถานะภาพเคลื่อนไหว";
 		next;
 		break;
 	case 2:
 		mes "[Vigilante Gnocchi]";
-		mes "Do you need more explanation on the status?";
+		mes "คุณต้องการคำอธิบายเพิ่มเติมเกี่ยวกับสถานะหรือไม่";
 		next;
-		if (select( "Yes.", "No." ) == 2) {
+		if (select( "ใช่ต้องการ", "ไม่เป็นไรขอบคุณ." ) == 2) {
 			mes "[Vigilante Gnocchi]";
-			mes "Up to level 49, the village hypnotist will reset your stats and skills.";
-			mes "This will let you practice and experiment which will help find the path that works for you.";
+			mes "จนถึง Level 49 ผู้สะกดจิตหมู่บ้านจะรีเซ็ต Stat และ Skill ของคุณ";
+			mes "นี่จะช่วยให้คุณฝึกฝนและทดลองซึ่งจะช่วยค้นหาเส้นทางที่เหมาะกับคุณ";
 			close;
 		}
 		break;
 	}
 	mes "[Vigilante Gnocchi]";
-	mes "Press the ^4d4dffAlt+Q^000000 keys to view your physical stats.";
-	mes "Calibration is also available depending on your equipment.";
+	mes "กดปุ่ม ^4d4dffAlt + Q^000000 เพื่อดูสถานะทางกายภาพของคุณ";
+	mes "การสอบเทียบก็มีให้ใช้เช่นกันขึ้นอยู่กับอุปกรณ์ของคุณ";
 	next;
 	mes "[Vigilante Gnocchi]";
-	mes "Let me explain the statuses in detail.";
-	mes "^4d4dffSTR means strength^000000. It ^4d4dffboosts physical attacks^000000.";
+	mes "ให้ฉันอธิบายสถานะโดยละเอียด";
+	mes "^4d4dffSTR หมายถึงความแข็งแกร่ง^000000. มัน^4d4dffboostsการโจมตีทางกายภาพ^000000";
 	next;
 	mes "[Vigilante Gnocchi]";
-	mes "^4d4dffVIT is vitality which indicates health^000000. This is what ^4d4dffboosts your overall HP^000000.";
-	mes "^4d4dffAGI means agility^000000. It affects ^4d4dffevasion and attack speed^000000.";
+	mes "^4d4dffVIT คือพลังที่บ่งบอกถึงสุขภาพ^000000 นี่คือสิ่งที่^4d4dffเพิ่ม HP โดยรวมของคุณ^000000";
+	mes "^4d4dffAGI หมายถึงความว่องไว^000000 มันมีผลกับ^4d4dffการหลบเลี่ยงและความเร็วในการโจมตี^000000";
 	next;
 	mes "[Vigilante Gnocchi]";
-	mes "^4d4dffINT refers to intelligence and MATK means magical attack^000000. If your skills are centered on magic, you must boost INT first and foremost.";
+	mes "^4d4dffINTหมายถึงหน่วยข่าวกรองและ MATK หมายถึงการโจมตีเวทมนต์^000000 ถ้าทักษะของคุณมีศูนย์กลางที่เวทย์มนตร์คุณต้องเพิ่ม INT ก่อนและหลัง";
 	next;
 	mes "[Vigilante Gnocchi]";
-	mes "^4d4dffDEX is related with dexterity and accuracy^000000.";
-	mes "You can both quicken casting speed and boost the accuracy of your attacks.";
+	mes "^4d4dffDEX นั้นเกี่ยวข้องกับความชำนาญและความแม่นยำ^000000";
+	mes "คุณสามารถเร่งความเร็วในการร่ายเร็วขึ้นและเพิ่มความแม่นยำในการโจมตี";
 	next;
 	mes "[Vigilante Gnocchi]";
-	mes "^4d4dffLUK means luck; the more luck you have, the higher your critical hit rate (CRI) becomes^000000.";
-	mes "It also means you can dodge an enemy's attack more easily.";
+	mes "^4d4dffLUK หมายถึงโชคยิ่งคุณมีโชคมากเท่าไหร่อัตราการโจมตีคริติคอลของคุณก็ยิ่งสูงขึ้นเรื่อยๆ กลายเป็น^000000";
+	mes "มันหมายความว่าคุณสามารถหลบการโจมตีของศัตรูได้ง่ายขึ้น";
 	next;
 	mes "[Vigilante Gnocchi]";
-	mes "If you want to boost your physical attacks, focus on STR. If what you want is magical attacks, go for INT. Got it?";
+	mes "ถ้าคุณต้องการเพิ่มการโจมตีทางกายภาพของคุณให้มุ่งเน้นไปที่ STR หากสิ่งที่คุณต้องการคือการโจมตีเวทมนตร์ให้ไปที่ INT ได้หรือไม่";
 	next;
 	mes "[Vigilante Gnocchi]";
-	mes "DEX is highly crucial in the early stages because it is what boosts Accuracy.";
-	mes "This can be a difficult concept to get, so you should try boosting this and that to find your own way.";
+	mes "DEX มีความสำคัญอย่างมากในระยะแรกเพราะมันเป็นสิ่งที่ช่วยเพิ่มความแม่นยำ";
+	mes "นี่อาจเป็นแนวคิดที่ยากที่จะหาดังนั้นคุณควรลองเพิ่มสิ่งนี้และหาวิธีของคุณเอง";
 	if (isbegin_quest(7723) == 1) {
 		completequest 7723;// The potential within
 		getexp 50,50;
 		next;
 		mes "[Vigilante Gnocchi]";
-		mes "I wish you godspeed!";
+		mes "ฉันขอให้คุณโชคดี!";
 	}
 	close;
 OnInit:
@@ -245,59 +246,59 @@ OnInit:
 lasa_fild01,60,322,3	script	Vigilante Aglio#doram02	4_DR_AGLIO,{
 	if (Class != Job_Summoner) {
 		mes "[Vigilante Aglio]";
-		mes "Oh! You must be the famous strangers from the New Continent, eh?";
-		mes "Out-of-towner Dorams abound in this place, I definitely don't want any more of them.";
+		mes "โอ้! คุณต้องเป็นคนแปลกหน้าจากทวีปใหม่ใช่มั้ย";
+		mes "Dorams ที่เต็มไปด้วยผู้คนมากมายในสถานที่นี้ฉันไม่ต้องการพวกเขาอีกต่อไป";
 		next;
 		mes "[Vigilante Aglio]";
-		mes "Wouldn't they be surprised to see you guys?";
-		mes "Moreover, it's dangerous to cross the mountain ridge.";
-		mes "This is for your own good. Just go back to where you come from.";
+		mes "พวกเขาจะไม่แปลกใจเมื่อเจอพวกคุณเหรอ?";
+		mes "ยิ่งกว่านั้นมันอันตรายที่จะข้ามสันเขา";
+		mes "สิ่งนี้เป็นผลดีต่อตัวคุณเองเพียงกลับไปยังที่ที่คุณมา";
 		close;
 	}
 	if (checkweight(1001,2) == 0) {
-		mes "- Hold on a second here!! -";
-		mes "- You have too many items. -";
-		mes "- That means you can no longer receive any items. -";
-		mes "- Free up some space -";
-		mes "- and try again. -";
+		mes "- รอสักครู่ที่นี่ !! -";
+		mes "- คุณมีรายการมากเกินไป -";
+		mes "- นั่นหมายความว่าคุณจะไม่สามารถรับไอเท็มใด ๆ อีกต่อไป -";
+		mes "- เพิ่มพื้นที่ว่าง -";
+		mes "- แล้วลองอีกครั้ง -";
 		close;
 	}
 	if (lasagna_quest[0] == 0) {
 		mes "[Vigilante Aglio]";
-		mes "Oh, hello?";
-		mes "I'm Aglio. I'm going to be your attendant from this point on.";
-		mes "Consider it a privilege.";
-		mes "Because I'm one of the ace members of the Farfalle Vigilante Corp.";
+		mes "โอ้สวัสดีเหรอ?";
+		mes "ฉัน Aglio. ฉันจะเป็นผู้ดูแลของคุณตั้งแต่นี้เป็นต้นไป";
+		mes "คิดว่ามันเป็นสิทธิพิเศษ";
+		mes "เพราะฉันเป็นหนึ่งในสมาชิกเอซของ Farfalle Vigilante Corp. ";
 		next;
 		mes "[Vigilante Aglio]";
-		mes "I'm sure I can be of help for just about anything.";
-		mes "First off, let's see what you've got.";
+		mes "ฉันแน่ใจว่าฉันสามารถช่วยอะไรก็ได้";
+		mes "ก่อนอื่นมาดูสิ่งที่คุณมี";
 		next;
 		mes "[Vigilante Aglio]";
-		mes "Hang on. Let me check if you are properly equipped first.";
-		mes "You don't want to fight with bare hands, now do you?";
-		mes "^4d4dffYou should equip your weapons.^000000";
+		mes "Hang on. ให้ฉันตรวจสอบว่าคุณได้รับการติดตั้งอย่างถูกต้องก่อนหรือไม่";
+		mes "เจ้าไม่ต้องการต่อสู้ด้วยมือเปล่าตอนนี้เจ้า?";
+		mes "^4d4dffคุณควรติดตั้งอาวุธของคุณ^000000";
 		next;
 		cutin "tutorial03.BMP",4;
-		mes "!- Notice -!";
-		mes "^4d4dffYou can use or equip an item by double-clicking it.";
-		mes "Open or close the item window with the shortcut key [Alt+E].";
+		mes "! - ประกาศ -!";
+		mes "^4d4dffคุณสามารถใช้หรือจัดเตรียมไอเท็มได้โดยดับเบิลคลิก";
+		mes "เปิดหรือปิดหน้าต่างรายการด้วยปุ่มทางลัด [Alt + E]";
 		next;
-		mes "!- Notice -!";
-		mes "^4d4dffCheck out your equipped items easily by pressing the shortcut key [Alt+Q].";
-		mes "Simply drag the appropriate items to the area you'd like to equip.^000000";
+		mes "! - ประกาศ -!";
+		mes "^4d4dffตรวจสอบรายการที่ติดตั้งของคุณได้อย่างง่ายดายโดยกดปุ่มทางลัด [Alt + Q]";
+		mes "เพียงลากรายการที่เหมาะสมไปยังพื้นที่ที่คุณต้องการจัด^000000";
 		next;
 		cutin "",255;
 		mes "[Vigilante Aglio]";
-		mes "Now that we've checked your weapons, why don't we take a look at a target to hunt?";
-		mes "Do you see those ^4d4dffEggring^000000 wandering around over there?";
+		mes "ตอนนี้เราได้ตรวจสอบอาวุธของคุณแล้วทำไมเราไม่ลองดูเป้าหมายเพื่อตามล่า";
+		mes "คุณเห็นพวก ^4d4dffEggring^000000 เดินไปรอบ ๆ นั่นไหม";
 		next;
 		mes "[Vigilante Aglio]";
-		mes "They may look dumb but they can be a real pain in the butt. They will pick up and eat anything they come across.";
-		mes "They are a dime a dozen around here, so they're a great target for the novice Dorams to test their worth on.";
+		mes "พวกมันอาจจะดูเป็นคนโง่ แต่พวกมันอาจจะเจ็บปวดจริง ๆ ในก้นพวกเขาจะหยิบขึ้นมาและกินอะไรก็ได้ที่เจอ";
+		mes "พวกมันเป็นโหลสำคัญอยู่ที่นี่ดังนั้นพวกมันจึงเป็นเป้าหมายที่ยอดเยี่ยมสำหรับมือใหม่ที่จะทดสอบค่าของพวกมัน";
 		next;
 		mes "[Vigilante Aglio]";
-		mes "Go ahead and get rid of some ^4d4dffEggring^000000, will you? ^4d4dffThree^000000 should do for now.";
+		mes "ไปข้างหน้าและกำจัด ^4d4dffEggring^000000 คุณจะได้ไหม ^4d4dffควรทำตอนนี้ ^000000";
 		if (isbegin_quest(7712) == 0)
 			setquest 7712;// Where am I? Who am I??
 		completequest 7712;
@@ -305,37 +306,37 @@ lasa_fild01,60,322,3	script	Vigilante Aglio#doram02	4_DR_AGLIO,{
 		lasagna_quest[0] = 1;
 		next;
 		cutin "tutorial02.BMP",4;
-		mes "^4d4dff!- Notice -!^000000";
-		mes "You have accepted a quest from an NPC.";
-		mes "^4d4dffCheck out the quest details by pressing the shortcut key [Alt+U],^000000 or through the Quest icon found in the menu tray.^000000";
+		mes "^4d4dff! - ประกาศ -! ^000000";
+		mes "คุณยอมรับภารกิจจาก NPC";
+		mes "^4d4dffตรวจสอบรายละเอียดภารกิจโดยกดปุ่มทางลัด [Alt + U],^000000 หรือผ่านไอคอน Quest ที่พบในถาดเมนู^000000";
 		close3;
 	}
 	if (lasagna_quest[0] == 1 || lasagna_quest[0] == 2 || lasagna_quest[0] == 3) {
 		if (lasagna_quest[0] == 1) {
 			if (checkquest(7713,HUNTING) < 2) {
 				mes "[Vigilante Aglio]";
-				mes "Alright, to warm up, go and eliminate ^4d4dffthree Eggrings^000000.";
+				mes "เอาล่ะเพื่ออุ่นเครื่องไปและกำจัด ^4d4dffสาม Eggrings^000000";
 				next;
 				mes "[Vigilante Aglio]";
-				mes "What do they look like? You'll see just by glancing at them right away. You can't miss them!";
-				mes "They abound around here. Go get them, tiger!";
+				mes "พวกมันมีลักษณะเป็นอย่างไรคุณจะเห็นเพียงแค่เหลือบมองพวกเขาทันทีคุณไม่สามารถพลาดได้!";
+				mes "พวกมันมีอยู่มากมายที่นี่ไปเอาเสือมาให้";
 				next;
 				cutin "tutorial02.BMP",4;
-				mes "^4d4dff!- Notice -!^000000";
-				mes "^4d4dffCheck out the quest details by pressing the shortcut key [Alt+U],^000000 or through the Quest icon found in the menu tray.^000000";
+				mes "^4d4dff!- ประกาศ -!^000000";
+				mes "^4d4dffตรวจสอบรายละเอียดภารกิจโดยกดปุ่มทางลัด [Alt + U],^000000 หรือผ่านไอคอน Quest ที่พบในถาดเมนู^000000";
 				close;
 			}
 			mes "[Vigilante Aglio]";
-			mes "Whoa, you're good!";
-			mes "I should've seen that in you because crossing the mountains is never easy.";
+			mes "โอ้เจ้าสบายดี!";
+			mes "ข้าเห็นว่าในตัวเจ้าเพราะการข้ามภูเขาไม่ใช่เรื่องง่าย";
 			next;
 			mes "[Vigilante Aglio]";
-			mes "I believe you can do very well, even in a new location.";
-			mes "Here, take this.";
+			mes "ข้าเชื่อว่าเจ้าทำได้ดีมากแม้แต่ในที่ใหม่";
+			mes "เอานี่สิ";
 			next;
 			mes "[Vigilante Aglio]";
-			mes "I brought some snacks for you.";
-			mes "It's cool apple juice!";
+			mes "ฉันนำขนมมาให้คุณ";
+			mes "มันเป็นน้ำผลไม้แอปเปิ้ลสุดยอด!";
 			completequest 7713;// First Battle!
 			getexp 70,70;
 			setquest 7714;// Refreshing Apple Juice
@@ -346,54 +347,54 @@ lasa_fild01,60,322,3	script	Vigilante Aglio#doram02	4_DR_AGLIO,{
 		if (lasagna_quest[0] == 2) {
 			if (countitem(531) > 0) {
 				mes "[Vigilante Aglio]";
-				mes "Click the 'Item' icon in the basic information window found in the upper left-hand side to open the item window.";
+				mes "คลิกที่ไอคอน 'item' ในหน้าต่างข้อมูลพื้นฐานที่พบในด้านซ้ายมือเพื่อเปิดหน้าต่างรายการ";
 				next;
 				mes "[Vigilante Aglio]";
-				mes "The item window comes with four tabs.";
-				mes "Items are automatically placed into the Item, Gear and Etc tabs, depending on their type.";
+				mes "หน้าต่างไอเท็มมาพร้อมกับสี่แท็บ";
+				mes "รายการจะถูกวางลงในแท็บรายการ, เกียร์และอื่น ๆ โดยอัตโนมัติขึ้นอยู่กับประเภทของรายการ";
 				next;
 				mes "[Vigilante Aglio]";
-				mes "To use or equip an item, ^4d4dffdouble-click that item^000000, or";
-				mes "^4d4dffdrag it to the Equipment window^000000 to use.";
+				mes "ในการใช้หรือจัดเตรียมไอเท็ม ^4d4dffดับเบิลคลิกที่ไอเท็ม^000000 หรือ";
+				mes "^4d4dffลากไปยังหน้าต่างอุปกรณ์^000000 เพื่อใช้";
 				next;
-				cutin "tutorial03.BMP",4;
-				mes "!- Notice -!";
-				mes "^4d4dffYou can use or equip an item by double-clicking it.";
-				mes "Open or close the item window with the shortcut key [Alt+E].";
+				cutin "tutorial03.BMP", 4;
+				mes "!- ประกาศ -!";
+				mes "^4d4dffคุณสามารถใช้หรือจัดเตรียมไอเท็มได้โดยดับเบิลคลิก";
+				mes "เปิดหรือปิดหน้าต่างรายการด้วยปุ่มทางลัด [Alt + E]";
 				next;
-				mes "!- Notice -!";
-				mes "^4d4dffCheck out your equipped items easily by pressing the shortcut key [Alt+Q].";
-				mes "Or, simply drag the appropriate items to the area you'd like to equip.^000000";
+				mes "!- ประกาศ -!";
+				mes "^4d4dffตรวจสอบรายการที่ติดตั้งของคุณได้อย่างง่ายดายโดยกดปุ่มทางลัด [Alt + Q]";
+				mes "หรือลากรายการที่เหมาะสมไปยังพื้นที่ที่คุณต้องการจัดเตรียม^000000";
 				next;
-				cutin "",255;
+				cutin "", 255;
 				mes "[Vigilante Aglio]";
-				mes "If you want to ^4d4dffsee a detailed description for each item, right-click that item.^000000";
-				mes "This shows the detailed description of the selected item.";
+				mes "หากคุณต้องการ ^4d4dffดูคำอธิบายโดยละเอียดสำหรับแต่ละรายการให้คลิกขวาที่รายการนั้น^000000";
+				mes "นี่จะแสดงคำอธิบายโดยละเอียดของรายการที่เลือก";
 				next;
-				cutin "tutorial04.BMP",4;
-				mes "!- Notice -!";
-				mes "^4d4dffRight-click an item to view its detailed description.^000000";
+				cutin "tutorial04.BMP", 4;
+				mes "!- ประกาศ -!";
+				mes "^4d4dffคลิกขวาที่ไอเท็มเพื่อดูคำอธิบายโดยละเอียด^000000";
 				next;
-				mes "!- Notice -!";
-				mes "^4d4dffIf a player wishes, they can use the social options such as Booking, Party, or Guild. Here, they join a party or request transactions.^000000";
+				mes "!- ประกาศ -!";
+				mes "^4d4dffหากผู้เล่นต้องการพวกเขาสามารถใช้ตัวเลือกโซเชียลเช่นการจองปาร์ตี้หรือกิลด์ที่นี่พวกเขาเข้าร่วมปาร์ตี้หรือทำธุรกรรมร้องขอ^000000";
 				next;
-				cutin "",255;
+				cutin "", 255;
 				mes "[Vigilante Aglio]";
-				mes "Well, then. ^4d4dffGo ahead and drink the apple juice that I gave you.^000000";
+				mes "เอาล่ะ ^4d4dffไปข้างหน้าแล้วดื่มน้ำแอปเปิ้ลที่ฉันให้คุณ^000000";
 				close;
 			}
 			mes "[Vigilante Aglio]";
-			mes "How do you like it? It's cool, sweet, and just good, right?";
-			mes "I would've given you more if I had any, but...no.";
+			mes "คุณชอบมันอย่างไรมันเจ๋งดีและดีใช่มั้ย";
+			mes "ฉันจะให้คุณมากกว่านี้ถ้าฉันมี แต่ไม่มี ... ";
 			next;
 			mes "[Vigilante Aglio]";
-			mes "Oh, right! I'll give you this, too.";
-			mes "It'll restore your stamina if you take it when you're tired.";
+			mes "โอ้ใช่แล้ว! ฉันจะให้สิ่งนี้กับคุณด้วย";
+			mes "มันจะฟื้นฟูความแข็งแกร่งของเจ้าถ้าเจ้าทำเมื่อเจ้าเหนื่อย";
 			next;
 			mes "[Vigilante Aglio]";
-			mes "Also, I'll give you a new staff.";
-			mes "It should be better than that sprout you brought with you.";
-			mes "Now you know how to equip an item because I already explained it to you, don't you?";
+			mes "นอกจากนี้ฉันจะให้สต๊าฟใหม่ให้คุณ";
+			mes "น่าจะดีกว่าต้นกล้าที่เจ้านำมาด้วย";
+			mes "ตอนนี้คุณรู้วิธีจัดเตรียมสิ่งของแล้วเพราะฉันอธิบายให้คุณแล้วใช่มั้ย";
 			erasequest 7714;// Refreshing Apple Juice
 			getitem 569,30;// Novice Potion
 			getitem 1687,1;// Beginner Foxtail Staff [1]
@@ -403,134 +404,134 @@ lasa_fild01,60,322,3	script	Vigilante Aglio#doram02	4_DR_AGLIO,{
 		next;
 		classchange( 4_DR_KID_01, "Kid#doram03t", bc_self );
 		mes "[Vigilante Aglio]";
-		mes "I'll direct you to the village, now.";
+		mes "ฉันจะพาคุณไปที่หมู่บ้านทันที";
 		npctalk "....Aglioooooo!!", "Kid#doram03t", bc_self;
 		next;
-		npctalk "Oh, my days! You startled me!", "", bc_self;
+		npctalk "โอ้วันของฉัน! คุณตกใจฉัน!", "", bc_self;
 		mes "[Vigilante Aglio]";
-		mes "What's up?";
-		mes "Oh, you're the youngest kitten of the tool merchant!";
-		mes "it's dangerous around here. What brought you all this way?";
+		mes "เกิดอะไรขึ้น";
+		mes "โอ้เจ้าเป็นลูกแมวอายุน้อยที่สุดของพ่อค้าขายเครื่องมือ!";
+		mes "มันอันตรายอยู่แถวนี้อะไรนำพาเจ้ามาทางนี้?";
 		next;
-		mes "[The Youngest Kitten of the Tool Merchant]";
-		mes "Oh, actually...I lost it!";
-		mes "There was a box!";
-		mes "I was supposed to give it to Haru.";
-		mes "I was just trying to hang out for a while, but I fell down!";
+		mes "[ลูกแมวที่อายุน้อยที่สุดของพ่อค้าเครื่องมือ]";
+		mes "โอ้จริงแล้ว ... ฉันทำมันหาย!";
+		mes "มีกล่อง!";
+		mes "ฉันควรจะมอบให้ฮารุ";
+		mes "ฉันแค่พยายามออกไปเที่ยวซักพัก แต่ฉันล้มลง!";
 		next;
-		mes "[The Youngest Kitten of the Tool Merchant]";
-		mes "Please find it, Aglio!";
-		mes "Or, I'm going to be in trouble!";
-		next;
-		mes "[Vigilante Aglio]";
-		mes "So, you were running an errand to deliver a box to Healer Haru.";
-		mes "But you fell down while hanging out for a while and lost the box. Is that it?";
-		next;
-		mes "[The Youngest Child of the Tool Merchant]";
-		mes "Yes, sir!";
-		mes "You're so good at summing it up!";
+		mes "[ลูกแมวที่อายุน้อยที่สุดของพ่อค้าเครื่องมือ]";
+		mes "ได้โปรดพบ Aglio!";
+		mes "หรือข้าจะเดือดร้อน!";
 		next;
 		mes "[Vigilante Aglio]";
-		mes "Alright. You just return to your village.";
-		mes "I'll see what I can do. You return home and wait.";
+		mes "งั้นเจ้าต้องใช้ธุระในการส่งกล่องให้ Healer Haru";
+		mes "แต่เจ้าล้มลงในขณะที่ออกไปข้างนอกสักครู่แล้วทำกล่องหายนั่นมัน?";
+		next;
+		mes "[ลูกคนสุดท้องของพ่อค้าเครื่องมือ]";
+		mes "ใช่แล้วท่าน!";
+		mes "เจ้าทำได้ดีมากในการสรุป!";
 		next;
 		mes "[Vigilante Aglio]";
-		mes "One more thing. Just drop that habit of acting like you're naive in front of the strangers!";
+		mes "ได้เลยเจ้าเพียงแค่กลับไปที่หมู่บ้านของคุณ";
+		mes "ฉันจะเห็นสิ่งที่ฉันสามารถทำได้คุณกลับบ้านแล้วรอ";
 		next;
-		mes "[The Youngest Kitten of the Tool Merchant]";
-		mes "Come on...I'm the cutest, youngest kitten from Lasagna!";
-		mes "Anyway, I hope you help me by finding that box. Please.";
+		mes "[Vigilante Aglio]";
+		mes "อีกสิ่งหนึ่งเพียงแค่วางนิสัยของการแสดงเช่นคุณไร้เดียงสาต่อหน้าคนแปลกหน้า!";
 		next;
-		npctalk "You know that I love you, don't you?", "Kid#doram03t", bc_self;
+		mes "[ลูกแมวที่อายุน้อยที่สุดของพ่อค้าเครื่องมือ]";
+		mes "Come on ... ฉันเป็นลูกแมวที่น่ารักและอายุน้อยที่สุดจาก Lasagna!";
+		mes "อย่างไรก็ตามข้าหวังว่าคุณจะช่วยฉันด้วยการหาช่องนั้นได้โปรดเถิด";
+		next;
+		npctalk "คุณรู้ไหมว่าฉันรักคุณใช่ไหม", "Kid#doram03t", bc_self;
 		sleep2 1000;
-		npctalk "Just go, already!", "", bc_self;
+		npctalk "เพิ่งไปแล้ว!", "", bc_self;
 		classchange( HIDDEN_WARP_NPC, "Kid#doram03t", bc_self );
 		mes "[Vigilante Aglio]";
 		mes ".....";
-		mes "........~Sighs deeply~...";
+		mes "........ ~ ถอนหายใจลึก ~ ... ";
 		next;
 		mes "[Vigilante Aglio]";
-		mes "Well, there's no choice, then.";
+		mes "เอาล่ะไม่มีทางเลือก";
 		mes "" + strcharinfo(0) + "";
-		mes "I think you can step up and handle it this time.";
+		mes "ข้าคิดว่าเจ้าสามารถก้าวขึ้นมาจัดการกับมันได้ในเวลานี้";
 		next;
 		mes "[Vigilante Aglio]";
-		mes "it's a relief to have a competent Doram with me.";
-		mes "My guess is that an ^4d4dffEggring must've eaten that box.^000000";
+		mes "มันเป็นการผ่อนปรนที่จะได้ Doram ที่เก่งกาจกับข้า";
+		mes "ฉันเดาได้ว่าตัว ^4d4dffEggring ต้องกินกล่องนั้น^000000";
 		next;
 		mes "[Vigilante Aglio]";
-		mes "Keep hunting Eggrings until you find that box...";
-		mes "Let's go!";
+		mes "คอยล่า Eggrings จนกว่าเจ้าจะพบกล่องนั้น ... ";
+		mes "ไปกันเถอะ!";
 		setquest 7715;// Midding Box
 		lasagna_quest[0] = 4;
 		next;
-		mes "!- Notice -!";
-		mes "^4d4dffYou accepted a new quest from Vigilante Aglio.";
-		mes "Check out the details of the quest in the Quest Information Window.";
+		mes "!- ประกาศ -!";
+		mes "^4d4dffคุณยอมรับภารกิจใหม่จาก Vigilante Aglio";
+		mes "ตรวจสอบรายละเอียดของภารกิจในหน้าต่างข้อมูล Quest";
 		next;
-		mes "!- Notice -!";
-		mes "Press the ^4d4dffAlt + U^000000 shortcut key to open the Quest Information Window.";
+		mes "!- ประกาศ -!";
+		mes "กดปุ่มทางลัด ^4d4dffAlt + U^000000 เพื่อเปิดหน้าต่างข้อมูล Quest";
 		close;
 	}
 	if (lasagna_quest[0] == 4) {
 		if (countitem(1081) < 1) {// Midding Box
 			mes "[Vigilante Aglio]";
-			mes "You must remember Eggrings, you've hunted them before, haven't you?";
-			mes "They are easily spotted around here.";
+			mes "เจ้าต้องจำ Eggrings เจ้าเคยล่าพวกมันมาก่อนเจ้าไม่ได้เหรอ?";
+			mes "พวกมันถูกพบที่นี่ได้อย่างง่ายดาย";
 			next;
 			mes "[Vigilante Aglio]";
-			mes "I have no idea which Eggring swallowed the box, but, you'll find it once you start hunting them.";
+			mes "ข้าไม่รู้ว่า Eggring กลืนกล่อง แต่เจ้าจะพบมันเมื่อเจ้าเริ่มล่าพวกมัน";
 			next;
 			mes "[Vigilante Aglio]";
-			mes "Well, then. I'm counting on you.";
+			mes "ถ้างั้นฉันจะนับให้คุณ";
 			close;
 		}
 		mes "[Vigilante Aglio]";
-		mes "Ohh...! This is the box!";
-		mes "You can bring this when you visit the village!";
+		mes "โอ้ ... นี่คือกล่อง!";
+		mes "คุณสามารถนำสิ่งนี้มาเมื่อคุณไปที่หมู่บ้าน!";
 		next;
 		mes "[Vigilante Aglio]";
-		mes "^4d4dffWhen you arrive in the village, find the tool shop first and deliver this box.^000000";
+		mes "^4d4dffเมื่อคุณมาถึงหมู่บ้านหาร้านขายเครื่องมือก่อนแล้วส่งกล่องนี้^000000";
 		next;
 		mes "[Vigilante Aglio]";
-		mes "I'll let you know how to reach the village.";
-		mes "Follow the arrows that just appeared on the ground.";
+		mes "ข้าจะบอกให้เจ้ารู้วิธีไปยังหมู่บ้าน";
+		mes "ตามลูกธนูที่เพิ่งปรากฎบนพื้น";
 		erasequest 7715;// Midding Box
 		setquest 7716;// To the Village!
 		getexp 100,100;
 		lasagna_quest[0] = 5;
 		next;
-		mes "!- Notice -!";
-		mes "^4d4dffSometimes NPCs will help you find your destination through the Navigation tool.";
-		mes "Links can be created if there is a need for it. If you see the [Target], click it for pathfinding.^000000";
-		cutin "navi01.bmp",4;
+		mes "!- ประกาศ -!";
+		mes "^4d4dffบางครั้ง NPCs จะช่วยให้คุณค้นหาปลายทางของคุณผ่านเครื่องมือนำทาง";
+		mes "สามารถสร้างลิงค์ได้หากจำเป็นต้องใช้ถ้าคุณเห็น [Target] คลิกที่ลิงค์เพื่อค้นหาเส้นทาง^000000";
+		cutin "navi01.bmp", 4;
 		next;
-		mes "!- Notice -!";
-		mes "^4d4dffCall up the Navigation panel by clicking the appropriate menu icon.";
-		mes "Search for the target, set the goal, and click Pathfinding.";
-		mes "Arrows will be generated pointing toward the location of the target.^000000";
+		mes "!- ประกาศ -!";
+		mes "^4d4dffเรียกใช้แถบนำทางโดยคลิกที่ไอคอนเมนูที่เหมาะสม";
+		mes "ค้นหาเป้าหมายตั้งเป้าหมายแล้วคลิก Pathfinding";
+		mes "ลูกศรจะถูกสร้างขึ้นโดยชี้ไปยังตำแหน่งของเป้าหมาย^000000";
 		cutin "navi02.bmp",4;
 		navigateto "lasagna",168,124;
 		close3;
 	}
 	if (lasagna_quest[0] == 5) {
 		mes "[Vigilante Aglio]";
-		mes "What's in front of you is Lasagna, the harbor village.";
-		mes "You should bring that box to the tool shop first, right?";
+		mes "อะไรที่อยู่ข้างหน้าคุณคือ Lasagna หมู่บ้านท่าเรือ";
+		mes "คุณควรนำกล่องนั้นไปที่ร้านขายเครื่องมือก่อนใช่มั้ย";
 		next;
 		mes "[Vigilante Aglio]";
-		mes "I'll let you know how to reach the village.";
-		mes "Follow the arrows that just appeared on the ground.";
+		mes "ข้าจะบอกให้เจ้ารู้วิธีไปยังหมู่บ้าน";
+		mes "ตามลูกธนูที่เพิ่งปรากฎบนพื้น";
 		next;
 		mes "[Vigilante Aglio]";
-		mes "I'll be right behind you!";
-		mes "Don't worry about me. Just keep going.";
+		mes "ฉันจะอยู่ข้างหลังคุณ!";
+		mes "ไม่ต้องห่วงฉันไปเลยไปเรื่อย ๆ ";
 		navigateto "lasagna",168,124;
 		close;
 	}
 	mes "[Vigilante Aglio]";
-	mes "Haven't you left for Midgard yet?";
-	mes "Well, problems do occur at the harbor from time to time, but I thought it wouldn't be an issue for you.";
+	mes "คุณยังไม่ได้ไปที่ Midgard หรือยัง";
+	mes "มีปัญหาเกิดขึ้นที่ท่าเรือเป็นครั้งคราว แต่ฉันคิดว่ามันจะไม่เป็นปัญหาสำหรับคุณ";
 	close;
 OnInit:
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(7712) > 0 && (checkquest(7713,HUNTING) == -1 || checkquest(7713,HUNTING) == 2)" );
@@ -541,46 +542,46 @@ lasa_fild01,62,321,3	script	Kid#doram03t	HIDDEN_WARP_NPC,{ end; }
 
 lasa_fild01,132,374,3	script	Sloth#doram	4_DR_KID_01,3,3,{
 	if (checkweight(1001,3) == 0) {
-		mes "- Hold on a second here!! -";
-		mes "- You have too many items. -";
-		mes "- That means you can no longer receive any items. -";
-		mes "- Free up some space -";
-		mes "- and try again. -";
+		mes "- รอสักครู่ที่นี่ !! -";
+		mes "- คุณมีรายการมากเกินไป -";
+		mes "- นั่นหมายความว่าคุณจะไม่สามารถรับไอเท็มใด ๆ อีกต่อไป -";
+		mes "- เพิ่มพื้นที่ว่าง -";
+		mes "- แล้วลองอีกครั้ง -";
 		close;
 	}
 	switch( isbegin_quest(7719) ) {
 	case 0:
 		mes "[Sloth]";
-		mes "Hmm...You look energetic.";
-		mes "You see, I have an upset stomach.";
+		mes "อืม ... เจ้าดูกระตือรือร้น";
+		mes "เจ้าเห็นแล้วฉันปวดท้อง";
 		next;
 		mes "[Sloth]";
-		mes "The weather is sunny and warm, but...";
-		mes "I think I'm having a very bad day...";
+		mes "อากาศแจ่มใสและอบอุ่น แต่ ... ";
+		mes "ฉันคิดว่าฉันมีวันที่แย่มาก ... ";
 		next;
 		mes "[Sloth]";
-		mes "I should pluck all the Red Grass in this herb field...";
+		mes "ข้าควรถอนหญ้าสีแดงทั้งหมดในทุ่งหญ้าสมุนไพรนี้ ... ";
 		next;
 		mes "[Sloth]";
-		mes "But I'm pleasantly full in this fine sunny weather...";
-		mes "And there's a good breeze blowing...";
+		mes "แต่ฉันก็อิ่มเอมใจในวันที่อากาศแจ่มใส ... ";
+		mes "และมันก็มีลมพัดแรง ... ";
 		next;
 		mes "[Sloth]";
-		mes "I don't think I can ever drag myself up.";
-		mes "But I'm supposed to pluck the Red Grass...";
-		mes "If you do it I'll give you anchovies, okay?";
+		mes "ฉันไม่คิดว่าฉันจะลากตัวเองขึ้นมาได้";
+		mes "แต่ฉันควรจะดึง Red Grass ... ";
+		mes "ถ้าคุณทำเช่นนั้นฉันจะให้ปลากะตักกับคุณได้ไหม";
 		next;
-		switch( select( "I'll pluck the Red Grass for you.", "Move your butt, you lazy sloth!" ) ) {
+		switch( select( "ฉันจะถอนหญ้าสีแดงให้คุณ", "ขยับก้นคุณขี้เกียจเฉื่อยชา!" ) ) {
 		case 1:
 			mes "[Sloth]";
-			mes "^4d4dffPluck 3 Red Grass and then collect 2 Red Herbs^000000 around here!";
+			mes "^4d4dffถอน 3 Red Grass แล้วรวบรวม 2 Red Herb^000000 แถวนี้!";
 			next;
 			mes "[Sloth]";
-			mes "This may be of great help to you!";
-			mes "Well, then. I'm counting on you.";
+			mes "นี่อาจจะเป็นประโยชน์อย่างมากสำหรับคุณ!";
+			mes "ถ้างั้นฉันจะนับให้คุณ";
 			next;
 			mes "[Sloth]";
-			mes "I'll rest here to make my upset stomach feel better.";
+			mes "ฉันจะพักที่นี่เพื่อทำให้กระเพาะอาหารของฉันรู้สึกดีขึ้น";
 			setquest 7719;// Time to Digest
 			close;
 		case 2:
@@ -592,37 +593,37 @@ lasa_fild01,132,374,3	script	Sloth#doram	4_DR_KID_01,3,3,{
 	case 1:
 		if (checkquest(7719,HUNTING) != 2) {
 			mes "[Sloth]";
-			mes "What I want isn't too much.";
-			mes "Just ^4d4dffpluck the Red Grass and collect 2 Red Herbs^000000 around here. That's all.";
+			mes "สิ่งที่ฉันต้องการไม่มากเกินไป";
+			mes "แค่^4d4dffถอน Red Grass และรวบรวม 2 Red Herb^000000 รอบๆ ที่นี่นั่นคือทั้งหมด";
 			next;
 			mes "[Sloth]";
-			mes "They grow too fast and keep growing no matter how many times I pluck them. I've had it...";
+			mes "พวกมันโตเร็วเกินไปและเติบโตต่อไปไม่ว่าข้าจะถอนมันกี่ครั้งข้าก็มี ... ";
 			close;
 		}
 		if (countitem(507) < 2) {
 			mes "[Sloth]";
-			mes "What I want isn't too much.";
-			mes "Just ^4d4dffpluck the Red Grass and collect 2 Red Herbs^000000 around here. That's all.";
+			mes "สิ่งที่ฉันต้องการไม่มากเกินไป";
+			mes "แค่^4d4dffถอน Red Grass และรวบรวม 2 Red Herb^000000 รอบๆ ที่นี่นั่นคือทั้งหมด";
 			close;
 		}
 		mes "[Sloth]";
-		mes "Oh...This aroma!";
-		mes "You plucked the Red Herbs just right.";
+		mes "โอ้ ... กลิ่นนี้!";
+		mes "เจ้าถอนสมุนไพรแดงออกมาแล้ว";
 		next;
 		mes "[Sloth]";
-		mes "I'll munch on them like twigs and digest them just like that. Meow!";
+		mes "ข้าจะแทะเล็มพวกมันอย่างกิ่งไม้และย่อยพวกมันแบบนั้นเหรอ!";
 		next;
 		mes "[Sloth]";
-		mes "I'll give you the left-over herbs as a reward.";
-		mes "Chew them up and ^4d4dffyour HP will be restored.^000000";
+		mes "ข้าจะมอบสมุนไพรที่เหลือไว้ให้ท่านเป็นรางวัล";
+		mes "ให้เคี้ยวมันขึ้นมาและ^4d4dff HP ของคุณจะถูกกู้คืน^000000";
 		next;
 		mes "[Sloth]";
-		mes "If you ask Haru, she'll tell you how to turn them into a potion with more effects.";
+		mes "ถ้าคุณถาม Haru เธอจะบอกวิธีเปลี่ยนมันให้เป็นยาที่มีเอฟเฟกต์มากขึ้น";
 		next;
 		mes "[Sloth]";
-		mes "Anyway, I'm the cat who knows how to return the favor.";
-		mes "This is for you.";
-		mes "Stay out of trouble, now.";
+		mes "อย่างไรก็ตามข้าเป็นแมวที่รู้วิธีคืนความโปรดปราน";
+		mes "นี่สำหรับคุณ";
+		mes "อยู่ห่างจากปัญหาตอนนี้";
 		completequest 7719;
 		delitem 507,1;// Red Herb
 		getitem 11601,20;// Delicious Anchovy
@@ -632,14 +633,14 @@ lasa_fild01,132,374,3	script	Sloth#doram	4_DR_KID_01,3,3,{
 		close;
 	case 2:
 		mes "[Sloth]";
-		mes "I'm feeling... so tired...";
+		mes "ฉันรู้สึก ... เหนื่อยจัง ... ";
 		close;
 	}
 OnTouch:
 	if (isbegin_quest(7719) == 2)
-		npctalk "~Growling~", "", bc_self;
+		npctalk "~คำราม~", "", bc_self;
 	else
-		npctalk "Hey, there! Get over here for a minute!", "", bc_self;
+		npctalk "สวัสดี! มาที่นี่สักครู่!", "", bc_self;
 	end;
 OnInit:
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(7719)" );
@@ -649,11 +650,11 @@ OnInit:
 lasa_fild01,103,344,3	script	Well-known Troublemaker	4_DR_KID_01,3,3,{
 	if (Class != Job_Summoner) {
 		mes "[Well-known Troublemaker]";
-		mes "What brought you all the way up here, human?";
-		mes "Be gone! Be gone, meeow!";
+		mes "มนุษย์นำอะไรมาถึงที่นี่มนุษย์?";
+		mes "ไปแล้ว! ไปแล้วไปเลย meeow!";
 		next;
 		mes "[Well-known Troublemaker]";
-		mes "This is like a gateway. It cannot and should not be tainted by humans!";
+		mes "นี่มันเหมือนเกตเวย์มันไม่สามารถและไม่ควรเสียกับมนุษย์!";
 		close;
 	}
 	switch( isbegin_quest(7721) ) {

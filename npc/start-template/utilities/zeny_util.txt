@@ -1,0 +1,49 @@
+function	script	IsZenyEnough	{
+	.@zeny = getarg(0,0);
+	.@npc_name$ = getarg(1,"[ระบบ]");
+	.@is_paid = getarg(2,0);
+	if(Zeny >= .@zeny){
+		if(.@is_paid)
+		callfunc("UseZeny",.@zeny);
+		return true;
+	}
+	else{
+		freeloop(0);
+		mes "";
+		clear;
+		mes .@npc_name$;
+		mes "^E02D2Dต้องการ: " + .@zeny + " Zeny^000000";
+		callfunc("MyZeny");
+		cutin "",255;
+		close2;
+		end;
+	}
+}
+
+function	script	MyZeny	{
+	.@is_not_use_mes = getarg(0,0);
+	if(!.@is_not_use_mes)
+	mes "^69149eคุณมี: " + Zeny + " Zeny^000000";
+	dispbottom "คุณมี: " + Zeny + " Zeny";
+	return;
+}
+
+function	script	AddZeny	{
+	if(getarg(2,0)==0)
+	specialeffect2 18;
+	.@zeny = getarg(0,0);
+	Zeny += .@zeny;
+	if(getarg(1,0)==0)
+	callfunc("MyZeny",1);
+	return;
+}
+
+function	script	UseZeny	{
+	if(getarg(2,0)==0)
+	specialeffect2 18;
+	.@zeny = getarg(0,0);
+	Zeny -= .@zeny;
+	if(getarg(1,0)==0)
+	callfunc("MyZeny");
+	return;
+}

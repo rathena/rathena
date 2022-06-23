@@ -33,90 +33,60 @@
 //============================================================
 hugel,189,143,5	script	Young Man	898,{
 	mes "[Young Man]";
-	mes "Huh. So that giant";
-	mes "air pouch can make";
-	mes "people float in midair?";
-	mes "Would filling my tummy";
-	mes "with air work the same way?";
+	mes "หึ..ซองอากาศขนาดยักษ์นั่นทำให้คนลอยไปกลางอากาศได้เหรอ?";
+	mes "เติมลมให้เต็มหน้าท้องเหมือนเดิมไหม";
 	close;
 }
 
 hugel,126,151,3	script	Emily	90,{
 	mes "[Emily]";
-	mes "I feel so blessed to";
-	mes "live in this quant, little";
-	mes "town. It's so beautiful, and";
-	mes "everyone here is so nice~";
+	mes "ฉันรู้สึกมีความสุขมากที่ได้ใช้ชีวิตในเมืองเล็ก ๆ แห่งนี้";
+	mes "สวยมากทุกคนที่นี่น่ารักมาก~";
 	next;
 	mes "[Emily]";
-	mes "For some reason, my older";
-	mes "sister wants to move out of";
-	mes "Hugel as soon as she can. She";
-	mes "Says that she's getting crept";
-	mes "out by the people that live here.";
-	mes "Don't you think that sounds weird?";
+	mes "ด้วยเหตุผลบางอย่างพี่สาวของฉันต้องการย้ายออกจาก Hugel โดยเร็วที่สุด";
+	mes "เธอบอกว่าเธอถูกคนที่อาศัยอยู่ที่นี่";
+	mes "คุณไม่คิดว่ามันฟังดูแปลกๆ เหรอ?";
 	close;
 }
 
 hugel,86,165,5	script	Kayplas	896,{
 	mes "[Kayplas]";
-	mes "Ooh, I really want to";
-	mes "have that red bottle.";
-	mes "I should ask my mom";
-	mes "to buy me one. It doesn't";
-	mes "look too expensive, does it?";
+	mes "โอฉันอยากได้ขวดสีแดงนั่นจริงๆ";
+	mes "ขอแม่ซื้อให้หน่อย";
+	mes "มันดูไม่แพงเกินไปใช่ไหม";
 	close;
 }
 
 hugel,71,197,3	script	Lisa	90,{
 	mes "[Lisa]";
-	mes "Hugel is a pretty";
-	mes "small, homely village.";
-	mes "Everyone knows everyone,";
-	mes "everybody knows what";
-	mes "everybody else is doing.";
-	mes "It's so suffocating!";
+	mes "Hugel เป็นหมู่บ้านเล็ก ๆ ที่อบอุ่นเหมือนอยู่บ้าน";
+	mes "ทุกคนรู้ทุกคนทุกคนรู้ว่าคนอื่นกำลังทำอะไร";
+	mes "มันหายใจไม่ออก!";
 	next;
 	mes "[Lisa]";
-	mes "There's no privacy in";
-	mes "small towns. Someday,";
-	mes "I wanna go out and";
-	mes "live in the big city~";
+	mes "ในเมืองเล็ก ๆ ไม่มีความเป็นส่วนตัวสักวันฉันอยากออกไปใช้ชีวิตในเมืองใหญ่ ~";
 	close;
 }
 
 hugel,169,112,5	script	Old Nikki	892,{
 	mes "[Old Nikki]";
-	mes "You must not be from";
-	mes "around here. Ah, you're";
-	mes "an adventurer, right? Do";
-	mes "you know how I could tell?";
+	mes "คุณต้องไม่มาจากแถว ๆ นี้อ่าคุณเป็นนักผจญภัยใช่ไหมคุณรู้ไหมว่าฉันจะบอกได้อย่างไร";
 	next;
 	mes "[Old Nikki]";
-	mes "It's because everyone";
-	mes "who's lived here starts";
-	mes "to look alike after a while.";
-	mes "And you certainly don't look";
-	mes "as old as us. Well, have";
-	mes "a nice day, adventurer~";
+	mes "เป็นเพราะทุกคนที่อาศัยอยู่ที่นี่เริ่มมีหน้าตาเหมือนกัน";
+	mes "และคุณดูไม่แก่เหมือนพวกเราอย่างแน่นอนขอให้มีความสุขในวันนี้นะนักผจญภัย ~";
 	close;
 }
 
 hugel,175,115,5	script	Marius	897,{
 	mes "[Marius]";
-	mes "Yes, I'm an old man, but";
-	mes "I can lick a whippersnapper";
-	mes "like you any day of the week!";
-	mes "You know, Hugel's got a longer";
-	mes "life expectancy than all the other towns. You wanna know why?";
+	mes "ใช่ฉันแก่แล้ว แต่ฉันสามารถเลียนกแสกอย่างคุณได้ทุกวัน!";
+	mes "คุณรู้ไหมว่า Hugel มีอายุขัยยืนยาวกว่าเมืองอื่น ๆ ทั้งหมดคุณอยากรู้ไหมว่าทำไม";
 	next;
 	mes "[Marius]";
-	mes "It's because the old";
-	mes "coots in this town refuse";
-	mes "to just lay down and die!";
-	mes "Now, c'mon! Lemme show";
-	mes "you how strong I am! Let's";
-	mes "wrestle or something, kid~";
+	mes "เป็นเพราะเจ้าตูบตัวเก่าในเมืองนี้ไม่ยอมนอนตาย!";
+	mes "ตอนนี้ c'mon! Lemme แสดงให้คุณเห็นว่าฉันแข็งแกร่งแค่ไหนมาดิ้นหรืออะไรเด็ก ~";
 	close;
 }
 
@@ -124,82 +94,57 @@ hugel,175,115,5	script	Marius	897,{
 //============================================================
 hu_in01,111,386,4	script	Chris	86,{
 	mes "[Chris]";
-	mes "You know, the people don't";
-	mes "fight harmful monsters, they";
-	mes "just protect themselves by";
-	mes "equipping armor. That's";
-	mes "just the way they are.";
+	mes "คุณรู้ไหมว่าผู้คนไม่ได้ต่อสู้กับสัตว์ประหลาดที่เป็นอันตรายพวกเขาแค่ปกป้องตัวเองด้วยการสวมชุดเกราะ";
+	mes "นั่นคือวิธีที่พวกเขาเป็น";
 	next;
 	mes "[Chris]";
-	mes "If you want to buy";
-	mes "some nicer armors,";
-	mes "then I suggest buying";
-	mes "some in a bigger city.";
+	mes "ถ้าคุณต้องการซื้อชุดเกราะที่ดีกว่านี้ฉันขอแนะนำให้ซื้อในเมืองที่ใหญ่กว่า";
 	close;
 }
 
 hu_in01,23,311,4	script	Party Supplies Shop	898,{
 	mes "[Shopkeeper]";
-	mes "Welcome to the party supplies";
-	mes "shop!";
-	mes "Why don't you enjoy some";
-	mes "spectacular fireworks with your";
-	mes "friends?";
-	mes "We can provide you with 5 of them";
-	mes "at 500 zeny.";
+	mes "ยินดีต้อนรับสู่ร้านขายอุปกรณ์จัดงานเลี้ยง";
+	mes "ทำไมคุณไม่สนุกกับดอกไม้ไฟกับเพื่อนๆ ดูล่ะ";
+	mes "เราสามารถให้คุณได้ 5 ตัวในราคา 500 zeny";
 	next;
-	switch (select("Buy:Cancel")) {
+	switch (select("ซื้อ:ยกเลิก")) {
 		case 1:
 			if (Zeny < 500) {
 				mes "[Shopkeeper]";
-				mes "I am sorry, but you don't have";
-				mes "enough money~";
+				mes "ฉันขอโทษ แต่คุณมีเงินไม่พอ ~";
 				close;
 			}
 			set Zeny,Zeny-500;
 			getitem 12018,5;	// Fire_Cracker
 			mes "[Shopkeeper]";
-			mes "Here you go!";
-			mes "Have fun with them!";
+			mes "จัดไป!";
+			mes "สนุกไปกับมัน!";
 			close;
 		case 2:
 			mes "[Shopkeeper]";
-			mes "Thank you, please come again.";
+			mes "ขอบคุณครับมาใหม่";
 			close;
 	}
 }
 
 hu_in01,18,94,0	script	A Part-Timer#1	49,{
 	mes "[Luda]";
-	mes "Welcome to the";
-	mes "Shrine Expedition Office.";
-	mes "I'm Luda, a part-time";
-	mes "assistant. My job is to";
-	mes "keep this office neat and";
-	mes "clean, but look at this place!";
+	mes "ยินดีต้อนรับสู่สำนักงานสำรวจศาลเจ้า";
+	mes "ฉันชื่อลูดาเป็นผู้ช่วยนอกเวลา";
+	mes "งานของฉันคือดูแลสำนักงานนี้ให้เรียบร้อยและสะอาด แต่ดูที่นี่สิ!";
 	next;
 	mes "[Luda]";
-	mes "Still, I think I can";
-	mes "handle this difficult task~";
-	mes "This room is the office for";
-	mes "the Schwarzwald Republic team,";
-	mes "and the other is for the Rune-";
-	mes "Midgarts Kingdom team.";
+	mes "ยังฉันคิดว่าฉันสามารถรับมือกับงานที่ยากนี้ได้ ~";
+	mes "ห้องนี้เป็นห้องทำงานของทีม Schwarzwald Republic ส่วนอีกห้องเป็นของทีม Rune-Midgarts Kingdom";
 	next;
 	mes "[Luda]";
-	mes "I have to clean both rooms,";
-	mes "so they keep me pretty busy.";
-	mes "Why don't you volunteer for";
-	mes "their expedition? I know they";
-	mes "can't really pay you, but it's";
-	mes "a great chance to explore~";
+	mes "ฉันต้องทำความสะอาดทั้งสองห้องดังนั้นพวกเขาจึงค่อนข้างยุ่ง";
+	mes "ทำไมคุณไม่เป็นอาสาสมัครในการเดินทางของพวกเขาฉันรู้ว่าพวกเขาไม่สามารถจ่ายเงินให้คุณได้จริงๆ แต่มันเป็นโอกาสที่ดีในการสำรวจ~";
 	close;
 }
 
 hu_in01,26,77,4	script	A Part-Timer#2	50,{
-	mes "^3355FFThis part-timer is";
-	mes "completely engrossed";
-	mes "in his task of organizing";
-	mes "files and books.^000000";
+	mes "^3355FFพาร์ทไทม์เมอร์นี้มีส่วนร่วมอย่างสมบูรณ์ในงานของเขาในการจัดระเบียบไฟล์และหนังสือ^000000";
 	close;
 }

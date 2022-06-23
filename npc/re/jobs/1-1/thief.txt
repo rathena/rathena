@@ -17,18 +17,18 @@ moc_prydb1,39,129,2	script	Thief Guide#thief	69,{
 		if (ADVJOB == Job_Assassin_Cross || ADVJOB == Job_Stalker) {
 			if (Class == Job_Novice_High) {
 				mes "[Thief Guide]";
-				mes "Huh? Do I know you? It's creepy that you seem so familiar. You don't have a twin, do you?";
+				mes "Huh? ฉันรู้จักคุณหรือเปล่ามันดูน่าขนลุกจนคุณคุ้นเคยคุณไม่มีคู่คุณใช่ไหม";
 				next;
 				if (!callfunc("F_CanChangeJob")) {
 					mes "[Thief Guide]";
-					mes "What, do you want to be a Thief? I'm sorry, but you look like you need more training.";
+					mes "เจ้าต้องการเป็นโจรหรือเปล่าข้าขอโทษ แต่ดูเหมือนว่าคุณต้องฝึกฝนมากกว่านี้";
 					next;
 					mes "[Thief Guide]";
-					mes "Take your time and learn all the Basic Skills, will you? Well then, see you later~!";
+					mes "ใช้เวลาของคุณและเรียนรู้ทักษะพื้นฐานทั้งหมดใช่มั้ยถ้างั้นมาเจอกันทีหลัง ~!";
 					close;
 				}
 				mes "[Thief Guide]";
-				mes "Well, I got this feeling like you've been through a lifetime of fighting, so I'm promoting you to a Thief right this minute. I better give you tough guys what you want...";
+				mes "เอาล่ะฉันรู้สึกแบบนี้มาตลอดชีวิตของการต่อสู้ดังนั้นฉันจึงกำลังโปรโมตคุณให้กับ Thief ในนาทีนี้ฉันจะให้สิ่งที่คุณต้องการแก่คุณ... ";
 				next;
 				skill "NV_TRICKDEAD",0,SKILL_PERM;
 				jobchange Job_Thief_High;
@@ -37,119 +37,119 @@ moc_prydb1,39,129,2	script	Thief Guide#thief	69,{
 				skill "TF_PICKSTONE",1,SKILL_PERM;
 				skill "TF_THROWSTONE",1,SKILL_PERM;
 				mes "[Thief Guide]";
-				mes "Since you've become a Thief, live as a Thief. Now, go for it! Next~";
+				mes "เมื่อเจ้าเป็น Thief จงใช้ชีวิตเหมือน Thief จงไปหามันต่อไป!~";
 				close;
 			}else{
 				mes "[Thief Guide]";
 				if (Sex == SEX_MALE)
-					mes "Hey, dude.";
+					mes "เฮ้เพื่อน";
 				else
-					mes "Hey, baby~";
+					mes "เฮ้ที่รัก~";
 				close;
 			}
 		}else{
 			mes "[Thief Guide]";
 			if (Sex == SEX_MALE)
-				mes "Hey, dude.";
+				mes "เฮ้เพื่อน";
 			else
-				mes "Hey, baby.";
-			mes "...Hey! You look too goody-goody to want to be a Thief!! Now scram, I'm busy. Next!";
+				mes "เฮ้ที่รัก";
+				mes "... เฮ้! คุณดูดีเกินไปแล้ว - ดีเกินกว่าที่จะต้องการเป็นโจร !! ตอนนี้คุณกำลังยุ่งอยู่กับการต่อไป!";
 			close;
 		}
 	}
 	if(q_job_thief == 1) {
 		mes "[Thief Guildsman]";
-		mes "Ehh... Seems like a beloved "+(Sex == SEX_MALE?"son":"daughter")+" of a rich family, but why are you here in this dirty place?";
+		mes "อ๊ะ ... ดูเหมือนคนที่รัก" + (Sex == SEX_MALE? "ลูกชาย": "ลูกสาว") + "ของครอบครัวที่ร่ำรวย แต่ทำไมคุณถึงมาอยู่ที่นี่ในที่สกปรกแห่งนี้";
 		next;
 		mes "[Thief Guildsman]";
-		mes "Well, I'm not in charge of making you a Thief. I just accept applications, get it?";
-		mes "If you want to become a Thief, ask the sharp-eyed guy next to me.";
+		mes "เอาล่ะฉันไม่ได้คิดที่จะทำให้เจ้าเป็นขโมยฉันแค่ยอมรับแอพพลิเคชั่นเอามาใช่ไหม";
+		mes "ถ้าเจ้าอยากเป็นโจรให้ถามคนที่มีตาแหลมข้างข้า";
 		close;
 	}
 	mes "[Thief Guildsman]";
 	if(BaseJob != Job_Novice) {
 		if(BaseJob == Job_Thief) {
-			mes "Hey~ if you have any trouble, get it out to me anytime, huh?";
+			mes "เฮ้ ~ ถ้าเจ้ามีปัญหาอะไรให้ฉันออกไปได้ทุกเวลาเหรอ?";
 			close;
 		}else{
 			mes "What the heck...?";
 			if(Sex == SEX_MALE) {
-				mes "Huh... you are a "+jobname(Class)+", blockhead!";
+				mes "Huh... คุณคือ" + jobname(Class) + ", blockhead!";
 				next;
 				mes "[Thief Guildsman]";
-				mes "Hey, brother.";
+				mes "เฮ้พี่ชาย";
 			}else{
 				next;
 				mes "[Thief Guildsman]";
-				mes "Hey, lady.";
+				mes "เฮ้ผู้หญิง";
 			}
-			mes "Why are you here? Go back to your place~ go back~~";
+			mes "เจ้ามาที่นี่ทำไมกลับไปยังที่ของเจ้า~ กลับไป~~";
 			close;
 		}
 	}
-	mes "Ehh... Seems like a beloved "+(Sex == SEX_MALE?"son":"daughter")+" of a rich family, but why are you here in this dirty place?";
+	mes "อ๊ะ... ดูเหมือนคนที่รัก" + (Sex == SEX_MALE? "ลูกชาย": "ลูกสาว") + "ของครอบครัวที่ร่ำรวย แต่ทำไมคุณถึงมาอยู่ที่นี่ในที่สกปรกแห่งนี้";
 	next;
-	if(select("I want to be a Thief.:Nothing.") == 2) {
+	if(select("ฉันอยากเป็นโจร:ไม่มีอะไรเลย") == 2) {
 		mes "[Thief Guildsman]";
-		mes "You know you cannot be a thief without an application...";
-		mes "What's on your mind...?";
+		mes "คุณรู้ว่าคุณไม่สามารถเป็นขโมยได้หากไม่มีใบสมัคร ... ";
+		mes "คุณคิดอะไรอยู่ ... ?";
 		close;
 	}
 	mes "[Thief Guildsman]";
-	mes "Well, are you that proud of it?";
-	mes "You're telling me so proudly that you want to be a Thief! Why don't you go to all the villages and advertise yourself for being a thief?";
-	mes "'Ha ha ha! Go put up a banner that says 'I will be a proud thief who steals other people's stuff.'";
+	mes "เอ่อเจ้าภูมิใจขนาดนั้นเหรอ?";
+	mes "เจ้าบอกข้าอย่างภูมิใจว่าเจ้าอยากเป็นขโมย! ทำไมเจ้าไม่ไปที่หมู่บ้านทั้งหมดและโฆษณาตัวเองเพื่อเป็นขโมย";
+	mes "'Ha ha ha! Go ติดป้ายที่บอกว่า' ฉันจะเป็นขโมยที่ภูมิใจที่ขโมยสิ่งของของคนอื่น '";
 	next;
 	mes "[Thief Guildsman]";
-	mes "Do you want to be a thief so badly?";
+	mes "เจ้าต้องการที่จะเป็นโจรอย่างเลวร้ายงั้นเหรอ?";
 	next;
-	switch(select("Yes.:No.:How about you?")) {
+	switch(select("ใช่แล้ว:ไม่เลย:แล้วคุณล่ะ?")) {
 	case 1:
 		mes "[Thief Guildsman]";
-		mes "Oh, do you...? Huh.. well... I do live and learn to see strange people like you.";
+		mes "โอ้, คุณ...? Huh..ดี... ฉันมีชีวิตอยู่และเรียนรู้ที่จะเห็นคนแปลกหน้าเช่นคุณ";
 		next;
 		break;
 	case 2:
 		mes "[Thief Guildsman]";
-		mes "Then why are you here? Do you think you can become a thief so easily?";
+		mes "ถ้าอย่างนั้นทำไมเจ้ามาที่นี่ทำไมเจ้าคิดว่าเจ้าสามารถกลายเป็นขโมยได้อย่างง่ายดายเหรอ?";
 		next;
 		break;
 	case 3:
 		mes "[Thief Guildsman]";
-		mes "Eh..? me? me?";
-		mes "Well... I just fit well to being a thief... characteristically... I don't mind this silly matter.";
+		mes "เอ๊ะ...? ฉัน? ฉัน?";
+		mes "อืม...ฉันแค่พอดีที่จะเป็นโจร...โดยเฉพาะ...ฉันไม่สนใจเรื่องโง่ ๆ แบบนี้";
 		next;
 		break;
 	}
 	mes "[Thief Guildsman]";
-	mes "Anyway, in the outside world, never say that you want to be a Thief!!";
+	mes "อย่างไรก็ตามในโลกภายนอกอย่าพูดว่าคุณต้องการเป็นโจร !!";
 	next;
 	mes "[Thief Guildsman]";
-	mes "So, do you want to apply for being a Thief?";
+	mes "งั้นคุณต้องการสมัครเพื่อเป็นโจรหรือไม่?";
 	next;
 	if(select("Yes, I do.:No.") == 2) {
 		mes "[Thief Guildsman]";
-		mes "Well... do what you want to do~ Go your way~";
+		mes "เอ่อ...ทำในสิ่งที่เจ้าอยากจะทำ~ไปตามทาง~";
 		close;
 	}
 	mes "[Thief Guildsman]";
-	mes "Alright, tell me your name. Huh? What?";
-	mes ""+strcharinfo(0)+". So "+strcharinfo(0)+", right...?";
+	mes "ได้โปรดบอกชื่อของคุณหน่อยสิอะไรนะ?";
+	mes "" + strcharinfo(0) + " ดังนั้น " + strcharinfo(0) + ", ขวา ... ?";
 	next;
 	if (!callfunc("F_CanChangeJob")) {
 		mes "[Thief Guildsman]";
-		mes "I can see your strong will to become a Thief......";
-		mes "But only with your will, you cannot make it in a real fight, can you?";
-		mes "So go and reach at least Basic Skill Level 9.";
+		mes "ข้าเห็นความตั้งใจอันแรงกล้าของคุณที่จะเป็นจอมโจร ...... ";
+		mes "แต่ด้วยความตั้งใจของเจ้าเท่านั้นเจ้าไม่สามารถสู้มันได้จริงหรือ?";
+		mes "จงไปให้ถึงระดับทักษะขั้นพื้นฐานอย่างน้อย 9";
 		close;
 	}
 	mes "[Thief Guildsman]";
-	mes "Hmm.... I found your interesting criminal records from the data of the detective agency. Well you seem to have what it takes to be a good thief.";
-	mes ""+strcharinfo(0)+". I now declare that you have passed the job interview!";
+	mes "อืม .... ฉันพบประวัติอาชญากรรมที่น่าสนใจของคุณจากข้อมูลของสำนักงานนักสืบคุณดูเหมือนจะมีสิ่งที่จะเป็นขโมยที่ดี";
+	mes "" + strcharinfo(0) + "ตอนนี้ฉันประกาศว่าคุณผ่านการสัมภาษณ์อาชีพแล้ว!";
 	next;
 	mes "[Thief Guildsman]";
-	mes "Well, I'm not in charge of making you a Thief. I just accept applications, get it?";
-	mes "If you want to become a Thief, ask the guy next to me.";
+	mes "เอาล่ะฉันไม่ได้คิดที่จะทำให้เจ้าเป็นขโมยฉันแค่ยอมรับแอพพลิเคชั่นเอามาใช่ไหม";
+	mes "ถ้าคุณอยากเป็นโจรให้ถามคนที่อยู่ข้างๆฉัน";
 	set q_job_thief,1;
 	close;
 }
@@ -157,46 +157,46 @@ moc_prydb1,39,129,2	script	Thief Guide#thief	69,{
 moc_prydb1,42,133,2	script	Thief Guildsman#thief	118,{
 	if(q_job_thief == 1) {
 		mes "[Thief Guildsman]";
-		mes "Alright. You must have passed the job interview, huh?";
-		mes "Good. I'll accept you.";
-		mes "Let's begin the job-changing ceremony of our guild!";
+		mes "ได้เลยเจ้าต้องผ่านการสัมภาษณ์อาชีพเหรอ?";
+		mes "ดีฉันจะยอมรับคุณ";
+		mes "มาเริ่มพิธีเปลี่ยนอาชีพของกิลด์ของเรา!";
 		next;
-		mes "[Commander of Thief Guild]";
-		mes "'"+strcharinfo(0)+".'";
-		mes "'For those who are ready, the moonlight shall open the way. Now you are fully ready, I now officially allow you to become a member of the Thief Guild.'";
+		mes "[Thief Guildsman]";
+		mes "'" + strcharinfo(0) + ".'";
+		mes "'สำหรับผู้ที่มีความพร้อมแสงจันทร์จะเปิดทางตอนนี้คุณพร้อมแล้วตอนนี้ฉันอนุญาตให้คุณเป็นสมาชิกของสมาคมโจรได้อย่างเป็นทางการ'";
 		callfunc "Job_Change",Job_Thief;
 		set q_job_thief,0;
 		getitem 13041,1;	// N_Main_Gauche
 		next;
 		mes "[Commander of Thief Guild]";
-		mes "'Congratulations on becoming a Thief.'";
-		mes "'From now on, keep the rules of our guild and be an honorable member.'";
-		mes "'If you bring us any disgrace by breaking our rules, you better watch your back.'";
-		mes "'Anyway, I expect you to be a great thief.'";
+		mes "'ขอแสดงความยินดีกับการเป็นโจร'";
+		mes "'จากนี้ไปให้รักษากฎของกิลด์ของเราและเป็นสมาชิกที่มีเกียรติ'";
+		mes "'ถ้าคุณนำความอับอายมาให้เราด้วยการทำผิดกฎของเราคุณควรระวังหลังเจ้าด้วย'";
+		mes "'อย่างไรก็ตามข้าหวังว่าเจ้าจะเป็นขโมยที่ยิ่งใหญ่'";
 		next;
 		mes "[Brad]";
-		mes "Heee~Yaaaa~! Congratulations! My friend.";
-		mes "My name is 'Brad'. I'm in charge of human resources here.";
-		mes "I'm not sure for now but you'll have more chances to see me later on.";
+		mes "Heee ~ Yaaaa ~! ขอแสดงความยินดีด้วยเพื่อนของฉัน";
+		mes "ฉันชื่อ 'Brad' ฉันรับผิดชอบทรัพยากรมนุษย์ที่นี่";
+		mes "ตอนนี้ฉันยังไม่แน่ใจ แต่คุณจะมีโอกาสได้พบฉันอีกในภายหลัง";
 		next;
 		mes "[Brad]";
-		mes "Okay, I've done what I can do to you, so go on your way. I'm quite a busy man.";
-		mes "See you again.";
+		mes "โอเคฉันได้ทำในสิ่งที่ฉันสามารถทำกับคุณได้แล้วไปเถอะฉันเป็นคนค่อนข้างยุ่ง";
+		mes "แล้วเจอกันอีก";
 		close;
 	}
 	if(BaseJob != Job_Novice) {
 		if(BaseJob == Job_Thief) {
 			mes "[Brad]";
-			mes "I don't have any special events now. So go on your way and come back later.";
+			mes "ตอนนี้ฉันไม่มีกิจกรรมพิเศษดังนั้นไปทางแล้วกลับมาใหม่ในภายหลัง";
 		}else{
 			mes "[Thief Guildsman]";
-			mes "Hey~ Hey~ You're not a novice or a thief!";
-			mes "What are you doing here? You're not welcome to make this place your home~ Hweeeee~ Get outta here~";
+			mes "เฮ้~ เฮ้~ เจ้าไม่ใช่มือใหม่หรือขโมย!";
+			mes "เจ้ามาทำอะไรที่นี่? เจ้าไม่ยินดีที่จะทำให้ที่นี่เป็นบ้านของเจ้า~ Hweeeee~ ออกไปที่นี่~";
 		}
 		close;
 	}
 	mes "[Thief Guildsman]";
-	mes "Ho? Why is a novice like you visiting here?";
-	mes "If you are here to be a Thief, ask the nasty-tempered lady right next to me.";
+	mes "โฮทำไมเป็นสามเณรอย่างคุณที่มาที่นี่";
+	mes "ถ้าเจ้าอยู่ที่นี่เพื่อเป็นขโมยจงถามผู้หญิงที่น่ารังเกียจที่อยู่ข้างๆข้า";
 	close;
 }

@@ -16,3 +16,5 @@
 mag_dun01,126,66,0	warp	mag01-yunfild	1,1,yuno_fild03,34,139
 mag_dun01,242,241,0	warp	mag01-02	1,1,mag_dun02,47,30
 mag_dun02,47,28,0	warp	mag02-01	1,1,mag_dun01,242,239
+mag_dun02,245,68,0	warp	mag02-03	1,1,mag_dun03,47,34
+mag_dun03,47,30,0	warp	mag03-02	1,1,mag_dun02,241,69

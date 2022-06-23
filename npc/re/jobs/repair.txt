@@ -13,6 +13,7 @@
 //= 1.0 First version.
 //= 1.1 Added GM management function. [Euphy]
 //= 2.0 Prontera castle map changed in ep16.1 [Capuche]
+//= แปลไทยโดย Playragnarok
 //============================================================ 
 
 // Job Variables
@@ -65,55 +66,55 @@ Expanded Super Novice: EXSUPNOV_Q -> job_super2
 //============================================================
 prt_in,38,104,4	script	Valerie	811,{
 	if (checkweight(1201,1) == 0) {
-		mes "I think you have too many items. Let's try it again after you take some out.";
+		mes "ข้าคิดว่าเจ้ามีไอเทมมากเกินไป ลองนำไอเทมบางอย่างออกไป";
 		close;
 	}
 	if (MaxWeight - Weight < 1000) {
-		mes "You're overweight with items so I don't think we can proceed any further. Challenge me after you've taken some items off.";
+		mes "ข้าคิดว่าเจ้ามีน้ำหนักไอเทมมากเกินไป ไม่สามารถดำเนินการต่อได้ ลองนำบางอย่างออก";
 		close;
 	}
 	mes "[Valerie]";
-	mes "I am Valerie; I help those with abnormalities. I am friends with Valkyrie.";
+	mes "ข้าคือ Valerie ข้าช่วยเหลือผู้มีความผิดปกติ ข้าเป็นเพื่อนกับ Valkyrie";
 	next;
 	mes "[Valerie]";
-	mes "If both abnormalities disappear then we must start the test over from scratch. What would you like to do?";
+	mes "หากผิดปกติทั้งสองหายไปเราต้องเริ่มการทดสอบตั้งแต่เริ่ม คุณอยากทำอะไร?";
 	next;
-	switch(select("I don't have any abnormalities:I think my body has some abnormalities")) {
+	switch(select("ฉันไม่ได้มีความผิดปกติใดๆ:ฉันคิดว่า ร่างกาย ฉันผิดปกติ")) {
 	case 1:
 		mes "[Valerie]";
-		mes "That's a relief. Then please take care.";
+		mes "แค่นั่นข้าก็โล่งอกแล้ว ดูแลตัวเองด้วยล่ะ";
 		close;
 	case 2:
 		mes "[Valerie]";
-		mes "Are you sure you want to intialize it and start over?";
+		mes "เจ้าแน่ใจหรือไม่ ว่าต้องการเริ่มต้นใหม่?";
 		next;
-		if(select("Nope:Yes, I want to start completely over") == 1) {
+		if(select("ไม่:แน่นอน ข้าต้องการเริ่มต้นใหม่ทั้งหมด") == 1) {
 			mes "[Valerie]";
-			mes "I understand. I'll see you next time";
+			mes "ข้าเข้าใจแล้ว แล้วเจอกันใหม่";
 			close;
 		}
 		mes "[Valerie]";
-		mes "All items related to the existing conditions will disappear. Are you okay with this?";
+		mes "ไอเทมทั้งหมดที่เกี่ยวข้องกับเงื่อนไข ที่มีอยู่จะหายไป เจ้าโอเคกับเรื่องนี้หรือไม่?";
 		next;
-		if(select("Nope:Yes, I want to start completely over.") == 1) {
+		if(select("ไม่:แน่นอน ข้าต้องการเริ่มต้นใหม่ทั้งหมด") == 1) {
 			mes "[Valerie]";
-			mes "I understand. I'll see you next time.";
+			mes "ข้าเข้าใจแล้ว แล้วเจอกันใหม่";
 			close;
 		}
 		mes "[Valerie]";
-		mes "It seems that there are a sea of people who seemed to be cursed of not being able to get a significant other after going through with this. Are you still okay with this? ";
+		mes "ดูเหมือนว่าจะมีคนจำนวนมากที่ดูเหมือนจะถูกสาปไว้ ไม่สามารถหาคนที่ผ่านเรื่องนี้ได้ คุณโอเคหรือไม่? ";
 		next;
-		if(select("Nope:I still want to intialize.") == 1) {
+		if(select("ไม่:ข้า ยังต้องการเริ่มต้นใหม่") == 1) {
 			mes "[Valerie]";
-			mes "I understand. I will see you next time.";
+			mes "ข้าเข้าใจแล้ว แล้วเจอกันใหม่";
 			close;
 		}
 		mes "[Valerie]";
-		mes "In extreme cases, some become crippled and can get ulcers. Do you still want to intilize former processes?";
+		mes "ในกรณีนี้บางคนพิการหรือได้รับบาดแผล คุณคิดว่าไง?";
 		next;
-		if(select("Nope:Please intilize the former processes") == 1) {
+		if(select("ไม่:ได้โปรด เริ่มมันกันเลย") == 1) {
 			mes "[Valerie]";
-			mes "I understand. I will see you next time";
+			mes "ข้าเข้าใจแล้ว แล้วเจอกันใหม่";
 			close;
 		}
 		specialeffect2 EF_INVENOM;
@@ -122,13 +123,13 @@ prt_in,38,104,4	script	Valerie	811,{
 		// Warlock - quest items
 		if (isequipped(2796) || isequipped(2797)) {
 			mes "[Valerie]";
-			mes "Please unequip the Magical Stone or Magical Stone Ring and try again.";
+			mes "กรุณาถอด Magical Stone หรือ Magical Stone Ring แล้วลองอีกครั้ง";
 			close;
 		}
 		if (countitem(2796) || countitem(2797)) {
 			if (isequipped(2796) || isequipped(2797)) {
 				mes "[Valerie]";
-				mes "Please talk to me after your replace all Magical Stones.";
+				mes "กรุณาคุยกับข้าหลังจากที่คุณเปลี่ยน Magical Stones ทั้งหมดแล้ว";
 				close;
 			}
 			setarray .@items[0], 2796, 2797, 6152, 6151; //Magical_Stone,Magical_Stone_,Glittering_Crystal,Peice_Of_Great_Bradium
@@ -137,14 +138,14 @@ prt_in,38,104,4	script	Valerie	811,{
 					delitem .@items[.@i], countitem(.@items[.@i]);
 			}
 			mes "[Valerie]";
-			mes "You're carrying something that is unnecessary. I will sort it out for you.";
+			mes "เจ้าถือไอเทมที่ไม่จำเป็น เดี๋ยวข้าจัดการให้ใหม่";
 			close;
 		}
 
 		// Baby and third job characters meet no further conditions.
 		if (eaclass()&(EAJL_BABY|EAJL_THIRD)) {
 			mes "[Valerie]";
-			mes "I don't think you should have any further business with me.";
+			mes "ข้าคิดว่า เจ้าไม่มีธุระใดๆ กับข้าอีกแล้ว";
 			close;
 		}
 
@@ -152,10 +153,10 @@ prt_in,38,104,4	script	Valerie	811,{
 		if ((Class >= Job_Swordman && Class <= Job_Crusader2) && ADVJOB != 0) {
 			set ADVJOB,0;
 			mes "[Valerie]";
-			mes "You're carrying big karma- You should erase it.";
+			mes "เจ้ากำลังแบกกรรมอันยิ่งใหญ่ เจ้าควรวางมันลง";
 			next;
 			mes "[Valerie]";
-			mes "Please talk to me again as there could be additional problems.";
+			mes "โปรดพูดคุยกับข้าอีกครั้งเนื่องจากอาจมีปัญหาเพิ่มเติม";
 			close;
 		}
 
@@ -212,7 +213,7 @@ prt_in,38,104,4	script	Valerie	811,{
 			callsub L_Third, "job_soc", 12098, 12096, 12098;
 
 		mes "[Valerie]";
-		mes "I don't think you should have any further business with me.";
+		mes "ข้าไม่คิดว่าเจ้าจะมีธุระอะไรกับข้าอีก";
 		close;
 	}
 
@@ -222,10 +223,10 @@ L_Second:
 		if (checkquest(getarg(1)) == 2)
 			erasequest getarg(1);
 		mes "[Valerie]";
-		mes "I will help clear your problems for you that came from your former attempts.";
+		mes "ข้าจะช่วยเคลียร์ปัญหาของเจ้าให้กับเจ้าซึ่งมาจากความพยายามครั้งก่อนของเจ้า";
 		next;
 		mes "[Valerie]";
-		mes "Please talk to me again as there could be additional problems.";
+		mes "โปรดพูดคุยกับข้าอีกครั้งเนื่องจากอาจมีปัญหาเพิ่มเติม";
 		close;
 	} else
 		return;
@@ -246,17 +247,17 @@ L_Third:
 				erasequest getarg(4);
 		}
 		mes "[Valerie]";
-		mes "I will help clear your problems for you that came from your former attempts.";
+		mes "ข้าจะช่วยเคลียร์ปัญหาของเจ้าให้กับเจ้าซึ่งมาจากความพยายามครั้งก่อนของเจ้า";
 		next;
 		mes "[Valerie]";
-		mes "Please talk to me again as there could be additional problems.";
+		mes "โปรดพูดคุยกับข้าอีกครั้งเนื่องจากอาจมีปัญหาเพิ่มเติม";
 		close;
 	} else
 		return;
 }
 
 -	script	Valerie#sign	-1,{
-	mes "^ff00ffI couldn't pay the office rent so I am temporarily relocating to the building across from the Prontera Refinery.^000000";
+	mes "^ff00ffข้า ไม่สามารถจ่ายค่าเช่าสำนักงานได้ จึงย้ายไปอยู่ตรงข้ามโรงกลั่น Prontera ชั่วคราว^000000";
 	mes " ";
 	mes "^ff00ffValerie^000000";
 	close;

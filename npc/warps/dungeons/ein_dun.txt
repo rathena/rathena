@@ -22,3 +22,5 @@ ein_dun02,216,210,0	warp	EinCave01A_EinCave01B	1,1,ein_dun02,208,228
 ein_dun02,228,109,0	warp	EinCave02A_EinCave02B	1,1,ein_dun02,191,130
 ein_dun02,210,225,0	warp	EinCave01B_EinCave01A	1,1,ein_dun02,216,207
 ein_dun02,195,130,0	warp	EinCave02B_EinCave02A	1,1,ein_dun02,233,109
+ein_dun02,15,250,0	warp	ein_dun02-03	1,1,ein_dun03,268,278
+ein_dun03,268,283,0	warp	ein_dun03-02	1,1,ein_dun02,21,250

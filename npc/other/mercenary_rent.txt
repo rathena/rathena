@@ -30,20 +30,20 @@
 		if( compare( .@npc$,.@name$[.@type] ) ) break;
 	.@faith_merc = mercenary_get_faith(getd(.@faith$[.@type]));
 	mes "[Mercenary Manager]";
-	mes "Welcome to the";
-	mes .@name$[.@type] + " Mercenary Guild.";
-	mes "What can I do for you?";
+	mes "ยินดีต้อนรับสู่";
+	mes .@name$[.@type] + " สมาคมทหารรับจ้าง";
+	mes "ฉันจะทำอะไรให้คุณได้บ้าง";
 	next;
-	switch(select("Hire Mercenary:Mercenary Info:Nothing:10th Grade Mercenaries")) {
+	switch(select("จ้างทหารรับจ้าง:ข้อมูลทหารรับจ้าง:ไม่มีอะไร:ทหารรับจ้างเกรด 10")) {
 		case 1:
 			mes "[Mercenary Manager]";
-			mes "You want to hire a";
-			mes .@name$[.@type] + " Mercenary?";
-			mes "Which Grade were you";
-			mes "interested in hiring?";
+			mes "คุณต้องการจ้าง";
+			mes .@name$[.@type] + "Mercenary?";
+			mes "เจ้าอยู่ระดับไหน";
+			mes "สนใจจ้างงาน";
 			next;
 			for (.@i = 1; .@i <= 9; .@i++)
-				.@menu$ = .@menu$ + callfunc("F_GetNumSuffix",.@i) + " Grade " + .@name$[.@type] + " Mercenary:";
+				.@menu$ = .@menu$ + callfunc("F_GetNumSuffix",.@i) + " ทหารรับจ้างเกรด " + .@name$[.@type] + ":";
 			.@Grade = select(.@menu$);
 			.@BaseLevel = 5 + (.@Grade * 10);
 			.@BaseLevel = (.@val > 90)? 90 : .@BaseLevel;
@@ -51,159 +51,159 @@
 			setarray .@FaithCost[7], 50,100,300;
 			.@FaithCost = .@FaithCost[.@Grade];
 			mes "[Mercenary Manager]";
-			mes "So you want to hire a " + callfunc("F_GetNumSuffix",.@Grade);
-			mes "Grade " + .@name$[.@type] + " Mercenary?";
-			mes "You need to have attained";
-			mes "Base Level " + .@BaseLevel + " or higher, and";
-			mes "must pay the " + .@ZenyCost + ",000 zeny fee.";
+			mes "ดังนั้นคุณต้องการจ้าง" + callfunc("F_GetNumSuffix",.@Grade);
+			mes "ทหารรับจ้างเกรด " + .@name$[.@type] + "?";
+			mes "เจ้าต้องบรรลุ";
+			mes "ระดับเลเวล " + .@BaseLevel + " หรือสูงกว่าและ";
+			mes "ต้องจ่าย " + .@ZenyCost + ",000 zeny";
 			next;
-			if(select("Yes:No") == 2) {
+			if(select("ตกลง:ไม่มีอะไร") == 2) {
 				mes "[Mercenary Manager]";
-				mes "Oh, really? Well, now";
-				mes "might not be a good time";
-				mes "for you to consider hiring";
-				mes "a Mercenary, but please feel";
-				mes "free to come back if your";
-				mes "needs change. Thank you~";
+				mes "โอ้จริงเหรอตอนนี้";
+				mes "อาจไม่ใช่ช่วงเวลาที่ดี";
+				mes "ให้เจ้าพิจารณาจ้าง";
+				mes "ทหารรับจ้างแต่ได้โปรดรู้สึก";
+				mes "ได้ฟรีถ้าเจ้ากลับมา";
+				mes "ต้องการการเปลี่ยนแปลงขอบคุณ ~";
 			}
 			else if(.@FaithCost && .@faith_merc < .@FaithCost) {
 				mes "[Mercenary Manager]";
-				mes "Oh... Your Loyalty rating";
-				mes "with the " + .@name$[.@type] + " Mercenary";
-				mes "Guild isn't high enough to";
-				mes "hire this Mercenary. Please";
-				mes "come back after you earn";
-				mes "" + .@FaithCost + " or more Loyalty with us.";
+				mes "โอ้ ... คะแนนความภักดีของคุณ";
+				mes "ด้วย " + .@name$[.@type] + " Mercenary";
+				mes "Guild ไม่สูงพอที่จะ";
+				mes "จ้างทหารรับจ้างคนนี้ได้โปรด";
+				mes "กลับมาหลังจากเจ้าได้รับ";
+				mes "" + .@FaithCost + "หรือมากกว่าความภักดีกับเรา";
 			}
 			else if (BaseLevel < .@BaseLevel) {
 				mes "[Mercenary Manager]";
-				mes "I'm sorry, but your Base";
-				mes "Level isn't high enough";
-				mes "to hire this Mercenary.";
-				mes "Please come back to me";
-				mes "once you reach Base Level " + .@BaseLevel + ".";
+				mes "ฉันขอโทษ แต่ฐานของคุณ";
+				mes "ระดับไม่สูงพอ";
+				mes "เพื่อจ้างทหารรับจ้างคนนี้";
+				mes "ได้โปรดกลับมาหาข้าด้วย";
+				mes "เมื่อคุณไปถึงระดับเลเวล" + .@BaseLevel + ".";
 			}
 			else if (Zeny < .@ZenyCost * 1000) {
 				mes "[Mercenary Manager]";
-				mes "I'm sorry, but you";
-				mes "don't have enough zeny";
-				mes "to hire this Mercenary.";
-				mes "The hiring fee is " + .@ZenyCost + ",000 zeny.";
+				mes "ฉันขอโทษ แต่คุณ";
+				mes "มี zeny ไม่พอ";
+				mes "เพื่อจ้างทหารรับจ้างคนนี้";
+				mes "ค่าจ้างคือ " + .@ZenyCost + ",000 zeny.";
 			}
 			else {
 				mes "[Mercenary Manager]";
-				mes "Great! Our Mercenaries";
-				mes "are sincere and devoted";
-				mes "to protecting their clients.";
-				mes "Summoned Mercenaries will";
-				mes "offer their support to you for";
-				mes "30 minutes. Take care now.";
+				mes "เยี่ยมมากทหารรับจ้างของเรา";
+				mes "จริงใจและทุ่มเท";
+				mes "เพื่อปกป้องลูกค้า";
+				mes "ทหารรับจ้างที่เรียกจะมา";
+				mes "ให้การสนับสนุนพวกเขาสำหรับคุณ";
+				mes "30 นาที. ระวังตอนนี้";
 				Zeny = Zeny - (.@ZenyCost * 1000);
 				getitem .@item[.@type] - 10 + .@Grade, 1;
 			}
 			close;
 		case 2:
 			mes "[Mercenary Manager]";
-			mes "Mercenaries are soldiers";
-			mes "that will fight at your side";
-			mes "on the battlefield, but there";
-			mes "are a few terms and conditions";
-			mes "you must fulfill to hire them.";
+			mes "ทหารรับจ้างเป็นทหาร";
+			mes "ที่จะต่อสู้เคียงข้างคุณ";
+			mes "ในสนามรบ แต่อยู่ที่นั่น";
+			mes "เป็นข้อตกลงและเงื่อนไข";
+			mes "คุณต้องทำให้สำเร็จเพื่อจ้างพวกเขา";
 			next;
 			mes "[Mercenary Manager]";
-			mes "You must fulfill a level";
-			mes "requirement and pay a zeny";
-			mes "fee to hire a Mercenary.";
-			mes "Higher grade Mercenaries";
-			mes "will also require that you";
-			mes "build a Loyalty rating with us.";
+			mes "เจ้าต้องผ่านเลเวล";
+			mes "ต้องการและจ่าย zeny";
+			mes "ค่าธรรมเนียมในการจ้างทหารรับจ้าง";
+			mes "ทหารรับจ้างระดับสูงกว่า";
+			mes "จะต้องการสิ่งนั้นด้วย";
+			mes "สร้างคะแนนความภักดีกับเรา";
 			next;
 			mes "[Mercenary Manager]";
-			mes "Mercenary contracts can't be";
-			mes "transferred to other people,";
-			mes "and we only allow a 5 Base Level difference between the Mercenary";
-			mes "and client so you can't hire one much stronger than you.";
+			mes "สัญญาจ้างไม่สามารถเป็นได้";
+			mes "โอนไปให้คนอื่น";
+			mes "และเราอนุญาตเพียง 5 ระดับความแตกต่างพื้นฐานระหว่างทหารรับจ้าง";
+			mes "และไคลเอนต์ดังนั้นคุณไม่สามารถจ้างคนที่แข็งแกร่งกว่าคุณได้";
 			next;
 			mes "[Mercenary Manager]";
-			mes "Well, you can figure out the";
-			mes "details when you actually form";
-			mes "a contract with one of our";
-			mes "Mercenaries, and receive";
-			mes "the Summon Scroll that will";
-			mes "call a Mercenary to your side.";
+			mes "เอาล่ะเจ้าสามารถหา";
+			mes "รายละเอียดต่าง ๆ เมื่อเจ้าสร้าง";
+			mes "สัญญากับหนึ่งในพวกเรา";
+			mes "ทหารรับจ้างและรับ";
+			mes "Summon Scroll ที่จะทำให้";
+			mes "เรียกทหารรับจ้างมาหาคุณ";
 			next;
 			mes "[Mercenary Manager]";
-			mes "You can't give this scroll";
-			mes "to anyone else, and the";
-			mes "Mercenary will only remain";
-			mes "with you for 30 minutes after";
-			mes "you summon him. Don't forget";
-			mes "about the time limit, okay?";
+			mes "คุณไม่สามารถเลื่อนนี้";
+			mes "สำหรับคนอื่น ๆ และ";
+			mes "ทหารรับจ้างจะยังคงอยู่";
+			mes "กับคุณเป็นเวลา 30 นาทีหลังจากนั้น";
+			mes "คุณเรียกเขาอย่าลืม";
+			mes "เกี่ยวกับการ จำกัด เวลาโอเคไหม";
 			close;
 		case 3:
 			mes "[Mercenary Manager]";
-			mes "No? You didn't need any";
-			mes "help? Well, feel free to";
-			mes "ask me if you have any";
-			mes "questions about Mercenaries.";
+			mes "ไม่คุณไม่ต้องการอะไรเลย";
+			mes "ช่วยด้วยหรือเปล่า?";
+			mes "ถามฉันว่าเจ้ามีไหม";
+			mes "คำถามเกี่ยวกับทหารรับจ้าง";
 			close;
 		case 4:
 			mes "[Mercenary Manager]";
-			mes "10th Grade Mercenaries are";
-			mes "the best we have to offer,";
-			mes "and we use different criteria";
-			mes "for our clients to hire them.";
-			mes "There's no zeny fee, but you";
-			mes "must have 500 Loyalty.";
+			mes "ทหารรับจ้างเกรด 10 คือ";
+			mes "สิ่งที่ดีที่สุดที่เรามีให้";
+			mes "และเราใช้เกณฑ์ต่างกัน";
+			mes "สำหรับลูกค้าของเราที่จะจ้างพวกเขา";
+			mes "ไม่มีค่า zeny แต่เจ้า";
+			mes "ต้องมี 500 ความภักดี";
 			next;
 			mes "[Mercenary Manager]";
-			mes "Once you make a contract";
-			mes "with a 10th Grade Mercenary,";
-			mes "your Loyalty rating will be";
-			mes "decreased by 400. In other";
-			mes "words, you pay 400 Loyalty";
-			mes "to hire a 10th Grade Mercenary.";
+			mes "เมื่อเจ้าทำสัญญา";
+			mes "ด้วยทหารรับจ้างเกรด 10";
+			mes "คะแนนความภักดีของคุณจะเป็น";
+			mes "ลดลง 400 คนอื่น ๆ ";
+			mes "คำ, คุณจ่าย 400 ลอยัลตี้";
+			mes "เพื่อจ้างทหารรับจ้างระดับ 10";
 			next;
 			mes "[Mercenary Manager]";
-			mes "You must also be at";
-			mes "Base Level 90 or higher to";
-			mes "hire a 10th Grade Mercenary.";
-			mes "Are you still interested in";
-			mes "forming this contract?";
+			mes "เจ้าต้องอยู่ที่";
+			mes "ระดับเลเวล 90 หรือสูงกว่าถึง";
+			mes "จ้างทหารรับจ้างเกรด 10";
+			mes "คุณยังสนใจอยู่";
+			mes "สร้างสัญญานี้ขึ้นมา?";
 			next;
-			if (select("Yes:No") == 2) {
+			if (select("ใช่สนใจอยู่:ไม่สนใจแล้ว") == 2) {
 				mes "[Mercenary Manager]";
-				mes "I understand... It takes";
-				mes "hard work and sacrifice to";
-				mes "even reach the point where";
-				mes "you can hire a 10th Grade";
-				mes "Mercenary. Have you considered";
-				mes "hiring a lower grade Mercenary?";
+				mes "ฉันเข้าใจ ... มันต้องใช้";
+				mes "ทำงานหนักและเสียสละเพื่อ";
+				mes "ถึงจุดที่";
+				mes "คุณสามารถจ้างทหารรับจ้างเกรด 10";
+				mes "เจ้าได้พิจารณา";
+				mes "จ้างทหารรับจ้างชั้นต่ำกว่า";
 			}
 			else if (.@faith_merc < 500) {
 				mes "[Mercenary Manager]";
-				mes "I'm sorry, but your";
-				mes "Loyalty rating is too";
-				mes "low to hire a 10th Grade";
-				mes "Mercenary. You must have";
-				mes "500 or more Loyalty to";
-				mes "form a contract with one.";
+				mes "ฉันขอโทษ แต่คุณ";
+				mes "คะแนนความภักดีก็เช่นกัน";
+				mes "ต่ำถึงจ้างเกรด 10";
+				mes "ทหารรับจ้างคุณต้องมี";
+				mes "500 หรือมากกว่าความภักดีต่อ";
+				mes "สร้างสัญญากับหนึ่ง";
 			}
 			else if (BaseLevel < 90) {
 				mes "[Mercenary Manager]";
-				mes "I'm sorry, but you must";
-				mes "be at Base Level 90 or";
-				mes "higher to form a contract";
-				mes "with a 10th Grade Mercenary.";
+				mes "ฉันขอโทษ แต่คุณต้อง";
+				mes "อยู่ที่ระดับเลเวล 90 หรือ";
+				mes "สูงกว่าเพื่อทำสัญญา";
+				mes "ด้วยทหารรับจ้างเกรด 10";
 			}
 			else {
 				mes "[Mercenary Manager]";
-				mes "Congratulations! It looks";
-				mes "like you're planning in taking";
-				mes "on some very dangerous work";
-				mes "since you're hiring a 10th";
-				mes "Grade Mercenary. I wish you";
-				mes "the best of luck with him.";
+				mes "ขอแสดงความยินดีด้วยดูเหมือนว่า";
+				mes "เหมือนที่คุณวางแผนจะทำ";
+				mes "งานที่อันตรายมาก";
+				mes "เพราะเจ้าจ้างทหารรับจ้างเกรด 10";
+				mes "ฉันขอให้คุณ";
+				mes "โชคดีที่สุดกับเขา";
 				mercenary_set_faith getd(.@faith$[.@type]),-400;
 				getitem .@item[.@type],1;
 			}
@@ -217,11 +217,11 @@ pay_arche,99,167,4	duplicate(Mercenary Manager#main)	Mercenary Manager#Bow	4_M_J
 //============================================================
 -	script	Mercenary Merchant#dummy::MercMerchant	-1,{
 	mes "[Mercenary Goods Merchant]";
-	mes "Hello, I sell goods";
-	mes "that Mercenaries can";
-	mes "use. Is there anything";
-	mes "in particular that";
-	mes "you're looking for?";
+	mes "สวัสดีฉันขายสินค้า";
+	mes "ที่ Mercenaries ทำได้";
+	mes "ใช้แล้วมีอะไรไหม";
+	mes "โดยเฉพาะอย่างยิ่งว่า";
+	mes "คุณกำลังหาอยู่หรือ?";
 	next;
 	setarray .@item, 12184,	12185,	12241,	12242,	12243;
 	setarray .@cost, 1750,	3000,	560,	1050,	2100;
@@ -233,57 +233,57 @@ pay_arche,99,167,4	duplicate(Mercenary Manager#main)	Mercenary Manager#Bow	4_M_J
 	.@str_cost$ = (.@len <= 3)? .@str$ : insertchar(.@str$,",",.@len-3);
 	mes "[Mercenary Goods Merchant]";
 	mes getitemname(.@item[.@m]);
-	mes "each cost " + .@str_cost$ + " zeny.";
-	mes "How many would you like?";
+	mes "แต่ละค่าใช้จ่าย" + .@str_cost$ + "zeny.";
+	mes "คุณต้องการเท่าไหร่";
 	next;
 	input .@input;
 	if (!.@input) {
 		mes "[Mercenary Goods Merchant]";
-		mes "You changed your mind?";
-		mes "Alright, feel free to come";
-		mes "back to me whenever you want";
-		mes "to buy any Mercenary Potions.";
+		mes "คุณเปลี่ยนใจหรือไม่";
+		mes "เอาล่ะรู้สึกอิสระที่จะมา";
+		mes "กลับมาหาข้าทุกครั้งที่เจ้าต้องการ";
+		mes "เพื่อซื้อ Potion ใดๆ ของ Mercenary";
 		close;
 	}
 	else if (.@input < 0 || .@input > 10000) {
 		mes "[Mercenary Goods Merchant]";
-		mes "I'm sorry, but you";
-		mes "can only buy up to";
-		mes "10,000 of these potions";
-		mes "at a time. Please enter";
-		mes "a number from 1 to 10,000.";
+		mes "ฉันขอโทษ แต่คุณ";
+		mes "สามารถซื้อได้สูงสุด";
+		mes "10,000 ของยาเหล่านี้";
+		mes "พร้อมกันโปรดป้อน";
+		mes "ตัวเลขตั้งแต่ 1 ถึง 10,000";
 		close;
 	}
 	else if (set(.@total_po, .@input * .@cost[.@m]) > Zeny) {
 		mes "[Mercenary Goods Merchant]";
-		mes "I'm sorry, but you don't";
-		mes "have enough zeny for this";
-		mes "many potions. Well, I'll be";
-		mes "be here when you're ready";
-		mes "to purchase something";
-		mes "for your Mercenaries.";
+		mes "ฉันขอโทษ แต่คุณไม่ได้";
+		mes "มี zeny เพียงพอสำหรับเรื่องนี้";
+		mes "ยามากแล้วข้าจะเป็น";
+		mes "อยู่ที่นี่เมื่อคุณพร้อม";
+		mes "ซื้อบางอย่าง";
+		mes "สำหรับทหารรับจ้างของคุณ";
 		close;
 	}
 	else if (!checkweight(.@item[.@m], .@input)) {
 		mes "[Mercenary Goods Merchant]";
-		mes "If I gave you that many";
-		mes "potions, you wouldn't be";
-		mes "able to carry them with you.";
-		mes "Please come back after";
-		mes "you free up some space";
-		mes "in your Inventory.";
+		mes "ถ้าฉันให้คุณมากมาย";
+		mes "potions, เจ้าจะไม่เป็น";
+		mes "สามารถพาพวกเขาไปด้วยได้";
+		mes "ได้โปรดกลับมาหลังจาก";
+		mes "คุณเพิ่มพื้นที่ว่าง";
+		mes "ในคลังของคุณ";
 		close;
 	}
 	mes "[Mercenary Goods Merchant]";
 	if (.@input == 1) 
-		mes "Here's your " + getitemname(.@item[.@m]) + ".";
+		mes "นี่ของคุณคือ " + getitemname(.@item[.@m]) + ".";
 	else {
-		mes "Here you are, this is exactly";
+		mes "เจ้าอยู่นี่นี่แน่";
 		mes callfunc("F_InsertPlural",.@input,getitemname(.@item[.@m])) + ".";
 	}
-	mes "Thank you, and please come";
-	mes "again when you need more";
-	mes "potions for your Mercenaries.";
+	mes "ขอบคุณและได้โปรดมา";
+	mes "อีกครั้งเมื่อคุณต้องการมากกว่านี้";
+	mes "potions สำหรับทหารรับจ้างของคุณ";
 	Zeny = Zeny - .@total_po;
 	getitem .@item[.@m], .@input;
 	close;
@@ -301,25 +301,25 @@ pay_arche,102,167,5	duplicate(MercMerchant)	Mercenary Merchant#Bow	4_F_CAPEGIRL
 		if (.@npc$ == .@name$[.@type]) break;
 
 	mes "[Checker]";
-	mes "Please input a password.";
+	mes "กรุณาใส่รหัสผ่าน";
 	next;
 	.@i = callfunc("F_GM_NPC",1854,0,0,10000);
 	mes "[Checker]";
 	if (.@i == -2)
 		mes "Error.";
 	else if (.@i == 0)
-		mes "Wrong number";
+		mes "หมายเลขผิด";
 	else if (.@i == 1) {
-		mes "Please select.";
+		mes "กรุณาเลือก";
 		next;
-		switch( select( "Turn off Mercenary NPC","Turn on Mercenary NPC" ) ) {
+		switch( select( "ปิด Mercenary NPC", "เปิด Mercenary NPC" ) ) {
 		case 1:
-			mes "NPCs are turned off.";
+			mes "NPC ถูกปิด";
 			disablenpc "Mercenary Manager#" + .@name$[.@type];
 			disablenpc "Mercenary Merchant#" + .@name$[.@type];
 			break;
 		case 2:
-			mes "NPCs are turned on.";
+			mes "NPC ถูกเปิด";
 			enablenpc "Mercenary Manager#" + .@name$[.@type];
 			enablenpc "Mercenary Merchant#" + .@name$[.@type];
 			break;

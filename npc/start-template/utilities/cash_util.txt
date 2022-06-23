@@ -1,0 +1,49 @@
+function	script	IsCashEnough	{
+	.@cash = getarg(0,0);
+	.@npc_name$ = getarg(1,"[ระบบ]");
+	.@is_paid = getarg(2,0);
+	if(#CASHPOINTS >= .@cash){
+		if(.@is_paid)
+		callfunc("UseCash",.@cash);
+		return true;
+	}
+	else{
+		freeloop(0);
+		mes "";
+		clear;
+		mes .@npc_name$;
+		mes "^E02D2Dต้องการ: " + .@cash + " Cash^000000";
+		callfunc("MyCash");
+		cutin "",255;
+		close2;
+		end;
+	}
+}
+
+function	script	MyCash	{
+	.@is_not_use_mes = getarg(0,0);
+	if(!.@is_not_use_mes)
+	mes "^69149eคุณมี: " + #CASHPOINTS + " Cash^000000";
+	dispbottom "คุณมี: " + #CASHPOINTS + " Cash";
+	return;
+}
+
+function	script	AddCash	{
+	if(getarg(2,0)==0)
+	specialeffect2 100;
+	.@cash = getarg(0,0);
+	#CASHPOINTS += .@cash;
+	if(getarg(1,0)==0)
+	callfunc("MyCash",1);
+	return;
+}
+
+function	script	UseCash	{
+	if(getarg(2,0)==0)
+	specialeffect2 100;
+	.@cash = getarg(0,0);
+	#CASHPOINTS -= .@cash;
+	if(getarg(1,0)==0)
+	callfunc("MyCash");
+	return;
+}

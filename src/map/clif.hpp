@@ -501,8 +501,32 @@ enum useskill_fail_cause : uint8_t
 	USESKILL_FAIL_THERE_ARE_NPC_AROUND = 83,
 	USESKILL_FAIL_NEED_MORE_BULLET = 84,
 	USESKILL_FAIL_COINS = 85,
-	// 86-99 unknown
-	USESKILL_FAIL_AP_INSUFFICIENT = 100,
+	USESKILL_FAIL_UNKNOWN_1, //#86 Unknown Usage MSG: Do you agree?
+	USESKILL_FAIL_MAP,
+	USESKILL_FAIL_NEED_SUMMON_SP,
+	USESKILL_FAIL_SAME_VEND,
+	USESKILL_FAIL_NEED_BULLETS,
+	USESKILL_FAIL_NEED_ARROWS,
+	USESKILL_FAIL_NEED_PARTY,
+	USESKILL_FAIL_NEED_PARTY_LEADER,
+	USESKILL_FAIL_NEED_PARTNER_SP,
+	USESKILL_FAIL_NEED_WEAPON,
+	USESKILL_FAIL_NEED_ENERGY_SPHERE,
+	USESKILL_FAIL_NEED_WEAPON_BLOCKING,
+	USESKILL_FAIL_MAX_TRAPS,
+	USESKILL_FAIL_NEED_MAGIC_SPELLBOOK,
+	USESKILL_FAIL_AP_INSUFFICIENT,
+	USESKILL_FAIL_NEED_SERVANT_WEAPON,
+	USESKILL_FAIL_NEED_TWINKLING_GALAXY,
+	USESKILL_FAIL_NEED_SOUL_ENGERY,
+	USESKILL_FAIL_NEED_AMULET,
+	USESKILL_FAIL_NEED_GATLING_SHOTGUT,
+	USESKILL_FAIL_NEED_RIFLE_REVOLVER,
+	USESKILL_FAIL_NEED_GLAUNCHER_RIFLE,
+	USESKILL_FAIL_NEED_GATLING_REVOLVER,
+	USESKILL_FAIL_NEED_SHOTGUN_GLAUNCHER,
+	USESKILL_FAIL_NEED_SHIELD,
+	USESKILL_FAIL_TARGET_SHADOW_SPACE,
 	USESKILL_FAIL_MAX
 };
 
@@ -601,6 +625,12 @@ enum e_config_type : uint32 {
 
 enum e_memorial_dungeon_command : uint16 {
 	COMMAND_MEMORIALDUNGEON_DESTROY_FORCE = 0x3,
+};
+
+enum e_siege_teleport_result : uint8 {
+	SIEGE_TP_SUCCESS = 0,
+	SIEGE_TP_NOT_ENOUGH_ZENY = 1,
+	SIEGE_TP_INVALID_MODE = 2
 };
 
 int clif_setip(const char* ip);
@@ -854,6 +884,11 @@ void clif_guild_broken(struct map_session_data *sd,int flag);
 void clif_guild_xy(struct map_session_data *sd);
 void clif_guild_xy_single(int fd, struct map_session_data *sd);
 void clif_guild_xy_remove(struct map_session_data *sd);
+void clif_guild_castle_list(struct map_session_data *sd);
+void clif_guild_castle_info(struct map_session_data *sd, int castle_id, int economy, int defense);
+void clif_guild_castle_teleport_res(struct map_session_data* sd, enum e_siege_teleport_result result);
+void clif_parse_guild_castle_teleport_request(struct map_session_data *sd);
+void clif_parse_guild_castle_info_request(struct map_session_data *sd);
 
 // Battleground
 void clif_bg_hp(struct map_session_data *sd);

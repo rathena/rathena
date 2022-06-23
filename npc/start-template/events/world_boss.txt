@@ -1,0 +1,182 @@
+x_prt	mapflag	nowarpto
+x_prt	mapflag	nogo
+x_prt	mapflag	nosave
+x_prt	mapflag	nomemo
+x_prt	mapflag	nowarp
+x_prt	mapflag	noteleport
+x_prt	mapflag	noreturn
+x_prt	mapflag	noloot
+x_prt	mapflag	noexp
+x_prt	mapflag	notomb
+
+prontera,147,164,5	script	World Boss	971,{
+	mes "- ค่าเข้า " + .zeny_req +"z";
+	mes "- รอบ 1 เปิด 10 โมง";
+	mes "- รอบ 1 ปิด เที่ยง";
+	mes "- รอบ 2 เปิด บ่าย 1";
+	mes "- รอบ 2 ปิด บ่าย 3";
+	mes "- รอบ 3 เปิด 1 ทุ่ม";
+	mes "- รอบ 3 ปิด 3 ทุ่ม";
+	mes "- รอบ 4 เปิด 4 ทุ่ม";
+	mes "- รอบ 4 ปิด เที่ยงคืน";
+	mes " ";
+	mes "^9600ccหากชนะ.... ทุกคนที่ได้ร่วมกำจัด Boss อย่างน้อย 1 ตัว.... จะได้รับ " + .reward_amount + " " + getitemname(.reward_id) + " (ต้อง Online อยู่)^000000";
+	mes " ";
+	mes "^9600ccหากแพ้.... ทุกคนที่ได้ร่วมกำจัด Boss อย่างน้อย 1 ตัว.... จะได้รับ 1 " + getitemname(.reward_id) + " (ต้อง Online อยู่)^000000";
+	mes " ";
+	mes "^ff0000* ภายใน Map จะไม่ได้รับ EXP, Monster จะไม่ Drop Item";
+	mes "* Teleport ทุกชนิด ภายใน Map ไม่ได้ ต้อง กดเลือกตัวละคร แล้วเข้าใหม่เท่านั้น^000000";
+	if(.is_open)
+	mes "สถานะขณะนี้: [" + $world_boss_dead_count + "/" + .kill_req + "]";
+	next;
+	if(getgmlevel())
+	menu "เข้า",L_Enter,"เริ่ม Event ใหม่",OnClock2200;
+	else
+	menu "เข้า",L_Enter;
+	
+	L_Enter:
+	if(!.is_open){
+		mes "ตอนนี้ปิดอยู่";
+		close;
+	}
+	else if(Zeny < .zeny_req)
+	{
+		mes "เงินไม่พอ";
+		close;
+	}
+	
+	Zeny -= .zeny_req;
+	warp "x_prt",0,0;
+	end;
+
+OnSpawnWorldBoss:
+	//if($boss <= 0)//For now just stick to 1 boss per round
+	//$boss = $all_mvp[rand(0,getarraysize($all_mvp) - 1)];
+	
+	freeloop(1);
+	
+	.@spawn_count = 5;
+	while(.@spawn_count > 0){
+		.@spawn_count--;
+		monster "x_prt",0,0,"--ja--",$all_mvp[rand(0,getarraysize($all_mvp) - 1)],1," #WorldBoss::OnWorldBossDead";
+	}
+	
+	freeloop(0);
+	
+	end;
+	
+OnWorldBossDead://Call when boss dead
+	//Set players rid
+	for(.@i = 0; .@i < getarraysize($world_boss_slayer); .@i++){
+		if(killerrid == $world_boss_slayer[.@i])
+		{
+			.@is_had = 1;
+			break;
+		}
+	}
+	if(!.@is_had)
+	$world_boss_slayer[getarraysize($world_boss_slayer)] = killerrid;
+
+	//Calculate
+	$world_boss_dead_count++;
+	
+	announce strcharinfo(0) + " กำจัด World Boss! [" + $world_boss_dead_count + "/" + .kill_req + "]",bc_all,0xff9b05;
+	if($world_boss_dead_count >= .kill_req){
+		$is_world_boss_finish = 1;
+		$world_boss_dead_count = 0;
+		.is_open = 0;
+		$boss = 0;
+		
+		killmonsterall "x_prt";
+		
+		
+		announce "======== Event - World Boss จบลงแล้ว! ========",bc_all,0x00ff4c;
+		
+		goto OnReward;
+	}
+	else{
+		//Spawn more
+		.@players_count = getmapusers(strcharinfo(3));
+		.@spawn_count = 1 + (.@players_count / rand(1,2));
+		while(.@spawn_count > 0){
+			.@spawn_count--;
+			monster "x_prt",0,0,"--ja--",$all_mvp[rand(0,getarraysize($all_mvp) - 1)],1," #WorldBoss::OnWorldBossDead";
+		}
+	}
+	end;
+
+OnReward://Give reward to boss slayer players that online
+	for(.@i = 0; .@i < getarraysize($world_boss_slayer); .@i++)
+	getitem .reward_id,.reward_amount,$world_boss_slayer[.@i];
+	end;
+
+OnRewardFailed://Give 1 reward to boss slayer players that online
+	for(.@i = 0; .@i < getarraysize($world_boss_slayer); .@i++)
+	getitem .reward_id,1,$world_boss_slayer[.@i];
+	end;
+	
+	//Start
+OnClock1000:
+OnClock1300:
+OnClock1900:
+OnClock2200:
+	announce "======== Event - World Boss เปิดให้เข้าแล้ว! ========",bc_all,0xffe100;
+	
+	$is_world_boss_finish = 0;
+	$world_boss_dead_count = 0;
+	$boss = 0;
+	.is_open = 1;
+	
+	//Delete all slayer
+	deletearray $world_boss_slayer[0],getarraysize($world_boss_slayer);
+	
+	goto OnSpawnWorldBoss;
+	
+	//End
+OnClock1200:
+OnClock1500:
+OnClock2100:
+OnClock0000:
+	$is_world_boss_finish = 1;
+	.is_open = 0;
+	$boss = 0;
+	$world_boss_dead_count = 0;
+	
+	//Delete all slayer
+	deletearray $world_boss_slayer[0],getarraysize($world_boss_slayer);
+	
+	killmonsterall "x_prt";
+	
+	if(!$is_world_boss_finish){
+		announce "======== Event - World Boss ปิดแล้ว! ========",bc_all,0xffe100;
+		goto OnRewardFailed;
+	}
+	
+	end;
+
+OnInit://Setting, Clear Boss, Respawn Boss
+
+	setarray $all_mvp[0],2075,1874,1832,2236,2238,2237,1646,2235,3074,2241,2239,1719,2022,2240,1647,1650,2165,1917,1648,1649,1651,2319,1871,1768,1751,1734,2362,2255,2251,2253,2249,2341,1708,1785,1658,1779,2202,1312,1583,2996,1252,1492,1623,1272,1885,1630,1112,2156,1373,1157,1251,2087,2483,1039,1059,1688,1150,1046,1389,1399,1038,1511,2448,2447,2443,2444,2445,2449,2442,2441,1685,1115,1086,2532,2534,2533,2535,2529,1147,1418,1876,1159,2446,1087,1980,1502,2068,1190,2131,1802,2109,2108,2110,2099,2104,2107,2052,2096,2112,2097,2105,2106,2111,2113,2098,2103,2101,2094,2095,2100;
+	
+	.kill_req = 50;
+	.zeny_req = 5000;
+	.reward_id = 501;
+	.reward_amount = 3;
+
+	killmonsterall "x_prt";
+
+	if(
+			(gettime(3) >= 10 || gettime(3) < 12)
+			|| (gettime(3) >= 13 || gettime(3) < 15)
+			|| (gettime(3) >= 19 || gettime(3) < 21)
+			|| (gettime(3) >= 22 || gettime(3) < 24)
+			&& !$is_world_boss_finish)
+	.is_open = 1; 
+	else 
+	.is_open = 0;
+	
+	if(.is_open)
+	goto OnSpawnWorldBoss;
+
+	end;
+}

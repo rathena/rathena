@@ -18,3 +18,6 @@ abyss_02,145,280,0	warp	abysslakedunwarp002	1,1,abyss_03,115,30
 abyss_02,277,270,0	warp	abysslakedunwarp003	1,1,abyss_01,25,30
 abyss_03,115,25,0	warp	abysslakedunwarp004	1,1,abyss_02,145,275
 abyss_01,265,274,0	warp	abysslakedunwarp005	1,1,hu_fild05,177,211
+
+abyss_03,98,104,0	warp	abysslakedunwarp006	1,1,abyss_04,163,166
+abyss_04,165,168,0	warp	abysslakedunwarp007	1,1,abyss_03,98,99

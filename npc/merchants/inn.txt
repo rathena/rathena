@@ -65,21 +65,21 @@ prt_in,61,141,2	script	Inn Employee#Ahlma	53,{
 //======================== Alberta ====================================
 alberta_in,32,142,3	script	Inn Employee#Jennie	53,{
 
-	callfunc "F_InnMaid","[Employee Jennie]","'Fisherman Inn'!","alberta_in",26,142;
+	callfunc "F_InnMaid","[Employee Jennie]","'โรงแรม Fisherman'!","alberta_in",26,142;
 	warp "alberta_in",18,188; end;
 }
 
 //====================== Geffen ======================================
 geffen_in,70,64,5	script	Inn Employee#Cena	53,{
 
-	callfunc "F_InnMaid","[Employee Cena]","'Ifrit,' the only Inn in the city of Geffen.","geffen_in",70,59;
+	callfunc "F_InnMaid","[Employee Cena]","'Ifrit' เป็นโรงแรมแห่งเดียวในเมือง Geffen","geffen_in",70,59;
 	warp "geffen_in",31,31; end;
 }
 
 //======================= Payon ======================================
 payon_in01,132,62,5	script	Inn Employee#Ahee	53,{
 
-	callfunc "F_InnMaid","[Employee Ahee]","Payon Inn","payon_in01",136,61;
+	callfunc "F_InnMaid","[Employee Ahee]","โรงแรม Payon","payon_in01",136,61;
 	warp "payon_in01",132,11; end;
 }
 
@@ -88,13 +88,13 @@ payon_in01,132,62,5	script	Inn Employee#Ahee	53,{
 /*
 morocc_in,147,141,3	script	Inn Employee#Hasna	53,{
 
-	callfunc "F_InnMaid","[Employee Hasna]","Morocc Inn","morocc_in",142,140;
+	callfunc "F_InnMaid","[Employee Hasna]","โรงแรม Morocc","morocc_in",142,140;
 	warp "morocc_in",173,135; end;
 }
 // South --------------------------------
 morocc_in,80,100,5	script	Inn Employee#Manar	53,{
 
-	callfunc "F_InnMaid","[Employee Manar]","Morocc Inn","morocc_in",78,95;
+	callfunc "F_InnMaid","[Employee Manar]","โรงแรม Morocc","morocc_in",78,95;
 	warp "morocc_in",79,123; end;
 }
 */
@@ -102,48 +102,46 @@ morocc_in,80,100,5	script	Inn Employee#Manar	53,{
 //====================== Aldebaran ===================================
 aldeba_in,92,58,5	script	Inn Maid#Rilim	53,{
 
-	callfunc "F_InnMaid","[Rilim]","Al De Baran Inn","aldeba_in",92,50;
+	callfunc "F_InnMaid","[Rilim]","โรงแรม Al De Baran","aldeba_in",92,50;
 	warp "aldeba_in",92,112; end;
 }
 
 //======================== Rachel ====================================
 ra_in01,376,69,4	script	Inn Keeper#Annie	931,{
 
-	callfunc "F_InnMaid","[Annie]","Rachel Inn","ra_in01",375,58;
+	callfunc "F_InnMaid","[Annie]","โรงแรม Rachel","ra_in01",375,58;
 	warp "ra_in01",384,128; end;
 }
 
 //====================== Lighthalzen =================================
 lhz_in02,230,284,4	script	Hotel Employee#01	86,{
 	mes "[Hotel Employee]";
-	mes "Welcome to";
-	mes "the Royal Dragon,";
-	mes "where you can find the";
-	mes "finest accomodations";
-	mes "and the best service.";
+	mes "ยินดีต้อนรับสู่";
+	mes "มังกรหลวง";
+	mes "ที่คุณสามารถหา";
+	mes "ที่พักที่ดีที่สุด";
+	mes "และบริการที่ดีที่สุด";
 	next;
-	switch(select("Save Point:Rest - 5,000 zeny:Cancel")) {
+	switch(select("บันทึกจุดเซฟ:Rest - 5,000 zeny:ยกเลิก")) {
 	case 1:
 		savepoint "lhz_in02",209,275,1,1;
 		mes "[Hotel Employee]";
-		mes "Thank you, your";
-		mes "Respawn Point has";
-		mes "been saved here in";
-		mes "the Royal Dragon.";
+		mes "ขอบคุณคุณ";
+		mes "จุดเกิดใหม่ได้รับการบันทึกที่นี่ในมังกรหลวง";
 		close;
 	case 2:
 		if(Zeny < 5000) {
 			mes "[Hotel Employee]";
-			mes "I'm sorry, but";
-			mes "you need 5,000 zeny";
-			mes "in order to check in.";
+			mes "ฉันขอโทษ แต่";
+			mes "คุณต้องการ 5,000 zeny";
+			mes "เพื่อเช็คอิน";
 			close;
 		}
 		set Zeny,Zeny - 5000;
 		mes "[Hotel Employee]";
-		mes "Thank you~";
-		mes "I hope you enjoy";
-		mes "your stay in the";
+		mes "ขอบคุณ ~";
+		mes "ฉันหวังว่าคุณจะสนุก";
+		mes "เจ้าอยู่ใน";
 		mes "Royal Dragon.";
 		close2;
 		warp "lhz_in02",219,150;
@@ -152,8 +150,8 @@ lhz_in02,230,284,4	script	Hotel Employee#01	86,{
 		end;
 	case 3:
 		mes "[Hotel Employee]";
-		mes "Thank you and";
-		mes "have a nice day.";
+		mes "ขอบคุณและ";
+		mes "ขอให้เป็นวันที่ดีนะ";
 		close;
 	}
 }
@@ -161,36 +159,36 @@ lhz_in02,230,284,4	script	Hotel Employee#01	86,{
 //======================== Hugel ====================================
 hu_in01,246,107,3	script	Inn Maid#Receptionist	53,{
 
-	callfunc "F_InnMaid","[Receptionist]","Hugel Inn","hu_in01",263,95;
+	callfunc "F_InnMaid","[Receptionist]","โรงแรม Hugel","hu_in01",263,95;
 	warp "hu_in01",267,5; end;
 }
 
 //======================== Veins ====================================
 ve_in,157,219,5	script	Inn Master#Receptionist	709,{
 	mes "[Inn Master]";
-	mes "Good day~";
-	mes "Welcome to the";
-	mes "most comfortable";
-	mes "inn here in Veins~";
+	mes "วันดี ~";
+	mes "ยินดีต้อนรับสู่";
+	mes "สบายที่สุด";
+	mes "อินน์ที่นี่ใน Veins ~";
 	next;
-	switch(select("Save:Take a Rest -> 5000 zeny:Quit")) {
+	switch(select("เซฟ:พักเอาแรง -> 5000 zeny:ออก")) {
 	case 1:
 		mes "[Inn Master]";
-		mes "Your Respawn Point";
-		mes "has been saved in Veins.";
-		mes "Enjoy your stay in town~";
+		mes "จุดเกิดใหม่ของคุณ";
+		mes "ได้รับการช่วยชีวิตในหลอดเลือดดำ";
+		mes "เพลิดเพลินกับการพักผ่อนในเมือง ~";
 		savepoint "ve_in",157,209,1,1;
 		close;
 	case 2:
 		mes "[Inn Master]";
 		if(Zeny < 5000){
-			mes "I'm sorry, but I don't";
-			mes "think you have enough";
-			mes "money to check in. The";
-			mes "service charge is 5,000 zeny.";
+			mes "ฉันขอโทษ แต่ฉันไม่ได้";
+			mes "คิดว่าเจ้ามีเพียงพอ";
+			mes "เงินที่ใช้เช็คอิน";
+			mes "ค่าบริการคือ 5,000 zeny";
 			close;
 		}
-		mes "Enjoy your stay~";
+		mes "เพลิดเพลินกับการพักผ่อนของคุณ ~";
 		close2;
 		set Zeny,Zeny - 5000;
 		percentheal 100,100;
@@ -198,7 +196,7 @@ ve_in,157,219,5	script	Inn Master#Receptionist	709,{
 		end;
 	case 3:
 		mes "[Inn Master]";
-		mes "Please come again.";
+		mes "ได้โปรดกลับมาอีกครั้ง";
 		close;
 	}
 }
@@ -208,28 +206,28 @@ function	script	F_InnMaid	{
 	.@npc_name$ = getarg(0);
 
 	mes .@npc_name$;
-	mes "Welcome to";
+	mes "ยินดีต้อนรับสู่";
 	mes getarg(1) + ".";
-	mes "How may I help you?";
+	mes "ฉันจะช่วยคุณได้อย่างไร";
 	next;
-	switch(select("Save:Take a Rest -> 5000 zeny:Cancel")) {
+	switch(select("เซฟ:พักผ่อน -> 5000 zeny:ยกเลิก")) {
 	case 1:
 		mes .@npc_name$;
-		mes "Your respawn point";
-		mes "has been saved.";
-		mes "Thank you,";
-		mes "please come again.";
+		mes "จุดเกิดใหม่ของคุณ";
+		mes "ได้รับการบันทึกแล้ว";
+		mes "ขอบคุณ";
+		mes "ได้โปรดกลับมาอีกครั้ง";
 		savepoint getarg(2),getarg(3),getarg(4),1,1;
 		close;
 	case 2:
 		mes .@npc_name$;
 		if(Zeny < 5000){
-			mes "I'm sorry, but the service charge is 5,000 zeny. Please make sure that you have enough money to check in next time, okay?";
+			mes "ฉันขอโทษ แต่ค่าบริการอยู่ที่ 5,000 zeny โปรดตรวจสอบให้แน่ใจว่าคุณมีเงินมากพอที่จะเช็คอินในครั้งต่อไปได้ไหม";
 			close;
 		}
-		mes "Thank you.";
-		mes "I hope you";
-		mes "enjoy your rest~";
+		mes "ขอบคุณ";
+		mes "ฉันหวังว่าคุณ";
+		mes "เพลิดเพลินไปกับการพักผ่อนของคุณ ~";
 		close2;
 		set Zeny,Zeny - 5000;
 		percentheal 100,100;

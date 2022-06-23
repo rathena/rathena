@@ -228,7 +228,9 @@ typedef uintptr_t uintptr;
 // some redefine of function redefines for some Compilers
 //////////////////////////////////////////////////////////////////////////
 #if defined(_MSC_VER) || defined(__BORLANDC__)
+#ifndef strcasecmp
 #define strcasecmp			stricmp
+#endif
 #define strncasecmp			strnicmp
 #define strncmpi			strnicmp
 #if defined(__BORLANDC__) || _MSC_VER < 1900

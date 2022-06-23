@@ -1843,6 +1843,79 @@
 	export_constant(SC_M_LIFEPOTION);
 	export_constant(SC_S_MANAPOTION);
 
+	export_constant(SC_RUSH_QUAKE1);
+	export_constant(SC_RUSH_QUAKE2);
+	// 2021 Mutated Homunculus Skills
+	export_constant(SC_TOXIN_OF_MANDARA);
+	export_constant(SC_GOLDENE_TONE);
+	export_constant(SC_TEMPERING);
+
+	// Hyper Novice
+	export_constant(SC_SHIELDCHAINRUSH);
+	export_constant(SC_MISTYFROST);
+	export_constant(SC_GROUNDGRAVITY);
+	export_constant(SC_BREAKINGLIMIT);
+	export_constant(SC_RULEBREAK);
+	export_constant(SC_HNNOWEAPON);
+	
+	// Sky Emperor
+	export_constant(SC_RISING_SUN);
+	export_constant(SC_NOON_SUN);
+	export_constant(SC_SUNSET_SUN);
+	export_constant(SC_RISING_MOON);
+	export_constant(SC_MIDNIGHT_MOON);
+	export_constant(SC_DAWN_MOON);
+	export_constant(SC_STAR_BURST);
+	export_constant(SC_SKY_ENCHANT);
+	
+	// Soul Ascetic
+	export_constant(SC_TALISMAN_OF_PROTECTION);
+	export_constant(SC_TALISMAN_OF_WARRIOR);
+	export_constant(SC_TALISMAN_OF_MAGICIAN);
+	export_constant(SC_TALISMAN_OF_FIVE_ELEMENTS);
+	export_constant(SC_TOTEM_OF_TUTELARY);
+	export_constant(SC_T_FIRST_GOD);
+	export_constant(SC_T_SECOND_GOD);
+	export_constant(SC_T_THIRD_GOD);
+	export_constant(SC_T_FOURTH_GOD);
+	export_constant(SC_T_FIFTH_GOD);
+	export_constant(SC_HEAVEN_AND_EARTH);
+	
+	// Night Watch
+	export_constant(SC_INTENSIVE_AIM);
+	export_constant(SC_INTENSIVE_AIM_COUNT);
+	export_constant(SC_GRENADE_FRAGMENT_1);
+	export_constant(SC_GRENADE_FRAGMENT_2);
+	export_constant(SC_GRENADE_FRAGMENT_3);
+	export_constant(SC_GRENADE_FRAGMENT_4);
+	export_constant(SC_GRENADE_FRAGMENT_5);
+	export_constant(SC_GRENADE_FRAGMENT_6);
+	export_constant(SC_AUTO_FIRING_LAUNCHER);
+	export_constant(SC_HIDDEN_CARD);
+
+	// Shinkiro/Shiranui
+	export_constant(SC_SHADOW_CLOCK);
+	export_constant(SC_SHINKIROU_CALL);
+	export_constant(SC_NIGHTMARE);
+	export_constant(SC_SBUNSHIN);
+
+	// Spirit Handler
+	export_constant(SC_HOGOGONG);
+	export_constant(SC_MARINE_FESTIVAL);
+	export_constant(SC_SANDY_FESTIVAL);
+	export_constant(SC_KI_SUL_RAMPAGE);
+	export_constant(SC_COLORS_OF_HYUN_ROK_1);
+	export_constant(SC_COLORS_OF_HYUN_ROK_2);
+	export_constant(SC_COLORS_OF_HYUN_ROK_3);
+	export_constant(SC_COLORS_OF_HYUN_ROK_4);
+	export_constant(SC_COLORS_OF_HYUN_ROK_5);
+	export_constant(SC_COLORS_OF_HYUN_ROK_6);
+	export_constant(SC_COLORS_OF_HYUN_ROK_BUFF);
+	export_constant(SC_TEMPORARY_COMMUNION);
+	export_constant(SC_BLESSING_OF_M_CREATURES);
+	export_constant(SC_BLESSING_OF_M_C_DEBUFF);
+
+
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -4064,6 +4137,9 @@
 	export_constant(RC2_TEMPLE_DEMON);
 	export_constant(RC2_ILLUSION_VAMPIRE);
 	export_constant(RC2_MALANGDO);
+	export_constant(RC2_EP172ALPHA);
+	export_constant(RC2_EP172BETA);
+	export_constant(RC2_EP172BATH);
 	export_constant(RC2_MAX);
 
 	/* monster ai */
@@ -5734,6 +5810,18 @@
 	export_constant(IG_SHADOW_CUBE_SHIELD);
 	export_constant(IG_SHADOW_CUBE_SHOES);
 	export_constant(IG_SHADOW_CUBE_WEAPON);
+	export_constant(IG_ODIN_RELIC);
+	export_constant(IG_AUTOMATIC_MODULE_MIX);
+	export_constant(IG_EPIC_MODULE_MIX);
+	export_constant(IG_AUTO_M_I_BOX_A);
+	export_constant(IG_AUTO_M_I_BOX_B);
+	export_constant(IG_ILLUSION_MODULE_MIX);
+	export_constant(IG_ENCHANT_STONE_BOX22);
+	export_constant(IG_ENCHANT_STONE_BOX23);
+	export_constant(IG_ENCHANT_STONE_BOX24);
+	export_constant(IG_ENCHANT_STONE_BOX25);
+	export_constant(IG_ENCHANT_STONE_BOX27);
+	export_constant(IG_ANCIENT_HERO_BOX_1);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
@@ -8745,6 +8833,21 @@
 	export_constant(UNT_SWIFTTRAP);
 	export_constant(UNT_FLAMETRAP);
 
+	export_constant(UNT_TWINKLING_GALAXY);
+	export_constant(UNT_STAR_CANNON);
+	export_constant(UNT_GRENADES_DROPPING);
+	export_constant(UNT_UNKNOWN_2);
+	export_constant(UNT_FUUMASHOUAKU);
+	export_constant(UNT_MISSION_BOMBARD);
+	export_constant(UNT_TOTEM_OF_TUTELARY);
+	export_constant(UNT_HYUN_ROKS_BREEZE);
+	export_constant(UNT_SHINKIROU);
+	export_constant(UNT_JACK_FROST_NOVA);
+	export_constant(UNT_GROUND_GRAVITATION);
+	export_constant(UNT_KUNAIKAITEN);
+	export_constant(UNT_KUNAIWAIKYOKU);
+	export_constant(UNT_STAR_BURST);
+
 	export_constant(UNT_GD_LEADERSHIP);
 	export_constant(UNT_GD_GLORYWOUNDS);
 	export_constant(UNT_GD_SOULCOLD);
@@ -8770,7 +8873,8 @@
 	export_constant(ITEMJ_ALL_UPPER);
 	export_constant(ITEMJ_ALL_BABY);
 	export_constant(ITEMJ_ALL_THIRD);
-
+	export_constant(ITEMJ_ALL_FOURTH);
+	
 	/* item drop effects */
 	export_constant(DROPEFFECT_NONE);
 	export_constant(DROPEFFECT_CLIENT);

@@ -187,7 +187,7 @@ OnMyMobDead:
 		set $@TierraBG2_Victory, 2;
 		enablenpc "Guillaume Vintenar#a02_a";
 		enablenpc "Croix Vintenar#a02_b";
-		mapannounce "bat_a02", "Croix Vintenar Swandery: We destroyed Guillaume's Food Storage. We won that! Wow!",bc_map,"0xFFCE00";
+		mapannounce "bat_a02", "Croix Vintenar Swandery : เราทำลายที่เก็บเสบียงของ Guillaume's เราชนะ! ว้าว!",bc_map,"0xFFCE00";
 		bg_warp $@TierraBG2_id1,"bat_a02",50,374;
 		bg_warp $@TierraBG2_id2,"bat_a02",42,16;
 		if (getbattleflag("feature.bgqueue"))
@@ -212,7 +212,7 @@ OnMyMobDead:
 		set $@TierraBG2_Victory, 1;
 		enablenpc "Guillaume Vintenar#a02_a";
 		enablenpc "Croix Vintenar#a02_b";
-		mapannounce "bat_a02", "Guillaume Vintenar Axl Rose : We destroyed Croix's Food Storage. We won that! Wow!",bc_map,"0xFFCE00";
+		mapannounce "bat_a02", "Guillaume Vintenar Axl Rose : เราทำลายที่เก็บเสบียงของ Croix's เราชนะ! ว้าว!",bc_map,"0xFFCE00";
 		bg_warp $@TierraBG2_id1,"bat_a02",50,374;
 		bg_warp $@TierraBG2_id2,"bat_a02",42,16;
 		if (getbattleflag("feature.bgqueue"))
@@ -239,7 +239,7 @@ OnMyMobDead:
 		killmonster "bat_a02","barricade#bat_a02_a::OnMyMobDead";
 		delwall "bat_a02_c1";
 		enablenpc "Guillaume Blacksmith#a02";
-		mapannounce "bat_a02", "Guillaume Vintenar Axl Rose : The Barricade in the valley has been destroyed! Where's the Blacksmith? We need to rebuild the Barricade!",bc_map,"0xFFCE00";
+		mapannounce "bat_a02", "Guillaume Vintenar Axl Rose : สิ่งกีดขวางในหุบเขาถูกทำลาย! Blacksmith อยู่ที่ใด เราจำเป็นต้องสร้างสิ่งกีดขวางใหม่!",bc_map,"0xFFCE00";
 	}
 	end;
 }
@@ -262,7 +262,7 @@ OnMyMobDead:
 		killmonster "bat_a02","barricade#bat_a02_b::OnMyMobDead";
 		delwall "bat_a02_g1";
 		enablenpc "Croix Blacksmith#bat_a02";
-		mapannounce "bat_a02", "Croix Vintenar Swandery : The Barricade in the valley has been destroyed! Where's the Blacksmith? We need to rebuild the Barricade!",bc_map,"0xFFCE00";
+		mapannounce "bat_a02", "Croix Vintenar Swandery : สิ่งกีดขวางในหุบเขาถูกทำลาย! Blacksmith อยู่ที่ใด เราจำเป็นต้องสร้างสิ่งกีดขวางใหม่!",bc_map,"0xFFCE00";
 	}
 	end;
 }
@@ -281,11 +281,11 @@ OnMyMobDead:
 		bg_team_setxy getcharid(4),56,212;
 		if (getcharid(4) == $@TierraBG2_id1) {
 			donpcevent "NOBJ_mob#bat_a02_a::OnEnable";
-			mapannounce "bat_a02", "Guillaume captured a Neutrality Flag, so they have an advantage.",bc_map,"0xFFCE00";
+			mapannounce "bat_a02", "Guillaume ยึดธงตรงกลางได้ ดังนั้นพวกเขาจึงได้เปรียบ",bc_map,"0xFFCE00";
 		}
 		else {
 			donpcevent "NOBJ_mob#bat_a02_b::OnEnable";
-			mapannounce "bat_a02", "Croix captured a Neutrality Flag, so they have an advantage.",bc_map,"0xFFCE00";
+			mapannounce "bat_a02", "Croix ยึดธงตรงกลางได้ ดังนั้นพวกเขาจึงได้เปรียบ",bc_map,"0xFFCE00";
 		}
 	}
 	end;
@@ -326,15 +326,15 @@ OnMyMobDead:
 bat_a02,185,270,1	script	Guillaume Blacksmith#a02	851,{
 	if (getcharid(4) == $@TierraBG2_id1) {
 		mes "[Guillaume Blacksmith]";
-		mes "We are in urgency! The Barricade has been destroyed!";
-		mes "We can repair the Barricade with ^3131FF50 Stones, 3 Sinew of Bear, 500 Metal Fragments, 30 Rough Elunium and 100 Gold.^000000";
-		mes "We have it all except for the 50 Stones!";
+		mes "พวกเรารีบด่วน! สิ่งกีดขวางถูกทำลาย!";
+		mes "เราสามารถซ่อมแซมสิ่งกีดขวางด้วย ^3131FF50 Stones, 3 Sinew of Bear, 500 Metal Fragments, 30 Rough Elunium และ 100 Gold^000000";
+		mes "เรามีทุกอย่างยกเว้น 50 Stones!";
 		next;
-		switch(select("Repair.:Leave it.")) {
+		switch(select("ซ่อมแซม:ยกเลิก")) {
 		case 1:
 			if (countitem(7049) > 49) {
 				mes "[Guillaume Blacksmith]";
-				mes "You brought enough stones! Let's go and repair.";
+				mes "ท่านนำ Stones มามากพอ! ไปต่อกันเถอะ";
 				next;
 				mes "..";
 				next;
@@ -351,19 +351,19 @@ bat_a02,185,270,1	script	Guillaume Blacksmith#a02	851,{
 				mes "..............";
 				next;
 				mes "[Guillaume Blacksmith]";
-				mes "Combine Stones and Gold in the proper percentage.";
+				mes "รวม Stones และ Gold ในอัตราที่เหมาะสม";
 				next;
 				mes "[Guillaume Blacksmith]";
-				mes "Combine Stones and Gold in the proper percentage and shape the Barricade.";
+				mes "รวม Stones and Gold ในอัตราที่เหมาะสม และ กำหนดสิ่งกีดขวาง";
 				next;
 				mes "[Guillaume Blacksmith]";
-				mes "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger.";
+				mes "รวม Stones and Gold ในอัตราที่เหมาะสม และ กำหนดสิ่งกีดขวาง จากนั้นเพิ่ม Rough Elunium เพื่อให้แข็งแกร่งขึ้น";
 				next;
 				mes "[Guillaume Blacksmith]";
-				mes "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger. Now decorate with Metal Fragments.";
+				mes "รวม Stones and Gold ในอัตราที่เหมาะสม และ กำหนดสิ่งกีดขวาง จากนั้นเพิ่ม Rough Elunium เพื่อให้แข็งแกร่งขึ้น ตอนนี้ตกแต่งด้วย Metal Fragments";
 				next;
 				mes "[Guillaume Blacksmith]";
-				mes "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger. Decorate with Metal Fragments, and plait stones with Sinew of Bear!";
+				mes "รวม Stones and Gold ในอัตราที่เหมาะสม และ กำหนดสิ่งกีดขวาง จากนั้นเพิ่ม Rough Elunium เพื่อให้แข็งแกร่งขึ้น ตอนนี้ตกแต่งด้วย Metal Fragments และ stones กับ Sinew of Bear!";
 				next;
 				mes "..............";
 				mes "..............";
@@ -373,8 +373,8 @@ bat_a02,185,270,1	script	Guillaume Blacksmith#a02	851,{
 				next;
 				specialeffect EF_REPAIRWEAPON;
 				mes "[Guillaume Blacksmith]";
-				mes "Wow! It's done.";
-				mes "We are relieved.";
+				mes "ว้าว! เสร็จแล้ว";
+				mes "เราสบายใจ";
 				if (mobcount("bat_a02","barricade#bat_a02_a::OnMyMobDead") < 17) {
 					delitem 7049,50; //Stone
 					donpcevent "barricade#bat_a02_a::OnEnable";
@@ -385,22 +385,22 @@ bat_a02,185,270,1	script	Guillaume Blacksmith#a02	851,{
 			}
 			else {
 				mes "[Guillaume Blacksmith]";
-				mes "You don't have enough Stones!";
+				mes "ท่านมี Stones ไม่พอ!";
 				next;
 				mes "[Guillaume Blacksmith]";
-				mes "^3131FFWe need 50 Stones.^000000";
-				mes "We are busy, so please hurry.";
+				mes "^3131FFพวกเราต้องการ 50 Stones^000000";
+				mes "พวกเราไม่ค่อยว่าง ดังนั้นโปรดรีบหน่อย";
 				close;
 			}
 		case 2:
 			mes "[Guillaume Blacksmith]";
-			mes "There are enemies coming! Let's evacuate from here!";
+			mes "ศัตรูกำลังมา! อพยพคนออกจากที่นี่!";
 			close;
 		}
 	}
 	else {
 		mes "[Guillaume Blacksmith]";
-		mes "There the enemy is coming!";
+		mes "ศัตรูกำลังมา!";
 		close;
 	}
 
@@ -412,15 +412,15 @@ OnInit:
 bat_a02,170,121,5	script	Croix Blacksmith#bat_a02	851,{
 	if (getcharid(4) == $@TierraBG2_id2) {
 		mes "[Croix Blacksmith]";
-		mes "We are in urgency! The Barricade has been destroyed!";
-		mes "We can repair the Barricade with ^3131FF50 Stones, 3 Sinew of Bear, 500 Metal Fragments, 30 Rough Elunium and 100 Gold.^000000";
-		mes "We have it all except for the 50 Stones!";
+		mes "พวกเรารีบด่วน! สิ่งกีดขวางถูกทำลาย!";
+		mes "เราสามารถซ่อมแซมสิ่งกีดขวางด้วย ^3131FF50 Stones, 3 Sinew of Bear, 500 Metal Fragments, 30 Rough Elunium และ 100 Gold^000000";
+		mes "เรามีทุกอย่างยกเว้น 50 Stones!";
 		next;
-		switch(select("Repair.:Leave it.")) {
+		switch(select("ซ่อมแซม:ยกเลิก")) {
 		case 1:
 			if (countitem(7049) > 49) {
 				mes "[Croix Blacksmith]";
-				mes "You brought enough stones! Let's go and repair.";
+				mes "ท่านนำ Stones มามากพอ! ไปต่อกันเถอะ.";
 				next;
 				mes "..";
 				next;
@@ -437,19 +437,19 @@ bat_a02,170,121,5	script	Croix Blacksmith#bat_a02	851,{
 				mes "..............";
 				next;
 				mes "[Croix Blacksmith]";
-				mes "Combine Stones and Gold in the proper percentage.";
+				mes "รวม Stones และ Gold ในอัตราที่เหมาะสม";
 				next;
 				mes "[Croix Blacksmith]";
-				mes "Combine Stones and Gold in the proper percentage and shape the Barricade.";
+				mes "รวม Stones and Gold ในอัตราที่เหมาะสม และ กำหนดสิ่งกีดขวาง";
 				next;
 				mes "[Croix Blacksmith]";
-				mes "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger.";
+				mes "รวม Stones and Gold ในอัตราที่เหมาะสม และ กำหนดสิ่งกีดขวาง จากนั้นเพิ่ม Rough Elunium เพื่อให้แข็งแกร่งขึ้น";
 				next;
 				mes "[Croix Blacksmith]";
-				mes "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger. Now decorate with Metal Fragments.";
+				mes "รวม Stones and Gold ในอัตราที่เหมาะสม และ กำหนดสิ่งกีดขวาง จากนั้นเพิ่ม Rough Elunium เพื่อให้แข็งแกร่งขึ้น ตอนนี้ตกแต่งด้วย Metal Fragments";
 				next;
 				mes "[Croix Blacksmith]";
-				mes "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger. Decorate with Metal Fragments, and plait stones with Sinew of Bear!";
+				mes "รวม Stones and Gold ในอัตราที่เหมาะสม และ กำหนดสิ่งกีดขวาง จากนั้นเพิ่ม Rough Elunium เพื่อให้แข็งแกร่งขึ้น ตอนนี้ตกแต่งด้วย Metal Fragments และ stones กับ Sinew of Bear!";
 				next;
 				mes "..............";
 				mes "..............";
@@ -459,8 +459,8 @@ bat_a02,170,121,5	script	Croix Blacksmith#bat_a02	851,{
 				next;
 				specialeffect EF_REPAIRWEAPON;
 				mes "[Croix Blacksmith]";
-				mes "Wow! It's done.";
-				mes "We are relieved.";
+				mes "ว้าว! เสร็จแล้ว";
+				mes "เราสบายใจ";
 				if (mobcount("bat_a02","barricade#bat_a02_b::OnMyMobDead") < 17) {
 					delitem 7049,50; //Stone
 					donpcevent "barricade#bat_a02_b::OnEnable";
@@ -471,22 +471,22 @@ bat_a02,170,121,5	script	Croix Blacksmith#bat_a02	851,{
 			}
 			else {
 				mes "[Croix Blacksmith]";
-				mes "You don't have enough Stones!";
+				mes "ท่านมี Stones ไม่พอ!";
 				next;
 				mes "[Croix Blacksmith]";
-				mes "^3131FFWe need 50 Stone.^000000";
-				mes "We are busy, so please hurry.";
+				mes "^3131FFพวกเราต้องการ 50 Stones^000000";
+				mes "พวกเราไม่ค่อยว่าง ดังนั้นโปรดรีบหน่อย";
 				close;
 			}
 		case 2:
 			mes "[Croix Blacksmith]";
-			mes "There are enemies coming! Let's evacuate from here!";
+			mes "ศัตรูกำลังมา! อพยพคนออกจากที่นี่!";
 			close;
 		}
 	}
 	else {
 		mes "[Croix Blacksmith]";
-		mes "There, the enemy is coming!";
+		mes "ศัตรูกำลังมา!";
 		close;
 	}
 
@@ -498,9 +498,9 @@ OnInit:
 bat_a02,53,377,3	script	Battle Therapist#a02_a	95,{
 	specialeffect2 EF_HEAL;
 	mes "[Battle Therapist]";
-	mes "Just close your eyes,";
-	mes "and take a deep breath.";
-	mes "You can be free from pain.";
+	mes "แค่หลับตา และ";
+	mes "สูดหายใจเข้าลึก ๆ";
+	mes "ท่านสามารถเป็นอิสระจากความเจ็บปวด";
 	close;
 	end;
 
@@ -552,9 +552,9 @@ OnTouch:
 bat_a02,45,19,3	script	Battle Therapist#a02_b	95,{
 	specialeffect2 EF_HEAL;
 	mes "[Battle Therapist]";
-	mes "Just close your eyes,";
-	mes "and take a deep breath.";
-	mes "You can be free from pain.";
+	mes "แค่หลับตา และ";
+	mes "สูดหายใจเข้าลึก ๆ";
+	mes "ท่านสามารถเป็นอิสระจากความเจ็บปวด";
 	close;
 	end;
 
@@ -606,7 +606,7 @@ OnTouch:
 bat_a02,60,216,3	script	Valley Ghost#bat_a02_n	950,{
 	specialeffect2 EF_HEAL;
 	mes "[Valley Ghost]";
-	mes "Boo...Boo...";
+	mes "บู...บู...";
 	close;
 
 OnInit:
@@ -770,31 +770,31 @@ OnStop:
 	end;
 
 OnTimer7000:
-	mapannounce "bat_a02", "Guillaume Vintenar Axl Rose : Let's attack to burn down Croix's Food Depot!",bc_map,"0xFF9900";
+	mapannounce "bat_a02", "Guillaume Vintenar Axl Rose : มาโจมตีและทำลายคลังอาหารของ Croix's กัน!",bc_map,"0xFF9900";
 	end;
 
 OnTimer8000:
-	mapannounce "bat_a02", "Croix Vintenar Swandery : Master of Valhalla! Let us be gifted with unfailing faith and courage!",bc_map,"0xFF99CC";
+	mapannounce "bat_a02", "Croix Vintenar Swandery : เราได้รับพรสวรรค์ด้วยศรัทธา และความกล้าหาญอย่างไม่มีที่สิ้นสุด!",bc_map,"0xFF99CC";
 	end;
 
 OnTimer1800000:
-	mapannounce "bat_a02", "Marollo VII : Guillaume Marollo, Croix Marollo! Marollo followers!",bc_map,"0x99CC00";
+	mapannounce "bat_a02", "Marollo VII : Guillaume Marollo, Croix Marollo! ผู้ติดตามของ Marollo!",bc_map,"0x99CC00";
 	end;
 
 OnTimer1803000:
-	mapannounce "bat_a02", "Marollo VII : Both camps are competitive, so no camp would be destroyed easily. That means the Marollo kingdoms will never be defeated!",bc_map,"0x99CC00";
+	mapannounce "bat_a02", "Marollo VII : ทั้งสองค่ายกำลังแข่งขันกัน ดังนั้นจะไม่มีค่ายใดถูกทำลายได้ง่าย นั่นหมายความว่าอาณาจักร Marollo จะไม่มีวันพ่ายแพ้!",bc_map,"0x99CC00";
 	end;
 
 OnTimer1808000:
-	mapannounce "bat_a02", "Marollo VII : I think we'd better terminate the battle, and call it a draw.",bc_map,"0x99CC00";
+	mapannounce "bat_a02", "Marollo VII : ข้าคิดว่าเราควรยุติการต่อสู้ และเรียกมันว่าการแข่งขั",bc_map,"0x99CC00";
 	end;
 
 OnTimer1822000:
-	mapannounce "bat_a02", "Marollo VII : Hold your royalty and faith for a moment, and let's settle up the battle of Tierra Gorge.",bc_map,"0x99CC00";
+	mapannounce "bat_a02", "Marollo VII : หยุดศรัทธาของท่านสักครู่ แล้วมาจัดการสงคราม Tierra Gorge",bc_map,"0x99CC00";
 	end;
 
 OnTimer1825000:
-	mapannounce "bat_a02", "Axl Rose, Swandery : Yes sir.",bc_map,"0x99CC00";
+	mapannounce "bat_a02", "Axl Rose, Swandery : ครับท่าน",bc_map,"0x99CC00";
 	end;
 
 OnTimer1830000:
@@ -805,12 +805,12 @@ OnTimer1830000:
 
 /*
 bat_a02,351,75,3	script	Croix Camp Soldier#bat_a02_guide	934,{
-	mes "Loading...";
+	mes "กำลังโหลด...";
 	close;
 }
 
 bat_a02,356,326,3	script	Guillaume Camp Soldier#bat_a02_guide	934,{
-	mes "Loading...";
+	mes "กำลังโหลด...";
 	close;
 }
 */
@@ -818,21 +818,21 @@ bat_a02,356,326,3	script	Guillaume Camp Soldier#bat_a02_guide	934,{
 bat_a02,1,1,3	script	Release all#a02	81,{
 	set .@i, callfunc("F_GM_NPC",1854,0);
 	if (.@i == -1) {
-		mes "Cancelled.";
+		mes "ยกเลิก";
 		close;
 	} else if (.@i == 0) {
 		end;
 	} else {
-		mes "May I help you?";
+		mes "มีอะไรให้ช่วยไหม";
 		next;
 		switch(select("Release all.:Cancel.")) {
 		case 1:
-			mes "Bye.";
+			mes "ลาก่อน";
 			close2;
 			mapwarp "bat_a02","bat_room",154,150;
 			end;
 		case 2:
-			mes "Cancelled.";
+			mes "ยกเลิก";
 			close;
 		}
 	}
