@@ -8150,7 +8150,7 @@ ACMD_FUNC(homshuffle)
 ACMD_FUNC(iteminfo)
 {
 	struct item_data *item_array[MAX_SEARCH];
-	uint16 i, count;
+	uint16 i, count = 1;
 
 	if (!message || !*message) {
 		clif_displaymessage(fd, msg_txt(sd,1276)); // Please enter an item name/ID (usage: @ii/@iteminfo <item name/ID>).
@@ -8201,7 +8201,7 @@ ACMD_FUNC(iteminfo)
 ACMD_FUNC(whodrops)
 {
 	struct item_data *item_data, *item_array[MAX_SEARCH];
-	uint16 i, j, count;
+	uint16 i, j, count = 1;
 
 	if (!message || !*message) {
 		clif_displaymessage(fd, msg_txt(sd,1284)); // Please enter item name/ID (usage: @whodrops <item name/ID>).
