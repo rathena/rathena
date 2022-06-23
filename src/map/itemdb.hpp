@@ -22,7 +22,7 @@ const t_itemid UNKNOWN_ITEM_ID = 512;
 /// The maximum number of item delays
 #define MAX_ITEMDELAYS	10
 ///Designed for search functions, species max number of matches to display.
-#define MAX_SEARCH	5
+#define MAX_SEARCH	10
 
 #define MAX_ROULETTE_LEVEL 7 /** client-defined value **/
 #define MAX_ROULETTE_COLUMNS 9 /** client-defined value **/
