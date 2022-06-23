@@ -1360,7 +1360,7 @@ public:
 
 extern LaphineUpgradeDatabase laphine_upgrade_db;
 
-int itemdb_searchname_array(struct item_data** data, int size, const char *str);
+uint16 itemdb_searchname_array(struct item_data** data, uint16 size, const char *str);
 struct item_data* itemdb_search(t_itemid nameid);
 struct item_data* itemdb_exists(t_itemid nameid);
 #define itemdb_name(n) itemdb_search(n)->name.c_str()

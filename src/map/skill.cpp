@@ -24022,6 +24022,8 @@ void SkillDatabase::loadingFinished(){
 	if( this->skill_num > MAX_SKILL ){
 		ShowError( "There are more skills defined in the skill database (%d) than the MAX_SKILL (%d) define. Please increase it and recompile.\n", this->skill_num, MAX_SKILL );
 	}
+
+	TypesafeYamlDatabase::loadingFinished();
 }
 
 /**
