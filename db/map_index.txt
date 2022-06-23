@@ -1143,6 +1143,25 @@ que_thr
 tur_d04ia
 tur_d04ib
 wolfvill
+icecastle
+icas_in
+jor_tail
+jor_back1
+jor_back2
+jor_back3
+jor_nest
+jor_dun01
+jor_dun02
+jor_dun03
+jor_ab01
+jor_ab02
+jor_que
+air_if
+1@iwp
+1@jorchs
+1@jorlab
+1@whl
+
 
 //======================================================================================
 // - Other/Extra maps -
