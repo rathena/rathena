@@ -1,0 +1,10 @@
+//==================================================
+//Nifflheim Dungeon
+//==================================================
+niflheim,148,124,0	warp	nif_to_nif01	1,1,nif_dun01,146,88
+nif_dun01,146,82,0	warp	nif01_to_nif	1,1,niflheim,145,122
+nif_dun01,134,34,0	warp	nif01l_to_nif02l	1,1,nif_dun02,137,18
+nif_dun02,137,14,0	warp	nif02l_to_nif01l	1,1,nif_dun01,138,34
+nif_dun01,157,34,0	warp	nif01r_to_nif02r	1,1,nif_dun02,162,18
+nif_dun02,162,14,0	warp	nif02r_to_nif01r	1,1,nif_dun01,153,34
+

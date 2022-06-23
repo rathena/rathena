@@ -42939,35 +42939,35 @@ Body:
     Script: |
       bonus bMatk,5;
   - Id: 29423
-    AegisName: SuraStone_Top_
+    AegisName: Sura_Top
     Name: Champion Stone (Upper)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,2*getskilllv("MO_IRONHAND");
   - Id: 29424
-    AegisName: SuraStone_Middle_
+    AegisName: Sura_Middle
     Name: Champion Stone (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bHit,2*getskilllv("MO_DODGE");
   - Id: 29425
-    AegisName: SuraStone_Bottom_
+    AegisName: Sura_Bottom
     Name: Champion Stone (Bottom)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"MO_CHAINCOMBO",20;
   - Id: 29426
-    AegisName: SuraStone_Robe_
+    AegisName: Sura_Robe
     Name: SuraStone (Garment)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",15;
   - Id: 29427
-    AegisName: SuraStone_Robe2_
+    AegisName: Sura_Robe2
     Name: Sura Stone II (Garment)
     Type: Card
     SubType: Enchant
@@ -43248,35 +43248,35 @@ Body:
     Script: |
       bonus2 bSkillAtk,"SC_TRIANGLESHOT",15;
   - Id: 29481
-    AegisName: MechanicStone_Top_
+    AegisName: Mechanic_Top
     Name: Whitesmith Stone (Upper)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,2*getskilllv("BS_WEAPONRESEARCH");
   - Id: 29482
-    AegisName: MechanicStone_Middle_
+    AegisName: Mechanic_Middle
     Name: Whitesmith Stone (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bHit,3*getskilllv("BS_SKINTEMPER");
   - Id: 29483
-    AegisName: MechanicStone_Bottom_
+    AegisName: Mechanic_Bottom
     Name: Whitesmith Stone (Bottom)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"WS_CARTTERMINATION",20;
   - Id: 29484
-    AegisName: MechanicStone_Robe_
+    AegisName: Mechanic_Robe
     Name: Mechanic Stone (Garment)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"NC_AXETORNADO",15;
   - Id: 29485
-    AegisName: WanderMinstrelStone_Top_
+    AegisName: WanderMinstrel_Top
     Name: Clown Gypsy Stone (Upper)
     Type: Card
     SubType: Enchant
@@ -43286,7 +43286,7 @@ Body:
       else
          bonus bBaseAtk,getskilllv("BA_MUSICALLESSON")*2;
   - Id: 29486
-    AegisName: WanderMinstrelStone_Middle_
+    AegisName: WanderMinstrel_Middle
     Name: Clown Gypsy Stone (Middle)
     Type: Card
     SubType: Enchant
@@ -43296,14 +43296,14 @@ Body:
       else
          bonus2 bSkillAtk,"BA_MUSICALSTRIKE",20;
   - Id: 29487
-    AegisName: WanderMinstrelStone_Bottom_
+    AegisName: WanderMinstrel_Bottom
     Name: Clown Gypsy Stone (Bottom)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"CG_ARROWVULCAN",20;
   - Id: 29488
-    AegisName: WanderMinstrelStone_Robe_
+    AegisName: WanderMinstrel_Robe
     Name: Wanderer Minstrel Stone (Garment)
     Type: Card
     SubType: Enchant
@@ -43346,35 +43346,35 @@ Body:
     Script: |
       bonus2 bSkillAtk,"AB_ADORAMUS",15;
   - Id: 29517
-    AegisName: PaladinStone_Top_
+    AegisName: Paladin_Top
     Name: Paladin Stone (Upper)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMaxHPrate,(getskilllv("CR_TRUST")/2);
   - Id: 29518
-    AegisName: PaladinStone_Middle_
+    AegisName: Paladin_Middle
     Name: Paladin Stone (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bLongAtkRate,(getskilllv("KN_SPEARMASTERY")/2);
   - Id: 29519
-    AegisName: PaladinStone_Bottom_
+    AegisName: Paladin_Bottom
     Name: Paladin Stone (Bottom)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"CR_HOLYCROSS",20;
   - Id: 29520
-    AegisName: RoyalguardStone_Robe_
+    AegisName: Royalguard_Robe
     Name: Royal Guard Stone (Garment)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"LG_BANISHINGPOINT",15;
   - Id: 29521
-    AegisName: AssacrossStone_Top_
+    AegisName: Assassincross_Top
     Name: Assassin Cross Stone (Upper)
     Type: Card
     SubType: Enchant
@@ -43395,7 +43395,7 @@ Body:
     Script: |
       bonus2 bSkillAtk,"AS_SONICBLOW",20;
   - Id: 29524
-    AegisName: GuillcrossStone_Robe_
+    AegisName: Guillotinecross_Robe
     Name: Assassin Cross Stone (Garment)
     Type: Card
     SubType: Enchant
@@ -43842,21 +43842,21 @@ Body:
     SubType: Enchant
     Buy: 20
   - Id: 29611
-    AegisName: SuraStone_Bottom2_
+    AegisName: Sura_Bottom2
     Name: Sura Stone II (Bottom)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,2*getskilllv("AL_DP");
   - Id: 29612
-    AegisName: SuraStone_Middle2_
+    AegisName: Sura_Middle2
     Name: Sura Stone II (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"MO_COMBOFINISH",15;
   - Id: 29613
-    AegisName: SuraStone_Top2_
+    AegisName: Sura_Top2
     Name: Sura Stone II (Upper)
     Type: Card
     SubType: Enchant
@@ -46942,7 +46942,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Poison,7;
       bonus bUseSPrate,5;
   - Id: 300254
-    AegisName: aegis_300254
+    AegisName: Amitera_Card
     Name: Amitera Card
     Type: Card
     Weight: 10
@@ -46956,7 +46956,7 @@ Body:
          bonus bMaxHPrate,10;
       }
   - Id: 300255
-    AegisName: aegis_300255
+    AegisName: Litus_Card
     Name: Litus Card
     Type: Card
     Weight: 10
@@ -46971,7 +46971,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Wind,7;
       bonus bUseSPrate,5;
   - Id: 300256
-    AegisName: aegis_300256
+    AegisName: Fillia_Card
     Name: Fillia Card
     Type: Card
     Weight: 10
@@ -46986,7 +46986,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Fire,7;
       bonus bUseSPrate,5;
   - Id: 300257
-    AegisName: aegis_300257
+    AegisName: Vanilaqus_Card
     Name: Vanilaqus Card
     Type: Card
     Weight: 10
@@ -47016,7 +47016,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Dark,7;
       bonus bUseSPrate,5;
   - Id: 300259
-    AegisName: aegis_300259
+    AegisName: Fulgor_Card
     Name: Fulgor Card
     Type: Card
     Weight: 10
@@ -47031,7 +47031,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Earth,7;
       bonus bUseSPrate,5;
   - Id: 300260
-    AegisName: aegis_300260
+    AegisName: Napeo_Card
     Name: Napeo Card
     Type: Card
     Weight: 10
@@ -47045,7 +47045,7 @@ Body:
          bonus bMatk,60;
       }
   - Id: 300261
-    AegisName: aegis_300261
+    AegisName: Galensis_Card
     Name: Galensis Card
     Type: Card
     Weight: 10
@@ -47059,7 +47059,7 @@ Body:
          bonus bCritAtkRate,30;
       }
   - Id: 300262
-    AegisName: aegis_300262
+    AegisName: The_One_Card
     Name: The One Card
     Type: Card
     Weight: 10
@@ -47409,7 +47409,7 @@ Body:
       if (.@r>=9)
          bonus2 bMagicAddRace,RC_Insect,7;
   - Id: 300297
-    AegisName: aegis_300297
+    AegisName: Goblin_King_Card
     Name: Goblin King Card
     Type: Card
     Weight: 10
@@ -53039,28 +53039,28 @@ Body:
     Script: |
       bonus2 bSPDrainRate,10,1;
   - Id: 310664
-    AegisName: aegis_310664
+    AegisName: Magic_Top
     Name: Magic Power Stone(Upper)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bMagicAtkEle,Ele_All,3;
   - Id: 310665
-    AegisName: aegis_310665
+    AegisName: Magic_Middle
     Name: Magic Power Stone(Mid)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bMagicAtkEle,Ele_All,3;
   - Id: 310666
-    AegisName: aegis_310666
+    AegisName: Magic_Bottom
     Name: Magic Power Stone(Lower)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bMagicAtkEle,Ele_All,3;
   - Id: 310667
-    AegisName: aegis_310667
+    AegisName: Magic_Robe_D
     Name: Magic Power Stone(Dual)
     Type: Card
     SubType: Enchant
@@ -60541,6 +60541,85 @@ Body:
           }
         }
       }
+  - Id: 311425
+    AegisName: aegis_311425
+    Name: Spell Stone (Dual)
+    Type: Card
+    SubType: Enchant
+    Weight: 10
+    Script: |
+      bonus bSpl,5;
+  - Id: 311426
+    AegisName: aegis_311426
+    Name: Spell Magic Attack Stone (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,3;
+  - Id: 311427
+    AegisName: aegis_311427
+    Name: Sura Stone (Upper)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bFixedCast,-100*(getskilllv("SR_RAISINGDRAGON")/2);
+  - Id: 311428
+    AegisName: aegis_311428
+    Name: Sura Stone (Middle)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,2*getskilllv("SR_GENTLETOUCH_REVITALIZE");
+  - Id: 311429
+    AegisName: aegis_311429
+    Name: Sura Stone (Lower)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,2*getskilllv("SR_GENTLETOUCH_REVITALIZE");
+  - Id: 311430
+    AegisName: aegis_311430
+    Name: Mechanic Stone (Upper)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,getskilllv("NC_RESEARCHFE");
+  - Id: 311431
+    AegisName: aegis_311431
+    Name: Mechanic Stone (Middle)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,getskilllv("NC_MADOLICENCE");
+      bonus bLongAtkRate,getskilllv("NC_MADOLICENCE");
+  - Id: 311432
+    AegisName: aegis_311432
+    Name: Mechanic Stone (Lower)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDelayrate,getskilllv("NC_TRAININGAXE");
+  - Id: 311433
+    AegisName: aegis_311433
+    Name: Guillotine Cross Stone (Upper)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDelayrate,getskilllv("GC_RESEARCHNEWPOISON")/2;
+  - Id: 311434
+    AegisName: aegis_311434
+    Name: Guillotine Cross Stone (Middle)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,2*getskilllv("GC_DARKILLUSION");
+  - Id: 311435
+    AegisName: aegis_311435
+    Name: Guillotine Cross Stone (Lower)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,2*getskilllv("GC_CROSSRIPPERSLASHER");
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -63564,6 +63643,16 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1000921
+    AegisName: SplStone_Robe_D
+    Name: Spell Stone (Dual)
+    Type: Etc
+    Weight: 100
+  - Id: 1000922
+    AegisName: SmatkStone_Robe
+    Name: Spell Magic Attack Stone (Garment)
+    Type: Etc
+    Weight: 100
   - Id: 1000956
     AegisName: aegis_1000956
     Name: Special Kunnam Exchange
@@ -63575,6 +63664,55 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1000968
+    AegisName: SuraStone_Top3
+    Name: Sura Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1000969
+    AegisName: SuraStone_Middle3
+    Name: Sura Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000970
+    AegisName: SuraStone_Bottom3
+    Name: Sura Stone (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1000971
+    AegisName: MechanicStone_Top3
+    Name: Mechanic Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1000972
+    AegisName: MechanicStone_Middle3
+    Name: Mechanic Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000973
+    AegisName: MechanicStone_Bottom3
+    Name: Mechanic Stone (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1000974
+    AegisName: GuillcrossStone_Top3
+    Name: Guillotine Cross Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1000975
+    AegisName: GuillcrossStone_Middle3
+    Name: Guillotine Cross Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000976
+    AegisName: GuillcrossStone_Bottom3
+    Name: Guillotine Cross Stone (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1001023
+    AegisName: aegis_1001023
+    Name: "[Event] Shard of Infinity Star"
+    Type: Etc
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai

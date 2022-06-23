@@ -3621,6 +3621,12 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 	pc_delautobonus(*sd, sd->autobonus2, true);
 	pc_delautobonus(*sd, sd->autobonus3, true);
 
+	if (sd->pd != nullptr) {
+		pet_delautobonus(*sd, sd->pd->autobonus, true);
+		pet_delautobonus(*sd, sd->pd->autobonus2, true);
+		pet_delautobonus(*sd, sd->pd->autobonus3, true);
+	}
+
 	// Parse equipment
 	for (i = 0; i < EQI_MAX; i++) {
 		current_equip_item_index = index = sd->equip_index[i]; // We pass INDEX to current_equip_item_index - for EQUIP_SCRIPT (new cards solution) [Lupus]
@@ -4629,6 +4635,8 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 			sd->right_weapon.addrace[RC_FORMLESS] += 20;
 			sd->right_weapon.addrace[RC_PLANT] += 20;
 		}
+		if (sc->data[SC_UNLIMIT])
+			sd->bonus.long_attack_atk_rate += sc->data[SC_UNLIMIT]->val2;
 		if (sc->data[SC_HIDDEN_CARD])
 			sd->bonus.long_attack_atk_rate += sc->data[SC_HIDDEN_CARD]->val3;
 		if (sc->data[SC_DEADLY_DEFEASANCE])
@@ -10319,6 +10327,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				if (sc && sc->data[type]->val2 & BREAK_NECK)
 					return 0; // BREAK_NECK cannot be stacked with new breaks until the status is over.
 				val2 |= sce->val2; // Stackable ailments
+			case SC_CLIMAX:
+				sce->val1 = val1;
+				break;
 			default:
 				if (scdb->flag[SCF_OVERLAPIGNORELEVEL])
 					break;
@@ -12730,7 +12741,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		sce->timer = INVALID_TIMER; // Infinite duration
 
 	if (calc_flag.any()) {
-		if (sd) {
+		if (sd != nullptr) {
 			switch(type) {
 				// Statuses that adjust HP/SP and heal after starting
 				case SC_BERSERK:
@@ -12739,7 +12750,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					status_calc_bl_(bl, calc_flag, SCO_FORCE);
 					break;
 				default:
-					status_calc_bl_(bl, calc_flag);
+					if (!sd->state.connect_new)
+						status_calc_bl_(bl, calc_flag);
 					break;
 			}
 		} else
@@ -12750,21 +12762,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	if (sc_isnew && scdb->state.any())
 		status_calc_state(bl, sc, scdb->state, true);
 
-	if (sd) {
-		if (sd->pd)
-			pet_sc_check(sd, type); // Skotlex: Pet Status Effect Healing
-		switch (type) {
-			case SC_BERSERK:
-			case SC_MERC_HPUP:
-			case SC_MERC_SPUP:
-				status_calc_pc(sd, SCO_FORCE);
-				break;
-			default:
-				if (!sd->state.connect_new)
-					status_calc_pc(sd, SCO_NONE);
-				break;
-		}
-	}
+	if (sd != nullptr && sd->pd != nullptr)
+		pet_sc_check(sd, type); // Skotlex: Pet Status Effect Healing
 
 	// 1st thing to execute when loading status
 	switch (type) {

@@ -1,0 +1,28 @@
+//===== rAthena Script =======================================
+//= Amicitia Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 Updated Amicitia Monster Spawn. [Mr.Taurus]
+//============================================================
+
+//==================================================
+// amicitia1 - Amicitia Dungeon F1
+//==================================================
+amicitia1,0,0	monster	Amitera	20924,30,5000
+amicitia1,0,0	monster	Litus	20925,30,5000
+amicitia1,0,0	monster	Fillia	20926,30,5000
+amicitia1,0,0	monster	Vanilaqus	20927,30,5000
+
+//==================================================
+// amicitia2 - Amicitia Dungeon F2
+//==================================================
+amicitia2,0,0	monster	Lavaeter	20920,30,5000
+amicitia2,0,0	monster	Fulgor	20921,30,5000
+amicitia2,0,0	monster	Napeo	20922,30,5000
+amicitia2,0,0	monster	Galensis	20923,30,5000
+amicitia2,0,0,0,0	boss_monster	The One	20928,1,10800000,600000,0

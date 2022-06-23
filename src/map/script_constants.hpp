@@ -5147,6 +5147,7 @@
 	export_constant(IG_A_GRADE_COIN_BAG);
 	export_constant(IG_ADVANCED_WEAPONS_BOX);
 	export_constant(IG_SPLENDID_BOX);
+	export_constant(IG_SPLENDID_BOX2);
 	export_constant(IG_CARDALBUM_ARMOR);
 	export_constant(IG_CARDALBUM_HELM);
 	export_constant(IG_CARDALBUM_ACC);
@@ -5815,6 +5816,12 @@
 	export_constant(IG_AUTO_M_I_BOX_A);
 	export_constant(IG_AUTO_M_I_BOX_B);
 	export_constant(IG_ILLUSION_MODULE_MIX);
+	export_constant(IG_ENCHANT_STONE_BOX22);
+	export_constant(IG_ENCHANT_STONE_BOX23);
+	export_constant(IG_ENCHANT_STONE_BOX24);
+	export_constant(IG_ENCHANT_STONE_BOX25);
+	export_constant(IG_ENCHANT_STONE_BOX27);
+	export_constant(IG_ANCIENT_HERO_BOX_1);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
@@ -8866,7 +8873,8 @@
 	export_constant(ITEMJ_ALL_UPPER);
 	export_constant(ITEMJ_ALL_BABY);
 	export_constant(ITEMJ_ALL_THIRD);
-
+	export_constant(ITEMJ_ALL_FOURTH);
+	
 	/* item drop effects */
 	export_constant(DROPEFFECT_NONE);
 	export_constant(DROPEFFECT_CLIENT);

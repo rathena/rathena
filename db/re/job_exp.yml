@@ -2870,107 +2870,145 @@ Body:
   - Jobs:
       Super_Novice_E: true
       Super_Baby_E: true
-    MaxJobLevel: 50
+    MaxJobLevel: 70
     JobExp:
       - Level: 1
-        Exp: 112000
+        Exp: 112000	
       - Level: 2
-        Exp: 355000
+        Exp: 355000	
       - Level: 3
-        Exp: 615000
+        Exp: 615000	
       - Level: 4
-        Exp: 917000
+        Exp: 917000	
       - Level: 5
-        Exp: 1253000
+        Exp: 1253000	
       - Level: 6
-        Exp: 1595000
+        Exp: 1595000	
       - Level: 7
-        Exp: 2007000
+        Exp: 2007000	
       - Level: 8
-        Exp: 2430000
+        Exp: 2430000	
       - Level: 9
-        Exp: 2868000
+        Exp: 2868000	
       - Level: 10
-        Exp: 3420000
+        Exp: 3420000	
       - Level: 11
-        Exp: 3863000
+        Exp: 3863000	
       - Level: 12
-        Exp: 4504000
+        Exp: 4504000	
       - Level: 13
-        Exp: 4998000
+        Exp: 4998000	
       - Level: 14
-        Exp: 5769000
+        Exp: 5769000	
       - Level: 15
-        Exp: 6321000
+        Exp: 6321000	
       - Level: 16
-        Exp: 7254000
+        Exp: 7254000	
       - Level: 17
-        Exp: 7870000
+        Exp: 7870000	
       - Level: 18
-        Exp: 9015000
+        Exp: 9015000	
       - Level: 19
-        Exp: 9530000
+        Exp: 9530000	
       - Level: 20
-        Exp: 11072000
+        Exp: 11072000	
       - Level: 21
-        Exp: 11848000
+        Exp: 11848000	
       - Level: 22
-        Exp: 13467000
+        Exp: 13467000	
       - Level: 23
-        Exp: 14337000
+        Exp: 14337000	
       - Level: 24
-        Exp: 16243000
+        Exp: 16243000	
       - Level: 25
-        Exp: 17216000
+        Exp: 17216000	
       - Level: 26
-        Exp: 19446000
+        Exp: 19446000	
       - Level: 27
-        Exp: 20781000
+        Exp: 20781000	
       - Level: 28
-        Exp: 23070000
+        Exp: 23070000	
       - Level: 29
-        Exp: 24453000
+        Exp: 24453000	
       - Level: 30
-        Exp: 27568000
+        Exp: 27568000	
       - Level: 31
-        Exp: 29118000
+        Exp: 29118000	
       - Level: 32
-        Exp: 31820000
+        Exp: 31820000	
       - Level: 33
-        Exp: 34125000
+        Exp: 34125000	
       - Level: 34
-        Exp: 37048000
+        Exp: 37048000	
       - Level: 35
-        Exp: 40204000
+        Exp: 40204000	
       - Level: 36
-        Exp: 42972000
+        Exp: 42972000	
       - Level: 37
-        Exp: 45937000
+        Exp: 45937000	
       - Level: 38
-        Exp: 49110000
+        Exp: 49110000	
       - Level: 39
-        Exp: 52696000
+        Exp: 52696000	
       - Level: 40
-        Exp: 57158000
+        Exp: 57158000	
       - Level: 41
-        Exp: 61305000
+        Exp: 61305000	
       - Level: 42
-        Exp: 67167000
+        Exp: 67167000	
       - Level: 43
-        Exp: 72285000
+        Exp: 72285000	
       - Level: 44
-        Exp: 77647000
+        Exp: 77647000	
       - Level: 45
-        Exp: 83624000
+        Exp: 83624000	
       - Level: 46
-        Exp: 91113000
+        Exp: 91113000	
       - Level: 47
-        Exp: 98548000
+        Exp: 98548000	
       - Level: 48
-        Exp: 107630000
+        Exp: 107630000	
       - Level: 49
-        Exp: 119077000
-      - Level: 50
+        Exp: 119077000	
+      - Level: 51
+        Exp: 127335500	
+      - Level: 52
+        Exp: 136632900	
+      - Level: 53
+        Exp: 145930300	
+      - Level: 54
+        Exp: 155227700	
+      - Level: 55
+        Exp: 164525100	
+      - Level: 56
+        Exp: 173822500	
+      - Level: 57
+        Exp: 183119900	
+      - Level: 58
+        Exp: 192417300	
+      - Level: 59
+        Exp: 201714700	
+      - Level: 60
+        Exp: 211012100	
+      - Level: 61
+        Exp: 220309500	
+      - Level: 62
+        Exp: 229606900	
+      - Level: 63
+        Exp: 238904300	
+      - Level: 64
+        Exp: 248201700	
+      - Level: 65
+        Exp: 257499100	
+      - Level: 66
+        Exp: 266796500	
+      - Level: 67
+        Exp: 276093900	
+      - Level: 68
+        Exp: 285391300	
+      - Level: 69
+        Exp: 294688700	
+      - Level: 70
         Exp: 999999999
   - Jobs:
       Super_Novice: true
@@ -3845,6 +3883,13 @@ Body:
       Meister2: true
       Dragon_Knight2: true
       Imperial_Guard2: true
+      Sky_Emperor: true
+      Soul_Ascetic: true
+      Shinkiro: true
+      Shiranui: true
+      Night_Watch: true
+      Hyper_Novice: true
+      Spirit_Handler: true
     MaxJobLevel: 50
     JobExp:
       - Level: 1
