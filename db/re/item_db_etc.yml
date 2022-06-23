@@ -63637,14 +63637,3 @@ Body:
     EquipLevelMin: 1
     Script: |
       bonus bAtkEle,Ele_Holy;
-#Item Vending
-  - Id: 30000
-    AegisName: Zeny
-    Name: Zeny
-    Type: Etc
-    Weight: 1
-  - Id: 30001
-    AegisName: Cash
-    Name: Cash
-    Type: Etc
-    Weight: 1
