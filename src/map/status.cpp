@@ -4629,6 +4629,8 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 			sd->right_weapon.addrace[RC_FORMLESS] += 20;
 			sd->right_weapon.addrace[RC_PLANT] += 20;
 		}
+		if (sc->data[SC_UNLIMIT])
+			sd->bonus.long_attack_atk_rate += sc->data[SC_UNLIMIT]->val2;
 		if (sc->data[SC_HIDDEN_CARD])
 			sd->bonus.long_attack_atk_rate += sc->data[SC_HIDDEN_CARD]->val3;
 		if (sc->data[SC_DEADLY_DEFEASANCE])

@@ -5630,6 +5630,8 @@ Body:
   - Status: Unlimit
     Icon: EFST_UNLIMIT
     DurationLookup: RA_UNLIMIT
+    CalcFlags:
+      All: true
     Flags:
       DisplayPc: true
   - Status: Kings_Grace
@@ -8235,7 +8237,7 @@ Body:
     Icon: EFST_HIDDEN_CARD
     DurationLookup: NW_HIDDEN_CARD
     CalcFlags:
-      Patk: true
+      All: true
   - Status: Grenade_Fragment_1
     Icon: EFST_GRENADE_FRAGMENT_1
     DurationLookup: NW_GRENADE_FRAGMENT

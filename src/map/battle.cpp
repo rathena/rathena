@@ -4065,6 +4065,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += sc->data[SC_OVERTHRUST]->val3;
 		if(sc->data[SC_MAXOVERTHRUST])
 			skillratio += sc->data[SC_MAXOVERTHRUST]->val2;
+		if(sc->data[SC_HEAT_BARREL])
+			skillratio += sc->data[SC_HEAT_BARREL]->val3;
 		if(sc->data[SC_BERSERK])
 #ifndef RENEWAL
 			skillratio += 100;
@@ -5971,22 +5973,6 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 				ATK_ADD(wd->damage, wd->damage2, hd->homunculus.spiritball * 3);
 				RE_ALLATK_ADD(wd, hd->homunculus.spiritball * 3);
 			}
-		}
-		if(sc->data[SC_UNLIMIT] && (wd->flag&(BF_LONG|BF_MAGIC)) == BF_LONG) {
-			switch(skill_id) {
-				case RA_WUGDASH:
-				case RA_WUGSTRIKE:
-				case RA_WUGBITE:
-					break;
-				default:
-					ATK_ADDRATE(wd->damage, wd->damage2, sc->data[SC_UNLIMIT]->val2);
-					RE_ALLATK_ADDRATE(wd, sc->data[SC_UNLIMIT]->val2);
-					break;
-			}
-		}
-		if (sc->data[SC_HEAT_BARREL]) {
-			ATK_ADDRATE(wd->damage, wd->damage2, sc->data[SC_HEAT_BARREL]->val3);
-			RE_ALLATK_ADDRATE(wd, sc->data[SC_HEAT_BARREL]->val3);
 		}
 		if((wd->flag&(BF_LONG|BF_MAGIC)) == BF_LONG) {
 			if (sc->data[SC_MTF_RANGEATK]) { // Monster Transformation bonus
