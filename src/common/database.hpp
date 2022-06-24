@@ -166,6 +166,10 @@ public:
 		}
 	}
 
+	std::vector<std::shared_ptr<datatype>> getCache() {
+		return this->cache;
+	}
+
 	virtual size_t calculateCacheKey( keytype key ){
 		return key;
 	}

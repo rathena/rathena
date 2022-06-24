@@ -833,6 +833,8 @@ void BarterDatabase::loadingFinished(){
 			}
 		}
 	}
+
+	TypesafeYamlDatabase::loadingFinished();
 }
 
 BarterDatabase barter_db;

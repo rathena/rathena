@@ -46347,7 +46347,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus_script "bonus2 bRegenPercentSP,5,5000;",600,9;
+      bonus_script "{ bonus2 bRegenPercentSP,5,5000; }",600,9;
       /* fix me: unknown flag and specialeffect ;  disabled when LK_BERSERK */
   - Id: 23016
     AegisName: Pieces_Of_Grudge
