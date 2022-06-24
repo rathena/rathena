@@ -17949,23 +17949,23 @@ Body:
   - Id: 754
     Name: NPC_IMMUNE_PROPERTY
     Description: Property Immune
-    MaxLevel: 10 #Check: Max level is 5?
-    TargetType: Self #Check: Type is Support?
+    MaxLevel: 5
+    TargetType: Support
     DamageFlags:
       NoDamage: true
     Flags:
       IsNpc: true
-    #Range: Check: Skill has range?
-    #  - Level: 1
-    #    Size: 5
-    #  - Level: 2
-    #    Size: 10
-    #  - Level: 3
-    #    Size: 15
-    #  - Level: 4
-    #    Size: 20
-    #  - Level: 5
-    #    Size: 25
+    Range:
+      - Level: 1
+        Size: 5
+      - Level: 2
+        Size: 10
+      - Level: 3
+        Size: 15
+      - Level: 4
+        Size: 20
+      - Level: 5
+        Size: 25
     Duration1: 30000
   - Id: 755
     Name: NPC_MOVE_COORDINATE
