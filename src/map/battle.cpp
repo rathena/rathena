@@ -1165,6 +1165,14 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 			status_change_end(target, SC_GUARDIAN_S, INVALID_TIMER);
 	}
 
+	// Weapon Blocking can be triggered while the above statuses are active.
+	if ((sce = sc->data[SC_WEAPONBLOCKING]) && flag & (BF_SHORT | BF_WEAPON) && rnd() % 100 < sce->val2) {
+		clif_skill_nodamage(target, src, GC_WEAPONBLOCKING, sce->val1, 1);
+		sc_start(src, target, SC_WEAPONBLOCK_ON, 100, src->id, skill_get_time2(GC_WEAPONBLOCKING, sce->val1));
+		d->dmg_lv = ATK_BLOCK;
+		return false;
+	}
+
 	if (damage == 0)
 		return false;
 
@@ -1236,13 +1244,6 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 			d->dmg_lv = ATK_BLOCK;
 			return false;
 		}
-	}
-
-	if ((sce = sc->data[SC_WEAPONBLOCKING]) && flag&(BF_SHORT | BF_WEAPON) && rnd() % 100 < sce->val2) {
-		clif_skill_nodamage(target, src, GC_WEAPONBLOCKING, sce->val1, 1);
-		sc_start(src, target, SC_WEAPONBLOCK_ON, 100, src->id, skill_get_time2(GC_WEAPONBLOCKING, sce->val1));
-		d->dmg_lv = ATK_BLOCK;
-		return false;
 	}
 
 	if ((sce = sc->data[SC_MILLENNIUMSHIELD]) && sce->val2 > 0 && damage > 0) {
@@ -8266,6 +8267,18 @@ struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct bl
 		if (d.dmg_lv == ATK_DEF /*&& attack_type&(BF_MAGIC|BF_MISC)*/) // Isn't it that additional effects don't apply if miss?
 			d.dmg_lv = ATK_MISS;
 		d.dmotion = 0;
+
+		status_change *tsc = status_get_sc(target);
+
+		// Weapon Blocking has the ability to trigger on ATK_MISS as well.
+		if (tsc != nullptr && tsc->data[SC_WEAPONBLOCKING]) {
+			status_change_entry *tsce = tsc->data[SC_WEAPONBLOCKING];
+
+			if (attack_type == BF_WEAPON && rnd() % 100 < tsce->val2) {
+				clif_skill_nodamage(target, bl, GC_WEAPONBLOCKING, tsce->val1, 1);
+				sc_start(bl, target, SC_WEAPONBLOCK_ON, 100, bl->id, skill_get_time2(GC_WEAPONBLOCKING, tsce->val1));
+			}
+		}
 	}
 	else // Some skills like Weaponry Research will cause damage even if attack is dodged
 		d.dmg_lv = ATK_DEF;
