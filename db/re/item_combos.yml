@@ -13125,7 +13125,7 @@ Body:
       bonus bMaxSPrate,10;
   - Combos:
       - Combo:
-          - Sura_Robe    # 29426
+          - SuraStone_Robe_
           - Sura_Top    # 29423
     Script: |
       bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",10;

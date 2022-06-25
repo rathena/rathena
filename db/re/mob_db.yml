@@ -98528,7 +98528,7 @@ Body:
         Rate: 20
       - Item: Shadowdecon
         Rate: 20
-      - Item: aegis_300258
+      - Item: Lavaeter_Card
         Rate: 1
         StealProtected: true
   - Id: 20921
