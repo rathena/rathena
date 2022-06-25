@@ -357,6 +357,8 @@ void PenaltyDatabase::loadingFinished(){
 			}
 		}
 	}
+
+	TypesafeYamlDatabase::loadingFinished();
 }
 
 PenaltyDatabase penalty_db;
@@ -12990,6 +12992,8 @@ void SkillTreeDatabase::loadingFinished() {
 			}
 		}
 	}
+
+	TypesafeYamlDatabase::loadingFinished();
 }
 
 /**
@@ -13546,6 +13550,8 @@ void JobDatabase::loadingFinished() {
 			}
 		}
 	}
+
+	TypesafeCachedYamlDatabase::loadingFinished();
 }
 
 /**
@@ -13708,6 +13714,8 @@ void PlayerStatPointDatabase::loadingFinished(){
 		// Store it for next iteration
 		last_level = entry;
 	}
+
+	TypesafeCachedYamlDatabase::loadingFinished();
 }
 
 /*==========================================

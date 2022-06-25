@@ -1168,6 +1168,8 @@ void ItemDatabase::loadingFinished(){
 
 		item_db.put( ITEMID_DUMMY, dummy_item );
 	}
+
+	TypesafeCachedYamlDatabase::loadingFinished();
 }
 
 /**
@@ -1668,14 +1670,17 @@ LaphineUpgradeDatabase laphine_upgrade_db;
  * @param str
  * @return Number of matches item
  *------------------------------------------*/
-int itemdb_searchname_array(struct item_data** data, int size, const char *str)
+uint16 itemdb_searchname_array(struct item_data** data, uint16 size, const char *str)
 {
-	int count = 0;
+	uint16 count = 0;
+	const auto &item_list = item_db.getCache();
 
-	for (const auto &it : item_db) {
+	for (const auto &item : item_list) {
+		if (item == nullptr)
+			continue;
 		if (count < size) {
-			if (stristr(it.second->name.c_str(), str) != nullptr || stristr(it.second->ename.c_str(), str) != nullptr || strcmpi(it.second->ename.c_str(), str) == 0)
-				data[count++] = it.second.get();
+			if (stristr(item->name.c_str(), str) != nullptr || stristr(item->ename.c_str(), str) != nullptr || strcmpi(item->ename.c_str(), str) == 0)
+				data[count++] = item.get();
 		} else
 			break;
 	}
@@ -2351,6 +2356,8 @@ void ItemGroupDatabase::loadingFinished() {
 			}
 		}
 	}
+
+	TypesafeYamlDatabase::loadingFinished();
 }
 
 /** Read item forbidden by mapflag (can't equip item)
@@ -2527,6 +2534,8 @@ void ComboDatabase::loadingFinished() {
 			it->combos.push_back(combo.second);
 		}
 	}
+
+	TypesafeYamlDatabase::loadingFinished();
 }
 
 /**
@@ -3115,6 +3124,8 @@ void RandomOptionDatabase::loadingFinished(){
 
 		script_set_constant( name.c_str(), pair.first, false, false );
 	}
+
+	TypesafeYamlDatabase::loadingFinished();
 }
 
 RandomOptionDatabase random_option_db;

@@ -156,6 +156,7 @@ public:
 	void clear() override{
 		TypesafeYamlDatabase<keytype, datatype>::clear();
 		cache.clear();
+		cache.shrink_to_fit();
 	}
 
 	std::shared_ptr<datatype> find( keytype key ) override{
@@ -164,6 +165,10 @@ public:
 		}else{
 			return cache[this->calculateCacheKey( key )];
 		}
+	}
+
+	std::vector<std::shared_ptr<datatype>> getCache() {
+		return this->cache;
 	}
 
 	virtual size_t calculateCacheKey( keytype key ){

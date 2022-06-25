@@ -3912,7 +3912,7 @@ ACMD_FUNC(mapexit)
 ACMD_FUNC(idsearch)
 {
 	char item_name[100];
-	unsigned int i, match;
+	uint16 i, match;
 	struct item_data *item_array[MAX_SEARCH];
 	nullpo_retr(-1, sd);
 
@@ -7613,8 +7613,7 @@ ACMD_FUNC(mobinfo)
 	unsigned char melement[ELE_ALL][8] = { "Neutral", "Water", "Earth", "Fire", "Wind", "Poison", "Holy", "Dark", "Ghost", "Undead" };
 	char atcmd_output2[CHAT_SIZE_MAX];
 	struct item_data *item_data;
-	uint16 mob_ids[MAX_SEARCH];
-	int count;
+	uint16 mob_ids[MAX_SEARCH], count;
 	int i, k;
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
@@ -8151,7 +8150,7 @@ ACMD_FUNC(homshuffle)
 ACMD_FUNC(iteminfo)
 {
 	struct item_data *item_array[MAX_SEARCH];
-	int i, count = 1;
+	uint16 i, count = 1;
 
 	if (!message || !*message) {
 		clif_displaymessage(fd, msg_txt(sd,1276)); // Please enter an item name/ID (usage: @ii/@iteminfo <item name/ID>).
@@ -8202,7 +8201,7 @@ ACMD_FUNC(iteminfo)
 ACMD_FUNC(whodrops)
 {
 	struct item_data *item_data, *item_array[MAX_SEARCH];
-	int i,j, count = 1;
+	uint16 i, j, count = 1;
 
 	if (!message || !*message) {
 		clif_displaymessage(fd, msg_txt(sd,1284)); // Please enter item name/ID (usage: @whodrops <item name/ID>).
@@ -8257,8 +8256,7 @@ ACMD_FUNC(whodrops)
 
 ACMD_FUNC(whereis)
 {
-	uint16 mob_ids[MAX_SEARCH] = {0};
-	int count = 0;
+	uint16 mob_ids[MAX_SEARCH] = {0}, count;
 
 	if (!message || !*message) {
 		clif_displaymessage(fd, msg_txt(sd,1288)); // Please enter a monster name/ID (usage: @whereis <monster_name_or_monster_ID>).
