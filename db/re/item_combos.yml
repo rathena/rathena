@@ -13132,7 +13132,7 @@ Body:
   - Combos:
       - Combo:
           - SuraStone_Robe_
-          - SuraStone_Middle_
+          - Sura_Middle    # 29424
     Script: |
       bonus2 bFixedCastrate,"CH_SOULCOLLECT",-40;
   - Combos:
