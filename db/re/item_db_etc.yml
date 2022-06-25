@@ -42939,14 +42939,14 @@ Body:
     Script: |
       bonus bMatk,5;
   - Id: 29423
-    AegisName: SuraStone_Top_
+    AegisName: Sura_Top
     Name: Champion Stone (Upper)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,2*getskilllv("MO_IRONHAND");
   - Id: 29424
-    AegisName: SuraStone_Middle_
+    AegisName: Sura_Middle
     Name: Champion Stone (Middle)
     Type: Card
     SubType: Enchant
