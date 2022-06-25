@@ -98553,25 +98553,408 @@ Body:
 #  - Id: 20934
 #    AegisName: R001_BESTIA
 #    DamageTaken: 10
-#  - Id: 20935
-#    AegisName: GAN_CEANN
-#  - Id: 20936
-#    AegisName: DISGUISER
-#  - Id: 20937
-#    AegisName: BRUTAL_MURDERER
-#  - Id: 20938
-#    AegisName: GHOST_CUBE
-#  - Id: 20939
-#    AegisName: LUDE_GAL
-#  - Id: 20940
-#    AegisName: BLUEMOON_LOLI_RURI
-#  - Id: 20941
-#    AegisName: GROTE
-#  - Id: 20942
-#    AegisName: PIERROTZOIST
-#  - Id: 20943
-#    AegisName: DEATH_WITCH
-#    DamageTaken: 10
+  - Id: 20935
+    AegisName: GAN_CEANN
+    Name: Gan Ceann
+    Level: 215
+    Hp: 4681632
+    BaseExp: 205200
+    JobExp: 168700
+    Attack: 7854
+    Attack2: 1448
+    Defense: 280
+    MagicDefense: 90
+    Str: 221
+    Agi: 129
+    Vit: 151
+    Int: 65
+    Dex: 245
+    Luk: 43
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 155
+    AttackDelay: 647
+    AttackMotion: 652
+    DamageMotion: 480
+    Ai: 09
+    Modes:
+      ChangeChase: true
+    Drops:
+      - Item: Broken_Steel_Piece
+        Rate: 1000
+      - Item: Broken_Armor_Piece
+        Rate: 4850
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: aegis_300240
+        Rate: 1
+        StealProtected: true
+  - Id: 20936
+    AegisName: DISGUISER
+    Name: Disguiser
+    Level: 254
+    Hp: 6854120
+    BaseExp: 266400
+    JobExp: 150700
+    Attack: 7338
+    Attack2: 1282
+    Defense: 285
+    MagicDefense: 111
+    Str: 242
+    Agi: 153
+    Vit: 127
+    Int: 75
+    Dex: 210
+    Luk: 47
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Undead
+    ElementLevel: 2
+    WalkSpeed: 147
+    AttackDelay: 516
+    AttackMotion: 568
+    DamageMotion: 384
+    Ai: 09
+    Modes:
+      ChangeChase: true
+      Detector: true
+    Drops:
+      - Item: Red_Scarf
+        Rate: 4850
+      - Item: Tangled_Chain
+        Rate: 3686
+      - Item: White_Powder
+        Rate: 100
+      - Item: Honey
+        Rate: 100
+      - Item: aegis_300244
+        Rate: 1
+        StealProtected: true
+  - Id: 20937
+    AegisName: BRUTAL_MURDERER
+    Name: Brutal Murderer
+    Level: 214
+    Hp: 4960787
+    BaseExp: 219080
+    JobExp: 182200
+    Attack: 7397
+    Attack2: 1498
+    Defense: 284
+    MagicDefense: 91
+    Str: 222
+    Agi: 145
+    Vit: 166
+    Int: 41
+    Dex: 247
+    Luk: 46
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 175
+    AttackDelay: 614
+    AttackMotion: 644
+    DamageMotion: 384
+    Ai: 09
+    Modes:
+      ChangeChase: true
+    Drops:
+      - Item: Old_Manteau
+        Rate: 4171
+      - Item: Rusty_Cleaver
+        Rate: 2000
+      - Item: aegis_300241
+        Rate: 1
+        StealProtected: true
+  - Id: 20938
+    AegisName: GHOST_CUBE
+    Name: Ghost Cube
+    Level: 213
+    Hp: 4439942
+    BaseExp: 152500
+    JobExp: 124700
+    Attack: 4294
+    Attack2: 1270
+    Defense: 277
+    MagicDefense: 75
+    Str: 184
+    Agi: 154
+    Vit: 155
+    Int: 66
+    Dex: 231
+    Luk: 60
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 512
+    AttackMotion: 548
+    DamageMotion: 576
+    Ai: 09
+    Modes:
+      ChangeChase: true
+    Drops:
+      - Item: Piece_Of_Black_Cloth
+        Rate: 3200
+      - Item: Ectoplasm
+        Rate: 5723
+      - Item: Black_Powder
+        Rate: 500
+      - Item: aegis_300242
+        Rate: 1
+        StealProtected: true
+  - Id: 20939
+    AegisName: LUDE_GAL
+    Name: Lude Gal
+    Level: 213
+    Hp: 4439942
+    BaseExp: 169900
+    JobExp: 139000
+    Attack: 4283
+    Attack2: 1378
+    Defense: 277
+    MagicDefense: 77
+    Str: 197
+    Agi: 138
+    Vit: 105
+    Int: 182
+    Dex: 203
+    Luk: 55
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Undead
+    Element: Undead
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 590
+    AttackMotion: 560
+    DamageMotion: 480
+    Ai: 04
+    Drops:
+      - Item: Pumpkin_Bucket
+        Rate: 3200
+      - Item: Ectoplasm
+        Rate: 5723
+      - Item: Transparent_Cloth
+        Rate: 1000
+      - Item: Yellow_Powder
+        Rate: 300
+      - Item: aegis_300243
+        Rate: 1
+        StealProtected: true
+  - Id: 20940
+    AegisName: BLUEMOON_LOLI_RURI
+    Name: Blue Moon Loli Ruri
+    Level: 255
+    Hp: 6685410
+    BaseExp: 288700
+    JobExp: 180100
+    Attack: 7423
+    Attack2: 2280
+    Defense: 273
+    MagicDefense: 84
+    Str: 111
+    Agi: 105
+    Vit: 127
+    Int: 179
+    Dex: 295
+    Luk: 79
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 125
+    AttackDelay: 647
+    AttackMotion: 632
+    DamageMotion: 376
+    Ai: 09
+    Modes:
+      ChangeChase: true
+      Detector: true
+    Drops:
+      - Item: Black_Kitty_Doll
+        Rate: 800
+      - Item: Striped_Socks
+        Rate: 3000
+      - Item: Bat_Cage
+        Rate: 5044
+      - Item: Elunium
+        Rate: 100
+      - Item: Loki's_Whispers
+        Rate: 1
+      - Item: Yellow_Powder
+        Rate: 300
+      - Item: aegis_300245
+        Rate: 1
+        StealProtected: true
+  - Id: 20941
+    AegisName: GROTE
+    Name: Grote
+    Level: 253
+    Hp: 5750150
+    BaseExp: 1625
+    JobExp: 1547
+    Attack: 6697
+    Attack2: 1285
+    Defense: 270
+    MagicDefense: 80
+    Str: 183
+    Agi: 156
+    Vit: 162
+    Int: 75
+    Dex: 213
+    Luk: 37
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 180
+    AttackDelay: 717
+    AttackMotion: 784
+    DamageMotion: 576
+    Ai: 04
+    Modes:
+      CastSensorIdle: true
+      Detector: true
+    Drops:
+      - Item: Hanging_Doll
+        Rate: 1800
+      - Item: Rotten_Rope
+        Rate: 5335
+      - Item: Tree_Knot
+        Rate: 4074
+      - Item: Cardinal_Jewel_
+        Rate: 300
+      - Item: Red_Gemstone
+        Rate: 100
+      - Item: Branch_Of_Dead_Tree
+        Rate: 10
+      - Item: Elder_Branch
+        Rate: 100
+      - Item: aegis_300246
+        Rate: 1
+        StealProtected: true
+  - Id: 20942
+    AegisName: PIERROTZOIST
+    Name: Pierrotzoist
+    Level: 255
+    Hp: 5358000
+    BaseExp: 156500
+    JobExp: 148700
+    Attack: 6548
+    Attack2: 1281
+    Defense: 273
+    MagicDefense: 68
+    Str: 197
+    Agi: 167
+    Vit: 172
+    Int: 88
+    Dex: 233
+    Luk: 60
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 155
+    AttackDelay: 741
+    AttackMotion: 736
+    DamageMotion: 480
+    Ai: 04
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Broken_Needle
+        Rate: 4365
+      - Item: Spool
+        Rate: 5335
+      - Item: Needle_Pouch
+        Rate: 2000
+      - Item: Stuffed_Doll
+        Rate: 80
+      - Item: Ectoplasm
+        Rate: 300
+      - Item: aegis_300247
+        Rate: 1
+        StealProtected: true
+  - Id: 20943
+    AegisName: DEATH_WITCH
+    Name: Death Witch
+    Level: 255
+    Hp: 88000000
+    BaseExp: 35000000
+    JobExp: 25000000
+    MvpExp: 15000000
+    Attack: 8840
+    Attack2: 13000
+    Defense: 610
+    MagicDefense: 110
+    Str: 141
+    Agi: 123
+    Vit: 118
+    Int: 255
+    Dex: 270
+    Luk: 70
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 155
+    AttackDelay: 541
+    AttackMotion: 536
+    DamageMotion: 480
+    Ai: 21
+    Class: Boss
+    Modes:
+      Detector: true
+      KnockBackImmune: true
+      StatusImmune: true
+      Mvp: true
+    MvpDrops:
+      - Item: Old_Card_Album
+        Rate: 10000
+      - Item: Old_Violet_Box
+        Rate: 10000
+    Drops:
+      - Item: aegis_300248
+        Rate: 1
+        StealProtected: true
+      - Item: Yggdrasilberry
+        Rate: 10000
+      - Item: Bat_Cage
+        Rate: 10000
+      - Item: Old_Card_Album
+        Rate: 3000
+      - Item: Old_Violet_Box
+        Rate: 5000
 #  - Id: 20944
 #    AegisName: JP_E_MONSTER_151
 #  - Id: 20945
