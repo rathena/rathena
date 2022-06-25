@@ -34,13 +34,13 @@ mag_dun02,0,0	monster	Gig	1387,10,5000
 //==================================================
 // mag_dun03 - Nogg Road
 //==================================================
-mag_dun03,0,0	monster	Rigid Blazer	20372,20,5000,5000,"#MagmaF3_Drop::OnMagma3MobDead"
-mag_dun03,0,0	monster	Rigid Nightmare	20373,35,5000,5000,"#MagmaF3_Drop::OnMagma3MobDead"
+mag_dun03,0,0	monster	Rigid Blazer	20372,30,5000,5000,"#MagmaF3_Drop::OnMagma3MobDead"
+mag_dun03,0,0	monster	Rigid Nightmare	20373,40,5000,5000,"#MagmaF3_Drop::OnMagma3MobDead"
 mag_dun03,0,0	monster	Rigid Deleter	20374,40,5000,5000,"#MagmaF3_Drop::OnMagma3MobDead"
-mag_dun03,0,0	monster	Rigid Deleter	20375,45,5000,5000,"#MagmaF3_Drop::OnMagma3MobDead"
-mag_dun03,0,0	monster	Rigid Explosion	20376,20,5000,5000,"#MagmaF3_Drop::OnMagma3MobDead"
+mag_dun03,0,0	monster	Rigid Deleter	20375,40,5000,5000,"#MagmaF3_Drop::OnMagma3MobDead"
+mag_dun03,0,0	monster	Rigid Explosion	20376,25,5000,5000,"#MagmaF3_Drop::OnMagma3MobDead"
 mag_dun03,0,0	monster	Rigid Kaho	20377,20,5000,5000,"#MagmaF3_Drop::OnMagma3MobDead"
-mag_dun03,0,0	monster	Rigid Lava Golem	20378,15,5000,5000,"#MagmaF3_Drop::OnMagma3MobDead"
+mag_dun03,0,0	monster	Rigid Lava Golem	20378,25,5000,5000,"#MagmaF3_Drop::OnMagma3MobDead"
 
 mag_dun03,0,0	boss_monster	Rigid Muspellskoll	20419,1,7200000,600000,"#MagmaF3_Drop::OnMagma3MobDead"
 
