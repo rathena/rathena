@@ -16,7 +16,7 @@
 //= 2.0 Added 4th class [Lemongrass]
 //============================================================
 
-prontera,165,165,4	script	Job Master	485,{
+prontera,153,193,6	script	Job Master	123,{
 function Get_Job_Equip;
 // Checks if the Player has the required level.
 // closes if not, returns if yes
@@ -515,7 +515,6 @@ OnInit:
 		.BabyExpanded = false;
 		.BabySummoner = false;
 	}
-    setunitdata getnpcid(0),UNPC_GROUP_ID,22;    //1-38
-    end;
+	end;
 }
 

@@ -82,7 +82,6 @@ Body:
     Opt1: StoneWait
     Flags:
       SendOption: true
-      BossResist: true
       StopAttacking: true
     Fail:
       Freeze: true
