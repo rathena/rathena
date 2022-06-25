@@ -75,11 +75,9 @@ c_tower3_,0,0,0,0	boss_monster	Time Holder	3074,1,7200000,0,0
 //==================================================
 // clock_01 - Clock Tower: Unknown Basement
 //==================================================
-clock_01,0,0	monster	Jennifer	20177,45,5000,0,0
+clock_01,0,0	monster	Jennifer	20177,50,5000,0,0
 clock_01,0,0	monster	General Orc	20178,65,5000,0,0
 clock_01,0,0	monster	Erzsebet	20176,65,5000,0,0
 clock_01,0,0	monster	Sieglouse	20179,60,5000,0,0
 clock_01,0,0	monster	Extra Joker	20175,50,5000,0,0
-clock_01,0,0	monster	Owl Marquis	2923,3,5000,5000
-clock_01,0,0	monster	Sieglouse	2921,60,5000,1800000
-clock_01,0,0,0,0	boss_monster	Time Holder	20118,1,7200000,0,0
+clock_01,0,0	boss_monster	Goblin King	20118,1,7200000,0,0

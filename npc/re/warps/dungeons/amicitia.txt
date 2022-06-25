@@ -1,0 +1,25 @@
+//===== rAthena Script =======================================
+//= Abandoned Lab Amicitia Warp Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 Updated Abandoned Lab Amicitia Warp Script. [Mr.Taurus]
+//============================================================
+ein_fild08,154,100,0	script	Amicitia	45,1,1,{
+
+OnTouch_:
+if(BaseLevel < 220) {
+	dispbottom "System: You are not strong enough for the next area. You need at least Base Level 220!";
+	end;
+}
+warp "amicitia1",243,244;
+end;
+}
+
+amicitia1,248,243,0	warp	amicitia 1 to ein_fild08	1,1,ein_fild08,150,97
+amicitia1,150,17,0	warp	amicitia 1 to 2	1,1,amicitia2,146,278
+amicitia2,146,282,0	warp	amicitia 2 to 1	1,1,amicitia1,150,22
