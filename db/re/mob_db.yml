@@ -99446,70 +99446,1597 @@ Body:
 #    AegisName: MD_COMMON
 #  - Id: 21547
 #    AegisName: M_INCREASE_SOIL
-#  - Id: 21548
-#    AegisName: ECO_CORNUS
-#  - Id: 21549
-#    AegisName: ECO_PINGUICULA
-#  - Id: 21550
-#    AegisName: ECO_HUNTER_FLY
-#  - Id: 21551
-#    AegisName: ECO_ROCKER
-#  - Id: 21552
-#    AegisName: ECO_SAVAGE
-#  - Id: 21553
-#    AegisName: ECO_FLORA
-#  - Id: 21554
-#    AegisName: ECO_HILL_WIND
-#  - Id: 21555
-#    AegisName: ECO_MISTRESS
-#  - Id: 21556
-#    AegisName: ECO_EXPLOSION
-#  - Id: 21557
-#    AegisName: ECO_DELETER
-#  - Id: 21558
-#    AegisName: ECO_JAKK
-#  - Id: 21559
-#    AegisName: ECO_LAVA_GOLEM
-#  - Id: 21560
-#    AegisName: ECO_MAJORUROS
-#  - Id: 21561
-#    AegisName: ECO_HYDRO
-#  - Id: 21562
-#    AegisName: ECO_ACIDUS
-#  - Id: 21563
-#    AegisName: ECO_DETALE
-#  - Id: 21564
-#    AegisName: ECO_ICE_TITAN
-#  - Id: 21565
-#    AegisName: ECO_SIROMA
-#  - Id: 21566
-#    AegisName: ECO_SNOWIER
-#  - Id: 21567
-#    AegisName: ECO_CENTIPEDE
-#  - Id: 21568
-#    AegisName: ECO_AQUA_ELEMENTAL
-#  - Id: 21569
-#    AegisName: ECO_ANGELGOLT
-#  - Id: 21570
-#    AegisName: ECO_RHYNCHO
-#  - Id: 21571
-#    AegisName: ECO_KTULLANUX
-#  - Id: 21572
-#    AegisName: ECO_ANCIENT_MUMMY
-#  - Id: 21573
-#    AegisName: ECO_LUDE
-#  - Id: 21574
-#    AegisName: ECO_RAGGED_ZOMBIE
-#  - Id: 21575
-#    AegisName: ECO_WRAITH
-#  - Id: 21576
-#    AegisName: ECO_FLAME_SKULL
-#  - Id: 21577
-#    AegisName: ECO_BANSHEE
-#  - Id: 21578
-#    AegisName: ECO_KNIGHT_OF_ABYSS
-#  - Id: 21579
-#    AegisName: ECO_LORD_OF_DEATH
+  - Id: 21548
+    AegisName: ECO_CORNUS
+    Name: Verdant Cornus
+    Level: 250
+    Hp: 4537500
+    BaseExp: 1522652
+    JobExp: 1412544
+    Attack: 5403
+    Attack2: 1522
+    Defense: 366
+    MagicDefense: 195
+    Str: 251
+    Agi: 147
+    Vit: 159
+    Int: 199
+    Dex: 130
+    Luk: 77
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    RaceGroups:
+      Splendide: true
+    Element: Holy
+    ElementLevel: 3
+    WalkSpeed: 120
+    AttackDelay: 1000
+    AttackMotion: 624
+    DamageMotion: 300
+    Ai: 03
+    Drops:
+      - Item: Mystic_Horn
+        Rate: 2000
+      - Item: Soft_Feather
+        Rate: 1500
+      - Item: Bradium
+        Rate: 5
+      - Item: Snowy_Horn
+        Rate: 1
+      - Item: Long_Horn
+        Rate: 1
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Plain_Barmund_Rune
+        Rate: 50
+      - Item: Plain_Barmund_Rune2
+        Rate: 1
+      - Item: Cornus_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 21549
+    AegisName: ECO_PINGUICULA
+    Name: Verdant Pinguicula
+    Level: 251
+    Hp: 3652050
+    BaseExp: 1411706
+    JobExp: 1381547
+    Attack: 4546
+    Attack2: 1322
+    Defense: 346
+    MagicDefense: 147
+    Str: 167
+    Agi: 160
+    Vit: 164
+    Int: 107
+    Dex: 277
+    Luk: 34
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    RaceGroups:
+      Splendide: true
+    Element: Earth
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 700
+    AttackMotion: 600
+    DamageMotion: 360
+    Ai: 13
+    Drops:
+      - Item: Pinguicula_Corsage
+        Rate: 1
+      - Item: Sharp_Leaf
+        Rate: 2500
+      - Item: Great_Leaf
+        Rate: 1000
+      - Item: Browny_Root
+        Rate: 1500
+      - Item: Elder_Branch
+        Rate: 500
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Pinguicula_Card
+        Rate: 1
+        StealProtected: true
+      - Item: Plain_Barmund_Rune2
+        Rate: 5
+      - Item: Plain_Barmund_Rune
+        Rate: 5
+  - Id: 21550
+    AegisName: ECO_HUNTER_FLY
+    Name: Verdant Hunter Fly
+    Level: 249
+    Hp: 3361500
+    BaseExp: 1358800
+    JobExp: 1253200
+    Attack: 3226
+    Attack2: 1200
+    Defense: 316
+    MagicDefense: 120
+    Str: 132
+    Agi: 172
+    Vit: 122
+    Int: 125
+    Dex: 200
+    Luk: 15
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Wind
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 676
+    AttackMotion: 576
+    DamageMotion: 480
+    Ai: 04
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Rough_Wind
+        Rate: 15
+      - Item: Steel
+        Rate: 50
+      - Item: Solid_Shell
+        Rate: 2668
+      - Item: Zargon
+        Rate: 650
+      - Item: Oridecon_Stone
+        Rate: 65
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Plain_Barmund_Rune
+        Rate: 50
+      - Item: Plain_Barmund_Rune2
+        Rate: 5
+      - Item: Hunter_Fly_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 21551
+    AegisName: ECO_ROCKER
+    Name: Verdant Rocker
+    Level: 245
+    Hp: 4520250
+    BaseExp: 1517400
+    JobExp: 1411000
+    Attack: 4119
+    Attack2: 1500
+    Defense: 316
+    MagicDefense: 130
+    Str: 212
+    Agi: 181
+    Vit: 180
+    Int: 110
+    Dex: 217
+    Luk: 50
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Insect
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1864
+    AttackMotion: 864
+    DamageMotion: 540
+    Ai: 01
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Grasshopper's_Leg
+        Rate: 8000
+      - Item: Wing_Of_Fly
+        Rate: 500
+      - Item: Grasshopper_Doll
+        Rate: 10
+      - Item: Hinalle
+        Rate: 10
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Rocker_Card
+        Rate: 1
+        StealProtected: true
+      - Item: Plain_Barmund_Rune
+        Rate: 50
+      - Item: Plain_Barmund_Rune2
+        Rate: 5
+  - Id: 21552
+    AegisName: ECO_SAVAGE
+    Name: Verdant Savage
+    Level: 247
+    Hp: 526110
+    BaseExp: 1553500
+    JobExp: 1457000
+    Attack: 5181
+    Attack2: 1223
+    Defense: 326
+    MagicDefense: 138
+    Str: 156
+    Agi: 121
+    Vit: 154
+    Int: 110
+    Dex: 252
+    Luk: 85
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Brute
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1960
+    AttackMotion: 960
+    DamageMotion: 384
+    Ai: 17
+    Drops:
+      - Item: Wild_Boar's_Mane
+        Rate: 4500
+      - Item: Grape
+        Rate: 150
+      - Item: Animal_Blood
+        Rate: 1
+      - Item: Savage_Meat
+        Rate: 25
+      - Item: Elunium_Stone
+        Rate: 35
+      - Item: Royal_Jelly
+        Rate: 1
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Savage_Card
+        Rate: 1
+        StealProtected: true
+      - Item: Plain_Barmund_Rune2
+        Rate: 5
+      - Item: Plain_Barmund_Rune
+        Rate: 50
+  - Id: 21553
+    AegisName: ECO_FLORA
+    Name: Verdant Flora
+    Level: 254
+    Hp: 5230100
+    BaseExp: 1535000
+    JobExp: 1457000
+    Attack: 5163
+    Attack2: 1331
+    Defense: 199
+    MagicDefense: 129
+    Str: 249
+    Agi: 129
+    Vit: 135
+    Int: 59
+    Dex: 246
+    Luk: 80
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Plant
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1432
+    AttackMotion: 432
+    DamageMotion: 576
+    Ai: 10
+    Drops:
+      - Item: Blossom_Of_Maneater
+        Rate: 4500
+      - Item: Aloe
+        Rate: 5
+      - Item: Leaflet_Of_Aloe
+        Rate: 25
+      - Item: Singing_Flower
+        Rate: 10
+      - Item: Stem
+        Rate: 1000
+      - Item: Witherless_Rose
+        Rate: 1
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Flora_Card
+        Rate: 1
+        StealProtected: true
+      - Item: Plain_Barmund_Rune2
+        Rate: 5
+      - Item: Plain_Barmund_Rune
+        Rate: 5
+  - Id: 21554
+    AegisName: ECO_HILL_WIND
+    Name: Verdant Hill Wind
+    Level: 250
+    Hp: 3375000
+    BaseExp: 1415045
+    JobExp: 1346700
+    Attack: 4400
+    Attack2: 1067
+    Defense: 290
+    MagicDefense: 137
+    Str: 205
+    Agi: 169
+    Vit: 159
+    Int: 135
+    Dex: 196
+    Luk: 55
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Wind
+    ElementLevel: 3
+    WalkSpeed: 170
+    AttackDelay: 504
+    AttackMotion: 480
+    DamageMotion: 360
+    Ai: 04
+    Drops:
+      - Item: Harpy's_Feather
+        Rate: 2000
+      - Item: Harpy's_Claw
+        Rate: 1500
+      - Item: Monster's_Feed
+        Rate: 500
+      - Item: Blue_Herb
+        Rate: 5
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Plain_Barmund_Rune2
+        Rate: 5
+      - Item: Hill_Wind_Card
+        Rate: 1
+        StealProtected: true
+      - Item: Plain_Barmund_Rune
+        Rate: 50
+  - Id: 21555
+    AegisName: ECO_MISTRESS
+    Name: Verdant Mistress
+    Level: 260
+    Hp: 237800000
+    BaseExp: 61841400
+    JobExp: 51500660
+    MvpExp: 48414000
+    Attack: 13511
+    Attack2: 4967
+    Defense: 487
+    MagicDefense: 192
+    Str: 276
+    Agi: 186
+    Vit: 188
+    Int: 213
+    Dex: 272
+    Luk: 79
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Wind
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 1148
+    AttackMotion: 648
+    DamageMotion: 300
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Old_Violet_Box
+        Rate: 1500
+      - Item: Blacksmith_Blessing
+        Rate: 500
+    Drops:
+      - Item: Honey
+        Rate: 5000
+      - Item: Old_Card_Album
+        Rate: 500
+      - Item: Young_Twig
+        Rate: 5
+      - Item: Elunium
+        Rate: 2134
+      - Item: Etel_Dust
+        Rate: 10000
+      - Item: Mistress_Card
+        Rate: 1
+        StealProtected: true
+      - Item: Zelunium
+        Rate: 1000
+      - Item: Shadowdecon
+        Rate: 1000
+      - Item: Plain_Barmund_Rune2
+        Rate: 10000
+      - Item: Plain_Barmund_Rune
+        Rate: 10000	
+  - Id: 21556
+    AegisName: ECO_EXPLOSION
+    Name: Blazing Explosion
+    Level: 255
+    Hp: 4628250
+    BaseExp: 1510000
+    JobExp: 1412000
+    Attack: 6025
+    Attack2: 1100
+    Defense: 312
+    MagicDefense: 150
+    Str: 191
+    Agi: 151
+    Vit: 163
+    Int: 150
+    Dex: 178
+    Luk: 60
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 165
+    AttackDelay: 1260
+    AttackMotion: 960
+    DamageMotion: 336
+    Ai: 04
+    Drops:
+      - Item: Wing_Of_Red_Bat
+        Rate: 2750
+      - Item: Etel_Dust
+        Rate: 100
+      - Item: Hot_Hair
+        Rate: 1600
+      - Item: Flame_Barmund_Rune
+        Rate: 30
+      - Item: Explosion_Card
+        Rate: 1
+        StealProtected: true
+      - Item: Flame_Barmund_Rune2
+        Rate: 5
+      - Item: Burning_Heart
+        Rate: 1600
+  - Id: 21557
+    AegisName: ECO_DELETER
+    Name: Blazing Sky Deleter
+    Level: 251
+    Hp: 3689700
+    BaseExp: 1591500
+    JobExp: 1305470
+    Attack: 653
+    Attack2: 179
+    Defense: 311
+    MagicDefense: 153
+    Str: 205
+    Agi: 155
+    Vit: 153
+    Int: 168
+    Dex: 180
+    Luk: 73
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Dragon
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 175
+    AttackDelay: 1020
+    AttackMotion: 720
+    DamageMotion: 384
+    Ai: 13
+    Drops:
+      - Item: Dragon's_Skin
+        Rate: 1000
+      - Item: Dragon_Canine
+        Rate: 1300
+      - Item: Dragon_Train
+        Rate: 1000
+      - Item: Dragon_Scale
+        Rate: 1000
+      - Item: Flame_Barmund_Rune
+        Rate: 30
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Flame_Barmund_Rune2
+        Rate: 5
+      - Item: Flying_Deleter_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 21558
+    AegisName: ECO_JAKK
+    Name: Blazing Jakk
+    Level: 245
+    Hp: 3528000
+    BaseExp: 1488000
+    JobExp: 1405320
+    Attack: 229
+    Attack2: 37
+    Defense: 290
+    MagicDefense: 125
+    Str: 158
+    Agi: 143
+    Vit: 142
+    Int: 125
+    Dex: 161
+    Luk: 65
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 1180
+    AttackMotion: 480
+    DamageMotion: 648
+    Ai: 21
+    Drops:
+      - Item: Pumpkin_Head
+        Rate: 4500
+      - Item: Zargon
+        Rate: 450
+      - Item: Elunium
+        Rate: 16
+      - Item: Frozen_Heart
+        Rate: 3
+      - Item: Pumpkin
+        Rate: 500
+      - Item: Flame_Barmund_Rune
+        Rate: 30
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Flame_Barmund_Rune2
+        Rate: 5
+      - Item: Jakk_Card
+        Rate: 1
+        StealProtected: true
+      - Item: Light_Granule
+        Rate: 30
+  - Id: 21559
+    AegisName: ECO_LAVA_GOLEM
+    Name: Blazing Lava Golem
+    Level: 254
+    Hp: 5715000
+    BaseExp: 1601585
+    JobExp: 1415070
+    Attack: 777
+    Attack2: 53
+    Defense: 399
+    MagicDefense: 127
+    Str: 224
+    Agi: 142
+    Vit: 203
+    Int: 128
+    Dex: 192
+    Luk: 15
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    RaceGroups:
+      Golem: true
+    Element: Fire
+    ElementLevel: 4
+    WalkSpeed: 400
+    AttackDelay: 2190
+    AttackMotion: 2040
+    DamageMotion: 336
+    Ai: 09
+    Drops:
+      - Item: Cold_Magma
+        Rate: 2280
+      - Item: Burning_Heart
+        Rate: 1843
+      - Item: Flame_Barmund_Rune2
+        Rate: 5
+      - Item: Magma_Fist
+        Rate: 10
+      - Item: Flame_Barmund_Rune
+        Rate: 30
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Black_Powder
+        Rate: 500
+      - Item: Lava_Golem_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 21560
+    AegisName: ECO_MAJORUROS
+    Name: Blazing Majoruros
+    Level: 253
+    Hp: 5199150
+    BaseExp: 1518450
+    JobExp: 1417590
+    Attack: 5850
+    Attack2: 1432
+    Defense: 411
+    MagicDefense: 125
+    Str: 212
+    Agi: 158
+    Vit: 165
+    Int: 155
+    Dex: 186
+    Luk: 49
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Brute
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 250
+    AttackDelay: 1100
+    AttackMotion: 960
+    DamageMotion: 780
+    Ai: 21
+    Drops:
+      - Item: Nose_Ring
+        Rate: 2207
+      - Item: Zelunium_Ore
+        Rate: 200
+      - Item: Star_Crumb
+        Rate: 125
+      - Item: Flame_Barmund_Rune
+        Rate: 30
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Flame_Barmund_Rune2
+        Rate: 5
+      - Item: Flame_Barmund_Rune2
+        Rate: 5
+      - Item: Beef_Head_Meat
+        Rate: 600
+      - Item: Majoruros_Card
+        Rate: 1
+        StealProtected: true
+      - Item: White_Herb
+        Rate: 20
+  - Id: 21561
+    AegisName: ECO_HYDRO
+    Name: Blazing Hydrolancer
+    Level: 255
+    Hp: 5622750
+    BaseExp: 1604085
+    JobExp: 1502454
+    Attack: 6064
+    Attack2: 2150
+    Defense: 392
+    MagicDefense: 158
+    Str: 220
+    Agi: 172
+    Vit: 167
+    Int: 166
+    Dex: 223
+    Luk: 58
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Dragon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 160
+    AttackDelay: 140
+    AttackMotion: 672
+    DamageMotion: 432
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Dragon's_Skin
+        Rate: 2000
+      - Item: Dragon_Canine
+        Rate: 2000
+      - Item: Tri_Headed_Dragon_Head
+        Rate: 1940
+      - Item: Flame_Barmund_Rune
+        Rate: 30
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Flame_Barmund_Rune2
+        Rate: 5
+      - Item: Hydro_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 21562
+    AegisName: ECO_ACIDUS
+    Name: Blazing Black Acidus
+    Level: 254
+    Hp: 4425696
+    BaseExp: 1567690
+    JobExp: 1397382
+    Attack: 4124
+    Attack2: 1124
+    Defense: 201
+    MagicDefense: 120
+    Str: 225
+    Agi: 169
+    Vit: 173
+    Int: 122
+    Dex: 166
+    Luk: 73
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Dragon
+    Element: Dark
+    ElementLevel: 4
+    WalkSpeed: 170
+    AttackDelay: 168
+    AttackMotion: 1008
+    DamageMotion: 300
+    Ai: 09
+    Drops:
+      - Item: Dragon_Canine
+        Rate: 4000
+      - Item: Dragon_Scale
+        Rate: 3589
+      - Item: Flame_Barmund_Rune
+        Rate: 30
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Acidus_B_Card
+        Rate: 1
+        StealProtected: true
+      - Item: Flame_Barmund_Rune2
+        Rate: 5
+  - Id: 21563
+    AegisName: ECO_DETALE
+    Name: Blazing Detardeurus
+    Level: 260
+    Hp: 266005000
+    BaseExp: 68080000
+    JobExp: 58810000
+    MvpExp: 51600000
+    Attack: 16108
+    Attack2: 4662
+    Defense: 364
+    MagicDefense: 166
+    Str: 265
+    Agi: 153
+    Vit: 171
+    Int: 136
+    Dex: 378
+    Luk: 72
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Dragon
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 250
+    AttackDelay: 432
+    AttackMotion: 936
+    DamageMotion: 360
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Old_Blue_Box
+        Rate: 5500
+      - Item: Blacksmith_Blessing
+        Rate: 2000
+    Drops:
+      - Item: Treasure_Box
+        Rate: 2500
+      - Item: Scale_Of_Red_Dragon
+        Rate: 1795
+      - Item: Int_Dish10
+        Rate: 500
+      - Item: Flame_Barmund_Rune2
+        Rate: 10000
+      - Item: Etel_Dust
+        Rate: 10000
+      - Item: Detale_Card
+        Rate: 1
+        StealProtected: true
+      - Item: Flame_Barmund_Rune
+        Rate: 10000
+      - Item: Shadowdecon
+        Rate: 1000
+      - Item: Shadowdecon
+        Rate: 1000
+  - Id: 21564
+    AegisName: ECO_ICE_TITAN
+    Name: Glacial Ice Titan
+    Level: 252
+    Hp: 6350400
+    BaseExp: 1619080
+    JobExp: 1518220
+    Attack: 5088
+    Attack2: 1998
+    Defense: 444
+    MagicDefense: 144
+    Str: 200
+    Agi: 115
+    Vit: 177
+    Int: 189
+    Dex: 250
+    Luk: 56
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 250
+    AttackDelay: 861
+    AttackMotion: 660
+    DamageMotion: 144
+    Ai: 05
+    Modes:
+      ChangeTargetMelee: true
+    Drops:
+      - Item: Ice_Piece
+        Rate: 1500
+      - Item: Cold_Ice
+        Rate: 250
+      - Item: Ice_Heart
+        Rate: 2500
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Acc_Ore_1
+        Rate: 200
+      - Item: Ice_Barmund_Rune
+        Rate: 100
+      - Item: Ice_Titan_Card
+        Rate: 1
+        StealProtected: true
+      - Item: Ice_Barmund_Rune2
+        Rate: 5
+  - Id: 21565
+    AegisName: ECO_SIROMA
+    Name: Glacial Siroma
+    Level: 251
+    Hp: 4593300
+    BaseExp: 1601349
+    JobExp: 1411278
+    Attack: 5060
+    Attack2: 1000
+    Defense: 364
+    MagicDefense: 138
+    Str: 183
+    Agi: 143
+    Vit: 115
+    Int: 170
+    Dex: 196
+    Luk: 60
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 180
+    AttackDelay: 432
+    AttackMotion: 648
+    DamageMotion: 240
+    Ai: 10
+    Modes:
+      CanMove: true
+    Drops:
+      - Item: Ice_Heart
+        Rate: 250
+      - Item: Ice_Piece
+        Rate: 750
+      - Item: Blue_Herb
+        Rate: 5
+      - Item: Strange_Foxtail
+        Rate: 20
+      - Item: Detail_Model_Foxtail
+        Rate: 20
+      - Item: Crystal_Blue
+        Rate: 10
+      - Item: Ice_Barmund_Rune
+        Rate: 100
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Ice_Barmund_Rune2
+        Rate: 5
+      - Item: Siroma_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 21566
+    AegisName: ECO_SNOWIER
+    Name: Glacial Snowier
+    Level: 249
+    Hp: 5415750
+    BaseExp: 1585000
+    JobExp: 1200507
+    Attack: 4763
+    Attack2: 2082
+    Defense: 321
+    MagicDefense: 147
+    Str: 191
+    Agi: 161
+    Vit: 167
+    Int: 145
+    Dex: 183
+    Luk: 55
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Water
+    ElementLevel: 2
+    WalkSpeed: 220
+    AttackDelay: 936
+    AttackMotion: 1020
+    DamageMotion: 420
+    Ai: 04
+    Drops:
+      - Item: Ice_Heart
+        Rate: 1500
+      - Item: Ice_Piece
+        Rate: 500
+      - Item: Ice_Barmund_Rune
+        Rate: 100
+      - Item: Shadowdecon_Ore
+        Rate: 200
+      - Item: Crystal_Blue
+        Rate: 50
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Snowier_Card
+        Rate: 1
+        StealProtected: true
+      - Item: Ice_Barmund_Rune2
+        Rate: 5
+  - Id: 21567
+    AegisName: ECO_CENTIPEDE
+    Name: Glacial Centipede
+    Level: 245
+    Hp: 3969000
+    BaseExp: 1431430
+    JobExp: 1302000
+    Attack: 4841
+    Attack2: 1112
+    Defense: 313
+    MagicDefense: 125
+    Str: 163
+    Agi: 171
+    Vit: 169
+    Int: 139
+    Dex: 180
+    Luk: 49
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Insect
+    RaceGroups:
+      Manuk: true
+    Element: Poison
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1000
+    AttackMotion: 792
+    DamageMotion: 336
+    Ai: 21
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Acc_Ore_1
+        Rate: 200
+      - Item: Ice_Barmund_Rune
+        Rate: 100
+      - Item: Zelunium_Ore
+        Rate: 200
+      - Item: Short_Leg
+        Rate: 2668
+      - Item: Zargon
+        Rate: 2500
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Centipede_Card
+        Rate: 1
+        StealProtected: true
+      - Item: Ice_Barmund_Rune2
+        Rate: 5
+      - Item: Solid_Shell
+        Rate: 2000
+  - Id: 21568
+    AegisName: ECO_AQUA_ELEMENTAL
+    Name: Glacial Aqua Elemental
+    Level: 247
+    Hp: 3816150
+    BaseExp: 1403047
+    JobExp: 1302924
+    Attack: 4862
+    Attack2: 1450
+    Defense: 323
+    MagicDefense: 58
+    Str: 195
+    Agi: 161
+    Vit: 125
+    Int: 125
+    Dex: 190
+    Luk: 40
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Water
+    ElementLevel: 4
+    WalkSpeed: 230
+    AttackDelay: 504
+    AttackMotion: 960
+    DamageMotion: 576
+    Ai: 09
+    Drops:
+      - Item: Crystalized_Teardrop
+        Rate: 500
+      - Item: Fluorescent_Liquid
+        Rate: 2500
+      - Item: Ice_Barmund_Rune
+        Rate: 100
+      - Item: Starsand_Of_Witch
+        Rate: 1250
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Aqua_Elemental_Card
+        Rate: 1
+        StealProtected: true
+      - Item: Ice_Barmund_Rune2
+        Rate: 5
+      - Item: Tiny_Waterbottle
+        Rate: 100
+  - Id: 21569
+    AegisName: ECO_ANGELGOLT
+    Name: Glacial Angelgolt
+    Level: 254
+    Hp: 4991100
+    BaseExp: 1563580
+    JobExp: 1394500
+    Attack: 5102
+    Attack2: 2542
+    Defense: 335
+    MagicDefense: 166
+    Str: 143
+    Agi: 117
+    Vit: 102
+    Int: 186
+    Dex: 231
+    Luk: 106
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Angel
+    Element: Holy
+    ElementLevel: 4
+    WalkSpeed: 250
+    AttackDelay: 672
+    AttackMotion: 780
+    DamageMotion: 480
+    Ai: 21
+    Drops:
+      - Item: Ice_Barmund_Rune
+        Rate: 100
+      - Item: Ice_Barmund_Rune2
+        Rate: 5
+      - Item: Rune_Of_Darkness
+        Rate: 3000
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Angelgolt_Card
+        Rate: 1
+        StealProtected: true
+      - Item: Soft_Feather
+        Rate: 3500
+      - Item: Light_Granule
+        Rate: 1500
+  - Id: 21570
+    AegisName: ECO_RHYNCHO
+    Name: Glacial Rhyncho
+    Level: 250
+    Hp: 5250000
+    BaseExp: 1430969
+    JobExp: 1330020
+    Attack: 4863
+    Attack2: 2201
+    Defense: 368
+    MagicDefense: 122
+    Str: 159
+    Agi: 198
+    Vit: 162
+    Int: 148
+    Dex: 219
+    Luk: 46
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Water
+    ElementLevel: 3
+    WalkSpeed: 240
+    AttackDelay: 576
+    AttackMotion: 660
+    DamageMotion: 420
+    Ai: 13
+    Drops:
+      - Item: Fluorescent_Liquid
+        Rate: 2500
+      - Item: Ice_Piece
+        Rate: 2500
+      - Item: Crystal_Of_Soul_01
+        Rate: 250
+      - Item: Ice_Barmund_Rune
+        Rate: 100
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Ringco_Card
+        Rate: 1
+        StealProtected: true
+      - Item: Karvodailnirol
+        Rate: 30
+      - Item: Ice_Barmund_Rune2
+        Rate: 5
+  - Id: 21571
+    AegisName: ECO_KTULLANUX
+    Name: Glacial Ktullanux
+    Level: 260
+    Hp: 262600000
+    BaseExp: 62134500
+    JobExp: 47497100
+    MvpExp: 51778800
+    Attack: 13754
+    Attack2: 4680
+    Defense: 429
+    MagicDefense: 178
+    Str: 285
+    Agi: 226
+    Vit: 130
+    Int: 155
+    Dex: 242
+    Luk: 122
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Brute
+    Element: Water
+    ElementLevel: 4
+    WalkSpeed: 400
+    AttackDelay: 432
+    AttackMotion: 840
+    DamageMotion: 216
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Old_Violet_Box
+        Rate: 5000
+      - Item: Blacksmith_Blessing
+        Rate: 2000
+    Drops:
+      - Item: Ice_Scale
+        Rate: 4500
+      - Item: Ice_Barmund_Rune2
+        Rate: 5
+      - Item: Herald_Of_GOD
+        Rate: 2500
+      - Item: Zelunium
+        Rate: 1000
+      - Item: Ice_Barmund_Rune
+        Rate: 10000
+      - Item: Etel_Dust
+        Rate: 10000
+      - Item: Ktullanux_Card
+        Rate: 1
+        StealProtected: true
+      - Item: Shadowdecon
+        Rate: 1000
+  - Id: 21572
+    AegisName: ECO_ANCIENT_MUMMY
+    Name: Grave Ancient Mummy
+    Level: 250
+    Hp: 4950000
+    BaseExp: 1524460
+    JobExp: 1402017
+    Attack: 5981
+    Attack2: 1200
+    Defense: 393
+    MagicDefense: 151
+    Str: 226
+    Agi: 157
+    Vit: 155
+    Int: 169
+    Dex: 257
+    Luk: 45
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 2
+    WalkSpeed: 175
+    AttackDelay: 1772
+    AttackMotion: 120
+    DamageMotion: 384
+    Ai: 21
+    Drops:
+      - Item: Rotten_Bandage
+        Rate: 2207
+      - Item: Mementos
+        Rate: 900
+      - Item: Zelunium_Ore
+        Rate: 200
+      - Item: Oridecon_Stone
+        Rate: 75
+      - Item: Elunium_Stone
+        Rate: 50
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Runstone_Ancient
+        Rate: 30
+      - Item: Death_Barmund_Rune2
+        Rate: 5
+      - Item: Death_Barmund_Rune
+        Rate: 100
+      - Item: Ancient_Mummy_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 21573
+    AegisName: ECO_LUDE
+    Name: Grave Lude
+    Level: 251
+    Hp: 3652050
+    BaseExp: 1416990
+    JobExp: 1313900
+    Attack: 483
+    Attack2: 1078
+    Defense: 290
+    MagicDefense: 133
+    Str: 197
+    Agi: 138
+    Vit: 155
+    Int: 182
+    Dex: 183
+    Luk: 55
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 890
+    AttackMotion: 960
+    DamageMotion: 480
+    Ai: 04
+    Drops:
+      - Item: Pumpkin_Bucket
+        Rate: 1600
+      - Item: Ectoplasm
+        Rate: 2862
+      - Item: Transparent_Cloth
+        Rate: 500
+      - Item: Elunium_Stone
+        Rate: 5
+      - Item: Death_Barmund_Rune
+        Rate: 100
+      - Item: Yellow_Powder
+        Rate: 150
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Death_Barmund_Rune2
+        Rate: 5
+      - Item: Lude_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 21574
+    AegisName: ECO_RAGGED_ZOMBIE
+    Name: Grave Ragged Zombie
+    Level: 249
+    Hp: 4407300
+    BaseExp: 1434040
+    JobExp: 1312818
+    Attack: 4334
+    Attack2: 1300
+    Defense: 385
+    MagicDefense: 135
+    Str: 181
+    Agi: 150
+    Vit: 164
+    Int: 156
+    Dex: 278
+    Luk: 23
+    AttackRange: 9
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1960
+    AttackMotion: 576
+    DamageMotion: 420
+    Ai: 26
+    Drops:
+      - Item: Clattering_Skull
+        Rate: 1500
+      - Item: Skel_Bone
+        Rate: 2250
+      - Item: Carnium
+        Rate: 1
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Wasteland_Outlaw
+        Rate: 30
+      - Item: Death_Barmund_Rune
+        Rate: 100
+      - Item: Death_Barmund_Rune2
+        Rate: 5
+      - Item: Ragged_Zombie_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 21575
+    AegisName: ECO_WRAITH
+    Name: Grave Wraith Dead
+    Level: 245
+    Hp: 3711750
+    BaseExp: 1335100
+    JobExp: 1277200
+    Attack: 3002
+    Attack2: 1600
+    Defense: 288
+    MagicDefense: 156
+    Str: 163
+    Agi: 169
+    Vit: 155
+    Int: 145
+    Dex: 206
+    Luk: 45
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Undead
+    Element: Undead
+    ElementLevel: 4
+    WalkSpeed: 175
+    AttackDelay: 1816
+    AttackMotion: 576
+    DamageMotion: 240
+    Ai: 21
+    Drops:
+      - Item: Transparent_Cloth
+        Rate: 2207
+      - Item: Red_Gemstone
+        Rate: 350
+      - Item: Old_Blue_Box
+        Rate: 2
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Death_Barmund_Rune
+        Rate: 100
+      - Item: Death_Barmund_Rune2
+        Rate: 5
+      - Item: Wraith_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 21576
+    AegisName: ECO_FLAME_SKULL
+    Name: Grave Flame Skull
+    Level: 247
+    Hp: 3667950
+    BaseExp: 1327430
+    JobExp: 1307600
+    Attack: 3074
+    Attack2: 1135
+    Defense: 293
+    MagicDefense: 140
+    Str: 211
+    Agi: 190
+    Vit: 160
+    Int: 170
+    Dex: 239
+    Luk: 65
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Demon
+    Element: Ghost
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 972
+    AttackMotion: 648
+    DamageMotion: 432
+    Ai: 20
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Skull
+        Rate: 2500
+      - Item: Horrendous_Mouth
+        Rate: 3000
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Death_Barmund_Rune
+        Rate: 100
+      - Item: Death_Barmund_Rune2
+        Rate: 5
+      - Item: Flame_Skull_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 21577
+    AegisName: ECO_BANSHEE
+    Name: Grave Banshee
+    Level: 254
+    Hp: 4724400
+    BaseExp: 1437390
+    JobExp: 1359800
+    Attack: 5014
+    Attack2: 1703
+    Defense: 373
+    MagicDefense: 196
+    Str: 197
+    Agi: 171
+    Vit: 155
+    Int: 243
+    Dex: 237
+    Luk: 72
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 676
+    AttackMotion: 504
+    DamageMotion: 504
+    Ai: 20
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Old_White_Cloth
+        Rate: 1500
+      - Item: Mementos
+        Rate: 750
+      - Item: Brigan
+        Rate: 2668
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Death_Barmund_Rune
+        Rate: 100
+      - Item: Death_Barmund_Rune2
+        Rate: 5
+      - Item: Banshee_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 21578
+    AegisName: ECO_KNIGHT_OF_ABYSS
+    Name: Grave Abysmal Knight
+    Level: 250
+    Hp: 5262500
+    BaseExp: 1630710
+    JobExp: 1482948
+    Attack: 6734
+    Attack2: 2192
+    Defense: 302
+    MagicDefense: 150
+    Str: 221
+    Agi: 155
+    Vit: 168
+    Int: 170
+    Dex: 236
+    Luk: 67
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demihuman
+    RaceGroups:
+      Clocktower: true
+    Element: Dark
+    ElementLevel: 4
+    WalkSpeed: 300
+    AttackDelay: 1500
+    AttackMotion: 500
+    DamageMotion: 1000
+    Ai: 21
+    Drops:
+      - Item: Reins
+        Rate: 2668
+      - Item: Blade_Lost_In_Darkness
+        Rate: 3
+      - Item: Battle_Hook
+        Rate: 13
+      - Item: Elunium
+        Rate: 185
+      - Item: Etel_Dust
+        Rate: 50
+      - Item: Death_Barmund_Rune
+        Rate: 100
+      - Item: Death_Barmund_Rune2
+        Rate: 5
+      - Item: Knight_Of_Abyss_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 21579
+    AegisName: ECO_LORD_OF_DEATH
+    Name: Grave Lord of Death
+    Level: 260
+    Hp: 260388300
+    BaseExp: 62622720
+    JobExp: 51726260
+    MvpExp: 4218560
+    Attack: 15351
+    Attack2: 3962
+    Defense: 436
+    MagicDefense: 173
+    Str: 240
+    Agi: 199
+    Vit: 130
+    Int: 229
+    Dex: 270
+    Luk: 90
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 180
+    AttackDelay: 1446
+    AttackMotion: 1296
+    DamageMotion: 360
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Blacksmith_Blessing
+        Rate: 5000
+      - Item: Old_Violet_Box
+        Rate: 5000
+    Drops:
+      - Item: Boroken_Shiled_Piece
+        Rate: 2668
+      - Item: Lord_Of_Death_Card
+        Rate: 1
+        StealProtected: true
+      - Item: Shine_Spear_Blade
+        Rate: 5
+      - Item: Etel_Dust
+        Rate: 10000
+      - Item: Death_Barmund_Rune2
+        Rate: 5000
+      - Item: Death_Barmund_Rune
+        Rate: 5000
+      - Item: Shadowdecon
+        Rate: 1000
+      - Item: Zelunium
+        Rate: 1000
 #  - Id: 21580
 #    AegisName: G_BIJOU
 #  - Id: 21587
