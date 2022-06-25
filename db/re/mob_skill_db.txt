@@ -12583,6 +12583,46 @@
 3765,Deranged Adventurer@NPC_TALK,idle,682,10,2500,0,35000,yes,self,always,0,,,,,,,53
 3765,Deranged Adventurer@NPC_TALK,idle,682,10,2500,0,30000,yes,self,always,0,,,,,,,54
 
+//Clock Tower: Unknown Basement
+20118,Rei Goblin@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,,
+20118,Rei Goblin@BS_MAXIMIZE,attack,114,5,500,1000,5000,no,self,always,0,,,,,,27,
+20118,Rei Goblin@BS_MAXIMIZE,chase,114,5,500,1000,5000,no,self,always,0,,,,,,27,
+20118,Rei Goblin@CR_SHIELDCHARGE,attack,250,3,500,0,5000,no,target,always,0,,,,,,27,
+20118,Rei Goblin@NPC_SUMMONSLAVE,attack,196,6,10000,700,30000,no,self,slavele,0,20179,20179,20179,,,,
+20118,Rei Goblin@NPC_SUMMONSLAVE,idle,196,6,10000,700,30000,no,self,slavele,0,20179,20179,20179,,,,
+
+//Clock Tower: Unknown Basement
+20175,Extra Joker@MG_FIREBALL,chase,17,5,500,800,5000,yes,target,always,0,,,,,,10,
+20175,Extra Joker@MG_FROSTDIVER,chase,15,9,500,1000,5000,yes,target,always,0,,,,,,10,
+20175,Extra Joker@MG_SOULSTRIKE,chase,13,9,500,500,5000,yes,target,always,0,,,,,,12,
+20175,Extra Joker@NPC_ATTRICHANGE,idle,161,1,500,2000,300000,no,self,always,0,,,,,,10,
+20175,Extra Joker@NPC_DARKTHUNDER,chase,341,5,500,1500,5000,yes,target,always,0,,,,,,11,
+20175,Extra Joker@NPC_EMOTION,attack,197,1,10000,0,60000,yes,self,always,0,6,,,,,,
+20175,Extra Joker@NPC_EMOTION,idle,197,1,100,0,60000,yes,self,always,0,6,0x3695,,,,,
+20175,Extra Joker@NPC_EMOTION_ON,idle,474,1,100,0,60000,yes,self,always,0,20,0x81,,,,,
+20175,Extra Joker@NPC_EMOTION_ON,idle,474,1,100,0,60000,yes,self,always,0,22,0x83,,,,,
+20175,Extra Joker@NPC_ENERGYDRAIN,chase,200,1,500,800,5000,no,target,always,0,,,,,,12,
+20175,Extra Joker@NPC_WINDATTACK,chase,187,2,500,800,5000,no,target,always,0,,,,,,11,
+20175,Extra Joker@WZ_HEAVENDRIVE,chase,91,5,500,1200,5000,yes,target,always,0,,,,,,11,
+20175,Extra Joker@WZ_QUAGMIRE,chase,92,5,500,700,5000,yes,target,always,0,,,,,,12,
+20176,Erzsebet@NPC_CURSEATTACK,attack,181,3,500,800,5000,no,target,always,0,,,,,,,
+20176,Erzsebet@NPC_EMOTION,chase,197,1,2000,0,5000,yes,self,always,0,30,,,,,,
+20176,Erzsebet@NPC_ENERGYDRAIN,attack,200,1,500,0,5000,yes,target,always,0,,,,,,30,
+20176,Erzsebet@NPC_ENERGYDRAIN,chase,200,1,500,0,5000,yes,target,always,0,,,,,,30,
+20176,Erzsebet@NPC_SILENCEATTACK,attack,178,3,500,700,5000,no,target,always,0,,,,,,,
+20176,Erzsebet@NPC_STOP,attack,342,1,500,500,5000,no,target,always,0,,,,,,30,
+20177,Jenifer@NPC_WATERATTACK,attack,184,2,500,500,5000,no,randomtarget,always,0,,,,,,,
+20178,General Orc@CR_SHIELDCHARGE,attack,250,1,500,0,5000,no,target,always,0,,,,,,,
+20178,General Orc@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,,
+20178,General Orc@NPC_EMOTION,chase,197,1,2000,0,5000,yes,self,always,0,6,,,,,,
+20178,General Orc@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,0x3695,,,,,
+20178,General Orc@NPC_FIREATTACK,attack,186,2,500,500,5000,no,target,always,0,,,,,,6,
+20178,General Orc@NPC_SMOKING,idle,195,1,500,0,36000000,yes,self,always,0,,,,,,32,
+20179,Sieglouse@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,,
+20179,Sieglouse@NPC_EMOTION,chase,197,1,200,0,5000,yes,self,always,0,19,0x81,,,,,
+20179,Sieglouse@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,0x3095,,,,,
+20179,Sieglouse@NPC_GROUNDATTACK,attack,185,1,2000,0,5000,yes,target,always,0,,,,,,,
+
 // Episode 17.1 - Illusion (custom) #!todo
 20340,EL-A17T@NPC_AGIUP,chase,350,5,2000,0,60000,no,self,always,0,,,,,,6,
 20340,EL-A17T@NPC_POWERUP,attack,349,5,2000,0,60000,no,self,always,0,,,,,,6,
