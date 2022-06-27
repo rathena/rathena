@@ -2435,6 +2435,8 @@ uint64 pc_calc_skilltree_normalize_job_sub( struct map_session_data *sd ){
 
 		if( skill_point < summoner_skills ){
 			return MAPID_SUMMONER;
+		} else {
+			return MAPID_SPIRIT_HANDLER;
 		}
 
 		skill_point -= summoner_skills;
