@@ -302,8 +302,6 @@ uint64 QuestDatabase::parseBodyNode(const ryml::NodeRef& node) {
 					const auto& MapMobTargets = targetNode["MapMobTargets"];
 
 					for (const auto& MapMobTargetsNode : MapMobTargets) {
-						uint32 mob_id = 0; // Can be 0 which means all monsters
-
 						std::string mob_name;
 
 						if (!this->asString(MapMobTargetsNode, "Name", mob_name))
