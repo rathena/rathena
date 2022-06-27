@@ -4959,15 +4959,13 @@ bool pc_skill(struct map_session_data* sd, uint16 skill_id, int level, enum e_ad
 
 		case ADDSKILL_TEMP: //Item bonus skill.
 			if (sd->status.skill[idx].id != 0) {
-				if (sd->status.skill[idx].lv >= level)
-					return true;
 				if (sd->status.skill[idx].flag == SKILL_FLAG_PERMANENT) //Non-granted skill, store it's level.
 					sd->status.skill[idx].flag = SKILL_FLAG_REPLACED_LV_0 + sd->status.skill[idx].lv;
 			} else {
 				sd->status.skill[idx].id   = skill_id;
 				sd->status.skill[idx].flag = SKILL_FLAG_TEMPORARY;
 			}
-			sd->status.skill[idx].lv = level;
+			sd->status.skill[idx].lv = max(sd->status.skill[idx].lv, level);
 			break;
 
 		case ADDSKILL_TEMP_ADDLEVEL: //Add skill bonus on top of what you had.
@@ -6709,7 +6707,7 @@ e_skill_flag pc_checkskill_flag(map_session_data &sd, uint16 skill_id) {
 	if ((idx = skill_db.get_index(skill_id, skill_id >= RK_ENCHANTBLADE, __FUNCTION__, __FILE__, __LINE__)) == 0) {
 		if (skill_id >= RK_ENCHANTBLADE) {
 			// Silently fail for now -> future update planned
-			return 0;
+			return SKILL_FLAG_NONE;
 		}
 #endif
 		ShowError("pc_checkskill_flag: Invalid skill id %d (char_id=%d).\n", skill_id, sd.status.char_id);
