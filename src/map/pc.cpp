@@ -6695,6 +6695,31 @@ uint8 pc_checkskill(struct map_session_data *sd, uint16 skill_id)
 }
 
 /**
+ * Returns the flag of the given skill (when learned).
+ * @param sd: Player data
+ * @param skill_id: Skill to lookup
+ * @return Skill flag type
+ */
+e_skill_flag pc_checkskill_flag(map_session_data &sd, uint16 skill_id) {
+	uint16 idx;
+
+#ifdef RENEWAL
+	if ((idx = skill_get_index(skill_id)) == 0) {
+#else
+	if ((idx = skill_db.get_index(skill_id, skill_id >= RK_ENCHANTBLADE, __FUNCTION__, __FILE__, __LINE__)) == 0) {
+		if (skill_id >= RK_ENCHANTBLADE) {
+			// Silently fail for now -> future update planned
+			return 0;
+		}
+#endif
+		ShowError("pc_checkskill_flag: Invalid skill id %d (char_id=%d).\n", skill_id, sd.status.char_id);
+		return SKILL_FLAG_NONE;
+	}
+
+	return (sd.status.skill[idx].id == skill_id && sd.status.skill[idx].lv > 0) ? static_cast<e_skill_flag>(sd.status.skill[idx].flag) : SKILL_FLAG_NONE;
+}
+
+/**
  * Returns the amount of skill points invested in a Summoner's Power of Sea/Land/Life
  * @param sd: Player data
  * @param type: Summoner Power Type
