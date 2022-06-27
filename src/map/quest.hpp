@@ -35,6 +35,7 @@ struct s_quest_objective {
 	e_element element;
 	int16 mapid;
 	std::string map_name;
+	std::vector<uint16> mobs_allowed;
 };
 
 struct s_quest_db {
