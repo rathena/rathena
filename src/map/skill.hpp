@@ -41,6 +41,10 @@ struct status_change;
 
 /// To control alternative skill scalings [Muh]
 #define SKILL_ALTDMG_FLAG 0x10
+/// Make skill ignore requirement consumption [Muh]
+#define SKILL_NOCONSUME_REQ 0x20
+/// Make skill consume ammo, but not the unit [Muh]
+#define UNIT_NOCONSUME_AMMO 0x40
 
 /// Constants to identify a skill's nk value (damage properties)
 /// The NK value applies only to non INF_GROUND_SKILL skills

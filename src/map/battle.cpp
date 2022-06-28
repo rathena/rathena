@@ -1554,14 +1554,12 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 		if (sc->data[SC_SOUNDOFDESTRUCTION])
 			damage <<= 1;
-		if (sc->data[SC_DARKCROW] && (flag&(BF_SHORT|BF_MAGIC)) == BF_SHORT) {
-			int bonus = sc->data[SC_DARKCROW]->val2;
 		if( sc->data[SC_BURNT] && status_get_element(src) == ELE_FIRE )
 			damage += damage * 666 / 100; //Custom value
-
+		if (sc->data[SC_DARKCROW] && (flag&(BF_SHORT|BF_MAGIC)) == BF_SHORT) {
+			int bonus = sc->data[SC_DARKCROW]->val2;
 			if (status_get_class_(bl) == CLASS_BOSS)
 				bonus /= 2;
-
 			damage += damage * bonus / 100;
 		}
 		if (sc->data[SC_HOLY_OIL] && (flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
@@ -1586,6 +1584,8 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		}
 #endif
 
+		if (sc->data[SC_SHADOW_CLOCK] && (flag&(BF_WEAPON|BF_MAGIC)))
+			damage -= damage / 4; //TODO exact reduction unknown [Muh]
 		if (sc->data[SC_DEFENDER] &&
 			skill_id != NJ_ZENYNAGE && skill_id != KO_MUCHANAGE &&
 #ifdef RENEWAL
@@ -1791,9 +1791,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			}
 		}
 
-		if (sc->data[SC_SHADOW_CLOCK] && flag&(BF_WEAPON|BF_MAGIC))
-			damage -= damage / 4;
-		
 		if( sc->data[SC_INVINCIBLE] && !sc->data[SC_INVINCIBLEOFF] )
 			damage += damage * 75 / 100;
 

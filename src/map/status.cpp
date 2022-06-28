@@ -13764,7 +13764,7 @@ TIMER_FUNC(status_change_timer){
 		if (sce->val4 >= 0 && status->hp > status->max_hp / 4)
 			status_percent_damage(nullptr, bl, -1, 0, false);
 		break;
-	case SC_HANDICAPSTATE_DEADLYPOISON:
+	case SC_HANDICAPSTATE_DEADLYPOISON: // TODO actual damage unknown [Muh]
 	case SC_POISON:
 	case SC_DPOISON:
 		if (sce->val4 >= 0 && !sc->data[SC_SLOWPOISON]) {
@@ -13793,14 +13793,7 @@ TIMER_FUNC(status_change_timer){
 			status_heal(bl, 0, -(int)status->max_sp * 2 / 100, 0, 1);
 		}
 		break;
-	case SC_HANDICAPSTATE_CONFLAGRATION:
-		if (sce->val4 >= 0) {
-			int64 damage = 2000; // Deals fixed (1000 + 3%*MaxHP)
-			map_freeblock_lock();
-			dounlock = true;
-			status_zap(bl, damage, 0, 0);
-		}
-		break;
+	case SC_HANDICAPSTATE_CONFLAGRATION: // TODO actual damage unknown [Muh]
 	case SC_BURNING:
 		if (sce->val4 >= 0) {
 			int64 damage = 1000 + (3 * status->max_hp) / 100; // Deals fixed (1000 + 3%*MaxHP)
