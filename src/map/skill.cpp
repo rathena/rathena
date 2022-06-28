@@ -3195,7 +3195,7 @@ int skill_mirage_cast(struct block_list* src, struct block_list* bl, int skill_i
 			switch (skill_id) {
 			case SS_KUNAIWAIKYOKU: {
 				if (!(distance_xy(x, y, itsu->unit->bl.x, itsu->unit->bl.y) < skill_get_range(skill_id, skill_lv)))
-					return 0;
+					continue;
 				clif_skill_poseffect(&itsu->unit->bl, skill_id, skill_lv, x, y, tick);
 				int i = skill_get_splash(skill_id, skill_lv);
 				map_foreachinallarea(skill_area_sub, src->m, x - i, y - i, x + i, y + i, BL_CHAR,
