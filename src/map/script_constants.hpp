@@ -5071,6 +5071,7 @@
 	export_constant(IG_A_GRADE_COIN_BAG);
 	export_constant(IG_ADVANCED_WEAPONS_BOX);
 	export_constant(IG_SPLENDID_BOX);
+	export_constant(IG_SPLENDID_BOX2);
 	export_constant(IG_CARDALBUM_ARMOR);
 	export_constant(IG_CARDALBUM_HELM);
 	export_constant(IG_CARDALBUM_ACC);
