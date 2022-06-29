@@ -10907,6 +10907,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
+      bonus bMatkRate,15;
       bonus2 bMagicAddRace,RC_DemiHuman,15;
       bonus2 bMagicAddRace,RC_Player_Human,15;
       bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,25 + ((getrefine()>5) ? 5 : 0);
@@ -10947,6 +10948,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
+      bonus bMatkRate,15;
       bonus bHealPower,14;
       bonus bDelayRate,-10;
       bonus bUnbreakableWeapon;
@@ -11015,7 +11017,7 @@ Body:
     EquipLevelMin: 70
     Refineable: true
     Script: |
-      bonus bMatk,15;
+      bonus bMatkRate,15;
       bonus bInt,4;
       if (getrefine()>5) {
          bonus bInt,getrefine()-5;
