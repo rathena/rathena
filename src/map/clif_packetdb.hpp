@@ -2375,7 +2375,6 @@
 // 2018-03-07bRagexeRE
 #if PACKETVER >= 20180307
 	parseable_packet(0x0A68,3,clif_parse_open_ui,2);
-	packet(0x0AE2,7);
 	parseable_packet(0x0AEF,2,clif_parse_attendance_request,0);
 	packet(0x0AF0,10);
 #endif
@@ -2447,6 +2446,9 @@
 
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 	parseable_packet( HEADER_CZ_UNCONFIRMED_TSTATUS_UP, sizeof( PACKET_CZ_UNCONFIRMED_TSTATUS_UP ), clif_parse_traitstatus_up, 0 );
+	parseable_packet( HEADER_CZ_GRADE_ENCHANT_SELECT_EQUIPMENT, sizeof( struct PACKET_CZ_GRADE_ENCHANT_SELECT_EQUIPMENT ), clif_parse_enchantgrade_add, 0 );
+	parseable_packet( HEADER_CZ_GRADE_ENCHANT_REQUEST, sizeof( struct PACKET_CZ_GRADE_ENCHANT_REQUEST ), clif_parse_enchantgrade_start, 0 );
+	parseable_packet( HEADER_CZ_GRADE_ENCHANT_CLOSE_UI, sizeof( struct PACKET_CZ_GRADE_ENCHANT_CLOSE_UI ), clif_parse_enchantgrade_close, 0 );
 #endif
 
 #if PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20210818

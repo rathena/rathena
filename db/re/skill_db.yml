@@ -7597,17 +7597,7 @@ Body:
       TargetTrap: true
     Range: 9
     Hit: Multi_Hit
-    HitCount:
-      - Level: 1
-        Count: 1
-      - Level: 2
-        Count: 2
-      - Level: 3
-        Count: 3
-      - Level: 4
-        Count: 4
-      - Level: 5
-        Count: 5
+    HitCount: 5
     Element: Weapon
     CopyFlags:
       Skill:
@@ -20173,7 +20163,11 @@ Body:
         Time: 240000
       - Level: 5
         Time: 300000
-    Duration2: 300000
+    Duration2:
+      - Level: 1
+        Time: 15000
+      - Level: 2
+        Time: 300000
     Requires:
       SpCost:
         - Level: 1
@@ -20352,7 +20346,7 @@ Body:
     Unit:
       Id: Poisonsmoke
       Layout: 2
-      Interval: 1000
+      Interval: 2000
       Target: Enemy
       Flag:
         NoOverlap: true
@@ -25640,15 +25634,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 40
+          Amount: 25
         - Level: 2
-          Amount: 50
+          Amount: 30
         - Level: 3
-          Amount: 60
+          Amount: 35
         - Level: 4
-          Amount: 70
+          Amount: 40
         - Level: 5
-          Amount: 80
+          Amount: 45
       SpiritSphereCost: 2
   - Id: 2350
     Name: WA_SWING_DANCE
