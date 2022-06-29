@@ -365,8 +365,6 @@ void AchievementDatabase::loadingFinished(){
 
 		ach->dependent_ids.shrink_to_fit();
 	}
-
-	TypesafeYamlDatabase::loadingFinished();
 }
 
 AchievementDatabase achievement_db;

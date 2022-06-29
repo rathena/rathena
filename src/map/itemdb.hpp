@@ -22,9 +22,7 @@ const t_itemid UNKNOWN_ITEM_ID = 512;
 /// The maximum number of item delays
 #define MAX_ITEMDELAYS	10
 ///Designed for search functions, species max number of matches to display.
-#ifndef MAX_SEARCH
-#define MAX_SEARCH	10
-#endif
+#define MAX_SEARCH	5
 
 #define MAX_ROULETTE_LEVEL 7 /** client-defined value **/
 #define MAX_ROULETTE_COLUMNS 9 /** client-defined value **/
@@ -308,7 +306,6 @@ enum e_random_item_group {
 	IG_A_GRADE_COIN_BAG,
 	IG_ADVANCED_WEAPONS_BOX,
 	IG_SPLENDID_BOX,
-	IG_SPLENDID_BOX2,
 	IG_CARDALBUM_ARMOR,
 	IG_CARDALBUM_HELM,
 	IG_CARDALBUM_ACC,
@@ -958,19 +955,6 @@ enum e_random_item_group {
 	IG_GOLDEN_LORD_LAUNCHER_CUBE,
 	IG_THE_BLACK_CUBE,
 	IG_DEMON_SLAYER_SHOT_CUBE,
-	IG_RUNE_CRAFT_MATERIALS,
-	IG_ELEMENTAL_CONVERTER,
-	IG_POISONS,
-	IG_BLACKSMITH,
-	IG_POTION_CRAFT_MATERIALS,
-	IG_KUNAI_BOX,
-	IG_BULLET_CASE,
-	IG_SOUL_LINKER,
-	IG_ELEMENTAL_STONES,
-	IG_SHADOW_CUBE_ARMOR,
-	IG_SHADOW_CUBE_SHIELD,
-	IG_SHADOW_CUBE_SHOES,
-	IG_SHADOW_CUBE_WEAPON,
 
 	IG_MAX,
 };
@@ -1362,7 +1346,7 @@ public:
 
 extern LaphineUpgradeDatabase laphine_upgrade_db;
 
-uint16 itemdb_searchname_array(struct item_data** data, uint16 size, const char *str);
+int itemdb_searchname_array(struct item_data** data, int size, const char *str);
 struct item_data* itemdb_search(t_itemid nameid);
 struct item_data* itemdb_exists(t_itemid nameid);
 #define itemdb_name(n) itemdb_search(n)->name.c_str()

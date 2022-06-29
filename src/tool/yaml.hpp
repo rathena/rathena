@@ -57,10 +57,6 @@
 
 using namespace rathena;
 
-/// Uncomment this line to enable the ability for the conversion tools to automatically convert
-/// all files with no user interaction, whether it be from CSV to YAML or YAML to SQL.
-//#define CONVERT_ALL
-
 #ifndef WIN32
 int getch(void) {
 	struct termios oldattr, newattr;

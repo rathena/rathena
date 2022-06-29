@@ -315,17 +315,14 @@ std::shared_ptr<s_mob_db> mobdb_search_aegisname( const char* str ){
 /*==========================================
  * Founds up to N matches. Returns number of matches [Skotlex]
  *------------------------------------------*/
-uint16 mobdb_searchname_array_(const char *str, uint16 * out, uint16 size, bool full_cmp)
+int mobdb_searchname_array_(const char *str, uint16 * out, int size, bool full_cmp)
 {
-	uint16 count = 0;
-	const auto &mob_list = mob_db.getCache();
-
-	for( const auto &mob : mob_list ) {
-		if (mob == nullptr)
-			continue;
-		if( mobdb_searchname_sub(mob->id, str, full_cmp) ) {
+	unsigned short count = 0;
+	for( auto const &mobdb_pair : mob_db ) {
+		const uint16 mob_id = mobdb_pair.first;
+		if( mobdb_searchname_sub(mob_id, str, full_cmp) ) {
 			if( count < size )
-				out[count] = mob->id;
+				out[count] = mob_id;
 			count++;
 		}
 	}
@@ -333,7 +330,7 @@ uint16 mobdb_searchname_array_(const char *str, uint16 * out, uint16 size, bool 
 	return count;
 }
 
-uint16 mobdb_searchname_array(const char *str, uint16 * out, uint16 size)
+int mobdb_searchname_array(const char *str, uint16 * out, int size)
 {
 	return mobdb_searchname_array_(str, out, size, false);
 }
@@ -1690,10 +1687,6 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	if(md->bl.prev == nullptr || md->status.hp == 0)
 		return false;
 
-	// Monsters force-walked by script commands should not be searching for targets.
-	if (md->ud.state.force_walk)
-		return false;
-
 	if (DIFF_TICK(tick, md->last_thinktime) < MIN_MOBTHINKTIME)
 		return false;
 
@@ -2011,10 +2004,6 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 
 	if(md->bl.prev == NULL)
 		return 0;
-
-	// Monsters force-walked by script commands should not be searching for targets.
-	if (md->ud.state.force_walk)
-		return false;
 
 	t_tick tick = va_arg(args,t_tick);
 
@@ -4977,8 +4966,6 @@ void MobDatabase::loadingFinished() {
 		mob->status.hp = mob->status.max_hp;
 		mob->status.sp = mob->status.max_sp;
 	}
-
-	TypesafeCachedYamlDatabase::loadingFinished();
 }
 
 MobDatabase mob_db;

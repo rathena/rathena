@@ -146,8 +146,6 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 			if( !askConfirmation( "Found the file \"%s\", which can be converted to sql.\nDo you want to convert it now? (Y/N)\n", from.c_str() ) ){
 				continue;
 			}
-#else
-			ShowMessage("Found the file \"%s\", converting from yml to sql.\n", from.c_str());
 #endif
 
 			inNode.reset();
@@ -445,10 +443,6 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 				column.append("`job_sage`,");
 			if (appendEntry(jobs["SoulLinker"], value))
 				column.append("`job_soullinker`,");
-#ifdef RENEWAL
-			if (appendEntry(jobs["Spirit_Handler"], value))
-				column.append("`job_spirit_handler`,");
-#endif
 			if (appendEntry(jobs["StarGladiator"], value))
 				column.append("`job_stargladiator`,");
 #ifdef RENEWAL
