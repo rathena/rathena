@@ -933,6 +933,8 @@ void EnchantgradeDatabase::loadingFinished(){
 			}
 		}
 	}
+
+	TypesafeYamlDatabase::loadingFinished();
 }
 
 EnchantgradeDatabase enchantgrade_db;
@@ -10340,9 +10342,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				if (sc && sc->data[type]->val2 & BREAK_NECK)
 					return 0; // BREAK_NECK cannot be stacked with new breaks until the status is over.
 				val2 |= sce->val2; // Stackable ailments
-			case SC_CLIMAX:
-				sce->val1 = val1;
-				break;
 			default:
 				if (scdb->flag[SCF_OVERLAPIGNORELEVEL])
 					break;
@@ -12754,7 +12753,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		sce->timer = INVALID_TIMER; // Infinite duration
 
 	if (calc_flag.any()) {
-		if (sd != nullptr) {
+		if (sd) {
 			switch(type) {
 				// Statuses that adjust HP/SP and heal after starting
 				case SC_BERSERK:
@@ -12763,8 +12762,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					status_calc_bl_(bl, calc_flag, SCO_FORCE);
 					break;
 				default:
-					if (!sd->state.connect_new)
-						status_calc_bl_(bl, calc_flag);
+					status_calc_bl_(bl, calc_flag);
 					break;
 			}
 		} else
@@ -12775,8 +12773,21 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	if (sc_isnew && scdb->state.any())
 		status_calc_state(bl, sc, scdb->state, true);
 
-	if (sd != nullptr && sd->pd != nullptr)
-		pet_sc_check(sd, type); // Skotlex: Pet Status Effect Healing
+	if (sd) {
+		if (sd->pd)
+			pet_sc_check(sd, type); // Skotlex: Pet Status Effect Healing
+		switch (type) {
+			case SC_BERSERK:
+			case SC_MERC_HPUP:
+			case SC_MERC_SPUP:
+				status_calc_pc(sd, SCO_FORCE);
+				break;
+			default:
+				if (!sd->state.connect_new)
+					status_calc_pc(sd, SCO_NONE);
+				break;
+		}
+	}
 
 	// 1st thing to execute when loading status
 	switch (type) {
@@ -13774,7 +13785,7 @@ TIMER_FUNC(status_change_timer){
 		if (sce->val4 >= 0 && status->hp > status->max_hp / 4)
 			status_percent_damage(nullptr, bl, -1, 0, false);
 		break;
-	case SC_HANDICAPSTATE_DEADLYPOISON:
+	case SC_HANDICAPSTATE_DEADLYPOISON: // TODO actual damage unknown [Muh]
 	case SC_POISON:
 	case SC_DPOISON:
 		if (sce->val4 >= 0 && !sc->data[SC_SLOWPOISON]) {
@@ -13803,14 +13814,7 @@ TIMER_FUNC(status_change_timer){
 			status_heal(bl, 0, -(int)status->max_sp * 2 / 100, 0, 1);
 		}
 		break;
-	case SC_HANDICAPSTATE_CONFLAGRATION:
-		if (sce->val4 >= 0) {
-			int64 damage = 2000; // Deals fixed (1000 + 3%*MaxHP)
-			map_freeblock_lock();
-			dounlock = true;
-			status_zap(bl, damage, 0, 0);
-		}
-		break;
+	case SC_HANDICAPSTATE_CONFLAGRATION: // TODO actual damage unknown [Muh]
 	case SC_BURNING:
 		if (sce->val4 >= 0) {
 			int64 damage = 1000 + (3 * status->max_hp) / 100; // Deals fixed (1000 + 3%*MaxHP)
@@ -15818,6 +15822,8 @@ void StatusDatabase::loadingFinished(){
 			this->StatusRelevantBLTypes[status->icon] = BL_PC;
 		}
 	}
+
+	TypesafeYamlDatabase::loadingFinished();
 }
 
 StatusDatabase status_db;

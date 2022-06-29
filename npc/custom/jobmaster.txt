@@ -15,7 +15,6 @@
 //= 1.9 Migrate/Integrate to Global Functions Platinum Skills. [mazvi]
 //= 2.0 Added 4th class [Lemongrass]
 //============================================================
-
 prontera,153,193,6	script	เปลี่ยนอาชีพ	10435,{
 	function Get_Job_Equip;
 	// Checks if the Player has the required level.

@@ -1562,14 +1562,12 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 		if (sc->data[SC_SOUNDOFDESTRUCTION])
 			damage <<= 1;
-		if (sc->data[SC_DARKCROW] && (flag&(BF_SHORT|BF_MAGIC)) == BF_SHORT) {
-			int bonus = sc->data[SC_DARKCROW]->val2;
 		if( sc->data[SC_BURNT] && status_get_element(src) == ELE_FIRE )
 			damage += damage * 666 / 100; //Custom value
-
+		if (sc->data[SC_DARKCROW] && (flag&(BF_SHORT|BF_MAGIC)) == BF_SHORT) {
+			int bonus = sc->data[SC_DARKCROW]->val2;
 			if (status_get_class_(bl) == CLASS_BOSS)
 				bonus /= 2;
-
 			damage += damage * bonus / 100;
 		}
 		if (sc->data[SC_HOLY_OIL] && (flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
@@ -1594,6 +1592,8 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		}
 #endif
 
+		if (sc->data[SC_SHADOW_CLOCK] && (flag&(BF_WEAPON|BF_MAGIC)))
+			damage -= damage / 4; //TODO exact reduction unknown [Muh]
 		if (sc->data[SC_DEFENDER] &&
 			skill_id != NJ_ZENYNAGE && skill_id != KO_MUCHANAGE &&
 #ifdef RENEWAL
@@ -1799,9 +1799,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			}
 		}
 
-		if (sc->data[SC_SHADOW_CLOCK] && flag&(BF_WEAPON|BF_MAGIC))
-			damage -= damage / 4;
-		
 		if( sc->data[SC_INVINCIBLE] && !sc->data[SC_INVINCIBLEOFF] )
 			damage += damage * 75 / 100;
 
@@ -1854,7 +1851,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			}
 		}
 
-		if (sc->data[SC_POISONINGWEAPON] && flag&BF_SHORT && damage > 0) {
+		if (sc->data[SC_POISONINGWEAPON] && flag&BF_SHORT && (skill_id == 0 || skill_id == GC_VENOMPRESSURE) && damage > 0) {
 			damage += damage * 10 / 100;
 			if (rnd() % 100 < sc->data[SC_POISONINGWEAPON]->val3)
 				sc_start4(src, bl, (sc_type)sc->data[SC_POISONINGWEAPON]->val2, 100, sc->data[SC_POISONINGWEAPON]->val1, 0, 1, 0, (sc->data[SC_POISONINGWEAPON]->val2 == SC_VENOMBLEED ? skill_get_time2(GC_POISONINGWEAPON, 1) : skill_get_time2(GC_POISONINGWEAPON, 2)));
@@ -1887,8 +1884,22 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	} //End of caster SC_ check
 
 	//PK damage rates
-	if (map_getmapflag(bl->m, MF_PVP) > 0)
-		damage = battle_calc_pk_damage(*src, *bl, damage, skill_id, flag);
+	if (battle_config.pk_mode && sd && bl->type == BL_PC && damage && map_getmapflag(bl->m, MF_PVP)) {
+		if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
+			if (flag&BF_WEAPON)
+				damage = damage * battle_config.pk_weapon_damage_rate / 100;
+			if (flag&BF_MAGIC)
+				damage = damage * battle_config.pk_magic_damage_rate / 100;
+			if (flag&BF_MISC)
+				damage = damage * battle_config.pk_misc_damage_rate / 100;
+		} else { //Normal attacks get reductions based on range.
+			if (flag & BF_SHORT)
+				damage = damage * battle_config.pk_short_damage_rate / 100;
+			if (flag & BF_LONG)
+				damage = damage * battle_config.pk_long_damage_rate / 100;
+		}
+		damage = i64max(damage,1);
+	}
 
 	if(battle_config.skill_min_damage && damage > 0 && damage < div_) {
 		if ((flag&BF_WEAPON && battle_config.skill_min_damage&1)
@@ -2141,41 +2152,6 @@ int64 battle_calc_tb4_damage(struct block_list* src, struct block_list* bl, int6
 		damage = damage * battle_config.tb4_damage_rate / 100000;
 	damage = i64max(damage, 1);
 	return damage;
-}
-
-/**
- * Calculates PK related damage adjustments (between players only).
- * @param src: Source object
- * @param bl: Target object
- * @param damage: Damage being done
- * @param skill_id: Skill used
- * @param flag: Battle flag type
- * @return Modified damage
- */
-int64 battle_calc_pk_damage(block_list &src, block_list &bl, int64 damage, uint16 skill_id, int flag) {
-	if (damage == 0) // No reductions to make.
-		return 0;
-
-	if (battle_config.pk_mode == 0) // PK mode is disabled.
-		return damage;
-
-	if (src.type == BL_PC && bl.type == BL_PC) {
-		if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
-			if (flag & BF_WEAPON)
-				damage = damage * battle_config.pk_weapon_damage_rate / 100;
-			if (flag & BF_MAGIC)
-				damage = damage * battle_config.pk_magic_damage_rate / 100;
-			if (flag & BF_MISC)
-				damage = damage * battle_config.pk_misc_damage_rate / 100;
-		} else { //Normal attacks get reductions based on range.
-			if (flag & BF_SHORT)
-				damage = damage * battle_config.pk_short_damage_rate / 100;
-			if (flag & BF_LONG)
-				damage = damage * battle_config.pk_long_damage_rate / 100;
-		}
-	}
-
-	return i64max(damage, 1);
 }
 
 /**
@@ -2630,6 +2606,12 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 		case BO_ACIDIFIED_ZONE_FIRE_ATK:
 		case BO_ACIDIFIED_ZONE_GROUND_ATK:
 		case BO_ACIDIFIED_ZONE_WIND_ATK:
+		case SS_FUUMAKOUCHIKU:
+		case SS_FUUMAKOUCHIKU_BLASTING:
+		case SS_KUNAIKAITEN:
+		case SS_KUNAIKUSSETSU:
+		case SS_HITOUAKUMU:
+		case NW_THE_VIGILANTE_AT_NIGHT:
 			return BF_LONG;
 		case NJ_KIRIKAGE: // Cast range mimics NJ_SHADOWJUMP but damage is considered melee
 		case GC_CROSSIMPACT: // Cast range is 7 cells and player jumps to target but skill is considered melee
@@ -2639,6 +2621,7 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 		case MT_RUSH_QUAKE: // 9 cell cast range.
 		case ABC_UNLUCKY_RUSH: // 7 cell cast range.
 		case MH_THE_ONE_FIGHTER_RISES: // 7 cell cast range.
+		case SS_SHIMIRU: // 11 cell cast range.
 			return BF_SHORT;
 		case CD_PETITIO: // Skill range is 2 but damage is melee with books and ranged with mace.
 			if (sd && (sd->status.weapon == W_MACE || sd->status.weapon == W_2HMACE))
@@ -4018,6 +4001,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 	if( sd && !skill_id ) {	// if no skill_id passed, check for double attack [helvetica]
 		short i;
 		if( ( ( skill_lv = pc_checkskill(sd,TF_DOUBLE) ) > 0 && sd->weapontype1 == W_DAGGER )
+			|| ( pc_checkskill_flag(*sd, TF_DOUBLE) > SKILL_FLAG_PERMANENT && sd->weapontype1 != W_FIST )
 			|| ( sd->bonus.double_rate > 0 && sd->weapontype1 != W_FIST ) // Will fail bare-handed
 			|| ( sc && sc->data[SC_KAGEMUSYA] && sd->weapontype1 != W_FIST )) // Will fail bare-handed
 		{	//Success chance is not added, the higher one is used [Skotlex]
@@ -5470,13 +5454,13 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case SHC_SAVAGE_IMPACT:
 			skillratio += -100 + 90 * skill_lv + 5 * sstatus->pow;
-			if (sc && sc->data[SC_SHADOW_EXCEED])
+			if (sc && sc->data[SC_CLOAKINGEXCEED])
 				skillratio += 20 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 		case SHC_ETERNAL_SLASH:
 			skillratio += -100 + 265 * skill_lv + 2 * sstatus->pow;
-			if (sc && sc->data[SC_SHADOW_EXCEED])
+			if (sc && sc->data[SC_CLOAKINGEXCEED])
 				skillratio += 100 * skill_lv + sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
@@ -6092,7 +6076,7 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 			ATK_ADDRATE(wd->damage, wd->damage2, sc->data[SC_EXEEDBREAK]->val2);
 			RE_ALLATK_ADDRATE(wd, sc->data[SC_EXEEDBREAK]->val2);
 		}
-		if (sc->data[SC_PYREXIA] && sc->data[SC_PYREXIA]->val3 == 0 && skill_id == 0) {
+		if (sc->data[SC_PYREXIA] && sc->data[SC_PYREXIA]->val3 == 0) {
 			ATK_ADDRATE(wd->damage, wd->damage2, sc->data[SC_PYREXIA]->val2);
 			RE_ALLATK_ADDRATE(wd, sc->data[SC_PYREXIA]->val2);
 		}
@@ -6820,7 +6804,8 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 					wd.div_ = sc->data[SC_ROLLINGCUTTER]->val1;
 				break;
 			case SHC_SAVAGE_IMPACT:
-				wd.div_ = wd.div_ + wd.miscflag;
+				if (sc && sc->data[SC_CLOAKINGEXCEED])
+					wd.div_ = 5;
 				break;
 			case MT_AXE_STOMP:
 				if (sd && sd->status.weapon == W_2HAXE)
@@ -9151,24 +9136,6 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 			rdamage = damage * tsc->data[SC_MAXPAIN]->val1 * 10 / 100;
 	}
 
-	// Config damage adjustment
-	map_data *mapdata = map_getmapdata(src->m);
-
-	if (mapdata_flag_gvg2(mapdata))
-		rdamage = battle_calc_gvg_damage(src, tbl, rdamage, skill_id, flag);
-	else if (mapdata->flag[MF_BATTLEGROUND])
-		rdamage = battle_calc_bg_damage(src, tbl, rdamage, skill_id, flag);
-	else if (mapdata->flag[MF_PVP])
-		rdamage = battle_calc_pk_damage(*src, *tbl, rdamage, skill_id, flag);
-
-	// Skill damage adjustment
-	int skill_damage = battle_skill_damage(src, tbl, skill_id);
-
-	if (skill_damage != 0) {
-		rdamage += rdamage * skill_damage / 100;
-		rdamage = i64max(rdamage, 1);
-	}
-
 	if (rdamage == 0)
 		return 0; // No reflecting damage calculated.
 	else
@@ -9895,34 +9862,35 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 
 	if (sc && sc->data[SC_AUTO_FIRING_LAUNCHER]) {
 		uint16 skill_lv = 0;
+		int r = rnd() % 100;
 		switch (sc->data[SC_AUTO_FIRING_LAUNCHER]->val1) {
 			case 1:
-				if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && rnd() % 100 < 6)
-					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
+				if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && r < 6)
+					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag);
 				break;
 			case 2:
-				if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && rnd() % 100 < 7)
-					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
+				if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && r < 7)
+					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag);
 				break;
 			case 3:
-				if ((skill_lv = pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE)) && rnd() % 100 < 3)
-					skill_castend_pos2(src, target->x, target->y, NW_HASTY_FIRE_IN_THE_HOLE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
-				if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && rnd() % 100 < 8)
-					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
+				if ((skill_lv = pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE)) && r < 3)
+					skill_castend_pos2(src, target->x, target->y, NW_HASTY_FIRE_IN_THE_HOLE, skill_lv, tick, flag);
+				else if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && r < 11)
+					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag);
 				break;
 			case 4:
-				if ((skill_lv = pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE)) && rnd() % 100 < 5)
-					skill_castend_pos2(src, target->x, target->y, NW_HASTY_FIRE_IN_THE_HOLE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
-				if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && rnd() % 100 < 9)
-					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
+				if ((skill_lv = pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE)) && r < 5)
+					skill_castend_pos2(src, target->x, target->y, NW_HASTY_FIRE_IN_THE_HOLE, skill_lv, tick, flag);
+				else if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && r < 14)
+					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag);
 				break;
 			case 5:
-				if ((skill_lv = pc_checkskill(sd, NW_GRENADES_DROPPING)) && rnd() % 100 < 3)
-					skill_castend_pos2(src, target->x, target->y, NW_GRENADES_DROPPING, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
-				if ((skill_lv = pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE)) && rnd() % 100 < 7)
-					skill_castend_pos2(src, target->x, target->y, NW_HASTY_FIRE_IN_THE_HOLE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
-				if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && rnd() % 100 < 10)
-					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag | SKILL_NOCONSUME_REQ);
+				if ((skill_lv = pc_checkskill(sd, NW_GRENADES_DROPPING)) && r < 3)
+					skill_castend_pos2(src, target->x, target->y, NW_GRENADES_DROPPING, skill_lv, tick, flag);
+				else if ((skill_lv = pc_checkskill(sd, NW_HASTY_FIRE_IN_THE_HOLE)) && r < 10)
+					skill_castend_pos2(src, target->x, target->y, NW_HASTY_FIRE_IN_THE_HOLE, skill_lv, tick, flag);
+				else if ((skill_lv = pc_checkskill(sd, NW_BASIC_GRENADE)) && r < 20)
+					skill_castend_pos2(src, target->x, target->y, NW_BASIC_GRENADE, skill_lv, tick, flag);
 				break;
 		}
 	}

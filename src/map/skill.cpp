@@ -2541,13 +2541,12 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		sc_start(src,src,SC_BLIND,2*skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 	case HFLI_SBR44:	//[orn]
+	case HVAN_EXPLOSION:
 		if(src->type == BL_HOM){
-			struct homun_data *hd = (struct homun_data *)src;
-			if (hd != nullptr) {
-				hd->homunculus.intimacy = hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION);
-				if (hd->master)
-					clif_send_homdata(hd->master,SP_INTIMATE,hd->homunculus.intimacy / 100);
-			}
+			TBL_HOM *hd = (TBL_HOM*)src;
+			hd->homunculus.intimacy = (skill_id == HFLI_SBR44) ? 200 : 100; // hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION)
+			if (hd->master)
+				clif_send_homdata(hd->master,SP_INTIMATE,hd->homunculus.intimacy/100);
 		}
 		break;
 	case CR_GRANDCROSS:
@@ -3195,7 +3194,7 @@ int skill_mirage_cast(struct block_list* src, struct block_list* bl, int skill_i
 			switch (skill_id) {
 			case SS_KUNAIWAIKYOKU: {
 				if (!(distance_xy(x, y, itsu->unit->bl.x, itsu->unit->bl.y) < skill_get_range(skill_id, skill_lv)))
-					return 0;
+					continue;
 				clif_skill_poseffect(&itsu->unit->bl, skill_id, skill_lv, x, y, tick);
 				int i = skill_get_splash(skill_id, skill_lv);
 				map_foreachinallarea(skill_area_sub, src->m, x - i, y - i, x + i, y + i, BL_CHAR,
@@ -5813,7 +5812,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				case SU_SCRATCH:
 				case BO_MAYHEMIC_THORNS:
 				case DK_DRAGONIC_BREATH:
-				case DK_HACKANDSLASHER:
 				case MT_SPARK_BLASTER:
 				case SOA_TALISMAN_OF_FOUR_BEARING_GOD:
 				case HN_JUPITEL_THUNDER_STORM:
@@ -5821,11 +5819,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				case SKE_NOON_BLAST:
 					clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 					break;
-				case LG_MOONSLASHER:
-					sc_start(src,src,SC_OVERBRANDREADY,100,skill_lv,skill_get_time2(skill_id,skill_lv));
 #ifdef RENEWAL
 				case NJ_HUUMA:
 #endif
+				case LG_MOONSLASHER:
+					sc_start(src,src,SC_OVERBRANDREADY,100,skill_lv,skill_get_time2(skill_id,skill_lv));
 				case MH_XENO_SLASHER:
 					clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SINGLE);
 					break;
@@ -5843,33 +5841,13 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 						skill_id = SU_LUNATICCARROTBEAT2;
 					break;
 				case DK_SERVANT_W_PHANTOM:
-					// Jump to the target before attacking.
-					if (skill_check_unit_movepos(5, src, bl->x, bl->y, 0, 1))
-						skill_blown(src, src, 1, (map_calc_dir(bl, src->x, src->y) + 4) % 8, BLOWN_NONE);
-					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);// Trigger animation on servants.
-					// Deal no damage if no Servant Sign on Enemy
-					if( tsc == nullptr || tsc->data[SC_SERVANT_SIGN] == nullptr || tsc->data[SC_SERVANT_SIGN]->val1 != src->id ){
-						map_freeblock_unlock();
-						return 0;
-					}
-					break;
 				case SHC_SAVAGE_IMPACT:
-					if (sc && sc->data[SC_CLOAKINGEXCEED])
-						skill_area_temp[0] = 2;
-					status_change_end(src, SC_CLOAKINGEXCEED, INVALID_TIMER);
 				case SHC_FATAL_SHADOW_CROW:
-					// Jump to the target before attacking.
-					if (skill_check_unit_movepos(5, src, bl->x, bl->y, 0, 1))
-						skill_blown(src, src, 1, (map_calc_dir(bl, src->x, src->y) + 4) % 8, BLOWN_NONE);
-					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);// Trigger animation on servants.
-					break;
 				case MT_RUSH_QUAKE:
 					// Jump to the target before attacking.
 					if (skill_check_unit_movepos(5, src, bl->x, bl->y, 0, 1))
 						skill_blown(src, src, 1, (map_calc_dir(bl, src->x, src->y) + 4) % 8, BLOWN_NONE);
 					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);// Trigger animation on servants.
-					clif_blown(src);
-					//TODO: does this buff start before or after dealing damage? [Muh]
 					sc_start(src,src,SC_RUSH_QUAKE2,100,skill_lv,skill_get_time2(skill_id,skill_lv));
 					break;
 				case AG_CRYSTAL_IMPACT_ATK:
@@ -7262,7 +7240,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 	map_freeblock_unlock();
 
-	if( sd && !(flag&1))
+	if( sd && !(flag&1) )
 	{// ensure that the skill last-cast tick is recorded
 		sd->canskill_tick = gettick();
 
@@ -7272,8 +7250,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		}
 
 		// perform skill requirement consumption
-		if (!(flag&SKILL_NOCONSUME_REQ))
-			skill_consume_requirement(sd,skill_id,skill_lv,2);
+		skill_consume_requirement(sd,skill_id,skill_lv,2);
 	}
 
 	return 0;
@@ -8666,7 +8643,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case LG_RAYOFGENESIS:
 	case NPC_RAYOFGENESIS:
 	case MH_THE_ONE_FIGHTER_RISES:
-	case MH_HEILIGE_PFERD:
 	case KO_HAPPOKUNAI:
 	case RL_FIREDANCE:
 	case RL_R_TRIP:
@@ -8906,14 +8882,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			return 1;
 		}
 		status_damage(src, src, sstatus->max_hp,0,0,1, skill_id);
-		if(skill_id == HVAN_EXPLOSION && src->type == BL_HOM) {
-			struct homun_data *hd = (struct homun_data *)src;
-			if (hd != nullptr) {
-				hd->homunculus.intimacy = hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION);
-				if (hd->master)
-					clif_send_homdata(hd->master,SP_INTIMATE,hd->homunculus.intimacy / 100);
-			}
-		}
 		break;
 	case AL_ANGELUS:
 #ifdef RENEWAL
@@ -13168,7 +13136,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		mobskill_event(dstmd, src, tick, MSC_SKILLUSED|(skill_id<<16));
 	}
 
-	if( sd && !(flag&1))
+	if( sd && !(flag&1) )
 	{// ensure that the skill last-cast tick is recorded
 		sd->canskill_tick = gettick();
 
@@ -13178,8 +13146,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		skill_onskillusage(sd, bl, skill_id, tick);
 		// perform skill requirement consumption
-		if (!(flag&SKILL_NOCONSUME_REQ))
-			skill_consume_requirement(sd,skill_id,skill_lv,2);
+		skill_consume_requirement(sd,skill_id,skill_lv,2);
 	}
 
 	map_freeblock_unlock();
@@ -14174,6 +14141,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case GS_GROUNDDRIFT: //Ammo should be deleted right away.
 	case GN_WALLOFTHORN:
 	case GN_DEMONIC_FIRE:
+	case SS_FUUMASHOUAKU:
 		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
 		break;
 	case SS_KUNAIKUSSETSU:
@@ -14683,10 +14651,9 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		break;
 
 	case WM_SEVERE_RAINSTORM:
-		flag |= 1;
 		if (sd)
 			sd->canequip_tick = tick + skill_get_time(skill_id, skill_lv); // Can't switch equips for the duration of the skill.
-		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
+		skill_unitsetting(src,skill_id,skill_lv,x,y,UNIT_NOCONSUME_AMMO);
 		break;
 
 	case GN_CRAZYWEED: {
@@ -14922,8 +14889,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1,
 			skill_castend_damage_id);
 		if (!(flag & 1)) {
-			skill_addtimerskill(src, tick + 300, 0, x, y, skill_id, skill_lv, 0, flag | 1 | SKILL_NOCONSUME_REQ);
-			skill_addtimerskill(src, tick + 600, 0, x, y, skill_id, skill_lv, 0, flag | 3 | SKILL_NOCONSUME_REQ);
+			skill_addtimerskill(src, tick + 300, 0, x, y, skill_id, skill_lv, 0, flag | 1);
+			skill_addtimerskill(src, tick + 600, 0, x, y, skill_id, skill_lv, 0, flag | 3);
 		}
 		break;
 	case NW_BASIC_GRENADE:
@@ -14991,15 +14958,12 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		i = skill_get_splash(skill_id, skill_lv);
 		map_foreachinallarea(skill_area_sub, src->m, x - i, y - i, x + i, y + i, BL_CHAR,
 			src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_damage_id);
-	case SS_FUUMASHOUAKU:
-		flag |= 1;
-		skill_unitsetting(src, skill_id, skill_lv, x, y, 0);
+		skill_unitsetting(src, skill_id, skill_lv, x, y, UNIT_NOCONSUME_AMMO);
 		break;
 	case SS_KUNAIKAITEN:
 		sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time2(skill_id, skill_lv));
-		flag |= 1;
-		skill_unitsetting(src, skill_id, skill_lv, x, y, 0);
-		skill_unitsetting(src, SS_KUNAIWAIKYOKU, skill_lv, x, y, 0);
+		skill_unitsetting(src, skill_id, skill_lv, x, y, UNIT_NOCONSUME_AMMO);
+		skill_unitsetting(src, SS_KUNAIWAIKYOKU, skill_lv, x, y, UNIT_NOCONSUME_AMMO);
 		break;
 	case SS_FUUMAKOUCHIKU:
 		if (battle_config.skill_eightpath_algorithm) {
@@ -15042,8 +15006,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		}
 		skill_onskillusage(sd, NULL, skill_id, tick);
 		// perform skill requirement consumption
-		if (!(flag&SKILL_NOCONSUME_REQ))
-			skill_consume_requirement(sd,skill_id,skill_lv,2);
+		skill_consume_requirement(sd,skill_id,skill_lv,2);
 	}
 
 	return 0;
@@ -15694,7 +15657,7 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 	group->link_group_id = link_group_id;
 	group->target_flag = target;
 	group->bl_flag = skill_get_unit_bl_target(skill_id);
-	group->state.ammo_consume = (sd && sd->state.arrow_atk && skill_id != GS_GROUNDDRIFT); //Store if this skill needs to consume ammo.
+	group->state.ammo_consume = (sd && sd->state.arrow_atk && skill_id != GS_GROUNDDRIFT && !(flag&UNIT_NOCONSUME_AMMO)); //Store if this skill needs to consume ammo.
 	group->state.song_dance = (((skill->unit_flag[UF_DANCE] || skill->unit_flag[UF_SONG])?1:0)|(skill->unit_flag[UF_ENSEMBLE]?2:0)); //Signals if this is a song/dance/duet
 	group->state.guildaura = ( skill_id >= GD_LEADERSHIP && skill_id <= GD_HAWKEYES )?1:0;
 	group->item_id = req_item;
@@ -18496,8 +18459,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			break;
 		case ST_SHIELD:
 			if(sd->status.shield <= 0) {
-				//TODO: will this change from USESKILL_FAIL_LEVEL cause problems in older clients? [Muh]
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_NEED_SHIELD,0);
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return false;
 			}
 			break;
@@ -20584,7 +20546,7 @@ int skill_detonator(struct block_list *bl, va_list ap)
 
 		case UNT_KUNAIWAIKYOKU:
 			skill_delunit(unit);
-			skill_unitsetting(src,SS_KUNAIKUSSETSU,flag,bl->x, bl->y,0);
+			skill_unitsetting(src,SS_KUNAIKUSSETSU,flag,bl->x, bl->y,UNIT_NOCONSUME_AMMO);
 			break;
 	}
 	return 0;
@@ -25196,6 +25158,8 @@ void SkillDatabase::loadingFinished(){
 	if( this->skill_num > MAX_SKILL ){
 		ShowError( "There are more skills defined in the skill database (%d) than the MAX_SKILL (%d) define. Please increase it and recompile.\n", this->skill_num, MAX_SKILL );
 	}
+
+	TypesafeYamlDatabase::loadingFinished();
 }
 
 /**

@@ -844,7 +844,6 @@ Body:
     Refineable: true
     Script: |
       skill "TF_DOUBLE",5;
-      bonus bDoubleRate,25;
       bonus2 bAddRace,RC_DemiHuman,5;
       bonus2 bAddRace,RC_Player_Human,5;
   - Id: 1131
@@ -24702,7 +24701,6 @@ Body:
     Script: |
       bonus bMaxSP,100;
       skill "TF_DOUBLE",3;
-      bonus bDoubleRate,15;
       skill "TF_STEAL",1;
       skill "TF_HIDING",1;
       skill "TF_POISON",1;
@@ -29767,7 +29765,6 @@ Body:
       bonus bMaxHP,50;
       bonus bMaxSP,50;
       skill "TF_DOUBLE",2;
-      bonus bDoubleRate,10;
       bonus2 bSubRace,RC_DemiHuman,3;
       bonus2 bSubRace,RC_Player_Human,3;
   - Id: 5284
@@ -31728,7 +31725,6 @@ Body:
       NoGuildStorage: true
     Script: |
       skill "TF_DOUBLE",5;
-      bonus bDoubleRate,25;
   - Id: 5389
     AegisName: Angel_Spirit
     Name: Angel Spirit
@@ -34171,9 +34167,7 @@ Body:
     View: 525
     Script: |
       bonus bDex,2;
-      .@bonus = max(getskilllv("TF_DOUBLE"), 5);
-      skill "TF_DOUBLE",.@bonus;
-      bonus bDoubleRate,.@bonus * 5;
+      skill "TF_DOUBLE",5;
   - Id: 5532
     AegisName: Pirate_Dagger_J
     Name: Pirate Dagger
@@ -39963,7 +39957,6 @@ Body:
     WeaponLevel: 4
     Script: |
       skill "TF_DOUBLE",5;
-      bonus bDoubleRate,25;
       bonus2 bAddRace,RC_DemiHuman,40;
       bonus2 bAddRace,RC_Player_Human,40;
   - Id: 13408

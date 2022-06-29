@@ -13,7 +13,7 @@
 //= 1.01 Updated required job level to 70.
 //= 2.0 Added trait era expanded jobs.
 //============================================================
-prontera,165,170,4	script	Special 4cram Job Changer	485,{
+prontera,158,184,4	script	Special Job Changer	485,{
 
 	mes "[Special Job Changer]";
 	mes "คุณต้องการที่จะเปลี่นยนเป็นคลาส 4 แล้วหรือยัง?";
@@ -23,9 +23,9 @@ prontera,165,170,4	script	Special 4cram Job Changer	485,{
 Xready:
 	set @reqbaselv,200;// Required base level to change to trait era jobs.
 	if (Class == Job_Summoner)
-		set @reqjoblv,60;// Required job level for Summoners.
+		set @reqjoblv,50;// Required job level for Summoners.
 	else
-		set @reqjoblv,70;// Required job level for all over jobs.
+		set @reqjoblv,50;// Required job level for all over jobs.
 
 	if (checkcart() || checkfalcon() || checkriding() || checkdragon() || checkwug() || checkmadogear())
 		goto Xremove;
@@ -91,8 +91,4 @@ Xlowlevel:
 	mes "[Special Job Changer]";
 	mes "เสียใจด้วย เราต้องการเลเวล "+@reqbaselv+" และจ้อบเลเวล "+@reqjoblv+".";
 	close;
-
-OnInit:
-    setunitdata getnpcid(0),UNPC_GROUP_ID,22;    //1-38
-    end;
 }

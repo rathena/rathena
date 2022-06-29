@@ -357,6 +357,8 @@ void PenaltyDatabase::loadingFinished(){
 			}
 		}
 	}
+
+	TypesafeYamlDatabase::loadingFinished();
 }
 
 PenaltyDatabase penalty_db;
@@ -4957,15 +4959,13 @@ bool pc_skill(struct map_session_data* sd, uint16 skill_id, int level, enum e_ad
 
 		case ADDSKILL_TEMP: //Item bonus skill.
 			if (sd->status.skill[idx].id != 0) {
-				if (sd->status.skill[idx].lv >= level)
-					return true;
 				if (sd->status.skill[idx].flag == SKILL_FLAG_PERMANENT) //Non-granted skill, store it's level.
 					sd->status.skill[idx].flag = SKILL_FLAG_REPLACED_LV_0 + sd->status.skill[idx].lv;
 			} else {
 				sd->status.skill[idx].id   = skill_id;
 				sd->status.skill[idx].flag = SKILL_FLAG_TEMPORARY;
 			}
-			sd->status.skill[idx].lv = level;
+			sd->status.skill[idx].lv = max(sd->status.skill[idx].lv, level);
 			break;
 
 		case ADDSKILL_TEMP_ADDLEVEL: //Add skill bonus on top of what you had.
@@ -6690,6 +6690,31 @@ uint8 pc_checkskill(struct map_session_data *sd, uint16 skill_id)
 		return 0;
 	}
 	return (sd->status.skill[idx].id == skill_id) ? sd->status.skill[idx].lv : 0;
+}
+
+/**
+ * Returns the flag of the given skill (when learned).
+ * @param sd: Player data
+ * @param skill_id: Skill to lookup
+ * @return Skill flag type
+ */
+e_skill_flag pc_checkskill_flag(map_session_data &sd, uint16 skill_id) {
+	uint16 idx;
+
+#ifdef RENEWAL
+	if ((idx = skill_get_index(skill_id)) == 0) {
+#else
+	if ((idx = skill_db.get_index(skill_id, skill_id >= RK_ENCHANTBLADE, __FUNCTION__, __FILE__, __LINE__)) == 0) {
+		if (skill_id >= RK_ENCHANTBLADE) {
+			// Silently fail for now -> future update planned
+			return SKILL_FLAG_NONE;
+		}
+#endif
+		ShowError("pc_checkskill_flag: Invalid skill id %d (char_id=%d).\n", skill_id, sd.status.char_id);
+		return SKILL_FLAG_NONE;
+	}
+
+	return (sd.status.skill[idx].id == skill_id && sd.status.skill[idx].lv > 0) ? static_cast<e_skill_flag>(sd.status.skill[idx].flag) : SKILL_FLAG_NONE;
 }
 
 /**
@@ -12990,6 +13015,8 @@ void SkillTreeDatabase::loadingFinished() {
 			}
 		}
 	}
+
+	TypesafeYamlDatabase::loadingFinished();
 }
 
 /**
@@ -13546,6 +13573,8 @@ void JobDatabase::loadingFinished() {
 			}
 		}
 	}
+
+	TypesafeCachedYamlDatabase::loadingFinished();
 }
 
 /**
@@ -13708,6 +13737,8 @@ void PlayerStatPointDatabase::loadingFinished(){
 		// Store it for next iteration
 		last_level = entry;
 	}
+
+	TypesafeCachedYamlDatabase::loadingFinished();
 }
 
 /*==========================================
