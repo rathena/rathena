@@ -2518,13 +2518,10 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
       if (.@r >= 7) {
-         .@bonus = max(getskilllv("TF_DOUBLE"),5);
-         skill "TF_DOUBLE",.@bonus;
-         bonus bDoubleRate,.@bonus*5;
+         skill "TF_DOUBLE",5;
       }
       else if (.@r >= 5) {
          skill "TF_DOUBLE",1;
-         bonus bDoubleRate,25;
       }
   - Combos:
       - Combo:
@@ -9915,7 +9912,6 @@ Body:
          .@val += 15;
          if ((.@weapon + .@eq) >= 22) {
             skill "TF_DOUBLE",4;
-            bonus bDoubleRate,20;
          }
       }
       bonus bAspdRate,.@val;
