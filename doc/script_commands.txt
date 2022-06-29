@@ -8164,7 +8164,15 @@ This function is intended for use in item scripts.
 
 Opens the Bank UI for the attached player or the given character ID.
 
-This command requires packet version 2015-01-28 or newer.
+This command requires packet version 2015-12-02 or newer.
+
+---------------------------------------
+
+*enchantgradeui {<char id>};
+
+Opens the enchantgrade UI for the attached character or the player given by the char ID parameter.
+
+This command requires packet version 2020-07-24 or newer.
 
 ---------------------------------------
 \\
@@ -8261,6 +8269,8 @@ values (can be combined using the pipe operator):
 	USW_MOVE_ONCE = Force the unit to move one cell if it hasn't yet.
 	USW_MOVE_FULL_CELL = Enable moving to the next cell when unit was already half-way there (may cause on-touch/place side-effects, such as a scripted map change).
 	USW_FORCE_STOP = Force stop moving.
+
+This command will also remove the state tracking used for 'unitwalk' and 'unitwalkto'.
 
 ---------------------------------------
 
@@ -9783,6 +9793,8 @@ QMARK_PURPLE - Purple Marker
 
 Opens the quest UI for the attached player or the given character ID.
 Use 0 as the quest ID to open the main quest UI. If the quest ID is not 0 then the quest UI is opened to the given quest. If the quest data is not populated in the client LUB then a message will be displayed saying the quest doesn't exist.
+
+This command requires packet version 2015-12-02 or newer.
 
 ---------------------------------------
 

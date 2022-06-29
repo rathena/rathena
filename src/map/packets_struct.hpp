@@ -5340,7 +5340,7 @@ DEFINE_PACKET_HEADER(CZ_GRADE_ENCHANT_CLOSE_UI, 0x0b5c);
 struct PACKET_ZC_GRADE_ENCHANT_ACK {
 	int16 PacketType;
 	int16 index;
-	int16 grade;
+	int16 enchantgrade;
 	int result;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_GRADE_ENCHANT_ACK, 0x0b5d);
@@ -5351,7 +5351,7 @@ struct PACKET_ZC_GRADE_ENCHANT_BROADCAST_RESULT {
 	int16 packetType;
 	char name[NAME_LENGTH];
 	uint32 itemId;
-	int16 grade;
+	int16 enchantgrade;
 	int8 status;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_GRADE_ENCHANT_BROADCAST_RESULT, 0x0b5e);
