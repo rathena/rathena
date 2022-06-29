@@ -320,7 +320,7 @@ uint64 QuestDatabase::parseBodyNode(const ryml::NodeRef& node) {
 							if (!this->asBool(MapMobTargetsNode, "Flag", active))
 								return 0;
 
-							if (active) {
+							if (!active) {
 								util::vector_erase_if_exists(target->mobs_allowed, mob->id);
 								continue;
 							}
