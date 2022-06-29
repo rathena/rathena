@@ -844,7 +844,6 @@ Body:
     Refineable: true
     Script: |
       skill "TF_DOUBLE",5;
-      bonus bDoubleRate,25;
       bonus2 bAddRace,RC_DemiHuman,5;
       bonus2 bAddRace,RC_Player_Human,5;
   - Id: 1131
@@ -8689,7 +8688,6 @@ Body:
       bonus bAtkEle,Ele_Poison;
       bonus bCritical,10;
       skill "TF_DOUBLE",5;
-      bonus bDoubleRate,25;
       bonus2 bAddEff,Eff_Poison,1000;
       bonus2 bAddEff2,Eff_Poison,300;
   - Id: 1448
@@ -35842,7 +35840,6 @@ Body:
     Script: |
       bonus bMaxSP,100;
       skill "TF_DOUBLE",3;
-      bonus bDoubleRate,15;
       skill "TF_STEAL",1;
       skill "TF_HIDING",1;
       skill "TF_POISON",1;
@@ -43509,7 +43506,6 @@ Body:
       bonus bMaxHP,50;
       bonus bMaxSP,50;
       skill "TF_DOUBLE",2;
-      bonus bDoubleRate,10;
       bonus2 bSubRace,RC_DemiHuman,3;
       bonus2 bSubRace,RC_Player_Human,3;
       bonus2 bSubRace,RC_Brute,3;
@@ -45480,7 +45476,6 @@ Body:
     View: 393
     Script: |
       skill "TF_DOUBLE",5;
-      bonus bDoubleRate,25;
   - Id: 5389
     AegisName: Angel_Spirit
     Name: Angel Spirit
@@ -48103,9 +48098,7 @@ Body:
       NoDrop: true
     Script: |
       bonus bDex,2;
-      .@bonus = max(getskilllv("TF_DOUBLE"), 5);
-      skill "TF_DOUBLE",.@bonus;
-      bonus bDoubleRate,.@bonus * 5;
+      skill "TF_DOUBLE",5;
   - Id: 5532
     AegisName: Pirate_Dagger_J
     Name: Pirate Dagger
@@ -49893,7 +49886,6 @@ Body:
       bonus2 bSubRace,RC_Brute,3;
       bonus2 bSubRace,RC_Player_Doram,3;
       skill "TF_DOUBLE",2;
-      bonus bDoubleRate,10;
       bonus bMaxHP,50;
       bonus bMaxSP,50;
   - Id: 5626
@@ -62443,7 +62435,6 @@ Body:
       NoAuction: true
     Script: |
       skill "TF_DOUBLE",5;
-      bonus bDoubleRate,25;
       bonus2 bAddRace,RC_DemiHuman,40;
       bonus2 bAddRace,RC_Player_Human,40;
   - Id: 13408
@@ -82624,7 +82615,6 @@ Body:
       bonus bMaxHP,50;
       bonus bMaxSP,50;
       skill "TF_DOUBLE",2;
-      bonus bDoubleRate,10;
       bonus2 bSubRace,RC_DemiHuman,3;
       bonus2 bSubRace,RC_Player_Human,3;
   - Id: 19130
@@ -83583,7 +83573,6 @@ Body:
          bonus bCritAtkRate,5*getskilllv("BS_OVERTHRUST");
       if (.@r>=11) {
          skill "TF_DOUBLE",5;
-         bonus bDoubleRate,25;
       }
   - Id: 19190
     AegisName: Racing_Cap_GN
@@ -83797,7 +83786,6 @@ Body:
       if (.@r>=11) {
          bonus bUnbreakableWeapon;
          skill "TF_DOUBLE",5;
-         bonus bDoubleRate,25;
       }
   - Id: 19196
     AegisName: Racing_Cap_RG
@@ -99654,21 +99642,18 @@ Body:
          bonus bFlee,30;
          skill "TF_DOUBLE",10;
          skill "MO_TRIPLEATTACK",10;
-         bonus bDoubleRate,50;
       }
       else if (.@r>=7) {
          bonus bAspdRate,6;
          bonus bFlee,20;
          skill "TF_DOUBLE",5;
          skill "MO_TRIPLEATTACK",5;
-         bonus bDoubleRate,25;
       }
       else {
          bonus bAspdRate,3;
          bonus bFlee,10;
          skill "TF_DOUBLE",3;
          skill "MO_TRIPLEATTACK",3;
-         bonus bDoubleRate,15;
       }
   - Id: 20863
     AegisName: MenblattWing
@@ -118546,7 +118531,6 @@ Body:
       }
       if (.@r>=10) {
          skill "TF_DOUBLE",3;
-         bonus bDoubleRate,15;
       }
   - Id: 26154
     AegisName: SoulWeight
