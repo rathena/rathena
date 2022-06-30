@@ -2540,6 +2540,8 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 		// Renewal changes to ranged physical damage
 #endif
 		case RL_FIRE_RAIN:
+		case RL_FIREDANCE:
+		case RL_R_TRIP:
 		case RL_R_TRIP_PLUSATK:
 		case SR_RAMPAGEBLASTER:
 		case BO_ACIDIFIED_ZONE_WATER_ATK:
