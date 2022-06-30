@@ -430,7 +430,7 @@ Body:
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bDef,1;
         bonus bMdef,1;
-        bonus2 bResEff,Eff_Stun,100;
+        bonus2 bResEff,Eff_Stun,-100;
       }
   - Mob: BON_GUN
     TameItem: Heart_Of_Her
