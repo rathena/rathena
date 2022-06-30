@@ -40343,14 +40343,15 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bInt,getrefine()-5;
+      .@r = getrefine();
+      bonus bInt,.@r-5;
       bonus bMatkRate,10;
       bonus bUnbreakableWeapon;
-      if (getrefine()>5)
+      if (.@r>5)
          bonus bUseSPrate,-10;
-      if (getrefine()>8)
+      if (.@r>8)
          bonus4 bAutoSpellOnSkill,"PA_PRESSURE","PR_LEXAETERNA",1,1000;
-      if (getrefine()>9)
+      if (.@r>9)
          bonus bInt,5;
   - Id: 13419
     AegisName: Holy_Saber
