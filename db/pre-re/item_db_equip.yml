@@ -40344,6 +40344,7 @@ Body:
       NoAuction: true
     Script: |
       .@r = getrefine();
+      bonus bInt,6;
       bonus bInt,.@r-5;
       bonus bMatkRate,10;
       bonus bUnbreakableWeapon;
