@@ -17193,7 +17193,7 @@ Body:
       if (.@r>9) {
          bonus2 bVariableCastrate,"MO_EXTREMITYFIST",-100;
          bonus2 bFixedCastrate,"MO_EXTREMITYFIST",-100;
-         bonus4 bAutoSpellOnSkill,"MO_EXPLOSIONSPIRITS","CH_SOULCOLLECT",1,10000;
+         bonus4 bAutoSpellOnSkill,"MO_EXPLOSIONSPIRITS","CH_SOULCOLLECT",1,1000;
          bonus2 bHPLossRate,500,3000;
       }
   - Id: 1833
