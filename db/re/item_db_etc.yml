@@ -35311,7 +35311,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25256
-    AegisName: Hazy_Dream_Fragment
+    AegisName: HazyDream
     Name: Hazy Dream Fragment
     Type: Etc
     Weight: 10
@@ -35601,7 +35601,7 @@ Body:
     Type: Etc
     Weight: 10
   - Id: 25300
-    AegisName: Ktullanux_Eye
+    AegisName: KTULLANUXsEye
     Name: Ktullanux Eye
     Type: Etc
     Weight: 10
@@ -43360,7 +43360,7 @@ Body:
     Script: |
       bonus bLongAtkRate,(getskilllv("KN_SPEARMASTERY")/2);
   - Id: 29519
-    AegisName: PaladinStone_Bottom_
+    AegisName: Paladin_Bottom
     Name: Paladin Stone (Bottom)
     Type: Card
     SubType: Enchant

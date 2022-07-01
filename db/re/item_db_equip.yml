@@ -64101,7 +64101,7 @@ Body:
          bonus bHit,5;
       }
   - Id: 13469
-    AegisName: Illusion_Immaterial_Sword
+    AegisName: Immaterial_Sword_IL
     Name: Illusion Immaterial Sword
     Type: Weapon
     SubType: 1hSword
@@ -85813,7 +85813,7 @@ Body:
       if (.@r>=10)
          bonus bIgnoreMdefRace,RC_All;
   - Id: 19428
-    AegisName: Illusion_Morpheus's_Hood
+    AegisName: Morpheus_Hood_IL
     Name: Illusion Morpheus's Hood
     Type: Armor
     Buy: 20
@@ -100374,7 +100374,7 @@ Body:
          bonus bVariableCastrate,-10;
       }
   - Id: 20948
-    AegisName: Illusion_Morpheus's_Shawl
+    AegisName: Morpheus_Shawl_IL
     Name: Illusion Morpheus's Shawl
     Type: Armor
     Buy: 20
@@ -125099,7 +125099,7 @@ Body:
       bonus2 bMagicAddRace,RC_Demon,.@val;
       bonus2 bMagicAddRace,RC_Undead,.@val;
   - Id: 28626
-    AegisName: Illusion_Tablet
+    AegisName: Tablet_IL
     Name: Illusion Tablet
     Type: Weapon
     SubType: Book
@@ -126117,7 +126117,7 @@ Body:
          bonus5 bAutoSpell,"SO_PSYCHIC_WAVE",3,50,BF_WEAPON|BF_SHORT,1;
       }
   - Id: 28745
-    AegisName: Illusion_Counter_Dagger
+    AegisName: Counter_Dagger_IL
     Name: Illusion Counter Dagger
     Type: Weapon
     SubType: Dagger
@@ -137028,7 +137028,7 @@ Body:
       bonus bMatkRate,5;
       bonus bVariableCastrate,-10;
   - Id: 32238
-    AegisName: Illusion_Morpheus's_Ring
+    AegisName: Morpheus_Ring_IL
     Name: Illusion Morpheus's Ring
     Type: Armor
     Buy: 20
@@ -137042,7 +137042,7 @@ Body:
       bonus bInt,3;
       bonus bMaxSPrate,5;
   - Id: 32239
-    AegisName: Illusion_Morpheus's_Bracelet
+    AegisName: Morpheus_Armlet_IL
     Name: Illusion Morpheus's Bracelet
     Type: Armor
     Buy: 20
@@ -138140,7 +138140,7 @@ Body:
          bonus2 bAddSize,Size_Medium,15;
       }
   - Id: 400053
-    AegisName: Morrigane's_Helm_IL
+    AegisName: Morrigane_Helm_IL
     Name: Illusion Morrigane's Helm
     Type: Armor
     View: 257
@@ -142098,7 +142098,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 420076
-    AegisName: Vassalage_Necklace
+    AegisName: Choker_Of_Restriction
     Name: Bondage Necklace
     Type: Armor
     Weight: 10
@@ -152515,7 +152515,7 @@ Body:
          }
       }
   - Id: 490069
-    AegisName: Morrigane's_Belt_IL
+    AegisName: Morrigane_Belt_IL
     Name: Illusion Morrigane's Belt
     Type: Armor
     Weight: 200
@@ -152531,7 +152531,7 @@ Body:
       bonus bMaxHPrate,5;
       bonus bStr,3;
   - Id: 490070
-    AegisName: Morrigane's_Pendant_IL
+    AegisName: Morrigane_Pendant_IL
     Name: Illusion Morrigane's Pendant
     Type: Armor
     Weight: 200
@@ -153628,7 +153628,7 @@ Body:
       bonus2 bAddClass,Class_All,10;
       bonus bVariableCastrate,-10;
   - Id: 490159
-    AegisName: Omega_Core
+    AegisName: Rough_Core
     Name: Rough Core
     Type: Armor
     Weight: 500

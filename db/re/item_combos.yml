@@ -7383,7 +7383,7 @@ Body:
       bonus2 bAddRace,RC_DemiHuman,4;
   - Combos:
       - Combo:
-          - Illusion_Immaterial_Sword
+          - Immaterial_Sword_IL
           - Cape_Of_Ancient_Lord_IL
     Script: |
       .@weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -9337,10 +9337,10 @@ Body:
       bonus2 bSkillCooldown,"SP_SOULREAPER",-10000;
   - Combos:
       - Combo:
-          - Illusion_Morpheus's_Hood
-          - Illusion_Morpheus's_Shawl
-          - Illusion_Morpheus's_Ring
-          - Illusion_Morpheus's_Bracelet
+          - Morpheus_Hood_IL
+          - Morpheus_Shawl_IL
+          - Morpheus_Ring_IL
+          - Morpheus_Armlet_IL
     Script: |
       bonus bInt,5;
       bonus bMaxSPrate,10;
@@ -9903,7 +9903,7 @@ Body:
   - Combos:
       - Combo:
           - Illusion_Survivor_Manteau
-          - Illusion_Counter_Dagger
+          - Counter_Dagger_IL
     Script: |
       .@weapon = getequiprefinerycnt(EQI_HAND_R);
       .@eq = getequiprefinerycnt(EQI_GARMENT);
@@ -13023,7 +13023,7 @@ Body:
   - Combos:
       - Combo:
           - Ring_IL
-          - Illusion_Tablet
+          - Tablet_IL
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
       bonus bAspdRate,8;
@@ -13153,7 +13153,7 @@ Body:
   - Combos:
       - Combo:
           - Sura_Robe2
-          - SuraStone_Middle2_
+          - SuraStone_Middle2
     Script: |
       bonus bMaxHPrate,10;
   - Combos:
@@ -13377,7 +13377,7 @@ Body:
           - Shadowchaser_Bottom2
       - Combo:
           - Staremperor_Robe
-          - StarGladiatorStone_Bottom_
+          - Gladiator_Bottom
       - Combo:
           - Kagerou_Robe
           - Ninja_Bottom
@@ -13611,8 +13611,8 @@ Body:
       bonus3 bAddEff,Eff_Silence,.@r*50,ATF_SHORT; /* Unknow rates */
   - Combos:
       - Combo:
-          - Illusion_Morpheus's_Ring
-          - Illusion_Morpheus's_Bracelet
+          - Morpheus_Ring_IL
+          - Morpheus_Armlet_IL
     Script: |
       bonus bVariableCastrate,-10;
       bonus bMatkRate,10;
@@ -14192,10 +14192,10 @@ Body:
       bonus2 bSkillAtk,"LG_CANNONSPEAR",4*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - Morrigane's_Helm_IL
-          - Morrigane's_Manteau_IL
-          - Morrigane's_Belt_IL
-          - Morrigane's_Pendant_IL
+          - Morrigane_Helm_IL
+          - Morrigane_Manyeau_IL
+          - Morrigane_Belt_IL
+          - Morrigane_Pendant_IL
     Script: |
       bonus2 bAddSize,Size_Small,20;
       bonus bCritical,5;
@@ -14275,8 +14275,8 @@ Body:
       }
   - Combos:
       - Combo:
-          - Morrigane's_Belt_IL
-          - Morrigane's_Pendant_IL
+          - Morrigane_Belt_IL
+          - Morrigane_Pendant_IL
     Script: |
       bonus bAspdRate,10;
       bonus2 bAddClass,Class_All,10;
@@ -19304,7 +19304,7 @@ Body:
   - Combos:
       - Combo:
           - Thorn_Staff_IL
-          - Illusion_Morpheus's_Hood
+          - Morpheus_Hood_IL
     Script: |
       .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_HEAD_TOP);
       bonus bMatk,20;
