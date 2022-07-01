@@ -1265,6 +1265,7 @@ void pc_setinventorydata(struct map_session_data *sd);
 
 int pc_get_skillcooldown(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 uint8 pc_checkskill(struct map_session_data *sd,uint16 skill_id);
+e_skill_flag pc_checkskill_flag(map_session_data &sd, uint16 skill_id);
 uint8 pc_checkskill_summoner(map_session_data *sd, e_summoner_power_type type);
 uint8 pc_checkskill_imperial_guard(struct map_session_data *sd, short flag);
 short pc_checkequip(struct map_session_data *sd,int pos,bool checkall=false);
