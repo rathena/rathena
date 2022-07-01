@@ -7226,7 +7226,7 @@ Body:
             Rate: 16
           - Item: EXPStone_Bottom
             Rate: 24
-          - Item: aegis_310330
+          - Item: Range_Middle
             Rate: 24
           - Item: EXPStone_Middle
             Rate: 24
@@ -7310,7 +7310,7 @@ Body:
             Rate: 16
           - Item: EXPStone_Bottom
             Rate: 24
-          - Item: aegis_310330
+          - Item: Range_Middle
             Rate: 24
           - Item: EXPStone_Middle
             Rate: 24
@@ -7394,7 +7394,7 @@ Body:
             Rate: 17
           - Item: EXPStone_Bottom
             Rate: 20
-          - Item: aegis_310330
+          - Item: Range_Middle
             Rate: 20
           - Item: ReloadStone_Top
             Rate: 20
@@ -7498,7 +7498,7 @@ Body:
             Rate: 16
           - Item: EXPStone_Bottom
             Rate: 24
-          - Item: aegis_310330
+          - Item: Range_Middle
             Rate: 24
           - Item: EXPStone_Middle
             Rate: 24
@@ -7618,7 +7618,7 @@ Body:
             Rate: 16
           - Item: EXPStone_Bottom
             Rate: 24
-          - Item: aegis_310330
+          - Item: Range_Middle
             Rate: 24
           - Item: EXPStone_Middle
             Rate: 24
@@ -7700,7 +7700,7 @@ Body:
             Rate: 16
           - Item: WanderMinsStone_Robe2
             Rate: 16
-          - Item: aegis_310330
+          - Item: Range_Middle
             Rate: 24
           - Item: EXPStone_Top
             Rate: 24
@@ -18003,96 +18003,6 @@ Body:
             Rate: 1
           - Item: Mystic_Bow
             Rate: 2
-  - Group: Splendid_Box2
-    SubGroups:
-      - SubGroup: 1
-        List:
-          - Item: Krasnaya
-            Rate: 232
-          - Item: Alca_Bringer
-            Rate: 232
-          - Item: Chrome_Twohand_Sword
-            Rate: 232
-          - Item: Krishna
-            Rate: 232
-          - Item: Cakram
-            Rate: 232
-          - Item: Durga
-            Rate: 232
-          - Item: Vecer_Axe
-            Rate: 232
-          - Item: Giant_Axe
-            Rate: 232
-          - Item: Hunting_Spear
-            Rate: 232
-          - Item: Imperial_Spear
-            Rate: 232
-          - Item: Rafini_Staff
-            Rate: 232
-          - Item: Falken_Blitz
-            Rate: 232
-          - Item: Elven_Bow
-            Rate: 232
-          - Item: Green_Whistle
-            Rate: 232
-          - Item: Stem_Whip
-            Rate: 232
-          - Item: Rotha_Shield
-            Rate: 232
-          - Item: Imperial_Guard
-            Rate: 232
-          - Item: Elven_Ears
-            Rate: 232
-          - Item: Diabolus_Robe
-            Rate: 232
-          - Item: Diabolus_Armor
-            Rate: 232
-          - Item: Dragon_Vest
-            Rate: 232
-          - Item: Variant_Shoes
-            Rate: 232
-          - Item: Tidal_Shoes
-            Rate: 232
-          - Item: Black_Leather_Boots
-            Rate: 232
-          - Item: Diabolus_Boots
-            Rate: 232
-          - Item: Black_Leather_Boots_
-            Rate: 232
-          - Item: Diabolus_Manteau
-            Rate: 232
-          - Item: Dragon_Manteau
-            Rate: 232
-          - Item: Piece_Of_Angent_Skin
-            Rate: 232
-          - Item: Bison_Horn
-            Rate: 232
-          - Item: Krieg
-            Rate: 232
-          - Item: Weihna
-            Rate: 232
-          - Item: Black_Wing
-            Rate: 232
-          - Item: Twin_Edge_B
-            Rate: 232
-          - Item: Twin_Edge_R
-            Rate: 232
-          - Item: Ruber
-            Rate: 232
-          - Item: Bone_Plate
-            Rate: 232
-          - Item: Ebone_Armor
-            Rate: 232
-          - Item: Erde
-            Rate: 232
-          - Item: Red_Square_Bag
-            Rate: 232
-          - Item: Carga_Mace
-            Rate: 232
-          - Item: Red_Ether_Bag
-            Rate: 232
-          - Item: Mystic_Bow
-            Rate: 232
   - Group: SPRING_FESTIVAL_SCROLL
     SubGroups:
       - SubGroup: 1
@@ -23918,7 +23828,7 @@ Body:
         List:
           - Item: Actinidia_Cat_Fruit
             Amount: 100
-          - Item: aegis_101271
+          - Item: Enchant_Stone_Box26
             Amount: 2
           - Item: Comp_Bubble_Gum
             Amount: 3
@@ -23928,7 +23838,7 @@ Body:
         List:
           - Item: Actinidia_Cat_Fruit
             Amount: 200
-          - Item: aegis_101271
+          - Item: Enchant_Stone_Box26
             Amount: 2
           - Item: Battle_Manual100
             Amount: 2
@@ -23938,7 +23848,7 @@ Body:
         List:
           - Item: Actinidia_Cat_Fruit
             Amount: 400
-          - Item: aegis_101271
+          - Item: Enchant_Stone_Box26
             Amount: 2
           - Item: Comp_Bubble_Gum
             Amount: 5
@@ -24000,9 +23910,9 @@ Body:
             Rate: 8
           - Item: ShadowchasStone_Bottom3
             Rate: 8
-          - Item: aegis_100465
+          - Item: Stone_Robe_Box
             Rate: 16
-          - Item: aegis_100495
+          - Item: Stone_Robe_Box
             Rate: 16
           - Item: ReloadStone_Top
             Rate: 24
@@ -24046,17 +23956,17 @@ Body:
             Rate: 15
           - Item: ShadowchaserStone_Top2
             Rate: 15
-          - Item: aegis_100496
+          - Item: Stone_Top_Box
             Rate: 36
-          - Item: aegis_100497
+          - Item: Stone_Top2_Box
             Rate: 36
-          - Item: aegis_100498
+          - Item: Stone_Middle_Box
             Rate: 36
-          - Item: aegis_100499
+          - Item: Stone_Middle2_Box
             Rate: 36
-          - Item: aegis_100500
+          - Item: Stone_Bottom_Box
             Rate: 36
-          - Item: aegis_100501
+          - Item: Stone_Bottom2_Box
             Rate: 36
           - Item: CastingStone_Top
             Rate: 36
@@ -28665,7 +28575,7 @@ Body:
             Amount: 100
           - Item: Evt_Cos_Coin
             Amount: 12
-          - Item: aegis_101271
+          - Item: Enchant_Stone_Box26
             Amount: 3
   - Group: COSTUME_MILE_PACK_26_2
     SubGroups:
@@ -28675,7 +28585,7 @@ Body:
             Amount: 200
           - Item: Evt_Cos_Coin
             Amount: 25
-          - Item: aegis_101271
+          - Item: Enchant_Stone_Box26
             Amount: 5
   - Group: COSTUME_MILE_PACK_26_3
     SubGroups:
@@ -28685,7 +28595,7 @@ Body:
             Amount: 400
           - Item: Evt_Cos_Coin
             Amount: 50
-          - Item: aegis_101271
+          - Item: Enchant_Stone_Box26
             Amount: 10
   - Group: EP17_1_SPC01
     SubGroups:
