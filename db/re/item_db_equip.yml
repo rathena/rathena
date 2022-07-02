@@ -122035,7 +122035,7 @@ Body:
     Buy: 10
     Weight: 100
     Locations:
-      Both_Accessory: true
+      Left_Accessory: true
     ArmorLevel: 1
     EquipLevelMin: 145
     Trade:
@@ -122054,7 +122054,7 @@ Body:
     Buy: 10
     Weight: 100
     Locations:
-      Both_Accessory: true
+      Right_Accessory: true
     ArmorLevel: 1
     EquipLevelMin: 145
     Trade:
