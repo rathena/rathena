@@ -44473,6 +44473,7 @@ Body:
     Flags:
       TargetTrap: true
     Range: 9
+    GiveAp: 2
     Hit: Multi_Hit
     HitCount: -2
     Element: Weapon
