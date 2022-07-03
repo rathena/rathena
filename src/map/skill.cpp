@@ -3599,14 +3599,11 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 
 	damage = dmg.damage + dmg.damage2;
 
-	if (dmg.flag & BF_MAGIC) {
-		if (tsc && tsc->data[SC_MAXPAIN]) {
-			tsc->data[SC_MAXPAIN]->val3 = (int)damage;
-			tsc->data[SC_MAXPAIN]->val2 = 0;
-			if (!tsc->data[SC_KYOMU]) {//SC_KYOMU invalidates reflecting ability.
-				skill_castend_damage_id(bl, src, NPC_MAXPAIN_ATK, tsc->data[SC_MAXPAIN]->val1, tick, flag);
-			}
-		}
+	if ((dmg.flag & BF_MAGIC) && tsc && tsc->data[SC_MAXPAIN]) {
+		tsc->data[SC_MAXPAIN]->val3 = (int)damage;
+		tsc->data[SC_MAXPAIN]->val2 = 0;
+		if (!tsc->data[SC_KYOMU]) //SC_KYOMU invalidates reflecting ability.
+			skill_castend_damage_id(bl, src, NPC_MAXPAIN_ATK, tsc->data[SC_MAXPAIN]->val1, tick, flag);
 	}
 
 	if( (skill_id == AL_INCAGI || skill_id == AL_BLESSING ||
