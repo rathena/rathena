@@ -8357,11 +8357,6 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 		}
 	}
 
-	if (tsc) {
-		if (tsc->data[SC_MAXPAIN])
-			rdamage = damage * tsc->data[SC_MAXPAIN]->val1 * 10 / 100;
-	}
-
 	// Config damage adjustment
 	map_data *mapdata = map_getmapdata(src->m);
 
