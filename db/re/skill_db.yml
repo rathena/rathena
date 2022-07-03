@@ -17949,7 +17949,7 @@ Body:
   - Id: 754
     Name: NPC_IMMUNE_PROPERTY
     Description: Property Immune
-    MaxLevel: 5
+    MaxLevel: 10 #Official max level is 5.
     TargetType: Support
     DamageFlags:
       NoDamage: true
