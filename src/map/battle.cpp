@@ -6592,14 +6592,13 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			break;
 		case NPC_MAXPAIN_ATK:
 			if (sc && sc->data[SC_MAXPAIN]) {
-				if (sc->data[SC_MAXPAIN]->val2) {
+				if (sc->data[SC_MAXPAIN]->val2)
 					wd.damage = sc->data[SC_MAXPAIN]->val2 * skill_lv / 10;
-				} else if (sc->data[SC_MAXPAIN]->val3) {
+				else if (sc->data[SC_MAXPAIN]->val3)
 					wd.damage = sc->data[SC_MAXPAIN]->val3 * skill_lv / 10;
-				}
-			} else {
-				wd.damage = 0;
 			}
+			else 
+				wd.damage = 0;
 			break;
 	}
 
