@@ -8408,24 +8408,6 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 		rdamage = i64max(rdamage, 1);
 	}
 
-	// Config damage adjustment
-	map_data *mapdata = map_getmapdata(src->m);
-
-	if (mapdata_flag_gvg2(mapdata))
-		rdamage = battle_calc_gvg_damage(src, tbl, rdamage, skill_id, flag);
-	else if (mapdata->flag[MF_BATTLEGROUND])
-		rdamage = battle_calc_bg_damage(src, tbl, rdamage, skill_id, flag);
-	else if (mapdata->flag[MF_PVP])
-		rdamage = battle_calc_pk_damage(*src, *tbl, rdamage, skill_id, flag);
-
-	// Skill damage adjustment
-	int skill_damage = battle_skill_damage(src, tbl, skill_id);
-
-	if (skill_damage != 0) {
-		rdamage += rdamage * skill_damage / 100;
-		rdamage = i64max(rdamage, 1);
-	}
-
 	if (rdamage == 0)
 		return 0; // No reflecting damage calculated.
 	else
