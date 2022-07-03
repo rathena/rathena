@@ -5734,7 +5734,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case SOA_EXORCISM_OF_MALICIOUS_SOUL:
 	case SOA_TALISMAN_OF_WHITE_TIGER:
 	case SOA_TALISMAN_OF_RED_PHOENIX:
-	case SOA_TALISMAN_OF_BLACK_TORTOISE:
 	case SOA_TALISMAN_OF_FOUR_BEARING_GOD:
 	case SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS:
 	case BO_HELL_HOWLING:
@@ -5786,12 +5785,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 #endif
 				case SJ_PROMINENCEKICK: // Trigger the 2nd hit. (100% fire damage.)
 					skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, sflag|8|SD_ANIMATION);
-					break;
-
-				case SOA_TALISMAN_OF_BLACK_TORTOISE:
-					if (sc && (sc->data[SC_T_THIRD_GOD] && !sc->data[SC_T_FOURTH_GOD] && !sc->data[SC_T_FIFTH_GOD])){
-						sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
-					}
 					break;
 			}
 		} else {
@@ -5941,7 +5934,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 						sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
 					}
 					break;
-
 				case SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS:
 					clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 					skill_area_temp[0] = map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
@@ -13992,15 +13984,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			PR_LEXAETERNA, 1, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
 		break;
 
-	case SOA_TALISMAN_OF_BLACK_TORTOISE:
-		if( map_getcell(src->m, x, y, CELL_CHKLANDPROTECTOR) ) {
-			return 0;
-		}
-		i = skill_get_splash(skill_id, skill_lv);
-		map_foreachinallarea(skill_area_sub, src->m, x-i, y-i, x+i, y+i, BL_CHAR,
-			src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
-		break;
-
 	case SA_VOLCANO:
 	case SA_DELUGE:
 	case SA_VIOLENTGALE:
@@ -14167,6 +14150,12 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case GN_WALLOFTHORN:
 	case GN_DEMONIC_FIRE:
 	case SS_FUUMASHOUAKU:
+		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
+		break;
+	case SOA_TALISMAN_OF_BLACK_TORTOISE:
+		if (sc && (sc->data[SC_T_THIRD_GOD] && !sc->data[SC_T_FOURTH_GOD] && !sc->data[SC_T_FIFTH_GOD])){
+			sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time2(skill_id, skill_lv));
+		}
 		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
 		break;
 	case SS_KUNAIKUSSETSU:
