@@ -4756,6 +4756,9 @@ static TIMER_FUNC(skill_timerskill){
 					short tmpx = 0, tmpy = 0;
 					tmpx = skl->x - area + rnd() % (area * 2 + 1);
 					tmpy = skl->y - area + rnd() % (area * 2 + 1);
+					if( map_getcell(src->m, tmpx, tmpy, CELL_CHKLANDPROTECTOR) ) {
+						return 0;
+					}
 					clif_skill_poseffect(src, skl->skill_id, skl->skill_lv, tmpx, tmpy, tick);
 					map_foreachinarea(skill_area_sub, src->m, tmpx - splash, tmpy - splash, tmpx + splash, tmpy + splash, BL_CHAR,
 						src, skl->skill_id, skl->skill_lv, tick, skl->flag | BCT_ENEMY | SD_SPLASH | SKILL_ALTDMG_FLAG | 1, skill_castend_damage_id);
@@ -13990,6 +13993,9 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		break;
 
 	case SOA_TALISMAN_OF_BLACK_TORTOISE:
+		if( map_getcell(src->m, x, y, CELL_CHKLANDPROTECTOR) ) {
+			return 0;
+		}
 		i = skill_get_splash(skill_id, skill_lv);
 		map_foreachinallarea(skill_area_sub, src->m, x-i, y-i, x+i, y+i, BL_CHAR,
 			src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
@@ -14291,6 +14297,10 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	break;
 	case HN_JACK_FROST_NOVA:
 	case HN_GROUND_GRAVITATION: {
+		if( map_getcell(src->m, x, y, CELL_CHKLANDPROTECTOR) ) {
+			clif_skill_fail(sd,skill_id,USESKILL_FAIL,0);
+			return 0;
+		}
 		int splash = skill_get_splash(skill_id, skill_lv);
 		map_foreachinarea(skill_area_sub, src->m, x - splash, y - splash, x + splash, y + splash, BL_CHAR,
 			src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | SKILL_ALTDMG_FLAG | 1, skill_castend_damage_id);
@@ -14301,6 +14311,10 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		break;
 	}
 	case HN_METEOR_STORM_BUSTER: {
+			if( map_getcell(src->m, x, y, CELL_CHKLANDPROTECTOR) ) {
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL,0);
+				return 0;
+			}
 			int splash = skill_get_splash(skill_id, skill_lv);
 
 			map_foreachinarea(skill_area_sub, src->m, x - splash, y - splash, x + splash, y + splash, BL_CHAR,
@@ -14942,6 +14956,10 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case SS_RAIDENPOU:
 	case SS_SEKIENHOU:
 		skill_mirage_cast(src, NULL,SS_ANTENPOU, skill_lv, x, y, tick, flag);
+		if( map_getcell(src->m, x, y, CELL_CHKLANDPROTECTOR) ) {
+			clif_skill_fail(sd,skill_id,USESKILL_FAIL,0);
+			return 0;
+		}
 		clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
 		if (battle_config.skill_eightpath_algorithm) {
 			//Use official AoE algorithm
@@ -14968,6 +14986,10 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		break;
 	case SS_REIKETSUHOU:
 		skill_mirage_cast(src, NULL,SS_ANTENPOU, skill_lv, 0, 0, tick,flag);
+		if( map_getcell(src->m, x, y, CELL_CHKLANDPROTECTOR) ) {
+			clif_skill_fail(sd,skill_id,USESKILL_FAIL,0);
+			return 0;
+		}
 		i = skill_get_splash(skill_id, skill_lv);
 		map_foreachinallarea(skill_area_sub, src->m, x - i, y - i, x + i, y + i, BL_CHAR,
 			src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_damage_id);
