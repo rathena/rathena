@@ -1165,6 +1165,14 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 			status_change_end(target, SC_GUARDIAN_S, INVALID_TIMER);
 	}
 
+	// Weapon Blocking can be triggered while the above statuses are active.
+	if ((sce = sc->data[SC_WEAPONBLOCKING]) && flag & (BF_SHORT | BF_WEAPON) && rnd() % 100 < sce->val2) {
+		clif_skill_nodamage(target, src, GC_WEAPONBLOCKING, sce->val1, 1);
+		sc_start(src, target, SC_WEAPONBLOCK_ON, 100, src->id, skill_get_time2(GC_WEAPONBLOCKING, sce->val1));
+		d->dmg_lv = ATK_BLOCK;
+		return false;
+	}
+
 	if (damage == 0)
 		return false;
 
@@ -1236,13 +1244,6 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 			d->dmg_lv = ATK_BLOCK;
 			return false;
 		}
-	}
-
-	if ((sce = sc->data[SC_WEAPONBLOCKING]) && flag&(BF_SHORT | BF_WEAPON) && rnd() % 100 < sce->val2) {
-		clif_skill_nodamage(target, src, GC_WEAPONBLOCKING, sce->val1, 1);
-		sc_start(src, target, SC_WEAPONBLOCK_ON, 100, src->id, skill_get_time2(GC_WEAPONBLOCKING, sce->val1));
-		d->dmg_lv = ATK_BLOCK;
-		return false;
 	}
 
 	if ((sce = sc->data[SC_MILLENNIUMSHIELD]) && sce->val2 > 0 && damage > 0) {
@@ -1772,7 +1773,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			}
 		}
 
-		if (sc->data[SC_POISONINGWEAPON] && flag&BF_SHORT && (skill_id == 0 || skill_id == GC_VENOMPRESSURE) && damage > 0) {
+		if (sc->data[SC_POISONINGWEAPON] && flag&BF_SHORT && damage > 0) {
 			damage += damage * 10 / 100;
 			if (rnd() % 100 < sc->data[SC_POISONINGWEAPON]->val3)
 				sc_start4(src, bl, (sc_type)sc->data[SC_POISONINGWEAPON]->val2, 100, sc->data[SC_POISONINGWEAPON]->val1, 0, 1, 0, (sc->data[SC_POISONINGWEAPON]->val2 == SC_VENOMBLEED ? skill_get_time2(GC_POISONINGWEAPON, 1) : skill_get_time2(GC_POISONINGWEAPON, 2)));
@@ -1805,22 +1806,8 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	} //End of caster SC_ check
 
 	//PK damage rates
-	if (battle_config.pk_mode && sd && bl->type == BL_PC && damage && map_getmapflag(bl->m, MF_PVP)) {
-		if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
-			if (flag&BF_WEAPON)
-				damage = damage * battle_config.pk_weapon_damage_rate / 100;
-			if (flag&BF_MAGIC)
-				damage = damage * battle_config.pk_magic_damage_rate / 100;
-			if (flag&BF_MISC)
-				damage = damage * battle_config.pk_misc_damage_rate / 100;
-		} else { //Normal attacks get reductions based on range.
-			if (flag & BF_SHORT)
-				damage = damage * battle_config.pk_short_damage_rate / 100;
-			if (flag & BF_LONG)
-				damage = damage * battle_config.pk_long_damage_rate / 100;
-		}
-		damage = i64max(damage,1);
-	}
+	if (map_getmapflag(bl->m, MF_PVP) > 0)
+		damage = battle_calc_pk_damage(*src, *bl, damage, skill_id, flag);
 
 	if(battle_config.skill_min_damage && damage > 0 && damage < div_) {
 		if ((flag&BF_WEAPON && battle_config.skill_min_damage&1)
@@ -1999,6 +1986,41 @@ int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 
 	}
 	damage = i64max(damage,1);
 	return damage;
+}
+
+/**
+ * Calculates PK related damage adjustments (between players only).
+ * @param src: Source object
+ * @param bl: Target object
+ * @param damage: Damage being done
+ * @param skill_id: Skill used
+ * @param flag: Battle flag type
+ * @return Modified damage
+ */
+int64 battle_calc_pk_damage(block_list &src, block_list &bl, int64 damage, uint16 skill_id, int flag) {
+	if (damage == 0) // No reductions to make.
+		return 0;
+
+	if (battle_config.pk_mode == 0) // PK mode is disabled.
+		return damage;
+
+	if (src.type == BL_PC && bl.type == BL_PC) {
+		if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
+			if (flag & BF_WEAPON)
+				damage = damage * battle_config.pk_weapon_damage_rate / 100;
+			if (flag & BF_MAGIC)
+				damage = damage * battle_config.pk_magic_damage_rate / 100;
+			if (flag & BF_MISC)
+				damage = damage * battle_config.pk_misc_damage_rate / 100;
+		} else { //Normal attacks get reductions based on range.
+			if (flag & BF_SHORT)
+				damage = damage * battle_config.pk_short_damage_rate / 100;
+			if (flag & BF_LONG)
+				damage = damage * battle_config.pk_long_damage_rate / 100;
+		}
+	}
+
+	return i64max(damage, 1);
 }
 
 /**
@@ -3781,6 +3803,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 	if( sd && !skill_id ) {	// if no skill_id passed, check for double attack [helvetica]
 		short i;
 		if( ( ( skill_lv = pc_checkskill(sd,TF_DOUBLE) ) > 0 && sd->weapontype1 == W_DAGGER )
+			|| ( pc_checkskill_flag(*sd, TF_DOUBLE) > SKILL_FLAG_PERMANENT && sd->weapontype1 != W_FIST )
 			|| ( sd->bonus.double_rate > 0 && sd->weapontype1 != W_FIST ) // Will fail bare-handed
 			|| ( sc && sc->data[SC_KAGEMUSYA] && sd->weapontype1 != W_FIST )) // Will fail bare-handed
 		{	//Success chance is not added, the higher one is used [Skotlex]
@@ -5544,7 +5567,7 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 			ATK_ADDRATE(wd->damage, wd->damage2, sc->data[SC_EXEEDBREAK]->val2);
 			RE_ALLATK_ADDRATE(wd, sc->data[SC_EXEEDBREAK]->val2);
 		}
-		if (sc->data[SC_PYREXIA] && sc->data[SC_PYREXIA]->val3 == 0) {
+		if (sc->data[SC_PYREXIA] && sc->data[SC_PYREXIA]->val3 == 0 && skill_id == 0) {
 			ATK_ADDRATE(wd->damage, wd->damage2, sc->data[SC_PYREXIA]->val2);
 			RE_ALLATK_ADDRATE(wd, sc->data[SC_PYREXIA]->val2);
 		}
@@ -8251,6 +8274,18 @@ struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct bl
 		if (d.dmg_lv == ATK_DEF /*&& attack_type&(BF_MAGIC|BF_MISC)*/) // Isn't it that additional effects don't apply if miss?
 			d.dmg_lv = ATK_MISS;
 		d.dmotion = 0;
+
+		status_change *tsc = status_get_sc(target);
+
+		// Weapon Blocking has the ability to trigger on ATK_MISS as well.
+		if (tsc != nullptr && tsc->data[SC_WEAPONBLOCKING]) {
+			status_change_entry *tsce = tsc->data[SC_WEAPONBLOCKING];
+
+			if (attack_type == BF_WEAPON && rnd() % 100 < tsce->val2) {
+				clif_skill_nodamage(target, bl, GC_WEAPONBLOCKING, tsce->val1, 1);
+				sc_start(bl, target, SC_WEAPONBLOCK_ON, 100, bl->id, skill_get_time2(GC_WEAPONBLOCKING, tsce->val1));
+			}
+		}
 	}
 	else // Some skills like Weaponry Research will cause damage even if attack is dodged
 		d.dmg_lv = ATK_DEF;
@@ -8355,6 +8390,24 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 			rdamage -= damage * sc->data[SC_VENOMBLEED]->val2 / 100;
 			rdamage = i64max(rdamage, 1);
 		}
+	}
+
+	// Config damage adjustment
+	map_data *mapdata = map_getmapdata(src->m);
+
+	if (mapdata_flag_gvg2(mapdata))
+		rdamage = battle_calc_gvg_damage(src, tbl, rdamage, skill_id, flag);
+	else if (mapdata->flag[MF_BATTLEGROUND])
+		rdamage = battle_calc_bg_damage(src, tbl, rdamage, skill_id, flag);
+	else if (mapdata->flag[MF_PVP])
+		rdamage = battle_calc_pk_damage(*src, *tbl, rdamage, skill_id, flag);
+
+	// Skill damage adjustment
+	int skill_damage = battle_skill_damage(src, tbl, skill_id);
+
+	if (skill_damage != 0) {
+		rdamage += rdamage * skill_damage / 100;
+		rdamage = i64max(rdamage, 1);
 	}
 
 	// Config damage adjustment

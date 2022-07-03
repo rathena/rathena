@@ -2517,12 +2517,13 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		sc_start(src,src,SC_BLIND,2*skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 	case HFLI_SBR44:	//[orn]
-	case HVAN_EXPLOSION:
 		if(src->type == BL_HOM){
-			TBL_HOM *hd = (TBL_HOM*)src;
-			hd->homunculus.intimacy = (skill_id == HFLI_SBR44) ? 200 : 100; // hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION)
-			if (hd->master)
-				clif_send_homdata(hd->master,SP_INTIMATE,hd->homunculus.intimacy/100);
+			struct homun_data *hd = (struct homun_data *)src;
+			if (hd != nullptr) {
+				hd->homunculus.intimacy = hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION);
+				if (hd->master)
+					clif_send_homdata(hd->master,SP_INTIMATE,hd->homunculus.intimacy / 100);
+			}
 		}
 		break;
 	case CR_GRANDCROSS:
@@ -8426,6 +8427,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			return 1;
 		}
 		status_damage(src, src, sstatus->max_hp,0,0,1, skill_id);
+		if(skill_id == HVAN_EXPLOSION && src->type == BL_HOM) {
+			struct homun_data *hd = (struct homun_data *)src;
+			if (hd != nullptr) {
+				hd->homunculus.intimacy = hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION);
+				if (hd->master)
+					clif_send_homdata(hd->master,SP_INTIMATE,hd->homunculus.intimacy / 100);
+			}
+		}
 		break;
 	case AL_ANGELUS:
 #ifdef RENEWAL
@@ -24028,6 +24037,8 @@ void SkillDatabase::loadingFinished(){
 	if( this->skill_num > MAX_SKILL ){
 		ShowError( "There are more skills defined in the skill database (%d) than the MAX_SKILL (%d) define. Please increase it and recompile.\n", this->skill_num, MAX_SKILL );
 	}
+
+	TypesafeYamlDatabase::loadingFinished();
 }
 
 /**
