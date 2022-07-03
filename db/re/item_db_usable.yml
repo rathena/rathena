@@ -10965,11 +10965,14 @@ Body:
   - Id: 12608
     AegisName: Splendid_Box2
     Name: Splendid Box2
-    Type: Delayconsume
+    Type: Usable
     Buy: 20
     Weight: 100
     Flags:
       BuyingStore: true
+      Container: true
+    Script: |
+      getgroupitem(IG_Splendid_Box2);
   - Id: 12609
     AegisName: Old_Ore_Box
     Name: Old Ore Box
@@ -46344,7 +46347,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus_script "bonus2 bRegenPercentSP,5,5000;",600,9;
+      bonus_script "{ bonus2 bRegenPercentSP,5,5000; }",600,9;
       /* fix me: unknown flag and specialeffect ;  disabled when LK_BERSERK */
   - Id: 23016
     AegisName: Pieces_Of_Grudge
