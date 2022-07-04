@@ -6308,8 +6308,7 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 			return;
 
 		if (tsc->data[SC_MAXPAIN]) {
-			rdamage = wd->damage + wd->damage2;
-			tsc->data[SC_MAXPAIN]->val2 = (int)rdamage;
+			tsc->data[SC_MAXPAIN]->val2 = (int)damage;
 			if (!tsc->data[SC_KYOMU] && !(tsc->data[SC_DARKCROW] && wd->flag&BF_SHORT)) //SC_KYOMU invalidates reflecting ability. SC_DARKCROW also does, but only for short weapon attack.
 				skill_castend_damage_id(target, src, NPC_MAXPAIN_ATK, tsc->data[SC_MAXPAIN]->val1, tick, ((wd->flag & 1) ? wd->flag - 1 : wd->flag));
 		}
@@ -6323,7 +6322,7 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 
 			if (sc && sc->data[SC_VITALITYACTIVATION])
 				rdamage /= 2;
-			else if( attack_type == BF_WEAPON && tsc->data[SC_REFLECTDAMAGE] ) // Don't reflect your own damage (Grand Cross)
+			if( attack_type == BF_WEAPON && tsc->data[SC_REFLECTDAMAGE] ) // Don't reflect your own damage (Grand Cross)
 				map_foreachinshootrange(battle_damage_area,target,skill_get_splash(LG_REFLECTDAMAGE,1),BL_CHAR,tick,target,wd->amotion,sstatus->dmotion,rdamage,wd->flag);
 			else if( attack_type == BF_WEAPON || attack_type == BF_MISC) {
 				rdelay = clif_damage(src, (!d_bl) ? src : d_bl, tick, wd->amotion, sstatus->dmotion, rdamage, 1, DMG_ENDURE, 0, false);
