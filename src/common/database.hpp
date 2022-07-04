@@ -194,10 +194,10 @@ public:
 			this->cache[key] = pair.second;
 		}
 
-		for( size_t index = this->cache.size() - 1; index >= 0; index-- ){
-			if( this->cache[index] != nullptr ){
+		for( auto it = this->cache.rbegin(); it != this->cache.rend(); it++ ){
+			if( *it != nullptr ){
 				// Resize to only fit all existing non null entries
-				this->cache.resize( index + 1 );
+				this->cache.resize( this->cache.rend() - it );
 
 				// Free the memory that was allocated too much
 				this->cache.shrink_to_fit();
