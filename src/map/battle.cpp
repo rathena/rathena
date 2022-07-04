@@ -8342,7 +8342,7 @@ int64 battle_calc_return_damage(struct block_list* tbl, struct block_list *src, 
 						return 0;
 				}
 			}
-			if ( tsc->data[SC_REFLECTSHIELD] && skill_id != WS_CARTTERMINATION ) {
+			if ( tsc->data[SC_REFLECTSHIELD] && skill_id != WS_CARTTERMINATION && skill_id != NPC_MAXPAIN_ATK ) {
 				// Don't reflect non-skill attack if has SC_REFLECTSHIELD from Devotion bonus inheritance
 				if (!skill_id && battle_config.devotion_rdamage_skill_only && tsc->data[SC_REFLECTSHIELD]->val4)
 					rdamage = 0;
