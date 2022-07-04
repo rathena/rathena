@@ -6334,8 +6334,8 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 				if( tsd )
 					battle_drain(tsd, src, rdamage, rdamage, sstatus->race, sstatus->class_);
 				// It appears that official servers give skill reflect damage a longer delay
-				battle_delay_damage(tick, wd->amotion, target, (!d_bl) ? src : d_bl, 0, CR_REFLECTSHIELD, 0, rdamage, ATK_DEF, rdelay ,true, false);
-				skill_additional_effect(target, (!d_bl) ? src : d_bl, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL, ATK_DEF, tick);
+				battle_delay_damage(tick, wd->amotion, target, (!d_bl) ? src : d_bl, wd->flag, skill_id, skill_lv, rdamage, ATK_DEF, rdelay ,true, false);
+				skill_additional_effect(target, (!d_bl) ? src : d_bl, skill_id, skill_lv, wd->flag, ATK_DEF, tick);
 			}
 		}
 	}
