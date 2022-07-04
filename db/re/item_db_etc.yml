@@ -38895,7 +38895,7 @@ Body:
     Script: |
       .@atk = 5;
       .@r = getrefine();
-      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_SPEAR && .@r >= 10) {
+      if ((getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_1HSPEAR || getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_2HSPEAR) && .@r >= 10) {
          .@atk += 20;
          if (.@r >= 14) {
             .@atk += 20;
