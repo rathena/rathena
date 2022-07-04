@@ -3042,11 +3042,11 @@ static int skill_magic_reflect(struct block_list* src, struct block_list* bl, in
 		// Item-based reflection - Bypasses Boss check
 		if (sd && sd->bonus.magic_damage_return && type && rnd()%100 < sd->bonus.magic_damage_return)
 			return 1;
-	}
 
-	// Magic Mirror reflection - Bypasses Boss check
-	if (sc && sc->data[SC_MAGICMIRROR] && rnd()%100 < sc->data[SC_MAGICMIRROR]->val2)
-		return 1;
+		// Magic Mirror reflection - Bypasses Boss check
+		if (sc && sc->data[SC_MAGICMIRROR] && rnd()%100 < sc->data[SC_MAGICMIRROR]->val2)
+			return 1;
+	}
 
 	if( status_get_class_(src) == CLASS_BOSS )
 		return 0;
