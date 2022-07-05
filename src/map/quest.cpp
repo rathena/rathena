@@ -164,13 +164,6 @@ uint64 QuestDatabase::parseBodyNode(const ryml::NodeRef& node) {
 					return 0;
 				}
 
-				if (!this->nodeExists(targetNode, "Mob") && !this->nodeExists(targetNode, "MinLevel") && !this->nodeExists(targetNode, "MaxLevel") &&
-						!this->nodeExists(targetNode, "Race") && !this->nodeExists(targetNode, "Size") && !this->nodeExists(targetNode, "Element") &&
-						!this->nodeExists(targetNode, "Location") && !this->nodeExists(targetNode, "MapName")) {
-					this->invalidWarning(targetNode, "Targets is missing required field, skipping.\n");
-					return 0;
-				}
-
 				target = std::make_shared<s_quest_objective>();
 				target->index = index;
 				target->mob_id = mob_id;
@@ -299,31 +292,27 @@ uint64 QuestDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				}
 
 				if (this->nodeExists(targetNode, "MapMobTargets")) {
-					const auto& MapMobTargets = targetNode["MapMobTargets"];
+					const auto& MapMobTargetsNode = targetNode["MapMobTargets"];
 
-					for (const auto& MapMobTargetsNode : MapMobTargets) {
+					for (const auto& MapMobTargetsIt : MapMobTargetsNode) {
 						std::string mob_name;
-
-						if (!this->asString(MapMobTargetsNode, "Name", mob_name))
-							return 0;
+						c4::from_chars(MapMobTargetsIt.key(), &mob_name);
 
 						std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(mob_name.c_str());
 
 						if (!mob) {
-							this->invalidWarning(MapMobTargetsNode["Name"], "Mob %s does not exist, skipping.\n", mob_name.c_str());
+							this->invalidWarning(MapMobTargetsNode[MapMobTargetsIt.key()], "Mob %s does not exist, skipping.\n", mob_name.c_str());
 							continue;
 						}
 
-						if (this->nodeExists(MapMobTargetsNode, "Flag")) {
-							bool active;
+						bool active;
 
-							if (!this->asBool(MapMobTargetsNode, "Flag", active))
-								return 0;
+						if (!this->asBool(MapMobTargetsNode, mob_name, active))
+							return 0;
 
-							if (!active) {
-								util::vector_erase_if_exists(target->mobs_allowed, mob->id);
-								continue;
-							}
+						if (!active) {
+							util::vector_erase_if_exists(target->mobs_allowed, mob->id);
+							continue;
 						}
 
 						if (!util::vector_exists( target->mobs_allowed, mob->id ))
