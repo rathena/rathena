@@ -8175,7 +8175,7 @@ ACMD_FUNC(iteminfo)
 	std::map<t_itemid, std::shared_ptr<item_data>> item_array = {};
 	uint16 count = 1;
 
-	if (item_db.find(strtoul(message, nullptr, 10)) == nullptr)
+	if ((item_array[0] = item_db.find(strtoul(message, nullptr, 10))) == nullptr)
 		count = itemdb_searchname_array(item_array, MAX_SEARCH, message);
 
 	if (!count) {
@@ -8228,7 +8228,7 @@ ACMD_FUNC(whodrops)
 	std::map<t_itemid, std::shared_ptr<item_data>> item_array = {};
 	uint16 count = 1;
 
-	if (item_db.find(strtoul(message, nullptr, 10)) == nullptr)
+	if ((item_array[0] = item_db.find(strtoul(message, nullptr, 10))) == nullptr)
 		count = itemdb_searchname_array(item_array, MAX_SEARCH, message);
 
 	if (!count) {
