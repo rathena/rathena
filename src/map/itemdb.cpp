@@ -1676,12 +1676,12 @@ uint16 itemdb_searchname_array(std::map<t_itemid, std::shared_ptr<item_data>> &d
 
 		if (id == nullptr)
 			continue;
-		if (data.size() < size) {
-			if (stristr(id->name.c_str(), str) != nullptr || stristr(id->ename.c_str(), str) != nullptr || strcmpi(id->ename.c_str(), str) == 0)
-				data[id->nameid] = id;
-		} else
-			break;
+		if (stristr(id->name.c_str(), str) != nullptr || stristr(id->ename.c_str(), str) != nullptr || strcmpi(id->ename.c_str(), str) == 0)
+			data[id->nameid] = id;
 	}
+
+	if (data.size() > size)
+		util::map_resize(data, size);
 
 	return static_cast<uint16>(data.size());
 }
