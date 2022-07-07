@@ -15547,7 +15547,7 @@ void StatusDatabase::loadingFinished(){
 		}
 	}
 
-	TypesafeYamlDatabase::loadingFinished();
+	TypesafeCachedYamlDatabase::loadingFinished();
 }
 
 StatusDatabase status_db;
