@@ -18003,6 +18003,96 @@ Body:
             Rate: 1
           - Item: Mystic_Bow
             Rate: 2
+  - Group: Splendid_Box2
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Krasnaya
+            Rate: 232
+          - Item: Alca_Bringer
+            Rate: 232
+          - Item: Chrome_Twohand_Sword
+            Rate: 232
+          - Item: Krishna
+            Rate: 232
+          - Item: Cakram
+            Rate: 232
+          - Item: Durga
+            Rate: 232
+          - Item: Vecer_Axe
+            Rate: 232
+          - Item: Giant_Axe
+            Rate: 232
+          - Item: Hunting_Spear
+            Rate: 232
+          - Item: Imperial_Spear
+            Rate: 232
+          - Item: Rafini_Staff
+            Rate: 232
+          - Item: Falken_Blitz
+            Rate: 232
+          - Item: Elven_Bow
+            Rate: 232
+          - Item: Green_Whistle
+            Rate: 232
+          - Item: Stem_Whip
+            Rate: 232
+          - Item: Rotha_Shield
+            Rate: 232
+          - Item: Imperial_Guard
+            Rate: 232
+          - Item: Elven_Ears
+            Rate: 232
+          - Item: Diabolus_Robe
+            Rate: 232
+          - Item: Diabolus_Armor
+            Rate: 232
+          - Item: Dragon_Vest
+            Rate: 232
+          - Item: Variant_Shoes
+            Rate: 232
+          - Item: Tidal_Shoes
+            Rate: 232
+          - Item: Black_Leather_Boots
+            Rate: 232
+          - Item: Diabolus_Boots
+            Rate: 232
+          - Item: Black_Leather_Boots_
+            Rate: 232
+          - Item: Diabolus_Manteau
+            Rate: 232
+          - Item: Dragon_Manteau
+            Rate: 232
+          - Item: Piece_Of_Angent_Skin
+            Rate: 232
+          - Item: Bison_Horn
+            Rate: 232
+          - Item: Krieg
+            Rate: 232
+          - Item: Weihna
+            Rate: 232
+          - Item: Black_Wing
+            Rate: 232
+          - Item: Twin_Edge_B
+            Rate: 232
+          - Item: Twin_Edge_R
+            Rate: 232
+          - Item: Ruber
+            Rate: 232
+          - Item: Bone_Plate
+            Rate: 232
+          - Item: Ebone_Armor
+            Rate: 232
+          - Item: Erde
+            Rate: 232
+          - Item: Red_Square_Bag
+            Rate: 232
+          - Item: Carga_Mace
+            Rate: 232
+          - Item: Red_Ether_Bag
+            Rate: 232
+          - Item: Mystic_Bow
+            Rate: 232
   - Group: SPRING_FESTIVAL_SCROLL
     SubGroups:
       - SubGroup: 1

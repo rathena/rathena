@@ -4213,7 +4213,6 @@ Body:
       DropEffect: CLIENT
     Script: |
       skill "TF_DOUBLE",1;
-      bonus bDoubleRate,5;
   - Id: 4118
     AegisName: Petit_Card
     Name: Earth Petite Card
@@ -38903,7 +38902,8 @@ Body:
     Script: |
       .@atk = 5;
       .@r = getrefine();
-      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_SPEAR && .@r >= 10) {
+      .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
+      if ((.@i == W_1HSPEAR || .@i == W_2HSPEAR) && .@r >= 10) {
          .@atk += 20;
          if (.@r >= 14) {
             .@atk += 20;
@@ -42887,7 +42887,6 @@ Body:
     SubType: Enchant
     Script: |
       skill "TF_DOUBLE",3;
-      bonus bDoubleRate,15;
   - Id: 29366
     AegisName: Strong_Blow1
     Name: Hard Blow 1
@@ -49616,7 +49615,6 @@ Body:
       bonus bCritAtkRate,15;
       if (getskilllv("AS_KATAR") >= 10) {
          skill "TF_DOUBLE",3;
-         bonus bDoubleRate,15;
       }
   - Id: 310189
     AegisName: GuillotineCross_Bottom2
