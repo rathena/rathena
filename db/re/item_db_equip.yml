@@ -141399,7 +141399,7 @@ Body:
       }
   - Id: 400268
     AegisName: Rose_Crispinette
-    Name: Rosé Crespinette
+    Name: RosÃ© Crespinette
     Type: Armor
     Locations:
       Head_Top: true
@@ -154557,6 +154557,7 @@ Body:
       Right_Accessory: true
     ArmorLevel: 1
     EquipLevelMin: 100
+    Refineable: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -154587,6 +154588,7 @@ Body:
       Right_Accessory: true
     ArmorLevel: 1
     EquipLevelMin: 100
+    Refineable: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -154614,6 +154616,7 @@ Body:
       Right_Accessory: true
     ArmorLevel: 1
     EquipLevelMin: 100
+    Refineable: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -154642,6 +154645,7 @@ Body:
       Left_Accessory: true
     ArmorLevel: 1
     EquipLevelMin: 100
+    Refineable: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -154669,6 +154673,7 @@ Body:
       Right_Accessory: true
     ArmorLevel: 1
     EquipLevelMin: 100
+    Refineable: true
     Trade:
       NoDrop: true
       NoTrade: true
@@ -154696,6 +154701,7 @@ Body:
       Right_Accessory: true
     ArmorLevel: 1
     EquipLevelMin: 110
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus bMatk,15;
@@ -154715,6 +154721,7 @@ Body:
       Right_Accessory: true
     ArmorLevel: 1
     EquipLevelMin: 110
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus2 bMagicAtkEle,Ele_Holy,5;
@@ -154735,6 +154742,7 @@ Body:
       Right_Accessory: true
     ArmorLevel: 1
     EquipLevelMin: 110
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus bBaseAtk,15;
