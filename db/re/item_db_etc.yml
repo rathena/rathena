@@ -47753,7 +47753,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus2 bMagicAtkEle,Ele_Fire,35;
+      bonus2 bMagicAtkEle,Ele_Ghost,35;
       bonus bUseSPrate,10;
   - Id: 300371
     AegisName: aegis_300371
@@ -47780,7 +47780,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bSubEle,Ele_Neutral,15;
-      bonus2 bMagicAtkEle,Ele_Fire,3*getrefine();
+      bonus2 bMagicAtkEle,Ele_Ghost,3*getrefine();
   - Id: 300373
     AegisName: aegis_300373
     Name: Hallucigenia Baby Card
@@ -47833,7 +47833,7 @@ Body:
       }
       bonus2 bMagicSubDefEle,Ele_Dark,.@rate;
       bonus2 bMagicSubDefEle,Ele_Holy,.@rate;
-      bonus2 bMagicSubDefEle,Ele_Fire,.@rate;
+      bonus2 bMagicSubDefEle,Ele_Ghost,.@rate;
       bonus2 bMagicSubDefEle,Ele_Neutral,.@rate;
   - Id: 300376
     AegisName: aegis_300376
