@@ -274,7 +274,7 @@ uint64 QuestDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 					uint16 mapindex = mapindex_name2idx(location.c_str(), nullptr);
 
-					if (mapindex == 0) {
+					if (mapindex == 0 && strcmpi(location.c_str(), "All") != 0) {
 						this->invalidWarning(targetNode["Location"], "Map \"%s\" not found.\n", location.c_str());
 						return 0;
 					}
