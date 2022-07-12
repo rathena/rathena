@@ -8011,7 +8011,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case RA_UNLIMIT:
 	case WL_TELEKINESIS_INTENSE:
 	case RL_HEAT_BARREL:
-	case RL_P_ALTER:
 	case RL_E_CHAIN:
 	case SU_FRESHSHRIMP:
 	case SU_ARCLOUSEDASH:
@@ -8057,7 +8056,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
-
+	case RL_P_ALTER:
+		clif_skill_nodamage(src,bl,skill_id,skill_lv,
+			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
+		sc_start2(src,bl,SC_KYRIE,100,skill_lv,skill_id,skill_get_time(skill_id,skill_lv));
+		break;
 	case LG_SHIELDSPELL:
 		if (skill_lv == 1)
 			type = SC_SHIELDSPELL_HP;
