@@ -8589,6 +8589,7 @@ Body:
     CalcFlags:
       Smatk: true
       M_Lifepotion: true
+    End:
   - Status: M_DefScroll
     Icon: EFST_M_DEFSCROLL
     CalcFlags:
@@ -8600,3 +8601,4 @@ Body:
       NoClearance: true
     Fail:
       M_DefScroll: true
+    End:
