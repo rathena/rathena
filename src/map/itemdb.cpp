@@ -3245,6 +3245,13 @@ void s_random_opt_group::apply( struct item& item ){
 		item_option.param = option->param;
 	};
 
+	// (Re)initialize all the options
+	for( size_t i = 0; i < MAX_ITEM_RDM_OPT; i++ ){
+		item.option[i].id = 0;
+		item.option[i].value = 0;
+		item.option[i].param = 0;
+	};
+
 	// Apply Must options
 	for( size_t i = 0; i < this->slots.size(); i++ ){
 		// Try to apply an entry
