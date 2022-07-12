@@ -5592,6 +5592,7 @@ OnMove:
 		.@x = rand(16,31);
 		.@y = rand(311,332);
 	}
+	unitstopwalk .@gid;
 	unitwalk .@gid,.@x,.@y;
 	.@skip = 0;
 	switch (rand(1,11)) {
