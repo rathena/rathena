@@ -8588,3 +8588,15 @@ Body:
     DurationLookup: SOA_SOUL_OF_HEAVEN_AND_EARTH
     CalcFlags:
       Smatk: true
+      M_Lifepotion: true
+  - Status: M_DefScroll
+    Icon: EFST_M_DEFSCROLL
+    CalcFlags:
+      Def: true
+      Mdef: true
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Fail:
+      M_DefScroll: true

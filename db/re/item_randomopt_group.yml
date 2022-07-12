@@ -12285,3 +12285,615 @@ Body:
             MinValue: 1
             MaxValue: 5
             Chance: 769
+  # Source: https://ro.gnjoy.com/news/probability/View.asp?category=6&seq=4136330
+  - Id: 145
+    Group: MAJORAUTOSPELL_UP
+    Slots:
+      - Slot: 1
+        Options:
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 100
+            MaxValue: 500
+            Chance: 630
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 20
+            MaxValue: 100
+            Chance: 630
+          - Option: VAR_MAXHPPERCENT
+            MinValue: 1
+            MaxValue: 1
+            Chance: 630
+          - Option: VAR_MAXHPPERCENT
+            MinValue: 2
+            MaxValue: 2
+            Chance: 60
+          - Option: VAR_MAXSPPERCENT
+            MinValue: 1
+            MaxValue: 1
+            Chance: 630
+          - Option: VAR_MAXSPPERCENT
+            MinValue: 2
+            MaxValue: 2
+            Chance: 60
+          - Option: VAR_ATTPOWER
+            MinValue: 1
+            MaxValue: 15
+            Chance: 600
+          - Option: VAR_ATTMPOWER
+            MinValue: 1
+            MaxValue: 15
+            Chance: 600
+          - Option: VAR_ATKPERCENT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 300
+          - Option: VAR_MAGICATKPERCENT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 300
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 1
+            Chance: 150
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 190
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 15
+            Chance: 633
+          - Option: VAR_AVOIDSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 15
+            Chance: 633
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 10
+            MaxValue: 25
+            Chance: 633
+          - Option: VAR_MDEFPOWER
+            MinValue: 1
+            MaxValue: 3
+            Chance: 633
+          - Option: VAR_CRITICALSUCCESSVALUE
+            MinValue: 1
+            MaxValue: 5
+            Chance: 633
+          - Option: DAMAGE_CRI_TARGET
+            MinValue: 1
+            MaxValue: 5
+            Chance: 150
+          - Option: ADDSKILLMDAMAGE_ALL
+            MinValue: 1
+            MaxValue: 5
+            Chance: 150
+          - Option: RANGE_ATTACK_DAMAGE_TARGET
+            MinValue: 1
+            MaxValue: 5
+            Chance: 150
+          - Option: MELEE_ATTACK_DAMAGE_TARGET
+            MinValue: 1
+            MaxValue: 5
+            Chance: 150
+          - Option: HEAL_VALUE
+            MinValue: 3
+            MaxValue: 5
+            Chance: 632
+          - Option: HEAL_MODIFY_PERCENT
+            MinValue: 3
+            MaxValue: 5
+            Chance: 632
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 1
+            MaxValue: 3
+            Chance: 190
+      - Slot: 2
+        Chance: 3300
+        Options:
+          - Option: VAR_CRITICAL_RATE
+            MinValue: 1
+            MaxValue: 5
+            Chance: 140
+          - Option: VAR_HEAL_PLUS
+            MinValue: 3
+            MaxValue: 10
+            Chance: 140
+          - Option: VAR_POWAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 55
+          - Option: VAR_CONAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 55
+          - Option: VAR_WISAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 55
+          - Option: VAR_SPLAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 55
+          - Option: VAR_CRTAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 55
+          - Option: VAR_STAAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 55
+          - Option: VAR_PATKAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Chance: 55
+          - Option: VAR_SMATKAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Chance: 55
+          - Option: VAR_RESAMOUNT
+            MinValue: 5
+            MaxValue: 15
+            Chance: 140
+          - Option: VAR_MRESAMOUNT
+            MinValue: 5
+            MaxValue: 15
+            Chance: 140
+  # Source: https://ro.gnjoy.com/news/probability/View.asp?category=6&seq=4136331
+  - Id: 146
+    Group: HASTY_UP
+    Slots:
+      - Slot: 1
+        Options:
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 100
+            MaxValue: 500
+            Chance: 630
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 20
+            MaxValue: 100
+            Chance: 630
+          - Option: VAR_MAXHPPERCENT
+            MinValue: 1
+            MaxValue: 1
+            Chance: 630
+          - Option: VAR_MAXHPPERCENT
+            MinValue: 2
+            MaxValue: 2
+            Chance: 60
+          - Option: VAR_MAXSPPERCENT
+            MinValue: 1
+            MaxValue: 1
+            Chance: 630
+          - Option: VAR_MAXSPPERCENT
+            MinValue: 2
+            MaxValue: 2
+            Chance: 60
+          - Option: VAR_ATTPOWER
+            MinValue: 1
+            MaxValue: 15
+            Chance: 600
+          - Option: VAR_ATTMPOWER
+            MinValue: 1
+            MaxValue: 15
+            Chance: 600
+          - Option: VAR_ATKPERCENT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 300
+          - Option: VAR_MAGICATKPERCENT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 300
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 1
+            Chance: 150
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 190
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 15
+            Chance: 633
+          - Option: VAR_AVOIDSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 15
+            Chance: 633
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 10
+            MaxValue: 25
+            Chance: 633
+          - Option: VAR_MDEFPOWER
+            MinValue: 1
+            MaxValue: 3
+            Chance: 633
+          - Option: VAR_CRITICALSUCCESSVALUE
+            MinValue: 1
+            MaxValue: 5
+            Chance: 633
+          - Option: DAMAGE_CRI_TARGET
+            MinValue: 1
+            MaxValue: 5
+            Chance: 150
+          - Option: ADDSKILLMDAMAGE_ALL
+            MinValue: 1
+            MaxValue: 5
+            Chance: 150
+          - Option: RANGE_ATTACK_DAMAGE_TARGET
+            MinValue: 1
+            MaxValue: 5
+            Chance: 150
+          - Option: MELEE_ATTACK_DAMAGE_TARGET
+            MinValue: 1
+            MaxValue: 5
+            Chance: 150
+          - Option: HEAL_VALUE
+            MinValue: 3
+            MaxValue: 5
+            Chance: 632
+          - Option: HEAL_MODIFY_PERCENT
+            MinValue: 3
+            MaxValue: 5
+            Chance: 632
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 1
+            MaxValue: 3
+            Chance: 190
+      - Slot: 2
+        Chance: 3300
+        Options:
+          - Option: VAR_CRITICAL_RATE
+            MinValue: 1
+            MaxValue: 5
+            Chance: 140
+          - Option: VAR_HEAL_PLUS
+            MinValue: 3
+            MaxValue: 10
+            Chance: 140
+          - Option: VAR_POWAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 55
+          - Option: VAR_CONAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 55
+          - Option: VAR_WISAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 55
+          - Option: VAR_SPLAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 55
+          - Option: VAR_CRTAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 55
+          - Option: VAR_STAAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 55
+          - Option: VAR_PATKAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Chance: 55
+          - Option: VAR_SMATKAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Chance: 55
+          - Option: VAR_RESAMOUNT
+            MinValue: 5
+            MaxValue: 15
+            Chance: 140
+          - Option: VAR_MRESAMOUNT
+            MinValue: 5
+            MaxValue: 15
+            Chance: 140
+  # Source: https://ro.gnjoy.com/news/probability/View.asp?category=6&seq=4136332
+  - Id: 147
+    Group: PHYSICALSHADOW_UP
+    Slots:
+      - Slot: 1
+        Options:
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 100
+            MaxValue: 500
+            Chance: 630
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 20
+            MaxValue: 100
+            Chance: 630
+          - Option: VAR_MAXHPPERCENT
+            MinValue: 1
+            MaxValue: 1
+            Chance: 630
+          - Option: VAR_MAXHPPERCENT
+            MinValue: 2
+            MaxValue: 2
+            Chance: 60
+          - Option: VAR_MAXSPPERCENT
+            MinValue: 1
+            MaxValue: 1
+            Chance: 630
+          - Option: VAR_MAXSPPERCENT
+            MinValue: 2
+            MaxValue: 2
+            Chance: 60
+          - Option: VAR_ATTPOWER
+            MinValue: 1
+            MaxValue: 15
+            Chance: 600
+          - Option: VAR_ATTMPOWER
+            MinValue: 1
+            MaxValue: 15
+            Chance: 600
+          - Option: VAR_ATKPERCENT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 300
+          - Option: VAR_MAGICATKPERCENT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 300
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 1
+            Chance: 150
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 190
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 15
+            Chance: 633
+          - Option: VAR_AVOIDSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 15
+            Chance: 633
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 10
+            MaxValue: 25
+            Chance: 633
+          - Option: VAR_MDEFPOWER
+            MinValue: 1
+            MaxValue: 3
+            Chance: 633
+          - Option: VAR_CRITICALSUCCESSVALUE
+            MinValue: 1
+            MaxValue: 5
+            Chance: 633
+          - Option: DAMAGE_CRI_TARGET
+            MinValue: 1
+            MaxValue: 5
+            Chance: 150
+          - Option: ADDSKILLMDAMAGE_ALL
+            MinValue: 1
+            MaxValue: 5
+            Chance: 150
+          - Option: RANGE_ATTACK_DAMAGE_TARGET
+            MinValue: 1
+            MaxValue: 5
+            Chance: 150
+          - Option: MELEE_ATTACK_DAMAGE_TARGET
+            MinValue: 1
+            MaxValue: 5
+            Chance: 150
+          - Option: HEAL_VALUE
+            MinValue: 3
+            MaxValue: 5
+            Chance: 632
+          - Option: HEAL_MODIFY_PERCENT
+            MinValue: 3
+            MaxValue: 5
+            Chance: 632
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 1
+            MaxValue: 3
+            Chance: 190
+      - Slot: 2
+        Chance: 3300
+        Options:
+          - Option: VAR_CRITICAL_RATE
+            MinValue: 1
+            MaxValue: 5
+            Chance: 140
+          - Option: VAR_HEAL_PLUS
+            MinValue: 3
+            MaxValue: 10
+            Chance: 140
+          - Option: VAR_POWAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 55
+          - Option: VAR_CONAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 55
+          - Option: VAR_WISAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 55
+          - Option: VAR_SPLAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 55
+          - Option: VAR_CRTAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 55
+          - Option: VAR_STAAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 55
+          - Option: VAR_PATKAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Chance: 55
+          - Option: VAR_SMATKAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Chance: 55
+          - Option: VAR_RESAMOUNT
+            MinValue: 5
+            MaxValue: 15
+            Chance: 140
+          - Option: VAR_MRESAMOUNT
+            MinValue: 5
+            MaxValue: 15
+            Chance: 140
+  # Source: https://ro.gnjoy.com/news/probability/View.asp?category=6&seq=4136333
+  - Id: 148
+    Group: PERFECTSIZE_UP
+    Slots:
+      - Slot: 1
+        Options:
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 100
+            MaxValue: 500
+            Chance: 630
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 20
+            MaxValue: 100
+            Chance: 630
+          - Option: VAR_MAXHPPERCENT
+            MinValue: 1
+            MaxValue: 1
+            Chance: 630
+          - Option: VAR_MAXHPPERCENT
+            MinValue: 2
+            MaxValue: 2
+            Chance: 60
+          - Option: VAR_MAXSPPERCENT
+            MinValue: 1
+            MaxValue: 1
+            Chance: 630
+          - Option: VAR_MAXSPPERCENT
+            MinValue: 2
+            MaxValue: 2
+            Chance: 60
+          - Option: VAR_ATTPOWER
+            MinValue: 1
+            MaxValue: 15
+            Chance: 600
+          - Option: VAR_ATTMPOWER
+            MinValue: 1
+            MaxValue: 15
+            Chance: 600
+          - Option: VAR_ATKPERCENT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 300
+          - Option: VAR_MAGICATKPERCENT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 300
+          - Option: VAR_PLUSASPD
+            MinValue: 1
+            MaxValue: 1
+            Chance: 150
+          - Option: VAR_PLUSASPDPERCENT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 190
+          - Option: VAR_HITSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 15
+            Chance: 633
+          - Option: VAR_AVOIDSUCCESSVALUE
+            MinValue: 5
+            MaxValue: 15
+            Chance: 633
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 10
+            MaxValue: 25
+            Chance: 633
+          - Option: VAR_MDEFPOWER
+            MinValue: 1
+            MaxValue: 3
+            Chance: 633
+          - Option: VAR_CRITICALSUCCESSVALUE
+            MinValue: 1
+            MaxValue: 5
+            Chance: 633
+          - Option: DAMAGE_CRI_TARGET
+            MinValue: 1
+            MaxValue: 5
+            Chance: 150
+          - Option: ADDSKILLMDAMAGE_ALL
+            MinValue: 1
+            MaxValue: 5
+            Chance: 150
+          - Option: RANGE_ATTACK_DAMAGE_TARGET
+            MinValue: 1
+            MaxValue: 5
+            Chance: 150
+          - Option: MELEE_ATTACK_DAMAGE_TARGET
+            MinValue: 1
+            MaxValue: 5
+            Chance: 150
+          - Option: HEAL_VALUE
+            MinValue: 3
+            MaxValue: 5
+            Chance: 632
+          - Option: HEAL_MODIFY_PERCENT
+            MinValue: 3
+            MaxValue: 5
+            Chance: 632
+          - Option: DEC_SPELL_CAST_TIME
+            MinValue: 1
+            MaxValue: 3
+            Chance: 190
+      - Slot: 2
+        Chance: 3300
+        Options:
+          - Option: VAR_CRITICAL_RATE
+            MinValue: 1
+            MaxValue: 5
+            Chance: 140
+          - Option: VAR_HEAL_PLUS
+            MinValue: 3
+            MaxValue: 10
+            Chance: 140
+          - Option: VAR_POWAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 55
+          - Option: VAR_CONAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 55
+          - Option: VAR_WISAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 55
+          - Option: VAR_SPLAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 55
+          - Option: VAR_CRTAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 55
+          - Option: VAR_STAAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 55
+          - Option: VAR_PATKAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Chance: 55
+          - Option: VAR_SMATKAMOUNT
+            MinValue: 1
+            MaxValue: 2
+            Chance: 55
+          - Option: VAR_RESAMOUNT
+            MinValue: 5
+            MaxValue: 15
+            Chance: 140
+          - Option: VAR_MRESAMOUNT
+            MinValue: 5
+            MaxValue: 15
+            Chance: 140
