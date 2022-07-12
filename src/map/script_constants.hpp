@@ -5814,7 +5814,6 @@
 	export_constant(IG_EPIC_MODULE_MIX);
 	export_constant(IG_AUTO_M_I_BOX_A);
 	export_constant(IG_AUTO_M_I_BOX_B);
-	export_constant(IG_ILLUSION_MODULE_MIX);
 
 	export_constant(IG_ODIN_RELIC);
 	export_constant(IG_AUTOMATIC_MODULE_MIX);
