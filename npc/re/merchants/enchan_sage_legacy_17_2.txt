@@ -237,49 +237,48 @@ function	enchant_check	{
 
 //= Merchants
 -	marketshop	ep172littlemanager00	-1,1000227:172:999999
-ba_in01,87,386,3	script	Child Manager ß#ep172_pet	20696,{
+
+ba_in01,87,386,3	script	Child Manager ß#ep172_pet	EP17_2_CHILD_ADMIN1,{
 	mes "[ Child Manager ß ]";
 	mes "I have a whole bunch of little stuffs!";
 	next;
-	switch (select("Little Manager:Cloud Cotton:Little Headress:Cancel")) {
-		case 1:
-			mes "[ Child Manager ß ]";
-			mes "If you want to play with the little manager, it would cost you 30 Barmeal Tickets.";
-			next;
-			if (select("Exchange.:Stop.") == 2) {
-				mes "[ Child Manager ß ]";
-				mes "Then, it's time for me to play!";
-				close;
-			}
-			if (countitem(1000103) < 30) {
-				mes "[ Child Manager ß ]";
-				mes "Like I said, if you want to play with the little manager, you'll need 30 Barmeal Tickets!";
-				close;
-			}
-			mes "[ Child Manager ß ]";
-			mes "Have fun with your new friend!";
-			delitem 1000103,30;
-			getitem 9123,1;
-			close;
-
-		case 2:
-			callshop "ep172littlemanager00";
-			break;
-
-		case 3:
-			callshop "ep172littlemanager01"; //TODO BARTERSHOP
-			break;
-
-		case 4:
+	switch( select( "Little Manager", "Cloud Cotton", "Little Headress", "Cancel" ) ) {
+	case 1:
+		mes "[ Child Manager ß ]";
+		mes "If you want to play with the little manager, it would cost you 30 Barmeal Tickets.";
+		next;
+		if (select("Exchange.", "Stop.") == 2) {
 			mes "[ Child Manager ß ]";
 			mes "Then, it's time for me to play!";
 			close;
+		}
+		if (countitem(1000103) < 30) {
+			mes "[ Child Manager ß ]";
+			mes "Like I said, if you want to play with the little manager, you'll need 30 Barmeal Tickets!";
+			close;
+		}
+		mes "[ Child Manager ß ]";
+		mes "Have fun with your new friend!";
+		delitem 1000103,30;
+		getitem 9123,1;
+		close;
+	case 2:
+		callshop "ep172littlemanager00";
+		end;
+	case 3:
+		callshop "barter_Ep_17_2_C_Admin_Acc";
+		end;
+	case 4:
+		mes "[ Child Manager ß ]";
+		mes "Then, it's time for me to play!";
+		close;
 	}
-	close;
+	end;
 }
 
 //= Cube Shop
--	shop	ep172cubeshop00	-1,no,100251:10000000,100252:30000000
+-	marketshop	ep172cubeshop00	-1,100251:10000000:-1,100252:30000000:-1
+
 ba_in01,87,376,3	script	Cube Lane#ep172cube	4_EP17_GUARD_B,{
 	disable_items;
 	mes "[ Cube Lane ]";
@@ -291,8 +290,8 @@ ba_in01,87,376,3	script	Cube Lane#ep172cube	4_EP17_GUARD_B,{
 }
 
 //= Module Shop
-ba_in01,87,373,3	script	Spiera#ep172_soapstone	20698,{
-	callshop "172epicmodule",1; //TODO BARTERSHOP
+ba_in01,87,373,3	script	Spiera#ep172_soapstone	MD_ASSISTANT,{
+	callshop "barter_EP17_2_EP";
 	end;
 }
 
@@ -304,38 +303,35 @@ ba_in01,87,383,3	script	Yeoncheong#equipment_exchange	4_EP17_CLEANER_W,{
 	mes "We accept Barmeal Tickets for upgrading your Illusion Equipment into Automatic Requipments.";
 	mes "What would you like to exchange?";
 	next;
-	switch (select("Exchange Information:Automatic Equipment Exchange:Automatic Accessory Exchange:Quit")) {
-		case 1:
-			mes "[ Yeoncheong ]";
-			mes "You can exchange your ^0000CD+9 Illusion Armor, Engine, or Leg and 900 Barmeal Tickets^000000 to ^FF0000Automatic Armor, Engine, or Leg^000000.";
-			next;
-			mes "[ Yeoncheong ]";
-			mes "The ^FF0000Automatic Accessories^000000 can be exchanged for ^0000CDIllusion Accessories and 1500 Barmeal Tickets^000000.";
-			next;
-			mes "[ Yeoncheong ]";
-			mes "The equipment you want to exchange must be in your inventory and talk to me.";
-			mes "^FF0000Bring only one equipment that you want to exchange and proceed.^000000";
-			close3;
-
-		case 2:
-			.@shop$ = "auto_armor_shop";
-			break;
-
-		case 3:
-			.@shop$ = "auto_acce_shop";
-			close3;
-
-		case 4:
-			mes "[ Yeoncheong ]";
-			mes "Have a nice day, dear guest~";
-			close3;
+	switch( select( "Exchange Information", "Automatic Equipment Exchange", "Automatic Accessory Exchange", "Quit" ) ) {
+	case 1:
+		mes "[ Yeoncheong ]";
+		mes "You can exchange your ^0000CD+9 Illusion Armor, Engine, or Leg and 900 Barmeal Tickets^000000 to ^FF0000Automatic Armor, Engine, or Leg^000000.";
+		next;
+		mes "[ Yeoncheong ]";
+		mes "The ^FF0000Automatic Accessories^000000 can be exchanged for ^0000CDIllusion Accessories and 1500 Barmeal Tickets^000000.";
+		next;
+		mes "[ Yeoncheong ]";
+		mes "The equipment you want to exchange must be in your inventory and talk to me.";
+		mes "^FF0000Bring only one equipment that you want to exchange and proceed.^000000";
+		close3;
+	case 2:
+		.@shop$ = "barter_auto_equip_1";
+		break;
+	case 3:
+		.@shop$ = "barter_auto_equip_2";
+		break;
+	case 4:
+		mes "[ Yeoncheong ]";
+		mes "Have a nice day, dear guest~";
+		close3;
 	}
 	mes "[ Yeoncheong ]";
 	mes "^FF0000Bring only one equipment that you want to exchange and proceed.^000000";
 	mes "If there are multiple equipments in your inventory, it will be exchanged randomly if it meets the condition.";
 	close2;
 	cutin "",255;
-	callshop .@shop$,1; //TODO BARTERSHOP
+	callshop .@shop$;
 	end;
 }
 
@@ -347,135 +343,138 @@ ba_in01,87,380,3	script	Yecheon#ep172module_trader	4_EP17_CLEANER_W,{
 	mes "I can provide you an Automatic Module, Physical Automatic Improvement Device, and Magical Automatic Improvement Device. It will help you the improve abilites of your automatic equipments.";
 	next;
 	cutin "",255;
-	switch (select("More information.:Get Automatic Module:Get Physical Automatic Improvement Device:Get Magical Automatic Improvement Device:Cancel")) {
-		case 1:
-			cutin "ep172_omega",2;
+	switch( select( "More information.", "Get Automatic Module", "Get Physical Automatic Improvement Device", "Get Magical Automatic Improvement Device", "Cancel" ) ) {
+	case 1:
+		cutin "ep172_omega",2;
+		mes "[ Yecheon ]";
+		mes "You can get an ^FF0000automatic module^000000 for ^0000CD90 Barmeal Tickets^000000. I will give you a random automatic module excluding the epic grade modules.";
+		next;
+		mes "[ Yecheon ]";
+		mes "I'm also providing ^FF0000Physical Automatic Improvement Device and Magical Automatic Improvement Device^000000. You can exchange it for ^0000CD45 Barmeal Tickets^000000, or ^0000CD1500000 Zeny^000000.";
+		next;
+		mes "[ Yecheon ]";
+		mes "Then, combat-specialized guest, do safely improve your abilities.";
+		close3;
+	case 2:
+		.@price = 90;
+		cutin "ep172_omega",2;
+		mes "[ Yecheon ]";
+		mes "I will exchange 1 random Automatic Module excluding the epic grade modules for " + .@price + " <ITEM>[Barmeal Ticket]<INFO>1000103</INFO></ITEM>.";
+		next;
+		cutin "",255;
+		if (select("Exchange Barmeal Ticket.", "Do not exchange") == 2) {
 			mes "[ Yecheon ]";
-			mes "You can get an ^FF0000automatic module^000000 for ^0000CD90 Barmeal Tickets^000000. I will give you a random automatic module excluding the epic grade modules.";
-			next;
-			mes "[ Yecheon ]";
-			mes "I'm also providing ^FF0000Physical Automatic Improvement Device and Magical Automatic Improvement Device^000000. You can exchange it for ^0000CD45 Barmeal Tickets^000000, or ^0000CD1500000 Zeny^000000.";
-			next;
-			mes "[ Yecheon ]";
-			mes "Then, combat-specialized guest, do safely improve your abilities.";
+			mes "Transaction ended.";
 			close3;
-
-		case 2:
-			.@price = 90;
-			cutin "ep172_omega",2;
+		}
+		cutin "ep172_omega",2;
+		if (countitem(1000103) < .@price) {
 			mes "[ Yecheon ]";
-			mes "I will exchange 1 random Automatic Module excluding the epic grade modules for 90 <ITEM>[Barmeal Ticket]<INFO>1000103</INFO></ITEM>.";
-			next;
-			cutin "",255;
-			if (select("Exchange Barmeal Ticket.:Do not exchange") == 2) {
-				mes "[ Yecheon ]";
-				mes "Transaction ended.";
-				close3;
-			}
+			mes "You don't have enough Barmeal tickets for the exchange.";
+			close3;
+		}
+		mes "[ Yecheon ]";
+		mes "I exchanged it for one random Automatic Module.";
+		delitem 1000103,.@price;
+		getitem rand(1000105,1000149),1;
+		close3;
+	case 3:
+		.@price = 45;
+		.@zeny = 1500000;
+		cutin "ep172_omega",2;
+		mes "[ Yecheon ]";
+		mes "I will exchange ^FF00001 Physical Automatic Improvement Device^000000 for " + .@price + " <ITEM>[Barmeal Ticket]<INFO>1000103</INFO></ITEM> or " + .@zeny + " Zeny.";
+		next;
+		cutin "",255;
+		switch( select( "Exchange for Barmeal Ticket.", "Exchange for 1500000 Zeny.", "Do not exchange." ) ) {
+		case 1:
 			cutin "ep172_omega",2;
 			if (countitem(1000103) < .@price) {
 				mes "[ Yecheon ]";
 				mes "You don't have enough Barmeal tickets for the exchange.";
 				close3;
 			}
-			mes "[ Yecheon ]";
-			mes "I exchanged it for one random Automatic Module.";
 			delitem 1000103,.@price;
-			getitem .module[rand(getarraysize(.module))],1;
-			close3;
-
+			break;
+		case 2:
+			cutin "ep172_omega",2;
+			if (Zeny < .@zeny) {
+				mes "[ Yecheon ]";
+				mes "You don't have enough Zeny for the exchange.";
+				close3;
+			}
+			Zeny -= .@zeny;
+			break;
 		case 3:
-			cutin "ep172_omega",2;
 			mes "[ Yecheon ]";
-			mes "I will exchange ^FF00001 Physical Automatic Improvement Device^000000 for 45 <ITEM>[Barmeal Ticket]<INFO>1000103</INFO></ITEM> or 1500000 Zeny.";
-			next;
-			cutin "",255;
-			.@price = 45;
-			.@zeny = 1500000;
-			switch (select("Exchange for Barmeal Ticket.:Exchange for 1500000 Zeny.:Do not exchange.")) {
-				case 1:
-					cutin "ep172_omega",2;
-					if (countitem(1000103) < .@price) {
-						mes "[ Yecheon ]";
-						mes "You don't have enough Barmeal tickets for the exchange.";
-						close3;
-					}
-					mes "[ Yecheon ]";
-					mes "I exchanged it for one random Physical Automatic Improvement Device.";
-					delitem 1000103,.@price;
-					getitem .p_rand[rand(getarraysize(.p_rand))],1;
-					close3;
-
-				case 2:
-					cutin "ep172_omega",2;
-					if (Zeny < .@zeny) {
-						mes "[ Yecheon ]";
-						mes "You don't have enough Zeny for the exchange.";
-						close3;
-					}
-					mes "[ Yecheon ]";
-					mes "I exchanged it for one random Physical Automatic Improvement Device.";
-					Zeny -= .@zeny;
-					getitem .p_rand[rand(getarraysize(.p_rand))],1;
-					close3;
-
-				case 3:
-					close;
-			}
-
-		case 4:
-			cutin "ep172_omega",2;
-			mes "[ Yecheon ]";
-			mes "I will exchange ^FF00001 Magical Automatic Improvement Device^000000 for 45 <ITEM>[Barmeal Ticket]<INFO>1000103</INFO></ITEM> or 1500000 Zeny.";
-			next;
-			cutin "",255;
-			.@price = 45;
-			.@zeny = 1500000;
-			switch (select("Exchange for Barmeal Ticket.:Exchange for 1500000 Zeny.:Do not exchange.")) {
-				case 1:
-					cutin "ep172_omega",2;
-					if (countitem(1000103) < .@price) {
-						mes "[ Yecheon ]";
-						mes "You don't have enough Barmeal tickets for the exchange.";
-						close3;
-					}
-					mes "[ Yecheon ]";
-					mes "I exchanged it for one random Magical Automatic Improvement Device.";
-					delitem 1000103,.@price;
-					getitem .m_rand[rand(getarraysize(.m_rand))],1;
-					close3;
-
-				case 2:
-					cutin "ep172_omega",2;
-					if (Zeny < .@zeny) {
-						mes "[ Yecheon ]";
-						mes "You don't have enough Zeny for the exchange.";
-						close3;
-					}
-					mes "[ Yecheon ]";
-					mes "I exchanged it for one random Magical Automatic Improvement Device.";
-					Zeny -= .@zeny;
-					getitem .m_rand[rand(getarraysize(.m_rand))],1;
-					close3;
-
-				case 3:
-					close;
-			}
-
-		case 5:
-			close;
-	}
-
-OnInit:
-	setarray .physical,100164,50,100165,30,100166,20;
-	setarray .magical,100167,50,100167,30,100167,20;
-	for (.@i = 0; .@i < getarraysize(.physical); .@i += 2) {
-		for (.@x = 0; .@x < .physical[.@i+1]; .@x++) {
-			.p_rand[getarraysize(.p_rand)] = .physical[.@i];
-			.m_rand[getarraysize(.m_rand)] = .magical[.@i];
+			mes "Transaction ended.";
+			close3;
 		}
+		mes "[ Yecheon ]";
+		mes "I exchanged it for one random Physical Automatic Improvement Device.";
+		.@r = rand(100);
+		if (.@r < 50)
+			getitem 100164,1;
+		else if (.@r < 80)
+			getitem 100165,1;
+		else
+			getitem 100166,1;
+		close3;
+	case 4:
+		.@price = 45;
+		.@zeny = 1500000;
+		cutin "ep172_omega",2;
+		mes "[ Yecheon ]";
+		mes "I will exchange ^FF00001 Magical Automatic Improvement Device^000000 for " + .@price + " <ITEM>[Barmeal Ticket]<INFO>1000103</INFO></ITEM> or " + .@zeny + " Zeny.";
+		next;
+		cutin "",255;
+		switch( select( "Exchange for Barmeal Ticket.", "Exchange for 1500000 Zeny.", "Do not exchange." ) ) {
+		case 1:
+			cutin "ep172_omega",2;
+			if (countitem(1000103) < .@price) {
+				mes "[ Yecheon ]";
+				mes "You don't have enough Barmeal tickets for the exchange.";
+				close3;
+			}
+			delitem 1000103,.@price;
+			break;
+		case 2:
+			cutin "ep172_omega",2;
+			if (Zeny < .@zeny) {
+				mes "[ Yecheon ]";
+				mes "You don't have enough Zeny for the exchange.";
+				close3;
+			}
+			Zeny -= .@zeny;
+			break;
+		case 3:
+			mes "[ Yecheon ]";
+			mes "Transaction ended.";
+			close3;
+		}
+		mes "[ Yecheon ]";
+		mes "I exchanged it for one random Magical Automatic Improvement Device.";
+		.@r = rand(100);
+		if (.@r < 50)
+			getitem 100167,1;
+		else if (.@r < 80)
+			getitem 100168,1;
+		else
+			getitem 100169,1;
+		close3;
+	case 5:
+		mes "[ Yecheon ]";
+		mes "Transaction ended.";
+		close3;
 	}
-	for (.@i = 1000105; .@i < 1000150; .@i++)
-		.module[getarraysize(.module)] = .@i;
+	end;
+}
+
+ba_in01,87,389,2	script	Butterfly Merchant#ba_in01	4_EP17_MASTER_A,{
+	mes "[Butterfly Merchant]";
+	mes "Welcome.";
+	mes "Do you need wings to move to Barmund Mansion?";
+	close2;
+	callshop "barter_Teleport_Ep17_02";
 	end;
 }

@@ -1846,6 +1846,7 @@
 	export_constant(SC_POISON_SHIELD_OPTION);
 	export_constant(SC_M_LIFEPOTION);
 	export_constant(SC_S_MANAPOTION);
+	export_constant(SC_M_DEFSCROLL);
 
 	export_constant(SC_RUSH_QUAKE1);
 	export_constant(SC_RUSH_QUAKE2);
@@ -5821,11 +5822,22 @@
 	export_constant(IG_ILLUSION_MODULE_MIX);
 
 	export_constant(IG_ODIN_RELIC);
-	export_constant(IG_AUTOMATIC_MODULE_MIX);
-	export_constant(IG_EPIC_MODULE_MIX);
-	export_constant(IG_AUTO_M_I_BOX_A);
-	export_constant(IG_AUTO_M_I_BOX_B);
-	export_constant(IG_ILLUSION_MODULE_MIX);
+
+	export_constant(IG_BS_ITEM_M_S_52);
+	export_constant(IG_BS_ITEM_M_S_53);
+	export_constant(IG_BS_ITEM_M_S_54);
+	export_constant(IG_BS_ITEM_M_S_55);
+	export_constant(IG_BS_ITEM_M_S_56);
+	export_constant(IG_BS_ITEM_M_S_57);
+	export_constant(IG_BS_ITEM_M_S_58);
+	export_constant(IG_BS_ITEM_M_S_59);
+	export_constant(IG_MONTHLY_PACKAGE_1);
+	export_constant(IG_MONTHLY_PACKAGE_2);
+	export_constant(IG_MONTHLY_PACKAGE_3);
+	export_constant(IG_MONTHLY_BUFF_PACKAGE);
+	export_constant(IG_MONTHLY_BATTLE_PACKAGE);
+	export_constant(IG_MD_AIRBOAT_EXPBOX);
+	export_constant(IG_ENCHANT_STONE_BOX27);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
