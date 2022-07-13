@@ -20,26 +20,20 @@ git pull https://github.com/rathena/rathena.git script/episode_17_2
 timeout /t 3
 cls
 
-Echo 4. Initial support for web service for newer clients #5731
-git pull https://github.com/vstumpf/rathena.git feature/webservice
-
-timeout /t 3
-cls
-
-Echo 5. Guild UI features ได้ : Added new guild UI features #6285 + #6933 Update packets
-git pull https://github.com/Balferian/rathena.git castle_teleport
-
-timeout /t 3
-cls
-
-Echo 6. Prevent opening vending UI multiple times in one vending session #6430
+Echo 4. Prevent opening vending UI multiple times in one vending session #6430
 git pull https://github.com/rathena/rathena.git hotfix/vending_autosave_fix
 
 timeout /t 3
 cls
 
-Echo 7. 4th / Expanded Job Skill-Updates as of KRO 20220602 incl. 3rd Job fixes / Homunculus skills #7024
+Echo 5. 4th / Expanded Job Skill-Updates as of KRO 20220602 incl. 3rd Job fixes / Homunculus skills #7024
 git pull https://github.com/datawulf/rathena.git skillupd
+
+timeout /t 3
+cls
+
+Echo 6. Minor Expanded Class Job Level Adjust #7029
+git pull https://github.com/admkakaroto/rathena.git patch-2
 
 timeout /t 3
 cls
