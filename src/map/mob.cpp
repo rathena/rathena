@@ -5496,6 +5496,27 @@ uint64 MobAvailDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		mob->vd.head_bottom = item->look;
 	}
 
+	if (this->nodeExists(node, "Robe")) {
+		if (pcdb_checkid(mob->vd.class_) == 0) {
+			this->invalidWarning(node["Robe"], "Robe is only applicable to Job sprites.\n");
+			return 0;
+		}
+
+		std::string robe;
+
+		if (!this->asString(node, "Robe", robe))
+			return 0;
+
+		std::shared_ptr<item_data> item = item_db.search_aegisname(robe.c_str());
+
+		if (item == nullptr) {
+			this->invalidWarning(node["Robe"], "Robe %s is not a valid item.\n", robe.c_str());
+			return 0;
+		}
+
+		mob->vd.robe = item->look;
+	}
+
 	if (this->nodeExists(node, "PetEquip")) {
 		std::shared_ptr<s_pet_db> pet_db_ptr = pet_db.find(mob->id);
 
