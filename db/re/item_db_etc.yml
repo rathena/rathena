@@ -562,6 +562,7 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 757
     AegisName: Elunium_Stone
     Name: Rough Elunium
@@ -570,6 +571,7 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 766
     AegisName: Silky_Fur_Bundle
     Name: A bundle of shiny hair.
@@ -1230,6 +1232,7 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 985
     AegisName: Elunium
     Name: Elunium
@@ -1238,6 +1241,7 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 986
     AegisName: Anvil
     Name: Anvil
@@ -17553,6 +17557,7 @@ Body:
     Weight: 150
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 6224
     AegisName: Bradium
     Name: Bradium
@@ -17561,6 +17566,7 @@ Body:
     Weight: 150
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 6225
     AegisName: HD_Carnium
     Name: HD Carnium
@@ -35435,6 +35441,7 @@ Body:
     Buy: 10
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25272
     AegisName: IllusoryStone
     Name: Illusion Gemstone
@@ -37213,21 +37220,29 @@ Body:
     Name: Rough Shadowdecon
     Type: Etc
     Weight: 10
+    Flags:
+      DropEffect: CLIENT
   - Id: 25729
     AegisName: Shadowdecon
     Name: Shadowdecon
     Type: Etc
     Weight: 20
+    Flags:
+      DropEffect: CLIENT
   - Id: 25730
     AegisName: Zelunium_Ore
     Name: Rough Zelunium
     Type: Etc
     Weight: 10
+    Flags:
+      DropEffect: CLIENT
   - Id: 25731
     AegisName: Zelunium
     Name: Zelunium
     Type: Etc
     Weight: 20
+    Flags:
+      DropEffect: CLIENT
   - Id: 25733
     AegisName: EP17_1_Open_Event
     Name: Episode Quest Clear Coupon
@@ -37284,6 +37299,7 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25760
     AegisName: Dragenergy_Blue
     Name: Blue Dragon Orb
@@ -37291,6 +37307,7 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25761
     AegisName: Dragenergy_Red
     Name: Red Dragon Orb
@@ -37298,6 +37315,7 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25762
     AegisName: Dragenergy_Gold
     Name: Gold Dragon Orb
@@ -37305,6 +37323,7 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25763
     AegisName: Dragenergy_Purple
     Name: Purple Dragon Orb
@@ -37312,6 +37331,7 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25764
     AegisName: Dragenergy_Silver
     Name: Silver Dragon Orb
@@ -37319,6 +37339,7 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25765
     AegisName: Drabone_L
     Name: Large Dragon Bone
@@ -37326,6 +37347,7 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25766
     AegisName: Drabone_S
     Name: Small Dragon Bone
@@ -37333,6 +37355,7 @@ Body:
     Weight: 100
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25767
     AegisName: Angel_Dream
     Name: Angel's Dream
@@ -37340,6 +37363,7 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25768
     AegisName: Shard_Blue
     Name: Valkyrie Ingrid's Armor Fragment
@@ -37565,30 +37589,35 @@ Body:
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25810
     AegisName: Ein_RINDIUM
     Name: Rindium
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25811
     AegisName: Ein_ODIUM
     Name: Odium
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25812
     AegisName: Ein_PURDIUM
     Name: Purdium
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25813
     AegisName: Ein_WHIDIUM
     Name: Whidium
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25814
     AegisName: Ein_DYNITE
     Name: Dynite
@@ -37596,6 +37625,7 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25815
     AegisName: Ein_SOLIDDUST
     Name: Hardened Dust
@@ -39205,6 +39235,8 @@ Body:
     Weight: 10
     Locations:
       Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
   - Id: 27201
     AegisName: Agnes_Card
     Name: Agnes Card
@@ -39212,6 +39244,8 @@ Body:
     Weight: 10
     Locations:
       Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
   - Id: 27202
     AegisName: Jurgen_Card
     Name: Juergen Card
@@ -39219,6 +39253,8 @@ Body:
     Weight: 10
     Locations:
       Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
   - Id: 27203
     AegisName: Spica_Card
     Name: Spica Card
@@ -39226,6 +39262,8 @@ Body:
     Weight: 10
     Locations:
       Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
   - Id: 27209
     AegisName: SLD_Q_Scaraba_Card
     Name: Sealed Queen Scaraba Card
@@ -61460,18 +61498,21 @@ Body:
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000244
     AegisName: Sin_Shard_B
     Name: Fragment of Fear
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000245
     AegisName: Sin_Shard_C
     Name: Fragment of Resentment
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000253
     AegisName: Booster_W_Ticket
     Name: Booster Weapon Voucher
@@ -61503,54 +61544,63 @@ Body:
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000256
     AegisName: Sin_Shard_E
     Name: Fragment of Sorrow
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000257
     AegisName: Sin_Fragment
     Name: Piece of Sin
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000258
     AegisName: Fate_Shard_A
     Name: Fragment of Empathy
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000259
     AegisName: Fate_Shard_B
     Name: Fragment of Happiness
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000260
     AegisName: Fate_Shard_C
     Name: Fragment of Rest
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000261
     AegisName: Fate_Shard_D
     Name: Fragment of Comfort
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000262
     AegisName: Fate_Shard_E
     Name: Fragment of Blessing
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000263
     AegisName: Fate_Fragment
     Name: Fragment of Good Will
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000268
     AegisName: J4_Gas_Mask
     Name: Gas Mask
@@ -61855,6 +61905,7 @@ Body:
     Weight: 1
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000323
     AegisName: Etel_Stone
     Name: Etel Stone
@@ -62212,94 +62263,140 @@ Body:
     AegisName: Weapon_Ore_1
     Name: Weapon Enhancement Ore(Lower)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000420
     AegisName: Weapon_Ore_2
     Name: Weapon Enhancement Ore(Intermediate)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000421
     AegisName: Weapon_Ore_3
     Name: Weapon Enhancement Ore(High)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000422
     AegisName: Weapon_Ore_4
     Name: Weapon Enhancement Ore(Superior)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000423
     AegisName: Armor_Ore_1
     Name: Armor Enhancement Ore(Lower)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000424
     AegisName: Armor_Ore_2
     Name: Armor Enhancement Ore(Intermediate)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000425
     AegisName: Armor_Ore_4
     Name: Armor Enhancement Ore(Superior)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000426
     AegisName: Acc_Ore_1
     Name: Accessory Enhancement Ore(Lower)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000427
     AegisName: Acc_Ore_2
     Name: Accessory Enhancement Ore(Intermediate)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000428
     AegisName: Acc_Ore_3
     Name: Accessory Enhancement Ore(High)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000429
     AegisName: Acc_Ore_4
     Name: Accessory Enhancement Ore(Superior)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000430
     AegisName: Weapon_Stone_1
     Name: Weapon Upgrade Stone(Lower)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000431
     AegisName: Weapon_Stone_2
     Name: Weapon Upgrade Stone(Intermediate)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000432
     AegisName: Weapon_Stone_3
     Name: Weapon Upgrade Stone(High)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000433
     AegisName: Weapon_Stone_4
     Name: Weapon Upgrade Stone(Superior)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000434
     AegisName: Armor_Stone_1
     Name: Armor Upgrade Stone(Lower)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000435
     AegisName: Armor_Stone_2
     Name: Armor Upgrade Stone(Intermediate)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000436
     AegisName: Armor_Stone_3
     Name: Armor Upgrade Stone(High)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000437
     AegisName: Armor_Stone_4
     Name: Armor Upgrade Stone(Superior)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000438
     AegisName: Acc_Stone_1
     Name: Accessory Upgrade Stone(Lower)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000439
     AegisName: Acc_Stone_2
     Name: Accessory Upgrade Stone(Intermediate)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000440
     AegisName: Acc_Stone_3
     Name: Accessory Upgrade Stone(High)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000441
     AegisName: Acc_Stone_4
     Name: Accessory Upgrade Stone(Superior)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000442
     AegisName: Pow_Meteorite_Fragment
     Name: Power Meteorite Fragment
@@ -62690,6 +62787,7 @@ Body:
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000609
     AegisName: Mad_Bunny_Ticket
     Name: Mad Bunny-LT Enchantment Ticket
@@ -62748,41 +62846,57 @@ Body:
     Name: Meadow Rune Fragment    # !todo check english name
     Type: Etc
     Weight: 1
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000637
     AegisName: Flame_Barmund_Rune
     Name: Fire Rune Fragment    # !todo check english name
     Type: Etc
     Weight: 1
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000638
     AegisName: Ice_Barmund_Rune
     Name: Ice Rune Fragments    # !todo check english name
     Type: Etc
     Weight: 1
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000639
     AegisName: Death_Barmund_Rune
     Name: Death Rune Fragment    # !todo check english name
     Type: Etc
     Weight: 1
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000640
     AegisName: Plain_Barmund_Rune2
     Name: Meadow Rune    # !todo check english name
     Type: Etc
     Weight: 10
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000641
     AegisName: Flame_Barmund_Rune2
     Name: Fire Rune    # !todo check english name
     Type: Etc
     Weight: 10
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000642
     AegisName: Ice_Barmund_Rune2
     Name: Ice Rune    # !todo check english name
     Type: Etc
     Weight: 10
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000643
     AegisName: Death_Barmund_Rune2
     Name: Death Rune    # !todo check english name
     Type: Etc
     Weight: 10
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000645
     AegisName: Hero_Enchant_Ticket
     Name: Hero's Enchantment Ticket
@@ -62850,10 +62964,14 @@ Body:
     AegisName: ClockTower_Lead
     Name: Lead    # !todo check english name
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000681
     AegisName: ClockTower_Gear
     Name: Cog wheel    # !todo check english name
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000682
     AegisName: aegis_1000682
     Name: Tuner    # !todo check english name
@@ -63361,24 +63479,28 @@ Body:
     Weight: 1
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000812
     AegisName: Snow_F_Stone1
     Name: Snowflower Gem
     Weight: 1
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000813
     AegisName: Snow_F_Stone2
     Name: Shining Snowflower Gem
     Weight: 1
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000814
     AegisName: Snow_F_Stone3
     Name: Brilliant Snowflower Gem
     Weight: 1
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000822
     AegisName: EP19_Shell_Of_Rgan
     Name: Rgan Shell

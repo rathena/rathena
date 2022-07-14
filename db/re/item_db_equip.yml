@@ -101637,6 +101637,8 @@ Body:
     WeaponLevel: 4
     EquipLevelMin: 175
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bBaseAtk,20*(.@r/2);
@@ -117809,6 +117811,8 @@ Body:
     WeaponLevel: 3
     EquipLevelMin: 175
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bLongAtkRate,3*(.@r/2);
@@ -138463,6 +138467,8 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 170
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bBaseAtk,20*(.@r/2);
@@ -138493,6 +138499,8 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 170
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bMatk,20*(.@r/2);
@@ -138527,6 +138535,8 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 170
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bSPrecovRate,6*(.@r/2);
@@ -138560,6 +138570,8 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 170
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bSPrecovRate,6*(.@r/2);
@@ -138614,6 +138626,8 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 170
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bBaseAtk,20*(.@r/2);
@@ -138644,6 +138658,8 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 170
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bBaseAtk,20*(.@r/2);
@@ -138738,6 +138754,8 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 170
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bBaseAtk,20*(.@r/2);
@@ -138768,6 +138786,8 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 170
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bMatk,20*(.@r/2);
@@ -138802,6 +138822,8 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 170
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bMatk,20*(.@r/2);
@@ -138836,6 +138858,8 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 170
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bBaseAtk,20*(.@r/2);
@@ -138866,6 +138890,8 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 170
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bMatk,20*(.@r/2);
@@ -138899,6 +138925,8 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 170
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bBaseAtk,20*(.@r/2);
