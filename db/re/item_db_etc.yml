@@ -60581,7 +60581,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bVariableCastrate,getskilllv("NC_RESEARCHFE");
+      bonus bVariableCastrate,-getskilllv("NC_RESEARCHFE");
   - Id: 311431
     AegisName: aegis_311431
     Name: Mechanic Stone (Middle)
@@ -60596,14 +60596,14 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bDelayrate,getskilllv("NC_TRAININGAXE");
+      bonus bDelayrate,-(getskilllv("NC_TRAININGAXE")/2);
   - Id: 311433
     AegisName: aegis_311433
     Name: Guillotine Cross Stone (Upper)
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bDelayrate,getskilllv("GC_RESEARCHNEWPOISON")/2;
+      bonus bDelayrate,-getskilllv("GC_RESEARCHNEWPOISON")/2;
   - Id: 311434
     AegisName: aegis_311434
     Name: Guillotine Cross Stone (Middle)

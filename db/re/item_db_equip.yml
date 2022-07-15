@@ -151305,7 +151305,7 @@ Body:
          bonus bLongAtkDef,10;
       }
       if (getskilllv("RA_UNLIMIT")>=5)
-         bonus2 bSkillCooldown,"RA_ARROWSTORM",300;
+         bonus2 bSkillCooldown,"RA_ARROWSTORM",-300;
       if (getskilllv("RA_WUGRIDER")>=3)
          bonus bMaxHP,10000;
       bonus2 bAddSize,Size_All,2*getskilllv("RA_AIMEDBOLT");
