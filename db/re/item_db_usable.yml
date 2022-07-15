@@ -46354,6 +46354,8 @@ Body:
     Type: Usable
     Buy: 1
     Weight: 1
+    Flags:
+      DropEffect: CLIENT
     Script: |
       callfunc("F_Cursed_Fragment");
   - Id: 23027
