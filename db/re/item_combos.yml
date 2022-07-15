@@ -355,17 +355,21 @@ Body:
       bonus bAspdRate,getequiprefinerycnt(EQI_HAND_R);
   - Combos:
       - Combo:
-          - Principles_Of_Magic
-          - Librarian_Glove
-          - Pocket_Watch_
+          - Principles_Of_Magic    # 1572
+          - Librarian_Glove    # 2716
+          - Pocket_Watch__    # 2971
       - Combo:
-          - Ancient_Magic
-          - Librarian_Glove
-          - Pocket_Watch_
+          - Ancient_Magic    # 1573
+          - Librarian_Glove    # 2716
+          - Pocket_Watch__    # 2971
       - Combo:
-          - Ancient_Magic
-          - Librarian_Glove
-          - Pocket_Watch
+          - Ancient_Magic    # 1573
+          - Librarian_Glove    # 2716
+          - Pocket_Watch_    # 2717
+      - Combo:
+          - Principles_Of_Magic    # 1572
+          - Librarian_Glove    # 2716
+          - Pocket_Watch_    # 2717
     Script: |
       bonus bInt,5;
       bonus bMaxHP,700;
@@ -1061,37 +1065,37 @@ Body:
       }
   - Combos:
       - Combo:
-          - Memorize_Book
-          - One_Eyed_Glass
-          - Pocket_Watch
+          - Memorize_Book    # 2109
+          - One_Eyed_Glass    # 2239
+          - Pocket_Watch_    # 2717
       - Combo:
-          - Memorize_Book
-          - One_Eyed_Glass
-          - Pocket_Watch_
+          - Memorize_Book    # 2109
+          - One_Eyed_Glass    # 2239
+          - Pocket_Watch__    # 2971
       - Combo:
-          - Memorize_Book
-          - Pocket_Watch_
-          - One_Eyed_Glass_
+          - Memorize_Book    # 2109
+          - One_Eyed_Glass_    # 18874
+          - Pocket_Watch_    # 2717
       - Combo:
-          - Memorize_Book
-          - Pocket_Watch
-          - One_Eyed_Glass_
+          - Memorize_Book    # 2109
+          - One_Eyed_Glass_    # 18874
+          - Pocket_Watch__    # 2971
       - Combo:
-          - Memorize_Book_
-          - One_Eyed_Glass
-          - Pocket_Watch
+          - Memorize_Book_    # 2121
+          - One_Eyed_Glass    # 2239
+          - Pocket_Watch_    # 2717
       - Combo:
-          - Memorize_Book_
-          - One_Eyed_Glass
-          - Pocket_Watch_
+          - Memorize_Book_    # 2121
+          - One_Eyed_Glass    # 2239
+          - Pocket_Watch__    # 2971
       - Combo:
-          - Memorize_Book_
-          - Pocket_Watch_
-          - One_Eyed_Glass_
+          - Memorize_Book_    # 2121
+          - One_Eyed_Glass_    # 18874
+          - Pocket_Watch_    # 2717
       - Combo:
-          - Memorize_Book_
-          - Pocket_Watch
-          - One_Eyed_Glass_
+          - Memorize_Book_    # 2121
+          - One_Eyed_Glass_    # 18874
+          - Pocket_Watch__    # 2971
     Script: |
       bonus bHPrecovRate,15;
       bonus bSPrecovRate,15;
@@ -4820,13 +4824,15 @@ Body:
       bonus2 bSPLossRate,6,6000;
   - Combos:
       - Combo:
-          - White_Knightage_Card
-          - Khaliz_Knightage_Card
+          - White_Knightage_Card    # 4608
+          - Khaliz_Knightage_Card    # 4609
     Script: |
       bonus2 bAddSize,Size_Medium,15;
       bonus2 bAddSize,Size_Large,15;
       bonus2 bSubSize,Size_Medium,5;
       bonus2 bSubSize,Size_Large,5;
+      bonus2 bMagicSubSize,Size_Medium,5;
+      bonus2 bMagicSubSize,Size_Large,5;
   - Combos:
       - Combo:
           - Sarah_Card

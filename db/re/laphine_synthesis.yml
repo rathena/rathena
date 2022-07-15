@@ -2223,7 +2223,7 @@ Body:
     Requirements:
       - Item: Shadowdecon
         Amount: 10
-      - Item: Pocket_Watch__
+      - Item: Pocket_Watch
         Amount: 50
   - Item: Bs_Sha_M_S_17
     RewardGroup: BS_SHA_M_S_17
@@ -2367,7 +2367,7 @@ Body:
     Requirements:
       - Item: Zelunium
         Amount: 20
-      - Item: Pocket_Watch__
+      - Item: Pocket_Watch
         Amount: 150
   - Item: Bs_Item_M_S_39
     RewardGroup: BS_ITEM_M_S_39
@@ -2735,7 +2735,7 @@ Body:
     Requirements:
       - Item: Shadowdecon
         Amount: 25
-      - Item: Pocket_Watch__
+      - Item: Pocket_Watch
         Amount: 150
   - Item: Bs_Sha_M_S_25
     RewardGroup: BS_SHA_M_S_25

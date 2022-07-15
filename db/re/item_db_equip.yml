@@ -38205,10 +38205,10 @@ Body:
     Script: |
       bonus bMatkRate,1;
   - Id: 2971
-    AegisName: Pocket_Watch
+    AegisName: Pocket_Watch__
     Name: Pocket Watch
     Type: Armor
-    Buy: 10
+    Buy: 20
     Weight: 200
     Defense: 1
     Slots: 1
@@ -38221,10 +38221,6 @@ Body:
       Both_Accessory: true
     ArmorLevel: 1
     EquipLevelMin: 80
-    Script: |
-      bonus bHPrecovRate,15;
-      bonus bSPrecovRate,15;
-      bonus bMatkRate,7;
   - Id: 2976
     AegisName: Red_Lantern
     Name: Red Lantern
@@ -68988,6 +68984,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bUnbreakableArmor;
       bonus2 bAddSize,Size_Medium,10;
       bonus2 bAddSize,Size_Large,10;
       bonus2 bMagicAddSize,Size_Medium,10;

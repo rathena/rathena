@@ -11459,6 +11459,8 @@ Body:
       bonus bDef,20;
       bonus2 bSubSize,Size_Medium,25;
       bonus2 bSubSize,Size_Large,25;
+      bonus2 bMagicSubSize,Size_Medium,25;
+      bonus2 bMagicSubSize,Size_Large,25;
   - Id: 4610
     AegisName: Sarah_Card
     Name: Sarah Card
@@ -27858,10 +27860,10 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 7513
-    AegisName: Pocket_Watch__
+    AegisName: Pocket_Watch
     Name: Pocket Watch
     Type: Etc
-    Buy: 3420
+    Buy: 2564
     Weight: 10
     Flags:
       BuyingStore: true
