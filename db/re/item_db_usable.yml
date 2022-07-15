@@ -51985,6 +51985,15 @@ Body:
       BuyingStore: true
     Script: |
       laphine_upgrade();
+  - Id: 101416
+    AegisName: aegis_101416
+    Name: Costume Enchant Stone Box 27
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_Enchant_Stone_Box27);
   - Id: 101455
     AegisName: E_Auto_Up
     Name: Automatic (bound) upgrade package    # !todo check english name
@@ -52000,15 +52009,6 @@ Body:
       NoAuction: true
     Script: |
       laphine_upgrade();
-  - Id: 101416
-    AegisName: aegis_101416
-    Name: Costume Enchant Stone Box 27
-    Type: Usable
-    Weight: 10
-    Flags:
-      Container: true
-    Script: |
-      getgroupitem(IG_Enchant_Stone_Box27);
   - Id: 101463
     AegisName: HD_Elunium_10Box_MSP
     Name: (Limited) HD Elunium 10 Box
