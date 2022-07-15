@@ -13121,35 +13121,35 @@ Body:
       bonus bMaxSPrate,10;
   - Combos:
       - Combo:
-          - SuraStone_Robe_
-          - SuraStone_Top_
+          - Sura_Robe    # 29426
+          - Sura_Top    # 29423
     Script: |
       bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",10;
   - Combos:
       - Combo:
-          - SuraStone_Robe_
-          - SuraStone_Middle_
+          - Sura_Robe    # 29426
+          - Sura_Middle    # 29424
     Script: |
       bonus2 bFixedCastrate,"CH_SOULCOLLECT",-40;
   - Combos:
       - Combo:
-          - SuraStone_Robe_
-          - SuraStone_Bottom_
+          - Sura_Robe    # 29426
+          - Sura_Bottom    # 29425
     Script: |
       bonus4 bAutoSpellOnSkill,"SR_RAMPAGEBLASTER","CH_SOULCOLLECT",300,1;
   - Combos:
       - Combo:
-          - SuraStone_Robe2_
-          - SuraStone_Top2_
+          - Sura_Robe2    # 29427
+          - Sura_Top2    # 29613
       - Combo:
-          - SuraStone_Robe2_
-          - SuraStone_Bottom2_
+          - Sura_Robe2    # 29427
+          - Sura_Bottom2    # 29611
     Script: |
       bonus2 bSkillAtk,"SR_TIGERCANNON",15;
   - Combos:
       - Combo:
-          - SuraStone_Robe2_
-          - SuraStone_Middle2_
+          - Sura_Robe2    # 29427
+          - Sura_Middle2    # 29612
     Script: |
       bonus bMaxHPrate,10;
   - Combos:
@@ -13249,50 +13249,50 @@ Body:
       bonus2 bSkillUseSPrate,"SC_TRIANGLESHOT",10;
   - Combos:
       - Combo:
-          - MechanicStone_Robe_
-          - MechanicStone_Top_
+          - Mechanic_Robe    # 29484
+          - Mechanic_Top    # 29481
       - Combo:
-          - RoyalguardStone_Robe_
-          - PaladinStone_Top_
+          - Royalguard_Robe    # 29520
+          - Paladin_Top    # 29517
       - Combo:
-          - GuillcrossStone_Robe_
-          - AssacrossStone_Top_
+          - Guillotinecross_Robe    # 29524
+          - Assassincross_Top    # 29521
       - Combo:
-          - WanderMins_Top3
-          - WanderMinstrelStone_Robe_
+          - WanderMins_Top3    # 311005
+          - WanderMinstrel_Robe    # 29488
     Script: |
       bonus2 bSPDrainRate,20,1;
   - Combos:
       - Combo:
-          - MechanicStone_Robe_
-          - MechanicStone_Middle_
+          - Mechanic_Robe    # 29484
+          - Mechanic_Middle    # 29482
     Script: |
       bonus2 bSkillCooldown,"NC_AXETORNADO",-1000;
   - Combos:
       - Combo:
-          - MechanicStone_Robe_
-          - MechanicStone_Bottom_
+          - Mechanic_Robe    # 29484
+          - Mechanic_Bottom    # 29483
     Script: |
       bonus2 bSkillAtk,"NC_AXETORNADO",15;
   - Combos:
       - Combo:
-          - WanderMinstrelStone_Robe_
-          - WanderMinstrelStone_Top_
+          - WanderMinstrel_Robe    # 29488
+          - WanderMinstrel_Top    # 29485
       - Combo:
-          - WanderMins_Bottom3
-          - WanderMinstrelStone_Robe_
+          - WanderMins_Bottom3    # 311007
+          - WanderMinstrel_Robe    # 29488
     Script: |
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
   - Combos:
       - Combo:
-          - WanderMinstrelStone_Robe_
-          - WanderMinstrelStone_Middle_
+          - WanderMinstrel_Robe    # 29488
+          - WanderMinstrel_Middle    # 29486
     Script: |
       bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-1000;
   - Combos:
       - Combo:
-          - WanderMinstrelStone_Robe_
-          - WanderMinstrelStone_Bottom_
+          - WanderMinstrel_Robe    # 29488
+          - WanderMinstrel_Bottom    # 29487
     Script: |
       bonus2 bSkillFixedCast,"WM_SEVERE_RAINSTORM",-500;
   - Combos:
@@ -13321,31 +13321,31 @@ Body:
       bonus bFixedCast,-500;
   - Combos:
       - Combo:
-          - RoyalguardStone_Robe_
-          - PaladinStone_Middle_
+          - Royalguard_Robe    # 29520
+          - Paladin_Middle    # 29518
     Script: |
       bonus2 bSkillCooldown,"LG_CANNONSPEAR",-500;
   - Combos:
       - Combo:
-          - RoyalguardStone_Robe_
-          - PaladinStone_Bottom_
+          - Royalguard_Robe    # 29520
+          - Paladin_Bottom    # 29519
       - Combo:
-          - Royalguard_Middle3
-          - RoyalguardStone_Robe_
+          - Royalguard_Middle3    # 310888
+          - Royalguard_Robe    # 29520
       - Combo:
-          - Royalguard_Middle3
-          - RoyalGuard_Robe2
+          - Royalguard_Middle3    # 310888
+          - RoyalGuard_Robe2    # 310184
     Script: |
       bonus2 bSkillAtk,"LG_BANISHINGPOINT",15;
   - Combos:
       - Combo:
-          - GuillcrossStone_Robe_
+          - Guillotinecross_Robe    # 29524
           - AssacrossStone_Middle_
     Script: |
       bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",15;
   - Combos:
       - Combo:
-          - GuillcrossStone_Robe_
+          - Guillotinecross_Robe    # 29524
           - AssacrossStone_Bottom_
     Script: |
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15;
@@ -18046,20 +18046,20 @@ Body:
       bonus bDelayrate,-5;
   - Combos:
       - Combo:
-          - aegis_490090
-          - Egir_Armor_K
-          - Aegir_Helm
-          - Egir_Manteau_K
-          - Egir_Shoes_K
+          - Egir_Ring_K    # 490090
+          - Egir_Armor_K    # 15138
+          - Aegir_Helm    # 19026
+          - Egir_Manteau_K    # 20756
+          - Egir_Shoes_K    # 22059
       - Combo:
-          - aegis_310667
-          - aegis_310664
+          - Magic_Robe_D    # 310667
+          - Magic_Top    # 310664
       - Combo:
-          - aegis_310667
-          - aegis_310665
+          - Magic_Robe_D    # 310667
+          - Magic_Middle    # 310665
       - Combo:
-          - aegis_310667
-          - aegis_310666
+          - Magic_Robe_D    # 310667
+          - Magic_Bottom    # 310666
     Script: |
       bonus2 bMagicAtkEle,Ele_All,2;
   - Combos:
@@ -20688,9 +20688,9 @@ Body:
       bonus bShortAtkRate,2;
   - Combos:
       - Combo:
-          - aegis_310664
-          - aegis_310665
-          - aegis_310666
+          - Magic_Top    # 310664
+          - Magic_Middle    # 310665
+          - Magic_Bottom    # 310666
     Script: |
       bonus2 bMagicAtkEle,Ele_All,6;
   - Combos:
@@ -20741,11 +20741,11 @@ Body:
       bonus2 bSkillAtk,"WL_CHAINLIGHTNING",15;
   - Combos:
       - Combo:
-          - Royalguard_Top3
-          - RoyalguardStone_Robe_
+          - Royalguard_Top3    # 310887
+          - Royalguard_Robe    # 29520
       - Combo:
-          - Royalguard_Bottom3
-          - RoyalguardStone_Robe_
+          - Royalguard_Bottom3    # 310889
+          - Royalguard_Robe    # 29520
     Script: |
       bonus2 bSkillAtk,"LG_CANNONSPEAR",15;
   - Combos:
@@ -20794,8 +20794,8 @@ Body:
       bonus2 bSkillAtk,"WM_METALICSOUND",15;
   - Combos:
       - Combo:
-          - WanderMins_Middle3
-          - WanderMinstrelStone_Robe_
+          - WanderMins_Middle3    # 311006
+          - WanderMinstrel_Robe    # 29488
     Script: |
       bonus2 bAddSize,Size_All,15;
   - Combos:
@@ -26283,3 +26283,161 @@ Body:
          bonus bMatkRate,5;
          bonus bVariableCastrate,-5;
       }
+  - Combos:
+      - Combo:
+          - aegis_311426    # 311426
+          - aegis_311425    # 311425
+    Script: |
+      bonus bSMatk,5;
+      bonus bSpl,3;
+  - Combos:
+      - Combo:
+          - aegis_311426    # 311426
+          - Magic_Top    # 310664
+      - Combo:
+          - aegis_311426    # 311426
+          - Magic_Middle    # 310665
+      - Combo:
+          - aegis_311426    # 311426
+          - Magic_Bottom    # 310666
+    Script: |
+      bonus bSMatk,1;
+      bonus bSpl,1;
+  - Combos:
+      - Combo:
+          - Sura_Robe    # 29426
+          - aegis_311427    # 311427
+      - Combo:
+          - Sura_Robe    # 29426
+          - aegis_311428    # 311428
+    Script: |
+      bonus2 bSkillAtk,"SR_RIDEINLIGHTNING",20;
+  - Combos:
+      - Combo:
+          - Sura_Robe2    # 29427
+          - aegis_311427    # 311427
+      - Combo:
+          - Sura_Robe2    # 29427
+          - aegis_311429    # 311429
+    Script: |
+      bonus2 bSkillAtk,"SR_KNUCKLEARROW",15;
+  - Combos:
+      - Combo:
+          - aegis_311428    # 311428
+          - Sura_Robe2    # 29427
+    Script: |
+      bonus2 bSkillAtk,"SR_TIGERCANNON",15;
+  - Combos:
+      - Combo:
+          - aegis_311429    # 311429
+          - Sura_Robe    # 29426
+    Script: |
+      bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",15;
+  - Combos:
+      - Combo:
+          - aegis_311430    # 311430
+          - Mechanic_Robe    # 29484
+    Script: |
+      bonus2 bSkillAtk,"NC_AXETORNADO",15;
+  - Combos:
+      - Combo:
+          - aegis_311430    # 311430
+          - Mechanic_Robe2    # 310007
+    Script: |
+      bonus2 bSkillAtk,"NC_BOOSTKNUCKLE",15;
+  - Combos:
+      - Combo:
+          - aegis_311431    # 311431
+          - Mechanic_Robe    # 29484
+    Script: |
+      bonus2 bSkillAtk,"NC_AXEBOOMERANG",15;
+  - Combos:
+      - Combo:
+          - aegis_311431    # 311431
+          - Mechanic_Robe2    # 310007
+    Script: |
+      bonus2 bSkillAtk,"NC_ARMSCANNON",15;
+  - Combos:
+      - Combo:
+          - aegis_311432    # 311432
+          - Mechanic_Robe    # 29484
+    Script: |
+      bonus2 bSkillAtk,"NC_POWERSWING",15;
+  - Combos:
+      - Combo:
+          - aegis_311432    # 311432
+          - Mechanic_Robe2    # 310007
+    Script: |
+      bonus2 bSkillAtk,"NC_VULCANARM",15;
+  - Combos:
+      - Combo:
+          - aegis_311433    # 311433
+          - Guillotinecross_Robe    # 29524
+    Script: |
+      bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",15;
+  - Combos:
+      - Combo:
+          - aegis_311433    # 311433
+          - GuillotineCross_Robe2    # 310188
+    Script: |
+      bonus2 bSkillAtk,"GC_COUNTERSLASH",15;
+  - Combos:
+      - Combo:
+          - aegis_311434    # 311434
+          - Guillotinecross_Robe    # 29524
+    Script: |
+      bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15;
+  - Combos:
+      - Combo:
+          - aegis_311434    # 311434
+          - GuillotineCross_Robe2    # 310188
+    Script: |
+      bonus2 bSkillAtk,"GC_CROSSIMPACT",15;
+  - Combos:
+      - Combo:
+          - aegis_311435    # 311435
+          - Guillotinecross_Robe    # 29524
+    Script: |
+      bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",15;
+  - Combos:
+      - Combo:
+          - aegis_311435    # 311435
+          - GuillotineCross_Robe2    # 310188
+    Script: |
+      bonus2 bAddRace,RC_All,15;
+      bonus2 bAddRace,RC_Player_Human,-15;
+      bonus2 bAddRace,RC_Player_Doram,-15;
+  - Combos:
+      - Combo:
+          - aegis_490221    # 490221
+          - Old_Rune_Circlet    # 18971
+    Script: |
+      bonus bLongAtkRate,15;
+  - Combos:
+      - Combo:
+          - aegis_490221    # 490221
+          - Old_Protect_Of_Crown    # 18983
+    Script: |
+      bonus2 bSkillCooldown,"LG_EARTHDRIVE",-2200;
+  - Combos:
+      - Combo:
+          - Luminous_Blue_Stone_TW    # 32270
+          - Sharp2    # 4817
+      - Combo:
+          - Luminous_Blue_Stone_TW    # 32270
+          - Sharp1    # 4818
+    Script: |
+      bonus bCritAtkRate,5;
+  - Combos:
+      - Combo:
+          - aegis_490229    # 490229
+          - Old_Circlet_Of_Bone    # 18982
+    Script: |
+      bonus2 bIgnoreDefRaceRate,RC_All,15;
+      bonus2 bAddRace,RC_All,10;
+  - Combos:
+      - Combo:
+          - aegis_490229    # 490229
+          - Old_Shadow_Handicraft    # 18975
+    Script: |
+      autobonus3 "{}",30,100,"SC_TRIANGLESHOT","{ sc_start SC_UNLIMIT,5000,3; sc_start SC_SPCOST_RATE,5000,-100; }";
