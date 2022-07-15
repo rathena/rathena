@@ -367,19 +367,9 @@ Body:
           - Librarian_Glove    # 2716
           - Pocket_Watch_    # 2717
       - Combo:
-          - Ancient_Magic    # 1573
-          - Librarian_Glove    # 2716
-          - Pocket_Watch_    # 2717
-          - Pocket_Watch__    # 2971
-      - Combo:
           - Principles_Of_Magic    # 1572
           - Librarian_Glove    # 2716
           - Pocket_Watch_    # 2717
-      - Combo:
-          - Principles_Of_Magic    # 1572
-          - Librarian_Glove    # 2716
-          - Pocket_Watch_    # 2717
-          - Pocket_Watch__    # 2971
     Script: |
       bonus bInt,5;
       bonus bMaxHP,700;
@@ -1105,26 +1095,6 @@ Body:
       - Combo:
           - Memorize_Book_    # 2121
           - One_Eyed_Glass_    # 18874
-          - Pocket_Watch__    # 2971
-      - Combo:
-          - Memorize_Book    # 2109
-          - One_Eyed_Glass    # 2239
-          - Pocket_Watch_    # 2717
-          - Pocket_Watch__    # 2971
-      - Combo:
-          - Memorize_Book    # 2109
-          - One_Eyed_Glass_    # 18874
-          - Pocket_Watch_    # 2717
-          - Pocket_Watch__    # 2971
-      - Combo:
-          - Memorize_Book_    # 2121
-          - One_Eyed_Glass    # 2239
-          - Pocket_Watch_    # 2717
-          - Pocket_Watch__    # 2971
-      - Combo:
-          - Memorize_Book_    # 2121
-          - One_Eyed_Glass_    # 18874
-          - Pocket_Watch_    # 2717
           - Pocket_Watch__    # 2971
     Script: |
       bonus bHPrecovRate,15;
