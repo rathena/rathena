@@ -562,6 +562,7 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 757
     AegisName: Elunium_Stone
     Name: Rough Elunium
@@ -570,6 +571,7 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 766
     AegisName: Silky_Fur_Bundle
     Name: A bundle of shiny hair.
@@ -1230,6 +1232,7 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 985
     AegisName: Elunium
     Name: Elunium
@@ -1238,6 +1241,7 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 986
     AegisName: Anvil
     Name: Anvil
@@ -17555,6 +17559,7 @@ Body:
     Weight: 150
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 6224
     AegisName: Bradium
     Name: Bradium
@@ -17563,6 +17568,7 @@ Body:
     Weight: 150
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 6225
     AegisName: HD_Carnium
     Name: HD Carnium
@@ -35437,6 +35443,7 @@ Body:
     Buy: 10
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25272
     AegisName: IllusoryStone
     Name: Illusion Gemstone
@@ -37215,21 +37222,29 @@ Body:
     Name: Rough Shadowdecon
     Type: Etc
     Weight: 10
+    Flags:
+      DropEffect: CLIENT
   - Id: 25729
     AegisName: Shadowdecon
     Name: Shadowdecon
     Type: Etc
     Weight: 20
+    Flags:
+      DropEffect: CLIENT
   - Id: 25730
     AegisName: Zelunium_Ore
     Name: Rough Zelunium
     Type: Etc
     Weight: 10
+    Flags:
+      DropEffect: CLIENT
   - Id: 25731
     AegisName: Zelunium
     Name: Zelunium
     Type: Etc
     Weight: 20
+    Flags:
+      DropEffect: CLIENT
   - Id: 25733
     AegisName: EP17_1_Open_Event
     Name: Episode Quest Clear Coupon
@@ -37286,6 +37301,7 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25760
     AegisName: Dragenergy_Blue
     Name: Blue Dragon Orb
@@ -37293,6 +37309,7 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25761
     AegisName: Dragenergy_Red
     Name: Red Dragon Orb
@@ -37300,6 +37317,7 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25762
     AegisName: Dragenergy_Gold
     Name: Gold Dragon Orb
@@ -37307,6 +37325,7 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25763
     AegisName: Dragenergy_Purple
     Name: Purple Dragon Orb
@@ -37314,6 +37333,7 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25764
     AegisName: Dragenergy_Silver
     Name: Silver Dragon Orb
@@ -37321,6 +37341,7 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25765
     AegisName: Drabone_L
     Name: Large Dragon Bone
@@ -37328,6 +37349,7 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25766
     AegisName: Drabone_S
     Name: Small Dragon Bone
@@ -37335,6 +37357,7 @@ Body:
     Weight: 100
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25767
     AegisName: Angel_Dream
     Name: Angel's Dream
@@ -37342,6 +37365,7 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25768
     AegisName: Shard_Blue
     Name: Valkyrie Ingrid's Armor Fragment
@@ -37567,30 +37591,35 @@ Body:
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25810
     AegisName: Ein_RINDIUM
     Name: Rindium
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25811
     AegisName: Ein_ODIUM
     Name: Odium
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25812
     AegisName: Ein_PURDIUM
     Name: Purdium
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25813
     AegisName: Ein_WHIDIUM
     Name: Whidium
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25814
     AegisName: Ein_DYNITE
     Name: Dynite
@@ -37598,6 +37627,7 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 25815
     AegisName: Ein_SOLIDDUST
     Name: Hardened Dust
@@ -39207,6 +39237,8 @@ Body:
     Weight: 10
     Locations:
       Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
   - Id: 27201
     AegisName: Agnes_Card
     Name: Agnes Card
@@ -39214,6 +39246,8 @@ Body:
     Weight: 10
     Locations:
       Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
   - Id: 27202
     AegisName: Jurgen_Card
     Name: Juergen Card
@@ -39221,6 +39255,8 @@ Body:
     Weight: 10
     Locations:
       Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
   - Id: 27203
     AegisName: Spica_Card
     Name: Spica Card
@@ -39228,6 +39264,8 @@ Body:
     Weight: 10
     Locations:
       Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
   - Id: 27209
     AegisName: SLD_Q_Scaraba_Card
     Name: Sealed Queen Scaraba Card
@@ -42940,35 +42978,35 @@ Body:
     Script: |
       bonus bMatk,5;
   - Id: 29423
-    AegisName: SuraStone_Top_
+    AegisName: Sura_Top
     Name: Champion Stone (Upper)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,2*getskilllv("MO_IRONHAND");
   - Id: 29424
-    AegisName: SuraStone_Middle_
+    AegisName: Sura_Middle
     Name: Champion Stone (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bHit,2*getskilllv("MO_DODGE");
   - Id: 29425
-    AegisName: SuraStone_Bottom_
+    AegisName: Sura_Bottom
     Name: Champion Stone (Bottom)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"MO_CHAINCOMBO",20;
   - Id: 29426
-    AegisName: SuraStone_Robe_
+    AegisName: Sura_Robe
     Name: SuraStone (Garment)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",15;
   - Id: 29427
-    AegisName: SuraStone_Robe2_
+    AegisName: Sura_Robe2
     Name: Sura Stone II (Garment)
     Type: Card
     SubType: Enchant
@@ -43249,35 +43287,35 @@ Body:
     Script: |
       bonus2 bSkillAtk,"SC_TRIANGLESHOT",15;
   - Id: 29481
-    AegisName: MechanicStone_Top_
+    AegisName: Mechanic_Top
     Name: Whitesmith Stone (Upper)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,2*getskilllv("BS_WEAPONRESEARCH");
   - Id: 29482
-    AegisName: MechanicStone_Middle_
+    AegisName: Mechanic_Middle
     Name: Whitesmith Stone (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bHit,3*getskilllv("BS_SKINTEMPER");
   - Id: 29483
-    AegisName: MechanicStone_Bottom_
+    AegisName: Mechanic_Bottom
     Name: Whitesmith Stone (Bottom)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"WS_CARTTERMINATION",20;
   - Id: 29484
-    AegisName: MechanicStone_Robe_
+    AegisName: Mechanic_Robe
     Name: Mechanic Stone (Garment)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"NC_AXETORNADO",15;
   - Id: 29485
-    AegisName: WanderMinstrelStone_Top_
+    AegisName: WanderMinstrel_Top
     Name: Clown Gypsy Stone (Upper)
     Type: Card
     SubType: Enchant
@@ -43287,7 +43325,7 @@ Body:
       else
          bonus bBaseAtk,getskilllv("BA_MUSICALLESSON")*2;
   - Id: 29486
-    AegisName: WanderMinstrelStone_Middle_
+    AegisName: WanderMinstrel_Middle
     Name: Clown Gypsy Stone (Middle)
     Type: Card
     SubType: Enchant
@@ -43297,14 +43335,14 @@ Body:
       else
          bonus2 bSkillAtk,"BA_MUSICALSTRIKE",20;
   - Id: 29487
-    AegisName: WanderMinstrelStone_Bottom_
+    AegisName: WanderMinstrel_Bottom
     Name: Clown Gypsy Stone (Bottom)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"CG_ARROWVULCAN",20;
   - Id: 29488
-    AegisName: WanderMinstrelStone_Robe_
+    AegisName: WanderMinstrel_Robe
     Name: Wanderer Minstrel Stone (Garment)
     Type: Card
     SubType: Enchant
@@ -43347,35 +43385,35 @@ Body:
     Script: |
       bonus2 bSkillAtk,"AB_ADORAMUS",15;
   - Id: 29517
-    AegisName: PaladinStone_Top_
+    AegisName: Paladin_Top
     Name: Paladin Stone (Upper)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMaxHPrate,(getskilllv("CR_TRUST")/2);
   - Id: 29518
-    AegisName: PaladinStone_Middle_
+    AegisName: Paladin_Middle
     Name: Paladin Stone (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bLongAtkRate,(getskilllv("KN_SPEARMASTERY")/2);
   - Id: 29519
-    AegisName: PaladinStone_Bottom_
+    AegisName: Paladin_Bottom
     Name: Paladin Stone (Bottom)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"CR_HOLYCROSS",20;
   - Id: 29520
-    AegisName: RoyalguardStone_Robe_
+    AegisName: Royalguard_Robe
     Name: Royal Guard Stone (Garment)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"LG_BANISHINGPOINT",15;
   - Id: 29521
-    AegisName: AssacrossStone_Top_
+    AegisName: Assassincross_Top
     Name: Assassin Cross Stone (Upper)
     Type: Card
     SubType: Enchant
@@ -43396,7 +43434,7 @@ Body:
     Script: |
       bonus2 bSkillAtk,"AS_SONICBLOW",20;
   - Id: 29524
-    AegisName: GuillcrossStone_Robe_
+    AegisName: Guillotinecross_Robe
     Name: Assassin Cross Stone (Garment)
     Type: Card
     SubType: Enchant
@@ -43843,21 +43881,21 @@ Body:
     SubType: Enchant
     Buy: 20
   - Id: 29611
-    AegisName: SuraStone_Bottom2_
+    AegisName: Sura_Bottom2
     Name: Sura Stone II (Bottom)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bBaseAtk,2*getskilllv("AL_DP");
   - Id: 29612
-    AegisName: SuraStone_Middle2_
+    AegisName: Sura_Middle2
     Name: Sura Stone II (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"MO_COMBOFINISH",15;
   - Id: 29613
-    AegisName: SuraStone_Top2_
+    AegisName: Sura_Top2
     Name: Sura Stone II (Upper)
     Type: Card
     SubType: Enchant
@@ -53039,28 +53077,28 @@ Body:
     Script: |
       bonus2 bSPDrainRate,10,1;
   - Id: 310664
-    AegisName: aegis_310664
+    AegisName: Magic_Top
     Name: Magic Power Stone(Upper)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bMagicAtkEle,Ele_All,3;
   - Id: 310665
-    AegisName: aegis_310665
+    AegisName: Magic_Middle
     Name: Magic Power Stone(Mid)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bMagicAtkEle,Ele_All,3;
   - Id: 310666
-    AegisName: aegis_310666
+    AegisName: Magic_Bottom
     Name: Magic Power Stone(Lower)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bMagicAtkEle,Ele_All,3;
   - Id: 310667
-    AegisName: aegis_310667
+    AegisName: Magic_Robe_D
     Name: Magic Power Stone(Dual)
     Type: Card
     SubType: Enchant
@@ -60541,6 +60579,85 @@ Body:
           }
         }
       }
+  - Id: 311425
+    AegisName: aegis_311425
+    Name: Spell Stone (Dual)
+    Type: Card
+    SubType: Enchant
+    Weight: 10
+    Script: |
+      bonus bSpl,5;
+  - Id: 311426
+    AegisName: aegis_311426
+    Name: Spell Magic Attack Stone (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bSMatk,3;
+  - Id: 311427
+    AegisName: aegis_311427
+    Name: Sura Stone (Upper)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bFixedCast,-100*(getskilllv("SR_RAISINGDRAGON")/2);
+  - Id: 311428
+    AegisName: aegis_311428
+    Name: Sura Stone (Middle)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,2*getskilllv("SR_GENTLETOUCH_REVITALIZE");
+  - Id: 311429
+    AegisName: aegis_311429
+    Name: Sura Stone (Lower)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,2*getskilllv("SR_GENTLETOUCH_REVITALIZE");
+  - Id: 311430
+    AegisName: aegis_311430
+    Name: Mechanic Stone (Upper)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bVariableCastrate,-getskilllv("NC_RESEARCHFE");
+  - Id: 311431
+    AegisName: aegis_311431
+    Name: Mechanic Stone (Middle)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,getskilllv("NC_MADOLICENCE");
+      bonus bLongAtkRate,getskilllv("NC_MADOLICENCE");
+  - Id: 311432
+    AegisName: aegis_311432
+    Name: Mechanic Stone (Lower)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDelayrate,-(getskilllv("NC_TRAININGAXE")/2);
+  - Id: 311433
+    AegisName: aegis_311433
+    Name: Guillotine Cross Stone (Upper)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDelayrate,-getskilllv("GC_RESEARCHNEWPOISON")/2;
+  - Id: 311434
+    AegisName: aegis_311434
+    Name: Guillotine Cross Stone (Middle)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,2*getskilllv("GC_DARKILLUSION");
+  - Id: 311435
+    AegisName: aegis_311435
+    Name: Guillotine Cross Stone (Lower)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,2*getskilllv("GC_CROSSRIPPERSLASHER");
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -61462,18 +61579,21 @@ Body:
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000244
     AegisName: Sin_Shard_B
     Name: Fragment of Fear
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000245
     AegisName: Sin_Shard_C
     Name: Fragment of Resentment
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000253
     AegisName: Booster_W_Ticket
     Name: Booster Weapon Voucher
@@ -61505,54 +61625,63 @@ Body:
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000256
     AegisName: Sin_Shard_E
     Name: Fragment of Sorrow
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000257
     AegisName: Sin_Fragment
     Name: Piece of Sin
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000258
     AegisName: Fate_Shard_A
     Name: Fragment of Empathy
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000259
     AegisName: Fate_Shard_B
     Name: Fragment of Happiness
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000260
     AegisName: Fate_Shard_C
     Name: Fragment of Rest
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000261
     AegisName: Fate_Shard_D
     Name: Fragment of Comfort
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000262
     AegisName: Fate_Shard_E
     Name: Fragment of Blessing
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000263
     AegisName: Fate_Fragment
     Name: Fragment of Good Will
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000268
     AegisName: J4_Gas_Mask
     Name: Gas Mask
@@ -61857,6 +61986,7 @@ Body:
     Weight: 1
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000323
     AegisName: Etel_Stone
     Name: Etel Stone
@@ -62214,94 +62344,140 @@ Body:
     AegisName: Weapon_Ore_1
     Name: Weapon Enhancement Ore(Lower)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000420
     AegisName: Weapon_Ore_2
     Name: Weapon Enhancement Ore(Intermediate)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000421
     AegisName: Weapon_Ore_3
     Name: Weapon Enhancement Ore(High)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000422
     AegisName: Weapon_Ore_4
     Name: Weapon Enhancement Ore(Superior)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000423
     AegisName: Armor_Ore_1
     Name: Armor Enhancement Ore(Lower)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000424
     AegisName: Armor_Ore_2
     Name: Armor Enhancement Ore(Intermediate)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000425
     AegisName: Armor_Ore_4
     Name: Armor Enhancement Ore(Superior)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000426
     AegisName: Acc_Ore_1
     Name: Accessory Enhancement Ore(Lower)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000427
     AegisName: Acc_Ore_2
     Name: Accessory Enhancement Ore(Intermediate)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000428
     AegisName: Acc_Ore_3
     Name: Accessory Enhancement Ore(High)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000429
     AegisName: Acc_Ore_4
     Name: Accessory Enhancement Ore(Superior)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000430
     AegisName: Weapon_Stone_1
     Name: Weapon Upgrade Stone(Lower)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000431
     AegisName: Weapon_Stone_2
     Name: Weapon Upgrade Stone(Intermediate)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000432
     AegisName: Weapon_Stone_3
     Name: Weapon Upgrade Stone(High)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000433
     AegisName: Weapon_Stone_4
     Name: Weapon Upgrade Stone(Superior)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000434
     AegisName: Armor_Stone_1
     Name: Armor Upgrade Stone(Lower)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000435
     AegisName: Armor_Stone_2
     Name: Armor Upgrade Stone(Intermediate)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000436
     AegisName: Armor_Stone_3
     Name: Armor Upgrade Stone(High)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000437
     AegisName: Armor_Stone_4
     Name: Armor Upgrade Stone(Superior)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000438
     AegisName: Acc_Stone_1
     Name: Accessory Upgrade Stone(Lower)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000439
     AegisName: Acc_Stone_2
     Name: Accessory Upgrade Stone(Intermediate)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000440
     AegisName: Acc_Stone_3
     Name: Accessory Upgrade Stone(High)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000441
     AegisName: Acc_Stone_4
     Name: Accessory Upgrade Stone(Superior)
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000442
     AegisName: Pow_Meteorite_Fragment
     Name: Power Meteorite Fragment
@@ -62692,6 +62868,7 @@ Body:
     Type: Etc
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000609
     AegisName: Mad_Bunny_Ticket
     Name: Mad Bunny-LT Enchantment Ticket
@@ -62750,41 +62927,57 @@ Body:
     Name: Meadow Rune Fragment    # !todo check english name
     Type: Etc
     Weight: 1
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000637
     AegisName: Flame_Barmund_Rune
     Name: Fire Rune Fragment    # !todo check english name
     Type: Etc
     Weight: 1
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000638
     AegisName: Ice_Barmund_Rune
     Name: Ice Rune Fragments    # !todo check english name
     Type: Etc
     Weight: 1
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000639
     AegisName: Death_Barmund_Rune
     Name: Death Rune Fragment    # !todo check english name
     Type: Etc
     Weight: 1
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000640
     AegisName: Plain_Barmund_Rune2
     Name: Meadow Rune    # !todo check english name
     Type: Etc
     Weight: 10
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000641
     AegisName: Flame_Barmund_Rune2
     Name: Fire Rune    # !todo check english name
     Type: Etc
     Weight: 10
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000642
     AegisName: Ice_Barmund_Rune2
     Name: Ice Rune    # !todo check english name
     Type: Etc
     Weight: 10
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000643
     AegisName: Death_Barmund_Rune2
     Name: Death Rune    # !todo check english name
     Type: Etc
     Weight: 10
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000645
     AegisName: Hero_Enchant_Ticket
     Name: Hero's Enchantment Ticket
@@ -62852,10 +63045,14 @@ Body:
     AegisName: ClockTower_Lead
     Name: Lead    # !todo check english name
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000681
     AegisName: ClockTower_Gear
     Name: Cog wheel    # !todo check english name
     Type: Etc
+    Flags:
+      DropEffect: CLIENT
   - Id: 1000682
     AegisName: aegis_1000682
     Name: Tuner    # !todo check english name
@@ -63363,24 +63560,28 @@ Body:
     Weight: 1
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000812
     AegisName: Snow_F_Stone1
     Name: Snowflower Gem
     Weight: 1
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000813
     AegisName: Snow_F_Stone2
     Name: Shining Snowflower Gem
     Weight: 1
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000814
     AegisName: Snow_F_Stone3
     Name: Brilliant Snowflower Gem
     Weight: 1
     Flags:
       BuyingStore: true
+      DropEffect: CLIENT
   - Id: 1000822
     AegisName: EP19_Shell_Of_Rgan
     Name: Rgan Shell
@@ -63564,6 +63765,16 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1000921
+    AegisName: SplStone_Robe_D
+    Name: Spell Stone (Dual)
+    Type: Etc
+    Weight: 100
+  - Id: 1000922
+    AegisName: SmatkStone_Robe
+    Name: Spell Magic Attack Stone (Garment)
+    Type: Etc
+    Weight: 100
   - Id: 1000956
     AegisName: aegis_1000956
     Name: Special Kunnam Exchange
@@ -63575,6 +63786,55 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1000968
+    AegisName: SuraStone_Top3
+    Name: Sura Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1000969
+    AegisName: SuraStone_Middle3
+    Name: Sura Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000970
+    AegisName: SuraStone_Bottom3
+    Name: Sura Stone (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1000971
+    AegisName: MechanicStone_Top3
+    Name: Mechanic Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1000972
+    AegisName: MechanicStone_Middle3
+    Name: Mechanic Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000973
+    AegisName: MechanicStone_Bottom3
+    Name: Mechanic Stone (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1000974
+    AegisName: GuillcrossStone_Top3
+    Name: Guillotine Cross Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1000975
+    AegisName: GuillcrossStone_Middle3
+    Name: Guillotine Cross Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000976
+    AegisName: GuillcrossStone_Bottom3
+    Name: Guillotine Cross Stone (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1001023
+    AegisName: aegis_1001023
+    Name: "[Event] Shard of Infinity Star"
+    Type: Etc
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai

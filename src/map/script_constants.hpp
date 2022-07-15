@@ -5739,6 +5739,12 @@
 	export_constant(IG_AUTO_M_I_BOX_A);
 	export_constant(IG_AUTO_M_I_BOX_B);
 	export_constant(IG_ILLUSION_MODULE_MIX);
+	export_constant(IG_ENCHANT_STONE_BOX22);
+	export_constant(IG_ENCHANT_STONE_BOX23);
+	export_constant(IG_ENCHANT_STONE_BOX24);
+	export_constant(IG_ENCHANT_STONE_BOX25);
+	export_constant(IG_ENCHANT_STONE_BOX27);
+	export_constant(IG_ANCIENT_HERO_BOX_1);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
