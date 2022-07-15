@@ -31084,3 +31084,66 @@ Body:
             Rate: 100
           - Item: Katar_of_Shiver
             Rate: 100
+  - Group: 3LV_9REFINE_WEAPON_7GU
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Guarantee_Weapon_7Up
+  - Group: 3LV_10REFINE_WEAPON_8GU
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Guarantee_Weapon_8Up
+  - Group: 3LV_11REFINE_WEAPON_9GU
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Guarantee_Weapon_9Up
+  - Group: 3LV_12REFINE_WEAPON_10G
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Guarantee_Weapon_10Up
+  - Group: 4LV_9REFINE_WEAPON_8GU
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Guarantee_Weapon_8Up
+  - Group: 4LV_10REFINE_WEAPON_9GU
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Guarantee_Weapon_9Up
+  - Group: 4LV_11REFINE_WEAPON_10G
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Guarantee_Weapon_10Up
+  - Group: BS_ITEM_M_S_52
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Blacksmith_Blessing
+            Amount: 2
+  - Group: Bs_Item_M_S_53
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Shadow_Refine_Hammer
+            Amount: 2
+  - Group: Bs_Item_M_S_54
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Mightysoul_Essence
+  - Group: Bs_Item_M_S_55
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: M_Dimension_Essence
+  - Group: Bs_Item_M_S_56
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Enchant_Ticket
+            Amount: 2

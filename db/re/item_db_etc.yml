@@ -31129,11 +31129,10 @@ Body:
     Buy: 20
     Weight: 10
   - Id: 7925
-    AegisName: Silver_Paper
-    Name: Silver Paper
+    AegisName: M_Dimension_Essence
+    Name: Essence of a Powerful Dimension
     Type: Etc
     Buy: 20
-    Weight: 10
   - Id: 7926
     AegisName: Incense
     Name: Incense
@@ -35851,7 +35850,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25375
-    AegisName: Powerful_Soul_Essence
+    AegisName: Mightysoul_Essence
     Name: Powerful Soul Essence
     Type: Etc
   - Id: 25376

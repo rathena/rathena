@@ -2982,202 +2982,202 @@ Body:
     MinimumRefine: 9
     Requirements:
       - Item: Freezing_Rod
-#  - Item: 3Lv_9Refine_Weapon_7Gu
-#    RewardGroup: 3LV_9REFINE_WEAPON_7GU
-#    MinimumRefine: 9
-#    MaximumRefine: 9
-#    Requirements:
-#      - Item: Scarlet_Knuckle
-#      - Item: Scarlet_Dagger
-#      - Item: Scarlet_Lance
-#      - Item: Scarlet_Rod
-#      - Item: Scarlet_Revolver
-#      - Item: Scarlet_Mace
-#      - Item: Scarlet_Bible
-#      - Item: Scarlet_Viollin
-#      - Item: Scarlet_Bow
-#      - Item: Scarlet_Saber
-#      - Item: Scarlet_Staff
-#      - Item: Scarlet_Spear
-#      - Item: Scarlet_Wire
-#      - Item: Scarlet_Katar
-#      - Item: Scarlet_Twohand_Sword
-#      - Item: Scarlet_Twohand_Axe
-#      - Item: Scarlet_Huuma
-#  - Item: 3Lv_10Refine_Weapon_8Gu
-#    RewardGroup: 3LV_10REFINE_WEAPON_8GU
-#    MinimumRefine: 10
-#    MaximumRefine: 10
-#    Requirements:
-#      - Item: Scarlet_Knuckle
-#      - Item: Scarlet_Dagger
-#      - Item: Scarlet_Lance
-#      - Item: Scarlet_Rod
-#      - Item: Scarlet_Revolver
-#      - Item: Scarlet_Mace
-#      - Item: Scarlet_Bible
-#      - Item: Scarlet_Viollin
-#      - Item: Scarlet_Bow
-#      - Item: Scarlet_Saber
-#      - Item: Scarlet_Staff
-#      - Item: Scarlet_Spear
-#      - Item: Scarlet_Wire
-#      - Item: Scarlet_Katar
-#      - Item: Scarlet_Twohand_Sword
-#      - Item: Scarlet_Twohand_Axe
-#      - Item: Scarlet_Huuma
-#  - Item: 3Lv_11Refine_Weapon_9Gu
-#    RewardGroup: 3LV_11REFINE_WEAPON_9GU
-#    MinimumRefine: 11
-#    MaximumRefine: 11
-#    Requirements:
-#      - Item: Scarlet_Knuckle
-#      - Item: Scarlet_Dagger
-#      - Item: Scarlet_Lance
-#      - Item: Scarlet_Rod
-#      - Item: Scarlet_Revolver
-#      - Item: Scarlet_Mace
-#      - Item: Scarlet_Bible
-#      - Item: Scarlet_Viollin
-#      - Item: Scarlet_Bow
-#      - Item: Scarlet_Saber
-#      - Item: Scarlet_Staff
-#      - Item: Scarlet_Spear
-#      - Item: Scarlet_Wire
-#      - Item: Scarlet_Katar
-#      - Item: Scarlet_Twohand_Sword
-#      - Item: Scarlet_Twohand_Axe
-#      - Item: Scarlet_Huuma
-#  - Item: 3Lv_12Refine_Weapon_10G
-#    RewardGroup: 3LV_12REFINE_WEAPON_10G
-#    MinimumRefine: 12
-#    MaximumRefine: 12
-#    Requirements:
-#      - Item: Scarlet_Knuckle
-#      - Item: Scarlet_Dagger
-#      - Item: Scarlet_Lance
-#      - Item: Scarlet_Rod
-#      - Item: Scarlet_Revolver
-#      - Item: Scarlet_Mace
-#      - Item: Scarlet_Bible
-#      - Item: Scarlet_Viollin
-#      - Item: Scarlet_Bow
-#      - Item: Scarlet_Saber
-#      - Item: Scarlet_Staff
-#      - Item: Scarlet_Spear
-#      - Item: Scarlet_Wire
-#      - Item: Scarlet_Katar
-#      - Item: Scarlet_Twohand_Sword
-#      - Item: Scarlet_Twohand_Axe
-#      - Item: Scarlet_Huuma
-#  - Item: 4Lv_9Refine_Weapon_8Gu
-#    RewardGroup: 4LV_9REFINE_WEAPON_8GU
-#    MinimumRefine: 9
-#    MaximumRefine: 9
-#    Requirements:
-#      - Item: Thanos_Sword
-#      - Item: Thanos_Knuckle
-#      - Item: Thanos_Dagger
-#      - Item: Thanos_Great_Sword
-#      - Item: Thanos_Axe
-#      - Item: Thanos_Hammer
-#      - Item: Thanos_Violin
-#      - Item: Thanos_Rod
-#      - Item: Thanos_Long_Spear
-#      - Item: Thanos_Whip
-#      - Item: Thanos_Staff
-#      - Item: Thanos_Spear
-#      - Item: Thanos_Katar
-#      - Item: Thanos_Bow
-#      - Item: Sinister_Dagger
-#      - Item: Sinister_Lance
-#      - Item: Sinister_Rod
-#      - Item: Sinister_Revolver
-#      - Item: Sinister_Mace
-#      - Item: Sinister_Viollin
-#      - Item: Sinister_Bow
-#      - Item: Sinister_Book
-#      - Item: Sinister_Saber
-#      - Item: Sinister_Staff
-#      - Item: Sinister_Spear
-#      - Item: Sinister_Wire
-#      - Item: Sinister_Katar
-#      - Item: Sinister_Twohand_Sword
-#      - Item: Sinister_Twohand_Axe
-#      - Item: Sinister_Huuma
-#      - Item: Sinister_Fist
-#  - Item: 4Lv_10Refine_Weapon_9Gu
-#    RewardGroup: 4LV_10REFINE_WEAPON_9GU
-#    MinimumRefine: 10
-#    MaximumRefine: 10
-#    Requirements:
-#      - Item: Thanos_Sword
-#      - Item: Thanos_Knuckle
-#      - Item: Thanos_Dagger
-#      - Item: Thanos_Great_Sword
-#      - Item: Thanos_Axe
-#      - Item: Thanos_Hammer
-#      - Item: Thanos_Violin
-#      - Item: Thanos_Rod
-#      - Item: Thanos_Long_Spear
-#      - Item: Thanos_Whip
-#      - Item: Thanos_Staff
-#      - Item: Thanos_Spear
-#      - Item: Thanos_Katar
-#      - Item: Thanos_Bow
-#      - Item: Sinister_Dagger
-#      - Item: Sinister_Lance
-#      - Item: Sinister_Rod
-#      - Item: Sinister_Revolver
-#      - Item: Sinister_Mace
-#      - Item: Sinister_Viollin
-#      - Item: Sinister_Bow
-#      - Item: Sinister_Book
-#      - Item: Sinister_Saber
-#      - Item: Sinister_Staff
-#      - Item: Sinister_Spear
-#      - Item: Sinister_Wire
-#      - Item: Sinister_Katar
-#      - Item: Sinister_Twohand_Sword
-#      - Item: Sinister_Twohand_Axe
-#      - Item: Sinister_Huuma
-#      - Item: Sinister_Fist
-#  - Item: 4Lv_11Refine_Weapon_10G
-#    RewardGroup: 4LV_11REFINE_WEAPON_10G
-#    MinimumRefine: 11
-#    MaximumRefine: 11
-#    Requirements:
-#      - Item: Thanos_Sword
-#      - Item: Thanos_Knuckle
-#      - Item: Thanos_Dagger
-#      - Item: Thanos_Great_Sword
-#      - Item: Thanos_Axe
-#      - Item: Thanos_Hammer
-#      - Item: Thanos_Violin
-#      - Item: Thanos_Rod
-#      - Item: Thanos_Long_Spear
-#      - Item: Thanos_Whip
-#      - Item: Thanos_Staff
-#      - Item: Thanos_Spear
-#      - Item: Thanos_Katar
-#      - Item: Thanos_Bow
-#      - Item: Sinister_Dagger
-#      - Item: Sinister_Lance
-#      - Item: Sinister_Rod
-#      - Item: Sinister_Revolver
-#      - Item: Sinister_Mace
-#      - Item: Sinister_Viollin
-#      - Item: Sinister_Bow
-#      - Item: Sinister_Book
-#      - Item: Sinister_Saber
-#      - Item: Sinister_Staff
-#      - Item: Sinister_Spear
-#      - Item: Sinister_Wire
-#      - Item: Sinister_Katar
-#      - Item: Sinister_Twohand_Sword
-#      - Item: Sinister_Twohand_Axe
-#      - Item: Sinister_Huuma
-#      - Item: Sinister_Fist
+  - Item: 3Lv_9Refine_Weapon_7Gu
+    RewardGroup: 3LV_9REFINE_WEAPON_7GU
+    MinimumRefine: 9
+    MaximumRefine: 9
+    Requirements:
+      - Item: Scarlet_Knuckle
+      - Item: Scarlet_Dagger
+      - Item: Scarlet_Lance
+      - Item: Scarlet_Rod
+      - Item: Scarlet_Revolver
+      - Item: Scarlet_Mace
+      - Item: Scarlet_Bible
+      - Item: Scarlet_Viollin
+      - Item: Scarlet_Bow
+      - Item: Scarlet_Saber
+      - Item: Scarlet_Staff
+      - Item: Scarlet_Spear
+      - Item: Scarlet_Wire
+      - Item: Scarlet_Katar
+      - Item: Scarlet_Twohand_Sword
+      - Item: Scarlet_Twohand_Axe
+      - Item: Scarlet_Huuma
+  - Item: 3Lv_10Refine_Weapon_8Gu
+    RewardGroup: 3LV_10REFINE_WEAPON_8GU
+    MinimumRefine: 10
+    MaximumRefine: 10
+    Requirements:
+      - Item: Scarlet_Knuckle
+      - Item: Scarlet_Dagger
+      - Item: Scarlet_Lance
+      - Item: Scarlet_Rod
+      - Item: Scarlet_Revolver
+      - Item: Scarlet_Mace
+      - Item: Scarlet_Bible
+      - Item: Scarlet_Viollin
+      - Item: Scarlet_Bow
+      - Item: Scarlet_Saber
+      - Item: Scarlet_Staff
+      - Item: Scarlet_Spear
+      - Item: Scarlet_Wire
+      - Item: Scarlet_Katar
+      - Item: Scarlet_Twohand_Sword
+      - Item: Scarlet_Twohand_Axe
+      - Item: Scarlet_Huuma
+  - Item: 3Lv_11Refine_Weapon_9Gu
+    RewardGroup: 3LV_11REFINE_WEAPON_9GU
+    MinimumRefine: 11
+    MaximumRefine: 11
+    Requirements:
+      - Item: Scarlet_Knuckle
+      - Item: Scarlet_Dagger
+      - Item: Scarlet_Lance
+      - Item: Scarlet_Rod
+      - Item: Scarlet_Revolver
+      - Item: Scarlet_Mace
+      - Item: Scarlet_Bible
+      - Item: Scarlet_Viollin
+      - Item: Scarlet_Bow
+      - Item: Scarlet_Saber
+      - Item: Scarlet_Staff
+      - Item: Scarlet_Spear
+      - Item: Scarlet_Wire
+      - Item: Scarlet_Katar
+      - Item: Scarlet_Twohand_Sword
+      - Item: Scarlet_Twohand_Axe
+      - Item: Scarlet_Huuma
+  - Item: 3Lv_12Refine_Weapon_10G
+    RewardGroup: 3LV_12REFINE_WEAPON_10G
+    MinimumRefine: 12
+    MaximumRefine: 12
+    Requirements:
+      - Item: Scarlet_Knuckle
+      - Item: Scarlet_Dagger
+      - Item: Scarlet_Lance
+      - Item: Scarlet_Rod
+      - Item: Scarlet_Revolver
+      - Item: Scarlet_Mace
+      - Item: Scarlet_Bible
+      - Item: Scarlet_Viollin
+      - Item: Scarlet_Bow
+      - Item: Scarlet_Saber
+      - Item: Scarlet_Staff
+      - Item: Scarlet_Spear
+      - Item: Scarlet_Wire
+      - Item: Scarlet_Katar
+      - Item: Scarlet_Twohand_Sword
+      - Item: Scarlet_Twohand_Axe
+      - Item: Scarlet_Huuma
+  - Item: 4Lv_9Refine_Weapon_8Gu
+    RewardGroup: 4LV_9REFINE_WEAPON_8GU
+    MinimumRefine: 9
+    MaximumRefine: 9
+    Requirements:
+      - Item: Thanos_Sword
+      - Item: Thanos_Knuckle
+      - Item: Thanos_Dagger
+      - Item: Thanos_Great_Sword
+      - Item: Thanos_Axe
+      - Item: Thanos_Hammer
+      - Item: Thanos_Violin
+      - Item: Thanos_Rod
+      - Item: Thanos_Long_Spear
+      - Item: Thanos_Whip
+      - Item: Thanos_Staff
+      - Item: Thanos_Spear
+      - Item: Thanos_Katar
+      - Item: Thanos_Bow
+      - Item: Sinister_Dagger
+      - Item: Sinister_Lance
+      - Item: Sinister_Rod
+      - Item: Sinister_Revolver
+      - Item: Sinister_Mace
+      - Item: Sinister_Viollin
+      - Item: Sinister_Bow
+      - Item: Sinister_Book
+      - Item: Sinister_Saber
+      - Item: Sinister_Staff
+      - Item: Sinister_Spear
+      - Item: Sinister_Wire
+      - Item: Sinister_Katar
+      - Item: Sinister_Twohand_Sword
+      - Item: Sinister_Twohand_Axe
+      - Item: Sinister_Huuma
+      - Item: Sinister_Fist
+  - Item: 4Lv_10Refine_Weapon_9Gu
+    RewardGroup: 4LV_10REFINE_WEAPON_9GU
+    MinimumRefine: 10
+    MaximumRefine: 10
+    Requirements:
+      - Item: Thanos_Sword
+      - Item: Thanos_Knuckle
+      - Item: Thanos_Dagger
+      - Item: Thanos_Great_Sword
+      - Item: Thanos_Axe
+      - Item: Thanos_Hammer
+      - Item: Thanos_Violin
+      - Item: Thanos_Rod
+      - Item: Thanos_Long_Spear
+      - Item: Thanos_Whip
+      - Item: Thanos_Staff
+      - Item: Thanos_Spear
+      - Item: Thanos_Katar
+      - Item: Thanos_Bow
+      - Item: Sinister_Dagger
+      - Item: Sinister_Lance
+      - Item: Sinister_Rod
+      - Item: Sinister_Revolver
+      - Item: Sinister_Mace
+      - Item: Sinister_Viollin
+      - Item: Sinister_Bow
+      - Item: Sinister_Book
+      - Item: Sinister_Saber
+      - Item: Sinister_Staff
+      - Item: Sinister_Spear
+      - Item: Sinister_Wire
+      - Item: Sinister_Katar
+      - Item: Sinister_Twohand_Sword
+      - Item: Sinister_Twohand_Axe
+      - Item: Sinister_Huuma
+      - Item: Sinister_Fist
+  - Item: 4Lv_11Refine_Weapon_10G
+    RewardGroup: 4LV_11REFINE_WEAPON_10G
+    MinimumRefine: 11
+    MaximumRefine: 11
+    Requirements:
+      - Item: Thanos_Sword
+      - Item: Thanos_Knuckle
+      - Item: Thanos_Dagger
+      - Item: Thanos_Great_Sword
+      - Item: Thanos_Axe
+      - Item: Thanos_Hammer
+      - Item: Thanos_Violin
+      - Item: Thanos_Rod
+      - Item: Thanos_Long_Spear
+      - Item: Thanos_Whip
+      - Item: Thanos_Staff
+      - Item: Thanos_Spear
+      - Item: Thanos_Katar
+      - Item: Thanos_Bow
+      - Item: Sinister_Dagger
+      - Item: Sinister_Lance
+      - Item: Sinister_Rod
+      - Item: Sinister_Revolver
+      - Item: Sinister_Mace
+      - Item: Sinister_Viollin
+      - Item: Sinister_Bow
+      - Item: Sinister_Book
+      - Item: Sinister_Saber
+      - Item: Sinister_Staff
+      - Item: Sinister_Spear
+      - Item: Sinister_Wire
+      - Item: Sinister_Katar
+      - Item: Sinister_Twohand_Sword
+      - Item: Sinister_Twohand_Axe
+      - Item: Sinister_Huuma
+      - Item: Sinister_Fist
   - Item: Iron_Nail_K_Cube
     RewardGroup: IRON_NAIL_K_CUBE
     MinimumRefine: 9
@@ -4490,3 +4490,63 @@ Body:
       - Item: S_Blitz_Shoes
       - Item: S_Blitz_Pendent
       - Item: S_Blitz_Earring
+  - Item: Bs_Item_M_S_52
+    RewardGroup: BS_ITEM_M_S_52
+    Requirements:
+      - Item: Zelunium
+        Amount: 150
+  - Item: Bs_Item_M_S_53
+    RewardGroup: BS_ITEM_M_S_53
+    Requirements:
+      - Item: Shadowdecon
+        Amount: 150
+  - Item: Bs_Item_M_S_54
+    RewardGroup: BS_ITEM_M_S_54
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 200
+      - Item: Shadowdecon
+        Amount: 200
+  - Item: Bs_Item_M_S_55
+    RewardGroup: BS_ITEM_M_S_55
+    RequiredRequirementsCount: 2
+    Requirements:
+      - Item: Zelunium
+        Amount: 200
+      - Item: Shadowdecon
+        Amount: 200
+  - Item: Bs_Item_M_S_56
+    RewardGroup: BS_ITEM_M_S_56
+    RequiredRequirementsCount: 4
+    Requirements:
+      - Item: Mightysoul_Essence
+      - Item: M_Dimension_Essence
+      - Item: Zelunium
+        Amount: 150
+      - Item: Shadowdecon
+        Amount: 150
+#  - Item: Bs_Item_M_S_57
+#    RewardGroup: BS_ITEM_M_S_57
+#    RequiredRequirementsCount: 2
+#    Requirements:
+#      - Item: Tiger's_Skin
+#        Amount: 50
+#      - Item: Zelunium
+#        Amount: 250
+#  - Item: Bs_Item_M_S_58
+#    RewardGroup: BS_ITEM_M_S_58
+#    RequiredRequirementsCount: 2
+#    Requirements:
+#      - Item: Will_Of_Darkness_
+#        Amount: 30
+#      - Item: Zelunium
+#        Amount: 250
+#  - Item: Bs_Item_M_S_59
+#    RewardGroup: BS_ITEM_M_S_59
+#    RequiredRequirementsCount: 2
+#    Requirements:
+#      - Item: Loki's_Whispers
+#        Amount: 30
+#      - Item: Zelunium
+#        Amount: 250
