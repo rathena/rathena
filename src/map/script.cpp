@@ -19325,11 +19325,15 @@ BUILDIN_FUNC(unitwalk)
 			status_calc_npc(((TBL_NPC*)bl), SCO_NONE);
 	}
 
+	bool can_reach = false;
+
 	if (!strcmp(cmd,"unitwalk")) {
 		int x = script_getnum(st,3);
 		int y = script_getnum(st,4);
+		can_reach = unit_can_reach_pos(bl,x,y,0);
+		script_pushint(st, can_reach);
 
-		if (script_pushint(st, unit_can_reach_pos(bl,x,y,0))) {
+		if (can_reach) {
 			if (ud != nullptr)
 				ud->state.force_walk = true;
 			add_timer(gettick()+50, unit_delay_walktoxy_timer, bl->id, (x<<16)|(y&0xFFFF)); // Need timer to avoid mismatches
@@ -19341,7 +19345,11 @@ BUILDIN_FUNC(unitwalk)
 			ShowError("buildin_unitwalk: Bad target destination.\n");
 			script_pushint(st, 0);
 			return SCRIPT_CMD_FAILURE;
-		} else if (script_pushint(st, unit_can_reach_bl(bl, tbl, distance_bl(bl, tbl)+1, 0, NULL, NULL))) {
+		}
+		can_reach = unit_can_reach_bl(bl, tbl, distance_bl(bl, tbl)+1, 0, NULL, NULL);
+		script_pushint(st, can_reach);
+		
+		if (can_reach) {
 			if (ud != nullptr)
 				ud->state.force_walk = true;
 			add_timer(gettick()+50, unit_delay_walktobl_timer, bl->id, tbl->id); // Need timer to avoid mismatches
@@ -19349,7 +19357,7 @@ BUILDIN_FUNC(unitwalk)
 		off = 4;
 	}
 
-	if (ud && script_hasdata(st, off)) {
+	if (ud && script_hasdata(st, off) && can_reach) {
 		done_label = script_getstr(st, off);
 		check_event(st, done_label);
 		safestrncpy(ud->walk_done_event, done_label, sizeof(ud->walk_done_event));
@@ -19496,11 +19504,6 @@ BUILDIN_FUNC(unitstopwalk)
 
 		if (ud != nullptr)
 			ud->state.force_walk = false;
-
-		if (unit_stop_walking(bl, flag) == 0 && flag != USW_FORCE_STOP) {
-			ShowWarning("buildin_unitstopwalk: Unable to find unit or unit is not walking.\n");
-			return SCRIPT_CMD_FAILURE;
-		}
 
 		return SCRIPT_CMD_SUCCESS;
 	} else {
