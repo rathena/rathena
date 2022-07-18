@@ -319,7 +319,7 @@ OnTouch:
 	sscanf( strnpcinfo(2), "lrboom%d", .@num );
 	areamonster 'map_name$,178,34,198,54, "Machine Component", (3251 + ((.@num-1) % 2)), 3;
 	mapannounce 'map_name$, "System message : Intruder detected in Zone 2.",bc_map,"0xFF0000";
-	disablenpc instance_npcname( strnpcinfo(0) );
+	disablenpc();
 	end;
 }
 1@uns,164,97,0	duplicate(#lrboom1)	#lrboom2	4_CRACK,2,2

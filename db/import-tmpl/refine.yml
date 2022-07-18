@@ -1,0 +1,687 @@
+# This file is a part of rAthena++.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Refine Database
+###########################################################################
+#
+# Refine Settings
+#
+###########################################################################
+# - Group                               Refine item type.
+#   Levels:                             Refinement settings per item level. (Default: null)
+#     - Level                           Item level.
+#       RefineLevels:                   Refinement settings per refine level. (Default: null)
+#         - Level                       Refine level.
+#           Bonus                       Refinement bonus. (Default: 0)
+#           RandomBonus                 Extra refinement bonus of 0~RandomBonus stacked on Bonus. (Default: 0)
+#           BlacksmithBlessingAmount    Amount of Blacksmith Blessing required. (Default: 0)
+#           Chances:                    Success chance based on cost type. (Default: null)
+#             - Type                    Refinement cost type based on ore used.
+#               Rate                    Chance of success out of 0~10000. (Default: 0)
+#               Price                   Amount of zeny required to refine. (Default: 0)
+#               Material                Ore item required to refine. (Default: 0)
+#               BreakingRate            Chance of item breaking out of 0~10000. (Default: 0)
+#               DowngradeAmount         Number of refine levels reduced on failure. (Default: 0)
+###########################################################################
+
+Header:
+  Type: REFINE_DB
+  Version: 1
+
+###########################################################################
+# Event Refine Rates
+###########################################################################
+#Body:
+#  - Group: Armor
+#    Levels:
+#      - Level: 1
+#        RefineLevels:
+#          - Level: 5
+#            Chances:
+#              - Type: Enriched
+#                Rate: 9500
+#          - Level: 6
+#            Chances:
+#              - Type: Enriched
+#                Rate: 8000
+#          - Level: 7
+#            Chances:
+#              - Type: Enriched
+#                Rate: 8000
+#          - Level: 8
+#            Chances:
+#              - Type: Enriched
+#                Rate: 5000
+#          - Level: 9
+#            Chances:
+#              - Type: Enriched
+#                Rate: 5000
+#          - Level: 10
+#            Chances:
+#              - Type: Enriched
+#                Rate: 3500
+#          - Level: 11
+#            Chances:
+#              - Type: Normal
+#                Rate: 2000
+#              - Type: HD
+#                Rate: 2000
+#          - Level: 12
+#            Chances:
+#              - Type: Normal
+#                Rate: 2000
+#              - Type: HD
+#                Rate: 2000
+#          - Level: 13
+#            Chances:
+#              - Type: Normal
+#                Rate: 1600
+#              - Type: HD
+#                Rate: 1600
+#          - Level: 14
+#            Chances:
+#              - Type: Normal
+#                Rate: 1600
+#              - Type: HD
+#                Rate: 1600
+#          - Level: 15
+#            Chances:
+#              - Type: Normal
+#                Rate: 1500
+#              - Type: HD
+#                Rate: 1500
+#          - Level: 16
+#            Chances:
+#              - Type: Normal
+#                Rate: 1500
+#              - Type: HD
+#                Rate: 1500
+#          - Level: 17
+#            Chances:
+#              - Type: Normal
+#                Rate: 1400
+#              - Type: HD
+#                Rate: 1400
+#          - Level: 18
+#            Chances:
+#              - Type: Normal
+#                Rate: 1400
+#              - Type: HD
+#                Rate: 1400
+#          - Level: 19
+#            Chances:
+#              - Type: Normal
+#                Rate: 1000
+#              - Type: HD
+#                Rate: 1000
+#          - Level: 20
+#            Chances:
+#              - Type: Normal
+#                Rate: 1000
+#              - Type: HD
+#                Rate: 1000
+#      - Level: 2
+#        RefineLevels:
+#          - Level: 4
+#            Chances:
+#              - Type: Normal
+#                Rate: 8000
+#              - Type: Enriched
+#                Rate: 9500
+#          - Level: 5
+#            Chances:
+#              - Type: Normal
+#                Rate: 8000
+#              - Type: Enriched
+#                Rate: 8500
+#          - Level: 6
+#            Chances:
+#              - Type: Normal
+#                Rate: 6000
+#              - Type: Enriched
+#                Rate: 7000
+#          - Level: 7
+#            Chances:
+#              - Type: Normal
+#                Rate: 6000
+#              - Type: Enriched
+#                Rate: 6500
+#          - Level: 8
+#            Chances:
+#              - Type: Normal
+#                Rate: 4000
+#              - Type: Enriched
+#                Rate: 5500
+#          - Level: 9
+#            Chances:
+#              - Type: Normal
+#                Rate: 4000
+#              - Type: Enriched
+#                Rate: 4500
+#          - Level: 10
+#            Chances:
+#              - Type: Normal
+#                Rate: 1800
+#              - Type: Enriched
+#                Rate: 2500
+#          - Level: 11
+#            Chances:
+#              - Type: Normal
+#                Rate: 1600
+#              - Type: HD
+#                Rate: 2000
+#          - Level: 12
+#            Chances:
+#              - Type: Normal
+#                Rate: 1600
+#              - Type: HD
+#                Rate: 2000
+#          - Level: 13
+#            Chances:
+#              - Type: Normal
+#                Rate: 1600
+#              - Type: HD
+#                Rate: 2000
+#          - Level: 14
+#            Chances:
+#              - Type: Normal
+#                Rate: 1600
+#              - Type: HD
+#                Rate: 2000
+#          - Level: 15
+#            Chances:
+#              - Type: Normal
+#                Rate: 1400
+#              - Type: HD
+#                Rate: 1500
+#          - Level: 16
+#            Chances:
+#              - Type: Normal
+#                Rate: 1400
+#              - Type: HD
+#                Rate: 1500
+#          - Level: 17
+#            Chances:
+#              - Type: Normal
+#                Rate: 1400
+#              - Type: HD
+#                Rate: 1500
+#          - Level: 18
+#            Chances:
+#              - Type: Normal
+#                Rate: 1400
+#              - Type: HD
+#                Rate: 1500
+#          - Level: 19
+#            Chances:
+#              - Type: Normal
+#                Rate: 1000
+#              - Type: HD
+#                Rate: 1000
+#          - Level: 20
+#            Chances:
+#              - Type: Normal
+#                Rate: 1000
+#              - Type: HD
+#                Rate: 1000
+#  - Group: Weapon
+#    Levels:
+#      - Level: 1
+#        RefineLevels:
+#          - Level: 8
+#            Chances:
+#              - Type: Enriched
+#                Rate: 9500
+#          - Level: 9
+#            Chances:
+#              - Type: Enriched
+#                Rate: 8500
+#          - Level: 10
+#            Chances:
+#              - Type: Enriched
+#                Rate: 5500
+#          - Level: 11
+#            Chances:
+#              - Type: Normal
+#                Rate: 4000
+#              - Type: HD
+#                Rate: 4000
+#          - Level: 12
+#            Chances:
+#              - Type: Normal
+#                Rate: 4000
+#              - Type: HD
+#                Rate: 4000
+#          - Level: 13
+#            Chances:
+#              - Type: Normal
+#                Rate: 3500
+#              - Type: HD
+#                Rate: 3500
+#          - Level: 14
+#            Chances:
+#              - Type: Normal
+#                Rate: 3500
+#              - Type: HD
+#                Rate: 3500
+#          - Level: 15
+#            Chances:
+#              - Type: Normal
+#                Rate: 3000
+#              - Type: HD
+#                Rate: 3000
+#          - Level: 16
+#            Chances:
+#              - Type: Normal
+#                Rate: 3000
+#              - Type: HD
+#                Rate: 3000
+#          - Level: 17
+#            Chances:
+#              - Type: Normal
+#                Rate: 2000
+#              - Type: HD
+#                Rate: 2000
+#          - Level: 18
+#            Chances:
+#              - Type: Normal
+#                Rate: 2000
+#              - Type: HD
+#                Rate: 2000
+#      - Level: 2
+#        RefineLevels:
+#          - Level: 7
+#            Chances:
+#              - Type: Enriched
+#                Rate: 9500
+#          - Level: 8
+#            Chances:
+#              - Type: Enriched
+#                Rate: 8500
+#          - Level: 9
+#            Chances:
+#              - Type: Enriched
+#                Rate: 6000
+#          - Level: 10
+#            Chances:
+#              - Type: Enriched
+#                Rate: 4500
+#          - Level: 11
+#            Chances:
+#              - Type: Normal
+#                Rate: 4000
+#              - Type: HD
+#                Rate: 4000
+#          - Level: 12
+#            Chances:
+#              - Type: Normal
+#                Rate: 4000
+#              - Type: HD
+#                Rate: 4000
+#          - Level: 13
+#            Chances:
+#              - Type: Normal
+#                Rate: 3500
+#              - Type: HD
+#                Rate: 3500
+#          - Level: 14
+#            Chances:
+#              - Type: Normal
+#                Rate: 3500
+#              - Type: HD
+#                Rate: 3500
+#          - Level: 15
+#            Chances:
+#              - Type: Normal
+#                Rate: 3000
+#              - Type: HD
+#                Rate: 3000
+#          - Level: 16
+#            Chances:
+#              - Type: Normal
+#                Rate: 3000
+#              - Type: HD
+#                Rate: 3000
+#          - Level: 17
+#            Chances:
+#              - Type: Normal
+#                Rate: 2000
+#              - Type: HD
+#                Rate: 2000
+#          - Level: 18
+#            Chances:
+#              - Type: Normal
+#                Rate: 2000
+#              - Type: HD
+#                Rate: 2000
+#      - Level: 3
+#        RefineLevels:
+#          - Level: 6
+#            Chances:
+#              - Type: Enriched
+#                Rate: 9500
+#          - Level: 7
+#            Chances:
+#              - Type: Enriched
+#                Rate: 9000
+#          - Level: 8
+#            Chances:
+#              - Type: Enriched
+#                Rate: 7000
+#          - Level: 9
+#            Chances:
+#              - Type: Enriched
+#                Rate: 6000
+#          - Level: 10
+#            Chances:
+#              - Type: Enriched
+#                Rate: 4500
+#          - Level: 11
+#            Chances:
+#              - Type: Normal
+#                Rate: 4000
+#              - Type: HD
+#                Rate: 4000
+#          - Level: 12
+#            Chances:
+#              - Type: Normal
+#                Rate: 4000
+#              - Type: HD
+#                Rate: 4000
+#          - Level: 13
+#            Chances:
+#              - Type: Normal
+#                Rate: 3500
+#              - Type: HD
+#                Rate: 3500
+#          - Level: 14
+#            Chances:
+#              - Type: Normal
+#                Rate: 3500
+#              - Type: HD
+#                Rate: 3500
+#          - Level: 15
+#            Chances:
+#              - Type: Normal
+#                Rate: 3000
+#              - Type: HD
+#                Rate: 3000
+#          - Level: 16
+#            Chances:
+#              - Type: Normal
+#                Rate: 3000
+#              - Type: HD
+#                Rate: 3000
+#          - Level: 17
+#            Chances:
+#              - Type: Normal
+#                Rate: 2000
+#              - Type: HD
+#                Rate: 2000
+#          - Level: 18
+#            Chances:
+#              - Type: Normal
+#                Rate: 2000
+#              - Type: HD
+#                Rate: 2000
+#      - Level: 4
+#        RefineLevels:
+#          - Level: 5
+#            Chances:
+#              - Type: Enriched
+#                Rate: 9500
+#          - Level: 6
+#            Chances:
+#              - Type: Enriched
+#                Rate: 8000
+#          - Level: 7
+#            Chances:
+#              - Type: Enriched
+#                Rate: 8000
+#          - Level: 8
+#            Chances:
+#              - Type: Enriched
+#                Rate: 6000
+#          - Level: 9
+#            Chances:
+#              - Type: Enriched
+#                Rate: 5000
+#          - Level: 10
+#            Chances:
+#              - Type: Enriched
+#                Rate: 3500
+#          - Level: 11
+#            Chances:
+#              - Type: Normal
+#                Rate: 2000
+#              - Type: HD
+#                Rate: 2000
+#          - Level: 12
+#            Chances:
+#              - Type: Normal
+#                Rate: 2000
+#              - Type: HD
+#                Rate: 2000
+#          - Level: 13
+#            Chances:
+#              - Type: Normal
+#                Rate: 1600
+#              - Type: HD
+#                Rate: 1600
+#          - Level: 14
+#            Chances:
+#              - Type: Normal
+#                Rate: 1600
+#              - Type: HD
+#                Rate: 1600
+#          - Level: 15
+#            Chances:
+#              - Type: Normal
+#                Rate: 1500
+#              - Type: HD
+#                Rate: 1500
+#          - Level: 16
+#            Chances:
+#              - Type: Normal
+#                Rate: 1500
+#              - Type: HD
+#                Rate: 1500
+#          - Level: 17
+#            Chances:
+#              - Type: Normal
+#                Rate: 1400
+#              - Type: HD
+#                Rate: 1400
+#          - Level: 18
+#            Chances:
+#              - Type: Normal
+#                Rate: 1400
+#              - Type: HD
+#                Rate: 1400
+#          - Level: 19
+#            Chances:
+#              - Type: Normal
+#                Rate: 1000
+#              - Type: HD
+#                Rate: 1000
+#          - Level: 20
+#            Chances:
+#              - Type: Normal
+#                Rate: 1000
+#              - Type: HD
+#                Rate: 1000
+#      - Level: 5
+#        RefineLevels:
+#          - Level: 4
+#            Chances:
+#              - Type: Normal
+#                Rate: 8000
+#              - Type: Enriched
+#                Rate: 9500
+#          - Level: 5
+#            Chances:
+#              - Type: Normal
+#                Rate: 8000
+#              - Type: Enriched
+#                Rate: 8500
+#          - Level: 6
+#            Chances:
+#              - Type: Normal
+#                Rate: 6000
+#              - Type: Enriched
+#                Rate: 7000
+#          - Level: 7
+#            Chances:
+#              - Type: Normal
+#                Rate: 6000
+#              - Type: Enriched
+#                Rate: 6500
+#          - Level: 8
+#            Chances:
+#              - Type: Normal
+#                Rate: 4000
+#              - Type: Enriched
+#                Rate: 5500
+#          - Level: 9
+#            Chances:
+#              - Type: Normal
+#                Rate: 4000
+#              - Type: Enriched
+#                Rate: 4500
+#          - Level: 10
+#            Chances:
+#              - Type: Normal
+#                Rate: 1800
+#              - Type: Enriched
+#                Rate: 2500
+#          - Level: 11
+#            Chances:
+#              - Type: Normal
+#                Rate: 1600
+#              - Type: HD
+#                Rate: 2000
+#          - Level: 12
+#            Chances:
+#              - Type: Normal
+#                Rate: 1600
+#              - Type: HD
+#                Rate: 2000
+#          - Level: 13
+#            Chances:
+#              - Type: Normal
+#                Rate: 1600
+#              - Type: HD
+#                Rate: 2000
+#          - Level: 14
+#            Chances:
+#              - Type: Normal
+#                Rate: 1600
+#              - Type: HD
+#                Rate: 2000
+#          - Level: 15
+#            Chances:
+#              - Type: Normal
+#                Rate: 1400
+#              - Type: HD
+#                Rate: 1500
+#          - Level: 16
+#            Chances:
+#              - Type: Normal
+#                Rate: 1400
+#              - Type: HD
+#                Rate: 1500
+#          - Level: 17
+#            Chances:
+#              - Type: Normal
+#                Rate: 1400
+#              - Type: HD
+#                Rate: 1500
+#          - Level: 18
+#            Chances:
+#              - Type: Normal
+#                Rate: 1400
+#              - Type: HD
+#                Rate: 1500
+#          - Level: 19
+#            Chances:
+#              - Type: Normal
+#                Rate: 1000
+#              - Type: HD
+#                Rate: 1000
+#          - Level: 20
+#            Chances:
+#              - Type: Normal
+#                Rate: 1000
+#              - Type: HD
+#                Rate: 1000
+#  - Group: Shadow_Armor
+#    Levels:
+#      - Level: 1
+#        RefineLevels:
+#          - Level: 5
+#            Chances:
+#              - Type: Enriched
+#                Rate: 9500
+#          - Level: 6
+#            Chances:
+#              - Type: Enriched
+#                Rate: 8000
+#          - Level: 7
+#            Chances:
+#              - Type: Enriched
+#                Rate: 8000
+#          - Level: 8
+#            Chances:
+#              - Type: Enriched
+#                Rate: 5000
+#          - Level: 9
+#            Chances:
+#              - Type: Enriched
+#                Rate: 5000
+#          - Level: 10
+#            Chances:
+#              - Type: Enriched
+#                Rate: 3500
+#  - Group: Shadow_Weapon
+#    Levels:
+#      - Level: 1
+#        RefineLevels:
+#          - Level: 5
+#            Chances:
+#              - Type: Enriched
+#                Rate: 9500
+#          - Level: 6
+#            Chances:
+#              - Type: Enriched
+#                Rate: 8000
+#          - Level: 7
+#            Chances:
+#              - Type: Enriched
+#                Rate: 8000
+#          - Level: 8
+#            Chances:
+#              - Type: Enriched
+#                Rate: 5000
+#          - Level: 9
+#            Chances:
+#              - Type: Enriched
+#                Rate: 5000
+#          - Level: 10
+#            Chances:
+#              - Type: Enriched
+#                Rate: 3500

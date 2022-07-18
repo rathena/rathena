@@ -1409,6 +1409,7 @@ amatsu,171,174,4	script	Gate Soldier#ama6	767,{
 		mes "The mother of our lord is resting in here.";
 		mes " ";
 		next;
+		setquest 8131;
 		set event_amatsu,1;
 		mes "[Gate Soldier]";
 		mes "She has been sick for months.";
@@ -1836,7 +1837,7 @@ ama_in02,200,176,4	script	Lord of Palace#ama	768,{
 	else if (event_amatsu == 5) {
 		if (countitem(1022) > 0) {
 			mes "[Ishida Yoshinaga]";
-			mes "I've hear the great news!";
+			mes "I've heard the great news!";
 			mes "My mother seems to have gotten better. What was her disease?";
 			next;
 			mes "[Ishida Yoshinaga]";
@@ -2177,7 +2178,10 @@ ama_in01,180,173,3	script	Kitsune Mask#ama	762,{
 		mes "Good. Show that spiritual";
 		mes "energy to the fox several times.";
 		mes "Sooner or later, you'll be successful.";
-		changequest 8133,8134;
+		if (isbegin_quest(8132) == 1)
+			changequest 8132,8134;
+		else if (isbegin_quest(8133) == 1)
+			changequest 8133,8134;
 		close;
 	}
 	else if (event_amatsu == 4) {

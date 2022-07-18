@@ -78,14 +78,14 @@ int8 buyingstore_setup(struct map_session_data* sd, unsigned char slots){
 		return 2;
 	}
 
-	if( map_getmapflag(sd->bl.m, MF_NOVENDING) )
-	{// custom: no vending maps
+	if( map_getmapflag(sd->bl.m, MF_NOBUYINGSTORE) )
+	{// custom: no buyingstore maps
 		clif_displaymessage(sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
 		return 3;
 	}
 
-	if( map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOVENDING) )
-	{// custom: no vending cells
+	if( map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOBUYINGSTORE) )
+	{// custom: no buyingstore cells
 		clif_displaymessage(sd->fd, msg_txt(sd,204)); // "You can't open a shop on this cell."
 		return 4;
 	}
@@ -145,14 +145,14 @@ int8 buyingstore_create( struct map_session_data* sd, int zenylimit, unsigned ch
 		return 2;
 	}
 
-	if( map_getmapflag(sd->bl.m, MF_NOVENDING) )
-	{// custom: no vending maps
+	if( map_getmapflag(sd->bl.m, MF_NOBUYINGSTORE) )
+	{// custom: no buyingstore maps
 		clif_displaymessage(sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
 		return 3;
 	}
 
-	if( map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOVENDING) )
-	{// custom: no vending cells
+	if( map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOBUYINGSTORE) )
+	{// custom: no buyingstore cells
 		clif_displaymessage(sd->fd, msg_txt(sd,204)); // "You can't open a shop on this cell."
 		return 4;
 	}
@@ -568,10 +568,26 @@ bool buyingstore_searchall(struct map_session_data* sd, const struct s_search_st
 			;
 		}
 
-		if( !searchstore_result(s->search_sd, sd->buyer_id, sd->status.account_id, sd->message, it->nameid, it->amount, it->price, buyingstore_blankslots, 0, 0) )
-		{// result set full
+		// Check if the result set is full
+		if( s->search_sd->searchstore.items.size() >= (unsigned int)battle_config.searchstore_maxresults ){
 			return false;
 		}
+
+		std::shared_ptr<s_search_store_info_item> ssitem = std::make_shared<s_search_store_info_item>();
+
+		ssitem->store_id = sd->buyer_id;
+		ssitem->account_id = sd->status.account_id;
+		safestrncpy( ssitem->store_name, sd->message, sizeof( ssitem->store_name ) );
+		ssitem->nameid = it->nameid;
+		ssitem->amount = it->amount;
+		ssitem->price = it->price;
+		for( int j = 0; j < MAX_SLOTS; j++ ){
+			ssitem->card[j] = 0;
+		}
+		ssitem->refine = 0;
+		ssitem->enchantgrade = 0;
+
+		s->search_sd->searchstore.items.push_back( ssitem );
 	}
 
 	return true;
@@ -780,6 +796,20 @@ static int buyingstore_autotrader_free(DBKey key, DBData *data, va_list ap) {
 	if (at)
 		buyingstore_autotrader_remove(at, false);
 	return 0;
+}
+
+/**
+* Update buyer location
+* @param sd: Player's session data
+*/
+void buyingstore_update(map_session_data &sd)
+{
+	if (Sql_Query(mmysql_handle, "UPDATE `%s` SET `map` = '%s', `x` = '%d', `y` = '%d', `body_direction` = '%d', `head_direction` = '%d', `sit` = '%d', `autotrade` = '%d' WHERE `id` = '%d'",
+		buyingstores_table, map_getmapdata(sd.bl.m)->name, sd.bl.x, sd.bl.y, sd.ud.dir, sd.head_dir, pc_issit(&sd), sd.state.autotrade,
+		sd.buyer_id
+	) != SQL_SUCCESS) {
+		Sql_ShowDebug(mmysql_handle);
+	}
 }
 
 /**

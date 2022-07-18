@@ -552,7 +552,7 @@ function	script	F_mal_coin	{
 				mes "I'm sorry, you need more "+.@str$+".";
 				close;
 			}
-			if (MaxWeight - Weight < getiteminfo(getarg(3),6)) {
+			if (MaxWeight - Weight < getiteminfo(getarg(3), ITEMINFO_WEIGHT)) {
 				mes .@npc_name$;
 				mes "Sorry, you've purchased too many.";
 				mes "You need to make more space in your inventory. Please come back later.";

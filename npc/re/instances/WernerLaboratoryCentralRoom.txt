@@ -513,7 +513,7 @@ OnTouch:
 		.@label$ = instance_npcname("#security_device_lab") + "::OnRight2";
 		break;
 	}
-	disablenpc instance_npcname( strnpcinfo(0) );
+	disablenpc();
 	areamonster .@map$, (.@x-2), (.@y-2), (.@x+2), (.@y+2), "Special Guard", 3622, .@mob_count, .@label$;	// EP16_2_MM_S_GUARDS
 	end;
 }

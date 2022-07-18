@@ -43,7 +43,7 @@
 /// Uncomment to enable real-time server stats (in and out data and ram usage).
 //#define SHOW_SERVER_STATS
 
-/// Uncomment to enable the job base HP/SP table (job_basehpsp_db.txt)
+/// Comment to disable the job base HP/SP/AP table (job_basepoints.yml)
 #define HP_SP_TABLES
 
 /// Uncomment to enable VIP system.
@@ -80,6 +80,9 @@
 // cause unexpected behavior.
 // Do NOT create any issues or ask for help with these compilers.
 //#define DEPRECATED_COMPILER_SUPPORT
+
+/// Uncomment for use with Nemo patch ExtendCashShopPreview
+//#define ENABLE_CASHSHOP_PREVIEW_PATCH
 
 /**
  * No settings past this point

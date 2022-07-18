@@ -6,6 +6,7 @@
 #include "../config/core.hpp"
 
 #ifndef MINICORE
+#include "database.hpp"
 #include "ers.hpp"
 #include "socket.hpp"
 #include "timer.hpp"
@@ -365,7 +366,7 @@ int main (int argc, char **argv)
 	Sql_Init();
 	db_init();
 	signals_init();
-
+	do_init_database();
 #ifdef _WIN32
 	cevents_init();
 #endif

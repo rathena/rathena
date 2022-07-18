@@ -1,0 +1,121 @@
+//===== rAthena Script =======================================
+//= Ghost Palace Exchange NPC.
+//===== Description: =========================================
+//= Walkthrough Conversion.
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [Capuche]
+//============================================================
+
+dali02,51,130,4	script	Dimension Traveler	4_F_SHABBY,{
+	if (checkweight(28100,1) == 0) {// Thanos Axe
+		mes "- You cannot proceed because you have too many items with you. -";
+		close;
+	}
+	.@item_name_req$ = getitemname(6672);// Shard_of_Gray
+	mes "[Dimension Traveler]";
+	mes "Adventurer friend, <ITEM>[" + .@item_name_req$ + "]<INFO>6672</INFO></ITEM> is what I need. How about exchanging it with something I have?";
+	next;
+	.@type = select( "Show me your weapon.", "Show me your armor.", "Anything special?", "I do not need." ) - 1;
+	mes "[Dimension Traveler]";
+	switch(.@type) {
+	case 0:
+		mes "Oh! Are you interested in weapons? We have all the weapons we can get from the Ghost Palace. Why don't you choose one?";
+		break;
+	case 1:
+		mes "Armor? We have all the armors we can get from the Ghost Palace. Why don't you choose one?";
+		break;
+	case 2:
+		mes "Huhh! It seems like many of them already heard that I have the best stuff. Feel free to check out my collections.";
+		break;
+	case 3:
+		mes "Goodbye friend~ Come again!";
+		close;
+	}
+	next;
+	mes "[Dimension Traveler]";
+	mes "Ah! The number that is written beside <ITEM>[" + .@item_name_req$ + "]<INFO>6672</INFO></ITEM> will be needed.";
+	mes "Please keep that in mind.";
+
+	switch(.@type) {
+	case 0:
+		setarray .@items[0],
+			13441, 200,		// Thanos Sword
+			21009, 200, 	// Thanos Great Sword
+			1438,  200,		// Thanos Spear
+			1496,  200,		// Thanos Long Spear
+			1669,  200,		// Thanos Staff
+			2023,  200,		// Thanos Rod
+			18119, 200,		// Thanos Bow
+			13093, 200,		// Thanos Dagger
+			28000, 200,		// Thanos Katar
+			1836,  200,		// Thanos Knuckle
+			16028, 200,		// Thanos Hammer
+			28100, 200,		// Thanos Axe
+			1933,  200,		// Thanos Violin
+			1988,  200;		// Thanos Whip
+		break;
+	case 1:
+		setarray .@items[0],
+			2187,  100,		// Shield Of Gray
+			15090, 100, 	// Armor Of Gray
+			15091, 100,		// Gray Robe
+			20721, 100,		// Cloak Of Gray
+			22033, 100,		// Boots Of Gray
+			18820, 100;		// Gray Helmet
+		break;
+	case 2:
+		setarray .@items[0],
+			27184, 10000,		// Knight Sakray Card
+			23676, 50, 			// Gray Charcoal Melee (Melee)
+			23677, 50,			// Gray Charcoal Magic (Magic)
+			23678, 50,			// Gray Charcoal Range (Range)
+			27184, 10000;		// Knight Sakray Card
+		break;
+	}
+	.@size = getarraysize(.@items);
+	for ( .@i = 0; .@i < .@size; .@i += 2 )
+		.@menu$ += getitemname(.@items[.@i]) + " - " + .@items[.@i+1] + ":";
+
+	while(true) {
+		next;
+		.@s = (select(.@menu$) - 1) * 2;
+		mes "[Dimension Traveler]";
+		if (.@type != 1)	// armor type doesn't display item info
+			mes "Do you mean <ITEM>[" + getitemname(.@items[.@s]) + "]<INFO>" + .@items[.@s] + "</INFO></ITEM>?";
+		mes "" + .@items[.@s+1] + " ^006400" + .@item_name_req$ + "^000000 are required in exchange.";
+		next;
+		switch( select( "Let's exchange.", "Let me see other stuff.", "I will come back later." ) ) {
+		case 1:
+			break;
+		case 2:
+			mes "[Dimension Traveler]";
+			switch(.@type) {
+			case 0:
+				mes "I have more than enough weapons.";
+				break;
+			case 1:
+				mes "We have many armors for you. Why don't you pick one?";
+				break;
+			case 2:
+				mes "If you bring me " + .@item_name_req$ + ", I will trade it with anything you want.";
+				break;
+			}
+			continue;
+		case 3:
+			mes "[Dimension Traveler]";
+			mes "Take care friend~ See you next time!";
+			close;
+		}
+		if (countitem(6672) < .@items[.@s+1]) {
+			mes "[Dimension Traveler]";
+			mes "You put me in a difficult situation, friend.";
+			mes "I am in need of " + .@item_name_req$ + ". I will exchange it for ^006400" + .@items[.@s+1] + " " + .@item_name_req$ + "^000000.";
+			close;
+		}
+		mes "[Dimension Traveler]";
+		mes "Thank you. Come back if you need anything else.";
+		delitem 6672, .@items[.@s+1];
+		getitem .@items[.@s], 1;
+		close;
+	}
+}

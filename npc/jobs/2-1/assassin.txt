@@ -2257,7 +2257,7 @@ OnTouch_:
 	end;
 
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 }
 in_moc_16,156,87,1	duplicate(#moc_assin_dup)	[Huey]	55

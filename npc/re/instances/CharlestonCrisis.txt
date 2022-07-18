@@ -1766,14 +1766,14 @@ OnTouch_:
 			donpcevent instance_npcname("GeneratorBroadcast#1") + "::OnStart";
 			disablenpc instance_npcname("Charleston 1#2");
 			enablenpc instance_npcname("Charleston 1#3");
-			disablenpc instance_npcname( strnpcinfo(0) );
+			disablenpc();
 		}
 		close;
 	}
 	if ('ep15_1_mcd01 == 6 || 'ep15_1_mcd01 == 5) {
 		mes "You turned on the generator. The sounds of turning wheels can be heard.";
 		'ep15_1_mcd01++;
-		disablenpc instance_npcname( strnpcinfo(0) );
+		disablenpc();
 		close;
 	}
 	end;
@@ -1890,7 +1890,7 @@ OnTouch_:
 1@mcd,127,262,0	script	mob#1	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch_:
-	disablenpc instance_npcname( strnpcinfo(0) );
+	disablenpc();
 	switch( atoi(strnpcinfo(2)) ) {
 	case 1:
 		areamonster 'map_name$,106,246,115,256,"Security robot", 3128,5;	// KICK_AND_KICK

@@ -13,6 +13,6 @@
 -	script	dummy_cloaked_npc	-1,{
 	end;
 OnInit:
-	cloakonnpc strnpcinfo(0);
+	cloakonnpc();
 	end;
 }

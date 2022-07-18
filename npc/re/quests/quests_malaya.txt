@@ -1477,7 +1477,7 @@ malaya,62,274,0	script	Sand Trap#malaya	557,{
 	mes "someone scattered on the sea water.";
 	close2;
 	progressbar "0xffff00", 5;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	initnpctimer;
 	getitem 6501, 1; // Salt_Bag
 	mes "[" + strcharinfo(0) + "]";
@@ -1485,7 +1485,7 @@ malaya,62,274,0	script	Sand Trap#malaya	557,{
 	close;
 
 OnTimer30000:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	stopnpctimer;
 	end;
 }
@@ -1509,7 +1509,7 @@ ma_fild01,178,206,0	script	Black Bamboo#malaya	844,4,4,{
 	mes "If some of it is cut off and sharpened, I think it will suffice for the Sharpened Bamboo Imelda wanted.";
 	close2;
 	progressbar "0xffff00", 3;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	initnpctimer;
 	getitem 6500, 1; //Sharp_Bamboo
 	mes "[" + strcharinfo(0) + "]";
@@ -1521,7 +1521,7 @@ OnTouch_:
 	}
 	end;
 OnTimer30000:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	stopnpctimer;
 	end;
 }
@@ -3137,7 +3137,7 @@ ma_fild01,251,93,3	script	Lost Child#malaya01	576,{
 		setquest 7389;
 		erasequest 7388;
 		close2;
-		disablenpc strnpcinfo(0);
+		disablenpc();
 		if (strnpcinfo(0) == "Lost Child#malaya01") {
 			enablenpc "Lost Child#malaya02";
 		} else if (strnpcinfo(0) == "Lost Child#malaya01") {
@@ -3171,7 +3171,7 @@ ma_fild01,251,93,3	script	Lost Child#malaya01	576,{
 	
 OnInit:
 	if (strnpcinfo(0) != "Lost Child#malaya01")
-		disablenpc strnpcinfo(0);
+		disablenpc();
 }
 ma_fild01,114,141,3	duplicate(Lost Child#malaya01)	Lost Child#malaya02	576
 ma_fild01,130,314,3	duplicate(Lost Child#malaya01)	Lost Child#malaya03	576
@@ -4552,13 +4552,13 @@ OnInit:
 		mes "[" + strcharinfo(0) + "]";
 		mes "It's warm as a mother's bosom.";
 		getitem 6519,1; //Collected_Sample
-		disablenpc strnpcinfo(0);
+		disablenpc();
 		initnpctimer;
 		close;
 	}
 	end;
 OnTimer20000:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	stopnpctimer;
 	end;
 }
@@ -7958,15 +7958,15 @@ malaya,59,84,4	duplicate(MalayaStick)	Suspicious Wooden Stick::MalayaStick10	858
 -	script	Tent#ma	-1,{ //557
 	end;
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	initnpctimer;
 	end;
 OnDisable:
 	stopnpctimer;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnTimer1000:
 	donpcevent "MalayaStick"+replacestr(strnpcinfo(1),"Tent","")+"::OnDisable";
@@ -9120,13 +9120,13 @@ ma_fild01,164,231,6	script	Beat Catching Boy#pin10	577,{
 	close;
 OnInit:
 	if (!$malaya_pintados_00)
-		disablenpc strnpcinfo(0);
+		disablenpc();
 	end;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 }
 ma_fild01,170,228,4	duplicate(Beat Catching Boy#pin10)	Beat Catching Boy#pin11	577

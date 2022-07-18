@@ -4741,7 +4741,11 @@
 #endif
 	parseable_packet(0x0368,6,clif_parse_GetCharNameRequest,2);
 	parseable_packet(0x0369,6,clif_parse_SolveCharName,2);
-	parseable_packet(0x0436,19,clif_parse_WantToConnection,2,6,10,14,18);
+#if PACKETVER_RE_NUM >= 20211103
+	parseable_packet( 0x0436, 23, clif_parse_WantToConnection, 2, 6, 10, 14, 22 );
+#else
+	parseable_packet( 0x0436, 19, clif_parse_WantToConnection, 2, 6, 10, 14, 18 );
+#endif
 	parseable_packet(0x0437,7,clif_parse_ActionRequest,2,6);
 	parseable_packet(0x0438,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x07E4,-1,clif_parse_ItemListWindowSelected,2,4,8,12);

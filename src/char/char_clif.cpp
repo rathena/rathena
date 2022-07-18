@@ -21,6 +21,7 @@
 #include "char_logif.hpp"
 #include "char_mapif.hpp"
 #include "inter.hpp"
+#include "packets.hpp"
 
 #if PACKETVER_SUPPORTS_PINCODE
 bool pincode_allowed( char* pincode );
@@ -34,7 +35,7 @@ bool pincode_allowed( char* pincode );
 // 1: failed
 void chclif_moveCharSlotReply( int fd, struct char_session_data* sd, unsigned short index, short reason ){
 	WFIFOHEAD(fd,8);
-	WFIFOW(fd,0) = 0x8d5;
+	WFIFOW(fd,0) = HEADER_HC_ACK_CHANGE_CHARACTER_SLOT;
 	WFIFOW(fd,2) = 8;
 	WFIFOW(fd,4) = reason;
 	WFIFOW(fd,6) = sd->char_moves[index];
@@ -374,7 +375,7 @@ void chclif_mmo_send099d(int fd, struct char_session_data *sd) {
 	uint8 count = 0;
 
 	WFIFOHEAD(fd,4 + (MAX_CHARS*MAX_CHAR_BUF));
-	WFIFOW(fd,0) = 0x99d;
+	WFIFOW(fd,0) = HEADER_HC_ACK_CHARINFO_PER_PAGE;
 	WFIFOW(fd,2) = char_mmo_chars_fromsql(sd, WFIFOP(fd,4), &count) + 4;
 	WFIFOSET(fd,WFIFOW(fd,2));
 
@@ -382,7 +383,7 @@ void chclif_mmo_send099d(int fd, struct char_session_data *sd) {
 	// The client triggers some finalization code only if count is != 3.
 	if( count == 3 ){
 		WFIFOHEAD(fd,4);
-		WFIFOW(fd,0) = 0x99d;
+		WFIFOW(fd,0) = HEADER_HC_ACK_CHARINFO_PER_PAGE;
 		WFIFOW(fd,2) = 4;
 		WFIFOSET(fd,4);
 	}
@@ -752,7 +753,7 @@ int chclif_parse_reqtoconnect(int fd, struct char_session_data* sd,uint32 ipl){
 		}
 		else
 		{// authentication not found (coming from login server)
-			if (login_fd > 0) { // don't send request if no login-server
+			if (session_isValid(login_fd)) { // don't send request if no login-server
 				WFIFOHEAD(login_fd,23);
 				WFIFOW(login_fd,0) = 0x2712; // ask login-server to authentify an account
 				WFIFOL(login_fd,2) = sd->account_id;
@@ -816,13 +817,13 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		int slot = RFIFOB(fd,2);
 		RFIFOSKIP(fd,3);
 
-		ARR_FIND( 0, ARRAYLENGTH(map_server), server_id, map_server[server_id].fd > 0 && !map_server[server_id].map.empty() );
+		ARR_FIND( 0, ARRAYLENGTH(map_server), server_id, session_isValid(map_server[server_id].fd) && !map_server[server_id].map.empty() );
 		// Map-server not available, tell the client to wait (client wont close, char select will respawn)
 		if (server_id == ARRAYLENGTH(map_server)) {
 			WFIFOHEAD(fd, 24);
 			WFIFOW(fd, 0) = 0x840;
 			WFIFOW(fd, 2) = 24;
-			memcpy(WFIFOP(fd, 4), "0", 20); // we can't send it empty (otherwise the list will pop up)
+			strncpy(WFIFOCP(fd, 4), "0", 20); // we can't send it empty (otherwise the list will pop up)
 			WFIFOSET(fd, 24);
 			return 1;
 		}
@@ -882,7 +883,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		if (i < 0 || !cd->last_point.map) {
 			unsigned short j;
 			//First check that there's actually a map server online.
-			ARR_FIND( 0, ARRAYLENGTH(map_server), j, map_server[j].fd >= 0 && map_server[j].map[0] );
+			ARR_FIND( 0, ARRAYLENGTH(map_server), j, session_isValid(map_server[j].fd) && !map_server[j].map.empty() );
 			if (j == ARRAYLENGTH(map_server)) {
 				ShowInfo("Connection Closed. No map servers available.\n");
 				chclif_send_auth_result(fd,1); // 01 = Server closed
@@ -1050,7 +1051,7 @@ int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd){
 
 		// send to player
 		WFIFOHEAD(fd,2+MAX_CHAR_BUF);
-		WFIFOW(fd,0) = 0x6d;
+		WFIFOW(fd,0) = HEADER_HC_ACCEPT_MAKECHAR;
 		len = 2 + char_mmo_char_tobuf(WFIFOP(fd,2), &char_dat);
 		WFIFOSET(fd,len);
 

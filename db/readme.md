@@ -18,20 +18,18 @@ We want to add our own custom achievement that can be given to a player via an N
 
 #### /db/import/achievement_db.yml
 
-
-    Achievements:
-      - ID: 280000
-        Group: "AG_GOAL_ACHIEVE"
-        Name: "Emperio"
-        Reward:
-          TitleID: 1035
-        Score: 50
-      - ID: 280001
-        Group: "AG_GOAL_ACHIEVE"
-        Name: "Staff"
-        Reward:
-          TitleID: 1036
-        Score: 50
+    - Id: 280000
+      Group: None
+      Name: Emperio
+      Reward:
+        TitleId: 1035
+      Score: 50
+    - Id: 280001
+      Group: None
+      Name: Staff
+      Reward:
+        TitleId: 1036
+      Score: 50
 
 
 ### Instances

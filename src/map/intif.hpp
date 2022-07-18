@@ -4,6 +4,8 @@
 #ifndef INTIF_HPP
 #define INTIF_HPP
 
+#include <vector>
+
 #include "../common/cbasetypes.hpp"
 #include "../common/mmo.hpp"
 
@@ -64,13 +66,13 @@ int intif_guild_alliance(int guild_id1, int guild_id2, uint32 account_id1, uint3
 int intif_guild_notice(int guild_id, const char *mes1, const char *mes2);
 int intif_guild_emblem(int guild_id, int len, const char *data);
 int intif_guild_emblem_version(int guild_id, int version);
-int intif_guild_castle_dataload(int num, int *castle_ids);
+bool intif_guild_castle_dataload( const std::vector<int32>& castle_ids );
 int intif_guild_castle_datasave(int castle_id, int index, int value);
 #ifdef BOUND_ITEMS
 void intif_itembound_guild_retrieve(uint32 char_id, uint32 account_id, int guild_id);
 #endif
 
-int intif_create_pet(uint32 account_id, uint32 char_id, short pet_type, short pet_lv, t_itemid pet_egg_id, t_itemid pet_equip, short intimate, short hungry, char rename_flag, char incubate, char *pet_name);
+int intif_create_pet(uint32 account_id, uint32 char_id, short pet_type, short pet_lv, t_itemid pet_egg_id, t_itemid pet_equip, short intimate, short hungry, char rename_flag, char incubate, const char *pet_name);
 int intif_request_petdata(uint32 account_id, uint32 char_id, int pet_id);
 int intif_save_petdata(uint32 account_id, struct s_pet *p);
 int intif_delete_petdata(int pet_id);

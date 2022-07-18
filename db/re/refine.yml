@@ -1,0 +1,2511 @@
+# This file is a part of rAthena++.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Refine Database
+###########################################################################
+#
+# Refine Settings
+#
+###########################################################################
+# - Group                               Refine item type.
+#   Levels:                             Refinement settings per item level. (Default: null)
+#     - Level                           Item level.
+#       RefineLevels:                   Refinement settings per refine level. (Default: null)
+#         - Level                       Refine level.
+#           Bonus                       Refinement bonus. (Default: 0)
+#           RandomBonus                 Extra refinement bonus of 0~RandomBonus stacked on Bonus. (Default: 0)
+#           BlacksmithBlessingAmount    Amount of Blacksmith Blessing required. (Default: 0)
+#           Chances:                    Success chance based on cost type. (Default: null)
+#             - Type                    Refinement cost type based on ore used.
+#               Rate                    Chance of success out of 0~10000. (Default: 0)
+#               Price                   Amount of zeny required to refine. (Default: 0)
+#               Material                Ore item required to refine. (Default: 0)
+#               BreakingRate            Chance of item breaking out of 0~10000. (Default: 0)
+#               DowngradeAmount         Number of refine levels reduced on failure. (Default: 0)
+###########################################################################
+
+Header:
+  Type: REFINE_DB
+  Version: 1
+
+Body:
+  - Group: Armor
+    Levels:
+      - Level: 1
+        RefineLevels:
+          - Level: 1
+            Bonus: 100
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 2000
+                Material: Elunium
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Elunium
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Elunium
+          - Level: 2
+            Bonus: 200
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 2000
+                Material: Elunium
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Elunium
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Elunium
+          - Level: 3
+            Bonus: 300
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 2000
+                Material: Elunium
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Elunium
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Elunium
+          - Level: 4
+            Bonus: 400
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 2000
+                Material: Elunium
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Elunium
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Elunium
+          - Level: 5
+            Bonus: 600
+            Chances:
+              - Type: Normal
+                Rate: 6000
+                Price: 2000
+                Material: Elunium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 6000
+                Price: 20000
+                Material: HD_Elunium
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 9000
+                Price: 2000
+                Material: Enriched_Elunium
+                BreakingRate: 10000
+          - Level: 6
+            Bonus: 800
+            Chances:
+              - Type: Normal
+                Rate: 4000
+                Price: 2000
+                Material: Elunium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 4000
+                Price: 20000
+                Material: HD_Elunium
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 7000
+                Price: 2000
+                Material: Enriched_Elunium
+                BreakingRate: 10000
+          - Level: 7
+            Bonus: 1000
+            Chances:
+              - Type: Normal
+                Rate: 4000
+                Price: 2000
+                Material: Elunium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 4000
+                Price: 20000
+                Material: HD_Elunium
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 7000
+                Price: 2000
+                Material: Enriched_Elunium
+                BreakingRate: 10000
+          - Level: 8
+            Bonus: 1200
+            BlacksmithBlessingAmount: 1
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 2000
+                Material: Elunium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 2000
+                Price: 20000
+                Material: HD_Elunium
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 4000
+                Price: 2000
+                Material: Enriched_Elunium
+                BreakingRate: 10000
+          - Level: 9
+            Bonus: 1500
+            BlacksmithBlessingAmount: 2
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 2000
+                Material: Elunium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 2000
+                Price: 20000
+                Material: HD_Elunium
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 4000
+                Price: 2000
+                Material: Enriched_Elunium
+                BreakingRate: 10000
+          - Level: 10
+            Bonus: 1800
+            BlacksmithBlessingAmount: 4
+            Chances:
+              - Type: Normal
+                Rate: 900
+                Price: 2000
+                Material: Elunium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 900
+                Price: 20000
+                Material: HD_Elunium
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 2000
+                Price: 2000
+                Material: Enriched_Elunium
+                BreakingRate: 10000
+          - Level: 11
+            Bonus: 2100
+            BlacksmithBlessingAmount: 7
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Carnium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 800
+                Price: 100000
+                Material: HD_Carnium
+                DowngradeAmount: 1
+          - Level: 12
+            Bonus: 2400
+            BlacksmithBlessingAmount: 11
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Carnium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 800
+                Price: 100000
+                Material: HD_Carnium
+                DowngradeAmount: 1
+          - Level: 13
+            Bonus: 2800
+            BlacksmithBlessingAmount: 16
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Carnium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 800
+                Price: 100000
+                Material: HD_Carnium
+                DowngradeAmount: 1
+          - Level: 14
+            Bonus: 3200
+            BlacksmithBlessingAmount: 22
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Carnium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 800
+                Price: 100000
+                Material: HD_Carnium
+                DowngradeAmount: 1
+          - Level: 15
+            Bonus: 3600
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Carnium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 700
+                Price: 100000
+                Material: HD_Carnium
+                DowngradeAmount: 1
+          - Level: 16
+            Bonus: 4000
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Carnium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 700
+                Price: 100000
+                Material: HD_Carnium
+                DowngradeAmount: 1
+          - Level: 17
+            Bonus: 4500
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Carnium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 700
+                Price: 100000
+                Material: HD_Carnium
+                DowngradeAmount: 1
+          - Level: 18
+            Bonus: 5000
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Carnium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 700
+                Price: 100000
+                Material: HD_Carnium
+                DowngradeAmount: 1
+          - Level: 19
+            Bonus: 5500
+            Chances:
+              - Type: Normal
+                Rate: 500
+                Price: 100000
+                Material: Carnium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 500
+                Price: 100000
+                Material: HD_Carnium
+                DowngradeAmount: 1
+          - Level: 20
+            Bonus: 6000
+            Chances:
+              - Type: Normal
+                Rate: 500
+                Price: 100000
+                Material: Carnium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 500
+                Price: 100000
+                Material: HD_Carnium
+                DowngradeAmount: 1
+      - Level: 2
+        RefineLevels:
+          - Level: 1
+            Bonus: 120
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50000
+                Material: Ethernium
+              - Type: Enriched
+                Rate: 10000
+                Price: 50000
+                Material: Enriched_Ethernium
+          - Level: 2
+            Bonus: 240
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50000
+                Material: Ethernium
+              - Type: Enriched
+                Rate: 10000
+                Price: 50000
+                Material: Enriched_Ethernium
+          - Level: 3
+            Bonus: 360
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50000
+                Material: Ethernium
+              - Type: Enriched
+                Rate: 10000
+                Price: 50000
+                Material: Enriched_Ethernium
+          - Level: 4
+            Bonus: 480
+            Chances:
+              - Type: Normal
+                Rate: 6000
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 9000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 5
+            Bonus: 720
+            Chances:
+              - Type: Normal
+                Rate: 6000
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 7000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 6
+            Bonus: 960
+            Chances:
+              - Type: Normal
+                Rate: 4000
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 6000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 7
+            Bonus: 1200
+            Chances:
+              - Type: Normal
+                Rate: 4000
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 6000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 8
+            Bonus: 1440
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 4000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 9
+            Bonus: 1800
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 4000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 10
+            Bonus: 2160
+            Chances:
+              - Type: Normal
+                Rate: 900
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 2000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 11
+            Bonus: 2520
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Ethernium
+                BreakingRate: 10000
+          - Level: 12
+            Bonus: 2880
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Ethernium
+                BreakingRate: 10000
+          - Level: 13
+            Bonus: 3360
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Ethernium
+                BreakingRate: 10000
+          - Level: 14
+            Bonus: 3840
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Ethernium
+                BreakingRate: 10000
+          - Level: 15
+            Bonus: 4320
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Ethernium
+                BreakingRate: 10000
+          - Level: 16
+            Bonus: 4800
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Etel_Carnium
+                BreakingRate: 10000
+          - Level: 17
+            Bonus: 5400
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Etel_Carnium
+                BreakingRate: 10000
+          - Level: 18
+            Bonus: 6000
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Etel_Carnium
+                BreakingRate: 10000
+          - Level: 19
+            Bonus: 6600
+            Chances:
+              - Type: Normal
+                Rate: 500
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 700
+                Price: 100000
+                Material: HD_Etel_Carnium
+                BreakingRate: 10000
+          - Level: 20
+            Bonus: 7200
+            Chances:
+              - Type: Normal
+                Rate: 500
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 700
+                Price: 100000
+                Material: HD_Etel_Carnium
+                BreakingRate: 10000
+  - Group: Weapon
+    Levels:
+      - Level: 1
+        RefineLevels:
+          - Level: 1
+            Bonus: 200
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50
+                Material: Phracon
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Oridecon
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Oridecon
+          - Level: 2
+            Bonus: 400
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50
+                Material: Phracon
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Oridecon
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Oridecon
+          - Level: 3
+            Bonus: 600
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50
+                Material: Phracon
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Oridecon
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Oridecon
+          - Level: 4
+            Bonus: 800
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50
+                Material: Phracon
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Oridecon
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Oridecon
+          - Level: 5
+            Bonus: 1000
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50
+                Material: Phracon
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Oridecon
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Oridecon
+          - Level: 6
+            Bonus: 1200
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50
+                Material: Phracon
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Oridecon
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Oridecon
+          - Level: 7
+            Bonus: 1400
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50
+                Material: Phracon
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Oridecon
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Oridecon
+          - Level: 8
+            Bonus: 1600
+            RandomBonus: 300
+            BlacksmithBlessingAmount: 1
+            Chances:
+              - Type: Normal
+                Rate: 6000
+                Price: 50
+                Material: Phracon
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 6000
+                Price: 20000
+                Material: HD_Oridecon
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 9000
+                Price: 2000
+                Material: Enriched_Oridecon
+                BreakingRate: 10000
+          - Level: 9
+            Bonus: 1800
+            RandomBonus: 600
+            BlacksmithBlessingAmount: 2
+            Chances:
+              - Type: Normal
+                Rate: 4000
+                Price: 50
+                Material: Phracon
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 4000
+                Price: 20000
+                Material: HD_Oridecon
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 7000
+                Price: 2000
+                Material: Enriched_Oridecon
+                BreakingRate: 10000
+          - Level: 10
+            Bonus: 2000
+            RandomBonus: 900
+            BlacksmithBlessingAmount: 4
+            Chances:
+              - Type: Normal
+                Rate: 1900
+                Price: 50
+                Material: Phracon
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1900
+                Price: 20000
+                Material: HD_Oridecon
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 3000
+                Price: 2000
+                Material: Enriched_Oridecon
+                BreakingRate: 10000
+          - Level: 11
+            Bonus: 2200
+            RandomBonus: 1200
+            BlacksmithBlessingAmount: 7
+            Chances:
+              - Type: Normal
+                Rate: 1800
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1800
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 12
+            Bonus: 2400
+            RandomBonus: 1500
+            BlacksmithBlessingAmount: 11
+            Chances:
+              - Type: Normal
+                Rate: 1800
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1800
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 13
+            Bonus: 2600
+            RandomBonus: 1800
+            BlacksmithBlessingAmount: 16
+            Chances:
+              - Type: Normal
+                Rate: 1800
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1800
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 14
+            Bonus: 2800
+            RandomBonus: 2100
+            BlacksmithBlessingAmount: 22
+            Chances:
+              - Type: Normal
+                Rate: 1800
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1800
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 15
+            Bonus: 3000
+            RandomBonus: 2400
+            Chances:
+              - Type: Normal
+                Rate: 1800
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1800
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 16
+            Bonus: 4800
+            RandomBonus: 2700
+            Chances:
+              - Type: Normal
+                Rate: 1700
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1700
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 17
+            Bonus: 5100
+            RandomBonus: 3000
+            Chances:
+              - Type: Normal
+                Rate: 1700
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1700
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 18
+            Bonus: 5400
+            RandomBonus: 3300
+            Chances:
+              - Type: Normal
+                Rate: 1700
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1700
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 19
+            Bonus: 5700
+            RandomBonus: 3600
+            Chances:
+              - Type: Normal
+                Rate: 1500
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 20
+            Bonus: 6000
+            RandomBonus: 3900
+            Chances:
+              - Type: Normal
+                Rate: 1500
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+      - Level: 2
+        RefineLevels:
+          - Level: 1
+            Bonus: 300
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 200
+                Material: Emveretarcon
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Oridecon
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Oridecon
+          - Level: 2
+            Bonus: 600
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 200
+                Material: Emveretarcon
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Oridecon
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Oridecon
+          - Level: 3
+            Bonus: 900
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 200
+                Material: Emveretarcon
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Oridecon
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Oridecon
+          - Level: 4
+            Bonus: 1200
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 200
+                Material: Emveretarcon
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Oridecon
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Oridecon
+          - Level: 5
+            Bonus: 1500
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 200
+                Material: Emveretarcon
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Oridecon
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Oridecon
+          - Level: 6
+            Bonus: 1800
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 200
+                Material: Emveretarcon
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Oridecon
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Oridecon
+          - Level: 7
+            Bonus: 2100
+            RandomBonus: 500
+            Chances:
+              - Type: Normal
+                Rate: 6000
+                Price: 200
+                Material: Emveretarcon
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 6000
+                Price: 20000
+                Material: HD_Oridecon
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 9000
+                Price: 2000
+                Material: Enriched_Oridecon
+                BreakingRate: 10000
+          - Level: 8
+            Bonus: 2400
+            RandomBonus: 1000
+            BlacksmithBlessingAmount: 1
+            Chances:
+              - Type: Normal
+                Rate: 4000
+                Price: 200
+                Material: Emveretarcon
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 4000
+                Price: 20000
+                Material: HD_Oridecon
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 7000
+                Price: 2000
+                Material: Enriched_Oridecon
+                BreakingRate: 10000
+          - Level: 9
+            Bonus: 2700
+            RandomBonus: 1500
+            BlacksmithBlessingAmount: 2
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 200
+                Material: Emveretarcon
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 2000
+                Price: 20000
+                Material: HD_Oridecon
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 4000
+                Price: 2000
+                Material: Enriched_Oridecon
+                BreakingRate: 10000
+          - Level: 10
+            Bonus: 3000
+            RandomBonus: 2000
+            BlacksmithBlessingAmount: 4
+            Chances:
+              - Type: Normal
+                Rate: 1900
+                Price: 200
+                Material: Emveretarcon
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1900
+                Price: 20000
+                Material: HD_Oridecon
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 3000
+                Price: 2000
+                Material: Enriched_Oridecon
+                BreakingRate: 10000
+          - Level: 11
+            Bonus: 3300
+            RandomBonus: 2500
+            BlacksmithBlessingAmount: 7
+            Chances:
+              - Type: Normal
+                Rate: 1800
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1800
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 12
+            Bonus: 3600
+            RandomBonus: 3000
+            BlacksmithBlessingAmount: 11
+            Chances:
+              - Type: Normal
+                Rate: 1800
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1800
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 13
+            Bonus: 3900
+            RandomBonus: 3500
+            BlacksmithBlessingAmount: 16
+            Chances:
+              - Type: Normal
+                Rate: 1800
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1800
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 14
+            Bonus: 4200
+            RandomBonus: 4000
+            BlacksmithBlessingAmount: 22
+            Chances:
+              - Type: Normal
+                Rate: 1800
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1800
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 15
+            Bonus: 4500
+            RandomBonus: 4500
+            Chances:
+              - Type: Normal
+                Rate: 1800
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1800
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 16
+            Bonus: 8000
+            RandomBonus: 5000
+            Chances:
+              - Type: Normal
+                Rate: 1700
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1700
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 17
+            Bonus: 8500
+            RandomBonus: 5500
+            Chances:
+              - Type: Normal
+                Rate: 1700
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1700
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 18
+            Bonus: 9000
+            RandomBonus: 6000
+            Chances:
+              - Type: Normal
+                Rate: 1700
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1700
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 19
+            Bonus: 9500
+            RandomBonus: 6500
+            Chances:
+              - Type: Normal
+                Rate: 1500
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 20
+            Bonus: 10000
+            RandomBonus: 7000
+            Chances:
+              - Type: Normal
+                Rate: 1500
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+      - Level: 3
+        RefineLevels:
+          - Level: 1
+            Bonus: 500
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 5000
+                Material: Oridecon
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Oridecon
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Oridecon
+          - Level: 2
+            Bonus: 1000
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 5000
+                Material: Oridecon
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Oridecon
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Oridecon
+          - Level: 3
+            Bonus: 1500
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 5000
+                Material: Oridecon
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Oridecon
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Oridecon
+          - Level: 4
+            Bonus: 2000
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 5000
+                Material: Oridecon
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Oridecon
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Oridecon
+          - Level: 5
+            Bonus: 2500
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 5000
+                Material: Oridecon
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Oridecon
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Oridecon
+          - Level: 6
+            Bonus: 3000
+            RandomBonus: 800
+            Chances:
+              - Type: Normal
+                Rate: 6000
+                Price: 5000
+                Material: Oridecon
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 6000
+                Price: 20000
+                Material: HD_Oridecon
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 9000
+                Price: 2000
+                Material: Enriched_Oridecon
+                BreakingRate: 10000
+          - Level: 7
+            Bonus: 3500
+            RandomBonus: 1600
+            Chances:
+              - Type: Normal
+                Rate: 5000
+                Price: 5000
+                Material: Oridecon
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 5000
+                Price: 20000
+                Material: HD_Oridecon
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 8000
+                Price: 2000
+                Material: Enriched_Oridecon
+                BreakingRate: 10000
+          - Level: 8
+            Bonus: 4000
+            RandomBonus: 2400
+            BlacksmithBlessingAmount: 1
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 5000
+                Material: Oridecon
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 2000
+                Price: 20000
+                Material: HD_Oridecon
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 4000
+                Price: 2000
+                Material: Enriched_Oridecon
+                BreakingRate: 10000
+          - Level: 9
+            Bonus: 4500
+            RandomBonus: 3200
+            BlacksmithBlessingAmount: 2
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 5000
+                Material: Oridecon
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 2000
+                Price: 20000
+                Material: HD_Oridecon
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 4000
+                Price: 2000
+                Material: Enriched_Oridecon
+                BreakingRate: 10000
+          - Level: 10
+            Bonus: 5000
+            RandomBonus: 4000
+            BlacksmithBlessingAmount: 4
+            Chances:
+              - Type: Normal
+                Rate: 1900
+                Price: 5000
+                Material: Oridecon
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1900
+                Price: 20000
+                Material: HD_Oridecon
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 3000
+                Price: 2000
+                Material: Enriched_Oridecon
+                BreakingRate: 10000
+          - Level: 11
+            Bonus: 5500
+            RandomBonus: 4800
+            BlacksmithBlessingAmount: 7
+            Chances:
+              - Type: Normal
+                Rate: 1800
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1800
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 12
+            Bonus: 6000
+            RandomBonus: 5600
+            BlacksmithBlessingAmount: 11
+            Chances:
+              - Type: Normal
+                Rate: 1800
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1800
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 13
+            Bonus: 6500
+            RandomBonus: 6400
+            BlacksmithBlessingAmount: 16
+            Chances:
+              - Type: Normal
+                Rate: 1800
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1800
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 14
+            Bonus: 7000
+            RandomBonus: 7200
+            BlacksmithBlessingAmount: 22
+            Chances:
+              - Type: Normal
+                Rate: 1800
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1800
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 15
+            Bonus: 7500
+            RandomBonus: 8000
+            Chances:
+              - Type: Normal
+                Rate: 1800
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1800
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 16
+            Bonus: 11200
+            RandomBonus: 8800
+            Chances:
+              - Type: Normal
+                Rate: 1700
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1700
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 17
+            Bonus: 11900
+            RandomBonus: 9600
+            Chances:
+              - Type: Normal
+                Rate: 1700
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1700
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 18
+            Bonus: 12600
+            RandomBonus: 10400
+            Chances:
+              - Type: Normal
+                Rate: 1700
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1700
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 19
+            Bonus: 13300
+            RandomBonus: 11200
+            Chances:
+              - Type: Normal
+                Rate: 1500
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 20
+            Bonus: 14000
+            RandomBonus: 12000
+            Chances:
+              - Type: Normal
+                Rate: 1500
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+      - Level: 4
+        RefineLevels:
+          - Level: 1
+            Bonus: 700
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 20000
+                Material: Oridecon
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Oridecon
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Oridecon
+          - Level: 2
+            Bonus: 1400
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 20000
+                Material: Oridecon
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Oridecon
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Oridecon
+          - Level: 3
+            Bonus: 2100
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 20000
+                Material: Oridecon
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Oridecon
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Oridecon
+          - Level: 4
+            Bonus: 2800
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 20000
+                Material: Oridecon
+              - Type: HD
+                Rate: 10000
+                Price: 20000
+                Material: HD_Oridecon
+              - Type: Enriched
+                Rate: 10000
+                Price: 2000
+                Material: Enriched_Oridecon
+          - Level: 5
+            Bonus: 3500
+            RandomBonus: 1400
+            Chances:
+              - Type: Normal
+                Rate: 6000
+                Price: 20000
+                Material: Oridecon
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 6000
+                Price: 20000
+                Material: HD_Oridecon
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 9000
+                Price: 2000
+                Material: Enriched_Oridecon
+                BreakingRate: 10000
+          - Level: 6
+            Bonus: 4200
+            RandomBonus: 2800
+            Chances:
+              - Type: Normal
+                Rate: 4000
+                Price: 20000
+                Material: Oridecon
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 4000
+                Price: 20000
+                Material: HD_Oridecon
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 7000
+                Price: 2000
+                Material: Enriched_Oridecon
+                BreakingRate: 10000
+          - Level: 7
+            Bonus: 4900
+            RandomBonus: 4200
+            Chances:
+              - Type: Normal
+                Rate: 4000
+                Price: 20000
+                Material: Oridecon
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 4000
+                Price: 20000
+                Material: HD_Oridecon
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 7000
+                Price: 2000
+                Material: Enriched_Oridecon
+                BreakingRate: 10000
+          - Level: 8
+            Bonus: 5600
+            RandomBonus: 5600
+            BlacksmithBlessingAmount: 1
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 20000
+                Material: Oridecon
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 2000
+                Price: 20000
+                Material: HD_Oridecon
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 4000
+                Price: 2000
+                Material: Enriched_Oridecon
+                BreakingRate: 10000
+          - Level: 9
+            Bonus: 6300
+            RandomBonus: 7000
+            BlacksmithBlessingAmount: 2
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 20000
+                Material: Oridecon
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 2000
+                Price: 20000
+                Material: HD_Oridecon
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 4000
+                Price: 2000
+                Material: Enriched_Oridecon
+                BreakingRate: 10000
+          - Level: 10
+            Bonus: 7000
+            RandomBonus: 8400
+            BlacksmithBlessingAmount: 4
+            Chances:
+              - Type: Normal
+                Rate: 900
+                Price: 20000
+                Material: Oridecon
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 900
+                Price: 20000
+                Material: HD_Oridecon
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 2000
+                Price: 2000
+                Material: Enriched_Oridecon
+                BreakingRate: 10000
+          - Level: 11
+            Bonus: 7700
+            RandomBonus: 9800
+            BlacksmithBlessingAmount: 7
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 800
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 12
+            Bonus: 8400
+            RandomBonus: 11200
+            BlacksmithBlessingAmount: 11
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 800
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 13
+            Bonus: 9100
+            RandomBonus: 12600
+            BlacksmithBlessingAmount: 16
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 800
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 14
+            Bonus: 9800
+            RandomBonus: 14000
+            BlacksmithBlessingAmount: 22
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 800
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 15
+            Bonus: 10500
+            RandomBonus: 15400
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 700
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 16
+            Bonus: 16000
+            RandomBonus: 16800
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 700
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 17
+            Bonus: 17000
+            RandomBonus: 18200
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 700
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 18
+            Bonus: 18000
+            RandomBonus: 19600
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 700
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 19
+            Bonus: 19000
+            RandomBonus: 21000
+            Chances:
+              - Type: Normal
+                Rate: 500
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 500
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+          - Level: 20
+            Bonus: 20000
+            RandomBonus: 22400
+            Chances:
+              - Type: Normal
+                Rate: 500
+                Price: 100000
+                Material: Bradium
+                BreakingRate: 2000
+                DowngradeAmount: 3
+              - Type: HD
+                Rate: 500
+                Price: 100000
+                Material: HD_Bradium
+                DowngradeAmount: 1
+      - Level: 5
+        RefineLevels:
+          - Level: 1
+            Bonus: 800
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50000
+                Material: Etherdeocon
+              - Type: Enriched
+                Rate: 10000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+          - Level: 2
+            Bonus: 1600
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50000
+                Material: Etherdeocon
+              - Type: Enriched
+                Rate: 10000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+          - Level: 3
+            Bonus: 2400
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50000
+                Material: Etherdeocon
+              - Type: Enriched
+                Rate: 10000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+          - Level: 4
+            Bonus: 3200
+            Chances:
+              - Type: Normal
+                Rate: 6000
+                Price: 50000
+                Material: Etherdeocon
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 9000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+                DowngradeAmount: 1
+          - Level: 5
+            Bonus: 4000
+            Chances:
+              - Type: Normal
+                Rate: 6000
+                Price: 50000
+                Material: Etherdeocon
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 7000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+                DowngradeAmount: 1
+          - Level: 6
+            Bonus: 4800
+            Chances:
+              - Type: Normal
+                Rate: 4000
+                Price: 50000
+                Material: Etherdeocon
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 6000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+                DowngradeAmount: 1
+          - Level: 7
+            Bonus: 5600
+            Chances:
+              - Type: Normal
+                Rate: 4000
+                Price: 50000
+                Material: Etherdeocon
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 6000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+                DowngradeAmount: 1
+          - Level: 8
+            Bonus: 6400
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 50000
+                Material: Etherdeocon
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 4000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+                DowngradeAmount: 1
+          - Level: 9
+            Bonus: 7200
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 50000
+                Material: Etherdeocon
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 4000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+                DowngradeAmount: 1
+          - Level: 10
+            Bonus: 8000
+            Chances:
+              - Type: Normal
+                Rate: 900
+                Price: 50000
+                Material: Etherdeocon
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 2000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+                DowngradeAmount: 1
+          - Level: 11
+            Bonus: 8800
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Etherdeocon
+                BreakingRate: 10000
+          - Level: 12
+            Bonus: 9600
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Etherdeocon
+                BreakingRate: 10000
+          - Level: 13
+            Bonus: 10400
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Etherdeocon
+                BreakingRate: 10000
+          - Level: 14
+            Bonus: 11200
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Etherdeocon
+                BreakingRate: 10000
+          - Level: 15
+            Bonus: 12000
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Etherdeocon
+                BreakingRate: 10000
+          - Level: 16
+            Bonus: 12800
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Etel_Bradium
+                BreakingRate: 10000
+          - Level: 17
+            Bonus: 13600
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Etel_Bradium
+                BreakingRate: 10000
+          - Level: 18
+            Bonus: 14400
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Etel_Bradium
+                BreakingRate: 10000
+          - Level: 19
+            Bonus: 15200
+            Chances:
+              - Type: Normal
+                Rate: 500
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 700
+                Price: 100000
+                Material: HD_Etel_Bradium
+                BreakingRate: 10000
+          - Level: 20
+            Bonus: 16000
+            Chances:
+              - Type: Normal
+                Rate: 500
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 700
+                Price: 100000
+                Material: HD_Etel_Bradium
+                BreakingRate: 10000
+  - Group: Shadow_Armor
+    Levels:
+      - Level: 1
+        RefineLevels:
+          - Level: 1
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 10000
+                Material: Elunium
+              - Type: HD
+                Rate: 10000
+                Price: 10000
+                Material: HD_Elunium
+              - Type: Enriched
+                Rate: 10000
+                Price: 10000
+                Material: Enriched_Elunium
+          - Level: 2
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 10000
+                Material: Elunium
+              - Type: HD
+                Rate: 10000
+                Price: 10000
+                Material: HD_Elunium
+              - Type: Enriched
+                Rate: 10000
+                Price: 10000
+                Material: Enriched_Elunium
+          - Level: 3
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 10000
+                Material: Elunium
+              - Type: HD
+                Rate: 10000
+                Price: 10000
+                Material: HD_Elunium
+              - Type: Enriched
+                Rate: 10000
+                Price: 10000
+                Material: Enriched_Elunium
+          - Level: 4
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 10000
+                Material: Elunium
+              - Type: HD
+                Rate: 10000
+                Price: 10000
+                Material: HD_Elunium
+              - Type: Enriched
+                Rate: 10000
+                Price: 10000
+                Material: Enriched_Elunium
+          - Level: 5
+            Chances:
+              - Type: Normal
+                Rate: 6000
+                Price: 10000
+                Material: Elunium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 6000
+                Price: 10000
+                Material: HD_Elunium
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 9000
+                Price: 10000
+                Material: Enriched_Elunium
+                BreakingRate: 10000
+          - Level: 6
+            Chances:
+              - Type: Normal
+                Rate: 4000
+                Price: 10000
+                Material: Elunium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 4000
+                Price: 10000
+                Material: HD_Elunium
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 7000
+                Price: 10000
+                Material: Enriched_Elunium
+                BreakingRate: 10000
+          - Level: 7
+            Chances:
+              - Type: Normal
+                Rate: 4000
+                Price: 10000
+                Material: Elunium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 4000
+                Price: 10000
+                Material: HD_Elunium
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 7000
+                Price: 10000
+                Material: Enriched_Elunium
+                BreakingRate: 10000
+          - Level: 8
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 10000
+                Material: Elunium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 2000
+                Price: 10000
+                Material: HD_Elunium
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 4000
+                Price: 10000
+                Material: Enriched_Elunium
+                BreakingRate: 10000
+          - Level: 9
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 10000
+                Material: Elunium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 2000
+                Price: 10000
+                Material: HD_Elunium
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 4000
+                Price: 10000
+                Material: Enriched_Elunium
+                BreakingRate: 10000
+          - Level: 10
+            Chances:
+              - Type: Normal
+                Rate: 900
+                Price: 10000
+                Material: Elunium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 900
+                Price: 10000
+                Material: HD_Elunium
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 2000
+                Price: 10000
+                Material: Enriched_Elunium
+                BreakingRate: 10000
+  - Group: Shadow_Weapon
+    Levels:
+      - Level: 1
+        RefineLevels:
+          - Level: 1
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 10000
+                Material: Oridecon
+              - Type: HD
+                Rate: 10000
+                Price: 10000
+                Material: HD_Oridecon
+              - Type: Enriched
+                Rate: 10000
+                Price: 10000
+                Material: Enriched_Oridecon
+          - Level: 2
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 10000
+                Material: Oridecon
+              - Type: HD
+                Rate: 10000
+                Price: 10000
+                Material: HD_Oridecon
+              - Type: Enriched
+                Rate: 10000
+                Price: 10000
+                Material: Enriched_Oridecon
+          - Level: 3
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 10000
+                Material: Oridecon
+              - Type: HD
+                Rate: 10000
+                Price: 10000
+                Material: HD_Oridecon
+              - Type: Enriched
+                Rate: 10000
+                Price: 10000
+                Material: Enriched_Oridecon
+          - Level: 4
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 10000
+                Material: Oridecon
+              - Type: HD
+                Rate: 10000
+                Price: 10000
+                Material: HD_Oridecon
+              - Type: Enriched
+                Rate: 10000
+                Price: 10000
+                Material: Enriched_Oridecon
+          - Level: 5
+            Chances:
+              - Type: Normal
+                Rate: 6000
+                Price: 10000
+                Material: Oridecon
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 6000
+                Price: 10000
+                Material: HD_Oridecon
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 9000
+                Price: 10000
+                Material: Enriched_Oridecon
+                BreakingRate: 10000
+          - Level: 6
+            Chances:
+              - Type: Normal
+                Rate: 4000
+                Price: 10000
+                Material: Oridecon
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 4000
+                Price: 10000
+                Material: HD_Oridecon
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 7000
+                Price: 10000
+                Material: Enriched_Oridecon
+                BreakingRate: 10000
+          - Level: 7
+            Chances:
+              - Type: Normal
+                Rate: 4000
+                Price: 10000
+                Material: Oridecon
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 4000
+                Price: 10000
+                Material: HD_Oridecon
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 7000
+                Price: 10000
+                Material: Enriched_Oridecon
+                BreakingRate: 10000
+          - Level: 8
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 10000
+                Material: Oridecon
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 2000
+                Price: 10000
+                Material: HD_Oridecon
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 4000
+                Price: 10000
+                Material: Enriched_Oridecon
+                BreakingRate: 10000
+          - Level: 9
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 10000
+                Material: Oridecon
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 2000
+                Price: 10000
+                Material: HD_Oridecon
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 4000
+                Price: 10000
+                Material: Enriched_Oridecon
+                BreakingRate: 10000
+          - Level: 10
+            Chances:
+              - Type: Normal
+                Rate: 900
+                Price: 10000
+                Material: Oridecon
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 900
+                Price: 10000
+                Material: HD_Oridecon
+                DowngradeAmount: 1
+              - Type: Enriched
+                Rate: 2000
+                Price: 10000
+                Material: Enriched_Oridecon
+                BreakingRate: 10000

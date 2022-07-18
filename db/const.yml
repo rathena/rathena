@@ -1,0 +1,51 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Script Constant Database
+###########################################################################
+#
+# Script Constant Settings
+#
+###########################################################################
+# - Name             Unique name for the constant. Must not have same name as script commands, functions, or variables.
+#   Value            Value assigned to the constant. This value cannot be changed during the runtime of the server.
+#   Parameter        Specifies whether the identifier is a parameter. (Default: false)
+#                    Note: Parameters are special in that they retrieve certain runtime values depending on the specified ID
+#                    in field Value. Depending on the implementation values assigned by scripts the parameters will affect
+#                    runtime values, such as Zeny, as well (see pc_readparam/pc_setparam).
+###########################################################################
+
+Header:
+  Type: CONSTANT_DB
+  Version: 1
+
+Body:
+  - Name: SWORDCLAN
+    Value: 1
+  - Name: ARCWANDCLAN
+    Value: 2
+  - Name: GOLDENMACECLAN
+    Value: 3
+  - Name: CROSSBOWCLAN
+    Value: 4
+  - Name: JUMPINGCLAN
+    Value: 5
+
+Footer:
+  Imports:
+  - Path: db/import/const.yml

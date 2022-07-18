@@ -5,6 +5,7 @@
 #define UTILILITIES_HPP
 
 #include <algorithm>
+#include <locale>
 #include <map>
 #include <memory>
 #include <string>
@@ -170,7 +171,7 @@ namespace rathena {
 		 * @param value: Value wanted
 		 * @return True on success or false on failure
 		 */
-		template <typename K, typename V> bool vector_exists(std::vector<K> &vec, V value) {
+		template <typename K, typename V> bool vector_exists(const std::vector<K> &vec, V value) {
 			auto it = std::find(vec.begin(), vec.end(), value);
 
 			if (it != vec.end())
@@ -257,6 +258,10 @@ namespace rathena {
 			}else{
 				return result;
 			}
+		}
+
+		template <typename T> void tolower( T& string ){
+			std::transform( string.begin(), string.end(), string.begin(), ::tolower );
 		}
 	}
 }
