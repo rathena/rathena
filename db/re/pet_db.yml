@@ -626,11 +626,11 @@ Body:
       if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bDef,2;
         bonus bMdef,2;
-        bonus2 bResEff,Eff_Stun,200;
+        bonus2 bResEff,Eff_Stun,-200;
       } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bDef,1;
         bonus bMdef,1;
-        bonus2 bResEff,Eff_Stun,100;
+        bonus2 bResEff,Eff_Stun,-100;
       }
   - Mob: BON_GUN
     TameItem: Heart_Of_Her
@@ -1574,7 +1574,7 @@ Body:
 #    Evolution:
 #      - Target: ORK_HERO2
 #        ItemRequirements:
-#          - Item: Powerful_Soul_Essence
+#          - Item: Mightysoul_Essence
 #            Amount: 30
 #          - Item: Orc_Warrior_Card
 #            Amount: 10
@@ -1682,7 +1682,7 @@ Body:
     Evolution:
       - Target: MOONLIGHT
         ItemRequirements:
-          - Item: Powerful_Soul_Essence
+          - Item: Mightysoul_Essence
             Amount: 30
           - Item: Nine_Tail_Card
             Amount: 10
