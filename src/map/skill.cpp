@@ -2488,13 +2488,23 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	sd = BL_CAST(BL_PC, src);
 	dstsd = BL_CAST(BL_PC, bl);
 
-	if(dstsd && attack_type&BF_WEAPON) {	//Counter effects.
+	if(dstsd && attack_type & BF_WEAPONMASK) {	//Counter effects.
 		for (const auto &it : dstsd->addeff_atked) {
 			rate = it.rate;
 			if (attack_type&BF_LONG)
 				rate += it.arrow_rate;
-			if (!rate)
+			if (rate == 0)
 				continue;
+
+			if ((it.flag&(ATF_WEAPON|ATF_MAGIC|ATF_MISC)) != (ATF_WEAPON|ATF_MAGIC|ATF_MISC)) {
+				// Trigger has attack type consideration.
+				if ((it.flag&ATF_WEAPON && attack_type&BF_WEAPON) ||
+					(it.flag&ATF_MAGIC && attack_type&BF_MAGIC) ||
+					(it.flag&ATF_MISC && attack_type&BF_MISC))
+					;
+				else
+					continue;
+			}
 
 			if ((it.flag&(ATF_LONG|ATF_SHORT)) != (ATF_LONG|ATF_SHORT)) {	//Trigger has range consideration.
 				if((it.flag&ATF_LONG && !(attack_type&BF_LONG)) ||
