@@ -3623,6 +3623,44 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 	pc_delautobonus(*sd, sd->autobonus2, true);
 	pc_delautobonus(*sd, sd->autobonus3, true);
 
+	// Process and check item combos
+	// Run combos first to ensure equipment bonuses are properly accounted for.
+	if (!sd->combos.empty()) {
+		for (const auto &combo : sd->combos) {
+			std::shared_ptr<s_item_combo> item_combo;
+
+			current_equip_item_index = -1;
+			current_equip_combo_pos = combo->pos;
+
+			if (combo->bonus == nullptr || !(item_combo = itemdb_combo.find(combo->id)))
+				continue;
+
+			bool no_run = false;
+			size_t j = 0;
+
+			// Check combo items
+			while (j < item_combo->nameid.size()) {
+				item_data *id = itemdb_exists(item_combo->nameid[j]);
+
+				// Don't run the script if at least one of combo's pair has restriction
+				if (id && !pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(id, sd->bl.m)) {
+					no_run = true;
+					break;
+				}
+
+				j++;
+			}
+
+			if (no_run)
+				continue;
+
+			run_script(combo->bonus, 0, sd->bl.id, 0);
+
+			if (!calculating) // Abort, run_script retriggered this
+				return 1;
+		}
+	}
+
 	// Parse equipment
 	for (i = 0; i < EQI_MAX; i++) {
 		current_equip_item_index = index = sd->equip_index[i]; // We pass INDEX to current_equip_item_index - for EQUIP_SCRIPT (new cards solution) [Lupus]
@@ -3770,43 +3808,6 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 				run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
 			sd->state.lr_flag = 0;
 			if (!calculating) // Abort, run_script retriggered status_calc_pc. [Skotlex]
-				return 1;
-		}
-	}
-
-	// Process and check item combos
-	if (!sd->combos.empty()) {
-		for (const auto &combo : sd->combos) {
-			std::shared_ptr<s_item_combo> item_combo;
-
-			current_equip_item_index = -1;
-			current_equip_combo_pos = combo->pos;
-
-			if (combo->bonus == nullptr || !(item_combo = itemdb_combo.find(combo->id)))
-				continue;
-
-			bool no_run = false;
-			size_t j = 0;
-
-			// Check combo items
-			while (j < item_combo->nameid.size()) {
-				item_data *id = itemdb_exists(item_combo->nameid[j]);
-
-				// Don't run the script if at least one of combo's pair has restriction
-				if (id && !pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(id, sd->bl.m)) {
-					no_run = true;
-					break;
-				}
-
-				j++;
-			}
-
-			if (no_run)
-				continue;
-
-			run_script(combo->bonus, 0, sd->bl.id, 0);
-
-			if (!calculating) // Abort, run_script retriggered this
 				return 1;
 		}
 	}
