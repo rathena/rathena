@@ -8174,9 +8174,14 @@ ACMD_FUNC(iteminfo)
 
 	std::map<t_itemid, std::shared_ptr<item_data>> item_array = {};
 	uint16 count = 1;
+	t_itemid itemid = strtoul(message, nullptr, 10);
 
-	if ((item_array[0] = item_db.find(strtoul(message, nullptr, 10))) == nullptr)
+	if (itemid == 0) // Entered a string
 		count = itemdb_searchname_array(item_array, MAX_SEARCH, message);
+	else {
+		if ((item_array[0] = item_db.find(itemid)) == nullptr)
+			count = 0;
+	}
 
 	if (!count) {
 		clif_displaymessage(fd, msg_txt(sd,19));	// Invalid item ID or name.
@@ -8227,9 +8232,14 @@ ACMD_FUNC(whodrops)
 
 	std::map<t_itemid, std::shared_ptr<item_data>> item_array = {};
 	uint16 count = 1;
+	t_itemid itemid = strtoul(message, nullptr, 10);
 
-	if ((item_array[0] = item_db.find(strtoul(message, nullptr, 10))) == nullptr)
+	if (itemid == 0) // Entered a string
 		count = itemdb_searchname_array(item_array, MAX_SEARCH, message);
+	else {
+		if ((item_array[0] = item_db.find(itemid)) == nullptr)
+			count = 0;
+	}
 
 	if (!count) {
 		clif_displaymessage(fd, msg_txt(sd,19));	// Invalid item ID or name.
@@ -8242,9 +8252,6 @@ ACMD_FUNC(whodrops)
 	}
 	for (const auto &result : item_array) {
 		std::shared_ptr<item_data> id = result.second;
-
-		if (id == 0)
-			continue;
 
 		sprintf(atcmd_output, msg_txt(sd,1285), id->ename.c_str(), id->slots, id->nameid); // Item: '%s'[%d] (ID:%u)
 		clif_displaymessage(fd, atcmd_output);
