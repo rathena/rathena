@@ -28265,7 +28265,6 @@ Body:
     HitCount: 3
     Element: Weapon
     SplashArea: 2
-    Knockback: 2
     AfterCastActDelay: 1000
     Duration1: 5000
     Cooldown: 2000
