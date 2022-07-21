@@ -844,7 +844,6 @@ Body:
     Refineable: true
     Script: |
       skill "TF_DOUBLE",5;
-      bonus bDoubleRate,25;
       bonus2 bAddRace,RC_DemiHuman,5;
       bonus2 bAddRace,RC_Player_Human,5;
   - Id: 1131
@@ -8689,7 +8688,6 @@ Body:
       bonus bAtkEle,Ele_Poison;
       bonus bCritical,10;
       skill "TF_DOUBLE",5;
-      bonus bDoubleRate,25;
       bonus2 bAddEff,Eff_Poison,1000;
       bonus2 bAddEff2,Eff_Poison,300;
   - Id: 1448
@@ -17195,7 +17193,7 @@ Body:
       if (.@r>9) {
          bonus2 bVariableCastrate,"MO_EXTREMITYFIST",-100;
          bonus2 bFixedCastrate,"MO_EXTREMITYFIST",-100;
-         bonus4 bAutoSpellOnSkill,"MO_EXPLOSIONSPIRITS","CH_SOULCOLLECT",1,10000;
+         bonus4 bAutoSpellOnSkill,"MO_EXPLOSIONSPIRITS","CH_SOULCOLLECT",1,1000;
          bonus2 bHPLossRate,500,3000;
       }
   - Id: 1833
@@ -35842,7 +35840,6 @@ Body:
     Script: |
       bonus bMaxSP,100;
       skill "TF_DOUBLE",3;
-      bonus bDoubleRate,15;
       skill "TF_STEAL",1;
       skill "TF_HIDING",1;
       skill "TF_POISON",1;
@@ -38208,10 +38205,10 @@ Body:
     Script: |
       bonus bMatkRate,1;
   - Id: 2971
-    AegisName: Pocket_Watch
+    AegisName: Pocket_Watch__
     Name: Pocket Watch
     Type: Armor
-    Buy: 10
+    Buy: 20
     Weight: 200
     Defense: 1
     Slots: 1
@@ -38224,10 +38221,6 @@ Body:
       Both_Accessory: true
     ArmorLevel: 1
     EquipLevelMin: 80
-    Script: |
-      bonus bHPrecovRate,15;
-      bonus bSPrecovRate,15;
-      bonus bMatkRate,7;
   - Id: 2976
     AegisName: Red_Lantern
     Name: Red Lantern
@@ -43509,7 +43502,6 @@ Body:
       bonus bMaxHP,50;
       bonus bMaxSP,50;
       skill "TF_DOUBLE",2;
-      bonus bDoubleRate,10;
       bonus2 bSubRace,RC_DemiHuman,3;
       bonus2 bSubRace,RC_Player_Human,3;
       bonus2 bSubRace,RC_Brute,3;
@@ -45480,7 +45472,6 @@ Body:
     View: 393
     Script: |
       skill "TF_DOUBLE",5;
-      bonus bDoubleRate,25;
   - Id: 5389
     AegisName: Angel_Spirit
     Name: Angel Spirit
@@ -48103,9 +48094,7 @@ Body:
       NoDrop: true
     Script: |
       bonus bDex,2;
-      .@bonus = max(getskilllv("TF_DOUBLE"), 5);
-      skill "TF_DOUBLE",.@bonus;
-      bonus bDoubleRate,.@bonus * 5;
+      skill "TF_DOUBLE",5;
   - Id: 5532
     AegisName: Pirate_Dagger_J
     Name: Pirate Dagger
@@ -49893,7 +49882,6 @@ Body:
       bonus2 bSubRace,RC_Brute,3;
       bonus2 bSubRace,RC_Player_Doram,3;
       skill "TF_DOUBLE",2;
-      bonus bDoubleRate,10;
       bonus bMaxHP,50;
       bonus bMaxSP,50;
   - Id: 5626
@@ -55916,12 +55904,12 @@ Body:
     Type: Petegg
     Buy: 20
   - Id: 9123
-    AegisName: Ep_17_2_C_Admin1_Egg
+    AegisName: Ep17_2_C_Admin1_Egg
     Name: Child Admin Beta Egg
     Type: Petegg
     Buy: 20
   - Id: 9124
-    AegisName: Ep_17_2_C_Admin2_Egg
+    AegisName: Ep17_2_C_Admin2_Egg
     Name: Child Admin Alpha Egg
     Type: Petegg
     Buy: 20
@@ -62443,7 +62431,6 @@ Body:
       NoAuction: true
     Script: |
       skill "TF_DOUBLE",5;
-      bonus bDoubleRate,25;
       bonus2 bAddRace,RC_DemiHuman,40;
       bonus2 bAddRace,RC_Player_Human,40;
   - Id: 13408
@@ -68997,6 +68984,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bUnbreakableArmor;
       bonus2 bAddSize,Size_Medium,10;
       bonus2 bAddSize,Size_Large,10;
       bonus2 bMagicAddSize,Size_Medium,10;
@@ -82624,7 +82612,6 @@ Body:
       bonus bMaxHP,50;
       bonus bMaxSP,50;
       skill "TF_DOUBLE",2;
-      bonus bDoubleRate,10;
       bonus2 bSubRace,RC_DemiHuman,3;
       bonus2 bSubRace,RC_Player_Human,3;
   - Id: 19130
@@ -83583,7 +83570,6 @@ Body:
          bonus bCritAtkRate,5*getskilllv("BS_OVERTHRUST");
       if (.@r>=11) {
          skill "TF_DOUBLE",5;
-         bonus bDoubleRate,25;
       }
   - Id: 19190
     AegisName: Racing_Cap_GN
@@ -83797,7 +83783,6 @@ Body:
       if (.@r>=11) {
          bonus bUnbreakableWeapon;
          skill "TF_DOUBLE",5;
-         bonus bDoubleRate,25;
       }
   - Id: 19196
     AegisName: Racing_Cap_RG
@@ -85129,6 +85114,19 @@ Body:
          bonus2 bAddClass,Class_All,5;
          bonus2 bHPDrainRate,30,15;
       }
+  - Id: 19314
+    AegisName: Royal_Mantle
+    Name: Royal Mantle
+    Type: Armor
+    Buy: 20
+    Weight: 100
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 90
+    View: 1697
+    Script: |
+      bonus2 bSubEle,Ele_All,5;
   - Id: 19321
     AegisName: Bell_Pigeon_J
     Name: Mysterious Pigeon    # !todo check english name
@@ -88750,14 +88748,14 @@ Body:
     EquipLevelMin: 1
     View: 463
   - Id: 19669
-    AegisName: C_Reginleif_Hairband_
+    AegisName: C_Reginleif_Wings_J
     Name: Costume Reginleif Hairband
     Type: Armor
     Locations:
       Costume_Head_Mid: true
     ArmorLevel: 1
     EquipLevelMin: 1
-    View: 214
+    View: 468
   - Id: 19670
     AegisName: C_Southern_Cross
     Name: Costume Southern Cross
@@ -99654,21 +99652,18 @@ Body:
          bonus bFlee,30;
          skill "TF_DOUBLE",10;
          skill "MO_TRIPLEATTACK",10;
-         bonus bDoubleRate,50;
       }
       else if (.@r>=7) {
          bonus bAspdRate,6;
          bonus bFlee,20;
          skill "TF_DOUBLE",5;
          skill "MO_TRIPLEATTACK",5;
-         bonus bDoubleRate,25;
       }
       else {
          bonus bAspdRate,3;
          bonus bFlee,10;
          skill "TF_DOUBLE",3;
          skill "MO_TRIPLEATTACK",3;
-         bonus bDoubleRate,15;
       }
   - Id: 20863
     AegisName: MenblattWing
@@ -100848,6 +100843,43 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 82
+  - Id: 20986
+    AegisName: Scientist_Mantle
+    Name: Scientists Mantle
+    Type: Armor
+    Weight: 300
+    Defense: 25
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bFlee2,5;
+      bonus2 bSubEle,Ele_Fire,10;
+      bonus2 bSubEle,Ele_Wind,10;
+      bonus2 bSubRace,RC_Player_Human,10;
+      bonus2 bSubRace,RC_Player_Doram,10;
+      bonus bMaxHP,1500*getskilllv("GN_CRAZYWEED");
+      bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",20*getskilllv("GN_FIRE_EXPANSION");
+      if (getskilllv("GN_MANDRAGORA")>=5)
+         bonus bHitRate,50;
+      if (getskilllv("GN_HELLS_PLANT")>=5)
+         bonus2 bVariableCastrate,"GN_SPORE_EXPLOSION",-100;
+      if (.@r>=7) {
+         bonus bFlee2,8;
+         bonus bLongAtkRate,10;
+         bonus2 bSubEle,Ele_Fire,20;
+         bonus2 bSubEle,Ele_Wind,20;
+      }
+      if (.@r>=9) {
+         bonus bFlee2,12;
+         bonus bLongAtkRate,10;
+         bonus2 bSubEle,Ele_Fire,20;
+         bonus2 bSubEle,Ele_Wind,20;
+      }
   - Id: 20987
     AegisName: C_Heart_Wing_Bag_J
     Name: Costume Piglering Bag
@@ -101652,6 +101684,8 @@ Body:
     WeaponLevel: 4
     EquipLevelMin: 175
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bBaseAtk,20*(.@r/2);
@@ -117824,6 +117858,8 @@ Body:
     WeaponLevel: 3
     EquipLevelMin: 175
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bLongAtkRate,3*(.@r/2);
@@ -118546,7 +118582,6 @@ Body:
       }
       if (.@r>=10) {
          skill "TF_DOUBLE",3;
-         bonus bDoubleRate,15;
       }
   - Id: 26154
     AegisName: SoulWeight
@@ -122001,7 +122036,7 @@ Body:
     Buy: 10
     Weight: 100
     Locations:
-      Both_Accessory: true
+      Left_Accessory: true
     ArmorLevel: 1
     EquipLevelMin: 145
     Trade:
@@ -122020,7 +122055,7 @@ Body:
     Buy: 10
     Weight: 100
     Locations:
-      Both_Accessory: true
+      Right_Accessory: true
     ArmorLevel: 1
     EquipLevelMin: 145
     Trade:
@@ -137345,6 +137380,25 @@ Body:
          bonus2 bSkillVariableCast,"LG_EARTHDRIVE",-500;
          bonus2 bSkillUseSP,"LG_EARTHDRIVE",25;
       }
+  - Id: 32270
+    AegisName: Luminous_Blue_Stone_TW
+    Name: Luminous Blue Stone
+    Type: Armor
+    Weight: 400
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 90
+    Script: |
+      bonus bAspdRate,5;
+      bonus bCritical,5;
+      skill "MG_SIGHT",1;
+      bonus bCritAtkRate,5;
+      if (readparam(bLuk)>=100) {
+         bonus bCritical,5;
+         bonus bCritAtkRate,5;
+      }
   - Id: 32295
     AegisName: Crystal_Blade_Necklace
     Name: Crystal Blade Necklace
@@ -138105,7 +138159,7 @@ Body:
          bonus bDelayrate,-15;
       }
   - Id: 400043
-    AegisName: aegis_400043
+    AegisName: Fallen_Angel_feather
     Name: Fallen Angel Hairband
     Type: Armor
     Weight: 100
@@ -138479,6 +138533,8 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 170
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bBaseAtk,20*(.@r/2);
@@ -138509,6 +138565,8 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 170
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bMatk,20*(.@r/2);
@@ -138543,6 +138601,8 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 170
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bSPrecovRate,6*(.@r/2);
@@ -138576,6 +138636,8 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 170
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bSPrecovRate,6*(.@r/2);
@@ -138630,6 +138692,8 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 170
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bBaseAtk,20*(.@r/2);
@@ -138660,6 +138724,8 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 170
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bBaseAtk,20*(.@r/2);
@@ -138754,6 +138820,8 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 170
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bBaseAtk,20*(.@r/2);
@@ -138784,6 +138852,8 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 170
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bMatk,20*(.@r/2);
@@ -138818,6 +138888,8 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 170
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bMatk,20*(.@r/2);
@@ -138852,6 +138924,8 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 170
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bBaseAtk,20*(.@r/2);
@@ -138882,6 +138956,8 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 170
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bMatk,20*(.@r/2);
@@ -138915,6 +138991,8 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 170
     Refineable: true
+    Flags:
+      DropEffect: CLIENT
     Script: |
       .@r = getrefine();
       bonus bBaseAtk,20*(.@r/2);
@@ -140137,6 +140215,38 @@ Body:
       bonus bBaseAtk,10*(.@r/2);
       bonus2 bSkillAtk,"LG_OVERBRAND",15*(.@r/3);
       bonus bShortAtkRate,7*(.@r/4);
+  - Id: 400203
+    AegisName: Wolf_Officer_Hat
+    Name: Wolf Officer Hat
+    Type: Armor
+    Weight: 500
+    Defense: 10
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    View: 2177
+    Script: |
+      .@r = getrefine();
+      bonus bDelayrate,-10;
+      bonus2 bSkillAtk,"RA_ARROWSTORM",15;
+      if (getskilllv("RA_AIMEDBOLT")>=10) {
+         bonus2 bSubClass,Class_Boss,20;
+         bonus bDelayrate,-15;
+      }
+      if (getskilllv("RA_WUGRIDER")>=3)
+         bonus bDelayrate,-20;
+      if (getskilllv("RA_RANGERMAIN")>=10)
+         bonus2 bAddEle,Ele_All,25;
+      if (getskilllv("RA_CAMOUFLAGE")>=5)
+         bonus2 bSkillCooldown,"RA_ARROWSTORM",200;
+      bonus bDex,3*.@r;
+      if (.@r>=7)
+         bonus2 bSkillAtk,"RA_ARROWSTORM",20;
+      if (.@r>=9)
+         bonus2 bSkillCooldown,"RA_UNLIMIT",-150000;
   - Id: 400204
     AegisName: C_Cat_Ear_Red_Hat_TW
     Name: Costume Cat Ear Red Witch Hat
@@ -141679,6 +141789,54 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 2171
+  - Id: 410129
+    AegisName: aegis_410129
+    Name: Phantom Ears
+    Type: Armor
+    Weight: 100
+    Defense: 2
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    View: 2226
+    Script: |
+      bonus2 bMagicAddSize,Size_All,10;
+      bonus2 bSubRace,RC_Player_Human,5;
+      bonus2 bSubRace,RC_Player_Doram,5;
+      bonus2 bResEff,Eff_Sleep,10000;
+      if (getskilllv("WL_TELEKINESIS_INTENSE")>=5) {
+         bonus2 bFixedCastrate,"WL_JACKFROST",-100;
+         bonus2 bSkillCooldown,"WL_TELEKINESIS_INTENSE",-80000;
+      }
+      if (getskilllv("WL_RECOGNIZEDSPELL")>=5)
+         bonus bDelayrate,-15;
+    UnEquipScript: |
+      sc_end SC_RECOGNIZEDSPELL;
+  - Id: 410130
+    AegisName: aegis_410130
+    Name: Phantom Ears
+    Type: Armor
+    Weight: 100
+    Defense: 2
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    View: 2226
+    Script: |
+      bonus2 bMagicAddSize,Size_All,10;
+      bonus2 bSubRace,RC_Player_Human,5;
+      bonus2 bSubRace,RC_Player_Doram,5;
+      bonus2 bResEff,Eff_Sleep,10000;
+      if (getskilllv("WL_TELEKINESIS_INTENSE")>=5) {
+         bonus2 bFixedCastrate,"WL_JACKFROST",-100;
+         bonus2 bSkillCooldown,"WL_TELEKINESIS_INTENSE",-80000;
+      }
+      if (getskilllv("WL_RECOGNIZEDSPELL")>=5)
+         bonus bDelayrate,-15;
+    UnEquipScript: |
+      sc_end SC_RECOGNIZEDSPELL;
   - Id: 410131
     AegisName: C_Tiger_WH
     Name: Costume Tiger (White)
@@ -142307,6 +142465,52 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1110
+  - Id: 420109
+    AegisName: C_Charm_Of_Flame_Heart
+    Name: Costume Charm of Frame Heart    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1261
+  - Id: 420110
+    AegisName: ScarfOfHero_J
+    Name: Scarf Of Hero    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    View: 1882
+    Script: |
+      bonus2 bAddSize,Size_All,BaseLevel/10;
+      bonus2 bMagicAddSize,Size_All,BaseLevel/10;
+  - Id: 420111
+    AegisName: C_Rocking_Short
+    Name: Costume Rocking Short    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 2225
+  - Id: 420112
+    AegisName: Guardian_Claus
+    Name: Guardian Claus    # !todo check english name
+    Type: Armor
+    Defense: 2
+    Weight: 100
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    View: 2227
+    Script: |
+      bonus bMdef,5;
+      bonus bMaxHPrate,15;
+      bonus2 bSubRace,RC_DemiHuman,3;
   - Id: 420113
     AegisName: C_WL_Hair_BL
     Name: Costume Side Roll Pony (Black)
@@ -146349,7 +146553,7 @@ Body:
          bonus bVariableCastrate,-15;
       }
   - Id: 450131
-    AegisName: aegis_450131
+    AegisName: Fallen_Angel_Armor_TW
     Name: Fallen Angel Armor
     Type: Armor
     Weight: 1000
@@ -147317,6 +147521,33 @@ Body:
          bonus bMaxHPrate,3;
       if (BaseLevel>=130)
          bonus bMatk,40;
+  - Id: 450189
+    AegisName: Oceanus_Blessing
+    Name: Oceanus Blessing
+    Type: Armor
+    Buy: 20
+    Weight: 600
+    Defense: 100
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableArmor;
+      bonus2 bExpAddRace,RC_Fish,10;
+      if (.@r>=5) {
+         bonus2 bAddRace,RC_Fish,20;
+         bonus2 bMagicAddRace,RC_Fish,20;
+         bonus2 bExpAddRace,RC_Fish,10;
+      }
+      if (.@r>=7) {
+         bonus2 bAddRace,RC_Fish,20;
+         bonus2 bMagicAddRace,RC_Fish,20;
+         bonus2 bResEff,Eff_Confusion,10000;
+      }
   - Id: 450191
     AegisName: ST_Orleans_Gown
     Name: Engraved Orlean's Gown
@@ -147649,6 +147880,101 @@ Body:
          bonus bDef,150;
          bonus bMdef,15;
       }
+  - Id: 450209
+    AegisName: Imp_Powered_Suit
+    Name: Imp Powered Suit
+    Type: Armor
+    Weight: 1000
+    Buy: 20
+    Defense: 120
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,10;
+      if (getskilllv("NC_ARMSCANNON")>=3)
+         bonus bBaseAtk,BaseLevel;
+      if (getskilllv("NC_NEUTRALBARRIER")>=3)
+         bonus bLongAtkRate,70;
+      bonus bDelayrate,-10*getskilllv("NC_PILEBUNKER");
+      if (.@r>=5) {
+         bonus2 bSkillAtk,"NC_ARMSCANNON",50;
+         bonus2 bSkillAtk,"NC_COLDSLOWER",50;
+         bonus2 bSkillAtk,"NC_FLAMELAUNCHER",50;
+      }
+      if (.@r>=7) {
+         bonus2 bSkillAtk,"NC_ARMSCANNON",50;
+         bonus2 bSkillAtk,"NC_COLDSLOWER",50;
+         bonus2 bSkillAtk,"NC_FLAMELAUNCHER",50;
+      }
+  - Id: 450210
+    AegisName: Fluffy_Shark_Pajama
+    Name: Fluffy Shark Pajama
+    Type: Armor
+    Weight: 100
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableArmor;
+      bonus bHealPower2,10;
+      if (getskilllv("SU_SPIRITOFSEA")>=1) {
+         bonus5 bAutoSpellWhenHit,"SU_TUNAPARTY",1,100,BF_WEAPON,0;
+         bonus5 bAutoSpellWhenHit,"SU_TUNAPARTY",1,100,BF_MAGIC,0;
+      }
+      bonus2 bVariableCastrate,"SU_FRESHSHRIMP",-10*getskilllv("SU_SHRIMPARTY");
+      bonus2 bVariableCastrate,"SU_BUNCHOFSHRIMP",-10*getskilllv("SU_SHRIMPARTY");
+      bonus2 bVariableCastrate,"SU_TUNABELLY",-10*getskilllv("SU_SHRIMPARTY");
+      bonus2 bVariableCastrate,"SU_TUNAPARTY",-10*getskilllv("SU_SHRIMPARTY");
+      bonus bMaxHPrate,10*getskilllv("SU_GROOMING");
+      if (getskilllv("SU_PURRING")>=5)
+         bonus2 bSubClass,Class_Boss,5;
+      if (.@r>=5) {
+         bonus bHealPower2,10;
+         bonus bFlee2,5;
+      }
+      if (.@r>=7) {
+         bonus bHealPower2,10;
+         bonus bFlee2,5;
+      }
+  - Id: 450214
+    AegisName: Dark_Triad
+    Name: Dark Triad
+    Type: Armor
+    Weight: 1000
+    Defense: 100
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,10;
+      if (getskilllv("SC_AUTOSHADOWSPELL")>=10)
+         autobonus3 "{}",30,100,"SC_TRIANGLESHOT","{ sc_start SC_UNLIMIT,5000,1; }";
+      bonus2 bAddRace,RC_All,7*getskilllv("SC_TRIANGLESHOT");
+      bonus bAgi,10*getskilllv("SC_MAELSTROM");
+      bonus bBaseAtk,50*getskilllv("SC_MAELSTROM");
+      if (.@r>=5)
+         bonus bPerfectHitRate,25;
+      if (.@r>=7)
+         bonus bPerfectHitRate,25;
+    UnEquipScript: |
+      sc_end SC_UNLIMIT;
   - Id: 460004
     AegisName: Illusion_Shield_A
     Name: Illusion Shield I
@@ -150364,7 +150690,7 @@ Body:
       }
   - Id: 480023
     AegisName: Arabian_Manteau
-    Name: Arabian Manteau    # !todo check english name
+    Name: Arabian Manteau
     Type: Armor
     Defense: 10
     Weight: 300
@@ -150974,6 +151300,42 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 97
+  - Id: 480094
+    AegisName: ErymanthianSkin
+    Name: Erymanthian Skin
+    Type: Armor
+    Weight: 100
+    Defense: 12
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableGarment;
+      bonus bDex,6;
+      bonus2 bSubRace,RC_Player_Human,5;
+      bonus2 bSubRace,RC_Player_Doram,5;
+      bonus bDelayrate,-3;
+      if (.@r>=7) {
+         bonus bDex,12;
+         bonus bAspdRate,5;
+         bonus bLongAtkDef,10;
+      }
+      if (.@r>=9) {
+         bonus bDex,12;
+         bonus bAspdRate,7;
+         bonus bLongAtkDef,10;
+      }
+      if (getskilllv("RA_UNLIMIT")>=5)
+         bonus2 bSkillCooldown,"RA_ARROWSTORM",-300;
+      if (getskilllv("RA_WUGRIDER")>=3)
+         bonus bMaxHP,10000;
+      bonus2 bAddSize,Size_All,2*getskilllv("RA_AIMEDBOLT");
+      if (getskilllv("RA_ELECTRICSHOCKER")>=5)
+         bonus2 bSubEle,Ele_Fire,100;
   - Id: 480095
     AegisName: C_Giant_White_Rabbit
     Name: Costume Giant White Rabbit
@@ -152148,7 +152510,7 @@ Body:
       if (getskilllv("WL_RECOGNIZEDSPELL") == 5)
          bonus bDelayrate,-30;
   - Id: 490033
-    AegisName: aegis_490033
+    AegisName: Fallen_Angel_tear
     Name: Fallen Angel's Tear
     Type: Armor
     Weight: 100
@@ -152828,7 +153190,7 @@ Body:
     Script: |
       bonus bAllTraits,6-(JobLevel/5);
   - Id: 490090
-    AegisName: aegis_490090
+    AegisName: Egir_Ring_K
     Name: Aegir Ring
     Type: Armor
     Weight: 200
@@ -154126,6 +154488,39 @@ Body:
     UnEquipScript: |
       if ((eaclass()&EAJ_THIRDMASK)==EAJ_MINSTRELWANDERER)
          sc_end SC_UNLIMIT;
+  - Id: 490221
+    AegisName: aegis_490221
+    Name: Record of Swordsman    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bAtkRate,5;
+      bonus bBaseAtk,15*(getskilllv("SM_BASH")/2);
+  - Id: 490229
+    AegisName: aegis_490229
+    Name: Record of Thief    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Jobs:
+      Thief: true
+      Assassin: true
+      Rogue: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bAtkRate,5;
+      bonus bBaseAtk,15*(getskilllv("TF_HIDING")/2);
   - Id: 500000
     AegisName: IDTest_weapon
     Name: IDTest weapon
@@ -156046,6 +156441,27 @@ Body:
             }
          }
       }
+  - Id: 510031
+    AegisName: Rotten_Garden_knife
+    Name: Rotten Garden Knife
+    Type: Weapon
+    SubType: Dagger
+    Buy: 20
+    Weight: 400
+    Attack: 360
+    MagicAttack: 160
+    Range: 1
+    Slots: 1
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"RA_CLUSTERBOMB",4*getskilllv("RA_CLUSTERBOMB");
+      bonus bFlee2,.@r;
+      bonus bLongAtkDef,.@r;
   - Id: 510032
     AegisName: Adulter_F_Dagger
     Name: Adulter Fides Dagger
@@ -156466,7 +156882,7 @@ Body:
          }
       }
   - Id: 510049
-    AegisName: Rotten_Garden_knife
+    AegisName: C_Garden_Knife
     Name: Corrode Garden Knife
     Type: Weapon
     SubType: Dagger

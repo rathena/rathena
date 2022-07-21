@@ -363,8 +363,9 @@ struct startitem {
 	uint32 pos;
 };
 
-enum e_skill_flag
+enum e_skill_flag : int8
 {
+	SKILL_FLAG_NONE = -1,
 	SKILL_FLAG_PERMANENT,
 	SKILL_FLAG_TEMPORARY,
 	SKILL_FLAG_PLAGIARIZED,

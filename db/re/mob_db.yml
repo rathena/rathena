@@ -29966,7 +29966,7 @@ Body:
       - Item: Old_Card_Album
         Rate: 2000
     Drops:
-      - Item: Pocket_Watch__
+      - Item: Pocket_Watch
         Rate: 1500
       - Item: Old_Violet_Box
         Rate: 1500
