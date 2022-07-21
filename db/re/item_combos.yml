@@ -19871,17 +19871,17 @@ Body:
       bonus2 bAddClass,Class_All,10;
   - Combos:
       - Combo:
-          - Angel_Egg     # 2965
-          - Deep_Angel_Hairband     # 18797
+          - Angel_Egg
+          - Deep_Angel_Hairband
       - Combo:
-          - Angel_Egg     # 2965
-          - Pink_Angel_Hairband     # 18798
+          - Angel_Egg
+          - Pink_Angel_Hairband
     Script: |
       bonus bAllStats,1;
       bonus bMaxHPrate,5;
       bonus bMaxSPrate,5;
       bonus3 bAutoSpellWhenHit,"WZ_VERMILION",5,5;
-      bonus2 bAddClass,Class_All,5;
+      bonus2 bAddRace,RC_All,5;
       bonus bVariableCastrate,-10;
   - Combos:
       - Combo:
@@ -26760,7 +26760,7 @@ Body:
           - Heros_TriumphantSong    # 311074
           - Amdarais_Card    # 4601
     Script: |
-      bonus2 bAddClass,Class_All,15;
+      bonus bAtkRate,15;
       bonus bMatkRate,15;
       bonus2 bHPRegenRate,666,4000;
       bonus2 bSPRegenRate,66,4000;
@@ -26828,7 +26828,7 @@ Body:
           - C_Amdarais_Card    # 27383
     Script: |
       bonus bMaxHPrate,50;
-      bonus2 bAddClass,Class_All,15;
+      bonus bAtkRate,15;
       bonus bMatkRate,15;
   - Combos:
       - Combo:
@@ -26841,7 +26841,7 @@ Body:
           - Heros_TriumphantSong    # 311074
           - Faceworm_Q_Card_J    # 27237
     Script: |
-      bonus2 bAddClass,Class_All,15;
+      bonus bAtkRate,15;
   - Combos:
       - Combo:
           - Heros_TriumphantSong    # 311074
@@ -26873,7 +26873,7 @@ Body:
           - Schmidt_Card    # 27329
     Script: |
       skill "LG_EARTHDRIVE",5;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
   - Combos:
       - Combo:
           - Heros_TriumphantSong    # 311074
@@ -26905,7 +26905,7 @@ Body:
           - Heros_TriumphantSong    # 311074
           - AmdaraisH_Card_J    # 27008
     Script: |
-      bonus2 bAddClass,Class_All,15;
+      bonus bAtkRate,15;
       bonus bMatkRate,15;
       bonus2 bHPRegenRate,666,6000;
       bonus2 bSPRegenRate,66,6000;
@@ -26961,14 +26961,14 @@ Body:
           - Memento_Mori    # 490207
     Script: |
       bonus bAllStats,10;
-      bonus2 bAddClass,Class_All,30;
+      bonus bAtkRate,30;
       bonus bMatkRate,30;
   - Combos:
       - Combo:
           - CorruptionRootH_Card_J    # 27009
           - AmdaraisH_Card_J    # 27008
     Script: |
-      bonus2 bAddClass,Class_All,15;
+      bonus bAtkRate,15;
       bonus bMatkRate,15;
       bonus2 bSubEle,Ele_Dark,50;
   - Combos:
@@ -27064,7 +27064,7 @@ Body:
       .@d = readparam(bInt)/10;
       .@e = readparam(bDex)/10;
       .@f = readparam(bLuk)/10;
-      bonus2 bAddClass,Class_All,.@a;
+      bonus bAtkRate,.@a;
       bonus bBaseAtk,.@r*20;
       bonus bAspdRate,.@b;
       bonus bMaxHPrate,.@c;

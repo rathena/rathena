@@ -21430,7 +21430,7 @@ Body:
     Refineable: true
     Script: |
       if (BaseLevel>=175) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          bonus bMatkRate,5;
       }
   - Id: 2043
@@ -21456,7 +21456,7 @@ Body:
     Refineable: true
     Script: |
       if (BaseLevel>=175) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          bonus bMatkRate,5;
       }
   - Id: 2044
@@ -21482,7 +21482,7 @@ Body:
     Refineable: true
     Script: |
       if (BaseLevel>=175) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          bonus bMatkRate,5;
       }
   - Id: 2045
@@ -21508,7 +21508,7 @@ Body:
     Refineable: true
     Script: |
       if (BaseLevel>=175) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          bonus bMatkRate,5;
       }
   - Id: 2046
@@ -62202,7 +62202,7 @@ Body:
     Refineable: true
     Script: |
       if (BaseLevel>=175) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          bonus bMatkRate,5;
       }
   - Id: 13340
@@ -73116,7 +73116,7 @@ Body:
     Refineable: true
     Script: |
       if (BaseLevel>=175) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          bonus bMatkRate,5;
       }
   - Id: 18154
@@ -73142,7 +73142,7 @@ Body:
     Refineable: true
     Script: |
       if (BaseLevel>=175) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          bonus bMatkRate,5;
       }
   - Id: 18155
@@ -73168,7 +73168,7 @@ Body:
     Refineable: true
     Script: |
       if (BaseLevel>=175) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          bonus bMatkRate,5;
       }
   - Id: 18163
@@ -102107,7 +102107,7 @@ Body:
     Refineable: true
     Script: |
       if (BaseLevel>=175) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          bonus bMatkRate,5;
       }
   - Id: 21037
@@ -118334,7 +118334,7 @@ Body:
     Refineable: true
     Script: |
       if (BaseLevel>=175) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          bonus bMatkRate,5;
       }
   - Id: 26015
@@ -120315,7 +120315,7 @@ Body:
     Refineable: true
     Script: |
       if (BaseLevel>=175) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          bonus bMatkRate,5;
       }
   - Id: 28027
@@ -121119,7 +121119,7 @@ Body:
     Refineable: true
     Script: |
       if (BaseLevel>=175) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          bonus bMatkRate,5;
       }
   - Id: 28122
@@ -121145,7 +121145,7 @@ Body:
     Refineable: true
     Script: |
       if (BaseLevel>=175) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          bonus bMatkRate,5;
       }
   - Id: 28127
@@ -122057,7 +122057,7 @@ Body:
          bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",30;
       }
       if (BaseLevel>=175) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          bonus bMatkRate,5;
       }
   - Id: 28240
@@ -148723,7 +148723,7 @@ Body:
       .@r = getrefine();
       bonus bAspdRate,5;
       bonus2 bSubEle,Ele_Earth,10;
-      bonus2 bAddClass,Class_All,10*(.@r/3);
+      bonus bAtkRate,10*(.@r/3);
       bonus bMatkRate,10*(.@r/3);
       bonus bUnbreakableArmor;
   - Id: 460004
@@ -155292,7 +155292,7 @@ Body:
     EquipLevelMin: 100
     Script: |
       bonus bDelayrate,-10;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bMatkRate,10;
   - Id: 490221
     AegisName: aegis_490221
@@ -155346,7 +155346,7 @@ Body:
     EquipLevelMin: 100
     Script: |
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,3*(getskilllv("MC_MAMMONITE")/2);
+      bonus bAtkRate,3*(getskilllv("MC_MAMMONITE")/2);
       bonus bMatkRate,3*(getskilllv("MC_MAMMONITE")/2);
   - Id: 490246
     AegisName: aegis_490246
@@ -155366,7 +155366,7 @@ Body:
          .@a = .@a*2;
          .@b = .@b*2;
       }
-      bonus2 bAddClass,Class_All,.@a;
+      bonus bAtkRate,.@a;
       bonus bCritAtkRate,.@b;
   - Id: 500000
     AegisName: IDTest_weapon

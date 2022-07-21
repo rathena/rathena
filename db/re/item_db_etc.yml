@@ -37928,7 +37928,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,6+.@r;
+      bonus bAtkRate,6+.@r;
       bonus bMatkRate,6+.@r;
       bonus2 bHPLossRate,666,6000;
       bonus2 bSPLossRate,66,6000;
@@ -37949,7 +37949,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bHit,50;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus5 bAutoSpell,"NPC_WIDESTONE",2,50,BF_SHORT,0;
       bonus5 bAutoSpell,"NPC_WIDESLEEP",2,50,BF_SHORT,0;
       bonus5 bAutoSpell,"NPC_WIDECURSE",2,50,BF_SHORT,0;
@@ -39644,7 +39644,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       skill "AS_ENCHANTPOISON",10;
       skill "SA_SEISMICWEAPON",1;
       skill "SA_FLAMELAUNCHER",1;
