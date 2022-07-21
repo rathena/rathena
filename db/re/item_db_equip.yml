@@ -6096,7 +6096,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bUnbreakableWeapon;
-      bonus2 bAddClass,Class_all,5;
+      bonus bAtkRate,5;
       bonus bBaseAtk,4*.@r;
       if (.@r>=11)
          .@val = 35;
@@ -6162,7 +6162,7 @@ Body:
     Refineable: true
     Script: |
       bonus bUnbreakableWeapon;
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       .@r = getrefine();
       bonus bLongAtkRate,.@r;
       if (.@r >= 9) {
@@ -17675,7 +17675,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (.@r >= 7) {
          bonus bAspdRate,7;
          if (.@r >= 9) {
@@ -17801,7 +17801,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"SR_KNUCKLEARROW",10;
       if (.@r>=7) {
          bonus bAspdRate,15;
@@ -32280,7 +32280,7 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddClass,Class_All,5;
-      bonus2 bMagicAddClass,Class_All,5;
+      bonus bMatkRate,5;
   - Id: 2645
     AegisName: Moonlight_Ring
     Name: Moonlight Ring
@@ -58976,8 +58976,8 @@ Body:
       }
       if (.@r>=6) {
          .@rate = 5*(.@i+1);
-         bonus2 bAddClass,Class_All,.@rate;
-         bonus2 bMagicAddClass,Class_All,.@rate;
+         bonus2 bAddRace,RC_All,.@rate;
+         bonus2 bMagicAddRace,RC_All,.@rate;
       }
   - Id: 13093
     AegisName: Thanos_Dagger
@@ -59061,7 +59061,7 @@ Body:
          if (.@r>=12) {
             .@dmg += 7;
          }
-         bonus2 bAddClass,Class_All,.@dmg;
+         bonus bAtkRate,.@dmg;
       }
   - Id: 13096
     AegisName: Half_BF_Dagger2
@@ -62132,7 +62132,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,15;
+      bonus bAtkRate,15;
       bonus bUnbreakableWeapon;
       bonus2 bSkillAtk,"KO_HUUMARANKA",15;
       if (.@r>=7) {
@@ -68155,7 +68155,7 @@ Body:
          .@val += .@r;
       }
       if (.@val) {
-         bonus2 bAddClass,Class_All,.@val;
+         bonus bAtkRate,.@val;
       }
   - Id: 15215
     AegisName: Tatenasi_Armor_TW
@@ -68265,7 +68265,7 @@ Body:
       bonus bAllStats,1;
       bonus bMaxHP,400;
       bonus bMaxSP,100;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bMagicAddClass,Class_All,2;
   - Id: 15278
     AegisName: Overwhelm_Str_Armor
@@ -68283,7 +68283,7 @@ Body:
       .@r = getrefine();
       bonus bBaseAtk,50;
       if (.@r > 2)
-         bonus2 bAddClass,Class_All,.@r/3*2;
+         bonus bAtkRate,.@r/3*2;
       if (.@r > 6) {
          bonus2 bIgnoreDefRaceRate,RC_Brute,30;
          bonus2 bIgnoreDefRaceRate,RC_Demon,30;
@@ -69068,7 +69068,7 @@ Body:
       bonus bMaxHPrate,15;
       bonus bMaxSPrate,10;
       bonus bStr,12;
-      bonus2 bAddClass,Class_All,2*(.@r/2);
+      bonus bAtkRate,2*(.@r/2);
       bonus2 bAddRace,RC_Dragon,7*(.@r/3);
       if (.@r>=11) {
          bonus bFixedCast,-200;
@@ -69222,7 +69222,7 @@ Body:
       bonus bMaxHPrate,10;
       bonus bMaxSPrate,10;
       bonus bAspdRate,10;
-      bonus2 bAddClass,Class_All,3*(.@r/2);
+      bonus bAtkRate,3*(.@r/2);
       bonus bStr,5*(.@r/3);
       bonus2 bAddRace,RC_Angel,8*(.@r/4);
       bonus2 bAddRace,RC_Demon,8*(.@r/4);
@@ -69290,7 +69290,7 @@ Body:
       bonus bAspdRate,10;
       bonus bVariableCastrate,-10;
       bonus bMatkRate,(.@r/2);
-      bonus2 bAddClass,Class_All,(.@r/2);
+      bonus bAtkRate,(.@r/2);
       bonus bDex,5*(.@r/3);
       bonus2 bAddRace,RC_Angel,6*(.@r/4);
       bonus2 bMagicAddRace,RC_Angel,6*(.@r/4);
@@ -70468,11 +70468,11 @@ Body:
       .@r = getrefine();
       bonus bBaseAtk,(.@r/3)*30;
       if (.@r>=9) {
-         bonus2 bAddClass,Class_All,5;
+         bonus2 bAddRace,RC_All,5;
          bonus3 bAutoSpell,"BS_WEAPONPERFECT",1,10;
       }
       if (.@r>=6) {
-         bonus2 bAddClass,Class_All,5;
+         bonus2 bAddRace,RC_All,5;
       }
   - Id: 16027
     AegisName: Hammer_Of_Evil_Slayer
@@ -70505,7 +70505,7 @@ Body:
       bonus2 bAddRace,RC_Demon,10;
       bonus2 bAddRace,RC_Undead,10;
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,(.@r>=12?12:(.@r>=9?5:0));
+      bonus bAtkRate,(.@r>=12?12:(.@r>=9?5:0));
   - Id: 16028
     AegisName: Thanos_Hammer
     Name: Thanos Hammer
@@ -71442,7 +71442,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bUnbreakableWeapon;
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (.@r >= 7) {
          bonus bVariableCastrate,-7;
          if (.@r >= 9) {
@@ -71539,7 +71539,7 @@ Body:
       .@r = getrefine();
       bonus bUnbreakableWeapon;
       bonus bLongAtkRate,10;
-      bonus2 bAddClass,Class_All,.@r;
+      bonus bAtkRate,.@r;
       if (.@r>=9)
          bonus2 bSkillAtk,"GN_CARTCANNON",25;
       if (.@r>=11)
@@ -71632,7 +71632,7 @@ Body:
          bonus2 bSkillAtk,"MO_INVESTIGATE",50;
       }
       if (.@r>=11)
-         bonus2 bAddClass,Class_All,10;
+         bonus bAtkRate,10;
   - Id: 16099
     AegisName: Ein_1HHAMMER
     Name: Rubber Hammer
@@ -72209,7 +72209,7 @@ Body:
       bonus2 bAddRace,RC_Demon,10;
       bonus2 bAddRace,RC_Undead,10;
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,(.@r>=12?12:(.@r>=9?5:0));
+      bonus bAtkRate,(.@r>=12?12:(.@r>=9?5:0));
   - Id: 18121
     AegisName: Sinister_Bow
     Name: Bow of Vicious Mind
@@ -73054,7 +73054,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (.@r >= 7) {
          bonus bLongAtkRate,7;
          if (.@r >= 9) {
@@ -73087,7 +73087,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (.@r >= 7) {
          bonus bLongAtkRate,7;
          if (.@r >= 9) {
@@ -73370,7 +73370,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"RA_AIMEDBOLT",10;
       if (.@r>=7) {
          bonus bVariableCastrate,-10;
@@ -84360,7 +84360,7 @@ Body:
     Refineable: true
     View: 14
     Script: |
-      bonus2 bAddClass,Class_All,1;
+      bonus bAtkRate,1;
       bonus bBaseAtk,(2*getrefine());
   - Id: 19238
     AegisName: PoringTownOnion
@@ -84577,7 +84577,7 @@ Body:
       }
       if (.@r>8) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
       }
       if (.@r>10) {
          bonus bCritAtkRate,15;
@@ -84958,7 +84958,7 @@ Body:
          bonus bLongAtkRate,7;
       }
       if (.@r>=9) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          bonus bAspd,1;
       }
       if (.@r>=11) {
@@ -85019,7 +85019,7 @@ Body:
          bonus bBaseAtk,30;
       }
       if (.@r>=9) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          bonus bAspd,1;
       }
       if (.@r>=11) {
@@ -85067,7 +85067,7 @@ Body:
       }
       if (.@r>=11) {
          bonus bMatkRate,3;
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
       }
       if (.@r>=10) {
          bonus bFixedCast,-100*(min((.@r-10),15)/1);
@@ -85425,7 +85425,7 @@ Body:
       }
       if (.@r>=11) {
          bonus bMatkRate,5;
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          bonus2 bAddRace,RC_Formless,min(.@r-10,15);
          bonus2 bMagicAddRace,RC_Formless,min(.@r-10,15);
       }
@@ -86256,7 +86256,7 @@ Body:
       bonus2 bSkillAtk,"LG_CANNONSPEAR",15*(.@r/3);
       bonus bLongAtkRate,5*(.@r/4);
       if (.@r>=11) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
       }
   - Id: 19476
     AegisName: S_Circlet_Of_Time_NC
@@ -86356,7 +86356,7 @@ Body:
       bonus bAspdRate,2*(.@r/3);
       bonus2 bSkillAtk,"GC_COUNTERSLASH",20*(.@r/3);
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",20*(.@r/3);
-      bonus2 bAddClass,Class_All,2*(.@r/4);
+      bonus bAtkRate,2*(.@r/4);
       if (.@r>=11) {
          bonus bDelayrate,-5;
       }
@@ -86390,7 +86390,7 @@ Body:
       bonus bAspdRate,2*(.@r/3);
       bonus2 bSkillAtk,"SC_FATALMENACE",30*(.@r/3);
       bonus2 bSkillAtk,"SC_FEINTBOMB",30*(.@r/3);
-      bonus2 bAddClass,Class_All,2*(.@r/4);
+      bonus bAtkRate,2*(.@r/4);
       if (.@r>=11) {
          bonus bDelayrate,-5;
       }
@@ -86459,7 +86459,7 @@ Body:
       bonus2 bSkillAtk,"SR_TIGERCANNON",10*(.@r/3);
       bonus bLongAtkRate,5*(.@r/4);
       if (.@r>=11) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
       }
   - Id: 19482
     AegisName: S_Circlet_Of_Time_WL
@@ -86629,7 +86629,7 @@ Body:
       bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",30*(.@r/3);
       bonus2 bAddSize,Size_All,2*(.@r/4);
       if (.@r>=11) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
       }
   - Id: 19487
     AegisName: S_Circlet_Of_Time_SP
@@ -86757,7 +86757,7 @@ Body:
       bonus2 bSkillAtk,"KO_JYUMONJIKIRI",20*(.@r/3);
       bonus2 bAddSize,Size_All,2*(.@r/4);
       if (.@r>=11) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
       }
   - Id: 19491
     AegisName: S_Circlet_Of_Time_NV
@@ -99356,7 +99356,7 @@ Body:
     Script: |
       .@r = getrefine();
       if (.@r >= 2)
-         bonus2 bAddClass,Class_All,.@r/2;
+         bonus bAtkRate,.@r/2;
       if (.@r >= 9)
          bonus bAspdRate,10;
       if (.@r >= 12)
@@ -100167,7 +100167,7 @@ Body:
       if (.@r>=9)
          bonus bCritAtkRate,5;
       if (.@r>=11)
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
   - Id: 20937
     AegisName: Lava_Leather_Hood
     Name: Lava Leather Hood
@@ -100324,7 +100324,7 @@ Body:
       bonus bMaxHP,(300+(100*(.@r/2)));
       bonus bMaxHPRate,(2*(.@r/3));
       if (.@r >= 7) {
-         bonus2 bAddClass,Class_All,7;
+         bonus bAtkRate,7;
       }
       if (.@r >= 9) {
          bonus bVariableCastrate,-10;
@@ -100531,7 +100531,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bMatkRate,(.@r/2);
-      bonus2 bAddClass,Class_All,(.@r/2);
+      bonus bAtkRate,(.@r/2);
       if (.@r>=9) {
          bonus bMatk,30;
          bonus bBaseAtk,30;
@@ -100588,11 +100588,11 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,(.@r/2);
+      bonus bAtkRate,(.@r/2);
       bonus bBaseAtk,10*(.@r/2);
       bonus2 bAddSize,Size_All,5*(.@r/4);
       if (.@r>=7) {
-         bonus2 bAddClass,Class_All,7;
+         bonus bAtkRate,7;
       }
       if (.@r>=9) {
          bonus2 bIgnoreDefRaceRate,RC_Demon,20;
@@ -100624,7 +100624,7 @@ Body:
       bonus bBaseAtk,10*(.@r/2);
       bonus2 bAddSize,Size_All,5*(.@r/4);
       if (.@r>=7) {
-         bonus2 bAddClass,Class_All,7;
+         bonus bAtkRate,7;
       }
       if (.@r>=9) {
          bonus2 bIgnoreDefRaceRate,RC_Demon,20;
@@ -100656,7 +100656,7 @@ Body:
       bonus bMaxHP,400*(.@r/2);
       bonus bMaxHPrate,3*(.@r/4);
       if (.@r>=7) {
-         bonus2 bAddClass,Class_All,7;
+         bonus bAtkRate,7;
       }
       if (.@r>=9) {
          bonus2 bIgnoreDefRaceRate,RC_Demon,20;
@@ -100720,7 +100720,7 @@ Body:
       bonus bBaseAtk,10*(.@r/2);
       bonus bCritAtkRate,3*(.@r/4);
       if (.@r>=7) {
-         bonus2 bAddClass,Class_All,7;
+         bonus bAtkRate,7;
       }
       if (.@r>=9) {
          bonus2 bIgnoreDefRaceRate,RC_Demon,20;
@@ -100752,7 +100752,7 @@ Body:
       bonus bCritical,3*(.@r/2);
       bonus bAspdRate,5*(.@r/4);
       if (.@r>=7) {
-         bonus2 bAddClass,Class_All,7;
+         bonus bAtkRate,7;
       }
       if (.@r>=9) {
          bonus2 bIgnoreDefRaceRate,RC_Demon,20;
@@ -101888,7 +101888,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bLongAtkRate,.@r;
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       if (.@r>=9) {
          bonus2 bSkillAtk,"LK_SPIRALPIERCE",30;
          bonus2 bSkillAtk,"RK_SONICWAVE",30;
@@ -101940,7 +101940,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bCritical,5;
-      bonus2 bAddClass,Class_All,15;
+      bonus bAtkRate,15;
       if (.@r>=7) {
          bonus bCritAtkRate,25;
          bonus bAspdRate,10;
@@ -101973,7 +101973,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bBaseAtk,4*.@r;
       if (.@r>=9) {
          bonus bCritAtkRate,25;
@@ -104354,7 +104354,7 @@ Body:
       bonus bMdef,10;
       skill "BS_MAXIMIZE",1;
       bonus2 bSkillUseSP,"ASC_METEORASSAULT",8;
-      bonus2 bAddClass,Class_All,4*.@a;
+      bonus bAtkRate,4*.@a;
       bonus2 bSkillCooldown,"GC_HALLUCINATIONWALK",-5000*.@b;
       bonus2 bIgnoreDefRaceRate,RC_All,20*.@c;
       bonus2 bVariableCastrate,"ASC_METEORASSAULT",-7*(.@a+.@b+.@c);
@@ -104460,7 +104460,7 @@ Body:
       bonus2 bVariableCastrate,"MO_STEELBODY",-.@c*10;
       bonus2 bFixedCastrate,"CH_SOULCOLLECT",-.@c*10;
       bonus bAspdRate,2*getskilllv("SR_GENTLETOUCH_CHANGE");
-      bonus2 bAddClass,Class_All,4*getskilllv("SR_GENTLETOUCH_QUIET");
+      bonus bAtkRate,4*getskilllv("SR_GENTLETOUCH_QUIET");
   - Id: 22167
     AegisName: Astraea_Shoes
     Name: Asteria's Boots
@@ -104949,7 +104949,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       if (.@r>=7)
          bonus bBaseAtk,25;
       if (.@r>=9)
@@ -105283,7 +105283,7 @@ Body:
       bonus bMaxHPrate,.@r/3;
       bonus bMaxSPrate,.@r/3;
       if (.@r >= 7) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          bonus bMatkRate,5;
       }
       if (.@r >= 9) {
@@ -109401,7 +109401,7 @@ Body:
       bonus bBaseAtk,.@r;
       bonus bMatk,.@r;
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,.@r;
+      bonus bAtkRate,.@r;
       bonus bMatkRate,.@r;
       if (.@r>=7) {
          bonus bMaxHP,1000;
@@ -110026,7 +110026,7 @@ Body:
       }
       bonus2 bIgnoreDefClassRate,Class_Normal,(3*(getskilllv("TK_HPTIME")+.@r));
       bonus2 bIgnoreMdefClassRate,Class_Normal,(3*(getskilllv("TK_SPTIME")+.@r));
-      bonus2 bAddClass,Class_All,.@val;
+      bonus bAtkRate,.@val;
       bonus bMatkRate,.@val;
   - Id: 24316
     AegisName: S_DoramPhysical_Shield
@@ -110043,7 +110043,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bMaxHP,.@r*10;
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       autobonus3 "{ bonus bAspd,1; }",1000,50000,"SU_ARCLOUSEDASH";
       bonus2 bSkillCooldown,"SU_LUNATICCARROTBEAT",-(.@r*200);
       if (.@r>=7)
@@ -110092,11 +110092,11 @@ Body:
       bonus bAspdRate,(2*getskilllv("TF_DOUBLE")+.@r);
       bonus bVariableCastrate,-(2*getskilllv("AC_OWL")+.@r);
       if (.@r>=7) {
-         bonus2 bAddClass,Class_All,2;
+         bonus bAtkRate,2;
          bonus bMatkRate,2;
       }
       if (.@r>=9) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus bMatkRate,3;
       }
   - Id: 24319
@@ -110136,7 +110136,7 @@ Body:
          .@val += 1;
       }
       bonus bFlee,5;
-      bonus2 bAddClass,Class_All,.@val;
+      bonus bAtkRate,.@val;
       bonus bMatkRate,.@val;
   - Id: 24321
     AegisName: S_Bearer's_Pendant_II
@@ -110202,7 +110202,7 @@ Body:
       bonus bBaseAtk,.@r;
       bonus bMatk,.@r;
       bonus bSPrecovRate,5;
-      bonus2 bAddClass,Class_All,1 + (.@r >= 7);
+      bonus bAtkRate,1 + (.@r >= 7);
   - Id: 24325
     AegisName: S_Malicious_Armor_II
     Name: Malicious Shadow Armor II
@@ -110214,7 +110214,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bMaxHP,100+.@r*10;
-      bonus2 bAddClass,Class_All,1 + (.@r >= 7);
+      bonus bAtkRate,1 + (.@r >= 7);
   - Id: 24326
     AegisName: S_Sigrun_Armor
     Name: Sigrun Shadow Armor
@@ -111325,9 +111325,9 @@ Body:
       bonus bMaxHP,.@r*10;
       bonus bBaseAtk,20;
       if (.@r >= 9) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
       } else if (.@r >= 7) {
-         bonus2 bAddClass,Class_All,2;
+         bonus bAtkRate,2;
       }
   - Id: 24396
     AegisName: S_Magical_Shoes
@@ -112012,7 +112012,7 @@ Body:
       .@r = getrefine();
       bonus bBaseAtk,.@r;
       bonus bMatk,.@r;
-      bonus2 bAddClass,Class_All,1+.@r/2;
+      bonus bAtkRate,1+.@r/2;
       bonus bMatkRate,1+.@r/2;
       if (.@r >= 7) {
          bonus bDef,15;
@@ -112745,7 +112745,7 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bAddClass,Class_All,2+(getrefine()/3);
+      bonus bAtkRate,2+(getrefine()/3);
   - Id: 24482
     AegisName: S_Knucklearrow_Armor
     Name: Knuckle Shadow Armor
@@ -116101,7 +116101,7 @@ Body:
       .@r = getrefine();
       bonus bBaseAtk,10+(.@r/2);
       if (.@r>=9) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
       }
   - Id: 24672
     AegisName: S_Mammoth_Earring
@@ -116208,7 +116208,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       bonus bLongAtkRate,(.@r/2);
       bonus bShortAtkRate,(.@r/2);
       if (.@r>=10) {
@@ -116223,7 +116223,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       bonus bLongAtkRate,(.@r/2);
       bonus bShortAtkRate,(.@r/2);
       if (.@r>=10) {
@@ -116238,7 +116238,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       bonus bLongAtkRate,(.@r/2);
       bonus bShortAtkRate,(.@r/2);
       if (.@r>=10) {
@@ -116253,7 +116253,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       bonus bLongAtkRate,(.@r/2);
       bonus bShortAtkRate,(.@r/2);
       if (.@r>=10) {
@@ -116287,7 +116287,7 @@ Body:
       .@r = getrefine();
       bonus bMaxHPrate,3;
       bonus bMaxSPrate,3;
-      bonus2 bAddClass,Class_All,(.@r/3);
+      bonus bAtkRate,(.@r/3);
       if (.@r>=7) {
          bonus bVariableCastrate,-3;
          if (.@r>=10) {
@@ -116306,7 +116306,7 @@ Body:
       .@r = getrefine();
       bonus bMaxHPrate,3;
       bonus bMaxSPrate,3;
-      bonus2 bAddClass,Class_All,(.@r/3);
+      bonus bAtkRate,(.@r/3);
       if (.@r>=7) {
          bonus bVariableCastrate,-3;
          if (.@r>=10) {
@@ -117063,7 +117063,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       bonus bShortAtkRate,(.@r/2);
       if (.@r>=9) {
          bonus bAspd,1;
@@ -117080,7 +117080,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       bonus bShortAtkRate,(.@r/2);
       if (.@r>=10) {
          bonus bAspdRate,3;
@@ -117095,7 +117095,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bMatkRate,1+(.@r/2);
-      bonus2 bAddClass,Class_All,1+(.@r/2);
+      bonus bAtkRate,1+(.@r/2);
       if (.@r>=7) {
          bonus bDef,15;
          bonus bFlee,15;
@@ -117130,7 +117130,7 @@ Body:
       .@r = getrefine();
       bonus bLongAtkRate,2;
       bonus bShortAtkRate,2;
-      bonus2 bAddClass,Class_All,(.@r/2);
+      bonus bAtkRate,(.@r/2);
       if (.@r>=9) {
          bonus bAspd,1;
          if (.@r>=10) {
@@ -117150,7 +117150,7 @@ Body:
       .@r = getrefine();
       bonus bLongAtkRate,2;
       bonus bShortAtkRate,2;
-      bonus2 bAddClass,Class_All,(.@r/2);
+      bonus bAtkRate,(.@r/2);
       if (.@r>=9) {
          bonus bAspd,1;
          if (.@r>=10) {
@@ -117317,7 +117317,7 @@ Body:
       bonus bAspdRate,3*(.@r/2);
       if (.@r>=9) {
          bonus bMatkRate,3;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
       }
   - Id: 24747
     AegisName: S_SpellCaster_Armor
@@ -117330,7 +117330,7 @@ Body:
       .@r = getrefine();
       bonus bVariableCastrate,-.@r;
       bonus bMatkRate,(.@r/3);
-      bonus2 bAddClass,Class_All,(.@r/3);
+      bonus bAtkRate,(.@r/3);
   - Id: 24748
     AegisName: S_SpellCaster_Shoes
     Name: Spell Caster Shoes Shadow    # !todo check english name
@@ -117342,7 +117342,7 @@ Body:
       .@r = getrefine();
       bonus bVariableCastrate,-.@r;
       bonus bMatkRate,(.@r/3);
-      bonus2 bAddClass,Class_All,(.@r/3);
+      bonus bAtkRate,(.@r/3);
   - Id: 24749
     AegisName: S_SpellCaster_Earring
     Name: Spell Caster Earring Shadow    # !todo check english name
@@ -117354,7 +117354,7 @@ Body:
       .@r = getrefine();
       bonus bVariableCastrate,-.@r;
       bonus bMatkRate,(.@r/3);
-      bonus2 bAddClass,Class_All,(.@r/3);
+      bonus bAtkRate,(.@r/3);
   - Id: 24750
     AegisName: S_SpellCaster_Pendant
     Name: Spell Caster Pendant Shadow    # !todo check english name
@@ -117366,7 +117366,7 @@ Body:
       .@r = getrefine();
       bonus bVariableCastrate,-.@r;
       bonus bMatkRate,(.@r/3);
-      bonus2 bAddClass,Class_All,(.@r/3);
+      bonus bAtkRate,(.@r/3);
   - Id: 24751
     AegisName: S_P_Power_Weapon
     Name: Physical Power Weapon Shadow    # !todo check english name
@@ -117864,7 +117864,7 @@ Body:
       .@r = getrefine();
       bonus bLongAtkRate,3*(.@r/2);
       if (.@r>=7)
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
       if (.@r>=9)
          bonus2 bAddRace,RC_All,15;
   - Id: 26021
@@ -118637,7 +118637,7 @@ Body:
       .@r = getrefine();
       bonus bMatk,10*(.@r/2);
       bonus bBaseAtk,10*(.@r/2);
-      bonus2 bAddClass,Class_All,2*(.@r/3);
+      bonus bAtkRate,2*(.@r/3);
       bonus bMatkRate,2*(.@r/3);
       if (.@r >= 7) {
          bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",15;
@@ -119702,7 +119702,7 @@ Body:
       if (getrefine() >= 9) {
          .@flee += 5;
          .@flee2 += 2;
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
       }
       bonus bFlee,.@flee;
       bonus bFlee2,.@flee2;
@@ -119843,7 +119843,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (.@r >= 7) {
          bonus bAspdRate,7;
          if (.@r >= 9) {
@@ -119952,7 +119952,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bLongAtkRate,.@r;
       if (.@r>=9)
          bonus2 bSkillAtk,"GC_ROLLINGCUTTER",30;
@@ -119986,7 +119986,7 @@ Body:
          bonus2 bAddSize,Size_All,15;
       if (.@r>=11) {
          bonus bUnbreakableWeapon;
-         bonus2 bAddClass,Class_All,7;
+         bonus bAtkRate,7;
       }
   - Id: 28045
     AegisName: Ein_BHKATAR
@@ -120009,7 +120009,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",10;
       if (.@r>=7) {
          bonus bAspdRate,10;
@@ -120043,7 +120043,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bBaseAtk,5*.@r;
       if (.@r>=9) {
          bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",20;
@@ -120766,7 +120766,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bUnbreakableWeapon;
       bonus2 bSkillAtk,"NC_ARMSCANNON",10;
       if (.@r>=7) {
@@ -120805,7 +120805,7 @@ Body:
       bonus2 bMagicSubSize,Size_Medium,10;
       bonus2 bSubSize,Size_Large,10;
       bonus2 bMagicSubSize,Size_Large,10;
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bUnbreakableWeapon;
       bonus bLongAtkRate,.@r;
       if (.@r>=9) {
@@ -121466,7 +121466,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bDex,2;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bLongAtkRate,(.@r/2)*5 + (.@r > 11 ? 5 : 0);
       if (.@r > 6) {
          bonus2 bSkillAtk,"RL_R_TRIP",20;
@@ -121522,7 +121522,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bDex,2;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bLongAtkRate,(.@r/2)*5;
       if (.@r > 6) {
          bonus bAspdRate,5;
@@ -121709,7 +121709,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (.@r >= 7) {
          bonus bLongAtkRate,7;
          if (.@r >= 9) {
@@ -123171,7 +123171,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
   - Id: 28444
     AegisName: Para_Team_Str_Necklace100
     Name: Awakened Eden Group Necklace of Strength I
@@ -123205,7 +123205,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
   - Id: 28446
     AegisName: Para_Team_Str_Necklace115
     Name: Awakened Eden Group Necklace of Strength II
@@ -123239,7 +123239,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,4;
+      bonus bAtkRate,4;
   - Id: 28448
     AegisName: Para_Team_Str_Necklace130
     Name: Awakened Eden Group Necklace of Strength III
@@ -123273,7 +123273,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
   - Id: 28450
     AegisName: Para_Team_Str_Necklace145
     Name: Awakened Eden Group Necklace of Strength IV
@@ -123307,7 +123307,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       skill "AL_HEAL",1;
   - Id: 28452
     AegisName: Para_Team_Str_Necklace160
@@ -123874,7 +123874,7 @@ Body:
       .@S = getskilllv("RL_S_STORM");
       .@D = getskilllv("RL_D_TAIL");
       .@E = getskilllv("RL_E_CHAIN");
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bAspdRate,2*.@M;
       bonus bVariableCastrate,-10;
       bonus bDelayrate,-(.@F);
@@ -123982,7 +123982,7 @@ Body:
       NoAuction: true
     Script: |
       if (readparam(bStr) > 89)
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
       if (readparam(bVit) > 89)
          bonus bMaxHP,1000;
       if (readparam(bDex) > 89)
@@ -124126,7 +124126,7 @@ Body:
     Script: |
       bonus bMaxSPrate,5;
       bonus bAspdRate,5;
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
   - Id: 28507
     AegisName: Glove_Of_Wizard
     Name: Magician's Gloves
@@ -124363,7 +124363,7 @@ Body:
       bonus bUseSPrate,-3;
       bonus bAspdRate,5;
       bonus bVariableCastrate,-5;
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       bonus bMatkRate,3;
       bonus2 bHPDrainRate,10,3;
       autobonus "{ bonus2 bHPRegenRate,300,1000; }",10,5000,BF_MAGIC;
@@ -125294,7 +125294,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (.@r >= 7) {
          bonus bAspdRate,7;
          if (.@r >= 9) {
@@ -125466,7 +125466,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bCritical,3;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       if (.@r>=7) {
          bonus bAspdRate,10;
          bonus bBaseAtk,40;
@@ -126256,7 +126256,7 @@ Body:
       bonus bCritical,90;
       bonus bCritAtkRate,(3*(.@r/2));
       if (.@r >= 7) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          if (.@r >= 9) {
             bonus2 bAddSize,Size_All,20;
             if (.@r >= 11) {
@@ -126596,7 +126596,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"GC_CROSSIMPACT",10;
       if (.@r>=7) {
          bonus bAspdRate,10;
@@ -126666,7 +126666,7 @@ Body:
     EquipLevelMin: 170
     Refineable: true
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
   - Id: 28775
     AegisName: R_Gladius_L
     Name: Royal Gladius (L)
@@ -127337,7 +127337,7 @@ Body:
     View: 1
     Script: |
       bonus bAspdRate,10;
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       bonus bMatkRate,3;
       bonus2 bSubEle,Ele_All,7;
       autobonus2 "{ bonus2 bSPRegenRate,25,1000; }",50,5000;
@@ -127367,7 +127367,7 @@ Body:
     View: 1
     Script: |
       bonus bAspdRate,10;
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       bonus bMatkRate,3;
       bonus2 bSubEle,Ele_All,7;
       autobonus2 "{ bonus2 bSPRegenRate,25,1000; }",50,5000;
@@ -127397,7 +127397,7 @@ Body:
     View: 1
     Script: |
       bonus bAspdRate,10;
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bMatkRate,5;
       bonus2 bSubEle,Ele_All,10;
       autobonus2 "{ bonus2 bSPRegenRate,50,1000; }",50,5000;
@@ -136456,7 +136456,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bDelayrate,-.@r;
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       if (.@r>=9)
          bonus2 bSkillAtk,"LG_CANNONSPEAR",20;
       if (.@r>=11)
@@ -136482,7 +136482,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"LG_BANISHINGPOINT",10;
       if (.@r>=7) {
          bonus bAspdRate,10;
@@ -136915,7 +136915,7 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 130
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
   - Id: 32208
     AegisName: Illusion_B_L
     Name: Illusion Booster L
@@ -136928,7 +136928,7 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 130
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
   - Id: 32209
     AegisName: Illusion_BC_R
     Name: Illusion Battle chip R
@@ -137044,7 +137044,7 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 150
     Script: |
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
   - Id: 32229
     AegisName: Schmidt_Insignia_Divine_Power
     Name: King Schmidt's Divine Power Insignia
@@ -137249,7 +137249,7 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 170
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
   - Id: 32251
     AegisName: Ein_SAFETY_EPAULL
     Name: Safety Epaulet B
@@ -137514,7 +137514,7 @@ Body:
       bonus bAspdRate,3*(.@r/3);
       if (.@r >= 7) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          if (.@r >= 9) {
             bonus bCritAtkRate,20;
             if (.@r >= 11) {
@@ -137664,7 +137664,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"GN_CARTCANNON",10;
       if (.@r>=7) {
          bonus bVariableCastrate,-10;
@@ -137775,7 +137775,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bUnbreakableWeapon;
       bonus bLongAtkRate,.@r;
       if (.@r>=9) {
@@ -137807,7 +137807,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bUnbreakableWeapon;
       bonus bLongAtkRate,.@r;
       if (.@r>=9) {
@@ -137839,7 +137839,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bUnbreakableWeapon;
       bonus bBaseAtk,4*.@r;
       if (.@r>=9) {
@@ -137975,7 +137975,7 @@ Body:
     EquipLevelMin: 120
     Script: |
       bonus bMatkRate,1;
-      bonus2 bAddClass,Class_All,1;
+      bonus bAtkRate,1;
   - Id: 400001
     AegisName: Victory_Wing_Ear
     Name: Victory Wing Ears
@@ -138051,7 +138051,7 @@ Body:
       bonus bBaseAtk,5*(.@r/2);
       if (.@r>=7) {
          bonus bMatkRate,5;
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
       }
       if (.@r>=9) {
          bonus2 bHPDrainRate,50,5;
@@ -138150,7 +138150,7 @@ Body:
       bonus bMaxSPrate,5;
       if (.@r>=7) {
          bonus bMatkRate,5;
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
       }
       if (.@r>=9) {
          bonus bVariableCastrate,-10;
@@ -138576,7 +138576,7 @@ Body:
       }
       if (.@r>=9) {
          bonus2 bMagicAtkEle,Ele_Holy,15;
-         bonus2 bAddClass,Class_All,15;
+         bonus bAtkRate,15;
       }
       if (.@r>=11) {
          bonus bFixedCast,-200;
@@ -138669,7 +138669,7 @@ Body:
     Script: |
       bonus bUnbreakableHelm;
       bonus bMatkRate,7;
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
       if (getrefine()>=9) {
          bonus bMatk,40;
          bonus bBaseAtk,40;
@@ -138900,7 +138900,7 @@ Body:
       }
       if (.@r>=9) {
          bonus bMatkRate,15;
-         bonus2 bAddClass,Class_All,15;
+         bonus bAtkRate,15;
       }
       if (.@r>=11) {
          bonus2 bMagicAtkEle,Ele_All,10;
@@ -138967,7 +138967,7 @@ Body:
       }
       if (.@r>=9) {
          bonus bMatkRate,15;
-         bonus2 bAddClass,Class_All,15;
+         bonus bAtkRate,15;
       }
       if (.@r>=11) {
          bonus2 bAddSize,Size_All,10;
@@ -139070,7 +139070,7 @@ Body:
     View: 511
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,4*(.@r/3);
+      bonus bAtkRate,4*(.@r/3);
       if (.@r>=7) {
          bonus bAspdRate,10;
          if (.@r>=9) {
@@ -139096,7 +139096,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,5*(.@r/3);
+      bonus bAtkRate,5*(.@r/3);
       if (.@r>=7) {
          bonus bAspdRate,15;
          if (.@r>=9) {
@@ -139222,7 +139222,7 @@ Body:
     View: 2089
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,4*(.@r/3);
+      bonus bAtkRate,4*(.@r/3);
       if (.@r>=7) {
          bonus bAspdRate,10;
          if (.@r>=9) {
@@ -139247,7 +139247,7 @@ Body:
     View: 2090
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,5*(.@r/3);
+      bonus bAtkRate,5*(.@r/3);
       if (.@r>=7) {
          bonus bAspdRate,15;
          if (.@r>=9) {
@@ -139349,7 +139349,7 @@ Body:
     View: 2105
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,4*(.@r/3);
+      bonus bAtkRate,4*(.@r/3);
       if (.@r>=7) {
          bonus bAspdRate,10;
          if (.@r>=9) {
@@ -139374,7 +139374,7 @@ Body:
     View: 2104
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,5*(.@r/3);
+      bonus bAtkRate,5*(.@r/3);
       if (.@r>=7) {
          bonus bAspdRate,15;
          if (.@r>=9) {
@@ -139820,7 +139820,7 @@ Body:
             bonus bFixedCast,-200;
             if (.@r>=11) {
                bonus bFixedCast,-300;
-               bonus2 bAddClass,Class_All,5;
+               bonus bAtkRate,5;
             }
          }
       }
@@ -139861,7 +139861,7 @@ Body:
             bonus bFixedCast,-200;
             if (.@r>=11) {
                bonus bFixedCast,-300;
-               bonus2 bAddClass,Class_All,5;
+               bonus bAtkRate,5;
             }
          }
       }
@@ -139952,7 +139952,7 @@ Body:
             bonus bFixedCast,-200;
             if (.@r>=11) {
                bonus bFixedCast,-300;
-               bonus2 bAddClass,Class_All,5;
+               bonus bAtkRate,5;
             }
          }
       }
@@ -139994,7 +139994,7 @@ Body:
             bonus bFixedCast,-200;
             if (.@r>=11) {
                bonus bFixedCast,-300;
-               bonus2 bAddClass,Class_All,5;
+               bonus bAtkRate,5;
             }
          }
       }
@@ -140035,7 +140035,7 @@ Body:
             bonus bFixedCast,-200;
             if (.@r>=11) {
                bonus bFixedCast,-300;
-               bonus2 bAddClass,Class_All,5;
+               bonus bAtkRate,5;
             }
          }
       }
@@ -140084,7 +140084,7 @@ Body:
             bonus bFixedCast,-200;
             if (.@r>=11) {
                bonus bFixedCast,-300;
-               bonus2 bAddClass,Class_All,5;
+               bonus bAtkRate,5;
             }
          }
       }
@@ -140125,7 +140125,7 @@ Body:
             bonus bFixedCast,-200;
             if (.@r>=11) {
                bonus bFixedCast,-300;
-               bonus2 bAddClass,Class_All,5;
+               bonus bAtkRate,5;
             }
          }
       }
@@ -140208,7 +140208,7 @@ Body:
             bonus bFixedCast,-200;
             if (.@r>=11) {
                bonus bFixedCast,-300;
-               bonus2 bAddClass,Class_All,5;
+               bonus bAtkRate,5;
             }
          }
       }
@@ -140290,7 +140290,7 @@ Body:
             bonus bFixedCast,-200;
             if (.@r>=11) {
                bonus bFixedCast,-300;
-               bonus2 bAddClass,Class_All,5;
+               bonus bAtkRate,5;
             }
          }
       }
@@ -140331,7 +140331,7 @@ Body:
             bonus bFixedCast,-200;
             if (.@r>=11) {
                bonus bFixedCast,-300;
-               bonus2 bAddClass,Class_All,5;
+               bonus bAtkRate,5;
             }
          }
       }
@@ -140466,7 +140466,7 @@ Body:
             bonus bFixedCast,-200;
             if (.@r>=11) {
                bonus bFixedCast,-300;
-               bonus2 bAddClass,Class_All,5;
+               bonus bAtkRate,5;
             }
          }
       }
@@ -140508,7 +140508,7 @@ Body:
             bonus bFixedCast,-200;
             if (.@r>=11) {
                bonus bFixedCast,-300;
-               bonus2 bAddClass,Class_All,5;
+               bonus bAtkRate,5;
             }
          }
       }
@@ -140590,7 +140590,7 @@ Body:
             bonus bFixedCast,-200;
             if (.@r>=11) {
                bonus bFixedCast,-300;
-               bonus2 bAddClass,Class_All,5;
+               bonus bAtkRate,5;
             }
          }
       }
@@ -140631,7 +140631,7 @@ Body:
             bonus bFixedCast,-200;
             if (.@r>=11) {
                bonus bFixedCast,-300;
-               bonus2 bAddClass,Class_All,5;
+               bonus bAtkRate,5;
             }
          }
       }
@@ -140673,7 +140673,7 @@ Body:
             bonus bFixedCast,-200;
             if (.@r>=11) {
                bonus bFixedCast,-300;
-               bonus2 bAddClass,Class_All,5;
+               bonus bAtkRate,5;
             }
          }
       }
@@ -140722,7 +140722,7 @@ Body:
             bonus bFixedCast,-200;
             if (.@r>=11) {
                bonus bFixedCast,-300;
-               bonus2 bAddClass,Class_All,5;
+               bonus bAtkRate,5;
             }
          }
       }
@@ -140763,7 +140763,7 @@ Body:
             bonus bFixedCast,-200;
             if (.@r>=11) {
                bonus bFixedCast,-300;
-               bonus2 bAddClass,Class_All,5;
+               bonus bAtkRate,5;
             }
          }
       }
@@ -140801,7 +140801,7 @@ Body:
             bonus bFixedCast,-200;
             if (.@r>=11) {
                bonus bFixedCast,-300;
-               bonus2 bAddClass,Class_All,5;
+               bonus bAtkRate,5;
             }
          }
       }
@@ -140839,7 +140839,7 @@ Body:
             bonus bFixedCast,-200;
             if (.@r>=11) {
                bonus bFixedCast,-300;
-               bonus2 bAddClass,Class_All,5;
+               bonus bAtkRate,5;
             }
          }
       }
@@ -140877,7 +140877,7 @@ Body:
             bonus bFixedCast,-200;
             if (.@r>=11) {
                bonus bFixedCast,-300;
-               bonus2 bAddClass,Class_All,5;
+               bonus bAtkRate,5;
             }
          }
       }
@@ -140917,7 +140917,7 @@ Body:
             bonus bFixedCast,-200;
             if (.@r>=11) {
                bonus bFixedCast,-300;
-               bonus2 bAddClass,Class_All,5;
+               bonus bAtkRate,5;
             }
          }
       }
@@ -141033,7 +141033,7 @@ Body:
             bonus bFixedCast,-200;
             if (.@r>=11) {
                bonus bFixedCast,-300;
-               bonus2 bAddClass,Class_All,5;
+               bonus bAtkRate,5;
             }
          }
       }
@@ -141072,7 +141072,7 @@ Body:
             bonus bFixedCast,-200;
             if (.@r>=11) {
                bonus bFixedCast,-300;
-               bonus2 bAddClass,Class_All,5;
+               bonus bAtkRate,5;
             }
          }
       }
@@ -141111,7 +141111,7 @@ Body:
             bonus bFixedCast,-200;
             if (.@r>=11) {
                bonus bFixedCast,-300;
-               bonus2 bAddClass,Class_All,5;
+               bonus bAtkRate,5;
             }
          }
       }
@@ -141185,14 +141185,14 @@ Body:
       if (.@r>=7) {
          bonus bShortAtkRate,15;
          if (.@r>=9) {
-            bonus2 bAddClass,Class_All,10;
+            bonus bAtkRate,10;
             if (.@r>=11) {
                bonus bShortAtkRate,10;
             }
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          bonus bPow,3;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bFixedCast,-500;
@@ -142744,7 +142744,7 @@ Body:
     Script: |
       bonus2 bAddRace,RC_Player_Human,10;
       bonus2 bAddRace,RC_Player_Doram,10;
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
   - Id: 436002
     AegisName: aegis_436002
     Name: Thanatos's Odium Mask
@@ -142793,7 +142793,7 @@ Body:
     Script: |
       bonus2 bAddRace,RC_Player_Human,10;
       bonus2 bAddRace,RC_Player_Doram,10;
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
   - Id: 436005
     AegisName: aegis_436005
     Name: Thanatos's Maeror Mask
@@ -143029,7 +143029,7 @@ Body:
       bonus bDelayrate,-5;
       .@r = getrefine();
       if (.@r>=2) {
-         bonus2 bAddClass,Class_All,.@r/2;
+         bonus bAtkRate,.@r/2;
       }
       if (.@r>=3) {
          bonus bCritAtkRate,.@r/3;
@@ -143786,7 +143786,7 @@ Body:
       .@r = getrefine();
       bonus bBaseAtk,50;
       if (.@r>=7)
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
       if (.@r>=9)
          bonus bLongAtkRate,5;
   - Id: 450039
@@ -143815,7 +143815,7 @@ Body:
       .@r = getrefine();
       bonus bBaseAtk,50;
       if (.@r>=7)
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
       if (.@r>=9)
          bonus bLongAtkRate,5;
   - Id: 450040
@@ -143977,7 +143977,7 @@ Body:
       if (.@r>=7)
          bonus bAspdRate,3;
       if (.@r>=9)
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
   - Id: 450045
     AegisName: Noblesse_Moon_Suit
     Name: Noblesse Moon Suit
@@ -144009,7 +144009,7 @@ Body:
       if (.@r>=7)
          bonus2 bAddSize,Size_All,5;
       if (.@r>=9)
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
   - Id: 450046
     AegisName: Noblesse_Ninja_Suit
     Name: Noblesse Ninja Suit
@@ -144065,7 +144065,7 @@ Body:
       .@r = getrefine();
       bonus bBaseAtk,50;
       if (.@r>=7)
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
       if (.@r>=9)
          bonus bLongAtkRate,5;
   - Id: 450048
@@ -144922,7 +144922,7 @@ Body:
       .@r = getrefine();
       bonus bBaseAtk,75;
       if (.@r>=7)
-         bonus2 bAddClass,Class_All,7;
+         bonus bAtkRate,7;
       if (.@r>=9)
          bonus bLongAtkRate,7;
   - Id: 450075
@@ -144951,7 +144951,7 @@ Body:
       .@r = getrefine();
       bonus bBaseAtk,75;
       if (.@r>=7)
-         bonus2 bAddClass,Class_All,7;
+         bonus bAtkRate,7;
       if (.@r>=9)
          bonus bLongAtkRate,7;
   - Id: 450076
@@ -145113,7 +145113,7 @@ Body:
       if (.@r>=7)
          bonus bAspdRate,5;
       if (.@r>=9)
-         bonus2 bAddClass,Class_All,7;
+         bonus bAtkRate,7;
   - Id: 450081
     AegisName: Imperial_Moon_Suit
     Name: Imperial Moon Suit
@@ -145145,7 +145145,7 @@ Body:
       if (.@r>=7)
          bonus2 bAddSize,Size_All,7;
       if (.@r>=9)
-         bonus2 bAddClass,Class_All,7;
+         bonus bAtkRate,7;
   - Id: 450082
     AegisName: Imperial_Ninja_Suit
     Name: Imperial Ninja Suit
@@ -145201,7 +145201,7 @@ Body:
       .@r = getrefine();
       bonus bBaseAtk,75;
       if (.@r>=7)
-         bonus2 bAddClass,Class_All,7;
+         bonus bAtkRate,7;
       if (.@r>=9)
          bonus bLongAtkRate,7;
   - Id: 450084
@@ -145994,7 +145994,7 @@ Body:
       .@r = getrefine();
       bonus bBaseAtk,100;
       if (.@r>=7)
-         bonus2 bAddClass,Class_All,10;
+         bonus bAtkRate,10;
       if (.@r>=9)
          bonus bLongAtkRate,10;
   - Id: 450109
@@ -146023,7 +146023,7 @@ Body:
       .@r = getrefine();
       bonus bBaseAtk,100;
       if (.@r>=7)
-         bonus2 bAddClass,Class_All,10;
+         bonus bAtkRate,10;
       if (.@r>=9)
          bonus bLongAtkRate,10;
   - Id: 450110
@@ -146185,7 +146185,7 @@ Body:
       if (.@r>=7)
          bonus bAspdRate,7;
       if (.@r>=9)
-         bonus2 bAddClass,Class_All,10;
+         bonus bAtkRate,10;
   - Id: 450115
     AegisName: Grace_Moon_Suit
     Name: Grace Moon Suit
@@ -146217,7 +146217,7 @@ Body:
       if (.@r>=7)
          bonus2 bAddSize,Size_All,10;
       if (.@r>=9)
-         bonus2 bAddClass,Class_All,10;
+         bonus bAtkRate,10;
   - Id: 450116
     AegisName: Grace_Ninja_Suit
     Name: Grace Ninja Suit
@@ -146273,7 +146273,7 @@ Body:
       .@r = getrefine();
       bonus bBaseAtk,100;
       if (.@r>=7)
-         bonus2 bAddClass,Class_All,10;
+         bonus bAtkRate,10;
       if (.@r>=9)
          bonus bLongAtkRate,10;
   - Id: 450118
@@ -146679,7 +146679,7 @@ Body:
       bonus2 bAddEle,Ele_Fire,4*(.@r/3);
       bonus2 bAddEle,Ele_Water,4*(.@r/3);
       if (.@r>=9) {
-         bonus2 bAddClass,Class_All,10;
+         bonus bAtkRate,10;
       }
       if (.@r>=11) {
          bonus bAspdRate,10;
@@ -146976,25 +146976,25 @@ Body:
       bonus bPow,1;
       bonus bBaseAtk,125+15*(.@r/2);
       if (.@r>=9) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          if (.@r>=11) {
             bonus bShortAtkRate,20;
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,(.@r/2);
+         bonus bAtkRate,(.@r/2);
          bonus bBaseAtk,2*(.@r/2);
          bonus bShortAtkRate,(.@r/3);
          if (.@g >= ENCHANTGRADE_C) {
-            bonus2 bAddClass,Class_All,(.@r/2);
+            bonus bAtkRate,(.@r/2);
             bonus bBaseAtk,3*(.@r/2);
             bonus bShortAtkRate,(.@r/3);
             if (.@g >= ENCHANTGRADE_B) {
-               bonus2 bAddClass,Class_All,2*(.@r/2);
+               bonus bAtkRate,2*(.@r/2);
                bonus bShortAtkRate,(.@r/3);
                bonus bPAtk,(.@r/4);
                if (.@g >= ENCHANTGRADE_A) {
-                  bonus2 bAddClass,Class_All,3*(.@r/2);
+                  bonus bAtkRate,3*(.@r/2);
                   bonus bShortAtkRate,2*(.@r/3);
                   bonus bPAtk,2*(.@r/4);
                }
@@ -147082,11 +147082,11 @@ Body:
       }
       if (.@g >= ENCHANTGRADE_D) {
          bonus bAspdRate,(.@r/2);
-         bonus2 bAddClass,Class_All,(.@r/2);
+         bonus bAtkRate,(.@r/2);
          bonus bBaseAtk,2*(.@r/2);
          if (.@g >= ENCHANTGRADE_C) {
             bonus bAspdRate,(.@r/2);
-            bonus2 bAddClass,Class_All,2*(.@r/2);
+            bonus bAtkRate,2*(.@r/2);
             bonus bBaseAtk,3*(.@r/2);
             if (.@g >= ENCHANTGRADE_B) {
                bonus bAspdRate,2*(.@r/2);
@@ -147484,7 +147484,7 @@ Body:
       bonus bBaseAtk,5*(min(.@l,150)/10);
       .@l = BaseLevel;
       if (.@l>=105)
-         bonus2 bAddClass,Class_ALL,3;
+         bonus bAtkRate,3;
       if (.@l>=110)
          bonus bDelayrate,-5;
       if (.@l>=120)
@@ -147651,7 +147651,7 @@ Body:
       .@r = getrefine();
       bonus bPow,(readparam(bStr)/25);
       if (.@r>=7) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          if (.@r>=9) {
             bonus bCritAtkRate,10;
             if (.@r>=11) {
@@ -147660,9 +147660,9 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@g >= ENCHANTGRADE_C) {
-            bonus2 bAddClass,Class_All,3;
+            bonus bAtkRate,3;
             bonus bPow,3;
             if (.@g >= ENCHANTGRADE_B) {
                bonus bShortAtkRate,10;
@@ -147786,7 +147786,7 @@ Body:
       .@r = getrefine();
       bonus bCon,(readparam(bDex)/25);
       if (.@r>=7) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          if (.@r>=9) {
             bonus bCritAtkRate,10;
             if (.@r>=11) {
@@ -147795,9 +147795,9 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@g >= ENCHANTGRADE_C) {
-            bonus2 bAddClass,Class_All,3;
+            bonus bAtkRate,3;
             bonus bCon,3;
             if (.@g >= ENCHANTGRADE_B) {
                bonus bLongAtkRate,10;
@@ -148036,7 +148036,7 @@ Body:
     View: 1
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       bonus bMdef,10;
       if (.@r>=7) {
          bonus bCritical,3;
@@ -148045,7 +148045,7 @@ Body:
             bonus bAspdRate,5;
             if (.@r>=12) {
                bonus bCritAtkRate,10;
-               bonus2 bAddClass,Class_All,7;
+               bonus bAtkRate,7;
             }
          }
       }
@@ -148142,7 +148142,7 @@ Body:
       .@g = getenchantgrade();
       .@r = getrefine();
       bonus bMatkRate,5+2*(.@r/2);
-      bonus2 bAddClass,Class_All,5+2*(.@r/2);
+      bonus bAtkRate,5+2*(.@r/2);
       bonus bAspd,3;
       if (.@r>=7) {
          bonus bAspdRate,5;
@@ -149368,7 +149368,7 @@ Body:
       if (.@l>=120)
          bonus bCritAtkRate,5;
       if (.@l>=130)
-         bonus2 bAddClass,Class_ALL,5;
+         bonus bAtkRate,5;
   - Id: 470070
     AegisName: Egirnion_Shoes
     Name: Aegirnion Shoes
@@ -149567,7 +149567,7 @@ Body:
             if (.@r>=13) {
                bonus bCritAtkRate,7;
                bonus bCritical,7;
-               bonus2 bAddClass,Class_All,7;
+               bonus bAtkRate,7;
             }
          }
       }
@@ -149996,7 +149996,7 @@ Body:
       }
       if (.@r>=7) {
          bonus bMatkRate,5;
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          if (.@r>=9) {
             bonus bVariableCastrate,-5;
             bonus bPerfectHitAddRate,10;
@@ -150135,7 +150135,7 @@ Body:
       .@g = getenchantgrade();
       .@r = getrefine();
       if (.@r>=7) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          if (.@r>=9) {
             bonus bFixedCast,-300;
             bonus bVariableCastrate,-5;
@@ -150146,12 +150146,12 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,2;
+         bonus bAtkRate,2;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bFixedCast,-300;
             if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
-               bonus2 bAddClass,Class_All,2;
+               bonus bAtkRate,2;
                if (.@g >= ENCHANTGRADE_A) {
                   bonus bFixedCast,-200;
                }
@@ -150227,7 +150227,7 @@ Body:
       .@g = getenchantgrade();
       .@r = getrefine();
       if (.@r>=7) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          if (.@r>=9) {
             bonus bFixedCast,-300;
             bonus bCritAtkRate,5;
@@ -150238,12 +150238,12 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,2;
+         bonus bAtkRate,2;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bFixedCast,-300;
             if (.@g >= ENCHANTGRADE_B) {
                bonus bPAtk,2;
-               bonus2 bAddClass,Class_All,2;
+               bonus bAtkRate,2;
                if (.@g >= ENCHANTGRADE_A) {
                   bonus bCrate,1;
                }
@@ -151637,7 +151637,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,(.@r/2);
+      bonus bAtkRate,(.@r/2);
       bonus bBaseAtk,5*(.@r/2);
       bonus2 bAddSize,Size_All,3*(.@r/3);
       if (.@r>=7) {
@@ -151901,15 +151901,15 @@ Body:
          if (.@r>=9) {
             bonus bCritAtkRate,10;
             if (.@r>=11) {
-               bonus2 bAddClass,Class_All,5;
+               bonus bAtkRate,5;
             }
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,2;
-            bonus2 bAddClass,Class_All,3;
+            bonus bAtkRate,3;
             if (.@g >= ENCHANTGRADE_B) {
                bonus bShortAtkRate,5;
                if (.@g >= ENCHANTGRADE_A) {
@@ -151985,7 +151985,7 @@ Body:
       .@g = getenchantgrade();
       .@r = getrefine();
       if (.@r>=7) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          if (.@r>=9) {
             bonus bCritAtkRate,10;
             if (.@r>=11) {
@@ -151994,10 +151994,10 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,2;
-            bonus2 bAddClass,Class_All,3;
+            bonus bAtkRate,3;
             if (.@g >= ENCHANTGRADE_B) {
                bonus bLongAtkRate,5;
                if (.@g >= ENCHANTGRADE_A) {
@@ -152439,7 +152439,7 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 160
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bMaxHPrate,5;
   - Id: 490025
     AegisName: Auto_B_L
@@ -152452,7 +152452,7 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 160
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bMaxSPrate,5;
   - Id: 490026
     AegisName: Auto_BC_R
@@ -152520,7 +152520,7 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 30
     Script: |
-      bonus2 bAddClass,Class_All,6;
+      bonus bAtkRate,6;
       bonus bMatkRate,6;
       bonus bHit,15;
   - Id: 490035
@@ -152623,7 +152623,7 @@ Body:
     EquipLevelMin: 170
     Script: |
       bonus bAspdRate,7;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
   - Id: 490045
     AegisName: Sin_Necklace_R
     Name: Sinful Ruby Necklace
@@ -152636,7 +152636,7 @@ Body:
     EquipLevelMin: 170
     Script: |
       bonus bVariableCastrate,-7;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
   - Id: 490046
     AegisName: Sin_Ring_E
     Name: Sinful Emerald Ring
@@ -152649,7 +152649,7 @@ Body:
     EquipLevelMin: 170
     Script: |
       bonus bAspdRate,7;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
   - Id: 490047
     AegisName: Sin_Necklace_E
     Name: Sinful Emerald Necklace
@@ -152662,7 +152662,7 @@ Body:
     EquipLevelMin: 170
     Script: |
       bonus bVariableCastrate,-7;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
   - Id: 490048
     AegisName: Sin_Ring_T
     Name: Sinful Topaz Ring
@@ -152676,7 +152676,7 @@ Body:
     Script: |
       bonus bAspdRate,7;
       bonus bMatkRate,7;
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
   - Id: 490049
     AegisName:  Sin_Necklace_T
     Name: Sinful Topaz Necklace
@@ -152690,7 +152690,7 @@ Body:
     Script: |
       bonus bVariableCastrate,-7;
       bonus bMatkRate,7;
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
   - Id: 490050
     AegisName: Sin_Ring_A
     Name: Sinful Amethyst Ring
@@ -152704,7 +152704,7 @@ Body:
     Script: |
       bonus bAspdRate,7;
       bonus bMatkRate,7;
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
   - Id: 490051
     AegisName: Sin_Necklace_A
     Name: Sinful Amethyst Necklace
@@ -152718,7 +152718,7 @@ Body:
     Script: |
       bonus bVariableCastrate,-7;
       bonus bMatkRate,7;
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
   - Id: 490052
     AegisName: Sin_Ring_S
     Name: Sinful Sapphire Ring
@@ -152757,7 +152757,7 @@ Body:
     EquipLevelMin: 170
     Script: |
       bonus bAspdRate,7;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
   - Id: 490055
     AegisName: Sin_Necklace_O
     Name: Sinful Opal Necklace
@@ -152770,7 +152770,7 @@ Body:
     EquipLevelMin: 170
     Script: |
       bonus bVariableCastrate,-7;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
   - Id: 490056
     AegisName: Shine_Ring_R
     Name: Brilliant Light Ruby Ring
@@ -152783,7 +152783,7 @@ Body:
     EquipLevelMin: 170
     Script: |
       bonus bAspdRate,7;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
   - Id: 490057
     AegisName: Shine_Necklace_R
     Name: Brilliant Light Ruby Necklace
@@ -152796,7 +152796,7 @@ Body:
     EquipLevelMin: 170
     Script: |
       bonus bVariableCastrate,-7;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
   - Id: 490058
     AegisName: Shine_Ring_A
     Name: Brilliant Light Amethyst Ring
@@ -152810,7 +152810,7 @@ Body:
     Script: |
       bonus bAspdRate,7;
       bonus bMatkRate,7;
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
   - Id: 490059
     AegisName: Shine_Necklace_A
     Name: Brilliant Light Amethyst Necklace
@@ -152824,7 +152824,7 @@ Body:
     Script: |
       bonus bVariableCastrate,-7;
       bonus bMatkRate,7;
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
   - Id: 490060
     AegisName: Shine_Ring_E
     Name: Brilliant Light Emerald Ring
@@ -152838,7 +152838,7 @@ Body:
     Script: |
       bonus bAspdRate,7;
       bonus bMatkRate,7;
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
   - Id: 490061
     AegisName: Shine_Necklace_E
     Name: Brilliant Light Emerald Necklace
@@ -152852,7 +152852,7 @@ Body:
     Script: |
       bonus bVariableCastrate,-7;
       bonus bMatkRate,7;
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
   - Id: 490062
     AegisName: Shine_Ring_Z
     Name: Brilliant Light Zircon Ring
@@ -152865,7 +152865,7 @@ Body:
     EquipLevelMin: 170
     Script: |
       bonus bAspdRate,7;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
   - Id: 490063
     AegisName: Shine_Necklace_Z
     Name: Brilliant Light Zircon Necklace
@@ -152878,7 +152878,7 @@ Body:
     EquipLevelMin: 170
     Script: |
       bonus bVariableCastrate,-7;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
   - Id: 490064
     AegisName: Shine_Ring_S
     Name: Brilliant Light Sapphire Ring
@@ -152917,7 +152917,7 @@ Body:
     EquipLevelMin: 170
     Script: |
       bonus bAspdRate,7;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
   - Id: 490067
     AegisName: Shine_Necklace_AQ
     Name: Brilliant Light Aquamarine Necklace
@@ -152930,7 +152930,7 @@ Body:
     EquipLevelMin: 170
     Script: |
       bonus bVariableCastrate,-7;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
   - Id: 490068
     AegisName: RingofVenus
     Name: Ring of Venus
@@ -153015,7 +153015,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
   - Id: 490073
     AegisName: E_Illusion_B_L
     Name: Illusion Booster L(Bound)
@@ -153034,7 +153034,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
   - Id: 490074
     AegisName: E_Illusion_BC_R
     Name: Illusion Battle Chip R(Bound)
@@ -153101,7 +153101,7 @@ Body:
     EquipLevelMin: 230
     Script: |
       bonus bMaxHPrate,5;
-      bonus2 bAddClass,Class_All,8;
+      bonus bAtkRate,8;
   - Id: 490078
     AegisName: MD_Geffen_Ring2
     Name: Mental Condenser
@@ -153309,7 +153309,7 @@ Body:
     ArmorLevel: 1
     Script: |
       bonus bMatkRate,5;
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
   - Id: 490100
     AegisName: Blue_Mental_Pendant
     Name: Red Force Pendant
@@ -153321,7 +153321,7 @@ Body:
     ArmorLevel: 1
     Script: |
       bonus bMatkRate,5;
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
   - Id: 490101
     AegisName: Red_Force_Pendant
     Name: Blue Mental Pendant
@@ -153333,7 +153333,7 @@ Body:
     ArmorLevel: 1
     Script: |
       bonus bMatkRate,5;
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
   - Id: 490102
     AegisName: aegis_490102
     Name: Skull Ring
@@ -153408,7 +153408,7 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 190
     Script: |
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
       bonus bMaxHPrate,5;
   - Id: 490107
     AegisName: Gray_W_Ring
@@ -153421,7 +153421,7 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 190
     Script: |
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
       bonus bMaxSPrate,5;
   - Id: 490108
     AegisName: Gray_W_Earing
@@ -153591,7 +153591,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bNoCastCancel;
   - Id: 490123
     AegisName: 1Para_Acc_R_A
@@ -153667,7 +153667,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       bonus bNoCastCancel;
   - Id: 490127
     AegisName: L_60Lv_Gloves
@@ -153779,7 +153779,7 @@ Body:
       NoAuction: true
     Script: |
       bonus bPAtk,3;
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
   - Id: 490133
     AegisName: Signet_Of_Sta_Star
     Name: Stellar Stamina Seal
@@ -154019,7 +154019,7 @@ Body:
     EquipLevelMin: 205
     Script: |
       bonus bMatkRate,10;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bVariableCastrate,-10;
   - Id: 490153
     AegisName: aegis_490153
@@ -154038,7 +154038,7 @@ Body:
     EquipLevelMin: 205
     Script: |
       bonus bMatkRate,10;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bVariableCastrate,-10;
   - Id: 490155
     AegisName: aegis_490155
@@ -154057,7 +154057,7 @@ Body:
     EquipLevelMin: 205
     Script: |
       bonus bMatkRate,10;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bVariableCastrate,-10;
   - Id: 490156
     AegisName: aegis_490156
@@ -154076,7 +154076,7 @@ Body:
     EquipLevelMin: 205
     Script: |
       bonus bMatkRate,10;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bVariableCastrate,-10;
   - Id: 490159
     AegisName: Omega_Core
@@ -154165,7 +154165,7 @@ Body:
     EquipLevelMin: 205
     Script: |
       bonus bMatkRate,10;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bVariableCastrate,-10;
   - Id: 490165
     AegisName: aegis_490165
@@ -154184,7 +154184,7 @@ Body:
     EquipLevelMin: 205
     Script: |
       bonus bMatkRate,10;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bVariableCastrate,-10;
   - Id: 490166
     AegisName: aegis_490166
@@ -154203,7 +154203,7 @@ Body:
     EquipLevelMin: 205
     Script: |
       bonus bMatkRate,10;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bVariableCastrate,-10;
   - Id: 490167
     AegisName: aegis_490167
@@ -154222,7 +154222,7 @@ Body:
     EquipLevelMin: 205
     Script: |
       bonus bMatkRate,10;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bVariableCastrate,-10;
   - Id: 490171
     AegisName: aegis_490171
@@ -154241,7 +154241,7 @@ Body:
     EquipLevelMin: 205
     Script: |
       bonus bMatkRate,10;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bVariableCastrate,-10;
   - Id: 490172
     AegisName: aegis_490172
@@ -154260,7 +154260,7 @@ Body:
     EquipLevelMin: 205
     Script: |
       bonus bMatkRate,10;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bVariableCastrate,-10;
   - Id: 490176
     AegisName: Snowflower_Pendant
@@ -154273,7 +154273,7 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 210
     Script: |
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
       bonus bMaxHPrate,7;
   - Id: 490177
     AegisName: Snowflower_Ring
@@ -154286,7 +154286,7 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 210
     Script: |
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
       bonus bMaxSPrate,7;
   - Id: 490178
     AegisName: Snowflower_Necklace
@@ -154331,7 +154331,7 @@ Body:
     EquipLevelMin: 205
     Script: |
       bonus bMatkRate,10;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bVariableCastrate,-10;
   - Id: 490181
     AegisName: aegis_490181
@@ -154350,7 +154350,7 @@ Body:
     EquipLevelMin: 205
     Script: |
       bonus bMatkRate,10;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bVariableCastrate,-10;
   - Id: 490182
     AegisName: aegis_490182
@@ -154383,7 +154383,7 @@ Body:
     EquipLevelMin: 205
     Script: |
       bonus bMatkRate,10;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bVariableCastrate,-10;
   - Id: 490185
     AegisName: aegis_490185
@@ -154402,7 +154402,7 @@ Body:
     EquipLevelMin: 205
     Script: |
       bonus bMatkRate,10;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bVariableCastrate,-10;
   - Id: 490186
     AegisName: aegis_490186
@@ -154421,7 +154421,7 @@ Body:
     EquipLevelMin: 205
     Script: |
       bonus bMatkRate,10;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bVariableCastrate,-10;
   - Id: 490187
     AegisName: aegis_490187
@@ -154440,7 +154440,7 @@ Body:
     EquipLevelMin: 205
     Script: |
       bonus bMatkRate,10;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bVariableCastrate,-10;
   - Id: 490188
     AegisName: aegis_490188
@@ -154460,7 +154460,7 @@ Body:
     EquipLevelMin: 205
     Script: |
       bonus bMatkRate,10;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bVariableCastrate,-10;
   - Id: 490193
     AegisName: aegis_490193
@@ -154849,7 +154849,7 @@ Body:
       NoAuction: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bBaseAtk,3*.@r;
       bonus bBaseAtk,3*(min(BaseLevel,195)/15);
       if (.@r>=7) {
@@ -154926,7 +154926,7 @@ Body:
       .@r = getrefine();
       bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",5*(.@r/2);
       bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",5*(.@r/2);
-      bonus2 bAddClass,Class_All,3*(.@r/4);
+      bonus bAtkRate,3*(.@r/4);
   - Id: 500019
     AegisName: Poenitentia_Gladius
     Name: Poenitentia Gladius
@@ -154993,7 +154993,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",10;
       bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",10;
       bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WATER",10;
@@ -155051,7 +155051,7 @@ Body:
       bonus bLongAtkRate,4*(.@r/3);
       if (.@r>=7) {
          bonus bVariableCastrate,-15;
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          if (.@r>=9) {
             bonus bAspdRate,10;
             bonus2 bSkillAtk,"GN_CARTCANNON",15;
@@ -155062,14 +155062,14 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,2;
+         bonus bAtkRate,2;
          bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",10;
          bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",10;
          bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WATER",10;
          bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_GROUND",10;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
-            bonus2 bAddClass,Class_All,3;
+            bonus bAtkRate,3;
             if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",10;
                bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",10;
@@ -155245,7 +155245,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"GN_CARTCANNON",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
@@ -155374,7 +155374,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (BaseLevel>=60)
          bonus bShortAtkRate,10;
       if (BaseLevel>=75)
@@ -155404,7 +155404,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (BaseLevel>=60)
          bonus bShortAtkRate,10;
       if (BaseLevel>=75)
@@ -155484,7 +155484,7 @@ Body:
       .@l = BaseLevel;
       .@a = getskilllv("GN_TRAINING_SWORD");
       bonus bShortAtkRate,2*.@a;
-      bonus2 bAddClass,Class_ALL,5*.@a;
+      bonus bAtkRate,5*.@a;
       if (.@l>=105) {
          bonus bDelayrate,-5;
          bonus2 bSkillAtk,"GN_HELLS_PLANT",25;
@@ -155575,7 +155575,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       if (BaseLevel>=210) {
          bonus bPAtk,1;
          bonus bPow,2;
@@ -155594,7 +155594,7 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
@@ -155628,7 +155628,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       if (BaseLevel>=210) {
          bonus bPAtk,1;
          bonus bPow,2;
@@ -155647,7 +155647,7 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bShortAtkRate,15;
             bonus bPAtk,1;
@@ -155801,7 +155801,7 @@ Body:
       bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",6*(.@r/2);
       bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",6*(.@r/2);
       bonus2 bSkillAtk,"GN_CART_TORNADO",7*(.@r/3);
-      bonus2 bAddClass,Class_All,5*(.@r/4);
+      bonus bAtkRate,5*(.@r/4);
       if (.@g >= ENCHANTGRADE_D) {
          bonus bPow,2;
          if (.@g >= ENCHANTGRADE_C) {
@@ -155833,7 +155833,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",10+3*(.@r/2);
       bonus2 bSkillAtk,"HN_SHIELD_CHAIN_RUSH",10+3*(.@r/2);
       if (.@r>=7) {
@@ -155918,7 +155918,7 @@ Body:
     Refineable: true
     Script: |
       bonus2 bMagicAtkEle,Ele_Fire,3;
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       .@r = getrefine();
       if (.@r) {
          bonus bBaseAtk,.@r*2;
@@ -155954,7 +155954,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Fire,3;
       bonus2 bMagicAtkEle,Ele_Wind,3;
       bonus2 bMagicAtkEle,Ele_Water,3;
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       .@r = getrefine();
       if (.@r) {
          bonus bBaseAtk,.@r*2;
@@ -156092,7 +156092,7 @@ Body:
       NoAuction: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bBaseAtk,3*.@r;
       bonus bBaseAtk,3*(min(BaseLevel,195)/15);
       if (.@r>=7) {
@@ -156140,7 +156140,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bMatkRate,2;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bMatk,3*(.@r+(min(BaseLevel,195)/15));
       bonus bBaseAtk,3*(.@r+(min(BaseLevel,195)/15));
       if (.@r>=7) {
@@ -156322,7 +156322,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"SHC_SHADOW_STAB",10;
       bonus2 bSkillAtk,"GC_CROSSIMPACT",3*(.@r/2);
       if (.@r>=7) {
@@ -156366,7 +156366,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"ABC_DEFT_STAB",10;
       bonus2 bSkillAtk,"SC_FATALMENACE",3*(.@r/2);
       if (.@r>=7) {
@@ -156540,7 +156540,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SC_FATALMENACE",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
@@ -156725,7 +156725,7 @@ Body:
       bonus bMatk,180;
       bonus bMatkRate,3;
       bonus bDelayrate,-1*.@a;
-      bonus2 bAddClass,Class_ALL,3;
+      bonus bAtkRate,3;
       if (.@l>=105) {
          bonus2 bSkillAtk,"SC_FATALMENACE",25;
          bonus bAspd,1;
@@ -156765,7 +156765,7 @@ Body:
       .@l = BaseLevel;
       .@a = getskilllv("SM_SWORD");
       bonus bShortAtkRate,1*.@a;
-      bonus2 bAddClass,Class_ALL,5;
+      bonus bAtkRate,5;
       if (.@l>=105) {
          bonus bAspdRate,10;
          bonus2 bSkillAtk,"RG_RAID",25;
@@ -156852,7 +156852,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       if (BaseLevel>=210) {
          bonus bPAtk,1;
          bonus bPow,2;
@@ -156871,7 +156871,7 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bShortAtkRate,15;
             bonus bPAtk,1;
@@ -157112,7 +157112,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
       bonus2 bSkillAtk,"SS_KUNAIKAITEN",7;
       bonus2 bSkillAtk,"SS_KUNAIKUSSETSU",7;
       bonus2 bSkillAtk,"KO_JYUMONJIKIRI",2*(.@r/2);
@@ -157215,7 +157215,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
@@ -157401,7 +157401,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"NC_AXEBOOMERANG",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
@@ -157461,7 +157461,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (BaseLevel>=60)
          bonus bShortAtkRate,10;
       if (BaseLevel>=75)
@@ -157497,7 +157497,7 @@ Body:
       .@a = getskilllv("NC_MADOLICENCE");
       bonus bUnbreakableWeapon;
       bonus bLongAtkRate,2*.@a;
-      bonus2 bAddClass,Class_ALL,5;
+      bonus bAtkRate,5;
       if (.@l>=105) {
          bonus bVariableCastrate,-10;
          bonus2 bSkillAtk,"NC_VULCANARM",25;
@@ -157558,7 +157558,7 @@ Body:
     Refineable: true
     Script: |
       bonus bMatkRate,3;
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       bonus2 bMagicAtkEle,Ele_Holy,3;
       .@r = getrefine();
       if (.@r) {
@@ -157634,7 +157634,7 @@ Body:
       NoAuction: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bBaseAtk,3*.@r;
       bonus bBaseAtk,3*(min(BaseLevel,195)/15);
       if (.@r>=7) {
@@ -157733,7 +157733,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"IG_OVERSLASH",10;
       bonus2 bSkillAtk,"LG_OVERBRAND",3*(.@r/2);
       if (.@r>=7) {
@@ -157794,11 +157794,11 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,2;
+         bonus bAtkRate,2;
          bonus2 bSkillAtk,"IG_OVERSLASH",10;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
-            bonus2 bAddClass,Class_All,3;
+            bonus bAtkRate,3;
             if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"IG_OVERSLASH",10;
             }
@@ -157882,7 +157882,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"LG_OVERBRAND",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
@@ -157948,7 +157948,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (BaseLevel>=60)
          bonus bAspdRate,10;
       if (BaseLevel>=75)
@@ -157983,7 +157983,7 @@ Body:
       .@l = BaseLevel;
       .@a = getskilllv("CR_SPEARQUICKEN");
       bonus bAspdRate,1*.@a;
-      bonus2 bAddClass,Class_ALL,5;
+      bonus bAtkRate,5;
       if (.@l>=105) {
          bonus bAspd,1;
          bonus2 bSkillAtk,"LG_BANISHINGPOINT",25;
@@ -158022,7 +158022,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       if (BaseLevel>=210) {
          bonus bPAtk,1;
          bonus bPow,2;
@@ -158041,7 +158041,7 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@g >= ENCHANTGRADE_C) {
             bonus2 bAddEle,Ele_All,15;
             bonus bPAtk,1;
@@ -158162,7 +158162,7 @@ Body:
          bonus bAspdRate,getskilllv("TK_RUN");
       }
       if (.@r>=9) {
-         bonus2 bAddClass,Class_All,10;
+         bonus bAtkRate,10;
       }
   - Id: 540004
     AegisName: Ep172_1h_Book
@@ -158458,7 +158458,7 @@ Body:
       .@r = getrefine();
       bonus bUnbreakableWeapon;
       bonus bMatkRate,5;
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bMatk,215;
       bonus2 bSkillAtk,"CD_PETITIO",10;
       bonus2 bSkillAtk,"AB_DUPLELIGHT",3*(.@r/2);
@@ -158804,7 +158804,7 @@ Body:
          bonus2 bSkillAtk,"AB_DUPLELIGHT",25;
          if (.@g >= ENCHANTGRADE_B) {
             bonus bMatkRate,7;
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
@@ -158897,7 +158897,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (BaseLevel>=60)
          bonus bShortAtkRate,10;
       if (BaseLevel>=75) {
@@ -158930,7 +158930,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (BaseLevel>=60)
          bonus bShortAtkRate,10;
       if (BaseLevel>=75) {
@@ -159077,9 +159077,9 @@ Body:
       .@l = BaseLevel;
       .@a = getskilllv("TK_HPTIME");
       bonus bShortAtkRate,1*.@a;
-      bonus2 bAddClass,Class_ALL,5;
+      bonus bAtkRate,5;
       if (.@l>=105) {
-         bonus2 bAddClass,Class_ALL,10;
+         bonus bAtkRate,10;
          bonus2 bSkillAtk,"SJ_PROMINENCEKICK",25;
          bonus2 bSkillAtk,"SJ_SOLARBURST",25;
          if (.@l>=110) {
@@ -159119,9 +159119,9 @@ Body:
       .@l = BaseLevel;
       .@a = getskilllv("TK_HPTIME");
       bonus bShortAtkRate,1*.@a;
-      bonus2 bAddClass,Class_ALL,5;
+      bonus bAtkRate,5;
       if (.@l>=105) {
-         bonus2 bAddClass,Class_ALL,10;
+         bonus bAtkRate,10;
          bonus2 bSkillAtk,"SJ_PROMINENCEKICK",25;
          bonus2 bSkillAtk,"SJ_SOLARBURST",25;
          if (.@l>=110) {
@@ -159214,7 +159214,7 @@ Body:
       NoAuction: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bBaseAtk,3*.@r;
       bonus bBaseAtk,3*(min(BaseLevel,195)/15);
       if (.@r>=7) {
@@ -159226,7 +159226,7 @@ Body:
             bonus2 bSkillAtk,"SJ_NEWMOONKICK",25;
             if (.@r>=11) {
                bonus2 bAddSize,Size_All,15;
-               bonus2 bAddClass,Class_All,10;
+               bonus bAtkRate,10;
                if (.@r>=13) {
                   bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15;
                   bonus2 bSkillAtk,"SJ_FULLMOONKICK",15;
@@ -159261,7 +159261,7 @@ Body:
       NoAuction: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bBaseAtk,3*.@r;
       bonus bBaseAtk,3*(min(BaseLevel,195)/15);
       if (.@r>=7) {
@@ -159272,7 +159272,7 @@ Body:
             bonus2 bSkillAtk,"SJ_PROMINENCEKICK",25;
             if (.@r>=11) {
                bonus2 bAddSize,Size_All,15;
-               bonus2 bAddClass,Class_All,10;
+               bonus bAtkRate,10;
                if (.@r>=13) {
                   bonus2 bSkillAtk,"SJ_SOLARBURST",15;
                   bonus2 bSkillAtk,"SJ_PROMINENCEKICK",15;
@@ -159394,7 +159394,7 @@ Body:
       .@g = getenchantgrade();
       .@r = getrefine();
       bonus bUnbreakableWeapon;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"SKE_SUNSET_BLAST",10;
       bonus2 bSkillAtk,"SKE_DAWN_BREAK",10;
       bonus2 bSkillAtk,"SJ_SOLARBURST",3*(.@r/2);
@@ -159466,7 +159466,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
@@ -159516,7 +159516,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SJ_FULLMOONKICK",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
@@ -159561,7 +159561,7 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bShortAtkRate,15;
             bonus bPAtk,1;
@@ -159682,7 +159682,7 @@ Body:
       bonus bMatk,350;
       bonus bUnbreakableWeapon;
       bonus bMatkRate,7;
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
       bonus2 bSkillAtk,"SU_CN_METEOR",15;
       bonus2 bSkillAtk,"SU_PICKYPECK",15;
       if (.@r>=7) {
@@ -159999,7 +159999,7 @@ Body:
       .@r = getrefine();
       bonus bMatk,15*(.@r/2);
       bonus bBaseAtk,15*(.@r/2);
-      bonus2 bAddClass,Class_All,2*(.@r/3);
+      bonus bAtkRate,2*(.@r/3);
       bonus bMatkRate,2*(.@r/3);
       if (.@r>=7) {
          bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",25;
@@ -160735,7 +160735,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (BaseLevel>=60)
          bonus bLongAtkRate,10;
       if (BaseLevel>=75)
@@ -160876,7 +160876,7 @@ Body:
     Script: |
       .@l = BaseLevel;
       .@a = getskilllv("SU_PICKYPECK");
-      bonus2 bAddClass,Class_ALL,5;
+      bonus bAtkRate,5;
       bonus bUnbreakableWeapon;
       bonus bLongAtkRate,2*.@a;
       if (.@l>=105) {
@@ -161129,7 +161129,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bUnbreakableWeapon;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bBaseAtk,3*.@r;
       bonus bBaseAtk,3*(min(BaseLevel,195)/15);
       if (.@r>=7) {
@@ -161837,7 +161837,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SU_PICKYPECK",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
@@ -161885,7 +161885,7 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus bMatkRate,3;
          if (.@g >= ENCHANTGRADE_C) {
             bonus2 bMagicAtkEle,Ele_All,15;
@@ -161899,7 +161899,7 @@ Body:
       }
       bonus bMatk,15*(.@r/2);
       bonus bBaseAtk,15*(.@r/2);
-      bonus2 bAddClass,Class_All,2*(.@r/3);
+      bonus bAtkRate,2*(.@r/3);
       bonus bMatkRate,2*(.@r/3);
   - Id: 550068
     AegisName: SoulWeight_LT
@@ -162114,7 +162114,7 @@ Body:
       NoAuction: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bBaseAtk,(3*.@r)+3*(min(BaseLevel,195)/15);
       if (.@r>=7) {
          bonus bLongAtkRate,2*getskilllv("MO_CALLSPIRITS");
@@ -162159,14 +162159,14 @@ Body:
       NoAuction: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,2+(min(BaseLevel,195)/15);
+      bonus bAtkRate,2+(min(BaseLevel,195)/15);
       bonus bMaxHP,250*.@r;
       bonus bMaxSP,20*.@r;
       if (.@r>=7) {
          bonus bMaxHPrate,2*getskilllv("MO_CHAINCOMBO");
       }
       if (.@r>=9) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          bonus2 bSkillAtk,"SR_SKYNETBLOW",25;
          bonus2 bSkillAtk,"SR_TIGERCANNON",25;
       }
@@ -162292,7 +162292,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"IQ_SECOND_FAITH",10;
       bonus2 bSkillAtk,"SR_TIGERCANNON",3*(.@r/2);
       if (.@r>=7) {
@@ -162336,7 +162336,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"IQ_EXPOSION_BLASTER",10;
       bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",3*(.@r/2);
       if (.@r>=7) {
@@ -162397,11 +162397,11 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,2;
+         bonus bAtkRate,2;
          bonus2 bSkillAtk,"IQ_THIRD_FLAME_BOMB",10;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
-            bonus2 bAddClass,Class_All,3;
+            bonus bAtkRate,3;
             if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"IQ_THIRD_FLAME_BOMB",10;
             }
@@ -162520,7 +162520,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SR_TIGERCANNON",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
@@ -162570,7 +162570,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
@@ -162599,7 +162599,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (BaseLevel>=60)
          bonus bAspdRate,10;
       if (BaseLevel>=75)
@@ -162628,7 +162628,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (BaseLevel>=60)
          bonus bLongAtkRate,10;
       if (BaseLevel>=75)
@@ -162661,7 +162661,7 @@ Body:
       NoAuction: true
     Script: |
       .@a = getskilllv("MO_CHAINCOMBO");
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bMaxHPrate,2*.@a;
       if (BaseLevel>=105) {
          bonus2 bSkillCooldown,"SR_TIGERCANNON",-1000;
@@ -162702,7 +162702,7 @@ Body:
       NoAuction: true
     Script: |
       .@a = getskilllv("MO_CALLSPIRITS");
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bLongAtkRate,2*.@a;
       if (BaseLevel>=105) {
          bonus2 bSkillCooldown,"SR_RAMPAGEBLASTER",-1000;
@@ -162739,7 +162739,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       if (BaseLevel>=210) {
          bonus bPAtk,1;
          bonus bPow,2;
@@ -162759,7 +162759,7 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
@@ -162793,7 +162793,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       if (BaseLevel>=210) {
          bonus bPAtk,1;
          bonus bPow,2;
@@ -162812,7 +162812,7 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bShortAtkRate,15;
@@ -162900,7 +162900,7 @@ Body:
     Refineable: true
     Script: |
       bonus2 bMagicAtkEle,Ele_Neutral,3;
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       .@r = getrefine();
       bonus bBaseAtk,.@r*3;
       bonus bMatk,.@r*3;
@@ -163215,11 +163215,11 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,2;
+         bonus bAtkRate,2;
          bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",10;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
-            bonus2 bAddClass,Class_All,3;
+            bonus bAtkRate,3;
             if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",10;
             }
@@ -163342,7 +163342,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
@@ -163424,7 +163424,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (BaseLevel>=60)
          bonus bLongAtkRate,10;
       if (BaseLevel>=75)
@@ -163458,7 +163458,7 @@ Body:
       NoAuction: true
     Script: |
       .@a = getskilllv("BA_MUSICALLESSON");
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bLongAtkRate,1*.@a;
       if (BaseLevel>=105) {
          bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000;
@@ -163541,7 +163541,7 @@ Body:
       NoAuction: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bBaseAtk,3*.@r;
       bonus bBaseAtk,3*(min(BaseLevel,195)/15);
       if (.@r>=7) {
@@ -163692,7 +163692,7 @@ Body:
     Refineable: true
     Script: |
       bonus2 bMagicAtkEle,Ele_Neutral,3;
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       .@r = getrefine();
       bonus bBaseAtk,.@r*3;
       bonus bMatk,.@r*3;
@@ -163703,7 +163703,7 @@ Body:
          bonus bVariableCastrate,getskilllv("DC_DANCINGLESSON")*-1;
       }
       if (.@r>=9) {
-         bonus2 bAddClass,Class_All,10;
+         bonus bAtkRate,10;
          bonus2 bMagicAddClass,Class_All,10;
       }
   - Id: 580002
@@ -164007,11 +164007,11 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,2;
+         bonus bAtkRate,2;
          bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",10;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
-            bonus2 bAddClass,Class_All,3;
+            bonus bAtkRate,3;
             if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",10;
             }
@@ -164134,7 +164134,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
@@ -164216,7 +164216,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (BaseLevel>=60)
         bonus bLongAtkRate,10;
       if (BaseLevel>=75)
@@ -164250,7 +164250,7 @@ Body:
       NoAuction: true
     Script: |
       .@a = getskilllv("DC_DANCINGLESSON");
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bLongAtkRate,1*.@a;
       if (BaseLevel>=105) {
          bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000;
@@ -164333,7 +164333,7 @@ Body:
       NoAuction: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bBaseAtk,3*.@r;
       bonus bBaseAtk,3*(min(BaseLevel,195)/15);
       if (.@r>=7) {
@@ -164486,7 +164486,7 @@ Body:
       bonus bMatk,160;
       bonus bUnbreakableWeapon;
       bonus2 bMagicAtkEle,Ele_Holy,3;
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       bonus bMatk,2*.@r;
       bonus bBaseAtk,2*.@r;
       bonus bMatk,3*(min(BaseLevel,180)/15);
@@ -164627,7 +164627,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bUnbreakableWeapon;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bBaseAtk,3*.@r+3*(min(BaseLevel,195)/15);
       if (.@r>=7) {
          bonus bLongAtkRate,2*getskilllv("NC_MADOLICENCE");
@@ -164673,7 +164673,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bUnbreakableWeapon;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bBaseAtk,3*.@r+3*(min(BaseLevel,195)/15);
       if (.@r>=7) {
          bonus bLongAtkRate,2*getskilllv("AM_LEARNINGPOTION");
@@ -164720,7 +164720,7 @@ Body:
       .@r = getrefine();
       bonus bUnbreakableWeapon;
       bonus bMatkRate,2;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bMatk,160+(3*.@r)+3*(min(BaseLevel,195)/15);
       bonus bBaseAtk,3*.@r+3*(min(BaseLevel,195)/15);
       if (.@r>=7) {
@@ -164856,7 +164856,7 @@ Body:
       .@g = getenchantgrade();
       .@r = getrefine();
       bonus bUnbreakableWeapon;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"MT_AXE_STOMP",10;
       if (.@r>=7) {
          bonus bVariableCastrate,-10;
@@ -164898,7 +164898,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",10;
       bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",10;
       bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WATER",10;
@@ -164962,7 +164962,7 @@ Body:
          bonus bAspdRate,10;
          if (.@r>=9) {
             bonus bMatkRate,5;
-            bonus2 bAddClass,Class_All,5;
+            bonus bAtkRate,5;
             bonus2 bSkillAtk,"AB_DUPLELIGHT",30;
             if (.@r>=11) {
                bonus2 bAddSize,Size_All,15;
@@ -164972,7 +164972,7 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"CD_PETITIO",10;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
@@ -165098,7 +165098,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"NC_VULCANARM",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
@@ -165149,7 +165149,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"GN_CART_TORNADO",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
@@ -165214,7 +165214,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (BaseLevel>=60)
          bonus bVariableCastrate,-10;
       if (BaseLevel>=75)
@@ -165277,7 +165277,7 @@ Body:
     Script: |
       .@a = getskilllv("AM_LEARNINGPOTION");
       bonus bUnbreakableWeapon;
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bLongAtkRate,1*.@a;
       if (BaseLevel>=105) {
          bonus bVariableCastrate,-10;
@@ -165414,7 +165414,7 @@ Body:
       .@g = getenchantgrade();
       .@r = getrefine();
       bonus bUnbreakableWeapon;
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       if (BaseLevel>=210) {
          bonus bPAtk,1;
          bonus bPow,2;
@@ -165432,7 +165432,7 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
@@ -165807,7 +165807,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"DK_STORMSLASH",10;
       bonus2 bSkillAtk,"RK_IGNITIONBREAK",3*(.@r/2);
       if (.@r>=7) {
@@ -165859,7 +165859,7 @@ Body:
          bonus bAspdRate,10;
          bonus2 bSkillAtk,"RK_WINDCUTTER",20;
          if (.@r>=9) {
-            bonus2 bAddClass,Class_All,5;
+            bonus bAtkRate,5;
             if (.@r>=11) {
                bonus2 bAddSize,Size_All,15;
                bonus bShortAtkRate,15;
@@ -165867,11 +165867,11 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,2;
+         bonus bAtkRate,2;
          bonus2 bSkillAtk,"DK_SERVANTWEAPON_ATK",10;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
-            bonus2 bAddClass,Class_All,3;
+            bonus bAtkRate,3;
             if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"DK_SERVANTWEAPON_ATK",10;
             }
@@ -165955,7 +165955,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RK_WINDCUTTER",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
@@ -166055,7 +166055,7 @@ Body:
       .@g = getenchantgrade();
       .@r = getrefine();
       bonus bUnbreakableWeapon;
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       if (BaseLevel>=210) {
          bonus bPAtk,1;
          bonus bPow,2;
@@ -166075,7 +166075,7 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bShortAtkRate,15;
@@ -166440,7 +166440,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"SHC_IMPACT_CRATER",10;
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",3*(.@r/2);
       if (.@r>=7) {
@@ -166492,7 +166492,7 @@ Body:
          bonus bDelayrate,-10;
          bonus2 bSkillAtk,"GC_COUNTERSLASH",15;
          if (.@r>=9) {
-            bonus2 bAddClass,Class_All,5;
+            bonus bAtkRate,5;
             bonus2 bSkillAtk,"GC_ROLLINGCUTTER",25;
             if (.@r>=11) {
                bonus2 bAddSize,Size_All,15;
@@ -166501,7 +166501,7 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SHC_IMPACT_CRATER",10;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bDelayrate,-5;
@@ -166624,7 +166624,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
@@ -166674,7 +166674,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"GC_COUNTERSLASH",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
@@ -166732,7 +166732,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (BaseLevel>=60)
          bonus bHit,15;
       if (BaseLevel>=75)
@@ -166806,7 +166806,7 @@ Body:
       NoAuction: true
     Script: |
       .@a = getskilllv("AS_KATAR");
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bDelayrate,-1*.@a;
       if (BaseLevel>=105) {
          bonus bShortAtkRate,10;
@@ -166845,7 +166845,7 @@ Body:
       NoAuction: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bBaseAtk,3*.@r;
       bonus bBaseAtk,3*(min(BaseLevel,195)/15);
       if (.@r>=7) {
@@ -166886,7 +166886,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       if (BaseLevel>=210) {
          bonus bPAtk,1;
          bonus bPow,2;
@@ -166906,7 +166906,7 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bShortAtkRate,15;
             bonus bPAtk,1;
@@ -166940,7 +166940,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       if (BaseLevel>=210) {
          bonus bPAtk,1;
          bonus bPow,2;
@@ -166961,7 +166961,7 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bShortAtkRate,15;
@@ -167055,7 +167055,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bUnbreakableWeapon;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bBaseAtk,3*.@r+3*(min(BaseLevel,195)/15);
       if (.@r>=7) {
          bonus bShortAtkRate,getskilllv("BS_WEAPONRESEARCH");
@@ -167152,7 +167152,7 @@ Body:
       .@g = getenchantgrade();
       .@r = getrefine();
       bonus bUnbreakableWeapon;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"MT_AXE_STOMP",10;
       bonus2 bSkillAtk,"NC_AXETORNADO",3*(.@r/2);
       if (.@r>=7) {
@@ -167214,11 +167214,11 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,2;
+         bonus bAtkRate,2;
          bonus2 bSkillAtk,"MT_AXE_STOMP",10;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bPAtk,1;
-            bonus2 bAddClass,Class_All,3;
+            bonus bAtkRate,3;
             if (.@g >= ENCHANTGRADE_B) {
                bonus2 bSkillAtk,"MT_AXE_STOMP",10;
             }
@@ -167317,7 +167317,7 @@ Body:
       NoAuction: true
     Script: |
       .@a = getskilllv("BS_WEAPONRESEARCH");
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bShortAtkRate,1*.@a;
       if (BaseLevel>=105) {
          bonus2 bSkillCooldown,"NC_AXETORNADO",-1000;
@@ -167355,7 +167355,7 @@ Body:
       .@g = getenchantgrade();
       .@r = getrefine();
       bonus bUnbreakableWeapon;
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       if (BaseLevel>=210) {
          bonus bPAtk,1;
          bonus bPow,2;
@@ -167373,7 +167373,7 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bShortAtkRate,15;
@@ -167496,7 +167496,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"LG_OVERBRAND",5*(.@r/2);
       if (.@r>=7) {
          bonus2 bSkillAtk,"LG_OVERBRAND",20;
@@ -167573,7 +167573,7 @@ Body:
       NoAuction: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,2+(min(BaseLevel,195)/15);
+      bonus bAtkRate,2+(min(BaseLevel,195)/15);
       bonus bMaxHP,250*.@r;
       bonus bMaxSP,20*.@r;
       if (.@r>=7) {
@@ -167615,7 +167615,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"DK_MADNESS_CRUSHER",10;
       bonus2 bSkillAtk,"RK_HUNDREDSPEAR",3*(.@r/2);
       if (.@r>=7) {
@@ -167716,7 +167716,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RK_HUNDREDSPEAR",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
@@ -167745,7 +167745,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (BaseLevel>=60)
          bonus2 bSkillAtk,"KN_PIERCE",20;
       if (BaseLevel>=75)
@@ -167778,7 +167778,7 @@ Body:
       NoAuction: true
     Script: |
       .@a = getskilllv("RK_DRAGONTRAINING");
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bDelayrate,-3*.@a;
       if (BaseLevel>=105) {
          bonus bVariableCastrate,-10;
@@ -169001,7 +169001,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (BaseLevel>=60)
          bonus bLongAtkRate,10;
       if (BaseLevel>=75)
@@ -169075,7 +169075,7 @@ Body:
       NoAuction: true
     Script: |
       .@a = getskilllv("NJ_TOBIDOUGU");
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bLongAtkRate,1*.@a;
       if (BaseLevel>=105) {
          bonus2 bSkillCooldown,"KO_JYUMONJIKIRI",-2000;
@@ -169161,7 +169161,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bUnbreakableWeapon;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bBaseAtk,3*.@r;
       bonus bBaseAtk,3*(min(BaseLevel,195)/15);
       if (.@r>=7) {
@@ -169279,7 +169279,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"KO_JYUMONJIKIRI",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
@@ -169330,7 +169330,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"KO_HUUMARANKA",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
@@ -169377,7 +169377,7 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
@@ -169650,7 +169650,7 @@ Body:
       NoAuction: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bBaseAtk,3*.@r+3*(min(BaseLevel,195)/15);
       if (.@r>=7) {
          bonus bDelayrate,-1*(getskilllv("AC_VULTURE")/2);
@@ -169696,7 +169696,7 @@ Body:
       NoAuction: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bBaseAtk,3*.@r+3*(min(BaseLevel,195)/15);
       if (.@r>=7) {
          bonus bLongAtkRate,getskilllv("AC_OWL");
@@ -169740,7 +169740,7 @@ Body:
       NoAuction: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bBaseAtk,3*.@r+3*(min(BaseLevel,195)/15);
       if (.@r>=7) {
          bonus bLongAtkRate,getskilllv("AC_VULTURE");
@@ -169752,7 +169752,7 @@ Body:
       }
       if (.@r>=11) {
          bonus2 bAddSize,Size_All,15;
-         bonus2 bAddClass,Class_All,10;
+         bonus bAtkRate,10;
       }
       if (.@r>=13) {
          bonus2 bSkillAtk,"RA_AIMEDBOLT",15;
@@ -169786,7 +169786,7 @@ Body:
       NoAuction: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bBaseAtk,3*.@r+3*(min(BaseLevel,195)/15);
       if (.@r>=7) {
          bonus bLongAtkRate,2*getskilllv("BA_MUSICALLESSON");
@@ -169915,7 +169915,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"ABC_FRENZY_SHOT",10;
       bonus2 bSkillAtk,"SC_TRIANGLESHOT",3*(.@r/2);
       if (.@r>=7) {
@@ -169959,7 +169959,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",10;
       bonus2 bSkillAtk,"RA_AIMEDBOLT",3*(.@r/2);
       if (.@r>=7) {
@@ -170003,7 +170003,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"WH_GALESTORM",10;
       bonus2 bSkillAtk,"RA_ARROWSTORM",3*(.@r/2);
       if (.@r>=7) {
@@ -170047,7 +170047,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",10;
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",3*(.@r/2);
       if (.@r>=7) {
@@ -170108,7 +170108,7 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",10;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bDelayrate,-5;
@@ -170267,7 +170267,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"SC_TRIANGLESHOT",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
@@ -170318,7 +170318,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RA_ARROWSTORM",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
@@ -170368,7 +170368,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RA_AIMEDBOLT",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bPow,(.@r/3);
@@ -170425,7 +170425,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (BaseLevel>=60)
          bonus bLongAtkRate,10;
       if (BaseLevel>=75)
@@ -170454,7 +170454,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (BaseLevel>=60)
          bonus bLongAtkRate,10;
       if (BaseLevel>=75)
@@ -170483,7 +170483,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (BaseLevel>=60)
          bonus bAspdRate,10;
       if (BaseLevel>=75)
@@ -170512,7 +170512,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (BaseLevel>=60)
          bonus bLongAtkRate,10;
       if (BaseLevel>=75)
@@ -170545,7 +170545,7 @@ Body:
       NoAuction: true
     Script: |
       .@a = getskilllv("AC_VULTURE");
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bLongAtkRate,1*.@a;
       if (BaseLevel>=105) {
          bonus bVariableCastrate,-10;
@@ -170586,7 +170586,7 @@ Body:
       NoAuction: true
     Script: |
       .@a = getskilllv("AC_OWL");
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bLongAtkRate,1*.@a;
       if (BaseLevel>=105) {
          bonus2 bSkillCooldown,"RA_ARROWSTORM",-700;
@@ -170624,7 +170624,7 @@ Body:
       NoAuction: true
     Script: |
       .@a = getskilllv("AC_VULTURE");
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bAspdRate,1*.@a;
       if (BaseLevel>=105) {
          bonus2 bSkillCooldown,"RA_AIMEDBOLT",-1000;
@@ -170662,7 +170662,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       if (BaseLevel>=210) {
          bonus bPAtk,1;
          bonus bPow,2;
@@ -170681,7 +170681,7 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
@@ -170715,7 +170715,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       if (BaseLevel>=210) {
          bonus bPAtk,1;
          bonus bPow,2;
@@ -170733,7 +170733,7 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
@@ -170769,7 +170769,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       if (BaseLevel>=210) {
          bonus bPAtk,1;
          bonus bPow,2;
@@ -170788,7 +170788,7 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
@@ -170894,7 +170894,7 @@ Body:
       bonus bBaseAtk,.@r/2*10;
       bonus2 bSkillAtk,"RL_FIREDANCE",.@r/3*2;
       if (.@r>=7) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          bonus bLongAtkRate,10;
       }
       if (.@r>=9) {
@@ -170989,7 +170989,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (BaseLevel>=60)
          bonus bAspdRate,10;
       if (BaseLevel>=75)
@@ -171019,7 +171019,7 @@ Body:
       NoAuction: true
     Script: |
       .@a = getskilllv("GS_CHAINACTION");
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bLongAtkRate,1*.@a;
       if (BaseLevel>=105) {
          bonus bLongAtkRate,10;
@@ -171058,7 +171058,7 @@ Body:
       NoAuction: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bBaseAtk,3*.@r;
       bonus bBaseAtk,3*(min(BaseLevel,195)/15);
       if (.@r>=7) {
@@ -171153,7 +171153,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",10;
       bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",10;
       bonus2 bSkillAtk,"RL_FIREDANCE",3*(.@r/2);
@@ -171224,7 +171224,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RL_FIREDANCE",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bCon,(.@r/3);
@@ -171259,7 +171259,7 @@ Body:
          bonus2 bMagicSubSize,Size_All,20;
          bonus2 bSkillAtk,"RL_FIREDANCE",25;
          if (.@r>=9) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             bonus2 bSkillAtk,"RL_FIREDANCE",35;
             if (.@r>=11) {
                bonus2 bAddSize,Size_All,15;
@@ -171268,7 +171268,7 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
@@ -171417,7 +171417,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
       if (BaseLevel>=60)
          bonus bLongAtkRate,10;
       if (BaseLevel>=75)
@@ -171500,7 +171500,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",10;
       bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",10;
       bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",3*(.@r/2);
@@ -171572,7 +171572,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bCon,(.@r/3);
@@ -171844,7 +171844,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RL_S_STORM",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bCon,(.@r/3);
@@ -171891,7 +171891,7 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
@@ -172066,7 +172066,7 @@ Body:
       NoAuction: true
     Script: |
       .@a = getskilllv("GS_SINGLEACTION");
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bLongAtkRate,1*.@a;
       if (BaseLevel>=105) {
          bonus2 bSkillCooldown,"RL_FIRE_RAIN",-1000;
@@ -172105,7 +172105,7 @@ Body:
       NoAuction: true
     Script: |
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bBaseAtk,3*.@r;
       bonus bBaseAtk,3*(min(BaseLevel,195)/15);
       if (.@r>=7) {
@@ -172201,7 +172201,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING",10;
       bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",10;
       bonus2 bSkillAtk,"RL_R_TRIP",3*(.@r/2);
@@ -172271,7 +172271,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RL_R_TRIP",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bCon,(.@r/3);
@@ -172315,7 +172315,7 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;
@@ -172516,7 +172516,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"NW_SPIRAL_SHOOTING",10;
       bonus2 bSkillAtk,"NW_WILD_FIRE",10;
       bonus2 bSkillAtk,"RL_D_TAIL",3*(.@r/2);
@@ -172587,7 +172587,7 @@ Body:
       if (.@g >= ENCHANTGRADE_C) {
          bonus2 bSkillAtk,"RL_D_TAIL",15;
          if (.@g >= ENCHANTGRADE_B) {
-            bonus2 bAddClass,Class_All,7;
+            bonus bAtkRate,7;
             if (.@g >= ENCHANTGRADE_A) {
                bonus bPAtk,(.@r/3);
                bonus bCon,(.@r/3);
@@ -172631,7 +172631,7 @@ Body:
          }
       }
       if (.@g >= ENCHANTGRADE_D) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@g >= ENCHANTGRADE_C) {
             bonus bLongAtkRate,15;
             bonus bPAtk,1;

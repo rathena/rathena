@@ -156,7 +156,7 @@ Body:
          bonus2 bSkillAtk,"NC_AXEBOOMERANG",15;
       }
       if ((.@eq + .@weapon) >= 18) {
-         bonus2 bAddClass,Class_All,10;
+         bonus bAtkRate,10;
          if ((.@eq + .@weapon) >= 22) {
             bonus bLongAtkRate,10;
          }
@@ -2069,7 +2069,7 @@ Body:
           - S_Shadowchaser_Shield
     Script: |
       bonus2 bSkillAtk,"SC_TRIANGLESHOT",20;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bMatkRate,2;
       bonus bLongAtkRate,2;
   - Combos:
@@ -2490,7 +2490,7 @@ Body:
       bonus2 bIgnoreDefRaceRate,RC_Demon,15;
       bonus2 bIgnoreDefRaceRate,RC_Undead,15;
       bonus bMaxHPrate,10+.@r;
-      bonus2 bAddClass,Class_All,2+.@r;
+      bonus bAtkRate,2+.@r;
   - Combos:
       - Combo:
           - Valkyrie_Manteau
@@ -2849,13 +2849,13 @@ Body:
           - Gh_md_dex
           - Hawkeye
     Script: |
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
   - Combos:
       - Combo:
           - Contaminated_Raydric_Card
           - Daydric_Card
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus2 bSubEle,Ele_Neutral,10;
   - Combos:
       - Combo:
@@ -4056,6 +4056,22 @@ Body:
       bonus bMatkRate,10;
   - Combos:
       - Combo:
+          - Min_Toad_Card
+          - Min_Chimera_Card
+      - Combo:
+          - Min_Vagabond_Wolf_Card
+          - Min_Chimera_Card
+      - Combo:
+          - Min_Vocal_Card
+          - Min_Chimera_Card
+      - Combo:
+          - Min_Eclipse_Card
+          - Min_Chimera_Card
+    Script: |
+      bonus bAtkRate,10;
+      bonus bMatkRate,10;
+  - Combos:
+      - Combo:
           - Old_DetachmentsRing_J
           - Old_Rune_Circlet
     Script: |
@@ -4230,7 +4246,7 @@ Body:
           - Mantis_Card
           - Chaotic_Mantis_Card
     Script: |
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
       bonus bHit,12;
   - Combos:
       - Combo:
@@ -5177,11 +5193,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"RA_AIMEDBOLT",10;
       if (.@r >= 27) {
          bonus bDelayrate,-5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"RA_AIMEDBOLT",10;
       }
   - Combos:
@@ -5193,11 +5209,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",10;
       if (.@r >= 27) {
          bonus bDelayrate,-5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",10;
       }
   - Combos:
@@ -5209,11 +5225,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"AB_DUPLELIGHT",10;
       if (.@r >= 27) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"AB_DUPLELIGHT",10;
       }
   - Combos:
@@ -5257,11 +5273,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bVariableCastRate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"GN_CARTCANNON",10;
       if (.@r >= 27) {
          bonus bVariableCastRate,-5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"GN_CARTCANNON",10;
       }
   - Combos:
@@ -5273,11 +5289,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"GN_CART_TORNADO",10;
       if (.@r >= 27) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"GN_CART_TORNADO",10;
       }
   - Combos:
@@ -5289,11 +5305,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",10;
       if (.@r >= 27) {
          bonus bDelayrate,-5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"GC_ROLLINGCUTTER",10;
       }
   - Combos:
@@ -5315,11 +5331,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bCritAtkRate,5;
       if (.@r >= 27) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus bCritAtkRate,5;
       }
   - Combos:
@@ -5331,11 +5347,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SC_FATALMENACE",10;
       if (.@r >= 27) {
          bonus bDelayrate,-5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SC_FATALMENACE",10;
       }
   - Combos:
@@ -5347,11 +5363,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SU_PICKYPECK",10;
       if (.@r >= 27) {
          bonus bDelayrate,-5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SU_PICKYPECK",10;
       }
   - Combos:
@@ -5363,11 +5379,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bLongAtkRate,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"RL_R_TRIP",10;
       if (.@r >= 27) {
          bonus bLongAtkRate,5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"RL_R_TRIP",10;
       }
   - Combos:
@@ -5379,11 +5395,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"RL_FIRE_RAIN",10;
       if (.@r >= 27) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"RL_FIRE_RAIN",10;
       }
   - Combos:
@@ -5395,11 +5411,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SJ_SOLARBURST",10;
       if (.@r >= 27) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SJ_SOLARBURST",10;
       }
   - Combos:
@@ -5411,11 +5427,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus2 bAddSize,Size_All,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SJ_FULLMOONKICK",10;
       if (.@r >= 27) {
          bonus2 bAddSize,Size_All,5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SJ_FULLMOONKICK",10;
       }
   - Combos:
@@ -5427,11 +5443,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bLongAtkRate,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"KO_HAPPOKUNAI",10;
       if (.@r >= 27) {
          bonus bLongAtkRate,5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"KO_HAPPOKUNAI",10;
       }
   - Combos:
@@ -5443,11 +5459,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SR_KNUCKLEARROW",10;
       if (.@r >= 27) {
          bonus bDelayrate,-5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SR_KNUCKLEARROW",10;
       }
   - Combos:
@@ -5459,11 +5475,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bMaxHPrate,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SR_TIGERCANNON",10;
       if (.@r >= 27) {
          bonus bMaxHPrate,5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SR_TIGERCANNON",10;
       }
   - Combos:
@@ -5485,11 +5501,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bMaxHPrate,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus bCritAtkRate,5;
       if (.@r >= 27) {
          bonus bMaxHPrate,5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus bCritAtkRate,5;
       }
   - Combos:
@@ -5779,11 +5795,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"RA_AIMEDBOLT",10;
       if (.@r >= 27) {
          bonus bDelayrate,-10;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"RA_AIMEDBOLT",15;
       }
   - Combos:
@@ -5795,11 +5811,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",10;
       if (.@r >= 27) {
          bonus bDelayrate,-5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
       }
   - Combos:
@@ -5811,11 +5827,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"AB_DUPLELIGHT",10;
       if (.@r >= 27) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"AB_DUPLELIGHT",15;
       }
   - Combos:
@@ -5827,11 +5843,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SR_KNUCKLEARROW",10;
       if (.@r >= 27) {
          bonus bDelayrate,-10;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SR_KNUCKLEARROW",15;
       }
   - Combos:
@@ -5843,11 +5859,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bMaxHPrate,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SR_TIGERCANNON",10;
       if (.@r >= 27) {
          bonus bMaxHPrate,5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SR_TIGERCANNON",15;
       }
   - Combos:
@@ -5891,11 +5907,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bVariableCastRate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"GN_CARTCANNON",10;
       if (.@r >= 27) {
          bonus bVariableCastRate,-5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"GN_CARTCANNON",15;
       }
   - Combos:
@@ -5907,11 +5923,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"GN_CART_TORNADO",10;
       if (.@r >= 27) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"GN_CART_TORNADO",15;
       }
   - Combos:
@@ -5923,11 +5939,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",10;
       if (.@r >= 27) {
          bonus bDelayrate,-10;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15;
       }
   - Combos:
@@ -5939,11 +5955,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SC_FATALMENACE",10;
       if (.@r >= 27) {
          bonus bDelayrate,-10;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SC_FATALMENACE",15;
       }
   - Combos:
@@ -5955,11 +5971,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SU_PICKYPECK",10;
       if (.@r >= 27) {
          bonus bDelayrate,-10;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SU_PICKYPECK",15;
       }
   - Combos:
@@ -5971,11 +5987,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bLongAtkRate,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"RL_R_TRIP",10;
       if (.@r >= 27) {
          bonus bLongAtkRate,5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"RL_R_TRIP",15;
       }
   - Combos:
@@ -5987,11 +6003,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"RL_FIRE_RAIN",10;
       if (.@r >= 27) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"RL_FIRE_RAIN",15;
       }
   - Combos:
@@ -6003,11 +6019,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SJ_SOLARBURST",10;
       if (.@r >= 27) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SJ_SOLARBURST",15;
       }
   - Combos:
@@ -6019,11 +6035,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus2 bAddSize,Size_All,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SJ_FULLMOONKICK",10;
       if (.@r >= 27) {
          bonus2 bAddSize,Size_All,5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SJ_FULLMOONKICK",15;
       }
   - Combos:
@@ -6035,11 +6051,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bLongAtkRate,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"KO_HAPPOKUNAI",10;
       if (.@r >= 27) {
          bonus bLongAtkRate,5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"KO_HAPPOKUNAI",15;
       }
   - Combos:
@@ -6329,11 +6345,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-10;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"RA_AIMEDBOLT",15;
       if (.@r >= 27) {
          bonus bDelayrate,-10;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"RA_AIMEDBOLT",15;
       }
   - Combos:
@@ -6345,11 +6361,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
       if (.@r >= 27) {
          bonus bDelayrate,-5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
       }
   - Combos:
@@ -6361,11 +6377,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"AB_DUPLELIGHT",15;
       if (.@r >= 27) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"AB_DUPLELIGHT",15;
       }
   - Combos:
@@ -6377,11 +6393,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-10;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SR_KNUCKLEARROW",15;
       if (.@r >= 27) {
          bonus bDelayrate,-10;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SR_KNUCKLEARROW",15;
       }
   - Combos:
@@ -6393,11 +6409,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bMaxHPrate,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SR_TIGERCANNON",15;
       if (.@r >= 27) {
          bonus bMaxHPrate,5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SR_TIGERCANNON",15;
       }
   - Combos:
@@ -6441,11 +6457,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bVariableCastRate,-5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"GN_CARTCANNON",15;
       if (.@r >= 27) {
          bonus bVariableCastRate,-5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"GN_CARTCANNON",15;
       }
   - Combos:
@@ -6457,11 +6473,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"GN_CART_TORNADO",15;
       if (.@r >= 27) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"GN_CART_TORNADO",15;
       }
   - Combos:
@@ -6473,11 +6489,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-10;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15;
       if (.@r >= 27) {
          bonus bDelayrate,-10;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15;
       }
   - Combos:
@@ -6489,11 +6505,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-10;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SC_FATALMENACE",10;
       if (.@r >= 27) {
          bonus bDelayrate,-10;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SC_FATALMENACE",15;
       }
   - Combos:
@@ -6505,11 +6521,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bDelayrate,-10;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SU_PICKYPECK",15;
       if (.@r >= 27) {
          bonus bDelayrate,-10;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SU_PICKYPECK",15;
       }
   - Combos:
@@ -6521,11 +6537,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bLongAtkRate,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"RL_R_TRIP",15;
       if (.@r >= 27) {
          bonus bLongAtkRate,10;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"RL_R_TRIP",15;
       }
   - Combos:
@@ -6537,11 +6553,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"RL_FIRE_RAIN",15;
       if (.@r >= 27) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"RL_FIRE_RAIN",15;
       }
   - Combos:
@@ -6553,11 +6569,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bAspd,1;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SJ_SOLARBURST",15;
       if (.@r >= 27) {
          bonus bAspd,1;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SJ_SOLARBURST",15;
       }
   - Combos:
@@ -6569,11 +6585,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus2 bAddSize,Size_All,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"SJ_FULLMOONKICK",15;
       if (.@r >= 27) {
          bonus2 bAddSize,Size_All,5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"SJ_FULLMOONKICK",15;
       }
   - Combos:
@@ -6585,11 +6601,11 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_ARMOR);
       bonus bLongAtkRate,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       bonus2 bSkillAtk,"KO_HAPPOKUNAI",15;
       if (.@r >= 27) {
          bonus bLongAtkRate,5;
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          bonus2 bSkillAtk,"KO_HAPPOKUNAI",15;
       }
   - Combos:
@@ -7981,7 +7997,7 @@ Body:
           - Overwhelm_Str_Armor
           - Modify_Str_Boots_
     Script: |
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       .@r = getequiprefinerycnt(EQI_ARMOR) + getequiprefinerycnt(EQI_SHOES);
       if (.@r >= 21) {
          bonus2 bIgnoreDefRaceRate,RC_Brute,20;
@@ -8099,7 +8115,7 @@ Body:
           - E_Illusion_Leg_A
           - E_Illusion_Armor_A
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
   - Combos:
       - Combo:
           - Illusion_Armor_A
@@ -8282,7 +8298,7 @@ Body:
          .@val = 20;
       }
       if ((.@weapon + .@eq) >= 18) {
-         bonus2 bAddClass,Class_All,10;
+         bonus bAtkRate,10;
       }
       if ((.@weapon + .@eq) >= 22) {
          .@val += 30;
@@ -8297,7 +8313,7 @@ Body:
     Script: |
       .@weapon = getequiprefinerycnt(EQI_HAND_R);
       .@eq = getequiprefinerycnt(EQI_SHOES);
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       if (.@weapon >= 7 && .@eq >= 7) {
          bonus bAspd,2;
       }
@@ -9258,7 +9274,7 @@ Body:
     Script: |
       .@weapon = getequiprefinerycnt(EQI_HAND_R);
       .@eq = getequiprefinerycnt(EQI_HEAD_TOP);
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       if (.@weapon >= 7 && .@eq >= 7) {
          bonus bAspd,2;
       }
@@ -9277,7 +9293,7 @@ Body:
       .@eq = getequiprefinerycnt(EQI_HEAD_TOP);
       .@weapon = getequiprefinerycnt(EQI_HAND_R);
       if (.@eq >= 7 && .@weapon >= 7) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
       }
       if ((.@eq + .@weapon) >= 18) {
          bonus2 bSubSize,Size_Small,20;
@@ -10054,12 +10070,12 @@ Body:
           - Lava_Leather_Boots
           - Lava_Leather_Armor
     Script: |
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       .@a = getequiprefinerycnt(EQI_GARMENT);
       .@b = getequiprefinerycnt(EQI_SHOES);
       .@c = getequiprefinerycnt(EQI_ARMOR);
       if (.@a >= 7 && .@b >= 7 && .@c >= 7)
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@a+.@b+.@c >= 27)
             bonus bDelayrate,-20;
   - Combos:
@@ -10068,12 +10084,12 @@ Body:
           - Lava_Leather_Shoes
           - Lava_Leather_Suit
     Script: |
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       .@a = getequiprefinerycnt(EQI_GARMENT);
       .@b = getequiprefinerycnt(EQI_SHOES);
       .@c = getequiprefinerycnt(EQI_ARMOR);
       if (.@a >= 7 && .@b >= 7 && .@c >= 7)
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
          if (.@a+.@b+.@c >= 27)
             bonus bCritAtkRate,20;
   - Combos:
@@ -10231,10 +10247,10 @@ Body:
       bonus bMaxSPRate,5;
       .@r = getequiprefinerycnt(EQI_SHOES);
       if (.@r >= 7) {
-         bonus2 bAddClass,Class_All,2;
+         bonus bAtkRate,2;
       }
       if (.@r >= 9) {
-         bonus2 bAddClass,Class_All,3;
+         bonus bAtkRate,3;
       }
       if (.@r >= 12) {
          bonus bDelayrate,-5;
@@ -10584,7 +10600,7 @@ Body:
          .@val = 20;
       }
       if ((.@eq + .@weapon) >= 18) {
-         bonus2 bAddClass,Class_All,10;
+         bonus bAtkRate,10;
          if ((.@eq + .@weapon) >= 22) {
             .@val += 20;
          }
@@ -10694,7 +10710,7 @@ Body:
           - Ancient_Hero_Boots
           - Meteor_Striker
     Script: |
-      autobonus "{ bonus bStr,20; bonus2 bAddClass,Class_All,15; }",30,7000;
+      autobonus "{ bonus bStr,20; bonus bAtkRate,15; }",30,7000;
   - Combos:
       - Combo:
           - Ancient_Hero_Boots
@@ -10730,7 +10746,7 @@ Body:
           - Ancient_Hero_Boots
           - MeawFoxtail
     Script: |
-      autobonus "{ bonus bLuk,20; bonus bMatkRate,15; bonus2 bAddClass,Class_All,15; }",20,7000,BF_MAGIC|BF_WEAPON; /* unknown rate */
+      autobonus "{ bonus bLuk,20; bonus bMatkRate,15; bonus bAtkRate,15; }",20,7000,BF_MAGIC|BF_WEAPON; /* unknown rate */
   - Combos:
       - Combo:
           - Ancient_Hero_Boots
@@ -10764,7 +10780,7 @@ Body:
           - Sharp_Wind_Sword
           - Fog_Dew_Sword
     Script: |
-      autobonus "{ bonus bStr,20; bonus2 bAddClass,Class_All,10; }",20,7000,BF_WEAPON; /* unknown rate */
+      autobonus "{ bonus bStr,20; bonus bAtkRate,10; }",20,7000,BF_WEAPON; /* unknown rate */
   - Combos:
       - Combo:
           - Ancient_Hero_Boots
@@ -10822,7 +10838,7 @@ Body:
           - Illusion_Boots
           - Illusion_Butcher
     Script: |
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       .@eq = getequiprefinerycnt(EQI_SHOES);
       .@weapon = getequiprefinerycnt(EQI_HAND_R);
       if (.@eq >= 7 && .@weapon >= 7) {
@@ -10852,7 +10868,7 @@ Body:
           - S_Physical_Pendant
     Script: |
       if (getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L) + getequiprefinerycnt(EQI_SHADOW_WEAPON) >= 23) {
-         bonus2 bAddClass,Class_All,1;
+         bonus bAtkRate,1;
       }
   - Combos:
       - Combo:
@@ -11287,7 +11303,7 @@ Body:
           - S_Infinity_Earring
           - S_Infinity_Pendant
     Script: |
-      bonus2 bAddClass,Class_All,1;
+      bonus bAtkRate,1;
       if (getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L) >= 15)
          bonus bNoSizeFix;
   - Combos:
@@ -11833,7 +11849,7 @@ Body:
       if ((getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_ACC_R)) >= 10) {
          .@val += 2;
       }
-      bonus2 bAddClass,Class_All,.@val;
+      bonus bAtkRate,.@val;
       bonus bMaxHPrate,.@val;
   - Combos:
       - Combo:
@@ -12158,10 +12174,10 @@ Body:
       .@r = getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES);
       bonus bBaseAtk,.@r*2;
       if (.@r >= 25) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
       }
       else if (.@r >= 23) {
-         bonus2 bAddClass,Class_All,2;
+         bonus bAtkRate,2;
       }
   - Combos:
       - Combo:
@@ -12571,7 +12587,7 @@ Body:
           - LivingDead_Card
           - Vampire's_Servant
     Script: |
-      bonus2 bAddClass,Class_All,(getrefine()/3);
+      bonus bAtkRate,(getrefine()/3);
   - Combos:
       - Combo:
           - Ill_Dracula_Card
@@ -12673,7 +12689,7 @@ Body:
           - Cowraiders2_Card
     Script: |
       bonus bStr,3;
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
   - Combos:
       - Combo:
           - Cowraiders1_Card
@@ -13085,7 +13101,7 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R) + getequiprefinerycnt(EQI_HAND_L);
       bonus bBaseAtk,10*(.@r/3);
-      bonus2 bAddClass,Class_All,2*(.@r/5);
+      bonus bAtkRate,2*(.@r/5);
       if (.@r >= 14) {
          .@val = 25;
          if (.@r >= 16) {
@@ -13113,7 +13129,7 @@ Body:
          bonus2 bSkillAtk,"GC_COUNTERSLASH",20;
       }
       if (.@a+.@b >= 18)
-         bonus2 bAddClass,Class_All,12;
+         bonus bAtkRate,12;
          if (.@a+.@b >= 20) .@val = 20;
             bonus2 bSkillAtk,"ASC_BREAKER",40+.@val;
             bonus2 bSkillAtk,"ASC_METEORASSAULT",40+.@val;
@@ -13520,7 +13536,7 @@ Body:
           - King_Schmidt_Manteau
     Script: |
       bonus bCritAtkRate,7;
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
   - Combos:
       - Combo:
           - Schmidt_Insignia_Rigid_Body
@@ -13683,7 +13699,7 @@ Body:
           - Ancient_Hero_Boots
           - Ray_Knuckle
     Script: |
-      autobonus "{ bonus bStr,20; bonus2 bAddClass,Class_All,15; }",30,7000,BF_WEAPON;
+      autobonus "{ bonus bStr,20; bonus bAtkRate,15; }",30,7000,BF_WEAPON;
   - Combos:
       - Combo:
           - Great_Hero_Boots
@@ -13708,7 +13724,7 @@ Body:
           - Up_Thousand_Sun
     Script: |
       bonus bStr,10;
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
   - Combos:
       - Combo:
           - Great_Hero_Boots
@@ -13812,21 +13828,21 @@ Body:
           - Up_Crimson_Rose
     Script: |
       bonus bDex,10;
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
   - Combos:
       - Combo:
           - Great_Hero_Boots
           - Up_Ray_Knuckle
     Script: |
       bonus bVit,10;
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
   - Combos:
       - Combo:
           - Great_Hero_Boots
           - Up_MeawFoxtail
     Script: |
       bonus bLuk,10;
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
       bonus bMatkRate,7;
   - Combos:
       - Combo:
@@ -13842,7 +13858,7 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R) + getequiprefinerycnt(EQI_HAND_L);
       bonus bBaseAtk,15*(.@r/3);
-      bonus2 bAddClass,Class_All,3*(.@r/5);
+      bonus bAtkRate,3*(.@r/5);
       if (.@r >= 14) {
          bonus2 bSkillAtk,"KO_JYUMONJIKIRI",30;
          bonus2 bSkillCooldown,"KO_JYUMONJIKIRI",-2000;
@@ -13889,11 +13905,11 @@ Body:
           - Dragon_Boots
     Script: |
       .@sum = getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT);
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bMdef,8;
       bonus bDef,50;
       bonus bBaseAtk,15*(readparam(bStr)/15);
-      autobonus2 "{ bonus2 bAddClass,Class_All,10; if (readparam(bStr) >= 120) { bonus2 bAddClass,Class_All,15; } }",1+(readparam(bStr) >= 120),10000,BF_MAGIC|BF_WEAPON;
+      autobonus2 "{ bonus bAtkRate,10; if (readparam(bStr) >= 120) { bonus bAtkRate,15; } }",1+(readparam(bStr) >= 120),10000,BF_MAGIC|BF_WEAPON;
       if (.@sum >= 33) {
          bonus bAspdRate,20;
          bonus bDelayrate,-25;
@@ -14075,7 +14091,7 @@ Body:
           - King_Schmidt_Manteau
     Script: |
       .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT);
-      autobonus "{ bonus2 bAddClass,Class_All,10; }",1,10000,BF_WEAPON;
+      autobonus "{ bonus bAtkRate,10; }",1,10000,BF_WEAPON;
       bonus bBaseAtk,30;
       if (.@sum >= 40) {
          bonus2 bAddEle,Ele_Undead,20;
@@ -14116,7 +14132,7 @@ Body:
           - King_Schmidt_Manteau
     Script: |
       .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT);
-      autobonus "{ bonus bMatkRate,7; bonus2 bAddClass,Class_All,7; }",1,10000,BF_MAGIC;
+      autobonus "{ bonus bMatkRate,7; bonus bAtkRate,7; }",1,10000,BF_MAGIC;
       if (.@sum >= 30) {
          bonus2 bMagicAddEle,Ele_Undead,20;
          bonus2 bAddEle,Ele_Undead,20;
@@ -14145,7 +14161,7 @@ Body:
       bonus2 bAddSize,Size_Medium,5;
       bonus2 bMagicAddSize,Size_Medium,5;
       bonus bMatkRate,5;
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
   - Combos:
       - Combo:
           - ILL_Obeaune_Card
@@ -14201,7 +14217,7 @@ Body:
     Script: |
       bonus2 bAddSize,Size_Small,20;
       bonus bCritical,5;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bMaxHPrate,10;
       bonus bMaxSPrate,10;
       bonus bStr,5;
@@ -14250,7 +14266,7 @@ Body:
       .@weapon = getequiprefinerycnt(EQI_HAND_R);
       bonus bBaseAtk,30;
       if (.@eq >= 7 && .@weapon >= 7) {
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
       }
       if ((.@eq + .@weapon) >= 18) {
          bonus2 bSkillAtk,"SR_SKYNETBLOW",20;
@@ -14264,7 +14280,7 @@ Body:
           - KatarOfCold_Icicle_IL
     Script: |
       .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_ARMOR);
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       if (.@sum >= 7) {
          bonus bCritical,5;
       }
@@ -14281,7 +14297,7 @@ Body:
           - Morrigane's_Pendant_IL
     Script: |
       bonus bAspdRate,10;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
   - Combos:
       - Combo:
           - Electronic_Guitar_IL
@@ -14342,7 +14358,7 @@ Body:
           - KatarOfCold_Icicle_IL
           - Ring_IL
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       if (getequiprefinerycnt(EQI_HAND_R) >= 9) {
          bonus bCritAtkRate,20;
       }
@@ -14355,7 +14371,7 @@ Body:
           - Water_Sprits_Armor_IL
     Script: |
       .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_ARMOR);
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       if (.@sum >= 7) {
          bonus bDelayrate,-5;
       }
@@ -14425,7 +14441,7 @@ Body:
     Script: |
       .@sum = getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT);
       bonus bMatkRate,5;
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bMdef,8;
       bonus bDef,50;
       bonus bAspdRate,3*(readparam(bDex)/15);
@@ -14460,12 +14476,12 @@ Body:
           - Dragon_Boots
     Script: |
       .@sum = getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_SHOES)+getequiprefinerycnt(EQI_GARMENT);
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bMdef,8;
       bonus bDef,50;
       bonus bCritAtkRate,3*(readparam(bLuk)/15);
       bonus bCritical,2*(readparam(bLuk)/15);
-      autobonus2 "{ bonus bCritAtkRate,10; bonus2 bAddClass,Class_All,7; if (readparam(bLuk) >= 120) { bonus bCritAtkRate,10; bonus2 bAddClass,Class_All,7; } }",1+(readparam(bLuk) >= 120),10000,BF_MAGIC|BF_WEAPON;
+      autobonus2 "{ bonus bCritAtkRate,10; bonus bAtkRate,7; if (readparam(bLuk) >= 120) { bonus bCritAtkRate,10; bonus bAtkRate,7; } }",1+(readparam(bLuk) >= 120),10000,BF_MAGIC|BF_WEAPON;
       if (.@sum >= 33) {
          bonus bAspdRate,20;
          bonus bDelayrate,-25;
@@ -14483,7 +14499,7 @@ Body:
       bonus2 bSubRace,RC_Angel,15;
       bonus2 bSubRace,RC_Demon,15;
       if (.@sum >= 27) {
-         bonus2 bAddClass,Class_All,10;
+         bonus bAtkRate,10;
          bonus bDelayrate,-20;
          bonus bFixedCastrate,-20;
       }
@@ -14518,7 +14534,7 @@ Body:
       bonus2 bSubRace,RC_Demon,20;
       if (.@sum >= 27) {
          bonus bMatkRate,4;
-         bonus2 bAddClass,Class_All,4;
+         bonus bAtkRate,4;
          bonus bDelayrate,-20;
          bonus bFixedCastrate,-20;
       }
@@ -14536,7 +14552,7 @@ Body:
       bonus2 bSubRace,RC_Demon,15;
       if (.@sum >= 27) {
          bonus bMatkRate,7;
-         bonus2 bAddClass,Class_All,7;
+         bonus bAtkRate,7;
          bonus bDelayrate,-20;
          bonus bFixedCastrate,-20;
       }
@@ -14568,7 +14584,7 @@ Body:
       bonus bDef,30;
       bonus bLuk,8;
       if (.@sum >= 27) {
-         bonus2 bAddClass,Class_All,10;
+         bonus bAtkRate,10;
          bonus bDelayrate,-20;
          bonus bFixedCastrate,-20;
       }
@@ -14644,14 +14660,14 @@ Body:
           - Reginleif_Card
           - Randgris_Card
     Script: |
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bMaxHPrate,5;
   - Combos:
       - Combo:
           - Ingrid_Card
           - Randgris_Card
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bMaxHPrate,10;
   - Combos:
       - Combo:
@@ -14692,7 +14708,7 @@ Body:
           - CassockA_STR
     Script: |
       bonus2 bAddRace,RC_All,12;
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
   - Combos:
       - Combo:
           - Cassock_Agi
@@ -15047,7 +15063,7 @@ Body:
           - GuillotineCross_Robe2
           - GuillotineCross_Bottom2
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bCritAtkRate,15;
   - Combos:
       - Combo:
@@ -15154,7 +15170,7 @@ Body:
           - Attacker_Booster_Manteau_
           - Attacker_Booster_Ring
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bDelayrate,-15;
       bonus2 bSkillAtk,"SC_FATALMENACE",min(BaseLevel,180)/15;
       autobonus3 "{ bonus2 bSkillAtk,\"SC_FATALMENACE\",35; }",1000,60000,"ST_PRESERVE";
@@ -15468,7 +15484,7 @@ Body:
           - Ranger_Booster_Manteau_
           - Range_Booster_Brooch
     Script: |
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bDelayrate,-15;
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",min(BaseLevel,180)/15;
       autobonus3 "{ bonus2 bSkillAtk,\"GC_ROLLINGCUTTER\",20; }",1000,60000,"ASC_EDP";
@@ -15571,13 +15587,16 @@ Body:
       bonus2 bSkillAtk,"SU_CN_METEOR",4*(.@r/2);
   - Combos:
       - Combo:
-          - Auto_Leg_A
-          - Auto_Armor_A
-      - Combo:
           - Gray_W_Boots
           - Gray_W_Suits
     Script: |
       bonus2 bAddClass,Class_All,7;
+  - Combos:
+      - Combo:
+          - Auto_Leg_A
+          - Auto_Armor_A
+    Script: |
+      bonus bAtkRate,7;
   - Combos:
       - Combo:
           - Auto_Leg_A
@@ -16632,7 +16651,7 @@ Body:
           - S_FullPene_Pendant
     Script: |
       .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L);
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       if (.@sum >= 18) {
          bonus bIgnoreDefRace,RC_All;
          bonus2 bIgnoreDefRaceRate,RC_Player_Human,-100;
@@ -16644,7 +16663,7 @@ Body:
           - S_FullPene_Shoes
     Script: |
       .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES);
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       if (.@sum >= 18) {
          bonus bIgnoreDefRace,RC_All;
          bonus2 bIgnoreDefRaceRate,RC_Player_Human,-100;
@@ -16735,7 +16754,7 @@ Body:
           - Blue_Rear_Ribbon
           - Bag_Of_Antonio_S
     Script: |
-      bonus2 bAddClass,Class_All,4;
+      bonus bAtkRate,4;
       if (getequiprefinerycnt(EQI_GARMENT) >= 12) {
          bonus bAllStats,1;
       }
@@ -17008,7 +17027,7 @@ Body:
     Script: |
       bonus bLongAtkRate,10;
       bonus bAspdRate,10;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       if (getequiprefinerycnt(EQI_GARMENT) >= 10) {
          bonus bCritAtkRate,15;
          bonus bHit,15;
@@ -17181,7 +17200,7 @@ Body:
           - Time_Overload_Robe
     Script: |
       bonus bMatkRate,5;
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
   - Combos:
       - Combo:
           - Regia_Hunting_Boots
@@ -17708,7 +17727,7 @@ Body:
           - Temporal_M_Str
     Script: |
       .@sum = getequiprefinerycnt(EQI_HEAD_MID)+getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT);
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       if (.@sum >= 14) {
          bonus bBaseAtk,80;
       }
@@ -17732,7 +17751,7 @@ Body:
       }
       if (.@sum >= 18) {
          bonus2 bAddSize,Size_All,7;
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
       }
       if (.@sum >= 22) {
          bonus bLongAtkRate,10;
@@ -17785,7 +17804,7 @@ Body:
          bonus bBaseAtk,80;
       }
       if (.@sum >= 18) {
-         bonus2 bAddClass,Class_All,10;
+         bonus bAtkRate,10;
          bonus bMaxSPrate,7;
       }
       if (.@sum >= 22) {
@@ -18112,7 +18131,7 @@ Body:
       }
       if (.@r >= 9) {
          bonus bMatkRate,5;
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
       }
       if (.@r >= 11) {
          bonus bFixedCast,-500;
@@ -18130,7 +18149,7 @@ Body:
       }
       if (.@r >= 9) {
          bonus bMatkRate,5;
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          if (.@r >= 11) {
             bonus bFixedCast,-500;
          }
@@ -18148,7 +18167,7 @@ Body:
       }
       if (.@r >= 9) {
          bonus bMatkRate,5;
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
          if (.@r >= 11) {
             bonus bFixedCast,-500;
          }
@@ -18307,7 +18326,7 @@ Body:
           - Beginner's_Ring
     Script: |
       bonus bBaseAtk,3*(min(BaseLevel,150)/10);
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bAspd,1;
   - Combos:
       - Combo:
@@ -18340,7 +18359,7 @@ Body:
       bonus bBaseAtk,3*(min(BaseLevel,150)/10);
       bonus bVariableCastrate,-10;
       bonus bMatkRate,3;
-      bonus2 bAddClass,Class_All,3;
+      bonus bAtkRate,3;
   - Combos:
       - Combo:
           - Rebeginer_N2_Mace
@@ -18364,7 +18383,7 @@ Body:
     Script: |
       bonus bBaseAtk,3*(min(BaseLevel,150)/10);
       bonus bLongAtkRate,5;
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
   - Combos:
       - Combo:
           - Rebeginer_WM_Bow
@@ -18665,7 +18684,7 @@ Body:
           - S_Mammoth_Weapon
           - S_Mammoth_Shield
     Script: |
-      bonus2 bAddClass,Class_All,1;
+      bonus bAtkRate,1;
       if (getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_SHOES)+getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L) >= 45) {
          bonus bNoKnockback;
       }
@@ -18703,7 +18722,7 @@ Body:
           - S_M_Mammoth_Shoes
     Script: |
       .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES);
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       if (.@sum >= 18) {
          bonus bNoKnockback;
          if (.@sum >= 20) {
@@ -18716,7 +18735,7 @@ Body:
           - S_M_Mammoth_Pendant
     Script: |
       .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L);
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       if (.@sum >= 18) {
          bonus bNoKnockback;
          if (.@sum >= 20) {
@@ -19354,7 +19373,7 @@ Body:
             bonus2 bAddRace,RC_All,20;
             if (.@sum >= 22) {
                bonus bVariableCastrate,-10;
-               bonus2 bAddClass,Class_All,15;
+               bonus bAtkRate,15;
             }
          }
       }
@@ -19364,7 +19383,7 @@ Body:
           - Sprint_Shoes_IL
     Script: |
       .@sum = getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_SHOES);
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       if (getequiprefinerycnt(EQI_ARMOR) >= 7 && getequiprefinerycnt(EQI_SHOES) >= 7) {
          bonus bBaseAtk,70;
          if (.@sum >= 18) {
@@ -19942,13 +19961,13 @@ Body:
     Script: |
       bonus bFixedCast,-200;
       if (BaseLevel >= 30) {
-         bonus2 bAddClass,Class_All,1;
+         bonus bAtkRate,1;
          bonus bAspdRate,2;
          if (BaseLevel >= 45) {
-            bonus2 bAddClass,Class_All,1;
+            bonus bAtkRate,1;
             bonus bAspdRate,3;
             if (BaseLevel >= 85) {
-               bonus2 bAddClass,Class_All,1;
+               bonus bAtkRate,1;
                bonus bAspdRate,5;
             }
          }
@@ -19979,7 +19998,7 @@ Body:
       bonus bFixedCast,-200;
       bonus bAspdRate,10;
       if (BaseLevel >= 105) {
-         bonus2 bAddClass,Class_All,2;
+         bonus bAtkRate,2;
          if (BaseLevel >= 110) {
             bonus bShortAtkRate,5;
             bonus bLongAtkRate,5;
@@ -20791,7 +20810,7 @@ Body:
           - HeroBoots_AGI
     Script: |
       bonus bCritical,15;
-      bonus2 bAddClass,Class_All,15;
+      bonus bAtkRate,15;
   - Combos:
       - Combo:
           - WanderMins_Top3
@@ -21116,7 +21135,7 @@ Body:
           - S_AutoSpell_Earring
     Script: |
       .@sum = getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_ACC_R);
-      bonus2 bAddClass,Class_All,1;
+      bonus bAtkRate,1;
       if (.@sum >= 27) {
          bonus3 bAutoSpell,"AS_SONICBLOW",10,80;
       }
@@ -21142,7 +21161,7 @@ Body:
           - S_M_AutoSpell_Pendant
     Script: |
       .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L);
-      bonus2 bAddClass,Class_All,2;
+      bonus bAtkRate,2;
       if (.@sum >= 20) {
          bonus5 bAutoSpell,"NC_POWERSWING",max(getskilllv("NC_POWERSWING"),8),80,BF_SHORT|BF_NORMAL,1;
       }
@@ -21345,7 +21364,7 @@ Body:
           - Thanos_Bow_AD     # 700029
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus2 bSkillAtk,"SN_SHARPSHOOTING",10*(.@r_weapon/2);
   - Combos:
       - Combo:
@@ -21877,7 +21896,7 @@ Body:
       bonus bBaseAtk,50;
       if (getequiprefinerycnt(EQI_ARMOR) >= 11) {
          bonus bAspdRate,10;
-         bonus2 bAddClass,Class_All,5;
+         bonus bAtkRate,5;
       }
   - Combos:
       - Combo:
@@ -21885,7 +21904,7 @@ Body:
           - Victory_Wing_Ear
     Script: |
       bonus bDelayrate,-15;
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
   - Combos:
       - Combo:
           - aegis_480124
@@ -21896,14 +21915,14 @@ Body:
     Script: |
       bonus bLongAtkRate,5;
       bonus bShortAtkRate,5;
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
   - Combos:
       - Combo:
           - aegis_480124
           - aegis_410079
     Script: |
       bonus bVariableCastrate,-15;
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
   - Combos:
       - Combo:
           - aegis_480125
@@ -21983,7 +22002,7 @@ Body:
           - Signet_Of_Pow_Star
           - Star_Armor_Of_Pow
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bPAtk,2;
   - Combos:
       - Combo:
@@ -22501,7 +22520,7 @@ Body:
           - Hero_Boots_LT   # 470094
     Script: |
       bonus bPAtk,2;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
   - Combos:
       - Combo:
           - Solid_Dagger
@@ -23572,14 +23591,14 @@ Body:
          }
       }
       bonus bBaseAtk,15*(.@sum/3);
-      bonus2 bAddClass,Class_All,4*(.@sum/5);
+      bonus bAtkRate,4*(.@sum/5);
   - Combos:
       - Combo:
           - MeawFoxtail_LT   # 550067
           - Hero_Boots_LT   # 470094
     Script: |
       bonus bSmatk,2;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus bMatkRate,10;
   - Combos:
       - Combo:
@@ -24021,7 +24040,7 @@ Body:
           - aegis_300362  # 300362 Unfrost Flower Card
           - aegis_300360  # 300360 Shining Seaweed Card
     Script: |
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
   - Combos:
      - Combo:
           - aegis_300367  # 300367 Lesser Rgan Card
@@ -24055,7 +24074,7 @@ Body:
           - aegis_300381  # 300381 Hearthunter AT Card
           - aegis_300363  # 300363 Limacina Card
     Script: |
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
   - Combos:
      - Combo:
           - Snowflower_Armor  # 450206
@@ -24085,7 +24104,7 @@ Body:
           - Snowflower_Boots  # 470115
           - Snowflower_Armor  # 450206
     Script: |
-      bonus2 bAddClass,Class_All,7;
+      bonus bAtkRate,7;
   - Combos:
      - Combo:
           - Snowflower_Boots  # 470115
@@ -24733,7 +24752,7 @@ Body:
           - Royal_Guardian_Ring     # 28483
           - Lich_Lord_Card     # 27025
     Script: |
-      bonus2 bAddClass,Class_All,5;
+      bonus bAtkRate,5;
       bonus bMatkRate,5;
   - Combos:
       - Combo:
