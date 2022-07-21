@@ -36784,7 +36784,7 @@ Body:
     CastTime: 4000
     AfterCastActDelay: 500
     Duration1: 20000
-    Cooldown: 1000
+    Cooldown: 1500
     FixedCastTime: 1000
     Requires:
       SpCost:

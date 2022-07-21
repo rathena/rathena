@@ -4593,12 +4593,14 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case RK_HUNDREDSPEAR:
 			skillratio += -100 + 600 + 200 * skill_lv;
 			if (sd)
-				skillratio += 50 * pc_checkskill(sd,LK_SPIRALPIERCE) + 160 * pc_checkskill(sd, DK_DRAGONIC_AURA);
-			RE_LVL_DMOD(100);
+				skillratio += 50 * pc_checkskill(sd,LK_SPIRALPIERCE);
 			if (sc) {
+				if (sc->data[SC_DRAGONIC_AURA])
+					skillratio += sc->data[SC_DRAGONIC_AURA]->val1 * 160;
 				if (sc->data[SC_CHARGINGPIERCE_COUNT] && sc->data[SC_CHARGINGPIERCE_COUNT]->val1 >= 10)
 					skillratio *= 2;
 			}
+			RE_LVL_DMOD(100);
 			break;
 		case RK_WINDCUTTER:
 			if (sd) {
