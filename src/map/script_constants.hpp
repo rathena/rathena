@@ -1842,6 +1842,7 @@
 	export_constant(SC_POISON_SHIELD_OPTION);
 	export_constant(SC_M_LIFEPOTION);
 	export_constant(SC_S_MANAPOTION);
+	export_constant(SC_SUB_WEAPONPROPERTY);
 
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
