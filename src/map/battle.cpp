@@ -2272,11 +2272,7 @@ static int battle_calc_base_weapon_attack(struct block_list *src, struct status_
 		atkmin = max(0, (int)(atkmin - variance + base_stat_bonus));
 		atkmax = min(UINT16_MAX, (int)(atkmax + variance + base_stat_bonus));
 
-#ifdef RENEWAL
 		if ((sc && sc->data[SC_MAXIMIZEPOWER]) || critical == true)
-#else
-		if (sc && sc->data[SC_MAXIMIZEPOWER])
-#endif
 			damage = atkmax;
 		else
 			damage = rnd_value(atkmin, atkmax);
