@@ -3535,7 +3535,7 @@ static void battle_calc_damage_parts(struct Damage* wd, struct block_list *src,s
 	wd->equipAtk2 += battle_calc_equip_attack(src, skill_id);
 	wd->equipAtk2 = battle_attr_fix(src, target, wd->equipAtk2, left_element, tstatus->def_ele, tstatus->ele_lv);
 
-	// AtkRate give static bonus from (W.ATK + E.ATK)
+	// AtkRate gives a static bonus from (W.ATK + E.ATK)
 	if (sd && sd->bonus.atk_rate) {
 		wd->percentAtk = (wd->weaponAtk + wd->equipAtk) * sd->bonus.atk_rate / 100;
 		wd->percentAtk2 = (wd->weaponAtk2 + wd->equipAtk2) * sd->bonus.atk_rate / 100;
@@ -6536,9 +6536,10 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 		// Advance Katar Mastery
 		if (sd) {
-			int skill = 0;
-			if (sd->status.weapon == W_KATAR && (skill = pc_checkskill(sd, ASC_KATAR)) > 0) // Adv. Katar Mastery applied after calculate with skillratio.
-				ATK_ADDRATE(wd.damage, wd.damage2, (10 + 2 * skill));
+			uint16 katar_skill;
+
+			if (sd->status.weapon == W_KATAR && (katar_skill = pc_checkskill(sd, ASC_KATAR)) > 0) // Adv. Katar Mastery applied after calculate with skillratio.
+				ATK_ADDRATE(wd.damage, wd.damage2, (10 + 2 * katar_skill));
 		}
 
 		// Res reduces physical damage by a percentage and
