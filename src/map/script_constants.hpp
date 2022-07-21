@@ -1842,6 +1842,7 @@
 	export_constant(SC_POISON_SHIELD_OPTION);
 	export_constant(SC_M_LIFEPOTION);
 	export_constant(SC_S_MANAPOTION);
+	export_constant(SC_SUB_WEAPONPROPERTY);
 
 	export_constant(SC_RUSH_QUAKE1);
 	export_constant(SC_RUSH_QUAKE2);
