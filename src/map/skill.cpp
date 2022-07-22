@@ -2177,10 +2177,6 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	case SS_ANKOKURYUUAKUMU:
 		status_change_end(bl, SC_NIGHTMARE, INVALID_TIMER);
 		break;
-	case HN_SHIELD_CHAIN_RUSH:
-		if (!dstmd || !status_has_mode(tstatus, MD_STATUSIMMUNE))
-			sc_start(src, bl, skill_get_sc(skill_id), 100, 0, skill_get_time(skill_id, skill_lv));
-		break;
 	case NW_THE_VIGILANTE_AT_NIGHT:
 	case NW_ONLY_ONE_BULLET:
 	case NW_SPIRAL_SHOOTING:
@@ -2189,10 +2185,10 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		if (sc && sc->data[SC_INTENSIVE_AIM_COUNT])
 			status_change_end(src, SC_INTENSIVE_AIM_COUNT, INVALID_TIMER);
 		break;
+	case HN_SHIELD_CHAIN_RUSH:
 	case HN_JACK_FROST_NOVA:
 	case HN_GROUND_GRAVITATION:
-		if (!dstmd || !status_has_mode(tstatus, MD_STATUSIMMUNE))
-			sc_start(src, bl, skill_get_sc(skill_id), 100, 0, skill_get_time2(skill_id, skill_lv));
+		sc_start(src, bl, skill_get_sc(skill_id), 100, 0, skill_get_time2(skill_id, skill_lv));
 		break;
 	} //end switch skill_id
 

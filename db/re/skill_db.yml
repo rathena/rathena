@@ -44776,6 +44776,8 @@ Body:
       - Level: 10
         Area: 4
     CastCancel: true
+    CastTime: 1000
+    FixedCastTime: 500
     AfterCastActDelay: 150
     Cooldown: 700
     Requires:
