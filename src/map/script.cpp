@@ -11712,7 +11712,7 @@ BUILDIN_FUNC(getmapusers)
  *------------------------------------------*/
 static int buildin_getareausers_sub(struct block_list *bl,va_list ap)
 {
-	int *users=va_arg(ap,int *);
+	int *users = va_arg(ap, int *);
 	(*users)++;
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -11720,7 +11720,8 @@ static int buildin_getareausers_sub(struct block_list *bl,va_list ap)
 BUILDIN_FUNC(getareausers)
 {
 	const char *str;
-	int16 m,x0,y0,x1,y1,users=0; //doubt we can have more then 32k users on
+	int16 m,x0,y0,x1,y1;
+	int users = 0;
 	str=script_getstr(st,2);
 	x0=script_getnum(st,3);
 	y0=script_getnum(st,4);
@@ -14214,13 +14215,10 @@ BUILDIN_FUNC(getitemname)
  *------------------------------------------*/
 BUILDIN_FUNC(getitemslots)
 {
-	struct item_data *i_data;
-
 	t_itemid item_id=script_getnum(st,2);
+	std::shared_ptr<item_data> i_data = item_db.find(item_id);
 
-	i_data = itemdb_exists(item_id);
-
-	if (i_data)
+	if (i_data != nullptr)
 		script_pushint(st,i_data->slots);
 	else
 		script_pushint(st,-1);
@@ -16310,18 +16308,19 @@ BUILDIN_FUNC(unequip) {
  **/
 BUILDIN_FUNC(equip) {
 	TBL_PC *sd;
-	struct item_data *item_data;
 
 	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	t_itemid nameid = script_getnum(st,2);
-	if ((item_data = itemdb_exists(nameid))) {
+	std::shared_ptr<item_data> id = item_db.find(nameid);
+
+	if (id == nullptr) {
 		int i;
 
 		ARR_FIND( 0, MAX_INVENTORY, i, sd->inventory.u.items_inventory[i].nameid == nameid );
 		if (i < MAX_INVENTORY) {
-			pc_equipitem(sd,i,item_data->equip);
+			pc_equipitem(sd,i,id->equip);
 			script_pushint(st,1);
 			return SCRIPT_CMD_SUCCESS;
 		}
@@ -16334,24 +16333,23 @@ BUILDIN_FUNC(equip) {
 
 BUILDIN_FUNC(autoequip)
 {
-	int flag;
-	struct item_data *item_data;
 	t_itemid nameid=script_getnum(st,2);
-	flag=script_getnum(st,3);
+	int flag=script_getnum(st,3);
+	std::shared_ptr<item_data> id = item_db.find(nameid);
 
-	if( ( item_data = itemdb_exists(nameid) ) == NULL )
+	if( id == nullptr )
 	{
 		ShowError("buildin_autoequip: Invalid item '%u'.\n", nameid);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if( !itemdb_isequip2(item_data) )
+	if( !itemdb_isequip2(id.get()) )
 	{
 		ShowError("buildin_autoequip: Item '%u' cannot be equipped.\n", nameid);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	item_data->flag.autoequip = flag>0?1:0;
+	id->flag.autoequip = flag>0?1:0;
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -17783,14 +17781,14 @@ BUILDIN_FUNC(setitemscript)
 {
 	int n = 0;
 	const char *script;
-	struct item_data *i_data;
 	struct script_code **dstscript;
 
 	t_itemid item_id = script_getnum(st,2);
 	script = script_getstr(st,3);
 	if( script_hasdata(st,4) )
 		n=script_getnum(st,4);
-	i_data = itemdb_exists(item_id);
+
+	std::shared_ptr<item_data> i_data = item_db.find(item_id);
 
 	if (!i_data || script==NULL || ( script[0] && script[0]!='{' )) {
 		script_pushint(st,0);
@@ -17844,7 +17842,7 @@ BUILDIN_FUNC(addmonsterdrop)
 	}
 
 	t_itemid item_id = script_getnum(st, 3);
-	item_data *itm = itemdb_exists(item_id);
+	std::shared_ptr<item_data> itm = item_db.find(item_id);
 
 	if (itm == nullptr) {
 		ShowError("addmonsterdrop: Nonexistant item %u requested.\n", item_id);
@@ -18084,7 +18082,7 @@ BUILDIN_FUNC(searchitem)
 {
 	struct script_data* data = script_getdata(st, 2);
 	const char *itemname = script_getstr(st,3);
-	struct item_data *items[MAX_SEARCH];
+	std::map<t_itemid, std::shared_ptr<item_data>> items;
 	int count;
 
 	char* name;
@@ -18093,10 +18091,10 @@ BUILDIN_FUNC(searchitem)
 	int32 i;
 	TBL_PC* sd = NULL;
 
-	if ((items[0] = itemdb_exists(atoi(itemname))))
+	if ((items[0] = item_db.find(strtoul(itemname, nullptr, 10))))
 		count = 1;
 	else
-		count = itemdb_searchname_array(items, ARRAYLENGTH(items), itemname);
+		count = itemdb_searchname_array(items, MAX_SEARCH, itemname);
 
 	if (!count) {
 		script_pushint(st, 0);
@@ -25207,15 +25205,15 @@ BUILDIN_FUNC(mail){
 		}
 
 		for( i = 0; i < num_items && start < end; i++, start++ ){
-			struct item_data *item = itemdb_exists(msg.item[i].nameid);
+			std::shared_ptr<item_data> itm = item_db.find(msg.item[i].nameid);
 
 			msg.item[i].amount = (short)get_val2_num( st, reference_uid( id, start ), reference_getref( data ) );
 
 			if( msg.item[i].amount <= 0 ){
 				ShowError( "buildin_mail: amount %d for item %u is invalid.\n", msg.item[i].amount, msg.item[i].nameid );
 				return SCRIPT_CMD_FAILURE;
-			}else if( itemdb_isstackable2(item) ){
-				uint16 max = item->stack.amount > 0 ? item->stack.amount : MAX_AMOUNT;
+			}else if( itemdb_isstackable2(itm.get()) ){
+				uint16 max = itm->stack.amount > 0 ? itm->stack.amount : MAX_AMOUNT;
 
 				if( msg.item[i].amount > max ){
 					ShowWarning( "buildin_mail: amount %d for item %u is exceeding the maximum of %d. Capping...\n", msg.item[i].amount, msg.item[i].nameid, max );
@@ -25241,11 +25239,11 @@ BUILDIN_FUNC(mail){
 		}
 
 		for (i = 0; i < num_items && start < end; i++, start++) {
-			struct item_data* item = itemdb_exists(msg.item[i].nameid);
+			std::shared_ptr<item_data> itm = item_db.find(msg.item[i].nameid);
 
 			msg.item[i].refine = (char)get_val2_num( st, reference_uid( id, start ), reference_getref( data ) );
 
-			if (!item->flag.no_refine && (item->type == IT_WEAPON || item->type == IT_ARMOR || item->type == IT_SHADOWGEAR)) {
+			if (!itm->flag.no_refine && (itm->type == IT_WEAPON || itm->type == IT_ARMOR || itm->type == IT_SHADOWGEAR)) {
 				if (msg.item[i].refine > MAX_REFINE)
 					msg.item[i].refine = MAX_REFINE;
 			}
@@ -25267,8 +25265,6 @@ BUILDIN_FUNC(mail){
 		}
 
 		for( i = 0; i < num_items && start < end; i++, start++ ){
-			struct item_data *item = itemdb_exists(msg.item[i].nameid);
-
 			msg.item[i].bound = (char)get_val2_num( st, reference_uid( id, start ), reference_getref( data ) );
 
 			if( msg.item[i].bound < BOUND_NONE || msg.item[i].bound >= BOUND_MAX ){
