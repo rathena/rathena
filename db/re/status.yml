@@ -5680,8 +5680,6 @@ Body:
     DurationLookup: AB_OFFERTORIUM
     Flags:
       DisplayPc: true
-    Fail:
-      Magnificat: true
     End:
       Magnificat: true
       Blind: true
