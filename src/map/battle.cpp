@@ -5488,9 +5488,9 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case WH_CRESCIVE_BOLT:
 			skillratio += -100 + 300 * skill_lv + 5 * sstatus->con;
 			RE_LVL_DMOD(100);
-			if (sc) { // At level 10 the SP usage of 100 increased by 20 on each count. So maybe damage increase is 20%??? [Rytech]
+			if (sc) {
 				if (sc->data[SC_CRESCIVEBOLT])
-					skillratio += skillratio * (20 * sc->data[SC_CRESCIVEBOLT]->val1) / 100;
+					skillratio += skillratio * (10 * sc->data[SC_CRESCIVEBOLT]->val1) / 100;
 
 				if (sc->data[SC_CALAMITYGALE]) {
 					skillratio += skillratio * 20 / 100;
