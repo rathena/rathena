@@ -4383,15 +4383,14 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 		sd->indexed_bonus.subele[ELE_FIRE] += skill*5;
 	}
 	if((skill=pc_checkskill(sd,SA_DRAGONOLOGY))>0) {
+		sd->right_weapon.addrace[RC_DRAGON]+=skill*4;
+		sd->left_weapon.addrace[RC_DRAGON]+=skill*4;
 #ifdef RENEWAL
-		skill = skill * 2;
+		sd->indexed_bonus.magic_addrace[RC_DRAGON]+=skill*2;
 #else
-		skill = skill * 4;
+		sd->indexed_bonus.magic_addrace[RC_DRAGON]+=skill*4;
 #endif
-		sd->right_weapon.addrace[RC_DRAGON]+=skill;
-		sd->left_weapon.addrace[RC_DRAGON]+=skill;
-		sd->indexed_bonus.magic_addrace[RC_DRAGON]+=skill;
-		sd->indexed_bonus.subrace[RC_DRAGON]+=skill;
+		sd->indexed_bonus.subrace[RC_DRAGON]+=skill*4;
 	}
 	if ((skill = pc_checkskill(sd, AB_EUCHARISTICA)) > 0) {
 		sd->right_weapon.addrace[RC_DEMON] += skill;
