@@ -156,14 +156,19 @@ public:
 	void clear() override{
 		TypesafeYamlDatabase<keytype, datatype>::clear();
 		cache.clear();
+		cache.shrink_to_fit();
 	}
 
 	std::shared_ptr<datatype> find( keytype key ) override{
-		if( this->cache.empty() || key >= this->cache.capacity() ){
+		if( this->cache.empty() || key >= this->cache.size() ){
 			return TypesafeYamlDatabase<keytype, datatype>::find( key );
 		}else{
 			return cache[this->calculateCacheKey( key )];
 		}
+	}
+
+	std::vector<std::shared_ptr<datatype>> getCache() {
+		return this->cache;
 	}
 
 	virtual size_t calculateCacheKey( keytype key ){
@@ -178,8 +183,10 @@ public:
 
 			// Check if the key fits into the current cache size
 			if (this->cache.capacity() <= key) {
+				// Some keys compute to 0, so we allocate a minimum of 500 (250*2) entries
+				const static size_t minimum = 250;
 				// Double the current size, so we do not have to resize that often
-				size_t new_size = key * 2;
+				size_t new_size = std::max( key, minimum ) * 2;
 
 				// Very important => initialize everything to nullptr
 				this->cache.resize(new_size, nullptr);

@@ -78,6 +78,9 @@ obj/mini%.o: %.cpp $(COMMON_H) $(LIBCONFIG_H) $(YAML_CPP_H)
 $(LIBCONFIG_AR):
 	@$(MAKE) -C ../../3rdparty/libconfig
 
+$(YAML_CPP_AR):
+	@$(MAKE) -C ../../3rdparty/yaml-cpp
+
 $(RAPIDYAML_AR):
 	@$(MAKE) -C ../../3rdparty/rapidyaml
 

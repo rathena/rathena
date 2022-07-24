@@ -144,13 +144,66 @@ public:
 
 extern AttributeDatabase elemental_attribute_db;
 
+enum e_enchantgrade_result{
+	ENCHANTGRADE_UPGRADE_SUCCESS,
+	ENCHANTGRADE_UPGRADE_FAILED,
+	ENCHANTGRADE_UPGRADE_DOWNGRADE,
+	ENCHANTGRADE_UPGRADE_BREAK,
+	ENCHANTGRADE_UPGRADE_PROTECTED,
+};
+
+struct s_enchantgradeoption{
+	uint16 id;
+	t_itemid item;
+	uint16 amount;
+	uint32 zeny;
+	uint16 breaking_rate;
+	uint16 downgrade_amount;
+};
+
+struct s_enchantgradelevel{
+	e_enchantgrade grade;
+	uint16 refine;
+	uint16 chance;
+	uint16 bonus;
+	bool announce;
+	struct{
+		t_itemid item;
+		uint16 amountPerStep;
+		uint16 maximumSteps;
+		uint16 chanceIncrease;
+	}catalyst;
+	std::map<uint16,std::shared_ptr<s_enchantgradeoption>> options;
+};
+
+struct s_enchantgrade{
+	uint16 itemtype;
+	std::map<uint16,std::map<e_enchantgrade,std::shared_ptr<s_enchantgradelevel>>> levels;
+};
+
+class EnchantgradeDatabase : public TypesafeYamlDatabase<uint16, s_enchantgrade>{
+public:
+	EnchantgradeDatabase() : TypesafeYamlDatabase( "ENCHANTGRADE_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode( const ryml::NodeRef& node ) override;
+	void loadingFinished() override;
+
+	// Additional
+	std::shared_ptr<s_enchantgradelevel> findCurrentLevelInfo( const struct item_data& data, struct item& item );
+};
+
+extern EnchantgradeDatabase enchantgrade_db;
+
 /// Status changes listing. These code are for use by the server.
 enum sc_type : int16 {
 	SC_NONE = -1,
 
 	//First we enumerate common status ailments which are often used around.
 	SC_STONE = 0,
-	SC_COMMON_MIN = 0, // begin
+	SC_COMMON_MIN = SC_STONE, // begin
 	SC_FREEZE,
 	SC_STUN,
 	SC_SLEEP,
@@ -161,7 +214,8 @@ enum sc_type : int16 {
 	SC_BLIND,
 	SC_BLEEDING,
 	SC_DPOISON, //10
-	SC_COMMON_MAX = 10, // end
+	SC_STONEWAIT,
+	SC_COMMON_MAX = SC_STONEWAIT, // end
 
 	//Next up, we continue on 20, to leave enough room for additional "common" ailments in the future.
 	SC_PROVOKE = 20,
@@ -1172,6 +1226,10 @@ enum sc_type : int16 {
 	SC_DEEP_POISONING_OPTION,
 	SC_POISON_SHIELD,
 	SC_POISON_SHIELD_OPTION,
+	SC_M_LIFEPOTION,
+	SC_S_MANAPOTION,
+
+	SC_SUB_WEAPONPROPERTY,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
@@ -2826,7 +2884,6 @@ enum e_status_change_flag : uint16 {
 	SCF_REMOVEONCHANGEMAP,
 	SCF_REMOVEONMAPWARP,
 	SCF_REMOVECHEMICALPROTECT,
-	SCF_OVERLAPFAIL,
 	SCF_OVERLAPIGNORELEVEL,
 	SCF_SENDOPTION,
 	SCF_ONTOUCH,
@@ -2870,14 +2927,14 @@ struct s_status_change_db {
 	uint16 skill_id;				///< Associated skill for (addeff) duration lookups
 	std::vector<sc_type> end;		///< List of SC that will be ended when this SC is activated
 	std::vector<sc_type> fail;		///< List of SC that causing this SC cannot be activated
-	bool end_return;				///< After SC ends the SC from end list, it does nothing
+	std::vector<sc_type> endreturn;	///< List of SC that will be ended when this SC is activated and then immediately return
 	t_tick min_duration;			///< Minimum duration effect (after all status reduction)
 	uint16 min_rate;				///< Minimum rate to be applied (after all status reduction)
 };
 
 class StatusDatabase : public TypesafeCachedYamlDatabase<uint16, s_status_change_db> {
 public:
-	StatusDatabase() : TypesafeCachedYamlDatabase("STATUS_DB", 1) {
+	StatusDatabase() : TypesafeCachedYamlDatabase("STATUS_DB", 2) {
 		// All except BASE and extra flags.
 		SCB_BATTLE.set();
 		SCB_BATTLE.reset(SCB_BASE);
@@ -3054,6 +3111,8 @@ struct status_change {
 	unsigned short opt1;// body state
 	unsigned short opt2;// health state (bitfield)
 	unsigned char count;
+	sc_type lastEffect; // Used to check for stacking damageable SC on the same attack
+	int32 lastEffectTimer; // Timer for lastEffect
 	//! TODO: See if it is possible to implement the following SC's without requiring extra parameters while the SC is inactive.
 	struct {
 		uint8 move;
@@ -3215,12 +3274,17 @@ int status_isdead(struct block_list *bl);
 int status_isimmune(struct block_list *bl);
 
 t_tick status_get_sc_def(struct block_list *src,struct block_list *bl, enum sc_type type, int rate, t_tick tick, unsigned char flag);
+int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,t_tick duration,unsigned char flag, int32 delay = 0);
 //Short version, receives rate in 1->100 range, and does not uses a flag setting.
-#define sc_start(src, bl, type, rate, val1, tick) status_change_start(src,bl,type,100*(rate),val1,0,0,0,tick,SCSTART_NONE)
-#define sc_start2(src, bl, type, rate, val1, val2, tick) status_change_start(src,bl,type,100*(rate),val1,val2,0,0,tick,SCSTART_NONE)
-#define sc_start4(src, bl, type, rate, val1, val2, val3, val4, tick) status_change_start(src,bl,type,100*(rate),val1,val2,val3,val4,tick,SCSTART_NONE)
-
-int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,t_tick duration,unsigned char flag);
+static int sc_start(block_list *src, block_list *bl, sc_type type, int32 rate, int32 val1, t_tick duration, int32 delay = 0) {
+	return status_change_start(src, bl, type, 100 * rate, val1, 0, 0, 0, duration, SCSTART_NONE, delay);
+}
+static int sc_start2(block_list *src, block_list *bl, sc_type type, int32 rate, int32 val1, int32 val2, t_tick duration, int32 delay = 0) {
+	return status_change_start(src, bl, type, 100 * rate, val1, val2, 0, 0, duration, SCSTART_NONE, delay);
+}
+static int sc_start4(block_list *src, block_list *bl, sc_type type, int32 rate, int32 val1, int32 val2, int32 val3, int32 val4, t_tick duration, int32 delay = 0) {
+	return status_change_start(src, bl, type, 100 * rate, val1, val2, val3, val4, duration, SCSTART_NONE, delay);
+}
 int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const char* file, int line);
 #define status_change_end(bl,type,tid) status_change_end_(bl,type,tid,__FILE__,__LINE__)
 TIMER_FUNC(status_change_timer);
@@ -3228,6 +3292,7 @@ int status_change_timer_sub(struct block_list* bl, va_list ap);
 int status_change_clear(struct block_list* bl, int type);
 void status_change_clear_buffs(struct block_list* bl, uint8 type);
 void status_change_clear_onChangeMap(struct block_list *bl, struct status_change *sc);
+TIMER_FUNC(status_clear_lastEffect_timer);
 
 #define status_calc_mob(md, opt) status_calc_bl_(&(md)->bl, status_db.getSCB_ALL(), opt)
 #define status_calc_pet(pd, opt) status_calc_bl_(&(pd)->bl, status_db.getSCB_ALL(), opt)

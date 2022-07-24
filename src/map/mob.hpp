@@ -29,6 +29,8 @@ struct guardian_data;
 #define MAX_MOB_DROP_TOTAL (MAX_MOB_DROP+MAX_MOB_DROP_ADD)
 #define MAX_MVP_DROP_TOTAL (MAX_MVP_DROP+MAX_MVP_DROP_ADD)
 
+#define MAX_MINCHASE 30	//Max minimum chase value to use for mobs.
+
 //Min time between AI executions
 const t_tick MIN_MOBTHINKTIME = 100;
 //Min time before mobs do a check to call nearby friends for help (or for slaves to support their master)
@@ -445,7 +447,7 @@ struct item_drop_list {
 
 uint16 mobdb_searchname(const char * const str);
 std::shared_ptr<s_mob_db> mobdb_search_aegisname( const char* str );
-int mobdb_searchname_array(const char *str, uint16 * out, int size);
+uint16 mobdb_searchname_array(const char *str, uint16 * out, uint16 size);
 int mobdb_checkid(const int id);
 struct view_data* mob_get_viewdata(int mob_id);
 void mob_set_dynamic_viewdata( struct mob_data* md );

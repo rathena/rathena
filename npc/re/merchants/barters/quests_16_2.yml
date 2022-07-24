@@ -55,7 +55,7 @@ Body:
           - Index: 0
             Item: Swz_Honor_Token
             Amount: 1
-  - Name: shop_ext162_JOB_RUNE_KNIGHT
+  - Name: shop_ext162_JOB_GUILLOTINE_CROSS
     Items:
       - Index: 0
         Item: Imperial_Attack_Ring
@@ -1235,7 +1235,7 @@ Body:
           - Index: 0
             Item: Swz_Honor_Token
             Amount: 5
-  - Name: shop_ext162_JOB_STAR_EMPEROR
+  - Name: shop_ext162_JOB_MECHANIC
     Items:
       - Index: 0
         Item: Imperial_Attack_Ring

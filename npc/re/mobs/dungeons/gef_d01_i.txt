@@ -1,0 +1,16 @@
+//===== rAthena Script =======================================
+//= Illusion of Vampire
+//===== Description: =========================================
+//= Illusion of Vampire monster spawn script.
+//===== Changelog: ===========================================
+//= 1.0 Initial Release [Everade]
+//============================================================
+
+gef_d01_i	monster	White Plant	1082,12
+gef_d01_i	monster	Blue Plant	1079,2
+gef_d01_i	monster	Matt Drainliar	3750,25
+gef_d01_i	monster	Living Dead	3751,10
+gef_d01_i	monster	Starving Living Dead	3752,20
+gef_d01_i	monster	Living Dead	3753,30
+gef_d01_i	monster	Sweet Nightmare	3754,25
+gef_d01_i	monster	Black Mushroom	3755,15

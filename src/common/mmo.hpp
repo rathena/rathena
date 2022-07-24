@@ -111,12 +111,22 @@ typedef uint32 t_itemid;
 	#define MAX_BARTER_REQUIREMENTS 5
 #endif
 
+enum e_enchantgrade : uint16{
+	ENCHANTGRADE_NONE = 0,
+	ENCHANTGRADE_D,
+	ENCHANTGRADE_C,
+	ENCHANTGRADE_B,
+	ENCHANTGRADE_A
+};
+
 #ifdef RENEWAL
 	#define MAX_WEAPON_LEVEL 5
 	#define MAX_ARMOR_LEVEL 2
+	#define MAX_ENCHANTGRADE ENCHANTGRADE_A
 #else
 	#define MAX_WEAPON_LEVEL 4
 	#define MAX_ARMOR_LEVEL 1
+	#define MAX_ENCHANTGRADE ENCHANTGRADE_NONE
 #endif
 
 // for produce
@@ -353,8 +363,9 @@ struct startitem {
 	uint32 pos;
 };
 
-enum e_skill_flag
+enum e_skill_flag : int8
 {
+	SKILL_FLAG_NONE = -1,
 	SKILL_FLAG_PERMANENT,
 	SKILL_FLAG_TEMPORARY,
 	SKILL_FLAG_PLAGIARIZED,
