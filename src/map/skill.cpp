@@ -18530,7 +18530,7 @@ int skill_castfix_sc(struct block_list *bl, double time, uint8 flag)
 		}
 	}
 
-	time = max(time, 0);
+	time = std::max(time, 0.0);
 	//ShowInfo("Castime castfix_sc = %f\n",time);
 
 	return (int)time;
