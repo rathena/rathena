@@ -304,6 +304,8 @@ void PlayerGroupDatabase::loadingFinished(){
 
 	// Initialize command cache
 	atcommand_db_load_groups();
+
+	TypesafeYamlDatabase::loadingFinished();
 }
 
 PlayerGroupDatabase player_group_db;

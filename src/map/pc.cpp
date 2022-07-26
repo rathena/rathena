@@ -357,6 +357,8 @@ void PenaltyDatabase::loadingFinished(){
 			}
 		}
 	}
+
+	TypesafeYamlDatabase::loadingFinished();
 }
 
 PenaltyDatabase penalty_db;
@@ -2677,19 +2679,19 @@ static void pc_bonus_autospell(std::vector<s_autospell> &spell, uint16 id, uint1
 		if ((it.card_id == card_id || it.rate < 0 || rate < 0) && it.id == id && it.lv == lv && it.battle_flag == battle_flag && it.flag == flag) {
 			if (!battle_config.autospell_stacking && it.rate > 0 && rate > 0) // Stacking disabled
 				return;
-			it.rate = util::safe_addition_cap(it.rate, rate, (short)10000);
+			it.rate = util::safe_addition_cap(it.rate, rate, (short)1000);
 			return;
 		}
 	}
 
 	struct s_autospell entry = {};
 
-	if (rate < -10000 || rate > 10000)
-		ShowWarning("pc_bonus_autospell: Item bonus rate %d exceeds -10000~10000 range, capping.\n", rate);
+	if (rate < -1000 || rate > 1000)
+		ShowWarning("pc_bonus_autospell: Item bonus rate %d exceeds -1000~1000 range, capping.\n", rate);
 
 	entry.id = id;
 	entry.lv = lv;
-	entry.rate = cap_value(rate, -10000, 10000);
+	entry.rate = cap_value(rate, -1000, 1000);
 	entry.battle_flag = battle_flag;
 	entry.card_id = card_id;
 	entry.flag = flag;
@@ -2721,13 +2723,13 @@ static void pc_bonus_autospell_onskill(std::vector<s_autospell> &spell, uint16 s
 
 	struct s_autospell entry = {};
 
-	if (rate < -10000 || rate > 10000)
-		ShowWarning("pc_bonus_onskill: Item bonus rate %d exceeds -10000~10000 range, capping.\n", rate);
+	if (rate < -1000 || rate > 1000)
+		ShowWarning("pc_bonus_onskill: Item bonus rate %d exceeds -1000~1000 range, capping.\n", rate);
 
 	entry.trigger_skill = src_skill;
 	entry.id = id;
 	entry.lv = lv;
-	entry.rate = cap_value(rate, -10000, 10000);
+	entry.rate = cap_value(rate, -1000, 1000);
 	entry.card_id = card_id;
 	entry.flag = flag;
 
@@ -4957,15 +4959,13 @@ bool pc_skill(struct map_session_data* sd, uint16 skill_id, int level, enum e_ad
 
 		case ADDSKILL_TEMP: //Item bonus skill.
 			if (sd->status.skill[idx].id != 0) {
-				if (sd->status.skill[idx].lv >= level)
-					return true;
 				if (sd->status.skill[idx].flag == SKILL_FLAG_PERMANENT) //Non-granted skill, store it's level.
 					sd->status.skill[idx].flag = SKILL_FLAG_REPLACED_LV_0 + sd->status.skill[idx].lv;
 			} else {
 				sd->status.skill[idx].id   = skill_id;
 				sd->status.skill[idx].flag = SKILL_FLAG_TEMPORARY;
 			}
-			sd->status.skill[idx].lv = level;
+			sd->status.skill[idx].lv = max(sd->status.skill[idx].lv, level);
 			break;
 
 		case ADDSKILL_TEMP_ADDLEVEL: //Add skill bonus on top of what you had.
@@ -6138,17 +6138,17 @@ int pc_show_steal(struct block_list *bl,va_list ap)
 {
 	struct map_session_data *sd;
 	t_itemid itemid;
-
-	struct item_data *item=NULL;
 	char output[100];
 
 	sd=va_arg(ap,struct map_session_data *);
 	itemid=va_arg(ap,int);
 
-	if((item=itemdb_exists(itemid))==NULL)
+	std::shared_ptr<item_data> id = item_db.find(itemid);
+
+	if(id == nullptr)
 		sprintf(output,"%s stole an Unknown Item (id: %u).",sd->status.name, itemid);
 	else
-		sprintf(output,"%s stole %s.",sd->status.name,item->ename.c_str());
+		sprintf(output,"%s stole %s.",sd->status.name,id->ename.c_str());
 	clif_displaymessage( ((struct map_session_data *)bl)->fd, output);
 
 	return 0;
@@ -6690,6 +6690,31 @@ uint8 pc_checkskill(struct map_session_data *sd, uint16 skill_id)
 		return 0;
 	}
 	return (sd->status.skill[idx].id == skill_id) ? sd->status.skill[idx].lv : 0;
+}
+
+/**
+ * Returns the flag of the given skill (when learned).
+ * @param sd: Player data
+ * @param skill_id: Skill to lookup
+ * @return Skill flag type
+ */
+e_skill_flag pc_checkskill_flag(map_session_data &sd, uint16 skill_id) {
+	uint16 idx;
+
+#ifdef RENEWAL
+	if ((idx = skill_get_index(skill_id)) == 0) {
+#else
+	if ((idx = skill_db.get_index(skill_id, skill_id >= RK_ENCHANTBLADE, __FUNCTION__, __FILE__, __LINE__)) == 0) {
+		if (skill_id >= RK_ENCHANTBLADE) {
+			// Silently fail for now -> future update planned
+			return SKILL_FLAG_NONE;
+		}
+#endif
+		ShowError("pc_checkskill_flag: Invalid skill id %d (char_id=%d).\n", skill_id, sd.status.char_id);
+		return SKILL_FLAG_NONE;
+	}
+
+	return (sd.status.skill[idx].id == skill_id && sd.status.skill[idx].lv > 0) ? static_cast<e_skill_flag>(sd.status.skill[idx].flag) : SKILL_FLAG_NONE;
 }
 
 /**
@@ -11289,15 +11314,15 @@ int pc_load_combo(struct map_session_data *sd) {
 			ret += pc_checkcombo(sd, id);
 
 		if (!itemdb_isspecial(sd->inventory.u.items_inventory[idx].card[0])) {
-			item_data *data;
-
 			for (uint8 j = 0; j < MAX_SLOTS; j++) {
 				if (!sd->inventory.u.items_inventory[idx].card[j])
 					continue;
 
-				if ((data = itemdb_exists(sd->inventory.u.items_inventory[idx].card[j])) != nullptr) {
+				std::shared_ptr<item_data> data = item_db.find(sd->inventory.u.items_inventory[idx].card[j]);
+
+				if (data != nullptr) {
 					if (!data->combos.empty())
-						ret += pc_checkcombo(sd, data);
+						ret += pc_checkcombo(sd, data.get());
 				}
 			}
 		}
@@ -11390,7 +11415,7 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 			if (!sd->inventory.u.items_inventory[n].card[i])
 				continue;
 
-			struct item_data *card_data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i]);
+			std::shared_ptr<item_data> card_data = item_db.find(sd->inventory.u.items_inventory[n].card[i]);
 
 			if (card_data) {
 				int card_pos = card_data->equip;
@@ -11535,13 +11560,14 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 		; // No cards
 	else {
 		for (i = 0; i < MAX_SLOTS; i++) {
-			item_data *data;
-
 			if (!sd->inventory.u.items_inventory[n].card[i])
 				continue;
-			if ((data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i])) != nullptr) {
+
+			std::shared_ptr<item_data> data = item_db.find(sd->inventory.u.items_inventory[n].card[i]);
+
+			if (data != nullptr) {
 				if (!data->combos.empty())
-					pc_checkcombo(sd, data);
+					pc_checkcombo(sd, data.get());
 			}
 		}
 	}
@@ -11559,11 +11585,13 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 			; //No cards
 		else {
 			for( i = 0; i < MAX_SLOTS; i++ ) {
-				struct item_data *data;
 				if (!sd->inventory.u.items_inventory[n].card[i])
 					continue;
-				if ( ( data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i]) ) != NULL ) {
-					if (data->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(data,sd->bl.m)))
+
+				std::shared_ptr<item_data> data = item_db.find(sd->inventory.u.items_inventory[n].card[i]);
+
+				if ( data != nullptr ) {
+					if (data->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(data.get(), sd->bl.m)))
 						run_script(data->equip_script,0,sd->bl.id,fake_nd->bl.id);
 				}
 			}
@@ -11620,13 +11648,14 @@ static void pc_unequipitem_sub(struct map_session_data *sd, int n, int flag) {
 			; // No cards
 		else {
 			for (i = 0; i < MAX_SLOTS; i++) {
-				item_data *data;
-
 				if (!sd->inventory.u.items_inventory[n].card[i])
 					continue;
-				if ((data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i])) != nullptr) {
+
+				std::shared_ptr<item_data> data = item_db.find(sd->inventory.u.items_inventory[n].card[i]);
+
+				if (data != nullptr) {
 					if (!data->combos.empty()) {
-						if (pc_removecombo(sd, data))
+						if (pc_removecombo(sd, data.get()))
 							status_calc = true;
 					}
 				}
@@ -11650,11 +11679,12 @@ static void pc_unequipitem_sub(struct map_session_data *sd, int n, int flag) {
 			; //No cards
 		else {
 			for (i = 0; i < MAX_SLOTS; i++) {
-				struct item_data *data;
 				if (!sd->inventory.u.items_inventory[n].card[i])
 					continue;
 
-				if ((data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i])) != NULL) {
+				std::shared_ptr<item_data> data = item_db.find(sd->inventory.u.items_inventory[n].card[i]);
+
+				if (data != nullptr) {
 					if (data->unequip_script)
 						run_script(data->unequip_script, 0, sd->bl.id, fake_nd->bl.id);
 				}
@@ -12990,6 +13020,8 @@ void SkillTreeDatabase::loadingFinished() {
 			}
 		}
 	}
+
+	TypesafeYamlDatabase::loadingFinished();
 }
 
 /**
@@ -13546,6 +13578,8 @@ void JobDatabase::loadingFinished() {
 			}
 		}
 	}
+
+	TypesafeCachedYamlDatabase::loadingFinished();
 }
 
 /**
@@ -13708,6 +13742,8 @@ void PlayerStatPointDatabase::loadingFinished(){
 		// Store it for next iteration
 		last_level = entry;
 	}
+
+	TypesafeCachedYamlDatabase::loadingFinished();
 }
 
 /*==========================================

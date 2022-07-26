@@ -3305,8 +3305,7 @@ Body:
     Script: |
       itemheal 0,100;
       if (getequipid(EQI_HEAD_MID) == 15385)
-         warp "xmas",147,134;
-      /* todo check map x y */
+         warp "xmas",233,296;
   - Id: 11564
     AegisName: Sweet_Canape
     Name: Sweet Canape
@@ -10965,11 +10964,14 @@ Body:
   - Id: 12608
     AegisName: Splendid_Box2
     Name: Splendid Box2
-    Type: Delayconsume
+    Type: Usable
     Buy: 20
     Weight: 100
     Flags:
       BuyingStore: true
+      Container: true
+    Script: |
+      getgroupitem(IG_Splendid_Box2);
   - Id: 12609
     AegisName: Old_Ore_Box
     Name: Old Ore Box
@@ -46344,7 +46346,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus_script "bonus2 bRegenPercentSP,5,5000;",600,9;
+      bonus_script "{ bonus2 bRegenPercentSP,5,5000; }",600,9;
       /* fix me: unknown flag and specialeffect ;  disabled when LK_BERSERK */
   - Id: 23016
     AegisName: Pieces_Of_Grudge
@@ -46352,6 +46354,8 @@ Body:
     Type: Usable
     Buy: 1
     Weight: 1
+    Flags:
+      DropEffect: CLIENT
     Script: |
       callfunc("F_Cursed_Fragment");
   - Id: 23027
@@ -49330,6 +49334,27 @@ Body:
     Weight: 10
     Script: |
       laphine_upgrade();
+  - Id: 100147
+    AegisName: Bath_Foam_A
+    Name: Bath Foam A
+    Type: Usable
+    Weight: 10
+    Script: |
+      /* bonus_script "{ bonus2 bAddRace2,RC2_EP172BATH,5; }",900,1,0,EFST_BATH_FOAM_A; */
+  - Id: 100148
+    AegisName: Bath_Foam_B
+    Name: Bath Foam B
+    Type: Usable
+    Weight: 10
+    Script: |
+      /* bonus_script "{ bonus2 bAddRace2,RC2_EP172BATH,10; }",900,1,0,EFST_BATH_FOAM_B; */
+  - Id: 100149
+    AegisName: Bath_Foam_C
+    Name: Bath Foam C
+    Type: Usable
+    Weight: 10
+    Script: |
+      /* bonus_script "{ bonus2 bAddRace2,RC2_EP172BATH,15; }",900,1,0,EFST_BATH_FOAM_C; */
   - Id: 100151
     AegisName: Skill_Sha_M_S_Weapon
     Name: Skill Shadow Weapon Combination Scroll
@@ -49356,6 +49381,30 @@ Body:
     Script: |
       specialeffect2 EF_CLAYMORE;
       setmadogear true,MADO_SUIT;
+  - Id: 100160
+    AegisName: Auto_M_Box
+    Name: Automatic Module Box
+    Type: Usable
+    Script: |
+      getrandgroupitem(IG_AUTOMATIC_MODULE_MIX,1);
+  - Id: 100161
+    AegisName: Epic_M_Box
+    Name: Epic Module Box
+    Type: Usable
+    Script: |
+      getrandgroupitem(IG_EPIC_MODULE_MIX,1);
+  - Id: 100162
+    AegisName: Auto_M_I_Box_A
+    Name: Automatic Improvement Device Physical
+    Type: Usable
+    Script: |
+      getrandgroupitem(IG_AUTO_M_I_BOX_A,1);
+  - Id: 100163
+    AegisName: Auto_M_I_Box_B
+    Name: Automatic Improvement Device Magical
+    Type: Usable
+    Script: |
+      getrandgroupitem(IG_AUTO_M_I_BOX_B,1);
   - Id: 100164
     AegisName: Auto_Imp_Melee_1
     Name: Normal Automatic Improvement Device (Physical)
@@ -50570,7 +50619,7 @@ Body:
     Flags:
       Container: true
     Script: |
-      /* getgroupitem(IG_Enchant_Stone_Box22); */
+      getgroupitem(IG_Enchant_Stone_Box22);
   - Id: 100516
     AegisName: Eye_Cleaner
     Name: Eye Cleaner
@@ -50882,6 +50931,15 @@ Body:
     Weight: 10
     Script: |
       laphine_upgrade();
+  - Id: 100721
+    AegisName: Enchant_Stone_Box23
+    Name: Costume Enchant Stone Box 23
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_Enchant_Stone_Box23);
   - Id: 100722
     AegisName: Booster_RandomOpt_P
     Name: Booster Modification Stone(Physical)
@@ -51160,6 +51218,15 @@ Body:
     Weight: 10
     Script: |
       /* reform(); */
+  - Id: 100920
+    AegisName: Enchant_Stone_Box24
+    Name: Costume Enchant Stone Box 24
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_Enchant_Stone_Box24);
   - Id: 100938
     AegisName: Hero_Weapon_Hammer_5
     Name: Modified Hero's Weapon Refinement Hammer V
@@ -51208,6 +51275,15 @@ Body:
     Weight: 10
     Script: |
       bonus_script "{ bonus bMaxHPrate,5; bonus bMaxSPrate,5; bonus bCritAtkRate,5; bonus bLongAtkRate,5; bonus2 bMagicAddEle,Ele_All,5; bonus bNoCastCancel;}",1800;
+  - Id: 101103
+    AegisName: Enchant_Stone_Box25
+    Name: Costume Enchant Stone Box 25
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_Enchant_Stone_Box25);
   - Id: 101107
     AegisName: Cannon_Box_Ice
     Name: Cannon Box Ice
@@ -51654,7 +51730,7 @@ Body:
     Script: |
       laphine_upgrade();
   - Id: 101271
-    AegisName: aegis_101271
+    AegisName: Enchant_Stone_Box26
     Name: Costume Enchant Stone Box 26
     Type: Usable
     Weight: 10
@@ -51797,6 +51873,142 @@ Body:
     Script: |
       sc_start SC_FOOD_VIT_CASH,1800000,15;
       bonus_script "{ bonus bHPRecovRate,rand(11,33); }",1800,1;
+  - Id: 101340
+    AegisName: Bs_Item_M_S_52
+    Name: Blacksmith's Blessing Combination Scroll
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101341
+    AegisName: Bs_Item_M_S_53
+    # Name: Hollgrehenn's Shadow Refine Hammer Combination Scroll
+    Name: Hollgrehenn Combination Scroll
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101342
+    AegisName: Bs_Item_M_S_54
+    Name: Powerful Soul Essence Combination Scroll
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101343
+    AegisName: Bs_Item_M_S_55
+    Name: Powerful Dimension Essence Combination Scroll
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101344
+    AegisName: Bs_Item_M_S_56
+    Name: Enchantment Ticket Combination Scroll
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101345
+    AegisName: Bs_Item_M_S_57
+    Name: Beast's Leather Shoes Combination Scroll
+    Type: DelayConsume
+    Weight: 10
+    EquipLevelMin: 200
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101346
+    AegisName: Bs_Item_M_S_58
+    Name: Pirate Captain's Coat Combination Scroll
+    Type: DelayConsume
+    Weight: 10
+    EquipLevelMin: 200
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101347
+    AegisName: Bs_Item_M_S_59
+    Name: Phreeoni Wing Suit Combination Scroll
+    Type: DelayConsume
+    Weight: 10
+    EquipLevelMin: 200
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101359
+    AegisName: MajorAutoSpell_Up
+    Name: Major Auto Spell Shadow Spellbook
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 101360
+    AegisName: Hasty_Up
+    Name: Hasty Shadow Spellbook
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 101361
+    AegisName: PhysicalShadow_Up
+    Name: Durable Shadow Spellbook
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 101362
+    AegisName: PerfectSize_Up
+    Name: Perfect Size Shadow Spellbook
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 101416
+    AegisName: aegis_101416
+    Name: Costume Enchant Stone Box 27
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_Enchant_Stone_Box27);
+  - Id: 101455
+    AegisName: E_Auto_Up
+    Name: Automatic (bound) upgrade package    # !todo check english name
+    Type: DelayConsume
+    EquipLevelMin: 160
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_upgrade();
   - Id: 101463
     AegisName: HD_Elunium_10Box_MSP
     Name: (Limited) HD Elunium 10 Box
@@ -51827,6 +52039,78 @@ Body:
     Script: |
       getitem 6240,10;
       getitembound 23919,11,Bound_Account;
+  - Id: 101482
+    AegisName: Freedom_Stick_Cube
+    Name: Freedom Stick Remodeling Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 101483
+    AegisName: Blessed_Knife_Cube
+    Name: Blessed Knife Remodeling Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      laphine_synthesis();
+  - Id: 101512
+    AegisName: aegis_101512
+    Name: Ancient Hero Box 1    # !todo check english name
+    Type: Usable
+    Weight: 200
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_Ancient_Hero_Box_1);
+  - Id: 101513
+    AegisName: aegis_101513
+    Name: "[Scroll] STR Biscuit Stick"    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Script: |
+      sc_start SC_FOOD_STR_CASH,1800000,15;
+      sc_start SC_ATKPOTION,600000,rand(11,111);
+  - Id: 101514
+    AegisName: aegis_101514
+    Name: "[Scroll] INT Biscuit Stick"    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Script: |
+      sc_start SC_FOOD_INT_CASH,1800000,15;
+      sc_start SC_MATKPOTION,600000,rand(11,111);
+  - Id: 101564
+    AegisName: AllMighty_Up
+    Name: Almighty Shadow Spellbook
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_upgrade();
+  - Id: 101639
+    AegisName: D_Gw_Extractor
+    Name: Dim Glacier Extractor    # !todo check english name
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      laphine_synthesis();
+  - Id: 101665
+    AegisName: EXPShadow_Mix2
+    Name: Experience Shadow Pickbox (Weapon)    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      laphine_synthesis();
   - Id: 200055
     AegisName: C_Acid_B_50Box
     Name: Acid Bomb 50 Box

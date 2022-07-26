@@ -162,11 +162,10 @@ int8 buyingstore_create( struct map_session_data* sd, int zenylimit, unsigned ch
 	// check item list
 	for( i = 0; i < count; i++ ){
 		const struct PACKET_CZ_REQ_OPEN_BUYING_STORE_sub *item = &itemlist[i];
-
-		struct item_data* id = itemdb_exists( item->itemId );
+		std::shared_ptr<item_data> id = item_db.find(item->itemId);
 
 		// invalid input
-		if( id == NULL || item->amount == 0 ){	
+		if( id == nullptr || item->amount == 0 ){	
 			break;
 		}
 
@@ -176,7 +175,7 @@ int8 buyingstore_create( struct map_session_data* sd, int zenylimit, unsigned ch
 		}
 
 		// restrictions: allowed and no character-bound items
-		if( !id->flag.buyingstore || !itemdb_cantrade_sub( id, pc_get_group_level( sd ), pc_get_group_level( sd ) ) ){ 
+		if( !id->flag.buyingstore || !itemdb_cantrade_sub( id.get(), pc_get_group_level( sd ), pc_get_group_level( sd ) ) ){ 
 			break;
 		}
 

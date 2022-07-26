@@ -313,16 +313,19 @@ std::shared_ptr<s_mob_db> mobdb_search_aegisname( const char* str ){
 }
 
 /*==========================================
- * Founds up to N matches. Returns number of matches [Skotlex]
+ * Searches up to N matches. Returns number of matches [Skotlex]
  *------------------------------------------*/
-int mobdb_searchname_array_(const char *str, uint16 * out, int size, bool full_cmp)
+uint16 mobdb_searchname_array_(const char *str, uint16 * out, uint16 size, bool full_cmp)
 {
-	unsigned short count = 0;
-	for( auto const &mobdb_pair : mob_db ) {
-		const uint16 mob_id = mobdb_pair.first;
-		if( mobdb_searchname_sub(mob_id, str, full_cmp) ) {
+	uint16 count = 0;
+	const auto &mob_list = mob_db.getCache();
+
+	for( const auto &mob : mob_list ) {
+		if (mob == nullptr)
+			continue;
+		if( mobdb_searchname_sub(mob->id, str, full_cmp) ) {
 			if( count < size )
-				out[count] = mob_id;
+				out[count] = mob->id;
 			count++;
 		}
 	}
@@ -330,7 +333,7 @@ int mobdb_searchname_array_(const char *str, uint16 * out, int size, bool full_c
 	return count;
 }
 
-int mobdb_searchname_array(const char *str, uint16 * out, int size)
+uint16 mobdb_searchname_array(const char *str, uint16 * out, uint16 size)
 {
 	return mobdb_searchname_array_(str, out, size, false);
 }
@@ -2784,7 +2787,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	{ // Item Drop
 		struct item_drop_list *dlist = ers_alloc(item_drop_list_ers, struct item_drop_list);
 		struct item_drop *ditem;
-		struct item_data* it = NULL;
 		int drop_rate, drop_modifier = 100;
 
 #ifdef RENEWAL_DROP
@@ -2801,7 +2803,10 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		for (i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
 			if (md->db->dropitem[i].nameid == 0)
 				continue;
-			if ( !(it = itemdb_exists(md->db->dropitem[i].nameid)) )
+
+			std::shared_ptr<item_data> it = item_db.find(md->db->dropitem[i].nameid);
+
+			if ( it == nullptr )
 				continue;
 			
 			drop_rate = mob_getdroprate(src, md->db, md->db->dropitem[i].rate, drop_modifier);
@@ -2963,9 +2968,12 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 #endif
 
 			for(i = 0; i < MAX_MVP_DROP_TOTAL; i++) {
-				struct item_data *i_data;
+				if(mdrop[i].nameid == 0)
+					continue;
 
-				if(mdrop[i].nameid == 0 || !(i_data = itemdb_exists(mdrop[i].nameid)))
+				std::shared_ptr<item_data> i_data = item_db.find(mdrop[i].nameid);
+
+				if (i_data == nullptr)
 					continue;
 
 				temp = mdrop[i].rate;
@@ -3757,8 +3765,9 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event)
 				case MSC_MASTERATTACKED:
 					flag = (md->master_id > 0 && (fbl=map_id2bl(md->master_id)) && unit_counttargeted(fbl) > 0); break;
 				case MSC_ALCHEMIST:
-					flag = (md->state.alchemist);
-					break;
+					flag = (md->state.alchemist); break;
+				case MSC_MOBNEARBYGT:
+					flag = (map_foreachinallrange(mob_count_sub, &md->bl, AREA_SIZE, BL_MOB) > c2 ); break;
 			}
 		}
 
@@ -4974,6 +4983,8 @@ void MobDatabase::loadingFinished() {
 		mob->status.hp = mob->status.max_hp;
 		mob->status.sp = mob->status.max_sp;
 	}
+
+	TypesafeCachedYamlDatabase::loadingFinished();
 }
 
 MobDatabase mob_db;
@@ -5491,6 +5502,27 @@ uint64 MobAvailDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		mob->vd.head_bottom = item->look;
 	}
 
+	if (this->nodeExists(node, "Robe")) {
+		if (pcdb_checkid(mob->vd.class_) == 0) {
+			this->invalidWarning(node["Robe"], "Robe is only applicable to Job sprites.\n");
+			return 0;
+		}
+
+		std::string robe;
+
+		if (!this->asString(node, "Robe", robe))
+			return 0;
+
+		std::shared_ptr<item_data> item = item_db.search_aegisname(robe.c_str());
+
+		if (item == nullptr) {
+			this->invalidWarning(node["Robe"], "Robe %s is not a valid item.\n", robe.c_str());
+			return 0;
+		}
+
+		mob->vd.robe = item->look;
+	}
+
 	if (this->nodeExists(node, "PetEquip")) {
 		std::shared_ptr<s_pet_db> pet_db_ptr = pet_db.find(mob->id);
 
@@ -5763,6 +5795,7 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 		{ "masterattacked",    MSC_MASTERATTACKED    },
 		{ "alchemist",         MSC_ALCHEMIST         },
 		{ "onspawn",           MSC_SPAWN             },
+		{ "mobnearbygt",       MSC_MOBNEARBYGT       },
 	}, cond2[] ={
 		{	"anybad",		-1				},
 		{	"stone",		SC_STONE		},

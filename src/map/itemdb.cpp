@@ -4,7 +4,6 @@
 #include "itemdb.hpp"
 
 #include <iostream>
-#include <map>
 #include <stdlib.h>
 
 #include "../common/nullpo.hpp"
@@ -1168,6 +1167,8 @@ void ItemDatabase::loadingFinished(){
 
 		item_db.put( ITEMID_DUMMY, dummy_item );
 	}
+
+	TypesafeCachedYamlDatabase::loadingFinished();
 }
 
 /**
@@ -1668,19 +1669,21 @@ LaphineUpgradeDatabase laphine_upgrade_db;
  * @param str
  * @return Number of matches item
  *------------------------------------------*/
-int itemdb_searchname_array(struct item_data** data, int size, const char *str)
+uint16 itemdb_searchname_array(std::map<t_itemid, std::shared_ptr<item_data>> &data, uint16 size, const char *str)
 {
-	int count = 0;
+	for (const auto &item : item_db) {
+		std::shared_ptr<item_data> id = item.second;
 
-	for (const auto &it : item_db) {
-		if (count < size) {
-			if (stristr(it.second->name.c_str(), str) != nullptr || stristr(it.second->ename.c_str(), str) != nullptr || strcmpi(it.second->ename.c_str(), str) == 0)
-				data[count++] = it.second.get();
-		} else
-			break;
+		if (id == nullptr)
+			continue;
+		if (stristr(id->name.c_str(), str) != nullptr || stristr(id->ename.c_str(), str) != nullptr || strcmpi(id->ename.c_str(), str) == 0)
+			data[id->nameid] = id;
 	}
 
-	return count;
+	if (data.size() > size)
+		util::map_resize(data, size);
+
+	return static_cast<uint16>(data.size());
 }
 
 std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(std::shared_ptr<s_item_group_random> random) {
@@ -1839,10 +1842,8 @@ uint8 ItemGroupDatabase::pc_get_itemgroup(uint16 group_id, bool identify, map_se
 * @param nameid
 * @return *item_data if item is exist, or NULL if not
 */
-struct item_data* itemdb_exists(t_itemid nameid) {
-	std::shared_ptr<item_data> item = item_db.find(nameid);
-
-	return item ? item.get() : nullptr;
+std::shared_ptr<item_data> itemdb_exists(t_itemid nameid) {
+	return item_db.find(nameid);
 }
 
 /// Returns name type of ammunition [Cydh]
@@ -2351,6 +2352,8 @@ void ItemGroupDatabase::loadingFinished() {
 			}
 		}
 	}
+
+	TypesafeYamlDatabase::loadingFinished();
 }
 
 /** Read item forbidden by mapflag (can't equip item)
@@ -2359,12 +2362,13 @@ void ItemGroupDatabase::loadingFinished() {
 static bool itemdb_read_noequip(char* str[], int columns, int current) {
 	t_itemid nameid;
 	int flag;
-	struct item_data *id;
 
 	nameid = strtoul(str[0], nullptr, 10);
 	flag = atoi(str[1]);
 
-	if( ( id = itemdb_exists(nameid) ) == NULL )
+	std::shared_ptr<item_data> id = item_db.find(nameid);
+
+	if( id == nullptr )
 	{
 		ShowWarning("itemdb_read_noequip: Invalid item id %u.\n", nameid);
 		return false;
@@ -2523,10 +2527,14 @@ void ComboDatabase::loadingFinished() {
 	// Populate item_data to refer to the combo
 	for (const auto &combo : *this) {
 		for (const auto &itm : combo.second->nameid) {
-			item_data *it = itemdb_exists(itm);
-			it->combos.push_back(combo.second);
+			std::shared_ptr<item_data> it = item_db.find(itm);
+
+			if (it != nullptr)
+				it->combos.push_back(combo.second);
 		}
 	}
+
+	TypesafeYamlDatabase::loadingFinished();
 }
 
 /**
@@ -2911,6 +2919,8 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 		jobs["Rebellion"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
 		jobs["Summoner"] << (std::stoi(str[index]) ? "true" : "false");
+	if (!str[++index].empty())
+		jobs["Spirit_Handler"] << (std::stoi(str[index]) ? "true" : "false");
 #endif
 
 	if( !jobs.has_children() ){
@@ -2970,7 +2980,7 @@ static int itemdb_read_sqldb(void) {
 			"`delay_duration`,`delay_status`,`stack_amount`,`stack_inventory`,`stack_cart`,`stack_storage`,`stack_guildstorage`,`nouse_override`,`nouse_sitting`,"
 			"`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_tradepartner`,`trade_nosell`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`,`equip_script`,`unequip_script`"
 #ifdef RENEWAL
-			",`magic_attack`,`class_third`,`class_third_upper`,`class_third_baby`,`class_fourth`,`job_kagerouoboro`,`job_rebellion`,`job_summoner`"
+			",`magic_attack`,`class_third`,`class_third_upper`,`class_third_baby`,`class_fourth`,`job_kagerouoboro`,`job_rebellion`,`job_summoner`,`job_spirit_handler`"
 #endif
 			" FROM `%s`", item_db_name[fi]) ) {
 			Sql_ShowDebug(mmysql_handle);
@@ -3113,6 +3123,8 @@ void RandomOptionDatabase::loadingFinished(){
 
 		script_set_constant( name.c_str(), pair.first, false, false );
 	}
+
+	TypesafeYamlDatabase::loadingFinished();
 }
 
 RandomOptionDatabase random_option_db;
@@ -3230,6 +3242,13 @@ void s_random_opt_group::apply( struct item& item ){
 		item_option.id = option->id;
 		item_option.value = rnd_value( option->min_value, option->max_value );
 		item_option.param = option->param;
+	};
+
+	// (Re)initialize all the options
+	for( size_t i = 0; i < MAX_ITEM_RDM_OPT; i++ ){
+		item.option[i].id = 0;
+		item.option[i].value = 0;
+		item.option[i].param = 0;
 	};
 
 	// Apply Must options

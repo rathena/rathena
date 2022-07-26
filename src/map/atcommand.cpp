@@ -3911,28 +3911,33 @@ ACMD_FUNC(mapexit)
  *------------------------------------------*/
 ACMD_FUNC(idsearch)
 {
-	char item_name[100];
-	unsigned int i, match;
-	struct item_data *item_array[MAX_SEARCH];
 	nullpo_retr(-1, sd);
 
+	char item_name[100];
+
 	memset(item_name, '\0', sizeof(item_name));
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (!message || !*message || sscanf(message, "%99s", item_name) < 0) {
 		clif_displaymessage(fd, msg_txt(sd,1031)); // Please enter part of an item name (usage: @idsearch <part_of_item_name>).
 		return -1;
 	}
 
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+
 	sprintf(atcmd_output, msg_txt(sd,77), item_name); // The reference result of '%s' (name: id):
 	clif_displaymessage(fd, atcmd_output);
-	match = itemdb_searchname_array(item_array, MAX_SEARCH, item_name);
+
+	std::map<t_itemid, std::shared_ptr<item_data>> item_array = {};
+	uint16 match = itemdb_searchname_array(item_array, MAX_SEARCH, item_name);
+
 	if (match == MAX_SEARCH) {
 		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH); // Displaying first %d matches
 		clif_displaymessage(fd, atcmd_output);
 	}
-	for(i = 0; i < match; i++) {
-		sprintf(atcmd_output, msg_txt(sd,78), item_array[i]->ename.c_str(), item_array[i]->nameid); // %s: %u
+	for(const auto &result : item_array) {
+		std::shared_ptr<item_data> id = result.second;
+
+		sprintf(atcmd_output, msg_txt(sd,78), id->ename.c_str(), id->nameid); // %s: %u
 		clif_displaymessage(fd, atcmd_output);
 	}
 	sprintf(atcmd_output, msg_txt(sd,79), match); // It is %d affair above.
@@ -5840,7 +5845,6 @@ ACMD_FUNC(dropall)
 {
 	int8 type = -1;
 	uint16 i, count = 0, count2 = 0;
-	struct item_data *item_data = NULL;
 
 	nullpo_retr(-1, sd);
 	
@@ -5857,14 +5861,16 @@ ACMD_FUNC(dropall)
 
 	for( i = 0; i < MAX_INVENTORY; i++ ) {
 		if( sd->inventory.u.items_inventory[i].amount ) {
-			if( (item_data = itemdb_exists(sd->inventory.u.items_inventory[i].nameid)) == NULL ) {
+			std::shared_ptr<item_data> id = item_db.find(sd->inventory.u.items_inventory[i].nameid);
+
+			if( id == nullptr ) {
 				ShowDebug("Non-existant item %d on dropall list (account_id: %d, char_id: %d)\n", sd->inventory.u.items_inventory[i].nameid, sd->status.account_id, sd->status.char_id);
 				continue;
 			}
 			if( !pc_candrop(sd,&sd->inventory.u.items_inventory[i]) )
 				continue;
 
-			if( type == -1 || type == (uint8)item_data->type ) {
+			if( type == -1 || type == (uint8)id->type ) {
 				if( sd->inventory.u.items_inventory[i].equip != 0 )
 					pc_unequipitem(sd, i, 3);
 				if( itemdb_ishatched_egg( &sd->inventory.u.items_inventory[i] ) ){
@@ -7612,10 +7618,8 @@ ACMD_FUNC(mobinfo)
 	unsigned char mrace[RC_ALL][11] = { "Formless", "Undead", "Beast", "Plant", "Insect", "Fish", "Demon", "Demi-Human", "Angel", "Dragon", "Player" };
 	unsigned char melement[ELE_ALL][8] = { "Neutral", "Water", "Earth", "Fire", "Wind", "Poison", "Holy", "Dark", "Ghost", "Undead" };
 	char atcmd_output2[CHAT_SIZE_MAX];
-	struct item_data *item_data;
-	uint16 mob_ids[MAX_SEARCH];
-	int count;
-	int i, k;
+	uint16 mob_ids[MAX_SEARCH], count;
+	uint16 i;
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 	memset(atcmd_output2, '\0', sizeof(atcmd_output2));
@@ -7626,7 +7630,7 @@ ACMD_FUNC(mobinfo)
 	}
 
 	// If monster identifier/name argument is a name
-	if ((i = mobdb_checkid(atoi(message))))
+	if ((i = mobdb_checkid(strtoul(message, nullptr, 10))))
 	{
 		mob_ids[0] = i;
 		count = 1;
@@ -7643,7 +7647,7 @@ ACMD_FUNC(mobinfo)
 		clif_displaymessage(fd, atcmd_output);
 		count = MAX_SEARCH;
 	}
-	for (k = 0; k < count; k++) {
+	for (uint16 k = 0; k < count; k++) {
 		std::shared_ptr<s_mob_db> mob = mob_db.find(mob_ids[k]);
 
 		if (mob == nullptr)
@@ -7698,15 +7702,21 @@ ACMD_FUNC(mobinfo)
 #endif
 
 		for (i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
-			if (mob->dropitem[i].nameid == 0 || mob->dropitem[i].rate < 1 || (item_data = itemdb_exists(mob->dropitem[i].nameid)) == NULL)
+
+			if (mob->dropitem[i].nameid == 0 || mob->dropitem[i].rate < 1)
+				continue;
+
+			std::shared_ptr<item_data> id = item_db.find(mob->dropitem[i].nameid);
+
+			if (id == nullptr)
 				continue;
 
 			int droprate = mob_getdroprate( &sd->bl, mob, mob->dropitem[i].rate, drop_modifier );
 
-			if (item_data->slots)
-				sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_data->ename.c_str(), item_data->slots, (float)droprate / 100);
+			if (id->slots)
+				sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", id->ename.c_str(), id->slots, (float)droprate / 100);
 			else
-				sprintf(atcmd_output2, " - %s  %02.02f%%", item_data->ename.c_str(), (float)droprate / 100);
+				sprintf(atcmd_output2, " - %s  %02.02f%%", id->ename.c_str(), (float)droprate / 100);
 			strcat(atcmd_output, atcmd_output2);
 			if (++j % 3 == 0) {
 				clif_displaymessage(fd, atcmd_output);
@@ -7726,8 +7736,15 @@ ACMD_FUNC(mobinfo)
 			mvpremain = 100.0; //Remaining drop chance for official mvp drop mode
 			j = 0;
 			for (i = 0; i < MAX_MVP_DROP_TOTAL; i++) {
-				if (mob->mvpitem[i].nameid == 0 || (item_data = itemdb_exists(mob->mvpitem[i].nameid)) == NULL)
+
+				if (mob->mvpitem[i].nameid == 0)
 					continue;
+
+				std::shared_ptr<item_data> id = item_db.find(mob->mvpitem[i].nameid);
+
+				if (id == nullptr)
+					continue;
+
 				//Because if there are 3 MVP drops at 50%, the first has a chance of 50%, the second 25% and the third 12.5%
 				mvppercent = (float)mob->mvpitem[i].rate * mvpremain / 10000.0f;
 				if(battle_config.item_drop_mvp_mode == 0) {
@@ -7736,15 +7753,15 @@ ACMD_FUNC(mobinfo)
 				if (mvppercent > 0) {
 					j++;
 					if (j == 1) {
-						if (item_data->slots)
-							sprintf(atcmd_output2, " %s[%d]  %02.02f%%", item_data->ename.c_str(), item_data->slots, mvppercent);
+						if (id->slots)
+							sprintf(atcmd_output2, " %s[%d]  %02.02f%%", id->ename.c_str(), id->slots, mvppercent);
 						else
-							sprintf(atcmd_output2, " %s  %02.02f%%", item_data->ename.c_str(), mvppercent);
+							sprintf(atcmd_output2, " %s  %02.02f%%", id->ename.c_str(), mvppercent);
 					} else {
-						if (item_data->slots)
-							sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_data->ename.c_str(), item_data->slots, mvppercent);
+						if (id->slots)
+							sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", id->ename.c_str(), id->slots, mvppercent);
 						else
-							sprintf(atcmd_output2, " - %s  %02.02f%%", item_data->ename.c_str(), mvppercent);
+							sprintf(atcmd_output2, " - %s  %02.02f%%", id->ename.c_str(), mvppercent);
 					}
 					strcat(atcmd_output, atcmd_output2);
 				}
@@ -8150,15 +8167,21 @@ ACMD_FUNC(homshuffle)
  *------------------------------------------*/
 ACMD_FUNC(iteminfo)
 {
-	struct item_data *item_array[MAX_SEARCH];
-	int i, count = 1;
-
 	if (!message || !*message) {
 		clif_displaymessage(fd, msg_txt(sd,1276)); // Please enter an item name/ID (usage: @ii/@iteminfo <item name/ID>).
 		return -1;
 	}
-	if ((item_array[0] = itemdb_exists(strtoul(message, nullptr, 10))) == nullptr)
+
+	std::map<t_itemid, std::shared_ptr<item_data>> item_array = {};
+	uint16 count = 1;
+	t_itemid itemid = strtoul(message, nullptr, 10);
+
+	if (itemid == 0) // Entered a string
 		count = itemdb_searchname_array(item_array, MAX_SEARCH, message);
+	else {
+		if ((item_array[0] = item_db.find(itemid)) == nullptr)
+			count = 0;
+	}
 
 	if (!count) {
 		clif_displaymessage(fd, msg_txt(sd,19));	// Invalid item ID or name.
@@ -8169,8 +8192,9 @@ ACMD_FUNC(iteminfo)
 		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH); // Displaying first %d matches
 		clif_displaymessage(fd, atcmd_output);
 	}
-	for (i = 0; i < count; i++) {
-		struct item_data * item_data = item_array[i];
+	for (const auto &result : item_array) {
+		std::shared_ptr<item_data> item_data = result.second;
+
 		sprintf(atcmd_output, msg_txt(sd,1277), // Item: '%s'/'%s'[%d] (%u) Type: %s | Extra Effect: %s
 			item_data->name.c_str(),item_data->ename.c_str(),item_data->slots,item_data->nameid,
 			(item_data->type != IT_AMMO) ? itemdb_typename((enum item_types)item_data->type) : itemdb_typename_ammo((e_ammo_type)item_data->subtype),
@@ -8201,15 +8225,21 @@ ACMD_FUNC(iteminfo)
  *------------------------------------------*/
 ACMD_FUNC(whodrops)
 {
-	struct item_data *item_data, *item_array[MAX_SEARCH];
-	int i,j, count = 1;
-
 	if (!message || !*message) {
 		clif_displaymessage(fd, msg_txt(sd,1284)); // Please enter item name/ID (usage: @whodrops <item name/ID>).
 		return -1;
 	}
-	if ((item_array[0] = itemdb_exists(strtoul(message, nullptr, 10))) == nullptr)
+
+	std::map<t_itemid, std::shared_ptr<item_data>> item_array = {};
+	uint16 count = 1;
+	t_itemid itemid = strtoul(message, nullptr, 10);
+
+	if (itemid == 0) // Entered a string
 		count = itemdb_searchname_array(item_array, MAX_SEARCH, message);
+	else {
+		if ((item_array[0] = item_db.find(itemid)) == nullptr)
+			count = 0;
+	}
 
 	if (!count) {
 		clif_displaymessage(fd, msg_txt(sd,19));	// Invalid item ID or name.
@@ -8220,22 +8250,23 @@ ACMD_FUNC(whodrops)
 		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH); // Displaying first %d matches
 		clif_displaymessage(fd, atcmd_output);
 	}
-	for (i = 0; i < count; i++) {
-		item_data = item_array[i];
-		sprintf(atcmd_output, msg_txt(sd,1285), item_data->ename.c_str(), item_data->slots, item_data->nameid); // Item: '%s'[%d] (ID:%u)
+	for (const auto &result : item_array) {
+		std::shared_ptr<item_data> id = result.second;
+
+		sprintf(atcmd_output, msg_txt(sd,1285), id->ename.c_str(), id->slots, id->nameid); // Item: '%s'[%d] (ID:%u)
 		clif_displaymessage(fd, atcmd_output);
 
-		if (item_data->mob[0].chance == 0) {
+		if (id->mob[0].chance == 0) {
 			strcpy(atcmd_output, msg_txt(sd,1286)); //  - Item is not dropped by mobs.
 			clif_displaymessage(fd, atcmd_output);
 		} else {
 			sprintf(atcmd_output, msg_txt(sd,1287), MAX_SEARCH); //  - Common mobs with highest drop chance (only max %d are listed):
 			clif_displaymessage(fd, atcmd_output);
 
-			for (j=0; j < MAX_SEARCH && item_data->mob[j].chance > 0; j++)
+			for (uint16 j=0; j < MAX_SEARCH && id->mob[j].chance > 0; j++)
 			{
-				int dropchance = item_data->mob[j].chance;
-				std::shared_ptr<s_mob_db> mob = mob_db.find(item_data->mob[j].id);
+				int dropchance = id->mob[j].chance;
+				std::shared_ptr<s_mob_db> mob = mob_db.find(id->mob[j].id);
 				if(!mob) continue;
 
 #ifdef RENEWAL_DROP
@@ -8247,7 +8278,7 @@ ACMD_FUNC(whodrops)
 #endif
 				if (pc_isvip(sd)) // Display item rate increase for VIP
 					dropchance += (dropchance * battle_config.vip_drop_increase) / 100;
-				sprintf(atcmd_output, "- %s (%d): %02.02f%%", mob->jname.c_str(), item_data->mob[j].id, dropchance/100.);
+				sprintf(atcmd_output, "- %s (%d): %02.02f%%", mob->jname.c_str(), id->mob[j].id, dropchance/100.);
 				clif_displaymessage(fd, atcmd_output);
 			}
 		}
@@ -8257,8 +8288,7 @@ ACMD_FUNC(whodrops)
 
 ACMD_FUNC(whereis)
 {
-	uint16 mob_ids[MAX_SEARCH] = {0};
-	int count = 0;
+	uint16 mob_ids[MAX_SEARCH] = {0}, count;
 
 	if (!message || !*message) {
 		clif_displaymessage(fd, msg_txt(sd,1288)); // Please enter a monster name/ID (usage: @whereis <monster_name_or_monster_ID>).
@@ -9200,9 +9230,13 @@ ACMD_FUNC(itemlist)
 	counter = 0; // total items found
 	for( i = 0; i < size; ++i ) {
 		const struct item* it = &items[i];
-		struct item_data* itd;
 
-		if( it->nameid == 0 || (itd = itemdb_exists(it->nameid)) == NULL )
+		if( it->nameid == 0  )
+			continue;
+
+		std::shared_ptr<item_data> itd = item_db.find(it->nameid);
+
+		if (itd == nullptr)
 			continue;
 
 		counter += it->amount;
@@ -9304,9 +9338,12 @@ ACMD_FUNC(itemlist)
 			int counter2 = 0;
 
 			for( j = 0; j < itd->slots; ++j ) {
-				struct item_data* card;
+				if( it->card[j] == 0 )
+					continue;
 
-				if( it->card[j] == 0 || (card = itemdb_exists(it->card[j])) == NULL )
+				std::shared_ptr<item_data> card = item_db.find(it->card[j]);
+
+				if (card == nullptr)
 					continue;
 
 				counter2++;

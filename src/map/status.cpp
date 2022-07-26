@@ -933,6 +933,8 @@ void EnchantgradeDatabase::loadingFinished(){
 			}
 		}
 	}
+
+	TypesafeYamlDatabase::loadingFinished();
 }
 
 EnchantgradeDatabase enchantgrade_db;
@@ -1897,7 +1899,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 			return false;
 		}
 
-		if (skill_id && sc->cant.cast && skill_id != RK_REFRESH && skill_id != SU_GROOMING && skill_id != SR_GENTLETOUCH_CURE) { // Stuned/Frozen/etc
+		if (skill_id > 0 && sc->opt1 && sc->opt1 != OPT1_STONEWAIT && sc->opt1 != OPT1_BURNING && skill_id != RK_REFRESH && skill_id != SU_GROOMING && skill_id != SR_GENTLETOUCH_CURE) { // Stuned/Frozen/etc
 			if (flag != 1) // Can't cast, casted stuff can't damage.
 				return false;
 			if (skill_get_casttype(skill_id) == CAST_DAMAGE)
@@ -3788,10 +3790,10 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 
 			// Check combo items
 			while (j < item_combo->nameid.size()) {
-				item_data *id = itemdb_exists(item_combo->nameid[j]);
+				std::shared_ptr<item_data> id = item_db.find(item_combo->nameid[j]);
 
 				// Don't run the script if at least one of combo's pair has restriction
-				if (id && !pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(id, sd->bl.m)) {
+				if (id && !pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(id.get(), sd->bl.m)) {
 					no_run = true;
 					break;
 				}
@@ -3828,7 +3830,6 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 
 		if (sd->inventory_data[index]) {
 			int j;
-			struct item_data *data;
 
 			// Card script execution.
 			if (itemdb_isspecial(sd->inventory.u.items_inventory[index].card[0]))
@@ -3838,17 +3839,19 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 				current_equip_card_id= c;
 				if(!c)
 					continue;
-				data = itemdb_exists(c);
+
+				std::shared_ptr<item_data> data = item_db.find(c);
+
 				if(!data)
 					continue;
-				if (opt&SCO_FIRST && data->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(data,sd->bl.m))) {// Execute equip-script on login
+				if (opt&SCO_FIRST && data->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(data.get(), sd->bl.m))) {// Execute equip-script on login
 					run_script(data->equip_script,0,sd->bl.id,0);
 					if (!calculating)
 						return 1;
 				}
 				if(!data->script)
 					continue;
-				if(!pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(data,sd->bl.m)) // Card restriction checks.
+				if(!pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(data.get(), sd->bl.m)) // Card restriction checks.
 					continue;
 				if(i == EQI_HAND_L && sd->inventory.u.items_inventory[index].equip == EQP_HAND_L) { // Left hand status.
 					sd->state.lr_flag = 1;
@@ -3905,7 +3908,8 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 	}
 
 	if (sc->count && sc->data[SC_ITEMSCRIPT]) {
-		struct item_data *data = itemdb_exists(sc->data[SC_ITEMSCRIPT]->val1);
+		std::shared_ptr<item_data> data = item_db.find(sc->data[SC_ITEMSCRIPT]->val1);
+
 		if (data && data->script)
 			run_script(data->script, 0, sd->bl.id, 0);
 	}
@@ -12317,6 +12321,16 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_DEEP_POISONING_OPTION:
 			val3 = ELE_POISON;
 			break;
+		case SC_SUB_WEAPONPROPERTY:
+			if (sd && val3 == ASC_EDP) {
+				uint16 poison_level = pc_checkskill(sd, GC_RESEARCHNEWPOISON);
+
+				if (poison_level > 0) {
+					tick += 30000; // Base of 30 seconds
+					tick += poison_level * 15 * 1000; // Additional 15 seconds per level
+				}
+			}
+			break;
 
 		default:
 			if (calc_flag.none() && scdb->skill_id == 0 && scdb->icon == EFST_BLANK && scdb->opt1 == OPT1_NONE && scdb->opt2 == OPT2_NONE && scdb->state.none() && scdb->flag.none() && scdb->end.empty() && scdb->endreturn.empty() && scdb->fail.empty()) {
@@ -12535,7 +12549,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		sce->timer = INVALID_TIMER; // Infinite duration
 
 	if (calc_flag.any()) {
-		if (sd) {
+		if (sd != nullptr) {
 			switch(type) {
 				// Statuses that adjust HP/SP and heal after starting
 				case SC_BERSERK:
@@ -12544,7 +12558,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					status_calc_bl_(bl, calc_flag, SCO_FORCE);
 					break;
 				default:
-					status_calc_bl_(bl, calc_flag);
+					if (!sd->state.connect_new)
+						status_calc_bl_(bl, calc_flag);
 					break;
 			}
 		} else
@@ -12555,21 +12570,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	if (sc_isnew && scdb->state.any())
 		status_calc_state(bl, sc, scdb->state, true);
 
-	if (sd) {
-		if (sd->pd)
-			pet_sc_check(sd, type); // Skotlex: Pet Status Effect Healing
-		switch (type) {
-			case SC_BERSERK:
-			case SC_MERC_HPUP:
-			case SC_MERC_SPUP:
-				status_calc_pc(sd, SCO_FORCE);
-				break;
-			default:
-				if (!sd->state.connect_new)
-					status_calc_pc(sd, SCO_NONE);
-				break;
-		}
-	}
+	if (sd != nullptr && sd->pd != nullptr)
+		pet_sc_check(sd, type); // Skotlex: Pet Status Effect Healing
 
 	// 1st thing to execute when loading status
 	switch (type) {
@@ -15554,6 +15556,8 @@ void StatusDatabase::loadingFinished(){
 			this->StatusRelevantBLTypes[status->icon] = BL_PC;
 		}
 	}
+
+	TypesafeCachedYamlDatabase::loadingFinished();
 }
 
 StatusDatabase status_db;

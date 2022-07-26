@@ -1842,6 +1842,7 @@
 	export_constant(SC_POISON_SHIELD_OPTION);
 	export_constant(SC_M_LIFEPOTION);
 	export_constant(SC_S_MANAPOTION);
+	export_constant(SC_SUB_WEAPONPROPERTY);
 
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
@@ -5071,6 +5072,7 @@
 	export_constant(IG_A_GRADE_COIN_BAG);
 	export_constant(IG_ADVANCED_WEAPONS_BOX);
 	export_constant(IG_SPLENDID_BOX);
+	export_constant(IG_SPLENDID_BOX2);
 	export_constant(IG_CARDALBUM_ARMOR);
 	export_constant(IG_CARDALBUM_HELM);
 	export_constant(IG_CARDALBUM_ACC);
@@ -5733,6 +5735,29 @@
 	export_constant(IG_SHADOW_CUBE_SHIELD);
 	export_constant(IG_SHADOW_CUBE_SHOES);
 	export_constant(IG_SHADOW_CUBE_WEAPON);
+	export_constant(IG_AUTOMATIC_MODULE_MIX);
+	export_constant(IG_EPIC_MODULE_MIX);
+	export_constant(IG_AUTO_M_I_BOX_A);
+	export_constant(IG_AUTO_M_I_BOX_B);
+	export_constant(IG_ILLUSION_MODULE_MIX);
+	export_constant(IG_ENCHANT_STONE_BOX22);
+	export_constant(IG_ENCHANT_STONE_BOX23);
+	export_constant(IG_ENCHANT_STONE_BOX24);
+	export_constant(IG_ENCHANT_STONE_BOX25);
+	export_constant(IG_ENCHANT_STONE_BOX27);
+	export_constant(IG_ANCIENT_HERO_BOX_1);
+	export_constant(IG_3LV_9REFINE_WEAPON_7GU);
+	export_constant(IG_3LV_10REFINE_WEAPON_8GU);
+	export_constant(IG_3LV_11REFINE_WEAPON_9GU);
+	export_constant(IG_3LV_12REFINE_WEAPON_10G);
+	export_constant(IG_4LV_9REFINE_WEAPON_8GU);
+	export_constant(IG_4LV_10REFINE_WEAPON_9GU);
+	export_constant(IG_4LV_11REFINE_WEAPON_10G);
+	export_constant(IG_BS_ITEM_M_S_52);
+	export_constant(IG_Bs_Item_M_S_53);
+	export_constant(IG_Bs_Item_M_S_54);
+	export_constant(IG_Bs_Item_M_S_55);
+	export_constant(IG_Bs_Item_M_S_56);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

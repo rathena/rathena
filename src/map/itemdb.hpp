@@ -22,7 +22,9 @@ const t_itemid UNKNOWN_ITEM_ID = 512;
 /// The maximum number of item delays
 #define MAX_ITEMDELAYS	10
 ///Designed for search functions, species max number of matches to display.
-#define MAX_SEARCH	5
+#ifndef MAX_SEARCH
+#define MAX_SEARCH	10
+#endif
 
 #define MAX_ROULETTE_LEVEL 7 /** client-defined value **/
 #define MAX_ROULETTE_COLUMNS 9 /** client-defined value **/
@@ -306,6 +308,7 @@ enum e_random_item_group {
 	IG_A_GRADE_COIN_BAG,
 	IG_ADVANCED_WEAPONS_BOX,
 	IG_SPLENDID_BOX,
+	IG_SPLENDID_BOX2,
 	IG_CARDALBUM_ARMOR,
 	IG_CARDALBUM_HELM,
 	IG_CARDALBUM_ACC,
@@ -968,6 +971,29 @@ enum e_random_item_group {
 	IG_SHADOW_CUBE_SHIELD,
 	IG_SHADOW_CUBE_SHOES,
 	IG_SHADOW_CUBE_WEAPON,
+	IG_AUTOMATIC_MODULE_MIX,
+	IG_EPIC_MODULE_MIX,
+	IG_AUTO_M_I_BOX_A,
+	IG_AUTO_M_I_BOX_B,
+	IG_ILLUSION_MODULE_MIX,
+	IG_ENCHANT_STONE_BOX22,
+	IG_ENCHANT_STONE_BOX23,
+	IG_ENCHANT_STONE_BOX24,
+	IG_ENCHANT_STONE_BOX25,
+	IG_ENCHANT_STONE_BOX27,
+	IG_ANCIENT_HERO_BOX_1,
+	IG_3LV_9REFINE_WEAPON_7GU,
+	IG_3LV_10REFINE_WEAPON_8GU,
+	IG_3LV_11REFINE_WEAPON_9GU,
+	IG_3LV_12REFINE_WEAPON_10G,
+	IG_4LV_9REFINE_WEAPON_8GU,
+	IG_4LV_10REFINE_WEAPON_9GU,
+	IG_4LV_11REFINE_WEAPON_10G,
+	IG_BS_ITEM_M_S_52,
+	IG_Bs_Item_M_S_53,
+	IG_Bs_Item_M_S_54,
+	IG_Bs_Item_M_S_55,
+	IG_Bs_Item_M_S_56,
 
 	IG_MAX,
 };
@@ -1359,9 +1385,9 @@ public:
 
 extern LaphineUpgradeDatabase laphine_upgrade_db;
 
-int itemdb_searchname_array(struct item_data** data, int size, const char *str);
+uint16 itemdb_searchname_array(std::map<t_itemid, std::shared_ptr<item_data>> &data, uint16 size, const char *str);
 struct item_data* itemdb_search(t_itemid nameid);
-struct item_data* itemdb_exists(t_itemid nameid);
+std::shared_ptr<item_data> itemdb_exists(t_itemid nameid);
 #define itemdb_name(n) itemdb_search(n)->name.c_str()
 #define itemdb_ename(n) itemdb_search(n)->ename.c_str()
 #define itemdb_type(n) itemdb_search(n)->type

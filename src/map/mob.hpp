@@ -430,6 +430,7 @@ enum e_mob_skill_condition {
 	MSC_MASTERATTACKED,
 	MSC_ALCHEMIST,
 	MSC_SPAWN,
+	MSC_MOBNEARBYGT,
 };
 
 // The data structures for storing delayed item drops
@@ -447,7 +448,7 @@ struct item_drop_list {
 
 uint16 mobdb_searchname(const char * const str);
 std::shared_ptr<s_mob_db> mobdb_search_aegisname( const char* str );
-int mobdb_searchname_array(const char *str, uint16 * out, int size);
+uint16 mobdb_searchname_array(const char *str, uint16 * out, uint16 size);
 int mobdb_checkid(const int id);
 struct view_data* mob_get_viewdata(int mob_id);
 void mob_set_dynamic_viewdata( struct mob_data* md );
