@@ -7069,6 +7069,8 @@ static int script_countitem_sub(struct item *items, std::shared_ptr<item_data> i
 				continue;
 			if (itm->nameid != it.nameid || itm->identify != it.identify || itm->refine != it.refine || itm->attribute != it.attribute)
 				continue;
+			if ((!rental && itm->expire_time > 0) || (rental && itm->expire_time == 0))
+				continue;
 			if (memcmp(it.card, itm->card, sizeof(it.card)))
 				continue;
 			if (random_option) {
@@ -7082,8 +7084,7 @@ static int script_countitem_sub(struct item *items, std::shared_ptr<item_data> i
 					continue;
 			}
 
-			if ((rental && itm->expire_time > 0) || (!rental && itm->expire_time == 0))
-				count += items[i].amount;
+			count += items[i].amount;
 		}
 	}
 
