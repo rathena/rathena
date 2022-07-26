@@ -193,7 +193,8 @@ struct s_mob_skill {
 	short permillage;
 	int casttime,delay;
 	short cancel;
-	short cond1,cond2;
+	short cond1;
+	int64 cond2;
 	short target;
 	int val[5];
 	short emotion;
@@ -431,6 +432,8 @@ enum e_mob_skill_condition {
 	MSC_ALCHEMIST,
 	MSC_SPAWN,
 	MSC_MOBNEARBYGT,
+	MSC_GROUNDATTACKED,
+	MSC_DAMAGEDGT,
 };
 
 // The data structures for storing delayed item drops
@@ -478,7 +481,7 @@ TIMER_FUNC(mob_delayspawn);
 int mob_setdelayspawn(struct mob_data *md);
 int mob_parse_dataset(struct spawn_data *data);
 void mob_log_damage(struct mob_data *md, struct block_list *src, int damage);
-void mob_damage(struct mob_data *md, struct block_list *src, int damage);
+void mob_damage(struct mob_data *md, struct block_list *src, int damage, uint16 skill_id);
 int mob_dead(struct mob_data *md, struct block_list *src, int type);
 void mob_revive(struct mob_data *md, unsigned int hp);
 void mob_heal(struct mob_data *md,unsigned int heal);
@@ -500,7 +503,7 @@ int mob_warpslave(struct block_list *bl, int range);
 int mob_linksearch(struct block_list *bl,va_list ap);
 
 bool mob_chat_display_message (mob_data &md, uint16 msg_id);
-int mobskill_use(struct mob_data *md,t_tick tick,int event);
+int mobskill_use(struct mob_data *md,t_tick tick,int event, int64 damage = 0);
 int mobskill_event(struct mob_data *md,struct block_list *src,t_tick tick, int flag);
 int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id);
 int mob_countslave(struct block_list *bl);
