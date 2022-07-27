@@ -2501,8 +2501,6 @@ void battle_consume_ammo(struct map_session_data*sd, int skill, int lv)
 
 static int battle_range_type(struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv)
 {
-	struct map_session_data *sd = BL_CAST(BL_PC, src);
-
 	// [Akinari] , [Xynvaroth]: Traps are always short range.
 	if (skill_get_inf2(skill_id, INF2_ISTRAP))
 		return BF_SHORT;
@@ -2545,13 +2543,18 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 		case MH_THE_ONE_FIGHTER_RISES: // 7 cell cast range.
 		case SS_SHIMIRU: // 11 cell cast range.
 			return BF_SHORT;
-		case CD_PETITIO: // Skill range is 2 but damage is melee with books and ranged with mace.
+		case CD_PETITIO: { // Skill range is 2 but damage is melee with books and ranged with mace.
+			map_session_data *sd = BL_CAST(BL_PC, src);
+
 			if (sd && (sd->status.weapon == W_MACE || sd->status.weapon == W_2HMACE))
 				return BF_LONG;
+		}
 			break;
 		case DK_HACKANDSLASHER:
 		case DK_HACKANDSLASHER_ATK:
-		case RK_WINDCUTTER:
+		case RK_WINDCUTTER: {
+			map_session_data *sd = BL_CAST(BL_PC, src);
+
 			if (sd && (sd->status.weapon == W_1HSPEAR || sd->status.weapon == W_2HSPEAR))
 				return BF_LONG;
 			break;
@@ -2829,7 +2832,9 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 	if (skill_id == NPC_CRITICALSLASH || skill_id == LG_PINPOINTATTACK) //Always critical skills
 		return true;
 #endif
-	struct status_change *sc = status_get_sc(src);
+
+	status_change *sc = status_get_sc(src);
+
 	if (sc && sc->data[SC_FUSION])
 		return true;
 	if( skill_id && !skill_get_nk(skill_id,NK_CRITICAL) )
@@ -2911,27 +2916,22 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 					return false;
 				break;
 			case SKE_NOON_BLAST:
-				if (sc && (sc->data[SC_NOON_SUN] || sc->data[SC_SKY_ENCHANT]))
-					break;
-				else return false;
+				if (!(sc && (sc->data[SC_NOON_SUN] || sc->data[SC_SKY_ENCHANT])))
+					return false;
 			case SKE_SUNSET_BLAST:
-				if (sc && (sc->data[SC_SUNSET_SUN] || sc->data[SC_SKY_ENCHANT]))
-					break;
-				else return false;
+				if (!(sc && (sc->data[SC_SUNSET_SUN] || sc->data[SC_SKY_ENCHANT])))
+					return false;
 			case NW_ONLY_ONE_BULLET:
 			case NW_SPIRAL_SHOOTING:
-				if( sd && sd->weapontype1 == W_RIFLE )
-					break;
-				else return false;
+				if (!(sd && sd->weapontype1 == W_RIFLE))
+					return false;
 			case NW_MAGAZINE_FOR_ONE:
-				if( sd && sd->weapontype1 == W_REVOLVER )
-					break;
-				else return false;
+				if (!(sd && sd->weapontype1 == W_REVOLVER))
+					return false;
 			case SH_CHUL_HO_SONIC_CLAW:
 			case SH_HOGOGONG_STRIKE:
-				if ((sd && pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO)) || (sc && sc->data[SC_TEMPORARY_COMMUNION]))
-					break;
-				else return false;
+				if (!(sd && pc_checkskill(sd, SH_COMMUNE_WITH_CHUL_HO)) || !(sc && sc->data[SC_TEMPORARY_COMMUNION]))
+					return false;
 		}
 		if(tsd && tsd->bonus.critical_def)
 			cri = cri * ( 100 - tsd->bonus.critical_def ) / 100;
@@ -3317,7 +3317,7 @@ static int battle_get_weapon_element(struct Damage* wd, struct block_list *src, 
 		// on official endows override all other elements [helvetica]
 		if(sc && sc->data[SC_ENCHANTARMS]) // Check for endows
 			element = sc->data[SC_ENCHANTARMS]->val1;
-		// Nigth Watch Grenade Fragment elementals affecting those skills.
+		// Night Watch Grenade Fragment elementals affecting those skills.
 		if (sc && (skill_id == NW_BASIC_GRENADE || skill_id == NW_HASTY_FIRE_IN_THE_HOLE || skill_id == NW_GRENADES_DROPPING || skill_id == NW_MISSION_BOMBARD)) {
 			if (sc->data[SC_GRENADE_FRAGMENT_1])
 				element = ELE_WATER;
@@ -3380,7 +3380,8 @@ static int battle_get_weapon_element(struct Damage* wd, struct block_list *src, 
 		case SS_FUUMASHOUAKU:
 		case SS_FUUMAKOUCHIKU:
 		case SS_FUUMAKOUCHIKU_BLASTING:
-				element = sd->bonus.arrow_ele;
+				if (sd)
+					element = sd->bonus.arrow_ele;
 			break;
 	}
 
@@ -3782,15 +3783,8 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 
 				if(status_get_lv(src) > 100)
 					damagevalue = damagevalue * status_get_lv(src) / 100;
-				if(sd) {
-					//TODO Need official scaling. [Muh]
-					damagevalue = damagevalue * 
-							(90 
-							 + 10 * pc_checkskill(sd, RK_DRAGONTRAINING)
-							 + (pc_checkskill(sd, DK_DRAGONIC_AURA) >= 1 ? (sstatus->pow / 4 + sstatus->patk / 2 ): 0) 
-							) 
-						 / 100;
-				}
+				if(sd) //TODO Need official scaling. [Muh]
+					damagevalue = damagevalue * (90 + 10 * pc_checkskill(sd, RK_DRAGONTRAINING) + (pc_checkskill(sd, DK_DRAGONIC_AURA) >= 1 ? (sstatus->pow / 4 + sstatus->patk / 2 ): 0)) / 100;
 				if (sc && sc->data[SC_DRAGONIC_AURA])// Need official damage increase. [Rytech]
 					damagevalue += damagevalue * 50 / 100;
 				ATK_ADD(wd->damage, wd->damage2, damagevalue);
@@ -9499,8 +9493,8 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		if (sc->data[SC_GIANTGROWTH] && (wd.flag&BF_SHORT) && rnd()%100 < sc->data[SC_GIANTGROWTH]->val2 && !is_infinite_defense(target, wd.flag) && !vellum_damage)
 			wd.damage += wd.damage * 150 / 100; // 2.5 times damage
 		if (sc->data[SC_VIGOR] && (wd.flag&BF_SHORT) && !is_infinite_defense(target, wd.flag) && !vellum_damage) {
-			int mod = 0;
-			mod = 100 + sc->data[SC_VIGOR]->val1 * 15;
+			int mod = 100 + sc->data[SC_VIGOR]->val1 * 15;
+
 			if (tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_ANGEL)
 				mod += sc->data[SC_VIGOR]->val1 * 10;
 			wd.damage += wd.damage * (mod) / 100;
