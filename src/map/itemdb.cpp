@@ -4,7 +4,6 @@
 #include "itemdb.hpp"
 
 #include <iostream>
-#include <map>
 #include <stdlib.h>
 
 #include "../common/nullpo.hpp"
@@ -1670,22 +1669,21 @@ LaphineUpgradeDatabase laphine_upgrade_db;
  * @param str
  * @return Number of matches item
  *------------------------------------------*/
-uint16 itemdb_searchname_array(struct item_data** data, uint16 size, const char *str)
+uint16 itemdb_searchname_array(std::map<t_itemid, std::shared_ptr<item_data>> &data, uint16 size, const char *str)
 {
-	uint16 count = 0;
-	const auto &item_list = item_db.getCache();
+	for (const auto &item : item_db) {
+		std::shared_ptr<item_data> id = item.second;
 
-	for (const auto &item : item_list) {
-		if (item == nullptr)
+		if (id == nullptr)
 			continue;
-		if (count < size) {
-			if (stristr(item->name.c_str(), str) != nullptr || stristr(item->ename.c_str(), str) != nullptr || strcmpi(item->ename.c_str(), str) == 0)
-				data[count++] = item.get();
-		} else
-			break;
+		if (stristr(id->name.c_str(), str) != nullptr || stristr(id->ename.c_str(), str) != nullptr || strcmpi(id->ename.c_str(), str) == 0)
+			data[id->nameid] = id;
 	}
 
-	return count;
+	if (data.size() > size)
+		util::map_resize(data, size);
+
+	return static_cast<uint16>(data.size());
 }
 
 std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(std::shared_ptr<s_item_group_random> random) {
@@ -1844,10 +1842,8 @@ uint8 ItemGroupDatabase::pc_get_itemgroup(uint16 group_id, bool identify, map_se
 * @param nameid
 * @return *item_data if item is exist, or NULL if not
 */
-struct item_data* itemdb_exists(t_itemid nameid) {
-	std::shared_ptr<item_data> item = item_db.find(nameid);
-
-	return item ? item.get() : nullptr;
+std::shared_ptr<item_data> itemdb_exists(t_itemid nameid) {
+	return item_db.find(nameid);
 }
 
 /// Returns name type of ammunition [Cydh]
@@ -2366,12 +2362,13 @@ void ItemGroupDatabase::loadingFinished() {
 static bool itemdb_read_noequip(char* str[], int columns, int current) {
 	t_itemid nameid;
 	int flag;
-	struct item_data *id;
 
 	nameid = strtoul(str[0], nullptr, 10);
 	flag = atoi(str[1]);
 
-	if( ( id = itemdb_exists(nameid) ) == NULL )
+	std::shared_ptr<item_data> id = item_db.find(nameid);
+
+	if( id == nullptr )
 	{
 		ShowWarning("itemdb_read_noequip: Invalid item id %u.\n", nameid);
 		return false;
@@ -2530,8 +2527,10 @@ void ComboDatabase::loadingFinished() {
 	// Populate item_data to refer to the combo
 	for (const auto &combo : *this) {
 		for (const auto &itm : combo.second->nameid) {
-			item_data *it = itemdb_exists(itm);
-			it->combos.push_back(combo.second);
+			std::shared_ptr<item_data> it = item_db.find(itm);
+
+			if (it != nullptr)
+				it->combos.push_back(combo.second);
 		}
 	}
 
