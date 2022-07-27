@@ -5081,39 +5081,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		return 1;
 	}
 
-	switch (skill_id) {
-	case SKE_STAR_BURST:
-		if (!(flag & 1))
-		{
-			struct unit_data *ud = unit_bl2ud(src);
-			if (ud) {
-				for (const auto itsu : ud->skillunits) {
-					skill_unit *su = itsu->unit;
-					std::shared_ptr<s_skill_unit_group> sg = itsu->unit->group;
-
-					if (itsu->skill_id == SKE_TWINKLING_GALAXY && distance_xy(bl->x, bl->y, su->bl.x, su->bl.y) <= skill_get_unit_range(SKE_TWINKLING_GALAXY, itsu->skill_lv)) {
-						for(int i=0;i<MAX_SKILLTIMERSKILL;i++) {
-							if(ud->skilltimerskill[i]) {
-								if (ud->skilltimerskill[i]->skill_id == SKE_TWINKLING_GALAXY) {
-									delete_timer(ud->skilltimerskill[i]->timer, skill_timerskill);
-									ers_free(skill_timer_ers, ud->skilltimerskill[i]);
-									ud->skilltimerskill[i]=NULL;
-								}
-							}
-						}
-						skill_delunitgroup(sg);
-						sc_start2(src, bl, skill_get_sc(skill_id), 100, skill_lv, src->id, skill_get_time2(skill_id, skill_lv));
-						return skill_castend_pos2(src, bl->x, bl->y, skill_id, skill_lv, tick, 0);
-					}
-				}
-			}
-			if (sd)
-				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
-			return 1;
-		}
-		break;
-	}
-
 	sc = status_get_sc(src);
 	tsc = status_get_sc(bl);
 	if (sc && !sc->count)
@@ -6023,7 +5990,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case HN_GROUND_GRAVITATION:
 	case SKE_TWINKLING_GALAXY:
 	case SKE_STAR_CANNON:
-	case SKE_STAR_BURST:
 	case SS_KAGEGARI:
 	case SS_TOKEDASU:
 	case SS_KAGEAKUMU:
@@ -6035,6 +6001,37 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case SS_FUUMAKOUCHIKU:
 		if (flag & 1)
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+		break;
+	case SKE_STAR_BURST:
+		if (flag & 1) {
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+		} else {
+			struct unit_data *ud = unit_bl2ud(src);
+			if (ud) {
+				for (const auto itsu : ud->skillunits) {
+					skill_unit *su = itsu->unit;
+					std::shared_ptr<s_skill_unit_group> sg = itsu->unit->group;
+
+					if (itsu->skill_id == SKE_TWINKLING_GALAXY && distance_xy(bl->x, bl->y, su->bl.x, su->bl.y) <= skill_get_unit_range(SKE_TWINKLING_GALAXY, itsu->skill_lv)) {
+						for(int i=0;i<MAX_SKILLTIMERSKILL;i++) {
+							if(ud->skilltimerskill[i]) {
+								if (ud->skilltimerskill[i]->skill_id == SKE_TWINKLING_GALAXY) {
+									delete_timer(ud->skilltimerskill[i]->timer, skill_timerskill);
+									ers_free(skill_timer_ers, ud->skilltimerskill[i]);
+									ud->skilltimerskill[i]=NULL;
+								}
+							}
+						}
+						skill_delunitgroup(sg);
+						sc_start2(src, bl, skill_get_sc(skill_id), 100, skill_lv, src->id, skill_get_time2(skill_id, skill_lv));
+						return skill_castend_pos2(src, bl->x, bl->y, skill_id, skill_lv, tick, 0);
+					}
+				}
+			}
+			if (sd)
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+			return 1;
+		}
 		break;
 	case SS_ANKOKURYUUAKUMU:
 		if (flag & 1) {
@@ -6063,8 +6060,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			skill_unit *su = itsu->unit;
 			std::shared_ptr<s_skill_unit_group> sg = itsu->unit->group;
 
-			dx = src->x - itsu->unit->bl.x;
-			dy = src->y - itsu->unit->bl.y;
+			int dx = src->x - itsu->unit->bl.x;
+			int dy = src->y - itsu->unit->bl.y;
 			while (1) {
 				if (map_foreachincell(skill_shimiru_check_cell, src->m, itsu->unit->bl.x + dx, itsu->unit->bl.y + dy, BL_CHAR|BL_SKILL) == 0)
 					break;	
@@ -13120,7 +13117,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case NW_GRENADE_FRAGMENT:
 		status_change_end(src, type, INVALID_TIMER);
 		if (skill_lv < 7)
-			sc_start(src, bl, SC_GRENADE_FRAGMENT_1 + skill_lv - 1, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+			sc_start(src, bl, (sc_type)(SC_GRENADE_FRAGMENT_1 -1 + skill_lv), 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		else if (skill_lv == 7) {
 			status_change_end(src, SC_GRENADE_FRAGMENT_1, INVALID_TIMER);
 			status_change_end(src, SC_GRENADE_FRAGMENT_2, INVALID_TIMER);
@@ -20354,19 +20351,15 @@ int skill_attack_area(struct block_list *bl, va_list ap)
 		return (int)skill_attack(atk_type,src,dsrc,bl,skill_id,skill_lv,tick,flag);
 	}
 
-	if (skill_id == SS_FUUMAKOUCHIKU)
-	{
-		if (bl->type == BL_SKILL)
-		{
-			struct skill_unit *unit = (struct skill_unit *)bl;
-			if (unit == NULL || unit->group == NULL )
-				return 0;
-			if (unit->group->skill_id == SS_FUUMASHOUAKU) {
-				map_foreachinallrange(skill_area_sub, bl, skill_get_splash(SS_FUUMAKOUCHIKU_BLASTING,skill_lv), BL_CHAR,
-					src, SS_FUUMAKOUCHIKU_BLASTING, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
-				skill_delunit(unit);
-				return 1;
-			}
+	if (skill_id == SS_FUUMAKOUCHIKU && bl->type == BL_SKILL) {
+		skill_unit *unit = (skill_unit *)bl;
+		if (unit == nullptr || unit->group == nullptr)
+			return 0;
+		if (unit->group->skill_id == SS_FUUMASHOUAKU) {
+			map_foreachinallrange(skill_area_sub, bl, skill_get_splash(SS_FUUMAKOUCHIKU_BLASTING,skill_lv), BL_CHAR,
+				src, SS_FUUMAKOUCHIKU_BLASTING, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
+			skill_delunit(unit);
+			return 1;
 		}
 	}
 

@@ -2558,6 +2558,7 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 			if (sd && (sd->status.weapon == W_1HSPEAR || sd->status.weapon == W_2HSPEAR))
 				return BF_LONG;
 			break;
+		}
 	}
 
 	//Skill Range Criteria

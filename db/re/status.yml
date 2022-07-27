@@ -8342,6 +8342,8 @@ Body:
   - Status: Ki_Sul_Rampage
     Icon: EFST_KI_SUL_RAMPAGE
     DurationLookup: SH_KI_SUL_RAMPAGE
+    States:
+      NoCast: true
   - Status: Colors_of_Hyun_Rok_Buff
     Icon: EFST_COLORS_OF_HYUN_ROK_BUFF
     DurationLookup: SH_COLORS_OF_HYUN_ROK
