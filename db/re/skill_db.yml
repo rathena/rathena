@@ -37703,6 +37703,7 @@ Body:
     Requires:
       SpCost: 150
       ApCost: 150
+    Status: Rush_Quake2
   - Id: 5297
     Name: MT_M_MACHINE
     Description: Manufacture Machine
