@@ -3715,9 +3715,9 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event, int64 damage)
 			flag = 1; //Trigger skill.
 		else if (ms[i]->cond1 == MSC_SKILLUSED)
 			flag = ((event & 0xffff) == MSC_SKILLUSED && ((event >> 16) == c2 || c2 == 0));
-		else if (ms[i]->cond1 == MSC_GROUNDATTACKED && damage)
-			flag = (skill_get_inf((event >> 16))&INF_GROUND_SKILL);
-		else if (ms[i]->cond1 == MSC_DAMAGEDGT && damage)
+		else if (ms[i]->cond1 == MSC_GROUNDATTACKED && damage > 0)
+			flag = (event > 0 && skill_get_inf((event >> 16))&INF_GROUND_SKILL);
+		else if (ms[i]->cond1 == MSC_DAMAGEDGT && damage > 0)
 			flag = (damage > c2);
 		else if(event == -1){
 			//Avoid entering on defined events to avoid "hyper-active skill use" due to the overflow of calls to this function in battle.
