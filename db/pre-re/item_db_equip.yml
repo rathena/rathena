@@ -5359,7 +5359,7 @@ Body:
     Refineable: true
     Script: |
       bonus bStr,10;
-      bonus bSpeedRate,25;
+      bonus bMoveHaste,25;
   - Id: 1364
     AegisName: Great_Axe
     Name: Great Axe
@@ -5434,6 +5434,7 @@ Body:
       bonus bAtkEle,Ele_Holy;
       skill "AL_HEAL",3;
       bonus2 bAddRace,RC_Demon,3;
+      bonus bMoveHaste,25;
   - Id: 1367
     AegisName: Slaughter
     Name: Slaughter
@@ -5605,7 +5606,7 @@ Body:
       skill "AL_HEAL",3;
       bonus2 bAddRace,RC_Demon,3;
       bonus bStr,10;
-      bonus bSpeedRate,25;
+      bonus bMoveHaste,25;
   - Id: 1373
     AegisName: Brood_Axe_C
     Name: Refined Bloody Axe
@@ -5626,7 +5627,7 @@ Body:
     WeaponLevel: 4
     Script: |
       bonus bStr,20;
-      bonus bSpeedRate,25;
+      bonus bMoveHaste,25;
       bonus bAspdRate,5;
   - Id: 1374
     AegisName: Tomahawk_C
@@ -15242,7 +15243,7 @@ Body:
       Skill "HW_MAGICPOWER",10;
       bonus bMaxHPRate,200;
       bonus bNoGemStone;
-      bonus bSpeedRate,25;
+      bonus bMoveHaste,25;
       bonus bNoWalkDelay;
   - Id: 2201
     AegisName: Sunglasses
@@ -18908,7 +18909,8 @@ Body:
       bonus bMaxHPrate,20;
       bonus bMaxSPrate,20;
       bonus bSPrecovRate,15;
-      bonus bSpeedRate,25;
+      bonus bMoveHaste,25;
+      bonus bInt,25;
   - Id: 2411
     AegisName: Grave
     Name: Greaves
@@ -27207,7 +27209,7 @@ Body:
     ArmorLevel: 1
     View: 219
     Script: |
-      bonus bSpeedRate,25;
+      bonus bMoveHaste,25;
   - Id: 5151
     AegisName: Headset_OST
     Name: Note Headphones
@@ -28129,7 +28131,7 @@ Body:
     ArmorLevel: 1
     View: 253
     Script: |
-      bonus bSpeedRate,25;
+      bonus bMoveHaste,25;
   - Id: 5204
     AegisName: Event_Pierrot_Nose
     Name: Rudolph's Nose
@@ -29505,7 +29507,7 @@ Body:
       bonus bInt,1;
       bonus bAgi,1;
       bonus bAspdRate,3;
-      bonus bSpeedRate,25;
+      bonus bMoveHaste,25;
   - Id: 5270
     AegisName: Fallen_Leaves_
     Name: Autumn Leaves
@@ -29566,7 +29568,7 @@ Body:
     Refineable: true
     View: 305
     Script: |
-      bonus bSpeedRate,25;
+      bonus bMoveHaste,25;
       bonus bDef,4;
       skill "TF_HIDING",1;
     UnEquipScript: |
@@ -29585,7 +29587,7 @@ Body:
     Refineable: true
     View: 306
     Script: |
-      bonus bSpeedRate,25;
+      bonus bMoveHaste,25;
       bonus bDef,4;
       skill "TF_HIDING",1;
     UnEquipScript: |
@@ -29604,7 +29606,7 @@ Body:
     Refineable: true
     View: 307
     Script: |
-      bonus bSpeedRate,25;
+      bonus bMoveHaste,25;
       bonus bDef,4;
       skill "TF_HIDING",1;
     UnEquipScript: |
@@ -29623,7 +29625,7 @@ Body:
     Refineable: true
     View: 308
     Script: |
-      bonus bSpeedRate,25;
+      bonus bMoveHaste,25;
       bonus bDef,4;
       skill "TF_HIDING",1;
     UnEquipScript: |
@@ -29815,7 +29817,7 @@ Body:
       NoSell: true
       NoGuildStorage: true
     Script: |
-      bonus bSpeedRate,25;
+      bonus bMoveHaste,25;
       bonus bAspdRate,-10;
       bonus bCastrate,25;
   - Id: 5287
