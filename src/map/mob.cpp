@@ -3668,7 +3668,7 @@ bool mob_chat_display_message(mob_data &md, uint16 msg_id) {
 /*==========================================
  * Skill use judging
  *------------------------------------------*/
-int mobskill_use(struct mob_data *md, t_tick tick, int event, int64 damage)
+int mobskill_use(struct mob_data *md, t_tick tick, int event, int damage)
 {
 	struct block_list *fbl = NULL; //Friend bl, which can either be a BL_PC or BL_MOB depending on the situation. [Skotlex]
 	struct block_list *bl;
@@ -3689,7 +3689,7 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event, int64 damage)
 	//Pick a starting position and loop from that.
 	i = battle_config.mob_ai&0x100?rnd()%ms.size():0;
 	for (n = 0; n < ms.size(); i++, n++) {
-		int64 c2;
+		int c2;
 		int flag = 0;
 
 		if (i == ms.size())
