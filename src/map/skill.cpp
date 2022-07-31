@@ -3210,6 +3210,7 @@ int skill_mirage_cast(struct block_list* src, struct block_list* bl, int skill_i
 			case SS_KAGEGISSEN://damage splash
 				x = bl->x;
 				y = bl->y;
+				skill_area_temp[1] = 0;
 				clif_skill_nodamage(&itsu->unit->bl, bl, skill_id, skill_lv, tick);
 				if (battle_config.skill_eightpath_algorithm) {
 					//Use official AoE algorithm
@@ -5998,7 +5999,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case SS_ANTENPOU:
 	case SS_REIKETSUHOU:
 	case SS_KUNAIWAIKYOKU:
-	case SS_FUUMAKOUCHIKU:
 		if (flag & 1)
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
@@ -14946,6 +14946,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
     	break;
 	case SS_RAIDENPOU:
 	case SS_SEKIENHOU:
+		skill_area_temp[1] = 0;
 		skill_mirage_cast(src, NULL,SS_ANTENPOU, skill_lv, x, y, tick, flag);
 		if( map_getcell(src->m, x, y, CELL_CHKLANDPROTECTOR) ) {
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL,0);
@@ -14998,6 +14999,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		skill_unitsetting(src, SS_KUNAIWAIKYOKU, skill_lv, x, y, UNIT_NOCONSUME_AMMO);
 		break;
 	case SS_FUUMAKOUCHIKU:
+		skill_area_temp[1] = 0;
 		if (battle_config.skill_eightpath_algorithm) {
 			//Use official AoE algorithm
 			map_foreachindir(skill_attack_area, src->m, src->x, src->y, x, y,
