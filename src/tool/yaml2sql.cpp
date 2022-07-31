@@ -1012,7 +1012,7 @@ static bool mob_skill_db_yaml2sql(const std::string &file, const std::string &ta
 		}
 	}
 
-	ShowStatus("Done converting '" CL_WHITE "%d" CL_RESET "' mob skills in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+	ShowStatus("Done converting '" CL_WHITE "%zu" CL_RESET "' mob skills in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
 	return true;
 }

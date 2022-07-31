@@ -49,9 +49,9 @@ const t_tick MIN_RANDOMWALKTIME = 4000;
  * Added definitions for WoE:SE objects and other [L0ne_W0lf], [aleos]
  */
 enum MOBID {
-	MOBID_ALL				= -3,
-	MOBID_NORMAL			= -2,
-	MOBID_BOSS				= -1,
+	MOBID_ALL				= 0,
+	MOBID_NORMAL			= 1,
+	MOBID_BOSS				= 2,
 	MOBID_PORING			= 1002,
 	MOBID_RED_PLANT			= 1078,
 	MOBID_BLUE_PLANT,
@@ -237,12 +237,13 @@ enum e_mob_skill_condition {
 
 struct s_mob_skill {
 	e_MobSkillState state;
-	uint16 skill_id,skill_lv;
+	uint16 skill_id, skill_lv;
 	short permillage;
-	int casttime,delay;
+	int casttime, delay;
 	bool cancel;
 	e_mob_skill_target target;
-	short cond1, cond2, cond3;
+	short cond1;
+	int32 cond2, cond3;
 	int mob_mode;
 	std::unordered_map<uint16, int> summons;	// index, mob ID
 	short emotion;
@@ -251,7 +252,7 @@ struct s_mob_skill {
 
 /// Mob skill struct for temporary storage
 struct s_mob_skill_db {
-	int32 mob_id; ///< Monster ID. MOBID_BOSS boss types, MOBID_NORMAL normal types, MOBID_ALL all monsters
+	uint32 mob_id; ///< Monster ID. MOBID_BOSS boss types, MOBID_NORMAL normal types, MOBID_ALL all monsters
 	uint16 index_num;	/// index for unordered_map
 	std::unordered_map<uint16, std::shared_ptr<s_mob_skill>> skills; ///< index, Skills
 };

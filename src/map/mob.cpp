@@ -3579,10 +3579,10 @@ int mob_getfriendhprate_sub(struct block_list *bl,va_list ap)
 }
 static struct block_list *mob_getfriendhprate(struct mob_data *md,int min_rate,int max_rate)
 {
+	nullpo_retr(NULL, md);
+
 	struct block_list *fr=NULL;
 	int type = BL_MOB;
-
-	nullpo_retr(NULL, md);
 
 	if (md->special_state.ai) //Summoned creatures. [Skotlex]
 		type = BL_PC;
@@ -3673,25 +3673,26 @@ bool mob_chat_display_message(mob_data &md, uint16 msg_id) {
  *------------------------------------------*/
 int mobskill_use(struct mob_data *md, t_tick tick, int event)
 {
-	struct block_list *fbl = NULL; //Friend bl, which can either be a BL_PC or BL_MOB depending on the situation. [Skotlex]
-	struct block_list *bl;
-	struct mob_data *fmd = NULL;
-	int i,j,n;
-	short skill_target;
-
 	nullpo_ret(md);
+
+	if (event == -1 && DIFF_TICK(md->ud.canact_tick, tick) > 0)
+		return 0; //Skill act delay only affects non-event skills.
 
 	std::vector<std::shared_ptr<s_mob_skill>> &ms = md->db->skill;
 
 	if (!battle_config.mob_skill_rate || md->ud.skilltimer != INVALID_TIMER || ms.empty() || status_has_mode(&md->status,MD_NOCAST))
 		return 0;
 
-	if (event == -1 && DIFF_TICK(md->ud.canact_tick, tick) > 0)
-		return 0; //Skill act delay only affects non-event skills.
+	struct block_list *fbl = NULL; //Friend bl, which can either be a BL_PC or BL_MOB depending on the situation. [Skotlex]
+	struct block_list *bl;
+	struct mob_data *fmd = NULL;
+	int j;
+	short skill_target;
 
 	//Pick a starting position and loop from that.
-	i = battle_config.mob_ai&0x100?rnd()%ms.size():0;
-	for (n = 0; n < ms.size(); i++, n++) {
+	int i = battle_config.mob_ai&0x100?rnd()%ms.size():0;
+
+	for (int n = 0; n < ms.size(); i++, n++) {
 		if (i == ms.size())
 			i = 0;
 
@@ -3905,10 +3906,10 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event)
  *------------------------------------------*/
 int mobskill_event(struct mob_data *md, struct block_list *src, t_tick tick, int flag)
 {
-	int target_id, res = 0;
-
 	if(md->bl.prev == NULL || md->status.hp == 0)
 		return 0;
+
+	int target_id, res = 0;
 
 	target_id = md->target_id;
 	if (!target_id || battle_config.mob_changetarget_byskill)
@@ -5767,7 +5768,7 @@ uint64 MobSkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	if (!this->asString( node, "Mob", mob_name ))
 		return 0;
 
-	int32 mob_id;
+	uint32 mob_id;
 	std::shared_ptr<s_mob_db> mob = nullptr;
 
 	if (mob_name == "ALL")	// special behaviour
@@ -5784,7 +5785,7 @@ uint64 MobSkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			return 0;
 		}
 
-		mob_id = static_cast<int32>(mob->id);
+		mob_id = mob->id;
 	}
 
 	std::shared_ptr<s_mob_skill_db> mob_skill = this->find(mob_id);
@@ -5991,7 +5992,7 @@ uint64 MobSkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 							this->invalidWarning(it["ConditionValue1"], "Invalid Aegis skill name \"%s\".\n", condition_value.c_str());
 							return 0;
 						}
-						skill->cond2 = static_cast<int16>(skill_id_cond2);
+						skill->cond2 = static_cast<int32>(skill_id_cond2);
 						break;
 					}
 					case MSC_MYSTATUSON:	// SC_ status constant required
@@ -6027,13 +6028,13 @@ uint64 MobSkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 								this->invalidWarning(it["ConditionValue1"], "Unsupported ConditionValue1 %s.\n", condition_value.c_str());
 								return 0;
 						}
-						skill->cond2 = static_cast<int16>(constant);
+						skill->cond2 = static_cast<int32>(constant);
 						break;
 					}
 					default: {
-						int16 cond2;
+						int32 cond2;
 
-						if (!this->asInt16(it, "ConditionValue1", cond2))
+						if (!this->asInt32(it, "ConditionValue1", cond2))
 							return 0;
 
 						skill->cond2 = cond2;
@@ -6055,9 +6056,9 @@ uint64 MobSkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 						return 0;
 				}
 
-				int16 cond3;
+				int32 cond3;
 
-				if (!this->asInt16(it, "ConditionValue2", cond3))
+				if (!this->asInt32(it, "ConditionValue2", cond3))
 					return 0;
 
 				skill->cond3 = cond3;
@@ -6122,7 +6123,7 @@ uint64 MobSkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 							return 0;
 
 						if (active && skill->summons.erase(summon_index) == 0) {
-							this->invalidWarning(summonit["Clear"], "Failed to remove data in index %s.\n", summon_index);
+							this->invalidWarning(summonit["Clear"], "Failed to remove data in index %d.\n", summon_index);
 							continue;
 						}
 
@@ -6229,7 +6230,7 @@ void MobSkillDatabase::loadingFinished() {
 				skill->target = MST_TARGET;
 			}
 
-			// Remove the condition value not required
+			// Set to 0 the value of the conditions not required because of potential change from import
 			switch( skill->cond1 ) {
 				case MSC_ALWAYS:
 				case MSC_SPAWN:
@@ -6251,6 +6252,7 @@ void MobSkillDatabase::loadingFinished() {
 				case MSC_SLAVELE:
 				case MSC_SKILLUSED:
 				case MSC_AFTERSKILL:
+				case MSC_MOBNEARBYGT:
 					skill->cond3 = 0;
 					break;
 				case MSC_MYHPINRATE:
