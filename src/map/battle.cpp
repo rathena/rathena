@@ -5756,23 +5756,24 @@ static void battle_calc_defense_reduction(struct Damage* wd, struct block_list *
 	}
 
 #ifdef RENEWAL
-	/**
-	 * RE DEF Reduction
-	 * Damage = Attack * (4000+eDEF)/(4000+eDEF*10) - sDEF
-	 * Pierce defence gains 1 atk per def/2
-	 */
 	switch(skill_id) {
 		case GN_CARTCANNON:
-			// Defense reduction by flat value.
 			if (attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_R) || attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_L))
 				return;
 			if (is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) || is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L))
 				return;
 
+			// Defense reduction by flat value.
+			// This completely bypasses the normal RE DEF Reduction formula.
 			wd->damage -= (def1 + vit_def);
 			if (is_attack_left_handed(src, skill_id))
 				wd->damage2 -= (def1 + vit_def);
 			break;
+		/**
+		 * RE DEF Reduction
+		 * Damage = Attack * (4000+eDEF)/(4000+eDEF*10) - sDEF
+		 * Pierce defence gains 1 atk per def/2
+		 */
 		default:
 			if( def1 == -400 ) /* -400 creates a division by 0 and subsequently crashes */
 				def1 = -399;
