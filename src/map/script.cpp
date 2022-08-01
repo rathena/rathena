@@ -16315,7 +16315,7 @@ BUILDIN_FUNC(equip) {
 	t_itemid nameid = script_getnum(st,2);
 	std::shared_ptr<item_data> id = item_db.find(nameid);
 
-	if (id == nullptr) {
+	if (id != nullptr) {
 		int i;
 
 		ARR_FIND( 0, MAX_INVENTORY, i, sd->inventory.u.items_inventory[i].nameid == nameid );
