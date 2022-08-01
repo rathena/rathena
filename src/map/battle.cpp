@@ -5759,6 +5759,7 @@ static void battle_calc_defense_reduction(struct Damage* wd, struct block_list *
 	switch(skill_id) {
 		case RK_DRAGONBREATH:
 		case RK_DRAGONBREATH_WATER:
+		case NC_ARMSCANNON:
 		case GN_CARTCANNON:
 			if (attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_R) || attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_L))
 				return;
