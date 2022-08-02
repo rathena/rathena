@@ -153188,7 +153188,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAllTraits,6-(JobLevel/5);
+      bonus bAllTraitStats,6-(JobLevel/5);
   - Id: 490090
     AegisName: Egir_Ring_K
     Name: Aegir Ring
