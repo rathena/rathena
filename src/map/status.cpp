@@ -3623,44 +3623,6 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 	pc_delautobonus(*sd, sd->autobonus2, true);
 	pc_delautobonus(*sd, sd->autobonus3, true);
 
-	// Process and check item combos
-	// Run combos first to ensure equipment bonuses are properly accounted for.
-	if (!sd->combos.empty()) {
-		for (const auto &combo : sd->combos) {
-			std::shared_ptr<s_item_combo> item_combo;
-
-			current_equip_item_index = -1;
-			current_equip_combo_pos = combo->pos;
-
-			if (combo->bonus == nullptr || !(item_combo = itemdb_combo.find(combo->id)))
-				continue;
-
-			bool no_run = false;
-			size_t j = 0;
-
-			// Check combo items
-			while (j < item_combo->nameid.size()) {
-				item_data *id = itemdb_exists(item_combo->nameid[j]);
-
-				// Don't run the script if at least one of combo's pair has restriction
-				if (id && !pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(id, sd->bl.m)) {
-					no_run = true;
-					break;
-				}
-
-				j++;
-			}
-
-			if (no_run)
-				continue;
-
-			run_script(combo->bonus, 0, sd->bl.id, 0);
-
-			if (!calculating) // Abort, run_script retriggered this
-				return 1;
-		}
-	}
-
 	// Parse equipment
 	for (i = 0; i < EQI_MAX; i++) {
 		current_equip_item_index = index = sd->equip_index[i]; // We pass INDEX to current_equip_item_index - for EQUIP_SCRIPT (new cards solution) [Lupus]
@@ -3674,8 +3636,6 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 		if (!sd->inventory_data[index])
 			continue;
 
-		base_status->def += sd->inventory_data[index]->def;
-
 		// Items may be equipped, their effects however are nullified.
 		if (opt&SCO_FIRST && sd->inventory_data[index]->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT)
 			|| !itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m))) { // Execute equip-script on login
@@ -3684,71 +3644,9 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 				return 1;
 		}
 
-		// Sanitize the refine level in case someone decreased the value inbetween
-		if (sd->inventory.u.items_inventory[index].refine > MAX_REFINE)
-			sd->inventory.u.items_inventory[index].refine = MAX_REFINE;
-
-		std::shared_ptr<s_refine_level_info> info = refine_db.findCurrentLevelInfo( *sd->inventory_data[index], sd->inventory.u.items_inventory[index] );
-#ifdef RENEWAL
-		std::shared_ptr<s_enchantgradelevel> enchantgrade_info = nullptr;
-
-		if( sd->inventory.u.items_inventory[index].enchantgrade > 0 ){
-			enchantgrade_info = enchantgrade_db.findCurrentLevelInfo( *sd->inventory_data[index], sd->inventory.u.items_inventory[index] );
-		}
-#endif
-
 		if (sd->inventory_data[index]->type == IT_WEAPON) {
-			int wlv = sd->inventory_data[index]->weapon_level;
-			struct weapon_data *wd;
-			struct weapon_atk *wa;
-
-			if(wlv >= MAX_WEAPON_LEVEL)
-				wlv = MAX_WEAPON_LEVEL;
-
-			if(i == EQI_HAND_L && sd->inventory.u.items_inventory[index].equip == EQP_HAND_L) {
-				wd = &sd->left_weapon; // Left-hand weapon
-				wa = &base_status->lhw;
-			} else {
-				wd = &sd->right_weapon;
-				wa = &base_status->rhw;
-			}
-			wa->atk += sd->inventory_data[index]->atk;
-			if( info != nullptr ){
-				wa->atk2 += info->bonus / 100;
-
-#ifdef RENEWAL
-				if( enchantgrade_info != nullptr ){
-					wa->atk2 += ( ( ( info->bonus / 100 ) * enchantgrade_info->bonus ) / 100 );
-				}
-
-				if( wlv == 5 ){
-					base_status->patk += sd->inventory.u.items_inventory[index].refine * 2;
-					base_status->smatk += sd->inventory.u.items_inventory[index].refine * 2;
-				}
-#endif
-			}
-#ifdef RENEWAL
-			if (sd->bonus.weapon_atk_rate)
-				wa->atk += wa->atk * sd->bonus.weapon_atk_rate / 100;
-			wa->matk += sd->inventory_data[index]->matk;
-			wa->wlv = wlv;
-			// Renewal magic attack refine bonus
-			if( info != nullptr && sd->weapontype1 != W_BOW ){
-				wa->matk += info->bonus / 100;
-
-				if( enchantgrade_info != nullptr ){
-					wa->matk += ( ( ( info->bonus / 100 ) * enchantgrade_info->bonus ) / 100 );
-				}
-			}
-#endif
-			// Overrefine bonus.
-			if( info != nullptr ){
-				wd->overrefine = info->randombonus_max / 100;
-			}
-
-			wa->range += sd->inventory_data[index]->range;
 			if(sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m))) {
-				if (wd == &sd->left_weapon) {
+				if (i == EQI_HAND_L && sd->inventory.u.items_inventory[index].equip == EQP_HAND_L) {
 					sd->state.lr_flag = 1;
 					run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
 					sd->state.lr_flag = 0;
@@ -3757,30 +3655,7 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 				if (!calculating) // Abort, run_script retriggered this. [Skotlex]
 					return 1;
 			}
-#ifdef RENEWAL
-			if (sd->bonus.weapon_matk_rate)
-				wa->matk += wa->matk * sd->bonus.weapon_matk_rate / 100;
-#endif
-			if(sd->inventory.u.items_inventory[index].card[0] == CARD0_FORGE) { // Forged weapon
-				wd->star += (sd->inventory.u.items_inventory[index].card[1]>>8);
-				if(wd->star >= 15) wd->star = 40; // 3 Star Crumbs now give +40 dmg
-				if(pc_famerank(MakeDWord(sd->inventory.u.items_inventory[index].card[2],sd->inventory.u.items_inventory[index].card[3]) ,MAPID_BLACKSMITH))
-					wd->star += 10;
-				if (!wa->ele) // Do not overwrite element from previous bonuses.
-					wa->ele = (sd->inventory.u.items_inventory[index].card[1]&0x0f);
-			}
 		} else if(sd->inventory_data[index]->type == IT_ARMOR) {
-			if( info != nullptr ){
-				refinedef += info->bonus;
-
-#ifdef RENEWAL
-				if( sd->inventory_data[index]->armor_level == 2 ){
-					base_status->res += sd->inventory.u.items_inventory[index].refine * 2;
-					base_status->mres += sd->inventory.u.items_inventory[index].refine * 2;
-				}
-#endif
-			}
-
 			if(sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m))) {
 				if( i == EQI_HAND_L ) // Shield
 					sd->state.lr_flag = 3;
@@ -3811,6 +3686,43 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 				return 1;
 		}
 	}
+	
+	// Process and check item combos
+	if (!sd->combos.empty()) {
+		for (const auto &combo : sd->combos) {
+			std::shared_ptr<s_item_combo> item_combo;
+
+			current_equip_item_index = -1;
+			current_equip_combo_pos = combo->pos;
+
+			if (combo->bonus == nullptr || !(item_combo = itemdb_combo.find(combo->id)))
+				continue;
+
+			bool no_run = false;
+			size_t j = 0;
+
+			// Check combo items
+			while (j < item_combo->nameid.size()) {
+				std::shared_ptr<item_data> id = item_db.find(item_combo->nameid[j]);
+
+				// Don't run the script if at least one of combo's pair has restriction
+				if (id && !pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(id.get(), sd->bl.m)) {
+					no_run = true;
+					break;
+				}
+
+				j++;
+			}
+
+			if (no_run)
+				continue;
+
+			run_script(combo->bonus, 0, sd->bl.id, 0);
+
+			if (!calculating) // Abort, run_script retriggered this
+				return 1;
+		}
+	}
 
 	// Store equipment script bonuses
 	memcpy(sd->indexed_bonus.param_equip,sd->indexed_bonus.param_bonus,sizeof(sd->indexed_bonus.param_equip));
@@ -3831,7 +3743,6 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 
 		if (sd->inventory_data[index]) {
 			int j;
-			struct item_data *data;
 
 			// Card script execution.
 			if (itemdb_isspecial(sd->inventory.u.items_inventory[index].card[0]))
@@ -3841,17 +3752,19 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 				current_equip_card_id= c;
 				if(!c)
 					continue;
-				data = itemdb_exists(c);
+
+				std::shared_ptr<item_data> data = item_db.find(c);
+
 				if(!data)
 					continue;
-				if (opt&SCO_FIRST && data->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(data,sd->bl.m))) {// Execute equip-script on login
+				if (opt&SCO_FIRST && data->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(data.get(), sd->bl.m))) {// Execute equip-script on login
 					run_script(data->equip_script,0,sd->bl.id,0);
 					if (!calculating)
 						return 1;
 				}
 				if(!data->script)
 					continue;
-				if(!pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(data,sd->bl.m)) // Card restriction checks.
+				if(!pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(data.get(), sd->bl.m)) // Card restriction checks.
 					continue;
 				if(i == EQI_HAND_L && sd->inventory.u.items_inventory[index].equip == EQP_HAND_L) { // Left hand status.
 					sd->state.lr_flag = 1;
@@ -3907,8 +3820,117 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 		current_equip_opt_index = -1;
 	}
 
+	// Give equipment bonuses based on all parsed information.
+	for (i = 0; i < EQI_MAX; i++) {
+		index = sd->equip_index[i];
+
+		if (index < 0)
+			continue;
+		if (i == EQI_AMMO)
+			continue;
+		if (pc_is_same_equip_index((enum equip_index)i, sd->equip_index, index))
+			continue;
+		if (!sd->inventory_data[index])
+			continue;
+
+		base_status->def += sd->inventory_data[index]->def;
+
+		// Sanitize the refine level in case someone decreased the value inbetween
+		if (sd->inventory.u.items_inventory[index].refine > MAX_REFINE)
+			sd->inventory.u.items_inventory[index].refine = MAX_REFINE;
+
+		std::shared_ptr<s_refine_level_info> info = refine_db.findCurrentLevelInfo(*sd->inventory_data[index], sd->inventory.u.items_inventory[index]);
+#ifdef RENEWAL
+		std::shared_ptr<s_enchantgradelevel> enchantgrade_info = nullptr;
+
+		if (sd->inventory.u.items_inventory[index].enchantgrade > 0)
+			enchantgrade_info = enchantgrade_db.findCurrentLevelInfo(*sd->inventory_data[index], sd->inventory.u.items_inventory[index]);
+#endif
+
+		if (sd->inventory_data[index]->type == IT_WEAPON) {
+			uint16 wlv = sd->inventory_data[index]->weapon_level;
+			weapon_data *wd;
+			weapon_atk *wa;
+
+			if (wlv >= MAX_WEAPON_LEVEL)
+				wlv = MAX_WEAPON_LEVEL;
+
+			if (i == EQI_HAND_L && sd->inventory.u.items_inventory[index].equip == EQP_HAND_L) {
+				wd = &sd->left_weapon; // Left-hand weapon
+				wa = &base_status->lhw;
+			} else {
+				wd = &sd->right_weapon;
+				wa = &base_status->rhw;
+			}
+
+			wa->atk += sd->inventory_data[index]->atk;
+
+			if (info != nullptr) {
+				wa->atk2 += info->bonus / 100;
+
+#ifdef RENEWAL
+				if (enchantgrade_info != nullptr)
+					wa->atk2 += (((info->bonus / 100) * enchantgrade_info->bonus) / 100);
+
+				if (wlv == 5) {
+					base_status->patk += sd->inventory.u.items_inventory[index].refine * 2;
+					base_status->smatk += sd->inventory.u.items_inventory[index].refine * 2;
+				}
+#endif
+			}
+
+#ifdef RENEWAL
+			if (sd->bonus.weapon_atk_rate)
+				wa->atk += wa->atk * sd->bonus.weapon_atk_rate / 100;
+
+			wa->matk += sd->inventory_data[index]->matk;
+			wa->wlv = static_cast<uint8>(wlv);
+
+			// Renewal magic attack refine bonus
+			if (info != nullptr && sd->weapontype1 != W_BOW) {
+				wa->matk += info->bonus / 100;
+
+				if (enchantgrade_info != nullptr)
+					wa->matk += (((info->bonus / 100) * enchantgrade_info->bonus) / 100);
+			}
+#endif
+			// Overrefine bonus.
+			if (info != nullptr)
+				wd->overrefine = info->randombonus_max / 100;
+
+			wa->range += sd->inventory_data[index]->range;
+
+#ifdef RENEWAL
+			if (sd->bonus.weapon_matk_rate)
+				wa->matk += wa->matk * sd->bonus.weapon_matk_rate / 100;
+#endif
+			if (sd->inventory.u.items_inventory[index].card[0] == CARD0_FORGE) { // Forged weapon
+				wd->star += (sd->inventory.u.items_inventory[index].card[1] >> 8);
+
+				if (wd->star >= 15)
+					wd->star = 40; // 3 Star Crumbs now give +40 dmg
+				if (pc_famerank(MakeDWord(sd->inventory.u.items_inventory[index].card[2], sd->inventory.u.items_inventory[index].card[3]), MAPID_BLACKSMITH))
+					wd->star += 10;
+				if (!wa->ele) // Do not overwrite element from previous bonuses.
+					wa->ele = (sd->inventory.u.items_inventory[index].card[1] & 0x0f);
+			}
+		} else if (sd->inventory_data[index]->type == IT_ARMOR) {
+			if (info != nullptr) {
+				refinedef += info->bonus;
+
+#ifdef RENEWAL
+				if (sd->inventory_data[index]->armor_level == 2) {
+					base_status->res += sd->inventory.u.items_inventory[index].refine * 2;
+					base_status->mres += sd->inventory.u.items_inventory[index].refine * 2;
+				}
+#endif
+			}
+		}
+	}
+
 	if (sc->count && sc->data[SC_ITEMSCRIPT]) {
-		struct item_data *data = itemdb_exists(sc->data[SC_ITEMSCRIPT]->val1);
+		std::shared_ptr<item_data> data = item_db.find(sc->data[SC_ITEMSCRIPT]->val1);
+
 		if (data && data->script)
 			run_script(data->script, 0, sd->bl.id, 0);
 	}
