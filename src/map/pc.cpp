@@ -12442,23 +12442,19 @@ bool pc_setstand(struct map_session_data *sd, bool force){
  * @param sd: Player data
  * @param heat: Amount of Heat to adjust
  **/
-void pc_overheat(struct map_session_data *sd, int16 heat) {
-	nullpo_retv(sd);
-
-	status_change_entry *sce = sd->sc.data[SC_OVERHEAT_LIMITPOINT];
+void pc_overheat(map_session_data &sd, int16 heat) {
+	status_change_entry *sce = sd.sc.data[SC_OVERHEAT_LIMITPOINT];
 
 	if (sce) {
-		static std::vector<int16> limit = { 150, 200, 280, 360, 450 };
-		uint16 skill_lv = cap_value(pc_checkskill(sd, NC_MAINFRAME), 0, (uint16)(limit.size()-1));
-
 		sce->val1 += heat;
 		sce->val1 = cap_value(sce->val1, 0, 1000);
-		if (sd->sc.data[SC_OVERHEAT])
-			status_change_end(&sd->bl, SC_OVERHEAT, INVALID_TIMER);
-		if (sce->val1 > limit[skill_lv])
-			sc_start(&sd->bl, &sd->bl, SC_OVERHEAT, 100, sce->val1, 1000);
+
+		if (heat < 0 && sce->val1 == 0) { // Cooling device used.
+			status_change_end(&sd.bl, SC_OVERHEAT_LIMITPOINT, INVALID_TIMER);
+			status_change_end(&sd.bl, SC_OVERHEAT, INVALID_TIMER);
+		}
 	} else if (heat > 0)
-		sc_start(&sd->bl, &sd->bl, SC_OVERHEAT_LIMITPOINT, 100, heat, 1000);
+		sc_start(&sd.bl, &sd.bl, SC_OVERHEAT_LIMITPOINT, 100, heat, 1000);
 }
 
 /**

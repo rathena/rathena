@@ -14051,13 +14051,17 @@ TIMER_FUNC(status_change_timer){
 
 	case SC_OVERHEAT_LIMITPOINT:
 		if (--(sce->val1) >= 0) { // Cooling
-			static std::vector<int16> limit = { 150, 200, 280, 360, 450 };
-			uint16 skill_lv = (sd ? cap_value(pc_checkskill(sd, NC_MAINFRAME), 0, (uint16)(limit.size()-1)) : 0);
+			if (sce->val2 == 0) { // Flag the overheat limit once it has been met.
+				static std::vector<int16> limit = { 150, 200, 280, 360, 450 };
+				uint16 skill_lv = (sd ? cap_value(pc_checkskill(sd, NC_MAINFRAME), 0, (uint16)(limit.size() - 1)) : 0);
 
-			if (sc && sc->data[SC_OVERHEAT])
-				status_change_end(bl,SC_OVERHEAT,INVALID_TIMER);
-			if (sce->val1 > limit[skill_lv])
-				sc_start(bl, bl, SC_OVERHEAT, 100, sce->val1, 1000);
+				if (sce->val1 > limit[skill_lv])
+					sce->val2 = 1;
+			} else {
+				status_change_end(bl, SC_OVERHEAT, INVALID_TIMER);
+				if (sce->val2 > 0)
+					sc_start(bl, bl, SC_OVERHEAT, 100, sce->val1, 975);
+			}
 			sc_timer_next(1000 + tick);
 			return 0;
 		}
@@ -14069,10 +14073,8 @@ TIMER_FUNC(status_change_timer){
 			if (damage >= status->hp)
 				damage = status->hp - 1; // Do not kill, just keep you with 1 hp minimum
 			map_freeblock_lock();
-			status_fix_damage(NULL, bl, damage, clif_damage(bl, bl, tick, 0, 0, damage, 0, DMG_NORMAL, 0, false),0);
-			if (sc->data[type]) {
-				sc_timer_next(1000 + tick);
-			}
+			status_zap(bl, damage, 0);
+			sc_timer_next(975 + tick); // Tick is not 1000 to avoid desync with SC_OVERHEAT_LIMITPOINT.
 			map_freeblock_unlock();
 			return 0;
 		}
