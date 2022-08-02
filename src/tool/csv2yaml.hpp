@@ -245,6 +245,33 @@ static std::unordered_map<int, std::string> um_mob_mode2ai {	// mode, AI
 	{ 0x8084, "27" },
 };
 
+// Cond1 string to enum
+static std::unordered_map<std::string, e_mob_skill_condition> um_mob_cond1 {
+	{ "always",            MSC_ALWAYS            },
+	{ "myhpltmaxrate",     MSC_MYHPLTMAXRATE     },
+	{ "myhpinrate",        MSC_MYHPINRATE        },
+	{ "friendhpltmaxrate", MSC_FRIENDHPLTMAXRATE },
+	{ "friendhpinrate",    MSC_FRIENDHPINRATE    },
+	{ "mystatuson",        MSC_MYSTATUSON        },
+	{ "mystatusoff",       MSC_MYSTATUSOFF       },
+	{ "friendstatuson",    MSC_FRIENDSTATUSON    },
+	{ "friendstatusoff",   MSC_FRIENDSTATUSOFF   },
+	{ "attackpcgt",        MSC_ATTACKPCGT        },
+	{ "attackpcge",        MSC_ATTACKPCGE        },
+	{ "slavelt",           MSC_SLAVELT           },
+	{ "slavele",           MSC_SLAVELE           },
+	{ "closedattacked",    MSC_CLOSEDATTACKED    },
+	{ "longrangeattacked", MSC_LONGRANGEATTACKED },
+	{ "skillused",         MSC_SKILLUSED         },
+	{ "afterskill",        MSC_AFTERSKILL        },
+	{ "casttargeted",      MSC_CASTTARGETED      },
+	{ "rudeattacked",      MSC_RUDEATTACKED      },
+	{ "masterhpltmaxrate", MSC_MASTERHPLTMAXRATE },
+	{ "masterattacked",    MSC_MASTERATTACKED    },
+	{ "alchemist",         MSC_ALCHEMIST         },
+	{ "onspawn",           MSC_SPAWN             },
+};
+
 // Initialize Random Option constants
 void init_random_option_constants() {
 	#define export_constant2(a, b) script_set_constant_(a, b, a, false, false)

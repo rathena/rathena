@@ -5004,27 +5004,55 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current) {
 
 	// Cond1
 	std::string cond1 = str[10];
-	std::transform(cond1.begin(), cond1.end(), cond1.begin(), ::toupper);
-	entry.cond1_name = cond1;
+	std::transform(cond1.begin(), cond1.end(), cond1.begin(), ::tolower);
+
+	// Find the enum from the string
+	e_mob_skill_condition *cond1_val = util::umap_find( um_mob_cond1, cond1 );
+
+	if (cond1_val == nullptr) {
+		ShowError( "Unknown Cond1 %s.\n", str[10] );
+		return false;
+	}
+
+	// Get and save the constant name
+	char *constant = const_cast<char *>(constant_lookup(*cond1_val, "MSC_"));
+
+	if (constant == nullptr) {
+		ShowWarning("Constant for Cond1 %s is not found.\n", str[10]);
+		return false;
+	}
+	constant += 4;
+	std::string cond1_name(constant);
+	entry.cond1_name = cond1_name;
 
 	// Cond2
-	std::string cond2(str[11]);
-	if (cond1 == "MYSTATUSON" || cond1 == "MYSTATUSOFF" || cond1 == "FRIENDSTATUSON" || cond1 == "FRIENDSTATUSOFF") {	// SC_ status
-		std::transform(cond2.begin(), cond2.end(), cond2.begin(), ::toupper);
-		entry.cond2_name = "SC_" + cond2;
-	}
-	else if (atoi(str[11]) > 0) {
-		if (cond1 != "SKILLUSED" && cond1 != "AFTERSKILL")	// Store the aegis skill name for SKILLUSED and AFTERSKILL
-			entry.cond2_name = cond2;
-		else {	// Aegis skill name
-			uint16 tmp_skill_id = atoi(str[11]);
-			std::string* tmp_skill_name = util::umap_find( aegis_skillnames, tmp_skill_id );
+	if (*str[11]) {
+		std::string cond2(str[11]);
 
-			if( tmp_skill_name == nullptr ){
-				ShowError( "Invalid specified skill %hu for %s (source: skill id %hu).\n", tmp_skill_id, cond1.c_str(), atoi(str[3]) );
-				return false;
+		switch( *cond1_val ) {
+			case MSC_MYSTATUSON:
+			case MSC_MYSTATUSOFF:
+			case MSC_FRIENDSTATUSON:
+			case MSC_FRIENDSTATUSOFF:	// SC_ status
+				std::transform(cond2.begin(), cond2.end(), cond2.begin(), ::toupper);
+				entry.cond2_name = "SC_" + cond2;
+				break;
+			case MSC_SKILLUSED:
+			case MSC_AFTERSKILL: {	// Aegis skill name
+				uint16 tmp_skill_id = atoi(str[11]);
+				std::string* tmp_skill_name = util::umap_find( aegis_skillnames, tmp_skill_id );
+
+				if (tmp_skill_name == nullptr) {
+					ShowError( "Invalid specified skill %hu for %s (source: skill id %hu).\n", tmp_skill_id, cond1.c_str(), atoi(str[3]) );
+					return false;
+				}
+				entry.cond2_name = *tmp_skill_name;
+				break;
 			}
-			entry.cond2_name = *tmp_skill_name;
+			default:
+				if (atoi(str[11]) > 0)
+					entry.cond2_name = cond2;
+				break;
 		}
 	}
 
@@ -5039,13 +5067,13 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current) {
 
 			std::string val_name = std::to_string(val);
 
-			if (i == 0 && (cond1 == "MYHPINRATE" || cond1 == "FRIENDHPINRATE")) {	// Upper bound now stored in cond3 instead of val 1
+			if (i == 0 && (*cond1_val == MSC_MYHPINRATE || *cond1_val == MSC_FRIENDHPINRATE)) {	// Upper bound now stored in cond3 instead of val1 (lower from val0 in cond2)
 				entry.cond3 = val;
 				continue;
 			}
 
 			switch( skill_id ) {
-				case NPC_METAMORPHOSIS:
+				case NPC_METAMORPHOSIS:	// save the mobs name when summon skills
 				case NPC_SUMMONSLAVE:
 				case NPC_SUMMONMONSTER:
 				case NPC_DEATHSUMMON: {
@@ -5078,7 +5106,7 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current) {
 					break;
 			}
 
-			// In any case the remain values should be the ai
+			// The remain values should be the ai
 			std::string *ai = util::umap_find( um_mob_mode2ai, val );
 
 			if (ai == nullptr || strncasecmp(str[index], "0x", 2) != 0) {
@@ -5129,7 +5157,7 @@ static bool mob_parse_row_mobskilldb_yaml(void) {
 			body << YAML::Key << "CastRate" << YAML::Value << mob_skill.permillage;
 			body << YAML::Key << "CastTime" << YAML::Value << mob_skill.casttime;
 			body << YAML::Key << "CastDelay" << YAML::Value << mob_skill.delay;
-			body << YAML::Key << "CastCancel" << YAML::Value << ( !mob_skill.cancel ? "false" : "true" );
+			body << YAML::Key << "CastCancel" << YAML::Value << ( mob_skill.cancel ? "true" : "false" );
 			body << YAML::Key << "Target" << YAML::Value << mob_skill.target_name;
 			body << YAML::Key << "Condition" << YAML::Value << mob_skill.cond1_name;
 
