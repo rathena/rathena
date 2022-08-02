@@ -7653,13 +7653,9 @@ Body:
   - Status: Climax_Earth
     Icon: EFST_CLIMAX_EARTH
     DurationLookup: AG_VIOLENT_QUAKE
-    CalcFlags:
-      All: true
   - Status: Climax_Bloom
     Icon: EFST_CLIMAX_BLOOM
     DurationLookup: AG_ALL_BLOOM
-    CalcFlags:
-      All: true
   - Status: Climax_Cryimp
     Icon: EFST_CLIMAX_CRYIMP
     DurationLookup: AG_CRYSTAL_IMPACT
