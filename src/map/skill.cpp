@@ -1307,9 +1307,9 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		if (sc != nullptr) {
 			status_change_entry *sce;
 
-			if ((sce = sc->data[SC_SHADOW_WEAPON]) && rnd() % 100 < sce->val2) {
+			if ((sce = sc->data[SC_SHADOW_WEAPON]) && util::rnd_chance(sce->val2, 100)) {
 				if (tsc && tsc->data[SC_SHADOW_SCAR])
-					sce->val1 += 1; // Directly adjust the rate so the duration is not reset each time.
+					sce->val1 += 1; // Directly adjust the damage rate so the duration is not reset each time.
 				else
 					sc_start(src, bl, SC_SHADOW_SCAR, 100, 1, skill_get_time2(SHC_ENCHANTING_SHADOW, sce->val1));
 			}
