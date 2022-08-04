@@ -8157,3 +8157,12 @@ Body:
       NoClearance: true
     Fail:
       S_Manapotion: true
+  - Status: Sub_Weaponproperty
+    Flags:
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+      NoRemoveOnDead: true
+      NoClearbuff: true
+    End:
+      Sub_Weaponproperty: true

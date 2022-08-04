@@ -1229,6 +1229,8 @@ enum sc_type : int16 {
 	SC_M_LIFEPOTION,
 	SC_S_MANAPOTION,
 
+	SC_SUB_WEAPONPROPERTY,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif

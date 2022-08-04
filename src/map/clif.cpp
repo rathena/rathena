@@ -2193,10 +2193,10 @@ void clif_buylist( struct map_session_data *sd, struct npc_data *nd ){
 		p->items[count].itemType = itemtype( nd->u.shop.shop_item[i].nameid );
 		p->items[count].itemId = client_nameid( nd->u.shop.shop_item[i].nameid );
 #if PACKETVER_MAIN_NUM >= 20210203 || PACKETVER_RE_NUM >= 20211103
-		struct item_data* id = itemdb_exists( nd->u.shop.shop_item[i].nameid );
+		std::shared_ptr<item_data> id = item_db.find(nd->u.shop.shop_item[i].nameid);
 
 		p->items[count].viewSprite = id->look;
-		p->items[count].location = pc_equippoint_sub( sd, id );
+		p->items[count].location = pc_equippoint_sub( sd, id.get() );
 #endif
 		count++;
 	}
@@ -2279,7 +2279,7 @@ void clif_npc_market_open(struct map_session_data *sd, struct npc_data *nd) {
 			continue;
 		}
 
-		struct item_data *id = itemdb_exists( item->nameid );
+		std::shared_ptr<item_data> id = item_db.find(item->nameid);
 
 		if( !id ){
 			continue;
@@ -2296,7 +2296,7 @@ void clif_npc_market_open(struct map_session_data *sd, struct npc_data *nd) {
 		p->list[count].qty = item->qty;
 		p->list[count].weight = id->weight;
 #if PACKETVER_MAIN_NUM >= 20210203 || PACKETVER_RE_NUM >= 20211103
-		p->list[count].location = pc_equippoint_sub( sd, id );
+		p->list[count].location = pc_equippoint_sub( sd, id.get() );
 #endif
 		count++;
 	}
@@ -16215,7 +16215,6 @@ void clif_Mail_read( struct map_session_data *sd, int mail_id ){
 	} else {
 		struct mail_message *msg = &sd->mail.inbox.msg[i];
 		struct item *item;
-		struct item_data *data;
 		int msg_len = strlen(msg->body);
 
 		if( msg_len == 0 ) {
@@ -16273,7 +16272,9 @@ void clif_Mail_read( struct map_session_data *sd, int mail_id ){
 		for( int j = 0; j < MAIL_MAX_ITEM; j++ ){
 			item = &msg->item[j];
 
-			if( item->nameid > 0 && item->amount > 0 && ( data = itemdb_exists( item->nameid ) ) != NULL ){
+			std::shared_ptr<item_data> data = item_db.find(item->nameid);
+
+			if( item->nameid > 0 && item->amount > 0 && data != nullptr ){
 				struct PACKET_ZC_ACK_READ_RODEX_SUB* mailitem = (struct PACKET_ZC_ACK_READ_RODEX_SUB*)WBUFP( p, p->PacketLength );
 
 				mailitem->ITID = client_nameid( item->nameid );
@@ -16282,7 +16283,7 @@ void clif_Mail_read( struct map_session_data *sd, int mail_id ){
 				mailitem->IsIdentified = item->identify ? 1 : 0;
 				mailitem->IsDamaged = item->attribute ? 1 : 0;
 				mailitem->refiningLevel = item->refine;
-				mailitem->location = pc_equippoint_sub( sd, data );
+				mailitem->location = pc_equippoint_sub( sd, data.get() );
 				mailitem->viewSprite = data->look;
 				mailitem->bindOnEquip = item->bound ? 2 : data->flag.bindOnEquip ? 1 : 0;
 				clif_addcards( &mailitem->slot, item );
@@ -16476,9 +16477,9 @@ void clif_parse_Mail_getattach( int fd, struct map_session_data *sd ){
 			struct item* item = &msg->item[i];
 
 			if( item->nameid > 0 && item->amount > 0 ){
-				struct item_data *data;
+				std::shared_ptr<item_data> data = item_db.find(item->nameid);
 
-				if((data = itemdb_exists(item->nameid)) == NULL)
+				if(data == nullptr)
 					continue;
 
 				switch( pc_checkadditem(sd, item->nameid, item->amount) ){
@@ -16845,7 +16846,6 @@ void clif_parse_Auction_setitem(int fd, struct map_session_data *sd){
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 	int idx = RFIFOW(fd,info->pos[0]) - 2;
 	int amount = RFIFOL(fd,info->pos[1]); // Always 1
-	struct item_data *item;
 
 	if( !battle_config.feature_auction )
 		return;
@@ -16863,7 +16863,9 @@ void clif_parse_Auction_setitem(int fd, struct map_session_data *sd){
 		return;
 	}
 
-	if( (item = itemdb_exists(sd->inventory.u.items_inventory[idx].nameid)) != NULL && !(item->type == IT_ARMOR || item->type == IT_PETARMOR || item->type == IT_WEAPON || item->type == IT_CARD || item->type == IT_ETC || item->type == IT_SHADOWGEAR) )
+	std::shared_ptr<item_data> id = item_db.find(sd->inventory.u.items_inventory[idx].nameid);
+
+	if( id != nullptr && !(id->type == IT_ARMOR || id->type == IT_PETARMOR || id->type == IT_WEAPON || id->type == IT_CARD || id->type == IT_ETC || id->type == IT_SHADOWGEAR) )
 	{ // Consumable or pets are not allowed
 		clif_Auction_setitem(sd->fd, idx, true);
 		return;
@@ -16925,7 +16927,6 @@ void clif_Auction_close(int fd, unsigned char flag)
 void clif_parse_Auction_register(int fd, struct map_session_data *sd)
 {
 	struct auction_data auction;
-	struct item_data *item;
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 
 	if( !battle_config.feature_auction )
@@ -16980,14 +16981,16 @@ void clif_parse_Auction_register(int fd, struct map_session_data *sd)
 		return;
 	}
 
-	if( (item = itemdb_exists(sd->inventory.u.items_inventory[sd->auction.index].nameid)) == NULL )
+	std::shared_ptr<item_data> id = item_db.find(sd->inventory.u.items_inventory[sd->auction.index].nameid);
+
+	if( id == nullptr )
 	{ // Just in case
 		clif_Auction_message(fd, 2); // The auction has been canceled
 		return;
 	}
 
-	safestrncpy(auction.item_name, item->ename.c_str(), sizeof(auction.item_name));
-	auction.type = item->type;
+	safestrncpy(auction.item_name, id->ename.c_str(), sizeof(auction.item_name));
+	auction.type = id->type;
 	memcpy(&auction.item, &sd->inventory.u.items_inventory[sd->auction.index], sizeof(struct item));
 	auction.item.amount = 1;
 	auction.timestamp = 0;
@@ -22788,7 +22791,7 @@ void clif_barter_open( struct map_session_data& sd, struct npc_data& nd ){
 	int16 count = 0;
 	for( const auto& itemPair : barter->items ){
 		struct PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO_sub* item = &p->list[count];
-		struct item_data* id = itemdb_exists( itemPair.second->nameid );
+		std::shared_ptr<item_data> id = item_db.find(itemPair.second->nameid);
 
 		item->nameid = client_nameid( id->nameid );
 		item->type = itemtype( id->nameid );
@@ -22801,7 +22804,7 @@ void clif_barter_open( struct map_session_data& sd, struct npc_data& nd ){
 		item->index = itemPair.second->index;
 #if PACKETVER_MAIN_NUM >= 20210203 || PACKETVER_RE_NUM >= 20211103
 		item->viewSprite = id->look;
-		item->location = pc_equippoint_sub( &sd, id );
+		item->location = pc_equippoint_sub( &sd, id.get() );
 #endif
 
 		// Use a loop if someone did not start with index 0
@@ -22938,7 +22941,7 @@ void clif_barter_extended_open( struct map_session_data& sd, struct npc_data& nd
 	for( const auto& itemPair : barter->items ){
 		// Needs dynamic calculation, because of variable currencies
 		struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub* item = (struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub*)( ( (uint8*)p ) + p->packetLength );
-		struct item_data* id = itemdb_exists( itemPair.second->nameid );
+		std::shared_ptr<item_data> id = item_db.find(itemPair.second->nameid);
 
 		item->nameid = client_nameid( id->nameid );
 		item->type = itemtype( id->nameid );
@@ -22952,7 +22955,7 @@ void clif_barter_extended_open( struct map_session_data& sd, struct npc_data& nd
 		item->zeny = itemPair.second->price;
 #if PACKETVER_MAIN_NUM >= 20210203 || PACKETVER_RE_NUM >= 20211103
 		item->viewSprite = id->look;
-		item->location = pc_equippoint_sub( &sd, id );
+		item->location = pc_equippoint_sub( &sd, id.get() );
 #endif
 		
 		p->packetLength += (int16)( sizeof( *item ) - sizeof( item->currencies ) );
