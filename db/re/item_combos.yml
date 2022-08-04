@@ -4037,18 +4037,6 @@ Body:
           - RWC_Gold_Brooch
           - RWC_Brooch
       - Combo:
-          - Min_Toad_Card
-          - Min_Chimera_Card
-      - Combo:
-          - Min_Vagabond_Wolf_Card
-          - Min_Chimera_Card
-      - Combo:
-          - Min_Vocal_Card
-          - Min_Chimera_Card
-      - Combo:
-          - Min_Eclipse_Card
-          - Min_Chimera_Card
-      - Combo:
           - C_Amdarais_Card
           - AmdaraisH_Card
     Script: |
