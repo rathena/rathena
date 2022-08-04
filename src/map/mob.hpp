@@ -430,6 +430,7 @@ enum e_mob_skill_condition {
 	MSC_MASTERATTACKED,
 	MSC_ALCHEMIST,
 	MSC_SPAWN,
+	MSC_MOBNEARBYGT,
 };
 
 // The data structures for storing delayed item drops

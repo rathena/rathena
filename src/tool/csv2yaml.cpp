@@ -288,7 +288,7 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
-	if (!process("QUEST_DB", 2, root_paths, "quest_db", [](const std::string &path, const std::string &name_ext) -> bool {
+	if (!process("QUEST_DB", 3, root_paths, "quest_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 3 + MAX_QUEST_OBJECTIVES * 2 + MAX_QUEST_DROPS * 3, 100, -1, &quest_read_db, false);
 	})) {
 		return 0;

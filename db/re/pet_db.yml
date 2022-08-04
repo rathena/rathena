@@ -1574,7 +1574,7 @@ Body:
 #    Evolution:
 #      - Target: ORK_HERO2
 #        ItemRequirements:
-#          - Item: Powerful_Soul_Essence
+#          - Item: Mightysoul_Essence
 #            Amount: 30
 #          - Item: Orc_Warrior_Card
 #            Amount: 10
@@ -1682,7 +1682,7 @@ Body:
     Evolution:
       - Target: MOONLIGHT
         ItemRequirements:
-          - Item: Powerful_Soul_Essence
+          - Item: Mightysoul_Essence
             Amount: 30
           - Item: Nine_Tail_Card
             Amount: 10
