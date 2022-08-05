@@ -5205,7 +5205,7 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, std::bi
 				  || (sc->data[SC_FEAR] && sc->data[SC_FEAR]->val2 > 0)
 				  || (sc->data[SC_SPIDERWEB] && sc->data[SC_SPIDERWEB]->val1)
 				  || (sc->data[SC_HIDING] && (bl->type != BL_PC || (pc_checkskill(BL_CAST(BL_PC,bl),RG_TUNNELDRIVE) <= 0)))
-				  || (sc->data[SC_DANCING] && sc->data[SC_DANCING]->val4 && (
+				  || (sc->data[SC_DANCING] && (
 #ifndef RENEWAL
 						!sc->data[SC_LONGING] ||
 #endif
