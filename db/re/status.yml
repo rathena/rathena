@@ -7632,7 +7632,7 @@ Body:
     Icon: EFST_DEADLY_DEFEASANCE
     DurationLookup: AG_DEADLY_PROJECTION
     CalcFlags:
-      All: true
+      Base: true
     Flags:
       BlEffect: true
       DisplayPc: true
