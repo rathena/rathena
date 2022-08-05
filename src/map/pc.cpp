@@ -11737,7 +11737,7 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 	}
 
 	if(pos & EQP_HAND_R) {
-		sd->weapontype1 = 0;
+		sd->weapontype1 = W_FIST;
 		sd->status.weapon = sd->weapontype2;
 		pc_calcweapontype(sd);
 		clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
