@@ -3554,7 +3554,7 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 	// Give them all modes except these (useful for clones)
 	base_status->mode = static_cast<e_mode>(MD_MASK&~(MD_STATUSIMMUNE|MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC|MD_DETECTOR|MD_ANGRY|MD_TARGETWEAK));
 
-	base_status->size = (sd->class_&JOBL_BABY) ? SZ_SMALL : (((sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER) ? battle_config.summoner_size : SZ_MEDIUM);
+	base_status->size = (sd->class_&JOBL_BABY) ? SZ_SMALL : ((sd->class_&MAPID_SUMMONER) == MAPID_SUMMONER ? battle_config.summoner_size : SZ_MEDIUM);
 	if (battle_config.character_size && pc_isriding(sd)) { // [Lupus]
 		if (sd->class_&JOBL_BABY) {
 			if (battle_config.character_size&SZ_BIG)
@@ -3565,7 +3565,7 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 	}
 	base_status->aspd_rate = 1000;
 	base_status->ele_lv = 1;
-	base_status->race = ((sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER) ? battle_config.summoner_race : RC_PLAYER_HUMAN;
+	base_status->race = ((sd->class_&MAPID_SUMMONER) == MAPID_SUMMONER) ? battle_config.summoner_race : RC_PLAYER_HUMAN;
 	base_status->class_ = CLASS_NORMAL;
 
 	sd->autospell.clear();
@@ -12124,7 +12124,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_ARCLOUSEDASH:
 			val2 = 15 + 5 * val1; // AGI
 			val3 = 25; // Move speed increase
-			if (sd && (sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER)
+			if (sd && (sd->class_&MAPID_SUMMONER) == MAPID_SUMMONER)
 				val4 = 10; // Ranged ATK increase
 			break;
 		case SC_SHRIMP:
