@@ -37,6 +37,9 @@
 struct Battle_Config battle_config;
 static struct eri *delay_damage_ers; //For battle delay damage structures.
 
+// Early declaration
+int battle_get_weapon_element(struct Damage *wd, struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, short weapon_position, bool calc_for_damage_only);
+
 /**
  * Returns the current/list skill used by the bl
  * @param bl
@@ -1823,9 +1826,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	}
 
 	if (sd && pc_ismadogear(sd)) {
-		int element = battle_get_weapon_element(d, src, bl, skill_id, skill_lv, EQI_HAND_R, false);
-
-		pc_overheat(*sd, (element == ELE_FIRE ? 3 : 1));
+		pc_overheat(*sd, (battle_get_weapon_element(d, src, bl, skill_id, skill_lv, EQI_HAND_R, false) == ELE_FIRE ? 3 : 1));
 	}
 
 	if (bl->type == BL_MOB) { // Reduces damage received for Green Aura MVP
