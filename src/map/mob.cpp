@@ -6674,7 +6674,7 @@ static void mob_skill_db_set(void) {
 			continue;
 
 		// Specific monster
-		if (skill->mob_id >= 0) {
+		if (skill->mob_id >= 3) {
 			std::shared_ptr<s_mob_db> mob = mob_db.find(skill->mob_id);
 
 			if (mob != nullptr)
