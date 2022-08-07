@@ -6164,6 +6164,24 @@ uint64 MobSkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 					skill->emotion = ET_NONE;
 			}
 
+			if (this->nodeExists(it, "Emotion2")) {
+				std::string emotion_name;
+
+				if (!this->asString(it, "Emotion2", emotion_name))
+					return 0;
+
+				int64 constant;
+
+				if (!script_get_constant(emotion_name.c_str(), &constant) || constant <= ET_NONE || constant >= ET_MAX) {
+					this->invalidWarning(it["Emotion2"], "Invalid Emotion %s.\n", emotion_name.c_str());
+					return 0;
+				}
+				skill->emotion2 = static_cast<int16>(constant);
+			} else {
+				if (!skill_exists)
+					skill->emotion2 = ET_NONE;
+			}
+
 			if (this->nodeExists(it, "Chat")) {
 				uint16 msg_id;
 

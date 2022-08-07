@@ -496,7 +496,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_WATERATTACK
         Level: 1
@@ -519,7 +519,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_QUESTION
+        Emotion2: ET_QUESTION
       - Index: 1
         Name: KN_SPEARSTAB
         Level: 5
@@ -885,7 +885,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_GROUNDATTACK
         Level: 1
@@ -908,7 +908,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_METAMORPHOSIS
         Level: 1
@@ -989,7 +989,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -1001,7 +1001,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 5
         Name: NPC_SUMMONSLAVE
         Level: 1
@@ -1435,7 +1435,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_FIREATTACK
         Level: 1
@@ -1468,7 +1468,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_STUNATTACK
         Level: 3
@@ -1524,7 +1524,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -1536,7 +1536,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 5
         Name: SM_BASH
         Level: 5
@@ -1616,7 +1616,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_MONEY
+        Emotion2: ET_MONEY
       - Index: 1
         Name: MC_MAMMONITE
         Level: 9
@@ -1671,7 +1671,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 6
         Name: NPC_EMOTION
         Level: 1
@@ -1683,7 +1683,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 7
         Name: NPC_EMOTION
         Level: 1
@@ -1695,7 +1695,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
   - Mob: COELACANTH_N_E
     Skills:
       - Index: 0
@@ -1907,7 +1907,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_AHA
+        Emotion2: ET_AHA
       - Index: 2
         Name: NPC_WINDATTACK
         Level: 3
@@ -2006,7 +2006,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_KEK
+        Emotion2: ET_KEK
       - Index: 1
         Name: NPC_POISON
         Level: 1
@@ -2230,7 +2230,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_QUESTION
+        Emotion2: ET_QUESTION
       - Index: 1
         Name: NPC_PROVOCATION
         Level: 1
@@ -2739,7 +2739,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -2751,7 +2751,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_QUESTION
+        Emotion2: ET_QUESTION
       - Index: 2
         Name: NPC_STUNATTACK
         Level: 2
@@ -2774,7 +2774,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_STUNATTACK
         Level: 2
@@ -2798,7 +2798,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_HOLYATTACK
         Level: 1
@@ -3136,7 +3136,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_KIK
+        Emotion2: ET_KIK
       - Index: 4
         Name: NPC_MAGICALATTACK
         Level: 1
@@ -3214,7 +3214,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_SLEEPY
+        Emotion2: ET_SLEEPY
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -3226,7 +3226,7 @@ Body:
         Target: SELF
         Condition: MYHPLTMAXRATE
         ConditionValue1: 1
-        Emotion: ET_CRY
+        Emotion2: ET_CRY
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -3238,7 +3238,7 @@ Body:
         Target: SELF
         Condition: MYHPLTMAXRATE
         ConditionValue1: 1
-        Emotion: ET_CRY
+        Emotion2: ET_CRY
       - Index: 5
         Name: NPC_SILENCEATTACK
         Level: 2
@@ -3459,7 +3459,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_FIREATTACK
         Level: 1
@@ -3493,7 +3493,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 2
         Name: NPC_GROUNDATTACK
         Level: 3
@@ -3900,7 +3900,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_KIK
+        Emotion2: ET_KIK
       - Index: 2
         Name: CR_AUTOGUARD
         Level: 2
@@ -3955,7 +3955,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 2
         Name: NPC_FIREATTACK
         Level: 1
@@ -4138,7 +4138,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 6
         Name: NPC_EMOTION
         Level: 1
@@ -4150,7 +4150,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
   - Mob: C3_OWL_DUKE
     Skills:
       - Index: 0
@@ -4194,7 +4194,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -4206,7 +4206,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -4217,7 +4217,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_HNG
+        Emotion2: ET_HNG
       - Index: 6
         Name: PR_LEXDIVINA
         Level: 3
@@ -4295,7 +4295,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_SCRATCH
+        Emotion2: ET_SCRATCH
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -4307,7 +4307,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -4319,7 +4319,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 6
         Name: NPC_WATERATTACK
         Level: 3
@@ -4343,7 +4343,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_METAMORPHOSIS
         Level: 4
@@ -4512,7 +4512,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 8
         Name: NPC_EMOTION
         Level: 1
@@ -4524,7 +4524,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 17
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
   - Mob: EVIL_DRUID
     Skills:
       - Index: 0
@@ -5060,7 +5060,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -5072,7 +5072,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_HNG
+        Emotion2: ET_HNG
       - Index: 4
         Name: NPC_SMOKING
         Level: 1
@@ -5094,7 +5094,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_GO
+        Emotion2: ET_GO
       - Index: 6
         Name: NPC_GROUNDATTACK
         Level: 2
@@ -5117,7 +5117,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
   - Mob: BIGFOOT
     Skills:
       - Index: 0
@@ -5130,7 +5130,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 1
         Name: NPC_GROUNDATTACK
         Level: 1
@@ -5152,7 +5152,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_STUNATTACK
         Level: 2
@@ -5371,7 +5371,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 7
         Name: NPC_EMOTION
         Level: 1
@@ -5383,7 +5383,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 8
         Name: NPC_EMOTION
         Level: 1
@@ -5395,7 +5395,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 9
         Name: AL_TELEPORT
         Level: 1
@@ -5430,7 +5430,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 2
         Name: NPC_GROUNDATTACK
         Level: 2
@@ -5746,7 +5746,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 2
         Name: NPC_COMBOATTACK
         Level: 1
@@ -6323,7 +6323,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 2
         Name: NPC_GROUNDATTACK
         Level: 1
@@ -6476,7 +6476,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -6488,7 +6488,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
   - Mob: HUNTER_FLY
     Skills:
       - Index: 0
@@ -6534,7 +6534,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -6546,7 +6546,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 5
         Name: NPC_WINDATTACK
         Level: 1
@@ -6590,7 +6590,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 9
         Name: NPC_WINDATTACK
         Level: 1
@@ -6700,7 +6700,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 13
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
   - Mob: GOBLIN_2
     Skills:
       - Index: 0
@@ -6713,7 +6713,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_KIK
+        Emotion2: ET_KIK
       - Index: 1
         Name: NPC_FIREATTACK
         Level: 2
@@ -6735,7 +6735,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -6747,7 +6747,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
   - Mob: E_MISTRESS
     Skills:
       - Index: 0
@@ -7039,7 +7039,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_POISON
         Level: 2
@@ -7269,7 +7269,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 13
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
   - Mob: VERIT
     Skills:
       - Index: 0
@@ -7282,7 +7282,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_POISON
         Level: 2
@@ -7554,7 +7554,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -7566,7 +7566,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 17
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 4
         Name: CR_AUTOGUARD
         Level: 5
@@ -7631,7 +7631,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -7643,7 +7643,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
   - Mob: BATHORY
     Skills:
       - Index: 0
@@ -7666,7 +7666,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_CHUP
+        Emotion2: ET_CHUP
       - Index: 2
         Name: NPC_ENERGYDRAIN
         Level: 1
@@ -8307,7 +8307,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_HNG
+        Emotion2: ET_HNG
       - Index: 3
         Name: TF_SPRINKLESAND
         Level: 1
@@ -8947,7 +8947,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 1
         Name: NPC_STUNATTACK
         Level: 3
@@ -8992,7 +8992,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -9004,7 +9004,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 2
         Name: NPC_WATERATTACK
         Level: 3
@@ -9086,7 +9086,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -9098,7 +9098,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 3
         Name: NPC_COMBOATTACK
         Level: 1
@@ -9121,7 +9121,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 5
         Name: NPC_UNDEADATTACK
         Level: 1
@@ -9420,7 +9420,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -9432,7 +9432,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 2
         Name: NPC_STUNATTACK
         Level: 2
@@ -9466,7 +9466,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 5
         Name: NPC_STUNATTACK
         Level: 2
@@ -9675,7 +9675,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_METAMORPHOSIS
         Level: 1
@@ -9724,7 +9724,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -9736,7 +9736,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 4
         Name: NPC_FIREATTACK
         Level: 3
@@ -9824,7 +9824,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 1
         Name: NPC_SILENCEATTACK
         Level: 5
@@ -9846,7 +9846,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
   - Mob: ROCKER
     Skills:
       - Index: 0
@@ -9859,7 +9859,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_GROUNDATTACK
         Level: 1
@@ -10774,7 +10774,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 17
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_CRITICALSLASH
         Level: 2
@@ -10909,7 +10909,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 5
         Name: NPC_SILENCEATTACK
         Level: 3
@@ -11577,7 +11577,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_SCRATCH
+        Emotion2: ET_SCRATCH
       - Index: 10
         Name: NPC_EMOTION
         Level: 1
@@ -11589,7 +11589,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 11
         Name: NPC_EMOTION
         Level: 1
@@ -11600,7 +11600,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 12
         Name: NPC_EMOTION_ON
         Level: 1
@@ -11612,7 +11612,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 02
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
   - Mob: C3_SNAKE
     Skills:
       - Index: 0
@@ -11690,7 +11690,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 4
         Name: NPC_UNDEADATTACK
         Level: 1
@@ -11911,7 +11911,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_FIREATTACK
         Level: 1
@@ -12053,7 +12053,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_HNG
+        Emotion2: ET_HNG
       - Index: 5
         Name: NPC_WATERATTACK
         Level: 1
@@ -12231,7 +12231,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_OHNO
+        Emotion2: ET_OHNO
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -12242,7 +12242,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 6
         Name: SM_BASH
         Level: 10
@@ -12453,7 +12453,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -12465,7 +12465,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 17
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
   - Mob: C3_CLOCK
     Skills:
       - Index: 0
@@ -12490,7 +12490,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 17
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 2
         Name: NPC_EMOTION_ON
         Level: 1
@@ -12502,7 +12502,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 3
         Name: NPC_GROUNDATTACK
         Level: 4
@@ -13507,7 +13507,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -13519,7 +13519,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 4
         Name: NPC_SPLASHATTACK
         Level: 1
@@ -13652,7 +13652,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_QUESTION
+        Emotion2: ET_QUESTION
       - Index: 1
         Name: NPC_UNDEADATTACK
         Level: 1
@@ -14073,7 +14073,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 9
         Name: NPC_EMOTION
         Level: 1
@@ -14085,7 +14085,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
   - Mob: POISON_SPORE
     Skills:
       - Index: 0
@@ -14120,7 +14120,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -14132,7 +14132,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_QUESTION
+        Emotion2: ET_QUESTION
       - Index: 4
         Name: NPC_POISON
         Level: 3
@@ -14165,7 +14165,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
   - Mob: ILL_BON_GUN
     Skills:
       - Index: 0
@@ -14244,7 +14244,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: TF_THROWSTONE
         Level: 1
@@ -14292,7 +14292,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 1
         Name: AL_TELEPORT
         Level: 1
@@ -15355,7 +15355,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 03
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_SPLASHATTACK
         Level: 1
@@ -15513,7 +15513,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 8
         Name: NPC_EMOTION
         Level: 1
@@ -15609,7 +15609,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -15621,7 +15621,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -15633,7 +15633,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 3
         Name: NPC_CRITICALWOUND
         Level: 4
@@ -15945,7 +15945,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_GO
+        Emotion2: ET_GO
       - Index: 3
         Name: NPC_GROUNDATTACK
         Level: 3
@@ -16013,7 +16013,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_KEEPING
         Level: 1
@@ -16616,7 +16616,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_GROUNDATTACK
         Level: 2
@@ -16672,7 +16672,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 03
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_SPLASHATTACK
         Level: 1
@@ -16717,7 +16717,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 2
         Name: NPC_WATERATTACK
         Level: 3
@@ -16809,7 +16809,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 7
         Name: NPC_HOLYATTACK
         Level: 5
@@ -16924,7 +16924,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -16936,7 +16936,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -16948,7 +16948,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 4
         Name: SM_ENDURE
         Level: 1
@@ -17005,7 +17005,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_METAMORPHOSIS
         Level: 1
@@ -17198,7 +17198,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 8
         Name: NPC_EMOTION
         Level: 1
@@ -17210,7 +17210,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 9
         Name: NPC_EARTHQUAKE
         Level: 5
@@ -17233,7 +17233,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 11
         Name: AL_TELEPORT
         Level: 1
@@ -17429,7 +17429,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 13
         Name: NPC_EMOTION
         Level: 1
@@ -17441,7 +17441,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 14
         Name: MG_THUNDERSTORM
         Level: 5
@@ -17627,7 +17627,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -17639,7 +17639,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
   - Mob: C4_VENATU_1
     Skills:
       - Index: 0
@@ -17663,7 +17663,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -17798,7 +17798,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -17810,7 +17810,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -17822,7 +17822,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 3
         Name: NPC_WATERATTACK
         Level: 1
@@ -17919,7 +17919,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_KIK
+        Emotion2: ET_KIK
       - Index: 2
         Name: NPC_DARKNESSATTACK
         Level: 3
@@ -18104,7 +18104,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 5
         Name: NPC_HALLUCINATION
         Level: 1
@@ -18138,7 +18138,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 8
         Name: NPC_EMOTION
         Level: 1
@@ -18150,7 +18150,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
   - Mob: MOROCC_3
     Skills:
       - Index: 0
@@ -18367,7 +18367,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -18379,7 +18379,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 3
         Name: TF_HIDING
         Level: 1
@@ -18423,7 +18423,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 7
         Name: TF_HIDING
         Level: 1
@@ -18521,7 +18521,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_GROUNDATTACK
         Level: 2
@@ -18580,7 +18580,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -18592,7 +18592,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 13
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 3
         Name: TF_SPRINKLESAND
         Level: 1
@@ -18616,7 +18616,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 1
         Name: SM_BASH
         Level: 5
@@ -18681,7 +18681,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -18693,7 +18693,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 4
         Name: NPC_FIREATTACK
         Level: 3
@@ -18729,7 +18729,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -18741,7 +18741,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 2
         Name: NPC_WATERATTACK
         Level: 3
@@ -18819,7 +18819,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_FIREATTACK
         Level: 1
@@ -18874,7 +18874,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -18886,7 +18886,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 17
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
   - Mob: G_CRUISER
     Skills:
       - Index: 0
@@ -18996,7 +18996,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 8
         Name: NPC_EMOTION
         Level: 1
@@ -19337,7 +19337,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_CRY
+        Emotion2: ET_CRY
       - Index: 10
         Name: NPC_SUMMONSLAVE
         Level: 5
@@ -19976,7 +19976,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -19988,7 +19988,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 13
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -19999,7 +19999,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 3
         Name: NPC_WINDATTACK
         Level: 5
@@ -20734,7 +20734,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -20746,7 +20746,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 3
         Name: NPC_COMBOATTACK
         Level: 1
@@ -20769,7 +20769,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 5
         Name: NPC_UNDEADATTACK
         Level: 3
@@ -20834,7 +20834,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
   - Mob: C2_ROWEEN
     Skills:
       - Index: 0
@@ -20859,7 +20859,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 13
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 2
         Name: NPC_WINDATTACK
         Level: 2
@@ -21210,7 +21210,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_AHA
+        Emotion2: ET_AHA
       - Index: 3
         Name: NPC_GROUNDATTACK
         Level: 2
@@ -21586,7 +21586,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_FIREATTACK
         Level: 1
@@ -21664,7 +21664,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 6
         Name: NPC_EMOTION
         Level: 1
@@ -21676,7 +21676,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 7
         Name: NPC_EMOTION
         Level: 1
@@ -21688,7 +21688,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 8
         Name: NPC_WINDATTACK
         Level: 2
@@ -22074,7 +22074,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -22086,7 +22086,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 13
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -22097,7 +22097,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_SMILE
+        Emotion2: ET_SMILE
       - Index: 3
         Name: NPC_WINDATTACK
         Level: 5
@@ -22130,7 +22130,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 2
         Name: NPC_GROUNDATTACK
         Level: 1
@@ -22293,7 +22293,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_QUESTION
+        Emotion2: ET_QUESTION
       - Index: 5
         Name: NPC_FIREATTACK
         Level: 1
@@ -22368,7 +22368,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_MONEY
+        Emotion2: ET_MONEY
       - Index: 2
         Name: NPC_GROUNDATTACK
         Level: 1
@@ -22402,7 +22402,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_SMILE
+        Emotion2: ET_SMILE
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -22414,7 +22414,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -22426,7 +22426,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 3
         Name: NPC_WINDATTACK
         Level: 2
@@ -22460,7 +22460,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_SCRATCH
+        Emotion2: ET_SCRATCH
       - Index: 2
         Name: NPC_WATERATTACK
         Level: 3
@@ -22528,7 +22528,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 1
         Name: NPC_POISONATTACK
         Level: 2
@@ -22550,7 +22550,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -22562,7 +22562,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 13
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
   - Mob: KARAKASA
     Skills:
       - Index: 0
@@ -22620,7 +22620,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_CRY
+        Emotion2: ET_CRY
   - Mob: GOBLIN_4
     Skills:
       - Index: 0
@@ -22633,7 +22633,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_SCRATCH
+        Emotion2: ET_SCRATCH
       - Index: 1
         Name: NPC_GROUNDATTACK
         Level: 2
@@ -22655,7 +22655,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -22667,7 +22667,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 13
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
   - Mob: MD_E_13EN0
     Skills:
       - Index: 0
@@ -22713,7 +22713,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_CRY
+        Emotion2: ET_CRY
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -22725,7 +22725,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -22737,7 +22737,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 13
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 3
         Name: NPC_WATERATTACK
         Level: 2
@@ -23174,7 +23174,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_GROUNDATTACK
         Level: 2
@@ -23524,7 +23524,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 7
         Name: NPC_TELEKINESISATTACK
         Level: 5
@@ -23616,7 +23616,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -23628,7 +23628,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
   - Mob: KOBOLD_1
     Skills:
       - Index: 0
@@ -23641,7 +23641,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -23653,7 +23653,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -23665,7 +23665,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 13
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 3
         Name: NPC_WINDATTACK
         Level: 3
@@ -23935,7 +23935,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -23947,7 +23947,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 4
         Name: NPC_SUMMONSLAVE
         Level: 3
@@ -24561,7 +24561,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 1
         Name: NPC_POISONATTACK
         Level: 3
@@ -24584,7 +24584,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -24596,7 +24596,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 13
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
   - Mob: KOBOLD_3
     Skills:
       - Index: 0
@@ -24609,7 +24609,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 1
         Name: NPC_FIREATTACK
         Level: 3
@@ -24632,7 +24632,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -24644,7 +24644,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 13
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
   - Mob: L_SHECIL
     Skills:
       - Index: 0
@@ -25264,7 +25264,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_CRY
+        Emotion2: ET_CRY
       - Index: 2
         Name: NPC_STUNATTACK
         Level: 3
@@ -25831,7 +25831,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -25843,7 +25843,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
   - Mob: JEJELING
     Skills:
       - Index: 0
@@ -25856,7 +25856,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_WATERATTACK
         Level: 1
@@ -26190,7 +26190,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 2
         Name: WZ_JUPITEL
         Level: 3
@@ -26378,7 +26378,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_WATERATTACK
         Level: 2
@@ -26559,7 +26559,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_QUESTION
+        Emotion2: ET_QUESTION
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -26571,7 +26571,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 17
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_WATERATTACK
         Level: 3
@@ -27213,7 +27213,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -27225,7 +27225,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
   - Mob: MATYR
     Skills:
       - Index: 0
@@ -27260,7 +27260,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -27272,7 +27272,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
   - Mob: GEFFEN_MAGE_8
     Skills:
       - Index: 0
@@ -27560,7 +27560,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 16
         Name: NPC_EMOTION
         Level: 1
@@ -27572,7 +27572,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 17
         Name: NPC_EMOTION
         Level: 1
@@ -27584,7 +27584,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 18
         Name: AL_TELEPORT
         Level: 1
@@ -28246,7 +28246,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -28258,7 +28258,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
   - Mob: NAGA
     Skills:
       - Index: 0
@@ -28389,7 +28389,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -28401,7 +28401,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 5
         Name: WZ_HEAVENDRIVE
         Level: 3
@@ -28524,7 +28524,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
   - Mob: C4_GARGOYLE
     Skills:
       - Index: 0
@@ -29198,7 +29198,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -29210,7 +29210,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_ATTRICHANGE
         Level: 1
@@ -29390,7 +29390,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 2
         Name: NPC_MENTALBREAKER
         Level: 2
@@ -29736,7 +29736,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_GROUNDATTACK
         Level: 2
@@ -29801,7 +29801,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 1
         Name: NPC_FIREATTACK
         Level: 5
@@ -30050,7 +30050,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_GROUNDATTACK
         Level: 3
@@ -30073,7 +30073,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -30085,7 +30085,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 4
         Name: NPC_TELEKINESISATTACK
         Level: 5
@@ -30273,7 +30273,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -30285,7 +30285,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -30297,7 +30297,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 3
         Name: NPC_TELEKINESISATTACK
         Level: 5
@@ -30692,7 +30692,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 10
         Name: NPC_EMOTION
         Level: 1
@@ -31643,7 +31643,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_QUESTION
+        Emotion2: ET_QUESTION
       - Index: 2
         Name: NPC_CRITICALSLASH
         Level: 1
@@ -31745,7 +31745,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_CRY
+        Emotion2: ET_CRY
       - Index: 1
         Name: NPC_STOP
         Level: 1
@@ -31791,7 +31791,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 1
         Name: NPC_WATERATTACK
         Level: 3
@@ -31824,7 +31824,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -31836,7 +31836,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
   - Mob: STAINER
     Skills:
       - Index: 0
@@ -31976,7 +31976,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_KIK
+        Emotion2: ET_KIK
       - Index: 2
         Name: NPC_POISON
         Level: 2
@@ -32011,7 +32011,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_FIREATTACK
         Level: 3
@@ -32034,7 +32034,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -32046,7 +32046,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 4
         Name: NPC_FIREATTACK
         Level: 3
@@ -32069,7 +32069,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
   - Mob: HEADLESS_MULE
     Skills:
       - Index: 0
@@ -32325,7 +32325,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -32392,7 +32392,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 5
         Name: NPC_SUMMONSLAVE
         Level: 2
@@ -32459,7 +32459,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -32471,7 +32471,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_CRY
+        Emotion2: ET_CRY
       - Index: 6
         Name: MO_BODYRELOCATION
         Level: 1
@@ -32835,7 +32835,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_HNG
+        Emotion2: ET_HNG
       - Index: 1
         Name: SM_PROVOKE
         Level: 10
@@ -32931,7 +32931,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -32943,7 +32943,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 4
         Name: NPC_RANDOMATTACK
         Level: 3
@@ -33826,7 +33826,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_KIK
+        Emotion2: ET_KIK
       - Index: 2
         Name: CR_AUTOGUARD
         Level: 2
@@ -33937,7 +33937,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -33949,7 +33949,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 4
         Name: NPC_SPLASHATTACK
         Level: 1
@@ -33995,7 +33995,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -34007,7 +34007,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
   - Mob: C4_WANDER_MAN
     Skills:
       - Index: 0
@@ -34051,7 +34051,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 4
         Name: NPC_SPLASHATTACK
         Level: 1
@@ -34526,7 +34526,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -34538,7 +34538,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 3
         Name: NPC_WINDATTACK
         Level: 1
@@ -34582,7 +34582,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_CHUP
+        Emotion2: ET_CHUP
       - Index: 3
         Name: NPC_GUIDEDATTACK
         Level: 3
@@ -34750,7 +34750,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 1
         Name: NPC_POISON
         Level: 3
@@ -34804,7 +34804,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -34816,7 +34816,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 4
         Name: NPC_STUNATTACK
         Level: 3
@@ -34897,7 +34897,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_KIK
+        Emotion2: ET_KIK
       - Index: 3
         Name: NPC_PIERCINGATT
         Level: 3
@@ -35188,7 +35188,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 1
         Name: NPC_WATERATTACK
         Level: 1
@@ -35221,7 +35221,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -35233,7 +35233,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
   - Mob: NYDHOG_MEMORY2_1
     Skills:
       - Index: 0
@@ -35384,7 +35384,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -35396,7 +35396,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_SCRATCH
+        Emotion2: ET_SCRATCH
       - Index: 6
         Name: TF_HIDING
         Level: 1
@@ -35551,7 +35551,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_KIK
+        Emotion2: ET_KIK
   - Mob: EP14_MORS_BOSSA
     Skills:
       - Index: 0
@@ -35940,7 +35940,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 1
         Name: NPC_MAGICALATTACK
         Level: 1
@@ -36015,7 +36015,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 3
         Name: NPC_SPLASHATTACK
         Level: 1
@@ -36070,7 +36070,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THROB
+        Emotion2: ET_THROB
       - Index: 2
         Name: NPC_GROUNDATTACK
         Level: 3
@@ -36361,7 +36361,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 1
         Name: NPC_FIREATTACK
         Level: 2
@@ -36394,7 +36394,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -36406,7 +36406,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 5
         Name: NPC_SMOKING
         Level: 1
@@ -36913,7 +36913,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -36925,7 +36925,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 6
         Name: NPC_SUMMONSLAVE
         Level: 3
@@ -37239,7 +37239,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -37251,7 +37251,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -37263,7 +37263,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_HNG
+        Emotion2: ET_HNG
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -37274,7 +37274,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_GO
+        Emotion2: ET_GO
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -37974,7 +37974,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 9
         Name: NPC_EMOTION
         Level: 1
@@ -37986,7 +37986,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
   - Mob: C2_LIVE_PEACH_TREE
     Skills:
       - Index: 0
@@ -38104,7 +38104,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -38116,7 +38116,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_QUESTION
+        Emotion2: ET_QUESTION
       - Index: 3
         Name: NPC_WATERATTACK
         Level: 5
@@ -38359,7 +38359,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: MG_FROSTDIVER
         Level: 5
@@ -38380,7 +38380,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 3
         Name: NPC_WATERATTACK
         Level: 1
@@ -38425,7 +38425,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 3
         Name: NPC_HOLYATTACK
         Level: 1
@@ -38774,7 +38774,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -38786,7 +38786,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 5
         Name: WZ_HEAVENDRIVE
         Level: 3
@@ -38862,7 +38862,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 2
         Name: NPC_FIREATTACK
         Level: 3
@@ -38885,7 +38885,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -38897,7 +38897,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 5
         Name: WZ_FIREPILLAR
         Level: 3
@@ -38932,7 +38932,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_GO
+        Emotion2: ET_GO
   - Mob: ARC_ELDER
     Skills:
       - Index: 0
@@ -39378,7 +39378,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THROB
+        Emotion2: ET_THROB
       - Index: 4
         Name: NPC_HALLUCINATION
         Level: 1
@@ -39572,7 +39572,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 7
         Name: NPC_EMOTION
         Level: 1
@@ -39584,7 +39584,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
   - Mob: C5_WICKED_NYMPH
     Skills:
       - Index: 0
@@ -39790,7 +39790,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_SORRY
+        Emotion2: ET_SORRY
       - Index: 6
         Name: AM_DEMONSTRATION
         Level: 5
@@ -39909,7 +39909,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_GROUNDATTACK
         Level: 1
@@ -40192,7 +40192,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -40204,7 +40204,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 13
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
   - Mob: GARM
     Skills:
       - Index: 0
@@ -40590,7 +40590,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 3
         Name: NPC_STUNATTACK
         Level: 3
@@ -40799,7 +40799,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -40811,7 +40811,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 3
         Name: NPC_WINDATTACK
         Level: 1
@@ -40888,7 +40888,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 1
         Name: NPC_STUNATTACK
         Level: 3
@@ -40944,7 +40944,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -41075,7 +41075,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 2
         Name: NPC_WINDATTACK
         Level: 1
@@ -41098,7 +41098,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: AL_HEAL
         Level: 9
@@ -41187,7 +41187,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_KIK
+        Emotion2: ET_KIK
       - Index: 4
         Name: NPC_MAGICALATTACK
         Level: 1
@@ -41266,7 +41266,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION_ON
         Level: 1
@@ -41278,7 +41278,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -41290,7 +41290,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 03
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
   - Mob: MERMAN
     Skills:
       - Index: 0
@@ -41314,7 +41314,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -41326,7 +41326,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 3
         Name: NPC_RANGEATTACK
         Level: 1
@@ -41432,7 +41432,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 7
         Name: NPC_TELEKINESISATTACK
         Level: 5
@@ -41498,7 +41498,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 4
         Name: NPC_HALLUCINATION
         Level: 1
@@ -41641,7 +41641,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 8
         Name: NPC_EMOTION
         Level: 1
@@ -41653,7 +41653,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 9
         Name: NPC_EMOTION
         Level: 1
@@ -41665,7 +41665,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
   - Mob: BLOODY_KNIGHT
     Skills:
       - Index: 0
@@ -41915,7 +41915,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_SLEEPY
+        Emotion2: ET_SLEEPY
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -41927,7 +41927,7 @@ Body:
         Target: SELF
         Condition: MYHPLTMAXRATE
         ConditionValue1: 1
-        Emotion: ET_CRY
+        Emotion2: ET_CRY
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -41939,7 +41939,7 @@ Body:
         Target: SELF
         Condition: MYHPLTMAXRATE
         ConditionValue1: 1
-        Emotion: ET_CRY
+        Emotion2: ET_CRY
       - Index: 3
         Name: NPC_SILENCEATTACK
         Level: 2
@@ -42111,7 +42111,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 17
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
   - Mob: G_ORC_LADY
     Skills:
       - Index: 0
@@ -42306,7 +42306,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 7
         Name: NPC_EMOTION
         Level: 1
@@ -42318,7 +42318,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 8
         Name: NPC_EMOTION
         Level: 1
@@ -42330,7 +42330,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 9
         Name: AL_TELEPORT
         Level: 1
@@ -42421,7 +42421,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 7
         Name: NPC_EMOTION
         Level: 1
@@ -42432,7 +42432,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_HUK
+        Emotion2: ET_HUK
   - Mob: MEGALITH
     Skills:
       - Index: 0
@@ -42455,7 +42455,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
   - Mob: V_SHECIL
     Skills:
       - Index: 0
@@ -42743,7 +42743,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -42755,7 +42755,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 3
         Name: NPC_STUNATTACK
         Level: 3
@@ -42800,7 +42800,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 7
         Name: NPC_STUNATTACK
         Level: 3
@@ -42901,8 +42901,6 @@ Body:
             Mob: V_G_GERTIE
           - Index: 4
             Mob: V_G_ALPHOCCIO
-          - Index: 5
-            Mob: V_G_TRENTINI
       - Index: 2
         Name: NPC_CALLSLAVE
         Level: 1
@@ -42991,8 +42989,6 @@ Body:
             Mob: V_G_GERTIE
           - Index: 4
             Mob: V_G_ALPHOCCIO
-          - Index: 5
-            Mob: V_G_TRENTINI
       - Index: 9
         Name: NPC_SUMMONMONSTER
         Level: 1
@@ -43015,8 +43011,6 @@ Body:
             Mob: V_G_GERTIE
           - Index: 4
             Mob: V_G_ALPHOCCIO
-          - Index: 5
-            Mob: V_G_TRENTINI
       - Index: 10
         Name: PA_PRESSURE
         Level: 5
@@ -43196,7 +43190,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 6
         Name: NPC_SUMMONSLAVE
         Level: 1
@@ -43329,7 +43323,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_GROUNDATTACK
         Level: 1
@@ -43351,7 +43345,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 02
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: SM_BASH
         Level: 10
@@ -43441,7 +43435,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_GO
+        Emotion2: ET_GO
       - Index: 1
         Name: NPC_SELFDESTRUCTION
         Level: 1
@@ -44040,7 +44034,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_HNG
+        Emotion2: ET_HNG
       - Index: 5
         Name: SA_DISPELL
         Level: 5
@@ -44075,7 +44069,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_SCRATCH
+        Emotion2: ET_SCRATCH
       - Index: 2
         Name: NPC_FIREATTACK
         Level: 2
@@ -44277,7 +44271,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -44289,7 +44283,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_SMILE
+        Emotion2: ET_SMILE
       - Index: 5
         Name: NPC_SUMMONSLAVE
         Level: 2
@@ -44374,7 +44368,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_FIREATTACK
         Level: 1
@@ -44398,7 +44392,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -44410,7 +44404,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 13
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -44421,7 +44415,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 3
         Name: NPC_POISONATTACK
         Level: 5
@@ -44585,7 +44579,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -44597,7 +44591,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 6
         Name: NPC_SUMMONSLAVE
         Level: 2
@@ -44634,7 +44628,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_KIK
+        Emotion2: ET_KIK
       - Index: 2
         Name: MG_FIREBALL
         Level: 5
@@ -44698,7 +44692,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_HNG
+        Emotion2: ET_HNG
       - Index: 4
         Name: SA_DISPELL
         Level: 5
@@ -44721,7 +44715,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 6
         Name: NPC_EMOTION
         Level: 1
@@ -44733,7 +44727,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 7
         Name: NPC_SUMMONSLAVE
         Level: 2
@@ -44879,7 +44873,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 03
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_SPLASHATTACK
         Level: 1
@@ -45019,7 +45013,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -45031,7 +45025,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 07
-        Emotion: ET_QUESTION
+        Emotion2: ET_QUESTION
       - Index: 3
         Name: NPC_WATERATTACK
         Level: 2
@@ -45460,7 +45454,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
   - Mob: IFN_POIRING
     Skills:
       - Index: 0
@@ -45543,7 +45537,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -45555,7 +45549,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 4
         Name: NPC_SILENCEATTACK
         Level: 3
@@ -45794,7 +45788,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_HALLUCINATION
         Level: 1
@@ -45850,7 +45844,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_KIK
+        Emotion2: ET_KIK
       - Index: 2
         Name: CR_AUTOGUARD
         Level: 2
@@ -45945,7 +45939,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -45957,7 +45951,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 6
         Name: NPC_SUMMONSLAVE
         Level: 2
@@ -46222,7 +46216,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 7
         Name: NPC_GROUNDATTACK
         Level: 3
@@ -46265,7 +46259,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 17
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 11
         Name: TF_SPRINKLESAND
         Level: 1
@@ -46463,7 +46457,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -46475,7 +46469,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 5
         Name: NPC_SUMMONSLAVE
         Level: 2
@@ -46978,7 +46972,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -46990,7 +46984,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 4
         Name: NPC_STUNATTACK
         Level: 5
@@ -47428,7 +47422,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 1
         Name: NPC_GROUNDATTACK
         Level: 1
@@ -47450,7 +47444,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_STUNATTACK
         Level: 2
@@ -47554,7 +47548,7 @@ Body:
         Target: SELF
         Condition: MYHPLTMAXRATE
         ConditionValue1: 20
-        Emotion: ET_HUK
+        Emotion2: ET_HUK
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -47566,7 +47560,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -47578,7 +47572,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 6
         Name: NPC_WINDATTACK
         Level: 3
@@ -47627,7 +47621,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 1
         Name: NPC_GROUNDATTACK
         Level: 3
@@ -47650,7 +47644,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 17
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_SPLASHATTACK
         Level: 1
@@ -47835,7 +47829,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_HNG
+        Emotion2: ET_HNG
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -47847,7 +47841,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -47859,7 +47853,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
   - Mob: G_RIDEWORD
     Skills:
       - Index: 0
@@ -48130,7 +48124,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 3
         Name: NPC_FIREATTACK
         Level: 3
@@ -48696,7 +48690,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 3
         Name: NPC_FIREATTACK
         Level: 3
@@ -48953,7 +48947,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 7
         Name: NPC_WINDATTACK
         Level: 2
@@ -49066,7 +49060,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -49077,7 +49071,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -49088,7 +49082,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
   - Mob: HARPY
     Skills:
       - Index: 0
@@ -49249,7 +49243,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 5
         Name: NPC_GROUNDATTACK
         Level: 1
@@ -50102,7 +50096,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 4
         Name: NPC_HALLUCINATION
         Level: 1
@@ -50203,7 +50197,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -50215,7 +50209,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_QUESTION
+        Emotion2: ET_QUESTION
       - Index: 5
         Name: NPC_WATERATTACK
         Level: 5
@@ -50304,7 +50298,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -50316,7 +50310,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 13
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 6
         Name: SM_MAGNUM
         Level: 9
@@ -51252,7 +51246,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_KIK
+        Emotion2: ET_KIK
       - Index: 2
         Name: NPC_DARKNESSATTACK
         Level: 3
@@ -51497,7 +51491,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 6
         Name: NPC_EMOTION
         Level: 1
@@ -52081,7 +52075,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
   - Mob: WICKED_NYMPH
     Skills:
       - Index: 0
@@ -52276,7 +52270,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -52288,7 +52282,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -52300,7 +52294,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 3
         Name: NPC_SLOWCAST
         Level: 5
@@ -52532,7 +52526,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 8
         Name: NPC_EMOTION
         Level: 1
@@ -52544,7 +52538,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
   - Mob: G_ISIS
     Skills:
       - Index: 0
@@ -52609,7 +52603,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_STUNATTACK
         Level: 3
@@ -53839,7 +53833,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_SPARK
+        Emotion2: ET_SPARK
       - Index: 6
         Name: RG_STRIPARMOR
         Level: 5
@@ -54096,7 +54090,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 6
         Name: NPC_EMOTION
         Level: 1
@@ -54120,7 +54114,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_KEEPING
         Level: 1
@@ -54437,7 +54431,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_KIK
+        Emotion2: ET_KIK
       - Index: 5
         Name: NPC_REBIRTH
         Level: 3
@@ -55696,7 +55690,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_MONEY
+        Emotion2: ET_MONEY
       - Index: 1
         Name: MC_MAMMONITE
         Level: 9
@@ -55751,7 +55745,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 6
         Name: NPC_EMOTION
         Level: 1
@@ -55763,7 +55757,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 7
         Name: NPC_EMOTION
         Level: 1
@@ -55775,7 +55769,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 8
         Name: AL_TELEPORT
         Level: 1
@@ -55872,7 +55866,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -55884,7 +55878,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 3
         Name: NPC_WINDATTACK
         Level: 2
@@ -56092,7 +56086,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -56104,7 +56098,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 6
         Name: NPC_FIREATTACK
         Level: 3
@@ -56128,7 +56122,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_WATERATTACK
         Level: 1
@@ -56377,7 +56371,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -56389,7 +56383,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 5
         Name: NPC_GROUNDATTACK
         Level: 1
@@ -56761,7 +56755,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 3
         Name: NPC_PIERCINGATT
         Level: 2
@@ -56877,7 +56871,7 @@ Body:
         CastCancel: false
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_KIK
+        Emotion2: ET_KIK
       - Index: 4
         Name: NPC_MAGICALATTACK
         Level: 1
@@ -57003,7 +56997,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 8
         Name: NPC_GROUNDATTACK
         Level: 3
@@ -57245,7 +57239,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -57257,7 +57251,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -57269,7 +57263,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 3
         Name: NPC_SUMMONSLAVE
         Level: 7
@@ -58100,7 +58094,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -58112,7 +58106,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 2
         Name: NPC_STUNATTACK
         Level: 2
@@ -58146,7 +58140,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 5
         Name: NPC_STUNATTACK
         Level: 2
@@ -58287,7 +58281,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_SPARK
+        Emotion2: ET_SPARK
       - Index: 6
         Name: RG_STRIPARMOR
         Level: 5
@@ -59181,7 +59175,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_CRY
+        Emotion2: ET_CRY
       - Index: 4
         Name: NPC_HALLUCINATION
         Level: 1
@@ -59270,7 +59264,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -59282,7 +59276,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 6
         Name: NPC_CRITICALWOUND
         Level: 2
@@ -59539,7 +59533,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_HUK
+        Emotion2: ET_HUK
       - Index: 6
         Name: NPC_EMOTION_ON
         Level: 1
@@ -59550,7 +59544,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 7
         Name: NPC_SELFDESTRUCTION
         Level: 1
@@ -60192,7 +60186,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 2
         Name: NPC_FIREATTACK
         Level: 3
@@ -60590,7 +60584,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
   - Mob: G_TIRFING
     Skills:
       - Index: 0
@@ -62370,7 +62364,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THROB
+        Emotion2: ET_THROB
       - Index: 5
         Name: NPC_SUMMONSLAVE
         Level: 1
@@ -62470,7 +62464,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 17
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_WATERATTACK
         Level: 3
@@ -62726,7 +62720,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -63985,7 +63979,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 8
         Name: NPC_EMOTION
         Level: 1
@@ -63997,7 +63991,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 9
         Name: NPC_EARTHQUAKE
         Level: 5
@@ -64020,7 +64014,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 11
         Name: NPC_BLEEDING
         Level: 3
@@ -64066,7 +64060,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_GROUNDATTACK
         Level: 3
@@ -64638,7 +64632,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 2
         Name: NPC_GROUNDATTACK
         Level: 2
@@ -66463,7 +66457,7 @@ Body:
         CastCancel: false
         Target: SELF
         Condition: SLAVELE
-        Emotion: ET_CRY
+        Emotion2: ET_CRY
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -66474,7 +66468,7 @@ Body:
         CastCancel: false
         Target: SELF
         Condition: SLAVELE
-        Emotion: ET_CRY
+        Emotion2: ET_CRY
       - Index: 3
         Name: NPC_SUMMONSLAVE
         Level: 2
@@ -66801,7 +66795,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -66812,7 +66806,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 4
         Name: CR_AUTOGUARD
         Level: 5
@@ -67216,7 +67210,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 7
         Name: NPC_EMOTION
         Level: 1
@@ -67228,7 +67222,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 8
         Name: NPC_EMOTION
         Level: 1
@@ -67240,7 +67234,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
   - Mob: G_SEYREN
     Skills:
       - Index: 0
@@ -69016,7 +69010,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 6
         Name: NPC_EMOTION
         Level: 1
@@ -69028,7 +69022,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 7
         Name: NPC_EMOTION
         Level: 1
@@ -69040,7 +69034,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 8
         Name: AL_TELEPORT
         Level: 1
@@ -69379,7 +69373,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 6
         Name: NPC_EMOTION
         Level: 1
@@ -69391,7 +69385,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
       - Index: 7
         Name: NPC_EMOTION
         Level: 1
@@ -69403,7 +69397,7 @@ Body:
         Target: SELF
         Condition: SKILLUSED
         ConditionValue1: AL_HEAL
-        Emotion: ET_THANKS
+        Emotion2: ET_THANKS
   - Mob: CONSTANT
     Skills:
       - Index: 0
@@ -69449,7 +69443,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -69461,7 +69455,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 3
         Name: NPC_PETRIFYATTACK
         Level: 3
@@ -69694,7 +69688,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -70150,7 +70144,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_CHUP
+        Emotion2: ET_CHUP
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -70161,7 +70155,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_CHUPCHUP
+        Emotion2: ET_CHUPCHUP
       - Index: 2
         Name: KN_PIERCE
         Level: 5
@@ -70279,7 +70273,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 1
         Name: AL_HEAL
         Level: 11
@@ -70516,7 +70510,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_GROUNDATTACK
         Level: 1
@@ -70538,7 +70532,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 02
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: SM_BASH
         Level: 10
@@ -70664,7 +70658,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_METAMORPHOSIS
         Level: 1
@@ -72670,7 +72664,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_HNG
+        Emotion2: ET_HNG
       - Index: 1
         Name: KN_BRANDISHSPEAR
         Level: 10
@@ -72713,7 +72707,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -72725,7 +72719,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_STARE
+        Emotion2: ET_STARE
       - Index: 6
         Name: NPC_CRITICALSLASH
         Level: 1
@@ -73030,7 +73024,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_KIK
+        Emotion2: ET_KIK
   - Mob: NOVUS
     Skills:
       - Index: 0
@@ -73043,7 +73037,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 1
         Name: NPC_COMBOATTACK
         Level: 1
@@ -73139,7 +73133,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_HNG
+        Emotion2: ET_HNG
       - Index: 1
         Name: KN_BRANDISHSPEAR
         Level: 10
@@ -73579,7 +73573,7 @@ Body:
         Target: SELF
         Condition: MYHPLTMAXRATE
         ConditionValue1: 60
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 1
         Name: AC_SHOWER
         Level: 5
@@ -74298,7 +74292,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -74309,7 +74303,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_OHNO
+        Emotion2: ET_OHNO
       - Index: 3
         Name: AL_HEAL
         Level: 5
@@ -74392,7 +74386,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 3
         Name: NPC_HOLYATTACK
         Level: 1
@@ -74468,7 +74462,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THROB
+        Emotion2: ET_THROB
       - Index: 4
         Name: NPC_HALLUCINATION
         Level: 1
@@ -74538,7 +74532,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 2
         Name: NPC_WINDATTACK
         Level: 1
@@ -76005,7 +75999,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 9
         Name: NPC_EMOTION
         Level: 1
@@ -76183,7 +76177,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 7
         Name: NPC_HOLYATTACK
         Level: 5
@@ -76834,7 +76828,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -76846,7 +76840,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -76858,7 +76852,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 3
         Name: NPC_TELEKINESISATTACK
         Level: 5
@@ -77852,7 +77846,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 13
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
   - Mob: C2_GRAND_PECO
     Skills:
       - Index: 0
@@ -77877,7 +77871,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -77889,7 +77883,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION_ON
         Level: 1
@@ -77901,7 +77895,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 4
         Name: NPC_FIREATTACK
         Level: 3
@@ -77968,7 +77962,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 5
         Name: AL_TELEPORT
         Level: 1
@@ -78630,7 +78624,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 5
         Name: AL_TELEPORT
         Level: 1
@@ -78853,7 +78847,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_KIK
+        Emotion2: ET_KIK
       - Index: 4
         Name: NPC_GUIDEDATTACK
         Level: 1
@@ -79846,7 +79840,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_CHUP
+        Emotion2: ET_CHUP
       - Index: 2
         Name: NPC_ENERGYDRAIN
         Level: 1
@@ -80075,7 +80069,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 1
         Name: NPC_GROUNDATTACK
         Level: 1
@@ -80097,7 +80091,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_STUNATTACK
         Level: 2
@@ -80142,7 +80136,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -80154,7 +80148,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 13
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 3
         Name: TF_SPRINKLESAND
         Level: 1
@@ -80190,7 +80184,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 2
         Name: NPC_GROUNDATTACK
         Level: 2
@@ -80267,7 +80261,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_SCRATCH
+        Emotion2: ET_SCRATCH
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -80279,7 +80273,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -80291,7 +80285,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 6
         Name: NPC_WATERATTACK
         Level: 3
@@ -80325,7 +80319,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_SMILE
+        Emotion2: ET_SMILE
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -80337,7 +80331,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -80349,7 +80343,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 4
         Name: NPC_WINDATTACK
         Level: 2
@@ -80382,7 +80376,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 2
         Name: NPC_MENTALBREAKER
         Level: 2
@@ -80502,7 +80496,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -80514,7 +80508,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -80526,7 +80520,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 4
         Name: SM_ENDURE
         Level: 1
@@ -81188,7 +81182,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -81200,7 +81194,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_CRY
+        Emotion2: ET_CRY
       - Index: 6
         Name: NPC_EMOTION
         Level: 1
@@ -83528,7 +83522,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -83540,7 +83534,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 4
         Name: NPC_SPLASHATTACK
         Level: 1
@@ -83588,7 +83582,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: AL_HEAL
         Level: 5
@@ -83674,7 +83668,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_SCRATCH
+        Emotion2: ET_SCRATCH
       - Index: 4
         Name: NPC_WATERATTACK
         Level: 3
@@ -85149,7 +85143,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -85161,7 +85155,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -85173,7 +85167,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 3
         Name: HP_ASSUMPTIO
         Level: 5
@@ -85887,7 +85881,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 17
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 4
         Name: NPC_POWERUP
         Level: 5
@@ -86117,7 +86111,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 2
         Name: NPC_FIREATTACK
         Level: 3
@@ -86835,7 +86829,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_SCRATCH
+        Emotion2: ET_SCRATCH
       - Index: 2
         Name: NPC_WATERATTACK
         Level: 3
@@ -87245,7 +87239,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THROB
+        Emotion2: ET_THROB
       - Index: 2
         Name: NPC_EVILLAND
         Level: 1
@@ -87323,7 +87317,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -87335,7 +87329,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 4
         Name: NPC_STUNATTACK
         Level: 3
@@ -87497,7 +87491,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 11
         Name: NPC_EMOTION
         Level: 1
@@ -87509,7 +87503,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 12
         Name: WZ_WATERBALL
         Level: 10
@@ -87697,7 +87691,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -87709,7 +87703,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 3
         Name: NPC_WINDATTACK
         Level: 1
@@ -87848,7 +87842,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_HNG
+        Emotion2: ET_HNG
       - Index: 1
         Name: SM_PROVOKE
         Level: 10
@@ -88201,7 +88195,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 8
         Name: NPC_EMOTION
         Level: 1
@@ -88213,7 +88207,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
   - Mob: G_TATACHO
     Skills:
       - Index: 0
@@ -88247,7 +88241,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -88259,7 +88253,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 4
         Name: NPC_STUNATTACK
         Level: 3
@@ -89185,7 +89179,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 1
         Name: NPC_WATERATTACK
         Level: 1
@@ -89218,7 +89212,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -89230,7 +89224,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 5
         Name: AS_SONICBLOW
         Level: 10
@@ -89766,7 +89760,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -89778,7 +89772,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -89790,7 +89784,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 5
         Name: NPC_UNDEADATTACK
         Level: 3
@@ -89823,7 +89817,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 2
         Name: NPC_FIREATTACK
         Level: 3
@@ -90256,7 +90250,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 9
         Name: NPC_EMOTION
         Level: 1
@@ -90268,7 +90262,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
   - Mob: W_AQUA_ELEMENTAL
     Skills:
       - Index: 0
@@ -90368,7 +90362,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -90379,7 +90373,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 4
         Name: CR_AUTOGUARD
         Level: 5
@@ -90412,7 +90406,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -90424,7 +90418,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -90436,7 +90430,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 3
         Name: NPC_WATERATTACK
         Level: 1
@@ -90760,7 +90754,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THROB
+        Emotion2: ET_THROB
       - Index: 4
         Name: WZ_WATERBALL
         Level: 3
@@ -91010,7 +91004,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 5
         Name: AL_TELEPORT
         Level: 1
@@ -91285,7 +91279,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 8
         Name: NPC_EMOTION
         Level: 1
@@ -91297,7 +91291,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
   - Mob: G_L_WHIKEBAIN
     Skills:
       - Index: 0
@@ -91449,7 +91443,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -91461,7 +91455,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 5
         Name: NPC_GROUNDATTACK
         Level: 3
@@ -91507,7 +91501,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_CRY
+        Emotion2: ET_CRY
       - Index: 3
         Name: NPC_STOP
         Level: 1
@@ -91619,8 +91613,6 @@ Body:
             Mob: V_G_GERTIE
           - Index: 4
             Mob: V_G_ALPHOCCIO
-          - Index: 5
-            Mob: V_G_TRENTINI
       - Index: 3
         Name: NPC_MAXPAIN
         Level: 5
@@ -91709,8 +91701,6 @@ Body:
             Mob: V_G_GERTIE
           - Index: 4
             Mob: V_G_ALPHOCCIO
-          - Index: 5
-            Mob: V_G_TRENTINI
       - Index: 10
         Name: NPC_MAXPAIN
         Level: 10
@@ -91743,8 +91733,6 @@ Body:
             Mob: V_G_GERTIE
           - Index: 4
             Mob: V_G_ALPHOCCIO
-          - Index: 5
-            Mob: V_G_TRENTINI
       - Index: 12
         Name: CR_ACIDDEMONSTRATION
         Level: 5
@@ -92910,7 +92898,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 2
         Name: NPC_GROUNDATTACK
         Level: 1
@@ -94350,7 +94338,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 9
         Name: NPC_SUMMONSLAVE
         Level: 2
@@ -95769,7 +95757,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 4
         Name: NPC_WINDATTACK
         Level: 1
@@ -95881,7 +95869,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 1
         Name: NPC_STUNATTACK
         Level: 2
@@ -97539,7 +97527,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -97551,7 +97539,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 5
         Name: NPC_STUNATTACK
         Level: 3
@@ -97658,7 +97646,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_HNG
+        Emotion2: ET_HNG
       - Index: 5
         Name: NPC_WATERATTACK
         Level: 1
@@ -97820,7 +97808,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -97832,7 +97820,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 4
         Name: NPC_WINDATTACK
         Level: 1
@@ -99197,7 +99185,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_SCRATCH
+        Emotion2: ET_SCRATCH
       - Index: 2
         Name: NPC_FIREATTACK
         Level: 3
@@ -99319,7 +99307,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_GROUNDATTACK
         Level: 1
@@ -99382,7 +99370,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_HNG
+        Emotion2: ET_HNG
       - Index: 5
         Name: NPC_WATERATTACK
         Level: 1
@@ -103110,7 +103098,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_FIREATTACK
         Level: 1
@@ -104374,7 +104362,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_KIK
+        Emotion2: ET_KIK
       - Index: 2
         Name: CR_AUTOGUARD
         Level: 2
@@ -104599,7 +104587,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_KIK
+        Emotion2: ET_KIK
       - Index: 2
         Name: CR_AUTOGUARD
         Level: 2
@@ -104830,7 +104818,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_GROUNDATTACK
         Level: 3
@@ -104864,7 +104852,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -104876,7 +104864,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -104888,7 +104876,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 13
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 3
         Name: NPC_WINDATTACK
         Level: 5
@@ -105076,7 +105064,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 1
         Name: NPC_POISONATTACK
         Level: 5
@@ -105099,7 +105087,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -105111,7 +105099,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 13
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
   - Mob: GLD_KOBOLD_3
     Skills:
       - Index: 0
@@ -105124,7 +105112,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 1
         Name: NPC_FIREATTACK
         Level: 5
@@ -105147,7 +105135,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -105159,7 +105147,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 13
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
   - Mob: E_GOLDEN_BUG
     Skills:
       - Index: 0
@@ -105205,7 +105193,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -105217,7 +105205,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
   - Mob: TIYANAK
     Skills:
       - Index: 0
@@ -105315,7 +105303,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 17
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -105326,7 +105314,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 4
         Name: NPC_GROUNDATTACK
         Level: 3
@@ -106507,7 +106495,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_POISON
         Level: 3
@@ -110029,7 +110017,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_QUESTION
+        Emotion2: ET_QUESTION
       - Index: 3
         Name: NPC_PROVOCATION
         Level: 1
@@ -110451,7 +110439,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
   - Mob: MG_RAYDRIC
     Skills:
       - Index: 0
@@ -111178,7 +111166,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 7
         Name: NPC_EMOTION
         Level: 1
@@ -111190,7 +111178,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 8
         Name: NPC_EMOTION
         Level: 1
@@ -111202,7 +111190,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
   - Mob: VENOM_BUG
     Skills:
       - Index: 0
@@ -111863,7 +111851,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -111875,7 +111863,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_QUESTION
+        Emotion2: ET_QUESTION
       - Index: 3
         Name: NPC_WATERATTACK
         Level: 5
@@ -111984,7 +111972,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 4
         Name: NPC_GROUNDATTACK
         Level: 1
@@ -112193,7 +112181,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 2
         Name: NPC_WINDATTACK
         Level: 1
@@ -112393,7 +112381,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -112405,7 +112393,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -112416,7 +112404,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 3
         Name: NPC_SILENCEATTACK
         Level: 3
@@ -112713,7 +112701,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -112724,7 +112712,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 2
         Name: NPC_SILENCEATTACK
         Level: 5
@@ -112858,7 +112846,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -112870,7 +112858,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_SCRATCH
+        Emotion2: ET_SCRATCH
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -112969,7 +112957,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 17
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 4
         Name: NPC_EMOTION_ON
         Level: 1
@@ -112981,7 +112969,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 5
         Name: NPC_STUNATTACK
         Level: 4
@@ -113070,7 +113058,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 6
         Name: NPC_WINDATTACK
         Level: 2
@@ -113146,7 +113134,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 4
         Name: NPC_UNDEADATTACK
         Level: 1
@@ -113574,7 +113562,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_COMEON
+        Emotion2: ET_COMEON
   - Mob: C4_SKELETON_GENERAL
     Skills:
       - Index: 0
@@ -113675,7 +113663,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_QUESTION
+        Emotion2: ET_QUESTION
   - Mob: C2_SIDE_WINDER
     Skills:
       - Index: 0
@@ -113917,7 +113905,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -113929,7 +113917,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -113940,7 +113928,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 3
         Name: NPC_WATERATTACK
         Level: 3
@@ -114029,7 +114017,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_SMILE
+        Emotion2: ET_SMILE
       - Index: 4
         Name: NPC_SPLASHATTACK
         Level: 1
@@ -114131,7 +114119,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 2
         Name: NPC_GROUNDATTACK
         Level: 3
@@ -114166,7 +114154,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 2
         Name: NPC_GROUNDATTACK
         Level: 3
@@ -114865,7 +114853,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -114877,7 +114865,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 4
         Name: NPC_SUMMONSLAVE
         Level: 2
@@ -114948,7 +114936,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 2
         Name: NPC_WINDATTACK
         Level: 2
@@ -115184,7 +115172,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -115196,7 +115184,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 6
         Name: NPC_GROUNDATTACK
         Level: 3
@@ -115299,7 +115287,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 5
         Name: NPC_SILENCEATTACK
         Level: 3
@@ -115357,7 +115345,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -115369,7 +115357,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 3
         Name: NPC_WINDATTACK
         Level: 3
@@ -115392,7 +115380,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_WATERATTACK
         Level: 1
@@ -115415,7 +115403,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_WATERATTACK
         Level: 1
@@ -115460,7 +115448,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 3
         Name: NPC_WATERATTACK
         Level: 1
@@ -115596,7 +115584,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_POISON
         Level: 2
@@ -115684,7 +115672,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_POISON
         Level: 2
@@ -115717,7 +115705,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_POISON
         Level: 2
@@ -115782,7 +115770,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 4
         Name: NPC_POISON
         Level: 3
@@ -115816,7 +115804,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -115828,7 +115816,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -115840,7 +115828,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_QUESTION
+        Emotion2: ET_QUESTION
       - Index: 3
         Name: NPC_POISON
         Level: 3
@@ -116168,7 +116156,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -116180,7 +116168,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 4
         Name: NPC_GROUNDATTACK
         Level: 1
@@ -116282,7 +116270,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -116294,7 +116282,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -116305,7 +116293,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 5
         Name: NPC_GROUNDATTACK
         Level: 3
@@ -116350,7 +116338,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -116362,7 +116350,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -116373,7 +116361,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 3
         Name: NPC_GROUNDATTACK
         Level: 3
@@ -116460,7 +116448,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 2
         Name: NPC_FIREATTACK
         Level: 1
@@ -116581,7 +116569,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 7
         Name: NPC_EMOTION
         Level: 1
@@ -116593,7 +116581,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 8
         Name: SM_BASH
         Level: 5
@@ -116706,7 +116694,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THROB
+        Emotion2: ET_THROB
       - Index: 2
         Name: NPC_GROUNDATTACK
         Level: 3
@@ -116872,7 +116860,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 3
         Name: NPC_PIERCINGATT
         Level: 2
@@ -116948,7 +116936,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 5
         Name: NPC_PIERCINGATT
         Level: 2
@@ -117034,7 +117022,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 3
         Name: NPC_PIERCINGATT
         Level: 2
@@ -117186,7 +117174,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 6
         Name: NPC_SPLASHATTACK
         Level: 1
@@ -117789,7 +117777,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THROB
+        Emotion2: ET_THROB
       - Index: 4
         Name: NPC_HALLUCINATION
         Level: 1
@@ -117920,7 +117908,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 4
         Name: NPC_STUNATTACK
         Level: 3
@@ -117989,7 +117977,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -118001,7 +117989,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 6
         Name: NPC_EMOTION
         Level: 1
@@ -118013,7 +118001,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 7
         Name: NPC_UNDEADATTACK
         Level: 3
@@ -118466,7 +118454,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -118478,7 +118466,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 4
         Name: NPC_FIREATTACK
         Level: 3
@@ -118556,7 +118544,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -118568,7 +118556,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 6
         Name: NPC_FIREATTACK
         Level: 3
@@ -118875,7 +118863,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_KIK
+        Emotion2: ET_KIK
   - Mob: C5_MIMIC
     Skills:
       - Index: 0
@@ -118930,7 +118918,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_KIK
+        Emotion2: ET_KIK
   - Mob: C1_METALLER
     Skills:
       - Index: 0
@@ -118965,7 +118953,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 3
         Name: NPC_FIREATTACK
         Level: 3
@@ -119471,7 +119459,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -119483,7 +119471,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 3
         Name: NPC_RANGEATTACK
         Level: 1
@@ -119562,7 +119550,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -119574,7 +119562,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 6
         Name: NPC_PETRIFYATTACK
         Level: 5
@@ -119695,7 +119683,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_COMEON
+        Emotion2: ET_COMEON
   - Mob: C3_MARIONETTE
     Skills:
       - Index: 0
@@ -119787,7 +119775,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -119799,7 +119787,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 4
         Name: NPC_FIREATTACK
         Level: 3
@@ -119869,7 +119857,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_CRY
+        Emotion2: ET_CRY
       - Index: 2
         Name: NPC_STUNATTACK
         Level: 3
@@ -120145,7 +120133,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THROB
+        Emotion2: ET_THROB
       - Index: 7
         Name: NPC_SUMMONSLAVE
         Level: 1
@@ -120303,7 +120291,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -120315,7 +120303,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 3
         Name: NPC_GROUNDATTACK
         Level: 3
@@ -120729,7 +120717,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_SCRATCH
+        Emotion2: ET_SCRATCH
       - Index: 4
         Name: NPC_FIREATTACK
         Level: 3
@@ -121298,7 +121286,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -121310,7 +121298,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
   - Mob: C3_ISILLA
     Skills:
       - Index: 0
@@ -121640,7 +121628,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THROB
+        Emotion2: ET_THROB
       - Index: 3
         Name: NPC_STOP
         Level: 1
@@ -121902,7 +121890,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 8
         Name: NPC_PIERCINGATT
         Level: 3
@@ -122046,7 +122034,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -122058,7 +122046,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -122069,7 +122057,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 4
         Name: NPC_FIREATTACK
         Level: 3
@@ -122181,7 +122169,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -122193,7 +122181,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION_ON
         Level: 1
@@ -122205,7 +122193,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 4
         Name: NPC_FIREATTACK
         Level: 3
@@ -122265,7 +122253,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -122277,7 +122265,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 13
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -122288,7 +122276,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_SMILE
+        Emotion2: ET_SMILE
       - Index: 5
         Name: NPC_WINDATTACK
         Level: 5
@@ -122312,7 +122300,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -122324,7 +122312,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 13
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -122335,7 +122323,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 3
         Name: NPC_POISONATTACK
         Level: 5
@@ -122424,7 +122412,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 5
         Name: NPC_FIREATTACK
         Level: 3
@@ -122458,7 +122446,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -122470,7 +122458,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 3
         Name: NPC_PIERCINGATT
         Level: 3
@@ -122761,7 +122749,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 5
         Name: NPC_SUMMONSLAVE
         Level: 3
@@ -122865,7 +122853,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -122877,7 +122865,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -122888,7 +122876,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_SCRATCH
+        Emotion2: ET_SCRATCH
       - Index: 6
         Name: NPC_WATERATTACK
         Level: 3
@@ -122943,7 +122931,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -122955,7 +122943,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -122966,7 +122954,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_SCRATCH
+        Emotion2: ET_SCRATCH
       - Index: 6
         Name: NPC_WATERATTACK
         Level: 3
@@ -123045,7 +123033,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_HNG
+        Emotion2: ET_HNG
       - Index: 5
         Name: NPC_GROUNDATTACK
         Level: 5
@@ -123477,7 +123465,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_FIREATTACK
         Level: 2
@@ -123577,7 +123565,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_HNG
+        Emotion2: ET_HNG
       - Index: 2
         Name: NPC_FIREBREATH
         Level: 3
@@ -123852,7 +123840,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_FIREATTACK
         Level: 1
@@ -123888,7 +123876,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_FIREATTACK
         Level: 1
@@ -123911,7 +123899,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_GROUNDATTACK
         Level: 2
@@ -124080,7 +124068,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -124091,7 +124079,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_STARE_ABOUT
+        Emotion2: ET_STARE_ABOUT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -124102,7 +124090,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
   - Mob: C1_CREAMY
     Skills:
       - Index: 0
@@ -124212,7 +124200,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_CRY
+        Emotion2: ET_CRY
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -124223,7 +124211,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_CRY
+        Emotion2: ET_CRY
       - Index: 5
         Name: NPC_GROUNDATTACK
         Level: 5
@@ -124267,7 +124255,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_GROUNDATTACK
         Level: 3
@@ -124313,7 +124301,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 17
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 2
         Name: NPC_EMOTION_ON
         Level: 1
@@ -124325,7 +124313,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 3
         Name: NPC_GROUNDATTACK
         Level: 4
@@ -124433,7 +124421,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 8
         Name: NPC_EMOTION
         Level: 1
@@ -124445,7 +124433,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 9
         Name: NPC_POISON
         Level: 3
@@ -124961,7 +124949,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 17
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
       - Index: 3
         Name: NPC_EMOTION_ON
         Level: 1
@@ -124973,7 +124961,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 4
         Name: NPC_STUNATTACK
         Level: 4
@@ -125008,7 +124996,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 1
         Name: NPC_GROUNDATTACK
         Level: 1
@@ -125030,7 +125018,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_STUNATTACK
         Level: 2
@@ -125087,7 +125075,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_CHUP
+        Emotion2: ET_CHUP
       - Index: 2
         Name: NPC_ENERGYDRAIN
         Level: 1
@@ -125206,7 +125194,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 7
         Name: NPC_EMOTION
         Level: 1
@@ -125356,7 +125344,7 @@ Body:
         Target: SELF
         Condition: MYHPLTMAXRATE
         ConditionValue1: 20
-        Emotion: ET_HUK
+        Emotion2: ET_HUK
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -125368,7 +125356,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -125380,7 +125368,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
       - Index: 6
         Name: NPC_WINDATTACK
         Level: 5
@@ -125523,7 +125511,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 4
         Name: NPC_EMOTION
         Level: 1
@@ -125535,7 +125523,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
   - Mob: C1_ARGIOPE
     Skills:
       - Index: 0
@@ -125601,7 +125589,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 6
         Name: NPC_EMOTION
         Level: 1
@@ -125613,7 +125601,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
   - Mob: C2_ARCLOUSE
     Skills:
       - Index: 0
@@ -125647,7 +125635,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_EMOTION
         Level: 1
@@ -125659,7 +125647,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 09
-        Emotion: ET_ANGER
+        Emotion2: ET_ANGER
   - Mob: C4_APOCALIPS
     Skills:
       - Index: 0
@@ -125904,7 +125892,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_GROUNDATTACK
         Level: 2
@@ -126018,7 +126006,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 17
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
   - Mob: C3_ACIDUS_
     Skills:
       - Index: 0
@@ -126205,7 +126193,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 8
         Name: NPC_EMOTION
         Level: 1
@@ -126217,7 +126205,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 17
-        Emotion: ET_THINK
+        Emotion2: ET_THINK
   - Mob: OWL_VISCOUNT
     Skills:
       - Index: 0
@@ -126315,7 +126303,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_HNG
+        Emotion2: ET_HNG
       - Index: 9
         Name: NPC_EMOTION
         Level: 1
@@ -126327,7 +126315,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 10
         Name: NPC_EMOTION
         Level: 1
@@ -126339,7 +126327,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
   - Mob: OWL_MARQUEES
     Skills:
       - Index: 0
@@ -126393,7 +126381,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_HNG
+        Emotion2: ET_HNG
       - Index: 5
         Name: NPC_EMOTION
         Level: 1
@@ -126405,7 +126393,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 6
         Name: NPC_EMOTION
         Level: 1
@@ -126417,7 +126405,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 21
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 7
         Name: NPC_SUMMONSLAVE
         Level: 2
@@ -126654,7 +126642,7 @@ Body:
         CastCancel: false
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_KIK
+        Emotion2: ET_KIK
       - Index: 2
         Name: MG_FIREBALL
         Level: 5
@@ -126763,7 +126751,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_GROUNDATTACK
         Level: 2
@@ -127189,8 +127177,6 @@ Body:
             Mob: V_G_CHEN
           - Index: 4
             Mob: V_G_GERTIE
-          - Index: 5
-            Mob: V_G_ALPHOCCIO
       - Index: 2
         Name: NPC_CALLSLAVE
         Level: 1
@@ -127279,8 +127265,6 @@ Body:
             Mob: V_G_CHEN
           - Index: 4
             Mob: V_G_GERTIE
-          - Index: 5
-            Mob: V_G_ALPHOCCIO
       - Index: 9
         Name: NPC_SUMMONMONSTER
         Level: 1
@@ -127303,8 +127287,6 @@ Body:
             Mob: V_G_CHEN
           - Index: 4
             Mob: V_G_GERTIE
-          - Index: 5
-            Mob: V_G_ALPHOCCIO
       - Index: 10
         Name: NPC_MAXPAIN
         Level: 9
@@ -127781,7 +127763,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_COMEON
+        Emotion2: ET_COMEON
   - Mob: PERE4
     Skills:
       - Index: 0
@@ -127816,7 +127798,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_COMEON
+        Emotion2: ET_COMEON
   - Mob: TIMEHOLDER
     Skills:
       - Index: 0
@@ -128957,7 +128939,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_QUESTION
+        Emotion2: ET_QUESTION
       - Index: 1
         Name: NPC_PROVOCATION
         Level: 1
@@ -131301,8 +131283,6 @@ Body:
             Mob: V_G_GERTIE
           - Index: 4
             Mob: V_G_ALPHOCCIO
-          - Index: 5
-            Mob: V_G_TRENTINI
       - Index: 3
         Name: AL_TELEPORT
         Level: 1
@@ -131416,8 +131396,6 @@ Body:
             Mob: V_G_GERTIE
           - Index: 4
             Mob: V_G_ALPHOCCIO
-          - Index: 5
-            Mob: V_G_TRENTINI
       - Index: 13
         Name: NPC_SUMMONMONSTER
         Level: 1
@@ -131440,8 +131418,6 @@ Body:
             Mob: V_G_GERTIE
           - Index: 4
             Mob: V_G_ALPHOCCIO
-          - Index: 5
-            Mob: V_G_TRENTINI
       - Index: 14
         Name: SA_LANDPROTECTOR
         Level: 5
@@ -131578,8 +131554,6 @@ Body:
             Mob: V_G_GERTIE
           - Index: 4
             Mob: V_G_ALPHOCCIO
-          - Index: 5
-            Mob: V_G_TRENTINI
       - Index: 2
         Name: NPC_MAXPAIN
         Level: 5
@@ -131648,8 +131622,6 @@ Body:
             Mob: V_G_GERTIE
           - Index: 4
             Mob: V_G_ALPHOCCIO
-          - Index: 5
-            Mob: V_G_TRENTINI
       - Index: 7
         Name: NPC_SUMMONMONSTER
         Level: 1
@@ -131672,8 +131644,6 @@ Body:
             Mob: V_G_GERTIE
           - Index: 4
             Mob: V_G_ALPHOCCIO
-          - Index: 5
-            Mob: V_G_TRENTINI
       - Index: 8
         Name: MO_EXTREMITYFIST
         Level: 5
@@ -131821,8 +131791,6 @@ Body:
             Mob: V_G_CHEN
           - Index: 4
             Mob: V_G_ALPHOCCIO
-          - Index: 5
-            Mob: V_G_TRENTINI
       - Index: 2
         Name: NPC_CALLSLAVE
         Level: 1
@@ -131911,8 +131879,6 @@ Body:
             Mob: V_G_CHEN
           - Index: 4
             Mob: V_G_ALPHOCCIO
-          - Index: 5
-            Mob: V_G_TRENTINI
       - Index: 9
         Name: NPC_SUMMONMONSTER
         Level: 1
@@ -131935,8 +131901,6 @@ Body:
             Mob: V_G_CHEN
           - Index: 4
             Mob: V_G_ALPHOCCIO
-          - Index: 5
-            Mob: V_G_TRENTINI
       - Index: 10
         Name: NPC_AGIUP
         Level: 5
@@ -132097,8 +132061,6 @@ Body:
             Mob: V_G_CHEN
           - Index: 4
             Mob: V_G_GERTIE
-          - Index: 5
-            Mob: V_G_TRENTINI
       - Index: 3
         Name: NPC_SLOWCAST
         Level: 5
@@ -132188,8 +132150,6 @@ Body:
             Mob: V_G_CHEN
           - Index: 4
             Mob: V_G_GERTIE
-          - Index: 5
-            Mob: V_G_TRENTINI
       - Index: 10
         Name: NPC_SUMMONMONSTER
         Level: 1
@@ -132212,8 +132172,6 @@ Body:
             Mob: V_G_CHEN
           - Index: 4
             Mob: V_G_GERTIE
-          - Index: 5
-            Mob: V_G_TRENTINI
       - Index: 11
         Name: NPC_POWERUP
         Level: 5
@@ -132369,7 +132327,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
   - Mob: MIN_FABRE
     Skills:
       - Index: 0
@@ -132404,7 +132362,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_AHA
+        Emotion2: ET_AHA
       - Index: 2
         Name: NPC_WINDATTACK
         Level: 3
@@ -132428,7 +132386,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_POISON
         Level: 2
@@ -132473,7 +132431,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 2
         Name: NPC_GROUNDATTACK
         Level: 2
@@ -132566,7 +132524,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: MG_FROSTDIVER
         Level: 5
@@ -132587,7 +132545,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 3
         Name: NPC_WATERATTACK
         Level: 1
@@ -132656,7 +132614,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_FRET
+        Emotion2: ET_FRET
       - Index: 2
         Name: NPC_FIREATTACK
         Level: 1
@@ -132690,7 +132648,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 1
         Name: NPC_GROUNDATTACK
         Level: 2
@@ -132748,7 +132706,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_DELIGHT
+        Emotion2: ET_DELIGHT
       - Index: 1
         Name: NPC_FIREATTACK
         Level: 1
@@ -132838,7 +132796,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -132850,7 +132808,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 07
-        Emotion: ET_QUESTION
+        Emotion2: ET_QUESTION
       - Index: 3
         Name: NPC_WATERATTACK
         Level: 2
@@ -133072,7 +133030,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_GO
+        Emotion2: ET_GO
       - Index: 2
         Name: NPC_GROUNDATTACK
         Level: 3
@@ -135449,7 +135407,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 04
-        Emotion: ET_QUESTION
+        Emotion2: ET_QUESTION
       - Index: 1
         Name: NPC_EMOTION
         Level: 1
@@ -135461,7 +135419,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 2
         Name: NPC_EMOTION
         Level: 1
@@ -135473,7 +135431,7 @@ Body:
         Target: SELF
         Condition: ALWAYS
         Ai: 01
-        Emotion: ET_PROFUSELY_SWEAT
+        Emotion2: ET_PROFUSELY_SWEAT
       - Index: 3
         Name: NPC_STUNATTACK
         Level: 5
@@ -135550,7 +135508,7 @@ Body:
         CastCancel: true
         Target: SELF
         Condition: ALWAYS
-        Emotion: ET_CRY
+        Emotion2: ET_CRY
       - Index: 2
         Name: NPC_STOP
         Level: 1

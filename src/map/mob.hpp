@@ -246,7 +246,7 @@ struct s_mob_skill {
 	int32 cond2, cond3;
 	int mob_mode;
 	std::unordered_map<uint16, int> summons;	// index, mob ID
-	short emotion;
+	short emotion, emotion2;
 	unsigned short msg_id;
 };
 

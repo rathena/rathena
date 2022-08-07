@@ -149,7 +149,7 @@ struct s_mercenary_skill_csv {
 std::unordered_map<uint16, std::vector<s_mercenary_skill_csv>> mercenary_skill_tree;
 
 struct s_mob_skill_csv {
-	std::string skill_name, state_name, cond1_name, cond2_name, target_name, emotion;
+	std::string skill_name, state_name, cond1_name, cond2_name, target_name, emotion, emotion2;	// emotion2: another field for emotion used by NPC_EMOTION
 	uint16 skill_lv, permillage, msg_id;
 	int32 casttime, delay;
 	std::string mob_ai;

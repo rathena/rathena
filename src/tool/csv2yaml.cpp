@@ -5090,14 +5090,14 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current) {
 				}
 				case NPC_EMOTION:
 				case NPC_EMOTION_ON:
-					if (i == 0) {	// Emoticon is now stored in entry.emotion instead of val 1
+					if (i == 0) {	// Emoticon is now stored in entry.emotion2 instead of val 1
 						char *constant = const_cast<char *>(constant_lookup(val, "ET_"));
 
 						if (constant != nullptr)
-							entry.emotion = constant;
+							entry.emotion2 = constant;
 						else {
 							std::string emotion(str[val]);
-							entry.emotion = emotion;
+							entry.emotion2 = emotion;
 						}
 						continue;
 					}
@@ -5184,6 +5184,8 @@ static bool mob_parse_row_mobskilldb_yaml(void) {
 
 			if (!mob_skill.emotion.empty())
 				body << YAML::Key << "Emotion" << YAML::Value << mob_skill.emotion;
+			if (!mob_skill.emotion2.empty())
+				body << YAML::Key << "Emotion2" << YAML::Value << mob_skill.emotion2;
 			if (mob_skill.msg_id > 0)
 				body << YAML::Key << "Chat" << YAML::Value << mob_skill.msg_id;
 			body << YAML::EndMap;
