@@ -69966,9 +69966,8 @@ Body:
     View: 2018
     EquipLevelMin: 30
     Script: |
-      .@i = BaseLevel/35;
-      .@a = .@i;
-      .@b = 2*.@i;
+      .@a = BaseLevel/35;
+      .@b = 2*.@a;
       if (BaseLevel>=175) {
          .@a = .@a*2;
          .@b = .@b*2;
@@ -155359,9 +155358,8 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 30
     Script: |
-      .@i = BaseLevel/35;
       .@a = 5;
-      .@b = .@i;
+      .@b = BaseLevel/35;
       if (BaseLevel>=175) {
          .@a = .@a*2;
          .@b = .@b*2;

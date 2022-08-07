@@ -38198,7 +38198,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bHit,50;
-      bonus2 bIgnoreDefClassRate,Class_Boss,100;
+      bonus bIgnoreDefClass,Class_Boss;
   - Id: 27040
     AegisName: Bijou_Card_J
     Name: Bijou Card
@@ -47863,7 +47863,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      .@val = readparam(bStr) +  readparam(bInt) +  readparam(bDex);
+      .@val = readparam(bStr) + readparam(bInt) + readparam(bDex);
       bonus2 bAddEle,Ele_Neutral,.@val/20;
       bonus2 bMagicAddEle,Ele_Neutral,.@val/20;
   - Id: 300340
