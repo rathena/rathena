@@ -37,6 +37,9 @@
 struct Battle_Config battle_config;
 static struct eri *delay_damage_ers; //For battle delay damage structures.
 
+// Early declaration
+int battle_get_weapon_element(struct Damage *wd, struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, short weapon_position, bool calc_for_damage_only);
+
 /**
  * Returns the current/list skill used by the bl
  * @param bl
@@ -1822,21 +1825,8 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			damage = div_;
 	}
 
-	if (tsd && pc_ismadogear(tsd)) {
-		short element = skill_get_ele(skill_id, skill_lv);
-
-		if( !skill_id || element == ELE_WEAPON ) { //Take weapon's element
-			struct status_data *sstatus = NULL;
-			if( src->type == BL_PC && ((TBL_PC*)src)->bonus.arrow_ele )
-				element = ((TBL_PC*)src)->bonus.arrow_ele;
-			else if( (sstatus = status_get_status_data(src)) ) {
-				element = sstatus->rhw.ele;
-			}
-		} else if( element == ELE_ENDOWED ) //Use enchantment's element
-			element = status_get_attack_sc_element(src,status_get_sc(src));
-		else if( element == ELE_RANDOM ) //Use random element
-			element = rnd()%ELE_ALL;
-		pc_overheat(tsd, (element == ELE_FIRE ? 3 : 1));
+	if (sd && pc_ismadogear(sd)) {
+		pc_overheat(*sd, (battle_get_weapon_element(d, src, bl, skill_id, skill_lv, EQI_HAND_R, false) == ELE_FIRE ? 3 : 1));
 	}
 
 	if (bl->type == BL_MOB) { // Reduces damage received for Green Aura MVP
@@ -3193,7 +3183,7 @@ static int battle_calc_equip_attack(struct block_list *src, int skill_id)
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
-static int battle_get_weapon_element(struct Damage* wd, struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, short weapon_position, bool calc_for_damage_only)
+int battle_get_weapon_element(struct Damage* wd, struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, short weapon_position, bool calc_for_damage_only)
 {
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
 	struct status_change *sc = status_get_sc(src);
