@@ -561,7 +561,7 @@ int map_count_oncell(int16 m, int16 x, int16 y, int type, int flag)
 			if(bl->x == x && bl->y == y && bl->type&type) {
 				if (bl->type == BL_NPC) {	// Don't count hidden or invisible npc. Cloaked npc are counted
 					npc_data *nd = BL_CAST(BL_NPC, bl);
-					if (nd && (nd->bl.m < 0 || nd->class_ == JT_FAKENPC || nd->class_ == JT_HIDDEN_WARP_NPC || nd->sc.option && nd->sc.option&(OPTION_HIDE|OPTION_INVISIBLE)))
+					if (nd && (nd->bl.m < 0 || nd->sc.option && nd->sc.option&(OPTION_HIDE|OPTION_INVISIBLE)))
 						continue;
 				}
 				if(flag&1) {
