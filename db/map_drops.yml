@@ -22,7 +22,7 @@
 # Map Drop Settings
 #
 ###########################################################################
-# - Map                             Name of the map
+# - Map                             Name of the map.
 #   GlobalDrops                     Drops for all monsters on this map. (Default: empty)
 #     - Item                        Item name.
 #       Rate                        Drop rate of item.
