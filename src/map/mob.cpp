@@ -2903,7 +2903,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			// Process map wide drops
 			for( const auto& it : mapdrops->globals ){
 				if( rnd_chance( it.second->rate, 10000 ) ){
-					mob_item_drop( md, dlist, mob_setdropitem( it.second.get(), 1, md->mob_id), 0, it.second->rate, homkillonly || merckillonly );
+					mob_item_drop( md, dlist, mob_setdropitem( it.second.get(), 1, md->mob_id ), 0, it.second->rate, homkillonly || merckillonly );
 				}
 			}
 
@@ -2913,7 +2913,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			if( specific != mapdrops->specific.end() ){
 				for( const auto& it : specific->second ){
 					if( rnd_chance( it.second->rate, 10000 ) ){
-						mob_item_drop( md, dlist, mob_setdropitem( it.second.get(), 1, md->mob_id), 0, it.second->rate, homkillonly || merckillonly );
+						mob_item_drop( md, dlist, mob_setdropitem( it.second.get(), 1, md->mob_id ), 0, it.second->rate, homkillonly || merckillonly );
 					}
 				}
 			}
@@ -6414,7 +6414,7 @@ uint64 MapDropDatabase::parseBodyNode( const ryml::NodeRef& node ){
 				return 0;
 			}
 
-			std::unordered_map<t_itemid, std::shared_ptr<s_mob_drop>>& specificDrops = mapdrops->specific[mob->id];
+			std::unordered_map<uint16, std::shared_ptr<s_mob_drop>>& specificDrops = mapdrops->specific[mob->id];
 
 			for( const auto& it : monsterNode["Drops"] ){
 				if( !this->parseDrop( it, specificDrops ) ){
@@ -6431,31 +6431,40 @@ uint64 MapDropDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	return 1;
 }
 
-bool MapDropDatabase::parseDrop( const ryml::NodeRef& node, std::unordered_map<t_itemid, std::shared_ptr<s_mob_drop>>& drops ){
-	std::string itemname;
+bool MapDropDatabase::parseDrop( const ryml::NodeRef& node, std::unordered_map<uint16, std::shared_ptr<s_mob_drop>>& drops ){
+	uint16 index;
 
-	if( !this->asString( node, "Item", itemname ) ){
-		return 0;
-	}
-
-	std::shared_ptr<item_data> item = item_db.search_aegisname( itemname.c_str() );
-
-	if( item == nullptr ){
-		this->invalidWarning( node["Item"], "Item %s does not exist.\n", itemname.c_str() );
+	if( !this->asUInt16( node, "Index", index ) ){
 		return false;
 	}
 
-	std::shared_ptr<s_mob_drop> drop = util::umap_find( drops, item->nameid );
+	std::shared_ptr<s_mob_drop> drop = util::umap_find( drops, index );
 	bool exists = drop != nullptr;
 
 	if( !exists ){
-		if( !this->nodesExist( node, { "Rate" } ) ){
+		if( !this->nodesExist( node, { "Item", "Rate" } ) ){
 			return false;
 		}
 
 		drop = std::make_shared<s_mob_drop>();
-		drop->nameid = item->nameid;
 		drop->steal_protected = true;
+	}
+
+	if( this->nodeExists( node, "Item" ) ){
+		std::string itemname;
+
+		if( !this->asString( node, "Item", itemname ) ){
+			return 0;
+		}
+
+		std::shared_ptr<item_data> item = item_db.search_aegisname( itemname.c_str() );
+
+		if( item == nullptr ){
+			this->invalidWarning( node["Item"], "Item %s does not exist.\n", itemname.c_str() );
+			return false;
+		}
+
+		drop->nameid = item->nameid;
 	}
 
 	if( this->nodeExists( node, "Rate" ) ){
@@ -6467,7 +6476,7 @@ bool MapDropDatabase::parseDrop( const ryml::NodeRef& node, std::unordered_map<t
 
 		if( rate == 0 ){
 			if( exists ){
-				drops.erase( item->nameid );
+				drops.erase( index );
 				return true;
 			}else{
 				this->invalidWarning( node["Rate"], "Rate %" PRIu16 " is below minimum of 1.\n", rate );

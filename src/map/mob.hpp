@@ -293,8 +293,8 @@ struct s_map_mob_drop{
 
 struct s_map_drops{
 	uint16 mapid;
-	std::unordered_map<t_itemid, std::shared_ptr<s_mob_drop>> globals;
-	std::unordered_map<uint16, std::unordered_map<t_itemid, std::shared_ptr<s_mob_drop>>> specific;
+	std::unordered_map<uint16, std::shared_ptr<s_mob_drop>> globals;
+	std::unordered_map<uint16, std::unordered_map<uint16, std::shared_ptr<s_mob_drop>>> specific;
 };
 
 class MapDropDatabase : public TypesafeYamlDatabase<uint16, s_map_drops>{
@@ -307,7 +307,7 @@ public:
 	uint64 parseBodyNode( const ryml::NodeRef& node ) override;
 
 private:
-	bool parseDrop( const ryml::NodeRef& node, std::unordered_map<t_itemid, std::shared_ptr<s_mob_drop>>& drops );
+	bool parseDrop( const ryml::NodeRef& node, std::unordered_map<uint16, std::shared_ptr<s_mob_drop>>& drops );
 };
 
 extern MapDropDatabase map_drop_db;
