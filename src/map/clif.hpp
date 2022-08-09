@@ -572,6 +572,7 @@ enum clif_messages : uint16_t {
 	SKILL_NEED_REVOLVER = 0x9fd,
 	SKILL_NEED_HOLY_BULLET = 0x9fe,
 	SKILL_NEED_GRENADE = 0xa01,
+	SKILL_FAIL_P_ALT_HEAT_B_MADNESSC = 0xa02,
 	GUILD_MASTER_WOE = 0xb93, /// <"Currently in WoE hours, unable to delegate Guild leader"
 	GUILD_MASTER_DELAY = 0xb94, /// <"You have to wait for one day before delegating a new Guild leader"
 	MSG_ATTENDANCE_DISABLED = 0xd92,
@@ -979,6 +980,7 @@ void clif_equipcheckbox(struct map_session_data* sd);
 void clif_msg(struct map_session_data* sd, unsigned short id);
 void clif_msg_value(struct map_session_data* sd, unsigned short id, int value);
 void clif_msg_skill(struct map_session_data* sd, uint16 skill_id, int msg_id);
+void clif_msg_color( struct map_session_data *sd, uint16 msg_id, uint32 color);
 
 //quest system [Kevin] [Inkfish]
 void clif_quest_send_list(struct map_session_data * sd);

@@ -18461,6 +18461,24 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				return false;
 			}
 			break;
+		case RL_P_ALTER:
+			if (sc && (sc->data[SC_HEAT_BARREL] || sc->data[SC_MADNESSCANCEL])){
+				clif_msg_color( sd, SKILL_FAIL_P_ALT_HEAT_B_MADNESSC, color_table[COLOR_RED] );
+				return false;
+			}
+			break;
+		case RL_HEAT_BARREL:
+			if (sc && (sc->data[SC_P_ALTER] || sc->data[SC_MADNESSCANCEL])){
+				clif_msg_color( sd, SKILL_FAIL_P_ALT_HEAT_B_MADNESSC, color_table[COLOR_RED] );
+				return false;
+			}
+			break;
+		case GS_MADNESSCANCEL:
+			if (sc && (sc->data[SC_HEAT_BARREL] || sc->data[SC_P_ALTER])){
+				clif_msg_color( sd, SKILL_FAIL_P_ALT_HEAT_B_MADNESSC, color_table[COLOR_RED] );
+				return false;
+			}
+			break;
 	}
 
 	/* check state required */
