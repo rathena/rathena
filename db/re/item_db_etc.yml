@@ -10582,6 +10582,22 @@ Body:
          bonus bCritical,5;
          bonus3 bAutoSpell,"HT_PHANTASMIC",1,100;
       }
+  - Id: 4551
+    AegisName: Upd_Necromancer_Card
+    Name: Enhanced Necromancer Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
+      if (.@i == W_STAFF || .@i == W_2HSTAFF) {
+         bonus bInt,1;
+         bonus2 bIgnoreMdefClassRate,Class_All,2+(getrefine()/4);
+      }
   - Id: 4552
     AegisName: Manny_Card
     Name: Manny Card
@@ -37899,6 +37915,44 @@ Body:
       bonus2 bAddMonsterDropItem,666,30;
       bonus2 bAddMonsterDropItem,667,30;
       /*Unknow Rate*/
+  - Id: 27008
+    AegisName: AmdaraisH_Card_J
+    Name: Realized Amdarais Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,6+.@r;
+      bonus bMatkRate,6+.@r;
+      bonus2 bHPLossRate,666,6000;
+      bonus2 bSPLossRate,66,6000;
+      if (.@r>=9)
+         bonus2 bResEff,Eff_Freeze,10000;
+    UnEquipScript: |
+      heal -6666,-666;
+  - Id: 27009
+    AegisName: CorruptionRootH_Card_J
+    Name: Realized Corruption Root Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bHit,50;
+      bonus bAtkRate,10;
+      bonus5 bAutoSpell,"NPC_WIDESTONE",2,50,BF_SHORT,0;
+      bonus5 bAutoSpell,"NPC_WIDESLEEP",2,50,BF_SHORT,0;
+      bonus5 bAutoSpell,"NPC_WIDECURSE",2,50,BF_SHORT,0;
   - Id: 27012
     AegisName: Kick_Step_Card
     Name: Kick Step Card
@@ -38132,6 +38186,33 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bAddClass,Class_All,10;
+  - Id: 27035
+    AegisName: As_Ragged_Golem_Card_J
+    Name: Stephane Jack Earnest Wolf Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bHit,50;
+      bonus bIgnoreDefClass,Class_Boss;
+  - Id: 27040
+    AegisName: Bijou_Card_J
+    Name: Bijou Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Left_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bSubEle,Ele_Water,100;
+      bonus2 bAddEffWhenHit,Eff_Freeze,5000;
+      bonus bMatkRate,10;
   - Id: 27081
     AegisName: AngerMoonlight_Card
     Name: Angry Moonlight Flower Card
@@ -39552,6 +39633,54 @@ Body:
          bonus bMatkRate,15;
          bonus bUseSPrate,15;
       }
+  - Id: 27237
+    AegisName: Faceworm_Q_Card_J
+    Name: Faceworm Queen Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bAtkRate,10;
+      skill "AS_ENCHANTPOISON",10;
+      skill "SA_SEISMICWEAPON",1;
+      skill "SA_FLAMELAUNCHER",1;
+      skill "SA_FROSTWEAPON",1;
+      skill "SA_LIGHTNINGLOADER",1;
+      autobonus "{ bonus bAgi,100; bonus bSpeedRate,25; }",50,5000,BF_NORMAL;
+  - Id: 27247
+    AegisName: Grand_Pere_Card_J
+    Name: Grand Pere Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bResEff,Eff_Freezing,5000;
+      bonus2 bSkillAtk,"WM_METALICSOUND",50;
+  - Id: 27248
+    AegisName: Sarah_Card_J
+    Name: Sarah Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bSubEle,Ele_Fire,10;
+      bonus2 bSubEle,Ele_Dark,10;
+      skill "MG_ENERGYCOAT",1;
+      bonus2 bSkillAtk,"WL_HELLINFERNO",10*getrefine();
   - Id: 27249
     AegisName: Archi_Card
     Name: Arhi Card
@@ -40277,7 +40406,7 @@ Body:
       }
       bonus2 bMagicAtkEle,Ele_Fire,.@val;
   - Id: 27321
-    AegisName: Despair_God_Morocc_Card
+    AegisName: DespairGodMorocc_Card
     Name: Despair God Morocc Card
     Type: Card
     Buy: 20
@@ -40343,7 +40472,7 @@ Body:
     Script: |
       bonus2 bSubDefEle,Ele_Fire,30;
   - Id: 27326
-    AegisName: Morocc's_Minion_Card
+    AegisName: MinionOfMorocc_Card
     Name: Morocc's Minion Card
     Type: Card
     Buy: 20
@@ -40357,7 +40486,7 @@ Body:
       bonus bAspdRate,25;
       bonus bMaxHPrate,-20;
   - Id: 27327
-    AegisName: Grim_Reaper_Ankou_Card
+    AegisName: ReaperAnkou_Card
     Name: Grim Reaper Ankou Card
     Type: Card
     Buy: 20
@@ -40595,7 +40724,7 @@ Body:
       }
       /*Unknow Rate*/
   - Id: 27346
-    AegisName: Rigid_Muspellskoll_Card
+    AegisName: Firm_Muspell_Card
     Name: Rigid Muspellskoll Card
     Type: Card
     Buy: 20
@@ -40807,7 +40936,7 @@ Body:
       bonus2 bAddSize,Size_Large,30;
       bonus2 bAddSize,Size_Medium,30;
   - Id: 27362
-    AegisName: Contaminated_Spider_Queen_Card
+    AegisName: Polluted_Spi_Q_Card
     Name: Contaminated Spider Queen Card
     Type: Card
     Buy: 20
@@ -40821,7 +40950,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Earth,100;
       bonus2 bMagicAtkEle,Ele_Water,100;
   - Id: 27363
-    AegisName: Contaminated_Dark_Lord_Card
+    AegisName: Polluted_Dark_L_Card
     Name: Contaminated Dark Lord Card
     Type: Card
     Buy: 20
@@ -44761,6 +44890,13 @@ Body:
       bonus5 bAutoSpellWhenHit,"SO_ELECTRICWALK",5,80,BF_MAGIC,0;
       autobonus "{ bonus bFlee,200; }",30,10000,BF_WEAPON,"{ specialeffect2 EF_TEIHIT1; }";
       autobonus "{ bonus bSpeedRate,25; }",25,10000,BF_MAGIC,"{ specialeffect2 EF_POTION_BERSERK; }";
+  - Id: 101645
+    AegisName: GMT_Robe_Stone
+    Name: Geffen Secret Stone
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 300000
     AegisName: IDTest_Card
     Name: IDTest Card
@@ -47514,6 +47650,137 @@ Body:
     Script: |
       bonus bVariableCastrate,-10;
       bonus bDelayrate,-10;
+  - Id: 300319
+    AegisName: Sealed_Eddga_Card_J
+    Name: Sealed Eddga Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus3 bAutoSpellWhenHit,"SM_ENDURE",1,500;
+      /*Unknow Rate*/
+  - Id: 300320
+    AegisName: SLD_Osiris_Card_J
+    Name: Sealed Osiris Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bRestartFullRecover;
+      bonus2 bHPLossRate,1000,10000;
+      bonus2 bSPLossRate,100,10000;
+  - Id: 300321
+    AegisName: Sealed_Orc_Hero_Card_J
+    Name: Sealed Orc Hero Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bVit,1;
+      bonus2 bResEff,Eff_Stun,3000;
+  - Id: 300322
+    AegisName: Sealed_Orc_Load_Card_J
+    Name: Sealed Orc Load Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bShortWeaponDamageReturn,10;
+  - Id: 300323
+    AegisName: SLD_Doppelganger_Card_J
+    Name: Sealed Doppelganger Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bAspdRate,3;
+  - Id: 300324
+    AegisName: Sealed_Drake_Card_J
+    Name: Sealed Drake Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bNoSizeFix;
+      bonus bBaseAtk,-100;
+  - Id: 300325
+    AegisName: SLD_Baphomet_Card_J
+    Name: Sealed Baphomet Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bHit,-50;
+      bonus bSplashRange,1;
+  - Id: 300326
+    AegisName: Sealed_Phreeoni_Card_J
+    Name: Sealed Phreeoni Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bHit,30;
+  - Id: 300327
+    AegisName: SLD_Maya_Card_J
+    Name: Sealed Maya Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Left_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bMagicDamageReturn,15;
+  - Id: 300328
+    AegisName: Sealed_Mistress_Card_J
+    Name: Sealed Mistress Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bNoGemStone;
+      bonus bUseSPrate,100;
   - Id: 300330
     AegisName: Sealed_Atroce_Card_J
     Name: Sealed Atroce Card
@@ -47585,6 +47852,50 @@ Body:
       bonus bDef,-30;
       bonus bFlee,-30;
       bonus bSPDrainValue,-1;
+  - Id: 300339
+    AegisName: SLD_P_Dark_L_Card_J
+    Name: Sealed Contaminated Dark Lord Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@val = readparam(bStr) + readparam(bInt) + readparam(bDex);
+      bonus2 bAddEle,Ele_Neutral,.@val/20;
+      bonus2 bMagicAddEle,Ele_Neutral,.@val/20;
+  - Id: 300340
+    AegisName: SLD_P_Spi_Q_Card_J
+    Name: Sealed Contaminated Spider Queen Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bMaxHPrate,5;
+      bonus bMaxSPrate,5;
+      bonus2 bAddEle,Ele_Water,10;
+      bonus2 bMagicAddEle,Ele_Water,10;
+      bonus2 bResEff,Eff_Freezing,1500;
+  - Id: 300341
+    AegisName: SLD_F_Muspell_Card_J
+    Name: Sealed Contaminated Firm Muspellskoll Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bMaxHPrate,5;
+      bonus bMaxSPrate,5;
+      bonus2 bAddEle,Ele_Fire,10;
+      bonus2 bMagicAddEle,Ele_Fire,10;
+      bonus2 bSubEle,Ele_Fire,15;
   - Id: 300348
     AegisName: SLD_G_Amon_Ra_Card_J
     Name: Sealed Nightmare Amon Ra Card
@@ -48001,6 +48312,19 @@ Body:
       bonus2 bMagicAtkEle,Ele_Poison,100;
       bonus2 bMagicAtkEle,Ele_Undead,100;
       bonus2 bSubEle,Ele_All,-30;
+  - Id: 300407
+    AegisName: aegis_300407
+    Name: Sealed Tao Gunka Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bMaxHPrate,30;
+      bonus bDef,-50;
+      bonus bMdef,-50;
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)
@@ -56131,6 +56455,14 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bVariableCastrate,-10;
+  - Id: 311072
+    AegisName: King_of_Origin
+    Name: King of Origin    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bMaxHP,2500;
+      bonus bMaxSP,250;
   - Id: 311073
     AegisName: Goddess_of_Abundance
     Name: Goddess of Abundance    # !todo check english name
@@ -56139,6 +56471,13 @@ Body:
     Script: |
       bonus bHealpower2,15;
       bonus bAddItemHealRate,15;
+  - Id: 311074
+    AegisName: Heros_TriumphantSong
+    Name: Hero's Triumph    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAspd,1;
   - Id: 311076
     AegisName: POW_1Lv
     Name: POW Lv1
