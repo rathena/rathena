@@ -3665,7 +3665,7 @@ ACMD_FUNC(lostskill)
 
 	sd->status.skill[sk_idx].lv = 0;
 	sd->status.skill[sk_idx].flag = SKILL_FLAG_PERMANENT;
-	clif_deleteskill(sd,skill_id);
+	clif_deleteskill( *sd, skill_id );
 	clif_displaymessage(fd, msg_txt(sd,71)); // You have forgotten the skill.
 
 	return 0;

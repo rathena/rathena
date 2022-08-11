@@ -1103,7 +1103,7 @@ int chrif_deadopt(uint32 father_id, uint32 mother_id, uint32 child_id) {
 		sd->status.skill[idx].id = 0;
 		sd->status.skill[idx].lv = 0;
 		sd->status.skill[idx].flag = SKILL_FLAG_PERMANENT;
-		clif_deleteskill(sd,WE_CALLBABY);
+		clif_deleteskill( *sd, WE_CALLBABY );
 	}
 
 	if( mother_id && ( sd = map_charid2sd(mother_id) ) != NULL && sd->status.child == child_id ) {
@@ -1111,7 +1111,7 @@ int chrif_deadopt(uint32 father_id, uint32 mother_id, uint32 child_id) {
 		sd->status.skill[idx].id = 0;
 		sd->status.skill[idx].lv = 0;
 		sd->status.skill[idx].flag = SKILL_FLAG_PERMANENT;
-		clif_deleteskill(sd,WE_CALLBABY);
+		clif_deleteskill( *sd, WE_CALLBABY );
 	}
 
 	return 0;

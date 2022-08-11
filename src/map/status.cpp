@@ -4663,7 +4663,7 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 		return 0;
 	}
 	if(memcmp(b_skill,sd->status.skill,sizeof(sd->status.skill)))
-		clif_skillinfoblock(sd);
+		clif_skillinfoblock( *sd );
 
 	// If the skill is learned, the status is infinite.
 	if (pc_checkskill(sd, SU_SPRITEMABLE) > 0 && !sd->sc.data[SC_SPRITEMABLE])
