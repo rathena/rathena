@@ -274,7 +274,7 @@ void battle_damage(struct block_list *src, struct block_list *target, int64 dama
 	if (dmg_lv > ATK_BLOCK && attack_type)
 		skill_counter_additional_effect(src, target, skill_id, skill_lv, attack_type, tick);
 	// This is the last place where we have access to the actual damage type, so any monster events depending on type must be placed here
-	if (target->type == BL_MOB && damage > 0) {
+	if (target->type == BL_MOB) {
 		mob_data *md = BL_CAST(BL_MOB, target);
 
 		if (md != nullptr) {
@@ -287,7 +287,7 @@ void battle_damage(struct block_list *src, struct block_list *target, int64 dama
 			}
 
 			// Monsters differentiate whether they have been attacked by a skill or a normal attack
-			if (attack_type & BF_NORMAL)
+			if (damage > 0 && (attack_type & BF_NORMAL))
 				md->norm_attacked_id = md->attacked_id;
 		}
 	}
