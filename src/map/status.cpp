@@ -5205,7 +5205,7 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, std::bi
 				  || (sc->data[SC_FEAR] && sc->data[SC_FEAR]->val2 > 0)
 				  || (sc->data[SC_SPIDERWEB] && sc->data[SC_SPIDERWEB]->val1)
 				  || (sc->data[SC_HIDING] && (bl->type != BL_PC || (pc_checkskill(BL_CAST(BL_PC,bl),RG_TUNNELDRIVE) <= 0)))
-				  || (sc->data[SC_DANCING] && (
+				  || (sc->data[SC_DANCING] && sc->data[SC_DANCING]->val4 && (
 #ifndef RENEWAL
 						!sc->data[SC_LONGING] ||
 #endif
@@ -12935,14 +12935,15 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			break;
 		case SC_DANCING:
 			{
-				struct map_session_data *dsd;
-				struct status_change_entry *dsc;
+				map_session_data *dsd;
 
 				if(sce->val4 && sce->val4 != BCT_SELF && (dsd=map_id2sd(sce->val4))) { // End status on partner as well
-					dsc = dsd->sc.data[SC_DANCING];
+					status_change_entry *dsc = dsd->sc.data[SC_DANCING];
+
 					if(dsc) {
 						// This will prevent recursive loops.
-						dsc->val2 = dsc->val4 = 0;
+						dsc->val2 = 0;
+						dsc->val4 = BCT_SELF;
 						status_change_end(&dsd->bl, SC_DANCING, INVALID_TIMER);
 					}
 				}
