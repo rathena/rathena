@@ -279,8 +279,12 @@ void battle_damage(struct block_list *src, struct block_list *target, int64 dama
 
 		if (md != nullptr) {
 			// Trigger monster skill condition for non-skill attacks.
-			if (skill_id == 0 && !status_isdead(target) && src != target)
-				mobskill_event(md, src, tick, attack_type);
+			if (!status_isdead(target) && src != target) {
+				if (damage > 0)
+					mobskill_event(md, src, tick, attack_type);
+				if (skill_id > 0)
+					mobskill_event(md, src, tick, MSC_SKILLUSED | (skill_id << 16));
+			}
 
 			// Monsters differentiate whether they have been attacked by a skill or a normal attack
 			if (attack_type & BF_NORMAL)
