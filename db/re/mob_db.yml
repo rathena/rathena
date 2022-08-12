@@ -76132,7 +76132,7 @@ Body:
         Rate: 200
       - Item: Fruit_Of_Mastela
         Rate: 200
-      - Item: Morocc's_Minion_Card
+      - Item: MinionOfMorocc_Card
         Rate: 1
         StealProtected: true
   - Id: 3000
@@ -77138,7 +77138,7 @@ Body:
         Rate: 10000
       - Item: Fruit_Of_Mastela
         Rate: 200
-      - Item: Grim_Reaper_Ankou_Card
+      - Item: ReaperAnkou_Card
         Rate: 1
         StealProtected: true
 #  - Id: 3030
