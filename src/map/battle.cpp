@@ -6069,7 +6069,7 @@ static void battle_calc_weapon_final_atk_modifiers(struct Damage* wd, struct blo
 	{
 		ATK_RATER(wd->damage, 50)
 		status_fix_damage(target,src,wd->damage,clif_damage(target,src,gettick(),0,0,wd->damage,0,DMG_NORMAL,0,false),ST_REJECTSWORD);
-		if (tsc->data[SC_REJECTSWORD] != NULL) {
+		if (tsc->data[SC_REJECTSWORD] != nullptr) {
 			clif_skill_nodamage(target, target, ST_REJECTSWORD, tsc->data[SC_REJECTSWORD]->val1, 1);
 			if (--(tsc->data[SC_REJECTSWORD]->val3) <= 0)
 				status_change_end(target, SC_REJECTSWORD, INVALID_TIMER);
