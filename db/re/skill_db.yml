@@ -13820,7 +13820,7 @@ Body:
         Element: Ghost
       - Level: 10
         Element: Undead
-    Duration1: 1200000
+    Duration1: 300000
     Requires:
       SpCost: 1
     Status: EnchantArms
