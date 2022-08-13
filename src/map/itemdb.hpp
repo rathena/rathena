@@ -990,10 +990,11 @@ enum e_random_item_group {
 	IG_4LV_10REFINE_WEAPON_9GU,
 	IG_4LV_11REFINE_WEAPON_10G,
 	IG_BS_ITEM_M_S_52,
-	IG_Bs_Item_M_S_53,
-	IG_Bs_Item_M_S_54,
-	IG_Bs_Item_M_S_55,
-	IG_Bs_Item_M_S_56,
+	IG_BS_ITEM_M_S_53,
+	IG_BS_ITEM_M_S_54,
+	IG_BS_ITEM_M_S_55,
+	IG_BS_ITEM_M_S_56,
+	IG_ENCHANT_STONE_BOX28,
 
 	IG_MAX,
 };

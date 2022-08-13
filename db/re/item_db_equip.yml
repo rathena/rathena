@@ -12471,8 +12471,8 @@ Body:
       bonus bHealPower,200;
       bonus2 bAddClass,Class_All,100;
       skill "WZ_STORMGUST",10;
-      Skill "WZ_METEOR",10;
-      Skill "WZ_VERMILION",10;
+      skill "WZ_METEOR",10;
+      skill "WZ_VERMILION",10;
       skill "GM_SANDMAN",1;
       bonus bVariableCastrate,-100;
       bonus bFixedCastrate,-100;
@@ -23844,7 +23844,6 @@ Body:
     Type: Armor
     Buy: 10
     Weight: 200
-    MagicAttack: 5
     Defense: 50
     Slots: 1
     Jobs:
@@ -79632,7 +79631,6 @@ Body:
     Type: Armor
     Buy: 10
     Weight: 200
-    MagicAttack: 20
     Slots: 1
     Locations:
       Head_Top: true
@@ -98120,7 +98118,6 @@ Body:
     Type: Armor
     Buy: 10
     Weight: 100
-    MagicAttack: 10
     Slots: 1
     Locations:
       Garment: true
@@ -98129,6 +98126,7 @@ Body:
     Refineable: true
     View: 7
     Script: |
+      bonus bMatk,10;
       bonus bInt,1;
       bonus bDex,1;
   - Id: 20726
@@ -106245,7 +106243,6 @@ Body:
     AegisName: S_Healing_Weapon
     Name: Healing Shadow Weapon
     Type: Shadowgear
-    MagicAttack: 10
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 1
@@ -115144,7 +115141,6 @@ Body:
     AegisName: S_Booster_Earing
     Name: Booster Shadow Earring
     Type: ShadowGear
-    MagicAttack: 15
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 100
@@ -115157,6 +115153,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
+      bonus bMatk,15;
       bonus bMaxHP,100;
   - Id: 24588
     AegisName: S_Booster_Pandent
@@ -117451,7 +117448,6 @@ Body:
     AegisName: S_AutoSpell_Shield
     Name: Auto Spell Shadow Shield
     Type: ShadowGear
-    MagicAttack: 15
     Locations:
       Shadow_Shield: true
     Refineable: true
@@ -128088,6 +128084,22 @@ Body:
          if (readparam(bLuk)>=90)
             bonus bCritAtkRate,5;
       }
+  - Id: 28948
+    AegisName: Doram_Shield
+    Name: Doram Shield
+    Type: Armor
+    Buy: 20
+    Weight: 100
+    Defense: 120
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    View: 1
+    Script: |
+      bonus bMdef,5;
+      bonus2 bSubSize,Size_All,(getrefine() >= 8 ? 25 : 15);
   - Id: 28950
     AegisName: Variant_Shield
     Name: Abyss Shield
@@ -128246,6 +128258,28 @@ Body:
       bonus2 bSubEle,Ele_Wind,20;
       bonus2 bSubEle,Ele_Holy,20+(getskilllv("CR_TRUST")*2);
       bonus2 bSubEle,Ele_Ghost,20;
+  - Id: 28973
+    AegisName: aegis_28973
+    Name: Themis Balance
+    Type: Armor
+    Weight: 300
+    Defense: 90
+    Slots: 1
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    View: 1
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus bVariableCastrate,-5;
+      bonus2 bSkillAtk,"LG_RAYOFGENESIS",BaseLevel/5;
+      if (.@r>=9)
+         bonus2 bMagicAtkEle,Ele_Holy,3*(getskilllv("AL_HEAL")/2);
+      if (.@r>=11)
+         bonus2 bSkillCooldown,"LG_RAYOFGENESIS",-1000;
   - Id: 31027
     AegisName: C_Pretty_Bear
     Name: Costume Pretty Bear
@@ -141863,7 +141897,7 @@ Body:
       bonus bCon,2;
       bonus bVariableCastrate,-10;
       bonus2 bMagicAddRace,RC_Undead,10;
-      autobonus "{ .@r = getrefine(); bonus bMatk,35*.@r; if (.@r>=10) { bonus bSmatk,20; }",1,7000,BF_MAGIC;
+      autobonus "{ .@r = getrefine(); bonus bMatk,35*.@r; if (.@r>=10) { bonus bSmatk,20; } }",1,7000,BF_MAGIC;
       if (.@r>=7) {
          bonus2 bMagicAtkEle,Ele_All,15;
          if (.@r>=9) {
@@ -141918,6 +141952,14 @@ Body:
     Name: Costume Magic Heir
     Type: Armor
     View: 1996
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+  - Id: 410011
+    AegisName: C_Dark_Blindfold
+    Name: Costume Dark Blinkers
+    Type: Armor
+    View: 187
     Locations:
       Costume_Head_Mid: true
     ArmorLevel: 1
@@ -142617,6 +142659,32 @@ Body:
     Script: |
       bonus2 bMagicAtkEle,Ele_All,5;
       bonus5 bAutoSpell,"MG_SOULSTRIKE",10,100,BF_SHORT|BF_WEAPON,1;
+  - Id: 420004
+    AegisName: Nine_Tail_Fox_Hair
+    Name: Nine Tail Fox Hair
+    Type: Armor
+    View: 1884
+    Weight: 300
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 130
+    Script: |
+      bonus2 bAddRace,RC_Demon,20;
+      bonus2 bMagicAddRace,RC_Demon,20;
+      bonus2 bResEff,Eff_Blind,10000;
+  - Id: 420005
+    AegisName: Love_Feeling_TW
+    Name: Feeling of Love
+    Type: Armor
+    View: 1717
+    Weight: 300
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      autobonus "{ bonus2 bHPRegenRate,400,1000; bonus2 bSPRegenRate,80,1000; }",10,10000,BF_MAGIC;
   - Id: 420006
     AegisName: aegis_420006
     Name: Collar of Slavery
@@ -142731,6 +142799,30 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
     View: 1403
+  - Id: 420027
+    AegisName: C_Fishbone_Hair
+    Name: Costume Fishbone Hair
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2139
+  - Id: 420028
+    AegisName: Imperial_Glory
+    Name: Imperial Glory
+    Type: Armor
+    View: 2056
+    Buy: 20
+    Weight: 300
+    Defense: 70
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 70
+    Script: |
+      .@a = (readparam(bAgi)+readparam(bVit))/50;
+      bonus bMdef,4*.@a;
+      bonus bDelayrate,-3*.@a;
   - Id: 420029
     AegisName: C_Imperial_Glory
     Name: "Costume: Imperial Glory"
@@ -147213,7 +147305,6 @@ Body:
     Name: Automatic Armor Type B
     Type: Armor
     Weight: 1000
-    MagicAttack: 125
     Defense: 135
     Slots: 1
     Locations:
@@ -147223,7 +147314,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bMatk,10*(.@r/2);
+      bonus bMatk,125+(10*(.@r/2));
       if (.@r>=7) {
          bonus bVariableCastrate,-15;
       }
@@ -147253,6 +147344,46 @@ Body:
          bonus bMaxHPrate,5;
       if (.@r>=11)
          bonus bVariableCastrate,-8;
+  - Id: 450132
+    AegisName: Magical_Cloth
+    Name: Magical Cloth
+    Type: Armor
+    Buy: 200000
+    Weight: 100
+    Defense: 45
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_Earth,5;
+      bonus2 bMagicAtkEle,Ele_Water,5;
+      bonus2 bMagicAtkEle,Ele_Wind,5;
+      bonus2 bMagicAtkEle,Ele_Fire,5;
+      if (.@r>=7) {
+         bonus bAspdRate,10;
+         bonus2 bMagicAtkEle,Ele_Earth,2;
+         bonus2 bMagicAtkEle,Ele_Water,2;
+         bonus2 bMagicAtkEle,Ele_Wind,2;
+         bonus2 bMagicAtkEle,Ele_Fire,2;
+      }
+      if (.@r>=8) {
+         bonus bUnbreakableArmor;
+         bonus2 bMagicAtkEle,Ele_Earth,3;
+         bonus2 bMagicAtkEle,Ele_Water,3;
+         bonus2 bMagicAtkEle,Ele_Wind,3;
+         bonus2 bMagicAtkEle,Ele_Fire,3;
+      }
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Earth,5;
+         bonus2 bMagicAtkEle,Ele_Water,5;
+         bonus2 bMagicAtkEle,Ele_Wind,5;
+         bonus2 bMagicAtkEle,Ele_Fire,5;
+         autobonus "{ bonus2 bSkillAtk,\"MG_FIREBOLT\",100; bonus2 bSkillAtk,\"MG_COLDBOLT\",100; bonus2 bSkillAtk,\"MG_LIGHTNINGBOLT\",100; bonus2 bSkillAtk,\"WZ_EARTHSPIKE\",100; }",2000,10000;
+      }
   - Id: 450142
     AegisName: Orc_Load_Mail
     Name: Orc Lord Armor
@@ -147566,7 +147697,6 @@ Body:
     Name: Faint Star's Robe
     Type: Armor
     Weight: 500
-    MagicAttack: 125
     Defense: 105
     Slots: 1
     Locations:
@@ -147576,7 +147706,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bMatk,15*(.@r/2);
+      bonus bMatk,125+(15*(.@r/2));
       if (.@r>=9) {
          bonus bVariableCastrate,-10;
          if (.@r>=11) {
@@ -147830,7 +147960,6 @@ Body:
     Name: Nebula Robe of Spell
     Type: Armor
     Weight: 500
-    MagicAttack: 125
     Defense: 105
     Slots: 1
     Locations:
@@ -147849,7 +147978,7 @@ Body:
       .@g = getenchantgrade();
       .@r = getrefine();
       bonus bSpl,1;
-      bonus bMatk,15*(.@r/2);
+      bonus bMatk,125+(15*(.@r/2));
       if (.@r>=9) {
          bonus bMatkRate,5;
          if (.@r>=11) {
@@ -147881,7 +148010,6 @@ Body:
     Name: Nebula Robe of Wisdom
     Type: Armor
     Weight: 500
-    MagicAttack: 125
     Defense: 105
     Slots: 1
     Locations:
@@ -147899,6 +148027,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
+      bonus bMatk,125;
       bonus bWis,1;
       bonus bMaxSPrate,2*(.@r/2);
       bonus bHealPower,(.@r/2);
@@ -147928,6 +148057,48 @@ Body:
             }
          }
       }
+  - Id: 450176
+    AegisName: Supplement_Part_Wing
+    Name: Powered Wing
+    Type: Armor
+    Buy: 20
+    Weight: 100
+    Defense: 12
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      .@a = getskilllv("NC_PILEBUNKER");
+      bonus bMaxHPrate,3;
+      bonus2 bSubEle,Ele_Fire,10;
+      bonus2 bSubEle,Ele_Wind,10;
+      bonus2 bSkillAtk,"NC_ARMSCANNON",25*.@a;
+      bonus2 bSkillAtk,"NC_FLAMELAUNCHER",25*.@a;
+      bonus2 bSkillAtk,"NC_COLDSLOWER",25*.@a;
+      if (getskilllv("NC_ARMSCANNON") == 5)
+         bonus bDelayrate,-20;
+      if (getskilllv("NC_NEUTRALBARRIER") == 3) {
+         bonus2 bSubClass,Class_Boss,5;
+         bonus bHPGainValue,100;
+         bonus bSPGainValue,10;
+      }
+      if (getskilllv("NC_RESEARCHFE") == 5)
+         bonus bNoKnockback;
+      if (.@r>=7) {
+         bonus bMaxHPrate,5;
+         bonus2 bSubEle,Ele_Fire,20;
+         bonus2 bSubEle,Ele_Wind,20;
+         bonus2 bAddClass,Class_Boss,10;
+      }
+      if (.@r>=9) {
+         bonus bMaxHPrate,7;
+         bonus2 bSubEle,Ele_Fire,20;
+         bonus2 bSubEle,Ele_Wind,20;
+         bonus2 bAddClass,Class_Boss,10;
+      }
   - Id: 450177
     AegisName: Gray_W_Suits
     Name: Gray Wolf Suit
@@ -147951,7 +148122,6 @@ Body:
     Name: Gray Wolf Robe
     Type: Armor
     Weight: 1000
-    MagicAttack: 130
     Defense: 160
     Slots: 1
     Locations:
@@ -147961,7 +148131,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bMatk,15*(.@r/2);
+      bonus bMatk,130+(15*(.@r/2));
       if (.@r>=7) {
          bonus bVariableCastrate,-15;
       }
@@ -147970,7 +148140,6 @@ Body:
     Name: Celine's Dress
     Type: Armor
     Weight: 500
-    MagicAttack: 50
     Defense: 40
     Slots: 1
     Locations:
@@ -147980,6 +148149,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMatk,50;
       if (.@r>=7) {
          bonus bVariableCastrate,-10;
          if (.@r>=9) {
@@ -155366,6 +155536,28 @@ Body:
       }
       bonus bAtkRate,.@a;
       bonus bCritAtkRate,.@b;
+  - Id: 490279
+    AegisName: aegis_490279
+    Name: Raphin P. Necklace
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      .@a = readparam(bInt);
+      .@p = getitempos();
+      bonus bLongAtkRate,5;
+      bonus2 bSkillAtk,"RA_AIMEDBOLT",3*getskilllv("RA_WUGSTRIKE");
+      bonus bDelayrate,-.@a/12;
+      if (.@a >= 125) {
+         if (.@p == EQP_ACC_R)
+            bonus bFixedCast,-500;
+         if (.@p == EQP_ACC_L)
+            bonus bBaseAtk,80;
+      }
   - Id: 500000
     AegisName: IDTest_weapon
     Name: IDTest weapon

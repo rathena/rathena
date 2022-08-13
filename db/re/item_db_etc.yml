@@ -44110,7 +44110,7 @@ Body:
     Script: |
       bonus bVariableCastrate,-2*getskilllv("SL_KAAHI");
   - Id: 29654
-    AegisName: SoulReaperStone_Robe_
+    AegisName: Soulreaper_Robe
     Name: Soul Reaper Stone (Garment)
     Type: Card
     SubType: Enchant
@@ -44138,7 +44138,7 @@ Body:
     Script: |
       bonus bAspdRate,getskilllv("SG_KNOWLEDGE");
   - Id: 29658
-    AegisName: StarEmperorStone_Garment_
+    AegisName: Staremperor_Robe
     Name: Star Emperor Stone (Garment)
     Type: Card
     SubType: Enchant
@@ -44206,7 +44206,7 @@ Body:
     Script: |
       bonus bLongAtkRate,(getskilllv("GS_CHAINACTION")/2);
   - Id: 29667
-    AegisName: GunslingerStone_Robe_
+    AegisName: Rebellion_Robe
     Name: Gunslinger Stone (Garment)
     Type: Card
     SubType: Enchant
@@ -46552,6 +46552,19 @@ Body:
       bonus bDelayrate,-5;
       bonus bPAtk,1;
       bonus bSmatk,1;
+  - Id: 300207
+    AegisName: SLD_Shining_T_Bear_Card
+    Name: Sealed Shiny Teddy Bear Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      bonus bUseSPrate,15;
+      bonus2 bMagicAtkEle,Ele_Holy,2*.@r;
+      if (.@r>=15)
+         bonus2 bMagicAtkEle,Ele_Holy,7;
   - Id: 300209
     AegisName: aegis_300209
     Name: Sealed Nightmare Amon Ra Card
@@ -50514,42 +50527,42 @@ Body:
     Script: |
       bonus bAllStats,10;
   - Id: 310325
-    AegisName: aegis_310325
+    AegisName: Range_Top
     Name: Range Stone (Top)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bLongAtkRate,3;
   - Id: 310326
-    AegisName: aegis_310326
+    AegisName: Range_Bottom
     Name: Range Stone (Bottom)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bLongAtkRate,3;
   - Id: 310327
-    AegisName: aegis_310327
+    AegisName: Melee_Top
     Name: Melee Stone (Top)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bShortAtkRate,3;
   - Id: 310328
-    AegisName: aegis_310328
+    AegisName: Melee_Middle
     Name: Melee Stone (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bShortAtkRate,3;
   - Id: 310329
-    AegisName: aegis_310329
+    AegisName: Melee_Bottom
     Name: Melee Stone (Bottom)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bShortAtkRate,3;
   - Id: 310330
-    AegisName: aegis_310330
+    AegisName: Range_Middle
     Name: Range Stone (Middle)
     Type: Card
     SubType: Enchant
@@ -60610,7 +60623,7 @@ Body:
       bonus bCritical,10;
       bonus bCritAtkRate,10;
   - Id: 311355
-    AegisName: aegis_311355
+    AegisName: Con_Robe_D
     Name: Concentration Stone (Dual)
     Type: Card
     SubType: Enchant
@@ -60996,6 +61009,92 @@ Body:
     SubType: Enchant
     Script: |
       bonus bLongAtkRate,2*getskilllv("GC_CROSSRIPPERSLASHER");
+  - Id: 311460
+    AegisName: aegis_311460
+    Name: Star Emperor Stone (Upper)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SJ_FULLMOONKICK",3*getskilllv("SG_MOON_BLESS");
+  - Id: 311461
+    AegisName: aegis_311461
+    Name: Star Emperor Stone (Middle)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,2*getskilllv("SG_SUN_BLESS");
+  - Id: 311462
+    AegisName: aegis_311462
+    Name: Star Emperor Stone (Lower)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR",4*getskilllv("SG_STAR_BLESS");
+  - Id: 311463
+    AegisName: aegis_311463
+    Name: Rebellion Stone (Upper)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddSize,Size_All,2;
+      bonus2 bSkillAtk,"RL_D_TAIL",4*getskilllv("RL_P_ALTER");
+  - Id: 311464
+    AegisName: aegis_311464
+    Name: Rebellion Stone (Middle)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,2*getskilllv("RL_FIRE_RAIN");
+  - Id: 311465
+    AegisName: aegis_311465
+    Name: Rebellion Stone (Lower)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"RL_FIREDANCE",4*getskilllv("RL_HAMMER_OF_GOD");
+      bonus2 bSkillAtk,"RL_HEAT_BARREL",4*getskilllv("RL_HAMMER_OF_GOD");
+  - Id: 311466
+    AegisName: aegis_311466
+    Name: Soul Reaper Stone (Upper)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,getskilllv("SP_SPA");
+  - Id: 311467
+    AegisName: aegis_311467
+    Name: Soul Reaper Stone (Middle)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,getskilllv("SP_SWHOO");
+  - Id: 311468
+    AegisName: aegis_311468
+    Name: Soul Reaper Stone (Lower)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillCooldown,"SP_CURSEEXPLOSION",-100*getskilllv("SP_SOULCURSE");
+  - Id: 311469
+    AegisName: aegis_311469
+    Name: Melee Physical Attack Stone (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,3;
+  - Id: 311470
+    AegisName: aegis_311470
+    Name: Range Physical Attack Stone (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPAtk,3;
+  - Id: 311471
+    AegisName: aegis_311471
+    Name: Power Stone (Dual)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bPow,5;
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -64173,6 +64272,66 @@ Body:
     AegisName: aegis_1001023
     Name: "[Event] Shard of Infinity Star"
     Type: Etc
+  - Id: 1001044
+    AegisName: StarStone_Top3
+    Name: Star Emperor Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1001045
+    AegisName: StarStone_Middle3
+    Name: Star Emperor Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1001046
+    AegisName: StarStone_Bottom3
+    Name: Star Emperor Stone (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1001047
+    AegisName: RebelStone_Top3
+    Name: Star Rebellion Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1001048
+    AegisName: RebelStone_Middle3
+    Name: Star Rebellion Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1001049
+    AegisName: RebelStone_Bottom3
+    Name: Star Rebellion Stone (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1001050
+    AegisName: ReaperStone_Top3
+    Name: Star Soul Reaper Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1001051
+    AegisName: ReaperStone_Middle3
+    Name: Star Soul Reaper Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1001052
+    AegisName: ReaperStone_Bottom3
+    Name: Star Soul Reaper Stone (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1001053
+    AegisName: M_PATKStone_Robe
+    Name: Melee Physical Attack Stone (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1001054
+    AegisName: R_PATKStone_Robe
+    Name: Range Physical Attack Stone (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1001055
+    AegisName: POWStone_Robe_D
+    Name: Power Stone (Dual)
+    Type: Etc
+    Weight: 100
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai
