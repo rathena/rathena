@@ -139783,6 +139783,14 @@ Body:
             bonus bPow,2;
          }
       }
+  - Id: 400136
+    AegisName: C_Ancient_Gold_Deco_TW
+    Name: Costume Ancient Gold Deco    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 739
   - Id: 400137
     AegisName: 1Para_Cap_A
     Name: Paradise Cap
@@ -140295,6 +140303,14 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 2140
+  - Id: 400165
+    AegisName: C_Green_Apple_Hat_J
+    Name: Costume Green Apple Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 821
   - Id: 400166
     AegisName: C_Egir_Helm
     Name: Costume Aegir Helm    # !todo check english name
@@ -140303,6 +140319,46 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 870
+  - Id: 400167
+    AegisName: C_Mosquito_Coil
+    Name: Costume Mosquito Coil    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 563
+  - Id: 400168
+    AegisName: C_Souvenirs_Of_Izlude
+    Name: Costume Souvenirs Of Izlude    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1377
+  - Id: 400169
+    AegisName: C_Fish_Pin
+    Name: Costume Fish Pin    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 669
+  - Id: 400170
+    AegisName: C_Jaty_C
+    Name: Costume Jaty    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 686
+  - Id: 400171
+    AegisName: C_Angel_feather
+    Name: Costume Angel feather    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 18
   - Id: 400176
     AegisName: C_Fishbowl_Parfait_Hat
     Name: Costume Fishbowl Parfait Hat    # !todo check english name
@@ -142359,6 +142415,14 @@ Body:
       hateffect HAT_EF_C_Released_Ground,true;
     UnEquipScript: |
       hateffect HAT_EF_C_Released_Ground,false;
+  - Id: 410086
+    AegisName: C_Melon_Headphone_J
+    Name: Costume Melon Headphone    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2129
   - Id: 410087
     AegisName: C_Demons_Familiar_K
     Name: Costume Robotic Watcher
@@ -143105,6 +143169,14 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 420075
+    AegisName: C_Floating_Gioia_J
+    Name: Costume Floating Gioia    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 1730
   - Id: 420076
     AegisName: Vassalage_Necklace
     Name: Bondage Necklace
