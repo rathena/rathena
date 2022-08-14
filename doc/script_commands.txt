@@ -4748,6 +4748,8 @@ quite a few item scripts. For more examples check just about any official script
 *getitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 *getitem3 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
 *getitem3 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
+*getitem4 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
+*getitem4 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
 
 This command will give an amount of specified items to the invoking character.
 If an optional account ID is specified, and the target character is currently
@@ -4838,6 +4840,14 @@ this really cause.
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
 
+'getitem4' is advance version of 'getitem3' that also use the grade as additional values.
+Valid grades are:
+	ENCHANTGRADE_NONE		- No grade
+	ENCHANTGRADE_D			- Grade D
+	ENCHANTGRADE_C			- Grade C
+	ENCHANTGRADE_B			- Grade B
+	ENCHANTGRADE_A			- Grade A
+
 Example to get Crimson Weapon with Ghost property:
 	// +9 Crimson Dagger [2]
 	setarray .@OptID[0],RDMOPT_WEAPON_ATTR_TELEKINESIS;
@@ -4867,6 +4877,8 @@ Valid bound types are:
 *getitembound2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<bound type>{,<account ID>};
 *getitembound3 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<bound type>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
 *getitembound3 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<bound type>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
+*getitembound4 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<bound type>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
+*getitembound4 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<bound type>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
 
 This command behaves identically to 'getitem2', but the items created will be
 bound to the target character as specified by the bound type. All items created
@@ -4879,6 +4891,14 @@ For a list of bound types see 'getitembound'.
 <RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.yml
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
+
+'getitembound4' is advance version of 'getitembound3' that also use the grade as additional values.
+Valid grades are:
+	ENCHANTGRADE_NONE		- No grade
+	ENCHANTGRADE_D			- Grade D
+	ENCHANTGRADE_C			- Grade C
+	ENCHANTGRADE_B			- Grade B
+	ENCHANTGRADE_A			- Grade A
 
 Example to get Crimson Weapon with Ghost property:
 	// +9 Crimson Dagger [2]
@@ -4935,6 +4955,8 @@ Note: 'countitem' will not count any item with a rental timer. Use 'rentalcounti
 *rentitem2 "<item name>",<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account_id>};
 *rentitem3 <item id>,<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account_id>};
 *rentitem3 "<item name>",<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account_id>};
+*rentitem4 <item id>,<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account_id>};
+*rentitem4 "<item name>",<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account_id>};
 
 Creates a rental item in the attached character's inventory. The item will expire
 in <time> seconds and be automatically deleted. See 'rentitem' for further details.
@@ -4945,6 +4967,14 @@ See 'getitem2' for an explanation of the expanded parameters.
 <RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.yml
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
+
+'rentitem4' is advance version of 'rentitem3' that also use the grade as additional values.
+Valid grades are:
+	ENCHANTGRADE_NONE		- No grade
+	ENCHANTGRADE_D			- Grade D
+	ENCHANTGRADE_C			- Grade C
+	ENCHANTGRADE_B			- Grade B
+	ENCHANTGRADE_A			- Grade A
 
 Example to get Crimson Weapon with Ghost property:
 	// +9 Crimson Dagger [2]
@@ -4975,6 +5005,8 @@ If <canShowEffect> flag is set to true, it will show a pillar effect on the grou
 *makeitem2 "<item name>",<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<canShowEffect>};
 *makeitem3 <item id>,<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<canShowEffect>};
 *makeitem3 "<item name>",<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<canShowEffect>};
+*makeitem4 <item id>,<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<canShowEffect>};
+*makeitem4 "<item name>",<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<canShowEffect>};
 
 This command will create an item on the specified cell of a map. See 'makeitem' for
 further details.
@@ -4985,6 +5017,14 @@ See 'getitem2' for an explanation of the expanded parameters.
 <RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.yml
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
+
+'makeitem4' is advance version of 'makeitem3' that also use the grade as additional values.
+Valid grades are:
+	ENCHANTGRADE_NONE		- No grade
+	ENCHANTGRADE_D			- Grade D
+	ENCHANTGRADE_C			- Grade C
+	ENCHANTGRADE_B			- Grade B
+	ENCHANTGRADE_A			- Grade A
 
 Example to get Crimson Weapon with Ghost property:
 	// 0.5% chance to get +0 Valkyrie Shield [1]
@@ -5063,6 +5103,8 @@ If player is not in a guild or storage is open, 'guildstoragedelitem' will retur
 *delitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 *delitem3 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
 *delitem3 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
+*delitem4 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
+*delitem4 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
 
 This command will remove a specified amount of items from the invoking/target character.
 See 'getitem2' for an explanation of the expanded parameters.
@@ -5071,6 +5113,8 @@ See 'getitem2' for an explanation of the expanded parameters.
 <RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.yml
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
+
+'delitem4' is advance version of 'delitem3' that also use the grade as criteria.
 
 ---------------------------------------
 
@@ -5154,6 +5198,8 @@ If player is not in a guild or storage is open, 'guildstoragecountitem' will ret
 *countitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
 *countitem3(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
 *countitem3("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+*countitem4(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+*countitem4("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
 
 Expanded version of 'countitem' function, used for created/carded/forged items.
 
@@ -5165,6 +5211,8 @@ See 'getitem2' for an explanation of the expanded parameters.
 <RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.yml
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
+
+'countitem4' is advance version of 'countitem3' that also use the grade as criteria.
 
 ---------------------------------------
 
@@ -5195,6 +5243,8 @@ invoking character has in the inventory.
 *rentalcountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
 *rentalcountitem3(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
 *rentalcountitem3("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+*rentalcountitem4(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+*rentalcountitem4("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
 
 Expanded version of 'rentalcountitem' function, used for created/carded/forged items.
 
@@ -5206,6 +5256,8 @@ See 'getitem2' for an explanation of the expanded parameters.
 <RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.yml
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
+
+'rentalcountitem4' is advance version of 'rentalcountitem3' that also use the grade as criteria.
 
 ---------------------------------------
 
