@@ -7640,6 +7640,7 @@ Body:
     Icon: EFST_CLIMAX_DES_HU
     DurationLookup: AG_DESTRUCTIVE_HURRICANE
     CalcFlags:
+      Base: true
       Matk: true
   - Status: Climax
     Icon: EFST_CLIMAX
