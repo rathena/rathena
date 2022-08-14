@@ -2950,7 +2950,8 @@ Body:
     End:
       Lukfood: true
   - Status: Fear
-    DurationLookup: RK_WINDCUTTER
+    Icon: EFST_HEALTHSTATE_FEAR
+    DurationLookup: RK_DRAGONHOWLING
     States:
       NoMove: true
       NoMoveCond: true
