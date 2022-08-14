@@ -34,7 +34,7 @@ obj:
 	
 obj/%.o: %.cc $(HTTPLIB_H)
 	@echo "	CXX	$<"
-	@@CXX@ $(CXXFLAG) @CFLAGS_AR@ @CPPFLAGS@ -g $(INC) -c $(OUTPUT_OPTION) $<
+	@@CXX@ $(CXXFLAG) @CFLAGS_AR@ @CPPFLAGS@ -DCPPHTTPLIB_SEND_FLAGS=MSG_NOSIGNAL -g -c $(OUTPUT_OPTION) $<
 
 httplib: obj $(HTTPLIB_DIR_OBJ) $(HTTPLIB_AR)
 
