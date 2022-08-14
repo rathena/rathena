@@ -28665,6 +28665,7 @@ Body:
       Splash: true
     Flags:
       TargetTrap: true
+      TargetHidden: true
       IgnoreLandProtector: true
     Range: 5
     Hit: Multi_Hit
