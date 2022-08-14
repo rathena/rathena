@@ -42,24 +42,24 @@ struct Inter_Config inter_config {};
 std::shared_ptr<httplib::Server> http_server;
 
 int login_server_port = 3306;
-char login_server_ip[64] = "127.0.0.1";
-char login_server_id[32] = "ragnarok";
-char login_server_pw[32] = "";
-char login_server_db[32] = "ragnarok";
+std::string login_server_ip = "127.0.0.1";
+std::string login_server_id = "ragnarok";
+std::string login_server_pw = "";
+std::string login_server_db = "ragnarok";
 
 int  char_server_port = 3306;
-char char_server_ip[64] = "127.0.0.1";
-char char_server_id[32] = "ragnarok";
-char char_server_pw[32] = "";
-char char_server_db[32] = "ragnarok";
+std::string char_server_ip = "127.0.0.1";
+std::string char_server_id = "ragnarok";
+std::string char_server_pw = "";
+std::string char_server_db = "ragnarok";
 
 int web_server_port = 3306;
-char web_server_ip[64] = "127.0.0.1";
-char web_server_id[32] = "ragnarok";
-char web_server_pw[32] = "";
-char web_server_db[32] = "ragnarok";
+std::string web_server_ip = "127.0.0.1";
+std::string web_server_id = "ragnarok";
+std::string web_server_pw = "";
+std::string web_server_db = "ragnarok";
 
-char default_codepage[32] = "";
+std::string default_codepage = "";
 
 Sql * login_handle = NULL;
 Sql * char_handle = NULL;
@@ -174,37 +174,37 @@ int inter_config_read(const char* cfgName)
 		else if (!strcmpi(w1, "emblem_transparency_limit"))
 			inter_config.emblem_woe_change = config_switch(w2) == 1;
 		else if(!strcmpi(w1,"login_server_ip"))
-			safestrncpy(login_server_ip,w2,sizeof(login_server_ip));
+			login_server_ip = w2;
 		else if(!strcmpi(w1,"login_server_port"))
 			login_server_port = atoi(w2);
 		else if(!strcmpi(w1,"login_server_id"))
-			safestrncpy(login_server_id,w2,sizeof(login_server_id));
+			login_server_id = w2;
 		else if(!strcmpi(w1,"login_server_pw"))
-			safestrncpy(login_server_pw,w2,sizeof(login_server_pw));
+			login_server_pw = w2;
 		else if(!strcmpi(w1,"login_server_db"))
-			safestrncpy(login_server_db,w2,sizeof(login_server_db));
+			login_server_db = w2;
 		else if(!strcmpi(w1,"char_server_ip"))
-			safestrncpy(char_server_ip,w2,sizeof(char_server_ip));
+			char_server_ip = w2;
 		else if(!strcmpi(w1,"char_server_port"))
 			char_server_port = atoi(w2);
 		else if(!strcmpi(w1,"char_server_id"))
-			safestrncpy(char_server_id,w2,sizeof(char_server_id));
+			char_server_id = w2;
 		else if(!strcmpi(w1,"char_server_pw"))
-			safestrncpy(char_server_pw,w2,sizeof(char_server_pw));
+			char_server_pw = w2;
 		else if(!strcmpi(w1,"char_server_db"))
-			safestrncpy(char_server_db,w2,sizeof(char_server_db));
+			char_server_db = w2;
 		else if(!strcmpi(w1,"web_server_ip"))
-			safestrncpy(web_server_ip,w2,sizeof(web_server_ip));
+			web_server_ip = w2;
 		else if(!strcmpi(w1,"web_server_port"))
 			web_server_port = atoi(w2);
 		else if(!strcmpi(w1,"web_server_id"))
-			safestrncpy(web_server_id,w2,sizeof(web_server_id));
+			web_server_id = w2;
 		else if(!strcmpi(w1,"web_server_pw"))
-			safestrncpy(web_server_pw,w2,sizeof(web_server_pw));
+			web_server_pw = w2;
 		else if(!strcmpi(w1,"web_server_db"))
-			safestrncpy(web_server_db,w2,sizeof(web_server_db));
+			web_server_db = w2;
 		else if(!strcmpi(w1,"default_codepage"))
-			safestrncpy(default_codepage,w2,sizeof(default_codepage));
+			default_codepage = w2;
 		else if (!strcmpi(w1, "user_configs"))
 			safestrncpy(user_configs_table, w2, sizeof(user_configs_table));
 		else if (!strcmpi(w1, "char_configs"))
@@ -249,51 +249,51 @@ int web_sql_init(void) {
 	login_handle = Sql_Malloc();
 	ShowInfo("Connecting to the Login DB server.....\n");
 
-	if (SQL_ERROR == Sql_Connect(login_handle, login_server_id, login_server_pw, login_server_ip, login_server_port, login_server_db)) {
+	if (SQL_ERROR == Sql_Connect(login_handle, login_server_id.c_str(), login_server_pw.c_str(), login_server_ip.c_str(), login_server_port, login_server_db.c_str())) {
 		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-			login_server_id, login_server_pw, login_server_ip, login_server_port, login_server_db);
+			login_server_id.c_str(), login_server_pw.c_str(), login_server_ip.c_str(), login_server_port, login_server_db.c_str());
 		Sql_ShowDebug(login_handle);
 		Sql_Free(login_handle);
 		exit(EXIT_FAILURE);
 	}
 	ShowStatus("Connect success! (Login Server Connection)\n");
 
-	if (strlen(default_codepage) > 0) {
-		if (SQL_ERROR == Sql_SetEncoding(login_handle, default_codepage))
+	if (!default_codepage.empty()) {
+		if (SQL_ERROR == Sql_SetEncoding(login_handle, default_codepage.c_str()))
 			Sql_ShowDebug(login_handle);
 	}
 
 	char_handle = Sql_Malloc();
 	ShowInfo("Connecting to the Char DB server.....\n");
 
-	if (SQL_ERROR == Sql_Connect(char_handle, char_server_id, char_server_pw, char_server_ip, char_server_port, char_server_db)) {
+	if (SQL_ERROR == Sql_Connect(char_handle, char_server_id.c_str(), char_server_pw.c_str(), char_server_ip.c_str(), char_server_port, char_server_db.c_str())) {
 		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-			char_server_id, char_server_pw, char_server_ip, char_server_port, char_server_db);
+			char_server_id.c_str(), char_server_pw.c_str(), char_server_ip.c_str(), char_server_port, char_server_db.c_str());
 		Sql_ShowDebug(char_handle);
 		Sql_Free(char_handle);
 		exit(EXIT_FAILURE);
 	}
 	ShowStatus("Connect success! (Char Server Connection)\n");
 
-	if (strlen(default_codepage) > 0) {
-		if (SQL_ERROR == Sql_SetEncoding(char_handle, default_codepage))
+	if (!default_codepage.empty()) {
+		if (SQL_ERROR == Sql_SetEncoding(char_handle, default_codepage.c_str()))
 			Sql_ShowDebug(char_handle);
 	}
 
 	web_handle = Sql_Malloc();
 	ShowInfo("Connecting to the Web DB server.....\n");
 
-	if (SQL_ERROR == Sql_Connect(web_handle, web_server_id, web_server_pw, web_server_ip, web_server_port, web_server_db)) {
+	if (SQL_ERROR == Sql_Connect(web_handle, web_server_id.c_str(), web_server_pw.c_str(), web_server_ip.c_str(), web_server_port, web_server_db.c_str())) {
 		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-			web_server_id, web_server_pw, web_server_ip, web_server_port, web_server_db);
+			web_server_id.c_str(), web_server_pw.c_str(), web_server_ip.c_str(), web_server_port, web_server_db.c_str());
 		Sql_ShowDebug(web_handle);
 		Sql_Free(web_handle);
 		exit(EXIT_FAILURE);
 	}
 	ShowStatus("Connect success! (Web Server Connection)\n");
 
-	if (strlen(default_codepage) > 0) {
-		if (SQL_ERROR == Sql_SetEncoding(web_handle, default_codepage))
+	if (!default_codepage.empty()) {
+		if (SQL_ERROR == Sql_SetEncoding(web_handle, default_codepage.c_str()))
 			Sql_ShowDebug(web_handle);
 	}
 
