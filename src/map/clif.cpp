@@ -23833,12 +23833,12 @@ void clif_reputation_list( struct map_session_data& sd ){
 	for( const auto& entry : reputation_db ){
 		std::shared_ptr<s_reputation> reputation = entry.second;
 
-		struct PACKET_ZC_REPUTE_INFO_sub* entry = &p->list[index];
+		struct PACKET_ZC_REPUTE_INFO_sub* list_entry = &p->list[index];
 
-		entry->type = reputation->id;
-		entry->points = pc_readreg2( &sd, reputation->variable.c_str() );
+		list_entry->type = reputation->id;
+		list_entry->points = pc_readreg2( &sd, reputation->variable.c_str() );
 
-		p->packetLength += sizeof( *entry );
+		p->packetLength += sizeof( *list_entry );
 		index++;
 	}
 
