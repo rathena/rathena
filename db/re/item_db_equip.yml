@@ -139184,6 +139184,51 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 400077
+    AegisName: Cat_Shampoo_Hat
+    Name: Splish-splash Nyanpoo Hat
+    Type: Armor
+    View: 507
+    Weight: 1000
+    Buy: 20
+    Defense: 18
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      bonus bUnbreakableHelm;
+      .@r = getrefine();
+      bonus bMdef,15;
+      bonus bMaxHPrate,20;
+      bonus bMaxSPrate,20;
+      if (getskilllv("SU_SPIRITOFSEA") >= 1)
+         skill "AL_PNEUMA",1;
+      if (getskilllv("SU_SHRIMPARTY") >= 5) {
+         bonus bMaxHPrate,30;
+         bonus bMaxSPrate,30;
+      }
+      if (getskilllv("SU_GROOMING") >= 5) {
+         bonus2 bResEff,Eff_Confusion,10000;
+         bonus2 bResEff,Eff_Silence,10000;
+      }
+      bonus bHealPower2,20*getskilllv("SU_PURRING");
+      bonus bDef,50*.@r;
+      if (.@r >= 7) {
+         bonus bDelayrate,-10;
+         bonus2 bVariableCastrate,"SU_STOOP",-50;
+         bonus2 bVariableCastrate,"SU_LOPE",-50;
+         bonus2 bSubClass,Class_Boss,10;
+      }
+      if (.@r >= 9) {
+         bonus bDelayrate,-10;
+         bonus2 bVariableCastrate,"SU_STOOP",-50;
+         bonus2 bVariableCastrate,"SU_LOPE",-50;
+         bonus2 bSubClass,Class_Boss,10;
+      }
+      if (.@r >= 10)
+         autobonus3 "{ bonus bFlee2,100; }",1000,3000,"SU_TUNAPARTY";
   - Id: 400078
     AegisName: BioWeapon_Helm_RK
     Name: Goral Crown
@@ -139251,6 +139296,49 @@ Body:
          bonus bFixedCast,-200;
          bonus2 bAddSize,Size_All,10;
          bonus2 bMagicAddSize,Size_All,10;
+      }
+  - Id: 400080
+    AegisName: C_Kriemhild_Crown_TW
+    Name: Costume Kriemhild Crown    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1056
+  - Id: 400081
+    AegisName: C_2020RTC_Imp_TW
+    Name: Costume 2020RTC Naughty Ghost    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 2009
+  - Id: 400082
+    AegisName: 2020RTC_Imp_TW
+    Name: 2020RTC Naughty Ghost    # !todo check english name
+    Type: Armor
+    View: 2009
+    Weight: 100
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSubRace,RC_DemiHuman,10;
+      bonus2 bSubRace,RC_Player_Human,10;
+      bonus2 bSubRace,RC_Player_Doram,10;
+      bonus2 bAddEffWhenHit,Eff_Freeze,100;
+      if (.@r>=9) {
+         bonus bFixedCast,-100*.@r;
+         bonus bAtkRate,2*.@r;
+         bonus bMatkRate,2*.@r;
+         bonus bLongAtkRate,2*.@r;
+         bonus bHealPower2,3*.@r;
+         bonus bCritAtkRate,5*.@r;
+         bonus bCritical,3*.@r;
       }
   - Id: 400094
     AegisName: BioWeapon_Helm_WL
@@ -140287,6 +140375,30 @@ Body:
       }
       autobonus "{ bonus bAtkEle,Ele_Fire; }",1,60000,BF_WEAPON;
       autobonus "{ bonus2 bMagicAtkEle,Ele_Fire,20; }",1,60000,BF_MAGIC;
+  - Id: 400157
+    AegisName: C_Astrologer_T_Hat
+    Name: Costume Astrologer T Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 2125
+  - Id: 400158
+    AegisName: C_Demon_Crown
+    Name: Costume Demon Crown
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 2135
+  - Id: 400159
+    AegisName: C_Bridal_Heir_Band_TW
+    Name: Costume Bridal Heir Band    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 167
   - Id: 400160
     AegisName: Wave_Noodle
     Name: Costume Wavy Noodles
@@ -140295,6 +140407,22 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 2138
+  - Id: 400161
+    AegisName: C_Hat_0f_King
+    Name: Costume Hat 0f King    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 374
+  - Id: 400162
+    AegisName: C_Red_Navy_Hat
+    Name: Costume Red Navy Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 651
   - Id: 400163
     AegisName: C_Whale_Cap
     Name: Costume Whale Cap
@@ -140303,6 +140431,20 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 2140
+  - Id: 400164
+    AegisName: 2021RTC_Headset_TW
+    Name: 2021RTC Headset    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    View: 2134
+    Script: |
+      bonus bFixedCast,-100;
+      bonus bShortAtkRate,1;
+      bonus bLongAtkRate,1;
+      bonus2 bMagicAddEle,Ele_All,1;
   - Id: 400165
     AegisName: C_Green_Apple_Hat_J
     Name: Costume Green Apple Hat    # !todo check english name
@@ -140359,6 +140501,38 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 18
+  - Id: 400172
+    AegisName: C_Ati_Atihan_Hat_V
+    Name: Costume Atihan Hat
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 303
+  - Id: 400173
+    AegisName: C_Fancy_Phantom_Mask_V
+    Name: Costume Fancy Phantom Mask (Middle)
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 710
+  - Id: 400174
+    AegisName: C_Weissbier_Hat
+    Name: Costume Buyers Hat
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1079
+  - Id: 400175
+    AegisName: C_Campfire_Hat
+    Name: Costume Camp Fire Cap
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 416
   - Id: 400176
     AegisName: C_Fishbowl_Parfait_Hat
     Name: Costume Fishbowl Parfait Hat    # !todo check english name

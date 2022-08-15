@@ -27260,3 +27260,12 @@ Body:
     Script: |
       bonus bPAtk,5;
       bonus bCon,3;
+  - Combos:
+      - Combo:
+          - 2020RTC_Imp_TW    # 400082
+          - 2021RTC_Headset_TW    # 400164
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bSubRace,RC_Player_Human,1+(2*.@r/3);
+      bonus2 bSubRace,RC_Player_Doram,1+(2*.@r/3);
+      bonus bDelayrate,-1+(-.@r/3);
