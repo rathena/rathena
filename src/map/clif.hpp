@@ -1165,6 +1165,7 @@ enum out_ui_type : int8 {
 	OUT_UI_QUEST = 6,
 	OUT_UI_ATTENDANCE,
 	OUT_UI_ENCHANTGRADE,
+	OUT_UI_ENCHANT = 10,
 };
 
 void clif_ui_open( struct map_session_data& sd, enum out_ui_type ui_type, int32 data );
@@ -1199,5 +1200,8 @@ void clif_summon_hp_bar(struct mob_data& md);
 // Laphine System
 void clif_laphine_synthesis_open( struct map_session_data *sd, std::shared_ptr<s_laphine_synthesis> synthesis );
 void clif_laphine_upgrade_open( struct map_session_data* sd, std::shared_ptr<s_laphine_upgrade> upgrade );
+
+// Item Enchant UI
+void clif_enchantwindow_open( struct map_session_data& sd, uint64 clientLuaIndex );
 
 #endif /* CLIF_HPP */

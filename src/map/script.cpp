@@ -26038,6 +26038,36 @@ BUILDIN_FUNC( enchantgradeui ){
 #endif
 }
 
+BUILDIN_FUNC(item_enchant){
+#if PACKETVER_RE_NUM < 20211103
+	ShowError( "buildin_item_enchant: This command requires packet version 2021-11-03 or newer.\n" );
+	return SCRIPT_CMD_FAILURE;
+#else
+	struct map_session_data* sd;
+
+	if( !script_charid2sd( 3, sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	// Hardcoded clientside check
+	if( sd->weight >= ( ( sd->max_weight * 70 ) / 100 ) ){
+		ShowError( "buildin_item_enchant: Player %s (AID: %u, CID: %u) was over 70% weight.\n", sd->status.name, sd->status.account_id, sd->status.char_id );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	uint64 clientLuaIndex = script_getnum64( st, 2 );
+
+	if( !item_enchant_db.exists( clientLuaIndex ) ){
+		ShowError( "buildin_item_enchant: %" PRIu64 " is not a valid item enchant index.\n", clientLuaIndex );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_enchantwindow_open( *sd, clientLuaIndex );
+
+	return SCRIPT_CMD_SUCCESS;
+#endif
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -26759,6 +26789,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getjobexp_ratio, "i??"),
 	BUILDIN_DEF(enchantgradeui, "?" ),
 
+	BUILDIN_DEF(item_enchant, "i?"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

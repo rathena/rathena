@@ -1,0 +1,77 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Item Enchant Database
+###########################################################################
+#
+# Item Enchant Settings
+#
+###########################################################################
+# - Id                         Clientside LUA index
+#   TargetItems:               List of possible target item(s)
+#     <item name>              Item name of the possible target item (true/false)
+#   MinimumRefine              Minimum refine of the target item (default: 0)
+#   MinimumEnchantgrade        Minimum enchantgrade of the target item (default: 0)
+#   AllowRandomOptions         Are random options in the target item allowed? (Default: true)
+#   Reset:                     Reset options (Default: disabled)
+#     Chance                   Chance of successful reset (Default: 0)
+#     Price                    Price for trying to reset the enchants (Default: 0)
+#     Materials:               Items required for trying to reset the enchants (Default: none)
+#       - Material             Item name of the required item
+#         Amount               Amount of the required item (Default: 1)
+#   Order:                     Order in which the slots can be enchanted (Default: none)
+#     - Slot                   Number of the slot (0-3)
+#   Slots:                     Enchant options (Default: none)
+#     - Slot                   Number of the slot (0-3)
+#       Price                  Price required for the normal enchant process (Default: 0)
+#       Materials:             Items required for the normal enchant process (Default: none)
+#         - Material           Item name of the required item
+#           Amount             Amount of the required item (Default: 1)
+#       Chance                 Base chance for the normal enchant process (Default: 100000)
+#       EnchantgradeBonus:     Additional bonus chance increase per enchantgrade (Default: none)
+#         - Enchantgrade       Enchantgrade required for the bonus
+#           Chance             Additional chance that is added to the base chance
+#       Enchants:              Available enchants for the normal enchant process per enchantgrade (Default: none)
+#         - Enchantgrade       Enchantgrade of the item to be enchanted
+#           Items:             Available enchants for the normal enchant process on the given enchantgrade (Default: none)
+#             - Item           Item name of the available enchant item
+#               Chance         Chance to get this specific enchant item
+#       PerfectEnchants:       Available perfect enchants (100% chance + selectable) for this slot (Default: none)
+#         - Item               Item name of the available enchant item
+#           Price              Price required for this perfect enchant (Default: 0)
+#           Materials:         Items required for this perfect enchant (Default: none)
+#             - Material       Item name of the required item
+#               Amount         Amount of the required item (Default: 1)
+#       Upgrades:              Available enchant upgrades for this slot (Default: none)
+#         - Enchant            Item name of the enchant item available for upgrade.
+#           Upgrade            Item name of the enchant it can be upgrade to.
+#           Price              Price required for this enchant upgrade (Default: 0)
+#           Materials:         Items required for this enchant upgrade (Default: none)
+#             - Material       Item name of the required item
+#               Amount         Amount of the required item (Default: 1)
+###########################################################################
+
+Header:
+  Type: ITEM_ENCHANT_DB
+  Version: 1
+
+Footer:
+  Imports:
+  - Path: db/re/item_enchant.yml
+    Mode: Renewal
+  - Path: db/import/item_enchant.yml

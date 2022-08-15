@@ -1662,6 +1662,525 @@ uint64 LaphineUpgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 
 LaphineUpgradeDatabase laphine_upgrade_db;
 
+const std::string ItemEnchantDatabase::getDefaultLocation(){
+	return std::string( db_path ) + "/item_enchant.yml";
+}
+
+bool ItemEnchantDatabase::parseMaterials( const ryml::NodeRef& node, std::unordered_map<t_itemid, uint16>& materials ){
+	if( this->nodeExists( node, "Materials" ) ){
+		for( const ryml::NodeRef& materialNode : node["Materials"] ){
+			std::string name;
+
+			if( !this->asString( materialNode, "Material", name ) ){
+				return false;
+			}
+
+			std::shared_ptr<item_data> item = item_db.search_aegisname( name.c_str() );
+
+			if( item == nullptr ){
+				this->invalidWarning( materialNode["Material"], "Unknown item \"%s\".\n", name.c_str() );
+				return false;
+			}
+
+			t_itemid material_id = item->nameid;
+			bool material_exists = util::umap_find( materials, material_id ) != nullptr;
+			uint16 amount;
+
+			if( this->nodeExists( materialNode, "Amount" ) ){
+				if( !this->asUInt16( materialNode, "Amount", amount ) ){
+					return false;
+				}
+
+				if( amount > MAX_AMOUNT ){
+					this->invalidWarning( materialNode["Amount"], "Amount %hu is too high, capping to MAX_AMOUNT...\n", amount );
+					amount = MAX_AMOUNT;
+				}
+			}else{
+				if( !material_exists ){
+					amount = 1;
+				}else{
+					amount = materials[material_id];
+				}
+			}
+
+			if( amount > 0 ){
+				materials[material_id] = amount;
+			}else{
+				materials.erase( material_id );
+			}
+		}
+	}
+
+	return true;
+}
+
+uint64 ItemEnchantDatabase::parseBodyNode( const ryml::NodeRef& node ){
+	uint64 id;
+
+	if( !this->asUInt64( node, "Id", id ) ){
+		return 0;
+	}
+
+	std::shared_ptr<s_item_enchant> enchant = this->find( id );
+	bool exists = enchant != nullptr;
+
+	if( !exists ){
+		if( !this->nodesExist( node, { "TargetItems", "Order", "Slots" } ) ){
+			return 0;
+		}
+
+		enchant = std::make_shared<s_item_enchant>();
+		enchant->id = id;
+	}
+
+	if( this->nodeExists( node, "TargetItems" ) ){
+		const ryml::NodeRef& targetItemsNode = node["TargetItems"];
+
+		for( const auto& it : targetItemsNode ){
+			std::string name;
+
+			c4::from_chars( it.key(), &name );
+
+			std::shared_ptr<item_data> item = item_db.search_aegisname( name.c_str() );
+
+			if( item == nullptr ){
+				this->invalidWarning( it, "Unknown item \"%s\".\n", name.c_str() );
+				return 0;
+			}
+
+			bool enable;
+
+			if( !this->asBool( targetItemsNode, name, enable ) ){
+				return 0;
+			}
+
+			if( enable ){
+				if( util::vector_exists( enchant->target_item_ids, item->nameid ) ){
+					this->invalidWarning( it, "Target item \"%s\" is already in the list.\n", name.c_str() );
+				}else{
+					enchant->target_item_ids.push_back( item->nameid );
+				}
+			}else{
+				if( !util::vector_exists( enchant->target_item_ids, item->nameid ) ){
+					this->invalidWarning( it, "Target item \"%s\" is not in the list.\n", name.c_str() );
+				}else{
+					util::vector_erase_if_exists( enchant->target_item_ids, item->nameid );
+				}
+			}
+		}
+	}
+
+	if( this->nodeExists( node, "MinimumRefine" ) ){
+		uint16 refine;
+
+		if( !this->asUInt16( node, "MinimumRefine", refine ) ){
+			return 0;
+		}
+
+		if( refine > MAX_REFINE ){
+			this->invalidWarning( node["MinimumRefine"], "Minimum refine %hu exceeds MAX_REFINE...\n", refine );
+			return 0;
+		}
+
+		enchant->minimumRefine = refine;
+	}else{
+		if( !exists ){
+			enchant->minimumRefine = 0;
+		}
+	}
+
+	if( this->nodeExists( node, "MinimumEnchantgrade" ) ){
+		uint16 enchantgrade;
+
+		if( !this->asUInt16( node, "MinimumEnchantgrade", enchantgrade ) ){
+			return 0;
+		}
+
+		if( enchantgrade > MAX_ENCHANTGRADE ){
+			this->invalidWarning( node["MinimumEnchantgrade"], "Minimum enchantgrade %hu exceeds MAX_ENCHANTGRADE...\n", enchantgrade );
+			return 0;
+		}
+
+		enchant->minimumEnchantgrade = enchantgrade;
+	}else{
+		if( !exists ){
+			enchant->minimumEnchantgrade = 0;
+		}
+	}
+
+	if( this->nodeExists( node, "AllowRandomOptions" ) ){
+		bool allow;
+
+		if( !this->asBool( node, "AllowRandomOptions", allow ) ){
+			return 0;
+		}
+
+		enchant->allowRandomOptions = allow;
+	}else{
+		if( !exists ){
+			enchant->allowRandomOptions = true;
+		}
+	}
+
+	if( this->nodeExists( node, "Reset" ) ){
+		const ryml::NodeRef& resetNode = node["Reset"];
+
+		if( this->nodeExists( resetNode, "Chance" ) ){
+			uint32 chance;
+
+			if( !this->asUInt32Rate( resetNode, "Chance", chance, 100000 ) ){
+				return 0;
+			}
+
+			enchant->reset.chance = chance;
+		}else{
+			if( !exists ){
+				enchant->reset.chance = 0;
+			}
+		}
+
+		if( this->nodeExists( resetNode, "Price" ) ){
+			uint32 zeny;
+
+			if( !this->asUInt32( resetNode, "Price", zeny ) ){
+				return 0;
+			}
+
+			if( zeny > MAX_ZENY ){
+				this->invalidWarning( resetNode["Price"], "Price %u exceeds MAX_ZENY...\n", zeny );
+				return 0;
+			}
+
+			enchant->reset.zeny = zeny;
+		}else{
+			if( !exists ){
+				enchant->reset.zeny = 0;
+			}
+		}
+
+		if( !this->parseMaterials( resetNode, enchant->reset.materials ) ){
+			return 0;
+		}
+	}else{
+		if( !exists ){
+			enchant->reset = {};
+		}
+	}
+
+	if( this->nodeExists( node, "Order" ) ){
+		enchant->order.clear();
+
+		for( const auto it : node["Order"] ){
+			uint16 slot;
+
+			if( !this->asUInt16( it, "Slot", slot ) ){
+				return 0;
+			}
+
+			if( slot >= MAX_SLOTS ){
+				this->invalidWarning( it, "Slot %hu exceeds MAX_SLOTS...\n", slot );
+				return 0;
+			}
+
+			enchant->order.push_back( slot );
+		}
+	}
+
+	if( this->nodeExists( node, "Slots" ) ){
+		for( const ryml::NodeRef& slotNode : node["Slots"] ){
+			uint16 slot;
+
+			if( !this->asUInt16( slotNode, "Slot", slot ) ){
+				return 0;
+			}
+
+			if( slot >= MAX_SLOTS ){
+				this->invalidWarning( slotNode["Slot"], "Slot %hu exceeds MAX_SLOTS...\n", slot );
+				return 0;
+			}
+
+			std::shared_ptr<s_item_enchant_slot> enchant_slot = util::umap_find( enchant->slots, slot );
+			bool slot_exists = enchant_slot != nullptr;
+
+			if( !slot_exists ){
+				enchant_slot = std::make_shared<s_item_enchant_slot>();
+				enchant_slot->slot = slot;
+
+				for( int i = 0; i <= MAX_ENCHANTGRADE; i++ ){
+					enchant_slot->normal.enchantgradeChanceIncrease[i] = 0;
+				}
+			}
+
+			if( this->nodeExists( slotNode, "Price" ) ){
+				uint32 zeny;
+
+				if( !this->asUInt32( slotNode, "Price", zeny ) ){
+					return 0;
+				}
+
+				if( zeny > MAX_ZENY ){
+					this->invalidWarning( slotNode["Price"], "Price %u exceeds MAX_ZENY...\n", zeny );
+					return 0;
+				}
+
+				enchant_slot->normal.zeny = zeny;
+			}else{
+				if( !slot_exists ){
+					enchant_slot->normal.zeny = 0;
+				}
+			}
+
+			if( !this->parseMaterials( slotNode, enchant_slot->normal.materials ) ){
+				return 0;
+			}
+
+			if( this->nodeExists( slotNode, "Chance" ) ){
+				uint32 chance;
+
+				if( !this->asUInt32Rate( slotNode, "Chance", chance, 100000 ) ){
+					return 0;
+				}
+
+				enchant_slot->normal.chance = chance;
+			}else{
+				if( !slot_exists ){
+					enchant_slot->normal.chance = 100000;
+				}
+			}
+
+			if( this->nodeExists( slotNode, "EnchantgradeBonus" ) ){
+				for( const ryml::NodeRef& enchantgradeNode : slotNode["EnchantgradeBonus"] ){
+					uint16 enchantgrade;
+
+					if( !this->asUInt16( enchantgradeNode, "Enchantgrade", enchantgrade ) ){
+						return 0;
+					}
+
+					if( enchantgrade > MAX_ENCHANTGRADE ){
+						this->invalidWarning( enchantgradeNode["Enchantgrade"], "Enchantgrade %hu exceeds MAX_ENCHANTGRADE...\n", enchantgrade );
+						return 0;
+					}
+
+					uint32 chance;
+
+					if( !this->asUInt32Rate( slotNode, "Chance", chance, 100000 ) ){
+						return 0;
+					}
+
+					enchant_slot->normal.enchantgradeChanceIncrease[enchantgrade] = chance;
+				}
+			}
+
+			if( this->nodeExists( slotNode, "Enchants" ) ){
+				for( const ryml::NodeRef& enchantNode : slotNode["Enchants"] ){
+					uint16 enchantgrade;
+
+					if( !this->asUInt16( enchantNode, "Enchantgrade", enchantgrade ) ){
+						return 0;
+					}
+
+					if( enchantgrade > MAX_ENCHANTGRADE ){
+						this->invalidWarning( enchantNode["Enchantgrade"], "Enchantgrade %hu exceeds MAX_ENCHANTGRADE...\n", enchantgrade );
+						return 0;
+					}
+
+					std::shared_ptr<s_item_enchant_normal> enchants_for_enchantgrade = util::umap_find( enchant_slot->normal.enchants, enchantgrade );
+					bool enchants_for_enchantgrade_exists = enchants_for_enchantgrade != nullptr;
+
+					if( !enchants_for_enchantgrade_exists ){
+						enchants_for_enchantgrade = std::make_shared<s_item_enchant_normal>();
+						enchants_for_enchantgrade->enchantgrade = enchantgrade;
+					}
+
+					if( this->nodeExists( enchantNode, "Items" ) ){
+						for( const ryml::NodeRef& itemNode : enchantNode["Items"] ){
+							std::string enchant_name;
+
+							if( !this->asString( itemNode, "Item", enchant_name ) ){
+								return 0;
+							}
+
+							std::shared_ptr<item_data> enchant_item = item_db.search_aegisname( enchant_name.c_str() );
+
+							if( enchant_item == nullptr ){
+								this->invalidWarning( itemNode["Item"], "Unknown item \"%s\".\n", enchant_name.c_str() );
+								return 0;
+							}
+
+							std::shared_ptr<s_item_enchant_normal_sub> enchant = util::umap_find( enchants_for_enchantgrade->enchants, enchant_item->nameid );
+							bool enchant_exists = enchant != nullptr;
+
+							if( !enchant_exists ){
+								if( !this->nodesExist( itemNode, { "Chance" } ) ){
+									return 0;
+								}
+
+								enchant = std::make_shared<s_item_enchant_normal_sub>();
+								enchant->item_id = enchant_item->nameid;
+							}
+
+							if( this->nodeExists( itemNode, "Chance" ) ){
+								uint32 chance;
+
+								if( !this->asUInt32Rate( itemNode, "Chance", chance, 100000 ) ){
+									return 0;
+								}
+
+								enchant->chance = chance;
+							}
+
+							if( !enchant_exists ){
+								enchants_for_enchantgrade->enchants[enchant->item_id] = enchant;
+							}
+						}
+					}
+
+					if( !enchants_for_enchantgrade_exists ){
+						enchant_slot->normal.enchants[enchantgrade] = enchants_for_enchantgrade;
+					}
+				}
+			}
+
+			if( this->nodeExists( slotNode, "PerfectEnchants" ) ){
+				for( const ryml::NodeRef& enchantNode : slotNode["PerfectEnchants"] ){
+					std::string enchant_name;
+
+					if( !this->asString( enchantNode, "Item", enchant_name ) ){
+						return 0;
+					}
+
+					std::shared_ptr<item_data> enchant_item = item_db.search_aegisname( enchant_name.c_str() );
+
+					if( enchant_item == nullptr ){
+						this->invalidWarning( enchantNode["Item"], "Unknown item \"%s\".\n", enchant_name.c_str() );
+						return 0;
+					}
+
+					std::shared_ptr<s_item_enchant_perfect> enchant = util::umap_find( enchant_slot->perfect.enchants, enchant_item->nameid );
+					bool enchant_exists = enchant != nullptr;
+
+					if( !enchant_exists ){
+						enchant = std::make_shared<s_item_enchant_perfect>();
+						enchant->item_id = enchant_item->nameid;
+					}
+
+					if( this->nodeExists( enchantNode, "Price" ) ){
+						uint32 zeny;
+
+						if( !this->asUInt32( enchantNode, "Price", zeny ) ){
+							return 0;
+						}
+
+						if( zeny > MAX_ZENY ){
+							this->invalidWarning( enchantNode["Price"], "Price %u exceeds MAX_ZENY...\n", zeny );
+							return 0;
+						}
+
+						enchant->zeny = zeny;
+					}else{
+						if( !slot_exists ){
+							enchant->zeny = 0;
+						}
+					}
+
+					if( !this->parseMaterials( enchantNode, enchant->materials ) ){
+						return 0;
+					}
+
+					if( !enchant_exists ){
+						enchant_slot->perfect.enchants[enchant->item_id] = enchant;
+					}
+				}
+			}
+
+			if( this->nodeExists( slotNode, "Upgrades" ) ){
+				for( const ryml::NodeRef& upgradeNode : slotNode["Upgrades"] ){
+					std::string enchant_name;
+
+					if( !this->asString( upgradeNode, "Enchant", enchant_name ) ){
+						return 0;
+					}
+
+					std::shared_ptr<item_data> enchant_item = item_db.search_aegisname( enchant_name.c_str() );
+
+					if( enchant_item == nullptr ){
+						this->invalidWarning( upgradeNode["Enchant"], "Unknown item \"%s\".\n", enchant_name.c_str() );
+						return 0;
+					}
+
+					std::shared_ptr<s_item_enchant_upgrade> enchant_upgrade = util::umap_find( enchant_slot->upgrade.enchants, enchant_item->nameid );
+					bool enchant_upgrade_exists = enchant_upgrade != nullptr;
+
+					if( !enchant_upgrade_exists ){
+						if( !this->nodesExist( upgradeNode, { "Upgrade" } ) ){
+							return 0;
+						}
+
+						enchant_upgrade = std::make_shared<s_item_enchant_upgrade>();
+						enchant_upgrade->enchant_item_id = enchant_item->nameid;
+					}
+
+					if( this->nodeExists( upgradeNode, "Upgrade" ) ){
+						std::string upgrade_name;
+
+						if( !this->asString( upgradeNode, "Upgrade", upgrade_name ) ){
+							return 0;
+						}
+
+						std::shared_ptr<item_data> upgrade_item = item_db.search_aegisname( upgrade_name.c_str() );
+
+						if( upgrade_item == nullptr ){
+							this->invalidWarning( upgradeNode["Upgrade"], "Unknown item \"%s\".\n", upgrade_name.c_str() );
+							return 0;
+						}
+
+						enchant_upgrade->upgrade_item_id = upgrade_item->nameid;
+					}
+
+					if( this->nodeExists( upgradeNode, "Price" ) ){
+						uint32 zeny;
+
+						if( !this->asUInt32( upgradeNode, "Price", zeny ) ){
+							return 0;
+						}
+
+						if( zeny > MAX_ZENY ){
+							this->invalidWarning( upgradeNode["Price"], "Price %u exceeds MAX_ZENY...\n", zeny );
+							return 0;
+						}
+
+						enchant_upgrade->zeny = zeny;
+					}else{
+						if( !enchant_upgrade_exists ){
+							enchant_upgrade->zeny = 0;
+						}
+					}
+
+					if( !this->parseMaterials( upgradeNode, enchant_upgrade->materials ) ){
+						return 0;
+					}
+
+					if( !enchant_upgrade_exists ){
+						enchant_slot->upgrade.enchants[enchant_upgrade->enchant_item_id] = enchant_upgrade;
+					}
+				}
+			}
+
+			if( !slot_exists ){
+				enchant->slots[slot] = enchant_slot;
+			}
+		}
+	}
+
+	if( !exists ){
+		this->put( enchant->id, enchant );
+	}
+
+	return 1;
+}
+
+ItemEnchantDatabase item_enchant_db;
+
 /*==========================================
  * Finds up to N matches. Returns number of matches [Skotlex]
  * @param *data
@@ -3475,6 +3994,7 @@ static void itemdb_read(void) {
 	itemdb_combo.load();
 	laphine_synthesis_db.load();
 	laphine_upgrade_db.load();
+	item_enchant_db.load();
 
 	if (battle_config.feature_roulette)
 		itemdb_parse_roulette_db();
@@ -3541,6 +4061,7 @@ void do_final_itemdb(void) {
 	random_option_group.clear();
 	laphine_synthesis_db.clear();
 	laphine_upgrade_db.clear();
+	item_enchant_db.clear();
 	if (battle_config.feature_roulette)
 		itemdb_roulette_free();
 }
