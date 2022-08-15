@@ -6138,17 +6138,17 @@ int pc_show_steal(struct block_list *bl,va_list ap)
 {
 	struct map_session_data *sd;
 	t_itemid itemid;
-
-	struct item_data *item=NULL;
 	char output[100];
 
 	sd=va_arg(ap,struct map_session_data *);
 	itemid=va_arg(ap,int);
 
-	if((item=itemdb_exists(itemid))==NULL)
+	std::shared_ptr<item_data> id = item_db.find(itemid);
+
+	if(id == nullptr)
 		sprintf(output,"%s stole an Unknown Item (id: %u).",sd->status.name, itemid);
 	else
-		sprintf(output,"%s stole %s.",sd->status.name,item->ename.c_str());
+		sprintf(output,"%s stole %s.",sd->status.name,id->ename.c_str());
 	clif_displaymessage( ((struct map_session_data *)bl)->fd, output);
 
 	return 0;
@@ -11314,15 +11314,15 @@ int pc_load_combo(struct map_session_data *sd) {
 			ret += pc_checkcombo(sd, id);
 
 		if (!itemdb_isspecial(sd->inventory.u.items_inventory[idx].card[0])) {
-			item_data *data;
-
 			for (uint8 j = 0; j < MAX_SLOTS; j++) {
 				if (!sd->inventory.u.items_inventory[idx].card[j])
 					continue;
 
-				if ((data = itemdb_exists(sd->inventory.u.items_inventory[idx].card[j])) != nullptr) {
+				std::shared_ptr<item_data> data = item_db.find(sd->inventory.u.items_inventory[idx].card[j]);
+
+				if (data != nullptr) {
 					if (!data->combos.empty())
-						ret += pc_checkcombo(sd, data);
+						ret += pc_checkcombo(sd, data.get());
 				}
 			}
 		}
@@ -11415,7 +11415,7 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 			if (!sd->inventory.u.items_inventory[n].card[i])
 				continue;
 
-			struct item_data *card_data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i]);
+			std::shared_ptr<item_data> card_data = item_db.find(sd->inventory.u.items_inventory[n].card[i]);
 
 			if (card_data) {
 				int card_pos = card_data->equip;
@@ -11560,13 +11560,14 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 		; // No cards
 	else {
 		for (i = 0; i < MAX_SLOTS; i++) {
-			item_data *data;
-
 			if (!sd->inventory.u.items_inventory[n].card[i])
 				continue;
-			if ((data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i])) != nullptr) {
+
+			std::shared_ptr<item_data> data = item_db.find(sd->inventory.u.items_inventory[n].card[i]);
+
+			if (data != nullptr) {
 				if (!data->combos.empty())
-					pc_checkcombo(sd, data);
+					pc_checkcombo(sd, data.get());
 			}
 		}
 	}
@@ -11584,11 +11585,13 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 			; //No cards
 		else {
 			for( i = 0; i < MAX_SLOTS; i++ ) {
-				struct item_data *data;
 				if (!sd->inventory.u.items_inventory[n].card[i])
 					continue;
-				if ( ( data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i]) ) != NULL ) {
-					if (data->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(data,sd->bl.m)))
+
+				std::shared_ptr<item_data> data = item_db.find(sd->inventory.u.items_inventory[n].card[i]);
+
+				if ( data != nullptr ) {
+					if (data->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(data.get(), sd->bl.m)))
 						run_script(data->equip_script,0,sd->bl.id,fake_nd->bl.id);
 				}
 			}
@@ -11645,13 +11648,14 @@ static void pc_unequipitem_sub(struct map_session_data *sd, int n, int flag) {
 			; // No cards
 		else {
 			for (i = 0; i < MAX_SLOTS; i++) {
-				item_data *data;
-
 				if (!sd->inventory.u.items_inventory[n].card[i])
 					continue;
-				if ((data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i])) != nullptr) {
+
+				std::shared_ptr<item_data> data = item_db.find(sd->inventory.u.items_inventory[n].card[i]);
+
+				if (data != nullptr) {
 					if (!data->combos.empty()) {
-						if (pc_removecombo(sd, data))
+						if (pc_removecombo(sd, data.get()))
 							status_calc = true;
 					}
 				}
@@ -11675,11 +11679,12 @@ static void pc_unequipitem_sub(struct map_session_data *sd, int n, int flag) {
 			; //No cards
 		else {
 			for (i = 0; i < MAX_SLOTS; i++) {
-				struct item_data *data;
 				if (!sd->inventory.u.items_inventory[n].card[i])
 					continue;
 
-				if ((data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i])) != NULL) {
+				std::shared_ptr<item_data> data = item_db.find(sd->inventory.u.items_inventory[n].card[i]);
+
+				if (data != nullptr) {
 					if (data->unequip_script)
 						run_script(data->unequip_script, 0, sd->bl.id, fake_nd->bl.id);
 				}
@@ -11732,7 +11737,7 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 	}
 
 	if(pos & EQP_HAND_R) {
-		sd->weapontype1 = 0;
+		sd->weapontype1 = W_FIST;
 		sd->status.weapon = sd->weapontype2;
 		pc_calcweapontype(sd);
 		clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
@@ -12437,23 +12442,19 @@ bool pc_setstand(struct map_session_data *sd, bool force){
  * @param sd: Player data
  * @param heat: Amount of Heat to adjust
  **/
-void pc_overheat(struct map_session_data *sd, int16 heat) {
-	nullpo_retv(sd);
-
-	status_change_entry *sce = sd->sc.data[SC_OVERHEAT_LIMITPOINT];
+void pc_overheat(map_session_data &sd, int16 heat) {
+	status_change_entry *sce = sd.sc.data[SC_OVERHEAT_LIMITPOINT];
 
 	if (sce) {
-		static std::vector<int16> limit = { 150, 200, 280, 360, 450 };
-		uint16 skill_lv = cap_value(pc_checkskill(sd, NC_MAINFRAME), 0, (uint16)(limit.size()-1));
-
 		sce->val1 += heat;
 		sce->val1 = cap_value(sce->val1, 0, 1000);
-		if (sd->sc.data[SC_OVERHEAT])
-			status_change_end(&sd->bl, SC_OVERHEAT, INVALID_TIMER);
-		if (sce->val1 > limit[skill_lv])
-			sc_start(&sd->bl, &sd->bl, SC_OVERHEAT, 100, sce->val1, 1000);
+
+		if (heat < 0 && sce->val1 == 0) { // Cooling device used.
+			status_change_end(&sd.bl, SC_OVERHEAT_LIMITPOINT, INVALID_TIMER);
+			status_change_end(&sd.bl, SC_OVERHEAT, INVALID_TIMER);
+		}
 	} else if (heat > 0)
-		sc_start(&sd->bl, &sd->bl, SC_OVERHEAT_LIMITPOINT, 100, heat, 1000);
+		sc_start(&sd.bl, &sd.bl, SC_OVERHEAT_LIMITPOINT, 100, heat, 1000);
 }
 
 /**

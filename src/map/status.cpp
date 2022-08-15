@@ -3789,10 +3789,10 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 
 			// Check combo items
 			while (j < item_combo->nameid.size()) {
-				item_data *id = itemdb_exists(item_combo->nameid[j]);
+				std::shared_ptr<item_data> id = item_db.find(item_combo->nameid[j]);
 
 				// Don't run the script if at least one of combo's pair has restriction
-				if (id && !pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(id, sd->bl.m)) {
+				if (id && !pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(id.get(), sd->bl.m)) {
 					no_run = true;
 					break;
 				}
@@ -3829,7 +3829,6 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 
 		if (sd->inventory_data[index]) {
 			int j;
-			struct item_data *data;
 
 			// Card script execution.
 			if (itemdb_isspecial(sd->inventory.u.items_inventory[index].card[0]))
@@ -3839,17 +3838,19 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 				current_equip_card_id= c;
 				if(!c)
 					continue;
-				data = itemdb_exists(c);
+
+				std::shared_ptr<item_data> data = item_db.find(c);
+
 				if(!data)
 					continue;
-				if (opt&SCO_FIRST && data->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(data,sd->bl.m))) {// Execute equip-script on login
+				if (opt&SCO_FIRST && data->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(data.get(), sd->bl.m))) {// Execute equip-script on login
 					run_script(data->equip_script,0,sd->bl.id,0);
 					if (!calculating)
 						return 1;
 				}
 				if(!data->script)
 					continue;
-				if(!pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(data,sd->bl.m)) // Card restriction checks.
+				if(!pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(data.get(), sd->bl.m)) // Card restriction checks.
 					continue;
 				if(i == EQI_HAND_L && sd->inventory.u.items_inventory[index].equip == EQP_HAND_L) { // Left hand status.
 					sd->state.lr_flag = 1;
@@ -3906,7 +3907,8 @@ int status_calc_pc_sub(struct map_session_data* sd, uint8 opt)
 	}
 
 	if (sc->count && sc->data[SC_ITEMSCRIPT]) {
-		struct item_data *data = itemdb_exists(sc->data[SC_ITEMSCRIPT]->val1);
+		std::shared_ptr<item_data> data = item_db.find(sc->data[SC_ITEMSCRIPT]->val1);
+
 		if (data && data->script)
 			run_script(data->script, 0, sd->bl.id, 0);
 	}
@@ -13133,14 +13135,15 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			break;
 		case SC_DANCING:
 			{
-				struct map_session_data *dsd;
-				struct status_change_entry *dsc;
+				map_session_data *dsd;
 
 				if(sce->val4 && sce->val4 != BCT_SELF && (dsd=map_id2sd(sce->val4))) { // End status on partner as well
-					dsc = dsd->sc.data[SC_DANCING];
+					status_change_entry *dsc = dsd->sc.data[SC_DANCING];
+
 					if(dsc) {
 						// This will prevent recursive loops.
-						dsc->val2 = dsc->val4 = 0;
+						dsc->val2 = 0;
+						dsc->val4 = BCT_SELF;
 						status_change_end(&dsd->bl, SC_DANCING, INVALID_TIMER);
 					}
 				}
@@ -14283,13 +14286,17 @@ TIMER_FUNC(status_change_timer){
 
 	case SC_OVERHEAT_LIMITPOINT:
 		if (--(sce->val1) >= 0) { // Cooling
-			static std::vector<int16> limit = { 150, 200, 280, 360, 450 };
-			uint16 skill_lv = (sd ? cap_value(pc_checkskill(sd, NC_MAINFRAME), 0, (uint16)(limit.size()-1)) : 0);
+			if (sce->val2 == 0) { // Flag the overheat limit once it has been met.
+				static std::vector<int16> limit = { 150, 200, 280, 360, 450 };
+				uint16 skill_lv = (sd ? cap_value(pc_checkskill(sd, NC_MAINFRAME), 0, (uint16)(limit.size() - 1)) : 0);
 
-			if (sc && sc->data[SC_OVERHEAT])
-				status_change_end(bl,SC_OVERHEAT,INVALID_TIMER);
-			if (sce->val1 > limit[skill_lv])
-				sc_start(bl, bl, SC_OVERHEAT, 100, sce->val1, 1000);
+				if (sce->val1 > limit[skill_lv])
+					sce->val2 = 1;
+			} else {
+				status_change_end(bl, SC_OVERHEAT, INVALID_TIMER);
+				if (sce->val2 > 0)
+					sc_start(bl, bl, SC_OVERHEAT, 100, sce->val1, 975);
+			}
 			sc_timer_next(1000 + tick);
 			return 0;
 		}
@@ -14301,10 +14308,8 @@ TIMER_FUNC(status_change_timer){
 			if (damage >= status->hp)
 				damage = status->hp - 1; // Do not kill, just keep you with 1 hp minimum
 			map_freeblock_lock();
-			status_fix_damage(NULL, bl, damage, clif_damage(bl, bl, tick, 0, 0, damage, 0, DMG_NORMAL, 0, false),0);
-			if (sc->data[type]) {
-				sc_timer_next(1000 + tick);
-			}
+			status_zap(bl, damage, 0);
+			sc_timer_next(975 + tick); // Tick is not 1000 to avoid desync with SC_OVERHEAT_LIMITPOINT.
 			map_freeblock_unlock();
 			return 0;
 		}
@@ -15805,7 +15810,7 @@ void StatusDatabase::loadingFinished(){
 		}
 	}
 
-	TypesafeYamlDatabase::loadingFinished();
+	TypesafeCachedYamlDatabase::loadingFinished();
 }
 
 StatusDatabase status_db;

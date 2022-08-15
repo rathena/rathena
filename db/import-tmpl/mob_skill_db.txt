@@ -43,6 +43,7 @@
 //	afterskill		After mob casts the specified skill.
 //	casttargeted		When a target is in cast range (no condition value).
 //	rudeattacked		When mob is rude attacked (no condition value).
+//	mobnearbygt		When monsters in range become greater than specified number.
 //
 //	Status abnormalities specified through the statuson/statusoff system:
 //	    anybad (any type of state change) / stone / freeze / stun / sleep /
