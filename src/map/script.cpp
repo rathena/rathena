@@ -7764,12 +7764,12 @@ BUILDIN_FUNC(getitem2)
 				return SCRIPT_CMD_FAILURE;
 
 			if (grade_offset > 0) {
-				int grade_tmp = script_getnum(st, grade_offset);
-				if (grade_tmp < ENCHANTGRADE_NONE || grade_tmp > ENCHANTGRADE_A) {
-					ShowError("buildin_getitem2: Not a correct grade! Grade=%d\n", grade_tmp);
+				int grade = script_getnum(st, grade_offset);
+				if (grade < ENCHANTGRADE_NONE || grade > MAX_ENCHANTGRADE) {
+					ShowError("buildin_getitem2: Not a correct grade! Grade=%d\n", grade);
 					return SCRIPT_CMD_FAILURE;
 				}
-				item_tmp.enchantgrade = static_cast<e_enchantgrade>(grade_tmp);
+				item_tmp.enchantgrade = static_cast<e_enchantgrade>(grade);
 			}
 		}
 
@@ -7944,7 +7944,7 @@ BUILDIN_FUNC(rentitem2) {
 			return SCRIPT_CMD_FAILURE;
 
 		int grade = script_getnum(st, 11);
-		if (grade < ENCHANTGRADE_NONE || grade > ENCHANTGRADE_A) {
+		if (grade < ENCHANTGRADE_NONE || grade > MAX_ENCHANTGRADE) {
 			ShowError("buildin_rentitem2: Not a correct grade! Grade=%d\n", grade);
 			return SCRIPT_CMD_FAILURE;
 		}
@@ -8198,7 +8198,7 @@ BUILDIN_FUNC(makeitem2) {
 				offset = 15;
 
 				int grade = script_getnum(st, 14);
-				if (grade < ENCHANTGRADE_NONE || grade > ENCHANTGRADE_A) {
+				if (grade < ENCHANTGRADE_NONE || grade > MAX_ENCHANTGRADE) {
 					ShowError( "buildin_%s: Not a correct grade! Grade=%d\n", funcname, grade );
 					return SCRIPT_CMD_FAILURE;
 				}
@@ -8632,7 +8632,7 @@ BUILDIN_FUNC(delitem2)
 			offset = 12;
 
 			int grade = script_getnum(st, 11);
-			if (grade < ENCHANTGRADE_NONE || grade > ENCHANTGRADE_A) {
+			if (grade < ENCHANTGRADE_NONE || grade > MAX_ENCHANTGRADE) {
 				ShowError( "buildin_%s: Not a correct grade! Grade=%d\n", command, grade );
 				return SCRIPT_CMD_FAILURE;
 			}

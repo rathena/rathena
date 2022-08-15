@@ -2465,7 +2465,7 @@ ACMD_FUNC(grade)
 		return -1;
 	}
 
-	grade = cap_value(grade, -ENCHANTGRADE_A, ENCHANTGRADE_A);
+	grade = cap_value(grade, -MAX_ENCHANTGRADE, MAX_ENCHANTGRADE);
 
 	count = 0;
 	for (j = 0; j < EQI_MAX; j++) {
@@ -2480,7 +2480,7 @@ ACMD_FUNC(grade)
 		if(position && !(sd->inventory.u.items_inventory[i].equip & position))
 			continue;
 
-		final_grade = cap_value(sd->inventory.u.items_inventory[i].enchantgrade + grade, 0, ENCHANTGRADE_A);
+		final_grade = cap_value(sd->inventory.u.items_inventory[i].enchantgrade + grade, 0, MAX_ENCHANTGRADE);
 		if (sd->inventory.u.items_inventory[i].enchantgrade != final_grade) {
 			sd->inventory.u.items_inventory[i].enchantgrade = final_grade;
 			current_position = sd->inventory.u.items_inventory[i].equip;
@@ -2493,14 +2493,8 @@ ACMD_FUNC(grade)
 		}
 	}
 
-	if (count == 0)
-		clif_displaymessage(fd, msg_txt(sd,1520)); // No item has been upgraded.
-	else if (count == 1)
-		clif_displaymessage(fd, msg_txt(sd,1521)); // 1 item has been upgraded.
-	else {
-		sprintf(atcmd_output, msg_txt(sd,1522), count); // %d items have been upgraded.
-		clif_displaymessage(fd, atcmd_output);
-	}
+	sprintf(atcmd_output, msg_txt(sd,1520), count); // %d items have been graded.
+	clif_displaymessage(fd, atcmd_output);
 
 	return 0;
 }
