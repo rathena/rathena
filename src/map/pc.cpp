@@ -262,6 +262,91 @@ uint64 AttendanceDatabase::parseBodyNode(const ryml::NodeRef& node){
 
 AttendanceDatabase attendance_db;
 
+const std::string ReputationDatabase::getDefaultLocation(){
+	return std::string( db_path ) + "/reputation.yml";
+}
+
+uint64 ReputationDatabase::parseBodyNode( const ryml::NodeRef& node ){
+	int64 id;
+
+	if( !this->asInt64( node, "Id", id ) ){
+		return 0;
+	}
+
+	std::shared_ptr<s_reputation> reputation = this->find( id );
+	bool exists = reputation != nullptr;
+
+	if( !exists ){
+		if( !this->nodesExist( node, { "Name", "Variable" } ) ){
+			return 0;
+		}
+
+		reputation = std::make_shared<s_reputation>();
+		reputation->id = id;
+	}
+
+	if( this->nodeExists( node, "Name" ) ){
+		std::string name;
+
+		if( !this->asString( node, "Name", name ) ){
+			return 0;
+		}
+
+		reputation->name = name;
+	}
+
+	if( this->nodeExists( node, "Variable" ) ){
+		std::string variable;
+
+		if( !this->asString( node, "Variable", variable ) ){
+			return 0;
+		}
+
+		if( variable.length() > 32 ){
+			this->invalidWarning( node, "Variable name \"%s\" exceeds maximum length 32.\n", variable.c_str() );
+			return 0;
+		}
+
+		reputation->variable = variable;
+	}
+
+	if( this->nodeExists( node, "Minimum" ) ){
+		int64 minimum;
+
+		if( !this->asInt64( node, "Minimum", minimum ) ){
+			return 0;
+		}
+
+		reputation->minimum = minimum;
+	}else{
+		if( !exists ){
+			reputation->minimum = INT64_MIN;
+		}
+	}
+
+	if( this->nodeExists( node, "Maximum" ) ){
+		int64 maximum;
+
+		if( !this->asInt64( node, "Maximum", maximum ) ){
+			return 0;
+		}
+
+		reputation->maximum = maximum;
+	}else{
+		if( !exists ){
+			reputation->maximum = INT64_MIN;
+		}
+	}
+
+	if( !exists ){
+		this->put( id, reputation );
+	}
+
+	return 1;
+}
+
+ReputationDatabase reputation_db;
+
 const std::string PenaltyDatabase::getDefaultLocation(){
 	return std::string( db_path ) + "/level_penalty.yml";
 }
@@ -14914,6 +14999,7 @@ void do_final_pc(void) {
 	ers_destroy(str_reg_ers);
 
 	attendance_db.clear();
+	reputation_db.clear();
 	penalty_db.clear();
 }
 
@@ -14924,6 +15010,7 @@ void do_init_pc(void) {
 	pc_readdb();
 	pc_read_motd(); // Read MOTD [Valaris]
 	attendance_db.load();
+	reputation_db.load();
 
 	add_timer_func_list(pc_invincible_timer, "pc_invincible_timer");
 	add_timer_func_list(pc_eventtimer, "pc_eventtimer");
