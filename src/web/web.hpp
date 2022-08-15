@@ -13,7 +13,9 @@
 #include "../config/core.hpp"
 
 
-#define SQL_BUFFER_SIZE 65535
+#ifndef SQL_BUFFER_SIZE
+	#define SQL_BUFFER_SIZE 65535
+#endif
 
 enum E_WEBSERVER_ST {
 	WEBSERVER_ST_RUNNING = CORE_ST_LAST,

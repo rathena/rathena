@@ -12,7 +12,6 @@
 #define WEB_AUTH_TOKEN_LENGTH 16+1
 #endif
 
-
 typedef struct AccountDB AccountDB;
 typedef struct AccountDBIterator AccountDBIterator;
 
