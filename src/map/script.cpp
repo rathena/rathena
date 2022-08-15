@@ -26038,6 +26038,35 @@ BUILDIN_FUNC( enchantgradeui ){
 #endif
 }
 
+BUILDIN_FUNC(item_reform){
+#if PACKETVER < 20211103
+	ShowError( "buildin_item_reform: This command requires packet version 2021-11-03 or newer.\n" );
+	return SCRIPT_CMD_FAILURE;
+#else
+	struct map_session_data* sd;
+
+	if( !script_charid2sd( 3, sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	t_itemid item_id = script_getnum( st, 2 );
+
+	if( !item_db.exists( item_id ) ){
+		ShowError( "buildin_item_reform: Item ID %u does not exist.\n", item_id );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( !item_reform_db.exists( item_id ) ){
+		ShowError( "buildin_item_reform: Item ID %u is not in Item Reform database.\n", item_id );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_item_reform_open( *sd, item_id );
+
+	return SCRIPT_CMD_SUCCESS;
+#endif
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -26759,6 +26788,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getjobexp_ratio, "i??"),
 	BUILDIN_DEF(enchantgradeui, "?" ),
 
+	BUILDIN_DEF(item_reform, "i?"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

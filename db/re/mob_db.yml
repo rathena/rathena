@@ -75054,7 +75054,7 @@ Body:
     DamageMotion: 420
     Ai: 04
     Drops:
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 1000
       - Item: Decayed_Nail
         Rate: 3000
@@ -75088,7 +75088,7 @@ Body:
     DamageMotion: 384
     Ai: 04
     Drops:
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 1000
       - Item: Mementos
         Rate: 2500
@@ -75126,7 +75126,7 @@ Body:
     Modes:
       Detector: true
     Drops:
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 1000
       - Item: Withered_Flower
         Rate: 2500
@@ -75164,7 +75164,7 @@ Body:
     Modes:
       Detector: true
     Drops:
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 1000
       - Item: Sticky_Mucus
         Rate: 3000
@@ -75202,7 +75202,7 @@ Body:
     Modes:
       Detector: true
     Drops:
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 1000
       - Item: Immortal_Heart
         Rate: 2500
@@ -75236,7 +75236,7 @@ Body:
     DamageMotion: 192
     Ai: 04
     Drops:
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 1000
       - Item: Decayed_Nail
         Rate: 3000
@@ -75270,7 +75270,7 @@ Body:
     DamageMotion: 576
     Ai: 04
     Drops:
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 1000
       - Item: Horrendous_Mouth
         Rate: 3500
@@ -75306,7 +75306,7 @@ Body:
     DamageMotion: 504
     Ai: 04
     Drops:
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 1000
       - Item: Skel_Bone
         Rate: 3500
@@ -75342,7 +75342,7 @@ Body:
     DamageMotion: 396
     Ai: 04
     Drops:
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 1000
       - Item: Immortal_Heart
         Rate: 2000
@@ -75378,7 +75378,7 @@ Body:
     DamageMotion: 480
     Ai: 04
     Drops:
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 1500
       - Item: Realgar_Wine
         Rate: 5000
@@ -75416,7 +75416,7 @@ Body:
     Modes:
       Detector: true
     Drops:
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 1500
       - Item: Tendon
         Rate: 2500
@@ -75452,9 +75452,9 @@ Body:
     DamageMotion: 360
     Ai: 04
     Drops:
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 10000
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 10000
       - Item: Evil_Horn
         Rate: 2000
@@ -75516,9 +75516,9 @@ Body:
     Drops:
       - Item: Evil_Horn
         Rate: 2000
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 10000
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 10000
 #  - Id: 2962
 #    AegisName: E_DEVILING
