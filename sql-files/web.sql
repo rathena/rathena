@@ -4,12 +4,12 @@
 --
 
 CREATE TABLE IF NOT EXISTS `guild_emblems` (
-  `guild_id` int(11) unsigned NOT NULL,
   `world_name` varchar(32) NOT NULL,
+  `guild_id` int(11) unsigned NOT NULL,
   `file_type` varchar(255) NOT NULL,
   `file_data` blob,
   `version` int(11) unsigned NOT NULL default '0',
-  PRIMARY KEY (`guild_id`, `world_name`)
+  PRIMARY KEY (`world_name`, `guild_id`)
 ) ENGINE=MyISAM;
 
 --
@@ -17,10 +17,10 @@ CREATE TABLE IF NOT EXISTS `guild_emblems` (
 --
 
 CREATE TABLE IF NOT EXISTS `user_configs` (
-  `account_id` int(11) unsigned NOT NULL,
   `world_name` varchar(32) NOT NULL,
+  `account_id` int(11) unsigned NOT NULL,
   `data` longtext NOT NULL,
-  PRIMARY KEY (`account_id`, `world_name`)
+  PRIMARY KEY (`world_name`, `account_id`)
 ) ENGINE=MyISAM;
 
 
@@ -29,11 +29,11 @@ CREATE TABLE IF NOT EXISTS `user_configs` (
 --
 
 CREATE TABLE IF NOT EXISTS `char_configs` (
+  `world_name` varchar(32) NOT NULL,
   `account_id` int(11) unsigned NOT NULL,
   `char_id` int(11) unsigned NOT NULL,
-  `world_name` varchar(32) NOT NULL,
   `data` longtext NOT NULL,
-  PRIMARY KEY (`account_id`, `char_id`, `world_name`)
+  PRIMARY KEY (`world_name`, `account_id`, `char_id`)
 ) ENGINE=MyISAM;
 
 --
@@ -41,10 +41,10 @@ CREATE TABLE IF NOT EXISTS `char_configs` (
 --
 
 CREATE TABLE IF NOT EXISTS `merchant_configs` (
+  `world_name` varchar(32) NOT NULL,
   `account_id` int(11) unsigned NOT NULL,
   `char_id` INT(11) UNSIGNED NOT NULL,
-  `world_name` varchar(32) NOT NULL,
   `store_type` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
   `data` longtext NOT NULL,
-  PRIMARY KEY (`account_id`, `char_id`, `world_name`)
+  PRIMARY KEY (`world_name`, `account_id`, `char_id`)
 ) ENGINE=MyISAM;
