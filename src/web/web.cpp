@@ -434,14 +434,16 @@ int do_init(int argc, char** argv) {
 	http_server->set_logger(logger);
 	shutdown_callback = do_shutdown;
 
-	runflag = WEBSERVER_ST_RUNNING;
+	runflag = WEBSERVER_ST_STARTING;
 
 	svr_thr = std::thread([] {
 		http_server->listen(web_config.web_ip.c_str(), web_config.web_port);
 	});
 
 	for (int i = 0; i < 10; i++) {
-		if (http_server->is_running() || runflag != WEBSERVER_ST_RUNNING)
+		if (runflag == CORE_ST_STOP)
+			return 0;
+		if (http_server->is_running())
 			break;
 		ShowDebug("Web server not running, sleeping 1 second.\n");
 		std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -453,6 +455,7 @@ int do_init(int argc, char** argv) {
 		return 0;
 	}
 
+	runflag = WEBSERVER_ST_RUNNING;
 	ShowStatus("The web-server is " CL_GREEN "ready" CL_RESET " (Server is listening on the port %u).\n\n", web_config.web_port);
 	return 0;
 #endif
