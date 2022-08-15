@@ -16,7 +16,7 @@
 
 HANDLER_FUNC(merchantstore_save) {
 	if (!isAuthorized(req, false)) {
-		res.status = 400;
+		res.status = HTTP_BAD_REQUEST;
 		res.set_content("Error", "text/plain");
 		return;
 	}
@@ -50,7 +50,7 @@ HANDLER_FUNC(merchantstore_save) {
 		SqlStmt_ShowDebug(stmt);
 		SqlStmt_Free(stmt);
 		sl.unlock();
-		res.status = 400;
+		res.status = HTTP_BAD_REQUEST;
 		res.set_content("Error", "text/plain");
 		return;
 	}
@@ -69,7 +69,7 @@ HANDLER_FUNC(merchantstore_save) {
 			SqlStmt_ShowDebug(stmt);
 			SqlStmt_Free(stmt);
 			sl.unlock();
-			res.status = 400;
+			res.status = HTTP_BAD_REQUEST;
 			res.set_content("Error", "text/plain");
 			return;
 		}
@@ -88,7 +88,7 @@ HANDLER_FUNC(merchantstore_save) {
 			SqlStmt_ShowDebug(stmt);
 			SqlStmt_Free(stmt);
 			sl.unlock();
-			res.status = 400;
+			res.status = HTTP_BAD_REQUEST;
 			res.set_content("Error", "text/plain");
 			return;
 		}
@@ -101,7 +101,7 @@ HANDLER_FUNC(merchantstore_save) {
 
 HANDLER_FUNC(merchantstore_load) {
 	if (!req.has_file("AID") || !req.has_file("WorldName")) {
-		res.status = 400;
+		res.status = HTTP_BAD_REQUEST;
 		res.set_content("Error", "text/plain");
 		return;
 	}
@@ -135,7 +135,7 @@ HANDLER_FUNC(merchantstore_load) {
 		SqlStmt_ShowDebug(stmt);
 		SqlStmt_Free(stmt);
 		sl.unlock();
-		res.status = 400;
+		res.status = HTTP_BAD_REQUEST;
 		res.set_content("Error", "text/plain");
 		return;
 	}
@@ -156,7 +156,7 @@ HANDLER_FUNC(merchantstore_load) {
 		SqlStmt_ShowDebug(stmt);
 		SqlStmt_Free(stmt);
 		sl.unlock();
-		res.status = 400;
+		res.status = HTTP_BAD_REQUEST;
 		res.set_content("Error", "text/plain");
 		return;
 	}

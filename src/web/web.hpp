@@ -39,6 +39,11 @@ struct Inter_Config {
 	bool emblem_woe_change;							// allow emblem change during woe
 };
 
+enum e_http_status{
+	HTTP_BAD_REQUEST = 400,
+	HTTP_NOT_FOUND = 404,
+};
+
 extern struct Web_Config web_config;
 extern struct Inter_Config inter_config;
 
