@@ -37,6 +37,9 @@
 struct Battle_Config battle_config;
 static struct eri *delay_damage_ers; //For battle delay damage structures.
 
+// Early declaration
+int battle_get_weapon_element(struct Damage *wd, struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, short weapon_position, bool calc_for_damage_only);
+
 /**
  * Returns the current/list skill used by the bl
  * @param bl
@@ -275,17 +278,21 @@ void battle_damage(struct block_list *src, struct block_list *target, int64 dama
 		skill_counter_additional_effect(src, target, skill_id, skill_lv, attack_type, tick);
 	// This is the last place where we have access to the actual damage type, so any monster events depending on type must be placed here
 	if (target->type == BL_MOB) {
-		struct mob_data* md = BL_CAST(BL_MOB, target);
+		mob_data *md = BL_CAST(BL_MOB, target);
 
-		if (!status_isdead(target) && src != target) {
-			if (damage > 0 )
-				mobskill_event(md, src, tick, attack_type);
-			if (skill_id)
-				mobskill_event(md, src, tick, MSC_SKILLUSED|(skill_id<<16));
+		if (md != nullptr) {
+			// Trigger monster skill condition for non-skill attacks.
+			if (!status_isdead(target) && src != target) {
+				if (damage > 0)
+					mobskill_event(md, src, tick, attack_type);
+				if (skill_id > 0)
+					mobskill_event(md, src, tick, MSC_SKILLUSED | (skill_id << 16));
+			}
+
+			// Monsters differentiate whether they have been attacked by a skill or a normal attack
+			if (damage > 0 && (attack_type & BF_NORMAL))
+				md->norm_attacked_id = md->attacked_id;
 		}
-
-		if (damage && (attack_type&BF_NORMAL)) // Monsters differentiate whether they have been attacked by a skill or a normal attack
-			md->norm_attacked_id = md->attacked_id;
 	}
 	map_freeblock_unlock();
 }
@@ -1822,21 +1829,8 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			damage = div_;
 	}
 
-	if (tsd && pc_ismadogear(tsd)) {
-		short element = skill_get_ele(skill_id, skill_lv);
-
-		if( !skill_id || element == ELE_WEAPON ) { //Take weapon's element
-			struct status_data *sstatus = NULL;
-			if( src->type == BL_PC && ((TBL_PC*)src)->bonus.arrow_ele )
-				element = ((TBL_PC*)src)->bonus.arrow_ele;
-			else if( (sstatus = status_get_status_data(src)) ) {
-				element = sstatus->rhw.ele;
-			}
-		} else if( element == ELE_ENDOWED ) //Use enchantment's element
-			element = status_get_attack_sc_element(src,status_get_sc(src));
-		else if( element == ELE_RANDOM ) //Use random element
-			element = rnd()%ELE_ALL;
-		pc_overheat(tsd, (element == ELE_FIRE ? 3 : 1));
+	if (sd && pc_ismadogear(sd)) {
+		pc_overheat(*sd, (battle_get_weapon_element(d, src, bl, skill_id, skill_lv, EQI_HAND_R, false) == ELE_FIRE ? 3 : 1));
 	}
 
 	if (bl->type == BL_MOB) { // Reduces damage received for Green Aura MVP
@@ -3193,7 +3187,7 @@ static int battle_calc_equip_attack(struct block_list *src, int skill_id)
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
-static int battle_get_weapon_element(struct Damage* wd, struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, short weapon_position, bool calc_for_damage_only)
+int battle_get_weapon_element(struct Damage* wd, struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, short weapon_position, bool calc_for_damage_only)
 {
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
 	struct status_change *sc = status_get_sc(src);

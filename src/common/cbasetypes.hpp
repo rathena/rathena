@@ -181,17 +181,6 @@ typedef unsigned long int   ppuint32;
 #include <stddef.h> // size_t
 //#include <stdbool.h> //boolean
 
-#if defined(WIN32) && !defined(MINGW) // does not have a signed size_t
-//////////////////////////////
-#if defined(_WIN64)	// naive 64bit windows platform
-typedef __int64			ssize_t;
-#else
-typedef int				ssize_t;
-#endif
-//////////////////////////////
-#endif
-//////////////////////////////
-
 
 //////////////////////////////////////////////////////////////////////////
 // pointer sized integers
@@ -244,10 +233,6 @@ typedef uintptr_t uintptr;
 #define stricmp				strcasecmp
 #define strncmpi			strncasecmp
 #define strnicmp			strncasecmp
-#endif
-#if defined(_MSC_VER) && _MSC_VER > 1200
-#define strtoull			_strtoui64
-#define strtoll				_strtoi64
 #endif
 
 // keyword replacement
