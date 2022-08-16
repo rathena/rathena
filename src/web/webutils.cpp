@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <iostream>
 
-/* 
+/**
  * Appends to_append to the JSON object obj
  * modifies the obj parameter
  * Returns true on succes, false on failure
@@ -22,7 +22,6 @@ bool addToJsonObject(std::string& obj, const std::string& to_append) {
 		return false;
 	}
 	for (auto it = last_close_brace + 1; it != obj.rend(); ++it) {
-		std::cout << "Checking " << *it << "\n";
 		if (*it == '}' || *it == '"' || *it == ':') {
 			// there was a value, we need to add a comma
 			need_comma = true;
@@ -33,7 +32,6 @@ bool addToJsonObject(std::string& obj, const std::string& to_append) {
 			break;
 		}
 	}
-	std::cout << "erase everything from " << *(last_close_brace.base() - 1) << "\n";
 	obj.erase(--(last_close_brace.base()));
 	if (need_comma) {
 		obj += ",";
