@@ -32,3 +32,7 @@ set ( HTTPLIB_DEFINITIONS
 include_directories( ${HTTPLIB_INCLUDE_DIRS} ${HTTPLIB_SOURCE_DIR} )
 
 ADD_LIBRARY( ${this_target} STATIC ${HTTPLIB_SOURCES} )
+
+if (not WIN32)
+    target_compile_definitions(${this_target} PUBLIC "CPPHTTPLIB_SEND_FLAGS=MSG_NOSIGNAL")
+endif()
