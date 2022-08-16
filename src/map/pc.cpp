@@ -13686,17 +13686,17 @@ void PlayerStatPointDatabase::loadingFinished(){
 		level_one = std::make_shared<s_statpoint_entry>();
 
 		level_one->level = 1;
-		level_one->statpoints = start_status_points;
+		level_one->statpoints = inter_config.start_status_points;
 		level_one->traitpoints = 0;
 
 		this->put( 1, level_one );
 	}else if( battle_config.use_statpoint_table ){
-		if( level_one->statpoints != start_status_points ){
-			ShowError( "Status points for Level 1 (=%u) do not match inter_athena.conf value (=%u).\n", level_one->statpoints, start_status_points );
-			level_one->statpoints = start_status_points;
+		if( level_one->statpoints != inter_config.start_status_points ){
+			ShowError( "Status points for Level 1 (=%u) do not match inter_athena.conf value (=%u).\n", level_one->statpoints, inter_config.start_status_points );
+			level_one->statpoints = inter_config.start_status_points;
 		}
 	}else{
-		level_one->statpoints = start_status_points;
+		level_one->statpoints = inter_config.start_status_points;
 		level_one->traitpoints = 0;
 	}
 
