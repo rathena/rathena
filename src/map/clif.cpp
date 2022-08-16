@@ -23945,6 +23945,11 @@ void clif_parse_item_reform_start( int fd, struct map_session_data* sd ){
 		}
 	}
 
+	// If triggered from item
+	if( sd->itemid == sd->state.item_reform && pc_delitem( sd, sd->itemindex, 1, 0, 0, LOG_TYPE_REFORM ) != 0 ){
+		return;
+	}
+
 	// Log removal of item
 	log_pick_pc( sd, LOG_TYPE_REFORM, -1, &selected_item );
 

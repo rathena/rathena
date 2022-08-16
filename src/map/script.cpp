@@ -26049,11 +26049,27 @@ BUILDIN_FUNC(item_reform){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	t_itemid item_id = script_getnum( st, 2 );
+	t_itemid item_id;
 
-	if( !item_db.exists( item_id ) ){
-		ShowError( "buildin_item_reform: Item ID %u does not exist.\n", item_id );
-		return SCRIPT_CMD_FAILURE;
+	if( script_hasdata( st, 2 ) ){
+		item_id = script_getnum( st, 2 );
+
+		if( !item_db.exists( item_id ) ){
+			ShowError( "buildin_item_reform: Item ID %u does not exist.\n", item_id );
+			return SCRIPT_CMD_FAILURE;
+		}
+	}else{
+		if( sd->itemid == 0 ){
+			ShowError( "buildin_item_reform: Called outside of an item script without item id.\n" );
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		if( sd->inventory_data[sd->itemindex]->flag.delay_consume == 0 ){
+			ShowError( "buildin_item_reform: Called from item %u, which is not a consumed delayed.\n", sd->itemid );
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		item_id = sd->itemid;
 	}
 
 	if( !item_reform_db.exists( item_id ) ){
@@ -26788,7 +26804,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getjobexp_ratio, "i??"),
 	BUILDIN_DEF(enchantgradeui, "?" ),
 
-	BUILDIN_DEF(item_reform, "i?"),
+	BUILDIN_DEF(item_reform, "??"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

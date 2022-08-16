@@ -50712,13 +50712,13 @@ Body:
     Name: Thanos Weapon Reform Cube (Lower)
     Type: DelayConsume
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 100592
     AegisName: Thanos_W_Reform_2
     Name: Thanos Weapon Reform Cube (Middle)
     Type: DelayConsume
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 100596
     AegisName: FullTempShadow_Mix
     Name: Full Tempest Shadow Thump Box
@@ -50763,7 +50763,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 100620
     AegisName: True_GemShadow_Mix
     Name: True Gemstone Shadow Thump Box
@@ -50824,13 +50824,13 @@ Body:
     Name: Purification Ritual
     Type: DelayConsume
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 100649
     AegisName: Consecrate_Weapon_2
     Name: Advanced Purification Ritual
     Type: DelayConsume
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 100650
     AegisName: Pontifex_Courage
     Name: Pontifex Courage
@@ -50903,13 +50903,13 @@ Body:
     Name: Armor Modification Box (Lower)
     Type: DelayConsume
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 100695
     AegisName: C_Armor_Reform_2
     Name: Armor Modification Box (Middle)
     Type: DelayConsume
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 100699
     AegisName: Twins_Box_IL
     Name: Twins Refinement Box
@@ -50987,19 +50987,19 @@ Body:
     Name: Weapon Modification Box (Lower)
     Type: DelayConsume
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 100747
     AegisName: C_Weapon_Reform_2
     Name: Weapon Modification Box (Middle)
     Type: DelayConsume
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 100748
     AegisName: C_Weapon_Reform_3
     Name: Weapon Modification Box (Upper)
     Type: DelayConsume
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 100753
     AegisName: Hero_Equipment_Cube
     Name: Ancient Hero's Release Cube
@@ -51008,7 +51008,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 100783
     AegisName: MajorAutoSpell_Mix
     Name: Auto Spell Shadow Pick-Up Box    # !todo check english name
@@ -51026,48 +51026,48 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 100786
     AegisName: C_Armor_Reform_3
     Name: Armor Modification Box (Upper)
     Type: DelayConsume
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 100817
     AegisName: Thanos_Upgrade_Box
     Name: Thanos Upgrade Box
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 100819
     AegisName: Hero_Weapon_Up_Box_1
     Name: Hero's Weapon Modification Box I
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 100820
     AegisName: Hero_Weapon_Up_Box_2
     Name: Hero's Weapon Modification Box II
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 100821
     AegisName: Hero_Weapon_Hammer_1
     Name: Modified Hero's Weapon Refinement Hammer I
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 100822
     AegisName: Hero_Weapon_Hammer_2
     Name: Modified Hero's Weapon Refinement Hammer II
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 100823
     AegisName: Lens_Craft_Stone
     Name: Lens Craft Stone    # !todo check english name
@@ -51081,14 +51081,14 @@ Body:
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 100835
     AegisName: Hero_Weapon_Hammer_3
     Name: Modified Hero's Weapon Refinement Hammer III
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 100880
     AegisName: aegis_100880
     Name: Piercing Shadow Box
@@ -51124,7 +51124,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 100900
     AegisName: Teleport_Ep19_01
     Name: Ice Castle Transport Wing
@@ -51210,14 +51210,14 @@ Body:
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 100918
     AegisName: Hero_Weapon_Up_Box_4
     Name: Hero's Weapon Modification Box IV
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 100920
     AegisName: Enchant_Stone_Box24
     Name: Costume Enchant Stone Box 24
@@ -51233,14 +51233,14 @@ Body:
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 100939
     AegisName: Hero_Weapon_Up_Box_5
     Name: Hero's Weapon Modification Box V
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 101075
     AegisName: SLD_Card_Recipe
     Name: Sealed Boss Card Pick-Up Box    # !todo check english name
@@ -51258,7 +51258,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 101078
     AegisName: Adulter_Weapon_Up_Box
     Name: Adulter Weapon Modification Box
@@ -51267,7 +51267,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 101097
     AegisName: aegis_101097
     Name: "[Scroll] Unlimited Drink"
@@ -51596,14 +51596,14 @@ Body:
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 101190
     AegisName: Hero_Weapon_Up_Box_6
     Name: Hero's Weapon Modification Box VI
     Type: DelayConsume
     Weight: 10
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 101217
     AegisName: Snow_F_Enchant2
     Name: Snowflower Armor Enchant (Garment)
@@ -51665,7 +51665,7 @@ Body:
     Name: Shadow Changer
     Type: DelayConsume
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 101257
     AegisName: R_BearersShadow_Mix
     Name: Road Bearers Shadow Pick-Up Box    # !todo check english name
@@ -51692,7 +51692,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 101260
     AegisName: R_Bearers_Shadow_Up
     Name: Road Bearers Shadow Grimoire    # !todo check english name
@@ -51775,7 +51775,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 101307
     AegisName: Barmund_Hammer
     Name: Barmund Refining Hammer
@@ -51784,7 +51784,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* reform(); */
+      item_reform();
   - Id: 101308
     AegisName: True_GemShadow_Up
     Name: True Gemstone Shadow Spellbook
