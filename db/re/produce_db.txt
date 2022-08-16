@@ -393,9 +393,9 @@
 //-- Water Elemental Converter <-- SA_CREATECON & 1 Blank Scroll, 1 Crystal Blue
 143,12115,23,1007,1,7433,1,991,1
 //-- Earth Elemental Converter <-- SA_CREATECON & 1 Blank Scroll, 1 Green Live
-144,12116,23,1007,1,7433,1,992,1
+144,12116,23,1007,1,7433,1,993,1
 //-- Wind Elemental Converter <-- SA_CREATECON & 1 Blank Scroll, 1 Wind of Verdure
-145,12117,23,1007,1,7433,1,993,1
+145,12117,23,1007,1,7433,1,992,1
 
 //==============================================
 
@@ -703,14 +703,14 @@
 //==============================================
 
 //===== Bionic Pharmacy === ItemLV=32 ==========
-// Flame Acid Bottle (1000276) <-- BO_BIONIC_PHARMACY Lvl, 1 Beaker, 5 Fire Bottle, 5 Acid Bottle, 2 Bloody Red
-284,1000276,32,5336,1,1000275,1,7135,5,7136,5,990,2
-// Earth Acid Bottle (1000277) <-- BO_BIONIC_PHARMACY Lvl, 1 Beaker, 5 Fire Bottle, 5 Acid Bottle, 2 Yellow Live
-285,1000277,32,5336,1,1000275,1,7135,5,7136,5,993,2
-// Gale Acid Bottle (1000278) <-- BO_BIONIC_PHARMACY Lvl, 1 Beaker, 5 Fire Bottle, 5 Acid Bottle, 2 Wind of Verdure
-286,1000278,32,5336,1,1000275,1,7135,5,7136,5,992,2
-// Icicle Acid Bottle (1000279) <-- BO_BIONIC_PHARMACY Lvl, 1 Beaker, 5 Fire Bottle, 5 Acid Bottle, 2 Crystal Blue
-287,1000279,32,5336,1,1000275,1,7135,5,7136,5,991,2
+// Flame Acid Bottle (1000276) <-- BO_BIONIC_PHARMACY Lvl, 1 Beaker, 1 Fire Bottle, 1 Acid Bottle, 2 Scarlet Point
+284,1000276,32,5336,1,1000275,1,7135,1,7136,1,6360,2
+// Earth Acid Bottle (1000277) <-- BO_BIONIC_PHARMACY Lvl, 1 Beaker, 1 Fire Bottle, 1 Acid Bottle, 2 Lime Green Point
+285,1000277,32,5336,1,1000275,1,7135,1,7136,1,6363,2
+// Gale Acid Bottle (1000278) <-- BO_BIONIC_PHARMACY Lvl, 1 Beaker, 1 Fire Bottle, 1 Acid Bottle, 2 Yellow Wish
+286,1000278,32,5336,1,1000275,1,7135,1,7136,1,6362,2
+// Icicle Acid Bottle (1000279) <-- BO_BIONIC_PHARMACY Lvl, 1 Beaker, 1 Fire Bottle, 1 Acid Bottle, 2 Indigo Blue
+287,1000279,32,5336,1,1000275,1,7135,1,7136,1,6361,2
 // High Coating Bottle (1000280) <-- BO_BIONIC_PHARMACY Lvl, 1 Beaker, 5 Empty Bottle, 10 Coating Bottle
 288,1000280,32,5336,1,1000275,1,713,5,7139,10
 // High Plant Bottle (1000281) <-- BO_BIONIC_PHARMACY Lvl, 1 Beaker, 2 Seed Of Thorny Plant, 2 Bloodsuck Plant Seed, 5 Mandragora Flowerpot, 10 Plant Bottle
