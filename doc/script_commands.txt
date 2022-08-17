@@ -8178,13 +8178,13 @@ This command requires packet version 2020-07-24 or newer.
 
 *set_reputation_points(<type>,<points>{,<char id>})
 
-Sets the reputation points <points> for reputation group <type> for the attached player or the given character id.
+Sets the reputation points via <points> for reputation group <type> for the attached player or the given character ID.
 
 ---------------------------------------
 
 *get_reputation_points(<type>{,<char id>})
 
-Gets the reputation points for reputation group <type> for the attached player or the given character id.
+Gets the reputation points for reputation group <type> for the attached player or the given character ID.
 
 ---------------------------------------
 \\

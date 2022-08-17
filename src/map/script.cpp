@@ -26046,7 +26046,6 @@ BUILDIN_FUNC(set_reputation_points){
 	}
 
 	int64 type = script_getnum64( st, 2 );
-
 	std::shared_ptr<s_reputation> reputation = reputation_db.find( type );
 
 	if( reputation == nullptr ){
@@ -26075,7 +26074,6 @@ BUILDIN_FUNC(get_reputation_points){
 	}
 
 	int64 type = script_getnum64( st, 2 );
-
 	std::shared_ptr<s_reputation> reputation = reputation_db.find( type );
 
 	if( reputation == nullptr ){

@@ -22,11 +22,11 @@
 # Reputation Settings
 #
 ###########################################################################
-# - Id                                  Clientside index
-#   Name                                Name of the reputation type
-#   Variable                            Name of the variable that will store the reputation
-#   Minimum                             Minimum amount of points (Default: INT64_MIN)
-#   Maximum                             Maximum amount of points (Default: INT64_MAX)
+# - Id                                  Client side index.
+#   Name                                Name of the reputation type.
+#   Variable                            Name of the variable that will store the reputation. (Default: RepPoints<id>)
+#   Minimum                             Minimum amount of points. (Default: INT64_MIN)
+#   Maximum                             Maximum amount of points. (Default: INT64_MAX)
 ###########################################################################
 
 Header:
