@@ -26052,11 +26052,24 @@ BUILDIN_FUNC(item_reform){
 	t_itemid item_id;
 
 	if( script_hasdata( st, 2 ) ){
-		item_id = script_getnum( st, 2 );
+		if( script_isstring( st, 2 ) ){
+			const char* item_name = script_getstr( st, 2 );
 
-		if( !item_db.exists( item_id ) ){
-			ShowError( "buildin_item_reform: Item ID %u does not exist.\n", item_id );
-			return SCRIPT_CMD_FAILURE;
+			std::shared_ptr<item_data> item = item_db.searchname( item_name );
+
+			if( item == nullptr ){
+				ShowError("buildin_item_reform: Item \"%s\" does not exist.\n", item_name );
+				return SCRIPT_CMD_FAILURE;
+			}
+
+			item_id = item->nameid;
+		}else{
+			item_id = script_getnum( st, 2 );
+
+			if( !item_db.exists( item_id ) ){
+				ShowError( "buildin_item_reform: Item ID %u does not exist.\n", item_id );
+				return SCRIPT_CMD_FAILURE;
+			}
 		}
 	}else{
 		if( sd->itemid == 0 ){

@@ -8177,9 +8177,10 @@ This command requires packet version 2020-07-24 or newer.
 ---------------------------------------
 
 *item_reform({<item id>{,<char id>}})
+*item_reform({<"item name">{,<char id>}})
 
-Opens the item reform UI for <item id> for the attached player or the given character id.
-If run from within an item script <item id> is optional.
+Opens the item reform UI for <item id> or <item name> for the attached player or the given character id.
+If run from within an item script <item id> or <item name> is optional.
 
 This feature requires packet version 2021-11-03 or newer.
 
