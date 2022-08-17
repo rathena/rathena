@@ -23768,7 +23768,8 @@ void clif_parse_enchantgrade_start( int fd, struct map_session_data* sd ){
 	}else{
 		// Check if it has to be announced (has to be done before deleting the item from inventory)
 		if( enchantgradelevel->announce ){
-			clif_enchantgrade_announce( *sd, sd->inventory.u.items_inventory[index], false );
+			if(enchantgradelevel->grade > ENCHANTGRADE_C)
+				clif_enchantgrade_announce( *sd, sd->inventory.u.items_inventory[index], false );
 		}
 
 		// Delete the item if it is breakable
