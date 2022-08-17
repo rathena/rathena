@@ -12474,7 +12474,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	switch(type) {
 		case SC_DANCING:
-			if ((val1&0xFFFF) != CG_MOONLIT)
+			if ((val1&0xFFFF) == CG_MOONLIT)
 				sc->opt3 |= OPT3_MOONLIT;
 			break;
 		case SC_INCATKRATE:
