@@ -284,7 +284,7 @@ void battle_damage(struct block_list *src, struct block_list *target, int64 dama
 			// Trigger monster skill condition for non-skill attacks.
 			if (!status_isdead(target) && src != target) {
 				if (damage > 0)
-					mobskill_event(md, src, tick, attack_type);
+					mobskill_event(md, src, tick, attack_type, damage);
 				if (skill_id > 0)
 					mobskill_event(md, src, tick, MSC_SKILLUSED | (skill_id << 16));
 			}
