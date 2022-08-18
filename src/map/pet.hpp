@@ -201,7 +201,7 @@ struct pet_data {
 	struct pet_skill_attack* a_skill;
 	struct pet_skill_support* s_skill;
 	struct pet_loot* loot;
-	std::shared_ptr<s_petautobonus> autobonus, autobonus2, autobonus3;
+	std::vector<std::shared_ptr<s_petautobonus>> autobonus, autobonus2, autobonus3;
 
 	int masterteleport_timer;
 	struct map_session_data *master;
@@ -257,9 +257,9 @@ void pet_clear_support_bonuses(struct map_session_data *sd);
 #define pet_stop_walking(pd, type) unit_stop_walking(&(pd)->bl, type)
 #define pet_stop_attack(pd) unit_stop_attack(&(pd)->bl)
 
-bool pet_addautobonus(std::shared_ptr<s_petautobonus> &bonus, const std::string &script, int16 rate, uint32 dur, uint16 atk_type, const std::string &other_script, bool onskill);
-void pet_exeautobonus(map_session_data &sd, std::shared_ptr<s_petautobonus> &bonus);
-void pet_delautobonus(map_session_data &sd, std::shared_ptr<s_petautobonus> &bonus, bool restore);
+bool pet_addautobonus(std::vector<std::shared_ptr<s_petautobonus>> &bonus, const std::string &script, int16 rate, uint32 dur, uint16 atk_type, const std::string &other_script, bool onskill);
+void pet_exeautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_petautobonus>> *bonus, std::shared_ptr<s_petautobonus> &autobonus);
+void pet_delautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_petautobonus>> &bonus, bool restore);
 
 void do_init_pet(void);
 void do_final_pet(void);

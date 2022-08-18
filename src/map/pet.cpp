@@ -2344,7 +2344,12 @@ void pet_evolution(struct map_session_data *sd, int16 pet_id) {
  * @param onskill: Skill used to trigger autobonus
  * @return True on success or false otherwise
  */
-bool pet_addautobonus(std::shared_ptr<s_petautobonus> &bonus, const std::string &script, int16 rate, uint32 dur, uint16 flag, const std::string &other_script, bool onskill) {
+bool pet_addautobonus(std::vector<std::shared_ptr<s_petautobonus>> &bonus, const std::string &script, int16 rate, uint32 dur, uint16 flag, const std::string &other_script, bool onskill) {
+	if (bonus.size() == MAX_PC_BONUS) {
+		ShowWarning("pet_addautobonus: Reached max (%d) number of petautobonus per pet!\n", MAX_PC_BONUS);
+		return false;
+	}
+
 	if (!onskill) {
 		if (!(flag & BF_RANGEMASK))
 			flag |= BF_SHORT | BF_LONG; //No range defined? Use both.
@@ -2372,7 +2377,7 @@ bool pet_addautobonus(std::shared_ptr<s_petautobonus> &bonus, const std::string 
 	if (!other_script.empty())
 		entry->other_script = other_script;
 
-	bonus = entry;
+	bonus.push_back(entry);
 
 	return true;
 }
@@ -2383,28 +2388,35 @@ bool pet_addautobonus(std::shared_ptr<s_petautobonus> &bonus, const std::string 
  * @param bonus: Autobonus
  * @param restore: Run script on clearing or not
  */
-void pet_delautobonus(map_session_data &sd, std::shared_ptr<s_petautobonus> &bonus, bool restore) {
-	if (bonus != nullptr && bonus->timer != INVALID_TIMER && !bonus->bonus_script.empty() && restore) {
-		script_run_petautobonus(bonus->bonus_script, sd);
+void pet_delautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_petautobonus>> &bonus, bool restore) {
+	std::vector<std::shared_ptr<s_petautobonus>>::iterator it = bonus.begin();
 
-		bonus = nullptr;
+	while (it != bonus.end()) {
+		std::shared_ptr<s_petautobonus> b = *it;
+
+		if (b->timer != INVALID_TIMER && !b->bonus_script.empty() && restore) {
+			script_run_petautobonus(b->bonus_script, sd);
+
+			it = bonus.erase(it);
+		}
 	}
 }
 
 /**
  * Execute petautobonus on player.
  * @param sd: Player data
+ * @param bonus: Bonus vector
  * @param autobonus: Autobonus to run
  */
-void pet_exeautobonus(map_session_data &sd, std::shared_ptr<s_petautobonus> &bonus) {
-	if (bonus->timer != INVALID_TIMER)
-		delete_timer(bonus->timer, pet_endautobonus);
+void pet_exeautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_petautobonus>> *bonus, std::shared_ptr<s_petautobonus> &autobonus) {
+	if (autobonus->timer != INVALID_TIMER)
+		delete_timer(autobonus->timer, pet_endautobonus);
 
-	if (!bonus->other_script.empty()) {
-		script_run_petautobonus(bonus->other_script, sd);
+	if (!autobonus->other_script.empty()) {
+		script_run_petautobonus(autobonus->other_script, sd);
 	}
 
-	bonus->timer = add_timer(gettick() + bonus->duration, pet_endautobonus, sd.bl.id, (intptr_t)&bonus);
+	autobonus->timer = add_timer(gettick() + autobonus->duration, pet_endautobonus, sd.bl.id, (intptr_t)&bonus);
 	status_calc_pc(&sd, SCO_FORCE);
 }
 
@@ -2413,13 +2425,17 @@ void pet_exeautobonus(map_session_data &sd, std::shared_ptr<s_petautobonus> &bon
  */
 TIMER_FUNC(pet_endautobonus) {
 	map_session_data *sd = map_id2sd(id);
-	std::shared_ptr<s_petautobonus> *bonus = (std::shared_ptr<s_petautobonus> *)data;
+	std::vector<std::shared_ptr<s_petautobonus>> *bonus = (std::vector<std::shared_ptr<s_petautobonus>> *)data;
 
 	nullpo_ret(sd);
 	nullpo_ret(bonus);
 
-	if (bonus->get()->timer == tid)
-		bonus->get()->timer = INVALID_TIMER;
+	for (std::shared_ptr<s_petautobonus> autobonus : *bonus) {
+		if (autobonus->timer == tid) {
+			autobonus->timer = INVALID_TIMER;
+			break;
+		}
+	}
 
 	status_calc_pc(sd, SCO_FORCE);
 	return 0;

@@ -9982,7 +9982,7 @@ BUILDIN_FUNC(petautobonus) {
 	map_session_data *sd;
 
 	if (!script_rid2sd(sd))
-		return SCRIPT_CMD_SUCCESS; // No player attached
+		return SCRIPT_CMD_FAILURE; // No player attached
 
 	const char *command = script_getfuncname(st);
 
@@ -9996,7 +9996,7 @@ BUILDIN_FUNC(petautobonus) {
 	uint32 dur = script_getnum(st, 4);
 
 	if (!rate || !dur || bonus_script.empty())
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
 
 	uint16 atk_type = 0;
 	std::string other_script = {};
@@ -10039,7 +10039,6 @@ BUILDIN_FUNC(petautobonus3) {
 
 	uint16 skill_id = 0;
 	std::string other_script = {};
-	std::shared_ptr<s_petautobonus> petbonus = sd->pd->autobonus3;
 
 	if (script_isstring(st, 5)) {
 		const char *name = script_getstr(st, 5);
@@ -10060,7 +10059,7 @@ BUILDIN_FUNC(petautobonus3) {
 	if (script_hasdata(st, 6))
 		other_script = script_getstr(st, 6);
 
-	if (pet_addautobonus(petbonus, bonus_script, rate, dur, skill_id, other_script, true)) {
+	if (pet_addautobonus(sd->pd->autobonus3, bonus_script, rate, dur, skill_id, other_script, true)) {
 		script_add_petautobonus(bonus_script);
 		if (!other_script.empty())
 			script_add_petautobonus(other_script);
