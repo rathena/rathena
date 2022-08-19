@@ -26038,6 +26038,58 @@ BUILDIN_FUNC( enchantgradeui ){
 #endif
 }
 
+BUILDIN_FUNC(set_reputation_points){
+	struct map_session_data* sd;
+
+	if( !script_charid2sd( 4, sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int64 type = script_getnum64( st, 2 );
+	std::shared_ptr<s_reputation> reputation = reputation_db.find( type );
+
+	if( reputation == nullptr ){
+		ShowError( "buildin_set_reputation_points: Unknown reputation type %" PRIi64 ".\n", type );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int64 points = script_getnum64( st, 3 );
+
+	points = cap_value( points, reputation->minimum, reputation->maximum );
+
+	if( !pc_setreg2( sd, reputation->variable.c_str(), points ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_reputation_type( *sd, type, points );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(get_reputation_points){
+	struct map_session_data* sd;
+
+	if( !script_charid2sd( 3, sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int64 type = script_getnum64( st, 2 );
+	std::shared_ptr<s_reputation> reputation = reputation_db.find( type );
+
+	if( reputation == nullptr ){
+		ShowError( "buildin_set_reputation_points: Unknown reputation type %" PRIi64 ".\n", type );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int64 points = pc_readreg2( sd, reputation->variable.c_str() );
+
+	points = cap_value( points, reputation->minimum, reputation->maximum );
+
+	script_pushint( st, points );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -26759,6 +26811,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getjobexp_ratio, "i??"),
 	BUILDIN_DEF(enchantgradeui, "?" ),
 
+	BUILDIN_DEF(set_reputation_points, "ii?"),
+	BUILDIN_DEF(get_reputation_points, "i?"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
