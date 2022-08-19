@@ -23763,12 +23763,12 @@ void clif_parse_enchantgrade_start( int fd, struct map_session_data* sd ){
 		clif_enchantgrade_result( *sd, index, ENCHANTGRADE_UPGRADE_SUCCESS );
 
 		// Check if it has to be announced
-		if( enchantgradelevel->announce ){
+		if( enchantgradelevel->AnnounceSuccess ){
 			clif_enchantgrade_announce( *sd, sd->inventory.u.items_inventory[index], true );
 		}
 	}else{
 		// Check if it has to be announced (has to be done before deleting the item from inventory)
-		if( enchantgradelevel->announce ){
+		if( enchantgradelevel->AnnounceFail ){
 			if(enchantgradelevel->grade > ENCHANTGRADE_C)
 				clif_enchantgrade_announce( *sd, sd->inventory.u.items_inventory[index], false );
 		}
