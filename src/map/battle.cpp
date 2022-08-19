@@ -1459,13 +1459,22 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		case HW_GRAVITATION:
 #endif
 		case SP_SOULEXPLOSION:
+			// Adjust these based on any possible PK damage rates.
+			if (battle_config.pk_mode == 1 && map_getmapflag(bl->m, MF_PVP) > 0)
+				damage = battle_calc_pk_damage(*src, *bl, damage, skill_id, flag);
+
 			return damage; //These skills bypass everything else.
-  }
+	}
 
 	// Nothing can reduce the damage, but Safety Wall and Millennium Shield can block it completely.
 	// So can defense sphere's but what the heck is that??? [Rytech]
-	if (skill_id == SJ_NOVAEXPLOSING && !(sc && (sc->data[SC_SAFETYWALL] || sc->data[SC_MILLENNIUMSHIELD])))
+	if (skill_id == SJ_NOVAEXPLOSING && !(sc && (sc->data[SC_SAFETYWALL] || sc->data[SC_MILLENNIUMSHIELD]))) {
+		// Adjust this based on any possible PK damage rates.
+		if (battle_config.pk_mode == 1 && map_getmapflag(bl->m, MF_PVP) > 0)
+			damage = battle_calc_pk_damage(*src, *bl, damage, skill_id, flag);
+
 		return damage;
+	}
 
 	if( sc && sc->count ) {
 		if (!battle_status_block_damage(src, bl, sc, d, damage, skill_id, skill_lv)) // Statuses that reduce damage to 0.
@@ -1818,7 +1827,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	} //End of caster SC_ check
 
 	//PK damage rates
-	if (map_getmapflag(bl->m, MF_PVP) > 0)
+	if (battle_config.pk_mode == 1 && map_getmapflag(bl->m, MF_PVP) > 0)
 		damage = battle_calc_pk_damage(*src, *bl, damage, skill_id, flag);
 
 	if(battle_config.skill_min_damage && damage > 0 && damage < div_) {
