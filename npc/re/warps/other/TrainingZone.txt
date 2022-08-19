@@ -1,0 +1,91 @@
+//===== rAthena Script =======================================
+//= Training Zone
+//===== Description: =========================================
+//= NPC warp related to the training zone.
+//===== Changelog: ===========================================
+//= 1.0 Initial Release [Capuche]
+//============================================================
+
+prontera,246,62,3	script	Training Instructor#sol1	8W_SOLDIER,{
+	mes "[Training Instructor]";
+	mes "If you want to train in a wider area, I'll let you in.";
+	next;
+	mes "[Training Instructor]";
+	mes "The training ground is divided into two main areas.";
+	next;
+	mes "[Training Instructor]";
+	mes "Upper area where you can check the applied force based on monster size.";
+	next;
+	mes "[Training Instructor]";
+	mes "The lower area where you can check the force applied depending on the monster's attribute and form.";
+	next;
+	mes "[Training Instructor]";
+	mes "Where would you like to enter?";
+	next;
+	switch( select( "Upper area", "Lower area", "Do not enter" ) ) {
+	case 1:
+		mes "[Training Instructor]";
+		mes "Then I will guide you.";
+		close2;
+		warp "tra_fild",112,167;
+		end;
+	case 2:
+		mes "[Training Instructor]";
+		mes "Then I will guide you.";
+		close2;
+		warp "tra_fild",111,74;
+		end;
+	case 3:
+		mes "[Training Instructor]";
+		mes "If you need guidance, come to me.";
+		close;
+	}
+}
+
+tra_fild,111,79,3	script	Training Instructor#sol3	8W_SOLDIER,{
+	mes "[Training Instructor]";
+	mes "Are you sure you want to move to the upper section?";
+	next;
+	switch( select( "Move", "Do not move", "Warp to Prontera." ) ) {
+	case 1:
+		mes "[Training Instructor]";
+		mes "Go to upper section!!!";
+		close2;
+		warp "tra_fild",112,167;
+		end;
+	case 2:
+		mes "[Training Instructor]";
+		mes "Talk to me if you need to move.";
+		close;
+	case 3:
+		mes "[Training Instructor]";
+		mes "I'll warp you.";
+		close2;
+		warp "prontera",246,60;
+		end;
+	}
+}
+
+tra_fild,112,171,3	script	Training Instructor#sol2	8W_SOLDIER,{
+	mes "[Training Instructor]";
+	mes "Are you sure you want to move to the lower section?";
+	next;
+	switch( select( "Move", "Do not move", "Warp to Prontera." ) ) {
+	case 1:
+		mes "[Training Instructor]";
+		mes "Go to lower section!!!";
+		close2;
+		warp "tra_fild",111,74;
+		end;
+	case 2:
+		mes "[Training Instructor]";
+		mes "Talk to me if you need to move.";
+		close;
+	case 3:
+		mes "[Training Instructor]";
+		mes "I'll warp you.";
+		close2;
+		warp "prontera",246,60;
+		end;
+	}
+}
