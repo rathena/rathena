@@ -98,7 +98,8 @@ std::string log_db_pw = "";
 std::string log_db_db = "log";
 Sql* logmysql_handle;
 
-uint32 start_status_points = 48;
+// inter config
+struct inter_conf inter_config {};
 
 // DBMap declaration
 static DBMap* id_db=NULL; /// int id -> struct block_list*
@@ -559,6 +560,11 @@ int map_count_oncell(int16 m, int16 x, int16 y, int type, int flag)
 	if (type&~BL_MOB)
 		for( bl = mapdata->block[bx+by*mapdata->bxs] ; bl != NULL ; bl = bl->next )
 			if(bl->x == x && bl->y == y && bl->type&type) {
+				if (bl->type == BL_NPC) {	// Don't count hidden or invisible npc. Cloaked npc are counted
+					npc_data *nd = BL_CAST(BL_NPC, bl);
+					if (nd && (nd->bl.m < 0 || nd->sc.option && nd->sc.option&(OPTION_HIDE|OPTION_INVISIBLE)))
+						continue;
+				}
 				if(flag&1) {
 					struct unit_data *ud = unit_bl2ud(bl);
 					if(!ud || ud->walktimer == INVALID_TIMER)
@@ -4199,8 +4205,16 @@ int inter_config_read(const char *cfgName)
 			log_db_db = w2;
 		else
 		if(strcmpi(w1,"start_status_points")==0)
-			start_status_points=atoi(w2);
+			inter_config.start_status_points=atoi(w2);
 		else
+		if(strcmpi(w1, "emblem_woe_change")==0)
+			inter_config.emblem_woe_change = config_switch(w2) == 1;
+		else
+		if (strcmpi(w1, "emblem_transparency_limit") == 0) {
+			auto val = atoi(w2);
+			val = cap_value(val, 0, 100);
+			inter_config.emblem_transparency_limit = val;
+		}
 		if( mapreg_config_read(w1,w2) )
 			continue;
 		//support the import command, just like any other config
@@ -5111,6 +5125,11 @@ int do_init(int argc, char *argv[])
 	safestrncpy(map_default.mapname, "prontera", MAP_NAME_LENGTH);
 	map_default.x = 156;
 	map_default.y = 191;
+
+	// default inter_config
+	inter_config.start_status_points = 48;
+	inter_config.emblem_woe_change = true;
+	inter_config.emblem_transparency_limit = 80;
 
 	cli_get_options(argc,argv);
 

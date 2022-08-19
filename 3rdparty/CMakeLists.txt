@@ -47,6 +47,7 @@ macro( CONFIGURE_WITH_LOCAL_OR_SYSTEM name )
 endmacro( CONFIGURE_WITH_LOCAL_OR_SYSTEM )
 
 
+add_subdirectory( httplib )
 add_subdirectory( libconfig )
 add_subdirectory( mysql )
 add_subdirectory( pcre )

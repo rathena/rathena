@@ -1202,6 +1202,26 @@ public:
 
 extern AttendanceDatabase attendance_db;
 
+struct s_reputation{
+	int64 id;
+	std::string name;
+	std::string variable;
+	int64 minimum;
+	int64 maximum;
+};
+
+class ReputationDatabase : public TypesafeYamlDatabase<int64, s_reputation>{
+public:
+	ReputationDatabase() : TypesafeYamlDatabase( "REPUTATION_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode( const ryml::NodeRef& node ) override;
+};
+
+extern ReputationDatabase reputation_db;
+
 struct s_statpoint_entry{
 	uint16 level;
 	uint32 statpoints;
@@ -1553,7 +1573,7 @@ int pc_read_motd(void); // [Valaris]
 int pc_disguise(struct map_session_data *sd, int class_);
 bool pc_isautolooting(struct map_session_data *sd, t_itemid nameid);
 
-void pc_overheat(struct map_session_data *sd, int16 heat);
+void pc_overheat(map_session_data &sd, int16 heat);
 
 void pc_itemcd_do(struct map_session_data *sd, bool load);
 uint8 pc_itemcd_add(struct map_session_data *sd, struct item_data *id, t_tick tick, unsigned short n);
