@@ -15,7 +15,7 @@ This list contains all available constants referenced in the 'bonus' commands.
 * Status effect (eff)
 	Eff_Bleeding, Eff_Blind, Eff_Burning, Eff_Confusion, Eff_Crystalize, Eff_Curse, Eff_DPoison,
 	Eff_Fear, Eff_Freeze, Eff_Poison, Eff_Silence, Eff_Sleep, Eff_Stone, Eff_Stun, Eff_Freezing,
-	Eff_Heat
+	Eff_Heat, Eff_Deepsleep
 
 * Element (e)
 	Ele_Dark, Ele_Earth, Ele_Fire, Ele_Ghost, Ele_Holy, Ele_Neutral, Ele_Poison,
@@ -125,7 +125,7 @@ Atk/Def
 bonus bBaseAtk,n;  			Basic attack power + n
 bonus bAtk,n;      			ATK + n (unofficial)
 bonus bAtk2,n;     			ATK2 + n
-bonus bAtkRate,n;  			Attack power + n% (unofficial)
+bonus bAtkRate,n;  			ATK + n% that won't interfere with Damage modifier and SC_EDP (renewal mode only)
 bonus bWeaponAtkRate,n; 	Weapon ATK + n%
 bonus bMatk,n;     			Magical attack power + n
 bonus bMatkRate,n; 			Magical attack power + n%
@@ -292,7 +292,8 @@ bonus2 bMagicAddRace2,mr,x;		+x% magic damage against monster race mr
 
 bonus2 bSubSkill,sk,n;  		Reduces n% damage received from skill sk
 
-bonus bAbsorbDmgMaxHP,n;		If the damage received is more than n% of Max HP, the damage received is [TotalDamage] - [n% of MaxHP] (Doesn't stack, will use the highest value)
+bonus bAbsorbDmgMaxHP,n;		If the damage received is more than n% of Max HP, the damage received is [TotalDamage] - [n% of MaxHP] (Doesn't stack, will use the highest value) (Legacy rAthena behavior)
+bonus bAbsorbDmgMaxHP2,n;		If the damage received is more than n% of Max HP, the damage received is reduced to n% of MaxHP (Doesn't stack, will use the highest value) (Official behavior)
 
 Atk/Def
 -------

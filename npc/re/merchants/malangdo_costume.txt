@@ -11,6 +11,7 @@
 //= 1.0 First version. [Capuche]
 //= 1.1 Corrected exchange costumes for enchant box 4-21 [Everade]
 //= 1.2 Added support for more than 120 missing enchants [Everade]
+//= 1.3 Added a temporary fix of the menu length on Aver De Dosh until new data [Capuche]
 //============================================================
 
 // Missing 4th slot enchanter
@@ -1246,9 +1247,27 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		close;
 	}
 	.@size = getarraysize(.@stone_id);
-	for ( .@i = 0; .@i < .@size; .@i += 2 )
-		.@menu$ += sprintf( "%d. %s [%d] left:", (.@i/2)+1, getitemname(.@stone_id[.@i]), countitem(.@stone_id[.@i]) );
-	.@s = (select(.@menu$) - 1) * 2;
+	.@max_menu_size = 2047;	// temporary fix the menu length until new data
+	.@i = 0;
+
+	do {
+		.@menu$ = "";
+		.@offset += .@i;
+
+		for ( .@i = .@offset; .@i < .@size; .@i += 2 ) {
+			.@str$ = sprintf( "%d. %s [%d] left:", (.@i/2)+1, getitemname(.@stone_id[.@i]), countitem(.@stone_id[.@i]) );
+			if ((getstrlen(.@menu$ + .@str$) + 4) >= .@max_menu_size) {
+				.@menu$ += "^0000ffNext^000000:";
+				break;
+			}
+			.@menu$ += .@str$;
+		}
+		.@s = (select(.@menu$) - 1) * 2;
+	}
+	while(.@i < .@size && .@i == .@s);
+
+	.@s += .@offset;
+
 	.@stone = .@stone_id[.@s];
 	.@enchant = .@stone_id[.@s+1];
 

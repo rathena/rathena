@@ -647,6 +647,7 @@ void clif_viewpoint(struct map_session_data *sd, int npc_id, int type, int x, in
 void clif_additem(struct map_session_data *sd, int n, int amount, unsigned char fail); // self
 void clif_dropitem(struct map_session_data *sd,int n,int amount);	//self
 void clif_delitem(struct map_session_data *sd,int n,int amount, short reason); //self
+void clif_update_hp(map_session_data &sd);
 void clif_updatestatus(struct map_session_data *sd,int type);	//self
 void clif_changestatus(struct map_session_data* sd,int type,int val);	//area
 int clif_damage(struct block_list* src, struct block_list* dst, t_tick tick, int sdelay, int ddelay, int64 sdamage, int div, enum e_damage_type type, int64 sdamage2, bool spdamage);	// area
@@ -1159,11 +1160,14 @@ enum in_ui_type : int8 {
 };
 
 enum out_ui_type : int8 {
-	OUT_UI_STYLIST = 1,
-	OUT_UI_ATTENDANCE = 7
+	OUT_UI_BANK = 0,
+	OUT_UI_STYLIST,
+	OUT_UI_QUEST = 6,
+	OUT_UI_ATTENDANCE,
+	OUT_UI_ENCHANTGRADE,
 };
 
-void clif_ui_open( struct map_session_data *sd, enum out_ui_type ui_type, int32 data );
+void clif_ui_open( struct map_session_data& sd, enum out_ui_type ui_type, int32 data );
 void clif_attendence_response( struct map_session_data *sd, int32 data );
 
 void clif_weight_limit( struct map_session_data* sd );
@@ -1195,5 +1199,9 @@ void clif_summon_hp_bar(struct mob_data& md);
 // Laphine System
 void clif_laphine_synthesis_open( struct map_session_data *sd, std::shared_ptr<s_laphine_synthesis> synthesis );
 void clif_laphine_upgrade_open( struct map_session_data* sd, std::shared_ptr<s_laphine_upgrade> upgrade );
+
+// Reputation System
+void clif_reputation_type( struct map_session_data& sd, int64 type, int64 points );
+void clif_reputation_list( struct map_session_data& sd );
 
 #endif /* CLIF_HPP */

@@ -6,6 +6,7 @@
 #include "../config/core.hpp"
 
 #ifndef MINICORE
+#include "database.hpp"
 #include "ers.hpp"
 #include "socket.hpp"
 #include "timer.hpp"
@@ -365,7 +366,7 @@ int main (int argc, char **argv)
 	Sql_Init();
 	db_init();
 	signals_init();
-
+	do_init_database();
 #ifdef _WIN32
 	cevents_init();
 #endif
@@ -378,7 +379,11 @@ int main (int argc, char **argv)
 	// Main runtime cycle
 	while (runflag != CORE_ST_STOP) { 
 		t_tick next = do_timer(gettick_nocache());
-		do_sockets(next);
+
+		if (SERVER_TYPE != ATHENA_SERVER_WEB)
+			do_sockets(next);
+		else
+			do_wait(next);
 	}
 
 	do_final();

@@ -26,6 +26,8 @@
 #include "party.hpp"
 #include "pc.hpp"
 
+using namespace rathena;
+
 static int split_exact_quest_time(char* modif_p, int* day, int* hour, int* minute, int *second);
 
 const std::string QuestDatabase::getDefaultLocation() {
@@ -37,7 +39,7 @@ const std::string QuestDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 QuestDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	uint32 quest_id;
 
 	if (!this->asUInt32(node, "Id", quest_id))
@@ -97,9 +99,9 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Targets")) {
-		const YAML::Node &targets = node["Targets"];
+		const auto& targets = node["Targets"];
 
-		for (const YAML::Node &targetNode : targets) {
+		for (const auto& targetNode : targets) {
 			if (quest->objectives.size() >= MAX_QUEST_OBJECTIVES) {
 				this->invalidWarning(targetNode, "Targets list exceeds the maximum of %d, skipping.\n", MAX_QUEST_OBJECTIVES);
 				return 0;
@@ -159,13 +161,6 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 			if (!targetExists) {
 				if (!this->nodeExists(targetNode, "Count")) {
 					this->invalidWarning(targetNode["Count"], "Targets has no Count value specified, skipping.\n");
-					return 0;
-				}
-
-				if (!this->nodeExists(targetNode, "Mob") && !this->nodeExists(targetNode, "MinLevel") && !this->nodeExists(targetNode, "MaxLevel") &&
-						!this->nodeExists(targetNode, "Race") && !this->nodeExists(targetNode, "Size") && !this->nodeExists(targetNode, "Element") &&
-						!this->nodeExists(targetNode, "Location") && !this->nodeExists(targetNode, "MapName")) {
-					this->invalidWarning(targetNode, "Targets is missing required field, skipping.\n");
 					return 0;
 				}
 
@@ -279,7 +274,7 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 
 					uint16 mapindex = mapindex_name2idx(location.c_str(), nullptr);
 
-					if (mapindex == 0) {
+					if (mapindex == 0 && strcmpi(location.c_str(), "All") != 0) {
 						this->invalidWarning(targetNode["Location"], "Map \"%s\" not found.\n", location.c_str());
 						return 0;
 					}
@@ -294,6 +289,35 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 						return 0;
 
 					target->map_name = map_name;
+				}
+
+				if (this->nodeExists(targetNode, "MapMobTargets")) {
+					const auto& MapMobTargetsNode = targetNode["MapMobTargets"];
+
+					for (const auto& MapMobTargetsIt : MapMobTargetsNode) {
+						std::string mob_name;
+						c4::from_chars(MapMobTargetsIt.key(), &mob_name);
+
+						std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(mob_name.c_str());
+
+						if (!mob) {
+							this->invalidWarning(MapMobTargetsNode[MapMobTargetsIt.key()], "Mob %s does not exist, skipping.\n", mob_name.c_str());
+							continue;
+						}
+
+						bool active;
+
+						if (!this->asBool(MapMobTargetsNode, mob_name, active))
+							return 0;
+
+						if (!active) {
+							util::vector_erase_if_exists(target->mobs_allowed, mob->id);
+							continue;
+						}
+
+						if (!util::vector_exists( target->mobs_allowed, mob->id ))
+							target->mobs_allowed.push_back(mob->id);
+					}
 				}
 
 				// if max_level is set, min_level is 1
@@ -315,9 +339,9 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Drops")) {
-		const YAML::Node &drops = node["Drops"];
+		const auto& drops = node["Drops"];
 
-		for (const YAML::Node &dropNode : drops) {
+		for (const auto& dropNode : drops) {
 			uint32 mob_id = 0; // Can be 0 which means all monsters
 
 			if (this->nodeExists(dropNode, "Mob")) {
@@ -708,11 +732,13 @@ void quest_update_objective(struct map_session_data *sd, struct mob_data* md)
 			continue;
 
 		// Process quest objectives
+		uint8 total_check = 7; // Must pass all checks
+
 		for (int j = 0; j < qi->objectives.size(); j++) {
-			uint8 objective_check = 0; // Must pass all 6 checks
+			uint8 objective_check = 0;
 
 			if (qi->objectives[j]->mob_id == md->mob_id)
-				objective_check = 6;
+				objective_check = total_check;
 			else if (qi->objectives[j]->mob_id == 0) {
 				if (qi->objectives[j]->min_level == 0 || qi->objectives[j]->min_level <= md->level)
 					objective_check++;
@@ -724,17 +750,21 @@ void quest_update_objective(struct map_session_data *sd, struct mob_data* md)
 					objective_check++;
 				if (qi->objectives[j]->element == ELE_ALL || qi->objectives[j]->element == md->status.def_ele)
 					objective_check++;
-				if (qi->objectives[j]->mapid < 0 || (qi->objectives[j]->mapid == sd->bl.m && md->spawn != nullptr))
+				if (qi->objectives[j]->mapid < 0)
 					objective_check++;
-				else if (qi->objectives[j]->mapid >= 0) {
+				else if (qi->objectives[j]->mapid == sd->bl.m)
+					objective_check++;
+				else {
 					struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
 					if (mapdata->instance_id && mapdata->instance_src_map == qi->objectives[j]->mapid)
 						objective_check++;
 				}
+				if (qi->objectives[j]->mobs_allowed.empty() || util::vector_exists( qi->objectives[j]->mobs_allowed, md->mob_id ))
+					objective_check++;
 			}
 
-			if (objective_check == 6 && sd->quest_log[i].count[j] < qi->objectives[j]->count)  {
+			if (objective_check == total_check && sd->quest_log[i].count[j] < qi->objectives[j]->count)  {
 				sd->quest_log[i].count[j]++;
 				sd->save_quest = true;
 				clif_quest_update_objective(sd, &sd->quest_log[i]);

@@ -39,6 +39,7 @@ CREATE TABLE `item_db2_re` (
   `job_rogue` tinyint(1) unsigned DEFAULT NULL,
   `job_sage` tinyint(1) unsigned DEFAULT NULL,
   `job_soullinker` tinyint(1) unsigned DEFAULT NULL,
+  `job_spirit_handler` tinyint(1) unsigned DEFAULT NULL,
   `job_stargladiator` tinyint(1) unsigned DEFAULT NULL,
   `job_summoner` tinyint(1) unsigned DEFAULT NULL,
   `job_supernovice` tinyint(1) unsigned DEFAULT NULL,

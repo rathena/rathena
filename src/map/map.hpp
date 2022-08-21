@@ -551,7 +551,7 @@ enum _sp {
 	SP_IGNORE_DEF_CLASS_RATE, SP_REGEN_PERCENT_HP, SP_REGEN_PERCENT_SP, SP_SKILL_DELAY, SP_NO_WALK_DELAY, //2088-2092
 	SP_LONG_SP_GAIN_VALUE, SP_LONG_HP_GAIN_VALUE, SP_SHORT_ATK_RATE, SP_MAGIC_SUBSIZE, SP_CRIT_DEF_RATE, // 2093-2097
 	SP_MAGIC_SUBDEF_ELE, SP_REDUCE_DAMAGE_RETURN, SP_ADD_ITEM_SPHEAL_RATE, SP_ADD_ITEMGROUP_SPHEAL_RATE, // 2098-2101
-	SP_WEAPON_SUBSIZE // 2102
+	SP_WEAPON_SUBSIZE, SP_ABSORB_DMG_MAXHP2 // 2102-2103
 };
 
 enum _look {
@@ -632,7 +632,7 @@ enum e_mapflag : int16 {
 	MF_NOUSECART,
 	MF_NOITEMCONSUMPTION,
 	MF_NOSUNMOONSTARMIRACLE,
-	MF_NOMINEEFFECT,
+	MF_FORCEMINEFFECT,
 	MF_NOLOCKON,
 	MF_NOTOMB,
 	MF_SKILL_DAMAGE,	//60
@@ -650,6 +650,7 @@ enum e_mapflag : int16 {
 	MF_NORENEWALEXPPENALTY,
 	MF_NORENEWALDROPPENALTY,
 	MF_NOPETCAPTURE,
+	MF_NOBUYINGSTORE,
 	MF_MAX
 };
 
@@ -712,7 +713,7 @@ enum cell_t{
 	CELL_NOCHAT,
 	CELL_MAELSTROM,
 	CELL_ICEWALL,
-
+	CELL_NOBUYINGSTORE,
 };
 
 // used by map_getcell()
@@ -736,6 +737,7 @@ enum cell_chk : uint8 {
 	CELL_CHKNOCHAT,			// Whether the cell denies Player Chat Window
 	CELL_CHKMAELSTROM,		// Whether the cell has Maelstrom
 	CELL_CHKICEWALL,		// Whether the cell has Ice Wall
+	CELL_CHKNOBUYINGSTORE,	// Whether the cell denies ALL_BUYING_STORE skill
 
 };
 
@@ -755,7 +757,8 @@ struct mapcell
 		novending : 1,
 		nochat : 1,
 		maelstrom : 1,
-		icewall : 1;
+		icewall : 1,
+		nobuyingstore : 1;
 
 #ifdef CELL_NOSTACK
 	unsigned char cell_bl; //Holds amount of bls in this cell.
@@ -829,6 +832,14 @@ struct map_data_other_server {
 	uint16 port;
 };
 
+struct inter_conf {
+	uint32 start_status_points;
+	bool emblem_woe_change;
+	uint32 emblem_transparency_limit;
+};
+
+extern struct inter_conf inter_config;
+
 int map_getcell(int16 m,int16 x,int16 y,cell_chk cellchk);
 int map_getcellp(struct map_data* m,int16 x,int16 y,cell_chk cellchk);
 void map_setcell(int16 m, int16 x, int16 y, cell_t cell, bool flag);
@@ -842,8 +853,6 @@ extern int minsave_interval;
 extern int16 save_settings;
 extern int night_flag; // 0=day, 1=night [Yor]
 extern int enable_spy; //Determines if @spy commands are active.
-
-extern uint32 start_status_points;
 
 // Agit Flags
 extern bool agit_flag;

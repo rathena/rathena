@@ -4848,32 +4848,18 @@ Body:
             MaxValue: 20
             Chance: 1000
           - Option: WEAPON_ATTR_WATER
-            MinValue: 0
-            MaxValue: 0
             Chance: 500
           - Option: WEAPON_ATTR_GROUND
-            MinValue: 0
-            MaxValue: 0
             Chance: 500
           - Option: WEAPON_ATTR_FIRE
-            MinValue: 0
-            MaxValue: 0
             Chance: 500
           - Option: WEAPON_ATTR_WIND
-            MinValue: 0
-            MaxValue: 0
             Chance: 500
           - Option: WEAPON_ATTR_SAINT
-            MinValue: 0
-            MaxValue: 0
             Chance: 500
           - Option: WEAPON_ATTR_DARKNESS
-            MinValue: 0
-            MaxValue: 0
             Chance: 500
           - Option: DAMAGE_SIZE_PERFECT
-            MinValue: 0
-            MaxValue: 0
             Chance: 50
       - Slot: 2
         Options:
@@ -5007,32 +4993,18 @@ Body:
             MaxValue: 20
             Chance: 1000
           - Option: WEAPON_ATTR_WATER
-            MinValue: 0
-            MaxValue: 0
             Chance: 500
           - Option: WEAPON_ATTR_GROUND
-            MinValue: 0
-            MaxValue: 0
             Chance: 500
           - Option: WEAPON_ATTR_FIRE
-            MinValue: 0
-            MaxValue: 0
             Chance: 500
           - Option: WEAPON_ATTR_WIND
-            MinValue: 0
-            MaxValue: 0
             Chance: 500
           - Option: WEAPON_ATTR_SAINT
-            MinValue: 0
-            MaxValue: 0
             Chance: 500
           - Option: WEAPON_ATTR_DARKNESS
-            MinValue: 0
-            MaxValue: 0
             Chance: 500
           - Option: DAMAGE_SIZE_PERFECT
-            MinValue: 0
-            MaxValue: 0
             Chance: 50
       - Slot: 2
         Options:
@@ -7456,7 +7428,7 @@ Body:
         Chance: 625
   # TODO: Confirm official rates
   - Id: 100
-    Group: DROOPING_GUNSLINGER_SCROLL
+    Group: GUNSLINGER_ENCHANT
     Slots:
       - Slot: 1
         Options:
@@ -7560,7 +7532,7 @@ Body:
             Chance: 1250
   # Source: https://ro.gnjoy.com/news/probability/View.asp?seq=3999572
   - Id: 101
-    Group: FAN_MODIFICATION_KIT
+    Group: FAN_UPGRADE_KIT
     Slots:
       - Slot: 1
         Options:
@@ -7672,7 +7644,7 @@ Body:
             Chance: 769
   # Source: https://ro.gnjoy.com/news/probability/View.asp?seq=3964871
   - Id: 102
-    Group: UNIFORM_REPAIR_KIT
+    Group: SUIT_UPGRADE_KIT
     Slots:
       - Slot: 1
         Options:
@@ -7810,7 +7782,7 @@ Body:
             Chance: 5000
   # Source: https://ro.gnjoy.com/news/probability/View.asp?seq=3999577
   - Id: 109
-    Group: CANDY_POUCH_BLESSING_SCROLL_MELEE
+    Group: CANDY_BAG_SCROLL_MELEE
     Slots:
       - Slot: 1
         Options:
@@ -7934,7 +7906,7 @@ Body:
             Chance: 454
   # Source: https://ro.gnjoy.com/news/probability/View.asp?seq=3999578
   - Id: 110
-    Group: CANDY_POUCH_BLESSING_SCROLL_RANGE
+    Group: CANDY_BAG_SCROLL_RANGE
     Slots:
       - Slot: 1
         Options:
@@ -8058,7 +8030,7 @@ Body:
             Chance: 454
   # Source: https://ro.gnjoy.com/news/probability/View.asp?seq=3999579
   - Id: 111
-    Group: CANDY_POUCH_BLESSING_SCROLL_MAGIC
+    Group: CANDY_BAG_SCROLL_MAGIC
     Slots:
       - Slot: 1
         Options:
@@ -8182,7 +8154,7 @@ Body:
             Chance: 454
   # Source: https://ro.gnjoy.com/news/probability/View.asp?seq=3964872
   - Id: 112
-    Group: MAGICAL_BOOSTER_AMPLIFIER
+    Group: BOOSTER_AMPLIFIER
     Slots:
       - Slot: 1
         Options:
@@ -8310,7 +8282,7 @@ Body:
             Chance: 714
   # Source: https://ro.gnjoy.com/news/probability/View.asp?seq=3964879
   - Id: 113
-    Group: MAGIC_CAT_HAND_SCROLL
+    Group: MAGICAL_CAT_HAND
     Slots:
       - Slot: 1
         Options:
@@ -8445,7 +8417,7 @@ Body:
           - Option: VAR_MAXSPAMOUNT
             MinValue: 50
             MaxValue: 500
-            Chance: 
+            Chance: 588
           - Option: VAR_MAXSPPERCENT
             MinValue: 1
             MaxValue: 5
@@ -8557,8 +8529,6 @@ Body:
             MaxValue: 20
             Chance: 357
           - Option: BODY_INDESTRUCTIBLE
-            MinValue: 1
-            MaxValue: 1
             Chance: 357
           - Option: BODY_ATTR_WATER
             MinValue: 3
@@ -9435,8 +9405,6 @@ Body:
             MaxValue: 5
             Chance: 212
           - Option: DAMAGE_SIZE_PERFECT
-            MinValue: 1
-            MaxValue: 1
             Chance: 212
           - Option: CLASS_IGNORE_MDEF_PERCENT_NORMAL
             MinValue: 30
@@ -9530,28 +9498,16 @@ Body:
             MaxValue: 10
             Chance: 666
           - Option: BODY_INDESTRUCTIBLE
-            MinValue: 1
-            MaxValue: 1
             Chance: 666
           - Option: BODY_ATTR_WATER
-            MinValue: 1
-            MaxValue: 1
             Chance: 666
           - Option: BODY_ATTR_WIND
-            MinValue: 1
-            MaxValue: 1
             Chance: 666
           - Option: BODY_ATTR_DARKNESS
-            MinValue: 1
-            MaxValue: 1
             Chance: 666
           - Option: BODY_ATTR_FIRE
-            MinValue: 1
-            MaxValue: 1
             Chance: 666
           - Option: BODY_ATTR_GROUND
-            MinValue: 1
-            MaxValue: 1
             Chance: 666
   - Id: 119
     Group: GRAY_CHARCOAL_MELEE
@@ -9599,8 +9555,6 @@ Body:
             MaxValue: 20
             Chance: 526
           - Option: DAMAGE_SIZE_PERFECT
-            MinValue: 1
-            MaxValue: 1
             Chance: 526
           - Option: VAR_PLUSASPD
             MinValue: 1
@@ -9610,29 +9564,17 @@ Body:
             MinValue: 5
             MaxValue: 10
             Chance: 526
-          - Option: DAMAGE_PROPERTY_WATER_TARGET
-            MinValue: 1
-            MaxValue: 1
+          - Option: WEAPON_ATTR_WATER
             Chance: 526
-          - Option: DAMAGE_PROPERTY_GROUND_TARGET
-            MinValue: 1
-            MaxValue: 1
+          - Option: WEAPON_ATTR_GROUND
             Chance: 526
-          - Option: DAMAGE_PROPERTY_FIRE_TARGET
-            MinValue: 1
-            MaxValue: 1
+          - Option: WEAPON_ATTR_FIRE
             Chance: 526
-          - Option: DAMAGE_PROPERTY_WIND_TARGET
-            MinValue: 1
-            MaxValue: 1
+          - Option: WEAPON_ATTR_WIND
             Chance: 526
-          - Option: DAMAGE_PROPERTY_SAINT_TARGET
-            MinValue: 1
-            MaxValue: 1
+          - Option: WEAPON_ATTR_SAINT
             Chance: 526
-          - Option: DAMAGE_PROPERTY_DARKNESS_TARGET
-            MinValue: 1
-            MaxValue: 1
+          - Option: WEAPON_ATTR_DARKNESS
             Chance: 526
       - Slot: 2
         Options:
@@ -9693,8 +9635,6 @@ Body:
             MaxValue: 20
             Chance: 666
           - Option: WEAPON_INDESTRUCTIBLE
-            MinValue: 1
-            MaxValue: 1
             Chance: 666
   - Id: 120
     Group: GRAY_CHARCOAL_MAGIC
@@ -9861,8 +9801,6 @@ Body:
             MaxValue: 20
             Chance: 666
           - Option: DAMAGE_SIZE_PERFECT
-            MinValue: 1
-            MaxValue: 1
             Chance: 666
           - Option: VAR_PLUSASPD
             MinValue: 1
@@ -9877,8 +9815,6 @@ Body:
             MaxValue: 10
             Chance: 666
           - Option: WEAPON_INDESTRUCTIBLE
-            MinValue: 1
-            MaxValue: 1
             Chance: 666
       - Slot: 2
         Options:
@@ -10131,32 +10067,18 @@ Body:
             MaxValue: 20
             Chance: 384
           - Option: WEAPON_ATTR_WATER
-            MinValue: 1
-            MaxValue: 1
             Chance: 384
           - Option: WEAPON_ATTR_GROUND
-            MinValue: 1
-            MaxValue: 1
             Chance: 384
           - Option: WEAPON_ATTR_FIRE
-            MinValue: 1
-            MaxValue: 1
             Chance: 384
           - Option: WEAPON_ATTR_WIND
-            MinValue: 1
-            MaxValue: 1
             Chance: 384
           - Option: WEAPON_ATTR_SAINT
-            MinValue: 1
-            MaxValue: 1
             Chance: 384
           - Option: WEAPON_ATTR_DARKNESS
-            MinValue: 1
-            MaxValue: 1
             Chance: 384
           - Option: DAMAGE_SIZE_PERFECT
-            MinValue: 1
-            MaxValue: 1
             Chance: 384
   - Id: 124
     Group: CHARLESTON_PARTS_R
@@ -10236,32 +10158,18 @@ Body:
             MaxValue: 20
             Chance: 384
           - Option: WEAPON_ATTR_WATER
-            MinValue: 1
-            MaxValue: 1
             Chance: 384
           - Option: WEAPON_ATTR_GROUND
-            MinValue: 1
-            MaxValue: 1
             Chance: 384
           - Option: WEAPON_ATTR_FIRE
-            MinValue: 1
-            MaxValue: 1
             Chance: 384
           - Option: WEAPON_ATTR_WIND
-            MinValue: 1
-            MaxValue: 1
             Chance: 384
           - Option: WEAPON_ATTR_SAINT
-            MinValue: 1
-            MaxValue: 1
             Chance: 384
           - Option: WEAPON_ATTR_DARKNESS
-            MinValue: 1
-            MaxValue: 1
             Chance: 384
           - Option: DAMAGE_SIZE_PERFECT
-            MinValue: 1
-            MaxValue: 1
             Chance: 384
   - Id: 125
     Group: SHADOW_RANDOM_MIX
@@ -10762,8 +10670,6 @@ Body:
             MaxValue: 10
             Chance: 500
           - Option: WEAPON_INDESTRUCTIBLE
-            MinValue: 1
-            MaxValue: 1
             Chance: 500
   - Id: 129
     Group: EP17_1_SPC08
@@ -11143,8 +11049,6 @@ Body:
             MaxValue: 10
             Chance: 555
           - Option: WEAPON_INDESTRUCTIBLE
-            MinValue: 1
-            MaxValue: 1
             Chance: 555
   - Id: 132
     Group: MAGMA_ESSENCE
@@ -11713,8 +11617,6 @@ Body:
             MaxValue: 10
             Chance: 666
           - Option: WEAPON_INDESTRUCTIBLE
-            MinValue: 1
-            MaxValue: 1
             Chance: 666
   - Id: 136
     Group: ANCIENT_HERO_WISDOM
@@ -11832,7 +11734,7 @@ Body:
             MaxValue: 10
             Chance: 714
   - Id: 137
-    Group: IMPERIAL_P_MO_GARMENT
+    Group: IMPERIAL_CONVERT1
     Slots:
       - Slot: 1
         Options:
@@ -11877,7 +11779,7 @@ Body:
             MaxValue: 5
             Chance: 1000
   - Id: 138
-    Group: IMPERIAL_M_MO_GARMENT
+    Group: IMPERIAL_CONVERT2
     Slots:
       - Slot: 1
         Options:
@@ -11922,7 +11824,7 @@ Body:
             MaxValue: 5
             Chance: 1000
   - Id: 139
-    Group: IMPERIAL_P_MO_ARMOR
+    Group: IMPERIAL_CONVERT3
     Slots:
       - Slot: 1
         Options:
@@ -11959,7 +11861,7 @@ Body:
             MaxValue: 5
             Chance: 1250
   - Id: 140
-    Group: IMPERIAL_M_MO_ARMOR
+    Group: IMPERIAL_CONVERT4
     Slots:
       - Slot: 1
         Options:
@@ -12004,7 +11906,7 @@ Body:
             MaxValue: 5
             Chance: 1000
   - Id: 141
-    Group: GRACE_P_MO_GARMENT
+    Group: GRACE_CONVERT1
     Slots:
       - Slot: 1
         Options:
@@ -12103,7 +12005,7 @@ Body:
             MaxValue: 5
             Chance: 769
   - Id: 142
-    Group: GRACE_M_MO_GARMENT
+    Group: GRACE_CONVERT2
     Slots:
       - Slot: 1
         Options:
@@ -12202,7 +12104,7 @@ Body:
             MaxValue: 5
             Chance: 769
   - Id: 143
-    Group: GRACE_P_MO_ARMOR
+    Group: GRACE_CONVERT3
     Slots:
       - Slot: 1
         Options:
@@ -12293,7 +12195,7 @@ Body:
             MaxValue: 5
             Chance: 769
   - Id: 144
-    Group: GRACE_M_MO_ARMOR
+    Group: GRACE_CONVERT4
     Slots:
       - Slot: 1
         Options:

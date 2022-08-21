@@ -3403,7 +3403,7 @@ Body:
             Rate: 1
           - Item: Burnt_Parts
             Rate: 1
-          - Item: Pocket_Watch__
+          - Item: Pocket_Watch
             Rate: 1
           - Item: Ice_Heart
             Rate: 15
@@ -6741,27 +6741,27 @@ Body:
           - Item: ChangeLUK_Middle
             Rate: 312
           - Item: ChangeSTR_Middle
-            Rate: 312
+            Rate: 313
           - Item: ChangeAGI_Middle
-            Rate: 312
+            Rate: 313
           - Item: ChangeINT_Middle
-            Rate: 312
+            Rate: 313
           - Item: ChangeVIT_Middle
-            Rate: 312
+            Rate: 313
           - Item: ChangeDEX_Middle
-            Rate: 312
+            Rate: 313
           - Item: ChangeVIT_Bottom
-            Rate: 312
+            Rate: 313
           - Item: ChangeAGI_Bottom
-            Rate: 312
+            Rate: 313
           - Item: ChangeDEX_Bottom
-            Rate: 312
+            Rate: 313
           - Item: ChangeLUK_Bottom
-            Rate: 312
+            Rate: 313
           - Item: ChangeSTR_Bottom
-            Rate: 312
+            Rate: 313
           - Item: ChangeINT_Bottom
-            Rate: 312
+            Rate: 313
           - Item: EXPStone_Bottom
             Rate: 391
           - Item: MaxHP2_Stone
@@ -6777,775 +6777,775 @@ Body:
       - SubGroup: 1
         List:
           - Item: CastingStone_Robe
-            Rate: 2
+            Rate: 20
           - Item: SPdrainStone_Robe
-            Rate: 8
+            Rate: 80
           - Item: SPdrainStone_Top
-            Rate: 8
+            Rate: 80
           - Item: ASPDStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: HPdrainStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: HPdrainStone_Top
-            Rate: 16
+            Rate: 160
           - Item: ASPDStone_Top
-            Rate: 16
+            Rate: 160
           - Item: MinorCastingStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: WhiteBodyEffect_Middle
-            Rate: 16
+            Rate: 160
           - Item: ATKStone_Middle
-            Rate: 24
+            Rate: 240
           - Item: MATKStone_Middle
-            Rate: 24
+            Rate: 240
           - Item: ATKStone_Top
-            Rate: 24
+            Rate: 240
           - Item: MATKStone_Top
-            Rate: 24
+            Rate: 240
           - Item: ATKStone_Bottom
-            Rate: 24
+            Rate: 240
           - Item: MATKStone_Bottom
-            Rate: 24
+            Rate: 240
           - Item: Critical_Stone
-            Rate: 24
+            Rate: 240
           - Item: Range_Stone
-            Rate: 24
+            Rate: 240
           - Item: ExplodingEffect_Middle
-            Rate: 24
+            Rate: 240
           - Item: WaterFieldEffect_Bottom
-            Rate: 24
+            Rate: 240
           - Item: Heal_Stone
-            Rate: 24
+            Rate: 240
           - Item: Teleport_Stone
-            Rate: 24
+            Rate: 240
           - Item: Steal_Stone
-            Rate: 24
+            Rate: 240
           - Item: ChangeLUK_Middle
-            Rate: 32
+            Rate: 320
           - Item: ChangeSTR_Middle
-            Rate: 32
+            Rate: 320
           - Item: ChangeAGI_Middle
-            Rate: 32
+            Rate: 320
           - Item: ChangeINT_Middle
-            Rate: 32
+            Rate: 320
           - Item: ChangeVIT_Middle
-            Rate: 32
+            Rate: 320
           - Item: ChangeDEX_Middle
-            Rate: 32
+            Rate: 320
           - Item: ChangeVIT_Bottom
-            Rate: 32
+            Rate: 320
           - Item: ChangeAGI_Bottom
-            Rate: 32
+            Rate: 320
           - Item: ChangeDEX_Bottom
-            Rate: 32
+            Rate: 320
           - Item: ChangeLUK_Bottom
-            Rate: 32
+            Rate: 320
           - Item: ChangeSTR_Bottom
-            Rate: 32
+            Rate: 320
           - Item: ChangeINT_Bottom
-            Rate: 32
+            Rate: 320
           - Item: EXPStone_Bottom
-            Rate: 38
+            Rate: 380
           - Item: MaxHP2_Stone
-            Rate: 38
+            Rate: 380
           - Item: MaxSP2_Stone
-            Rate: 38
+            Rate: 380
           - Item: EXPStone_Middle
-            Rate: 38
+            Rate: 380
           - Item: EXPStone_Top
-            Rate: 38
+            Rate: 380
   - Group: ENCHANT_STONE_BOX12
     SubGroups:
       - SubGroup: 1
         List:
           - Item: CastingStone_Robe
-            Rate: 2
+            Rate: 20
           - Item: DoubleAttack_Stone
-            Rate: 2
+            Rate: 20
           - Item: Critical_Stone_Robe
-            Rate: 2
+            Rate: 20
           - Item: SPdrainStone_Robe
-            Rate: 8
+            Rate: 80
           - Item: SPdrainStone_Top
-            Rate: 8
+            Rate: 80
           - Item: ShrinkEffect_Bottom
-            Rate: 8
+            Rate: 80
           - Item: CastStone_Robe
-            Rate: 8
+            Rate: 80
           - Item: ASPDStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: HPdrainStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: HPdrainStone_Top
-            Rate: 16
+            Rate: 160
           - Item: ASPDStone_Top
-            Rate: 16
+            Rate: 160
           - Item: MinorCastingStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: ATKStone_Middle
-            Rate: 24
+            Rate: 240
           - Item: MATKStone_Middle
-            Rate: 24
+            Rate: 240
           - Item: ATKStone_Top
-            Rate: 24
+            Rate: 240
           - Item: MATKStone_Top
-            Rate: 24
+            Rate: 240
           - Item: EXPStone_Bottom
-            Rate: 24
+            Rate: 240
           - Item: ATKStone_Bottom
-            Rate: 24
+            Rate: 240
           - Item: MATKStone_Bottom
-            Rate: 24
+            Rate: 240
           - Item: Range_Stone
-            Rate: 24
+            Rate: 240
           - Item: EXPStone_Middle
-            Rate: 24
+            Rate: 240
           - Item: EXPStone_Top
-            Rate: 24
+            Rate: 240
           - Item: CastingStone_Top
-            Rate: 24
+            Rate: 240
           - Item: CastingStone_Middle
-            Rate: 24
+            Rate: 240
           - Item: CastingStone_Bottom
-            Rate: 24
+            Rate: 240
           - Item: ChangeLUK_Middle
-            Rate: 38
+            Rate: 380
           - Item: ChangeSTR_Middle
-            Rate: 38
+            Rate: 380
           - Item: ChangeAGI_Middle
-            Rate: 38
+            Rate: 380
           - Item: ChangeINT_Middle
-            Rate: 38
+            Rate: 380
           - Item: ChangeVIT_Middle
-            Rate: 38
+            Rate: 380
           - Item: ChangeDEX_Middle
-            Rate: 38
+            Rate: 380
           - Item: ChangeVIT_Bottom
-            Rate: 38
+            Rate: 380
           - Item: ChangeAGI_Bottom
-            Rate: 38
+            Rate: 380
           - Item: ChangeDEX_Bottom
-            Rate: 38
+            Rate: 380
           - Item: ChangeLUK_Bottom
-            Rate: 38
+            Rate: 380
           - Item: ChangeSTR_Bottom
-            Rate: 38
+            Rate: 380
           - Item: ChangeINT_Bottom
-            Rate: 38
+            Rate: 380
           - Item: Critical_Stone
-            Rate: 38
+            Rate: 380
           - Item: Critical_Stone_Top
-            Rate: 38
+            Rate: 380
           - Item: Critical_Stone_Bottom
-            Rate: 38
+            Rate: 380
   - Group: ENCHANT_STONE_BOX13
     SubGroups:
       - SubGroup: 1
         List:
           - Item: CastingStone_Robe
-            Rate: 2
+            Rate: 20
           - Item: DoubleAttack_Stone
-            Rate: 2
+            Rate: 20
           - Item: Critical_Stone_Robe
-            Rate: 2
+            Rate: 20
           - Item: SPdrainStone_Robe
-            Rate: 8
+            Rate: 80
           - Item: SPdrainStone_Top
-            Rate: 8
+            Rate: 80
           - Item: ShrinkEffect_Bottom
-            Rate: 8
+            Rate: 80
           - Item: CastStone_Robe
-            Rate: 8
+            Rate: 80
           - Item: ASPDStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: HPdrainStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: HPdrainStone_Top
-            Rate: 16
+            Rate: 160
           - Item: ASPDStone_Top
-            Rate: 16
+            Rate: 160
           - Item: MinorCastingStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: SuraStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: RangerStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: SorcererStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: EXPStone_Bottom
-            Rate: 24
+            Rate: 240
           - Item: Range_Stone
-            Rate: 24
+            Rate: 240
           - Item: EXPStone_Middle
-            Rate: 24
+            Rate: 240
           - Item: EXPStone_Top
-            Rate: 24
+            Rate: 240
           - Item: CastingStone_Top
-            Rate: 24
+            Rate: 240
           - Item: CastingStone_Middle
-            Rate: 24
+            Rate: 240
           - Item: CastingStone_Bottom
-            Rate: 24
+            Rate: 240
           - Item: ATKStone_Middle
-            Rate: 37
+            Rate: 370
           - Item: MATKStone_Middle
-            Rate: 37
+            Rate: 370
           - Item: ATKStone_Top
-            Rate: 37
+            Rate: 370
           - Item: MATKStone_Top
-            Rate: 37
+            Rate: 370
           - Item: ATKStone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: MATKStone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: Critical_Stone
-            Rate: 37
+            Rate: 370
           - Item: Critical_Stone_Top
-            Rate: 37
+            Rate: 370
           - Item: Critical_Stone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: SuraStone_Top
-            Rate: 37
+            Rate: 370
           - Item: SuraStone_Middle
-            Rate: 37
+            Rate: 370
           - Item: SuraStone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: RangerStone_Top
-            Rate: 37
+            Rate: 370
           - Item: RangerStone_Middle
-            Rate: 37
+            Rate: 370
           - Item: RangerStone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: SorcererStone_Top
-            Rate: 37
+            Rate: 370
           - Item: SorcererStone_Middle
-            Rate: 37
+            Rate: 370
           - Item: SorcererStone_Bottom
-            Rate: 37
+            Rate: 370
   - Group: ENCHANT_STONE_BOX14
     SubGroups:
       - SubGroup: 1
         List:
           - Item: CastingStone_Robe
-            Rate: 2
+            Rate: 20
           - Item: DoubleAttack_Stone
-            Rate: 2
+            Rate: 20
           - Item: Critical_Stone_Robe
-            Rate: 2
+            Rate: 20
           - Item: SPdrainStone_Robe
-            Rate: 8
+            Rate: 80
           - Item: SPdrainStone_Top
-            Rate: 8
+            Rate: 80
           - Item: ShrinkEffect_Bottom
-            Rate: 8
+            Rate: 80
           - Item: CastStone_Robe
-            Rate: 8
+            Rate: 80
           - Item: ASPDStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: HPdrainStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: HPdrainStone_Top
-            Rate: 16
+            Rate: 160
           - Item: ASPDStone_Top
-            Rate: 16
+            Rate: 160
           - Item: MinorCastingStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: RuneknightStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: GeneticStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: WarlockStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: EXPStone_Bottom
-            Rate: 24
+            Rate: 240
           - Item: Range_Stone
-            Rate: 24
+            Rate: 240
           - Item: EXPStone_Middle
-            Rate: 24
+            Rate: 240
           - Item: EXPStone_Top
-            Rate: 24
+            Rate: 240
           - Item: CastingStone_Top
-            Rate: 24
+            Rate: 240
           - Item: CastingStone_Middle
-            Rate: 24
+            Rate: 240
           - Item: CastingStone_Bottom
-            Rate: 24
+            Rate: 240
           - Item: ATKStone_Middle
-            Rate: 37
+            Rate: 370
           - Item: MATKStone_Middle
-            Rate: 37
+            Rate: 370
           - Item: ATKStone_Top
-            Rate: 37
+            Rate: 370
           - Item: MATKStone_Top
-            Rate: 37
+            Rate: 370
           - Item: ATKStone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: MATKStone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: Critical_Stone
-            Rate: 37
+            Rate: 370
           - Item: Critical_Stone_Top
-            Rate: 37
+            Rate: 370
           - Item: Critical_Stone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: RuneknightStone_Top
-            Rate: 37
+            Rate: 370
           - Item: RuneknightStone_Middle
-            Rate: 37
+            Rate: 370
           - Item: RuneknightStone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: GeneticStone_Top
-            Rate: 37
+            Rate: 370
           - Item: GeneticStone_Middle
-            Rate: 37
+            Rate: 370
           - Item: GeneticStone_Bottom
-            Rate: 37
-          - Item: WarlockStone_Top
-            Rate: 37
-          - Item: WarlockStone_Middle
-            Rate: 37
-          - Item: WarlockStone_Bottom
-            Rate: 37
+            Rate: 370
+          - Item: WarlockStone_Top3
+            Rate: 370
+          - Item: WarlockStone_Middle3
+            Rate: 370
+          - Item: WarlockStone_Bottom3
+            Rate: 370
   - Group: ENCHANT_STONE_BOX15
     SubGroups:
       - SubGroup: 1
         List:
           - Item: CastingStone_Robe
-            Rate: 2
+            Rate: 20
           - Item: DoubleAttack_Stone
-            Rate: 2
+            Rate: 20
           - Item: Critical_Stone_Robe
-            Rate: 2
+            Rate: 20
           - Item: SPdrainStone_Robe
-            Rate: 8
+            Rate: 80
           - Item: SPdrainStone_Top
-            Rate: 8
+            Rate: 80
           - Item: ShrinkEffect_Bottom
-            Rate: 8
+            Rate: 80
           - Item: CastStone_Robe
-            Rate: 8
+            Rate: 80
           - Item: ASPDStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: HPdrainStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: HPdrainStone_Top
-            Rate: 16
+            Rate: 160
           - Item: ASPDStone_Top
-            Rate: 16
+            Rate: 160
           - Item: MinorCastingStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: ShadowchaserStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: MechanicStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: WanderMinstrelStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: EXPStone_Bottom
-            Rate: 24
+            Rate: 240
           - Item: Range_Stone
-            Rate: 24
+            Rate: 240
           - Item: EXPStone_Middle
-            Rate: 24
+            Rate: 240
           - Item: EXPStone_Top
-            Rate: 24
+            Rate: 240
           - Item: CastingStone_Top
-            Rate: 24
+            Rate: 240
           - Item: CastingStone_Middle
-            Rate: 24
+            Rate: 240
           - Item: CastingStone_Bottom
-            Rate: 24
+            Rate: 240
           - Item: ATKStone_Middle
-            Rate: 37
+            Rate: 370
           - Item: MATKStone_Middle
-            Rate: 37
+            Rate: 370
           - Item: ATKStone_Top
-            Rate: 37
+            Rate: 370
           - Item: MATKStone_Top
-            Rate: 37
+            Rate: 370
           - Item: ATKStone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: MATKStone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: Critical_Stone
-            Rate: 37
+            Rate: 370
           - Item: Critical_Stone_Top
-            Rate: 37
+            Rate: 370
           - Item: Critical_Stone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: ShadowchaserStone_Top
-            Rate: 37
+            Rate: 370
           - Item: ShadowchaseStone_Middle
-            Rate: 37
+            Rate: 370
           - Item: ShadowchaseStone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: MechanicStone_Top
-            Rate: 37
+            Rate: 370
           - Item: MechanicStone_Middle
-            Rate: 37
+            Rate: 370
           - Item: MechanicStone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: WanderMinstrelStone_Top
-            Rate: 37
+            Rate: 370
           - Item: WanderMinstrelStone_Middle
-            Rate: 37
+            Rate: 370
           - Item: WanderMinstrelStone_Bottom
-            Rate: 37
+            Rate: 370
   - Group: ENCHANT_STONE_BOX16
     SubGroups:
       - SubGroup: 1
         List:
           - Item: CastingStone_Robe
-            Rate: 2
+            Rate: 20
           - Item: DoubleAttack_Stone
-            Rate: 2
+            Rate: 20
           - Item: Critical_Stone_Robe
-            Rate: 2
+            Rate: 20
           - Item: SPdrainStone_Robe
-            Rate: 8
+            Rate: 80
           - Item: SPdrainStone_Top
-            Rate: 8
+            Rate: 80
           - Item: ShrinkEffect_Bottom
-            Rate: 8
+            Rate: 80
           - Item: CastStone_Robe
-            Rate: 8
+            Rate: 80
           - Item: ASPDStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: HPdrainStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: HPdrainStone_Top
-            Rate: 16
+            Rate: 160
           - Item: ASPDStone_Top
-            Rate: 16
+            Rate: 160
           - Item: MinorCastingStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: ArchbishopStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: RoyalguardStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: GuillcrossStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: EXPStone_Bottom
-            Rate: 24
-          - Item: aegis_310330
-            Rate: 24
+            Rate: 240
+          - Item: Range_Stone
+            Rate: 240
           - Item: EXPStone_Middle
-            Rate: 24
+            Rate: 240
           - Item: EXPStone_Top
-            Rate: 24
+            Rate: 240
           - Item: CastingStone_Top
-            Rate: 24
+            Rate: 240
           - Item: CastingStone_Middle
-            Rate: 24
+            Rate: 240
           - Item: CastingStone_Bottom
-            Rate: 24
+            Rate: 240
           - Item: ATKStone_Middle
-            Rate: 37
+            Rate: 370
           - Item: MATKStone_Middle
-            Rate: 37
+            Rate: 370
           - Item: ATKStone_Top
-            Rate: 37
+            Rate: 370
           - Item: MATKStone_Top
-            Rate: 37
+            Rate: 370
           - Item: ATKStone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: MATKStone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: Critical_Stone
-            Rate: 37
+            Rate: 370
           - Item: Critical_Stone_Top
-            Rate: 37
+            Rate: 370
           - Item: Critical_Stone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: HighpriestStone_Top
-            Rate: 37
+            Rate: 370
           - Item: HighpriestStone_Middle
-            Rate: 37
+            Rate: 370
           - Item: HighpriestStone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: PaladinStone_Top
-            Rate: 37
+            Rate: 370
           - Item: PaladinStone_Middle
-            Rate: 37
+            Rate: 370
           - Item: PaladinStone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: AssacrossStone_Top
-            Rate: 37
+            Rate: 370
           - Item: AssacrossStone_Middle
-            Rate: 37
+            Rate: 370
           - Item: AssacrossStone_Bottom
-            Rate: 37
+            Rate: 370
   - Group: ENCHANT_STONE_BOX17
     SubGroups:
       - SubGroup: 1
         List:
           - Item: CastingStone_Robe
-            Rate: 2
+            Rate: 20
           - Item: DoubleAttack_Stone
-            Rate: 2
+            Rate: 20
           - Item: Critical_Stone_Robe
-            Rate: 2
+            Rate: 20
           - Item: SPdrainStone_Robe
-            Rate: 8
+            Rate: 80
           - Item: SPdrainStone_Top
-            Rate: 8
+            Rate: 80
           - Item: ShrinkEffect_Bottom
-            Rate: 8
+            Rate: 80
           - Item: CastStone_Robe
-            Rate: 8
+            Rate: 80
           - Item: ASPDStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: HPdrainStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: HPdrainStone_Top
-            Rate: 16
+            Rate: 160
           - Item: ASPDStone_Top
-            Rate: 16
+            Rate: 160
           - Item: MinorCastingStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: SuraStone_Robe2
-            Rate: 16
+            Rate: 160
           - Item: SorcererStone_Robe2
-            Rate: 16
+            Rate: 160
           - Item: ShadowchaserStone_Robe2
-            Rate: 16
+            Rate: 160
           - Item: EXPStone_Bottom
-            Rate: 24
-          - Item: aegis_310330
-            Rate: 24
+            Rate: 240
+          - Item: Range_Stone
+            Rate: 240
           - Item: EXPStone_Middle
-            Rate: 24
+            Rate: 240
           - Item: EXPStone_Top
-            Rate: 24
+            Rate: 240
           - Item: CastingStone_Top
-            Rate: 24
+            Rate: 240
           - Item: CastingStone_Middle
-            Rate: 24
+            Rate: 240
           - Item: CastingStone_Bottom
-            Rate: 24
+            Rate: 240
           - Item: ATKStone_Middle
-            Rate: 37
+            Rate: 370
           - Item: MATKStone_Middle
-            Rate: 37
+            Rate: 370
           - Item: ATKStone_Top
-            Rate: 37
+            Rate: 370
           - Item: MATKStone_Top
-            Rate: 37
+            Rate: 370
           - Item: ATKStone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: MATKStone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: Critical_Stone
-            Rate: 37
+            Rate: 370
           - Item: Critical_Stone_Top
-            Rate: 37
+            Rate: 370
           - Item: Critical_Stone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: SuraStone_Bottom2
-            Rate: 37
+            Rate: 370
           - Item: SuraStone_Middle2
-            Rate: 37
+            Rate: 370
           - Item: SuraStone_Top2
-            Rate: 37
+            Rate: 370
           - Item: SorcererStone_Bottom2
-            Rate: 37
+            Rate: 370
           - Item: SorcererStone_Middle2
-            Rate: 37
+            Rate: 370
           - Item: SorcererStone_Top2
-            Rate: 37
+            Rate: 370
           - Item: ShadowchasStone_Bottom2
-            Rate: 37
+            Rate: 370
           - Item: ShadowchasStone_Middle2
-            Rate: 37
+            Rate: 370
           - Item: ShadowchaserStone_Top2
-            Rate: 37
+            Rate: 370
   - Group: ENCHANT_STONE_BOX18
     SubGroups:
       - SubGroup: 1
         List:
-          - Item: CastingStone_Robe
-            Rate: 2
-          - Item: DoubleAttack_Stone
-            Rate: 2
-          - Item: Critical_Stone_Robe
-            Rate: 2
-          - Item: SPdrainStone_Robe
-            Rate: 8
-          - Item: SPdrainStone_Top
-            Rate: 8
-          - Item: ShrinkEffect_Bottom
-            Rate: 8
-          - Item: CastStone_Robe
-            Rate: 8
-          - Item: SoulReaperStone_Robe
-            Rate: 16
-          - Item: StarEmperorStone_Garment
-            Rate: 16
-          - Item: KagerouStone_Robe
-            Rate: 16
-          - Item: OboroStone_Robe
-            Rate: 16
-          - Item: GunslingerStone_Robe
-            Rate: 16
-          - Item: DoramStone_Robe
-            Rate: 16
-          - Item: ElectricEffect_Middle
-            Rate: 17
-          - Item: WaterFieldEffect_Bottom
-            Rate: 17
           - Item: EXPStone_Bottom
-            Rate: 20
-          - Item: aegis_310330
-            Rate: 20
+            Rate: 27
+          - Item: Range_Stone
+            Rate: 27
+          - Item: CastingStone_Robe
+            Rate: 27
           - Item: ReloadStone_Top
-            Rate: 20
+            Rate: 27
           - Item: ReloadStone_Middle
-            Rate: 20
+            Rate: 27
           - Item: ReloadStone_Bottom
-            Rate: 20
+            Rate: 27
           - Item: GreenFloor_Bottom
-            Rate: 20
+            Rate: 27
           - Item: EXPStone_Middle
-            Rate: 20
+            Rate: 27
           - Item: EXPStone_Top
-            Rate: 20
+            Rate: 27
           - Item: CastingStone_Top
-            Rate: 20
+            Rate: 27
           - Item: CastingStone_Middle
-            Rate: 20
+            Rate: 27
           - Item: CastingStone_Bottom
-            Rate: 20
+            Rate: 27
           - Item: BlueAuraEffect_Middle
-            Rate: 20
+            Rate: 27
           - Item: PinkGlowEffect_Middle
-            Rate: 20
+            Rate: 27
           - Item: ExplodingEffect_Middle
-            Rate: 20
+            Rate: 27
+          - Item: DoubleAttack_Stone
+            Rate: 27
+          - Item: Critical_Stone_Robe
+            Rate: 27
+          - Item: SPdrainStone_Robe
+            Rate: 107
+          - Item: SPdrainStone_Top
+            Rate: 107
+          - Item: ShrinkEffect_Bottom
+            Rate: 107
+          - Item: CastStone_Robe
+            Rate: 107
+          - Item: SoulReaperStone_Robe
+            Rate: 214
+          - Item: StarEmperorStone_Garment
+            Rate: 214
+          - Item: KagerouStone_Robe
+            Rate: 214
+          - Item: OboroStone_Robe
+            Rate: 214
+          - Item: GunslingerStone_Robe
+            Rate: 214
+          - Item: DoramStone_Robe
+            Rate: 214
+          - Item: ElectricEffect_Middle
+            Rate: 227
+          - Item: WaterFieldEffect_Bottom
+            Rate: 227
           - Item: SoulLinkerStone_Top
-            Rate: 26
+            Rate: 348
           - Item: SoulLinkerStone_Middle
-            Rate: 26
+            Rate: 348
           - Item: SoulLinkerStone_Bottom
-            Rate: 26
+            Rate: 348
           - Item: StarGladiatorStone_Top
-            Rate: 26
+            Rate: 348
           - Item: StarGladiatorStone_Middle
-            Rate: 26
+            Rate: 348
           - Item: StarGladiatorStone_Bottom
-            Rate: 26
+            Rate: 348
           - Item: NinjaStone_Top
-            Rate: 26
+            Rate: 348
           - Item: NinjaStone_Middle
-            Rate: 26
+            Rate: 348
           - Item: NinjaStone_Bottom
-            Rate: 26
+            Rate: 348
           - Item: GunslingerStone_Top
-            Rate: 26
+            Rate: 348
           - Item: GunslingerStone_Middle
-            Rate: 26
+            Rate: 348
           - Item: GunslingerStone_Bottom
-            Rate: 26
+            Rate: 348
           - Item: DoramStone_Top
-            Rate: 26
+            Rate: 348
           - Item: DoramStone_Middle
-            Rate: 26
+            Rate: 348
           - Item: DoramStone_Bottom
-            Rate: 26
+            Rate: 348
           - Item: ATKStone_Middle
-            Rate: 27
+            Rate: 361
           - Item: MATKStone_Middle
-            Rate: 27
+            Rate: 361
           - Item: ATKStone_Top
-            Rate: 27
+            Rate: 361
           - Item: MATKStone_Top
-            Rate: 27
+            Rate: 361
           - Item: ATKStone_Bottom
-            Rate: 27
+            Rate: 361
           - Item: MATKStone_Bottom
-            Rate: 27
+            Rate: 361
   - Group: ENCHANT_STONE_BOX19
     SubGroups:
       - SubGroup: 1
         List:
           - Item: CastingStone_Robe
-            Rate: 2
+            Rate: 20
           - Item: DoubleAttack_Stone
-            Rate: 2
+            Rate: 20
           - Item: Critical_Stone_Robe
-            Rate: 2
+            Rate: 20
           - Item: SPdrainStone_Robe
-            Rate: 8
+            Rate: 80
           - Item: SPdrainStone_Top
-            Rate: 8
+            Rate: 80
           - Item: ShrinkEffect_Bottom
-            Rate: 8
+            Rate: 80
           - Item: CastStone_Robe
-            Rate: 8
+            Rate: 80
           - Item: ASPDStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: HPdrainStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: HPdrainStone_Top
-            Rate: 16
+            Rate: 160
           - Item: ASPDStone_Top
-            Rate: 16
+            Rate: 160
           - Item: MinorCastingStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: RangerStone_II_Garment
-            Rate: 16
+            Rate: 160
           - Item: MechanicStone_II_Garment
-            Rate: 16
+            Rate: 160
           - Item: ArchbishopStone_II_Garment
-            Rate: 16
+            Rate: 160
           - Item: EXPStone_Bottom
-            Rate: 24
-          - Item: aegis_310330
-            Rate: 24
+            Rate: 240
+          - Item: Range_Stone
+            Rate: 240
           - Item: EXPStone_Middle
-            Rate: 24
+            Rate: 240
           - Item: EXPStone_Top
-            Rate: 24
+            Rate: 240
           - Item: CastingStone_Top
-            Rate: 24
+            Rate: 240
           - Item: CastingStone_Middle
-            Rate: 24
+            Rate: 240
           - Item: CastingStone_Bottom
-            Rate: 24
+            Rate: 240
           - Item: ATKStone_Middle
-            Rate: 37
+            Rate: 370
           - Item: MATKStone_Middle
-            Rate: 37
+            Rate: 370
           - Item: ATKStone_Top
-            Rate: 37
+            Rate: 370
           - Item: MATKStone_Top
-            Rate: 37
+            Rate: 370
           - Item: ATKStone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: MATKStone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: Critical_Stone
-            Rate: 37
+            Rate: 370
           - Item: Critical_Stone_Top
-            Rate: 37
+            Rate: 370
           - Item: Critical_Stone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: RangerStone_II_Top
-            Rate: 37
+            Rate: 370
           - Item: RangerStone_II_Middle
-            Rate: 37
+            Rate: 370
           - Item: RangerStone_II_Bottom
-            Rate: 37
+            Rate: 370
           - Item: MechanicStone_II_Top
-            Rate: 37
+            Rate: 370
           - Item: MechanicStone_II_Middle
-            Rate: 37
+            Rate: 370
           - Item: MechanicStone_II_Bottom
-            Rate: 37
+            Rate: 370
           - Item: HighpriestStone_II_Top
-            Rate: 37
+            Rate: 370
           - Item: HighpriestStone_II_Middle
-            Rate: 37
+            Rate: 370
           - Item: HighpriestStone_II_Bottom
-            Rate: 37
+            Rate: 370
   - Group: ENCHANT_STONE_BOX2
     SubGroups:
       - SubGroup: 1
@@ -7587,169 +7587,169 @@ Body:
       - SubGroup: 1
         List:
           - Item: CastingStone_Robe
-            Rate: 2
+            Rate: 20
           - Item: DoubleAttack_Stone
-            Rate: 2
+            Rate: 20
           - Item: Critical_Stone_Robe
-            Rate: 2
+            Rate: 20
           - Item: SPdrainStone_Robe
-            Rate: 8
+            Rate: 80
           - Item: SPdrainStone_Top
-            Rate: 8
+            Rate: 80
           - Item: Greed_Stone
-            Rate: 8
+            Rate: 80
           - Item: CastStone_Robe
-            Rate: 8
+            Rate: 80
           - Item: ASPDStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: HPdrainStone_Robe
-            Rate: 16
+            Rate: 160
           - Item: HPdrainStone_Top
-            Rate: 16
+            Rate: 160
           - Item: ASPDStone_Top
-            Rate: 16
+            Rate: 160
           - Item: WaterFieldEffect_Bottom
-            Rate: 16
+            Rate: 160
           - Item: WarlockStone_Robe2
-            Rate: 16
+            Rate: 160
           - Item: RoyalGuardStone_Robe2
-            Rate: 16
+            Rate: 160
           - Item: GuillotineCrossStone_Robe2
-            Rate: 16
+            Rate: 160
           - Item: EXPStone_Bottom
-            Rate: 24
-          - Item: aegis_310330
-            Rate: 24
+            Rate: 240
+          - Item: Range_Stone
+            Rate: 240
           - Item: EXPStone_Middle
-            Rate: 24
+            Rate: 240
           - Item: EXPStone_Top
-            Rate: 24
+            Rate: 240
           - Item: CastingStone_Top
-            Rate: 24
+            Rate: 240
           - Item: CastingStone_Middle
-            Rate: 24
+            Rate: 240
           - Item: CastingStone_Bottom
-            Rate: 24
+            Rate: 240
           - Item: ATKStone_Middle
-            Rate: 37
+            Rate: 370
           - Item: MATKStone_Middle
-            Rate: 37
+            Rate: 370
           - Item: ATKStone_Top
-            Rate: 37
+            Rate: 370
           - Item: MATKStone_Top
-            Rate: 37
+            Rate: 370
           - Item: ATKStone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: MATKStone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: Critical_Stone
-            Rate: 37
+            Rate: 370
           - Item: Critical_Stone_Top
-            Rate: 37
+            Rate: 370
           - Item: Critical_Stone_Bottom
-            Rate: 37
+            Rate: 370
           - Item: WarlockStone_Top2
-            Rate: 37
+            Rate: 370
           - Item: WarlockStone_Middle2
-            Rate: 37
+            Rate: 370
           - Item: WarlockStone_Bottom2
-            Rate: 37
+            Rate: 370
           - Item: RoyalGuardStone_Top2
-            Rate: 37
+            Rate: 370
           - Item: RoyalGuardStone_Middle2
-            Rate: 37
+            Rate: 370
           - Item: RoyalGuardStone_Bottom2
-            Rate: 37
+            Rate: 370
           - Item: GuillotineCrossStone_Top2
-            Rate: 37
+            Rate: 370
           - Item: GuillotineCrossStone_Middle2
-            Rate: 37
+            Rate: 370
           - Item: GuillotineCrossStone_Bottom2
-            Rate: 37
+            Rate: 370
   - Group: ENCHANT_STONE_BOX21
     SubGroups:
       - SubGroup: 1
         List:
-          - Item: DoubleAttack_Stone
-            Rate: 2
-          - Item: Critical_Stone_Robe
-            Rate: 2
           - Item: CastingStone_Robe
-            Rate: 2
+            Rate: 20
+          - Item: DoubleAttack_Stone
+            Rate: 20
+          - Item: Critical_Stone_Robe
+            Rate: 20
           - Item: SPdrainStone_Robe
-            Rate: 8
+            Rate: 80
           - Item: SPdrainStone_Top
-            Rate: 8
-          - Item: CastStone_Robe
-            Rate: 8
+            Rate: 80
           - Item: Greed_Stone
-            Rate: 8
-          - Item: HPdrainStone_Robe
-            Rate: 16
-          - Item: HPdrainStone_Top
-            Rate: 16
-          - Item: ASPDStone_Top
-            Rate: 16
+            Rate: 80
+          - Item: CastStone_Robe
+            Rate: 80
           - Item: ASPDStone_Robe
-            Rate: 16
+            Rate: 160
+          - Item: HPdrainStone_Robe
+            Rate: 160
+          - Item: HPdrainStone_Top
+            Rate: 160
+          - Item: ASPDStone_Top
+            Rate: 160
           - Item: WaterFieldEffect_Bottom
-            Rate: 16
+            Rate: 160
           - Item: RuneknightStone_Robe2
-            Rate: 16
+            Rate: 160
           - Item: GeneticStone_Robe2
-            Rate: 16
+            Rate: 160
           - Item: WanderMinsStone_Robe2
-            Rate: 16
-          - Item: aegis_310330
-            Rate: 24
-          - Item: EXPStone_Top
-            Rate: 24
-          - Item: EXPStone_Middle
-            Rate: 24
+            Rate: 160
           - Item: EXPStone_Bottom
-            Rate: 24
+            Rate: 240
+          - Item: Range_Stone
+            Rate: 240
+          - Item: EXPStone_Middle
+            Rate: 240
+          - Item: EXPStone_Top
+            Rate: 240
           - Item: CastingStone_Top
-            Rate: 24
+            Rate: 240
           - Item: CastingStone_Middle
-            Rate: 24
+            Rate: 240
           - Item: CastingStone_Bottom
-            Rate: 24
-          - Item: RuneknightStone_Top2
-            Rate: 37
-          - Item: RuneknightStone_Middle2
-            Rate: 37
-          - Item: RuneknightStone_Bottom2
-            Rate: 37
-          - Item: GeneticStone_Top2
-            Rate: 37
-          - Item: GeneticStone_Middle2
-            Rate: 37
-          - Item: GeneticStone_Bottom2
-            Rate: 37
-          - Item: WanderMinsStone_Top2
-            Rate: 37
-          - Item: WanderMinsStone_Middle2
-            Rate: 37
-          - Item: WanderMinsStone_Bottom2
-            Rate: 37
-          - Item: ATKStone_Top
-            Rate: 37
+            Rate: 240
           - Item: ATKStone_Middle
-            Rate: 37
-          - Item: ATKStone_Bottom
-            Rate: 37
-          - Item: MATKStone_Top
-            Rate: 37
+            Rate: 370
           - Item: MATKStone_Middle
-            Rate: 37
+            Rate: 370
+          - Item: ATKStone_Top
+            Rate: 370
+          - Item: MATKStone_Top
+            Rate: 370
+          - Item: ATKStone_Bottom
+            Rate: 370
           - Item: MATKStone_Bottom
-            Rate: 37
-          - Item: Critical_Stone_Top
-            Rate: 37
+            Rate: 370
           - Item: Critical_Stone
-            Rate: 37
+            Rate: 370
+          - Item: Critical_Stone_Top
+            Rate: 370
           - Item: Critical_Stone_Bottom
-            Rate: 37
+            Rate: 370
+          - Item: RuneknightStone_Top2
+            Rate: 370
+          - Item: RuneknightStone_Middle2
+            Rate: 370
+          - Item: RuneknightStone_Bottom2
+            Rate: 370
+          - Item: GeneticStone_Top2
+            Rate: 370
+          - Item: GeneticStone_Middle2
+            Rate: 370
+          - Item: GeneticStone_Bottom2
+            Rate: 370
+          - Item: WanderMinsStone_Top2
+            Rate: 370
+          - Item: WanderMinsStone_Middle2
+            Rate: 370
+          - Item: WanderMinsStone_Bottom2
+            Rate: 370
   - Group: ENCHANT_STONE_BOX3
     SubGroups:
       - SubGroup: 1
@@ -7840,64 +7840,64 @@ Body:
     SubGroups:
       - SubGroup: 1
         List:
-          - Item: ASPDStone_Robe
-            Rate: 168
-          - Item: ATKStone_Middle
-            Rate: 252
-          - Item: MATKStone_Middle
-            Rate: 252
-          - Item: ATKStone_Top
-            Rate: 252
-          - Item: MATKStone_Top
-            Rate: 252
-          - Item: STRStone_Top
-            Rate: 336
-          - Item: INTStone_Top
-            Rate: 336
-          - Item: AGIStone_Top
-            Rate: 336
-          - Item: DEXStone_Top
-            Rate: 336
-          - Item: VITStone_Top
-            Rate: 336
-          - Item: LUKStone_Top
-            Rate: 336
-          - Item: HPStone_Middle
-            Rate: 336
-          - Item: SPStone_Middle
-            Rate: 336
-          - Item: STRStone_Middle
-            Rate: 336
-          - Item: INTStone_Middle
-            Rate: 336
-          - Item: AGIStone_Middle
-            Rate: 336
-          - Item: DEXStone_Middle
-            Rate: 336
-          - Item: VITStone_Middle
-            Rate: 336
-          - Item: LUKStone_Middle
-            Rate: 336
-          - Item: HPStone_Bottom
-            Rate: 336
           - Item: HITStone_Bottom
-            Rate: 420
+            Rate: 64
           - Item: FLEEStone_Bottom
-            Rate: 420
+            Rate: 64
           - Item: HealStone_Top
-            Rate: 420
+            Rate: 64
           - Item: HealStone2_Top
-            Rate: 420
+            Rate: 64
           - Item: HealStone_Middle
-            Rate: 420
+            Rate: 64
           - Item: HealStone_Bottom
-            Rate: 420
+            Rate: 64
           - Item: BigStone_Top
-            Rate: 420
+            Rate: 64
           - Item: MediumStone_Top
-            Rate: 420
+            Rate: 64
           - Item: SmallStone_Top
-            Rate: 420
+            Rate: 64
+          - Item: ASPDStone_Robe
+            Rate: 255
+          - Item: ATKStone_Middle
+            Rate: 382
+          - Item: MATKStone_Middle
+            Rate: 382
+          - Item: ATKStone_Top
+            Rate: 382
+          - Item: MATKStone_Top
+            Rate: 382
+          - Item: STRStone_Top
+            Rate: 510
+          - Item: INTStone_Top
+            Rate: 510
+          - Item: AGIStone_Top
+            Rate: 510
+          - Item: DEXStone_Top
+            Rate: 510
+          - Item: VITStone_Top
+            Rate: 510
+          - Item: LUKStone_Top
+            Rate: 510
+          - Item: HPStone_Middle
+            Rate: 510
+          - Item: SPStone_Middle
+            Rate: 510
+          - Item: STRStone_Middle
+            Rate: 510
+          - Item: INTStone_Middle
+            Rate: 510
+          - Item: AGIStone_Middle
+            Rate: 510
+          - Item: DEXStone_Middle
+            Rate: 510
+          - Item: VITStone_Middle
+            Rate: 510
+          - Item: LUKStone_Middle
+            Rate: 510
+          - Item: HPStone_Bottom
+            Rate: 510
   - Group: ENCHANT_STONE_BOX6
     SubGroups:
       - SubGroup: 1
@@ -8112,7 +8112,7 @@ Body:
             Rate: 372
           - Item: Detoxify_Stone
             Rate: 372
-          - Item: HealStone_Bottom
+          - Item: Recovery_Stone
             Rate: 372
   - Group: ENCHANT_STONE_BOX9
     SubGroups:
@@ -8185,15 +8185,15 @@ Body:
           - Item: ChangeINT_Bottom
             Rate: 317
           - Item: EXPStone_Bottom
-            Rate: 397
+            Rate: 398
           - Item: MaxHP2_Stone
-            Rate: 397
+            Rate: 398
           - Item: MaxSP2_Stone
-            Rate: 397
+            Rate: 398
           - Item: Identify_Stone
-            Rate: 397
+            Rate: 398
           - Item: EXPStone_Middle
-            Rate: 397
+            Rate: 398
   - Group: ENERGETIC_PISCES_BOX
     SubGroups:
       - SubGroup: 0
@@ -15722,7 +15722,7 @@ Body:
         List:
           - Item: Actinidia_Cat_Fruit
             Rate: 1
-          - Item: World_Moving_Rights
+          - Item: World_Tour_Ticket
             Rate: 1
   - Group: PRIZEOFHERO
     SubGroups:
@@ -18003,6 +18003,96 @@ Body:
             Rate: 1
           - Item: Mystic_Bow
             Rate: 2
+  - Group: Splendid_Box2
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Krasnaya
+            Rate: 232
+          - Item: Alca_Bringer
+            Rate: 232
+          - Item: Chrome_Twohand_Sword
+            Rate: 232
+          - Item: Krishna
+            Rate: 232
+          - Item: Cakram
+            Rate: 232
+          - Item: Durga
+            Rate: 232
+          - Item: Vecer_Axe
+            Rate: 232
+          - Item: Giant_Axe
+            Rate: 232
+          - Item: Hunting_Spear
+            Rate: 232
+          - Item: Imperial_Spear
+            Rate: 232
+          - Item: Rafini_Staff
+            Rate: 232
+          - Item: Falken_Blitz
+            Rate: 232
+          - Item: Elven_Bow
+            Rate: 232
+          - Item: Green_Whistle
+            Rate: 232
+          - Item: Stem_Whip
+            Rate: 232
+          - Item: Rotha_Shield
+            Rate: 232
+          - Item: Imperial_Guard
+            Rate: 232
+          - Item: Elven_Ears
+            Rate: 232
+          - Item: Diabolus_Robe
+            Rate: 232
+          - Item: Diabolus_Armor
+            Rate: 232
+          - Item: Dragon_Vest
+            Rate: 232
+          - Item: Variant_Shoes
+            Rate: 232
+          - Item: Tidal_Shoes
+            Rate: 232
+          - Item: Black_Leather_Boots
+            Rate: 232
+          - Item: Diabolus_Boots
+            Rate: 232
+          - Item: Black_Leather_Boots_
+            Rate: 232
+          - Item: Diabolus_Manteau
+            Rate: 232
+          - Item: Dragon_Manteau
+            Rate: 232
+          - Item: Piece_Of_Angent_Skin
+            Rate: 232
+          - Item: Bison_Horn
+            Rate: 232
+          - Item: Krieg
+            Rate: 232
+          - Item: Weihna
+            Rate: 232
+          - Item: Black_Wing
+            Rate: 232
+          - Item: Twin_Edge_B
+            Rate: 232
+          - Item: Twin_Edge_R
+            Rate: 232
+          - Item: Ruber
+            Rate: 232
+          - Item: Bone_Plate
+            Rate: 232
+          - Item: Ebone_Armor
+            Rate: 232
+          - Item: Erde
+            Rate: 232
+          - Item: Red_Square_Bag
+            Rate: 232
+          - Item: Carga_Mace
+            Rate: 232
+          - Item: Red_Ether_Bag
+            Rate: 232
+          - Item: Mystic_Bow
+            Rate: 232
   - Group: SPRING_FESTIVAL_SCROLL
     SubGroups:
       - SubGroup: 1
@@ -22701,7 +22791,7 @@ Body:
             Rate: 1
           - Item: Burnt_Parts
             Rate: 1
-          - Item: Pocket_Watch__
+          - Item: Pocket_Watch
             Rate: 1
           - Item: Ice_Heart
             Rate: 1
@@ -23828,7 +23918,7 @@ Body:
         List:
           - Item: Actinidia_Cat_Fruit
             Amount: 100
-          - Item: aegis_101271
+          - Item: Enchant_Stone_Box26
             Amount: 2
           - Item: Comp_Bubble_Gum
             Amount: 3
@@ -23838,7 +23928,7 @@ Body:
         List:
           - Item: Actinidia_Cat_Fruit
             Amount: 200
-          - Item: aegis_101271
+          - Item: Enchant_Stone_Box26
             Amount: 2
           - Item: Battle_Manual100
             Amount: 2
@@ -23848,138 +23938,138 @@ Body:
         List:
           - Item: Actinidia_Cat_Fruit
             Amount: 400
-          - Item: aegis_101271
+          - Item: Enchant_Stone_Box26
             Amount: 2
           - Item: Comp_Bubble_Gum
             Amount: 5
           - Item: Battle_Manual100
             Amount: 5
-  - Group: Enchant_Stone_Box26
+  - Group: ENCHANT_STONE_BOX26
     SubGroups:
       - SubGroup: 1
         List:
           - Item: CriticalStone_Robe_D
-            Rate: 1
+            Rate: 10
           - Item: ConStone_Robe_D
-            Rate: 1
-          - Item: Critical_Stone_Robe
-            Rate: 2
+            Rate: 10
           - Item: CastingStone_Robe
-            Rate: 2
+            Rate: 20
+          - Item: Critical_Stone_Robe
+            Rate: 20
           - Item: SPdrainStone_Robe_D
-            Rate: 4
+            Rate: 40
           - Item: SPdrainStone_Top
-            Rate: 8
+            Rate: 80
           - Item: CastStone_Robe
-            Rate: 8
-          - Item: ASPDStone_Top
-            Rate: 16
-          - Item: ASPDStone_Robe_D
-            Rate: 8
-          - Item: HPdrainStone_Robe_D
-            Rate: 8
-          - Item: ElectricEffect_Middle
-            Rate: 16
-          - Item: ArchbishopStone_Robe
-            Rate: 8
-          - Item: ArchbishopStone_II_Garment
-            Rate: 8
+            Rate: 80
           - Item: RangerStone_Robe
-            Rate: 8
-          - Item: RangerStone_II_Garment
-            Rate: 8
+            Rate: 80
           - Item: ShadowchaserStone_Robe
-            Rate: 8
+            Rate: 80
+          - Item: ArchbishopStone_Robe
+            Rate: 80
           - Item: ShadowchaserStone_Robe2
-            Rate: 8
+            Rate: 80
+          - Item: RangerStone_II_Garment
+            Rate: 80
+          - Item: ArchbishopStone_II_Garment
+            Rate: 80
+          - Item: ASPDStone_Robe_D
+            Rate: 80
+          - Item: HPdrainStone_Robe_D
+            Rate: 80
           - Item: ArchbishopStone_Top3
-            Rate: 8
+            Rate: 80
           - Item: ArchbishopStone_Middle3
-            Rate: 8
+            Rate: 80
           - Item: ArchbishopStone_Bottom3
-            Rate: 8
+            Rate: 80
           - Item: RangerStone_Top3
-            Rate: 8
+            Rate: 80
           - Item: RangerStone_Middle3
-            Rate: 8
+            Rate: 80
           - Item: RangerStone_Bottom3
-            Rate: 8
+            Rate: 80
           - Item: ShadowchasStone_Top3
-            Rate: 8
+            Rate: 80
           - Item: ShadowchasStone_Middle3
-            Rate: 8
+            Rate: 80
           - Item: ShadowchasStone_Bottom3
-            Rate: 8
-          - Item: aegis_100465
-            Rate: 16
-          - Item: aegis_100495
-            Rate: 16
-          - Item: ReloadStone_Top
-            Rate: 24
-          - Item: ReloadStone_Middle
-            Rate: 24
-          - Item: ReloadStone_Bottom
-            Rate: 24
-          - Item: HighpriestStone_Top
-            Rate: 15
-          - Item: HighpriestStone_Middle
-            Rate: 15
-          - Item: HighpriestStone_Bottom
-            Rate: 15
-          - Item: HighpriestStone_II_Top
-            Rate: 15
-          - Item: HighpriestStone_II_Middle
-            Rate: 15
-          - Item: HighpriestStone_II_Bottom
-            Rate: 15
+            Rate: 80
           - Item: RangerStone_Top
-            Rate: 15
+            Rate: 150
           - Item: RangerStone_Middle
-            Rate: 15
+            Rate: 150
           - Item: RangerStone_Bottom
-            Rate: 15
-          - Item: RangerStone_II_Top
-            Rate: 15
-          - Item: RangerStone_II_Middle
-            Rate: 15
-          - Item: RangerStone_II_Bottom
-            Rate: 15
+            Rate: 150
           - Item: ShadowchaserStone_Top
-            Rate: 15
+            Rate: 150
           - Item: ShadowchaseStone_Middle
-            Rate: 15
+            Rate: 150
           - Item: ShadowchaseStone_Bottom
-            Rate: 15
+            Rate: 150
+          - Item: HighpriestStone_Top
+            Rate: 150
+          - Item: HighpriestStone_Middle
+            Rate: 150
+          - Item: HighpriestStone_Bottom
+            Rate: 150
           - Item: ShadowchasStone_Bottom2
-            Rate: 15
+            Rate: 150
           - Item: ShadowchasStone_Middle2
-            Rate: 15
+            Rate: 150
           - Item: ShadowchaserStone_Top2
-            Rate: 15
-          - Item: aegis_100496
-            Rate: 36
-          - Item: aegis_100497
-            Rate: 36
-          - Item: aegis_100498
-            Rate: 36
-          - Item: aegis_100499
-            Rate: 36
-          - Item: aegis_100500
-            Rate: 36
-          - Item: aegis_100501
-            Rate: 36
-          - Item: CastingStone_Top
-            Rate: 36
-          - Item: CastingStone_Middle
-            Rate: 36
-          - Item: CastingStone_Bottom
-            Rate: 36
+            Rate: 150
+          - Item: RangerStone_II_Top
+            Rate: 150
+          - Item: RangerStone_II_Middle
+            Rate: 150
+          - Item: RangerStone_II_Bottom
+            Rate: 150
+          - Item: HighpriestStone_II_Top
+            Rate: 150
+          - Item: HighpriestStone_II_Middle
+            Rate: 150
+          - Item: HighpriestStone_II_Bottom
+            Rate: 150
+          - Item: ASPDStone_Top
+            Rate: 160
+          - Item: ElectricEffect_Middle
+            Rate: 160
+          - Item: aegis_100465
+            Rate: 160
+          - Item: aegis_100495
+            Rate: 160
+          - Item: ReloadStone_Top
+            Rate: 240
+          - Item: ReloadStone_Middle
+            Rate: 240
+          - Item: ReloadStone_Bottom
+            Rate: 240
           - Item: Critical_Stone
-            Rate: 36
+            Rate: 360
+          - Item: CastingStone_Top
+            Rate: 360
+          - Item: CastingStone_Middle
+            Rate: 360
+          - Item: CastingStone_Bottom
+            Rate: 360
           - Item: Critical_Stone_Top
-            Rate: 36
+            Rate: 360
           - Item: Critical_Stone_Bottom
-            Rate: 36
+            Rate: 360
+          - Item: aegis_100496
+            Rate: 360
+          - Item: aegis_100497
+            Rate: 360
+          - Item: aegis_100498
+            Rate: 360
+          - Item: aegis_100499
+            Rate: 360
+          - Item: aegis_100500
+            Rate: 360
+          - Item: aegis_100501
+            Rate: 360
   - Group: THIRD_JOB_STONE_GARMENT_BOX
     SubGroups:
       - SubGroup: 1
@@ -24984,9 +25074,9 @@ Body:
             Rate: 73
           - Item: S_Tempest_Armor
             Rate: 73
-          - Item: S_Perfect_Size_Weapon
+          - Item: S_PerfectSize_Weapon
             Rate: 73
-          - Item: S_Perfect_Size_Armor
+          - Item: S_PerfectSize_Armor
             Rate: 73
           - Item: S_M_Exo_Co_Weapon
             Rate: 73
@@ -25388,12 +25478,12 @@ Body:
             Rate: 73
           - Item: S_FullPene_Earring
             Rate: 73
-  - Group: DROOPING_GUNSLINGER_SCROLL
+  - Group: GUNSLINGER_ENCHANT
     SubGroups:
       - SubGroup: 0
         List:
           - Item: Drooping_Rebellion_
-            RandomOptionGroup: DROOPING_GUNSLINGER_SCROLL
+            RandomOptionGroup: GUNSLINGER_ENCHANT
   - Group: ENCHANTSTONE_RECIPE
     SubGroups:
       - SubGroup: 1
@@ -26046,18 +26136,18 @@ Body:
             Rate: 130
           - Item: C_Giant_White_Rabbit
             Rate: 130
-  - Group: FAN_MODIFICATION_KIT
+  - Group: FAN_UPGRADE_KIT
     SubGroups:
       - SubGroup: 0
         List:
           - Item: Sea_Otter_Mini_Fan
-            RandomOptionGroup: FAN_MODIFICATION_KIT
-  - Group: UNIFORM_REPAIR_KIT
+            RandomOptionGroup: FAN_UPGRADE_KIT
+  - Group: SUIT_UPGRADE_KIT
     SubGroups:
       - SubGroup: 0
         List:
           - Item: Kafra_Uniform
-            RandomOptionGroup: UNIFORM_REPAIR_KIT
+            RandomOptionGroup: SUIT_UPGRADE_KIT
   - Group: SCROLL_OF_FALLEN_ANGEL_WINGS
     SubGroups:
       - SubGroup: 0
@@ -26580,39 +26670,39 @@ Body:
             Rate: 1
           - Item: S_All_Race_Shield
             Rate: 1
-  - Group: CANDY_POUCH_BLESSING_SCROLL_MELEE
+  - Group: CANDY_BAG_SCROLL_MELEE
     SubGroups:
       - SubGroup: 0
         List:
           - Item: Bag_Of_Antonio_P
-            RandomOptionGroup: CANDY_POUCH_BLESSING_SCROLL_MELEE
-  - Group: CANDY_POUCH_BLESSING_SCROLL_RANGE
+            RandomOptionGroup: CANDY_BAG_SCROLL_MELEE
+  - Group: CANDY_BAG_SCROLL_RANGE
     SubGroups:
       - SubGroup: 0
         List:
           - Item: Bag_Of_Antonio_S
-            RandomOptionGroup: CANDY_POUCH_BLESSING_SCROLL_RANGE
-  - Group: CANDY_POUCH_BLESSING_SCROLL_MAGIC
+            RandomOptionGroup: CANDY_BAG_SCROLL_RANGE
+  - Group: CANDY_BAG_SCROLL_MAGIC
     SubGroups:
       - SubGroup: 0
         List:
           - Item: Bag_Of_Antonio_
-            RandomOptionGroup: CANDY_POUCH_BLESSING_SCROLL_MAGIC
-  - Group: MAGICAL_BOOSTER_AMPLIFIER
+            RandomOptionGroup: CANDY_BAG_SCROLL_MAGIC
+  - Group: BOOSTER_AMPLIFIER
     SubGroups:
       - SubGroup: 1
         List:
           - Item: Crimson_Booster
             Rate: 1
           - Item: Magical_Booster_K
-            RandomOptionGroup: MAGICAL_BOOSTER_AMPLIFIER
+            RandomOptionGroup: BOOSTER_AMPLIFIER
             Rate: 1
-  - Group: MAGIC_CAT_HAND_SCROLL
+  - Group: MAGICAL_CAT_HAND
     SubGroups:
       - SubGroup: 0
         List:
           - Item: Neko_Headress
-            RandomOptionGroup: MAGIC_CAT_HAND_SCROLL
+            RandomOptionGroup: MAGICAL_CAT_HAND
   - Group: INFINITYSHADOW_MIX
     SubGroups:
       - SubGroup: 0
@@ -27442,9 +27532,9 @@ Body:
     SubGroups:
       - SubGroup: 1
         List:
-          - Item: S_Perfect_Size_Weapon
+          - Item: S_PerfectSize_Weapon
             Rate: 1
-          - Item: S_Perfect_Size_Armor
+          - Item: S_PerfectSize_Armor
             Rate: 1
   - Group: MAGICPIERCING_MIX
     SubGroups:
@@ -28466,3 +28556,2594 @@ Body:
             Rate: 33
           - Item: S_Archer_earring
             Rate: 33
+  - Group: HELM_OF_FAITH_BOX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Viva_Adul_Hat_WL1
+            Rate: 1
+          - Item: Viva_Adul_Hat_WL2
+            Rate: 1
+          - Item: Viva_Adul_Hat_SR1
+            Rate: 1
+          - Item: Viva_Adul_Hat_SR2
+            Rate: 1
+          - Item: Viva_Adul_Hat_AB1
+            Rate: 1
+          - Item: Viva_Adul_Hat_AB2
+            Rate: 1
+          - Item: Viva_Adul_Hat_SC1
+            Rate: 1
+          - Item: Viva_Adul_Hat_SC2
+            Rate: 1
+          - Item: Viva_Adul_Hat_RA1
+            Rate: 1
+          - Item: Viva_Adul_Hat_RA2
+            Rate: 1
+          - Item: Viva_Adul_Hat_LG1
+            Rate: 1
+          - Item: Viva_Adul_Hat_LG2
+            Rate: 1
+          - Item: Viva_Adul_Hat_GC1
+            Rate: 1
+          - Item: Viva_Adul_Hat_GC2
+            Rate: 1
+          - Item: Viva_Adul_Hat_SO1
+            Rate: 1
+          - Item: Viva_Adul_Hat_SO2
+            Rate: 1
+          - Item: Viva_Adul_Hat_RK1
+            Rate: 1
+          - Item: Viva_Adul_Hat_RK2
+            Rate: 1
+          - Item: Viva_Adul_Hat_WM1
+            Rate: 1
+          - Item: Viva_Adul_Hat_WM2
+            Rate: 1
+          - Item: Viva_Adul_Hat_NC1
+            Rate: 1
+          - Item: Viva_Adul_Hat_NC2
+            Rate: 1
+          - Item: Viva_Adul_Hat_GN1
+            Rate: 1
+          - Item: Viva_Adul_Hat_GN2
+            Rate: 1
+          - Item: Viva_Adul_Hat_KO1
+            Rate: 1
+          - Item: Viva_Adul_Hat_KO2
+            Rate: 1
+          - Item: Viva_Adul_Hat_RL1
+            Rate: 1
+          - Item: Viva_Adul_Hat_RL2
+            Rate: 1
+          - Item: Viva_Adul_Hat_SP1
+            Rate: 1
+          - Item: Viva_Adul_Hat_SP2
+            Rate: 1
+          - Item: Viva_Adul_Hat_SJ1
+            Rate: 1
+          - Item: Viva_Adul_Hat_SJ2
+            Rate: 1
+          - Item: Viva_Adul_Hat_SU1
+            Rate: 1
+          - Item: Viva_Adul_Hat_SU2
+            Rate: 1
+  - Group: 2022_LUNARNEWYEARS_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: 2022_LunarNewYears_band
+          - Item: Special_Tool_Box_Coupon
+            Amount: 3
+          - Item: E_Main_Dish_C
+            Amount: 10
+          - Item: E_Mimir_Spring_W
+            Amount: 10
+          - Item: E_Challenge_Drink
+            Amount: 10
+          - Item: E_Power_Drink
+            Amount: 10
+          - Item: E_Baldrs_Blessing
+            Amount: 10
+          - Item: World_Tour_Ticket
+            Amount: 30
+  - Group: 2020_REWARD_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Cachua_Coupon
+            Amount: 10
+          - Item: Kr_B_Special01
+            Amount: 3
+          - Item: World_Tour_Ticket
+            Amount: 20
+  - Group: COSTUME_MILE_PACK_26_1
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Actinidia_Cat_Fruit
+            Amount: 100
+          - Item: Evt_Cos_Coin
+            Amount: 12
+          - Item: Enchant_Stone_Box26
+            Amount: 3
+  - Group: COSTUME_MILE_PACK_26_2
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Actinidia_Cat_Fruit
+            Amount: 200
+          - Item: Evt_Cos_Coin
+            Amount: 25
+          - Item: Enchant_Stone_Box26
+            Amount: 5
+  - Group: COSTUME_MILE_PACK_26_3
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Actinidia_Cat_Fruit
+            Amount: 400
+          - Item: Evt_Cos_Coin
+            Amount: 50
+          - Item: Enchant_Stone_Box26
+            Amount: 10
+  - Group: EP17_1_SPC01
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Burning_Knuckle_OS
+            Rate: 625
+          - Item: Cannon_Rapier_OS
+            Rate: 625
+          - Item: Saphir_Hall_OS
+            Rate: 625
+          - Item: Ultio_Spes_OS
+            Rate: 625
+          - Item: Virtual_Bow_OS
+            Rate: 625
+          - Item: MH_P89_OS
+            Rate: 625
+          - Item: AC_B44_OS
+            Rate: 625
+          - Item: Beam_Claymore_OS
+            Rate: 625
+          - Item: Rutilus_Stick_OS
+            Rate: 625
+          - Item: ElectricFox_OS
+            Rate: 625
+          - Item: Meuchler_OS
+            Rate: 625
+          - Item: Blasti_OS
+            Rate: 625
+          - Item: HR_S55_OS
+            Rate: 625
+          - Item: Circuit_Board_OS
+            Rate: 625
+          - Item: Kuroiro_OS
+            Rate: 625
+          - Item: Boost_Lance_OS
+            Rate: 625
+  - Group: EP17_1_SPC02
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: EP17_1_SPC05
+            Rate: 7500
+          - Item: EP17_1_SPC06
+            Rate: 2000
+          - Item: EP17_1_SPC07
+            Rate: 500
+  - Group: EP17_1_SPC03
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: EP17_1_SPC08
+            Rate: 7500
+          - Item: EP17_1_SPC09
+            Rate: 2000
+          - Item: EP17_1_SPC10
+            Rate: 500
+  - Group: EP17_1_SPC04
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: EP17_1_EVT03
+            Rate: 900
+          - Item: EP17_1_EVT04
+            Rate: 900
+          - Item: EP17_1_EVT05
+            Rate: 904
+          - Item: EP17_1_EVT06
+            Rate: 904
+          - Item: EP17_1_EVT07
+            Rate: 904
+          - Item: EP17_1_EVT08
+            Rate: 904
+          - Item: EP17_1_EVT09
+            Rate: 904
+          - Item: EP17_1_EVT10
+            Rate: 904
+          - Item: EP17_1_EVT11
+            Rate: 300
+          - Item: EP17_1_EVT12
+            Rate: 300
+          - Item: EP17_1_EVT13
+            Rate: 300
+          - Item: EP17_1_EVT14
+            Rate: 300
+          - Item: EP17_1_EVT15
+            Rate: 300
+          - Item: EP17_1_EVT16
+            Rate: 300
+          - Item: EP17_1_EVT17
+            Rate: 100
+          - Item: EP17_1_EVT18
+            Rate: 100
+          - Item: EP17_1_EVT19
+            Rate: 100
+          - Item: EP17_1_EVT20
+            Rate: 100
+          - Item: EP17_1_EVT21
+            Rate: 100
+          - Item: EP17_1_EVT22
+            Rate: 100
+          - Item: EP17_1_EVT23
+            Rate: 100
+          - Item: EP17_1_EVT24
+            Rate: 100
+          - Item: EP17_1_EVT25
+            Rate: 100
+          - Item: EP17_1_EVT26
+            Rate: 10
+          - Item: EP17_1_EVT27
+            Rate: 10
+          - Item: EP17_1_EVT28
+            Rate: 10
+          - Item: EP17_1_EVT29
+            Rate: 10
+          - Item: EP17_1_EVT30
+            Rate: 10
+          - Item: EP17_1_EVT31
+            Rate: 10
+          - Item: EP17_1_EVT32
+            Rate: 10
+          - Item: EP17_1_EVT33
+            Rate: 1
+          - Item: EP17_1_EVT34
+            Rate: 1
+          - Item: EP17_1_EVT35
+            Rate: 1
+          - Item: EP17_1_EVT36
+            Rate: 1
+          - Item: EP17_1_EVT37
+            Rate: 1
+          - Item: EP17_1_EVT38
+            Rate: 1
+  - Group: STABILITYSHADOW_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_Plasterer's_Armor_II
+            Rate: 1
+          - Item: S_Insomniac_Shoes_II
+            Rate: 1
+          - Item: S_Peerless_Armor_II
+            Rate: 1
+          - Item: S_Adulate_Shoes_II
+            Rate: 1
+          - Item: S_Unfreezing_Weapon_II
+            Rate: 1
+          - Item: S_Vitality_Earring_II
+            Rate: 1
+          - Item: S_Neutral_Weapon_II
+            Rate: 1
+          - Item: S_Uncursed_Pendant_II
+            Rate: 1
+  - Group: BS_SHA_M_S_2
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_Swordman_earring
+            Rate: 1
+          - Item: S_Merchant_earring
+            Rate: 1
+          - Item: S_Acolyte_earring
+            Rate: 1
+          - Item: S_Magician_earring
+            Rate: 1
+          - Item: S_Swordman_Pendant
+            Rate: 1
+          - Item: S_Merchant_Pendant
+            Rate: 1
+          - Item: S_Acolyte_Pendant
+            Rate: 1
+          - Item: S_Thief_Pendant
+            Rate: 1
+          - Item: S_Magician_Pendant
+            Rate: 1
+          - Item: S_Archer_Pendant
+            Rate: 1
+          - Item: S_Knight_Shoes
+            Rate: 1
+          - Item: S_Crusader_Shoes
+            Rate: 1
+          - Item: S_Blacksmith_Shoes
+            Rate: 1
+          - Item: S_Alchemist_Shoes
+            Rate: 1
+          - Item: S_Priest_Shoes
+            Rate: 1
+          - Item: S_Monk_Shoes
+            Rate: 1
+          - Item: S_Assassin_Shoes
+            Rate: 1
+          - Item: S_Rogue_Shoes
+            Rate: 1
+          - Item: S_Wizard_Shoes
+            Rate: 1
+          - Item: S_Sage_Shoes
+            Rate: 1
+          - Item: S_Hunter_Shoes
+            Rate: 1
+          - Item: S_Bard_Shoes
+            Rate: 1
+          - Item: S_Dancer_Shoes
+            Rate: 1
+          - Item: S_Knight_Armor
+            Rate: 1
+          - Item: S_Crusader_Armor
+            Rate: 1
+          - Item: S_Blacksmith_Armor
+            Rate: 1
+          - Item: S_Alchemist_Armor
+            Rate: 1
+          - Item: S_Priest_Armor
+            Rate: 1
+          - Item: S_Monk_Armor
+            Rate: 1
+          - Item: S_Assassin_Armor
+            Rate: 1
+          - Item: S_Rogue_Armor
+            Rate: 1
+          - Item: S_Wizard_Armor
+            Rate: 1
+          - Item: S_Sage_Armor
+            Rate: 1
+          - Item: S_Hunter_Armor
+            Rate: 1
+          - Item: S_Bard_Armor
+            Rate: 1
+          - Item: S_Dancer_Armor
+            Rate: 1
+          - Item: S_SuperNovice_Weapon
+            Rate: 1
+          - Item: S_Gunslinger_Weapon
+            Rate: 1
+          - Item: S_Taekwon_Weapon
+            Rate: 1
+          - Item: S_Ninja_Weapon
+            Rate: 1
+          - Item: S_DoramMagical_Weapon
+            Rate: 1
+          - Item: S_DoramPhysical_Weapon
+            Rate: 1
+          - Item: S_Runeknight_Weapon
+            Rate: 1
+          - Item: S_Royalguard_Weapon
+            Rate: 1
+          - Item: S_Mechanic_weapon
+            Rate: 1
+          - Item: S_Genetic_Weapon
+            Rate: 1
+          - Item: S_Archbishop_Weapon
+            Rate: 1
+          - Item: S_Sura_weapon
+            Rate: 1
+          - Item: S_Guillotine_Weapon
+            Rate: 1
+          - Item: S_Shadowchaser_Weapon
+            Rate: 1
+          - Item: S_Warlock_Weapon
+            Rate: 1
+          - Item: S_Sorcerer_Weapon
+            Rate: 1
+          - Item: S_Ranger_Weapon
+            Rate: 1
+          - Item: S_Minstrel_Weapon
+            Rate: 1
+          - Item: S_Wanderer_Weapon
+            Rate: 1
+          - Item: S_Runeknight_Shield
+            Rate: 1
+          - Item: S_Royalguard_Shield
+            Rate: 1
+          - Item: S_Mechanic_Shield
+            Rate: 1
+          - Item: S_Genetic_Shield
+            Rate: 1
+          - Item: S_Archbishop_Shield
+            Rate: 1
+          - Item: S_Sura_Shield
+            Rate: 1
+          - Item: S_Guillotine_Shield
+            Rate: 1
+          - Item: S_Shadowchaser_Shield
+            Rate: 1
+          - Item: S_Warlock_Shield
+            Rate: 1
+          - Item: S_Sorcerer_Shield
+            Rate: 1
+          - Item: S_Ranger_Shield
+            Rate: 1
+          - Item: S_Minstrel_Shield
+            Rate: 1
+          - Item: S_Wanderer_Shield
+            Rate: 1
+          - Item: S_Ninja_Shield
+            Rate: 1
+          - Item: S_Taekwon_Shield
+            Rate: 1
+          - Item: S_DoramPhysical_Shield
+            Rate: 1
+          - Item: S_DoramMagical_Shield
+            Rate: 1
+          - Item: S_SuperNovice_Shield
+            Rate: 1
+          - Item: S_Gunslinger_Shield
+            Rate: 1
+  - Group: BS_SHA_M_S_22
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_Mortal_Blow_Weapon
+            Rate: 1
+          - Item: S_Mortal_Blow_Earring
+            Rate: 1
+          - Item: S_Mortal_Blow_Pendant
+            Rate: 1
+  - Group: SLD_CARD_RECIPE
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Sealed_Kiel_Card
+            Rate: 1
+          - Item: Sealed_Ktullanux_Card
+            Rate: 1
+          - Item: Sealed_B_Ygnizem_Card
+            Rate: 1
+          - Item: Sealed_Dracula_Card
+            Rate: 1
+          - Item: Sealed_Mistress_Card
+            Rate: 1
+          - Item: Sealed_Gloom_Card
+            Rate: 1
+          - Item: Sealed_Berz_Card
+            Rate: 1
+          - Item: Sealed_Ifrit_Card
+            Rate: 1
+          - Item: Sealed_D_Lord_Card
+            Rate: 1
+          - Item: Sealed_Pharaoh_Card
+            Rate: 1
+          - Item: Sealed_M_Flower_Card
+            Rate: 1
+          - Item: Sealed_B_Shecil_Card
+            Rate: 1
+          - Item: Sealed_Orc_Hero_Card
+            Rate: 1
+          - Item: Sealed_Tao_Card
+            Rate: 1
+          - Item: Sealed_TurtleG_Card
+            Rate: 1
+          - Item: Sealed_Knight_WS_Card
+            Rate: 1
+          - Item: Sealed_Lady_Tanee_Card
+            Rate: 1
+          - Item: Sealed_Samurai_Card
+            Rate: 1
+          - Item: Sealed_Orc_Load_Card
+            Rate: 1
+          - Item: Sealed_B_Magaleta_Card
+            Rate: 1
+          - Item: Sealed_B_Harword_Card
+            Rate: 1
+          - Item: Sealed_Apocalips_H_Card
+            Rate: 1
+          - Item: Sealed_Eddga_Card
+            Rate: 1
+          - Item: Sealed_Bacsojin_Card
+            Rate: 1
+          - Item: Sealed_F_Bishop_Card
+            Rate: 1
+          - Item: SLD_Q_Scaraba_Card
+            Rate: 1
+          - Item: SLD_Baphomet_Card
+            Rate: 1
+          - Item: SLD_Maya_Card
+            Rate: 1
+          - Item: SLD_Clown_Card
+            Rate: 1
+          - Item: SLD_Professor_Card
+            Rate: 1
+          - Item: SLD_Champion_Card
+            Rate: 1
+          - Item: SLD_Creator_Card
+            Rate: 1
+          - Item: SLD_Stalker_Card
+            Rate: 1
+          - Item: SLD_Paladin_Card
+            Rate: 1
+          - Item: SLD_Gypsy_Card
+            Rate: 1
+          - Item: SLD_Daehyon_Card
+            Rate: 1
+          - Item: SLD_Gioia_Card
+            Rate: 1
+          - Item: SLD_Pyuriel_Card
+            Rate: 1
+          - Item: SLD_Kades_Card
+            Rate: 1
+          - Item: SLD_Timeholder_Card
+            Rate: 1
+  - Group: R_BEARERSSHADOW_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_R_Bearers_Shoes
+            Rate: 1
+          - Item: S_R_Bearers_Armor
+            Rate: 1
+          - Item: S_R_Bearers_Pendant
+            Rate: 1
+          - Item: S_R_Bearers_Earring
+            Rate: 1
+  - Group: M_BLITZSHADOW_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_Mega_Blitz_Shield
+            Rate: 1
+          - Item: S_Mega_Blitz_Weapon
+            Rate: 1
+  - Group: RELOADSHADOW_MIX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_S_Reload_Shield
+  - Group: SPELLCASTERSHADOW_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_SpellCaster_Armor
+            Rate: 1
+          - Item: S_SpellCaster_Shoes
+            Rate: 1
+          - Item: S_SpellCaster_Earring
+            Rate: 1
+          - Item: S_SpellCaster_Pendant
+            Rate: 1
+  - Group: MAGICALSHADOW_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_Clever_Weapon
+            Rate: 1
+          - Item: S_Clever_Shield
+            Rate: 1
+  - Group: PHYSICALSHADOW_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_Durable_Weapon
+            Rate: 1
+          - Item: S_Durable_Shield
+            Rate: 1
+  - Group: MAJORAUTOSPELL_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_M_AutoSpell_Armor
+            Rate: 1
+          - Item: S_M_AutoSpell_Shoes
+            Rate: 1
+          - Item: S_M_AutoSpell_Earring
+            Rate: 1
+          - Item: S_M_AutoSpell_Pendant
+            Rate: 1
+  - Group: ABSORBSHADOW_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_Absorb_Shield
+            Rate: 1
+          - Item: S_Absorb_Weapon
+            Rate: 1
+  - Group: TRUE_GEMSHADOW_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_TrueGem_Armor
+            Rate: 1
+          - Item: S_TrueGem_Shoes
+            Rate: 1
+          - Item: S_TrueGem_Earring
+            Rate: 1
+          - Item: S_TrueGem_Pendant
+            Rate: 1
+  - Group: MAMMOTH_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_M_Mammoth_Armor
+            Rate: 1
+          - Item: S_M_Mammoth_Shoes
+            Rate: 1
+          - Item: S_M_Mammoth_Earring
+            Rate: 1
+          - Item: S_M_Mammoth_Pendant
+            Rate: 1
+  - Group: FULLTEMPSHADOW_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_FullTemp_Earring
+            Rate: 1
+          - Item: S_FullTemp_Shoes
+            Rate: 1
+          - Item: S_FullTemp_Armor
+            Rate: 1
+          - Item: S_FullTemp_Pendant
+            Rate: 1
+  - Group: FULLPENESHADOW_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_FullPene_Earring
+            Rate: 1
+          - Item: S_FullPene_Pendant
+            Rate: 1
+          - Item: S_FullPene_Armor
+            Rate: 1
+          - Item: S_FullPene_Shoes
+            Rate: 1
+  - Group: REMODEL_HERO_BOOTS
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Great_Hero_Boots
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: ORIENTAL_SWORD_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Oriental_Sword
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: DRAGONIC_SLAYER_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Dragonic_Slayer
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: SHIVER_KATAR_K_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Shiver_Katar_K
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: BLADE_KATAR_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Blade_Katar
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: SWORD_OF_BLUEFIRE_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Sword_Of_Bluefire
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: SLATE_SWORD_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Slate_Sword
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: NARCIS_BOW_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Narcis_Bow
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: TRUMPET_SHELL_K_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Trumpet_Shell_K
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: BARB_WIRE_K_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Barb_Wire_K
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: AVENGER_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Avenger
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: METEOR_STRIKER_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Meteor_Striker
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: MAGIC_SWORD_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Magic_Sword
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: FATALIST_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Fatalist
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: ROYAL_BOW_K_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Royal_Bow_K
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: SCALET_DRAGON_L_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Scalet_Dragon_L_Bow
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: SHADOW_STAFF_K_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Shadow_Staff_K
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: FREEZING_ROD_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Freezing_Rod
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: IRON_NAIL_K_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Iron_Nail_K
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: RAY_KNUCKLE_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Ray_Knuckle
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: UNDINE_SPEAR_K_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Undine_Spear_K
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: LIGHT_BLADE_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Light_Blade
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: IRON_STAFF_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Iron_Staff
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: BLUE_CRYSTAL_STAFF_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Blue_Crystal_Staff
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: DEMON_HUNT_BIBLE_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Demon_Hunting_Bible
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: SAINT_HALL_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Saint_Hall
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: MEAWFOXTAIL_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_MeawFoxtail
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: FOG_DEW_SWORD_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Fog_Dew_Sword
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: HUMMA_CLEAR_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Humma_Clear
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: THOUSAND_SUN_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Thousand_Sun
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: SPIRIT_PENDULUM_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Spirit_Pendulum_
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: CRIMSON_ROSE_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Crimson_Rose
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: MASTER_SOUL_RIFLE_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Master_Soul_Rifle
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: GOLDEN_LORD_LAUNCHER_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Golden_Lord_Launcher
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: THE_BLACK_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_The_Black
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: DEMON_SLAYER_SHOT_CUBE
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Up_Demon_Slayer_Shot
+            RefineMinimum: 7
+            RefineMaximum: 7
+  - Group: RUNE_CRAFT_MATERIALS
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Emperium
+            Rate: 1
+          - Item: Ogre_Tooth
+            Rate: 1
+          - Item: Cobold_Hair
+            Rate: 1
+          - Item: Broken_Armor_Piece
+            Rate: 1
+          - Item: Claw_Of_Desert_Wolf
+            Rate: 1
+          - Item: Tangled_Chain
+            Rate: 1
+          - Item: Dullahan_Armor
+            Rate: 1
+          - Item: Dragon's_Skin
+            Rate: 1
+          - Item: Dragon_Canine
+            Rate: 1
+          - Item: Honey
+            Rate: 1
+          - Item: Light_Granule
+            Rate: 1
+          - Item: Old_Magic_Circle
+            Rate: 1
+          - Item: Slender_Snake
+            Rate: 1
+          - Item: Round_Shell
+            Rate: 1
+          - Item: Burning_Heart
+            Rate: 1
+          - Item: Red_Gemstone
+            Rate: 1
+  - Group: ELEMENTAL_CONVERTER
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Scorpion's_Tail
+            Rate: 1
+          - Item: Snail's_Shell
+            Rate: 1
+          - Item: Horn
+            Rate: 1
+          - Item: Colorful_Shell
+            Rate: 1
+  - Group: POISONS
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Anolian_Skin
+            Rate: 1
+          - Item: Izidor
+            Rate: 1
+          - Item: Poison_Toad's_Skin
+            Rate: 1
+          - Item: Poison_Spore
+            Rate: 1
+          - Item: Poison_Herb_Amoena
+            Rate: 1
+          - Item: Poison_Herb_Scopolia
+            Rate: 1
+          - Item: Poison_Herb_Seratum
+            Rate: 1
+          - Item: Poison_Herb_Makulata
+            Rate: 1
+          - Item: Poison_Herb_Rantana
+            Rate: 1
+          - Item: Poison_Herb_Nerium
+            Rate: 1
+          - Item: Heart_Of_Mermaid
+            Rate: 1
+          - Item: Sticky_Poison
+            Rate: 1
+          - Item: Decayed_Nail
+            Rate: 1
+  - Group: BLACKSMITH
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Steel
+            Rate: 1
+          - Item: Iron
+            Rate: 1
+          - Item: Brigan
+            Rate: 1
+  - Group: POTION_CRAFT_MATERIALS
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Red_Herb
+            Rate: 1
+          - Item: Yellow_Herb
+            Rate: 1
+          - Item: White_Herb
+            Rate: 1
+          - Item: Blue_Herb
+            Rate: 1
+          - Item: Green_Herb
+            Rate: 1
+          - Item: Cactus_Needle
+            Rate: 1
+          - Item: Starsand_Of_Witch
+            Rate: 1
+          - Item: Moustache_Of_Mole
+            Rate: 1
+  - Group: KUNAI_BOX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Dried_Squid_Box
+            Rate: 1
+          - Item: Flying_Fish_Box
+            Rate: 1
+          - Item: Starfish_Box
+            Rate: 1
+  - Group: BULLET_CASE
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Bullet_Case
+            Rate: 1
+          - Item: Bullet_Case_Silver
+            Rate: 1
+          - Item: Bullet_Case_Blood
+            Rate: 1
+  - Group: SOUL_LINKER
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Witherless_Rose
+            Rate: 1
+          - Item: Crystal_Jewel__
+            Rate: 1
+          - Item: Immortal_Heart
+            Rate: 1
+  - Group: ELEMENTAL_STONES
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Flame_Heart
+            Rate: 1
+          - Item: Mistic_Frozen
+            Rate: 1
+          - Item: Rough_Wind
+            Rate: 1
+          - Item: Great_Nature
+            Rate: 1
+          - Item: Star_Crumb
+            Rate: 1
+          - Item: Sparkling_Dust
+            Rate: 1
+  - Group: SHADOW_CUBE_ARMOR
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_Breezy_Armor
+            Rate: 227
+          - Item: S_Immune_Armor
+            Rate: 227
+          - Item: S_Hard_Armor
+            Rate: 227
+          - Item: S_Ancient_Armor
+            Rate: 227
+          - Item: S_Critical_Armor
+            Rate: 227
+          - Item: S_Dexterous_Armor
+            Rate: 227
+          - Item: S_Lucky_Armor
+            Rate: 227
+          - Item: S_Big_Armor
+            Rate: 227
+          - Item: S_Medium_Armor
+            Rate: 227
+          - Item: S_Small_Armor
+            Rate: 227
+          - Item: S_Malicious_Armor
+            Rate: 227
+          - Item: S_Gemstone_Armor
+            Rate: 227
+          - Item: S_Plasterer's_Armor
+            Rate: 227
+          - Item: S_Insomniac_Armor
+            Rate: 227
+          - Item: S_Peerless_Armor
+            Rate: 227
+          - Item: S_Adurate_Armor
+            Rate: 227
+          - Item: S_Spell_Flow_Armor
+            Rate: 227
+          - Item: S_Greed_Armor
+            Rate: 227
+          - Item: S_Heal_Armor
+            Rate: 227
+          - Item: S_Hiding_Armor
+            Rate: 227
+          - Item: S_Cloaking_Armor
+            Rate: 227
+          - Item: S_Teleport_Armor
+            Rate: 227
+          - Item: S_Steal_Armor
+            Rate: 227
+          - Item: S_Immortal_Armor
+            Rate: 227
+          - Item: S_Bearers_Armor
+            Rate: 227
+          - Item: S_Basis_Armor
+            Rate: 227
+          - Item: S_Hallowed_Armor
+            Rate: 227
+          - Item: S_Saharic_Armor
+            Rate: 227
+          - Item: S_Underneath_Armor
+            Rate: 227
+          - Item: S_Flam_Armor
+            Rate: 227
+          - Item: S_Windy_Armor
+            Rate: 227
+          - Item: S_Envenom_Armor
+            Rate: 227
+          - Item: S_Damned_Armor
+            Rate: 227
+          - Item: S_Geist_Armor
+            Rate: 227
+          - Item: S_Divine_Armor
+            Rate: 227
+          - Item: S_Hasty_Armor
+            Rate: 227
+          - Item: S_Attack_Armor
+            Rate: 227
+          - Item: S_ColdBolt_Armor
+            Rate: 227
+          - Item: S_FireBolt_Armor
+            Rate: 227
+          - Item: S_LightingBolt_Armor
+            Rate: 227
+          - Item: S_EarthSpike_Armor
+            Rate: 227
+          - Item: S_Caster_Armor
+            Rate: 227
+          - Item: S_Reload_Armor
+            Rate: 227
+          - Item: S_Blitz_Armor
+            Rate: 227
+  - Group: SHADOW_CUBE_SHIELD
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_Athena_Shield
+            Rate: 233
+          - Item: S_Athletic_Shield
+            Rate: 233
+          - Item: S_Vital_Shield
+            Rate: 233
+          - Item: S_Cranial_Shield
+            Rate: 233
+          - Item: S_Safeguard_Shield
+            Rate: 233
+          - Item: S_Brutal_Shield
+            Rate: 233
+          - Item: S_Gargantua_Shield
+            Rate: 233
+          - Item: S_Homers_Shield
+            Rate: 233
+          - Item: S_Dragoon_Shield
+            Rate: 233
+          - Item: S_Satanic_Shield
+            Rate: 233
+          - Item: S_Flameguard_Shield
+            Rate: 233
+          - Item: S_Requiem_Shield
+            Rate: 233
+          - Item: S_Cadi_Shield
+            Rate: 233
+          - Item: S_Malicious_Shield
+            Rate: 233
+          - Item: S_Gemstone_Shield
+            Rate: 233
+          - Item: S_Stability_Shield
+            Rate: 233
+          - Item: S_Spell_Flow_Shield
+            Rate: 233
+          - Item: S_Greed_Shield
+            Rate: 233
+          - Item: S_Heal_Shield
+            Rate: 233
+          - Item: S_Hiding_Shield
+            Rate: 233
+          - Item: S_Cloaking_Shield
+            Rate: 233
+          - Item: S_Teleport_Shield
+            Rate: 233
+          - Item: S_Steal_Shield
+            Rate: 233
+          - Item: S_Bearers_Shield
+            Rate: 233
+          - Item: S_Basis_Shield
+            Rate: 233
+          - Item: S_Hallowed_Shield
+            Rate: 233
+          - Item: S_Saharic_Shield
+            Rate: 233
+          - Item: S_Underneath_Shield
+            Rate: 233
+          - Item: S_Flam_Shield
+            Rate: 233
+          - Item: S_Windy_Shield
+            Rate: 233
+          - Item: S_Envenom_Shield
+            Rate: 233
+          - Item: S_Damned_Shield
+            Rate: 233
+          - Item: S_Geist_Shield
+            Rate: 233
+          - Item: S_Divine_Shield
+            Rate: 233
+          - Item: S_Expert_Shield
+            Rate: 233
+          - Item: S_Beginner_Shield
+            Rate: 233
+          - Item: S_Rookie_Shield
+            Rate: 233
+          - Item: S_Advanced_Shield
+            Rate: 233
+          - Item: S_Blitz_Shield
+            Rate: 233
+          - Item: S_Caster_Shield
+            Rate: 233
+          - Item: S_Reload_Shield
+            Rate: 233
+          - Item: S_Critical_Shield
+            Rate: 233
+          - Item: S_Healing_Shield
+            Rate: 233
+  - Group: SHADOW_CUBE_SHOES
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_Champion_Shoes
+            Rate: 270
+          - Item: S_Vital_Shoes
+            Rate: 270
+          - Item: S_Athletic_Shoes
+            Rate: 270
+          - Item: S_Bloody_Shoes
+            Rate: 270
+          - Item: S_Liberation_Shoes
+            Rate: 270
+          - Item: S_Chemical_Shoes
+            Rate: 270
+          - Item: S_Clamorous_Shoes
+            Rate: 270
+          - Item: S_Insecticide_Shoes
+            Rate: 270
+          - Item: S_Fisher_Shoes
+            Rate: 270
+          - Item: S_Seraphim_Shoes
+            Rate: 270
+          - Item: S_Beholder_Shoes
+            Rate: 270
+          - Item: S_Divine_Shoes
+            Rate: 270
+          - Item: S_Dragoon_Shoes
+            Rate: 270
+          - Item: S_Malicious_Shoes
+            Rate: 270
+          - Item: S_Gemstone_Shoes
+            Rate: 270
+          - Item: S_Plasterer's_Shoes
+            Rate: 270
+          - Item: S_Insomniac_Shoes
+            Rate: 270
+          - Item: S_Peerless_Shoes
+            Rate: 270
+          - Item: S_Adurate_Shoes
+            Rate: 270
+          - Item: S_Spell_Flow_Shoes
+            Rate: 270
+          - Item: S_Greed_Shoes
+            Rate: 270
+          - Item: S_Heal_Shoes
+            Rate: 270
+          - Item: S_Hiding_Shoes
+            Rate: 270
+          - Item: S_Cloaking_Shoes
+            Rate: 270
+          - Item: S_Teleport_Shoes
+            Rate: 270
+          - Item: S_Steal_Shoes
+            Rate: 270
+          - Item: S_Bearers_Shoes
+            Rate: 270
+          - Item: S_Hasty_Shoes
+            Rate: 270
+          - Item: S_Expert_Shoes
+            Rate: 270
+          - Item: S_Beginner_Shoes
+            Rate: 270
+          - Item: S_Rookie_Shoes
+            Rate: 270
+          - Item: S_Advanced_Shoes
+            Rate: 270
+          - Item: S_Blitz_Shoes
+            Rate: 270
+          - Item: S_Caster_Shoes
+            Rate: 270
+          - Item: S_Reload_Shoes
+            Rate: 270
+          - Item: S_Critical_Shoes
+            Rate: 270
+          - Item: S_Healing_Shoes
+            Rate: 270
+  - Group: SHADOW_CUBE_WEAPON
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: S_Physical_Weapon
+            Rate: 185
+          - Item: S_Magical_Weapon
+            Rate: 185
+          - Item: S_Kingbird_Weapon
+            Rate: 185
+          - Item: S_Cri_Hit_Weapon
+            Rate: 185
+          - Item: S_Healing_Weapon
+            Rate: 185
+          - Item: S_Lucky_Weapon
+            Rate: 185
+          - Item: S_Dexterous_Weapon
+            Rate: 185
+          - Item: S_Big_Weapon
+            Rate: 185
+          - Item: S_Medium_Weapon
+            Rate: 185
+          - Item: S_Small_Weapon
+            Rate: 185
+          - Item: S_Spiritual_Weapon
+            Rate: 185
+          - Item: S_Gemstone_Weapon
+            Rate: 185
+          - Item: Unfreez_Weapon_S
+            Rate: 185
+          - Item: S_Neutral_Weapon
+            Rate: 185
+          - Item: S_Caster_Weapon
+            Rate: 185
+          - Item: S_Greed_Weapon
+            Rate: 185
+          - Item: S_Heal_Weapon
+            Rate: 185
+          - Item: S_Hiding_Weapon
+            Rate: 185
+          - Item: S_Cloaking_Weapon
+            Rate: 185
+          - Item: S_Teleport_Weapon
+            Rate: 185
+          - Item: S_Steal_Weapon
+            Rate: 185
+          - Item: S_Solid_Weapon
+            Rate: 185
+          - Item: S_Executioner_Weapon
+            Rate: 185
+          - Item: S_Exorcist_Weapon
+            Rate: 185
+          - Item: S_Hunting_Weapon
+            Rate: 185
+          - Item: S_Insect_Net_Weapon
+            Rate: 185
+          - Item: S_Fishing_Weapon
+            Rate: 185
+          - Item: S_Dragon_Killer_Weapon
+            Rate: 185
+          - Item: S_Corrupt_Weapon
+            Rate: 185
+          - Item: S_Vibration_Weapon
+            Rate: 185
+          - Item: S_Holy_Water_Weapon
+            Rate: 185
+          - Item: S_Scissors_Weapon
+            Rate: 185
+          - Item: S_M_Executioner_Weapon
+            Rate: 185
+          - Item: S_M_Exorcist_Weapon
+            Rate: 185
+          - Item: S_M_Hunting_Weapon
+            Rate: 185
+          - Item: S_M_Insect_Net_Weapon
+            Rate: 185
+          - Item: S_M_Fishing_Weapon
+            Rate: 185
+          - Item: S_M_Dragon_K_Weapon
+            Rate: 185
+          - Item: S_M_Corrupt_Weapon
+            Rate: 185
+          - Item: S_M_Vibration_Weapon
+            Rate: 185
+          - Item: S_M_Holy_Water_Weapon
+            Rate: 185
+          - Item: S_M_Scissors_Weapon
+            Rate: 185
+          - Item: S_Bearers_Weapon
+            Rate: 185
+          - Item: S_Enhance_Force_Weapon
+            Rate: 185
+          - Item: S_Force_Weapon
+            Rate: 185
+          - Item: S_Enhance_Spirit_Weapon
+            Rate: 185
+          - Item: S_Spirit_Weapon
+            Rate: 185
+          - Item: S_Exceed_Weapon
+            Rate: 185
+          - Item: S_Blitz_Weapon
+            Rate: 185
+          - Item: S_Tension_Weapon
+            Rate: 185
+          - Item: S_Elegant_Weapon
+            Rate: 185
+          - Item: S_Mortal_Blow_Weapon
+            Rate: 185
+          - Item: Sentimental_Weapone_S
+            Rate: 185
+          - Item: Enchanting_Weapone_S
+            Rate: 185
+  # todo! Custom Rates
+  - Group: AUTOMATIC_MODULE_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: EP17_2_NO1
+            Rate: 212
+          - Item: EP17_2_NO2
+            Rate: 212
+          - Item: EP17_2_NO3
+            Rate: 212
+          - Item: EP17_2_NO4
+            Rate: 212
+          - Item: EP17_2_NO5
+            Rate: 212
+          - Item: EP17_2_NO6
+            Rate: 212
+          - Item: EP17_2_NO7
+            Rate: 212
+          - Item: EP17_2_NO8
+            Rate: 212
+          - Item: EP17_2_RA1
+            Rate: 212
+          - Item: EP17_2_RA2
+            Rate: 212
+          - Item: EP17_2_RA3
+            Rate: 212
+          - Item: EP17_2_RA4
+            Rate: 212
+          - Item: EP17_2_RA5
+            Rate: 212
+          - Item: EP17_2_RA6
+            Rate: 212
+          - Item: EP17_2_RA7
+            Rate: 212
+          - Item: EP17_2_RA8
+            Rate: 212
+          - Item: EP17_2_RA9
+            Rate: 212
+          - Item: EP17_2_RA10
+            Rate: 212
+          - Item: EP17_2_RA11
+            Rate: 212
+          - Item: EP17_2_RA12
+            Rate: 212
+          - Item: EP17_2_RA13
+            Rate: 212
+          - Item: EP17_2_RA14
+            Rate: 212
+          - Item: EP17_2_RA15
+            Rate: 212
+          - Item: EP17_2_RA16
+            Rate: 212
+          - Item: EP17_2_RA17
+            Rate: 212
+          - Item: EP17_2_RA18
+            Rate: 212
+          - Item: EP17_2_RA19
+            Rate: 212
+          - Item: EP17_2_RA20
+            Rate: 212
+          - Item: EP17_2_RA21
+            Rate: 212
+          - Item: EP17_2_UQ1
+            Rate: 212
+          - Item: EP17_2_UQ2
+            Rate: 212
+          - Item: EP17_2_UQ3
+            Rate: 212
+          - Item: EP17_2_UQ4
+            Rate: 212
+          - Item: EP17_2_UQ5
+            Rate: 212
+          - Item: EP17_2_UQ6
+            Rate: 212
+          - Item: EP17_2_UQ7
+            Rate: 212
+          - Item: EP17_2_UQ8
+            Rate: 212
+          - Item: EP17_2_UQ9
+            Rate: 212
+          - Item: EP17_2_UQ10
+            Rate: 212
+          - Item: EP17_2_UQ11
+            Rate: 212
+          - Item: EP17_2_UQ12
+            Rate: 212
+          - Item: EP17_2_LE1
+            Rate: 212
+          - Item: EP17_2_LE2
+            Rate: 212
+          - Item: EP17_2_LE3
+            Rate: 212
+          - Item: EP17_2_LE4
+            Rate: 212
+          - Item: EP17_2_LE5
+            Rate: 212
+          - Item: EP17_2_LE6
+            Rate: 212
+  # todo! Custom Rates (50% Stone vs 50% Epic Module) 
+  - Group: EPIC_MODULE_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Magical_Igni_Stone
+            Rate: 5000
+          - Item: EP17_2_EP1
+            Rate: 98
+          - Item: EP17_2_EP2
+            Rate: 98
+          - Item: EP17_2_EP3
+            Rate: 98
+          - Item: EP17_2_EP4
+            Rate: 98
+          - Item: EP17_2_EP5
+            Rate: 98
+          - Item: EP17_2_EP6
+            Rate: 98
+          - Item: EP17_2_EP7
+            Rate: 98
+          - Item: EP17_2_EP8
+            Rate: 98
+          - Item: EP17_2_EP9
+            Rate: 98
+          - Item: EP17_2_EP10
+            Rate: 98
+          - Item: EP17_2_EP11
+            Rate: 98
+          - Item: EP17_2_EP12
+            Rate: 98
+          - Item: EP17_2_EP13
+            Rate: 98
+          - Item: EP17_2_EP14
+            Rate: 98
+          - Item: EP17_2_EP15
+            Rate: 98
+          - Item: EP17_2_EP16
+            Rate: 98
+          - Item: EP17_2_EP17
+            Rate: 98
+          - Item: EP17_2_EP18
+            Rate: 98
+          - Item: EP17_2_EP19
+            Rate: 98
+          - Item: EP17_2_EP20
+            Rate: 98
+          - Item: EP17_2_EP21
+            Rate: 98
+          - Item: EP17_2_EP22
+            Rate: 98
+          - Item: EP17_2_EP23
+            Rate: 98
+          - Item: EP17_2_EP24
+            Rate: 98
+          - Item: EP17_2_EP25
+            Rate: 98
+          - Item: EP17_2_EP26
+            Rate: 98
+          - Item: EP17_2_EP27
+            Rate: 98
+          - Item: EP17_2_EP28
+            Rate: 98
+          - Item: EP17_2_EP29
+            Rate: 98
+          - Item: EP17_2_EP30
+            Rate: 98
+          - Item: EP17_2_EP31
+            Rate: 98
+          - Item: EP17_2_EP32
+            Rate: 98
+          - Item: EP17_2_EP33
+            Rate: 98
+          - Item: EP17_2_EP34
+            Rate: 98
+          - Item: EP17_2_EP35
+            Rate: 98
+          - Item: EP17_2_EP36
+            Rate: 98
+          - Item: EP17_2_EP37
+            Rate: 98
+          - Item: EP17_2_EP38
+            Rate: 98
+          - Item: EP17_2_EP39
+            Rate: 98
+          - Item: EP17_2_EP40
+            Rate: 98
+          - Item: EP17_2_EP41
+            Rate: 98
+          - Item: EP17_2_EP42
+            Rate: 98
+          - Item: EP17_2_EP43
+            Rate: 98
+          - Item: EP17_2_EP44
+            Rate: 98
+          - Item: EP17_2_EP45
+            Rate: 98
+          - Item: EP17_2_EP46
+            Rate: 98
+          - Item: EP17_2_EP47
+            Rate: 98
+          - Item: EP17_2_EP48
+            Rate: 98
+          - Item: EP17_2_EP49
+            Rate: 98
+          - Item: EP17_2_EP50
+            Rate: 98
+          - Item: EP17_2_EP51
+            Rate: 98
+  # Source: https://ro.gnjoy.com/news/probability/View.asp?seq=4088011
+  - Group: AUTOMATIC_MODULE_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: EP17_2_NO1
+            Rate: 40
+          - Item: EP17_2_NO1
+            Rate: 39
+          - Item: EP17_2_NO2
+            Rate: 40
+          - Item: EP17_2_NO3
+            Rate: 40
+          - Item: EP17_2_NO4
+            Rate: 40
+          - Item: EP17_2_NO5
+            Rate: 40
+          - Item: EP17_2_NO6
+            Rate: 40
+          - Item: EP17_2_NO7
+            Rate: 40
+          - Item: EP17_2_NO8
+            Rate: 32
+          - Item: EP17_2_RA1
+            Rate: 32
+          - Item: EP17_2_RA2
+            Rate: 32
+          - Item: EP17_2_RA3
+            Rate: 32
+          - Item: EP17_2_RA4
+            Rate: 32
+          - Item: EP17_2_RA5
+            Rate: 32
+          - Item: EP17_2_RA6
+            Rate: 32
+          - Item: EP17_2_RA7
+            Rate: 32
+          - Item: EP17_2_RA8
+            Rate: 32
+          - Item: EP17_2_RA9
+            Rate: 32
+          - Item: EP17_2_RA10
+            Rate: 32
+          - Item: EP17_2_RA11
+            Rate: 32
+          - Item: EP17_2_RA12
+            Rate: 32
+          - Item: EP17_2_RA13
+            Rate: 32
+          - Item: EP17_2_RA14
+            Rate: 32
+          - Item: EP17_2_RA15
+            Rate: 32
+          - Item: EP17_2_RA16
+            Rate: 2
+          - Item: EP17_2_RA17
+            Rate: 2
+          - Item: EP17_2_RA18
+            Rate: 2
+          - Item: EP17_2_RA19
+            Rate: 2
+          - Item: EP17_2_RA20
+            Rate: 2
+          - Item: EP17_2_RA21
+            Rate: 2
+          - Item: EP17_2_UQ1
+            Rate: 2
+          - Item: EP17_2_UQ2
+            Rate: 2
+          - Item: EP17_2_UQ3
+            Rate: 2
+          - Item: EP17_2_UQ4
+            Rate: 2
+          - Item: EP17_2_UQ5
+            Rate: 2
+          - Item: EP17_2_UQ6
+            Rate: 2
+          - Item: EP17_2_UQ7
+            Rate: 2
+          - Item: EP17_2_UQ8
+            Rate: 2
+          - Item: EP17_2_UQ9
+            Rate: 2
+          - Item: EP17_2_UQ10
+            Rate: 2
+          - Item: EP17_2_UQ11
+            Rate: 2
+          - Item: EP17_2_UQ12
+            Rate: 2
+          - Item: EP17_2_LE1
+            Rate: 2
+          - Item: EP17_2_LE2
+            Rate: 2
+          - Item: EP17_2_LE3
+            Rate: 2
+          - Item: EP17_2_LE4
+            Rate: 2
+          - Item: EP17_2_LE5
+            Rate: 2
+          - Item: EP17_2_LE6
+            Rate: 2
+          - Item: EP17_2_EP1
+            Rate: 3
+          - Item: EP17_2_EP2
+            Rate: 3
+          - Item: EP17_2_EP3
+            Rate: 3
+          - Item: EP17_2_EP4
+            Rate: 3
+          - Item: EP17_2_EP5
+            Rate: 3
+          - Item: EP17_2_EP6
+            Rate: 3
+          - Item: EP17_2_EP7
+            Rate: 3
+          - Item: EP17_2_EP8
+            Rate: 3
+          - Item: EP17_2_EP9
+            Rate: 3
+          - Item: EP17_2_EP10
+            Rate: 3
+          - Item: EP17_2_EP11
+            Rate: 3
+          - Item: EP17_2_EP12
+            Rate: 3
+          - Item: EP17_2_EP13
+            Rate: 3
+          - Item: EP17_2_EP14
+            Rate: 3
+          - Item: EP17_2_EP15
+            Rate: 3
+          - Item: EP17_2_EP16
+            Rate: 3
+          - Item: EP17_2_EP17
+            Rate: 3
+          - Item: EP17_2_EP18
+            Rate: 3
+          - Item: EP17_2_EP19
+            Rate: 3
+          - Item: EP17_2_EP20
+            Rate: 3
+          - Item: EP17_2_EP21
+            Rate: 3
+          - Item: EP17_2_EP22
+            Rate: 3
+          - Item: EP17_2_EP23
+            Rate: 3
+          - Item: EP17_2_EP24
+            Rate: 3
+          - Item: EP17_2_EP25
+            Rate: 3
+          - Item: EP17_2_EP26
+            Rate: 3
+          - Item: EP17_2_EP27
+            Rate: 3
+          - Item: EP17_2_EP28
+            Rate: 3
+          - Item: EP17_2_EP29
+            Rate: 3
+          - Item: EP17_2_EP30
+            Rate: 3
+          - Item: EP17_2_EP31
+            Rate: 3
+          - Item: EP17_2_EP32
+            Rate: 3
+          - Item: EP17_2_EP33
+            Rate: 3
+          - Item: EP17_2_EP34
+            Rate: 3
+          - Item: EP17_2_EP35
+            Rate: 3
+          - Item: EP17_2_EP36
+            Rate: 3
+          - Item: EP17_2_EP37
+            Rate: 3
+          - Item: EP17_2_EP38
+            Rate: 3
+          - Item: EP17_2_EP39
+            Rate: 3
+          - Item: EP17_2_EP40
+            Rate: 3
+          - Item: EP17_2_EP41
+            Rate: 3
+          - Item: EP17_2_EP42
+            Rate: 3
+          - Item: EP17_2_EP43
+            Rate: 3
+          - Item: EP17_2_EP44
+            Rate: 3
+          - Item: EP17_2_EP45
+            Rate: 3
+          - Item: EP17_2_EP46
+            Rate: 3
+          - Item: EP17_2_EP47
+            Rate: 3
+          - Item: EP17_2_EP48
+            Rate: 3
+          - Item: EP17_2_EP49
+            Rate: 3
+          - Item: EP17_2_EP50
+            Rate: 3
+          - Item: EP17_2_EP51
+            Rate: 3
+  # Source: https://ro.gnjoy.com/news/probability/View.asp?seq=4088012
+  - Group: ILLUSION_MODULE_MIX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: EP17_1_EVT03
+            Rate: 50
+          - Item: EP17_1_EVT04
+            Rate: 50
+          - Item: EP17_1_EVT05
+            Rate: 60
+          - Item: EP17_1_EVT06
+            Rate: 60
+          - Item: EP17_1_EVT07
+            Rate: 60
+          - Item: EP17_1_EVT08
+            Rate: 60
+          - Item: EP17_1_EVT09
+            Rate: 60
+          - Item: EP17_1_EVT10
+            Rate: 60
+          - Item: EP17_1_EVT11
+            Rate: 50
+          - Item: EP17_1_EVT12
+            Rate: 50
+          - Item: EP17_1_EVT13
+            Rate: 30
+          - Item: EP17_1_EVT14
+            Rate: 30
+          - Item: EP17_1_EVT15
+            Rate: 30
+          - Item: EP17_1_EVT16
+            Rate: 30
+          - Item: EP17_1_EVT17
+            Rate: 30
+          - Item: EP17_1_EVT18
+            Rate: 30
+          - Item: EP17_1_EVT19
+            Rate: 30
+          - Item: EP17_1_EVT20
+            Rate: 30
+          - Item: EP17_1_EVT21
+            Rate: 30
+          - Item: EP17_1_EVT22
+            Rate: 30
+          - Item: EP17_1_EVT23
+            Rate: 30
+          - Item: EP17_1_EVT24
+            Rate: 30
+          - Item: EP17_1_EVT25
+            Rate: 30
+          - Item: EP17_1_EVT26
+            Rate: 3
+          - Item: EP17_1_EVT27
+            Rate: 5
+          - Item: EP17_1_EVT28
+            Rate: 4
+          - Item: EP17_1_EVT29
+            Rate: 5
+          - Item: EP17_1_EVT30
+            Rate: 5
+          - Item: EP17_1_EVT31
+            Rate: 5
+          - Item: EP17_1_EVT32
+            Rate: 5
+          - Item: EP17_1_EVT33
+            Rate: 3
+          - Item: EP17_1_EVT34
+            Rate: 3
+          - Item: EP17_1_EVT35
+            Rate: 3
+          - Item: EP17_1_EVT36
+            Rate: 3
+          - Item: EP17_1_EVT37
+            Rate: 3
+          - Item: EP17_1_EVT38
+            Rate: 3
+  - Group: AUTO_M_I_BOX_A
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Auto_Imp_Melee_1
+            Rate: 3333
+          - Item: Auto_Imp_Melee_2
+            Rate: 3333
+          - Item: Auto_Imp_Melee_3
+            Rate: 3333
+  - Group: AUTO_M_I_BOX_B
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Auto_Imp_Magic_1
+            Rate: 3333
+          - Item: Auto_Imp_Magic_2
+            Rate: 3333
+          - Item: Auto_Imp_Magic_3
+            Rate: 3333
+  - Group: ENCHANT_STONE_BOX22
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: CastingStone_Robe
+            Rate: 20
+          - Item: DoubleAttack_Stone
+            Rate: 20
+          - Item: Critical_Stone_Robe
+            Rate: 20
+          - Item: SPdrainStone_Robe
+            Rate: 80
+          - Item: SPdrainStone_Top
+            Rate: 80
+          - Item: Greed_Stone
+            Rate: 80
+          - Item: CastStone_Robe
+            Rate: 80
+          - Item: ASPDStone_Robe
+            Rate: 160
+          - Item: ASPDStone_Top
+            Rate: 160
+          - Item: WaterFieldEffect_Bottom
+            Rate: 160
+          - Item: EXPStone_Bottom
+            Rate: 250
+          - Item: Range_Stone
+            Rate: 250
+          - Item: EXPStone_Middle
+            Rate: 250
+          - Item: EXPStone_Top
+            Rate: 250
+          - Item: CastingStone_Top
+            Rate: 250
+          - Item: CastingStone_Middle
+            Rate: 250
+          - Item: CastingStone_Bottom
+            Rate: 250
+          - Item: aegis_100465
+            Rate: 250
+          - Item: aegis_100495
+            Rate: 250
+          - Item: Range_Stone_Top
+            Rate: 250
+          - Item: Range_Stone_Bottom
+            Rate: 250
+          - Item: Melee_Stone_Top
+            Rate: 250
+          - Item: Melee_Stone_Middle
+            Rate: 250
+          - Item: Melee_Stone_Bottom
+            Rate: 250
+          - Item: MATKStone_Middle
+            Rate: 380
+          - Item: MATKStone_Top
+            Rate: 380
+          - Item: MATKStone_Bottom
+            Rate: 380
+          - Item: Critical_Stone
+            Rate: 380
+          - Item: Critical_Stone_Top
+            Rate: 380
+          - Item: Critical_Stone_Bottom
+            Rate: 380
+          - Item: aegis_100496
+            Rate: 560
+          - Item: aegis_100497
+            Rate: 560
+          - Item: aegis_100498
+            Rate: 560
+          - Item: aegis_100499
+            Rate: 560
+          - Item: aegis_100500
+            Rate: 560
+          - Item: aegis_100501
+            Rate: 560
+  - Group: ENCHANT_STONE_BOX23
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Melee_Stone_Robe_D
+            Rate: 10
+          - Item: Magic_Stone_Robe_D
+            Rate: 10
+          - Item: CastingStone_Robe
+            Rate: 20
+          - Item: Critical_Stone_Robe
+            Rate: 20
+          - Item: CastStone_Robe_D
+            Rate: 40
+          - Item: SPdrainStone_Top
+            Rate: 80
+          - Item: CastStone_Robe
+            Rate: 80
+          - Item: WarlockStone_Robe
+            Rate: 80
+          - Item: GuillcrossStone_Robe
+            Rate: 80
+          - Item: WarlockStone_Robe2
+            Rate: 80
+          - Item: GuillotineCrossStone_Robe2
+            Rate: 80
+          - Item: ASPDStone_Robe_D
+            Rate: 80
+          - Item: HPdrainStone_Robe_D
+            Rate: 80
+          - Item: WarlockStone_Top
+            Rate: 120
+          - Item: WarlockStone_Middle
+            Rate: 120
+          - Item: WarlockStone_Bottom
+            Rate: 120
+          - Item: AssacrossStone_Top
+            Rate: 120
+          - Item: AssacrossStone_Middle
+            Rate: 120
+          - Item: AssacrossStone_Bottom
+            Rate: 120
+          - Item: WarlockStone_Top2
+            Rate: 120
+          - Item: WarlockStone_Middle2
+            Rate: 120
+          - Item: WarlockStone_Bottom2
+            Rate: 120
+          - Item: GuillotineCrossStone_Top2
+            Rate: 120
+          - Item: GuillotineCrossStone_Middle2
+            Rate: 120
+          - Item: GuillotineCrossStone_Bottom2
+            Rate: 120
+          - Item: WaterFieldEffect_Bottom
+            Rate: 140
+          - Item: ASPDStone_Top
+            Rate: 160
+          - Item: aegis_100465
+            Rate: 160
+          - Item: aegis_100495
+            Rate: 160
+          - Item: Range_Stone
+            Rate: 240
+          - Item: CastingStone_Top
+            Rate: 240
+          - Item: CastingStone_Middle
+            Rate: 240
+          - Item: CastingStone_Bottom
+            Rate: 240
+          - Item: Range_Stone_Top
+            Rate: 240
+          - Item: Range_Stone_Bottom
+            Rate: 240
+          - Item: Melee_Stone_Top
+            Rate: 240
+          - Item: Melee_Stone_Middle
+            Rate: 240
+          - Item: Melee_Stone_Bottom
+            Rate: 240
+          - Item: Magic_Stone_Top
+            Rate: 240
+          - Item: Magic_Stone_Middle
+            Rate: 240
+          - Item: Magic_Stone_Bottom
+            Rate: 240
+          - Item: MATKStone_Middle
+            Rate: 360
+          - Item: MATKStone_Top
+            Rate: 360
+          - Item: MATKStone_Bottom
+            Rate: 360
+          - Item: Critical_Stone
+            Rate: 360
+          - Item: Critical_Stone_Top
+            Rate: 360
+          - Item: Critical_Stone_Bottom
+            Rate: 360
+          - Item: aegis_100496
+            Rate: 360
+          - Item: aegis_100497
+            Rate: 360
+          - Item: aegis_100498
+            Rate: 360
+          - Item: aegis_100499
+            Rate: 360
+          - Item: aegis_100500
+            Rate: 360
+          - Item: aegis_100501
+            Rate: 360
+  - Group: ENCHANT_STONE_BOX24
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: MinorCastStone_Robe_D
+            Rate: 10
+          - Item: Range_Stone_Robe_D
+            Rate: 10
+          - Item: CastingStone_Robe
+            Rate: 20
+          - Item: Critical_Stone_Robe
+            Rate: 20
+          - Item: SPdrainStone_Robe_D
+            Rate: 40
+          - Item: SPdrainStone_Top
+            Rate: 80
+          - Item: CastStone_Robe
+            Rate: 80
+          - Item: RuneknightStone_Robe
+            Rate: 80
+          - Item: WarlockStone_Robe
+            Rate: 80
+          - Item: RoyalguardStone_Robe
+            Rate: 80
+          - Item: WarlockStone_Robe2
+            Rate: 80
+          - Item: RoyalGuardStone_Robe2
+            Rate: 80
+          - Item: RuneknightStone_Robe2
+            Rate: 80
+          - Item: ASPDStone_Robe_D
+            Rate: 80
+          - Item: HPdrainStone_Robe_D
+            Rate: 80
+          - Item: RuneknightStone_Top3
+            Rate: 80
+          - Item: RuneknightStone_Middle3
+            Rate: 80
+          - Item: RuneknightStone_Bottom3
+            Rate: 80
+          - Item: WarlockStone_Top3
+            Rate: 80
+          - Item: WarlockStone_Middle3
+            Rate: 80
+          - Item: WarlockStone_Bottom3
+            Rate: 80
+          - Item: RoyalguardStone_Top3
+            Rate: 80
+          - Item: RoyalguardStone_Middle3
+            Rate: 80
+          - Item: RoyalguardStone_Bottom3
+            Rate: 80
+          - Item: RuneknightStone_Top
+            Rate: 150
+          - Item: RuneknightStone_Middle
+            Rate: 150
+          - Item: RuneknightStone_Bottom
+            Rate: 150
+          - Item: WarlockStone_Top
+            Rate: 150
+          - Item: WarlockStone_Middle
+            Rate: 150
+          - Item: WarlockStone_Bottom
+            Rate: 150
+          - Item: PaladinStone_Top
+            Rate: 150
+          - Item: PaladinStone_Middle
+            Rate: 150
+          - Item: PaladinStone_Bottom
+            Rate: 150
+          - Item: WarlockStone_Top2
+            Rate: 150
+          - Item: WarlockStone_Middle2
+            Rate: 150
+          - Item: WarlockStone_Bottom2
+            Rate: 150
+          - Item: RoyalGuardStone_Top2
+            Rate: 150
+          - Item: RoyalGuardStone_Middle2
+            Rate: 150
+          - Item: RoyalGuardStone_Bottom2
+            Rate: 150
+          - Item: RuneknightStone_Top2
+            Rate: 150
+          - Item: RuneknightStone_Middle2
+            Rate: 150
+          - Item: RuneknightStone_Bottom2
+            Rate: 150
+          - Item: ASPDStone_Top
+            Rate: 160
+          - Item: WaterFieldEffect_Bottom
+            Rate: 160
+          - Item: aegis_100465
+            Rate: 160
+          - Item: aegis_100495
+            Rate: 160
+          - Item: Range_Stone
+            Rate: 240
+          - Item: Range_Stone_Top
+            Rate: 240
+          - Item: Range_Stone_Bottom
+            Rate: 240
+          - Item: MATKStone_Middle
+            Rate: 360
+          - Item: MATKStone_Top
+            Rate: 360
+          - Item: MATKStone_Bottom
+            Rate: 360
+          - Item: Critical_Stone
+            Rate: 360
+          - Item: Critical_Stone_Top
+            Rate: 360
+          - Item: Critical_Stone_Bottom
+            Rate: 360
+          - Item: aegis_100496
+            Rate: 360
+          - Item: aegis_100497
+            Rate: 360
+          - Item: aegis_100498
+            Rate: 360
+          - Item: aegis_100499
+            Rate: 360
+          - Item: aegis_100500
+            Rate: 360
+          - Item: aegis_100501
+            Rate: 360
+  - Group: ENCHANT_STONE_BOX25
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: ReloadStone_Robe_D
+            Rate: 10
+          - Item: CrtStone_Robe_D
+            Rate: 10
+          - Item: CastingStone_Robe
+            Rate: 20
+          - Item: Critical_Stone_Robe
+            Rate: 20
+          - Item: SPdrainStone_Robe_D
+            Rate: 40
+          - Item: SPdrainStone_Top
+            Rate: 80
+          - Item: CastStone_Robe
+            Rate: 80
+          - Item: SorcererStone_Robe
+            Rate: 80
+          - Item: GeneticStone_Robe
+            Rate: 80
+          - Item: WanderMinstrelStone_Robe
+            Rate: 80
+          - Item: SorcererStone_Robe2
+            Rate: 80
+          - Item: GeneticStone_Robe2
+            Rate: 80
+          - Item: WanderMinsStone_Robe2
+            Rate: 80
+          - Item: ASPDStone_Robe_D
+            Rate: 80
+          - Item: HPdrainStone_Robe_D
+            Rate: 80
+          - Item: WanderMinsStone_Top3
+            Rate: 80
+          - Item: WanderMinsStone_Middle3
+            Rate: 80
+          - Item: WanderMinsStone_Bottom3
+            Rate: 80
+          - Item: GeneticStone_Top3
+            Rate: 80
+          - Item: GeneticStone_Middle3
+            Rate: 80
+          - Item: GeneticStone_Bottom3
+            Rate: 80
+          - Item: SorcererStone_Top3
+            Rate: 80
+          - Item: SorcererStone_Middle3
+            Rate: 80
+          - Item: SorcererStone_Bottom3
+            Rate: 80
+          - Item: SorcererStone_Top
+            Rate: 150
+          - Item: SorcererStone_Middle
+            Rate: 150
+          - Item: SorcererStone_Bottom
+            Rate: 150
+          - Item: GeneticStone_Top
+            Rate: 150
+          - Item: GeneticStone_Middle
+            Rate: 150
+          - Item: GeneticStone_Bottom
+            Rate: 150
+          - Item: WanderMinstrelStone_Top
+            Rate: 150
+          - Item: WanderMinstrelStone_Middle
+            Rate: 150
+          - Item: WanderMinstrelStone_Bottom
+            Rate: 150
+          - Item: SorcererStone_Bottom2
+            Rate: 150
+          - Item: SorcererStone_Middle2
+            Rate: 150
+          - Item: SorcererStone_Top2
+            Rate: 150
+          - Item: GeneticStone_Top2
+            Rate: 150
+          - Item: GeneticStone_Middle2
+            Rate: 150
+          - Item: GeneticStone_Bottom2
+            Rate: 150
+          - Item: WanderMinsStone_Top2
+            Rate: 150
+          - Item: WanderMinsStone_Middle2
+            Rate: 150
+          - Item: WanderMinsStone_Bottom2
+            Rate: 150
+          - Item: ASPDStone_Top
+            Rate: 160
+          - Item: WaterFieldEffect_Bottom
+            Rate: 160
+          - Item: aegis_100465
+            Rate: 160
+          - Item: aegis_100495
+            Rate: 160
+          - Item: ReloadStone_Top
+            Rate: 240
+          - Item: ReloadStone_Middle
+            Rate: 240
+          - Item: ReloadStone_Bottom
+            Rate: 240
+          - Item: Critical_Stone
+            Rate: 360
+          - Item: CastingStone_Top
+            Rate: 360
+          - Item: CastingStone_Middle
+            Rate: 360
+          - Item: CastingStone_Bottom
+            Rate: 360
+          - Item: Critical_Stone_Top
+            Rate: 360
+          - Item: Critical_Stone_Bottom
+            Rate: 360
+          - Item: aegis_100496
+            Rate: 360
+          - Item: aegis_100497
+            Rate: 360
+          - Item: aegis_100498
+            Rate: 360
+          - Item: aegis_100499
+            Rate: 360
+          - Item: aegis_100500
+            Rate: 360
+          - Item: aegis_100501
+            Rate: 360
+  - Group: ENCHANT_STONE_BOX27
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: SmatkStone_Robe
+            Rate: 10
+          - Item: SplStone_Robe_D
+            Rate: 10
+          - Item: Critical_Stone_Robe
+            Rate: 20
+          - Item: CastingStone_Robe
+            Rate: 20
+          - Item: SPdrainStone_Robe_D
+            Rate: 40
+          - Item: SPdrainStone_Top
+            Rate: 80
+          - Item: CastStone_Robe
+            Rate: 80
+          - Item: ASPDStone_Top
+            Rate: 160
+          - Item: ASPDStone_Robe_D
+            Rate: 80
+          - Item: HPdrainStone_Robe_D
+            Rate: 80
+          - Item: PinkGlowEffect_Middle
+            Rate: 160
+          - Item: SuraStone_Robe
+            Rate: 80
+          - Item: SuraStone_Robe2
+            Rate: 80
+          - Item: MechanicStone_Robe
+            Rate: 80
+          - Item: MechanicStone_II_Garment
+            Rate: 80
+          - Item: GuillcrossStone_Robe
+            Rate: 80
+          - Item: GuillotineCrossStone_Robe2
+            Rate: 80
+          - Item: SuraStone_Top3
+            Rate: 80
+          - Item: SuraStone_Middle3
+            Rate: 80
+          - Item: SuraStone_Bottom3
+            Rate: 80
+          - Item: MechanicStone_Top3
+            Rate: 80
+          - Item: MechanicStone_Middle3
+            Rate: 80
+          - Item: MechanicStone_Bottom3
+            Rate: 80
+          - Item: GuillcrossStone_Top3
+            Rate: 80
+          - Item: GuillcrossStone_Middle3
+            Rate: 80
+          - Item: GuillcrossStone_Bottom3
+            Rate: 80
+          - Item: aegis_100465
+            Rate: 160
+          - Item: aegis_100495
+            Rate: 160
+          - Item: Magic_Stone_Top
+            Rate: 240
+          - Item: Magic_Stone_Middle
+            Rate: 240
+          - Item: Magic_Stone_Bottom
+            Rate: 240
+          - Item: SuraStone_Top
+            Rate: 150
+          - Item: SuraStone_Middle
+            Rate: 150
+          - Item: SuraStone_Bottom
+            Rate: 150
+          - Item: SuraStone_Top2
+            Rate: 150
+          - Item: SuraStone_Middle2
+            Rate: 150
+          - Item: SuraStone_Bottom2
+            Rate: 150
+          - Item: MechanicStone_Top
+            Rate: 150
+          - Item: MechanicStone_Middle
+            Rate: 150
+          - Item: MechanicStone_Bottom
+            Rate: 150
+          - Item: MechanicStone_II_Top
+            Rate: 150
+          - Item: MechanicStone_II_Middle
+            Rate: 150
+          - Item: MechanicStone_II_Bottom
+            Rate: 150
+          - Item: AssacrossStone_Top
+            Rate: 150
+          - Item: AssacrossStone_Middle
+            Rate: 150
+          - Item: AssacrossStone_Bottom
+            Rate: 150
+          - Item: GuillotineCrossStone_Top2
+            Rate: 150
+          - Item: GuillotineCrossStone_Middle2
+            Rate: 150
+          - Item: GuillotineCrossStone_Bottom2
+            Rate: 150
+          - Item: aegis_100496
+            Rate: 360
+          - Item: aegis_100497
+            Rate: 360
+          - Item: aegis_100498
+            Rate: 360
+          - Item: aegis_100499
+            Rate: 360
+          - Item: aegis_100500
+            Rate: 360
+          - Item: aegis_100501
+            Rate: 360
+          - Item: CastingStone_Top
+            Rate: 360
+          - Item: CastingStone_Middle
+            Rate: 360
+          - Item: CastingStone_Bottom
+            Rate: 360
+          - Item: Critical_Stone_Top
+            Rate: 360
+          - Item: Critical_Stone
+            Rate: 360
+          - Item: Critical_Stone_Bottom
+            Rate: 360
+  - Group: ANCIENT_HERO_BOX_1
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Royal_Bow_K
+            Rate: 100
+          - Item: Narcis_Bow
+            Rate: 100
+          - Item: Shadow_Staff
+            Rate: 100
+          - Item: Iron_Nail_K
+            Rate: 100
+          - Item: Magic_Sword
+            Rate: 100
+          - Item: Sword_Of_Bluefire
+            Rate: 100
+          - Item: Avenger
+            Rate: 100
+          - Item: Aeon_Staff
+            Rate: 100
+          - Item: Oriental_Sword
+            Rate: 100
+          - Item: Undine_Spear_K
+            Rate: 100
+          - Item: Exoricists_Bible_
+            Rate: 100
+          - Item: Katar_of_Shiver
+            Rate: 100
+  - Group: 3LV_9REFINE_WEAPON_7GU
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Guarantee_Weapon_7Up
+  - Group: 3LV_10REFINE_WEAPON_8GU
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Guarantee_Weapon_8Up
+  - Group: 3LV_11REFINE_WEAPON_9GU
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Guarantee_Weapon_9Up
+  - Group: 3LV_12REFINE_WEAPON_10G
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Guarantee_Weapon_10Up
+  - Group: 4LV_9REFINE_WEAPON_8GU
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Guarantee_Weapon_8Up
+  - Group: 4LV_10REFINE_WEAPON_9GU
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Guarantee_Weapon_9Up
+  - Group: 4LV_11REFINE_WEAPON_10G
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Guarantee_Weapon_10Up
+  - Group: BS_ITEM_M_S_52
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Blacksmith_Blessing
+            Amount: 2
+  - Group: Bs_Item_M_S_53
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Shadow_Refine_Hammer
+            Amount: 2
+  - Group: Bs_Item_M_S_54
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Mightysoul_Essence
+  - Group: Bs_Item_M_S_55
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: M_Dimension_Essence
+  - Group: Bs_Item_M_S_56
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Enchant_Ticket
+            Amount: 2
