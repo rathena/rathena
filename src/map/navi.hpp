@@ -38,6 +38,6 @@ struct navi_walkpath_data {
 };
 
 
-void create_lists();
+void navi_create_lists();
 #endif // ifdef GENERATE_NAVI
 #endif

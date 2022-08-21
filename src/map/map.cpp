@@ -5243,7 +5243,7 @@ int do_init(int argc, char *argv[])
 	ShowStatus("Server is '" CL_GREEN "ready" CL_RESET "' and listening on port '" CL_WHITE "%d" CL_RESET "'.\n\n", map_port);
 
 #ifdef GENERATE_NAVI
-	create_lists();
+	navi_create_lists();
 	runflag = CORE_ST_STOP;
 #endif
 

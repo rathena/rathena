@@ -618,7 +618,7 @@ void write_map_distances() {
 }
 
 
-void create_lists() {
+void navi_create_lists() {
 	BHEAP_INIT(g_open_set);
 
 	auto starttime = std::chrono::system_clock::now();
