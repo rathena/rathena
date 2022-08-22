@@ -1459,13 +1459,22 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		case HW_GRAVITATION:
 #endif
 		case SP_SOULEXPLOSION:
+			// Adjust these based on any possible PK damage rates.
+			if (battle_config.pk_mode == 1 && map_getmapflag(bl->m, MF_PVP) > 0)
+				damage = battle_calc_pk_damage(*src, *bl, damage, skill_id, flag);
+
 			return damage; //These skills bypass everything else.
-  }
+	}
 
 	// Nothing can reduce the damage, but Safety Wall and Millennium Shield can block it completely.
 	// So can defense sphere's but what the heck is that??? [Rytech]
-	if (skill_id == SJ_NOVAEXPLOSING && !(sc && (sc->data[SC_SAFETYWALL] || sc->data[SC_MILLENNIUMSHIELD])))
+	if (skill_id == SJ_NOVAEXPLOSING && !(sc && (sc->data[SC_SAFETYWALL] || sc->data[SC_MILLENNIUMSHIELD]))) {
+		// Adjust this based on any possible PK damage rates.
+		if (battle_config.pk_mode == 1 && map_getmapflag(bl->m, MF_PVP) > 0)
+			damage = battle_calc_pk_damage(*src, *bl, damage, skill_id, flag);
+
 		return damage;
+	}
 
 	if( sc && sc->count ) {
 		if (!battle_status_block_damage(src, bl, sc, d, damage, skill_id, skill_lv)) // Statuses that reduce damage to 0.
@@ -1818,7 +1827,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	} //End of caster SC_ check
 
 	//PK damage rates
-	if (map_getmapflag(bl->m, MF_PVP) > 0)
+	if (battle_config.pk_mode == 1 && map_getmapflag(bl->m, MF_PVP) > 0)
 		damage = battle_calc_pk_damage(*src, *bl, damage, skill_id, flag);
 
 	if(battle_config.skill_min_damage && damage > 0 && damage < div_) {
@@ -5750,22 +5759,40 @@ static void battle_calc_defense_reduction(struct Damage* wd, struct block_list *
 	}
 
 #ifdef RENEWAL
-	/**
-	 * RE DEF Reduction
-	 * Damage = Attack * (4000+eDEF)/(4000+eDEF*10) - sDEF
-	 * Pierce defence gains 1 atk per def/2
-	 */
-	if( def1 == -400 ) /* -400 creates a division by 0 and subsequently crashes */
-		def1 = -399;
-	ATK_ADD2(wd->damage, wd->damage2,
-		is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) ? (def1*battle_calc_attack_skill_ratio(wd, src, target, skill_id, skill_lv))/200 : 0,
-		is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L) ? (def1*battle_calc_attack_skill_ratio(wd, src, target, skill_id, skill_lv))/200 : 0
-	);
-	if( !attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_R) && !is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) )
-		wd->damage = wd->damage * (4000+def1) / (4000+10*def1) - vit_def;
-	if( is_attack_left_handed(src, skill_id) && !attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_L) && !is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L) )
-		wd->damage2 = wd->damage2 * (4000+def1) / (4000+10*def1) - vit_def;
+	switch(skill_id) {
+		case RK_DRAGONBREATH:
+		case RK_DRAGONBREATH_WATER:
+		case NC_ARMSCANNON:
+		case GN_CARTCANNON:
+			if (attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_R) || attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_L))
+				return;
+			if (is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) || is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L))
+				return;
 
+			// Defense reduction by flat value.
+			// This completely bypasses the normal RE DEF Reduction formula.
+			wd->damage -= (def1 + vit_def);
+			if (is_attack_left_handed(src, skill_id))
+				wd->damage2 -= (def1 + vit_def);
+			break;
+		/**
+		 * RE DEF Reduction
+		 * Damage = Attack * (4000+eDEF)/(4000+eDEF*10) - sDEF
+		 * Pierce defence gains 1 atk per def/2
+		 */
+		default:
+			if( def1 == -400 ) /* -400 creates a division by 0 and subsequently crashes */
+				def1 = -399;
+			ATK_ADD2(wd->damage, wd->damage2,
+				is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) ? (def1*battle_calc_attack_skill_ratio(wd, src, target, skill_id, skill_lv))/200 : 0,
+				is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L) ? (def1*battle_calc_attack_skill_ratio(wd, src, target, skill_id, skill_lv))/200 : 0
+			);
+			if( !attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_R) && !is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) )
+				wd->damage = wd->damage * (4000+def1) / (4000+10*def1) - vit_def;
+			if( is_attack_left_handed(src, skill_id) && !attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_L) && !is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L) )
+				wd->damage2 = wd->damage2 * (4000+def1) / (4000+10*def1) - vit_def;
+			break;
+	}
 #else
 		if (def1 > 100) def1 = 100;
 		ATK_RATE2(wd->damage, wd->damage2,
@@ -10089,8 +10116,6 @@ static const struct _battle_data {
 	{ "vip_disp_rate",                      &battle_config.vip_disp_rate,                   1,      0,      1,              },
 	{ "mon_trans_disable_in_gvg",           &battle_config.mon_trans_disable_in_gvg,        0,      0,      1,              },
 	{ "homunculus_S_growth_level",          &battle_config.hom_S_growth_level,             99,      0,      MAX_LEVEL,      },
-	{ "emblem_woe_change",                  &battle_config.emblem_woe_change,               0,      0,      1,              },
-	{ "emblem_transparency_limit",          &battle_config.emblem_transparency_limit,      80,      0,      100,            },
 	{ "discount_item_point_shop",			&battle_config.discount_item_point_shop,		0,		0,		3,				},
 	{ "update_enemy_position",				&battle_config.update_enemy_position,			0,		0,		1,				},
 	{ "devotion_rdamage",					&battle_config.devotion_rdamage,				0,		0,		100,			},

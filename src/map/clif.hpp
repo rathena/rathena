@@ -1201,6 +1201,10 @@ void clif_summon_hp_bar(struct mob_data& md);
 void clif_laphine_synthesis_open( struct map_session_data *sd, std::shared_ptr<s_laphine_synthesis> synthesis );
 void clif_laphine_upgrade_open( struct map_session_data* sd, std::shared_ptr<s_laphine_upgrade> upgrade );
 
+// Reputation System
+void clif_reputation_type( struct map_session_data& sd, int64 type, int64 points );
+void clif_reputation_list( struct map_session_data& sd );
+
 // Item Enchant UI
 void clif_enchantwindow_open( struct map_session_data& sd, uint64 clientLuaIndex );
 
