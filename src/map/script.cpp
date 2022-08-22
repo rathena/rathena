@@ -6915,7 +6915,7 @@ BUILDIN_FUNC(viewpointmap) {
  * @param funcname Function name
  * @param x First position of random option id array from the script
  **/
-static int script_getitem_randomoption(struct script_state *st, struct map_session_data* sd, struct item *it, const char *funcname, int x) {
+static bool script_getitem_randomoption(struct script_state *st, struct map_session_data* sd, struct item *it, const char *funcname, int x) {
 	int i, opt_id_n;
 	struct script_data *opt_id = script_getdata(st,x);
 	struct script_data *opt_val = script_getdata(st,x+1);
@@ -6933,18 +6933,18 @@ static int script_getitem_randomoption(struct script_state *st, struct map_sessi
 		// If no player is attached
 		if( !script_rid2sd(sd) ){
 			ShowError( "buildin_%s: variable \"%s\" was not a server variable, but no player was attached.\n", funcname, opt_id_var );
-			return SCRIPT_CMD_FAILURE;
+			return false;
 		}
 	}
 
 	if( !data_isreference(opt_id) || !script_array_src( st, sd, opt_id_var, reference_getref(opt_id) ) ){
 		ShowError( "buildin_%s: The option id parameter is not an array.\n", funcname );
-		return SCRIPT_CMD_FAILURE;
+		return false;
 	}
 
 	if (is_string_variable(opt_id_var)) {
 		ShowError("buildin_%s: The array %s is not numeric type.\n", funcname, opt_id_var);
-		return SCRIPT_CMD_FAILURE;
+		return false;
 	}
 
 	// Check if the variable requires a player
@@ -6952,18 +6952,18 @@ static int script_getitem_randomoption(struct script_state *st, struct map_sessi
 		// If no player is attached
 		if( !script_rid2sd(sd) ){
 			ShowError( "buildin_%s: variable \"%s\" was not a server variable, but no player was attached.\n", funcname, opt_val_var );
-			return SCRIPT_CMD_FAILURE;
+			return false;
 		}
 	}
 
 	if( !data_isreference(opt_val) || !script_array_src( st, sd, opt_val_var, reference_getref(opt_val) ) ){
 		ShowError( "buildin_%s: The option value parameter is not an array.\n", funcname );
-		return SCRIPT_CMD_FAILURE;
+		return false;
 	}
 
 	if (is_string_variable(opt_val_var)) {
 		ShowError("buildin_%s: The array %s is not numeric type.\n", funcname, opt_val_var);
-		return SCRIPT_CMD_FAILURE;
+		return false;
 	}
 
 	// Check if the variable requires a player
@@ -6971,18 +6971,18 @@ static int script_getitem_randomoption(struct script_state *st, struct map_sessi
 		// If no player is attached
 		if( !script_rid2sd(sd) ){
 			ShowError( "buildin_%s: variable \"%s\" was not a server variable, but no player was attached.\n", funcname, opt_param_var );
-			return SCRIPT_CMD_FAILURE;
+			return false;
 		}
 	}
 
 	if( !data_isreference(opt_param) || !script_array_src( st, sd, opt_param_var, reference_getref(opt_param) ) ){
 		ShowError( "buildin_%s: The option param parameter is not an array.\n", funcname );
-		return SCRIPT_CMD_FAILURE;
+		return false;
 	}
 
 	if (is_string_variable(opt_param_var)) {
 		ShowError("buildin_%s: The array %s is not numeric type.\n", funcname, opt_param_var);
-		return SCRIPT_CMD_FAILURE;
+		return false;
 	}
 
 	opt_id_ref = reference_getref(opt_id);
@@ -7004,7 +7004,7 @@ static int script_getitem_randomoption(struct script_state *st, struct map_sessi
 		it->option[i].value = (short)get_val2_num( st, reference_uid( opt_val_id, opt_val_idx + i ), opt_val_ref );
 		it->option[i].param = (char)get_val2_num( st, reference_uid( opt_param_id, opt_param_idx + i ), opt_param_ref );
 	}
-	return SCRIPT_CMD_SUCCESS;
+	return true;
 }
 
 /**
@@ -7019,7 +7019,8 @@ static int script_getitem_randomoption(struct script_state *st, struct map_sessi
  * @param rental: Whether or not to count rental items
  * @return Total count of item being searched
  */
-static int script_countitem_sub(struct item *items, std::shared_ptr<item_data> id, int size, bool expanded, bool random_option, struct script_state *st, struct map_session_data *sd = nullptr, bool rental = false) {
+static int script_countitem_sub(struct item *items, std::shared_ptr<item_data> id, int size, int expanded, struct script_state *st, struct map_session_data *sd = nullptr, bool rental = false) {
+
 	nullpo_retr(-1, items);
 	nullpo_retr(-1, st);
 
@@ -7037,9 +7038,8 @@ static int script_countitem_sub(struct item *items, std::shared_ptr<item_data> i
 				count += itm->amount;
 		}
 	} else { // For expanded functions
-		item it;
-
-		memset(&it, 0, sizeof(it));
+		item it = {};
+		int offset = 10;
 
 		it.nameid = id->nameid;
 		it.identify = script_getnum(st,3);
@@ -7050,15 +7050,21 @@ static int script_countitem_sub(struct item *items, std::shared_ptr<item_data> i
 		it.card[2] = script_getnum(st,8);
 		it.card[3] = script_getnum(st,9);
 
-		if (random_option) {
+		if (expanded&4) {
+			it.enchantgrade = script_getnum(st,10);
+
+			offset = 11;
+		}
+
+		if (expanded&2) {
 			if (!sd) {
 				ShowError("buildin_countitem3: Player not attached.\n");
 				return -1;
 			}
 
-			int res = script_getitem_randomoption(st, sd, &it, "countitem3", 10);
+			bool res = script_getitem_randomoption(st, sd, &it, "countitem3", offset);
 
-			if (res != SCRIPT_CMD_SUCCESS)
+			if (!res)
 				return -1;
 		}
 
@@ -7067,13 +7073,13 @@ static int script_countitem_sub(struct item *items, std::shared_ptr<item_data> i
 
 			if (itm == nullptr || itm->nameid == 0 || itm->amount < 1)
 				continue;
-			if (itm->nameid != it.nameid || itm->identify != it.identify || itm->refine != it.refine || itm->attribute != it.attribute)
+			if (itm->nameid != it.nameid || itm->identify != it.identify || itm->refine != it.refine || itm->attribute != it.attribute || itm->enchantgrade != it.enchantgrade)
 				continue;
 			if ((!rental && itm->expire_time > 0) || (rental && itm->expire_time == 0))
 				continue;
 			if (memcmp(it.card, itm->card, sizeof(it.card)))
 				continue;
-			if (random_option) {
+			if (expanded&2) {
 				uint8 j;
 
 				for (j = 0; j < MAX_ITEM_RDM_OPT; j++) {
@@ -7097,19 +7103,27 @@ static int script_countitem_sub(struct item *items, std::shared_ptr<item_data> i
  * countitem2(<nameID>,<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>}) [Lupus]
  * countitem3(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
  * countitem3("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+ * countitem4(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+ * countitem4("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
  */
 BUILDIN_FUNC(countitem)
 {
 	TBL_PC *sd;
 	char *command = (char *)script_getfuncname(st);
 	int aid = 3;
-	bool random_option = false;
+	int expanded = 0;
 
-	if (command[strlen(command)-1] == '2')
+	if (command[strlen(command)-1] == '2') {
+		expanded = 1;
 		aid = 10;
+	}
 	else if (command[strlen(command)-1] == '3') {
+		expanded = 3;
 		aid = 13;
-		random_option = true;
+	}
+	else if (command[strlen(command)-1] == '4') {
+		expanded = 7;
+		aid = 14;
 	}
 
 	if (!script_accid2sd(aid, sd))
@@ -7128,7 +7142,7 @@ BUILDIN_FUNC(countitem)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	int count = script_countitem_sub(sd->inventory.u.items_inventory, id, MAX_INVENTORY, (aid > 3) ? true : false, random_option, st, sd);
+	int count = script_countitem_sub(sd->inventory.u.items_inventory, id, MAX_INVENTORY, expanded, st, sd);
 	if (count < 0) {
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
@@ -7147,9 +7161,12 @@ BUILDIN_FUNC(cartcountitem)
 	TBL_PC *sd;
 	char *command = (char *)script_getfuncname(st);
 	int aid = 3;
+	int expanded = 0;
 
-	if (command[strlen(command) - 1] == '2')
+	if (command[strlen(command) - 1] == '2') {
+		expanded = 1;
 		aid = 10;
+	}
 
 	if (!script_accid2sd(aid, sd))
 		return SCRIPT_CMD_FAILURE;
@@ -7173,7 +7190,7 @@ BUILDIN_FUNC(cartcountitem)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	int count = script_countitem_sub(sd->cart.u.items_cart, id, MAX_CART, (aid > 3) ? true : false, false, st);
+	int count = script_countitem_sub(sd->cart.u.items_cart, id, MAX_CART, expanded, st);
 	if (count < 0) {
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
@@ -7192,9 +7209,12 @@ BUILDIN_FUNC(storagecountitem)
 	TBL_PC *sd;
 	char *command = (char *)script_getfuncname(st);
 	int aid = 3;
+	int expanded = 0;
 
-	if (command[strlen(command) - 1] == '2')
+	if (command[strlen(command) - 1] == '2') {
+		expanded = 1;
 		aid = 10;
+	}
 
 	if (!script_accid2sd(aid, sd))
 		return SCRIPT_CMD_FAILURE;
@@ -7217,7 +7237,7 @@ BUILDIN_FUNC(storagecountitem)
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	int count = script_countitem_sub(sd->storage.u.items_storage, id, MAX_STORAGE, (aid > 3) ? true : false, false, st);
+	int count = script_countitem_sub(sd->storage.u.items_storage, id, MAX_STORAGE, expanded, st);
 	if (count < 0) {
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
@@ -7236,9 +7256,12 @@ BUILDIN_FUNC(guildstoragecountitem)
 	TBL_PC *sd;
 	char *command = (char *)script_getfuncname(st);
 	int aid = 3;
+	int expanded = 0;
 
-	if (command[strlen(command) - 1] == '2')
+	if (command[strlen(command) - 1] == '2') {
+		expanded = 1;
 		aid = 10;
+	}
 
 	if (!script_accid2sd(aid, sd))
 		return SCRIPT_CMD_FAILURE;
@@ -7265,7 +7288,7 @@ BUILDIN_FUNC(guildstoragecountitem)
 
 	gstor->lock = true;
 
-	int count = script_countitem_sub(gstor->u.items_guild, id, MAX_GUILD_STORAGE, (aid > 3) ? true : false, false, st);
+	int count = script_countitem_sub(gstor->u.items_guild, id, MAX_GUILD_STORAGE, expanded, st);
 
 	storage_guild_storageclose(sd);
 	gstor->lock = false;
@@ -7290,13 +7313,19 @@ BUILDIN_FUNC(rentalcountitem)
 {
 	char *command = (char *)script_getfuncname(st);
 	int aid = 3;
-	bool random_option = false;
+	int expanded = 0;
 
-	if (command[strlen(command) - 1] == '2')
+	if (command[strlen(command) - 1] == '2') {
+		expanded = 1;
 		aid = 10;
+	}
 	else if (command[strlen(command) - 1] == '3') {
+		expanded = 3;
 		aid = 13;
-		random_option = true;
+	}
+	else if (command[strlen(command) - 1] == '4') {
+		expanded = 7;
+		aid = 14;
 	}
 
 	map_session_data *sd;
@@ -7317,7 +7346,7 @@ BUILDIN_FUNC(rentalcountitem)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	int count = script_countitem_sub(sd->inventory.u.items_inventory, id, MAX_INVENTORY, (aid > 3) ? true : false, random_option, st, sd, true);
+	int count = script_countitem_sub(sd->inventory.u.items_inventory, id, MAX_INVENTORY, expanded, st, sd, true);
 	if (count < 0) {
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
@@ -7614,7 +7643,14 @@ BUILDIN_FUNC(getitem)
  *
  * getitembound3 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<bound type>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
  * getitembound3 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<bound type>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
- * Type:
+ *
+ * getitem4 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
+ * getitem4 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
+ *
+ * getitembound4 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<bound type>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
+ * getitembound4 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<bound type>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
+
+ Type:
  *	0 - No bound
  *	1 - Account Bound
  *	2 - Guild Bound
@@ -7623,16 +7659,11 @@ BUILDIN_FUNC(getitem)
  *------------------------------------------*/
 BUILDIN_FUNC(getitem2)
 {
-	t_itemid nameid;
-	unsigned short amount;
-	int iden, ref, attr;
-	t_itemid c1, c2, c3, c4;
-	char bound = BOUND_NONE;
-	std::shared_ptr<item_data> item_data;
-	struct item item_tmp;
 	TBL_PC *sd;
+	char bound = BOUND_NONE;
 	const char* command = script_getfuncname(st);
 	int offset = 0;
+	int grade_offset = 0;
 
 	if( !strncmp(command,"getitembound",12) ) {
 		int aid_pos = 12;
@@ -7645,6 +7676,11 @@ BUILDIN_FUNC(getitem2)
 			offset = 12;
 			aid_pos = 15;
 		}
+		else if (command[strlen(command)-1] == '4') {
+			grade_offset = 12;
+			offset = 13;
+			aid_pos = 16;
+		}
 		script_mapid2sd(aid_pos,sd);
 	} else {
 		int aid_pos = 11;
@@ -7652,11 +7688,19 @@ BUILDIN_FUNC(getitem2)
 			offset = 11;
 			aid_pos = 14;
 		} 
+		if (strcmpi(command,"getitem4") == 0) {
+			grade_offset = 11;
+			offset = 12;
+			aid_pos = 15;
+		}
 		script_mapid2sd(aid_pos,sd);
 	}
 
-	if( sd == NULL ) // no target
+	if( sd == nullptr ) // no target
 		return SCRIPT_CMD_SUCCESS;
+
+	t_itemid nameid;
+	std::shared_ptr<item_data> item_data;
 
 	if( script_isstring(st, 2) ) {
 		const char *name = script_getstr(st, 2);
@@ -7679,18 +7723,18 @@ BUILDIN_FUNC(getitem2)
 		}
 	}
 
-	amount = script_getnum(st,3);
-	iden = script_getnum(st,4);
-	ref = script_getnum(st,5);
-	attr = script_getnum(st,6);
-	c1 = script_getnum(st,7);
-	c2 = script_getnum(st,8);
-	c3 = script_getnum(st,9);
-	c4 = script_getnum(st,10);
+	int amount = script_getnum(st,3);
+	int iden = script_getnum(st,4);
+	int ref = script_getnum(st,5);
+	int attr = script_getnum(st,6);
+	t_itemid c1 = script_getnum(st,7);
+	t_itemid c2 = script_getnum(st,8);
+	t_itemid c3 = script_getnum(st,9);
+	t_itemid c4 = script_getnum(st,10);
+
+	struct item item_tmp = {};
 
 	if( item_data ) {
-		int get_count = 0, i;
-		memset(&item_tmp,0,sizeof(item_tmp));
 		if( item_data->type == IT_WEAPON || item_data->type == IT_ARMOR || item_data->type == IT_SHADOWGEAR ) {
 			if(ref > MAX_REFINE)
 				ref = MAX_REFINE;
@@ -7715,11 +7759,22 @@ BUILDIN_FUNC(getitem2)
 		item_tmp.bound = bound;
 
 		if (offset != 0) {
-			int res = script_getitem_randomoption(st, sd, &item_tmp, command, offset);
-			if (res == SCRIPT_CMD_FAILURE)
+			bool res = script_getitem_randomoption(st, sd, &item_tmp, command, offset);
+			if (!res)
 				return SCRIPT_CMD_FAILURE;
+
+			if (grade_offset > 0) {
+				int grade = script_getnum(st, grade_offset);
+				if (grade < ENCHANTGRADE_NONE || grade > MAX_ENCHANTGRADE) {
+					ShowError("buildin_getitem2: Not a correct grade! Grade=%d\n", grade);
+					return SCRIPT_CMD_FAILURE;
+				}
+				item_tmp.enchantgrade = static_cast<e_enchantgrade>(grade);
+			}
 		}
 
+		int get_count = 0;
+	
 		//Check if it's stackable.
 		if( !itemdb_isstackable2( item_data.get() ) ){
 			get_count = 1;
@@ -7727,7 +7782,7 @@ BUILDIN_FUNC(getitem2)
 			get_count = amount;
 		}
 
-		for (i = 0; i < amount; i += get_count)
+		for (int i = 0; i < amount; i += get_count)
 		{
 			// if not pet egg
 			if (!pet_create_egg(sd, nameid))
@@ -7751,8 +7806,6 @@ BUILDIN_FUNC(getitem2)
  */
 BUILDIN_FUNC(rentitem) {
 	struct map_session_data *sd;
-	struct item it;
-	int seconds;
 	t_itemid nameid = 0;
 	unsigned char flag = 0;
 
@@ -7780,8 +7833,9 @@ BUILDIN_FUNC(rentitem) {
 		}
 	}
 
-	seconds = script_getnum(st,3);
-	memset(&it, 0, sizeof(it));
+	int seconds = script_getnum(st,3);
+	struct item it = {};
+
 	it.nameid = nameid;
 	it.identify = 1;
 	it.expire_time = (unsigned int)(time(NULL) + seconds);
@@ -7802,23 +7856,25 @@ BUILDIN_FUNC(rentitem) {
  *
  * rentitem3 <item id>,<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account_id>};
  * rentitem3 "<item name>",<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account_id>};
+ *
+ * rentitem4 <item id>,<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account_id>};
+ * rentitem4 "<item name>",<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account_id>};
  */
 BUILDIN_FUNC(rentitem2) {
 	struct map_session_data *sd;
-	struct item it;
-	std::shared_ptr<item_data> id;
-	int seconds;
-	t_itemid nameid = 0;
-	unsigned char flag = 0;
-	int iden,ref,attr;
-	t_itemid c1,c2,c3,c4;
 	const char *funcname = script_getfuncname(st);
 
 	if (funcname[strlen(funcname)-1] == '3') {
 		if (!script_accid2sd(14,sd))
 			return SCRIPT_CMD_FAILURE;
+	} else if (funcname[strlen(funcname)-1] == '4') {
+		if (!script_accid2sd(15,sd))
+			return SCRIPT_CMD_FAILURE;
 	} else if (!script_accid2sd(11,sd))
 		return SCRIPT_CMD_FAILURE;
+
+	std::shared_ptr<item_data> id;
+	t_itemid nameid = 0;
 
 	if( script_isstring(st, 2) ) {
 		const char *name = script_getstr(st, 2);
@@ -7840,14 +7896,15 @@ BUILDIN_FUNC(rentitem2) {
 			return SCRIPT_CMD_FAILURE;
 		}
 	}
-	
-	seconds = script_getnum(st,3);
-	iden = script_getnum(st,4);
-	ref = script_getnum(st,5);
-	attr = script_getnum(st,6);
+
+	int seconds = script_getnum(st,3);
+	int iden = script_getnum(st,4);
+	int ref = script_getnum(st,5);
+	int attr = script_getnum(st,6);
 
 	if (id->type==IT_WEAPON || id->type==IT_ARMOR || id->type==IT_SHADOWGEAR) {
-		if(ref > MAX_REFINE) ref = MAX_REFINE;
+		if(ref > MAX_REFINE)
+			ref = MAX_REFINE;
 	}
 	else if (id->type==IT_PETEGG) {
 		iden = 1;
@@ -7858,12 +7915,13 @@ BUILDIN_FUNC(rentitem2) {
 		ref = attr = 0;
 	}
 
-	c1 = script_getnum(st,7);
-	c2 = script_getnum(st,8);
-	c3 = script_getnum(st,9);
-	c4 = script_getnum(st,10);
+	t_itemid c1 = script_getnum(st,7);
+	t_itemid c2 = script_getnum(st,8);
+	t_itemid c3 = script_getnum(st,9);
+	t_itemid c4 = script_getnum(st,10);
 
-	memset(&it, 0, sizeof(it));
+	struct item it = {};
+
 	it.nameid = nameid;
 	it.identify = iden;
 	it.refine = ref;
@@ -7876,10 +7934,24 @@ BUILDIN_FUNC(rentitem2) {
 	it.bound = BOUND_NONE;
 
 	if (funcname[strlen(funcname)-1] == '3') {
-		int res = script_getitem_randomoption(st, sd, &it, funcname, 11);
-		if (res != SCRIPT_CMD_SUCCESS)
-			return res;
+		bool res = script_getitem_randomoption(st, sd, &it, funcname, 11);
+		if (!res)
+			return SCRIPT_CMD_FAILURE;
 	}
+	else if (funcname[strlen(funcname)-1] == '4') {
+		bool res = script_getitem_randomoption(st, sd, &it, funcname, 12);
+		if (!res)
+			return SCRIPT_CMD_FAILURE;
+
+		int grade = script_getnum(st, 11);
+		if (grade < ENCHANTGRADE_NONE || grade > MAX_ENCHANTGRADE) {
+			ShowError("buildin_rentitem2: Not a correct grade! Grade=%d\n", grade);
+			return SCRIPT_CMD_FAILURE;
+		}
+		it.enchantgrade = static_cast<e_enchantgrade>(grade);
+	}
+
+	unsigned char flag = 0;
 
 	if( (flag = pc_additem(sd, &it, 1, LOG_TYPE_SCRIPT)) ) {
 		clif_additem(sd, 0, 0, flag);
@@ -8043,16 +8115,13 @@ BUILDIN_FUNC(makeitem) {
  *
  * makeitem3 <item id>,<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<canShowEffect>};
  * makeitem3 "<item name>",<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<canShowEffect>};
+ *
+ * makeitem4 <item id>,<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<canShowEffect>};
+ * makeitem4 "<item name>",<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<canShowEffect>};
  */
 BUILDIN_FUNC(makeitem2) {
 	t_itemid nameid;
-	uint16 amount, x, y;
-	const char *mapname;
-	int m;
-	struct item item_tmp;
-	struct item_data *id;
 	const char *funcname = script_getfuncname(st);
-	bool canShowEffect = false;
 
 	if( script_isstring( st, 2 ) ){
 		const char *name = script_getstr( st, 2 );
@@ -8073,10 +8142,11 @@ BUILDIN_FUNC(makeitem2) {
 		}
 	}
 
-	amount = script_getnum(st,3);
-	mapname	= script_getstr(st,4);
-	x = script_getnum(st,5);
-	y = script_getnum(st,6);
+	int amount = script_getnum(st,3);
+	const char *mapname	= script_getstr(st,4);
+	int x = script_getnum(st,5);
+	int y = script_getnum(st,6);
+	int m;
 
 	if (strcmp(mapname,"this")==0) {
 		TBL_PC *sd;
@@ -8087,17 +8157,20 @@ BUILDIN_FUNC(makeitem2) {
 	else
 		m = map_mapname2mapid(mapname);
 	
+	struct item_data *id;
+
 	if ((id = itemdb_search(nameid))) {
-		char iden, ref, attr;
-		memset(&item_tmp,0,sizeof(item_tmp));
+		struct item item_tmp = {};
+
 		item_tmp.nameid = nameid;
 
-		iden = (char)script_getnum(st,7);
-		ref = (char)script_getnum(st,8);
-		attr = (char)script_getnum(st,9);		
+		char iden = (char)script_getnum(st,7);
+		char ref = (char)script_getnum(st,8);
+		char attr = (char)script_getnum(st,9);		
 
 		if (id->type==IT_WEAPON || id->type==IT_ARMOR || id->type==IT_SHADOWGEAR) {
-			if(ref > MAX_REFINE) ref = MAX_REFINE;
+			if(ref > MAX_REFINE)
+				ref = MAX_REFINE;
 		}
 		else if (id->type==IT_PETEGG) {
 			iden = 1;
@@ -8107,7 +8180,7 @@ BUILDIN_FUNC(makeitem2) {
 			iden = 1;
 			ref = attr = 0;
 		}
-		
+
 		item_tmp.identify = iden;
 		item_tmp.refine = ref;
 		item_tmp.attribute = attr;
@@ -8116,14 +8189,29 @@ BUILDIN_FUNC(makeitem2) {
 		item_tmp.card[2] = script_getnum(st,12);
 		item_tmp.card[3] = script_getnum(st,13);
 
-		if (funcname[strlen(funcname)-1] == '3') {
-			int res = script_getitem_randomoption(st, nullptr, &item_tmp, funcname, 14);
-			if (res != SCRIPT_CMD_SUCCESS)
-				return res;
+		bool canShowEffect = false;
 
-			if (script_hasdata(st, 17)) {
-				if (script_getnum(st, 17) != 0)
-					canShowEffect = script_getnum(st, 17) != 0;
+		if (funcname[strlen(funcname)-1] == '3' || funcname[strlen(funcname)-1] == '4') {
+			int offset = 14;
+
+			if (funcname[strlen(funcname)-1] == '4') {
+				offset = 15;
+
+				int grade = script_getnum(st, 14);
+				if (grade < ENCHANTGRADE_NONE || grade > MAX_ENCHANTGRADE) {
+					ShowError( "buildin_%s: Not a correct grade! Grade=%d\n", funcname, grade );
+					return SCRIPT_CMD_FAILURE;
+				}
+				item_tmp.enchantgrade = static_cast<e_enchantgrade>(grade);
+			}
+
+			bool res = script_getitem_randomoption(st, nullptr, &item_tmp, funcname, offset);
+			if (!res)
+				return SCRIPT_CMD_FAILURE;
+
+			if (script_hasdata(st, offset+3)) {
+				if (script_getnum(st, offset+3) != 0)
+					canShowEffect = script_getnum(st, offset+3) != 0;
 			}
 		}
 		else {
@@ -8273,7 +8361,7 @@ static bool buildin_delitem_search(struct map_session_data* sd, struct item* it,
 
 			if( exact_match )
 			{
-				if( (exact_match&0x1) && ( itm->identify != it->identify || itm->attribute != it->attribute || memcmp(itm->card, it->card, sizeof(itm->card)) ) )
+				if( (exact_match&0x1) && ( itm->identify != it->identify || itm->attribute != it->attribute || itm->enchantgrade != it->enchantgrade || memcmp(itm->card, it->card, sizeof(itm->card)) ) )
 				{// not matching exact attributes
 					continue;
 				}
@@ -8328,7 +8416,7 @@ static bool buildin_delitem_search(struct map_session_data* sd, struct item* it,
 
 			if( exact_match )
 			{
-				if( (exact_match&0x1) && ( itm->refine != it->refine || itm->identify != it->identify || itm->attribute != it->attribute || memcmp(itm->card, it->card, sizeof(itm->card)) ) )
+				if( (exact_match&0x1) && ( itm->refine != it->refine || itm->identify != it->identify || itm->attribute != it->attribute || itm->enchantgrade != it->enchantgrade || memcmp(itm->card, it->card, sizeof(itm->card)) ) )
 				{// not matching attributes
 					continue;
 				}
@@ -8460,14 +8548,14 @@ BUILDIN_FUNC(delitem)
 /// guildstoragedelitem2 "<Item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>}
 /// delitem3 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
 /// delitem3 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
+/// delitem4 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
+/// delitem4 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<grade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
 BUILDIN_FUNC(delitem2)
 {
 	TBL_PC *sd;
-	struct item it;
 	uint8 loc = 0;
 	char* command = (char*)script_getfuncname(st);
 	int aid_pos = 11;
-	uint8 flag = 0x1;
 
 	if(!strncmp(command, "cart", 4))
 		loc = TABLE_CART;
@@ -8478,6 +8566,8 @@ BUILDIN_FUNC(delitem2)
 
 	if (command[strlen(command)-1] == '3')
 		aid_pos = 14;
+	else if (command[strlen(command)-1] == '4')
+		aid_pos = 15;
 
 	if( !script_accid2sd(aid_pos,sd) ){
 		// In any case cancel script execution
@@ -8499,7 +8589,7 @@ BUILDIN_FUNC(delitem2)
 		}
 	}
 
-	memset(&it, 0, sizeof(it));
+	struct item it = {};
 
 	if( script_isstring(st, 2) )
 	{
@@ -8533,9 +8623,24 @@ BUILDIN_FUNC(delitem2)
 	it.card[2]=script_getnum(st,9);
 	it.card[3]=script_getnum(st,10);
 
-	if (command[strlen(command)-1] == '3') {
-		int res = script_getitem_randomoption(st, sd, &it, command, 11);
-		if (res != SCRIPT_CMD_SUCCESS)
+	uint8 flag = 0x1;
+
+	if (command[strlen(command)-1] == '3' || command[strlen(command)-1] == '4') {
+		int offset = 11;
+
+		if (command[strlen(command)-1] == '4') {
+			offset = 12;
+
+			int grade = script_getnum(st, 11);
+			if (grade < ENCHANTGRADE_NONE || grade > MAX_ENCHANTGRADE) {
+				ShowError( "buildin_%s: Not a correct grade! Grade=%d\n", command, grade );
+				return SCRIPT_CMD_FAILURE;
+			}
+			it.enchantgrade = static_cast<e_enchantgrade>(grade);
+		}
+		
+		bool res = script_getitem_randomoption(st, sd, &it, command, offset);
+		if (!res)
 			return SCRIPT_CMD_FAILURE;
 		flag |= 0x2;
 	}
@@ -26762,6 +26867,14 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(delitem2,"delitem3","viiiiiiiirrr?"),
 	BUILDIN_DEF2(countitem,"countitem3","viiiiiiirrr?"),
 
+	// Grade Extension
+	BUILDIN_DEF2(getitem2,"getitem4","viiiiiiiiirrr?"),
+	BUILDIN_DEF2(getitem2,"getitembound4","viiiiiiiiiirrr?"),
+	BUILDIN_DEF2(rentitem2,"rentitem4","viiiiiiiiirrr?"),
+	BUILDIN_DEF2(makeitem2,"makeitem4","visiiiiiiiiiirrr?"),
+	BUILDIN_DEF2(delitem2,"delitem4","viiiiiiiiirrr?"),
+	BUILDIN_DEF2(countitem,"countitem4","viiiiiiiirrr?"),
+
 	// Achievement System
 	BUILDIN_DEF(achievementinfo,"ii?"),
 	BUILDIN_DEF(achievementadd,"i?"),
@@ -26793,6 +26906,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(rentalcountitem, "v?"),
 	BUILDIN_DEF2(rentalcountitem, "rentalcountitem2", "viiiiiii?"),
 	BUILDIN_DEF2(rentalcountitem, "rentalcountitem3", "viiiiiiirrr?"),
+	BUILDIN_DEF2(rentalcountitem, "rentalcountitem4", "viiiiiiiirrr?"),
 
 	BUILDIN_DEF(getenchantgrade, "??"),
 
