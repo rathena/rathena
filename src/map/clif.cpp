@@ -11092,6 +11092,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			}
 		}
 #endif
+		clif_reputation_list( *sd );
 
 		if (sd->guild && battle_config.guild_notice_changemap == 1){
 			clif_guild_notice(sd); // Displays after VIP
@@ -23800,6 +23801,48 @@ void clif_parse_enchantgrade_close( int fd, struct map_session_data* sd ){
 	nullpo_retv( sd );
 
 	sd->state.enchantgrade_open = false;
+#endif
+}
+
+void clif_reputation_type( struct map_session_data& sd, int64 type, int64 points ){
+#if PACKETVER_RE_NUM >= 20211103
+	struct PACKET_ZC_REPUTE_INFO* p = (struct PACKET_ZC_REPUTE_INFO*)packet_buffer;
+
+	p->packetType = HEADER_ZC_REPUTE_INFO;
+	p->packetLength = sizeof( struct PACKET_ZC_REPUTE_INFO ) + sizeof( struct PACKET_ZC_REPUTE_INFO_sub );
+	p->success = true;
+
+	struct PACKET_ZC_REPUTE_INFO_sub* entry = &p->list[0];
+
+	entry->type = type;
+	entry->points = points;
+
+	clif_send( p, p->packetLength, &sd.bl, SELF );
+#endif
+}
+
+void clif_reputation_list( struct map_session_data& sd ){
+#if PACKETVER_RE_NUM >= 20211103
+	struct PACKET_ZC_REPUTE_INFO* p = (struct PACKET_ZC_REPUTE_INFO*)packet_buffer;
+
+	p->packetType = HEADER_ZC_REPUTE_INFO;
+	p->packetLength = sizeof( struct PACKET_ZC_REPUTE_INFO );
+	p->success = true;
+
+	size_t index = 0;
+	for( const auto& entry : reputation_db ){
+		std::shared_ptr<s_reputation> reputation = entry.second;
+
+		struct PACKET_ZC_REPUTE_INFO_sub* list_entry = &p->list[index];
+
+		list_entry->type = reputation->id;
+		list_entry->points = pc_readreg2( &sd, reputation->variable.c_str() );
+
+		p->packetLength += sizeof( *list_entry );
+		index++;
+	}
+
+	clif_send( p, p->packetLength, &sd.bl, SELF );
 #endif
 }
 

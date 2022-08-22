@@ -8176,6 +8176,20 @@ This command requires packet version 2020-07-24 or newer.
 
 ---------------------------------------
 
+*set_reputation_points(<type>,<points>{,<char id>})
+
+Sets the reputation points via <points> for reputation group <type> for the attached player or the given character ID.
+<type> is the client side index as stored in the Id field of the reputation.yml database files.
+
+---------------------------------------
+
+*get_reputation_points(<type>{,<char id>})
+
+Gets the reputation points for reputation group <type> for the attached player or the given character ID.
+<type> is the client side index as stored in the Id field of the reputation.yml database files.
+
+---------------------------------------
+
 *item_reform({<item id>{,<char id>}})
 *item_reform({<"item name">{,<char id>}})
 
