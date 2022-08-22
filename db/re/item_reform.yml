@@ -27,8 +27,8 @@
 #     - BaseItem               Item that can be reformed.
 #       MinimumRefine          Minimum refine level of the required items. (Default: 0)
 #       MaximumRefine          Maximum refine level of the required items. (Default: MAX_REFINE)
-#       RequiredRandomOptions  How many random options have to be in the item? (Default: 0)
-#       CardsAllowed           Are cards allowed in the target item? (Default: yes)
+#       RequiredRandomOptions  Amount of random options have to be in the item. (Default: 0)
+#       CardsAllowed           Allow cards in the target item. (Default: true)
 #       Materials:             Additional items needed for the reformation. (Default: none)
 #         - Material           Material item that is needed.
 #           Amount             Amount of the material item that is needed. (Default: 1)

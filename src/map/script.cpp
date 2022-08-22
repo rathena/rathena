@@ -26106,7 +26106,6 @@ BUILDIN_FUNC(item_reform){
 	if( script_hasdata( st, 2 ) ){
 		if( script_isstring( st, 2 ) ){
 			const char* item_name = script_getstr( st, 2 );
-
 			std::shared_ptr<item_data> item = item_db.searchname( item_name );
 
 			if( item == nullptr ){
@@ -26130,7 +26129,7 @@ BUILDIN_FUNC(item_reform){
 		}
 
 		if( sd->inventory_data[sd->itemindex]->flag.delay_consume == 0 ){
-			ShowError( "buildin_item_reform: Called from item %u, which is not a consumed delayed.\n", sd->itemid );
+			ShowError( "buildin_item_reform: Called from item %u, which is not a DelayConsume type.\n", sd->itemid );
 			return SCRIPT_CMD_FAILURE;
 		}
 
@@ -26138,7 +26137,7 @@ BUILDIN_FUNC(item_reform){
 	}
 
 	if( !item_reform_db.exists( item_id ) ){
-		ShowError( "buildin_item_reform: Item ID %u is not in Item Reform database.\n", item_id );
+		ShowError( "buildin_item_reform: Item ID %u is not in the Item Reform database.\n", item_id );
 		return SCRIPT_CMD_FAILURE;
 	}
 
