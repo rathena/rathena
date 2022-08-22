@@ -30,8 +30,8 @@
 #ifndef DEPRECATED_COMPILER_SUPPORT
 	#if defined( _MSC_VER ) && _MSC_VER < 1900
 		#error "Visual Studio versions older than Visual Studio 2015 are not officially supported anymore"
-	#elif defined( __clang__ ) && __clang_major__ < 4 && !( __clang_major__ == 3 && __clang_minor__ >= 7 )
-		#error "clang versions older than clang 3.7 are not officially supported anymore"
+	#elif defined( __clang__ ) && __clang_major__ < 6
+		#error "clang versions older than clang 6.0 are not officially supported anymore"
 	#elif !defined( __clang__ ) && defined( __GNUC__ ) && __GNUC__ < 5
 		#error "GCC versions older than GCC 5 are not officially supported anymore"
 	#endif
