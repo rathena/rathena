@@ -466,6 +466,30 @@ Body:
            Amount: 100
         ResultItem: MeawFoxtail_LT
         ChangeRefine: -5
+#     - BaseItem: Up_Freedom_Stick
+#       MinimumRefine: 9
+#       CardsAllowed: false
+#       Materials:
+#        - Material: Bio_Test_Fragment
+#          Amount: 100
+#        - Material: Bio_Reseearch_Docu
+#          Amount: 50
+#        - Material: Weapon_Stone_1
+#          Amount: 100
+#       ResultItem: Freedom_Stick_LT
+#       ChangeRefine: -5
+#     - BaseItem: Up_Blessed_Knife
+#       MinimumRefine: 9
+#       CardsAllowed: false
+#       Materials:
+#        - Material: Bio_Test_Fragment
+#          Amount: 100
+#        - Material: Bio_Reseearch_Docu
+#          Amount: 50
+#        - Material: Weapon_Stone_1
+#          Amount: 100
+#       ResultItem: Blessed_Knife_LT
+#       ChangeRefine: -5
   - Item: Consecrate_Weapon_2
     BaseItems:
       - BaseItem: Adulter_F_T_Sword
@@ -1103,6 +1127,50 @@ Body:
            Amount: 14
         ResultItem: Ray_Knuckle_LT
         ChangeRefine: 1
+# - Item: Barmund_Plain_Reform
+#   BaseItems:
+#     - BaseItem: Barmund_Plain_Armor
+#       MinimumRefine: 7
+#       Materials:
+#        - Material: Armor_Stone_4
+#          Amount: 100
+#        - Material: Barmund_Plain_Essence
+#          Amount: 50
+#        - Material: Zelunium
+#          Amount: 300
+#        - Material: Plain_Barmund_Rune2
+#          Amount: 20
+#        - Material: BarMealTicket
+#          Amount: 500
+#       ResultItem: Plain_Rune_Armor
+#     - BaseItem: Barmund_Plain_Boots
+#       MinimumRefine: 7
+#       Materials:
+#        - Material: Armor_Stone_4
+#          Amount: 100
+#        - Material: Barmund_Plain_Essence
+#          Amount: 50
+#        - Material: Zelunium
+#          Amount: 300
+#        - Material: Plain_Barmund_Rune2
+#          Amount: 20
+#        - Material: BarMealTicket
+#          Amount: 500
+#       ResultItem: Plain_Rune_Boots
+#     - BaseItem: Barmund_Plain_Hood
+#       MinimumRefine: 7
+#       Materials:
+#        - Material: Armor_Stone_4
+#          Amount: 100
+#        - Material: Barmund_Plain_Essence
+#          Amount: 50
+#        - Material: Zelunium
+#          Amount: 300
+#        - Material: Plain_Barmund_Rune2
+#          Amount: 20
+#        - Material: BarMealTicket
+#          Amount: 500
+#       ResultItem: Plain_Rune_Hood
   - Item: Vivatus_Weapon_Hammer
     BaseItems:
       - BaseItem: Vivatus_F_M_Book
@@ -1839,6 +1907,304 @@ Body:
            Amount: 150
         ResultItem: MeawFoxtail_LT
         ChangeRefine: -1
+#     - BaseItem: Up_Freedom_Stick
+#       MinimumRefine: 9
+#       CardsAllowed: false
+#       Materials:
+#        - Material: Weapon_Stone_2
+#          Amount: 100
+#        - Material: Bio_Test_Fragment
+#          Amount: 300
+#        - Material: Bio_Reseearch_Docu
+#          Amount: 150
+#       ResultItem: Freedom_Stick_LT
+#       ChangeRefine: -1
+#     - BaseItem: Up_Blessed_Knife
+#       MinimumRefine: 9
+#       CardsAllowed: false
+#       Materials:
+#        - Material: Weapon_Stone_2
+#          Amount: 100
+#        - Material: Bio_Test_Fragment
+#          Amount: 300
+#        - Material: Bio_Reseearch_Docu
+#          Amount: 150
+#       ResultItem: Blessed_Knife_LT
+#       ChangeRefine: -1
+# - Item: Helm_Of_Faith_Hammer
+#   BaseItems:
+#     - BaseItem: Viva_Adul_Hat_WL1
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_WL1
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_WL2
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_WL2
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_SR1
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_SR1
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_SR2
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_SR2
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_AB1
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_AB1
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_AB2
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_AB2
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_SC1
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_SC1
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_SC2
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_SC2
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_RA1
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_RA1
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_RA2
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_RA2
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_LG1
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_LG1
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_LG2
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_LG2
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_GC1
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_GC1
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_GC2
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_GC2
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_SO1
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_SO1
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_SO2
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_SO2
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_RK1
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_RK1
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_RK2
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_RK2
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_WM1
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_WM1
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_WM2
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_WM2
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_NC1
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_NC1
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_NC2
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_NC2
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_GN1
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_GN1
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_GN2
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_GN2
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_KO1
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_KO1
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_KO2
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_KO2
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_RL1
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_RL1
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_RL2
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_RL2
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_SP1
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_SP1
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_SP2
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_SP2
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_SJ1
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_SJ1
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_SJ2
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_SJ2
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_SU1
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_SU1
+#       ChangeRefine: 1
+#     - BaseItem: Viva_Adul_Hat_SU2
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Viva_Adul_Hat_SU2
+#       ChangeRefine: 1
   - Item: Hero_Weapon_Up_Box_6
     BaseItems:
       - BaseItem: Up_Humma_Clear
@@ -1861,6 +2227,54 @@ Body:
         ResultItem: OneSkyOneSun_LT
       - BaseItem: Up_SoulWeight
         ResultItem: SoulWeight_LT
+#     - BaseItem: Up_Freedom_Stick
+#       ResultItem: Freedom_Stick_LT
+#     - BaseItem: Up_Blessed_Knife
+#       ResultItem: Blessed_Knife_LT
+# - Item: Barmund_Flame_Reform
+#   BaseItems:
+#     - BaseItem: Barmund_Flame_Armor
+#       MinimumRefine: 7
+#       Materials:
+#        - Material: Armor_Stone_4
+#          Amount: 100
+#        - Material: Zelunium
+#          Amount: 300
+#        - Material: Barmund_Flame_Essence
+#          Amount: 50
+#        - Material: Flame_Barmund_Rune2
+#          Amount: 20
+#        - Material: BarMealTicket
+#          Amount: 500
+#       ResultItem: Flame_Rune_Armor
+#     - BaseItem: Barmund_Flame_Boots
+#       MinimumRefine: 7
+#       Materials:
+#        - Material: Armor_Stone_4
+#          Amount: 100
+#        - Material: Zelunium
+#          Amount: 300
+#        - Material: Barmund_Flame_Essence
+#          Amount: 50
+#        - Material: Flame_Barmund_Rune2
+#          Amount: 20
+#        - Material: BarMealTicket
+#          Amount: 500
+#       ResultItem: Flame_Rune_Boots
+#     - BaseItem: Barmund_Flame_Hood
+#       MinimumRefine: 7
+#       Materials:
+#        - Material: Armor_Stone_4
+#          Amount: 100
+#        - Material: Zelunium
+#          Amount: 300
+#        - Material: Barmund_Flame_Essence
+#          Amount: 50
+#        - Material: Flame_Barmund_Rune2
+#          Amount: 20
+#        - Material: BarMealTicket
+#          Amount: 500
+#       ResultItem: Flame_Rune_Hood
   - Item: Adulter_Weapon_Up_Box
     BaseItems:
       - BaseItem: Adulter_F_M_Book
@@ -2058,6 +2472,152 @@ Body:
          - Material: Ep18_Amethyst_Fragment
            Amount: 400
         ResultItem: Vivatus_F_Shotgun
+# - Item: OS_Weapon_Hammer
+#   BaseItems:
+#     - BaseItem: Beam_Claymore_AD
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: EP17_1_EVT39
+#          Amount: 30
+#        - Material: Zelunium
+#          Amount: 30
+#       ResultItem: Beam_Claymore_AD
+#       ChangeRefine: 1
+#     - BaseItem: Meuchler_AD
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: EP17_1_EVT39
+#          Amount: 30
+#        - Material: Zelunium
+#          Amount: 30
+#       ResultItem: Meuchler_AD
+#       ChangeRefine: 1
+#     - BaseItem: Blasti_AD
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: EP17_1_EVT39
+#          Amount: 30
+#        - Material: Zelunium
+#          Amount: 30
+#       ResultItem: Blasti_AD
+#       ChangeRefine: 1
+#     - BaseItem: Virtual_Bow_AD
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: EP17_1_EVT39
+#          Amount: 30
+#        - Material: Zelunium
+#          Amount: 30
+#       ResultItem: Virtual_Bow_AD
+#       ChangeRefine: 1
+#     - BaseItem: MH_P89_AD
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: EP17_1_EVT39
+#          Amount: 30
+#        - Material: Zelunium
+#          Amount: 30
+#       ResultItem: MH_P89_AD
+#       ChangeRefine: 1
+#     - BaseItem: AC_B44_AD
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: EP17_1_EVT39
+#          Amount: 30
+#        - Material: Zelunium
+#          Amount: 30
+#       ResultItem: AC_B44_AD
+#       ChangeRefine: 1
+#     - BaseItem: HR_S55_AD
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: EP17_1_EVT39
+#          Amount: 30
+#        - Material: Zelunium
+#          Amount: 30
+#       ResultItem: HR_S55_AD
+#       ChangeRefine: 1
+#     - BaseItem: Burning_Knuckle_AD
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: EP17_1_EVT39
+#          Amount: 30
+#        - Material: Zelunium
+#          Amount: 30
+#       ResultItem: Burning_Knuckle_AD
+#       ChangeRefine: 1
+#     - BaseItem: Cannon_Rapier_AD
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: EP17_1_EVT39
+#          Amount: 30
+#        - Material: Zelunium
+#          Amount: 30
+#       ResultItem: Cannon_Rapier_AD
+#       ChangeRefine: 1
+#     - BaseItem: Saphir_Hall_AD
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: EP17_1_EVT39
+#          Amount: 30
+#        - Material: Zelunium
+#          Amount: 30
+#       ResultItem: Saphir_Hall_AD
+#       ChangeRefine: 1
+#     - BaseItem: Ultio_Spes_AD
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: EP17_1_EVT39
+#          Amount: 30
+#        - Material: Zelunium
+#          Amount: 30
+#       ResultItem: Ultio_Spes_AD
+#       ChangeRefine: 1
+#     - BaseItem: Rutilus_Stick_AD
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: EP17_1_EVT39
+#          Amount: 30
+#        - Material: Zelunium
+#          Amount: 30
+#       ResultItem: Rutilus_Stick_AD
+#       ChangeRefine: 1
+#     - BaseItem: ElectricFox_AD
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: EP17_1_EVT39
+#          Amount: 30
+#        - Material: Zelunium
+#          Amount: 30
+#       ResultItem: ElectricFox_AD
+#       ChangeRefine: 1
+#     - BaseItem: Circuit_Board_AD
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: EP17_1_EVT39
+#          Amount: 30
+#        - Material: Zelunium
+#          Amount: 30
+#       ResultItem: Circuit_Board_AD
+#       ChangeRefine: 1
+#     - BaseItem: Kuroiro_AD
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: EP17_1_EVT39
+#          Amount: 30
+#        - Material: Zelunium
+#          Amount: 30
+#       ResultItem: Kuroiro_AD
+#       ChangeRefine: 1
+#     - BaseItem: Boost_Lance_AD
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: EP17_1_EVT39
+#          Amount: 30
+#        - Material: Zelunium
+#          Amount: 30
+#       ResultItem: Boost_Lance_AD
+#       ChangeRefine: 1
   - Item: Thanos_W_Reform_2
     BaseItems:
       - BaseItem: Thanos_Sword
@@ -2177,6 +2737,50 @@ Body:
            Amount: 300
         ResultItem: Thanos_Knuckle_AD
         ChangeRefine: -1
+# - Item: Barmund_Death_Reform
+#   BaseItems:
+#     - BaseItem: Barmund_Death_Armor
+#       MinimumRefine: 7
+#       Materials:
+#        - Material: Armor_Stone_4
+#          Amount: 100
+#        - Material: Zelunium
+#          Amount: 300
+#        - Material: Barmund_Death_Essence
+#          Amount: 50
+#        - Material: Death_Barmund_Rune2
+#          Amount: 20
+#        - Material: BarMealTicket
+#          Amount: 500
+#       ResultItem: Death_Rune_Armor
+#     - BaseItem: Barmund_Death_Boots
+#       MinimumRefine: 7
+#       Materials:
+#        - Material: Armor_Stone_4
+#          Amount: 100
+#        - Material: Zelunium
+#          Amount: 300
+#        - Material: Barmund_Death_Essence
+#          Amount: 50
+#        - Material: Death_Barmund_Rune2
+#          Amount: 20
+#        - Material: BarMealTicket
+#          Amount: 500
+#       ResultItem: Death_Rune_Boots
+#     - BaseItem: Barmund_Death_Hood
+#       MinimumRefine: 7
+#       Materials:
+#        - Material: Armor_Stone_4
+#          Amount: 100
+#        - Material: Zelunium
+#          Amount: 300
+#        - Material: Barmund_Death_Essence
+#          Amount: 50
+#        - Material: Death_Barmund_Rune2
+#          Amount: 20
+#        - Material: BarMealTicket
+#          Amount: 500
+#       ResultItem: Death_Rune_Hood
   - Item: Poenitentia_Hammer
     BaseItems:
       - BaseItem: Poenitentia_Gladius
@@ -2585,6 +3189,115 @@ Body:
         ResultItem: Blue_Gemstone
         ChangeRefine: 1
         #RandomOptionGroup: BP # TODO: translate to our group names
+# - Item: Barmund_Ice_Reform
+#   BaseItems:
+#     - BaseItem: Barmund_Ice_Armor
+#       MinimumRefine: 7
+#       Materials:
+#        - Material: Armor_Stone_4
+#          Amount: 100
+#        - Material: Barmund_Ice_Essence
+#          Amount: 50
+#        - Material: BarMealTicket
+#          Amount: 500
+#        - Material: Zelunium
+#          Amount: 300
+#        - Material: Ice_Barmund_Rune2
+#          Amount: 20
+#       ResultItem: Ice_Rune_Armor
+#     - BaseItem: Barmund_Ice_Boots
+#       MinimumRefine: 7
+#       Materials:
+#        - Material: Armor_Stone_4
+#          Amount: 100
+#        - Material: Barmund_Ice_Essence
+#          Amount: 50
+#        - Material: BarMealTicket
+#          Amount: 500
+#        - Material: Zelunium
+#          Amount: 300
+#        - Material: Ice_Barmund_Rune2
+#          Amount: 20
+#       ResultItem: Ice_Rune_Boots
+#     - BaseItem: Barmund_Ice_Hood
+#       MinimumRefine: 7
+#       Materials:
+#        - Material: Armor_Stone_4
+#          Amount: 100
+#        - Material: Barmund_Ice_Essence
+#          Amount: 50
+#        - Material: BarMealTicket
+#          Amount: 500
+#        - Material: Zelunium
+#          Amount: 300
+#        - Material: Ice_Barmund_Rune2
+#          Amount: 20
+#       ResultItem: Ice_Rune_Hood
+# - Item: OS_Helm_Hammer
+#   BaseItems:
+#     - BaseItem: Sagittarius_DiademK_LT
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Shadowdecon
+#          Amount: 30
+#        - Material: EP17_1_EVT39
+#          Amount: 30
+#       ResultItem: Sagittarius_DiademK_LT
+#       ChangeRefine: 1
+#     - BaseItem: Scorpio_Diadem_K_LT
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Shadowdecon
+#          Amount: 30
+#        - Material: EP17_1_EVT39
+#          Amount: 30
+#       ResultItem: Scorpio_Diadem_K_LT
+#       ChangeRefine: 1
+#     - BaseItem: Large_Sorcerer_Crown_LT
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Shadowdecon
+#          Amount: 30
+#        - Material: EP17_1_EVT39
+#          Amount: 30
+#       ResultItem: Large_Sorcerer_Crown_LT
+#       ChangeRefine: 1
+#     - BaseItem: Stripe_Hat_LT
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Shadowdecon
+#          Amount: 30
+#        - Material: EP17_1_EVT39
+#          Amount: 30
+#       ResultItem: Stripe_Hat_LT
+#       ChangeRefine: 1
+#     - BaseItem: Phantom_Cap_LT
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Shadowdecon
+#          Amount: 30
+#        - Material: EP17_1_EVT39
+#          Amount: 30
+#       ResultItem: Phantom_Cap_LT
+#       ChangeRefine: 1
+#     - BaseItem: Ignis_CapK_LT
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Shadowdecon
+#          Amount: 30
+#        - Material: EP17_1_EVT39
+#          Amount: 30
+#       ResultItem: Ignis_CapK_LT
+#       ChangeRefine: 1
+#     - BaseItem: Clock_Casket_RD_LT
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Shadowdecon
+#          Amount: 30
+#        - Material: EP17_1_EVT39
+#          Amount: 30
+#       ResultItem: Clock_Casket_RD_LT
+#       ChangeRefine: 1
   - Item: Thanos_W_Reform_1
     BaseItems:
       - BaseItem: Thanos_Sword
@@ -2852,6 +3565,300 @@ Body:
            Amount: 100
         ResultItem: Baksojin_Hat_LT
         ChangeRefine: -5
+#     - BaseItem: Sagittarius_DiademK
+#       MinimumRefine: 9
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 100
+#        - Material: Armor_Stone_1
+#          Amount: 100
+#        - Material: EP17_1_EVT39
+#          Amount: 20
+#       ResultItem: Sagittarius_DiademK_LT
+#       ChangeRefine: -5
+#     - BaseItem: Scorpio_Diadem_K
+#       MinimumRefine: 9
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 100
+#        - Material: Armor_Stone_1
+#          Amount: 100
+#        - Material: EP17_1_EVT39
+#          Amount: 20
+#       ResultItem: Scorpio_Diadem_K_LT
+#       ChangeRefine: -5
+#     - BaseItem: Large_Sorcerer_Crown
+#       MinimumRefine: 9
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 100
+#        - Material: Armor_Stone_1
+#          Amount: 100
+#        - Material: EP17_1_EVT39
+#          Amount: 20
+#       ResultItem: Large_Sorcerer_Crown_LT
+#       ChangeRefine: -5
+#     - BaseItem: Stripe_Hat
+#       MinimumRefine: 9
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 100
+#        - Material: Armor_Stone_1
+#          Amount: 100
+#        - Material: EP17_1_EVT39
+#          Amount: 20
+#       ResultItem: Stripe_Hat_LT
+#       ChangeRefine: -5
+#     - BaseItem: Phantom_Cap
+#       MinimumRefine: 9
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 100
+#        - Material: Armor_Stone_1
+#          Amount: 100
+#        - Material: EP17_1_EVT39
+#          Amount: 20
+#       ResultItem: Phantom_Cap_LT
+#       ChangeRefine: -5
+#     - BaseItem: Ignis_CapK
+#       MinimumRefine: 9
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 100
+#        - Material: Armor_Stone_1
+#          Amount: 100
+#        - Material: EP17_1_EVT39
+#          Amount: 20
+#       ResultItem: Ignis_CapK_LT
+#       ChangeRefine: -5
+#     - BaseItem: Clock_Casket_RD
+#       MinimumRefine: 9
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 100
+#        - Material: Armor_Stone_1
+#          Amount: 100
+#        - Material: EP17_1_EVT39
+#          Amount: 20
+#       ResultItem: Clock_Casket_RD_LT
+#       ChangeRefine: -5
+# - Item: Clock_Tower_W_Hammer
+#   BaseItems:
+#     - BaseItem: Precision_Bow
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Precision_Bow
+#       ChangeRefine: 1
+#     - BaseItem: Precision_Fist
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Precision_Fist
+#       ChangeRefine: 1
+#     - BaseItem: Precision_Fuuma
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Precision_Fuuma
+#       ChangeRefine: 1
+#     - BaseItem: Precision_Gatling
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Precision_Gatling
+#       ChangeRefine: 1
+#     - BaseItem: Precision_Grenade
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Precision_Grenade
+#       ChangeRefine: 1
+#     - BaseItem: Precision_Lute
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Precision_Lute
+#       ChangeRefine: 1
+#     - BaseItem: Precision_Pistol
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Precision_Pistol
+#       ChangeRefine: 1
+#     - BaseItem: Precision_Rifle
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Precision_Rifle
+#       ChangeRefine: 1
+#     - BaseItem: Precision_Shotgun
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Precision_Shotgun
+#       ChangeRefine: 1
+#     - BaseItem: Precision_Whip
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Precision_Whip
+#       ChangeRefine: 1
+#     - BaseItem: Solid_Claymore
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Solid_Claymore
+#       ChangeRefine: 1
+#     - BaseItem: Solid_Dagger
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Solid_Dagger
+#       ChangeRefine: 1
+#     - BaseItem: Solid_Edge
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Solid_Edge
+#       ChangeRefine: 1
+#     - BaseItem: Solid_Manual
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Solid_Manual
+#       ChangeRefine: 1
+#     - BaseItem: Solid_Rod
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Solid_Rod
+#       ChangeRefine: 1
+#     - BaseItem: Solid_Spear
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Solid_Spear
+#       ChangeRefine: 1
+#     - BaseItem: Solid_Staff
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Solid_Staff
+#       ChangeRefine: 1
+#     - BaseItem: Solid_Wand
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Solid_Wand
+#       ChangeRefine: 1
+#     - BaseItem: Wicked_Axe
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Wicked_Axe
+#       ChangeRefine: 1
+#     - BaseItem: Wicked_Blade
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Wicked_Blade
+#       ChangeRefine: 1
+#     - BaseItem: Wicked_Book
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Wicked_Book
+#       ChangeRefine: 1
+#     - BaseItem: Wicked_Cross
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Wicked_Cross
+#       ChangeRefine: 1
+#     - BaseItem: Wicked_Dagger
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Wicked_Dagger
+#       ChangeRefine: 1
+#     - BaseItem: Wicked_Edge
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Wicked_Edge
+#       ChangeRefine: 1
+#     - BaseItem: Wicked_Katar
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Wicked_Katar
+#       ChangeRefine: 1
+#     - BaseItem: Wicked_Plant
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Wicked_Plant
+#       ChangeRefine: 1
   - Item: Thanos_Upgrade_Box
     BaseItems:
       - BaseItem: Thanos_Sword
@@ -3184,6 +4191,598 @@ Body:
            Amount: 14
         ResultItem: Barmund_Flame_Armor
         ChangeRefine: 1
+#     - BaseItem: Sagittarius_DiademK
+#       MinimumRefine: 9
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 300
+#        - Material: EP17_1_EVT39
+#          Amount: 60
+#        - Material: Armor_Stone_2
+#          Amount: 100
+#       ResultItem: Sagittarius_DiademK_LT
+#       ChangeRefine: -1
+#     - BaseItem: Scorpio_Diadem_K
+#       MinimumRefine: 9
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 300
+#        - Material: EP17_1_EVT39
+#          Amount: 60
+#        - Material: Armor_Stone_2
+#          Amount: 100
+#       ResultItem: Scorpio_Diadem_K_LT
+#       ChangeRefine: -1
+#     - BaseItem: Large_Sorcerer_Crown
+#       MinimumRefine: 9
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 300
+#        - Material: EP17_1_EVT39
+#          Amount: 60
+#        - Material: Armor_Stone_2
+#          Amount: 100
+#       ResultItem: Large_Sorcerer_Crown_LT
+#       ChangeRefine: -1
+#     - BaseItem: Stripe_Hat
+#       MinimumRefine: 9
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 300
+#        - Material: EP17_1_EVT39
+#          Amount: 60
+#        - Material: Armor_Stone_2
+#          Amount: 100
+#       ResultItem: Stripe_Hat_LT
+#       ChangeRefine: -1
+#     - BaseItem: Phantom_Cap
+#       MinimumRefine: 9
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 300
+#        - Material: EP17_1_EVT39
+#          Amount: 60
+#        - Material: Armor_Stone_2
+#          Amount: 100
+#       ResultItem: Phantom_Cap_LT
+#       ChangeRefine: -1
+#     - BaseItem: Ignis_CapK
+#       MinimumRefine: 9
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 300
+#        - Material: EP17_1_EVT39
+#          Amount: 60
+#        - Material: Armor_Stone_2
+#          Amount: 100
+#       ResultItem: Ignis_CapK_LT
+#       ChangeRefine: -1
+#     - BaseItem: Clock_Casket_RD
+#       MinimumRefine: 9
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 300
+#        - Material: EP17_1_EVT39
+#          Amount: 60
+#        - Material: Armor_Stone_2
+#          Amount: 100
+#       ResultItem: Clock_Casket_RD_LT
+#       ChangeRefine: -1
+# - Item: EP19_DGW_Refine
+#   BaseItems:
+#     - BaseItem: D_Glacier_T_Sword
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Ep19_Snow_Flower
+#          Amount: 40
+#        - Material: EP19_N_P_Crystal
+#          Amount: 10
+#        - Material: EP19_D_P_Crystal
+#          Amount: 10
+#       ResultItem: D_Glacier_T_Sword
+#       ChangeRefine: 1
+#     - BaseItem: D_Glacier_Katar
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Ep19_Snow_Flower
+#          Amount: 40
+#        - Material: EP19_N_P_Crystal
+#          Amount: 10
+#        - Material: EP19_D_P_Crystal
+#          Amount: 10
+#       ResultItem: D_Glacier_Katar
+#       ChangeRefine: 1
+#     - BaseItem: D_Glacier_T_Axe
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Ep19_Snow_Flower
+#          Amount: 40
+#        - Material: EP19_N_P_Crystal
+#          Amount: 10
+#        - Material: EP19_D_P_Crystal
+#          Amount: 10
+#       ResultItem: D_Glacier_T_Axe
+#       ChangeRefine: 1
+#     - BaseItem: D_Glacier_Lance
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Ep19_Snow_Flower
+#          Amount: 40
+#        - Material: EP19_N_P_Crystal
+#          Amount: 10
+#        - Material: EP19_D_P_Crystal
+#          Amount: 10
+#       ResultItem: D_Glacier_Lance
+#       ChangeRefine: 1
+#     - BaseItem: D_Glacier_Staff
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Ep19_Snow_Flower
+#          Amount: 40
+#        - Material: EP19_N_P_Crystal
+#          Amount: 10
+#        - Material: EP19_D_P_Crystal
+#          Amount: 10
+#       ResultItem: D_Glacier_Staff
+#       ChangeRefine: 1
+#     - BaseItem: D_Glacier_Humma
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Ep19_Snow_Flower
+#          Amount: 40
+#        - Material: EP19_N_P_Crystal
+#          Amount: 10
+#        - Material: EP19_D_P_Crystal
+#          Amount: 10
+#       ResultItem: D_Glacier_Humma
+#       ChangeRefine: 1
+#     - BaseItem: D_Glacier_Bow
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Ep19_Snow_Flower
+#          Amount: 40
+#        - Material: EP19_N_P_Crystal
+#          Amount: 10
+#        - Material: EP19_D_P_Crystal
+#          Amount: 10
+#       ResultItem: D_Glacier_Bow
+#       ChangeRefine: 1
+#     - BaseItem: D_Glacier_Revolver
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Ep19_Snow_Flower
+#          Amount: 40
+#        - Material: EP19_N_P_Crystal
+#          Amount: 10
+#        - Material: EP19_D_P_Crystal
+#          Amount: 10
+#       ResultItem: D_Glacier_Revolver
+#       ChangeRefine: 1
+#     - BaseItem: D_Glacier_Rifle
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Ep19_Snow_Flower
+#          Amount: 40
+#        - Material: EP19_N_P_Crystal
+#          Amount: 10
+#        - Material: EP19_D_P_Crystal
+#          Amount: 10
+#       ResultItem: D_Glacier_Rifle
+#       ChangeRefine: 1
+#     - BaseItem: D_Glacier_Shotgun
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Ep19_Snow_Flower
+#          Amount: 40
+#        - Material: EP19_N_P_Crystal
+#          Amount: 10
+#        - Material: EP19_D_P_Crystal
+#          Amount: 10
+#       ResultItem: D_Glacier_Shotgun
+#       ChangeRefine: 1
+#     - BaseItem: D_Glacier_Gatling
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Ep19_Snow_Flower
+#          Amount: 40
+#        - Material: EP19_N_P_Crystal
+#          Amount: 10
+#        - Material: EP19_D_P_Crystal
+#          Amount: 10
+#       ResultItem: D_Glacier_Gatling
+#       ChangeRefine: 1
+#     - BaseItem: D_Glacier_Launcher
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Ep19_Snow_Flower
+#          Amount: 40
+#        - Material: EP19_N_P_Crystal
+#          Amount: 10
+#        - Material: EP19_D_P_Crystal
+#          Amount: 10
+#       ResultItem: D_Glacier_Launcher
+#       ChangeRefine: 1
+#     - BaseItem: D_Glacier_Sword
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Ep19_Snow_Flower
+#          Amount: 40
+#        - Material: EP19_N_P_Crystal
+#          Amount: 10
+#        - Material: EP19_D_P_Crystal
+#          Amount: 10
+#       ResultItem: D_Glacier_Sword
+#       ChangeRefine: 1
+#     - BaseItem: D_Glacier_B_Sword
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Ep19_Snow_Flower
+#          Amount: 40
+#        - Material: EP19_N_P_Crystal
+#          Amount: 10
+#        - Material: EP19_D_P_Crystal
+#          Amount: 10
+#       ResultItem: D_Glacier_B_Sword
+#       ChangeRefine: 1
+#     - BaseItem: D_Glacier_R_Knife
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Ep19_Snow_Flower
+#          Amount: 40
+#        - Material: EP19_N_P_Crystal
+#          Amount: 10
+#        - Material: EP19_D_P_Crystal
+#          Amount: 10
+#       ResultItem: D_Glacier_R_Knife
+#       ChangeRefine: 1
+#     - BaseItem: D_Glacier_B_Knife
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Ep19_Snow_Flower
+#          Amount: 40
+#        - Material: EP19_N_P_Crystal
+#          Amount: 10
+#        - Material: EP19_D_P_Crystal
+#          Amount: 10
+#       ResultItem: D_Glacier_B_Knife
+#       ChangeRefine: 1
+#     - BaseItem: D_Glacier_Axe
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Ep19_Snow_Flower
+#          Amount: 40
+#        - Material: EP19_N_P_Crystal
+#          Amount: 10
+#        - Material: EP19_D_P_Crystal
+#          Amount: 10
+#       ResultItem: D_Glacier_Axe
+#       ChangeRefine: 1
+#     - BaseItem: D_Glacier_Spear
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Ep19_Snow_Flower
+#          Amount: 40
+#        - Material: EP19_N_P_Crystal
+#          Amount: 10
+#        - Material: EP19_D_P_Crystal
+#          Amount: 10
+#       ResultItem: D_Glacier_Spear
+#       ChangeRefine: 1
+#     - BaseItem: D_Glacier_Book
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Ep19_Snow_Flower
+#          Amount: 40
+#        - Material: EP19_N_P_Crystal
+#          Amount: 10
+#        - Material: EP19_D_P_Crystal
+#          Amount: 10
+#       ResultItem: D_Glacier_Book
+#       ChangeRefine: 1
+#     - BaseItem: D_Glacier_Wand
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Ep19_Snow_Flower
+#          Amount: 40
+#        - Material: EP19_N_P_Crystal
+#          Amount: 10
+#        - Material: EP19_D_P_Crystal
+#          Amount: 10
+#       ResultItem: D_Glacier_Wand
+#       ChangeRefine: 1
+#     - BaseItem: D_Glacier_Foxtail
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Ep19_Snow_Flower
+#          Amount: 40
+#        - Material: EP19_N_P_Crystal
+#          Amount: 10
+#        - Material: EP19_D_P_Crystal
+#          Amount: 10
+#       ResultItem: D_Glacier_Foxtail
+#       ChangeRefine: 1
+#     - BaseItem: D_Glacier_Knuckle
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Ep19_Snow_Flower
+#          Amount: 40
+#        - Material: EP19_N_P_Crystal
+#          Amount: 10
+#        - Material: EP19_D_P_Crystal
+#          Amount: 10
+#       ResultItem: D_Glacier_Knuckle
+#       ChangeRefine: 1
+#     - BaseItem: D_Glacier_Violin
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Ep19_Snow_Flower
+#          Amount: 40
+#        - Material: EP19_N_P_Crystal
+#          Amount: 10
+#        - Material: EP19_D_P_Crystal
+#          Amount: 10
+#       ResultItem: D_Glacier_Violin
+#       ChangeRefine: 1
+#     - BaseItem: D_Glacier_Whip
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Ep19_Snow_Flower
+#          Amount: 40
+#        - Material: EP19_N_P_Crystal
+#          Amount: 10
+#        - Material: EP19_D_P_Crystal
+#          Amount: 10
+#       ResultItem: D_Glacier_Whip
+#       ChangeRefine: 1
+#     - BaseItem: D_Glacier_Mace
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Ep19_Snow_Flower
+#          Amount: 40
+#        - Material: EP19_N_P_Crystal
+#          Amount: 10
+#        - Material: EP19_D_P_Crystal
+#          Amount: 10
+#       ResultItem: D_Glacier_Mace
+#       ChangeRefine: 1
+#     - BaseItem: D_Glacier_M_Mace
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Ep19_Snow_Flower
+#          Amount: 40
+#        - Material: EP19_N_P_Crystal
+#          Amount: 10
+#        - Material: EP19_D_P_Crystal
+#          Amount: 10
+#       ResultItem: D_Glacier_M_Mace
+#       ChangeRefine: 1
+# - Item: OS_Weapon_Reform
+#   BaseItems:
+#     - BaseItem: Beam_Claymore_OS
+#       MinimumRefine: 7
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 200
+#        - Material: EP17_1_EVT39
+#          Amount: 40
+#        - Material: Weapon_Stone_1
+#          Amount: 70
+#       ResultItem: Beam_Claymore_AD
+#       RandomOptionGroup: G0 # TODO: translate to our group names
+#     - BaseItem: Meuchler_OS
+#       MinimumRefine: 7
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 200
+#        - Material: EP17_1_EVT39
+#          Amount: 40
+#        - Material: Weapon_Stone_1
+#          Amount: 70
+#       ResultItem: Meuchler_AD
+#       RandomOptionGroup: G0 # TODO: translate to our group names
+#     - BaseItem: Blasti_OS
+#       MinimumRefine: 7
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 200
+#        - Material: EP17_1_EVT39
+#          Amount: 40
+#        - Material: Weapon_Stone_1
+#          Amount: 70
+#       ResultItem: Blasti_AD
+#       RandomOptionGroup: G0 # TODO: translate to our group names
+#     - BaseItem: Virtual_Bow_OS
+#       MinimumRefine: 7
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 200
+#        - Material: EP17_1_EVT39
+#          Amount: 40
+#        - Material: Weapon_Stone_1
+#          Amount: 70
+#       ResultItem: Virtual_Bow_AD
+#       RandomOptionGroup: G0 # TODO: translate to our group names
+#     - BaseItem: MH_P89_OS
+#       MinimumRefine: 7
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 200
+#        - Material: EP17_1_EVT39
+#          Amount: 40
+#        - Material: Weapon_Stone_1
+#          Amount: 70
+#       ResultItem: MH_P89_AD
+#       RandomOptionGroup: G0 # TODO: translate to our group names
+#     - BaseItem: AC_B44_OS
+#       MinimumRefine: 7
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 200
+#        - Material: EP17_1_EVT39
+#          Amount: 40
+#        - Material: Weapon_Stone_1
+#          Amount: 70
+#       ResultItem: AC_B44_AD
+#       RandomOptionGroup: G0 # TODO: translate to our group names
+#     - BaseItem: HR_S55_OS
+#       MinimumRefine: 7
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 200
+#        - Material: EP17_1_EVT39
+#          Amount: 40
+#        - Material: Weapon_Stone_1
+#          Amount: 70
+#       ResultItem: HR_S55_AD
+#       RandomOptionGroup: G0 # TODO: translate to our group names
+#     - BaseItem: Burning_Knuckle_OS
+#       MinimumRefine: 7
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 200
+#        - Material: EP17_1_EVT39
+#          Amount: 40
+#        - Material: Weapon_Stone_1
+#          Amount: 70
+#       ResultItem: Burning_Knuckle_AD
+#       RandomOptionGroup: G0 # TODO: translate to our group names
+#     - BaseItem: Cannon_Rapier_OS
+#       MinimumRefine: 7
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 200
+#        - Material: EP17_1_EVT39
+#          Amount: 40
+#        - Material: Weapon_Stone_1
+#          Amount: 70
+#       ResultItem: Cannon_Rapier_AD
+#       RandomOptionGroup: G0 # TODO: translate to our group names
+#     - BaseItem: Saphir_Hall_OS
+#       MinimumRefine: 7
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 200
+#        - Material: EP17_1_EVT39
+#          Amount: 40
+#        - Material: Weapon_Stone_1
+#          Amount: 70
+#       ResultItem: Saphir_Hall_AD
+#       RandomOptionGroup: G0 # TODO: translate to our group names
+#     - BaseItem: Ultio_Spes_OS
+#       MinimumRefine: 7
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 200
+#        - Material: EP17_1_EVT39
+#          Amount: 40
+#        - Material: Weapon_Stone_1
+#          Amount: 70
+#       ResultItem: Ultio_Spes_AD
+#       RandomOptionGroup: G0 # TODO: translate to our group names
+#     - BaseItem: Rutilus_Stick_OS
+#       MinimumRefine: 7
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 200
+#        - Material: EP17_1_EVT39
+#          Amount: 40
+#        - Material: Weapon_Stone_1
+#          Amount: 70
+#       ResultItem: Rutilus_Stick_AD
+#       RandomOptionGroup: G0 # TODO: translate to our group names
+#     - BaseItem: ElectricFox_OS
+#       MinimumRefine: 7
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 200
+#        - Material: EP17_1_EVT39
+#          Amount: 40
+#        - Material: Weapon_Stone_1
+#          Amount: 70
+#       ResultItem: ElectricFox_AD
+#       RandomOptionGroup: G0 # TODO: translate to our group names
+#     - BaseItem: Circuit_Board_OS
+#       MinimumRefine: 7
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 200
+#        - Material: EP17_1_EVT39
+#          Amount: 40
+#        - Material: Weapon_Stone_1
+#          Amount: 70
+#       ResultItem: Circuit_Board_AD
+#       RandomOptionGroup: G0 # TODO: translate to our group names
+#     - BaseItem: Kuroiro_OS
+#       MinimumRefine: 7
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 200
+#        - Material: EP17_1_EVT39
+#          Amount: 40
+#        - Material: Weapon_Stone_1
+#          Amount: 70
+#       ResultItem: Kuroiro_AD
+#       RandomOptionGroup: G0 # TODO: translate to our group names
+#     - BaseItem: Boost_Lance_OS
+#       MinimumRefine: 7
+#       CardsAllowed: false
+#       Materials:
+#        - Material: EP17_1_EVT02
+#          Amount: 200
+#        - Material: EP17_1_EVT39
+#          Amount: 40
+#        - Material: Weapon_Stone_1
+#          Amount: 70
+#       ResultItem: Boost_Lance_AD
+#       RandomOptionGroup: G0 # TODO: translate to our group names
   - Item: Hero_Weapon_Up_Box_5
     BaseItems:
       - BaseItem: Up_Blade_Katar
@@ -3542,6 +5141,18 @@ Body:
         Materials:
          - Material: Shadow_Exchange_Ticket
         ResultItem: S_KingbirdAnc_Weapon
+#     - BaseItem: S_EXP_Shield
+#       MaximumRefine: 10
+#       CardsAllowed: false
+#       Materials:
+#        - Material: Shadow_Exchange_Ticket
+#       ResultItem: S_EXP_Weapon
+#     - BaseItem: S_EXP_Weapon
+#       MaximumRefine: 10
+#       CardsAllowed: false
+#       Materials:
+#        - Material: Shadow_Exchange_Ticket
+#       ResultItem: S_EXP_Shield
   - Item: Consecrate_Weapon_1
     BaseItems:
       - BaseItem: Adulter_F_T_Sword
@@ -4211,6 +5822,22 @@ Body:
            Amount: 14
         ResultItem: SoulWeight_LT
         ChangeRefine: 1
+#     - BaseItem: Freedom_Stick_LT
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Freedom_Stick_LT
+#       ChangeRefine: 1
+#     - BaseItem: Blessed_Knife_LT
+#       MinimumRefine: 9
+#       MaximumRefine: 11
+#       Materials:
+#        - Material: Blacksmith_Blessing
+#          Amount: 14
+#       ResultItem: Blessed_Knife_LT
+#       ChangeRefine: 1
   - Item: Shadow_Changer_W_Shi
     BaseItems:
       - BaseItem: S_Hasty_Weapon
@@ -4735,6 +6362,16 @@ Body:
         CardsAllowed: false
         ResultItem: Great_Hero_Boots
         ChangeRefine: -2
+#     - BaseItem: Freedom_Stick
+#       MinimumRefine: 7
+#       CardsAllowed: false
+#       ResultItem: Up_Freedom_Stick
+#       ChangeRefine: -2
+#     - BaseItem: Blessed_Knife
+#       MinimumRefine: 7
+#       CardsAllowed: false
+#       ResultItem: Up_Blessed_Knife
+#       ChangeRefine: -2
   - Item: C_Weapon_Reform_3
     BaseItems:
       - BaseItem: Up_Saint_Hall
@@ -5227,3 +6864,31 @@ Body:
            Amount: 150
         ResultItem: MeawFoxtail_LT
         ChangeRefine: 1
+#     - BaseItem: Up_Freedom_Stick
+#       MinimumRefine: 9
+#       MaximumRefine: 19
+#       CardsAllowed: false
+#       Materials:
+#        - Material: M_Dimension_Essence
+#        - Material: Bio_Test_Fragment
+#          Amount: 300
+#        - Material: Weapon_Stone_3
+#          Amount: 100
+#        - Material: Bio_Reseearch_Docu
+#          Amount: 150
+#       ResultItem: Freedom_Stick_LT
+#       ChangeRefine: 1
+#     - BaseItem: Up_Blessed_Knife
+#       MinimumRefine: 9
+#       MaximumRefine: 19
+#       CardsAllowed: false
+#       Materials:
+#        - Material: M_Dimension_Essence
+#        - Material: Bio_Test_Fragment
+#          Amount: 300
+#        - Material: Weapon_Stone_3
+#          Amount: 100
+#        - Material: Bio_Reseearch_Docu
+#          Amount: 150
+#       ResultItem: Blessed_Knife_LT
+#       ChangeRefine: 1

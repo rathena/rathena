@@ -138884,7 +138884,7 @@ Body:
       if (.@r>=10)
          bonus bUseSPrate,-20;
   - Id: 400049
-    AegisName: aegis_400049
+    AegisName: Stripe_Hat
     Name: Stripe Hat
     Type: Armor
     View: 1728
