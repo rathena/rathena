@@ -7148,18 +7148,6 @@ static unsigned short status_calc_matk(struct block_list *bl, struct status_chan
 		matk += sc->data[SC_MOONLITSERENADE]->val3/100;
 	if (sc->data[SC_MTF_MATK])
 		matk += matk * sc->data[SC_MTF_MATK]->val1 / 100;
-	if(sc->data[SC_2011RWC_SCROLL])
-		matk += 30;
-	if (sc->data[SC_ALMIGHTY])
-		matk += 30;
-	if (sc->data[SC_ULTIMATECOOK])
-		matk += 30;
-	if (sc->data[SC_LIMIT_POWER_BOOSTER])
-		matk += sc->data[SC_LIMIT_POWER_BOOSTER]->val1;
-	if (sc->data[SC_MAGICCANDY])
-		matk += 30;
-	if (sc->data[SC_SKF_MATK])
-		matk += sc->data[SC_SKF_MATK]->val1;
 	if (sc->data[SC_SHRIMP])
 		matk += matk * sc->data[SC_SHRIMP]->val2 / 100;
 	if (sc->data[SC_VOLCANO])

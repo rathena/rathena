@@ -13321,7 +13321,7 @@ Body:
           - ArchbishopStone_Robe_
           - HighpriestStone_Bottom_
       - Combo:
-          - Soulreaper_Robe
+          - Soulreaper_Robe    # 29654
           - SoulLinkerStone_Top_
       - Combo:
           - aegis_310659
@@ -13381,7 +13381,7 @@ Body:
           - ShadowchaserStone_Robe2_
           - ShadowchasStone_Bottom2_
       - Combo:
-          - Staremperor_Robe
+          - Staremperor_Robe    # 29658
           - StarGladiatorStone_Bottom_
       - Combo:
           - KagerouStone_Robe_
@@ -13402,25 +13402,25 @@ Body:
       bonus2 bSkillAtk,"SC_FATALMENACE",10;
   - Combos:
       - Combo:
-          - Soulreaper_Robe
+          - Soulreaper_Robe    # 29654
           - SoulLinkerStone_Middle_
     Script: |
       bonus2 bSkillAtk,"SP_SPA",20;
   - Combos:
       - Combo:
-          - Soulreaper_Robe
+          - Soulreaper_Robe    # 29654
           - SoulLinkerStone_Bottom_
     Script: |
       bonus2 bSkillAtk,"SP_SWHOO",20;
   - Combos:
       - Combo:
-          - Staremperor_Robe
+          - Staremperor_Robe    # 29658
           - StarGladiatorStone_Top_
     Script: |
       bonus2 bSkillAtk,"SJ_SOLARBURST",15;
   - Combos:
       - Combo:
-          - Staremperor_Robe
+          - Staremperor_Robe    # 29658
           - StarGladiatorStone_Middle_
     Script: |
       bonus2 bSkillAtk,"SJ_FALLINGSTAR",15;
@@ -13465,19 +13465,19 @@ Body:
       bonus bVariableCastrate,-15;
   - Combos:
       - Combo:
-          - Rebellion_Robe
+          - Rebellion_Robe    # 29667
           - GunslingerStone_Top_
     Script: |
       bonus2 bSkillAtk,"RL_R_TRIP",15;
   - Combos:
       - Combo:
-          - Rebellion_Robe
+          - Rebellion_Robe    # 29667
           - GunslingerStone_Middle_
     Script: |
       bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",20;
   - Combos:
       - Combo:
-          - Rebellion_Robe
+          - Rebellion_Robe    # 29667
           - GunslingerStone_Bottom_
     Script: |
       bonus2 bSkillAtk,"RL_BANISHING_BUSTER",25;
@@ -15661,16 +15661,16 @@ Body:
       bonus bAspd,2;
   - Combos:
       - Combo:
-          - Range_Top
-          - Range_Bottom
-          - Range_Middle
+          - Range_Top    # 310325
+          - Range_Bottom    # 310326
+          - Range_Middle    # 310330
     Script: |
       bonus bLongAtkRate,6;
   - Combos:
       - Combo:
-          - Melee_Top
-          - Melee_Middle
-          - Melee_Bottom
+          - Melee_Top    # 310327
+          - Melee_Middle    # 310328
+          - Melee_Bottom    # 310329
     Script: |
       bonus bShortAtkRate,6;
   - Combos:
@@ -20684,25 +20684,25 @@ Body:
   - Combos:
       - Combo:
           - aegis_310660
-          - Range_Top
+          - Range_Top    # 310325
       - Combo:
           - aegis_310660
-          - Range_Bottom
+          - Range_Bottom    # 310326
       - Combo:
           - aegis_310660
-          - Range_Middle
+          - Range_Middle    # 310330
     Script: |
       bonus bLongAtkRate,2;
   - Combos:
       - Combo:
           - aegis_310661
-          - Melee_Top
+          - Melee_Top    # 310327
       - Combo:
           - aegis_310661
-          - Melee_Middle
+          - Melee_Middle    # 310328
       - Combo:
           - aegis_310661
-          - Melee_Bottom
+          - Melee_Bottom    # 310329
     Script: |
       bonus bShortAtkRate,2;
   - Combos:
@@ -27266,6 +27266,6 @@ Body:
           - 2021RTC_Headset_TW    # 400164
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
-      bonus2 bSubRace,RC_Player_Human,1+(2*.@r/3);
-      bonus2 bSubRace,RC_Player_Doram,1+(2*.@r/3);
-      bonus bDelayrate,-1+(-.@r/3);
+      bonus2 bSubRace,RC_Player_Human,1+2*(.@r/3);
+      bonus2 bSubRace,RC_Player_Doram,1+2*(.@r/3);
+      bonus bDelayrate,-1-.@r/3;
