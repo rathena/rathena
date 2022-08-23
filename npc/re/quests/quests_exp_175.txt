@@ -6,6 +6,7 @@
 //===== Changelog: ===========================================
 //= 1.0 Initial release of Glast Heim Abyss quests. [OptimusM]
 //= 1.1 Corrections here and there. [Capuche]
+//= 1.2 Initial release of Abyss Dungeon 4 quests. [Capuche]
 //============================================================
 
 glast_01,191,273,3	script	Magician Nillem#glabyss01	4_M_JOB_WIZARD,{
@@ -290,5 +291,260 @@ gl_cas01_,205,36,5	script	Magician Nillem#glabyss02	4_M_JOB_WIZARD,{
 	mes "Let's - Go - Out - Side - !";
 	close2;
 	warp "glast_01",191,270;
+	end;
+}
+
+
+// abyss_04
+abyss_03,108,97,3	script	Traveler's Monument#abyss	1_JOURNEY_STONE_F,{
+	mes "[Traveler's Monument]";
+	mes "The Traveler's Monument stands still.";
+	close;
+}
+
+hugel,102,148,3	script	Ethnographer Marigold#exdq0	4_F_HUWOMAN,{
+	if (checkquest(7893,HUNTING) == 2) {
+		mes "[Marigold]";
+		mes "Purple Ferus... Hmm, that's right. We still need more investigation. Should we do this this time?";
+		erasequest 7893;
+		setquest 7894;
+		getexp 15823920,11076720;
+		next;
+	}
+	if (checkquest(7895,HUNTING) == 2) {
+		mes "[Marigold]";
+		mes "Treasure Mimics carry those things. Oh, you can take them all as loot. All you need to know is the type.";
+		erasequest 7895;
+		setquest 7896;
+		getexp 7979360,5585560;
+		next;
+	}
+	if (checkquest(7897,HUNTING) == 2) {
+		mes "[Marigold]";
+		mes "How do you feel against the Black Acidus and the Silver Acidus? Interesting!";
+		erasequest 7897;
+		setquest 7898;
+		getexp 32090640,22463360;
+		next;
+	}
+	if (checkquest(7899,HUNTING) == 2) {
+		mes "[Marigold]";
+		mes "Thank you for dealing with Bone Ferus and Bone Acidus. I haven't been able to explain why this is happening.";
+		erasequest 7899;
+		setquest 7900;
+		getexp 48548160,33983640;
+		next;
+	}
+	mes "[Marigold]";
+	mes "Why do dragons stack up so much gold?";
+	next;
+	mes "[Marigold]";
+	mes "I want to investigate the new dragons found deep in the Abyss Cave, can you help me?";
+	next;
+	switch( select( "Ferus of an unusual color", "Investigation of new mimics", "Research on Acidus properties", "Things that go against Providence", "What are you studying?" ) ) {
+	case 1:
+		switch( checkquest(7894,PLAYTIME) ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "[Marigold]";
+			mes "We are still organizing the data we collected the other day.";
+			mes "There is still time until the next investigation, so how about taking a break?";
+			close;
+		case 2:
+			erasequest 7894;
+			break;
+		}
+		switch( checkquest(7893,HUNTING) ) {
+		case -1:
+			mes "[Marigold]";
+			mes "An unusual Purple Ferus was found on the 4th floor of the Abyss Cave.";
+			mes "Ferus usually follows natural attributes, isn't it amazing that it's purple?";
+			mes "So I want to know about this Purple ferus.";
+			next;
+			if (select( "Accept the request", "Reject" ) == 2) {
+				mes "[Marigold]";
+				mes "The world is large and full of people.";
+				mes "It sounds like there are many adventurers with great skills.";
+				close;
+			}
+			mes "[Marigold]";
+			mes "The thing to investigate this time is the ^4d4dffPurple Ferus^000000 found on the ^4d4dff4th floor of the Abyss Cave^000000!";
+			mes "Show me the loot you've earned while dealing with it in moderation.";
+			setquest 7893;
+			close;
+		case 0:
+		case 1:
+			mes "[Marigold]";
+			mes "Purple Ferus is said to appear on the 4th floor of the Abyss Cave.";
+			close;
+		case 2:
+			end;
+		}
+		end;
+	case 2:
+		switch( checkquest(7896,PLAYTIME) ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "[Marigold]";
+			mes "We are still organizing the data we collected the other day.";
+			mes "There is still time until the next investigation, so how about taking a break?";
+			close;
+		case 2:
+			erasequest 7896;
+			break;
+		}
+		switch( checkquest(7895,HUNTING) ) {
+		case -1:
+			mes "[Marigold]";
+			mes "A new mimic has been discovered on the 4th floor of the Abyss Cave.";
+			mes "I wonder what kind of loot this guy called 'Treasure Mimic' will give you.";
+			next;
+			if (select( "Accept the request", "Reject" ) == 2) {
+				mes "[Marigold]";
+				mes "The world is large and full of people.";
+				mes "It sounds like there are many adventurers with great skills.";
+				close;
+			}
+			mes "[Marigold]";
+			mes "The thing to investigate this time is the ^4d4dffTreasure Mimic ^000000found on the ^4d4dff4th floor of the Abyss Cave^000000!";
+			mes "Show me the loot you've earned while dealing with it in moderation.";
+			setquest 7895;
+			close;
+		case 0:
+		case 1:
+			mes "[Marigold]";
+			mes "The Treasure Mimic is said to be found on the 4th floor of the Abyss Cave.";
+			close;
+		case 2:
+			end;
+		}
+		end;
+	case 3:
+		switch( checkquest(7898,PLAYTIME) ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "[Marigold]";
+			mes "We are still organizing the data we collected the other day.";
+			mes "There is still time until the next investigation, so how about taking a break?";
+			close;
+		case 2:
+			erasequest 7898;
+			break;
+		}
+		switch( checkquest(7897,HUNTING) ) {
+		case -1:
+			mes "[Marigold]";
+			mes "The color of an Acidus gives a rough estimate of its natural properties.";
+			mes "But I don't know about Black Acidus and Silver Acidus. I'm looking for someone to help me collect data while dealing with them.";
+			next;
+			if (select( "Accept the request", "Reject" ) == 2) {
+				mes "[Marigold]";
+				mes "The world is large and full of people.";
+				mes "It sounds like there are many adventurers with great skills.";
+				close;
+			}
+			mes "[Marigold]";
+			mes "This time, we are going to investigate ^4d4dffSilver Acidus and Black Acidus^000000found on the ^4d4dff4th floor of the Abyss Cave^000000!";
+			mes "Tell me what attributes you have when you deal directly with them.";
+			setquest 7897;
+			close;
+		case 0:
+		case 1:
+			mes "[Marigold]";
+			mes "Black Acidus and Silver Acidus live on the 4th floor of the Abyss Cave.";
+			close;
+		case 2:
+			end;
+		}
+		end;
+	case 4:
+		switch( checkquest(7900,PLAYTIME) ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			mes "[Marigold]";
+			mes "We are still organizing the data we collected the other day.";
+			mes "There is still time until the next investigation, so how about taking a break?";
+			close;
+		case 2:
+			erasequest 7900;
+			break;
+		}
+		switch( checkquest(7899,HUNTING) ) {
+		case -1:
+			mes "[Marigold]";
+			mes "What kind of force acts on the 4th floor of the Abyss Cave?";
+			mes "Ferus and Acidus, who are already dead and have only bones, move as if they were alive.";
+			mes "It's against providence. I don't think it should be left alone.";
+			next;
+			if (select( "Accept the request", "Reject" ) == 2) {
+				mes "[Marigold]";
+				mes "The world is large and full of people.";
+				mes "It sounds like there are many adventurers with great skills.";
+				close;
+			}
+			mes "[Marigold]";
+			mes "Please defeat the ^4d4dffBone Ferus and Bone Acidus^000000 who became monsters ^4d4dffin the 4th floor of the Abyss Cave^000000!";
+			mes "I'll collect data to find out why this happens.";
+			setquest 7899;
+			close;
+		case 0:
+		case 1:
+			mes "[Marigold]";
+			mes "Born Ferus and Bone Acidus are said to be found on the 4th floor of the Abyss Cave.";
+			close;
+		case 2:
+			end;
+		}
+		end;
+	case 5:
+		mes "[Marigold]";
+		mes "I'm researching nearby phenomena, monsters, and religious relics and objects.";
+		mes "There is one other person besides me, it's Cinnamon.";
+		next;
+		mes "[Marigold]";
+		mes "He was researching the ancient temple of Odin and went to the island where the temple of Odin is located.";
+		mes "Even though it is possible to recruit skilled adventurers even here in the square.";
+		next;
+		mes "[Marigold]";
+		mes "I've heard interesting news about the Dragon's Cave in Abyss Lake to the west and am investigating.";
+		next;
+		mes "[Marigold]";
+		mes "It wasn't really the lowest floor, where it was piled up with gold coins that we knew was the lowest level.";
+		mes "What was the space under the high pile of gold coins?";
+		next;
+		mes "[Marigold]";
+		mes "The gold coins pierced the ceiling and went upstairs.";
+		mes "So now we are collecting data on the ecology down there.";
+		mes "It's a dangerous place, so it's taking time.";
+		close;
+	}
+	end;
+
+OnInit:
+	// completed
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(7893,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(7895,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(7897,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "checkquest(7899,HUNTING) == 2" );
+
+	// timeout
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(7894,PLAYTIME) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(7896,PLAYTIME) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(7898,PLAYTIME) == 2" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(7900,PLAYTIME) == 2" );
+
+	// not started
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(7893) == 0 && checkquest(7894,PLAYTIME) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(7895) == 0 && checkquest(7896,PLAYTIME) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(7897) == 0 && checkquest(7898,PLAYTIME) == -1" );
+	questinfo( QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(7899) == 0 && checkquest(7900,PLAYTIME) == -1" );
 	end;
 }
