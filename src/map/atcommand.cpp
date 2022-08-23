@@ -2432,6 +2432,76 @@ ACMD_FUNC(refine)
 /*==========================================
  *
  *------------------------------------------*/
+ACMD_FUNC(grade)
+{
+	int j, position = 0, grade = 0, current_position, final_grade;
+	int count;
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+
+	if (!message || !*message || sscanf(message, "%11d %11d", &position, &grade) < 2) {
+		clif_displaymessage(fd, msg_txt(sd,1519)); // Please enter a position and an amount (usage: @grade <equip position> <+/- amount>).
+		sprintf(atcmd_output, msg_txt(sd,997), EQP_HEAD_LOW); // %d: Lower Headgear
+		clif_displaymessage(fd, atcmd_output);
+		sprintf(atcmd_output, msg_txt(sd,998), EQP_HAND_R); // %d: Right Hand
+		clif_displaymessage(fd, atcmd_output);
+		sprintf(atcmd_output, msg_txt(sd,999), EQP_GARMENT); // %d: Garment
+		clif_displaymessage(fd, atcmd_output);
+		sprintf(atcmd_output, msg_txt(sd,1000), EQP_ACC_L); // %d: Left Accessory
+		clif_displaymessage(fd, atcmd_output);
+		sprintf(atcmd_output, msg_txt(sd,1001), EQP_ARMOR); // %d: Body Armor
+		clif_displaymessage(fd, atcmd_output);
+		sprintf(atcmd_output, msg_txt(sd,1002), EQP_HAND_L); // %d: Left Hand
+		clif_displaymessage(fd, atcmd_output);
+		sprintf(atcmd_output, msg_txt(sd,1003), EQP_SHOES); // %d: Shoes
+		clif_displaymessage(fd, atcmd_output);
+		sprintf(atcmd_output, msg_txt(sd,1004), EQP_ACC_R); // %d: Right Accessory
+		clif_displaymessage(fd, atcmd_output);
+		sprintf(atcmd_output, msg_txt(sd,1005), EQP_HEAD_TOP); // %d: Top Headgear
+		clif_displaymessage(fd, atcmd_output);
+		sprintf(atcmd_output, msg_txt(sd,1006), EQP_HEAD_MID); // %d: Mid Headgear
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+
+	grade = cap_value(grade, -MAX_ENCHANTGRADE, MAX_ENCHANTGRADE);
+
+	count = 0;
+	for (j = 0; j < EQI_MAX; j++) {
+		int i;
+		if ((i = sd->equip_index[j]) < 0)
+			continue;
+		if(j == EQI_AMMO)
+			continue;
+		if (pc_is_same_equip_index((enum equip_index)j, sd->equip_index, i))
+			continue;
+
+		if(position && !(sd->inventory.u.items_inventory[i].equip & position))
+			continue;
+
+		final_grade = cap_value(sd->inventory.u.items_inventory[i].enchantgrade + grade, 0, MAX_ENCHANTGRADE);
+		if (sd->inventory.u.items_inventory[i].enchantgrade != final_grade) {
+			sd->inventory.u.items_inventory[i].enchantgrade = final_grade;
+			current_position = sd->inventory.u.items_inventory[i].equip;
+			pc_unequipitem(sd, i, 3);
+			clif_delitem(sd, i, 1, 3);
+			clif_additem(sd, i, 1, 0);
+			pc_equipitem(sd, i, current_position);
+			clif_misceffect(&sd->bl, 3);
+			count++;
+		}
+	}
+
+	sprintf(atcmd_output, msg_txt(sd,1520), count); // %d items have been graded.
+	clif_displaymessage(fd, atcmd_output);
+
+	return 0;
+}
+
+/*==========================================
+ *
+ *------------------------------------------*/
 ACMD_FUNC(produce)
 {
 	char item_name[100];
@@ -10818,6 +10888,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(killmonster),
 		ACMD_DEF2("killmonster2", killmonster),
 		ACMD_DEF(refine),
+		ACMD_DEF(grade),
 		ACMD_DEF(produce),
 		ACMD_DEF(memo),
 		ACMD_DEF(gat),

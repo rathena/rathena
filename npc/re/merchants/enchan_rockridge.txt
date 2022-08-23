@@ -446,7 +446,7 @@ har_in01,19,86,4	script	Weapon Dealer#rockridge01	1_F_02,{
 
 -	marketshop	armor_rockridge_1	-1,2247:500000:10,2248:500000:10,5018:700000:10
 -	marketshop	armor_rockridge_2	-1,5067:700000:10,5071:700000:10,5075:700000:10
--	marketshop	armor_rockridge_3	-1,2267:100000:10,2268:500000:10,5155:5000:10
+-	marketshop	armor_rockridge_3	-1,2267:100000:10,2268:500000:10,2241:5000:10
 -	marketshop	armor_rockridge_4	-1,5067:700000:10,5071:700000:10,5075:700000:10,31144:1500000:3
 
 har_in01,16,86,4	script	Armor Dealer#rockridge02	1_M_04,{
@@ -498,6 +498,22 @@ har_in01,16,86,4	script	Armor Dealer#rockridge02	1_M_04,{
 		callshop "armor_rockridge_3", 1;
 	else if (.@day == FRIDAY)
 		callshop "armor_rockridge_4", 1;
+	end;
+	
+OnSun0000:	// custom restock, no official info
+	npcshopupdate "armor_rockridge_1",2247,0,10;
+	npcshopupdate "armor_rockridge_1",2248,0,10;
+	npcshopupdate "armor_rockridge_1",5018,0,10;
+	npcshopupdate "armor_rockridge_2",5067,0,10;
+	npcshopupdate "armor_rockridge_2",5071,0,10;
+	npcshopupdate "armor_rockridge_2",5075,0,10;
+	npcshopupdate "armor_rockridge_3",2267,0,10;
+	npcshopupdate "armor_rockridge_3",2268,0,10;
+	npcshopupdate "armor_rockridge_3",2241,0,10;
+	npcshopupdate "armor_rockridge_4",5067,0,10;
+	npcshopupdate "armor_rockridge_4",5071,0,10;
+	npcshopupdate "armor_rockridge_4",5075,0,10;
+	npcshopupdate "armor_rockridge_4",31144,0,3;
 	end;
 }
 
