@@ -258,6 +258,27 @@ struct PACKET_ZC_REPUTE_INFO{
 	struct PACKET_ZC_REPUTE_INFO_sub list[];
 } __attribute__((packed));
 
+struct PACKET_ZC_OPEN_REFORM_UI{
+	int16 packetType;
+	uint32 itemId;
+} __attribute__((packed));
+
+struct PACKET_CZ_CLOSE_REFORM_UI{
+	int16 packetType;
+} __attribute__((packed));
+
+struct PACKET_CZ_ITEM_REFORM{
+	int16 packetType;
+	uint32 itemId;
+	uint16 index;
+} __attribute__((packed));
+
+struct PACKET_ZC_ITEM_REFORM_ACK{
+	int16 packetType;
+	uint16 index;
+	uint8 result;
+} __attribute__((packed));
+
 struct PACKET_ZC_UI_OPEN_V3{
 	int16 packetType;
 	uint8 type;
@@ -355,6 +376,10 @@ DEFINE_PACKET_HEADER(CZ_UNCONFIRMED_RODEX_RETURN, 0xb98)
 DEFINE_PACKET_HEADER(ZC_SUMMON_HP_INIT, 0xb6b)
 DEFINE_PACKET_HEADER(ZC_SUMMON_HP_UPDATE, 0xb6c)
 DEFINE_PACKET_HEADER(ZC_REPUTE_INFO, 0x0b8d)
+DEFINE_PACKET_HEADER(ZC_OPEN_REFORM_UI, 0x0b8f)
+DEFINE_PACKET_HEADER(CZ_CLOSE_REFORM_UI, 0x0b90)
+DEFINE_PACKET_HEADER(CZ_ITEM_REFORM, 0x0b91)
+DEFINE_PACKET_HEADER(ZC_ITEM_REFORM_ACK, 0x0b92)
 DEFINE_PACKET_HEADER(ZC_UI_OPEN_V3, 0x0b9a)
 DEFINE_PACKET_HEADER(CZ_REQUEST_RANDOM_ENCHANT, 0x0b9b)
 DEFINE_PACKET_HEADER(CZ_REQUEST_PERFECT_ENCHANT, 0x0b9c)
