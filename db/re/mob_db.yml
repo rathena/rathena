@@ -96908,8 +96908,33 @@ Body:
 #    AegisName: G_MINERAL_R
 #  - Id: 20559
 #    AegisName: G_MINERAL_P
-#  - Id: 20560
-#    AegisName: G_MINERAL_G
+  - Id: 20560
+    AegisName: G_MINERAL_G
+    Name: Green Mineral
+    Level: 190
+    Hp: 2435702
+    Attack: 3729
+    Attack2: 671
+    Defense: 287
+    MagicDefense: 68
+    Str: 157
+    Agi: 134
+    Vit: 96
+    Int: 53
+    Dex: 138
+    Luk: 75
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 250
+    AttackDelay: 648
+    AttackMotion: 480
+    DamageMotion: 360
+    Ai: 17
 #  - Id: 20561
 #    AegisName: G_MINERAL_W
 #  - Id: 20562
@@ -96972,30 +96997,555 @@ Body:
 #    AegisName: RU_E_ECLIPS
 #  - Id: 20591
 #    AegisName: PAPARE
-#  - Id: 20592
-#    AegisName: POISONOUS
-#  - Id: 20593
-#    AegisName: TOXIOUS
-#  - Id: 20594
-#    AegisName: MINERAL_G
-#  - Id: 20595
-#    AegisName: MINERAL_R
-#  - Id: 20596
-#    AegisName: MINERAL_W
-#  - Id: 20597
-#    AegisName: MINERAL_P
-#  - Id: 20598
-#    AegisName: JEWELIANT
-#  - Id: 20599
-#    AegisName: G_JEWELIANT
-#  - Id: 20600
-#    AegisName: JEWEL
-#  - Id: 20601
-#    AegisName: JUNGOLIANT
-#  - Id: 20602
-#    AegisName: PORCELLIO_W
-#  - Id: 20603
-#    AegisName: ABYSSMAN
+  - Id: 20592
+    AegisName: POISONOUS
+    Name: Poisonous
+    Level: 188
+    Hp: 2407086
+    BaseExp: 171935
+    JobExp: 120354
+    Attack: 3408
+    Attack2: 840
+    Defense: 248
+    MagicDefense: 68
+    Str: 145
+    Agi: 141
+    Vit: 77
+    Int: 67
+    Dex: 175
+    Luk: 11
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Ghost
+    ElementLevel: 4
+    WalkSpeed: 350
+    AttackDelay: 768
+    AttackMotion: 1440
+    DamageMotion: 672
+    Ai: 04
+    Drops:
+      - Item: Ein_SOLIDDUST
+        Rate: 200
+      - Item: Mould_Powder
+        Rate: 1500
+      - Item: Air_Pollutant
+        Rate: 1500
+      - Item: Anodyne
+        Rate: 25
+      - Item: Spawns
+        Rate: 1500
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Old_Violet_Box
+        Rate: 1
+      - Item: Poisonous_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20593
+    AegisName: TOXIOUS
+    Name: Toxious
+    Level: 188
+    Hp: 2407556
+    BaseExp: 171968
+    JobExp: 120378
+    Attack: 3384
+    Attack2: 815
+    Defense: 254
+    MagicDefense: 68
+    Str: 144
+    Agi: 143
+    Vit: 80
+    Int: 65
+    Dex: 168
+    Luk: 47
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Poison
+    ElementLevel: 4
+    WalkSpeed: 350
+    AttackDelay: 768
+    AttackMotion: 1440
+    DamageMotion: 672
+    Ai: 04
+    Drops:
+      - Item: Jubilee
+        Rate: 2500
+      - Item: Ein_SOLIDDUST
+        Rate: 200
+      - Item: Insect_Feeler
+        Rate: 500
+      - Item: Single_Cell
+        Rate: 1500
+      - Item: Fluorescent_Liquid
+        Rate: 15
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Poison_Powder
+        Rate: 50
+      - Item: Toxious_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20594
+    AegisName: MINERAL_G
+    Name: Green Mineral
+    Level: 190
+    Hp: 2435702
+    BaseExp: 173979
+    JobExp: 121785
+    Attack: 3634
+    Attack2: 684
+    Defense: 287
+    MagicDefense: 68
+    Str: 153
+    Agi: 141
+    Vit: 96
+    Int: 54
+    Dex: 143
+    Luk: 68
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 250
+    AttackDelay: 648
+    AttackMotion: 480
+    DamageMotion: 360
+    Ai: 04
+    Drops:
+      - Item: Fragment_Of_Crystal
+        Rate: 1500
+      - Item: Ein_RINDIUM
+        Rate: 100
+      - Item: Ein_EYEROCK
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Oridecon
+        Rate: 40
+      - Item: Emveretarcon
+        Rate: 400
+      - Item: Gold
+        Rate: 1
+      - Item: Neo_Mineral_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20595
+    AegisName: MINERAL_R
+    Name: Red Mineral
+    Level: 190
+    Hp: 2435702
+    BaseExp: 173979
+    JobExp: 121785
+    Attack: 3729
+    Attack2: 671
+    Defense: 287
+    MagicDefense: 68
+    Str: 157
+    Agi: 134
+    Vit: 96
+    Int: 53
+    Dex: 138
+    Luk: 75
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 250
+    AttackDelay: 648
+    AttackMotion: 480
+    DamageMotion: 360
+    Ai: 04
+    Drops:
+      - Item: Fragment_Of_Crystal
+        Rate: 1500
+      - Item: Ein_REDIUM
+        Rate: 100
+      - Item: Ein_EYEROCK
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Oridecon
+        Rate: 40
+      - Item: Emveretarcon
+        Rate: 400
+      - Item: Gold
+        Rate: 1
+      - Item: Neo_Mineral_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20596
+    AegisName: MINERAL_W
+    Name: White Mineral
+    Level: 190
+    Hp: 2436177
+    BaseExp: 174013
+    JobExp: 121809
+    Attack: 3705
+    Attack2: 722
+    Defense: 293
+    MagicDefense: 68
+    Str: 156
+    Agi: 138
+    Vit: 99
+    Int: 57
+    Dex: 139
+    Luk: 77
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 250
+    AttackDelay: 648
+    AttackMotion: 480
+    DamageMotion: 360
+    Ai: 04
+    Drops:
+      - Item: Fragment_Of_Crystal
+        Rate: 1500
+      - Item: Ein_WHIDIUM
+        Rate: 100
+      - Item: Ein_EYEROCK
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Oridecon
+        Rate: 40
+      - Item: Emveretarcon
+        Rate: 400
+      - Item: Gold
+        Rate: 1
+      - Item: Neo_Mineral_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20597
+    AegisName: MINERAL_P
+    Name: Purple Mineral
+    Level: 190
+    Hp: 2435543
+    BaseExp: 173967
+    JobExp: 121777
+    Attack: 3681
+    Attack2: 697
+    Defense: 285
+    MagicDefense: 68
+    Str: 155
+    Agi: 122
+    Vit: 95
+    Int: 55
+    Dex: 141
+    Luk: 71
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 250
+    AttackDelay: 648
+    AttackMotion: 480
+    DamageMotion: 360
+    Ai: 04
+    Drops:
+      - Item: Fragment_Of_Crystal
+        Rate: 1500
+      - Item: Ein_PURDIUM
+        Rate: 100
+      - Item: Ein_EYEROCK
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Oridecon
+        Rate: 40
+      - Item: Emveretarcon
+        Rate: 400
+      - Item: Gold
+        Rate: 1
+      - Item: Neo_Mineral_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20598
+    AegisName: JEWELIANT
+    Name: Jewelry Ant
+    Level: 191
+    Hp: 2445656
+    BaseExp: 174690
+    JobExp: 122283
+    Attack: 3748
+    Attack2: 1108
+    Defense: 252
+    MagicDefense: 71
+    Str: 157
+    Agi: 144
+    Vit: 778
+    Int: 87
+    Dex: 166
+    Luk: 79
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Insect
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 250
+    AttackDelay: 360
+    AttackMotion: 360
+    DamageMotion: 600
+    Ai: 21
+    Drops:
+      - Item: Long_Limb
+        Rate: 2250
+      - Item: Jaws_Of_Ant
+        Rate: 1750
+      - Item: Colorful_Shell
+        Rate: 500
+      - Item: Olivine
+        Rate: 750
+      - Item: Fluorescent_Liquid
+        Rate: 1250
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Ein_UNDIUM
+        Rate: 300
+      - Item: Jeweliant_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20599
+    AegisName: G_JEWELIANT
+    Name: Jewelry Ant
+    Level: 191
+    Hp: 2445656
+    Attack: 3748
+    Attack2: 1108
+    Defense: 252
+    MagicDefense: 71
+    Str: 157
+    Agi: 144
+    Vit: 78
+    Int: 87
+    Dex: 166
+    Luk: 79
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Insect
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 250
+    AttackDelay: 360
+    AttackMotion: 360
+    DamageMotion: 600
+    Ai: 21
+    Drops:
+      - Item: Jeweliant_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20600
+    AegisName: JEWEL
+    Name: Jewel
+    Level: 192
+    Hp: 100
+    Attack: 1
+    Attack2: 1
+    Defense: 504
+    MagicDefense: 71
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 1008
+    AttackMotion: 1200
+    DamageMotion: 540
+    Ai: 21
+    Class: Boss
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+    Drops:
+      - Item: Ein_DYNITE
+        Rate: 100
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Ein_REDIUM
+        Rate: 300
+      - Item: Ein_RINDIUM
+        Rate: 300
+      - Item: Ein_ODIUM
+        Rate: 300
+      - Item: Ein_PURDIUM
+        Rate: 300
+      - Item: Ein_WHIDIUM
+        Rate: 300
+      - Item: Ein_UNDIUM
+        Rate: 250
+        StealProtected: true
+  - Id: 20601
+    AegisName: JUNGOLIANT
+    Name: Jewel Ungoliant
+    Level: 197
+    Hp: 37847096
+    BaseExp: 2703364
+    JobExp: 1892355
+    Attack: 7264
+    Attack2: 3782
+    Defense: 345
+    MagicDefense: 90
+    Str: 295
+    Agi: 165
+    Vit: 123
+    Int: 288
+    Dex: 190
+    Luk: 64
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Insect
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 350
+    AttackDelay: 420
+    AttackMotion: 576
+    DamageMotion: 420
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    Drops:
+      - Item: Long_Limb
+        Rate: 2250
+      - Item: Jaws_Of_Ant
+        Rate: 1750
+      - Item: Shadowdecon
+        Rate: 50
+      - Item: Zelunium
+        Rate: 50
+      - Item: Ein_UNDIUM
+        Rate: 7500
+      - Item: Ein_UNDIUM
+        Rate: 2500
+      - Item: Ein_DYNITE
+        Rate: 8000
+      - Item: Jungoliant_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20602
+    AegisName: PORCELLIO_W
+    Name: White Porcellio
+    Level: 188
+    Hp: 2403326
+    BaseExp: 171666
+    JobExp: 120166
+    Attack: 3314
+    Attack2: 940
+    Defense: 200
+    MagicDefense: 69
+    Str: 141
+    Agi: 158
+    Vit: 53
+    Int: 75
+    Dex: 186
+    Luk: 75
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Earth
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 720
+    AttackMotion: 360
+    DamageMotion: 360
+    Ai: 02
+    Drops:
+      - Item: Jubilee
+        Rate: 2500
+      - Item: Insect_Feeler
+        Rate: 500
+      - Item: Single_Cell
+        Rate: 1500
+      - Item: Fluorescent_Liquid
+        Rate: 15
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Ein_ODIUM
+        Rate: 150
+      - Item: Solid_Shell
+        Rate: 1000
+      - Item: Porcellio_W_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20603
+    AegisName: ABYSSMAN
+    Name: Abyssman
+    Level: 190
+    Hp: 2428577
+    BaseExp: 173470
+    JobExp: 121429
+    Attack: 3824
+    Attack2: 570
+    Defense: 197
+    MagicDefense: 67
+    Str: 161
+    Agi: 129
+    Vit: 51
+    Int: 45
+    Dex: 177
+    Luk: 53
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Brute
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 180
+    AttackDelay: 960
+    AttackMotion: 336
+    DamageMotion: 300
+    Ai: 04
+    Drops:
+      - Item: Old_Pick
+        Rate: 1500
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Ein_RUSTHELM
+        Rate: 150
+      - Item: Ein_ODIUM
+        Rate: 150
+      - Item: Coal
+        Rate: 50
+      - Item: Lantern
+        Rate: 500
+      - Item: Headlamp
+        Rate: 40
+      - Item: Abyss_Man_Card
+        Rate: 1
+        StealProtected: true
 #  - Id: 20604
 #    AegisName: ANGELGOLT
 #  - Id: 20605

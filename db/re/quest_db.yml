@@ -5141,20 +5141,53 @@ Body:
   - Id: 7868
     Title: Mercenary vs Mercenary - Waiting
     TimeLimit: 4h
+  - Id: 7879
+    Title: New Poison Research
+    Targets:
+      - Mob: POISONOUS
+        Count: 20
+      - Mob: TOXIOUS
+        Count: 20
   - Id: 7880
-    Title: New toxic gas research - Standby
+    Title: New Poison Research - Standby
     TimeLimit: 4h
+  - Id: 7881
+    Title: Unusual Mineral Research 1
+    Targets:
+      - Mob: MINERAL_G
+        Count: 20
+      - Mob: MINERAL_R
+        Count: 20
   - Id: 7882
-    Title: Special mineral research 1 - Waiting
+    Title: Special Mineral Research 1 - Standby
     TimeLimit: 4h
+  - Id: 7883
+    Title: Special Mineral Research2
+    Targets:
+      - Mob: MINERAL_W
+        Count: 20
+      - Mob: MINERAL_P
+        Count: 20
   - Id: 7884
-    Title: Special mineral research 2 - Waiting
+    Title: Special Mineral Research 2 - Standby
     TimeLimit: 4h
+  - Id: 7885
+    Title: Research Abyssman
+    Targets:
+      - Mob: ABYSSMAN
+        Count: 10
   - Id: 7886
-    Title: Abyssman Research - Waiting
+    Title: Research Abyssman - Standby
     TimeLimit: 4h
+  - Id: 7887
+    Title: Mineworm Research
+    Targets:
+      - Mob: JEWELIANT
+        Count: 10
+      - Mob: PORCELLIO_W
+        Count: 10
   - Id: 7888
-    Title: Gwangin bug research - Waiting
+    Title: Mineworm Research - Standby
     TimeLimit: 4h
   - Id: 7890
     Title: X century XX gold-waiting
