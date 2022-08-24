@@ -30,13 +30,18 @@ jobs:
           gcc: ['10']
           # We run build checks for both Renewal and PRE-Renewal
           mode: ['PRE','RE']
-          # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
-          # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
-          language: [ 'cpp' ]
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      # Initializes the CodeQL tools for scanning.
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+           # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
+           # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
+           languages: cpp
 
       # A simple 'yes' and 'no' can be confusing, so we use names to display in the current job then convert them for use in the compiler.
       - name: Variable Parsing - PRE
