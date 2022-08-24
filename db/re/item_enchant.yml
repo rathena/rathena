@@ -10655,37 +10655,37 @@ Body:
           - Item: Mettle1
             Materials:
               - Material: Enchant_Ticket
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 100
           - Item: Adamatine1
             Materials:
               - Material: Enchant_Ticket
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 100
           - Item: MagicEessence1
             Materials:
               - Material: Enchant_Ticket
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 100
           - Item: Acute1
             Materials:
               - Material: Enchant_Ticket
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 100
           - Item: MasterArcher1
             Materials:
               - Material: Enchant_Ticket
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 100
           - Item: Affection1
             Materials:
               - Material: Enchant_Ticket
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 100
           - Item: Tenacity1
             Materials:
               - Material: Enchant_Ticket
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 100
         Upgrades:
           - Enchant: Mettle1
@@ -10693,7 +10693,7 @@ Body:
             Materials:
               - Material: Enchant_Ticket
                 Amount: 1
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 150
               - Material: Sakray_Fury
                 Amount: 2
@@ -10704,7 +10704,7 @@ Body:
             Materials:
               - Material: Enchant_Ticket
                 Amount: 1
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 150
               - Material: Sakray_Fury
                 Amount: 2
@@ -10715,7 +10715,7 @@ Body:
             Materials:
               - Material: Enchant_Ticket
                 Amount: 1
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 150
               - Material: Sakray_Fury
                 Amount: 2
@@ -10726,7 +10726,7 @@ Body:
             Materials:
               - Material: Enchant_Ticket
                 Amount: 1
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 150
               - Material: Sakray_Fury
                 Amount: 2
@@ -10737,7 +10737,7 @@ Body:
             Materials:
               - Material: Enchant_Ticket
                 Amount: 1
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 150
               - Material: Sakray_Fury
                 Amount: 2
@@ -10748,7 +10748,7 @@ Body:
             Materials:
               - Material: Enchant_Ticket
                 Amount: 1
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 150
               - Material: Sakray_Fury
                 Amount: 2
@@ -10759,7 +10759,7 @@ Body:
             Materials:
               - Material: Enchant_Ticket
                 Amount: 1
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 150
               - Material: Sakray_Fury
                 Amount: 2
@@ -10770,7 +10770,7 @@ Body:
             Materials:
               - Material: Enchant_Ticket
                 Amount: 1
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 300
               - Material: Sakray_Fury
                 Amount: 4
@@ -10781,7 +10781,7 @@ Body:
             Materials:
               - Material: Enchant_Ticket
                 Amount: 1
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 300
               - Material: Sakray_Fury
                 Amount: 4
@@ -10792,7 +10792,7 @@ Body:
             Materials:
               - Material: Enchant_Ticket
                 Amount: 1
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 300
               - Material: Sakray_Fury
                 Amount: 4
@@ -10803,7 +10803,7 @@ Body:
             Materials:
               - Material: Enchant_Ticket
                 Amount: 1
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 300
               - Material: Sakray_Fury
                 Amount: 4
@@ -10814,7 +10814,7 @@ Body:
             Materials:
               - Material: Enchant_Ticket
                 Amount: 1
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 300
               - Material: Sakray_Fury
                 Amount: 4
@@ -10825,7 +10825,7 @@ Body:
             Materials:
               - Material: Enchant_Ticket
                 Amount: 1
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 300
               - Material: Sakray_Fury
                 Amount: 4
@@ -10836,7 +10836,7 @@ Body:
             Materials:
               - Material: Enchant_Ticket
                 Amount: 1
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 300
               - Material: Sakray_Fury
                 Amount: 4
@@ -10847,22 +10847,22 @@ Body:
           - Item: Gray_Melee1
             Materials:
               - Material: Enchant_Ticket
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 100
           - Item: Gray_Range1
             Materials:
               - Material: Enchant_Ticket
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 100
           - Item: Gray_Magic1
             Materials:
               - Material: Enchant_Ticket
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 100
           - Item: Gray_Fight1
             Materials:
               - Material: Enchant_Ticket
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 100
         Upgrades:
           - Enchant: Gray_Melee1
@@ -10870,7 +10870,7 @@ Body:
             Materials:
               - Material: Enchant_Ticket
                 Amount: 1
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 150
               - Material: Sakray_Fury
                 Amount: 5
@@ -10881,7 +10881,7 @@ Body:
             Materials:
               - Material: Enchant_Ticket
                 Amount: 1
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 150
               - Material: Sakray_Fury
                 Amount: 5
@@ -10892,7 +10892,7 @@ Body:
             Materials:
               - Material: Enchant_Ticket
                 Amount: 1
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 150
               - Material: Sakray_Fury
                 Amount: 5
@@ -10903,7 +10903,7 @@ Body:
             Materials:
               - Material: Enchant_Ticket
                 Amount: 1
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 150
               - Material: Sakray_Fury
                 Amount: 5
@@ -10914,7 +10914,7 @@ Body:
             Materials:
               - Material: Enchant_Ticket
                 Amount: 1
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 300
               - Material: Sakray_Fury
                 Amount: 10
@@ -10925,7 +10925,7 @@ Body:
             Materials:
               - Material: Enchant_Ticket
                 Amount: 1
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 300
               - Material: Sakray_Fury
                 Amount: 10
@@ -10936,7 +10936,7 @@ Body:
             Materials:
               - Material: Enchant_Ticket
                 Amount: 1
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 300
               - Material: Sakray_Fury
                 Amount: 10
@@ -10947,7 +10947,7 @@ Body:
             Materials:
               - Material: Enchant_Ticket
                 Amount: 1
-              - Material: Shard_of_Gray
+              - Material: Gray_Shard
                 Amount: 300
               - Material: Sakray_Fury
                 Amount: 10
