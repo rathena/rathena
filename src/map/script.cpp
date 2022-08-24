@@ -26195,6 +26195,63 @@ BUILDIN_FUNC(get_reputation_points){
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(item_reform){
+#if PACKETVER < 20211103
+	ShowError( "buildin_item_reform: This command requires packet version 2021-11-03 or newer.\n" );
+	return SCRIPT_CMD_FAILURE;
+#else
+	struct map_session_data* sd;
+
+	if( !script_charid2sd( 3, sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	t_itemid item_id;
+
+	if( script_hasdata( st, 2 ) ){
+		if( script_isstring( st, 2 ) ){
+			const char* item_name = script_getstr( st, 2 );
+			std::shared_ptr<item_data> item = item_db.searchname( item_name );
+
+			if( item == nullptr ){
+				ShowError("buildin_item_reform: Item \"%s\" does not exist.\n", item_name );
+				return SCRIPT_CMD_FAILURE;
+			}
+
+			item_id = item->nameid;
+		}else{
+			item_id = script_getnum( st, 2 );
+
+			if( !item_db.exists( item_id ) ){
+				ShowError( "buildin_item_reform: Item ID %u does not exist.\n", item_id );
+				return SCRIPT_CMD_FAILURE;
+			}
+		}
+	}else{
+		if( sd->itemid == 0 ){
+			ShowError( "buildin_item_reform: Called outside of an item script without item id.\n" );
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		if( sd->inventory_data[sd->itemindex]->flag.delay_consume == 0 ){
+			ShowError( "buildin_item_reform: Called from item %u, which is not a DelayConsume type.\n", sd->itemid );
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		item_id = sd->itemid;
+	}
+
+	if( !item_reform_db.exists( item_id ) ){
+		ShowError( "buildin_item_reform: Item ID %u is not in the Item Reform database.\n", item_id );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_item_reform_open( *sd, item_id );
+
+	return SCRIPT_CMD_SUCCESS;
+#endif
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -26927,6 +26984,7 @@ struct script_function buildin_func[] = {
 
 	BUILDIN_DEF(set_reputation_points, "ii?"),
 	BUILDIN_DEF(get_reputation_points, "i?"),
+	BUILDIN_DEF(item_reform, "??"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

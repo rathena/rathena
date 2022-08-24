@@ -8241,6 +8241,16 @@ Gets the reputation points for reputation group <type> for the attached player o
 <type> is the client side index as stored in the Id field of the reputation.yml database files.
 
 ---------------------------------------
+
+*item_reform({<item id>{,<char id>}})
+*item_reform({<"item name">{,<char id>}})
+
+Opens the item reform UI for <item ID> or <item name> for the attached player or the given character ID.
+If run from within an item script <item ID> or <item name> is optional.
+
+This feature requires packet version 2021-11-03 or newer.
+
+---------------------------------------
 \\
 6,1.- Unit-related commands
 \\

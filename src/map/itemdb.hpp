@@ -1385,6 +1385,37 @@ public:
 
 extern LaphineUpgradeDatabase laphine_upgrade_db;
 
+struct s_item_reform_base{
+	t_itemid item_id;
+	uint16 minimumRefine;
+	uint16 maximumRefine;
+	uint16 requiredRandomOptions;
+	bool cardsAllowed;
+	std::unordered_map<t_itemid, uint16> materials;
+	t_itemid resultItemId;
+	int16 refineChange;
+	std::shared_ptr<s_random_opt_group> randomOptionGroup;
+	bool clearSlots;
+	bool removeEnchantgrade;
+};
+
+struct s_item_reform{
+	t_itemid item_id;
+	std::unordered_map<t_itemid, std::shared_ptr<s_item_reform_base>> base_items;
+};
+
+class ItemReformDatabase : public TypesafeYamlDatabase<t_itemid, s_item_reform>{
+public:
+	ItemReformDatabase() : TypesafeYamlDatabase( "ITEM_REFORM_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode( const ryml::NodeRef& node );
+};
+
+extern ItemReformDatabase item_reform_db;
+
 uint16 itemdb_searchname_array(std::map<t_itemid, std::shared_ptr<item_data>> &data, uint16 size, const char *str);
 struct item_data* itemdb_search(t_itemid nameid);
 std::shared_ptr<item_data> itemdb_exists(t_itemid nameid);

@@ -2456,6 +2456,8 @@
 	parseable_packet( HEADER_CZ_UNCONFIRMED_RODEX_RETURN, sizeof( struct PACKET_CZ_UNCONFIRMED_RODEX_RETURN ), clif_parse_Mail_return, 0 );
 	parseable_packet( HEADER_CZ_REQ_TAKEOFF_EQUIP_ALL, sizeof( struct PACKET_CZ_REQ_TAKEOFF_EQUIP_ALL ), clif_parse_unequipall, 0 );
 	parseable_packet( 0xb93, 12, clif_parse_dull, 0 );
+	parseable_packet( HEADER_CZ_CLOSE_REFORM_UI, sizeof( struct PACKET_CZ_CLOSE_REFORM_UI ), clif_parse_item_reform_close, 0 );
+	parseable_packet( HEADER_CZ_ITEM_REFORM, sizeof( struct PACKET_CZ_ITEM_REFORM ), clif_parse_item_reform_start, 0 );
 #endif
 
 #endif /* CLIF_PACKETDB_HPP */
