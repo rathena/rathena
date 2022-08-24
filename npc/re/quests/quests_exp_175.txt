@@ -6,6 +6,7 @@
 //===== Changelog: ===========================================
 //= 1.0 Initial release of Glast Heim Abyss quests. [OptimusM]
 //= 1.1 Corrections here and there. [Capuche]
+//= 1.2 Initial release of Magma Dungeon 3 quests. [Capuche]
 //============================================================
 
 glast_01,191,273,3	script	Magician Nillem#glabyss01	4_M_JOB_WIZARD,{
@@ -290,5 +291,313 @@ gl_cas01_,205,36,5	script	Magician Nillem#glabyss02	4_M_JOB_WIZARD,{
 	mes "Let's - Go - Out - Side - !";
 	close2;
 	warp "glast_01",191,270;
+	end;
+}
+
+
+// mag_dun03
+yuno_fild03,38,146,5	script	Lily Blanc	-1,{
+	if (BaseLevel < 175) {
+		mes "[Lily]";
+		mes "...?";
+		mes "...well, I don't think the guards will let you in...";
+		next;
+		mes "[Lily]";
+		mes "If you are qualified to enter the 3rd floor of Nogg Road, would you accept a quest?";
+		mes "We need a lot of work.";
+		mes "The guards said level 175 is enough...";
+		close;
+	}
+	mes "[Lily]";
+	mes "Friendly adventurer, would you mind helping us with the research for our conference report?";
+	mes "Only an adventurer's eye is the only way for us to live.";
+	next;
+	switch( select( "Listen to the request", "Suspicious...", "Reject" ) ) {
+	case 1:
+		mes "[Lily]";
+		mes "Generous adventurer! Thank you.";
+		mes "The request is on the 3rd floor of Nogg Road, a place I can't enter yet, but the conference wants a report...";
+		next;
+		setarray .@quest_list[1], 8550, 8553, 8556, 8559;
+		.@s = select( "Dealer that caused abnormal evolution", "Eradicate the nightmare that became a reality", "Check density", "Small things crumbling", "Next time" );
+
+		if (.@s < 5) {
+			.@quest_first = .@quest_list[.@s];
+			.@quest_delay = .@quest_first + 1;
+			.@quest_daily = .@quest_first + 2;
+
+			callsub( S_CheckDelay, .@quest_delay );
+
+			if (isbegin_quest(.@quest_first) < 2)
+				.@quest_ongoing = .@quest_first;
+			else
+				.@quest_ongoing = .@quest_daily;
+		}
+
+		switch( .@s ) {
+		case 1:
+			switch( checkquest(.@quest_ongoing,HUNTING) ) {
+			case -1:
+				if (.@quest_ongoing == .@quest_first) {
+					mes "[Lily]";
+					mes "Our doctor said that monsters change their characteristics and appearance when they live in different places...";
+					mes "Dr. and me too... Because combat isn't my major.";
+					next;
+					mes "[Lily]";
+					mes "So here... Let's see.";
+					mes "^0000FFThere is a report that the " + getmonsterinfo("DELETER2_H", MOB_NAME) + " and " + getmonsterinfo("DELETER1_H", MOB_NAME) + "^000000 caused abnormal evolution.";
+					mes "But I can't even approach them because of their ferocious personality...";
+					next;
+				}
+				mes "[Lily]";
+				mes "Haunted on the 3rd floor of Nogg Road,";
+				mes "^0000FFKill 15 " + getmonsterinfo("DELETER1_H", MOB_NAME) + "^000000";
+				mes "and 15 ^0000FF" + getmonsterinfo("DELETER2_H", MOB_NAME) + "^000000 and tell me how hard they were.";
+				callsub( S_Give, .@quest_ongoing );
+			case 0:
+			case 1:
+				mes "[Lily]";
+				mes "Haunted on the 3rd floor of Nogg Road,";
+				mes "^0000FFKill 15 " + getmonsterinfo("DELETER1_H", MOB_NAME) + "^000000";
+				mes "and 15 ^0000FF" + getmonsterinfo("DELETER2_H", MOB_NAME) + "^000000 and tell me how hard they were.";
+				close;
+			case 2:
+				mes "[Lily]";
+				mes "How was it?";
+				mes "How was it different from just an air or ground Deleter?";
+				next;
+				mes "[Lily]";
+				mes "Hmm... are you okay?";
+				mes "Hmmmm. Okay";
+				callsub( S_SetDelay, .@quest_ongoing, .@quest_first, .@quest_delay, 4852278,3396600 );
+			}
+			end;
+		case 2:
+			switch( checkquest(.@quest_ongoing,HUNTING) ) {
+			case -1:
+				if (.@quest_ongoing == .@quest_first) {
+					mes "[Lily]";
+					mes "" + getmonsterinfo("NIGHTMARE_TERROR_H", MOB_NAME) + " is a hardened nightmare terror...";
+					mes "I've only seen Nightmare terror. Just looking at it made me stiff and unable to move. Although the professor dragged me out...";
+					next;
+					mes "[Lily]";
+					mes "So here... Let's see.";
+				}
+				else {
+					mes "[Lily]";
+				}
+				mes "Haunted on the 3rd floor of Nogg Road,";
+				mes "^0000FFDefeat 10 " + getmonsterinfo("NIGHTMARE_TERROR_H", MOB_NAME) + "^000000 and tell me how hard it is.";
+				callsub( S_Give, .@quest_ongoing );
+			case 0:
+			case 1:
+				mes "[Lily]";
+				mes "Haunted on the 3rd floor of Nogg Road";
+				mes "^0000FF Defeat 10 " + getmonsterinfo("NIGHTMARE_TERROR_H", MOB_NAME) + "^000000 and tell me how hard it is.";
+				close;
+			case 2:
+				mes "[Lily]";
+				mes "How was it?";
+				mes "How was it different from just a Nightmare Terror?";
+				next;
+				mes "[Lily]";
+				mes "Huh... Really?";
+				mes "What should I do... my God. Is it real?";
+				mes "Hmmmm. Okay";
+				callsub( S_SetDelay, .@quest_ongoing, .@quest_first, .@quest_delay, 1661868,1163304 );
+			}
+			end;
+		case 3:
+			switch( checkquest(.@quest_ongoing,HUNTING) ) {
+			case -1:
+				if (.@quest_ongoing == .@quest_first) {
+					mes "[Lily]";
+					mes "I've heard that there is a huge difference in density between a Lava Golem and a " + getmonsterinfo("LAVA_GOLEM_H", MOB_NAME) + ".";
+				}
+				else {
+					mes "[Lily]";
+				}
+				mes "Haunted on the 3rd floor of Nogg Road";
+				mes "^0000FFDefeat 10 " + getmonsterinfo("LAVA_GOLEM_H", MOB_NAME) + "^000000 and tell me the density difference.";
+				callsub( S_Give, .@quest_ongoing );
+			case 0:
+			case 1:
+				mes "[Lily]";
+				mes "Haunted on the 3rd floor of Nogg Road";
+				mes "^0000FFDefeat 10 " + getmonsterinfo("LAVA_GOLEM_H", MOB_NAME) + "^000000 and tell me the density difference.";
+				close;
+			case 2:
+				mes "[Lily]";
+				mes "How was it?";
+				mes "How was it different from just a Lava Golem?";
+				next;
+				mes "[Lily]";
+				mes "Um... that's right. The shell...";
+				mes "Yes? The soles of the feet? Indeed...";
+				mes "Hmmmm. Okay";
+				callsub( S_SetDelay, .@quest_ongoing, .@quest_first, .@quest_delay, 1590396,1113275 );
+			}
+			end;
+		case 4:
+			switch( checkquest(.@quest_ongoing,HUNTING) ) {
+			case -1:
+				if (.@quest_ongoing == .@quest_first) {
+					mes "[Lily]";
+					mes "" + getmonsterinfo("EXPLOSION_H", MOB_NAME) + " and " + getmonsterinfo("BLAZZER_H", MOB_NAME) + " are said to crumble much better than normal Explosion and Blazers.";
+					mes "...our professor.";
+					next;
+					mes "[Lily]";
+					mes "Haunted on the 3rd floor of Nogg Road,";
+					mes "^0000FFKill 10 " + getmonsterinfo("EXPLOSION_H", MOB_NAME) + "^000000";
+					mes "^0000FFand 10 " + getmonsterinfo("BLAZZER_H", MOB_NAME) + "^000000 and tell them how they feel.";
+					mes "You don't have to touch it. You can tell just by looking at it...";
+				}
+				else {
+					mes "[Lily]";
+					mes "Haunted on the 3rd floor of Nogg Road,";
+					mes "^0000FFKill 10 " + getmonsterinfo("EXPLOSION_H", MOB_NAME) + "^000000";
+					mes "^0000FFand 10 " + getmonsterinfo("BLAZZER_H", MOB_NAME) + "^000000 and tell them how they feel.";
+				}
+				callsub( S_Give, .@quest_ongoing );
+			case 0:
+			case 1:
+				mes "[Lily]";
+				mes "Haunted on the 3rd floor of Nogg Road,";
+				mes "^0000FFKill 10 " + getmonsterinfo("EXPLOSION_H", MOB_NAME) + "^000000";
+				mes "^0000FFand 10 " + getmonsterinfo("BLAZZER_H", MOB_NAME) + "^000000 and tell them how they feel.";
+				close;
+			case 2:
+				mes "[Lily]";
+				mes "How was it?";
+				mes "How is it different from just Explosion or Blazer?";
+				next;
+				mes "[Lily]";
+				mes "Um... that's right. Pass...";
+				mes "It's much more crumbly...";
+				mes "Aha, that's a lot more dust.";
+				mes "Hmmmm. Okay";
+				callsub( S_SetDelay, .@quest_ongoing, .@quest_first, .@quest_delay, 3251388,2275966 );
+			}
+			end;
+		case 5:
+			mes "[Lily]";
+			mes "Ah...";
+			mes "When will I ever be able to escape from the professor's magic...";
+			close;
+		}
+		end;
+	case 2:
+		mes "[Lily]";
+		mes "As you can see, I'm just an incompetent sage.";
+		mes "The professor I'm serving is a bit stubborn... I mean, someone has to investigate.";
+		next;
+		mes "[Lily]";
+		mes "But I am still not allowed to enter the 3rd floor of Nogg Road.";
+		mes "How did I get to the entrance and they said they would never let me in.";
+		mes "That's right... not a place for sage to fit in.";
+		next;
+		mes "[Lily]";
+		mes "Then what can I do? Why don't all the bards sing only what they see and hear?";
+		mes "Some people have heard of this and that, others have told me, so it must be.";
+		next;
+		mes "[Lily]";
+		mes "Don't worry. I'll use the adventurer's name when I report it to the professor...";
+		mes "Yes...  " + strcharinfo(0) + ".";
+		mes "All right.";
+		next;
+		mes "[Lily]";
+		mes "There is a list of monsters that will be research materials, so please check the quests if you are interested.";
+		close;
+	case 3:
+		mes "[Lily]";
+		mes "Ah, no...!";
+		mes "Generous adventurer, please free me from the professor's magic...!";
+		close;
+	}
+	end;
+
+S_CheckDelay:
+	switch( checkquest(getarg(0),PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Lily]";
+		mes "You have already completed today's report.";
+		mes "Will you help me with tomorrow's report...?";
+		close;
+	case 2:
+		erasequest getarg(0);
+		break;
+	}
+	return;
+
+S_Give:
+	next;
+	if (select( "I accept.", "I'm busy." ) == 2) {
+		mes "[Lily]";
+		mes "Originally, research is about persistence.";
+		mes "Help me when you're not busy.";
+		close;
+	}
+	mes "[Lily]";
+	mes "Thank you!";
+	mes "I'll be waiting here.";
+	setquest getarg(0);
+	close;
+
+S_SetDelay:
+	.@quest_ongoing = getarg(0);
+	.@quest_first = getarg(1);
+	.@quest_delay = getarg(2);
+	next;
+	mes "[Lily]";
+	mes "Thank you for your kind explanation.";
+	mes "But I don't think you can understand the whole story by just that. Although this is the beauty of requesting an investigation...";
+	mes "I'll ask you again tomorrow.";
+	if (.@quest_ongoing == .@quest_first)
+		completequest .@quest_ongoing;
+	else
+		erasequest .@quest_ongoing;
+	setquest .@quest_delay;
+	getexp getarg(3), getarg(4);
+	close;
+
+OnInit:
+	setunitdata getnpcid(0), UNPC_CLASS, JOB_SAGE;
+	setunitdata getnpcid(0), UNPC_SEX, SEX_FEMALE;
+	setunitdata getnpcid(0), UNPC_HAIRCOLOR, 6;
+	setunitdata getnpcid(0), UNPC_HAIRSTYLE, 22;
+	setunitdata getnpcid(0), UNPC_HEADTOP, 316;
+
+	// completed first quest
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8550,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8553,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8556,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8559,HUNTING) == 2" );
+
+	// completed daily
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8552,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8555,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8558,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8561,HUNTING) == 2" );
+
+	// timeout
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8551,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8554,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8557,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(8560,PLAYTIME) == 2" );
+
+	// not started first quest
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8550) == 0 && checkquest(8551,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8553) == 0 && checkquest(8553,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8556) == 0 && checkquest(8555,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8559) == 0 && checkquest(8557,PLAYTIME) == -1" );
+
+	// not started daily
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8550) == 2 && isbegin_quest(8552) == 0 && checkquest(8551,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8553) == 2 && isbegin_quest(8555) == 0 && checkquest(8554,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8556) == 2 && isbegin_quest(8558) == 0 && checkquest(8557,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8559) == 2 && isbegin_quest(8561) == 0 && checkquest(8560,PLAYTIME) == -1" );
 	end;
 }

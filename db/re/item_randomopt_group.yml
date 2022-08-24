@@ -11055,194 +11055,104 @@ Body:
     Slots:
       - Slot: 1
         Options:
+          - Option: VAR_STRAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 5000
+          - Option: VAR_AGIAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 5000
+          - Option: VAR_VITAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 5000
+          - Option: VAR_INTAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 5000
+          - Option: VAR_DEXAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 5000
+          - Option: VAR_LUKAMOUNT
+            MinValue: 1
+            MaxValue: 5
+            Chance: 5000
           - Option: VAR_MAXHPAMOUNT
-            MinValue: 150
-            MaxValue: 350
-            Chance: 2500
+            MinValue: 50
+            MaxValue: 500
+            Chance: 26
           - Option: VAR_MAXSPAMOUNT
-            MinValue: 25
-            MaxValue: 50
-            Chance: 2500
-          - Option: VAR_MAXHPPERCENT
-            MinValue: 1
-            MaxValue: 5
-            Chance: 2500
-          - Option: VAR_MAXSPPERCENT
-            MinValue: 1
-            MaxValue: 5
-            Chance: 2500
-      - Slot: 2
-        Options:
-          - Option: VAR_HPACCELERATION
-            MinValue: 15
-            MaxValue: 50
-            Chance: 384
-          - Option: VAR_SPACCELERATION
-            MinValue: 15
-            MaxValue: 50
-            Chance: 384
-          - Option: VAR_AVOIDSUCCESSVALUE
-            MinValue: 5
-            MaxValue: 15
-            Chance: 384
+            MinValue: 10
+            MaxValue: 100
+            Chance: 5000
           - Option: VAR_ITEMDEFPOWER
             MinValue: 10
-            MaxValue: 30
-            Chance: 384
-          - Option: VAR_MDEFPOWER
+            MaxValue: 100
+            Chance: 5000
+          - Option: VAR_ATTPOWER
+            MinValue: 1
+            MaxValue: 15
+            Chance: 5000
+          - Option: VAR_ATTMPOWER
+            MinValue: 1
+            MaxValue: 15
+            Chance: 5000
+          - Option: VAR_ATKPERCENT
             MinValue: 1
             MaxValue: 3
-            Chance: 384
-          - Option: HEAL_VALUE
-            MinValue: 3
-            MaxValue: 7
-            Chance: 384
-          - Option: DEC_SPELL_CAST_TIME
-            MinValue: 5
-            MaxValue: 10
-            Chance: 384
-          - Option: DAMAGE_PROPERTY_NOTHING_USER
-            MinValue: 5
-            MaxValue: 10
-            Chance: 384
-          - Option: DAMAGE_PROPERTY_WATER_USER
-            MinValue: 5
-            MaxValue: 10
-            Chance: 384
-          - Option: DAMAGE_PROPERTY_GROUND_USER
-            MinValue: 5
-            MaxValue: 10
-            Chance: 384
-          - Option: DAMAGE_PROPERTY_FIRE_USER
-            MinValue: 5
-            MaxValue: 10
-            Chance: 384
-          - Option: DAMAGE_PROPERTY_WIND_USER
-            MinValue: 5
-            MaxValue: 10
-            Chance: 384
-          - Option: DAMAGE_PROPERTY_POISON_USER
-            MinValue: 5
-            MaxValue: 10
-            Chance: 384
-          - Option: DAMAGE_PROPERTY_SAINT_USER
-            MinValue: 5
-            MaxValue: 10
-            Chance: 384
-          - Option: DAMAGE_PROPERTY_DARKNESS_USER
-            MinValue: 5
-            MaxValue: 10
-            Chance: 384
-          - Option: DAMAGE_PROPERTY_TELEKINESIS_USER
-            MinValue: 5
-            MaxValue: 10
-            Chance: 384
-          - Option: DAMAGE_PROPERTY_UNDEAD_USER
-            MinValue: 5
-            MaxValue: 10
-            Chance: 384
-          - Option: MDAMAGE_PROPERTY_NOTHING_USER
-            MinValue: 5
-            MaxValue: 10
-            Chance: 384
-          - Option: MDAMAGE_PROPERTY_WATER_USER
-            MinValue: 5
-            MaxValue: 10
-            Chance: 384
-          - Option: MDAMAGE_PROPERTY_GROUND_USER
-            MinValue: 5
-            MaxValue: 10
-            Chance: 384
-          - Option: MDAMAGE_PROPERTY_FIRE_USER
-            MinValue: 5
-            MaxValue: 10
-            Chance: 384
-          - Option: MDAMAGE_PROPERTY_WIND_USER
-            MinValue: 5
-            MaxValue: 10
-            Chance: 384
-          - Option: MDAMAGE_PROPERTY_POISON_USER
-            MinValue: 5
-            MaxValue: 10
-            Chance: 384
-          - Option: MDAMAGE_PROPERTY_SAINT_USER
-            MinValue: 5
-            MaxValue: 10
-            Chance: 384
-          - Option: MDAMAGE_PROPERTY_DARKNESS_USER
-            MinValue: 5
-            MaxValue: 10
-            Chance: 384
-          - Option: MDAMAGE_PROPERTY_TELEKINESIS_USER
-            MinValue: 5
-            MaxValue: 10
-            Chance: 384
-      - Slot: 3
-        Options:
-          - Option: VAR_MAXHPAMOUNT
-            MinValue: 150
-            MaxValue: 300
-            Chance: 833
-          - Option: VAR_MAXSPAMOUNT
-            MinValue: 25
-            MaxValue: 50
-            Chance: 833
-          - Option: RACE_TOLERACE_NOTHING
-            MinValue: 3
-            MaxValue: 7
-            Chance: 833
-          - Option: RACE_TOLERACE_UNDEAD
-            MinValue: 3
-            MaxValue: 7
-            Chance: 833
-          - Option: RACE_TOLERACE_ANIMAL
-            MinValue: 3
-            MaxValue: 7
-            Chance: 833
-          - Option: RACE_TOLERACE_PLANT
-            MinValue: 3
-            MaxValue: 7
-            Chance: 833
-          - Option: RACE_TOLERACE_INSECT
-            MinValue: 3
-            MaxValue: 7
-            Chance: 833
-          - Option: RACE_TOLERACE_FISHS
-            MinValue: 3
-            MaxValue: 7
-            Chance: 833
-          - Option: RACE_TOLERACE_DEVIL
-            MinValue: 3
-            MaxValue: 7
-            Chance: 833
-          - Option: RACE_TOLERACE_HUMAN
-            MinValue: 3
-            MaxValue: 7
-            Chance: 833
-          - Option: RACE_TOLERACE_ANGEL
-            MinValue: 3
-            MaxValue: 7
-            Chance: 833
-          - Option: RACE_TOLERACE_DRAGON
-            MinValue: 3
-            MaxValue: 7
-            Chance: 833
-      - Slot: 4
-        Options:
-          - Option: BODY_INDESTRUCTIBLE
-            Chance: 1428
-          - Option: WEAPON_ATTR_WATER
-            Chance: 1428
-          - Option: WEAPON_ATTR_GROUND
-            Chance: 1428
-          - Option: WEAPON_ATTR_FIRE
-            Chance: 1428
-          - Option: WEAPON_ATTR_WIND
-            Chance: 1428
-          - Option: WEAPON_ATTR_SAINT
-            Chance: 1428
-          - Option: WEAPON_ATTR_DARKNESS
-            Chance: 1428
+            Chance: 5000
+          - Option: VAR_MAGICATKPERCENT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 5000
+    MaxRandom: 2
+    Random:
+      - Option: VAR_MAXHPAMOUNT
+        MinValue: 100
+        MaxValue: 750
+        Chance: 5000
+      - Option: VAR_MAXSPAMOUNT
+        MinValue: 20
+        MaxValue: 450
+        Chance: 5000
+      - Option: VAR_ATTPOWER
+        MinValue: 1
+        MaxValue: 20
+        Chance: 5000
+      - Option: VAR_ATTMPOWER
+        MinValue: 1
+        MaxValue: 20
+        Chance: 5000
+      - Option: VAR_HITSUCCESSVALUE
+        MinValue: 1
+        MaxValue: 7
+        Chance: 5000
+      - Option: VAR_AVOIDSUCCESSVALUE
+        MinValue: 1
+        MaxValue: 10
+        Chance: 5000
+      - Option: VAR_ITEMDEFPOWER
+        MinValue: 10
+        MaxValue: 200
+        Chance: 5000
+      - Option: VAR_CRITICALSUCCESSVALUE
+        MinValue: 1
+        MaxValue: 10
+        Chance: 5000
+      - Option: DEC_SPELL_CAST_TIME
+        MinValue: 1
+        MaxValue: 15
+        Chance: 5000
+      - Option: DEC_SPELL_DELAY_TIME
+        MinValue: 1
+        MaxValue: 3
+        Chance: 5000
+      - Option: DEC_SP_CONSUMPTION
+        MinValue: 1
+        MaxValue: 10
+        Chance: 5000
   - Id: 133
     Group: ILL_PIECE_A
     Slots:
@@ -13861,4 +13771,79 @@ Body:
       - Option: CLASS_MDAMAGE_NORMAL
         MinValue: 1
         MaxValue: 15
+        Chance: 5000
+  - Id: 156
+    Group: MAGMA3
+    Slots: 
+      - Slot: 1
+        Options:
+          - Option: VAR_STRAMOUNT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 5000
+          - Option: VAR_AGIAMOUNT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 5000
+          - Option: VAR_VITAMOUNT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 5000
+          - Option: VAR_INTAMOUNT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 5000
+          - Option: VAR_DEXAMOUNT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 5000
+          - Option: VAR_LUKAMOUNT
+            MinValue: 1
+            MaxValue: 3
+            Chance: 5000
+          - Option: VAR_MAXHPAMOUNT
+            MinValue: 50
+            MaxValue: 300
+            Chance: 26
+          - Option: VAR_MAXSPAMOUNT
+            MinValue: 10
+            MaxValue: 100
+            Chance: 5000
+          - Option: VAR_ITEMDEFPOWER
+            MinValue: 10
+            MaxValue: 100
+            Chance: 5000
+    MaxRandom: 2
+    Random:
+      - Option: VAR_MAXHPAMOUNT
+        MinValue: 100
+        MaxValue: 500
+        Chance: 5000
+      - Option: VAR_MAXSPAMOUNT
+        MinValue: 10
+        MaxValue: 250
+        Chance: 5000
+      - Option: VAR_ATTPOWER
+        MinValue: 1
+        MaxValue: 20
+        Chance: 5000
+      - Option: VAR_ATTMPOWER
+        MinValue: 1
+        MaxValue: 20
+        Chance: 5000
+      - Option: VAR_HITSUCCESSVALUE
+        MinValue: 1
+        MaxValue: 7
+        Chance: 5000
+      - Option: VAR_AVOIDSUCCESSVALUE
+        MinValue: 1
+        MaxValue: 10
+        Chance: 5000
+      - Option: VAR_ITEMDEFPOWER
+        MinValue: 10
+        MaxValue: 150
+        Chance: 5000
+      - Option: VAR_CRITICALSUCCESSVALUE
+        MinValue: 1
+        MaxValue: 5
         Chance: 5000
