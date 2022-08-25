@@ -400,7 +400,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 		return 0;
 	}
 
-	ud->dir = dir;
+	unit_setdir(bl, dir);
 
 	int dx = dirx[dir];
 	int dy = diry[dir];
@@ -1023,7 +1023,6 @@ int unit_escape(struct block_list *bl, struct block_list *target, short dist, ui
 bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool checkpath)
 {
 	short dx,dy;
-	uint8 dir;
 	struct unit_data        *ud = NULL;
 	struct map_session_data *sd = NULL;
 
@@ -1044,8 +1043,7 @@ bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, boo
 	ud->to_x = dst_x;
 	ud->to_y = dst_y;
 
-	dir = map_calc_dir(bl, dst_x, dst_y);
-	ud->dir = dir;
+	unit_setdir(bl, map_calc_dir(bl, dst_x, dst_y));
 
 	dx = dst_x - bl->x;
 	dy = dst_y - bl->y;
@@ -1109,8 +1107,14 @@ int unit_setdir(struct block_list *bl, unsigned char dir)
 
 	ud->dir = dir;
 
-	if (bl->type == BL_PC)
-		((TBL_PC *)bl)->head_dir = 0;
+	if (bl->type == BL_PC) {
+		map_session_data *sd = map_id2sd(bl->id);
+
+		if (sd != nullptr) {
+			sd->head_dir = 0;
+			sd->status.dir = ud->dir;
+		}
+	}
 
 	clif_changed_dir(bl, AREA);
 
@@ -2762,7 +2766,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 
 	if( DIFF_TICK(ud->attackabletime,tick) <= 0 ) {
 		if (battle_config.attack_direction_change && (src->type&battle_config.attack_direction_change))
-			ud->dir = map_calc_dir(src, target->x, target->y);
+			unit_setdir(src, map_calc_dir(src, target->x, target->y));
 
 		if(ud->walktimer != INVALID_TIMER)
 			unit_stop_walking(src,1);
