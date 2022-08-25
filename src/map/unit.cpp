@@ -14,6 +14,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/socket.hpp"
 #include "../common/timer.hpp"
+#include "../common/utils.hpp"
 
 #include "achievement.hpp"
 #include "battle.hpp"
@@ -36,6 +37,8 @@
 #include "pet.hpp"
 #include "storage.hpp"
 #include "trade.hpp"
+
+using namespace rathena;
 
 // Directions values
 // 1 0 7
@@ -3622,6 +3625,103 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 	return 0;
 }
 
+static TIMER_FUNC(unit_shadowscar_timer) {
+	block_list *bl = map_id2bl(id);
+
+	if (bl == nullptr)
+		return 0;
+
+	unit_data *ud = unit_bl2ud(bl);
+
+	if (ud == nullptr)
+		return 1;
+
+	if (ud->shadow_scar == 0) {
+		status_change_end(bl, SC_SHADOW_SCAR, INVALID_TIMER);
+		return 0;
+	}
+
+	std::vector<int>::iterator it = ud->shadow_scar_timer.begin();
+
+	while (it != ud->shadow_scar_timer.end()) {
+		if (*it == tid) {
+			ud->shadow_scar--;
+			ud->shadow_scar_timer.erase(it);
+			break;
+		}
+
+		it++;
+	}
+
+	if (ud->shadow_scar == 0)
+		status_change_end(bl, SC_SHADOW_SCAR, INVALID_TIMER);
+
+	return 0;
+}
+
+/**
+ * Adds a Shadow Scar to unit for 'interval' ms.
+ * @param ud: Unit data
+ * @param interval: Duration
+ * @param max: Maximum amount
+ */
+void unit_addshadowscar(unit_data &ud, int interval, int max) {
+	if (max > MAX_SHADOW_SCAR)
+		max = MAX_SHADOW_SCAR;
+
+	if (ud.shadow_scar > 0 && ud.shadow_scar >= max) {
+		if (ud.shadow_scar_timer[0] != INVALID_TIMER)
+			delete_timer(ud.shadow_scar_timer[0], unit_shadowscar_timer);
+		ud.shadow_scar--;
+		util::erase_at(ud.shadow_scar_timer, 0);
+	}
+
+	ud.shadow_scar++;
+	ud.shadow_scar_timer.push_back(add_timer(gettick() + interval, unit_shadowscar_timer, ud.bl->id, 0));
+
+	status_change *sc = status_get_sc(ud.bl);
+
+	if (sc != nullptr && sc->data[SC_SHADOW_SCAR] != nullptr)
+		sc->data[SC_SHADOW_SCAR]->val1 = ud.shadow_scar;
+}
+
+/**
+ * Removes number of Shadow Scar from unit.
+ * @param sd: Player data
+ * @param count: Amount to delete
+ */
+void unit_delshadowscar(unit_data &ud, int count) {
+	if (count == 0 || ud.shadow_scar == 0) {
+		status_change_end(ud.bl, SC_SHADOW_SCAR, INVALID_TIMER);
+		return;
+	}
+
+	count = cap_value(count, 0, MAX_SHADOW_SCAR);
+
+	if (count > ud.shadow_scar)
+		count = ud.shadow_scar;
+
+	ud.shadow_scar -= count;
+
+	status_change *sc = status_get_sc(ud.bl);
+
+	if (sc != nullptr && sc->data[SC_SHADOW_SCAR] != nullptr)
+		sc->data[SC_SHADOW_SCAR]->val1 = ud.shadow_scar;
+
+	std::vector<int>::iterator it = ud.shadow_scar_timer.begin();
+	int8 i = 0;
+
+	while (it != ud.shadow_scar_timer.end() && i < count) {
+		delete_timer(ud.shadow_scar_timer[i], unit_shadowscar_timer);
+		it = ud.shadow_scar_timer.erase(it);
+		it++;
+		i++;
+	}
+
+	if (ud.shadow_scar == 0)
+		status_change_end(ud.bl, SC_SHADOW_SCAR, INVALID_TIMER);
+}
+
 /**
  * Initialization function for unit on map start
  * called in map::do_init
@@ -3634,6 +3734,7 @@ void do_init_unit(void){
 	add_timer_func_list(unit_delay_walktobl_timer,"unit_delay_walktobl_timer");
 	add_timer_func_list(unit_teleport_timer,"unit_teleport_timer");
 	add_timer_func_list(unit_step_timer,"unit_step_timer");
+	add_timer_func_list(unit_shadowscar_timer, "unit_shadowscar_timer");
 }
 
 /**

@@ -1305,13 +1305,15 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 
 		// Enchanting Shadow gives a chance to inflict Shadow Wounds to the enemy.
 		if (sc != nullptr) {
-			status_change_entry *sce;
+			status_change_entry *sce = sc->data[SC_SHADOW_WEAPON];
+			unit_data *ud = unit_bl2ud(bl);
 
-			if ((sce = sc->data[SC_SHADOW_WEAPON]) && rnd_chance(sce->val2, 100)) {
-				if (tsc && tsc->data[SC_SHADOW_SCAR])
-					sce->val1 += 1; // Directly adjust the damage rate so the duration is not reset each time.
-				else
-					sc_start(src, bl, SC_SHADOW_SCAR, 100, 1, skill_get_time2(SHC_ENCHANTING_SHADOW, sce->val1));
+			if (sce != nullptr && ud != nullptr && ud->shadow_scar < MAX_SHADOW_SCAR && rnd_chance(sce->val1, 100)) {
+				clif_specialeffect(bl, 677, AREA);
+
+				if (tsc != nullptr && tsc->data[SC_SHADOW_SCAR] == nullptr)
+					sc_start(src, bl, SC_SHADOW_SCAR, 100, 1, INFINITE_TICK);
+				unit_addshadowscar(*ud, skill_get_time2(SHC_ENCHANTING_SHADOW, sce->val1), MAX_SHADOW_SCAR);
 			}
 		}
 
