@@ -25,7 +25,7 @@ const std::string CashShopDatabase::getDefaultLocation(){
 	return std::string( db_path ) + "/item_cash.yml";
 }
 
-uint64 CashShopDatabase::parseBodyNode( const YAML::Node &node ){
+uint64 CashShopDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	std::string name;
 
 	if( !this->asString( node, "Tab", name ) ){
@@ -59,7 +59,7 @@ uint64 CashShopDatabase::parseBodyNode( const YAML::Node &node ){
 		entry->tab = tab;
 	}
 
-	for( const YAML::Node &it : node["Items"] ){
+	for( const ryml::NodeRef& it : node["Items"] ){
 		std::string item_name;
 
 		if( !this->asString( it, "Item", item_name ) ){

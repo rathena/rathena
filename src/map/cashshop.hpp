@@ -72,7 +72,7 @@ public:
 	}
 
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const YAML::Node &node );
+	uint64 parseBodyNode( const ryml::NodeRef& node );
 
 	// Additional
 	std::shared_ptr<s_cash_item> findItemInTab( e_cash_shop_tab tab, t_itemid nameid );
