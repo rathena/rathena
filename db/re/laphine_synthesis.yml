@@ -364,8 +364,8 @@ Body:
       - Item: S_Gemstone_Shield_II
       - Item: S_Bearer's_Armor_II
       - Item: S_Bearer's_Shoes_II
-      - Item: S_Almighty_Earring
-      - Item: S_Almighty_Pendant
+      - Item: S_AllMighty_Earring
+      - Item: S_AllMighty_Pendant
       - Item: S_Tempest_Shield
       - Item: S_Tempest_Shoes
       - Item: S_Magic_Executioner_Holy_Water_Armor
@@ -416,8 +416,8 @@ Body:
       - Item: S_Magical_Armor
       - Item: S_Immune_Athena_Shield
       - Item: S_Hard_Champion_Shoes
-      - Item: S_Kingbird_Ancient_Armor
-      - Item: S_Cri_Hit_Armor
+      - Item: S_KingbirdAncient_Armor
+      - Item: S_CriticalHit_Armor
       - Item: S_Rebellion_Armor
       - Item: S_Kagerou_Armor
       - Item: S_Oboro_Armor
@@ -1853,7 +1853,7 @@ Body:
   - Item: Fan_Upgrade_Kit
     RewardGroup: FAN_UPGRADE_KIT
     Requirements:
-      - Item: Sea_Otter_Mini_Fan
+      - Item: SeeOtter_Fan
   - Item: Suit_Upgrade_Kit
     RewardGroup: SUIT_UPGRADE_KIT
     Requirements:
@@ -3202,7 +3202,7 @@ Body:
     RewardGroup: IRON_STAFF_CUBE
     MinimumRefine: 9
     Requirements:
-      - Item: Aeon_Staff
+      - Item: Iron_Staff
   - Item: Blue_Crystal_Staff_Cube
     RewardGroup: BLUE_CRYSTAL_STAFF_CUBE
     MinimumRefine: 9
@@ -3696,8 +3696,8 @@ Body:
 #      - Item: S_Gemstone_Shield_II
 #      - Item: S_Bearer's_Armor_II
 #      - Item: S_Bearer's_Shoes_II
-#      - Item: S_Almighty_Earring
-#      - Item: S_Almighty_Pendant
+#      - Item: S_AllMighty_Earring
+#      - Item: S_AllMighty_Pendant
 #      - Item: S_Tempest_Shield
 #      - Item: S_Tempest_Shoes
 #      - Item: S_Magic_Executioner_Holy_Water_Armor
@@ -3748,8 +3748,8 @@ Body:
 #      - Item: S_Magical_Armor
 #      - Item: S_Immune_Athena_Shield
 #      - Item: S_Hard_Champion_Shoes
-#      - Item: S_Kingbird_Ancient_Armor
-#      - Item: S_Cri_Hit_Armor
+#      - Item: S_KingbirdAncient_Armor
+#      - Item: S_CriticalHit_Armor
 #      - Item: S_Rebellion_Armor
 #      - Item: S_Kagerou_Armor
 #      - Item: S_Oboro_Armor

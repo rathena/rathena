@@ -1027,7 +1027,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Fire,5;
   - Combos:
       - Combo:
-          - Aeon_Staff
+          - Iron_Staff
           - Ancient_Hero_Boots
       - Combo:
           - Ancient_Hero_Boots
@@ -3853,19 +3853,19 @@ Body:
           - RWC_2012_Pendant_
           - RWC_Memory_Knife
       - Combo:
-          - Survive_Circlet_
+          - Survive_Circlet_K
           - Survival_Rod
       - Combo:
-          - Survive_Circlet_
+          - Survive_Circlet_K
           - Survival_Rod_
       - Combo:
-          - Survive_Circlet_
+          - Survive_Circlet_K
           - Survival_Rod2
       - Combo:
-          - Survive_Circlet_
+          - Survive_Circlet_K
           - Survival_Rod2_
       - Combo:
-          - Survive_Circlet_
+          - Survive_Circlet_K
           - Survival_Rod_C
     Script: |
       bonus bMatk,getequiprefinerycnt(EQI_HAND_R)*10;
@@ -9070,29 +9070,29 @@ Body:
       }
   - Combos:
       - Combo:
-          - Survive_Circlet_
+          - Survive_Circlet_K
           - SurviveOrb_K
     Script: |
       bonus bDelayrate,getequiprefinerycnt(EQI_HEAD_TOP)*-1;
   - Combos:
       - Combo:
-          - Survive_Circlet_
+          - Survive_Circlet_K
           - Clack_Of_Servival
       - Combo:
-          - Survive_Circlet_
+          - Survive_Circlet_K
           - Coak_of_Survival
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
       bonus bVariableCastrate,-5*(.@r/2);
   - Combos:
       - Combo:
-          - Survive_Circlet_     # 19266
+          - Survive_Circlet_K     # 19266
           - Cloak_Of_Survival_C     # 2535
     Script: |
       bonus bVariableCastrate,-5*getequiprefinerycnt(EQI_GARMENT)/2;
   - Combos:
       - Combo:
-          - Survive_Circlet_
+          - Survive_Circlet_K
           - SurviveOrb
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
@@ -13708,7 +13708,7 @@ Body:
           - Up_Undine_Spear_K
       - Combo:
           - Great_Hero_Boots
-          - Up_Thousand_Sun
+          - Up_OneSkyOneSun
     Script: |
       bonus bStr,10;
       bonus bAtkRate,7;
@@ -13735,13 +13735,13 @@ Body:
           - Up_Narcis_Bow
       - Combo:
           - Great_Hero_Boots
-          - Up_Golden_Lord_Launcher
+          - Up_Golden_L_Launcher
       - Combo:
           - Great_Hero_Boots
-          - Up_The_Black
+          - Up_The_Black_Gatling
       - Combo:
           - Great_Hero_Boots
-          - Up_Demon_Slayer_Shot
+          - Up_Demon_S_Shot
     Script: |
       bonus bDex,10;
       bonus bLongAtkRate,5;
@@ -13785,7 +13785,7 @@ Body:
           - Up_Saint_Hall
       - Combo:
           - Great_Hero_Boots
-          - Up_Spirit_Pendulum_
+          - Up_SoulWeight
     Script: |
       bonus bInt,10;
       bonus bMatkRate,7;
@@ -14173,7 +14173,7 @@ Body:
       bonus bStr,4;
   - Combos:
       - Combo:
-          - aegis_400049
+          - Stripe_Hat
           - MH_P89_OS
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -14181,7 +14181,7 @@ Body:
       bonus bLongAtkRate,3*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - aegis_400049
+          - Stripe_Hat
           - AC_B44_OS
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
@@ -14189,7 +14189,7 @@ Body:
       bonus bLongAtkRate,3*(.@r_weapon/2);
   - Combos:
       - Combo:
-          - aegis_400049
+          - Stripe_Hat
           - Boost_Lance_OS
     Script: |
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);

@@ -26140,7 +26140,7 @@ Body:
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: Sea_Otter_Mini_Fan
+          - Item: SeeOtter_Fan
             RandomOptionGroup: FAN_UPGRADE_KIT
   - Group: SUIT_UPGRADE_KIT
     SubGroups:
@@ -26637,9 +26637,9 @@ Body:
     SubGroups:
       - SubGroup: 1
         List:
-          - Item: S_Almighty_Earring
+          - Item: S_AllMighty_Earring
             Rate: 1
-          - Item: S_Almighty_Pendant
+          - Item: S_AllMighty_Pendant
             Rate: 1
   - Group: GEMSTONESHADOW_MIX
     SubGroups:
@@ -26748,12 +26748,12 @@ Body:
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: S_Kingbird_Ancient_Armor
+          - Item: S_KingbirdAncient_Armor
   - Group: CRITICALHIT_MIX
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: S_Cri_Hit_Armor
+          - Item: S_CriticalHit_Armor
   - Group: BS_ITEM_M_S_2
     SubGroups:
       - SubGroup: 0
@@ -26907,7 +26907,7 @@ Body:
         List:
           - Item: SurviveOrb_K
             Rate: 1
-          - Item: Survive_Circlet_
+          - Item: Survive_Circlet_K
             Rate: 1
   - Group: BS_ITEM_M_S_28
     SubGroups:
@@ -27509,7 +27509,7 @@ Body:
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: Wickebines_Black_Cat_Ears
+          - Item: Whikebain_Ears_K
   - Group: ENCHANTSTONE_RECIPE_9M
     SubGroups:
       - SubGroup: 1
@@ -27850,9 +27850,9 @@ Body:
             Rate: 4
           - Item: S_Bearer's_Shoes_II
             Rate: 4
-          - Item: S_Almighty_Earring
+          - Item: S_AllMighty_Earring
             Rate: 4
-          - Item: S_Almighty_Pendant
+          - Item: S_AllMighty_Pendant
             Rate: 4
           - Item: S_All_Race_Shoes
             Rate: 4
@@ -27920,7 +27920,7 @@ Body:
             Rate: 4
           - Item: S_Hard_Champion_Shoes
             Rate: 4
-          - Item: S_Kingbird_Ancient_Armor
+          - Item: S_KingbirdAncient_Armor
             Rate: 4
           - Item: S_Rebellion_Armor
             Rate: 4
@@ -29413,14 +29413,14 @@ Body:
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: Up_Thousand_Sun
+          - Item: Up_OneSkyOneSun
             RefineMinimum: 7
             RefineMaximum: 7
   - Group: SPIRIT_PENDULUM_CUBE
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: Up_Spirit_Pendulum_
+          - Item: Up_SoulWeight
             RefineMinimum: 7
             RefineMaximum: 7
   - Group: CRIMSON_ROSE_CUBE
@@ -29441,21 +29441,21 @@ Body:
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: Up_Golden_Lord_Launcher
+          - Item: Up_Golden_L_Launcher
             RefineMinimum: 7
             RefineMaximum: 7
   - Group: THE_BLACK_CUBE
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: Up_The_Black
+          - Item: Up_The_Black_Gatling
             RefineMinimum: 7
             RefineMaximum: 7
   - Group: DEMON_SLAYER_SHOT_CUBE
     SubGroups:
       - SubGroup: 0
         List:
-          - Item: Up_Demon_Slayer_Shot
+          - Item: Up_Demon_S_Shot
             RefineMinimum: 7
             RefineMaximum: 7
   - Group: RUNE_CRAFT_MATERIALS
@@ -31074,7 +31074,7 @@ Body:
             Rate: 100
           - Item: Avenger
             Rate: 100
-          - Item: Aeon_Staff
+          - Item: Iron_Staff
             Rate: 100
           - Item: Oriental_Sword
             Rate: 100

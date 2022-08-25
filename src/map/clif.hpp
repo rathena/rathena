@@ -1204,4 +1204,7 @@ void clif_laphine_upgrade_open( struct map_session_data* sd, std::shared_ptr<s_l
 void clif_reputation_type( struct map_session_data& sd, int64 type, int64 points );
 void clif_reputation_list( struct map_session_data& sd );
 
+// Item Reform UI
+void clif_item_reform_open( struct map_session_data& sd, t_itemid item );
+
 #endif /* CLIF_HPP */

@@ -1662,6 +1662,291 @@ uint64 LaphineUpgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 
 LaphineUpgradeDatabase laphine_upgrade_db;
 
+const std::string ItemReformDatabase::getDefaultLocation(){
+	return std::string( db_path ) + "/item_reform.yml";
+}
+
+uint64 ItemReformDatabase::parseBodyNode( const ryml::NodeRef& node ){
+	t_itemid item_id;
+
+	{
+		std::string name;
+
+		if( !this->asString( node, "Item", name ) ){
+			return 0;
+		}
+
+		std::shared_ptr<item_data> id = item_db.search_aegisname( name.c_str() );
+
+		if( id == nullptr ){
+			this->invalidWarning( node["Item"], "Unknown item \"%s\".\n", name.c_str() );
+			return 0;
+		}
+
+		item_id = id->nameid;
+	}
+
+	std::shared_ptr<s_item_reform> entry = this->find( item_id );
+	bool exists = entry != nullptr;
+
+	if( !exists ){
+		if( !this->nodesExist( node, { "BaseItems" } ) ){
+			return 0;
+		}
+
+		entry = std::make_shared<s_item_reform>();
+		entry->item_id = item_id;
+	}
+
+	if( this->nodeExists( node, "BaseItems" ) ){
+		for( const ryml::NodeRef& baseNode : node["BaseItems"] ){
+			t_itemid base_itemid;
+
+			{
+				std::string name;
+
+				if( !this->asString( baseNode, "BaseItem", name ) ){
+					return 0;
+				}
+
+				std::shared_ptr<item_data> id = item_db.search_aegisname( name.c_str() );
+
+				if( id == nullptr ){
+					this->invalidWarning( baseNode["BaseItem"], "Unknown item \"%s\".\n", name.c_str() );
+					return 0;
+				}
+
+				base_itemid = id->nameid;
+			}
+
+			std::shared_ptr<s_item_reform_base> base = util::umap_find( entry->base_items, base_itemid );
+			bool base_exists = base != nullptr;
+
+			if( !base_exists ){
+				if( !this->nodesExist( baseNode, { "ResultItem" } ) ){
+					return 0;
+				}
+
+				base = std::make_shared<s_item_reform_base>();
+				base->item_id = base_itemid;
+			}
+
+			if( this->nodeExists( baseNode, "MinimumRefine" ) ){
+				uint16 refine;
+
+				if( !this->asUInt16( baseNode, "MinimumRefine", refine ) ){
+					return 0;
+				}
+
+				if( refine > MAX_REFINE ){
+					this->invalidWarning( baseNode["MinimumRefine"], "Minimum refine %hu is too high, capping to MAX_REFINE...\n", refine );
+					refine = MAX_REFINE;
+				}
+
+				base->minimumRefine = refine;
+			}else{
+				if( !base_exists ){
+					base->minimumRefine = 0;
+				}
+			}
+
+			if( this->nodeExists( baseNode, "MaximumRefine" ) ){
+				uint16 refine;
+
+				if( !this->asUInt16( baseNode, "MaximumRefine", refine ) ){
+					return 0;
+				}
+
+				if( refine > MAX_REFINE ){
+					this->invalidWarning( baseNode["MaximumRefine"], "Maximum refine %hu is too high, capping to MAX_REFINE...\n", refine );
+					refine = MAX_REFINE;
+				}
+
+				base->maximumRefine = refine;
+			}else{
+				if( !base_exists ){
+					base->maximumRefine = MAX_REFINE;
+				}
+			}
+
+			if( this->nodeExists( baseNode, "RequiredRandomOptions" ) ){
+				uint16 amount;
+
+				if( !this->asUInt16( baseNode, "RequiredRandomOptions", amount ) ){
+					return 0;
+				}
+
+				if( amount > MAX_ITEM_RDM_OPT ){
+					this->invalidWarning( baseNode["RequiredRandomOptions"], "Required random option amount %hu is too high, capping to MAX_ITEM_RDM_OPT...\n", amount );
+					amount = MAX_ITEM_RDM_OPT;
+				}
+
+				base->requiredRandomOptions = amount;
+			}else{
+				if( !base_exists ){
+					base->requiredRandomOptions = 0;
+				}
+			}
+
+			if( this->nodeExists( baseNode, "CardsAllowed" ) ){
+				bool allowed;
+
+				if( !this->asBool( baseNode, "CardsAllowed", allowed ) ){
+					return 0;
+				}
+
+				base->cardsAllowed = allowed;
+			}else{
+				if( !base_exists ){
+					base->cardsAllowed = true;
+				}
+			}
+
+			if( this->nodeExists( baseNode, "Materials" ) ){
+				for( const ryml::NodeRef& materialNode : baseNode["Materials"] ){
+					std::string name;
+
+					if( !this->asString( materialNode, "Material", name ) ){
+						return 0;
+					}
+
+					std::shared_ptr<item_data> id = item_db.search_aegisname( name.c_str() );
+
+					if( id == nullptr ){
+						this->invalidWarning( materialNode["Material"], "Unknown item \"%s\".\n", name.c_str() );
+						return 0;
+					}
+
+					t_itemid material_id = id->nameid;
+					bool material_exists = util::umap_find( base->materials, material_id ) != nullptr;
+					uint16 amount;
+
+					if( this->nodeExists( materialNode, "Amount" ) ){
+						if( !this->asUInt16( materialNode, "Amount", amount ) ){
+							return 0;
+						}
+
+						if( amount > MAX_AMOUNT ){
+							this->invalidWarning( materialNode["Amount"], "Amount %hu is too high, capping to MAX_AMOUNT...\n", amount );
+							amount = MAX_AMOUNT;
+						}
+					}else{
+						if( !material_exists ){
+							amount = 1;
+						}
+					}
+
+					if( amount > 0 ){
+						base->materials[material_id] = amount;
+					}else{
+						base->materials.erase( material_id );
+					}
+				}
+			}
+
+			if( this->nodeExists( baseNode, "ResultItem" ) ){
+				std::string name;
+
+				if( !this->asString( baseNode, "ResultItem", name ) ){
+					return 0;
+				}
+
+				std::shared_ptr<item_data> id = item_db.search_aegisname( name.c_str() );
+
+				if( id == nullptr ){
+					this->invalidWarning( baseNode["ResultItem"], "Unknown item \"%s\".\n", name.c_str() );
+					return 0;
+				}
+
+				base->resultItemId = id->nameid;
+			}
+
+			if( this->nodeExists( baseNode, "ChangeRefine" ) ){
+				int16 refine;
+
+				if( !this->asInt16( baseNode, "ChangeRefine", refine ) ){
+					return 0;
+				}
+
+				if( refine > MAX_REFINE ){
+					this->invalidWarning( baseNode["MaximumRefine"], "Refine change %hu is too high, capping to MAX_REFINE...\n", refine );
+					refine = MAX_REFINE;
+				}else if( refine < -MAX_REFINE ){
+					this->invalidWarning( baseNode["MaximumRefine"], "Refine change %hu is too low, capping to -MAX_REFINE...\n", refine );
+					refine = -MAX_REFINE;
+				}
+
+				base->refineChange = refine;
+			}else{
+				if( !base_exists ){
+					base->refineChange = 0;
+				}
+			}
+
+			if( this->nodeExists( baseNode, "RandomOptionGroup" ) ){
+				std::string name;
+
+				if( !this->asString( baseNode, "RandomOptionGroup", name ) ){
+					return 0;
+				}
+
+				uint16 id;
+
+				if( !random_option_group.option_get_id( name, id ) ){
+					this->invalidWarning( baseNode["RandomOptionGroup"], "Unknown random option group \"%s\".\n", name.c_str() );
+					return 0;
+				}
+
+				base->randomOptionGroup = random_option_group.find( id );
+			}else{
+				if( !base_exists ){
+					base->randomOptionGroup = nullptr;
+				}
+			}
+
+			if( this->nodeExists( baseNode, "ClearSlots" ) ){
+				bool clear;
+
+				if( !this->asBool( baseNode, "ClearSlots", clear ) ){
+					return 0;
+				}
+
+				base->clearSlots = clear;
+			}else{
+				if( !base_exists ){
+					base->clearSlots = false;
+				}
+			}
+
+			if( this->nodeExists( baseNode, "RemoveEnchantgrade" ) ){
+				bool clear;
+
+				if( !this->asBool( baseNode, "RemoveEnchantgrade", clear ) ){
+					return 0;
+				}
+
+				base->removeEnchantgrade = clear;
+			}else{
+				if( !base_exists ){
+					base->removeEnchantgrade = false;
+				}
+			}
+
+			if( !base_exists ){
+				entry->base_items[base_itemid] = base;
+			}
+		}
+	}
+
+	if( !exists ){
+		this->put( entry->item_id, entry );
+	}
+
+	return 1;
+}
+
+ItemReformDatabase item_reform_db;
+
 /*==========================================
  * Finds up to N matches. Returns number of matches [Skotlex]
  * @param *data
@@ -3475,6 +3760,7 @@ static void itemdb_read(void) {
 	itemdb_combo.load();
 	laphine_synthesis_db.load();
 	laphine_upgrade_db.load();
+	item_reform_db.load();
 
 	if (battle_config.feature_roulette)
 		itemdb_parse_roulette_db();
@@ -3541,6 +3827,7 @@ void do_final_itemdb(void) {
 	random_option_group.clear();
 	laphine_synthesis_db.clear();
 	laphine_upgrade_db.clear();
+	item_reform_db.clear();
 	if (battle_config.feature_roulette)
 		itemdb_roulette_free();
 }

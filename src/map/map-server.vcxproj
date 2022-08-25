@@ -336,6 +336,7 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_noequip.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_noequip.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_randomopt_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_randomopt_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_randomopt_group.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_randomopt_group.yml')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_reform.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_reform.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\job_noenter_map.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\job_noenter_map.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\job_stats.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\job_stats.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\laphine_synthesis.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\laphine_synthesis.yml')" />

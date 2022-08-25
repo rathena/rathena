@@ -258,6 +258,27 @@ struct PACKET_ZC_REPUTE_INFO{
 	struct PACKET_ZC_REPUTE_INFO_sub list[];
 } __attribute__((packed));
 
+struct PACKET_ZC_OPEN_REFORM_UI{
+	int16 packetType;
+	uint32 itemId;
+} __attribute__((packed));
+
+struct PACKET_CZ_CLOSE_REFORM_UI{
+	int16 packetType;
+} __attribute__((packed));
+
+struct PACKET_CZ_ITEM_REFORM{
+	int16 packetType;
+	uint32 itemId;
+	uint16 index;
+} __attribute__((packed));
+
+struct PACKET_ZC_ITEM_REFORM_ACK{
+	int16 packetType;
+	uint16 index;
+	uint8 result;
+} __attribute__((packed));
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -313,6 +334,10 @@ DEFINE_PACKET_HEADER(CZ_UNCONFIRMED_RODEX_RETURN, 0xb98)
 DEFINE_PACKET_HEADER(ZC_SUMMON_HP_INIT, 0xb6b)
 DEFINE_PACKET_HEADER(ZC_SUMMON_HP_UPDATE, 0xb6c)
 DEFINE_PACKET_HEADER(ZC_REPUTE_INFO, 0x0b8d)
+DEFINE_PACKET_HEADER(ZC_OPEN_REFORM_UI, 0x0b8f)
+DEFINE_PACKET_HEADER(CZ_CLOSE_REFORM_UI, 0x0b90)
+DEFINE_PACKET_HEADER(CZ_ITEM_REFORM, 0x0b91)
+DEFINE_PACKET_HEADER(ZC_ITEM_REFORM_ACK, 0x0b92)
 
 const int16 MAX_INVENTORY_ITEM_PACKET_NORMAL = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_normal ) - ( sizeof( struct NORMALITEM_INFO ) * MAX_ITEMLIST) ) ) / sizeof( struct NORMALITEM_INFO ) );
 const int16 MAX_INVENTORY_ITEM_PACKET_EQUIP = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_equip ) - ( sizeof( struct EQUIPITEM_INFO ) * MAX_ITEMLIST ) ) ) / sizeof( struct EQUIPITEM_INFO ) );

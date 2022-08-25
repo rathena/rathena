@@ -23846,6 +23846,196 @@ void clif_reputation_list( struct map_session_data& sd ){
 #endif
 }
 
+void clif_item_reform_open( struct map_session_data& sd, t_itemid item ){
+#if PACKETVER_RE_NUM >= 20211103
+	struct PACKET_ZC_OPEN_REFORM_UI p = {};
+
+	p.packetType = HEADER_ZC_OPEN_REFORM_UI;
+	p.itemId = item;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+
+	sd.state.item_reform = item;
+#endif
+}
+
+void clif_parse_item_reform_close( int fd, struct map_session_data* sd ){
+#if PACKETVER_RE_NUM >= 20211103
+	sd->state.item_reform = 0;
+#endif
+}
+
+void clif_item_reform_result( struct map_session_data& sd, uint16 index, uint8 result ){
+#if PACKETVER_RE_NUM >= 20211103
+	struct PACKET_ZC_ITEM_REFORM_ACK p = {};
+
+	p.packetType = HEADER_ZC_ITEM_REFORM_ACK;
+	p.index = client_index( index );
+	p.result = result;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+
+	if( result == 0 ){
+		// Client closes the window on success
+		sd.state.item_reform = 0;
+	}
+#endif
+}
+
+void clif_parse_item_reform_start( int fd, struct map_session_data* sd ){
+#if PACKETVER_RE_NUM >= 20211103
+	// Not opened
+	if( sd->state.item_reform == 0 ){
+		return;
+	}
+
+	struct PACKET_CZ_ITEM_REFORM *p = (struct PACKET_CZ_ITEM_REFORM*)RFIFOP( fd, 0 );
+
+	// Item mismatch
+	if( p->itemId != sd->state.item_reform ){
+		return;
+	}
+
+	uint16 index = server_index( p->index );
+
+	if( index >= MAX_INVENTORY ){
+		return;
+	}
+
+	if( sd->inventory_data[index] == nullptr ){
+		return;
+	}
+
+	std::shared_ptr<s_item_reform> reform = item_reform_db.find( sd->state.item_reform );
+
+	if( reform == nullptr ){
+		return;
+	}
+
+	struct item& selected_item = sd->inventory.u.items_inventory[index];
+
+	std::shared_ptr<s_item_reform_base> base = util::umap_find( reform->base_items, selected_item.nameid );
+
+	if( base == nullptr ){
+		return;
+	}
+
+	// If target item is not identified
+	if( selected_item.identify == 0 ){
+		return;
+	}
+
+	// If target item is equipped
+	if( selected_item.equip != 0 ){
+		return;
+	}
+
+	// Check minimum refine requirement
+	if( selected_item.refine < base->minimumRefine ){
+		return;
+	}
+
+	// Check maximum refine requirement
+	if( selected_item.refine > base->maximumRefine ){
+		return;
+	}
+
+	// If no cards are allowed
+	if( !base->cardsAllowed ){
+		for( int i = 0; i < MAX_SLOTS; i++ ){
+			if( selected_item.card[i] != 0 ){
+				return;
+			}
+		}
+	}
+
+	// If random options are required
+	if( base->requiredRandomOptions > 0 ){
+		int i;
+
+		for( i = MAX_ITEM_RDM_OPT - 1; i >= 0; i-- ){
+			if( selected_item.option[i].id != 0 ){
+				break;
+			}
+		}
+
+		if( ( i + 1 ) < base->requiredRandomOptions ){
+			return;
+		}
+	}
+
+	std::unordered_map<uint16, uint16> materials;
+
+	// Check if all materials exist
+	for( const auto& material : base->materials ){
+		int16 material_index = pc_search_inventory( sd, material.first );
+
+		if( material_index < 0 ){
+			return;
+		}
+
+		if( sd->inventory.u.items_inventory[material_index].amount < material.second ){
+			return;
+		}
+
+		materials[material_index] = material.second;
+	}
+
+	// Remove the material
+	for( const auto& material : materials ){
+		if( pc_delitem( sd, material.first, material.second, 0, 0, LOG_TYPE_REFORM ) != 0 ){
+			return;
+		}
+	}
+
+	// If triggered from item
+	if( sd->itemid == sd->state.item_reform && pc_delitem( sd, sd->itemindex, 1, 0, 0, LOG_TYPE_REFORM ) != 0 ){
+		return;
+	}
+
+	// Log removal of item
+	log_pick_pc( sd, LOG_TYPE_REFORM, -1, &selected_item );
+
+	// Visually remove it from the client
+	clif_delitem( sd, index, 1, 0 );
+
+	// Apply the random options
+	if( base->randomOptionGroup != nullptr ){
+		base->randomOptionGroup->apply( selected_item );
+	}
+
+	// Change the refine rate if needed
+	if( base->refineChange != 0 ){
+		selected_item.refine = cap_value( selected_item.refine + base->refineChange, 0, MAX_REFINE );
+	}
+
+	// Remove all cards and socket enchants
+	if( base->clearSlots ){
+		for( int i = 0; i < MAX_SLOTS; i++ ){
+			selected_item.card[i] = 0;
+		}
+	}
+
+	// Remove the current enchantgrade
+	if( base->removeEnchantgrade ){
+		selected_item.enchantgrade = 0;
+	}
+
+	// Finally change the item id
+	selected_item.nameid = base->resultItemId;
+	// Link inventory data cache to the new item
+	sd->inventory_data[index] = itemdb_search( base->resultItemId );
+
+	// Log retrieving the item again -> with the new options
+	log_pick_pc( sd, LOG_TYPE_REFORM, 1, &selected_item );
+
+	// Make it visible for the client again
+	clif_additem( sd, index, 1, 0 );
+
+	clif_item_reform_result( *sd, index, 0 );
+#endif
+}
+
 /*==========================================
  * Main client packet processing function
  *------------------------------------------*/
