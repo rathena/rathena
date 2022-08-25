@@ -4,7 +4,6 @@
 #include "guild.hpp"
 
 #include <stdlib.h>
-#include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/database.hpp"
@@ -73,15 +72,15 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const YAML::Node& node );
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode( const ryml::NodeRef& node ) override;
 };
 
 const std::string GuildSkillTreeDatabase::getDefaultLocation(){
 	return std::string(db_path) + "/guild_skill_tree.yml";
 }
 
-uint64 GuildSkillTreeDatabase::parseBodyNode( const YAML::Node &node ){
+uint64 GuildSkillTreeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	std::string name;
 
 	if( !this->asString( node, "Id", name ) ){
@@ -129,7 +128,8 @@ uint64 GuildSkillTreeDatabase::parseBodyNode( const YAML::Node &node ){
 	}
 
 	if( this->nodeExists( node, "Required" ) ){
-		for( const YAML::Node& requiredNode : node["Required"] ){
+		const auto& reqNode = node["Required"];
+		for( const auto&  requiredNode : reqNode ){
 			std::string requiredName;
 
 			if( !this->asString( requiredNode, "Id", requiredName ) ){
@@ -274,7 +274,7 @@ const std::string CastleDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/castle_db.yml";
 }
 
-uint64 CastleDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 CastleDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	int32 castle_id;
 
 	if (!this->asInt32(node, "Id", castle_id))
@@ -1529,14 +1529,15 @@ void guild_guildaura_refresh(struct map_session_data *sd, uint16 skill_id, uint1
 	if( !skill_lv )
 		return;
 
-	std::shared_ptr<s_skill_unit_group> group;
-	sc_type type = status_skill2sc(skill_id);
+	sc_type type = skill_get_sc(skill_id);
 
-	if( sd->sc.data[type] && (group = skill_id2group(sd->sc.data[type]->val4)) ) {
-		skill_delunitgroup(group);
-		status_change_end(&sd->bl,type,INVALID_TIMER);
-	}
-	group = skill_unitsetting(&sd->bl,skill_id,skill_lv,sd->bl.x,sd->bl.y,0);
+	if (type == SC_NONE)
+		return;
+
+	status_change_end(&sd->bl, type, INVALID_TIMER);
+
+	std::shared_ptr<s_skill_unit_group> group = skill_unitsetting(&sd->bl,skill_id,skill_lv,sd->bl.x,sd->bl.y,0);
+
 	if( group )
 		sc_start4(NULL,&sd->bl,type,100,(battle_config.guild_aura&16)?0:skill_lv,0,0,group->group_id,600000);//duration doesn't matter these status never end with val4
 	return;

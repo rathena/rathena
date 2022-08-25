@@ -1,0 +1,131 @@
+//===== rAthena Script ======================================= 
+//= Enchant Grade
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [JohnnyPlayy]
+//= 1.1 Fixed small issues. [Lemongrass]
+//= 1.2 Added translation. [Asheraf]
+//= 1.3 Added paramarket NPC and warps. [Balfear]
+//= 1.4 Translated paramarket NPC. [Lemongrass]
+//============================================================
+
+grademk,34,184,4	script	Sratos#sratos	4_JP_GARM_H,{
+	mes "[Sratos]";
+	mes "Hello, dear customer who walked in, let's hope for a miracle today.";
+	mes "How can I help you?";
+	next;
+	switch( select( "Enhance the equipment's grade.", "Exchange Etel items", "What is Grade Enhancement?" ) ){
+		case 1:
+			mes "[Sratos]";
+			mes "Our customer. You want to enhance the grade of equipment.";
+			mes "It is not easy to move the magical power of jewels.";
+			next;
+			mes "[Sratos]";
+			mes "Magical power can explode on the spot.";
+			mes "Then the weapon that will inherit the magical power also explodes!";
+			next;
+			switch( select( "I'll still do it!", "I'll think about it." ) ){
+				case 1:
+					mes "[Sratos]";
+					mes "I wish good luck to our courageous customers!";
+					close2;
+					enchantgradeui();
+					end;
+				case 2:
+					mes "[Sratos]";
+					mes "Whenever you have the courage to challenge, please come back.";
+					close;
+			}
+		case 2:
+			mes "[Sratos]";
+			mes "These are jewels used to enhance grades.";
+			mes "Etel Dust, the jewels that will be the base, and if you give me a small fee I'll exchange it for Etel jewels.";
+			close2;
+			callshop "EnchantGradeExchange";
+			end;
+
+		case 3:
+			mes "[Sratos]";
+			mes "Occasionally, unstable jewels with a lot of pure magical power are found.";
+			mes "We call these etheric gems, right?";
+			next;
+			mes "[Sratos]";
+			mes "You can transfer the magical power of the etheric gem to other weapons, but of course there is some risk.";
+			mes "It's delicate, so if you aren't careful, pop! It will explode.";
+			next;
+			mes "[Sratos]";
+			mes "Anyway, if you use this etheric gem, you can enhance the weapon you are using.";
+			mes "Performance gets better. We call this grade enhancement.";
+			next;
+			mes "[Sratos]";
+			mes "You too, wouldn't you be happy if the weapons you love grow one step further?";
+			mes "We are the people who assist it. It's a bit risky, though. ahahaha.";
+			close;
+	}
+
+OnInit:
+	setunittitle(getnpcid(0), "<Grade Enhancer>");
+	end;
+}
+
+paramk,34,184,4	script	Suribell#suribell	4_F_FRUIT,{
+	mes "[Suribell]";
+	mes "May good luck always be with you!";
+	mes "Welcome to Paramarket's Grade Enhancement Center~";
+	next;
+	switch( select( "Enhance the equipment's grade.", "Exchange Etel items", "What is Grade Enhancement?" )) {
+		case 1:
+			mes "[Suribell]";
+			mes "Do you want to unlock the potential of your favorite equipment?";
+			mes "Explosions may also occur in the process of dealing with magical powers.";
+			next;
+			mes "[Suribell]";
+			mes "Still, if you're trying to enhance your grade... !";
+			mes "I, Suribell, will do my best!";
+			next;
+			switch( select( "I'll still do it!", "I'll think about it." ) ){
+				case 1:
+					mes "[Suribell]";
+					mes "Let's hold hands and have faith! Try clenching your teeth!";
+					close2;
+					enchantgradeui();
+					end;
+				case 2:
+					mes "[Suribell]";
+					mes "Okay! Let's drink a glass of cold water!";
+					close;
+			}
+		case 2:
+			mes "[Suribell]";
+			mes "You need etheric gems to enhance grades!";
+			mes "If you combine Etel Dust and jewels to make it, it is fine! An Etel jewel for adventurers is complete!";
+			mes "Would you like to combine jewels and Etel Dust?";
+			close2;
+			callshop "EnchantGradeExchange";
+			end;
+		case 3:
+			mes "[Suribell]";
+			mes "Occasionally, unstable jewels with a lot of pure magical power are found.";
+			mes "I decided to call such gems etheric gems.";
+			mes "Who? I am Suribell!";
+			next;
+			mes "[Suribell]";
+			mes "The magical power of etheric gems sometimes awakens the hidden potential of equipment.";
+			mes "We call it grade enhancement because it goes up one tier!";
+			next;
+			mes "[Suribell]";
+			mes "The adventurer may have a potential that is unknown to him.";
+			mes "There is a risk that it can be destroyed if done wrong, but try it with faith!";
+			close;
+	}
+
+OnInit:
+	setunittitle(getnpcid(0), "<Grade Enhancer>");
+	end;
+}
+
+// = Portals
+//============================================================
+prontera,50,293,0	warp	Grademk_Int	1,1,grademk,13,172
+grademk,9,172,0	warp	Grademk_Out	1,1,prontera,50,290
+paramk,8,171,0	warp	grade_in	1,1,paramk,141,64
+paramk,145,64,0	warp	grade_out	1,1,paramk,11,171

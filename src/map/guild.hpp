@@ -122,9 +122,10 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node &node);
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 
+	// Additional
 	std::shared_ptr<guild_castle> mapname2gc(const char* mapname);
 	std::shared_ptr<guild_castle> mapindex2gc(int16 mapindex);
 };

@@ -432,7 +432,6 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, s
 	uint32 totalcash = 0;
 	uint32 totalweight = 0;
 	int i,new_;
-	item_data *id;
 
 	if( sd == NULL || item_list == NULL ){
 		clif_cashshop_result( sd, 0, CASHSHOP_RESULT_ERROR_UNKNOWN );
@@ -461,7 +460,8 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, s
 			return false;
 		}
 
-		id = itemdb_exists(nameid);
+
+		std::shared_ptr<item_data> id = item_db.find(nameid);
 
 		if( !id ){
 			clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_UNKONWN_ITEM );

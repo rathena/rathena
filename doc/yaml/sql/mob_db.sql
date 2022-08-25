@@ -56,6 +56,7 @@ CREATE TABLE `mob_db` (
   `racegroup_werner_lab` tinyint(1) unsigned DEFAULT NULL,
   `racegroup_temple_demon` tinyint(1) unsigned DEFAULT NULL,
   `racegroup_illusion_vampire` tinyint(1) unsigned DEFAULT NULL,
+  `racegroup_malangdo` tinyint(1) unsigned DEFAULT NULL,
   `element` varchar(24) DEFAULT NULL,
   `element_level` tinyint(4) unsigned DEFAULT NULL,
   `walk_speed` smallint(6) unsigned DEFAULT NULL,

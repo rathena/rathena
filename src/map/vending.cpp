@@ -227,7 +227,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 		// vending item
 		pc_additem(sd, &vsd->cart.u.items_cart[idx], amount, LOG_TYPE_VENDING);
 		vsd->vending[vend_list[i]].amount -= amount;
-		z += ((double)vsd->vending[i].value * (double)amount);
+		z += ((double)vsd->vending[vend_list[i]].value * (double)amount);
 
 		if( vsd->vending[vend_list[i]].amount ) {
 			if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `amount` = %d WHERE `vending_id` = %d and `cartinventory_id` = %d", vending_items_table, vsd->vending[vend_list[i]].amount, vsd->vender_id, vsd->cart.u.items_cart[idx].id ) != SQL_SUCCESS ) {
@@ -711,6 +711,20 @@ static int vending_autotrader_free(DBKey key, DBData *data, va_list ap) {
 }
 
 /**
+* Update vendor location
+* @param sd: Player's session data
+*/
+void vending_update(map_session_data &sd)
+{
+	if (Sql_Query(mmysql_handle, "UPDATE `%s` SET `map` = '%s', `x` = '%d', `y` = '%d', `body_direction` = '%d', `head_direction` = '%d', `sit` = '%d', `autotrade` = '%d' WHERE `id` = '%d'",
+		vendings_table, map_getmapdata(sd.bl.m)->name, sd.bl.x, sd.bl.y, sd.ud.dir, sd.head_dir, pc_issit(&sd), sd.state.autotrade,
+		sd.vender_id
+	) != SQL_SUCCESS) {
+		Sql_ShowDebug(mmysql_handle);
+	}
+}
+
+/**	
  * Initialise the vending module
  * called in map::do_init
  */

@@ -1,12 +1,13 @@
 L_SRV=login-server
 C_SRV=char-server
 M_SRV=map-server
+W_SRV=web-server
 INST_PATH=/opt
 PKG=rathena
 PKG_PATH=$INST_PATH/$PKG
 
 check_files() {
-    for i in ${L_SRV} ${C_SRV} ${M_SRV}
+    for i in ${L_SRV} ${C_SRV} ${M_SRV} ${W_SRV}
     do
         if [ ! -f ./$i ]; then
             echo "$i does not exist... exiting..."

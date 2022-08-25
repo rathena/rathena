@@ -52,17 +52,18 @@
 
 using namespace rathena;
 
-char default_codepage[32] = "";
+std::string default_codepage = "";
 
 int map_server_port = 3306;
-char map_server_ip[64] = "127.0.0.1";
-char map_server_id[32] = "ragnarok";
-char map_server_pw[32] = "";
-char map_server_db[32] = "ragnarok";
+std::string map_server_ip = "127.0.0.1";
+std::string map_server_id = "ragnarok";
+std::string map_server_pw = "";
+std::string map_server_db = "ragnarok";
 Sql* mmysql_handle;
 Sql* qsmysql_handle; /// For query_sql
 
 int db_use_sqldbs = 0;
+char barter_table[32] = "barter";
 char buyingstores_table[32] = "buyingstores";
 char buyingstore_items_table[32] = "buyingstore_items";
 #ifdef RENEWAL
@@ -88,14 +89,15 @@ char roulette_table[32] = "db_roulette";
 char guild_storage_log_table[32] = "guild_storage_log";
 
 // log database
-char log_db_ip[64] = "127.0.0.1";
+std::string log_db_ip = "127.0.0.1";
 int log_db_port = 3306;
-char log_db_id[32] = "ragnarok";
-char log_db_pw[32] = "";
-char log_db_db[32] = "log";
+std::string log_db_id = "ragnarok";
+std::string log_db_pw = "";
+std::string log_db_db = "log";
 Sql* logmysql_handle;
 
-uint32 start_status_points = 48;
+// inter config
+struct inter_conf inter_config {};
 
 // DBMap declaration
 static DBMap* id_db=NULL; /// int id -> struct block_list*
@@ -556,6 +558,11 @@ int map_count_oncell(int16 m, int16 x, int16 y, int type, int flag)
 	if (type&~BL_MOB)
 		for( bl = mapdata->block[bx+by*mapdata->bxs] ; bl != NULL ; bl = bl->next )
 			if(bl->x == x && bl->y == y && bl->type&type) {
+				if (bl->type == BL_NPC) {	// Don't count hidden or invisible npc. Cloaked npc are counted
+					npc_data *nd = BL_CAST(BL_NPC, bl);
+					if (nd && (nd->bl.m < 0 || nd->sc.option && nd->sc.option&(OPTION_HIDE|OPTION_INVISIBLE)))
+						continue;
+				}
 				if(flag&1) {
 					struct unit_data *ud = unit_bl2ud(bl);
 					if(!ud || ud->walktimer == INVALID_TIMER)
@@ -1837,6 +1844,7 @@ bool map_closest_freecell(int16 m, int16 *x, int16 *y, int type, int flag)
  * @param third_charid : 3rd player that could loot the item (3rd charid that could loot for third_get_charid duration)
  * @param flag: &1 MVP item. &2 do stacking check. &4 bypass droppable check.
  * @param mob_id: Monster ID if dropped by monster
+ * @param canShowEffect: enable pillar effect on the dropped item (if set in the database)
  * @return 0:failure, x:item_gid [MIN_FLOORITEM;MAX_FLOORITEM]==[2;START_ACCOUNT_NUM]
  *------------------------------------------*/
 int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect)
@@ -2080,82 +2088,27 @@ int map_quit(struct map_session_data *sd) {
 	//map_quit handles extra specific data which is related to quitting normally
 	//(changing map-servers invokes unit_free but bypasses map_quit)
 	if( sd->sc.count ) {
-		//Status that are not saved...
-		status_change_end(&sd->bl, SC_BOSSMAPINFO, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_AUTOTRADE, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_SPURT, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_BERSERK, INVALID_TIMER);
-		status_change_end(&sd->bl, SC__BLOODYLUST, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_TRICKDEAD, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_LEADERSHIP, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_GLORYWOUNDS, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_SOULCOLD, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_HAWKEYES, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_EMERGENCY_MOVE, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_CHASEWALK2, INVALID_TIMER);
-		if(sd->sc.data[SC_PROVOKE] && sd->sc.data[SC_PROVOKE]->timer == INVALID_TIMER)
-			status_change_end(&sd->bl, SC_PROVOKE, INVALID_TIMER); //Infinite provoke ends on logout
-		status_change_end(&sd->bl, SC_WEIGHT50, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_WEIGHT90, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_SATURDAYNIGHTFEVER, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_KYOUGAKU, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_C_MARKER, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_READYSTORM, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_READYDOWN, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_READYTURN, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_READYCOUNTER, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_DODGE, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_CBC, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_EQC, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_SPRITEMABLE, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_SV_ROOTTWIST, INVALID_TIMER);
-		// Remove visuals effect from headgear
-		status_change_end(&sd->bl, SC_MOONSTAR, INVALID_TIMER); 
-		status_change_end(&sd->bl, SC_SUPER_STAR, INVALID_TIMER); 
-		status_change_end(&sd->bl, SC_STRANGELIGHTS, INVALID_TIMER); 
-		status_change_end(&sd->bl, SC_DECORATION_OF_MUSIC, INVALID_TIMER); 
-		if (battle_config.debuff_on_logout&1) { //Remove negative buffs
-			status_change_end(&sd->bl, SC_ORCISH, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_STRIPWEAPON, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_STRIPARMOR, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_STRIPSHIELD, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_STRIPHELM, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_EXTREMITYFIST, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_EXPLOSIONSPIRITS, INVALID_TIMER);
-			if(sd->sc.data[SC_REGENERATION] && sd->sc.data[SC_REGENERATION]->val4)
-				status_change_end(&sd->bl, SC_REGENERATION, INVALID_TIMER);
-			//TO-DO Probably there are way more NPC_type negative status that are removed
-			status_change_end(&sd->bl, SC_CHANGEUNDEAD, INVALID_TIMER);
-			// Both these statuses are removed on logout. [L0ne_W0lf]
-			status_change_end(&sd->bl, SC_SLOWCAST, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_CRITICALWOUND, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_H_MINE, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_ANTI_M_BLAST, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_B_TRAP, INVALID_TIMER);
-		}
-		if (battle_config.debuff_on_logout&2) { //Remove positive buffs
-			status_change_end(&sd->bl, SC_MAXIMIZEPOWER, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_MAXOVERTHRUST, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_STEELBODY, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_PRESERVE, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_KAAHI, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_SPIRIT, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_HEAT_BARREL, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_P_ALTER, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_E_CHAIN, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_SIGHTBLASTER, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_BENEDICTIO, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_GLASTHEIM_ATK, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_GLASTHEIM_DEF, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_GLASTHEIM_HEAL, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_GLASTHEIM_HIDDEN, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_GLASTHEIM_STATE, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_GLASTHEIM_ITEMDEF, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_GLASTHEIM_HPSP, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_SOULGOLEM, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_SOULSHADOW, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_SOULFALCON, INVALID_TIMER);
-			status_change_end(&sd->bl, SC_SOULFAIRY, INVALID_TIMER);
+		for (const auto &it : status_db) {
+			std::bitset<SCF_MAX> &flag = it.second->flag;
+
+			//No need to save infinite status
+			if (flag[SCF_NOSAVEINFINITE] && sd->sc.data[it.first] && sd->sc.data[it.first]->val4 > 0) {
+				status_change_end(&sd->bl, static_cast<sc_type>(it.first), INVALID_TIMER);
+				continue;
+			}
+
+			//Status that are not saved
+			if (flag[SCF_NOSAVE]) {
+				status_change_end(&sd->bl, static_cast<sc_type>(it.first), INVALID_TIMER);
+				continue;
+			}
+			//Removes status by config
+			if (battle_config.debuff_on_logout&1 && flag[SCF_DEBUFF] || //Removes debuffs
+				(battle_config.debuff_on_logout&2 && !(flag[SCF_DEBUFF]))) //Removes buffs
+			{
+				status_change_end(&sd->bl, static_cast<sc_type>(it.first), INVALID_TIMER);
+				continue;
+			}
 		}
 	}
 
@@ -2236,7 +2189,7 @@ struct homun_data* map_id2hd(int id){
 	return BL_CAST(BL_HOM, bl);
 }
 
-struct mercenary_data* map_id2mc(int id){
+struct s_mercenary_data* map_id2mc(int id){
 	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_MER, bl);
 }
@@ -2246,7 +2199,7 @@ struct pet_data* map_id2pd(int id){
 	return BL_CAST(BL_PET, bl);
 }
 
-struct elemental_data* map_id2ed(int id) {
+struct s_elemental_data* map_id2ed(int id) {
 	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_ELEM, bl);
 }
@@ -2698,7 +2651,7 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 /*==========================================
  * Add an instance map
  *------------------------------------------*/
-int map_addinstancemap(int src_m, int instance_id)
+int map_addinstancemap(int src_m, int instance_id, bool no_mapflag)
 {
 	if(src_m < 0)
 		return -1;
@@ -2764,7 +2717,8 @@ int map_addinstancemap(int src_m, int instance_id)
 	dst_map->channel = nullptr;
 	dst_map->mob_delete_timer = INVALID_TIMER;
 
-	map_data_copy(dst_map, src_map);
+	if(!no_mapflag)
+		map_data_copy(dst_map, src_map);
 
 	ShowInfo("[Instance] Created map '%s' (%d) from '%s' (%d).\n", dst_map->name, dst_map->m, name, src_map->m);
 
@@ -3239,6 +3193,8 @@ int map_getcellp(struct map_data* m,int16 x,int16 y,cell_chk cellchk)
 			return (cell.landprotector);
 		case CELL_CHKNOVENDING:
 			return (cell.novending);
+		case CELL_CHKNOBUYINGSTORE:
+			return (cell.nobuyingstore);
 		case CELL_CHKNOCHAT:
 			return (cell.nochat);
 		case CELL_CHKMAELSTROM:
@@ -3300,6 +3256,7 @@ void map_setcell(int16 m, int16 x, int16 y, cell_t cell, bool flag)
 		case CELL_NOCHAT:        mapdata->cell[j].nochat = flag;        break;
 		case CELL_MAELSTROM:	 mapdata->cell[j].maelstrom = flag;	  break;
 		case CELL_ICEWALL:		 mapdata->cell[j].icewall = flag;		  break;
+		case CELL_NOBUYINGSTORE: mapdata->cell[j].nobuyingstore = flag; break;
 		default:
 			ShowWarning("map_setcell: invalid cell type '%d'\n", (int)cell);
 			break;
@@ -3647,7 +3604,7 @@ void map_flags_init(void){
 		union u_mapflag_args args = {};
 
 		mapdata->flag.clear();
-		mapdata->flag.reserve(MF_MAX); // Reserve the bucket size
+		mapdata->flag.resize(MF_MAX, 0); // Resize and define default values
 		mapdata->drop_list.clear();
 		args.flag_val = 100;
 
@@ -3684,7 +3641,7 @@ void map_data_copy(struct map_data *dst_map, struct map_data *src_map) {
 	memcpy(&dst_map->save, &src_map->save, sizeof(struct point));
 	memcpy(&dst_map->damage_adjust, &src_map->damage_adjust, sizeof(struct s_skill_damage));
 
-	dst_map->flag.insert(src_map->flag.begin(), src_map->flag.end());
+	dst_map->flag = src_map->flag;
 	dst_map->skill_damage.insert(src_map->skill_damage.begin(), src_map->skill_damage.end());
 	dst_map->skill_duration.insert(src_map->skill_duration.begin(), src_map->skill_duration.end());
 
@@ -3700,7 +3657,8 @@ void map_data_copyall (void) {
 		return;
 	for (int i = instance_start; i < map_num; i++) {
 		struct map_data *mapdata = &map[i];
-		if (!mapdata || mapdata->name[0] == '\0' || !mapdata->instance_src_map)
+		std::shared_ptr<s_instance_data> idata = util::umap_find(instances, mapdata->instance_id);
+		if (!mapdata || mapdata->name[0] == '\0' || !mapdata->instance_src_map || (idata && idata->nomapflag))
 			continue;
 		map_data_copy(mapdata, &map[mapdata->instance_src_map]);
 	}
@@ -3788,40 +3746,33 @@ void map_removemapdb(struct map_data *m)
  *--------------------------------------*/
 int map_readallmaps (void)
 {
-	FILE* fp=NULL;
+	FILE* fp;
 	// Has the uncompressed gat data of all maps, so just one allocation has to be made
-	char *map_cache_buffer[2] = {
-		NULL,
-		NULL
-	};
-	char map_cache_decode_buffer[MAX_MAP_SIZE];
+	std::vector<char *> map_cache_buffer = {};
 
 	if( enable_grf )
 		ShowStatus("Loading maps (using GRF files)...\n");
 	else {
-		const char* mapcachefilepath[] = {
+		// Load the map cache files in reverse order to account for import
+		const std::vector<std::string> mapcachefilepath = {
+			"db/" DBIMPORT "/map_cache.dat",
 			"db/" DBPATH "map_cache.dat",
-			"db/" DBIMPORT "/map_cache.dat"
+			"db/map_cache.dat",
 		};
 
-		for( int i = 0; i < 2; i++ ){
-			ShowStatus( "Loading maps (using %s as map cache)...\n", mapcachefilepath[i] );
+		for(const auto &mapdat : mapcachefilepath) {
+			ShowStatus( "Loading maps (using %s as map cache)...\n", mapdat.c_str() );
 
-			if( ( fp = fopen(mapcachefilepath[i], "rb") ) == NULL ){
-				if( i == 0 ){
-					ShowFatalError( "Unable to open map cache file " CL_WHITE "%s" CL_RESET "\n", mapcachefilepath[i] );
-					exit(EXIT_FAILURE); //No use launching server if maps can't be read.
-				}else{
-					ShowWarning( "Unable to open map cache file " CL_WHITE "%s" CL_RESET "\n", mapcachefilepath[i] );
-					break;
-				}
+			if( ( fp = fopen(mapdat.c_str(), "rb")) == nullptr) {
+				ShowFatalError( "Unable to open map cache file " CL_WHITE "%s" CL_RESET "\n", mapdat.c_str());
+				continue;
 			}
 
 			// Init mapcache data. [Shinryo]
-			map_cache_buffer[i] = map_init_mapcache(fp);
+			map_cache_buffer.push_back(map_init_mapcache(fp));
 
-			if( !map_cache_buffer[i] ) {
-				ShowFatalError( "Failed to initialize mapcache data (%s)..\n", mapcachefilepath[i] );
+			if( !map_cache_buffer.back() ) {
+				ShowFatalError( "Failed to initialize mapcache data (%s)..\n", mapdat.c_str());
 				exit(EXIT_FAILURE);
 			}
 
@@ -3836,6 +3787,7 @@ int map_readallmaps (void)
 		bool success = false;
 		unsigned short idx = 0;
 		struct map_data *mapdata = &map[i];
+		char map_cache_decode_buffer[MAX_MAP_SIZE];
 
 		// show progress
 		ShowStatus("Loading maps [%i/%i]: %s" CL_CLL "\r", i, map_num, mapdata->name);
@@ -3845,14 +3797,9 @@ int map_readallmaps (void)
 			success = map_readgat(mapdata) != 0;
 		}else{
 			// try to load the map
-			// Read from import first, in case of override
-			if( map_cache_buffer[1] != NULL ){
-				success = map_readfromcache( mapdata, map_cache_buffer[1], map_cache_decode_buffer ) != 0;
-			}
-
-			// Nothing was found in import - try to find it in the main file
-			if( !success ){
-				success = map_readfromcache( mapdata, map_cache_buffer[0], map_cache_decode_buffer ) != 0;
+			for (const auto &cache : map_cache_buffer) {
+				if ((success = map_readfromcache(mapdata, cache, map_cache_decode_buffer)) != 0)
+					break;
 			}
 		}
 
@@ -3901,10 +3848,12 @@ int map_readallmaps (void)
 
 	if( !enable_grf ) {
 		// The cache isn't needed anymore, so free it. [Shinryo]
-		if( map_cache_buffer[1] != NULL ){
-			aFree(map_cache_buffer[1]);
+		auto it = map_cache_buffer.begin();
+
+		while (it != map_cache_buffer.end()) {
+			aFree(*it);
+			it = map_cache_buffer.erase(it);
 		}
-		aFree(map_cache_buffer[0]);
 	}
 
 	if (maps_removed)
@@ -4180,7 +4129,9 @@ int inter_config_read(const char *cfgName)
 		}
 #undef RENEWALPREFIX
 
-		if( strcmpi( w1, "buyingstore_db" ) == 0 )
+		if( strcmpi( w1, "barter_table" ) == 0 )
+			safestrncpy( barter_table, w2, sizeof(barter_table) );
+		else if( strcmpi( w1, "buyingstore_db" ) == 0 )
 			safestrncpy( buyingstores_table, w2, sizeof(buyingstores_table) );
 		else if( strcmpi( w1, "buyingstore_items_table" ) == 0 )
 			safestrncpy( buyingstore_items_table, w2, sizeof(buyingstore_items_table) );
@@ -4211,45 +4162,53 @@ int inter_config_read(const char *cfgName)
 		else
 		//Map Server SQL DB
 		if(strcmpi(w1,"map_server_ip")==0)
-			safestrncpy(map_server_ip, w2, sizeof(map_server_ip));
+			map_server_ip = w2;
 		else
 		if(strcmpi(w1,"map_server_port")==0)
 			map_server_port=atoi(w2);
 		else
 		if(strcmpi(w1,"map_server_id")==0)
-			safestrncpy(map_server_id, w2, sizeof(map_server_id));
+			map_server_id = w2;
 		else
 		if(strcmpi(w1,"map_server_pw")==0)
-			safestrncpy(map_server_pw, w2, sizeof(map_server_pw));
+			map_server_pw = w2;
 		else
 		if(strcmpi(w1,"map_server_db")==0)
-			safestrncpy(map_server_db, w2, sizeof(map_server_db));
+			map_server_db = w2;
 		else
 		if(strcmpi(w1,"default_codepage")==0)
-			safestrncpy(default_codepage, w2, sizeof(default_codepage));
+			default_codepage = w2;
 		else
 		if(strcmpi(w1,"use_sql_db")==0) {
 			db_use_sqldbs = config_switch(w2);
 			ShowStatus ("Using SQL dbs: %s\n",w2);
 		} else
 		if(strcmpi(w1,"log_db_ip")==0)
-			safestrncpy(log_db_ip, w2, sizeof(log_db_ip));
+			log_db_ip = w2;
 		else
 		if(strcmpi(w1,"log_db_id")==0)
-			safestrncpy(log_db_id, w2, sizeof(log_db_id));
+			log_db_id = w2;
 		else
 		if(strcmpi(w1,"log_db_pw")==0)
-			safestrncpy(log_db_pw, w2, sizeof(log_db_pw));
+			log_db_pw = w2;
 		else
 		if(strcmpi(w1,"log_db_port")==0)
 			log_db_port = atoi(w2);
 		else
 		if(strcmpi(w1,"log_db_db")==0)
-			safestrncpy(log_db_db, w2, sizeof(log_db_db));
+			log_db_db = w2;
 		else
 		if(strcmpi(w1,"start_status_points")==0)
-			start_status_points=atoi(w2);
+			inter_config.start_status_points=atoi(w2);
 		else
+		if(strcmpi(w1, "emblem_woe_change")==0)
+			inter_config.emblem_woe_change = config_switch(w2) == 1;
+		else
+		if (strcmpi(w1, "emblem_transparency_limit") == 0) {
+			auto val = atoi(w2);
+			val = cap_value(val, 0, 100);
+			inter_config.emblem_transparency_limit = val;
+		}
 		if( mapreg_config_read(w1,w2) )
 			continue;
 		//support the import command, just like any other config
@@ -4272,11 +4231,11 @@ int map_sql_init(void)
 	qsmysql_handle = Sql_Malloc();
 
 	ShowInfo("Connecting to the Map DB Server....\n");
-	if( SQL_ERROR == Sql_Connect(mmysql_handle, map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db) ||
-		SQL_ERROR == Sql_Connect(qsmysql_handle, map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db) )
+	if( SQL_ERROR == Sql_Connect(mmysql_handle, map_server_id.c_str(), map_server_pw.c_str(), map_server_ip.c_str(), map_server_port, map_server_db.c_str()) ||
+		SQL_ERROR == Sql_Connect(qsmysql_handle, map_server_id.c_str(), map_server_pw.c_str(), map_server_ip.c_str(), map_server_port, map_server_db.c_str()) )
 	{
-		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-			map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db);
+		ShowError("Couldn't connect with uname='%s',host='%s',port='%d',database='%s'\n",
+			map_server_id.c_str(), map_server_ip.c_str(), map_server_port, map_server_db.c_str());
 		Sql_ShowDebug(mmysql_handle);
 		Sql_Free(mmysql_handle);
 		Sql_ShowDebug(qsmysql_handle);
@@ -4285,10 +4244,10 @@ int map_sql_init(void)
 	}
 	ShowStatus("Connect success! (Map Server Connection)\n");
 
-	if( strlen(default_codepage) > 0 ) {
-		if ( SQL_ERROR == Sql_SetEncoding(mmysql_handle, default_codepage) )
+	if( !default_codepage.empty() ) {
+		if ( SQL_ERROR == Sql_SetEncoding(mmysql_handle, default_codepage.c_str()) )
 			Sql_ShowDebug(mmysql_handle);
-		if ( SQL_ERROR == Sql_SetEncoding(qsmysql_handle, default_codepage) )
+		if ( SQL_ERROR == Sql_SetEncoding(qsmysql_handle, default_codepage.c_str()) )
 			Sql_ShowDebug(qsmysql_handle);
 	}
 	return 0;
@@ -4317,18 +4276,18 @@ int log_sql_init(void)
 	// log db connection
 	logmysql_handle = Sql_Malloc();
 
-	ShowInfo("" CL_WHITE "[SQL]" CL_RESET ": Connecting to the Log Database " CL_WHITE "%s" CL_RESET " At " CL_WHITE "%s" CL_RESET "...\n",log_db_db,log_db_ip);
-	if ( SQL_ERROR == Sql_Connect(logmysql_handle, log_db_id, log_db_pw, log_db_ip, log_db_port, log_db_db) ){
-		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-			log_db_id, log_db_pw, log_db_ip, log_db_port, log_db_db);
+	ShowInfo("" CL_WHITE "[SQL]" CL_RESET ": Connecting to the Log Database " CL_WHITE "%s" CL_RESET " At " CL_WHITE "%s" CL_RESET "...\n",log_db_db.c_str(), log_db_ip.c_str());
+	if ( SQL_ERROR == Sql_Connect(logmysql_handle, log_db_id.c_str(), log_db_pw.c_str(), log_db_ip.c_str(), log_db_port, log_db_db.c_str()) ){
+		ShowError("Couldn't connect with uname='%s',host='%s',port='%d',database='%s'\n",
+			log_db_id.c_str(), log_db_ip.c_str(), log_db_port, log_db_db.c_str());
 		Sql_ShowDebug(logmysql_handle);
 		Sql_Free(logmysql_handle);
 		exit(EXIT_FAILURE);
 	}
-	ShowStatus("" CL_WHITE "[SQL]" CL_RESET ": Successfully '" CL_GREEN "connected" CL_RESET "' to Database '" CL_WHITE "%s" CL_RESET "'.\n", log_db_db);
+	ShowStatus("" CL_WHITE "[SQL]" CL_RESET ": Successfully '" CL_GREEN "connected" CL_RESET "' to Database '" CL_WHITE "%s" CL_RESET "'.\n", log_db_db.c_str());
 
-	if( strlen(default_codepage) > 0 )
-		if ( SQL_ERROR == Sql_SetEncoding(logmysql_handle, default_codepage) )
+	if( !default_codepage.empty() )
+		if ( SQL_ERROR == Sql_SetEncoding(logmysql_handle, default_codepage.c_str()) )
 			Sql_ShowDebug(logmysql_handle);
 
 	return 0;
@@ -4566,11 +4525,11 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
 		case MF_RESTRICTED:
 			return mapdata->zone;
 		case MF_NOLOOT:
-			return util::umap_get(mapdata->flag, static_cast<int16>(MF_NOMOBLOOT), 0) && util::umap_get(mapdata->flag, static_cast<int16>(MF_NOMVPLOOT), 0);
+			return mapdata->flag[MF_NOMOBLOOT] && mapdata->flag[MF_NOMVPLOOT];
 		case MF_NOPENALTY:
-			return util::umap_get(mapdata->flag, static_cast<int16>(MF_NOEXPPENALTY), 0) && util::umap_get(mapdata->flag, static_cast<int16>(MF_NOZENYPENALTY), 0);
+			return mapdata->flag[MF_NOEXPPENALTY] && mapdata->flag[MF_NOZENYPENALTY];
 		case MF_NOEXP:
-			return util::umap_get(mapdata->flag, static_cast<int16>(MF_NOBASEEXP), 0) && util::umap_get(mapdata->flag, static_cast<int16>(MF_NOJOBEXP), 0);
+			return mapdata->flag[MF_NOBASEEXP] && mapdata->flag[MF_NOJOBEXP];
 		case MF_SKILL_DAMAGE:
 			nullpo_retr(-1, args);
 
@@ -4583,10 +4542,10 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
 				case SKILLDMG_CASTER:
 					return mapdata->damage_adjust.caster;
 				default:
-					return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
+					return mapdata->flag[mapflag];
 			}
 		default:
-			return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
+			return mapdata->flag[mapflag];
 	}
 }
 
@@ -4788,7 +4747,8 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 
 				if (mapdata->flag[MF_PVP]) {
 					mapdata->flag[MF_PVP] = false;
-					ShowWarning("map_setmapflag: Unable to set PvP and Battleground flags for the same map! Removing PvP flag from %s.\n", mapdata->name);
+					if (!battle_config.pk_mode)
+						ShowWarning("map_setmapflag: Unable to set PvP and Battleground flags for the same map! Removing PvP flag from %s.\n", mapdata->name);
 				}
 				if (mapdata->flag[MF_GVG]) {
 					mapdata->flag[MF_GVG] = false;
@@ -5159,6 +5119,11 @@ int do_init(int argc, char *argv[])
 	safestrncpy(map_default.mapname, "prontera", MAP_NAME_LENGTH);
 	map_default.x = 156;
 	map_default.y = 191;
+
+	// default inter_config
+	inter_config.start_status_points = 48;
+	inter_config.emblem_woe_change = true;
+	inter_config.emblem_transparency_limit = 80;
 
 	cli_get_options(argc,argv);
 

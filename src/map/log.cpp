@@ -85,6 +85,11 @@ static char log_picktype2char(e_log_pick_type type)
 		case LOG_TYPE_MERGE_ITEM:		return 'Z';  // Merged Item
 		case LOG_TYPE_QUEST:			return 'Q';  // (Q)uest Item
 		case LOG_TYPE_PRIVATE_AIRSHIP:	return 'H';  // Private Airs(H)ip
+		case LOG_TYPE_BARTER:			return 'J';  // Barter Shop
+		case LOG_TYPE_LAPHINE:			return 'W';  // Laphine UI
+		case LOG_TYPE_ENCHANTGRADE:		return '0';  // Enchantgrade UI
+		case LOG_TYPE_REFORM:			return '1';  // Reform UI
+		case LOG_TYPE_ENCHANT:			return '2';  // Echant UI
 	}
 
 	// should not get here, fallback
@@ -139,9 +144,9 @@ static char log_feedingtype2char(e_log_feeding_type type) {
 static bool should_log_item(t_itemid nameid, int amount, int refine)
 {
 	int filter = log_config.filter;
-	struct item_data* id;
+	std::shared_ptr<item_data> id = item_db.find(nameid);
 
-	if( ( id = itemdb_exists(nameid) ) == NULL )
+	if( id == nullptr )
 		return false;
 
 	if( ( filter&LOG_FILTER_ALL ) ||

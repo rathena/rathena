@@ -363,6 +363,262 @@ Body:
                 Price: 100000
                 Material: HD_Carnium
                 DowngradeAmount: 1
+      - Level: 2
+        RefineLevels:
+          - Level: 1
+            Bonus: 120
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50000
+                Material: Ethernium
+              - Type: Enriched
+                Rate: 10000
+                Price: 50000
+                Material: Enriched_Ethernium
+          - Level: 2
+            Bonus: 240
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50000
+                Material: Ethernium
+              - Type: Enriched
+                Rate: 10000
+                Price: 50000
+                Material: Enriched_Ethernium
+          - Level: 3
+            Bonus: 360
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50000
+                Material: Ethernium
+              - Type: Enriched
+                Rate: 10000
+                Price: 50000
+                Material: Enriched_Ethernium
+          - Level: 4
+            Bonus: 480
+            Chances:
+              - Type: Normal
+                Rate: 6000
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 9000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 5
+            Bonus: 720
+            Chances:
+              - Type: Normal
+                Rate: 6000
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 7000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 6
+            Bonus: 960
+            Chances:
+              - Type: Normal
+                Rate: 4000
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 6000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 7
+            Bonus: 1200
+            Chances:
+              - Type: Normal
+                Rate: 4000
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 6000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 8
+            Bonus: 1440
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 4000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 9
+            Bonus: 1800
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 4000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 10
+            Bonus: 2160
+            Chances:
+              - Type: Normal
+                Rate: 900
+                Price: 50000
+                Material: Ethernium
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 2000
+                Price: 50000
+                Material: Enriched_Ethernium
+                DowngradeAmount: 1
+          - Level: 11
+            Bonus: 2520
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Ethernium
+                BreakingRate: 10000
+          - Level: 12
+            Bonus: 2880
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Ethernium
+                BreakingRate: 10000
+          - Level: 13
+            Bonus: 3360
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Ethernium
+                BreakingRate: 10000
+          - Level: 14
+            Bonus: 3840
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Ethernium
+                BreakingRate: 10000
+          - Level: 15
+            Bonus: 4320
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Ethernium
+                BreakingRate: 10000
+          - Level: 16
+            Bonus: 4800
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Etel_Carnium
+                BreakingRate: 10000
+          - Level: 17
+            Bonus: 5400
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Etel_Carnium
+                BreakingRate: 10000
+          - Level: 18
+            Bonus: 6000
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Etel_Carnium
+                BreakingRate: 10000
+          - Level: 19
+            Bonus: 6600
+            Chances:
+              - Type: Normal
+                Rate: 500
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 700
+                Price: 100000
+                Material: HD_Etel_Carnium
+                BreakingRate: 10000
+          - Level: 20
+            Bonus: 7200
+            Chances:
+              - Type: Normal
+                Rate: 500
+                Price: 100000
+                Material: Etel_Carnium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 700
+                Price: 100000
+                Material: HD_Etel_Carnium
+                BreakingRate: 10000
   - Group: Weapon
     Levels:
       - Level: 1
@@ -1673,6 +1929,262 @@ Body:
                 Price: 100000
                 Material: HD_Bradium
                 DowngradeAmount: 1
+      - Level: 5
+        RefineLevels:
+          - Level: 1
+            Bonus: 800
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50000
+                Material: Etherdeocon
+              - Type: Enriched
+                Rate: 10000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+          - Level: 2
+            Bonus: 1600
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50000
+                Material: Etherdeocon
+              - Type: Enriched
+                Rate: 10000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+          - Level: 3
+            Bonus: 2400
+            Chances:
+              - Type: Normal
+                Rate: 10000
+                Price: 50000
+                Material: Etherdeocon
+              - Type: Enriched
+                Rate: 10000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+          - Level: 4
+            Bonus: 3200
+            Chances:
+              - Type: Normal
+                Rate: 6000
+                Price: 50000
+                Material: Etherdeocon
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 9000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+                DowngradeAmount: 1
+          - Level: 5
+            Bonus: 4000
+            Chances:
+              - Type: Normal
+                Rate: 6000
+                Price: 50000
+                Material: Etherdeocon
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 7000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+                DowngradeAmount: 1
+          - Level: 6
+            Bonus: 4800
+            Chances:
+              - Type: Normal
+                Rate: 4000
+                Price: 50000
+                Material: Etherdeocon
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 6000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+                DowngradeAmount: 1
+          - Level: 7
+            Bonus: 5600
+            Chances:
+              - Type: Normal
+                Rate: 4000
+                Price: 50000
+                Material: Etherdeocon
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 6000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+                DowngradeAmount: 1
+          - Level: 8
+            Bonus: 6400
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 50000
+                Material: Etherdeocon
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 4000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+                DowngradeAmount: 1
+          - Level: 9
+            Bonus: 7200
+            Chances:
+              - Type: Normal
+                Rate: 2000
+                Price: 50000
+                Material: Etherdeocon
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 4000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+                DowngradeAmount: 1
+          - Level: 10
+            Bonus: 8000
+            Chances:
+              - Type: Normal
+                Rate: 900
+                Price: 50000
+                Material: Etherdeocon
+                DowngradeAmount: 3
+              - Type: Enriched
+                Rate: 2000
+                Price: 50000
+                Material: Enriched_Etherdeocon
+                DowngradeAmount: 1
+          - Level: 11
+            Bonus: 8800
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Etherdeocon
+                BreakingRate: 10000
+          - Level: 12
+            Bonus: 9600
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Etherdeocon
+                BreakingRate: 10000
+          - Level: 13
+            Bonus: 10400
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Etherdeocon
+                BreakingRate: 10000
+          - Level: 14
+            Bonus: 11200
+            Chances:
+              - Type: Normal
+                Rate: 800
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1500
+                Price: 100000
+                Material: HD_Etherdeocon
+                BreakingRate: 10000
+          - Level: 15
+            Bonus: 12000
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Etherdeocon
+                BreakingRate: 10000
+          - Level: 16
+            Bonus: 12800
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Etel_Bradium
+                BreakingRate: 10000
+          - Level: 17
+            Bonus: 13600
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Etel_Bradium
+                BreakingRate: 10000
+          - Level: 18
+            Bonus: 14400
+            Chances:
+              - Type: Normal
+                Rate: 700
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 1000
+                Price: 100000
+                Material: HD_Etel_Bradium
+                BreakingRate: 10000
+          - Level: 19
+            Bonus: 15200
+            Chances:
+              - Type: Normal
+                Rate: 500
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 700
+                Price: 100000
+                Material: HD_Etel_Bradium
+                BreakingRate: 10000
+          - Level: 20
+            Bonus: 16000
+            Chances:
+              - Type: Normal
+                Rate: 500
+                Price: 100000
+                Material: Etel_Bradium
+                BreakingRate: 10000
+              - Type: HD
+                Rate: 700
+                Price: 100000
+                Material: HD_Etel_Bradium
+                BreakingRate: 10000
   - Group: Shadow_Armor
     Levels:
       - Level: 1
