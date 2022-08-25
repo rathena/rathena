@@ -11046,8 +11046,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			npc_script_event(sd, NPCE_LOGIN);
 		}
 
-		// Set facing direction before battle_config.spawn_direction
-		sd->ud.dir = sd->status.dir;
+		// Set facing direction before check below to update client
+		if (battle_config.spawn_direction)
+			unit_setdir(&sd->bl, sd->status.dir);
 	} else {
 		//For some reason the client "loses" these on warp/map-change.
 		clif_updatestatus(sd,SP_STR);

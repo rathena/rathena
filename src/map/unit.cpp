@@ -121,8 +121,10 @@ int unit_walktoxy_sub(struct block_list *bl)
 	ud->state.change_walk_target=0;
 
 	if (bl->type == BL_PC) {
-		((TBL_PC *)bl)->head_dir = 0;
-		clif_walkok((TBL_PC*)bl);
+		map_session_data *sd = map_id2sd(bl->id);
+
+		sd->head_dir = DIR_NORTH;
+		clif_walkok(sd);
 	}
 #if PACKETVER >= 20170726
 	// If this is a walking NPC and it will use a player sprite
@@ -1110,10 +1112,8 @@ int unit_setdir(struct block_list *bl, unsigned char dir)
 	if (bl->type == BL_PC) {
 		map_session_data *sd = map_id2sd(bl->id);
 
-		if (sd != nullptr) {
-			sd->head_dir = 0;
-			sd->status.dir = ud->dir;
-		}
+		sd->head_dir = DIR_NORTH;
+		sd->status.dir = ud->dir;
 	}
 
 	clif_changed_dir(bl, AREA);
