@@ -911,7 +911,7 @@ void unit_run_hit(struct block_list *bl, struct status_change *sc, struct map_se
 
 	// Set running to 0 beforehand so status_change_end knows not to enable spurt [Kevin]
 	unit_bl2ud(bl)->state.running = 0;
-	status_change_end(bl, type, INVALID_TIMER);
+	status_change_end(bl, type);
 
 	if (type == SC_RUN) {
 		skill_blown(bl, bl, skill_get_blewcount(TK_RUN, lv), unit_getdir(bl), BLOWN_NONE);
@@ -943,7 +943,7 @@ bool unit_run(struct block_list *bl, struct map_session_data *sd, enum sc_type t
 		return false;
 
 	if (!unit_can_move(bl)) {
-		status_change_end(bl, type, INVALID_TIMER);
+		status_change_end(bl, type);
 		return false;
 	}
 
@@ -1408,8 +1408,8 @@ int unit_stop_walking(struct block_list *bl,int type)
 
 	// Re-added, the check in unit_set_walkdelay means dmg during running won't fall through to this place in code [Kevin]
 	if (ud->state.running) {
-		status_change_end(bl, SC_RUN, INVALID_TIMER);
-		status_change_end(bl, SC_WUGDASH, INVALID_TIMER);
+		status_change_end(bl, SC_RUN);
+		status_change_end(bl, SC_WUGDASH);
 	}
 
 	return 1;
@@ -2049,17 +2049,17 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	if( sc ) {
 		// These 3 status do not stack, so it's efficient to use if-else
  		if( sc->data[SC_CLOAKING] && !(sc->data[SC_CLOAKING]->val4&4) && skill_id != AS_CLOAKING && skill_id != SHC_SHADOW_STAB) {
-			status_change_end(src, SC_CLOAKING, INVALID_TIMER);
+			status_change_end(src, SC_CLOAKING);
 
 			if (!src->prev)
 				return 0; // Warped away!
 		} else if( sc->data[SC_CLOAKINGEXCEED] && !(sc->data[SC_CLOAKINGEXCEED]->val4&4) && skill_id != GC_CLOAKINGEXCEED && skill_id != SHC_SHADOW_STAB) {
-			status_change_end(src,SC_CLOAKINGEXCEED, INVALID_TIMER);
+			status_change_end(src,SC_CLOAKINGEXCEED);
 
 			if (!src->prev)
 				return 0;
 		} else if (sc->data[SC_NEWMOON] && skill_id != SJ_NEWMOONKICK) {
-			status_change_end(src, SC_NEWMOON, INVALID_TIMER);
+			status_change_end(src, SC_NEWMOON);
 			if (!src->prev)
 				return 0; // Warped away!
 		}
@@ -2231,17 +2231,17 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	if( sc ) {
 		// These 3 status do not stack, so it's efficient to use if-else
 		if (sc->data[SC_CLOAKING] && !(sc->data[SC_CLOAKING]->val4&4)) {
-			status_change_end(src, SC_CLOAKING, INVALID_TIMER);
+			status_change_end(src, SC_CLOAKING);
 
 			if (!src->prev)
 				return 0; // Warped away!
 		} else if (sc->data[SC_CLOAKINGEXCEED] && !(sc->data[SC_CLOAKINGEXCEED]->val4&4)) {
-			status_change_end(src, SC_CLOAKINGEXCEED, INVALID_TIMER);
+			status_change_end(src, SC_CLOAKINGEXCEED);
 
 			if (!src->prev)
 				return 0;
 		} else if (sc->data[SC_NEWMOON]) {
-			status_change_end(src, SC_NEWMOON, INVALID_TIMER);
+			status_change_end(src, SC_NEWMOON);
 
 			if (!src->prev)
 				return 0;
@@ -2475,7 +2475,7 @@ int unit_cancel_combo(struct block_list *bl)
 {
 	struct unit_data  *ud;
 
-	if (!status_change_end(bl, SC_COMBO, INVALID_TIMER))
+	if (!status_change_end(bl, SC_COMBO))
 		return 0; // Combo wasn't active.
 
 	ud = unit_bl2ud(bl);
@@ -3065,13 +3065,13 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 
 		// Ensure the bl is a PC; if so, we'll handle the removal of cloaking and cloaking exceed later
 		if ( bl->type != BL_PC ) {
-			status_change_end(bl, SC_CLOAKING, INVALID_TIMER);
-			status_change_end(bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
+			status_change_end(bl, SC_CLOAKING);
+			status_change_end(bl, SC_CLOAKINGEXCEED);
 		}
 		if (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)
-			status_change_end(bl, SC_GOSPEL, INVALID_TIMER);
+			status_change_end(bl, SC_GOSPEL);
 		if (sc->data[SC_PROVOKE] && sc->data[SC_PROVOKE]->val4 == 1)
-			status_change_end(bl, SC_PROVOKE, INVALID_TIMER); //End infinite provoke to prevent exploit
+			status_change_end(bl, SC_PROVOKE); //End infinite provoke to prevent exploit
 	}
 
 	switch( bl->type ) {
@@ -3082,7 +3082,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			    struct block_list *d_bl = map_id2bl(sd->shadowform_id);
 
 			    if( d_bl )
-				    status_change_end(d_bl,SC__SHADOWFORM,INVALID_TIMER);
+				    status_change_end(d_bl,SC__SHADOWFORM);
 			}
 
 			// Leave/reject all invitations.
@@ -3122,8 +3122,8 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 
 			// Check if warping and not changing the map.
 			if ( sd->state.warping && !sd->state.changemap ) {
-				status_change_end(bl, SC_CLOAKING, INVALID_TIMER);
-				status_change_end(bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
+				status_change_end(bl, SC_CLOAKING);
+				status_change_end(bl, SC_CLOAKINGEXCEED);
 			}
 
 			sd->npc_shopid = 0;
@@ -3552,7 +3552,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 					sd->status.hom_id = 0;
 
 #ifdef RENEWAL
-				status_change_end(&sd->bl, SC_HOMUN_TIME, INVALID_TIMER);
+				status_change_end(&sd->bl, SC_HOMUN_TIME);
 #endif
 			}
 

@@ -12170,7 +12170,7 @@ BUILDIN_FUNC(sc_end)
 
 		//This should help status_change_end force disabling the SC in case it has no limit.
 		sce->val1 = sce->val2 = sce->val3 = sce->val4 = 0;
-		status_change_end(bl, (sc_type)type, INVALID_TIMER);
+		status_change_end(bl, (sc_type)type);
 	} else
 		status_change_clear(bl, 3); // remove all effects
 
@@ -22201,7 +22201,7 @@ BUILDIN_FUNC(setmounting) {
 		script_pushint(st, 0); // Silent failure
 	} else {
 		if( sd->sc.data[SC_ALL_RIDING] )
-			status_change_end(&sd->bl, SC_ALL_RIDING, INVALID_TIMER); //release mount
+			status_change_end(&sd->bl, SC_ALL_RIDING); //release mount
 		else
 			sc_start(NULL, &sd->bl, SC_ALL_RIDING, 10000, 1, INFINITE_TICK); //mount
 		script_pushint(st,1);//in both cases, return 1.
@@ -23107,10 +23107,10 @@ BUILDIN_FUNC(montransform) {
 		}
 
 		if (!strcmp(script_getfuncname(st), "active_transform")) {
-			status_change_end(&sd->bl, SC_ACTIVE_MONSTER_TRANSFORM, INVALID_TIMER); // Clear previous
+			status_change_end(&sd->bl, SC_ACTIVE_MONSTER_TRANSFORM); // Clear previous
 			sc_start2(NULL, &sd->bl, SC_ACTIVE_MONSTER_TRANSFORM, 100, mob_id, type, tick);
 		} else {
-			status_change_end(&sd->bl, SC_MONSTER_TRANSFORM, INVALID_TIMER); // Clear previous
+			status_change_end(&sd->bl, SC_MONSTER_TRANSFORM); // Clear previous
 			sc_start2(NULL, &sd->bl, SC_MONSTER_TRANSFORM, 100, mob_id, type, tick);
 		}
 		if (type != SC_NONE)
