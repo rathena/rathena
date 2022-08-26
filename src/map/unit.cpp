@@ -121,7 +121,7 @@ int unit_walktoxy_sub(struct block_list *bl)
 	ud->state.change_walk_target=0;
 
 	if (bl->type == BL_PC) {
-		map_session_data *sd = map_id2sd(bl->id);
+		map_session_data *sd = BL_CAST(BL_PC, bl);
 
 		sd->head_dir = DIR_NORTH;
 		clif_walkok(sd);
@@ -402,7 +402,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 		return 0;
 	}
 
-	unit_setdir(bl, dir);
+	unit_setdir(bl, dir, false);
 
 	int dx = dirx[dir];
 	int dy = diry[dir];
@@ -1045,7 +1045,7 @@ bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, boo
 	ud->to_x = dst_x;
 	ud->to_y = dst_y;
 
-	unit_setdir(bl, map_calc_dir(bl, dst_x, dst_y));
+	unit_setdir(bl, map_calc_dir(bl, dst_x, dst_y), false);
 
 	dx = dst_x - bl->x;
 	dy = dst_y - bl->y;
@@ -1094,31 +1094,31 @@ bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, boo
  * Sets direction of a unit
  * @param bl: Object to set direction
  * @param dir: Direction (0-7)
- * @return 0
+ * @param send_update: Update the client area of direction (default: true)
+ * @return True on success or False on failure
  */
-int unit_setdir(struct block_list *bl, unsigned char dir)
+bool unit_setdir(block_list *bl, uint8 dir, bool send_update)
 {
-	struct unit_data *ud;
-
 	nullpo_ret(bl);
 
-	ud = unit_bl2ud(bl);
+	unit_data *ud = unit_bl2ud(bl);
 
-	if (!ud)
-		return 0;
+	if (ud == nullptr)
+		return false;
 
 	ud->dir = dir;
 
 	if (bl->type == BL_PC) {
-		map_session_data *sd = map_id2sd(bl->id);
+		map_session_data *sd = BL_CAST(BL_PC, bl);
 
 		sd->head_dir = DIR_NORTH;
 		sd->status.dir = ud->dir;
 	}
 
-	clif_changed_dir(bl, AREA);
+	if (send_update)
+		clif_changed_dir(bl, AREA);
 
-	return 0;
+	return true;
 }
 
 /**
@@ -2766,7 +2766,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 
 	if( DIFF_TICK(ud->attackabletime,tick) <= 0 ) {
 		if (battle_config.attack_direction_change && (src->type&battle_config.attack_direction_change))
-			unit_setdir(src, map_calc_dir(src, target->x, target->y));
+			unit_setdir(src, map_calc_dir(src, target->x, target->y), false);
 
 		if(ud->walktimer != INVALID_TIMER)
 			unit_stop_walking(src,1);
