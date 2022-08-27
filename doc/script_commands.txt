@@ -978,6 +978,11 @@ Only the special labels which are not associated with any script command are
 listed here. There are other kinds of labels which may be triggered in a similar
 manner, but they are described with their associated commands.
 
+OnNaviGenerate:
+
+This special label triggers when running the map-server-generator binary. It is used
+in combination with 'naviregisterwarp' to register extra warps for an npc.
+
 On<label name>:
 
 These special labels are used with Mob scripts mostly, and script commands
@@ -9443,6 +9448,20 @@ This command will open a book item at the specified page.
 
 Opens the roulette window for the currently attached character or the character
 with the given character id.
+
+---------------------------------------
+
+*naviregisterwarp("<Name of Link>", "<dest_map>", <dest_x>, <dest_y>)
+
+Only useful when using the map-server-generator. Registers an extra warp from this
+npc to the destination map/x/y for the generated client files.
+
+---------------------------------------
+
+*navihide
+
+Only useful when using the map-server-generator. Hides this npc and all links from
+this npc in the navigation generation.
 
 ---------------------------------------
 

@@ -19,6 +19,7 @@
 #include "../common/timer.hpp"
 #include "../config/core.hpp"
 
+#include "navi.hpp"
 #include "script.hpp"
 
 struct npc_data;
@@ -812,6 +813,13 @@ struct map_data {
 
 	/* speeds up clif_updatestatus processing by causing hpmeter to run only when someone with the permission can view it */
 	unsigned short hpmeter_visible;
+#ifdef GENERATE_NAVI
+	struct {
+		std::vector<const struct npc_data *> npcs;
+		std::vector<const struct navi_link *> warps_into;
+		std::vector<const struct navi_link *> warps_outof;
+	} navi;
+#endif
 };
 
 /// Stores information about a remote map (for multi-mapserver setups).

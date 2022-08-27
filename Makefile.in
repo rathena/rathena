@@ -60,6 +60,7 @@ libconfig:
 
 tools:
 	@$(MAKE) -C src/tool
+	@$(MAKE) -C src/map tools
 
 rapidyaml:
 	@$(MAKE) -C 3rdparty/rapidyaml
