@@ -209,6 +209,7 @@
     <ClInclude Include="mapreg.hpp" />
     <ClInclude Include="mercenary.hpp" />
     <ClInclude Include="mob.hpp" />
+    <ClInclude Include="navi.hpp" />
     <ClInclude Include="npc.hpp" />
     <ClInclude Include="packets.hpp" />
     <ClInclude Include="packets_struct.hpp" />
@@ -256,6 +257,7 @@
     <ClCompile Include="mob.cpp">
       <Optimization Condition="'$(Configuration)'=='Release'">Disabled</Optimization>
     </ClCompile>
+    <ClCompile Include="navi.cpp" />
     <ClCompile Include="npc.cpp" />
     <ClCompile Include="npc_chat.cpp" />
     <ClCompile Include="party.cpp" />
