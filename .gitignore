@@ -1,6 +1,5 @@
-/autom4te.cache/output.0
-/autom4te.cache/requests
-/autom4te.cache/traces.0
+autom4te.cache/
+
 #Global
 .vscode
 .Apple*
@@ -42,6 +41,7 @@ Thumbs.db
 /map-server
 /mapcache
 /nbproject
+/web-server
 /yaml2sql
 /yamlupgrade
 
@@ -55,6 +55,10 @@ Thumbs.db
 
 # /3rdparty/yaml-cpp/
 /3rdparty/yaml-cpp/Makefile
+
+# /3rdparty/httplib/
+/3rdparty/httplib/Makefile
+/3rdparty/httplib/obj
 
 # /db/
 /db/import
@@ -92,6 +96,10 @@ Thumbs.db
 /src/map/obj_sql
 /src/map/pcre.hpp
 
+# /src/web
+/src/web/Makefile
+/src/web/obj
+
 # /src/tool/
 /src/tool/Makefile
 /src/tool/obj_all
@@ -125,6 +133,7 @@ Thumbs.db
 /mapserv.bat
 /runserver.bat
 /serv.bat
+/webserv.bat
 /yaml2sql.bat
 /yamlupgrade.bat
 
@@ -135,3 +144,6 @@ Thumbs.db
 
 # CMakeFiles
 /CMakeFiles/
+
+# generated files
+generated

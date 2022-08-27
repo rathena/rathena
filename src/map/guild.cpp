@@ -1038,11 +1038,11 @@ int guild_member_withdraw(int guild_id, uint32 account_id, uint32 char_id, int f
 		}
 
 		clif_name_area(&sd->bl); //Update display name [Skotlex]
-		status_change_end(&sd->bl,SC_LEADERSHIP,INVALID_TIMER);
-		status_change_end(&sd->bl,SC_GLORYWOUNDS,INVALID_TIMER);
-		status_change_end(&sd->bl,SC_SOULCOLD,INVALID_TIMER);
-		status_change_end(&sd->bl,SC_HAWKEYES,INVALID_TIMER);
-		status_change_end(&sd->bl,SC_EMERGENCY_MOVE,INVALID_TIMER);
+		status_change_end(&sd->bl,SC_LEADERSHIP);
+		status_change_end(&sd->bl,SC_GLORYWOUNDS);
+		status_change_end(&sd->bl,SC_SOULCOLD);
+		status_change_end(&sd->bl,SC_HAWKEYES);
+		status_change_end(&sd->bl,SC_EMERGENCY_MOVE);
 		//@TODO: Send emblem update to self and people around
 	}
 	return 0;
@@ -1534,7 +1534,7 @@ void guild_guildaura_refresh(struct map_session_data *sd, uint16 skill_id, uint1
 	if (type == SC_NONE)
 		return;
 
-	status_change_end(&sd->bl, type, INVALID_TIMER);
+	status_change_end(&sd->bl, type);
 
 	std::shared_ptr<s_skill_unit_group> group = skill_unitsetting(&sd->bl,skill_id,skill_lv,sd->bl.x,sd->bl.y,0);
 
@@ -1914,11 +1914,11 @@ int guild_broken(int guild_id,int flag) {
 			sd->state.gmaster_flag = 0;
 			clif_guild_broken(g->member[i].sd,0);
 			clif_name_area(&sd->bl); // [LuzZza]
-			status_change_end(&sd->bl,SC_LEADERSHIP,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_GLORYWOUNDS,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_SOULCOLD,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_HAWKEYES,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_EMERGENCY_MOVE,INVALID_TIMER);
+			status_change_end(&sd->bl,SC_LEADERSHIP);
+			status_change_end(&sd->bl,SC_GLORYWOUNDS);
+			status_change_end(&sd->bl,SC_SOULCOLD);
+			status_change_end(&sd->bl,SC_HAWKEYES);
+			status_change_end(&sd->bl,SC_EMERGENCY_MOVE);
 		}
 	}
 

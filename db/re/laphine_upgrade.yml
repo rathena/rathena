@@ -494,8 +494,8 @@ Body:
       - Item: S_Gemstone_Shield_II
       - Item: S_Bearer's_Armor_II
       - Item: S_Bearer's_Shoes_II
-      - Item: S_Almighty_Earring
-      - Item: S_Almighty_Pendant
+      - Item: S_AllMighty_Earring
+      - Item: S_AllMighty_Pendant
       - Item: S_All_Race_Shoes
       - Item: S_All_Race_Shield
       - Item: S_Blitz_Weapon
@@ -550,8 +550,8 @@ Body:
       - Item: S_Magical_Armor
       - Item: S_Immune_Athena_Shield
       - Item: S_Hard_Champion_Shoes
-      - Item: S_Kingbird_Ancient_Armor
-      - Item: S_Cri_Hit_Armor
+      - Item: S_KingbirdAncient_Armor
+      - Item: S_CriticalHit_Armor
       - Item: S_Thief_earring
       - Item: S_Archer_earring
       - Item: S_Rebellion_Armor
@@ -1226,8 +1226,8 @@ Body:
       - Item: S_Gemstone_Shield_II
       - Item: S_Bearer's_Armor_II
       - Item: S_Bearer's_Shoes_II
-      - Item: S_Almighty_Earring
-      - Item: S_Almighty_Pendant
+      - Item: S_AllMighty_Earring
+      - Item: S_AllMighty_Pendant
       - Item: S_All_Race_Shoes
       - Item: S_All_Race_Shield
       - Item: S_Blitz_Weapon
@@ -1282,8 +1282,8 @@ Body:
       - Item: S_Magical_Armor
       - Item: S_Immune_Athena_Shield
       - Item: S_Hard_Champion_Shoes
-      - Item: S_Kingbird_Ancient_Armor
-      - Item: S_Cri_Hit_Armor
+      - Item: S_KingbirdAncient_Armor
+      - Item: S_CriticalHit_Armor
       - Item: S_Tempest_Weapon
       - Item: S_Tempest_Armor
       - Item: S_PerfectSize_Weapon
@@ -2036,8 +2036,8 @@ Body:
       - Item: S_Gemstone_Shield_II
       - Item: S_Bearer's_Armor_II
       - Item: S_Bearer's_Shoes_II
-      - Item: S_Almighty_Earring
-      - Item: S_Almighty_Pendant
+      - Item: S_AllMighty_Earring
+      - Item: S_AllMighty_Pendant
       - Item: S_All_Race_Shoes
       - Item: S_All_Race_Shield
       - Item: S_Blitz_Weapon
@@ -2092,8 +2092,8 @@ Body:
       - Item: S_Magical_Armor
       - Item: S_Immune_Athena_Shield
       - Item: S_Hard_Champion_Shoes
-      - Item: S_Kingbird_Ancient_Armor
-      - Item: S_Cri_Hit_Armor
+      - Item: S_KingbirdAncient_Armor
+      - Item: S_CriticalHit_Armor
       - Item: S_Thief_earring
       - Item: S_Archer_earring
       - Item: S_Rebellion_Armor
@@ -2496,7 +2496,7 @@ Body:
       - Item: Magic_Sword
       - Item: Sword_Of_Bluefire
       - Item: Avenger
-      - Item: Aeon_Staff
+      - Item: Iron_Staff
       - Item: Oriental_Sword
       - Item: Undine_Spear_K
       - Item: Exoricists_Bible_
@@ -2554,12 +2554,12 @@ Body:
       - Item: Up_Fog_Dew_Sword
       - Item: Up_Humma_Clear
       - Item: Up_Master_Soul_Rifle
-      - Item: Up_Golden_Lord_Launcher
-      - Item: Up_The_Black
-      - Item: Up_Demon_Slayer_Shot
+      - Item: Up_Golden_L_Launcher
+      - Item: Up_The_Black_Gatling
+      - Item: Up_Demon_S_Shot
       - Item: Up_Crimson_Rose
-      - Item: Up_Thousand_Sun
-      - Item: Up_Spirit_Pendulum_
+      - Item: Up_OneSkyOneSun
+      - Item: Up_SoulWeight
   - Item: Ancient_Hero_Wisdom
     RandomOptionGroup: ANCIENT_HERO_WISDOM
     TargetItems:
@@ -2570,7 +2570,7 @@ Body:
       - Item: Magic_Sword
       - Item: Sword_Of_Bluefire
       - Item: Avenger
-      - Item: Aeon_Staff
+      - Item: Iron_Staff
       - Item: Oriental_Sword
       - Item: Undine_Spear_K
       - Item: Exoricists_Bible_
@@ -2628,12 +2628,12 @@ Body:
       - Item: Up_Fog_Dew_Sword
       - Item: Up_Humma_Clear
       - Item: Up_Master_Soul_Rifle
-      - Item: Up_Golden_Lord_Launcher
-      - Item: Up_The_Black
-      - Item: Up_Demon_Slayer_Shot
+      - Item: Up_Golden_L_Launcher
+      - Item: Up_The_Black_Gatling
+      - Item: Up_Demon_S_Shot
       - Item: Up_Crimson_Rose
-      - Item: Up_Thousand_Sun
-      - Item: Up_Spirit_Pendulum_
+      - Item: Up_OneSkyOneSun
+      - Item: Up_SoulWeight
   - Item: Boost_Up_1
     ResultRefine: 10
     MaximumRefine: 9
@@ -3881,7 +3881,7 @@ Body:
       - Item: Magic_Sword
       - Item: Sword_Of_Bluefire
       - Item: Avenger
-      - Item: Aeon_Staff
+      - Item: Iron_Staff
       - Item: Oriental_Sword
       - Item: Undine_Spear_K
       - Item: Exoricists_Bible_
@@ -4215,12 +4215,12 @@ Body:
 #      - Item: Up_Fog_Dew_Sword
 #      - Item: Up_Humma_Clear
 #      - Item: Up_Master_Soul_Rifle
-#      - Item: Up_Golden_Lord_Launcher
-#      - Item: Up_The_Black
-#      - Item: Up_Demon_Slayer_Shot
+#      - Item: Up_Golden_L_Launcher
+#      - Item: Up_The_Black_Gatling
+#      - Item: Up_Demon_S_Shot
 #      - Item: Up_Crimson_Rose
-#      - Item: Up_Thousand_Sun
-#      - Item: Up_Spirit_Pendulum_
+#      - Item: Up_OneSkyOneSun
+#      - Item: Up_SoulWeight
 #  - Item: Great_Hero_Wisdom
 #    TargetItems:
 #      - Item: Up_Oriental_Sword
@@ -4252,12 +4252,12 @@ Body:
 #      - Item: Up_Fog_Dew_Sword
 #      - Item: Up_Humma_Clear
 #      - Item: Up_Master_Soul_Rifle
-#      - Item: Up_Golden_Lord_Launcher
-#      - Item: Up_The_Black
-#      - Item: Up_Demon_Slayer_Shot
+#      - Item: Up_Golden_L_Launcher
+#      - Item: Up_The_Black_Gatling
+#      - Item: Up_Demon_S_Shot
 #      - Item: Up_Crimson_Rose
-#      - Item: Up_Thousand_Sun
-#      - Item: Up_Spirit_Pendulum_
+#      - Item: Up_OneSkyOneSun
+#      - Item: Up_SoulWeight
   - Item: Vampire_Box_IL
     ResultRefineMinimum: 7
     ResultRefineMaximum: 10

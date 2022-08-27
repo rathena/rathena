@@ -11092,6 +11092,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			}
 		}
 #endif
+		clif_reputation_list( *sd );
 
 		if (sd->guild && battle_config.guild_notice_changemap == 1){
 			clif_guild_notice(sd); // Displays after VIP
@@ -11191,8 +11192,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_changeoption(&sd->bl);
 
 	if ((sd->sc.data[SC_MONSTER_TRANSFORM] || sd->sc.data[SC_ACTIVE_MONSTER_TRANSFORM]) && battle_config.mon_trans_disable_in_gvg && mapdata_flag_gvg2(mapdata)) {
-		status_change_end(&sd->bl, SC_MONSTER_TRANSFORM, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_ACTIVE_MONSTER_TRANSFORM, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_MONSTER_TRANSFORM);
+		status_change_end(&sd->bl, SC_ACTIVE_MONSTER_TRANSFORM);
 		clif_displaymessage(sd->fd, msg_txt(sd,731)); // Transforming into monster is not allowed in Guild Wars.
 	}
 
@@ -11458,8 +11459,8 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd)
 	// not when you move each cell.  This is official behaviour.
 	if (sd->sc.data[SC_CLOAKING])
 		skill_check_cloaking(&sd->bl, sd->sc.data[SC_CLOAKING]);
-	status_change_end(&sd->bl, SC_ROLLINGCUTTER, INVALID_TIMER); // If you move, you lose your counters. [malufett]
-	status_change_end(&sd->bl, SC_CRESCIVEBOLT, INVALID_TIMER);
+	status_change_end(&sd->bl, SC_ROLLINGCUTTER); // If you move, you lose your counters. [malufett]
+	status_change_end(&sd->bl, SC_CRESCIVEBOLT);
 
 	pc_delinvincibletimer(sd);
 
@@ -14304,7 +14305,7 @@ void clif_parse_GuildRequestEmblem(int fd,struct map_session_data *sd)
 enum e_result_validate_emblem {	// Used as Result for clif_validate_emblem
 	EMBVALIDATE_SUCCESS = 0,
 	EMBVALIDATE_ERR_RAW_FILEFORMAT,	// Invalid File Format (Error in zlib/decompression or malformed BMP header)
-	EMBVALIDATE_ERR_TRANSPARENCY	// uploaded emblem does not met the requirements of battle_config.emblem_transparency_limit
+	EMBVALIDATE_ERR_TRANSPARENCY	// uploaded emblem does not met the requirements of inter_config.emblem_transparency_limit
 };
 
 static enum e_result_validate_emblem clif_validate_emblem(const uint8* emblem, unsigned long emblem_len)
@@ -14320,7 +14321,7 @@ static enum e_result_validate_emblem clif_validate_emblem(const uint8* emblem, u
 		))
 		return EMBVALIDATE_ERR_RAW_FILEFORMAT;
 
-	if(battle_config.emblem_transparency_limit != 100) {
+	if(inter_config.emblem_transparency_limit != 100) {
 		int i, transcount = 1, tmp[3];
 		for(i = offset; i < buf_len-1; i++) {
 			int j = i%3;
@@ -14328,7 +14329,7 @@ static enum e_result_validate_emblem clif_validate_emblem(const uint8* emblem, u
 			if(j == 2 && (tmp[0] == 0xFFFF00FF) && (tmp[1] == 0xFFFF00) && (tmp[2] == 0xFF00FFFF)) //if pixel is transparent
 				transcount++;
 		}
-		if(((transcount*300)/(buf_len-offset)) > battle_config.emblem_transparency_limit) //convert in % to chk
+		if(((transcount*300)/(buf_len-offset)) > inter_config.emblem_transparency_limit) //convert in % to chk
 			return EMBVALIDATE_ERR_TRANSPARENCY;
 	}
 
@@ -14347,7 +14348,7 @@ void clif_parse_GuildChangeEmblem(int fd,struct map_session_data *sd){
 	if( !emblem_len || !sd->state.gmaster_flag )
 		return;
 
-	if(!(battle_config.emblem_woe_change) && is_agit_start() ){
+	if(!(inter_config.emblem_woe_change) && is_agit_start() ){
 		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,385),false,SELF); //"You not allowed to change emblem during woe"
 		return;
 	}
@@ -14358,7 +14359,7 @@ void clif_parse_GuildChangeEmblem(int fd,struct map_session_data *sd){
 		return;
 	} else if(emb_val == EMBVALIDATE_ERR_TRANSPARENCY){
 		char output[128];
-		safesnprintf(output,sizeof(output),msg_txt(sd,387),battle_config.emblem_transparency_limit);
+		safesnprintf(output,sizeof(output),msg_txt(sd,387),inter_config.emblem_transparency_limit);
 		clif_messagecolor(&sd->bl,color_table[COLOR_RED],output,false,SELF); //"The chosen emblem was detected invalid as it contain too much transparency (limit=%d)\n"
 		return;
 	}
@@ -14381,7 +14382,7 @@ void clif_parse_GuildChangeEmblem2(int fd, struct map_session_data* sd) {
 	if (!sd->state.gmaster_flag)
 		return;
 
-	if (!battle_config.emblem_woe_change && is_agit_start()) {
+	if (!inter_config.emblem_woe_change && is_agit_start()) {
 		clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 385), false, SELF); //"You not allowed to change emblem during woe"
 		return;
 	}
@@ -19589,7 +19590,7 @@ int clif_autoshadowspell_list(struct map_session_data *sd) {
 		sd->menuskill_id = SC_AUTOSHADOWSPELL;
 		sd->menuskill_val = c;
 	} else {
-		status_change_end(&sd->bl,SC_STOP,INVALID_TIMER);
+		status_change_end(&sd->bl,SC_STOP);
 		clif_skill_fail(sd,SC_AUTOSHADOWSPELL,USESKILL_FAIL_IMITATION_SKILL_NONE,0);
 	}
 
@@ -23800,6 +23801,238 @@ void clif_parse_enchantgrade_close( int fd, struct map_session_data* sd ){
 	nullpo_retv( sd );
 
 	sd->state.enchantgrade_open = false;
+#endif
+}
+
+void clif_reputation_type( struct map_session_data& sd, int64 type, int64 points ){
+#if PACKETVER_RE_NUM >= 20211103
+	struct PACKET_ZC_REPUTE_INFO* p = (struct PACKET_ZC_REPUTE_INFO*)packet_buffer;
+
+	p->packetType = HEADER_ZC_REPUTE_INFO;
+	p->packetLength = sizeof( struct PACKET_ZC_REPUTE_INFO ) + sizeof( struct PACKET_ZC_REPUTE_INFO_sub );
+	p->success = true;
+
+	struct PACKET_ZC_REPUTE_INFO_sub* entry = &p->list[0];
+
+	entry->type = type;
+	entry->points = points;
+
+	clif_send( p, p->packetLength, &sd.bl, SELF );
+#endif
+}
+
+void clif_reputation_list( struct map_session_data& sd ){
+#if PACKETVER_RE_NUM >= 20211103
+	struct PACKET_ZC_REPUTE_INFO* p = (struct PACKET_ZC_REPUTE_INFO*)packet_buffer;
+
+	p->packetType = HEADER_ZC_REPUTE_INFO;
+	p->packetLength = sizeof( struct PACKET_ZC_REPUTE_INFO );
+	p->success = true;
+
+	size_t index = 0;
+	for( const auto& entry : reputation_db ){
+		std::shared_ptr<s_reputation> reputation = entry.second;
+
+		struct PACKET_ZC_REPUTE_INFO_sub* list_entry = &p->list[index];
+
+		list_entry->type = reputation->id;
+		list_entry->points = pc_readreg2( &sd, reputation->variable.c_str() );
+
+		p->packetLength += sizeof( *list_entry );
+		index++;
+	}
+
+	clif_send( p, p->packetLength, &sd.bl, SELF );
+#endif
+}
+
+void clif_item_reform_open( struct map_session_data& sd, t_itemid item ){
+#if PACKETVER_RE_NUM >= 20211103
+	struct PACKET_ZC_OPEN_REFORM_UI p = {};
+
+	p.packetType = HEADER_ZC_OPEN_REFORM_UI;
+	p.itemId = item;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+
+	sd.state.item_reform = item;
+#endif
+}
+
+void clif_parse_item_reform_close( int fd, struct map_session_data* sd ){
+#if PACKETVER_RE_NUM >= 20211103
+	sd->state.item_reform = 0;
+#endif
+}
+
+void clif_item_reform_result( struct map_session_data& sd, uint16 index, uint8 result ){
+#if PACKETVER_RE_NUM >= 20211103
+	struct PACKET_ZC_ITEM_REFORM_ACK p = {};
+
+	p.packetType = HEADER_ZC_ITEM_REFORM_ACK;
+	p.index = client_index( index );
+	p.result = result;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+
+	if( result == 0 ){
+		// Client closes the window on success
+		sd.state.item_reform = 0;
+	}
+#endif
+}
+
+void clif_parse_item_reform_start( int fd, struct map_session_data* sd ){
+#if PACKETVER_RE_NUM >= 20211103
+	// Not opened
+	if( sd->state.item_reform == 0 ){
+		return;
+	}
+
+	struct PACKET_CZ_ITEM_REFORM *p = (struct PACKET_CZ_ITEM_REFORM*)RFIFOP( fd, 0 );
+
+	// Item mismatch
+	if( p->itemId != sd->state.item_reform ){
+		return;
+	}
+
+	uint16 index = server_index( p->index );
+
+	if( index >= MAX_INVENTORY ){
+		return;
+	}
+
+	if( sd->inventory_data[index] == nullptr ){
+		return;
+	}
+
+	std::shared_ptr<s_item_reform> reform = item_reform_db.find( sd->state.item_reform );
+
+	if( reform == nullptr ){
+		return;
+	}
+
+	struct item& selected_item = sd->inventory.u.items_inventory[index];
+
+	std::shared_ptr<s_item_reform_base> base = util::umap_find( reform->base_items, selected_item.nameid );
+
+	if( base == nullptr ){
+		return;
+	}
+
+	// If target item is not identified
+	if( selected_item.identify == 0 ){
+		return;
+	}
+
+	// If target item is equipped
+	if( selected_item.equip != 0 ){
+		return;
+	}
+
+	// Check minimum refine requirement
+	if( selected_item.refine < base->minimumRefine ){
+		return;
+	}
+
+	// Check maximum refine requirement
+	if( selected_item.refine > base->maximumRefine ){
+		return;
+	}
+
+	// If no cards are allowed
+	if( !base->cardsAllowed ){
+		for( int i = 0; i < MAX_SLOTS; i++ ){
+			if( selected_item.card[i] != 0 ){
+				return;
+			}
+		}
+	}
+
+	// If random options are required
+	if( base->requiredRandomOptions > 0 ){
+		int i;
+
+		for( i = MAX_ITEM_RDM_OPT - 1; i >= 0; i-- ){
+			if( selected_item.option[i].id != 0 ){
+				break;
+			}
+		}
+
+		if( ( i + 1 ) < base->requiredRandomOptions ){
+			return;
+		}
+	}
+
+	std::unordered_map<uint16, uint16> materials;
+
+	// Check if all materials exist
+	for( const auto& material : base->materials ){
+		int16 material_index = pc_search_inventory( sd, material.first );
+
+		if( material_index < 0 ){
+			return;
+		}
+
+		if( sd->inventory.u.items_inventory[material_index].amount < material.second ){
+			return;
+		}
+
+		materials[material_index] = material.second;
+	}
+
+	// Remove the material
+	for( const auto& material : materials ){
+		if( pc_delitem( sd, material.first, material.second, 0, 0, LOG_TYPE_REFORM ) != 0 ){
+			return;
+		}
+	}
+
+	// If triggered from item
+	if( sd->itemid == sd->state.item_reform && pc_delitem( sd, sd->itemindex, 1, 0, 0, LOG_TYPE_REFORM ) != 0 ){
+		return;
+	}
+
+	// Log removal of item
+	log_pick_pc( sd, LOG_TYPE_REFORM, -1, &selected_item );
+
+	// Visually remove it from the client
+	clif_delitem( sd, index, 1, 0 );
+
+	// Apply the random options
+	if( base->randomOptionGroup != nullptr ){
+		base->randomOptionGroup->apply( selected_item );
+	}
+
+	// Change the refine rate if needed
+	if( base->refineChange != 0 ){
+		selected_item.refine = cap_value( selected_item.refine + base->refineChange, 0, MAX_REFINE );
+	}
+
+	// Remove all cards and socket enchants
+	if( base->clearSlots ){
+		for( int i = 0; i < MAX_SLOTS; i++ ){
+			selected_item.card[i] = 0;
+		}
+	}
+
+	// Remove the current enchantgrade
+	if( base->removeEnchantgrade ){
+		selected_item.enchantgrade = 0;
+	}
+
+	// Finally change the item id
+	selected_item.nameid = base->resultItemId;
+	// Link inventory data cache to the new item
+	sd->inventory_data[index] = itemdb_search( base->resultItemId );
+
+	// Log retrieving the item again -> with the new options
+	log_pick_pc( sd, LOG_TYPE_REFORM, 1, &selected_item );
+
+	// Make it visible for the client again
+	clif_additem( sd, index, 1, 0 );
+
+	clif_item_reform_result( *sd, index, 0 );
 #endif
 }
 
