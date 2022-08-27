@@ -2069,7 +2069,7 @@ TIMER_FUNC(pet_recovery_timer){
 		//Display a heal animation?
 		//Detoxify is chosen for now.
 		clif_skill_nodamage(&pd->bl,&sd->bl,TF_DETOXIFY,1,1);
-		status_change_end(&sd->bl, pd->recovery->type, INVALID_TIMER);
+		status_change_end(&sd->bl, pd->recovery->type);
 		clif_emotion(&pd->bl, ET_OK);
 	}
 

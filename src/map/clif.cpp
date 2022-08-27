@@ -11192,8 +11192,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_changeoption(&sd->bl);
 
 	if ((sd->sc.data[SC_MONSTER_TRANSFORM] || sd->sc.data[SC_ACTIVE_MONSTER_TRANSFORM]) && battle_config.mon_trans_disable_in_gvg && mapdata_flag_gvg2(mapdata)) {
-		status_change_end(&sd->bl, SC_MONSTER_TRANSFORM, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_ACTIVE_MONSTER_TRANSFORM, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_MONSTER_TRANSFORM);
+		status_change_end(&sd->bl, SC_ACTIVE_MONSTER_TRANSFORM);
 		clif_displaymessage(sd->fd, msg_txt(sd,731)); // Transforming into monster is not allowed in Guild Wars.
 	}
 
@@ -11459,8 +11459,8 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd)
 	// not when you move each cell.  This is official behaviour.
 	if (sd->sc.data[SC_CLOAKING])
 		skill_check_cloaking(&sd->bl, sd->sc.data[SC_CLOAKING]);
-	status_change_end(&sd->bl, SC_ROLLINGCUTTER, INVALID_TIMER); // If you move, you lose your counters. [malufett]
-	status_change_end(&sd->bl, SC_CRESCIVEBOLT, INVALID_TIMER);
+	status_change_end(&sd->bl, SC_ROLLINGCUTTER); // If you move, you lose your counters. [malufett]
+	status_change_end(&sd->bl, SC_CRESCIVEBOLT);
 
 	pc_delinvincibletimer(sd);
 
@@ -19590,7 +19590,7 @@ int clif_autoshadowspell_list(struct map_session_data *sd) {
 		sd->menuskill_id = SC_AUTOSHADOWSPELL;
 		sd->menuskill_val = c;
 	} else {
-		status_change_end(&sd->bl,SC_STOP,INVALID_TIMER);
+		status_change_end(&sd->bl,SC_STOP);
 		clif_skill_fail(sd,SC_AUTOSHADOWSPELL,USESKILL_FAIL_IMITATION_SKILL_NONE,0);
 	}
 

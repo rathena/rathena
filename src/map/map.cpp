@@ -443,17 +443,17 @@ int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
 		skill_unit_move(bl,tick,2);
 		if ( sc && sc->count ) //at least one to cancel
 		{
-			status_change_end(bl, SC_CLOSECONFINE, INVALID_TIMER);
-			status_change_end(bl, SC_CLOSECONFINE2, INVALID_TIMER);
-			status_change_end(bl, SC_TINDER_BREAKER, INVALID_TIMER);
-			status_change_end(bl, SC_TINDER_BREAKER2, INVALID_TIMER);
-	//		status_change_end(bl, SC_BLADESTOP, INVALID_TIMER); //Won't stop when you are knocked away, go figure...
-			status_change_end(bl, SC_TATAMIGAESHI, INVALID_TIMER);
-			status_change_end(bl, SC_MAGICROD, INVALID_TIMER);
-			status_change_end(bl, SC_SU_STOOP, INVALID_TIMER);
+			status_change_end(bl, SC_CLOSECONFINE);
+			status_change_end(bl, SC_CLOSECONFINE2);
+			status_change_end(bl, SC_TINDER_BREAKER);
+			status_change_end(bl, SC_TINDER_BREAKER2);
+	//		status_change_end(bl, SC_BLADESTOP); //Won't stop when you are knocked away, go figure...
+			status_change_end(bl, SC_TATAMIGAESHI);
+			status_change_end(bl, SC_MAGICROD);
+			status_change_end(bl, SC_SU_STOOP);
 			if (sc->data[SC_PROPERTYWALK] &&
 				sc->data[SC_PROPERTYWALK]->val3 >= skill_get_maxcount(sc->data[SC_PROPERTYWALK]->val1,sc->data[SC_PROPERTYWALK]->val2) )
-				status_change_end(bl,SC_PROPERTYWALK,INVALID_TIMER);
+				status_change_end(bl,SC_PROPERTYWALK);
 		}
 	} else
 	if (bl->type == BL_NPC)
@@ -481,7 +481,7 @@ int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
 			struct block_list *d_bl;
 			if( (d_bl = map_id2bl(((TBL_PC*)bl)->shadowform_id)) == NULL || !check_distance_bl(bl,d_bl,10) ) {
 				if( d_bl )
-					status_change_end(d_bl,SC__SHADOWFORM,INVALID_TIMER);
+					status_change_end(d_bl,SC__SHADOWFORM);
 				((TBL_PC*)bl)->shadowform_id = 0;
 			}
 		}
@@ -491,7 +491,7 @@ int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
 				skill_unit_move_unit_group(skill_id2group(sc->data[SC_DANCING]->val2), bl->m, x1-x0, y1-y0);
 			else {
 				if (sc->data[SC_CLOAKING] && sc->data[SC_CLOAKING]->val1 < 3 && !skill_check_cloaking(bl, NULL))
-					status_change_end(bl, SC_CLOAKING, INVALID_TIMER);
+					status_change_end(bl, SC_CLOAKING);
 				if (sc->data[SC_WARM])
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_WARM]->val4), bl->m, x1-x0, y1-y0);
 				if (sc->data[SC_BANDING])
@@ -505,7 +505,7 @@ int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
 				if( sc->data[SC__SHADOWFORM] ) {//Shadow Form Caster Moving
 					struct block_list *d_bl;
 					if( (d_bl = map_id2bl(sc->data[SC__SHADOWFORM]->val2)) == NULL || !check_distance_bl(bl,d_bl,10) )
-						status_change_end(bl,SC__SHADOWFORM,INVALID_TIMER);
+						status_change_end(bl,SC__SHADOWFORM);
 				}
 
 				if (sc->data[SC_PROPERTYWALK]
@@ -2095,20 +2095,20 @@ int map_quit(struct map_session_data *sd) {
 
 			//No need to save infinite status
 			if (flag[SCF_NOSAVEINFINITE] && sd->sc.data[it.first] && sd->sc.data[it.first]->val4 > 0) {
-				status_change_end(&sd->bl, static_cast<sc_type>(it.first), INVALID_TIMER);
+				status_change_end(&sd->bl, static_cast<sc_type>(it.first));
 				continue;
 			}
 
 			//Status that are not saved
 			if (flag[SCF_NOSAVE]) {
-				status_change_end(&sd->bl, static_cast<sc_type>(it.first), INVALID_TIMER);
+				status_change_end(&sd->bl, static_cast<sc_type>(it.first));
 				continue;
 			}
 			//Removes status by config
 			if (battle_config.debuff_on_logout&1 && flag[SCF_DEBUFF] || //Removes debuffs
 				(battle_config.debuff_on_logout&2 && !(flag[SCF_DEBUFF]))) //Removes buffs
 			{
-				status_change_end(&sd->bl, static_cast<sc_type>(it.first), INVALID_TIMER);
+				status_change_end(&sd->bl, static_cast<sc_type>(it.first));
 				continue;
 			}
 		}
