@@ -208,7 +208,7 @@ struct npc_data {
 		unsigned long color;
 	} progressbar;
 
-#ifdef GENERATE_NAVI
+#ifdef MAP_GENERATOR
 	struct navi_link navi; // for warps and the src of npcs
 	std::vector<navi_link> links; // for extra links, like warper npc
 #endif

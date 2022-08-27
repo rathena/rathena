@@ -1,6 +1,6 @@
 #include "../config/core.hpp"
 
-#ifdef GENERATE_NAVI
+#ifdef MAP_GENERATOR
 
 #include <sys/stat.h>
 #include <algorithm>

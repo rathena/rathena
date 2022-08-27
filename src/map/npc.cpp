@@ -3716,7 +3716,7 @@ struct npc_data *npc_create_npc(int16 m, int16 x, int16 y){
 	nd->progressbar.timeout = 0;
 	nd->vd = npc_viewdb[0]; // Default to JT_INVISIBLE
 
-#ifdef GENERATE_NAVI
+#ifdef MAP_GENERATOR
 	nd->navi.pos = {m, x, y};
 	nd->navi.id = 0;
 	nd->navi.npc = nd;
@@ -3842,7 +3842,7 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 	nd->u.warp.xs = xs;
 	nd->u.warp.ys = ys;
 
-#ifdef GENERATE_NAVI
+#ifdef MAP_GENERATOR
 	nd->navi.warp_dest = {map_mapindex2mapid(i), to_x, to_y};
 #endif
 
