@@ -1117,10 +1117,36 @@ void StatusDatabase::removeByStatusFlag(block_list *bl, std::vector<e_status_cha
 		}
 	}
 }
-
-status_change_entry * status_change::getSCE(enum sc_type type) {
+/**
+ * Accessor for a status_change_entry in a status_change
+ */
+status_change_entry * status_change::getSCE(enum sc_type type) const {
 	// TODO: bounds check
 	return data[type];
+}
+
+status_change_entry * status_change::getSCE(uint32 type) const {
+	return getSCE(static_cast<sc_type>(type));
+}
+
+status_change_entry * status_change::createSCE(enum sc_type type) {
+	data[type] = ers_alloc(sc_data_ers, struct status_change_entry);
+	return data[type];
+}
+
+/**
+ * free the sce, then clear it
+ */
+void status_change::deleteSCE(enum sc_type type) {
+	ers_free(sc_data_ers, data[type]);
+	data[type] = nullptr;
+}
+
+/**
+ * For when we only want to clear the sce without freeing.
+ */
+void status_change::clearSCE(enum sc_type type) {
+	data[type] = nullptr;
 }
 
 /** Creates dummy status */
@@ -12723,7 +12749,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		sc_isnew = false;
 	} else { // New sc
 		++(sc->count);
-		sce = sc->data[type] = ers_alloc(sc_data_ers, struct status_change_entry);
+		sce = sc->createSCE(type);
 	}
 	sce->val1 = val1;
 	sce->val2 = val2;
@@ -12902,8 +12928,7 @@ int status_change_clear(struct block_list* bl, int type)
 			(sc->count)--;
 			if (sc->data[status]->timer != INVALID_TIMER)
 				delete_timer(sc->data[status]->timer, status_change_timer);
-			ers_free(sc_data_ers, sc->data[status]);
-			sc->data[status] = NULL;
+			sc->deleteSCE(status);
 		}
 	}
 
@@ -12996,7 +13021,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 	if (scdb->state.any())
 		status_calc_state(bl,sc,scdb->state,false);
 
-	sc->data[type] = NULL;
+	sc->clearSCE(type);
 
 	if (scdb->flag[SCF_DISPLAYPC] || scdb->flag[SCF_DISPLAYNPC])
 		status_display_remove(bl,type);
