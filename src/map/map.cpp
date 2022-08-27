@@ -3893,7 +3893,6 @@ int parse_console(const char* buf){
 	int n;
 	struct map_session_data sd;
 
-	memset(&sd, 0, sizeof(struct map_session_data));
 	strcpy(sd.status.name, "console");
 
 	if( ( n = sscanf(buf, "%63[^:]:%63[^:]:%11s %6hd %6hd[^\n]", type, command, mapname, &x, &y) ) < 5 ){

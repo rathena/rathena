@@ -3132,7 +3132,8 @@ struct status_change_entry {
 };
 
 ///Status change
-struct status_change {
+class status_change {
+public:
 	unsigned int option;// effect state (bitfield)
 	unsigned int opt3;// skill state (bitfield)
 	unsigned short opt1;// body state

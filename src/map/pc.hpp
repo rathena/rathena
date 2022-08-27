@@ -372,7 +372,8 @@ struct s_qi_display {
 	e_questinfo_markcolor color;
 };
 
-struct map_session_data {
+class map_session_data {
+public:
 	struct block_list bl;
 	struct unit_data ud;
 	struct view_data vd;
