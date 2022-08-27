@@ -75054,7 +75054,7 @@ Body:
     DamageMotion: 420
     Ai: 04
     Drops:
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 1000
       - Item: Decayed_Nail
         Rate: 3000
@@ -75088,7 +75088,7 @@ Body:
     DamageMotion: 384
     Ai: 04
     Drops:
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 1000
       - Item: Mementos
         Rate: 2500
@@ -75126,7 +75126,7 @@ Body:
     Modes:
       Detector: true
     Drops:
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 1000
       - Item: Withered_Flower
         Rate: 2500
@@ -75164,7 +75164,7 @@ Body:
     Modes:
       Detector: true
     Drops:
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 1000
       - Item: Sticky_Mucus
         Rate: 3000
@@ -75202,7 +75202,7 @@ Body:
     Modes:
       Detector: true
     Drops:
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 1000
       - Item: Immortal_Heart
         Rate: 2500
@@ -75236,7 +75236,7 @@ Body:
     DamageMotion: 192
     Ai: 04
     Drops:
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 1000
       - Item: Decayed_Nail
         Rate: 3000
@@ -75270,7 +75270,7 @@ Body:
     DamageMotion: 576
     Ai: 04
     Drops:
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 1000
       - Item: Horrendous_Mouth
         Rate: 3500
@@ -75306,7 +75306,7 @@ Body:
     DamageMotion: 504
     Ai: 04
     Drops:
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 1000
       - Item: Skel_Bone
         Rate: 3500
@@ -75342,7 +75342,7 @@ Body:
     DamageMotion: 396
     Ai: 04
     Drops:
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 1000
       - Item: Immortal_Heart
         Rate: 2000
@@ -75378,7 +75378,7 @@ Body:
     DamageMotion: 480
     Ai: 04
     Drops:
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 1500
       - Item: Realgar_Wine
         Rate: 5000
@@ -75416,7 +75416,7 @@ Body:
     Modes:
       Detector: true
     Drops:
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 1500
       - Item: Tendon
         Rate: 2500
@@ -75452,9 +75452,9 @@ Body:
     DamageMotion: 360
     Ai: 04
     Drops:
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 10000
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 10000
       - Item: Evil_Horn
         Rate: 2000
@@ -75516,9 +75516,9 @@ Body:
     Drops:
       - Item: Evil_Horn
         Rate: 2000
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 10000
-      - Item: Shard_of_Gray
+      - Item: Gray_Shard
         Rate: 10000
 #  - Id: 2962
 #    AegisName: E_DEVILING
@@ -93927,52 +93927,521 @@ Body:
 #    AegisName: MD_AIRBOAT_BOSS3
 #  - Id: 21063
 #    AegisName: MD_AIRBOAT_BOSS4
-#  - Id: 21064
-#    AegisName: S_DUMMY_100_SMALL
-#  - Id: 21065
-#    AegisName: S_DUMMY_100_MEDIUM
-#  - Id: 21066
-#    AegisName: S_DUMMY_100_LARGE
-#  - Id: 21067
-#    AegisName: S_DUMMY_100_NOTHING
-#  - Id: 21068
-#    AegisName: S_DUMMY_100_DRAGON
-#  - Id: 21069
-#    AegisName: S_DUMMY_100_ANIMAL
-#  - Id: 21070
-#    AegisName: S_DUMMY_100_HUMAN
-#  - Id: 21071
-#    AegisName: S_DUMMY_100_INSECT
-#  - Id: 21072
-#    AegisName: S_DUMMY_100_FISH
-#  - Id: 21073
-#    AegisName: S_DUMMY_100_DEMON
-#  - Id: 21074
-#    AegisName: S_DUMMY_100_PLANT
-#  - Id: 21075
-#    AegisName: S_DUMMY_100_ANGEL
-#  - Id: 21076
-#    AegisName: S_DUMMY_100_UNDEAD
-#  - Id: 21077
-#    AegisName: S_DUMMY_100_NOTHING2
-#  - Id: 21078
-#    AegisName: S_DUMMY_100_WATER
-#  - Id: 21079
-#    AegisName: S_DUMMY_100_GROUND
-#  - Id: 21080
-#    AegisName: S_DUMMY_100_FIRE
-#  - Id: 21081
-#    AegisName: S_DUMMY_100_WIND
-#  - Id: 21082
-#    AegisName: S_DUMMY_100_POISON
-#  - Id: 21083
-#    AegisName: S_DUMMY_100_SAINT
-#  - Id: 21084
-#    AegisName: S_DUMMY_100_DARKNESS
-#  - Id: 21085
-#    AegisName: S_DUMMY_100_TELEKINESIS
-#  - Id: 21086
-#    AegisName: S_DUMMY_100_UNDEAD2
+  - Id: 21064
+    AegisName: S_DUMMY_100_SMALL
+    Name: Training Dummy (Small)
+    Level: 100
+    Hp: 2000000000
+    Attack: 10
+    Attack2: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Class: Boss
+    Modes:
+      NoRandomWalk: true
+      TeleportBlock: true
+  - Id: 21065
+    AegisName: S_DUMMY_100_MEDIUM
+    Name: Training Dummy (Medium)
+    Level: 100
+    Hp: 2000000000
+    Attack: 10
+    Attack2: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Class: Boss
+    Modes:
+      NoRandomWalk: true
+      TeleportBlock: true
+  - Id: 21066
+    AegisName: S_DUMMY_100_LARGE
+    Name: Training Dummy (Large)
+    Level: 100
+    Hp: 2000000000
+    Attack: 10
+    Attack2: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Class: Boss
+    Modes:
+      NoRandomWalk: true
+      TeleportBlock: true
+  - Id: 21067
+    AegisName: S_DUMMY_100_NOTHING
+    Name: Training Dummy (Neutral)
+    Level: 100
+    Hp: 2000000000
+    Attack: 10
+    Attack2: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Class: Boss
+    Modes:
+      NoRandomWalk: true
+      TeleportBlock: true
+  - Id: 21068
+    AegisName: S_DUMMY_100_DRAGON
+    Name: Training Dummy (Dragon)
+    Level: 100
+    Hp: 2000000000
+    Attack: 10
+    Attack2: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Dragon
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Class: Boss
+    Modes:
+      NoRandomWalk: true
+      TeleportBlock: true
+  - Id: 21069
+    AegisName: S_DUMMY_100_ANIMAL
+    Name: Training Dummy (Brute)
+    Level: 100
+    Hp: 2000000000
+    Attack: 10
+    Attack2: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Brute
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Class: Boss
+    Modes:
+      NoRandomWalk: true
+      TeleportBlock: true
+  - Id: 21070
+    AegisName: S_DUMMY_100_HUMAN
+    Name: Training Dummy (Human)
+    Level: 100
+    Hp: 2000000000
+    Attack: 10
+    Attack2: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Class: Boss
+    Modes:
+      NoRandomWalk: true
+      TeleportBlock: true
+  - Id: 21071
+    AegisName: S_DUMMY_100_INSECT
+    Name: Training Dummy (Insect)
+    Level: 100
+    Hp: 2000000000
+    Attack: 10
+    Attack2: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Insect
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Class: Boss
+    Modes:
+      NoRandomWalk: true
+      TeleportBlock: true
+  - Id: 21072
+    AegisName: S_DUMMY_100_FISH
+    Name: Training Dummy (Fish)
+    Level: 100
+    Hp: 2000000000
+    Attack: 10
+    Attack2: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Fish
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Class: Boss
+    Modes:
+      NoRandomWalk: true
+      TeleportBlock: true
+  - Id: 21073
+    AegisName: S_DUMMY_100_DEMON
+    Name: Training Dummy (Demon)
+    Level: 100
+    Hp: 2000000000
+    Attack: 10
+    Attack2: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Class: Boss
+    Modes:
+      NoRandomWalk: true
+      TeleportBlock: true
+  - Id: 21074
+    AegisName: S_DUMMY_100_PLANT
+    Name: Training Dummy (Plant)
+    Level: 100
+    Hp: 2000000000
+    Attack: 10
+    Attack2: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Class: Boss
+    Modes:
+      NoRandomWalk: true
+      TeleportBlock: true
+  - Id: 21075
+    AegisName: S_DUMMY_100_ANGEL
+    Name: Training Dummy (Angel)
+    Level: 100
+    Hp: 2000000000
+    Attack: 10
+    Attack2: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Class: Boss
+    Modes:
+      NoRandomWalk: true
+      TeleportBlock: true
+  - Id: 21076
+    AegisName: S_DUMMY_100_UNDEAD
+    Name: Training Dummy (Undead)
+    Level: 100
+    Hp: 2000000000
+    Attack: 10
+    Attack2: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Class: Boss
+    Modes:
+      NoRandomWalk: true
+      TeleportBlock: true
+  - Id: 21077
+    AegisName: S_DUMMY_100_NOTHING2
+    # Name: Training Dummy (Neutral Lv1)
+    Name: Dummy (Neutral Lv1)
+    Level: 100
+    Hp: 2000000000
+    Attack: 10
+    Attack2: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 482
+    Modes:
+      NoRandomWalk: true
+      TeleportBlock: true
+  - Id: 21078
+    AegisName: S_DUMMY_100_WATER
+    # Name: Training Dummy (Water Lv1)
+    Name: Dummy (Water Lv1)
+    Level: 100
+    Hp: 2000000000
+    Attack: 10
+    Attack2: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Class: Boss
+    Modes:
+      NoRandomWalk: true
+      TeleportBlock: true
+  - Id: 21079
+    AegisName: S_DUMMY_100_GROUND
+    # Name: Training Dummy (Earth Lv1)
+    Name: Dummy (Earth Lv1)
+    Level: 100
+    Hp: 2000000000
+    Attack: 10
+    Attack2: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Class: Boss
+    Modes:
+      NoRandomWalk: true
+      TeleportBlock: true
+  - Id: 21080
+    AegisName: S_DUMMY_100_FIRE
+    # Name: Training Dummy (Fire Lv1)
+    Name: Dummy (Fire Lv1)
+    Level: 100
+    Hp: 2000000000
+    Attack: 10
+    Attack2: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Fire
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Class: Boss
+    Modes:
+      NoRandomWalk: true
+      TeleportBlock: true
+  - Id: 21081
+    AegisName: S_DUMMY_100_WIND
+    # Name: Training Dummy (Wind Lv1)
+    Name: Dummy (Wind Lv1)
+    Level: 100
+    Hp: 2000000000
+    Attack: 10
+    Attack2: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Wind
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Class: Boss
+    Modes:
+      NoRandomWalk: true
+      TeleportBlock: true
+  - Id: 21082
+    AegisName: S_DUMMY_100_POISON
+    # Name: Training Dummy (Poison Lv1)
+    Name: Dummy (Poison Lv1)
+    Level: 100
+    Hp: 2000000000
+    Attack: 10
+    Attack2: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Poison
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Class: Boss
+    Modes:
+      NoRandomWalk: true
+      TeleportBlock: true
+  - Id: 21083
+    AegisName: S_DUMMY_100_SAINT
+    # Name: Training Dummy (Holy Lv1)
+    Name: Dummy (Holy Lv1)
+    Level: 100
+    Hp: 2000000000
+    Attack: 10
+    Attack2: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Holy
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Class: Boss
+    Modes:
+      NoRandomWalk: true
+      TeleportBlock: true
+  - Id: 21084
+    AegisName: S_DUMMY_100_DARKNESS
+    # Name: Training Dummy (Dark Lv1)
+    Name: Dummy (Dark Lv1)
+    Level: 100
+    Hp: 2000000000
+    Attack: 10
+    Attack2: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Dark
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Class: Boss
+    Modes:
+      NoRandomWalk: true
+      TeleportBlock: true
+  - Id: 21085
+    AegisName: S_DUMMY_100_TELEKINESIS
+    # Name: Training Dummy (Ghost Lv1)
+    Name: Dummy (Ghost Lv1)
+    Level: 100
+    Hp: 2000000000
+    Attack: 10
+    Attack2: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Ghost
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Class: Boss
+    Modes:
+      NoRandomWalk: true
+      TeleportBlock: true
+  - Id: 21086
+    AegisName: S_DUMMY_100_UNDEAD2
+    # Name: Training Dummy (Undead Lv1)
+    Name: Dummy (Undead Lv1)
+    Level: 100
+    Hp: 2000000000
+    Attack: 10
+    Attack2: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1672
+    AttackMotion: 672
+    DamageMotion: 480
+    Class: Boss
+    Modes:
+      NoRandomWalk: true
+      TeleportBlock: true
 #  - Id: 21087
 #    AegisName: S_DUMMY_100_HUMANP
 #  - Id: 21088

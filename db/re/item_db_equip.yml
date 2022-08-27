@@ -21578,7 +21578,7 @@ Body:
       if (.@r>=12)
          bonus bFixedCastrate,-70;
   - Id: 2048
-    AegisName: Aeon_Staff
+    AegisName: Iron_Staff
     Name: Aeon Staff
     Type: Weapon
     SubType: 2hStaff
@@ -68552,7 +68552,7 @@ Body:
          bonus2 bMagicAddEle,Ele_Wind,10;
       }
   - Id: 15280
-    AegisName: S_Cri_Hit_Armor
+    AegisName: S_CriticalHit_Armor
     Name: Critical Hit Shadow Armor
     Type: Shadowgear
     Locations:
@@ -83099,7 +83099,7 @@ Body:
     Script: |
       bonus2 bSubClass,Class_Boss,2;
   - Id: 19134
-    AegisName: Wickebines_Black_Cat_Ears
+    AegisName: Whikebain_Ears_K
     Name: Wickebine's Black Cat Ears
     Type: Armor
     Buy: 20
@@ -85033,7 +85033,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_All,.@r;
       autobonus "{ .@r = getrefine(); bonus3 bAutoSpell,\"MG_COLDBOLT\",2,50; bonus3 bAutoSpell,\"MG_FIREBOLT\",2,50; bonus3 bAutoSpell,\"MG_LIGHTNINGBOLT\",2,50; bonus3 bAutoSpell,\"WZ_EARTHSPIKE\",2,50; if (.@r>=7) { bonus3 bAutoSpell,\"WZ_FROSTNOVA\",5,40; if (.@r>=8) { bonus3 bAutoSpell,\"MG_THUNDERSTORM\",5,30; if (BaseLevel>100) { if (.@r>=9) { bonus3 bAutoSpell,\"WL_HELLINFERNO\",5,20; if (.@r>=10) { bonus3 bAutoSpell,\"WL_CHAINLIGHTNING\",3,10; } } } } } }",1,5000,BF_WEAPON,"{ active_transform 1056,5000; /*SMOKIE*/ }";
   - Id: 19266
-    AegisName: Survive_Circlet_
+    AegisName: Survive_Circlet_K
     Name: Survivor's Circlet
     Type: Armor
     Weight: 500
@@ -110948,7 +110948,7 @@ Body:
          bonus bMaxHPrate,1;
       }
   - Id: 24339
-    AegisName: S_Almighty_Earring
+    AegisName: S_AllMighty_Earring
     Name: Almighty Shadow Earring
     Type: Shadowgear
     Locations:
@@ -110960,7 +110960,7 @@ Body:
       bonus bMaxHP,.@r*10;
       bonus bAllStats,.@r;
   - Id: 24340
-    AegisName: S_Almighty_Pendant
+    AegisName: S_AllMighty_Pendant
     Name: Almighty Shadow Pendant
     Type: Shadowgear
     Locations:
@@ -111914,7 +111914,7 @@ Body:
       bonus bMaxHPrate,.@r;
       bonus bMaxSPrate,.@r;
   - Id: 24401
-    AegisName: S_Kingbird_Ancient_Armor
+    AegisName: S_KingbirdAncient_Armor
     Name: Kingbird Ancient Shadow Armor
     Type: Shadowgear
     Locations:
@@ -123730,7 +123730,7 @@ Body:
       if (readparam(bDex)>=100)
          bonus bLongAtkRate,5;
   - Id: 28439
-    AegisName: Sea_Otter_Mini_Fan
+    AegisName: SeeOtter_Fan
     Name: Sea Otter Mini Fan
     Type: Armor
     Weight: 100
@@ -138884,7 +138884,7 @@ Body:
       if (.@r>=10)
          bonus bUseSPrate,-20;
   - Id: 400049
-    AegisName: aegis_400049
+    AegisName: Stripe_Hat
     Name: Stripe Hat
     Type: Armor
     View: 1728
@@ -159132,7 +159132,7 @@ Body:
          bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",15;
       }
   - Id: 540010
-    AegisName: Up_Thousand_Sun
+    AegisName: Up_OneSkyOneSun
     Name: Patent One Sky One Sun
     Type: Weapon
     SubType: Book
@@ -160859,7 +160859,7 @@ Body:
          bonus2 bSkillAtk,"SU_CN_METEOR",25;
       }
   - Id: 550015
-    AegisName: Up_Spirit_Pendulum_
+    AegisName: Up_SoulWeight
     Name: Patent Spirit Pendulum
     Type: Weapon
     SubType: Staff
@@ -172551,7 +172551,7 @@ Body:
          bonus2 bSkillAtk,"RL_SLUGSHOT",25;
       }
   - Id: 820001
-    AegisName: Up_Demon_Slayer_Shot
+    AegisName: Up_Demon_S_Shot
     Name: Patent Demon Slayer Shot
     Type: Weapon
     SubType: Shotgun
@@ -172850,7 +172850,7 @@ Body:
          bonus2 bSkillAtk,"RL_FIRE_RAIN",25;
       }
   - Id: 830002
-    AegisName: Up_The_Black
+    AegisName: Up_The_Black_Gatling
     Name: Patent The Black
     Type: Weapon
     SubType: Gatling
@@ -173247,7 +173247,7 @@ Body:
          bonus2 bSkillAtk,"RL_H_MINE",25;
       }
   - Id: 840001
-    AegisName: Up_Golden_Lord_Launcher
+    AegisName: Up_Golden_L_Launcher
     Name: Patent Golden Lord Launcher
     Type: Weapon
     SubType: Grenade
