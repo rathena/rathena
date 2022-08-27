@@ -3165,6 +3165,8 @@ public:
 	unsigned char sg_counter; //Storm gust counter (previous hits from storm gust)
 #endif
 	struct status_change_entry *data[SC_MAX];
+
+	status_change_entry * getSCE(enum sc_type type);
 };
 
 int status_damage( struct block_list *src, struct block_list *target, int64 dhp, int64 dsp, int64 dap, t_tick walkdelay, int flag, uint16 skill_id );

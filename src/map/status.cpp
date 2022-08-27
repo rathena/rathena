@@ -1118,6 +1118,11 @@ void StatusDatabase::removeByStatusFlag(block_list *bl, std::vector<e_status_cha
 	}
 }
 
+status_change_entry * status_change::getSCE(enum sc_type type) {
+	// TODO: bounds check
+	return data[type];
+}
+
 /** Creates dummy status */
 static void initDummyData(void) {
 	memset(&dummy_status, 0, sizeof(dummy_status));
