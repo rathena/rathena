@@ -1152,7 +1152,7 @@ static bool pc_cant_act( struct map_session_data* sd ){
 	#define pc_isvip(sd)      ( false )
 #endif
 #ifdef NEW_CARTS
-	#define pc_iscarton(sd)       ( (sd)->sc.data[SC_PUSH_CART] )
+	#define pc_iscarton(sd)       ( (sd)->sc.getSCE(SC_PUSH_CART) )
 #else
 	#define pc_iscarton(sd)       ( (sd)->sc.option&OPTION_CART )
 #endif
@@ -1233,14 +1233,14 @@ enum e_mado_type : uint16 {
 	#define pc_rightside_mdef(sd) ( (sd)->battle_status.mdef2 - ((sd)->battle_status.vit>>1) )
 #define pc_leftside_matk(sd) \
     (\
-    ((sd)->sc.data[SC_MAGICPOWER] && (sd)->sc.data[SC_MAGICPOWER]->val4) \
-		?((sd)->battle_status.matk_min * 100 + 50) / ((sd)->sc.data[SC_MAGICPOWER]->val3+100) \
+    ((sd)->sc.getSCE(SC_MAGICPOWER) && (sd)->sc.getSCE(SC_MAGICPOWER)->val4) \
+		?((sd)->battle_status.matk_min * 100 + 50) / ((sd)->sc.getSCE(SC_MAGICPOWER)->val3+100) \
         :(sd)->battle_status.matk_min \
     )
 #define pc_rightside_matk(sd) \
     (\
-    ((sd)->sc.data[SC_MAGICPOWER] && (sd)->sc.data[SC_MAGICPOWER]->val4) \
-		?((sd)->battle_status.matk_max * 100 + 50) / ((sd)->sc.data[SC_MAGICPOWER]->val3+100) \
+    ((sd)->sc.getSCE(SC_MAGICPOWER) && (sd)->sc.getSCE(SC_MAGICPOWER)->val4) \
+		?((sd)->battle_status.matk_max * 100 + 50) / ((sd)->sc.getSCE(SC_MAGICPOWER)->val3+100) \
         :(sd)->battle_status.matk_max \
     )
 #endif

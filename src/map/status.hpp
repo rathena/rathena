@@ -3164,6 +3164,7 @@ public:
 #ifndef RENEWAL
 	unsigned char sg_counter; //Storm gust counter (previous hits from storm gust)
 #endif
+private:
 	struct status_change_entry *data[SC_MAX];
 public:
 	status_change_entry * getSCE(enum sc_type type) const;

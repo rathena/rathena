@@ -1295,7 +1295,7 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 
 	struct status_change* tsc = status_get_sc( &md->bl );
 
-	if( battle_config.pet_hide_check && tsc && ( tsc->data[SC_HIDING] || tsc->data[SC_CLOAKING] || tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_NEWMOON] || tsc->data[SC_CLOAKINGEXCEED] ) ){
+	if( battle_config.pet_hide_check && tsc && ( tsc->getSCE(SC_HIDING) || tsc->getSCE(SC_CLOAKING) || tsc->getSCE(SC_CAMOUFLAGE) || tsc->getSCE(SC_NEWMOON) || tsc->getSCE(SC_CLOAKINGEXCEED) ) ){
 		clif_pet_roulette( sd, 0 );
 		sd->catch_target_class = PET_CATCH_FAIL;
 
@@ -2066,7 +2066,7 @@ TIMER_FUNC(pet_recovery_timer){
 		return 0;
 	}
 
-	if(sd->sc.data[pd->recovery->type]) {
+	if(sd->sc.getSCE(pd->recovery->type)) {
 		//Display a heal animation?
 		//Detoxify is chosen for now.
 		clif_skill_nodamage(&pd->bl,&sd->bl,TF_DETOXIFY,1,1);

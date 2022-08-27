@@ -748,7 +748,7 @@ int pc_addsoulball(map_session_data *sd, int max)
 
 	status_change *sc = status_get_sc(&sd->bl);
 
-	if (sc == nullptr || sc->data[SC_SOULENERGY] == nullptr) {
+	if (sc == nullptr || sc->getSCE(SC_SOULENERGY) == nullptr) {
 		sc_start(&sd->bl, &sd->bl, SC_SOULENERGY, 100, 0, skill_get_time2(SP_SOULCOLLECT, 1));
 		sd->soulball = 0;
 	}
@@ -781,14 +781,14 @@ int pc_delsoulball(map_session_data *sd, int count, bool type)
 
 	status_change *sc = status_get_sc(&sd->bl);
 
-	if (sd->soulball <= 0 || sc == nullptr || sc->data[SC_SOULENERGY] == nullptr) {
+	if (sd->soulball <= 0 || sc == nullptr || sc->getSCE(SC_SOULENERGY) == nullptr) {
 		sd->soulball = 0;
 	}else{
 		sd->soulball -= cap_value(count, 0, sd->soulball);
 		if (sd->soulball == 0)
 			status_change_end(&sd->bl, SC_SOULENERGY);
 		else
-			sc->data[SC_SOULENERGY]->val1 = sd->soulball;
+			sc->getSCE(SC_SOULENERGY)->val1 = sd->soulball;
 	}
 
 	if (!type)
@@ -1139,7 +1139,7 @@ void pc_makesavestatus(struct map_session_data *sd) {
 #else
 	sd->status.option = sd->sc.option&(OPTION_INVISIBLE|OPTION_CART|OPTION_FALCON|OPTION_RIDING|OPTION_DRAGON|OPTION_WUG|OPTION_WUGRIDER|OPTION_MADOGEAR);
 #endif
-	if (sd->sc.data[SC_JAILED]) { //When Jailed, do not move last point.
+	if (sd->sc.getSCE(SC_JAILED)) { //When Jailed, do not move last point.
 		if(pc_isdead(sd)){
 			pc_setrestartvalue(sd, 0);
 		} else {
@@ -1657,24 +1657,24 @@ uint8 pc_isequip(struct map_session_data *sd,int n)
 	}
 
 	if (sd->sc.count) {
-		if(item->equip & EQP_ARMS && item->type == IT_WEAPON && sd->sc.data[SC_STRIPWEAPON]) // Also works with left-hand weapons [DracoRPG]
+		if(item->equip & EQP_ARMS && item->type == IT_WEAPON && sd->sc.getSCE(SC_STRIPWEAPON)) // Also works with left-hand weapons [DracoRPG]
 			return ITEM_EQUIP_ACK_FAIL;
-		if(item->equip & EQP_SHIELD && item->type == IT_ARMOR && sd->sc.data[SC_STRIPSHIELD])
+		if(item->equip & EQP_SHIELD && item->type == IT_ARMOR && sd->sc.getSCE(SC_STRIPSHIELD))
 			return ITEM_EQUIP_ACK_FAIL;
-		if(item->equip & EQP_ARMOR && sd->sc.data[SC_STRIPARMOR])
+		if(item->equip & EQP_ARMOR && sd->sc.getSCE(SC_STRIPARMOR))
 			return ITEM_EQUIP_ACK_FAIL;
-		if(item->equip & EQP_HEAD_TOP && sd->sc.data[SC_STRIPHELM])
+		if(item->equip & EQP_HEAD_TOP && sd->sc.getSCE(SC_STRIPHELM))
 			return ITEM_EQUIP_ACK_FAIL;
-		if(item->equip & EQP_ACC && sd->sc.data[SC__STRIPACCESSORY])
+		if(item->equip & EQP_ACC && sd->sc.getSCE(SC__STRIPACCESSORY))
 			return ITEM_EQUIP_ACK_FAIL;
-		if (item->equip & EQP_ARMS && sd->sc.data[SC__WEAKNESS])
+		if (item->equip & EQP_ARMS && sd->sc.getSCE(SC__WEAKNESS))
 			return ITEM_EQUIP_ACK_FAIL;
-		if (item->equip & EQP_SHADOW_GEAR && sd->sc.data[SC_SHADOW_STRIP])
+		if (item->equip & EQP_SHADOW_GEAR && sd->sc.getSCE(SC_SHADOW_STRIP))
 			return ITEM_EQUIP_ACK_FAIL;
-		if(item->equip && (sd->sc.data[SC_KYOUGAKU] || sd->sc.data[SC_SUHIDE]))
+		if(item->equip && (sd->sc.getSCE(SC_KYOUGAKU) || sd->sc.getSCE(SC_SUHIDE)))
 			return ITEM_EQUIP_ACK_FAIL;
 
-		if (sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_SUPERNOVICE) {
+		if (sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_SUPERNOVICE) {
 			//Spirit of Super Novice equip bonuses. [Skotlex]
 			if (sd->status.base_level > 90 && item->equip & EQP_HELM)
 				return ITEM_EQUIP_ACK_OK; //Can equip all helms
@@ -2360,7 +2360,7 @@ void pc_calc_skilltree(struct map_session_data *sd)
 				if (!sd->status.skill[sk_idx].lv && (
 					(skill->inf2[INF2_ISQUEST] && !battle_config.quest_skill_learn) ||
 					skill->inf2[INF2_ISWEDDING] ||
-					(skill->inf2[INF2_ISSPIRIT] && !sd->sc.data[SC_SPIRIT])
+					(skill->inf2[INF2_ISSPIRIT] && !sd->sc.getSCE(SC_SPIRIT))
 				))
 					continue; //Cannot be learned via normal means. Note this check DOES allows raising already known skills.
 
@@ -2407,7 +2407,7 @@ void pc_calc_skilltree(struct map_session_data *sd)
 	}
 
 	// Enable Bard/Dancer spirit linked skills.
-	if (sd->sc.count && sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_BARDDANCER) {
+	if (sd->sc.count && sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_BARDDANCER) {
 		std::vector<std::vector<uint16>> linked_skills = { { BA_WHISTLE, DC_HUMMING },
 														   { BA_ASSASSINCROSS, DC_DONTFORGETME },
 														   { BA_POEMBRAGI, DC_FORTUNEKISS },
@@ -2487,7 +2487,7 @@ static void pc_check_skilltree(struct map_session_data *sd)
 			if( !sd->status.skill[sk_idx].lv && (
 				(skill->inf2[INF2_ISQUEST] && !battle_config.quest_skill_learn) ||
 				skill->inf2[INF2_ISWEDDING] ||
-				(skill->inf2[INF2_ISSPIRIT] && !sd->sc.data[SC_SPIRIT])
+				(skill->inf2[INF2_ISSPIRIT] && !sd->sc.getSCE(SC_SPIRIT))
 			) )
 				continue; //Cannot be learned via normal means.
 
@@ -2648,7 +2648,7 @@ void pc_updateweightstatus(struct map_session_data *sd)
 
 	nullpo_retv(sd);
 
-	old_overweight = (sd->sc.data[SC_WEIGHT90]) ? 2 : (sd->sc.data[SC_WEIGHT50]) ? 1 : 0;
+	old_overweight = (sd->sc.getSCE(SC_WEIGHT90)) ? 2 : (sd->sc.getSCE(SC_WEIGHT50)) ? 1 : 0;
 #ifdef RENEWAL
 	new_overweight = (pc_is90overweight(sd)) ? 2 : (pc_is70overweight(sd)) ? 1 : 0;
 #else
@@ -6044,7 +6044,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 
 	/* Items with delayed consume are not meant to work while in mounts except reins of mount(12622) */
 	if( id->flag.delay_consume > 0 ) {
-		if( nameid != ITEMID_REINS_OF_MOUNT && sd->sc.data[SC_ALL_RIDING] )
+		if( nameid != ITEMID_REINS_OF_MOUNT && sd->sc.getSCE(SC_ALL_RIDING) )
 			return 0;
 		else if( pc_issit(sd) )
 			return 0;
@@ -6444,8 +6444,8 @@ int pc_steal_coin(struct map_session_data *sd,struct block_list *target)
 	md = (TBL_MOB*)target;
 	target_lv = status_get_lv(target);
 
-	if (md->state.steal_coin_flag || md->sc.data[SC_STONE] || md->sc.data[SC_FREEZE] || md->sc.data[SC_HANDICAPSTATE_FROSTBITE] || 
-		md->sc.data[SC_HANDICAPSTATE_SWOONING] || md->sc.data[SC_HANDICAPSTATE_LIGHTNINGSTRIKE] || md->sc.data[SC_HANDICAPSTATE_CRYSTALLIZATION] || 
+	if (md->state.steal_coin_flag || md->sc.getSCE(SC_STONE) || md->sc.getSCE(SC_FREEZE) || md->sc.getSCE(SC_HANDICAPSTATE_FROSTBITE) || 
+		md->sc.getSCE(SC_HANDICAPSTATE_SWOONING) || md->sc.getSCE(SC_HANDICAPSTATE_LIGHTNINGSTRIKE) || md->sc.getSCE(SC_HANDICAPSTATE_CRYSTALLIZATION) || 
 		status_bl_has_mode(target,MD_STATUSIMMUNE) || util::vector_exists(status_get_race2(&md->bl), RC2_TREASURE))
 		return 0;
 
@@ -6523,12 +6523,12 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 				return SETPOS_MAPINDEX; // You may not get out!
 
 			for (const auto &it : status_db) {
-				if (sc->data[it.first]) {
+				if (sc->getSCE(it.first)) {
 					if (it.second->flag[SCF_REMOVEONMAPWARP])
 						status_change_end(&sd->bl, static_cast<sc_type>(it.first));
 
 					if (it.second->flag[SCF_RESTARTONMAPWARP] && it.second->skill_id > 0) {
-						status_change_entry *sce = sd->sc.data[it.first];
+						status_change_entry *sce = sd->sc.getSCE(it.first);
 
 						if (sce->timer != INVALID_TIMER)
 							delete_timer(sce->timer, status_change_timer);
@@ -6820,7 +6820,7 @@ int pc_get_skillcooldown(struct map_session_data *sd, uint16 skill_id, uint16 sk
 	if (skill_id == SJ_NOVAEXPLOSING) {
 		struct status_change *sc = status_get_sc(&sd->bl);
 
-		if (sc && sc->data[SC_DIMENSION])
+		if (sc && sc->getSCE(SC_DIMENSION))
 			return 0;
 	}
 
@@ -6967,12 +6967,12 @@ static void pc_checkallowskill(struct map_session_data *sd)
 		if (flag[SCF_REQUIREWEAPON]) { // Skills requiring specific weapon types
 			if (status == SC_DANCING && !battle_config.dancing_weaponswitch_fix)
 				continue;
-			if (sd->sc.data[status] && !pc_check_weapontype(sd, skill_get_weapontype(it.second->skill_id)))
+			if (sd->sc.getSCE(status) && !pc_check_weapontype(sd, skill_get_weapontype(it.second->skill_id)))
 				status_change_end(&sd->bl, status);
 		}
 
 		if (flag[SCF_REQUIRESHIELD]) { // Skills requiring a shield
-			if (sd->sc.data[status] && sd->status.shield <= 0)
+			if (sd->sc.getSCE(status) && sd->status.shield <= 0)
 				status_change_end(&sd->bl, status);
 		}
 	}
@@ -7906,10 +7906,10 @@ static void pc_calcexp(struct map_session_data *sd, t_exp *base_exp, t_exp *job_
 	}
 
 	// Give EXPBOOST for quests even if src is NULL.
-	if (sd->sc.data[SC_EXPBOOST]) {
-		bonus += sd->sc.data[SC_EXPBOOST]->val1;
+	if (sd->sc.getSCE(SC_EXPBOOST)) {
+		bonus += sd->sc.getSCE(SC_EXPBOOST)->val1;
 		if (battle_config.vip_bm_increase && pc_isvip(sd)) // Increase Battle Manual EXP rate for VIP
-			bonus += (sd->sc.data[SC_EXPBOOST]->val1 / battle_config.vip_bm_increase);
+			bonus += (sd->sc.getSCE(SC_EXPBOOST)->val1 / battle_config.vip_bm_increase);
 	}
 
 	if (*base_exp) {
@@ -7918,8 +7918,8 @@ static void pc_calcexp(struct map_session_data *sd, t_exp *base_exp, t_exp *job_
 	}
 
 	// Give JEXPBOOST for quests even if src is NULL.
-	if (sd->sc.data[SC_JEXPBOOST])
-		bonus += sd->sc.data[SC_JEXPBOOST]->val1;
+	if (sd->sc.getSCE(SC_JEXPBOOST))
+		bonus += sd->sc.getSCE(SC_JEXPBOOST)->val1;
 
 	if (*job_exp) {
 		t_exp exp = (t_exp)(*job_exp + ((double)*job_exp * ((bonus + vip_bonus_job) / 100.)));
@@ -8969,7 +8969,7 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 		if( i&OPTION_CART && pc_checkskill(sd, MC_PUSHCART) )
 			i &= ~OPTION_CART;
 #else
-		if( sd->sc.data[SC_PUSH_CART] )
+		if( sd->sc.getSCE(SC_PUSH_CART) )
 			pc_setcart(sd, 0);
 #endif
 		if( i != sd->sc.option )
@@ -8978,9 +8978,9 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 		if( hom_is_active(sd->hd) && pc_checkskill(sd, AM_CALLHOMUN) )
 			hom_vaporize(sd, HOM_ST_ACTIVE);
 
-		if (sd->sc.data[SC_SPRITEMABLE] && pc_checkskill(sd, SU_SPRITEMABLE))
+		if (sd->sc.getSCE(SC_SPRITEMABLE) && pc_checkskill(sd, SU_SPRITEMABLE))
 			status_change_end(&sd->bl, SC_SPRITEMABLE);
-		if (sd->sc.data[SC_SOULATTACK] && pc_checkskill(sd, SU_SOULATTACK))
+		if (sd->sc.getSCE(SC_SOULATTACK) && pc_checkskill(sd, SU_SOULATTACK))
 			status_change_end(&sd->bl, SC_SOULATTACK);
 	}
 
@@ -9665,15 +9665,15 @@ bool pc_revive_item(struct map_session_data *sd) {
 	if (!pc_isdead(sd) || sd->respawn_tid != INVALID_TIMER)
 		return false;
 
-	if (sd->sc.data[SC_HELLPOWER]) // Cannot resurrect while under the effect of SC_HELLPOWER.
+	if (sd->sc.getSCE(SC_HELLPOWER)) // Cannot resurrect while under the effect of SC_HELLPOWER.
 		return false;
 
 	int16 item_position = itemdb_group.item_exists_pc(sd, IG_TOKEN_OF_SIEGFRIED);
 	uint8 hp = 100, sp = 100;
 
 	if (item_position < 0) {
-		if (sd->sc.data[SC_LIGHT_OF_REGENE]) {
-			hp = sd->sc.data[SC_LIGHT_OF_REGENE]->val2;
+		if (sd->sc.getSCE(SC_LIGHT_OF_REGENE)) {
+			hp = sd->sc.getSCE(SC_LIGHT_OF_REGENE)->val2;
 			sp = 0;
 		}
 		else
@@ -10189,7 +10189,7 @@ int pc_itemheal(struct map_session_data *sd, t_itemid itemid, int hp, int sp)
 		// A potion produced by an Alchemist in the Fame Top 10 gets +50% effect [DracoRPG]
 		if (potion_flag == 2) {
 			bonus += bonus * 50 / 100;
-			if (sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_ROGUE)
+			if (sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_ROGUE)
 				bonus += bonus; // Receive an additional +100% effect from ranked potions to HP only
 		}
 		//All item bonuses.
@@ -10204,16 +10204,16 @@ int pc_itemheal(struct map_session_data *sd, t_itemid itemid, int hp, int sp)
 			}
 		}
 		// Recovery Potion
-		if (sd->sc.data[SC_INCHEALRATE])
-			bonus += bonus * sd->sc.data[SC_INCHEALRATE]->val1 / 100;
+		if (sd->sc.getSCE(SC_INCHEALRATE))
+			bonus += bonus * sd->sc.getSCE(SC_INCHEALRATE)->val1 / 100;
 		// 2014 Halloween Event : Pumpkin Bonus
-		if (sd->sc.data[SC_MTF_PUMPKIN]) {
+		if (sd->sc.getSCE(SC_MTF_PUMPKIN)) {
 			if (itemid == ITEMID_PUMPKIN)
-				bonus += bonus * sd->sc.data[SC_MTF_PUMPKIN]->val1 / 100;
+				bonus += bonus * sd->sc.getSCE(SC_MTF_PUMPKIN)->val1 / 100;
 			else if (itemid == ITEMID_COOKIE_BAT)
-				bonus += sd->sc.data[SC_MTF_PUMPKIN]->val2;
+				bonus += sd->sc.getSCE(SC_MTF_PUMPKIN)->val2;
 		}
-		if (sd->sc.data[SC_VITALIZE_POTION])
+		if (sd->sc.getSCE(SC_VITALIZE_POTION))
 			bonus += bonus * 10 / 100;
 
 		tmp = hp * bonus / 100; // Overflow check
@@ -10244,26 +10244,26 @@ int pc_itemheal(struct map_session_data *sd, t_itemid itemid, int hp, int sp)
 	}
 	if (sd->sc.count) {
 		// Critical Wound and Death Hurt stack
-		if (sd->sc.data[SC_CRITICALWOUND])
-			penalty += sd->sc.data[SC_CRITICALWOUND]->val2;
+		if (sd->sc.getSCE(SC_CRITICALWOUND))
+			penalty += sd->sc.getSCE(SC_CRITICALWOUND)->val2;
 
-		if (sd->sc.data[SC_DEATHHURT] && sd->sc.data[SC_DEATHHURT]->val3 == 1)
+		if (sd->sc.getSCE(SC_DEATHHURT) && sd->sc.getSCE(SC_DEATHHURT)->val3 == 1)
 			penalty += 20;
 
-		if (sd->sc.data[SC_NORECOVER_STATE])
+		if (sd->sc.getSCE(SC_NORECOVER_STATE))
 			penalty = 100;
 
-		if (sd->sc.data[SC_VITALITYACTIVATION])
+		if (sd->sc.getSCE(SC_VITALITYACTIVATION))
 			hp += hp / 2; // 1.5 times
 
-		if (sd->sc.data[SC_WATER_INSIGNIA] && sd->sc.data[SC_WATER_INSIGNIA]->val1 == 2) {
+		if (sd->sc.getSCE(SC_WATER_INSIGNIA) && sd->sc.getSCE(SC_WATER_INSIGNIA)->val1 == 2) {
 			hp += hp / 10;
 			sp += sp / 10;
 		}
 
 #ifdef RENEWAL
-		if (sd->sc.data[SC_APPLEIDUN])
-			hp += sd->sc.data[SC_APPLEIDUN]->val3 / 100;
+		if (sd->sc.getSCE(SC_APPLEIDUN))
+			hp += sd->sc.getSCE(SC_APPLEIDUN)->val3 / 100;
 #endif
 
 		if (penalty > 0) {
@@ -10272,10 +10272,10 @@ int pc_itemheal(struct map_session_data *sd, t_itemid itemid, int hp, int sp)
 		}
 
 #ifdef RENEWAL
-		if (sd->sc.data[SC_EXTREMITYFIST2])
+		if (sd->sc.getSCE(SC_EXTREMITYFIST2))
 			sp = 0;
 #endif
-		if (sd->sc.data[SC_BITESCAR])
+		if (sd->sc.getSCE(SC_BITESCAR))
 			hp = 0;
 	}
 
@@ -10527,7 +10527,7 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	if( i&OPTION_CART && !pc_checkskill(sd, MC_PUSHCART) )
 		i&=~OPTION_CART;
 #else
-	if( sd->sc.data[SC_PUSH_CART] && !pc_checkskill(sd, MC_PUSHCART) )
+	if( sd->sc.getSCE(SC_PUSH_CART) && !pc_checkskill(sd, MC_PUSHCART) )
 		pc_setcart(sd, 0);
 #endif
 	if(i != sd->sc.option)
@@ -10536,11 +10536,11 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	if(hom_is_active(sd->hd) && !pc_checkskill(sd, AM_CALLHOMUN))
 		hom_vaporize(sd, HOM_ST_ACTIVE);
 
-	if (sd->sc.data[SC_SPRITEMABLE] && !pc_checkskill(sd, SU_SPRITEMABLE))
+	if (sd->sc.getSCE(SC_SPRITEMABLE) && !pc_checkskill(sd, SU_SPRITEMABLE))
 		status_change_end(&sd->bl, SC_SPRITEMABLE);
-	if (sd->sc.data[SC_SOULATTACK] && !pc_checkskill(sd, SU_SOULATTACK))
+	if (sd->sc.getSCE(SC_SOULATTACK) && !pc_checkskill(sd, SU_SOULATTACK))
 		status_change_end(&sd->bl, SC_SOULATTACK);
-	if( sd->sc.data[SC_SPIRIT] ){
+	if( sd->sc.getSCE(SC_SPIRIT) ){
 		status_change_end( &sd->bl, SC_SPIRIT );
 	}
 
@@ -10763,13 +10763,13 @@ bool pc_setcart(struct map_session_data *sd,int type) {
 
 	switch( type ) {
 		case 0:
-			if( !sd->sc.data[SC_PUSH_CART] )
+			if( !sd->sc.getSCE(SC_PUSH_CART) )
 				return 0;
 			status_change_end(&sd->bl,SC_PUSH_CART);
 			clif_clearcart(sd->fd);
 			break;
 		default:/* everything else is an allowed ID so we can move on */
-			if( !sd->sc.data[SC_PUSH_CART] ) { /* first time, so fill cart data */
+			if( !sd->sc.getSCE(SC_PUSH_CART) ) { /* first time, so fill cart data */
 				clif_cartlist(sd);
 				status_calc_cart_weight(sd, (e_status_calc_weight_opt)(CALCWT_ITEM|CALCWT_MAXBONUS|CALCWT_CARTSTATE));
 			}
@@ -10809,7 +10809,7 @@ void pc_setfalcon(struct map_session_data* sd, int flag)
  *------------------------------------------*/
 void pc_setriding(struct map_session_data* sd, int flag)
 {
-	if( sd->sc.data[SC_ALL_RIDING] )
+	if( sd->sc.getSCE(SC_ALL_RIDING) )
 		return;
 
 	if( flag ){
@@ -11554,7 +11554,7 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 		}
 		return false;
 	}
-	if( sd->sc.count && (sd->sc.cant.equip || (sd->sc.data[SC_PYROCLASTIC] && sd->inventory_data[n]->type == IT_WEAPON)) ) {
+	if( sd->sc.count && (sd->sc.cant.equip || (sd->sc.getSCE(SC_PYROCLASTIC) && sd->inventory_data[n]->type == IT_WEAPON)) ) {
 		if( equipswitch ){
 			clif_equipswitch_add( sd, n, req_pos, ITEM_EQUIP_ACK_FAIL );
 		}else{
@@ -11832,7 +11832,7 @@ static void pc_unequipitem_sub(struct map_session_data *sd, int n, int flag) {
 		status_calc_pc(sd, SCO_FORCE);
 	}
 
-	if (sd->sc.data[SC_SIGNUMCRUCIS] && !battle_check_undead(sd->battle_status.race, sd->battle_status.def_ele))
+	if (sd->sc.getSCE(SC_SIGNUMCRUCIS) && !battle_check_undead(sd->battle_status.race, sd->battle_status.def_ele))
 		status_change_end(&sd->bl, SC_SIGNUMCRUCIS);
 
 	//OnUnEquip script [Skotlex]
@@ -11886,7 +11886,7 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 	}
 	// status change that makes player cannot unequip equipment
 	if (!(flag&2) && sd->sc.count &&( sd->sc.cant.unequip ||
-		(sd->sc.data[SC_PYROCLASTIC] &&	sd->inventory_data[n]->type == IT_WEAPON)))	// can't switch weapon
+		(sd->sc.getSCE(SC_PYROCLASTIC) &&	sd->inventory_data[n]->type == IT_WEAPON)))	// can't switch weapon
 	{
 		clif_unequipitemack(sd,n,0,0);
 		return false;
@@ -12584,7 +12584,7 @@ bool pc_setstand(struct map_session_data *sd, bool force){
 
 	// Cannot stand yet
 	// TODO: Move to SCS_NOSTAND [Cydh]
-	if (!force && (sd->sc.data[SC_SITDOWN_FORCE] || sd->sc.data[SC_BANANA_BOMB_SITDOWN]))
+	if (!force && (sd->sc.getSCE(SC_SITDOWN_FORCE) || sd->sc.getSCE(SC_BANANA_BOMB_SITDOWN)))
 		return false;
 
 	status_change_end(&sd->bl, SC_TENSIONRELAX);
@@ -12607,7 +12607,7 @@ bool pc_setstand(struct map_session_data *sd, bool force){
  * @param heat: Amount of Heat to adjust
  **/
 void pc_overheat(map_session_data &sd, int16 heat) {
-	status_change_entry *sce = sd.sc.data[SC_OVERHEAT_LIMITPOINT];
+	status_change_entry *sce = sd.sc.getSCE(SC_OVERHEAT_LIMITPOINT);
 
 	if (sce) {
 		sce->val1 += heat;
@@ -14101,8 +14101,8 @@ uint8 pc_itemcd_check(struct map_session_data *sd, struct item_data *id, t_tick 
 		return pc_itemcd_add(sd, id, tick, n);
 
 	// Send reply of delay remains
-	if (sc->data[id->delay.sc]) {
-		const struct TimerData *timer = get_timer(sc->data[id->delay.sc]->timer);
+	if (sc->getSCE(id->delay.sc)) {
+		const struct TimerData *timer = get_timer(sc->getSCE(id->delay.sc)->timer);
 		clif_msg_value(sd, ITEM_REUSE_LIMIT, (int)(timer ? DIFF_TICK(timer->tick, tick) / 1000 : 99));
 		return 1;
 	}
@@ -14210,8 +14210,8 @@ void pc_scdata_received(struct map_session_data *sd) {
 		status_calc_cart_weight(sd, (e_status_calc_weight_opt)(CALCWT_ITEM|CALCWT_MAXBONUS|CALCWT_CARTSTATE));
 	}
 
-	if (sd->sc.data[SC_SOULENERGY])
-		sd->soulball = sd->sc.data[SC_SOULENERGY]->val1;
+	if (sd->sc.getSCE(SC_SOULENERGY))
+		sd->soulball = sd->sc.getSCE(SC_SOULENERGY)->val1;
 }
 
 /**
@@ -14615,10 +14615,10 @@ void pc_cell_basilica(struct map_session_data *sd) {
 #endif
 
 	if (!map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKBASILICA)) {
-		if (sd->sc.data[type])
+		if (sd->sc.getSCE(type))
 			status_change_end(&sd->bl, type);
 	}
-	else if (!sd->sc.data[type])
+	else if (!sd->sc.getSCE(type))
 		sc_start(&sd->bl,&sd->bl, type,100,0,INFINITE_TICK);
 }
 
