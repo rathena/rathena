@@ -8803,15 +8803,16 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,0);
 			break;
 		}
-		if (tsc && tsc->opt1) {
+		if (tsc) {
 			status_change_end(bl, SC_FREEZE);
+			status_change_end(bl, SC_STONEWAIT);
 			status_change_end(bl, SC_STONE);
 			status_change_end(bl, SC_SLEEP);
 			status_change_end(bl, SC_STUN);
 			status_change_end(bl, SC_WHITEIMPRISON);
+			status_change_end(bl, SC_STASIS);
+			status_change_end(bl, SC_NETHERWORLD);
 		}
-		status_change_end(bl, SC_STASIS);
-		status_change_end(bl, SC_NETHERWORLD);
 		if(battle_check_undead(tstatus->race,tstatus->def_ele))
 			skill_addtimerskill(src, tick+1000, bl->id, 0, 0, skill_id, skill_lv, 100, flag);
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
