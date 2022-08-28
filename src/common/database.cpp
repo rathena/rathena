@@ -106,7 +106,16 @@ bool YamlDatabase::load(const std::string& path) {
 	fclose(f);
 
 	parser = {};
-	ryml::Tree tree = parser.parse_in_arena(c4::to_csubstr(path), c4::to_csubstr(buf));
+	ryml::Tree tree;
+
+	try{
+		tree = parser.parse_in_arena(c4::to_csubstr(path), c4::to_csubstr(buf));
+	}catch( std::runtime_error e ){
+		ShowError( "Failed to load %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), path.c_str() );
+		ShowError( "You most likely have a syntax error in your file.\n" );
+		ShowError( "Error message: %s\n", e.what() );
+		return false;
+	}
 
 	// Required here already for header error reporting
 	this->currentFile = path;
