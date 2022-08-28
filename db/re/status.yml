@@ -364,6 +364,8 @@ Body:
     DurationLookup: AS_ENCHANTPOISON
     CalcFlags:
       Atk_Ele: true
+    Flags:
+      RemoveOnUnequipWeapon: true
     End:
       Aspersio: true
       Fireweapon: true
@@ -1000,7 +1002,7 @@ Body:
     CalcFlags:
       All: true
     Flags:
-      NoRemoveOnDead: true
+      RemoveOnUnequipWeapon: true
     End:
       Encpoison: true
       Aspersio: true
@@ -1015,7 +1017,7 @@ Body:
     CalcFlags:
       All: true
     Flags:
-      NoRemoveOnDead: true
+      RemoveOnUnequipWeapon: true
     End:
       Encpoison: true
       Aspersio: true
@@ -1030,7 +1032,7 @@ Body:
     CalcFlags:
       All: true
     Flags:
-      NoRemoveOnDead: true
+      RemoveOnUnequipWeapon: true
     End:
       Encpoison: true
       Aspersio: true
@@ -1045,7 +1047,7 @@ Body:
     CalcFlags:
       All: true
     Flags:
-      NoRemoveOnDead: true
+      RemoveOnUnequipWeapon: true
     End:
       Encpoison: true
       Aspersio: true
