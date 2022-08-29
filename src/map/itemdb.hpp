@@ -1246,6 +1246,7 @@ struct item_data
 		bool broadcast; ///< Will be broadcasted if someone obtain the item [Cydh]
 		bool bindOnEquip; ///< Set item as bound when equipped
 		e_item_drop_effect dropEffect; ///< Drop Effect Mode
+		unsigned gradable : 1;
 	} flag;
 	struct {// item stacking limitation
 		uint16 amount;
@@ -1443,7 +1444,6 @@ const char *itemdb_typename_ammo (e_ammo_type ammo);
 
 #define itemdb_value_buy(n) itemdb_search(n)->value_buy
 #define itemdb_value_sell(n) itemdb_search(n)->value_sell
-#define itemdb_canrefine(n) (!itemdb_search(n)->flag.no_refine)
 //Item trade restrictions [Skotlex]
 bool itemdb_isdropable_sub(struct item_data *itd, int gmlv, int unused);
 bool itemdb_cantrade_sub(struct item_data *itd, int gmlv, int gmlv2);

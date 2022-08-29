@@ -23545,6 +23545,11 @@ void clif_parse_enchantgrade_add( int fd, struct map_session_data* sd ){
 		return;
 	}
 
+	// Item can't be enhanced
+	if( !sd->inventory_data[index]->flag.gradable ){
+		return;
+	}
+
 	uint16 level = 0;
 
 	if( sd->inventory_data[index]->type == IT_WEAPON ){
