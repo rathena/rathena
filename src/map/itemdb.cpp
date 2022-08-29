@@ -571,15 +571,15 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 	}
 
 	if (this->nodeExists(node, "Gradable")) {
-		bool grade;
+		bool gradable;
 
-		if (!this->asBool(node, "Gradable", grade))
+		if (!this->asBool(node, "Gradable", gradable))
 			return 0;
 
-		item->flag.no_grade = !grade;
+		item->flag.gradable = gradable;
 	} else {
 		if (!exists)
-			item->flag.no_grade = true;
+			item->flag.gradable = false;
 	}
 
 	if (this->nodeExists(node, "View")) {

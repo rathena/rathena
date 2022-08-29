@@ -23546,7 +23546,7 @@ void clif_parse_enchantgrade_add( int fd, struct map_session_data* sd ){
 	}
 
 	// Item can't be enhanced
-	if( sd->inventory_data[index]->flag.no_grade ){
+	if( !sd->inventory_data[index]->flag.gradable ){
 		return;
 	}
 
