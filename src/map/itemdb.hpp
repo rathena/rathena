@@ -1294,7 +1294,7 @@ private:
 	e_sex defaultGender( const ryml::NodeRef& node, std::shared_ptr<item_data> id );
 
 public:
-	ItemDatabase() : TypesafeCachedYamlDatabase("ITEM_DB", 2, 1) {
+	ItemDatabase() : TypesafeCachedYamlDatabase("ITEM_DB", 3, 1) {
 
 	}
 
