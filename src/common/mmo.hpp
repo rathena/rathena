@@ -572,7 +572,7 @@ struct mmo_charstatus {
 	short shield; // view-id
 	short head_top,head_mid,head_bottom;
 	short robe;
-	uint8 dir;
+	uint8 body_direction;
 
 	char name[NAME_LENGTH];
 	unsigned int base_level,job_level;

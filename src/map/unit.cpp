@@ -1112,7 +1112,7 @@ bool unit_setdir(block_list *bl, uint8 dir, bool send_update)
 		map_session_data *sd = BL_CAST(BL_PC, bl);
 
 		sd->head_dir = DIR_NORTH;
-		sd->status.dir = ud->dir;
+		sd->status.body_direction = ud->dir;
 	}
 
 	if (send_update)
