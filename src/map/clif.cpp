@@ -23242,11 +23242,9 @@ void clif_parse_laphine_synthesis( int fd, struct map_session_data* sd ){
 		}
 	}
 
-	int16 index;
-
 	// If triggered from item
 	if( sd->itemid == sd->state.laphine_synthesis ){
-		index = pc_search_inventory( sd, sd->state.laphine_synthesis );
+		int16 index = pc_search_inventory( sd, sd->state.laphine_synthesis );
 
 		if( index < 0 ){
 			clif_laphine_synthesis_result( sd, LAPHINE_SYNTHESIS_ITEM );
@@ -23261,7 +23259,7 @@ void clif_parse_laphine_synthesis( int fd, struct map_session_data* sd ){
 	}
 
 	for( size_t i = 0; i < count; i++ ){
-		index = server_index( p->items[i].index );
+		int16 index = server_index( p->items[i].index );
 
 		if( pc_delitem( sd, index, p->items[i].count, 0, 0, LOG_TYPE_LAPHINE ) != 0 ){
 			return;
