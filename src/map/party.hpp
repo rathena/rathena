@@ -48,6 +48,11 @@ struct party_booking_ad_info {
 	struct party_booking_detail p_detail;
 };
 
+struct s_party_booking_requirement{
+	uint16 minimum_level;
+	uint16 maximum_level;
+};
+
 extern int party_create_byscript;
 
 void do_init_party(void);
@@ -67,6 +72,9 @@ int party_leave(struct map_session_data *sd);
 int party_removemember(struct map_session_data *sd,uint32 account_id,char *name);
 int party_removemember2(struct map_session_data *sd,uint32 char_id,int party_id);
 int party_member_withdraw(int party_id, uint32 account_id, uint32 char_id, char *name, enum e_party_member_withdraw type);
+bool party_isleader( struct map_session_data* sd );
+void party_join( struct map_session_data* sd, int party_id );
+bool party_booking_load( uint32 account_id, uint32 char_id, struct s_party_booking_requirement* booking );
 int party_reply_invite(struct map_session_data *sd,int party_id,int flag);
 #define party_add_member(party_id,sd) party_reply_invite(sd,party_id,1)
 int party_recv_noinfo(int party_id, uint32 char_id);

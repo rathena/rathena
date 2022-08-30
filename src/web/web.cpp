@@ -28,8 +28,9 @@
 #include "charconfig_controller.hpp"
 #include "emblem_controller.hpp"
 #include "http.hpp"
-#include "userconfig_controller.hpp"
 #include "merchantstore_controller.hpp"
+#include "partybooking_controller.hpp"
+#include "userconfig_controller.hpp"
 
 
 using namespace rathena;
@@ -53,6 +54,12 @@ std::string char_server_id = "ragnarok";
 std::string char_server_pw = "";
 std::string char_server_db = "ragnarok";
 
+int map_server_port = 3306;
+std::string map_server_ip = "127.0.0.1";
+std::string map_server_id = "ragnarok";
+std::string map_server_pw = "";
+std::string map_server_db = "ragnarok";
+
 int web_server_port = 3306;
 std::string web_server_ip = "127.0.0.1";
 std::string web_server_id = "ragnarok";
@@ -63,6 +70,7 @@ std::string default_codepage = "";
 
 Sql * login_handle = NULL;
 Sql * char_handle = NULL;
+Sql * map_handle = NULL;
 Sql * web_handle = NULL;
 
 char login_table[32] = "login";
@@ -70,6 +78,8 @@ char guild_emblems_table[32] = "guild_emblems";
 char user_configs_table[32] = "user_configs";
 char char_configs_table[32] = "char_configs";
 char merchant_configs_table[32] = "merchant_configs";
+char party_table[32] = "party";
+char partybookings_table[32] = "party_bookings";
 char guild_db_table[32] = "guild";
 char char_db_table[32] = "char";
 
@@ -193,6 +203,16 @@ int inter_config_read(const char* cfgName)
 			char_server_pw = w2;
 		else if(!strcmpi(w1,"char_server_db"))
 			char_server_db = w2;
+		else if(!strcmpi(w1,"map_server_ip"))
+			map_server_ip = w2;
+		else if(!strcmpi(w1,"map_server_port"))
+			map_server_port = atoi(w2);
+		else if(!strcmpi(w1,"map_server_id"))
+			map_server_id = w2;
+		else if(!strcmpi(w1,"map_server_pw"))
+			map_server_pw = w2;
+		else if(!strcmpi(w1,"map_server_db"))
+			map_server_db = w2;
 		else if(!strcmpi(w1,"web_server_ip"))
 			web_server_ip = w2;
 		else if(!strcmpi(w1,"web_server_port"))
@@ -211,6 +231,10 @@ int inter_config_read(const char* cfgName)
 			safestrncpy(char_configs_table, w2, sizeof(char_configs_table));
 		else if (!strcmpi(w1, "merchant_configs"))
 			safestrncpy(merchant_configs_table, w2, sizeof(merchant_configs_table));
+		else if (!strcmpi(w1, "party_db"))
+			safestrncpy(party_table, w2, sizeof(party_table));
+		else if (!strcmpi(w1, "partybookings_table"))
+			safestrncpy(partybookings_table, w2, sizeof(partybookings_table));
 		else if (!strcmpi(w1, "guild_emblems"))
 			safestrncpy(guild_emblems_table, w2, sizeof(guild_emblems_table));
 		else if (!strcmpi(w1, "login_server_account_db"))
@@ -232,7 +256,7 @@ int inter_config_read(const char* cfgName)
 
 void web_set_defaults() {
 	web_config.web_ip = "0.0.0.0";
-	web_config.web_port = 3000;
+	web_config.web_port = 8888;
 	safestrncpy(web_config.webconf_name, "conf/web_athena.conf", sizeof(web_config.webconf_name));
 	safestrncpy(web_config.msgconf_name, "conf/msg_conf/web_msg.conf", sizeof(web_config.msgconf_name));
 	web_config.print_req_res = false;
@@ -250,8 +274,8 @@ int web_sql_init(void) {
 	ShowInfo("Connecting to the Login DB server.....\n");
 
 	if (SQL_ERROR == Sql_Connect(login_handle, login_server_id.c_str(), login_server_pw.c_str(), login_server_ip.c_str(), login_server_port, login_server_db.c_str())) {
-		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-			login_server_id.c_str(), login_server_pw.c_str(), login_server_ip.c_str(), login_server_port, login_server_db.c_str());
+		ShowError("Couldn't connect with uname='%s',host='%s',port='%d',database='%s'\n",
+			login_server_id.c_str(), login_server_ip.c_str(), login_server_port, login_server_db.c_str());
 		Sql_ShowDebug(login_handle);
 		Sql_Free(login_handle);
 		exit(EXIT_FAILURE);
@@ -267,8 +291,8 @@ int web_sql_init(void) {
 	ShowInfo("Connecting to the Char DB server.....\n");
 
 	if (SQL_ERROR == Sql_Connect(char_handle, char_server_id.c_str(), char_server_pw.c_str(), char_server_ip.c_str(), char_server_port, char_server_db.c_str())) {
-		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-			char_server_id.c_str(), char_server_pw.c_str(), char_server_ip.c_str(), char_server_port, char_server_db.c_str());
+		ShowError("Couldn't connect with uname='%s',host='%s',port='%d',database='%s'\n",
+			char_server_id.c_str(), char_server_ip.c_str(), char_server_port, char_server_db.c_str());
 		Sql_ShowDebug(char_handle);
 		Sql_Free(char_handle);
 		exit(EXIT_FAILURE);
@@ -280,12 +304,29 @@ int web_sql_init(void) {
 			Sql_ShowDebug(char_handle);
 	}
 
+	map_handle = Sql_Malloc();
+	ShowInfo("Connecting to the Map DB server.....\n");
+
+	if (SQL_ERROR == Sql_Connect(map_handle, map_server_id.c_str(), map_server_pw.c_str(), map_server_ip.c_str(), map_server_port, map_server_db.c_str())) {
+		ShowError("Couldn't connect with uname='%s',host='%s',port='%d',database='%s'\n",
+			map_server_id.c_str(), map_server_ip.c_str(), map_server_port, map_server_db.c_str());
+		Sql_ShowDebug(map_handle);
+		Sql_Free(map_handle);
+		exit(EXIT_FAILURE);
+	}
+	ShowStatus("Connect success! (Map Server Connection)\n");
+
+	if (!default_codepage.empty()) {
+		if (SQL_ERROR == Sql_SetEncoding(map_handle, default_codepage.c_str()))
+			Sql_ShowDebug(map_handle);
+	}
+
 	web_handle = Sql_Malloc();
 	ShowInfo("Connecting to the Web DB server.....\n");
 
 	if (SQL_ERROR == Sql_Connect(web_handle, web_server_id.c_str(), web_server_pw.c_str(), web_server_ip.c_str(), web_server_port, web_server_db.c_str())) {
-		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-			web_server_id.c_str(), web_server_pw.c_str(), web_server_ip.c_str(), web_server_port, web_server_db.c_str());
+		ShowError("Couldn't connect with uname='%s',host='%s',port='%d',database='%s'\n",
+			web_server_id.c_str(), web_server_ip.c_str(), web_server_port, web_server_db.c_str());
 		Sql_ShowDebug(web_handle);
 		Sql_Free(web_handle);
 		exit(EXIT_FAILURE);
@@ -309,6 +350,9 @@ int web_sql_close(void)
 	ShowStatus("Close Char DB Connection....\n");
 	Sql_Free(char_handle);
 	char_handle = NULL;
+	ShowStatus("Close Map DB Connection....\n");
+	Sql_Free(map_handle);
+	map_handle = NULL;
 	ShowStatus("Close Web DB Connection....\n");
 	Sql_Free(web_handle);
 	web_handle = NULL;
@@ -317,8 +361,8 @@ int web_sql_close(void)
 }
 
 /**
- * Login-serv destructor
- *  dealloc..., function called at exit of the login-serv
+ * web-server destructor
+ *  dealloc..., function called at exit of the web-server
  */
 void do_final(void) {
 	ShowStatus("Terminating...\n");
@@ -421,14 +465,19 @@ int do_init(int argc, char** argv) {
 
 	http_server = std::make_shared<httplib::Server>();
 	// set up routes
-	http_server->Post("/emblem/download", emblem_download);
-	http_server->Post("/emblem/upload", emblem_upload);
-	http_server->Post("/userconfig/load", userconfig_load);
-	http_server->Post("/userconfig/save", userconfig_save);
 	http_server->Post("/charconfig/load", charconfig_load);
 	http_server->Post("/charconfig/save", charconfig_save);
+	http_server->Post("/emblem/download", emblem_download);
+	http_server->Post("/emblem/upload", emblem_upload);
 	http_server->Post("/MerchantStore/load", merchantstore_load);
 	http_server->Post("/MerchantStore/save", merchantstore_save);
+	http_server->Post("/party/add", partybooking_add);
+	http_server->Post("/party/del", partybooking_delete);
+	http_server->Post("/party/get", partybooking_get);
+	http_server->Post("/party/list", partybooking_list);
+	http_server->Post("/party/search", partybooking_search);
+	http_server->Post("/userconfig/load", userconfig_load);
+	http_server->Post("/userconfig/save", userconfig_save);
 
 	// set up logger
 	http_server->set_logger(logger);

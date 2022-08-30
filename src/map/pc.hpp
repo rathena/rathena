@@ -868,6 +868,8 @@ struct map_session_data {
 		uint16 level;
 		int target;
 	} skill_keep_using;
+
+	std::vector<uint32> party_booking_requests;
 };
 
 extern struct eri *pc_sc_display_ers; /// Player's SC display table
