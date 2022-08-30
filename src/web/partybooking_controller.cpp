@@ -437,45 +437,45 @@ HANDLER_FUNC(partybooking_search){
 	}
 
 	if( entry.assist || entry.damagedealer || entry.healer || entry.tanker ){
-		bool or = false;
+		bool or_required = false;
 
 		condition += "AND ( ";
 
 		if( entry.assist ){
-			if( or ){
+			if( or_required ){
 				condition += " OR ";
 			}else{
-				or = true;
+				or_required = true;
 			}
 
 			condition += "`assist` = '1'";
 		}
 
 		if( entry.damagedealer ){
-			if( or ){
+			if( or_required ){
 				condition += " OR ";
 			}else{
-				or = true;
+				or_required = true;
 			}
 
 			condition += "`damagedealer` = '1'";
 		}
 
 		if( entry.healer ){
-			if( or ){
+			if( or_required ){
 				condition += " OR ";
 			}else{
-				or = true;
+				or_required = true;
 			}
 
 			condition += "`healer` = '1'";
 		}
 
 		if( entry.tanker ){
-			if( or ){
+			if( or_required ){
 				condition += " OR ";
 			}else{
-				or = true;
+				or_required = true;
 			}
 
 			condition += "`tanker` = '1'";
