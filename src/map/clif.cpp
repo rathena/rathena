@@ -11081,6 +11081,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_equipcheckbox(sd);
 #endif
 		clif_pet_autofeed_status(sd,false);
+		clif_configuration( sd, CONFIG_CALL, sd->status.disable_call );
 #if PACKETVER >= 20170920
 		if( battle_config.homunculus_autofeed_always ){
 			// Always send ON or OFF
@@ -17559,6 +17560,9 @@ void clif_parse_configuration( int fd, struct map_session_data* sd ){
 	switch( type ){
 		case CONFIG_OPEN_EQUIPMENT_WINDOW:
 			sd->status.show_equip = flag;
+			break;
+		case CONFIG_CALL:
+			sd->status.disable_call = flag;
 			break;
 		case CONFIG_PET_AUTOFEED:
 			// Player can not click this if he does not have a pet
