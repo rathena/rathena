@@ -31193,7 +31193,7 @@ Body:
             Rate: 4
           - Item: Sealed_D_Lord_Card
             Rate: 1
-  - Group: IG_SEALED_F_BISHOP_SCROLL
+  - Group: SEALED_F_BISHOP_SCROLL
     SubGroups:
       - SubGroup: 1
         List:
@@ -31245,7 +31245,7 @@ Body:
             Rate: 10
           - Item: Sealed_F_Bishop_Card
             Rate: 1
-  - Group: IG_OLD_HAT_BOX_
+  - Group: OLD_HAT_BOX_
     SubGroups:
       - SubGroup: 1
         List:
@@ -31293,7 +31293,7 @@ Body:
             Rate: 3
           - Item: Chick_Hat
             Rate: 3
-  - Group: IG_SCROLL_TURTLE_GENERAL_SEALED
+  - Group: SCROLL_TURTLE_GENERAL_SEALED
     SubGroups:
       - SubGroup: 1
         List:
@@ -31341,7 +31341,7 @@ Body:
             Rate: 10
           - Item: Sealed_TurtleG_Card
             Rate: 1
-  - Group: IG_SEALED_BACSOJIN_SCROLL
+  - Group: SEALED_BACSOJIN_SCROLL
     SubGroups:
       - SubGroup: 1
         List:
@@ -31385,7 +31385,7 @@ Body:
             Rate: 10
           - Item: Sealed_Bacsojin_Card
             Rate: 1
-  - Group: IG_COSTUME_FESTIVAL_BOX_II
+  - Group: COSTUME_FESTIVAL_BOX_II
     SubGroups:
       - SubGroup: 1
         List:
@@ -31409,7 +31409,7 @@ Body:
             Rate: 577
           - Item: C_Kirin_Wing
             Rate: 192
-  - Group: IG_SEALED_PHARAOH_SCROLL
+  - Group: SEALED_PHARAOH_SCROLL
     SubGroups:
       - SubGroup: 1
         List:
@@ -31455,7 +31455,7 @@ Body:
             Rate: 10
           - Item: Sealed_Pharaoh_Card
             Rate: 1
-  - Group: IG_SEALED_GENERAL_EGNIGEM_SCROLL
+  - Group: SEALED_GENERAL_EGNIGEM_SCROLL
     SubGroups:
       - SubGroup: 1
         List:
@@ -31509,7 +31509,7 @@ Body:
             Rate: 500
           - Item: S_Penetration_Pendent
             Rate: 500
-  - Group: IG_WOLFKING_SCROLL
+  - Group: WOLFKING_SCROLL
     SubGroups:
       - SubGroup: 1
         List:
@@ -31553,7 +31553,7 @@ Body:
             Rate: 150
           - Item: C_Imp_Hat
             Rate: 150
-  - Group: IG_KINGS_GIFT
+  - Group: KINGS_GIFT
     SubGroups:
       - SubGroup: 1
         List:
@@ -31609,7 +31609,7 @@ Body:
             Rate: 500
           - Item: Vermilion_10_Scroll
             Rate: 500
-  - Group: IG_80LVUP
+  - Group: 80LVUP
     SubGroups:
       - SubGroup: 1
         List:
@@ -31627,7 +31627,7 @@ Body:
             Rate: 1429
           - Item: S_Promotion_Pendant
             Rate: 1429
-  - Group: IG_NEW_YEAR_GIFT_BOX
+  - Group: NEW_YEAR_GIFT_BOX
     SubGroups:
       - SubGroup: 0
         List:
@@ -31647,7 +31647,7 @@ Body:
             Amount: 3
           - Item: Made_Dish_Box2
             Rate: 2500
-  - Group: IG_LUCKY_BAG_OF_NEW_ERA
+  - Group: LUCKY_BAG_OF_NEW_ERA
     SubGroups:
       - SubGroup: 1
         List:
@@ -31690,7 +31690,7 @@ Body:
             Rate: 94
           - Item: Rainbow
             Rate: 47
-  - Group: IG_MEMORIAL_BOX
+  - Group: MEMORIAL_BOX
     SubGroups:
       - SubGroup: 1
         List:
@@ -31720,7 +31720,7 @@ Body:
             Rate: 1000
           - Item: Spray_Of_Flowers
             Rate: 1000
-  - Group: IG_WET_CARDALBUM
+  - Group: WET_CARDALBUM
     SubGroups:
       - SubGroup: 1
         List:
@@ -31742,7 +31742,7 @@ Body:
             Rate: 1000
           - Item: Golden_Card
             Rate: 1
-  - Group: IG_SEALED_M_FLOWER_SCROLL
+  - Group: SEALED_M_FLOWER_SCROLL
     SubGroups:
       - SubGroup: 1
         List:
@@ -31792,3 +31792,31 @@ Body:
             Rate: 350
           - Item: S_Immortal_Pendant
             Rate: 350
+  - Group: QUESTION_BOX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Apple
+            Rate: 1300
+            Amount: 200
+          - Item: Wing_Of_Fly
+            Rate: 1300
+            Amount: 100
+          - Item: Wing_Of_Butterfly
+            Rate: 1300
+            Amount: 50
+          - Item: Arrow
+            Rate: 1300
+            Amount: 1000
+          - Item: Savage_BBQ
+            Rate: 800
+          - Item: Wug_Blood_Cocktail
+            Rate: 800
+          - Item: Minor_Brisket
+            Rate: 800
+          - Item: Siroma_Icetea
+            Rate: 800
+          - Item: Drocera_Herb_Stew
+            Rate: 800
+          - Item: Petti_Tail_Noodle
+            Rate: 800

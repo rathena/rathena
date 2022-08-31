@@ -44871,12 +44871,12 @@ Body:
     Script: |
       getgroupitem(IG_PITAPAT_BOX);
   - Id: 22721
-    AegisName: "?_Box"
+    AegisName: Question_Box
     Name: "? Box"
     Type: Cash
     Buy: 10
     Script: |
-      /* TODO: No clue the random item yet*/
+      getgroupitem(IG_QUESTION_BOX);
   - Id: 22734
     AegisName: Revolution_Quiz_Box
     Name: Revolution Quiz Box

@@ -5775,6 +5775,7 @@
 	export_constant(IG_MEMORIAL_BOX);
 	export_constant(IG_WET_CARDALBUM);
 	export_constant(IG_SEALED_M_FLOWER_SCROLL);
+	export_constant(IG_QUESTION_BOX);
 	
 	/* unit stop walking */
 	export_constant(USW_NONE);

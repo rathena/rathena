@@ -1010,6 +1010,7 @@ enum e_random_item_group {
 	IG_MEMORIAL_BOX,
 	IG_WET_CARDALBUM,
 	IG_SEALED_M_FLOWER_SCROLL,
+	IG_QUESTION_BOX,
 	IG_MAX,
 };
 
