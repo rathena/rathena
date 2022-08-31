@@ -33702,12 +33702,6 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-  - Id: 22654
-    AegisName: Golden_Seal_Card
-    Name: Golden Seal Card
-    Type: Etc
-    Buy: 20
-    Weight: 50
   - Id: 22717
     AegisName: Wanderer_Ball
     Name: Wanderer Ball

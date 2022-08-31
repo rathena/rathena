@@ -31820,3 +31820,160 @@ Body:
             Rate: 800
           - Item: Petti_Tail_Noodle
             Rate: 800
+  - Group: GOLDEN_CARD
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Phreeoni_Card
+            Rate: 808
+          - Item: Eddga_Card
+            Rate: 101
+          - Item: Moonlight_Flower_Card
+            Rate: 505
+          - Item: Mistress_Card
+            Rate: 101
+          - Item: Dracula_Card
+            Rate: 101
+          - Item: Orc_Load_Card
+            Rate: 101
+          - Item: Doppelganger_Card
+            Rate: 505
+          - Item: Orc_Hero_Card
+            Rate: 101
+          - Item: Osiris_Card
+            Rate: 101
+          - Item: Berzebub_Card
+            Rate: 101
+          - Item: Maya_Card
+            Rate: 101
+          - Item: Baphomet_Card
+            Rate: 101
+          - Item: Pharaoh_Card
+            Rate: 10
+          - Item: Dark_Lord_Card
+            Rate: 303
+          - Item: Amon_Ra_Card
+            Rate: 707
+          - Item: Incant_Samurai_Card
+            Rate: 707
+          - Item: Lord_Of_Death_Card
+            Rate: 505
+          - Item: Turtle_General_Card
+            Rate: 101
+          - Item: Knight_Windstorm_Card
+            Rate: 101
+          - Item: Garm_Card
+            Rate: 253
+          - Item: Dark_Snake_Lord_Card
+            Rate: 202
+          - Item: Rsx_0806_Card
+            Rate: 101
+          - Item: B_Ygnizem_Card
+            Rate: 101
+          - Item: B_Eremes_Card
+            Rate: 101
+          - Item: B_Harword_Card
+            Rate: 101
+          - Item: B_Magaleta_Card
+            Rate: 101
+          - Item: B_Katrinn_Card
+            Rate: 101
+          - Item: B_Shecil_Card
+            Rate: 101
+          - Item: Bacsojin_Card
+            Rate: 101
+          - Item: Apocalips_H_Card
+            Rate: 101
+          - Item: Lady_Tanee_Card
+            Rate: 101
+          - Item: Detale_Card
+            Rate: 101
+          - Item: Kiel_Card
+            Rate: 101
+          - Item: Randgris_Card
+            Rate: 101
+          - Item: Gloom_Under_Night_Card
+            Rate: 10
+          - Item: Ktullanux_Card
+            Rate: 101
+          - Item: Atroce_Card
+            Rate: 101
+          - Item: Ifrit_Card
+            Rate: 101
+          - Item: Fallen_Bishop_Card
+            Rate: 10
+          - Item: Ant_Buyanne_Card
+            Rate: 101
+          - Item: Nidhogg_Shadow_Card
+            Rate: 101
+          - Item: Nahtzigger_Card
+            Rate: 101
+          - Item: Q_Scaraba_Card
+            Rate: 101
+          - Item: Gold_Q_Scaraba_Card
+            Rate: 101
+          - Item: Kraken_Card
+            Rate: 101
+          - Item: Odd_Coelacanth_Card
+            Rate: 101
+          - Item: Black_Coelacanth_Card
+            Rate: 101
+          - Item: Mutant_Coelacanth_Card
+            Rate: 101
+          - Item: Cruel_Coelacanth_Card
+            Rate: 101
+          - Item: Giant_Octopus_Card
+            Rate: 101
+          - Item: Clown_Card
+            Rate: 101
+          - Item: Professor_Card
+            Rate: 101
+          - Item: Champion_Card
+            Rate: 101
+          - Item: Creator_Card
+            Rate: 101
+          - Item: Stalker_Card
+            Rate: 101
+          - Item: Paladin_Card
+            Rate: 101
+          - Item: Gypsy_Card
+            Rate: 101
+          - Item: Daehyon_Card
+            Rate: 101
+          - Item: Gioia_Card
+            Rate: 101
+          - Item: Pyuriel_Card
+            Rate: 101
+          - Item: Kades_Card
+            Rate: 101
+          - Item: Bangungot_Card
+            Rate: 101
+          - Item: Bakonawa_Card
+            Rate: 101
+          - Item: Buwaya_Card
+            Rate: 101
+          - Item: Amdarais_Card
+            Rate: 101
+          - Item: AmdaraisH_Card
+            Rate: 10
+          - Item: CorruptionRoot_Card
+            Rate: 101
+          - Item: CorruptionRootH_Card
+            Rate: 10
+  - Group: 90LVUP
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Yellow_Slim_Potion_B
+            Amount: 150
+          - Item: Inspector_Certificate_
+            Amount: 10
+          - Item: Comp_Battle_Manual
+            Amount: 5
+          - Item: N_Fly_Wing
+            Amount: 100
+          - Item: E_Abrasive
+            Amount: 5
+          - Item: 100LVUP
+          - Item: Comp_Regenerate_Potion
+            Amount: 4
