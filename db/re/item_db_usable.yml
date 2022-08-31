@@ -2863,7 +2863,7 @@ Body:
     Script: |
       itemheal rand(300,400),0;
       if (getequipid(EQI_HEAD_MID) == 15385)
-         warp "dali",113,82;
+        warp "dali",113,82;
       /* todo check map x y */
   - Id: 11516
     AegisName: Asai_Fruit
@@ -3306,7 +3306,7 @@ Body:
     Script: |
       itemheal 0,100;
       if (getequipid(EQI_HEAD_MID) == 15385)
-         warp "xmas",233,296;
+        warp "xmas",233,296;
   - Id: 11564
     AegisName: Sweet_Canape
     Name: Sweet Canape
@@ -3786,7 +3786,6 @@ Body:
     Weight: 30
     Script: |
       itemheal rand(50,100),0;
-      /*TODO*/
   - Id: 11616
     AegisName: Yummy_Meat
     Name: Delicious Meat
@@ -33335,8 +33334,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*TODO: Confirm the rates*/
-      getitem callfunc("F_Rand",6228,6232,4488,4169,19739,24032,24033,24031,24030,24028,24029,24028,24027),1;
+      getgroupitem(IG_Scroll_Sealed_Dark_Lord);
   - Id: 14664
     AegisName: Bi_Hwang_Scroll
     Name: Bi Hwang Scroll
@@ -33557,8 +33555,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*TODO: COnfirm the rates*/
-      getitem callfunc("F_Rand",6228,6232,14704,19884,14695,6697),1;
+      getgroupitem(IG_Sealed_F_Bishop_Scroll);
   - Id: 14713
     AegisName: Sealed_Ifrit_Scroll
     Name: Sealed Ifrit Scroll
@@ -33605,8 +33602,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*TODO: Confirm the rates*/
-      getitem callfunc("F_Rand",6228,6232,19751,14695),1;
+      getgroupitem(IG_SCROLL_TURTLE_GENERAL_SEALED);
   - Id: 14723
     AegisName: Limited_Neuralizer_I
     Name: (Limited)Neuralizer I
@@ -33652,8 +33648,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*TODO: Confirm the rates*/
-      getitem callfunc("F_Rand",4372,6228,6232,19750,14730,17474),1;
+      getgroupitem(IG_SEALED_BACSOJIN_SCROLL);
   - Id: 14726
     AegisName: Grid_Shadow_Box
     Name: Grid Shadow Box
@@ -33753,7 +33748,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*TODO: No clue yet*/
+      getgroupitem(IG_COSTUME_FESTIVAL_BOX_II);
   - Id: 14731
     AegisName: Teleport_Shadow_Box
     Name: Teleport Shadow Box
@@ -33811,8 +33806,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*TODO: Confirm the rates*/
-      getitem callfunc("F_Rand",6228,6232,14726,20034,17474),1;
+      getgroupitem(IG_SEALED_PHARAOH_SCROLL);
   - Id: 14735
     AegisName: Costama_Egg22
     Name: Shapeshifter Costume
@@ -33845,8 +33839,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*TODO: Confirm the rates*/
-      getitem callfunc("F_Rand",4482,6228,6232,24156,19935),1;
+      getgroupitem(IG_SEALED_GENERAL_EGNIGEM_SCROLL);
   - Id: 14740
     AegisName: Sealed_Vesper_Scroll
     Name: Sealed Vesper Scroll
@@ -41182,7 +41175,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*TODO*/
+      /* TODO */
   - Id: 17289
     AegisName: Wing_Of_Baalzebub_Box
     Name: Beelzebub Wing Box
@@ -41454,9 +41447,10 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*TODO: Confirm the items and rates*/
+      getitem 12832,20;
       getitem 14534,20;
       getitem 14535,20;
+      getitem 14682,1;
   - Id: 17322
     AegisName: Three_Master_Package_10
     Name: Three Master Package(10)
@@ -41474,9 +41468,10 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*TODO: Confirm the items and rates*/
+      getitem 12832,200;
       getitem 14534,200;
       getitem 14535,200;
+      getitem 14682,11;
   - Id: 17326
     AegisName: Requiem_Scroll
     Name: Requiem Egg
@@ -41584,13 +41579,13 @@ Body:
       getitem 7620,50;
       getitem 14696,11;
   - Id: 17394
-    AegisName: Event_Old_Headgear_Box
+    AegisName: Old_Hat_Box_
     Name: Event Old Headgear Box
     Type: Usable
     Buy: 20
     Weight: 10
     Script: |
-      /* TODO */
+      getgroupitem(IG_Old_Hat_Box_);
   - Id: 17396
     AegisName: Half_L_Magestic_Goat_Box1
     Name: Half L Magestic Goat Box1
@@ -41937,6 +41932,44 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Idn_Legend_Hero_Scroll);
+  - Id: 17438
+    AegisName: 3_Life_Potion_pack2
+    Name: Three Master Package II
+    Type: Cash
+    Buy: 10
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 12832,20;
+      getitem 14534,20;
+      getitem 14535,20;
+      getitem 14713,1;
+  - Id: 17439
+    AegisName: 3_Life_Potion_10pack2
+    Name: Three Master Package II(10)
+    Type: Cash
+    Buy: 10
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 12832,20;
+      getitem 14534,20;
+      getitem 14535,20;
+      getitem 14713,1;
   - Id: 17440
     AegisName: Name_Change_Card_Box
     Name: Name Change Card Box
@@ -42886,7 +42919,7 @@ Body:
   - Id: 17527
     AegisName: Nyangvine_Box200
     Name: Actinidia Cat Fruit Box(200)
-    Type: Usable
+    Type: Cash
     Buy: 10
     Weight: 10
     Trade:
@@ -42899,8 +42932,7 @@ Body:
       NoAuction: true
     Script: |
       getitem 6909,200;
-      getitem 12636,rand(1,5);
-      /*TODO: Fix the 12636 amount*/
+      getitem 12636,600;
   - Id: 17532
     AegisName: Blessing_Lucky_Scroll
     Name: Blessing Lucky Egg
@@ -43386,8 +43418,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*TODO, confirm the rates*/
-      getitem callfunc("F_Rand",6635,19598,5658,6238,6239),1;
+      getgroupitem(IG_WOLFKING_SCROLL);
   - Id: 22511
     AegisName: Fenrir_Card__
     Name: Fenrir's Power Scroll
@@ -43418,8 +43449,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*TODO, confirm the rates*/
-      getitem callfunc("F_Rand",12817,4403,14512),1;
+      getgroupitem(IG_KINGS_GIFT);
   - Id: 22514
     AegisName: Candy_Holder
     Name: Candy Holder
@@ -43490,7 +43520,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*TODO*/
+      getgroupitem(IG_80LVUP);
   - Id: 22522
     AegisName: Level_Up_Box100
     Name: Level Up Box(100)
@@ -43662,7 +43692,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*TODO*/
+      getgroupitem(IG_NEW_YEAR_GIFT_BOX);
   - Id: 22534
     AegisName: Closedmind_Box
     Name: Closed Mind Box
@@ -44019,7 +44049,7 @@ Body:
     Name: Lucky Bag Of New Era
     Type: Usable
     Script: |
-      /* TODO */
+      getgroupitem(IG_LUCKY_BAG_OF_NEW_ERA);
   - Id: 22566
     AegisName: Frost_Crystal
     Name: Last Year's Frost
@@ -44161,7 +44191,8 @@ Body:
     Buy: 10
     Weight: 50
     Script: |
-      /* TODO */
+      specialeffect2 EF_VENOMDUST;
+#      transform 1036,60000,SC_GLASTHEIM_TRANS;  /* todo */
   - Id: 22614
     AegisName: Premium_Manual
     Name: Premium Manual
@@ -44228,7 +44259,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      /* TODO */
+      getgroupitem(IG_MEMORIAL_BOX);
   - Id: 22621
     AegisName: Squid_Bbq
     Name: Barbecued Squid
@@ -44486,7 +44517,7 @@ Body:
     Buy: 10000
     Weight: 50
     Script: |
-      /* TODO */
+      getgroupitem(IG_WET_CARDALBUM);
   - Id: 22657
     AegisName: Honey_Songpyun_
     Name: Honey Songpyun
@@ -44773,7 +44804,12 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*TODO: getitem 12529,1; getitem 12323,200; getitem 12324,50; and 5 boxes that containing quivers + oridecons*/
+      getitem 12007,5;
+      getitem 12324,50;
+      getitem 12325,50;
+      getitem 12529,1;
+      getitem 23338,200;
+      getitem 23900,1;
   - Id: 22702
     AegisName: Minus_Str
     Name: STR Reduction Potion
@@ -44840,7 +44876,7 @@ Body:
     Type: Cash
     Buy: 10
     Script: |
-      /*No clue the random item yet*/
+      /* TODO: No clue the random item yet*/
   - Id: 22734
     AegisName: Revolution_Quiz_Box
     Name: Revolution Quiz Box
@@ -44875,8 +44911,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*TODO: Confirm the rates*/
-      getitem callfunc("F_Rand",6228,6232,24150,19934,6635,17474),1;
+      getgroupitem(IG_SEALED_M_FLOWER_SCROLL);
   - Id: 22736
     AegisName: July_Gift_Box
     Name: July Gift Box
