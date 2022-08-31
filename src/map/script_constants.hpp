@@ -4462,6 +4462,7 @@
 	export_constant(MOB_ELEMENT);
 	export_constant(MOB_MODE);
 	export_constant(MOB_MVPEXP);
+	export_constant(MOB_ID);
 
 	/* petinfo types */
 	export_constant(PETINFO_ID);
