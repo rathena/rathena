@@ -18066,19 +18066,20 @@ BUILDIN_FUNC(delmonsterdrop)
  * Returns some values of a monster [Lupus]
  * Name, Level, race, size, etc...
 	getmonsterinfo(monsterID,queryIndex);
+	getmonsterinfo(monsterName,queryIndex);
  *------------------------------------------*/
 BUILDIN_FUNC(getmonsterinfo)
 {
 	std::shared_ptr<s_mob_db> mob;
 
 	if (script_isstring(st, 2))
-		mob = mob_db.find(mobdb_searchname(script_getstr(st, 3)));
+		mob = mob_db.find(mobdb_search_aegisname(script_getstr(st, 2)));
 	else
 		mob = mob_db.find(script_getnum(st, 2));
 
 	if (mob == nullptr || mob_is_clone(mob->id)) {
 		//ShowError("buildin_getmonsterinfo: Wrong Monster ID: %i\n", mob_id);
-		if (script_getnum(st, 3) == MOB_NAME) // requested the name
+		if (script_getnum(st, 2) == MOB_NAME) // requested the name
 			script_pushconststr(st, "null");
 		else
 			script_pushint(st, -1);
