@@ -18070,14 +18070,19 @@ BUILDIN_FUNC(delmonsterdrop)
  *------------------------------------------*/
 BUILDIN_FUNC(getmonsterinfo)
 {
-	std::shared_ptr<s_mob_db> mob;
+	std::shared_ptr<s_mob_db> mob = nullptr;
 
 	if (script_isstring(st, 2))
 		mob = mob_db.find(mobdb_search_aegisname(script_getstr(st, 2)));
-	else
-		mob = mob_db.find(script_getnum(st, 2));
+	else {
+		uint16 mob_id = script_getnum(st, 2);
 
-	if (mob == nullptr || mob_is_clone(mob->id)) {
+		if (!mob_is_clone(mob_id)) {
+			mob = mob_db.find(mob_id);
+		}
+	}
+
+	if (mob == nullptr) {
 		//ShowError("buildin_getmonsterinfo: Wrong Monster ID: %i\n", mob_id);
 		if (script_getnum(st, 2) == MOB_NAME) // requested the name
 			script_pushconststr(st, "null");

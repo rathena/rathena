@@ -3580,8 +3580,8 @@ This command does not count skills which are set as flag 4 (permament granted) (
 *getmonsterinfo(<mob ID>,<type>)
 *getmonsterinfo(<mob name>,<type>)
 
-This function will look up the monster with the specified ID number in the
-mob database and return the info set by TYPE argument.
+This function will look up the monster with the specified <mob ID> or <mob name> in the
+mob database and return the info set by <type> argument.
 It will return -1 if there is no such monster (or the type value is invalid),
 or "null" if you requested the monster's name.
 
