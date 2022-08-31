@@ -379,7 +379,8 @@ enum monsterinfo_types {
 	MOB_RACE,
 	MOB_ELEMENT,
 	MOB_MODE,
-	MOB_MVPEXP
+	MOB_MVPEXP,
+	MOB_ID,
 };
 
 enum petinfo_types {
