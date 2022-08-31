@@ -31629,7 +31629,7 @@ Body:
             Rate: 1429
   - Group: IG_NEW_YEAR_GIFT_BOX
     SubGroups:
-      - SubGroup: 
+      - SubGroup: 0
         List:
           - Item: Speed_Up_Potion
             Amount: 3
