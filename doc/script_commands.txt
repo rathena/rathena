@@ -3611,7 +3611,7 @@ Valid types are:
 	MOB_ELEMENT - monster's element(doesn't return the element level, only the element ID)
 	MOB_MODE - monster's mode
 	MOB_MVPEXP - monster's mvp experience
-	MOB_ID - monster's mvp experience
+	MOB_ID - monster's ID
 
 For more details, see the sample in 'doc/sample/getmonsterinfo.txt'.
 
