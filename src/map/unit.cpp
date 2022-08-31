@@ -121,8 +121,10 @@ int unit_walktoxy_sub(struct block_list *bl)
 	ud->state.change_walk_target=0;
 
 	if (bl->type == BL_PC) {
-		((TBL_PC *)bl)->head_dir = 0;
-		clif_walkok((TBL_PC*)bl);
+		map_session_data *sd = BL_CAST(BL_PC, bl);
+
+		sd->head_dir = DIR_NORTH;
+		clif_walkok(sd);
 	}
 #if PACKETVER >= 20170726
 	// If this is a walking NPC and it will use a player sprite
@@ -400,7 +402,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 		return 0;
 	}
 
-	ud->dir = dir;
+	unit_setdir(bl, dir, false);
 
 	int dx = dirx[dir];
 	int dy = diry[dir];
@@ -1023,7 +1025,6 @@ int unit_escape(struct block_list *bl, struct block_list *target, short dist, ui
 bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool checkpath)
 {
 	short dx,dy;
-	uint8 dir;
 	struct unit_data        *ud = NULL;
 	struct map_session_data *sd = NULL;
 
@@ -1044,8 +1045,7 @@ bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, boo
 	ud->to_x = dst_x;
 	ud->to_y = dst_y;
 
-	dir = map_calc_dir(bl, dst_x, dst_y);
-	ud->dir = dir;
+	unit_setdir(bl, map_calc_dir(bl, dst_x, dst_y), false);
 
 	dx = dst_x - bl->x;
 	dy = dst_y - bl->y;
@@ -1094,27 +1094,31 @@ bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, boo
  * Sets direction of a unit
  * @param bl: Object to set direction
  * @param dir: Direction (0-7)
- * @return 0
+ * @param send_update: Update the client area of direction (default: true)
+ * @return True on success or False on failure
  */
-int unit_setdir(struct block_list *bl, unsigned char dir)
+bool unit_setdir(block_list *bl, uint8 dir, bool send_update)
 {
-	struct unit_data *ud;
-
 	nullpo_ret(bl);
 
-	ud = unit_bl2ud(bl);
+	unit_data *ud = unit_bl2ud(bl);
 
-	if (!ud)
-		return 0;
+	if (ud == nullptr)
+		return false;
 
 	ud->dir = dir;
 
-	if (bl->type == BL_PC)
-		((TBL_PC *)bl)->head_dir = 0;
+	if (bl->type == BL_PC) {
+		map_session_data *sd = BL_CAST(BL_PC, bl);
 
-	clif_changed_dir(bl, AREA);
+		sd->head_dir = DIR_NORTH;
+		sd->status.body_direction = ud->dir;
+	}
 
-	return 0;
+	if (send_update)
+		clif_changed_dir(bl, AREA);
+
+	return true;
 }
 
 /**
@@ -2762,7 +2766,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 
 	if( DIFF_TICK(ud->attackabletime,tick) <= 0 ) {
 		if (battle_config.attack_direction_change && (src->type&battle_config.attack_direction_change))
-			ud->dir = map_calc_dir(src, target->x, target->y);
+			unit_setdir(src, map_calc_dir(src, target->x, target->y), false);
 
 		if(ud->walktimer != INVALID_TIMER)
 			unit_stop_walking(src,1);
