@@ -18084,7 +18084,7 @@ BUILDIN_FUNC(getmonsterinfo)
 
 	if (mob == nullptr) {
 		//ShowError("buildin_getmonsterinfo: Wrong Monster ID: %i\n", mob_id);
-		if (script_getnum(st, 2) == MOB_NAME) // requested the name
+		if (script_getnum(st, 3) == MOB_NAME) // requested the name
 			script_pushconststr(st, "null");
 		else
 			script_pushint(st, -1);
