@@ -8199,13 +8199,13 @@ This feature requires packet version 2015-11-04 or newer.
 
 ---------------------------------------
 
-*laphine_synthesis()
+*laphine_synthesis({<item id>})
+*laphine_synthesis({<"item name">})
 
-Opens the laphine synthesis UI for the attached player.
+Opens the laphine synthesis UI for <item ID> or <item name> for the attached player.
+If run from within an item script <item ID> or <item name> is optional.
 
 This feature requires packet version 2016-06-01 or newer.
-
-This function is intended for use in item scripts.
 
 ---------------------------------------
 

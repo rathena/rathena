@@ -25959,14 +25959,40 @@ BUILDIN_FUNC( laphine_synthesis ){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if( sd->itemid == 0 ){
-		ShowError( "buildin_laphine_synthesis: Called outside of an item script without item id.\n" );
-		return SCRIPT_CMD_FAILURE;
-	}
+	t_itemid item_id;
 
-	if( sd->inventory_data[sd->itemindex]->flag.delay_consume == 0 ){
-		ShowError( "buildin_laphine_synthesis: Called from item %u, which is not a consumed delayed.\n", sd->itemid );
-		return SCRIPT_CMD_FAILURE;
+	if( script_hasdata( st, 2 ) ){
+		if( script_isstring( st, 2 ) ){
+			const char* item_name = script_getstr( st, 2 );
+
+			std::shared_ptr<item_data> item = item_db.searchname( item_name );
+
+			if( item == nullptr ){
+				ShowError("buildin_laphine_synthesis: Item \"%s\" does not exist.\n", item_name );
+				return SCRIPT_CMD_FAILURE;
+			}
+
+			item_id = item->nameid;
+		}else{
+			item_id = script_getnum( st, 2 );
+
+			if( !item_db.exists( item_id ) ){
+				ShowError( "buildin_laphine_synthesis: Item ID %u does not exist.\n", item_id );
+				return SCRIPT_CMD_FAILURE;
+			}
+		}
+	}else{
+		if( sd->itemid == 0 ){
+			ShowError( "buildin_laphine_synthesis: Called outside of an item script without item id.\n" );
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		if( sd->inventory_data[sd->itemindex]->flag.delay_consume == 0 ){
+			ShowError( "buildin_laphine_synthesis: Called from item %u, which is not a consumed delayed.\n", sd->itemid );
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		item_id = sd->itemid;
 	}
 
 	if( sd->state.laphine_synthesis != 0 ){
@@ -25974,10 +26000,10 @@ BUILDIN_FUNC( laphine_synthesis ){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	std::shared_ptr<s_laphine_synthesis> synthesis = laphine_synthesis_db.find( sd->itemid );
+	std::shared_ptr<s_laphine_synthesis> synthesis = laphine_synthesis_db.find( item_id );
 
 	if( synthesis == nullptr ){
-		ShowError( "buildin_laphine_synthesis: %u is not a valid Laphine Synthesis item.\n", sd->itemid );
+		ShowError( "buildin_laphine_synthesis: %u is not a valid Laphine Synthesis item.\n", item_id );
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -27035,7 +27061,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(navihide, ""),
 
 	BUILDIN_DEF(getitempos,""),
-	BUILDIN_DEF(laphine_synthesis, ""),
+	BUILDIN_DEF(laphine_synthesis, "?"),
 	BUILDIN_DEF(laphine_upgrade, ""),
 	BUILDIN_DEF(randomoptgroup,"i"),
 	BUILDIN_DEF(open_quest_ui, "??"),
