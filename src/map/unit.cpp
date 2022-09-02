@@ -3629,7 +3629,7 @@ static TIMER_FUNC(unit_shadowscar_timer) {
 	block_list *bl = map_id2bl(id);
 
 	if (bl == nullptr)
-		return 0;
+		return 1;
 
 	unit_data *ud = unit_bl2ud(bl);
 
