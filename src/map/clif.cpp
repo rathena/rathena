@@ -15073,7 +15073,7 @@ void clif_parse_PMIgnore(int fd, struct map_session_data* sd)
 
 		// find entry
 		ARR_FIND( 0, MAX_IGNORE_LIST, i, sd->ignore[i].name[0] == '\0' || strcmp(sd->ignore[i].name, nick) == 0 );
-		if( i == MAX_IGNORE_LIST || sd->ignore[i].name[i] == '\0' ) { //Not found
+		if( i == MAX_IGNORE_LIST || sd->ignore[i].name[0] == '\0' ) { //Not found
 			clif_wisexin(sd, type, 1); // fail
 			return;
 		}
