@@ -21902,7 +21902,7 @@ Body:
   - Combos:
       - Combo:
           - aegis_480124
-          - aegis_410016
+          - Battle_Processor
       - Combo:
           - aegis_480124
           - Battle_Processor_
@@ -21913,7 +21913,7 @@ Body:
   - Combos:
       - Combo:
           - aegis_480124
-          - aegis_410079
+          - Deepblue_Sunglasses
     Script: |
       bonus bVariableCastrate,-15;
       bonus bAtkRate,7;
@@ -21927,7 +21927,7 @@ Body:
   - Combos:
       - Combo:
           - aegis_480125
-          - aegis_410016
+          - Battle_Processor
       - Combo:
           - aegis_480125
           - Battle_Processor_
@@ -21937,7 +21937,7 @@ Body:
   - Combos:
       - Combo:
           - aegis_480125
-          - aegis_410079
+          - Deepblue_Sunglasses
     Script: |
       bonus bVariableCastrate,-15;
       bonus bMatkRate,7;
@@ -27300,7 +27300,7 @@ Body:
   - Combos:
       - Combo:
           - aegis_311470   # 311470
-          - aegis_311355   # 311355
+          - Con_Robe_D   # 311355
     Script: |
       bonus bPAtk,5;
       bonus bCon,3;
@@ -27605,7 +27605,7 @@ Body:
   - Combos:
       - Combo:
           - aegis_480197   # 480197
-          - aegis_410016   # 410016
+          - Battle_Processor   # 410016
     Script: |
       bonus bLongAtkRate,5;
       bonus bShortAtkRate,5;
@@ -27613,7 +27613,7 @@ Body:
   - Combos:
       - Combo:
           - aegis_480197   # 480197
-          - aegis_410079   # 410079
+          - Deepblue_Sunglasses   # 410079
     Script: |
       bonus bVariableCastrate,-15;
       bonus bCritAtkRate,7;

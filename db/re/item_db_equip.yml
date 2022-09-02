@@ -56101,28 +56101,29 @@ Body:
     Type: Petegg
     Buy: 20
   - Id: 9125
-    AegisName: ?????
+    AegisName: E_Duckling_Egg
     Name: Wandering Duck Doll Egg
     Type: PetEgg
   - Id: 9126
     AegisName: Kiel_Egg
     Name: Kiel-D-01 Egg
     Type: PetEgg
+    Buy: 20
   - Id: 9128
     AegisName: Dark_Priest_Egg
     Name: Dark Priest Egg
     Type: Petegg
     Buy: 20
   - Id: 9129
-    AegisName: aegis_9129
+    AegisName: Desert_Wolf_Egg
     Name: Desert Wolf Egg
     Type: PetEgg
   - Id: 9130
-    AegisName: aegis_9130
+    AegisName: Chaos_Bapho_Jr_Egg
     Name: Chaotic Baphomet Junior Egg
     Type: PetEgg
   - Id: 9131
-    AegisName: aegis_9131
+    AegisName: Fire_Golem_Egg
     Name: Fire Golem Egg
     Type: PetEgg
   - Id: 9132
@@ -142418,7 +142419,7 @@ Body:
       bonus bMdef,3;
       bonus bDelayrate,-10;
   - Id: 410016
-    AegisName: aegis_410016
+    AegisName: Battle_Processor
     Name: Battle Processor
     Type: Armor
     View: 1552
@@ -142729,7 +142730,7 @@ Body:
     EquipLevelMin: 1
     View: 2127
   - Id: 410079
-    AegisName: aegis_410079
+    AegisName: Deepblue_Sunglasses
     Name: Deep Blue Sunglasses
     Type: Armor
     Weight: 100
@@ -149495,7 +149496,7 @@ Body:
       bonus bUnbreakableArmor;
   - Id: 450234
     AegisName: Flame_Rune_Armor
-    Name: Fire Rune Armor    # !todo check english name
+    Name: Rune Armor of Flame
     Type: Armor
     Weight: 1000
     Defense: 45
@@ -149536,7 +149537,7 @@ Body:
       }
   - Id: 450243
     AegisName: Plain_Rune_Armor
-    Name: Meadow Rune Armor    # !todo check english name
+    Name: Rune Armor of Plain
     Type: Armor
     Weight: 1000
     Defense: 45
@@ -149577,7 +149578,7 @@ Body:
       }
   - Id: 450244
     AegisName: Ice_Rune_Armor
-    Name: Ice Rune Armor    # !todo check english name
+    Name: Rune Armor of Ice
     Type: Armor
     Weight: 1000
     Defense: 45
@@ -149618,7 +149619,7 @@ Body:
       }
   - Id: 450245
     AegisName: Death_Rune_Armor
-    Name: Death Rune Robe    # !todo check english name
+    Name: Rune Robe of Death
     Type: Armor
     Weight: 1000
     Defense: 45
@@ -152151,7 +152152,7 @@ Body:
       }
   - Id: 470173
     AegisName: Flame_Rune_Boots
-    Name: Rune Boots of Fire    # !todo check english name
+    Name: Rune Boots of Flame
     Type: Armor
     Weight: 1000
     Defense: 45
@@ -152193,7 +152194,7 @@ Body:
       }
   - Id: 470174
     AegisName: Plain_Rune_Boots
-    Name: Meadow Rune Boots    # !todo check english name
+    Name: Rune Boots of Plain
     Type: Armor
     Weight: 1000
     Defense: 45
@@ -152235,7 +152236,7 @@ Body:
       }
   - Id: 470175
     AegisName: Ice_Rune_Boots
-    Name: Ice Rune Boots    # !todo check english name
+    Name: Rune Boots of Ice
     Type: Armor
     Weight: 1000
     Defense: 45
@@ -152277,7 +152278,7 @@ Body:
       }
   - Id: 470176
     AegisName: Death_Rune_Boots
-    Name: Death Rune Boots    # !todo check english name
+    Name: Rune Boots of Death
     Type: Armor
     Weight: 1000
     Defense: 45
@@ -154394,7 +154395,7 @@ Body:
     ArmorLevel: 1
   - Id: 480230
     AegisName: Flame_Rune_Hood
-    Name: Rune Cloak of Fire    # !todo check english name
+    Name: Rune Manteau of Flame
     Type: Armor
     Weight: 1000
     Defense: 45
@@ -154433,7 +154434,7 @@ Body:
       }
   - Id: 480231
     AegisName: Plain_Rune_Hood
-    Name: Grassland Rune Cloak    # !todo check english name
+    Name: Rune Manteau of Plain
     Type: Armor
     Weight: 1000
     Defense: 45
@@ -154475,7 +154476,7 @@ Body:
       }
   - Id: 480232
     AegisName: Ice_Rune_Hood
-    Name: Ice Rune Cloak    # !todo check english name
+    Name: Rune Manteau of Ice
     Type: Armor
     Weight: 1000
     Defense: 45
@@ -154514,7 +154515,7 @@ Body:
       }
   - Id: 480233
     AegisName: Death_Rune_Hood
-    Name: Death Rune Cloak    # !todo check english name
+    Name: Rune Manteau of Death
     Type: Armor
     Weight: 1000
     Defense: 45
@@ -176763,7 +176764,7 @@ Body:
     Refineable: true
   - Id: 810013
     AegisName: HR_S55_AD
-    Name: HR-S55-OSAD
+    Name: HR-55-OSAD
     Type: Weapon
     SubType: Rifle
     Weight: 1000

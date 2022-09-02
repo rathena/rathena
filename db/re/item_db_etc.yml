@@ -32162,7 +32162,7 @@ Body:
     Buy: 20
     Weight: 10
   - Id: 11064
-    AegisName: aegis_11064
+    AegisName: Spiritualism_Guide2
     Name: Advanced Elemental Arts Guide
     Type: Etc
     Weight: 10
@@ -37911,7 +37911,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
   - Id: 25921
-    AegisName: aegis_25921
+    AegisName: Mature_Cacao
     Name: Aged Cacao Beans
     Type: Etc
   - Id: 25924
@@ -60639,7 +60639,7 @@ Body:
       bonus bCritical,10;
       bonus bCritAtkRate,10;
   - Id: 311355
-    AegisName: aegis_311355
+    AegisName: Con_Robe_D
     Name: Concentration Stone (Dual)
     Type: Card
     SubType: Enchant
@@ -61693,7 +61693,7 @@ Body:
       bonus bPow,5;
   - Id: 311862
     AegisName: Barmund_Flame1
-    Name: Barmund's Crystal (Fire) Lv1    # !todo check english name
+    Name: Varmundt's Crystal (Flame) Lv1
     Type: Card
     SubType: Enchant
     Script: |
@@ -61720,7 +61720,7 @@ Body:
       }
   - Id: 311863
     AegisName: Barmund_Flame2
-    Name: Barmund's Crystal (Fire) Lv2    # !todo check english name
+    Name: Varmundt's Crystal (Flame) Lv2
     Type: Card
     SubType: Enchant
     Script: |
@@ -61747,7 +61747,7 @@ Body:
       }
   - Id: 311864
     AegisName: Barmund_Flame3
-    Name: Barmund's Crystal (Fire) Lv3    # !todo check english name
+    Name: Varmundt's Crystal (Flame) Lv3
     Type: Card
     SubType: Enchant
     Script: |
@@ -61774,7 +61774,7 @@ Body:
       }
   - Id: 311865
     AegisName: Barmund_Flame4
-    Name: Barmund's Crystal (Fire) Lv4    # !todo check english name
+    Name: Varmundt's Crystal (Flame) Lv4
     Type: Card
     SubType: Enchant
     Script: |
@@ -61801,7 +61801,7 @@ Body:
       }
   - Id: 311866
     AegisName: Barmund_Flame5
-    Name: Barmund's Crystal (Fire) Lv5    # !todo check english name
+    Name: Varmundt's Crystal (Flame) Lv5
     Type: Card
     SubType: Enchant
     Script: |
@@ -61828,7 +61828,7 @@ Body:
       }
   - Id: 311867
     AegisName: Barmund_Ice1
-    Name: Barmund's Crystal (Ice) Lv1    # !todo check english name
+    Name: Varmundt's Crystal (Ice) Lv1
     Type: Card
     SubType: Enchant
     Script: |
@@ -61855,7 +61855,7 @@ Body:
       }
   - Id: 311868
     AegisName: Barmund_Ice2
-    Name: Barmund's Crystal (Ice) Lv2    # !todo check english name
+    Name: Varmundt's Crystal (Ice) Lv2
     Type: Card
     SubType: Enchant
     Script: |
@@ -61882,7 +61882,7 @@ Body:
       }
   - Id: 311869
     AegisName: Barmund_Ice3
-    Name: Barmund's Crystal (Ice) Lv3    # !todo check english name
+    Name: Varmundt's Crystal (Ice) Lv3
     Type: Card
     SubType: Enchant
     Script: |
@@ -61909,7 +61909,7 @@ Body:
       }
   - Id: 311870
     AegisName: Barmund_Ice4
-    Name: Barmund's Crystal (Ice) Lv4    # !todo check english name
+    Name: Varmundt's Crystal (Ice) Lv4
     Type: Card
     SubType: Enchant
     Script: |
@@ -61936,7 +61936,7 @@ Body:
       }
   - Id: 311871
     AegisName: Barmund_Ice5
-    Name: Barmund's Crystal (Ice) Lv5    # !todo check english name
+    Name: Varmundt's Crystal (Ice) Lv5
     Type: Card
     SubType: Enchant
     Script: |
@@ -61963,7 +61963,7 @@ Body:
       }
   - Id: 311872
     AegisName: Barmund_Plain1
-    Name: Barmund's Crystal (Meadow) Lv1    # !todo check english name
+    Name: Varmundt's Crystal (Plain) Lv1
     Type: Card
     SubType: Enchant
     Script: |
@@ -61990,7 +61990,7 @@ Body:
       }
   - Id: 311873
     AegisName: Barmund_Plain2
-    Name: Barmund's Crystal (Meadow) Lv2    # !todo check english name
+    Name: Varmundt's Crystal (Plain) Lv2
     Type: Card
     SubType: Enchant
     Script: |
@@ -62017,7 +62017,7 @@ Body:
       }
   - Id: 311874
     AegisName: Barmund_Plain3
-    Name: Barmund's Crystal (Meadow) Lv3    # !todo check english name
+    Name: Varmundt's Crystal (Plain) Lv3
     Type: Card
     SubType: Enchant
     Script: |
@@ -62044,7 +62044,7 @@ Body:
       }
   - Id: 311875
     AegisName: Barmund_Plain4
-    Name: Barmund's Crystal (Meadow) Lv4    # !todo check english name
+    Name: Varmundt's Crystal (Plain) Lv4
     Type: Card
     SubType: Enchant
     Script: |
@@ -62071,7 +62071,7 @@ Body:
       }
   - Id: 311876
     AegisName: Barmund_Plain5
-    Name: Barmund's Crystal (Meadow) Lv5    # !todo check english name
+    Name: Varmundt's Crystal (Plain) Lv5
     Type: Card
     SubType: Enchant
     Script: |
@@ -62098,7 +62098,7 @@ Body:
       }
   - Id: 311877
     AegisName: Barmund_Death1
-    Name: Barmund's Crystal (Death) Lv1    # !todo check english name
+    Name: Varmundt's Crystal (Death) Lv1
     Type: Card
     SubType: Enchant
     Script: |
@@ -62125,7 +62125,7 @@ Body:
       }
   - Id: 311878
     AegisName: Barmund_Death2
-    Name: Barmund's Crystal (Death) Lv2    # !todo check english name
+    Name: Varmundt's Crystal (Death) Lv2
     Type: Card
     SubType: Enchant
     Script: |
@@ -62152,7 +62152,7 @@ Body:
       }
   - Id: 311879
     AegisName: Barmund_Death3
-    Name: Barmund's Crystal (Death) Lv3    # !todo check english name
+    Name: Varmundt's Crystal (Death) Lv3
     Type: Card
     SubType: Enchant
     Script: |
@@ -62179,7 +62179,7 @@ Body:
       }
   - Id: 311880
     AegisName: Barmund_Death4
-    Name: Barmund's Crystal (Death) Lv4    # !todo check english name
+    Name: Varmundt's Crystal (Death) Lv4
     Type: Card
     SubType: Enchant
     Script: |
@@ -62206,7 +62206,7 @@ Body:
       }
   - Id: 311881
     AegisName: Barmund_Death5
-    Name: Barmund's Crystal (Death) Lv5    # !todo check english name
+    Name: Varmundt's Crystal (Death) Lv5
     Type: Card
     SubType: Enchant
     Script: |
