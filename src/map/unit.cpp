@@ -3709,7 +3709,7 @@ void unit_delshadowscar(unit_data &ud, int count) {
 		sc->data[SC_SHADOW_SCAR]->val1 = ud.shadow_scar;
 
 	std::vector<int>::iterator it = ud.shadow_scar_timer.begin();
-	int8 i = 0;
+	uint16 i = 0;
 
 	while (it != ud.shadow_scar_timer.end() && i < count) {
 		delete_timer(ud.shadow_scar_timer[i], unit_shadowscar_timer);
