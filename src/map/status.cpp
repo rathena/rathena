@@ -677,7 +677,7 @@ uint64 EnchantgradeDatabase::parseBodyNode( const ryml::NodeRef& node ){
 			if( this->nodeExists( gradeNode, "AnnounceSuccess" ) ){
 				bool announcesuccess;
 
-				if( !this->asBool( gradeNode, "AnnounceSuccess", announcesucess ) ){
+				if( !this->asBool( gradeNode, "AnnounceSuccess", announcesuccess ) ){
 					return 0;
 				}
 
