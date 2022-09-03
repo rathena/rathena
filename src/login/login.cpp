@@ -685,7 +685,7 @@ bool login_config_read(const char* cfgName, bool normal) {
 		else if(strcmpi(w1, "chars_per_account") == 0) { //maxchars per account [Sirius]
 			login_config.char_per_account = atoi(w2);
 			if( login_config.char_per_account > MAX_CHARS ) {
-				ShowWarning("Max chars per account '%d' exceeded limit. Capping to '%d'.\n", login_config.char_per_account, MAX_CHARS);
+				ShowWarning("Exceeded limit of max chars per account '%d'. Capping to '%d'.\n", login_config.char_per_account, MAX_CHARS);
 				login_config.char_per_account = MAX_CHARS;
 			}else if( login_config.char_per_account < 0 ){
 				ShowWarning("Max chars per account '%d' is negative. Capping to '%d'.\n", login_config.char_per_account, MIN_CHARS);
