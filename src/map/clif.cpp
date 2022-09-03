@@ -16242,7 +16242,9 @@ void clif_Mail_read( struct map_session_data *sd, int mail_id ){
 		WFIFOL(fd,72) = 0;
 		WFIFOL(fd,76) = msg->zeny;
 
-		if( item->nameid && (data = itemdb_exists(item->nameid)) != NULL ) {
+		std::shared_ptr<item_data> data = item_db.find(item->nameid);
+
+		if( item->nameid && data != nullptr ) {
 			WFIFOL(fd,80) = item->amount;
 			WFIFOW(fd,84) = client_nameid( item->nameid );
 			WFIFOW(fd,86) = itemtype( item->nameid );
