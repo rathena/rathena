@@ -6536,8 +6536,8 @@ Examples:
 *areamonster "<map name>",<x1>,<y1>,<x2>,<y2>,"<name to show>",<mob id>,<amount>{,"<event label>",<size>,<ai>};
 *areamonster "<map name>",<x1>,<y1>,<x2>,<y2>,"<name to show>","<mob name>",<amount>{,"<event label>",<size>,<ai>};
 
-This command will spawn <amount> monsters with <mob id> or <mob name> on the specified 
-coordinates on the specified map. If the script is invoked by a character, a special 
+This command will spawn <amount> monsters with <mob id> or <mob name> on the specified
+coordinates on the specified map. If the script is invoked by a character, a special
 <map name>, "this", will be recognized to mean the name of the map the invoking character
 is located at. This command works fine in item scripts.
 
