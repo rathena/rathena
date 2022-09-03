@@ -684,11 +684,11 @@ bool login_config_read(const char* cfgName, bool normal) {
 			login_config.usercount_high = atoi(w2);
 		else if(strcmpi(w1, "chars_per_account") == 0) { //maxchars per account [Sirius]
 			login_config.char_per_account = atoi(w2);
-			if( login_config.char_per_account <= 0 || login_config.char_per_account > MAX_CHARS ) {
-				if( login_config.char_per_account > MAX_CHARS ) {
-					ShowWarning("Max chars per account '%d' exceeded limit. Defaulting to '%d'.\n", login_config.char_per_account, MAX_CHARS);
-					login_config.char_per_account = MAX_CHARS;
-				}
+			if( login_config.char_per_account > MAX_CHARS ) {
+				ShowWarning("Exceeded limit of max chars per account '%d'. Capping to '%d'.\n", login_config.char_per_account, MAX_CHARS);
+				login_config.char_per_account = MAX_CHARS;
+			}else if( login_config.char_per_account < 0 ){
+				ShowWarning("Max chars per account '%d' is negative. Capping to '%d'.\n", login_config.char_per_account, MIN_CHARS);
 				login_config.char_per_account = MIN_CHARS;
 			}
 		}

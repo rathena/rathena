@@ -549,6 +549,11 @@ static bool mmo_auth_fromsql(AccountDB_SQL* db, struct mmo_account* acc, uint32 
 	Sql_FreeResult(sql_handle);
 	acc->web_auth_token[0] = '\0';
 
+	if( acc->char_slots > MAX_CHARS ){
+		ShowError( "Account %s (AID=%u) exceeds MAX_CHARS. Capping...\n", acc->userid, acc->account_id );
+		acc->char_slots = MAX_CHARS;
+	}
+
 	return true;
 }
 
