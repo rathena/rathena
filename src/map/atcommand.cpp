@@ -7444,7 +7444,7 @@ ACMD_FUNC(unmute)
 	}
 
 	pl_sd->status.manner = 0;
-	status_change_end(&pl_sd->bl, SC_NOCHAT, INVALID_TIMER);
+	status_change_end(&pl_sd->bl, SC_NOCHAT);
 	clif_displaymessage(sd->fd,msg_txt(sd,1236)); // Player unmuted.
 
 	return 0;
@@ -7551,7 +7551,7 @@ ACMD_FUNC(mute)
 		sc_start(NULL,&pl_sd->bl,SC_NOCHAT,100,0,0);
 	} else {
 		pl_sd->status.manner = 0;
-		status_change_end(&pl_sd->bl, SC_NOCHAT, INVALID_TIMER);
+		status_change_end(&pl_sd->bl, SC_NOCHAT);
 	}
 
 	clif_GM_silence(sd, pl_sd, (manner > 0 ? 1 : 0));
@@ -8438,7 +8438,7 @@ static int atcommand_mutearea_sub(struct block_list *bl,va_list ap)
 		if (pl_sd->status.manner < 0)
 			sc_start(NULL,&pl_sd->bl,SC_NOCHAT,100,0,0);
 		else
-			status_change_end(&pl_sd->bl, SC_NOCHAT, INVALID_TIMER);
+			status_change_end(&pl_sd->bl, SC_NOCHAT);
 	}
 	return 0;
 }
@@ -9738,7 +9738,7 @@ ACMD_FUNC(mount2) {
 		sc_start(NULL, &sd->bl, SC_ALL_RIDING, 10000, 1, INFINITE_TICK);
 	} else {
 		clif_displaymessage(sd->fd,msg_txt(sd,1364)); // You have released your mount.
-		status_change_end(&sd->bl, SC_ALL_RIDING, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_ALL_RIDING);
 	}
 	return 0;
 }
@@ -10333,7 +10333,7 @@ ACMD_FUNC(changedress){
 
 	for( sc_type type : name2id ) {
 		if( sd->sc.data[type] ) {
-			status_change_end( &sd->bl, type, INVALID_TIMER );
+			status_change_end( &sd->bl, type );
 			// You should only be able to have one - so we cancel here
 			break;
 		}
@@ -10366,7 +10366,7 @@ ACMD_FUNC(costume) {
 			if( sd->sc.data[name2id[k]] ) {
 				sprintf(atcmd_output, msg_txt(sd, 727), names[k]); // '%s' Costume removed.
 				clif_displaymessage(sd->fd, atcmd_output);
-				status_change_end(&sd->bl, (sc_type)name2id[k], INVALID_TIMER);
+				status_change_end(&sd->bl, (sc_type)name2id[k]);
 				return 0;
 			}
 		}

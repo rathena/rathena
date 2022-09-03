@@ -121,8 +121,10 @@ int unit_walktoxy_sub(struct block_list *bl)
 	ud->state.change_walk_target=0;
 
 	if (bl->type == BL_PC) {
-		((TBL_PC *)bl)->head_dir = 0;
-		clif_walkok((TBL_PC*)bl);
+		map_session_data *sd = BL_CAST(BL_PC, bl);
+
+		sd->head_dir = DIR_NORTH;
+		clif_walkok(sd);
 	}
 #if PACKETVER >= 20170726
 	// If this is a walking NPC and it will use a player sprite
@@ -400,7 +402,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 		return 0;
 	}
 
-	ud->dir = dir;
+	unit_setdir(bl, dir, false);
 
 	int dx = dirx[dir];
 	int dy = diry[dir];
@@ -911,7 +913,7 @@ void unit_run_hit(struct block_list *bl, struct status_change *sc, struct map_se
 
 	// Set running to 0 beforehand so status_change_end knows not to enable spurt [Kevin]
 	unit_bl2ud(bl)->state.running = 0;
-	status_change_end(bl, type, INVALID_TIMER);
+	status_change_end(bl, type);
 
 	if (type == SC_RUN) {
 		skill_blown(bl, bl, skill_get_blewcount(TK_RUN, lv), unit_getdir(bl), BLOWN_NONE);
@@ -943,7 +945,7 @@ bool unit_run(struct block_list *bl, struct map_session_data *sd, enum sc_type t
 		return false;
 
 	if (!unit_can_move(bl)) {
-		status_change_end(bl, type, INVALID_TIMER);
+		status_change_end(bl, type);
 		return false;
 	}
 
@@ -1023,7 +1025,6 @@ int unit_escape(struct block_list *bl, struct block_list *target, short dist, ui
 bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool checkpath)
 {
 	short dx,dy;
-	uint8 dir;
 	struct unit_data        *ud = NULL;
 	struct map_session_data *sd = NULL;
 
@@ -1044,8 +1045,7 @@ bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, boo
 	ud->to_x = dst_x;
 	ud->to_y = dst_y;
 
-	dir = map_calc_dir(bl, dst_x, dst_y);
-	ud->dir = dir;
+	unit_setdir(bl, map_calc_dir(bl, dst_x, dst_y), false);
 
 	dx = dst_x - bl->x;
 	dy = dst_y - bl->y;
@@ -1094,27 +1094,31 @@ bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, boo
  * Sets direction of a unit
  * @param bl: Object to set direction
  * @param dir: Direction (0-7)
- * @return 0
+ * @param send_update: Update the client area of direction (default: true)
+ * @return True on success or False on failure
  */
-int unit_setdir(struct block_list *bl, unsigned char dir)
+bool unit_setdir(block_list *bl, uint8 dir, bool send_update)
 {
-	struct unit_data *ud;
-
 	nullpo_ret(bl);
 
-	ud = unit_bl2ud(bl);
+	unit_data *ud = unit_bl2ud(bl);
 
-	if (!ud)
-		return 0;
+	if (ud == nullptr)
+		return false;
 
 	ud->dir = dir;
 
-	if (bl->type == BL_PC)
-		((TBL_PC *)bl)->head_dir = 0;
+	if (bl->type == BL_PC) {
+		map_session_data *sd = BL_CAST(BL_PC, bl);
 
-	clif_changed_dir(bl, AREA);
+		sd->head_dir = DIR_NORTH;
+		sd->status.body_direction = ud->dir;
+	}
 
-	return 0;
+	if (send_update)
+		clif_changed_dir(bl, AREA);
+
+	return true;
 }
 
 /**
@@ -1408,8 +1412,8 @@ int unit_stop_walking(struct block_list *bl,int type)
 
 	// Re-added, the check in unit_set_walkdelay means dmg during running won't fall through to this place in code [Kevin]
 	if (ud->state.running) {
-		status_change_end(bl, SC_RUN, INVALID_TIMER);
-		status_change_end(bl, SC_WUGDASH, INVALID_TIMER);
+		status_change_end(bl, SC_RUN);
+		status_change_end(bl, SC_WUGDASH);
 	}
 
 	return 1;
@@ -2049,17 +2053,17 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	if( sc ) {
 		// These 3 status do not stack, so it's efficient to use if-else
  		if( sc->data[SC_CLOAKING] && !(sc->data[SC_CLOAKING]->val4&4) && skill_id != AS_CLOAKING && skill_id != SHC_SHADOW_STAB) {
-			status_change_end(src, SC_CLOAKING, INVALID_TIMER);
+			status_change_end(src, SC_CLOAKING);
 
 			if (!src->prev)
 				return 0; // Warped away!
 		} else if( sc->data[SC_CLOAKINGEXCEED] && !(sc->data[SC_CLOAKINGEXCEED]->val4&4) && skill_id != GC_CLOAKINGEXCEED && skill_id != SHC_SHADOW_STAB) {
-			status_change_end(src,SC_CLOAKINGEXCEED, INVALID_TIMER);
+			status_change_end(src,SC_CLOAKINGEXCEED);
 
 			if (!src->prev)
 				return 0;
 		} else if (sc->data[SC_NEWMOON] && skill_id != SJ_NEWMOONKICK) {
-			status_change_end(src, SC_NEWMOON, INVALID_TIMER);
+			status_change_end(src, SC_NEWMOON);
 			if (!src->prev)
 				return 0; // Warped away!
 		}
@@ -2231,17 +2235,17 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	if( sc ) {
 		// These 3 status do not stack, so it's efficient to use if-else
 		if (sc->data[SC_CLOAKING] && !(sc->data[SC_CLOAKING]->val4&4)) {
-			status_change_end(src, SC_CLOAKING, INVALID_TIMER);
+			status_change_end(src, SC_CLOAKING);
 
 			if (!src->prev)
 				return 0; // Warped away!
 		} else if (sc->data[SC_CLOAKINGEXCEED] && !(sc->data[SC_CLOAKINGEXCEED]->val4&4)) {
-			status_change_end(src, SC_CLOAKINGEXCEED, INVALID_TIMER);
+			status_change_end(src, SC_CLOAKINGEXCEED);
 
 			if (!src->prev)
 				return 0;
 		} else if (sc->data[SC_NEWMOON]) {
-			status_change_end(src, SC_NEWMOON, INVALID_TIMER);
+			status_change_end(src, SC_NEWMOON);
 
 			if (!src->prev)
 				return 0;
@@ -2475,7 +2479,7 @@ int unit_cancel_combo(struct block_list *bl)
 {
 	struct unit_data  *ud;
 
-	if (!status_change_end(bl, SC_COMBO, INVALID_TIMER))
+	if (!status_change_end(bl, SC_COMBO))
 		return 0; // Combo wasn't active.
 
 	ud = unit_bl2ud(bl);
@@ -2762,7 +2766,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 
 	if( DIFF_TICK(ud->attackabletime,tick) <= 0 ) {
 		if (battle_config.attack_direction_change && (src->type&battle_config.attack_direction_change))
-			ud->dir = map_calc_dir(src, target->x, target->y);
+			unit_setdir(src, map_calc_dir(src, target->x, target->y), false);
 
 		if(ud->walktimer != INVALID_TIMER)
 			unit_stop_walking(src,1);
@@ -3065,13 +3069,13 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 
 		// Ensure the bl is a PC; if so, we'll handle the removal of cloaking and cloaking exceed later
 		if ( bl->type != BL_PC ) {
-			status_change_end(bl, SC_CLOAKING, INVALID_TIMER);
-			status_change_end(bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
+			status_change_end(bl, SC_CLOAKING);
+			status_change_end(bl, SC_CLOAKINGEXCEED);
 		}
 		if (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)
-			status_change_end(bl, SC_GOSPEL, INVALID_TIMER);
+			status_change_end(bl, SC_GOSPEL);
 		if (sc->data[SC_PROVOKE] && sc->data[SC_PROVOKE]->val4 == 1)
-			status_change_end(bl, SC_PROVOKE, INVALID_TIMER); //End infinite provoke to prevent exploit
+			status_change_end(bl, SC_PROVOKE); //End infinite provoke to prevent exploit
 	}
 
 	switch( bl->type ) {
@@ -3082,7 +3086,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			    struct block_list *d_bl = map_id2bl(sd->shadowform_id);
 
 			    if( d_bl )
-				    status_change_end(d_bl,SC__SHADOWFORM,INVALID_TIMER);
+				    status_change_end(d_bl,SC__SHADOWFORM);
 			}
 
 			// Leave/reject all invitations.
@@ -3122,8 +3126,8 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 
 			// Check if warping and not changing the map.
 			if ( sd->state.warping && !sd->state.changemap ) {
-				status_change_end(bl, SC_CLOAKING, INVALID_TIMER);
-				status_change_end(bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
+				status_change_end(bl, SC_CLOAKING);
+				status_change_end(bl, SC_CLOAKINGEXCEED);
 			}
 
 			sd->npc_shopid = 0;
@@ -3552,7 +3556,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 					sd->status.hom_id = 0;
 
 #ifdef RENEWAL
-				status_change_end(&sd->bl, SC_HOMUN_TIME, INVALID_TIMER);
+				status_change_end(&sd->bl, SC_HOMUN_TIME);
 #endif
 			}
 

@@ -978,6 +978,11 @@ Only the special labels which are not associated with any script command are
 listed here. There are other kinds of labels which may be triggered in a similar
 manner, but they are described with their associated commands.
 
+OnNaviGenerate:
+
+This special label triggers when running the map-server-generator binary. It is used
+in combination with 'naviregisterwarp' to register extra warps for an npc.
+
 On<label name>:
 
 These special labels are used with Mob scripts mostly, and script commands
@@ -3578,14 +3583,15 @@ This command does not count skills which are set as flag 4 (permament granted) (
 ---------------------------------------
 
 *getmonsterinfo(<mob ID>,<type>)
+*getmonsterinfo(<mob name>,<type>)
 
-This function will look up the monster with the specified ID number in the
-mob database and return the info set by TYPE argument.
+This function will look up the monster with the specified <mob ID> or <mob name> in the
+mob database and return the info set by <type> argument.
 It will return -1 if there is no such monster (or the type value is invalid),
 or "null" if you requested the monster's name.
 
 Valid types are:
-	MOB_NAME - monster's name, if there is no such monster "null" is returned
+	MOB_NAME - monster's japanese name, if there is no such monster "null" is returned
 	MOB_LV - monster's level
 	MOB_MAXHP - monster's maximum hp
 	MOB_BASEEXP - monster's base experience
@@ -3610,6 +3616,7 @@ Valid types are:
 	MOB_ELEMENT - monster's element(doesn't return the element level, only the element ID)
 	MOB_MODE - monster's mode
 	MOB_MVPEXP - monster's mvp experience
+	MOB_ID - monster's ID
 
 For more details, see the sample in 'doc/sample/getmonsterinfo.txt'.
 
@@ -8192,13 +8199,13 @@ This feature requires packet version 2015-11-04 or newer.
 
 ---------------------------------------
 
-*laphine_synthesis()
+*laphine_synthesis({<item id>})
+*laphine_synthesis({<"item name">})
 
-Opens the laphine synthesis UI for the attached player.
+Opens the laphine synthesis UI for <item ID> or <item name> for the attached player.
+If run from within an item script <item ID> or <item name> is optional.
 
 This feature requires packet version 2016-06-01 or newer.
-
-This function is intended for use in item scripts.
 
 ---------------------------------------
 
@@ -9452,6 +9459,20 @@ This command will open a book item at the specified page.
 
 Opens the roulette window for the currently attached character or the character
 with the given character id.
+
+---------------------------------------
+
+*naviregisterwarp("<Name of Link>", "<dest_map>", <dest_x>, <dest_y>)
+
+Only useful when using the map-server-generator. Registers an extra warp from this
+npc to the destination map/x/y for the generated client files.
+
+---------------------------------------
+
+*navihide
+
+Only useful when using the map-server-generator. Hides this npc and all links from
+this npc in the navigation generation.
 
 ---------------------------------------
 

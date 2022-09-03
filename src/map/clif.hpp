@@ -594,8 +594,8 @@ enum class e_pet_evolution_result : uint32 {
 
 enum e_config_type : uint32 {
 	CONFIG_OPEN_EQUIPMENT_WINDOW = 0,
-	// Unknown
-	CONFIG_PET_AUTOFEED = 2,
+	CONFIG_CALL,
+	CONFIG_PET_AUTOFEED,
 	CONFIG_HOMUNCULUS_AUTOFEED
 };
 

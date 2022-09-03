@@ -572,6 +572,7 @@ struct mmo_charstatus {
 	short shield; // view-id
 	short head_top,head_mid,head_bottom;
 	short robe;
+	uint8 body_direction;
 
 	char name[NAME_LENGTH];
 	unsigned int base_level,job_level;
@@ -589,7 +590,7 @@ struct mmo_charstatus {
 #ifdef HOTKEY_SAVING
 	struct hotkey hotkeys[MAX_HOTKEYS_DB];
 #endif
-	bool show_equip,allow_party;
+	bool show_equip,allow_party, disable_call;
 	short rename;
 
 	time_t delete_date;
