@@ -24054,6 +24054,14 @@ void clif_parse_item_reform_start( int fd, struct map_session_data* sd ){
 
 void clif_enchantwindow_open( struct map_session_data& sd, uint64 clientLuaIndex ){
 #if PACKETVER_RE_NUM >= 20211103
+	// Hardcoded clientside check
+	if( sd.weight > ( ( sd.max_weight * 70 ) / 100 ) ){
+		clif_msg_color( &sd, C_ENCHANT_OVERWEIGHT, color_table[COLOR_RED] );
+		sd.state.item_enchant_index = 0;
+		return;
+		
+	}
+
 	struct PACKET_ZC_UI_OPEN_V3 p = {};
 
 	p.packetType = HEADER_ZC_UI_OPEN_V3;
@@ -24062,10 +24070,7 @@ void clif_enchantwindow_open( struct map_session_data& sd, uint64 clientLuaIndex
 
 	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 
-	// Hardcoded clientside check, that will trigger a message and prevent opening the UI
-	if( sd.weight < ( ( sd.max_weight * 70 ) / 100 ) ){
-		sd.state.item_enchant_index = clientLuaIndex;
-	}
+	sd.state.item_enchant_index = clientLuaIndex;
 #endif
 }
 

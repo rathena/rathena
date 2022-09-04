@@ -555,6 +555,7 @@ enum clif_messages : uint16_t {
 	// Unofficial names
 	C_ITEM_EQUIP_SWITCH = 0xbc7,
 	C_ITEM_NOEQUIP = 0x174,	/// <"You can't put this item on."
+	C_ENCHANT_OVERWEIGHT = 0xEFD,
 	C_ENCHANT_SUCCESS = 0xF11,
 	C_ENCHANT_FAILURE = 0xF12,
 };
