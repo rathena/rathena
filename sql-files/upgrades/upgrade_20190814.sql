@@ -1,2 +1,0 @@
-ALTER TABLE `ipbanlist`
-	CHANGE COLUMN `list` `list` VARCHAR(15) NOT NULL DEFAULT '' FIRST;
