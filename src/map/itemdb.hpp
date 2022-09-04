@@ -994,6 +994,36 @@ enum e_random_item_group {
 	IG_Bs_Item_M_S_54,
 	IG_Bs_Item_M_S_55,
 	IG_Bs_Item_M_S_56,
+	IG_S_FULLPENE_EARRING,
+	IG_S_FULLPENE_PENDANT,
+	IG_S_FULLPENE_ARMOR,
+	IG_S_FULLPENE_SHOES,
+	IG_S_FULLTEMP_EARRING,
+	IG_S_FULLTEMP_PENDANT,
+	IG_S_FULLTEMP_ARMOR,
+	IG_S_FULLTEMP_SHOES,
+	IG_S_DURABLE_WEAPON,
+	IG_S_DURABLE_SHIELD,
+	IG_S_CLEVER_WEAPON,
+	IG_S_CLEVER_SHIELD,
+	IG_S_ALLMIGHTY_EARRING,
+	IG_S_ALLMIGHTY_PENDANT,
+	IG_S_TRUEGEM_EARRING,
+	IG_S_TRUEGEM_PENDANT,
+	IG_S_TRUEGEM_SHOES,
+	IG_S_TRUEGEM_ARMOR,
+	IG_S_PERFECTSIZE_WEAPON,
+	IG_S_PERFECTSIZE_ARMOR,
+	IG_S_M_MAMMOTH_EARRING,
+	IG_S_M_MAMMOTH_PENDANT,
+	IG_S_M_MAMMOTH_ARMOR,
+	IG_S_M_MAMMOTH_SHOES,
+	IG_S_SPELLCASTER_EARRING,
+	IG_S_SPELLCASTER_PENDANT,
+	IG_S_SPELLCASTER_ARMOR,
+	IG_S_SPELLCASTER_SHOES,
+	IG_S_ABSORB_WEAPON,
+	IG_S_ABSORB_SHIELD,
 
 	IG_MAX,
 };
@@ -1416,6 +1446,36 @@ public:
 };
 
 extern ItemReformDatabase item_reform_db;
+
+struct s_item_package_item{
+	t_itemid item_id;
+	uint16 amount;
+	uint16 rentalhours;
+	uint16 refine;
+	std::shared_ptr<s_random_opt_group> randomOptionGroup;
+};
+
+struct s_item_package_group{
+	uint32 groupIndex;
+	std::unordered_map<uint32, std::shared_ptr<s_item_package_item>> items;
+};
+
+struct s_item_package{
+	t_itemid item_id;
+	std::unordered_map<uint32, std::shared_ptr<s_item_package_group>> groups;
+};
+
+class ItemPackageDatabase : public TypesafeYamlDatabase<t_itemid, s_item_package>{
+public:
+	ItemPackageDatabase() : TypesafeYamlDatabase( "ITEM_PACKAGE_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode( const ryml::NodeRef& node );
+};
+
+extern ItemPackageDatabase item_package_db;
 
 uint16 itemdb_searchname_array(std::map<t_itemid, std::shared_ptr<item_data>> &data, uint16 size, const char *str);
 struct item_data* itemdb_search(t_itemid nameid);

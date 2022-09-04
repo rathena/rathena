@@ -51242,6 +51242,14 @@ Body:
     Weight: 10
     Script: |
       item_reform();
+  - Id: 101060
+    AegisName: Select_Example1
+    Name: TestA
+    Type: DelayConsume
+  - Id: 101062
+    AegisName: Select_Example2
+    Name: TestB
+    Type: DelayConsume
   - Id: 101075
     AegisName: SLD_Card_Recipe
     Name: Sealed Boss Card Pick-Up Box    # !todo check english name
@@ -51995,6 +52003,46 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box27);
+  - Id: 101423
+    AegisName: Boost_Armor_Box
+    Name: Boost Armor Box    # !todo check english name
+    Type: DelayConsume
+    EquipLevelMin: 100
+    # TODO: can be sold, but price is unknown
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 101453
+    AegisName: Special_Coin_Pack
+    Name: Special Coin Pack    # !todo check english name
+    Type: DelayConsume
+    EquipLevelMin: 200
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoStorage: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 101454
+    AegisName: Metal_W_Box
+    Name: Metal Weapon Box    # !todo check english name
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 101455
     AegisName: E_Auto_Up
     Name: Automatic (bound) upgrade package    # !todo check english name
@@ -52010,6 +52058,58 @@ Body:
       NoAuction: true
     Script: |
       laphine_upgrade();
+  - Id: 101456
+    AegisName: Memento_Box
+    Name: Souvenir Box    # !todo check english name
+    Type: DelayConsume
+    # TODO: can be sold, but price is unknown
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 101457
+    AegisName: P_Memento_Box
+    Name: Premium Souvenir Box    # !todo check english name
+    Type: DelayConsume
+    # TODO: can be sold, but price is unknown
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 101458
+    AegisName: Booster_Hat_Box
+    Name: Booster Costume Helmet Box    # !todo check english name
+    Type: DelayConsume
+    # TODO: can be sold, but price is unknown
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 101459
+    AegisName: Booster_Back_Box
+    Name: Booster Costume Backpack Box    # !todo check english name
+    Type: DelayConsume
+    # TODO: can be sold, but price is unknown
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 101463
     AegisName: HD_Elunium_10Box_MSP
     Name: (Limited) HD Elunium 10 Box
@@ -52040,6 +52140,17 @@ Body:
     Script: |
       getitem 6240,10;
       getitembound 23919,11,Bound_Account;
+  - Id: 101470
+    AegisName: aegis_101470
+    Name: Stats Soul Potion Selection Box    # !todo check english name
+    Type: DelayConsume
+    # TODO: can be sold, but price is unknown
+  - Id: 101471
+    AegisName: aegis_101471
+    Name: Alchemist Selection Box    # !todo check english name
+    Type: DelayConsume
+    Buy: 20
+    Weight: 10
   - Id: 101482
     AegisName: Freedom_Stick_Cube
     Name: Freedom Stick Remodeling Cube
@@ -52079,6 +52190,156 @@ Body:
     Script: |
       sc_start SC_FOOD_INT_CASH,1800000,15;
       sc_start SC_MATKPOTION,600000,rand(11,111);
+  - Id: 101542
+    AegisName: aegis_101542
+    Name: Full Penetration Shadow Selection Box    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+  - Id: 101543
+    AegisName: aegis_101543
+    Name: Full Penetration Shadow Earring Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_FULLPENE_EARRING,true);
+  - Id: 101544
+    AegisName: aegis_101544
+    Name: Full Penetration Shadow Pendant Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_FULLPENE_PENDANT,true);
+  - Id: 101545
+    AegisName: aegis_101545
+    Name: Full Penetration Shadow Armor Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_FULLPENE_ARMOR,true);
+  - Id: 101546
+    AegisName: aegis_101546
+    Name: Full Penetration Shadow Shoes Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_FULLPENE_SHOES,true);
+  - Id: 101547
+    AegisName: aegis_101547
+    Name: Full Tempest Shadow Selection Box    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+  - Id: 101548
+    AegisName: aegis_101548
+    Name: Full Penetration Shadow Earring Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_FULLTEMP_EARRING,true);
+  - Id: 101549
+    AegisName: aegis_101549
+    Name: Full Penetration Shadow Pendant Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_FULLTEMP_PENDANT,true);
+  - Id: 101550
+    AegisName: aegis_101550
+    Name: Full Penetration Shadow Armor Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_FULLTEMP_ARMOR,true);
+  - Id: 101551
+    AegisName: aegis_101551
+    Name: Full Penetration Shadow Shoes Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_FULLTEMP_SHOES,true);
+  - Id: 101552
+    AegisName: aegis_101552
+    Name: Durable Shadow Selection Box    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+  - Id: 101553
+    AegisName: aegis_101553
+    Name: Durable Weapon Shadow Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_DURABLE_WEAPON,true);
+  - Id: 101554
+    AegisName: aegis_101554
+    Name: Durable Shield Shadow Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_DURABLE_SHIELD,true);
+  - Id: 101555
+    AegisName: aegis_101555
+    Name: Clever Shadow Selection Box    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+  - Id: 101556
+    AegisName: aegis_101556
+    Name: Clever Weapon Shadow Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_CLEVER_WEAPON,true);
+  - Id: 101557
+    AegisName: aegis_101557
+    Name: Clever Shield Shadow Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_CLEVER_SHIELD,true);
+  - Id: 101563
+    AegisName: aegis_101563
+    Name: Helmet Selection Box for OS Weapons    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    # TODO: can be sold, but price is unknown
   - Id: 101564
     AegisName: AllMighty_Up
     Name: Almighty Shadow Spellbook
@@ -52088,6 +52349,12 @@ Body:
       BuyingStore: true
     Script: |
       laphine_upgrade();
+  - Id: 101565
+    AegisName: aegis_101565
+    Name: Shadow Spellbook Selection Box    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    # TODO: can be sold, but price is unknown
   - Id: 101639
     AegisName: D_Gw_Extractor
     Name: Dim Glacier Extractor    # !todo check english name
@@ -52103,6 +52370,104 @@ Body:
       NoAuction: true
     Script: |
       laphine_synthesis();
+  - Id: 101654
+    AegisName: aegis_101654
+    Name: Almighty Shadow Selection Box    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+  - Id: 101655
+    AegisName: aegis_101655
+    Name: Almighty Shadow Earring Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_ALLMIGHTY_EARRING,true);
+  - Id: 101656
+    AegisName: aegis_101656
+    Name: Almighty Shadow Pendant Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_ALLMIGHTY_PENDANT,true);
+  - Id: 101657
+    AegisName: aegis_101657
+    Name: True Gemstone Shadow Selection Box    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+  - Id: 101658
+    AegisName: aegis_101658
+    Name: True Gemstone Shadow Earring Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_TRUEGEM_EARRING,true);
+  - Id: 101659
+    AegisName: aegis_101659
+    Name: True Gemstone Shadow Pendant Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_TRUEGEM_PENDANT,true);
+  - Id: 101660
+    AegisName: aegis_101660
+    Name: True Gemstone Shadow Shoes Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_TRUEGEM_SHOES,true);
+  - Id: 101661
+    AegisName: aegis_101661
+    Name: True Gemstone Shadow Armor Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_TRUEGEM_ARMOR,true);
+  - Id: 101662
+    AegisName: aegis_101662
+    Name: Perfect Size Shadow Selection Box    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+  - Id: 101663
+    AegisName: aegis_101663
+    Name: Perfect Size Shadow Weapon Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_PERFECTSIZE_WEAPON,true);
+  - Id: 101664
+    AegisName: aegis_101664
+    Name: Perfect Size Shadow Armor Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_PERFECTSIZE_ARMOR,true);
   - Id: 101665
     AegisName: EXPShadow_Mix2
     Name: Experience Shadow Pickbox (Weapon)    # !todo check english name
@@ -52112,6 +52477,124 @@ Body:
       BuyingStore: true
     Script: |
       laphine_synthesis();
+  - Id: 101717
+    AegisName: aegis_101717
+    Name: Maximum Mammoth Shadow Earring Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_M_MAMMOTH_EARRING,true);
+  - Id: 101718
+    AegisName: aegis_101718
+    Name: Maximum Mammoth Shadow Pendant Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_M_MAMMOTH_PENDANT,true);
+  - Id: 101719
+    AegisName: aegis_101719
+    Name: Maximum Mammoth Shadow Armor Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_M_MAMMOTH_ARMOR,true);
+  - Id: 101720
+    AegisName: aegis_101720
+    Name: Maximum Mammoth Shadow Shoes Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_M_MAMMOTH_SHOES,true);
+  - Id: 101721
+    AegisName: aegis_101721
+    Name: Spell Caster Shadow Earring Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_SPELLCASTER_EARRING,true);
+  - Id: 101722
+    AegisName: aegis_101722
+    Name: Spell Caster Shadow Pendant Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_SPELLCASTER_PENDANT,true);
+  - Id: 101723
+    AegisName: aegis_101723
+    Name: Spell Caster Shadow Armor Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_SPELLCASTER_ARMOR,true);
+  - Id: 101724
+    AegisName: aegis_101724
+    Name: Spell Caster Shadow Shoes Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_SPELLCASTER_SHOES,true);
+  - Id: 101725
+    AegisName: aegis_101725
+    Name: Absorb Shadow Weapon Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_ABSORB_WEAPON,true);
+  - Id: 101726
+    AegisName: aegis_101726
+    Name: Absorb Shadow Shield Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_S_ABSORB_SHIELD,true);
+  - Id: 101727
+    AegisName: aegis_101727
+    Name: Maximum Mammoth Shadow Selection Box    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+  - Id: 101728
+    AegisName: aegis_101728
+    Name: Spell Caster Shadow Selection Box    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    # TODO: can be sold, but price is unknown
+  - Id: 101729
+    AegisName: aegis_101729
+    Name: Absorb Shadow Selection Box    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    # TODO: can be sold, but price is unknown
   - Id: 200055
     AegisName: C_Acid_B_50Box
     Name: Acid Bomb 50 Box
