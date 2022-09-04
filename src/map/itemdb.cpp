@@ -2075,8 +2075,8 @@ uint64 ItemEnchantDatabase::parseBodyNode( const ryml::NodeRef& node ){
 		}
 
 		if( refine > MAX_REFINE ){
-			this->invalidWarning( node["MinimumRefine"], "Minimum refine %hu exceeds MAX_REFINE...\n", refine );
-			return 0;
+			this->invalidWarning( node["MinimumRefine"], "Minimum refine %hu exceeds MAX_REFINE. Capping...\n", refine );
+			refine = MAX_REFINE;
 		}
 
 		enchant->minimumRefine = refine;
@@ -2094,8 +2094,8 @@ uint64 ItemEnchantDatabase::parseBodyNode( const ryml::NodeRef& node ){
 		}
 
 		if( enchantgrade > MAX_ENCHANTGRADE ){
-			this->invalidWarning( node["MinimumEnchantgrade"], "Minimum enchantgrade %hu exceeds MAX_ENCHANTGRADE...\n", enchantgrade );
-			return 0;
+			this->invalidWarning( node["MinimumEnchantgrade"], "Minimum enchantgrade %hu exceeds MAX_ENCHANTGRADE. Capping...\n", enchantgrade );
+			enchantgrade = MAX_ENCHANTGRADE;
 		}
 
 		enchant->minimumEnchantgrade = enchantgrade;
@@ -2144,8 +2144,8 @@ uint64 ItemEnchantDatabase::parseBodyNode( const ryml::NodeRef& node ){
 			}
 
 			if( zeny > MAX_ZENY ){
-				this->invalidWarning( resetNode["Price"], "Price %u exceeds MAX_ZENY...\n", zeny );
-				return 0;
+				this->invalidWarning( resetNode["Price"], "Price %u exceeds MAX_ZENY. Capping...\n", zeny );
+				zeny = MAX_ZENY;
 			}
 
 			enchant->reset.zeny = zeny;
@@ -2167,7 +2167,7 @@ uint64 ItemEnchantDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	if( this->nodeExists( node, "Order" ) ){
 		enchant->order.clear();
 
-		for( const auto it : node["Order"] ){
+		for( const auto& it : node["Order"] ){
 			uint16 slot;
 
 			if( !this->asUInt16( it, "Slot", slot ) ){
@@ -2216,8 +2216,8 @@ uint64 ItemEnchantDatabase::parseBodyNode( const ryml::NodeRef& node ){
 				}
 
 				if( zeny > MAX_ZENY ){
-					this->invalidWarning( slotNode["Price"], "Price %u exceeds MAX_ZENY...\n", zeny );
-					return 0;
+					this->invalidWarning( slotNode["Price"], "Price %u exceeds MAX_ZENY. Capping...\n", zeny );
+					zeny = MAX_ZENY;
 				}
 
 				enchant_slot->normal.zeny = zeny;
@@ -2254,7 +2254,7 @@ uint64 ItemEnchantDatabase::parseBodyNode( const ryml::NodeRef& node ){
 					}
 
 					if( enchantgrade > MAX_ENCHANTGRADE ){
-						this->invalidWarning( enchantgradeNode["Enchantgrade"], "Enchant grade %hu exceeds MAX_ENCHANTGRADE...\n", enchantgrade );
+						this->invalidWarning( enchantgradeNode["Enchantgrade"], "Enchant grade %hu exceeds MAX_ENCHANTGRADE.\n", enchantgrade );
 						return 0;
 					}
 
@@ -2369,8 +2369,8 @@ uint64 ItemEnchantDatabase::parseBodyNode( const ryml::NodeRef& node ){
 						}
 
 						if( zeny > MAX_ZENY ){
-							this->invalidWarning( enchantNode["Price"], "Price %u exceeds MAX_ZENY...\n", zeny );
-							return 0;
+							this->invalidWarning( enchantNode["Price"], "Price %u exceeds MAX_ZENY. Capping...\n", zeny );
+							zeny = MAX_ZENY;
 						}
 
 						enchant->zeny = zeny;
@@ -2442,8 +2442,8 @@ uint64 ItemEnchantDatabase::parseBodyNode( const ryml::NodeRef& node ){
 						}
 
 						if( zeny > MAX_ZENY ){
-							this->invalidWarning( upgradeNode["Price"], "Price %u exceeds MAX_ZENY...\n", zeny );
-							return 0;
+							this->invalidWarning( upgradeNode["Price"], "Price %u exceeds MAX_ZENY. Capping...\n", zeny );
+							zeny = MAX_ZENY;
 						}
 
 						enchant_upgrade->zeny = zeny;

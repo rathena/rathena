@@ -24062,25 +24062,28 @@ void clif_enchantwindow_open( struct map_session_data& sd, uint64 clientLuaIndex
 
 	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 
-	sd.state.item_enchant_index = clientLuaIndex;
+	// Hardcoded clientside check, that will trigger a message and prevent opening the UI
+	if( sd.weight < ( ( sd.max_weight * 70 ) / 100 ) ){
+		sd.state.item_enchant_index = clientLuaIndex;
+	}
 #endif
 }
 
-void clif_enchantwindow_result( struct map_session_data* sd, bool success, t_itemid enchant = 0 ){
+void clif_enchantwindow_result( struct map_session_data& sd, bool success, t_itemid enchant = 0 ){
 #if PACKETVER_RE_NUM >= 20211103
 	struct PACKET_ZC_RESPONSE_ENCHANT p = {};
 
 	p.packetType = HEADER_ZC_RESPONSE_ENCHANT;
 	if( success ){
-		p.messageId = 3857;
+		p.messageId = C_ENCHANT_SUCCESS;
 	}else{
-		p.messageId = 3858;
+		p.messageId = C_ENCHANT_FAILURE;
 	}
 	p.enchantItemId = enchant;
 
-	clif_send( &p, sizeof( p ), &sd->bl, SELF );
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 
-	sd->state.item_enchant_index = 0;
+	sd.state.item_enchant_index = 0;
 #endif
 }
 
@@ -24175,8 +24178,8 @@ void clif_parse_enchantwindow_general( int fd, struct map_session_data* sd ){
 	std::shared_ptr<s_item_enchant_normal> enchants_for_enchantgrade = util::umap_find( enchant_slot->normal.enchants, (uint16)selected_item.enchantgrade );
 
 	if( enchants_for_enchantgrade == nullptr ){
-		clif_messagecolor( &sd->bl, color_table[COLOR_RED], "Enchanting is not possible for your item's enchantgrade.", false, SELF );
-		clif_enchantwindow_result( sd, false );
+		clif_messagecolor( &sd->bl, color_table[COLOR_RED], msg_txt( sd, 829 ), false, SELF); // Enchanting is not possible for your item's enchantgrade.
+		clif_enchantwindow_result( *sd, false );
 		return;
 	}
 
@@ -24217,7 +24220,7 @@ void clif_parse_enchantwindow_general( int fd, struct map_session_data* sd ){
 	}
 
 	if( chance < 100000 && rnd_value( 0, 100000 ) > chance ){
-		clif_enchantwindow_result( sd, false );
+		clif_enchantwindow_result( *sd, false );
 		return;
 	}
 
@@ -24245,7 +24248,7 @@ void clif_parse_enchantwindow_general( int fd, struct map_session_data* sd ){
 	// Log retrieving the item again -> with the new enchant
 	log_pick_pc( sd, LOG_TYPE_ENCHANT, 1, &selected_item );
 
-	clif_enchantwindow_result( sd, true, selected_item.card[slot] );
+	clif_enchantwindow_result( *sd, true, selected_item.card[slot] );
 #endif
 }
 
@@ -24345,7 +24348,7 @@ void clif_parse_enchantwindow_perfect( int fd, struct map_session_data* sd ){
 	// Log retrieving the item again -> with the new enchant
 	log_pick_pc( sd, LOG_TYPE_ENCHANT, 1, &selected_item );
 
-	clif_enchantwindow_result( sd, true, selected_item.card[slot] );
+	clif_enchantwindow_result( *sd, true, selected_item.card[slot] );
 #endif
 }
 
@@ -24442,7 +24445,7 @@ void clif_parse_enchantwindow_upgrade( int fd, struct map_session_data* sd ){
 	// Log retrieving the item again -> with the new enchant
 	log_pick_pc( sd, LOG_TYPE_ENCHANT, 1, &selected_item );
 
-	clif_enchantwindow_result( sd, true, selected_item.card[slot] );
+	clif_enchantwindow_result( *sd, true, selected_item.card[slot] );
 #endif
 }
 
@@ -24546,7 +24549,7 @@ void clif_parse_enchantwindow_reset( int fd, struct map_session_data* sd ){
 	}
 
 	if( chance < 100000 && rnd_value( 0, 100000 ) > chance ){
-		clif_enchantwindow_result( sd, false );
+		clif_enchantwindow_result( *sd, false );
 		return;
 	}
 
@@ -24560,7 +24563,7 @@ void clif_parse_enchantwindow_reset( int fd, struct map_session_data* sd ){
 	// Log retrieving the item again -> with the new enchant
 	log_pick_pc( sd, LOG_TYPE_ENCHANT, 1, &selected_item );
 
-	clif_enchantwindow_result( sd, true );
+	clif_enchantwindow_result( *sd, true );
 #endif
 }
 

@@ -34,9 +34,10 @@
 #     Materials:               Items required for resetting enchants. (Default: null)
 #       - Material             Item name of the required item.
 #         Amount               Amount of the required item. (Default: 1)
-#   Order:                     Order in which the slots can be enchanted. (Default: null)
+#   Order:                     Order in which the slots can be enchanted.
+#                              Overwriting via import will clear the currently defined order.
 #     - Slot                   Number of the slot (0-3).
-#   Slots:                     Enchant options. (Default: null)
+#   Slots:                     Enchant options.
 #     - Slot                   Number of the slot (0-3).
 #       Price                  Price required for the normal enchant process. (Default: 0)
 #       Materials:             Items required for the normal enchant process. (Default: null)
