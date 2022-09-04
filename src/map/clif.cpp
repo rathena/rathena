@@ -24183,7 +24183,7 @@ void clif_parse_enchantwindow_general( int fd, struct map_session_data* sd ){
 	std::shared_ptr<s_item_enchant_normal> enchants_for_enchantgrade = util::umap_find( enchant_slot->normal.enchants, (uint16)selected_item.enchantgrade );
 
 	if( enchants_for_enchantgrade == nullptr ){
-		clif_messagecolor( &sd->bl, color_table[COLOR_RED], msg_txt( sd, 829 ), false, SELF); // Enchanting is not possible for your item's enchantgrade.
+		clif_messagecolor( &sd->bl, color_table[COLOR_RED], msg_txt( sd, 829 ), false, SELF); // Enchanting is not possible for your item's enchant grade.
 		clif_enchantwindow_result( *sd, false );
 		return;
 	}
