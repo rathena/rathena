@@ -1417,6 +1417,76 @@ public:
 
 extern ItemReformDatabase item_reform_db;
 
+struct s_item_enchant_normal_sub{
+	t_itemid item_id;
+	uint32 chance;
+};
+
+struct s_item_enchant_normal{
+	uint16 enchantgrade;
+	std::unordered_map<t_itemid, std::shared_ptr<s_item_enchant_normal_sub>> enchants;
+};
+
+struct s_item_enchant_perfect{
+	t_itemid item_id;
+	uint32 zeny;
+	std::unordered_map<t_itemid, uint16> materials;
+};
+
+struct s_item_enchant_upgrade{
+	t_itemid enchant_item_id;
+	t_itemid upgrade_item_id;
+	uint32 zeny;
+	std::unordered_map<t_itemid, uint16> materials;
+};
+
+struct s_item_enchant_slot{
+	uint16 slot;
+	struct{
+		uint32 zeny;
+		std::unordered_map<t_itemid, uint16> materials;
+		uint32 chance;
+		std::unordered_map<uint16, uint32> enchantgradeChanceIncrease;
+		std::unordered_map<uint16, std::shared_ptr<s_item_enchant_normal>> enchants;
+	} normal;
+	struct{
+		std::unordered_map<t_itemid, std::shared_ptr<s_item_enchant_perfect>> enchants;
+	} perfect;
+	struct{
+		std::unordered_map<t_itemid, std::shared_ptr<s_item_enchant_upgrade>> enchants;
+	} upgrade;
+};
+
+struct s_item_enchant{
+	uint64 id;
+	std::vector<t_itemid> target_item_ids;
+	uint16 minimumRefine;
+	uint16 minimumEnchantgrade;
+	bool allowRandomOptions;
+	struct {
+		uint32 zeny;
+		std::unordered_map<t_itemid, uint16> materials;
+		uint32 chance;
+	} reset;
+	std::vector<uint16> order;
+	std::unordered_map<uint16, std::shared_ptr<s_item_enchant_slot>> slots;
+};
+
+class ItemEnchantDatabase : public TypesafeYamlDatabase<uint64, s_item_enchant>{
+private:
+	bool parseMaterials( const ryml::NodeRef& node, std::unordered_map<t_itemid, uint16>& materials );
+
+public:
+	ItemEnchantDatabase() : TypesafeYamlDatabase( "ITEM_ENCHANT_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode( const ryml::NodeRef& node );
+};
+
+extern ItemEnchantDatabase item_enchant_db;
+
 uint16 itemdb_searchname_array(std::map<t_itemid, std::shared_ptr<item_data>> &data, uint16 size, const char *str);
 struct item_data* itemdb_search(t_itemid nameid);
 std::shared_ptr<item_data> itemdb_exists(t_itemid nameid);

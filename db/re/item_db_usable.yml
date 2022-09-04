@@ -2217,6 +2217,20 @@ Body:
     Weight: 10
     Script: |
       rentitem 22998,604800;
+  - Id: 9585
+    AegisName: Small_Spray_Of_Flowers
+    Name: Small Flower Branches
+    Type: Usable
+    Weight: 50
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* TODO: sc_start MHP +3% and MSP +3% for 10 minutes */
   - Id: 9785
     AegisName: Frozen_Box_IL
     Name: Frozen Refine Box
