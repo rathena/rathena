@@ -2254,7 +2254,7 @@ uint64 ItemEnchantDatabase::parseBodyNode( const ryml::NodeRef& node ){
 					}
 
 					if( enchantgrade > MAX_ENCHANTGRADE ){
-						this->invalidWarning( enchantgradeNode["Enchantgrade"], "Enchantgrade %hu exceeds MAX_ENCHANTGRADE...\n", enchantgrade );
+						this->invalidWarning( enchantgradeNode["Enchantgrade"], "Enchant grade %hu exceeds MAX_ENCHANTGRADE...\n", enchantgrade );
 						return 0;
 					}
 
@@ -2277,7 +2277,7 @@ uint64 ItemEnchantDatabase::parseBodyNode( const ryml::NodeRef& node ){
 					}
 
 					if( enchantgrade > MAX_ENCHANTGRADE ){
-						this->invalidWarning( enchantNode["Enchantgrade"], "Enchantgrade %hu exceeds MAX_ENCHANTGRADE...\n", enchantgrade );
+						this->invalidWarning( enchantNode["Enchantgrade"], "Enchant grade %hu exceeds MAX_ENCHANTGRADE...\n", enchantgrade );
 						return 0;
 					}
 

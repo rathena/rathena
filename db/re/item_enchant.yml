@@ -22,48 +22,48 @@
 # Item Enchant Settings
 #
 ###########################################################################
-# - Id                         Clientside LUA index
-#   TargetItems:               List of possible target item(s)
-#     <item name>              Item name of the possible target item (true/false)
-#   MinimumRefine              Minimum refine of the target item (default: 0)
-#   MinimumEnchantgrade        Minimum enchantgrade of the target item (default: 0)
-#   AllowRandomOptions         Are random options in the target item allowed? (Default: true)
-#   Reset:                     Reset options (Default: disabled)
-#     Chance                   Chance of successful reset (Default: 0)
-#     Price                    Price for trying to reset the enchants (Default: 0)
-#     Materials:               Items required for trying to reset the enchants (Default: none)
-#       - Material             Item name of the required item
-#         Amount               Amount of the required item (Default: 1)
-#   Order:                     Order in which the slots can be enchanted (Default: none)
-#     - Slot                   Number of the slot (0-3)
-#   Slots:                     Enchant options (Default: none)
-#     - Slot                   Number of the slot (0-3)
-#       Price                  Price required for the normal enchant process (Default: 0)
-#       Materials:             Items required for the normal enchant process (Default: none)
-#         - Material           Item name of the required item
-#           Amount             Amount of the required item (Default: 1)
-#       Chance                 Base chance for the normal enchant process (Default: 100000)
-#       EnchantgradeBonus:     Additional bonus chance increase per enchantgrade (Default: none)
-#         - Enchantgrade       Enchantgrade required for the bonus
-#           Chance             Additional chance that is added to the base chance
-#       Enchants:              Available enchants for the normal enchant process per enchantgrade (Default: none)
-#         - Enchantgrade       Enchantgrade of the item to be enchanted
-#           Items:             Available enchants for the normal enchant process on the given enchantgrade (Default: none)
-#             - Item           Item name of the available enchant item
-#               Chance         Chance to get this specific enchant item
-#       PerfectEnchants:       Available perfect enchants (100% chance + selectable) for this slot (Default: none)
-#         - Item               Item name of the available enchant item
-#           Price              Price required for this perfect enchant (Default: 0)
-#           Materials:         Items required for this perfect enchant (Default: none)
-#             - Material       Item name of the required item
-#               Amount         Amount of the required item (Default: 1)
-#       Upgrades:              Available enchant upgrades for this slot (Default: none)
+# - Id                         Client side LUA index.
+#   TargetItems:               List of possible target items.
+#     <item name>              Item name of possible target item.
+#   MinimumRefine              Minimum refine of the target item. (Default: 0)
+#   MinimumEnchantgrade        Minimum enchant grade of the target item. (Default: 0)
+#   AllowRandomOptions         Enable random options in the target item. (Default: true)
+#   Reset:                     Reset options. (Default: null)
+#     Chance                   Chance of successful reset. (Default: 0)
+#     Price                    Price for resetting enchants. (Default: 0)
+#     Materials:               Items required for resetting enchants. (Default: null)
+#       - Material             Item name of the required item.
+#         Amount               Amount of the required item. (Default: 1)
+#   Order:                     Order in which the slots can be enchanted. (Default: null)
+#     - Slot                   Number of the slot (0-3).
+#   Slots:                     Enchant options. (Default: null)
+#     - Slot                   Number of the slot (0-3).
+#       Price                  Price required for the normal enchant process. (Default: 0)
+#       Materials:             Items required for the normal enchant process. (Default: null)
+#         - Material           Item name of the required item.
+#           Amount             Amount of the required item. (Default: 1)
+#       Chance                 Base chance for the normal enchant process. (Default: 100000)
+#       EnchantgradeBonus:     Additional bonus chance increase per enchant grade. (Default: null)
+#         - Enchantgrade       Enchant grade required for the bonus.
+#           Chance             Additional chance that is added to the base chance.
+#       Enchants:              Available enchants for the normal enchant process per enchant grade. (Default: null)
+#         - Enchantgrade       Enchant grade of the item to be enchanted.
+#           Items:             Available enchants for the normal enchant process on the given enchant grade. (Default: null)
+#             - Item           Item name of the available enchant item.
+#               Chance         Chance to get this specific enchant item.
+#       PerfectEnchants:       Available perfect enchants (100% chance + selectable) for this slot. (Default: null)
+#         - Item               Item name of the available enchant item.
+#           Price              Price required for this perfect enchant. (Default: 0)
+#           Materials:         Items required for this perfect enchant. (Default: null)
+#             - Material       Item name of the required item.
+#               Amount         Amount of the required item. (Default: 1)
+#       Upgrades:              Available enchant upgrades for this slot. (Default: null)
 #         - Enchant            Item name of the enchant item available for upgrade.
 #           Upgrade            Item name of the enchant it can be upgrade to.
-#           Price              Price required for this enchant upgrade (Default: 0)
-#           Materials:         Items required for this enchant upgrade (Default: none)
-#             - Material       Item name of the required item
-#               Amount         Amount of the required item (Default: 1)
+#           Price              Price required for this enchant upgrade. (Default: 0)
+#           Materials:         Items required for this enchant upgrade (Default: null)
+#             - Material       Item name of the required item.
+#               Amount         Amount of the required item. (Default: 1)
 ###########################################################################
 
 Header:

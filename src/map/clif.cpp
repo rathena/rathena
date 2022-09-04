@@ -24139,7 +24139,6 @@ void clif_parse_enchantwindow_general( int fd, struct map_session_data* sd ){
 	}
 
 	struct item& selected_item = sd->inventory.u.items_inventory[index];
-
 	std::shared_ptr<s_item_enchant> enchant = item_enchant_db.find( p->clientLuaIndex );
 
 	if( enchant == nullptr ){
@@ -24269,7 +24268,6 @@ void clif_parse_enchantwindow_perfect( int fd, struct map_session_data* sd ){
 	}
 
 	struct item& selected_item = sd->inventory.u.items_inventory[index];
-
 	std::shared_ptr<s_item_enchant> enchant = item_enchant_db.find( p->clientLuaIndex );
 
 	if( enchant == nullptr ){
@@ -24370,7 +24368,6 @@ void clif_parse_enchantwindow_upgrade( int fd, struct map_session_data* sd ){
 	}
 
 	struct item& selected_item = sd->inventory.u.items_inventory[index];
-
 	std::shared_ptr<s_item_enchant> enchant = item_enchant_db.find( p->clientLuaIndex );
 
 	if( enchant == nullptr ){
