@@ -1136,11 +1136,8 @@ struct clan{
 #error MAX_PARTY is too small, you need at least 2 players for a party
 #endif
 
-#ifndef VIP_ENABLE
-	#define MIN_STORAGE MAX_STORAGE // If the VIP system is disabled the min = max.
-	#define MIN_CHARS MAX_CHARS // Default number of characters per account.
-	#define MAX_CHAR_BILLING 0
-	#define MAX_CHAR_VIP 0
+#ifndef MIN_CHARS
+	#define MIN_CHARS ( MAX_CHARS - MAX_CHAR_VIP - MAX_CHAR_BILLING ) // Default number of characters per account.
 #endif
 
 #if (MIN_CHARS + MAX_CHAR_VIP + MAX_CHAR_BILLING) > MAX_CHARS

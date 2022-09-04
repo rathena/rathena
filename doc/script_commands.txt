@@ -6532,12 +6532,14 @@ Examples:
 ---------------------------------------
 
 *monster     "<map name>",<x>,<y>,"<name to show>",<mob id>,<amount>{,"<event label>",<size>,<ai>};
+*monster     "<map name>",<x>,<y>,"<name to show>","<mob name>",<amount>{,"<event label>",<size>,<ai>};
 *areamonster "<map name>",<x1>,<y1>,<x2>,<y2>,"<name to show>",<mob id>,<amount>{,"<event label>",<size>,<ai>};
+*areamonster "<map name>",<x1>,<y1>,<x2>,<y2>,"<name to show>","<mob name>",<amount>{,"<event label>",<size>,<ai>};
 
-This command will spawn a monster on the specified coordinates on the specified
-map. If the script is invoked by a character, a special map name, "this", will
-be recognized to mean the name of the map the invoking character is located at.
-This command works fine in the item scripts.
+This command will spawn <amount> monsters with <mob id> or <mob name> on the specified
+coordinates on the specified map. If the script is invoked by a character, a special
+<map name>, "this", will be recognized to mean the name of the map the invoking character
+is located at. This command works fine in item scripts.
 
 The same command arguments mean the same things as described above in the
 beginning of this document when talking about permanent monster spawns. Monsters
@@ -6616,11 +6618,13 @@ For more good examples see just about any official 2-1 or 2-2 job quest script.
 
 *areamobuseskill "<map name>",<x>,<y>,<range>,<mob id>,<skill id>,<skill level>,<cast time>,<cancelable>,<emotion>,<target type>;
 *areamobuseskill "<map name>",<x>,<y>,<range>,<mob id>,"<skill name>",<skill level>,<cast time>,<cancelable>,<emotion>,<target type>;
+*areamobuseskill "<map name>",<x>,<y>,<range>,"<mob name>",<skill id>,<skill level>,<cast time>,<cancelable>,<emotion>,<target type>;
+*areamobuseskill "<map name>",<x>,<y>,<range>,"<mob name>","<skill name>",<skill level>,<cast time>,<cancelable>,<emotion>,<target type>;
 
-This command will make all monsters of the specified mob ID in the specified
-area use the specified skill. Map name, x, and y define the center of the area,
+This command will make all monsters of the specified <mob id> or <mob name> in the specified
+area use the specified skill. <map name>, <x>, and <y> define the center of the area,
 which extending <range> cells in each direction (ex: a range of 3 would create
-a 7x7 square). The skill can be specified by skill ID or name. <cast time> is in
+a 7x7 square). The skill can be specified by <skill id> or <skill name>. <cast time> is in
 milliseconds (1000 = 1 second), and the rest should be self-explanatory.
 
 <target type> can be:
