@@ -26393,6 +26393,30 @@ BUILDIN_FUNC(item_reform){
 #endif
 }
 
+BUILDIN_FUNC(item_enchant){
+#if PACKETVER_RE_NUM < 20211103
+	ShowError( "buildin_item_enchant: This command requires packet version 2021-11-03 or newer.\n" );
+	return SCRIPT_CMD_FAILURE;
+#else
+	struct map_session_data* sd;
+
+	if( !script_charid2sd( 3, sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	uint64 clientLuaIndex = script_getnum64( st, 2 );
+
+	if( !item_enchant_db.exists( clientLuaIndex ) ){
+		ShowError( "buildin_item_enchant: %" PRIu64 " is not a valid item enchant index.\n", clientLuaIndex );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_enchantwindow_open( *sd, clientLuaIndex );
+
+	return SCRIPT_CMD_SUCCESS;
+#endif
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -27130,6 +27154,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(set_reputation_points, "ii?"),
 	BUILDIN_DEF(get_reputation_points, "i?"),
 	BUILDIN_DEF(item_reform, "??"),
+	BUILDIN_DEF(item_enchant, "i?"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

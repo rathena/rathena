@@ -8262,6 +8262,16 @@ If run from within an item script <item ID> or <item name> is optional.
 This feature requires packet version 2021-11-03 or newer.
 
 ---------------------------------------
+
+*item_enchant(<client side LUA index>{,<char ID>});
+
+Opens the enchant UI for the attached character or the player given by the <char ID> parameter.
+If the player exceeds 70% weight the client will not open the enchant UI and will trigger an
+error message instead.
+
+This command requires packet version 2021-11-03 or newer.
+
+---------------------------------------
 \\
 6,1.- Unit-related commands
 \\
