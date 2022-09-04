@@ -2048,7 +2048,12 @@ uint64 ItemPackageDatabase::parseBodyNode( const ryml::NodeRef& node ){
 						this->invalidWarning( itemNode["Amount"], "Amount %hu is too high, capping to MAX_AMOUNT...\n", amount );
 						amount = MAX_AMOUNT;
 					}else if( amount == 0 ){
-						
+						if( !package_item_exists ){
+							this->invalidWarning( itemNode["Amount"], "Trying to remove non existant item \"%s\".\n", name.c_str() );
+							return 0;
+						}else{
+							group->items.erase( id->nameid );
+						}
 					}
 
 					package_item->amount = amount;
