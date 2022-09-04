@@ -654,6 +654,7 @@
 	export_constant2("bCastrate",SP_CASTRATE);
 	export_constant2("bMaxHPrate",SP_MAXHPRATE);
 	export_constant2("bMaxSPrate",SP_MAXSPRATE);
+	export_constant2("bMaxAPrate", SP_MAXAPRATE);
 	export_constant2("bUseSPrate",SP_SPRATE);
 	export_constant2("bAddEle",SP_ADDELE);
 	export_constant2("bAddRace",SP_ADDRACE);
@@ -4461,6 +4462,7 @@
 	export_constant(MOB_ELEMENT);
 	export_constant(MOB_MODE);
 	export_constant(MOB_MVPEXP);
+	export_constant(MOB_ID);
 
 	/* petinfo types */
 	export_constant(PETINFO_ID);

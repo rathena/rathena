@@ -196,8 +196,16 @@ public:
 			this->cache[key] = pair.second;
 		}
 
-		// Free the memory that was allocated too much
-		this->cache.shrink_to_fit();
+		for( auto it = this->cache.rbegin(); it != this->cache.rend(); it++ ){
+			if( *it != nullptr ){
+				// Resize to only fit all existing non null entries
+				this->cache.resize( this->cache.rend() - it );
+
+				// Free the memory that was allocated too much
+				this->cache.shrink_to_fit();
+				break;
+			}
+		}
 	}
 };
 

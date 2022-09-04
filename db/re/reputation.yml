@@ -1,0 +1,56 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Reputation Database
+###########################################################################
+#
+# Reputation Settings
+#
+###########################################################################
+# - Id                                  Client side index.
+#   Name                                Name of the reputation type.
+#   Variable                            Name of the variable that will store the reputation. (Default: RepPoints<id>)
+#   Minimum                             Minimum amount of points. (Default: INT64_MIN)
+#   Maximum                             Maximum amount of points. (Default: INT64_MAX)
+###########################################################################
+
+Header:
+  Type: REPUTATION_DB
+  Version: 1
+
+Body:
+  - Id: 1
+    Name: Orc Village
+    Variable: RepPointsOrc
+    Minimum: -3000
+    Maximum: 3000
+  - Id: 2
+    Name: Goblin Village
+    Variable: RepPointsGoblin
+    Minimum: -3000
+    Maximum: 3000
+  - Id: 3
+    Name: Grey Wolf Village
+    Variable: RepPointsWolf
+    Minimum: -5000
+    Maximum: 5000
+  - Id: 4
+    Name: Isgard
+    Variable: RepPointsIsgard
+    Minimum: -3000
+    Maximum: 3000
