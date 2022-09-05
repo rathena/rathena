@@ -49616,6 +49616,30 @@ Body:
     Weight: 250
     Script: |
       getitem "Explosive_Kunai",500;
+  - Id: 100192
+    AegisName: Gemstone_Blue
+    Name: Blue Gemstone Pouch
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Blue_Gemstone",500;
+  - Id: 100193
+    AegisName: Gemstone_YL
+    Name: Yellow Gemstone Pouch
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Yellow_Gemstone",500;
+  - Id: 100194
+    AegisName: Gemstone_Red
+    Name: Red Gemstone Pouch
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Red_Gemstone",500;
   - Id: 100195
     AegisName: aegis_100195
     Name: Full Metal Jacket Cartridge
