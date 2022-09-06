@@ -1200,4 +1200,7 @@ void clif_summon_hp_bar(struct mob_data& md);
 void clif_laphine_synthesis_open( struct map_session_data *sd, std::shared_ptr<s_laphine_synthesis> synthesis );
 void clif_laphine_upgrade_open( struct map_session_data* sd, std::shared_ptr<s_laphine_upgrade> upgrade );
 
+// Enchanting Shadow / Shadow Scar Spirit
+void clif_enchantingshadow_spirit(unit_data &ud);
+
 #endif /* CLIF_HPP */

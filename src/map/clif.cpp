@@ -1581,6 +1581,20 @@ static void clif_spiritcharm_single(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
+ * Enchanting Shadow / Shadow Scar Spirit
+ *------------------------------------------*/
+void clif_enchantingshadow_spirit(unit_data &ud) {
+	PACKET_ZC_TARGET_SPIRITS p = {};
+
+	p.packetType = HEADER_ZC_TARGET_SPIRITS;
+	p.GID = ud.bl->id;
+	p.unknown_val = 0;
+	p.amount = static_cast<uint16>(ud.shadow_scar_timer.size());
+
+	clif_send(&p, sizeof(p), ud.bl, AREA);
+}
+
+/*==========================================
  * Run when player changes map / refreshes
  * Tells its client to display all weather settings being used by this map
  *------------------------------------------*/

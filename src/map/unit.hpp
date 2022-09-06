@@ -19,8 +19,6 @@ enum clr_type : uint8;
 extern const short dirx[DIR_MAX]; ///lookup to know where will move to x according dir
 extern const short diry[DIR_MAX]; ///lookup to know where will move to y according dir
 
-#define MAX_SHADOW_SCAR 100 /// Max Shadow Scars
-
 struct unit_data {
 	struct block_list *bl; ///link to owner object BL_PC|BL_MOB|BL_PET|BL_NPC|BL_HOM|BL_MER|BL_ELEM
 	struct walkpath_data walkpath;
@@ -66,7 +64,6 @@ struct unit_data {
 	char title[NAME_LENGTH];
 	int32 group_id;
 
-	uint16 shadow_scar;
 	std::vector<int> shadow_scar_timer;
 };
 
@@ -178,8 +175,7 @@ int unit_changeviewsize(struct block_list *bl,short size);
 int unit_changetarget(struct block_list *bl,va_list ap);
 
 // Shadow Scar
-void unit_addshadowscar(unit_data &ud, int interval, int max);
-void unit_delshadowscar(unit_data &ud, int count);
+void unit_addshadowscar(unit_data &ud, int interval);
 
 void do_init_unit(void);
 void do_final_unit(void);
