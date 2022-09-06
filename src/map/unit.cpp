@@ -3663,10 +3663,9 @@ static TIMER_FUNC(unit_shadowscar_timer) {
  * @param interval: Duration
  */
 void unit_addshadowscar(unit_data &ud, int interval) {
-	if (ud.shadow_scar_timer.size() > 0 && ud.shadow_scar_timer.size() >= MAX_SHADOW_SCAR) {
-		if (ud.shadow_scar_timer[0] != INVALID_TIMER)
-			delete_timer(ud.shadow_scar_timer[0], unit_shadowscar_timer);
-		util::erase_at(ud.shadow_scar_timer, 0);
+	if (ud.shadow_scar_timer.size() >= MAX_SHADOW_SCAR) {
+		ShowWarning("unit_addshadowscar: Unit %s (%d) has reached the maximum amount of Shadow Scars (%d).\n", status_get_name(ud.bl), ud.bl->id, MAX_SHADOW_SCAR);
+		return;
 	}
 
 	status_change *sc = status_get_sc(ud.bl);
