@@ -14,6 +14,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/socket.hpp"
 #include "../common/timer.hpp"
+#include "../common/utils.hpp"
 
 #include "achievement.hpp"
 #include "battle.hpp"
@@ -36,6 +37,12 @@
 #include "pet.hpp"
 #include "storage.hpp"
 #include "trade.hpp"
+
+using namespace rathena;
+
+#ifndef MAX_SHADOW_SCAR 
+	#define MAX_SHADOW_SCAR 100 /// Max Shadow Scars
+#endif
 
 // Directions values
 // 1 0 7
@@ -3626,6 +3633,60 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 	return 0;
 }
 
+static TIMER_FUNC(unit_shadowscar_timer) {
+	block_list *bl = map_id2bl(id);
+
+	if (bl == nullptr)
+		return 1;
+
+	unit_data *ud = unit_bl2ud(bl);
+
+	if (ud == nullptr)
+		return 1;
+
+	std::vector<int>::iterator it = ud->shadow_scar_timer.begin();
+
+	while (it != ud->shadow_scar_timer.end()) {
+		if (*it == tid) {
+			ud->shadow_scar_timer.erase(it);
+			break;
+		}
+
+		it++;
+	}
+
+	if (ud->shadow_scar_timer.empty())
+		status_change_end(bl, SC_SHADOW_SCAR, INVALID_TIMER);
+
+	return 0;
+}
+
+/**
+ * Adds a Shadow Scar to unit for 'interval' ms.
+ * @param ud: Unit data
+ * @param interval: Duration
+ */
+void unit_addshadowscar(unit_data &ud, int interval) {
+	if (ud.shadow_scar_timer.size() >= MAX_SHADOW_SCAR) {
+		ShowWarning("unit_addshadowscar: Unit %s (%d) has reached the maximum amount of Shadow Scars (%d).\n", status_get_name(ud.bl), ud.bl->id, MAX_SHADOW_SCAR);
+		return;
+	}
+
+	ud.shadow_scar_timer.push_back(add_timer(gettick() + interval, unit_shadowscar_timer, ud.bl->id, 0));
+
+	status_change *sc = status_get_sc(ud.bl);
+
+	if (sc != nullptr) {
+		if (sc->data[SC_SHADOW_SCAR] != nullptr) {
+			sc->data[SC_SHADOW_SCAR]->val1 = static_cast<int>(ud.shadow_scar_timer.size());
+		} else {
+			sc_start(ud.bl, ud.bl, SC_SHADOW_SCAR, 100, 1, INFINITE_TICK);
+		}
+
+		clif_enchantingshadow_spirit(ud);
+	}
+}
+
 /**
  * Initialization function for unit on map start
  * called in map::do_init
@@ -3638,6 +3699,7 @@ void do_init_unit(void){
 	add_timer_func_list(unit_delay_walktobl_timer,"unit_delay_walktobl_timer");
 	add_timer_func_list(unit_teleport_timer,"unit_teleport_timer");
 	add_timer_func_list(unit_step_timer,"unit_step_timer");
+	add_timer_func_list(unit_shadowscar_timer, "unit_shadowscar_timer");
 }
 
 /**

@@ -1553,8 +1553,8 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		}
 		if (sc->data[SC_HOLY_OIL] && (flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
 			damage += damage * 50 / 100;// Need official adjustment. [Rytech]
-		if (sc->data[SC_SHADOW_SCAR])// Need official adjustment for this too.
-			damage += damage * (10 * sc->data[SC_SHADOW_SCAR]->val1) / 100;
+		if (sc->data[SC_SHADOW_SCAR]) // !TODO: Need official adjustment for this too.
+			damage += damage * (3 * sc->data[SC_SHADOW_SCAR]->val1) / 100;
 
 		// Damage reductions
 		// Assumptio increases DEF on RE mode, otherwise gives a reduction on the final damage. [Igniz]

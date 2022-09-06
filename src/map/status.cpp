@@ -12231,9 +12231,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_POTENT_VENOM:
 			val2 = 3 * val1;// Res Pierce Percentage
 			break;
-		case SC_SHADOW_WEAPON:
-			val2 = val1;// Success Chance of Shadow Scar
-			break;
 		case SC_A_MACHINE:
 			val4 = tick / 1000;
 			tick_time = 1000;
