@@ -413,7 +413,7 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 	safestrncpy(acc.last_ip, ip, sizeof(acc.last_ip));
 	acc.unban_time = 0;
 	acc.logincount++;
-	accounts->save(accounts, &acc);
+	accounts->save(accounts, &acc, true);
 
 	if( login_config.use_web_auth_token ){
 		safestrncpy( sd->web_auth_token, acc.web_auth_token, WEB_AUTH_TOKEN_LENGTH );
@@ -646,6 +646,8 @@ bool login_config_read(const char* cfgName, bool normal) {
 			login_config.client_hash_check = config_switch(w2);
 		else if(!strcmpi(w1, "use_web_auth_token"))
 			login_config.use_web_auth_token = config_switch(w2);
+		else if (!strcmpi(w1, "disable_webtoken_delay"))
+			login_config.disable_webtoken_delay = cap_value(atoi(w2), 0, INT_MAX);
 		else if(!strcmpi(w1, "client_hash")) {
 			int group = 0;
 			char md5[33];
@@ -682,11 +684,11 @@ bool login_config_read(const char* cfgName, bool normal) {
 			login_config.usercount_high = atoi(w2);
 		else if(strcmpi(w1, "chars_per_account") == 0) { //maxchars per account [Sirius]
 			login_config.char_per_account = atoi(w2);
-			if( login_config.char_per_account <= 0 || login_config.char_per_account > MAX_CHARS ) {
-				if( login_config.char_per_account > MAX_CHARS ) {
-					ShowWarning("Max chars per account '%d' exceeded limit. Defaulting to '%d'.\n", login_config.char_per_account, MAX_CHARS);
-					login_config.char_per_account = MAX_CHARS;
-				}
+			if( login_config.char_per_account > MAX_CHARS ) {
+				ShowWarning("Exceeded limit of max chars per account '%d'. Capping to '%d'.\n", login_config.char_per_account, MAX_CHARS);
+				login_config.char_per_account = MAX_CHARS;
+			}else if( login_config.char_per_account < 0 ){
+				ShowWarning("Max chars per account '%d' is negative. Capping to '%d'.\n", login_config.char_per_account, MIN_CHARS);
 				login_config.char_per_account = MIN_CHARS;
 			}
 		}
@@ -761,6 +763,7 @@ void login_set_defaults() {
 	login_config.vip_sys.group = 5;
 #endif
 	login_config.use_web_auth_token = true;
+	login_config.disable_webtoken_delay = 10000;
 
 	//other default conf
 	safestrncpy(login_config.loginconf_name, "conf/login_athena.conf", sizeof(login_config.loginconf_name));

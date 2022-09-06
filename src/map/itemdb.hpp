@@ -1246,6 +1246,7 @@ struct item_data
 		bool broadcast; ///< Will be broadcasted if someone obtain the item [Cydh]
 		bool bindOnEquip; ///< Set item as bound when equipped
 		e_item_drop_effect dropEffect; ///< Drop Effect Mode
+		unsigned gradable : 1;
 	} flag;
 	struct {// item stacking limitation
 		uint16 amount;
@@ -1293,7 +1294,7 @@ private:
 	e_sex defaultGender( const ryml::NodeRef& node, std::shared_ptr<item_data> id );
 
 public:
-	ItemDatabase() : TypesafeCachedYamlDatabase("ITEM_DB", 2, 1) {
+	ItemDatabase() : TypesafeCachedYamlDatabase("ITEM_DB", 3, 1) {
 
 	}
 
@@ -1385,9 +1386,110 @@ public:
 
 extern LaphineUpgradeDatabase laphine_upgrade_db;
 
-uint16 itemdb_searchname_array(struct item_data** data, uint16 size, const char *str);
+struct s_item_reform_base{
+	t_itemid item_id;
+	uint16 minimumRefine;
+	uint16 maximumRefine;
+	uint16 requiredRandomOptions;
+	bool cardsAllowed;
+	std::unordered_map<t_itemid, uint16> materials;
+	t_itemid resultItemId;
+	int16 refineChange;
+	std::shared_ptr<s_random_opt_group> randomOptionGroup;
+	bool clearSlots;
+	bool removeEnchantgrade;
+};
+
+struct s_item_reform{
+	t_itemid item_id;
+	std::unordered_map<t_itemid, std::shared_ptr<s_item_reform_base>> base_items;
+};
+
+class ItemReformDatabase : public TypesafeYamlDatabase<t_itemid, s_item_reform>{
+public:
+	ItemReformDatabase() : TypesafeYamlDatabase( "ITEM_REFORM_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode( const ryml::NodeRef& node );
+};
+
+extern ItemReformDatabase item_reform_db;
+
+struct s_item_enchant_normal_sub{
+	t_itemid item_id;
+	uint32 chance;
+};
+
+struct s_item_enchant_normal{
+	uint16 enchantgrade;
+	std::unordered_map<t_itemid, std::shared_ptr<s_item_enchant_normal_sub>> enchants;
+};
+
+struct s_item_enchant_perfect{
+	t_itemid item_id;
+	uint32 zeny;
+	std::unordered_map<t_itemid, uint16> materials;
+};
+
+struct s_item_enchant_upgrade{
+	t_itemid enchant_item_id;
+	t_itemid upgrade_item_id;
+	uint32 zeny;
+	std::unordered_map<t_itemid, uint16> materials;
+};
+
+struct s_item_enchant_slot{
+	uint16 slot;
+	struct{
+		uint32 zeny;
+		std::unordered_map<t_itemid, uint16> materials;
+		uint32 chance;
+		std::unordered_map<uint16, uint32> enchantgradeChanceIncrease;
+		std::unordered_map<uint16, std::shared_ptr<s_item_enchant_normal>> enchants;
+	} normal;
+	struct{
+		std::unordered_map<t_itemid, std::shared_ptr<s_item_enchant_perfect>> enchants;
+	} perfect;
+	struct{
+		std::unordered_map<t_itemid, std::shared_ptr<s_item_enchant_upgrade>> enchants;
+	} upgrade;
+};
+
+struct s_item_enchant{
+	uint64 id;
+	std::vector<t_itemid> target_item_ids;
+	uint16 minimumRefine;
+	uint16 minimumEnchantgrade;
+	bool allowRandomOptions;
+	struct {
+		uint32 zeny;
+		std::unordered_map<t_itemid, uint16> materials;
+		uint32 chance;
+	} reset;
+	std::vector<uint16> order;
+	std::unordered_map<uint16, std::shared_ptr<s_item_enchant_slot>> slots;
+};
+
+class ItemEnchantDatabase : public TypesafeYamlDatabase<uint64, s_item_enchant>{
+private:
+	bool parseMaterials( const ryml::NodeRef& node, std::unordered_map<t_itemid, uint16>& materials );
+
+public:
+	ItemEnchantDatabase() : TypesafeYamlDatabase( "ITEM_ENCHANT_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode( const ryml::NodeRef& node );
+};
+
+extern ItemEnchantDatabase item_enchant_db;
+
+uint16 itemdb_searchname_array(std::map<t_itemid, std::shared_ptr<item_data>> &data, uint16 size, const char *str);
 struct item_data* itemdb_search(t_itemid nameid);
-struct item_data* itemdb_exists(t_itemid nameid);
+std::shared_ptr<item_data> itemdb_exists(t_itemid nameid);
 #define itemdb_name(n) itemdb_search(n)->name.c_str()
 #define itemdb_ename(n) itemdb_search(n)->ename.c_str()
 #define itemdb_type(n) itemdb_search(n)->type
@@ -1412,7 +1514,6 @@ const char *itemdb_typename_ammo (e_ammo_type ammo);
 
 #define itemdb_value_buy(n) itemdb_search(n)->value_buy
 #define itemdb_value_sell(n) itemdb_search(n)->value_sell
-#define itemdb_canrefine(n) (!itemdb_search(n)->flag.no_refine)
 //Item trade restrictions [Skotlex]
 bool itemdb_isdropable_sub(struct item_data *itd, int gmlv, int unused);
 bool itemdb_cantrade_sub(struct item_data *itd, int gmlv, int gmlv2);

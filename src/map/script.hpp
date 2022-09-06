@@ -211,6 +211,9 @@ struct Script_Config {
 	// Instance related
 	const char* instance_init_event_name;
 	const char* instance_destroy_event_name;
+
+	// Navigation related
+	const char* navi_generate_name;
 };
 extern struct Script_Config script_config;
 
@@ -376,7 +379,8 @@ enum monsterinfo_types {
 	MOB_RACE,
 	MOB_ELEMENT,
 	MOB_MODE,
-	MOB_MVPEXP
+	MOB_MVPEXP,
+	MOB_ID,
 };
 
 enum petinfo_types {

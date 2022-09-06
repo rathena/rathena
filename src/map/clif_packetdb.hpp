@@ -2456,6 +2456,13 @@
 	parseable_packet( HEADER_CZ_UNCONFIRMED_RODEX_RETURN, sizeof( struct PACKET_CZ_UNCONFIRMED_RODEX_RETURN ), clif_parse_Mail_return, 0 );
 	parseable_packet( HEADER_CZ_REQ_TAKEOFF_EQUIP_ALL, sizeof( struct PACKET_CZ_REQ_TAKEOFF_EQUIP_ALL ), clif_parse_unequipall, 0 );
 	parseable_packet( 0xb93, 12, clif_parse_dull, 0 );
+	parseable_packet( HEADER_CZ_CLOSE_REFORM_UI, sizeof( struct PACKET_CZ_CLOSE_REFORM_UI ), clif_parse_item_reform_close, 0 );
+	parseable_packet( HEADER_CZ_ITEM_REFORM, sizeof( struct PACKET_CZ_ITEM_REFORM ), clif_parse_item_reform_start, 0 );
+	parseable_packet( HEADER_CZ_REQUEST_RANDOM_ENCHANT, sizeof( struct PACKET_CZ_REQUEST_RANDOM_ENCHANT ), clif_parse_enchantwindow_general, 0 );
+	parseable_packet( HEADER_CZ_REQUEST_PERFECT_ENCHANT, sizeof( struct PACKET_CZ_REQUEST_PERFECT_ENCHANT ), clif_parse_enchantwindow_perfect, 0 );
+	parseable_packet( HEADER_CZ_REQUEST_UPGRADE_ENCHANT, sizeof( struct PACKET_CZ_REQUEST_UPGRADE_ENCHANT ), clif_parse_enchantwindow_upgrade, 0 );
+	parseable_packet( HEADER_CZ_REQUEST_RESET_ENCHANT, sizeof( struct PACKET_CZ_REQUEST_RESET_ENCHANT ), clif_parse_enchantwindow_reset, 0 );
+	parseable_packet( HEADER_CZ_CLOSE_UI_ENCHANT, sizeof( struct PACKET_CZ_CLOSE_UI_ENCHANT ), clif_parse_enchantwindow_close, 0 );
 #endif
 
 #endif /* CLIF_PACKETDB_HPP */

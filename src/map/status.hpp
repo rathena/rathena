@@ -1229,6 +1229,8 @@ enum sc_type : int16 {
 	SC_M_LIFEPOTION,
 	SC_S_MANAPOTION,
 
+	SC_SUB_WEAPONPROPERTY,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif
@@ -3283,8 +3285,7 @@ static int sc_start2(block_list *src, block_list *bl, sc_type type, int32 rate, 
 static int sc_start4(block_list *src, block_list *bl, sc_type type, int32 rate, int32 val1, int32 val2, int32 val3, int32 val4, t_tick duration, int32 delay = 0) {
 	return status_change_start(src, bl, type, 100 * rate, val1, val2, val3, val4, duration, SCSTART_NONE, delay);
 }
-int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const char* file, int line);
-#define status_change_end(bl,type,tid) status_change_end_(bl,type,tid,__FILE__,__LINE__)
+int status_change_end(struct block_list* bl, enum sc_type type, int tid = INVALID_TIMER);
 TIMER_FUNC(status_change_timer);
 int status_change_timer_sub(struct block_list* bl, va_list ap);
 int status_change_clear(struct block_list* bl, int type);

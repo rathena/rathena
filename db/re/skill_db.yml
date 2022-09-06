@@ -42468,7 +42468,7 @@ Body:
         - Level: 10
           Amount: 16
       SpCost: 30
-    Status: Watk_Element
+    Status: Sub_Weaponproperty
   - Id: 8203
     Name: MS_BOWLINGBASH
     Description: Bowling_Bash
