@@ -532,7 +532,7 @@ Body:
       FailedMado: true
       NoSave: true
       SuperNoviceAngel: true
-    Fail:
+    End:
       Offertorium: true
   - Status: Gloria
     Icon: EFST_GLORIA
