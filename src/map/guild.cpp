@@ -842,11 +842,6 @@ void guild_member_joined(struct map_session_data *sd) {
 	}
 	if (strcmp(sd->status.name,g->master) == 0) {	// set the Guild Master flag
 		sd->state.gmaster_flag = 1;
-#ifndef RENEWAL
-		// prevent Guild Skills from being used directly after relog
-		if( battle_config.guild_skill_relog_delay )
-			guild_block_skill(sd, battle_config.guild_skill_relog_delay);
-#endif
 	}
 	i = guild_getindex(g, sd->status.account_id, sd->status.char_id);
 	if (i == -1)
@@ -1564,10 +1559,10 @@ int guild_get_alliance_count(struct guild *g,int flag) {
 
 // Blocks all guild skills which have a common delay time.
 void guild_block_skill(struct map_session_data *sd, int time) {
-	uint16 skill_id[] = { GD_BATTLEORDER, GD_REGENERATION, GD_RESTORE, GD_EMERGENCYCALL };
-	int i;
-	for (i = 0; i < 4; i++)
-		skill_blockpc_start(sd, skill_id[i], time);
+	std::vector<uint16> skills = { GD_BATTLEORDER, GD_REGENERATION, GD_RESTORE, GD_EMERGENCYCALL };
+
+	for (const auto &skill_id : skills)
+		skill_blockpc_start(sd, skill_id, time);
 }
 
 /*====================================================
