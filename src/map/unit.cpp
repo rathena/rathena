@@ -3672,15 +3672,17 @@ void unit_addshadowscar(unit_data &ud, int interval) {
 		return;
 	}
 
-	status_change *sc = status_get_sc(ud.bl);
-
-	if (sc != nullptr && sc->data[SC_SHADOW_SCAR] == nullptr)
-		sc_start(ud.bl, ud.bl, SC_SHADOW_SCAR, 100, 1, INFINITE_TICK);
-
 	ud.shadow_scar_timer.push_back(add_timer(gettick() + interval, unit_shadowscar_timer, ud.bl->id, 0));
 
-	if (sc != nullptr && sc->data[SC_SHADOW_SCAR] != nullptr) {
-		sc->data[SC_SHADOW_SCAR]->val1 = static_cast<int>(ud.shadow_scar_timer.size());
+	status_change *sc = status_get_sc(ud.bl);
+
+	if (sc != nullptr) {
+		if (sc->data[SC_SHADOW_SCAR] != nullptr) {
+			sc->data[SC_SHADOW_SCAR]->val1 = static_cast<int>(ud.shadow_scar_timer.size());
+		} else {
+			sc_start(ud.bl, ud.bl, SC_SHADOW_SCAR, 100, 1, INFINITE_TICK);
+		}
+
 		clif_enchantingshadow_spirit(ud);
 	}
 }

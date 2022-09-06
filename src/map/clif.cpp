@@ -1584,6 +1584,7 @@ static void clif_spiritcharm_single(int fd, struct map_session_data *sd)
  * Enchanting Shadow / Shadow Scar Spirit
  *------------------------------------------*/
 void clif_enchantingshadow_spirit(unit_data &ud) {
+#if PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191120 || PACKETVER_ZERO_NUM >= 20191127
 	PACKET_ZC_TARGET_SPIRITS p = {};
 
 	p.packetType = HEADER_ZC_TARGET_SPIRITS;
@@ -1592,6 +1593,7 @@ void clif_enchantingshadow_spirit(unit_data &ud) {
 	p.amount = static_cast<uint16>(ud.shadow_scar_timer.size());
 
 	clif_send(&p, sizeof(p), ud.bl, AREA);
+#endif
 }
 
 /*==========================================
