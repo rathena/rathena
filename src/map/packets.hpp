@@ -321,6 +321,13 @@ struct PACKET_CZ_CLOSE_UI_ENCHANT{
 	int16 packetType;
 } __attribute__((packed));
 
+struct PACKET_ZC_TARGET_SPIRITS {
+	int16 packetType;
+	uint32 GID;
+	uint32 unknown_val;
+	uint16 amount;
+} __attribute__((packed));
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -371,6 +378,7 @@ DEFINE_PACKET_HEADER(CZ_REQ_STYLE_CHANGE2, 0xafc)
 DEFINE_PACKET_HEADER(ZC_REMOVE_EFFECT, 0x0b0d)
 DEFINE_PACKET_HEADER(CZ_UNCONFIRMED_TSTATUS_UP, 0x0b24)
 DEFINE_PACKET_HEADER(CZ_GUILD_EMBLEM_CHANGE2, 0x0b46)
+DEFINE_PACKET_HEADER(ZC_TARGET_SPIRITS, 0xb68)
 DEFINE_PACKET_HEADER(ZC_UNCONFIRMED_SPIRITS3, 0xb73)
 DEFINE_PACKET_HEADER(CZ_UNCONFIRMED_RODEX_RETURN, 0xb98)
 DEFINE_PACKET_HEADER(ZC_SUMMON_HP_INIT, 0xb6b)
