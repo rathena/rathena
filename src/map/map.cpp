@@ -190,7 +190,7 @@ int enable_grf = 0;	//To enable/disable reading maps from GRF files, bypassing m
 
 #ifdef MAP_GENERATOR
 struct generator_options {
-	bool gen_navi;
+	bool navi;
 } gen_options;
 #endif
 
@@ -5087,8 +5087,8 @@ const char* map_msg_txt(struct map_session_data *sd, int msg_number){
 /**
  * Read the option specified in command line
  *  and assign the confs used by the different server.
- * @param argc:
- * @param argv:
+ * @param argc: Argument count
+ * @param argv: Argument values
  * @return true or Exit on failure.
  */
 int mapgenerator_get_options(int argc, char** argv) {
@@ -5101,7 +5101,7 @@ int mapgenerator_get_options(int argc, char** argv) {
 			arg++;
 
 			if (strcmp(arg, "generate-navi") == 0) {
-				gen_options.gen_navi = true;
+				gen_options.navi = true;
 			} else {
 				// pass through to default get_options
 				continue;
@@ -5112,11 +5112,11 @@ int mapgenerator_get_options(int argc, char** argv) {
 			optionSet = true;
 		}
 	}
-#endif
 	if (!optionSet) {
 		ShowError("No options passed to the map generator, you must set at least one.\n");
 		exit(1);
 	}
+#endif
 	return 1;
 }
 
@@ -5289,7 +5289,7 @@ int do_init(int argc, char *argv[])
 	ShowStatus("Server is '" CL_GREEN "ready" CL_RESET "' and listening on port '" CL_WHITE "%d" CL_RESET "'.\n\n", map_port);
 #else
 	// depending on gen_options, generate the correct things
-	if (gen_options.gen_navi)
+	if (gen_options.navi)
 		navi_create_lists();
 	runflag = CORE_ST_STOP;
 #endif

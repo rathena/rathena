@@ -2,17 +2,17 @@
 
 This is a tool to generate files that are hard to manually create.
 
-Right now, the only thing you can make are client navigation files. 
+Right now, the only thing feature is creating the client navigation files.
 
 ## How to run
 ### Linux
 Run `make tools`.
 This creates a new binary called `map-server-generator`.
 
-You can run this with `./map-server-generator`
+It can be ran with: `./map-server-generator`
 
 ### Windows
-Not currently supported.
+It can be ran with `./map-server-generator.exe`, or with the provided `.bat` files.
 
 ## Available options
 On Linux, prefix with `--`
