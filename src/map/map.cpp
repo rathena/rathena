@@ -5093,10 +5093,11 @@ const char* map_msg_txt(struct map_session_data *sd, int msg_number){
  */
 int mapgenerator_get_options(int argc, char** argv) {
 #ifdef MAP_GENERATOR
+	bool optionSet = false;
 	for (int i = 1; i < argc; i++) {
 		const char *arg = argv[i];
 		if (arg[0] != '-' && (arg[0] != '/' || arg[1] == '-')) {// -, -- and /
-		} else if ((++arg)[0] == '-') {// long option
+		} else if (arg[0] == '/' || (++arg)[0] == '-') {// long option
 			arg++;
 
 			if (strcmp(arg, "generate-navi") == 0) {
@@ -5108,9 +5109,14 @@ int mapgenerator_get_options(int argc, char** argv) {
 
 			// clear option
 			argv[i] = nullptr;
+			optionSet = true;
 		}
 	}
 #endif
+	if (!optionSet) {
+		ShowError("No options passed to the map generator, you must set at least one.\n");
+		exit(1);
+	}
 	return 1;
 }
 
