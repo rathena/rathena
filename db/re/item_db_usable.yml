@@ -45395,7 +45395,7 @@ Body:
       callfunc "F_CashStore";
   - Id: 22816
     AegisName: G_Mysterious_Water
-    Name: True Mysterious Life Potion    # !todo check english name
+    Name: True Mysterious Life Potion
     Type: Usable
     Weight: 10
     NoUse:
@@ -45414,7 +45414,7 @@ Body:
       sc_start SC_SPEEDUP0,600000,25;
   - Id: 22817
     AegisName: G_Small_Life_Potion
-    Name: True Small Life Potion    # !todo check english name
+    Name: True Small Life Potion
     Type: Usable
     Weight: 10
     NoUse:
@@ -45433,7 +45433,7 @@ Body:
       sc_start SC_SPEEDUP0,600000,25;
   - Id: 22818
     AegisName: G_Med_Life_Potion
-    Name: True Medium Life potion    # !todo check english name
+    Name: True Medium Life Potion
     Type: Usable
     Weight: 10
     NoUse:
@@ -45467,7 +45467,7 @@ Body:
       sc_start SC_SPEEDUP0,600000,25;
   - Id: 22820
     AegisName: G_ASPD_Potion
-    Name: True EnhancedASPD Potion    # !todo check english name
+    Name: True Enhanced ASPD Potion
     Type: Usable
     Weight: 10
     NoUse:
@@ -45488,7 +45488,7 @@ Body:
       sc_start SC_SPEEDUP0,600000,25;
   - Id: 22821
     AegisName: G_Red_Booster
-    Name: True Red Booster    # !todo check english name
+    Name: True Red Booster
     Type: Usable
     Weight: 10
     NoUse:
@@ -46375,7 +46375,7 @@ Body:
       callfunc("F_Cursed_Fragment");
   - Id: 23027
     AegisName: Dandelion_Ring
-    Name: Dandelion Ring    # !todo check english name
+    Name: Dandelion Ring
     Type: Usable
     Flags:
       NoConsume: true
@@ -47538,7 +47538,7 @@ Body:
       bonus_script "{ bonus bMaxHPrate,5; bonus bMaxSPrate,5; bonus bCritAtkRate,5; bonus bLongAtkRate,5; bonus bMatkRate,5; bonus bNoCastCancel; }",1800,1,1,EFST_INFINITY_DRINK;
   - Id: 23505
     AegisName: Yellow_Potion_B_20
-    Name: "[Not for Sale] Yellow Potions Box 20"   # !todo check english name
+    Name: "[Event] Crate of 20 Yellow Potions"
     Type: Usable
     Trade:
       NoDrop: true
@@ -47551,7 +47551,7 @@ Body:
       getitem 11566,20;
   - Id: 23506
     AegisName: White_Potion_B_20
-    Name: "[Not for Sale] White Potion Box 20"   # !todo check english name
+    Name: "[Event] Box of 20 White Potion"
     Type: Usable
     Trade:
       NoDrop: true
@@ -47668,7 +47668,7 @@ Body:
       sc_start SC_MATKPOTION,600000,3;
   - Id: 23582
     AegisName: E_Wing_Of_Fly_3Day_Box
-    Name: "[Not for Sale] Infinite Flywing Box 7-Day"    # !todo check english name
+    Name: "[Gift] Unlimited Fly Wing 3 Day Box"
     Type: Usable
     Trade:
       NoDrop: true
@@ -47682,7 +47682,7 @@ Body:
       rentitem 12887,604800;
   - Id: 23583
     AegisName: Rebeginer_Box
-    Name: Beginner's Armor Box    # !todo check english name
+    Name: Beginner's Armor Box
     Type: Usable
     EquipLevelMin: 100
     Trade:
@@ -47701,7 +47701,7 @@ Body:
       getitem 28566,1;
   - Id: 23584
     AegisName: Rebeginer_S_Box
-    Name: Shadow Box for Beginners    # !todo check english name
+    Name: Beginner's Shadow Box
     Type: Usable
     EquipLevelMin: 120
     Trade:
@@ -47721,7 +47721,7 @@ Body:
       getitem 24392,1;
   - Id: 23585
     AegisName: Rebeginer_Box_100
-    Name: Beginner Support Box (100)    # !todo check english name
+    Name: Beginner Support Box(100)
     Type: Usable
     EquipLevelMin: 100
     Trade:
@@ -47740,7 +47740,7 @@ Body:
       getitem 23586,1;
   - Id: 23586
     AegisName: Rebeginer_Box_110
-    Name: Beginner Support Box (110)    # !todo check english name
+    Name: Beginner Support Box(110)
     Type: Usable
     EquipLevelMin: 110
     Trade:
@@ -47758,7 +47758,7 @@ Body:
       getitem 23587,1;
   - Id: 23587
     AegisName: Rebeginer_Box_120
-    Name: Beginner Support Box (120)    # !todo check english name
+    Name: Beginner Support Box(120)
     Type: Usable
     EquipLevelMin: 120
     Trade:
@@ -48036,7 +48036,7 @@ Body:
       getitem callfunc("F_Rand",15278,15279,15346,15347,15353,15354),1;
   - Id: 23767
     AegisName: Powerful_Helm_Box
-    Name: Powerful Helm Box    # !todo check english name
+    Name: Strong Helmet Box
     Type: Usable
     Flags:
       Container: true
@@ -48809,7 +48809,7 @@ Body:
       laphine_upgrade();
   - Id: 100005
     AegisName: G_Small_Mana_Potion
-    Name: True Small Mana Potion    # !todo check english name
+    Name: True Small Mana Potion
     Type: Usable
     Weight: 10
     NoUse:
@@ -48820,7 +48820,7 @@ Body:
       sc_start SC_SPEEDUP0,600000,25;
   - Id: 100006
     AegisName: G_M_DEFScroll
-    Name: True Brilliant Protection Scroll    # !todo check english name
+    Name: True Brilliant Protection Scroll
     Type: Usable
     Weight: 10
     NoUse:
@@ -48831,7 +48831,7 @@ Body:
       sc_start SC_SPEEDUP0,600000,25;
   - Id: 100007
     AegisName: G_Limit_Power_Booster
-    Name: Gin Limited Power Booster    # !todo check english name
+    Name: True Limited Power Booster
     Type: Usable
     Weight: 10
     NoUse:
@@ -48842,7 +48842,7 @@ Body:
       sc_start SC_SPEEDUP0,600000,25;
   - Id: 100008
     AegisName: G_Infinity_Drink
-    Name: Gin Infinity Drink    # !todo check english name
+    Name: True Infinity Drink
     Type: Usable
     Weight: 10
     NoUse:
@@ -49861,7 +49861,7 @@ Body:
       getgroupitem(IG_Enchant_Stone_Box21);
   - Id: 100316
     AegisName: G_Tyrs_Blessing
-    Name: Gin Tyr's Blessing    # !todo check english name
+    Name: True Tyr's Blessing
     Type: Usable
     Weight: 10
     NoUse:
@@ -49871,7 +49871,7 @@ Body:
       sc_start SC_SPEEDUP0,600000,25;
   - Id: 100317
     AegisName: G_Mental_Potion
-    Name: Gin Mental Potion    # !todo check english name
+    Name: True Mental Potion
     Type: Usable
     Weight: 10
     NoUse:
@@ -51026,7 +51026,7 @@ Body:
       item_reform();
   - Id: 100783
     AegisName: MajorAutoSpell_Mix
-    Name: Auto Spell Shadow Pick-Up Box    # !todo check english name
+    Name: Auto Spell Shadow Thump Box
     Type: DelayConsume
     Weight: 10
     Flags:
@@ -51085,7 +51085,7 @@ Body:
       item_reform();
   - Id: 100823
     AegisName: Lens_Craft_Stone
-    Name: Lens Craft Stone    # !todo check english name
+    Name: Lens Craft Stone
     Type: Delayconsume
     Weight: 10
     Script: |
@@ -51115,7 +51115,7 @@ Body:
       getitem callfunc("F_Rand",24157,24163,24164,24156,24160,24159,24165,24161,24162,24158),1;
   - Id: 100887
     AegisName: MagicalShadow_Mix
-    Name: Clever Shadow Pick-Up Box    # !todo check english name
+    Name: Clever Shadow Thump Box
     Type: DelayConsume
     Weight: 10
     Flags:
@@ -51258,7 +51258,7 @@ Body:
       item_reform();
   - Id: 101075
     AegisName: SLD_Card_Recipe
-    Name: Sealed Boss Card Pick-Up Box    # !todo check english name
+    Name: Sealed Boss Card Thump Box
     Type: DelayConsume
     Weight: 10
     Flags:
@@ -51468,7 +51468,7 @@ Body:
       bonus_script " bonus2 bAddItemHealRate,1100006,100; ",120,1,1;
   - Id: 101177
     AegisName: FullPenest_Shadow_Up
-    Name: Full Tempenite Shadow Grimoire    # !todo check english name
+    Name: Full Temperament Shadow Spellbook
     Type: Delayconsume
     Weight: 10
     Flags:
@@ -51477,7 +51477,7 @@ Body:
       laphine_upgrade();
   - Id: 101178
     AegisName: Reload_Shadow_Up
-    Name: Reload Shadow Grimoire    # !todo check english name
+    Name: ?eload Shadow Spellbook
     Type: Delayconsume
     Weight: 10
     Flags:
@@ -51486,7 +51486,7 @@ Body:
       laphine_upgrade();
   - Id: 101179
     AegisName: SpellCaster_Shadow_Up
-    Name: Spellcaster Shadow Grimoire    # !todo check english name
+    Name: Spell Caster Shadow Spellbook
     Type: Delayconsume
     Weight: 10
     Flags:
@@ -51495,7 +51495,7 @@ Body:
       laphine_upgrade();
   - Id: 101180
     AegisName: Ex_Status_Shadow_Up
-    Name: Trait Status Shadow Grimoire    # !todo check english name
+    Name: Trait Status Shadow Spellbook
     Type: Delayconsume
     Weight: 10
     Flags:
@@ -51504,7 +51504,7 @@ Body:
       laphine_upgrade();
   - Id: 101181
     AegisName: ReloadShadow_Mix
-    Name: Reload Shadow Pick-Up Box    # !todo check english name
+    Name: Reload Shadow Thump Box
     Type: DelayConsume
     Weight: 10
     Flags:
@@ -51513,7 +51513,7 @@ Body:
       laphine_synthesis();
   - Id: 101182
     AegisName: SpellCasterShadow_Mix
-    Name: Spell Caster Shadow Pick-Up Box    # !todo check english name
+    Name: Spell Caster Shadow Thump Box
     Type: DelayConsume
     Weight: 10
     Flags:
@@ -51579,7 +51579,7 @@ Body:
       /* Missing description */
   - Id: 101187
     AegisName: Snow_F_Refine
-    Name: Snowflower Armor 9 Refine Cube    # !todo check english name
+    Name: Snow Flower Armor +9 Refinement Cube
     Type: Delayconsume
     Weight: 10
     Trade:
@@ -51593,7 +51593,7 @@ Body:
       laphine_upgrade();
   - Id: 101188
     AegisName: Glacier_W_Refine
-    Name: Glacier Weapon 9 Refine Cube    # !todo check english name
+    Name: Glacier Weapon +9 Refinement Cube
     Type: Delayconsume
     Weight: 10
     Trade:
@@ -51683,7 +51683,7 @@ Body:
       item_reform();
   - Id: 101257
     AegisName: R_BearersShadow_Mix
-    Name: Road Bearers Shadow Pick-Up Box    # !todo check english name
+    Name: Lord Bearer's Shadow Thump Box
     Type: DelayConsume
     Weight: 10
     Flags:
@@ -51692,7 +51692,7 @@ Body:
       laphine_synthesis();
   - Id: 101258
     AegisName: M_BlitzShadow_Mix
-    Name: Mega Blitz Shadow Pick-Up Box    # !todo check english name
+    Name: Mega Blitz Shadow Thump Box
     Type: DelayConsume
     Weight: 10
     Flags:
@@ -51710,7 +51710,7 @@ Body:
       item_reform();
   - Id: 101260
     AegisName: R_Bearers_Shadow_Up
-    Name: Road Bearers Shadow Grimoire    # !todo check english name
+    Name: Lord Bearer's Shadow Spellbook
     Type: Delayconsume
     Weight: 10
     Flags:
@@ -51719,7 +51719,7 @@ Body:
       laphine_upgrade();
   - Id: 101261
     AegisName: M_Blitz_Shadow_Up
-    Name: Mega Blitz Shadow Grimoire    # !todo check english name
+    Name: Mega Blitz Shadow Spellbook
     Type: Delayconsume
     Weight: 10
     Flags:
@@ -51728,7 +51728,7 @@ Body:
       laphine_upgrade();
   - Id: 101262
     AegisName: Absorb_Shadow_Up
-    Name: Absorb Shadow Grimoire    # !todo check english name
+    Name: Absorb Shadow Spellbook
     Type: Delayconsume
     Weight: 10
     Flags:
@@ -51737,7 +51737,7 @@ Body:
       laphine_upgrade();
   - Id: 101264
     AegisName: Mammoth_Shadow_Up
-    Name: Max Mammoth Shadow Grimoire    # !todo check english name
+    Name: Maximum Mammoth Shadow Spellbook
     Type: Delayconsume
     Weight: 10
     Flags:

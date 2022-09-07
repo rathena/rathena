@@ -33835,7 +33835,7 @@ Body:
       /*Item removed on 2014-12-17*/
   - Id: 23063
     AegisName: Freeze_Dream
-    Name: Freeze Dream    # !todo check english name
+    Name: Frozen Dream
     Type: Etc
     Trade:
       NoDrop: true
@@ -36504,17 +36504,17 @@ Body:
       NoAuction: true
   - Id: 25505
     AegisName: Jokers_Wild
-    Name: Jokers Wild    # !todo check english name
+    Name: Jokers Wild
     Type: Etc
     Weight: 10
   - Id: 25506
     AegisName: Cute_Broom
-    Name: Cute broom    # !todo check english name
+    Name: Cute Broom
     Type: Etc
     Weight: 10
   - Id: 25507
     AegisName: Showy_Coral_Reef
-    Name: Colorful coral    # !todo check english name
+    Name: Colorful Coral
     Type: Etc
     Weight: 10
   - Id: 25508
@@ -36524,7 +36524,7 @@ Body:
     Weight: 10
   - Id: 25509
     AegisName: Shining_Round_Shell
-    Name: Glowing Roundshell    # !todo check english name
+    Name: Shiny Round Shell
     Type: Etc
     Weight: 10
   - Id: 25511
@@ -43297,35 +43297,35 @@ Body:
       bonus bFixedCastrate,-50;
   - Id: 29445
     AegisName: Amplification1
-    Name: Amplify 1    # !todo check english name
+    Name: Amplification 1
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatkRate,getrefine();
   - Id: 29446
     AegisName: Amplification2
-    Name: Amplify 2    # !todo check english name
+    Name: Amplification 2
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatkRate,2*getrefine();
   - Id: 29447
     AegisName: Amplification3
-    Name: Amplify 3    # !todo check english name
+    Name: Amplification 3
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatkRate,3*getrefine();
   - Id: 29448
     AegisName: Amplification4
-    Name: Amplify 4    # !todo check english name
+    Name: Amplification 4
     Type: Card
     SubType: Enchant
     Script: |
       bonus bMatkRate,4*getrefine();
   - Id: 29449
     AegisName: Amplification5
-    Name: Amplify 5    # !todo check english name
+    Name: Amplification 5
     Type: Card
     SubType: Enchant
     Script: |
@@ -55603,14 +55603,14 @@ Body:
       bonus2 bMagicAtkEle,Ele_All,2*getskilllv("SO_EARTHGRAVE");
   - Id: 311014
     AegisName: aegis_311014
-    Name: Reload Stone (Dual)    # !todo check english name
+    Name: Reload Stone (Dual)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bDelayrate,-5;
   - Id: 311015
     AegisName: aegis_311015
-    Name: Creative Stone (Dual)    # !todo check english name
+    Name: Creative Stone (Dual)
     Type: Card
     SubType: Enchant
     Script: |
@@ -64497,56 +64497,56 @@ Body:
     Type: Etc
   - Id: 1000636
     AegisName: Plain_Barmund_Rune
-    Name: Meadow Rune Fragment    # !todo check english name
+    Name: Glade Rune Fragment
     Type: Etc
     Weight: 1
     Flags:
       DropEffect: CLIENT
   - Id: 1000637
     AegisName: Flame_Barmund_Rune
-    Name: Fire Rune Fragment    # !todo check english name
+    Name: Fire Rune Fragment
     Type: Etc
     Weight: 1
     Flags:
       DropEffect: CLIENT
   - Id: 1000638
     AegisName: Ice_Barmund_Rune
-    Name: Ice Rune Fragments    # !todo check english name
+    Name: Ice Rune Fragment
     Type: Etc
     Weight: 1
     Flags:
       DropEffect: CLIENT
   - Id: 1000639
     AegisName: Death_Barmund_Rune
-    Name: Death Rune Fragment    # !todo check english name
+    Name: Death Rune Fragment
     Type: Etc
     Weight: 1
     Flags:
       DropEffect: CLIENT
   - Id: 1000640
     AegisName: Plain_Barmund_Rune2
-    Name: Meadow Rune    # !todo check english name
+    Name: Glade Rune
     Type: Etc
     Weight: 10
     Flags:
       DropEffect: CLIENT
   - Id: 1000641
     AegisName: Flame_Barmund_Rune2
-    Name: Fire Rune    # !todo check english name
+    Name: Fire Rune
     Type: Etc
     Weight: 10
     Flags:
       DropEffect: CLIENT
   - Id: 1000642
     AegisName: Ice_Barmund_Rune2
-    Name: Ice Rune    # !todo check english name
+    Name: Ice Rune
     Type: Etc
     Weight: 10
     Flags:
       DropEffect: CLIENT
   - Id: 1000643
     AegisName: Death_Barmund_Rune2
-    Name: Death Rune    # !todo check english name
+    Name: Death Rune
     Type: Etc
     Weight: 10
     Flags:
@@ -64569,7 +64569,7 @@ Body:
     Type: Etc
   - Id: 1000657
     AegisName: Evt_Soul_Skein
-    Name: Soul's Thread    # !todo check english name
+    Name: Soul Thread
     Type: Etc
   - Id: 1000666
     AegisName: WanderMinsStone_Top3
@@ -64628,75 +64628,75 @@ Body:
     Weight: 100
   - Id: 1000680
     AegisName: ClockTower_Lead
-    Name: Lead    # !todo check english name
+    Name: Lead
     Type: Etc
     Flags:
       DropEffect: CLIENT
   - Id: 1000681
     AegisName: ClockTower_Gear
-    Name: Cog wheel    # !todo check english name
+    Name: Clock Gear
     Type: Etc
     Flags:
       DropEffect: CLIENT
   - Id: 1000682
     AegisName: aegis_1000682
-    Name: Tuner    # !todo check english name
+    Name: Tuner
     Type: Etc
   - Id: 1000684
     AegisName: aegis_1000684
-    Name: Second-level job change guide map    # !todo check english name
+    Name: 4th Expanded Job Change Guide
     Type: Etc
   - Id: 1000685
     AegisName: Conse_F_Humma
-    Name: Fides Fuma Shuriken Blueprint    # !todo check english name
+    Name: Fides Huuma Shuriken Blueprint
     Type: Etc
   - Id: 1000686
     AegisName: Conse_F_C_Humma
-    Name: Fidesz cross wind shuriken blueprint    # !todo check english name
+    Name: Fides Cross-Shaped Huuma Shuriken Blueprint
     Type: Etc
   - Id: 1000687
     AegisName: Conse_F_Revolver
-    Name: Fideth Revolver Drawing    # !todo check english name
+    Name: Fides Revolver Blueprint
     Type: Etc
   - Id: 1000688
     AegisName: Conse_F_Shotgun
-    Name: Fideth Shotgun Drawings    # !todo check english name
+    Name: Fides Shotgun Blueprint
     Type: Etc
   - Id: 1000689
     AegisName: Conse_F_Rifle
-    Name: Fideth Rifle Drawing    # !todo check english name
+    Name: Fides Rifle Blueprint
     Type: Etc
   - Id: 1000690
     AegisName: Conse_F_Gatling
-    Name: Fidesz Gatlinggun Drawings    # !todo check english name
+    Name: Fides Gatling Gun Blueprint
     Type: Etc
   - Id: 1000691
     AegisName: Conse_F_Launcher
-    Name: Fidesgrenade Launcher Blueprint    # !todo check english name
+    Name: Fides Launcher Blueprint
     Type: Etc
   - Id: 1000692
     AegisName: Conse_F_Moon_B
-    Name: Fides Moonbook Drawing    # !todo check english name
+    Name: Fides Moon Book Blueprint
     Type: Etc
   - Id: 1000693
     AegisName: Conse_F_Star_B
-    Name: Fideth Stardust Book Blueprint    # !todo check english name
+    Name: Fides Stardust Book Blueprint
     Type: Etc
   - Id: 1000694
     AegisName: Conse_F_S_Stick
-    Name: Fideth Soulstick Drawing    # !todo check english name
+    Name: Fides Soul Stick Blueprint
     Type: Etc
   - Id: 1000695
     AegisName: Conse_F_D_Wand
-    Name: Fideth Dark Wand Blueprint    # !todo check english name
+    Name: Fides Dark Wand Blueprint
     Type: Etc
   - Id: 1000696
     AegisName: Conse_F_F_Wand
-    Name: Fideth Foxtail Wand Drawing    # !todo check english name
+    Name: Fides Foxtail Wand Blueprint
     Type: Etc
   - Id: 1000697
     AegisName: Conse_F_F_model
-    Name: Fideth Foxtail Model Drawing    # !todo check english name
+    Name: Fides Foxtail Model Blueprint
     Type: Etc
   - Id: 1000705
     AegisName: Ep19_Rgan_Core
