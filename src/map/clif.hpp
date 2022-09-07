@@ -1214,4 +1214,7 @@ void clif_item_reform_open( struct map_session_data& sd, t_itemid item );
 // Item Enchant UI
 void clif_enchantwindow_open( struct map_session_data& sd, uint64 clientLuaIndex );
 
+// Enchanting Shadow / Shadow Scar Spirit
+void clif_enchantingshadow_spirit(unit_data &ud);
+
 #endif /* CLIF_HPP */
