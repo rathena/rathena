@@ -23476,17 +23476,53 @@ void clif_parse_laphine_upgrade( int fd, struct map_session_data* sd ){
 	if( upgrade->resultRefine > 0 ){
 		// Absolute refine level change
 		item->refine = max( item->refine, upgrade->resultRefine );
-	}else if( upgrade->resultRefineMaximum > 0 ){
-		// If a minimum is specified it can also downgrade
-		if( upgrade->resultRefineMinimum ){
-			item->refine = rnd_value( upgrade->resultRefineMinimum, upgrade->resultRefineMaximum );
-		}else{
-			// Otherwise it can only be upgraded until the maximum, but not downgraded
-			item->refine = rnd_value( item->refine, upgrade->resultRefineMaximum );
+	}else {
+		uint16 min_value = 0;
+		uint16 max_value = MAX_REFINE;
+
+		if( upgrade->resultRefineMaximum > 0 ){
+			// If a minimum is specified it can also downgrade
+			if( upgrade->resultRefineMinimum ){
+				min_value = upgrade->resultRefineMinimum;
+			}else{
+				// Otherwise it can only be upgraded until the maximum, but not downgraded
+				min_value = item->refine;
+			}
+			max_value = upgrade->resultRefineMaximum;
+		}else if( upgrade->resultRefineMinimum > 0 ){
+			// No maximum has been specified, so it can be anything between minimum and MAX_REFINE
+			min_value = upgrade->resultRefineMinimum;
 		}
-	}else if( upgrade->resultRefineMinimum > 0 ){
-		// No maximum has been specified, so it can be anything between minimum and MAX_REFINE
-		item->refine = rnd_value( upgrade->resultRefineMinimum, MAX_REFINE );
+
+		if (upgrade->resultRefineRate.empty()) {
+			item->refine = rnd_value( min_value, max_value );
+		}
+		else {
+			int level, total = 0, rate = 0;
+
+			// Get the total rate between min_value and max_value
+			for ( level = min_value; level <= max_value; level++ ) {
+				if (upgrade->resultRefineRate.count(level) > 0)
+					total += upgrade->resultRefineRate[level];
+				else
+					total += 1;
+			}
+
+			int r = rnd_value( 1, total );
+
+			for ( level = min_value; level <= max_value; level++ ) {
+				if (upgrade->resultRefineRate.count(level) > 0)
+					rate += upgrade->resultRefineRate[level];
+				else
+					rate += 1;
+
+				if (r <= rate) {
+					item->refine = level;
+					break;
+				}
+			}
+			
+		}
 	}
 
 	// Log retrieving the item again -> with the new options

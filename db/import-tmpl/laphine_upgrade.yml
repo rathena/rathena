@@ -27,6 +27,10 @@
 #   ResultRefine               Absolute refine level after the upgrade. (Default: none)
 #   ResultRefineMinimum        Minimum refine level after the upgrade. (Default: none)
 #   ResultRefineMaximum        Maximum refine level after the upgrade. (Default: none)
+#   ResultRefineRate:          Table of rate per refine level. (Default: none)
+#                              By default the rate per level is 1. When defined the total rate is the sum of the rates between the minimum and maximum refinements.
+#     - Level                  Refine level.
+#       Rate                   Rate per level. (Default: 1. Max: 10000)
 #   MinimumRefine              Minimum refine level of the required items. (Default: 0)
 #   MaximumRefine              Maximum refine level of the required items. (Default: MAX_REFINE)
 #   RequiredRandomOptions      How many random options have to be in the item? (Default: 0)
@@ -37,4 +41,4 @@
 
 Header:
   Type: LAPHINE_UPGRADE_DB
-  Version: 1
+  Version: 2
