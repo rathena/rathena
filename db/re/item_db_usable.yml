@@ -51246,10 +51246,14 @@ Body:
     AegisName: Select_Example1
     Name: TestA
     Type: DelayConsume
+    Flags:
+      BuyingStore: true
   - Id: 101062
     AegisName: Select_Example2
     Name: TestB
     Type: DelayConsume
+    Flags:
+      BuyingStore: true
   - Id: 101075
     AegisName: SLD_Card_Recipe
     Name: Sealed Boss Card Pick-Up Box    # !todo check english name
@@ -52142,15 +52146,18 @@ Body:
       getitembound 23919,11,Bound_Account;
   - Id: 101470
     AegisName: aegis_101470
-    Name: Stats Soul Potion Selection Box    # !todo check english name
+    Name: Stats Soul Potion Selection Box
     Type: DelayConsume
-    # TODO: can be sold, but price is unknown
+    Flags:
+      BuyingStore: true
   - Id: 101471
     AegisName: aegis_101471
-    Name: Alchemist Selection Box    # !todo check english name
+    Name: Alchemist Selection Box
     Type: DelayConsume
     Buy: 20
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 101482
     AegisName: Freedom_Stick_Cube
     Name: Freedom Stick Remodeling Cube
@@ -52192,23 +52199,23 @@ Body:
       sc_start SC_MATKPOTION,600000,rand(11,111);
   - Id: 101542
     AegisName: aegis_101542
-    Name: Full Penetration Shadow Selection Box    # !todo check english name
+    Name: Full Penetration Shadow Selection Box
     Type: DelayConsume
     Weight: 10
-    # TODO: can be sold, but price is unknown
+    Flags:
+      BuyingStore: true
   - Id: 101543
     AegisName: aegis_101543
-    Name: Full Penetration Shadow Earring Box    # !todo check english name
+    Name: Full Penetration Shadow Earring Box
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
       getgroupitem(IG_S_FULLPENE_EARRING,true);
   - Id: 101544
     AegisName: aegis_101544
-    Name: Full Penetration Shadow Pendant Box    # !todo check english name
+    Name: Full Penetration Shadow Pendant Box
     Type: Usable
     Weight: 10
     # TODO: can be sold, but price is unknown
@@ -52218,7 +52225,7 @@ Body:
       getgroupitem(IG_S_FULLPENE_PENDANT,true);
   - Id: 101545
     AegisName: aegis_101545
-    Name: Full Penetration Shadow Armor Box    # !todo check english name
+    Name: Full Penetration Shadow Armor Box
     Type: Usable
     Weight: 10
     # TODO: can be sold, but price is unknown
@@ -52228,7 +52235,7 @@ Body:
       getgroupitem(IG_S_FULLPENE_ARMOR,true);
   - Id: 101546
     AegisName: aegis_101546
-    Name: Full Penetration Shadow Shoes Box    # !todo check english name
+    Name: Full Penetration Shadow Shoes Box
     Type: Usable
     Weight: 10
     # TODO: can be sold, but price is unknown
@@ -52238,13 +52245,14 @@ Body:
       getgroupitem(IG_S_FULLPENE_SHOES,true);
   - Id: 101547
     AegisName: aegis_101547
-    Name: Full Tempest Shadow Selection Box    # !todo check english name
+    Name: Full Tempest Shadow Selection Box
     Type: DelayConsume
     Weight: 10
-    # TODO: can be sold, but price is unknown
+    Flags:
+      BuyingStore: true
   - Id: 101548
     AegisName: aegis_101548
-    Name: Full Penetration Shadow Earring Box    # !todo check english name
+    Name: Full Tempest Shadow Earring Box
     Type: Usable
     Weight: 10
     # TODO: can be sold, but price is unknown
@@ -52254,7 +52262,7 @@ Body:
       getgroupitem(IG_S_FULLTEMP_EARRING,true);
   - Id: 101549
     AegisName: aegis_101549
-    Name: Full Penetration Shadow Pendant Box    # !todo check english name
+    Name: Full Tempest Shadow Pendant Box
     Type: Usable
     Weight: 10
     # TODO: can be sold, but price is unknown
@@ -52264,7 +52272,7 @@ Body:
       getgroupitem(IG_S_FULLTEMP_PENDANT,true);
   - Id: 101550
     AegisName: aegis_101550
-    Name: Full Penetration Shadow Armor Box    # !todo check english name
+    Name: Full Tempest Shadow Armor Box
     Type: Usable
     Weight: 10
     # TODO: can be sold, but price is unknown
@@ -52274,7 +52282,7 @@ Body:
       getgroupitem(IG_S_FULLTEMP_ARMOR,true);
   - Id: 101551
     AegisName: aegis_101551
-    Name: Full Penetration Shadow Shoes Box    # !todo check english name
+    Name: Full Tempest Shadow Shoes Box
     Type: Usable
     Weight: 10
     # TODO: can be sold, but price is unknown
@@ -52284,13 +52292,14 @@ Body:
       getgroupitem(IG_S_FULLTEMP_SHOES,true);
   - Id: 101552
     AegisName: aegis_101552
-    Name: Durable Shadow Selection Box    # !todo check english name
+    Name: Durable Shadow Selection Box
     Type: DelayConsume
     Weight: 10
-    # TODO: can be sold, but price is unknown
+    Flags:
+      BuyingStore: true
   - Id: 101553
     AegisName: aegis_101553
-    Name: Durable Weapon Shadow Box    # !todo check english name
+    Name: Durable Shadow Weapon Box
     Type: Usable
     Weight: 10
     # TODO: can be sold, but price is unknown
@@ -52300,7 +52309,7 @@ Body:
       getgroupitem(IG_S_DURABLE_WEAPON,true);
   - Id: 101554
     AegisName: aegis_101554
-    Name: Durable Shield Shadow Box    # !todo check english name
+    Name: Durable Shadow Shield Box
     Type: Usable
     Weight: 10
     # TODO: can be sold, but price is unknown
@@ -52310,13 +52319,14 @@ Body:
       getgroupitem(IG_S_DURABLE_SHIELD,true);
   - Id: 101555
     AegisName: aegis_101555
-    Name: Clever Shadow Selection Box    # !todo check english name
+    Name: Clever Shadow Selection Box
     Type: DelayConsume
     Weight: 10
-    # TODO: can be sold, but price is unknown
+    Flags:
+      BuyingStore: true
   - Id: 101556
     AegisName: aegis_101556
-    Name: Clever Weapon Shadow Box    # !todo check english name
+    Name: Clever Shadow Weapon Box
     Type: Usable
     Weight: 10
     # TODO: can be sold, but price is unknown
@@ -52326,7 +52336,7 @@ Body:
       getgroupitem(IG_S_CLEVER_WEAPON,true);
   - Id: 101557
     AegisName: aegis_101557
-    Name: Clever Shield Shadow Box    # !todo check english name
+    Name: Clever Shadow Shield Box
     Type: Usable
     Weight: 10
     # TODO: can be sold, but price is unknown
@@ -52336,10 +52346,11 @@ Body:
       getgroupitem(IG_S_CLEVER_SHIELD,true);
   - Id: 101563
     AegisName: aegis_101563
-    Name: Helmet Selection Box for OS Weapons    # !todo check english name
+    Name: Helmet Selection Box for OS Weapons
     Type: DelayConsume
     Weight: 10
-    # TODO: can be sold, but price is unknown
+    Flags:
+      BuyingStore: true
   - Id: 101564
     AegisName: AllMighty_Up
     Name: Almighty Shadow Spellbook
@@ -52351,10 +52362,11 @@ Body:
       laphine_upgrade();
   - Id: 101565
     AegisName: aegis_101565
-    Name: Shadow Spellbook Selection Box    # !todo check english name
+    Name: Shadow Spellbook Selection Box
     Type: DelayConsume
     Weight: 10
-    # TODO: can be sold, but price is unknown
+    Flags:
+      BuyingStore: true
   - Id: 101639
     AegisName: D_Gw_Extractor
     Name: Dim Glacier Extractor    # !todo check english name
@@ -52375,7 +52387,8 @@ Body:
     Name: Almighty Shadow Selection Box    # !todo check english name
     Type: DelayConsume
     Weight: 10
-    # TODO: can be sold, but price is unknown
+    Flags:
+      BuyingStore: true
   - Id: 101655
     AegisName: aegis_101655
     Name: Almighty Shadow Earring Box    # !todo check english name
@@ -52401,7 +52414,8 @@ Body:
     Name: True Gemstone Shadow Selection Box    # !todo check english name
     Type: DelayConsume
     Weight: 10
-    # TODO: can be sold, but price is unknown
+    Flags:
+      BuyingStore: true
   - Id: 101658
     AegisName: aegis_101658
     Name: True Gemstone Shadow Earring Box    # !todo check english name
@@ -52447,7 +52461,8 @@ Body:
     Name: Perfect Size Shadow Selection Box    # !todo check english name
     Type: DelayConsume
     Weight: 10
-    # TODO: can be sold, but price is unknown
+    Flags:
+      BuyingStore: true
   - Id: 101663
     AegisName: aegis_101663
     Name: Perfect Size Shadow Weapon Box    # !todo check english name
@@ -52582,19 +52597,22 @@ Body:
     Name: Maximum Mammoth Shadow Selection Box    # !todo check english name
     Type: DelayConsume
     Weight: 10
-    # TODO: can be sold, but price is unknown
+    Flags:
+      BuyingStore: true
   - Id: 101728
     AegisName: aegis_101728
     Name: Spell Caster Shadow Selection Box    # !todo check english name
     Type: DelayConsume
     Weight: 10
-    # TODO: can be sold, but price is unknown
+    Flags:
+      BuyingStore: true
   - Id: 101729
     AegisName: aegis_101729
     Name: Absorb Shadow Selection Box    # !todo check english name
     Type: DelayConsume
     Weight: 10
-    # TODO: can be sold, but price is unknown
+    Flags:
+      BuyingStore: true
   - Id: 200055
     AegisName: C_Acid_B_50Box
     Name: Acid Bomb 50 Box
