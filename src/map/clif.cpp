@@ -24073,7 +24073,7 @@ void clif_parse_item_reform_start( int fd, struct map_session_data* sd ){
 }
 
 void clif_enchantwindow_open( struct map_session_data& sd, uint64 clientLuaIndex ){
-#if PACKETVER_RE_NUM >= 20211103
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
 	// Hardcoded clientside check
 	if( sd.weight > ( ( sd.max_weight * 70 ) / 100 ) ){
 		clif_msg_color( &sd, C_ENCHANT_OVERWEIGHT, color_table[COLOR_RED] );
@@ -24095,7 +24095,7 @@ void clif_enchantwindow_open( struct map_session_data& sd, uint64 clientLuaIndex
 }
 
 void clif_enchantwindow_result( struct map_session_data& sd, bool success, t_itemid enchant = 0 ){
-#if PACKETVER_RE_NUM >= 20211103
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
 	struct PACKET_ZC_RESPONSE_ENCHANT p = {};
 
 	p.packetType = HEADER_ZC_RESPONSE_ENCHANT;
@@ -24149,7 +24149,7 @@ bool clif_parse_enchant_basecheck( struct item& selected_item, std::shared_ptr<s
 }
 
 void clif_parse_enchantwindow_general( int fd, struct map_session_data* sd ){
-#if PACKETVER_RE_NUM >= 20211103
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
 	struct PACKET_CZ_REQUEST_RANDOM_ENCHANT *p = (struct PACKET_CZ_REQUEST_RANDOM_ENCHANT*)RFIFOP( fd, 0 );
 
 	if( sd->state.item_enchant_index != p->clientLuaIndex ){
@@ -24278,7 +24278,7 @@ void clif_parse_enchantwindow_general( int fd, struct map_session_data* sd ){
 }
 
 void clif_parse_enchantwindow_perfect( int fd, struct map_session_data* sd ){
-#if PACKETVER_RE_NUM >= 20211103
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
 	struct PACKET_CZ_REQUEST_PERFECT_ENCHANT *p = (struct PACKET_CZ_REQUEST_PERFECT_ENCHANT*)RFIFOP( fd, 0 );
 
 	if( sd->state.item_enchant_index != p->clientLuaIndex ){
@@ -24378,7 +24378,7 @@ void clif_parse_enchantwindow_perfect( int fd, struct map_session_data* sd ){
 }
 
 void clif_parse_enchantwindow_upgrade( int fd, struct map_session_data* sd ){
-#if PACKETVER_RE_NUM >= 20211103
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
 	struct PACKET_CZ_REQUEST_UPGRADE_ENCHANT *p = (struct PACKET_CZ_REQUEST_UPGRADE_ENCHANT*)RFIFOP( fd, 0 );
 
 	if( sd->state.item_enchant_index != p->clientLuaIndex ){
@@ -24475,7 +24475,7 @@ void clif_parse_enchantwindow_upgrade( int fd, struct map_session_data* sd ){
 }
 
 void clif_parse_enchantwindow_reset( int fd, struct map_session_data* sd ){
-#if PACKETVER_RE_NUM >= 20211103
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
 	struct PACKET_CZ_REQUEST_RESET_ENCHANT *p = (struct PACKET_CZ_REQUEST_RESET_ENCHANT*)RFIFOP( fd, 0 );
 
 	if( sd->state.item_enchant_index != p->clientLuaIndex ){
@@ -24593,7 +24593,7 @@ void clif_parse_enchantwindow_reset( int fd, struct map_session_data* sd ){
 }
 
 void clif_parse_enchantwindow_close( int fd, struct map_session_data* sd ){
-#if PACKETVER_RE_NUM >= 20211103
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
 	sd->state.item_enchant_index = 0;
 #endif
 }
