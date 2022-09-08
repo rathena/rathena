@@ -881,6 +881,7 @@ void clif_instance_changewait(int instance_id, int num);
 void clif_instance_status(int instance_id, unsigned int limit1, unsigned int limit2);
 void clif_instance_changestatus(int instance_id, e_instance_notify type, unsigned int limit);
 void clif_parse_MemorialDungeonCommand(int fd, map_session_data *sd);
+void clif_instance_info( struct map_session_data& sd );
 
 // Custom Fonts
 void clif_font(struct map_session_data *sd);
