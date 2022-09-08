@@ -5454,6 +5454,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      SendVal1: true
       NoForcedEnd: true
   - Status: Angel_Protect
     Icon: EFST_ANGEL_PROTECT
@@ -6115,6 +6116,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      SendVal1: true
       NoForcedEnd: true
   - Status: Ljosalfar
     Icon: EFST_LJOSALFAR
