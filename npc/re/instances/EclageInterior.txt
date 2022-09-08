@@ -149,7 +149,7 @@ OnInstanceInit:
 
 OnInstanceInit:
 	'mob_summoned = 0;
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 
 OnEnable:

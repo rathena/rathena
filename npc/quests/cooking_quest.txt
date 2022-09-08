@@ -2063,8 +2063,8 @@ L_End:
 
 S_SellSets:
 	.@item_id = getarg(0);
-	.@item_cost = getiteminfo(.@item_id,0);
-	.@item_weight = getiteminfo(.@item_id,6);
+	.@item_cost = getiteminfo(.@item_id, ITEMINFO_BUY);
+	.@item_weight = getiteminfo(.@item_id, ITEMINFO_WEIGHT);
 	mes "[Madeleine Chu]";
 	mes "How many "+ (.@item_id == 12125 ? "Outdoor":"Indoor");
 	mes "Cooking Kits would";

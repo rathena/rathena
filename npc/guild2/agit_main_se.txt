@@ -1055,7 +1055,7 @@ OnInit:
 						close2;
 						donpcevent "df"+.@num+"#"+strnpcinfo(4)+"::OnEnable";
 						specialeffect EF_ICECRASH;
-						disablenpc strnpcinfo(0);
+						disablenpc();
 						setd .@var$+"["+(.@num-1)+"]",0;
 						set .@df_all,getd(.@var$+"[0]")+getd(.@var$+"[1]");
 						if (!.@df_all) {
@@ -1092,11 +1092,11 @@ OnInit:
 
 OnInit:
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	specialeffect EF_MAPPILLAR2;
 	end;
 }
@@ -1297,7 +1297,7 @@ OnEnable:
 							delitem 984,5; //Oridecon
 							close2;
 							donpcevent "RL"+.@num+"#"+strnpcinfo(4)+"::OnEnable";
-							disablenpc strnpcinfo(0);
+							disablenpc();
 							if (.@num == 1) set .@str$,"1st";
 							else if (.@num == 2) set .@str$,"2nd";
 							else if (.@num == 3) set .@str$,"3rd";
@@ -1336,11 +1336,11 @@ OnEnable:
 
 OnInit:
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 }
 

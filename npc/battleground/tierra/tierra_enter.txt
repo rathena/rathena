@@ -27,7 +27,7 @@ bat_room,124,178,5	script	Tierra Gorge Officer#01a	418,{
 	next;
 	switch(select("I want to join your army!:End Conversation")) {
 	case 1:
-		if ((Class == Job_Novice) || (BaseClass == Job_Super_Novice)) {
+		if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice)) {
 			mes "[Guillaume Army Officer]";
 			mes "I'm very pleased that you want to join us and fight the Croix Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield.";
 		}
@@ -96,7 +96,7 @@ bat_room,140,178,5	script	Tierra Gorge Officer#02a	418,{
 	next;
 	switch(select("I want to join your army!:End Conversation")) {
 	case 1:
-		if ((Class == Job_Novice) || (BaseClass == Job_Super_Novice)) {
+		if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice)) {
 			mes "[Guillaume Army Officer]";
 			mes "I'm very pleased that you want to join us and fight the Croix Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield.";
 		}
@@ -233,7 +233,7 @@ bat_room,125,121,1	script	Tierra Gorge Officer#01b	414,{
 	next;
 	switch(select("I want to join your army!:End Conversation")) {
 	case 1:
-		if ((Class == Job_Novice) || (BaseClass == Job_Super_Novice)) {
+		if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice)) {
 			mes "[Croix Army Officer]";
 			mes "I'm very pleased that you want to join us and fight the Guillaume Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield.";
 		}
@@ -302,7 +302,7 @@ bat_room,140,121,1	script	Tierra Gorge Officer#02b	414,{
 	next;
 	switch(select("I want to join your army!:End Conversation")) {
 	case 1:
-		if ((Class == Job_Novice) || (BaseClass == Job_Super_Novice)) {
+		if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice)) {
 			mes "[Croix Army Officer]";
 			mes "I'm very pleased that you want to join us and fight the Guillaume Army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield.";
 		}

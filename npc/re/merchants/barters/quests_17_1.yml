@@ -1,0 +1,1299 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Barter Database
+###########################################################################
+#
+# Barter Settings
+#
+###########################################################################
+#  - Name               NPC name.
+#    Map                Map name. (Default: not on a map)
+#    X                  Map x coordinate. (Default: 0)
+#    Y                  Map y coordinate. (Default: 0)
+#    Direction          Direction the NPC is looking. (Default: North)
+#    Sprite             Sprite name of the NPC. (Default: FakeNpc)
+#    Items:             List of sold items.
+#      - Index          Index of the item inside the shop. (0-...)
+#                       Maximum index depends on client.
+#        Item           Aegis name of the item.
+#        Stock          Amount of item in stock. 0 means unlimited. (Default: 0)
+#        Zeny           Cost of them item in Zeny. (Default: 0)
+#        RequiredItems: List of required items (Optional)
+#          - Index      Index of the required item. (0-4)
+#            Item       Aegis name of required item.
+#            Amount     Amount of required item. (Default: 1)
+#            Refine     Refine level of required item. (Default: 0)
+###########################################################################
+
+Header:
+  Type: BARTER_DB
+  Version: 1
+
+# Related to Grace Shop
+Body:
+  - Name: shop_sp_cor
+    Items:
+      - Index: 0
+        Item: Teleport_Ep17_01
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 1
+  - Name: shop_ext171_JOB_GUILLOTINE_CROSS
+    Items:
+      - Index: 0
+        Item: Grace_Attack_Ring
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 1
+        Item: Grace_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 2
+        Item: Grace_Attack_Boots
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 3
+        Item: Grace_Rifine_Ticket
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT39
+            Amount: 20
+      - Index: 4
+        Item: Grace_Rolling_Suit
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 5
+        Item: Grace_Assasin_Suit
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 6
+        Item: Grace_Convert1
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 7
+        Item: Grace_Convert2
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 8
+        Item: Grace_Convert3
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 9
+        Item: Grace_Convert4
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+  - Name: shop_ext171_JOB_RANGER
+    Items:
+      - Index: 0
+        Item: Grace_Attack_Ring
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 1
+        Item: Grace_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 2
+        Item: Grace_Attack_Boots
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 3
+        Item: Grace_Rifine_Ticket
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT39
+            Amount: 20
+      - Index: 4
+        Item: Grace_Aim_Suit
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 5
+        Item: Grace_Sharp_Suit
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 6
+        Item: Grace_Convert1
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 7
+        Item: Grace_Convert2
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 8
+        Item: Grace_Convert3
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 9
+        Item: Grace_Convert4
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+  - Name: shop_ext171_JOB_SHADOW_CHASER
+    Items:
+      - Index: 0
+        Item: Grace_Attack_Ring
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 1
+        Item: Grace_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 2
+        Item: Grace_Attack_Boots
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 3
+        Item: Grace_Rifine_Ticket
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT39
+            Amount: 20
+      - Index: 4
+        Item: Grace_Fatal_Suit
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 5
+        Item: Grace_Stalker_Suit
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 6
+        Item: Grace_Magic_Boots
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 7
+        Item: Grace_Magic_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 8
+        Item: Grace_Magic_Ring
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 9
+        Item: Grace_Convert1
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 10
+        Item: Grace_Convert2
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 11
+        Item: Grace_Convert3
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 12
+        Item: Grace_Convert4
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+  - Name: shop_ext171_JOB_RUNE_KNIGHT
+    Items:
+      - Index: 0
+        Item: Grace_Attack_Ring
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 1
+        Item: Grace_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 2
+        Item: Grace_Attack_Boots
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 3
+        Item: Grace_Rifine_Ticket
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT39
+            Amount: 20
+      - Index: 4
+        Item: Grace_Knight_Armor
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 5
+        Item: Grace_Breath_Armor
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 6
+        Item: Grace_Convert1
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 7
+        Item: Grace_Convert2
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 8
+        Item: Grace_Convert3
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 9
+        Item: Grace_Convert4
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+  - Name: shop_ext171_JOB_ARCH_BISHOP
+    Items:
+      - Index: 0
+        Item: Grace_Attack_Ring
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 1
+        Item: Grace_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 2
+        Item: Grace_Attack_Boots
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 3
+        Item: Grace_Rifine_Ticket
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT39
+            Amount: 20
+      - Index: 4
+        Item: Grace_Adora_Robe
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 5
+        Item: Grace_Duple_Robe
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 6
+        Item: Grace_Magic_Boots
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 7
+        Item: Grace_Magic_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 8
+        Item: Grace_Magic_Ring
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 9
+        Item: Grace_Convert1
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 10
+        Item: Grace_Convert2
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 11
+        Item: Grace_Convert3
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 12
+        Item: Grace_Convert4
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+  - Name: shop_ext171_JOB_GENETIC
+    Items:
+      - Index: 0
+        Item: Grace_Attack_Ring
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 1
+        Item: Grace_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 2
+        Item: Grace_Attack_Boots
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 3
+        Item: Grace_Rifine_Ticket
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT39
+            Amount: 20
+      - Index: 4
+        Item: Grace_Kart_Suit
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 5
+        Item: Grace_Kart_Suit2
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 6
+        Item: Grace_Convert1
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 7
+        Item: Grace_Convert2
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 8
+        Item: Grace_Convert3
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 9
+        Item: Grace_Convert4
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+  - Name: shop_ext171_JOB_SUMMONER
+    Items:
+      - Index: 0
+        Item: Grace_Attack_Ring
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 1
+        Item: Grace_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 2
+        Item: Grace_Attack_Boots
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 3
+        Item: Grace_Rifine_Ticket
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT39
+            Amount: 20
+      - Index: 4
+        Item: Grace_Picky_Robe
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 5
+        Item: Grace_Carrot_Robe
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 6
+        Item: Grace_Magic_Boots
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 7
+        Item: Grace_Magic_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 8
+        Item: Grace_Magic_Ring
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 9
+        Item: Grace_Convert1
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 10
+        Item: Grace_Convert2
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 11
+        Item: Grace_Convert3
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 12
+        Item: Grace_Convert4
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+  - Name: shop_ext171_JOB_WARLOCK
+    Items:
+      - Index: 0
+        Item: Grace_Magic_Ring
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 1
+        Item: Grace_Magic_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 2
+        Item: Grace_Magic_Boots
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 3
+        Item: Grace_Rifine_Ticket
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT39
+            Amount: 20
+      - Index: 4
+        Item: Grace_Frost_Robe
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 5
+        Item: Grace_Crimson_Robe
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 6
+        Item: Grace_Convert1
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 7
+        Item: Grace_Convert2
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 8
+        Item: Grace_Convert3
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 9
+        Item: Grace_Convert4
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+  - Name: shop_ext171_JOB_SORCERER
+    Items:
+      - Index: 0
+        Item: Grace_Magic_Ring
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 1
+        Item: Grace_Magic_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 2
+        Item: Grace_Magic_Boots
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 3
+        Item: Grace_Rifine_Ticket
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT39
+            Amount: 20
+      - Index: 4
+        Item: Grace_Dust_Robe
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 5
+        Item: Grace_Psychic_Robe
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 6
+        Item: Grace_Convert1
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 7
+        Item: Grace_Convert2
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 8
+        Item: Grace_Convert3
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 9
+        Item: Grace_Convert4
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+  - Name: shop_ext171_JOB_SOUL_REAPER
+    Items:
+      - Index: 0
+        Item: Grace_Magic_Ring
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 1
+        Item: Grace_Magic_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 2
+        Item: Grace_Magic_Boots
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 3
+        Item: Grace_Rifine_Ticket
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT39
+            Amount: 20
+      - Index: 4
+        Item: Grace_Swhoo_Robe
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 5
+        Item: Grace_Explosion_Robe
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 6
+        Item: Grace_Convert1
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 7
+        Item: Grace_Convert2
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 8
+        Item: Grace_Convert3
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 9
+        Item: Grace_Convert4
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+  - Name: shop_ext171_JOB_REBELLION
+    Items:
+      - Index: 0
+        Item: Grace_Attack_Ring
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 1
+        Item: Grace_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 2
+        Item: Grace_Attack_Boots
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 3
+        Item: Grace_Rifine_Ticket
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT39
+            Amount: 20
+      - Index: 4
+        Item: Grace_Firerain_Suit
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 5
+        Item: Grace_Trip_Suit
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 6
+        Item: Grace_Convert1
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 7
+        Item: Grace_Convert2
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 8
+        Item: Grace_Convert3
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 9
+        Item: Grace_Convert4
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+  - Name: shop_ext171_JOB_ROYAL_GUARD
+    Items:
+      - Index: 0
+        Item: Grace_Attack_Ring
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 1
+        Item: Grace_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 2
+        Item: Grace_Attack_Boots
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 3
+        Item: Grace_Rifine_Ticket
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT39
+            Amount: 20
+      - Index: 4
+        Item: Grace_Spear_Armor
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 5
+        Item: Grace_Genesis_Armor
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 6
+        Item: Grace_Magic_Boots
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 7
+        Item: Grace_Magic_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 8
+        Item: Grace_Magic_Ring
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 9
+        Item: Grace_Convert1
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 10
+        Item: Grace_Convert2
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 11
+        Item: Grace_Convert3
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 12
+        Item: Grace_Convert4
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+  - Name: shop_ext171_JOB_SURA
+    Items:
+      - Index: 0
+        Item: Grace_Attack_Ring
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 1
+        Item: Grace_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 2
+        Item: Grace_Attack_Boots
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 3
+        Item: Grace_Rifine_Ticket
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT39
+            Amount: 20
+      - Index: 4
+        Item: Grace_Knuckle_Suit
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 5
+        Item: Grace_Tiger_Suit
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 6
+        Item: Grace_Convert1
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 7
+        Item: Grace_Convert2
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 8
+        Item: Grace_Convert3
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 9
+        Item: Grace_Convert4
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+  - Name: shop_ext171_JOB_KAGEROU
+    Items:
+      - Index: 0
+        Item: Grace_Attack_Ring
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 1
+        Item: Grace_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 2
+        Item: Grace_Attack_Boots
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 3
+        Item: Grace_Rifine_Ticket
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT39
+            Amount: 20
+      - Index: 4
+        Item: Grace_Kunai_Suit
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 5
+        Item: Grace_Ninja_Suit
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 6
+        Item: Grace_Magic_Boots
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 7
+        Item: Grace_Magic_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 8
+        Item: Grace_Magic_Ring
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 9
+        Item: Grace_Convert1
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 10
+        Item: Grace_Convert2
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 11
+        Item: Grace_Convert3
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 12
+        Item: Grace_Convert4
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+  - Name: shop_ext171_JOB_STAR_EMPEROR
+    Items:
+      - Index: 0
+        Item: Grace_Attack_Ring
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 1
+        Item: Grace_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 2
+        Item: Grace_Attack_Boots
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 3
+        Item: Grace_Rifine_Ticket
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT39
+            Amount: 20
+      - Index: 4
+        Item: Grace_Sun_Suit
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 5
+        Item: Grace_Moon_Suit
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 6
+        Item: Grace_Convert1
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 7
+        Item: Grace_Convert2
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 8
+        Item: Grace_Convert3
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 9
+        Item: Grace_Convert4
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+  - Name: shop_ext171_JOB_MINSTREL
+    Items:
+      - Index: 0
+        Item: Grace_Attack_Ring
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 1
+        Item: Grace_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 2
+        Item: Grace_Attack_Boots
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 3
+        Item: Grace_Rifine_Ticket
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT39
+            Amount: 20
+      - Index: 4
+        Item: Grace_Severe_Suit
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 5
+        Item: Grace_Reverb_Suit
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 6
+        Item: Grace_Magic_Boots
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 7
+        Item: Grace_Magic_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 8
+        Item: Grace_Magic_Ring
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 9
+        Item: Grace_Convert1
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 10
+        Item: Grace_Convert2
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 11
+        Item: Grace_Convert3
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 12
+        Item: Grace_Convert4
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+  - Name: shop_ext171_JOB_SUPER_NOVICE_E
+    Items:
+      - Index: 0
+        Item: Grace_Attack_Ring
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 1
+        Item: Grace_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 2
+        Item: Grace_Attack_Boots
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 3
+        Item: Grace_Rifine_Ticket
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT39
+            Amount: 20
+      - Index: 4
+        Item: Grace_Snovice_Suit
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 5
+        Item: Grace_Snovice_Robe
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 6
+        Item: Grace_Magic_Boots
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 7
+        Item: Grace_Magic_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 8
+        Item: Grace_Magic_Ring
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 9
+        Item: Grace_Convert1
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 10
+        Item: Grace_Convert2
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 11
+        Item: Grace_Convert3
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 12
+        Item: Grace_Convert4
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+  - Name: shop_ext171_JOB_MECHANIC
+    Items:
+      - Index: 0
+        Item: Grace_Attack_Ring
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 1
+        Item: Grace_Attack_Manteau
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 2
+        Item: Grace_Attack_Boots
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 3
+        Item: Grace_Rifine_Ticket
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT39
+            Amount: 20
+      - Index: 4
+        Item: Grace_Tonado_Armor
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 5
+        Item: Grace_Vulcan_Armor
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 20
+      - Index: 6
+        Item: Grace_Convert1
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 7
+        Item: Grace_Convert2
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 8
+        Item: Grace_Convert3
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10
+      - Index: 9
+        Item: Grace_Convert4
+        RequiredItems:
+          - Index: 0
+            Item: EP17_1_EVT02
+            Amount: 10

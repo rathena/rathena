@@ -1,0 +1,30 @@
+//===== rAthena Script ======================================= 
+//= Einbroch Warp Script
+//===== Description: =========================================
+//= Warp Points for Einbroch
+//===== Changelog: ===========================================
+//= 1.0 Some warps have been changed in renewal ep16.2 [Capuche]
+//= 1.1 Episode 17.1 - Illusion update [crazyarashi]
+//============================================================
+
+ein_in01,274,246,0	script	#ep162_warp01	WARPNPC,1,1,{
+	end;
+OnTouch:
+	if (terra_gloria_main == 18 || terra_gloria_main == 22) {
+		cutin "ep16_tes01.bmp",0;
+		mes "[Tess]";
+		mes "Welcome. Please come in.";
+		close2;
+	}
+	warp "ein_in01",273,276;
+	end;
+}
+ein_in01,273,273,0	warp	roomB_roomBGate	1,1,ein_in01,274,243
+
+//============================================================
+// Episode 17.1 - Illusion
+//============================================================
+// Cat on Bullet Pub
+einbroch,302,331,0	warp	ein_to_pub	1,1,pub_cat,49,27
+pub_cat,44,27,0	warp	pub_to_ein	1,1,einbroch,302,326
+pub_cat,146,105,0	warp	backroom_exit	1,1,pub_cat,100,106

@@ -239,7 +239,7 @@ OnInstanceInit:
 	donpcevent instance_npcname(strnpcinfo(0))+"::OnDisable";
 	end;
 OnEnable:
-	enablenpc instance_npcname(strnpcinfo(0));
+	enablenpc();
 	set .@label$, instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
 	set .@i, atoi(charat(strnpcinfo(0),8));
 	set .@map$, instance_mapname("1@cash");
@@ -300,7 +300,7 @@ OnEnable:
 	end;
 OnDisable:
 	killmonster instance_mapname("1@cash"),instance_npcname(strnpcinfo(0))+"::OnMyMobDead"; // Not in official script.
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 OnTouch_:
 	if (getd("."+strnpcinfo(0)+instance_id())) end;
@@ -664,7 +664,7 @@ OnMyMobDead:
 1@cash,190,208,0	script	oct_exit_1	45,2,2,{
 	end;
 OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 OnTouch:
 	mes "Do you want to go out from the octopus dungeon?";

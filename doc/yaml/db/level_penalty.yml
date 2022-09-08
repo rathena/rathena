@@ -1,0 +1,12 @@
+###########################################################################
+# Level Penalty Database
+###########################################################################
+#
+# Level Penalty Settings
+#
+###########################################################################
+# - Type:             Type of Penalty (Exp, Drop, Mvp_Exp, Mvp_Drop)
+#   LevelDifferences: List of level difference between player and monster
+#     - Difference:   Level difference between player and monster
+#       Rate:         Rate applied to original exp or drop rate (0-10000)
+###########################################################################
