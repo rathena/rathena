@@ -29,7 +29,7 @@
 #         - Item               Item that will be given out.
 #           Amount             Amount of the item. (Default: 1)
 #                              To remove an item via import set amount to 0.
-#           Rentalhours        Rental time in hours. (Default: 0)
+#           RentalHours        Rental time in hours. (Default: 0)
 #           Refine             Refine level of the item. (Default: 0)
 #           RandomOptionGroup  Name of the random option group that will be applied. (Default: none)
 ###########################################################################
@@ -53,7 +53,7 @@ Body:
             Refine: 3
 #            RandomOptionGroup: TODO <insert random option group name>
           - Item: Event_Pierrot_Nose
-            Rentalhours: 24
+            RentalHours: 24
 #            RandomOptionGroup: TODO <insert random option group name>
       - Group: 1
         Items:
@@ -86,7 +86,7 @@ Body:
           - Item: Red_Potion
             Amount: 100
           - Item: Ring
-            Rentalhours: 24
+            RentalHours: 24
 #            RandomOptionGroup: TODO <insert random option group name>
       - Group: 1
         Items:
@@ -104,7 +104,7 @@ Body:
             Refine: 20
 #            RandomOptionGroup: TODO <insert random option group name>
           - Item: Guard
-            Rentalhours: 168
+            RentalHours: 168
             Refine: 5
 #            RandomOptionGroup: TODO <insert random option group name>
           - Item: White_Herb
@@ -151,12 +151,12 @@ Body:
         Items:
           - Item: Wing_Of_Fly
             Amount: 3
-            Rentalhours: 24
+            RentalHours: 24
           - Item: Wing_Of_Butterfly
             Amount: 5
-            Rentalhours: 168
+            RentalHours: 168
           - Item: Old_Blue_Box
-            Rentalhours: 1
+            RentalHours: 1
       - Group: 9
         Items:
           - Item: Red_Potion
@@ -166,7 +166,7 @@ Body:
           - Item: Red_Potion
           - Item: Red_Potion
             Amount: 3
-            Rentalhours: 1
+            RentalHours: 1
       - Group: 10
         Items:
           - Item: Guard_

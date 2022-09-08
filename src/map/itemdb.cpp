@@ -2063,10 +2063,10 @@ uint64 ItemPackageDatabase::parseBodyNode( const ryml::NodeRef& node ){
 					}
 				}
 
-				if( this->nodeExists( itemNode, "Rentalhours" ) ){
+				if( this->nodeExists( itemNode, "RentalHours" ) ){
 					uint16 rentalhours;
 
-					if( !this->asUInt16( itemNode, "Rentalhours", rentalhours ) ){
+					if( !this->asUInt16( itemNode, "RentalHours", rentalhours ) ){
 						return 0;
 					}
 

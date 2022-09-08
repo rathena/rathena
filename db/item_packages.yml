@@ -29,7 +29,7 @@
 #         - Item               Item that will be given out.
 #           Amount             Amount of the item. (Default: 1)
 #                              To remove an item via import set amount to 0.
-#           Rentalhours        Rental time in hours. (Default: 0)
+#           RentalHours        Rental time in hours. (Default: 0)
 #           Refine             Refine level of the item. (Default: 0)
 #           RandomOptionGroup  Name of the random option group that will be applied. (Default: none)
 ###########################################################################
