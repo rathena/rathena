@@ -4798,7 +4798,7 @@ int status_calc_homunculus_(struct homun_data *hd, uint8 opt)
 		status->max_hp += skill_lv * 2 * status->max_hp / 100;
 
 	if((skill_lv = hom_checkskill(hd, HLIF_BRAIN)) > 0)
-		status->max_sp += (1 + skill_lv / 2 - skill_lv / 4 + skill_lv / 5) * status->max_sp / 100;
+		status->max_sp += skill_lv * status->max_sp / 100;
 
 	if (opt&SCO_FIRST) {
 		hd->battle_status.hp = hom->hp;
