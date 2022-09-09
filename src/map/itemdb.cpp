@@ -2884,7 +2884,7 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (strncasecmp(group_name.c_str(), "IG_", 3) != 0)
 			this->invalidWarning(node["Group"], "Invalid group %s.\n", group_name.c_str());
 		else
-			this->invalidWarning(node["Group"], "Invalid group %s. Note that 'IG_' is automatically appended to the group name.\n", group_name.c_str());
+			this->invalidWarning(node["Group"], "Invalid group %s. Note that 'IG_' is automatically prepended to the group name.\n", group_name.c_str());
 		return 0;
 	}
 

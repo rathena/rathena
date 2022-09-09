@@ -31147,3 +31147,833 @@ Body:
         List:
           - Item: Enchant_Ticket
             Amount: 2
+  - Group: SCROLL_SEALED_DARK_LORD
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Comp_Bubble_Gum
+            Rate: 1500
+          - Item: Comp_Battle_Manual
+            Rate: 1500
+          - Item: Enchant_Stone_Box
+            Rate: 1000
+          - Item: Poison_Bottle_Box2
+            Rate: 1000
+          - Item: Treasure_Box
+            Rate: 1000
+          - Item: Costume_Exchange
+            Rate: 1000
+          - Item: Comp_Insurance
+            Rate: 500
+          - Item: S_Critical_Armor
+            Rate: 350
+          - Item: S_Ancient_Armor
+            Rate: 350
+          - Item: S_Hard_Armor
+            Rate: 350
+          - Item: S_Healing_Weapon
+            Rate: 300
+          - Item: S_Cri_Hit_Weapon
+            Rate: 300
+          - Item: S_Kingbird_Weapon
+            Rate: 300
+          - Item: S_Immune_Armor
+            Rate: 150
+          - Item: C_Sleeping_Kitty_Cat
+            Rate: 150
+          - Item: Guarantee_Weapon_7Up
+            Rate: 120
+          - Item: Guarantee_Armor_7Up
+            Rate: 115
+          - Item: Guarantee_Armor_9Up
+            Rate: 5
+          - Item: Guarantee_Weapon_9Up
+            Rate: 5
+          - Item: Dark_Illusion_Card
+            Rate: 4
+          - Item: Sealed_D_Lord_Card
+            Rate: 1
+  - Group: SEALED_F_BISHOP_SCROLL
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Enchant_Stone_Box3
+            Rate: 1000
+          - Item: Poison_Bottle_Box2
+            Rate: 1000
+          - Item: Comp_Bubble_Gum
+            Rate: 1000
+          - Item: Comp_Battle_Manual
+            Rate: 1000
+          - Item: Costume_Exchange
+            Rate: 1000
+          - Item: S_Stability_Shield
+            Rate: 550
+          - Item: Comp_Insurance
+            Rate: 500
+          - Item: Treasure_Box
+            Rate: 500
+          - Item: Enchant_Book
+            Rate: 500
+          - Item: S_Adurate_Shoes
+            Rate: 300
+          - Item: S_Adurate_Armor
+            Rate: 300
+          - Item: S_Peerless_Shoes
+            Rate: 300
+          - Item: S_Peerless_Armor
+            Rate: 300
+          - Item: S_Insomniac_Shoes
+            Rate: 300
+          - Item: S_Insomniac_Armor
+            Rate: 300
+          - Item: S_Plasterer's_Shoes
+            Rate: 300
+          - Item: S_Plasterer's_Armor
+            Rate: 300
+          - Item: C_Vanargandr_Helm
+            Rate: 150
+          - Item: Gemstone_Shadow_Box
+            Rate: 139
+          - Item: Guarantee_Armor_7Up
+            Rate: 120
+          - Item: Guarantee_Weapon_7Up
+            Rate: 120
+          - Item: Guarantee_Armor_9Up
+            Rate: 10
+          - Item: Guarantee_Weapon_9Up
+            Rate: 10
+          - Item: Sealed_F_Bishop_Card
+            Rate: 1
+  - Group: OLD_HAT_BOX_
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Chicken_Hat
+            Rate: 5
+          - Item: New_Cowboy_Hat
+            Rate: 5
+          - Item: Santa_Poring_Hat
+            Rate: 5
+          - Item: Fish_Head_Hat
+            Rate: 5
+          - Item: Rabbit_Ear_Hat
+            Rate: 5
+          - Item: L_Orc_Hero_Helm
+            Rate: 5
+          - Item: Darkness_Helm
+            Rate: 5
+          - Item: Drooping_White_Kitty
+            Rate: 5
+          - Item: J_Captain_Hat
+            Rate: 5
+          - Item: Little_Angel_Doll
+            Rate: 5
+          - Item: Diadem
+            Rate: 5
+          - Item: Marcher_Hat
+            Rate: 5
+          - Item: Flying_Angel
+            Rate: 5
+          - Item: Twin_Ribbon
+            Rate: 5
+          - Item: Angel_Spirit
+            Rate: 4
+          - Item: Santa_Hat_1
+            Rate: 4
+          - Item: Ninja_Scroll
+            Rate: 4
+          - Item: Gang_Scarf
+            Rate: 4
+          - Item: Whikebain_Ears
+            Rate: 4
+          - Item: Robo_Eye
+            Rate: 4
+          - Item: Rune_Hairband
+            Rate: 3
+          - Item: Chick_Hat
+            Rate: 3
+  - Group: SCROLL_TURTLE_GENERAL_SEALED
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: C_Wing_Of_Fly_1Day_Box
+            Rate: 1000
+          - Item: Enchant_Stone_Box3
+            Rate: 1000
+          - Item: Poison_Bottle_Box2
+            Rate: 1000
+          - Item: Comp_Battle_Manual
+            Rate: 1000
+          - Item: Costume_Exchange
+            Rate: 1000
+          - Item: Comp_Bubble_Gum
+            Rate: 729
+          - Item: Old_C_Album_Weapon
+            Rate: 500
+          - Item: Old_C_Album_Garment
+            Rate: 500
+          - Item: Blacksmith_Blessing
+            Rate: 500
+          - Item: Enchant_Book
+            Rate: 500
+          - Item: S_Spell_Flow_Shield
+            Rate: 350
+          - Item: S_Spell_Flow_Shoes
+            Rate: 350
+          - Item: S_Caster_Weapon
+            Rate: 350
+          - Item: S_Caster_earring
+            Rate: 350
+          - Item: S_Caster_Pendant
+            Rate: 350
+          - Item: S_Spell_Flow_Armor
+            Rate: 150
+          - Item: C_Light_Darkness_Crown
+            Rate: 150
+          - Item: Guarantee_Armor_7Up
+            Rate: 100
+          - Item: Guarantee_Weapon_7Up
+            Rate: 100
+          - Item: Guarantee_Armor_9Up
+            Rate: 10
+          - Item: Guarantee_Weapon_9Up
+            Rate: 10
+          - Item: Sealed_TurtleG_Card
+            Rate: 1
+  - Group: SEALED_BACSOJIN_SCROLL
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: C_Wing_Of_Fly_1Day_Box
+            Rate: 1000
+          - Item: Enchant_Stone_Box3
+            Rate: 1000
+          - Item: Poison_Bottle_Box2
+            Rate: 1000
+          - Item: Comp_Battle_Manual
+            Rate: 1000
+          - Item: Treasure_Box
+            Rate: 1000
+          - Item: Costume_Exchange
+            Rate: 100
+          - Item: Costume_Festival_Box_II
+            Rate: 700
+          - Item: Cloaking_Shadow_Box
+            Rate: 700
+          - Item: Hiding_Shadow_Box
+            Rate: 700
+          - Item: Heal_Shadow_Box
+            Rate: 700
+          - Item: Costume_Festival_Box
+            Rate: 500
+          - Item: C_Saint_Frill_Ribbon
+            Rate: 150
+          - Item: Grid_Shadow_Box
+            Rate: 150
+          - Item: C_Wing_Of_Fly_5Day_Box
+            Rate: 129
+          - Item: Guarantee_Armor_7Up
+            Rate: 100
+          - Item: Guarantee_Weapon_7Up
+            Rate: 100
+          - Item: Gold
+            Rate: 50
+          - Item: Guarantee_Armor_9Up
+            Rate: 10
+          - Item: Guarantee_Weapon_9Up
+            Rate: 10
+          - Item: Sealed_Bacsojin_Card
+            Rate: 1
+  - Group: COSTUME_FESTIVAL_BOX_II
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: C_Noah_Hat
+            Rate: 1154
+          - Item: C_Vanargandr_Helm
+            Rate: 1154
+          - Item: C_Carnation_Hairband
+            Rate: 1154
+          - Item: C_Light_Darkness_Crown
+            Rate: 1154
+          - Item: C_Sleeping_Kitty_Cat
+            Rate: 1154
+          - Item: C_Wings_Of_Victory
+            Rate: 1154
+          - Item: C_Red_Dress_Hat
+            Rate: 1154
+          - Item: C_Wind_Milestone
+            Rate: 1154
+          - Item: C_Ice_Wing_Ear
+            Rate: 577
+          - Item: C_Kirin_Wing
+            Rate: 192
+  - Group: SEALED_PHARAOH_SCROLL
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: C_Wing_Of_Fly_1Day_Box
+            Rate: 1000
+          - Item: Enchant_Stone_Box3
+            Rate: 1000
+          - Item: Poison_Bottle_Box2
+            Rate: 1000
+          - Item: Comp_Battle_Manual
+            Rate: 1000
+          - Item: Treasure_Box
+            Rate: 1000
+          - Item: Costume_Exchange
+            Rate: 1000
+          - Item: Steal_Shadow_Box
+            Rate: 700
+          - Item: Teleport_Shadow_Box
+            Rate: 700
+          - Item: Old_C_Album_Shield
+            Rate: 500
+          - Item: Old_C_Album_Armor
+            Rate: 500
+          - Item: Enchant_Book
+            Rate: 500
+          - Item: Heal_Shadow_Box
+            Rate: 400
+          - Item: C_Jack_Castle_Bat
+            Rate: 150
+          - Item: Grid_Shadow_Box
+            Rate: 150
+          - Item: C_Wing_Of_Fly_5Day_Box
+            Rate: 129
+          - Item: Guarantee_Armor_7Up
+            Rate: 100
+          - Item: Guarantee_Weapon_7Up
+            Rate: 100
+          - Item: Gold
+            Rate: 50
+          - Item: Guarantee_Armor_9Up
+            Rate: 10
+          - Item: Guarantee_Weapon_9Up
+            Rate: 10
+          - Item: Sealed_Pharaoh_Card
+            Rate: 1
+  - Group: SEALED_GENERAL_EGNIGEM_SCROLL
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Gold
+            Rate: 50
+          - Item: Sealed_B_Ygnizem_Card
+            Rate: 1
+          - Item: Guarantee_Weapon_9Up
+            Rate: 10
+          - Item: Guarantee_Weapon_7Up
+            Rate: 100
+          - Item: Guarantee_Armor_9Up
+            Rate: 10
+          - Item: Guarantee_Armor_7Up
+            Rate: 100
+          - Item: Costume_Exchange
+            Rate: 1000
+          - Item: Treasure_Box
+            Rate: 1000
+          - Item: Comp_Battle_Manual
+            Rate: 1000
+          - Item: Poison_Bottle_Box2
+            Rate: 1000
+          - Item: Enchant_Stone_Box3
+            Rate: 1000
+          - Item: C_Wing_Of_Fly_1Day_Box
+            Rate: 879
+          - Item: C_Hunting_Cap_Of_Gust
+            Rate: 150
+          - Item: S_Executioner_Weapon
+            Rate: 150
+          - Item: S_Exorcist_Weapon
+            Rate: 150
+          - Item: S_Hunting_Weapon
+            Rate: 300
+          - Item: S_Insect_Net_Weapon
+            Rate: 300
+          - Item: S_Fishing_Weapon
+            Rate: 300
+          - Item: S_Dragon_Killer_Weapon
+            Rate: 300
+          - Item: S_Corrupt_Weapon
+            Rate: 300
+          - Item: S_Vibration_Weapon
+            Rate: 300
+          - Item: S_Holy_Water_Weapon
+            Rate: 300
+          - Item: S_Scissors_Weapon
+            Rate: 300
+          - Item: S_Penetration_Earring
+            Rate: 500
+          - Item: S_Penetration_Pendent
+            Rate: 500
+  - Group: WOLFKING_SCROLL
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Branch_Of_Dead_Tree
+            Rate: 1000
+          - Item: Wondering_Wolf_Helm
+            Rate: 75
+          - Item: Imp_Hat
+            Rate: 75
+          - Item: Guarantee_Weapon_7Up
+            Rate: 34
+          - Item: Guarantee_Armor_7Up
+            Rate: 34
+          - Item: Guarantee_Weapon_11Up
+            Rate: 1
+          - Item: Guarantee_Armor_11Up
+            Rate: 1
+          - Item: Auger_Of_Spirit
+            Rate: 100
+          - Item: Blacksmith_Blessing
+            Rate: 150
+          - Item: Treasure_Box
+            Rate: 1000
+          - Item: Magic_Card_Album
+            Rate: 80
+          - Item: Comp_Battle_Manual
+            Rate: 1500
+          - Item: Comp_Bubble_Gum
+            Rate: 1500
+          - Item: White_Slim_Pot_Box2
+            Rate: 1650
+          - Item: Poison_Bottle_Box2
+            Rate: 1000
+          - Item: Old_Ore_Box
+            Rate: 1000
+          - Item: Old_C_Album_Armor
+            Rate: 250
+          - Item: Old_C_Album_Shield
+            Rate: 250
+          - Item: C_Wondering_Wolf_Helm
+            Rate: 150
+          - Item: C_Imp_Hat
+            Rate: 150
+  - Group: KINGS_GIFT
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Old_Card_Album
+            Rate: 500
+          - Item: Old_Violet_Box
+            Rate: 1499
+          - Item: Kiel_Card
+            Rate: 1
+          - Item: Guarantee_Weapon_5Up
+            Rate: 200
+          - Item: Guarantee_Armor_5Up
+            Rate: 200
+          - Item: Comp_Battle_Manual
+            Rate: 500
+          - Item: Comp_Bubble_Gum
+            Rate: 500
+          - Item: Comp_Insurance
+            Rate: 500
+          - Item: E_WOB_Rune
+            Rate: 500
+          - Item: E_WOB_Schwaltz
+            Rate: 500
+          - Item: E_WOB_Rachel
+            Rate: 500
+          - Item: E_WOB_Local
+            Rate: 500
+          - Item: White_Slim_Pot_Box2
+            Rate: 1000
+          - Item: Mysterious_Egg
+            Rate: 200
+          - Item: Reward_Job_BM25
+            Rate: 500
+          - Item: Mysterious_Egg2
+            Rate: 200
+          - Item: Elf_Tear_Stun
+            Rate: 100
+          - Item: Elf_Tear_Stone_Curse
+            Rate: 100
+          - Item: Elf_Tear_Freezing
+            Rate: 100
+          - Item: Elf_Tear_Sleep
+            Rate: 100
+          - Item: Elf_Tear_Curse
+            Rate: 100
+          - Item: Elf_Tear_Silence
+            Rate: 100
+          - Item: Elf_Tear_Blind
+            Rate: 100
+          - Item: Meteor_10_Scroll
+            Rate: 500
+          - Item: Storm_10_Scroll
+            Rate: 500
+          - Item: Vermilion_10_Scroll
+            Rate: 500
+  - Group: 80LVUP
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: 90LVUP
+            Rate: 1429
+          - Item: S_Promotion_Weapon
+            Rate: 1429
+          - Item: S_Promotion_Armor
+            Rate: 1429
+          - Item: S_Promotion_Shoes
+            Rate: 1429
+          - Item: S_Promotion_Shield
+            Rate: 1429
+          - Item: S_Promotion_Earring
+            Rate: 1429
+          - Item: S_Promotion_Pendant
+            Rate: 1429
+  - Group: NEW_YEAR_GIFT_BOX
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Speed_Up_Potion
+            Amount: 3
+      - SubGroup: 1
+        List:
+          - Item: Set_Of_Taiming_Item
+            Rate: 2000
+          - Item: Accessory_Box
+            Rate: 500
+          - Item: Comp_Battle_Manual
+            Rate: 2500
+            Amount: 3
+          - Item: Reward_Job_BM25
+            Rate: 2500
+            Amount: 3
+          - Item: Made_Dish_Box2
+            Rate: 2500
+  - Group: LUCKY_BAG_OF_NEW_ERA
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Str_Dish10_
+            Rate: 943
+            Amount: 2
+          - Item: Agi_Dish10_
+            Rate: 943
+            Amount: 2
+          - Item: Int_Dish10_
+            Rate: 943
+            Amount: 2
+          - Item: Dex_Dish10_
+            Rate: 943
+            Amount: 2
+          - Item: Luk_Dish10_
+            Rate: 943
+            Amount: 2
+          - Item: Vit_Dish10_
+            Rate: 943
+            Amount: 2
+          - Item: Battle_Manual
+            Rate: 189
+            Amount: 2
+          - Item: Bubble_Gum
+            Rate: 943
+            Amount: 2
+          - Item: Neuralizer
+            Rate: 47
+          - Item: Reward_Job_BM25
+            Rate: 189
+            Amount: 2
+          - Item: Repair_Scroll
+            Rate: 1415
+            Amount: 2
+          - Item: Dun_Tele_Scroll1
+            Rate: 1415
+            Amount: 2
+          - Item: Boarding_Halter_Box7
+            Rate: 94
+          - Item: Rainbow
+            Rate: 47
+  - Group: MEMORIAL_BOX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Book_Of_Devil
+            Rate: 500
+          - Item: Singing_Plant
+            Rate: 1000
+          - Item: Illusion_Flower
+            Rate: 500
+          - Item: Silver_Ring
+            Rate: 800
+          - Item: Flower_Ring
+            Rate: 1000
+          - Item: Diamond_Ring
+            Rate: 500
+          - Item: Elegant_Flower
+            Rate: 800
+          - Item: Beautiful_Flower
+            Rate: 1000
+          - Item: Leaf_Bookmark
+            Rate: 1000
+          - Item: Bookclip_In_Memory
+            Rate: 800
+          - Item: Accessory_Box
+            Rate: 100
+          - Item: Bundle_Of_Magic_Scroll
+            Rate: 1000
+          - Item: Spray_Of_Flowers
+            Rate: 1000
+  - Group: WET_CARDALBUM
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Old_Card_Album
+            Rate: 2999
+          - Item: Magic_Card_Album
+            Rate: 1000
+          - Item: Old_C_Album_Helm
+            Rate: 1000
+          - Item: Old_C_Album_Armor
+            Rate: 1000
+          - Item: Old_C_Album_Shield
+            Rate: 1000
+          - Item: Old_C_Album_Garment
+            Rate: 1000
+          - Item: Old_C_Album_Shoes
+            Rate: 1000
+          - Item: Old_C_Album_Acc
+            Rate: 1000
+          - Item: Golden_Card
+            Rate: 1
+  - Group: SEALED_M_FLOWER_SCROLL
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Gold
+            Rate: 50
+          - Item: Sealed_M_Flower_Card
+            Rate: 1
+          - Item: Guarantee_Weapon_9Up
+            Rate: 10
+          - Item: Guarantee_Weapon_7Up
+            Rate: 100
+          - Item: Guarantee_Armor_9Up
+            Rate: 10
+          - Item: Guarantee_Armor_7Up
+            Rate: 100
+          - Item: Enchant_Book
+            Rate: 500
+          - Item: Blacksmith_Blessing
+            Rate: 500
+          - Item: Costume_Exchange
+            Rate: 1000
+          - Item: Treasure_Box
+            Rate: 1000
+          - Item: Comp_Battle_Manual
+            Rate: 1000
+          - Item: Poison_Bottle_Box2
+            Rate: 1000
+          - Item: Old_C_Album_Shoes
+            Rate: 500
+          - Item: Enchant_Stone_Box3
+            Rate: 1000
+          - Item: C_Wing_Of_Fly_1Day_Box
+            Rate: 1000
+          - Item: C_Wing_Of_Fly_5Day_Box
+            Rate: 179
+          - Item: C_10Gallon_Hat_Of_Flame
+            Rate: 150
+          - Item: S_Infinity_Earring
+            Rate: 150
+          - Item: S_Infinity_Pendant
+            Rate: 350
+          - Item: S_Solid_Weapon
+            Rate: 350
+          - Item: S_Solid_Earring
+            Rate: 350
+          - Item: S_Immortal_Armor
+            Rate: 350
+          - Item: S_Immortal_Pendant
+            Rate: 350
+  - Group: QUESTION_BOX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Apple
+            Rate: 1300
+            Amount: 200
+          - Item: Wing_Of_Fly
+            Rate: 1300
+            Amount: 100
+          - Item: Wing_Of_Butterfly
+            Rate: 1300
+            Amount: 50
+          - Item: Arrow
+            Rate: 1300
+            Amount: 1000
+          - Item: Savage_BBQ
+            Rate: 800
+          - Item: Wug_Blood_Cocktail
+            Rate: 800
+          - Item: Minor_Brisket
+            Rate: 800
+          - Item: Siroma_Icetea
+            Rate: 800
+          - Item: Drocera_Herb_Stew
+            Rate: 800
+          - Item: Petti_Tail_Noodle
+            Rate: 800
+  - Group: GOLDEN_CARD
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Phreeoni_Card
+            Rate: 808
+          - Item: Eddga_Card
+            Rate: 101
+          - Item: Moonlight_Flower_Card
+            Rate: 505
+          - Item: Mistress_Card
+            Rate: 101
+          - Item: Dracula_Card
+            Rate: 101
+          - Item: Orc_Load_Card
+            Rate: 101
+          - Item: Doppelganger_Card
+            Rate: 505
+          - Item: Orc_Hero_Card
+            Rate: 101
+          - Item: Osiris_Card
+            Rate: 101
+          - Item: Berzebub_Card
+            Rate: 101
+          - Item: Maya_Card
+            Rate: 101
+          - Item: Baphomet_Card
+            Rate: 101
+          - Item: Pharaoh_Card
+            Rate: 10
+          - Item: Dark_Lord_Card
+            Rate: 303
+          - Item: Amon_Ra_Card
+            Rate: 707
+          - Item: Incant_Samurai_Card
+            Rate: 707
+          - Item: Lord_Of_Death_Card
+            Rate: 505
+          - Item: Turtle_General_Card
+            Rate: 101
+          - Item: Knight_Windstorm_Card
+            Rate: 101
+          - Item: Garm_Card
+            Rate: 253
+          - Item: Dark_Snake_Lord_Card
+            Rate: 202
+          - Item: Rsx_0806_Card
+            Rate: 101
+          - Item: B_Ygnizem_Card
+            Rate: 101
+          - Item: B_Eremes_Card
+            Rate: 101
+          - Item: B_Harword_Card
+            Rate: 101
+          - Item: B_Magaleta_Card
+            Rate: 101
+          - Item: B_Katrinn_Card
+            Rate: 101
+          - Item: B_Shecil_Card
+            Rate: 101
+          - Item: Bacsojin_Card
+            Rate: 101
+          - Item: Apocalips_H_Card
+            Rate: 101
+          - Item: Lady_Tanee_Card
+            Rate: 101
+          - Item: Detale_Card
+            Rate: 101
+          - Item: Kiel_Card
+            Rate: 101
+          - Item: Randgris_Card
+            Rate: 101
+          - Item: Gloom_Under_Night_Card
+            Rate: 10
+          - Item: Ktullanux_Card
+            Rate: 101
+          - Item: Atroce_Card
+            Rate: 101
+          - Item: Ifrit_Card
+            Rate: 101
+          - Item: Fallen_Bishop_Card
+            Rate: 10
+          - Item: Ant_Buyanne_Card
+            Rate: 101
+          - Item: Nidhogg_Shadow_Card
+            Rate: 101
+          - Item: Nahtzigger_Card
+            Rate: 101
+          - Item: Q_Scaraba_Card
+            Rate: 101
+          - Item: Gold_Q_Scaraba_Card
+            Rate: 101
+          - Item: Kraken_Card
+            Rate: 101
+          - Item: Odd_Coelacanth_Card
+            Rate: 101
+          - Item: Black_Coelacanth_Card
+            Rate: 101
+          - Item: Mutant_Coelacanth_Card
+            Rate: 101
+          - Item: Cruel_Coelacanth_Card
+            Rate: 101
+          - Item: Giant_Octopus_Card
+            Rate: 101
+          - Item: Clown_Card
+            Rate: 101
+          - Item: Professor_Card
+            Rate: 101
+          - Item: Champion_Card
+            Rate: 101
+          - Item: Creator_Card
+            Rate: 101
+          - Item: Stalker_Card
+            Rate: 101
+          - Item: Paladin_Card
+            Rate: 101
+          - Item: Gypsy_Card
+            Rate: 101
+          - Item: Daehyon_Card
+            Rate: 101
+          - Item: Gioia_Card
+            Rate: 101
+          - Item: Pyuriel_Card
+            Rate: 101
+          - Item: Kades_Card
+            Rate: 101
+          - Item: Bangungot_Card
+            Rate: 101
+          - Item: Bakonawa_Card
+            Rate: 101
+          - Item: Buwaya_Card
+            Rate: 101
+          - Item: Amdarais_Card
+            Rate: 101
+          - Item: AmdaraisH_Card
+            Rate: 10
+          - Item: CorruptionRoot_Card
+            Rate: 101
+          - Item: CorruptionRootH_Card
+            Rate: 10
+  - Group: 90LVUP
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: Yellow_Slim_Potion_B
+            Amount: 150
+          - Item: Inspector_Certificate_
+            Amount: 10
+          - Item: Comp_Battle_Manual
+            Amount: 5
+          - Item: N_Fly_Wing
+            Amount: 100
+          - Item: E_Abrasive
+            Amount: 5
+          - Item: 100LVUP
+          - Item: Comp_Regenerate_Potion
+            Amount: 4
