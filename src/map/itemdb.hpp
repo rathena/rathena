@@ -1528,7 +1528,7 @@ struct s_item_package_item{
 
 struct s_item_package_group{
 	uint32 groupIndex;
-	std::unordered_map<uint32, std::shared_ptr<s_item_package_item>> items;
+	std::unordered_map<t_itemid, std::shared_ptr<s_item_package_item>> items;
 };
 
 struct s_item_package{
