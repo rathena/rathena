@@ -26394,7 +26394,7 @@ BUILDIN_FUNC(item_reform){
 }
 
 BUILDIN_FUNC(item_enchant){
-#if PACKETVER_RE_NUM < 20211103
+#if !( PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330 )
 	ShowError( "buildin_item_enchant: This command requires packet version 2021-11-03 or newer.\n" );
 	return SCRIPT_CMD_FAILURE;
 #else

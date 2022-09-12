@@ -5782,6 +5782,36 @@
 	export_constant(IG_BS_ITEM_M_S_55);
 	export_constant(IG_BS_ITEM_M_S_56);
 	export_constant(IG_ENCHANT_STONE_BOX28);
+	export_constant(IG_S_FULLPENE_EARRING);
+	export_constant(IG_S_FULLPENE_PENDANT);
+	export_constant(IG_S_FULLPENE_ARMOR);
+	export_constant(IG_S_FULLPENE_SHOES);
+	export_constant(IG_S_FULLTEMP_EARRING);
+	export_constant(IG_S_FULLTEMP_PENDANT);
+	export_constant(IG_S_FULLTEMP_ARMOR);
+	export_constant(IG_S_FULLTEMP_SHOES);
+	export_constant(IG_S_DURABLE_WEAPON);
+	export_constant(IG_S_DURABLE_SHIELD);
+	export_constant(IG_S_CLEVER_WEAPON);
+	export_constant(IG_S_CLEVER_SHIELD);
+	export_constant(IG_S_ALLMIGHTY_EARRING);
+	export_constant(IG_S_ALLMIGHTY_PENDANT);
+	export_constant(IG_S_TRUEGEM_EARRING);
+	export_constant(IG_S_TRUEGEM_PENDANT);
+	export_constant(IG_S_TRUEGEM_SHOES);
+	export_constant(IG_S_TRUEGEM_ARMOR);
+	export_constant(IG_S_PERFECTSIZE_WEAPON);
+	export_constant(IG_S_PERFECTSIZE_ARMOR);
+	export_constant(IG_S_M_MAMMOTH_EARRING);
+	export_constant(IG_S_M_MAMMOTH_PENDANT);
+	export_constant(IG_S_M_MAMMOTH_ARMOR);
+	export_constant(IG_S_M_MAMMOTH_SHOES);
+	export_constant(IG_S_SPELLCASTER_EARRING);
+	export_constant(IG_S_SPELLCASTER_PENDANT);
+	export_constant(IG_S_SPELLCASTER_ARMOR);
+	export_constant(IG_S_SPELLCASTER_SHOES);
+	export_constant(IG_S_ABSORB_WEAPON);
+	export_constant(IG_S_ABSORB_SHIELD);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

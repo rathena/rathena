@@ -90,6 +90,7 @@ static char log_picktype2char(e_log_pick_type type)
 		case LOG_TYPE_ENCHANTGRADE:		return '0';  // Enchantgrade UI
 		case LOG_TYPE_REFORM:			return '1';  // Reform UI
 		case LOG_TYPE_ENCHANT:			return '2';  // Echant UI
+		case LOG_TYPE_PACKAGE:			return '3';  // Item Package Selection
 	}
 
 	// should not get here, fallback

@@ -2478,6 +2478,184 @@ uint64 ItemEnchantDatabase::parseBodyNode( const ryml::NodeRef& node ){
 
 ItemEnchantDatabase item_enchant_db;
 
+const std::string ItemPackageDatabase::getDefaultLocation(){
+	return std::string( db_path ) + "/item_packages.yml";
+}
+
+uint64 ItemPackageDatabase::parseBodyNode( const ryml::NodeRef& node ){
+	t_itemid item_id;
+
+	{
+		std::string name;
+
+		if( !this->asString( node, "Item", name ) ){
+			return 0;
+		}
+
+		std::shared_ptr<item_data> id = item_db.search_aegisname( name.c_str() );
+
+		if( id == nullptr ){
+			this->invalidWarning( node["Item"], "Unknown item \"%s\".\n", name.c_str() );
+			return 0;
+		}
+
+		item_id = id->nameid;
+	}
+
+	std::shared_ptr<s_item_package> entry = this->find( item_id );
+	bool exists = entry != nullptr;
+
+	if( !exists ){
+		if( !this->nodesExist( node, { "Groups" } ) ){
+			return 0;
+		}
+
+		entry = std::make_shared<s_item_package>();
+		entry->item_id = item_id;
+	}
+
+	if( this->nodeExists( node, "Groups" ) ){
+		for( const ryml::NodeRef& groupNode : node["Groups"] ){
+			uint32 groupIndex;
+
+			if( !this->asUInt32( groupNode, "Group", groupIndex) ){
+				return 0;
+			}
+
+			std::shared_ptr<s_item_package_group> group = util::umap_find( entry->groups, groupIndex );
+			bool group_exists = group != nullptr;
+
+			if( !group_exists ){
+				if( !this->nodesExist( groupNode, { "Items" } ) ){
+					return 0;
+				}
+
+				group = std::make_shared<s_item_package_group>();
+				group->groupIndex = groupIndex;
+			}
+
+			for( const ryml::NodeRef& itemNode : groupNode["Items"] ){
+				std::string name;
+
+				if( !this->asString( itemNode, "Item", name ) ){
+					return 0;
+				}
+
+				std::shared_ptr<item_data> id = item_db.search_aegisname( name.c_str() );
+
+				if( id == nullptr ){
+					this->invalidWarning( itemNode["Item"], "Unknown item \"%s\".\n", name.c_str() );
+					return 0;
+				}
+
+				std::shared_ptr<s_item_package_item> package_item = util::umap_find( group->items, id->nameid );
+				bool package_item_exists = package_item != nullptr;
+
+				if( !package_item_exists ){
+					package_item = std::make_shared<s_item_package_item>();
+					package_item->item_id = id->nameid;
+				}
+
+				if( this->nodeExists( itemNode, "Amount" ) ){
+					uint16 amount;
+
+					if( !this->asUInt16( itemNode, "Amount", amount ) ){
+						return 0;
+					}
+
+					if( amount > MAX_AMOUNT ){
+						this->invalidWarning( itemNode["Amount"], "Amount %hu is too high, capping to MAX_AMOUNT...\n", amount );
+						amount = MAX_AMOUNT;
+					}else if( amount == 0 ){
+						if( !package_item_exists ){
+							this->invalidWarning( itemNode["Amount"], "Trying to remove non existant item \"%s\".\n", name.c_str() );
+							return 0;
+						}else{
+							group->items.erase( id->nameid );
+						}
+					}
+
+					package_item->amount = amount;
+				}else{
+					if( !package_item_exists ){
+						package_item->amount = 1;
+					}
+				}
+
+				if( this->nodeExists( itemNode, "RentalHours" ) ){
+					uint16 rentalhours;
+
+					if( !this->asUInt16( itemNode, "RentalHours", rentalhours ) ){
+						return 0;
+					}
+
+					package_item->rentalhours = rentalhours;
+				}else{
+					if( !package_item_exists ){
+						package_item->rentalhours = 0;
+					}
+				}
+
+				if( this->nodeExists( itemNode, "Refine" ) ){
+					uint16 refine;
+
+					if( !this->asUInt16( itemNode, "Refine", refine ) ){
+						return 0;
+					}
+
+					if( refine > MAX_REFINE ){
+						this->invalidWarning( itemNode["Refine"], "Refine %hu is too high, capping to MAX_REFINE...\n", refine );
+						refine = MAX_REFINE;
+					}
+
+					package_item->refine = refine;
+				}else{
+					if( !package_item_exists ){
+						package_item->refine = 0;
+					}
+				}
+
+				if( this->nodeExists( itemNode, "RandomOptionGroup" ) ){
+					std::string name;
+
+					if( !this->asString( itemNode, "RandomOptionGroup", name ) ){
+						return 0;
+					}
+
+					uint16 option_group_id;
+
+					if( !random_option_group.option_get_id( name, option_group_id ) ){
+						this->invalidWarning( itemNode["RandomOptionGroup"], "Unknown random option group \"%s\".\n", name.c_str() );
+						return 0;
+					}
+
+					package_item->randomOptionGroup = random_option_group.find( option_group_id );
+				}else{
+					if( !package_item_exists ){
+						package_item->randomOptionGroup = nullptr;
+					}
+				}
+
+				if( !package_item_exists ){
+					group->items[package_item->item_id] = package_item;
+				}
+			}
+
+			if( !group_exists ){
+				entry->groups[group->groupIndex] = group;
+			}
+		}
+	}
+
+	if( !exists ){
+		this->put( entry->item_id, entry );
+	}
+
+	return 1;
+}
+
+ItemPackageDatabase item_package_db;
+
 /*==========================================
  * Finds up to N matches. Returns number of matches [Skotlex]
  * @param *data
@@ -4295,6 +4473,7 @@ static void itemdb_read(void) {
 	laphine_upgrade_db.load();
 	item_reform_db.load();
 	item_enchant_db.load();
+	item_package_db.load();
 
 	if (battle_config.feature_roulette)
 		itemdb_parse_roulette_db();
@@ -4363,6 +4542,7 @@ void do_final_itemdb(void) {
 	laphine_upgrade_db.clear();
 	item_reform_db.clear();
 	item_enchant_db.clear();
+	item_package_db.clear();
 	if (battle_config.feature_roulette)
 		itemdb_roulette_free();
 }

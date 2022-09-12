@@ -31265,3 +31265,213 @@ Body:
             Rate: 360
           - Item: Critical_Stone_Bottom
             Rate: 360
+  - Group: S_FULLPENE_EARRING
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_FullPene_Earring
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_FULLPENE_PENDANT
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_FullPene_Pendant
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_FULLPENE_ARMOR
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_FullPene_Armor
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_FULLPENE_SHOES
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_FullPene_Shoes
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_FULLTEMP_EARRING
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_FullTemp_Earring
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_FULLTEMP_PENDANT
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_FullTemp_Pendant
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_FULLTEMP_ARMOR
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_FullTemp_Armor
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_FULLTEMP_SHOES
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_FullTemp_Shoes
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_DURABLE_WEAPON
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Durable_Weapon
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_DURABLE_SHIELD
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Durable_Shield
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_CLEVER_WEAPON
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Clever_Weapon
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_CLEVER_SHIELD
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Clever_Shield
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_ALLMIGHTY_EARRING
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_AllMighty_Earring
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_ALLMIGHTY_PENDANT
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_AllMighty_Pendant
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_TRUEGEM_EARRING
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_TrueGem_Earring
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_TRUEGEM_PENDANT
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_TrueGem_Pendant
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_TRUEGEM_SHOES
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_TrueGem_Shoes
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_TRUEGEM_ARMOR
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_TrueGem_Armor
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_PERFECTSIZE_WEAPON
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_PerfectSize_Weapon
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_PERFECTSIZE_ARMOR
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_PerfectSize_Armor
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_M_MAMMOTH_EARRING
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_M_Mammoth_Earring
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_M_MAMMOTH_PENDANT
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_M_Mammoth_Pendant
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_M_MAMMOTH_ARMOR
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_M_Mammoth_Armor
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_M_MAMMOTH_SHOES
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_M_Mammoth_Shoes
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_SPELLCASTER_EARRING
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_SpellCaster_Earring
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_SPELLCASTER_PENDANT
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_SpellCaster_Pendant
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_SPELLCASTER_ARMOR
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_SpellCaster_Armor
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_SPELLCASTER_SHOES
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_SpellCaster_Shoes
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_ABSORB_WEAPON
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Absorb_Weapon
+            RefineMinimum: 7
+            RefineMaximum: 10
+  - Group: S_ABSORB_SHIELD
+    SubGroups:
+      - SubGroup: 0
+        List:
+          - Item: S_Absorb_Shield
+            RefineMinimum: 7
+            RefineMaximum: 10
