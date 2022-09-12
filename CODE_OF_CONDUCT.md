@@ -53,15 +53,13 @@ decisions when appropriate.
 This Code of Conduct applies within all community spaces, and also applies when
 an individual is officially representing the community in public spaces.
 Examples of representing our community include using an official e-mail address,
-posting via an official social media account, or acting as an appointed
-representative at an online or offline event.
+posting via an official social media account, posting on the forums with an account in a Staff group, or acting as an appointed representative at an online or offline event.
 
 ## Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported to the community leaders responsible for enforcement via
-the Report Center on the forums or via Discord DM to any member of the Staff role.
-All complaints will be reviewed and investigated promptly and fairly.
+the Report Center on our forums. All complaints will be reviewed and investigated promptly and fairly.
 
 All community leaders are obligated to respect the privacy and security of the
 reporter of any incident.
@@ -78,7 +76,7 @@ unprofessional or unwelcome in the community.
 
 **Consequence**: A private, written warning from community leaders, providing
 clarity around the nature of the violation and an explanation of why the
-behavior was inappropriate. A public apology may be requested.
+behavior was inappropriate. In the event that a user is uncontactable through normal means, the offending content will be hidden. A second infraction from a user with no means of communication will result in immediate Temporary Ban. See section 3.
 
 ### 2. Warning
 
@@ -121,7 +119,7 @@ https://www.contributor-covenant.org/version/2/0/code_of_conduct.html.
 Community Impact Guidelines were inspired by [Mozilla's code of conduct
 enforcement ladder](https://github.com/mozilla/diversity).
 
-[homepage]: https://www.contributor-covenant.org
+[Contributor Covenant](https://www.contributor-covenant.org)
 
 For answers to common questions about this code of conduct, see the FAQ at
 https://www.contributor-covenant.org/faq. Translations are available at
