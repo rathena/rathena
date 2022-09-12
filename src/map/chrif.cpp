@@ -1371,7 +1371,7 @@ int chrif_skillcooldown_save(struct map_session_data *sd) {
 		if (!sd->scd[i])
 			continue;
 
-		if (battle_config.guild_skill_relog_type == 1 && (sd->scd[i]->skill_id >= GD_BATTLEORDER && sd->scd[i]->skill_id <= GD_EMERGENCYCALL))
+		if (battle_config.guild_skill_relog_type == 1 && SKILL_CHK_GUILD(sd->scd[i]->skill_id))
 			continue;
 
 		timer = get_timer(sd->scd[i]->timer);
