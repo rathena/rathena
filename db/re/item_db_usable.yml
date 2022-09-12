@@ -52106,7 +52106,6 @@ Body:
     Name: Boost Armor Box    # !todo check english name
     Type: DelayConsume
     EquipLevelMin: 100
-    # TODO: can be sold, but price is unknown
     Trade:
       NoDrop: true
       NoTrade: true
@@ -52160,7 +52159,6 @@ Body:
     AegisName: Memento_Box
     Name: Souvenir Box    # !todo check english name
     Type: DelayConsume
-    # TODO: can be sold, but price is unknown
     Trade:
       NoDrop: true
       NoTrade: true
@@ -52173,7 +52171,6 @@ Body:
     AegisName: P_Memento_Box
     Name: Premium Souvenir Box    # !todo check english name
     Type: DelayConsume
-    # TODO: can be sold, but price is unknown
     Trade:
       NoDrop: true
       NoTrade: true
@@ -52186,7 +52183,6 @@ Body:
     AegisName: Booster_Hat_Box
     Name: Booster Costume Helmet Box    # !todo check english name
     Type: DelayConsume
-    # TODO: can be sold, but price is unknown
     Trade:
       NoDrop: true
       NoTrade: true
@@ -52199,7 +52195,6 @@ Body:
     AegisName: Booster_Back_Box
     Name: Booster Costume Backpack Box    # !todo check english name
     Type: DelayConsume
-    # TODO: can be sold, but price is unknown
     Trade:
       NoDrop: true
       NoTrade: true
@@ -52312,7 +52307,6 @@ Body:
     Name: Full Penetration Shadow Pendant Box
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52322,7 +52316,6 @@ Body:
     Name: Full Penetration Shadow Armor Box
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52332,7 +52325,6 @@ Body:
     Name: Full Penetration Shadow Shoes Box
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52349,7 +52341,6 @@ Body:
     Name: Full Tempest Shadow Earring Box
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52359,7 +52350,6 @@ Body:
     Name: Full Tempest Shadow Pendant Box
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52369,7 +52359,6 @@ Body:
     Name: Full Tempest Shadow Armor Box
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52379,7 +52368,6 @@ Body:
     Name: Full Tempest Shadow Shoes Box
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52396,7 +52384,6 @@ Body:
     Name: Durable Shadow Weapon Box
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52406,7 +52393,6 @@ Body:
     Name: Durable Shadow Shield Box
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52423,7 +52409,6 @@ Body:
     Name: Clever Shadow Weapon Box
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52433,7 +52418,6 @@ Body:
     Name: Clever Shadow Shield Box
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52488,7 +52472,6 @@ Body:
     Name: Almighty Shadow Earring Box    # !todo check english name
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52498,7 +52481,6 @@ Body:
     Name: Almighty Shadow Pendant Box    # !todo check english name
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52515,7 +52497,6 @@ Body:
     Name: True Gemstone Shadow Earring Box    # !todo check english name
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52525,7 +52506,6 @@ Body:
     Name: True Gemstone Shadow Pendant Box    # !todo check english name
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52535,7 +52515,6 @@ Body:
     Name: True Gemstone Shadow Shoes Box    # !todo check english name
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52545,7 +52524,6 @@ Body:
     Name: True Gemstone Shadow Armor Box    # !todo check english name
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52562,7 +52540,6 @@ Body:
     Name: Perfect Size Shadow Weapon Box    # !todo check english name
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52572,7 +52549,6 @@ Body:
     Name: Perfect Size Shadow Armor Box    # !todo check english name
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52600,7 +52576,6 @@ Body:
     Name: Maximum Mammoth Shadow Earring Box    # !todo check english name
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52610,7 +52585,6 @@ Body:
     Name: Maximum Mammoth Shadow Pendant Box    # !todo check english name
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52620,7 +52594,6 @@ Body:
     Name: Maximum Mammoth Shadow Armor Box    # !todo check english name
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52630,7 +52603,6 @@ Body:
     Name: Maximum Mammoth Shadow Shoes Box    # !todo check english name
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52640,7 +52612,6 @@ Body:
     Name: Spell Caster Shadow Earring Box    # !todo check english name
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52650,7 +52621,6 @@ Body:
     Name: Spell Caster Shadow Pendant Box    # !todo check english name
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52660,7 +52630,6 @@ Body:
     Name: Spell Caster Shadow Armor Box    # !todo check english name
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52670,7 +52639,6 @@ Body:
     Name: Spell Caster Shadow Shoes Box    # !todo check english name
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52680,7 +52648,6 @@ Body:
     Name: Absorb Shadow Weapon Box    # !todo check english name
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
@@ -52690,7 +52657,6 @@ Body:
     Name: Absorb Shadow Shield Box    # !todo check english name
     Type: Usable
     Weight: 10
-    # TODO: can be sold, but price is unknown
     Flags:
       Container: true
     Script: |
