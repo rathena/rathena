@@ -9739,7 +9739,7 @@ static const struct _battle_data {
 	{ "guild_skill_relog_delay",            &battle_config.guild_skill_relog_delay,         300000, 0,      INT_MAX,        },
 #ifdef RENEWAL
 	{ "guild_skill_relog_type",             &battle_config.guild_skill_relog_type,          0,      0,      1,              },
-#elif
+#else
 	{ "guild_skill_relog_type",             &battle_config.guild_skill_relog_type,          1,      0,      1,              },
 #endif
 	{ "emergency_call",                     &battle_config.emergency_call,                  11,     0,      31,             },
