@@ -2374,8 +2374,7 @@ bool pet_addautobonus(std::vector<std::shared_ptr<s_petautobonus>> &bonus, const
 	entry->timer = INVALID_TIMER;
 	entry->atk_type = flag;
 	entry->bonus_script = script;
-	if (!other_script.empty())
-		entry->other_script = other_script;
+	entry->other_script = other_script;
 
 	bonus.push_back(entry);
 
