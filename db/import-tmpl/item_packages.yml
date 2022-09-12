@@ -24,7 +24,7 @@
 ###########################################################################
 # - Item                       Item that triggers Item Package Selection.
 #   Groups:                    Groups that can be selected.
-#     - Group                  Group ID that can be selected.
+#     - Group                  Group ID that can be selected (has to match the client's LUA file).
 #       Items:                 Items that will be given out.
 #         - Item               Item that will be given out.
 #           Amount             Amount of the item. (Default: 1)
