@@ -694,6 +694,12 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 			if (tsc->data[SC_ASSUMPTIO])
 				hp_bonus += tsc->data[SC_ASSUMPTIO]->val1 * 2;
 #endif
+			if (tsc->data[SC_VITALIZE_POTION])
+#ifdef RENEWAL
+				hp_bonus += 10;
+#else
+				hp += hp * 10 / 100;
+#endif
 		}
 	}
 
@@ -2380,6 +2386,12 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		int class_ = mob_get_random_id(MOBG_BRANCH_OF_DEAD_TREE, RMF_DB_RATE, 0);
 		if (class_ != 0 && mobdb_checkid(class_))
 			mob_class_change(dstmd,class_);
+	}
+
+	if (sd && sc) {
+		struct status_change_entry *sce;
+		if ((sce = sc->data[SC_2011RWC_SCROLL]) && rnd() % 1000 <= 10)
+			skill_castend_nodamage_id(src, src, AC_CONCENTRATION, max(3, pc_checkskill(sd,AC_CONCENTRATION)), tick, 0);
 	}
 
 	return 0;
@@ -18535,6 +18547,8 @@ int skill_castfix_sc(struct block_list *bl, double time, uint8 flag)
 				time += sc->data[SC_PARALYSIS]->val3;
 			if (sc->data[SC_IZAYOI])
 				time -= time * 50 / 100;
+			if (sc->data[SC_2011RWC_SCROLL])
+				time -= time * 5 / 100;
 		}
 		if (sc->data[SC_SUFFRAGIUM]) {
 			if(!(flag&2))
@@ -18678,6 +18692,8 @@ int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 
 			fixed = 0;
 		if (sc->data[SC_GLOOMYDAY])
 			fixed += skill_lv * 500;
+		if (sc->data[SC_2011RWC_SCROLL])
+			VARCAST_REDUCTION(5);
 	}
 	if (sc && sc->data[SC_SECRAMENT] && skill_id == HW_MAGICPOWER && (flag&2)) // Sacrament lowers Mystical Amplification cast time
 		fixcast_r = max(fixcast_r, sc->data[SC_SECRAMENT]->val2);

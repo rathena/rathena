@@ -1841,9 +1841,30 @@
 	export_constant(SC_DEEP_POISONING_OPTION);
 	export_constant(SC_POISON_SHIELD);
 	export_constant(SC_POISON_SHIELD_OPTION);
+	export_constant(SC_SUB_WEAPONPROPERTY);
 	export_constant(SC_M_LIFEPOTION);
 	export_constant(SC_S_MANAPOTION);
-	export_constant(SC_SUB_WEAPONPROPERTY);
+	export_constant(SC_ALMIGHTY);
+	export_constant(SC_ULTIMATECOOK);
+	export_constant(SC_M_DEFSCROLL);
+	export_constant(SC_INFINITY_DRINK);
+	export_constant(SC_MENTAL_POTION);
+	export_constant(SC_LIMIT_POWER_BOOSTER);
+	export_constant(SC_COMBAT_PILL);
+	export_constant(SC_COMBAT_PILL2);
+	export_constant(SC_MYSTICPOWDER);
+	export_constant(SC_SPARKCANDY);
+	export_constant(SC_MAGICCANDY);
+	export_constant(SC_ACARAJE);
+	export_constant(SC_POPECOOKIE);
+	export_constant(SC_VITALIZE_POTION);
+	export_constant(SC_CUP_OF_BOZA);
+	export_constant(SC_SKF_MATK);
+	export_constant(SC_SKF_ATK);
+	export_constant(SC_SKF_ASPD);
+	export_constant(SC_SKF_CAST);
+	export_constant(SC_BEEF_RIB_STEW);
+	export_constant(SC_PORK_RIB_STEW);
 
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
@@ -5756,10 +5777,11 @@
 	export_constant(IG_4LV_10REFINE_WEAPON_9GU);
 	export_constant(IG_4LV_11REFINE_WEAPON_10G);
 	export_constant(IG_BS_ITEM_M_S_52);
-	export_constant(IG_Bs_Item_M_S_53);
-	export_constant(IG_Bs_Item_M_S_54);
-	export_constant(IG_Bs_Item_M_S_55);
-	export_constant(IG_Bs_Item_M_S_56);
+	export_constant(IG_BS_ITEM_M_S_53);
+	export_constant(IG_BS_ITEM_M_S_54);
+	export_constant(IG_BS_ITEM_M_S_55);
+	export_constant(IG_BS_ITEM_M_S_56);
+	export_constant(IG_ENCHANT_STONE_BOX28);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
