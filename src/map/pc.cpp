@@ -2063,15 +2063,15 @@ void pc_reg_received(struct map_session_data *sd)
 		}
 	}
 
-#if PACKETVER_MAIN_NUM < 20190403 || PACKETVER_RE_NUM < 20190320 || PACKETVER_ZERO_NUM < 20190410
-	if (sd->instance_id > 0)
-		instance_reqinfo(sd, sd->instance_id);
 	if (sd->status.party_id > 0)
 		party_member_joined(sd);
 	if (sd->status.guild_id > 0)
 		guild_member_joined(sd);
 	if (sd->status.clan_id > 0)
 		clan_member_joined(sd);
+#if !( PACKETVER_MAIN_NUM >= 20190403 || PACKETVER_RE_NUM >= 20190320 || PACKETVER_ZERO_NUM >= 20190410 )
+	// Before those clients you could send out the instance info even when the client was still loading the map, afterwards you need to send it later
+	clif_instance_info( *sd );
 #endif
 
 	// pet
