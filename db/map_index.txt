@@ -1161,7 +1161,30 @@ air_if
 1@jorchs
 1@jorlab
 1@whl
-
+1@exhn
+1@exds
+2@exds
+1@exse
+1@exnw
+1@exsr
+1@exsh
+bl_grass
+bl_lava
+bl_ice
+bl_death
+clock_01
+rag_fes
+rag_fes_a
+memohall
+1@dime
+prt_elib
+1@vrcas
+1@vrev
+1@vrgen
+1@vrpo
+1@pdb
+airplane2
+vr_bob
 
 //======================================================================================
 // - Other/Extra maps -
