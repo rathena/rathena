@@ -1581,6 +1581,22 @@ static void clif_spiritcharm_single(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
+ * Enchanting Shadow / Shadow Scar Spirit
+ *------------------------------------------*/
+void clif_enchantingshadow_spirit(unit_data &ud) {
+#if PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191120 || PACKETVER_ZERO_NUM >= 20191127
+	PACKET_ZC_TARGET_SPIRITS p = {};
+
+	p.packetType = HEADER_ZC_TARGET_SPIRITS;
+	p.GID = ud.bl->id;
+	p.unknown_val = 0;
+	p.amount = static_cast<uint16>(ud.shadow_scar_timer.size());
+
+	clif_send(&p, sizeof(p), ud.bl, AREA);
+#endif
+}
+
+/*==========================================
  * Run when player changes map / refreshes
  * Tells its client to display all weather settings being used by this map
  *------------------------------------------*/
@@ -10413,6 +10429,7 @@ void clif_equipcheckbox(struct map_session_data* sd)
 /// 0997 <packet len>.W <name>.24B <class>.W <hairstyle>.W <bottom-viewid>.W <mid-viewid>.W <up-viewid>.W <robe>.W <haircolor>.W <cloth-dye>.W <gender>.B {equip item}.31B* (ZC_EQUIPWIN_MICROSCOPE_V5, PACKETVER >= 20120925)
 /// 0a2d <packet len>.W <name>.24B <class>.W <hairstyle>.W <bottom-viewid>.W <mid-viewid>.W <up-viewid>.W <robe>.W <haircolor>.W <cloth-dye>.W <gender>.B {equip item}.57B* (ZC_EQUIPWIN_MICROSCOPE_V6, PACKETVER >= 20150225)
 void clif_viewequip_ack( struct map_session_data* sd, struct map_session_data* tsd ){
+#if PACKETVER_AD_NUM >= 20071211 || PACKETVER_SAK_NUM >= 20071127 || PACKETVER_MAIN_NUM >= 20071211 || defined(PACKETVER_RE)
 	nullpo_retv( sd );
 	nullpo_retv( tsd );
 
@@ -10460,6 +10477,7 @@ void clif_viewequip_ack( struct map_session_data* sd, struct map_session_data* t
 	p->sex = tsd->vd.sex;
 
 	clif_send( p, p->PacketLength, &sd->bl, SELF );
+#endif
 }
 
 
@@ -11045,6 +11063,10 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			//Login Event
 			npc_script_event(sd, NPCE_LOGIN);
 		}
+
+		// Set facing direction before check below to update client
+		if (battle_config.spawn_direction)
+			unit_setdir(&sd->bl, sd->status.body_direction, false);
 	} else {
 		//For some reason the client "loses" these on warp/map-change.
 		clif_updatestatus(sd,SP_STR);
@@ -11077,6 +11099,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_equipcheckbox(sd);
 #endif
 		clif_pet_autofeed_status(sd,false);
+		clif_configuration( sd, CONFIG_CALL, sd->status.disable_call );
 #if PACKETVER >= 20170920
 		if( battle_config.homunculus_autofeed_always ){
 			// Always send ON or OFF
@@ -11267,7 +11290,7 @@ void clif_parse_TickSend(int fd, struct map_session_data *sd)
 /// 07d9 { <is skill>.B <id>.L <count>.W }*38 (ZC_SHORTCUT_KEY_LIST_V2, PACKETVER >= 20090617)
 /// 0a00 <rotate>.B { <is skill>.B <id>.L <count>.W }*38 (ZC_SHORTCUT_KEY_LIST_V3, PACKETVER >= 20141022)
 void clif_hotkeys_send( struct map_session_data *sd, int tab ){
-#ifdef HOTKEY_SAVING
+#if defined(HOTKEY_SAVING) && ( PACKETVER_MAIN_NUM >= 20070711 || PACKETVER_RE_NUM >= 20080827 || PACKETVER_AD_NUM >= 20070711 || PACKETVER_SAK_NUM >= 20070628 )
 	nullpo_retv( sd );
 
 	struct PACKET_ZC_SHORTCUT_KEY_LIST p;
@@ -15068,7 +15091,7 @@ void clif_parse_PMIgnore(int fd, struct map_session_data* sd)
 
 		// find entry
 		ARR_FIND( 0, MAX_IGNORE_LIST, i, sd->ignore[i].name[0] == '\0' || strcmp(sd->ignore[i].name, nick) == 0 );
-		if( i == MAX_IGNORE_LIST || sd->ignore[i].name[i] == '\0' ) { //Not found
+		if( i == MAX_IGNORE_LIST || sd->ignore[i].name[0] == '\0' ) { //Not found
 			clif_wisexin(sd, type, 1); // fail
 			return;
 		}
@@ -16237,7 +16260,9 @@ void clif_Mail_read( struct map_session_data *sd, int mail_id ){
 		WFIFOL(fd,72) = 0;
 		WFIFOL(fd,76) = msg->zeny;
 
-		if( item->nameid && (data = itemdb_exists(item->nameid)) != NULL ) {
+		std::shared_ptr<item_data> data = item_db.find(item->nameid);
+
+		if( item->nameid && data != nullptr ) {
 			WFIFOL(fd,80) = item->amount;
 			WFIFOW(fd,84) = client_nameid( item->nameid );
 			WFIFOW(fd,86) = itemtype( item->nameid );
@@ -17556,6 +17581,9 @@ void clif_parse_configuration( int fd, struct map_session_data* sd ){
 		case CONFIG_OPEN_EQUIPMENT_WINDOW:
 			sd->status.show_equip = flag;
 			break;
+		case CONFIG_CALL:
+			sd->status.disable_call = flag;
+			break;
 		case CONFIG_PET_AUTOFEED:
 			// Player can not click this if he does not have a pet
 			if( sd->pd == nullptr || !battle_config.feature_pet_autofeed || !sd->pd->get_pet_db()->allow_autofeed ){
@@ -18733,6 +18761,28 @@ void clif_parse_MemorialDungeonCommand(int fd, map_session_data *sd)
 	}
 }
 
+void clif_instance_info( struct map_session_data& sd ){
+	if( sd.instance_id > 0 ){
+		instance_reqinfo( &sd, sd.instance_id );
+	}
+
+	if( sd.status.party_id > 0 ){
+		struct party_data* p = party_search( sd.status.party_id );
+
+		if( p != nullptr && p->instance_id > 0 ){
+			instance_reqinfo( &sd, p->instance_id );
+		}
+	}
+
+	if( sd.guild != nullptr && sd.guild->instance_id > 0 ){
+		instance_reqinfo( &sd, sd.guild->instance_id );
+	}
+
+	if( sd.clan != nullptr && sd.clan->instance_id > 0 ){
+		instance_reqinfo( &sd, sd.clan->instance_id );
+	}
+}
+
 /// Notifies clients about item picked up by a party member.
 /// 02b8 <account id>.L <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.W <item type>.B (ZC_ITEM_PICKUP_PARTY)
 void clif_party_show_picker( struct map_session_data* sd, struct item* item_data ){
@@ -19789,14 +19839,7 @@ static void clif_loadConfirm( struct map_session_data *sd ){
 
 	clif_send( &p, sizeof(p), &sd->bl, SELF );
 
-	if (sd->instance_id > 0)
-		instance_reqinfo(sd, sd->instance_id);
-	if (sd->status.party_id > 0)
-		party_member_joined(sd);
-	if (sd->status.guild_id > 0)
-		guild_member_joined(sd);
-	if (sd->status.clan_id > 0)
-		clan_member_joined(sd);
+	clif_instance_info( *sd );
 #endif
 }
 
@@ -23242,21 +23285,24 @@ void clif_parse_laphine_synthesis( int fd, struct map_session_data* sd ){
 		}
 	}
 
-	int16 index = pc_search_inventory( sd, sd->state.laphine_synthesis );
+	// If triggered from item
+	if( sd->itemid == sd->state.laphine_synthesis ){
+		int16 index = pc_search_inventory( sd, sd->state.laphine_synthesis );
 
-	if( index < 0 ){
-		clif_laphine_synthesis_result( sd, LAPHINE_SYNTHESIS_ITEM );
-		return;
-	}
-
-	if( ( sd->inventory_data[index]->flag.delay_consume & DELAYCONSUME_NOCONSUME ) == 0 ){
-		if( pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_LAPHINE ) != 0 ){
+		if( index < 0 ){
+			clif_laphine_synthesis_result( sd, LAPHINE_SYNTHESIS_ITEM );
 			return;
+		}
+
+		if( ( sd->inventory_data[index]->flag.delay_consume & DELAYCONSUME_NOCONSUME ) == 0 ){
+			if( pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_LAPHINE ) != 0 ){
+				return;
+			}
 		}
 	}
 
 	for( size_t i = 0; i < count; i++ ){
-		index = server_index( p->items[i].index );
+		int16 index = server_index( p->items[i].index );
 
 		if( pc_delitem( sd, index, p->items[i].count, 0, 0, LOG_TYPE_LAPHINE ) != 0 ){
 			return;
@@ -23545,6 +23591,11 @@ void clif_parse_enchantgrade_add( int fd, struct map_session_data* sd ){
 		return;
 	}
 
+	// Item can't be enhanced
+	if( !sd->inventory_data[index]->flag.gradable ){
+		return;
+	}
+
 	uint16 level = 0;
 
 	if( sd->inventory_data[index]->type == IT_WEAPON ){
@@ -23805,7 +23856,7 @@ void clif_parse_enchantgrade_close( int fd, struct map_session_data* sd ){
 }
 
 void clif_reputation_type( struct map_session_data& sd, int64 type, int64 points ){
-#if PACKETVER_RE_NUM >= 20211103
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
 	struct PACKET_ZC_REPUTE_INFO* p = (struct PACKET_ZC_REPUTE_INFO*)packet_buffer;
 
 	p->packetType = HEADER_ZC_REPUTE_INFO;
@@ -23822,7 +23873,7 @@ void clif_reputation_type( struct map_session_data& sd, int64 type, int64 points
 }
 
 void clif_reputation_list( struct map_session_data& sd ){
-#if PACKETVER_RE_NUM >= 20211103
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
 	struct PACKET_ZC_REPUTE_INFO* p = (struct PACKET_ZC_REPUTE_INFO*)packet_buffer;
 
 	p->packetType = HEADER_ZC_REPUTE_INFO;
@@ -23847,7 +23898,7 @@ void clif_reputation_list( struct map_session_data& sd ){
 }
 
 void clif_item_reform_open( struct map_session_data& sd, t_itemid item ){
-#if PACKETVER_RE_NUM >= 20211103
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
 	struct PACKET_ZC_OPEN_REFORM_UI p = {};
 
 	p.packetType = HEADER_ZC_OPEN_REFORM_UI;
@@ -23860,13 +23911,13 @@ void clif_item_reform_open( struct map_session_data& sd, t_itemid item ){
 }
 
 void clif_parse_item_reform_close( int fd, struct map_session_data* sd ){
-#if PACKETVER_RE_NUM >= 20211103
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
 	sd->state.item_reform = 0;
 #endif
 }
 
 void clif_item_reform_result( struct map_session_data& sd, uint16 index, uint8 result ){
-#if PACKETVER_RE_NUM >= 20211103
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
 	struct PACKET_ZC_ITEM_REFORM_ACK p = {};
 
 	p.packetType = HEADER_ZC_ITEM_REFORM_ACK;
@@ -23883,7 +23934,7 @@ void clif_item_reform_result( struct map_session_data& sd, uint16 index, uint8 r
 }
 
 void clif_parse_item_reform_start( int fd, struct map_session_data* sd ){
-#if PACKETVER_RE_NUM >= 20211103
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
 	// Not opened
 	if( sd->state.item_reform == 0 ){
 		return;
@@ -24033,6 +24084,612 @@ void clif_parse_item_reform_start( int fd, struct map_session_data* sd ){
 	clif_additem( sd, index, 1, 0 );
 
 	clif_item_reform_result( *sd, index, 0 );
+#endif
+}
+
+void clif_enchantwindow_open( struct map_session_data& sd, uint64 clientLuaIndex ){
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
+	// Hardcoded clientside check
+	if( sd.weight > ( ( sd.max_weight * 70 ) / 100 ) ){
+		clif_msg_color( &sd, C_ENCHANT_OVERWEIGHT, color_table[COLOR_RED] );
+		sd.state.item_enchant_index = 0;
+		return;
+		
+	}
+
+	struct PACKET_ZC_UI_OPEN_V3 p = {};
+
+	p.packetType = HEADER_ZC_UI_OPEN_V3;
+	p.type = OUT_UI_ENCHANT;
+	p.data = clientLuaIndex;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+
+	sd.state.item_enchant_index = clientLuaIndex;
+#endif
+}
+
+void clif_enchantwindow_result( struct map_session_data& sd, bool success, t_itemid enchant = 0 ){
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
+	struct PACKET_ZC_RESPONSE_ENCHANT p = {};
+
+	p.packetType = HEADER_ZC_RESPONSE_ENCHANT;
+	if( success ){
+		p.messageId = C_ENCHANT_SUCCESS;
+	}else{
+		p.messageId = C_ENCHANT_FAILURE;
+	}
+	p.enchantItemId = enchant;
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
+
+	sd.state.item_enchant_index = 0;
+#endif
+}
+
+bool clif_parse_enchant_basecheck( struct item& selected_item, std::shared_ptr<s_item_enchant> enchant ){
+	if( selected_item.equip != 0 ){
+		return false;
+	}
+
+	if( selected_item.equipSwitch != 0 ){
+		return false;
+	}
+
+	if( selected_item.attribute != 0 ){
+		return false;
+	}
+
+	if( !util::vector_exists( enchant->target_item_ids, selected_item.nameid ) ){
+		return false;
+	}
+
+	if( selected_item.refine < enchant->minimumRefine ){
+		return false;
+	}
+
+	if( selected_item.enchantgrade < enchant->minimumEnchantgrade ){
+		return false;
+	}
+
+	if( !enchant->allowRandomOptions ){
+		for( const s_item_randomoption& option : selected_item.option ){
+			if( option.id != 0 ){
+				return false;
+			}
+		}
+	}
+
+	return true;
+}
+
+void clif_parse_enchantwindow_general( int fd, struct map_session_data* sd ){
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
+	struct PACKET_CZ_REQUEST_RANDOM_ENCHANT *p = (struct PACKET_CZ_REQUEST_RANDOM_ENCHANT*)RFIFOP( fd, 0 );
+
+	if( sd->state.item_enchant_index != p->clientLuaIndex ){
+		return;
+	}
+
+	uint16 index = server_index( p->index );
+
+	if( index >= MAX_INVENTORY ){
+		return;
+	}
+
+	if( sd->inventory_data[index] == nullptr ){
+		return;
+	}
+
+	struct item& selected_item = sd->inventory.u.items_inventory[index];
+	std::shared_ptr<s_item_enchant> enchant = item_enchant_db.find( p->clientLuaIndex );
+
+	if( enchant == nullptr ){
+		return;
+	}
+
+	if( !clif_parse_enchant_basecheck( selected_item, enchant ) ){
+		return;
+	}
+
+	uint16 slot = MAX_SLOTS;
+
+	for( uint16 nextSlot : enchant->order ){
+		if( selected_item.card[nextSlot] == 0 ){
+			slot = nextSlot;
+			break;
+		}
+	}
+
+	if( slot == MAX_SLOTS ){
+		return;
+	}
+
+	if( slot < sd->inventory_data[index]->slots ){
+		return;
+	}
+
+	std::shared_ptr<s_item_enchant_slot> enchant_slot = util::umap_find( enchant->slots, slot );
+
+	if( enchant_slot == nullptr ){
+		return;
+	}
+
+	std::shared_ptr<s_item_enchant_normal> enchants_for_enchantgrade = util::umap_find( enchant_slot->normal.enchants, (uint16)selected_item.enchantgrade );
+
+	if( enchants_for_enchantgrade == nullptr ){
+		clif_messagecolor( &sd->bl, color_table[COLOR_RED], msg_txt( sd, 829 ), false, SELF); // Enchanting is not possible for your item's enchant grade.
+		clif_enchantwindow_result( *sd, false );
+		return;
+	}
+
+	if( sd->status.zeny < enchant_slot->normal.zeny ){
+		return;
+	}
+
+	std::unordered_map<uint16, uint16> materials;
+
+	for( const auto& entry : enchant_slot->normal.materials ){
+		int16 idx = pc_search_inventory( sd, entry.first );
+
+		if( idx < 0 ){
+			return;
+		}
+
+		if( sd->inventory.u.items_inventory[idx].amount < entry.second ){
+			return;
+		}
+
+		materials[idx] = entry.second;
+	}
+
+	if( pc_payzeny( sd, enchant_slot->normal.zeny, LOG_TYPE_ENCHANT, nullptr ) != 0 ){
+		return;
+	}
+
+	for( const auto& entry : materials ){
+		if( pc_delitem( sd, entry.first, entry.second, 0, 0, LOG_TYPE_ENCHANT )  != 0 ){
+			return;
+		}
+	}
+
+	uint32 chance = enchant_slot->normal.chance;
+
+	for( int i = 0; i <= MAX_ENCHANTGRADE; i++ ){
+		chance += enchant_slot->normal.enchantgradeChanceIncrease[i];
+	}
+
+	if( chance < 100000 && rnd_value( 0, 100000 ) > chance ){
+		clif_enchantwindow_result( *sd, false );
+		return;
+	}
+
+	// Log removal of item
+	log_pick_pc( sd, LOG_TYPE_ENCHANT, -1, &selected_item );
+
+	size_t maximum = 3 * enchant_slot->normal.enchants.size();
+	bool enchanted = false;
+
+	for( int i = 0; i < maximum; i++ ){
+		std::shared_ptr<s_item_enchant_normal_sub> normal_enchant = util::umap_random( enchants_for_enchantgrade->enchants );
+
+		if( rnd_value( 0, 10000 ) < normal_enchant->chance ){
+			selected_item.card[slot] = normal_enchant->item_id;
+			enchanted = true;
+			break;
+		}
+	}
+
+	if( !enchanted ){
+		std::shared_ptr<s_item_enchant_normal_sub> normal_enchant = util::umap_random( enchants_for_enchantgrade->enchants );
+		selected_item.card[slot] = normal_enchant->item_id;
+	}
+
+	// Log retrieving the item again -> with the new enchant
+	log_pick_pc( sd, LOG_TYPE_ENCHANT, 1, &selected_item );
+
+	clif_enchantwindow_result( *sd, true, selected_item.card[slot] );
+#endif
+}
+
+void clif_parse_enchantwindow_perfect( int fd, struct map_session_data* sd ){
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
+	struct PACKET_CZ_REQUEST_PERFECT_ENCHANT *p = (struct PACKET_CZ_REQUEST_PERFECT_ENCHANT*)RFIFOP( fd, 0 );
+
+	if( sd->state.item_enchant_index != p->clientLuaIndex ){
+		return;
+	}
+
+	uint16 index = server_index( p->index );
+
+	if( index >= MAX_INVENTORY ){
+		return;
+	}
+
+	if( sd->inventory_data[index] == nullptr ){
+		return;
+	}
+
+	struct item& selected_item = sd->inventory.u.items_inventory[index];
+	std::shared_ptr<s_item_enchant> enchant = item_enchant_db.find( p->clientLuaIndex );
+
+	if( enchant == nullptr ){
+		return;
+	}
+
+	if( !clif_parse_enchant_basecheck( selected_item, enchant ) ){
+		return;
+	}
+
+	uint16 slot = MAX_SLOTS;
+
+	for( uint16 nextSlot : enchant->order ){
+		if( selected_item.card[nextSlot] == 0 ){
+			slot = nextSlot;
+			break;
+		}
+	}
+
+	if( slot == MAX_SLOTS ){
+		return;
+	}
+
+	if( slot < sd->inventory_data[index]->slots ){
+		return;
+	}
+
+	std::shared_ptr<s_item_enchant_slot> enchant_slot = util::umap_find( enchant->slots, slot );
+
+	if( enchant_slot == nullptr ){
+		return;
+	}
+
+	std::shared_ptr<s_item_enchant_perfect> perfect_enchant = util::umap_find( enchant_slot->perfect.enchants, p->itemId );
+
+	if( perfect_enchant == nullptr ){
+		return;
+	}
+
+	if( sd->status.zeny < perfect_enchant->zeny ){
+		return;
+	}
+
+	std::unordered_map<uint16, uint16> materials;
+
+	for( const auto& entry : perfect_enchant->materials ){
+		int16 idx = pc_search_inventory( sd, entry.first );
+
+		if( idx < 0 ){
+			return;
+		}
+
+		if( sd->inventory.u.items_inventory[idx].amount < entry.second ){
+			return;
+		}
+
+		materials[idx] = entry.second;
+	}
+
+	if( pc_payzeny( sd, perfect_enchant->zeny, LOG_TYPE_ENCHANT, nullptr ) != 0 ){
+		return;
+	}
+
+	for( const auto& entry : materials ){
+		if( pc_delitem( sd, entry.first, entry.second, 0, 0, LOG_TYPE_ENCHANT )  != 0 ){
+			return;
+		}
+	}
+
+	// Log removal of item
+	log_pick_pc( sd, LOG_TYPE_ENCHANT, -1, &selected_item );
+
+	selected_item.card[slot] = perfect_enchant->item_id;
+
+	// Log retrieving the item again -> with the new enchant
+	log_pick_pc( sd, LOG_TYPE_ENCHANT, 1, &selected_item );
+
+	clif_enchantwindow_result( *sd, true, selected_item.card[slot] );
+#endif
+}
+
+void clif_parse_enchantwindow_upgrade( int fd, struct map_session_data* sd ){
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
+	struct PACKET_CZ_REQUEST_UPGRADE_ENCHANT *p = (struct PACKET_CZ_REQUEST_UPGRADE_ENCHANT*)RFIFOP( fd, 0 );
+
+	if( sd->state.item_enchant_index != p->clientLuaIndex ){
+		return;
+	}
+
+	uint16 index = server_index( p->index );
+
+	if( index >= MAX_INVENTORY ){
+		return;
+	}
+
+	if( sd->inventory_data[index] == nullptr ){
+		return;
+	}
+
+	struct item& selected_item = sd->inventory.u.items_inventory[index];
+	std::shared_ptr<s_item_enchant> enchant = item_enchant_db.find( p->clientLuaIndex );
+
+	if( enchant == nullptr ){
+		return;
+	}
+
+	if( !clif_parse_enchant_basecheck( selected_item, enchant ) ){
+		return;
+	}
+
+	uint16 slot = p->slot;
+
+	if( slot >= MAX_SLOTS ){
+		return;
+	}
+
+	if( slot < sd->inventory_data[index]->slots ){
+		return;
+	}
+
+	if( selected_item.card[slot] == 0 ){
+		return;
+	}
+
+	std::shared_ptr<s_item_enchant_slot> enchant_slot = util::umap_find( enchant->slots, slot );
+
+	if( enchant_slot == nullptr ){
+		return;
+	}
+
+	std::shared_ptr<s_item_enchant_upgrade> upgrade = util::umap_find( enchant_slot->upgrade.enchants, selected_item.card[slot] );
+
+	if( upgrade == nullptr ){
+		return;
+	}
+
+	if( sd->status.zeny < upgrade->zeny ){
+		return;
+	}
+
+	std::unordered_map<uint16, uint16> materials;
+
+	for( const auto& entry : upgrade->materials ){
+		int16 idx = pc_search_inventory( sd, entry.first );
+
+		if( idx < 0 ){
+			return;
+		}
+
+		if( sd->inventory.u.items_inventory[idx].amount < entry.second ){
+			return;
+		}
+
+		materials[idx] = entry.second;
+	}
+
+	if( pc_payzeny( sd, upgrade->zeny, LOG_TYPE_ENCHANT, nullptr ) != 0 ){
+		return;
+	}
+
+	for( const auto& entry : materials ){
+		if( pc_delitem( sd, entry.first, entry.second, 0, 0, LOG_TYPE_ENCHANT )  != 0 ){
+			return;
+		}
+	}
+
+	// Log removal of item
+	log_pick_pc( sd, LOG_TYPE_ENCHANT, -1, &selected_item );
+
+	selected_item.card[slot] = upgrade->upgrade_item_id;
+
+	// Log retrieving the item again -> with the new enchant
+	log_pick_pc( sd, LOG_TYPE_ENCHANT, 1, &selected_item );
+
+	clif_enchantwindow_result( *sd, true, selected_item.card[slot] );
+#endif
+}
+
+void clif_parse_enchantwindow_reset( int fd, struct map_session_data* sd ){
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
+	struct PACKET_CZ_REQUEST_RESET_ENCHANT *p = (struct PACKET_CZ_REQUEST_RESET_ENCHANT*)RFIFOP( fd, 0 );
+
+	if( sd->state.item_enchant_index != p->clientLuaIndex ){
+		return;
+	}
+
+	uint16 index = server_index( p->index );
+
+	if( index >= MAX_INVENTORY ){
+		return;
+	}
+
+	if( sd->inventory_data[index] == nullptr ){
+		return;
+	}
+
+	struct item& selected_item = sd->inventory.u.items_inventory[index];
+
+	if( selected_item.equip != 0 ){
+		return;
+	}
+
+	if( selected_item.equipSwitch != 0 ){
+		return;
+	}
+
+	if( selected_item.attribute != 0 ){
+		return;
+	}
+
+	std::shared_ptr<s_item_enchant> enchant = item_enchant_db.find( p->clientLuaIndex );
+
+	if( enchant == nullptr ){
+		return;
+	}
+
+	if( !util::vector_exists( enchant->target_item_ids, selected_item.nameid ) ){
+		return;
+	}
+
+	if( selected_item.refine < enchant->minimumRefine ){
+		return;
+	}
+
+	if( selected_item.enchantgrade < enchant->minimumEnchantgrade ){
+		return;
+	}
+
+	bool is_enchanted = false;
+
+	for( int i = sd->inventory_data[index]->slots; i < MAX_SLOTS; i++ ){
+		if( selected_item.card[i] != 0 ){
+			is_enchanted = true;
+			break;
+		}
+	}
+
+	if( !is_enchanted ){
+		return;
+	}
+
+	if( sd->status.zeny < enchant->reset.zeny ){
+		return;
+	}
+
+	std::unordered_map<uint16, uint16> materials;
+
+	for( const auto& entry : enchant->reset.materials ){
+		int16 idx = pc_search_inventory( sd, entry.first );
+
+		if( idx < 0 ){
+			return;
+		}
+
+		if( sd->inventory.u.items_inventory[idx].amount < entry.second ){
+			return;
+		}
+
+		materials[idx] = entry.second;
+	}
+
+	if( pc_payzeny( sd, enchant->reset.zeny, LOG_TYPE_ENCHANT, nullptr ) != 0 ){
+		return;
+	}
+
+	for( const auto& entry : materials ){
+		if( pc_delitem( sd, entry.first, entry.second, 0, 0, LOG_TYPE_ENCHANT )  != 0 ){
+			return;
+		}
+	}
+
+	uint32 chance = enchant->reset.chance;
+
+	if( chance == 0 ){
+		return;
+	}
+
+	if( chance < 100000 && rnd_value( 0, 100000 ) > chance ){
+		clif_enchantwindow_result( *sd, false );
+		return;
+	}
+
+	// Log removal of item
+	log_pick_pc( sd, LOG_TYPE_ENCHANT, -1, &selected_item );
+
+	for( int i = sd->inventory_data[index]->slots; i < MAX_SLOTS; i++ ){
+		selected_item.card[i] = 0;
+	}
+
+	// Log retrieving the item again -> with the new enchant
+	log_pick_pc( sd, LOG_TYPE_ENCHANT, 1, &selected_item );
+
+	clif_enchantwindow_result( *sd, true );
+#endif
+}
+
+void clif_parse_enchantwindow_close( int fd, struct map_session_data* sd ){
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
+	sd->state.item_enchant_index = 0;
+#endif
+}
+
+void clif_parse_itempackage_select( int fd, struct map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20220216 || PACKETVER_ZERO_NUM >= 20220316
+	struct PACKET_CZ_USE_PACKAGEITEM* p = (struct PACKET_CZ_USE_PACKAGEITEM*)RFIFOP( fd, 0 );
+
+	if( p->AID != sd->status.account_id ){
+		return;
+	}
+
+	uint16 index = server_index( p->index );
+
+	if( index >= MAX_INVENTORY ){
+		return;
+	}
+
+	if( sd->inventory_data[index] == nullptr ){
+		return;
+	}
+
+	if( sd->inventory_data[index]->nameid != p->itemID ){
+		return;
+	}
+
+	if( sd->inventory_data[index]->elv > sd->status.base_level ){
+		return;
+	}
+
+	std::shared_ptr<s_item_package> package = item_package_db.find( p->itemID );
+
+	if( package == nullptr ){
+		return;
+	}
+
+	std::shared_ptr<s_item_package_group> group = util::umap_find( package->groups, p->BoxIndex );
+
+	if( group == nullptr ){
+		return;
+	}
+
+	if( pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_PACKAGE ) != 0 ){
+		return;
+	}
+
+	for( const auto& entry : group->items ){
+		struct item item = {};
+
+		item.nameid = entry.second->item_id;
+		item.identify = 1;
+		item.refine = (char)entry.second->refine;
+
+		if( entry.second->rentalhours ){
+			item.expire_time = (uint32)( time( nullptr ) + entry.second->rentalhours * 3600 );
+		}
+
+		// Check if it is a pet egg
+		std::shared_ptr<s_pet_db> pet = pet_db_search( item.nameid, PET_EGG );
+
+		if( pet != nullptr ){
+			for( int i = 0; i < entry.second->amount; i++ ){
+				pet_create_egg( sd, item.nameid );
+			}
+		}else if( entry.second->amount > 1 && ( !itemdb_isstackable( item.nameid ) || item.expire_time > 0 ) ){
+			for( int i = 0; i < entry.second->amount; i++ ){
+				// New random options on each iteration
+				if( entry.second->randomOptionGroup != nullptr ){
+					entry.second->randomOptionGroup->apply( item );
+				}
+
+				pc_additem( sd, &item, 1, LOG_TYPE_PACKAGE );
+			}
+		}else{
+			if( entry.second->randomOptionGroup != nullptr ){
+				entry.second->randomOptionGroup->apply( item );
+			}
+
+			pc_additem( sd, &item, entry.second->amount, LOG_TYPE_PACKAGE );
+		}
+	}
 #endif
 }
 

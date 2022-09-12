@@ -63,6 +63,8 @@ struct unit_data {
 	char walk_done_event[EVENT_NAME_LENGTH];
 	char title[NAME_LENGTH];
 	int32 group_id;
+
+	std::vector<int> shadow_scar_timer;
 };
 
 struct view_data {
@@ -125,7 +127,7 @@ int unit_escape(struct block_list *bl, struct block_list *target, short dist, ui
 // Instant unit changes
 bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool checkpath);
 int unit_warp(struct block_list *bl, short map, short x, short y, clr_type type);
-int unit_setdir(struct block_list *bl, unsigned char dir);
+bool unit_setdir(block_list *bl, uint8 dir, bool send_update = true);
 uint8 unit_getdir(struct block_list *bl);
 int unit_blown(struct block_list* bl, int dx, int dy, int count, enum e_skill_blown flag);
 enum e_unit_blown unit_blown_immune(struct block_list* bl, uint8 flag);
@@ -171,6 +173,9 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 int unit_free(struct block_list *bl, clr_type clrtype);
 int unit_changeviewsize(struct block_list *bl,short size);
 int unit_changetarget(struct block_list *bl,va_list ap);
+
+// Shadow Scar
+void unit_addshadowscar(unit_data &ud, int interval);
 
 void do_init_unit(void);
 void do_final_unit(void);

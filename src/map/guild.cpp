@@ -844,7 +844,7 @@ void guild_member_joined(struct map_session_data *sd) {
 		sd->state.gmaster_flag = 1;
 #ifndef RENEWAL
 		// prevent Guild Skills from being used directly after relog
-		if( battle_config.guild_skill_relog_delay )
+		if( sd->state.connect_new == 1 && battle_config.guild_skill_relog_delay )
 			guild_block_skill(sd, battle_config.guild_skill_relog_delay);
 #endif
 	}
@@ -855,8 +855,6 @@ void guild_member_joined(struct map_session_data *sd) {
 		g->member[i].sd = sd;
 		sd->guild = g;
 
-		if (g->instance_id > 0)
-			instance_reqinfo(sd, g->instance_id);
 		if( channel_config.ally_tmpl.name[0] && (channel_config.ally_tmpl.opt&CHAN_OPT_AUTOJOIN) ) {
 			channel_gjoin(sd,3);
 		}

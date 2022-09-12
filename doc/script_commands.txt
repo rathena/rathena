@@ -3583,14 +3583,15 @@ This command does not count skills which are set as flag 4 (permament granted) (
 ---------------------------------------
 
 *getmonsterinfo(<mob ID>,<type>)
+*getmonsterinfo(<mob name>,<type>)
 
-This function will look up the monster with the specified ID number in the
-mob database and return the info set by TYPE argument.
+This function will look up the monster with the specified <mob ID> or <mob name> in the
+mob database and return the info set by <type> argument.
 It will return -1 if there is no such monster (or the type value is invalid),
 or "null" if you requested the monster's name.
 
 Valid types are:
-	MOB_NAME - monster's name, if there is no such monster "null" is returned
+	MOB_NAME - monster's japanese name, if there is no such monster "null" is returned
 	MOB_LV - monster's level
 	MOB_MAXHP - monster's maximum hp
 	MOB_BASEEXP - monster's base experience
@@ -3615,6 +3616,7 @@ Valid types are:
 	MOB_ELEMENT - monster's element(doesn't return the element level, only the element ID)
 	MOB_MODE - monster's mode
 	MOB_MVPEXP - monster's mvp experience
+	MOB_ID - monster's ID
 
 For more details, see the sample in 'doc/sample/getmonsterinfo.txt'.
 
@@ -6530,12 +6532,14 @@ Examples:
 ---------------------------------------
 
 *monster     "<map name>",<x>,<y>,"<name to show>",<mob id>,<amount>{,"<event label>",<size>,<ai>};
+*monster     "<map name>",<x>,<y>,"<name to show>","<mob name>",<amount>{,"<event label>",<size>,<ai>};
 *areamonster "<map name>",<x1>,<y1>,<x2>,<y2>,"<name to show>",<mob id>,<amount>{,"<event label>",<size>,<ai>};
+*areamonster "<map name>",<x1>,<y1>,<x2>,<y2>,"<name to show>","<mob name>",<amount>{,"<event label>",<size>,<ai>};
 
-This command will spawn a monster on the specified coordinates on the specified
-map. If the script is invoked by a character, a special map name, "this", will
-be recognized to mean the name of the map the invoking character is located at.
-This command works fine in the item scripts.
+This command will spawn <amount> monsters with <mob id> or <mob name> on the specified
+coordinates on the specified map. If the script is invoked by a character, a special
+<map name>, "this", will be recognized to mean the name of the map the invoking character
+is located at. This command works fine in item scripts.
 
 The same command arguments mean the same things as described above in the
 beginning of this document when talking about permanent monster spawns. Monsters
@@ -6614,11 +6618,13 @@ For more good examples see just about any official 2-1 or 2-2 job quest script.
 
 *areamobuseskill "<map name>",<x>,<y>,<range>,<mob id>,<skill id>,<skill level>,<cast time>,<cancelable>,<emotion>,<target type>;
 *areamobuseskill "<map name>",<x>,<y>,<range>,<mob id>,"<skill name>",<skill level>,<cast time>,<cancelable>,<emotion>,<target type>;
+*areamobuseskill "<map name>",<x>,<y>,<range>,"<mob name>",<skill id>,<skill level>,<cast time>,<cancelable>,<emotion>,<target type>;
+*areamobuseskill "<map name>",<x>,<y>,<range>,"<mob name>","<skill name>",<skill level>,<cast time>,<cancelable>,<emotion>,<target type>;
 
-This command will make all monsters of the specified mob ID in the specified
-area use the specified skill. Map name, x, and y define the center of the area,
+This command will make all monsters of the specified <mob id> or <mob name> in the specified
+area use the specified skill. <map name>, <x>, and <y> define the center of the area,
 which extending <range> cells in each direction (ex: a range of 3 would create
-a 7x7 square). The skill can be specified by skill ID or name. <cast time> is in
+a 7x7 square). The skill can be specified by <skill id> or <skill name>. <cast time> is in
 milliseconds (1000 = 1 second), and the rest should be self-explanatory.
 
 <target type> can be:
@@ -8197,13 +8203,13 @@ This feature requires packet version 2015-11-04 or newer.
 
 ---------------------------------------
 
-*laphine_synthesis()
+*laphine_synthesis({<item id>})
+*laphine_synthesis({<"item name">})
 
-Opens the laphine synthesis UI for the attached player.
+Opens the laphine synthesis UI for <item ID> or <item name> for the attached player.
+If run from within an item script <item ID> or <item name> is optional.
 
 This feature requires packet version 2016-06-01 or newer.
-
-This function is intended for use in item scripts.
 
 ---------------------------------------
 
@@ -8254,6 +8260,16 @@ Opens the item reform UI for <item ID> or <item name> for the attached player or
 If run from within an item script <item ID> or <item name> is optional.
 
 This feature requires packet version 2021-11-03 or newer.
+
+---------------------------------------
+
+*item_enchant(<client side LUA index>{,<char ID>});
+
+Opens the enchant UI for the attached character or the player given by the <char ID> parameter.
+If the player exceeds 70% weight the client will not open the enchant UI and will trigger an
+error message instead.
+
+This command requires packet version 2021-11-03 or newer.
 
 ---------------------------------------
 \\
