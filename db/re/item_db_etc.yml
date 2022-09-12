@@ -46581,6 +46581,19 @@ Body:
       bonus bDelayrate,-5;
       bonus bPAtk,1;
       bonus bSmatk,1;
+  - Id: 300207
+    AegisName: SLD_Shining_T_Bear_Card
+    Name: Sealed Shiny Teddy Bear Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      bonus bUseSPrate,15;
+      bonus2 bMagicAtkEle,Ele_Holy,2*.@r;
+      if (.@r>=15)
+         bonus2 bMagicAtkEle,Ele_Holy,7;
   - Id: 300209
     AegisName: aegis_300209
     Name: Sealed Nightmare Amon Ra Card

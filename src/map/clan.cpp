@@ -111,12 +111,16 @@ int clan_getNextFreeMemberIndex( struct clan* clan ){
 }
 
 void clan_member_joined( struct map_session_data* sd ){
-	struct clan* clan;
-	int index;
-
 	nullpo_retv(sd);
 
-	clan = clan_search(sd->status.clan_id);
+	if( sd->clan != nullptr ){
+		clif_clan_basicinfo( sd );
+		clif_clan_onlinecount( sd->clan );
+		return;
+	}
+
+	struct clan* clan = clan_search(sd->status.clan_id);
+	int index;
 
 	nullpo_retv(clan);
 
@@ -129,9 +133,6 @@ void clan_member_joined( struct map_session_data* sd ){
 
 		intif_clan_member_joined(clan->id);
 		clif_clan_onlinecount(clan);
-
-		if (clan->instance_id > 0)
-			instance_reqinfo(sd, clan->instance_id);
 	}
 }
 

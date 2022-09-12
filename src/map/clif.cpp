@@ -18761,6 +18761,28 @@ void clif_parse_MemorialDungeonCommand(int fd, map_session_data *sd)
 	}
 }
 
+void clif_instance_info( struct map_session_data& sd ){
+	if( sd.instance_id > 0 ){
+		instance_reqinfo( &sd, sd.instance_id );
+	}
+
+	if( sd.status.party_id > 0 ){
+		struct party_data* p = party_search( sd.status.party_id );
+
+		if( p != nullptr && p->instance_id > 0 ){
+			instance_reqinfo( &sd, p->instance_id );
+		}
+	}
+
+	if( sd.guild != nullptr && sd.guild->instance_id > 0 ){
+		instance_reqinfo( &sd, sd.guild->instance_id );
+	}
+
+	if( sd.clan != nullptr && sd.clan->instance_id > 0 ){
+		instance_reqinfo( &sd, sd.clan->instance_id );
+	}
+}
+
 /// Notifies clients about item picked up by a party member.
 /// 02b8 <account id>.L <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.W <item type>.B (ZC_ITEM_PICKUP_PARTY)
 void clif_party_show_picker( struct map_session_data* sd, struct item* item_data ){
@@ -19817,14 +19839,7 @@ static void clif_loadConfirm( struct map_session_data *sd ){
 
 	clif_send( &p, sizeof(p), &sd->bl, SELF );
 
-	if (sd->instance_id > 0)
-		instance_reqinfo(sd, sd->instance_id);
-	if (sd->status.party_id > 0)
-		party_member_joined(sd);
-	if (sd->status.guild_id > 0)
-		guild_member_joined(sd);
-	if (sd->status.clan_id > 0)
-		clan_member_joined(sd);
+	clif_instance_info( *sd );
 #endif
 }
 
