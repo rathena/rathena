@@ -51569,7 +51569,7 @@ Body:
       laphine_upgrade();
   - Id: 101178
     AegisName: Reload_Shadow_Up
-    Name: ?eload Shadow Spellbook
+    Name: Reload Shadow Spellbook
     Type: Delayconsume
     Weight: 10
     Flags:
