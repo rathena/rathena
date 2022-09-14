@@ -2444,7 +2444,7 @@
 	parseable_packet( HEADER_CZ_REQ_ITEMREPAIR2, sizeof( struct PACKET_CZ_REQ_ITEMREPAIR2 ), clif_parse_RepairItem, 0 );
 #endif
 
-#if PACKETVER >= 20200902
+#if PACKETVER >= 20191204
 	parseable_packet( HEADER_CZ_PARTY_REQ_MASTER_TO_JOIN, sizeof( struct PACKET_CZ_PARTY_REQ_MASTER_TO_JOIN ), clif_parse_partybooking_join, 0 );
 	parseable_packet( HEADER_CZ_PARTY_REQ_ACK_MASTER_TO_JOIN, sizeof( struct PACKET_CZ_PARTY_REQ_ACK_MASTER_TO_JOIN ), clif_parse_partybooking_reply, 0 );
 #endif

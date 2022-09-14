@@ -24694,7 +24694,7 @@ void clif_parse_itempackage_select( int fd, struct map_session_data* sd ){
 }
 
 void clif_partybooking_ask( struct map_session_data* sd, struct map_session_data* joining_sd ){
-#if PACKETVER >= 20200902
+#if PACKETVER >= 20191204
 	struct PACKET_ZC_PARTY_REQ_MASTER_TO_JOIN p = { 0 };
 
 	p.packetType = HEADER_ZC_PARTY_REQ_MASTER_TO_JOIN;
@@ -24709,7 +24709,7 @@ void clif_partybooking_ask( struct map_session_data* sd, struct map_session_data
 }
 
 void clif_parse_partybooking_join( int fd, struct map_session_data* sd ){
-#if PACKETVER >= 20200902
+#if PACKETVER >= 20191204
 	struct PACKET_CZ_PARTY_REQ_MASTER_TO_JOIN* p = (struct PACKET_CZ_PARTY_REQ_MASTER_TO_JOIN*)RFIFOP( fd, 0 );
 
 	// Character is already in a party
@@ -24755,7 +24755,7 @@ void clif_parse_partybooking_join( int fd, struct map_session_data* sd ){
 }
 
 void clif_partybooking_reply( struct map_session_data* sd, struct map_session_data* party_leader_sd, bool accepted ){
-#if PACKETVER >= 20200902
+#if PACKETVER >= 20191204
 	struct PACKET_ZC_PARTY_JOIN_REQ_ACK_FROM_MASTER p = { 0 };
 
 	if( party_leader_sd->status.party_id == 0 ){
@@ -24779,7 +24779,7 @@ void clif_partybooking_reply( struct map_session_data* sd, struct map_session_da
 }
 
 void clif_parse_partybooking_reply( int fd, struct map_session_data* sd ){
-#if PACKETVER >= 20200902
+#if PACKETVER >= 20191204
 	struct PACKET_CZ_PARTY_REQ_ACK_MASTER_TO_JOIN* p = (struct PACKET_CZ_PARTY_REQ_ACK_MASTER_TO_JOIN*)RFIFOP( fd, 0 );
 
 	struct map_session_data* tsd = map_charid2sd( p->CID );
