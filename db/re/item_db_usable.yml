@@ -3396,7 +3396,7 @@ Body:
     Script: |
       itemheal rand(45,65),0;
   - Id: 11569
-    AegisName: Orange_Potion_
+    AegisName: Orange_Potion_B
     Name: Orange Potion
     Type: Healing
     Buy: 10
@@ -47477,6 +47477,16 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box12);
+  - Id: 23302
+    AegisName: PoringsPreciousBox
+    Name: Poring Treasure Box
+    Type: Usable
+    Weight: 200
+    EquipLevelMin: 30
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_PORINGSPRECIOUSBOX);
   - Id: 23307
     AegisName: Comp_M_DEFScroll
     Name: "[Sale] Shining Defense Scroll"
