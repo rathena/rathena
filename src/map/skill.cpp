@@ -13858,51 +13858,51 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		}
 		break;
 	case GN_FIRE_EXPANSION: {
-		struct unit_data *ud = unit_bl2ud(src);
+			struct unit_data* ud = unit_bl2ud(src);
 
-		if( !ud ) break;
+			if (!ud) break;
 
-		for (const auto itsu : ud->skillunits) {
-			skill_unit *su = itsu->unit;
-			std::shared_ptr<s_skill_unit_group> sg = itsu->unit->group;
+			auto predicate = [x, y](std::shared_ptr<s_skill_unit_group> sg) { auto* su = sg->unit; return sg->skill_id == GN_DEMONIC_FIRE && distance_xy(x, y, su->bl.x, su->bl.y) < 4; };
+			auto it = std::find_if(ud->skillunits.begin(), ud->skillunits.end(), predicate);
+			if (it != ud->skillunits.end()) {
+				auto* unit_group = it->get();
+				skill_unit* su = unit_group->unit;
 
-			if (itsu->skill_id == GN_DEMONIC_FIRE && distance_xy(x, y, su->bl.x, su->bl.y) < 4) {
 				switch (skill_lv) {
-					case 1: {
-							// TODO:
-							int duration = (int)(sg->limit - DIFF_TICK(tick, sg->tick));
+				case 1: {
+					// TODO:
+					int duration = (int)(unit_group->limit - DIFF_TICK(tick, unit_group->tick));
 
-							skill_delunit(su);
-							skill_unitsetting(src, GN_DEMONIC_FIRE, 1, x, y, duration);
-							flag |= 1;
-						}
+					skill_delunit(su);
+					skill_unitsetting(src, GN_DEMONIC_FIRE, 1, x, y, duration);
+					flag |= 1;
+				}
 						break;
-					case 2:
-						map_foreachinallarea(skill_area_sub, src->m, su->bl.x - 2, su->bl.y - 2, su->bl.x + 2, su->bl.y + 2, BL_CHAR, src, GN_DEMONIC_FIRE, skill_lv + 20, tick, flag|BCT_ENEMY|SD_LEVEL|1, skill_castend_damage_id);
-						if (su != NULL)
-							skill_delunit(su);
-						break;
-					case 3:
+				case 2:
+					map_foreachinallarea(skill_area_sub, src->m, su->bl.x - 2, su->bl.y - 2, su->bl.x + 2, su->bl.y + 2, BL_CHAR, src, GN_DEMONIC_FIRE, skill_lv + 20, tick, flag | BCT_ENEMY | SD_LEVEL | 1, skill_castend_damage_id);
+					if (su != NULL)
 						skill_delunit(su);
-						skill_unitsetting(src, GN_FIRE_EXPANSION_SMOKE_POWDER, 1, x, y, 0);
-						flag |= 1;
-						break;
-					case 4:
-						skill_delunit(su);
-						skill_unitsetting(src, GN_FIRE_EXPANSION_TEAR_GAS, 1, x, y, 0);
-						flag |= 1;
-						break;
-					case 5: {
-							uint16 acid_lv = 5; // Cast at Acid Demonstration at level 5 unless the user has a higher level learned.
+					break;
+				case 3:
+					skill_delunit(su);
+					skill_unitsetting(src, GN_FIRE_EXPANSION_SMOKE_POWDER, 1, x, y, 0);
+					flag |= 1;
+					break;
+				case 4:
+					skill_delunit(su);
+					skill_unitsetting(src, GN_FIRE_EXPANSION_TEAR_GAS, 1, x, y, 0);
+					flag |= 1;
+					break;
+				case 5: {
+					uint16 acid_lv = 5; // Cast at Acid Demonstration at level 5 unless the user has a higher level learned.
 
-							if (sd && pc_checkskill(sd, CR_ACIDDEMONSTRATION) > 5)
-								acid_lv = pc_checkskill(sd, CR_ACIDDEMONSTRATION);
-							map_foreachinallarea(skill_area_sub, src->m, su->bl.x - 2, su->bl.y - 2, su->bl.x + 2, su->bl.y + 2, BL_CHAR, src, GN_FIRE_EXPANSION_ACID, acid_lv, tick, flag|BCT_ENEMY|SD_LEVEL|1, skill_castend_damage_id);
-							if (su != NULL)
-								skill_delunit(su);
-						}
-						break;
-					}
+					if (sd && pc_checkskill(sd, CR_ACIDDEMONSTRATION) > 5)
+						acid_lv = pc_checkskill(sd, CR_ACIDDEMONSTRATION);
+					map_foreachinallarea(skill_area_sub, src->m, su->bl.x - 2, su->bl.y - 2, su->bl.x + 2, su->bl.y + 2, BL_CHAR, src, GN_FIRE_EXPANSION_ACID, acid_lv, tick, flag | BCT_ENEMY | SD_LEVEL | 1, skill_castend_damage_id);
+					if (su != NULL)
+						skill_delunit(su);
+				}
+					break;
 				}
 			}
 		}
