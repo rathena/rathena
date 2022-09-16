@@ -8954,6 +8954,18 @@ Example:
 
 ---------------------------------------
 
+*cap_value(<number>, <min>, <max>)
+
+Returns the number but capped between <min> and <max>.
+
+Example:
+	// capped between 0 ~ 100
+	.@value = cap_value(10, 0, 100);   // .@value will be equal to 10
+	.@value = cap_value(1000, 0, 100); // .@value will be equal to 100
+	.@value = cap_value(-10, 3, 100);  // .@value will be equal to 3
+
+---------------------------------------
+
 *round(<number>,<precision>);
 *ceil(<number>,<precision>);
 *floor(<number>,<precision>);
