@@ -9,6 +9,7 @@
 HANDLER_FUNC(partybooking_add);
 HANDLER_FUNC(partybooking_delete);
 HANDLER_FUNC(partybooking_get);
+HANDLER_FUNC(partybooking_info);
 HANDLER_FUNC(partybooking_list);
 HANDLER_FUNC(partybooking_search);
 

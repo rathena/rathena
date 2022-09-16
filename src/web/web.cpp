@@ -474,6 +474,7 @@ int do_init(int argc, char** argv) {
 	http_server->Post("/party/add", partybooking_add);
 	http_server->Post("/party/del", partybooking_delete);
 	http_server->Post("/party/get", partybooking_get);
+	http_server->Post("/party/info", partybooking_info);
 	http_server->Post("/party/list", partybooking_list);
 	http_server->Post("/party/search", partybooking_search);
 	http_server->Post("/userconfig/load", userconfig_load);

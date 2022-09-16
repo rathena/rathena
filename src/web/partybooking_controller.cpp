@@ -313,6 +313,43 @@ HANDLER_FUNC(partybooking_get){
 	res.set_content( response, "application/json" );
 }
 
+HANDLER_FUNC(partybooking_info){
+	if( !isAuthorized( req, false ) ){
+		res.status = HTTP_BAD_REQUEST;
+		res.set_content( "Error", "text/plain" );
+		return;
+	}
+
+	auto world_name = req.get_file_value( "WorldName" ).content;
+	auto account_id = std::stoi( req.get_file_value( "QueryAID" ).content );
+
+	if( world_name.length() > WORLD_NAME_LENGTH ){
+		res.status = HTTP_BAD_REQUEST;
+		res.set_content( "Error", "text/plain" );
+
+		return;
+	}
+
+	std::vector<s_party_booking_entry> bookings;
+
+	if( !party_booking_read( world_name, bookings, "`account_id` = '" + std::to_string( account_id ) + "'", "" ) ){
+		res.status = HTTP_BAD_REQUEST;
+		res.set_content( "Error", "text/plain" );
+
+		return;
+	}
+
+	std::string response;
+
+	if( bookings.empty() ){
+		response = "{ \"Type\": 1 }";
+	}else{
+		response = "{ \"Type\": 1, \"data\": [" + bookings.at( 0 ).to_json( world_name ) + "] }";
+	}
+
+	res.set_content( response, "application/json" );
+}
+
 HANDLER_FUNC(partybooking_list){
 	if( !isAuthorized( req, false ) ){
 		res.status = HTTP_BAD_REQUEST;
