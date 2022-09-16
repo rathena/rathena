@@ -11114,3 +11114,23 @@ See 'achievementinfo' for valid <type> values.
 - Excludes ACHIEVEINFO_LEVEL and ACHIEVEINFO_SCORE.
 
 ---------------------------------------
+
+*addfame(<amount>,{,<char id>})
+
+Increase the fame of character by a specific amount.
+Note: Only work for blacksmith, alchemist and taekwon class.
+
+---------------------------------------
+
+*getfame({<char id>})
+
+Gets the fame for the attached player or the given character ID.
+
+---------------------------------------
+
+*getfamerank({<char id>})
+
+Check if player is in the fame rankers list of its job.
+Returns fame rank (start from 1 to MAX_FAME_LIST), else 0.
+
+---------------------------------------
