@@ -3464,6 +3464,10 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			struct pet_data *pd = (struct pet_data*)bl;
 			struct map_session_data *sd = pd->master;
 
+			pet_delautobonus(*sd, pd->autobonus, false);
+			pet_delautobonus(*sd, pd->autobonus2, false);
+			pet_delautobonus(*sd, pd->autobonus3, false);
+
 			pet_hungry_timer_delete(pd);
 			pet_clear_support_bonuses(sd);
 
